@@ -1,2 +1,3 @@
-resources\*.sfc
 *.srm
+resources/sm_orig.sfc
+resources/smpal_orig.sfc
