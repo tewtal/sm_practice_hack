@@ -1,3 +1,6 @@
 *.srm
-resources/sm_orig.sfc
-resources/smpal_orig.sfc
+*.bst
+resources/sm_orig.s[mf]c
+resources/smpal_orig.s[mf]c
+build/*
+*.sw[op]

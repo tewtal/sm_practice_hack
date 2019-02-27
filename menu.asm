@@ -971,11 +971,13 @@ str_ridley: DB "RIDLEY", #$00
 ; Config Menu
 ConfigMenu:
 	DW #$0000, #load_menu, #InfoHudMenu, #str_infohudmenu
-	DW #$0000, #load_menu, #GameMenu,	 #str_gamemenu
+	DW #$0000, #load_menu, #GameMenu, #str_gamemenu
+	DW #$0000, #load_menu, #RngMenu, #str_rngmenu
 	DW #$FFFF
 	
 str_infohudmenu: DB "INFOHUD", #$00
 str_gamemenu: DB "GAME", #$00
+str_rngmenu: DB "RNG CONTROL", #$00
 
 InfoHudMenu:
 	DW #$007F, #$FB60, #$0000, #str_enemyhp
@@ -1001,8 +1003,64 @@ GameMenu:
 str_japanesetext: DB "JAPANESE TEXT", #$00
 str_moonwalk: DB "MOON WALK", #$00
 str_iconcancel: DB "ICON CANCEL", #$00
-str_debugmode: DB "DEBUG MODE", #$00	
-	
+str_debugmode: DB "DEBUG MODE", #$00
+
+RngMenu:
+	DW #$007F, #$FB80, #$0001, #str_rerandomize
+	DW #$0000, #load_menu, #PhantoonMenu, #str_phantoonrngmenu
+	DW #$0000, #load_menu, #BotwoonMenu, #str_botwoonrngmenu
+	DW #$FFFF
+
+str_rerandomize: DB "RERANDOMIZE", #$00
+str_phantoonrngmenu: DB "PHANTOON RNG", #$00
+str_botwoonrngmenu: DB "BOTWOON RNG", #$00
+
+PhantoonMenu:
+	DW #$007F, #$FB82, #$0000, #str_first_direction_random
+	DW #$007F, #$FB82, #$0001, #str_first_direction_left
+	DW #$007F, #$FB82, #$0002, #str_first_direction_right
+	DW #$007F, #$FB86, #$0000, #str_first_pattern_random
+	DW #$007F, #$FB86, #$0001, #str_first_pattern_fast
+	DW #$007F, #$FB86, #$0002, #str_first_pattern_mid
+	DW #$007F, #$FB86, #$0003, #str_first_pattern_slow
+	DW #$007F, #$FB84, #$0000, #str_second_direction_random
+	DW #$007F, #$FB84, #$0001, #str_second_direction_left
+	DW #$007F, #$FB84, #$0002, #str_second_direction_right
+	DW #$007F, #$FB88, #$0000, #str_second_pattern_random
+	DW #$007F, #$FB88, #$0001, #str_second_pattern_fast
+	DW #$007F, #$FB88, #$0002, #str_second_pattern_mid
+	DW #$007F, #$FB88, #$0003, #str_second_pattern_slow
+	DW #$FFFF
+
+str_first_direction_random: DB "1ST DIRECTION RANDOM", #$00
+str_second_direction_random: DB "2ND DIRECTION RANDOM", #$00
+str_first_pattern_random: DB "1ST PATTERN RANDOM", #$00
+str_second_pattern_random: DB "2ND PATTERN RANDOM", #$00
+str_first_direction_left: DB "1ST LEFT", #$00
+str_first_direction_right: DB "1ST RIGHT", #$00
+str_second_direction_left: DB "2ND LEFT", #$00
+str_second_direction_right: DB "2ND RIGHT", #$00
+str_first_pattern_fast: DB "1ST FAST", #$00
+str_first_pattern_mid: DB "1ST MID", #$00
+str_first_pattern_slow: DB "1ST SLOW", #$00
+str_second_pattern_fast: DB "2ND FAST", #$00
+str_second_pattern_mid: DB "2ND MID", #$00
+str_second_pattern_slow: DB "2ND SLOW", #$00
+
+BotwoonMenu:
+	DW #$007F, #$FB8A, #$0000, #str_botwoon_rng_random
+	DW #$007F, #$FB8A, #$0001, #str_botwoon_rng_down
+	DW #$007F, #$FB8A, #$0009, #str_botwoon_rng_up
+	DW #$007F, #$FB8A, #$0011, #str_botwoon_rng_right
+	DW #$007F, #$FB8A, #$0019, #str_botwoon_rng_left
+	DW #$FFFF
+
+str_botwoon_rng_random: DB "RANDOM", #$00
+str_botwoon_rng_down: DB "DOWN", #$00
+str_botwoon_rng_up: DB "UP", #$00
+str_botwoon_rng_right: DB "RIGHT", #$00
+str_botwoon_rng_left: DB "LEFT", #$00
+
 	
 CharTable:
 	;  0x00																										0x0F
@@ -1019,3 +1077,4 @@ CharTable:
 	DW #$0CEF,#$0CF0,#$0CF1,#$0CF2,#$0CF3,#$0CF4,#$0CF5,#$0CF6,#$0CF7,#$0CF8,#$0CF9,#$0CFA,#$0CFB,#$0CFC,#$0CFD,#$0CFE
 
 print "Menu Bank Ending at: ", pc
+warnpc $DFFFFF

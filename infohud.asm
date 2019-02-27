@@ -107,6 +107,12 @@ ih_init_code:
 	STA $7FFB70	; magic pants
 	STA $7FFB72	; magic pants
 	STA $7FFB74	; magic pants
+	STA $7FFB80	; rerandomize
+	STA $7FFB82	; phantoon rng
+	STA $7FFB84	; phantoon rng
+	STA $7FFB86	; phantoon rng
+	STA $7FFB88	; phantoon rng
+	STA $7FFB8A	; botwoon rng
 	
 	PLA
 	JSL $8B9146
