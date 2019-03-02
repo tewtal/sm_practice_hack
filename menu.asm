@@ -985,6 +985,10 @@ InfoHudMenu:
 	DW #$007F, #$FB60, #$0002, #str_chargetimer
 	DW #$007F, #$FB60, #$0003, #str_xfactortimer
 	DW #$107F, #$FB64, #$0001, #str_magicpants
+	DW #$007F, #$FB60, #$0004, #str_mbhp
+	DW #$007F, #$FB60, #$0005, #str_dashcounter
+	DW #$007F, #$FB60, #$0006, #str_vspeed
+	DW #$007F, #$FB60, #$0007, #str_iframes
 	DW #$FFFF
 
 str_enemyhp: DB "ENEMY HP", #$00
@@ -992,6 +996,10 @@ str_shinesparktimer: DB "SHINESPARK TIMER", #$00
 str_chargetimer: DB "CHARGE TIMER", #$00
 str_xfactortimer: DB "X FACTOR TIMER", #$00	
 str_magicpants: DB "MAGIC PANTS", #$00
+str_mbhp: DB "MOTHER BRAIN HP", #$00
+str_dashcounter: DB "DASH COUNTER", #$00
+str_vspeed: DB "VERTICAL SPEED", #$00
+str_iframes: DB "IFRAME TIMER", #$00
 
 GameMenu:
 	DW #$007E, #$09E2, #$0001, #str_japanesetext
