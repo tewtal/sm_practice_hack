@@ -72,6 +72,9 @@ org $91DAD8      ;hijack, runs after a shinespark has been charged
 org $8095fc		 ;hijack, end of NMI routine to update realtime frames
 	JML ih_nmi_code
 
+org $9AB800		 ;graphics for menu cursor and input display
+incbin resources\menugfx.bin
+
 ; Main bank stuff
 org !IH_BANK_START
 print "InfoHud Main Bank Starting at: ", pc
