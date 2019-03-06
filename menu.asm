@@ -604,6 +604,8 @@ EquipmentMenu:
 	DW #$0000, #equipment, #$0000, 				#str_any_old
 	DW #$0000, #equipment, #$0000, 				#str_14ice
 	DW #$0000, #equipment, #$0000, 				#str_14speed
+	DW #$0000, #equipment, #$0000, 				#str_gt_code
+	DW #$0000, #equipment, #$0000, 				#str_rbo
 	DW #$0000, #equipment, #$0000, 				#str_any_glitched
 	DW #$0000, #equipment, #$0000, 				#str_nothing
 	DW #$0000, #load_menu, #ToggleItemsMenu, 	#str_toggleitems
@@ -620,6 +622,8 @@ str_any_new: DB "ANY% NEW", #$00
 str_any_old: DB "ANY% OLD", #$00
 str_14ice: DB "14% ICE", #$00
 str_14speed: DB "14% SPEED", #$00
+str_gt_code: DB "GT CODE", #$00
+str_rbo: DB "RBO", #$00
 str_any_glitched: DB "ANY% GLITCHED", #$00
 str_nothing: DB "NOTHING", #$00
 str_toggleitems: DB "TOGGLE ITEMS", #$00
@@ -638,6 +642,8 @@ EquipmentTable:
 	DW #$3325, #$100B, #$018F, #$000F, #$000A, #$0005, #$0000, #$0000		;   any% old
 	DW #$1025, #$1002, #$018F, #$000A, #$000A, #$0005, #$0000, #$0000		;	14% ice
 	DW #$3025, #$1000, #$018F, #$000A, #$000A, #$0005, #$0000, #$0000		;	14% speed
+	DW #$F32F, #$100F, #$02BC, #$0064, #$0014, #$0014, #$012C, #$0000		;   gt code
+	DW #$710C, #$1001, #$031F, #$001E, #$0019, #$0014, #$0064, #$0000		;   rbo
 	DW #$9004, #$0000, #$00C7, #$0005, #$0005, #$0005, #$0000, #$0000		;	any% glitched
 	DW #$0000, #$0000, #$0063, #$0000, #$0000, #$0000, #$0000, #$0000		;   nothing
 	
