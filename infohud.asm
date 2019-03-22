@@ -587,7 +587,7 @@ charge_done:
 	DashCounter:
 	CLC
 	LDA $0B3F : AND #$00FF : CMP $7FFB38 : BEQ + : STA $7FFB38 : JSR Hex2Dec : LDX #$008A : JSR Draw3
-	LDX #$008A : JSR CheckLeadZero : LDA $7EC68E : CMP #$0057 : BNE + : LDA #$0C09 : STA $7EC68E
+;	LDX #$008A : JSR CheckLeadZero : LDA $7EC68E : CMP #$0057 : BNE + : LDA #$0C09 : STA $7EC68E
 +	JMP Etanks
 	;--/dash counter--
 
