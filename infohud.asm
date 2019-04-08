@@ -93,7 +93,11 @@ ih_init_code:
 	STA $7FFB2C
 	STA $7FFB00
 	STA $7FFB30
-	STA $7FFB40
+	STA $7FFB38	; dash counter
+	STA $7FFB3A	; iframe counter
+	STA $7FFB3C	; vertical speed
+	STA $7FFB3E	; mother brain HP
+	STA $7FFB40	; enemy HP
 	STA $7FFB42
 	STA $7FFB44
 	STA $7FFB46
@@ -536,6 +540,18 @@ status_display:
 +	CMP #$0003
 	BNE +
 	JMP Xfactor
++	CMP #$0004
+	BNE +
+	JMP MotherBrainHP
++	CMP #$0005
+	BNE +
+	JMP DashCounter
++	CMP #$0006
+	BNE +
+	JMP VerticalSpeed
++	CMP #$0007
+	BNE +
+	JMP IFrameTimer
 +	JMP EnemyHP
 	
 	;--shine timer--	
@@ -569,6 +585,39 @@ charge_done:
 	LDX #$008A : JSR CheckLeadZero : LDA $7EC68E : CMP #$0057 : BNE + : LDA #$0C09 : STA $7EC68E	
 +	JMP Etanks	
 	;--/xfactor timer--
+
+	;--dash counter-- ;
+	DashCounter:
+	CLC
+	LDA $0B3F : AND #$00FF : CMP $7FFB38 : BEQ + : STA $7FFB38 : JSR Hex2Dec : LDX #$008A : JSR Draw3
+;	LDX #$008A : JSR CheckLeadZero : LDA $7EC68E : CMP #$0057 : BNE + : LDA #$0C09 : STA $7EC68E
++	JMP Etanks
+	;--/dash counter--
+
+	;--motherbrain hp--
+	MotherBrainHP:
+	LDA $0E58 : STA $12 : LDY #$0014
+	LDA $0FCC : CMP $7FFB3E : BEQ + : STA $7FFB3E
+	JSR Hex2Dec : LDX $12 : LDA NumberGFXTable,X : STA $7EC688 : LDX #$008A : JSR Draw3
+	LDX #$0088 : JSR CheckLeadZero : LDA $7EC68E : CMP #$0057 : BNE + : LDA #$0C09 : STA $7EC68E
++	JMP Etanks
+	;--/motherbrain hp--
+
+	;--vertical speed-- ;
+	VerticalSpeed:
+	CLC
+	LDA $0B2E : CMP $7FFB3C : BEQ + : STA $7FFB3C : JSR Hex2Dec : LDX #$008A : JSR Draw3
+	LDX #$008A : JSR CheckLeadZero : LDA $7EC68E : CMP #$0057 : BNE + : LDA #$0C09 : STA $7EC68E
++	JMP Etanks
+	;--/vertical speed--
+
+	;--iframe timer-- ;
+	IFrameTimer:
+	CLC
+	LDA $18A8 : CMP $7FFB3A : BEQ + : STA $7FFB3A : JSR Hex2Dec : LDX #$008A : JSR Draw3
+	LDX #$008A : JSR CheckLeadZero : LDA $7EC68E : CMP #$0057 : BNE + : LDA #$0C09 : STA $7EC68E
++	JMP Etanks
+	;--/iframe timer--
 
 	; enemy hp
 	EnemyHP:
@@ -733,7 +782,7 @@ reset_slowdown:
 inc_statusdisplay:
 	LDA $7FFB60
 	INC A
-	CMP #$0004
+	CMP #$0008
 	BNE +
 	LDA #$0000
 +	STA $7FFB60
@@ -744,7 +793,7 @@ dec_statusdisplay:
 	DEC A
 	CMP #$FFFF
 	BNE +
-	LDA #$0003
+	LDA #$0007
 +	STA $7FFB60
 	JMP update_status
 
@@ -756,6 +805,10 @@ update_status:
 	STA $7FFB1C
 	STA $7FFB1E
 	INC A
+	STA $7FFB38
+	STA $7FFB3A
+	STA $7FFB3C
+	STA $7FFB3E
 	STA $7FFB40
 	STA $7FFB1A
 	JMP end_main
