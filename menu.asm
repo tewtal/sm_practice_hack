@@ -890,12 +890,14 @@ teleport:	; teleport destination in Y when called
 MiscMenu:
 	DW #$007E, #$0B3F, #$0004, #str_bluesuit			; pointer type #$007E and #$007F toggles a ram address between 0
 	DW #$007E, #$0A68, #$0001, #str_flashsuit			; and the value of given parameter
-	DW #$007E, #$0A76, #$0001, #str_hyperbeam			; if the #$1000 bit is also set, this instead changes to toggling 								
-	DW #$FFFF											; only the bits specified in the parameter as a bitmask
+	DW #$007E, #$0A76, #$0001, #str_hyperbeam			; if the #$1000 bit is also set, this instead changes to toggling
+	DW #$007E, #$0A66, #$0002, #str_babyslowdown			; only the bits specified in the parameter as a bitmask
+	DW #$FFFF							; 
 
 str_bluesuit: DB "BLUE SUIT", #$00
 str_flashsuit: DB "FLASH SUIT", #$00
 str_hyperbeam: DB "HYPER BEAM", #$00
+str_babyslowdown: DB "BABY SLOWDOWN", #$00
 
 ; Event Menu
 EventMenu:
