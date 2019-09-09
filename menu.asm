@@ -911,15 +911,17 @@ str_tourianentrance: DB "TOURIAN ENTRANCE", #$00
 str_tourianmb: DB "TOURIAN MB", #$00 
 
 teleport:	; teleport destination in Y when called
-	TYA
-	AND #$FF00
-	XBA
-	STA $7E079F
-	TYA
-	AND #$00FF
-	STA $7E078B
-	LDA #$0006
-	STA $7E0998
+	TYA : AND #$FF00 : XBA : STA $7E079F
+
+	TYA : AND #$00FF : STA $7E078B
+
+	LDA #$0006 : STA $7E0998
+
+    ; Make sure we can teleport to Zebes from Ceres
+    SEP #$20
+    LDA #$05 : STA $7ED914
+    REP #$20
+
 	RTS
 
 ; Misc Menu	
