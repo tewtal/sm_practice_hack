@@ -12,5 +12,6 @@
 !MENU_MAX = $7EFFE6
 !MENU_SKIP = $7EFFE8
 !MENU_PTR = $7EFFEA
+!MENU_INPUT_TIMER = $7EFFEC
 
 !MENU_STACK = $7FFFE0 ; first 2 bytes are the "stack pointer", then growing upwards is menu pointers
