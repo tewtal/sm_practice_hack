@@ -80,7 +80,8 @@ ih_menu:
 	
 	CMP #$0003
 	BEQ ih_menu_cm
-	
+
+
 ih_menu_end:
 	JSR ih_update_hud
 	PLP
@@ -122,8 +123,37 @@ ih_enter_menu:
 	STA !MENU_MODE
 	RTS
 	
-ih_handle_menu:
+
+ih_get_controller_input:
 	LDA !MENU_CONTROLLER_NEW
+    BEQ .check_holding
+
+    ; Initial delay of 16 frames
+    LDA #$0010 : STA !MENU_INPUT_TIMER
+
+    ; Return the new input
+    LDA !MENU_CONTROLLER_NEW
+    RTS
+
+.check_holding
+    ; Check if we're holding up or down
+    LDA !MENU_CONTROLLER : AND #$0C00 : BEQ .noinput
+
+    ; Decrement delay timer and check if it's zero
+    LDA !MENU_INPUT_TIMER : DEC : STA !MENU_INPUT_TIMER : BNE .noinput
+
+    ; Set new delay to 4 frames and return the input we're holding
+    LDA #$0004 : STA !MENU_INPUT_TIMER
+    LDA !MENU_CONTROLLER
+    RTS
+
+.noinput
+    LDA #$0000
+    RTS
+	
+	
+ih_handle_menu:
+    JSR ih_get_controller_input
 	CMP #$0400 ; down
 	BEQ hm_down
 	
@@ -140,7 +170,7 @@ ih_handle_menu:
 	BEQ hm_back
 
 	RTS
-	
+
 hm_down:
 	LDA !MENU_SEL
 	CMP !MENU_MAX
