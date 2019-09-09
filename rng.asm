@@ -97,3 +97,5 @@ hook_botwoon_rng:
   .no_manip
     LDA $05E5
     RTL
+
+warnpc $DFDA00

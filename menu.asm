@@ -365,10 +365,14 @@ ih_close_menu:
 
 ih_update_hud:
     LDX $0330 
+
+    ; DMA transfer size
     LDA #$00C0
     STA $D0,x 
     INX       
     INX       
+
+    ; DMA source address
     LDA #$C608
     STA $D0,x
     INX       
@@ -376,6 +380,8 @@ ih_update_hud:
     LDA #$007E
     STA $D0,x 
     INX       
+
+    ; DMA target address (VRAM)
     LDA #$5820
     STA $D0,x 
     INX       
