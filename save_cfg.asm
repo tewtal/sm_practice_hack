@@ -5,9 +5,9 @@
 !SS_INPUT_CUR = $8B
 !SS_INPUT_NEW = $8F
 !SS_INPUT_PREV = $97
-!SS_INPUT_SAVE = #$6010	; select + y + r
-!SS_INPUT_LOAD = #$6020 ; select + y + l
-!SS_INPUT_COMPARE = #$6000 ; select + y
+!SS_INPUT_SAVE = #$6010     ; select + y + r
+!SS_INPUT_LOAD = #$6020     ; select + y + l
+!SS_INPUT_COMPARE = #$6000  ; select + y
 
 !SRAM_START = $700000
 !SRAM_WRAM_7E0000 = $710000
@@ -32,12 +32,12 @@
 
 ; Game-specific patches for save-state code
 org $008000
-	db $FF		; patch out copy protection
+    db $FF          ; patch out copy protection
 
 org $809490
-	jmp $9497	; skip resetting player 2 inputs
+    jmp $9497       ; skip resetting player 2 inputs
 
 org $8094DF
-	plp			; patch out resetting of controller 2 buttons and enable debug mode
-	rtl
-; End of game-specific patches	
+    plp             ; patch out resetting of controller 2 buttons and enable debug mode
+    rtl
+; End of game-specific patches
