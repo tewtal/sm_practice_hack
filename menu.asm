@@ -613,6 +613,7 @@ load_menu:
 MainMenu:
     ;  Type    Pointer              Param               String
     DW #$0000, #mainmenu_refill,    #$0000,             #str_refill
+    DW #$0000, #load_menu,          #PresetsMenu,       #str_presets
     DW #$0000, #load_menu,          #EquipmentMenu,     #str_equipment
     DW #$0000, #load_menu,          #TeleportMenu,      #str_teleport
     DW #$0000, #load_menu,          #MiscMenu,          #str_misc
@@ -622,6 +623,7 @@ MainMenu:
     DW #$FFFF
 
 str_refill: DB "REFILL", #$00
+str_presets: DB "PRESETS", #$00
 str_equipment: DB "EQUIPMENT", #$00
 str_teleport: DB "TELEPORT", #$00
 str_misc: DB "MISC", #$00
@@ -636,6 +638,23 @@ mainmenu_refill:
     LDA $7E09CC : STA $7E09CA ; supers
     LDA $7E09D0 : STA $7E09CE ; pbs
     LDA $7E09D4 : STA $7E09D6 ; reserves
+    RTS
+
+; Presets
+
+incsrc delta_menu.asm
+
+load_delta:
+    PHB
+    PHK : PLB
+    STY $C1
+
+    ; Make the game load region 0 map 0, which indicates a preset
+    LDA #$0001 : STA !ram_load_preset
+    LDA #$0006 : STA $7E0998 ; Set game mode to "Loading game"
+    LDA #$0005 : STA $7ED914 ; This is needed just to get the right code to execute in Bank 82
+
+    PLB
     RTS
 
 ; Equipment Menu
