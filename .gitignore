@@ -4,3 +4,4 @@ resources/sm_orig.s[mf]c
 resources/smpal_orig.s[mf]c
 build/*
 *.sw[op]
+tools/*.smv
