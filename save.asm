@@ -21,7 +21,7 @@ pre_load_state:
     sta !SRAM_MUSIC_TRACK
 
     ; Rerandomize
-    lda $7ffb80 : and #$00ff
+    lda !ram_rerandomize : and #$00ff
     beq +
     lda $05e5
     sta $770080
@@ -52,7 +52,7 @@ music_load_track:
 
 music_done:
     ; Rerandomize
-    lda $7ffb80 : and #$00ff
+    lda !ram_rerandomize : and #$00ff
     beq +
     lda $770080
     sta $05e5

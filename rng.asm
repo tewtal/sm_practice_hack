@@ -37,7 +37,7 @@ org $DFD500
 hook_phantoon_1st_dir_rng:
     JSL $808111 ; Trying to preserve the number of RNG calls being done in the frame
 
-    LDA $7FFB82 : BEQ .no_manip
+    LDA !ram_phantoon_rng_1 : BEQ .no_manip
     RTL
 
   .no_manip
@@ -45,7 +45,7 @@ hook_phantoon_1st_dir_rng:
     RTL
 
 hook_phantoon_1st_pat:
-    LDA $7FFB86 : BEQ .no_manip
+    LDA !ram_phantoon_rng_3 : BEQ .no_manip
     RTL
 
   .no_manip
@@ -55,7 +55,7 @@ hook_phantoon_1st_pat:
 hook_phantoon_2nd_dir_rng:
     JSL $808111 ; Trying to preserve the number of RNG calls being done in the frame
 
-    LDA $7FFB84 : BEQ .no_manip
+    LDA !ram_phantoon_rng_2 : BEQ .no_manip
 
     DEC
     RTL
@@ -65,7 +65,7 @@ hook_phantoon_2nd_dir_rng:
     RTL
 
 hook_phantoon_2nd_dir_2:
-    LDA $7FFB84 : BEQ .no_manip
+    LDA !ram_phantoon_rng_2 : BEQ .no_manip
 
     ; I don't quite understand this part, but it works ¯\_(ツ)_/¯
     LDA #$0001
@@ -79,7 +79,7 @@ hook_phantoon_2nd_dir_2:
 hook_phantoon_2nd_pat:
     JSL $808111 ; Trying to preserve the number of RNG calls being done in the frame
 
-    LDA $7FFB88 : BEQ .no_manip
+    LDA !ram_phantoon_rng_4 : BEQ .no_manip
     RTL
 
   .no_manip
@@ -89,7 +89,7 @@ hook_phantoon_2nd_pat:
 hook_botwoon_rng:
     JSL $808111 ; Trying to preserve the number of RNG calls being done in the frame
 
-    LDA $7FFB8A : BEQ .no_manip
+    LDA !ram_botwoon_rng : BEQ .no_manip
 
     DEC
     RTL

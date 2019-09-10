@@ -7,8 +7,19 @@
 org $808449
     JSL ih_menu_init : NOP
 
-org $8095F7
-    JSL ih_menu_nmi : NOP
+; $82:8B44 08          PHP
+; $82:8B45 C2 30       REP #$30
+; $82:8B47 22 B6 8E A0 JSL $A08EB6[$A0:8EB6]  ; Determine which enemies to process
+; $82:8B4B 22 09 98 B4 JSL $B49809[$B4:9809]  ; Debug functions. Does nothing worthwhile normally
+; $82:8B4F 29 FF FF    AND #$FFFF
+; $82:8B52 D0 4C       BNE $4C    [$8BA0]     ; Debug branch
+
+org $828B44
+    PHP
+    JSL ih_menu_nmi : BCC end_of_normal_gameplay
+
+org $828BB7
+    end_of_normal_gameplay:
 
 
 org !MENU_BANK_START
@@ -32,23 +43,17 @@ ih_menu_init:
 
 ; Call this at the end of NMI
 ih_menu_nmi:
-    PHA
     %ai16()
-    LDA !MENU_MODE
-    BEQ ih_menu_nmi_none
-    JSR ih_menu
-    %a8()
-    LDA #$01
-    STA $05B4
-    %ai16()
-    JMP ih_menu_nmi_done
+    LDA !MENU_MODE : BEQ .not_active
 
-ih_menu_nmi_none:
-    LDA !MENU_CONTROLLER
-    CMP !MENU_INPUT
-    BNE ih_menu_nmi_done
-    LDA #$0001
-    STA !MENU_MODE
+    JSR ih_menu
+
+    JMP .skip_gamemode
+
+  .not_active
+    LDA !MENU_CONTROLLER : CMP !MENU_INPUT : BNE .continue_gamemode
+
+    LDA #$0001 : STA !MENU_MODE
 
     ; Reset inputs to stop pausing
     LDA #$0000
@@ -56,9 +61,13 @@ ih_menu_nmi_none:
     STA !MENU_CONTROLLER_NEW
     STA !MENU_CONTROLLER_PREV
 
-ih_menu_nmi_done:
-    PLA
-    INC $05B8
+  .skip_gamemode
+    CLC
+    RTL
+
+  .continue_gamemode
+    JSL $A08EB6
+    SEC
     RTL
 
 ; Main menu code
@@ -356,8 +365,6 @@ ih_close_menu:
 
     LDA #$0000
     STA !MENU_MODE
-    STA $7FFB50
-    STA $7FFB52
 
     RTS
 

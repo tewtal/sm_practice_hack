@@ -10,7 +10,6 @@ incsrc macros.asm ; Useful macros
 ; --- Game specific code below here ---
 incsrc infohud_cfg.asm ; InfoHud configuration
 incsrc infohud.asm ; Super Metroid InfoHUD / Practice features
-incsrc menu_cfg.asm ; Super Metroid Menu Configuration
 incsrc menu.asm ; Super Metroid Menu
 incsrc rng.asm ; Phantoon RNG manip
 incsrc misc.asm
