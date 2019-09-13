@@ -48,26 +48,34 @@
 !ram_slowdown_controller_1 = $7FFB54
 !ram_slowdown_controller_2 = $7FFB56
 
+!ram_hex2dec_first_digit = $14
+!ram_hex2dec_second_digit = $16
+!ram_hex2dec_third_digit = $18
+!ram_hex2dec_rest = $1A
+
 ; -------------
 ; Menu
 ; -------------
-!MENU_BANK_START = $DFEA00
-!MENU_BANK_DB = $DF00
+
+!ram_cm_menu_stack = $7FFFD0 ; 0x10
+!ram_cm_cursor_stack = $7FFFE0 ; 0x10
+!ram_cm_stack_index = $5D5
+!ram_cm_cursor_max = $7FFFF2
+!ram_cm_input_timer = $7FFFF4
+!ram_cm_controller = $7FFFF6
+
+!ram_cm_etanks = $7FFB90
+!ram_cm_reserve = $7FFB92
+!ram_cm_leave = $7FFB94
 
 !MENU_CONTROLLER = $8B
-!MENU_CONTROLLER_NEW = $8F
-!MENU_CONTROLLER_PREV = $97
-!MENU_INPUT = #$3000 ; select + start
+!MENU_INPUT = #$1010 ; select + start
 
-!MENU_MODE = $7EFFE0
-!MENU_SEL = $7EFFE2
-!MENU_VAL = $7EFFE4
-!MENU_MAX = $7EFFE6
-!MENU_SKIP = $7EFFE8
-!MENU_PTR = $7EFFEA
-!MENU_INPUT_TIMER = $7EFFEC
-
-!MENU_STACK = $7FFFE0
+!ACTION_TOGGLE      = #$0000
+!ACTION_TOGGLE_BIT  = #$0002
+!ACTION_JSR         = #$0004
+!ACTION_NUMFIELD    = #$0006
+!ACTION_CHOICE      = #$0008
 
 ; ------------
 ; Presets

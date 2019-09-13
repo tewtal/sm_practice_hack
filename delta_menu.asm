@@ -1,32 +1,60 @@
 PresetsMenu:
-dw #$0000, #load_menu, #seg_ceres, #str_seg_ceres
-dw #$0000, #load_menu, #seg_bombs, #str_seg_bombs
-dw #$FFFF
+    dw #presets_goto_ceres
+    dw #presets_goto_bombs
+    dw #$0000
+    %cm_header("PRESETS")
 
-seg_ceres:
-dw #$0000, #load_delta, #delta_ceres_elevator, #str_step_ceres_elevator
-dw #$0000, #load_delta, #delta_ceres_ridley, #str_step_ceres_ridley
-dw #$0000, #load_delta, #delta_ceres_last_3_screens, #str_step_ceres_last_3_screens
-dw #$FFFF
+presets_goto_ceres:
+    %cm_submenu("Ceres", #presets_submenu_ceres)
 
-seg_bombs:
-dw #$0000, #load_delta, #delta_bombs_ship, #str_step_bombs_ship
-dw #$0000, #load_delta, #delta_bombs_morph, #str_step_bombs_morph
-dw #$0000, #load_delta, #delta_bombs_pit_backtrack, #str_step_bombs_pit_backtrack
-dw #$0000, #load_delta, #delta_bombs_climb, #str_step_bombs_climb
-dw #$0000, #load_delta, #delta_bombs_parlor, #str_step_bombs_parlor
-dw #$0000, #load_delta, #delta_bombs_bomb_torizo, #str_step_bombs_bomb_torizo
-dw #$FFFF
+presets_goto_bombs:
+    %cm_submenu("Bombs", #presets_submenu_bombs)
 
-str_seg_ceres: db "CERES", #$00
-str_step_ceres_elevator: db "ELEVATOR", #$00
-str_step_ceres_ridley: db "RIDLEY", #$00
-str_step_ceres_last_3_screens: db "LAST 3 SCREENS", #$00
+presets_submenu_ceres:
+    dw #presets_ceres_elevator
+    dw #presets_ceres_ridley
+    dw #presets_ceres_last_3_screens
+    dw #$0000
+    %cm_header("CERES")
 
-str_seg_bombs: db "BOMBS", #$00
-str_step_bombs_ship: db "SHIP", #$00
-str_step_bombs_morph: db "MORPH", #$00
-str_step_bombs_pit_backtrack: db "PIT BACKTRACK", #$00
-str_step_bombs_climb: db "CLIMB", #$00
-str_step_bombs_parlor: db "PARLOR", #$00
-str_step_bombs_bomb_torizo: db "BOMB TORIZO", #$00
+presets_submenu_bombs:
+    dw #presets_bombs_ship
+    dw #presets_bombs_morph
+    dw #presets_bombs_pit_backtrack
+    dw #presets_bombs_climb
+    dw #presets_bombs_parlor
+    dw #presets_bombs_bomb_torizo
+    dw #$0000
+    %cm_header("BOMBS")
+
+; Ceres
+presets_ceres_elevator:
+    %cm_delta("Elevator", #delta_ceres_elevator)
+
+presets_ceres_ridley:
+    %cm_delta("Ridley", #delta_ceres_ridley)
+
+presets_ceres_last_3_screens:
+    %cm_delta("Last 3 screens", #delta_ceres_last_3_screens)
+
+
+; Bombs
+presets_bombs_ship:
+    %cm_delta("Ship", #delta_bombs_ship)
+
+presets_bombs_morph:
+    %cm_delta("Morph", #delta_bombs_morph)
+
+presets_bombs_pit_backtrack:
+    %cm_delta("Pit backtrack", #delta_bombs_pit_backtrack)
+
+presets_bombs_climb:
+    %cm_delta("Climb", #delta_bombs_climb)
+
+presets_bombs_parlor:
+    %cm_delta("Parlor", #delta_bombs_parlor)
+
+presets_bombs_bomb_torizo:
+    %cm_delta("Bomb Torizo", #delta_bombs_bomb_torizo)
+
+

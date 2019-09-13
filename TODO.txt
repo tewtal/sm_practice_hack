@@ -1,0 +1,25 @@
+- Presets
+    * Make presets from Zeni's smv
+
+- Save state during fanfare
+
+- Toggle fanfare
+
+- Fix framecounter not running always
+
+- Infohud changes
+    * Make it possible to toggle segment game/real time
+    * Make it possible to toggle on/off some of the information, including minimap
+        - Make the whole infohud toggleable?
+        - "ideally at this point room times are less useful to me for practice than accurate lag"
+    * Fix issue where item percent/number of etanks etc. doesn't always show
+    * Show frames too
+
+- Better menu
+    * Size it after the content?
+    * Make sure you have full control of Samus' equipment
+
+- Controller shortcuts
+    * Make it possible to change save/load/mainmenu shortcuts
+    * Load last preset
+    * Fill equipment

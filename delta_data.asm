@@ -1,6 +1,6 @@
+
 delta_ceres_elevator:
-    print "ceres_elevator ", pc
-    dw #$0000
+     dw #$0000
     dl $7E078D : db $02 : dw $AB58 ; DDB
     dl $7E078F : db $02 : dw $0000 ; DoorOut Index
     dl $7E079B : db $02 : dw $DF45 ; MDB
@@ -157,7 +157,6 @@ delta_ceres_elevator:
 .after
 
 delta_ceres_ridley:
-    print "ceres_ridley ", pc
     dw #delta_ceres_elevator ; Ceres: Elevator
     dl $7E078D : db $02 : dw $AB94 ; DDB
     dl $7E078F : db $02 : dw $0001 ; DoorOut Index
@@ -169,7 +168,6 @@ delta_ceres_ridley:
 .after
 
 delta_ceres_last_3_screens:
-    print "ceres_last_3_screens ", pc
     dw #delta_ceres_ridley ; Ceres: Ridley
     dl $7E078D : db $02 : dw $ABA0 ; DDB
     dl $7E078F : db $02 : dw $0000 ; DoorOut Index

@@ -12,9 +12,6 @@ org $8094DF
 org $828B4B        ; disable debug functions
     JML ih_debug_patch
 
-org $808455      ;hijack, runs as game is starting, JSR to RAM initialization to avoid bad values
-    JML ih_init_code
-
 org $809B51
     JMP $9BFB    ;skip drawing auto reserve icon and normal energy numbers and tanks during HUD routine
 
@@ -77,23 +74,6 @@ incbin resources\menugfx.bin
 
 ; Main bank stuff
 org !IH_BANK_START
-print "InfoHud Main Bank Starting at: ", pc
-ih_init_code:
-    REP #$30
-    PHA
-
-    print pc
-    ; We mostly use $7FFB00 and upward, so just zero everything
-    LDA #$0000
-    LDX #$04FF
-  .loop
-    STA $7FFB00,X
-    DEX : DEX : BPL .loop
-
-    PLA
-    JSL $8B9146
-    JML $808459
-
 ih_max_etank_code:
     LDA #$0000 : STA !ram_max_etanks ; reset max-etanks value
     LDA $7EC200,X
@@ -855,11 +835,8 @@ ih_shinespark_code:
     RTL
 
 
-print "InfoHud Main Bank Ending at: ", pc
-
 ; Stuff that needs to be placed in bank 80
 org !IH_BANK80_START
-print "InfoHud Bank 80 Starting at: ", pc
 NumberGFXTable:
     DW #$0C09,#$0C00,#$0C01,#$0C02,#$0C03,#$0C04,#$0C05,#$0C06,#$0C07,#$0C08,#$0C45,#$0C3C,#$0C3D,#$0C3E,#$0C3F,#$0C40,#$0C41,#$0C42,#$0C43,#$0C44
 
@@ -873,8 +850,6 @@ ControllerGfx1:
     DW $0C68, $0C61, $0C69, $0C67, $0C66, $0C6A
 ControllerGfx2:
     DW $0C60, $0C63, $0C62, $0C65, $0C64, $0C6B
-
-print "InfoHud Bank 80 Ending at: ", pc
 
 org $8098CB  ; Initial HUD tilemap
     DW #$2C0F,#$2C0F,#$2C0F,#$2C0F,#$2C0F,#$2C0F,#$2C0F,#$2C0F,#$2C0F,#$2C0F,#$2C0F,#$2C0F,#$2C0F,#$2C0F,#$2C0F,#$2C0F,#$2C0F,#$2C0F,#$2C0F,#$2C0F,#$2C0F,#$2C0F,#$2C0F,#$2C0F,#$2C0F,#$2C0F,#$0057,#$0057,#$0057,#$0057,#$0057,#$0057,#$2C0F,#$2C0F,#$2C0F,#$2C0F,#$2C0F,#$2C0F,#$2C0F,#$2C0F,#$2C0F,#$2C0F,#$2C0F,#$2C0F,#$2C0F,#$2C0F,#$2C0F,#$2C0F,#$2C0F,#$2C0F,#$2C0F,#$2C0F,#$2C0F,#$2C0F,#$2C0F,#$2C0F,#$2C0F,#$2C0F,#$0057,#$0057,#$0C09,#$0CCB,#$0C09,#$0C09,#$2C0F,#$2C0F,#$2C0F,#$0057,#$0057,#$2C0F,#$2C09,#$2C0F,#$2C0F,#$2C0F,#$2C0F,#$2C0F,#$2C0F,#$2C0F,#$2C0F,#$2C0F,#$2C0F,#$2C0F,#$2C0F,#$2C0F,#$2C0F,#$2C0F,#$2C0F,#$2C0F,#$2C0F,#$2C0F,#$2C0F,#$2C0F,#$2C0F,#$0057,#$0057,#$0C09
