@@ -9,7 +9,6 @@ org !SS_HOOK
     jsl ss_start
 
 org !SS_CODE
-print "Savestate Bank Starting at: ", pc
 ; These can be modified to do game-specific things before and after saving and loading
 ; Both A and X/Y are 16-bit here
 
@@ -366,5 +365,3 @@ vm_done:
     ; Return to caller.  The word in the table after the terminator is the
     ; code address to return to.
     jmp ($0002,x)
-
-print "Savestate Bank Ending at: ", pc

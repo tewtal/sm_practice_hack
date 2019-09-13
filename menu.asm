@@ -46,7 +46,12 @@ ih_menu_nmi:
     %ai16()
     LDA !MENU_MODE : BEQ .not_active
 
-    JSR ih_menu
+    LDA #$001A
+    JSL $858080
+
+    LDA #$0000 : STA !MENU_MODE
+
+    ; JSR ih_menu
 
     JMP .skip_gamemode
 

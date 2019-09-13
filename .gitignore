@@ -5,3 +5,4 @@ resources/smpal_orig.s[mf]c
 build/*
 *.sw[op]
 tools/*.smv
+tools/*.asm

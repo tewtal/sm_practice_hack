@@ -224,34 +224,44 @@ local function save_delta(step)
 end
 
 local function save_delta_file()
-    local file = io.open("delta_data.asm", "w")
+    local file = io.open('delta_data.asm', 'w')
     file:write(delta_output)
     file:close()
 
-    local file = io.open("delta_menu.asm", "w")
-    file:write("PresetsMenu:\n")
+    local file = io.open('delta_menu.asm', 'w')
+    file:write('PresetsMenu:\n')
     for _, segment in pairs(SEGMENTS) do
-        file:write("dw #$0000, #load_menu, #seg_" .. segment['slug'] .. ", #str_seg_" .. segment['slug'] .. "\n")
+        file:write('    dw #presets_goto_' .. segment['slug'] .. '\n')
     end
-    file:write("dw #$FFFF\n")
-    file:write("\n")
+    file:write('    dw #$0000\n')
+    file:write('    %cm_header("PRESETS")\n')
+    file:write('\n')
 
     for _, segment in pairs(SEGMENTS) do
-        file:write("seg_" .. segment['slug'] .. ":\n")
+        file:write('presets_goto_' .. segment['slug'] .. ':\n')
+        file:write('    %cm_submenu("' .. segment['name'] .. '", #presets_submenu_' .. segment['slug'] .. ')\n')
+        file:write('\n')
+    end
+
+    for _, segment in pairs(SEGMENTS) do
+        file:write('presets_submenu_' .. segment['slug'] .. ':\n')
         for _, step in pairs(segment['steps']) do
-            file:write("dw #$0000, #load_delta, #delta_" .. step['full_slug'] .. ", #str_step_" .. step['full_slug'] .. "\n")
+            file:write('    dw #presets_' .. step['full_slug'] .. '\n')
         end
-        file:write("dw #$FFFF\n")
-		file:write("\n")
+        file:write('    dw #$0000\n')
+        file:write('    %cm_header("' .. segment['name']:upper() .. '")\n')
+		file:write('\n')
     end
 
     for _, segment in pairs(SEGMENTS) do
-        file:write("str_seg_" .. segment['slug'] .. ": db \"" .. segment['name'] .. "\", #$00\n")
+        file:write('; ' .. segment['name'] .. '\n')
         for _, step in pairs(segment['steps']) do
-            file:write("str_step_" .. step['full_slug'] .. ": db \"" .. step['name'] .. "\", #$00\n")
+            file:write('presets_' .. step['full_slug'] .. ':\n')
+            file:write('    %cm_delta("' .. step['name'] .. '", #delta_' .. step['full_slug'] .. ')\n\n')
         end
         file:write("\n")
     end
+    file:close()
 end
 
 --
