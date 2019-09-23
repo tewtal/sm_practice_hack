@@ -1,16 +1,17 @@
 !ram_gametime_room = $7FFB00
 !ram_last_gametime_room = $7FFB02
-!ram_realtime_room = $7FFB44 
+!ram_realtime_room = $7FFB44
 !ram_last_realtime_room = $7FFB46
 !ram_last_room_lag = $7FFB48
-!ram_gametime_room_2 = $7FFB0E
-!ram_last_gametime_room_2 = $7FFB10
-!ram_door_lag_frames = $7FFB28
+!ram_transition_counter = $7FFB0E
+!ram_last_door_lag_frames = $7FFB10
 
 !ram_etanks = $7FFB12 ; ??
 !ram_max_etanks = $7FFB24 ; ??
+!ram_last_hp = $7FFB9A
 
 !ram_display_mode = $7FFB60
+!ram_frame_counter_mode = $7FFB8C
 !ram_slowdown_mode = $7EFFFC
 !ram_slowdown_frames = $7FFB52
 !ram_dash_counter = $7FFB38
@@ -28,6 +29,8 @@
 !ram_magic_pants_5 = $7FFB74
 !ram_charge_counter = $7FFB1C
 !ram_xfac_counter = $7FFB1E
+!ram_lag_counter = $7FFB96
+!ram_last_lag_counter = $7FFB98
 
 !ram_rerandomize = $7FFB80
 !ram_phantoon_rng_1 = $7FFB82
@@ -48,10 +51,16 @@
 !ram_slowdown_controller_1 = $7FFB54
 !ram_slowdown_controller_2 = $7FFB56
 
+!ram_seg_rt_frames = $7FFBA0
+!ram_seg_rt_seconds = $7FFBA2
+!ram_seg_rt_minutes = $7FFBA4
+
 !ram_hex2dec_first_digit = $14
 !ram_hex2dec_second_digit = $16
 !ram_hex2dec_third_digit = $18
 !ram_hex2dec_rest = $1A
+
+!ram_artificial_lag = $7FFBA6
 
 ; -------------
 ; Menu
@@ -69,7 +78,7 @@
 !ram_cm_leave = $7FFB94
 
 !MENU_CONTROLLER = $8B
-!MENU_INPUT = #$1010 ; select + start
+!MENU_INPUT = #$3000 ; select + start
 
 !ACTION_TOGGLE      = #$0000
 !ACTION_TOGGLE_BIT  = #$0002
@@ -82,3 +91,4 @@
 ; ------------
 
 !ram_load_preset = $7FFC00
+!ram_cgram_cache = $7FFC02 ; 0x14 bytes

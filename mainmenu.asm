@@ -4,7 +4,7 @@
 
 macro cm_header(title)
     table header.tbl
-    db #$34, "<title>", #$FF
+    db #$28, "<title>", #$FF
     table normal.tbl
 endmacro
 
@@ -112,13 +112,8 @@ action_load_delta:
 {
     PHB
     PHK : PLB
-    STY $C1
 
-    ; Make the game load region 0 map 0, which indicates a preset
-    LDA #$0001 : STA !ram_load_preset
-    LDA #$0006 : STA $7E0998 ; Set game mode to "Loading game"
-    LDA #$0005 : STA $7ED914 ; This is needed just to get the right code to execute in Bank 82
-
+    TYA : STA !ram_load_preset
     LDA #$0001 : STA !ram_cm_leave
 
     PLB
@@ -656,12 +651,14 @@ ConfigMenu:
 ; --------------
 
 InfoHudMenu:
-    dw #ih_infohud
+    dw #ih_display_mode
+    dw #ih_room_counter
+    dw #ih_lag
     dw #ih_magicpants
     dw #$0000
     %cm_header("INFOHUD")
 
-ih_infohud:
+ih_display_mode:
     dw !ACTION_CHOICE
     dl #!ram_display_mode
     dw #$0000
@@ -674,7 +671,20 @@ ih_infohud:
     db #$28, "       DASH", #$FF
     db #$28, " VERT SPEED", #$FF
     db #$28, "    IFRAMES", #$FF
+    db #$28, "LAG COUNTER", #$FF
     db #$FF
+
+ih_room_counter:
+    dw !ACTION_CHOICE
+    dl #!ram_frame_counter_mode
+    dw #$0000
+    db #$28, "Frame Counters", #$FF
+    db #$28, "   REALTIME", #$FF
+    db #$28, "     INGAME", #$FF
+    db #$FF
+
+ih_lag:
+    %cm_numfield("Artificial lag", !ram_artificial_lag, 0, 64, 1, #0)
 
 ih_magicpants:
     %cm_toggle_bit("Magic Pants", $7FFB64, #$0001, #0)
@@ -727,11 +737,11 @@ rng_botwoon_rng:
     dl #$7FFB8A
     dw #$0000
     db #$28, "Botwoon RNG", #$FF
-    db #$24, "     RANDOM", #$FF
-    db #$24, "       DOWN", #$FF
-    db #$24, "         UP", #$FF
-    db #$24, "      RIGHT", #$FF
-    db #$24, "       LEFT", #$FF
+    db #$28, "     RANDOM", #$FF
+    db #$28, "       DOWN", #$FF
+    db #$28, "         UP", #$FF
+    db #$28, "      RIGHT", #$FF
+    db #$28, "       LEFT", #$FF
     db #$FF
 
 rng_phan_first_direction:
@@ -739,9 +749,9 @@ rng_phan_first_direction:
     dl #$7FFB82
     dw #$0000
     db #$28, "Phan 1st Dir", #$FF
-    db #$24, "     RANDOM", #$FF
-    db #$24, "       LEFT", #$FF
-    db #$24, "      RIGHT", #$FF
+    db #$28, "     RANDOM", #$FF
+    db #$28, "       LEFT", #$FF
+    db #$28, "      RIGHT", #$FF
     db #$FF
 
 rng_phan_first_pattern:
@@ -749,10 +759,10 @@ rng_phan_first_pattern:
     dl #$7FFB84
     dw #$0000
     db #$28, "Phan 1st Pat", #$FF
-    db #$24, "     RANDOM", #$FF
-    db #$24, "       FAST", #$FF
-    db #$24, "        MID", #$FF
-    db #$24, "       SLOW", #$FF
+    db #$28, "     RANDOM", #$FF
+    db #$28, "       FAST", #$FF
+    db #$28, "        MID", #$FF
+    db #$28, "       SLOW", #$FF
     db #$FF
 
 rng_phan_second_direction:
@@ -760,9 +770,9 @@ rng_phan_second_direction:
     dl #$7FFB86
     dw #$0000
     db #$28, "Phan 2nd Dir", #$FF
-    db #$24, "     RANDOM", #$FF
-    db #$24, "       LEFT", #$FF
-    db #$24, "      RIGHT", #$FF
+    db #$28, "     RANDOM", #$FF
+    db #$28, "       LEFT", #$FF
+    db #$28, "      RIGHT", #$FF
     db #$FF
 
 rng_phan_second_pattern:
@@ -770,8 +780,8 @@ rng_phan_second_pattern:
     dl #$7FFB88
     dw #$0000
     db #$28, "Phan 2nd Pat", #$FF
-    db #$24, "     RANDOM", #$FF
-    db #$24, "       FAST", #$FF
-    db #$24, "        MID", #$FF
-    db #$24, "       SLOW", #$FF
+    db #$28, "     RANDOM", #$FF
+    db #$28, "       FAST", #$FF
+    db #$28, "        MID", #$FF
+    db #$28, "       SLOW", #$FF
     db #$FF
