@@ -3,28 +3,51 @@
 ; $82:8B47 22 B6 8E A0 JSL $A08EB6[$A0:8EB6]  ; Determine which enemies to process
 org $828B44
     PHP
-    JSL cm_check_inputs : BCS end_of_normal_gameplay
+    JSL gamemode_start : BCS end_of_normal_gameplay
 org $828BB7
     end_of_normal_gameplay:
 
+; $82:8BB3 22 69 91 A0 JSL $A09169[$A0:9169]  ; Handles Samus getting hurt?
+org $828BB3
+    JSL gamemode_end
 
 org $85A000
+print "newmenu start ", pc
 
 ; Call this at the end of NMI
-cm_check_inputs:
+gamemode_start:
 {
     %ai16()
+    ; Check if we loaded a preset
+    LDA !ram_load_preset : BNE .load_preset
+
+    ; Check if we should enter the menu
     LDA !MENU_CONTROLLER : CMP !MENU_INPUT : BNE .continue_gamemode
 
-    ; Go into Mainmenu
+    ; Enter MainMenu
     JSR cm_start
-
-    ; Skip gamemode this frame (not sure why. feels more "safe" ;)
     SEC : RTL
 
   .continue_gamemode
     JSL $A08EB6
     CLC : RTL
+
+  .load_preset
+    JSL preset_load
+    SEC : RTL
+}
+
+gamemode_end:
+{
+    JSL $A09169
+    %a8() : LDA $4201 : ORA #$80 : STA $4201 : %a16()
+    LDA $2137 : LDA $213D : AND #$00FF : STA !ram_lag_counter
+
+    LDA !ram_artificial_lag : BEQ + : ASL #4 : TAX
+    ; 41 loops ~= 1 scanline
+    - DEX : BNE -
+    +
+    RTL
 }
 
 cm_start:
@@ -35,12 +58,32 @@ cm_start:
   PHY
     PHK : PLB
 
+    ; Some DMA thing that disables menu in Ceres elevator screen
+    ; LDA $7E18B6 : PHA
+    ; LDA #$0000 : STA $7E18B6
+    ; JSL $808338 ; Wait for NMI
+    ; LDA #$0000 : STA $4332
+
+    %a8()
+    %ppu_off()
+    STZ $211A
+    STZ $5F
+    STZ $211B
+    STZ $211C
+    STZ $211D
+    STZ $211E
+    STZ $211F
+    STZ $2120
+    %ppu_on()
+    %a16()
+
     JSR cm_init
 
     JSL $82BE17         ; Cancel sound effects
     JSR $8143           ; Initialise PPU for message boxes
 
     JSR cm_transfer_custom_tileset
+    JSR cm_transfer_custom_cgram
     JSR cm_draw         ; Initialise message box
 
     JSR $8574           ; Play 2 lag frames of music and sound effects
@@ -48,14 +91,20 @@ cm_start:
     JSR cm_loop         ; Handle message box interaction
 
     JSR cm_transfer_original_tileset
+    JSR cm_transfer_original_cgram
 
     ; Update HUD (in case we added missiles etc.)
+    LDA !ram_gametime_room : STA $C1
+    LDA !ram_last_gametime_room : STA $C3
     JSL $809A79
+    LDA $C1 : STA !ram_gametime_room
+    LDA $C3 : STA !ram_last_gametime_room
     JSL $809B44
 
     ; I think the above subroutines erases some of infohud, so we make sure we redraw it.
-    LDA #$FFFF : STA !ram_pct_2
     JSL ih_update_hud_code
+
+    ; PLA : STA $7E18B6
 
     JSR $861A           ; Restore PPU
     JSL $82BE2F         ; Queue Samus movement sound effects
@@ -130,6 +179,57 @@ cm_transfer_original_tileset:
     LDA #$18 : STA $4301 ; destination (VRAM write)
     LDA #$01 : STA $420B ; initiate DMA (channel 1)
 
+    PLP
+    RTS
+}
+
+cm_transfer_custom_cgram:
+{
+    ; $0A = Border & OFF   $7277
+    ; $12 = Header         $48F3
+    ; $1A = Num            $0000, $7FFF
+    ; $32 = ON / Sel Num   $4376
+    ; $34 = Selected item  $761F
+    ; $3A = Sel Num        $0000, $761F
+    PHP
+    %a16()
+    LDA $7EC00A : STA !ram_cgram_cache
+    LDA $7EC012 : STA !ram_cgram_cache+2
+    LDA $7EC01A : STA !ram_cgram_cache+4
+    LDA $7EC01C : STA !ram_cgram_cache+6
+    LDA $7EC032 : STA !ram_cgram_cache+8
+    LDA $7EC034 : STA !ram_cgram_cache+10
+    LDA $7EC03A : STA !ram_cgram_cache+12
+    LDA $7EC03C : STA !ram_cgram_cache+14
+
+    LDA #$7277 : STA $7EC00A
+    LDA #$48F3 : STA $7EC012
+    LDA #$0000 : STA $7EC01A
+    LDA #$7FFF : STA $7EC01C
+    LDA #$4376 : STA $7EC032
+    LDA #$761F : STA $7EC034
+    LDA #$0000 : STA $7EC03A
+    LDA #$761F : STA $7EC03C
+
+    JSL transfer_cgram_long
+    PLP
+    RTS
+}
+
+cm_transfer_original_cgram:
+{
+    PHP
+    %a16()
+    LDA !ram_cgram_cache : STA $7EC00A
+    LDA !ram_cgram_cache+2 : STA $7EC012
+    LDA !ram_cgram_cache+4 : STA $7EC01A
+    LDA !ram_cgram_cache+6 : STA $7EC01C
+    LDA !ram_cgram_cache+8 : STA $7EC032
+    LDA !ram_cgram_cache+10 : STA $7EC034
+    LDA !ram_cgram_cache+12 : STA $7EC03A
+    LDA !ram_cgram_cache+14 : STA $7EC03C
+
+    JSL transfer_cgram_long
     PLP
     RTS
 }
@@ -262,6 +362,7 @@ cm_tilemap_menu:
 cm_tilemap_transfer:
 {
     JSR $8136                ; Wait for lag frame
+
     REP #$20
     LDA #$5800             ;\
     STA $2116              ;|
@@ -336,8 +437,8 @@ cm_draw_action_table:
       .checked
         ; On
         %a16()
-        LDA #$384B : STA $7E3900, X
-        LDA #$384C : STA $7E3902, X
+        LDA #$384B : STA $7E3902, X
+        LDA #$384C : STA $7E3904, X
         RTS
     }
 
@@ -372,8 +473,8 @@ cm_draw_action_table:
       .checked
         ; On
         %a16()
-        LDA #$384B : STA $7E3900, X
-        LDA #$384C : STA $7E3902, X
+        LDA #$384B : STA $7E3902, X
+        LDA #$384C : STA $7E3904, X
         RTS
     }
 
@@ -408,39 +509,33 @@ cm_draw_action_table:
         PHX : JSR cm_draw_text : PLX
 
         ; set position for the number
-        TXA : CLC : ADC #$0024 : TAX
+        TXA : CLC : ADC #$002C : TAX
 
         LDA [$04] : AND #$00FF : JSR cm_hex2dec
 
         ; Clear out the area (black tile)
-        LDA #$241F : STA $7E3900, X
+        LDA #$281F : STA $7E3900, X
                      STA $7E3900+2, X
                      STA $7E3900+4, X
 
         ; Set palette
         %a8()
-        LDA.b #$28 : ORA $0E : STA $0F
+        LDA.b #$24 : ORA $0E : STA $0F
         LDA.b #$70 : STA $0E
 
         ; Draw numbers
         %a16()
-        LDA !ram_hex2dec_first_digit : BEQ .second_digit
+        ; ones
+        LDA !ram_hex2dec_third_digit : CLC : ADC $0E : STA $7E3904, X
+
+        ; tens
+        LDA !ram_hex2dec_second_digit : ORA !ram_hex2dec_first_digit : BEQ .done
+        LDA !ram_hex2dec_second_digit : CLC : ADC $0E : STA $7E3902, X
+
+        LDA !ram_hex2dec_first_digit : BEQ .done
         CLC : ADC $0E : STA $7E3900, X
-        INX : INX
 
-        ; kinda hackish, just so 105 isnt spelt 15...
-        LDA !ram_hex2dec_second_digit : CLC : ADC $0E : STA $7E3900, X
-        INX : INX
-        BRA .third_digit
-
-    .second_digit
-        LDA !ram_hex2dec_second_digit : BEQ .third_digit
-        CLC : ADC $0E : STA $7E3900, X
-        INX : INX
-
-    .third_digit
-        LDA !ram_hex2dec_third_digit : CLC : ADC $0E : STA $7E3900,X
-
+      .done
         RTS
     }
 
@@ -460,7 +555,7 @@ cm_draw_action_table:
         %item_index_to_vram_index()
         PHX : JSR cm_draw_text : PLX
 
-        ; set position for ON/OFF
+        ; set position for choice
         TXA : CLC : ADC #$001C : TAX
 
         LDY #$0000
@@ -470,7 +565,7 @@ cm_draw_action_table:
         LDA [$04] : TAY
 
         ; find the correct text that should be drawn (the selected choice)
-        INY : INY ; uh, skipping the first text that we already draw..
+        INY : INY ; uh, skipping the first text that we already drew..
       .loop_choices
         DEY : BEQ .found
 
@@ -944,3 +1039,5 @@ incsrc mainmenu.asm
 
 cm_hud_table:
     incbin resources/cm_gfx.bin
+
+print "newmenu end ", pc

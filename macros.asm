@@ -19,7 +19,7 @@ macro a16()
 endmacro
 
 macro i8()
-    rep #$10
+    sep #$10
 endmacro
 
 macro ai8()
@@ -32,4 +32,8 @@ endmacro
 
 macro i16()
     rep #$10
+endmacro
+
+macro wdm()
+    dw $4242
 endmacro

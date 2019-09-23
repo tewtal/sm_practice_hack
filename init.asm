@@ -2,7 +2,8 @@ org $808455      ;hijack, runs as game is starting, JSR to RAM initialization to
     JML ih_init_code
 
 
-org $83F000
+org $81F000
+print "init start ", pc
 ih_init_code:
     REP #$30
     PHA
@@ -20,6 +21,10 @@ ih_init_code:
     LDA #$0001
     STA !ram_rerandomize
 
+    LDA #$0016 : STA !ram_artificial_lag
+
     PLA
     JSL $8B9146
     JML $808459
+
+print "init end ", pc
