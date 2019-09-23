@@ -4,6 +4,7 @@ local delta_output = ""
 local last_step = nil
 
 local MEMTRACK = {
+    { 0x07C3, 0x6, 'GFX Pointers' },
     { 0x07F3, 0x2, 'Music Bank' },
     { 0x07F5, 0x2, 'Music Track' },
     { 0x078B, 0x2, 'Elevator Index' },
@@ -184,8 +185,8 @@ local STEPS = {
     [145017] = { ["segment_no"] = 8, ["name"] = "Parlor", ["slug"] = "parlor" },
     [145530] = { ["segment_no"] = 8, ["name"] = "Terminator", ["slug"] = "terminator" },
     [146715] = { ["segment_no"] = 8, ["name"] = "Golden Four", ["slug"] = "golden_four" },
-    [150256] = { ["segment_no"] = 8, ["name"] = "Enter Tourian", ["slug"] = "enter_tourian" },
     -- Tourian
+    [150256] = { ["segment_no"] = 9, ["name"] = "Enter Tourian", ["slug"] = "enter_tourian" },
     [151618] = { ["segment_no"] = 9, ["name"] = "M1", ["slug"] = "m1" },
     [152430] = { ["segment_no"] = 9, ["name"] = "M2", ["slug"] = "m2" },
     [152908] = { ["segment_no"] = 9, ["name"] = "M3", ["slug"] = "m3" },
