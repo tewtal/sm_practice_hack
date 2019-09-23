@@ -6,6 +6,9 @@ delta_bombs_elevator:
     dl $7E078F : db $02 : dw $0000 ; DoorOut Index
     dl $7E079B : db $02 : dw $DF45 ; MDB
     dl $7E079F : db $02 : dw $0006 ; Region
+    dl $7E07C3 : db $02 : dw $E22A ; GFX Pointers
+    dl $7E07C5 : db $02 : dw $04C0 ; GFX Pointers
+    dl $7E07C7 : db $02 : dw $C2C1 ; GFX Pointers
     dl $7E07F3 : db $02 : dw $002D ; Music Bank
     dl $7E07F5 : db $02 : dw $0006 ; Music Track
     dl $7E08F7 : db $02 : dw $0000 ; How many blocks X the screen is scrolled?
@@ -242,6 +245,8 @@ delta_bombs_last_3_rooms:
     dw #delta_bombs_elevator ; Bombs: Ceres elevator
     dl $7E078D : db $02 : dw $ABA0 ; DDB
     dl $7E079B : db $02 : dw $E021 ; MDB
+    dl $7E07C3 : db $02 : dw $B004 ; GFX Pointers
+    dl $7E07C5 : db $02 : dw $E3C0 ; GFX Pointers
     dl $7E07F3 : db $02 : dw $0024 ; Music Bank
     dl $7E07F5 : db $02 : dw $0007 ; Music Track
     dl $7E0907 : db $02 : dw $0040 ; How many blocks X BG1 is scrolled?
@@ -272,6 +277,9 @@ delta_bombs_ship:
     dl $7E078D : db $02 : dw $88FE ; DDB
     dl $7E079B : db $02 : dw $91F8 ; MDB
     dl $7E079F : db $02 : dw $0000 ; Region
+    dl $7E07C3 : db $02 : dw $C629 ; GFX Pointers
+    dl $7E07C5 : db $02 : dw $7CBA ; GFX Pointers
+    dl $7E07C7 : db $02 : dw $C2AD ; GFX Pointers
     dl $7E07F3 : db $02 : dw $0006 ; Music Bank
     dl $7E07F5 : db $02 : dw $0005 ; Music Track
     dl $7E08F7 : db $02 : dw $0040 ; How many blocks X the screen is scrolled?
@@ -351,6 +359,9 @@ delta_bombs_morph:
     dl $7E078F : db $02 : dw $0001 ; DoorOut Index
     dl $7E079B : db $02 : dw $9E9F ; MDB
     dl $7E079F : db $02 : dw $0001 ; Region
+    dl $7E07C3 : db $02 : dw $E6B0 ; GFX Pointers
+    dl $7E07C5 : db $02 : dw $64BB ; GFX Pointers
+    dl $7E07C7 : db $02 : dw $C2B2 ; GFX Pointers
     dl $7E07F5 : db $02 : dw $0007 ; Music Track
     dl $7E08F7 : db $02 : dw $0050 ; How many blocks X the screen is scrolled?
     dl $7E08F9 : db $02 : dw $0020 ; How many blocks Y the screen is scrolled? (up = positive)
@@ -392,6 +403,9 @@ delta_bombs_pit_room:
     dl $7E078F : db $02 : dw $0002 ; DoorOut Index
     dl $7E079B : db $02 : dw $97B5 ; MDB
     dl $7E079F : db $02 : dw $0000 ; Region
+    dl $7E07C3 : db $02 : dw $F911 ; GFX Pointers
+    dl $7E07C5 : db $02 : dw $43BA ; GFX Pointers
+    dl $7E07C7 : db $02 : dw $C2AF ; GFX Pointers
     dl $7E07F5 : db $02 : dw $0003 ; Music Track
     dl $7E08F7 : db $02 : dw $0000 ; How many blocks X the screen is scrolled?
     dl $7E08F9 : db $02 : dw $0000 ; How many blocks Y the screen is scrolled? (up = positive)
@@ -555,6 +569,9 @@ delta_pbs_terminator:
     dw #delta_pbs_alcatraz ; Power Bombs: Alcatraz
     dl $7E078D : db $02 : dw $8BB6 ; DDB
     dl $7E079B : db $02 : dw $92FD ; MDB
+    dl $7E07C3 : db $02 : dw $C629 ; GFX Pointers
+    dl $7E07C5 : db $02 : dw $7CBA ; GFX Pointers
+    dl $7E07C7 : db $02 : dw $C2AD ; GFX Pointers
     dl $7E08F7 : db $02 : dw $0010 ; How many blocks X the screen is scrolled?
     dl $7E08FB : db $02 : dw $000C ; How many blocks X Layer 2 is scrolled?
     dl $7E08FF : db $02 : dw $0010 ; How many blocks X the screen was scrolled previously (Checked to know when to update blocks)
@@ -585,6 +602,9 @@ delta_pbs_pirates_shaft:
     dw #delta_pbs_terminator ; Power Bombs: Terminator
     dl $7E078D : db $02 : dw $895E ; DDB
     dl $7E079B : db $02 : dw $990D ; MDB
+    dl $7E07C3 : db $02 : dw $F911 ; GFX Pointers
+    dl $7E07C5 : db $02 : dw $43BA ; GFX Pointers
+    dl $7E07C7 : db $02 : dw $C2AF ; GFX Pointers
     dl $7E08F7 : db $02 : dw $0000 ; How many blocks X the screen is scrolled?
     dl $7E08F9 : db $02 : dw $001E ; How many blocks Y the screen is scrolled? (up = positive)
     dl $7E08FB : db $02 : dw $0000 ; How many blocks X Layer 2 is scrolled?
@@ -658,6 +678,9 @@ delta_pbs_early_supers:
     dl $7E078F : db $02 : dw $0009 ; DoorOut Index
     dl $7E079B : db $02 : dw $9AD9 ; MDB
     dl $7E079F : db $02 : dw $0001 ; Region
+    dl $7E07C3 : db $02 : dw $E6B0 ; GFX Pointers
+    dl $7E07C5 : db $02 : dw $64BB ; GFX Pointers
+    dl $7E07C7 : db $02 : dw $C2B2 ; GFX Pointers
     dl $7E07F3 : db $02 : dw $000F ; Music Bank
     dl $7E07F5 : db $02 : dw $0005 ; Music Track
     dl $7E08F9 : db $02 : dw $0041 ; How many blocks Y the screen is scrolled? (up = positive)
@@ -844,6 +867,9 @@ delta_pbs_hellway:
     dl $7E078D : db $02 : dw $8F0A ; DDB
     dl $7E078F : db $02 : dw $0001 ; DoorOut Index
     dl $7E079B : db $02 : dw $A253 ; MDB
+    dl $7E07C3 : db $02 : dw $A5AA ; GFX Pointers
+    dl $7E07C5 : db $02 : dw $5FBC ; GFX Pointers
+    dl $7E07C7 : db $02 : dw $C2B3 ; GFX Pointers
     dl $7E07F3 : db $02 : dw $0012 ; Music Bank
     dl $7E08F7 : db $02 : dw $0000 ; How many blocks X the screen is scrolled?
     dl $7E08F9 : db $02 : dw $0001 ; How many blocks Y the screen is scrolled? (up = positive)
@@ -931,6 +957,9 @@ delta_grav_kihunter_room:
     dl $7E078F : db $02 : dw $0002 ; DoorOut Index
     dl $7E079B : db $02 : dw $962A ; MDB
     dl $7E079F : db $02 : dw $0000 ; Region
+    dl $7E07C3 : db $02 : dw $F911 ; GFX Pointers
+    dl $7E07C5 : db $02 : dw $43BA ; GFX Pointers
+    dl $7E07C7 : db $02 : dw $C2AF ; GFX Pointers
     dl $7E08F7 : db $02 : dw $0000 ; How many blocks X the screen is scrolled?
     dl $7E08FB : db $02 : dw $0000 ; How many blocks X Layer 2 is scrolled?
     dl $7E08FF : db $02 : dw $0000 ; How many blocks X the screen was scrolled previously (Checked to know when to update blocks)
@@ -970,6 +999,9 @@ delta_grav_moat:
     dl $7E078D : db $02 : dw $8AF6 ; DDB
     dl $7E078F : db $02 : dw $0000 ; DoorOut Index
     dl $7E079B : db $02 : dw $948C ; MDB
+    dl $7E07C3 : db $02 : dw $C629 ; GFX Pointers
+    dl $7E07C5 : db $02 : dw $7CBA ; GFX Pointers
+    dl $7E07C7 : db $02 : dw $C2AD ; GFX Pointers
     dl $7E07F5 : db $02 : dw $0005 ; Music Track
     dl $7E08F7 : db $02 : dw $0020 ; How many blocks X the screen is scrolled?
     dl $7E08FB : db $02 : dw $0018 ; How many blocks X Layer 2 is scrolled?
@@ -1007,6 +1039,9 @@ delta_grav_wrecked_ship_enter:
     dl $7E078F : db $02 : dw $0001 ; DoorOut Index
     dl $7E079B : db $02 : dw $CA08 ; MDB
     dl $7E079F : db $02 : dw $0003 ; Region
+    dl $7E07C3 : db $02 : dw $AE9E ; GFX Pointers
+    dl $7E07C5 : db $02 : dw $A6BB ; GFX Pointers
+    dl $7E07C7 : db $02 : dw $C2B1 ; GFX Pointers
     dl $7E07F3 : db $02 : dw $0030 ; Music Bank
     dl $7E08F7 : db $02 : dw $0030 ; How many blocks X the screen is scrolled?
     dl $7E08FB : db $02 : dw $0024 ; How many blocks X Layer 2 is scrolled?
@@ -1078,6 +1113,8 @@ delta_grav_wrecked_ship_climb:
     dw #delta_grav_phantoon ; Gravity Suit: Phantoon
     dl $7E078D : db $02 : dw $A2C4 ; DDB
     dl $7E078F : db $02 : dw $0000 ; DoorOut Index
+    dl $7E07C5 : db $02 : dw $E7BB ; GFX Pointers
+    dl $7E07C7 : db $02 : dw $C2B0 ; GFX Pointers
     dl $7E07F5 : db $02 : dw $0006 ; Music Track
     dl $7E08F7 : db $02 : dw $0022 ; How many blocks X the screen is scrolled?
     dl $7E08FB : db $02 : dw $0019 ; How many blocks X Layer 2 is scrolled?
@@ -1150,6 +1187,9 @@ delta_grav_bowling_alley_farm:
     dl $7E078F : db $02 : dw $0002 ; DoorOut Index
     dl $7E079B : db $02 : dw $93FE ; MDB
     dl $7E079F : db $02 : dw $0000 ; Region
+    dl $7E07C3 : db $02 : dw $C629 ; GFX Pointers
+    dl $7E07C5 : db $02 : dw $7CBA ; GFX Pointers
+    dl $7E07C7 : db $02 : dw $C2AD ; GFX Pointers
     dl $7E07F3 : db $02 : dw $000C ; Music Bank
     dl $7E07F5 : db $02 : dw $0005 ; Music Track
     dl $7E08F7 : db $02 : dw $0020 ; How many blocks X the screen is scrolled?
@@ -1190,6 +1230,9 @@ delta_grav_grav:
     dl $7E078D : db $02 : dw $A1A4 ; DDB
     dl $7E079B : db $02 : dw $CE40 ; MDB
     dl $7E079F : db $02 : dw $0003 ; Region
+    dl $7E07C3 : db $02 : dw $AE9E ; GFX Pointers
+    dl $7E07C5 : db $02 : dw $E7BB ; GFX Pointers
+    dl $7E07C7 : db $02 : dw $C2B0 ; GFX Pointers
     dl $7E07F3 : db $02 : dw $0030 ; Music Bank
     dl $7E07F5 : db $02 : dw $0003 ; Music Track
     dl $7E08F7 : db $02 : dw $0000 ; How many blocks X the screen is scrolled?
@@ -1231,6 +1274,9 @@ delta_cath_kihunter_room:
     dl $7E078F : db $02 : dw $0000 ; DoorOut Index
     dl $7E079B : db $02 : dw $95FF ; MDB
     dl $7E079F : db $02 : dw $0000 ; Region
+    dl $7E07C3 : db $02 : dw $C629 ; GFX Pointers
+    dl $7E07C5 : db $02 : dw $7CBA ; GFX Pointers
+    dl $7E07C7 : db $02 : dw $C2AD ; GFX Pointers
     dl $7E07F3 : db $02 : dw $000C ; Music Bank
     dl $7E07F5 : db $02 : dw $0005 ; Music Track
     dl $7E0903 : db $02 : dw $001D ; How many blocks X Layer 2 was scrolled previously (Checked to know when to update blocks)
@@ -1259,6 +1305,9 @@ delta_cath_caterpillar_room:
     dl $7E078D : db $02 : dw $8A42 ; DDB
     dl $7E078F : db $02 : dw $0002 ; DoorOut Index
     dl $7E079B : db $02 : dw $962A ; MDB
+    dl $7E07C3 : db $02 : dw $F911 ; GFX Pointers
+    dl $7E07C5 : db $02 : dw $43BA ; GFX Pointers
+    dl $7E07C7 : db $02 : dw $C2AF ; GFX Pointers
     dl $7E07F5 : db $02 : dw $0003 ; Music Track
     dl $7E0903 : db $02 : dw $0000 ; How many blocks X Layer 2 was scrolled previously (Checked to know when to update blocks)
     dl $7E0905 : db $02 : dw $FFF0 ; How many blocks Y Layer 2 was scrolled previously (Checked to know when to update blocks) (up = positive)
@@ -1290,6 +1339,9 @@ delta_cath_red_tower:
     dl $7E078D : db $02 : dw $90AE ; DDB
     dl $7E079B : db $02 : dw $A2F7 ; MDB
     dl $7E079F : db $02 : dw $0001 ; Region
+    dl $7E07C3 : db $02 : dw $A5AA ; GFX Pointers
+    dl $7E07C5 : db $02 : dw $5FBC ; GFX Pointers
+    dl $7E07C7 : db $02 : dw $C2B3 ; GFX Pointers
     dl $7E07F3 : db $02 : dw $0012 ; Music Bank
     dl $7E07F5 : db $02 : dw $0005 ; Music Track
     dl $7E0903 : db $02 : dw $0029 ; How many blocks X Layer 2 was scrolled previously (Checked to know when to update blocks)
@@ -1421,6 +1473,9 @@ delta_cath_hi_jump:
     dl $7E078F : db $02 : dw $0005 ; DoorOut Index
     dl $7E079B : db $02 : dw $A7DE ; MDB
     dl $7E079F : db $02 : dw $0002 ; Region
+    dl $7E07C3 : db $02 : dw $C3F9 ; GFX Pointers
+    dl $7E07C5 : db $02 : dw $BBBD ; GFX Pointers
+    dl $7E07C7 : db $02 : dw $C2B6 ; GFX Pointers
     dl $7E07F3 : db $02 : dw $0015 ; Music Bank
     dl $7E07F5 : db $02 : dw $0005 ; Music Track
     dl $7E08F9 : db $02 : dw $0051 ; How many blocks Y the screen is scrolled? (up = positive)
@@ -1499,6 +1554,8 @@ delta_cath_ice_beam_snake_room:
     dl $7E078D : db $02 : dw $931E ; DDB
     dl $7E078F : db $02 : dw $0001 ; DoorOut Index
     dl $7E079B : db $02 : dw $A75D ; MDB
+    dl $7E07C5 : db $02 : dw $E4BD ; GFX Pointers
+    dl $7E07C7 : db $02 : dw $C2B5 ; GFX Pointers
     dl $7E08F7 : db $02 : dw $0000 ; How many blocks X the screen is scrolled?
     dl $7E08F9 : db $02 : dw $0000 ; How many blocks Y the screen is scrolled? (up = positive)
     dl $7E08FB : db $02 : dw $0000 ; How many blocks X Layer 2 is scrolled?
@@ -1569,6 +1626,8 @@ delta_cath_cathedral_entrance:
     dl $7E078D : db $02 : dw $932A ; DDB
     dl $7E078F : db $02 : dw $0002 ; DoorOut Index
     dl $7E079B : db $02 : dw $A7DE ; MDB
+    dl $7E07C5 : db $02 : dw $BBBD ; GFX Pointers
+    dl $7E07C7 : db $02 : dw $C2B6 ; GFX Pointers
     dl $7E08F9 : db $02 : dw $0031 ; How many blocks Y the screen is scrolled? (up = positive)
     dl $7E08FD : db $02 : dw $0025 ; How many blocks Y Layer 2 is scrolled? (up = positive)
     dl $7E0901 : db $02 : dw $0031 ; How many blocks Y the screen was scrolled previously (Checked to know when to update blocks) (up = positive)
@@ -1601,6 +1660,8 @@ delta_rid_cathedral:
     dl $7E078D : db $02 : dw $92CA ; DDB
     dl $7E078F : db $02 : dw $0001 ; DoorOut Index
     dl $7E079B : db $02 : dw $A7B3 ; MDB
+    dl $7E07C5 : db $02 : dw $E4BD ; GFX Pointers
+    dl $7E07C7 : db $02 : dw $C2B5 ; GFX Pointers
     dl $7E08F7 : db $02 : dw $0020 ; How many blocks X the screen is scrolled?
     dl $7E08F9 : db $02 : dw $0000 ; How many blocks Y the screen is scrolled? (up = positive)
     dl $7E08FB : db $02 : dw $0020 ; How many blocks X Layer 2 is scrolled?
@@ -2470,6 +2531,9 @@ delta_kraid_warehouse_entrance:
     dl $7E078F : db $02 : dw $0004 ; DoorOut Index
     dl $7E079B : db $02 : dw $A6A1 ; MDB
     dl $7E079F : db $02 : dw $0001 ; Region
+    dl $7E07C3 : db $02 : dw $A5AA ; GFX Pointers
+    dl $7E07C5 : db $02 : dw $5FBC ; GFX Pointers
+    dl $7E07C7 : db $02 : dw $C2B3 ; GFX Pointers
     dl $7E07F3 : db $02 : dw $0012 ; Music Bank
     dl $7E07F5 : db $02 : dw $0003 ; Music Track
     dl $7E0905 : db $02 : dw $0010 ; How many blocks Y Layer 2 was scrolled previously (Checked to know when to update blocks) (up = positive)
@@ -2658,6 +2722,9 @@ delta_dray_glass_tunnel:
     dl $7E078D : db $02 : dw $922E ; DDB
     dl $7E079B : db $02 : dw $CF80 ; MDB
     dl $7E079F : db $02 : dw $0004 ; Region
+    dl $7E07C3 : db $02 : dw $B130 ; GFX Pointers
+    dl $7E07C5 : db $02 : dw $3CBE ; GFX Pointers
+    dl $7E07C7 : db $02 : dw $C2B8 ; GFX Pointers
     dl $7E08F9 : db $02 : dw $0010 ; How many blocks Y the screen is scrolled? (up = positive)
     dl $7E08FD : db $02 : dw $0010 ; How many blocks Y Layer 2 is scrolled? (up = positive)
     dl $7E0901 : db $02 : dw $0010 ; How many blocks Y the screen was scrolled previously (Checked to know when to update blocks) (up = positive)
@@ -2764,6 +2831,9 @@ delta_dray_botwoon_hallway:
     dw #delta_dray_crab_shaft ; Draygon: Crab Shaft
     dl $7E078D : db $02 : dw $A4C8 ; DDB
     dl $7E079B : db $02 : dw $D5A7 ; MDB
+    dl $7E07C3 : db $02 : dw $E78D ; GFX Pointers
+    dl $7E07C5 : db $02 : dw $2EBE ; GFX Pointers
+    dl $7E07C7 : db $02 : dw $C2B9 ; GFX Pointers
     dl $7E07F5 : db $02 : dw $0005 ; Music Track
     dl $7E08F7 : db $02 : dw $0000 ; How many blocks X the screen is scrolled?
     dl $7E08FB : db $02 : dw $0000 ; How many blocks X Layer 2 is scrolled?
@@ -2906,6 +2976,9 @@ delta_g4_precious_room:
     dl $7E078D : db $02 : dw $A840 ; DDB
     dl $7E078F : db $02 : dw $0001 ; DoorOut Index
     dl $7E079B : db $02 : dw $DA60 ; MDB
+    dl $7E07C3 : db $02 : dw $9DEA ; GFX Pointers
+    dl $7E07C5 : db $02 : dw $2CBF ; GFX Pointers
+    dl $7E07C7 : db $02 : dw $C2BA ; GFX Pointers
     dl $7E07F3 : db $02 : dw $0024 ; Music Bank
     dl $7E07F5 : db $02 : dw $0003 ; Music Track
     dl $7E08F7 : db $02 : dw $0010 ; How many blocks X the screen is scrolled?
@@ -2948,6 +3021,9 @@ delta_g4_halfie_climb:
     dl $7E078D : db $02 : dw $A834 ; DDB
     dl $7E078F : db $02 : dw $0000 ; DoorOut Index
     dl $7E079B : db $02 : dw $D72A ; MDB
+    dl $7E07C3 : db $02 : dw $E78D ; GFX Pointers
+    dl $7E07C5 : db $02 : dw $2EBE ; GFX Pointers
+    dl $7E07C7 : db $02 : dw $C2B9 ; GFX Pointers
     dl $7E07F3 : db $02 : dw $001B ; Music Bank
     dl $7E07F5 : db $02 : dw $0005 ; Music Track
     dl $7E08F7 : db $02 : dw $0000 ; How many blocks X the screen is scrolled?
@@ -3044,6 +3120,9 @@ delta_g4_mt_everest:
     dw #delta_g4_crab_shaft ; Golden 4: Crab Shaft
     dl $7E078D : db $02 : dw $A708 ; DDB
     dl $7E079B : db $02 : dw $D1A3 ; MDB
+    dl $7E07C3 : db $02 : dw $B130 ; GFX Pointers
+    dl $7E07C5 : db $02 : dw $3CBE ; GFX Pointers
+    dl $7E07C7 : db $02 : dw $C2B8 ; GFX Pointers
     dl $7E07F5 : db $02 : dw $0006 ; Music Track
     dl $7E08F9 : db $02 : dw $001E ; How many blocks Y the screen is scrolled? (up = positive)
     dl $7E08FD : db $02 : dw $0017 ; How many blocks Y Layer 2 is scrolled? (up = positive)
@@ -3112,6 +3191,9 @@ delta_g4_kihunter_room:
     dl $7E078F : db $02 : dw $0002 ; DoorOut Index
     dl $7E079B : db $02 : dw $962A ; MDB
     dl $7E079F : db $02 : dw $0000 ; Region
+    dl $7E07C3 : db $02 : dw $F911 ; GFX Pointers
+    dl $7E07C5 : db $02 : dw $43BA ; GFX Pointers
+    dl $7E07C7 : db $02 : dw $C2AF ; GFX Pointers
     dl $7E07F3 : db $02 : dw $0012 ; Music Bank
     dl $7E07F5 : db $02 : dw $0003 ; Music Track
     dl $7E0905 : db $02 : dw $0010 ; How many blocks Y Layer 2 was scrolled previously (Checked to know when to update blocks) (up = positive)
@@ -3142,6 +3224,9 @@ delta_g4_parlor:
     dl $7E078D : db $02 : dw $8AC6 ; DDB
     dl $7E078F : db $02 : dw $0000 ; DoorOut Index
     dl $7E079B : db $02 : dw $91F8 ; MDB
+    dl $7E07C3 : db $02 : dw $C629 ; GFX Pointers
+    dl $7E07C5 : db $02 : dw $7CBA ; GFX Pointers
+    dl $7E07C7 : db $02 : dw $C2AD ; GFX Pointers
     dl $7E07F3 : db $02 : dw $000C ; Music Bank
     dl $7E07F5 : db $02 : dw $0005 ; Music Track
     dl $7E08F7 : db $02 : dw $005D ; How many blocks X the screen is scrolled?
@@ -3214,6 +3299,9 @@ delta_g4_golden_four:
     dw #delta_g4_terminator ; Golden 4: Terminator
     dl $7E078D : db $02 : dw $8BE6 ; DDB
     dl $7E079B : db $02 : dw $99BD ; MDB
+    dl $7E07C3 : db $02 : dw $F911 ; GFX Pointers
+    dl $7E07C5 : db $02 : dw $43BA ; GFX Pointers
+    dl $7E07C7 : db $02 : dw $C2AF ; GFX Pointers
     dl $7E08F7 : db $02 : dw $0000 ; How many blocks X the screen is scrolled?
     dl $7E08F9 : db $02 : dw $0060 ; How many blocks Y the screen is scrolled? (up = positive)
     dl $7E08FB : db $02 : dw $0000 ; How many blocks X Layer 2 is scrolled?
@@ -3256,6 +3344,9 @@ delta_g4_enter_tourian:
     dl $7E078D : db $02 : dw $91F2 ; DDB
     dl $7E078F : db $02 : dw $0002 ; DoorOut Index
     dl $7E079B : db $02 : dw $A66A ; MDB
+    dl $7E07C3 : db $02 : dw $860B ; GFX Pointers
+    dl $7E07C5 : db $02 : dw $9CC0 ; GFX Pointers
+    dl $7E07C7 : db $02 : dw $C2BC ; GFX Pointers
     dl $7E07F5 : db $02 : dw $0006 ; Music Track
     dl $7E08F9 : db $02 : dw $0011 ; How many blocks Y the screen is scrolled? (up = positive)
     dl $7E08FD : db $02 : dw $0000 ; How many blocks Y Layer 2 is scrolled? (up = positive)
@@ -3290,6 +3381,9 @@ delta_tou_m1:
     dl $7E078D : db $02 : dw $9222 ; DDB
     dl $7E079B : db $02 : dw $DAAE ; MDB
     dl $7E079F : db $02 : dw $0005 ; Region
+    dl $7E07C3 : db $02 : dw $D414 ; GFX Pointers
+    dl $7E07C5 : db $02 : dw $EDBF ; GFX Pointers
+    dl $7E07C7 : db $02 : dw $C2BA ; GFX Pointers
     dl $7E07F3 : db $02 : dw $001E ; Music Bank
     dl $7E07F5 : db $02 : dw $0005 ; Music Track
     dl $7E08F9 : db $02 : dw $002F ; How many blocks Y the screen is scrolled? (up = positive)
@@ -3549,6 +3643,9 @@ delta_tou_escape_parlor:
     dl $7E078D : db $02 : dw $AB34 ; DDB
     dl $7E079B : db $02 : dw $96BA ; MDB
     dl $7E079F : db $02 : dw $0000 ; Region
+    dl $7E07C3 : db $02 : dw $F911 ; GFX Pointers
+    dl $7E07C5 : db $02 : dw $43BA ; GFX Pointers
+    dl $7E07C7 : db $02 : dw $C2AF ; GFX Pointers
     dl $7E08F7 : db $02 : dw $0010 ; How many blocks X the screen is scrolled?
     dl $7E08F9 : db $02 : dw $0000 ; How many blocks Y the screen is scrolled? (up = positive)
     dl $7E08FB : db $02 : dw $000C ; How many blocks X Layer 2 is scrolled?
