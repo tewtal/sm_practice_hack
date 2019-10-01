@@ -66,10 +66,10 @@ org $91DAD8      ;hijack, runs after a shinespark has been charged
     JSL ih_shinespark_code
 
 org $8095fc         ;hijack, end of NMI routine to update realtime frames
-    JML ih_nmi_frame
+    JML ih_nmi_end
 
 org $9AB800         ;graphics for menu cursor and input display
-incbin resources\menugfx.bin
+incbin ../resources/menugfx.bin
 
 ; Main bank stuff
 org $DFE000
@@ -91,7 +91,7 @@ ih_debug_patch:
     JML $828B4F
 }
 
-ih_nmi_frame:
+ih_nmi_end:
 {
     %ai16()
 
@@ -260,9 +260,9 @@ ih_update_hud_code:
     ; Bank 80
     PEA $8080 : PLB : PLB
 
-    LDA #$FFFF : STA !ram_last_hp
+    LDA #$FFFF : STA !ram_last_hp : STA !ram_enemy_hp
 
-    LDA !ram_frame_counter_mode : BNE .ingameRoom
+    LDA !sram_frame_counter_mode : BNE .ingameRoom
 
     ; Real time
     {
@@ -357,7 +357,7 @@ ih_update_hud_code:
 
     ; Segment timer
     {
-        LDA !ram_frame_counter_mode : BNE .ingameSeg
+        LDA !sram_frame_counter_mode : BNE .ingameSeg
         LDA.w #!ram_seg_rt_frames : STA $00
         LDA #$007F : STA $02
         BRA .drawSeg
@@ -443,7 +443,7 @@ ih_hud_code:
     STA !ram_ih_controller
 
   .status_display
-    LDA !ram_display_mode : ASL : TAX
+    LDA !sram_display_mode : ASL : TAX
     JSR (.status_display_table,X)
 
     ; Samus' HP
@@ -756,21 +756,21 @@ ih_game_loop_code:
     JMP .done
 
   .inc_statusdisplay
-    LDA !ram_display_mode
+    LDA !sram_display_mode
     INC A
     CMP #$0008
     BNE +
     LDA #$0000
-+   STA !ram_display_mode
++   STA !sram_display_mode
     JMP .update_status
 
   .dec_statusdisplay
-    LDA !ram_display_mode
+    LDA !sram_display_mode
     DEC A
     CMP #$FFFF
     BNE +
     LDA #$0007
-+   STA !ram_display_mode
++   STA !sram_display_mode
     JMP .update_status
 
 

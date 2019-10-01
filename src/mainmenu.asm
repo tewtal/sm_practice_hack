@@ -3,9 +3,9 @@
 ; --------
 
 macro cm_header(title)
-    table header.tbl
+    table ../resources/header.tbl
     db #$28, "<title>", #$FF
-    table normal.tbl
+    table ../resources/normal.tbl
 endmacro
 
 macro cm_numfield(title, addr, start, end, increment, jsrtarget)
@@ -43,10 +43,15 @@ macro cm_submenu(title, target)
     %cm_jsr("<title>", #action_submenu, <target>)
 endmacro
 
-macro cm_delta(title, target)
-    %cm_jsr("<title>", #action_load_delta, <target>)
+macro cm_preset(title, target)
+    %cm_jsr("<title>", #action_load_preset, <target>)
 endmacro
 
+macro cm_ctrl_shortcut(title, addr)
+    dw !ACTION_CTRL_SHORTCUT
+    dl <addr>
+    db #$28, "<title>", #$FF
+endmacro
 
 action_submenu:
 {
@@ -74,6 +79,7 @@ MainMenu:
     dw #mm_goto_infohud
     dw #mm_goto_gamemenu
     dw #mm_goto_rngmenu
+    dw #mm_goto_ctrlsmenu
     dw #$0000
     %cm_header("SM PRACTICE HACK 2.0")
 
@@ -101,14 +107,17 @@ mm_goto_gamemenu:
 mm_goto_rngmenu:
     %cm_submenu("RNG Control", #RngMenu)
 
+mm_goto_ctrlsmenu:
+    %cm_submenu("Ctrl Shortcuts", #CtrlMenu)
+
 
 ; -------------
 ; Presets menu
 ; -------------
 
-incsrc delta_menu.asm
+incsrc presets_menu.asm
 
-action_load_delta:
+action_load_preset:
 {
     PHB
     PHK : PLB
@@ -660,7 +669,7 @@ InfoHudMenu:
 
 ih_display_mode:
     dw !ACTION_CHOICE
-    dl #!ram_display_mode
+    dl #!sram_display_mode
     dw #$0000
     db #$28, "Infohud Mode", #$FF
     db #$28, "   ENEMY HP", #$FF
@@ -676,7 +685,7 @@ ih_display_mode:
 
 ih_room_counter:
     dw !ACTION_CHOICE
-    dl #!ram_frame_counter_mode
+    dl #!sram_frame_counter_mode
     dw #$0000
     db #$28, "Frame Counters", #$FF
     db #$28, "   REALTIME", #$FF
@@ -684,7 +693,7 @@ ih_room_counter:
     db #$FF
 
 ih_lag:
-    %cm_numfield("Artificial lag", !ram_artificial_lag, 0, 64, 1, #0)
+    %cm_numfield("Artificial lag", !sram_artificial_lag, 0, 64, 1, #0)
 
 ih_magicpants:
     %cm_toggle_bit("Magic Pants", $7FFB64, #$0001, #0)
@@ -699,6 +708,8 @@ GameMenu:
     dw #game_moonwalk
     dw #game_iconcancel
     dw #game_debugmode
+    dw #game_fanfare_toggle
+    dw #game_music_toggle
     dw #$0000
     %cm_header("GAME")
 
@@ -713,6 +724,33 @@ game_iconcancel:
 
 game_debugmode:
     %cm_toggle("Debug Mode", $7E05D1, #$0001, #0)
+
+game_fanfare_toggle:
+    %cm_toggle("Fanfare", !sram_fanfare_toggle, #$0001, #0)
+
+game_music_toggle:
+    %cm_toggle("Music", !sram_music_toggle, #$0001, .routine)
+
+  .routine
+    BIT #$0001 : BEQ .noMusic
+
+    LDA $07F5 : STA $2140
+
+    RTS
+
+  .noMusic
+    LDA #$0000 
+    STA $0629
+    STA $062B
+    STA $062D
+    STA $062F
+    STA $0631
+    STA $0633
+    STA $0635
+    STA $0637
+    STA $063F
+    STA $2140
+    RTS
 
 
 ; ----------
@@ -730,7 +768,7 @@ RngMenu:
     %cm_header("RNG")
 
 rng_rerandomize:
-    %cm_toggle("Rerandomize", !ram_rerandomize, #$0001, #0)
+    %cm_toggle("Rerandomize", !sram_rerandomize, #$0001, #0)
 
 rng_botwoon_rng:
     dw !ACTION_CHOICE
@@ -785,3 +823,41 @@ rng_phan_second_pattern:
     db #$28, "        MID", #$FF
     db #$28, "       SLOW", #$FF
     db #$FF
+
+
+; ----------
+; Ctrl Menu
+; ----------
+
+CtrlMenu:
+    dw #ctrl_menu
+    dw #ctrl_load_last_preset
+    dw #ctrl_save_state
+    dw #ctrl_load_state
+    dw #ctrl_reset_segment_timer
+    dw #ctrl_reequip
+    dw #ctrl_kill_enemies
+    dw #$0000
+    %cm_header("CTRL SHORTCUTS")
+
+
+ctrl_menu:
+    %cm_ctrl_shortcut("Main menu", !sram_ctrl_menu)
+
+ctrl_load_last_preset:
+    %cm_ctrl_shortcut("Load Last Preset", !sram_ctrl_load_last_preset)
+
+ctrl_save_state:
+    %cm_ctrl_shortcut("Save State", !sram_ctrl_save_state)
+
+ctrl_load_state:
+    %cm_ctrl_shortcut("Load State", !sram_ctrl_load_state)
+
+ctrl_reset_segment_timer:
+    %cm_ctrl_shortcut("Reset Seg Timer", !sram_ctrl_reset_segment_timer)
+
+ctrl_reequip:
+    %cm_ctrl_shortcut("Reequip", !sram_ctrl_reequip)
+
+ctrl_kill_enemies:
+    %cm_ctrl_shortcut("Kill Enemies", !sram_ctrl_kill_enemies)

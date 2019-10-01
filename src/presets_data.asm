@@ -1,5 +1,5 @@
 
-delta_bombs_elevator:
+preset_bombs_elevator:
      dw #$0000
     dl $7E078B : db $02 : dw $0000 ; Elevator Index
     dl $7E078D : db $02 : dw $AB58 ; DDB
@@ -241,8 +241,8 @@ delta_bombs_elevator:
     dw #$FFFF
 .after
 
-delta_bombs_last_3_rooms:
-    dw #delta_bombs_elevator ; Bombs: Ceres elevator
+preset_bombs_last_3_rooms:
+    dw #preset_bombs_elevator ; Bombs: Ceres elevator
     dl $7E078D : db $02 : dw $ABA0 ; DDB
     dl $7E079B : db $02 : dw $E021 ; MDB
     dl $7E07C3 : db $02 : dw $B004 ; GFX Pointers
@@ -271,8 +271,8 @@ delta_bombs_last_3_rooms:
     dw #$FFFF
 .after
 
-delta_bombs_ship:
-    dw #delta_bombs_last_3_rooms ; Bombs: Ceres Last 3 rooms
+preset_bombs_ship:
+    dw #preset_bombs_last_3_rooms ; Bombs: Ceres Last 3 rooms
     dl $7E078B : db $02 : dw $0012 ; Elevator Index
     dl $7E078D : db $02 : dw $88FE ; DDB
     dl $7E079B : db $02 : dw $91F8 ; MDB
@@ -321,8 +321,8 @@ delta_bombs_ship:
     dw #$FFFF
 .after
 
-delta_bombs_parlor_down:
-    dw #delta_bombs_ship ; Bombs: Ship
+preset_bombs_parlor_down:
+    dw #preset_bombs_ship ; Bombs: Ship
     dl $7E078B : db $02 : dw $0000 ; Elevator Index
     dl $7E08F7 : db $02 : dw $0000 ; How many blocks X the screen is scrolled?
     dl $7E08F9 : db $02 : dw $0040 ; How many blocks Y the screen is scrolled? (up = positive)
@@ -353,8 +353,8 @@ delta_bombs_parlor_down:
     dw #$FFFF
 .after
 
-delta_bombs_morph:
-    dw #delta_bombs_parlor_down ; Bombs: Parlor down
+preset_bombs_morph:
+    dw #preset_bombs_parlor_down ; Bombs: Parlor down
     dl $7E078D : db $02 : dw $8B9E ; DDB
     dl $7E078F : db $02 : dw $0001 ; DoorOut Index
     dl $7E079B : db $02 : dw $9E9F ; MDB
@@ -397,8 +397,8 @@ delta_bombs_morph:
     dw #$FFFF
 .after
 
-delta_bombs_pit_room:
-    dw #delta_bombs_morph ; Bombs: Morph
+preset_bombs_pit_room:
+    dw #preset_bombs_morph ; Bombs: Morph
     dl $7E078D : db $02 : dw $8EB6 ; DDB
     dl $7E078F : db $02 : dw $0002 ; DoorOut Index
     dl $7E079B : db $02 : dw $97B5 ; MDB
@@ -442,8 +442,8 @@ delta_bombs_pit_room:
     dw #$FFFF
 .after
 
-delta_bombs_climb:
-    dw #delta_bombs_pit_room ; Bombs: Pit Room
+preset_bombs_climb:
+    dw #preset_bombs_pit_room ; Bombs: Pit Room
     dl $7E078D : db $02 : dw $8B92 ; DDB
     dl $7E078F : db $02 : dw $0000 ; DoorOut Index
     dl $7E079B : db $02 : dw $975C ; MDB
@@ -473,8 +473,8 @@ delta_bombs_climb:
     dw #$FFFF
 .after
 
-delta_bombs_parlor_up:
-    dw #delta_bombs_climb ; Bombs: Climb
+preset_bombs_parlor_up:
+    dw #preset_bombs_climb ; Bombs: Climb
     dl $7E078D : db $02 : dw $8B7A ; DDB
     dl $7E079B : db $02 : dw $96BA ; MDB
     dl $7E08F7 : db $02 : dw $0010 ; How many blocks X the screen is scrolled?
@@ -503,8 +503,8 @@ delta_bombs_parlor_up:
     dw #$FFFF
 .after
 
-delta_bombs_bomb_torizo:
-    dw #delta_bombs_parlor_up ; Bombs: Parlor up
+preset_bombs_bomb_torizo:
+    dw #preset_bombs_parlor_up ; Bombs: Parlor up
     dl $7E078D : db $02 : dw $8982 ; DDB
     dl $7E078F : db $02 : dw $0003 ; DoorOut Index
     dl $7E079B : db $02 : dw $9879 ; MDB
@@ -536,8 +536,8 @@ delta_bombs_bomb_torizo:
     dw #$FFFF
 .after
 
-delta_pbs_alcatraz:
-    dw #delta_bombs_bomb_torizo ; Bombs: Bomb Torizo
+preset_pbs_alcatraz:
+    dw #preset_bombs_bomb_torizo ; Bombs: Bomb Torizo
     dl $7E078D : db $02 : dw $8BAA ; DDB
     dl $7E078F : db $02 : dw $0000 ; DoorOut Index
     dl $7E08F7 : db $02 : dw $0000 ; How many blocks X the screen is scrolled?
@@ -565,8 +565,8 @@ delta_pbs_alcatraz:
     dw #$FFFF
 .after
 
-delta_pbs_terminator:
-    dw #delta_pbs_alcatraz ; Power Bombs: Alcatraz
+preset_pbs_terminator:
+    dw #preset_pbs_alcatraz ; Power Bombs: Alcatraz
     dl $7E078D : db $02 : dw $8BB6 ; DDB
     dl $7E079B : db $02 : dw $92FD ; MDB
     dl $7E07C3 : db $02 : dw $C629 ; GFX Pointers
@@ -598,8 +598,8 @@ delta_pbs_terminator:
     dw #$FFFF
 .after
 
-delta_pbs_pirates_shaft:
-    dw #delta_pbs_terminator ; Power Bombs: Terminator
+preset_pbs_pirates_shaft:
+    dw #preset_pbs_terminator ; Power Bombs: Terminator
     dl $7E078D : db $02 : dw $895E ; DDB
     dl $7E079B : db $02 : dw $990D ; MDB
     dl $7E07C3 : db $02 : dw $F911 ; GFX Pointers
@@ -640,8 +640,8 @@ delta_pbs_pirates_shaft:
     dw #$FFFF
 .after
 
-delta_pbs_elevator:
-    dw #delta_pbs_pirates_shaft ; Power Bombs: Pirates Shaft
+preset_pbs_elevator:
+    dw #preset_pbs_pirates_shaft ; Power Bombs: Pirates Shaft
     dl $7E078D : db $02 : dw $8C22 ; DDB
     dl $7E078F : db $02 : dw $0002 ; DoorOut Index
     dl $7E079B : db $02 : dw $9938 ; MDB
@@ -672,8 +672,8 @@ delta_pbs_elevator:
     dw #$FFFF
 .after
 
-delta_pbs_early_supers:
-    dw #delta_pbs_elevator ; Power Bombs: Elevator
+preset_pbs_early_supers:
+    dw #preset_pbs_elevator ; Power Bombs: Elevator
     dl $7E078D : db $02 : dw $8C0A ; DDB
     dl $7E078F : db $02 : dw $0009 ; DoorOut Index
     dl $7E079B : db $02 : dw $9AD9 ; MDB
@@ -710,8 +710,8 @@ delta_pbs_early_supers:
     dw #$FFFF
 .after
 
-delta_pbs_dachora_room:
-    dw #delta_pbs_early_supers ; Power Bombs: Early Supers
+preset_pbs_dachora_room:
+    dw #preset_pbs_early_supers ; Power Bombs: Early Supers
     dl $7E078D : db $02 : dw $8D4E ; DDB
     dl $7E078F : db $02 : dw $0000 ; DoorOut Index
     dl $7E08F9 : db $02 : dw $0061 ; How many blocks Y the screen is scrolled? (up = positive)
@@ -743,8 +743,8 @@ delta_pbs_dachora_room:
     dw #$FFFF
 .after
 
-delta_pbs_big_pink:
-    dw #delta_pbs_dachora_room ; Power Bombs: Dachora Room
+preset_pbs_big_pink:
+    dw #preset_pbs_dachora_room ; Power Bombs: Dachora Room
     dl $7E078D : db $02 : dw $8CE2 ; DDB
     dl $7E078F : db $02 : dw $0005 ; DoorOut Index
     dl $7E079B : db $02 : dw $9CB3 ; MDB
@@ -781,8 +781,8 @@ delta_pbs_big_pink:
     dw #$FFFF
 .after
 
-delta_pbs_green_hill_zone:
-    dw #delta_pbs_big_pink ; Power Bombs: Big Pink
+preset_pbs_green_hill_zone:
+    dw #preset_pbs_big_pink ; Power Bombs: Big Pink
     dl $7E078D : db $02 : dw $8DAE ; DDB
     dl $7E078F : db $02 : dw $0001 ; DoorOut Index
     dl $7E079B : db $02 : dw $9D19 ; MDB
@@ -824,8 +824,8 @@ delta_pbs_green_hill_zone:
     dw #$FFFF
 .after
 
-delta_pbs_red_tower:
-    dw #delta_pbs_green_hill_zone ; Power Bombs: Green Hill Zone
+preset_pbs_red_tower:
+    dw #preset_pbs_green_hill_zone ; Power Bombs: Green Hill Zone
     dl $7E078D : db $02 : dw $8E92 ; DDB
     dl $7E078F : db $02 : dw $0002 ; DoorOut Index
     dl $7E079B : db $02 : dw $9FBA ; MDB
@@ -862,8 +862,8 @@ delta_pbs_red_tower:
     dw #$FFFF
 .after
 
-delta_pbs_hellway:
-    dw #delta_pbs_red_tower ; Power Bombs: Red Tower
+preset_pbs_hellway:
+    dw #preset_pbs_red_tower ; Power Bombs: Red Tower
     dl $7E078D : db $02 : dw $8F0A ; DDB
     dl $7E078F : db $02 : dw $0001 ; DoorOut Index
     dl $7E079B : db $02 : dw $A253 ; MDB
@@ -896,8 +896,8 @@ delta_pbs_hellway:
     dw #$FFFF
 .after
 
-delta_pbs_caterpillar_room_down:
-    dw #delta_pbs_hellway ; Power Bombs: Hellway
+preset_pbs_caterpillar_room_down:
+    dw #preset_pbs_hellway ; Power Bombs: Hellway
     dl $7E078D : db $02 : dw $901E ; DDB
     dl $7E078F : db $02 : dw $0000 ; DoorOut Index
     dl $7E079B : db $02 : dw $A2F7 ; MDB
@@ -927,8 +927,8 @@ delta_pbs_caterpillar_room_down:
     dw #$FFFF
 .after
 
-delta_grav_caterpillar_room_up:
-    dw #delta_pbs_caterpillar_room_down ; Power Bombs: Caterpillar Room down
+preset_grav_caterpillar_room_up:
+    dw #preset_pbs_caterpillar_room_down ; Power Bombs: Caterpillar Room down
     dl $7E078D : db $02 : dw $9096 ; DDB
     dl $7E079B : db $02 : dw $A3AE ; MDB
     dl $7E07F5 : db $02 : dw $0003 ; Music Track
@@ -951,8 +951,8 @@ delta_grav_caterpillar_room_up:
     dw #$FFFF
 .after
 
-delta_grav_kihunter_room:
-    dw #delta_grav_caterpillar_room_up ; Gravity Suit: Caterpillar Room up
+preset_grav_kihunter_room:
+    dw #preset_grav_caterpillar_room_up ; Gravity Suit: Caterpillar Room up
     dl $7E078D : db $02 : dw $90BA ; DDB
     dl $7E078F : db $02 : dw $0002 ; DoorOut Index
     dl $7E079B : db $02 : dw $962A ; MDB
@@ -994,8 +994,8 @@ delta_grav_kihunter_room:
     dw #$FFFF
 .after
 
-delta_grav_moat:
-    dw #delta_grav_kihunter_room ; Gravity Suit: Kihunter Room
+preset_grav_moat:
+    dw #preset_grav_kihunter_room ; Gravity Suit: Kihunter Room
     dl $7E078D : db $02 : dw $8AF6 ; DDB
     dl $7E078F : db $02 : dw $0000 ; DoorOut Index
     dl $7E079B : db $02 : dw $948C ; MDB
@@ -1033,8 +1033,8 @@ delta_grav_moat:
     dw #$FFFF
 .after
 
-delta_grav_wrecked_ship_enter:
-    dw #delta_grav_moat ; Gravity Suit: Moat
+preset_grav_wrecked_ship_enter:
+    dw #preset_grav_moat ; Gravity Suit: Moat
     dl $7E078D : db $02 : dw $89D6 ; DDB
     dl $7E078F : db $02 : dw $0001 ; DoorOut Index
     dl $7E079B : db $02 : dw $CA08 ; MDB
@@ -1075,8 +1075,8 @@ delta_grav_wrecked_ship_enter:
     dw #$FFFF
 .after
 
-delta_grav_phantoon:
-    dw #delta_grav_wrecked_ship_enter ; Gravity Suit: Wrecked Ship Enter
+preset_grav_phantoon:
+    dw #preset_grav_wrecked_ship_enter ; Gravity Suit: Wrecked Ship Enter
     dl $7E078D : db $02 : dw $A21C ; DDB
     dl $7E078F : db $02 : dw $0003 ; DoorOut Index
     dl $7E079B : db $02 : dw $CC6F ; MDB
@@ -1109,8 +1109,8 @@ delta_grav_phantoon:
     dw #$FFFF
 .after
 
-delta_grav_wrecked_ship_climb:
-    dw #delta_grav_phantoon ; Gravity Suit: Phantoon
+preset_grav_wrecked_ship_climb:
+    dw #preset_grav_phantoon ; Gravity Suit: Phantoon
     dl $7E078D : db $02 : dw $A2C4 ; DDB
     dl $7E078F : db $02 : dw $0000 ; DoorOut Index
     dl $7E07C5 : db $02 : dw $E7BB ; GFX Pointers
@@ -1145,8 +1145,8 @@ delta_grav_wrecked_ship_climb:
     dw #$FFFF
 .after
 
-delta_grav_attic:
-    dw #delta_grav_wrecked_ship_climb ; Gravity Suit: Wrecked Ship Climb
+preset_grav_attic:
+    dw #preset_grav_wrecked_ship_climb ; Gravity Suit: Wrecked Ship Climb
     dl $7E078D : db $02 : dw $A2E8 ; DDB
     dl $7E079B : db $02 : dw $CAF6 ; MDB
     dl $7E08F7 : db $02 : dw $0040 ; How many blocks X the screen is scrolled?
@@ -1181,8 +1181,8 @@ delta_grav_attic:
     dw #$FFFF
 .after
 
-delta_grav_bowling_alley_farm:
-    dw #delta_grav_attic ; Gravity Suit: Attic
+preset_grav_bowling_alley_farm:
+    dw #preset_grav_attic ; Gravity Suit: Attic
     dl $7E078D : db $02 : dw $A1E0 ; DDB
     dl $7E078F : db $02 : dw $0002 ; DoorOut Index
     dl $7E079B : db $02 : dw $93FE ; MDB
@@ -1225,8 +1225,8 @@ delta_grav_bowling_alley_farm:
     dw #$FFFF
 .after
 
-delta_grav_grav:
-    dw #delta_grav_bowling_alley_farm ; Gravity Suit: Bowling Alley farm
+preset_grav_grav:
+    dw #preset_grav_bowling_alley_farm ; Gravity Suit: Bowling Alley farm
     dl $7E078D : db $02 : dw $A1A4 ; DDB
     dl $7E079B : db $02 : dw $CE40 ; MDB
     dl $7E079F : db $02 : dw $0003 ; Region
@@ -1268,8 +1268,8 @@ delta_grav_grav:
     dw #$FFFF
 .after
 
-delta_cath_kihunter_room:
-    dw #delta_grav_grav ; Gravity Suit: Grav
+preset_cath_kihunter_room:
+    dw #preset_grav_grav ; Gravity Suit: Grav
     dl $7E078D : db $02 : dw $89CA ; DDB
     dl $7E078F : db $02 : dw $0000 ; DoorOut Index
     dl $7E079B : db $02 : dw $95FF ; MDB
@@ -1300,8 +1300,8 @@ delta_cath_kihunter_room:
     dw #$FFFF
 .after
 
-delta_cath_caterpillar_room:
-    dw #delta_cath_kihunter_room ; Cathedral: Kihunter Room
+preset_cath_caterpillar_room:
+    dw #preset_cath_kihunter_room ; Cathedral: Kihunter Room
     dl $7E078D : db $02 : dw $8A42 ; DDB
     dl $7E078F : db $02 : dw $0002 ; DoorOut Index
     dl $7E079B : db $02 : dw $962A ; MDB
@@ -1334,8 +1334,8 @@ delta_cath_caterpillar_room:
     dw #$FFFF
 .after
 
-delta_cath_red_tower:
-    dw #delta_cath_caterpillar_room ; Cathedral: Caterpillar Room
+preset_cath_red_tower:
+    dw #preset_cath_caterpillar_room ; Cathedral: Caterpillar Room
     dl $7E078D : db $02 : dw $90AE ; DDB
     dl $7E079B : db $02 : dw $A2F7 ; MDB
     dl $7E079F : db $02 : dw $0001 ; Region
@@ -1368,8 +1368,8 @@ delta_cath_red_tower:
     dw #$FFFF
 .after
 
-delta_cath_bat_room:
-    dw #delta_cath_red_tower ; Cathedral: Red Tower
+preset_cath_bat_room:
+    dw #preset_cath_red_tower ; Cathedral: Red Tower
     dl $7E078D : db $02 : dw $907E ; DDB
     dl $7E078F : db $02 : dw $0000 ; DoorOut Index
     dl $7E079B : db $02 : dw $A253 ; MDB
@@ -1396,8 +1396,8 @@ delta_cath_bat_room:
     dw #$FFFF
 .after
 
-delta_cath_glass_tunnel:
-    dw #delta_cath_bat_room ; Cathedral: Bat Room
+preset_cath_glass_tunnel:
+    dw #preset_cath_bat_room ; Cathedral: Bat Room
     dl $7E078D : db $02 : dw $9132 ; DDB
     dl $7E079B : db $02 : dw $A408 ; MDB
     dl $7E08F7 : db $02 : dw $0010 ; How many blocks X the screen is scrolled?
@@ -1433,8 +1433,8 @@ delta_cath_glass_tunnel:
     dw #$FFFF
 .after
 
-delta_cath_business_center:
-    dw #delta_cath_glass_tunnel ; Cathedral: Glass Tunnel
+preset_cath_business_center:
+    dw #preset_cath_glass_tunnel ; Cathedral: Glass Tunnel
     dl $7E078D : db $02 : dw $A384 ; DDB
     dl $7E078F : db $02 : dw $0003 ; DoorOut Index
     dl $7E079B : db $02 : dw $A6A1 ; MDB
@@ -1467,8 +1467,8 @@ delta_cath_business_center:
     dw #$FFFF
 .after
 
-delta_cath_hi_jump:
-    dw #delta_cath_business_center ; Cathedral: Business Center
+preset_cath_hi_jump:
+    dw #preset_cath_business_center ; Cathedral: Business Center
     dl $7E078D : db $02 : dw $9246 ; DDB
     dl $7E078F : db $02 : dw $0005 ; DoorOut Index
     dl $7E079B : db $02 : dw $A7DE ; MDB
@@ -1505,8 +1505,8 @@ delta_cath_hi_jump:
     dw #$FFFF
 .after
 
-delta_cath_business_center_climb:
-    dw #delta_cath_hi_jump ; Cathedral: Hi Jump
+preset_cath_business_center_climb:
+    dw #preset_cath_hi_jump ; Cathedral: Hi Jump
     dl $7E078D : db $02 : dw $93F6 ; DDB
     dl $7E078F : db $02 : dw $0000 ; DoorOut Index
     dl $7E079B : db $02 : dw $AA41 ; MDB
@@ -1549,8 +1549,8 @@ delta_cath_business_center_climb:
     dw #$FFFF
 .after
 
-delta_cath_ice_beam_snake_room:
-    dw #delta_cath_business_center_climb ; Cathedral: Business Center climb
+preset_cath_ice_beam_snake_room:
+    dw #preset_cath_business_center_climb ; Cathedral: Business Center climb
     dl $7E078D : db $02 : dw $931E ; DDB
     dl $7E078F : db $02 : dw $0001 ; DoorOut Index
     dl $7E079B : db $02 : dw $A75D ; MDB
@@ -1589,8 +1589,8 @@ delta_cath_ice_beam_snake_room:
     dw #$FFFF
 .after
 
-delta_cath_ice_escape:
-    dw #delta_cath_ice_beam_snake_room ; Cathedral: Ice Beam Snake Room
+preset_cath_ice_escape:
+    dw #preset_cath_ice_beam_snake_room ; Cathedral: Ice Beam Snake Room
     dl $7E078D : db $02 : dw $935A ; DDB
     dl $7E078F : db $02 : dw $0000 ; DoorOut Index
     dl $7E079B : db $02 : dw $A8B9 ; MDB
@@ -1621,8 +1621,8 @@ delta_cath_ice_escape:
     dw #$FFFF
 .after
 
-delta_cath_cathedral_entrance:
-    dw #delta_cath_ice_escape ; Cathedral: Ice Escape
+preset_cath_cathedral_entrance:
+    dw #preset_cath_ice_escape ; Cathedral: Ice Escape
     dl $7E078D : db $02 : dw $932A ; DDB
     dl $7E078F : db $02 : dw $0002 ; DoorOut Index
     dl $7E079B : db $02 : dw $A7DE ; MDB
@@ -1655,8 +1655,8 @@ delta_cath_cathedral_entrance:
     dw #$FFFF
 .after
 
-delta_rid_cathedral:
-    dw #delta_cath_cathedral_entrance ; Cathedral: Cathedral Entrance
+preset_rid_cathedral:
+    dw #preset_cath_cathedral_entrance ; Cathedral: Cathedral Entrance
     dl $7E078D : db $02 : dw $92CA ; DDB
     dl $7E078F : db $02 : dw $0001 ; DoorOut Index
     dl $7E079B : db $02 : dw $A7B3 ; MDB
@@ -1694,8 +1694,8 @@ delta_rid_cathedral:
     dw #$FFFF
 .after
 
-delta_rid_bubble_mountain:
-    dw #delta_rid_cathedral ; Ridley: Cathedral
+preset_rid_bubble_mountain:
+    dw #preset_rid_cathedral ; Ridley: Cathedral
     dl $7E078D : db $02 : dw $929A ; DDB
     dl $7E079B : db $02 : dw $AFA3 ; MDB
     dl $7E08F7 : db $02 : dw $0040 ; How many blocks X the screen is scrolled?
@@ -1722,8 +1722,8 @@ delta_rid_bubble_mountain:
     dw #$FFFF
 .after
 
-delta_rid_bat_cave:
-    dw #delta_rid_bubble_mountain ; Ridley: Bubble Mountain
+preset_rid_bat_cave:
+    dw #preset_rid_bubble_mountain ; Ridley: Bubble Mountain
     dl $7E078D : db $02 : dw $973E ; DDB
     dl $7E079B : db $02 : dw $ACB3 ; MDB
     dl $7E08F7 : db $02 : dw $0010 ; How many blocks X the screen is scrolled?
@@ -1752,8 +1752,8 @@ delta_rid_bat_cave:
     dw #$FFFF
 .after
 
-delta_rid_bat_cave_revisited:
-    dw #delta_rid_bat_cave ; Ridley: Bat Cave
+preset_rid_bat_cave_revisited:
+    dw #preset_rid_bat_cave ; Ridley: Bat Cave
     dl $7E078D : db $02 : dw $95B2 ; DDB
     dl $7E079B : db $02 : dw $AD1B ; MDB
     dl $7E07F5 : db $02 : dw $0003 ; Music Track
@@ -1784,8 +1784,8 @@ delta_rid_bat_cave_revisited:
     dw #$FFFF
 .after
 
-delta_rid_single_chamber:
-    dw #delta_rid_bat_cave_revisited ; Ridley: Bat Cave revisited
+preset_rid_single_chamber:
+    dw #preset_rid_bat_cave_revisited ; Ridley: Bat Cave revisited
     dl $7E078D : db $02 : dw $97AA ; DDB
     dl $7E078F : db $02 : dw $0000 ; DoorOut Index
     dl $7E079B : db $02 : dw $ACB3 ; MDB
@@ -1822,8 +1822,8 @@ delta_rid_single_chamber:
     dw #$FFFF
 .after
 
-delta_rid_double_chamber:
-    dw #delta_rid_single_chamber ; Ridley: Single Chamber
+preset_rid_double_chamber:
+    dw #preset_rid_single_chamber ; Ridley: Single Chamber
     dl $7E078D : db $02 : dw $9582 ; DDB
     dl $7E078F : db $02 : dw $0004 ; DoorOut Index
     dl $7E079B : db $02 : dw $AD5E ; MDB
@@ -1856,8 +1856,8 @@ delta_rid_double_chamber:
     dw #$FFFF
 .after
 
-delta_rid_double_chamber_revisited:
-    dw #delta_rid_double_chamber ; Ridley: Double Chamber
+preset_rid_double_chamber_revisited:
+    dw #preset_rid_double_chamber ; Ridley: Double Chamber
     dl $7E078D : db $02 : dw $961E ; DDB
     dl $7E078F : db $02 : dw $0002 ; DoorOut Index
     dl $7E079B : db $02 : dw $ADDE ; MDB
@@ -1892,8 +1892,8 @@ delta_rid_double_chamber_revisited:
     dw #$FFFF
 .after
 
-delta_rid_kronic_boost_room:
-    dw #delta_rid_double_chamber_revisited ; Ridley: Double Chamber revisited
+preset_rid_kronic_boost_room:
+    dw #preset_rid_double_chamber_revisited ; Ridley: Double Chamber revisited
     dl $7E078D : db $02 : dw $95EE ; DDB
     dl $7E078F : db $02 : dw $0003 ; DoorOut Index
     dl $7E079B : db $02 : dw $AE07 ; MDB
@@ -1918,8 +1918,8 @@ delta_rid_kronic_boost_room:
     dw #$FFFF
 .after
 
-delta_rid_lavaspark:
-    dw #delta_rid_kronic_boost_room ; Ridley: Volcano Room
+preset_rid_lavaspark:
+    dw #preset_rid_kronic_boost_room ; Ridley: Volcano Room
     dl $7E078D : db $02 : dw $965A ; DDB
     dl $7E078F : db $02 : dw $0001 ; DoorOut Index
     dl $7E079B : db $02 : dw $AE74 ; MDB
@@ -1956,8 +1956,8 @@ delta_rid_lavaspark:
     dw #$FFFF
 .after
 
-delta_rid_elevator:
-    dw #delta_rid_lavaspark ; Ridley: Lavaspark
+preset_rid_elevator:
+    dw #preset_rid_lavaspark ; Ridley: Lavaspark
     dl $7E078D : db $02 : dw $96DE ; DDB
     dl $7E078F : db $02 : dw $0002 ; DoorOut Index
     dl $7E079B : db $02 : dw $AF3F ; MDB
@@ -1990,8 +1990,8 @@ delta_rid_elevator:
     dw #$FFFF
 .after
 
-delta_rid_fast_pillars:
-    dw #delta_rid_elevator ; Ridley: LN Elevator
+preset_rid_fast_pillars:
+    dw #preset_rid_elevator ; Ridley: LN Elevator
     dl $7E078D : db $02 : dw $96F6 ; DDB
     dl $7E078F : db $02 : dw $0003 ; DoorOut Index
     dl $7E079B : db $02 : dw $B236 ; MDB
@@ -2030,8 +2030,8 @@ delta_rid_fast_pillars:
     dw #$FFFF
 .after
 
-delta_rid_writg:
-    dw #delta_rid_fast_pillars ; Ridley: Fast Pillars
+preset_rid_writg:
+    dw #preset_rid_fast_pillars ; Ridley: Fast Pillars
     dl $7E078D : db $02 : dw $9912 ; DDB
     dl $7E078F : db $02 : dw $0004 ; DoorOut Index
     dl $7E079B : db $02 : dw $B457 ; MDB
@@ -2069,8 +2069,8 @@ delta_rid_writg:
     dw #$FFFF
 .after
 
-delta_rid_amphitheatre:
-    dw #delta_rid_writg ; Ridley: WRITG
+preset_rid_amphitheatre:
+    dw #preset_rid_writg ; Ridley: WRITG
     dl $7E078D : db $02 : dw $994E ; DDB
     dl $7E078F : db $02 : dw $0001 ; DoorOut Index
     dl $7E079B : db $02 : dw $B4AD ; MDB
@@ -2102,8 +2102,8 @@ delta_rid_amphitheatre:
     dw #$FFFF
 .after
 
-delta_rid_kihunter_shaft:
-    dw #delta_rid_amphitheatre ; Ridley: Amphitheatre
+preset_rid_kihunter_shaft:
+    dw #preset_rid_amphitheatre ; Ridley: Amphitheatre
     dl $7E078D : db $02 : dw $997E ; DDB
     dl $7E079B : db $02 : dw $B4E5 ; MDB
     dl $7E08F7 : db $02 : dw $0026 ; How many blocks X the screen is scrolled?
@@ -2133,8 +2133,8 @@ delta_rid_kihunter_shaft:
     dw #$FFFF
 .after
 
-delta_rid_wasteland:
-    dw #delta_rid_kihunter_shaft ; Ridley: Kihunter shaft
+preset_rid_wasteland:
+    dw #preset_rid_kihunter_shaft ; Ridley: Kihunter shaft
     dl $7E078D : db $02 : dw $99A2 ; DDB
     dl $7E079B : db $02 : dw $B585 ; MDB
     dl $7E08F7 : db $02 : dw $0000 ; How many blocks X the screen is scrolled?
@@ -2165,8 +2165,8 @@ delta_rid_wasteland:
     dw #$FFFF
 .after
 
-delta_rid_metal_pirates:
-    dw #delta_rid_wasteland ; Ridley: Wasteland
+preset_rid_metal_pirates:
+    dw #preset_rid_wasteland ; Ridley: Wasteland
     dl $7E078D : db $02 : dw $99EA ; DDB
     dl $7E078F : db $02 : dw $0000 ; DoorOut Index
     dl $7E079B : db $02 : dw $B5D5 ; MDB
@@ -2205,8 +2205,8 @@ delta_rid_metal_pirates:
     dw #$FFFF
 .after
 
-delta_rid_farming_room:
-    dw #delta_rid_metal_pirates ; Ridley: Metal Pirates
+preset_rid_farming_room:
+    dw #preset_rid_metal_pirates ; Ridley: Metal Pirates
     dl $7E078D : db $02 : dw $9A32 ; DDB
     dl $7E079B : db $02 : dw $B482 ; MDB
     dl $7E08F7 : db $02 : dw $0000 ; How many blocks X the screen is scrolled?
@@ -2245,8 +2245,8 @@ delta_rid_farming_room:
     dw #$FFFF
 .after
 
-delta_rid_ridley:
-    dw #delta_rid_farming_room ; Ridley: Ridley Farming Room
+preset_rid_ridley:
+    dw #preset_rid_farming_room ; Ridley: Ridley Farming Room
     dl $7E078D : db $02 : dw $995A ; DDB
     dl $7E079B : db $02 : dw $B37A ; MDB
     dl $7E0907 : db $02 : dw $0210 ; How many blocks X BG1 is scrolled?
@@ -2262,8 +2262,8 @@ delta_rid_ridley:
     dw #$FFFF
 .after
 
-delta_kraid_farming_room:
-    dw #delta_rid_ridley ; Ridley: Ridley
+preset_kraid_farming_room:
+    dw #preset_rid_ridley ; Ridley: Ridley
     dl $7E078D : db $02 : dw $98CA ; DDB
     dl $7E079B : db $02 : dw $B32E ; MDB
     dl $7E07F3 : db $02 : dw $0024 ; Music Bank
@@ -2296,8 +2296,8 @@ delta_kraid_farming_room:
     dw #$FFFF
 .after
 
-delta_kraid_wasteland:
-    dw #delta_kraid_farming_room ; Kraid: Ridley Farming Room
+preset_kraid_wasteland:
+    dw #preset_kraid_farming_room ; Kraid: Ridley Farming Room
     dl $7E078D : db $02 : dw $9966 ; DDB
     dl $7E078F : db $02 : dw $0001 ; DoorOut Index
     dl $7E079B : db $02 : dw $B62B ; MDB
@@ -2335,8 +2335,8 @@ delta_kraid_wasteland:
     dw #$FFFF
 .after
 
-delta_kraid_kihunter_shaft:
-    dw #delta_kraid_wasteland ; Kraid: Wasteland
+preset_kraid_kihunter_shaft:
+    dw #preset_kraid_wasteland ; Kraid: Wasteland
     dl $7E078D : db $02 : dw $9A3E ; DDB
     dl $7E079B : db $02 : dw $B5D5 ; MDB
     dl $7E08F7 : db $02 : dw $0050 ; How many blocks X the screen is scrolled?
@@ -2369,8 +2369,8 @@ delta_kraid_kihunter_shaft:
     dw #$FFFF
 .after
 
-delta_kraid_fireflea_room:
-    dw #delta_kraid_kihunter_shaft ; Kraid: Kihunter shaft
+preset_kraid_fireflea_room:
+    dw #preset_kraid_kihunter_shaft ; Kraid: Kihunter shaft
     dl $7E078D : db $02 : dw $9A26 ; DDB
     dl $7E079B : db $02 : dw $B585 ; MDB
     dl $7E08F7 : db $02 : dw $0000 ; How many blocks X the screen is scrolled?
@@ -2403,8 +2403,8 @@ delta_kraid_fireflea_room:
     dw #$FFFF
 .after
 
-delta_kraid_three_muskateers_room:
-    dw #delta_kraid_fireflea_room ; Kraid: Fireflea Room
+preset_kraid_three_muskateers_room:
+    dw #preset_kraid_fireflea_room ; Kraid: Fireflea Room
     dl $7E078D : db $02 : dw $9A92 ; DDB
     dl $7E078F : db $02 : dw $0000 ; DoorOut Index
     dl $7E079B : db $02 : dw $B510 ; MDB
@@ -2436,8 +2436,8 @@ delta_kraid_three_muskateers_room:
     dw #$FFFF
 .after
 
-delta_kraid_single_chamber:
-    dw #delta_kraid_three_muskateers_room ; Kraid: Three Muskateers Room
+preset_kraid_single_chamber:
+    dw #preset_kraid_three_muskateers_room ; Kraid: Three Muskateers Room
     dl $7E078D : db $02 : dw $99AE ; DDB
     dl $7E079B : db $02 : dw $B656 ; MDB
     dl $7E08F7 : db $02 : dw $0010 ; How many blocks X the screen is scrolled?
@@ -2467,8 +2467,8 @@ delta_kraid_single_chamber:
     dw #$FFFF
 .after
 
-delta_kraid_bubble_mountain:
-    dw #delta_kraid_single_chamber ; Kraid: Single Chamber
+preset_kraid_bubble_mountain:
+    dw #preset_kraid_single_chamber ; Kraid: Single Chamber
     dl $7E078D : db $02 : dw $9A4A ; DDB
     dl $7E079B : db $02 : dw $AD5E ; MDB
     dl $7E07F3 : db $02 : dw $0015 ; Music Bank
@@ -2493,8 +2493,8 @@ delta_kraid_bubble_mountain:
     dw #$FFFF
 .after
 
-delta_kraid_frog_speedway:
-    dw #delta_kraid_bubble_mountain ; Kraid: Bubble Mountain
+preset_kraid_frog_speedway:
+    dw #preset_kraid_bubble_mountain ; Kraid: Bubble Mountain
     dl $7E078D : db $02 : dw $956A ; DDB
     dl $7E078F : db $02 : dw $0002 ; DoorOut Index
     dl $7E079B : db $02 : dw $AF72 ; MDB
@@ -2525,8 +2525,8 @@ delta_kraid_frog_speedway:
     dw #$FFFF
 .after
 
-delta_kraid_warehouse_entrance:
-    dw #delta_kraid_frog_speedway ; Kraid: Frog Speedway
+preset_kraid_warehouse_entrance:
+    dw #preset_kraid_frog_speedway ; Kraid: Frog Speedway
     dl $7E078D : db $02 : dw $92EE ; DDB
     dl $7E078F : db $02 : dw $0004 ; DoorOut Index
     dl $7E079B : db $02 : dw $A6A1 ; MDB
@@ -2561,8 +2561,8 @@ delta_kraid_warehouse_entrance:
     dw #$FFFF
 .after
 
-delta_kraid_zeela_room:
-    dw #delta_kraid_warehouse_entrance ; Kraid: Warehouse Entrance
+preset_kraid_zeela_room:
+    dw #preset_kraid_warehouse_entrance ; Kraid: Warehouse Entrance
     dl $7E078F : db $02 : dw $0003 ; DoorOut Index
     dl $7E08F7 : db $02 : dw $001C ; How many blocks X the screen is scrolled?
     dl $7E08FB : db $02 : dw $0015 ; How many blocks X Layer 2 is scrolled?
@@ -2583,8 +2583,8 @@ delta_kraid_zeela_room:
     dw #$FFFF
 .after
 
-delta_kraid_baby_kraid:
-    dw #delta_kraid_zeela_room ; Kraid: Zeela Room
+preset_kraid_baby_kraid:
+    dw #preset_kraid_zeela_room ; Kraid: Zeela Room
     dl $7E078D : db $02 : dw $9156 ; DDB
     dl $7E078F : db $02 : dw $0002 ; DoorOut Index
     dl $7E079B : db $02 : dw $A4DA ; MDB
@@ -2619,8 +2619,8 @@ delta_kraid_baby_kraid:
     dw #$FFFF
 .after
 
-delta_kraid_kraid:
-    dw #delta_kraid_baby_kraid ; Kraid: Baby Kraid
+preset_kraid_kraid:
+    dw #preset_kraid_baby_kraid ; Kraid: Baby Kraid
     dl $7E078D : db $02 : dw $919E ; DDB
     dl $7E078F : db $02 : dw $0001 ; DoorOut Index
     dl $7E079B : db $02 : dw $A56B ; MDB
@@ -2647,8 +2647,8 @@ delta_kraid_kraid:
     dw #$FFFF
 .after
 
-delta_dray_baby_kraid:
-    dw #delta_kraid_kraid ; Kraid: Kraid
+preset_dray_baby_kraid:
+    dw #preset_kraid_kraid ; Kraid: Kraid
     dl $7E078D : db $02 : dw $91CE ; DDB
     dl $7E078F : db $02 : dw $0000 ; DoorOut Index
     dl $7E07F5 : db $02 : dw $0003 ; Music Track
@@ -2680,8 +2680,8 @@ delta_dray_baby_kraid:
     dw #$FFFF
 .after
 
-delta_dray_warehouse_entrance:
-    dw #delta_dray_baby_kraid ; Draygon: Baby Kraid
+preset_dray_warehouse_entrance:
+    dw #preset_dray_baby_kraid ; Draygon: Baby Kraid
     dl $7E078D : db $02 : dw $916E ; DDB
     dl $7E079B : db $02 : dw $A471 ; MDB
     dl $7E07F3 : db $02 : dw $0012 ; Music Bank
@@ -2717,8 +2717,8 @@ delta_dray_warehouse_entrance:
     dw #$FFFF
 .after
 
-delta_dray_glass_tunnel:
-    dw #delta_dray_warehouse_entrance ; Draygon: Warehouse Entrance
+preset_dray_glass_tunnel:
+    dw #preset_dray_warehouse_entrance ; Draygon: Warehouse Entrance
     dl $7E078D : db $02 : dw $922E ; DDB
     dl $7E079B : db $02 : dw $CF80 ; MDB
     dl $7E079F : db $02 : dw $0004 ; Region
@@ -2752,8 +2752,8 @@ delta_dray_glass_tunnel:
     dw #$FFFF
 .after
 
-delta_dray_fish_tank:
-    dw #delta_dray_glass_tunnel ; Draygon: Glass Tunnel
+preset_dray_fish_tank:
+    dw #preset_dray_glass_tunnel ; Draygon: Glass Tunnel
     dl $7E078D : db $02 : dw $A330 ; DDB
     dl $7E079B : db $02 : dw $CFC9 ; MDB
     dl $7E07F3 : db $02 : dw $001B ; Music Bank
@@ -2793,8 +2793,8 @@ delta_dray_fish_tank:
     dw #$FFFF
 .after
 
-delta_dray_crab_shaft:
-    dw #delta_dray_fish_tank ; Draygon: Fish Tank
+preset_dray_crab_shaft:
+    dw #preset_dray_fish_tank ; Draygon: Fish Tank
     dl $7E078D : db $02 : dw $A3F0 ; DDB
     dl $7E078F : db $02 : dw $0002 ; DoorOut Index
     dl $7E079B : db $02 : dw $D0B9 ; MDB
@@ -2827,8 +2827,8 @@ delta_dray_crab_shaft:
     dw #$FFFF
 .after
 
-delta_dray_botwoon_hallway:
-    dw #delta_dray_crab_shaft ; Draygon: Crab Shaft
+preset_dray_botwoon_hallway:
+    dw #preset_dray_crab_shaft ; Draygon: Crab Shaft
     dl $7E078D : db $02 : dw $A4C8 ; DDB
     dl $7E079B : db $02 : dw $D5A7 ; MDB
     dl $7E07C3 : db $02 : dw $E78D ; GFX Pointers
@@ -2866,8 +2866,8 @@ delta_dray_botwoon_hallway:
     dw #$FFFF
 .after
 
-delta_dray_botwoon:
-    dw #delta_dray_botwoon_hallway ; Draygon: Botwoon Hallway
+preset_dray_botwoon:
+    dw #preset_dray_botwoon_hallway ; Draygon: Botwoon Hallway
     dl $7E078D : db $02 : dw $A72C ; DDB
     dl $7E078F : db $02 : dw $0003 ; DoorOut Index
     dl $7E079B : db $02 : dw $D617 ; MDB
@@ -2902,8 +2902,8 @@ delta_dray_botwoon:
     dw #$FFFF
 .after
 
-delta_dray_halfie_climb:
-    dw #delta_dray_botwoon ; Draygon: Botwoon
+preset_dray_halfie_climb:
+    dw #preset_dray_botwoon ; Draygon: Botwoon
     dl $7E078D : db $02 : dw $A918 ; DDB
     dl $7E078F : db $02 : dw $0001 ; DoorOut Index
     dl $7E079B : db $02 : dw $D7E4 ; MDB
@@ -2939,8 +2939,8 @@ delta_dray_halfie_climb:
     dw #$FFFF
 .after
 
-delta_dray_draygon:
-    dw #delta_dray_halfie_climb ; Draygon: Halfie Climb
+preset_dray_draygon:
+    dw #preset_dray_halfie_climb ; Draygon: Halfie Climb
     dl $7E078D : db $02 : dw $A7F8 ; DDB
     dl $7E078F : db $02 : dw $0002 ; DoorOut Index
     dl $7E079B : db $02 : dw $D78F ; MDB
@@ -2971,8 +2971,8 @@ delta_dray_draygon:
     dw #$FFFF
 .after
 
-delta_g4_precious_room:
-    dw #delta_dray_draygon ; Draygon: Draygon
+preset_g4_precious_room:
+    dw #preset_dray_draygon ; Draygon: Draygon
     dl $7E078D : db $02 : dw $A840 ; DDB
     dl $7E078F : db $02 : dw $0001 ; DoorOut Index
     dl $7E079B : db $02 : dw $DA60 ; MDB
@@ -3016,8 +3016,8 @@ delta_g4_precious_room:
     dw #$FFFF
 .after
 
-delta_g4_halfie_climb:
-    dw #delta_g4_precious_room ; Golden 4: Precious Room
+preset_g4_halfie_climb:
+    dw #preset_g4_precious_room ; Golden 4: Precious Room
     dl $7E078D : db $02 : dw $A834 ; DDB
     dl $7E078F : db $02 : dw $0000 ; DoorOut Index
     dl $7E079B : db $02 : dw $D72A ; MDB
@@ -3055,8 +3055,8 @@ delta_g4_halfie_climb:
     dw #$FFFF
 .after
 
-delta_g4_botwoon_hallway:
-    dw #delta_g4_halfie_climb ; Golden 4: Halfie Climb
+preset_g4_botwoon_hallway:
+    dw #preset_g4_halfie_climb ; Golden 4: Halfie Climb
     dl $7E078D : db $02 : dw $A84C ; DDB
     dl $7E079B : db $02 : dw $D95E ; MDB
     dl $7E07F5 : db $02 : dw $0003 ; Music Track
@@ -3081,8 +3081,8 @@ delta_g4_botwoon_hallway:
     dw #$FFFF
 .after
 
-delta_g4_crab_shaft:
-    dw #delta_g4_botwoon_hallway ; Golden 4: Botwoon Hallway
+preset_g4_crab_shaft:
+    dw #preset_g4_botwoon_hallway ; Golden 4: Botwoon Hallway
     dl $7E078D : db $02 : dw $A768 ; DDB
     dl $7E079B : db $02 : dw $D5A7 ; MDB
     dl $7E07F5 : db $02 : dw $0005 ; Music Track
@@ -3116,8 +3116,8 @@ delta_g4_crab_shaft:
     dw #$FFFF
 .after
 
-delta_g4_mt_everest:
-    dw #delta_g4_crab_shaft ; Golden 4: Crab Shaft
+preset_g4_mt_everest:
+    dw #preset_g4_crab_shaft ; Golden 4: Crab Shaft
     dl $7E078D : db $02 : dw $A708 ; DDB
     dl $7E079B : db $02 : dw $D1A3 ; MDB
     dl $7E07C3 : db $02 : dw $B130 ; GFX Pointers
@@ -3154,8 +3154,8 @@ delta_g4_mt_everest:
     dw #$FFFF
 .after
 
-delta_g4_caterpillar_room:
-    dw #delta_g4_mt_everest ; Golden 4: Mt Everest
+preset_g4_caterpillar_room:
+    dw #preset_g4_mt_everest ; Golden 4: Mt Everest
     dl $7E078D : db $02 : dw $A42C ; DDB
     dl $7E079B : db $02 : dw $D104 ; MDB
     dl $7E08F9 : db $02 : dw $0000 ; How many blocks Y the screen is scrolled? (up = positive)
@@ -3185,8 +3185,8 @@ delta_g4_caterpillar_room:
     dw #$FFFF
 .after
 
-delta_g4_kihunter_room:
-    dw #delta_g4_caterpillar_room ; Golden 4: Caterpillar Room
+preset_g4_kihunter_room:
+    dw #preset_g4_caterpillar_room ; Golden 4: Caterpillar Room
     dl $7E078D : db $02 : dw $90BA ; DDB
     dl $7E078F : db $02 : dw $0002 ; DoorOut Index
     dl $7E079B : db $02 : dw $962A ; MDB
@@ -3219,8 +3219,8 @@ delta_g4_kihunter_room:
     dw #$FFFF
 .after
 
-delta_g4_parlor:
-    dw #delta_g4_kihunter_room ; Golden 4: Kihunter Room
+preset_g4_parlor:
+    dw #preset_g4_kihunter_room ; Golden 4: Kihunter Room
     dl $7E078D : db $02 : dw $8AC6 ; DDB
     dl $7E078F : db $02 : dw $0000 ; DoorOut Index
     dl $7E079B : db $02 : dw $91F8 ; MDB
@@ -3262,8 +3262,8 @@ delta_g4_parlor:
     dw #$FFFF
 .after
 
-delta_g4_terminator:
-    dw #delta_g4_parlor ; Golden 4: Parlor
+preset_g4_terminator:
+    dw #preset_g4_parlor ; Golden 4: Parlor
     dl $7E078D : db $02 : dw $8916 ; DDB
     dl $7E079B : db $02 : dw $92FD ; MDB
     dl $7E07F3 : db $02 : dw $0009 ; Music Bank
@@ -3295,8 +3295,8 @@ delta_g4_terminator:
     dw #$FFFF
 .after
 
-delta_g4_golden_four:
-    dw #delta_g4_terminator ; Golden 4: Terminator
+preset_g4_golden_four:
+    dw #preset_g4_terminator ; Golden 4: Terminator
     dl $7E078D : db $02 : dw $8BE6 ; DDB
     dl $7E079B : db $02 : dw $99BD ; MDB
     dl $7E07C3 : db $02 : dw $F911 ; GFX Pointers
@@ -3339,8 +3339,8 @@ delta_g4_golden_four:
     dw #$FFFF
 .after
 
-delta_g4_enter_tourian:
-    dw #delta_g4_golden_four ; Golden 4: Golden Four
+preset_tou_enter_tourian:
+    dw #preset_g4_golden_four ; Golden 4: Golden Four
     dl $7E078D : db $02 : dw $91F2 ; DDB
     dl $7E078F : db $02 : dw $0002 ; DoorOut Index
     dl $7E079B : db $02 : dw $A66A ; MDB
@@ -3376,8 +3376,8 @@ delta_g4_enter_tourian:
     dw #$FFFF
 .after
 
-delta_tou_m1:
-    dw #delta_g4_enter_tourian ; Golden 4: Enter Tourian
+preset_tou_m1:
+    dw #preset_tou_enter_tourian ; Tourian: Enter Tourian
     dl $7E078D : db $02 : dw $9222 ; DDB
     dl $7E079B : db $02 : dw $DAAE ; MDB
     dl $7E079F : db $02 : dw $0005 ; Region
@@ -3414,8 +3414,8 @@ delta_tou_m1:
     dw #$FFFF
 .after
 
-delta_tou_m2:
-    dw #delta_tou_m1 ; Tourian: M1
+preset_tou_m2:
+    dw #preset_tou_m1 ; Tourian: M1
     dl $7E078D : db $02 : dw $A984 ; DDB
     dl $7E078F : db $02 : dw $0000 ; DoorOut Index
     dl $7E079B : db $02 : dw $DAE1 ; MDB
@@ -3457,8 +3457,8 @@ delta_tou_m2:
     dw #$FFFF
 .after
 
-delta_tou_m3:
-    dw #delta_tou_m2 ; Tourian: M2
+preset_tou_m3:
+    dw #preset_tou_m2 ; Tourian: M2
     dl $7E078D : db $02 : dw $A9B4 ; DDB
     dl $7E078F : db $02 : dw $0001 ; DoorOut Index
     dl $7E079B : db $02 : dw $DB31 ; MDB
@@ -3494,8 +3494,8 @@ delta_tou_m3:
     dw #$FFFF
 .after
 
-delta_tou_m4:
-    dw #delta_tou_m3 ; Tourian: M3
+preset_tou_m4:
+    dw #preset_tou_m3 ; Tourian: M3
     dl $7E078D : db $02 : dw $A9CC ; DDB
     dl $7E079B : db $02 : dw $DB7D ; MDB
     dl $7E08F7 : db $02 : dw $0050 ; How many blocks X the screen is scrolled?
@@ -3529,8 +3529,8 @@ delta_tou_m4:
     dw #$FFFF
 .after
 
-delta_tou_baby_skip:
-    dw #delta_tou_m4 ; Tourian: M4
+preset_tou_baby_skip:
+    dw #preset_tou_m4 ; Tourian: M4
     dl $7E078D : db $02 : dw $AA14 ; DDB
     dl $7E079B : db $02 : dw $DC65 ; MDB
     dl $7E07F3 : db $02 : dw $0045 ; Music Bank
@@ -3561,8 +3561,8 @@ delta_tou_baby_skip:
     dw #$FFFF
 .after
 
-delta_tou_tourian_eye_door:
-    dw #delta_tou_baby_skip ; Tourian: Baby Skip
+preset_tou_tourian_eye_door:
+    dw #preset_tou_baby_skip ; Tourian: Baby Skip
     dl $7E078D : db $02 : dw $AA5C ; DDB
     dl $7E079B : db $02 : dw $DDC4 ; MDB
     dl $7E07F3 : db $02 : dw $001E ; Music Bank
@@ -3591,8 +3591,8 @@ delta_tou_tourian_eye_door:
     dw #$FFFF
 .after
 
-delta_tou_escape_room_3:
-    dw #delta_tou_tourian_eye_door ; Tourian: Tourian Eye Door
+preset_tou_escape_room_3:
+    dw #preset_tou_tourian_eye_door ; Tourian: Tourian Eye Door
     dl $7E078D : db $02 : dw $AAEC ; DDB
     dl $7E079B : db $02 : dw $DE7A ; MDB
     dl $7E07F3 : db $02 : dw $0024 ; Music Bank
@@ -3638,8 +3638,8 @@ delta_tou_escape_room_3:
     dw #$FFFF
 .after
 
-delta_tou_escape_parlor:
-    dw #delta_tou_escape_room_3 ; Tourian: Escape Room 3
+preset_tou_escape_parlor:
+    dw #preset_tou_escape_room_3 ; Tourian: Escape Room 3
     dl $7E078D : db $02 : dw $AB34 ; DDB
     dl $7E079B : db $02 : dw $96BA ; MDB
     dl $7E079F : db $02 : dw $0000 ; Region

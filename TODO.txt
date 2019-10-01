@@ -1,9 +1,14 @@
+x Music toggle
+
+x Controller shortcuts
+    x Load last preset
+    x Fill equipment
+    x Reset Segment
+
+- Rerandomize: Disable on Hopper-rooms
+
+- Sounds in menu (especially for jsrs)
+
+- Infohud option to toggle speed ?
+
 - Save state during fanfare
-
-- Toggle fanfare
-
-- Controller shortcuts
-    * Make it possible to change save/load/mainmenu shortcuts
-    * Load last preset
-    * Fill equipment
-    * Reset Segment
