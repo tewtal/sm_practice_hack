@@ -1,6 +1,6 @@
 local last_state = {} -- holds all state that has been changed up untill last save
 
-local delta_output = "" 
+local preset_output = "" 
 local last_step = nil
 
 local MEMTRACK = {
@@ -337,16 +337,16 @@ local function get_current_state()
 	return state
 end
 
-local function save_delta(step)
+local function save_preset(step)
 	local current_state = get_current_state()
 
 	print("saving step " .. step['full_slug'])
-    delta_output = delta_output .. "\ndelta_" .. step['full_slug'] .. ":\n"
+    preset_output = preset_output .. "\npreset_" .. step['full_slug'] .. ":\n"
 
     if last_step then
-        delta_output = delta_output .. "    dw #delta_" .. last_step['full_slug'] .. " ; " .. last_step['full_name'] .. "\n"
+        preset_output = preset_output .. "    dw #preset_" .. last_step['full_slug'] .. " ; " .. last_step['full_name'] .. "\n"
 	else
-		delta_output = delta_output .. "     dw #$0000\n"
+		preset_output = preset_output .. "     dw #$0000\n"
     end
 
     last_step = step
@@ -358,23 +358,23 @@ local function save_delta(step)
         if last_state[addr] ~= val then
             last_state[addr] = val
 
-            delta_output = delta_output ..  "    dl " ..  tohex(addr, 6) .. " : "
-            delta_output = delta_output ..  "db " ..  tohex(size, 2) .. " : "
-            delta_output = delta_output .. (size == 1 and "db " or "dw ") ..  tohex(val, size == 1 and 2 or 4)
-            delta_output = delta_output .. " ; " .. annotate_address(addr, val) .. "\n"
+            preset_output = preset_output ..  "    dl " ..  tohex(addr, 6) .. " : "
+            preset_output = preset_output ..  "db " ..  tohex(size, 2) .. " : "
+            preset_output = preset_output .. (size == 1 and "db " or "dw ") ..  tohex(val, size == 1 and 2 or 4)
+            preset_output = preset_output .. " ; " .. annotate_address(addr, val) .. "\n"
         end
     end
 
-    delta_output = delta_output .. "    dw #$FFFF\n"
-    delta_output = delta_output .. ".after\n"
+    preset_output = preset_output .. "    dw #$FFFF\n"
+    preset_output = preset_output .. ".after\n"
 end
 
-local function save_delta_file()
-    local file = io.open('delta_data.asm', 'w')
-    file:write(delta_output)
+local function save_preset_file()
+    local file = io.open('presets_data.asm', 'w')
+    file:write(preset_output)
     file:close()
 
-    local file = io.open('delta_menu.asm', 'w')
+    local file = io.open('presets_menu.asm', 'w')
     file:write('PresetsMenu:\n')
     for _, segment in pairs(SEGMENTS) do
         file:write('    dw #presets_goto_' .. segment['slug'] .. '\n')
@@ -403,7 +403,7 @@ local function save_delta_file()
         file:write('; ' .. segment['name'] .. '\n')
         for _, step in pairs(segment['steps']) do
             file:write('presets_' .. step['full_slug'] .. ':\n')
-            file:write('    %cm_delta("' .. step['name'] .. '", #delta_' .. step['full_slug'] .. ')\n\n')
+            file:write('    %cm_preset("' .. step['name'] .. '", #preset_' .. step['full_slug'] .. ')\n\n')
         end
         file:write("\n")
     end
@@ -419,8 +419,8 @@ local function tick()
 
     local step = STEPS[frame]
     if step then
-        save_delta(step)
-        save_delta_file()
+        save_preset(step)
+        save_preset_file()
     end
 end
 

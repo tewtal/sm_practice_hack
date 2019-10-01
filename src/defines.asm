@@ -10,8 +10,6 @@
 !ram_max_etanks = $7FFB24 ; ??
 !ram_last_hp = $7FFB9A
 
-!ram_display_mode = $7FFB60
-!ram_frame_counter_mode = $7FFB8C
 !ram_slowdown_mode = $7EFFFC
 !ram_slowdown_frames = $7FFB52
 !ram_dash_counter = $7FFB38
@@ -32,7 +30,6 @@
 !ram_lag_counter = $7FFB96
 !ram_last_lag_counter = $7FFB98
 
-!ram_rerandomize = $7FFB80
 !ram_phantoon_rng_1 = $7FFB82
 !ram_phantoon_rng_2 = $7FFB84
 !ram_phantoon_rng_3 = $7FFB86
@@ -60,7 +57,32 @@
 !ram_hex2dec_third_digit = $18
 !ram_hex2dec_rest = $1A
 
-!ram_artificial_lag = $7FFBA6
+!ram_cm_ctrl_mode = $7FFBC0
+!ram_cm_ctrl_timer = $7FFBC2
+!ram_cm_ctrl_last_input = $7FFBC4
+
+; -----
+; SRAM
+; -----
+
+!sram_initialized = $702000
+
+!sram_ctrl_menu = $702002
+!sram_ctrl_kill_enemies = $702004
+!sram_ctrl_reequip = $702006
+!sram_ctrl_reset_segment_timer = $702008
+!sram_ctrl_load_state = $70200A
+!sram_ctrl_save_state = $70200C
+!sram_ctrl_load_last_preset = $70200E
+
+!sram_artificial_lag = $702010
+!sram_rerandomize = $702012
+!sram_fanfare_toggle = $702014
+!sram_frame_counter_mode = $702016
+!sram_display_mode = $702018
+!sram_music_toggle = $70201A
+!sram_last_preset = $70201C
+
 
 ; -------------
 ; Menu
@@ -76,15 +98,36 @@
 !ram_cm_etanks = $7FFB90
 !ram_cm_reserve = $7FFB92
 !ram_cm_leave = $7FFB94
+!ram_cm_last_nmi_counter = $7FFB9C
 
-!MENU_CONTROLLER = $8B
-!MENU_INPUT = #$3000 ; select + start
+!ram_ctrl1 = $8B
+!ram_ctrl1_filtered = $8F
 
-!ACTION_TOGGLE      = #$0000
-!ACTION_TOGGLE_BIT  = #$0002
-!ACTION_JSR         = #$0004
-!ACTION_NUMFIELD    = #$0006
-!ACTION_CHOICE      = #$0008
+!ACTION_TOGGLE          = #$0000
+!ACTION_TOGGLE_BIT      = #$0002
+!ACTION_JSR             = #$0004
+!ACTION_NUMFIELD        = #$0006
+!ACTION_CHOICE          = #$0008
+!ACTION_CTRL_SHORTCUT   = #$000A
+
+; --------
+; Infohud
+; --------
+
+!IH_CONTROLLER_PRI = $8B
+!IH_CONTROLLER_PRI_NEW = $8F
+!IH_CONTROLLER_PRI_PREV = $97
+
+!IH_CONTROLLER_SEC = $8D
+!IH_CONTROLLER_SEC_NEW = $91
+!IH_CONTROLLER_SEC_PREV = $99
+
+!IH_PAUSE = #$0100 ; right
+!IH_SLOWDOWN = #$0400 ; down
+!IH_SPEEDUP = #$0800 ; up
+!IH_RESET = #$0200 ; left
+!IH_STATUS_R = #$0010 ; r
+!IH_STATUS_L = #$0020 ; l
 
 ; ------------
 ; Presets
@@ -92,3 +135,23 @@
 
 !ram_load_preset = $7FFC00
 !ram_cgram_cache = $7FFC02 ; 0x14 bytes
+
+; ----------
+; Save/load
+; ----------
+
+; Savestate code variables
+!SS_BANK = $8000
+!SS_INPUT_CUR = $8B
+!SS_INPUT_NEW = $8F
+!SS_INPUT_PREV = $97
+
+!SRAM_DMA_BANK = $770000
+!SRAM_SAVED_SP = $774004
+
+; SM specific things
+!SRAM_MUSIC_BANK = $701FD0
+!SRAM_MUSIC_TRACK = $701FD2
+!MUSIC_BANK = $07F3
+!MUSIC_TRACK = $07F5
+!MUSIC_ROUTINE = $808FC1
