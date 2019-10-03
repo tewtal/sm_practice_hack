@@ -32,9 +32,8 @@
 
 !ram_phantoon_rng_1 = $7FFB82
 !ram_phantoon_rng_2 = $7FFB84
-!ram_phantoon_rng_3 = $7FFB86
-!ram_phantoon_rng_4 = $7FFB88
-!ram_botwoon_rng = $7FFB8A
+!ram_botwoon_rng = $7FFB86
+!ram_room_has_set_rng = $7FFB88
 
 !ram_tmp_1 = $7FFB4C
 !ram_tmp_2 = $7FFB4E
@@ -69,7 +68,7 @@
 
 !sram_ctrl_menu = $702002
 !sram_ctrl_kill_enemies = $702004
-!sram_ctrl_reequip = $702006
+!sram_ctrl_full_equipment = $702006
 !sram_ctrl_reset_segment_timer = $702008
 !sram_ctrl_load_state = $70200A
 !sram_ctrl_save_state = $70200C
@@ -82,7 +81,8 @@
 !sram_display_mode = $702018
 !sram_music_toggle = $70201A
 !sram_last_preset = $70201C
-
+!sram_save_has_set_rng = $70201E
+!sram_preset_category = $702020
 
 ; -------------
 ; Menu
@@ -109,6 +109,9 @@
 !ACTION_NUMFIELD        = #$0006
 !ACTION_CHOICE          = #$0008
 !ACTION_CTRL_SHORTCUT   = #$000A
+
+!SOUND_MENU_MOVE = $0039
+!SOUND_MENU_JSR = $0039
 
 ; --------
 ; Infohud

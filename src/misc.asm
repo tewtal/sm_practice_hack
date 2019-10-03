@@ -86,3 +86,15 @@ gamemode_end:
     RTL
 }
 
+stop_all_sounds:
+{
+    ; If $05F5 is non-zero, the game won't clear the sounds
+    LDA $05F5 : PHA
+    LDA #$0000 : STA $05F5
+    JSL $82BE17
+    PLA : STA $05F5
+
+    ; Makes the game check Samus' health again, to see if we need annoying sound
+    LDA #$0000 : STA $0A6A
+    RTL
+}

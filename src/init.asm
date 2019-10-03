@@ -7,7 +7,7 @@ org $808455
 
 
 org $81F000
-print "init start ", pc
+print pc, " init start"
 init_code:
 {
     REP #$30
@@ -44,7 +44,7 @@ init_sram:
     LDA #$6010 : STA !sram_ctrl_save_state  ; Select + Y + R
     LDA #$6020 : STA !sram_ctrl_load_state  ; Select + Y + L
     LDA #$0000 : STA !sram_ctrl_load_last_preset
-    LDA #$0000 : STA !sram_ctrl_reequip
+    LDA #$0000 : STA !sram_ctrl_full_equipment
     LDA #$0000 : STA !sram_ctrl_kill_enemies
     LDA #$0000 : STA !sram_ctrl_reset_segment_timer
 
@@ -56,9 +56,11 @@ init_sram:
     LDA #$0000 : STA !sram_frame_counter_mode
     LDA #$0000 : STA !sram_display_mode
     LDA #$0000 : STA !sram_last_preset
+    LDA #$0000 : STA !sram_save_has_set_rng
+    LDA #$0000 : STA !sram_preset_category
 
     LDA #!SRAM_VERSION : STA !sram_initialized
     RTS
 }
 
-print "init end ", pc
+print pc, " init end"
