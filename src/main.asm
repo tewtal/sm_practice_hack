@@ -1,12 +1,17 @@
 lorom
 
+!FEATURE_SD2SNES ?= 1
+
 table ../resources/normal.tbl
 
 incsrc macros.asm
 incsrc defines.asm
 
 incsrc gamemode.asm
-incsrc save.asm
+if !FEATURE_SD2SNES
+    print "SD2SNES ENABLED"
+    incsrc save.asm
+endif
 incsrc infohud.asm
 incsrc menu.asm
 incsrc rng.asm

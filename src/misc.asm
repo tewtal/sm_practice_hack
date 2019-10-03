@@ -2,6 +2,16 @@
 org $008000
     db $FF
 
+; Set SRAM size
+if !FEATURE_SD2SNES
+    org $00FFD8
+        db $08 ; 256kb
+else
+    org $00FFD8
+        db $05 ; 64kb
+endif
+
+
 ; Skip intro
 ; $82:EEDF A9 95 A3    LDA #$A395
 org $82EEDF
