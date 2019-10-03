@@ -14,6 +14,3 @@ incsrc presets.asm
 incsrc misc.asm
 incsrc init.asm
 incsrc fanfare.asm
-
-; org $CF8413
-;     db $6F

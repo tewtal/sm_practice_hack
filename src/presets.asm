@@ -1,9 +1,5 @@
-!presets_bank = preset_pbs_elevator>>16
-!presets_bank_start = !presets_bank<<16
-
-
 org $82FA00
-print "misc start ", pc
+print pc, " presets start"
 preset_load:
 {
     PHP
@@ -100,6 +96,7 @@ preset_load:
 reset_all_counters:
 {
     LDA #$0000
+    STA !ram_room_has_set_rng
     STA $09DA : STA $09DC : STA $09DE : STA $09E0
     STA !ram_seg_rt_frames : STA !ram_seg_rt_seconds : STA !ram_seg_rt_minutes
     STA !ram_realtime_room : STA !ram_last_realtime_room
@@ -111,9 +108,12 @@ reset_all_counters:
 
 preset_load_preset:
   PHB
-    %a8() : LDA.b #!presets_bank : PHA : PLB : %a16()
+    LDA !sram_preset_category : ASL : TAX
+    LDA preset_banks,X : %a8() : PHA : PLB : %a16()
+
     LDA !ram_load_preset : STA !sram_last_preset : STA $C1
     LDA #$0000 : STA !ram_load_preset
+
     LDX #$0000
   .loop_path
     LDA $C1 : STA $7FF000,X
@@ -123,6 +123,7 @@ preset_load_preset:
   ; then traverse $7FF000 from the first preset until the last one, and apply them
   .loop_presets
     DEX #2 : BMI .done
+
     JSR preset_to_memory
     BRA .loop_presets
 
@@ -138,22 +139,23 @@ preset_load_preset:
 
 preset_to_memory:
   PHX
+    STZ $00
     LDA $7FF000,X
-    INC #2 : TAX
+    INC #2 : TAY
 
   .loop
-    LDA !presets_bank_start,X : CMP #$FFFF : BEQ .done : STA $C3
-    LDA !presets_bank_start+2,X : STA $C5
-    LDA !presets_bank_start+3,X : AND #$00FF : CMP #$0001 : BEQ .one
+    LDA ($00),Y : INY : INY : CMP #$FFFF : BEQ .done : STA $C3
+    LDA ($00),Y : INY : STA $C5
+    LDA ($00),Y : INY : AND #$00FF : CMP #$0001 : BEQ .one
 
   .two
-    LDA !presets_bank_start+4,X : STA [$C3]
+    LDA ($00),Y : INY : INY : STA [$C3]
     INX #6
     BRA .loop
 
   .one
     %a8()
-    LDA !presets_bank_start+5,X : STA [$C3]
+    LDA ($00),Y : INY : STA [$C3]
     %a16()
     INX #5
     BRA .loop
@@ -162,11 +164,17 @@ preset_to_memory:
   PLX
     RTS
 
-print "misc end ", pc
+preset_banks:
+{
+    dw preset_prkd_bombs_elevator>>16
+    dw preset_hundo_bombs_ceres_elevator>>16
+}
+
+print pc, " presets end"
 
 
 org $80F000
-print "preset_start_gameplay start ", pc
+print pc, " preset_start_gameplay start"
 preset_start_gameplay:
 {
     PHP
@@ -218,6 +226,7 @@ preset_start_gameplay:
     JSR $A12B    ; Play 14h frames of music
 
     LDA #$0000 : STA $05F5  ; Enable sounds
+    JSL stop_all_sounds
 
     LDA #$E737 : STA $099C  ; Pointer to next frame's room transition code = $82:E737
     PLB
@@ -234,4 +243,14 @@ transfer_cgram_long:
     PLP
     RTL
 }
-print "preset_start_gameplay end ", pc
+print pc, " preset_start_gameplay end"
+
+org $B88000
+print pc, " hundo data start"
+incsrc presets/hundo_data.asm
+print pc, " hundo data end"
+
+org $CEC000
+print pc, " prkd data start"
+incsrc presets/prkd_data.asm
+print pc, " prkd data end"

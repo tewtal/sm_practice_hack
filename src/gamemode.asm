@@ -6,9 +6,12 @@ org $82896E
     end_of_normal_gameplay:
 
 org $85A000
-print "gamemode start ", pc
+print pc, " gamemode start"
 gamemode_start:
 {
+    PHB
+    PHK : PLB
+
     JSR gamemode_shortcuts
     %ai16()
     PHP
@@ -20,6 +23,7 @@ gamemode_start:
     +
     LDA $0998 : AND #$00FF
     PLP
+    PLB
     RTL
 }
 
@@ -29,11 +33,11 @@ gamemode_shortcuts:
 
     CLC : RTS
 
-  + LDA !ram_ctrl1 : AND !sram_ctrl_save_state : CMP !sram_ctrl_save_state : BNE +
+  + LDA !ram_ctrl1 : CMP !sram_ctrl_save_state : BNE +
     AND !ram_ctrl1_filtered : BEQ +
     JMP .save_state
 
-  + LDA !ram_ctrl1 : AND !sram_ctrl_load_state : CMP !sram_ctrl_load_state : BNE +
+  + LDA !ram_ctrl1 : CMP !sram_ctrl_load_state : BNE +
     AND !ram_ctrl1_filtered : BEQ +
     JMP .load_state
 
@@ -49,9 +53,9 @@ gamemode_shortcuts:
     AND !ram_ctrl1_filtered : BEQ +
     JMP .reset_segment_timer
 
-  + LDA !ram_ctrl1 : AND !sram_ctrl_reequip : CMP !sram_ctrl_reequip : BNE +
+  + LDA !ram_ctrl1 : AND !sram_ctrl_full_equipment : CMP !sram_ctrl_full_equipment : BNE +
     AND !ram_ctrl1_filtered : BEQ +
-    JMP .reequip
+    JMP .full_equipment
 
   + LDA !ram_ctrl1 : AND !sram_ctrl_menu : CMP !sram_ctrl_menu : BNE +
     AND !ram_ctrl1_filtered : BEQ +
@@ -61,11 +65,11 @@ gamemode_shortcuts:
 
   .save_state
     JSL save_state
-    CLC : RTS
+    SEC : RTS
 
   .load_state
     JSL load_state
-    CLC : RTS
+    SEC : RTS
 
   .kill_enemies
     LDA #$0000
@@ -78,7 +82,7 @@ gamemode_shortcuts:
 
   .load_last_preset
     LDA !sram_last_preset : STA !ram_load_preset
-    CLC : RTS
+    SEC : RTS
 
   .reset_segment_timer
     LDA #$0000
@@ -87,7 +91,7 @@ gamemode_shortcuts:
     STA !ram_seg_rt_minutes
     CLC : RTS
 
-  .reequip
+  .full_equipment
     LDA $7E09C4 : STA $7E09C2 ; health
     LDA $7E09C8 : STA $7E09C6 ; missiles
     LDA $7E09CC : STA $7E09CA ; supers
@@ -108,4 +112,4 @@ gamemode_shortcuts:
 
     SEC : RTS
 }
-print "gamemode end ", pc
+print pc, " gamemode end"
