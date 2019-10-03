@@ -84,7 +84,7 @@ hook_phantoon_1st_dir_rng:
     JSL $808111 ; Trying to preserve the number of RNG calls being done in the frame
 
     LDA !ram_phantoon_rng_1 : BEQ .no_manip
-    PHX : TAX : LDA phantoon_dirs,X : PLX : AND #$00FF
+    PHX : TAX : LDA.l phantoon_dirs,X : PLX : AND #$00FF
     RTL
 
   .no_manip
@@ -94,7 +94,7 @@ hook_phantoon_1st_dir_rng:
 
 hook_phantoon_1st_pat:
     LDA !ram_phantoon_rng_1 : BEQ .no_manip
-    PHX : TAX : LDA phantoon_pats,X : PLX : AND #$00FF
+    PHX : TAX : LDA.l phantoon_pats,X : PLX : AND #$00FF
     RTL
 
   .no_manip
@@ -107,7 +107,7 @@ hook_phantoon_2nd_dir_rng:
 
     LDA !ram_phantoon_rng_2 : BEQ .no_manip
 
-    PHX : TAX : LDA phantoon_dirs,X : PLX : AND #$00FF
+    PHX : TAX : LDA.l phantoon_dirs,X : PLX : AND #$00FF
     EOR #$0001
     RTL
 
@@ -134,7 +134,7 @@ hook_phantoon_2nd_pat:
 
     LDA !ram_phantoon_rng_2 : BEQ .no_manip
 
-    PHX : TAX : LDA phantoon_pats,X : PLX : AND #$00FF
+    PHX : TAX : LDA.l phantoon_pats,X : PLX : AND #$00FF
     RTL
 
   .no_manip

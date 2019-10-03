@@ -335,7 +335,7 @@ cm_tilemap_transfer:
     STA $4310
     LDA.w #!ram_tilemap_buffer
     STA $4312
-    LDA #!ram_tilemap_buffer>>16
+    LDA.w #!ram_tilemap_buffer>>16
     STA $4314
     LDA #$0800
     STA $4315
@@ -1146,7 +1146,6 @@ cm_divide_100:
 ; -----------
 
 incsrc mainmenu.asm
-
 
 ; ----------
 ; Resources

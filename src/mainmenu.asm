@@ -71,7 +71,7 @@ action_presets_submenu:
 {
     ; Increment stack pointer by 2, then store current menu
     LDA !ram_cm_stack_index : INC #2 : STA !ram_cm_stack_index : TAX
-    LDA !sram_preset_category : ASL : TAY : LDA preset_category_submenus,Y : STA !ram_cm_menu_stack,X
+    LDA !sram_preset_category : ASL : TAY : LDA.w preset_category_submenus,Y : STA !ram_cm_menu_stack,X
     LDA #$0000 : STA !ram_cm_cursor_stack,X
 
     LDA #!SOUND_MENU_MOVE : JSL $80903F
@@ -285,25 +285,25 @@ action_category:
     TYA : ASL #4 : TAX
 
     ; Items
-    LDA .table, X : STA $7E09A4 : STA $7E09A2 : INX #2
+    LDA.l .table, X : STA $7E09A4 : STA $7E09A2 : INX #2
 
     ; Beams
-    LDA .table, X : STA $7E09A8 : STA $7E09A6 : INX #2
+    LDA.l .table, X : STA $7E09A8 : STA $7E09A6 : INX #2
 
     ; Health
-    LDA .table, X : STA $7E09C2 : STA $7E09C4 : INX #2
+    LDA.l .table, X : STA $7E09C2 : STA $7E09C4 : INX #2
 
     ; Missiles
-    LDA .table, X : STA $7E09C6 : STA $7E09C8 : INX #2
+    LDA.l .table, X : STA $7E09C6 : STA $7E09C8 : INX #2
 
     ; Supers
-    LDA .table, X : STA $7E09CA : STA $7E09CC : INX #2
+    LDA.l .table, X : STA $7E09CA : STA $7E09CC : INX #2
 
     ; PBs
-    LDA .table, X : STA $7E09CE : STA $7E09D0 : INX #2
+    LDA.l .table, X : STA $7E09CE : STA $7E09D0 : INX #2
 
     ; Reserves
-    LDA .table, X : STA $7E09D4 : STA $7E09D6 : INX #2
+    LDA.l .table, X : STA $7E09D4 : STA $7E09D6 : INX #2
 
     CPY #$0000 : BNE +
 
