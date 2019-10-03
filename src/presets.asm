@@ -105,11 +105,10 @@ reset_all_counters:
     RTL
 }
 
-
 preset_load_preset:
   PHB
     LDA !sram_preset_category : ASL : TAX
-    LDA preset_banks,X : %a8() : PHA : PLB : %a16()
+    LDA.l preset_banks,X : %a8() : PHA : PLB : %a16()
 
     LDA !ram_load_preset : STA !sram_last_preset : STA $C1
     LDA #$0000 : STA !ram_load_preset
