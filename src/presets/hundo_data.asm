@@ -688,33 +688,16 @@ preset_hundo_kraid_leaving_kraid_hallway:
     dw #$FFFF
 .after
 
-preset_hundo_kraid_kraid_etank:
-    dw #preset_hundo_kraid_leaving_kraid_hallway ; Kraid: Leaving Kraid Hallway
-    dl $7E078D : db $02 : dw $916E ; DDB
-    dl $7E079B : db $02 : dw $A471 ; MDB
-    dl $7E07F3 : db $02 : dw $0012 ; Music Bank
-    dl $7E07F5 : db $02 : dw $0005 ; Music Track
-    dl $7E090F : db $02 : dw $4000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $2800 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0100 ; Screen Y position in pixels
-    dl $7E0A1C : db $02 : dw $0028 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0504 ; More position/state
-    dl $7E0AF6 : db $02 : dw $0051 ; Samus X
-    dl $7E0AFA : db $02 : dw $0190 ; Samus Y
-    dl $7ED8B8 : db $02 : dw $00ED ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $0019 ; Events, Items, Doors
-    dw #$FFFF
-.after
-
 preset_hundo_kraid_kraid_escape:
-    dw #preset_hundo_kraid_kraid_etank ; Kraid: Kraid E-Tank
+    dw #preset_hundo_kraid_leaving_kraid_hallway ; Kraid: Leaving Kraid Hallway
     dl $7E078D : db $02 : dw $914A ; DDB
     dl $7E078F : db $02 : dw $0001 ; DoorOut Index
     dl $7E079B : db $02 : dw $A4B1 ; MDB
+    dl $7E07F3 : db $02 : dw $0012 ; Music Bank
+    dl $7E07F5 : db $02 : dw $0005 ; Music Track
     dl $7E090F : db $02 : dw $9000 ; Screen subpixel X position.
+    dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $C400 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $012B ; Health
     dl $7E09C4 : db $02 : dw $012B ; Max helath
     dl $7E0A1C : db $02 : dw $0009 ; Samus position/state
@@ -729,48 +712,38 @@ preset_hundo_kraid_kraid_escape:
 
 preset_hundo_speed_booster_business_center:
     dw #preset_hundo_kraid_kraid_escape ; Kraid: Kraid Escape
-    dl $7E078D : db $02 : dw $913E ; DDB
-    dl $7E078F : db $02 : dw $0003 ; DoorOut Index
-    dl $7E079B : db $02 : dw $A6A1 ; MDB
-    dl $7E07F5 : db $02 : dw $0003 ; Music Track
-    dl $7E090F : db $02 : dw $3000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $000B ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $23FF ; Screen subpixel Y position
-    dl $7E09C6 : db $02 : dw $0011 ; Missiles
-    dl $7E09CA : db $02 : dw $0004 ; Supers
-    dl $7E09D6 : db $02 : dw $0018 ; Reserves
-    dl $7E0A1C : db $02 : dw $0008 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0004 ; More position/state
-    dl $7E0AF6 : db $02 : dw $0079 ; Samus X
-    dl $7E0AFA : db $02 : dw $008B ; Samus Y
-    dw #$FFFF
-.after
-
-preset_hundo_speed_booster_hi_jump:
-    dw #preset_hundo_speed_booster_business_center ; Speed Booster: Business Center
-    dl $7E078D : db $02 : dw $92D6 ; DDB
+    dl $7E078D : db $02 : dw $9246 ; DDB
     dl $7E078F : db $02 : dw $0002 ; DoorOut Index
-    dl $7E079B : db $02 : dw $AA41 ; MDB
+    dl $7E079B : db $02 : dw $A7DE ; MDB
     dl $7E079F : db $02 : dw $0002 ; Region
     dl $7E07C3 : db $02 : dw $C3F9 ; GFX Pointers
     dl $7E07C5 : db $02 : dw $BBBD ; GFX Pointers
     dl $7E07C7 : db $02 : dw $C2B6 ; GFX Pointers
     dl $7E07F3 : db $02 : dw $0015 ; Music Bank
-    dl $7E07F5 : db $02 : dw $0002 ; Music Track
-    dl $7E090F : db $02 : dw $C000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $7C00 ; Screen subpixel Y position
-    dl $7E09C2 : db $02 : dw $018F ; Health
-    dl $7E09C4 : db $02 : dw $018F ; Max helath
+    dl $7E090F : db $02 : dw $3000 ; Screen subpixel X position.
+    dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
+    dl $7E0915 : db $02 : dw $0232 ; Screen Y position in pixels
+    dl $7E09C6 : db $02 : dw $0011 ; Missiles
+    dl $7E09CA : db $02 : dw $0004 ; Supers
+    dl $7E09D6 : db $02 : dw $0018 ; Reserves
+    dl $7E0A1C : db $02 : dw $009B ; Samus position/state
+    dl $7E0A1E : db $02 : dw $0000 ; More position/state
+    dl $7E0AF6 : db $02 : dw $0080 ; Samus X
+    dl $7E0AFA : db $02 : dw $02A2 ; Samus Y
+    dw #$FFFF
+.after
+
+preset_hundo_speed_booster_hi_jump:
+    dw #preset_hundo_speed_booster_business_center ; Speed Booster: Business Center
+    dl $7E090F : db $02 : dw $6001 ; Screen subpixel X position.
+    dl $7E0915 : db $02 : dw $051B ; Screen Y position in pixels
     dl $7E09CA : db $02 : dw $0003 ; Supers
     dl $7E09D6 : db $02 : dw $001D ; Reserves
-    dl $7E0A1C : db $02 : dw $0018 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0204 ; More position/state
-    dl $7E0AF6 : db $02 : dw $0182 ; Samus X
-    dl $7E0AFA : db $02 : dw $0077 ; Samus Y
-    dl $7ED876 : db $02 : dw $0101 ; Events, Items, Doors
+    dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
+    dl $7E0A1E : db $02 : dw $0004 ; More position/state
+    dl $7E0AF6 : db $02 : dw $0041 ; Samus X
+    dl $7E0AFA : db $02 : dw $058B ; Samus Y
     dl $7ED8B8 : db $02 : dw $20EF ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $001C ; Events, Items, Doors
     dw #$FFFF
 .after
 
@@ -778,11 +751,15 @@ preset_hundo_speed_booster_business_center_climb:
     dw #preset_hundo_speed_booster_hi_jump ; Speed Booster: Hi Jump
     dl $7E078D : db $02 : dw $93F6 ; DDB
     dl $7E078F : db $02 : dw $0000 ; DoorOut Index
-    dl $7E07F5 : db $02 : dw $0005 ; Music Track
+    dl $7E079B : db $02 : dw $AA41 ; MDB
     dl $7E090F : db $02 : dw $E000 ; Screen subpixel X position.
+    dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $5000 ; Screen subpixel Y position
+    dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
     dl $7E09A2 : db $02 : dw $1105 ; Equipped Items
     dl $7E09A4 : db $02 : dw $1105 ; Collected Items
+    dl $7E09C2 : db $02 : dw $018F ; Health
+    dl $7E09C4 : db $02 : dw $018F ; Max helath
     dl $7E09C6 : db $02 : dw $0018 ; Missiles
     dl $7E09C8 : db $02 : dw $0019 ; Max missiles
     dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
@@ -1115,13 +1092,16 @@ preset_hundo_phantoon_red_tower_revisit:
     dl $7E078F : db $02 : dw $0000 ; DoorOut Index
     dl $7E079B : db $02 : dw $A3DD ; MDB
     dl $7E07F5 : db $02 : dw $0005 ; Music Track
-    dl $7E090F : db $02 : dw $3801 ; Screen subpixel X position.
-    dl $7E0913 : db $02 : dw $6400 ; Screen subpixel Y position
-    dl $7E09C2 : db $02 : dw $0149 ; Health
+    dl $7E090F : db $02 : dw $3C00 ; Screen subpixel X position.
+    dl $7E0913 : db $02 : dw $E400 ; Screen subpixel Y position
+    dl $7E09C2 : db $02 : dw $014C ; Health
     dl $7E09CA : db $02 : dw $0005 ; Supers
-    dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0004 ; More position/state
-    dl $7E0AF6 : db $02 : dw $001C ; Samus X
+    dl $7E0A1C : db $02 : dw $00CA ; Samus position/state
+    dl $7E0A1E : db $02 : dw $1B04 ; More position/state
+    dl $7E0A68 : db $02 : dw $000E ; Flash suit
+    dl $7E0AF6 : db $02 : dw $0047 ; Samus X
+    dl $7E0AFA : db $02 : dw $007A ; Samus Y
+    dl $7E0B3F : db $02 : dw $0004 ; Blue suit
     dw #$FFFF
 .after
 
@@ -1132,13 +1112,17 @@ preset_hundo_phantoon_hellway:
     dl $7E090F : db $02 : dw $A000 ; Screen subpixel X position.
     dl $7E0913 : db $02 : dw $87FF ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0006 ; Screen Y position in pixels
+    dl $7E09C2 : db $02 : dw $0149 ; Health
     dl $7E0A1C : db $02 : dw $0009 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0108 ; More position/state
+    dl $7E0A68 : db $02 : dw $0000 ; Flash suit
     dl $7E0AF6 : db $02 : dw $00C7 ; Samus X
+    dl $7E0AFA : db $02 : dw $008B ; Samus Y
+    dl $7E0B3F : db $02 : dw $0000 ; Blue suit
     dw #$FFFF
 .after
 
-preset_hundo_phantoon_red_brinstar_elevator:
+preset_hundo_phantoon_leaving_alpha_pbs:
     dw #preset_hundo_phantoon_hellway ; Phantoon: Hellway
     dl $7E078D : db $02 : dw $9096 ; DDB
     dl $7E079B : db $02 : dw $A3AE ; MDB
@@ -1161,26 +1145,8 @@ preset_hundo_phantoon_red_brinstar_elevator:
     dw #$FFFF
 .after
 
-preset_hundo_phantoon_beta_pbs:
-    dw #preset_hundo_phantoon_red_brinstar_elevator ; Phantoon: Red Brinstar Elevator
-    dl $7E078D : db $02 : dw $90EA ; DDB
-    dl $7E079B : db $02 : dw $A322 ; MDB
-    dl $7E07F5 : db $02 : dw $0005 ; Music Track
-    dl $7E090F : db $02 : dw $B000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $4800 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $02F9 ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $013F ; Health
-    dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0004 ; More position/state
-    dl $7E0AF6 : db $02 : dw $0060 ; Samus X
-    dl $7E0AFA : db $02 : dw $038B ; Samus Y
-    dl $7ED8B6 : db $02 : dw $A808 ; Events, Items, Doors
-    dw #$FFFF
-.after
-
 preset_hundo_phantoon_kihunter_room:
-    dw #preset_hundo_phantoon_beta_pbs ; Phantoon: Beta PBs
+    dw #preset_hundo_phantoon_leaving_alpha_pbs ; Phantoon: Leaving Alpha PBs
     dl $7E078D : db $02 : dw $90BA ; DDB
     dl $7E078F : db $02 : dw $0002 ; DoorOut Index
     dl $7E079B : db $02 : dw $962A ; MDB
@@ -1188,10 +1154,9 @@ preset_hundo_phantoon_kihunter_room:
     dl $7E07C3 : db $02 : dw $F911 ; GFX Pointers
     dl $7E07C5 : db $02 : dw $43BA ; GFX Pointers
     dl $7E07C7 : db $02 : dw $C2AF ; GFX Pointers
-    dl $7E07F5 : db $02 : dw $0003 ; Music Track
     dl $7E090F : db $02 : dw $3000 ; Screen subpixel X position.
+    dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $9C01 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $0137 ; Health
     dl $7E09CA : db $02 : dw $0005 ; Supers
     dl $7E09CE : db $02 : dw $0007 ; Pbs
@@ -1239,23 +1204,23 @@ preset_hundo_phantoon_phantoon_2:
     dl $7E07C5 : db $02 : dw $A6BB ; GFX Pointers
     dl $7E07C7 : db $02 : dw $C2B1 ; GFX Pointers
     dl $7E07F3 : db $02 : dw $0030 ; Music Bank
-    dl $7E090F : db $02 : dw $8000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0400 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $B400 ; Screen subpixel Y position
+    dl $7E090F : db $02 : dw $2000 ; Screen subpixel X position.
+    dl $7E0911 : db $02 : dw $01F8 ; Screen X position in pixels
+    dl $7E0913 : db $02 : dw $E800 ; Screen subpixel Y position
     dl $7E09C2 : db $02 : dw $008F ; Health
     dl $7E09C6 : db $02 : dw $0032 ; Missiles
     dl $7E09C8 : db $02 : dw $0037 ; Max missiles
-    dl $7E09CA : db $02 : dw $0002 ; Supers
+    dl $7E09CA : db $02 : dw $0003 ; Supers
     dl $7E09CE : db $02 : dw $0006 ; Pbs
-    dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0008 ; More position/state
+    dl $7E0A1C : db $02 : dw $000A ; Samus position/state
+    dl $7E0A1E : db $02 : dw $0104 ; More position/state
     dl $7E0A68 : db $02 : dw $0000 ; Flash suit
-    dl $7E0AF6 : db $02 : dw $04D2 ; Samus X
-    dl $7E0AFA : db $02 : dw $008B ; Samus Y
+    dl $7E0AF6 : db $02 : dw $0271 ; Samus X
+    dl $7E0AFA : db $02 : dw $005B ; Samus Y
     dl $7ED870 : db $02 : dw $8190 ; Events, Items, Doors
     dl $7ED880 : db $02 : dw $0001 ; Events, Items, Doors
     dl $7ED8B0 : db $02 : dw $3000 ; Events, Items, Doors
-    dl $7ED8C0 : db $02 : dw $0030 ; Events, Items, Doors
+    dl $7ED8C0 : db $02 : dw $0010 ; Events, Items, Doors
     dl $7ED91A : db $02 : dw $0032 ; Events, Items, Doors
     dw #$FFFF
 .after
@@ -1301,43 +1266,23 @@ preset_hundo_gravity_ws_right_supers:
     dw #$FFFF
 .after
 
-preset_hundo_gravity_ws_shaft_up_2:
-    dw #preset_hundo_gravity_ws_right_supers ; Gravity: WS Right Supers
-    dl $7E078D : db $02 : dw $A210 ; DDB
-    dl $7E078F : db $02 : dw $0002 ; DoorOut Index
-    dl $7E079B : db $02 : dw $CDA8 ; MDB
-    dl $7E090F : db $02 : dw $7000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $0C00 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $012A ; Health
-    dl $7E09C6 : db $02 : dw $0034 ; Missiles
-    dl $7E09CA : db $02 : dw $000F ; Supers
-    dl $7E09CC : db $02 : dw $000F ; Max supers
-    dl $7E09CE : db $02 : dw $0005 ; Pbs
-    dl $7E0A1C : db $02 : dw $004E ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0204 ; More position/state
-    dl $7E0AF6 : db $02 : dw $0039 ; Samus X
-    dl $7E0AFA : db $02 : dw $0070 ; Samus Y
-    dl $7ED880 : db $02 : dw $0061 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $0036 ; Events, Items, Doors
-    dw #$FFFF
-.after
-
 preset_hundo_gravity_spiky_room_of_death:
-    dw #preset_hundo_gravity_ws_shaft_up_2 ; Gravity: WS Shaft Up 2
+    dw #preset_hundo_gravity_ws_right_supers ; Gravity: WS Right Supers
     dl $7E078D : db $02 : dw $A2E8 ; DDB
-    dl $7E078F : db $02 : dw $0000 ; DoorOut Index
-    dl $7E079B : db $02 : dw $CAF6 ; MDB
     dl $7E090F : db $02 : dw $D801 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0400 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $D000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0471 ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $011B ; Health
+    dl $7E09C6 : db $02 : dw $0034 ; Missiles
+    dl $7E09CA : db $02 : dw $000F ; Supers
+    dl $7E09CC : db $02 : dw $000F ; Max supers
+    dl $7E09CE : db $02 : dw $0005 ; Pbs
     dl $7E0A1C : db $02 : dw $000F ; Samus position/state
     dl $7E0A1E : db $02 : dw $0108 ; More position/state
     dl $7E0AF6 : db $02 : dw $0455 ; Samus X
     dl $7E0AFA : db $02 : dw $04E6 ; Samus Y
+    dl $7ED880 : db $02 : dw $0061 ; Events, Items, Doors
     dl $7ED91A : db $02 : dw $0037 ; Events, Items, Doors
     dw #$FFFF
 .after
@@ -1347,18 +1292,17 @@ preset_hundo_gravity_ws_etank:
     dl $7E078D : db $02 : dw $A258 ; DDB
     dl $7E078F : db $02 : dw $0001 ; DoorOut Index
     dl $7E079B : db $02 : dw $CBD5 ; MDB
-    dl $7E090F : db $02 : dw $A000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $5000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $F800 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
+    dl $7E0913 : db $02 : dw $2400 ; Screen subpixel Y position
+    dl $7E0915 : db $02 : dw $0100 ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $00B7 ; Health
     dl $7E09C6 : db $02 : dw $0033 ; Missiles
-    dl $7E09CA : db $02 : dw $000E ; Supers
-    dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0004 ; More position/state
-    dl $7E0AF6 : db $02 : dw $006A ; Samus X
-    dl $7E0AFA : db $02 : dw $005B ; Samus Y
-    dl $7ED8C0 : db $02 : dw $087C ; Events, Items, Doors
+    dl $7E0A1C : db $02 : dw $000A ; Samus position/state
+    dl $7E0A1E : db $02 : dw $0104 ; More position/state
+    dl $7E0AF6 : db $02 : dw $0078 ; Samus X
+    dl $7E0AFA : db $02 : dw $016B ; Samus Y
+    dl $7ED8C0 : db $02 : dw $007C ; Events, Items, Doors
     dw #$FFFF
 .after
 
@@ -1374,16 +1318,18 @@ preset_hundo_gravity_spiky_room_of_death_revisit:
     dl $7E0915 : db $02 : dw $0005 ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $01F3 ; Health
     dl $7E09C4 : db $02 : dw $01F3 ; Max helath
+    dl $7E09CA : db $02 : dw $000E ; Supers
     dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0008 ; More position/state
     dl $7E0AF6 : db $02 : dw $029E ; Samus X
     dl $7E0AFA : db $02 : dw $008D ; Samus Y
     dl $7ED880 : db $02 : dw $0071 ; Events, Items, Doors
+    dl $7ED8C0 : db $02 : dw $087C ; Events, Items, Doors
     dl $7ED91A : db $02 : dw $0038 ; Events, Items, Doors
     dw #$FFFF
 .after
 
-preset_hundo_gravity_ws_shaft_up_3:
+preset_hundo_gravity_ws_shaft_up_2:
     dw #preset_hundo_gravity_spiky_room_of_death_revisit ; Gravity: Spiky Room of Death Revisit
     dl $7E078D : db $02 : dw $A24C ; DDB
     dl $7E078F : db $02 : dw $0000 ; DoorOut Index
@@ -1402,7 +1348,7 @@ preset_hundo_gravity_ws_shaft_up_3:
 .after
 
 preset_hundo_gravity_attic:
-    dw #preset_hundo_gravity_ws_shaft_up_3 ; Gravity: WS Shaft Up 3
+    dw #preset_hundo_gravity_ws_shaft_up_2 ; Gravity: WS Shaft Up 2
     dl $7E078D : db $02 : dw $A2D0 ; DDB
     dl $7E079B : db $02 : dw $CAF6 ; MDB
     dl $7E090F : db $02 : dw $0800 ; Screen subpixel X position.
@@ -1423,17 +1369,19 @@ preset_hundo_gravity_ws_robot_missiles:
     dl $7E078D : db $02 : dw $A228 ; DDB
     dl $7E078F : db $02 : dw $0004 ; DoorOut Index
     dl $7E079B : db $02 : dw $CA52 ; MDB
-    dl $7E090F : db $02 : dw $6001 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $00DD ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $0BFF ; Screen subpixel Y position
+    dl $7E090F : db $02 : dw $9000 ; Screen subpixel X position.
+    dl $7E0911 : db $02 : dw $0600 ; Screen X position in pixels
+    dl $7E0913 : db $02 : dw $63FF ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $001F ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $01F3 ; Health
+    dl $7E09C2 : db $02 : dw $01EB ; Health
     dl $7E09C6 : db $02 : dw $002D ; Missiles
     dl $7E09CA : db $02 : dw $0008 ; Supers
-    dl $7E0A1C : db $02 : dw $00A6 ; Samus position/state
-    dl $7E0AF6 : db $02 : dw $0149 ; Samus X
-    dl $7E0AFA : db $02 : dw $00CB ; Samus Y
-    dl $7ED8C0 : db $02 : dw $097C ; Events, Items, Doors
+    dl $7E0A1C : db $02 : dw $001E ; Samus position/state
+    dl $7E0A1E : db $02 : dw $0408 ; More position/state
+    dl $7E0AF6 : db $02 : dw $06CD ; Samus X
+    dl $7E0AFA : db $02 : dw $0099 ; Samus Y
+    dl $7E0B3F : db $02 : dw $0104 ; Blue suit
+    dl $7ED8C0 : db $02 : dw $0B7C ; Events, Items, Doors
     dw #$FFFF
 .after
 
@@ -1453,8 +1401,8 @@ preset_hundo_gravity_attic_revisit:
     dl $7E0A1E : db $02 : dw $0104 ; More position/state
     dl $7E0AF6 : db $02 : dw $0046 ; Samus X
     dl $7E0AFA : db $02 : dw $008B ; Samus Y
+    dl $7E0B3F : db $02 : dw $0000 ; Blue suit
     dl $7ED880 : db $02 : dw $0079 ; Events, Items, Doors
-    dl $7ED8C0 : db $02 : dw $0B7C ; Events, Items, Doors
     dl $7ED91A : db $02 : dw $003A ; Events, Items, Doors
     dw #$FFFF
 .after
@@ -1476,16 +1424,17 @@ preset_hundo_gravity_sky_missiles:
 
 preset_hundo_gravity_bowling:
     dw #preset_hundo_gravity_sky_missiles ; Gravity: Sky Missiles
-    dl $7E078D : db $02 : dw $8A1E ; DDB
-    dl $7E078F : db $02 : dw $0001 ; DoorOut Index
-    dl $7E079B : db $02 : dw $968F ; MDB
+    dl $7E078D : db $02 : dw $89E2 ; DDB
+    dl $7E078F : db $02 : dw $0002 ; DoorOut Index
+    dl $7E079B : db $02 : dw $9461 ; MDB
     dl $7E079F : db $02 : dw $0000 ; Region
     dl $7E07C3 : db $02 : dw $C629 ; GFX Pointers
     dl $7E07C5 : db $02 : dw $7CBA ; GFX Pointers
     dl $7E07C7 : db $02 : dw $C2AD ; GFX Pointers
     dl $7E07F3 : db $02 : dw $000C ; Music Bank
     dl $7E07F5 : db $02 : dw $0005 ; Music Track
-    dl $7E090F : db $02 : dw $2900 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $A900 ; Screen subpixel X position.
+    dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $C800 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $019E ; Health
@@ -1493,47 +1442,28 @@ preset_hundo_gravity_bowling:
     dl $7E09C8 : db $02 : dw $0046 ; Max missiles
     dl $7E09CA : db $02 : dw $0006 ; Supers
     dl $7E09CE : db $02 : dw $0006 ; Pbs
-    dl $7E0A1C : db $02 : dw $004A ; Samus position/state
-    dl $7E0A1E : db $02 : dw $1004 ; More position/state
-    dl $7E0AF6 : db $02 : dw $0029 ; Samus X
+    dl $7E0A1C : db $02 : dw $0009 ; Samus position/state
+    dl $7E0A1E : db $02 : dw $0108 ; More position/state
+    dl $7E0AF6 : db $02 : dw $0194 ; Samus X
+    dl $7E0B3F : db $02 : dw $0001 ; Blue suit
     dl $7ED870 : db $02 : dw $819C ; Events, Items, Doors
     dl $7ED91A : db $02 : dw $003D ; Events, Items, Doors
     dw #$FFFF
 .after
 
-preset_hundo_gravity_ws_reserve_this_one_probably_wont_work:
+preset_hundo_gravity_leaving_gravity:
     dw #preset_hundo_gravity_bowling ; Gravity: Bowling
-    dl $7E078D : db $02 : dw $8B32 ; DDB
-    dl $7E079B : db $02 : dw $C98E ; MDB
+    dl $7E078D : db $02 : dw $A1A4 ; DDB
+    dl $7E079B : db $02 : dw $CE40 ; MDB
     dl $7E079F : db $02 : dw $0003 ; Region
     dl $7E07C3 : db $02 : dw $AE9E ; GFX Pointers
     dl $7E07C5 : db $02 : dw $E7BB ; GFX Pointers
     dl $7E07C7 : db $02 : dw $C2B0 ; GFX Pointers
     dl $7E07F3 : db $02 : dw $0030 ; Music Bank
     dl $7E07F5 : db $02 : dw $0003 ; Music Track
-    dl $7E090F : db $02 : dw $1000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0259 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $0400 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0200 ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $0144 ; Health
-    dl $7E09CE : db $02 : dw $0005 ; Pbs
-    dl $7E0A1C : db $02 : dw $003B ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0F08 ; More position/state
-    dl $7E0AF6 : db $02 : dw $02CA ; Samus X
-    dl $7E0AFA : db $02 : dw $027B ; Samus Y
-    dl $7ED91A : db $02 : dw $003F ; Events, Items, Doors
-    dw #$FFFF
-.after
-
-preset_hundo_gravity_leaving_gravity:
-    dw #preset_hundo_gravity_ws_reserve_this_one_probably_wont_work ; Gravity: WS Reserve -- This one probably won't work
-    dl $7E078D : db $02 : dw $A1A4 ; DDB
-    dl $7E078F : db $02 : dw $0002 ; DoorOut Index
-    dl $7E079B : db $02 : dw $CE40 ; MDB
     dl $7E090F : db $02 : dw $5000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $4000 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
     dl $7E09A2 : db $02 : dw $3125 ; Equipped Items
     dl $7E09A4 : db $02 : dw $3125 ; Collected Items
     dl $7E09C2 : db $02 : dw $011C ; Health
@@ -1544,82 +1474,59 @@ preset_hundo_gravity_leaving_gravity:
     dl $7E0A1C : db $02 : dw $000A ; Samus position/state
     dl $7E0A1E : db $02 : dw $0104 ; More position/state
     dl $7E0AF6 : db $02 : dw $006D ; Samus X
-    dl $7E0AFA : db $02 : dw $008B ; Samus Y
+    dl $7E0B3F : db $02 : dw $0000 ; Blue suit
     dl $7ED880 : db $02 : dw $00FF ; Events, Items, Doors
     dl $7ED91A : db $02 : dw $0040 ; Events, Items, Doors
     dw #$FFFF
 .after
 
-preset_hundo_waterway_etank_reverse_moat:
+preset_hundo_brinstar_cleanup_crateria_pbs:
     dw #preset_hundo_gravity_leaving_gravity ; Gravity: Leaving Gravity
-    dl $7E078D : db $02 : dw $A300 ; DDB
+    dl $7E078D : db $02 : dw $8ADE ; DDB
     dl $7E078F : db $02 : dw $0000 ; DoorOut Index
-    dl $7E079B : db $02 : dw $93FE ; MDB
+    dl $7E079B : db $02 : dw $948C ; MDB
     dl $7E079F : db $02 : dw $0000 ; Region
     dl $7E07C3 : db $02 : dw $C629 ; GFX Pointers
     dl $7E07C5 : db $02 : dw $7CBA ; GFX Pointers
     dl $7E07C7 : db $02 : dw $C2AD ; GFX Pointers
     dl $7E07F3 : db $02 : dw $000C ; Music Bank
     dl $7E07F5 : db $02 : dw $0005 ; Music Track
-    dl $7E090F : db $02 : dw $E000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $00F5 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $6800 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $044A ; Screen Y position in pixels
+    dl $7E090F : db $02 : dw $9C00 ; Screen subpixel X position.
+    dl $7E0913 : db $02 : dw $03FF ; Screen subpixel Y position
     dl $7E09C6 : db $02 : dw $0038 ; Missiles
     dl $7E09C8 : db $02 : dw $0050 ; Max missiles
-    dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0004 ; More position/state
-    dl $7E0AF6 : db $02 : dw $018F ; Samus X
-    dl $7E0AFA : db $02 : dw $04DB ; Samus Y
+    dl $7E0A1C : db $02 : dw $0010 ; Samus position/state
+    dl $7E0AF6 : db $02 : dw $008C ; Samus X
+    dl $7E0AFA : db $02 : dw $00A8 ; Samus Y
+    dl $7E0B3F : db $02 : dw $0003 ; Blue suit
     dl $7ED870 : db $02 : dw $819E ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $0043 ; Events, Items, Doors
-    dw #$FFFF
-.after
-
-preset_hundo_waterway_etank_crateria_pbs:
-    dw #preset_hundo_waterway_etank_reverse_moat ; Waterway E-Tank: Reverse Moat
-    dl $7E078D : db $02 : dw $8AC6 ; DDB
-    dl $7E079B : db $02 : dw $91F8 ; MDB
-    dl $7E090F : db $02 : dw $A000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $06DE ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $00A5 ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $00DB ; Health
-    dl $7E09C6 : db $02 : dw $0037 ; Missiles
-    dl $7E09CE : db $02 : dw $0003 ; Pbs
-    dl $7E0A1C : db $02 : dw $000B ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0108 ; More position/state
-    dl $7E0AF6 : db $02 : dw $076A ; Samus X
-    dl $7E0AFA : db $02 : dw $0115 ; Samus Y
-    dl $7ED8B0 : db $02 : dw $3002 ; Events, Items, Doors
     dl $7ED91A : db $02 : dw $0044 ; Events, Items, Doors
     dw #$FFFF
 .after
 
-preset_hundo_waterway_etank_ship_room:
-    dw #preset_hundo_waterway_etank_crateria_pbs ; Waterway E-Tank: Crateria PBs
+preset_hundo_brinstar_cleanup_ship_room:
+    dw #preset_hundo_brinstar_cleanup_crateria_pbs ; Brinstar Cleanup: Crateria PBs
     dl $7E078D : db $02 : dw $893A ; DDB
     dl $7E078F : db $02 : dw $0003 ; DoorOut Index
     dl $7E079B : db $02 : dw $93AA ; MDB
     dl $7E090F : db $02 : dw $5000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $E400 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $00B9 ; Health
     dl $7E09C6 : db $02 : dw $0034 ; Missiles
     dl $7E09CE : db $02 : dw $000A ; Pbs
     dl $7E09D0 : db $02 : dw $000F ; Max pbs
     dl $7E0A1C : db $02 : dw $000C ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0104 ; More position/state
     dl $7E0AF6 : db $02 : dw $0042 ; Samus X
     dl $7E0AFA : db $02 : dw $008B ; Samus Y
+    dl $7E0B3F : db $02 : dw $0000 ; Blue suit
     dl $7ED870 : db $02 : dw $819F ; Events, Items, Doors
+    dl $7ED8B0 : db $02 : dw $3002 ; Events, Items, Doors
     dl $7ED91A : db $02 : dw $0045 ; Events, Items, Doors
     dw #$FFFF
 .after
 
-preset_hundo_waterway_etank_gauntlet_etank:
-    dw #preset_hundo_waterway_etank_ship_room ; Waterway E-Tank: Ship Room
+preset_hundo_brinstar_cleanup_gauntlet_etank:
+    dw #preset_hundo_brinstar_cleanup_ship_room ; Brinstar Cleanup: Ship Room
     dl $7E078D : db $02 : dw $892E ; DDB
     dl $7E078F : db $02 : dw $0002 ; DoorOut Index
     dl $7E079B : db $02 : dw $92B3 ; MDB
@@ -1635,8 +1542,8 @@ preset_hundo_waterway_etank_gauntlet_etank:
     dw #$FFFF
 .after
 
-preset_hundo_waterway_etank_green_pirates_shaft:
-    dw #preset_hundo_waterway_etank_gauntlet_etank ; Waterway E-Tank: Gauntlet E-Tank
+preset_hundo_brinstar_cleanup_green_pirates_shaft:
+    dw #preset_hundo_brinstar_cleanup_gauntlet_etank ; Brinstar Cleanup: Gauntlet E-Tank
     dl $7E078D : db $02 : dw $8952 ; DDB
     dl $7E078F : db $02 : dw $0001 ; DoorOut Index
     dl $7E079B : db $02 : dw $965B ; MDB
@@ -1652,8 +1559,8 @@ preset_hundo_waterway_etank_green_pirates_shaft:
     dw #$FFFF
 .after
 
-preset_hundo_waterway_etank_green_shaft_revisit:
-    dw #preset_hundo_waterway_etank_green_pirates_shaft ; Waterway E-Tank: Green Pirates Shaft
+preset_hundo_brinstar_cleanup_green_shaft_revisit:
+    dw #preset_hundo_brinstar_cleanup_green_pirates_shaft ; Brinstar Cleanup: Green Pirates Shaft
     dl $7E078D : db $02 : dw $8C22 ; DDB
     dl $7E078F : db $02 : dw $0002 ; DoorOut Index
     dl $7E079B : db $02 : dw $9938 ; MDB
@@ -1673,8 +1580,8 @@ preset_hundo_waterway_etank_green_shaft_revisit:
     dw #$FFFF
 .after
 
-preset_hundo_waterway_etank_green_brinstar_beetoms:
-    dw #preset_hundo_waterway_etank_green_shaft_revisit ; Waterway E-Tank: Green Shaft Revisit
+preset_hundo_brinstar_cleanup_green_brinstar_beetoms:
+    dw #preset_hundo_brinstar_cleanup_green_shaft_revisit ; Brinstar Cleanup: Green Shaft Revisit
     dl $7E078D : db $02 : dw $8C0A ; DDB
     dl $7E078F : db $02 : dw $0009 ; DoorOut Index
     dl $7E079B : db $02 : dw $9AD9 ; MDB
@@ -1696,8 +1603,8 @@ preset_hundo_waterway_etank_green_brinstar_beetoms:
     dw #$FFFF
 .after
 
-preset_hundo_waterway_etank_etecoon_energy_tank_room:
-    dw #preset_hundo_waterway_etank_green_brinstar_beetoms ; Waterway E-Tank: Green Brinstar Beetoms
+preset_hundo_brinstar_cleanup_etecoon_energy_tank_room:
+    dw #preset_hundo_brinstar_cleanup_green_brinstar_beetoms ; Brinstar Cleanup: Green Brinstar Beetoms
     dl $7E078D : db $02 : dw $8F3A ; DDB
     dl $7E078F : db $02 : dw $0001 ; DoorOut Index
     dl $7E079B : db $02 : dw $A051 ; MDB
@@ -1719,8 +1626,8 @@ preset_hundo_waterway_etank_etecoon_energy_tank_room:
     dw #$FFFF
 .after
 
-preset_hundo_waterway_etank_etecoon_room:
-    dw #preset_hundo_waterway_etank_etecoon_energy_tank_room ; Waterway E-Tank: Etecoon Energy Tank Room
+preset_hundo_brinstar_cleanup_etecoon_room:
+    dw #preset_hundo_brinstar_cleanup_etecoon_energy_tank_room ; Brinstar Cleanup: Etecoon Energy Tank Room
     dl $7E078D : db $02 : dw $8F5E ; DDB
     dl $7E078F : db $02 : dw $0000 ; DoorOut Index
     dl $7E079B : db $02 : dw $A011 ; MDB
@@ -1737,8 +1644,8 @@ preset_hundo_waterway_etank_etecoon_room:
     dw #$FFFF
 .after
 
-preset_hundo_waterway_etank_dachora_room_revisit:
-    dw #preset_hundo_waterway_etank_etecoon_room ; Waterway E-Tank: Etecoon Room
+preset_hundo_brinstar_cleanup_dachora_room_revisit:
+    dw #preset_hundo_brinstar_cleanup_etecoon_room ; Brinstar Cleanup: Etecoon Room
     dl $7E078D : db $02 : dw $8D06 ; DDB
     dl $7E078F : db $02 : dw $0008 ; DoorOut Index
     dl $7E079B : db $02 : dw $9AD9 ; MDB
@@ -1758,8 +1665,8 @@ preset_hundo_waterway_etank_dachora_room_revisit:
     dw #$FFFF
 .after
 
-preset_hundo_waterway_etank_big_pink_revisit:
-    dw #preset_hundo_waterway_etank_dachora_room_revisit ; Waterway E-Tank: Dachora Room Revisit
+preset_hundo_brinstar_cleanup_big_pink_revisit:
+    dw #preset_hundo_brinstar_cleanup_dachora_room_revisit ; Brinstar Cleanup: Dachora Room Revisit
     dl $7E078D : db $02 : dw $8CE2 ; DDB
     dl $7E078F : db $02 : dw $0005 ; DoorOut Index
     dl $7E079B : db $02 : dw $9CB3 ; MDB
@@ -1774,8 +1681,8 @@ preset_hundo_waterway_etank_big_pink_revisit:
     dw #$FFFF
 .after
 
-preset_hundo_waterway_etank_mission_impossible_pbs:
-    dw #preset_hundo_waterway_etank_big_pink_revisit ; Waterway E-Tank: Big Pink Revisit
+preset_hundo_brinstar_cleanup_mission_impossible_pbs:
+    dw #preset_hundo_brinstar_cleanup_big_pink_revisit ; Brinstar Cleanup: Big Pink Revisit
     dl $7E078D : db $02 : dw $8DAE ; DDB
     dl $7E078F : db $02 : dw $0001 ; DoorOut Index
     dl $7E079B : db $02 : dw $9D19 ; MDB
@@ -1797,8 +1704,8 @@ preset_hundo_waterway_etank_mission_impossible_pbs:
     dw #$FFFF
 .after
 
-preset_hundo_waterway_etank_pink_brinstar_etank:
-    dw #preset_hundo_waterway_etank_mission_impossible_pbs ; Waterway E-Tank: Mission Impossible PBs
+preset_hundo_brinstar_cleanup_pink_brinstar_etank:
+    dw #preset_hundo_brinstar_cleanup_mission_impossible_pbs ; Brinstar Cleanup: Mission Impossible PBs
     dl $7E078D : db $02 : dw $8E62 ; DDB
     dl $7E078F : db $02 : dw $0000 ; DoorOut Index
     dl $7E090F : db $02 : dw $E000 ; Screen subpixel X position.
@@ -1820,36 +1727,36 @@ preset_hundo_waterway_etank_pink_brinstar_etank:
     dw #$FFFF
 .after
 
-preset_hundo_waterway_etank_spore_spawn_supers:
-    dw #preset_hundo_waterway_etank_pink_brinstar_etank ; Waterway E-Tank: Pink Brinstar E-Tank
-    dl $7E078D : db $02 : dw $8FCA ; DDB
-    dl $7E079B : db $02 : dw $A130 ; MDB
-    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0085 ; Screen X position in pixels
-    dl $7E0915 : db $02 : dw $000D ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $031F ; Health
+preset_hundo_brinstar_cleanup_spore_spawn_supers:
+    dw #preset_hundo_brinstar_cleanup_pink_brinstar_etank ; Brinstar Cleanup: Pink Brinstar E-Tank
+    dl $7E078D : db $02 : dw $8FB2 ; DDB
+    dl $7E090F : db $02 : dw $3000 ; Screen subpixel X position.
+    dl $7E0911 : db $02 : dw $02F3 ; Screen X position in pixels
+    dl $7E0913 : db $02 : dw $E000 ; Screen subpixel Y position
+    dl $7E0915 : db $02 : dw $053F ; Screen Y position in pixels
+    dl $7E09C2 : db $02 : dw $0308 ; Health
     dl $7E09C4 : db $02 : dw $031F ; Max helath
     dl $7E09CA : db $02 : dw $0006 ; Supers
-    dl $7E0A1C : db $02 : dw $008A ; Samus position/state
-    dl $7E0A1E : db $02 : dw $1504 ; More position/state
-    dl $7E0AF6 : db $02 : dw $0125 ; Samus X
-    dl $7E0AFA : db $02 : dw $007B ; Samus Y
+    dl $7E09CE : db $02 : dw $0012 ; Pbs
+    dl $7E0A1C : db $02 : dw $0007 ; Samus position/state
+    dl $7E0A1E : db $02 : dw $0008 ; More position/state
+    dl $7E0AF6 : db $02 : dw $0389 ; Samus X
+    dl $7E0AFA : db $02 : dw $05AB ; Samus Y
     dl $7E0B3F : db $02 : dw $0000 ; Blue suit
     dl $7ED874 : db $02 : dw $0F8C ; Events, Items, Doors
     dl $7ED8B6 : db $02 : dw $E8D8 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $0056 ; Events, Items, Doors
+    dl $7ED91A : db $02 : dw $0059 ; Events, Items, Doors
     dw #$FFFF
 .after
 
-preset_hundo_waterway_etank_waterway_etank_2:
-    dw #preset_hundo_waterway_etank_spore_spawn_supers ; Waterway E-Tank: Spore Spawn Supers
+preset_hundo_brinstar_cleanup_waterway_etank:
+    dw #preset_hundo_brinstar_cleanup_spore_spawn_supers ; Brinstar Cleanup: Spore Spawn Supers
     dl $7E078D : db $02 : dw $8F82 ; DDB
     dl $7E078F : db $02 : dw $0001 ; DoorOut Index
-    dl $7E079B : db $02 : dw $9D19 ; MDB
+    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $7400 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $090A ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $0308 ; Health
     dl $7E09C6 : db $02 : dw $003F ; Missiles
     dl $7E09C8 : db $02 : dw $0064 ; Max missiles
     dl $7E09CA : db $02 : dw $0007 ; Supers
@@ -1868,7 +1775,7 @@ preset_hundo_waterway_etank_waterway_etank_2:
 .after
 
 preset_hundo_mama_turtle_etank_big_pink_charge_escape:
-    dw #preset_hundo_waterway_etank_waterway_etank_2 ; Waterway E-Tank: Waterway E-Tank
+    dw #preset_hundo_brinstar_cleanup_waterway_etank ; Brinstar Cleanup: Waterway E-Tank
     dl $7E078D : db $02 : dw $8F8E ; DDB
     dl $7E078F : db $02 : dw $0000 ; DoorOut Index
     dl $7E090F : db $02 : dw $8000 ; Screen subpixel X position.
@@ -1925,37 +1832,34 @@ preset_hundo_mama_turtle_etank_blockbuster:
 
 preset_hundo_mama_turtle_etank_main_street:
     dw #preset_hundo_mama_turtle_etank_blockbuster ; Mama Turtle E-Tank: Blockbuster
-    dl $7E078D : db $02 : dw $A360 ; DDB
+    dl $7E078D : db $02 : dw $A330 ; DDB
     dl $7E078F : db $02 : dw $0000 ; DoorOut Index
-    dl $7E079B : db $02 : dw $CEFB ; MDB
+    dl $7E079B : db $02 : dw $CFC9 ; MDB
     dl $7E079F : db $02 : dw $0004 ; Region
     dl $7E07C3 : db $02 : dw $B130 ; GFX Pointers
     dl $7E07C5 : db $02 : dw $3CBE ; GFX Pointers
     dl $7E07C7 : db $02 : dw $C2B8 ; GFX Pointers
-    dl $7E07F3 : db $02 : dw $0012 ; Music Bank
-    dl $7E090F : db $02 : dw $3000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $E000 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0008 ; Screen Y position in pixels
+    dl $7E07F3 : db $02 : dw $001B ; Music Bank
+    dl $7E07F5 : db $02 : dw $0006 ; Music Track
+    dl $7E090F : db $02 : dw $2000 ; Screen subpixel X position.
+    dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
+    dl $7E0913 : db $02 : dw $F000 ; Screen subpixel Y position
+    dl $7E0915 : db $02 : dw $071F ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $037C ; Health
     dl $7E09CA : db $02 : dw $0009 ; Supers
     dl $7E09CE : db $02 : dw $000F ; Pbs
-    dl $7E0A1C : db $02 : dw $000A ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0104 ; More position/state
-    dl $7E0AF6 : db $02 : dw $0083 ; Samus X
-    dl $7E0AFA : db $02 : dw $007B ; Samus Y
+    dl $7E0A1C : db $02 : dw $0016 ; Samus position/state
+    dl $7E0A1E : db $02 : dw $0204 ; More position/state
+    dl $7E0AF6 : db $02 : dw $019A ; Samus X
+    dl $7E0AFA : db $02 : dw $07A8 ; Samus Y
     dl $7ED820 : db $02 : dw $0801 ; Events, Items, Doors
+    dl $7ED91A : db $02 : dw $0064 ; Events, Items, Doors
     dw #$FFFF
 .after
 
 preset_hundo_mama_turtle_etank_fish_tank:
     dw #preset_hundo_mama_turtle_etank_main_street ; Mama Turtle E-Tank: Main Street
-    dl $7E078D : db $02 : dw $A330 ; DDB
-    dl $7E079B : db $02 : dw $CFC9 ; MDB
-    dl $7E07F3 : db $02 : dw $001B ; Music Bank
-    dl $7E07F5 : db $02 : dw $0006 ; Music Track
     dl $7E090F : db $02 : dw $6000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0618 ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $0330 ; Health
@@ -1967,7 +1871,6 @@ preset_hundo_mama_turtle_etank_fish_tank:
     dl $7E0AF6 : db $02 : dw $0160 ; Samus X
     dl $7E0AFA : db $02 : dw $068B ; Samus Y
     dl $7ED880 : db $02 : dw $01FF ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $0064 ; Events, Items, Doors
     dw #$FFFF
 .after
 
@@ -2049,18 +1952,18 @@ preset_hundo_maridia_cleanup_mt_everest:
 
 preset_hundo_maridia_cleanup_beach_missiles:
     dw #preset_hundo_maridia_cleanup_mt_everest ; Maridia Cleanup: Mt Everest
-    dl $7E078D : db $02 : dw $A3CC ; DDB
-    dl $7E079B : db $02 : dw $D0B9 ; MDB
-    dl $7E090F : db $02 : dw $8800 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0500 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $5000 ; Screen subpixel Y position
+    dl $7E078D : db $02 : dw $A468 ; DDB
+    dl $7E078F : db $02 : dw $0005 ; DoorOut Index
+    dl $7E079B : db $02 : dw $D1A3 ; MDB
+    dl $7E090F : db $02 : dw $C000 ; Screen subpixel X position.
+    dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
+    dl $7E0913 : db $02 : dw $3C00 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $036E ; Health
-    dl $7E0A1C : db $02 : dw $00CD ; Samus position/state
-    dl $7E0A1E : db $02 : dw $1B08 ; More position/state
-    dl $7E0A68 : db $02 : dw $000E ; Flash suit
-    dl $7E0AF6 : db $02 : dw $05BB ; Samus X
-    dl $7E0AFA : db $02 : dw $0053 ; Samus Y
+    dl $7E0A1C : db $02 : dw $0009 ; Samus position/state
+    dl $7E0A1E : db $02 : dw $0108 ; More position/state
+    dl $7E0AF6 : db $02 : dw $0079 ; Samus X
+    dl $7E0AFA : db $02 : dw $005B ; Samus Y
     dw #$FFFF
 .after
 
@@ -2070,17 +1973,15 @@ preset_hundo_maridia_cleanup_maridia_bug_room:
     dl $7E078F : db $02 : dw $0001 ; DoorOut Index
     dl $7E079B : db $02 : dw $D1DD ; MDB
     dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $01FE ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $021B ; Screen Y position in pixels
+    dl $7E0913 : db $02 : dw $1C00 ; Screen subpixel Y position
+    dl $7E0915 : db $02 : dw $00F4 ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $035A ; Health
     dl $7E09C6 : db $02 : dw $004E ; Missiles
     dl $7E09C8 : db $02 : dw $0078 ; Max missiles
-    dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0004 ; More position/state
-    dl $7E0A68 : db $02 : dw $0000 ; Flash suit
-    dl $7E0AF6 : db $02 : dw $02BA ; Samus X
-    dl $7E0AFA : db $02 : dw $028B ; Samus Y
+    dl $7E0A1C : db $02 : dw $000A ; Samus position/state
+    dl $7E0A1E : db $02 : dw $0104 ; More position/state
+    dl $7E0AF6 : db $02 : dw $0060 ; Samus X
+    dl $7E0AFA : db $02 : dw $018B ; Samus Y
     dl $7ED880 : db $02 : dw $4FFF ; Events, Items, Doors
     dl $7ED91A : db $02 : dw $0069 ; Events, Items, Doors
     dw #$FFFF
@@ -2092,11 +1993,8 @@ preset_hundo_maridia_cleanup_watering_hole:
     dl $7E078F : db $02 : dw $0000 ; DoorOut Index
     dl $7E079B : db $02 : dw $D16D ; MDB
     dl $7E090F : db $02 : dw $4000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $A400 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0019 ; Screen Y position in pixels
-    dl $7E0A1C : db $02 : dw $000A ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0104 ; More position/state
     dl $7E0AF6 : db $02 : dw $005F ; Samus X
     dl $7E0AFA : db $02 : dw $008B ; Samus Y
     dw #$FFFF
@@ -2106,19 +2004,18 @@ preset_hundo_maridia_cleanup_maridia_bug_room_revisit:
     dw #preset_hundo_maridia_cleanup_watering_hole ; Maridia Cleanup: Watering Hole
     dl $7E078D : db $02 : dw $A498 ; DDB
     dl $7E079B : db $02 : dw $D13B ; MDB
-    dl $7E090F : db $02 : dw $9000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $E400 ; Screen subpixel Y position
+    dl $7E090F : db $02 : dw $8000 ; Screen subpixel X position.
+    dl $7E0911 : db $02 : dw $00C5 ; Screen X position in pixels
+    dl $7E0913 : db $02 : dw $E000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $036E ; Health
     dl $7E09C6 : db $02 : dw $0052 ; Missiles
     dl $7E09C8 : db $02 : dw $007D ; Max missiles
     dl $7E09CA : db $02 : dw $0012 ; Supers
     dl $7E09CC : db $02 : dw $0023 ; Max supers
-    dl $7E0A1C : db $02 : dw $0017 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0208 ; More position/state
-    dl $7E0AF6 : db $02 : dw $01B5 ; Samus X
-    dl $7E0AFA : db $02 : dw $0085 ; Samus Y
+    dl $7E0A1C : db $02 : dw $0009 ; Samus position/state
+    dl $7E0A1E : db $02 : dw $0108 ; More position/state
+    dl $7E0AF6 : db $02 : dw $012C ; Samus X
     dl $7ED880 : db $02 : dw $7FFF ; Events, Items, Doors
     dl $7ED91A : db $02 : dw $006B ; Events, Items, Doors
     dw #$FFFF
@@ -2134,6 +2031,7 @@ preset_hundo_maridia_cleanup_beach_revisit:
     dl $7E0915 : db $02 : dw $0100 ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $0355 ; Health
     dl $7E0A1C : db $02 : dw $0051 ; Samus position/state
+    dl $7E0A1E : db $02 : dw $0208 ; More position/state
     dl $7E0AF6 : db $02 : dw $03A2 ; Samus X
     dl $7E0AFA : db $02 : dw $0183 ; Samus Y
     dw #$FFFF
@@ -2182,23 +2080,24 @@ preset_hundo_draygon_botwoon:
 
 preset_hundo_draygon_full_halfie:
     dw #preset_hundo_draygon_botwoon ; Draygon: Botwoon
-    dl $7E078D : db $02 : dw $A774 ; DDB
+    dl $7E078D : db $02 : dw $A918 ; DDB
     dl $7E078F : db $02 : dw $0001 ; DoorOut Index
-    dl $7E079B : db $02 : dw $D95E ; MDB
-    dl $7E07F3 : db $02 : dw $002A ; Music Bank
-    dl $7E090F : db $02 : dw $1000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $2C00 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
+    dl $7E079B : db $02 : dw $D7E4 ; MDB
+    dl $7E090F : db $02 : dw $F000 ; Screen subpixel X position.
+    dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
+    dl $7E0913 : db $02 : dw $6C00 ; Screen subpixel Y position
+    dl $7E0915 : db $02 : dw $0006 ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $03AF ; Health
     dl $7E09C6 : db $02 : dw $0054 ; Missiles
     dl $7E09CA : db $02 : dw $000E ; Supers
     dl $7E09CE : db $02 : dw $0011 ; Pbs
-    dl $7E0A1C : db $02 : dw $00E4 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0008 ; More position/state
-    dl $7E0AF6 : db $02 : dw $01C9 ; Samus X
-    dl $7E0AFA : db $02 : dw $008B ; Samus Y
+    dl $7E0A1C : db $02 : dw $0067 ; Samus position/state
+    dl $7E0A1E : db $02 : dw $0608 ; More position/state
+    dl $7E0AF6 : db $02 : dw $004B ; Samus X
+    dl $7E0AFA : db $02 : dw $0091 ; Samus Y
     dl $7E0B3F : db $02 : dw $0000 ; Blue suit
+    dl $7ED82C : db $02 : dw $0002 ; Events, Items, Doors
+    dl $7ED91A : db $02 : dw $006F ; Events, Items, Doors
     dw #$FFFF
 .after
 
@@ -2206,7 +2105,6 @@ preset_hundo_draygon_draygon_missiles:
     dw #preset_hundo_draygon_full_halfie ; Draygon: Full Halfie
     dl $7E078D : db $02 : dw $A8E8 ; DDB
     dl $7E079B : db $02 : dw $D72A ; MDB
-    dl $7E07F3 : db $02 : dw $001B ; Music Bank
     dl $7E090F : db $02 : dw $A000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0600 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
@@ -2214,11 +2112,10 @@ preset_hundo_draygon_draygon_missiles:
     dl $7E09C2 : db $02 : dw $0330 ; Health
     dl $7E09CA : db $02 : dw $000D ; Supers
     dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
+    dl $7E0A1E : db $02 : dw $0008 ; More position/state
     dl $7E0AF6 : db $02 : dw $06B0 ; Samus X
     dl $7E0AFA : db $02 : dw $018B ; Samus Y
-    dl $7ED82C : db $02 : dw $0002 ; Events, Items, Doors
     dl $7ED8C2 : db $02 : dw $0400 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $006F ; Events, Items, Doors
     dw #$FFFF
 .after
 
@@ -2667,38 +2564,41 @@ preset_hundo_golden_torizo_kronic_boost:
 
 preset_hundo_golden_torizo_blue_fireball:
     dw #preset_hundo_golden_torizo_kronic_boost ; Golden Torizo: Kronic Boost
-    dl $7E078D : db $02 : dw $96DE ; DDB
-    dl $7E078F : db $02 : dw $0002 ; DoorOut Index
-    dl $7E079B : db $02 : dw $AF3F ; MDB
+    dl $7E078D : db $02 : dw $96F6 ; DDB
+    dl $7E079B : db $02 : dw $B236 ; MDB
+    dl $7E07F3 : db $02 : dw $0018 ; Music Bank
     dl $7E090F : db $02 : dw $A000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $F000 ; Screen subpixel Y position
+    dl $7E0911 : db $02 : dw $0400 ; Screen X position in pixels
+    dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
+    dl $7E0915 : db $02 : dw $0200 ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $0298 ; Health
     dl $7E09CE : db $02 : dw $0011 ; Pbs
-    dl $7E0A1C : db $02 : dw $0008 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0004 ; More position/state
-    dl $7E0AF6 : db $02 : dw $0083 ; Samus X
+    dl $7E0A1C : db $02 : dw $009B ; Samus position/state
+    dl $7E0A1E : db $02 : dw $0000 ; More position/state
+    dl $7E0AF6 : db $02 : dw $0480 ; Samus X
+    dl $7E0AFA : db $02 : dw $0285 ; Samus Y
     dl $7ED8BA : db $02 : dw $01F1 ; Events, Items, Doors
     dw #$FFFF
 .after
 
 preset_hundo_golden_torizo_golden_torizo_2:
     dw #preset_hundo_golden_torizo_blue_fireball ; Golden Torizo: Blue Fireball
-    dl $7E078D : db $02 : dw $9852 ; DDB
+    dl $7E078D : db $02 : dw $983A ; DDB
     dl $7E078F : db $02 : dw $0000 ; DoorOut Index
-    dl $7E079B : db $02 : dw $B1E5 ; MDB
-    dl $7E07F3 : db $02 : dw $0018 ; Music Bank
-    dl $7E090F : db $02 : dw $2000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0200 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0200 ; Screen Y position in pixels
+    dl $7E079B : db $02 : dw $B283 ; MDB
+    dl $7E07F3 : db $02 : dw $0024 ; Music Bank
+    dl $7E07F5 : db $02 : dw $0003 ; Music Track
+    dl $7E090F : db $02 : dw $C000 ; Screen subpixel X position.
+    dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
+    dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $0273 ; Health
     dl $7E09CE : db $02 : dw $000F ; Pbs
-    dl $7E0A1C : db $02 : dw $00A4 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0008 ; More position/state
-    dl $7E0AF6 : db $02 : dw $02B0 ; Samus X
-    dl $7E0AFA : db $02 : dw $028B ; Samus Y
+    dl $7E0A1C : db $02 : dw $0009 ; Samus position/state
+    dl $7E0A1E : db $02 : dw $0108 ; More position/state
+    dl $7E0AF6 : db $02 : dw $0027 ; Samus X
+    dl $7E0AFA : db $02 : dw $008B ; Samus Y
     dl $7ED820 : db $02 : dw $3801 ; Events, Items, Doors
+    dl $7ED91A : db $02 : dw $0082 ; Events, Items, Doors
     dw #$FFFF
 .after
 
@@ -2707,10 +2607,7 @@ preset_hundo_ridley_fast_ripper_room:
     dl $7E078D : db $02 : dw $9882 ; DDB
     dl $7E078F : db $02 : dw $0001 ; DoorOut Index
     dl $7E079B : db $02 : dw $B6C1 ; MDB
-    dl $7E07F3 : db $02 : dw $0024 ; Music Bank
-    dl $7E07F5 : db $02 : dw $0003 ; Music Track
     dl $7E090F : db $02 : dw $6000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $A000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $001B ; Screen Y position in pixels
     dl $7E09A2 : db $02 : dw $332E ; Equipped Items
@@ -2722,8 +2619,8 @@ preset_hundo_ridley_fast_ripper_room:
     dl $7E09CC : db $02 : dw $002D ; Max supers
     dl $7E09CE : db $02 : dw $000E ; Pbs
     dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
+    dl $7E0A1E : db $02 : dw $0008 ; More position/state
     dl $7E0AF6 : db $02 : dw $006E ; Samus X
-    dl $7E0AFA : db $02 : dw $008B ; Samus Y
     dl $7ED82A : db $02 : dw $0104 ; Events, Items, Doors
     dl $7ED878 : db $02 : dw $80DE ; Events, Items, Doors
     dl $7ED8BA : db $02 : dw $03F1 ; Events, Items, Doors
@@ -2754,14 +2651,13 @@ preset_hundo_ridley_mickey_mouse_missiles:
     dl $7E078D : db $02 : dw $994E ; DDB
     dl $7E078F : db $02 : dw $0001 ; DoorOut Index
     dl $7E079B : db $02 : dw $B4AD ; MDB
-    dl $7E090F : db $02 : dw $EFFF ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $8000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $4C00 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $001D ; Screen Y position in pixels
-    dl $7E09CA : db $02 : dw $0015 ; Supers
-    dl $7E0A1C : db $02 : dw $00A5 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0004 ; More position/state
-    dl $7E0AF6 : db $02 : dw $004A ; Samus X
+    dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
+    dl $7E0915 : db $02 : dw $010D ; Screen Y position in pixels
+    dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
+    dl $7E0AF6 : db $02 : dw $0071 ; Samus X
+    dl $7E0AFA : db $02 : dw $017B ; Samus Y
     dw #$FFFF
 .after
 
@@ -2774,8 +2670,8 @@ preset_hundo_ridley_amphitheatre:
     dl $7E09C2 : db $02 : dw $01CA ; Health
     dl $7E09C6 : db $02 : dw $0063 ; Missiles
     dl $7E09C8 : db $02 : dw $00A5 ; Max missiles
+    dl $7E09CA : db $02 : dw $0015 ; Supers
     dl $7E0A1C : db $02 : dw $00A4 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0008 ; More position/state
     dl $7E0AF6 : db $02 : dw $00BD ; Samus X
     dl $7E0AFA : db $02 : dw $018B ; Samus Y
     dl $7ED878 : db $02 : dw $82DE ; Events, Items, Doors
@@ -3010,25 +2906,24 @@ preset_hundo_crocomire_bubble_mountain_revisit:
 
 preset_hundo_crocomire_norfair_reserve:
     dw #preset_hundo_crocomire_bubble_mountain_revisit ; Crocomire: Bubble Mountain Revisit
-    dl $7E078D : db $02 : dw $9552 ; DDB
-    dl $7E079B : db $02 : dw $AC83 ; MDB
-    dl $7E090F : db $02 : dw $2000 ; Screen subpixel X position.
-    dl $7E0913 : db $02 : dw $9000 ; Screen subpixel Y position
+    dl $7E078D : db $02 : dw $95CA ; DDB
+    dl $7E079B : db $02 : dw $ACB3 ; MDB
+    dl $7E090F : db $02 : dw $E000 ; Screen subpixel X position.
+    dl $7E0913 : db $02 : dw $2000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
-    dl $7E09C6 : db $02 : dw $0076 ; Missiles
-    dl $7E09C8 : db $02 : dw $00B4 ; Max missiles
-    dl $7E0A1C : db $02 : dw $00A5 ; Samus position/state
+    dl $7E09C6 : db $02 : dw $0071 ; Missiles
+    dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0004 ; More position/state
-    dl $7E0AF6 : db $02 : dw $0049 ; Samus X
-    dl $7ED876 : db $02 : dw $81AF ; Events, Items, Doors
+    dl $7E0AF6 : db $02 : dw $0044 ; Samus X
     dl $7ED8BA : db $02 : dw $DFF9 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $008F ; Events, Items, Doors
+    dl $7ED91A : db $02 : dw $008E ; Events, Items, Doors
     dw #$FFFF
 .after
 
 preset_hundo_crocomire_bubble_mountain_cleanup:
     dw #preset_hundo_crocomire_norfair_reserve ; Crocomire: Norfair Reserve
     dl $7E078D : db $02 : dw $952E ; DDB
+    dl $7E079B : db $02 : dw $AC83 ; MDB
     dl $7E090F : db $02 : dw $6000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $D400 ; Screen subpixel Y position
@@ -3087,50 +2982,26 @@ preset_hundo_crocomire_crocomire_2:
     dw #$FFFF
 .after
 
-preset_hundo_crocomire_croc_pbs:
+preset_hundo_crocomire_grapple_shaft_down:
     dw #preset_hundo_crocomire_crocomire_2 ; Crocomire: Crocomire
-    dl $7E078D : db $02 : dw $93D2 ; DDB
-    dl $7E078F : db $02 : dw $0004 ; DoorOut Index
-    dl $7E079B : db $02 : dw $A98D ; MDB
-    dl $7E07C3 : db $02 : dw $FE2A ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $98BD ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2B7 ; GFX Pointers
-    dl $7E07F3 : db $02 : dw $0027 ; Music Bank
-    dl $7E090F : db $02 : dw $B000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0200 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $1C00 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $055A ; Health
-    dl $7E09C4 : db $02 : dw $0577 ; Max helath
-    dl $7E0A1C : db $02 : dw $000C ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0104 ; More position/state
-    dl $7E0A68 : db $02 : dw $0001 ; Flash suit
-    dl $7E0AF6 : db $02 : dw $02F6 ; Samus X
-    dl $7E0AFA : db $02 : dw $009B ; Samus Y
-    dl $7ED876 : db $02 : dw $E1BF ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $0094 ; Events, Items, Doors
-    dw #$FFFF
-.after
-
-preset_hundo_crocomire_croc_shaft_down:
-    dw #preset_hundo_crocomire_croc_pbs ; Crocomire: Croc PBs
     dl $7E078D : db $02 : dw $944A ; DDB
     dl $7E078F : db $02 : dw $0002 ; DoorOut Index
     dl $7E079B : db $02 : dw $AB07 ; MDB
-    dl $7E07C3 : db $02 : dw $C3F9 ; GFX Pointers
     dl $7E07C5 : db $02 : dw $BBBD ; GFX Pointers
     dl $7E07C7 : db $02 : dw $C2B6 ; GFX Pointers
-    dl $7E07F3 : db $02 : dw $0015 ; Music Bank
     dl $7E090F : db $02 : dw $4000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
+    dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $056E ; Health
+    dl $7E09C4 : db $02 : dw $0577 ; Max helath
     dl $7E09C6 : db $02 : dw $0085 ; Missiles
     dl $7E09CA : db $02 : dw $000C ; Supers
     dl $7E09CE : db $02 : dw $0019 ; Pbs
     dl $7E09D0 : db $02 : dw $002D ; Max pbs
     dl $7E0A1C : db $02 : dw $0009 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0108 ; More position/state
+    dl $7E0A68 : db $02 : dw $0001 ; Flash suit
     dl $7E0AF6 : db $02 : dw $007C ; Samus X
     dl $7E0AFA : db $02 : dw $008B ; Samus Y
     dl $7ED82A : db $02 : dw $0107 ; Events, Items, Doors
@@ -3140,8 +3011,8 @@ preset_hundo_crocomire_croc_shaft_down:
     dw #$FFFF
 .after
 
-preset_hundo_crocomire_croc_shaft_up:
-    dw #preset_hundo_crocomire_croc_shaft_down ; Crocomire: Croc Shaft Down
+preset_hundo_crocomire_grapple_shaft_up:
+    dw #preset_hundo_crocomire_grapple_shaft_down ; Crocomire: Grapple Shaft Down
     dl $7E078D : db $02 : dw $9516 ; DDB
     dl $7E078F : db $02 : dw $0000 ; DoorOut Index
     dl $7E079B : db $02 : dw $AB8F ; MDB
@@ -3162,7 +3033,7 @@ preset_hundo_crocomire_croc_shaft_up:
 .after
 
 preset_hundo_crocomire_crocomire_room_revisit:
-    dw #preset_hundo_crocomire_croc_shaft_up ; Crocomire: Croc Shaft Up
+    dw #preset_hundo_crocomire_grapple_shaft_up ; Crocomire: Grapple Shaft Up
     dl $7E078D : db $02 : dw $947A ; DDB
     dl $7E079B : db $02 : dw $AA82 ; MDB
     dl $7E07C5 : db $02 : dw $E4BD ; GFX Pointers
@@ -3224,7 +3095,7 @@ preset_hundo_crocomire_business_center_climb_final:
     dw #$FFFF
 .after
 
-preset_hundo_brinstar_cleanup_below_spazer:
+preset_hundo_brinstar_cleanup_2_below_spazer:
     dw #preset_hundo_crocomire_business_center_climb_final ; Crocomire: Business Center Climb Final
     dl $7E078D : db $02 : dw $A33C ; DDB
     dl $7E079B : db $02 : dw $CF54 ; MDB
@@ -3241,8 +3112,8 @@ preset_hundo_brinstar_cleanup_below_spazer:
     dw #$FFFF
 .after
 
-preset_hundo_brinstar_cleanup_red_tower_xray:
-    dw #preset_hundo_brinstar_cleanup_below_spazer ; Brinstar Cleanup: Below Spazer
+preset_hundo_brinstar_cleanup_2_red_tower_xray:
+    dw #preset_hundo_brinstar_cleanup_2_below_spazer ; Brinstar Cleanup: Below Spazer
     dl $7E078D : db $02 : dw $910E ; DDB
     dl $7E078F : db $02 : dw $0000 ; DoorOut Index
     dl $7E079B : db $02 : dw $A3DD ; MDB
@@ -3259,8 +3130,8 @@ preset_hundo_brinstar_cleanup_red_tower_xray:
     dw #$FFFF
 .after
 
-preset_hundo_brinstar_cleanup_red_brinstar_fireflea_room:
-    dw #preset_hundo_brinstar_cleanup_red_tower_xray ; Brinstar Cleanup: Red Tower X-Ray
+preset_hundo_brinstar_cleanup_2_red_brinstar_firefleas:
+    dw #preset_hundo_brinstar_cleanup_2_red_tower_xray ; Brinstar Cleanup: Red Tower X-Ray
     dl $7E078D : db $02 : dw $90F6 ; DDB
     dl $7E079B : db $02 : dw $A253 ; MDB
     dl $7E090F : db $02 : dw $5000 ; Screen subpixel X position.
@@ -3275,8 +3146,8 @@ preset_hundo_brinstar_cleanup_red_brinstar_fireflea_room:
     dw #$FFFF
 .after
 
-preset_hundo_brinstar_cleanup_red_brinstar_fireflea_revisit:
-    dw #preset_hundo_brinstar_cleanup_red_brinstar_fireflea_room ; Brinstar Cleanup: Red Brinstar Fireflea Room
+preset_hundo_brinstar_cleanup_2_red_brinstar_firefleas_2:
+    dw #preset_hundo_brinstar_cleanup_2_red_brinstar_firefleas ; Brinstar Cleanup: Red Brinstar Firefleas
     dl $7E078D : db $02 : dw $905A ; DDB
     dl $7E079B : db $02 : dw $A2CE ; MDB
     dl $7E07F5 : db $02 : dw $0003 ; Music Track
@@ -3299,8 +3170,8 @@ preset_hundo_brinstar_cleanup_red_brinstar_fireflea_revisit:
     dw #$FFFF
 .after
 
-preset_hundo_brinstar_cleanup_reverse_slinky:
-    dw #preset_hundo_brinstar_cleanup_red_brinstar_fireflea_revisit ; Brinstar Cleanup: Red Brinstar Fireflea Revisit
+preset_hundo_brinstar_cleanup_2_reverse_slinky:
+    dw #preset_hundo_brinstar_cleanup_2_red_brinstar_firefleas_2 ; Brinstar Cleanup: Red Brinstar Firefleas 2
     dl $7E078D : db $02 : dw $902A ; DDB
     dl $7E078F : db $02 : dw $0001 ; DoorOut Index
     dl $7E079B : db $02 : dw $9FBA ; MDB
@@ -3321,8 +3192,8 @@ preset_hundo_brinstar_cleanup_reverse_slinky:
     dw #$FFFF
 .after
 
-preset_hundo_brinstar_cleanup_retro_brinstar_hoppers:
-    dw #preset_hundo_brinstar_cleanup_reverse_slinky ; Brinstar Cleanup: Reverse Slinky
+preset_hundo_brinstar_cleanup_2_retro_brinstar_hoppers:
+    dw #preset_hundo_brinstar_cleanup_2_reverse_slinky ; Brinstar Cleanup: Reverse Slinky
     dl $7E078D : db $02 : dw $8EFE ; DDB
     dl $7E078F : db $02 : dw $0000 ; DoorOut Index
     dl $7E079B : db $02 : dw $9E52 ; MDB
@@ -3338,8 +3209,8 @@ preset_hundo_brinstar_cleanup_retro_brinstar_hoppers:
     dw #$FFFF
 .after
 
-preset_hundo_brinstar_cleanup_retro_brinstar_etank:
-    dw #preset_hundo_brinstar_cleanup_retro_brinstar_hoppers ; Brinstar Cleanup: Retro Brinstar Hoppers
+preset_hundo_brinstar_cleanup_2_retro_brinstar_etank:
+    dw #preset_hundo_brinstar_cleanup_2_retro_brinstar_hoppers ; Brinstar Cleanup: Retro Brinstar Hoppers
     dl $7E078D : db $02 : dw $8E86 ; DDB
     dl $7E078F : db $02 : dw $0001 ; DoorOut Index
     dl $7E079B : db $02 : dw $9E9F ; MDB
@@ -3359,8 +3230,8 @@ preset_hundo_brinstar_cleanup_retro_brinstar_etank:
     dw #$FFFF
 .after
 
-preset_hundo_brinstar_cleanup_billy_mays:
-    dw #preset_hundo_brinstar_cleanup_retro_brinstar_etank ; Brinstar Cleanup: Retro Brinstar E-Tank
+preset_hundo_brinstar_cleanup_2_billy_mays:
+    dw #preset_hundo_brinstar_cleanup_2_retro_brinstar_etank ; Brinstar Cleanup: Retro Brinstar E-Tank
     dl $7E078D : db $02 : dw $8ECE ; DDB
     dl $7E079B : db $02 : dw $9F64 ; MDB
     dl $7E090F : db $02 : dw $A001 ; Screen subpixel X position.
@@ -3381,8 +3252,8 @@ preset_hundo_brinstar_cleanup_billy_mays:
     dw #$FFFF
 .after
 
-preset_hundo_brinstar_cleanup_billy_mays_escape:
-    dw #preset_hundo_brinstar_cleanup_billy_mays ; Brinstar Cleanup: Billy Mays
+preset_hundo_brinstar_cleanup_2_billy_mays_escape:
+    dw #preset_hundo_brinstar_cleanup_2_billy_mays ; Brinstar Cleanup: Billy Mays
     dl $7E078D : db $02 : dw $8FEE ; DDB
     dl $7E079B : db $02 : dw $A1D8 ; MDB
     dl $7E090F : db $02 : dw $4000 ; Screen subpixel X position.
@@ -3399,8 +3270,8 @@ preset_hundo_brinstar_cleanup_billy_mays_escape:
     dw #$FFFF
 .after
 
-preset_hundo_brinstar_cleanup_retro_brinstar_escape:
-    dw #preset_hundo_brinstar_cleanup_billy_mays_escape ; Brinstar Cleanup: Billy Mays Escape
+preset_hundo_brinstar_cleanup_2_retro_brinstar_escape:
+    dw #preset_hundo_brinstar_cleanup_2_billy_mays_escape ; Brinstar Cleanup: Billy Mays Escape
     dl $7E078D : db $02 : dw $8FE2 ; DDB
     dl $7E078F : db $02 : dw $0000 ; DoorOut Index
     dl $7E079B : db $02 : dw $9F64 ; MDB
@@ -3421,8 +3292,8 @@ preset_hundo_brinstar_cleanup_retro_brinstar_escape:
     dw #$FFFF
 .after
 
-preset_hundo_brinstar_cleanup_pit_room_spark:
-    dw #preset_hundo_brinstar_cleanup_retro_brinstar_escape ; Brinstar Cleanup: Retro Brinstar Escape
+preset_hundo_brinstar_cleanup_2_pit_room_2:
+    dw #preset_hundo_brinstar_cleanup_2_retro_brinstar_escape ; Brinstar Cleanup: Retro Brinstar Escape
     dl $7E078D : db $02 : dw $8EB6 ; DDB
     dl $7E078F : db $02 : dw $0002 ; DoorOut Index
     dl $7E079B : db $02 : dw $97B5 ; MDB
@@ -3442,8 +3313,8 @@ preset_hundo_brinstar_cleanup_pit_room_spark:
     dw #$FFFF
 .after
 
-preset_hundo_brinstar_cleanup_climb_supers:
-    dw #preset_hundo_brinstar_cleanup_pit_room_spark ; Brinstar Cleanup: Pit Room Spark
+preset_hundo_brinstar_cleanup_2_climb_supers:
+    dw #preset_hundo_brinstar_cleanup_2_pit_room_2 ; Brinstar Cleanup: Pit Room
     dl $7E078D : db $02 : dw $8B92 ; DDB
     dl $7E078F : db $02 : dw $0000 ; DoorOut Index
     dl $7E079B : db $02 : dw $975C ; MDB
@@ -3458,8 +3329,8 @@ preset_hundo_brinstar_cleanup_climb_supers:
     dw #$FFFF
 .after
 
-preset_hundo_brinstar_cleanup_the_last_missiles:
-    dw #preset_hundo_brinstar_cleanup_climb_supers ; Brinstar Cleanup: Climb Supers
+preset_hundo_brinstar_cleanup_2_the_last_missiles:
+    dw #preset_hundo_brinstar_cleanup_2_climb_supers ; Brinstar Cleanup: Climb Supers
     dl $7E078D : db $02 : dw $8B3E ; DDB
     dl $7E079B : db $02 : dw $92FD ; MDB
     dl $7E07C3 : db $02 : dw $C629 ; GFX Pointers
@@ -3483,8 +3354,8 @@ preset_hundo_brinstar_cleanup_the_last_missiles:
     dw #$FFFF
 .after
 
-preset_hundo_brinstar_cleanup_the_last_missiles_escape:
-    dw #preset_hundo_brinstar_cleanup_the_last_missiles ; Brinstar Cleanup: The Last Missiles
+preset_hundo_brinstar_cleanup_2_the_last_missiles_escape:
+    dw #preset_hundo_brinstar_cleanup_2_the_last_missiles ; Brinstar Cleanup: The Last Missiles
     dl $7E078D : db $02 : dw $8C82 ; DDB
     dl $7E079B : db $02 : dw $9A90 ; MDB
     dl $7E07C3 : db $02 : dw $F911 ; GFX Pointers
@@ -3506,26 +3377,8 @@ preset_hundo_brinstar_cleanup_the_last_missiles_escape:
     dw #$FFFF
 .after
 
-preset_hundo_brinstar_cleanup_terminator_revisit:
-    dw #preset_hundo_brinstar_cleanup_the_last_missiles_escape ; Brinstar Cleanup: The Last Missiles Escape
-    dl $7E078D : db $02 : dw $8C8E ; DDB
-    dl $7E078F : db $02 : dw $0001 ; DoorOut Index
-    dl $7E079B : db $02 : dw $92FD ; MDB
-    dl $7E07C3 : db $02 : dw $C629 ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $7CBA ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2AD ; GFX Pointers
-    dl $7E090F : db $02 : dw $6400 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0019 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $1800 ; Screen subpixel Y position
-    dl $7E0A1C : db $02 : dw $000C ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0104 ; More position/state
-    dl $7E0AF6 : db $02 : dw $0040 ; Samus X
-    dl $7E0AFA : db $02 : dw $008C ; Samus Y
-    dw #$FFFF
-.after
-
 preset_hundo_tourian_metroids_1:
-    dw #preset_hundo_brinstar_cleanup_terminator_revisit ; Brinstar Cleanup: Terminator Revisit
+    dw #preset_hundo_brinstar_cleanup_2_the_last_missiles_escape ; Brinstar Cleanup: The Last Missiles Escape
     dl $7E078D : db $02 : dw $9222 ; DDB
     dl $7E078F : db $02 : dw $0002 ; DoorOut Index
     dl $7E079B : db $02 : dw $DAAE ; MDB
@@ -3535,7 +3388,6 @@ preset_hundo_tourian_metroids_1:
     dl $7E07C7 : db $02 : dw $C2BA ; GFX Pointers
     dl $7E07F3 : db $02 : dw $001E ; Music Bank
     dl $7E090F : db $02 : dw $9000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $A000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0300 ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $054B ; Health
