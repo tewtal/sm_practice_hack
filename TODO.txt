@@ -1,0 +1,20 @@
+x Music toggle
+
+x Controller shortcuts
+    x Load last preset
+    x Fill equipment
+    x Reset Segment
+
+x Rerandomize: Disable on Hopper-rooms
+
+x Sounds in menu
+
+x Fix/test Phantoon/Botwoon RNG
+
+x Hundo presets
+
+- Dray RNG?
+
+- Infohud option to toggle speed ?
+
+- Save state during fanfare

@@ -1,22 +1,8 @@
-main:
-	cp resources/sm_orig.smc sm.smc && xkas main.asm sm.smc && mv sm.smc "build/SM Saving+InfoHud+Menu+NoFanfare+InputDisplay 1.42.smc"
+# cp resources/sm_orig.sfc build/sm.sfc && cd src && xkas main.asm ../build/sm.sfc && cd - && mv build/sm.sfc build/smhack20.sfc
+smhack:
+	cp resources/sm_orig.sfc build/smhack20.sfc && cd src && asar -nocheck -DFEATURE_SD2SNES=0 main.asm ../build/smhack20.sfc && cd -
 
-main_2p:
-	cp resources/sm_orig.smc sm.smc && xkas main_2p.asm sm.smc && mv sm.smc "build/SM Saving+InfoHud+Menu+NoFanfare+InputDisplay 1.42 (Controller 2).smc"
+sd2snes:
+	cp resources/sm_orig.sfc build/smhack20_sd2snes.sfc && cd src && asar -nocheck -DFEATURE_SD2SNES=1 main.asm ../build/smhack20_sd2snes.sfc && cd -
 
-main_nosave:
-	cp resources/sm_orig.smc sm.smc && xkas main_nosave.asm sm.smc && mv sm.smc "build/SM SM InfoHud+Menu+NoFanfare+InputDisplay 1.42.smc"
-
-main_fanfare:
-	cp resources/sm_orig.smc sm.smc && xkas main_fanfare.asm sm.smc && mv sm.smc "build/SM Saving+InfoHud+Menu+InputDisplay 1.42.smc"
-
-main_pal:
-	cp resources/sm_orig.smc sm.smc && xkas main_pal.asm sm.smc && mv sm.smc "build/SM Saving+InfoHud+Menu+InputDisplay 1.42 (PAL).smc"
-
-main_pal_nosave:
-	cp resources/sm_orig.smc sm.smc && xkas main_pal_nosave.asm sm.smc && mv sm.smc "build/SM InfoHud+Menu+InputDisplay 1.42 (PAL).smc"
-
-all: main main_2p main_nosave main_fanfare main_pal main_pal_nosave
-
-clean:
-	rm -f build/*.smc
+all: sd2snes smhack
