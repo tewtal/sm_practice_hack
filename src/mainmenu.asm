@@ -259,7 +259,7 @@ cat_any_new:
     %cm_jsr("Any% PRKD", action_category, #$0001)
 
 cat_any_old:
-    %cm_jsr("Any% KRPD", action_category, #$0002)
+    %cm_jsr("Any% KPDR", action_category, #$0002)
 
 cat_14ice:
     %cm_jsr("14% Ice", action_category, #$0003)
