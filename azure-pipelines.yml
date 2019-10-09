@@ -40,7 +40,6 @@ steps:
 
 - bash: |
     export PATH=$PATH:$(System.DefaultWorkingDirectory)/asar-1.71/asar/
-    mkdir build
     make all
   displayName: Build ASM Practice hack code
   failOnStderr: true
