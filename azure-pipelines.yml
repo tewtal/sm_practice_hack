@@ -1,0 +1,68 @@
+# ASP.NET Core
+# Build and test ASP.NET Core projects targeting .NET Core.
+# Add steps that run tests, create a NuGet package, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  buildConfiguration: 'Release'
+
+steps:
+- bash: |
+    sudo apt-get install cmake
+  displayName: Install cmake
+
+- bash: |
+    curl -sSL "https://github.com/RPGHacker/asar/archive/v1.71.tar.gz" -o v1.71.tar.gz
+    tar xfz v1.71.tar.gz
+    cd asar-1.71
+    cmake src && make
+    cd asar
+    ln -s asar-standalone asar
+  displayName: Download and compile asar
+  failOnStderr: true
+  
+- bash: |
+    curl -sSL https://raw.githubusercontent.com/kylon/Lipx/master/lipx.py -o lipx.py
+  displayName: Download lipx
+  failOnStderr: true
+
+- bash: |
+    curl -sSL https://hacks.speedga.me/roms/orig.dat -o orig.dat
+    mv orig.dat resources/sm_orig.sfc
+  displayName: Download base data
+  failOnStderr: true
+
+- bash: |
+    export PATH=$PATH:$(System.DefaultWorkingDirectory)/asar-1.71/asar/
+    mkdir build
+    make all
+  displayName: Build ASM Practice hack code
+  failOnStderr: true
+
+- bash: |
+    python3 lipx.py -c resources/sm_orig.sfc build/smhack20.sfc website/ClientApp/src/files/noSaveStatePatch.ips
+    python3 lipx.py -c resources/sm_orig.sfc build/smhack20_sd2snes.sfc website/ClientApp/src/files/saveStatePatch.ips
+  displayName: Create IPS patches and move to build directory
+
+- script: |
+    dotnet build --configuration $(buildConfiguration)
+  workingDirectory: website
+  displayName: 'dotnet build $(buildConfiguration)'
+
+- script: |
+    dotnet publish --configuration $(buildConfiguration)
+  workingDirectory: website
+  displayName: 'dotnet publish'
+
+- task: Docker@2
+  inputs:
+    containerRegistry: 'dockerhub'
+    repository: 'tewtal/smprachack'
+    command: 'buildAndPush'
+    Dockerfile: '**/Dockerfile'
