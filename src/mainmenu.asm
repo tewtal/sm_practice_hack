@@ -102,7 +102,7 @@ MainMenu:
     dw #mm_goto_rngmenu
     dw #mm_goto_ctrlsmenu
     dw #$0000
-    %cm_header("SM PRACTICE HACK 2.0")
+    %cm_header("SM PRACTICE HACK 2.0.1")
 
 mm_goto_equipment:
     %cm_submenu("Equipment", #EquipmentMenu)

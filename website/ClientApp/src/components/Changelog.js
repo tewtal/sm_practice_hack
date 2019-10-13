@@ -16,6 +16,21 @@ export class Changelog extends Component {
                                 <Col>
                                     <Card>
                                         <CardBody>
+                                            <h2>Version 2.0.x</h2>
+                                            <p>Changes since 2.0:</p>
+                                            <h5>Changes:</h5>
+                                            <ul>
+                                                <li>Fix the Save State and Load State button combos being intercepted by the non-sd2snes rom. (2.0.1)</li>
+                                            </ul>
+                                        </CardBody>
+                                    </Card>
+                                </Col>
+                            </Row>
+                            <br />
+                            <Row>
+                                <Col>
+                                    <Card>
+                                        <CardBody>
                                             <h2>Version 2.0</h2>
                                             <p>This version includes a major rewrite of the menu system and a bunch more exciting changes made by Pinkus.</p>
                                             <h5>Changes:</h5>
