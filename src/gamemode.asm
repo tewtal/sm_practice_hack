@@ -45,6 +45,7 @@ gamemode_shortcuts:
         JMP .load_state
     endif
 
+
   + LDA !ram_ctrl1 : AND !sram_ctrl_kill_enemies : CMP !sram_ctrl_kill_enemies : BNE +
     AND !ram_ctrl1_filtered : BEQ +
     JMP .kill_enemies
