@@ -18,3 +18,7 @@ x Hundo presets
 - Infohud option to toggle speed ?
 
 - Save state during fanfare
+
+- Fix endgame freeze
+
+- Add hours to timer?
