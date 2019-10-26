@@ -191,7 +191,7 @@ export class Patcher extends Component {
                     <CardBody>
                         <h6>For information on what's available in the practice hack and how to use it, you can visit the <strong><Link to="/help">Help</Link></strong> page.</h6>
                         <br />
-                        <h6>If you're wondering what's changed since the last version, just head to the <strong><Link to="/help">Changelog</Link></strong></h6>
+                        <h6>If you're wondering what's changed since the last version, just head to the <strong><Link to="/changelog">Changelog</Link></strong></h6>
                         <br />
                         <h6>Strong with SNES Assembly? Take a look at the source code at <strong><a href="https://github.com/tewtal/sm_practice_hack">GitHub</a></strong></h6>
                     </CardBody>
