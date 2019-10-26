@@ -143,39 +143,6 @@ export class Patcher extends Component {
                                     </InputGroup>
                                 </Col>
                             </Row>
-                            <Row className="form-group">
-                                <Col>
-                                    <br />
-                                    <h5>Additional optional patches</h5>
-                                </Col>
-                            </Row>
-                            <Row className="form-group">
-                                <Col md="4">
-                                    <Label for="msu1">
-                                        <input type="checkbox" id="msu1"/>&nbsp;
-                                        MSU-1
-                                    </Label>
-                                </Col>
-                                <Col md="4">
-                                    <Label for="something">
-                                        <input type="checkbox" id="something"/>&nbsp;
-                                        Some other patch
-                                    </Label>
-                                </Col>
-                                <div className="w-100"></div>
-                                <Col md="4">
-                                    <Label for="msu2">
-                                        <input type="checkbox" id="msu1"/>&nbsp;
-                                        MSU-2
-                                    </Label>
-                                </Col>
-                                <Col md="4">
-                                    <Label for="something2">
-                                        <input type="checkbox" id="something2"/>&nbsp;
-                                        Superspecial patch
-                                    </Label>
-                                </Col>
-                            </Row>
                             <Row>
                                 <Col>
                                     <br />
@@ -189,6 +156,8 @@ export class Patcher extends Component {
                 <Card>
                     <CardHeader className="bg-warning text-white">Information</CardHeader>
                     <CardBody>
+                        <h6>This website is still in a bit of a WIP state, so a few pages like the Help page aren't done yet, but it's being worked on!</h6>
+                        <br />
                         <h6>For information on what's available in the practice hack and how to use it, you can visit the <strong><Link to="/help">Help</Link></strong> page.</h6>
                         <br />
                         <h6>If you're wondering what's changed since the last version, just head to the <strong><Link to="/help">Changelog</Link></strong></h6>
