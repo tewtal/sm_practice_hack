@@ -85,6 +85,7 @@ preset_category_submenus:
 {
     dw #PresetsMenuPrkd
     dw #PresetsMenuHundo
+    dw #PresetsMenuRbo
 }
 
 ; -----------
@@ -102,7 +103,7 @@ MainMenu:
     dw #mm_goto_rngmenu
     dw #mm_goto_ctrlsmenu
     dw #$0000
-    %cm_header("SM PRACTICE HACK 2.0.1")
+    %cm_header("SM PRACTICE HACK 2.0.2")
 
 mm_goto_equipment:
     %cm_submenu("Equipment", #EquipmentMenu)
@@ -138,6 +139,7 @@ mm_goto_ctrlsmenu:
 
 incsrc presets/prkd_menu.asm
 incsrc presets/hundo_menu.asm
+incsrc presets/rbo_menu.asm
 
 action_load_preset:
 {
@@ -584,6 +586,7 @@ misc_preset_cateory:
     db #$28, "Preset Category", #$FF
     db #$28, "y      PRKD", #$FF ; Note the "y" ;)
     db #$28, "y     HUNDO", #$FF
+    db #$28, "y       RBO", #$FF
     db #$FF
 
 

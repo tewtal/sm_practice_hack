@@ -21,6 +21,7 @@ export class Changelog extends Component {
                                             <h5>Changes:</h5>
                                             <ul>
                                                 <li>Fix the Save State and Load State button combos being intercepted by the non-sd2snes rom. (2.0.1)</li>
+                                                <li>Add support for RBO preset. (2.0.2)</li>
                                             </ul>
                                         </CardBody>
                                     </Card>
@@ -35,11 +36,8 @@ export class Changelog extends Component {
                                             <p>This version includes a major rewrite of the menu system and a bunch more exciting changes made by Pinkus.</p>
                                             <h5>Changes:</h5>
                                             <ul>
-                                                <li>New thing 1</li>
-                                                <li>New thing 2</li>
-                                                <ul>
-                                                    <li>Sub thing 1</li>
-                                                </ul>
+                                                <li>Presets available for various points in the PRKD and Hundo routes</li>
+                                                <li>Customizable artificial lag to offset the lack of minimap</li>
                                             </ul>
                                         </CardBody>
                                     </Card>

@@ -167,6 +167,7 @@ preset_banks:
 {
     dw preset_prkd_bombs_elevator>>16
     dw preset_hundo_bombs_ceres_elevator>>16
+    dw preset_rbo_bombs_parlor_down>>16
 }
 
 print pc, " presets end"
@@ -253,3 +254,8 @@ org $CEC000
 print pc, " prkd data start"
 incsrc presets/prkd_data.asm
 print pc, " prkd data end"
+
+org $B8C300
+print pc, " rbo data start"
+incsrc presets/rbo_data.asm
+print pc, " rbo data end"
