@@ -767,7 +767,7 @@ preset_prkd_gravity_suit_bowling_alley_farm:
     dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $01FC ; Screen Y position in pixels
     dl $7E09C6 : db $02 : dw $000B ; Missiles
-    dl $7E09CA : db $02 : dw $0004 ; Supers
+    dl $7E09CA : db $02 : dw $0006 ; Supers
     dl $7E09CE : db $02 : dw $0003 ; Pbs
     dl $7E0AF6 : db $02 : dw $02C7 ; Samus X
     dl $7E0AFA : db $02 : dw $028B ; Samus Y
@@ -934,7 +934,7 @@ preset_prkd_cathedral_hi_jump:
     dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $051B ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $0057 ; Health
-    dl $7E09CA : db $02 : dw $0003 ; Supers
+    dl $7E09CA : db $02 : dw $0005 ; Supers
     dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0004 ; More position/state
     dl $7E0AF6 : db $02 : dw $0041 ; Samus X
@@ -977,7 +977,7 @@ preset_prkd_cathedral_ice_beam_snake_room:
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $FC00 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
-    dl $7E09CA : db $02 : dw $0002 ; Supers
+    dl $7E09CA : db $02 : dw $0004 ; Supers
     dl $7E0A1C : db $02 : dw $0008 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0004 ; More position/state
     dl $7E0AF6 : db $02 : dw $003B ; Samus X
@@ -1036,7 +1036,7 @@ preset_prkd_ridley_cathedral_2:
     dl $7E0913 : db $02 : dw $0C00 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
     dl $7E09C6 : db $02 : dw $000A ; Missiles
-    dl $7E09CA : db $02 : dw $0001 ; Supers
+    dl $7E09CA : db $02 : dw $0003 ; Supers
     dl $7E09CE : db $02 : dw $0003 ; Pbs
     dl $7E0AF6 : db $02 : dw $02A5 ; Samus X
     dl $7E0AFA : db $02 : dw $008B ; Samus Y
@@ -1052,7 +1052,7 @@ preset_prkd_ridley_bubble_mountain:
     dl $7E0911 : db $02 : dw $0400 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $CC00 ; Screen subpixel Y position
     dl $7E09C2 : db $02 : dw $0121 ; Health
-    dl $7E09CA : db $02 : dw $0000 ; Supers
+    dl $7E09CA : db $02 : dw $0002 ; Supers
     dl $7E0A1C : db $02 : dw $0009 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0108 ; More position/state
     dl $7E0AF6 : db $02 : dw $04DA ; Samus X
@@ -1089,7 +1089,7 @@ preset_prkd_ridley_bat_cave_revisited:
     dl $7E09A4 : db $02 : dw $3124 ; Collected Items
     dl $7E09C2 : db $02 : dw $012B ; Health
     dl $7E09C6 : db $02 : dw $0008 ; Missiles
-    dl $7E09CA : db $02 : dw $0001 ; Supers
+    dl $7E09CA : db $02 : dw $0003 ; Supers
     dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0004 ; More position/state
     dl $7E0AF6 : db $02 : dw $003F ; Samus X
