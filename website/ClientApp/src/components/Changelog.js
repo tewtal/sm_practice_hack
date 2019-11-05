@@ -23,6 +23,7 @@ export class Changelog extends Component {
                                                 <li>Fix the Save State and Load State button combos being intercepted by the non-sd2snes rom. (2.0.1)</li>
                                                 <li>Add support for RBO preset. (2.0.2)</li>
                                                 <li>Add 2 Supers to the PRKD presets between Pre-Bowling and Speed. (2.0.3)</li>
+                                                <li>Fix a few RBO preset states, and shorten many preset names. (2.0.4)</li>
                                             </ul>
                                         </CardBody>
                                     </Card>

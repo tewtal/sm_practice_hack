@@ -364,7 +364,7 @@ preset_rbo_brinstar_green_brinstar_elevator:
     dw #$FFFF
 .after
 
-preset_rbo_brinstar_early_supers_entry_reserve:
+preset_rbo_brinstar_early_supers_reserve:
     dw #preset_rbo_brinstar_green_brinstar_elevator ; Brinstar: Green Brinstar Elevator
     dl $7E078D : db $02 : dw $8C0A ; DDB
     dl $7E079B : db $02 : dw $9AD9 ; MDB
@@ -389,7 +389,7 @@ preset_rbo_brinstar_early_supers_entry_reserve:
 .after
 
 preset_rbo_brinstar_early_supers_collection:
-    dw #preset_rbo_brinstar_early_supers_entry_reserve ; Brinstar: Early Supers Entry (Reserve)
+    dw #preset_rbo_brinstar_early_supers_reserve ; Brinstar: Early Supers Reserve
     dl $7E078D : db $02 : dw $8D5A ; DDB
     dl $7E079B : db $02 : dw $9C07 ; MDB
     dl $7E07F5 : db $02 : dw $0003 ; Music Track
@@ -431,7 +431,7 @@ preset_rbo_brinstar_big_pink:
     dw #$FFFF
 .after
 
-preset_rbo_brinstar_red_tower:
+preset_rbo_brinstar_red_tower_up:
     dw #preset_rbo_brinstar_big_pink ; Brinstar: Big Pink
     dl $7E078D : db $02 : dw $8E92 ; DDB
     dl $7E078F : db $02 : dw $0002 ; DoorOut Index
@@ -451,7 +451,7 @@ preset_rbo_brinstar_red_tower:
 .after
 
 preset_rbo_brinstar_reverse_hellway:
-    dw #preset_rbo_brinstar_red_tower ; Brinstar: Red Tower
+    dw #preset_rbo_brinstar_red_tower_up ; Brinstar: Red Tower (Up)
     dl $7E078D : db $02 : dw $90EA ; DDB
     dl $7E078F : db $02 : dw $0000 ; DoorOut Index
     dl $7E079B : db $02 : dw $A322 ; MDB
@@ -638,7 +638,7 @@ preset_rbo_brinstar_cleanup_alpha_spark:
     dw #$FFFF
 .after
 
-preset_rbo_brinstar_cleanup_spore_spawn_supers_backdoor:
+preset_rbo_brinstar_cleanup_spore_spawn_supers:
     dw #preset_rbo_brinstar_cleanup_alpha_spark ; Brinstar Cleanup: Alpha Spark
     dl $7E078D : db $02 : dw $8E7A ; DDB
     dl $7E078F : db $02 : dw $0000 ; DoorOut Index
@@ -663,7 +663,7 @@ preset_rbo_brinstar_cleanup_spore_spawn_supers_backdoor:
 .after
 
 preset_rbo_brinstar_cleanup_dachora_room:
-    dw #preset_rbo_brinstar_cleanup_spore_spawn_supers_backdoor ; Brinstar Cleanup: Spore Spawn Supers (Backdoor)
+    dw #preset_rbo_brinstar_cleanup_spore_spawn_supers ; Brinstar Cleanup: Spore Spawn Supers
     dl $7E078D : db $02 : dw $8FB2 ; DDB
     dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $02FA ; Screen X position in pixels
@@ -703,7 +703,7 @@ preset_rbo_brinstar_cleanup_green_shaft_down:
     dw #$FFFF
 .after
 
-preset_rbo_brinstar_cleanup_etecoon_supersetank:
+preset_rbo_brinstar_cleanup_etecoon_supers:
     dw #preset_rbo_brinstar_cleanup_green_shaft_down ; Brinstar Cleanup: Green Shaft (Down)
     dl $7E078D : db $02 : dw $8CBE ; DDB
     dl $7E078F : db $02 : dw $0002 ; DoorOut Index
@@ -722,7 +722,7 @@ preset_rbo_brinstar_cleanup_etecoon_supersetank:
 .after
 
 preset_rbo_brinstar_cleanup_green_shaft_up:
-    dw #preset_rbo_brinstar_cleanup_etecoon_supersetank ; Brinstar Cleanup: Etecoon Supers/E-Tank
+    dw #preset_rbo_brinstar_cleanup_etecoon_supers ; Brinstar Cleanup: Etecoon Supers
     dl $7E078D : db $02 : dw $8F46 ; DDB
     dl $7E079B : db $02 : dw $9AD9 ; MDB
     dl $7E090F : db $02 : dw $8000 ; Screen subpixel X position.
@@ -866,7 +866,7 @@ preset_rbo_norfair_second_visit_ice_entry:
     dw #$FFFF
 .after
 
-preset_rbo_norfair_second_visit_ice_escape_1:
+preset_rbo_norfair_second_visit_ice_escape:
     dw #preset_rbo_norfair_second_visit_ice_entry ; Norfair (Second Visit): Ice Entry
     dl $7E078D : db $02 : dw $937E ; DDB
     dl $7E078F : db $02 : dw $0002 ; DoorOut Index
@@ -888,7 +888,7 @@ preset_rbo_norfair_second_visit_ice_escape_1:
 .after
 
 preset_rbo_norfair_second_visit_croc_shaft_moonfall:
-    dw #preset_rbo_norfair_second_visit_ice_escape_1 ; Norfair (Second Visit): Ice Escape 1
+    dw #preset_rbo_norfair_second_visit_ice_escape ; Norfair (Second Visit): Ice Escape
     dl $7E078D : db $02 : dw $9276 ; DDB
     dl $7E078F : db $02 : dw $0000 ; DoorOut Index
     dl $7E079B : db $02 : dw $A815 ; MDB
@@ -908,21 +908,22 @@ preset_rbo_norfair_second_visit_croc_shaft_moonfall:
 
 preset_rbo_norfair_second_visit_croc:
     dw #preset_rbo_norfair_second_visit_croc_shaft_moonfall ; Norfair (Second Visit): Croc Shaft Moonfall
-    dl $7E078D : db $02 : dw $93D2 ; DDB
-    dl $7E078F : db $02 : dw $0004 ; DoorOut Index
+    dl $7E078D : db $02 : dw $9396 ; DDB
+    dl $7E078F : db $02 : dw $0001 ; DoorOut Index
     dl $7E079B : db $02 : dw $A923 ; MDB
     dl $7E07C5 : db $02 : dw $E4BD ; GFX Pointers
     dl $7E07C7 : db $02 : dw $C2B5 ; GFX Pointers
-    dl $7E090F : db $02 : dw $9880 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $D880 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0C00 ; Screen X position in pixels
+    dl $7E0913 : db $02 : dw $2C00 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $021F ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $003B ; Health
+    dl $7E09C2 : db $02 : dw $003E ; Health
     dl $7E09CA : db $02 : dw $0010 ; Supers
     dl $7E09D6 : db $02 : dw $0000 ; Reserves
     dl $7E0A1C : db $02 : dw $0029 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0608 ; More position/state
-    dl $7E0AF6 : db $02 : dw $0C94 ; Samus X
-    dl $7E0AFA : db $02 : dw $02DE ; Samus Y
+    dl $7E0AF6 : db $02 : dw $0C86 ; Samus X
+    dl $7E0AFA : db $02 : dw $02C9 ; Samus Y
     dl $7ED8B8 : db $02 : dw $6E00 ; Events, Items, Doors
     dl $7ED91A : db $02 : dw $0047 ; Events, Items, Doors
     dw #$FFFF
@@ -931,7 +932,6 @@ preset_rbo_norfair_second_visit_croc:
 preset_rbo_norfair_second_visit_grapple_escape:
     dw #preset_rbo_norfair_second_visit_croc ; Norfair (Second Visit): Croc
     dl $7E078D : db $02 : dw $94DA ; DDB
-    dl $7E078F : db $02 : dw $0001 ; DoorOut Index
     dl $7E079B : db $02 : dw $AC2B ; MDB
     dl $7E07C5 : db $02 : dw $BBBD ; GFX Pointers
     dl $7E07C7 : db $02 : dw $C2B6 ; GFX Pointers
@@ -1002,21 +1002,22 @@ preset_rbo_norfair_second_visit_lava_dive_entry_room:
 
 preset_rbo_lower_norfair_green_gate_glitch:
     dw #preset_rbo_norfair_second_visit_lava_dive_entry_room ; Norfair (Second Visit): Lava Dive (Entry Room)
-    dl $7E078D : db $02 : dw $985E ; DDB
-    dl $7E079B : db $02 : dw $B3A5 ; MDB
+    dl $7E078D : db $02 : dw $96F6 ; DDB
+    dl $7E078F : db $02 : dw $0003 ; DoorOut Index
+    dl $7E079B : db $02 : dw $B236 ; MDB
     dl $7E07F3 : db $02 : dw $0018 ; Music Bank
-    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $2000 ; Screen subpixel Y position
+    dl $7E090F : db $02 : dw $C000 ; Screen subpixel X position.
+    dl $7E0911 : db $02 : dw $0700 ; Screen X position in pixels
+    dl $7E0913 : db $02 : dw $8000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0200 ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $0191 ; Health
+    dl $7E09C2 : db $02 : dw $01C4 ; Health
     dl $7E09C6 : db $02 : dw $0005 ; Missiles
     dl $7E09CA : db $02 : dw $000A ; Supers
-    dl $7E09CE : db $02 : dw $0006 ; Pbs
-    dl $7E0A1C : db $02 : dw $0068 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0604 ; More position/state
-    dl $7E0AF6 : db $02 : dw $0084 ; Samus X
-    dl $7E0AFA : db $02 : dw $0287 ; Samus Y
+    dl $7E09CE : db $02 : dw $0005 ; Pbs
+    dl $7E0A1C : db $02 : dw $001E ; Samus position/state
+    dl $7E0A1E : db $02 : dw $0408 ; More position/state
+    dl $7E0AF6 : db $02 : dw $07C8 ; Samus X
+    dl $7E0AFA : db $02 : dw $0299 ; Samus Y
     dl $7ED8BA : db $02 : dw $01F3 ; Events, Items, Doors
     dw #$FFFF
 .after
@@ -1028,6 +1029,7 @@ preset_rbo_lower_norfair_golden_torizo:
     dl $7E079B : db $02 : dw $B6C1 ; MDB
     dl $7E07F5 : db $02 : dw $0003 ; Music Track
     dl $7E090F : db $02 : dw $3FFF ; Screen subpixel X position.
+    dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $4000 ; Screen subpixel Y position
     dl $7E09A2 : db $02 : dw $710C ; Equipped Items
     dl $7E09A4 : db $02 : dw $710C ; Collected Items
@@ -1096,7 +1098,7 @@ preset_rbo_lower_norfair_writg:
     dw #$FFFF
 .after
 
-preset_rbo_lower_norfair_firefleas_exit:
+preset_rbo_lower_norfair_kihunter_stairs_down:
     dw #preset_rbo_lower_norfair_writg ; Lower Norfair: WRITG
     dl $7E078D : db $02 : dw $9A02 ; DDB
     dl $7E078F : db $02 : dw $0002 ; DoorOut Index
@@ -1121,7 +1123,7 @@ preset_rbo_lower_norfair_firefleas_exit:
 .after
 
 preset_rbo_lower_norfair_ninja_pirates:
-    dw #preset_rbo_lower_norfair_firefleas_exit ; Lower Norfair: Firefleas Exit
+    dw #preset_rbo_lower_norfair_kihunter_stairs_down ; Lower Norfair: Kihunter Stairs (Down)
     dl $7E078D : db $02 : dw $99EA ; DDB
     dl $7E078F : db $02 : dw $0000 ; DoorOut Index
     dl $7E079B : db $02 : dw $B5D5 ; MDB
@@ -1523,7 +1525,7 @@ preset_rbo_wrecked_ship_ws_shaft_up:
     dw #$FFFF
 .after
 
-preset_rbo_kraidg4_crateria_kihunters_room_down:
+preset_rbo_kraidg4_kihunters_room_down:
     dw #preset_rbo_wrecked_ship_ws_shaft_up ; Wrecked Ship: WS Shaft (Up)
     dl $7E078D : db $02 : dw $89CA ; DDB
     dl $7E079B : db $02 : dw $95FF ; MDB
@@ -1545,7 +1547,7 @@ preset_rbo_kraidg4_crateria_kihunters_room_down:
 .after
 
 preset_rbo_kraidg4_kraid_entry:
-    dw #preset_rbo_kraidg4_crateria_kihunters_room_down ; Kraid/G4: Crateria Kihunters Room (Down)
+    dw #preset_rbo_kraidg4_kihunters_room_down ; Kraid/G4: Kihunters Room (Down)
     dl $7E078D : db $02 : dw $A348 ; DDB
     dl $7E078F : db $02 : dw $0002 ; DoorOut Index
     dl $7E079B : db $02 : dw $CF80 ; MDB
@@ -1589,7 +1591,7 @@ preset_rbo_kraidg4_kraid_hallway:
     dw #$FFFF
 .after
 
-preset_rbo_kraidg4_kraid_hallway_escape:
+preset_rbo_kraidg4_kraid_hallway_exit:
     dw #preset_rbo_kraidg4_kraid_hallway ; Kraid/G4: Kraid Hallway
     dl $7E078D : db $02 : dw $91CE ; DDB
     dl $7E078F : db $02 : dw $0000 ; DoorOut Index
@@ -1614,7 +1616,7 @@ preset_rbo_kraidg4_kraid_hallway_escape:
 .after
 
 preset_rbo_kraidg4_kraid_escape:
-    dw #preset_rbo_kraidg4_kraid_hallway_escape ; Kraid/G4: Kraid Hallway (Escape)
+    dw #preset_rbo_kraidg4_kraid_hallway_exit ; Kraid/G4: Kraid Hallway (Exit)
     dl $7E078D : db $02 : dw $913E ; DDB
     dl $7E079B : db $02 : dw $A6A1 ; MDB
     dl $7E07F3 : db $02 : dw $0012 ; Music Bank
@@ -1635,7 +1637,7 @@ preset_rbo_kraidg4_kraid_escape:
     dw #$FFFF
 .after
 
-preset_rbo_kraidg4_crateria_kihunters_room_up:
+preset_rbo_kraidg4_kihunters_room_up:
     dw #preset_rbo_kraidg4_kraid_escape ; Kraid/G4: Kraid Escape
     dl $7E078D : db $02 : dw $90BA ; DDB
     dl $7E078F : db $02 : dw $0002 ; DoorOut Index
@@ -1656,8 +1658,8 @@ preset_rbo_kraidg4_crateria_kihunters_room_up:
     dw #$FFFF
 .after
 
-preset_rbo_tourian_metroids_1:
-    dw #preset_rbo_kraidg4_crateria_kihunters_room_up ; Kraid/G4: Crateria Kihunters Room (Up)
+preset_rbo_tourian_metroids:
+    dw #preset_rbo_kraidg4_kihunters_room_up ; Kraid/G4: Kihunters Room (Up)
     dl $7E078D : db $02 : dw $9222 ; DDB
     dl $7E079B : db $02 : dw $DAAE ; MDB
     dl $7E079F : db $02 : dw $0005 ; Region
@@ -1682,7 +1684,7 @@ preset_rbo_tourian_metroids_1:
 .after
 
 preset_rbo_tourian_baby_skip:
-    dw #preset_rbo_tourian_metroids_1 ; Tourian: Metroids 1
+    dw #preset_rbo_tourian_metroids ; Tourian: Metroids
     dl $7E078D : db $02 : dw $AA14 ; DDB
     dl $7E078F : db $02 : dw $0001 ; DoorOut Index
     dl $7E079B : db $02 : dw $DC65 ; MDB

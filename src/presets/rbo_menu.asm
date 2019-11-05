@@ -59,10 +59,10 @@ presets_submenu_rbo_bombs:
 
 presets_submenu_rbo_brinstar:
     dw #presets_rbo_brinstar_green_brinstar_elevator
-    dw #presets_rbo_brinstar_early_supers_entry_reserve
+    dw #presets_rbo_brinstar_early_supers_reserve
     dw #presets_rbo_brinstar_early_supers_collection
     dw #presets_rbo_brinstar_big_pink
-    dw #presets_rbo_brinstar_red_tower
+    dw #presets_rbo_brinstar_red_tower_up
     dw #presets_rbo_brinstar_reverse_hellway
     dw #$0000
     %cm_header("BRINSTAR")
@@ -79,10 +79,10 @@ presets_submenu_rbo_norfair_first_visit:
 
 presets_submenu_rbo_brinstar_cleanup:
     dw #presets_rbo_brinstar_cleanup_alpha_spark
-    dw #presets_rbo_brinstar_cleanup_spore_spawn_supers_backdoor
+    dw #presets_rbo_brinstar_cleanup_spore_spawn_supers
     dw #presets_rbo_brinstar_cleanup_dachora_room
     dw #presets_rbo_brinstar_cleanup_green_shaft_down
-    dw #presets_rbo_brinstar_cleanup_etecoon_supersetank
+    dw #presets_rbo_brinstar_cleanup_etecoon_supers
     dw #presets_rbo_brinstar_cleanup_green_shaft_up
     dw #presets_rbo_brinstar_cleanup_reverse_terminator
     dw #presets_rbo_brinstar_cleanup_climb_supers_moonfall
@@ -93,7 +93,7 @@ presets_submenu_rbo_brinstar_cleanup:
 
 presets_submenu_rbo_norfair_second_visit:
     dw #presets_rbo_norfair_second_visit_ice_entry
-    dw #presets_rbo_norfair_second_visit_ice_escape_1
+    dw #presets_rbo_norfair_second_visit_ice_escape
     dw #presets_rbo_norfair_second_visit_croc_shaft_moonfall
     dw #presets_rbo_norfair_second_visit_croc
     dw #presets_rbo_norfair_second_visit_grapple_escape
@@ -107,7 +107,7 @@ presets_submenu_rbo_lower_norfair:
     dw #presets_rbo_lower_norfair_golden_torizo
     dw #presets_rbo_lower_norfair_energy_refill_escape
     dw #presets_rbo_lower_norfair_writg
-    dw #presets_rbo_lower_norfair_firefleas_exit
+    dw #presets_rbo_lower_norfair_kihunter_stairs_down
     dw #presets_rbo_lower_norfair_ninja_pirates
     dw #presets_rbo_lower_norfair_ridley
     dw #$0000
@@ -142,17 +142,17 @@ presets_submenu_rbo_wrecked_ship:
     %cm_header("WRECKED SHIP")
 
 presets_submenu_rbo_kraidg4:
-    dw #presets_rbo_kraidg4_crateria_kihunters_room_down
+    dw #presets_rbo_kraidg4_kihunters_room_down
     dw #presets_rbo_kraidg4_kraid_entry
     dw #presets_rbo_kraidg4_kraid_hallway
-    dw #presets_rbo_kraidg4_kraid_hallway_escape
+    dw #presets_rbo_kraidg4_kraid_hallway_exit
     dw #presets_rbo_kraidg4_kraid_escape
-    dw #presets_rbo_kraidg4_crateria_kihunters_room_up
+    dw #presets_rbo_kraidg4_kihunters_room_up
     dw #$0000
     %cm_header("KRAID/G4")
 
 presets_submenu_rbo_tourian:
-    dw #presets_rbo_tourian_metroids_1
+    dw #presets_rbo_tourian_metroids
     dw #presets_rbo_tourian_baby_skip
     dw #presets_rbo_tourian_zeb_skip
     dw #presets_rbo_tourian_escape_room_3
@@ -187,8 +187,8 @@ presets_rbo_bombs_terminator:
 presets_rbo_brinstar_green_brinstar_elevator:
     %cm_preset("Green Brinstar Elevator", #preset_rbo_brinstar_green_brinstar_elevator)
 
-presets_rbo_brinstar_early_supers_entry_reserve:
-    %cm_preset("Early Supers Entry (Reserve)", #preset_rbo_brinstar_early_supers_entry_reserve)
+presets_rbo_brinstar_early_supers_reserve:
+    %cm_preset("Early Supers Reserve", #preset_rbo_brinstar_early_supers_reserve)
 
 presets_rbo_brinstar_early_supers_collection:
     %cm_preset("Early Supers Collection", #preset_rbo_brinstar_early_supers_collection)
@@ -196,8 +196,8 @@ presets_rbo_brinstar_early_supers_collection:
 presets_rbo_brinstar_big_pink:
     %cm_preset("Big Pink", #preset_rbo_brinstar_big_pink)
 
-presets_rbo_brinstar_red_tower:
-    %cm_preset("Red Tower", #preset_rbo_brinstar_red_tower)
+presets_rbo_brinstar_red_tower_up:
+    %cm_preset("Red Tower (Up)", #preset_rbo_brinstar_red_tower_up)
 
 presets_rbo_brinstar_reverse_hellway:
     %cm_preset("Reverse Hellway", #preset_rbo_brinstar_reverse_hellway)
@@ -227,8 +227,8 @@ presets_rbo_norfair_first_visit_wave_escape:
 presets_rbo_brinstar_cleanup_alpha_spark:
     %cm_preset("Alpha Spark", #preset_rbo_brinstar_cleanup_alpha_spark)
 
-presets_rbo_brinstar_cleanup_spore_spawn_supers_backdoor:
-    %cm_preset("Spore Spawn Supers (Backdoor)", #preset_rbo_brinstar_cleanup_spore_spawn_supers_backdoor)
+presets_rbo_brinstar_cleanup_spore_spawn_supers:
+    %cm_preset("Spore Spawn Supers", #preset_rbo_brinstar_cleanup_spore_spawn_supers)
 
 presets_rbo_brinstar_cleanup_dachora_room:
     %cm_preset("Dachora Room", #preset_rbo_brinstar_cleanup_dachora_room)
@@ -236,8 +236,8 @@ presets_rbo_brinstar_cleanup_dachora_room:
 presets_rbo_brinstar_cleanup_green_shaft_down:
     %cm_preset("Green Shaft (Down)", #preset_rbo_brinstar_cleanup_green_shaft_down)
 
-presets_rbo_brinstar_cleanup_etecoon_supersetank:
-    %cm_preset("Etecoon Supers/E-Tank", #preset_rbo_brinstar_cleanup_etecoon_supersetank)
+presets_rbo_brinstar_cleanup_etecoon_supers:
+    %cm_preset("Etecoon Supers", #preset_rbo_brinstar_cleanup_etecoon_supers)
 
 presets_rbo_brinstar_cleanup_green_shaft_up:
     %cm_preset("Green Shaft (Up)", #preset_rbo_brinstar_cleanup_green_shaft_up)
@@ -259,8 +259,8 @@ presets_rbo_brinstar_cleanup_ball_buster:
 presets_rbo_norfair_second_visit_ice_entry:
     %cm_preset("Ice Entry", #preset_rbo_norfair_second_visit_ice_entry)
 
-presets_rbo_norfair_second_visit_ice_escape_1:
-    %cm_preset("Ice Escape 1", #preset_rbo_norfair_second_visit_ice_escape_1)
+presets_rbo_norfair_second_visit_ice_escape:
+    %cm_preset("Ice Escape", #preset_rbo_norfair_second_visit_ice_escape)
 
 presets_rbo_norfair_second_visit_croc_shaft_moonfall:
     %cm_preset("Croc Shaft Moonfall", #preset_rbo_norfair_second_visit_croc_shaft_moonfall)
@@ -291,8 +291,8 @@ presets_rbo_lower_norfair_energy_refill_escape:
 presets_rbo_lower_norfair_writg:
     %cm_preset("WRITG", #preset_rbo_lower_norfair_writg)
 
-presets_rbo_lower_norfair_firefleas_exit:
-    %cm_preset("Firefleas Exit", #preset_rbo_lower_norfair_firefleas_exit)
+presets_rbo_lower_norfair_kihunter_stairs_down:
+    %cm_preset("Kihunter Stairs (Down)", #preset_rbo_lower_norfair_kihunter_stairs_down)
 
 presets_rbo_lower_norfair_ninja_pirates:
     %cm_preset("Ninja Pirates", #preset_rbo_lower_norfair_ninja_pirates)
@@ -356,8 +356,8 @@ presets_rbo_wrecked_ship_ws_shaft_up:
 
 
 ; Kraid/G4
-presets_rbo_kraidg4_crateria_kihunters_room_down:
-    %cm_preset("Crateria Kihunters Room (Down)", #preset_rbo_kraidg4_crateria_kihunters_room_down)
+presets_rbo_kraidg4_kihunters_room_down:
+    %cm_preset("Kihunters Room (Down)", #preset_rbo_kraidg4_kihunters_room_down)
 
 presets_rbo_kraidg4_kraid_entry:
     %cm_preset("Kraid Entry", #preset_rbo_kraidg4_kraid_entry)
@@ -365,19 +365,19 @@ presets_rbo_kraidg4_kraid_entry:
 presets_rbo_kraidg4_kraid_hallway:
     %cm_preset("Kraid Hallway", #preset_rbo_kraidg4_kraid_hallway)
 
-presets_rbo_kraidg4_kraid_hallway_escape:
-    %cm_preset("Kraid Hallway (Escape)", #preset_rbo_kraidg4_kraid_hallway_escape)
+presets_rbo_kraidg4_kraid_hallway_exit:
+    %cm_preset("Kraid Hallway (Exit)", #preset_rbo_kraidg4_kraid_hallway_exit)
 
 presets_rbo_kraidg4_kraid_escape:
     %cm_preset("Kraid Escape", #preset_rbo_kraidg4_kraid_escape)
 
-presets_rbo_kraidg4_crateria_kihunters_room_up:
-    %cm_preset("Crateria Kihunters Room (Up)", #preset_rbo_kraidg4_crateria_kihunters_room_up)
+presets_rbo_kraidg4_kihunters_room_up:
+    %cm_preset("Kihunters Room (Up)", #preset_rbo_kraidg4_kihunters_room_up)
 
 
 ; Tourian
-presets_rbo_tourian_metroids_1:
-    %cm_preset("Metroids 1", #preset_rbo_tourian_metroids_1)
+presets_rbo_tourian_metroids:
+    %cm_preset("Metroids", #preset_rbo_tourian_metroids)
 
 presets_rbo_tourian_baby_skip:
     %cm_preset("Baby Skip", #preset_rbo_tourian_baby_skip)
