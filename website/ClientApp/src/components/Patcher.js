@@ -12,7 +12,7 @@ export class Patcher extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { romUploaded: false, baseRom: null, romType: 'savestates', showGeneratingDialog: false };
+        this.state = { romUploaded: false, baseRom: null, romType: 'savestates', category: 'combined', showGeneratingDialog: false };
         this.localforage = require('localforage');
     }
 
@@ -83,6 +83,11 @@ export class Patcher extends Component {
         this.setState({ romType: e.target.value });
     }
 
+    updateCategory(e)
+    {
+        this.setState({ category: e.target.value });
+    }
+
     async getPatch() {
         if(this.state.romType === "savestates")
             return new Uint8Array(await (await fetch(saveStatePatch, {cache: "no-store"})).arrayBuffer());
@@ -139,6 +144,18 @@ export class Patcher extends Component {
                                         <Input type="select" id="type" defaultValue={this.state.romType} onChange={(e) => this.updateType(e)}>
                                             <option value="savestates">With Save States (SD2SNES only)</option>
                                             <option value="nosavestates">Without Save States (Emu/VC/Classic etc)</option>
+                                        </Input>
+                                    </InputGroup>
+                                </Col>
+                            </Row>
+                            <Row className="form-group">
+                                <Col>
+                                    <InputGroup>
+                                        <InputGroupAddon addonType="prepend">
+                                            <InputGroupText>Category</InputGroupText>                                            
+                                        </InputGroupAddon>
+                                        <Input type="select" id="category" defaultValue={this.state.category} onChange={(e) => this.updateCategory(e)}>
+                                            <option value="combined">Combined (100%, Any% PRKD, RBO)</option>
                                         </Input>
                                     </InputGroup>
                                 </Col>
