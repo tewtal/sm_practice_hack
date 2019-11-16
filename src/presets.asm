@@ -169,7 +169,7 @@ preset_banks:
         dw preset_prkd_bombs_elevator>>16
         dw preset_hundo_bombs_ceres_elevator>>16
     elseif !CATEGORY == !category_rbo
-        dw preset_rbo_bombs_parlor_down>>16
+        dw preset_rbo_bombs_ceres_elevator>>16
     else
         error "Unsupported category"
     endif

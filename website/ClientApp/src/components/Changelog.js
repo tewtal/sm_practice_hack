@@ -24,6 +24,7 @@ export class Changelog extends Component {
                                                 <li>Add support for RBO preset. (2.0.2)</li>
                                                 <li>Add 2 Supers to the PRKD presets between Pre-Bowling and Speed. (2.0.3)</li>
                                                 <li>Fix a few RBO preset states, and shorten many preset names. (2.0.4)</li>
+                                                <li>Move RBO into a separate copy of the ROM, and enable the full set of RBO preset locations. (2.0.5)</li>
                                             </ul>
                                         </CardBody>
                                     </Card>
