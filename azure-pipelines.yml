@@ -47,6 +47,8 @@ steps:
 - bash: |
     python3 lipx.py -c resources/sm_orig.sfc build/smhack20.sfc website/ClientApp/src/files/noSaveStatePatch.ips
     python3 lipx.py -c resources/sm_orig.sfc build/smhack20_sd2snes.sfc website/ClientApp/src/files/saveStatePatch.ips
+    python3 lipx.py -c resources/sm_orig.sfc build/smhack20_rbo.sfc website/ClientApp/src/files/noSaveStatePatchRbo.ips
+    python3 lipx.py -c resources/sm_orig.sfc build/smhack20_sd2snes_rbo.sfc website/ClientApp/src/files/saveStatePatchRbo.ips
   displayName: Create IPS patches and move to build directory
 
 - script: |

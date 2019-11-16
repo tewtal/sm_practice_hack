@@ -165,9 +165,14 @@ preset_to_memory:
 
 preset_banks:
 {
-    dw preset_prkd_bombs_elevator>>16
-    dw preset_hundo_bombs_ceres_elevator>>16
-    dw preset_rbo_bombs_parlor_down>>16
+    if !CATEGORY == !category_combined
+        dw preset_prkd_bombs_elevator>>16
+        dw preset_hundo_bombs_ceres_elevator>>16
+    elseif !CATEGORY == !category_rbo
+        dw preset_rbo_bombs_parlor_down>>16
+    else
+        error "Unsupported category"
+    endif
 }
 
 print pc, " presets end"
@@ -245,17 +250,21 @@ transfer_cgram_long:
 }
 print pc, " preset_start_gameplay end"
 
-org $B88000
-print pc, " hundo data start"
-incsrc presets/hundo_data.asm
-print pc, " hundo data end"
+if !CATEGORY == !category_combined
+    org $B88000
+    print pc, " hundo data start"
+    incsrc presets/hundo_data.asm
+    print pc, " hundo data end"
 
-org $CEC000
-print pc, " prkd data start"
-incsrc presets/prkd_data.asm
-print pc, " prkd data end"
-
-org $B8C300
-print pc, " rbo data start"
-incsrc presets/rbo_data.asm
-print pc, " rbo data end"
+    org $CEC000
+    print pc, " prkd data start"
+    incsrc presets/prkd_data.asm
+    print pc, " prkd data end"
+elseif !CATEGORY == !category_rbo
+    org $B88000
+    print pc, " rbo data start"
+    incsrc presets/rbo_data.asm
+    print pc, " rbo data end"
+else
+    error "Unsupported category"
+endif

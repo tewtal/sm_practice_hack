@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom';
 
 import saveStatePatch from '../files/saveStatePatch.ips';
 import noSaveStatePatch from '../files/noSaveStatePatch.ips';
+import saveStatePatchRbo from '../files/saveStatePatchRbo.ips';
+import noSaveStatePatchRbo from '../files/noSaveStatePatchRbo.ips';
 
 export class Patcher extends Component {
     static displayName = Patcher.name;
@@ -90,9 +92,19 @@ export class Patcher extends Component {
 
     async getPatch() {
         if(this.state.romType === "savestates")
-            return new Uint8Array(await (await fetch(saveStatePatch, {cache: "no-store"})).arrayBuffer());
+            if(this.state.category === "combined")
+                return new Uint8Array(await (await fetch(saveStatePatch, {cache: "no-store"})).arrayBuffer());
+            else if(this.state.category === "rbo")
+                return new Uint8Array(await (await fetch(saveStatePatchRbo, {cache: "no-store"})).arrayBuffer());
+            else
+                return null;
         else if(this.state.romType === "nosavestates")
-            return new Uint8Array(await (await fetch(noSaveStatePatch, {cache: "no-store"})).arrayBuffer());
+            if(this.state.category === "combined")
+                return new Uint8Array(await (await fetch(noSaveStatePatch, {cache: "no-store"})).arrayBuffer());
+            else if(this.state.category === "rbo")
+                return new Uint8Array(await (await fetch(noSaveStatePatchRbo, {cache: "no-store"})).arrayBuffer());
+            else
+                return null;
         else
             return null;
     }
@@ -100,9 +112,17 @@ export class Patcher extends Component {
     getFileName()
     {
         if(this.state.romType === "savestates")
-            return "SM Practice Hack " + this.props.version + " (Savestates).sfc";
+            if(this.state.category === "rbo")
+                return "SM Practice Hack " + this.props.version + " (Savestates) RBO.sfc";
+            else
+                // Return this for unknown category, as well as combined
+                return "SM Practice Hack " + this.props.version + " (Savestates).sfc";
         else if(this.state.romType === "nosavestates")
-            return "SM Practice Hack " + this.props.version + " (No savestates).sfc";
+            if(this.state.category === "rbo")
+                return "SM Practice Hack " + this.props.version + " (No savestates) RBO.sfc";
+            else
+                // Return this for unknown category, as well as combined
+                return "SM Practice Hack " + this.props.version + " (No savestates).sfc";
         else
             return "SM Practice Hack " + this.props.version + " (Unknown type).sfc";       
     }
@@ -152,10 +172,11 @@ export class Patcher extends Component {
                                 <Col>
                                     <InputGroup>
                                         <InputGroupAddon addonType="prepend">
-                                            <InputGroupText>Category</InputGroupText>                                            
+                                            <InputGroupText>Preset Category</InputGroupText>                                            
                                         </InputGroupAddon>
                                         <Input type="select" id="category" defaultValue={this.state.category} onChange={(e) => this.updateCategory(e)}>
-                                            <option value="combined">Combined (100%, Any% PRKD, RBO)</option>
+                                            <option value="combined">Combined (100%, Any% PRKD)</option>
+                                            <option value="rbo">RBO</option>
                                         </Input>
                                     </InputGroup>
                                 </Col>
