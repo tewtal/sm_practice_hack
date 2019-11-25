@@ -170,6 +170,8 @@ preset_banks:
         dw preset_hundo_bombs_ceres_elevator>>16
     elseif !CATEGORY == !category_rbo
         dw preset_rbo_bombs_ceres_elevator>>16
+    elseif !CATEGORY == !category_kpdr25
+        dw preset_kpdr25_bombs_ceres_elevator>>16
     else
         error "Unsupported category"
     endif
@@ -265,6 +267,11 @@ elseif !CATEGORY == !category_rbo
     print pc, " rbo data start"
     incsrc presets/rbo_data.asm
     print pc, " rbo data end"
+elseif !CATEGORY == !category_kpdr25
+    org $B88000
+    print pc, " kpdr25 data start"
+    incsrc presets/kpdr25_data.asm
+    print pc, " kpdr25 data end"
 else
     error "Unsupported category"
 endif
