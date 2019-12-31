@@ -468,6 +468,8 @@ ih_hud_code:
     dw status_vspeed
     dw status_iframecounter
     dw status_lagcounter
+    dw status_xpos
+    dw status_ypos
 }
 
 
@@ -551,6 +553,24 @@ status_lagcounter:
 {
     LDA !ram_lag_counter : CMP !ram_last_lag_counter : BEQ .done : STA !ram_last_lag_counter
     JSR Hex2Dec : LDX #$008A : JSR Draw3
+
+  .done
+    RTS
+}
+
+status_xpos:
+{
+    LDA $0AF6 : CMP !ram_xpos : BEQ .done : STA !ram_xpos
+    JSR Hex2Dec : LDX #$0088 : JSR Draw4
+
+  .done
+    RTS
+}
+
+status_ypos:
+{
+    LDA $0AFA : CMP !ram_ypos : BEQ .done : STA !ram_ypos
+    JSR Hex2Dec : LDX #$0088 : JSR Draw4
 
   .done
     RTS
@@ -759,7 +779,7 @@ ih_game_loop_code:
   .inc_statusdisplay
     LDA !sram_display_mode
     INC A
-    CMP #$0009
+    CMP #$000B
     BNE +
     LDA #$0000
 +   STA !sram_display_mode
@@ -770,7 +790,7 @@ ih_game_loop_code:
     DEC A
     CMP #$FFFF
     BNE +
-    LDA #$0008
+    LDA #$000A
 +   STA !sram_display_mode
     JMP .update_status
 

@@ -12,6 +12,8 @@
 
 !ram_slowdown_mode = $7EFFFC
 !ram_slowdown_frames = $7FFB52
+!ram_xpos = $7FFB34
+!ram_ypos = $7FFB36
 !ram_dash_counter = $7FFB38
 !ram_iframe_counter = $7FFB3A
 !ram_vertical_speed = $7FFB3C
