@@ -12,7 +12,7 @@ This page hosts the source material for the Super Metroid Practice Hack. It is i
 
 ## Which rom should I use?
 
-The build script will create several versions of the practice hack for various speedrun categories. Roms that feature "sd2snes" in the filename have the built-in savestate feature enabled. This is only intended for use with the SD2SNES cartridge and will likely cause crashes if used with Everdrives and mostly emulators (including Virtual Console). The Super NT is compatible, although it may require a firmware update.
+The build script will create several versions of the practice hack for various speedrun categories. Roms that feature "sd2snes" in the filename have the built-in savestate feature enabled. This is only intended for use with the SD2SNES cartridge and will likely cause crashes if used with Everdrives and most emulators (including Virtual Console). The Super NT is compatible, although it may require a firmware update.
 
 ## Known Issues:
 
