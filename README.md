@@ -4,7 +4,7 @@ This page hosts the source material for the Super Metroid Practice Hack. It is i
 
 ## Getting Started:
 
-1. Copy your SM rom (NtSC only) into the \resources\ folder.
+1. Copy your SM rom (NTSC only) into the \resources\ folder.
 2. Rename the rom to `sm_orig.sfc`.
 3. Download asar from https://github.com/RPGHacker/asar and place it in the \tools\ folder.
 3. Run build.bat to apply the changes.
