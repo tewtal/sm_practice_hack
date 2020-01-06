@@ -90,6 +90,8 @@ preset_category_submenus:
         dw #PresetsMenuRbo
     elseif !CATEGORY == !category_kpdr25
         dw #PresetsMenuKpdr25
+    elseif !CATEGORY == !category_gtclassic
+        dw #PresetsMenuGtclassic
     else
         error "Unsupported category"
     endif
@@ -110,7 +112,7 @@ MainMenu:
     dw #mm_goto_rngmenu
     dw #mm_goto_ctrlsmenu
     dw #$0000
-    %cm_header("SM PRACTICE HACK 2.0.7")
+    %cm_header("SM PRACTICE HACK 2.0.8")
 
 mm_goto_equipment:
     %cm_submenu("Equipment", #EquipmentMenu)
@@ -150,6 +152,8 @@ elseif !CATEGORY == !category_rbo
     incsrc presets/rbo_menu.asm
 elseif !CATEGORY == !category_kpdr25
     incsrc presets/kpdr25_menu.asm
+elseif !CATEGORY == !category_gtclassic
+    incsrc presets/gtclassic_menu.asm
 else
     error "Unsupported category"
 endif
@@ -604,6 +608,8 @@ misc_preset_cateory:
         db #$28, "y       RBO", #$FF
     elseif !CATEGORY == !category_kpdr25
         db #$28, "y    KPDR25", #$FF
+    elseif !CATEGORY == !category_gtclassic
+        db #$28, "y GTCLASSIC", #$FF
     else
         error "Unsupported category"
     endif
