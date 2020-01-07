@@ -22,4 +22,4 @@ sd2sneskpdr25:
 sd2snesgtclassic:
 	cp resources/sm_orig.sfc build/smhack20_sd2snes_gtclassic.sfc && cd src && asar --no-title-check -DFEATURE_SD2SNES=1 -DCATEGORY=3 main.asm ../build/smhack20_sd2snes_gtclassic.sfc && cd -
 
-all: sd2snes smhack sd2snesrbo smhackrbo sd2sneskpdr25 smhackkpdr25 sd2snesgtclassic shmackgtclassic
+all: sd2snes smhack sd2snesrbo smhackrbo sd2sneskpdr25 smhackkpdr25 sd2snesgtclassic smhackgtclassic
