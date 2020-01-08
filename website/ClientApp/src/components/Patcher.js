@@ -10,6 +10,8 @@ import saveStatePatchRbo from '../files/saveStatePatchRbo.ips';
 import noSaveStatePatchRbo from '../files/noSaveStatePatchRbo.ips';
 import saveStatePatchKpdr25 from '../files/saveStatePatchKpdr25.ips';
 import noSaveStatePatchKpdr25 from '../files/noSaveStatePatchKpdr25.ips';
+import saveStatePatchGtclassic from '../files/saveStatePatchGtclassic.ips';
+import noSaveStatePatchGtclassic from '../files/noSaveStatePatchGtclassic.ips';
 
 export class Patcher extends Component {
     static displayName = Patcher.name;
@@ -100,6 +102,8 @@ export class Patcher extends Component {
                 return new Uint8Array(await (await fetch(saveStatePatchRbo, {cache: "no-store"})).arrayBuffer());
             else if(this.state.category === "kpdr25")
                 return new Uint8Array(await (await fetch(saveStatePatchKpdr25, {cache: "no-store"})).arrayBuffer());
+            else if(this.state.category === "gtclassic")
+                return new Uint8Array(await (await fetch(saveStatePatchGtclassic, {cache: "no-store"})).arrayBuffer());
             else
                 return null;
         else if(this.state.romType === "nosavestates")
@@ -109,6 +113,8 @@ export class Patcher extends Component {
                 return new Uint8Array(await (await fetch(noSaveStatePatchRbo, {cache: "no-store"})).arrayBuffer());
             else if(this.state.category === "kpdr25")
                 return new Uint8Array(await (await fetch(noSaveStatePatchKpdr25, {cache: "no-store"})).arrayBuffer());
+            else if(this.state.category === "gtclassic")
+                return new Uint8Array(await (await fetch(noSaveStatePatchGtclassic, {cache: "no-store"})).arrayBuffer());
             else
                 return null;
         else
@@ -122,6 +128,8 @@ export class Patcher extends Component {
                 return "SM Practice Hack " + this.props.version + " (Savestates) RBO.sfc";
             else if(this.state.category === "kpdr25")
                 return "SM Practice Hack " + this.props.version + " (Savestates) KPDR25.sfc";
+            else if(this.state.category === "gtclassic")
+                return "SM Practice Hack " + this.props.version + " (Savestates) GT Classic.sfc";
             else
                 // Return this for unknown category, as well as combined
                 return "SM Practice Hack " + this.props.version + " (Savestates).sfc";
@@ -130,6 +138,8 @@ export class Patcher extends Component {
                 return "SM Practice Hack " + this.props.version + " (No savestates) RBO.sfc";
             else if(this.state.category === "kpdr25")
                 return "SM Practice Hack " + this.props.version + " (No savestates) KPDR25.sfc";
+            else if(this.state.category === "gtclassic")
+                return "SM Practice Hack " + this.props.version + " (No savestates) GT Classic.sfc";
             else
                 // Return this for unknown category, as well as combined
                 return "SM Practice Hack " + this.props.version + " (No savestates).sfc";
@@ -188,6 +198,7 @@ export class Patcher extends Component {
                                             <option value="combined">Combined (100%, Any% PRKD)</option>
                                             <option value="rbo">RBO</option>
                                             <option value="kpdr25">KPDR 25% (Early Ice, Spazer, 5 tank, 25/10/5)</option>
+                                            <option value="gtclassic">GT Classic</option>
                                         </Input>
                                     </InputGroup>
                                 </Col>

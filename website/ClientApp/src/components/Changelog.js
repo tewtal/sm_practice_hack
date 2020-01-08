@@ -27,6 +27,7 @@ export class Changelog extends Component {
                                                 <li>Move RBO into a separate copy of the ROM, and enable the full set of RBO preset locations. (2.0.5)</li>
                                                 <li>Add support for a KPDR preset using the beginner-friendly 25% route (Early Ice, Spazer, 5 tank, 25/10/5) (2.0.6)</li>
                                                 <li>Add X Position and Y Position to the Infohud Mode options. (2.0.7)</li>
+                                                <li>Add support for a GT Classic preset (2.0.8)</li>
                                             </ul>
                                         </CardBody>
                                     </Card>
