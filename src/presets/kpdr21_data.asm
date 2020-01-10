@@ -351,7 +351,7 @@ preset_kpdr21_crateria_climb:
     dw #$FFFF
 .after
 
-preset_kpdr21_crateria_bomb_torizo:
+preset_kpdr21_crateria_parlor:
     dw #preset_kpdr21_crateria_climb ; Crateria: Climb
     dl $7E078D : db $02 : dw $8B7A ; DDB
     dl $7E079B : db $02 : dw $96BA ; MDB
@@ -364,8 +364,8 @@ preset_kpdr21_crateria_bomb_torizo:
     dw #$FFFF
 .after
 
-preset_kpdr21_crateria_terminator:
-    dw #preset_kpdr21_crateria_bomb_torizo ; Crateria: Bomb Torizo
+preset_kpdr21_crateria_bomb_torizo:
+    dw #preset_kpdr21_crateria_parlor ; Crateria: Parlor
     dl $7E078D : db $02 : dw $8982 ; DDB
     dl $7E078F : db $02 : dw $0003 ; DoorOut Index
     dl $7E079B : db $02 : dw $9879 ; MDB
@@ -381,26 +381,48 @@ preset_kpdr21_crateria_terminator:
     dw #$FFFF
 .after
 
+preset_kpdr21_crateria_terminator:
+    dw #preset_kpdr21_crateria_bomb_torizo ; Crateria: Bomb Torizo
+    dl $7E078D : db $02 : dw $8BB6 ; DDB
+    dl $7E078F : db $02 : dw $0000 ; DoorOut Index
+    dl $7E079B : db $02 : dw $92FD ; MDB
+    dl $7E07C3 : db $02 : dw $C629 ; GFX Pointers
+    dl $7E07C5 : db $02 : dw $7CBA ; GFX Pointers
+    dl $7E07C7 : db $02 : dw $C2AD ; GFX Pointers
+    dl $7E090F : db $02 : dw $0400 ; Screen subpixel X position.
+    dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
+    dl $7E0913 : db $02 : dw $F400 ; Screen subpixel Y position
+    dl $7E09A2 : db $02 : dw $1004 ; Equipped Items
+    dl $7E09A4 : db $02 : dw $1004 ; Collected Items
+    dl $7E09C6 : db $02 : dw $0005 ; Missiles
+    dl $7E0A1C : db $02 : dw $008A ; Samus position/state
+    dl $7E0A1E : db $02 : dw $1504 ; More position/state
+    dl $7E0AF6 : db $02 : dw $0115 ; Samus X
+    dl $7ED828 : db $02 : dw $0004 ; Events, Items, Doors
+    dl $7ED870 : db $02 : dw $0080 ; Events, Items, Doors
+    dl $7ED8B2 : db $02 : dw $2C00 ; Events, Items, Doors
+    dl $7ED91A : db $02 : dw $0005 ; Events, Items, Doors
+    dw #$FFFF
+.after
+
 preset_kpdr21_brinstar_green_brinstar_elevator:
     dw #preset_kpdr21_crateria_terminator ; Crateria: Terminator
     dl $7E078D : db $02 : dw $8C22 ; DDB
     dl $7E078F : db $02 : dw $0002 ; DoorOut Index
     dl $7E079B : db $02 : dw $9938 ; MDB
+    dl $7E07C3 : db $02 : dw $F911 ; GFX Pointers
+    dl $7E07C5 : db $02 : dw $43BA ; GFX Pointers
+    dl $7E07C7 : db $02 : dw $C2AF ; GFX Pointers
     dl $7E07F5 : db $02 : dw $0003 ; Music Track
     dl $7E090F : db $02 : dw $8000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $67FF ; Screen subpixel Y position
-    dl $7E09A2 : db $02 : dw $1004 ; Equipped Items
-    dl $7E09A4 : db $02 : dw $1004 ; Collected Items
     dl $7E09C2 : db $02 : dw $0095 ; Health
     dl $7E09C4 : db $02 : dw $00C7 ; Max helath
-    dl $7E09C6 : db $02 : dw $0005 ; Missiles
     dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0004 ; More position/state
     dl $7E0AF6 : db $02 : dw $007F ; Samus X
-    dl $7ED828 : db $02 : dw $0004 ; Events, Items, Doors
     dl $7ED870 : db $02 : dw $0180 ; Events, Items, Doors
-    dl $7ED8B2 : db $02 : dw $2C00 ; Events, Items, Doors
     dl $7ED91A : db $02 : dw $0008 ; Events, Items, Doors
     dw #$FFFF
 .after

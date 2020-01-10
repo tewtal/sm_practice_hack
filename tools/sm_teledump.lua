@@ -751,8 +751,9 @@ local STEPS = {
         [11628] = { ["segment_no"] = 1, ["name"] = "Morph" },
         [14941] = { ["segment_no"] = 1, ["name"] = "Pit Room Revisit" },
         [15511] = { ["segment_no"] = 1, ["name"] = "Climb" },
-        [16504] = { ["segment_no"] = 1, ["name"] = "Bomb Torizo" },
-        [17800] = { ["segment_no"] = 1, ["name"] = "Terminator" },
+        [16504] = { ["segment_no"] = 1, ["name"] = "Parlor" },
+        [17800] = { ["segment_no"] = 1, ["name"] = "Bomb Torizo" },
+        [21029] = { ["segment_no"] = 1, ["name"] = "Terminator" },
 		-- Brinstar
         [23446] = { ["segment_no"] = 2, ["name"] = "Green Brinstar Elevator" },
         [25973] = { ["segment_no"] = 2, ["name"] = "Dachora Room" },

@@ -38,6 +38,7 @@ presets_submenu_kpdr21_crateria:
     dw #presets_kpdr21_crateria_morph
     dw #presets_kpdr21_crateria_pit_room_revisit
     dw #presets_kpdr21_crateria_climb
+    dw #presets_kpdr21_crateria_parlor
     dw #presets_kpdr21_crateria_bomb_torizo
     dw #presets_kpdr21_crateria_terminator
     dw #$0000
@@ -154,6 +155,9 @@ presets_kpdr21_crateria_pit_room_revisit:
 
 presets_kpdr21_crateria_climb:
     %cm_preset("Climb", #preset_kpdr21_crateria_climb)
+
+presets_kpdr21_crateria_parlor:
+    %cm_preset("Parlor", #preset_kpdr21_crateria_parlor)
 
 presets_kpdr21_crateria_bomb_torizo:
     %cm_preset("Bomb Torizo", #preset_kpdr21_crateria_bomb_torizo)
