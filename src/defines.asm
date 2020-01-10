@@ -145,6 +145,7 @@
 !category_rbo = 1
 !category_kpdr25 = 2
 !category_gtclassic = 3
+!category_kpdr21 = 4
 
 ; ----------
 ; Save/load
