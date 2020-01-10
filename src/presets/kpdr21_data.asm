@@ -346,6 +346,7 @@ preset_kpdr21_crateria_climb:
     dl $7E0AF6 : db $02 : dw $0087 ; Samus X
     dl $7E0AFA : db $02 : dw $008B ; Samus Y
     dl $7ED820 : db $02 : dw $0001 ; Events, Items, Doors
+    dl $7ED8B2 : db $02 : dw $0400 ; Events, Items, Doors
     dl $7ED91A : db $02 : dw $0004 ; Events, Items, Doors
     dw #$FFFF
 .after
