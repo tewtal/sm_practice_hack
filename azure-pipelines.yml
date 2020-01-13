@@ -53,6 +53,8 @@ steps:
     python3 lipx.py -c resources/sm_orig.sfc build/smhack20_sd2snes_kpdr25.sfc website/ClientApp/src/files/saveStatePatchKpdr25.ips
     python3 lipx.py -c resources/sm_orig.sfc build/smhack20_gtclassic.sfc website/ClientApp/src/files/noSaveStatePatchGtclassic.ips
     python3 lipx.py -c resources/sm_orig.sfc build/smhack20_sd2snes_gtclassic.sfc website/ClientApp/src/files/saveStatePatchGtclassic.ips
+    python3 lipx.py -c resources/sm_orig.sfc build/smhack20_kpdr21.sfc website/ClientApp/src/files/noSaveStatePatchKpdr21.ips
+    python3 lipx.py -c resources/sm_orig.sfc build/smhack20_sd2snes_kpdr21.sfc website/ClientApp/src/files/saveStatePatchKpdr21.ips
   displayName: Create IPS patches and move to build directory
 
 - script: |

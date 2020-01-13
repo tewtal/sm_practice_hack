@@ -10,7 +10,7 @@ export class Home extends Component {
       <Row className="justify-content-center">
         <Col md="8">
           <div>
-              <Patcher version="2.0.8"/>
+              <Patcher version="2.0.9"/>
           </div>
         </Col>
       </Row>

@@ -174,6 +174,8 @@ preset_banks:
         dw preset_kpdr25_bombs_ceres_elevator>>16
     elseif !CATEGORY == !category_gtclassic
         dw preset_gtclassic_crateria_ceres_elevator>>16
+    elseif !CATEGORY == !category_kpdr21
+        dw preset_kpdr21_crateria_ceres_elevator>>16
     else
         error "Unsupported category"
     endif
@@ -279,6 +281,11 @@ elseif !CATEGORY == !category_gtclassic
     print pc, " gtclassic data start"
     incsrc presets/gtclassic_data.asm
     print pc, " gtclassic data end"
+elseif !CATEGORY == !category_kpdr21
+    org $B88000
+    print pc, " kpdr21 data start"
+    incsrc presets/kpdr21_data.asm
+    print pc, " kpdr21 data end"
 else
     error "Unsupported category"
 endif
