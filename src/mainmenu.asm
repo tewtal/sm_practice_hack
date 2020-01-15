@@ -85,6 +85,7 @@ preset_category_submenus:
 {
     if !CATEGORY == !category_combined
         dw #PresetsMenuPrkd
+        dw #PresetsMenuKpdr21
         dw #PresetsMenuHundo
     elseif !CATEGORY == !category_rbo
         dw #PresetsMenuRbo
@@ -149,6 +150,7 @@ mm_goto_ctrlsmenu:
 ; -------------
 if !CATEGORY == !category_combined
     incsrc presets/prkd_menu.asm
+    incsrc presets/kpdr21_menu.asm
     incsrc presets/hundo_menu.asm
 elseif !CATEGORY == !category_rbo
     incsrc presets/rbo_menu.asm
@@ -607,6 +609,7 @@ misc_preset_cateory:
     db #$28, "Preset Category", #$FF
     if !CATEGORY == !category_combined
         db #$28, "y      PRKD", #$FF ; Note the "y" ;)
+        db #$28, "y      KPDR", #$FF
         db #$28, "y     HUNDO", #$FF
     elseif !CATEGORY == !category_rbo
         db #$28, "y       RBO", #$FF

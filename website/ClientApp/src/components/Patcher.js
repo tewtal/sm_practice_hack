@@ -205,7 +205,7 @@ export class Patcher extends Component {
                                             <InputGroupText>Preset Category</InputGroupText>                                            
                                         </InputGroupAddon>
                                         <Input type="select" id="category" defaultValue={this.state.category} onChange={(e) => this.updateCategory(e)}>
-                                            <option value="combined">Combined (100%, Any% PRKD)</option>
+                                            <option value="combined">Combined (100%, Any% PRKD, Any% KPDR)</option>
                                             <option value="rbo">RBO</option>
                                             <option value="kpdr25">KPDR 25% (Early Ice, Spazer, 5 tank, 25/10/5)</option>
                                             <option value="gtclassic">GT Classic</option>

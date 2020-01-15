@@ -167,6 +167,7 @@ preset_banks:
 {
     if !CATEGORY == !category_combined
         dw preset_prkd_bombs_elevator>>16
+        dw preset_kpdr21_crateria_ceres_elevator>>16
         dw preset_hundo_bombs_ceres_elevator>>16
     elseif !CATEGORY == !category_rbo
         dw preset_rbo_bombs_ceres_elevator>>16
@@ -257,32 +258,37 @@ transfer_cgram_long:
 print pc, " preset_start_gameplay end"
 
 if !CATEGORY == !category_combined
-    org $B88000
+    org $B88000  ; 42A2 (length in hex)
     print pc, " hundo data start"
     incsrc presets/hundo_data.asm
     print pc, " hundo data end"
 
-    org $CEC000
+    org $CEC000  ; 27B6 (length in hex)
     print pc, " prkd data start"
     incsrc presets/prkd_data.asm
     print pc, " prkd data end"
+
+    org $B8C2B0  ; 20B0 (length in hex)
+    print pc, " kpdr21 data start"
+    incsrc presets/kpdr21_data.asm
+    print pc, " kpdr21 data end"
 elseif !CATEGORY == !category_rbo
-    org $B88000
+    org $B88000  ; 3274 (length in hex)
     print pc, " rbo data start"
     incsrc presets/rbo_data.asm
     print pc, " rbo data end"
 elseif !CATEGORY == !category_kpdr25
-    org $B88000
+    org $B88000  ; 1E3A (length in hex)
     print pc, " kpdr25 data start"
     incsrc presets/kpdr25_data.asm
     print pc, " kpdr25 data end"
 elseif !CATEGORY == !category_gtclassic
-    org $B88000
+    org $B88000  ; 218A (length in hex)
     print pc, " gtclassic data start"
     incsrc presets/gtclassic_data.asm
     print pc, " gtclassic data end"
 elseif !CATEGORY == !category_kpdr21
-    org $B88000
+    org $B88000  ; 20B0 (length in hex)
     print pc, " kpdr21 data start"
     incsrc presets/kpdr21_data.asm
     print pc, " kpdr21 data end"
