@@ -12,8 +12,6 @@ import saveStatePatchKpdr25 from '../files/saveStatePatchKpdr25.ips';
 import noSaveStatePatchKpdr25 from '../files/noSaveStatePatchKpdr25.ips';
 import saveStatePatchGtclassic from '../files/saveStatePatchGtclassic.ips';
 import noSaveStatePatchGtclassic from '../files/noSaveStatePatchGtclassic.ips';
-import saveStatePatchKpdr21 from '../files/saveStatePatchKpdr21.ips';
-import noSaveStatePatchKpdr21 from '../files/noSaveStatePatchKpdr21.ips';
 
 export class Patcher extends Component {
     static displayName = Patcher.name;
@@ -106,8 +104,6 @@ export class Patcher extends Component {
                 return new Uint8Array(await (await fetch(saveStatePatchKpdr25, {cache: "no-store"})).arrayBuffer());
             else if(this.state.category === "gtclassic")
                 return new Uint8Array(await (await fetch(saveStatePatchGtclassic, {cache: "no-store"})).arrayBuffer());
-            else if(this.state.category === "kpdr21")
-                return new Uint8Array(await (await fetch(saveStatePatchKpdr21, {cache: "no-store"})).arrayBuffer());
             else
                 return null;
         else if(this.state.romType === "nosavestates")
@@ -119,8 +115,6 @@ export class Patcher extends Component {
                 return new Uint8Array(await (await fetch(noSaveStatePatchKpdr25, {cache: "no-store"})).arrayBuffer());
             else if(this.state.category === "gtclassic")
                 return new Uint8Array(await (await fetch(noSaveStatePatchGtclassic, {cache: "no-store"})).arrayBuffer());
-            else if(this.state.category === "kpdr21")
-                return new Uint8Array(await (await fetch(noSaveStatePatchKpdr21, {cache: "no-store"})).arrayBuffer());
             else
                 return null;
         else
@@ -136,8 +130,6 @@ export class Patcher extends Component {
                 return "SM Practice Hack " + this.props.version + " (Savestates) KPDR25.sfc";
             else if(this.state.category === "gtclassic")
                 return "SM Practice Hack " + this.props.version + " (Savestates) GT Classic.sfc";
-            else if(this.state.category === "kpdr21")
-                return "SM Practice Hack " + this.props.version + " (Savestates) KPDR21.sfc";
             else
                 // Return this for unknown category, as well as combined
                 return "SM Practice Hack " + this.props.version + " (Savestates).sfc";
@@ -148,8 +140,6 @@ export class Patcher extends Component {
                 return "SM Practice Hack " + this.props.version + " (No savestates) KPDR25.sfc";
             else if(this.state.category === "gtclassic")
                 return "SM Practice Hack " + this.props.version + " (No savestates) GT Classic.sfc";
-            else if(this.state.category === "kpdr21")
-                return "SM Practice Hack " + this.props.version + " (No savestates) KPDR21.sfc";
             else
                 // Return this for unknown category, as well as combined
                 return "SM Practice Hack " + this.props.version + " (No savestates).sfc";
