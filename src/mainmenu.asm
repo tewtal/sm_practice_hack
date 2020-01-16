@@ -85,6 +85,7 @@ preset_category_submenus:
 {
     if !CATEGORY == !category_combined
         dw #PresetsMenuPrkd
+        dw #PresetsMenuKpdr21
         dw #PresetsMenuHundo
     elseif !CATEGORY == !category_rbo
         dw #PresetsMenuRbo
@@ -92,8 +93,6 @@ preset_category_submenus:
         dw #PresetsMenuKpdr25
     elseif !CATEGORY == !category_gtclassic
         dw #PresetsMenuGtclassic
-    elseif !CATEGORY == !category_kpdr21
-        dw #PresetsMenuKpdr21
     else
         error "Unsupported category"
     endif
@@ -149,6 +148,7 @@ mm_goto_ctrlsmenu:
 ; -------------
 if !CATEGORY == !category_combined
     incsrc presets/prkd_menu.asm
+    incsrc presets/kpdr21_menu.asm
     incsrc presets/hundo_menu.asm
 elseif !CATEGORY == !category_rbo
     incsrc presets/rbo_menu.asm
@@ -156,8 +156,6 @@ elseif !CATEGORY == !category_kpdr25
     incsrc presets/kpdr25_menu.asm
 elseif !CATEGORY == !category_gtclassic
     incsrc presets/gtclassic_menu.asm
-elseif !CATEGORY == !category_kpdr21
-    incsrc presets/kpdr21_menu.asm
 else
     error "Unsupported category"
 endif
@@ -607,6 +605,7 @@ misc_preset_cateory:
     db #$28, "Preset Category", #$FF
     if !CATEGORY == !category_combined
         db #$28, "y      PRKD", #$FF ; Note the "y" ;)
+        db #$28, "y      KPDR", #$FF
         db #$28, "y     HUNDO", #$FF
     elseif !CATEGORY == !category_rbo
         db #$28, "y       RBO", #$FF
@@ -614,8 +613,6 @@ misc_preset_cateory:
         db #$28, "y    KPDR25", #$FF
     elseif !CATEGORY == !category_gtclassic
         db #$28, "y GTCLASSIC", #$FF
-    elseif !CATEGORY == !category_kpdr21
-        db #$28, "y    KPDR21", #$FF
     else
         error "Unsupported category"
     endif
