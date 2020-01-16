@@ -209,7 +209,6 @@ export class Patcher extends Component {
                                             <option value="rbo">RBO</option>
                                             <option value="kpdr25">KPDR 25% (Early Ice, Spazer, 5 tank, 25/10/5)</option>
                                             <option value="gtclassic">GT Classic</option>
-                                            <option value="kpdr21">KPDR 21% (3 tank, 20/10/5)</option>
                                         </Input>
                                     </InputGroup>
                                 </Col>

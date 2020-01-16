@@ -93,8 +93,6 @@ preset_category_submenus:
         dw #PresetsMenuKpdr25
     elseif !CATEGORY == !category_gtclassic
         dw #PresetsMenuGtclassic
-    elseif !CATEGORY == !category_kpdr21
-        dw #PresetsMenuKpdr21
     else
         error "Unsupported category"
     endif
@@ -158,8 +156,6 @@ elseif !CATEGORY == !category_kpdr25
     incsrc presets/kpdr25_menu.asm
 elseif !CATEGORY == !category_gtclassic
     incsrc presets/gtclassic_menu.asm
-elseif !CATEGORY == !category_kpdr21
-    incsrc presets/kpdr21_menu.asm
 else
     error "Unsupported category"
 endif
@@ -617,8 +613,6 @@ misc_preset_cateory:
         db #$28, "y    KPDR25", #$FF
     elseif !CATEGORY == !category_gtclassic
         db #$28, "y GTCLASSIC", #$FF
-    elseif !CATEGORY == !category_kpdr21
-        db #$28, "y    KPDR21", #$FF
     else
         error "Unsupported category"
     endif
