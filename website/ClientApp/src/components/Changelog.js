@@ -30,6 +30,7 @@ export class Changelog extends Component {
                                                 <li>Add support for a GT Classic preset (2.0.8)</li>
                                                 <li>Add support for a KPDR preset using the standard 21% route (3 tank, 20/10/5) (2.0.9)</li>
                                                 <li>Move KPDR 21% presets to the combined ROM. (2.0.10)</li>
+                                                <li>Add cooldown timer to the Infohud Mode options. (2.0.11)</li>
                                             </ul>
                                         </CardBody>
                                     </Card>
