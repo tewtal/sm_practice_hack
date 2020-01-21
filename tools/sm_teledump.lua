@@ -839,9 +839,9 @@ local STEPS = {
     },
     ["14ice"] = {
 		-- Crateria
-		[1020] = { ["segment_no"] = 1, ["name"] = "Ceres Elevator" },
-		[4804] = { ["segment_no"] = 1, ["name"] = "Ceres Last 3 Rooms" },
-		[8691] = { ["segment_no"] = 1, ["name"] = "Ship" },
+        [1020] = { ["segment_no"] = 1, ["name"] = "Ceres Elevator" },
+        [4804] = { ["segment_no"] = 1, ["name"] = "Ceres Last 3 Rooms" },
+        [8691] = { ["segment_no"] = 1, ["name"] = "Ship" },
         [11398] = { ["segment_no"] = 1, ["name"] = "Morph" },
         [15133] = { ["segment_no"] = 1, ["name"] = "Climb" },
         [17304] = { ["segment_no"] = 1, ["name"] = "Bomb Torizo" },

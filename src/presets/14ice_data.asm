@@ -603,7 +603,7 @@ preset_14ice_wrecked_ship_shaft_revisit:
     dl $7E0913 : db $02 : dw $4800 ; Screen subpixel Y position
     dl $7E09CA : db $02 : dw $000A ; Supers
     dl $7E09CC : db $02 : dw $000A ; Max supers
-    dl $7E09CE : db $02 : dw $0001 ; Pbs
+    dl $7E09CE : db $02 : dw $0002 ; Pbs
     dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0008 ; More position/state
     dl $7E0AF6 : db $02 : dw $00C4 ; Samus X
@@ -643,9 +643,9 @@ preset_14ice_wrecked_ship_bowling_alley_path:
     dl $7E0911 : db $02 : dw $0200 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $1800 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0202 ; Screen Y position in pixels
-    dl $7E09C6 : db $02 : dw $0002 ; Missiles
+    dl $7E09C6 : db $02 : dw $0003 ; Missiles
     dl $7E09CA : db $02 : dw $0009 ; Supers
-    dl $7E09CE : db $02 : dw $0000 ; Pbs
+    dl $7E09CE : db $02 : dw $0001 ; Pbs
     dl $7E0AF6 : db $02 : dw $02C6 ; Samus X
     dl $7E0AFA : db $02 : dw $028B ; Samus Y
     dl $7ED8C0 : db $02 : dw $0174 ; Events, Items, Doors
