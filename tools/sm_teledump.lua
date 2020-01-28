@@ -1,4 +1,4 @@
-local CAT = "14ice" -- prkd, hundo, rbo, kpdr25, gtclassic, kpdr21, 14ice
+local CAT = "ssrta" -- prkd, hundo, rbo, kpdr25, gtclassic, kpdr21, 14ice, ssrta, crocrta, gtrta
 
 local last_state = {} -- holds all state that has been changed up untill last save
 
@@ -161,6 +161,22 @@ local SEGMENTS = {
         { ["name"] = "Lower Norfair", ["steps"] = {} },
         { ["name"] = "Maridia", ["steps"] = {} },
         { ["name"] = "Tourian", ["steps"] = {} },
+    },
+    ["ssrta"] = {
+        { ["name"] = "Zebes Asleep", ["steps"] = {} },
+        { ["name"] = "Zebes Awake", ["steps"] = {} },
+        { ["name"] = "Brinstar Missiles", ["steps"] = {} },
+    },
+    ["crocrta"] = {
+        { ["name"] = "Zebes Asleep", ["steps"] = {} },
+        { ["name"] = "Zebes Awake", ["steps"] = {} },
+        { ["name"] = "Brinstar", ["steps"] = {} },
+        { ["name"] = "Norfair", ["steps"] = {} },
+    },
+    ["gtrta"] = {
+        { ["name"] = "Crateria", ["steps"] = {} },
+        { ["name"] = "Brinstar", ["steps"] = {} },
+        { ["name"] = "Bootless Upper Norfair", ["steps"] = {} },
     },
 }
 
@@ -920,6 +936,104 @@ local STEPS = {
         [177624] = { ["segment_no"] = 8, ["name"] = "Zeb Skip" },
         [205325] = { ["segment_no"] = 8, ["name"] = "Escape Room 3" },
         [209282] = { ["segment_no"] = 8, ["name"] = "Escape Parlor" },
+    },
+    ["ssrta"] = {
+		-- Zebes Asleep
+        [1692] = { ["segment_no"] = 1, ["name"] = "Parlor" },
+        [2555] = { ["segment_no"] = 1, ["name"] = "Climb Down" },
+        [3050] = { ["segment_no"] = 1, ["name"] = "Pit Room" },
+        [4411] = { ["segment_no"] = 1, ["name"] = "Morph" },
+        [5358] = { ["segment_no"] = 1, ["name"] = "Construction Zone" },
+        [6451] = { ["segment_no"] = 1, ["name"] = "Construction Zone Revisit" },
+		-- Zebes Awake
+        [7927] = { ["segment_no"] = 2, ["name"] = "Pit Room Revisit" },
+        [8545] = { ["segment_no"] = 2, ["name"] = "Climb Up" },
+        [9755] = { ["segment_no"] = 2, ["name"] = "Parlor Revisit" },
+        [11145] = { ["segment_no"] = 2, ["name"] = "Bomb Torizo" },
+        [13771] = { ["segment_no"] = 2, ["name"] = "Alcatraz" },
+        [14325] = { ["segment_no"] = 2, ["name"] = "Terminator" },
+        [15123] = { ["segment_no"] = 2, ["name"] = "Green Pirate Shaft" },
+		-- Brinstar Missiles
+        [16419] = { ["segment_no"] = 3, ["name"] = "Green Brinstar Elevator" },
+        [17675] = { ["segment_no"] = 3, ["name"] = "Dachora Room" },
+        [18763] = { ["segment_no"] = 3, ["name"] = "Big Pink" },
+        [20580] = { ["segment_no"] = 3, ["name"] = "Kihunter Guards" },
+        [21020] = { ["segment_no"] = 3, ["name"] = "Spore Spawn" },
+        [24683] = { ["segment_no"] = 3, ["name"] = "Spore Spawn Shaft" },
+    },
+    ["crocrta"] = {
+		-- Zebes Asleep
+        [1692] = { ["segment_no"] = 1, ["name"] = "Parlor" },
+        [2555] = { ["segment_no"] = 1, ["name"] = "Climb Down" },
+        [3050] = { ["segment_no"] = 1, ["name"] = "Pit Room" },
+        [4411] = { ["segment_no"] = 1, ["name"] = "Morph" },
+        [5358] = { ["segment_no"] = 1, ["name"] = "Construction Zone" },
+        [6451] = { ["segment_no"] = 1, ["name"] = "Construction Zone Revisit" },
+		-- Zebes Awake
+        [7927] = { ["segment_no"] = 2, ["name"] = "Pit Room Revisit" },
+        [8545] = { ["segment_no"] = 2, ["name"] = "Climb Up" },
+        [9755] = { ["segment_no"] = 2, ["name"] = "Parlor Revisit" },
+        [11145] = { ["segment_no"] = 2, ["name"] = "Bomb Torizo" },
+        [13771] = { ["segment_no"] = 2, ["name"] = "Alcatraz" },
+        [14325] = { ["segment_no"] = 2, ["name"] = "Terminator" },
+        [15459] = { ["segment_no"] = 2, ["name"] = "Green Pirate Shaft" },
+		-- Brinstar
+        [16712] = { ["segment_no"] = 3, ["name"] = "Green Brinstar Elevator" },
+        [17820] = { ["segment_no"] = 3, ["name"] = "Early Supers" },
+        [19345] = { ["segment_no"] = 3, ["name"] = "Dachora Room" },
+        [20446] = { ["segment_no"] = 3, ["name"] = "Big Pink" },
+        [22914] = { ["segment_no"] = 3, ["name"] = "Green Hill Zone" },
+        [24385] = { ["segment_no"] = 3, ["name"] = "Red Tower" },
+        [25035] = { ["segment_no"] = 3, ["name"] = "Skree Boost" },
+		-- Norfair
+        [27345] = { ["segment_no"] = 4, ["name"] = "Business Center" },
+        [27630] = { ["segment_no"] = 4, ["name"] = "Hi Jump E-tank" },
+        [28520] = { ["segment_no"] = 4, ["name"] = "Business Center Revisit" },
+        [29200] = { ["segment_no"] = 4, ["name"] = "Hell Run" },
+        [31068] = { ["segment_no"] = 4, ["name"] = "Bubble Mountain" },
+        [32075] = { ["segment_no"] = 4, ["name"] = "Farm Room" },
+        [34369] = { ["segment_no"] = 4, ["name"] = "Acid Snakes Room" },
+        [35100] = { ["segment_no"] = 4, ["name"] = "Crocomire" },
+    },
+    ["gtrta"] = {
+		-- Crateria
+        [1692] = { ["segment_no"] = 1, ["name"] = "Parlor" },
+        [2555] = { ["segment_no"] = 1, ["name"] = "Climb Down" },
+        [3050] = { ["segment_no"] = 1, ["name"] = "Pit Room" },
+        [4411] = { ["segment_no"] = 1, ["name"] = "Morph" },
+        [5358] = { ["segment_no"] = 1, ["name"] = "Construction Zone" },
+        [6451] = { ["segment_no"] = 1, ["name"] = "Construction Zone Revisit" },
+        [7927] = { ["segment_no"] = 1, ["name"] = "Pit Room Revisit" },
+        [8545] = { ["segment_no"] = 1, ["name"] = "Climb Up" },
+        [9755] = { ["segment_no"] = 1, ["name"] = "Parlor Revisit" },
+        [11145] = { ["segment_no"] = 1, ["name"] = "Bomb Torizo" },
+        [13771] = { ["segment_no"] = 1, ["name"] = "Alcatraz" },
+        [14325] = { ["segment_no"] = 1, ["name"] = "Terminator" },
+        [15459] = { ["segment_no"] = 1, ["name"] = "Green Pirate Shaft" },
+		-- Brinstar
+        [16712] = { ["segment_no"] = 2, ["name"] = "Green Brinstar Elevator" },
+        [17820] = { ["segment_no"] = 2, ["name"] = "Early Supers" },
+        [19345] = { ["segment_no"] = 2, ["name"] = "Dachora Room" },
+        [20446] = { ["segment_no"] = 2, ["name"] = "Big Pink" },
+        [22081] = { ["segment_no"] = 2, ["name"] = "Green Hill Zone" },
+        [23008] = { ["segment_no"] = 2, ["name"] = "Red Tower" },
+        [23775] = { ["segment_no"] = 2, ["name"] = "Hellway" },
+        [25443] = { ["segment_no"] = 2, ["name"] = "Leaving Power Bombs" },
+        [27212] = { ["segment_no"] = 2, ["name"] = "Skree Boost" },
+        [28574] = { ["segment_no"] = 2, ["name"] = "Entering Kraids Lair" },
+        [29975] = { ["segment_no"] = 2, ["name"] = "Baby Kraid (Entering)" },
+        [31005] = { ["segment_no"] = 2, ["name"] = "Kraid" },
+        [34021] = { ["segment_no"] = 2, ["name"] = "Baby Kraid (Exiting)" },
+        [35390] = { ["segment_no"] = 2, ["name"] = "Kraid E-tank" },
+		-- Bootless Norfair
+        [37680] = { ["segment_no"] = 3, ["name"] = "Business Center" },
+        [38887] = { ["segment_no"] = 3, ["name"] = "Cathedral" },
+        [40264] = { ["segment_no"] = 3, ["name"] = "Bubble Mountain" },
+        [41125] = { ["segment_no"] = 3, ["name"] = "Magdollite Tunnel" },
+        [42235] = { ["segment_no"] = 3, ["name"] = "Lava Dive" },
+        [44260] = { ["segment_no"] = 3, ["name"] = "LN Main Hall" },
+        [45093] = { ["segment_no"] = 3, ["name"] = "Green Gate Glitch" },
+        [46460] = { ["segment_no"] = 3, ["name"] = "Golden Torizo" },
     },
 }
 

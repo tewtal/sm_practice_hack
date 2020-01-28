@@ -32,6 +32,7 @@ export class Changelog extends Component {
                                                 <li>Move KPDR 21% presets to the combined ROM. (2.0.10)</li>
                                                 <li>Add cooldown timer to the Infohud Mode options. (2.0.11)</li>
                                                 <li>Add support for 14% Ice presets. (2.0.12)</li>
+                                                <li>Add support for individual Miniboss RTA presets (Spore Spawn, Crocomire, and Golden Torizo) (2.0.13)</li>
                                             </ul>
                                         </CardBody>
                                     </Card>

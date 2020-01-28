@@ -147,6 +147,7 @@
 !category_kpdr25 = 2
 !category_gtclassic = 3
 !category_14ice = 4
+!category_miniboss = 5
 
 ; ----------
 ; Save/load

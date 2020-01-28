@@ -95,6 +95,10 @@ preset_category_submenus:
         dw #PresetsMenuGtclassic
     elseif !CATEGORY == !category_14ice
         dw #PresetsMenu14ice
+    elseif !CATEGORY == !category_miniboss
+        dw #PresetsMenuSsrta
+        dw #PresetsMenuCrocrta
+        dw #PresetsMenuGtrta
     else
         error "Unsupported category"
     endif
@@ -160,6 +164,10 @@ elseif !CATEGORY == !category_gtclassic
     incsrc presets/gtclassic_menu.asm
 elseif !CATEGORY == !category_14ice
     incsrc presets/14ice_menu.asm
+elseif !CATEGORY == !category_miniboss
+    incsrc presets/ssrta_menu.asm
+    incsrc presets/crocrta_menu.asm
+    incsrc presets/gtrta_menu.asm
 else
     error "Unsupported category"
 endif
@@ -619,6 +627,10 @@ misc_preset_cateory:
         db #$28, "y GTCLASSIC", #$FF
     elseif !CATEGORY == !category_14ice
         db #$28, "y    14 ICE", #$FF
+    elseif !CATEGORY == !category_miniboss
+        db #$28, "y    SS RTA", #$FF
+        db #$28, "y  CROC RTA", #$FF
+        db #$28, "y    GT RTA", #$FF
     else
         error "Unsupported category"
     endif

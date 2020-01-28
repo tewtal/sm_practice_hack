@@ -177,6 +177,10 @@ preset_banks:
         dw preset_gtclassic_crateria_ceres_elevator>>16
     elseif !CATEGORY == !category_14ice
         dw preset_14ice_crateria_ceres_elevator>>16
+    elseif !CATEGORY == !category_miniboss
+        dw preset_ssrta_zebes_asleep_parlor>>16
+        dw preset_crocrta_zebes_asleep_parlor>>16
+        dw preset_gtrta_crateria_parlor>>16
     else
         error "Unsupported category"
     endif
@@ -292,6 +296,21 @@ elseif !CATEGORY == !category_14ice
     print pc, " 14ice data start"
     incsrc presets/14ice_data.asm
     print pc, " 14ice data end"
+elseif !CATEGORY == !category_miniboss
+    org $CEC000  ; 0D18 (length in hex)
+    print pc, " ssrta data start"
+    incsrc presets/ssrta_data.asm
+    print pc, " ssrta data end"
+
+    org $CED000  ; 0DA6 (length in hex)
+    print pc, " crocrta data start"
+    incsrc presets/crocrta_data.asm
+    print pc, " crocrta data end"
+
+    org $CEE000  ; 135C (length in hex)
+    print pc, " gtrta data start"
+    incsrc presets/gtrta_data.asm
+    print pc, " gtrta data end"
 else
     error "Unsupported category"
 endif

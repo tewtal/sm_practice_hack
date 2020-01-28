@@ -14,6 +14,8 @@ import saveStatePatchGtclassic from '../files/saveStatePatchGtclassic.ips';
 import noSaveStatePatchGtclassic from '../files/noSaveStatePatchGtclassic.ips';
 import saveStatePatch14ice from '../files/saveStatePatch14ice.ips';
 import noSaveStatePatch14ice from '../files/noSaveStatePatch14ice.ips';
+import saveStatePatchMiniboss from '../files/saveStatePatchMiniboss.ips';
+import noSaveStatePatchMiniboss from '../files/noSaveStatePatchMiniboss.ips';
 
 export class Patcher extends Component {
     static displayName = Patcher.name;
@@ -108,6 +110,8 @@ export class Patcher extends Component {
                 return new Uint8Array(await (await fetch(saveStatePatchGtclassic, {cache: "no-store"})).arrayBuffer());
             else if(this.state.category === "14ice")
                 return new Uint8Array(await (await fetch(saveStatePatch14ice, {cache: "no-store"})).arrayBuffer());
+            else if(this.state.category === "miniboss")
+                return new Uint8Array(await (await fetch(saveStatePatchMiniboss, {cache: "no-store"})).arrayBuffer());
             else
                 return null;
         else if(this.state.romType === "nosavestates")
@@ -121,6 +125,8 @@ export class Patcher extends Component {
                 return new Uint8Array(await (await fetch(noSaveStatePatchGtclassic, {cache: "no-store"})).arrayBuffer());
             else if(this.state.category === "14ice")
                 return new Uint8Array(await (await fetch(noSaveStatePatch14ice, {cache: "no-store"})).arrayBuffer());
+            else if(this.state.category === "miniboss")
+                return new Uint8Array(await (await fetch(noSaveStatePatchMiniboss, {cache: "no-store"})).arrayBuffer());
             else
                 return null;
         else
@@ -138,6 +144,8 @@ export class Patcher extends Component {
                 return "SM Practice Hack " + this.props.version + " (Savestates) GT Classic.sfc";
             else if(this.state.category === "14ice")
                 return "SM Practice Hack " + this.props.version + " (Savestates) 14% Ice.sfc";
+            else if(this.state.category === "miniboss")
+                return "SM Practice Hack " + this.props.version + " (Savestates) Miniboss RTAs.sfc";
             else
                 // Return this for unknown category, as well as combined
                 return "SM Practice Hack " + this.props.version + " (Savestates).sfc";
@@ -150,6 +158,8 @@ export class Patcher extends Component {
                 return "SM Practice Hack " + this.props.version + " (No savestates) GT Classic.sfc";
             else if(this.state.category === "14ice")
                 return "SM Practice Hack " + this.props.version + " (No savestates) 14% Ice.sfc";
+            else if(this.state.category === "miniboss")
+                return "SM Practice Hack " + this.props.version + " (No savestates) Miniboss RTAs.sfc";
             else
                 // Return this for unknown category, as well as combined
                 return "SM Practice Hack " + this.props.version + " (No savestates).sfc";
@@ -210,6 +220,7 @@ export class Patcher extends Component {
                                             <option value="kpdr25">KPDR 25% (Early Ice, Spazer, 5 tank, 25/10/5)</option>
                                             <option value="gtclassic">GT Classic</option>
                                             <option value="14ice">14% Ice</option>
+                                            <option value="miniboss">Miniboss RTAs</option>
                                         </Input>
                                     </InputGroup>
                                 </Col>
