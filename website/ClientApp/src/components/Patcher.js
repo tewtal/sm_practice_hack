@@ -143,9 +143,9 @@ export class Patcher extends Component {
             else if(this.state.category === "gtclassic")
                 return "SM Practice Hack " + this.props.version + " (Savestates) GT Classic.sfc";
             else if(this.state.category === "14low")
-                return "SM Practice Hack " + this.props.version + " (Savestates) 14%.sfc";
+                return "SM Practice Hack " + this.props.version + " (Savestates) 14 Low.sfc";
             else if(this.state.category === "allboss")
-                return "SM Practice Hack " + this.props.version + " (Savestates) Any% All Bosses.sfc";
+                return "SM Practice Hack " + this.props.version + " (Savestates) All Bosses.sfc";
             else
                 // Return this for unknown category, as well as combined
                 return "SM Practice Hack " + this.props.version + " (Savestates).sfc";
@@ -157,9 +157,9 @@ export class Patcher extends Component {
             else if(this.state.category === "gtclassic")
                 return "SM Practice Hack " + this.props.version + " (No savestates) GT Classic.sfc";
             else if(this.state.category === "14low")
-                return "SM Practice Hack " + this.props.version + " (No savestates) 14%.sfc";
+                return "SM Practice Hack " + this.props.version + " (No savestates) 14 Low.sfc";
             else if(this.state.category === "allboss")
-                return "SM Practice Hack " + this.props.version + " (No savestates) Any% All Bosses.sfc";
+                return "SM Practice Hack " + this.props.version + " (No savestates) All Bosses.sfc";
             else
                 // Return this for unknown category, as well as combined
                 return "SM Practice Hack " + this.props.version + " (No savestates).sfc";
