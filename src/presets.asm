@@ -175,8 +175,13 @@ preset_banks:
         dw preset_kpdr25_bombs_ceres_elevator>>16
     elseif !CATEGORY == !category_gtclassic
         dw preset_gtclassic_crateria_ceres_elevator>>16
-    elseif !CATEGORY == !category_14ice
+    elseif !CATEGORY == !category_14low
         dw preset_14ice_crateria_ceres_elevator>>16
+        dw preset_14speed_crateria_ceres_elevator>>16
+    elseif !CATEGORY == !category_allboss
+        dw preset_allbosskpdr_crateria_ceres_elevator>>16
+        dw preset_allbosspkdr_crateria_ceres_elevator>>16
+        dw preset_allbossprkd_crateria_ceres_elevator>>16
     else
         error "Unsupported category"
     endif
@@ -287,11 +292,31 @@ elseif !CATEGORY == !category_gtclassic
     print pc, " gtclassic data start"
     incsrc presets/gtclassic_data.asm
     print pc, " gtclassic data end"
-elseif !CATEGORY == !category_14ice
+elseif !CATEGORY == !category_14low
     org $B88000  ; 1E95 (length in hex)
     print pc, " 14ice data start"
     incsrc presets/14ice_data.asm
     print pc, " 14ice data end"
+
+    org $B8A000  ; 1E95 (length in hex)
+    print pc, " 14speed data start"
+    incsrc presets/14speed_data.asm
+    print pc, " 14speed data end"
+elseif !CATEGORY == !category_allboss
+    org $B88000  ; 2400 (length in hex)
+    print pc, " allbosskpdr data start"
+    incsrc presets/allbosskpdr_data.asm
+    print pc, " allbosskpdr data end"
+
+    org $B8A500  ; 2484 (length in hex)
+    print pc, " allbosspkdr data start"
+    incsrc presets/allbosspkdr_data.asm
+    print pc, " allbosspkdr data end"
+
+    org $B8CA00  ; 2568 (length in hex)
+    print pc, " allbossprkd data start"
+    incsrc presets/allbossprkd_data.asm
+    print pc, " allbossprkd data end"
 else
     error "Unsupported category"
 endif

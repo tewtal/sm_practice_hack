@@ -6,7 +6,9 @@ cp resources/sm_orig.sfc build/smhack20_kpdr25.sfc && cd src && ..\tools\asar --
 
 cp resources/sm_orig.sfc build/smhack20_gtclassic.sfc && cd src && ..\tools\asar --no-title-check -DFEATURE_SD2SNES=0 -DCATEGORY=3 main.asm ../build/smhack20_gtclassic.sfc && cd ..
 
-cp resources/sm_orig.sfc build/smhack20_14ice.sfc && cd src && ..\tools\asar --no-title-check -DFEATURE_SD2SNES=0 -DCATEGORY=4 main.asm ../build/smhack20_14ice.sfc && cd ..
+cp resources/sm_orig.sfc build/smhack20_14low.sfc && cd src && ..\tools\asar --no-title-check -DFEATURE_SD2SNES=0 -DCATEGORY=4 main.asm ../build/smhack20_14low.sfc && cd ..
+
+cp resources/sm_orig.sfc build/smhack20_allboss.sfc && cd src && ..\tools\asar --no-title-check -DFEATURE_SD2SNES=0 -DCATEGORY=5 main.asm ../build/smhack20_allboss.sfc && cd ..
 
 cp resources/sm_orig.sfc build/smhack20_sd2snes.sfc && cd src && ..\tools\asar --no-title-check -DFEATURE_SD2SNES=1 -DCATEGORY=0 main.asm ../build/smhack20_sd2snes.sfc && cd ..
 
@@ -16,4 +18,6 @@ cp resources/sm_orig.sfc build/smhack20_sd2snes_kpdr25.sfc && cd src && ..\tools
 
 cp resources/sm_orig.sfc build/smhack20_sd2snes_gtclassic.sfc && cd src && ..\tools\asar --no-title-check -DFEATURE_SD2SNES=1 -DCATEGORY=3 main.asm ../build/smhack20_sd2snes_gtclassic.sfc && cd ..
 
-cp resources/sm_orig.sfc build/smhack20_sd2snes_14ice.sfc && cd src && ..\tools\asar --no-title-check -DFEATURE_SD2SNES=1 -DCATEGORY=4 main.asm ../build/smhack20_sd2snes_14ice.sfc && cd ..
+cp resources/sm_orig.sfc build/smhack20_sd2snes_14low.sfc && cd src && ..\tools\asar --no-title-check -DFEATURE_SD2SNES=1 -DCATEGORY=4 main.asm ../build/smhack20_sd2snes_14low.sfc && cd ..
+
+cp resources/sm_orig.sfc build/smhack20_sd2snes_allboss.sfc && cd src && ..\tools\asar --no-title-check -DFEATURE_SD2SNES=1 -DCATEGORY=5 main.asm ../build/smhack20_sd2snes_allboss.sfc && cd ..

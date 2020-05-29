@@ -53,8 +53,10 @@ steps:
     python3 lipx.py -c resources/sm_orig.sfc build/smhack20_sd2snes_kpdr25.sfc website/ClientApp/src/files/saveStatePatchKpdr25.ips
     python3 lipx.py -c resources/sm_orig.sfc build/smhack20_gtclassic.sfc website/ClientApp/src/files/noSaveStatePatchGtclassic.ips
     python3 lipx.py -c resources/sm_orig.sfc build/smhack20_sd2snes_gtclassic.sfc website/ClientApp/src/files/saveStatePatchGtclassic.ips
-    python3 lipx.py -c resources/sm_orig.sfc build/smhack20_14ice.sfc website/ClientApp/src/files/noSaveStatePatch14ice.ips
-    python3 lipx.py -c resources/sm_orig.sfc build/smhack20_sd2snes_14ice.sfc website/ClientApp/src/files/saveStatePatch14ice.ips
+    python3 lipx.py -c resources/sm_orig.sfc build/smhack20_14low.sfc website/ClientApp/src/files/noSaveStatePatch14low.ips
+    python3 lipx.py -c resources/sm_orig.sfc build/smhack20_sd2snes_14low.sfc website/ClientApp/src/files/saveStatePatch14low.ips
+    python3 lipx.py -c resources/sm_orig.sfc build/smhack20_allboss.sfc website/ClientApp/src/files/noSaveStatePatchAllboss.ips
+    python3 lipx.py -c resources/sm_orig.sfc build/smhack20_sd2snes_allboss.sfc website/ClientApp/src/files/saveStatePatchAllboss.ips
   displayName: Create IPS patches and move to build directory
 
 - script: |

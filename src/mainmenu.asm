@@ -93,8 +93,13 @@ preset_category_submenus:
         dw #PresetsMenuKpdr25
     elseif !CATEGORY == !category_gtclassic
         dw #PresetsMenuGtclassic
-    elseif !CATEGORY == !category_14ice
+    elseif !CATEGORY == !category_14low
         dw #PresetsMenu14ice
+        dw #PresetsMenu14speed
+    elseif !CATEGORY == !category_allboss
+        dw #PresetsMenuAllbosskpdr
+        dw #PresetsMenuAllbosspkdr
+        dw #PresetsMenuAllbossprkd
     else
         error "Unsupported category"
     endif
@@ -115,7 +120,7 @@ MainMenu:
     dw #mm_goto_rngmenu
     dw #mm_goto_ctrlsmenu
     dw #$0000
-    %cm_header("SM PRACTICE HACK 2.0.12")
+    %cm_header("SM PRACTICE HACK 2.0.13")
 
 mm_goto_equipment:
     %cm_submenu("Equipment", #EquipmentMenu)
@@ -158,8 +163,13 @@ elseif !CATEGORY == !category_kpdr25
     incsrc presets/kpdr25_menu.asm
 elseif !CATEGORY == !category_gtclassic
     incsrc presets/gtclassic_menu.asm
-elseif !CATEGORY == !category_14ice
+elseif !CATEGORY == !category_14low
     incsrc presets/14ice_menu.asm
+    incsrc presets/14speed_menu.asm
+elseif !CATEGORY == !category_allboss
+    incsrc presets/allbosskpdr_menu.asm
+    incsrc presets/allbosspkdr_menu.asm
+    incsrc presets/allbossprkd_menu.asm
 else
     error "Unsupported category"
 endif
@@ -617,8 +627,13 @@ misc_preset_cateory:
         db #$28, "y    KPDR25", #$FF
     elseif !CATEGORY == !category_gtclassic
         db #$28, "y GTCLASSIC", #$FF
-    elseif !CATEGORY == !category_14ice
+    elseif !CATEGORY == !category_14low
         db #$28, "y    14 ICE", #$FF
+        db #$28, "y  14 SPEED", #$FF
+    elseif !CATEGORY == !category_allboss
+        db #$28, "y      KPDR", #$FF
+        db #$28, "y      PKDR", #$FF
+        db #$28, "y      PRKD", #$FF
     else
         error "Unsupported category"
     endif

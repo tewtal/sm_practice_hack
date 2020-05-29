@@ -17,3 +17,5 @@ The build script will create several versions of the practice hack for various s
 ## Known Issues:
 
 * PAL region roms are no longer supported. Use the source from July 1st, 2018 instead and comment out `rng.asm`.
+* A crash will occur upon completing the game and leaving Zebes.
+* Equipment options that contain both Spazer and Plasma may equip them at the same time, which can lead to "Murder Beam" related crashes.
