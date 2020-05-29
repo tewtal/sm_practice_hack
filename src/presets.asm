@@ -298,7 +298,7 @@ elseif !CATEGORY == !category_14low
     incsrc presets/14ice_data.asm
     print pc, " 14ice data end"
 
-    org $B8A000  ; 1E95 (length in hex)
+    org $B8A000  ; 1EE6 (length in hex)
     print pc, " 14speed data start"
     incsrc presets/14speed_data.asm
     print pc, " 14speed data end"
