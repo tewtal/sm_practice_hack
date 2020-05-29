@@ -33,6 +33,7 @@ export class Changelog extends Component {
                                                 <li>Add cooldown timer to the Infohud Mode options. (2.0.11)</li>
                                                 <li>Add support for 14% Ice presets. (2.0.12)</li>
                                                 <li>Included all preset categories in the sam ROM (2.0.13)</li>
+                                                <li>Add support for 14% Speed and Any% All Bosses (multiple routes). (2.0.14)</li>
                                             </ul>
                                         </CardBody>
                                     </Card>
