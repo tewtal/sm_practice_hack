@@ -28,7 +28,9 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
         repository: tewtal/smprachack
         tags: latest
-    - uses: actions-hub/kubectl@master
+    
+    - name: Deploy to k8s
+      uses: actions-hub/kubectl@master
       env:
         KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
       with:
