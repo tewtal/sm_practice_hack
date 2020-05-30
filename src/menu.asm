@@ -1,6 +1,28 @@
 !ram_tilemap_buffer = $7E5800
 
-org $85B000
+org $85FE00
+
+wait_for_lag_frame_long:
+  jsr $8136
+  rtl
+
+initialize_ppu_long:
+  jsr $8143
+  rtl
+
+restore_ppu_long:
+  jsr $861A
+  rtl
+
+play_music_long:
+  jsr $8574
+  rtl
+
+maybe_trigger_pause_long:
+  jsr $80FA
+  rtl
+
+org $B88000
 print pc, " menu start"
 
 cm_start:
@@ -23,14 +45,14 @@ cm_start:
 
     JSR cm_init
 
-    JSL $82BE17         ; Cancel sound effects
-    JSR $8143           ; Initialise PPU for message boxes
+    JSL $82BE17               ; Cancel sound effects
+    JSL initialize_ppu_long   ; Initialise PPU for message boxes
 
     JSR cm_transfer_custom_tileset
     JSR cm_transfer_custom_cgram
     JSR cm_draw         ; Initialise message box
 
-    JSR $8574           ; Play 2 lag frames of music and sound effects
+    JSL play_music_long ; Play 2 lag frames of music and sound effects
 
     JSR cm_loop         ; Handle message box interaction
 
@@ -48,10 +70,10 @@ cm_start:
     ; I think the above subroutines erases some of infohud, so we make sure we redraw it.
     JSL ih_update_hud_code
 
-    JSR $861A           ; Restore PPU
-    JSL $82BE2F         ; Queue Samus movement sound effects
-    JSR $8574           ; Play 2 lag frames of music and sound effects
-    JSR $80FA           ; Maybe trigger pause screen or return save confirmation selection
+    JSL restore_ppu_long          ; Restore PPU
+    JSL $82BE2F                   ; Queue Samus movement sound effects
+    JSL play_music_long           ; Play 2 lag frames of music and sound effects
+    JSL maybe_trigger_pause_long  ; Maybe trigger pause screen or return save confirmation selection
 
   PLY
   PLX
@@ -101,7 +123,7 @@ cm_transfer_custom_tileset:
 
     LDX #$4000 : STX $2116 ; VRAM address (8000 in vram)
     LDX #cm_hud_table : STX $4302 ; Source offset
-    LDA #$85 : STA $4304 ; Source bank
+    LDA #cm_hud_table>>16 : STA $4304 ; Source bank
     LDX #$0900 : STX $4305 ; Size (0x10 = 1 tile)
     LDA #$01 : STA $4300 ; word, normal increment (DMA MODE)
     LDA #$18 : STA $4301 ; destination (VRAM write)
@@ -326,7 +348,7 @@ cm_tilemap_menu:
 
 cm_tilemap_transfer:
 {
-    JSR $8136  ; Wait for lag frame
+    JSL wait_for_lag_frame_long  ; Wait for lag frame
 
     REP #$20
     LDA #$5800
@@ -642,7 +664,7 @@ cm_loop:
   .inputLoop
     %ai16()
 
-    JSR $8136  ; Wait for lag frame
+    JSL wait_for_lag_frame_long  ; Wait for lag frame
 
     JSL $808F0C ; Music queue
     JSL $8289EF ; Sound fx queue

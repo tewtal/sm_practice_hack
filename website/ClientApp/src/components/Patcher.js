@@ -6,21 +6,13 @@ import { Link } from 'react-router-dom';
 
 import saveStatePatch from '../files/saveStatePatch.ips';
 import noSaveStatePatch from '../files/noSaveStatePatch.ips';
-import saveStatePatchRbo from '../files/saveStatePatchRbo.ips';
-import noSaveStatePatchRbo from '../files/noSaveStatePatchRbo.ips';
-import saveStatePatchKpdr25 from '../files/saveStatePatchKpdr25.ips';
-import noSaveStatePatchKpdr25 from '../files/noSaveStatePatchKpdr25.ips';
-import saveStatePatchGtclassic from '../files/saveStatePatchGtclassic.ips';
-import noSaveStatePatchGtclassic from '../files/noSaveStatePatchGtclassic.ips';
-import saveStatePatch14ice from '../files/saveStatePatch14ice.ips';
-import noSaveStatePatch14ice from '../files/noSaveStatePatch14ice.ips';
 
 export class Patcher extends Component {
     static displayName = Patcher.name;
 
     constructor(props) {
         super(props);
-        this.state = { romUploaded: false, baseRom: null, romType: 'savestates', category: 'combined', showGeneratingDialog: false };
+        this.state = { romUploaded: false, baseRom: null, romType: 'savestates', showGeneratingDialog: false };
         this.localforage = require('localforage');
     }
 
@@ -91,70 +83,21 @@ export class Patcher extends Component {
         this.setState({ romType: e.target.value });
     }
 
-    updateCategory(e)
-    {
-        this.setState({ category: e.target.value });
-    }
-
     async getPatch() {
-        if(this.state.romType === "savestates")
-            if(this.state.category === "combined")
-                return new Uint8Array(await (await fetch(saveStatePatch, {cache: "no-store"})).arrayBuffer());
-            else if(this.state.category === "rbo")
-                return new Uint8Array(await (await fetch(saveStatePatchRbo, {cache: "no-store"})).arrayBuffer());
-            else if(this.state.category === "kpdr25")
-                return new Uint8Array(await (await fetch(saveStatePatchKpdr25, {cache: "no-store"})).arrayBuffer());
-            else if(this.state.category === "gtclassic")
-                return new Uint8Array(await (await fetch(saveStatePatchGtclassic, {cache: "no-store"})).arrayBuffer());
-            else if(this.state.category === "14ice")
-                return new Uint8Array(await (await fetch(saveStatePatch14ice, {cache: "no-store"})).arrayBuffer());
-            else
-                return null;
-        else if(this.state.romType === "nosavestates")
-            if(this.state.category === "combined")
-                return new Uint8Array(await (await fetch(noSaveStatePatch, {cache: "no-store"})).arrayBuffer());
-            else if(this.state.category === "rbo")
-                return new Uint8Array(await (await fetch(noSaveStatePatchRbo, {cache: "no-store"})).arrayBuffer());
-            else if(this.state.category === "kpdr25")
-                return new Uint8Array(await (await fetch(noSaveStatePatchKpdr25, {cache: "no-store"})).arrayBuffer());
-            else if(this.state.category === "gtclassic")
-                return new Uint8Array(await (await fetch(noSaveStatePatchGtclassic, {cache: "no-store"})).arrayBuffer());
-            else if(this.state.category === "14ice")
-                return new Uint8Array(await (await fetch(noSaveStatePatch14ice, {cache: "no-store"})).arrayBuffer());
-            else
-                return null;
-        else
-            return null;
+        if(this.state.romType === "savestates") {
+            return new Uint8Array(await (await fetch(saveStatePatch, {cache: "no-store"})).arrayBuffer());
+        } else {
+            return new Uint8Array(await (await fetch(noSaveStatePatch, {cache: "no-store"})).arrayBuffer());
+        }
     }
 
     getFileName()
     {
-        if(this.state.romType === "savestates")
-            if(this.state.category === "rbo")
-                return "SM Practice Hack " + this.props.version + " (Savestates) RBO.sfc";
-            else if(this.state.category === "kpdr25")
-                return "SM Practice Hack " + this.props.version + " (Savestates) KPDR25.sfc";
-            else if(this.state.category === "gtclassic")
-                return "SM Practice Hack " + this.props.version + " (Savestates) GT Classic.sfc";
-            else if(this.state.category === "14ice")
-                return "SM Practice Hack " + this.props.version + " (Savestates) 14% Ice.sfc";
-            else
-                // Return this for unknown category, as well as combined
-                return "SM Practice Hack " + this.props.version + " (Savestates).sfc";
-        else if(this.state.romType === "nosavestates")
-            if(this.state.category === "rbo")
-                return "SM Practice Hack " + this.props.version + " (No savestates) RBO.sfc";
-            else if(this.state.category === "kpdr25")
-                return "SM Practice Hack " + this.props.version + " (No savestates) KPDR25.sfc";
-            else if(this.state.category === "gtclassic")
-                return "SM Practice Hack " + this.props.version + " (No savestates) GT Classic.sfc";
-            else if(this.state.category === "14ice")
-                return "SM Practice Hack " + this.props.version + " (No savestates) 14% Ice.sfc";
-            else
-                // Return this for unknown category, as well as combined
-                return "SM Practice Hack " + this.props.version + " (No savestates).sfc";
-        else
-            return "SM Practice Hack " + this.props.version + " (Unknown type).sfc";       
+        if(this.state.romType === "savestates") {
+            return "SM Practice Hack " + this.props.version + " (Savestates).sfc";
+        } else {
+            return "SM Practice Hack " + this.props.version + " (No savestates).sfc";
+        }
     }
 
     async createRom(e)
@@ -164,9 +107,11 @@ export class Patcher extends Component {
 
         try {
             const rom = new Uint8Array(await this.readAsArrayBuffer(this.state.baseRom));
+            const expandedRom = new Uint8Array(4 * 1024 * 1024);
+            expandedRom.set(rom);
             const patch = await this.getPatch();
-            this.applyIps(rom, patch);
-            saveAs(new Blob([rom]), this.getFileName());
+            this.applyIps(expandedRom, patch);
+            saveAs(new Blob([expandedRom]), this.getFileName());
         }
         catch (err) {
             console.log(err);
@@ -194,22 +139,6 @@ export class Patcher extends Component {
                                         <Input type="select" id="type" defaultValue={this.state.romType} onChange={(e) => this.updateType(e)}>
                                             <option value="savestates">With Save States (SD2SNES only)</option>
                                             <option value="nosavestates">Without Save States (Emu/VC/Classic etc)</option>
-                                        </Input>
-                                    </InputGroup>
-                                </Col>
-                            </Row>
-                            <Row className="form-group">
-                                <Col>
-                                    <InputGroup>
-                                        <InputGroupAddon addonType="prepend">
-                                            <InputGroupText>Preset Category</InputGroupText>                                            
-                                        </InputGroupAddon>
-                                        <Input type="select" id="category" defaultValue={this.state.category} onChange={(e) => this.updateCategory(e)}>
-                                            <option value="combined">Combined (100%, Any% PRKD, Any% KPDR)</option>
-                                            <option value="rbo">RBO</option>
-                                            <option value="kpdr25">KPDR 25% (Early Ice, Spazer, 5 tank, 25/10/5)</option>
-                                            <option value="gtclassic">GT Classic</option>
-                                            <option value="14ice">14% Ice</option>
                                         </Input>
                                     </InputGroup>
                                 </Col>

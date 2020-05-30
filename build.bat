@@ -1,19 +1,20 @@
-cp resources/sm_orig.sfc build/smhack20.sfc && cd src && ..\tools\asar --no-title-check -DFEATURE_SD2SNES=0 -DCATEGORY=0 main.asm ../build/smhack20.sfc && cd ..
+#!/bin/bash
 
-cp resources/sm_orig.sfc build/smhack20_rbo.sfc && cd src && ..\tools\asar --no-title-check -DFEATURE_SD2SNES=0 -DCATEGORY=1 main.asm ../build/smhack20_rbo.sfc && cd ..
+echo "Building SM Practice Hack"
+cd resources
+python3 create_dummies.py 00.sfc ff.sfc
 
-cp resources/sm_orig.sfc build/smhack20_kpdr25.sfc && cd src && ..\tools\asar --no-title-check -DFEATURE_SD2SNES=0 -DCATEGORY=2 main.asm ../build/smhack20_kpdr25.sfc && cd ..
+echo "Building saveless version"
+copy *.sfc ..\build
+..\tools\asar.exe --no-title-check -DFEATURE_SD2SNES=0 ..\src\main.asm ..\build\00.sfc
+..\tools\asar.exe --no-title-check -DFEATURE_SD2SNES=0 ..\src\main.asm ..\build\ff.sfc
+python3 create_ips.py ..\build\00.sfc ..\build\ff.sfc ..\build\smhack20.ips
 
-cp resources/sm_orig.sfc build/smhack20_gtclassic.sfc && cd src && ..\tools\asar --no-title-check -DFEATURE_SD2SNES=0 -DCATEGORY=3 main.asm ../build/smhack20_gtclassic.sfc && cd ..
+echo "Building SD2SNES version"
+copy *.sfc ..\build
+..\tools\asar --no-title-check -DFEATURE_SD2SNES=1 ..\src\main.asm ..\build\00.sfc
+..\tools\asar --no-title-check -DFEATURE_SD2SNES=1 ..\src\main.asm ..\build\ff.sfc
+python3 create_ips.py ..\build\00.sfc ..\build\ff.sfc ..\build\smhack20_sd2snes.ips
 
-cp resources/sm_orig.sfc build/smhack20_14ice.sfc && cd src && ..\tools\asar --no-title-check -DFEATURE_SD2SNES=0 -DCATEGORY=4 main.asm ../build/smhack20_14ice.sfc && cd ..
-
-cp resources/sm_orig.sfc build/smhack20_sd2snes.sfc && cd src && ..\tools\asar --no-title-check -DFEATURE_SD2SNES=1 -DCATEGORY=0 main.asm ../build/smhack20_sd2snes.sfc && cd ..
-
-cp resources/sm_orig.sfc build/smhack20_sd2snes_rbo.sfc && cd src && ..\tools\asar --no-title-check -DFEATURE_SD2SNES=1 -DCATEGORY=1 main.asm ../build/smhack20_sd2snes_rbo.sfc && cd ..
-
-cp resources/sm_orig.sfc build/smhack20_sd2snes_kpdr25.sfc && cd src && ..\tools\asar --no-title-check -DFEATURE_SD2SNES=1 -DCATEGORY=2 main.asm ../build/smhack20_sd2snes_kpdr25.sfc && cd ..
-
-cp resources/sm_orig.sfc build/smhack20_sd2snes_gtclassic.sfc && cd src && ..\tools\asar --no-title-check -DFEATURE_SD2SNES=1 -DCATEGORY=3 main.asm ../build/smhack20_sd2snes_gtclassic.sfc && cd ..
-
-cp resources/sm_orig.sfc build/smhack20_sd2snes_14ice.sfc && cd src && ..\tools\asar --no-title-check -DFEATURE_SD2SNES=1 -DCATEGORY=4 main.asm ../build/smhack20_sd2snes_14ice.sfc && cd ..
+del 00.sfc ff.sfc ..\build\00.sfc ..\build\ff.sfc
+cd ..
