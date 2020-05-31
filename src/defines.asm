@@ -97,6 +97,7 @@
 !ram_cm_cursor_max = $7FFFF2
 !ram_cm_input_timer = $7FFFF4
 !ram_cm_controller = $7FFFF6
+!ram_cm_menu_bank = $7FFFF8
 
 !ram_cm_etanks = $7FFB90
 !ram_cm_reserve = $7FFB92
@@ -146,7 +147,8 @@
 !category_rbo = 1
 !category_kpdr25 = 2
 !category_gtclassic = 3
-!category_14ice = 4
+!category_14low = 4
+!category_allboss = 5
 
 ; ----------
 ; Save/load
