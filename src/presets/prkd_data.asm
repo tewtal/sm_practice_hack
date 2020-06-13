@@ -399,7 +399,7 @@ preset_prkd_power_bombs_alcatraz:
     dl $7E0913 : db $02 : dw $4400 ; Screen subpixel Y position
     dl $7E09A2 : db $02 : dw $1004 ; Equipped Items
     dl $7E09A4 : db $02 : dw $1004 ; Collected Items
-    dl $7E09C6 : db $02 : dw $0004 ; Missiles
+    dl $7E09C6 : db $02 : dw $0005 ; Missiles
     dl $7E0A1C : db $02 : dw $000A ; Samus position/state
     dl $7E0A1E : db $02 : dw $0104 ; More position/state
     dl $7E0AF6 : db $02 : dw $0028 ; Samus X
