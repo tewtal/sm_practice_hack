@@ -540,40 +540,23 @@ preset_100early_brinstar_big_pink:
     dw #$FFFF
 .after
 
-preset_100early_upper_norfair_rising_tide:
+preset_100early_brinstar_green_hill_zone:
     dw #preset_100early_brinstar_big_pink ; Brinstar: Big Pink
     dl $7E078D : db $02 : dw $8DAE ; DDB
     dl $7E078F : db $02 : dw $0001 ; DoorOut Index
     dl $7E079B : db $02 : dw $9D19 ; MDB
-    dl $7E07F5 : db $02 : dw $0002 ; Music Track
-    dl $7E090F : db $02 : dw $A000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0200 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $5000 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0700 ; Screen Y position in pixels
-    dl $7E09A6 : db $02 : dw $1000 ; Beams
-    dl $7E09A8 : db $02 : dw $1000 ; Beams
-    dl $7E0A1C : db $02 : dw $008A ; Samus position/state
-    dl $7E0A1E : db $02 : dw $1504 ; More position/state
-    dl $7E0AF6 : db $02 : dw $0265 ; Samus X
-    dl $7E0AFA : db $02 : dw $077B ; Samus Y
-    dl $7ED872 : db $02 : dw $048F ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $0014 ; Events, Items, Doors
-    dw #$FFFF
-.after
-
-preset_100early_brinstar_green_hill_zone:
-    dw #preset_100early_upper_norfair_rising_tide ; Upper Norfair: Rising Tide
-    dl $7E07F5 : db $02 : dw $0005 ; Music Track
     dl $7E090F : db $02 : dw $B000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0300 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $73FF ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0617 ; Screen Y position in pixels
+    dl $7E09A6 : db $02 : dw $1000 ; Beams
+    dl $7E09A8 : db $02 : dw $1000 ; Beams
     dl $7E09CA : db $02 : dw $0002 ; Supers
-    dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0008 ; More position/state
     dl $7E0AF6 : db $02 : dw $0382 ; Samus X
     dl $7E0AFA : db $02 : dw $068B ; Samus Y
+    dl $7ED872 : db $02 : dw $048F ; Events, Items, Doors
     dl $7ED8B4 : db $02 : dw $0246 ; Events, Items, Doors
+    dl $7ED91A : db $02 : dw $0014 ; Events, Items, Doors
     dw #$FFFF
 .after
 
@@ -816,8 +799,27 @@ preset_100early_upper_norfair_cathedral:
     dw #$FFFF
 .after
 
-preset_100early_upper_norfair_bubble_mountain:
+preset_100early_upper_norfair_rising_tide:
     dw #preset_100early_upper_norfair_cathedral ; Upper Norfair: Cathedral
+    dl $7E078D : db $02 : dw $92B2 ; DDB
+    dl $7E079B : db $02 : dw $A788 ; MDB
+    dl $7E090F : db $02 : dw $F000 ; Screen subpixel X position.
+    dl $7E0913 : db $02 : dw $2800 ; Screen subpixel Y position
+    dl $7E0915 : db $02 : dw $0100 ; Screen Y position in pixels
+    dl $7E09C2 : db $02 : dw $0167 ; Health
+    dl $7E09C6 : db $02 : dw $001D ; Missiles
+    dl $7E09C8 : db $02 : dw $001E ; Max missiles
+    dl $7E09CA : db $02 : dw $0001 ; Supers
+    dl $7E0AF6 : db $02 : dw $02BB ; Samus X
+    dl $7E0AFA : db $02 : dw $018B ; Samus Y
+    dl $7ED876 : db $02 : dw $01A3 ; Events, Items, Doors
+    dl $7ED8B8 : db $02 : dw $26EF ; Events, Items, Doors
+    dl $7ED91A : db $02 : dw $0020 ; Events, Items, Doors
+    dw #$FFFF
+.after
+
+preset_100early_upper_norfair_bubble_mountain:
+    dw #preset_100early_upper_norfair_rising_tide ; Upper Norfair: Rising Tide
     dl $7E078D : db $02 : dw $929A ; DDB
     dl $7E079B : db $02 : dw $AFA3 ; MDB
     dl $7E090F : db $02 : dw $B000 ; Screen subpixel X position.
@@ -825,13 +827,8 @@ preset_100early_upper_norfair_bubble_mountain:
     dl $7E0913 : db $02 : dw $1000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $0142 ; Health
-    dl $7E09C6 : db $02 : dw $001D ; Missiles
-    dl $7E09C8 : db $02 : dw $001E ; Max missiles
-    dl $7E09CA : db $02 : dw $0001 ; Supers
     dl $7E0AF6 : db $02 : dw $04B0 ; Samus X
-    dl $7ED876 : db $02 : dw $01A3 ; Events, Items, Doors
-    dl $7ED8B8 : db $02 : dw $26EF ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $0020 ; Events, Items, Doors
+    dl $7E0AFA : db $02 : dw $008B ; Samus Y
     dw #$FFFF
 .after
 

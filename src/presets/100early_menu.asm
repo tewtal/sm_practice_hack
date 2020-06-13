@@ -84,12 +84,12 @@ presets_submenu_100early_brinstar:
     %cm_header("BRINSTAR")
 
 presets_submenu_100early_upper_norfair:
-    dw #presets_100early_upper_norfair_rising_tide
     dw #presets_100early_upper_norfair_business_center
     dw #presets_100early_upper_norfair_hijump
     dw #presets_100early_upper_norfair_business_center_climb
     dw #presets_100early_upper_norfair_precathedral
     dw #presets_100early_upper_norfair_cathedral
+    dw #presets_100early_upper_norfair_rising_tide
     dw #presets_100early_upper_norfair_bubble_mountain
     dw #presets_100early_upper_norfair_bat_cave
     dw #presets_100early_upper_norfair_leaving_speed_booster
@@ -351,13 +351,10 @@ presets_100early_brinstar_leaving_kraid_hallway:
     %cm_preset("Leaving Kraid Hallway", #preset_100early_brinstar_leaving_kraid_hallway)
 
 presets_100early_brinstar_kraid_etank:
-    %cm_preset("Kraid E-Tank", #preset_100early_brinstar_kraid_etank)
+    %cm_preset("Leaving Kraid E-Tank", #preset_100early_brinstar_kraid_etank)
 
 
 ; Upper Norfair
-presets_100early_upper_norfair_rising_tide:
-    %cm_preset("Rising Tide", #preset_100early_upper_norfair_rising_tide)
-
 presets_100early_upper_norfair_business_center:
     %cm_preset("Business Center", #preset_100early_upper_norfair_business_center)
 
@@ -372,6 +369,9 @@ presets_100early_upper_norfair_precathedral:
 
 presets_100early_upper_norfair_cathedral:
     %cm_preset("Cathedral", #preset_100early_upper_norfair_cathedral)
+
+presets_100early_upper_norfair_rising_tide:
+    %cm_preset("Rising Tide", #preset_100early_upper_norfair_rising_tide)
 
 presets_100early_upper_norfair_bubble_mountain:
     %cm_preset("Bubble Mountain", #preset_100early_upper_norfair_bubble_mountain)

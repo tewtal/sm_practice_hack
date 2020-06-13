@@ -1402,7 +1402,7 @@ local STEPS = {
 		[49003] = { ["segment_no"] = 3, ["name"] = "Business Center Climb" },
 		[49509] = { ["segment_no"] = 3, ["name"] = "Pre-Cathedral" },
 		[50058] = { ["segment_no"] = 3, ["name"] = "Cathedral" },
-		[31395] = { ["segment_no"] = 3, ["name"] = "Rising Tide" },
+		[51395] = { ["segment_no"] = 3, ["name"] = "Rising Tide" },
 		[52060] = { ["segment_no"] = 3, ["name"] = "Bubble Mountain" },
 		[52773] = { ["segment_no"] = 3, ["name"] = "Bat Cave" },
 		[55265] = { ["segment_no"] = 3, ["name"] = "Leaving Speed Booster" },
