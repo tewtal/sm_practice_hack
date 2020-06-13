@@ -7,5 +7,7 @@ build/*
 tools/*.smv
 tools/*.asm
 tools/*.log
+tools/asar.exe
+tools/dll/*
 .vscode/launch.json
 .vscode/tasks.json

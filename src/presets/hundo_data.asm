@@ -1879,13 +1879,13 @@ preset_hundo_mama_turtle_etank_mama_turtle_etank_2:
     dl $7E078D : db $02 : dw $A3B4 ; DDB
     dl $7E078F : db $02 : dw $0002 ; DoorOut Index
     dl $7E079B : db $02 : dw $D017 ; MDB
-    dl $7E090F : db $02 : dw $D000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $014A ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $6000 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $01FF ; Screen Y position in pixels
+    dl $7E090F : db $02 : dw $6000 ; Screen subpixel X position.
+    dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
+    dl $7E0913 : db $02 : dw $2C00 ; Screen subpixel Y position
+    dl $7E0915 : db $02 : dw $01FD ; Screen Y position in pixels
     dl $7E0A1C : db $02 : dw $0009 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0108 ; More position/state
-    dl $7E0AF6 : db $02 : dw $021E ; Samus X
+    dl $7E0AF6 : db $02 : dw $01E1 ; Samus X
     dl $7E0AFA : db $02 : dw $028B ; Samus Y
     dl $7E0B3F : db $02 : dw $0001 ; Blue suit
     dw #$FFFF

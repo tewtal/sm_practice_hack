@@ -43,10 +43,27 @@ init_sram:
     LDA #$3000 : STA !sram_ctrl_menu        ; Start + Select
     LDA #$6010 : STA !sram_ctrl_save_state  ; Select + Y + R
     LDA #$6020 : STA !sram_ctrl_load_state  ; Select + Y + L
-    LDA #$A020 : STA !sram_ctrl_load_last_preset  ; Select + B + L
+    LDA #$5020 : STA !sram_ctrl_load_last_preset  ; Start + Y + L
     LDA #$0000 : STA !sram_ctrl_full_equipment
     LDA #$0000 : STA !sram_ctrl_kill_enemies
     LDA #$0000 : STA !sram_ctrl_reset_segment_timer
+
+    ; Input Cheat Sheet  (#$XXYY)
+    ; $4218  (YY)
+    ; $80 = A
+    ; $40 = X
+    ; $20 = L
+    ; $10 = R
+    ; 
+    ; $4219  (XX)
+    ; $80 = B
+    ; $40 = Y
+    ; $20 = Select
+    ; $10 = Start
+    ; $08 = Up
+    ; $04 = Down
+    ; $02 = Left
+    ; $01 = Right
 
     ; Features
     LDA #$0016 : STA !sram_artificial_lag

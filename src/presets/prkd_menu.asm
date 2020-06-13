@@ -9,7 +9,7 @@ PresetsMenuPrkd:
     dw #presets_goto_prkd_golden_4
     dw #presets_goto_prkd_tourian
     dw #$0000
-    %cm_header("PRESETS FOR PRKD")
+    %cm_header("PRESETS FOR ANY PRKD")
 
 presets_goto_prkd_bombs:
     %cm_submenu("Bombs", #presets_submenu_prkd_bombs)

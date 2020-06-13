@@ -168,6 +168,7 @@ preset_banks:
   dw preset_prkd_bombs_elevator>>16
   dw preset_kpdr21_crateria_ceres_elevator>>16
   dw preset_hundo_bombs_ceres_elevator>>16
+  dw preset_100early_crateria_ceres_elevator>>16
   dw preset_rbo_bombs_ceres_elevator>>16
   dw preset_kpdr25_bombs_ceres_elevator>>16
   dw preset_gtclassic_crateria_ceres_elevator>>16
@@ -311,3 +312,10 @@ org $E38000
   print pc, " allbossprkd data start"
   incsrc presets/allbossprkd_data.asm
   print pc, " allbossprkd data end"    
+
+org $E48000
+  
+  ; 4266 (length in hex)
+  print pc, " 100early data start"
+  incsrc presets/100early_data.asm
+  print pc, " 100early data end"

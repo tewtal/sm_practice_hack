@@ -34,6 +34,7 @@ export class Changelog extends Component {
                                                 <li>Add support for 14% Ice presets. (2.0.12)</li>
                                                 <li>Included all preset categories in the sam ROM (2.0.13)</li>
                                                 <li>Add support for 14% Speed and Any% All Bosses (multiple routes). (2.0.14)</li>
+                                                <li>Add support for 100% Early Croc route. Changed default shortcut for Load Preset. (2.0.15)</li>
                                             </ul>
                                         </CardBody>
                                     </Card>
