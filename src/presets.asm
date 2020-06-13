@@ -165,21 +165,17 @@ preset_to_memory:
 
 preset_banks:
 {
-    if !CATEGORY == !category_combined
-        dw preset_prkd_bombs_elevator>>16
-        dw preset_kpdr21_crateria_ceres_elevator>>16
-        dw preset_hundo_bombs_ceres_elevator>>16
-    elseif !CATEGORY == !category_rbo
-        dw preset_rbo_bombs_ceres_elevator>>16
-    elseif !CATEGORY == !category_kpdr25
-        dw preset_kpdr25_bombs_ceres_elevator>>16
-    elseif !CATEGORY == !category_gtclassic
-        dw preset_gtclassic_crateria_ceres_elevator>>16
-    elseif !CATEGORY == !category_14ice
-        dw preset_14ice_crateria_ceres_elevator>>16
-    else
-        error "Unsupported category"
-    endif
+  dw preset_prkd_bombs_elevator>>16
+  dw preset_kpdr21_crateria_ceres_elevator>>16
+  dw preset_hundo_bombs_ceres_elevator>>16
+  dw preset_rbo_bombs_ceres_elevator>>16
+  dw preset_kpdr25_bombs_ceres_elevator>>16
+  dw preset_gtclassic_crateria_ceres_elevator>>16
+  dw preset_14ice_crateria_ceres_elevator>>16
+  dw preset_14speed_crateria_ceres_elevator>>16
+  dw preset_allbosskpdr_crateria_ceres_elevator>>16
+  dw preset_allbosspkdr_crateria_ceres_elevator>>16
+  dw preset_allbossprkd_crateria_ceres_elevator>>16
 }
 
 print pc, " presets end"
@@ -256,42 +252,62 @@ transfer_cgram_long:
     RTL
 }
 print pc, " preset_start_gameplay end"
+org $E08000 
+  ; 42A2 (length in hex)
+  print pc, " hundo data start"
+  incsrc presets/hundo_data.asm
+  print pc, " hundo data end"
 
-if !CATEGORY == !category_combined
-    org $B88000  ; 42A2 (length in hex)
-    print pc, " hundo data start"
-    incsrc presets/hundo_data.asm
-    print pc, " hundo data end"
+  ; 27B6 (length in hex)
+  print pc, " prkd data start"
+  incsrc presets/prkd_data.asm
+  print pc, " prkd data end"
 
-    org $CEC000  ; 27B6 (length in hex)
-    print pc, " prkd data start"
-    incsrc presets/prkd_data.asm
-    print pc, " prkd data end"
+org $E18000
+  ; 20B0 (length in hex)
+  print pc, " kpdr21 data start"
+  incsrc presets/kpdr21_data.asm
+  print pc, " kpdr21 data end"
 
-    org $B8C2B0  ; 20B0 (length in hex)
-    print pc, " kpdr21 data start"
-    incsrc presets/kpdr21_data.asm
-    print pc, " kpdr21 data end"
-elseif !CATEGORY == !category_rbo
-    org $B88000  ; 3274 (length in hex)
-    print pc, " rbo data start"
-    incsrc presets/rbo_data.asm
-    print pc, " rbo data end"
-elseif !CATEGORY == !category_kpdr25
-    org $B88000  ; 1E3A (length in hex)
-    print pc, " kpdr25 data start"
-    incsrc presets/kpdr25_data.asm
-    print pc, " kpdr25 data end"
-elseif !CATEGORY == !category_gtclassic
-    org $B88000  ; 218A (length in hex)
-    print pc, " gtclassic data start"
-    incsrc presets/gtclassic_data.asm
-    print pc, " gtclassic data end"
-elseif !CATEGORY == !category_14ice
-    org $B88000  ; 1E95 (length in hex)
-    print pc, " 14ice data start"
-    incsrc presets/14ice_data.asm
-    print pc, " 14ice data end"
-else
-    error "Unsupported category"
-endif
+  ; 3274 (length in hex)
+  print pc, " rbo data start"
+  incsrc presets/rbo_data.asm
+  print pc, " rbo data end"
+
+  ; 1E3A (length in hex)
+  print pc, " kpdr25 data start"
+  incsrc presets/kpdr25_data.asm
+  print pc, " kpdr25 data end"
+
+org $E28000
+  ; 218A (length in hex)
+  print pc, " gtclassic data start"
+  incsrc presets/gtclassic_data.asm
+  print pc, " gtclassic data end"
+
+  ; 1E95 (length in hex)
+  print pc, " 14ice data start"
+  incsrc presets/14ice_data.asm
+  print pc, " 14ice data end"
+
+  ; 1EE6 (length in hex)
+  print pc, " 14speed data start"
+  incsrc presets/14speed_data.asm
+  print pc, " 14speed data end"
+
+org $E38000
+  
+  ; 2400 (length in hex)
+  print pc, " allbosskpdr data start"
+  incsrc presets/allbosskpdr_data.asm
+  print pc, " allbosskpdr data end"
+
+  ; 2484 (length in hex)
+  print pc, " allbosspkdr data start"
+  incsrc presets/allbosspkdr_data.asm
+  print pc, " allbosspkdr data end"
+
+  ; 2568 (length in hex)
+  print pc, " allbossprkd data start"
+  incsrc presets/allbossprkd_data.asm
+  print pc, " allbossprkd data end"    

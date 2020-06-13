@@ -11,12 +11,10 @@ else
         db $05 ; 64kb
 endif
 
-
 ; Skip intro
 ; $82:EEDF A9 95 A3    LDA #$A395
 org $82EEDF
     LDA #$C100
-
 
 ; Skips the waiting time after teleporting
 org $90E870

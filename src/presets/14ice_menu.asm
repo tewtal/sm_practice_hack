@@ -8,7 +8,7 @@ PresetsMenu14ice:
     dw #presets_goto_14ice_maridia
     dw #presets_goto_14ice_tourian
     dw #$0000
-    %cm_header("PRESETS FOR 14ICE")
+    %cm_header("PRESETS FOR 14 ICE")
 
 presets_goto_14ice_crateria:
     %cm_submenu("Crateria", #presets_submenu_14ice_crateria)
