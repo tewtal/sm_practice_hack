@@ -12,7 +12,7 @@ PresetsMenu100early:
     dw #presets_goto_100early_final_cleanup
     dw #presets_goto_100early_tourian
     dw #$0000
-    %cm_header("PRESETS FOR 100 EARLY CROC")
+    %cm_header("PRESETS FOR 100EARLY")
 
 presets_goto_100early_crateria:
     %cm_submenu("Crateria", #presets_submenu_100early_crateria)
@@ -79,7 +79,7 @@ presets_submenu_100early_brinstar:
     dw #presets_100early_brinstar_kraid
     dw #presets_100early_brinstar_leaving_varia
     dw #presets_100early_brinstar_leaving_kraid_hallway
-    dw #presets_100early_brinstar_kraid_etank
+    dw #presets_100early_brinstar_leaving_kraid_etank
     dw #$0000
     %cm_header("BRINSTAR")
 
@@ -156,7 +156,7 @@ presets_submenu_100early_brinstar_cleanup:
     dw #presets_100early_brinstar_cleanup_dachora_room_revisit
     dw #presets_100early_brinstar_cleanup_big_pink_revisit
     dw #presets_100early_brinstar_cleanup_big_pink_power_bombs
-    dw #presets_100early_brinstar_cleanup_big_pink_hopepr_room
+    dw #presets_100early_brinstar_cleanup_big_pink_hopper_room
     dw #presets_100early_brinstar_cleanup_spore_spawn_supers
     dw #presets_100early_brinstar_cleanup_waterway_etank
     dw #presets_100early_brinstar_cleanup_green_hills_revisit
@@ -350,8 +350,8 @@ presets_100early_brinstar_leaving_varia:
 presets_100early_brinstar_leaving_kraid_hallway:
     %cm_preset("Leaving Kraid Hallway", #preset_100early_brinstar_leaving_kraid_hallway)
 
-presets_100early_brinstar_kraid_etank:
-    %cm_preset("Leaving Kraid E-Tank", #preset_100early_brinstar_kraid_etank)
+presets_100early_brinstar_leaving_kraid_etank:
+    %cm_preset("Leaving Kraid E-Tank", #preset_100early_brinstar_leaving_kraid_etank)
 
 
 ; Upper Norfair
@@ -541,8 +541,8 @@ presets_100early_brinstar_cleanup_big_pink_revisit:
 presets_100early_brinstar_cleanup_big_pink_power_bombs:
     %cm_preset("Big Pink Power Bombs", #preset_100early_brinstar_cleanup_big_pink_power_bombs)
 
-presets_100early_brinstar_cleanup_big_pink_hopepr_room:
-    %cm_preset("Big Pink Hopepr Room", #preset_100early_brinstar_cleanup_big_pink_hopepr_room)
+presets_100early_brinstar_cleanup_big_pink_hopper_room:
+    %cm_preset("Big Pink Hopper Room", #preset_100early_brinstar_cleanup_big_pink_hopper_room)
 
 presets_100early_brinstar_cleanup_spore_spawn_supers:
     %cm_preset("Spore Spawn Supers", #preset_100early_brinstar_cleanup_spore_spawn_supers)
