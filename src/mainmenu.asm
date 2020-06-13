@@ -90,6 +90,7 @@ preset_category_submenus:
     dw #PresetsMenuPrkd
     dw #PresetsMenuKpdr21
     dw #PresetsMenuHundo
+    dw #PresetsMenu100early
     dw #PresetsMenuRbo
     dw #PresetsMenuKpdr25
     dw #PresetsMenuGtclassic
@@ -106,6 +107,7 @@ preset_category_banks:
     dw #PresetsMenuPrkd>>16
     dw #PresetsMenuKpdr21>>16
     dw #PresetsMenuHundo>>16
+    dw #PresetsMenu100early>>16
     dw #PresetsMenuRbo>>16
     dw #PresetsMenuKpdr25>>16
     dw #PresetsMenuGtclassic>>16
@@ -133,7 +135,7 @@ MainMenu:
     dw #mm_goto_rngmenu
     dw #mm_goto_ctrlsmenu
     dw #$0000
-    %cm_header("SM PRACTICE HACK 2.0.14")
+    %cm_header("SM PRACTICE HACK 2.0.15")
 
 mm_goto_equipment:
     %cm_submenu("Equipment", #EquipmentMenu)
@@ -172,13 +174,14 @@ org $fe8000
 incsrc presets/prkd_menu.asm
 incsrc presets/kpdr21_menu.asm
 incsrc presets/hundo_menu.asm
+incsrc presets/100early_menu.asm
 incsrc presets/rbo_menu.asm
 incsrc presets/kpdr25_menu.asm
 incsrc presets/gtclassic_menu.asm
-incsrc presets/14ice_menu.asm
-incsrc presets/14speed_menu.asm
 
 org $ff8000
+incsrc presets/14ice_menu.asm
+incsrc presets/14speed_menu.asm
 incsrc presets/allbosskpdr_menu.asm
 incsrc presets/allbosspkdr_menu.asm
 incsrc presets/allbossprkd_menu.asm
@@ -630,7 +633,8 @@ misc_preset_cateory:
     db #$28, "Preset Category", #$FF
         db #$28, "y      PRKD", #$FF ; Note the "y" ;)
         db #$28, "y      KPDR", #$FF
-        db #$28, "y     HUNDO", #$FF
+        db #$28, "y  100 LATE", #$FF
+        db #$28, "y 100 EARLY", #$FF
         db #$28, "y       RBO", #$FF
         db #$28, "y    KPDR25", #$FF
         db #$28, "y GTCLASSIC", #$FF
