@@ -997,7 +997,7 @@ preset_100early_upper_norfair_postcrocomire:
     dl $7E09C2 : db $02 : dw $01F3 ; Health
     dl $7E09C4 : db $02 : dw $01F3 ; Max helath
     dl $7E09C6 : db $02 : dw $0028 ; Missiles
-    dl $7E09CA : db $02 : dw $0001 ; Supers
+    dl $7E09CA : db $02 : dw $0002 ; Supers
     dl $7E09D6 : db $02 : dw $0064 ; Reserves
     dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0008 ; More position/state
@@ -1023,7 +1023,7 @@ preset_100early_upper_norfair_leaving_power_bombs:
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $4400 ; Screen subpixel Y position
     dl $7E09C2 : db $02 : dw $01A2 ; Health
-    dl $7E09CA : db $02 : dw $0000 ; Supers
+    dl $7E09CA : db $02 : dw $0001 ; Supers
     dl $7E09CE : db $02 : dw $0005 ; Pbs
     dl $7E09D0 : db $02 : dw $0005 ; Max pbs
     dl $7E0AF6 : db $02 : dw $00A7 ; Samus X
@@ -1444,16 +1444,15 @@ preset_100early_wrecked_ship_leaving_east_supers:
 
 preset_100early_wrecked_ship_spiky_room_of_death:
     dw #preset_100early_wrecked_ship_leaving_east_supers ; Wrecked Ship: Leaving East Supers
-    dl $7E078D : db $02 : dw $A204 ; DDB
-    dl $7E078F : db $02 : dw $0001 ; DoorOut Index
-    dl $7E079B : db $02 : dw $CD5C ; MDB
-    dl $7E090F : db $02 : dw $4000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $00FF ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
-    dl $7E09C6 : db $02 : dw $0044 ; Missiles
-    dl $7E0AF6 : db $02 : dw $015F ; Samus X
-    dl $7E0AFA : db $02 : dw $006B ; Samus Y
-    dl $7ED8C0 : db $02 : dw $007C ; Events, Items, Doors
+    dl $7E078D : db $02 : dw $A2E8 ; DDB
+    dl $7E078F : db $02 : dw $0000 ; DoorOut Index
+    dl $7E079B : db $02 : dw $CAF6 ; MDB
+    dl $7E090F : db $02 : dw $AC01 ; Screen subpixel X position.
+    dl $7E0911 : db $02 : dw $0400 ; Screen X position in pixels
+    dl $7E0913 : db $02 : dw $E000 ; Screen subpixel Y position
+    dl $7E0915 : db $02 : dw $0472 ; Screen Y position in pixels
+    dl $7E0AF6 : db $02 : dw $042F ; Samus X
+    dl $7E0AFA : db $02 : dw $04EB ; Samus Y
     dl $7ED91A : db $02 : dw $003E ; Events, Items, Doors
     dw #$FFFF
 .after
@@ -1462,16 +1461,14 @@ preset_100early_wrecked_ship_wrecked_ship_etank:
     dw #preset_100early_wrecked_ship_spiky_room_of_death ; Wrecked Ship: Spiky Room of Death
     dl $7E078D : db $02 : dw $A258 ; DDB
     dl $7E079B : db $02 : dw $CBD5 ; MDB
-    dl $7E090F : db $02 : dw $8000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $F400 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
-    dl $7E0915 : db $02 : dw $001D ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $011C ; Health
-    dl $7E09CA : db $02 : dw $000D ; Supers
-    dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0004 ; More position/state
-    dl $7E0AF6 : db $02 : dw $004F ; Samus X
-    dl $7E0AFA : db $02 : dw $008B ; Samus Y
-    dl $7ED8C0 : db $02 : dw $087C ; Events, Items, Doors
+    dl $7E0913 : db $02 : dw $4C00 ; Screen subpixel Y position
+    dl $7E0915 : db $02 : dw $0100 ; Screen Y position in pixels
+    dl $7E0A1C : db $02 : dw $004E ; Samus position/state
+    dl $7E0A1E : db $02 : dw $0204 ; More position/state
+    dl $7E0AF6 : db $02 : dw $0079 ; Samus X
+    dl $7E0AFA : db $02 : dw $016B ; Samus Y
     dw #$FFFF
 .after
 
@@ -1974,15 +1971,15 @@ preset_100early_maridia_predraygon_main_street:
     dl $7E07C5 : db $02 : dw $3CBE ; GFX Pointers
     dl $7E07C7 : db $02 : dw $C2B8 ; GFX Pointers
     dl $7E07F3 : db $02 : dw $0012 ; Music Bank
-    dl $7E090F : db $02 : dw $8000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $C000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $8C00 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0003 ; Screen Y position in pixels
+    dl $7E0913 : db $02 : dw $2C01 ; Screen subpixel Y position
+    dl $7E0915 : db $02 : dw $0100 ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $03E5 ; Health
     dl $7E09CA : db $02 : dw $0011 ; Supers
     dl $7E09CE : db $02 : dw $000C ; Pbs
-    dl $7E0AF6 : db $02 : dw $0077 ; Samus X
-    dl $7E0AFA : db $02 : dw $007B ; Samus Y
+    dl $7E0AF6 : db $02 : dw $0044 ; Samus X
+    dl $7E0AFA : db $02 : dw $018B ; Samus Y
     dl $7ED820 : db $02 : dw $0801 ; Events, Items, Doors
     dw #$FFFF
 .after
