@@ -137,7 +137,7 @@ export class Patcher extends Component {
                                             <InputGroupText>Type</InputGroupText>                                            
                                         </InputGroupAddon>
                                         <Input type="select" id="type" defaultValue={this.state.romType} onChange={(e) => this.updateType(e)}>
-                                            <option value="savestates">With Save States (SD2SNES only)</option>
+                                            <option value="savestates">With Save States (SD2SNES/FXPAK only)</option>
                                             <option value="nosavestates">Without Save States (Emu/VC/Classic etc)</option>
                                         </Input>
                                     </InputGroup>

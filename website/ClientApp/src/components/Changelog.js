@@ -16,6 +16,21 @@ export class Changelog extends Component {
                                 <Col>
                                     <Card>
                                         <CardBody>
+                                            <h2>Version 2.1</h2>
+                                            <p>Changes since 2.0.15:</p>
+                                            <h5>Changes:</h5>
+                                            <ul>
+                                                <li>Prevent accidental Murder Beam after setting Equipment from menu. (2.1)</li>
+                                            </ul>
+                                        </CardBody>
+                                    </Card>
+                                </Col>
+                            </Row>
+                            <br />
+                            <Row>
+                                <Col>
+                                    <Card>
+                                        <CardBody>
                                             <h2>Version 2.0.x</h2>
                                             <p>Changes since 2.0:</p>
                                             <h5>Changes:</h5>
@@ -32,7 +47,7 @@ export class Changelog extends Component {
                                                 <li>Move KPDR 21% presets to the combined ROM. (2.0.10)</li>
                                                 <li>Add cooldown timer to the Infohud Mode options. (2.0.11)</li>
                                                 <li>Add support for 14% Ice presets. (2.0.12)</li>
-                                                <li>Included all preset categories in the sam ROM (2.0.13)</li>
+                                                <li>Included all preset categories in the same ROM (2.0.13)</li>
                                                 <li>Add support for 14% Speed and Any% All Bosses (multiple routes). (2.0.14)</li>
                                                 <li>Add support for 100% Early Croc route. Changed default shortcut for Load Preset. (2.0.15)</li>
                                             </ul>
