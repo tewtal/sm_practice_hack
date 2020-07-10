@@ -135,7 +135,7 @@ MainMenu:
     dw #mm_goto_rngmenu
     dw #mm_goto_ctrlsmenu
     dw #$0000
-    %cm_header("SM PRACTICE HACK 2.0.15")
+    %cm_header("SM PRACTICE HACK 2.1")
 
 mm_goto_equipment:
     %cm_submenu("Equipment", #EquipmentMenu)
@@ -337,7 +337,7 @@ action_category:
     LDA.l .table, X : STA $7E09A4 : STA $7E09A2 : INX #2
 
     ; Beams
-    LDA.l .table, X : STA $7E09A8 : STA $7E09A6 : INX #2
+    LDA.l .table, X : STA $7E09A8 : AND #$FFFB : STA $7E09A6 : INX #2
 
     ; Health
     LDA.l .table, X : STA $7E09C2 : STA $7E09C4 : INX #2

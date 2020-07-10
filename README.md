@@ -17,4 +17,3 @@ The build script will create two IPS patch files for the practice hack. The patc
 
 * PAL region roms are no longer supported in the main branch. See https://github.com/InsaneFirebat/sm_practice_hack/tree/PAL-v1.43 for the latest working PAL revision.
 * A crash will occur upon completing the game and leaving Zebes.
-* Equipment options that contain both Spazer and Plasma may equip them at the same time, which can lead to "Murder Beam" related crashes.
