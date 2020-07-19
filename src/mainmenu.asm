@@ -135,7 +135,7 @@ MainMenu:
     dw #mm_goto_rngmenu
     dw #mm_goto_ctrlsmenu
     dw #$0000
-    %cm_header("SM PRACTICE HACK 2.1")
+    %cm_header("SM PRACTICE HACK 2.1.1")
 
 mm_goto_equipment:
     %cm_submenu("Equipment", #EquipmentMenu)
@@ -818,6 +818,8 @@ ih_display_mode:
     db #$28, " X POSITION", #$FF
     db #$28, " Y POSITION", #$FF
     db #$28, "   COOLDOWN", #$FF
+    db #$28, " SHINE TUNE", #$FF
+    db #$28, " SHOT TIMER", #$FF
     db #$FF
 
 ih_room_counter:

@@ -6,12 +6,15 @@
 !ram_transition_counter = $7FFB0E
 !ram_last_door_lag_frames = $7FFB10
 
+!ram_armed_shine_duration = $7FFB14
 !ram_etanks = $7FFB12 ; ??
 !ram_max_etanks = $7FFB24 ; ??
 !ram_last_hp = $7FFB9A
 
 !ram_slowdown_mode = $7EFFFC
 !ram_slowdown_frames = $7FFB52
+!ram_shine_dash_held_late = $7FFB1A
+!ram_shine_counter = $7FFB30
 !ram_cooldown_counter = $7FFB32
 !ram_xpos = $7FFB34
 !ram_ypos = $7FFB36
@@ -20,9 +23,6 @@
 !ram_vertical_speed = $7FFB3C
 !ram_mb_hp = $7FFB3E
 !ram_enemy_hp = $7FFB40
-!ram_shine_counter_1 = $7FFB30 ; goes 1-A
-!ram_shine_counter_2 = $7FFB14 ; armed shine duration
-!ram_shine_counter_3 = $7FFB1A ; armed shine duration 2
 !ram_magic_pants_1 = $7FFB64
 !ram_magic_pants_2 = $7FFB66
 !ram_magic_pants_3 = $7FFB70
@@ -32,6 +32,7 @@
 !ram_xfac_counter = $7FFB1E
 !ram_lag_counter = $7FFB96
 !ram_last_lag_counter = $7FFB98
+!ram_shot_timer = $7FFB9E
 
 !ram_phantoon_rng_1 = $7FFB82
 !ram_phantoon_rng_2 = $7FFB84
@@ -62,6 +63,15 @@
 !ram_cm_ctrl_mode = $7FFBC0
 !ram_cm_ctrl_timer = $7FFBC2
 !ram_cm_ctrl_last_input = $7FFBC4
+
+!ram_shinefinetune_early_1 = $7FFBD0
+!ram_shinefinetune_late_1 = $7FFBD2
+!ram_shinefinetune_early_2 = $7FFBD4
+!ram_shinefinetune_late_2 = $7FFBD6
+!ram_shinefinetune_early_3 = $7FFBD8
+!ram_shinefinetune_late_3 = $7FFBDA
+!ram_shinefinetune_early_4 = $7FFBDC
+!ram_shinefinetune_late_4 = $7FFBDE
 
 ; -----
 ; SRAM
@@ -135,6 +145,18 @@
 !IH_RESET = #$0200 ; left
 !IH_STATUS_R = #$0010 ; r
 !IH_STATUS_L = #$0020 ; l
+
+!IH_INPUT_UP = $7E09AA
+!IH_INPUT_DOWN = $7E09AC
+!IH_INPUT_LEFT = $7E09AE
+!IH_INPUT_RIGHT = $7E09B0
+!IH_INPUT_SHOOT = $7E09B2
+!IH_INPUT_JUMP = $7E09B4
+!IH_INPUT_RUN = $7E09B6
+!IH_INPUT_ITEM_CANCEL = $7E09B8
+!IH_INPUT_ITEM_SELECT = $7E09BA
+!IH_INPUT_ANGLE_UP = $7E09BC
+!IH_INPUT_ANGLE_DOWN = $7E09BE
 
 ; ------------
 ; Presets
