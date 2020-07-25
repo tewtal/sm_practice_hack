@@ -16,11 +16,12 @@ export class Changelog extends Component {
                                 <Col>
                                     <Card>
                                         <CardBody>
-                                            <h2>Version 2.1</h2>
+                                            <h2>Version 2.1.x</h2>
                                             <p>Changes since 2.0.15:</p>
                                             <h5>Changes:</h5>
                                             <ul>
                                                 <li>Prevent accidental Murder Beam after setting Equipment from menu. (2.1)</li>
+                                                <li>Added Shine Tune and Shot Timer to the Infohud Mode options. (2.1.1)</li>
                                             </ul>
                                         </CardBody>
                                     </Card>

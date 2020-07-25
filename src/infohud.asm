@@ -187,7 +187,6 @@ ih_after_room_transition:
 
     LDA !ram_transition_counter : STA !ram_last_door_lag_frames
     LDA #$0000 : STA !ram_transition_flag
-    LDA #$0000 : STA !ram_shine_counter_1
 
     ; Update HUD
     JSL ih_update_hud_code
@@ -471,18 +470,14 @@ ih_hud_code:
     dw status_xpos
     dw status_ypos
     dw status_cooldowncounter
+    dw status_shinefinetune
+    dw status_shottimer
 }
 
 
 status_shinetimer:
 {
-    LDA !ram_shine_counter_1 : CMP #$000A : BNE .continue
-    LDA #$0000 : STA !ram_shine_counter_1
-
-  .continue
-    LDA !ram_shine_counter_1 : INC : STA !ram_shine_counter_1
-
-    LDA !ram_shine_counter_2 : CMP !ram_shine_counter_3 : BEQ .done : STA !ram_shine_counter_3
+    LDA !ram_armed_shine_duration : CMP !ram_shine_counter : BEQ .done : STA !ram_shine_counter
     CMP #$0000 : BNE .charge : LDA #$00B4
 
   .charge
@@ -586,6 +581,136 @@ status_cooldowncounter:
     RTS
 }
 
+status_shinefinetune:
+{
+    LDA $09C2 : STA !ram_last_hp
+    LDA !ram_dash_counter : CMP #$0003 : BEQ .checkdash3 : CMP #$0004 : BNE .checkdash012
+    LDA $0B3F : AND #$00FF : CMP !ram_dash_counter : BEQ .inc4 : STA !ram_dash_counter
+    LDA !ram_shinefinetune_late_4 : JSR Hex2Dec : LDX #$00C0 : JSR Draw4
+
+  .reset
+    LDA #$0000 : STA !ram_shinefinetune_early_1 : STA !ram_shinefinetune_late_1
+    STA !ram_shinefinetune_early_2 : STA !ram_shinefinetune_late_2
+    STA !ram_shinefinetune_early_3 : STA !ram_shinefinetune_late_3
+    STA !ram_shinefinetune_early_4 : STA !ram_shinefinetune_late_4
+    RTS
+
+  .inc4
+    LDA !ram_shinefinetune_late_4 : INC : STA !ram_shinefinetune_late_4
+    RTS
+
+  .nodash0
+    STA !ram_shinefinetune_early_1
+    RTS
+
+  .inc0
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_RUN : CMP #$0000 : BEQ .nodash0
+    LDA !ram_shinefinetune_early_1 : INC : STA !ram_shinefinetune_early_1
+    RTS
+
+  .checkdash012
+    LDA $0B3F : AND #$00FF : CMP #$0004 : BEQ .done
+
+  .checkdash3
+    LDA $0B3F : AND #$00FF : CMP !ram_dash_counter : BEQ .inc0123 : STA !ram_dash_counter
+    CMP #$0000 : BEQ .reset
+    JMP .draw1234
+
+  .nodash1
+    STA !ram_shinefinetune_early_2
+    CMP !ram_shine_dash_held_late : BEQ .done
+    STA !ram_shine_dash_held_late
+    LDA !ram_shinefinetune_late_1 : JSR Hex2Dec : LDX #$008C : JSR Draw2
+    RTS
+
+  .inc1
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_RUN : CMP #$0000 : BEQ .nodash1
+    LDA !ram_shinefinetune_early_2 : INC : STA !ram_shinefinetune_early_2
+    LDA !ram_shine_dash_held_late : CMP #$0000 : BEQ .done
+    LDA !ram_shinefinetune_late_1 : INC : STA !ram_shinefinetune_late_1
+    RTS
+
+  .inc0123
+    CMP #$0000 : BEQ .inc0
+    CMP #$0001 : BEQ .inc1
+    CMP #$0002 : BEQ .inc2
+    CMP #$0003 : BEQ .inc3
+
+  .done
+    RTS
+
+  .nodash2
+    STA !ram_shinefinetune_early_3
+    CMP !ram_shine_dash_held_late : BEQ .done
+    STA !ram_shine_dash_held_late
+    LDA !ram_shinefinetune_late_2 : JSR Hex2Dec : LDX #$0096 : JSR Draw2
+    RTS
+
+  .inc2
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_RUN : CMP #$0000 : BEQ .nodash2
+    LDA !ram_shinefinetune_early_3 : INC : STA !ram_shinefinetune_early_3
+    LDA !ram_shine_dash_held_late : CMP #$0000 : BEQ .done
+    LDA !ram_shinefinetune_late_2 : INC : STA !ram_shinefinetune_late_2
+    RTS
+
+  .nodash3
+    STA !ram_shinefinetune_early_4
+    CMP !ram_shine_dash_held_late : BEQ .done
+    STA !ram_shine_dash_held_late
+    LDA !ram_shinefinetune_late_3 : JSR Hex2Dec : LDX #$00B4 : JSR Draw2
+    RTS
+
+  .inc3
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_RUN : CMP #$0000 : BEQ .nodash3
+    LDA !ram_shinefinetune_early_4 : INC : STA !ram_shinefinetune_early_4
+    LDA !ram_shine_dash_held_late : CMP #$0000 : BEQ .done
+    LDA !ram_shinefinetune_late_3 : INC : STA !ram_shinefinetune_late_3
+    RTS
+
+  .draw1234
+    STA !ram_shine_dash_held_late
+    CMP #$0001 : BEQ .draw1clear234
+    CMP #$0002 : BEQ .draw2
+    CMP #$0003 : BEQ .draw3
+    CMP #$0004 : BEQ .draw4
+    RTS
+
+  .draw2
+    LDA !ram_shinefinetune_late_1 : JSR Hex2Dec : LDX #$008C : JSR Draw2
+    LDA !ram_shinefinetune_early_2 : JSR Hex2Dec : JSR Draw3
+    RTS
+
+  .draw3
+    LDA !ram_shinefinetune_late_2 : JSR Hex2Dec : LDX #$0096 : JSR Draw2
+    LDA !ram_shinefinetune_early_3 : JSR Hex2Dec : LDX #$00AE : JSR Draw3
+    RTS
+
+  .draw4
+    LDA !ram_shinefinetune_late_3 : JSR Hex2Dec : LDX #$00B4 : JSR Draw2
+    LDA !ram_shinefinetune_early_4 : JSR Hex2Dec : JSR Draw3
+    RTS
+
+  .draw1clear234
+    LDA !ram_shinefinetune_early_1 : JSR Hex2Dec : LDX #$0088 : JSR Draw2
+    LDA #$0057 : STA $7EC600,X : STA $7EC602,X : STA $7EC604,X
+    STA $7EC606,X : STA $7EC608,X : STA $7EC60A,X : STA $7EC60C,X
+    STA $7EC624,X : STA $7EC626,X : STA $7EC628,X : STA $7EC62A,X
+    STA $7EC62C,X : STA $7EC62E,X : STA $7EC630,X : STA $7EC632,X
+    STA $7EC634,X : STA $7EC636,X : STA $7EC638,X : STA $7EC63A,X
+    RTS
+}
+
+status_shottimer:
+{
+    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_SHOOT : CMP #$0000 : BEQ .inc
+    LDA !ram_shot_timer : JSR Hex2Dec : LDX #$0088 : JSR Draw4
+    LDA #$0000 : STA !ram_shot_timer
+
+  .inc
+    LDA !ram_shot_timer : INC : STA !ram_shot_timer
+    RTS
+}
+
 status_enemyhp:
 {
     LDA $0F8C : CMP !ram_enemy_hp : BEQ .done : STA !ram_enemy_hp
@@ -625,6 +750,21 @@ Hex2Dec:
     RTS
 }
 
+Draw2:
+{
+    LDA #$0057 : STA $7EC600,X
+
+    ; Second digit
+    LDY $18 : LDA.w NumberGFXTable,Y : STA $7EC602,X
+
+    ; First digit (if non-zero)
+    LDY $16 : BEQ .done : LDA.w NumberGFXTable,Y : STA $7EC600,X
+
+  .done
+    INX #4
+    RTS
+}
+
 Draw3:
 {
     LDA #$0057 : STA $7EC600,X : STA $7EC602,X
@@ -650,7 +790,7 @@ Draw4:
 {
     LDA #$0057 : STA $7EC600,X : STA $7EC602,X : STA $7EC604,X
 
-    ; Forth digit
+    ; Fourth digit
     LDY $18 : LDA.w NumberGFXTable,Y : STA $7EC606,X
 
     ; Check if done
@@ -665,7 +805,7 @@ Draw4:
     ; Second digit
     LDY $14 : LDA.w NumberGFXTable,Y : STA $7EC602,X
 
-    ; First digit
+    ; First digit (if non-zero)
     LDY $12 : BEQ .done : LDA.w NumberGFXTable,Y : STA $7EC600,X
 
   .done
@@ -807,8 +947,7 @@ ih_game_loop_code:
 
   .update_status
     LDA #$0000
-    STA !ram_shine_counter_1
-    STA !ram_shine_counter_2
+    STA !ram_armed_shine_duration
     STA !ram_charge_counter
     STA !ram_xfac_counter
     INC A
@@ -817,7 +956,7 @@ ih_game_loop_code:
     STA !ram_vertical_speed
     STA !ram_mb_hp
     STA !ram_enemy_hp
-    STA !ram_shine_counter_3
+    STA !ram_shine_counter
     JMP .done
 }
 
@@ -875,7 +1014,7 @@ ih_get_item_code:
 ih_shinespark_code:
 {
     DEC
-    STA !ram_shine_counter_2
+    STA !ram_armed_shine_duration
     STA $0A68
     RTL
 }
