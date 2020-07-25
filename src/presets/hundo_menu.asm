@@ -16,7 +16,7 @@ PresetsMenuHundo:
     dw #presets_goto_hundo_brinstar_cleanup_2
     dw #presets_goto_hundo_tourian
     dw #$0000
-    %cm_header("PRESETS FOR 100 LATE CROC")
+    %cm_header("ALL ITEMS LATE CROC")
 
 presets_goto_hundo_bombs:
     %cm_submenu("Bombs", #presets_submenu_hundo_bombs)

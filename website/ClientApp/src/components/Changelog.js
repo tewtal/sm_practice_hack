@@ -22,6 +22,7 @@ export class Changelog extends Component {
                                             <ul>
                                                 <li>Prevent accidental Murder Beam after setting Equipment from menu. (2.1)</li>
                                                 <li>Added Shine Tune and Shot Timer to the Infohud Mode options. (2.1.1)</li>
+                                                <li>Preset improvements for Any% PRKD, KPDR 21%, and GT Classic. (2.1.2)</li>
                                             </ul>
                                         </CardBody>
                                     </Card>

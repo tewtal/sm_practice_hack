@@ -135,13 +135,13 @@ MainMenu:
     dw #mm_goto_rngmenu
     dw #mm_goto_ctrlsmenu
     dw #$0000
-    %cm_header("SM PRACTICE HACK 2.1.1")
+    %cm_header("SM PRACTICE HACK 2.1.2")
 
 mm_goto_equipment:
     %cm_submenu("Equipment", #EquipmentMenu)
 
 mm_goto_presets:
-    %cm_jsr("Presets", #action_presets_submenu, #$0000)
+    %cm_jsr("Category Presets", #action_presets_submenu, #$0000)
 
 mm_goto_teleport:
     %cm_submenu("Teleport", #TeleportMenu)
