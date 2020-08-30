@@ -64,6 +64,10 @@
 !ram_cm_ctrl_timer = $7FFBC2
 !ram_cm_ctrl_last_input = $7FFBC4
 
+!ram_roomstrat_counter = $7FFBC6
+!ram_roomstrat_state = $7FFBC8
+!ram_jumppress_counter = $7FFBCA
+
 !ram_shinefinetune_early_1 = $7FFBD0
 !ram_shinefinetune_late_1 = $7FFBD2
 !ram_shinefinetune_early_2 = $7FFBD4
@@ -96,6 +100,7 @@
 !sram_last_preset = $70201C
 !sram_save_has_set_rng = $70201E
 !sram_preset_category = $702020
+!sram_room_strat = $702022
 
 ; -------------
 ; Menu
