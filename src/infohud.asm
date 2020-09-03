@@ -569,7 +569,7 @@ status_moatcwj:
     BRL .nochange
 
   .firstframeperfect
-    LDA #$0C67 : STA $7EC68A
+    LDA #$0C67 : STA $7EC688 : STA $7EC68A
     LDA #$0001 : STA !ram_roomstrat_state : STA !ram_roomstrat_counter
 
   .done
@@ -622,6 +622,7 @@ status_moatcwj:
     BRA .clearandresetcounter
 
   .startcounter731
+    LDA $0AF8 : CMP #$FFFF : BNE .incorrectstartpos : LDA !ram_xpos
     CMP !ram_roomstrat_state : BEQ .resetcounter
     STA !ram_roomstrat_state
     LDA #$0C67 : STA $7EC688
@@ -703,8 +704,16 @@ status_lagcounter:
 
 status_xpos:
 {
-    LDA $0AF6 : CMP !ram_xpos : BEQ .done : STA !ram_xpos
+    LDA $09C2 : STA !ram_last_hp
+    LDA $0AF6 : CMP !ram_xpos : BEQ .checksubpixel : STA !ram_xpos
     JSR Hex2Dec : LDX #$0088 : JSR Draw4
+    LDA $0AF8 : BRA .drawsubpixel
+
+  .checksubpixel
+    LDA $0AF8 : CMP !ram_subpixel_pos : BEQ .done
+
+  .drawsubpixel
+    STA !ram_subpixel_pos : LDX #$0092 : JSR Draw4Hex
 
   .done
     RTS
@@ -712,8 +721,16 @@ status_xpos:
 
 status_ypos:
 {
-    LDA $0AFA : CMP !ram_ypos : BEQ .done : STA !ram_ypos
+    LDA $09C2 : STA !ram_last_hp
+    LDA $0AFA : CMP !ram_ypos : BEQ .checksubpixel : STA !ram_ypos
     JSR Hex2Dec : LDX #$0088 : JSR Draw4
+    LDA $0AFC : BRA .drawsubpixel
+
+  .checksubpixel
+    LDA $0AFC : CMP !ram_subpixel_pos : BEQ .done
+
+  .drawsubpixel
+    STA !ram_subpixel_pos : LDX #$0092 : JSR Draw4Hex
 
   .done
     RTS
@@ -1111,6 +1128,18 @@ Draw4:
     RTS
 }
 
+Draw4Hex:
+{
+    STA $12 : AND #$000F : ASL A : TAY : LDA.w NumberGFXTable,Y : STA $7EC606,X
+    LDA $12 : LSR A : LSR A : LSR A
+    STA $12 : AND #$001E : TAY : LDA.w NumberGFXTable,Y : STA $7EC604,X
+    LDA $12 : LSR A : LSR A : LSR A : LSR A
+    STA $12 : AND #$001E : TAY : LDA.w NumberGFXTable,Y : STA $7EC602,X
+    LDA $12 : LSR A : LSR A : LSR A : LSR A
+    AND #$001E : TAY : LDA.w NumberGFXTable,Y : STA $7EC600,X
+    INX #8
+    RTS
+}
 
 CalcEtank:
 {

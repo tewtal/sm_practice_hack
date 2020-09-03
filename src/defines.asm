@@ -23,6 +23,7 @@
 !ram_vertical_speed = $7FFB3C
 !ram_mb_hp = $7FFB3E
 !ram_enemy_hp = $7FFB40
+!ram_subpixel_pos = $7FFB58
 !ram_magic_pants_1 = $7FFB64
 !ram_magic_pants_2 = $7FFB66
 !ram_magic_pants_3 = $7FFB70
