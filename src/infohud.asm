@@ -556,7 +556,7 @@ status_moatcwj:
     ASL A : TAY : LDA.w NumberGFXTable,Y : STA $7EC68A
 
   .firstlateprint
-    LDA #$0C64 : STA $7EC688
+    LDA #$0C68 : STA $7EC688
     LDA #$0000 : STA !ram_roomstrat_state : STA !ram_roomstrat_counter
     RTS
 
@@ -584,7 +584,7 @@ status_moatcwj:
     ASL A : TAY : LDA.w NumberGFXTable,Y : STA $7EC68A
 
   .firstearlyprint
-    LDA #$0C65 : STA $7EC688
+    LDA #$0C6C : STA $7EC688
     LDA #$0000 : STA !ram_roomstrat_state : STA !ram_roomstrat_counter
     RTS
 
@@ -641,7 +641,7 @@ status_moatcwj:
     ASL A : TAY : LDA.w NumberGFXTable,Y : STA $7EC68E
 
   .secondlateprint
-    LDA #$0C64 : STA $7EC68C
+    LDA #$0C68 : STA $7EC68C
     BRA .clear
 
   .secondframe1
@@ -667,7 +667,7 @@ status_moatcwj:
     ASL A : TAY : LDA.w NumberGFXTable,Y : STA $7EC68E
 
   .secondearlyprint
-    LDA #$0C65 : STA $7EC68C
+    LDA #$0C6C : STA $7EC68C
     BRA .clear
 
   .secondearlymiss
@@ -807,7 +807,7 @@ status_shinefinetune:
     LDA !ram_shinefinetune_early_2 : CMP #$0000 : BEQ .checklatemiss1
     LDA #$00FF : STA !ram_dash_counter
     LDA #$001A : SEC : SBC !ram_shinefinetune_early_2 : JSR Hex2Dec : LDX #$0090 : JSR Draw3
-    LDA #$0C65 : STA $7EC696
+    LDA #$0C6C : STA $7EC696
     LDA #$001B : SEC : SBC !ram_shine_counter : CMP #$000A : BPL .nodashearlymissprint1
     ASL A : TAY : LDA.w NumberGFXTable,Y : STA $7EC698
     RTS
@@ -829,7 +829,7 @@ status_shinefinetune:
   .checklatemiss1
     LDA !ram_shine_counter : CMP #$0023 : BMI .donecheck1
     LDA #$00FF : STA !ram_dash_counter
-    LDA #$0C64 : STA $7EC692
+    LDA #$0C68 : STA $7EC692
 
   .checklatemissprint1
     LDA #$0C66 : STA $7EC694
@@ -837,7 +837,7 @@ status_shinefinetune:
 
   .checklate1
     LDA #$00FF : STA !ram_dash_counter
-    LDA #$0C64 : STA $7EC692
+    LDA #$0C68 : STA $7EC692
     LDA !ram_shine_counter : SEC : SBC #$001A : CMP #$000A : BPL .checklatemissprint1
     ASL A : TAY : LDA.w NumberGFXTable,Y : STA $7EC694
     RTS
@@ -856,7 +856,7 @@ status_shinefinetune:
     LDA !ram_shinefinetune_early_3 : CMP #$0000 : BEQ .checklatemiss2
     LDA #$00FF : STA !ram_dash_counter
     LDA #$0016 : SEC : SBC !ram_shinefinetune_early_3 : JSR Hex2Dec : LDX #$00AE : JSR Draw3
-    LDA #$0C65 : STA $7EC6B4
+    LDA #$0C6C : STA $7EC6B4
     LDA #$0017 : SEC : SBC !ram_shine_counter : CMP #$000A : BPL .nodashearlymissprint2
     ASL A : TAY : LDA.w NumberGFXTable,Y : STA $7EC6B6
     RTS
@@ -878,7 +878,7 @@ status_shinefinetune:
   .checklatemiss2
     LDA !ram_shine_counter : CMP #$0023 : BMI .donecheck2
     LDA #$00FF : STA !ram_dash_counter
-    LDA #$0C64 : STA $7EC6B0
+    LDA #$0C68 : STA $7EC6B0
 
   .checklatemissprint2
     LDA #$0C66 : STA $7EC6B2
@@ -886,7 +886,7 @@ status_shinefinetune:
 
   .checklate2
     LDA #$00FF : STA !ram_dash_counter
-    LDA #$0C64 : STA $7EC6B0
+    LDA #$0C68 : STA $7EC6B0
     LDA !ram_shine_counter : SEC : SBC #$0016 : CMP #$000A : BPL .checklatemissprint2
     ASL A : TAY : LDA.w NumberGFXTable,Y : STA $7EC6B2
     RTS
@@ -905,7 +905,7 @@ status_shinefinetune:
     LDA !ram_shinefinetune_early_4 : CMP #$0000 : BEQ .checklatemiss3
     LDA #$00FF : STA !ram_dash_counter
     LDA #$0012 : SEC : SBC !ram_shinefinetune_early_4 : JSR Hex2Dec : LDX #$00B8 : JSR Draw3
-    LDA #$0C65 : STA $7EC6BE
+    LDA #$0C6C : STA $7EC6BE
     LDA #$0013 : SEC : SBC !ram_shine_counter : CMP #$000A : BPL .nodashearlymissprint3
     ASL A : TAY : LDA.w NumberGFXTable,Y : STA $7EC6C0
     RTS
@@ -927,7 +927,7 @@ status_shinefinetune:
   .checklatemiss3
     LDA !ram_shine_counter : CMP #$0023 : BMI .donecheck3
     LDA #$00FF : STA !ram_dash_counter
-    LDA #$0C64 : STA $7EC6BA
+    LDA #$0C68 : STA $7EC6BA
 
   .checklatemissprint3
     LDA #$0C66 : STA $7EC6BC
@@ -935,7 +935,7 @@ status_shinefinetune:
 
   .checklate3
     LDA #$00FF : STA !ram_dash_counter
-    LDA #$0C64 : STA $7EC6BA
+    LDA #$0C68 : STA $7EC6BA
     LDA !ram_shine_counter : SEC : SBC #$0012 : CMP #$000A : BPL .checklatemissprint3
     ASL A : TAY : LDA.w NumberGFXTable,Y : STA $7EC6BC
     RTS
