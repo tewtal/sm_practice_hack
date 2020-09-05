@@ -833,14 +833,14 @@ status_shinefinetune:
 
   .checklatemissprint1
     LDA #$0C66 : STA $7EC694
-    RTS
+    BRL .clear2
 
   .checklate1
     LDA #$00FF : STA !ram_dash_counter
     LDA #$0C68 : STA $7EC692
     LDA !ram_shine_counter : SEC : SBC #$001A : CMP #$000A : BPL .checklatemissprint1
     ASL A : TAY : LDA.w NumberGFXTable,Y : STA $7EC694
-    RTS
+    BRL .clear2
 
   .setnextearly1
     LDA !ram_shine_counter : CMP #$001A : BPL .checklate1
@@ -849,6 +849,7 @@ status_shinefinetune:
 
   .nodashearlymissprint2
     LDA #$0C66 : STA $7EC6B6
+    LDA #$0057 : STA $7EC6B8
     RTS
 
   .nodash2
@@ -859,6 +860,7 @@ status_shinefinetune:
     LDA #$0C6C : STA $7EC6B4
     LDA #$0017 : SEC : SBC !ram_shine_counter : CMP #$000A : BPL .nodashearlymissprint2
     ASL A : TAY : LDA.w NumberGFXTable,Y : STA $7EC6B6
+    LDA #$0057 : STA $7EC6B8
     RTS
 
   .nodashheldlate2
@@ -882,14 +884,14 @@ status_shinefinetune:
 
   .checklatemissprint2
     LDA #$0C66 : STA $7EC6B2
-    RTS
+    BRL .clear3
 
   .checklate2
     LDA #$00FF : STA !ram_dash_counter
     LDA #$0C68 : STA $7EC6B0
     LDA !ram_shine_counter : SEC : SBC #$0016 : CMP #$000A : BPL .checklatemissprint2
     ASL A : TAY : LDA.w NumberGFXTable,Y : STA $7EC6B2
-    RTS
+    BRL .clear3
 
   .setnextearly2
     LDA !ram_shine_counter : CMP #$0016 : BPL .checklate2
@@ -898,6 +900,7 @@ status_shinefinetune:
 
   .nodashearlymissprint3
     LDA #$0C66 : STA $7EC6C0
+    LDA #$0057 : STA $7EC6C2
     RTS
 
   .nodash3
@@ -908,11 +911,13 @@ status_shinefinetune:
     LDA #$0C6C : STA $7EC6BE
     LDA #$0013 : SEC : SBC !ram_shine_counter : CMP #$000A : BPL .nodashearlymissprint3
     ASL A : TAY : LDA.w NumberGFXTable,Y : STA $7EC6C0
+    LDA #$0057 : STA $7EC6C2
     RTS
 
   .nodashheldlate3
     STA !ram_shine_dash_held_late
     LDA !ram_shinefinetune_late_3 : JSR Hex2Dec : LDX #$00B4 : JSR Draw2
+    LDA #$0057 : STA $7EC6B8
     RTS
 
   .check3
@@ -931,27 +936,40 @@ status_shinefinetune:
 
   .checklatemissprint3
     LDA #$0C66 : STA $7EC6BC
-    RTS
+    BRA .clear4
 
   .checklate3
     LDA #$00FF : STA !ram_dash_counter
     LDA #$0C68 : STA $7EC6BA
     LDA !ram_shine_counter : SEC : SBC #$0012 : CMP #$000A : BPL .checklatemissprint3
     ASL A : TAY : LDA.w NumberGFXTable,Y : STA $7EC6BC
-    RTS
+    BRA .clear4
 
   .setnextearly3
     LDA !ram_shine_counter : CMP #$0012 : BPL .checklate3
     LDA !ram_shine_counter : STA !ram_shinefinetune_early_4
     RTS
 
+  .clear1
+    LDA #$0057 : STA $7EC68C : STA $7EC68E : STA $7EC690 : STA $7EC692 : STA $7EC694
+
+  .clear2
+    LDA #$0057 : STA $7EC696 : STA $7EC698 : STA $7EC6AE : STA $7EC6B0 : STA $7EC6B2
+
+  .clear3
+    LDA #$0057 : STA $7EC6B4 : STA $7EC6B6 : STA $7EC6B8 : STA $7EC6BA : STA $7EC6BC
+
+  .clear4
+    LDA #$0057 : STA $7EC6BE : STA $7EC6C0 : STA $7EC6C2 : STA $7EC6C4 : STA $7EC6C6
+    RTS
+
   .drawearly4
     LDA #$0012 : SEC : SBC !ram_shinefinetune_early_4 : JSR Hex2Dec : JSR Draw3
-    RTS
+    BRA .clear4
 
   .drawearly3
     LDA #$0016 : SEC : SBC !ram_shinefinetune_early_3 : JSR Hex2Dec : LDX #$00AE : JSR Draw3
-    RTS
+    BRA .clear3
 
   .draw4
     LDA !ram_shinefinetune_late_3 : JSR Hex2Dec : LDX #$00B4 : JSR Draw2
@@ -974,7 +992,7 @@ status_shinefinetune:
     CMP #$0004 : BEQ .draw4
     CMP #$0003 : BEQ .draw3
     CMP #$0002 : BEQ .draw2
-    CMP #$0001 : BEQ .draw1clear234
+    CMP #$0001 : BEQ .draw1
     RTS
 
   .draw2
@@ -986,21 +1004,16 @@ status_shinefinetune:
 
   .drawearly2
     LDA #$001A : SEC : SBC !ram_shinefinetune_early_2 : JSR Hex2Dec : JSR Draw3
-    RTS
+    BRL .clear2
 
-  .draw1clear234
-    LDA #$0057 : STA $7EC68C : STA $7EC68E : STA $7EC690
-    STA $7EC692 : STA $7EC694 : STA $7EC696 : STA $7EC698
-    STA $7EC6AE : STA $7EC6B0 : STA $7EC6B2 : STA $7EC6B4 : STA $7EC6B6
-    STA $7EC6B8 : STA $7EC6BA : STA $7EC6BC : STA $7EC6BE
-    STA $7EC6C0 : STA $7EC6C2 : STA $7EC6C4 : STA $7EC6C6
+  .draw1
     LDA !ram_shinefinetune_early_1 : CMP #$0064 : BPL .draw1miss
     JSR Hex2Dec : LDX #$0088 : JSR Draw2
-    RTS
+    BRL .clear1
 
   .draw1miss
     LDA #$0C66 : STA $7EC688 : STA $7EC68A
-    RTS
+    BRL .clear1
 }
 
 status_jumppress:
