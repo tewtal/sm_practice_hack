@@ -22,6 +22,9 @@ export class Changelog extends Component {
                                             <ul>
                                                 <li>Prevent accidental Murder Beam after setting Equipment from menu. (2.1)</li>
                                                 <li>Added Shine Tune and Shot Timer to the Infohud Mode options. (2.1.1)</li>
+                                                <li>Reordered Infohud Mode options and added Room Strat menu with Moat CWJ. (2.1.2)</li>
+                                                <li>Added Horiz Speed (speed + momentum) and Jump Press to Infohud Mode options. (2.1.2)</li>
+                                                <li>Added subpixels to position and speed options and improved Shine Tune feedback. (2.1.2)</li>
                                             </ul>
                                         </CardBody>
                                     </Card>
