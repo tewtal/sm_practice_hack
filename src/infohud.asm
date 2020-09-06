@@ -470,6 +470,7 @@ ih_hud_code:
     dw status_lagcounter
     dw status_xpos
     dw status_ypos
+    dw status_hspeed
     dw status_vspeed
     dw status_jumppress
     dw status_shottimer
@@ -675,10 +676,37 @@ status_moatcwj:
     BRA .secondearlyprint
 }
 
+status_hspeed:
+{
+    LDA $09C2 : STA !ram_last_hp
+    LDA $0B44 : CLC : ADC $0B48 : TAY
+    LDA $0B42 : ADC $0B46 : CMP !ram_horizontal_speed : BEQ .checksubpixel
+    STA !ram_horizontal_speed : TYA : STA !ram_subpixel_pos
+    LDA !ram_horizontal_speed : JSR Hex2Dec : LDX #$0088 : JSR Draw4
+    LDA !ram_subpixel_pos : BRA .drawsubpixel
+
+  .checksubpixel
+    TYA : CMP !ram_subpixel_pos : BEQ .done : STA !ram_subpixel_pos
+
+  .drawsubpixel
+    LDX #$0092 : JSR Draw4Hex
+
+  .done
+    RTS
+}
+
 status_vspeed:
 {
-    LDA $0B2E : CMP !ram_vertical_speed : BEQ .done : STA !ram_vertical_speed
-    JSR Hex2Dec : LDX #$008A : JSR Draw3
+    LDA $09C2 : STA !ram_last_hp
+    LDA $0B2E : CMP !ram_vertical_speed : BEQ .checksubpixel
+    STA !ram_vertical_speed : JSR Hex2Dec : LDX #$0088 : JSR Draw4
+    LDA $0B2C : BRA .drawsubpixel
+
+  .checksubpixel
+    LDA $0B2C : CMP !ram_subpixel_pos : BEQ .done
+
+  .drawsubpixel
+    STA !ram_subpixel_pos : LDX #$0092 : JSR Draw4Hex
 
   .done
     RTS
@@ -705,8 +733,8 @@ status_lagcounter:
 status_xpos:
 {
     LDA $09C2 : STA !ram_last_hp
-    LDA $0AF6 : CMP !ram_xpos : BEQ .checksubpixel : STA !ram_xpos
-    JSR Hex2Dec : LDX #$0088 : JSR Draw4
+    LDA $0AF6 : CMP !ram_xpos : BEQ .checksubpixel
+    STA !ram_xpos : JSR Hex2Dec : LDX #$0088 : JSR Draw4
     LDA $0AF8 : BRA .drawsubpixel
 
   .checksubpixel
@@ -722,8 +750,8 @@ status_xpos:
 status_ypos:
 {
     LDA $09C2 : STA !ram_last_hp
-    LDA $0AFA : CMP !ram_ypos : BEQ .checksubpixel : STA !ram_ypos
-    JSR Hex2Dec : LDX #$0088 : JSR Draw4
+    LDA $0AFA : CMP !ram_ypos : BEQ .checksubpixel
+    STA !ram_ypos : JSR Hex2Dec : LDX #$0088 : JSR Draw4
     LDA $0AFC : BRA .drawsubpixel
 
   .checksubpixel
@@ -1269,7 +1297,7 @@ ih_game_loop_code:
   .inc_statusdisplay
     LDA !sram_display_mode
     INC A
-    CMP #$000D
+    CMP #$000E
     BNE +
     LDA #$0000
 +   STA !sram_display_mode
@@ -1280,7 +1308,7 @@ ih_game_loop_code:
     DEC A
     CMP #$FFFF
     BNE +
-    LDA #$000C
+    LDA #$000D
 +   STA !sram_display_mode
     JMP .update_status
 
@@ -1293,7 +1321,11 @@ ih_game_loop_code:
     INC A
     STA !ram_dash_counter
     STA !ram_iframe_counter
+    STA !ram_xpos
+    STA !ram_ypos
+    STA !ram_horizontal_speed
     STA !ram_vertical_speed
+    STA !ram_subpixel_pos
     STA !ram_mb_hp
     STA !ram_enemy_hp
     STA !ram_shine_counter

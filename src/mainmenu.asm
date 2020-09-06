@@ -819,6 +819,7 @@ ih_display_mode:
     db #$28, "LAG COUNTER", #$FF
     db #$28, " X POSITION", #$FF
     db #$28, " Y POSITION", #$FF
+    db #$28, "HORIZ SPEED", #$FF
     db #$28, " VERT SPEED", #$FF
     db #$28, " JUMP PRESS", #$FF
     db #$28, " SHOT TIMER", #$FF
