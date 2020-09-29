@@ -44,7 +44,7 @@ for k in patches:
 
 
 d_patch = [0x50, 0x41, 0x54, 0x43, 0x48] + d_patch + [0x45, 0x4f, 0x46]
-fo.write(bytes(d_patch))
+fo.write(bytearray(d_patch))
 fo.close()
 f_ff.close()
 f_zero.close()
