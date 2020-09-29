@@ -12,8 +12,8 @@ else:
 fo_z = open(os.path.dirname(os.path.realpath(__file__)) + "/" + zero_name, "wb")
 fo_f = open(os.path.dirname(os.path.realpath(__file__)) + "/" + ff_name, "wb")
 
-fo_z.write(bytes([0x00] * 1024 * 1024 * 4))
-fo_f.write(bytes([0xff] * 1024 * 1024 * 4))
+fo_z.write(bytearray([0x00] * 1024 * 1024 * 4))
+fo_f.write(bytearray([0xff] * 1024 * 1024 * 4))
 
 fo_z.close()
 fo_f.close()
