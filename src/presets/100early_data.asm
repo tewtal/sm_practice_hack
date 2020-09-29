@@ -1396,7 +1396,7 @@ preset_100early_wrecked_ship_leaving_phantoon:
     dw #$FFFF
 .after
 
-preset_100early_wrecked_ship_west_supers:
+preset_100early_wrecked_ship_east_supers:
     dw #preset_100early_wrecked_ship_leaving_phantoon ; Wrecked Ship: Leaving Phantoon
     dl $7E078D : db $02 : dw $A294 ; DDB
     dl $7E078F : db $02 : dw $0000 ; DoorOut Index
@@ -1419,8 +1419,8 @@ preset_100early_wrecked_ship_west_supers:
     dw #$FFFF
 .after
 
-preset_100early_wrecked_ship_leaving_east_supers:
-    dw #preset_100early_wrecked_ship_west_supers ; Wrecked Ship: West Supers
+preset_100early_wrecked_ship_leaving_west_supers:
+    dw #preset_100early_wrecked_ship_east_supers ; Wrecked Ship: East Supers
     dl $7E078D : db $02 : dw $A210 ; DDB
     dl $7E078F : db $02 : dw $0002 ; DoorOut Index
     dl $7E079B : db $02 : dw $CDA8 ; MDB
@@ -1443,7 +1443,7 @@ preset_100early_wrecked_ship_leaving_east_supers:
 .after
 
 preset_100early_wrecked_ship_spiky_room_of_death:
-    dw #preset_100early_wrecked_ship_leaving_east_supers ; Wrecked Ship: Leaving East Supers
+    dw #preset_100early_wrecked_ship_leaving_west_supers ; Wrecked Ship: Leaving West Supers
     dl $7E078D : db $02 : dw $A2E8 ; DDB
     dl $7E078F : db $02 : dw $0000 ; DoorOut Index
     dl $7E079B : db $02 : dw $CAF6 ; MDB

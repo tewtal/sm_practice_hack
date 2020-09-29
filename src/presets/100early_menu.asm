@@ -467,11 +467,11 @@ presets_100early_wrecked_ship_phantoon:
 presets_100early_wrecked_ship_leaving_phantoon:
     %cm_preset("Leaving Phantoon", #preset_100early_wrecked_ship_leaving_phantoon)
 
-presets_100early_wrecked_ship_west_supers:
-    %cm_preset("West Supers", #preset_100early_wrecked_ship_west_supers)
+presets_100early_wrecked_ship_east_supers:
+    %cm_preset("East Supers", #preset_100early_wrecked_ship_east_supers)
 
-presets_100early_wrecked_ship_leaving_east_supers:
-    %cm_preset("Leaving East Supers", #preset_100early_wrecked_ship_leaving_east_supers)
+presets_100early_wrecked_ship_leaving_west_supers:
+    %cm_preset("Leaving West Supers", #preset_100early_wrecked_ship_leaving_west_supers)
 
 presets_100early_wrecked_ship_spiky_room_of_death:
     %cm_preset("Spiky Room of Death", #preset_100early_wrecked_ship_spiky_room_of_death)
