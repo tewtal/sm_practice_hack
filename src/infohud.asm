@@ -467,6 +467,7 @@ ih_hud_code:
     dw status_dashcounter
     dw status_shinefinetune
     dw status_iframecounter
+    dw status_spikesuit
     dw status_lagcounter
     dw status_xpos
     dw status_ypos
@@ -486,17 +487,49 @@ status_roomstrat:
   .status_room_table
     dw status_mbhp
     dw status_moatcwj
+    dw status_shinetopb
 }
 
 status_shinetimer:
 {
-    LDA !ram_armed_shine_duration : CMP !ram_shine_counter : BEQ .done : STA !ram_shine_counter
-    CMP #$0000 : BNE .charge : LDA #$00B4
+    LDA !ram_armed_shine_duration : CMP !ram_shine_counter : BEQ .done
+    STA !ram_shine_counter : CMP #$0000 : BNE .charge : LDA #$00B4
 
   .charge
-    JSR Hex2Dec : LDX #$008A : JSR Draw3
+    JSR Hex2Dec : LDX #$0088 : JSR Draw4
 
   .done
+    RTS
+}
+
+status_shinetopb:
+{
+    LDA $09C2 : STA !ram_last_hp
+    LDA !ram_armed_shine_duration : CMP !ram_shine_counter : BEQ .clearcounter
+    STA !ram_shine_counter : CMP #$0000 : BNE .charge : LDA #$00B4
+
+  .charge
+    JSR Hex2Dec : LDX #$0088 : JSR Draw4
+    LDA !ram_roomstrat_counter : CMP #$FFFF : BEQ .clearpb
+    CMP $09CE : BNE .drawpb
+
+  .done
+    RTS
+
+  .clearcounter
+    CMP #$00B4 : BNE .done
+    LDA #$FFFF : STA !ram_roomstrat_counter
+    RTS
+
+  .clearpb
+    LDA #$0057 : STA $7EC692 : STA $7EC694 : STA $7EC696 : STA $7EC698
+    BRA .setcounter
+
+  .drawpb
+    LDA !ram_armed_shine_duration : JSR Hex2Dec : LDX #$0092 : JSR Draw4
+
+  .setcounter
+    LDA $09CE : STA !ram_roomstrat_counter
     RTS
 }
 
@@ -605,7 +638,7 @@ status_moatcwj:
 
   .nochange
     LDA !ram_ypos : CMP #$008B : BNE .incorrectstartpos
-    LDA !ram_xpos : CMP #$0015 : BEQ .startcounter21 : CMP #$02DB : BEQ .startcounter731
+    LDA !ram_xpos : CMP #$0015 : BEQ .startcounter : CMP #$02DB : BEQ .startcounter
 
   .incorrectstartpos
     LDA !IH_CONTROLLER_PRI : AND #$0300 : CMP #$0000 : BNE .inccheck
@@ -616,19 +649,10 @@ status_moatcwj:
   .donenochange
     RTS
 
-  .startcounter21
+  .startcounter
     CMP !ram_roomstrat_state : BEQ .resetcounter
     STA !ram_roomstrat_state
     LDA #$0C67 : STA $7EC688
-    BRA .clearandresetcounter
-
-  .startcounter731
-    LDA $0AF8 : CMP #$FFFF : BNE .incorrectstartpos : LDA !ram_xpos
-    CMP !ram_roomstrat_state : BEQ .resetcounter
-    STA !ram_roomstrat_state
-    LDA #$0C67 : STA $7EC688
-
-  .clearandresetcounter
     LDA #$0057 : STA $7EC68A : STA $7EC68C : STA $7EC68E
 
   .resetcounter
@@ -718,6 +742,102 @@ status_iframecounter:
     JSR Hex2Dec : LDX #$008A : JSR Draw3
 
   .done
+    RTS
+}
+
+status_spikesuit:
+{
+    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_JUMP : CMP #$0000 : BEQ .nojump
+
+  .jumpup
+    LDA !ram_roomstrat_state : CMP #$0006 : BEQ .donewait
+    CMP #$0002 : BEQ .checkspark : CMP #$0004 : BEQ .checkspark
+    BRL .first
+
+  .nojump
+    LDA !ram_roomstrat_state : CMP #$0000 : BNE .donewait
+    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_UP : CMP #$0000 : BNE .jumpup
+    LDA !ram_roomstrat_counter : CMP #$0000 : BEQ .done : CMP #$0014 : BPL .resetstate
+    INC : STA !ram_roomstrat_counter
+    LDA $18A8 : CMP #$003C : BEQ .firstearly
+
+  .done
+    RTS
+
+  .donewait
+    LDA $18A8 : CMP #$0000 : BNE .done
+
+  .resetstate
+    LDA #$0000 : STA !ram_roomstrat_state : STA !ram_roomstrat_counter
+    RTS
+
+  .checkspark
+    LDA $18A8 : CMP #$0033 : BEQ .frameperfect : BPL .secondearly
+    LDA #$0C68 : STA $7EC68C
+    LDA #$0033 : SEC : SBC $18A8 : CMP #$000A : BPL .secondmiss
+    ASL A : TAY : LDA.w NumberGFXTable,Y : STA $7EC68E
+    BRA .endstate
+
+  .firstearly
+    LDA #$0C6C : STA $7EC688
+    LDA #$0057 : STA $7EC68A : STA $7EC68C : STA $7EC68E
+    LDA #$0002 : STA !ram_roomstrat_state
+    RTS
+
+  .frameperfect
+    LDA #$0C67 : STA $7EC68C : STA $7EC68E
+    BRA .endstate
+
+  .secondearly
+    LDA #$0C6C : STA $7EC68C
+    LDA $18A8 : SEC : SBC #$0033 : CMP #$000A : BPL .secondmiss
+    ASL A : TAY : LDA.w NumberGFXTable,Y : STA $7EC68E
+
+  .endstate
+    LDA #$0006 : STA !ram_roomstrat_state
+    RTS
+
+  .firstmiss
+    LDA #$0C66 : STA $7EC68A
+    BRA .endstate
+
+  .secondmiss
+    LDA #$0C66 : STA $7EC68E
+    BRA .endstate
+
+  .first
+    LDA $18A8 : CMP #$0000 : BEQ .damagewait : CMP #$003C : BEQ .damageunmorph
+    CMP #$003B : BEQ .prepspark1 : CMP #$003A : BEQ .prepspark2
+    LDA #$0057 : STA $7EC68C : STA $7EC68E
+    LDA #$0C68 : STA $7EC688
+    LDA #$003A : SEC : SBC $18A8 : CMP #$000A : BPL .firstmiss
+    ASL A : TAY : LDA.w NumberGFXTable,Y : STA $7EC68A
+    LDA #$0002 : STA !ram_roomstrat_state
+    RTS
+
+  .damagewait
+    LDA #$0001 : STA !ram_roomstrat_counter
+    LDA #$0057 : STA $7EC688 : STA $7EC68A : STA $7EC68C : STA $7EC68E
+    RTS
+
+  .damageunmorph
+    LDA #$0C6C : STA $7EC688
+    LDY #$0002 : LDA.w NumberGFXTable,Y : STA $7EC68A
+    LDA #$0057 : STA $7EC68C : STA $7EC68E
+    LDA #$0002 : STA !ram_roomstrat_state
+    RTS
+
+  .prepspark1
+    LDA #$0002 : STA !ram_roomstrat_state
+    BRA .prepspark
+
+  .prepspark2
+    LDA #$0004 : STA !ram_roomstrat_state
+
+  .prepspark
+    TAY : LDA.w NumberGFXTable,Y : STA $7EC68A
+    LDA #$0C67 : STA $7EC688
+    LDA #$0057 : STA $7EC68C : STA $7EC68E
     RTS
 }
 
@@ -1297,7 +1417,7 @@ ih_game_loop_code:
   .inc_statusdisplay
     LDA !sram_display_mode
     INC A
-    CMP #$000E
+    CMP #$000F
     BNE +
     LDA #$0000
 +   STA !sram_display_mode
@@ -1308,7 +1428,7 @@ ih_game_loop_code:
     DEC A
     CMP #$FFFF
     BNE +
-    LDA #$000D
+    LDA #$000E
 +   STA !sram_display_mode
     JMP .update_status
 
