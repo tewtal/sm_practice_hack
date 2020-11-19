@@ -53,7 +53,7 @@ export class Help extends Component {
                                 <Col>Closes the in-game menu</Col>
                             </Row>
                             <Row>
-                                <Col md="2" style={{fontWeight: 'bold'}}>Start+Y+L</Col>
+                                <Col md="2" style={{fontWeight: 'bold'}}>Select+B+L</Col>
                                 <Col>Reloads the last used preset (configurable in shortcuts menu)</Col>
                             </Row>
                             <br />

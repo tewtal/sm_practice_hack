@@ -20,9 +20,11 @@
 !ram_ypos = $7FFB36
 !ram_dash_counter = $7FFB38
 !ram_iframe_counter = $7FFB3A
-!ram_vertical_speed = $7FFB3C
+!ram_subpixel_pos = $7FFB3C
 !ram_mb_hp = $7FFB3E
 !ram_enemy_hp = $7FFB40
+!ram_horizontal_speed = $7FFB58
+!ram_vertical_speed = $7FFB5A
 !ram_magic_pants_1 = $7FFB64
 !ram_magic_pants_2 = $7FFB66
 !ram_magic_pants_3 = $7FFB70
@@ -64,6 +66,10 @@
 !ram_cm_ctrl_timer = $7FFBC2
 !ram_cm_ctrl_last_input = $7FFBC4
 
+!ram_roomstrat_counter = $7FFBC6
+!ram_roomstrat_state = $7FFBC8
+!ram_jumppress_counter = $7FFBCA
+
 !ram_shinefinetune_early_1 = $7FFBD0
 !ram_shinefinetune_late_1 = $7FFBD2
 !ram_shinefinetune_early_2 = $7FFBD4
@@ -96,6 +102,7 @@
 !sram_last_preset = $70201C
 !sram_save_has_set_rng = $70201E
 !sram_preset_category = $702020
+!sram_room_strat = $702022
 
 ; -------------
 ; Menu

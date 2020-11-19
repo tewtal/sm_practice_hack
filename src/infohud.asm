@@ -459,31 +459,77 @@ ih_hud_code:
 
   .status_display_table
     dw status_enemyhp
-    dw status_shinetimer
+    dw status_roomstrat
     dw status_chargetimer
     dw status_xfactor
-    dw status_mbhp
+    dw status_cooldowncounter
+    dw status_shinetimer
     dw status_dashcounter
-    dw status_vspeed
+    dw status_shinefinetune
     dw status_iframecounter
+    dw status_spikesuit
     dw status_lagcounter
     dw status_xpos
     dw status_ypos
-    dw status_cooldowncounter
-    dw status_shinefinetune
+    dw status_hspeed
+    dw status_vspeed
+    dw status_jumppress
     dw status_shottimer
 }
 
 
+status_roomstrat:
+{
+    LDA !sram_room_strat : ASL : TAX
+    JSR (.status_room_table,X)
+    RTS
+
+  .status_room_table
+    dw status_mbhp
+    dw status_moatcwj
+    dw status_shinetopb
+}
+
 status_shinetimer:
 {
-    LDA !ram_armed_shine_duration : CMP !ram_shine_counter : BEQ .done : STA !ram_shine_counter
-    CMP #$0000 : BNE .charge : LDA #$00B4
+    LDA !ram_armed_shine_duration : CMP !ram_shine_counter : BEQ .done
+    STA !ram_shine_counter : CMP #$0000 : BNE .charge : LDA #$00B4
 
   .charge
-    JSR Hex2Dec : LDX #$008A : JSR Draw3
+    JSR Hex2Dec : LDX #$0088 : JSR Draw4
 
   .done
+    RTS
+}
+
+status_shinetopb:
+{
+    LDA $09C2 : STA !ram_last_hp
+    LDA !ram_armed_shine_duration : CMP !ram_shine_counter : BEQ .clearcounter
+    STA !ram_shine_counter : CMP #$0000 : BNE .charge : LDA #$00B4
+
+  .charge
+    JSR Hex2Dec : LDX #$0088 : JSR Draw4
+    LDA !ram_roomstrat_counter : CMP #$FFFF : BEQ .clearpb
+    CMP $09CE : BNE .drawpb
+
+  .done
+    RTS
+
+  .clearcounter
+    CMP #$00B4 : BNE .done
+    LDA #$FFFF : STA !ram_roomstrat_counter
+    RTS
+
+  .clearpb
+    LDA #$0057 : STA $7EC692 : STA $7EC694 : STA $7EC696 : STA $7EC698
+    BRA .setcounter
+
+  .drawpb
+    LDA !ram_armed_shine_duration : JSR Hex2Dec : LDX #$0092 : JSR Draw4
+
+  .setcounter
+    LDA $09CE : STA !ram_roomstrat_counter
     RTS
 }
 
@@ -519,7 +565,6 @@ status_dashcounter:
 
 status_mbhp:
 {
-    LDY #$0014
     LDA $0FCC : CMP !ram_mb_hp : BEQ .done : STA !ram_mb_hp
     JSR Hex2Dec : LDX #$0088 : JSR Draw4
 
@@ -527,10 +572,165 @@ status_mbhp:
     RTS
 }
 
+status_moatcwj:
+{
+    LDA $0AFA : CMP !ram_ypos : BEQ .didxchange : STA !ram_ypos
+    LDA $0AF6
+
+  .onchange
+    STA !ram_xpos
+    LDA !ram_roomstrat_state : CMP #$0000 : BEQ .done
+    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_JUMP : CMP #$0000 : BEQ .inc
+    LDA !ram_roomstrat_state : CMP #$0001 : BNE .checkfirstjump
+    BRL .checksecondjump
+
+  .checkfirstjump
+    LDA !ram_roomstrat_counter : CMP #$0013 : BEQ .firstframeperfect : BMI .firstearly
+    SEC : SBC #$0013 : CMP #$000A : BPL .firstlatemiss
+    ASL A : TAY : LDA.w NumberGFXTable,Y : STA $7EC68A
+
+  .firstlateprint
+    LDA #$0C68 : STA $7EC688
+    LDA #$0000 : STA !ram_roomstrat_state : STA !ram_roomstrat_counter
+    RTS
+
+  .inc
+    LDA !ram_roomstrat_counter : INC : STA !ram_roomstrat_counter
+    RTS
+
+  .didxchange
+    LDA $0AF6 : CMP !ram_xpos : BNE .onchange
+    BRL .nochange
+
+  .firstframeperfect
+    LDA #$0C67 : STA $7EC688 : STA $7EC68A
+    LDA #$0001 : STA !ram_roomstrat_state : STA !ram_roomstrat_counter
+
+  .done
+    RTS
+
+  .firstlatemiss
+    LDA #$0C66 : STA $7EC68A
+    BRA .firstlateprint
+
+  .firstearly
+    LDA #$0013 : SEC : SBC !ram_roomstrat_counter : CMP #$000A : BPL .firstearlymiss
+    ASL A : TAY : LDA.w NumberGFXTable,Y : STA $7EC68A
+
+  .firstearlyprint
+    LDA #$0C6C : STA $7EC688
+    LDA #$0000 : STA !ram_roomstrat_state : STA !ram_roomstrat_counter
+    RTS
+
+  .firstearlymiss
+    LDA #$0C66 : STA $7EC68A
+    BRA .firstearlyprint
+
+  .inccheck
+    LDA !ram_roomstrat_state : CMP #$0000 : BEQ .done
+    CMP !ram_xpos : BEQ .donenochange
+    LDA !ram_xpos : CMP #$00EB : BNE .incconfirm
+    LDA !ram_ypos : CMP #$0084 : BEQ .donenochange
+
+  .incconfirm
+    LDA !ram_roomstrat_counter : INC : STA !ram_roomstrat_counter
+    RTS
+
+  .nochange
+    LDA !ram_ypos : CMP #$008B : BNE .incorrectstartpos
+    LDA !ram_xpos : CMP #$0015 : BEQ .startcounter : CMP #$02DB : BEQ .startcounter
+
+  .incorrectstartpos
+    LDA !IH_CONTROLLER_PRI : AND #$0300 : CMP #$0000 : BNE .inccheck
+    LDA !ram_roomstrat_state : CMP #$0000 : BEQ .donenochange
+    LDA #$0000 : STA !ram_roomstrat_state : STA !ram_roomstrat_counter
+    LDA #$0057 : STA $7EC688 : STA $7EC68A : STA $7EC68C : STA $7EC68E
+
+  .donenochange
+    RTS
+
+  .startcounter
+    CMP !ram_roomstrat_state : BEQ .resetcounter
+    STA !ram_roomstrat_state
+    LDA #$0C67 : STA $7EC688
+    LDA #$0057 : STA $7EC68A : STA $7EC68C : STA $7EC68E
+
+  .resetcounter
+    LDA #$0000 : STA !ram_roomstrat_counter
+    RTS
+
+  .checksecondjump
+    LDA !ram_roomstrat_counter : CMP #$0048 : BEQ .secondframe1 : BMI .secondearly
+    CMP #$0049 : BEQ .secondframe2
+    SEC : SBC #$0049 : CMP #$000A : BPL .secondlatemiss
+    ASL A : TAY : LDA.w NumberGFXTable,Y : STA $7EC68E
+
+  .secondlateprint
+    LDA #$0C68 : STA $7EC68C
+    BRA .clear
+
+  .secondframe1
+    LDA #$0C00 : STA $7EC68E
+    BRA .secondgotit
+
+  .secondframe2
+    LDA #$0C01 : STA $7EC68E
+
+  .secondgotit
+    LDA #$0C67 : STA $7EC68C
+
+  .clear
+    LDA #$0000 : STA !ram_roomstrat_state : STA !ram_roomstrat_counter
+    RTS
+
+  .secondlatemiss
+    LDA #$0C66 : STA $7EC68E
+    BRA .secondlateprint
+
+  .secondearly
+    LDA #$0048 : SEC : SBC !ram_roomstrat_counter : CMP #$000A : BPL .secondearlymiss
+    ASL A : TAY : LDA.w NumberGFXTable,Y : STA $7EC68E
+
+  .secondearlyprint
+    LDA #$0C6C : STA $7EC68C
+    BRA .clear
+
+  .secondearlymiss
+    LDA #$0C66 : STA $7EC68E
+    BRA .secondearlyprint
+}
+
+status_hspeed:
+{
+    LDA $09C2 : STA !ram_last_hp
+    LDA $0B44 : CLC : ADC $0B48 : TAY
+    LDA $0B42 : ADC $0B46 : CMP !ram_horizontal_speed : BEQ .checksubpixel
+    STA !ram_horizontal_speed : TYA : STA !ram_subpixel_pos
+    LDA !ram_horizontal_speed : JSR Hex2Dec : LDX #$0088 : JSR Draw4
+    LDA !ram_subpixel_pos : BRA .drawsubpixel
+
+  .checksubpixel
+    TYA : CMP !ram_subpixel_pos : BEQ .done : STA !ram_subpixel_pos
+
+  .drawsubpixel
+    LDX #$0092 : JSR Draw4Hex
+
+  .done
+    RTS
+}
+
 status_vspeed:
 {
-    LDA $0B2E : CMP !ram_vertical_speed : BEQ .done : STA !ram_vertical_speed
-    JSR Hex2Dec : LDX #$008A : JSR Draw3
+    LDA $09C2 : STA !ram_last_hp
+    LDA $0B2E : CMP !ram_vertical_speed : BEQ .checksubpixel
+    STA !ram_vertical_speed : JSR Hex2Dec : LDX #$0088 : JSR Draw4
+    LDA $0B2C : BRA .drawsubpixel
+
+  .checksubpixel
+    LDA $0B2C : CMP !ram_subpixel_pos : BEQ .done
+
+  .drawsubpixel
+    STA !ram_subpixel_pos : LDX #$0092 : JSR Draw4Hex
 
   .done
     RTS
@@ -545,6 +745,102 @@ status_iframecounter:
     RTS
 }
 
+status_spikesuit:
+{
+    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_JUMP : CMP #$0000 : BEQ .nojump
+
+  .jumpup
+    LDA !ram_roomstrat_state : CMP #$0006 : BEQ .donewait
+    CMP #$0002 : BEQ .checkspark : CMP #$0004 : BEQ .checkspark
+    BRL .first
+
+  .nojump
+    LDA !ram_roomstrat_state : CMP #$0000 : BNE .donewait
+    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_UP : CMP #$0000 : BNE .jumpup
+    LDA !ram_roomstrat_counter : CMP #$0000 : BEQ .done : CMP #$0014 : BPL .resetstate
+    INC : STA !ram_roomstrat_counter
+    LDA $18A8 : CMP #$003C : BEQ .firstearly
+
+  .done
+    RTS
+
+  .donewait
+    LDA $18A8 : CMP #$0000 : BNE .done
+
+  .resetstate
+    LDA #$0000 : STA !ram_roomstrat_state : STA !ram_roomstrat_counter
+    RTS
+
+  .checkspark
+    LDA $18A8 : CMP #$0033 : BEQ .frameperfect : BPL .secondearly
+    LDA #$0C68 : STA $7EC68C
+    LDA #$0033 : SEC : SBC $18A8 : CMP #$000A : BPL .secondmiss
+    ASL A : TAY : LDA.w NumberGFXTable,Y : STA $7EC68E
+    BRA .endstate
+
+  .firstearly
+    LDA #$0C6C : STA $7EC688
+    LDA #$0057 : STA $7EC68A : STA $7EC68C : STA $7EC68E
+    LDA #$0002 : STA !ram_roomstrat_state
+    RTS
+
+  .frameperfect
+    LDA #$0C67 : STA $7EC68C : STA $7EC68E
+    BRA .endstate
+
+  .secondearly
+    LDA #$0C6C : STA $7EC68C
+    LDA $18A8 : SEC : SBC #$0033 : CMP #$000A : BPL .secondmiss
+    ASL A : TAY : LDA.w NumberGFXTable,Y : STA $7EC68E
+
+  .endstate
+    LDA #$0006 : STA !ram_roomstrat_state
+    RTS
+
+  .firstmiss
+    LDA #$0C66 : STA $7EC68A
+    BRA .endstate
+
+  .secondmiss
+    LDA #$0C66 : STA $7EC68E
+    BRA .endstate
+
+  .first
+    LDA $18A8 : CMP #$0000 : BEQ .damagewait : CMP #$003C : BEQ .damageunmorph
+    CMP #$003B : BEQ .prepspark1 : CMP #$003A : BEQ .prepspark2
+    LDA #$0057 : STA $7EC68C : STA $7EC68E
+    LDA #$0C68 : STA $7EC688
+    LDA #$003A : SEC : SBC $18A8 : CMP #$000A : BPL .firstmiss
+    ASL A : TAY : LDA.w NumberGFXTable,Y : STA $7EC68A
+    LDA #$0002 : STA !ram_roomstrat_state
+    RTS
+
+  .damagewait
+    LDA #$0001 : STA !ram_roomstrat_counter
+    LDA #$0057 : STA $7EC688 : STA $7EC68A : STA $7EC68C : STA $7EC68E
+    RTS
+
+  .damageunmorph
+    LDA #$0C6C : STA $7EC688
+    LDY #$0002 : LDA.w NumberGFXTable,Y : STA $7EC68A
+    LDA #$0057 : STA $7EC68C : STA $7EC68E
+    LDA #$0002 : STA !ram_roomstrat_state
+    RTS
+
+  .prepspark1
+    LDA #$0002 : STA !ram_roomstrat_state
+    BRA .prepspark
+
+  .prepspark2
+    LDA #$0004 : STA !ram_roomstrat_state
+
+  .prepspark
+    TAY : LDA.w NumberGFXTable,Y : STA $7EC68A
+    LDA #$0C67 : STA $7EC688
+    LDA #$0057 : STA $7EC68C : STA $7EC68E
+    RTS
+}
+
 status_lagcounter:
 {
     LDA !ram_lag_counter : CMP !ram_last_lag_counter : BEQ .done : STA !ram_last_lag_counter
@@ -556,8 +852,16 @@ status_lagcounter:
 
 status_xpos:
 {
-    LDA $0AF6 : CMP !ram_xpos : BEQ .done : STA !ram_xpos
-    JSR Hex2Dec : LDX #$0088 : JSR Draw4
+    LDA $09C2 : STA !ram_last_hp
+    LDA $0AF6 : CMP !ram_xpos : BEQ .checksubpixel
+    STA !ram_xpos : JSR Hex2Dec : LDX #$0088 : JSR Draw4
+    LDA $0AF8 : BRA .drawsubpixel
+
+  .checksubpixel
+    LDA $0AF8 : CMP !ram_subpixel_pos : BEQ .done
+
+  .drawsubpixel
+    STA !ram_subpixel_pos : LDX #$0092 : JSR Draw4Hex
 
   .done
     RTS
@@ -565,8 +869,16 @@ status_xpos:
 
 status_ypos:
 {
-    LDA $0AFA : CMP !ram_ypos : BEQ .done : STA !ram_ypos
-    JSR Hex2Dec : LDX #$0088 : JSR Draw4
+    LDA $09C2 : STA !ram_last_hp
+    LDA $0AFA : CMP !ram_ypos : BEQ .checksubpixel
+    STA !ram_ypos : JSR Hex2Dec : LDX #$0088 : JSR Draw4
+    LDA $0AFC : BRA .drawsubpixel
+
+  .checksubpixel
+    LDA $0AFC : CMP !ram_subpixel_pos : BEQ .done
+
+  .drawsubpixel
+    STA !ram_subpixel_pos : LDX #$0092 : JSR Draw4Hex
 
   .done
     RTS
@@ -584,12 +896,14 @@ status_cooldowncounter:
 status_shinefinetune:
 {
     LDA $09C2 : STA !ram_last_hp
-    LDA !ram_dash_counter : CMP #$0003 : BEQ .checkdash3 : CMP #$0004 : BNE .checkdash012
+    LDA !ram_dash_counter : CMP #$0003 : BEQ .checkgearshift3
+    CMP #$00FF : BEQ .checkgearshiftinvalid : CMP #$0004 : BNE .checkgearshift012
     LDA $0B3F : AND #$00FF : CMP !ram_dash_counter : BEQ .inc4 : STA !ram_dash_counter
     LDA !ram_shinefinetune_late_4 : JSR Hex2Dec : LDX #$00C0 : JSR Draw4
 
   .reset
-    LDA #$0000 : STA !ram_shinefinetune_early_1 : STA !ram_shinefinetune_late_1
+    LDA #$0000 : STA !ram_shine_counter
+    STA !ram_shinefinetune_early_1 : STA !ram_shinefinetune_late_1
     STA !ram_shinefinetune_early_2 : STA !ram_shinefinetune_late_2
     STA !ram_shinefinetune_early_3 : STA !ram_shinefinetune_late_3
     STA !ram_shinefinetune_early_4 : STA !ram_shinefinetune_late_4
@@ -599,104 +913,266 @@ status_shinefinetune:
     LDA !ram_shinefinetune_late_4 : INC : STA !ram_shinefinetune_late_4
     RTS
 
+  .checkgearshiftinvalid
+    LDA $0B3F : AND #$00FF : CMP #$0000 : BNE .donegearshift
+
+  .checkgearshift012
+    LDA $0B3F : AND #$00FF : CMP #$0004 : BEQ .donegearshift
+
+  .checkgearshift3
+    LDA $0B3F : AND #$00FF : CMP !ram_dash_counter : BEQ .check0123 : STA !ram_dash_counter
+    CMP #$0000 : BEQ .reset
+    BRL .draw1234
+
+  .check0123
+    CMP #$0000 : BNE .check123
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_RUN : CMP #$0000 : BEQ .nodash0
+    LDA !ram_shinefinetune_early_1 : INC : STA !ram_shinefinetune_early_1
+
+  .donegearshift
+    RTS
+
   .nodash0
     STA !ram_shinefinetune_early_1
     RTS
 
-  .inc0
-    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_RUN : CMP #$0000 : BEQ .nodash0
-    LDA !ram_shinefinetune_early_1 : INC : STA !ram_shinefinetune_early_1
+  .check123
+    LDA !ram_shine_counter : INC : STA !ram_shine_counter
+    LDA !ram_dash_counter : CMP #$0003 : BNE .check12
+    BRL .check3
+
+  .check12
+    CMP #$0001 : BEQ .check1
+    CMP #$0002 : BNE .donegearshift
+    BRL .check2
+
+  .nodashearlymissprint1
+    LDA #$0C66 : STA $7EC698
     RTS
 
-  .checkdash012
-    LDA $0B3F : AND #$00FF : CMP #$0004 : BEQ .done
-
-  .checkdash3
-    LDA $0B3F : AND #$00FF : CMP !ram_dash_counter : BEQ .inc0123 : STA !ram_dash_counter
-    CMP #$0000 : BEQ .reset
-    JMP .draw1234
-
   .nodash1
-    STA !ram_shinefinetune_early_2
-    CMP !ram_shine_dash_held_late : BEQ .done
+    CMP !ram_shine_dash_held_late : BNE .nodashheldlate1
+    LDA !ram_shinefinetune_early_2 : CMP #$0000 : BEQ .checklatemiss1
+    LDA #$00FF : STA !ram_dash_counter
+    LDA #$001A : SEC : SBC !ram_shinefinetune_early_2 : JSR Hex2Dec : LDX #$0090 : JSR Draw3
+    LDA #$0C6C : STA $7EC696
+    LDA #$001B : SEC : SBC !ram_shine_counter : CMP #$000A : BPL .nodashearlymissprint1
+    ASL A : TAY : LDA.w NumberGFXTable,Y : STA $7EC698
+    RTS
+
+  .nodashheldlate1
     STA !ram_shine_dash_held_late
     LDA !ram_shinefinetune_late_1 : JSR Hex2Dec : LDX #$008C : JSR Draw2
     RTS
 
-  .inc1
+  .check1
     LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_RUN : CMP #$0000 : BEQ .nodash1
-    LDA !ram_shinefinetune_early_2 : INC : STA !ram_shinefinetune_early_2
-    LDA !ram_shine_dash_held_late : CMP #$0000 : BEQ .done
+    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_RUN : CMP #$0000 : BNE .setnextearly1
+    LDA !ram_shine_dash_held_late : CMP #$0000 : BEQ .donecheck1
     LDA !ram_shinefinetune_late_1 : INC : STA !ram_shinefinetune_late_1
+
+  .donecheck1
     RTS
 
-  .inc0123
-    CMP #$0000 : BEQ .inc0
-    CMP #$0001 : BEQ .inc1
-    CMP #$0002 : BEQ .inc2
-    CMP #$0003 : BEQ .inc3
+  .checklatemiss1
+    LDA !ram_shine_counter : CMP #$0023 : BMI .donecheck1
+    LDA #$00FF : STA !ram_dash_counter
+    LDA #$0C68 : STA $7EC692
 
-  .done
+  .checklatemissprint1
+    LDA #$0C66 : STA $7EC694
+    BRL .clear2
+
+  .checklate1
+    LDA #$00FF : STA !ram_dash_counter
+    LDA #$0C68 : STA $7EC692
+    LDA !ram_shine_counter : SEC : SBC #$001A : CMP #$000A : BPL .checklatemissprint1
+    ASL A : TAY : LDA.w NumberGFXTable,Y : STA $7EC694
+    BRL .clear2
+
+  .setnextearly1
+    LDA !ram_shine_counter : CMP #$001A : BPL .checklate1
+    LDA !ram_shine_counter : STA !ram_shinefinetune_early_2
+    RTS
+
+  .nodashearlymissprint2
+    LDA #$0C66 : STA $7EC6B6
+    LDA #$0057 : STA $7EC6B8
     RTS
 
   .nodash2
-    STA !ram_shinefinetune_early_3
-    CMP !ram_shine_dash_held_late : BEQ .done
+    CMP !ram_shine_dash_held_late : BNE .nodashheldlate2
+    LDA !ram_shinefinetune_early_3 : CMP #$0000 : BEQ .checklatemiss2
+    LDA #$00FF : STA !ram_dash_counter
+    LDA #$0016 : SEC : SBC !ram_shinefinetune_early_3 : JSR Hex2Dec : LDX #$00AE : JSR Draw3
+    LDA #$0C6C : STA $7EC6B4
+    LDA #$0017 : SEC : SBC !ram_shine_counter : CMP #$000A : BPL .nodashearlymissprint2
+    ASL A : TAY : LDA.w NumberGFXTable,Y : STA $7EC6B6
+    LDA #$0057 : STA $7EC6B8
+    RTS
+
+  .nodashheldlate2
     STA !ram_shine_dash_held_late
     LDA !ram_shinefinetune_late_2 : JSR Hex2Dec : LDX #$0096 : JSR Draw2
     RTS
 
-  .inc2
+  .check2
     LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_RUN : CMP #$0000 : BEQ .nodash2
-    LDA !ram_shinefinetune_early_3 : INC : STA !ram_shinefinetune_early_3
-    LDA !ram_shine_dash_held_late : CMP #$0000 : BEQ .done
+    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_RUN : CMP #$0000 : BNE .setnextearly2
+    LDA !ram_shine_dash_held_late : CMP #$0000 : BEQ .donecheck2
     LDA !ram_shinefinetune_late_2 : INC : STA !ram_shinefinetune_late_2
+
+  .donecheck2
+    RTS
+
+  .checklatemiss2
+    LDA !ram_shine_counter : CMP #$0023 : BMI .donecheck2
+    LDA #$00FF : STA !ram_dash_counter
+    LDA #$0C68 : STA $7EC6B0
+
+  .checklatemissprint2
+    LDA #$0C66 : STA $7EC6B2
+    BRL .clear3
+
+  .checklate2
+    LDA #$00FF : STA !ram_dash_counter
+    LDA #$0C68 : STA $7EC6B0
+    LDA !ram_shine_counter : SEC : SBC #$0016 : CMP #$000A : BPL .checklatemissprint2
+    ASL A : TAY : LDA.w NumberGFXTable,Y : STA $7EC6B2
+    BRL .clear3
+
+  .setnextearly2
+    LDA !ram_shine_counter : CMP #$0016 : BPL .checklate2
+    LDA !ram_shine_counter : STA !ram_shinefinetune_early_3
+    RTS
+
+  .nodashearlymissprint3
+    LDA #$0C66 : STA $7EC6C0
+    LDA #$0057 : STA $7EC6C2
     RTS
 
   .nodash3
-    STA !ram_shinefinetune_early_4
-    CMP !ram_shine_dash_held_late : BEQ .done
+    CMP !ram_shine_dash_held_late : BNE .nodashheldlate3
+    LDA !ram_shinefinetune_early_4 : CMP #$0000 : BEQ .checklatemiss3
+    LDA #$00FF : STA !ram_dash_counter
+    LDA #$0012 : SEC : SBC !ram_shinefinetune_early_4 : JSR Hex2Dec : LDX #$00B8 : JSR Draw3
+    LDA #$0C6C : STA $7EC6BE
+    LDA #$0013 : SEC : SBC !ram_shine_counter : CMP #$000A : BPL .nodashearlymissprint3
+    ASL A : TAY : LDA.w NumberGFXTable,Y : STA $7EC6C0
+    LDA #$0057 : STA $7EC6C2
+    RTS
+
+  .nodashheldlate3
     STA !ram_shine_dash_held_late
     LDA !ram_shinefinetune_late_3 : JSR Hex2Dec : LDX #$00B4 : JSR Draw2
+    LDA #$0057 : STA $7EC6B8
     RTS
 
-  .inc3
+  .check3
     LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_RUN : CMP #$0000 : BEQ .nodash3
-    LDA !ram_shinefinetune_early_4 : INC : STA !ram_shinefinetune_early_4
-    LDA !ram_shine_dash_held_late : CMP #$0000 : BEQ .done
+    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_RUN : CMP #$0000 : BNE .setnextearly3
+    LDA !ram_shine_dash_held_late : CMP #$0000 : BEQ .donecheck3
     LDA !ram_shinefinetune_late_3 : INC : STA !ram_shinefinetune_late_3
+
+  .donecheck3
     RTS
+
+  .checklatemiss3
+    LDA !ram_shine_counter : CMP #$0023 : BMI .donecheck3
+    LDA #$00FF : STA !ram_dash_counter
+    LDA #$0C68 : STA $7EC6BA
+
+  .checklatemissprint3
+    LDA #$0C66 : STA $7EC6BC
+    BRA .clear4
+
+  .checklate3
+    LDA #$00FF : STA !ram_dash_counter
+    LDA #$0C68 : STA $7EC6BA
+    LDA !ram_shine_counter : SEC : SBC #$0012 : CMP #$000A : BPL .checklatemissprint3
+    ASL A : TAY : LDA.w NumberGFXTable,Y : STA $7EC6BC
+    BRA .clear4
+
+  .setnextearly3
+    LDA !ram_shine_counter : CMP #$0012 : BPL .checklate3
+    LDA !ram_shine_counter : STA !ram_shinefinetune_early_4
+    RTS
+
+  .clear1
+    LDA #$0057 : STA $7EC68C : STA $7EC68E : STA $7EC690 : STA $7EC692 : STA $7EC694
+
+  .clear2
+    LDA #$0057 : STA $7EC696 : STA $7EC698 : STA $7EC6AE : STA $7EC6B0 : STA $7EC6B2
+
+  .clear3
+    LDA #$0057 : STA $7EC6B4 : STA $7EC6B6 : STA $7EC6B8 : STA $7EC6BA : STA $7EC6BC
+
+  .clear4
+    LDA #$0057 : STA $7EC6BE : STA $7EC6C0 : STA $7EC6C2 : STA $7EC6C4 : STA $7EC6C6
+    RTS
+
+  .drawearly4
+    LDA #$0012 : SEC : SBC !ram_shinefinetune_early_4 : JSR Hex2Dec : JSR Draw3
+    BRA .clear4
+
+  .drawearly3
+    LDA #$0016 : SEC : SBC !ram_shinefinetune_early_3 : JSR Hex2Dec : LDX #$00AE : JSR Draw3
+    BRA .clear3
+
+  .draw4
+    LDA !ram_shinefinetune_late_3 : JSR Hex2Dec : LDX #$00B4 : JSR Draw2
+    LDA !ram_shinefinetune_early_4 : CMP #$0000 : BNE .drawearly4
+    LDA !ram_shine_counter : STA !ram_shinefinetune_early_4
+    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_RUN : CMP #$0000 : BEQ .drawearly4
+    LDA #$0012 : STA !ram_shinefinetune_early_4
+    BRA .drawearly4
+
+  .draw3
+    LDA !ram_shinefinetune_late_2 : JSR Hex2Dec : LDX #$0096 : JSR Draw2
+    LDA !ram_shinefinetune_early_3 : CMP #$0000 : BNE .drawearly3
+    LDA !ram_shine_counter : STA !ram_shinefinetune_early_3
+    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_RUN : CMP #$0000 : BEQ .drawearly3
+    LDA #$0016 : STA !ram_shinefinetune_early_3
+    BRA .drawearly3
 
   .draw1234
-    STA !ram_shine_dash_held_late
-    CMP #$0001 : BEQ .draw1clear234
-    CMP #$0002 : BEQ .draw2
-    CMP #$0003 : BEQ .draw3
+    STA !ram_shine_dash_held_late : STA !ram_shine_counter
     CMP #$0004 : BEQ .draw4
+    CMP #$0003 : BEQ .draw3
+    CMP #$0002 : BEQ .draw2
+    CMP #$0001 : BEQ .draw1
     RTS
 
   .draw2
     LDA !ram_shinefinetune_late_1 : JSR Hex2Dec : LDX #$008C : JSR Draw2
-    LDA !ram_shinefinetune_early_2 : JSR Hex2Dec : JSR Draw3
+    LDA !ram_shinefinetune_early_2 : CMP #$0000 : BNE .drawearly2
+    LDA !ram_shine_counter : STA !ram_shinefinetune_early_2
+    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_RUN : CMP #$0000 : BEQ .drawearly2
+    LDA #$001A : STA !ram_shinefinetune_early_2
+
+  .drawearly2
+    LDA #$001A : SEC : SBC !ram_shinefinetune_early_2 : JSR Hex2Dec : JSR Draw3
+    BRL .clear2
+
+  .draw1
+    LDA !ram_shinefinetune_early_1 : CMP #$0064 : BPL .draw1miss
+    JSR Hex2Dec : LDX #$0088 : JSR Draw2
+    BRL .clear1
+
+  .draw1miss
+    LDA #$0C66 : STA $7EC688 : STA $7EC68A
+    BRL .clear1
+}
+
+status_jumppress:
+{
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_JUMP : CMP #$0000 : BNE .inc
+    STA !ram_jumppress_counter
     RTS
 
-  .draw3
-    LDA !ram_shinefinetune_late_2 : JSR Hex2Dec : LDX #$0096 : JSR Draw2
-    LDA !ram_shinefinetune_early_3 : JSR Hex2Dec : LDX #$00AE : JSR Draw3
-    RTS
-
-  .draw4
-    LDA !ram_shinefinetune_late_3 : JSR Hex2Dec : LDX #$00B4 : JSR Draw2
-    LDA !ram_shinefinetune_early_4 : JSR Hex2Dec : JSR Draw3
-    RTS
-
-  .draw1clear234
-    LDA !ram_shinefinetune_early_1 : JSR Hex2Dec : LDX #$0088 : JSR Draw2
-    LDA #$0057 : STA $7EC600,X : STA $7EC602,X : STA $7EC604,X
-    STA $7EC606,X : STA $7EC608,X : STA $7EC60A,X : STA $7EC60C,X
-    STA $7EC624,X : STA $7EC626,X : STA $7EC628,X : STA $7EC62A,X
-    STA $7EC62C,X : STA $7EC62E,X : STA $7EC630,X : STA $7EC632,X
-    STA $7EC634,X : STA $7EC636,X : STA $7EC638,X : STA $7EC63A,X
+  .inc
+    LDA !ram_jumppress_counter : INC : STA !ram_jumppress_counter
+    LDA !ram_jumppress_counter : JSR Hex2Dec : LDX #$0088 : JSR Draw4
     RTS
 }
 
@@ -813,6 +1289,18 @@ Draw4:
     RTS
 }
 
+Draw4Hex:
+{
+    STA $12 : AND #$000F : ASL A : TAY : LDA.w NumberGFXTable,Y : STA $7EC606,X
+    LDA $12 : LSR A : LSR A : LSR A
+    STA $12 : AND #$001E : TAY : LDA.w NumberGFXTable,Y : STA $7EC604,X
+    LDA $12 : LSR A : LSR A : LSR A : LSR A
+    STA $12 : AND #$001E : TAY : LDA.w NumberGFXTable,Y : STA $7EC602,X
+    LDA $12 : LSR A : LSR A : LSR A : LSR A
+    AND #$001E : TAY : LDA.w NumberGFXTable,Y : STA $7EC600,X
+    INX #8
+    RTS
+}
 
 CalcEtank:
 {
@@ -929,7 +1417,7 @@ ih_game_loop_code:
   .inc_statusdisplay
     LDA !sram_display_mode
     INC A
-    CMP #$000C
+    CMP #$000F
     BNE +
     LDA #$0000
 +   STA !sram_display_mode
@@ -940,7 +1428,7 @@ ih_game_loop_code:
     DEC A
     CMP #$FFFF
     BNE +
-    LDA #$000B
+    LDA #$000E
 +   STA !sram_display_mode
     JMP .update_status
 
@@ -953,7 +1441,11 @@ ih_game_loop_code:
     INC A
     STA !ram_dash_counter
     STA !ram_iframe_counter
+    STA !ram_xpos
+    STA !ram_ypos
+    STA !ram_horizontal_speed
     STA !ram_vertical_speed
+    STA !ram_subpixel_pos
     STA !ram_mb_hp
     STA !ram_enemy_hp
     STA !ram_shine_counter
