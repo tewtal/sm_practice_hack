@@ -135,7 +135,7 @@ MainMenu:
     dw #mm_goto_rngmenu
     dw #mm_goto_ctrlsmenu
     dw #$0000
-    %cm_header("SM PRACTICE HACK 2.1.3")
+    %cm_header("SM PRACTICE HACK 2.1.4")
 
 mm_goto_equipment:
     %cm_submenu("Equipment", #EquipmentMenu)
@@ -834,6 +834,7 @@ ih_room_strat:
     db #$28, "      MB HP", #$FF
     db #$28, "   MOAT CWJ", #$FF
     db #$28, "SHINE TO PB", #$FF
+    db #$28, " BOTWOON CF", #$FF
     db #$FF
 
 ih_room_counter:
