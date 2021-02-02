@@ -349,11 +349,14 @@ ih_update_hud_code:
     ; E-tanks
     LDA !ram_etanks : JSR Hex2Dec : LDX #$0054 : JSR Draw3
 
-    ; Door lag
-    LDA !ram_last_door_lag_frames : JSR Hex2Dec : LDX #$00C2 : JSR Draw3
-
     ; Lag
     LDA !ram_last_room_lag : JSR Hex2Dec : LDX #$0082 : JSR Draw3
+
+    ; Skip door lag and segment timer when shinetune enabled
+    LDA !sram_display_mode : CMP #$0007 : BEQ .end
+
+    ; Door lag
+    LDA !ram_last_door_lag_frames : JSR Hex2Dec : LDX #$00C2 : JSR Draw3
 
     ; Segment timer
     {
@@ -536,23 +539,22 @@ status_shinetopb:
 
 status_botwooncf:
 {
-    LDA !ram_roomstrat_counter : CMP $09CE : BNE .checkpb
-    LDA !ram_roomstrat_state : CMP #$0000 : BEQ .done
+    LDA !ram_roomstrat_counter : CMP $09CE : BNE .pbcheck
+    LDA !ram_roomstrat_state : CMP #$0000 : BEQ .setxy
     CMP #$0020 : BMI .inc
     LDA $0AF6 : CMP !ram_xpos : BNE .inc
     LDA $0AFA : CMP #$00B7 : BNE .inc
     LDA $0B2E : CMP #$0000 : BNE .inc
     LDA $0B2C : CMP #$0000 : BNE .inc
     LDA #$0C67 : STA $7EC68A
-    BRA .check
+    BRA .timecheck
 
-  .checkpb
-    LDA $0AFA : CMP #$00B7 : BEQ .startpb
+  .pbcheck
+    LDA !ram_ypos : CMP #$00B7 : BEQ .startpb
     LDA #$0057 : STA $7EC688
     BRA .setpb
 
   .startpb
-    LDA $0AF6 : STA !ram_xpos
     LDA #$0001 : STA !ram_roomstrat_state
     LDA #$0C67 : STA $7EC688
 
@@ -561,11 +563,14 @@ status_botwooncf:
     LDA #$0057 : STA $7EC68A : STA $7EC68C : STA $7EC68E
     RTS
 
+  .setxy
+    LDA $0AF6 : STA !ram_xpos
+    LDA $0AFA : STA !ram_ypos
+    RTS
+
   .inc
     LDA !ram_roomstrat_state : CMP #$00C0 : BPL .reset
     INC : STA !ram_roomstrat_state
-
-  .done
     RTS
 
   .early
@@ -576,7 +581,7 @@ status_botwooncf:
     LDA #$0C6C : STA $7EC68C
     BRA .inc
 
-  .check
+  .timecheck
     LDA !ram_roomstrat_state : CMP #$0099 : BEQ .frameperfect : BMI .early
     SEC : SBC #$0099 : CMP #$000A : BPL .latemiss
     ASL A : TAY : LDA.w NumberGFXTable,Y : STA $7EC68E
