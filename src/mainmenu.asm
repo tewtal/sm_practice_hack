@@ -141,7 +141,7 @@ mm_goto_equipment:
     %cm_submenu("Equipment", #EquipmentMenu)
 
 mm_goto_presets:
-    %cm_jsr("Presets", #action_presets_submenu, #$0000)
+    %cm_jsr("Category Presets", #action_presets_submenu, #$0000)
 
 mm_goto_teleport:
     %cm_submenu("Teleport", #TeleportMenu)

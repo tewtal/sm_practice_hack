@@ -424,6 +424,7 @@ preset_hundo_kraid_terminator:
     dl $7E0A1E : db $02 : dw $0804 ; More position/state
     dl $7E0AF6 : db $02 : dw $0115 ; Samus X
     dl $7E0AFA : db $02 : dw $0095 ; Samus Y
+    dl $7E0B3F : db $02 : dw $0104 ; Blue suit
     dw #$FFFF
 .after
 
@@ -445,6 +446,7 @@ preset_hundo_kraid_pirates_shaft:
     dl $7E0A1E : db $02 : dw $0104 ; More position/state
     dl $7E0AF6 : db $02 : dw $002E ; Samus X
     dl $7E0AFA : db $02 : dw $028B ; Samus Y
+    dl $7E0B3F : db $02 : dw $0000 ; Blue suit
     dl $7ED870 : db $02 : dw $0180 ; Events, Items, Doors
     dl $7ED91A : db $02 : dw $0006 ; Events, Items, Doors
     dw #$FFFF
