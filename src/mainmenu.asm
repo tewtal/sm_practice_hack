@@ -834,6 +834,7 @@ ih_room_strat:
     db #$28, "      MB HP", #$FF
     db #$28, "   MOAT CWJ", #$FF
     db #$28, "SHINE TO PB", #$FF
+    db #$28, " BOTWOON CF", #$FF
     db #$FF
 
 ih_room_counter:
