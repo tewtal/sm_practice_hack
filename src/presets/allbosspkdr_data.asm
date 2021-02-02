@@ -397,6 +397,7 @@ preset_allbosspkdr_crateria_terminator:
     dl $7E0A1C : db $02 : dw $008A ; Samus position/state
     dl $7E0A1E : db $02 : dw $1504 ; More position/state
     dl $7E0AF6 : db $02 : dw $0115 ; Samus X
+    dl $7E0B3F : db $02 : dw $0104 ; Blue suit
     dl $7ED828 : db $02 : dw $0004 ; Events, Items, Doors
     dl $7ED870 : db $02 : dw $0080 ; Events, Items, Doors
     dl $7ED8B2 : db $02 : dw $2C00 ; Events, Items, Doors
@@ -421,6 +422,7 @@ preset_allbosspkdr_crateria_green_pirate_shaft:
     dl $7E0A1E : db $02 : dw $0004 ; More position/state
     dl $7E0AF6 : db $02 : dw $0046 ; Samus X
     dl $7E0AFA : db $02 : dw $028F ; Samus Y
+    dl $7E0B3F : db $02 : dw $0000 ; Blue suit
     dl $7ED870 : db $02 : dw $0180 ; Events, Items, Doors
     dl $7ED91A : db $02 : dw $0006 ; Events, Items, Doors
     dw #$FFFF

@@ -350,6 +350,7 @@ preset_kpdr25_bombs_terminator:
     dl $7E0A1E : db $02 : dw $0404 ; More position/state
     dl $7E0AF6 : db $02 : dw $0115 ; Samus X
     dl $7E0AFA : db $02 : dw $0099 ; Samus Y
+    dl $7E0B3F : db $02 : dw $0104 ; Blue suit
     dl $7ED828 : db $02 : dw $0004 ; Events, Items, Doors
     dl $7ED870 : db $02 : dw $0080 ; Events, Items, Doors
     dl $7ED8B2 : db $02 : dw $2C00 ; Events, Items, Doors
@@ -375,6 +376,7 @@ preset_kpdr25_kraid_green_brinstar_elevator:
     dl $7E0A1E : db $02 : dw $0000 ; More position/state
     dl $7E0AF6 : db $02 : dw $0080 ; Samus X
     dl $7E0AFA : db $02 : dw $0089 ; Samus Y
+    dl $7E0B3F : db $02 : dw $0000 ; Blue suit
     dl $7ED870 : db $02 : dw $0180 ; Events, Items, Doors
     dl $7ED91A : db $02 : dw $0008 ; Events, Items, Doors
     dw #$FFFF
@@ -1378,6 +1380,7 @@ preset_kpdr25_golden_4_terminator_revisit:
     dl $7E0A1E : db $02 : dw $0104 ; More position/state
     dl $7E0AF6 : db $02 : dw $0077 ; Samus X
     dl $7E0AFA : db $02 : dw $0093 ; Samus Y
+    dl $7E0B3F : db $02 : dw $0104 ; Blue suit
     dw #$FFFF
 .after
 
@@ -1398,6 +1401,7 @@ preset_kpdr25_golden_4_g4_elevator:
     dl $7E0A1C : db $02 : dw $0007 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0008 ; More position/state
     dl $7E0AFA : db $02 : dw $019B ; Samus Y
+    dl $7E0B3F : db $02 : dw $0000 ; Blue suit
     dl $7ED820 : db $02 : dw $0FC1 ; Events, Items, Doors
     dl $7ED8B2 : db $02 : dw $6C01 ; Events, Items, Doors
     dl $7ED91A : db $02 : dw $004F ; Events, Items, Doors

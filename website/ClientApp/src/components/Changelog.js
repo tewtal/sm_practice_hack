@@ -26,6 +26,7 @@ export class Changelog extends Component {
                                                 <li>Added Horiz Speed (speed + momentum) and Jump Press to Infohud Mode options. (2.1.2)</li>
                                                 <li>Added subpixels to position and speed options and improved Shine Tune feedback. (2.1.2)</li>
                                                 <li>Added Spikesuit to Infohud Mode options and Shine to PB to Room Strat options. (2.1.3)</li>
+                                                <li>Preset improvements for Any% PRKD, KPDR 21%, and GT Classic. (2.1.4)</li>
                                             </ul>
                                         </CardBody>
                                     </Card>
