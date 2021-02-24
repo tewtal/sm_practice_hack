@@ -79,6 +79,8 @@
 !ram_shinefinetune_early_4 = $7FFBDC
 !ram_shinefinetune_late_4 = $7FFBDE
 
+!ram_sprite_prio_flag = $7FFBE0
+
 ; -----
 ; SRAM
 ; -----
