@@ -29,6 +29,7 @@ export class Changelog extends Component {
                                                 <li>Added Botwoon CF Room Strat and updated Spikesuit to consider springball. (2.1.4)</li>
                                                 <li>Preset improvements for Any% PRKD, KPDR 21%, and GT Classic. (2.1.4)</li>
                                                 <li>Fixed RBO preset for Pit Room to start before the door. (2.1.5)</li>
+                                                <li>Initial implementation for transparency support. This feature is in beta. (2.1.6)</li>
                                             </ul>
                                         </CardBody>
                                     </Card>

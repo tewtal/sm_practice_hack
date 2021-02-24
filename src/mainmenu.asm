@@ -135,7 +135,7 @@ MainMenu:
     dw #mm_goto_rngmenu
     dw #mm_goto_ctrlsmenu
     dw #$0000
-    %cm_header("SM PRACTICE HACK 2.1.5")
+    %cm_header("SM PRACTICE HACK 2.1.6")
 
 mm_goto_equipment:
     %cm_submenu("Equipment", #EquipmentMenu)
@@ -583,6 +583,7 @@ MiscMenu:
     dw #misc_babyslowdown
     dw #misc_fanfare_toggle
     dw #misc_music_toggle
+    dw #misc_transparent
     dw #misc_preset_cateory
     dw #$0000
     %cm_header("MISC")
@@ -625,6 +626,16 @@ misc_music_toggle:
     STA $063F
     STA $2140
     RTS
+
+misc_transparent:
+    %cm_jsr("Transparency", action_transparent, #$0000)
+
+action_transparent:
+{
+    LDA #$0006
+    STA $7E1984
+    RTS
+}
 
 misc_preset_cateory:
     dw !ACTION_CHOICE
