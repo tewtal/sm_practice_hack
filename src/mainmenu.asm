@@ -135,13 +135,13 @@ MainMenu:
     dw #mm_goto_rngmenu
     dw #mm_goto_ctrlsmenu
     dw #$0000
-    %cm_header("SM PRACTICE HACK 2.1.3")
+    %cm_header("SM PRACTICE HACK 2.1.6")
 
 mm_goto_equipment:
     %cm_submenu("Equipment", #EquipmentMenu)
 
 mm_goto_presets:
-    %cm_jsr("Presets", #action_presets_submenu, #$0000)
+    %cm_jsr("Category Presets", #action_presets_submenu, #$0000)
 
 mm_goto_teleport:
     %cm_submenu("Teleport", #TeleportMenu)
@@ -583,6 +583,7 @@ MiscMenu:
     dw #misc_babyslowdown
     dw #misc_fanfare_toggle
     dw #misc_music_toggle
+    dw #misc_transparent
     dw #misc_preset_cateory
     dw #$0000
     %cm_header("MISC")
@@ -625,6 +626,9 @@ misc_music_toggle:
     STA $063F
     STA $2140
     RTS
+
+misc_transparent:
+    %cm_toggle_bit("Transparency", !ram_sprite_prio_flag, #$3000, #0)
 
 misc_preset_cateory:
     dw !ACTION_CHOICE
@@ -834,6 +838,7 @@ ih_room_strat:
     db #$28, "      MB HP", #$FF
     db #$28, "   MOAT CWJ", #$FF
     db #$28, "SHINE TO PB", #$FF
+    db #$28, " BOTWOON CF", #$FF
     db #$FF
 
 ih_room_counter:

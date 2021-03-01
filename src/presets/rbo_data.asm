@@ -317,17 +317,16 @@ preset_rbo_bombs_morph:
 
 preset_rbo_bombs_pit_room:
     dw #preset_rbo_bombs_morph ; Bombs: Morph
-    dl $7E078D : db $02 : dw $8B92 ; DDB
-    dl $7E078F : db $02 : dw $0000 ; DoorOut Index
-    dl $7E079B : db $02 : dw $975C ; MDB
+    dl $7E078D : db $02 : dw $8EB6 ; DDB
+    dl $7E078F : db $02 : dw $0002 ; DoorOut Index
+    dl $7E079B : db $02 : dw $97B5 ; MDB
     dl $7E079F : db $02 : dw $0000 ; Region
     dl $7E07C3 : db $02 : dw $F911 ; GFX Pointers
     dl $7E07C5 : db $02 : dw $43BA ; GFX Pointers
     dl $7E07C7 : db $02 : dw $C2AF ; GFX Pointers
-    dl $7E07F3 : db $02 : dw $0009 ; Music Bank
-    dl $7E07F5 : db $02 : dw $0000 ; Music Track
-    dl $7E090F : db $02 : dw $B000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0200 ; Screen X position in pixels
+    dl $7E07F5 : db $02 : dw $0003 ; Music Track
+    dl $7E090F : db $02 : dw $8000 ; Screen subpixel X position.
+    dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $C000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
     dl $7E09A2 : db $02 : dw $0004 ; Equipped Items
@@ -336,11 +335,11 @@ preset_rbo_bombs_pit_room:
     dl $7E09C8 : db $02 : dw $0005 ; Max missiles
     dl $7E0A1C : db $02 : dw $000C ; Samus position/state
     dl $7E0A1E : db $02 : dw $0104 ; More position/state
-    dl $7E0AF6 : db $02 : dw $02D8 ; Samus X
+    dl $7E0AF6 : db $02 : dw $007A ; Samus X
     dl $7E0AFA : db $02 : dw $008B ; Samus Y
     dl $7ED872 : db $02 : dw $0400 ; Events, Items, Doors
     dl $7ED874 : db $02 : dw $0004 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $0004 ; Events, Items, Doors
+    dl $7ED91A : db $02 : dw $0003 ; Events, Items, Doors
     dw #$FFFF
 .after
 
@@ -353,9 +352,9 @@ preset_rbo_bombs_retro_etank:
     dl $7E07C3 : db $02 : dw $E6B0 ; GFX Pointers
     dl $7E07C5 : db $02 : dw $64BB ; GFX Pointers
     dl $7E07C7 : db $02 : dw $C2B2 ; GFX Pointers
+    dl $7E07F3 : db $02 : dw $0009 ; Music Bank
     dl $7E07F5 : db $02 : dw $0005 ; Music Track
     dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $BBFF ; Screen subpixel Y position
     dl $7E09C2 : db $02 : dw $0059 ; Health
     dl $7E09C6 : db $02 : dw $0000 ; Missiles
@@ -1010,7 +1009,7 @@ preset_rbo_brinstar_cleanup_dachora_room_2:
 .after
 
 preset_rbo_brinstar_cleanup_green_shaft_down:
-    dw #preset_rbo_brinstar_cleanup_dachora_room_2 ; Brinstar Cleanup: Dachora Room
+    dw #preset_rbo_brinstar_cleanup_dachora_room_2 ; Brinstar Cleanup: Dachora Room 2
     dl $7E078D : db $02 : dw $8DA2 ; DDB
     dl $7E079B : db $02 : dw $9AD9 ; MDB
     dl $7E090F : db $02 : dw $4000 ; Screen subpixel X position.

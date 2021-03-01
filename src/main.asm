@@ -19,6 +19,7 @@ incsrc presets.asm
 incsrc misc.asm
 incsrc init.asm
 incsrc fanfare.asm
+incsrc spriteprio.asm
 
 ; Make sure the ROM expands to 4MB
 org $ffffff : db $ff

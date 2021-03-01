@@ -349,11 +349,14 @@ ih_update_hud_code:
     ; E-tanks
     LDA !ram_etanks : JSR Hex2Dec : LDX #$0054 : JSR Draw3
 
-    ; Door lag
-    LDA !ram_last_door_lag_frames : JSR Hex2Dec : LDX #$00C2 : JSR Draw3
-
     ; Lag
     LDA !ram_last_room_lag : JSR Hex2Dec : LDX #$0082 : JSR Draw3
+
+    ; Skip door lag and segment timer when shinetune enabled
+    LDA !sram_display_mode : CMP #$0007 : BEQ .end
+
+    ; Door lag
+    LDA !ram_last_door_lag_frames : JSR Hex2Dec : LDX #$00C2 : JSR Draw3
 
     ; Segment timer
     {
@@ -488,6 +491,7 @@ status_roomstrat:
     dw status_mbhp
     dw status_moatcwj
     dw status_shinetopb
+    dw status_botwooncf
 }
 
 status_shinetimer:
@@ -531,6 +535,75 @@ status_shinetopb:
   .setcounter
     LDA $09CE : STA !ram_roomstrat_counter
     RTS
+}
+
+status_botwooncf:
+{
+    LDA !ram_roomstrat_counter : CMP $09CE : BNE .pbcheck
+    LDA !ram_roomstrat_state : CMP #$0000 : BEQ .setxy
+    CMP #$0020 : BMI .inc
+    LDA $0AF6 : CMP !ram_xpos : BNE .inc
+    LDA $0AFA : CMP #$00B7 : BNE .inc
+    LDA $0B2E : CMP #$0000 : BNE .inc
+    LDA $0B2C : CMP #$0000 : BNE .inc
+    LDA #$0C67 : STA $7EC68A
+    BRA .timecheck
+
+  .pbcheck
+    LDA !ram_ypos : CMP #$00B7 : BEQ .startpb
+    LDA #$0057 : STA $7EC688
+    BRA .setpb
+
+  .startpb
+    LDA #$0001 : STA !ram_roomstrat_state
+    LDA #$0C67 : STA $7EC688
+
+  .setpb
+    LDA $09CE : STA !ram_roomstrat_counter
+    LDA #$0057 : STA $7EC68A : STA $7EC68C : STA $7EC68E
+    RTS
+
+  .setxy
+    LDA $0AF6 : STA !ram_xpos
+    LDA $0AFA : STA !ram_ypos
+    RTS
+
+  .inc
+    LDA !ram_roomstrat_state : CMP #$00C0 : BPL .reset
+    INC : STA !ram_roomstrat_state
+    RTS
+
+  .early
+    LDA #$0099 : SEC : SBC !ram_roomstrat_state : CMP #$000A : BPL .earlymiss
+    ASL A : TAY : LDA.w NumberGFXTable,Y : STA $7EC68E
+
+  .earlyprint
+    LDA #$0C6C : STA $7EC68C
+    BRA .inc
+
+  .timecheck
+    LDA !ram_roomstrat_state : CMP #$0099 : BEQ .frameperfect : BMI .early
+    SEC : SBC #$0099 : CMP #$000A : BPL .latemiss
+    ASL A : TAY : LDA.w NumberGFXTable,Y : STA $7EC68E
+
+  .lateprint
+    LDA #$0C68 : STA $7EC68C
+
+  .reset
+    LDA #$0000 : STA !ram_roomstrat_state
+    RTS
+
+  .earlymiss
+    LDA #$0C66 : STA $7EC68E
+    BRA .earlyprint
+
+  .latemiss
+    LDA #$0C66 : STA $7EC68E
+    BRA .lateprint
+
+  .frameperfect
+    LDA #$0C67 : STA $7EC68C : STA $7EC68E
+    BRA .reset
 }
 
 status_chargetimer:
@@ -748,6 +821,10 @@ status_iframecounter:
 status_spikesuit:
 {
     LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_JUMP : CMP #$0000 : BEQ .nojump
+    LDA $09A2 : AND #$0002 : CMP #$0000 : BEQ .jumpup
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_UP : CMP #$0000 : BNE .nojump
+    LDA !ram_roomstrat_state : CMP #$0002 : BEQ .checkspark : CMP #$0004 : BEQ .checkspark
+    CMP #$0000 : BNE .donewait : BRL .nojumpnoup
 
   .jumpup
     LDA !ram_roomstrat_state : CMP #$0006 : BEQ .donewait
@@ -757,6 +834,8 @@ status_spikesuit:
   .nojump
     LDA !ram_roomstrat_state : CMP #$0000 : BNE .donewait
     LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_UP : CMP #$0000 : BNE .jumpup
+
+  .nojumpnoup
     LDA !ram_roomstrat_counter : CMP #$0000 : BEQ .done : CMP #$0014 : BPL .resetstate
     INC : STA !ram_roomstrat_counter
     LDA $18A8 : CMP #$003C : BEQ .firstearly
