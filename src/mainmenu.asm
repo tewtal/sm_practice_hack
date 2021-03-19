@@ -628,14 +628,7 @@ misc_music_toggle:
     RTS
 
 misc_transparent:
-    %cm_jsr("Transparency", action_transparent, #$0000)
-
-action_transparent:
-{
-    LDA #$0006
-    STA $7E1984
-    RTS
-}
+    %cm_toggle_bit("Transparency", !ram_sprite_prio_flag, #$3000, #0)
 
 misc_preset_cateory:
     dw !ACTION_CHOICE
