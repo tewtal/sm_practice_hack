@@ -492,6 +492,7 @@ status_roomstrat:
     dw status_moatcwj
     dw status_shinetopb
     dw status_botwooncf
+    dw status_robotflush
 }
 
 status_shinetimer:
@@ -640,6 +641,33 @@ status_mbhp:
 {
     LDA $0FCC : CMP !ram_mb_hp : BEQ .done : STA !ram_mb_hp
     JSR Hex2Dec : LDX #$0088 : JSR Draw4
+
+  .done
+    RTS
+}
+
+status_robotflush:
+{
+  ; Checking hit on first robot
+  ; 0x0C0E is a blank space
+    LDA #$0C0E : STA $7EC688
+    LDA $0FEA : CMP #$0030 : BMI .checkfirstfall
+    LDA #$0C3C : STA $7EC688
+
+  .checkfirstfall
+    LDA #$0C0E : STA $7EC68A
+    LDA $0FBE : CMP #$0280 : BMI .checksecondhit
+    LDA #$0C3C : STA $7EC68A
+
+  .checksecondhit
+    LDA #$0C0E : STA $7EC68C
+    LDA $102A : CMP #$0030 : BMI .checksecondfall
+    LDA #$0C3D : STA $7EC68C
+
+  .checksecondfall
+    LDA #$0C0E : STA $7EC68E
+    LDA $0FFE : CMP #$0280 : BMI .done
+    LDA #$0C3D : STA $7EC68E
 
   .done
     RTS
