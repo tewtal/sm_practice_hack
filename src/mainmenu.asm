@@ -135,7 +135,7 @@ MainMenu:
     dw #mm_goto_rngmenu
     dw #mm_goto_ctrlsmenu
     dw #$0000
-    %cm_header("SM PRACTICE HACK 2.1.7")
+    %cm_header("SM PRACTICE HACK 2.1.8")
 
 mm_goto_equipment:
     %cm_submenu("Equipment", #EquipmentMenu)
@@ -584,6 +584,7 @@ MiscMenu:
     dw #misc_fanfare_toggle
     dw #misc_music_toggle
     dw #misc_transparent
+    dw #misc_invincibility
     dw #misc_preset_cateory
     dw #$0000
     %cm_header("MISC")
@@ -628,7 +629,10 @@ misc_music_toggle:
     RTS
 
 misc_transparent:
-    %cm_toggle_bit("Transparency", !ram_sprite_prio_flag, #$3000, #0)
+    %cm_toggle_bit("Samus on top", !ram_sprite_prio_flag, #$3000, #0)
+
+misc_invincibility:
+    %cm_toggle_bit("Invincibility", $7E0DE0, #$0007, #0)
 
 misc_preset_cateory:
     dw !ACTION_CHOICE
@@ -821,7 +825,7 @@ ih_display_mode:
     db #$28, " SHINE TUNE", #$FF
     db #$28, "    IFRAMES", #$FF
     db #$28, "  SPIKESUIT", #$FF
-    db #$28, "LAG COUNTER", #$FF
+    db #$28, "  CPU USAGE", #$FF
     db #$28, " X POSITION", #$FF
     db #$28, " Y POSITION", #$FF
     db #$28, "HORIZ SPEED", #$FF

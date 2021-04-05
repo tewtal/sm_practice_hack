@@ -53,7 +53,7 @@ export class Help extends Component {
                                 <Col>Closes the in-game menu</Col>
                             </Row>
                             <Row>
-                                <Col md="2" style={{fontWeight: 'bold'}}>Select+B+L</Col>
+                                <Col md="2" style={{fontWeight: 'bold'}}>Start+Y+L</Col>
                                 <Col>Reloads the last used preset (configurable in shortcuts menu)</Col>
                             </Row>
                             <br />
@@ -179,6 +179,14 @@ export class Help extends Component {
                             <Row>
                                 <Col md="3" className="offset-md-1">Music</Col>
                                 <Col>Toggle the music</Col>
+                            </Row>
+                            <Row>
+                                <Col md="3" className="offset-md-1">Samus on top</Col>
+                                <Col>Draw Samus on top of foreground objects/tiles</Col>
+                            </Row>
+                            <Row>
+                                <Col md="3" className="offset-md-1">Invincibility</Col>
+                                <Col>Prevents Samus from taking damage or knockback</Col>
                             </Row>
                             <Row>
                                 <Col md="3" className="offset-md-1">Preset Category</Col>
