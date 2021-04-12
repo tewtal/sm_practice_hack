@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Row, Col, Card, CardHeader, CardBody } from 'reactstrap';
+import { Row, Col, Card, CardHeader, CardBody, NavItem, NavLink } from 'reactstrap';
+import { Link } from 'react-router-dom';
 import hudImage from '../files/smhud.png'
 
 export class Help extends Component {
