@@ -181,6 +181,10 @@ export class Help extends Component {
                                 <Col>Toggle the music</Col>
                             </Row>
                             <Row>
+                                <Col md="3" className="offset-md-1">Transparency</Col>
+                                <Col>Draw Samus in front of all room tiles</Col>
+                            </Row>
+                            <Row>
                                 <Col md="3" className="offset-md-1">Preset Category</Col>
                                 <Col>Select the category to be used in the Presets menu</Col>
                             </Row>
@@ -190,8 +194,20 @@ export class Help extends Component {
                                 <Col>Configure the HUD</Col>
                             </Row>
                             <Row>
-                                <Col md="3" className="offset-md-1">Infohud Mode</Col>
-                                <Col>Select the value from RAM to be displayed in the bottom-left of the HUD</Col>
+                                <Col md="3" className="offset-md-1">
+                                    <NavItem>
+                                        <NavLink tag={Link} className="text-dark" to="/infohudmode">Infohud Mode</NavLink>
+                                    </NavItem>
+                                </Col>
+                                <Col>Select the value from RAM to be displayed in the bottom-left of the HUD. Click the link for more details.</Col>
+                            </Row>
+                            <Row>
+                                <Col md="3" className="offset-md-1">
+                                    <NavItem>
+                                        <NavLink tag={Link} className="text-dark" to="/infohudmode">Room Strat</NavLink>
+                                    </NavItem>
+                                </Col>
+                                <Col>Select which Room Strat to be displayed in the bottom-left of the HUD. This only works if "Room Strat" is selected as the above Infohud Mode. Click the link for more details.</Col>
                             </Row>
                             <Row>
                                 <Col md="3" className="offset-md-1">Frame Counters</Col>

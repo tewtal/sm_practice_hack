@@ -68,7 +68,8 @@
 
 !ram_roomstrat_counter = $7FFBC6
 !ram_roomstrat_state = $7FFBC8
-!ram_jumppress_counter = $7FFBCA
+!ram_walljump_counter = $7FFBCA
+!ram_quickdrop_counter = $7FFBCC
 
 !ram_shinefinetune_early_1 = $7FFBD0
 !ram_shinefinetune_late_1 = $7FFBD2
