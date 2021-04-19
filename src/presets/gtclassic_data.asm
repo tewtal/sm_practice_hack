@@ -510,6 +510,7 @@ preset_gtclassic_brinstar_early_supers:
     dl $7E0A1E : db $02 : dw $0008 ; More position/state
     dl $7E0AF6 : db $02 : dw $00A1 ; Samus X
     dl $7E0AFA : db $02 : dw $048B ; Samus Y
+    dl $7ED8B4 : db $02 : dw $0002 ; Events, Items, Doors
     dl $7ED91A : db $02 : dw $0009 ; Events, Items, Doors
     dw #$FFFF
 .after
@@ -528,7 +529,6 @@ preset_gtclassic_brinstar_dachora_room:
     dl $7E0AF6 : db $02 : dw $0052 ; Samus X
     dl $7E0AFA : db $02 : dw $058F ; Samus Y
     dl $7ED872 : db $02 : dw $0401 ; Events, Items, Doors
-    dl $7ED8B4 : db $02 : dw $0002 ; Events, Items, Doors
     dl $7ED91A : db $02 : dw $000C ; Events, Items, Doors
     dw #$FFFF
 .after

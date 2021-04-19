@@ -194,15 +194,13 @@ export class InfohudMode extends Component {
                             </Row>
 							<br />
                             <Row>
-                                <Col md="3">Lag Counter</Col>
+                                <Col md="3">CPU Usage</Col>
                                 <Col>Counts down the number of scanlines that were drawn during processing of the next frame.
                                      The screen has a resolution of 256x224, so at 60 fps, 224 scanlines must be drawn every 1/60th of a second.
-                                     We can use the count to get a sense of the lag.
-                                     For example, if the count is 110, then we drew about half of the current frame while processing the next frame,
-                                     which means we finished with plenty of time to spare. However if the count is 210,
-                                     then we finished with only a few lines to spare. If we do not finish in time,
-                                     then the game must draw the current frame again and this is a lag frame.
-                                     If the count is a low number like 12, then it is likely the game lagged
+                                     This count is converted to a percentage to get a sense of the lag.
+                                     The higher the percentage, the closer we were to not finishing processing in time.
+                                     If processing does not finish in time, then the game must draw the current frame again and this is a lag frame.
+                                     If the percentage is a low number, then it is likely the game lagged
                                      with most of the work done during the previous frame and a small amount of work left over for the next frame.</Col>
                             </Row>
 							<br />
