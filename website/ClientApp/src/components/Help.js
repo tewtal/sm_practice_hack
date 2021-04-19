@@ -181,6 +181,14 @@ export class Help extends Component {
                                 <Col>Toggle the music</Col>
                             </Row>
                             <Row>
+                                <Col md="3" className="offset-md-1">Samus on top</Col>
+                                <Col>Draw Samus on top of foreground objects/tiles</Col>
+                            </Row>
+                            <Row>
+                                <Col md="3" className="offset-md-1">Invincibility</Col>
+                                <Col>Prevents Samus from taking damage or knockback</Col>
+                            </Row>
+                            <Row>
                                 <Col md="3" className="offset-md-1">Preset Category</Col>
                                 <Col>Select the category to be used in the Presets menu</Col>
                             </Row>
