@@ -823,14 +823,15 @@ ih_display_mode:
     db #$28, " SHINESPARK", #$FF
     db #$28, "       DASH", #$FF
     db #$28, " SHINE TUNE", #$FF
-    db #$28, "    IFRAMES", #$FF
+    db #$28, "   I FRAMES", #$FF
     db #$28, "  SPIKESUIT", #$FF
     db #$28, "  CPU USAGE", #$FF
     db #$28, " X POSITION", #$FF
     db #$28, " Y POSITION", #$FF
     db #$28, "HORIZ SPEED", #$FF
     db #$28, " VERT SPEED", #$FF
-    db #$28, " JUMP PRESS", #$FF
+    db #$28, " QUICK DROP", #$FF
+    db #$28, "  WALL JUMP", #$FF
     db #$28, " SHOT TIMER", #$FF
     db #$FF
 
@@ -843,6 +844,7 @@ ih_room_strat:
     db #$28, "   MOAT CWJ", #$FF
     db #$28, "SHINE TO PB", #$FF
     db #$28, " BOTWOON CF", #$FF
+    db #$28, "ELEVATOR CF", #$FF
     db #$28, "ROBOT FLUSH", #$FF
     db #$FF
 

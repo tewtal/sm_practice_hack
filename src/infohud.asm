@@ -381,9 +381,7 @@ ih_update_hud_code:
         LDA HexToNumberGFX2, X : STA $7EC6B8
 
         ; Minutes
-        LDA [$00] : ASL : TAX
-        LDA HexToNumberGFX1, X : STA $7EC6B0
-        LDA HexToNumberGFX2, X : STA $7EC6B2
+        LDA [$00] : JSR Hex2Dec : LDX #$00AE : JSR Draw3
 
         ; Draw decimal seperators
         LDA #$0CCB : STA $7EC6B4 : STA $7EC6BA
@@ -476,7 +474,8 @@ ih_hud_code:
     dw status_ypos
     dw status_hspeed
     dw status_vspeed
-    dw status_jumppress
+    dw status_quickdrop
+    dw status_walljump
     dw status_shottimer
 }
 
@@ -492,6 +491,7 @@ status_roomstrat:
     dw status_moatcwj
     dw status_shinetopb
     dw status_botwooncf
+    dw status_elevatorcf
     dw status_robotflush
 }
 
@@ -605,6 +605,101 @@ status_botwooncf:
   .frameperfect
     LDA #$0C67 : STA $7EC68C : STA $7EC68E
     BRA .reset
+}
+
+status_elevatorcf:
+{
+    LDA !ram_roomstrat_counter : CMP $09CE : BNE .roomcheck
+    LDA !ram_roomstrat_state : CMP #$0000 : BEQ .setxy
+    CMP #$005A : BMI .inc
+    LDA $0AF6 : CMP !ram_xpos : BNE .downcheck
+    LDA $0AFA : CMP !ram_ypos : BNE .downcheck
+    LDA $0B2E : CMP #$0000 : BNE .downcheck
+    LDA $0B2C : CMP #$0000 : BNE .downcheck
+    LDA #$0C67 : STA $7EC68A
+
+  .downcheck
+    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_DOWN : CMP #$0000 : BEQ .inc
+    BRA .timecheck
+
+  .setxy
+    LDA $0AF6 : STA !ram_xpos
+    LDA $0AFA : STA !ram_ypos
+    RTS
+
+  .roomcheck
+    LDA $079B : CMP #$94CC : BEQ .forgotten : CMP #$962A : BEQ .redbrin : CMP #$97B5 : BEQ .morph
+    CMP #$9938 : BEQ .greenbrin : CMP #$AF3F : BEQ .lowernorfair : CMP #$A6A1 : BEQ .warehouse
+    LDA #$0057 : STA $7EC688
+    BRA .setpb
+
+  .inc
+    LDA !ram_roomstrat_state : CMP #$00C0 : BPL .reset
+    INC : STA !ram_roomstrat_state
+    RTS
+
+  .forgotten
+  .redbrin
+    LDA #$0080 : CMP !ram_xpos : BEQ .questionpb
+    LDA #$00AB : CMP !ram_ypos : BEQ .goodpb
+    BRA .badpb
+
+  .morph
+  .greenbrin
+  .lowernorfair
+  .warehouse
+    LDA #$0080 : CMP !ram_xpos : BEQ .questionpb
+    LDA #$008B : CMP !ram_ypos : BEQ .goodpb
+    BRA .badpb
+
+  .questionpb
+    LDA #$0C0A : STA $7EC688
+    BRA .setpb
+
+  .timecheck
+    LDA !ram_roomstrat_state : CMP #$009A : BEQ .frameperfect : BMI .early
+    SEC : SBC #$009A : CMP #$000A : BPL .latemiss
+    ASL A : TAY : LDA.w NumberGFXTable,Y : STA $7EC68E
+
+  .lateprint
+    LDA #$0C68 : STA $7EC68C
+
+  .reset
+    LDA #$0000 : STA !ram_roomstrat_state
+    RTS
+
+  .badpb
+    LDA #$0C66 : STA $7EC688
+    BRA .setpb
+
+  .goodpb
+    LDA #$0C67 : STA $7EC688
+
+  .setpb
+    LDA $09CE : STA !ram_roomstrat_counter
+    LDA #$0001 : STA !ram_roomstrat_state
+    LDA #$0057 : STA $7EC68A : STA $7EC68C : STA $7EC68E
+    RTS
+
+  .early
+    LDA #$009A : SEC : SBC !ram_roomstrat_state : CMP #$000A : BPL .earlymiss
+    ASL A : TAY : LDA.w NumberGFXTable,Y : STA $7EC68E
+
+  .earlyprint
+    LDA #$0C6C : STA $7EC68C
+    BRA .reset
+
+  .frameperfect
+    LDA #$0C67 : STA $7EC68C : STA $7EC68E
+    BRA .reset
+
+  .earlymiss
+    LDA #$0C66 : STA $7EC68E
+    BRA .earlyprint
+
+  .latemiss
+    LDA #$0C66 : STA $7EC68E
+    BRA .lateprint
 }
 
 status_chargetimer:
@@ -1275,16 +1370,114 @@ status_shinefinetune:
     BRL .clear1
 }
 
-status_jumppress:
+status_quickdrop:
 {
-    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_JUMP : CMP #$0000 : BNE .inc
-    STA !ram_jumppress_counter
+    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_LEFT : CMP #$0000 : BNE .leftright
+    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_RIGHT : CMP #$0000 : BNE .leftright
+    LDA !ram_quickdrop_counter : CMP #$0000 : BEQ .done : CMP #$0014 : BPL .reset
+    LDA !ram_quickdrop_counter : INC : STA !ram_quickdrop_counter
     RTS
 
-  .inc
-    LDA !ram_jumppress_counter : INC : STA !ram_jumppress_counter
-    LDA !ram_jumppress_counter : JSR Hex2Dec : LDX #$0088 : JSR Draw4
+  .leftright
+    LDA #$0057 : STA $7EC688 : STA $7EC68A
+    LDA !ram_quickdrop_counter : CMP #$0000 : BEQ .firstleftright
+    JSR Hex2Dec : LDX #$008C : JSR Draw2
+
+  .setcounter
+    LDA #$0001 : STA !ram_quickdrop_counter
+
+  .done
     RTS
+
+  .firstleftright
+    LDA #$0057 : STA $7EC68C : STA $7EC68E
+    BRA .setcounter
+
+  .reset
+    LDA #$0000 : STA !ram_quickdrop_counter
+    RTS
+}
+
+status_walljump:
+{
+    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_LEFT : CMP #$0000 : BNE .leftright
+    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_RIGHT : CMP #$0000 : BNE .leftright
+    LDA !ram_walljump_counter : CMP #$0000 : BEQ .done : CMP #$0014 : BPL .reset
+    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_JUMP : CMP #$0000 : BNE .jump
+    LDA !ram_walljump_counter : INC : STA !ram_walljump_counter
+    RTS
+
+  .leftright
+    LDA #$0001 : STA !ram_walljump_counter
+
+  .done
+    RTS
+
+  .jump
+    LDA !ram_walljump_counter : JSR Hex2Dec : LDX #$008C : JSR Draw2
+    BRL .roomcheck
+
+  .toolow
+    LDA !ram_walljump_counter : CMP #$0009 : BNE .clear
+    LDA #$0C66 : STA $7EC68A
+
+  .lowprint
+    LDA #$0C68 : STA $7EC688
+    BRA .reset
+
+  .yes
+    LDA !ram_walljump_counter : CMP #$0009 : BNE .clear
+    LDA #$0C09 : STA $7EC68A
+    BRA .highprint
+
+  .ignore
+    LDA !ram_walljump_counter : CMP #$0009 : BNE .reset
+
+  .clear
+    LDA #$0057 : STA $7EC688 : STA $7EC68A
+
+  .reset
+    LDA #$0000 : STA !ram_walljump_counter
+    RTS
+
+  .low
+    SEC : SBC !ram_ypos : CMP #$0050 : BPL .ignore : CMP #$000B : BPL .toolow
+    DEC : ASL A : TAY
+    LDA !ram_walljump_counter : CMP #$0009 : BNE .clear
+    LDA.w NumberGFXTable,Y : STA $7EC68A
+    BRA .lowprint
+
+  .toohigh
+    LDA !ram_walljump_counter : CMP #$0009 : BNE .clear
+    LDA #$0C66 : STA $7EC68A
+
+  .highprint
+    LDA #$0C6D : STA $7EC688
+    BRA .reset
+
+  .heightcheck
+    LDA $0AFA : CMP !ram_ypos : BEQ .yes : BPL .low
+    LDA !ram_ypos : SEC : SBC $0AFA : CMP #$0050 : BPL .ignore : CMP #$000A : BPL .toohigh
+    ASL A : TAY
+    LDA !ram_walljump_counter : CMP #$0009 : BNE .clear
+    LDA.w NumberGFXTable,Y : STA $7EC68A
+    BRA .highprint
+
+  .roomcheck
+    LDA $079B : CMP #$B4AD : BEQ .writg : CMP #$D2AA : BEQ .plasma : CMP #$ACB3 : BEQ .bubble
+    BRL .clear
+
+  .writg
+    LDA #$042E : STA !ram_ypos
+    BRA .heightcheck
+
+  .plasma
+    LDA #$014E : STA !ram_ypos
+    BRA .heightcheck
+
+  .bubble
+    LDA #$0116 : STA !ram_ypos
+    BRA .heightcheck
 }
 
 status_shottimer:
@@ -1528,7 +1721,7 @@ ih_game_loop_code:
   .inc_statusdisplay
     LDA !sram_display_mode
     INC A
-    CMP #$000F
+    CMP #$0010
     BNE +
     LDA #$0000
 +   STA !sram_display_mode
@@ -1539,7 +1732,7 @@ ih_game_loop_code:
     DEC A
     CMP #$FFFF
     BNE +
-    LDA #$000E
+    LDA #$000F
 +   STA !sram_display_mode
     JMP .update_status
 

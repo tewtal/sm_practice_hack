@@ -32,6 +32,8 @@ export class Changelog extends Component {
                                                 <li>Initial implementation for transparency support. (2.1.6)</li>
                                                 <li>Added Robot Flush to the Room Strat list. (2.1.7)</li>
                                                 <li>Replaced Lag Counter with CPU Usage and added Invincibility toggle. (2.1.8)</li>
+                                                <li>Added Quick Drop and Wall Jump (replacing Jump Press) to Infohud Mode options. (2.1.8)</li>
+                                                <li>Added Elevator CF to the Room Strat list and a Infohud Mode/Room Strat help page. (2.1.8)</li>
                                             </ul>
                                         </CardBody>
                                     </Card>

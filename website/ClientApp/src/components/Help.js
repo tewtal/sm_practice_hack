@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Row, Col, Card, CardHeader, CardBody } from 'reactstrap';
+import { Row, Col, Card, CardHeader, CardBody, NavItem, NavLink } from 'reactstrap';
+import { Link } from 'react-router-dom';
 import hudImage from '../files/smhud.png'
 
 export class Help extends Component {
@@ -198,8 +199,20 @@ export class Help extends Component {
                                 <Col>Configure the HUD</Col>
                             </Row>
                             <Row>
-                                <Col md="3" className="offset-md-1">Infohud Mode</Col>
-                                <Col>Select the value from RAM to be displayed in the bottom-left of the HUD</Col>
+                                <Col md="3" className="offset-md-1">
+                                    <NavItem>
+                                        <NavLink tag={Link} className="text-dark" to="/infohudmode">Infohud Mode</NavLink>
+                                    </NavItem>
+                                </Col>
+                                <Col>Select the value from RAM to be displayed in the bottom-left of the HUD. Click the link for more details.</Col>
+                            </Row>
+                            <Row>
+                                <Col md="3" className="offset-md-1">
+                                    <NavItem>
+                                        <NavLink tag={Link} className="text-dark" to="/infohudmode">Room Strat</NavLink>
+                                    </NavItem>
+                                </Col>
+                                <Col>Select which Room Strat to be displayed in the bottom-left of the HUD. This only works if "Room Strat" is selected as the above Infohud Mode. Click the link for more details.</Col>
                             </Row>
                             <Row>
                                 <Col md="3" className="offset-md-1">Frame Counters</Col>
