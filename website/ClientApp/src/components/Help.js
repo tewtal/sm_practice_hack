@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Card, CardHeader, CardBody, NavItem, NavLink } from 'reactstrap';
+import { Row, Col, Card, CardHeader, CardBody, NavLink } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import hudImage from '../files/smhud.png'
 
@@ -121,17 +121,17 @@ export class Help extends Component {
                                 <Col md="3" className="offset-md-1">Power Bombs</Col>
                                 <Col>Select your max Power Bombs with left/right or A to increment</Col>
                             </Row>
-							<br />
+                            <br />
                             <Row>
                                 <Col md="4">Presets</Col>
                                 <Col>Presets are pre-configured savestates that are specific to a particular category. Select the desired category in the Misc menu.</Col>
                             </Row>
-							<br />
+                            <br />
                             <Row>
                                 <Col md="4">Teleport</Col>
                                 <Col>Warp to any save station</Col>
                             </Row>
-							<br />
+                            <br />
                             <Row>
                                 <Col md="4">Events</Col>
                                 <Col>Toggle event flags for doors, bosses, items, and other events</Col>
@@ -152,7 +152,7 @@ export class Help extends Component {
                                 <Col md="3" className="offset-md-1">Bosses</Col>
                                 <Col>Toggle boss kills</Col>
                             </Row>
-							<br />
+                            <br />
                             <Row>
                                 <Col md="4">Misc</Col>
                                 <Col>Toggle extra features</Col>
@@ -193,7 +193,7 @@ export class Help extends Component {
                                 <Col md="3" className="offset-md-1">Preset Category</Col>
                                 <Col>Select the category to be used in the Presets menu</Col>
                             </Row>
-							<br />
+                            <br />
                             <Row>
                                 <Col md="4">Infohud</Col>
                                 <Col>Configure the HUD</Col>
@@ -210,9 +210,7 @@ export class Help extends Component {
                                 <Col md="3" className="offset-md-1">
                                     <NavLink tag={Link} className="text-dark" to="/infohudmode">Room Strat</NavLink>
                                 </Col>
-                                <Col>Select which Room Strat to be displayed in the bottom-left of the HUD. This only works if "Room Strat" is selected as the above Infohud Mode.
-                                    <NavLink tag={Link} className="text-dark" to="/infohudmode">Click the link for more details.</NavLink>
-                                </Col>
+                                <Col>Select which Room Strat to be displayed in the bottom-left of the HUD. This only works if "Room Strat" is selected as the above Infohud Mode.</Col>
                             </Row>
                             <Row>
                                 <Col md="3" className="offset-md-1">Frame Counters</Col>
@@ -226,12 +224,12 @@ export class Help extends Component {
                                 <Col md="3" className="offset-md-1">Magic Pants</Col>
                                 <Col>Toggle a flashing animation on Samus to show when dash should be held for short charging</Col>
                             </Row>
-							<br />
+                            <br />
                             <Row>
                                 <Col md="4">Game</Col>
                                 <Col>Toggle pre-game options and Debug Mode without resetting</Col>
                             </Row>
-							<br />
+                            <br />
                             <Row>
                                 <Col md="4">RNG Control</Col>
                                 <Col>Pre-determine boss patterns for Phantoon or Botwoon</Col>
@@ -252,7 +250,7 @@ export class Help extends Component {
                                 <Col md="3" className="offset-md-1">Botwoon RNG</Col>
                                 <Col>Choose the opening pattern for Botwoon's first cycle</Col>
                             </Row>
-							<br />
+                            <br />
                             <Row>
                                 <Col md="4">Controller Shortcuts</Col>
                                 <Col>Set or change button combinations for activating features. Press A to select the shortcut and then hold the desired button combination until it turns pink.</Col>
