@@ -200,19 +200,19 @@ export class Help extends Component {
                             </Row>
                             <Row>
                                 <Col md="3" className="offset-md-1">
-                                    <NavItem>
-                                        <NavLink tag={Link} className="text-dark" to="/infohudmode">Infohud Mode</NavLink>
-                                    </NavItem>
+                                    <NavLink tag={Link} className="text-dark" to="/infohudmode">Infohud Mode</NavLink>
                                 </Col>
-                                <Col>Select the value from RAM to be displayed in the bottom-left of the HUD. Click the link for more details.</Col>
+                                <Col>Select the value from RAM to be displayed in the bottom-left of the HUD.
+                                    <NavLink tag={Link} className="text-dark" to="/infohudmode">Click the link for more details.</NavLink>
+                                </Col>
                             </Row>
                             <Row>
                                 <Col md="3" className="offset-md-1">
-                                    <NavItem>
-                                        <NavLink tag={Link} className="text-dark" to="/infohudmode">Room Strat</NavLink>
-                                    </NavItem>
+                                    <NavLink tag={Link} className="text-dark" to="/infohudmode">Room Strat</NavLink>
                                 </Col>
-                                <Col>Select which Room Strat to be displayed in the bottom-left of the HUD. This only works if "Room Strat" is selected as the above Infohud Mode. Click the link for more details.</Col>
+                                <Col>Select which Room Strat to be displayed in the bottom-left of the HUD. This only works if "Room Strat" is selected as the above Infohud Mode.
+                                    <NavLink tag={Link} className="text-dark" to="/infohudmode">Click the link for more details.</NavLink>
+                                </Col>
                             </Row>
                             <Row>
                                 <Col md="3" className="offset-md-1">Frame Counters</Col>
