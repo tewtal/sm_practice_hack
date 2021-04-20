@@ -53,6 +53,7 @@ export class InfohudMode extends Component {
                             </Row>
                       </CardBody>
                     </Card>
+                    <br />
                     <Card>
                         <CardHeader className="bg-primary text-white">Infohud Mode features</CardHeader>
                         <CardBody>
@@ -267,6 +268,7 @@ export class InfohudMode extends Component {
                             </Row>
                       </CardBody>
                     </Card>
+                    <br />
                     <Card>
                         <CardHeader className="bg-primary text-white">Room Strat features</CardHeader>
                         <CardBody>
