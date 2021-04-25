@@ -1161,6 +1161,7 @@ CtrlMenu:
     dw #ctrl_reset_segment_timer
     dw #ctrl_full_equipment
     dw #ctrl_kill_enemies
+    dw #ctrl_clear_shortcuts
     dw #$0000
     %cm_header("CONTROLLER SHORTCUTS")
 
@@ -1185,3 +1186,20 @@ ctrl_full_equipment:
 
 ctrl_kill_enemies:
     %cm_ctrl_shortcut("Kill Enemies", !sram_ctrl_kill_enemies)
+
+ctrl_clear_shortcuts:
+    %cm_jsr("Clear Shortcuts", action_clear_shortcuts, #$0000)
+
+action_clear_shortcuts:
+{
+    TYA
+    STA !sram_ctrl_save_state
+    STA !sram_ctrl_load_state
+    STA !sram_ctrl_load_last_preset
+    STA !sram_ctrl_full_equipment
+    STA !sram_ctrl_kill_enemies
+    STA !sram_ctrl_reset_segment_timer
+    ; menu to default, Start + Select
+    LDA #$3000 : STA !sram_ctrl_menu
+    RTS
+}
