@@ -68,6 +68,12 @@ org $91DAD8      ;hijack, runs after a shinespark has been charged
 org $8095fc         ;hijack, end of NMI routine to update realtime frames
     JML ih_nmi_end
 
+org $A98874         ; update seg timer after MB1 fight
+    JSL ih_mb1_segment
+
+org $A9BE23         ; update seg timer when baby spawns (off-screen) in MB2 fight
+    JSL ih_mb2_segment
+
 org $9AB800         ;graphics for menu cursor and input display
 incbin ../resources/menugfx.bin
 
@@ -394,6 +400,60 @@ ih_update_hud_code:
     PLX
 
     RTL
+}
+
+; runs during MB1 cutscene when you regain control of Samus, just before music change
+ih_mb1_segment:
+{
+    JSL $90F084    ; we overwrote this instruction to get here
+	JSR ih_update_seg_hud
+    RTL
+}
+
+; runs during baby spawn routine 
+ih_mb2_segment:
+{
+    STA $7E7854    ; we overwrote this instruction to get here
+    JSR ih_update_seg_hud
+    RTL
+
+; segment of code from ih_update_hud_code
+ih_update_seg_hud:
+{
+    PHX : PHY : PHP : PHB
+
+    ; Bank 80
+    PEA $8080 : PLB : PLB
+
+    ; Segment timer
+    {
+        LDA !sram_frame_counter_mode : BNE .ingameSeg
+        LDA.w #!ram_seg_rt_frames : STA $00
+        LDA #$007F : STA $02
+        BRA .drawSeg
+
+      .ingameSeg
+        LDA #$09DA : STA $00
+        LDA #$007E : STA $02
+
+      .drawSeg
+        ; Frames
+        LDA [$00] : INC $00 : INC $00 : ASL : TAX
+        LDA HexToNumberGFX1, X : STA $7EC6BC
+        LDA HexToNumberGFX2, X : STA $7EC6BE
+
+        ; Seconds
+        LDA [$00] : INC $00 : INC $00 : ASL : TAX
+        LDA HexToNumberGFX1, X : STA $7EC6B6
+        LDA HexToNumberGFX2, X : STA $7EC6B8
+
+        ; Minutes
+        LDA [$00] : JSR Hex2Dec : LDX #$00AE : JSR Draw3
+    }
+
+    PLB : PLP : PLY : PLX
+
+    RTS
 }
 
 ih_hud_code:
