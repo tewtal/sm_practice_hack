@@ -127,6 +127,7 @@ preset_category_banks:
 MainMenu:
     dw #mm_goto_equipment
     dw #mm_goto_presets
+    dw #mm_goto_select_preset_category
     dw #mm_goto_teleport
     dw #mm_goto_events
     dw #mm_goto_misc
@@ -142,6 +143,9 @@ mm_goto_equipment:
 
 mm_goto_presets:
     %cm_jsr("Category Presets", #action_presets_submenu, #$0000)
+
+mm_goto_select_preset_category:
+    %cm_submenu("Select Preset Category", #SelectPresetCategoryMenu)
 
 mm_goto_teleport:
     %cm_submenu("Teleport", #TeleportMenu)
@@ -460,6 +464,91 @@ tb_plasmabeam:
     %cm_toggle_bit("Plasma", $7E09A8, #$0008, #0)
 
 
+; ------------------
+; Select Preset Category menu
+; ------------------
+
+SelectPresetCategoryMenu:
+    dw #precat_current
+    dw #precat_prkd
+    dw #precat_kpdr21
+    dw #precat_hundo
+    dw #precat_100early
+    dw #precat_rbo
+    dw #precat_kpdr25
+    dw #precat_gtclassic
+    dw #precat_14ice
+    dw #precat_14speed
+    dw #precat_allbosskpdr
+    dw #precat_allbosspkdr
+    dw #precat_allbossprkd
+    dw #$0000
+    %cm_header("SELECT PRESET CATEGORY")
+
+precat_current:
+    dw !ACTION_CHOICE
+    dl #!sram_preset_category
+    dw #$0000
+    db #$28, "CURRENT PRESET", #$FF
+        db #$28, "       PRKD", #$FF ; Note the "y" ;)
+        db #$28, "       KPDR", #$FF
+        db #$28, "   100 LATE", #$FF
+        db #$28, "  100 EARLY", #$FF
+        db #$28, "        RBO", #$FF
+        db #$28, "     KPDR25", #$FF
+        db #$28, " GT CLASSIC", #$FF
+        db #$28, "     14 ICE", #$FF
+        db #$28, "   14 SPEED", #$FF
+        db #$28, "   ALL KPDR", #$FF
+        db #$28, "   ALL PKDR", #$FF
+        db #$28, "   ALL PRKD", #$FF
+    db #$FF
+    db #$FF
+
+precat_prkd:
+    %cm_jsr("Any% PRKD", #action_select_preset_category, #$0000)
+
+precat_kpdr21:
+    %cm_jsr("Any% KPDR", #action_select_preset_category, #$0001)
+
+precat_hundo:
+    %cm_jsr("100% Late Crocomire", #action_select_preset_category, #$0002)
+
+precat_100early:
+    %cm_jsr("100% Early Crocomire", #action_select_preset_category, #$0003)
+
+precat_rbo:
+    %cm_jsr("Reverse Boss Order", #action_select_preset_category, #$0004)
+
+precat_kpdr25:
+    %cm_jsr("Any% KPDR Early Ice", #action_select_preset_category, #$0005)
+
+precat_gtclassic:
+    %cm_jsr("GT Classic", #action_select_preset_category, #$0006)
+
+precat_14ice:
+    %cm_jsr("Low% Ice", #action_select_preset_category, #$0007)
+
+precat_14speed:
+    %cm_jsr("Low% Speed", #action_select_preset_category, #$0008)
+
+precat_allbosskpdr:
+    %cm_jsr("All Bosses KPDR", #action_select_preset_category, #$0009)
+
+precat_allbosspkdr:
+    %cm_jsr("All Bosses KPDR", #action_select_preset_category, #$000A)
+
+precat_allbossprkd:
+    %cm_jsr("All Bosses KPDR", #action_select_preset_category, #$000B)
+
+action_select_preset_category:
+{
+    TYA : STA !sram_preset_category
+    JSR cm_go_back
+    RTS
+}
+
+
 ; ---------------
 ; Teleport menu
 ; ---------------
@@ -585,7 +674,6 @@ MiscMenu:
     dw #misc_music_toggle
     dw #misc_transparent
     dw #misc_invincibility
-    dw #misc_preset_cateory
     dw #$0000
     %cm_header("MISC")
 
@@ -633,25 +721,6 @@ misc_transparent:
 
 misc_invincibility:
     %cm_toggle_bit("Invincibility", $7E0DE0, #$0007, #0)
-
-misc_preset_cateory:
-    dw !ACTION_CHOICE
-    dl #!sram_preset_category
-    dw #$0000
-    db #$28, "Preset Category", #$FF
-        db #$28, "y      PRKD", #$FF ; Note the "y" ;)
-        db #$28, "y      KPDR", #$FF
-        db #$28, "y  100 LATE", #$FF
-        db #$28, "y 100 EARLY", #$FF
-        db #$28, "y       RBO", #$FF
-        db #$28, "y    KPDR25", #$FF
-        db #$28, "y GTCLASSIC", #$FF
-        db #$28, "y    14 ICE", #$FF
-        db #$28, "y  14 SPEED", #$FF
-        db #$28, "y  ALL KPDR", #$FF
-        db #$28, "y  ALL PKDR", #$FF
-        db #$28, "y  ALL PRKD", #$FF
-    db #$FF
 
 
 ; -----------
@@ -802,7 +871,9 @@ ConfigMenu:
 ; --------------
 
 InfoHudMenu:
+    dw #ih_goto_display_mode
     dw #ih_display_mode
+    dw #ih_goto_room_strat
     dw #ih_room_strat
     dw #ih_room_counter
     dw #ih_lag
@@ -810,11 +881,105 @@ InfoHudMenu:
     dw #$0000
     %cm_header("INFOHUD")
 
+ih_goto_display_mode:
+    %cm_submenu("Select InfoHUD Mode", #DisplayModeMenu)
+
+DisplayModeMenu:
+    dw ihmode_enemyhp
+    dw ihmode_roomstrat
+    dw ihmode_chargetimer
+    dw ihmode_xfactor
+    dw ihmode_cooldowncounter
+    dw ihmode_shinetimer
+    dw ihmode_dashcounter
+    dw ihmode_shinefinetune
+    dw ihmode_iframecounter
+    dw ihmode_spikesuit
+    dw ihmode_lagcounter
+    dw ihmode_xpos
+    dw ihmode_ypos
+    dw ihmode_hspeed
+    dw ihmode_vspeed
+    dw ihmode_quickdrop
+    dw ihmode_walljump
+    dw ihmode_shottimer
+    dw ihmode_countdamage
+    dw ihmode_ridleygrab
+    dw #$0000
+    %cm_header("INFOHUD DISPLAY MODE")
+
+ihmode_enemyhp:
+    %cm_jsr("Enemy HP", #action_select_infohud_mode, #$0000)
+
+ihmode_roomstrat:
+    %cm_jsr("Room Strat", #action_select_infohud_mode, #$0001)
+
+ihmode_chargetimer:
+    %cm_jsr("Charge Timer", #action_select_infohud_mode, #$0002)
+
+ihmode_xfactor:
+    %cm_jsr("X-Factor Timer", #action_select_infohud_mode, #$0003)
+
+ihmode_cooldowncounter:
+    %cm_jsr("Cooldown Timer", #action_select_infohud_mode, #$0004)
+
+ihmode_shinetimer:
+    %cm_jsr("Shinespark Timer", #action_select_infohud_mode, #$0005)
+
+ihmode_dashcounter:
+    %cm_jsr("Dash Counter", #action_select_infohud_mode, #$0006)
+
+ihmode_shinefinetune:
+    %cm_jsr("ShineTune", #action_select_infohud_mode, #$0007)
+
+ihmode_iframecounter:
+    %cm_jsr("I-Frame Counter", #action_select_infohud_mode, #$0008)
+
+ihmode_spikesuit:
+    %cm_jsr("Spikesuit Trainer", #action_select_infohud_mode, #$0009)
+
+ihmode_lagcounter:
+    %cm_jsr("CPU Usage", #action_select_infohud_mode, #$000A)
+
+ihmode_xpos:
+    %cm_jsr("X Position", #action_select_infohud_mode, #$000B)
+
+ihmode_ypos:
+    %cm_jsr("Y Position", #action_select_infohud_mode, #$000C)
+
+ihmode_hspeed:
+    %cm_jsr("Horizontal Speed", #action_select_infohud_mode, #$000D)
+
+ihmode_vspeed:
+    %cm_jsr("Vertical Speed", #action_select_infohud_mode, #$000E)
+
+ihmode_quickdrop:
+    %cm_jsr("Quickdrop Trainer", #action_select_infohud_mode, #$000F)
+
+ihmode_walljump:
+    %cm_jsr("Walljump Trainer", #action_select_infohud_mode, #$0010)
+
+ihmode_shottimer:
+    %cm_jsr("Shot Timer", #action_select_infohud_mode, #$0011)
+
+ihmode_countdamage:
+    %cm_jsr("Boss Damage Counter", #action_select_infohud_mode, #$0012)
+
+ihmode_ridleygrab:
+    %cm_jsr("Ridley Death Grab Attempts", #action_select_infohud_mode, #$0013)
+
+action_select_infohud_mode:
+{
+    TYA : STA !sram_display_mode
+    JSR cm_go_back
+    RTS
+}
+
 ih_display_mode:
     dw !ACTION_CHOICE
     dl #!sram_display_mode
     dw #$0000
-    db #$28, "Infohud Mode", #$FF
+    db #$28, "Current Mode", #$FF
     db #$28, "   ENEMY HP", #$FF
     db #$28, " ROOM STRAT", #$FF
     db #$28, "     CHARGE", #$FF
@@ -835,11 +1000,49 @@ ih_display_mode:
     db #$28, " SHOT TIMER", #$FF
     db #$FF
 
+ih_goto_room_strat:
+    %cm_submenu("Select Room Strat", #RoomStratMenu)
+
+RoomStratMenu:
+    dw ihstrat_mbhp
+    dw ihstrat_moatcwj
+    dw ihstrat_shinetopb
+    dw ihstrat_botwooncf
+    dw ihstrat_elevatorcf
+    dw ihstrat_robotflush
+    dw #$0000
+    %cm_header("INFOHUD ROOM STRAT")
+
+ihstrat_mbhp:
+    %cm_jsr("Mother Brain HP", #action_select_room_strat, #$0000)
+
+ihstrat_moatcwj:
+    %cm_jsr("Moat CWJ", #action_select_room_strat, #$0001)
+
+ihstrat_shinetopb:
+    %cm_jsr("Shine to PB", #action_select_room_strat, #$0002)
+
+ihstrat_botwooncf:
+    %cm_jsr("Botwoon Crystal Flash", #action_select_room_strat, #$0003)
+
+ihstrat_elevatorcf:
+    %cm_jsr("Elevator Crystal Flash", #action_select_room_strat, #$0004)
+
+ihstrat_robotflush:
+    %cm_jsr("Robot Flush", #action_select_room_strat, #$0005)
+
+action_select_room_strat:
+{
+    TYA : STA !sram_room_strat
+    JSR cm_go_back
+    RTS
+}
+
 ih_room_strat:
     dw !ACTION_CHOICE
     dl #!sram_room_strat
     dw #$0000
-    db #$28, "Room Strat", #$FF
+    db #$28, "Current Strat", #$FF
     db #$28, "      MB HP", #$FF
     db #$28, "   MOAT CWJ", #$FF
     db #$28, "SHINE TO PB", #$FF
