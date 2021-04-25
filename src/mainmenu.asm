@@ -92,6 +92,7 @@ preset_category_submenus:
     dw #PresetsMenuHundo
     dw #PresetsMenu100early
     dw #PresetsMenuRbo
+    dw #PresetsMenuPkrd
     dw #PresetsMenuKpdr25
     dw #PresetsMenuGtclassic
     dw #PresetsMenu14ice
@@ -109,6 +110,7 @@ preset_category_banks:
     dw #PresetsMenuHundo>>16
     dw #PresetsMenu100early>>16
     dw #PresetsMenuRbo>>16
+    dw #PresetsMenuPkrd>>16
     dw #PresetsMenuKpdr25>>16
     dw #PresetsMenuGtclassic>>16
     dw #PresetsMenu14ice>>16
@@ -189,6 +191,7 @@ incsrc presets/14speed_menu.asm
 incsrc presets/allbosskpdr_menu.asm
 incsrc presets/allbosspkdr_menu.asm
 incsrc presets/allbossprkd_menu.asm
+incsrc presets/pkrd_menu.asm
 
 pullpc
 
@@ -495,6 +498,7 @@ precat_current:
         db #$28, "   100 LATE", #$FF
         db #$28, "  100 EARLY", #$FF
         db #$28, "        RBO", #$FF
+        db #$28, "       PKRD", #$FF
         db #$28, "     KPDR25", #$FF
         db #$28, " GT CLASSIC", #$FF
         db #$28, "     14 ICE", #$FF
@@ -523,23 +527,26 @@ precat_rbo:
 precat_kpdr25:
     %cm_jsr("Any% KPDR Early Ice", #action_select_preset_category, #$0005)
 
+precat_kpdr21:
+    %cm_jsr("Any% PKRD", #action_select_preset_category, #$0006)
+
 precat_gtclassic:
-    %cm_jsr("GT Classic", #action_select_preset_category, #$0006)
+    %cm_jsr("GT Classic", #action_select_preset_category, #$0007)
 
 precat_14ice:
-    %cm_jsr("Low% Ice", #action_select_preset_category, #$0007)
+    %cm_jsr("Low% Ice", #action_select_preset_category, #$0008)
 
 precat_14speed:
-    %cm_jsr("Low% Speed", #action_select_preset_category, #$0008)
+    %cm_jsr("Low% Speed", #action_select_preset_category, #$0009)
 
 precat_allbosskpdr:
-    %cm_jsr("All Bosses KPDR", #action_select_preset_category, #$0009)
-
-precat_allbosspkdr:
     %cm_jsr("All Bosses KPDR", #action_select_preset_category, #$000A)
 
-precat_allbossprkd:
+precat_allbosspkdr:
     %cm_jsr("All Bosses KPDR", #action_select_preset_category, #$000B)
+
+precat_allbossprkd:
+    %cm_jsr("All Bosses KPDR", #action_select_preset_category, #$000C)
 
 action_select_preset_category:
 {

@@ -170,6 +170,7 @@ preset_banks:
   dw preset_hundo_bombs_ceres_elevator>>16
   dw preset_100early_crateria_ceres_elevator>>16
   dw preset_rbo_bombs_ceres_elevator>>16
+  dw preset_pkrd_crateria_ship>>16
   dw preset_kpdr25_bombs_ceres_elevator>>16
   dw preset_gtclassic_crateria_ship>>16
   dw preset_14ice_crateria_ceres_elevator>>16
@@ -319,3 +320,10 @@ org $E48000
   print pc, " kpdr25 data start"
   incsrc presets/kpdr25_data.asm
   print pc, " kpdr25 data end"
+
+org $E58000
+  
+ ; 2EBC (length in hex)
+ print pc, " pkrd data start"
+ incsrc presets/pkrd_data.asm
+ print pc, " pkrd data end"
