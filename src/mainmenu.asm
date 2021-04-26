@@ -478,6 +478,7 @@ SelectPresetCategoryMenu:
     dw #precat_hundo
     dw #precat_100early
     dw #precat_rbo
+    dw #precat_pkrd
     dw #precat_kpdr25
     dw #precat_gtclassic
     dw #precat_14ice
@@ -524,11 +525,11 @@ precat_100early:
 precat_rbo:
     %cm_jsr("Reverse Boss Order", #action_select_preset_category, #$0004)
 
-precat_kpdr25:
-    %cm_jsr("Any% KPDR Early Ice", #action_select_preset_category, #$0005)
+precat_pkrd:
+    %cm_jsr("Any% PKRD", #action_select_preset_category, #$0005)
 
-precat_kpdr21:
-    %cm_jsr("Any% PKRD", #action_select_preset_category, #$0006)
+precat_kpdr25:
+    %cm_jsr("Any% KPDR Early Ice", #action_select_preset_category, #$0006)
 
 precat_gtclassic:
     %cm_jsr("GT Classic", #action_select_preset_category, #$0007)
@@ -543,10 +544,10 @@ precat_allbosskpdr:
     %cm_jsr("All Bosses KPDR", #action_select_preset_category, #$000A)
 
 precat_allbosspkdr:
-    %cm_jsr("All Bosses KPDR", #action_select_preset_category, #$000B)
+    %cm_jsr("All Bosses PKDR", #action_select_preset_category, #$000B)
 
 precat_allbossprkd:
-    %cm_jsr("All Bosses KPDR", #action_select_preset_category, #$000C)
+    %cm_jsr("All Bosses PRKD", #action_select_preset_category, #$000C)
 
 action_select_preset_category:
 {
@@ -910,8 +911,6 @@ DisplayModeMenu:
     dw ihmode_quickdrop
     dw ihmode_walljump
     dw ihmode_shottimer
-    dw ihmode_countdamage
-    dw ihmode_ridleygrab
     dw #$0000
     %cm_header("INFOHUD DISPLAY MODE")
 
@@ -937,7 +936,7 @@ ihmode_dashcounter:
     %cm_jsr("Dash Counter", #action_select_infohud_mode, #$0006)
 
 ihmode_shinefinetune:
-    %cm_jsr("ShineTune", #action_select_infohud_mode, #$0007)
+    %cm_jsr("Shine Tune", #action_select_infohud_mode, #$0007)
 
 ihmode_iframecounter:
     %cm_jsr("I-Frame Counter", #action_select_infohud_mode, #$0008)
@@ -968,12 +967,6 @@ ihmode_walljump:
 
 ihmode_shottimer:
     %cm_jsr("Shot Timer", #action_select_infohud_mode, #$0011)
-
-ihmode_countdamage:
-    %cm_jsr("Boss Damage Counter", #action_select_infohud_mode, #$0012)
-
-ihmode_ridleygrab:
-    %cm_jsr("Ridley Death Grab Attempts", #action_select_infohud_mode, #$0013)
 
 action_select_infohud_mode:
 {
