@@ -147,7 +147,7 @@ hook_botwoon_rng:
 
     LDA !ram_botwoon_rng : BEQ .no_manip
 
-    DEC : ASL #3
+    ASL #3 : DEC
     RTL
 
   .no_manip

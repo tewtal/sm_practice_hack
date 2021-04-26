@@ -37,6 +37,7 @@ export class Changelog extends Component {
                                                 <li>Added presets for Any% PKRD. (2.1.9)</li>
                                                 <li>Added submenus for Preset Categories, InfoHUD Display Modes, and Room Strats. (2.1.9)</li>
                                                 <li>Segment Timer now splits between Mother Brain phases. (2.1.9)</li>
+                                                <li>Fixed Botwoon RNG Control. (2.1.9)</li>
                                             </ul>
                                         </CardBody>
                                     </Card>
