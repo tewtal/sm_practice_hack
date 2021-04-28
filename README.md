@@ -15,6 +15,5 @@ The build script will create two IPS patch files for the practice hack. The patc
 
 ## Known Issues:
 
-* A crash will occur upon completing the game and leaving Zebes.
 * Loading a preset while in a loading transition can sometimes cause Samus to freeze when exiting the next door.
 * PAL region roms are no longer supported in the main branch. See https://github.com/InsaneFirebat/sm_practice_hack/tree/PAL-v1.43 for the latest working PAL revision.
