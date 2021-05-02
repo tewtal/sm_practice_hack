@@ -34,6 +34,7 @@ export class Changelog extends Component {
                                                 <li>Replaced Lag Counter with CPU Usage and added Invincibility toggle. (2.1.8)</li>
                                                 <li>Added Quick Drop and Wall Jump (replacing Jump Press) to Infohud Mode options. (2.1.8)</li>
                                                 <li>Added Elevator CF to the Room Strat list and a Infohud Mode/Room Strat help page. (2.1.8)</li>
+                                                <li>Update the room timer on activating an elevator. (2.1.9)</li>
                                             </ul>
                                         </CardBody>
                                     </Card>

@@ -46,6 +46,9 @@ org $9493B8      ;hijack, runs when Samus hits a door BTS
 org $82E764      ;hijack, runs when Samus is coming out of a room transition
     JSL ih_after_room_transition : RTS
 
+org $90F1E4      ;hijack, runs when an elevator is activated
+    JSL ih_elevator_activation
+
 org $90A7F7      ;skip drawing minimap grid when entering boss rooms
     BRA FinishDrawMinimap
 
@@ -247,6 +250,43 @@ ih_before_room_transition:
     PLA
     STA $0998
     CLC
+    RTL
+}
+
+ih_elevator_activation:
+{
+    PHA
+    PHX
+    PHY
+
+    ; Only update if we're in a room and activate an elevator.
+    ; Otherwise this will also run when you enter a room already riding one.
+    LDA $0998 : CMP #$0008 : BNE .done
+
+    ; calculate lag frames
+    LDA !ram_realtime_room : SEC : SBC !ram_transition_counter : STA !ram_last_room_lag
+
+    LDA !ram_gametime_room : STA !ram_last_gametime_room
+    LDA !ram_realtime_room : STA !ram_last_realtime_room
+
+    ; save temp variables
+    LDA $12 : PHA
+    LDA $14 : PHA
+
+    ; Update HUD
+    JSL ih_update_hud_code
+
+    ; restore temp variables
+    PLA : STA $14
+    PLA : STA $12
+
+  .done
+    ; Run standard code and return
+    PLY
+    PLX
+    PLA
+    STZ $0A56
+    SEC
     RTL
 }
 
