@@ -71,6 +71,12 @@ org $91DAD8      ;hijack, runs after a shinespark has been charged
 org $8095fc         ;hijack, end of NMI routine to update realtime frames
     JML ih_nmi_end
 
+org $A98874         ; update seg timer after MB1 fight
+    JSL ih_mb1_segment
+
+org $A9BE23         ; update seg timer when baby spawns (off-screen) in MB2 fight
+    JSL ih_mb2_segment
+
 org $9AB800         ;graphics for menu cursor and input display
 incbin ../resources/menugfx.bin
 
@@ -256,37 +262,34 @@ ih_before_room_transition:
 ih_elevator_activation:
 {
     PHA
-    PHX
-    PHY
-
     ; Only update if we're in a room and activate an elevator.
     ; Otherwise this will also run when you enter a room already riding one.
     LDA $0998 : CMP #$0008 : BNE .done
 
-    ; calculate lag frames
-    LDA !ram_realtime_room : SEC : SBC !ram_transition_counter : STA !ram_last_room_lag
-
-    LDA !ram_gametime_room : STA !ram_last_gametime_room
-    LDA !ram_realtime_room : STA !ram_last_realtime_room
-
-    ; save temp variables
-    LDA $12 : PHA
-    LDA $14 : PHA
-
-    ; Update HUD
-    JSL ih_update_hud_code
-
-    ; restore temp variables
-    PLA : STA $14
-    PLA : STA $12
+    JSL ih_update_hud_early
 
   .done
-    ; Run standard code and return
-    PLY
-    PLX
     PLA
     STZ $0A56
     SEC
+    RTL
+}
+
+ih_mb1_segment:
+{
+    ; runs during MB1 cutscene when you regain control of Samus, just before music change
+    JSL $90F084    ; we overwrote this instruction to get here
+
+    JSL ih_update_hud_early
+    RTL
+}
+
+ih_mb2_segment:
+{
+    ; runs during baby spawn routine for MB2
+    STA $7E7854    ; we overwrote this instruction to get here
+
+    JSL ih_update_hud_early
     RTL
 }
 
@@ -434,6 +437,35 @@ ih_update_hud_code:
     PLX
 
     RTL
+}
+
+ih_update_hud_early:
+{
+    PHA
+    PHX
+    PHY
+
+    ; calculate lag frames
+    LDA !ram_realtime_room : SEC : SBC !ram_transition_counter : STA !ram_last_room_lag
+
+    LDA !ram_gametime_room : STA !ram_last_gametime_room
+    LDA !ram_realtime_room : STA !ram_last_realtime_room
+
+    ; save temp variables
+    LDA $12 : PHA
+    LDA $14 : PHA
+
+    ; Update HUD
+    JSL ih_update_hud_code
+
+    ; restore temp variables
+    PLA : STA $14
+    PLA : STA $12
+
+    ; Run standard code and return
+    PLY
+    PLX
+    PLA
 }
 
 ih_hud_code:

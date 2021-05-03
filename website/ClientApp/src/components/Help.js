@@ -123,8 +123,13 @@ export class Help extends Component {
                             </Row>
                             <br />
                             <Row>
-                                <Col md="4">Presets</Col>
-                                <Col>Presets are pre-configured savestates that are specific to a particular category. Select the desired category in the Misc menu.</Col>
+                                <Col md="4">Category Presets</Col>
+                                <Col>Presets are pre-configured savestates that are specific to a particular category.</Col>
+                            </Row>
+                            <br />
+                            <Row>
+                                <Col md="4">Select Preset Category</Col>
+                                <Col>Select the desired category to be used with Category Presets</Col>
                             </Row>
                             <br />
                             <Row>
@@ -188,10 +193,6 @@ export class Help extends Component {
                             <Row>
                                 <Col md="3" className="offset-md-1">Invincibility</Col>
                                 <Col>Prevents Samus from taking damage or knockback</Col>
-                            </Row>
-                            <Row>
-                                <Col md="3" className="offset-md-1">Preset Category</Col>
-                                <Col>Select the category to be used in the Presets menu</Col>
                             </Row>
                             <br />
                             <Row>
@@ -274,6 +275,10 @@ export class Help extends Component {
                             <Row>
                                 <Col md="3" className="offset-md-1">Kill Enemies</Col>
                                 <Col>Instantly deletes all enemies in the current room</Col>
+                            </Row>
+                            <Row>
+                                <Col md="3" className="offset-md-1">Clear Shortcuts</Col>
+                                <Col>Reset Main Menu shortcut to default and removes button combos for all others.</Col>
                             </Row>
                         </CardBody>
                     </Card>
