@@ -553,6 +553,7 @@ action_select_preset_category:
 {
     TYA : STA !sram_preset_category
     JSR cm_go_back
+    JSR cm_calculate_max
     RTS
 }
 
@@ -972,6 +973,7 @@ action_select_infohud_mode:
 {
     TYA : STA !sram_display_mode
     JSR cm_go_back
+    JSR cm_calculate_max
     RTS
 }
 
@@ -1035,6 +1037,7 @@ action_select_room_strat:
 {
     TYA : STA !sram_room_strat
     JSR cm_go_back
+    JSR cm_calculate_max
     RTS
 }
 
