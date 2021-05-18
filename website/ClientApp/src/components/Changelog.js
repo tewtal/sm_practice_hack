@@ -39,6 +39,7 @@ export class Changelog extends Component {
                                                 <li>Update room timers between Mother Brain phases. (2.1.10)</li>
                                                 <li>Added presets for Any% PKRD. (2.1.10)</li>
                                                 <li>Fixed Botwoon RNG Control and endgame cutscene crash. (2.1.10)</li>
+                                                <li>Added Draygon RNG Control. (2.1.10)</li>
                                             </ul>
                                         </CardBody>
                                     </Card>

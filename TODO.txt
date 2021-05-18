@@ -13,12 +13,12 @@ x Fix/test Phantoon/Botwoon RNG
 
 x Hundo presets
 
-- Dray RNG?
+x Dray RNG?
 
 - Infohud option to toggle speed ?
 
 - Save state during fanfare
 
-- Fix endgame freeze
+x Fix endgame freeze
 
 - Add hours to timer?

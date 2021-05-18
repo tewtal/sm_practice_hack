@@ -36,6 +36,8 @@
 !ram_last_lag_counter = $7FFB98
 !ram_shot_timer = $7FFB9E
 
+!ram_draygon_rng_left = $7FFB7E
+!ram_draygon_rng_right = $7FFB80
 !ram_phantoon_rng_1 = $7FFB82
 !ram_phantoon_rng_2 = $7FFB84
 !ram_botwoon_rng = $7FFB86

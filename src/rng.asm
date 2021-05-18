@@ -34,6 +34,17 @@
         JSL hook_botwoon_rng
 }
 
+
+; Draygon hijacks
+{
+    org $A58ADC
+        JSR hook_draygon_rng_left
+
+    org $A5899D
+        JSR hook_draygon_rng_right
+}
+
+
 ; "Set rng" hijacks
 {
     ; $A3:AB0C A9 25 00    LDA #$0025
@@ -153,6 +164,30 @@ hook_botwoon_rng:
   .no_manip
     LDA $05E5
     RTL
+
+
+org $A5EE50
+hook_draygon_rng_left:
+{
+    LDA !ram_draygon_rng_left : BEQ .no_manip
+    DEC    ; return with 1 or 0
+    RTS
+    
+  .no_manip
+    LDA $05E5   ; return with random number
+    RTS
+}
+
+hook_draygon_rng_right:
+{
+    LDA !ram_draygon_rng_right : BEQ .no_manip
+    DEC    ; return with 1 or 0
+    RTS
+    
+  .no_manip
+    LDA $05E5   ; return with random number
+    RTS
+}
 
 
 phantoon_dirs:
