@@ -24,7 +24,7 @@ export class Help extends Component {
                                 <Col>
                                     <ol className="list" style={{fontSize: 1.1 + 'em'}}>
                                         <li>Status display defaults to first enemy's HP, but can be configured to show Charge Timer, X-Factor timer, Shinespark timer and more.</li>
-                                        <li>Item percentage</li>
+                                        <li>Item collection percentage</li>
                                         <li>Number of E-tanks</li>
                                         <li>Current total energy</li>
                                         <li>Segment timer in minutes.seconds.frames. Resets when loading a preset or by controller shortcut</li>
@@ -286,7 +286,7 @@ export class Help extends Component {
                             </Row>
                             <Row>
                                 <Col md="3" className="offset-md-1">Clear Shortcuts</Col>
-                                <Col>Reset Main Menu shortcut to default and removes button combos for all others.</Col>
+                                <Col>Resets Main Menu shortcut to default and removes button combos for all others.</Col>
                             </Row>
                         </CardBody>
                     </Card>
