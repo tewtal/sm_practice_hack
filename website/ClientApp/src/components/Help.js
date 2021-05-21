@@ -259,6 +259,10 @@ export class Help extends Component {
                                 <Col md="3" className="offset-md-1">Draygon from Left</Col>
                                 <Col>Choose Draygon's attack type from the left side of the room. Draygon will always 'swoop' after a 'goop'.</Col>
                             </Row>
+                            <Row>
+                                <Col md="3" className="offset-md-1">Crocomire RNG</Col>
+                                <Col>Set Crocomire to always step forward, or always swipe and shoot projectiles.</Col>
+                            </Row>
                             <br />
                             <Row>
                                 <Col md="4">Controller Shortcuts</Col>
