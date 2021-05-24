@@ -1103,6 +1103,7 @@ RngMenu:
     dw #rng_rerandomize
     dw #rng_phan_first_phase
     dw #rng_phan_second_phase
+    dw #rng_phan_eyeclose
     dw #rng_botwoon_rng
     dw #rng_draygon_rng_right
     dw #rng_draygon_rng_left
@@ -1151,6 +1152,17 @@ rng_phan_second_phase:
     db #$28, " FAST RIGHT", #$FF
     db #$28, "  MID RIGHT", #$FF
     db #$28, " SLOW RIGHT", #$FF
+    db #$FF
+
+rng_phan_eyeclose:
+    dw !ACTION_CHOICE
+    dl #!ram_phantoon_rng_3
+    dw #$0000
+    db #$28, "Phan Eye Close", #$FF
+    db #$28, "     RANDOM", #$FF
+    db #$28, "       SLOW", #$FF
+    db #$28, "        MID", #$FF
+    db #$28, "       FAST", #$FF
     db #$FF
 
 rng_draygon_rng_right:

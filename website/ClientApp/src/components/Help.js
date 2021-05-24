@@ -248,6 +248,10 @@ export class Help extends Component {
                                 <Col>Choose the direction and eye opening pattern for Phantoon's second and subsequent phases</Col>
                             </Row>
                             <Row>
+                                <Col md="3" className="offset-md-1">Phan Eye Close</Col>
+                                <Col>Choose how long Phantoon's eye will remain open after a ring of flames</Col>
+                            </Row>
+                            <Row>
                                 <Col md="3" className="offset-md-1">Botwoon RNG</Col>
                                 <Col>Choose the opening pattern for Botwoon's first cycle</Col>
                             </Row>
