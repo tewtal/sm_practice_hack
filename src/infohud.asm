@@ -77,8 +77,9 @@ org $A98874         ; update seg timer after MB1 fight
 org $A9BE23         ; update seg timer when baby spawns (off-screen) in MB2 fight
     JSL ih_mb2_segment
 
-org $9AB800         ;graphics for menu cursor and input display
-incbin ../resources/menugfx.bin
+org $9AB800         ; graphics for HUD
+incbin ../resources/hudgfx.bin
+
 
 ; Main bank stuff
 org $DFE000
@@ -984,6 +985,7 @@ status_hspeed:
     LDX #$0092 : JSR Draw4Hex
 
   .done
+    LDA #$0C6E : STA $7EC690 ; decimal
     RTS
 }
 
@@ -1001,6 +1003,7 @@ status_vspeed:
     STA !ram_subpixel_pos : LDX #$0092 : JSR Draw4Hex
 
   .done
+    LDA #$0C6E : STA $7EC690 ; decimal
     RTS
 }
 
@@ -1120,9 +1123,8 @@ status_lagcounter:
     LDA !ram_lag_counter : CMP !ram_last_lag_counter : BEQ .done : STA !ram_last_lag_counter
     %a8() : STA $211B : XBA : STA $211B : LDA #$64 : STA $211C : %a16() : LDA $2134
     STA $4204 : %a8() : LDA #$E1 : STA $4206 : %a16()
-    PHA : PLA : PHA : PLA : LDA $4214
+    LDA #$0C0A : STA $7EC690 : PHA : PLA : LDA $4214    ; draw % while waiting
     JSR Hex2Dec : LDX #$008A : JSR Draw3
-    LDA #$0C0A : STA $7EC690
 
   .done
     RTS
@@ -1142,6 +1144,7 @@ status_xpos:
     STA !ram_subpixel_pos : LDX #$0092 : JSR Draw4Hex
 
   .done
+    LDA #$0C6E : STA $7EC690 ; decimal
     RTS
 }
 
@@ -1159,6 +1162,7 @@ status_ypos:
     STA !ram_subpixel_pos : LDX #$0092 : JSR Draw4Hex
 
   .done
+    LDA #$0C6E : STA $7EC690 ; decimal
     RTS
 }
 
@@ -1667,7 +1671,10 @@ Draw4:
 
 Draw4Hex:
 {
-    STA $12 : AND #$000F : ASL A : TAY : LDA.w NumberGFXTable,Y : STA $7EC606,X
+    STA $12
+    LDA !sram_hexstyle : BNE .ABCDEF
+
+    LDA $12 : AND #$000F : ASL A : TAY : LDA.w NumberGFXTable,Y : STA $7EC606,X
     LDA $12 : LSR A : LSR A : LSR A
     STA $12 : AND #$001E : TAY : LDA.w NumberGFXTable,Y : STA $7EC604,X
     LDA $12 : LSR A : LSR A : LSR A : LSR A
@@ -1675,6 +1682,28 @@ Draw4Hex:
     LDA $12 : LSR A : LSR A : LSR A : LSR A
     AND #$001E : TAY : LDA.w NumberGFXTable,Y : STA $7EC600,X
     INX #8
+    RTS
+
+  .ABCDEF
+    LDA $12 : AND #$F000              ; get first digit (X000)
+    XBA : LSR #4                      ; move it to last digit (000X)
+    ASL : TAY : LDA.w HexGFXTable,Y   ; load tilemap address with 2x digit as index
+    STA $7EC600,X                     ; draw digit to HUD
+
+    LDA $12 : AND #$0F00              ; (0X00)
+    XBA
+    ASL : TAY : LDA.w HexGFXTable,Y
+    STA $7EC602,X
+
+    LDA $12 : AND #$00F0              ; (00X0)
+    LSR #4
+    ASL : TAY : LDA.w HexGFXTable,Y
+    STA $7EC604,X
+
+    LDA $12 : AND #$000F              ; (000X)
+    ASL : TAY : LDA.w HexGFXTable,Y
+    STA $7EC606,X
+
     RTS
 }
 
@@ -1739,7 +1768,6 @@ CalcBeams:
     PLP
     RTS
 }
-
 
 ih_game_loop_code:
 {
@@ -1895,6 +1923,9 @@ print pc, " infohud bank80 start"
 NumberGFXTable:
     dw #$0C09, #$0C00, #$0C01, #$0C02, #$0C03, #$0C04, #$0C05, #$0C06, #$0C07, #$0C08
     dw #$0C45, #$0C3C, #$0C3D, #$0C3E, #$0C3F, #$0C40, #$0C41, #$0C42, #$0C43, #$0C44
+
+HexGFXTable:
+    dw #$0C70, #$0C71, #$0C72, #$0C73, #$0C74, #$0C75, #$0C76, #$0C77, #$0C78, #$0C79, #$0C7A, #$0C7B, #$0C7C, #$0C7D, #$0C7E, #$0C7F
 
 ControllerTable1:
     dw $0020, $0800, $0010, $4000, $0040, $2000
