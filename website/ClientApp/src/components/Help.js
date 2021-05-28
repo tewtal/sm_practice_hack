@@ -240,12 +240,20 @@ export class Help extends Component {
                                 <Col>Toggles rerandomizing of RNG values upon loading a savestate. SD2SNES versions only.</Col>
                             </Row>
                             <Row>
-                                <Col md="3" className="offset-md-1">Phan 1st Phase</Col>
-                                <Col>Choose the direction and eye opening pattern for Phantoon's first phase</Col>
+                                <Col md="3" className="offset-md-1">Phan 1st Direction</Col>
+                                <Col>Choose the movement direction for Phantoon's first phase</Col>
                             </Row>
                             <Row>
-                                <Col md="3" className="offset-md-1">Phan 2nd Phase</Col>
-                                <Col>Choose the direction and eye opening pattern for Phantoon's second and subsequent phases</Col>
+                                <Col md="3" className="offset-md-1">Phan 1st Pattern</Col>
+                                <Col>Choose the eye opening pattern for Phantoon's first phase</Col>
+                            </Row>
+                            <Row>
+                                <Col md="3" className="offset-md-1">Phan 2nd Direction</Col>
+                                <Col>Choose the movement direction for Phantoon's second and subsequent phases</Col>
+                            </Row>
+                            <Row>
+                                <Col md="3" className="offset-md-1">Phan 2nd Pattern</Col>
+                                <Col>Choose the eye opening pattern for Phantoon's second and subsequent phases</Col>
                             </Row>
                             <Row>
                                 <Col md="3" className="offset-md-1">Phan Eye Close</Col>

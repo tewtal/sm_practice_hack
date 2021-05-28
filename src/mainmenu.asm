@@ -746,12 +746,26 @@ EventsMenu:
     dw #events_goto_bosses
     dw #events_zebesawake
     dw #events_maridiatubebroken
+    dw #events_chozoacid
     dw #events_shaktool
     dw #events_tourian
+    dw #events_metroid1
+    dw #events_metroid2
+    dw #events_metroid3
+    dw #events_metroid4
     dw #events_zebesexploding
     dw #events_animals
     dw #$0000
     %cm_header("EVENTS")
+
+events_resetevents:
+    %cm_jsr_nosound("Reset All Events", action_reset_events, #$0000)
+
+events_resetdoors:
+    %cm_jsr_nosound("Reset All Doors", action_reset_doors, #$0000)
+
+events_resetitems:
+    %cm_jsr_nosound("Reset All Items", action_reset_items, #$0000)
 
 events_goto_bosses:
     %cm_submenu("Bosses", #BossesMenu)
@@ -765,23 +779,29 @@ events_maridiatubebroken:
 events_shaktool:
     %cm_toggle_bit("Shaktool Done Digging", $7ED820, #$2000, #0)
 
+events_chozoacid:
+    %cm_toggle_bit("Chozo Lowered Acid", $7ED821, #$0010, #0)
+
 events_tourian:
     %cm_toggle_bit("Tourian Open", $7ED820, #$0400, #0)
+
+events_metroid1:
+    %cm_toggle_bit("1st Metroids Cleared", $7ED822, #$0001, #0)
+
+events_metroid2:
+    %cm_toggle_bit("2nd Metroids Cleared", $7ED822, #$0002, #0)
+
+events_metroid3:
+    %cm_toggle_bit("3rd Metroids Cleared", $7ED822, #$0004, #0)
+
+events_metroid4:
+    %cm_toggle_bit("4th Metroids Cleared", $7ED822, #$0008, #0)
 
 events_zebesexploding:
     %cm_toggle_bit("Zebes Set Ablaze", $7ED820, #$4000, #0)
 
 events_animals:
     %cm_toggle_bit("Animals Saved", $7ED820, #$8000, #0)
-
-events_resetevents:
-    %cm_jsr("Reset All Events", action_reset_events, #$0000)
-
-events_resetdoors:
-    %cm_jsr("Reset All Doors", action_reset_doors, #$0000)
-
-events_resetitems:
-    %cm_jsr("Reset All Items", action_reset_items, #$0000)
 
 
 action_reset_events:
