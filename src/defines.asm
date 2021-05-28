@@ -36,12 +36,14 @@
 !ram_last_lag_counter = $7FFB98
 !ram_shot_timer = $7FFB9E
 
-!ram_phantoon_rng_3 = $7FFB7A
+!ram_phantoon_rng_pat1 = $7FFB82
+!ram_phantoon_rng_pat2 = $7FFB84
+!ram_phantoon_rng_dir1 = $7FFB76
+!ram_phantoon_rng_dir2 = $7FFB78
+!ram_phantoon_rng_eyeclose = $7FFB7A
 !ram_crocomire_rng = $7FFB7C
 !ram_draygon_rng_left = $7FFB7E
 !ram_draygon_rng_right = $7FFB80
-!ram_phantoon_rng_1 = $7FFB82
-!ram_phantoon_rng_2 = $7FFB84
 !ram_botwoon_rng = $7FFB86
 !ram_room_has_set_rng = $7FFB88
 

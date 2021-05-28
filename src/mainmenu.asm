@@ -1110,16 +1110,20 @@ game_debugmode:
 ; ----------
 
 RngMenu:
-    dw #rng_rerandomize
-    dw #rng_phan_first_phase
-    dw #rng_phan_second_phase
+    if !FEATURE_SD2SNES
+        dw #rng_rerandomize
+    endif
+    dw #rng_phan_first_direction
+    dw #rng_phan_first_pattern
+    dw #rng_phan_second_direction
+    dw #rng_phan_second_pattern
     dw #rng_phan_eyeclose
     dw #rng_botwoon_rng
     dw #rng_draygon_rng_right
     dw #rng_draygon_rng_left
     dw #rng_crocomire_rng
     dw #$0000
-    %cm_header("RNG")
+    %cm_header("BOSS RNG CONTROL")
 
 rng_rerandomize:
     %cm_toggle("Rerandomize", !sram_rerandomize, #$0001, #0)
@@ -1136,37 +1140,51 @@ rng_botwoon_rng:
     db #$28, "       LEFT", #$FF
     db #$FF
 
-rng_phan_first_phase:
+rng_phan_first_direction:
     dw !ACTION_CHOICE
-    dl #!ram_phantoon_rng_1
+    dl #!ram_phantoon_rng_dir1
     dw #$0000
-    db #$28, "Phan 1st Phase", #$FF
-    db #$28, "     RANDOM", #$FF
-    db #$28, "  FAST LEFT", #$FF
-    db #$28, "   MID LEFT", #$FF
-    db #$28, "  SLOW LEFT", #$FF
-    db #$28, " FAST RIGHT", #$FF
-    db #$28, "  MID RIGHT", #$FF
-    db #$28, " SLOW RIGHT", #$FF
+    db #$28, "Phan 1st Direc", #$FF
+    db #$28, "tion RANDOM", #$FF
+    db #$28, "tion   LEFT", #$FF
+    db #$28, "tion  RIGHT", #$FF
     db #$FF
 
-rng_phan_second_phase:
+rng_phan_first_pattern:
     dw !ACTION_CHOICE
-    dl #!ram_phantoon_rng_2
+    dl #!ram_phantoon_rng_pat1
     dw #$0000
-    db #$28, "Phan 2nd Phase", #$FF
-    db #$28, "     RANDOM", #$FF
-    db #$28, "  FAST LEFT", #$FF
-    db #$28, "   MID LEFT", #$FF
-    db #$28, "  SLOW LEFT", #$FF
-    db #$28, " FAST RIGHT", #$FF
-    db #$28, "  MID RIGHT", #$FF
-    db #$28, " SLOW RIGHT", #$FF
+    db #$28, "Phan 1st Patte", #$FF
+    db #$28, "rn   RANDOM", #$FF
+    db #$28, "rn     FAST", #$FF
+    db #$28, "rn      MID", #$FF
+    db #$28, "rn     SLOW", #$FF
+    db #$FF
+
+rng_phan_second_direction:
+    dw !ACTION_CHOICE
+    dl #!ram_phantoon_rng_dir2
+    dw #$0000
+    db #$28, "Phan 2nd Direc", #$FF
+    db #$28, "tion RANDOM", #$FF
+    db #$28, "tion   LEFT", #$FF
+    db #$28, "tion  RIGHT", #$FF
+    db #$FF
+
+rng_phan_second_pattern:
+    dw !ACTION_CHOICE
+    dl #!ram_phantoon_rng_pat2
+    dw #$0000
+    db #$28, "Phan 2nd Patte", #$FF
+    db #$28, "rn   RANDOM", #$FF
+    db #$28, "rn     FAST", #$FF
+    db #$28, "rn      MID", #$FF
+    db #$28, "rn     SLOW", #$FF
     db #$FF
 
 rng_phan_eyeclose:
     dw !ACTION_CHOICE
-    dl #!ram_phantoon_rng_3
+    dl #!ram_phantoon_rng_eyeclose
     dw #$0000
     db #$28, "Phan Eye Close", #$FF
     db #$28, "     RANDOM", #$FF
