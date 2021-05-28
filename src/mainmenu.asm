@@ -759,13 +759,13 @@ EventsMenu:
     %cm_header("EVENTS")
 
 events_resetevents:
-    %cm_jsr_nosound("Reset All Events", action_reset_events, #$0000)
+    %cm_jsr("Reset All Events", action_reset_events, #$0000)
 
 events_resetdoors:
-    %cm_jsr_nosound("Reset All Doors", action_reset_doors, #$0000)
+    %cm_jsr("Reset All Doors", action_reset_doors, #$0000)
 
 events_resetitems:
-    %cm_jsr_nosound("Reset All Items", action_reset_items, #$0000)
+    %cm_jsr("Reset All Items", action_reset_items, #$0000)
 
 events_goto_bosses:
     %cm_submenu("Bosses", #BossesMenu)
