@@ -86,11 +86,13 @@ hook_hopper_set_rng:
     LDA #$0001 : STA !ram_room_has_set_rng
     JML $808111
 
+
 hook_lavarocks_set_rng:
     LDA #$0001 : STA !ram_room_has_set_rng
     LDA #$0011
     STA $05E5
     RTL
+
 
 hook_beetom_set_rng:
     LDA #$0001 : STA !ram_room_has_set_rng
@@ -102,28 +104,31 @@ hook_beetom_set_rng:
 hook_phantoon_1st_dir_rng:
     JSL $808111 ; Trying to preserve the number of RNG calls being done in the frame
 
-    LDA !ram_phantoon_rng_dir1 : BEQ .no_manip
-    PHX : TAX : LDA.l phantoon_dirs,X : PLX
+    LDA !ram_phantoon_rng_1 : BEQ .no_manip
+    PHX : TAX : LDA.l phantoon_dirs,X : PLX : AND #$00FF
     RTL
 
   .no_manip
     LDA $05E5
     RTL
 
+
 hook_phantoon_1st_pat:
-    LDA !ram_phantoon_rng_pat1 : BEQ .no_manip
+    LDA !ram_phantoon_rng_1 : BEQ .no_manip
+    PHX : TAX : LDA.l phantoon_pats,X : PLX : AND #$00FF
     RTL
 
   .no_manip
     LDA $05B6 : LSR A
     RTL
 
+
 hook_phantoon_2nd_dir_rng:
     JSL $808111 ; Trying to preserve the number of RNG calls being done in the frame
 
-    LDA !ram_phantoon_rng_dir2 : BEQ .no_manip
+    LDA !ram_phantoon_rng_2 : BEQ .no_manip
 
-    PHX : TAX : LDA.l phantoon_dirs,X : PLX
+    PHX : TAX : LDA.l phantoon_dirs,X : PLX : AND #$00FF
     EOR #$0001
     RTL
 
@@ -131,8 +136,9 @@ hook_phantoon_2nd_dir_rng:
     LDA $05E5
     RTL
 
+
 hook_phantoon_2nd_dir_2:
-    LDA !ram_phantoon_rng_dir2 : BEQ .no_manip
+    LDA !ram_phantoon_rng_2 : BEQ .no_manip
 
     ; I don't quite understand this part, but it works ¯\_(ツ)_/¯
     LDA #$0001
@@ -143,10 +149,13 @@ hook_phantoon_2nd_dir_2:
     LDA $05B6 : BIT #$0001
     RTL
 
+
 hook_phantoon_2nd_pat:
     JSL $808111 ; Trying to preserve the number of RNG calls being done in the frame
 
-    LDA !ram_phantoon_rng_pat2 : BEQ .no_manip
+    LDA !ram_phantoon_rng_2 : BEQ .no_manip
+
+    PHX : TAX : LDA.l phantoon_pats,X : PLX : AND #$00FF
     RTL
 
   .no_manip
@@ -155,7 +164,7 @@ hook_phantoon_2nd_pat:
 
 hook_phantoon_eyeclose:
 {
-    LDA !ram_phantoon_rng_eyeclose : BEQ .no_manip
+    LDA !ram_phantoon_rng_3 : BEQ .no_manip
     DEC : ASL ; return with 0-slow, 2-mid, 4-close
     RTL
 
@@ -166,7 +175,15 @@ hook_phantoon_eyeclose:
 }
 
 phantoon_dirs:
-db $FFFF, $0001, $0000 ; (random), left, right
+db $FF
+db $01, $01, $01
+db $00, $00, $00
+
+
+phantoon_pats:
+db $FF
+db $01, $02, $03
+db $01, $02, $03
 
 
 hook_botwoon_rng:
