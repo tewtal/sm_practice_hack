@@ -521,6 +521,7 @@ ih_hud_code:
     JSR (.status_display_table,X)
 
     ; Samus' HP
+    LDA #$0C0E : STA $7EC690 ; erase stale decimal tile
     LDA $09C2 : CMP !ram_last_hp : BEQ .end : STA !ram_last_hp
     JSR Hex2Dec : LDX #$0092 : JSR Draw4
 
@@ -985,7 +986,7 @@ status_hspeed:
     LDX #$0092 : JSR Draw4Hex
 
   .done
-    LDA #$0C6E : STA $7EC690 ; decimal
+    LDA #$0CCB : STA $7EC690 ; decimal
     RTS
 }
 
@@ -1003,7 +1004,7 @@ status_vspeed:
     STA !ram_subpixel_pos : LDX #$0092 : JSR Draw4Hex
 
   .done
-    LDA #$0C6E : STA $7EC690 ; decimal
+    LDA #$0CCB : STA $7EC690 ; decimal
     RTS
 }
 
@@ -1144,7 +1145,7 @@ status_xpos:
     STA !ram_subpixel_pos : LDX #$0092 : JSR Draw4Hex
 
   .done
-    LDA #$0C6E : STA $7EC690 ; decimal
+    LDA #$0CCB : STA $7EC690 ; decimal
     RTS
 }
 
@@ -1162,7 +1163,7 @@ status_ypos:
     STA !ram_subpixel_pos : LDX #$0092 : JSR Draw4Hex
 
   .done
-    LDA #$0C6E : STA $7EC690 ; decimal
+    LDA #$0CCB : STA $7EC690 ; decimal
     RTS
 }
 
@@ -1925,7 +1926,7 @@ NumberGFXTable:
     dw #$0C45, #$0C3C, #$0C3D, #$0C3E, #$0C3F, #$0C40, #$0C41, #$0C42, #$0C43, #$0C44
 
 HexGFXTable:
-    dw #$0C70, #$0C71, #$0C72, #$0C73, #$0C74, #$0C75, #$0C76, #$0C77, #$0C78, #$0C79, #$0C7A, #$0C7B, #$0C7C, #$0C7D, #$0C7E, #$0C7F
+    dw #$0C70, #$0C71, #$0C72, #$0C73, #$0C74, #$0C75, #$0C76, #$0C77, #$0C78, #$0C79, #$0C7A, #$0C7B, #$0C7C, #$0C7D, #$0C7E, #$0C7F, #$0C6E
 
 ControllerTable1:
     dw $0020, $0800, $0010, $4000, $0040, $2000

@@ -1130,7 +1130,9 @@ game_debugmode:
 ; ----------
 
 RngMenu:
-    dw #rng_rerandomize
+    if !FEATURE_SD2SNES
+        dw #rng_rerandomize
+    endif
     dw #rng_phan_first_phase
     dw #rng_phan_second_phase
     dw #rng_phan_eyeclose
@@ -1139,7 +1141,7 @@ RngMenu:
     dw #rng_draygon_rng_left
     dw #rng_crocomire_rng
     dw #$0000
-    %cm_header("RNG")
+    %cm_header("BOSS RNG CONTROL")
 
 rng_rerandomize:
     %cm_toggle("Rerandomize", !sram_rerandomize, #$0001, #0)
