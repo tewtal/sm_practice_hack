@@ -76,7 +76,6 @@ init_sram:
     LDA #$0000 : STA !sram_save_has_set_rng
     LDA #$0000 : STA !sram_preset_category
     LDA #$0000 : STA !sram_room_strat
-    LDA #$0000 : STA !sram_hexstyle
     
     LDA #!SRAM_VERSION : STA !sram_initialized
     RTS

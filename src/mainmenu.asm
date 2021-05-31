@@ -909,7 +909,6 @@ InfoHudMenu:
     dw #ih_goto_room_strat
     dw #ih_room_strat
     dw #ih_room_counter
-    dw #ih_hex_style
     dw #ih_lag
     dw #$0000
     %cm_header("INFOHUD")
@@ -1086,15 +1085,6 @@ ih_room_counter:
     db #$28, "Frame Counters", #$FF
     db #$28, "   REALTIME", #$FF
     db #$28, "     INGAME", #$FF
-    db #$FF
-
-ih_hex_style:
-    dw !ACTION_CHOICE
-    dl #!sram_hexstyle
-    dw #$0000
-    db #$28, "Hex Number Sty", #$FF
-    db #$28, "le ORIGINAL", #$FF
-    db #$28, "le TRUE O-F", #$FF
     db #$FF
 
 ih_lag:

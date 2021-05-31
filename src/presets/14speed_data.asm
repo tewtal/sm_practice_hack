@@ -1061,6 +1061,7 @@ preset_14speed_lower_norfair_ridley_farming_room:
     dl $7E0913 : db $02 : dw $4400 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $00F4 ; Health
+    dl $7E09C6 : db $02 : dw $000A ; Missiles
     dl $7E09CA : db $02 : dw $000A ; Supers
     dl $7E0AF6 : db $02 : dw $004D ; Samus X
     dl $7E0AFA : db $02 : dw $008B ; Samus Y
