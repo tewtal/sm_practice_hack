@@ -199,7 +199,7 @@ hook_botwoon_rng:
     RTL
 
 
-org $A5EE50
+org $A5F960
 hook_draygon_rng_left:
 {
     LDA !ram_draygon_rng_left : BEQ .no_manip
