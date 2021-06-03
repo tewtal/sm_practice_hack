@@ -24,6 +24,9 @@
     org $A7D07C ; hijack, RNG call for second pattern
         ; $A7:D07C 22 11 81 80 JSL $808111[$80:8111]
         JSL hook_phantoon_2nd_pat
+
+    org $A7D064 ; Phantoon eye close timer
+        JSL hook_phantoon_eyeclose
 }
 
 
@@ -33,6 +36,24 @@
         ; $B3:9943 22 11 81 80 JSL $808111[$80:8111]
         JSL hook_botwoon_rng
 }
+
+
+; Draygon hijacks
+{
+    org $A58ADC
+        JSR hook_draygon_rng_left
+
+    org $A5899D
+        JSR hook_draygon_rng_right
+}
+
+
+; Crocomire hijack
+{
+    org $A48753
+        JSR hook_crocomire_rng
+}
+
 
 ; "Set rng" hijacks
 {
@@ -141,19 +162,17 @@ hook_phantoon_2nd_pat:
     LDA $05E5
     RTL
 
-
-hook_botwoon_rng:
-    JSL $808111 ; Trying to preserve the number of RNG calls being done in the frame
-
-    LDA !ram_botwoon_rng : BEQ .no_manip
-
-    DEC : ASL #3
+hook_phantoon_eyeclose:
+{
+    LDA !ram_phantoon_rng_3 : BEQ .no_manip
+    DEC : ASL ; return with 0-slow, 2-mid, 4-close
     RTL
 
   .no_manip
-    LDA $05E5
+    LDA $05E5 ; return with random number
+    AND #$0007 : ASL   ; overwritten code
     RTL
-
+}
 
 phantoon_dirs:
 db $FF
@@ -165,6 +184,61 @@ phantoon_pats:
 db $FF
 db $01, $02, $03
 db $01, $02, $03
+
+
+hook_botwoon_rng:
+    JSL $808111 ; Trying to preserve the number of RNG calls being done in the frame
+
+    LDA !ram_botwoon_rng : BEQ .no_manip
+
+    DEC : ASL #3 : INC
+    RTL
+
+  .no_manip
+    LDA $05E5
+    RTL
+
+
+org $A5EE50
+hook_draygon_rng_left:
+{
+    LDA !ram_draygon_rng_left : BEQ .no_manip
+    DEC    ; return with 1-swoop or 0-goop
+    RTS
+    
+  .no_manip
+    LDA $05E5   ; return with random number (overwritten code)
+    RTS
+}
+
+hook_draygon_rng_right:
+{
+    LDA !ram_draygon_rng_right : BEQ .no_manip
+    DEC    ; return with 1-swoop or 0-goop
+    RTS
+    
+  .no_manip
+    LDA $05E5   ; return with random number (overwritten code)
+    RTS
+}
+
+
+org $A4F700
+hook_crocomire_rng:
+{
+    LDA !ram_crocomire_rng : BEQ .no_manip
+    DEC : BEQ .step
+    LDA #$0000    ; return with <400 for swipe
+    RTS
+
+  .step
+    LDA #$0400    ; return with 400+ for step
+    RTS
+
+  .no_manip
+    LDA $05E5    ; return with random number (overwritten code)
+    RTS
+}
 
 
 print pc, " rng end"

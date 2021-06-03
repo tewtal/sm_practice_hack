@@ -16,6 +16,26 @@ export class Changelog extends Component {
                                 <Col>
                                     <Card>
                                         <CardBody>
+                                            <h2>Version 2.2.x</h2>
+                                            <p>Changes since 2.1.9:</p>
+                                            <h5>Changes:</h5>
+                                            <ul>
+                                                <li>Added submenus for Preset Categories, InfoHUD Display Modes, and Room Strats. (2.2)</li>
+                                                <li>Update room timers between Mother Brain phases. (2.2)</li>
+                                                <li>Added support for five digit decimal numbers and hexidecimal. (2.2)</li>
+                                                <li>Added RNG Controls for Phantoon, Draygon, and Crocomire. (2.2)</li>
+                                                <li>Fixed Botwoon RNG Control and endgame cutscene crash. (2.2)</li>
+                                                <li>Added presets for Any% PKRD. (2.2)</li>
+                                            </ul>
+                                        </CardBody>
+                                    </Card>
+                                </Col>
+                            </Row>
+                            <br />
+                            <Row>
+                                <Col>
+                                    <Card>
+                                        <CardBody>
                                             <h2>Version 2.1.x</h2>
                                             <p>Changes since 2.0.15:</p>
                                             <h5>Changes:</h5>

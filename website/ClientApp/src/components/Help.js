@@ -24,7 +24,7 @@ export class Help extends Component {
                                 <Col>
                                     <ol className="list" style={{fontSize: 1.1 + 'em'}}>
                                         <li>Status display defaults to first enemy's HP, but can be configured to show Charge Timer, X-Factor timer, Shinespark timer and more.</li>
-                                        <li>Item percentage</li>
+                                        <li>Item collection percentage</li>
                                         <li>Number of E-tanks</li>
                                         <li>Current total energy</li>
                                         <li>Segment timer in minutes.seconds.frames. Resets when loading a preset or by controller shortcut</li>
@@ -123,8 +123,13 @@ export class Help extends Component {
                             </Row>
                             <br />
                             <Row>
-                                <Col md="4">Presets</Col>
-                                <Col>Presets are pre-configured savestates that are specific to a particular category. Select the desired category in the Misc menu.</Col>
+                                <Col md="4">Category Presets</Col>
+                                <Col>Presets are pre-configured savestates that are specific to a particular category.</Col>
+                            </Row>
+                            <br />
+                            <Row>
+                                <Col md="4">Select Preset Category</Col>
+                                <Col>Select the desired category to be used with Category Presets</Col>
                             </Row>
                             <br />
                             <Row>
@@ -174,6 +179,10 @@ export class Help extends Component {
                                 <Col>Toggle ultra slow horizontal movement, as if grabbed by the Baby Metroid</Col>
                             </Row>
                             <Row>
+                                <Col md="3" className="offset-md-1">Magic Pants</Col>
+                                <Col>Toggle a flashing animation on Samus to show when dash should be held for short charging</Col>
+                            </Row>
+                            <Row>
                                 <Col md="3" className="offset-md-1">Fanfare</Col>
                                 <Col>Toggle the fanfare for collecting items</Col>
                             </Row>
@@ -188,10 +197,6 @@ export class Help extends Component {
                             <Row>
                                 <Col md="3" className="offset-md-1">Invincibility</Col>
                                 <Col>Prevents Samus from taking damage or knockback</Col>
-                            </Row>
-                            <Row>
-                                <Col md="3" className="offset-md-1">Preset Category</Col>
-                                <Col>Select the category to be used in the Presets menu</Col>
                             </Row>
                             <br />
                             <Row>
@@ -220,10 +225,6 @@ export class Help extends Component {
                                 <Col md="3" className="offset-md-1">Artificial Lag</Col>
                                 <Col>Select a value to adjust how much lag occurs during normal gameplay. This is to compensate for the lack of a minimap on the HUD which would normally consume CPU cycles.</Col>
                             </Row>
-                            <Row>
-                                <Col md="3" className="offset-md-1">Magic Pants</Col>
-                                <Col>Toggle a flashing animation on Samus to show when dash should be held for short charging</Col>
-                            </Row>
                             <br />
                             <Row>
                                 <Col md="4">Game</Col>
@@ -247,8 +248,24 @@ export class Help extends Component {
                                 <Col>Choose the direction and eye opening pattern for Phantoon's second and subsequent phases</Col>
                             </Row>
                             <Row>
+                                <Col md="3" className="offset-md-1">Phan Eye Close</Col>
+                                <Col>Choose how long Phantoon's eye will remain open after a ring of flames</Col>
+                            </Row>
+                            <Row>
                                 <Col md="3" className="offset-md-1">Botwoon RNG</Col>
                                 <Col>Choose the opening pattern for Botwoon's first cycle</Col>
+                            </Row>
+                            <Row>
+                                <Col md="3" className="offset-md-1">Draygon from Right</Col>
+                                <Col>Choose Draygon's attack type from the right side of the room. Draygon will always 'swoop' after a 'goop'.</Col>
+                            </Row>
+                            <Row>
+                                <Col md="3" className="offset-md-1">Draygon from Left</Col>
+                                <Col>Choose Draygon's attack type from the left side of the room. Draygon will always 'swoop' after a 'goop'.</Col>
+                            </Row>
+                            <Row>
+                                <Col md="3" className="offset-md-1">Crocomire RNG</Col>
+                                <Col>Set Crocomire to always step forward, or always swipe and shoot projectiles.</Col>
                             </Row>
                             <br />
                             <Row>
@@ -274,6 +291,10 @@ export class Help extends Component {
                             <Row>
                                 <Col md="3" className="offset-md-1">Kill Enemies</Col>
                                 <Col>Instantly deletes all enemies in the current room</Col>
+                            </Row>
+                            <Row>
+                                <Col md="3" className="offset-md-1">Clear Shortcuts</Col>
+                                <Col>Resets Main Menu shortcut to default and removes button combos for all others.</Col>
                             </Row>
                         </CardBody>
                     </Card>

@@ -92,6 +92,7 @@ preset_category_submenus:
     dw #PresetsMenuHundo
     dw #PresetsMenu100early
     dw #PresetsMenuRbo
+    dw #PresetsMenuPkrd
     dw #PresetsMenuKpdr25
     dw #PresetsMenuGtclassic
     dw #PresetsMenu14ice
@@ -109,6 +110,7 @@ preset_category_banks:
     dw #PresetsMenuHundo>>16
     dw #PresetsMenu100early>>16
     dw #PresetsMenuRbo>>16
+    dw #PresetsMenuPkrd>>16
     dw #PresetsMenuKpdr25>>16
     dw #PresetsMenuGtclassic>>16
     dw #PresetsMenu14ice>>16
@@ -127,6 +129,7 @@ preset_category_banks:
 MainMenu:
     dw #mm_goto_equipment
     dw #mm_goto_presets
+    dw #mm_goto_select_preset_category
     dw #mm_goto_teleport
     dw #mm_goto_events
     dw #mm_goto_misc
@@ -135,13 +138,16 @@ MainMenu:
     dw #mm_goto_rngmenu
     dw #mm_goto_ctrlsmenu
     dw #$0000
-    %cm_header("SM PRACTICE HACK 2.1.9")
+    %cm_header("SM PRACTICE HACK 2.2")
 
 mm_goto_equipment:
     %cm_submenu("Equipment", #EquipmentMenu)
 
 mm_goto_presets:
     %cm_jsr("Category Presets", #action_presets_submenu, #$0000)
+
+mm_goto_select_preset_category:
+    %cm_submenu("Select Preset Category", #SelectPresetCategoryMenu)
 
 mm_goto_teleport:
     %cm_submenu("Teleport", #TeleportMenu)
@@ -185,6 +191,7 @@ incsrc presets/14speed_menu.asm
 incsrc presets/allbosskpdr_menu.asm
 incsrc presets/allbosspkdr_menu.asm
 incsrc presets/allbossprkd_menu.asm
+incsrc presets/pkrd_menu.asm
 
 pullpc
 
@@ -460,6 +467,97 @@ tb_plasmabeam:
     %cm_toggle_bit("Plasma", $7E09A8, #$0008, #0)
 
 
+; ------------------
+; Select Preset Category menu
+; ------------------
+
+SelectPresetCategoryMenu:
+    dw #precat_current
+    dw #precat_prkd
+    dw #precat_kpdr21
+    dw #precat_hundo
+    dw #precat_100early
+    dw #precat_rbo
+    dw #precat_pkrd
+    dw #precat_kpdr25
+    dw #precat_gtclassic
+    dw #precat_14ice
+    dw #precat_14speed
+    dw #precat_allbosskpdr
+    dw #precat_allbosspkdr
+    dw #precat_allbossprkd
+    dw #$0000
+    %cm_header("SELECT PRESET CATEGORY")
+
+precat_current:
+    dw !ACTION_CHOICE
+    dl #!sram_preset_category
+    dw #$0000
+    db #$28, "CURRENT PRESET", #$FF
+        db #$28, "       PRKD", #$FF ; Note the "y" ;)
+        db #$28, "       KPDR", #$FF
+        db #$28, "   100 LATE", #$FF
+        db #$28, "  100 EARLY", #$FF
+        db #$28, "        RBO", #$FF
+        db #$28, "       PKRD", #$FF
+        db #$28, "     KPDR25", #$FF
+        db #$28, " GT CLASSIC", #$FF
+        db #$28, "     14 ICE", #$FF
+        db #$28, "   14 SPEED", #$FF
+        db #$28, "   ALL KPDR", #$FF
+        db #$28, "   ALL PKDR", #$FF
+        db #$28, "   ALL PRKD", #$FF
+    db #$FF
+    db #$FF
+
+precat_prkd:
+    %cm_jsr("Any% PRKD", #action_select_preset_category, #$0000)
+
+precat_kpdr21:
+    %cm_jsr("Any% KPDR", #action_select_preset_category, #$0001)
+
+precat_hundo:
+    %cm_jsr("100% Late Crocomire", #action_select_preset_category, #$0002)
+
+precat_100early:
+    %cm_jsr("100% Early Crocomire", #action_select_preset_category, #$0003)
+
+precat_rbo:
+    %cm_jsr("Reverse Boss Order", #action_select_preset_category, #$0004)
+
+precat_pkrd:
+    %cm_jsr("Any% PKRD", #action_select_preset_category, #$0005)
+
+precat_kpdr25:
+    %cm_jsr("Any% KPDR Early Ice", #action_select_preset_category, #$0006)
+
+precat_gtclassic:
+    %cm_jsr("GT Classic", #action_select_preset_category, #$0007)
+
+precat_14ice:
+    %cm_jsr("Low% Ice", #action_select_preset_category, #$0008)
+
+precat_14speed:
+    %cm_jsr("Low% Speed", #action_select_preset_category, #$0009)
+
+precat_allbosskpdr:
+    %cm_jsr("All Bosses KPDR", #action_select_preset_category, #$000A)
+
+precat_allbosspkdr:
+    %cm_jsr("All Bosses PKDR", #action_select_preset_category, #$000B)
+
+precat_allbossprkd:
+    %cm_jsr("All Bosses PRKD", #action_select_preset_category, #$000C)
+
+action_select_preset_category:
+{
+    TYA : STA !sram_preset_category
+    JSR cm_go_back
+    JSR cm_calculate_max
+    RTS
+}
+
+
 ; ---------------
 ; Teleport menu
 ; ---------------
@@ -581,11 +679,11 @@ MiscMenu:
     dw #misc_flashsuit
     dw #misc_hyperbeam
     dw #misc_babyslowdown
+    dw #misc_magicpants
     dw #misc_fanfare_toggle
     dw #misc_music_toggle
     dw #misc_transparent
     dw #misc_invincibility
-    dw #misc_preset_cateory
     dw #$0000
     %cm_header("MISC")
 
@@ -600,6 +698,9 @@ misc_hyperbeam:
 
 misc_babyslowdown:
     %cm_toggle("Baby Slowdown", $7E0A66, #$0002, #0)
+
+misc_magicpants:
+    %cm_toggle_bit("Magic Pants", !ram_magic_pants_1, #$0001, #0)
 
 misc_fanfare_toggle:
     %cm_toggle("Fanfare", !sram_fanfare_toggle, #$0001, #0)
@@ -634,25 +735,6 @@ misc_transparent:
 misc_invincibility:
     %cm_toggle_bit("Invincibility", $7E0DE0, #$0007, #0)
 
-misc_preset_cateory:
-    dw !ACTION_CHOICE
-    dl #!sram_preset_category
-    dw #$0000
-    db #$28, "Preset Category", #$FF
-        db #$28, "y      PRKD", #$FF ; Note the "y" ;)
-        db #$28, "y      KPDR", #$FF
-        db #$28, "y  100 LATE", #$FF
-        db #$28, "y 100 EARLY", #$FF
-        db #$28, "y       RBO", #$FF
-        db #$28, "y    KPDR25", #$FF
-        db #$28, "y GTCLASSIC", #$FF
-        db #$28, "y    14 ICE", #$FF
-        db #$28, "y  14 SPEED", #$FF
-        db #$28, "y  ALL KPDR", #$FF
-        db #$28, "y  ALL PKDR", #$FF
-        db #$28, "y  ALL PRKD", #$FF
-    db #$FF
-
 
 ; -----------
 ; Events menu
@@ -664,12 +746,26 @@ EventsMenu:
     dw #events_goto_bosses
     dw #events_zebesawake
     dw #events_maridiatubebroken
+    dw #events_chozoacid
     dw #events_shaktool
     dw #events_tourian
+    dw #events_metroid1
+    dw #events_metroid2
+    dw #events_metroid3
+    dw #events_metroid4
     dw #events_zebesexploding
     dw #events_animals
     dw #$0000
     %cm_header("EVENTS")
+
+events_resetevents:
+    %cm_jsr("Reset All Events", action_reset_events, #$0000)
+
+events_resetdoors:
+    %cm_jsr("Reset All Doors", action_reset_doors, #$0000)
+
+events_resetitems:
+    %cm_jsr("Reset All Items", action_reset_items, #$0000)
 
 events_goto_bosses:
     %cm_submenu("Bosses", #BossesMenu)
@@ -683,23 +779,29 @@ events_maridiatubebroken:
 events_shaktool:
     %cm_toggle_bit("Shaktool Done Digging", $7ED820, #$2000, #0)
 
+events_chozoacid:
+    %cm_toggle_bit("Chozo Lowered Acid", $7ED821, #$0010, #0)
+
 events_tourian:
     %cm_toggle_bit("Tourian Open", $7ED820, #$0400, #0)
+
+events_metroid1:
+    %cm_toggle_bit("1st Metroids Cleared", $7ED822, #$0001, #0)
+
+events_metroid2:
+    %cm_toggle_bit("2nd Metroids Cleared", $7ED822, #$0002, #0)
+
+events_metroid3:
+    %cm_toggle_bit("3rd Metroids Cleared", $7ED822, #$0004, #0)
+
+events_metroid4:
+    %cm_toggle_bit("4th Metroids Cleared", $7ED822, #$0008, #0)
 
 events_zebesexploding:
     %cm_toggle_bit("Zebes Set Ablaze", $7ED820, #$4000, #0)
 
 events_animals:
     %cm_toggle_bit("Animals Saved", $7ED820, #$8000, #0)
-
-events_resetevents:
-    %cm_jsr("Reset All Events", action_reset_events, #$0000)
-
-events_resetdoors:
-    %cm_jsr("Reset All Doors", action_reset_doors, #$0000)
-
-events_resetitems:
-    %cm_jsr("Reset All Items", action_reset_items, #$0000)
 
 
 action_reset_events:
@@ -802,19 +904,107 @@ ConfigMenu:
 ; --------------
 
 InfoHudMenu:
+    dw #ih_goto_display_mode
     dw #ih_display_mode
+    dw #ih_goto_room_strat
     dw #ih_room_strat
     dw #ih_room_counter
     dw #ih_lag
-    dw #ih_magicpants
     dw #$0000
     %cm_header("INFOHUD")
+
+ih_goto_display_mode:
+    %cm_submenu("Select InfoHUD Mode", #DisplayModeMenu)
+
+DisplayModeMenu:
+    dw ihmode_enemyhp
+    dw ihmode_roomstrat
+    dw ihmode_chargetimer
+    dw ihmode_xfactor
+    dw ihmode_cooldowncounter
+    dw ihmode_shinetimer
+    dw ihmode_dashcounter
+    dw ihmode_shinefinetune
+    dw ihmode_iframecounter
+    dw ihmode_spikesuit
+    dw ihmode_lagcounter
+    dw ihmode_xpos
+    dw ihmode_ypos
+    dw ihmode_hspeed
+    dw ihmode_vspeed
+    dw ihmode_quickdrop
+    dw ihmode_walljump
+    dw ihmode_shottimer
+    dw #$0000
+    %cm_header("INFOHUD DISPLAY MODE")
+
+ihmode_enemyhp:
+    %cm_jsr("Enemy HP", #action_select_infohud_mode, #$0000)
+
+ihmode_roomstrat:
+    %cm_jsr("Room Strat", #action_select_infohud_mode, #$0001)
+
+ihmode_chargetimer:
+    %cm_jsr("Charge Timer", #action_select_infohud_mode, #$0002)
+
+ihmode_xfactor:
+    %cm_jsr("X-Factor Timer", #action_select_infohud_mode, #$0003)
+
+ihmode_cooldowncounter:
+    %cm_jsr("Cooldown Timer", #action_select_infohud_mode, #$0004)
+
+ihmode_shinetimer:
+    %cm_jsr("Shinespark Timer", #action_select_infohud_mode, #$0005)
+
+ihmode_dashcounter:
+    %cm_jsr("Dash Counter", #action_select_infohud_mode, #$0006)
+
+ihmode_shinefinetune:
+    %cm_jsr("Shine Tune", #action_select_infohud_mode, #$0007)
+
+ihmode_iframecounter:
+    %cm_jsr("I-Frame Counter", #action_select_infohud_mode, #$0008)
+
+ihmode_spikesuit:
+    %cm_jsr("Spikesuit Trainer", #action_select_infohud_mode, #$0009)
+
+ihmode_lagcounter:
+    %cm_jsr("CPU Usage", #action_select_infohud_mode, #$000A)
+
+ihmode_xpos:
+    %cm_jsr("X Position", #action_select_infohud_mode, #$000B)
+
+ihmode_ypos:
+    %cm_jsr("Y Position", #action_select_infohud_mode, #$000C)
+
+ihmode_hspeed:
+    %cm_jsr("Horizontal Speed", #action_select_infohud_mode, #$000D)
+
+ihmode_vspeed:
+    %cm_jsr("Vertical Speed", #action_select_infohud_mode, #$000E)
+
+ihmode_quickdrop:
+    %cm_jsr("Quickdrop Trainer", #action_select_infohud_mode, #$000F)
+
+ihmode_walljump:
+    %cm_jsr("Walljump Trainer", #action_select_infohud_mode, #$0010)
+
+ihmode_shottimer:
+    %cm_jsr("Shot Timer", #action_select_infohud_mode, #$0011)
+
+action_select_infohud_mode:
+{
+    TYA : STA !sram_display_mode
+    JSR cm_go_back
+    JSR cm_calculate_max
+    RTS
+}
 
 ih_display_mode:
     dw !ACTION_CHOICE
     dl #!sram_display_mode
     dw #$0000
-    db #$28, "Infohud Mode", #$FF
+    db #$28, "Current Mode", #$FF
     db #$28, "   ENEMY HP", #$FF
     db #$28, " ROOM STRAT", #$FF
     db #$28, "     CHARGE", #$FF
@@ -835,11 +1025,51 @@ ih_display_mode:
     db #$28, " SHOT TIMER", #$FF
     db #$FF
 
+ih_goto_room_strat:
+    %cm_submenu("Select Room Strat", #RoomStratMenu)
+
+RoomStratMenu:
+    dw ihstrat_mbhp
+    dw ihstrat_moatcwj
+    dw ihstrat_shinetopb
+    dw ihstrat_botwooncf
+    dw ihstrat_elevatorcf
+    dw ihstrat_robotflush
+    dw #$0000
+    %cm_header("INFOHUD ROOM STRAT")
+
+ihstrat_mbhp:
+    %cm_jsr("Mother Brain HP", #action_select_room_strat, #$0000)
+
+ihstrat_moatcwj:
+    %cm_jsr("Moat CWJ", #action_select_room_strat, #$0001)
+
+ihstrat_shinetopb:
+    %cm_jsr("Shine to PB", #action_select_room_strat, #$0002)
+
+ihstrat_botwooncf:
+    %cm_jsr("Botwoon Crystal Flash", #action_select_room_strat, #$0003)
+
+ihstrat_elevatorcf:
+    %cm_jsr("Elevator Crystal Flash", #action_select_room_strat, #$0004)
+
+ihstrat_robotflush:
+    %cm_jsr("Robot Flush", #action_select_room_strat, #$0005)
+
+action_select_room_strat:
+{
+    TYA : STA !sram_room_strat
+    LDA #$0001 : STA !sram_display_mode
+    JSR cm_go_back
+    JSR cm_calculate_max
+    RTS
+}
+
 ih_room_strat:
     dw !ACTION_CHOICE
     dl #!sram_room_strat
     dw #$0000
-    db #$28, "Room Strat", #$FF
+    db #$28, "Current Strat", #$FF
     db #$28, "      MB HP", #$FF
     db #$28, "   MOAT CWJ", #$FF
     db #$28, "SHINE TO PB", #$FF
@@ -859,9 +1089,6 @@ ih_room_counter:
 
 ih_lag:
     %cm_numfield("Artificial lag", !sram_artificial_lag, 0, 64, 1, #0)
-
-ih_magicpants:
-    %cm_toggle_bit("Magic Pants", $7FFB64, #$0001, #0)
 
 
 ; ----------
@@ -893,19 +1120,25 @@ game_debugmode:
 ; ----------
 
 RngMenu:
-    dw #rng_rerandomize
+    if !FEATURE_SD2SNES
+        dw #rng_rerandomize
+    endif
     dw #rng_phan_first_phase
     dw #rng_phan_second_phase
+    dw #rng_phan_eyeclose
     dw #rng_botwoon_rng
+    dw #rng_draygon_rng_right
+    dw #rng_draygon_rng_left
+    dw #rng_crocomire_rng
     dw #$0000
-    %cm_header("RNG")
+    %cm_header("BOSS RNG CONTROL")
 
 rng_rerandomize:
     %cm_toggle("Rerandomize", !sram_rerandomize, #$0001, #0)
 
 rng_botwoon_rng:
     dw !ACTION_CHOICE
-    dl #$7FFB8A
+    dl #!ram_botwoon_rng
     dw #$0000
     db #$28, "Botwoon RNG", #$FF
     db #$28, "     RANDOM", #$FF
@@ -943,6 +1176,47 @@ rng_phan_second_phase:
     db #$28, " SLOW RIGHT", #$FF
     db #$FF
 
+rng_phan_eyeclose:
+    dw !ACTION_CHOICE
+    dl #!ram_phantoon_rng_3
+    dw #$0000
+    db #$28, "Phan Eye Close", #$FF
+    db #$28, "     RANDOM", #$FF
+    db #$28, "       SLOW", #$FF
+    db #$28, "        MID", #$FF
+    db #$28, "       FAST", #$FF
+    db #$FF
+
+rng_draygon_rng_right:
+    dw !ACTION_CHOICE
+    dl #!ram_draygon_rng_right
+    dw #$0000
+    db #$28, "Draygon from R", #$FF
+    db #$28, "ight RANDOM", #$FF
+    db #$28, "ight   GOOP", #$FF
+    db #$28, "ight  SWOOP", #$FF
+    db #$FF
+
+rng_draygon_rng_left:
+    dw !ACTION_CHOICE
+    dl #!ram_draygon_rng_left
+    dw #$0000
+    db #$28, "Draygon from L", #$FF
+    db #$28, "eft  RANDOM", #$FF
+    db #$28, "eft    GOOP", #$FF
+    db #$28, "eft   SWOOP", #$FF
+    db #$FF
+
+rng_crocomire_rng:
+    dw !ACTION_CHOICE
+    dl #!ram_crocomire_rng
+    dw #$0000
+    db #$28, "Crocomire RNG", #$FF
+    db #$28, "     RANDOM", #$FF
+    db #$28, "       STEP", #$FF
+    db #$28, "      SWIPE", #$FF
+    db #$FF
+
 
 ; ----------
 ; Ctrl Menu
@@ -958,6 +1232,7 @@ CtrlMenu:
     dw #ctrl_reset_segment_timer
     dw #ctrl_full_equipment
     dw #ctrl_kill_enemies
+    dw #ctrl_clear_shortcuts
     dw #$0000
     %cm_header("CONTROLLER SHORTCUTS")
 
@@ -982,3 +1257,20 @@ ctrl_full_equipment:
 
 ctrl_kill_enemies:
     %cm_ctrl_shortcut("Kill Enemies", !sram_ctrl_kill_enemies)
+
+ctrl_clear_shortcuts:
+    %cm_jsr("Clear Shortcuts", action_clear_shortcuts, #$0000)
+
+action_clear_shortcuts:
+{
+    TYA
+    STA !sram_ctrl_save_state
+    STA !sram_ctrl_load_state
+    STA !sram_ctrl_load_last_preset
+    STA !sram_ctrl_full_equipment
+    STA !sram_ctrl_kill_enemies
+    STA !sram_ctrl_reset_segment_timer
+    ; menu to default, Start + Select
+    LDA #$3000 : STA !sram_ctrl_menu
+    RTS
+}

@@ -1186,7 +1186,7 @@ preset_kpdr21_wrecked_ship_oceanfly_setup:
     dl $7E07F5 : db $02 : dw $0005 ; Music Track
     dl $7E090F : db $02 : dw $8C00 ; Screen subpixel X position.
     dl $7E0913 : db $02 : dw $3000 ; Screen subpixel Y position
-    dl $7E09CE : db $02 : dw $0001 ; Pbs
+    dl $7E09CE : db $02 : dw $0002 ; Pbs
     dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0008 ; More position/state
     dl $7E0AF6 : db $02 : dw $002C ; Samus X
@@ -1274,7 +1274,7 @@ preset_kpdr21_wrecked_ship_leaving_phantoon:
     dl $7E0913 : db $02 : dw $8000 ; Screen subpixel Y position
     dl $7E09C2 : db $02 : dw $00E2 ; Health
     dl $7E09CA : db $02 : dw $0005 ; Supers
-    dl $7E09CE : db $02 : dw $0002 ; Pbs
+    dl $7E09CE : db $02 : dw $0003 ; Pbs
     dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0004 ; More position/state
     dl $7E0AF6 : db $02 : dw $04D6 ; Samus X

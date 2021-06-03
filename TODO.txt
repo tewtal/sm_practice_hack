@@ -13,12 +13,13 @@ x Fix/test Phantoon/Botwoon RNG
 
 x Hundo presets
 
-- Dray RNG?
+x Dray RNG?
 
 - Infohud option to toggle speed ?
+    The menu doesn't like slowdown, but easily done with a cm_numfield macro on !ram_slowdown_mode
 
 - Save state during fanfare
 
-- Fix endgame freeze
+x Fix endgame freeze
 
 - Add hours to timer?
