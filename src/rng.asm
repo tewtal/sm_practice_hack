@@ -198,8 +198,10 @@ hook_botwoon_rng:
     LDA $05E5
     RTL
 
+print pc, " rng end"
 
 org $A5F960
+print pc, " draygon rng start"
 hook_draygon_rng_left:
 {
     LDA !ram_draygon_rng_left : BEQ .no_manip
@@ -222,8 +224,10 @@ hook_draygon_rng_right:
     RTS
 }
 
+print pc, " draygon rng end"
 
 org $A4F700
+print pc, " crocomire rng start"
 hook_crocomire_rng:
 {
     LDA !ram_crocomire_rng : BEQ .no_manip
@@ -240,6 +244,5 @@ hook_crocomire_rng:
     RTS
 }
 
-
-print pc, " rng end"
+print pc, " crocomire rng end"
 

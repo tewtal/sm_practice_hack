@@ -1,7 +1,8 @@
-; $82:8963 AD 98 09    LDA $0998  [$7E:0998]  ;\
-; $82:8966 29 FF 00    AND #$00FF             ;|
+; $82:8963 AD 98 09    LDA $0998  [$7E:0998]
+; $82:8966 29 FF 00    AND #$00FF
 org $828963
     JSL gamemode_start : BCS end_of_normal_gameplay
+
 org $82896E
     end_of_normal_gameplay:
 
@@ -64,6 +65,10 @@ gamemode_shortcuts:
     AND !ram_ctrl1_filtered : BEQ +
     JMP .full_equipment
 
+  + LDA !ram_ctrl1 : AND !sram_ctrl_random_preset : CMP !sram_ctrl_random_preset : BNE +
+    AND !ram_ctrl1_filtered : BEQ +
+    JMP .random_preset
+
   + LDA !ram_ctrl1 : AND !sram_ctrl_menu : CMP !sram_ctrl_menu : BNE +
     AND !ram_ctrl1_filtered : BEQ +
     JMP .menu
@@ -112,6 +117,10 @@ gamemode_shortcuts:
     LDA $7E09D4 : STA $7E09D6 ; reserves
     CLC : RTS
 
+  .random_preset
+    JSL LoadRandomPreset
+    CLC : RTS
+
   .menu
     ; Set IRQ vector
     LDA $AB : PHA
@@ -125,4 +134,6 @@ gamemode_shortcuts:
 
     SEC : RTS
 }
+
 print pc, " gamemode end"
+warnpc $85FF00

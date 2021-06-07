@@ -40,13 +40,14 @@ init_code:
 init_sram:
 {
     ; Controllers
-    LDA #$3000 : STA !sram_ctrl_menu        ; Start + Select
-    LDA #$6010 : STA !sram_ctrl_save_state  ; Select + Y + R
-    LDA #$6020 : STA !sram_ctrl_load_state  ; Select + Y + L
-    LDA #$5020 : STA !sram_ctrl_load_last_preset  ; Start + Y + L
+    LDA #$3000 : STA !sram_ctrl_menu                  ; Start + Select
+    LDA #$6010 : STA !sram_ctrl_save_state            ; Select + Y + R
+    LDA #$6020 : STA !sram_ctrl_load_state            ; Select + Y + L
+    LDA #$5020 : STA !sram_ctrl_load_last_preset      ; Start + Y + L
     LDA #$0000 : STA !sram_ctrl_full_equipment
     LDA #$0000 : STA !sram_ctrl_kill_enemies
     LDA #$0000 : STA !sram_ctrl_reset_segment_timer
+    LDA #$0000 : STA !sram_ctrl_random_preset
 
     ; Input Cheat Sheet  (#$XXYY)
     ; $4218  (YY)
@@ -82,3 +83,4 @@ init_sram:
 }
 
 print pc, " init end"
+warnpc $81FF00

@@ -39,6 +39,7 @@ org $808F24
     NOP #2
 
 org $87D000
+print pc, " misc start"
 hook_set_music_track:
 {
     STZ $07F6
@@ -106,3 +107,6 @@ stop_all_sounds:
     LDA #$0000 : STA $0A6A
     RTL
 }
+
+print pc, " misc end"
+

@@ -176,24 +176,108 @@ mm_goto_ctrlsmenu:
 ; -------------
 pushpc
 
-org $fe8000
-incsrc presets/prkd_menu.asm
-incsrc presets/kpdr21_menu.asm
-incsrc presets/hundo_menu.asm
-incsrc presets/100early_menu.asm
-incsrc presets/rbo_menu.asm
-incsrc presets/kpdr25_menu.asm
-incsrc presets/gtclassic_menu.asm
+org $FE8000
+  print pc, " prkd menu start"
+  incsrc presets/prkd_menu.asm
+  print pc, " prkd menu end"
 
-org $ff8000
-incsrc presets/14ice_menu.asm
-incsrc presets/14speed_menu.asm
-incsrc presets/allbosskpdr_menu.asm
-incsrc presets/allbosspkdr_menu.asm
-incsrc presets/allbossprkd_menu.asm
-incsrc presets/pkrd_menu.asm
+  print pc, " kpdr21 menu start"
+  incsrc presets/kpdr21_menu.asm
+  print pc, " kpdr21 menu end"
+
+  print pc, " hundo menu start"
+  incsrc presets/hundo_menu.asm
+  print pc, " hundo menu end"
+
+  print pc, " 100early menu start"
+  incsrc presets/100early_menu.asm
+  print pc, " 100early menu end"
+
+  print pc, " rbo menu start"
+  incsrc presets/rbo_menu.asm
+  print pc, " rbo menu end"
+
+  print pc, " pkrd menu start"
+  incsrc presets/pkrd_menu.asm
+  print pc, " pkrd menu end"
+
+  print pc, " kpdr25 menu start"
+  incsrc presets/kpdr25_menu.asm
+  print pc, " kpdr25 menu end"
+
+org $FF8000
+  print pc, " gtclassic menu start"
+  incsrc presets/gtclassic_menu.asm
+  print pc, " gtclassic menu end"
+
+  print pc, " 14ice menu start"
+  incsrc presets/14ice_menu.asm
+  print pc, " 14ice menu end"
+
+  print pc, " 14speed menu start"
+  incsrc presets/14speed_menu.asm
+  print pc, " 14speed menu end"
+
+  print pc, " allbosskpdr menu start"
+  incsrc presets/allbosskpdr_menu.asm
+  print pc, " allbosskpdr menu end"
+
+  print pc, " allbosspkdr menu start"
+  incsrc presets/allbosspkdr_menu.asm
+  print pc, " allbosspkdr menu end"
+
+  print pc, " allbossprkd menu start"
+  incsrc presets/allbossprkd_menu.asm
+  print pc, " allbossprkd menu end"
 
 pullpc
+
+LoadRandomPreset:
+{
+    PHY : PHX
+    JSL $808111 : STA $12     ; random number
+
+    LDA #$00B8 : STA $18      ; this routine lives in bank B8
+    LDA !sram_preset_category : ASL : TAY
+    LDA #preset_category_submenus : STA $16
+    LDA [$16],Y : TAX         ; preset category submenu table
+    LDA #preset_category_banks : STA $16
+    LDA [$16],Y : STA $18     ; preset category menu bank
+
+    STX $16 : LDY #$0000
+  .toploop
+    INY #2
+    LDA [$16],Y : BNE .toploop
+    TYA : LSR : TAY           ; Y = size of preset category submenu table
+
+    LDA $12 : XBA : AND #$00FF : STA $4204
+    %a8()
+    STY $4206                 ; divide top half of random number by Y
+    %a16()
+    PEA $0000 : PLA
+    LDA $4216 : ASL : TAY     ; randomly selected subcategory
+    LDA [$16],Y : STA $16     ; increment four bytes to get the subcategory table
+    LDY #$0004 : LDA [$16],Y : STA $16
+
+    LDY #$0000
+  .subloop
+    INY #2
+    LDA [$16],Y : BNE .subloop
+    TYA : LSR : TAY           ; Y = size of subcategory table
+
+    LDA $12 : AND #$00FF : STA $4204
+    %a8()
+    STY $4206                 ; divide bottom half of random number by Y
+    %a16()
+    PEA $0000 : PLA
+    LDA $4216 : ASL : TAY     ; randomly selected preset
+    LDA [$16],Y : INC #4      ; increment four bytes to get the data
+
+    STA !ram_load_preset
+
+    PLX : PLY
+    RTL
+}
 
 action_load_preset:
 {
@@ -1232,6 +1316,7 @@ CtrlMenu:
     dw #ctrl_reset_segment_timer
     dw #ctrl_full_equipment
     dw #ctrl_kill_enemies
+    dw #ctrl_random_preset
     dw #ctrl_clear_shortcuts
     dw #$0000
     %cm_header("CONTROLLER SHORTCUTS")
@@ -1258,6 +1343,9 @@ ctrl_full_equipment:
 ctrl_kill_enemies:
     %cm_ctrl_shortcut("Kill Enemies", !sram_ctrl_kill_enemies)
 
+ctrl_random_preset:
+    %cm_ctrl_shortcut("Random Preset", !sram_ctrl_random_preset)
+
 ctrl_clear_shortcuts:
     %cm_jsr("Clear Shortcuts", action_clear_shortcuts, #$0000)
 
@@ -1269,6 +1357,7 @@ action_clear_shortcuts:
     STA !sram_ctrl_load_last_preset
     STA !sram_ctrl_full_equipment
     STA !sram_ctrl_kill_enemies
+    STA !sram_ctrl_random_preset
     STA !sram_ctrl_reset_segment_timer
     ; menu to default, Start + Select
     LDA #$3000 : STA !sram_ctrl_menu

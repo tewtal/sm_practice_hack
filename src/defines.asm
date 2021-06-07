@@ -111,6 +111,8 @@
 !sram_preset_category = $702020
 !sram_room_strat = $702022
 
+!sram_ctrl_random_preset = $702024
+
 ; -------------
 ; Menu
 ; -------------
@@ -172,19 +174,22 @@
 !IH_INPUT_ANGLE_UP = $7E09BC
 !IH_INPUT_ANGLE_DOWN = $7E09BE
 
+!IH_LETTER_A = $0C7A
+!IH_LETTER_B = $0C7B
+!IH_LETTER_E = $0C7E
+!IH_LETTER_H = $0C6C
+!IH_LETTER_L = $0C68
+!IH_LETTER_N = $0C6D
+!IH_LETTER_R = $0C69
+!IH_LETTER_X = $0C66
+!IH_LETTER_Y = $0C67
+
 ; ------------
 ; Presets
 ; ------------
 
 !ram_load_preset = $7FFC00
 !ram_cgram_cache = $7FFC02 ; 0x14 bytes
-
-!category_combined = 0
-!category_rbo = 1
-!category_kpdr25 = 2
-!category_gtclassic = 3
-!category_14low = 4
-!category_allboss = 5
 
 ; ----------
 ; Save/load

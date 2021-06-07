@@ -1,5 +1,6 @@
 ; $84:EFD7: Just past start of free space
 org $84EFD7
+print pc, " fanfare restore start"
   .prepareloop
     PHX              ; start of logic that was overwritten
     LDX #$000E
@@ -12,6 +13,7 @@ org $84EFD7
     BPL .clearloop
     BRL .continue    ; jump back to the original logic
 
+print pc, " fanfare restore end"
 
 ; $84:8BDD: Instruction - clear music queue and queue music track [[Y]] ;;;
 org $848BDD
@@ -25,6 +27,7 @@ org $848BDD
     PLA
     BRL .prepareloop
 
+warnpc $848BEB       ; we are only overwriting original logic up to this point
 
 ; $84:8BEB: Resume original logic
 org $848BEB
@@ -44,6 +47,7 @@ org $82E126
 
 
 org $85FF00
+print pc, " fanfare start"
 hook_message_box_wait:
     LDA !sram_fanfare_toggle : BNE .fanfareloop
     LDX #$0020
@@ -75,4 +79,6 @@ hook_resume_room_music:
     LDA $07F5
     JSL $808FC1
     RTL
+
+print pc, " fanfare end"
 
