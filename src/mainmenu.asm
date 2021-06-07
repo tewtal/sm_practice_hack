@@ -271,7 +271,8 @@ LoadRandomPreset:
     %a16()
     PEA $0000 : PLA
     LDA $4216 : ASL : TAY     ; randomly selected preset
-    LDA [$16],Y : INC #4      ; increment four bytes to get the data
+    LDA [$16],Y : STA $16     ; increment four bytes to get the data
+    LDY #$0004 : LDA [$16],Y
 
     STA !ram_load_preset
 
