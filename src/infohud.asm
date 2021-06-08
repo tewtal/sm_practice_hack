@@ -1972,11 +1972,22 @@ ih_game_loop_code:
 
     LDA !ram_transition_counter : INC : STA !ram_transition_counter
 
-    LDA !ram_magic_pants_1 : BEQ +
+    LDA !ram_magic_pants_enabled : BEQ .handleinputs
+    CMP #$0001 : BEQ .magicpants
+    CMP #$0002 : BEQ .spacepants
+
+    ; check if space jump is equipped
+    LDA $09A2 : AND #$0200 : BEQ .magicpants
+
+  .spacepants
+    JSR space_pants
+    BRA .handleinputs
+
+  .magicpants
     JSR magic_pants
 
-    ; handle inputs
-+   LDA !IH_CONTROLLER_SEC_NEW : BEQ .done
+  .handleinputs
+    LDA !IH_CONTROLLER_SEC_NEW : BEQ .done
     CMP !IH_PAUSE : BEQ .toggle_pause
     CMP !IH_SLOWDOWN : BEQ .toggle_slowdown
     CMP !IH_SPEEDUP : BEQ .toggle_speedup
@@ -2056,11 +2067,11 @@ ih_game_loop_code:
 magic_pants:
 {
     LDA $0A96 : CMP #$0009 : BEQ .check
-    LDA !ram_magic_pants_2 : BEQ +
-    LDA !ram_magic_pants_3 : STA $7EC194
-    LDA !ram_magic_pants_4 : STA $7EC196
-    LDA !ram_magic_pants_5 : STA $7EC19E
-    LDA #$0000 : STA !ram_magic_pants_2
+    LDA !ram_magic_pants_state : BEQ +
+    LDA !ram_magic_pants_pal1 : STA $7EC194
+    LDA !ram_magic_pants_pal2 : STA $7EC196
+    LDA !ram_magic_pants_pal3 : STA $7EC19E
+    LDA #$0000 : STA !ram_magic_pants_state
 +   RTS
 
   .check
@@ -2069,11 +2080,60 @@ magic_pants:
     RTS
 
   .flash
-    LDA !ram_magic_pants_2 : BNE +
-    LDA $7EC194 : STA !ram_magic_pants_3
-    LDA $7EC196 : STA !ram_magic_pants_4
-    LDA $7EC19E : STA !ram_magic_pants_5
-+   LDA #$FFFF : STA $7EC194 : STA $7EC196 : STA $7EC19E : STA !ram_magic_pants_2
+    LDA !ram_magic_pants_state : BNE +
+    LDA $7EC194 : STA !ram_magic_pants_pal1
+    LDA $7EC196 : STA !ram_magic_pants_pal2
+    LDA $7EC19E : STA !ram_magic_pants_pal3
++   LDA #$FFFF
+    STA $7EC194 : STA $7EC196 : STA $7EC19E
+    STA !ram_magic_pants_state
+    RTS
+}
+
+space_pants:
+{
++   LDA $0A1C : CMP #$001B : BEQ .checkFalling
+    CMP #$001C : BEQ .checkFalling
+    CMP #$0081 : BEQ .done
+    CMP #$0082 : BEQ .done
+  .reset
+    ; restore palettes if needed
+    LDA !ram_magic_pants_state : BEQ .done
+    LDA !ram_magic_pants_pal1 : STA $7EC194
+    LDA !ram_magic_pants_pal2 : STA $7EC196
+    LDA !ram_magic_pants_pal3 : STA $7EC198
+    LDA #$0000 : STA !ram_magic_pants_state
+  .done
+    RTS
+
+  .checkFalling
+    LDA $0B36 : CMP #$0002 : BNE .reset    ; check if falling
+
+  .checkLiquid
+    LDA $0AD2 : BNE .SJliquid             ; check if air
+
+  .SJair
+    LDA $0B2D : CMP $909E97 : BPL +       ; check against min SJ vspeed for air
+    BRA .reset
++   CMP $909E99 : BPL .reset              ; check against max SJ vspeed for air
+    BRA .flash
+
+  .SJliquid
+    LDA $0B2D : CMP $909E9B : BPL +       ; check against min SJ vspeed for liquids
+    BRA .reset
++   CMP $909E9D : BPL .reset              ; check against max SJ vspeed for liquids
+
+; Screw Attack seems to write new palette data every frame, which overwrites the flash
+  .flash
+    LDA !ram_magic_pants_state : BNE .done
+    ; preserve palettes first
+    LDA $7EC194 : STA !ram_magic_pants_pal1
+    LDA $7EC196 : STA !ram_magic_pants_pal2
+    LDA $7EC198 : STA !ram_magic_pants_pal3
+    ; then flash
+    LDA #$FFFF
+    STA $7EC194 : STA $7EC196 : STA $7EC198
+    STA !ram_magic_pants_state
     RTS
 }
 

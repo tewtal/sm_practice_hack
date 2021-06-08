@@ -765,6 +765,7 @@ MiscMenu:
     dw #misc_hyperbeam
     dw #misc_babyslowdown
     dw #misc_magicpants
+    dw #misc_spacepants
     dw #misc_fanfare_toggle
     dw #misc_music_toggle
     dw #misc_transparent
@@ -785,7 +786,10 @@ misc_babyslowdown:
     %cm_toggle("Baby Slowdown", $7E0A66, #$0002, #0)
 
 misc_magicpants:
-    %cm_toggle_bit("Magic Pants", !ram_magic_pants_1, #$0001, #0)
+    %cm_toggle_bit("Magic Pants", !ram_magic_pants_enabled, #$0001, #0)
+
+misc_spacepants:
+    %cm_toggle_bit("Space Pants", !ram_magic_pants_enabled, #$0002, #0)
 
 misc_fanfare_toggle:
     %cm_toggle("Fanfare", !sram_fanfare_toggle, #$0001, #0)

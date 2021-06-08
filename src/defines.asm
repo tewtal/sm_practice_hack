@@ -25,11 +25,11 @@
 !ram_enemy_hp = $7FFB40
 !ram_horizontal_speed = $7FFB58
 !ram_vertical_speed = $7FFB5A
-!ram_magic_pants_1 = $7FFB64
-!ram_magic_pants_2 = $7FFB66
-!ram_magic_pants_3 = $7FFB70
-!ram_magic_pants_4 = $7FFB72
-!ram_magic_pants_5 = $7FFB74
+!ram_magic_pants_enabled = $7FFB64
+!ram_magic_pants_state = $7FFB66
+!ram_magic_pants_pal1 = $7FFB70
+!ram_magic_pants_pal2 = $7FFB72
+!ram_magic_pants_pal3 = $7FFB74
 !ram_charge_counter = $7FFB1C
 !ram_xfac_counter = $7FFB1E
 !ram_lag_counter = $7FFB96
