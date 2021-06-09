@@ -50,15 +50,15 @@ org $85FF00
 print pc, " fanfare start"
 hook_message_box_wait:
     LDA !sram_fanfare_toggle : BNE .fanfareloop
-    LDX #$0020
+    LDX #$0020       ; shorten message box length
 
-  .nofanfareloop
+  .nofanfareloop     ; skipping fanfare, so no need to mess with sound
     JSR $8136
     DEX
     BNE .nofanfareloop
     RTS
 
-  .fanfareloop
+  .fanfareloop       ; original logic
     JSR $8136
     PHX
     JSL $808F0C
@@ -71,6 +71,9 @@ hook_message_box_wait:
 
 hook_resume_room_music:
     LDA !sram_fanfare_toggle : BNE .resume
+
+    ; This method is also used when starting game at Ceres
+    LDA $7ED914 : CMP #$001F : BEQ .resume
     RTL
 
   .resume
