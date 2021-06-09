@@ -75,14 +75,14 @@
 !ram_walljump_counter = $7FFBCA
 !ram_quickdrop_counter = $7FFBCC
 
-!ram_shinefinetune_early_1 = $7FFBD0
-!ram_shinefinetune_late_1 = $7FFBD2
-!ram_shinefinetune_early_2 = $7FFBD4
-!ram_shinefinetune_late_2 = $7FFBD6
-!ram_shinefinetune_early_3 = $7FFBD8
-!ram_shinefinetune_late_3 = $7FFBDA
-!ram_shinefinetune_early_4 = $7FFBDC
-!ram_shinefinetune_late_4 = $7FFBDE
+!ram_shinetune_early_1 = $7FFBD0
+!ram_shinetune_late_1 = $7FFBD2
+!ram_shinetune_early_2 = $7FFBD4
+!ram_shinetune_late_2 = $7FFBD6
+!ram_shinetune_early_3 = $7FFBD8
+!ram_shinetune_late_3 = $7FFBDA
+!ram_shinetune_early_4 = $7FFBDC
+!ram_shinetune_late_4 = $7FFBDE
 
 !ram_sprite_prio_flag = $7FFBE0
 
@@ -174,15 +174,18 @@
 !IH_INPUT_ANGLE_UP = $7E09BC
 !IH_INPUT_ANGLE_DOWN = $7E09BE
 
-!IH_LETTER_A = $0C7A
-!IH_LETTER_B = $0C7B
-!IH_LETTER_E = $0C7E
-!IH_LETTER_H = $0C6C
-!IH_LETTER_L = $0C68
-!IH_LETTER_N = $0C6D
-!IH_LETTER_R = $0C69
-!IH_LETTER_X = $0C66
-!IH_LETTER_Y = $0C67
+!IH_BLANK = #$0057
+!IH_DECIMAL = #$0CCB
+!IH_LETTER_A = #$0C7A
+!IH_LETTER_B = #$0C7B
+!IH_LETTER_E = #$0C7E
+!IH_LETTER_H = #$0C6C
+!IH_LETTER_L = #$0C68
+!IH_LETTER_N = #$0C6D
+!IH_LETTER_R = #$0C69
+!IH_LETTER_X = #$0C66
+!IH_LETTER_Y = #$0C67
+!IH_PERCENT = #$0C0A
 
 ; ------------
 ; Presets
