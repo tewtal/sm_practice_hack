@@ -1,4 +1,4 @@
-!SRAM_VERSION = $0004
+!SRAM_VERSION = $0005
 
 
 ; hijack, runs as game is starting, JSR to RAM initialization to avoid bad values

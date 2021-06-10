@@ -1013,7 +1013,7 @@ DisplayModeMenu:
     dw ihmode_cooldowncounter
     dw ihmode_shinetimer
     dw ihmode_dashcounter
-    dw ihmode_shinefinetune
+    dw ihmode_shinetune
     dw ihmode_iframecounter
     dw ihmode_spikesuit
     dw ihmode_lagcounter
@@ -1048,7 +1048,7 @@ ihmode_shinetimer:
 ihmode_dashcounter:
     %cm_jsr("Dash Counter", #action_select_infohud_mode, #$0006)
 
-ihmode_shinefinetune:
+ihmode_shinetune:
     %cm_jsr("Shine Tune", #action_select_infohud_mode, #$0007)
 
 ihmode_iframecounter:
