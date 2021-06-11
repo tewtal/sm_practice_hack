@@ -42,41 +42,41 @@ export class Help extends Component {
                         <CardBody>
                             <Row><Col><h5>Controller 1</h5></Col></Row>
                             <Row>
-                                <Col md="2" style={{fontWeight: 'bold'}}>Start + Select + L + R</Col>
+                                <Col md="3" style={{fontWeight: 'bold'}}>Start + Select + L + R</Col>
                                 <Col>Soft reset the game</Col>
                             </Row>
                             <Row>
-                                <Col md="2" style={{fontWeight: 'bold'}}>Start + Select</Col>
+                                <Col md="3" style={{fontWeight: 'bold'}}>Start + Select</Col>
                                 <Col>Opens the in-game menu (configurable in shortcuts menu)</Col>
                             </Row>
                             <Row>
-                                <Col md="2" style={{fontWeight: 'bold'}}>B</Col>
+                                <Col md="3" style={{fontWeight: 'bold'}}>B</Col>
                                 <Col>Closes the in-game menu</Col>
                             </Row>
                             <Row>
-                                <Col md="2" style={{fontWeight: 'bold'}}>Start+Y+L</Col>
+                                <Col md="3" style={{fontWeight: 'bold'}}>Start+Y+L</Col>
                                 <Col>Reloads the last used preset (configurable in shortcuts menu)</Col>
                             </Row>
                             <br />
                             <Row><Col><h5>Controller 2</h5></Col></Row>
                             <Row>
-                                <Col md="2" style={{fontWeight: 'bold'}}>L or R</Col>
+                                <Col md="3" style={{fontWeight: 'bold'}}>L or R</Col>
                                 <Col>Toggles the status display options mentioned in <em>1</em></Col>
                             </Row>
                             <Row>
-                                <Col md="2" style={{fontWeight: 'bold'}}>Up</Col>
+                                <Col md="3" style={{fontWeight: 'bold'}}>Up</Col>
                                 <Col>Increases game speed</Col>
                             </Row>
                             <Row>
-                                <Col md="2" style={{fontWeight: 'bold'}}>Down</Col>
+                                <Col md="3" style={{fontWeight: 'bold'}}>Down</Col>
                                 <Col>Decreases game speed</Col>
                             </Row>
                             <Row>
-                                <Col md="2" style={{fontWeight: 'bold'}}>Right</Col>
+                                <Col md="3" style={{fontWeight: 'bold'}}>Right</Col>
                                 <Col>Frame advance</Col>
                             </Row>
                             <Row>
-                                <Col md="2" style={{fontWeight: 'bold'}}>Left</Col>
+                                <Col md="3" style={{fontWeight: 'bold'}}>Left</Col>
                                 <Col>Restore game speed</Col>
                             </Row>
                         </CardBody>
@@ -112,6 +112,10 @@ export class Help extends Component {
                             <Row>
                                 <Col md="3" className="offset-md-1">Reserve Tanks</Col>
                                 <Col>Select your max Reserve Tanks with left/right or A to increment</Col>
+                            </Row>
+                            <Row>
+                                <Col md="3" className="offset-md-1">Missiles</Col>
+                                <Col>Select your max Missiles with left/right or A to increment</Col>
                             </Row>
                             <Row>
                                 <Col md="3" className="offset-md-1">Super Missiles</Col>
@@ -181,6 +185,15 @@ export class Help extends Component {
                             <Row>
                                 <Col md="3" className="offset-md-1">Magic Pants</Col>
                                 <Col>Toggle a flashing animation on Samus to show when dash should be held for short charging</Col>
+                            </Row>
+                            <Row>
+                                <Col md="3" className="offset-md-1">Space Pants</Col>
+                                <Col>Toggle a flashing animation on Samus during a space jump to show when you should jump</Col>
+                            </Row>
+                            <Row>
+                                <Col md="3" className="offset-md-1"></Col>
+                                <Col>Note: If you have both Magic Pants and Space Pants on, only one of them will be used.
+                                     If Space Jump is equipped then Space Pants will be used, otherwise Magic Pants will be used.</Col>
                             </Row>
                             <Row>
                                 <Col md="3" className="offset-md-1">Fanfare</Col>
@@ -291,6 +304,10 @@ export class Help extends Component {
                             <Row>
                                 <Col md="3" className="offset-md-1">Kill Enemies</Col>
                                 <Col>Instantly deletes all enemies in the current room</Col>
+                            </Row>
+                            <Row>
+                                <Col md="3" className="offset-md-1">Random Preset</Col>
+                                <Col>Randomly chooses a preset from your selected preset category</Col>
                             </Row>
                             <Row>
                                 <Col md="3" className="offset-md-1">Clear Shortcuts</Col>

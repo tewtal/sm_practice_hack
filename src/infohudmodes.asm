@@ -838,19 +838,19 @@ status_walljump:
     BRA .reset
 
   .roomcheck
-    LDA $079B : CMP #$B4AE : BEQ .writg : CMP #$D2AB : BEQ .plasma : CMP #$ACB4 : BEQ .bubble
+    LDA $079B : CMP #$B4AD : BEQ .writg : CMP #$D2AA : BEQ .plasma : CMP #$ACB3 : BEQ .bubble
     BRA .clear
 
   .writg
-    LDA #$042E : STA !ram_ypos
+    LDA #$042F : STA !ram_ypos
     BRA .heightcheck
 
   .plasma
-    LDA #$014E : STA !ram_ypos
+    LDA #$014F : STA !ram_ypos
     BRA .heightcheck
 
   .bubble
-    LDA #$0116 : STA !ram_ypos
+    LDA #$0117 : STA !ram_ypos
     BRA .heightcheck
 }
 
@@ -869,10 +869,272 @@ status_tacotank:
 {
     ; Suppress Samus HP display
     LDA $09C2 : STA !ram_last_hp
-    LDA #$DEAD : LDX #$0088 : JSR Draw4Hex
-    LDA !IH_BLANK : STA $7EC690
-    LDA #$BEEF : LDX #$0092 : JSR Draw4Hex
+
+    ; Seven states of taco tank
+    LDA !ram_roomstrat_state : CMP #$0007 : BPL .falling : CMP #$0002 : BMI .checkstart
+    BRL .checkotherstates
+
+  .donestart
     RTS
+
+  .returnstart
+    LDA #$0001 : STA !ram_roomstrat_state
+
+  .checkstart
+    ; Check if Samus is in starting position not facing right and not holding left
+    LDA $0AF6 : CMP #$022B : BNE .donestart
+    LDA $0AF8 : CMP #$FFFF : BNE .donestart
+    LDA $0AFA : CMP #$02BB : BNE .donestart
+    LDA $0A1E : AND #$0004 : CMP #$0004 : BNE .donestart
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_LEFT : BNE .donestart
+
+    ; Ready to start
+    LDA !IH_LETTER_Y : STA $7EC688
+    LDA !IH_BLANK : STA $7EC68A : STA $7EC68C : STA $7EC68E : STA $7EC690
+    STA $7EC692 : STA $7EC694 : STA $7EC696 : STA $7EC698
+    BRL .incstate
+
+  .falling
+    LDA !ram_walljump_counter : INC : STA !ram_walljump_counter
+
+    ; Check if we are still in aim down pose
+    LDA $0A1C : CMP #$0018 : BEQ .donestart
+
+    ; If not, assume we expanded our hitbox
+    LDA !ram_walljump_counter : CMP !ram_xpos : BMI .expandearly
+    CMP !ram_ypos : BPL .expandlate
+
+    ; We expanded hitbox on time
+    INC : SEC : SBC !ram_xpos
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC698
+    LDA !IH_LETTER_Y : STA $7EC696
+    BRL .returnstart
+
+  .expandearly
+    LDA !ram_xpos : SEC : SBC !ram_walljump_counter
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC698
+    LDA !IH_LETTER_E : STA $7EC696
+    BRL .returnstart
+
+  .expandlate
+    INC : SEC : SBC !ram_ypos
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC698
+    LDA !IH_LETTER_L : STA $7EC696
+    BRL .returnstart
+
+  .clearreturnstart
+    LDA !IH_BLANK : STA $7EC688 : STA $7EC68A
+    BRL .returnstart
+
+  .incleft
+    ; Arbitrary wait of 64 frames before giving up
+    LDA !ram_roomstrat_counter : CMP #$0040 : BPL .clearreturnstart
+    INC : STA !ram_roomstrat_counter
+    RTS
+
+  .incstate
+    LDA !ram_roomstrat_state : INC : STA !ram_roomstrat_state
+    LDA #$0000 : STA !ram_roomstrat_counter
+    RTS
+
+  .rising
+    ; If our speed is still good then we haven't broken spin
+    LDA $0B48 : CMP #$6000 : BEQ .done
+
+    ; We have broken spin, combine starting X position with walljump to see how we did
+    LDA !ram_xpos : CLC : ADC !ram_walljump_counter : STA !ram_xpos
+    BRL .setx
+
+  .initialjump
+    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_JUMP : BEQ .checkleft
+
+    ; Print number of frames after holding left that we pressed jump
+    LDA !ram_roomstrat_counter : ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC68A
+
+  .checkleft
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_LEFT : BNE .incleft
+
+    ; Nothing to do if we haven't pressed left yet
+    LDA !ram_roomstrat_counter : BEQ .done
+
+    ; Print number of frames we were holding left
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC688
+
+    ; If we stopped holding left, but we haven't jumped yet,
+    ; then we aren't ready to move to the next state
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_JUMP : BNE .incstate
+
+  .done
+    RTS
+
+  .wjfail
+    LDA !IH_LETTER_X : STA $7EC694
+    BRL .returnstart
+
+  .checkotherstates
+    ; Most states require the walljump counter incremented, so just do it for all of them
+    LDA !ram_walljump_counter : INC : STA !ram_walljump_counter
+    LDA !ram_roomstrat_state : CMP #$0002 : BEQ .initialjump : CMP #$0005 : BEQ .rising
+    CMP #$0006 : BEQ .peaking : CMP #$0004 : BEQ .accel
+    BRA .walljump
+
+  .accel
+    ; We can't evaluate the horizontal movement for a few frames
+    LDA !ram_walljump_counter : AND #$0004 : BNE .done
+
+    ; Once we can evaluate, make sure it is good
+    LDA $0B44 : CMP #$3000 : BNE .wjfail
+    LDA !ram_xpos : CMP #$0039 : BPL .wjfail
+    BRL .incstate
+
+  .peakfail
+    LDA !IH_LETTER_X : STA $7EC696 : STA $7EC698
+    BRL .returnstart
+
+  .checkground
+    LDA $0AFA : CMP #$02BB : BNE .done
+
+    ; We're back on the ground
+    BRL .returnstart
+
+  .peaking
+    ; If still rising, nothing to do
+    LDA $0B36 : CMP #$0001 : BEQ .done
+    
+    ; Fail if not falling with proper speed and pose
+    CMP #$0002 : BNE .peakfail
+    LDA $0AFA : CMP #$0243 : BPL .peakfail
+    LDA $0B44 : CMP #$3000 : BNE .peakfail
+    LDA $0B48 : CMP #$4000 : BNE .peakfail
+    LDA $0A1C : CMP #$0018 : BNE .peakfail
+    BRL .incstate
+
+  .wjfar
+    ; We jumped so late we are more than 65 pixels from the wall
+    ; Set ram_xpos to an arbitrarily large value to ensure we'll fail later
+    LDA !IH_LETTER_X : STA $7EC692 : STA !ram_xpos
+    BRA .wjcontinue
+
+  .walljump
+    ; Waiting for the walljump
+    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_JUMP : BEQ .checkground
+
+    ; We jumped, first calculate our distance from the wall
+    LDA #$022B : SEC : SBC $0AF6 : CMP #$0042 : BPL .wjfar
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC692
+
+    ; Store this for later, each pixel counts as 8 frames of good horizontal movement
+    TYA : ASL : ASL : STA !ram_xpos
+
+  .wjcontinue
+    LDA !IH_BLANK : STA $7EC6A4
+    LDA #$0000 : STA !ram_walljump_counter
+
+    ; Now time to evaluate the jump height
+    ; If necessary evaluate down to the subpixel
+    LDA $0AFA : CMP #$029D : BEQ .bonk : CMP #$029E : BEQ .threey : BPL .maybelow
+
+  .high
+    LDA #$029E : SEC : SBC $0AFA : CMP #$0042 : BPL .toohigh
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC68E
+    BRA .highprint
+
+  .toohigh
+    LDA !IH_LETTER_X : STA $7EC68E
+
+  .highprint
+    LDA !IH_LETTER_H : STA $7EC68C
+    BRL .wjfail
+
+  .bonk
+    LDA $0AFC : CMP #$F000 : BCS .printtwob : CMP #$B000 : BCS .printoneb
+    BRA .high
+
+  .maybelow
+    CMP #$029F : BEQ .twoy : CMP #$02A0 : BEQ .printoney : CMP #$02A1 : BEQ .oney
+
+  .low
+    LDA $0AFA : SEC : SBC #$02A0
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC68E
+    LDA !IH_LETTER_L : STA $7EC68C
+    BRL .wjfail
+
+  .threey
+    LDA $0AFC : CMP #$9400 : BCS .printtwoy : CMP #$1400 : BCC .printtwob
+    CMP #$1C00 : BCC .printthreeb
+    LDA #$0003
+
+  .printy
+    STA !ram_ypos : ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC68E
+    LDA !IH_LETTER_Y : STA $7EC68C
+
+    ; Determine last frame where we can gather the tank
+    LDA #$0036 : CLC : ADC !ram_ypos : STA !ram_ypos
+    BRL .incstate
+
+  .twoy
+    LDA $0AFC : CMP #$E400 : BCS .printoney
+
+  .printtwoy
+    LDA #$0002
+    BRA .printy
+
+  .printtwob
+    LDA #$0002
+    BRA .printb
+
+  .printoneb
+    LDA #$0001
+    BRA .printb
+
+  .oney
+    LDA $0AFC : CMP #$1800 : BCS .low
+
+  .printoney
+    LDA #$0001
+    BRA .printy
+
+  .printthreeb
+    LDA #$0003
+
+  .printb
+    STA !ram_ypos : ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC68E
+    LDA !IH_LETTER_B : STA $7EC68C
+
+    ; Determine last frame where we can gather the tank
+    LDA #$0036 : CLC : ADC !ram_ypos : STA !ram_ypos
+    BRL .incstate
+
+  .setx
+    ; Determine first frame where we can gather the tank
+    LDA !ram_xpos : CMP #$0051 : BPL .threex : CMP #$0046 : BPL .twox : CMP #$003A : BPL .onex
+    BRA .predictfail
+
+  .threex
+    LDA #$0036 : STA !ram_xpos
+    BRA .predict
+
+  .twox
+    LDA #$0037 : STA !ram_xpos
+    BRA .predict
+
+  .onex
+    LDA #$0038 : STA !ram_xpos
+
+  .predict
+    ; Compare first frame we can get the tank to the last frame
+    CMP !ram_ypos : BMI .predictchance
+
+  .predictfail
+    ; There are no frames where we can gather the tank
+    LDY #$0000 : LDA.w NumberGFXTable,Y : STA $7EC694
+    BRL .returnstart
+
+  .predictchance
+    ; There is at least one frame where we can gather the tank
+    LDA !ram_ypos : SEC : SBC !ram_xpos
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC694
+    BRL .incstate
 }
 
 status_gateglitch:
