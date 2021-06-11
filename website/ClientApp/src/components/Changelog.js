@@ -26,6 +26,10 @@ export class Changelog extends Component {
                                                 <li>Added RNG Controls for Phantoon, Draygon, and Crocomire. (2.2)</li>
                                                 <li>Fixed Botwoon RNG Control and endgame cutscene crash. (2.2)</li>
                                                 <li>Added presets for Any% PKRD. (2.2)</li>
+                                                <li>Added Space Pants and random preset shortcut. (2.2.1)</li>
+                                                <li>Added Gate Glitch and Taco Tank to the Room Strat list. (2.2.1)</li>
+                                                <li>Replaced vertical speed subpixels with jump feedback. (2.2.1)</li>
+                                                <li>When fanfare is off, music is not interrupted. (2.2.1)</li>
                                             </ul>
                                         </CardBody>
                                     </Card>

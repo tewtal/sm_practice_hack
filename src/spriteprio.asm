@@ -16,6 +16,7 @@ org $908643
 ; keeping the change in timing down as much as possible.
 
 org $81ef20
+print pc, " spriteprio start"
 oam_add_samus_sprite_with_prio:
     PHB
     PEA $9200
@@ -90,4 +91,5 @@ oam_add_samus_sprite_with_prio:
     PLB
     RTL
 
+print pc, " spriteprio end"
 warnpc $81f000

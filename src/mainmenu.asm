@@ -138,7 +138,7 @@ MainMenu:
     dw #mm_goto_rngmenu
     dw #mm_goto_ctrlsmenu
     dw #$0000
-    %cm_header("SM PRACTICE HACK 2.2")
+    %cm_header("SM PRACTICE HACK 2.2.1")
 
 mm_goto_equipment:
     %cm_submenu("Equipment", #EquipmentMenu)
@@ -176,24 +176,109 @@ mm_goto_ctrlsmenu:
 ; -------------
 pushpc
 
-org $fe8000
-incsrc presets/prkd_menu.asm
-incsrc presets/kpdr21_menu.asm
-incsrc presets/hundo_menu.asm
-incsrc presets/100early_menu.asm
-incsrc presets/rbo_menu.asm
-incsrc presets/kpdr25_menu.asm
-incsrc presets/gtclassic_menu.asm
+org $FE8000
+  print pc, " prkd menu start"
+  incsrc presets/prkd_menu.asm
+  print pc, " prkd menu end"
 
-org $ff8000
-incsrc presets/14ice_menu.asm
-incsrc presets/14speed_menu.asm
-incsrc presets/allbosskpdr_menu.asm
-incsrc presets/allbosspkdr_menu.asm
-incsrc presets/allbossprkd_menu.asm
-incsrc presets/pkrd_menu.asm
+  print pc, " kpdr21 menu start"
+  incsrc presets/kpdr21_menu.asm
+  print pc, " kpdr21 menu end"
+
+  print pc, " hundo menu start"
+  incsrc presets/hundo_menu.asm
+  print pc, " hundo menu end"
+
+  print pc, " 100early menu start"
+  incsrc presets/100early_menu.asm
+  print pc, " 100early menu end"
+
+  print pc, " rbo menu start"
+  incsrc presets/rbo_menu.asm
+  print pc, " rbo menu end"
+
+  print pc, " pkrd menu start"
+  incsrc presets/pkrd_menu.asm
+  print pc, " pkrd menu end"
+
+  print pc, " kpdr25 menu start"
+  incsrc presets/kpdr25_menu.asm
+  print pc, " kpdr25 menu end"
+
+org $FF8000
+  print pc, " gtclassic menu start"
+  incsrc presets/gtclassic_menu.asm
+  print pc, " gtclassic menu end"
+
+  print pc, " 14ice menu start"
+  incsrc presets/14ice_menu.asm
+  print pc, " 14ice menu end"
+
+  print pc, " 14speed menu start"
+  incsrc presets/14speed_menu.asm
+  print pc, " 14speed menu end"
+
+  print pc, " allbosskpdr menu start"
+  incsrc presets/allbosskpdr_menu.asm
+  print pc, " allbosskpdr menu end"
+
+  print pc, " allbosspkdr menu start"
+  incsrc presets/allbosspkdr_menu.asm
+  print pc, " allbosspkdr menu end"
+
+  print pc, " allbossprkd menu start"
+  incsrc presets/allbossprkd_menu.asm
+  print pc, " allbossprkd menu end"
 
 pullpc
+
+LoadRandomPreset:
+{
+    PHY : PHX
+    JSL $808111 : STA $12     ; random number
+
+    LDA #$00B8 : STA $18      ; this routine lives in bank B8
+    LDA !sram_preset_category : ASL : TAY
+    LDA #preset_category_submenus : STA $16
+    LDA [$16],Y : TAX         ; preset category submenu table
+    LDA #preset_category_banks : STA $16
+    LDA [$16],Y : STA $18     ; preset category menu bank
+
+    STX $16 : LDY #$0000
+  .toploop
+    INY #2
+    LDA [$16],Y : BNE .toploop
+    TYA : LSR : TAY           ; Y = size of preset category submenu table
+
+    LDA $12 : XBA : AND #$00FF : STA $4204
+    %a8()
+    STY $4206                 ; divide top half of random number by Y
+    %a16()
+    PEA $0000 : PLA
+    LDA $4216 : ASL : TAY     ; randomly selected subcategory
+    LDA [$16],Y : STA $16     ; increment four bytes to get the subcategory table
+    LDY #$0004 : LDA [$16],Y : STA $16
+
+    LDY #$0000
+  .subloop
+    INY #2
+    LDA [$16],Y : BNE .subloop
+    TYA : LSR : TAY           ; Y = size of subcategory table
+
+    LDA $12 : AND #$00FF : STA $4204
+    %a8()
+    STY $4206                 ; divide bottom half of random number by Y
+    %a16()
+    PEA $0000 : PLA
+    LDA $4216 : ASL : TAY     ; randomly selected preset
+    LDA [$16],Y : STA $16     ; increment four bytes to get the data
+    LDY #$0004 : LDA [$16],Y
+
+    STA !ram_load_preset
+
+    PLX : PLY
+    RTL
+}
 
 action_load_preset:
 {
@@ -680,6 +765,7 @@ MiscMenu:
     dw #misc_hyperbeam
     dw #misc_babyslowdown
     dw #misc_magicpants
+    dw #misc_spacepants
     dw #misc_fanfare_toggle
     dw #misc_music_toggle
     dw #misc_transparent
@@ -700,7 +786,10 @@ misc_babyslowdown:
     %cm_toggle("Baby Slowdown", $7E0A66, #$0002, #0)
 
 misc_magicpants:
-    %cm_toggle_bit("Magic Pants", !ram_magic_pants_1, #$0001, #0)
+    %cm_toggle_bit("Magic Pants", !ram_magic_pants_enabled, #$0001, #0)
+
+misc_spacepants:
+    %cm_toggle_bit("Space Pants", !ram_magic_pants_enabled, #$0002, #0)
 
 misc_fanfare_toggle:
     %cm_toggle("Fanfare", !sram_fanfare_toggle, #$0001, #0)
@@ -924,7 +1013,7 @@ DisplayModeMenu:
     dw ihmode_cooldowncounter
     dw ihmode_shinetimer
     dw ihmode_dashcounter
-    dw ihmode_shinefinetune
+    dw ihmode_shinetune
     dw ihmode_iframecounter
     dw ihmode_spikesuit
     dw ihmode_lagcounter
@@ -959,7 +1048,7 @@ ihmode_shinetimer:
 ihmode_dashcounter:
     %cm_jsr("Dash Counter", #action_select_infohud_mode, #$0006)
 
-ihmode_shinefinetune:
+ihmode_shinetune:
     %cm_jsr("Shine Tune", #action_select_infohud_mode, #$0007)
 
 ihmode_iframecounter:
@@ -1029,32 +1118,40 @@ ih_goto_room_strat:
     %cm_submenu("Select Room Strat", #RoomStratMenu)
 
 RoomStratMenu:
-    dw ihstrat_mbhp
+    dw ihstrat_tacotank
+    dw ihstrat_gateglitch
     dw ihstrat_moatcwj
-    dw ihstrat_shinetopb
-    dw ihstrat_botwooncf
-    dw ihstrat_elevatorcf
     dw ihstrat_robotflush
+    dw ihstrat_shinetopb
+    dw ihstrat_elevatorcf
+    dw ihstrat_botwooncf
+    dw ihstrat_mbhp
     dw #$0000
     %cm_header("INFOHUD ROOM STRAT")
 
-ihstrat_mbhp:
-    %cm_jsr("Mother Brain HP", #action_select_room_strat, #$0000)
+ihstrat_tacotank:
+    %cm_jsr("Taco Tank", #action_select_room_strat, #$0000)
+
+ihstrat_gateglitch:
+    %cm_jsr("Gate Glitch", #action_select_room_strat, #$0001)
 
 ihstrat_moatcwj:
-    %cm_jsr("Moat CWJ", #action_select_room_strat, #$0001)
-
-ihstrat_shinetopb:
-    %cm_jsr("Shine to PB", #action_select_room_strat, #$0002)
-
-ihstrat_botwooncf:
-    %cm_jsr("Botwoon Crystal Flash", #action_select_room_strat, #$0003)
-
-ihstrat_elevatorcf:
-    %cm_jsr("Elevator Crystal Flash", #action_select_room_strat, #$0004)
+    %cm_jsr("Moat CWJ", #action_select_room_strat, #$0002)
 
 ihstrat_robotflush:
-    %cm_jsr("Robot Flush", #action_select_room_strat, #$0005)
+    %cm_jsr("Robot Flush", #action_select_room_strat, #$0003)
+
+ihstrat_shinetopb:
+    %cm_jsr("Shine to PB", #action_select_room_strat, #$0004)
+
+ihstrat_elevatorcf:
+    %cm_jsr("Elevator Crystal Flash", #action_select_room_strat, #$0005)
+
+ihstrat_botwooncf:
+    %cm_jsr("Botwoon Crystal Flash", #action_select_room_strat, #$0006)
+
+ihstrat_mbhp:
+    %cm_jsr("Mother Brain HP", #action_select_room_strat, #$0007)
 
 action_select_room_strat:
 {
@@ -1070,12 +1167,14 @@ ih_room_strat:
     dl #!sram_room_strat
     dw #$0000
     db #$28, "Current Strat", #$FF
-    db #$28, "      MB HP", #$FF
+    db #$28, "  TACO TANK", #$FF
+    db #$28, "GATE GLITCH", #$FF
     db #$28, "   MOAT CWJ", #$FF
-    db #$28, "SHINE TO PB", #$FF
-    db #$28, " BOTWOON CF", #$FF
-    db #$28, "ELEVATOR CF", #$FF
     db #$28, "ROBOT FLUSH", #$FF
+    db #$28, "SHINE TO PB", #$FF
+    db #$28, "ELEVATOR CF", #$FF
+    db #$28, " BOTWOON CF", #$FF
+    db #$28, "      MB HP", #$FF
     db #$FF
 
 ih_room_counter:
@@ -1232,6 +1331,7 @@ CtrlMenu:
     dw #ctrl_reset_segment_timer
     dw #ctrl_full_equipment
     dw #ctrl_kill_enemies
+    dw #ctrl_random_preset
     dw #ctrl_clear_shortcuts
     dw #$0000
     %cm_header("CONTROLLER SHORTCUTS")
@@ -1258,6 +1358,9 @@ ctrl_full_equipment:
 ctrl_kill_enemies:
     %cm_ctrl_shortcut("Kill Enemies", !sram_ctrl_kill_enemies)
 
+ctrl_random_preset:
+    %cm_ctrl_shortcut("Random Preset", !sram_ctrl_random_preset)
+
 ctrl_clear_shortcuts:
     %cm_jsr("Clear Shortcuts", action_clear_shortcuts, #$0000)
 
@@ -1269,6 +1372,7 @@ action_clear_shortcuts:
     STA !sram_ctrl_load_last_preset
     STA !sram_ctrl_full_equipment
     STA !sram_ctrl_kill_enemies
+    STA !sram_ctrl_random_preset
     STA !sram_ctrl_reset_segment_timer
     ; menu to default, Start + Select
     LDA #$3000 : STA !sram_ctrl_menu

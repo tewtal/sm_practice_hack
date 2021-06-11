@@ -18,21 +18,11 @@ export class InfohudMode extends Component {
                             </Row>
                             <br />
                             <Row>
-                                <Col md="3">Number Overflow</Col>
-                                <Col>When a number is too large to be displayed by the infohud, the most-significant digit will go beyond the normal 0-9 range.
-                                     The next ten characters are also 0-9 just inverted (colors are flipped), so as long as the overflow is not too large the number can still make sense.
-                                     For example, Ridley HP of 18000 is displayed as 8000 with the 8 inverted. For larger numbers such as Mother Brain Stage 3 HP of 36000,
-                                     the most-significant digit will display seemingly random characters until the health drops below 20000.
-                                     They are not actually random, but they may not be that useful. As another example, 32767 is displayed as L767.</Col>
-                            </Row>
-                            <br />
-                            <Row>
                                 <Col md="3">Negative Numbers</Col>
                                 <Col>Infohud displays negative numbers as large positive numbers; this is sometimes referred to as number underflow.
                                      For example, at the start of moonfall when vertical speed underflows to a number between 0 and -1,
-                                     the whole number portion of vertical speed will be presented as 65535. Since this is too large to be displayed in four digits,
-                                     the most-significant digit picks another sprite in memory; it happens to pick a 2.
-                                     In summary, -1 is displayed as 2535, -2 is displayed as 2534, -3 is displayed as 2533, and so on.</Col>
+                                     the whole number portion of vertical speed will be presented as 65535.
+                                     -2 is displayed as 65534, -3 is displayed as 65533, and so on.</Col>
                             </Row>
                             <br />
                             <Row>
@@ -40,16 +30,14 @@ export class InfohudMode extends Component {
                                 <Col>Some numbers like subpixels represent fractions. For example, the max walking speed is 2.75 pixels per frame.
                                      However the fractional speed is not stored in a readable form like 0.75. Instead it is stored as 49152, since 49152/65536 = 0.75.
                                      The best way to efficiently display this information is to use hexadecimal or base-16 numbering format.
-                                     In this example, the fractional speed converts from 49152 to C000 (hexadecimal uses 0-9 and A-F as the 16 digits).
-                                     Instead of hexadecimal letters, the infohud uses number overflow so it is displayed as 2000 with the 2 inverted.
-                                     Number overflow is used for each digit, so if we are trying to display the maximum number 65535 in hexadecimal,
-                                     it will be displayed as inverted 5555.</Col>
+                                     In this example, the fractional speed converts from 49152 to C000 (hexadecimal uses 0-9 and A-F as the 16 digits).</Col>
                             </Row>
                             <br />
                             <Row>
                                 <Col md="3">Samus HP</Col>
                                 <Col>Most infohud and room strat options fit in the bottom left of the infohud, but some options will also cover up Samus HP.
-                                     This will be noted in the descriptions below. Shine Tune also covers up the right side of the infohud including the segment timer and door transition frames.</Col>
+                                     This will be noted in the descriptions below. Shine Tune also covers up the right side of the infohud
+                                     including the segment timer and door transition frames.</Col>
                             </Row>
                       </CardBody>
                     </Card>
@@ -152,15 +140,11 @@ export class InfohudMode extends Component {
                             </Row>
                             <Row>
                                 <Col md="4"></Col>
-                                <Col>Y1 or Y2 indicates you unmorphed on one of the two correct frames.</Col>
+                                <Col>Y1 indicates you unmorphed on the first frame of the two-frame window, and Y2 indicates you unmorphed on the second frame.</Col>
                             </Row>
                             <Row>
                                 <Col md="4"></Col>
-                                <Col>L# (L1-L9) indicates you unmorphed late where the number tells you how many frames you were late.</Col>
-                            </Row>
-                            <Row>
-                                <Col md="4"></Col>
-                                <Col>LX indicates you unmorphed 10 or more frames late.</Col>
+                                <Col>L# indicates you unmorphed late where the number tells you how many frames you were late.</Col>
                             </Row>
                             <Row>
                                 <Col md="3"></Col>
@@ -168,11 +152,7 @@ export class InfohudMode extends Component {
                             </Row>
                             <Row>
                                 <Col md="4"></Col>
-                                <Col>E# (E1-E9) indicates you activated the spark early where the number tells you how many frames you were early.</Col>
-                            </Row>
-                            <Row>
-                                <Col md="4"></Col>
-                                <Col>EX indicates you activated the spark 10 or more frames early.</Col>
+                                <Col>E# indicates you activated the spark early where the number tells you how many frames you were early.</Col>
                             </Row>
                             <Row>
                                 <Col md="4"></Col>
@@ -180,11 +160,7 @@ export class InfohudMode extends Component {
                             </Row>
                             <Row>
                                 <Col md="4"></Col>
-                                <Col>L# (L1-L9) indicates you activated the spark late where the number tells you how many frames you were late.</Col>
-                            </Row>
-                            <Row>
-                                <Col md="4"></Col>
-                                <Col>LX indicates you activated the spark 10 or more frames late.</Col>
+                                <Col>L# indicates you activated the spark late where the number tells you how many frames you were late.</Col>
                             </Row>
                             <Row>
                                 <Col md="3"></Col>
@@ -221,7 +197,27 @@ export class InfohudMode extends Component {
                             <br />
                             <Row>
                                 <Col md="3">Vert Speed</Col>
-                                <Col>Displays the vertical speed combined with momentum in pixels. Also Samus HP is replaced by the subpixels in hexadecimal.</Col>
+                                <Col>Displays the vertical speed in pixels. Additonally Samus HP will be overwritten with space jump feedback:</Col>
+                            </Row>
+                            <Row>
+                                <Col md="3"></Col>
+                                <Col>First two characters = Number of frames that the jump button was held.</Col>
+                            </Row>
+                            <Row>
+                                <Col md="3"></Col>
+                                <Col>Last two characters = Feedback on the time when you jumped, with respect to space jump.</Col>
+                            </Row>
+                            <Row>
+                                <Col md="4"></Col>
+                                <Col>E# indicates you were early where the number tells you how many frames you were early.</Col>
+                            </Row>
+                            <Row>
+                                <Col md="4"></Col>
+                                <Col>Y# indicates you made a valid space jump. Normally you have 23 frames, but if underwater you have 41 frames.</Col>
+                            </Row>
+                            <Row>
+                                <Col md="4"></Col>
+                                <Col>L# indicates you were late where the number tells you how many frames you were late.</Col>
                             </Row>
                             <br />
                             <Row>
@@ -232,6 +228,7 @@ export class InfohudMode extends Component {
                             <Row>
                                 <Col md="3">Wall Jump</Col>
                                 <Col>Displays the number of frames between pressing a left or right input and pressing the jump button, if the number of frames is between 1 and 20.
+                                     On NTSC, to walljump this number should be between 2 and 9 inclusive.
                                      Also, if the number of frames is 9 (required for a max-delayed walljump) and the walljump is taking place in WRITG, plasma room, or bubble mountain,
                                      then additional information may be presented if you appear to be making hi-jump bootless walljump attempts:</Col>
                             </Row>
@@ -241,19 +238,11 @@ export class InfohudMode extends Component {
                             </Row>
                             <Row>
                                 <Col md="4"></Col>
-                                <Col>H# (H0-H9) indicates you jumped high where the number tells you how many pixels you were high.</Col>
+                                <Col>H# indicates you jumped high where the number tells you how many pixels you were high (can be zero).</Col>
                             </Row>
                             <Row>
                                 <Col md="4"></Col>
-                                <Col>HX indicates you jumped 10 or more pixels too high.</Col>
-                            </Row>
-                            <Row>
-                                <Col md="4"></Col>
-                                <Col>L# (L0-L9) indicates you jumped low where the number tells you how many pixels you were low.</Col>
-                            </Row>
-                            <Row>
-                                <Col md="4"></Col>
-                                <Col>LX indicates you jumped 10 or more frames too low.</Col>
+                                <Col>L# indicates you jumped low where the number tells you how many pixels you were low (can be zero).</Col>
                             </Row>
                             <Row>
                                 <Col md="3"></Col>
@@ -273,8 +262,122 @@ export class InfohudMode extends Component {
                         <CardHeader className="bg-primary text-white">Room Strat features</CardHeader>
                         <CardBody>
                             <Row>
-                                <Col md="3">MB HP</Col>
-                                <Col>Displays the HP of the second enemy. Most useful for the Mother Brain fight since Mother Brain uses the second enemy slot.</Col>
+                                <Col md="3">Taco Tank</Col>
+                                <Col>Provides feedback on attempts to collect the Retro Brinstar E-Tank using a precise walljump:</Col>
+                            </Row>
+                            <Row>
+                                <Col md="3"></Col>
+                                <Col>First Y = You started from the correct position (pressed against the wall facing left).</Col>
+                            </Row>
+                            <Row>
+                                <Col md="3"></Col>
+                                <Col>First character = Number of frames that you initially held left (this will replace the first Y).
+                                     In order to get the proper momentum to walljump and collect the tank, this will need to be either 3 or 4.</Col>
+                            </Row>
+                            <Row>
+                                <Col md="3"></Col>
+                                <Col>Second character = Number of frames after pressing left that jump was pressed.
+                                     In order to get the proper momentum to walljump and collect the tank, this will need to be 3.
+                                     It is normal for a 0 to appear when jumping straight up and down and shooting at the tank to reveal it.</Col>
+                            </Row>
+                            <Row>
+                                <Col md="3"></Col>
+                                <Col>Next two characters = Feedback on the walljump height:</Col>
+                            </Row>
+                            <Row>
+                                <Col md="4"></Col>
+                                <Col>L# indicates you were low where the number tells you how many frames you were low.</Col>
+                            </Row>
+                            <Row>
+                                <Col md="4"></Col>
+                                <Col>Y# (Y1-Y3) indicates you were at a good height,
+                                     with # indicating the number of frames where you can grab the tank (based solely on walljump height).</Col>
+                            </Row>
+                            <Row>
+                                <Col md="4"></Col>
+                                <Col>B# (B1-B3) indicates you will bonk the ceiling but can still collect the tank,
+                                     with # indicating the number of frames where you can grab the tank (based solely on walljump height).</Col>
+                            </Row>
+                            <Row>
+                                <Col md="4"></Col>
+                                <Col>H# indicates you were high where the number tells you how many frames you were high.</Col>
+                            </Row>
+                            <Row>
+                                <Col md="3"></Col>
+                                <Col>Additonally Samus HP will be overwritten with more feedback:</Col>
+                            </Row>
+                            <Row>
+                                <Col md="3"></Col>
+                                <Col>First character = Number of pixels away from the wall when the walljump occurred.
+                                     Ideally this will be 7. If it is more than 7 then you will not execute a walljump.
+                                     If is it less than 7, then you are practically guaranteed to have fewer frames to collect the tank.
+                                     For example, if you see Y2 6, then it is likely you will only have 1 frame to grab the tank instead of 2.</Col>
+                            </Row>
+                            <Row>
+                                <Col md="3"></Col>
+                                <Col>Second character = Number of frames where you can collect the tank.
+                                     This will take into account your walljump height, initial pixels away from the wall, and time when you break spin.
+                                     For example, if you see Y2 71, then you broke spin too early and missed out on a frame to grab the tank.
+                                     If you see an X, this means there was something wrong with the walljump right out of the gate,
+                                     either because it was too high or low, or because it did not have the correct horizontal momentum.
+                                     Even with a Y3 or B3 jump, it is not possible to reach the tank without the correct momentum.</Col>
+                            </Row>
+                            <Row>
+                                <Col md="3"></Col>
+                                <Col>Last two characters = Feedback on the time when you expanded your hitbox to grab the tank:</Col>
+                            </Row>
+                            <Row>
+                                <Col md="4"></Col>
+                                <Col>E# indicates you were early where the number tells you how many frames you were early.</Col>
+                            </Row>
+                            <Row>
+                                <Col md="4"></Col>
+                                <Col>Y# indicates you had one chance to collect the tank.</Col>
+                            </Row>
+                            <Row>
+                                <Col md="4"></Col>
+                                <Col>L# indicates you were late where the number tells you how many frames you were late.</Col>
+                            </Row>
+                            <Row>
+                                <Col md="3"></Col>
+                                <Col>Unfortunately even if you are coming in with a Y3 73 jump, you only get one chance to grab the tank.
+                                     It does not matter if you choose Y1, Y2, or Y3 to attempt the grab, as it will come down to the collision oscillator.
+                                     When Samus expands her hitbox, she will contact both the tank and the ceiling, but the game will only check one of the tiles.
+                                     If it checks the ceiling tile, it will push Samus down and out of the ceiling and she will not be able to grab the tank on the next frame.</Col>
+                            </Row>
+                            <br />
+                            <Row>
+                                <Col md="3">Gate Glitch</Col>
+                                <Col>Provides feedback on attempts to open a left-facing gate from the right side:</Col>
+                            </Row>
+                            <Row>
+                                <Col md="3"></Col>
+                                <Col>First character = Number of frames where you could have fired a missile through the gate (0-2).</Col>
+                            </Row>
+                            <Row>
+                                <Col md="3"></Col>
+                                <Col>Last two characters = Feedback on the timing of your shot (only visible if number of frames greater than 0):</Col>
+                            </Row>
+                            <Row>
+                                <Col md="4"></Col>
+                                <Col>E# indicates you were early where the number tells you how many frames you were early.</Col>
+                            </Row>
+                            <Row>
+                                <Col md="4"></Col>
+                                <Col>YY indicates you were on time with a one-frame window.</Col>
+                            </Row>
+                            <Row>
+                                <Col md="4"></Col>
+                                <Col>Y1 indicates you shot on the first frame of a two-frame window, and Y2 indicates you shot on the second frame.</Col>
+                            </Row>
+                            <Row>
+                                <Col md="4"></Col>
+                                <Col>L# indicates you were late where the number tells you how many frames you were late.</Col>
+                            </Row>
+                            <Row>
+                                <Col md="3"></Col>
+                                <Col>Note: This only gives feedback on whether the missile could have been fired through the gate.
+                                     It does not predict if the missile would hit the blue or green switch that activates the gate.</Col>
                             </Row>
                             <br />
                             <Row>
@@ -294,11 +397,7 @@ export class InfohudMode extends Component {
                             </Row>
                             <Row>
                                 <Col md="4"></Col>
-                                <Col>E# (E1-E9) indicates you jumped early where the number tells you how many frames you were early.</Col>
-                            </Row>
-                            <Row>
-                                <Col md="4"></Col>
-                                <Col>EX indicates you jumped 10 or more frames early.</Col>
+                                <Col>E# indicates you jumped early where the number tells you how many frames you were early.</Col>
                             </Row>
                             <Row>
                                 <Col md="4"></Col>
@@ -306,11 +405,7 @@ export class InfohudMode extends Component {
                             </Row>
                             <Row>
                                 <Col md="4"></Col>
-                                <Col>L# (L1-L9) indicates you jumped late where the number tells you how many frames you were late.</Col>
-                            </Row>
-                            <Row>
-                                <Col md="4"></Col>
-                                <Col>LX indicates you jumped 10 or more frames late.</Col>
+                                <Col>L# indicates you jumped late where the number tells you how many frames you were late.</Col>
                             </Row>
                             <Row>
                                 <Col md="3"></Col>
@@ -323,11 +418,7 @@ export class InfohudMode extends Component {
                             </Row>
                             <Row>
                                 <Col md="4"></Col>
-                                <Col>E# (E1-E9) indicates you jumped early where the number tells you how many frames you were early.</Col>
-                            </Row>
-                            <Row>
-                                <Col md="4"></Col>
-                                <Col>EX indicates you jumped 10 or more frames early.</Col>
+                                <Col>E# indicates you jumped early where the number tells you how many frames you were early.</Col>
                             </Row>
                             <Row>
                                 <Col md="4"></Col>
@@ -335,11 +426,7 @@ export class InfohudMode extends Component {
                             </Row>
                             <Row>
                                 <Col md="4"></Col>
-                                <Col>L# (L1-L9) indicates you jumped late where the number tells you how many frames you were late.</Col>
-                            </Row>
-                            <Row>
-                                <Col md="4"></Col>
-                                <Col>LX indicates you jumped 10 or more frames late.</Col>
+                                <Col>L# indicates you jumped late where the number tells you how many frames you were late.</Col>
                             </Row>
                             <Row>
                                 <Col md="3"></Col>
@@ -350,58 +437,36 @@ export class InfohudMode extends Component {
                             </Row>
                             <br />
                             <Row>
+                                <Col md="3">Robot Flush</Col>
+                                <Col>Provides feedback on attempts to flush the two robots in the Bowling Alley:</Col>
+                            </Row>
+                            <Row>
+                                <Col md="3"></Col>
+                                <Col>First 1 = The first robot was hit by a beam shot.</Col>
+                            </Row>
+                            <Row>
+                                <Col md="3"></Col>
+                                <Col>Second 1 = The first robot fell down.</Col>
+                            </Row>
+                            <Row>
+                                <Col md="3"></Col>
+                                <Col>First 2 = The second robot was hit by a beam shot.</Col>
+                            </Row>
+                            <Row>
+                                <Col md="3"></Col>
+                                <Col>Second 2 = The second robot fell down.</Col>
+                            </Row>
+                            <Row>
+                                <Col md="3"></Col>
+                                <Col>Thus 1122 indicates both robots were successfully flushed.</Col>
+                            </Row>
+                            <br />
+                            <Row>
                                 <Col md="3">Shine to PB</Col>
                                 <Col>Similar to shinespark, except Samus HP is overwritten to display information for the power bomb.
                                      Counts down the frames from the time you charge a shinespark until the time the charge runs out.
                                      If you activate the shinespark in time, it will display the number of frames to spare.
                                      If you lay a power bomb, it will display the number of frames to spare.</Col>
-                            </Row>
-                            <br />
-                            <Row>
-                                <Col md="3">Botwoon CF</Col>
-                                <Col>Provides feedback on attempts to crystal flash clip in Botwoon Hallway:</Col>
-                            </Row>
-                            <Row>
-                                <Col md="3"></Col>
-                                <Col>First Y = You laid a power bomb at the correct height (maximum height that you can).</Col>
-                            </Row>
-                            <Row>
-                                <Col md="3"></Col>
-                                <Col>Second Y = You returned to the same X and Y location (within 3 seconds or so) and you had 0 vertical speed.
-                                     You should also have 0 horizontal speed although this is not checked.</Col>
-                            </Row>
-                            <Row>
-                                <Col md="3"></Col>
-                                <Col>Last two characters = Feedback on your timing in returning to the correct position:</Col>
-                            </Row>
-                            <Row>
-                                <Col md="4"></Col>
-                                <Col>E# (E1-E9) indicates you were early where the number tells you how many frames you were early.</Col>
-                            </Row>
-                            <Row>
-                                <Col md="4"></Col>
-                                <Col>EX indicates you were 10 or more frames early.</Col>
-                            </Row>
-                            <Row>
-                                <Col md="4"></Col>
-                                <Col>YY indicates you were on time. If you did not get the crystal flash, it could mean you were not holding the correct inputs
-                                     (you must hold only L, R, down, and shoot), or it could mean you did not meet the conditions for a crystal flash.
-                                     You must have 10+ missiles, 10+ super missiles, 10+ power bombs, and be below 50 HP with empty reserves
-                                     (having non-empty reserves to manual will prevent a crystal flash). It is often stated that you need 11+ power bombs,
-                                     but that is counting the power bomb you laid at the beginning of the crystal flash clip attempt.</Col>
-                            </Row>
-                            <Row>
-                                <Col md="4"></Col>
-                                <Col>L# (L1-L9) indicates you were late where the number tells you how many frames you were late.</Col>
-                            </Row>
-                            <Row>
-                                <Col md="4"></Col>
-                                <Col>LX indicates you were 10 or more frames late.</Col>
-                            </Row>
-                            <Row>
-                                <Col md="3"></Col>
-                                <Col>Note: If using the bombs method, there is a two-frame window where Samus will reach the correct position with 0 speed for two frames.
-                                     In this case, you will get your best case feedback. For example, instead of seeing YYL2 followed by YYL3, you will just see YYL2.</Col>
                             </Row>
                             <br />
                             <Row>
@@ -439,11 +504,7 @@ export class InfohudMode extends Component {
                             </Row>
                             <Row>
                                 <Col md="4"></Col>
-                                <Col>E# (E1-E9) indicates you were early where the number tells you how many frames you were early.</Col>
-                            </Row>
-                            <Row>
-                                <Col md="4"></Col>
-                                <Col>EX indicates you were 10 or more frames early.</Col>
+                                <Col>E# indicates you were early where the number tells you how many frames you were early.</Col>
                             </Row>
                             <Row>
                                 <Col md="4"></Col>
@@ -456,36 +517,51 @@ export class InfohudMode extends Component {
                             </Row>
                             <Row>
                                 <Col md="4"></Col>
-                                <Col>L# (L1-L9) indicates you were late where the number tells you how many frames you were late.</Col>
-                            </Row>
-                            <Row>
-                                <Col md="4"></Col>
-                                <Col>LX indicates you were 10 or more frames late.</Col>
+                                <Col>L# indicates you were late where the number tells you how many frames you were late.</Col>
                             </Row>
                             <br />
                             <Row>
-                                <Col md="3">Robot Flush</Col>
-                                <Col>Provides feedback on attempts to flush the two robots in the Bowling Alley:</Col>
+                                <Col md="3">Botwoon CF</Col>
+                                <Col>Provides feedback on attempts to crystal flash clip in Botwoon Hallway:</Col>
                             </Row>
                             <Row>
                                 <Col md="3"></Col>
-                                <Col>First 1 = The first robot was hit by a beam shot.</Col>
+                                <Col>First Y = You laid a power bomb at the correct height (maximum height that you can).</Col>
                             </Row>
                             <Row>
                                 <Col md="3"></Col>
-                                <Col>Second 1 = The first robot fell down.</Col>
+                                <Col>Second Y = You returned to the same X and Y location (within 3 seconds or so) and you had 0 vertical speed.
+                                     You should also have 0 horizontal speed although this is not checked.</Col>
                             </Row>
                             <Row>
                                 <Col md="3"></Col>
-                                <Col>First 2 = The second robot was hit by a beam shot.</Col>
+                                <Col>Last two characters = Feedback on your timing in returning to the correct position:</Col>
+                            </Row>
+                            <Row>
+                                <Col md="4"></Col>
+                                <Col>E# indicates you were early where the number tells you how many frames you were early.</Col>
+                            </Row>
+                            <Row>
+                                <Col md="4"></Col>
+                                <Col>YY indicates you were on time. If you did not get the crystal flash, it could mean you were not holding the correct inputs
+                                     (you must hold only L, R, down, and shoot), or it could mean you did not meet the conditions for a crystal flash.
+                                     You must have 10+ missiles, 10+ super missiles, 10+ power bombs, and be below 50 HP with empty reserves
+                                     (having non-empty reserves to manual will prevent a crystal flash). It is often stated that you need 11+ power bombs,
+                                     but that is counting the power bomb you laid at the beginning of the crystal flash clip attempt.</Col>
+                            </Row>
+                            <Row>
+                                <Col md="4"></Col>
+                                <Col>L# indicates you were late where the number tells you how many frames you were late.</Col>
                             </Row>
                             <Row>
                                 <Col md="3"></Col>
-                                <Col>Second 2 = The second robot fell down.</Col>
+                                <Col>Note: If using the bombs method, there is a two-frame window where Samus will reach the correct position with 0 speed for two frames.
+                                     In this case, you will get your best case feedback. For example, instead of seeing YYL2 followed by YYL3, you will just see YYL2.</Col>
                             </Row>
+                            <br />
                             <Row>
-                                <Col md="3"></Col>
-                                <Col>Thus 1122 indicates both robots were successfully flushed.</Col>
+                                <Col md="3">MB HP</Col>
+                                <Col>Displays the HP of the second enemy. Most useful for the Mother Brain fight since Mother Brain uses the second enemy slot.</Col>
                             </Row>
                         </CardBody>
                     </Card>

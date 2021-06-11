@@ -25,11 +25,11 @@
 !ram_enemy_hp = $7FFB40
 !ram_horizontal_speed = $7FFB58
 !ram_vertical_speed = $7FFB5A
-!ram_magic_pants_1 = $7FFB64
-!ram_magic_pants_2 = $7FFB66
-!ram_magic_pants_3 = $7FFB70
-!ram_magic_pants_4 = $7FFB72
-!ram_magic_pants_5 = $7FFB74
+!ram_magic_pants_enabled = $7FFB64
+!ram_magic_pants_state = $7FFB66
+!ram_magic_pants_pal1 = $7FFB70
+!ram_magic_pants_pal2 = $7FFB72
+!ram_magic_pants_pal3 = $7FFB74
 !ram_charge_counter = $7FFB1C
 !ram_xfac_counter = $7FFB1E
 !ram_lag_counter = $7FFB96
@@ -75,14 +75,14 @@
 !ram_walljump_counter = $7FFBCA
 !ram_quickdrop_counter = $7FFBCC
 
-!ram_shinefinetune_early_1 = $7FFBD0
-!ram_shinefinetune_late_1 = $7FFBD2
-!ram_shinefinetune_early_2 = $7FFBD4
-!ram_shinefinetune_late_2 = $7FFBD6
-!ram_shinefinetune_early_3 = $7FFBD8
-!ram_shinefinetune_late_3 = $7FFBDA
-!ram_shinefinetune_early_4 = $7FFBDC
-!ram_shinefinetune_late_4 = $7FFBDE
+!ram_shinetune_early_1 = $7FFBD0
+!ram_shinetune_late_1 = $7FFBD2
+!ram_shinetune_early_2 = $7FFBD4
+!ram_shinetune_late_2 = $7FFBD6
+!ram_shinetune_early_3 = $7FFBD8
+!ram_shinetune_late_3 = $7FFBDA
+!ram_shinetune_early_4 = $7FFBDC
+!ram_shinetune_late_4 = $7FFBDE
 
 !ram_sprite_prio_flag = $7FFBE0
 
@@ -110,6 +110,8 @@
 !sram_save_has_set_rng = $70201E
 !sram_preset_category = $702020
 !sram_room_strat = $702022
+
+!sram_ctrl_random_preset = $702024
 
 ; -------------
 ; Menu
@@ -172,19 +174,26 @@
 !IH_INPUT_ANGLE_UP = $7E09BC
 !IH_INPUT_ANGLE_DOWN = $7E09BE
 
+!IH_BLANK = #$0057
+!IH_DECIMAL = #$0CCB
+!IH_HYPHEN = #$0C6F
+!IH_LETTER_A = #$0C7A
+!IH_LETTER_B = #$0C7B
+!IH_LETTER_E = #$0C7E
+!IH_LETTER_H = #$0C6C
+!IH_LETTER_L = #$0C68
+!IH_LETTER_N = #$0C6D
+!IH_LETTER_R = #$0C69
+!IH_LETTER_X = #$0C66
+!IH_LETTER_Y = #$0C67
+!IH_PERCENT = #$0C0A
+
 ; ------------
 ; Presets
 ; ------------
 
 !ram_load_preset = $7FFC00
 !ram_cgram_cache = $7FFC02 ; 0x14 bytes
-
-!category_combined = 0
-!category_rbo = 1
-!category_kpdr25 = 2
-!category_gtclassic = 3
-!category_14low = 4
-!category_allboss = 5
 
 ; ----------
 ; Save/load
