@@ -785,6 +785,73 @@ status_quickdrop:
 
 status_walljump:
 {
+    ; Suppress Samus HP display
+    LDA $09C2 : STA !ram_last_hp
+
+    ; Check if it is time to calculate average climb speed
+    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_JUMP : BEQ .incframecount
+
+    ; Make sure we are tracking speed
+    LDA !ram_roomstrat_counter : BEQ .blankaverage
+
+    ; Divide total vertical speed by frame count
+    TAX : LDA !ram_vertical_speed
+    STA $4204
+    %a8()
+    STX $4206              ; divide by frame count
+    %a16()
+    PEA $0000 : PLA
+    PEA $0000 : PLA
+
+    ; Result is mulitiplied by 128 already, multiply by 8 for a nice decimal number
+    LDA $4214 : ASL : ASL : ASL : LDX #$0092 : JSR Draw4Hundredths
+    LDA !IH_BLANK : STA $7EC690
+
+  .startaverage
+    LDA #$0000 : STA !ram_vertical_speed : INC : STA !ram_roomstrat_counter
+    BRA .incspeed
+
+  .blankaverage
+    LDA !IH_BLANK : STA $7EC690 : STA $7EC692 : STA $7EC694 : STA $7EC696 : STA $7EC698
+    BRA .startaverage
+
+  .clearaverage
+    LDA #$0000 : STA !ram_roomstrat_counter
+    BRA .checkleftright
+
+  .incframecount
+    ; Arbitrary wait of 120 frames before we stop tracking the average
+    LDA !ram_roomstrat_counter : BEQ .checkleftright : CMP #$0078 : BPL .clearaverage
+    INC : STA !ram_roomstrat_counter
+
+  .incspeed
+    ; Nothing to do if speed is zero or negative
+    LDA $0B2D : AND #$8000 : BNE .checkleftright
+    LDA $0B2D : BEQ .checkleftright
+
+    ; Speed x256 is just a little too high
+    ; Make it x128 and store it for later use
+    LSR : STA $12
+
+    ; Check if we are rising or falling
+    LDA $0B36 : CMP #$0001 : BEQ .addspeed : CMP #$0002 : BEQ .subtractspeed
+    BRA .checkleftright
+
+  .addspeed
+    ; If total speed overflows, stop tracking the average
+    LDA !ram_vertical_speed : CLC : CLV : ADC $12 : BVS .clearaverage
+    STA !ram_vertical_speed
+    BRA .checkleftright
+
+  .subtractspeed
+    LDA !ram_vertical_speed : CMP $12 : BMI .zerospeed
+    SEC : SBC $12 : STA !ram_vertical_speed
+    BRA .checkleftright
+
+  .zerospeed
+    LDA #$0000 : STA !ram_vertical_speed
+
+  .checkleftright
     LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_LEFT : BNE .leftright
     LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_RIGHT : BNE .leftright
 

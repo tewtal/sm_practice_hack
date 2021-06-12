@@ -197,7 +197,7 @@ export class InfohudMode extends Component {
                             <br />
                             <Row>
                                 <Col md="3">Vert Speed</Col>
-                                <Col>Displays the vertical speed in pixels. Additonally Samus HP will be overwritten with space jump feedback:</Col>
+                                <Col>Displays the vertical speed in pixels. Also Samus HP will be overwritten with space jump feedback:</Col>
                             </Row>
                             <Row>
                                 <Col md="3"></Col>
@@ -249,6 +249,13 @@ export class InfohudMode extends Component {
                                 <Col>Unfortunately there is no single pixel that is guaranteed to work for these specific walljumps; it also depends on the subpixels.
                                      If you get H0 9 or L0 9, then the jump is possible an estimated 75% of the time.
                                      With H0 9 you will know it is possible if you do not bonk the ledge.</Col>
+                            </Row>
+                            <Row>
+                                <Col md="3"></Col>
+                                <Col>Additionally Samus HP will be overwritten with the average climb speed in approximate pixels per frame (inflated by 2.4%).
+                                     It averages vertical speed between jump presses, assuming the presses are within 2 seconds of each other
+                                     and assuming the total speed does not overflow (if either of these happen then average will be blank).
+                                     If total speed drops below zero then the average will be recorded as zero.</Col>
                             </Row>
                             <br />
                             <Row>
@@ -304,7 +311,7 @@ export class InfohudMode extends Component {
                             </Row>
                             <Row>
                                 <Col md="3"></Col>
-                                <Col>Additonally Samus HP will be overwritten with more feedback:</Col>
+                                <Col>Additionally Samus HP will be overwritten with more feedback:</Col>
                             </Row>
                             <Row>
                                 <Col md="3"></Col>

@@ -30,6 +30,7 @@ export class Changelog extends Component {
                                                 <li>Added Gate Glitch and Taco Tank to the Room Strat list. (2.2.1)</li>
                                                 <li>Replaced vertical speed subpixels with jump feedback. (2.2.1)</li>
                                                 <li>When fanfare is off, music is not interrupted. (2.2.1)</li>
+                                                <li>Added average climb speed to the Wall Jump infohud mode. (2.2.2)</li>
                                             </ul>
                                         </CardBody>
                                     </Card>
