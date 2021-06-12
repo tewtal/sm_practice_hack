@@ -547,10 +547,10 @@ Draw2:
     LDA $4214 : STA $16
 
     ; Ones digit
-    LDA $4216 : ASL A : TAY : LDA.w NumberGFXTable,Y : STA $7EC602,X
+    LDA $4216 : ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC602,X
 
     ; Tens digit
-    LDA $16 : BEQ .blanktens : ASL A : TAY : LDA.w NumberGFXTable,Y : STA $7EC600,X
+    LDA $16 : BEQ .blanktens : ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC600,X
 
   .done
     INX #4
@@ -571,7 +571,7 @@ Draw3:
     LDA $4214 : STA $16
 
     ; Ones digit
-    LDA $4216 : ASL A : TAY : LDA.w NumberGFXTable,Y : STA $7EC604,X
+    LDA $4216 : ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC604,X
 
     LDA $16 : BEQ .blanktens
     STA $4204
@@ -582,10 +582,10 @@ Draw3:
     LDA $4214 : STA $14
 
     ; Tens digit
-    LDA $4216 : ASL A : TAY : LDA.w NumberGFXTable,Y : STA $7EC602,X
+    LDA $4216 : ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC602,X
 
     ; Hundreds digit
-    LDA $14 : BEQ .blankhundreds : ASL A : TAY : LDA.w NumberGFXTable,Y : STA $7EC600,X
+    LDA $14 : BEQ .blankhundreds : ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC600,X
 
   .done
     INX #6
@@ -610,7 +610,7 @@ Draw4:
     LDA $4214 : STA $16
 
     ; Ones digit
-    LDA $4216 : ASL A : TAY : LDA.w NumberGFXTable,Y : STA $7EC606,X
+    LDA $4216 : ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC606,X
 
     LDA $16 : BEQ .blanktens
     STA $4204
@@ -621,7 +621,7 @@ Draw4:
     LDA $4214 : STA $14
 
     ; Tens digit
-    LDA $4216 : ASL A : TAY : LDA.w NumberGFXTable,Y : STA $7EC604,X
+    LDA $4216 : ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC604,X
 
     LDA $14 : BEQ .blankhundreds
     STA $4204
@@ -632,10 +632,10 @@ Draw4:
     LDA $4214 : STA $12
 
     ; Hundreds digit
-    LDA $4216 : ASL A : TAY : LDA.w NumberGFXTable,Y : STA $7EC602,X
+    LDA $4216 : ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC602,X
 
     ; Thousands digit
-    LDA $12 : BEQ .blankthousands : ASL A : TAY : LDA.w NumberGFXTable,Y : STA $7EC600,X
+    LDA $12 : BEQ .blankthousands : ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC600,X
 
   .done
     INX #8
@@ -674,6 +674,54 @@ Draw4Hex:
     ASL : TAY : LDA.w HexGFXTable,Y
     STA $7EC606,X
     RTS
+}
+
+Draw4Hundredths:
+{
+    STA $4204
+    %a8()
+    LDA #$0A : STA $4206   ; divide by 10
+    %a16()
+    PEA $0000 : PLA
+
+    ; Ones digit ignored, go straight to tens digit
+    LDA $4214 : BEQ .zerotens
+    STA $4204
+    %a8()
+    LDA #$0A : STA $4206   ; divide by 10
+    %a16()
+    PEA $0000 : PLA
+    LDA $4214 : STA $14
+
+    ; Tens digit
+    LDA $4216 : ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC606,X
+
+    LDA $14 : BEQ .zerohundreds
+    STA $4204
+    %a8()
+    LDA #$0A : STA $4206   ; divide by 10
+    %a16()
+    PEA $0000 : PLA
+    LDA $4214 : STA $12
+
+    ; Hundreds digit
+    LDA $4216 : ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC604,X
+
+    ; Thousands digit
+    LDA $12 : ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC600,X
+
+  .done
+    LDA !IH_DECIMAL : STA $7EC602,X
+    INX #8
+    RTS
+
+  .zerotens
+    LDA #$0C09 : STA $7EC600,X : STA $7EC604,X : STA $7EC606,X
+    BRA .done
+
+  .zerohundreds
+    LDA #$0C09 : STA $7EC600,X : STA $7EC604,X
+    BRA .done
 }
 
 CalcEtank:
