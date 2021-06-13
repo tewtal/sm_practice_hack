@@ -29,6 +29,7 @@ preset_14speed_crateria_ceres_elevator:
     dl $7E09CC : db $02 : dw $0000 ; Max supers
     dl $7E09CE : db $02 : dw $0000 ; Pbs
     dl $7E09D0 : db $02 : dw $0000 ; Max pbs
+    dl $7E09D2 : db $02 : dw $0000 ; Currently selected item
     dl $7E09D4 : db $02 : dw $0000 ; Max reserves
     dl $7E09D6 : db $02 : dw $0000 ; Reserves
     dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
@@ -468,6 +469,7 @@ preset_14speed_brinstar_leaving_power_bombs:
     dl $7E09CA : db $02 : dw $0003 ; Supers
     dl $7E09CE : db $02 : dw $0005 ; Pbs
     dl $7E09D0 : db $02 : dw $0005 ; Max pbs
+    dl $7E09D2 : db $02 : dw $0003 ; Currently selected item
     dl $7E0AF6 : db $02 : dw $0157 ; Samus X
     dl $7E0AFA : db $02 : dw $00AB ; Samus Y
     dl $7ED874 : db $02 : dw $0104 ; Events, Items, Doors
@@ -531,6 +533,7 @@ preset_14speed_brinstar_ocean:
     dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
     dl $7E09C6 : db $02 : dw $0007 ; Missiles
     dl $7E09C8 : db $02 : dw $000A ; Max missiles
+    dl $7E09D2 : db $02 : dw $0000 ; Currently selected item
     dl $7E0AF6 : db $02 : dw $01A1 ; Samus X
     dl $7ED870 : db $02 : dw $0190 ; Events, Items, Doors
     dl $7ED91A : db $02 : dw $0013 ; Events, Items, Doors
@@ -729,6 +732,7 @@ preset_14speed_brinstar_revisit_breaking_tube:
     dl $7E09C2 : db $02 : dw $0052 ; Health
     dl $7E09C6 : db $02 : dw $0008 ; Missiles
     dl $7E09CA : db $02 : dw $000A ; Supers
+    dl $7E09D2 : db $02 : dw $0003 ; Currently selected item
     dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0008 ; More position/state
     dl $7E0AF6 : db $02 : dw $002C ; Samus X
@@ -745,6 +749,7 @@ preset_14speed_brinstar_revisit_entering_kraids_lair:
     dl $7E0913 : db $02 : dw $1801 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0100 ; Screen Y position in pixels
     dl $7E09CE : db $02 : dw $0001 ; Pbs
+    dl $7E09D2 : db $02 : dw $0000 ; Currently selected item
     dl $7E0AF6 : db $02 : dw $002E ; Samus X
     dl $7E0AFA : db $02 : dw $018B ; Samus Y
     dl $7ED820 : db $02 : dw $0801 ; Events, Items, Doors
@@ -946,6 +951,7 @@ preset_14speed_lower_norfair_ln_main_hall:
     dl $7E0911 : db $02 : dw $0400 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
     dl $7E09C2 : db $02 : dw $00D7 ; Health
+    dl $7E09D2 : db $02 : dw $0003 ; Currently selected item
     dl $7E0A1C : db $02 : dw $009B ; Samus position/state
     dl $7E0A1E : db $02 : dw $0000 ; More position/state
     dl $7E0AF6 : db $02 : dw $0480 ; Samus X
@@ -995,6 +1001,7 @@ preset_14speed_lower_norfair_amphitheatre:
     dl $7E09C6 : db $02 : dw $0005 ; Missiles
     dl $7E09CA : db $02 : dw $0006 ; Supers
     dl $7E09CE : db $02 : dw $0004 ; Pbs
+    dl $7E09D2 : db $02 : dw $0000 ; Currently selected item
     dl $7E0AF6 : db $02 : dw $00B3 ; Samus X
     dl $7E0AFA : db $02 : dw $018B ; Samus Y
     dw #$FFFF
@@ -1249,6 +1256,7 @@ preset_14speed_maridia_aqueduct:
     dl $7E0915 : db $02 : dw $0300 ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $00C3 ; Health
     dl $7E09CA : db $02 : dw $0009 ; Supers
+    dl $7E09D2 : db $02 : dw $0003 ; Currently selected item
     dl $7E0A1C : db $02 : dw $001D ; Samus position/state
     dl $7E0A1E : db $02 : dw $0408 ; More position/state
     dl $7E0AF6 : db $02 : dw $01BD ; Samus X
@@ -1271,6 +1279,7 @@ preset_14speed_maridia_botwoon:
     dl $7E0913 : db $02 : dw $73FF ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0013 ; Screen Y position in pixels
     dl $7E09CE : db $02 : dw $0004 ; Pbs
+    dl $7E09D2 : db $02 : dw $0000 ; Currently selected item
     dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0008 ; More position/state
     dl $7E0AF6 : db $02 : dw $03AD ; Samus X

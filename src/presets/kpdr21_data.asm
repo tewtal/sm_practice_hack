@@ -29,6 +29,7 @@ preset_kpdr21_crateria_ship:
     dl $7E09CC : db $02 : dw $0000 ; Max supers
     dl $7E09CE : db $02 : dw $0000 ; Pbs
     dl $7E09D0 : db $02 : dw $0000 ; Max pbs
+    dl $7E09D2 : db $02 : dw $0000 ; Currently selected item
     dl $7E09D4 : db $02 : dw $0000 ; Max reserves
     dl $7E09D6 : db $02 : dw $0000 ; Reserves
     dl $7E0A1C : db $02 : dw $0000 ; Samus position/state
@@ -1142,6 +1143,8 @@ preset_kpdr21_red_brinstar_caterpillars_up:
     dl $7E09C2 : db $02 : dw $010F ; Health
     dl $7E09CE : db $02 : dw $0005 ; Pbs
     dl $7E09D0 : db $02 : dw $0005 ; Max pbs
+    dl $7E09D2 : db $02 : dw $0003 ; Currently selected item
+    dl $7E09D2 : db $02 : dw $0003 ; Currently selected item
     dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0008 ; More position/state
     dl $7E0AF6 : db $02 : dw $02AF ; Samus X
@@ -1187,6 +1190,8 @@ preset_kpdr21_wrecked_ship_oceanfly_setup:
     dl $7E090F : db $02 : dw $8C00 ; Screen subpixel X position.
     dl $7E0913 : db $02 : dw $3000 ; Screen subpixel Y position
     dl $7E09CE : db $02 : dw $0002 ; Pbs
+    dl $7E09D2 : db $02 : dw $0000 ; Currently selected item
+    dl $7E09D2 : db $02 : dw $0000 ; Currently selected item
     dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0008 ; More position/state
     dl $7E0AF6 : db $02 : dw $002C ; Samus X
@@ -1532,6 +1537,7 @@ preset_kpdr21_maridia_breaking_tube:
     dl $7E07C3 : db $02 : dw $B130 ; GFX Pointers
     dl $7E07C5 : db $02 : dw $3CBE ; GFX Pointers
     dl $7E07C7 : db $02 : dw $C2B8 ; GFX Pointers
+    dl $7E09D2 : db $02 : dw $0003 ; Currently selected item
     dl $7E090F : db $02 : dw $E000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $7400 ; Screen subpixel Y position
@@ -1552,6 +1558,7 @@ preset_kpdr21_maridia_fish_tank:
     dl $7E0913 : db $02 : dw $C000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $05F4 ; Screen Y position in pixels
     dl $7E09CE : db $02 : dw $0002 ; Pbs
+    dl $7E09D2 : db $02 : dw $0000 ; Currently selected item
     dl $7E0AF6 : db $02 : dw $0167 ; Samus X
     dl $7E0AFA : db $02 : dw $068B ; Samus Y
     dl $7ED820 : db $02 : dw $0801 ; Events, Items, Doors
@@ -1595,6 +1602,7 @@ preset_kpdr21_maridia_aqueduct:
     dl $7E0913 : db $02 : dw $83FF ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0300 ; Screen Y position in pixels
     dl $7E09CA : db $02 : dw $0009 ; Supers
+    dl $7E09D2 : db $02 : dw $0003 ; Currently selected item
     dl $7E0AF6 : db $02 : dw $01AD ; Samus X
     dl $7E0AFA : db $02 : dw $038B ; Samus Y
     dl $7ED8C0 : db $02 : dw $8174 ; Events, Items, Doors
@@ -1615,6 +1623,7 @@ preset_kpdr21_maridia_botwoon_hallway:
     dl $7E0913 : db $02 : dw $4000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
     dl $7E09CE : db $02 : dw $0001 ; Pbs
+    dl $7E09D2 : db $02 : dw $0000 ; Currently selected item
     dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0004 ; More position/state
     dl $7E0AF6 : db $02 : dw $009D ; Samus X
@@ -2033,6 +2042,7 @@ preset_kpdr21_lower_norfair_ln_main_hall:
     dl $7E0915 : db $02 : dw $0200 ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $00BA ; Health
     dl $7E09CE : db $02 : dw $0004 ; Pbs
+    dl $7E09D2 : db $02 : dw $0003 ; Currently selected item
     dl $7E0A1C : db $02 : dw $009B ; Samus position/state
     dl $7E0A1E : db $02 : dw $0000 ; More position/state
     dl $7E0AF6 : db $02 : dw $0480 ; Samus X
@@ -2082,6 +2092,7 @@ preset_kpdr21_lower_norfair_amphitheatre:
     dl $7E0915 : db $02 : dw $011D ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $0084 ; Health
     dl $7E09CE : db $02 : dw $0004 ; Pbs
+    dl $7E09D2 : db $02 : dw $0000 ; Currently selected item
     dl $7E0AF6 : db $02 : dw $00A7 ; Samus X
     dl $7E0AFA : db $02 : dw $018B ; Samus Y
     dw #$FFFF

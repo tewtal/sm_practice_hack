@@ -29,6 +29,7 @@ preset_allbossprkd_crateria_ceres_elevator:
     dl $7E09CC : db $02 : dw $0000 ; Max supers
     dl $7E09CE : db $02 : dw $0000 ; Pbs
     dl $7E09D0 : db $02 : dw $0000 ; Max pbs
+    dl $7E09D2 : db $02 : dw $0000 ; Currently selected item
     dl $7E09D4 : db $02 : dw $0000 ; Max reserves
     dl $7E09D6 : db $02 : dw $0000 ; Reserves
     dl $7E0A1C : db $02 : dw $0000 ; Samus position/state
@@ -603,6 +604,7 @@ preset_allbossprkd_brinstar_leaving_power_bombs:
     dl $7E09CA : db $02 : dw $0008 ; Supers
     dl $7E09CE : db $02 : dw $0005 ; Pbs
     dl $7E09D0 : db $02 : dw $0005 ; Max pbs
+    dl $7E09D2 : db $02 : dw $0003 ; Currently selected item
     dl $7E0AF6 : db $02 : dw $02BE ; Samus X
     dl $7ED874 : db $02 : dw $0104 ; Events, Items, Doors
     dl $7ED8B6 : db $02 : dw $2028 ; Events, Items, Doors
@@ -623,6 +625,7 @@ preset_allbossprkd_wrecked_ship_moat:
     dl $7E0913 : db $02 : dw $6800 ; Screen subpixel Y position
     dl $7E09CA : db $02 : dw $000A ; Supers
     dl $7E09CE : db $02 : dw $0001 ; Pbs
+    dl $7E09D2 : db $02 : dw $0000 ; Currently selected item
     dl $7E0A1C : db $02 : dw $0089 ; Samus position/state
     dl $7E0A1E : db $02 : dw $1508 ; More position/state
     dl $7E0AF6 : db $02 : dw $02DB ; Samus X
@@ -843,6 +846,7 @@ preset_allbossprkd_wrecked_ship_breaking_tube:
     dl $7E0913 : db $02 : dw $D000 ; Screen subpixel Y position
     dl $7E09A6 : db $02 : dw $1004 ; Beams
     dl $7E09A8 : db $02 : dw $1004 ; Beams
+    dl $7E09D2 : db $02 : dw $0003 ; Currently selected item
     dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0008 ; More position/state
     dl $7E0AF6 : db $02 : dw $002D ; Samus X
@@ -867,6 +871,7 @@ preset_allbossprkd_upper_norfair_business_center:
     dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0238 ; Screen Y position in pixels
     dl $7E09CE : db $02 : dw $0003 ; Pbs
+    dl $7E09D2 : db $02 : dw $0000 ; Currently selected item
     dl $7E0A1C : db $02 : dw $009B ; Samus position/state
     dl $7E0A1E : db $02 : dw $0000 ; More position/state
     dl $7E0AF6 : db $02 : dw $0080 ; Samus X
@@ -1098,6 +1103,7 @@ preset_allbossprkd_lower_norfair_ln_main_hall:
     dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
     dl $7E09A6 : db $02 : dw $1001 ; Beams
     dl $7E09C2 : db $02 : dw $00C6 ; Health
+    dl $7E09D2 : db $02 : dw $0003 ; Currently selected item
     dl $7E0A1C : db $02 : dw $009B ; Samus position/state
     dl $7E0A1E : db $02 : dw $0000 ; More position/state
     dl $7E0AF6 : db $02 : dw $0480 ; Samus X
@@ -1112,6 +1118,7 @@ preset_allbossprkd_lower_norfair_green_gate_glitch:
     dl $7E090F : db $02 : dw $4000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $AC00 ; Screen subpixel Y position
+    dl $7E09D2 : db $02 : dw $0000 ; Currently selected item
     dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0004 ; More position/state
     dl $7E0AF6 : db $02 : dw $007C ; Samus X
@@ -1601,6 +1608,7 @@ preset_allbossprkd_maridia_aqueduct:
     dl $7E0915 : db $02 : dw $0300 ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $0154 ; Health
     dl $7E09CA : db $02 : dw $000E ; Supers
+    dl $7E09D2 : db $02 : dw $0003 ; Currently selected item
     dl $7E0A1C : db $02 : dw $001D ; Samus position/state
     dl $7E0A1E : db $02 : dw $0408 ; More position/state
     dl $7E0AF6 : db $02 : dw $01B6 ; Samus X
@@ -1623,6 +1631,7 @@ preset_allbossprkd_maridia_botwoon:
     dl $7E0913 : db $02 : dw $F400 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
     dl $7E09CE : db $02 : dw $0004 ; Pbs
+    dl $7E09D2 : db $02 : dw $0000 ; Currently selected item
     dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0008 ; More position/state
     dl $7E0AF6 : db $02 : dw $03A6 ; Samus X

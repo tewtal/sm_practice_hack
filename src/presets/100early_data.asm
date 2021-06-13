@@ -29,6 +29,7 @@ preset_100early_crateria_ceres_elevator:
     dl $7E09CC : db $02 : dw $0000 ; Max supers
     dl $7E09CE : db $02 : dw $0000 ; Pbs
     dl $7E09D0 : db $02 : dw $0000 ; Max pbs
+    dl $7E09D2 : db $02 : dw $0000 ; Currently selected item
     dl $7E09D4 : db $02 : dw $0000 ; Max reserves
     dl $7E09D6 : db $02 : dw $0000 ; Reserves
     dl $7E0A1C : db $02 : dw $0000 ; Samus position/state
@@ -1254,6 +1255,7 @@ preset_100early_red_tower_and_crateria_beta_power_bombs:
     dl $7E0913 : db $02 : dw $5400 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $02FB ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $0177 ; Health
+    dl $7E09D2 : db $02 : dw $0003 ; Currently selected item
     dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0004 ; More position/state
     dl $7E0AF6 : db $02 : dw $0061 ; Samus X
@@ -1279,6 +1281,7 @@ preset_100early_red_tower_and_crateria_crateria_kihunters:
     dl $7E09CA : db $02 : dw $0005 ; Supers
     dl $7E09CE : db $02 : dw $000B ; Pbs
     dl $7E09D0 : db $02 : dw $000F ; Max pbs
+    dl $7E09D2 : db $02 : dw $0000 ; Currently selected item
     dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0008 ; More position/state
     dl $7E0AF6 : db $02 : dw $006A ; Samus X
@@ -1302,6 +1305,7 @@ preset_100early_red_tower_and_crateria_oceanfly:
     dl $7E090F : db $02 : dw $E401 ; Screen subpixel X position.
     dl $7E0913 : db $02 : dw $B800 ; Screen subpixel Y position
     dl $7E09CE : db $02 : dw $000A ; Pbs
+    dl $7E09D2 : db $02 : dw $0003 ; Currently selected item
     dl $7E0AF6 : db $02 : dw $0025 ; Samus X
     dl $7E0AFA : db $02 : dw $008B ; Samus Y
     dl $7ED8B0 : db $02 : dw $2000 ; Events, Items, Doors
@@ -1314,6 +1318,7 @@ preset_100early_red_tower_and_crateria_the_moat:
     dl $7E0911 : db $02 : dw $0200 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $F400 ; Screen subpixel Y position
     dl $7E09C2 : db $02 : dw $0172 ; Health
+    dl $7E09D2 : db $02 : dw $0000 ; Currently selected item
     dl $7E0AF6 : db $02 : dw $02B1 ; Samus X
     dw #$FFFF
 .after
@@ -2156,6 +2161,7 @@ preset_100early_maridia_predraygon_aqueduct:
     dl $7E0913 : db $02 : dw $FC00 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0300 ; Screen Y position in pixels
     dl $7E09CA : db $02 : dw $0018 ; Supers
+    dl $7E09D2 : db $02 : dw $0003 ; Currently selected item
     dl $7E0AF6 : db $02 : dw $01B0 ; Samus X
     dl $7E0AFA : db $02 : dw $038B ; Samus Y
     dl $7ED8C0 : db $02 : dw $CB7C ; Events, Items, Doors
@@ -2177,6 +2183,7 @@ preset_100early_maridia_predraygon_botwoon:
     dl $7E0913 : db $02 : dw $F800 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0001 ; Screen Y position in pixels
     dl $7E09CE : db $02 : dw $000B ; Pbs
+    dl $7E09D2 : db $02 : dw $0000 ; Currently selected item
     dl $7E0AF6 : db $02 : dw $03A8 ; Samus X
     dl $7E0AFA : db $02 : dw $008B ; Samus Y
     dl $7ED91A : db $02 : dw $0075 ; Events, Items, Doors

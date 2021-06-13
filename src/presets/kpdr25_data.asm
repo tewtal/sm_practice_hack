@@ -29,6 +29,7 @@ preset_kpdr25_bombs_ceres_elevator:
     dl $7E09CC : db $02 : dw $0000 ; Max supers
     dl $7E09CE : db $02 : dw $0000 ; Pbs
     dl $7E09D0 : db $02 : dw $0000 ; Max pbs
+    dl $7E09D2 : db $02 : dw $0000 ; Currently selected item
     dl $7E09D4 : db $02 : dw $0000 ; Max reserves
     dl $7E09D6 : db $02 : dw $0000 ; Reserves
     dl $7E0A1C : db $02 : dw $0026 ; Samus position/state
@@ -764,6 +765,7 @@ preset_kpdr25_wrecked_ship_post_power_bombs:
     dl $7E09CA : db $02 : dw $0002 ; Supers
     dl $7E09CE : db $02 : dw $0005 ; Pbs
     dl $7E09D0 : db $02 : dw $0005 ; Max pbs
+    dl $7E09D2 : db $02 : dw $0003 ; Currently selected item
     dl $7E0A1C : db $02 : dw $000B ; Samus position/state
     dl $7E0AF6 : db $02 : dw $02CA ; Samus X
     dl $7ED874 : db $02 : dw $0D04 ; Events, Items, Doors
@@ -813,6 +815,7 @@ preset_kpdr25_wrecked_ship_phantoon:
     dl $7E09C8 : db $02 : dw $0019 ; Max missiles
     dl $7E09CA : db $02 : dw $0001 ; Supers
     dl $7E09CE : db $02 : dw $0002 ; Pbs
+    dl $7E09D2 : db $02 : dw $0000 ; Currently selected item
     dl $7E0A1C : db $02 : dw $0089 ; Samus position/state
     dl $7E0A1E : db $02 : dw $1508 ; More position/state
     dl $7E0AF6 : db $02 : dw $04DB ; Samus X
@@ -948,6 +951,7 @@ preset_kpdr25_maridia_the_tube:
     dl $7E0915 : db $02 : dw $0100 ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $00F3 ; Health
     dl $7E09CA : db $02 : dw $0009 ; Supers
+    dl $7E09D2 : db $02 : dw $0003 ; Currently selected item
     dl $7E0A1C : db $02 : dw $0009 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0108 ; More position/state
     dl $7E0AF6 : db $02 : dw $01B9 ; Samus X
@@ -972,6 +976,7 @@ preset_kpdr25_maridia_botwoon:
     dl $7E09C2 : db $02 : dw $00B8 ; Health
     dl $7E09CA : db $02 : dw $0008 ; Supers
     dl $7E09CE : db $02 : dw $0002 ; Pbs
+    dl $7E09D2 : db $02 : dw $0000 ; Currently selected item
     dl $7E0AF6 : db $02 : dw $03BC ; Samus X
     dl $7E0AFA : db $02 : dw $008B ; Samus Y
     dl $7ED820 : db $02 : dw $0801 ; Events, Items, Doors
@@ -1148,6 +1153,7 @@ preset_kpdr25_lower_norfair_ln_elevator:
     dl $7E09C2 : db $02 : dw $01F0 ; Health
     dl $7E09C6 : db $02 : dw $0008 ; Missiles
     dl $7E09CE : db $02 : dw $0004 ; Pbs
+    dl $7E09D2 : db $02 : dw $0003 ; Currently selected item
     dl $7E0A1C : db $02 : dw $0007 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0008 ; More position/state
     dl $7E0AF6 : db $02 : dw $007B ; Samus X
@@ -1183,6 +1189,7 @@ preset_kpdr25_lower_norfair_kihunter_stairs:
     dl $7E0915 : db $02 : dw $003F ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $017B ; Health
     dl $7E09C6 : db $02 : dw $000A ; Missiles
+    dl $7E09D2 : db $02 : dw $0000 ; Currently selected item
     dl $7E0A1C : db $02 : dw $0011 ; Samus position/state
     dl $7E0AF6 : db $02 : dw $0309 ; Samus X
     dl $7E0AFA : db $02 : dw $00AF ; Samus Y

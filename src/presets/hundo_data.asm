@@ -29,6 +29,7 @@ preset_hundo_bombs_ceres_elevator:
     dl $7E09CC : db $02 : dw $0000 ; Max supers
     dl $7E09CE : db $02 : dw $0000 ; Pbs
     dl $7E09D0 : db $02 : dw $0000 ; Max pbs
+    dl $7E09D2 : db $02 : dw $0000 ; Currently selected item
     dl $7E09D4 : db $02 : dw $0000 ; Max reserves
     dl $7E09D6 : db $02 : dw $0000 ; Reserves
     dl $7E0A1C : db $02 : dw $0000 ; Samus position/state
@@ -1139,6 +1140,7 @@ preset_hundo_phantoon_leaving_alpha_pbs:
     dl $7E09CA : db $02 : dw $0004 ; Supers
     dl $7E09CE : db $02 : dw $0004 ; Pbs
     dl $7E09D0 : db $02 : dw $0005 ; Max pbs
+    dl $7E09D2 : db $02 : dw $0003 ; Currently selected item
     dl $7E0A1C : db $02 : dw $000B ; Samus position/state
     dl $7E0AF6 : db $02 : dw $02C0 ; Samus X
     dl $7ED874 : db $02 : dw $0F04 ; Events, Items, Doors
@@ -1187,6 +1189,7 @@ preset_hundo_phantoon_ocean_fly:
     dl $7E0911 : db $02 : dw $0131 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $8800 ; Screen subpixel Y position
     dl $7E09C6 : db $02 : dw $0028 ; Missiles
+    dl $7E09D2 : db $02 : dw $0000 ; Currently selected item
     dl $7E0A1C : db $02 : dw $0011 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0108 ; More position/state
     dl $7E0A68 : db $02 : dw $00AD ; Flash suit
@@ -2048,6 +2051,7 @@ preset_hundo_draygon_aqueduct:
     dl $7E0913 : db $02 : dw $1BFF ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0300 ; Screen Y position in pixels
     dl $7E09CA : db $02 : dw $0011 ; Supers
+    dl $7E09D2 : db $02 : dw $0003 ; Currently selected item
     dl $7E0A1C : db $02 : dw $0027 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0508 ; More position/state
     dl $7E0AF6 : db $02 : dw $01B3 ; Samus X
@@ -2071,6 +2075,7 @@ preset_hundo_draygon_botwoon:
     dl $7E0913 : db $02 : dw $1400 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $000D ; Screen Y position in pixels
     dl $7E09CE : db $02 : dw $000F ; Pbs
+    dl $7E09D2 : db $02 : dw $0000 ; Currently selected item
     dl $7E0A1C : db $02 : dw $0051 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0208 ; More position/state
     dl $7E0AF6 : db $02 : dw $03DA ; Samus X

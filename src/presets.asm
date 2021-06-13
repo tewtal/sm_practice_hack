@@ -140,6 +140,9 @@ post_ceres_timers:
 
 preset_load_preset:
   PHB
+    LDA #$0000
+    STA $7E09D2 ; Current selected weapon
+    STA $7E0A04 ; Auto-cancel item
     LDA !sram_preset_category : ASL : TAX
     LDA.l preset_banks,X : %a8() : PHA : PLB : %a16()
 
@@ -161,8 +164,6 @@ preset_load_preset:
 
   .done
     LDA #$0000
-    STA $7E09D2 ; Current selected weapon
-    STA $7E0A04 ; Auto-cancel item
     STA $0795   ; "Currently transitioning"
     STA $0797   ; "Currently transitioning"
   PLB
