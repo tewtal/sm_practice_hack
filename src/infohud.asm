@@ -30,9 +30,13 @@ org $90A91B      ;minimap drawing routine
 org $90A8EF      ;minimap update during HUD loading
     ; Make sure it only runs when you start a new game
     LDA $0998 : AND #$00FF : CMP #$0006 : BNE +
-    JSL reset_all_counters
+    ; It actually runs when you finish the cutscenes after Ceres
+    JSL post_ceres_timers
     +
     RTL
+
+org $82EE92      ;runs on START GAME
+    JSL startgame_seg_timer
 
 org $90E6AA      ;hijack, runs on gamestate = 08 (main gameplay), handles most updating HUD information
     JSL ih_gamemode_frame : NOP : NOP
