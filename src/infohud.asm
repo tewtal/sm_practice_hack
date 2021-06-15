@@ -72,14 +72,41 @@ org $84889F      ;hijack, runs every time an item is picked up
 org $91DAD8      ;hijack, runs after a shinespark has been charged
     JSL ih_shinespark_code
 
-org $8095fc         ;hijack, end of NMI routine to update realtime frames
+org $8095fc      ;hijack, end of NMI routine to update realtime frames
     JML ih_nmi_end
 
-org $A98874         ; update seg timer after MB1 fight
+org $A98874      ; update timers after MB1 fight
     JSL ih_mb1_segment
 
-org $A9BE23         ; update seg timer when baby spawns (off-screen) in MB2 fight
+org $A9BE23      ; update timers when baby spawns (off-screen) in MB2 fight
     JSL ih_mb2_segment
+
+org $A0B9AE      ; update timers when Ridley drops spawn
+    JSL ih_drops_segment
+
+org $A0B9E1      ; update timers when Crocomire drops spawn
+    JSL ih_drops_segment
+
+org $A0BA14      ; update timers when Phantoon drops spawn
+    JSL ih_drops_segment
+
+org $A0BA47      ; update timers when Botwoon drops spawn
+    JSL ih_drops_segment
+
+org $A0BA7A      ; update timers when Kraid drops spawn
+    JSL ih_drops_segment
+
+org $A0BAAD      ; update timers when Bomb Torizo drops spawn
+    JSL ih_drops_segment
+
+org $A0BAE0      ; update timers when Golden Torizo drops spawn
+    JSL ih_drops_segment
+
+org $A0BB13      ; update timers when Spore Spawn drops spawn
+    JSL ih_drops_segment
+
+org $A0BB46      ; update timers when Draygon drops spawn
+    JSL ih_drops_segment
 
 org $9AB200         ; graphics for HUD
 incbin ../resources/hudgfx.bin
@@ -295,6 +322,14 @@ ih_mb2_segment:
     STA $7E7854    ; we overwrote this instruction to get here
 
     JSL ih_update_hud_early
+    RTL
+}
+
+ih_drops_segment:
+{
+    ; runs when boss drops spawn
+    JSL ih_update_hud_early
+    JSL $808111 ; overwritten code
     RTL
 }
 
