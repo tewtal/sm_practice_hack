@@ -827,7 +827,7 @@ misc_music_toggle:
     RTS
 
 misc_transparent:
-    %cm_toggle_bit("Samus on Top", !ram_sprite_prio_flag, #$3000, #0)
+    %cm_toggle_bit("Samus on Top", !sram_sprite_prio_flag, #$3000, #0)
 
 misc_invincibility:
     %cm_toggle_bit("Invincibility", $7E0DE0, #$0007, #0)

@@ -84,8 +84,6 @@
 !ram_shinetune_early_4 = $7FFBDC
 !ram_shinetune_late_4 = $7FFBDE
 
-!ram_sprite_prio_flag = $7FFBE0
-
 !ram_watch_left = $7FFC30
 !ram_watch_left_hud = $7FFC32
 !ram_watch_left_hi = $7FFC34
@@ -116,6 +114,7 @@
 !sram_ctrl_load_state = $70200A
 !sram_ctrl_save_state = $70200C
 !sram_ctrl_load_last_preset = $70200E
+!sram_ctrl_random_preset = $702024
 
 !sram_artificial_lag = $702010
 !sram_rerandomize = $702012
@@ -127,8 +126,8 @@
 !sram_save_has_set_rng = $70201E
 !sram_preset_category = $702020
 !sram_room_strat = $702022
+!sram_sprite_prio_flag = $702026
 
-!sram_ctrl_random_preset = $702024
 
 ; -------------
 ; Menu

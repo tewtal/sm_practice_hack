@@ -262,6 +262,12 @@ export class InfohudMode extends Component {
                                 <Col md="3">Shot Timer</Col>
                                 <Col>Displays the number of frames between pressing the shoot button.</Col>
                             </Row>
+                            <br />
+                            <Row>
+                                <Col md="3">RAM Watch</Col>
+                                <Col>Displays the value of two configurable memory addresses in $7E. Values can also be "locked" or rewritten each frame
+                                while the RAM Watch HUD mode is enabled. These addresses and values can be configured in the 'Customize RAM Watch' submenu.</Col>
+                            </Row>
                       </CardBody>
                     </Card>
                     <br />
