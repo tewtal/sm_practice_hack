@@ -393,6 +393,7 @@ cm_draw_action_table:
     dw draw_numfield
     dw draw_choice
     dw draw_ctrl_shortcut
+    dw draw_numfield_hex
 
     draw_toggle:
     {
@@ -530,6 +531,51 @@ cm_draw_action_table:
 
         LDA !ram_hex2dec_first_digit : BEQ .done
         CLC : ADC $0E : STA !ram_tilemap_buffer,X
+
+      .done
+        RTS
+    }
+
+    draw_numfield_hex:
+    {
+        ; grab the memory address (long)
+        LDA [$04] : INC $04 : INC $04 : STA $08
+        LDA [$04] : INC $04 : STA $0A
+
+        ; skip bounds and increment value
+        INC $04 : INC $04 : INC $04
+
+        ; increment past JSR
+        INC $04 : INC $04
+
+        ; Draw the text
+        %item_index_to_vram_index()
+        PHX : JSR cm_draw_text : PLX
+
+        ; set position for the number
+        TXA : CLC : ADC #$002C : TAX
+
+        LDA [$08] : AND #$00FF : STA !ram_tmp_2
+
+        ; Clear out the area (black tile)
+        LDA #$281F : STA !ram_tilemap_buffer+0,X
+                     STA !ram_tilemap_buffer+2,X
+                     STA !ram_tilemap_buffer+4,X
+
+        ; Set palette
+        %a8()
+        LDA.b #$24 : ORA $0E : STA $0F
+        LDA.b #$70 : STA $0E
+
+        ; Draw numbers
+        %a16()
+        ; (00X0)
+        LDA !ram_tmp_2 : AND #$00F0 : LSR #3 : TAY
+        LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer+2,X 
+        
+        ; (000X)
+        LDA !ram_tmp_2 : AND #$000F : ASL : TAY
+        LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer+4,X
 
       .done
         RTS
@@ -916,6 +962,7 @@ cm_execute_action_table:
     dw execute_numfield
     dw execute_choice
     dw execute_ctrl_shortcut
+    dw execute_numfield_hex
 
     execute_toggle:
     {
@@ -1040,6 +1087,54 @@ cm_execute_action_table:
 
       .end
         LDA #!SOUND_MENU_MOVE : JSL $80903F
+        RTS
+    }
+
+    execute_numfield_hex:
+    {
+        ; $02[0x3] = memory address to manipulate
+        ; $06[0x1] = min
+        ; $08[0x1] = max
+        ; $0A[0x1] = increment
+        ; $0C[0x2] = JSR target
+        LDA [$00] : INC $00 : INC $00 : STA $04
+        LDA [$00] : INC $00 : STA $06
+
+        LDA [$00] : INC $00 : AND #$00FF : STA $08
+        LDA [$00] : INC $00 : AND #$00FF : INC : STA $0A ; INC for convenience
+        LDA [$00] : INC $00 : AND #$00FF : STA $0C
+
+        LDA [$00] : INC $00 : INC $00 : STA $20
+
+        LDA !ram_cm_controller : BIT #$0200 : BNE .pressed_left
+
+        LDA [$04] : CLC : ADC $0C
+
+        CMP $0A : BCS .set_to_min
+
+        STA [$04] : BRA .jsr
+
+      .pressed_left
+        LDA [$04] : SEC : SBC $0C : BMI .set_to_max
+
+        CMP $0A : BCS .set_to_max
+
+        STA [$04] : BRA .jsr
+
+      .set_to_min
+        LDA $08 : STA [$04] : CLC : BRA .jsr
+
+      .set_to_max
+        LDA $0A : DEC : STA [$04] : CLC
+
+      .jsr
+        LDA $20 : BEQ .end
+
+        LDA [$04]
+        LDX #$0000
+        JSR ($0020,X)
+
+      .end
         RTS
     }
 
@@ -1186,5 +1281,8 @@ incsrc mainmenu.asm
 
 cm_hud_table:
     incbin ../resources/cm_gfx.bin
+
+HexMenuGFXTable:
+    dw $2C70, $2C71, $2C72, $2C73, $2C74, $2C75, $2C76, $2C77, $2C78, $2C79, $2C50, $2C51, $2C52, $2C53, $2C54, $2C55
 
 print pc, " menu end"

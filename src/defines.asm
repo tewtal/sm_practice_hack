@@ -86,6 +86,23 @@
 
 !ram_sprite_prio_flag = $7FFBE0
 
+!ram_watch_left = $7FFC30
+!ram_watch_left_hud = $7FFC32
+!ram_watch_left_hi = $7FFC34
+!ram_watch_left_lo = $7FFC36
+!ram_watch_right = $7FFC38
+!ram_watch_right_hud = $7FFC3A
+!ram_watch_right_hi = $7FFC3C
+!ram_watch_right_lo = $7FFC3E
+!ram_watch_edit_left = $7FFC40
+!ram_watch_edit_left_hi = $7FFC42
+!ram_watch_edit_left_lo = $7FFC44
+!ram_watch_edit_right = $7FFC46
+!ram_watch_edit_right_hi = $7FFC48
+!ram_watch_edit_right_lo = $7FFC4A
+!ram_watch_edit_lock_left = $7FFC4C
+!ram_watch_edit_lock_right = $7FFC4E
+
 ; -----
 ; SRAM
 ; -----
@@ -139,6 +156,7 @@
 !ACTION_NUMFIELD        = #$0006
 !ACTION_CHOICE          = #$0008
 !ACTION_CTRL_SHORTCUT   = #$000A
+!ACTION_NUMFIELD_HEX    = #$000C
 
 !SOUND_MENU_MOVE = $0039
 !SOUND_MENU_JSR = $0039
