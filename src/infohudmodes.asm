@@ -736,8 +736,16 @@ status_vspeed:
   .newjump
     LDA #$0001 : STA !ram_roomstrat_counter : STA !ram_walljump_counter
 
+    ; Print initial jump speed over item%
+    LDA $0B38 : BNE +
+    LDA $7EC612 : STA $14
+    LDA $0B2D : AND #$0FFF
+    LDX #$0012 : JSR Draw4Hex
+    INC $0B38
+    LDA $14 : STA $7EC612
+
     ; If we started falling and space jump might be allowed, time to compare
-    LDA !ram_roomstrat_state : BEQ .done
++   LDA !ram_roomstrat_state : BEQ .done
     BRL .preparecompare
 
   .resetjumpcounter

@@ -35,6 +35,7 @@ export class Changelog extends Component {
                                                 <li>Added RAM Watch HUD mode with a new InfoHUD menu. (2.2.3)</li>
                                                 <li>Update HUD timers when boss drops spawn. (2.2.3)</li>
                                                 <li>Reset segment timer at game start for practice run timing. (2.2.3)</li>
+                                                <li>Added initial jump speed to vertical speed display. (2.2.3)</li>
                                             </ul>
                                         </CardBody>
                                     </Card>

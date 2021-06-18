@@ -405,6 +405,7 @@ ih_update_hud_code:
     ; Draw Item percent
     .pct
     {
+        LDA !sram_display_mode : CMP #$000E : BEQ .skipToEtanks
         LDA #$0000 : STA !ram_pct_1
 
         ; Max HP (E tanks)
@@ -428,7 +429,7 @@ ih_update_hud_code:
         ; Percent symbol on HUD
         LDA !IH_PERCENT : STA $7EC618
     }
-
+  .skipToEtanks
     ; E-tanks
     LDA !ram_etanks : LDX #$0054 : JSR Draw3
 
@@ -888,7 +889,7 @@ ih_game_loop_code:
   .inc_statusdisplay
     LDA !sram_display_mode
     INC A
-    CMP #$0012
+    CMP #$0013
     BNE +
     LDA #$0000
 +   STA !sram_display_mode
@@ -899,7 +900,7 @@ ih_game_loop_code:
     DEC A
     CMP #$FFFF
     BNE +
-    LDA #$0011
+    LDA #$0012
 +   STA !sram_display_mode
     JMP .update_status
 

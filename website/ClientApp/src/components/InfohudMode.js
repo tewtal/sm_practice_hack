@@ -197,7 +197,7 @@ export class InfohudMode extends Component {
                             <br />
                             <Row>
                                 <Col md="3">Vert Speed</Col>
-                                <Col>Displays the vertical speed in pixels. Also Samus HP will be overwritten with space jump feedback:</Col>
+                                <Col>Displays the vertical speed in pixels. Initial jump speed will displayed as a three digit hex value, overwriting the item collection percentage. Samus HP will be overwritten with space jump feedback:</Col>
                             </Row>
                             <Row>
                                 <Col md="3"></Col>
