@@ -197,7 +197,7 @@ export class InfohudMode extends Component {
                             <br />
                             <Row>
                                 <Col md="3">Vert Speed</Col>
-                                <Col>Displays the vertical speed in pixels. Also Samus HP will be overwritten with space jump feedback:</Col>
+                                <Col>Displays the vertical speed in pixels. Initial jump speed will displayed as a three digit hex value, overwriting the item collection percentage. Samus HP will be overwritten with space jump feedback:</Col>
                             </Row>
                             <Row>
                                 <Col md="3"></Col>
@@ -261,6 +261,12 @@ export class InfohudMode extends Component {
                             <Row>
                                 <Col md="3">Shot Timer</Col>
                                 <Col>Displays the number of frames between pressing the shoot button.</Col>
+                            </Row>
+                            <br />
+                            <Row>
+                                <Col md="3">RAM Watch</Col>
+                                <Col>Displays the value of two configurable memory addresses in $7E. Values can also be "locked" or rewritten each frame
+                                while the RAM Watch HUD mode is enabled. These addresses and values can be configured in the 'Customize RAM Watch' submenu.</Col>
                             </Row>
                       </CardBody>
                     </Card>

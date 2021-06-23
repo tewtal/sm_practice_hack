@@ -105,8 +105,44 @@ reset_all_counters:
     RTL
 }
 
+startgame_seg_timer:
+{
+    ; seg timer will be 1:50 (1 second, 50 frames) behind by the time it appears
+    ; 20 frames more if the file was new
+    ; initializing to 1:50 for now
+    LDA #$0032 : STA !ram_seg_rt_frames
+    LDA #$0001 : STA !ram_seg_rt_seconds
+    LDA #$0000 : STA !ram_seg_rt_minutes
+    JSL $808924    ; overwritten code
+    RTL
+}
+
+post_ceres_timers:
+{   ; don't reset segment timer after Ceres
+    LDA #$0000
+    STA $12 : STA $14
+    STA !ram_room_has_set_rng
+    STA $09DA : STA $09DC : STA $09DE : STA $09E0
+    STA !ram_realtime_room : STA !ram_last_realtime_room
+    STA !ram_gametime_room : STA !ram_last_gametime_room
+    STA !ram_last_room_lag : STA !ram_last_door_lag_frames : STA !ram_transition_counter
+
+    ; adding 1:13 to seg timer to account for missed frames between Ceres and Zebes
+    LDA !ram_seg_rt_frames : CLC : ADC #$000D : STA !ram_seg_rt_frames : CMP #$003C : BMI +
+    SEC : SBC #$003C : STA !ram_seg_rt_frames : INC $12
++   LDA !ram_seg_rt_seconds : CLC : ADC #$0001 : ADC $12 : STA !ram_seg_rt_seconds : CMP #$003C : BMI +
+    SEC : SBC #$003C : STA !ram_seg_rt_seconds : INC $14
++   LDA $14 : BEQ .done : CLC : ADC !ram_seg_rt_minutes : STA !ram_seg_rt_minutes
+
+  .done
+    RTL
+}
+
 preset_load_preset:
   PHB
+    LDA #$0000
+    STA $7E09D2 ; Current selected weapon
+    STA $7E0A04 ; Auto-cancel item
     LDA !sram_preset_category : ASL : TAX
     LDA.l preset_banks,X : %a8() : PHA : PLB : %a16()
 
@@ -128,8 +164,6 @@ preset_load_preset:
 
   .done
     LDA #$0000
-    STA $7E09D2 ; Current selected weapon
-    STA $7E0A04 ; Auto-cancel item
     STA $0795   ; "Currently transitioning"
     STA $0797   ; "Currently transitioning"
   PLB

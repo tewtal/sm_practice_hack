@@ -16,6 +16,14 @@ macro cm_numfield(title, addr, start, end, increment, jsrtarget)
     db #$28, "<title>", #$FF
 endmacro
 
+macro cm_numfield_hex(title, addr, start, end, increment, jsrtarget)
+    dw !ACTION_NUMFIELD_HEX
+    dl <addr>
+    db <start>, <end>, <increment>
+    dw <jsrtarget>
+    db #$28, "<title>", #$FF
+endmacro
+
 macro cm_toggle(title, addr, value, jsrtarget)
     dw !ACTION_TOGGLE
     dl <addr>
@@ -138,7 +146,7 @@ MainMenu:
     dw #mm_goto_rngmenu
     dw #mm_goto_ctrlsmenu
     dw #$0000
-    %cm_header("SM PRACTICE HACK 2.2.2")
+    %cm_header("SM PRACTICE HACK 2.2.3")
 
 mm_goto_equipment:
     %cm_submenu("Equipment", #EquipmentMenu)
@@ -819,7 +827,7 @@ misc_music_toggle:
     RTS
 
 misc_transparent:
-    %cm_toggle_bit("Samus on top", !ram_sprite_prio_flag, #$3000, #0)
+    %cm_toggle_bit("Samus on Top", !sram_sprite_prio_flag, #$3000, #0)
 
 misc_invincibility:
     %cm_toggle_bit("Invincibility", $7E0DE0, #$0007, #0)
@@ -999,6 +1007,7 @@ InfoHudMenu:
     dw #ih_room_strat
     dw #ih_room_counter
     dw #ih_lag
+    dw #ih_ram_watch
     dw #$0000
     %cm_header("INFOHUD")
 
@@ -1024,6 +1033,7 @@ DisplayModeMenu:
     dw ihmode_quickdrop
     dw ihmode_walljump
     dw ihmode_shottimer
+    dw ihmode_ramwatch
     dw #$0000
     %cm_header("INFOHUD DISPLAY MODE")
 
@@ -1081,6 +1091,9 @@ ihmode_walljump:
 ihmode_shottimer:
     %cm_jsr("Shot Timer", #action_select_infohud_mode, #$0011)
 
+ihmode_ramwatch:
+    %cm_jsr("RAM Watch", #action_select_infohud_mode, #$0012)
+
 action_select_infohud_mode:
 {
     TYA : STA !sram_display_mode
@@ -1112,6 +1125,7 @@ ih_display_mode:
     db #$28, " QUICK DROP", #$FF
     db #$28, "  WALL JUMP", #$FF
     db #$28, " SHOT TIMER", #$FF
+    db #$28, "  RAM WATCH", #$FF
     db #$FF
 
 ih_goto_room_strat:
@@ -1188,6 +1202,115 @@ ih_room_counter:
 
 ih_lag:
     %cm_numfield("Artificial lag", !sram_artificial_lag, 0, 64, 1, #0)
+
+ih_ram_watch:
+    %cm_submenu("Customize RAM Watch", #RAMWatchMenu)
+
+RAMWatchMenu:
+    dw ramwatch_left_hi
+    dw ramwatch_left_lo
+    dw ramwatch_left_edit_hi
+    dw ramwatch_left_edit_lo
+    dw ramwatch_execute_left
+    dw ramwatch_lock_left
+    dw ramwatch_right_hi
+    dw ramwatch_right_lo
+    dw ramwatch_right_edit_hi
+    dw ramwatch_right_edit_lo
+    dw ramwatch_execute_right
+    dw ramwatch_lock_right
+    dw #$0000
+    %cm_header("READ AND WRITE TO MEMORY")
+
+ramwatch_left_hi:
+    %cm_numfield_hex("Address 1 High", !ram_watch_left_hi, 0, 255, 1, #.routine)
+    .routine
+        XBA : ORA !ram_watch_left_lo
+        STA !ram_watch_left
+        RTS
+
+ramwatch_left_lo:
+    %cm_numfield_hex("Address 1 Low", !ram_watch_left_lo, 0, 255, 1, #.routine)
+    .routine
+        XBA : ORA !ram_watch_left_hi
+        XBA : STA !ram_watch_left
+        RTS
+
+ramwatch_left_edit_hi:
+    %cm_numfield_hex("Value 1 High", !ram_watch_edit_left_hi, 0, 255, 1, #.routine)
+    .routine
+        XBA : ORA !ram_watch_edit_left_lo
+        STA !ram_watch_edit_left
+        RTS
+
+ramwatch_left_edit_lo:
+    %cm_numfield_hex("Value 1 Low", !ram_watch_edit_left_lo, 0, 255, 1, #.routine)
+    .routine
+        XBA : ORA !ram_watch_edit_left_hi
+        XBA : STA !ram_watch_edit_left
+        RTS
+
+ramwatch_right_hi:
+    %cm_numfield_hex("Address 2 High", !ram_watch_right_hi, 0, 255, 1, #.routine)
+    .routine
+        XBA : ORA !ram_watch_right_lo
+        STA !ram_watch_right
+        RTS
+
+ramwatch_right_lo:
+    %cm_numfield_hex("Address 2 Low", !ram_watch_right_lo, 0, 255, 1, #.routine)
+    .routine
+        XBA : ORA !ram_watch_right_hi
+        XBA : STA !ram_watch_right
+        RTS
+
+ramwatch_right_edit_hi:
+    %cm_numfield_hex("Value 2 High", !ram_watch_edit_right_hi, 0, 255, 1, #.routine)
+    .routine
+        XBA : ORA !ram_watch_edit_right_lo
+        STA !ram_watch_edit_right
+        RTS
+
+ramwatch_right_edit_lo:
+    %cm_numfield_hex("Value 2 Low", !ram_watch_edit_right_lo, 0, 255, 1, #.routine)
+    .routine
+        XBA : ORA !ram_watch_edit_right_hi
+        XBA : STA !ram_watch_edit_right
+        RTS
+
+ramwatch_execute_left:
+    %cm_jsr("Write to Address 1", #action_ramwatch_edit_left, #$0000)
+
+ramwatch_execute_right:
+    %cm_jsr("Write to Address 2", #action_ramwatch_edit_right, #$0000)
+
+ramwatch_lock_left:
+    %cm_toggle("Lock Value 1", !ram_watch_edit_lock_left, #$0001, #action_HUD_ramwatch)
+
+ramwatch_lock_right:
+    %cm_toggle("Lock Value 2", !ram_watch_edit_lock_right, #$0001, #action_HUD_ramwatch)
+
+action_ramwatch_edit_left:
+{
+    LDA !ram_watch_left : TAX
+    LDA !ram_watch_edit_left : STA $7E0000,X
+    LDA #$0012 : STA !sram_display_mode
+    RTS
+}
+
+action_ramwatch_edit_right:
+{
+    LDA !ram_watch_right : TAX
+    LDA !ram_watch_edit_right : STA $7E0000,X
+    LDA #$0012 : STA !sram_display_mode
+    RTS
+}
+
+action_HUD_ramwatch:
+{
+    LDA #$0012 : STA !sram_display_mode
+    RTS
+}
 
 
 ; ----------

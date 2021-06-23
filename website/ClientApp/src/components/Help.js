@@ -27,7 +27,7 @@ export class Help extends Component {
                                         <li>Item collection percentage</li>
                                         <li>Number of E-tanks</li>
                                         <li>Current total energy</li>
-                                        <li>Segment timer in minutes.seconds.frames. Resets when loading a preset or by controller shortcut</li>
+                                        <li>Segment timer in minutes.seconds.frames. Resets when starting a new game, loading a preset, or by controller shortcut.</li>
                                         <li>Timer in seconds.frames, resets when entering a new room and updates on item acquisition and room transitions. Can be set to realtime or gametime</li>
                                         <li>Lag frames, updates same as above</li>
                                         <li>Frames spent by last door transition</li>
@@ -237,6 +237,17 @@ export class Help extends Component {
                             <Row>
                                 <Col md="3" className="offset-md-1">Artificial Lag</Col>
                                 <Col>Select a value to adjust how much lag occurs during normal gameplay. This is to compensate for the lack of a minimap on the HUD which would normally consume CPU cycles.</Col>
+                            </Row>
+                            <Row>
+                                <Col md="3" className="offset-md-1">Customize RAM Watch</Col>
+                                <Col>Setup addresses to be monitored by the RAM Watch HUD mode. Address 1 will appear in the bottom-left corner of the HUD, while Address 2 appears just to the right of Address 1.
+                                Memory at these locations can be edited by configuring a Value and selecting 'Write to Address'. Toggle 'Lock Value' to automatically write the value once every frame. RAM Watch must
+                                must be the selected HUD mode to continue writing to the address.</Col>
+                            </Row>
+                            <Row>
+                                <Col md="3" className="offset-md-1"></Col>
+                                <Col>Only one byte of hex can be configured at a time in the menu. 'Hi' refers to the first byte, while 'Lo' refers to the second. Set the Hi Address to 0D and the Lo Address to EC
+                                to monitor the memory address $0DEC, which stores the counter for Samus direction changes while held by Draygon (among other uses).</Col>
                             </Row>
                             <br />
                             <Row>

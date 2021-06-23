@@ -84,7 +84,22 @@
 !ram_shinetune_early_4 = $7FFBDC
 !ram_shinetune_late_4 = $7FFBDE
 
-!ram_sprite_prio_flag = $7FFBE0
+!ram_watch_left = $7FFC30
+!ram_watch_left_hud = $7FFC32
+!ram_watch_left_hi = $7FFC34
+!ram_watch_left_lo = $7FFC36
+!ram_watch_right = $7FFC38
+!ram_watch_right_hud = $7FFC3A
+!ram_watch_right_hi = $7FFC3C
+!ram_watch_right_lo = $7FFC3E
+!ram_watch_edit_left = $7FFC40
+!ram_watch_edit_left_hi = $7FFC42
+!ram_watch_edit_left_lo = $7FFC44
+!ram_watch_edit_right = $7FFC46
+!ram_watch_edit_right_hi = $7FFC48
+!ram_watch_edit_right_lo = $7FFC4A
+!ram_watch_edit_lock_left = $7FFC4C
+!ram_watch_edit_lock_right = $7FFC4E
 
 ; -----
 ; SRAM
@@ -99,6 +114,7 @@
 !sram_ctrl_load_state = $70200A
 !sram_ctrl_save_state = $70200C
 !sram_ctrl_load_last_preset = $70200E
+!sram_ctrl_random_preset = $702024
 
 !sram_artificial_lag = $702010
 !sram_rerandomize = $702012
@@ -110,8 +126,8 @@
 !sram_save_has_set_rng = $70201E
 !sram_preset_category = $702020
 !sram_room_strat = $702022
+!sram_sprite_prio_flag = $702026
 
-!sram_ctrl_random_preset = $702024
 
 ; -------------
 ; Menu
@@ -139,6 +155,7 @@
 !ACTION_NUMFIELD        = #$0006
 !ACTION_CHOICE          = #$0008
 !ACTION_CTRL_SHORTCUT   = #$000A
+!ACTION_NUMFIELD_HEX    = #$000C
 
 !SOUND_MENU_MOVE = $0039
 !SOUND_MENU_JSR = $0039

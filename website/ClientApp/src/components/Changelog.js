@@ -31,6 +31,11 @@ export class Changelog extends Component {
                                                 <li>Replaced vertical speed subpixels with jump feedback. (2.2.1)</li>
                                                 <li>When fanfare is off, music is not interrupted. (2.2.1)</li>
                                                 <li>Added average climb speed to the Wall Jump infohud mode. (2.2.2)</li>
+                                                <li>Automatically select Power Bombs when loading certain presets. (2.2.3)</li>
+                                                <li>Added RAM Watch HUD mode with a new InfoHUD menu. (2.2.3)</li>
+                                                <li>Update HUD timers when boss drops spawn. (2.2.3)</li>
+                                                <li>Reset segment timer at game start for practice run timing. (2.2.3)</li>
+                                                <li>Added initial jump speed to vertical speed display. (2.2.3)</li>
                                             </ul>
                                         </CardBody>
                                     </Card>

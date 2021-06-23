@@ -30,9 +30,13 @@ org $90A91B      ;minimap drawing routine
 org $90A8EF      ;minimap update during HUD loading
     ; Make sure it only runs when you start a new game
     LDA $0998 : AND #$00FF : CMP #$0006 : BNE +
-    JSL reset_all_counters
+    ; It actually runs when you finish the cutscenes after Ceres
+    JSL post_ceres_timers
     +
     RTL
+
+org $82EE92      ;runs on START GAME
+    JSL startgame_seg_timer
 
 org $90E6AA      ;hijack, runs on gamestate = 08 (main gameplay), handles most updating HUD information
     JSL ih_gamemode_frame : NOP : NOP
@@ -68,14 +72,41 @@ org $84889F      ;hijack, runs every time an item is picked up
 org $91DAD8      ;hijack, runs after a shinespark has been charged
     JSL ih_shinespark_code
 
-org $8095fc         ;hijack, end of NMI routine to update realtime frames
+org $8095fc      ;hijack, end of NMI routine to update realtime frames
     JML ih_nmi_end
 
-org $A98874         ; update seg timer after MB1 fight
+org $A98874      ; update timers after MB1 fight
     JSL ih_mb1_segment
 
-org $A9BE23         ; update seg timer when baby spawns (off-screen) in MB2 fight
+org $A9BE23      ; update timers when baby spawns (off-screen) in MB2 fight
     JSL ih_mb2_segment
+
+org $A0B9AE      ; update timers when Ridley drops spawn
+    JSL ih_drops_segment
+
+org $A0B9E1      ; update timers when Crocomire drops spawn
+    JSL ih_drops_segment
+
+org $A0BA14      ; update timers when Phantoon drops spawn
+    JSL ih_drops_segment
+
+org $A0BA47      ; update timers when Botwoon drops spawn
+    JSL ih_drops_segment
+
+org $A0BA7A      ; update timers when Kraid drops spawn
+    JSL ih_drops_segment
+
+org $A0BAAD      ; update timers when Bomb Torizo drops spawn
+    JSL ih_drops_segment
+
+org $A0BAE0      ; update timers when Golden Torizo drops spawn
+    JSL ih_drops_segment
+
+org $A0BB13      ; update timers when Spore Spawn drops spawn
+    JSL ih_drops_segment
+
+org $A0BB46      ; update timers when Draygon drops spawn
+    JSL ih_drops_segment
 
 org $9AB200         ; graphics for HUD
 incbin ../resources/hudgfx.bin
@@ -294,6 +325,14 @@ ih_mb2_segment:
     RTL
 }
 
+ih_drops_segment:
+{
+    ; runs when boss drops spawn
+    JSL ih_update_hud_early
+    JSL $808111 ; overwritten code
+    RTL
+}
+
 ih_update_hud_code:
 {
     PHX
@@ -366,6 +405,7 @@ ih_update_hud_code:
     ; Draw Item percent
     .pct
     {
+        LDA !sram_display_mode : CMP #$000E : BEQ .skipToEtanks
         LDA #$0000 : STA !ram_pct_1
 
         ; Max HP (E tanks)
@@ -389,7 +429,7 @@ ih_update_hud_code:
         ; Percent symbol on HUD
         LDA !IH_PERCENT : STA $7EC618
     }
-
+  .skipToEtanks
     ; E-tanks
     LDA !ram_etanks : LDX #$0054 : JSR Draw3
 
@@ -849,7 +889,7 @@ ih_game_loop_code:
   .inc_statusdisplay
     LDA !sram_display_mode
     INC A
-    CMP #$0012
+    CMP #$0013
     BNE +
     LDA #$0000
 +   STA !sram_display_mode
@@ -860,7 +900,7 @@ ih_game_loop_code:
     DEC A
     CMP #$FFFF
     BNE +
-    LDA #$0011
+    LDA #$0012
 +   STA !sram_display_mode
     JMP .update_status
 
