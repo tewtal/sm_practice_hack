@@ -2557,7 +2557,7 @@ preset_pkrd_tourian_escape_room_3:
     dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0008 ; More position/state
     dl $7E0A76 : db $02 : dw $8000 ; Hyper beam
-    dl $7E0AF6 : db $02 : dw $00DC ; Samus X
+    dl $7E0AF6 : db $02 : dw $00DF ; Samus X
     dl $7E0AFA : db $02 : dw $018B ; Samus Y
     dl $7ED820 : db $02 : dw $4FC5 ; Events, Items, Doors
     dl $7ED82C : db $02 : dw $0203 ; Events, Items, Doors
