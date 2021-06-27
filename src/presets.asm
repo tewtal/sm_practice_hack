@@ -79,6 +79,7 @@ preset_load:
     JSL !MUSIC_ROUTINE
 
     JSL reset_all_counters
+    STZ $0795 ; clear door transition flag
 
     ; Clear enemies (8000 = solid to Samus, 0400 = Ignore Samus projectiles)
     LDA #$0000
@@ -91,7 +92,6 @@ preset_load:
     PLP
     RTL
 }
-
 
 reset_all_counters:
 {
