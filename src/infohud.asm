@@ -50,9 +50,6 @@ org $9493B8      ;hijack, runs when Samus hits a door BTS
 org $82E764      ;hijack, runs when Samus is coming out of a room transition
     JSL ih_after_room_transition : RTS
 
-org $90F1E4      ;hijack, runs when an elevator is activated
-    JSL ih_elevator_activation
-
 org $90A7F7      ;skip drawing minimap grid when entering boss rooms
     BRA FinishDrawMinimap
 
@@ -69,48 +66,109 @@ org $82894F      ;hijack, main game loop: runs EVERY frame (used for room transi
 org $84889F      ;hijack, runs every time an item is picked up
     JSL ih_get_item_code
 
-org $91DAD8      ;hijack, runs after a shinespark has been charged
-    JSL ih_shinespark_code
-
 org $8095fc      ;hijack, end of NMI routine to update realtime frames
     JML ih_nmi_end
 
+if !FEATURE_PAL
+org $91DA3D      ;hijack, runs after a shinespark has been charged
+else
+org $91DAD8      ;hijack, runs after a shinespark has been charged
+endif
+    JSL ih_shinespark_code
+
+if !FEATURE_PAL
+org $90F1E1      ;hijack, runs when an elevator is activated
+else
+org $90F1E4      ;hijack, runs when an elevator is activated
+endif
+    JSL ih_elevator_activation
+
+if !FEATURE_PAL
+org $A98884      ; update timers after MB1 fight
+else
 org $A98874      ; update timers after MB1 fight
+endif
     JSL ih_mb1_segment
 
+if !FEATURE_PAL
+org $A9BE33      ; update timers when baby spawns (off-screen) in MB2 fight
+else
 org $A9BE23      ; update timers when baby spawns (off-screen) in MB2 fight
+endif
     JSL ih_mb2_segment
 
+if !FEATURE_PAL
+org $A0B9BE      ; update timers when Ridley drops spawn
+else
 org $A0B9AE      ; update timers when Ridley drops spawn
+endif
     JSL ih_drops_segment
 
+if !FEATURE_PAL
+org $A0B9F1      ; update timers when Crocomire drops spawn
+else
 org $A0B9E1      ; update timers when Crocomire drops spawn
+endif
     JSL ih_drops_segment
 
+if !FEATURE_PAL
+org $A0BA24      ; update timers when Phantoon drops spawn
+else
 org $A0BA14      ; update timers when Phantoon drops spawn
+endif
     JSL ih_drops_segment
 
+if !FEATURE_PAL
+org $A0BA57      ; update timers when Botwoon drops spawn
+else
 org $A0BA47      ; update timers when Botwoon drops spawn
+endif
     JSL ih_drops_segment
 
+if !FEATURE_PAL
+org $A0BA8A      ; update timers when Kraid drops spawn
+else
 org $A0BA7A      ; update timers when Kraid drops spawn
+endif
     JSL ih_drops_segment
 
+if !FEATURE_PAL
+org $A0BABD      ; update timers when Bomb Torizo drops spawn
+else
 org $A0BAAD      ; update timers when Bomb Torizo drops spawn
+endif
     JSL ih_drops_segment
 
+if !FEATURE_PAL
+org $A0BAF0      ; update timers when Golden Torizo drops spawn
+else
 org $A0BAE0      ; update timers when Golden Torizo drops spawn
+endif
     JSL ih_drops_segment
 
+if !FEATURE_PAL
+org $A0BB23      ; update timers when Spore Spawn drops spawn
+else
 org $A0BB13      ; update timers when Spore Spawn drops spawn
+endif
     JSL ih_drops_segment
 
+if !FEATURE_PAL
+org $A0BB56      ; update timers when Draygon drops spawn
+else
 org $A0BB46      ; update timers when Draygon drops spawn
+endif
     JSL ih_drops_segment
+
+if !FEATURE_PAL
+org $AAE592      ; update timers when statue grabs Samus
+else
+org $AAE582      ; update timers when statue grabs Samus
+endif
+    JSL ih_chozo_segment
 
 org $9AB200         ; graphics for HUD
 incbin ../resources/hudgfx.bin
-
 
 ; Main bank stuff
 org $E08000
@@ -333,6 +391,13 @@ ih_drops_segment:
     RTL
 }
 
+ih_chozo_segment:
+{
+    JSL $8090CB ; overwritten code
+    JSL ih_update_hud_early
+    RTL
+}
+
 ih_update_hud_code:
 {
     PHX
@@ -349,12 +414,17 @@ ih_update_hud_code:
 
     ; Real time
     {
-        ; Divide real time by 60, save seconds, frame seperately
+        ; Divide real time by 60/50, save seconds, frame seperately
         {
             STZ $4205
             LDA !ram_last_realtime_room : STA $4204
             %a8()
-            LDA #$3C : STA $4206
+            if !FEATURE_PAL
+                LDA #$32
+            else
+                LDA #$3C
+            endif
+            STA $4206
             PHA : PLA : PHA : PLA
             %a16()
             LDA $4214 : STA !ram_tmp_1
@@ -378,12 +448,17 @@ ih_update_hud_code:
     ; Room time
     .ingameRoom
     {
-        ; Divide game time by 60, save seconds, frames seperately
+        ; Divide game time by 60/50, save seconds, frames seperately
         {
             STZ $4205
             LDA !ram_last_gametime_room : STA $4204
             %a8()
-            LDA #$3C : STA $4206
+            if !FEATURE_PAL
+                LDA #$32
+            else
+                LDA #$3C
+            endif
+            STA $4206
             PHA : PLA : PHA : PLA
             %a16()
             LDA $4214 : STA !ram_tmp_3
@@ -526,7 +601,7 @@ ih_hud_code:
 
     ; -- read input
     TAY
-    LDX #$0000;
+    LDX #$0000
 
 -   TYA
     AND ControllerTable1, X
@@ -540,7 +615,7 @@ ih_hud_code:
     CPX #$00C
     BNE -
 
-    LDX #$0000;
+    LDX #$0000
 
 -   TYA
     AND ControllerTable2, X
@@ -836,8 +911,9 @@ ih_game_loop_code:
     CMP #$0001 : BEQ .magicpants
     CMP #$0002 : BEQ .spacepants
 
-    ; check if space jump is equipped
-    LDA $09A2 : AND #$0200 : BEQ .magicpants
+    ; both are enabled, check Samus movement type to decide
+    LDA $0A1F : AND #$00FF : CMP #$0001 : BEQ .magicpants    ; check if running
+
 
   .spacepants
     JSR space_pants

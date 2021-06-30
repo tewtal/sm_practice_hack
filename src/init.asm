@@ -33,7 +33,11 @@ init_code:
 
   .sram_initialized
     PLA
+if !FEATURE_PAL
+    JSL $8B90EF
+else
     JSL $8B9146
+endif
     JML $808459
 }
 

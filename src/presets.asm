@@ -11,7 +11,11 @@ preset_load:
     JSR $819B  ; Initialise IO registers
     JSR $82E2  ; Load standard BG3 tiles and sprite tiles, clear tilemaps
     JSR $82C5  ; Load initial palette
+if !FEATURE_PAL
+    JSL $91DF72  ; Initialise Samus
+else
     JSL $91E00D  ; Initialise Samus
+endif
 
     JSL preset_load_preset
 
@@ -43,7 +47,11 @@ preset_load:
 
     LDA #$0006 : STA $0DA0
   .loopSomething
+if !FEATURE_PAL
+    JSL $A08CE7  ; Load enemies
+else
     JSL $A08CD7  ; Load enemies
+endif
     JSL $808338  ; Wait for NMI
     DEC $0DA0  ; Decrement $0DA0
     BPL .loopSomething
@@ -64,7 +72,11 @@ preset_load:
     PLP
 
     ; Fix Samus' palette
+if !FEATURE_PAL
+    JSL $91DE4B
+else
     JSL $91DEBA
+endif
 
     LDA !SRAM_MUSIC_BANK
     CMP !MUSIC_BANK
@@ -79,6 +91,7 @@ preset_load:
     JSL !MUSIC_ROUTINE
 
     JSL reset_all_counters
+    STZ $0795 ; clear door transition flag
 
     ; Clear enemies (8000 = solid to Samus, 0400 = Ignore Samus projectiles)
     LDA #$0000
@@ -91,7 +104,6 @@ preset_load:
     PLP
     RTL
 }
-
 
 reset_all_counters:
 {
@@ -169,7 +181,6 @@ preset_load_preset:
   PLB
     RTL
 
-
 preset_to_memory:
   PHX
     STZ $00
@@ -246,7 +257,11 @@ preset_start_gameplay:
     JSL $8DC4D8  ; Clear $8D PLM-esque headers
     JSL $90AC8D  ; Update beam graphics
     JSL $82E139  ; Load target colours for common sprites, beams and slashing enemies / pickups
+if !FEATURE_PAL
+    JSL $A08A2E  ; Load enemies
+else
     JSL $A08A1E  ; Load enemies
+endif
     JSL $82E071  ; Clear music
     JSR $A12B    ; Play 14h frames of music
     JSL $82E09B  ; Execute subroutine $82:E09B
