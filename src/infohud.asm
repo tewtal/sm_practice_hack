@@ -73,12 +73,20 @@ org $91DAD8      ; hijack, runs after a shinespark has been charged
 org $8095FC      ; hijack, end of NMI routine to update realtime frames
     JML ih_nmi_end
 
-org $8282E5      ; write tiles to VRAM
-    JSL ih_write_hud_tiles
+org $8282E5      ; write and clear tiles to VRAM
+    JSL ih_write_and_clear_hud_tiles
     BRA .write_next_tiles
 
-org $828300
+org $828305
     .write_next_tiles
+
+org $828EB8      ; write and clear tiles to VRAM
+    JSL ih_write_and_clear_hud_tiles
+    PLP
+    RTL
+
+org $82E488      ; write tiles to VRAM
+    JMP ih_write_hud_tiles_during_door_transition
 
 org $A98874      ; update timers after MB1 fight
     JSL ih_mb1_segment
@@ -130,6 +138,33 @@ incbin ../resources/mapgfx.bin
 fillbyte $00
 fill 4096
 print pc, " infohud bankDF end"
+
+
+; Placed in bank 82 so that the jumps work
+org $82F70F
+print pc, " infohud bank82 start"
+
+ih_write_hud_tiles_during_door_transition:
+{
+    LDA !ram_minimap : BNE .minimap_vram
+
+    ; Load in normal vram
+    JSR $E039
+    dl $9AB200
+    dw $4000
+    dw $1000
+    JMP $E492  ; resume logic
+
+  .minimap_vram
+    JSR $E039
+    dl $DFD500
+    dw $4000
+    dw $1000
+    JMP $E492  ; resume logic
+}
+
+print pc, " infohud bank82 end"
+warnpc $82FA00
 
 
 ; Placed in bank 90 so that the jumps work
@@ -230,7 +265,7 @@ ih_debug_patch:
     JML $828B4F
 }
 
-ih_write_hud_tiles:
+ih_write_and_clear_hud_tiles:
 {
     %i16()
     LDA !ram_minimap : BNE .minimap_vram

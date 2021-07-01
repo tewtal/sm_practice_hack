@@ -366,7 +366,7 @@ eq_setreserves:
         RTS
 
 eq_setmissiles:
-    %cm_numfield("Missiles", $7E09C8, 0, 325, 5, .routine)
+    %cm_numfield("Missiles", $7E09C8, 0, 255, 5, .routine)
     .routine
         LDA $09C8 : STA $09C6 ; missiles
         RTS
