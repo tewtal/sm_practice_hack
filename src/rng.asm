@@ -55,6 +55,13 @@
 }
 
 
+; Kraid hijack
+{
+    org $A7BDBF
+        JSR hook_kraid_rng
+}
+
+
 ; "Set rng" hijacks
 {
     ; $A3:AB0C A9 25 00    LDA #$0025
@@ -240,9 +247,24 @@ hook_crocomire_rng:
     RTS
 
   .no_manip
-    LDA $05E5    ; return with random number (overwritten code)
+    LDA $05E5     ; return with random number (overwritten code)
     RTS
 }
 
 print pc, " crocomire rng end"
+
+org $A7FF84
+print pc, " kraid rng start"
+hook_kraid_rng:
+{
+    LDA !ram_kraid_rng : BEQ .no_manip
+    DEC : DEC     ; return -1 (laggy) or 0 (laggier)
+    RTS
+
+  .no_manip
+    LDA $05E5     ; return with random number (overwritten code)
+    RTS
+}
+
+print pc, " kraid rng end"
 

@@ -340,7 +340,7 @@ eq_goto_togglebeams:
     %cm_submenu("Toggle Beams", #ToggleBeamsMenu)
 
 eq_setetanks:
-    %cm_numfield("Energy Tanks", !ram_cm_etanks, 0, 14, 1, .routine)
+    %cm_numfield("Energy Tanks", !ram_cm_etanks, 0, 21, 1, .routine)
     .routine
         TAX
         LDA #$0063
@@ -353,7 +353,7 @@ eq_setetanks:
         RTS
 
 eq_setreserves:
-    %cm_numfield("Reserve Tanks", !ram_cm_reserve, 0, 4, 1, .routine)
+    %cm_numfield("Reserve Tanks", !ram_cm_reserve, 0, 7, 1, .routine)
     .routine
         TAX
         LDA #$0000
@@ -366,19 +366,19 @@ eq_setreserves:
         RTS
 
 eq_setmissiles:
-    %cm_numfield("Missiles", $7E09C8, 0, 230, 5, .routine)
+    %cm_numfield("Missiles", $7E09C8, 0, 325, 5, .routine)
     .routine
         LDA $09C8 : STA $09C6 ; missiles
         RTS
 
 eq_setsupers:
-    %cm_numfield("Super Missiles", $7E09CC, 0, 50, 5, .routine)
+    %cm_numfield("Super Missiles", $7E09CC, 0, 65, 5, .routine)
     .routine
         LDA $09CC : STA $09CA ; supers
         RTS
 
 eq_setpbs:
-    %cm_numfield("Power Bombs", $7E09D0, 0, 50, 5, .routine)
+    %cm_numfield("Power Bombs", $7E09D0, 0, 65, 5, .routine)
     .routine
         LDA $09D0 : STA $09CE ; pbs
         RTS
@@ -1201,7 +1201,7 @@ ih_room_counter:
     db #$FF
 
 ih_lag:
-    %cm_numfield("Artificial lag", !sram_artificial_lag, 0, 64, 1, #0)
+    %cm_numfield("Artificial Lag", !sram_artificial_lag, 0, 64, 1, #0)
 
 ih_ram_watch:
     %cm_submenu("Customize RAM Watch", #RAMWatchMenu)
@@ -1322,6 +1322,8 @@ GameMenu:
     dw #game_moonwalk
     dw #game_iconcancel
     dw #game_debugmode
+    dw #game_debugbrightness
+    dw #game_minimap
     dw #$0000
     %cm_header("GAME")
 
@@ -1336,6 +1338,13 @@ game_iconcancel:
 
 game_debugmode:
     %cm_toggle("Debug Mode", $7E05D1, #$0001, #0)
+
+game_debugbrightness:
+    %cm_toggle("Debug CPU Brightness", $7E0DF4, #$0001, #0)
+
+game_minimap:
+    %cm_toggle("Minimap", !ram_minimap, #$0001, #0)
+
 
 ; ----------
 ; RNG menu
@@ -1352,6 +1361,7 @@ RngMenu:
     dw #rng_draygon_rng_right
     dw #rng_draygon_rng_left
     dw #rng_crocomire_rng
+    dw #rng_kraid_rng
     dw #$0000
     %cm_header("BOSS RNG CONTROL")
 
@@ -1437,6 +1447,16 @@ rng_crocomire_rng:
     db #$28, "     RANDOM", #$FF
     db #$28, "       STEP", #$FF
     db #$28, "      SWIPE", #$FF
+    db #$FF
+
+rng_kraid_rng:
+    dw !ACTION_CHOICE
+    dl #!ram_kraid_rng
+    dw #$0000
+    db #$28, "Kraid Claw RNG", #$FF
+    db #$28, "     RANDOM", #$FF
+    db #$28, "      LAGGY", #$FF
+    db #$28, "    LAGGIER", #$FF
     db #$FF
 
 

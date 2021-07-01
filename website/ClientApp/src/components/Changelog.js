@@ -38,6 +38,7 @@ export class Changelog extends Component {
                                                 <li>Added initial jump speed to vertical speed display. (2.2.3)</li>
                                                 <li>Update room timers when grabbed by statues. (2.2.4)</li>
                                                 <li>Fixed door stuck bug after loading presets from a door transition. (2.2.4)</li>
+                                                <li>Added minimap option, debug CPU brightness option, Kraid claw RNG. (2.2.4)</li>
                                             </ul>
                                         </CardBody>
                                     </Card>

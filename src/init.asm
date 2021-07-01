@@ -33,6 +33,7 @@ init_code:
 
   .sram_initialized
     PLA
+    ; Execute overwritten logic and return
     JSL $8B9146
     JML $808459
 }

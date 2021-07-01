@@ -1,6 +1,7 @@
 !ram_tilemap_buffer = $7E5800
 
 org $85FE00
+print pc, " menu bank85 start"
 
 wait_for_lag_frame_long:
   jsr $8136
@@ -22,15 +23,18 @@ maybe_trigger_pause_long:
   jsr $80FA
   rtl
 
+print pc, " menu bank85 end"
+warnpc $85FF00
+
 org $B88000
 print pc, " menu start"
 
 cm_start:
 {
-  PHP
-  PHB
-  PHX
-  PHY
+    PHP
+    PHB
+    PHX
+    PHY
     PHK : PLB
 
     %a8()
@@ -75,10 +79,10 @@ cm_start:
     JSL play_music_long           ; Play 2 lag frames of music and sound effects
     JSL maybe_trigger_pause_long  ; Maybe trigger pause screen or return save confirmation selection
 
-  PLY
-  PLX
-  PLB
-  PLP
+    PLY
+    PLX
+    PLB
+    PLP
     RTL
 }
 
@@ -94,7 +98,7 @@ cm_init:
     STA !ram_cm_ctrl_timer
     STA $8F
     STA $8B
-    LDA $05B6 : STA !ram_last_lag_counter
+    LDA $05B6 : STA !ram_cm_input_counter
 
     LDA.w #MainMenu
     STA.l !ram_cm_menu_stack
@@ -140,9 +144,11 @@ cm_transfer_original_tileset:
 {
     PHP
     %a8()
-    ; word-access, incr by 1
-    LDA #$80 : STA $2115
 
+    LDA !ram_minimap : CMP #$00 : BNE .minimap_vram
+
+    ; Load in normal vram
+    LDA #$80 : STA $2115
     LDX #$4000 : STX $2116 ; VRAM address (8000 in vram)
     LDX #$B200 : STX $4302 ; Source offset
     LDA #$9A : STA $4304 ; Source bank
@@ -150,7 +156,19 @@ cm_transfer_original_tileset:
     LDA #$01 : STA $4300 ; word, normal increment (DMA MODE)
     LDA #$18 : STA $4301 ; destination (VRAM write)
     LDA #$01 : STA $420B ; initiate DMA (channel 1)
+    PLP
+    RTS
 
+  .minimap_vram
+    LDX #$7FFF : STA !ram_last_map_counter ; force map counter refresh
+    LDA #$80 : STA $2115
+    LDX #$4000 : STX $2116 ; VRAM address (8000 in vram)
+    LDX #$D500 : STX $4302 ; Source offset
+    LDA #$DF : STA $4304 ; Source bank
+    LDX #$0900 : STX $4305 ; Size (0x10 = 1 tile)
+    LDA #$01 : STA $4300 ; word, normal increment (DMA MODE)
+    LDA #$18 : STA $4301 ; destination (VRAM write)
+    LDA #$01 : STA $420B ; initiate DMA (channel 1)
     PLP
     RTS
 }
@@ -224,7 +242,7 @@ cm_tilemap_clear:
     ; top right corner = $07C
     ; bot left corner  = $682
     ; bot right corner = $6BC
-	; Empty out !ram_tilemap_buffer
+	 ; Empty out !ram_tilemap_buffer
     {
         LDX #$07FE
         LDA #$000E
@@ -884,7 +902,7 @@ cm_calculate_max:
 cm_get_inputs:
 {
     ; Make sure we don't read joysticks twice in the same frame
-    LDA $05B6 : CMP !ram_last_lag_counter : PHP : STA !ram_last_lag_counter : PLP : BNE +
+    LDA $05B6 : CMP !ram_cm_input_counter : PHP : STA !ram_cm_input_counter : PLP : BNE +
 
     JSL $809459 ; Read controller input
 

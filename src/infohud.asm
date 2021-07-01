@@ -6,74 +6,79 @@ org $809490
     jmp $9497    ; skip resetting player 2 inputs
 
 org $8094DF
-    plp          ; patch out resetting of controller 2 buttons and enable debug mode
-    rtl
+    PLP          ; patch out resetting of controller 2 buttons and enable debug mode
+    RTL
 
 org $828B4B      ; disable debug functions
     JML ih_debug_patch
 
 org $809B51
-    JMP $9BFB    ;skip drawing auto reserve icon and normal energy numbers and tanks during HUD routine
+    JMP $9BFB    ; skip drawing auto reserve icon and normal energy numbers and tanks during HUD routine
 
-org $82AED9      ;routine to draw auto reserve icon on HUD from equip screen
+org $82AED9      ; routine to draw auto reserve icon on HUD from equip screen
     NOP : NOP : NOP
 
-org $82AEAF      ;routine to remove auto reserve icon on HUD from equip screen
+org $82AEAF      ; routine to remove auto reserve icon on HUD from equip screen
     NOP : NOP : NOP
 
 org $828115
     JSL ih_max_etank_code
 
-org $90A91B      ;minimap drawing routine
-    RTL
+org $809AF3
+    JSL ih_initialize_minimap
 
-org $90A8EF      ;minimap update during HUD loading
-    ; Make sure it only runs when you start a new game
-    LDA $0998 : AND #$00FF : CMP #$0006 : BNE +
-    ; It actually runs when you finish the cutscenes after Ceres
-    JSL post_ceres_timers
-    +
-    RTL
+org $90A91E
+    JMP ih_update_minimap
 
-org $82EE92      ;runs on START GAME
+org $90A97E
+    JMP ih_inc_tile_count
+
+org $90A7EE      ; only clear minimap if it is visible
+    LDA !ram_minimap : BEQ .skip_minimap
+    JMP ih_clear_boss_room_tiles
+
+org $90A80A      ; normally runs after minimap grid has been drawn
+    .skip_minimap
+
+org $82EE92      ; runs on START GAME
     JSL startgame_seg_timer
 
-org $90E6AA      ;hijack, runs on gamestate = 08 (main gameplay), handles most updating HUD information
+org $90E6AA      ; hijack, runs on gamestate = 08 (main gameplay), handles most updating HUD information
     JSL ih_gamemode_frame : NOP : NOP
 
-org $9493FB      ;hijack, runs when Samus hits a door BTS
+org $9493FB      ; hijack, runs when Samus hits a door BTS
     JSL ih_before_room_transition
 
-org $9493B8      ;hijack, runs when Samus hits a door BTS
+org $9493B8      ; hijack, runs when Samus hits a door BTS
     JSL ih_before_room_transition
 
-org $82E764      ;hijack, runs when Samus is coming out of a room transition
+org $82E764      ; hijack, runs when Samus is coming out of a room transition
     JSL ih_after_room_transition : RTS
 
-org $90F1E4      ;hijack, runs when an elevator is activated
+org $90F1E4      ; hijack, runs when an elevator is activated
     JSL ih_elevator_activation
 
-org $90A7F7      ;skip drawing minimap grid when entering boss rooms
-    BRA FinishDrawMinimap
-
-org $90A80A      ;normally runs after minimap grid has been drawn
-    FinishDrawMinimap:
-    LDA $179C
-
-org $809B4C      ;hijack, HUD routine (game timer by Quote58)
+org $809B4C      ; hijack, HUD routine (game timer by Quote58)
     JSL ih_hud_code : NOP
 
-org $82894F      ;hijack, main game loop: runs EVERY frame (used for room transition timer)
+org $82894F      ; hijack, main game loop: runs EVERY frame (used for room transition timer)
     JSL ih_game_loop_code
 
-org $84889F      ;hijack, runs every time an item is picked up
+org $84889F      ; hijack, runs every time an item is picked up
     JSL ih_get_item_code
 
-org $91DAD8      ;hijack, runs after a shinespark has been charged
+org $91DAD8      ; hijack, runs after a shinespark has been charged
     JSL ih_shinespark_code
 
-org $8095fc      ;hijack, end of NMI routine to update realtime frames
+org $8095FC      ; hijack, end of NMI routine to update realtime frames
     JML ih_nmi_end
+
+org $8282E5      ; write tiles to VRAM
+    JSL ih_write_hud_tiles
+    BRA .write_next_tiles
+
+org $828300
+    .write_next_tiles
 
 org $A98874      ; update timers after MB1 fight
     JSL ih_mb1_segment
@@ -111,8 +116,98 @@ org $A0BB46      ; update timers when Draygon drops spawn
 org $AAE582      ; update timers when statue grabs Samus
     JSL ih_chozo_segment
 
-org $9AB200         ; graphics for HUD
+
+org $9AB200      ; graphics for HUD
 incbin ../resources/hudgfx.bin
+
+
+; Place minimap graphics in bank DF
+org $DFD500
+print pc, " infohud bankDF start"
+incbin ../resources/mapgfx.bin
+
+; Next block needs to be all zeros to clear a tilemap
+fillbyte $00
+fill 4096
+print pc, " infohud bankDF end"
+
+
+; Placed in bank 90 so that the jumps work
+org $90F640
+print pc, " infohud bank90 start"
+
+ih_initialize_minimap:
+{
+    ; If we just left Ceres, increment segment timer
+    LDA $0998 : AND #$00FF : CMP #$0006 : BNE .init_minimap
+    LDA #$0000 : STA $12 : STA $14 : STA !ram_room_has_set_rng
+    STA $09DA : STA $09DC : STA $09DE : STA $09E0
+    STA !ram_realtime_room : STA !ram_last_realtime_room
+    STA !ram_gametime_room : STA !ram_last_gametime_room
+    STA !ram_last_room_lag : STA !ram_last_door_lag_frames : STA !ram_transition_counter
+
+    ; adding 1:13 to seg timer to account for missed frames between Ceres and Zebes
+    LDA !ram_seg_rt_frames : CLC : ADC #$000D : STA !ram_seg_rt_frames
+    CMP #$003C : BMI .add_seconds
+    SEC : SBC #$003C : STA !ram_seg_rt_frames : INC $12
+
+  .add_seconds
+    LDA !ram_seg_rt_seconds : CLC : ADC #$0001 : ADC $12 : STA !ram_seg_rt_seconds
+    CMP #$003C : BMI .add_minutes
+    SEC : SBC #$003C : STA !ram_seg_rt_seconds : INC $14
+
+  .add_minutes
+    LDA $14 : BEQ .init_minimap : CLC : ADC !ram_seg_rt_minutes : STA !ram_seg_rt_minutes
+
+  .init_minimap
+    LDA !ram_minimap : BEQ .skip_minimap
+    JMP $A8EF  ; resume original logic
+
+  .skip_minimap
+    RTL
+}
+
+ih_update_minimap:
+{
+    LDA !ram_minimap : BEQ .skip_minimap
+    LDA $05F7 : BNE .skip_minimap
+    JMP $A925  ; minimap is enabled
+
+  .skip_minimap
+    PLP
+    RTL
+}
+
+ih_inc_tile_count:
+{
+    ; Check if tile is already set
+    LDA $07F7,X
+    ORA $AC04,Y
+    CMP $07F7,X : BEQ .done
+
+    ; Set tile and increment counter
+    STA $07F7,X
+    REP #$20
+    LDA !ram_map_counter : INC A : STA !ram_map_counter
+    SEP #$20
+
+  .done
+    JMP $A987  ; resume original logic
+}
+
+ih_clear_boss_room_tiles:
+{
+    LDA #$2C1F
+    LDX #$0000
+  .loop
+    STA $7EC63C,X
+    STA $7EC67C,X
+    STA $7EC6BC,X
+    INX : INX : CPX #$000A : BMI .loop
+    JMP $A80A
+}
+
+print pc, " infohud bank90 end"
 
 
 ; Main bank stuff
@@ -133,6 +228,36 @@ ih_debug_patch:
     JML $828B54
 +   JSL $B49809
     JML $828B4F
+}
+
+ih_write_hud_tiles:
+{
+    %i16()
+    LDA !ram_minimap : BNE .minimap_vram
+
+    ; Load in normal vram
+    LDA #$80 : STA $2115
+    LDX #$4000 : STX $2116 ; VRAM address (8000 in vram)
+    LDX #$B200 : STX $4302 ; Source offset
+    LDA #$9A : STA $4304 ; Source bank
+    LDX #$2000 : STX $4305 ; Size (0x10 = 1 tile)
+    LDA #$01 : STA $4300 ; word, normal increment (DMA MODE)
+    LDA #$18 : STA $4301 ; destination (VRAM write)
+    LDA #$01 : STA $420B ; initiate DMA (channel 1)
+    %i8()
+    RTL
+
+  .minimap_vram
+    LDA #$80 : STA $2115
+    LDX #$4000 : STX $2116 ; VRAM address (8000 in vram)
+    LDX #$D500 : STX $4302 ; Source offset
+    LDA #$DF : STA $4304 ; Source bank
+    LDX #$2000 : STX $4305 ; Size (0x10 = 1 tile)
+    LDA #$01 : STA $4300 ; word, normal increment (DMA MODE)
+    LDA #$18 : STA $4301 ; destination (VRAM write)
+    LDA #$01 : STA $420B ; initiate DMA (channel 1)
+    %i8()
+    RTL
 }
 
 ih_nmi_end:
@@ -315,8 +440,7 @@ ih_mb1_segment:
     ; runs during MB1 cutscene when you regain control of Samus, just before music change
     JSL $90F084    ; we overwrote this instruction to get here
 
-    JSL ih_update_hud_early
-    RTL
+    JML ih_update_hud_early
 }
 
 ih_mb2_segment:
@@ -324,27 +448,28 @@ ih_mb2_segment:
     ; runs during baby spawn routine for MB2
     STA $7E7854    ; we overwrote this instruction to get here
 
-    JSL ih_update_hud_early
-    RTL
+    JML ih_update_hud_early
 }
 
 ih_drops_segment:
 {
     ; runs when boss drops spawn
     JSL ih_update_hud_early
-    JSL $808111 ; overwritten code
-    RTL
+    JML $808111 ; overwritten code
 }
 
 ih_chozo_segment:
 {
     JSL $8090CB ; overwritten code
-    JSL ih_update_hud_early
-    RTL
+    JML ih_update_hud_early
 }
 
 ih_update_hud_code:
 {
+    LDA !ram_minimap : BEQ .start_update
+    RTL
+
+  .start_update
     PHX
     PHY
     PHP
@@ -439,6 +564,7 @@ ih_update_hud_code:
         ; Percent symbol on HUD
         LDA !IH_PERCENT : STA $7EC618
     }
+
   .skipToEtanks
     ; E-tanks
     LDA !ram_etanks : LDX #$0054 : JSR Draw3
@@ -572,13 +698,21 @@ ih_hud_code:
     JSR (.status_display_table,X)
 
     ; Samus' HP
-    LDA $09C2 : CMP !ram_last_hp : BEQ .end : STA !ram_last_hp
+    LDA $09C2 : CMP !ram_last_hp : BEQ .map_counter : STA !ram_last_hp
     LDX #$0092 : JSR Draw4
-    LDA !IH_BLANK : STA $7EC690 ; erase stale decimal tile
+    LDA !IH_BLANK : STA $7EC690
+
+  .map_counter
+    LDA !ram_minimap : BEQ .end
+    ; Map visible, so draw map counter
+    LDA !ram_map_counter : CMP !ram_last_map_counter : BEQ .end
+    STA !ram_last_map_counter : LDX #$00B0 : JSR Draw4
+    LDA !IH_BLANK : STA $7EC6BA
 
   .end
     PLB
-    ; overwritten code
+
+  .overwritten_code
     REP #$30
     LDA $7E09C0
     RTL
@@ -1049,16 +1183,16 @@ org $80D300
 print pc, " infohud bank80 start"
 NumberGFXTable:
     dw #$0C09, #$0C00, #$0C01, #$0C02, #$0C03, #$0C04, #$0C05, #$0C06, #$0C07, #$0C08
-    dw #$0C10, #$0C11, #$0C12, #$0C13, #$0C14, #$0C15, #$0C16, #$0C17, #$0C18, #$0C19
-    dw #$0C1A, #$0C20, #$0C21, #$0C22, #$0C23, #$0C24, #$0C25, #$0C26, #$0C27, #$0C28
-    dw #$0C29, #$0C2A, #$0C2B, #$0C2C, #$0C2D, #$0C2E, #$0C2F, #$0C30, #$0C31, #$0C33
-    dw #$0C4D, #$0C6E, #$0C4F, #$0C55, #$0C56, #$0C58, #$0C59, #$0C5A, #$0C5B, #$0C5C
-    dw #$0C5D, #$0C5E, #$0C5F, #$0C8D, #$0C8E, #$0C8F, #$0CD2, #$0CD4, #$0CD5, #$0CD6
-    dw #$0CD7, #$0CD8, #$0CD9, #$0CDA, #$0CDB, #$0CCA
+    dw #$0C70, #$0C71, #$0C72, #$0C73, #$0C74, #$0C75, #$0C78, #$0C79, #$0C7A, #$0C7B
+    dw #$0C7C, #$0C7D, #$0C7E, #$0C7F, #$0CD2, #$0CD4, #$0CD5, #$0CD6, #$0CD7, #$0CD8
+    dw #$0CD9, #$0CDA, #$0CDB, #$0C5C, #$0C5D, #$0CB8, #$0C8D, #$0C12, #$0C13, #$0C14
+    dw #$0C15, #$0C16, #$0C17, #$0C18, #$0C19, #$0C1A, #$0C1B, #$0C20, #$0C21, #$0C22
+    dw #$0C23, #$0C24, #$0C25, #$0C26, #$0C27, #$0C28, #$0C29, #$0C2A, #$0C2B, #$0C2C
+    dw #$0C2D, #$0C2E, #$0C2F, #$0C30, #$0C31, #$0CCA
 
 HexGFXTable:
-    dw #$0C70, #$0C71, #$0C72, #$0C73, #$0C74, #$0C75, #$0C76, #$0C77
-    dw #$0C78, #$0C79, #$0C7A, #$0C7B, #$0C7C, #$0C7D, #$0C7E, #$0C7F
+    dw #$0C09, #$0C00, #$0C01, #$0C02, #$0C03, #$0C04, #$0C05, #$0C06, #$0C07, #$0C08
+    dw #$0C64, #$0C65, #$0C58, #$0C59, #$0C5A, #$0C5B
 
 ControllerTable1:
     dw #$0020, #$0800, #$0010, #$4000, #$0040, #$2000
@@ -1067,7 +1201,7 @@ ControllerTable2:
 ControllerGfx1:
     dw #$0C68, #$0C61, #$0C69, #$0C67, #$0C66, #$0C6A
 ControllerGfx2:
-    dw #$0C60, #$0C63, #$0C62, #$0C7B, #$0C7A, #$0C6B
+    dw #$0C60, #$0C63, #$0C62, #$0C65, #$0C64, #$0C6B
 
 HexToNumberGFX1:
     dw #$0C09, #$0C09, #$0C09, #$0C09, #$0C09, #$0C09, #$0C09, #$0C09, #$0C09, #$0C09
@@ -1088,17 +1222,17 @@ HexToNumberGFX2:
 print pc, " infohud bank80 end"
 warnpc $80F000
 
-org $8098CB  ; Initial HUD tilemap
-    dw #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F
-    dw #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F
-    dw #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F
-    dw #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F
-    dw #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F
-    dw #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F
-    dw #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F
-    dw #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F
-    dw #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C09, #$2C0F
-    dw #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F
-    dw #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F
-    dw #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F
+; The default HUD minimap should be cleared
+org $8098FF    ; row 1
+    dw #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F
+
+org $80993F    ; row 2
+    dw #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F
+
+org $80997F    ; row 3
+    dw #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F
+
+; The default energy 0 text should be cleared
+org $80994D
+    dw #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F
 
