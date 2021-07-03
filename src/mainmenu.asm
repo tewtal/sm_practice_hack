@@ -40,6 +40,14 @@ macro cm_toggle(title, addr, value, jsrtarget)
     db #$28, "<title>", #$FF
 endmacro
 
+macro cm_toggle_inverted(title, addr, value, jsrtarget)
+    dw !ACTION_TOGGLE_INVERTED
+    dl <addr>
+    db <value>
+    dw <jsrtarget>
+    db #$28, "<title>", #$FF
+endmacro
+
 macro cm_toggle_bit(title, addr, mask, jsrtarget)
     dw !ACTION_TOGGLE_BIT
     dl <addr>
@@ -388,7 +396,11 @@ eq_setsupers:
         RTS
 
 eq_setpbs:
+if !FEATURE_PAL
+    %cm_numfield("Power Bombs", $7E09D0, 0, 70, 5, .routine)
+else
     %cm_numfield("Power Bombs", $7E09D0, 0, 65, 5, .routine)
+endif
     .routine
         LDA $09D0 : STA $09CE ; pbs
         RTS
@@ -1334,18 +1346,25 @@ action_HUD_ramwatch:
 ; ----------
 
 GameMenu:
-    dw #game_japanesetext
+    dw #game_alternatetext
     dw #game_moonwalk
     dw #game_iconcancel
     dw #game_debugmode
     dw #game_debugbrightness
+if !FEATURE_PAL
+    dw #game_paldebug
+endif
     dw #game_minimap
     dw #game_clear_minimap
     dw #$0000
     %cm_header("GAME")
 
-game_japanesetext:
+game_alternatetext:
+if !FEATURE_PAL
+    %cm_toggle("French Text", $7E09E2, #$0001, #0)
+else
     %cm_toggle("Japanese Text", $7E09E2, #$0001, #0)
+endif
 
 game_moonwalk:
     %cm_toggle("Moon Walk", $7E09E4, #$0001, #0)
@@ -1358,6 +1377,11 @@ game_debugmode:
 
 game_debugbrightness:
     %cm_toggle("Debug CPU Brightness", $7E0DF4, #$0001, #0)
+
+if !FEATURE_PAL
+game_paldebug:
+    %cm_toggle_inverted("PAL Debug Movement", $7E09E6, #$0001, #0)
+endif
 
 game_minimap:
     %cm_toggle("Minimap", !ram_minimap, #$0001, #0)

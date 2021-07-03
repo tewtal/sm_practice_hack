@@ -1,5 +1,4 @@
-; $84:EFD7: Just past start of free space
-org $84EFD7
+org $84EFD9
 print pc, " fanfare restore start"
   .prepareloop
     PHX              ; start of logic that was overwritten

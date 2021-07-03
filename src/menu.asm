@@ -413,6 +413,7 @@ cm_draw_action_table:
     dw draw_ctrl_shortcut
     dw draw_numfield_hex
     dw draw_numfield_word
+    dw draw_toggle_inverted
 
     draw_toggle:
     {
@@ -442,6 +443,50 @@ cm_draw_action_table:
 
         ; grab the value at that memory address
         LDA [$08] : CMP $0C : BEQ .checked
+
+        ; Off
+        %a16()
+        LDA #$244B : STA !ram_tilemap_buffer+0,X
+        LDA #$244D : STA !ram_tilemap_buffer+2,X
+        LDA #$244D : STA !ram_tilemap_buffer+4,X
+        RTS
+
+      .checked
+        ; On
+        %a16()
+        LDA #$384B : STA !ram_tilemap_buffer+2,X
+        LDA #$384C : STA !ram_tilemap_buffer+4,X
+        RTS
+    }
+
+    draw_toggle_inverted:
+    {
+        ; grab the memory address (long)
+        LDA [$04] : INC $04 : INC $04 : STA $08
+        LDA [$04] : INC $04 : STA $0A
+
+        ; grab the toggle value
+        LDA [$04] : AND #$00FF : INC $04 : STA $0C
+
+        ; increment past JSR
+        INC $04 : INC $04
+
+        ; Draw the text
+        %item_index_to_vram_index()
+        PHX : JSR cm_draw_text : PLX
+
+        ; Set position for ON/OFF
+        TXA : CLC : ADC #$002C : TAX
+
+        %a8()
+        ; set palette
+        LDA $0E
+        STA !ram_tilemap_buffer+1,X
+        STA !ram_tilemap_buffer+3,X
+        STA !ram_tilemap_buffer+5,X
+
+        ; grab the value at that memory address
+        LDA [$08] : CMP $0C : BNE .checked
 
         ; Off
         %a16()
@@ -1031,6 +1076,7 @@ cm_execute_action_table:
     dw execute_ctrl_shortcut
     dw execute_numfield_hex
     dw execute_numfield_word
+    dw execute_toggle
 
     execute_toggle:
     {

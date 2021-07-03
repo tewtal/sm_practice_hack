@@ -97,7 +97,11 @@ endif
 
 ; Kraid hijack
 {
+if !FEATURE_PAL
+    org $A7BDF3
+else
     org $A7BDBF
+endif
         JSR hook_kraid_rng
 }
 
@@ -309,7 +313,7 @@ hook_crocomire_rng:
 
 print pc, " crocomire rng end"
 
-org $A7FF84
+org $A7FFB6
 print pc, " kraid rng start"
 hook_kraid_rng:
 {
