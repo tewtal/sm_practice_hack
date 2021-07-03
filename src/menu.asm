@@ -152,7 +152,7 @@ cm_transfer_original_tileset:
     LDX #$4000 : STX $2116 ; VRAM address (8000 in vram)
     LDX #$B200 : STX $4302 ; Source offset
     LDA #$9A : STA $4304 ; Source bank
-    LDX #$0900 : STX $4305 ; Size (0x10 = 1 tile)
+    LDX #$1000 : STX $4305 ; Size (0x10 = 1 tile)
     LDA #$01 : STA $4300 ; word, normal increment (DMA MODE)
     LDA #$18 : STA $4301 ; destination (VRAM write)
     LDA #$01 : STA $420B ; initiate DMA (channel 1)
@@ -165,7 +165,7 @@ cm_transfer_original_tileset:
     LDX #$4000 : STX $2116 ; VRAM address (8000 in vram)
     LDX #$D500 : STX $4302 ; Source offset
     LDA #$DF : STA $4304 ; Source bank
-    LDX #$0900 : STX $4305 ; Size (0x10 = 1 tile)
+    LDX #$1000 : STX $4305 ; Size (0x10 = 1 tile)
     LDA #$01 : STA $4300 ; word, normal increment (DMA MODE)
     LDA #$18 : STA $4301 ; destination (VRAM write)
     LDA #$01 : STA $420B ; initiate DMA (channel 1)
@@ -226,13 +226,13 @@ cm_transfer_original_cgram:
 
 cm_draw:
 {
-  PHP
+    PHP
     %ai16()
     JSR cm_tilemap_clear
     JSR cm_tilemap_bg
     JSR cm_tilemap_menu
     JSR cm_tilemap_transfer
-  PLP
+    PLP
     RTS
 }
 

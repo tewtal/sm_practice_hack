@@ -12,35 +12,35 @@ org $82AEAF      ; routine to remove auto reserve icon on HUD from equip screen
     NOP : NOP : NOP
 
 org $809AF3
-    JSL ih_initialize_minimap
+    JSL mm_initialize_minimap
 
 org $90A91E
-    JMP ih_update_minimap
+    JMP mm_update_minimap
 
 org $90A97E
-    JMP ih_inc_tile_count
+    JMP mm_inc_tile_count
 
 org $90A7EE      ; only clear minimap if it is visible
     LDA !ram_minimap : BEQ .skip_minimap
-    JMP ih_clear_boss_room_tiles
+    JMP mm_clear_boss_room_tiles
 
 org $90A80A      ; normally runs after minimap grid has been drawn
     .skip_minimap
 
 org $8282E5      ; write and clear tiles to VRAM
-    JSR ih_write_and_clear_hud_tiles
+    JSR mm_write_and_clear_hud_tiles
     BRA .write_next_tiles
 
 org $828305
     .write_next_tiles
 
 org $828EB8      ; write and clear tiles to VRAM
-    JSR ih_write_and_clear_hud_tiles
+    JSR mm_write_and_clear_hud_tiles
     PLP
     RTL
 
 org $82E488      ; write tiles to VRAM
-    JMP ih_write_hud_tiles_during_door_transition
+    JMP mm_write_hud_tiles_during_door_transition
 
 
 
@@ -78,7 +78,7 @@ org $80994D
 org $82F70F
 print pc, " minimap bank82 start"
 
-ih_write_and_clear_hud_tiles:
+mm_write_and_clear_hud_tiles:
 {
     %i16()
     LDA !ram_minimap : BNE .minimap_vram
@@ -108,7 +108,7 @@ ih_write_and_clear_hud_tiles:
     RTS
 }
 
-ih_write_hud_tiles_during_door_transition:
+mm_write_hud_tiles_during_door_transition:
 {
     LDA !ram_minimap : BNE .minimap_vram
 
@@ -135,7 +135,7 @@ warnpc $82FA00
 org $90F640
 print pc, " minimap bank90 start"
 
-ih_initialize_minimap:
+mm_initialize_minimap:
 {
     ; If we just left Ceres, increment segment timer
     LDA $0998 : AND #$00FF : CMP #$0006 : BNE .init_minimap
@@ -166,7 +166,7 @@ ih_initialize_minimap:
     RTL
 }
 
-ih_update_minimap:
+mm_update_minimap:
 {
     LDA !ram_minimap : BEQ .skip_minimap
     LDA $05F7 : BNE .skip_minimap
@@ -177,7 +177,7 @@ ih_update_minimap:
     RTL
 }
 
-ih_inc_tile_count:
+mm_inc_tile_count:
 {
     ; Check if tile is already set
     LDA $07F7,X
@@ -194,7 +194,7 @@ ih_inc_tile_count:
     JMP $A987  ; resume original logic
 }
 
-ih_clear_boss_room_tiles:
+mm_clear_boss_room_tiles:
 {
     LDA #$2C1F
     LDX #$0000

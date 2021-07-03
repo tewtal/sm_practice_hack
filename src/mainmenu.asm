@@ -1324,6 +1324,7 @@ GameMenu:
     dw #game_debugmode
     dw #game_debugbrightness
     dw #game_minimap
+    dw #game_clear_minimap
     dw #$0000
     %cm_header("GAME")
 
@@ -1344,6 +1345,24 @@ game_debugbrightness:
 
 game_minimap:
     %cm_toggle("Minimap", !ram_minimap, #$0001, #0)
+
+game_clear_minimap:
+    %cm_jsr("Clear Minimap", .clear_minimap, #$0000)
+
+  .clear_minimap
+    LDA #$0000 : STA !ram_map_counter : STA $7E0789
+    STA $7ED908 : STA $7ED90A : STA $7ED90C : STA $7ED90E
+    LDX #$00FE : STA !ram_last_map_counter
+  .clear_minimap_loop
+    STA $7ECD52,X : STA $7ECE52,X
+    STA $7ECF52,X : STA $7ED052,X
+    STA $7ED152,X : STA $7ED252,X
+    STA $7ED352,X : STA $7ED452,X
+    STA $7ED91C,X : STA $7EDA1C,X
+    STA $7EDB1C,X : STA $7EDC1C,X
+    STA $7EDD1C,X : STA $7E07F7,X
+    DEX : DEX : BPL .clear_minimap_loop
+    RTS
 
 
 ; ----------
