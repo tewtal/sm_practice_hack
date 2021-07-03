@@ -14,7 +14,10 @@ org $82AEAF      ; routine to remove auto reserve icon on HUD from equip screen
 org $809AF3
     JSL mm_initialize_minimap
 
-org $90A91E
+org $90A91B
+    LDA !ram_minimap : BNE .update_minimap
+    RTL
+  .update_minimap
     JMP mm_update_minimap
 
 org $90A97E
@@ -168,7 +171,8 @@ mm_initialize_minimap:
 
 mm_update_minimap:
 {
-    LDA !ram_minimap : BEQ .skip_minimap
+    PHP
+    %ai16()
     LDA $05F7 : BNE .skip_minimap
     JMP $A925  ; minimap is enabled
 
