@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Building SM Practice Hack"
+echo "Building SM PAL Practice Hack"
 cd resources
 python3 create_dummies.py 00.sfc ff.sfc
 

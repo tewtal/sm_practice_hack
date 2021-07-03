@@ -33,8 +33,7 @@
 !ram_charge_counter = $7FFB1C
 !ram_xfac_counter = $7FFB1E
 !ram_map_counter = $7FFB8A
-!ram_last_map_counter = $7FFB8C
-!ram_vcounter_data = $7FFB8E
+!ram_vcounter_data = $7FFB8C
 !ram_minimap = $7FFB98
 !ram_shot_timer = $7FFB9E
 

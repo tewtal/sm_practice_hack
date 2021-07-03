@@ -1,6 +1,6 @@
 @echo off
 
-echo Building SM Practice Hack
+echo Building SM NTSC Practice Hack
 cd resources
 python create_dummies.py 00.sfc ff.sfc
 

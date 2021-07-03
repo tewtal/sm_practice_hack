@@ -41,11 +41,15 @@ org $828BB3
 org $828AB1
     %a8() : LDA $4201 : ORA #$80 : STA $4201 : %ai16()
     LDA $2137 : LDA $213D : STA !ram_vcounter_data
-    BRA .check_brightness_flag
 
-warnpc $828ACB
-org $828ACB       ; Resume original logic for debug CPU brightness
-    .check_brightness_flag
+    ; For efficiency, re-implement the debug brightness logic here
+    LDA $0DF4 : BEQ .skip_debug_brightness
+    %a8() : LDA $51 : AND #$F0 : ORA #$05 : STA $2100 : %a16()
+    BRA .skip_debug_brightness
+
+warnpc $828ADD
+org $828ADD       ; Resume original logic
+    .skip_debug_brightness
 
 
 ; $80:8F24 9C F6 07    STZ $07F6  [$7E:07F6]  ;/
@@ -104,15 +108,17 @@ else
 endif
 
     ; If minimap is disabled or shown, we ignore artificial lag
-    LDA $05F7 : BNE +
-    LDA !ram_minimap : BNE +
+    LDA $05F7 : BNE .endlag
+    LDA !ram_minimap : BNE .endlag
 
-    ; Artificial lag. 41 loops ~= 1 scanline
-    LDA !sram_artificial_lag : BEQ + : ASL #4 : TAX
-    {
-        - DEX : BNE -
-    }
-    +
+    ; Artificial lag, multiplied by 16 to get loop count
+    ; Each loop takes 5 clock cycles (assuming branch taken)
+    ; For reference, 41 loops ~= 1 scanline
+    LDA !sram_artificial_lag : BEQ .endlag
+    ASL #4 : TAX
+  .lagloop
+    DEX : BNE .lagloop
+  .endlag
     RTL
 }
 

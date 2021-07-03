@@ -160,7 +160,6 @@ cm_transfer_original_tileset:
     RTS
 
   .minimap_vram
-    LDX #$7FFF : STA !ram_last_map_counter ; force map counter refresh
     LDA #$80 : STA $2115
     LDX #$4000 : STX $2116 ; VRAM address (8000 in vram)
     LDX #$D500 : STX $4302 ; Source offset

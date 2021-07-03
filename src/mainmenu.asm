@@ -1392,7 +1392,7 @@ game_clear_minimap:
   .clear_minimap
     LDA #$0000 : STA !ram_map_counter : STA $7E0789
     STA $7ED908 : STA $7ED90A : STA $7ED90C : STA $7ED90E
-    LDX #$00FE : STA !ram_last_map_counter
+    LDX #$00FE
   .clear_minimap_loop
     STA $7ECD52,X : STA $7ECE52,X
     STA $7ECF52,X : STA $7ED052,X

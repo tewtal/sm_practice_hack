@@ -367,18 +367,24 @@ ih_chozo_segment:
 
 ih_update_hud_code:
 {
-    LDA !ram_minimap : BEQ .start_update
-    RTL
-
-  .start_update
     PHX
     PHY
     PHP
     PHB
-
     ; Bank 80
     PEA $8080 : PLB : PLB
 
+    LDA !ram_minimap : BEQ .start_update
+
+    ; Map visible, so draw map counter unless shinetune is enabled
+    LDA !sram_display_mode : CMP #$0007 : BEQ .minimap_end
+    LDA !ram_map_counter : LDX #$00B0 : JSR Draw4
+    LDA !IH_BLANK : STA $7EC6B8 : STA $7EC6BA
+
+  .minimap_end
+    BRL .end
+
+  .start_update
     LDA #$FFFF : STA !ram_last_hp : STA !ram_enemy_hp
 
     LDA !sram_frame_counter_mode : BNE .ingameRoom
@@ -518,12 +524,11 @@ ih_update_hud_code:
         LDA !IH_DECIMAL : STA $7EC6B4 : STA $7EC6BA
     }
 
-    .end
+  .end
     PLB
     PLP
     PLY
     PLX
-
     RTL
 }
 
@@ -609,21 +614,13 @@ ih_hud_code:
     JSR (.status_display_table,X)
 
     ; Samus' HP
-    LDA $09C2 : CMP !ram_last_hp : BEQ .map_counter : STA !ram_last_hp
+    LDA $09C2 : CMP !ram_last_hp : BEQ .end : STA !ram_last_hp
     LDX #$0092 : JSR Draw4
     LDA !IH_BLANK : STA $7EC690
 
-  .map_counter
-    LDA !ram_minimap : BEQ .end
-    ; Map visible, so draw map counter
-    LDA !ram_map_counter : CMP !ram_last_map_counter : BEQ .end
-    STA !ram_last_map_counter : LDX #$00B0 : JSR Draw4
-    LDA !IH_BLANK : STA $7EC6BA
-
   .end
     PLB
-
-  .overwritten_code
+    ; overwritten code
     REP #$30
     LDA $7E09C0
     RTL
