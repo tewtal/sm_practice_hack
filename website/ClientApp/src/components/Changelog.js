@@ -39,7 +39,7 @@ export class Changelog extends Component {
                                                 <li>Update room timers when grabbed by statues. (2.2.4)</li>
                                                 <li>Fixed door stuck bug after loading presets from a door transition. (2.2.4)</li>
                                                 <li>Added minimap option, debug CPU brightness option, Kraid claw RNG. (2.2.4)</li>
-                                                <li>Allow GT Max% equipment levels, except missiles capped at 255. (2.2.4)</li>
+                                                <li>Allow GT Max% equipment levels. (2.2.4)</li>
                                                 <li>CPU% calcalation now includes the artifical lag. (2.2.4)</li>
                                             </ul>
                                         </CardBody>

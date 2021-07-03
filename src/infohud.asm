@@ -389,7 +389,7 @@ ih_update_hud_code:
         LDA #$0000 : STA !ram_pct_1
 
         ; Max HP (E tanks)
-        LDA $09C4 : SEC : SBC #$0063 : CLC : INC : JSR CalcEtank : LDA $4214 : STA !ram_etanks
+        LDA $09C4 : JSR CalcEtank : LDA $4214 : STA !ram_etanks
 
         ; Max Reserve Tanks
         LDA $09D4 : JSR CalcEtank

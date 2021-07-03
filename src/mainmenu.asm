@@ -16,6 +16,14 @@ macro cm_numfield(title, addr, start, end, increment, jsrtarget)
     db #$28, "<title>", #$FF
 endmacro
 
+macro cm_numfield_word(title, addr, start, end, increment, jsrtarget)
+    dw !ACTION_NUMFIELD_WORD
+    dl <addr>
+    dw <start>, <end>, <increment>
+    dw <jsrtarget>
+    db #$28, "<title>", #$FF
+endmacro
+
 macro cm_numfield_hex(title, addr, start, end, increment, jsrtarget)
     dw !ACTION_NUMFIELD_HEX
     dl <addr>
@@ -343,13 +351,15 @@ eq_setetanks:
     %cm_numfield("Energy Tanks", !ram_cm_etanks, 0, 21, 1, .routine)
     .routine
         TAX
+        LDA #$0000
+        CPX #$000F : BPL .loop
         LDA #$0063
-        -
-        DEX : BMI +
+      .loop
+        DEX : BMI .endloop
         CLC : ADC #$0064
-        BRA -
-        +
-        STA $09C4 : STA $7E09C2
+        BRA .loop
+      .endloop
+        STA $09C4 : STA $09C2
         RTS
 
 eq_setreserves:
@@ -357,16 +367,16 @@ eq_setreserves:
     .routine
         TAX
         LDA #$0000
-        -
-        DEX : BMI +
+      .loop
+        DEX : BMI .endloop
         CLC : ADC #$0064
-        BRA -
-        +
-        STA $09D4 : STA $09D6
+        BRA .loop
+      .endloop
+        STA $09D6 : STA $09D4
         RTS
 
 eq_setmissiles:
-    %cm_numfield("Missiles", $7E09C8, 0, 255, 5, .routine)
+    %cm_numfield_word("Missiles", $7E09C8, 0, 325, 5, .routine)
     .routine
         LDA $09C8 : STA $09C6 ; missiles
         RTS
@@ -525,10 +535,16 @@ ti_speedbooster:
     %cm_toggle_bit("Speed Booster", $7E09A4, #$2000, #0)
 
 ti_grapple:
-    %cm_toggle_bit("Grapple", $7E09A2, #$4000, #0)
+    %cm_toggle_bit("Grapple", $7E09A2, #$4000, .routine)
+    .routine
+        LDA $09A4 : EOR #$4000 : STA $09A4
+        RTS
 
 ti_xray:
-    %cm_toggle_bit("X-Ray", $7E09A2, #$8000, #0)
+    %cm_toggle_bit("X-Ray", $7E09A2, #$8000, .routine)
+    .routine
+        LDA $09A4 : EOR #$8000 : STA $09A4
+        RTS
 
 
 ; ------------------

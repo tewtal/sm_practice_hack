@@ -111,8 +111,8 @@ cm_init:
 
 cm_set_etanks_and_reserve:
 {
-    LDA $09C4 : SBC #$0063 : CLC : INC : JSR cm_divide_100 : STA !ram_cm_etanks
-    LDA $09D4 : CLC : INC : JSR cm_divide_100 : STA !ram_cm_reserve
+    LDA $09C4 : JSR cm_divide_100 : STA !ram_cm_etanks
+    LDA $09D4 : JSR cm_divide_100 : STA !ram_cm_reserve
     RTS
 }
 
@@ -412,6 +412,7 @@ cm_draw_action_table:
     dw draw_choice
     dw draw_ctrl_shortcut
     dw draw_numfield_hex
+    dw draw_numfield_word
 
     draw_toggle:
     {
@@ -527,6 +528,54 @@ cm_draw_action_table:
         TXA : CLC : ADC #$002C : TAX
 
         LDA [$08] : AND #$00FF : JSR cm_hex2dec
+
+        ; Clear out the area (black tile)
+        LDA #$281F : STA !ram_tilemap_buffer+0,X
+                     STA !ram_tilemap_buffer+2,X
+                     STA !ram_tilemap_buffer+4,X
+
+        ; Set palette
+        %a8()
+        LDA.b #$24 : ORA $0E : STA $0F
+        LDA.b #$70 : STA $0E
+
+        ; Draw numbers
+        %a16()
+        ; ones
+        LDA !ram_hex2dec_third_digit : CLC : ADC $0E : STA !ram_tilemap_buffer+4,X
+
+        ; tens
+        LDA !ram_hex2dec_second_digit : ORA !ram_hex2dec_first_digit : BEQ .done
+        LDA !ram_hex2dec_second_digit : CLC : ADC $0E : STA !ram_tilemap_buffer+2,X
+
+        LDA !ram_hex2dec_first_digit : BEQ .done
+        CLC : ADC $0E : STA !ram_tilemap_buffer,X
+
+      .done
+        RTS
+    }
+
+    draw_numfield_word:
+    {
+        ; grab the memory address (long)
+        LDA [$04] : INC $04 : INC $04 : STA $08
+        LDA [$04] : INC $04 : STA $0A
+
+        ; skip bounds and increment value
+        INC $04 : INC $04 : INC $04
+        INC $04 : INC $04 : INC $04
+
+        ; increment past JSR
+        INC $04 : INC $04
+
+        ; Draw the text
+        %item_index_to_vram_index()
+        PHX : JSR cm_draw_text : PLX
+
+        ; set position for the number
+        TXA : CLC : ADC #$002C : TAX
+
+        LDA [$08] : JSR cm_hex2dec
 
         ; Clear out the area (black tile)
         LDA #$281F : STA !ram_tilemap_buffer+0,X
@@ -981,6 +1030,7 @@ cm_execute_action_table:
     dw execute_choice
     dw execute_ctrl_shortcut
     dw execute_numfield_hex
+    dw execute_numfield_word
 
     execute_toggle:
     {
@@ -1061,11 +1111,11 @@ cm_execute_action_table:
 
     execute_numfield:
     {
-        ; $02[0x3] = memory address to manipulate
-        ; $06[0x1] = min
-        ; $08[0x1] = max
-        ; $0A[0x1] = increment
-        ; $0C[0x2] = JSR target
+        ; $04[0x3] = memory address to manipulate
+        ; $08[0x1] = min
+        ; $0A[0x1] = max
+        ; $0C[0x1] = increment
+        ; $20[0x2] = JSR target
         LDA [$00] : INC $00 : INC $00 : STA $04
         LDA [$00] : INC $00 : STA $06
 
@@ -1108,13 +1158,62 @@ cm_execute_action_table:
         RTS
     }
 
+    execute_numfield_word:
+    {
+        ; $04[0x3] = memory address to manipulate
+        ; $08[0x2] = min
+        ; $0A[0x2] = max
+        ; $0C[0x2] = increment
+        ; $20[0x2] = JSR target
+        LDA [$00] : INC $00 : INC $00 : STA $04
+        LDA [$00] : INC $00 : STA $06
+
+        LDA [$00] : INC $00 : INC $00 : STA $08
+        LDA [$00] : INC $00 : INC $00 : INC : STA $0A ; INC for convenience
+        LDA [$00] : INC $00 : INC $00 : STA $0C
+
+        LDA [$00] : INC $00 : INC $00 : STA $20
+
+        LDA !ram_cm_controller : BIT #$0200 : BNE .pressed_left
+
+        LDA [$04] : CLC : ADC $0C
+
+        CMP $0A : BCS .set_to_min
+
+        STA [$04] : BRA .jsr
+
+      .pressed_left
+        LDA [$04] : SEC : SBC $0C : BMI .set_to_max
+
+        CMP $0A : BCS .set_to_max
+
+        STA [$04] : BRA .jsr
+
+      .set_to_min
+        LDA $08 : STA [$04] : CLC : BRA .jsr
+
+      .set_to_max
+        LDA $0A : DEC : STA [$04] : CLC
+
+      .jsr
+        LDA $20 : BEQ .end
+
+        LDA [$04]
+        LDX #$0000
+        JSR ($0020,X)
+
+      .end
+        LDA #!SOUND_MENU_MOVE : JSL $80903F
+        RTS
+    }
+
     execute_numfield_hex:
     {
-        ; $02[0x3] = memory address to manipulate
-        ; $06[0x1] = min
-        ; $08[0x1] = max
-        ; $0A[0x1] = increment
-        ; $0C[0x2] = JSR target
+        ; $04[0x3] = memory address to manipulate
+        ; $08[0x1] = min
+        ; $0A[0x1] = max
+        ; $0C[0x1] = increment
+        ; $20[0x2] = JSR target
         LDA [$00] : INC $00 : INC $00 : STA $04
         LDA [$00] : INC $00 : STA $06
 
@@ -1158,8 +1257,8 @@ cm_execute_action_table:
 
     execute_choice:
     {
-        ; $02[0x3] = memory to manipulate
-        ; $06[0x2] = jsr target
+        ; $04[0x3] = memory to manipulate
+        ; $08[0x2] = jsr target
         %a16()
         LDA [$00] : INC $00 : INC $00 : STA $04
         LDA [$00] : INC $00 : STA $06
