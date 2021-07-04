@@ -6,110 +6,139 @@ org $809490
     jmp $9497    ; skip resetting player 2 inputs
 
 org $8094DF
-    plp          ; patch out resetting of controller 2 buttons and enable debug mode
-    rtl
+    PLP          ; patch out resetting of controller 2 buttons and enable debug mode
+    RTL
 
 org $828B4B      ; disable debug functions
     JML ih_debug_patch
 
-org $809B51
-    JMP $9BFB    ;skip drawing auto reserve icon and normal energy numbers and tanks during HUD routine
-
-org $82AED9      ;routine to draw auto reserve icon on HUD from equip screen
-    NOP : NOP : NOP
-
-org $82AEAF      ;routine to remove auto reserve icon on HUD from equip screen
-    NOP : NOP : NOP
-
 org $828115
     JSL ih_max_etank_code
 
-org $90A91B      ;minimap drawing routine
-    RTL
-
-org $90A8EF      ;minimap update during HUD loading
-    ; Make sure it only runs when you start a new game
-    LDA $0998 : AND #$00FF : CMP #$0006 : BNE +
-    ; It actually runs when you finish the cutscenes after Ceres
-    JSL post_ceres_timers
-    +
-    RTL
-
-org $82EE92      ;runs on START GAME
+org $82EE92      ; runs on START GAME
     JSL startgame_seg_timer
 
-org $90E6AA      ;hijack, runs on gamestate = 08 (main gameplay), handles most updating HUD information
+org $90E6AA      ; hijack, runs on gamestate = 08 (main gameplay), handles most updating HUD information
     JSL ih_gamemode_frame : NOP : NOP
 
-org $9493FB      ;hijack, runs when Samus hits a door BTS
+org $9493FB      ; hijack, runs when Samus hits a door BTS
     JSL ih_before_room_transition
 
-org $9493B8      ;hijack, runs when Samus hits a door BTS
+org $9493B8      ; hijack, runs when Samus hits a door BTS
     JSL ih_before_room_transition
 
-org $82E764      ;hijack, runs when Samus is coming out of a room transition
+org $82E764      ; hijack, runs when Samus is coming out of a room transition
     JSL ih_after_room_transition : RTS
 
-org $90F1E4      ;hijack, runs when an elevator is activated
-    JSL ih_elevator_activation
-
-org $90A7F7      ;skip drawing minimap grid when entering boss rooms
-    BRA FinishDrawMinimap
-
-org $90A80A      ;normally runs after minimap grid has been drawn
-    FinishDrawMinimap:
-    LDA $179C
-
-org $809B4C      ;hijack, HUD routine (game timer by Quote58)
+org $809B4C      ; hijack, HUD routine (game timer by Quote58)
     JSL ih_hud_code : NOP
 
-org $82894F      ;hijack, main game loop: runs EVERY frame (used for room transition timer)
+org $82894F      ; hijack, main game loop: runs EVERY frame (used for room transition timer)
     JSL ih_game_loop_code
 
-org $84889F      ;hijack, runs every time an item is picked up
+org $84889F      ; hijack, runs every time an item is picked up
     JSL ih_get_item_code
 
-org $91DAD8      ;hijack, runs after a shinespark has been charged
-    JSL ih_shinespark_code
-
-org $8095fc      ;hijack, end of NMI routine to update realtime frames
+org $8095FC      ; hijack, end of NMI routine to update realtime frames
     JML ih_nmi_end
 
+if !FEATURE_PAL
+org $91DA3D      ; hijack, runs after a shinespark has been charged
+else
+org $91DAD8      ; hijack, runs after a shinespark has been charged
+endif
+    JSL ih_shinespark_code
+
+if !FEATURE_PAL
+org $90F1E1      ; hijack, runs when an elevator is activated
+else
+org $90F1E4      ; hijack, runs when an elevator is activated
+endif
+    JSL ih_elevator_activation
+
+if !FEATURE_PAL
+org $A98884      ; update timers after MB1 fight
+else
 org $A98874      ; update timers after MB1 fight
+endif
     JSL ih_mb1_segment
 
+if !FEATURE_PAL
+org $A9BE33      ; update timers when baby spawns (off-screen) in MB2 fight
+else
 org $A9BE23      ; update timers when baby spawns (off-screen) in MB2 fight
+endif
     JSL ih_mb2_segment
 
+if !FEATURE_PAL
+org $A0B9BE      ; update timers when Ridley drops spawn
+else
 org $A0B9AE      ; update timers when Ridley drops spawn
+endif
     JSL ih_drops_segment
 
+if !FEATURE_PAL
+org $A0B9F1      ; update timers when Crocomire drops spawn
+else
 org $A0B9E1      ; update timers when Crocomire drops spawn
+endif
     JSL ih_drops_segment
 
+if !FEATURE_PAL
+org $A0BA24      ; update timers when Phantoon drops spawn
+else
 org $A0BA14      ; update timers when Phantoon drops spawn
+endif
     JSL ih_drops_segment
 
+if !FEATURE_PAL
+org $A0BA57      ; update timers when Botwoon drops spawn
+else
 org $A0BA47      ; update timers when Botwoon drops spawn
+endif
     JSL ih_drops_segment
 
+if !FEATURE_PAL
+org $A0BA8A      ; update timers when Kraid drops spawn
+else
 org $A0BA7A      ; update timers when Kraid drops spawn
+endif
     JSL ih_drops_segment
 
+if !FEATURE_PAL
+org $A0BABD      ; update timers when Bomb Torizo drops spawn
+else
 org $A0BAAD      ; update timers when Bomb Torizo drops spawn
+endif
     JSL ih_drops_segment
 
+if !FEATURE_PAL
+org $A0BAF0      ; update timers when Golden Torizo drops spawn
+else
 org $A0BAE0      ; update timers when Golden Torizo drops spawn
+endif
     JSL ih_drops_segment
 
+if !FEATURE_PAL
+org $A0BB23      ; update timers when Spore Spawn drops spawn
+else
 org $A0BB13      ; update timers when Spore Spawn drops spawn
+endif
     JSL ih_drops_segment
 
+if !FEATURE_PAL
+org $A0BB56      ; update timers when Draygon drops spawn
+else
 org $A0BB46      ; update timers when Draygon drops spawn
+endif
     JSL ih_drops_segment
 
-org $9AB200         ; graphics for HUD
-incbin ../resources/hudgfx.bin
+if !FEATURE_PAL
+org $AAE592      ; update timers when statue grabs Samus
+else
+org $AAE582      ; update timers when statue grabs Samus
+endif
+    JSL ih_chozo_segment
 
 
 ; Main bank stuff
@@ -312,8 +341,7 @@ ih_mb1_segment:
     ; runs during MB1 cutscene when you regain control of Samus, just before music change
     JSL $90F084    ; we overwrote this instruction to get here
 
-    JSL ih_update_hud_early
-    RTL
+    JML ih_update_hud_early
 }
 
 ih_mb2_segment:
@@ -321,16 +349,20 @@ ih_mb2_segment:
     ; runs during baby spawn routine for MB2
     STA $7E7854    ; we overwrote this instruction to get here
 
-    JSL ih_update_hud_early
-    RTL
+    JML ih_update_hud_early
 }
 
 ih_drops_segment:
 {
     ; runs when boss drops spawn
     JSL ih_update_hud_early
-    JSL $808111 ; overwritten code
-    RTL
+    JML $808111 ; overwritten code
+}
+
+ih_chozo_segment:
+{
+    JSL $8090CB ; overwritten code
+    JML ih_update_hud_early
 }
 
 ih_update_hud_code:
@@ -339,22 +371,37 @@ ih_update_hud_code:
     PHY
     PHP
     PHB
-
     ; Bank 80
     PEA $8080 : PLB : PLB
 
+    LDA !ram_minimap : BEQ .start_update
+
+    ; Map visible, so draw map counter unless shinetune is enabled
+    LDA !sram_display_mode : CMP #$0007 : BEQ .minimap_end
+    LDA !ram_map_counter : LDX #$00B0 : JSR Draw4
+    LDA !IH_BLANK : STA $7EC6B8 : STA $7EC6BA
+
+  .minimap_end
+    BRL .end
+
+  .start_update
     LDA #$FFFF : STA !ram_last_hp : STA !ram_enemy_hp
 
     LDA !sram_frame_counter_mode : BNE .ingameRoom
 
     ; Real time
     {
-        ; Divide real time by 60, save seconds, frame seperately
+        ; Divide real time by 60/50, save seconds, frame seperately
         {
             STZ $4205
             LDA !ram_last_realtime_room : STA $4204
             %a8()
-            LDA #$3C : STA $4206
+            if !FEATURE_PAL
+                LDA #$32
+            else
+                LDA #$3C
+            endif
+            STA $4206
             PHA : PLA : PHA : PLA
             %a16()
             LDA $4214 : STA !ram_tmp_1
@@ -378,12 +425,17 @@ ih_update_hud_code:
     ; Room time
     .ingameRoom
     {
-        ; Divide game time by 60, save seconds, frames seperately
+        ; Divide game time by 60/50, save seconds, frames seperately
         {
             STZ $4205
             LDA !ram_last_gametime_room : STA $4204
             %a8()
-            LDA #$3C : STA $4206
+            if !FEATURE_PAL
+                LDA #$32
+            else
+                LDA #$3C
+            endif
+            STA $4206
             PHA : PLA : PHA : PLA
             %a16()
             LDA $4214 : STA !ram_tmp_3
@@ -409,7 +461,7 @@ ih_update_hud_code:
         LDA #$0000 : STA !ram_pct_1
 
         ; Max HP (E tanks)
-        LDA $09C4 : SEC : SBC #$0063 : CLC : INC : JSR CalcEtank : LDA $4214 : STA !ram_etanks
+        LDA $09C4 : JSR CalcEtank : LDA $4214 : STA !ram_etanks
 
         ; Max Reserve Tanks
         LDA $09D4 : JSR CalcEtank
@@ -429,6 +481,7 @@ ih_update_hud_code:
         ; Percent symbol on HUD
         LDA !IH_PERCENT : STA $7EC618
     }
+
   .skipToEtanks
     ; E-tanks
     LDA !ram_etanks : LDX #$0054 : JSR Draw3
@@ -471,12 +524,11 @@ ih_update_hud_code:
         LDA !IH_DECIMAL : STA $7EC6B4 : STA $7EC6BA
     }
 
-    .end
+  .end
     PLB
     PLP
     PLY
     PLX
-
     RTL
 }
 
@@ -526,7 +578,7 @@ ih_hud_code:
 
     ; -- read input
     TAY
-    LDX #$0000;
+    LDX #$0000
 
 -   TYA
     AND ControllerTable1, X
@@ -540,7 +592,7 @@ ih_hud_code:
     CPX #$00C
     BNE -
 
-    LDX #$0000;
+    LDX #$0000
 
 -   TYA
     AND ControllerTable2, X
@@ -564,7 +616,7 @@ ih_hud_code:
     ; Samus' HP
     LDA $09C2 : CMP !ram_last_hp : BEQ .end : STA !ram_last_hp
     LDX #$0092 : JSR Draw4
-    LDA !IH_BLANK : STA $7EC690 ; erase stale decimal tile
+    LDA !IH_BLANK : STA $7EC690
 
   .end
     PLB
@@ -836,8 +888,8 @@ ih_game_loop_code:
     CMP #$0001 : BEQ .magicpants
     CMP #$0002 : BEQ .spacepants
 
-    ; check if space jump is equipped
-    LDA $09A2 : AND #$0200 : BEQ .magicpants
+    ; both are enabled, check Samus movement type to decide
+    LDA $0A1F : AND #$00FF : CMP #$0001 : BEQ .magicpants    ; check if running
 
   .spacepants
     JSR space_pants
@@ -1023,7 +1075,6 @@ ih_get_item_code:
     RTL
 }
 
-
 ih_shinespark_code:
 {
     DEC
@@ -1034,21 +1085,23 @@ ih_shinespark_code:
 
 print pc, " infohud end"
 
+
 ; Stuff that needs to be placed in bank 80
 org $80D300
 print pc, " infohud bank80 start"
+
 NumberGFXTable:
     dw #$0C09, #$0C00, #$0C01, #$0C02, #$0C03, #$0C04, #$0C05, #$0C06, #$0C07, #$0C08
-    dw #$0C10, #$0C11, #$0C12, #$0C13, #$0C14, #$0C15, #$0C16, #$0C17, #$0C18, #$0C19
-    dw #$0C1A, #$0C20, #$0C21, #$0C22, #$0C23, #$0C24, #$0C25, #$0C26, #$0C27, #$0C28
-    dw #$0C29, #$0C2A, #$0C2B, #$0C2C, #$0C2D, #$0C2E, #$0C2F, #$0C30, #$0C31, #$0C33
-    dw #$0C4D, #$0C6E, #$0C4F, #$0C55, #$0C56, #$0C58, #$0C59, #$0C5A, #$0C5B, #$0C5C
-    dw #$0C5D, #$0C5E, #$0C5F, #$0C8D, #$0C8E, #$0C8F, #$0CD2, #$0CD4, #$0CD5, #$0CD6
-    dw #$0CD7, #$0CD8, #$0CD9, #$0CDA, #$0CDB, #$0CCA
+    dw #$0C70, #$0C71, #$0C72, #$0C73, #$0C74, #$0C75, #$0C78, #$0C79, #$0C7A, #$0C7B
+    dw #$0C7C, #$0C7D, #$0C7E, #$0C7F, #$0CD2, #$0CD4, #$0CD5, #$0CD6, #$0CD7, #$0CD8
+    dw #$0CD9, #$0CDA, #$0CDB, #$0C5C, #$0C5D, #$0CB8, #$0C8D, #$0C12, #$0C13, #$0C14
+    dw #$0C15, #$0C16, #$0C17, #$0C18, #$0C19, #$0C1A, #$0C1B, #$0C20, #$0C21, #$0C22
+    dw #$0C23, #$0C24, #$0C25, #$0C26, #$0C27, #$0C28, #$0C29, #$0C2A, #$0C2B, #$0C2C
+    dw #$0C2D, #$0C2E, #$0C2F, #$0C30, #$0C31, #$0CCA
 
 HexGFXTable:
-    dw #$0C70, #$0C71, #$0C72, #$0C73, #$0C74, #$0C75, #$0C76, #$0C77
-    dw #$0C78, #$0C79, #$0C7A, #$0C7B, #$0C7C, #$0C7D, #$0C7E, #$0C7F
+    dw #$0C09, #$0C00, #$0C01, #$0C02, #$0C03, #$0C04, #$0C05, #$0C06, #$0C07, #$0C08
+    dw #$0C64, #$0C65, #$0C58, #$0C59, #$0C5A, #$0C5B
 
 ControllerTable1:
     dw #$0020, #$0800, #$0010, #$4000, #$0040, #$2000
@@ -1057,7 +1110,7 @@ ControllerTable2:
 ControllerGfx1:
     dw #$0C68, #$0C61, #$0C69, #$0C67, #$0C66, #$0C6A
 ControllerGfx2:
-    dw #$0C60, #$0C63, #$0C62, #$0C7B, #$0C7A, #$0C6B
+    dw #$0C60, #$0C63, #$0C62, #$0C65, #$0C64, #$0C6B
 
 HexToNumberGFX1:
     dw #$0C09, #$0C09, #$0C09, #$0C09, #$0C09, #$0C09, #$0C09, #$0C09, #$0C09, #$0C09
@@ -1077,18 +1130,4 @@ HexToNumberGFX2:
 
 print pc, " infohud bank80 end"
 warnpc $80F000
-
-org $8098CB  ; Initial HUD tilemap
-    dw #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F
-    dw #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F
-    dw #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F
-    dw #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F
-    dw #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F
-    dw #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F
-    dw #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F
-    dw #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F
-    dw #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C09, #$2C0F
-    dw #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F
-    dw #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F
-    dw #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F
 

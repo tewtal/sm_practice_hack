@@ -17,7 +17,7 @@ init_code:
     {
         ; We mostly use $7FFB00 and upward, so just zero everything
         LDA #$0000
-        LDX #$04FF
+        LDX #$04FE
       .loop
         STA $7FFB00,X
         DEX : DEX : BPL .loop
@@ -33,7 +33,12 @@ init_code:
 
   .sram_initialized
     PLA
+    ; Execute overwritten logic and return
+if !FEATURE_PAL
+    JSL $8B90EF
+else
     JSL $8B9146
+endif
     JML $808459
 }
 

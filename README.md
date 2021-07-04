@@ -12,8 +12,3 @@ This page hosts the source material for the Super Metroid Practice Hack. It is i
 ## Which rom should I use?
 
 The build script will create two IPS patch files for the practice hack. The patch that features "sd2snes" in the filename will have the built-in savestate feature enabled. This is only intended for use with the SD2SNES cartridge and will likely cause crashes if used with Everdrives and most emulators (including Virtual Console). The Super NT is compatible, although it may require a firmware update. You will need an IPS patcher utility, such as Lunar IPS or Floating IPS, to apply the patch to your vanilla SM rom.
-
-## Known Issues:
-
-* Loading a preset while in a loading transition can sometimes cause Samus to freeze when exiting the next door.
-* PAL region roms are no longer supported in the main branch. See https://github.com/InsaneFirebat/sm_practice_hack/tree/PAL-v1.43 for the latest working PAL revision.

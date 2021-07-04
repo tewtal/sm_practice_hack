@@ -16,6 +16,14 @@ macro cm_numfield(title, addr, start, end, increment, jsrtarget)
     db #$28, "<title>", #$FF
 endmacro
 
+macro cm_numfield_word(title, addr, start, end, increment, jsrtarget)
+    dw !ACTION_NUMFIELD_WORD
+    dl <addr>
+    dw <start>, <end>, <increment>
+    dw <jsrtarget>
+    db #$28, "<title>", #$FF
+endmacro
+
 macro cm_numfield_hex(title, addr, start, end, increment, jsrtarget)
     dw !ACTION_NUMFIELD_HEX
     dl <addr>
@@ -26,6 +34,14 @@ endmacro
 
 macro cm_toggle(title, addr, value, jsrtarget)
     dw !ACTION_TOGGLE
+    dl <addr>
+    db <value>
+    dw <jsrtarget>
+    db #$28, "<title>", #$FF
+endmacro
+
+macro cm_toggle_inverted(title, addr, value, jsrtarget)
+    dw !ACTION_TOGGLE_INVERTED
     dl <addr>
     db <value>
     dw <jsrtarget>
@@ -146,7 +162,7 @@ MainMenu:
     dw #mm_goto_rngmenu
     dw #mm_goto_ctrlsmenu
     dw #$0000
-    %cm_header("SM PRACTICE HACK 2.2.3")
+    %cm_header("SM PRACTICE HACK 2.2.4")
 
 mm_goto_equipment:
     %cm_submenu("Equipment", #EquipmentMenu)
@@ -340,45 +356,51 @@ eq_goto_togglebeams:
     %cm_submenu("Toggle Beams", #ToggleBeamsMenu)
 
 eq_setetanks:
-    %cm_numfield("Energy Tanks", !ram_cm_etanks, 0, 14, 1, .routine)
-    .routine
-        TAX
-        LDA #$0063
-        -
-        DEX : BMI +
-        CLC : ADC #$0064
-        BRA -
-        +
-        STA $09C4 : STA $7E09C2
-        RTS
-
-eq_setreserves:
-    %cm_numfield("Reserve Tanks", !ram_cm_reserve, 0, 4, 1, .routine)
+    %cm_numfield("Energy Tanks", !ram_cm_etanks, 0, 21, 1, .routine)
     .routine
         TAX
         LDA #$0000
-        -
-        DEX : BMI +
+        CPX #$000F : BPL .loop
+        LDA #$0063
+      .loop
+        DEX : BMI .endloop
         CLC : ADC #$0064
-        BRA -
-        +
-        STA $09D4 : STA $09D6
+        BRA .loop
+      .endloop
+        STA $09C4 : STA $09C2
+        RTS
+
+eq_setreserves:
+    %cm_numfield("Reserve Tanks", !ram_cm_reserve, 0, 7, 1, .routine)
+    .routine
+        TAX
+        LDA #$0000
+      .loop
+        DEX : BMI .endloop
+        CLC : ADC #$0064
+        BRA .loop
+      .endloop
+        STA $09D6 : STA $09D4
         RTS
 
 eq_setmissiles:
-    %cm_numfield("Missiles", $7E09C8, 0, 230, 5, .routine)
+    %cm_numfield_word("Missiles", $7E09C8, 0, 325, 5, .routine)
     .routine
         LDA $09C8 : STA $09C6 ; missiles
         RTS
 
 eq_setsupers:
-    %cm_numfield("Super Missiles", $7E09CC, 0, 50, 5, .routine)
+    %cm_numfield("Super Missiles", $7E09CC, 0, 65, 5, .routine)
     .routine
         LDA $09CC : STA $09CA ; supers
         RTS
 
 eq_setpbs:
-    %cm_numfield("Power Bombs", $7E09D0, 0, 50, 5, .routine)
+if !FEATURE_PAL
+    %cm_numfield("Power Bombs", $7E09D0, 0, 70, 5, .routine)
+else
+    %cm_numfield("Power Bombs", $7E09D0, 0, 65, 5, .routine)
+endif
     .routine
         LDA $09D0 : STA $09CE ; pbs
         RTS
@@ -525,10 +547,16 @@ ti_speedbooster:
     %cm_toggle_bit("Speed Booster", $7E09A4, #$2000, #0)
 
 ti_grapple:
-    %cm_toggle_bit("Grapple", $7E09A2, #$4000, #0)
+    %cm_toggle_bit("Grapple", $7E09A2, #$4000, .routine)
+    .routine
+        LDA $09A4 : EOR #$4000 : STA $09A4
+        RTS
 
 ti_xray:
-    %cm_toggle_bit("X-Ray", $7E09A2, #$8000, #0)
+    %cm_toggle_bit("X-Ray", $7E09A2, #$8000, .routine)
+    .routine
+        LDA $09A4 : EOR #$8000 : STA $09A4
+        RTS
 
 
 ; ------------------
@@ -1201,7 +1229,7 @@ ih_room_counter:
     db #$FF
 
 ih_lag:
-    %cm_numfield("Artificial lag", !sram_artificial_lag, 0, 64, 1, #0)
+    %cm_numfield("Artificial Lag", !sram_artificial_lag, 0, 64, 1, #0)
 
 ih_ram_watch:
     %cm_submenu("Customize RAM Watch", #RAMWatchMenu)
@@ -1318,15 +1346,25 @@ action_HUD_ramwatch:
 ; ----------
 
 GameMenu:
-    dw #game_japanesetext
+    dw #game_alternatetext
     dw #game_moonwalk
     dw #game_iconcancel
     dw #game_debugmode
+    dw #game_debugbrightness
+if !FEATURE_PAL
+    dw #game_paldebug
+endif
+    dw #game_minimap
+    dw #game_clear_minimap
     dw #$0000
     %cm_header("GAME")
 
-game_japanesetext:
+game_alternatetext:
+if !FEATURE_PAL
+    %cm_toggle("French Text", $7E09E2, #$0001, #0)
+else
     %cm_toggle("Japanese Text", $7E09E2, #$0001, #0)
+endif
 
 game_moonwalk:
     %cm_toggle("Moon Walk", $7E09E4, #$0001, #0)
@@ -1336,6 +1374,36 @@ game_iconcancel:
 
 game_debugmode:
     %cm_toggle("Debug Mode", $7E05D1, #$0001, #0)
+
+game_debugbrightness:
+    %cm_toggle("Debug CPU Brightness", $7E0DF4, #$0001, #0)
+
+if !FEATURE_PAL
+game_paldebug:
+    %cm_toggle_inverted("PAL Debug Movement", $7E09E6, #$0001, #0)
+endif
+
+game_minimap:
+    %cm_toggle("Minimap", !ram_minimap, #$0001, #0)
+
+game_clear_minimap:
+    %cm_jsr("Clear Minimap", .clear_minimap, #$0000)
+
+  .clear_minimap
+    LDA #$0000 : STA !ram_map_counter : STA $7E0789
+    STA $7ED908 : STA $7ED90A : STA $7ED90C : STA $7ED90E
+    LDX #$00FE
+  .clear_minimap_loop
+    STA $7ECD52,X : STA $7ECE52,X
+    STA $7ECF52,X : STA $7ED052,X
+    STA $7ED152,X : STA $7ED252,X
+    STA $7ED352,X : STA $7ED452,X
+    STA $7ED91C,X : STA $7EDA1C,X
+    STA $7EDB1C,X : STA $7EDC1C,X
+    STA $7EDD1C,X : STA $7E07F7,X
+    DEX : DEX : BPL .clear_minimap_loop
+    RTS
+
 
 ; ----------
 ; RNG menu
@@ -1352,6 +1420,7 @@ RngMenu:
     dw #rng_draygon_rng_right
     dw #rng_draygon_rng_left
     dw #rng_crocomire_rng
+    dw #rng_kraid_rng
     dw #$0000
     %cm_header("BOSS RNG CONTROL")
 
@@ -1437,6 +1506,16 @@ rng_crocomire_rng:
     db #$28, "     RANDOM", #$FF
     db #$28, "       STEP", #$FF
     db #$28, "      SWIPE", #$FF
+    db #$FF
+
+rng_kraid_rng:
+    dw !ACTION_CHOICE
+    dl #!ram_kraid_rng
+    dw #$0000
+    db #$28, "Kraid Claw RNG", #$FF
+    db #$28, "     RANDOM", #$FF
+    db #$28, "      LAGGY", #$FF
+    db #$28, "    LAGGIER", #$FF
     db #$FF
 
 

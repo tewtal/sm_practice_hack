@@ -115,6 +115,9 @@ status_shinetune:
     ; Samus has reached fourth gear and is ready to charge the shinespark by pressing down
     ; When this happens, the gear resets to zero, so check for that
     LDA $0B3F : AND #$00FF : CMP !ram_dash_counter : BEQ .chargespark : STA !ram_dash_counter
+
+    ; Skip drawing if minimap on
+    LDA !ram_minimap : BNE .reset
     LDA !ram_shinetune_late_4 : LDX #$00C0 : JSR Draw4
 
   .reset
@@ -290,6 +293,13 @@ status_shinetune:
     LDA !ram_shine_counter : STA !ram_shinetune_early_3
     RTS
 
+  .nodash3minimap
+    ; We let go of dash early, but also we have the minimap displayed
+    LDA !IH_LETTER_E : STA $7EC6B8
+    LDA #$0013 : SEC : SBC !ram_shine_counter
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC6BA
+    RTS
+
   .nodash3
     ; Gear 3, not holding dash, check if we were still holding dash from the last transition
     CMP !ram_shine_dash_held_late : BNE .nodashheldlate3
@@ -299,6 +309,7 @@ status_shinetune:
 
     ; We were, which means we let go of dash early
     LDA #$00FF : STA !ram_dash_counter
+    LDA !ram_minimap : BNE .nodash3minimap
     LDA #$0012 : SEC : SBC !ram_shinetune_early_4 : LDX #$00B8 : JSR Draw3
     LDA !IH_LETTER_E : STA $7EC6BE
     LDA #$0013 : SEC : SBC !ram_shine_counter
@@ -324,26 +335,40 @@ status_shinetune:
   .donecheck3
     RTS
 
+  .checklatemiss3minimap
+    LDA !IH_LETTER_L : STA $7EC6B8
+    LDA !IH_LETTER_X : STA $7EC6BA
+    RTS
+
   .checklatemiss3
     ; Arbitrary give up waiting after 31 frames (13 past the time we should have pressed dash)
     LDA !ram_shine_counter : CMP #$001F : BMI .donecheck3
     LDA #$00FF : STA !ram_dash_counter
-    LDA !IH_LETTER_L : STA $7EC6BA
+    LDA !ram_minimap : BNE .checklatemiss3minimap
     LDA !IH_LETTER_X : STA $7EC6BC
-    BRA .clear4
+    BRA .checklateprint3
 
   .checklate3
     ; Gear 3, pressed dash too late to reach gear 4
     LDA #$00FF : STA !ram_dash_counter
-    LDA !IH_LETTER_L : STA $7EC6BA
+    LDA !ram_minimap : BNE .checklate3minimap
     LDA !ram_shine_counter : SEC : SBC #$0012
     ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC6BC
+
+  .checklateprint3
+    LDA !IH_LETTER_L : STA $7EC6BA
     BRA .clear4
 
   .setnextearly3
     ; Gear 3, just pressed dash when trying to reach gear 4
     LDA !ram_shine_counter : CMP #$0012 : BPL .checklate3
     LDA !ram_shine_counter : STA !ram_shinetune_early_4
+    RTS
+
+  .checklate3minimap
+    LDA !IH_LETTER_L : STA $7EC6B8
+    LDA !ram_shine_counter : SEC : SBC #$0012
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC6BA
     RTS
 
   .clear1
@@ -353,13 +378,23 @@ status_shinetune:
     LDA !IH_BLANK : STA $7EC696 : STA $7EC698 : STA $7EC6AE : STA $7EC6B0 : STA $7EC6B2
 
   .clear3
+    LDA !ram_minimap : BNE .clear3minimap
     LDA !IH_BLANK : STA $7EC6B4 : STA $7EC6B6 : STA $7EC6B8 : STA $7EC6BA : STA $7EC6BC
 
   .clear4
     LDA !IH_BLANK : STA $7EC6BE : STA $7EC6C0 : STA $7EC6C2 : STA $7EC6C4 : STA $7EC6C6
     RTS
 
+  .clear3minimap
+    LDA !IH_BLANK : STA $7EC6B4 : STA $7EC6B6 : STA $7EC6B8 : STA $7EC6BA
+    RTS
+
+  .drawearly4minimap
+    LDA #$0012 : SEC : SBC !ram_shinetune_early_4 : JSR Draw2
+    RTS
+
   .drawearly4
+    LDA !ram_minimap : BNE .drawearly4minimap
     LDA #$0012 : SEC : SBC !ram_shinetune_early_4 : JSR Draw3
     BRA .clear4
 
@@ -540,7 +575,7 @@ status_spikesuit:
 
 status_lagcounter:
 {
-    LDA !ram_lag_counter : CMP !ram_last_lag_counter : BEQ .done : STA !ram_last_lag_counter
+    LDA !ram_vcounter_data : AND #$00FF
     %a8() : STA $211B : XBA : STA $211B : LDA #$64 : STA $211C : %a16()
     LDA $2134 : STA $4204
     %a8() : LDA #$E1 : STA $4206 : %a16()

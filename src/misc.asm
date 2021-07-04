@@ -14,11 +14,15 @@ endif
 ; Skip intro
 ; $82:EEDF A9 95 A3    LDA #$A395
 org $82EEDF
+if !FEATURE_PAL
+    LDA #$C065
+else
     LDA #$C100
+endif
 
 ; Skips the waiting time after teleporting
-org $90E870
-    JMP $E898
+org $90E877
+    BRA $1F
 
 
 ; Adds frames when unpausing (nmi is turned off during vram transfers)
@@ -30,6 +34,22 @@ org $80A16B
 ; $82:8BB3 22 69 91 A0 JSL $A09169[$A0:9169]  ; Handles Samus getting hurt?
 org $828BB3
     JSL gamemode_end
+
+
+; Replace unnecessary logic checking controller input to toggle debug CPU brightness
+; with logic to collect the v-counter data
+org $828AB1
+    %a8() : LDA $4201 : ORA #$80 : STA $4201 : %ai16()
+    LDA $2137 : LDA $213D : STA !ram_vcounter_data
+
+    ; For efficiency, re-implement the debug brightness logic here
+    LDA $0DF4 : BEQ .skip_debug_brightness
+    %a8() : LDA $51 : AND #$F0 : ORA #$05 : STA $2100 : %a16()
+    BRA .skip_debug_brightness
+
+warnpc $828ADD
+org $828ADD       ; Resume original logic
+    .skip_debug_brightness
 
 
 ; $80:8F24 9C F6 07    STZ $07F6  [$7E:07F6]  ;/
@@ -72,6 +92,7 @@ hook_unpause:
     LDA !ram_seg_rt_minutes : INC : STA !ram_seg_rt_minutes
 
   .done
+    ; Replace overwritten logic to enable NMI
     JSL $80834B
     RTL
 }
@@ -79,19 +100,25 @@ hook_unpause:
 
 gamemode_end:
 {
+   ; overwritten logic
+if !FEATURE_PAL
+    JSL $A09179
+else
     JSL $A09169
-    %a8() : LDA $4201 : ORA #$80 : STA $4201 : %a16()
-    LDA $2137 : LDA $213D : AND #$00FF : STA !ram_lag_counter
+endif
 
-    ; If mini map is disabled, we ignore artificial lag
-    LDA $05F7 : BNE +
+    ; If minimap is disabled or shown, we ignore artificial lag
+    LDA $05F7 : BNE .endlag
+    LDA !ram_minimap : BNE .endlag
 
-    ; Artificial lag. 41 loops ~= 1 scanline
-    LDA !sram_artificial_lag : BEQ + : ASL #4 : TAX
-    {
-        - DEX : BNE -
-    }
-    +
+    ; Artificial lag, multiplied by 16 to get loop count
+    ; Each loop takes 5 clock cycles (assuming branch taken)
+    ; For reference, 41 loops ~= 1 scanline
+    LDA !sram_artificial_lag : BEQ .endlag
+    ASL #4 : TAX
+  .lagloop
+    DEX : BNE .lagloop
+  .endlag
     RTL
 }
 
