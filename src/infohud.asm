@@ -374,12 +374,84 @@ ih_update_hud_code:
     ; Bank 80
     PEA $8080 : PLB : PLB
 
-    LDA !ram_minimap : BEQ .start_update
+    LDA !ram_minimap : BNE .minimap_hud
+    BRL .start_update
 
-    ; Map visible, so draw map counter unless shinetune is enabled
-    LDA !sram_display_mode : CMP #$0007 : BEQ .minimap_end
-    LDA !ram_map_counter : LDX #$00B0 : JSR Draw4
-    LDA !IH_BLANK : STA $7EC6B8 : STA $7EC6BA
+  .minimap_hud
+    ; Map visible, so draw map counter over item%
+    LDA !ram_map_counter : LDX #$0014 : JSR Draw3
+    LDA !sram_display_mode : CMP #$0007 : BNE .minimap_roomtimer
+    BRL .map_doorlag
+
+  .minimap_roomtimer
+    LDA !sram_frame_counter_mode : BNE .ingameRoomMap
+
+    ; Real time with minimap
+    {
+        ; Divide real time by 60/50, save seconds, frame seperately
+        {
+            STZ $4205
+            LDA !ram_last_realtime_room : STA $4204
+            %a8()
+            if !FEATURE_PAL
+                LDA #$32
+            else
+                LDA #$3C
+            endif
+            STA $4206
+            PHA : PLA : PHA : PLA
+            %a16()
+            LDA $4214 : STA !ram_tmp_1
+            LDA $4216 : STA !ram_tmp_2
+        }
+        ; Draw seconds
+        LDA !ram_tmp_1 : LDX #$00B0 : JSR Draw2
+
+        ; Draw decimal seperator
+        LDA !IH_DECIMAL : STA $7EC6B4
+
+        ; Draw frames
+        LDA !ram_tmp_2 : ASL : TAX
+        LDA HexToNumberGFX1,X : STA $7EC6B6
+        LDA HexToNumberGFX2,X : STA $7EC6B8
+
+        BRA .map_doorlag
+    }
+
+    ; Room time with minimap
+    .ingameRoomMap
+    {
+        ; Divide game time by 60/50, save seconds, frames seperately
+        {
+            STZ $4205
+            LDA !ram_last_gametime_room : STA $4204
+            %a8()
+            if !FEATURE_PAL
+                LDA #$32
+            else
+                LDA #$3C
+            endif
+            STA $4206
+            PHA : PLA : PHA : PLA
+            %a16()
+            LDA $4214 : STA !ram_tmp_3
+            LDA $4216 : STA !ram_tmp_4
+        }
+        ; Draw seconds
+        LDA !ram_tmp_3 : LDX #$0080 : JSR Draw2
+
+        ; Draw decimal seperator
+        LDA !IH_DECIMAL : STA $7EC6B4
+
+        ; Draw frames
+        LDA !ram_tmp_4 : ASL : TAX
+        LDA HexToNumberGFX1,X : STA $7EC6B6
+        LDA HexToNumberGFX2,X : STA $7EC6B8
+    }
+
+  .map_doorlag
+    ; Lag
+    LDA !ram_last_door_lag_frames : LDX #$0054 : JSR Draw3
 
   .minimap_end
     BRL .end
@@ -416,8 +488,8 @@ ih_update_hud_code:
 
         ; Draw frames
         LDA !ram_tmp_2 : ASL : TAX
-        LDA HexToNumberGFX1, X : STA $7EC644
-        LDA HexToNumberGFX2, X : STA $7EC646
+        LDA HexToNumberGFX1,X : STA $7EC644
+        LDA HexToNumberGFX2,X : STA $7EC646
 
         BRA .pct
     }
@@ -450,8 +522,8 @@ ih_update_hud_code:
 
         ; Draw frames
         LDA !ram_tmp_4 : ASL : TAX
-        LDA HexToNumberGFX1, X : STA $7EC644
-        LDA HexToNumberGFX2, X : STA $7EC646
+        LDA HexToNumberGFX1,X : STA $7EC644
+        LDA HexToNumberGFX2,X : STA $7EC646
     }
 
     ; Draw Item percent

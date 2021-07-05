@@ -41,6 +41,7 @@ export class Changelog extends Component {
                                                 <li>Added minimap option, debug CPU brightness option, Kraid claw RNG. (2.2.4)</li>
                                                 <li>Allow GT Max% equipment levels. (2.2.4)</li>
                                                 <li>CPU% calcalation now includes the artifical lag. (2.2.4)</li>
+                                                <li>Restored room timers while minimap is enabled. (2.2.5)</li>
                                             </ul>
                                         </CardBody>
                                     </Card>
