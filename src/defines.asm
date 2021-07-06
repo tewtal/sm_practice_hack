@@ -36,6 +36,7 @@
 !ram_vcounter_data = $7FFB8C
 !ram_minimap = $7FFB98
 !ram_shot_timer = $7FFB9E
+!ram_magnetstairs = $7FFBA6
 
 !ram_kraid_rng = $7FFB78
 !ram_phantoon_rng_3 = $7FFB7A
