@@ -1,0 +1,2059 @@
+;=======================================================
+; Pseudo-patch converting NTSC to PAL
+;
+; This pseudo-patch references insert and remove
+; which aren't valid operations in asar
+;=======================================================
+
+;=======================================================
+; Bank 80
+;=======================================================
+
+; Escape timer X position math
+org $809E5B
+    LDA #$01C0    ; previously LDA #$00E0
+
+; Escape timer Y position math
+org $809E6E
+    LDA #$FF19    ; previously LDA #$FF3F
+
+; Escape timer centiseconds table
+org $809EEC
+    db #$01,#$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02
+    db #$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02
+    db #$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02
+    db #$01,#$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02
+    db #$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02
+    db #$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02
+    db #$01,#$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02
+    db #$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02,#$02
+
+; Tilemap for failed SRAM mapping check
+org $80BC37
+    dw ...
+org $80BC47
+
+; Freespace
+org $80CD8E
+
+; Game header
+org $80FFC0
+
+; Country code and checksum
+org $80FFD9
+    db #$02,#$01,#$00,#$04,#$84,#$FB,#$7B
+
+;=======================================================
+; Bank 81
+;=======================================================
+
+; Freespace
+org $81FF60
+
+;=======================================================
+; Bank 82
+;=======================================================
+
+; Cinematic function (ceres exploding)
+org $8283E7
+    LDA #$C080    ; previously LDA #$C11B
+
+; Cinematic function (ceres exploding)
+org $8284B5
+    LDA #$C080    ; previously LDA #$C11B
+
+; Cinematic function (ending and credits)
+org $828506
+    LDA #$D3F7    ; previously LDA #$D480
+
+; Cinematic function (title screen intro)
+org $828615
+    LDA #$9B38    ; previously LDA #$9B68
+
+; Cinematic function (title screen)
+org $828627
+    LDA #$9A17    ; previously LDA #$9A47
+
+; Demo data
+org $828774
+    dw ...
+org $828920
+
+; Cinematic function (title screen intro)
+org $828AED
+    LDA #$9B38    ; previously LDA #$9B68
+
+; Check game time frames for overflow
+org $82DBBC
+    CMP #$0032    ; previously CMP #$003C
+
+; Downwards elevator delay timer
+org $82E18E
+    LDA #$0028    ; previously LDA #$0030
+
+; Loading game options menu tilemap (options screen)
+org $82EC6B
+    LDA #$8B32    ; previously LDA #$8DF4
+
+; Loading game options menu tilemap (English/German controller settings)
+org $82EC7C
+    LDA #$8CD0    ; previously LDA #$8FCD
+
+; Loading game options menu tilemap (Japanese/French controller settings)
+org $82EC8D
+    LDA #$8EC7    ; previously LDA #$91C4
+
+; Loading game options menu tilemap (English/German special settings)
+org $82EC9E
+    LDA #$9090    ; previously LDA #$938D
+
+; Loading game options menu tilemap (Japanese/French special settings)
+org $82ECAF
+    LDA #$923D    ; previously LDA #$953A
+
+; Swapping between languages, determines how many bytes are updated
+org $82EDF5
+    LDY #$0028    ; previously LDY #$0018
+
+; Swapping between languages, determines how many bytes are updated
+org $82EE01
+    LDY #$0028    ; previously LDY #$0018
+
+; Swapping between languages, determines how many bytes are updated
+org $82EE27
+    LDY #$0028    ; previously LDY #$0018
+
+; Swapping between languages, determines how many bytes are updated
+org $82EE33
+    LDY #$0028    ; previously LDY #$0018
+
+; Cinematic function (ceres exploding)
+org $82EED1
+    LDA #$C080    ; previously LDA #$C11B
+
+; Cinematic function (intro)
+org $82EEDF
+    LDA #$A365    ; previously LDA #$A395
+
+org $82EF46
+    BEQ $32       ; previously BEQ $37
+
+org $82EF4B
+    BNE $2F       ; previously BNE $34
+
+;======== Remove 5 bytes ========
+; Check and branch if Japanese language
+org $82EF4D
+                  ; previously LDA $09E2
+                  ; previously BNE $11
+org $82EF4D  <--  org $82EF52
+
+org $82EF7A  <--  org $82EF7F
+    BRA $3C       ; previously BRA $41
+
+;======== Remove 5 bytes ========
+; Check and branch if Japanese language
+org $82EF7C  <--  org $82EF81
+                  ; previously LDA $09E2
+                  ; previously BNE $11
+org $82EF7C  <--  org $82EF86
+
+; Freespace
+org $82F705  <--  org $82F70F
+
+;=======================================================
+; Bank 83
+;=======================================================
+
+; Room FX, Parlor, Y velocity
+org $838016
+    dw #$FF70     ; previously dw #$FF98
+
+; Room FX, Climb, Y velocity and timer
+org $838026
+    dw #$FF70     ; previously dw #$FF98
+    db #$1E       ; previously db #$28
+
+; Room FX, Bomb Torizo, Y velocity and timer
+org $838036
+    dw #$FFEE     ; previously dw #$FFF0
+    db #$28       ; previously db #$30
+
+; Room FX, Climb Escape, Y velocity and timer
+org $838066
+    dw #$FF6A     ; previously dw #$FF80
+    db #$19       ; previously db #$20
+
+; Room FX, Speed Booster Hall, timer
+org $8385E8
+    db #$C8       ; previously db #$F0
+
+; Room FX, Speed Booster, timer
+org $838608
+    db #$19       ; previously db #$20
+
+; Room FX, Volcano, Y velocity and timer
+org $838656
+    dw #$FFF4     ; previously dw #$FFF6
+    db #$32       ; previously db #$40
+
+; Room FX, Rising Tide, Base Y position
+org $8386D2
+    dw #$00F0     ; previously dw #$0108
+
+; Room FX, Rising Tide, Y velocity and timer
+org $8386D6
+    dw #$FFD0     ; previously dw #$FFE0
+    db #$32       ; previously db #$40
+
+; Room FX, Pillars, Y velocity and timer
+org $838812
+    dw #$FFDC     ; previously dw #$FFE0
+    db #$41       ; previously db #$50
+
+; Room FX, WRITG, Timer
+org $838834
+    db #$19       ; previously db #$20
+
+; Room FX, Amphitheatre, Y velocity and timer
+org $838852
+    dw #$FF6A     ; previously dw #$FF80
+    db #$50       ; previously db #$60
+
+; Room FX, Metroid 1, Timer
+org $83A01C
+    db #$0A       ; previously db #$10
+
+; Room FX, Metroid 3, Timer
+org $83A03C
+    db #$0A       ; previously db #$10
+
+; Room FX, Mother Brain, Timer
+org $83A0AC
+    db #$0A       ; previously db #$10
+
+; Room FX, Mother Brain 1, Y velocity and timer
+org $83A0BA
+    dw #$FFEE     ; previously dw #$FFF0
+    db #$0A       ; previously db #$10
+
+; Room FX, Mother Brain 2, Y velocity and timer
+org $83A0BA
+    dw #$0036     ; previously dw #$0030
+    db #$0A       ; previously db #$10
+
+; Room FX, Tourian Escape 4, Timer
+org $83A13C
+    db #$32       ; previously db #$40
+
+; Freespace
+org $83AD66
+
+;=======================================================
+; Bank 84
+;=======================================================
+
+; Enemy projectile (save station electricity)
+org $848D02
+    LDY $E70E     ; previously LDY $E6D2
+
+; PLM, Save Station, Timer
+org $84AFF9
+    db #$10       ; previously db #$15
+
+; Enemy projectile (unused Bomb Torizo)
+org $84B3E3
+    LDY $A9B3     ; previously LDY $A977
+
+; Quicksand max vertical velocity (without and with gravity suit)
+org $84B493
+    dw #$02A0     ; previously dw #$0280
+    dw #$03A0     ; previously dw #$0380
+
+; Quicksand collision reaction constants (without and with gravity suit)
+org $84B53D
+    dw #$0028     ; previously dw #$0030
+    dw #$0028     ; previously dw #$0030
+
+;======== Insert 6 bytes ========
+; PLM, Maridia Tube break, adds draw commands
+; between power bomb and checking if player moved
+org $84D4E8
+    dw $86CA      ;
+    dw #$0030     ;
+    dw $98D1      ;
+org $84D4EA  <--  org $84D4E8
+
+; Freespace
+org $84EFD9  <--  org $84E4D3
+
+;=======================================================
+; Bank 85
+;=======================================================
+
+; Freespace
+org $849643
+
+;=======================================================
+; Bank 86
+;=======================================================
+
+;======== Insert 15 bytes ========
+; Pre-instruction, Pirate / MB laser move left
+org $86A062
+    LDA $1A27,X   ;
+    CLC           ;
+    ADC #$6666    ;
+    STA $1A27,X   ;
+    BCC $03       ;
+    DEC $1A4B,X   ;
+org $86A071  <--  org $86A062
+
+org $86A077  <--  org $86A068
+    BNE $15       ; previously BNE $06
+
+;======== Insert 15 bytes ========
+; Pre-instruction, Pirate / MB laser move left
+org $86A07F  <--  org $86A070
+    LDA $1A27,X   ;
+    CLC           ;
+    ADC #$6666    ;
+    STA $1A27,X   ;
+    BCC $03       ;
+    DEC $1A4B,X   ;
+org $86A08E  <--  org $86A070
+
+;======== Insert 15 bytes ========
+; Pre-instruction, Pirate / MB laser move right
+org $86A09E  <--  org $86A080
+    LDA $1A27,X   ;
+    CLC           ;
+    ADC #$6666    ;
+    STA $1A27,X   ;
+    BCC $03       ;
+    INC $1A4B,X   ;
+org $86A0AD  <--  org $86A080
+
+org $86A0B3  <--  org $86A086
+    BNE $15       ; previously BNE $06
+
+;======== Insert 15 bytes ========
+; Pre-instruction, Pirate / MB laser move right
+org $86A0BB  <--  org $86A08E
+    LDA $1A27,X   ;
+    CLC           ;
+    ADC #$6666    ;
+    STA $1A27,X   ;
+    BCC $03       ;
+    INC $1A4B,X   ;
+org $86A0CA  <--  org $86A08E
+
+; Freespace
+org $86F4E2  <--  org $86F4A6
+
+;=======================================================
+; Bank 87
+;=======================================================
+
+; Freespace
+org $87C964
+
+;=======================================================
+; Bank 88
+;=======================================================
+
+; Freespace
+org $88EE32
+
+;=======================================================
+; Bank 89
+;=======================================================
+
+; Freespace
+org $89AEFD
+
+;=======================================================
+; Bank 8A
+;=======================================================
+
+; Freespace
+org $8AE980
+
+;=======================================================
+; Bank 8B
+;=======================================================
+
+;======== Insert 52 bytes ========
+; Prepare transfer of data into VRAM? (PAL only)
+org $8B8D23
+    PHP           ;
+    SEP #$30      ;
+    LDA #$7F      ;
+    STA $02       ;
+    REP #$30      ;
+    PHX           ;
+    PHY           ;
+    LDY #$0000    ;
+    LDX #$0000    ;
+    LDA $00,Y     ;
+    CMP #$002F    ;
+    BEQ $09       ;
+    ORA #$2000    ;
+    STA $7E3600,X ;
+    BRA $07       ;
+    LDA #$3029    ;
+    STA $7E3600,X ;
+    INY           ;
+    INY           ;
+    INX           ;
+    INX           ;
+    CPX $12       ;
+    BMI $E1       ;
+    PLY           ;
+    PLX           ;
+    PLP           ;
+    RTS           ;
+org $8B8D57  <--  org $8B8D23
+
+;======== Insert 52 bytes ========
+; Prepare transfer of data into VRAM? (PAL only)
+org $8B8D57  <--  org $8B8D23
+    PHP           ;
+    SEP #$30      ;
+    LDA #$7F      ;
+    STA $02       ;
+    REP #$30      ;
+    PHX           ;
+    PHY           ;
+    LDY #$0000    ;
+    LDX #$0000    ;
+    LDA $00,Y     ;
+    CMP #$002F    ;
+    BEQ $09       ;
+    ORA #$2000    ;
+    STA $7E3680,X ;
+    BRA $07       ;
+    LDA #$3029    ;
+    STA $7E3680,X ;
+    INY           ;
+    INY           ;
+    INX           ;
+    INX           ;
+    CPX $12       ;
+    BMI $E1       ;
+    PLY           ;
+    PLX           ;
+    PLP           ;
+    RTS           ;
+org $8B8D8B  <--  org $8B8D23
+
+;======== Remove 192 bytes ========
+; Prepare transfer of data into VRAM? (NTSC only)
+org $8B8D8E  <--  org $8B8D26
+                  ; previously db ...
+org $8B8D8E  <--  org $8B8DE6
+
+;======== Insert 1 byte ========
+; Prepare transfer of data into VRAM?
+org $8B8DB4  <--  org $8B8E0C
+    PLP           ;
+org $8B8DBE  <--  org $8B8E0C
+
+;======== Insert 39 bytes ========
+; Handle cinematic BG objects without Samus eyes
+org $8B9602  <--  org $8B9659
+    PHP           ;
+    REP #$30      ;
+    BIT $19F1     ;
+    BPL $1D       ;
+    LDX #$0006    ;
+    STX $19ED     ;
+    LDA $19CD,X   ;
+    BEQ $06       ;
+    JSR $9629     ;
+    LDX $19ED     ;
+    DEX           ;
+    DEX           ;
+    BPL $EE       ;
+    BIT $19F3     ;
+    BPL $03       ;
+    JSR $87A0     ;
+    PLP           ;
+    RTS           ;
+org $8B9629  <--  org $8B9659
+
+;======== Insert 22 bytes ========
+; Cinematic function, intro, initialization
+org $8BA54D  <--  org $8BA57D
+    LDA $90E2     ;
+    BNE $11       ;
+    LDX #$00FE    ;
+    LDA $8CD8CF,X ;
+    STA $7E3000,X ;
+    DEX           ;
+    DEX           ;
+    BPL $F4       ;
+    BRA $0F       ;
+org $8BA563  <--  org $8BA57D
+
+;======== Remove 5 bytes ========
+; Cinematic function, intro, drawing
+org $8BA5B4  <--  org $8BA5CE
+                  ; previously LDA $09E2
+                  ; previously BEQ $24
+org $8BA5B4  <--  org $8BA5D3
+
+;======== Insert 20 bytes ========
+; Cinematic function, intro, queue music
+org $8BA619  <--  org $8BA638
+    LDA $90E2     ;
+    BNE $0F       ;
+    LDX #$00FE    ;
+    LDA $8CD9CF,X ;
+    STA $7E3000,X ;
+    DEX           ;
+    DEX           ;
+    BPL $F4       ;
+org $8BA62D  <--  org $8BA638
+
+org $8BA632  <--  org $8BA63D
+    BCS $35       ; previously BCS $0C
+
+;======== Insert 41 bytes ========
+; Cinematic function, intro, wait for music queue
+org $8BA640  <--  org $8BA64B
+    LDA $90E2     ;
+    BNE $24       ;
+    LDX $0330     ;
+    LDA #$0100    ;
+    STA $D0,X     ;
+    INX           ;
+    INX           ;
+    LDA #$3000    ;
+    STA $D0,X     ;
+    INX           ;
+    INX           ;
+    SEP #$20      ;
+    LDA #$7E      ;
+    STA $D0,X     ;
+    REP #$20      ;
+    INX           ;
+    LDA #$4EE0    ;
+    STA $D0,X     ;
+    INX           ;
+    INX           ;
+    STX $0330     ;
+org $8BA669  <--  org $8BA64B
+
+;======== Remove 22 bytes ========
+; Cinematic function, intro, setup page 1
+org $8BA6E4  <--  org $8BA6C6
+                  ; previously LDX #$0600
+                  ; previously LDY #$0000
+                  ; LDA $A72B,Y
+                  ; STA $7E3000,X
+                  ; INY
+                  ; INY
+                  ; INX
+                  ; INX
+                  ; CPX #$0700
+                  ; BMI $F0
+org $8BA6E4  <--  org $8BA6DC
+
+;======== Insert 3 bytes ========
+; Cinematic function, intro, setup page 1
+org $8BA6EF  <--  org $8BA6E7
+    JSR $A775     ;
+org $8BA6F2  <--  org $8BA6E7
+
+;======== Remove 256 bytes ========
+; Cinematic function, intro, Japanese text data
+org $8BA736  <--  org $8BA72B
+                  ; dw ...
+org $8BA736  <--  org $8BA82B
+
+;======== Remove 66 bytes ========
+; Cinematic function, intro, blank out text tiles
+org $8BA779  <--  org $8BA86E
+    LDX #$00FE    ; previously PHY
+    LDA $3C29     ; previously LDX #$0000
+    STA $7E3600,X ; previously LDA $7F8290
+    DEX           ; previously STA $7E4000,X
+    DEX           ; previously LDA $7F8292
+    BPL $F8       ; previously STA $7E4002,X
+                  ; previously LDA $7F8294
+                  ; previously STA $7E4004,X
+                  ; previously LDA $7F8296
+                  ; previously STA $7E4006,X
+                  ; previously LDA $7F8298
+                  ; previously STA $7E4008,X
+                  ; previously LDA $7F829A
+                  ; previously STA $7E400A,X
+                  ; previously LDA $7F829C
+                  ; previously STA $7E400C,X
+                  ; previously LDA $7F829E
+                  ; previously STA $7E400E,X
+                  ; TXA
+                  ; CLC
+                  ; ADC #$0010
+                  ; TAX
+                  ; CPX #$0600
+                  ; BMI $B5
+                  ; PLY
+org $8BA779  <--  org $8BA8BE
+
+;======== Remove 5 bytes ========
+; Cinematic function, intro, page 1 creating text
+org $8BAD0F  <--  org $8BAE46
+                  ; previously LDA $09E2
+                  ; previously BEQ $0F
+org $8BAD0F  <--  org $8BAE4B
+
+org $8BAD25  <--  org $8BAE61
+    BEQ $16       ; previously BCS $0F
+
+;======== Remove 8 bytes ========
+; Cinematic function, intro, page 2 creating text
+org $8BAD3D  <--  org $8BAE79
+                  ; previously STZ $1BA1
+                  ; previously LDA $09E2
+                  ; previously BEQ $0F
+org $8BAD3D  <--  org $8BAE81
+
+;======== Insert 8 bytes ========
+; Cinematic function, intro, page 2 creating text
+org $8BAD4B  <--  org $8BAE8F
+    LDY $D378     ;
+    JSR $948D     ;
+    PLY           ;
+org $8BAD53  <--  org $8BAE8F
+
+;======== Insert 19 bytes ========
+; Cinematic function, intro, page 2 creating text
+org $8BAD55  <--  org $8BAE91
+    STZ $1BA1     ;
+    PHB           ;
+    PEA $8B00     ;
+    PLB           ;
+    PLB           ;
+    PHY           ;
+    LDY $D37E     ;
+    JSR $948D     ;
+    PLY           ;
+    PLB           ;
+    RTS           ;
+org $8BAD68  <--  org $8BAE91
+
+org $8BAD6E  <--  org $8BAE97
+    BEQ $16       ; previously BEQ $18
+
+;======== Insert 14 bytes ========
+; Cinematic function, intro, page 2 blink and wait
+org $8BAD7E  <--  org $8BAEA7
+    PLB           ;
+    LDA $AE52     ;
+    STA $1F51     ;
+    RTS           ;
+    PHB           ;
+    PEA $8B00     ;
+    PLB           ;
+    PLB           ;
+org $8BAD8C  <--  org $8BAEA7
+
+;======== Insert 1 byte ========
+; Cinematic function, intro, page 2 blink and wait
+org $8BAD94  <--  org $8BAEAF
+    LDY $D384     ; previously PLB
+    JSR $948D     ; previously RTS
+    PLY           ; previously LDA $AF6C
+    PLB           ; previously STA $1F51
+org $8BAD9D  <--  org $8BAEB7
+
+;======== Remove 5 bytes ========
+; Cinematic function, intro, page 3 creating text
+org $8BAF5D  <--  org $8BB077
+                  ; previously LDA $09E2
+                  ; previously BEQ $0F
+org $8BAF5D  <--  org $8BB07C
+
+org $8BAF73  <--  org $8BB092
+    BEQ $16       ; previously BEQ $18
+
+;======== Insert 14 bytes ========
+; Cinematic function, intro, page 3 blink and wait
+org $8BAF83  <--  org $8BB0A2
+    PLB           ;
+    LDA $AFD1     ;
+    STA $1F51     ;
+    RTS           ;
+    PHB           ;
+    PEA $8B00     ;
+    PLB           ;
+    PLB           ;
+org $8BAF91  <--  org $8BB0A2
+
+;======== Insert 1 byte ========
+; Cinematic function, intro, page 3 blink and wait
+org $8BAF99  <--  org $8BB0AA
+    LDY $D390     ; previously PLB
+    JSR $948D     ; previously RTS
+    PLY           ; previously LDA $B0F2
+    PLB           ; previously STA $1F51
+org $8BAFA2  <--  org $8BB0B2
+
+;======== Remove 5 bytes ========
+; Cinematic function, intro, page 4 creating text
+org $8BAFA6  <--  org $8BB0B6
+                  ; previously LDA $09E2
+                  ; previously BEQ $0F
+org $8BAFA6  <--  org $8BB0BB
+
+;======== Remove 5 bytes ========
+; Cinematic function, intro, page 4 blink and wait
+org $8BAFB9  <--  org $8BB0CE
+                  ; previously LDA $09E2
+                  ; previously BEQ $0F
+org $8BAFB9  <--  org $8BB0D3
+
+;======== Remove 7 bytes ========
+; Cinematic function, intro, page 4 blink and wait
+org $8BAFD1  <--  org $8BB0EB
+                  ; previously LDA $B123
+                  ; previously STA $1F51
+                  ; previously RTS
+org $8BAFD1  <--  org $8BB0F2
+
+;======== Remove 5 bytes ========
+; Cinematic function, intro, page 5 creating text
+org $8BB07D  <--  org $8BB19E
+                  ; previously LDA $09E2
+                  ; previously BEQ $0F
+org $8BB07D  <--  org $8BB1A3
+
+org $8BB093  <--  org $8BB1B9
+    BEQ $16       ; previously BEQ $18
+
+;======== Insert 14 bytes ========
+; Cinematic function, intro, page 5 blink and wait
+org $8BB0A3  <--  org $8BB1C9
+    PLB           ;
+    LDA $B0C3     ;
+    STA $1F51     ;
+    RTS           ;
+    PHB           ;
+    PEA $8B00     ;
+    PLB           ;
+    PLB           ;
+org $8BB0B1  <--  org $8BB1C9
+
+;======== Insert 1 byte ========
+; Cinematic function, intro, page 5 blink and wait
+org $8BB0B9  <--  org $8BB1D1
+    LDY $D3A8     ; previously PLB
+    JSR $948D     ; previously RTS
+    PLY           ; previously LDA $B1DA
+    PLB           ; previously STA $1F51
+org $8BB0C9  <--  org $8BB1D9
+
+;======== Remove 5 bytes ========
+; Cinematic function, intro, page 5 creating text
+org $8BB114  <--  org $8BB22B
+                  ; previously LDA $09E2
+                  ; previously BEQ $0F
+org $8BB114  <--  org $8BB230
+
+;======== Remove 549 bytes ========
+; Cinematic BG tilemap updates (NTSC only)
+org $8BB3CF  <--  org $8BB4EB
+                  ; previously db ...
+org $8BB3CF  <--  org $8BB710
+
+;======== Insert 678 bytes ========
+; Cinematic BG tilemap updates? (PAL only)
+org $8BB95F  <--  org $8BBCA0
+    db ...
+org $8BBC05  <--  org $8BBCA0
+
+;======== Insert 12 bytes ========
+; Cinematic unknown object definitions
+org $8BD2EE  <--  org $8BD389
+    db ...
+org $8BD372  <--  org $8BD401
+
+;======== Insert 6 bytes ========
+; Mode 7 alternate intro text
+org $8BD372  <--  org $8BD401
+    dw ...
+org $8BD3BA  <--  org $8BD443
+
+org $8BE6E4  <--  org $8BE76D
+    BEQ $11       ; previously BEQ $0F
+
+;======== Insert 17 bytes ========
+; Clear tilemap logic?
+org $8BE6F7  <--  org $8BE780
+    LDX #$00FE    ;
+    LDA $8CE20F,X ;
+    STA $7E35C0,X ;
+    DEX           ;
+    DEX           ;
+    BPL $F4       ;
+    PLX           ;
+    RTS           ;
+org $8BE708  <--  org $8BE780
+
+; Clear tilemap logic?
+org $8BE709  <--  org $8BE781
+    LDX #$00FE    ; previously LDX #$007E
+    LDA #$004F    ; previously LDA #$007F
+
+; Freespace
+org $8BF6E8  <--  org $8BF760
+
+;=======================================================
+; Bank 8C
+;=======================================================
+
+;======== Insert 60 bytes ========
+; Alternate text for "Planet Zebes", length followed by tiles (5 bytes per tile)
+org $8C968D
+    dw #$0018     ; previously #$000C
+    dw ...
+org $8C9707  <--  org $8C96CB
+
+; Intro, text page 1
+org $8CC3BF  <--  org $8CC383
+    dw ...
+org $8CC7D3  <--  org $8CC797
+
+; Intro, text page 2
+org $8CC7D3  <--  org $8CC797
+    dw ...
+org $8CCB81  <--  org $8CCB45
+
+; Intro, text page 3
+org $8CCB81  <--  org $8CCB45
+    dw ...
+org $8CCE6F  <--  org $8CCE33
+
+; Intro, text page 4
+org $8CCE6F  <--  org $8CCE33
+    dw ...
+org $8CD199  <--  org $8CD15D
+
+; Intro, text page 5
+org $8CD199  <--  org $8CD15D
+    dw ...
+org $8CD54D  <--  org $8CD511
+
+; Intro, text page 6
+org $8CD54D  <--  org $8CD511
+    dw ...
+org $8CD61B  <--  org $8CD5DF
+
+; Intro, Samus blinking pages 1-5
+org $8CD61B  <--  org $8CD5DF
+    dw ...
+org $8CD64F  <--  org $8CD613
+
+; Intro, Samus blinking page 6
+org $8CD64F  <--  org $8CD613
+    dw ...
+org $8CD665  <--  org $8CD629
+
+;======== Insert 16 bytes ========
+; Intro, "Space Colony" text
+org $8CD665  <--  org $8CD629
+    dw ...
+org $8CD6C9  <--  org $8CD67D
+
+;======== Insert 60 bytes ========
+; Alternate text for "Space Colony", length followed by tiles (2 bytes per tile)
+org $8CD845  <--  org $8CD7F9
+    db #$11       ; previously #$08
+    db ...
+org $8CD879  <--  org $8CD81B
+
+;======== Insert 598 bytes ========
+; Intro, alternate text tilemap
+org $8CD879  <--  org $8CD81B
+    dw ...
+org $8CDBCF  <--  org $8CD91B
+
+;======== Insert 256 bytes ========
+; Ending sequence, instruction list
+org $8CDBCF  <--  org $8CD91B
+    dw ...
+org $8CE38F  <--  org $8CDFDB
+
+; Ending sequence, item percentage
+org $8CE38F  <--  org $8CDFDB
+    dw ...
+org $8CE463  <--  org $8CE0AF
+
+; Ending sequence, see you next mission
+org $8CE463  <--  org $8CE0AF
+    dw ...
+org $8CE4E3  <--  org $8CE12F
+
+; Whitespace character tile
+org $8CE4E9  <--  org $8CE135
+    dw #$204F     ; previously dw #$207F
+    dw #$204F     ; previously dw #$207F
+
+; Whitespace character tile
+org $8CE59B  <--  org $8CE1E7
+    dw #$204F     ; previously dw #$207F
+
+; Freespace
+org $8CF79D  <--  org $8CF3E9
+
+;=======================================================
+; Bank 8D
+;=======================================================
+
+; Freespace
+org $8DFFF0
+
+;=======================================================
+; Bank 8E
+;=======================================================
+
+; Freespace
+org $8E6000
+
+;=======================================================
+; Bank 8F
+;=======================================================
+
+; Freespace
+org $8FE99A
+
+;=======================================================
+; Bank 90
+;=======================================================
+
+;======== Remove 3 bytes ========
+; PAL debug movement is possible because this return was removed
+org $90E756
+                  ; previously PLB
+                  ; previously PLP
+                  ; previously RTL
+org $90E756  <--  org $90E759
+
+; Freespace
+org $90F637  <--  org $90F63A
+
+;=======================================================
+; Bank 91
+;=======================================================
+
+; Demo instructions, Landing site
+org $918ACE
+    dw ...
+org $918C3C
+
+; Demo instructions, Pseudo screw attack
+org $918C3E
+    dw ...
+org $918DEE
+
+; Demo instructions, Speed booster
+org $918DF0
+    dw ...
+org $918E62
+
+; Demo instructions, Dachora
+org $918E64
+    dw ...
+org $918EB2
+
+; Demo instructions, Red Brinstar
+org $918EB4
+    dw ...
+org $918F38
+
+; Demo instructions, Wrecked Ship hall
+org $918F3A
+    dw ...
+org $918FE2
+
+;======== Remove 102 bytes ========
+; Demo instructions, Lower Norfair entrance
+org $918FE4
+    dw ...
+org $9190EC  <--  org $919152
+
+; Demo instructions, Eye door
+org $9190EE  <--  org $919154
+    dw ...
+org $9192D4  <--  org $91933A
+
+; Demo instructions, Shinespark
+org $9192D6  <--  org $91933C
+    dw ...
+org $919364  <--  org $9193CA
+
+; Demo instructions, Missile door
+org $919366  <--  org $9193CC
+    dw ...
+org $9193FC  <--  org $919462
+
+; Demo instructions, Kraid
+org $9193FE  <--  org $919464
+    dw ...
+org $919404  <--  org $91946A
+
+;======== Insert 36 bytes ========
+; Demo instructions, Fireflea room
+org $919406  <--  org $91946C
+    dw ...
+org $9194C6  <--  org $919508
+
+; Demo instructions, Screw attack
+org $9194C8  <--  org $91950A
+    dw ...
+org $91951C  <--  org $91955E
+
+; Demo instructions, Brinstar diagonal room
+org $91951E  <--  org $919560
+    dw ...
+org $919578  <--  org $9195BA
+
+; Demo instructions, Unused
+org $91957A  <--  org $9195BC
+    dw ...
+org $919616  <--  org $919658
+
+;======== Insert 6 bytes ========
+; Demo instructions, Big Pink
+org $919618  <--  org $91965A
+    dw ...
+org $9196FC  <--  org $919738
+
+; Demo instructions, Grapple beam
+org $9196FE  <--  org $91973A
+    dw ...
+org $919860  <--  org $91989C
+
+; Demo instructions, Ice beam
+org $919862  <--  org $91989E
+    dw ...
+org $919970  <--  org $9199AC
+
+; Demo instructions, Gauntlet entrance
+org $919972  <--  org $9199AE
+    dw ...
+org $91998A  <--  org $9199C6
+
+;======== Remove 108 bytes ========
+; Demo instructions, Advanced grapple beam
+org $91998C  <--  org $9199C8
+    dw ...
+org $919A46  <--  org $919AEE
+
+; Demo instructions, Infinite bomb jump
+org $919A48  <--  org $919AF0
+    dw ...
+org $919C2E  <--  org $919CD6
+
+; Demo instructions, Special beam attack
+org $919C30  <--  org $919CD8
+    dw ...
+org $919CFC  <--  org $919DA4
+
+; Demo instructions, Tourian entrance
+org $919CFE  <--  org $919DA6
+    dw ...
+org $919D04  <--  org $919DAC
+
+; Demo instructions, Crystal flash
+org $919D06  <--  org $919DAE
+    dw ...
+org $919DA8  <--  org $919E50
+
+;======== Insert 5 bytes ========
+; Special sound/palletes for Samus?
+org $91D869  <--  org $91D911
+    LDA $0A78     ;
+    BNE $43       ;
+org $91D86E  <--  org $91D911
+
+;======== Insert 8 bytes ========
+; Special sound/palletes for Samus?
+org $91D8B1  <--  org $91D954
+    LDA #$0009    ;
+    JSL $80902B   ;
+    RTS           ;
+org $91D8B9  <--  org $91D954
+
+; Freespace
+org $91FF53  <--  org $91FFEE
+
+;=======================================================
+; Bank 92
+;=======================================================
+
+; Freespace
+org $92EDF4
+
+;=======================================================
+; Bank 93
+;=======================================================
+
+; Freespace
+org $93F61D
+
+;=======================================================
+; Bank 94
+;=======================================================
+
+; Freespace
+org $94B19F
+
+; Tiles, gunship liftoff dust clouds
+org $94C800
+
+; Freespace
+org $94DC00
+
+; Tiles, mode 7
+org $94E000
+
+;=======================================================
+; Bank 95
+; Bank 96
+; Bank 97
+; Bank 98
+; Bank 99
+;=======================================================
+
+;======== Remove 1355 bytes ========
+; Font tiles
+org $95D089
+    dw ...
+org $95DF77  <--  org $95E4C2
+
+;======== Insert 649 bytes ========
+; Space/Ceres/Zebes tiles
+org $96CBBF  <--  org $96D10A
+    dw ...
+org $96F942  <--  org $96FC04
+
+;======== Remove 59 bytes ========
+; Game options menu tilemaps
+org $978B32  <--  org $978DF4
+    dw ...
+org $9793F7  <--  org $9796F4
+
+;======== Insert 388 bytes ========
+; Game options menu tilemaps
+org $97E4E1  <--  org $97E7DE
+    dw ...
+org $97ED86  <--  org $97EEFF
+
+; Credits tilemap
+org $97ED86  <--  org $97EEFF
+    dw ...
+org $97F80E  <--  org $97F987
+
+; Freespace
+org $99ECA8  <--  org $99EE21
+
+;=======================================================
+; Bank 9A
+;=======================================================
+
+; Freespace
+org $9AFC20
+
+;=======================================================
+; Bank 9B
+;=======================================================
+
+; Grapple point animation timer
+org $9BBFC6
+    LDA #$0004    ; previously LDA #$0005
+
+; Grapple beam data
+org $9BC118
+    dw #$001C     ; previously dw #$0018
+    dw #$000E     ; previously dw #$000C
+    dw #$0006     ; previously dw #$0005
+    dw #$0566     ; previously dw #$0480
+    dw #$0399     ; previously dw #$0300
+
+; Grapple point animation timer
+org $9BC645
+    LDA #$0004    ; previously LDA #$0005
+
+; Samus drawing handler, firing grapple beam
+org $9BC676
+    LDA $EB83     ; previously LDA $EB86
+
+; Samus drawing handler, default
+org $9BC8AF
+    LDA $EB4F     ; previously LDA $EB52
+
+; Samus drawing handler, default
+org $9BC9A4
+    LDA $EB4F     ; previously LDA $EB52
+
+; Samus drawing handler, default
+org $9BCA4F
+    LDA $EB4F     ; previously LDA $EB52
+
+; Samus drawing handler, default
+org $9BCBE5
+    LDA $EB4F     ; previously LDA $EB52
+
+; Freespace
+org $9BCBFB
+
+; Samus tiles
+org $9BCBFB
+
+; Freespace
+org $9BFDA0
+
+;=======================================================
+; Bank 9C
+;=======================================================
+
+; Freespace
+org $9CFA80
+
+;=======================================================
+; Bank 9D
+;=======================================================
+
+; Freespace
+org $9DF780
+
+;=======================================================
+; Bank 9E
+;=======================================================
+
+; Freespace
+org $9EF6C0
+
+;=======================================================
+; Bank 9F
+;=======================================================
+
+; Freespace
+org $9FF740
+
+;=======================================================
+; Bank A0
+;=======================================================
+
+;======== Insert 16 bytes ========
+; Common enemy speeds, linearly increasing
+org $A08187
+    dw ...
+org $A0839F  <--  org $A0838F
+
+; Common enemy speeds, quadratically increasing
+org $A0839F  <--  org $A0838F
+    dw ...
+org $A08697  <--  org $A08687
+
+;======== Insert 16 bytes ========
+; Common enemy speeds, linearly increasing
+org $A0C9CF  <--  org $A0C9BF
+    dw ...
+org $A0CBE7  <--  org $A0CBC7
+
+; Common enemy speeds, quadratically increasing
+org $A0CBE7  <--  org $A0CBC7
+    dw ...
+org $A0CEDF  <--  org $A0CEBF
+
+; Freespace
+org $A0F7F3  <--  org $A0F7D3
+
+;=======================================================
+; Bank A1
+;=======================================================
+
+; Enemy population
+org $A18000
+    db ...
+org $A1EBD1
+
+; Freespace
+org $A1EBD1
+
+;=======================================================
+; Bank A2
+;=======================================================
+
+;======== Insert 16 bytes ========
+; Common enemy speeds, linearly increasing
+org $A28187
+    dw ...
+org $A2839F  <--  org $A2838F
+
+; Common enemy speeds, quadratically increasing
+org $A2839F  <--  org $A2838F
+    dw ...
+org $A28697  <--  org $A28687
+
+;======== Insert 1 byte ========
+; Replace branch with jump
+org $A29C03  <--  org $A29BF3
+    JMP $9C88     ; previously BRA $7B
+org $A29C06  <--  org $A29BF5
+
+;======== Insert 7 bytes ========
+; Puyo AI, $12 later used by vertical movement routine
+org $A29C43  <--  org $A29C32
+    LDA $9A19,Y   ; previously STZ $12
+    AND #$00FF    ;
+    XBA           ;
+    STA $12       ;
+org $A29C4C  <--  org $A29C34
+
+; Freespace
+org $A0F4B0  <--  org $A0F498
+
+;=======================================================
+; Bank A3
+;=======================================================
+
+;======== Insert 16 bytes ========
+; Common enemy speeds, linearly increasing
+org $A38187
+    dw ...
+org $A3839F  <--  org $A3838F
+
+; Common enemy speeds, quadratically increasing
+org $A3839F  <--  org $A3838F
+    dw ...
+org $A38697  <--  org $A38687
+
+org $A3A8E5  <--  org $A3A8D5
+    BMI $16       ; previously BMI $13
+
+org $A3A8ED  <--  org $A3A8DD
+    BRA $1C       ; previously BRA $16
+
+;======== Insert 3 bytes ========
+; Mochtroid AI, $0FA8 and $0FAA later used by horizontal movement routine
+org $A3A8EF  <--  org $A3A8DF
+    LDA #$CCD0    ; previously STZ $0FA8,X
+    STA $0FA8,X   ;
+    LDA #$FFFE    ; previously LDA #$FFFF
+org $A3A8F8  <--  org $A3A8E5
+
+org $A3A8FB  <--  org $A3A8E8
+    BRA $0E       ; previously BRA $0B
+
+;======== Insert 3 bytes ========
+; Mochtroid AI, $0FA8 later used by horizontal movement routine
+org $A3A8FD  <--  org $A3A8EA
+    LDA #$3330    ; previously STZ $0FA8,X
+    STA $0FA8,X   ;
+org $A3A903  <--  org $A3A8ED
+
+org $A3A923  <--  org $A3A90D
+    BMI $16       ; previously BMI $13
+
+org $A3A92B  <--  org $A3A915
+    BRA $1C       ; previously BRA $16
+
+;======== Insert 3 bytes ========
+; Mochtroid AI, $0FAC and $0FAE later used by vertical movement routine
+org $A3A92D  <--  org $A3A917
+    LDA #$CCD0    ; previously STZ $0FAC,X
+    STA $0FAC,X   ;
+    LDA #$FFFE    ; previously LDA #$FFFF
+org $A3A936  <--  org $A3A91D
+
+org $A3A939  <--  org $A3A920
+    BRA $0E       ; previously BRA $0B
+
+;======== Insert 3 bytes ========
+; Mochtroid AI, $0FAC later used by vertical movement routine
+org $A3A93B  <--  org $A3A922
+    LDA #$3330    ; previously STZ $0FAC,X
+    STA $0FA8,X   ;
+org $A3A941  <--  org $A3A925
+
+; Freespace
+org $A3F32D  <--  org $A3F311
+
+;=======================================================
+; Bank A4
+;=======================================================
+
+;======== Insert 16 bytes ========
+; Common enemy speeds, linearly increasing
+org $A48187
+    dw ...
+org $A4839F  <--  org $A4838F
+
+; Common enemy speeds, quadratically increasing
+org $A4839F  <--  org $A4838F
+    dw ...
+org $A48697  <--  org $A48687
+
+;======== Insert 3 bytes ========
+; HDMA object instructions
+org $A4999A  <--  org $A4998A
+    db #$71       ; previously db #$58
+    db #$E1       ;
+    db #$A9       ;
+    db #$63       ;
+org $A4999E  <--  org $A4998B
+
+;======== Insert 6 bytes ========
+; HDMA object instructions
+org $A49A14  <--  org $A49A01
+    dw #$A909     ; previously dw #$A903
+    dw #$9999     ;
+    dw #$B08D     ;
+    dw #$A90F     ;
+org $A49A1C  <--  org $A49A03
+
+; Freespace
+org $A4F6D9  <--  org $A4F6C0
+
+;=======================================================
+; Bank A5
+;=======================================================
+
+;======== Insert 16 bytes ========
+; Common enemy speeds, linearly increasing
+org $A58187
+    dw ...
+org $A5839F  <--  org $A5838F
+
+; Common enemy speeds, quadratically increasing
+org $A5839F  <--  org $A5838F
+    dw ...
+org $A58697  <--  org $A58687
+
+;======== Remove 4 bytes ========
+; Draygon data
+org $A59D78  <--  org $A59D68
+                  ; previously dw #$0008
+                  ; previously dw #$A797
+org $A59D78  <--  org $A59D6C
+
+;======== Remove 40 bytes ========
+; Spore Spawn data
+org $A5E789  <--  org $A5E77D
+    db ...
+org $A5E811  <--  org $A5E82D
+
+;======== Insert 28 bytes ========
+; Spore Spawn logic
+org $A5E811  <--  org $A5E82D
+    LDA #$0000,Y  ;
+    STA $7E7816   ;
+    LDA #$0002,Y  ;
+    STA $7E7818   ;
+    LDA #$0004,Y  ;
+    STA $7E7814   ;
+    TYA           ;
+    CLC           ;
+    ADC #$0006    ;
+    TAY           ;
+    RTL           ;
+org $A5E82D
+
+;======== Insert 9 bytes ========
+; Spore Spawn logic
+org $A5E897
+    LDA $0F8C     ;
+    BEQ $07       ;
+org $A5E89C  <--  org $A5E897
+
+;======== Insert 7 bytes ========
+; Spore Spawn logic
+org $A5EB4F  <--  org $A5EB4A
+    LDA #$3333    ;
+    STA $7E781E   ;
+org $A5EB56  <--  org $A5EB4A
+
+;======== Insert 41 bytes ========
+; Spore Spawn logic
+org $A5EB96  <--  org $A5EB8A
+    LDA $7E781E   ;
+    CLC           ;
+    ADC $7E781C   ;
+    STA $7E781C   ;
+    BCC $1A       ;
+    LDA $7E7818   ;
+    BMI $0B       ;
+    LDA $7E7814   ;
+    INC A         ;
+    STA $7E7814   ;
+    BRA $09       ;
+    LDA $7E7814   ;
+    DEC A         ;
+    STA $7E7814   ;
+org $A5EBBF  <--  org $A5EB8A
+
+;======== Insert 7 bytes ========
+; Spore Spawn logic
+org $A5EDCD  <--  org $A5ED98
+    LDA #$6666    ;
+    STA $7E781E   ;
+org $A5EDD4  <--  org $A5ED98
+
+;======== Insert 9 bytes ========
+; Spore Spawn logic
+org $A5EE85  <--  org $A5EE49
+    JSR $EBD0     ;
+    LDA $EC23     ;
+    STA $0FA8     ;
+org $A5EE8E  <--  org $A5EE49
+
+; Freespace
+org $A5F99F  <--  org $A5F95A
+
+;=======================================================
+; Bank A6
+;=======================================================
+
+;======== Insert 16 bytes ========
+; Common enemy speeds, linearly increasing
+org $A68187
+    dw ...
+org $A6839F  <--  org $A6838F
+
+; Common enemy speeds, quadratically increasing
+org $A6839F  <--  org $A6838F
+    dw ...
+org $A68697  <--  org $A68687
+
+;======== Insert 16 bytes ========
+; Ridley's explosion, X later used as an index
+org $A6C393  <--  org $A6C383
+    LDA $09E2     ; previously LDX $C3B8
+    BNE $05       ; previously PHB
+    LDX $DEC3     ; previously PHK
+    BRA $0D
+    LDX $DE5A
+    BRA $08
+    LDX $DE00
+    BRA $03
+    LDX $DE1E
+    PHB
+    PEA $00AD
+    PLB
+org $A6C3AF  <--  org $A6C388
+
+;======== Remove 152 bytes ========
+; Ridley's explosion subroutine
+org $A6C3DF  <--  org $A6C3B8
+                  ; previously db ...
+org $A6C3DF  <--  org $A6C450
+
+;======== Insert 72 bytes ========
+; Ridley's explosion data
+org $A6C3DF  <--  org $A6C450
+    db ...
+org $A6C50F  <--  org $A6C538
+
+; Freespace
+org $A6FE93  <--  org $A6FEBC
+
+;=======================================================
+; Bank A7
+;=======================================================
+
+;======== Insert 16 bytes ========
+; Common enemy speeds, linearly increasing
+org $A78187
+    dw ...
+org $A7839F  <--  org $A7838F
+
+; Common enemy speeds, quadratically increasing
+org $A7839F  <--  org $A7838F
+    dw ...
+org $A78697  <--  org $A78687
+
+; Kraid speeds
+org $A7A92E  <--  org $A7A91E
+    dw #$0CCC     ; previously dw #$0005
+    dw #$0005     ; previously dw #$0003
+
+;======== Insert 6 bytes ========
+; Kraid speeds
+org $A7A934  <--  org $A7A924
+    dw #$0CCC     ;
+    dw #$0004     ;
+    dw #$CCCC     ;
+org $A7A93A  <--  org $A7A924
+
+; Kraid X position
+org $A7B671  <--  org $A7B65B
+    LDA $0F7C     ; previously LDA $0F7A
+
+;======== Insert 9 bytes ========
+; Kraid X position
+org $A7B675  <--  org $A7B65F
+    SBC $A92E     ;
+    STA $0F7C     ;
+    LDA $0F7A     ;
+org $A7B67E  <--  org $A7B65F
+
+; Kraid X position
+org $A7B687  <--  org $A7B668
+    LDA $0F7C     ; previously LDA $0F7A
+
+;======== Insert 9 bytes ========
+; Kraid X position
+org $A7B68B  <--  org $A7B66C
+    SBC $A92E     ;
+    STA $0F7C     ;
+    LDA $0F7A     ;
+org $A7B694  <--  org $A7B66C
+
+; Kraid X position
+org $A7B69E  <--  org $A7B676
+    LDA $A934     ; previously LDA $A920
+
+;======== Insert 9 bytes ========
+; Kraid X position
+org $A7B6A2  <--  org $A7B67A
+    ADC $0F7C     ;
+    STA $0F7C     ;
+    LDA $A932     ;
+org $A7B6AB  <--  org $A7B67A
+
+org $A7B6C7  <--  org $A7B692
+    BNE $13       ; previously BNE $10
+
+;======== Insert 9 bytes ========
+; Kraid X position
+org $A7B6CC  <--  org $A7B69B
+    LDA $A938     ; previously STZ $12
+    STA $12       ; previously LDA $A922
+    LDA $A936     ; previously STA $14
+    STA $14
+org $A7B6D6  <--  org $A7B6A2
+
+; Freespace
+org $A7FFB6  <--  org $A7FF82
+
+;=======================================================
+; Bank A8
+;=======================================================
+
+;======== Insert 16 bytes ========
+; Common enemy speeds, linearly increasing
+org $A88187
+    dw ...
+org $A8839F  <--  org $A8838F
+
+; Common enemy speeds, quadratically increasing
+org $A8839F  <--  org $A8838F
+    dw ...
+org $A88697  <--  org $A88687
+
+;======== Remove 4 bytes ========
+; Beetom AI
+org $A8BC47  <--  org $A8BC37
+    LDA #$FFFD    ; previously LDA #$0003
+                  ; previously EOR #$FFFF
+                  ; previously INC A
+org $A8BC4A  <--  org $A8BC3E
+
+;======== Remove 4 bytes ========
+; Beetom AI
+org $A8BE17  <--  org $A8BE0B
+    LDA #$FFF3    ; previously LDA #$0002
+                  ; previously EOR #$FFFF
+                  ; previously INC A
+org $A8BE1A  <--  org $A8BE12
+
+;======== Insert 7 bytes ========
+; Kihunter AI
+org $A8F41C  <--  org $A8F414
+    BNE $0B       ; previously BNE $04
+    LDA #$6666    ;
+    STA $7E7806,X ;
+org $A8F425  <--  org $A8F416
+
+; Freespace
+org $A8F9CD  <--  org $A8F9BE
+
+;=======================================================
+; Bank A9
+;=======================================================
+
+;======== Insert 16 bytes ========
+; Common enemy speeds, linearly increasing
+org $A98187
+    dw ...
+org $A9839F  <--  org $A9838F
+
+; Common enemy speeds, quadratically increasing
+org $A9839F  <--  org $A9838F
+    dw ...
+org $A98697  <--  org $A98687
+
+org $A9B224  <--  org $A9B214
+    BPL $30       ; previously BPL $0C
+
+;======== Insert 17 bytes ========
+; MB3 AI
+org $A9B22C  <--  org $A9B21C
+    LDA #$0000    ;
+    STA $17A9     ;
+    STA $7EC09A   ;
+    LDA #$7FFF    ;
+    STA $7EC09C   ;
+org $A9B23D  <--  org $A9B21C
+
+;======== Insert 19 bytes ========
+; MB3 AI
+org $A9B243  <--  org $A9B222
+    LDA #$0000    ;
+    STA $7E7844   ;
+    LDA $A900     ;
+    STA $0605     ;
+    LDA $B257     ;
+    STA $0604     ;
+org $A9B256  <--  org $A9B222
+
+;======== Insert 36 bytes ========
+; MB3 AI
+org $A9B257  <--  org $A9B223
+    LDY $0330     ;
+    LDA $0B0C     ;
+    STA $000D,Y   ;
+    LDA $B700     ;
+    STA $00D3,Y   ;
+    LDA $DA00     ;
+    STA $00D2,Y   ;
+    LDA $1820     ;
+    STA $00D5,Y   ;
+    TYA           ;
+    CLC           ;
+    ADC #$0007    ;
+    STA $0330     ;
+    RTL           ;
+org $A9B27B  <--  org $A9B223
+
+;======== Remove 8 bytes ========
+; MB3 AI
+org $A9B31A  <--  org $A9B2C2
+    LDY $B321     ; previously LDY $B2D1
+                  ; previously LDA $09E2
+                  ; previously BNE $03
+                  ; previously LDY $B2E3
+org $A9B31D  <--  org $A9B2CD
+
+org $A9B324  <--  org $A9B2D4
+    BPL $0A       ; previously BPL $0D
+
+;======== Remove 3 bytes ========
+; MB3 AI, PAL reusing Ridley's explosion routine
+org $A9B32C  <--  org $A9B2DC
+    JSL $A6C393   ; previously LDY #$CBBB
+                  ; previously JSL $868097
+org $A9B330  <--  org $A9B2E3
+
+; Freespace
+org $A9FBBD  <--  org $A9FB70
+
+;=======================================================
+; Bank AA
+;=======================================================
+
+;======== Insert 16 bytes ========
+; Common enemy speeds, linearly increasing
+org $AA8187
+    dw ...
+org $AA839F  <--  org $AA838F
+
+; Common enemy speeds, quadratically increasing
+org $AA839F  <--  org $AA838F
+    dw ...
+org $AA8697  <--  org $AA8687
+
+; Freespace
+org $AAF7E3  <--  org $AAF7D3
+
+;=======================================================
+; Bank AB
+;=======================================================
+
+; Freespace
+org $ABF800
+
+;=======================================================
+; Bank AC
+;=======================================================
+
+; Freespace
+org $ACEE00
+
+;=======================================================
+; Bank AD
+;=======================================================
+
+;======== Insert 388 bytes ========
+; Unknown (PAL only)
+org $ADDE00
+    db ...
+org $ADE0CC  <--  org $ADDE00
+
+; Freespace
+org $ADF710  <--  org $ADF444
+
+;=======================================================
+; Bank AE
+;=======================================================
+
+; Freespace
+org $AEFD20
+
+;=======================================================
+; Bank AF
+;=======================================================
+
+; Freespace
+org $AFEC00
+
+;=======================================================
+; Bank B0
+;=======================================================
+
+; Freespace
+org $B0EE00
+
+;=======================================================
+; Bank B1
+;=======================================================
+
+; No freespace
+
+;=======================================================
+; Bank B2
+;=======================================================
+
+;======== Insert 16 bytes ========
+; Common enemy speeds, linearly increasing
+org $B28187
+    dw ...
+org $B2839F  <--  org $B2838F
+
+; Common enemy speeds, quadratically increasing
+org $B2839F  <--  org $B2838F
+    dw ...
+org $B28697  <--  org $B28687
+
+;======== Remove 5 bytes ========
+; Wall space pirate AI
+org $B2EFF9  <--  org $B2EFE9
+    LDA $0466     ; previously LDA $7E8004,X
+    STA $7E8004,X ; previously CLC
+    LDY $F03F     ; previously ADC #$0002
+                  ; previously STA $7E8004,X
+                  ; previously LDY $F034
+org $B2F003  <--  org $B2EFF8
+
+org $B2F00B  <--  org $B2F000
+    LDY $F112     ; previously LDY $F0C8
+
+;======== Insert 63 bytes ========
+; Wall space pirate AI
+org $B2F08D  <--  org $B2F082
+    LDA $7E8004,X ;
+    AND #$00FF    ;
+    XBA           ;
+    CLC           ;
+    ADC $7E8006,X ;
+    STA $7E8006   ;
+    BCC $20       ;
+    LDA $7E8004,X ;
+    AND #$FF00    ;
+    XBA           ;
+    STA $7E8008,X ;
+    LDA $0FB2,X   ;
+    SEC           ;
+    SBC $7E8008,X ;
+    AND #$00FF    ;
+    STA $0FB2,X   ;
+    CMP $7E8000,X ;
+    BEQ $20       ;
+    LDA $7E8004,X ;
+    AND #$FF00    ;
+    XBA           ;
+    STA $7E8008,X ;
+org $B2F0CC  <--  org $B2F082
+
+; Wall space pirate AI
+org $B2F0D0  <--  org $B2F086
+    SBC $7E8008,X ; previously SBC $7E8004,X
+
+;======== Insert 47 bytes ========
+; Wall space pirate AI
+org $B2F160  <--  org $B2F116
+    LDA $7E8004,X ; LDA $0FB2,X
+    AND #$00FF    ; CLS
+    XBA           ; ADC $7E8004,X
+    CLC           ;
+    ADC $7E8006,X ;
+    STA $7E8006   ;
+    BCC $18       ;
+    LDA $7E8004,X ;
+    AND #$FF00    ;
+    XBA           ;
+    CLC           ;
+    ADC $0FB2,X   ;
+    AND #$00FF    ;
+    STA $0FB2,X   ;
+    CMP $7E8000,X ;
+    BEQ $18       ;
+    LDA $7E8004,X ;
+    AND #$FF00    ;
+    XBA           ;
+    CLC           ;
+    ADC $0FB2,X   ;
+org $B2F197  <--  org $B2F11E
+
+; Freespace
+org $B2FF23  <--  org $B2FEAA
+
+;=======================================================
+; Bank B3
+;=======================================================
+
+;======== Insert 16 bytes ========
+; Common enemy speeds, linearly increasing
+org $B38187
+    dw ...
+org $B3839F  <--  org $B3838F
+
+; Common enemy speeds, quadratically increasing
+org $B3839F  <--  org $B3838F
+    dw ...
+org $B38697  <--  org $B38687
+
+; Freespace
+org $B3ED87  <--  org $B3ED77
+
+;=======================================================
+; Bank B4
+;=======================================================
+
+; Freespace
+org $B4F4B8
+
+;=======================================================
+; Bank B5
+;=======================================================
+
+; Freespace
+org $B5F000
+
+;=======================================================
+; Bank B6
+;=======================================================
+
+; Freespace
+org $B6F200
+
+;=======================================================
+; Bank B7
+;=======================================================
+
+;======== Insert 704 bytes ========
+; Tiles
+org $B7DA00
+    db ...
+org $B7E5C0  <--  org $B7E300
+
+; Freespace
+org $B7FFC0  <--  org $B7FD00
+
+;=======================================================
+; Bank B8
+;=======================================================
+
+; Freespace
+org $B88000
+
+;=======================================================
+; Bank B9
+; Bank BA
+; Bank BB
+; Bank BC
+; Bank BD
+; Bank BE
+; Bank BF
+; Bank C0
+; Bank C1
+; Bank C2
+; Bank C3
+; Bank C4
+; Bank C5
+; Bank C6
+; Bank C7
+; Bank C8
+; Bank C9
+; Bank CA
+; Bank CB
+; Bank CC
+; Bank CD
+; Bank CE
+;=======================================================
+
+; Freespace
+org $CEB22D
+
+;=======================================================
+; Bank CF
+; Bank D0
+; Bank D1
+; Bank D2
+; Bank D3
+; Bank D4
+; Bank D5
+; Bank D6
+; Bank D7
+; Bank D8
+; Bank D9
+; Bank DA
+; Bank DB
+; Bank DC
+; Bank DD
+; Bank DE
+;=======================================================
+
+;======== Remove 62 bytes ========
+; SPC engine
+org $CF8000
+    db ...
+org $D0E1CF  <--  org $D0E20D
+
+;======== Insert 2 bytes ========
+; Music, title sequence
+org $D0E1CF  <--  org $D0E20D
+    db ...
+org $D1B5EE  <--  org $D1B62A
+
+;======== Insert 8 bytes ========
+; Music, boss fight 1
+org $D7BF37  <--  org $D7BF73
+    db ...
+org $D8997E  <--  org $D899B2
+
+; Freespace
+org $DED18C  <--  org $DED1C0
+
+;=======================================================
+; Bank DF
+;=======================================================
+
+; Freespace
+org $DFD4DF
+
