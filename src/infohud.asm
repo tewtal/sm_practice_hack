@@ -147,7 +147,7 @@ print pc, " infohud start"
 ih_max_etank_code:
 {
     ; Reset max-etanks value
-    LDA #$0000 : STA !ram_max_etanks
+    LDA #$0000 : STA !ram_etanks
     LDA $7EC200,X
     RTL
 }
@@ -457,11 +457,13 @@ ih_update_hud_code:
     ; Draw Item percent
     .pct
     {
-        LDA !sram_display_mode : CMP #$000E : BEQ .skipToEtanks
         LDA #$0000 : STA !ram_pct_1
 
         ; Max HP (E tanks)
         LDA $09C4 : JSR CalcEtank : LDA $4214 : STA !ram_etanks
+
+        ; skip item% if display mode = vspeed
+        LDA !sram_display_mode : CMP #$000E : BEQ .skipToEtanks
 
         ; Max Reserve Tanks
         LDA $09D4 : JSR CalcEtank
@@ -959,12 +961,10 @@ ih_game_loop_code:
 
   .update_status
     LDA #$0000
+    STA !ram_HUD_check
     STA !ram_armed_shine_duration
-    STA !ram_charge_counter
-    STA !ram_xfac_counter
     INC A
     STA !ram_dash_counter
-    STA !ram_iframe_counter
     STA !ram_xpos
     STA !ram_ypos
     STA !ram_horizontal_speed
