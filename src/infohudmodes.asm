@@ -53,7 +53,7 @@ status_roomstrat:
 
 status_chargetimer:
 {
-    LDA #$003D : SEC : SBC $0CD0 : CMP !ram_charge_counter : BEQ .done : STA !ram_charge_counter
+    LDA #$003D : SEC : SBC $0CD0 : CMP !ram_HUD_check : BEQ .done : STA !ram_HUD_check
     CMP #$0000 : BPL .charging : LDA #$0000
 
   .charging
@@ -65,7 +65,7 @@ status_chargetimer:
 
 status_xfactor:
 {
-    LDA #$0079 : SEC : SBC $0CD0 : CMP !ram_xfac_counter : BEQ .done : STA !ram_xfac_counter
+    LDA #$0079 : SEC : SBC $0CD0 : CMP !ram_HUD_check : BEQ .done : STA !ram_HUD_check
     LDX #$0088 : JSR Draw4
 
   .done
@@ -74,7 +74,7 @@ status_xfactor:
 
 status_cooldowncounter:
 {
-    LDA $0CCC : CMP !ram_cooldown_counter : BEQ .done : STA !ram_cooldown_counter
+    LDA $0CCC : CMP !ram_HUD_check : BEQ .done : STA !ram_HUD_check
     LDX #$0088 : JSR Draw4
 
   .done
@@ -448,7 +448,7 @@ status_shinetune:
 
 status_iframecounter:
 {
-    LDA $18A8 : CMP !ram_iframe_counter : BEQ .done : STA !ram_iframe_counter
+    LDA $18A8 : CMP !ram_HUD_check : BEQ .done : STA !ram_HUD_check
     LDX #$0088 : JSR Draw4
 
   .done
