@@ -63,26 +63,26 @@
 !ram_roomstrat_counter = $7FFB82
 !ram_roomstrat_state = $7FFB84
 !ram_enemy_hp = $7FFB86
-!ram_mb_hp = $7FFB86
-!ram_shot_timer = $7FFB88
-!ram_shine_counter = $7FFB8A
-!ram_dash_counter = $7FFB8C
-!ram_shine_dash_held_late = $7FFB8E
-!ram_shinetune_early_1 = $7FFB90
-!ram_shinetune_late_1 = $7FFB92
-!ram_shinetune_early_2 = $7FFB94
-!ram_shinetune_late_2 = $7FFB96
-!ram_shinetune_early_3 = $7FFB98
-!ram_shinetune_late_3 = $7FFB9A
-!ram_shinetune_early_4 = $7FFB9C
-!ram_shinetune_late_4 = $7FFB9E
-!ram_xpos = $7FFBA0
-!ram_ypos = $7FFBA2
-!ram_subpixel_pos = $7FFBA4
-!ram_horizontal_speed = $7FFBA6
-!ram_vertical_speed = $7FFBA8
-!ram_quickdrop_counter = $7FFBAA
-!ram_walljump_counter = $7FFB8AC
+!ram_mb_hp = $7FFB88
+!ram_shot_timer = $7FFB8A
+!ram_shine_counter = $7FFB8C
+!ram_dash_counter = $7FFB8E
+!ram_shine_dash_held_late = $7FFB90
+!ram_shinetune_early_1 = $7FFB92
+!ram_shinetune_late_1 = $7FFB94
+!ram_shinetune_early_2 = $7FFB96
+!ram_shinetune_late_2 = $7FFB98
+!ram_shinetune_early_3 = $7FFB9A
+!ram_shinetune_late_3 = $7FFB9C
+!ram_shinetune_early_4 = $7FFB9E
+!ram_shinetune_late_4 = $7FFBA0
+!ram_xpos = $7FFBA2
+!ram_ypos = $7FFBA4
+!ram_subpixel_pos = $7FFBA6
+!ram_horizontal_speed = $7FFBA8
+!ram_vertical_speed = $7FFBAA
+!ram_quickdrop_counter = $7FFBAC
+!ram_walljump_counter = $7FFBAE
 
 ; FREE SPACE ^
 
