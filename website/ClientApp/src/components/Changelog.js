@@ -42,6 +42,7 @@ export class Changelog extends Component {
                                                 <li>Allow GT Max% equipment levels. (2.2.4)</li>
                                                 <li>CPU% calcalation now includes the artifical lag. (2.2.4)</li>
                                                 <li>Restored room timers while minimap is enabled. (2.2.5)</li>
+                                                <li>Update HUD timers on Ceres elevator and ship entry. (2.2.6)</li>
                                             </ul>
                                         </CardBody>
                                     </Card>

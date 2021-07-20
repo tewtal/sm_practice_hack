@@ -140,6 +140,16 @@ org $AAE582      ; update timers when statue grabs Samus
 endif
     JSL ih_chozo_segment
 
+org $89AD0A      ; update timers when Samus escapes Ceres
+    JSL ih_ceres_elevator_segment
+
+if !FEATURE_PAL
+org $A2AA38
+else
+org $A2AA20      ; update timers when Samus enters ship
+endif
+    JSL ih_ship_elevator_segment
+
 
 ; Main bank stuff
 org $E08000
@@ -363,6 +373,18 @@ ih_chozo_segment:
 {
     JSL $8090CB ; overwritten code
     JML ih_update_hud_early
+}
+
+ih_ceres_elevator_segment:
+{
+    JSL ih_update_hud_early
+    JML $90F084 ; overwritten code
+}
+
+ih_ship_elevator_segment:
+{
+    JSL ih_update_hud_early
+    JML $91E3F6 ; overwritten code
 }
 
 ih_update_hud_code:

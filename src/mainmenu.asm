@@ -162,7 +162,7 @@ MainMenu:
     dw #mm_goto_rngmenu
     dw #mm_goto_ctrlsmenu
     dw #$0000
-    %cm_header("SM PRACTICE HACK 2.2.5")
+    %cm_header("SM PRACTICE HACK 2.2.6")
 
 mm_goto_equipment:
     %cm_submenu("Equipment", #EquipmentMenu)
