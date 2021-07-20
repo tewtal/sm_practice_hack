@@ -384,7 +384,11 @@ ih_ceres_elevator_segment:
 ih_ship_elevator_segment:
 {
     JSL ih_update_hud_early
+if !FEATURE_PAL
+    JML $91E35B ; overwritten code
+else
     JML $91E3F6 ; overwritten code
+endif
 }
 
 ih_update_hud_code:
