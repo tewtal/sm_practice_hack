@@ -253,6 +253,7 @@ endif
     JSL $89AB82  ; Load FX1
     JSL $82E97C  ; Execute subroutine $82:E97C
 
+    JSR preset_scroll_fixes
     JSR $A2F9    ; Calculate layer 2 X position
     JSR $A33A    ; Calculate layer 2 Y position
     LDA $0917 : STA $0921  ; BG2 X scroll = layer 2 X scroll position
@@ -273,6 +274,29 @@ endif
     PLB
     PLP
     RTL
+}
+
+preset_scroll_fixes:
+{
+    PHP : %a8() : %i16()
+    ; run every preset with red (0) in $24
+    LDA $7ECD24 : BNE +
+    LDA #$01
+    STA $7ECD24
+    ; room-specific fixes
++   LDX $079B : LDA #$01
+    CPX #$B07A : BNE + ; top of Bat Cave
+    STA $7ECD20
++   CPX #$A011 : BNE + ; bottom-left of Etecoons Etank
+    STA $7ECD25
+    STA $7ECD26
++   CPX #$B3A5 : BNE + ; bottom of Pre-Pillars
+    STA $7ECD22
+    LDA #$00
+    STA $7ECD21
+
++   PLP
+    RTS
 }
 
 transfer_cgram_long:
