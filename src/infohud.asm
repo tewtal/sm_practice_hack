@@ -18,6 +18,9 @@ org $828115
 org $82EE92      ; runs on START GAME
     JSL startgame_seg_timer
 
+org $828B34      ; reset room timers for first room of Ceres
+    JML ceres_start_timers : NOP #2 : ceres_start_timers_return:
+        
 org $90E6AA      ; hijack, runs on gamestate = 08 (main gameplay), handles most updating HUD information
     JSL ih_gamemode_frame : NOP : NOP
 
@@ -328,6 +331,19 @@ ih_before_room_transition:
     STA $0998
     CLC
     RTL
+}
+
+ceres_start_timers:
+{
+    LDA #$0000
+    STA !ram_realtime_room : STA !ram_last_realtime_room
+    STA !ram_gametime_room : STA !ram_last_gametime_room
+    STA !ram_last_room_lag : STA !ram_last_door_lag_frames : STA !ram_transition_counter
+
+    STZ $0723 ; overwritten code
+    STZ $0725
+    
+    JML ceres_start_timers_return
 }
 
 ih_elevator_activation:
