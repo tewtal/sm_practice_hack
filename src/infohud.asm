@@ -18,6 +18,9 @@ org $828115
 org $82EE92      ; runs on START GAME
     JSL startgame_seg_timer
 
+org $828B34      ; reset room timers for first room of Ceres
+    JML ceres_start_timers : NOP #2 : ceres_start_timers_return:
+        
 org $90E6AA      ; hijack, runs on gamestate = 08 (main gameplay), handles most updating HUD information
     JSL ih_gamemode_frame : NOP : NOP
 
@@ -139,6 +142,16 @@ else
 org $AAE582      ; update timers when statue grabs Samus
 endif
     JSL ih_chozo_segment
+
+org $89AD0A      ; update timers when Samus escapes Ceres
+    JSL ih_ceres_elevator_segment
+
+if !FEATURE_PAL
+org $A2AA38
+else
+org $A2AA20      ; update timers when Samus enters ship
+endif
+    JSL ih_ship_elevator_segment
 
 
 ; Main bank stuff
@@ -320,6 +333,19 @@ ih_before_room_transition:
     RTL
 }
 
+ceres_start_timers:
+{
+    LDA #$0000
+    STA !ram_realtime_room : STA !ram_last_realtime_room
+    STA !ram_gametime_room : STA !ram_last_gametime_room
+    STA !ram_last_room_lag : STA !ram_last_door_lag_frames : STA !ram_transition_counter
+
+    STZ $0723 ; overwritten code
+    STZ $0725
+    
+    JML ceres_start_timers_return
+}
+
 ih_elevator_activation:
 {
     PHA
@@ -363,6 +389,22 @@ ih_chozo_segment:
 {
     JSL $8090CB ; overwritten code
     JML ih_update_hud_early
+}
+
+ih_ceres_elevator_segment:
+{
+    JSL ih_update_hud_early
+    JML $90F084 ; overwritten code
+}
+
+ih_ship_elevator_segment:
+{
+    JSL ih_update_hud_early
+if !FEATURE_PAL
+    JML $91E35B ; overwritten code
+else
+    JML $91E3F6 ; overwritten code
+endif
 }
 
 ih_update_hud_code:
