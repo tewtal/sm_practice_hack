@@ -58,6 +58,22 @@ org $808F24
     JSL hook_set_music_track
     NOP #2
 
+; swap Enemy HP to MB HP when entering MB's room
+org $83AAD2
+    dw #MotherBrainHP
+
+org $8FEA00 ; free space for door asm
+MotherBrainHP:
+{
+    LDA !sram_display_mode : BNE .done
+    LDA #$0001 : STA !sram_display_mode
+    LDA #$0007 : STA !sram_room_strat
+
+  .done
+    RTS
+}
+warnpc $8FFFFF
+
 org $87D000
 print pc, " misc start"
 hook_set_music_track:

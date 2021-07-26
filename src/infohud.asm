@@ -271,8 +271,14 @@ ih_after_room_transition:
     LDA !ram_transition_counter : STA !ram_last_door_lag_frames
     LDA #$0000 : STA !ram_transition_flag
 
+    ; Check if MBHP needs to be disabled
+    LDA !sram_display_mode : CMP #$0001 : BNE +
+    LDA !sram_room_strat : CMP #$0007 : BNE +
+    LDA $079B : CMP #$DD58 : BEQ +
+    LDA #$0000 : STA !sram_display_mode
+
     ; Update HUD
-    JSL ih_update_hud_code
++   JSL ih_update_hud_code
 
     ; Reset gametime/transition timer
     LDA #$0000 : STA !ram_transition_counter
