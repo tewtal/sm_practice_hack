@@ -267,7 +267,11 @@ endif
     JSL $80982A  ; Enable horizontal and vertical timer interrupts
     JSR $A12B    ; Play 14h frames of music
 
-    LDA #$0000 : STA $05F5  ; Enable sounds
+    LDA #$E695 : STA $0A42 ; Unlock Samus
+    LDA #$E725 : STA $0A44 ; Unlock Samus
+    STZ $0E18 ; Set elevator to inactive
+
++   LDA #$0000 : STA $05F5  ; Enable sounds
     JSL stop_all_sounds
 
     LDA #$E737 : STA $099C  ; Pointer to next frame's room transition code = $82:E737
