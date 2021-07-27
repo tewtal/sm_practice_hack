@@ -278,25 +278,33 @@ endif
 
 preset_scroll_fixes:
 {
+    ; Fixes bad scrolling caused by a loading into a position that
+    ; is normally hidden until passing over a red scroll block.
+    ; These fixes can often be found in nearby door asm.
     PHP : %a8() : %i16()
-    ; run every preset with red (0) in $24
-    LDA $7ECD24 : BNE +
-    LDA #$01 : STA $7ECD24
-    ; room-specific fixes
-+   LDX $079B : LDA #$01
-    CPX #$B07A : BNE + ; top of Bat Cave
-    STA $7ECD20
-    BRA .done
-+   CPX #$A011 : BNE + ; bottom-left of Etecoons Etank
+    LDX $079B : LDA #$01
++   CPX #$A011 : BNE +        ; bottom-left of Etecoons Etank
     STA $7ECD25 : STA $7ECD26
     BRA .done
-+   CPX #$B1E5 : BNE + ; bottom of Acid Chozo room
++   CPX #$AE32 : BNE +        ; bottom of Volcano Room
+    STA $7ECD26
+    BRA .done
++   CPX #$B07A : BNE +        ; top of Bat Cave
+    STA $7ECD20
+    BRA .done
++   CPX #$B1E5 : BNE +        ; bottom of Acid Chozo Room
     STA $7ECD26 : STA $7ECD27 : STA $7ECD28
     LDA #$00 : STA $7ECD23 : STA $7ECD24
     BRA .done
-+   CPX #$B3A5 : BNE .done ; bottom of Pre-Pillars
-    STA $7ECD22
++   CPX #$B3A5 : BNE +        ; bottom of Pre-Pillars
+    STA $7ECD22 : STA $7ECD24
     LDA #$00 : STA $7ECD21
+    BRA .done
++   CPX #$CC6F : BNE +        ; right of Basement (Phantoon)
+    STA $7ECD24
+    BRA .done
++   CPX #$D8C5 : BNE .done    ; Pants Room (door to Shaktool)
+    LDA #$00 : STA $7ECD22
 
   .done
     PLP
