@@ -52,6 +52,9 @@
 !ram_draygon_rng_left = $7FFB68
 !ram_draygon_rng_right = $7FFB6A
 
+!ram_metronome = $7FFB6C
+!ram_metronome_counter = $7FFB6E
+
 ; FREE SPACE ^
 
 
@@ -197,6 +200,10 @@
 !IH_INPUT_ANGLE_UP = $7E09BC
 !IH_INPUT_ANGLE_DOWN = $7E09BE
 
+!SFX_LIB1 = $80903F
+!SFX_LIB2 = $8090C1
+!SFX_LIB3 = $809143
+
 
 ; -----
 ; SRAM
@@ -226,6 +233,8 @@
 !sram_preset_category = $702030
 !sram_room_strat = $702032
 !sram_sprite_prio_flag = $702034
+!sram_metronome_tickrate = $702036
+!sram_metronome_sfx = $702038
 
 ; FREE SPACE ^
 

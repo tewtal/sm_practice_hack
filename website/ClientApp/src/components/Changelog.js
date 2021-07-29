@@ -45,6 +45,7 @@ export class Changelog extends Component {
                                                 <li>Fix bad camera scroll after loading certain presets. (2.2.6)</li>
                                                 <li>Update HUD timers on Ceres elevator and ship entry. (2.2.6)</li>
                                                 <li>Automatically switch between Enemy HP and MB HP. (2.2.7)</li>
+                                                <li>Added a metronome with timing and sound options. (2.2.7)</li>
                                             </ul>
                                         </CardBody>
                                     </Card>

@@ -284,6 +284,19 @@ export class Help extends Component {
                                 <Col md="3" className="offset-md-1">Clear Minimap</Col>
                                 <Col>Clears the map tile counter and all minimap data.</Col>
                             </Row>
+                            <Row>
+                                <Col md="3" className="offset-md-1">Metronome</Col>
+                                <Col>Repeatedly plays a sound effect at a set interval.
+                                     Other sound effects may interfere with the metronome.</Col>
+                            </Row>
+                            <Row>
+                                <Col md="3" className="offset-md-1">Metronome Tickrate</Col>
+                                <Col>Choose the number of frames between metronome ticks.</Col>
+                            </Row>
+                            <Row>
+                                <Col md="3" className="offset-md-1">Metronome SFX</Col>
+                                <Col>Choose the sound effect played by the metronome.</Col>
+                            </Row>
                             <br />
                             <Row>
                                 <Col md="4">RNG Control</Col>
