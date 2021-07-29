@@ -52,8 +52,11 @@
 !ram_draygon_rng_left = $7FFB68
 !ram_draygon_rng_right = $7FFB6A
 
-!ram_metronome = $7FFB6C
-!ram_metronome_counter = $7FFB6E
+!ram_game_loop_extras = $7FFB6C
+
+!ram_metronome = $7FFB6E
+!ram_metronome_counter = $7FFB70
+
 
 ; FREE SPACE ^
 

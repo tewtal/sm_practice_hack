@@ -1006,6 +1006,8 @@ ih_game_loop_code:
 
     LDA !ram_transition_counter : INC : STA !ram_transition_counter
 
+    LDA !ram_game_loop_extras : BEQ .handleinputs
+
     LDA !ram_metronome : BEQ +
     JSR metronome
 
