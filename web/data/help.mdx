@@ -1,0 +1,108 @@
+# HUD Modifications
+![HUD Image](/smhud.png)
+
+1. Status display defaults to first enemy's HP, but can be configured to show Charge Timer, X-Factor timer, Shinespark timer and more.
+2. Item collection percentage
+3. Number of E-tanks
+4. Current total energy
+5. Segment timer in minutes.seconds.frames. Resets when starting a new game, loading a preset, or by controller shortcut.
+6. Timer in seconds.frames, resets when entering a new room and updates on item acquisition and room transitions. Can be set to realtime or gametime.
+7. Lag frames, updates same as above
+8. Frames spent by last door transition
+# Controller shortcuts
+
+| **Controller 1**          | 
+| :---                      | :---   |
+| Start + Select + L + R    | Soft reset the game
+| Start + Select            | Opens the in-game menu (configurable in shortcuts menu)
+| B                         | Closes the in-game menu
+| Start + Y + L             | Reloads the last used preset (configurable in shortcuts menu)
+|&nbsp;|
+| **Controller 2**          |
+| L or R                    | Toggles the status display options mentioned in 1
+| Up                        | Increases game speed
+| Down                      | Decreases game speed
+| Right                     | Frame advance
+| Left                      | Restore game speed
+  
+
+# Menu features
+| <th width="600" />            |       |
+| :---                          | :---  |
+| **Equipment**                 | Configure Samus' current equipment
+| - Refill                      | Refills your ammo and energy to their current max
+| - Toggle Category             | Select a category to set your current equipment
+| - Toggle Items                | Toggle major items
+| - Toggle Beams                | Toggle beams
+| - Energy Tanks                | Select your max E-tanks with left/right or A to increment
+| - Reserve Tanks               | Select your max Reserve Tanks with left/right or A to increment
+| - Missiles                    | Select your max Missiles with left/right or A to increment
+| - Super Missiles              | Select your max Super Missiles with left/right or A to increment
+| - Power Bombs                 | Select your max Power Bombs with left/right or A to increment
+|&nbsp;|
+| **Category Presets**          | Presets are pre-configured savestates that are specific to a particular category.
+|&nbsp;|
+| **Select Preset Category**    | Select the desired category to be used with Category Presets
+|&nbsp;|
+| **Teleport**                  | Warp to any save station
+|&nbsp;|
+| **Events**                    | Toggle event flags for doors, bosses, items, and other events
+| - Reset All Events            | Clear all event flags
+| - Reset All Doors             | Reset all door locks
+| - Reset All Items             | Replace all items that have already been collected
+| - Bosses                      | Toggle boss kills
+|&nbsp;|
+| **Misc**                      | Toggle extra features
+| - Blue Suit                   | Give Samus the Blue Suit
+| - Flash Suit                  | Give Samus the Flash Suit (aka Spike Suit)
+| - Hyper Beam                  | Toggle Hyper Beam
+| - Baby Slowdown               | Toggle ultra slow horizontal movement, as if grabbed by the Baby Metroid
+| - Magic Pants                 | Toggle a flashing animation on Samus to show when dash should be held for short charging
+| - Space Pants                 | Toggle a flashing animation on Samus during a space jump to show when you should jump.
+|                               | **Note**: If you have both Magic Pants and Space Pants on, only one of them will be used. 
+|                               | If Space Jump is equipped then Space Pants will be used, otherwise Magic Pants will be used.
+| - Fanfare                     | Toggle the fanfare for collecting items
+| - Music                       | Toggle the music
+| - Samus on top                | Draw Samus on top of foreground objects/tiles
+| - Invincibility               | Prevents Samus from taking damage or knockback
+|&nbsp;|
+| **Infohud**                   | Configure the HUD
+| - Infohud Mode                | Select the value from RAM to be displayed in the bottom-left of the HUD.
+|                               | [Click the link for more details.](/infohudmode)
+| - Room Strat                  | Select which Room Strat to be displayed in the bottom-left of the HUD. 
+|                               | This only works if "Room Strat" is selected as the above Infohud Mode.
+| - Frame Counters              | Toggle the room timer in the top-right of the HUD between realtime and gametime
+| - Artificial Lag              | Select a value to adjust how much lag occurs during normal gameplay. 
+|                               | This is to compensate for the lack of a minimap on the HUD which would normally consume CPU cycles.
+| - Customize RAM Watch         | Setup addresses to be monitored by the RAM Watch HUD mode. Address 1 will appear in the bottom-left corner of the HUD, while Address 2 appears just to the right of Address 1. Memory at these locations can be edited by configuring a Value and selecting 'Write to Address'. Toggle 'Lock Value' to automatically write the value once every frame. RAM Watch must must be the selected HUD mode to continue writing to the address. Only one byte of hex can be configured at a time in the menu. 'Hi' refers to the first byte, while 'Lo' refers to the second. Set the Hi Address to 0D and the Lo Address to EC to monitor the memory address $0DEC, which stores the counter for Samus direction changes while held by Draygon (among other uses).
+|&nbsp;|
+| **Game**                      | Toggle game options
+| - Japanese Text               | Standard game option to toggle between English and Japanese text.
+| - Moon Walk                   | Standard game option for Moon Walk.
+| - Icon Cancel                 | Standard game option for Icon Cancel.
+| - Debug Mode                  | Toggles the debug mode. Note that debug mode shortcuts and features may not be well supported in the practice rom.
+| - Debug CPU Brightness        | Toggles a built-in debug feature to darken the screen after the game is done processing the next frame. Useful for estimating CPU usage.
+| - Minimap                     | Restores the game minimap, which also allows the pause menu map to be updated. When enabled, a map tile counter will also be displayed.
+| - Clear Minimap               | Clears the map tile counter and all minimap data.
+|&nbsp;|
+| **RNG Control**               | Pre-determine boss patterns for Phantoon or Botwoon
+| - Rerandomize                 | Toggles rerandomizing of RNG values upon loading a savestate. SD2SNES/FXPak versions only.
+| - Phan 1st Phase              | Choose the direction and eye opening pattern for Phantoon's first phase
+| - Phan 2nd Phase              | Choose the direction and eye opening pattern for Phantoon's second and subsequent phases
+| - Phan Eye Close              | Choose how long Phantoon's eye will remain open after a ring of flames
+| - Botwoon RNG                 | Choose the opening pattern for Botwoon's first cycle
+| - Draygon from Right          | Choose Draygon's attack type from the right side of the room. Draygon will always 'swoop' after a 'goop'.
+| - Draygon from Left           | Choose Draygon's attack type from the left side of the room. Draygon will always 'swoop' after a 'goop'.
+| - Crocomire RNG               | Set Crocomire to always step forward, or always swipe and shoot projectiles.
+| - Kraid Claw RNG              | Set Kraid's claws to spawn above or below. Kraid is laggier when coming out of the ground if both claws spawn below. 
+|                               | **Note**: It is not possible for both claws to spawn above Kraid, so there will always be some lag generated by a claw below.
+|&nbsp;|
+| **Controller Shortcuts**      | Set or change button combinations for activating features. Press A to select the shortcut and then hold the desired button combination until it turns pink.
+| - Main Menu                   | Open the InfoHUD menu
+| - Reload Preset               | Reload the last selected category preset
+| - Reset Seg Timer             | Reset the segment timer. Takes effect immediately but only updates the display on certain events/actions.
+| - Full Equipment              | Refills your energy and ammo to their current max capacities
+| - Kill Enemies                | Instantly deletes all enemies in the current room
+| - Random Preset               | Randomly chooses a preset from your selected preset category
+| - Clear Shortcuts             | Resets Main Menu shortcut to default and removes button combos for all others.
+<br />

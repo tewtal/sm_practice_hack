@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Build and publish
+name: Build and deploy patches and website
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
@@ -10,28 +10,55 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   build:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - uses: actions/checkout@v2
-
-    # Runs a single command using the runners shell
-    - name: Build and push Docker images
-      uses: docker/build-push-action@v1.1.0
-      with:
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
-        repository: tewtal/smprachack
-        tags: latest
+    - name: Checkout
+      uses: actions/checkout@v2
     
-    - name: Deploy to k8s
-      uses: actions-hub/kubectl@master
-      env:
-        KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
+    - name: Install packages
+      run: |
+        sudo apt-get update -yq && sudo apt-get install cmake build-essential python3.7 -yq
+        mkdir asar
+
+    - name: Download and build asar
+      working-directory: ./asar
+      run: |
+        curl -sSL "https://github.com/RPGHacker/asar/archive/v1.71.tar.gz" -o v1.71.tar.gz
+        tar xfz v1.71.tar.gz
+        cd asar-1.71
+        cmake src
+        make
+
+    - name: Build practice hack patches
+      run: |
+        cp ./asar/asar-1.71/asar/asar-standalone ./tools/asar
+        chmod +x ./build.sh
+        chmod +x ./build_PAL.sh
+        ./build.sh
+        ./build_PAL.sh
+        mkdir ./web/public/patches
+        cp build/smhack20_sd2snes.ips ./web/public/patches/sd2snes-ntsc.ips
+        cp build/smhack20.ips ./web/public/patches/emulator-ntsc.ips
+        cp build/smpalhack20_sd2snes.ips ./web/public/patches/sd2snes-pal.ips
+        cp build/smpalhack20.ips ./web/public/patches/emulator-pal.ips
+    
+    - name: Set up node
+      uses: actions/setup-node@v2
+
+    - name: Build and export web application
+      working-directory: ./web
+      run: |
+        npm i
+        npx next build
+        npx next export
+
+    - name: Deploy static website to azure
+      uses: Azure/static-web-apps-deploy@v1
       with:
-        args: rollout restart deployments/smprachack-deployment
+        azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+        action: 'upload'
+        app_location: './web/out/'
+        output_location: ''
+        skip_app_build: true
