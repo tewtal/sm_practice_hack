@@ -2,7 +2,9 @@
 *.bst
 resources/sm_orig.s[mf]c
 resources/smpal_orig.s[mf]c
-build/*
+build/*.ips
+build/*.smc
+build/*.sfc
 *.sw[op]
 tools/*.smv
 tools/*.asm
