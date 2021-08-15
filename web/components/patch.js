@@ -4,7 +4,7 @@ import { saveAs } from 'file-saver'
 
 export default function Patch({variant, romData}) {
     const [formData, setFormData] = useState(
-        Object.fromEntries([...config.configurations.map(c => ([c.id, c.options[0].id])), ["variant", variant]])
+        Object.fromEntries(config.configurations.map(c => ([c.id, c.options[0].id])))
     );
 
     const applyIps = (rom, patch) => {
@@ -30,7 +30,8 @@ export default function Patch({variant, romData}) {
 
     const onDownload = async () => {
         try {
-            const patch = config.patches.find((item) => { return Object.keys(formData).every(field => item[field] == formData[field]) });
+            const options = {...formData, "variant": variant};
+            const patch = config.patches.find((item) => { return Object.keys(options).every(field => item[field] == options[field]) });
             const patchData = new Uint8Array(await (await fetch(patch.file, { cache: 'no-store' })).arrayBuffer());
             const fileName = config.name + "-v" + config.version + Object.entries(patch).filter(([k,v]) => k !== 'file' && k !== 'size').reduce((o, [k, v]) => o + "-" + v.toString().toLowerCase(), "") + ".sfc";
             let expandedRom = new Uint8Array(patch.size);
@@ -56,7 +57,7 @@ export default function Patch({variant, romData}) {
             {config.configurations.map(c => (
                 <div key={c.id} className="mb-4 mt-4">
                 <label className="block mx-1 mb-2 text-sm font-bold text-base" htmlFor={c.id}>{c.name}</label>
-                <select id={c.id} className="w-full px-2 h-10 border rounded shadow cursor-pointer" onChange={(e) => setFormData(d => ({...d, [c.id]: e.target.value}))}>
+                <select id={c.id} className="w-full px-2 h-10 border rounded shadow cursor-pointer" onChange={(e) => setFormData(d => ({...d, [c.id]: e.target.value}))} value={formData[c.id]}>
                     {c.options.map(o => (
                         <option id={o.id} value={o.id} key={o.id}>{o.name}</option>
                     ))}
