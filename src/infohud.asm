@@ -271,8 +271,14 @@ ih_after_room_transition:
     LDA !ram_transition_counter : STA !ram_last_door_lag_frames
     LDA #$0000 : STA !ram_transition_flag
 
+    ; Check if MBHP needs to be disabled
+    LDA !sram_display_mode : CMP #$0001 : BNE +
+    LDA !sram_room_strat : CMP #$0007 : BNE +
+    LDA $079B : CMP #$DD58 : BEQ +
+    LDA #$0000 : STA !sram_display_mode
+
     ; Update HUD
-    JSL ih_update_hud_code
++   JSL ih_update_hud_code
 
     ; Reset gametime/transition timer
     LDA #$0000 : STA !ram_transition_counter
@@ -1000,7 +1006,12 @@ ih_game_loop_code:
 
     LDA !ram_transition_counter : INC : STA !ram_transition_counter
 
-    LDA !ram_magic_pants_enabled : BEQ .handleinputs
+    LDA !ram_game_loop_extras : BEQ .handleinputs
+
+    LDA !ram_metronome : BEQ +
+    JSR metronome
+
++   LDA !ram_magic_pants_enabled : BEQ .handleinputs
     CMP #$0001 : BEQ .magicpants
     CMP #$0002 : BEQ .spacepants
 
@@ -1088,6 +1099,31 @@ ih_game_loop_code:
     STA !ram_enemy_hp
     STA !ram_shine_counter
     JMP .done
+}
+
+metronome:
+{
+    LDA !ram_metronome_counter : INC
+    CMP !sram_metronome_tickrate : BEQ .tick
+    CMP #$0002 : BEQ .eraseHUD
+    STA !ram_metronome_counter
+    RTS
+
+  .eraseHUD
+    STA !ram_metronome_counter
+    LDA !IH_BLANK : STA $7EC662
+    RTS
+
+  .tick
+    LDA !IH_LETTER_X : STA $7EC662
+    LDA #$0000 : STA !ram_metronome_counter
+    LDA !sram_metronome_sfx : ASL : TAX
+    LDA.l MetronomeSFX,X : JSL !SFX_LIB1
+    RTS
+
+MetronomeSFX:
+    ; missile, click, beep, shot, spazer
+    dw #$0003, #$0039, #$0036, #$000B, #$000F
 }
 
 magic_pants:

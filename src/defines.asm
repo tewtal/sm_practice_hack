@@ -17,22 +17,22 @@
 !ram_ih_controller = $7FFB1A
 !ram_slowdown_controller_1 = $7FFB1C
 !ram_slowdown_controller_2 = $7FFB1E
-!ram_slowdown_mode = $7FFB20
-!ram_slowdown_frames = $7FFB22
+!ram_slowdown_frames = $7FFB20
+!ram_slowdown_mode = $7EFFFC ; $7E
 
-!ram_tmp_1 = $7FFB24
-!ram_tmp_2 = $7FFB26
-!ram_tmp_3 = $7FFB28
-!ram_tmp_4 = $7FFB2A
+!ram_tmp_1 = $7FFB22
+!ram_tmp_2 = $7FFB24
+!ram_tmp_3 = $7FFB26
+!ram_tmp_4 = $7FFB28
 
-!ram_last_hp = $7FFB2C
-!ram_etanks = $7FFB2E
-!ram_pct_1 = $7FFB30
-!ram_pct_2 = $7FFB32
-!ram_armed_shine_duration = $7FFB34
-!ram_minimap = $7FFB36
-!ram_map_counter = $7FFB38
-!ram_vcounter_data = $7FFB3A
+!ram_last_hp = $7FFB2A
+!ram_etanks = $7FFB2C
+!ram_pct_1 = $7FFB2E
+!ram_pct_2 = $7FFB30
+!ram_armed_shine_duration = $7FFB32
+!ram_minimap = $7FFB34
+!ram_map_counter = $7FFB36
+!ram_vcounter_data = $7FFB38
 
 ; FREE SPACE ^
 
@@ -51,6 +51,12 @@
 !ram_botwoon_rng = $7FFB66
 !ram_draygon_rng_left = $7FFB68
 !ram_draygon_rng_right = $7FFB6A
+
+!ram_game_loop_extras = $7FFB6C
+
+!ram_metronome = $7FFB6E
+!ram_metronome_counter = $7FFB70
+
 
 ; FREE SPACE ^
 
@@ -197,6 +203,10 @@
 !IH_INPUT_ANGLE_UP = $7E09BC
 !IH_INPUT_ANGLE_DOWN = $7E09BE
 
+!SFX_LIB1 = $80903F
+!SFX_LIB2 = $8090C1
+!SFX_LIB3 = $809143
+
 
 ; -----
 ; SRAM
@@ -226,6 +236,8 @@
 !sram_preset_category = $702030
 !sram_room_strat = $702032
 !sram_sprite_prio_flag = $702034
+!sram_metronome_tickrate = $702036
+!sram_metronome_sfx = $702038
 
 ; FREE SPACE ^
 

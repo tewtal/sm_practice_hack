@@ -162,7 +162,7 @@ MainMenu:
     dw #mm_goto_rngmenu
     dw #mm_goto_ctrlsmenu
     dw #$0000
-    %cm_header("SM PRACTICE HACK 2.2.6")
+    %cm_header("SM PRACTICE HACK 2.2.7")
 
 mm_goto_equipment:
     %cm_submenu("Equipment", #EquipmentMenu)
@@ -456,47 +456,46 @@ action_category:
     TYA : ASL #4 : TAX
 
     ; Items
-    LDA.l .table, X : STA $7E09A4 : STA $7E09A2 : INX #2
+    LDA .table,X : STA $7E09A4 : STA $7E09A2 : INX #2
 
     ; Beams
-    LDA.l .table, X : STA $7E09A8 : AND #$FFFB : STA $7E09A6 : INX #2
+    LDA .table,X : STA $7E09A8 : TAY
+    AND #$000C : CMP #$000C : BEQ .murderBeam
+    TYA : STA $7E09A6 : INX #2 : BRA +
+
+  .murderBeam
+    TYA : AND #$100B : STA $7E09A6 : INX #2
 
     ; Health
-    LDA.l .table, X : STA $7E09C2 : STA $7E09C4 : INX #2
++   LDA .table,X : STA $7E09C2 : STA $7E09C4 : INX #2
 
     ; Missiles
-    LDA.l .table, X : STA $7E09C6 : STA $7E09C8 : INX #2
+    LDA .table,X : STA $7E09C6 : STA $7E09C8 : INX #2
 
     ; Supers
-    LDA.l .table, X : STA $7E09CA : STA $7E09CC : INX #2
+    LDA .table,X : STA $7E09CA : STA $7E09CC : INX #2
 
     ; PBs
-    LDA.l .table, X : STA $7E09CE : STA $7E09D0 : INX #2
+    LDA .table,X : STA $7E09CE : STA $7E09D0 : INX #2
 
     ; Reserves
-    LDA.l .table, X : STA $7E09D4 : STA $7E09D6 : INX #2
+    LDA .table,X : STA $7E09D4 : STA $7E09D6 : INX #2
 
-    CPY #$0000 : BNE +
-
-    LDA $7E09A6 : AND #$000C : CMP #$000C : BNE +
-    LDA $7E09A6 : EOR #$0004 : STA $7E09A6
-
-    +
     JSR cm_set_etanks_and_reserve
     LDA #!SOUND_MENU_JSR : JSL $80903F
     RTS
 
   .table
     ;  Items,  Beams,  Health, Miss,   Supers, PBs,    Reserv, Dummy
-    dw #$F32F, #$100F, #$05db, #$00E6, #$0032, #$0032, #$0190, #$0000        ;    100%
-    dw #$3125, #$1007, #$018F, #$000F, #$000A, #$0005, #$0000, #$0000        ;    any% new
-    dw #$3325, #$100B, #$018F, #$000F, #$000A, #$0005, #$0000, #$0000        ;   any% old
-    dw #$1025, #$1002, #$018F, #$000A, #$000A, #$0005, #$0000, #$0000        ;    14% ice
-    dw #$3025, #$1000, #$018F, #$000A, #$000A, #$0005, #$0000, #$0000        ;    14% speed
-    dw #$F32F, #$100F, #$02BC, #$0064, #$0014, #$0014, #$012C, #$0000        ;   gt code
-    dw #$710C, #$1001, #$031F, #$001E, #$0019, #$0014, #$0064, #$0000        ;   rbo
-    dw #$9004, #$0000, #$00C7, #$0005, #$0005, #$0005, #$0000, #$0000        ;    any% glitched
-    dw #$0000, #$0000, #$0063, #$0000, #$0000, #$0000, #$0000, #$0000        ;   nothing
+    dw #$F32F, #$100F, #$05DB, #$00E6, #$0032, #$0032, #$0190, #$0000        ; 100%
+    dw #$3125, #$1007, #$018F, #$000F, #$000A, #$0005, #$0000, #$0000        ; any% new
+    dw #$3325, #$100B, #$018F, #$000F, #$000A, #$0005, #$0000, #$0000        ; any% old
+    dw #$1025, #$1002, #$018F, #$000A, #$000A, #$0005, #$0000, #$0000        ; 14% ice
+    dw #$3025, #$1000, #$018F, #$000A, #$000A, #$0005, #$0000, #$0000        ; 14% speed
+    dw #$F32F, #$100F, #$02BC, #$0064, #$0014, #$0014, #$012C, #$0000        ; gt code
+    dw #$710C, #$1001, #$031F, #$001E, #$0019, #$0014, #$0064, #$0000        ; rbo
+    dw #$9004, #$0000, #$00C7, #$0005, #$0005, #$0005, #$0000, #$0000        ; any% glitched
+    dw #$0000, #$0000, #$0063, #$0000, #$0000, #$0000, #$0000, #$0000        ; nothing
 }
 
 
@@ -822,10 +821,10 @@ misc_babyslowdown:
     %cm_toggle("Baby Slowdown", $7E0A66, #$0002, #0)
 
 misc_magicpants:
-    %cm_toggle_bit("Magic Pants", !ram_magic_pants_enabled, #$0001, #0)
+    %cm_toggle_bit("Magic Pants", !ram_magic_pants_enabled, #$0001, GameLoopExtras)
 
 misc_spacepants:
-    %cm_toggle_bit("Space Pants", !ram_magic_pants_enabled, #$0002, #0)
+    %cm_toggle_bit("Space Pants", !ram_magic_pants_enabled, #$0002, GameLoopExtras)
 
 misc_fanfare_toggle:
     %cm_toggle("Fanfare", !sram_fanfare_toggle, #$0001, #0)
@@ -1356,6 +1355,9 @@ if !FEATURE_PAL
 endif
     dw #game_minimap
     dw #game_clear_minimap
+    dw #game_metronome
+    dw #game_metronome_tickrate
+    dw #game_metronome_sfx
     dw #$0000
     %cm_header("GAME")
 
@@ -1403,6 +1405,38 @@ game_clear_minimap:
     STA $7EDD1C,X : STA $7E07F7,X
     DEX : DEX : BPL .clear_minimap_loop
     RTS
+
+game_metronome:
+    %cm_toggle("Metronome", !ram_metronome, #$0001, GameLoopExtras)
+
+game_metronome_tickrate:
+    %cm_numfield("Metronome Tickrate", !sram_metronome_tickrate, 1, 255, 1, #.routine)
+    .routine
+        LDA #$0000 : STA !ram_metronome_counter
+        RTS
+
+game_metronome_sfx:
+    dw !ACTION_CHOICE
+    dl #!sram_metronome_sfx
+    dw #$0000
+    db #$28, "Metronome SFX", #$FF
+        db #$28, "    MISSILE", #$FF
+        db #$28, "      CLICK", #$FF
+        db #$28, "       BEEP", #$FF
+        db #$28, " POWER BEAM", #$FF
+        db #$28, "     SPAZER", #$FF
+    db #$FF
+
+GameLoopExtras:
+{
+    LDA !ram_magic_pants_enabled : BNE .enabled
+    LDA !ram_metronome : BNE .enabled
+    LDA #$0000 : STA !ram_game_loop_extras
+    RTS
+  .enabled
+    LDA #$0001 : STA !ram_game_loop_extras
+    RTS
+}
 
 
 ; ----------
