@@ -627,7 +627,7 @@ preset_prkd_brinstar_caterpillars_down:
     dl $7E0911 : db $02 : dw $0200 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $4400 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $0089 ; Health
+    dl $7E09C2 : db $02 : dw $0093 ; Health
     dl $7E0AF6 : db $02 : dw $0286 ; Samus X
     dw #$FFFF
 .after
@@ -660,7 +660,7 @@ preset_prkd_brinstar_caterpillars_up:
     dl $7E0911 : db $02 : dw $0200 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $CC00 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $0075 ; Health
+    dl $7E09C2 : db $02 : dw $007F ; Health
     dl $7E09CE : db $02 : dw $0005 ; Pbs
     dl $7E09D0 : db $02 : dw $0005 ; Max pbs
     dl $7E09D2 : db $02 : dw $0003 ; Currently selected item
@@ -821,6 +821,7 @@ preset_prkd_wrecked_ship_shaft_to_supers:
     dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0226 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $FC00 ; Screen subpixel Y position
+    dl $7E09D2 : db $02 : dw $0003 ; Currently selected item
     dl $7E0AF6 : db $02 : dw $02C6 ; Samus X
     dl $7E0AFA : db $02 : dw $006B ; Samus Y
     dw #$FFFF
@@ -873,6 +874,7 @@ preset_prkd_wrecked_ship_upper_west_ocean:
     dl $7E09C6 : db $02 : dw $0009 ; Missiles
     dl $7E09CA : db $02 : dw $0006 ; Supers
     dl $7E09CE : db $02 : dw $0003 ; Pbs
+    dl $7E09D2 : db $02 : dw $0000 ; Currently selected item
     dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0004 ; More position/state
     dl $7E0AF6 : db $02 : dw $003B ; Samus X
