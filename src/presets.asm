@@ -203,6 +203,7 @@ preset_banks:
   dw preset_gtmax_crateria_ship>>16
   dw preset_14ice_crateria_ceres_elevator>>16
   dw preset_14speed_crateria_ceres_elevator>>16
+  dw preset_nintendopower_crateria_ship>>16
   dw preset_allbosskpdr_crateria_ceres_elevator>>16
   dw preset_allbosspkdr_crateria_ceres_elevator>>16
   dw preset_allbossprkd_crateria_ceres_elevator>>16
@@ -403,4 +404,10 @@ org $E68000
   print pc, " gtmax data start"
   incsrc presets/gtmax_data.asm
   print pc, " gtmax data end"
+
+org $E78000
+  ; 20F8h (length in hex)
+  print pc, " nintendopower data start"
+  incsrc presets/nintendopower_data.asm
+  print pc, " nintendopower data end"
 

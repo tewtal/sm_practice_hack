@@ -122,6 +122,7 @@ preset_category_submenus:
     dw #PresetsMenuGtmax
     dw #PresetsMenu14ice
     dw #PresetsMenu14speed
+    dw #PresetsMenuNintendopower
     dw #PresetsMenuAllbosskpdr
     dw #PresetsMenuAllbosspkdr
     dw #PresetsMenuAllbossprkd    
@@ -141,6 +142,7 @@ preset_category_banks:
     dw #PresetsMenuGtmax>>16
     dw #PresetsMenu14ice>>16
     dw #PresetsMenu14speed>>16
+    dw #PresetsMenuNintendopower>>16
     dw #PresetsMenuAllbosskpdr>>16
     dw #PresetsMenuAllbosspkdr>>16
     dw #PresetsMenuAllbossprkd>>16
@@ -259,6 +261,10 @@ org $FF8000
   print pc, " gtmax menu start"
   incsrc presets/gtmax_menu.asm
   print pc, " gtmax menu end"
+
+  print pc, " nintendopower menu start"
+  incsrc presets/nintendopower_menu.asm
+  print pc, " nintendopower menu end"
 
 pullpc
 
@@ -615,8 +621,10 @@ SelectPresetCategoryMenu:
     dw #precat_pkrd
     dw #precat_kpdr25
     dw #precat_gtclassic
+    dw #precat_gtmax
     dw #precat_14ice
     dw #precat_14speed
+    dw #precat_nintendopower
     dw #precat_allbosskpdr
     dw #precat_allbosspkdr
     dw #precat_allbossprkd
@@ -630,14 +638,16 @@ precat_current:
     db #$28, "CURRENT PRESET", #$FF
         db #$28, "       PRKD", #$FF ; Note the "y" ;)
         db #$28, "       KPDR", #$FF
-        db #$28, "   100 LATE", #$FF
-        db #$28, "  100 EARLY", #$FF
+        db #$28, "  100% LATE", #$FF
+        db #$28, " 100% EARLY", #$FF
         db #$28, "        RBO", #$FF
         db #$28, "       PKRD", #$FF
         db #$28, "     KPDR25", #$FF
         db #$28, " GT CLASSIC", #$FF
-        db #$28, "     14 ICE", #$FF
-        db #$28, "   14 SPEED", #$FF
+        db #$28, "    GT MAX%", #$FF
+        db #$28, "    14% ICE", #$FF
+        db #$28, "  14% SPEED", #$FF
+        db #$28, "  NIN POWER", #$FF
         db #$28, "   ALL KPDR", #$FF
         db #$28, "   ALL PKDR", #$FF
         db #$28, "   ALL PRKD", #$FF
@@ -668,20 +678,26 @@ precat_kpdr25:
 precat_gtclassic:
     %cm_jsr("GT Classic", #action_select_preset_category, #$0007)
 
+precat_gtmax:
+    %cm_jsr("GT Max%", #action_select_preset_category, #$0008)
+
 precat_14ice:
-    %cm_jsr("Low% Ice", #action_select_preset_category, #$0008)
+    %cm_jsr("Low% Ice", #action_select_preset_category, #$0009)
 
 precat_14speed:
-    %cm_jsr("Low% Speed", #action_select_preset_category, #$0009)
+    %cm_jsr("Low% Speed", #action_select_preset_category, #$000A)
+
+precat_nintendopower:
+    %cm_jsr("Nintendo Power", #action_select_preset_category, #$000B)
 
 precat_allbosskpdr:
-    %cm_jsr("All Bosses KPDR", #action_select_preset_category, #$000A)
+    %cm_jsr("All Bosses KPDR", #action_select_preset_category, #$000C)
 
 precat_allbosspkdr:
-    %cm_jsr("All Bosses PKDR", #action_select_preset_category, #$000B)
+    %cm_jsr("All Bosses PKDR", #action_select_preset_category, #$000D)
 
 precat_allbossprkd:
-    %cm_jsr("All Bosses PRKD", #action_select_preset_category, #$000C)
+    %cm_jsr("All Bosses PRKD", #action_select_preset_category, #$000E)
 
 action_select_preset_category:
 {
