@@ -200,6 +200,7 @@ preset_banks:
   dw preset_pkrd_crateria_ship>>16
   dw preset_kpdr25_bombs_ceres_elevator>>16
   dw preset_gtclassic_crateria_ship>>16
+  dw preset_gtmax_crateria_ship>>16
   dw preset_14ice_crateria_ceres_elevator>>16
   dw preset_14speed_crateria_ceres_elevator>>16
   dw preset_allbosskpdr_crateria_ceres_elevator>>16
@@ -397,4 +398,9 @@ org $E68000
   print pc, " pkrd data start"
   incsrc presets/pkrd_data.asm
   print pc, " pkrd data end"
+
+  ; 420Ah (length in hex)
+  print pc, " gtmax data start"
+  incsrc presets/gtmax_data.asm
+  print pc, " gtmax data end"
 

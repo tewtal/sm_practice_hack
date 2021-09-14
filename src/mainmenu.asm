@@ -119,6 +119,7 @@ preset_category_submenus:
     dw #PresetsMenuPkrd
     dw #PresetsMenuKpdr25
     dw #PresetsMenuGtclassic
+    dw #PresetsMenuGtmax
     dw #PresetsMenu14ice
     dw #PresetsMenu14speed
     dw #PresetsMenuAllbosskpdr
@@ -137,6 +138,7 @@ preset_category_banks:
     dw #PresetsMenuPkrd>>16
     dw #PresetsMenuKpdr25>>16
     dw #PresetsMenuGtclassic>>16
+    dw #PresetsMenuGtmax>>16
     dw #PresetsMenu14ice>>16
     dw #PresetsMenu14speed>>16
     dw #PresetsMenuAllbosskpdr>>16
@@ -253,6 +255,10 @@ org $FF8000
   print pc, " allbossprkd menu start"
   incsrc presets/allbossprkd_menu.asm
   print pc, " allbossprkd menu end"
+
+  print pc, " gtmax menu start"
+  incsrc presets/gtmax_menu.asm
+  print pc, " gtmax menu end"
 
 pullpc
 
