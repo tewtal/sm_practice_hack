@@ -162,7 +162,7 @@ MainMenu:
     dw #mm_goto_rngmenu
     dw #mm_goto_ctrlsmenu
     dw #$0000
-    %cm_header("SM PRACTICE HACK 2.2.7")
+    %cm_header("SM PRACTICE HACK 2.2.8")
 
 mm_goto_equipment:
     %cm_submenu("Equipment", #EquipmentMenu)
@@ -1033,6 +1033,7 @@ InfoHudMenu:
     dw #ih_goto_room_strat
     dw #ih_room_strat
     dw #ih_room_counter
+    dw #ih_reset_seg_later
     dw #ih_lag
     dw #ih_ram_watch
     dw #$0000
@@ -1229,6 +1230,12 @@ ih_room_counter:
 
 ih_lag:
     %cm_numfield("Artificial Lag", !sram_artificial_lag, 0, 64, 1, #0)
+
+ih_reset_seg_later:
+    %cm_jsr("Reset Segment in Next Room", #.routine, #$FFFF)
+    .routine
+        TYA : STA !ram_reset_segment_later
+        RTS
 
 ih_ram_watch:
     %cm_submenu("Customize RAM Watch", #RAMWatchMenu)
@@ -1565,6 +1572,7 @@ CtrlMenu:
         dw #ctrl_load_state
     endif
     dw #ctrl_reset_segment_timer
+    dw #ctrl_reset_segment_later
     dw #ctrl_full_equipment
     dw #ctrl_kill_enemies
     dw #ctrl_random_preset
@@ -1588,6 +1596,9 @@ ctrl_load_state:
 ctrl_reset_segment_timer:
     %cm_ctrl_shortcut("Reset Seg Timer", !sram_ctrl_reset_segment_timer)
 
+ctrl_reset_segment_later:
+    %cm_ctrl_shortcut("Reset Seg Later", !sram_ctrl_reset_segment_later)
+
 ctrl_full_equipment:
     %cm_ctrl_shortcut("Full Equipment", !sram_ctrl_full_equipment)
 
@@ -1610,6 +1621,7 @@ action_clear_shortcuts:
     STA !sram_ctrl_kill_enemies
     STA !sram_ctrl_random_preset
     STA !sram_ctrl_reset_segment_timer
+    STA !sram_ctrl_reset_segment_later
     ; menu to default, Start + Select
     LDA #$3000 : STA !sram_ctrl_menu
     RTS

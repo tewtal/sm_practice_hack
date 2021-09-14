@@ -62,6 +62,10 @@ gamemode_shortcuts:
     AND !IH_CONTROLLER_PRI_NEW : BEQ +
     JMP .reset_segment_timer
 
+  + LDA !IH_CONTROLLER_PRI : AND !sram_ctrl_reset_segment_later : CMP !sram_ctrl_reset_segment_later : BNE +
+    AND !IH_CONTROLLER_PRI_NEW : BEQ +
+    JMP .reset_segment_later
+
   + LDA !IH_CONTROLLER_PRI : AND !sram_ctrl_full_equipment : CMP !sram_ctrl_full_equipment : BNE +
     AND !IH_CONTROLLER_PRI_NEW : BEQ +
     JMP .full_equipment
@@ -110,11 +114,14 @@ gamemode_shortcuts:
 +   JMP .random_preset
 
   .reset_segment_timer
-    LDA #$0000
-    STA !ram_seg_rt_frames
-    STA !ram_seg_rt_seconds
-    STA !ram_seg_rt_minutes
+    LDA #$0000 : STA !ram_seg_rt_frames
+    STA !ram_seg_rt_seconds : STA !ram_seg_rt_minutes
     ; CLC to continue normal gameplay after resetting segment timer
+    CLC : RTS
+
+  .reset_segment_later
+    LDA #$7FFF : STA !ram_reset_segment_later
+    ; CLC to continue normal gameplay after setting segement timer reset
     CLC : RTS
 
   .full_equipment
