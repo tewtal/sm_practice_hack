@@ -812,7 +812,9 @@ action_teleport:
     LDA #$05 : STA $7ED914
     REP #$20
 
-    JSL reset_all_counters
+    STZ $1C1F ; Clear message box index
+
++   JSL reset_all_counters
     JSL stop_all_sounds
 
     LDA #$0001 : STA !ram_cm_leave
