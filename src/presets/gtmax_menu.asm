@@ -12,7 +12,7 @@ PresetsMenuGtmax:
     dw #presets_goto_gtmax_brinstar_cleanup_2
     dw #presets_goto_gtmax_tourian
     dw #$0000
-    %cm_header("PRESETS FOR GTMAX")
+    %cm_header("PRESETS FOR GT MAX")
 
 presets_goto_gtmax_crateria:
     %cm_submenu("Crateria", #presets_submenu_gtmax_crateria)
