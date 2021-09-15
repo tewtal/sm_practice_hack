@@ -2,7 +2,7 @@
 ; by acmlm, total, Myria
 ;
 
-org $80D000
+org $80F800
 print pc, " save start"
 ; These can be modified to do game-specific things before and after saving and loading
 ; Both A and X/Y are 16-bit here
@@ -329,4 +329,4 @@ vm_done:
     jmp ($0002,x)
 
 print pc, " save end"
-warnpc $80D300
+warnpc $80FC00
