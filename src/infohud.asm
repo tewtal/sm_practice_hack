@@ -155,7 +155,7 @@ endif
 
 
 ; Main bank stuff
-org $E08000
+org $F08000
 print pc, " infohud start"
 ih_max_etank_code:
 {
@@ -1243,7 +1243,7 @@ print pc, " infohud end"
 
 
 ; Stuff that needs to be placed in bank 80
-org $80D300
+org $80FC00
 print pc, " infohud bank80 start"
 
 NumberGFXTable:
@@ -1285,5 +1285,5 @@ HexToNumberGFX2:
     dw #$0C09, #$0C00, #$0C01, #$0C02, #$0C03, #$0C04, #$0C05, #$0C06, #$0C07, #$0C08
 
 print pc, " infohud bank80 end"
-warnpc $80F000
+warnpc $80FFBF ; header
 

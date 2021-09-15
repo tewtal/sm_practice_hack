@@ -1,4 +1,4 @@
-!SRAM_VERSION = $0007
+!SRAM_VERSION = $0008
 
 
 ; hijack, runs as game is starting, JSR to RAM initialization to avoid bad values
@@ -52,6 +52,7 @@ init_sram:
     LDA #$0000 : STA !sram_ctrl_full_equipment
     LDA #$0000 : STA !sram_ctrl_kill_enemies
     LDA #$0000 : STA !sram_ctrl_reset_segment_timer
+    LDA #$0000 : STA !sram_ctrl_reset_segment_later
     LDA #$0000 : STA !sram_ctrl_random_preset
 
     ; Input Cheat Sheet  (#$XXYY)
