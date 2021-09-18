@@ -50,13 +50,21 @@ gamemode_shortcuts:
         JMP .load_state
     endif
 
-  + LDA !IH_CONTROLLER_PRI : AND !sram_ctrl_kill_enemies : CMP !sram_ctrl_kill_enemies : BNE +
-    AND !IH_CONTROLLER_PRI_NEW : BEQ +
-    JMP .kill_enemies
-
   + LDA !IH_CONTROLLER_PRI : AND !sram_ctrl_load_last_preset : CMP !sram_ctrl_load_last_preset : BNE +
     AND !IH_CONTROLLER_PRI_NEW : BEQ +
     JMP .load_last_preset
+
+  + LDA !IH_CONTROLLER_PRI : AND !sram_ctrl_random_preset : CMP !sram_ctrl_random_preset : BNE +
+    AND !IH_CONTROLLER_PRI_NEW : BEQ +
+    JMP .random_preset
+
+    ; Check if any less common shortcuts are configured
+  + LDA !ram_game_mode_extras : BNE +
+    JMP .check_menu
+
+  + LDA !IH_CONTROLLER_PRI : AND !sram_ctrl_kill_enemies : CMP !sram_ctrl_kill_enemies : BNE +
+    AND !IH_CONTROLLER_PRI_NEW : BEQ +
+    JMP .kill_enemies
 
   + LDA !IH_CONTROLLER_PRI : AND !sram_ctrl_reset_segment_timer : CMP !sram_ctrl_reset_segment_timer : BNE +
     AND !IH_CONTROLLER_PRI_NEW : BEQ +
@@ -70,10 +78,7 @@ gamemode_shortcuts:
     AND !IH_CONTROLLER_PRI_NEW : BEQ +
     JMP .full_equipment
 
-  + LDA !IH_CONTROLLER_PRI : AND !sram_ctrl_random_preset : CMP !sram_ctrl_random_preset : BNE +
-    AND !IH_CONTROLLER_PRI_NEW : BEQ +
-    JMP .random_preset
-
+  .check_menu
   + LDA !IH_CONTROLLER_PRI : AND !sram_ctrl_menu : CMP !sram_ctrl_menu : BNE +
     AND !IH_CONTROLLER_PRI_NEW : BEQ +
     JMP .menu
@@ -81,21 +86,19 @@ gamemode_shortcuts:
     ; No shortcuts matched, CLC so we won't skip normal gameplay
   + CLC : RTS
 
+if !FEATURE_SD2SNES
+; This if statement is to prevent an assembler error from an unknown method. The one on the call to this
+; prevents the button combo from being intercepted by the non-sd2snes rom
   .save_state
-    ; This if statement is to prevent an assembler error from an unknown method. The one on the call to this
-    ; prevents the button combo from being intercepted by the non-sd2snes rom
-    if !FEATURE_SD2SNES
-        JSL save_state
-    endif
+    JSL save_state
     ; SEC to skip normal gameplay for one frame after saving state
     SEC : RTS
 
   .load_state
-    if !FEATURE_SD2SNES
-        JSL load_state
-    endif
+    JSL load_state
     ; SEC to skip normal gameplay for one frame after loading state
     SEC : RTS
+endif
 
   .kill_enemies
     LDA #$0000

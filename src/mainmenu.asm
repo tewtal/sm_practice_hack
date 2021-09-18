@@ -1612,7 +1612,6 @@ CtrlMenu:
     dw #$0000
     %cm_header("CONTROLLER SHORTCUTS")
 
-
 ctrl_menu:
     %cm_ctrl_shortcut("Main menu", !sram_ctrl_menu)
 
@@ -1646,6 +1645,7 @@ ctrl_clear_shortcuts:
 action_clear_shortcuts:
 {
     TYA
+    STA !ram_game_mode_extras
     STA !sram_ctrl_save_state
     STA !sram_ctrl_load_state
     STA !sram_ctrl_load_last_preset
@@ -1657,4 +1657,18 @@ action_clear_shortcuts:
     ; menu to default, Start + Select
     LDA #$3000 : STA !sram_ctrl_menu
     RTS
+}
+
+GameModeExtras:
+{
+    ; Check if any less common shortcuts are configured
+    LDA !sram_ctrl_reset_segment_timer : BNE .enabled
+    LDA !sram_ctrl_reset_segment_later : BNE .enabled
+    LDA !sram_ctrl_kill_enemies : BNE .enabled
+    LDA !sram_ctrl_full_equipment : BNE .enabled
+    RTL
+
+  .enabled
+    STA !ram_game_mode_extras
+    RTL
 }
