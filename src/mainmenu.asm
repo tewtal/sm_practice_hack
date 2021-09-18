@@ -125,7 +125,7 @@ preset_category_submenus:
     dw #PresetsMenuNintendopower
     dw #PresetsMenuAllbosskpdr
     dw #PresetsMenuAllbosspkdr
-    dw #PresetsMenuAllbossprkd    
+    dw #PresetsMenuAllbossprkd
     dw #$0000
 }
 
@@ -166,7 +166,7 @@ MainMenu:
     dw #mm_goto_rngmenu
     dw #mm_goto_ctrlsmenu
     dw #$0000
-    %cm_header("SM PRACTICE HACK 2.2.8")
+    %cm_header("SM PRACTICE HACK 2.2.9")
 
 mm_goto_equipment:
     %cm_submenu("Equipment", #EquipmentMenu)
