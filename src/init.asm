@@ -57,6 +57,10 @@ init_sram:
     LDA #$0000 : STA !sram_ctrl_reset_segment_timer
     LDA #$0000 : STA !sram_ctrl_reset_segment_later
     LDA #$0000 : STA !sram_ctrl_random_preset
+    LDA #$0000 : STA !sram_ctrl_save_custom_preset
+    LDA #$0000 : STA !sram_ctrl_load_custom_preset
+    LDA #$0000 : STA !sram_ctrl_inc_custom_preset
+    LDA #$0000 : STA !sram_ctrl_dec_custom_preset
 
     ; Input Cheat Sheet  ($4218)
     ; $8000 = B
@@ -82,6 +86,7 @@ init_sram:
     LDA #$0000 : STA !sram_last_preset
     LDA #$0000 : STA !sram_save_has_set_rng
     LDA #$0000 : STA !sram_preset_category
+    LDA #$0000 : STA !sram_custom_preset_slot
     LDA #$0000 : STA !sram_room_strat
     LDA #$0000 : STA !sram_sprite_prio_flag
     LDA #$000A : STA !sram_metronome_tickrate

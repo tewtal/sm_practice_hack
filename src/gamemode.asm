@@ -20,14 +20,14 @@ gamemode_start:
     PHP
 
     ; don't load presets if we're in credits
-    LDA $0998 : CMP #$0027 : BEQ +
+    LDA $0998 : CMP #$0027 : BEQ ++
 
-    LDA !ram_load_preset : BEQ +
+    LDA !ram_custom_preset : BNE +
+    LDA !ram_load_preset : BEQ ++
 
-    JSL preset_load
++   JSL preset_load
 
-    +
-    LDA $0998 : AND #$00FF
+++  LDA $0998 : AND #$00FF
     PLP
     PLB
     RTL
@@ -58,9 +58,25 @@ gamemode_shortcuts:
     AND !IH_CONTROLLER_PRI_NEW : BEQ +
     JMP .random_preset
 
+  + LDA !IH_CONTROLLER_PRI : AND !sram_ctrl_save_custom_preset : CMP !sram_ctrl_save_custom_preset : BNE +
+    AND !IH_CONTROLLER_PRI_NEW : BEQ +
+    JMP .save_custom_preset
+
+  + LDA !IH_CONTROLLER_PRI : AND !sram_ctrl_load_custom_preset : CMP !sram_ctrl_load_custom_preset : BNE +
+    AND !IH_CONTROLLER_PRI_NEW : BEQ +
+    JMP .load_custom_preset
+
     ; Check if any less common shortcuts are configured
   + LDA !ram_game_mode_extras : BNE +
     JMP .check_menu
+
+  + LDA !IH_CONTROLLER_PRI : AND !sram_ctrl_inc_custom_preset : CMP !sram_ctrl_inc_custom_preset : BNE +
+    AND !IH_CONTROLLER_PRI_NEW : BEQ +
+    JMP .next_preset_slot
+
+  + LDA !IH_CONTROLLER_PRI : AND !sram_ctrl_dec_custom_preset : CMP !sram_ctrl_dec_custom_preset : BNE +
+    AND !IH_CONTROLLER_PRI_NEW : BEQ +
+    JMP .prev_preset_slot
 
   + LDA !IH_CONTROLLER_PRI : AND !sram_ctrl_kill_enemies : CMP !sram_ctrl_kill_enemies : BNE +
     AND !IH_CONTROLLER_PRI_NEW : BEQ +
@@ -140,6 +156,43 @@ endif
     JSL LoadRandomPreset
     ; SEC to skip normal gameplay for one frame after loading preset
     SEC : RTS
+
+  .save_custom_preset
+    JSL custom_preset_save
+    ; CLC to continue normal gameplay after saving preset
+    LDA #!SOUND_MENU_JSR : JSL !SFX_LIB1
+    CLC : RTS
+
+  .load_custom_preset
+    ; check if slot is populated first
+    LDA !sram_custom_preset_slot : ASL : TAX
+    LDA.l PresetSlot,X : TAX
+    LDA $703000,X : CMP #$5AFE : BEQ .safe
+    LDA #!SOUND_MENU_FAIL : JSL !SFX_LIB1
+    ; CLC to continue normal gameplay after failing to load preset
+    CLC : RTS
+
+  .safe
+    STA !ram_custom_preset
+    JSL preset_load
+    ; SEC to skip normal gameplay for one frame after loading preset
+    SEC : RTS
+
+  .next_preset_slot
+    LDA !sram_custom_preset_slot : CMP #$002E ; max slots
+    BNE + : LDA #$FFFF
++   INC : STA !sram_custom_preset_slot
+    ASL : TAX : LDA.l NumberGFXTable,X : STA $7EC67C
+    ; CLC to continue normal gameplay after incrementing preset slot
+    CLC : RTS
+
+  .prev_preset_slot
+    LDA !sram_custom_preset_slot : BNE +
+    LDA #$002F ; max slots + 1
++   DEC : STA !sram_custom_preset_slot
+    ASL : TAX : LDA.l NumberGFXTable,X : STA $7EC67C
+    ; CLC to continue normal gameplay after decrementing preset slot
+    CLC : RTS
 
   .menu
     ; Set IRQ vector

@@ -1,38 +1,39 @@
 !ram_load_preset = $7FFB00
+!ram_custom_preset = $7FFB02
 
-!ram_gametime_room = $7FFB02
-!ram_last_gametime_room = $7FFB04
-!ram_realtime_room = $7FFB06
-!ram_last_realtime_room = $7FFB08
-!ram_last_room_lag = $7FFB0A
-!ram_last_door_lag_frames = $7FFB0C
-!ram_transition_counter = $7FFB0E
-!ram_transition_flag = $7FFB10
-!ram_transition_flag_2 = $7FFB12
+!ram_gametime_room = $7FFB04
+!ram_last_gametime_room = $7FFB06
+!ram_realtime_room = $7FFB08
+!ram_last_realtime_room = $7FFB0A
+!ram_last_room_lag = $7FFB0C
+!ram_last_door_lag_frames = $7FFB0E
+!ram_transition_counter = $7FFB10
+!ram_transition_flag = $7FFB12
+!ram_transition_flag_2 = $7FFB14
 
-!ram_seg_rt_frames = $7FFB14
-!ram_seg_rt_seconds = $7FFB16
-!ram_seg_rt_minutes = $7FFB18
-!ram_reset_segment_later = $7FFB1A
+!ram_seg_rt_frames = $7FFB16
+!ram_seg_rt_seconds = $7FFB18
+!ram_seg_rt_minutes = $7FFB1A
+!ram_reset_segment_later = $7FFB1C
 
-!ram_ih_controller = $7FFB1C
-!ram_slowdown_controller_1 = $7FFB1E
-!ram_slowdown_controller_2 = $7FFB20
-!ram_slowdown_frames = $7FFB22
+!ram_ih_controller = $7FFB1E
+!ram_slowdown_controller_1 = $7FFB20
+!ram_slowdown_controller_2 = $7FFB22
+!ram_slowdown_frames = $7FFB24
 !ram_slowdown_mode = $7EFFFC ; $7E
 
-!ram_tmp_1 = $7FFB24
-!ram_tmp_2 = $7FFB26
-!ram_tmp_3 = $7FFB28
-!ram_tmp_4 = $7FFB2A
+!ram_tmp_1 = $7FFB26
+!ram_tmp_2 = $7FFB28
+!ram_tmp_3 = $7FFB2A
+!ram_tmp_4 = $7FFB2C
 
-!ram_last_hp = $7FFB2C
-!ram_etanks = $7FFB2E
-!ram_pct_1 = $7FFB30
-!ram_pct_2 = $7FFB32
-!ram_armed_shine_duration = $7FFB34
-!ram_minimap = $7FFB36
-!ram_map_counter = $7FFB38
+!ram_last_hp = $7FFB2E
+!ram_etanks = $7FFB30
+!ram_pct_1 = $7FFB32
+!ram_pct_2 = $7FFB34
+!ram_armed_shine_duration = $7FFB36
+!ram_minimap = $7FFB38
+!ram_map_counter = $7FFB3A
 !ram_vcounter_data = $7FFB3A
 
 ; FREE SPACE ^
@@ -155,6 +156,7 @@
 
 !SOUND_MENU_MOVE = $0039
 !SOUND_MENU_JSR = $0039
+!SOUND_MENU_FAIL = $0007
 
 
 ; ------------
@@ -225,6 +227,10 @@
 !sram_ctrl_save_state = $70200E
 !sram_ctrl_load_last_preset = $702010
 !sram_ctrl_random_preset = $702012
+!sram_ctrl_save_custom_preset = $702014
+!sram_ctrl_load_custom_preset = $702016
+!sram_ctrl_inc_custom_preset = $702018
+!sram_ctrl_dec_custom_preset = $70201A
 
 ; FREE SPACE ^
 
@@ -237,10 +243,11 @@
 !sram_last_preset = $70202C
 !sram_save_has_set_rng = $70202E
 !sram_preset_category = $702030
-!sram_room_strat = $702032
-!sram_sprite_prio_flag = $702034
-!sram_metronome_tickrate = $702036
-!sram_metronome_sfx = $702038
+!sram_custom_preset_slot = $702032
+!sram_room_strat = $702034
+!sram_sprite_prio_flag = $702036
+!sram_metronome_tickrate = $702038
+!sram_metronome_sfx = $70203A
 
 ; FREE SPACE ^
 

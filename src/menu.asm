@@ -1438,6 +1438,8 @@ cm_divide_100:
 ; -----------
 
 incsrc mainmenu.asm
+incsrc custompresets.asm
+
 
 ; ----------
 ; Resources

@@ -135,6 +135,13 @@ preset_load_preset:
     LDA #$0000
     STA $7E09D2 ; Current selected weapon
     STA $7E0A04 ; Auto-cancel item
+
+    ; check if custom preset is being loaded
+    LDA !ram_custom_preset : BEQ .normal_preset
+    JSL custom_preset_load
+    BRA .done
+
+  .normal_preset
     LDA !sram_preset_category : ASL : TAX
     LDA.l preset_banks,X : %a8() : PHA : PLB : %a16()
 
@@ -357,85 +364,67 @@ warnpc $809AC9
 org $809AC9
   .resume_infohud_icon_initialization
 
-org $EF8000
-  ; 2EAA (length in hex)
-  print pc, " prkd data start"
-  incsrc presets/prkd_data.asm
-  print pc, " prkd data end"
 
-  ; 42A2 (length in hex)
-  print pc, " hundo data start"
-  incsrc presets/hundo_data.asm
-  print pc, " hundo data end"
+; -------------------
+; Category Menus/Data
+; -------------------
+
+org $F18000
+  incsrc presets/prkd_menu.asm
+  incsrc presets/kpdr21_menu.asm
+  incsrc presets/hundo_menu.asm
+  incsrc presets/100early_menu.asm
+  incsrc presets/rbo_menu.asm
+  incsrc presets/pkrd_menu.asm
+  incsrc presets/kpdr25_menu.asm
+  ; 18ADh bytes free
+  print pc, " preset_menu bankF1 end"
+
+org $F28000
+  incsrc presets/gtclassic_menu.asm
+  incsrc presets/14ice_menu.asm
+  incsrc presets/14speed_menu.asm
+  incsrc presets/allbosskpdr_menu.asm
+  incsrc presets/allbosspkdr_menu.asm
+  incsrc presets/allbossprkd_menu.asm
+  incsrc presets/gtmax_menu.asm
+  incsrc presets/nintendopower_menu.asm
+  ; 2B9Ah bytes free
+  print pc, " preset_menu bankF2 end"
+
+org $EF8000
+  incsrc presets/prkd_data.asm  ; 2EAAh bytes
+  incsrc presets/hundo_data.asm  ; 42A2h bytes
+  print pc, " preset_data bankEF end"
 
 org $EE8000
-  ; 2FF6 (length in hex)
-  print pc, " kpdr21 data start"
-  incsrc presets/kpdr21_data.asm
-  print pc, " kpdr21 data end"
-
-  ; 3274 (length in hex)
-  print pc, " rbo data start"
-  incsrc presets/rbo_data.asm
-  print pc, " rbo data end"
+  incsrc presets/kpdr21_data.asm  ; 2FF6h bytes
+  incsrc presets/rbo_data.asm  ; 3274h bytes
+  print pc, " preset_data bankEE end"
 
 org $ED8000
-  ; 2B5E (length in hex)
-  print pc, " gtclassic data start"
-  incsrc presets/gtclassic_data.asm
-  print pc, " gtclassic data end"
-
-  ; 1E95 (length in hex)
-  print pc, " 14ice data start"
-  incsrc presets/14ice_data.asm
-  print pc, " 14ice data end"
-
-  ; 1EE6 (length in hex)
-  print pc, " 14speed data start"
-  incsrc presets/14speed_data.asm
-  print pc, " 14speed data end"
+  incsrc presets/gtclassic_data.asm  ; 2B5Eh bytes
+  incsrc presets/14ice_data.asm  ; 1E95h bytes
+  incsrc presets/14speed_data.asm  ; 1EE6h bytes
+  print pc, " preset_data bankED end"
 
 org $EC8000
-  ; 2400 (length in hex)
-  print pc, " allbosskpdr data start"
-  incsrc presets/allbosskpdr_data.asm
-  print pc, " allbosskpdr data end"
-
-  ; 2484 (length in hex)
-  print pc, " allbosspkdr data start"
-  incsrc presets/allbosspkdr_data.asm
-  print pc, " allbosspkdr data end"
-
-  ; 2568 (length in hex)
-  print pc, " allbossprkd data start"
-  incsrc presets/allbossprkd_data.asm
-  print pc, " allbossprkd data end"    
+  incsrc presets/allbosskpdr_data.asm  ; 2400h bytes
+  incsrc presets/allbosspkdr_data.asm  ; 2484h bytes
+  incsrc presets/allbossprkd_data.asm  ; 2568h bytes
+  print pc, " preset_data bankEC end"
 
 org $EB8000
-  ; 423C (length in hex)
-  print pc, " 100early data start"
-  incsrc presets/100early_data.asm
-  print pc, " 100early data end"
-
-  ; 1E3A (length in hex)
-  print pc, " kpdr25 data start"
-  incsrc presets/kpdr25_data.asm
-  print pc, " kpdr25 data end"
+  incsrc presets/100early_data.asm  ; 423Ch bytes
+  incsrc presets/kpdr25_data.asm  ; 1E3Ah bytes
+  print pc, " preset_data bankEB end"
 
 org $EA8000
-  ; 2EBC (length in hex)
-  print pc, " pkrd data start"
-  incsrc presets/pkrd_data.asm
-  print pc, " pkrd data end"
-
-  ; 420Ah (length in hex)
-  print pc, " gtmax data start"
-  incsrc presets/gtmax_data.asm
-  print pc, " gtmax data end"
+  incsrc presets/pkrd_data.asm  ; 2EBCh bytes
+  incsrc presets/gtmax_data.asm  ; 420Ahh bytes
+  print pc, " preset_data bankEA end"
 
 org $E98000
-  ; 20F8h (length in hex)
-  print pc, " nintendopower data start"
-  incsrc presets/nintendopower_data.asm
-  print pc, " nintendopower data end"
+  incsrc presets/nintendopower_data.asm  ; 20F8hh bytes
+  print pc, " preset_data bankE9 end"
 
