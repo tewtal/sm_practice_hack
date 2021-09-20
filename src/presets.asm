@@ -299,10 +299,10 @@ preset_scroll_fixes:
     LDX $079B : LDA #$01
 +   CPX #$A011 : BNE +        ; bottom-left of Etecoons Etank
     STA $7ECD25 : STA $7ECD26
-    BRA .done
+    JMP .done
 +   CPX #$AE32 : BNE +        ; bottom of Volcano Room
     STA $7ECD26
-    BRA .done
+    JMP .done
 +   CPX #$B07A : BNE +        ; top of Bat Cave
     STA $7ECD20
     BRA .done
@@ -314,11 +314,20 @@ preset_scroll_fixes:
     STA $7ECD22 : STA $7ECD24
     LDA #$00 : STA $7ECD21
     BRA .done
++   CPX #$CAF6 : BNE +        ; bottom of WS Shaft
+    LDA #$02
+    STA $7ECD48 : STA $7ECD4E
+    BRA .done
 +   CPX #$CC6F : BNE +        ; right of Basement (Phantoon)
     STA $7ECD24
     BRA .done
++   CPX #$D1A3 : BNE +        ; bottom of Crab Shaft
+    STA $7ECD26
+    LDA #$02 : STA $7ECD24
+    BRA .done
 +   CPX #$D48E : BNE +        ; Oasis (bottom of Toilet)
-    LDA #$02 : STA $7ECD20 : STA $7ECD21
+    LDA #$02
+    STA $7ECD20 : STA $7ECD21
     BRA .done
 +   CPX #$D8C5 : BNE .done    ; Pants Room (door to Shaktool)
     LDA #$00 : STA $7ECD22

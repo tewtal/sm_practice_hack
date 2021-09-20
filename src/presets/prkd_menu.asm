@@ -110,11 +110,12 @@ presets_submenu_prkd_red_brinstar_revisit:
     dw #presets_prkd_red_brinstar_revisit_below_spazer
     dw #presets_prkd_red_brinstar_revisit_leaving_spazer
     dw #presets_prkd_red_brinstar_revisit_breaking_tube
+    dw #presets_prkd_red_brinstar_revisit_business_center_preelev
     dw #$0000
     %cm_header("RED BRINSTAR REVISIT")
 
 presets_submenu_prkd_upper_norfair:
-    dw #presets_prkd_upper_norfair_business_center
+    dw #presets_prkd_upper_norfair_business_center_postelev
     dw #presets_prkd_upper_norfair_hi_jump_etank
     dw #presets_prkd_upper_norfair_leaving_hi_jump
     dw #presets_prkd_upper_norfair_business_center_2
@@ -409,10 +410,13 @@ presets_prkd_red_brinstar_revisit_leaving_spazer:
 presets_prkd_red_brinstar_revisit_breaking_tube:
     %cm_preset("Breaking Tube", #preset_prkd_red_brinstar_revisit_breaking_tube)
 
+presets_prkd_red_brinstar_revisit_business_center_preelev:
+    %cm_preset("Business Center Pre-Elev", #preset_prkd_red_brinstar_revisit_business_center_preelev)
+
 
 ; Upper Norfair
-presets_prkd_upper_norfair_business_center:
-    %cm_preset("Business Center", #preset_prkd_upper_norfair_business_center)
+presets_prkd_upper_norfair_business_center_postelev:
+    %cm_preset("Business Center Post-Elev", #preset_prkd_upper_norfair_business_center_postelev)
 
 presets_prkd_upper_norfair_hi_jump_etank:
     %cm_preset("Hi Jump E-tank", #preset_prkd_upper_norfair_hi_jump_etank)

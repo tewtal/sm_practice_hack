@@ -1764,7 +1764,7 @@ preset_gtclassic_maridia_aqueduct:
     dl $7E0911 : db $02 : dw $0008 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $5400 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0300 ; Screen Y position in pixels
-    dl $7E09D2 : db $02 : dw $0003 ; Currently selected item
+    dl $7E09D2 : db $02 : dw $0002 ; Currently selected item
     dl $7E0AF6 : db $02 : dw $007C ; Samus X
     dl $7E0AFA : db $02 : dw $03AB ; Samus Y
     dw #$FFFF

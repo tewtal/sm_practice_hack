@@ -10,7 +10,7 @@ PresetsMenuPkrd:
     dw #presets_goto_pkrd_backtracking
     dw #presets_goto_pkrd_tourian
     dw #$0000
-    %cm_header("PRESETS FOR ANY% PKRD")
+    %cm_header("PRESETS FOR ANY PKRD")
 
 presets_goto_pkrd_crateria:
     %cm_submenu("Crateria", #presets_submenu_pkrd_crateria)
