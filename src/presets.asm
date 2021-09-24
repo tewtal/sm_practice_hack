@@ -78,6 +78,11 @@ else
     JSL $91DEBA
 endif
 
+    ; Re-upload OOB viewer tiles if needed
+    LDA !ram_oob_watch_active : BEQ +
+      JSL upload_sprite_oob_tiles
+    +
+
     LDA !SRAM_MUSIC_BANK
     CMP !MUSIC_BANK
     BEQ .load_music_track
