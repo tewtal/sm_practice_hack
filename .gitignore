@@ -1,11 +1,13 @@
 *.srm
 *.bst
+*.sfc
 resources/sm_orig.s[mf]c
 resources/smpal_orig.s[mf]c
 build/*.exe
 build/*.ips
 build/*.smc
 build/*.sfc
+build/*.sym
 *.sw[op]
 tools/*.smv
 tools/*.asm

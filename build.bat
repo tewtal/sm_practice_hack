@@ -1,20 +1,10 @@
 @echo off
-
-echo Building SM NTSC Practice Hack
+echo Building SM+SA1
 cd resources
-python create_dummies.py 00.sfc ff.sfc
-
-echo Building saveless version
-copy *.sfc ..\build
-..\tools\asar.exe --no-title-check -DFEATURE_SD2SNES=0 -DFEATURE_PAL=0 ..\src\main.asm ..\build\00.sfc
-..\tools\asar.exe --no-title-check -DFEATURE_SD2SNES=0 -DFEATURE_PAL=0 ..\src\main.asm ..\build\ff.sfc
-python create_ips.py ..\build\00.sfc ..\build\ff.sfc ..\build\smhack20.ips
-
-echo Building SD2SNES version
-copy *.sfc ..\build
-..\tools\asar --no-title-check -DFEATURE_SD2SNES=1 -DFEATURE_PAL=0 ..\src\main.asm ..\build\00.sfc
-..\tools\asar --no-title-check -DFEATURE_SD2SNES=1 -DFEATURE_PAL=0 ..\src\main.asm ..\build\ff.sfc
-python create_ips.py ..\build\00.sfc ..\build\ff.sfc ..\build\smhack20_sd2snes.ips
-
-del 00.sfc ff.sfc ..\build\00.sfc ..\build\ff.sfc
+python create_sa1rom.py sm_orig.sfc sm_sa1.sfc
+copy /y sm_sa1.sfc sm.sfc > NUL:
+echo Assembling Practice Hack
+..\tools\asar --symbols=wla --symbols-path=..\build\sm.sym ..\src\main.asm sm.sfc
+copy /y sm.sfc ..\build\sm.sfc > NUL:
 cd ..
+echo Done

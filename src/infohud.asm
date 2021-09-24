@@ -155,7 +155,7 @@ endif
 
 
 ; Main bank stuff
-org $F08000
+%org($D00000)
 print pc, " infohud start"
 ih_max_etank_code:
 {
@@ -1240,6 +1240,7 @@ ih_shinespark_code:
 }
 
 print pc, " infohud end"
+lorom
 
 
 ; Stuff that needs to be placed in bank 80

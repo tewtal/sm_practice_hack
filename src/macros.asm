@@ -37,3 +37,17 @@ endmacro
 macro wdm()
     dw $4242
 endmacro
+
+macro org(addr)
+    if <addr> < $C00000
+        ; regular lorom address, map as usual
+        lorom
+        org <addr>
+    else
+        print hex(<addr>)
+        print hex($200000+(<addr>&$1fffff))
+        norom
+        org $200000+(<addr>&$1fffff)
+        base <addr>
+    endif
+endmacro

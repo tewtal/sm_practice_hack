@@ -1,14 +1,19 @@
 lorom
 
-!FEATURE_SD2SNES ?= 1
-!FEATURE_PAL ?= 1
+!FEATURE_SD2SNES ?= 0
+!FEATURE_PAL ?= 0
 
 table ../resources/normal.tbl
 
 incsrc macros.asm
 incsrc defines.asm
 
+; SA-1 Base support routines
+incsrc sa1rom.asm
+incsrc sa1.asm
+
 incsrc gamemode.asm
+
 if !FEATURE_SD2SNES
     print "SD2SNES ENABLED"
     incsrc save.asm
@@ -24,5 +29,3 @@ incsrc fanfare.asm
 incsrc spriteprio.asm
 incsrc spritefeat.asm
 
-; Make sure the ROM expands to 4MB
-org $ffffff : db $ff

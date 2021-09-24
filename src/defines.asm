@@ -216,33 +216,33 @@
 ; SRAM
 ; -----
 
-!sram_initialized = $702000
+!sram_initialized = $402000
 
-!sram_ctrl_menu = $702002
-!sram_ctrl_kill_enemies = $702004
-!sram_ctrl_full_equipment = $702006
-!sram_ctrl_reset_segment_timer = $702008
-!sram_ctrl_reset_segment_later = $70200A
-!sram_ctrl_load_state = $70200C
-!sram_ctrl_save_state = $70200E
-!sram_ctrl_load_last_preset = $702010
-!sram_ctrl_random_preset = $702012
+!sram_ctrl_menu = $404002
+!sram_ctrl_kill_enemies = $404004
+!sram_ctrl_full_equipment = $404006
+!sram_ctrl_reset_segment_timer = $404008
+!sram_ctrl_reset_segment_later = $40400A
+!sram_ctrl_load_state = $40400C
+!sram_ctrl_save_state = $40400E
+!sram_ctrl_load_last_preset = $404010
+!sram_ctrl_random_preset = $404012
 
 ; FREE SPACE ^
 
-!sram_artificial_lag = $702020
-!sram_rerandomize = $702022
-!sram_fanfare_toggle = $702024
-!sram_frame_counter_mode = $702026
-!sram_display_mode = $702028
-!sram_music_toggle = $70202A
-!sram_last_preset = $70202C
-!sram_save_has_set_rng = $70202E
-!sram_preset_category = $702030
-!sram_room_strat = $702032
-!sram_sprite_prio_flag = $702034
-!sram_metronome_tickrate = $702036
-!sram_metronome_sfx = $702038
+!sram_artificial_lag = $404020
+!sram_rerandomize = $404022
+!sram_fanfare_toggle = $404024
+!sram_frame_counter_mode = $404026
+!sram_display_mode = $404028
+!sram_music_toggle = $40402A
+!sram_last_preset = $40402C
+!sram_save_has_set_rng = $40402E
+!sram_preset_category = $404030
+!sram_room_strat = $404032
+!sram_sprite_prio_flag = $404034
+!sram_metronome_tickrate = $404036
+!sram_metronome_sfx = $404038
 
 ; FREE SPACE ^
 
