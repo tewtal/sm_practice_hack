@@ -35,7 +35,13 @@ update_sprite_features:
     JSR update_sprite_hitbox
 
     PLP : PLY : PLX : PLA
-    JSL $A0884D    
+    
+    if !FEATURE_PAL
+        JSL $A0885D
+    else
+        JSL $A0884D
+    endif
+    
     RTL
 
 ; When loading into a game, do we need to update any sprite tiles?
