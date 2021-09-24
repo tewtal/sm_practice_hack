@@ -1,6 +1,5 @@
-lorom
-
-!FEATURE_SD2SNES ?= 0
+sa1rom
+!FEATURE_SD2SNES ?= 1
 !FEATURE_PAL ?= 0
 
 table ../resources/normal.tbl
@@ -10,7 +9,11 @@ incsrc defines.asm
 
 ; SA-1 Base support routines
 incsrc sa1rom.asm
+
+; Change SA-1 mapping to the one defined in sa1rom.asm
+sa1rom 2,3,0,1
 incsrc sa1.asm
+
 
 incsrc gamemode.asm
 

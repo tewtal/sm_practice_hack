@@ -216,7 +216,7 @@
 ; SRAM
 ; -----
 
-!sram_initialized = $402000
+!sram_initialized = $404000
 
 !sram_ctrl_menu = $404002
 !sram_ctrl_kill_enemies = $404004

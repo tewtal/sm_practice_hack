@@ -56,10 +56,8 @@ org $828ADD       ; Resume original logic
     .skip_debug_brightness
 
 
-%org($CF8BBF)       ; Set map scroll beep to high priority
-    dw $2A97
-
-lorom
+org $CF8BBF
+    dw $2A97  ; Set map scroll beep to high priority
 
 ; $80:8F24 9C F6 07    STZ $07F6  [$7E:07F6]  ;/
 ; $80:8F27 8D 40 21    STA $2140  [$7E:2140]  ; APU IO 0 = [music track]

@@ -57,6 +57,11 @@ interrupt:
 
 
 commands:
+    dw process_frame
+
+process_frame:
+    rts
+
 
 namespace off
 

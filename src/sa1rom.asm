@@ -53,8 +53,8 @@ sa1_setup:
     sta $2221   ; (Will be converted from E0-FF:8000-FFFF (lorom) by game routines for decompression)
                 ; This could in theory be bank switched for 4MB of more data
 
-    lda #$01
-    sta $2225   ; Set the first region of BW-RAM to be used as game SRAM
+    lda #$03
+    sta $2225   ; Set the fourth (6000-7FFF) region of BW-RAM to be used as game SRAM
 	sta $2224
 
     lda #$80
@@ -86,28 +86,6 @@ sa1_setup:
 	inx
 	inx
 	cpx #$0800
-	bne -
-
-	ldx #$0000		; Clear BW-RAM
--
-	sta.l $400000, x
-	inx
-	inx
-	cpx #$2000
-	bne -
-
-	ldx #$6000		; Clear BW-RAM
--
-	sta.l $400000, x
-	inx
-	inx
-	bne -
-
-	ldx #$0000		; Clear BW-RAM
--
-	sta.l $410000, x
-	inx
-	inx
 	bne -
 
 	ldx #$0000		; Clear WRAM

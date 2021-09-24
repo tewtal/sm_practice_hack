@@ -204,7 +204,7 @@ mm_goto_ctrlsmenu:
 ; -------------
 pushpc
 
-%org($D10000)
+org $D10000
   print pc, " prkd menu start"
   incsrc presets/prkd_menu.asm
   print pc, " prkd menu end"
@@ -233,7 +233,7 @@ pushpc
   incsrc presets/kpdr25_menu.asm
   print pc, " kpdr25 menu end"
 
-%org($D20000)
+org $D20000
   print pc, " gtclassic menu start"
   incsrc presets/gtclassic_menu.asm
   print pc, " gtclassic menu end"
@@ -266,7 +266,6 @@ pushpc
   incsrc presets/nintendopower_menu.asm
   print pc, " nintendopower menu end"
 
-lorom
 pullpc
 
 LoadRandomPreset:

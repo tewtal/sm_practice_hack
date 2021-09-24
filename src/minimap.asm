@@ -52,7 +52,7 @@ incbin ../resources/hudgfx.bin
 
 
 ; Place minimap graphics in bank DF
-%org($DFD500)
+org $DFD500
 print pc, " minimap bankDF start"
 incbin ../resources/mapgfx.bin
 
@@ -61,7 +61,6 @@ fillbyte $00
 fill 4096
 print pc, " minimap bankDF end"
 
-lorom
 
 ; The default HUD minimap should be cleared
 org $8098FF    ; row 1

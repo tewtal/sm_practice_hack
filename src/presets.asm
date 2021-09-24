@@ -357,7 +357,7 @@ warnpc $809AC9
 org $809AC9
   .resume_infohud_icon_initialization
 
-%org($CF0000)
+org $CF0000
   ; 2EAA (length in hex)
   print pc, " prkd data start"
   incsrc presets/prkd_data.asm
@@ -368,7 +368,7 @@ org $809AC9
   incsrc presets/hundo_data.asm
   print pc, " hundo data end"
 
-%org($CE0000)
+org $CE0000
   ; 2FF6 (length in hex)
   print pc, " kpdr21 data start"
   incsrc presets/kpdr21_data.asm
@@ -379,7 +379,7 @@ org $809AC9
   incsrc presets/rbo_data.asm
   print pc, " rbo data end"
 
-%org($CD0000)
+org $CD0000
   ; 2B5E (length in hex)
   print pc, " gtclassic data start"
   incsrc presets/gtclassic_data.asm
@@ -395,7 +395,7 @@ org $809AC9
   incsrc presets/14speed_data.asm
   print pc, " 14speed data end"
 
-%org($CC0000)
+org $CC0000
   ; 2400 (length in hex)
   print pc, " allbosskpdr data start"
   incsrc presets/allbosskpdr_data.asm
@@ -411,7 +411,7 @@ org $809AC9
   incsrc presets/allbossprkd_data.asm
   print pc, " allbossprkd data end"    
 
-%org($CB0000)
+org $CB0000
   ; 423C (length in hex)
   print pc, " 100early data start"
   incsrc presets/100early_data.asm
@@ -422,7 +422,7 @@ org $809AC9
   incsrc presets/kpdr25_data.asm
   print pc, " kpdr25 data end"
 
-%org($CA0000)
+org $CA0000
   ; 2EBC (length in hex)
   print pc, " pkrd data start"
   incsrc presets/pkrd_data.asm
@@ -433,10 +433,8 @@ org $809AC9
   incsrc presets/gtmax_data.asm
   print pc, " gtmax data end"
 
-%org($C90000)
+org $C90000
   ; 20F8h (length in hex)
   print pc, " nintendopower data start"
   incsrc presets/nintendopower_data.asm
   print pc, " nintendopower data end"
-
-lorom
