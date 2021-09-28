@@ -1017,7 +1017,7 @@ ih_game_loop_code:
     LDA !ram_metronome : BEQ +
     JSR metronome
 
-+   LDA !ram_magic_pants_enabled : BEQ .handleinputs
++   LDA !ram_magic_pants_enabled : AND #$0003 : BEQ .handleinputs
     CMP #$0001 : BEQ .magicpants
     CMP #$0002 : BEQ .spacepants
 
@@ -1153,12 +1153,13 @@ magic_pants:
     RTS
 
   .flash
-    LDA !ram_magic_pants_state : BNE +
-    JSR metronome_click
-    LDA $7EC194 : STA !ram_magic_pants_pal1
+    LDA !ram_magic_pants_state : BNE ++
+    LDA !ram_magic_pants_enabled : AND #$0004 : BEQ +
+    JSR metronome_click                 ; if loudpants are enabled, click
++   LDA $7EC194 : STA !ram_magic_pants_pal1
     LDA $7EC196 : STA !ram_magic_pants_pal2
     LDA $7EC19E : STA !ram_magic_pants_pal3
-+   LDA #$FFFF
+++  LDA #$FFFF
     STA $7EC194 : STA $7EC196 : STA $7EC19E
     STA !ram_magic_pants_state
     RTS
@@ -1200,8 +1201,10 @@ space_pants:
 ; Screw Attack seems to write new palette data every frame, which overwrites the flash
   .flash
     LDA !ram_magic_pants_state : BNE .done
+    LDA !ram_magic_pants_enabled : AND #$0004 : BEQ +
+    JSR metronome_click                   ; if loudpants are enabled, click
     ; preserve palettes first
-    LDA $7EC194 : STA !ram_magic_pants_pal1
++   LDA $7EC194 : STA !ram_magic_pants_pal1
     LDA $7EC196 : STA !ram_magic_pants_pal2
     LDA $7EC198 : STA !ram_magic_pants_pal3
     ; then flash

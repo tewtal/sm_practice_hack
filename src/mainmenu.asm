@@ -833,6 +833,7 @@ MiscMenu:
     dw #misc_babyslowdown
     dw #misc_magicpants
     dw #misc_spacepants
+    dw #misc_loudpants
     dw #misc_fanfare_toggle
     dw #misc_music_toggle
     dw #misc_transparent
@@ -857,6 +858,9 @@ misc_magicpants:
 
 misc_spacepants:
     %cm_toggle_bit("Space Pants", !ram_magic_pants_enabled, #$0002, GameLoopExtras)
+
+misc_loudpants:
+    %cm_toggle_bit("Loud Pants", !ram_magic_pants_enabled, #$0004, GameLoopExtras)
 
 misc_fanfare_toggle:
     %cm_toggle("Fanfare", !sram_fanfare_toggle, #$0001, #0)
