@@ -73,7 +73,7 @@ endif
 
     ; Fix Samus' palette
 if !FEATURE_PAL
-    JSL $91DE4B
+    JSL $91DE1F
 else
     JSL $91DEBA
 endif
@@ -100,7 +100,6 @@ endif
     ORA #$0200 : STA $0F86,X
     +
     TXA : CLC : ADC #$0040 : CMP #$0400 : BNE -
-    ; JSL $A08A6D
     PLP
     RTL
 }

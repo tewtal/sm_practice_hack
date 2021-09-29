@@ -67,7 +67,7 @@ endif
     JSL ih_mb1_segment
 
 if !FEATURE_PAL
-org $A9BE33      ; update timers when baby spawns (off-screen) in MB2 fight
+org $A9BE70      ; update timers when baby spawns (off-screen) in MB2 fight
 else
 org $A9BE23      ; update timers when baby spawns (off-screen) in MB2 fight
 endif
@@ -377,7 +377,11 @@ ih_elevator_activation:
 ih_mb1_segment:
 {
     ; runs during MB1 cutscene when you regain control of Samus, just before music change
-    JSL $90F084    ; we overwrote this instruction to get here
+if !FEATURE_PAL
+    JSL $90F081 ; overwritten code
+else
+    JSL $90F084 ; overwritten code
+endif
 
     JML ih_update_hud_early
 }
@@ -406,7 +410,11 @@ ih_chozo_segment:
 ih_ceres_elevator_segment:
 {
     JSL ih_update_hud_early
+if !FEATURE_PAL
+    JML $90F081 ; overwritten code
+else
     JML $90F084 ; overwritten code
+endif
 }
 
 ih_ship_elevator_segment:
@@ -717,7 +725,7 @@ ih_hud_code:
 ++  STA $7EC608, X
     INX
     INX
-    CPX #$00C
+    CPX #$000C
     BNE -
 
     LDX #$0000
