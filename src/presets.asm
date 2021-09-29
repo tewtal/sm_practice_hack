@@ -211,6 +211,7 @@ preset_banks:
   dw preset_gtmax_crateria_ship>>16
   dw preset_14ice_crateria_ceres_elevator>>16
   dw preset_14speed_crateria_ceres_elevator>>16
+  dw preset_100map_varia_landing_site>>16
   dw preset_nintendopower_crateria_ship>>16
   dw preset_allbosskpdr_crateria_ceres_elevator>>16
   dw preset_allbosspkdr_crateria_ceres_elevator>>16
@@ -296,27 +297,42 @@ preset_scroll_fixes:
     ; is normally hidden until passing over a red scroll block.
     ; These fixes can often be found in nearby door asm.
     PHP : %a8() : %i16()
-    LDX $079B : LDA #$01
+    LDA #$01 : LDX $079B      ; X = room ID
+    CPX #$C000 : BPL .halfway ; organized by room ID so we only have to check half
+
 +   CPX #$A011 : BNE +        ; bottom-left of Etecoons Etank
     STA $7ECD25 : STA $7ECD26
+    JMP .done
++   CPX #$AC83 : BNE +        ; left of Green Bubbles Missile Room (Norfair Reserve)
+    STA $7ECD20
     JMP .done
 +   CPX #$AE32 : BNE +        ; bottom of Volcano Room
     STA $7ECD26
     JMP .done
 +   CPX #$B07A : BNE +        ; top of Bat Cave
     STA $7ECD20
-    BRA .done
+    JMP .done
 +   CPX #$B1E5 : BNE +        ; bottom of Acid Chozo Room
     STA $7ECD26 : STA $7ECD27 : STA $7ECD28
     LDA #$00 : STA $7ECD23 : STA $7ECD24
-    BRA .done
+    JMP .done
 +   CPX #$B3A5 : BNE +        ; bottom of Pre-Pillars
+    LDY $0AFA : CPY #$0190    ; no scroll fix if Ypos < 400
+    BMI .done
     STA $7ECD22 : STA $7ECD24
     LDA #$00 : STA $7ECD21
-    BRA .done
+    JMP .done
++   CPX #$B4AD : BNE +        ; top of Worst Room in the Game
+    LDA #$02 : STA $7ECD20
+    JMP .done
+  .halfway
 +   CPX #$CAF6 : BNE +        ; bottom of WS Shaft
     LDA #$02
     STA $7ECD48 : STA $7ECD4E
+    BRA .done
++   CPX #$CBD5 : BNE +        ; top of Electric Death Room (WS E-Tank)
+    LDA #$02
+    STA $7ECD20
     BRA .done
 +   CPX #$CC6F : BNE +        ; right of Basement (Phantoon)
     STA $7ECD24
@@ -398,6 +414,7 @@ org $F28000
   incsrc presets/allbossprkd_menu.asm
   incsrc presets/gtmax_menu.asm
   incsrc presets/nintendopower_menu.asm
+  incsrc presets/100map_menu.asm
   ; 2B9Ah bytes free
   print pc, " preset_menu bankF2 end"
 
@@ -435,5 +452,6 @@ org $EA8000
 
 org $E98000
   incsrc presets/nintendopower_data.asm  ; 20F8hh bytes
+  incsrc presets/100map_data.asm ; 492Eh bytes
   print pc, " preset_data bankE9 end"
 

@@ -122,6 +122,7 @@ preset_category_submenus:
     dw #PresetsMenuGtmax
     dw #PresetsMenu14ice
     dw #PresetsMenu14speed
+    dw #PresetsMenu100map
     dw #PresetsMenuNintendopower
     dw #PresetsMenuAllbosskpdr
     dw #PresetsMenuAllbosspkdr
@@ -142,6 +143,7 @@ preset_category_banks:
     dw #PresetsMenuGtmax>>16
     dw #PresetsMenu14ice>>16
     dw #PresetsMenu14speed>>16
+    dw #PresetsMenu100map>>16
     dw #PresetsMenuNintendopower>>16
     dw #PresetsMenuAllbosskpdr>>16
     dw #PresetsMenuAllbosspkdr>>16
@@ -237,6 +239,7 @@ SelectPresetCategoryMenu:
     dw #precat_gtmax
     dw #precat_14ice
     dw #precat_14speed
+    dw #precat_100map
     dw #precat_nintendopower
     dw #precat_allbosskpdr
     dw #precat_allbosspkdr
@@ -260,6 +263,7 @@ presets_current:
         db #$28, "    GT MAX%", #$FF
         db #$28, "    14% ICE", #$FF
         db #$28, "  14% SPEED", #$FF
+        db #$28, "   100% MAP", #$FF
         db #$28, "  NIN POWER", #$FF
         db #$28, "   ALL KPDR", #$FF
         db #$28, "   ALL PKDR", #$FF
@@ -299,17 +303,20 @@ precat_14ice:
 precat_14speed:
     %cm_jsr("Low% Speed", #action_select_preset_category, #$000A)
 
+precat_100map:
+    %cm_jsr("100% Map Completion", #action_select_preset_category, #$000B)
+
 precat_nintendopower:
-    %cm_jsr("Nintendo Power", #action_select_preset_category, #$000B)
+    %cm_jsr("Nintendo Power", #action_select_preset_category, #$000C)
 
 precat_allbosskpdr:
-    %cm_jsr("All Bosses KPDR", #action_select_preset_category, #$000C)
+    %cm_jsr("All Bosses KPDR", #action_select_preset_category, #$000D)
 
 precat_allbosspkdr:
-    %cm_jsr("All Bosses PKDR", #action_select_preset_category, #$000D)
+    %cm_jsr("All Bosses PKDR", #action_select_preset_category, #$000E)
 
 precat_allbossprkd:
-    %cm_jsr("All Bosses PRKD", #action_select_preset_category, #$000E)
+    %cm_jsr("All Bosses PRKD", #action_select_preset_category, #$000F)
 
 action_select_preset_category:
 {
