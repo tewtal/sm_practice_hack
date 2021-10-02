@@ -104,6 +104,16 @@ status_dashcounter:
 
 status_shinetune:
 {
+if !FEATURE_PAL
+    !tap_1_to_2 = $0014
+    !tap_2_to_3 = $0014
+    !tap_3_to_4 = $000A
+else
+    !tap_1_to_2 = $0019
+    !tap_2_to_3 = $0014
+    !tap_3_to_4 = $000F
+endif
+
     ; Suppress Samus HP display
     ; The segment timer is also suppressed elsewhere just for shinetune
     LDA $09C2 : STA !ram_last_hp
@@ -150,7 +160,7 @@ status_shinetune:
     ; Assume we gear shifted up, so set flag indicating we are holding dash for this transition
     ; Also reset our shine counter
     ; For efficiency the shine counter is set to the dash counter instead of zero,
-    ; so keep that in mind when reviewing the logic to follo
+    ; so keep that in mind when reviewing the logic to follow
     STA !ram_shine_dash_held_late : STA !ram_shine_counter
 
     ; On gear shift, we have some numbers to draw
@@ -190,9 +200,9 @@ status_shinetune:
 
     ; We were, which means we let go of dash early
     LDA #$00FF : STA !ram_dash_counter
-    LDA #$001A : SEC : SBC !ram_shinetune_early_2 : LDX #$0090 : JSR Draw3
+    LDA #(!tap_1_to_2+1) : SEC : SBC !ram_shinetune_early_2 : LDX #$0090 : JSR Draw3
     LDA !IH_LETTER_E : STA $7EC696
-    LDA #$001B : SEC : SBC !ram_shine_counter
+    LDA #(!tap_1_to_2+2) : SEC : SBC !ram_shine_counter
     ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC698
     RTS
 
@@ -216,8 +226,8 @@ status_shinetune:
     RTS
 
   .checklatemiss1
-    ; Arbitrary give up waiting after 49 frames (23 past the time we should have pressed dash)
-    LDA !ram_shine_counter : CMP #$0031 : BMI .donecheck1
+    ; Arbitrary give up waiting after 50 frames (24 past the time we should have pressed dash)
+    LDA !ram_shine_counter : CMP #(!tap_1_to_2+!tap_1_to_2) : BMI .donecheck1
     LDA #$00FF : STA !ram_dash_counter
     LDA !IH_LETTER_L : STA $7EC692
     LDA !IH_LETTER_X : STA $7EC694
@@ -227,13 +237,13 @@ status_shinetune:
     ; Gear 1, pressed dash too late to reach gear 2
     LDA #$00FF : STA !ram_dash_counter
     LDA !IH_LETTER_L : STA $7EC692
-    LDA !ram_shine_counter : SEC : SBC #$001A
+    LDA !ram_shine_counter : SEC : SBC #(!tap_1_to_2+1)
     ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC694
     BRL .clear2
 
   .setnextearly1
     ; Gear 1, just pressed dash when trying to reach gear 2
-    LDA !ram_shine_counter : CMP #$001A : BPL .checklate1
+    LDA !ram_shine_counter : CMP #(!tap_1_to_2+1) : BPL .checklate1
     LDA !ram_shine_counter : STA !ram_shinetune_early_2
     RTS
 
@@ -246,9 +256,9 @@ status_shinetune:
 
     ; We were, which means we let go of dash early
     LDA #$00FF : STA !ram_dash_counter
-    LDA #$0016 : SEC : SBC !ram_shinetune_early_3 : LDX #$00AE : JSR Draw3
+    LDA #(!tap_2_to_3+2) : SEC : SBC !ram_shinetune_early_3 : LDX #$00AE : JSR Draw3
     LDA !IH_LETTER_E : STA $7EC6B4
-    LDA #$0017 : SEC : SBC !ram_shine_counter
+    LDA #(!tap_2_to_3+3) : SEC : SBC !ram_shine_counter
     ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC6B6
     RTS
 
@@ -273,7 +283,7 @@ status_shinetune:
 
   .checklatemiss2
     ; Arbitrary give up waiting after 40 frames (18 past the time we should have pressed dash)
-    LDA !ram_shine_counter : CMP #$0028 : BMI .donecheck2
+    LDA !ram_shine_counter : CMP #(!tap_2_to_3+!tap_2_to_3) : BMI .donecheck2
     LDA #$00FF : STA !ram_dash_counter
     LDA !IH_LETTER_L : STA $7EC6B0
     LDA !IH_LETTER_X : STA $7EC6B2
@@ -283,20 +293,20 @@ status_shinetune:
     ; Gear 2, pressed dash too late to reach gear 3
     LDA #$00FF : STA !ram_dash_counter
     LDA !IH_LETTER_L : STA $7EC6B0
-    LDA !ram_shine_counter : SEC : SBC #$0016
+    LDA !ram_shine_counter : SEC : SBC #(!tap_2_to_3+2)
     ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC6B2
     BRL .clear3
 
   .setnextearly2
     ; Gear 2, just pressed dash when trying to reach gear 3
-    LDA !ram_shine_counter : CMP #$0016 : BPL .checklate2
+    LDA !ram_shine_counter : CMP #(!tap_2_to_3+2) : BPL .checklate2
     LDA !ram_shine_counter : STA !ram_shinetune_early_3
     RTS
 
   .nodash3minimap
     ; We let go of dash early, but also we have the minimap displayed
     LDA !IH_LETTER_E : STA $7EC6B8
-    LDA #$0013 : SEC : SBC !ram_shine_counter
+    LDA #(!tap_3_to_4+4) : SEC : SBC !ram_shine_counter
     ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC6BA
     RTS
 
@@ -310,9 +320,9 @@ status_shinetune:
     ; We were, which means we let go of dash early
     LDA #$00FF : STA !ram_dash_counter
     LDA !ram_minimap : BNE .nodash3minimap
-    LDA #$0012 : SEC : SBC !ram_shinetune_early_4 : LDX #$00B8 : JSR Draw3
+    LDA #(!tap_3_to_4+3) : SEC : SBC !ram_shinetune_early_4 : LDX #$00B8 : JSR Draw3
     LDA !IH_LETTER_E : STA $7EC6BE
-    LDA #$0013 : SEC : SBC !ram_shine_counter
+    LDA #(!tap_3_to_4+4) : SEC : SBC !ram_shine_counter
     ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC6C0
     RTS
 
@@ -341,8 +351,8 @@ status_shinetune:
     RTS
 
   .checklatemiss3
-    ; Arbitrary give up waiting after 31 frames (13 past the time we should have pressed dash)
-    LDA !ram_shine_counter : CMP #$001F : BMI .donecheck3
+    ; Arbitrary give up waiting after 30 frames (12 past the time we should have pressed dash)
+    LDA !ram_shine_counter : CMP #(!tap_3_to_4+!tap_3_to_4) : BMI .donecheck3
     LDA #$00FF : STA !ram_dash_counter
     LDA !ram_minimap : BNE .checklatemiss3minimap
     LDA !IH_LETTER_X : STA $7EC6BC
@@ -352,7 +362,7 @@ status_shinetune:
     ; Gear 3, pressed dash too late to reach gear 4
     LDA #$00FF : STA !ram_dash_counter
     LDA !ram_minimap : BNE .checklate3minimap
-    LDA !ram_shine_counter : SEC : SBC #$0012
+    LDA !ram_shine_counter : SEC : SBC #(!tap_3_to_4+3)
     ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC6BC
 
   .checklateprint3
@@ -361,13 +371,13 @@ status_shinetune:
 
   .setnextearly3
     ; Gear 3, just pressed dash when trying to reach gear 4
-    LDA !ram_shine_counter : CMP #$0012 : BPL .checklate3
+    LDA !ram_shine_counter : CMP #(!tap_3_to_4+3) : BPL .checklate3
     LDA !ram_shine_counter : STA !ram_shinetune_early_4
     RTS
 
   .checklate3minimap
     LDA !IH_LETTER_L : STA $7EC6B8
-    LDA !ram_shine_counter : SEC : SBC #$0012
+    LDA !ram_shine_counter : SEC : SBC #(!tap_3_to_4+3)
     ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC6BA
     RTS
 
@@ -390,16 +400,16 @@ status_shinetune:
     RTS
 
   .drawearly4minimap
-    LDA #$0012 : SEC : SBC !ram_shinetune_early_4 : JSR Draw2
+    LDA #(!tap_3_to_4+3) : SEC : SBC !ram_shinetune_early_4 : JSR Draw2
     RTS
 
   .drawearly4
     LDA !ram_minimap : BNE .drawearly4minimap
-    LDA #$0012 : SEC : SBC !ram_shinetune_early_4 : JSR Draw3
+    LDA #(!tap_3_to_4+3) : SEC : SBC !ram_shinetune_early_4 : JSR Draw3
     BRA .clear4
 
   .drawearly3
-    LDA #$0016 : SEC : SBC !ram_shinetune_early_3 : LDX #$00AE : JSR Draw3
+    LDA #(!tap_2_to_3+2) : SEC : SBC !ram_shinetune_early_3 : LDX #$00AE : JSR Draw3
     BRA .clear3
 
   .draw4
@@ -407,7 +417,7 @@ status_shinetune:
     LDA !ram_shinetune_early_4 : BNE .drawearly4
     LDA !ram_shine_counter : STA !ram_shinetune_early_4
     LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_RUN : BEQ .drawearly4
-    LDA #$0012 : STA !ram_shinetune_early_4
+    LDA #(!tap_3_to_4+3) : STA !ram_shinetune_early_4
     BRA .drawearly4
 
   .draw3
@@ -415,7 +425,7 @@ status_shinetune:
     LDA !ram_shinetune_early_3 : BNE .drawearly3
     LDA !ram_shine_counter : STA !ram_shinetune_early_3
     LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_RUN : BEQ .drawearly3
-    LDA #$0016 : STA !ram_shinetune_early_3
+    LDA #(!tap_2_to_3+2) : STA !ram_shinetune_early_3
     BRA .drawearly3
 
   .draw1234
@@ -430,10 +440,10 @@ status_shinetune:
     LDA !ram_shinetune_early_2 : BNE .drawearly2
     LDA !ram_shine_counter : STA !ram_shinetune_early_2
     LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_RUN : BEQ .drawearly2
-    LDA #$001A : STA !ram_shinetune_early_2
+    LDA #(!tap_1_to_2+1) : STA !ram_shinetune_early_2
 
   .drawearly2
-    LDA #$001A : SEC : SBC !ram_shinetune_early_2 : JSR Draw3
+    LDA #(!tap_1_to_2+1) : SEC : SBC !ram_shinetune_early_2 : JSR Draw3
     BRL .clear2
 
   .draw1
