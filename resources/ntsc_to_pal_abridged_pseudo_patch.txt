@@ -1827,8 +1827,92 @@ org $909EA1
 org $909EB7
     dw #$3300     ; previously dw #$0000
 
-; Samus velocity constants
+; Samus initial Y speeds and subspeeds (jumping)
 org $909EB9
+    dw #$0005     ; previously dw #$0004
+    dw #$0002     ; previously dw #$0001
+    dw #$0003     ; previously dw #$0002
+    dw #$D900     ; previously dw #$E000
+    dw #$1900     ; previously dw #$C000
+    dw #$4C00     ; previously dw #$C000
+
+; Samus initial Y speeds and subspeeds (jumping with hi-jump)
+org $909EC5
+    dw #$0007     ; previously dw #$0006
+    dw #$0003     ; previously dw #$0002
+    dw #$0004     ; previously dw #$0003
+    dw #$3300     ; previously dw #$0000
+    dw #$0000     ; previously dw #$8000
+    dw #$3300     ; previously dw #$8000
+
+; Samus initial Y speeds and subspeeds (wall-jumping)
+org $909ED1
+    dw #$0005     ; previously dw #$0004
+    dw #$0000     ; previously dw #$0000
+    dw #$0003     ; previously dw #$0002
+    dw #$8C00     ; previously dw #$A000
+    dw #$4C00     ; previously dw #$4000
+    dw #$2600     ; previously dw #$A000
+
+; Samus initial Y speeds and subspeeds (wall-jumping with hi-jump)
+org $909EDD
+    dw #$0006     ; previously dw #$0005
+    dw #$0000     ; previously dw #$0000
+    dw #$0004     ; previously dw #$0003
+    dw #$9900     ; previously dw #$8000
+    dw #$9900     ; previously dw #$8000
+    dw #$3300     ; previously dw #$8000
+
+; Samus initial Y speeds and subspeeds (during knockback)
+org $909EE9
+    dw #$0006     ; previously dw #$0005
+    dw #$0002     ; previously dw #$0002
+    dw #$0002     ; previously dw #$0002
+    dw #$0000     ; previously dw #$0000
+    dw #$6600     ; previously dw #$0000
+    dw #$6600     ; previously dw #$0000
+
+; Samus initial Y speeds and subspeeds (during bomb jump)
+org $909EF5
+    dw #$0003     ; previously dw #$0002
+    dw #$0000     ; previously dw #$0000
+    dw #$0000     ; previously dw #$0000
+    dw #$4C00     ; previously dw #$C000
+    dw #$1300     ; previously dw #$1000
+    dw #$1300     ; previously dw #$1000
+
+; Samus X subaccelerations (running, accelerations are 0)
+org $909F07
+    dw #$1400     ; previously dw #$1000
+    dw #$04CC     ; previously dw #$0400
+    dw #$04CC     ; previously dw #$0400
+
+; Samus X max speed (with speed booster in air, other speeds are 4, subspeeds are 0)
+org $909F0D
+    dw #$0008     ; previously dw #$0007
+
+; Samus X max subspeeds (without speed booster in air and water, other subspeeds are 0, speeds are unchanged)
+org $909F1F
+    dw #$6600     ; previously dw #$0000
+    dw #$3300     ; previously dw #$0000
+
+; Samus X momentum and submomentum constants
+org $909F25
+    dw ...
+org $909F55
+
+; Samus X momentum table constants (in air)
+org $909F55
+    dw ...
+org $90A08D
+
+; Samus X momentum table constants (in water)
+org $90A08D
+    dw ...
+org $90A1DD
+
+; Samus X momentum table constants (in lava/acid)
+org $90A1DD
     dw ...
 org $90A32D
 
