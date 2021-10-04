@@ -1034,11 +1034,16 @@ status_tacotank:
     LDA #$0001 : STA !ram_roomstrat_state
 
   .checkstart
-    ; Check if Samus is in starting position not facing right and not holding left
+    ; Check if Samus is in starting position not facing right with no animation delay and not holding left
     LDA $0AF6 : CMP #$022B : BNE .donestart
     LDA $0AF8 : CMP #$FFFF : BNE .donestart
-    LDA $0AFA : CMP #$02BB : BNE .donestart
+    LDA $0B36 : CMP #$0000 : BNE .donestart
     LDA $0A1E : AND #$0004 : CMP #$0004 : BNE .donestart
+if !FEATURE_PAL
+    LDA $0A60 : CMP #$E910 : BNE .donestart
+else
+    LDA $0A60 : CMP #$E913 : BNE .donestart
+endif
     LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_LEFT : BNE .donestart
 
     ; Ready to start
@@ -1079,20 +1084,22 @@ status_tacotank:
     LDA !IH_BLANK : STA $7EC688 : STA $7EC68A
     BRL .returnstart
 
-  .incleft
-    ; Arbitrary wait of 64 frames before giving up
-    LDA !ram_roomstrat_counter : CMP #$0040 : BPL .clearreturnstart
-    INC : STA !ram_roomstrat_counter
-    RTS
-
   .incstate
     LDA !ram_roomstrat_state : INC : STA !ram_roomstrat_state
     LDA #$0000 : STA !ram_roomstrat_counter
     RTS
 
+  .incleft
+    ; Arbitrary wait of 64 frames before giving up
+    LDA !ram_roomstrat_counter : CMP #$0040 : BPL .clearreturnstart
+    INC : STA !ram_roomstrat_counter
+
+  .donerising
+    RTS
+
   .rising
     ; If our speed is still good then we haven't broken spin
-    LDA $0B48 : CMP #$6000 : BEQ .done
+    LDA $0B48 : CMP #$6000 : BEQ .donerising
 
     ; We have broken spin, combine starting X position with walljump to see how we did
     LDA !ram_xpos : CLC : ADC !ram_walljump_counter : STA !ram_xpos
@@ -1101,6 +1108,9 @@ status_tacotank:
   .initialjump
     LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_JUMP : BEQ .checkleft
 
+    ; If we haven't pressed left yet, move back to previous state
+    LDA !ram_roomstrat_counter : BEQ .clearreturnstart
+
     ; Print number of frames after holding left that we pressed jump
     LDA !ram_roomstrat_counter : ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC68A
 
@@ -1108,21 +1118,17 @@ status_tacotank:
     LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_LEFT : BNE .incleft
 
     ; Nothing to do if we haven't pressed left yet
-    LDA !ram_roomstrat_counter : BEQ .done
+    LDA !ram_roomstrat_counter : BEQ .donerising
 
-    ; Print number of frames we were holding left
-    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC688
+    ; Print number of frames we were holding left, if we haven't already
+    ASL : TAY : LDA $7EC688 : CMP !IH_LETTER_Y : BNE .noleftcheckjump
+    LDA.w NumberGFXTable,Y : STA $7EC688
 
+  .noleftcheckjump
     ; If we stopped holding left, but we haven't jumped yet,
     ; then we aren't ready to move to the next state
     LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_JUMP : BNE .incstate
-
-  .done
-    RTS
-
-  .wjfail
-    LDA !IH_LETTER_X : STA $7EC694
-    BRL .returnstart
+    BRA .incleft
 
   .checkotherstates
     ; Most states require the walljump counter incremented, so just do it for all of them
@@ -1130,6 +1136,13 @@ status_tacotank:
     LDA !ram_roomstrat_state : CMP #$0002 : BEQ .initialjump : CMP #$0005 : BEQ .rising
     CMP #$0006 : BEQ .peaking : CMP #$0004 : BEQ .accel
     BRA .walljump
+
+  .wjfail
+    LDA !IH_LETTER_X : STA $7EC694
+    BRL .returnstart
+
+  .done
+    RTS
 
   .accel
     ; We can't evaluate the horizontal movement for a few frames
