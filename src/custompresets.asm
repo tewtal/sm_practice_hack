@@ -3,20 +3,12 @@
 ; --------------
 
 print pc, " custom presets start"
-
-PresetSlot: ; 1AEh size slots
-    dw $0000, $01AE, $035C, $050A, $06B8, $0866, $0A14, $0BC2
-    dw $0D70, $0F1E, $10CC, $127A, $1428, $15D6, $1784, $1932
-    dw $1AE0, $1C8E, $1E3C, $1FEA, $2198, $2346, $24F4, $26A2
-    dw $2850, $29FE, $2BAC, $2D5A, $2F08, $30B6, $3264, $3412
-    dw $35C0, $376E, $391C, $3ACA, $3C78, $3E26, $3FD4, $4182
-    dw $4330, $44DE, $468C, $483A, $49E8, $4B96, $4D44
-
 custom_preset_save:
 {
-    LDA !sram_custom_preset_slot : ASL : TAX
-    LDA.l PresetSlot,X : TAX : LDY #$0000
+    LDA !sram_custom_preset_slot
+    ASL : XBA : TAX ; multiply by 200h (slot offset)
     LDA #$5AFE : STA $703000,X : INX #2 ; mark this slot as "SAFE" to load
+    LDA #$01B0 : STA $703000,X : INX #2 ; record slot size for future compatibility
     LDA $078B : STA $703000,X : INX #2 ;  Elevator Index
     LDA $078D : STA $703000,X : INX #2 ;  DDB
     LDA $078F : STA $703000,X : INX #2 ;  DoorOut Index
@@ -38,7 +30,7 @@ custom_preset_save:
     LDA $09A8 : STA $703000,X : INX #2 ;  Beams
     LDA $09C0 : STA $703000,X : INX #2 ;  Manual/Auto reserve tank
     LDA $09C2 : STA $703000,X : INX #2 ;  Health
-    LDA $09C4 : STA $703000,X : INX #2 ;  Max helath
+    LDA $09C4 : STA $703000,X : INX #2 ;  Max health
     LDA $09C6 : STA $703000,X : INX #2 ;  Missiles
     LDA $09C8 : STA $703000,X : INX #2 ;  Max missiles
     LDA $09CA : STA $703000,X : INX #2 ;  Supers
@@ -236,10 +228,11 @@ custom_preset_save:
 
 custom_preset_load:
 {
-    LDA !sram_custom_preset_slot : ASL : TAX
-    LDA.l PresetSlot,X : TAX : LDY #$0000
+    LDA !sram_custom_preset_slot
+    ASL : XBA : TAX ; multiply by 200h
     INX #2 ; skip past "5AFE" word
-+   LDA $703000,X : STA $078B : INX #2 ;  Elevator Index
+    INX #2 ; skip past size for now
+    LDA $703000,X : STA $078B : INX #2 ;  Elevator Index
     LDA $703000,X : STA $078D : INX #2 ;  DDB
     LDA $703000,X : STA $078F : INX #2 ;  DoorOut Index
     LDA $703000,X : STA $079B : INX #2 ;  MDB
@@ -260,7 +253,7 @@ custom_preset_load:
     LDA $703000,X : STA $09A8 : INX #2 ;  Beams
     LDA $703000,X : STA $09C0 : INX #2 ;  Manual/Auto reserve tank
     LDA $703000,X : STA $09C2 : INX #2 ;  Health
-    LDA $703000,X : STA $09C4 : INX #2 ;  Max helath
+    LDA $703000,X : STA $09C4 : INX #2 ;  Max health
     LDA $703000,X : STA $09C6 : INX #2 ;  Missiles
     LDA $703000,X : STA $09C8 : INX #2 ;  Max missiles
     LDA $703000,X : STA $09CA : INX #2 ;  Supers

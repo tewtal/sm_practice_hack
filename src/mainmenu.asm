@@ -168,7 +168,7 @@ MainMenu:
     dw #mm_goto_rngmenu
     dw #mm_goto_ctrlsmenu
     dw #$0000
-    %cm_header("SM PRACTICE HACK 2.2.9")
+    %cm_header("SM PRACTICE HACK 2.3.0")
 
 mm_goto_equipment:
     %cm_submenu("Equipment", #EquipmentMenu)
@@ -218,7 +218,7 @@ presets_goto_select_preset_category:
     %cm_submenu("Select Preset Category", #SelectPresetCategoryMenu)
 
 presets_custom_preset_slot:
-    %cm_numfield("Custom Preset Slot", !sram_custom_preset_slot, 0, 46, 1, #0) ; update max slots in gamemode.asm
+    %cm_numfield("Custom Preset Slot", !sram_custom_preset_slot, 0, 39, 1, #0) ; update total slots in gamemode.asm
 
 presets_save_custom_preset:
     %cm_jsr("Save Custom Preset", #action_save_custom_preset, #$0000)
@@ -337,8 +337,8 @@ action_save_custom_preset:
 action_load_custom_preset:
 {
     ; check if slot is populated first
-    LDA !sram_custom_preset_slot : ASL : TAX
-    LDA.l PresetSlot,X : TAX
+    LDA !sram_custom_preset_slot
+    ASL : XBA : TAX
     LDA $703000,X : CMP #$5AFE : BEQ .safe
     LDA #!SOUND_MENU_FAIL : JSL !SFX_LIB1
     RTS
