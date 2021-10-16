@@ -969,6 +969,7 @@ CalcItem:
 CalcLargeItem:
 {
     LDA $09A4
+    AND #$F32F ; GT Code adds an unused item (10h)
     LDX #$0000
   .loop
     BIT #$0001 : BEQ .noItem
