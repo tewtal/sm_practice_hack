@@ -42,7 +42,6 @@ cm_start:
     LDA #$80 : STA $2100
     LDA #$A1 : STA $4200
     LDA #$09 : STA $2105
-    LDA #$04 : STA $210C
     LDA #$0F : STA $2100
 
     %a16()
@@ -125,10 +124,13 @@ cm_set_etanks_and_reserve:
 cm_transfer_custom_tileset:
 {
     PHP
-    %a8()
-    ; word-access, incr by 1
-    LDA #$80 : STA $2115
+    %a16()
+    LDA $079B : CMP #$A59F : BEQ .kraid_vram
 
+    ; Load custom vram to normal location
+    %a8()
+    LDA #$04 : STA $210C
+    LDA #$80 : STA $2115 ; word-access, incr by 1
     LDX #$4000 : STX $2116 ; VRAM address (8000 in vram)
     LDX #cm_hud_table : STX $4302 ; Source offset
     LDA #cm_hud_table>>16 : STA $4304 ; Source bank
@@ -136,7 +138,21 @@ cm_transfer_custom_tileset:
     LDA #$01 : STA $4300 ; word, normal increment (DMA MODE)
     LDA #$18 : STA $4301 ; destination (VRAM write)
     LDA #$01 : STA $420B ; initiate DMA (channel 1)
+    PLP
+    RTS
 
+  .kraid_vram
+    ; Load custom vram to kraid location
+    %a8()
+    LDA #$02 : STA $210C
+    LDA #$80 : STA $2115 ; word-access, incr by 1
+    LDX #$2000 : STX $2116 ; VRAM address (4000 in vram)
+    LDX #cm_hud_table : STX $4302 ; Source offset
+    LDA #cm_hud_table>>16 : STA $4304 ; Source bank
+    LDX #$0900 : STX $4305 ; Size (0x10 = 1 tile)
+    LDA #$01 : STA $4300 ; word, normal increment (DMA MODE)
+    LDA #$18 : STA $4301 ; destination (VRAM write)
+    LDA #$01 : STA $420B ; initiate DMA (channel 1)
     PLP
     RTS
 }
@@ -144,12 +160,15 @@ cm_transfer_custom_tileset:
 cm_transfer_original_tileset:
 {
     PHP
-    %a8()
+    %a16()
+    LDA $079B : CMP #$A59F : BEQ .kraid_vram
 
+    %a8()
     LDA !ram_minimap : CMP #$00 : BNE .minimap_vram
 
-    ; Load in normal vram
-    LDA #$80 : STA $2115
+    ; Load in normal vram to normal location
+    LDA #$04 : STA $210C
+    LDA #$80 : STA $2115 ; word-access, incr by 1
     LDX #$4000 : STX $2116 ; VRAM address (8000 in vram)
     LDX #$B200 : STX $4302 ; Source offset
     LDA #$9A : STA $4304 ; Source bank
@@ -160,8 +179,25 @@ cm_transfer_original_tileset:
     PLP
     RTS
 
+  .kraid_vram
+    ; Load in normal vram to kraid location
+    %a8()
+    LDA #$02 : STA $210C
+    LDA #$80 : STA $2115 ; word-access, incr by 1
+    LDX #$2000 : STX $2116 ; VRAM address (4000 in vram)
+    LDX #$B200 : STX $4302 ; Source offset
+    LDA #$9A : STA $4304 ; Source bank
+    LDX #$1000 : STX $4305 ; Size (0x10 = 1 tile)
+    LDA #$01 : STA $4300 ; word, normal increment (DMA MODE)
+    LDA #$18 : STA $4301 ; destination (VRAM write)
+    LDA #$01 : STA $420B ; initiate DMA (channel 1)
+    PLP
+    RTS
+
   .minimap_vram
-    LDA #$80 : STA $2115
+    ; Load in minimap vram to normal location
+    LDA #$04 : STA $210C
+    LDA #$80 : STA $2115 ; word-access, incr by 1
     LDX #$4000 : STX $2116 ; VRAM address (8000 in vram)
     LDX #$D500 : STX $4302 ; Source offset
     LDA #$DF : STA $4304 ; Source bank
@@ -618,7 +654,7 @@ cm_draw_action_table:
         PHX : JSR cm_draw_text : PLX
 
         ; set position for the number
-        TXA : CLC : ADC #$002C : TAX
+        TXA : CLC : ADC #$002A : TAX
 
         LDA [$08] : JSR cm_hex2dec
 
@@ -626,6 +662,7 @@ cm_draw_action_table:
         LDA #$281F : STA !ram_tilemap_buffer+0,X
                      STA !ram_tilemap_buffer+2,X
                      STA !ram_tilemap_buffer+4,X
+                     STA !ram_tilemap_buffer+6,X
 
         ; Set palette
         %a8()
@@ -635,13 +672,17 @@ cm_draw_action_table:
         ; Draw numbers
         %a16()
         ; ones
-        LDA !ram_hex2dec_third_digit : CLC : ADC $0E : STA !ram_tilemap_buffer+4,X
+        LDA !ram_hex2dec_third_digit : CLC : ADC $0E : STA !ram_tilemap_buffer+6,X
 
         ; tens
-        LDA !ram_hex2dec_second_digit : ORA !ram_hex2dec_first_digit : BEQ .done
-        LDA !ram_hex2dec_second_digit : CLC : ADC $0E : STA !ram_tilemap_buffer+2,X
+        LDA !ram_hex2dec_second_digit : ORA !ram_hex2dec_first_digit
+        ORA !ram_hex2dec_rest : BEQ .done
+        LDA !ram_hex2dec_second_digit : CLC : ADC $0E : STA !ram_tilemap_buffer+4,X
 
-        LDA !ram_hex2dec_first_digit : BEQ .done
+        LDA !ram_hex2dec_first_digit : ORA !ram_hex2dec_rest : BEQ .done
+        LDA !ram_hex2dec_first_digit : CLC : ADC $0E : STA !ram_tilemap_buffer+2,X
+
+        LDA !ram_hex2dec_rest : BEQ .done
         CLC : ADC $0E : STA !ram_tilemap_buffer,X
 
       .done
