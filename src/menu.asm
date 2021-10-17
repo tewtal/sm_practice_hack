@@ -127,9 +127,9 @@ cm_transfer_custom_tileset:
     %a16()
     LDA $079B : CMP #$A59F : BEQ .kraid_vram
 
-    ; Load custom vram to normal location
+    ; Load custom vram to normal BG3 location
     %a8()
-    LDA #$04 : STA $210C
+    LDA #$04 : STA $210C ; BG3 starts at $4000 (8000 in vram)
     LDA #$80 : STA $2115 ; word-access, incr by 1
     LDX #$4000 : STX $2116 ; VRAM address (8000 in vram)
     LDX #cm_hud_table : STX $4302 ; Source offset
@@ -142,9 +142,9 @@ cm_transfer_custom_tileset:
     RTS
 
   .kraid_vram
-    ; Load custom vram to kraid location
+    ; Load custom vram to kraid BG3 location
     %a8()
-    LDA #$02 : STA $210C
+    LDA #$02 : STA $210C ; BG3 starts at $2000 (4000 in vram)
     LDA #$80 : STA $2115 ; word-access, incr by 1
     LDX #$2000 : STX $2116 ; VRAM address (4000 in vram)
     LDX #cm_hud_table : STX $4302 ; Source offset
@@ -166,8 +166,8 @@ cm_transfer_original_tileset:
     %a8()
     LDA !ram_minimap : CMP #$00 : BNE .minimap_vram
 
-    ; Load in normal vram to normal location
-    LDA #$04 : STA $210C
+    ; Load in normal vram to normal BG3 location
+    LDA #$04 : STA $210C ; BG3 starts at $4000 (8000 in vram)
     LDA #$80 : STA $2115 ; word-access, incr by 1
     LDX #$4000 : STX $2116 ; VRAM address (8000 in vram)
     LDX #$B200 : STX $4302 ; Source offset
@@ -180,9 +180,11 @@ cm_transfer_original_tileset:
     RTS
 
   .kraid_vram
-    ; Load in normal vram to kraid location
     %a8()
-    LDA #$02 : STA $210C
+    LDA !ram_minimap : CMP #$00 : BNE .kraid_minimap_vram
+
+    ; Load in normal vram to kraid BG3 location
+    LDA #$02 : STA $210C ; BG3 starts at $2000 (4000 in vram)
     LDA #$80 : STA $2115 ; word-access, incr by 1
     LDX #$2000 : STX $2116 ; VRAM address (4000 in vram)
     LDX #$B200 : STX $4302 ; Source offset
@@ -195,10 +197,24 @@ cm_transfer_original_tileset:
     RTS
 
   .minimap_vram
-    ; Load in minimap vram to normal location
-    LDA #$04 : STA $210C
+    ; Load in minimap vram to normal BG3 location
+    LDA #$04 : STA $210C ; BG3 starts at $4000 (8000 in vram)
     LDA #$80 : STA $2115 ; word-access, incr by 1
     LDX #$4000 : STX $2116 ; VRAM address (8000 in vram)
+    LDX #$D500 : STX $4302 ; Source offset
+    LDA #$DF : STA $4304 ; Source bank
+    LDX #$1000 : STX $4305 ; Size (0x10 = 1 tile)
+    LDA #$01 : STA $4300 ; word, normal increment (DMA MODE)
+    LDA #$18 : STA $4301 ; destination (VRAM write)
+    LDA #$01 : STA $420B ; initiate DMA (channel 1)
+    PLP
+    RTS
+
+  .kraid_minimap_vram
+    ; Load in minimap vram to kraid BG3 location
+    LDA #$02 : STA $210C ; BG3 starts at $2000 (4000 in vram)
+    LDA #$80 : STA $2115 ; word-access, incr by 1
+    LDX #$2000 : STX $2116 ; VRAM address (4000 in vram)
     LDX #$D500 : STX $4302 ; Source offset
     LDA #$DF : STA $4304 ; Source bank
     LDX #$1000 : STX $4305 ; Size (0x10 = 1 tile)

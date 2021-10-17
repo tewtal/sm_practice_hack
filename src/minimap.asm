@@ -45,6 +45,11 @@ org $828EB8      ; write and clear tiles to VRAM
 org $82E488      ; write tiles to VRAM
     JMP mm_write_hud_tiles_during_door_transition
 
+org $8FA5C9      ; add room asm to write tiles to VRAM
+    dw mm_write_hud_tiles_entering_kraid
+
+org $8FA5E3      ; add room asm to write tiles to VRAM
+    dw mm_write_hud_tiles_entering_kraid
 
 
 org $9AB200      ; graphics for HUD
@@ -87,7 +92,7 @@ mm_write_and_clear_hud_tiles:
     LDA !ram_minimap : BNE .minimap_vram
 
     ; Load in normal vram
-    LDA #$80 : STA $2115
+    LDA #$80 : STA $2115 ; word-access, incr by 1
     LDX #$4000 : STX $2116 ; VRAM address (8000 in vram)
     LDX #$B200 : STX $4302 ; Source offset
     LDA #$9A : STA $4304 ; Source bank
@@ -99,7 +104,7 @@ mm_write_and_clear_hud_tiles:
     RTS
 
   .minimap_vram
-    LDA #$80 : STA $2115
+    LDA #$80 : STA $2115 ; word-access, incr by 1
     LDX #$4000 : STX $2116 ; VRAM address (8000 in vram)
     LDX #$D500 : STX $4302 ; Source offset
     LDA #$DF : STA $4304 ; Source bank
@@ -132,6 +137,41 @@ mm_write_hud_tiles_during_door_transition:
 
 print pc, " minimap bank82 end"
 warnpc $82FA00
+
+
+; Placed in bank 8F so that the jumps work
+org $8FE99B
+print pc, " minimap bank8F start"
+
+mm_write_hud_tiles_entering_kraid:
+{
+    %a8()
+    LDA !ram_minimap : BEQ .skip_vram_update
+
+    ; Skip below logic that crashes the game
+    BRA .skip_vram_update
+
+    ; Load in minimap vram to kraid BG3 location
+    %i16()
+    PHP
+    PHX
+    LDA #$80 : STA $2115 ; word-access, incr by 1
+    LDX #$2000 : STX $2116 ; VRAM address (4000 in vram)
+    LDX #$D500 : STX $4302 ; Source offset
+    LDA #$DF : STA $4304 ; Source bank
+    LDX #$1000 : STX $4305 ; Size (0x10 = 1 tile)
+    LDA #$01 : STA $4300 ; word, normal increment (DMA MODE)
+    LDA #$18 : STA $4301 ; destination (VRAM write)
+    LDA #$01 : STA $420B ; initiate DMA (channel 1)
+    PLX
+    PLP
+
+  .skip_vram_update
+    %ai16()
+    RTS
+}
+
+print pc, " minimap bank8F end"
 
 
 ; Placed in bank 90 so that the jumps work
