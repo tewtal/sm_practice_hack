@@ -32,6 +32,13 @@ macro cm_numfield_hex(title, addr, start, end, increment, jsrtarget)
     db #$28, "<title>", #$FF
 endmacro
 
+macro cm_numfield_color(title, addr, jsrtarget)
+    dw !ACTION_NUMFIELD_COLOR
+    dl <addr>
+    dw <jsrtarget>
+    db #$28, "<title>", #$FF
+endmacro
+
 macro cm_toggle(title, addr, value, jsrtarget)
     dw !ACTION_TOGGLE
     dl <addr>
