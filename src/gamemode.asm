@@ -8,8 +8,9 @@ org $828963
 org $82896E
     end_of_normal_gameplay:
 
-org $85A000
+org $85F800
 print pc, " gamemode start"
+
 gamemode_start:
 {
     PHB
@@ -98,11 +99,7 @@ gamemode_shortcuts:
     SEC : RTS
 
   .kill_enemies
-    LDA #$0000
-    -
-    TAX
-    LDA $0F86,X : ORA #$0200 : STA $0F86,X
-    TXA : CLC : ADC #$0040 : CMP #$0400 : BNE -
+    JSL kill_enemies
     ; CLC to continue normal gameplay after killing enemies
     CLC : RTS
 
