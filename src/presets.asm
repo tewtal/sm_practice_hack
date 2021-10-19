@@ -343,6 +343,7 @@ add_grapple_and_xray_to_hud:
 print pc, " preset_start_gameplay end"
 warnpc $80FC00
 
+
 ; $80:9AB1: Add x-ray and grapple HUD items if necessary
 org $809AB1
     ; Skip x-ray and grapple if max HP is a multiple of 4,
@@ -356,84 +357,70 @@ warnpc $809AC9
 org $809AC9
   .resume_infohud_icon_initialization
 
+
 org $EF8000
-  ; 2EAA (length in hex)
   print pc, " prkd data start"
   incsrc presets/prkd_data.asm
   print pc, " prkd data end"
 
-  ; 42A2 (length in hex)
   print pc, " hundo data start"
   incsrc presets/hundo_data.asm
   print pc, " hundo data end"
 
 org $EE8000
-  ; 2FF6 (length in hex)
   print pc, " kpdr21 data start"
   incsrc presets/kpdr21_data.asm
   print pc, " kpdr21 data end"
 
-  ; 3274 (length in hex)
   print pc, " rbo data start"
   incsrc presets/rbo_data.asm
   print pc, " rbo data end"
 
 org $ED8000
-  ; 2B5E (length in hex)
   print pc, " gtclassic data start"
   incsrc presets/gtclassic_data.asm
   print pc, " gtclassic data end"
 
-  ; 1E95 (length in hex)
   print pc, " 14ice data start"
   incsrc presets/14ice_data.asm
   print pc, " 14ice data end"
 
-  ; 1EE6 (length in hex)
   print pc, " 14speed data start"
   incsrc presets/14speed_data.asm
   print pc, " 14speed data end"
 
 org $EC8000
-  ; 2400 (length in hex)
   print pc, " allbosskpdr data start"
   incsrc presets/allbosskpdr_data.asm
   print pc, " allbosskpdr data end"
 
-  ; 2484 (length in hex)
   print pc, " allbosspkdr data start"
   incsrc presets/allbosspkdr_data.asm
   print pc, " allbosspkdr data end"
 
-  ; 2568 (length in hex)
   print pc, " allbossprkd data start"
   incsrc presets/allbossprkd_data.asm
   print pc, " allbossprkd data end"    
 
 org $EB8000
-  ; 423C (length in hex)
   print pc, " 100early data start"
   incsrc presets/100early_data.asm
   print pc, " 100early data end"
 
-  ; 1E3A (length in hex)
   print pc, " kpdr25 data start"
   incsrc presets/kpdr25_data.asm
   print pc, " kpdr25 data end"
 
 org $EA8000
-  ; 2EBC (length in hex)
   print pc, " pkrd data start"
   incsrc presets/pkrd_data.asm
   print pc, " pkrd data end"
 
-  ; 420Ah (length in hex)
   print pc, " gtmax data start"
   incsrc presets/gtmax_data.asm
   print pc, " gtmax data end"
 
 org $E98000
-  ; 20F8h (length in hex)
   print pc, " nintendopower data start"
   incsrc presets/nintendopower_data.asm
   print pc, " nintendopower data end"

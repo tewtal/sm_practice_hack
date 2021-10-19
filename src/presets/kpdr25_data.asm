@@ -1028,32 +1028,21 @@ preset_kpdr25_maridia_draygon:
 
 preset_kpdr25_maridia_whomple_jump:
     dw #preset_kpdr25_maridia_draygon ; Maridia: Draygon
-    dl $7E078D : db $02 : dw $A924 ; DDB
+    dl $7E078D : db $02 : dw $A96C ; DDB
     dl $7E078F : db $02 : dw $0000 ; DoorOut Index
-    dl $7E079B : db $02 : dw $DA60 ; MDB
-    dl $7E07C3 : db $02 : dw $9DEA ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $2CBF ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2BA ; GFX Pointers
-    dl $7E07F3 : db $02 : dw $0024 ; Music Bank
-    dl $7E07F5 : db $02 : dw $0003 ; Music Track
-    dl $7E090F : db $02 : dw $6000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $2C00 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0012 ; Screen Y position in pixels
+    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position.
+    dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
     dl $7E09A2 : db $02 : dw $3325 ; Equipped Items
     dl $7E09A4 : db $02 : dw $3325 ; Collected Items
     dl $7E09C2 : db $02 : dw $0184 ; Health
     dl $7E09C6 : db $02 : dw $0006 ; Missiles
     dl $7E09CA : db $02 : dw $0003 ; Supers
     dl $7E09CE : db $02 : dw $0005 ; Pbs
-    dl $7E0A1C : db $02 : dw $0009 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0108 ; More position/state
-    dl $7E0AF6 : db $02 : dw $01C7 ; Samus X
+    dl $7E0AF6 : db $02 : dw $003F ; Samus X
     dl $7E0AFA : db $02 : dw $008B ; Samus Y
     dl $7ED82C : db $02 : dw $0003 ; Events, Items, Doors
-    dl $7ED882 : db $02 : dw $0500 ; Events, Items, Doors
-    dl $7ED8C2 : db $02 : dw $CC00 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $0040 ; Events, Items, Doors
+    dl $7ED8C2 : db $02 : dw $4C00 ; Events, Items, Doors
+    dl $7ED91A : db $02 : dw $0044 ; Events, Items, Doors
     dw #$FFFF
 .after
 
