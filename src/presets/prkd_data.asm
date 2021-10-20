@@ -687,7 +687,6 @@ preset_prkd_brinstar_crateria_kihunters:
     dl $7E0913 : db $02 : dw $6400 ; Screen subpixel Y position
     dl $7E09CA : db $02 : dw $0005 ; Supers
     dl $7E09CE : db $02 : dw $0003 ; Pbs
-    dl $7E09D2 : db $02 : dw $0000 ; Currently selected item
     dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0004 ; More position/state
     dl $7E0AF6 : db $02 : dw $007E ; Samus X
@@ -710,6 +709,7 @@ preset_prkd_brinstar_continuous_wall_jump:
     dl $7E0911 : db $02 : dw $0200 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $3000 ; Screen subpixel Y position
     dl $7E09CE : db $02 : dw $0001 ; Pbs
+    dl $7E09D2 : db $02 : dw $0000 ; Currently selected item
     dl $7E0A1C : db $02 : dw $0089 ; Samus position/state
     dl $7E0A1E : db $02 : dw $1508 ; More position/state
     dl $7E0AF6 : db $02 : dw $02DB ; Samus X
@@ -1109,26 +1109,46 @@ preset_prkd_red_brinstar_revisit_breaking_tube:
     dw #$FFFF
 .after
 
-preset_prkd_upper_norfair_business_center:
+preset_prkd_red_brinstar_revisit_business_center_preelev:
     dw #preset_prkd_red_brinstar_revisit_breaking_tube ; Red Brinstar Revisit: Breaking Tube
     dl $7E078D : db $02 : dw $A384 ; DDB
     dl $7E078F : db $02 : dw $0003 ; DoorOut Index
     dl $7E079B : db $02 : dw $A6A1 ; MDB
     dl $7E07F5 : db $02 : dw $0003 ; Music Track
-    dl $7E090F : db $02 : dw $8000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $4000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $2001 ; Screen subpixel Y position
+    dl $7E0913 : db $02 : dw $5001 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
     dl $7E09CE : db $02 : dw $0002 ; Pbs
-    dl $7E09D2 : db $02 : dw $0000 ; Currently selected item
-    dl $7E0AF6 : db $02 : dw $0080 ; Samus X
+    dl $7E09D2 : db $02 : dw $0000 ; Current selected weapon
+    dl $7E0AF6 : db $02 : dw $007F ; Samus X
     dl $7E0AFA : db $02 : dw $008B ; Samus Y
     dl $7ED820 : db $02 : dw $0801 ; Events, Items, Doors
     dw #$FFFF
 .after
 
+preset_prkd_upper_norfair_business_center_postelev:
+    dw #preset_prkd_red_brinstar_revisit_business_center_preelev ; Red Brinstar Revisit: Business Center Pre-Elev
+    dl $7E078D : db $02 : dw $9246 ; DDB
+    dl $7E078F : db $02 : dw $0002 ; DoorOut Index
+    dl $7E079B : db $02 : dw $A7DE ; MDB
+    dl $7E079F : db $02 : dw $0002 ; Region
+    dl $7E07C3 : db $02 : dw $C3F9 ; GFX Pointers
+    dl $7E07C5 : db $02 : dw $BBBD ; GFX Pointers
+    dl $7E07C7 : db $02 : dw $C2B6 ; GFX Pointers
+    dl $7E07F3 : db $02 : dw $0015 ; Music Bank
+    dl $7E07F5 : db $02 : dw $0005 ; Music Track
+    dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
+    dl $7E0915 : db $02 : dw $0238 ; Screen Y position in pixels
+    dl $7E0A1C : db $02 : dw $009B ; Samus position/state
+    dl $7E0A1E : db $02 : dw $0000 ; More position/state
+    dl $7E0AF6 : db $02 : dw $0080 ; Samus X
+    dl $7E0AFA : db $02 : dw $02A8 ; Samus Y
+    dw #$FFFF
+.after
+
 preset_prkd_upper_norfair_hi_jump_etank:
-    dw #preset_prkd_upper_norfair_business_center ; Upper Norfair: Business Center
+    dw #preset_prkd_upper_norfair_business_center_postelev ; Upper Norfair: Business Center
     dl $7E078D : db $02 : dw $9246 ; DDB
     dl $7E078F : db $02 : dw $0005 ; DoorOut Index
     dl $7E079B : db $02 : dw $A7DE ; MDB
@@ -1642,6 +1662,161 @@ preset_prkd_lower_norfair_ridley:
     dw #$FFFF
 .after
 
+preset_prkd_lower_norfair_nox_ln_main_hall:
+    dw #preset_prkd_upper_norfair_lava_spark ; Upper Norfair: Lava Spark
+    dl $7E078D : db $02 : dw $96F6 ; DDB
+    dl $7E079B : db $02 : dw $B236 ; MDB
+    dl $7E07F3 : db $02 : dw $0018 ; Music Bank
+    dl $7E090F : db $02 : dw $1000 ; Screen subpixel X position.
+    dl $7E0911 : db $02 : dw $0400 ; Screen X position in pixels
+    dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
+    dl $7E09C2 : db $02 : dw $00B4 ; Health
+    dl $7E09D2 : db $02 : dw $0003 ; Currently selected item
+    dl $7E0A1C : db $02 : dw $009B ; Samus position/state
+    dl $7E0A1E : db $02 : dw $0000 ; More position/state
+    dl $7E0AF6 : db $02 : dw $0480 ; Samus X
+    dl $7E0AFA : db $02 : dw $0288 ; Samus Y
+    dw #$FFFF
+.after
+
+preset_prkd_lower_norfair_nox_prepillars:
+    dw #preset_prkd_lower_norfair_nox_ln_main_hall ; Lower Norfair: LN Main Hall
+    dl $7E078F : db $02 : dw $0003 ; DoorOut Index
+    dl $7E090F : db $02 : dw $3000 ; Screen subpixel X position.
+    dl $7E0911 : db $02 : dw $0700 ; Screen X position in pixels
+    dl $7E0913 : db $02 : dw $9400 ; Screen subpixel Y position
+    dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
+    dl $7E0A1E : db $02 : dw $0008 ; More position/state
+    dl $7E0AF6 : db $02 : dw $079E ; Samus X
+    dl $7E0AFA : db $02 : dw $028B ; Samus Y
+    dw #$FFFF
+.after
+
+preset_prkd_lower_norfair_nox_worst_room_in_the_game:
+    dw #preset_prkd_lower_norfair_nox_prepillars ; Lower Norfair: Pre-Pillars
+    dl $7E078D : db $02 : dw $9912 ; DDB
+    dl $7E078F : db $02 : dw $0004 ; DoorOut Index
+    dl $7E079B : db $02 : dw $B457 ; MDB
+    dl $7E090F : db $02 : dw $277F ; Screen subpixel X position.
+    dl $7E0911 : db $02 : dw $0300 ; Screen X position in pixels
+    dl $7E0913 : db $02 : dw $E800 ; Screen subpixel Y position
+    dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
+    dl $7E09C2 : db $02 : dw $0071 ; Health
+    dl $7E0AF6 : db $02 : dw $03DB ; Samus X
+    dl $7E0AFA : db $02 : dw $008B ; Samus Y
+    dw #$FFFF
+.after
+
+preset_prkd_lower_norfair_nox_amphitheatre:
+    dw #preset_prkd_lower_norfair_nox_worst_room_in_the_game ; Lower Norfair: Worst Room in the Game
+    dl $7E078D : db $02 : dw $994E ; DDB
+    dl $7E078F : db $02 : dw $0001 ; DoorOut Index
+    dl $7E079B : db $02 : dw $B4AD ; MDB
+    dl $7E090F : db $02 : dw $4000 ; Screen subpixel X position.
+    dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
+    dl $7E0913 : db $02 : dw $A400 ; Screen subpixel Y position
+    dl $7E0915 : db $02 : dw $011C ; Screen Y position in pixels
+    dl $7E09CE : db $02 : dw $0004 ; Pbs
+    dl $7E09D2 : db $02 : dw $0000 ; Currently selected item
+    dl $7E0AF6 : db $02 : dw $00B1 ; Samus X
+    dl $7E0AFA : db $02 : dw $018B ; Samus Y
+    dw #$FFFF
+.after
+
+preset_prkd_lower_norfair_nox_kihunter_stairs_down:
+    dw #preset_prkd_lower_norfair_nox_amphitheatre ; Lower Norfair: Amphitheatre
+    dl $7E078D : db $02 : dw $997E ; DDB
+    dl $7E079B : db $02 : dw $B4E5 ; MDB
+    dl $7E0911 : db $02 : dw $0270 ; Screen X position in pixels
+    dl $7E0913 : db $02 : dw $F000 ; Screen subpixel Y position
+    dl $7E0915 : db $02 : dw $004B ; Screen Y position in pixels
+    dl $7E0AF6 : db $02 : dw $02D0 ; Samus X
+    dl $7E0AFA : db $02 : dw $00BB ; Samus Y
+    dw #$FFFF
+.after
+
+preset_prkd_lower_norfair_nox_wasteland:
+    dw #preset_prkd_lower_norfair_nox_kihunter_stairs_down ; Lower Norfair: Kihunter Stairs Down
+    dl $7E078D : db $02 : dw $99A2 ; DDB
+    dl $7E079B : db $02 : dw $B585 ; MDB
+    dl $7E090F : db $02 : dw $A980 ; Screen subpixel X position.
+    dl $7E0911 : db $02 : dw $0200 ; Screen X position in pixels
+    dl $7E0913 : db $02 : dw $F3FF ; Screen subpixel Y position
+    dl $7E0915 : db $02 : dw $0416 ; Screen Y position in pixels
+    dl $7E09C2 : db $02 : dw $0088 ; Health
+    dl $7E09CE : db $02 : dw $0002 ; Pbs
+    dl $7E0A1C : db $02 : dw $001D ; Samus position/state
+    dl $7E0A1E : db $02 : dw $0408 ; More position/state
+    dl $7E0AF6 : db $02 : dw $024C ; Samus X
+    dl $7E0AFA : db $02 : dw $0489 ; Samus Y
+    dl $7ED8BA : db $02 : dw $41F1 ; Events, Items, Doors
+    dw #$FFFF
+.after
+
+preset_prkd_lower_norfair_nox_metal_ninja_pirates:
+    dw #preset_prkd_lower_norfair_nox_wasteland ; Lower Norfair: Wasteland
+    dl $7E078D : db $02 : dw $99EA ; DDB
+    dl $7E078F : db $02 : dw $0000 ; DoorOut Index
+    dl $7E079B : db $02 : dw $B5D5 ; MDB
+    dl $7E090F : db $02 : dw $1000 ; Screen subpixel X position.
+    dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
+    dl $7E0913 : db $02 : dw $4C00 ; Screen subpixel Y position
+    dl $7E0915 : db $02 : dw $021C ; Screen Y position in pixels
+    dl $7E09C2 : db $02 : dw $0063 ; Health
+    dl $7E09CA : db $02 : dw $0007 ; Supers
+    dl $7E09CE : db $02 : dw $0001 ; Pbs
+    dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
+    dl $7E0A1E : db $02 : dw $0004 ; More position/state
+    dl $7E0AF6 : db $02 : dw $0169 ; Samus X
+    dl $7E0AFA : db $02 : dw $028B ; Samus Y
+    dl $7ED8BA : db $02 : dw $C1F1 ; Events, Items, Doors
+    dl $7ED91A : db $02 : dw $0035 ; Events, Items, Doors
+    dw #$FFFF
+.after
+
+preset_prkd_lower_norfair_nox_plowerhouse:
+    dw #preset_prkd_lower_norfair_nox_metal_ninja_pirates ; Lower Norfair: Metal Ninja Pirates
+    dl $7E078D : db $02 : dw $9A1A ; DDB
+    dl $7E079B : db $02 : dw $B62B ; MDB
+    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position.
+    dl $7E0911 : db $02 : dw $01F4 ; Screen X position in pixels
+    dl $7E0913 : db $02 : dw $1C00 ; Screen subpixel Y position
+    dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
+    dl $7E09C2 : db $02 : dw $00E9 ; Health
+    dl $7E09CA : db $02 : dw $000A ; Supers
+    dl $7E0AF6 : db $02 : dw $0254 ; Samus X
+    dl $7E0AFA : db $02 : dw $00BB ; Samus Y
+    dl $7ED8BC : db $02 : dw $0001 ; Events, Items, Doors
+    dw #$FFFF
+.after
+
+preset_prkd_lower_norfair_nox_ridley_farming_room:
+    dw #preset_prkd_lower_norfair_nox_plowerhouse ; Lower Norfair: Plowerhouse
+    dl $7E078D : db $02 : dw $9A32 ; DDB
+    dl $7E079B : db $02 : dw $B482 ; MDB
+    dl $7E090F : db $02 : dw $9000 ; Screen subpixel X position.
+    dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
+    dl $7E0913 : db $02 : dw $8C00 ; Screen subpixel Y position
+    dl $7E09C2 : db $02 : dw $00CD ; Health
+    dl $7E0AF6 : db $02 : dw $0047 ; Samus X
+    dl $7E0AFA : db $02 : dw $008B ; Samus Y
+    dw #$FFFF
+.after
+
+preset_prkd_lower_norfair_nox_ridley:
+    dw #preset_prkd_lower_norfair_nox_ridley_farming_room ; Lower Norfair: Ridley Farming Room
+    dl $7E078D : db $02 : dw $995A ; DDB
+    dl $7E079B : db $02 : dw $B37A ; MDB
+    dl $7E090F : db $02 : dw $1000 ; Screen subpixel X position.
+    dl $7E0913 : db $02 : dw $7C00 ; Screen subpixel Y position
+    dl $7E09C2 : db $02 : dw $00F2 ; Health
+    dl $7E09C6 : db $02 : dw $000F ; Missiles
+    dl $7E09CE : db $02 : dw $0004 ; Pbs
+    dl $7E0AF6 : db $02 : dw $0024 ; Samus X
+    dl $7ED8BA : db $02 : dw $D1F1 ; Events, Items, Doors
+    dw #$FFFF
+.after
+
 preset_prkd_lower_norfair_leaving_ridley:
     dw #preset_prkd_lower_norfair_ridley ; Lower Norfair: Ridley
     dl $7E078D : db $02 : dw $98CA ; DDB
@@ -1992,6 +2167,7 @@ preset_prkd_maridia_fish_tank:
     dl $7E0915 : db $02 : dw $05ED ; Screen Y position in pixels
     dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0008 ; More position/state
+    dl $7E09CA : db $02 : dw $0009 ; Supers
     dl $7E0AF6 : db $02 : dw $0162 ; Samus X
     dl $7E0AFA : db $02 : dw $068B ; Samus Y
     dl $7ED91A : db $02 : dw $003F ; Events, Items, Doors
@@ -2035,7 +2211,7 @@ preset_prkd_maridia_aqueduct:
     dl $7E0911 : db $02 : dw $0006 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $F001 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0300 ; Screen Y position in pixels
-    dl $7E09D2 : db $02 : dw $0003 ; Currently selected item
+    dl $7E09D2 : db $02 : dw $0002 ; Currently selected item
     dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0008 ; More position/state
     dl $7E0AF6 : db $02 : dw $0078 ; Samus X

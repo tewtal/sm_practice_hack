@@ -134,6 +134,13 @@ preset_load_preset:
     LDA #$0000
     STA $7E09D2 ; Current selected weapon
     STA $7E0A04 ; Auto-cancel item
+
+    ; check if custom preset is being loaded
+    LDA !ram_custom_preset : BEQ .normal_preset
+    JSL custom_preset_load
+    BRA .done
+
+  .normal_preset
     LDA !sram_preset_category : ASL : TAX
     LDA.l preset_banks,X : %a8() : PHA : PLB : %a16()
 
@@ -203,6 +210,7 @@ preset_banks:
   dw preset_gtmax_crateria_ship>>16
   dw preset_14ice_crateria_ceres_elevator>>16
   dw preset_14speed_crateria_ceres_elevator>>16
+  dw preset_100map_varia_landing_site>>16
   dw preset_nintendopower_crateria_ship>>16
   dw preset_allbosskpdr_crateria_ceres_elevator>>16
   dw preset_allbosspkdr_crateria_ceres_elevator>>16
@@ -288,29 +296,53 @@ preset_scroll_fixes:
     ; is normally hidden until passing over a red scroll block.
     ; These fixes can often be found in nearby door asm.
     PHP : %a8() : %i16()
-    LDX $079B : LDA #$01
+    LDA #$01 : LDX $079B      ; X = room ID
+    CPX #$C000 : BPL .halfway ; organized by room ID so we only have to check half
+
 +   CPX #$A011 : BNE +        ; bottom-left of Etecoons Etank
     STA $7ECD25 : STA $7ECD26
-    BRA .done
+    JMP .done
++   CPX #$AC83 : BNE +        ; left of Green Bubbles Missile Room (Norfair Reserve)
+    STA $7ECD20
+    JMP .done
 +   CPX #$AE32 : BNE +        ; bottom of Volcano Room
     STA $7ECD26
-    BRA .done
+    JMP .done
 +   CPX #$B07A : BNE +        ; top of Bat Cave
     STA $7ECD20
-    BRA .done
+    JMP .done
 +   CPX #$B1E5 : BNE +        ; bottom of Acid Chozo Room
     STA $7ECD26 : STA $7ECD27 : STA $7ECD28
     LDA #$00 : STA $7ECD23 : STA $7ECD24
-    BRA .done
+    JMP .done
 +   CPX #$B3A5 : BNE +        ; bottom of Pre-Pillars
+    LDY $0AFA : CPY #$0190    ; no scroll fix if Ypos < 400
+    BMI .done
     STA $7ECD22 : STA $7ECD24
     LDA #$00 : STA $7ECD21
+    JMP .done
++   CPX #$B4AD : BNE +        ; top of Worst Room in the Game
+    LDA #$02 : STA $7ECD20
+    JMP .done
+  .halfway
++   CPX #$CAF6 : BNE +        ; bottom of WS Shaft
+    LDA #$02
+    STA $7ECD48 : STA $7ECD4E
+    BRA .done
++   CPX #$CBD5 : BNE +        ; top of Electric Death Room (WS E-Tank)
+    LDA #$02
+    STA $7ECD20
     BRA .done
 +   CPX #$CC6F : BNE +        ; right of Basement (Phantoon)
     STA $7ECD24
     BRA .done
++   CPX #$D1A3 : BNE +        ; bottom of Crab Shaft
+    STA $7ECD26
+    LDA #$02 : STA $7ECD24
+    BRA .done
 +   CPX #$D48E : BNE +        ; Oasis (bottom of Toilet)
-    LDA #$02 : STA $7ECD20 : STA $7ECD21
+    LDA #$02
+    STA $7ECD20 : STA $7ECD21
     BRA .done
 +   CPX #$D8C5 : BNE .done    ; Pants Room (door to Shaktool)
     LDA #$00 : STA $7ECD22
@@ -358,70 +390,67 @@ org $809AC9
   .resume_infohud_icon_initialization
 
 
-org $EF8000
-  print pc, " prkd data start"
-  incsrc presets/prkd_data.asm
-  print pc, " prkd data end"
 
-  print pc, " hundo data start"
+; -------------------
+; Category Menus/Data
+; -------------------
+
+org $F18000
+  incsrc presets/prkd_menu.asm
+  incsrc presets/kpdr21_menu.asm
+  incsrc presets/hundo_menu.asm
+  incsrc presets/100early_menu.asm
+  incsrc presets/rbo_menu.asm
+  incsrc presets/pkrd_menu.asm
+  incsrc presets/kpdr25_menu.asm
+  print pc, " preset_menu bankF1 end"
+
+org $F28000
+  incsrc presets/gtclassic_menu.asm
+  incsrc presets/14ice_menu.asm
+  incsrc presets/14speed_menu.asm
+  incsrc presets/allbosskpdr_menu.asm
+  incsrc presets/allbosspkdr_menu.asm
+  incsrc presets/allbossprkd_menu.asm
+  incsrc presets/gtmax_menu.asm
+  incsrc presets/nintendopower_menu.asm
+  incsrc presets/100map_menu.asm
+  print pc, " preset_menu bankF2 end"
+
+org $EF8000
+  incsrc presets/prkd_data.asm
   incsrc presets/hundo_data.asm
-  print pc, " hundo data end"
+  print pc, " preset_data bankEF end"
 
 org $EE8000
-  print pc, " kpdr21 data start"
   incsrc presets/kpdr21_data.asm
-  print pc, " kpdr21 data end"
-
-  print pc, " rbo data start"
   incsrc presets/rbo_data.asm
-  print pc, " rbo data end"
+  print pc, " preset_data bankEE end"
 
 org $ED8000
-  print pc, " gtclassic data start"
   incsrc presets/gtclassic_data.asm
-  print pc, " gtclassic data end"
-
-  print pc, " 14ice data start"
   incsrc presets/14ice_data.asm
-  print pc, " 14ice data end"
-
-  print pc, " 14speed data start"
   incsrc presets/14speed_data.asm
-  print pc, " 14speed data end"
+  print pc, " preset_data bankED end"
 
 org $EC8000
-  print pc, " allbosskpdr data start"
   incsrc presets/allbosskpdr_data.asm
-  print pc, " allbosskpdr data end"
-
-  print pc, " allbosspkdr data start"
   incsrc presets/allbosspkdr_data.asm
-  print pc, " allbosspkdr data end"
-
-  print pc, " allbossprkd data start"
   incsrc presets/allbossprkd_data.asm
-  print pc, " allbossprkd data end"    
+  print pc, " preset_data bankEC end"
 
 org $EB8000
-  print pc, " 100early data start"
   incsrc presets/100early_data.asm
-  print pc, " 100early data end"
-
-  print pc, " kpdr25 data start"
   incsrc presets/kpdr25_data.asm
-  print pc, " kpdr25 data end"
+  print pc, " preset_data bankEB end"
 
 org $EA8000
-  print pc, " pkrd data start"
   incsrc presets/pkrd_data.asm
-  print pc, " pkrd data end"
-
-  print pc, " gtmax data start"
   incsrc presets/gtmax_data.asm
-  print pc, " gtmax data end"
+  print pc, " preset_data bankEA end"
 
 org $E98000
-  print pc, " nintendopower data start"
   incsrc presets/nintendopower_data.asm
-  print pc, " nintendopower data end"
+  incsrc presets/100map_data.asm
+  print pc, " preset_data bankE9 end"
 

@@ -1009,6 +1009,7 @@ cm_ctrl_mode:
     LDA !ram_cm_ctrl_timer : INC : STA !ram_cm_ctrl_timer : CMP.w #0060 : BNE .next_frame
 
     LDA $8B : STA [$C5]
+    JSL GameModeExtras
     LDA #!SOUND_MENU_MOVE : JSL $80903F
     BRA .exit
 
@@ -1516,6 +1517,8 @@ cm_divide_100:
 ; -----------
 
 incsrc mainmenu.asm
+incsrc custompresets.asm
+
 
 ; ----------
 ; Resources

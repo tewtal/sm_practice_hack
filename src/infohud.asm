@@ -785,7 +785,7 @@ Draw2:
     RTS
 
   .blanktens
-    LDA #$0057 : STA $7EC600,X
+    LDA !IH_BLANK : STA $7EC600,X
     BRA .done
 }
 
@@ -820,11 +820,11 @@ Draw3:
     RTS
 
   .blanktens
-    LDA #$0057 : STA $7EC600,X : STA $7EC602,X
+    LDA !IH_BLANK : STA $7EC600,X : STA $7EC602,X
     BRA .done
 
   .blankhundreds
-    LDA #$0057 : STA $7EC600,X
+    LDA !IH_BLANK : STA $7EC600,X
     BRA .done
 }
 
@@ -870,15 +870,15 @@ Draw4:
     RTS
 
   .blanktens
-    LDA #$0057 : STA $7EC600,X : STA $7EC602,X : STA $7EC604,X
+    LDA !IH_BLANK : STA $7EC600,X : STA $7EC602,X : STA $7EC604,X
     BRA .done
 
   .blankhundreds
-    LDA #$0057 : STA $7EC600,X : STA $7EC602,X
+    LDA !IH_BLANK : STA $7EC600,X : STA $7EC602,X
     BRA .done
 
   .blankthousands
-    LDA #$0057 : STA $7EC600,X
+    LDA !IH_BLANK : STA $7EC600,X
     BRA .done
 }
 
@@ -977,6 +977,7 @@ CalcItem:
 CalcLargeItem:
 {
     LDA $09A4
+    AND #$F32F ; GT Code adds an unused item (10h)
     LDX #$0000
   .loop
     BIT #$0001 : BEQ .noItem

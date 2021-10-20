@@ -29,6 +29,7 @@ preset_rbo_bombs_ceres_elevator:
     dl $7E09CC : db $02 : dw $0000 ; Max supers
     dl $7E09CE : db $02 : dw $0000 ; Pbs
     dl $7E09D0 : db $02 : dw $0000 ; Max pbs
+    dl $7E09D2 : db $02 : dw $0000 ; Currently selected item
     dl $7E09D4 : db $02 : dw $0000 ; Max reserves
     dl $7E09D6 : db $02 : dw $0000 ; Reserves
     dl $7E0A1C : db $02 : dw $0000 ; Samus position/state
@@ -1897,6 +1898,7 @@ preset_rbo_maridia_aqueduct:
     dl $7E09C2 : db $02 : dw $013F ; Health
     dl $7E09CA : db $02 : dw $0018 ; Supers
     dl $7E09CE : db $02 : dw $000E ; Pbs
+    dl $7E09D2 : db $02 : dw $0003 ; Currently selected item
     dl $7E0A1C : db $02 : dw $00E4 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0008 ; More position/state
     dl $7E0AF6 : db $02 : dw $01BA ; Samus X
@@ -1919,6 +1921,7 @@ preset_rbo_maridia_prebotwoon_ice_clip:
     dl $7E0913 : db $02 : dw $E800 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
     dl $7E09CE : db $02 : dw $000D ; Pbs
+    dl $7E09D2 : db $02 : dw $0000 ; Currently selected item
     dl $7E0A1C : db $02 : dw $0007 ; Samus position/state
     dl $7E0AF6 : db $02 : dw $0090 ; Samus X
     dl $7E0AFA : db $02 : dw $006B ; Samus Y
