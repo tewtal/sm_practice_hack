@@ -85,6 +85,8 @@
 |                               | This is to compensate for the lack of a minimap on the HUD which would normally consume CPU cycles.
 | - Reset Segment in Next Room  | Sets the segment timer to reset automatically when exiting the next door transition.
 | - Customize RAM Watch         | Setup addresses to be monitored by the RAM Watch HUD mode. Address 1 will appear in the bottom-left corner of the HUD, while Address 2 appears just to the right of Address 1. Memory at these locations can be edited by configuring a Value and selecting 'Write to Address'. Toggle 'Lock Value' to automatically write the value once every frame. RAM Watch must must be the selected HUD mode to continue writing to the address. Only one byte of hex can be configured at a time in the menu. 'Hi' refers to the first byte, while 'Lo' refers to the second. Set the Hi Address to 0D and the Lo Address to EC to monitor the memory address $0DEC, which stores the counter for Samus direction changes while held by Draygon (among other uses).
+| - Show Samus Hitbox           | Toggles an overlay of Samus hitbox that's drawn on top of Samus sprite.
+| - OOB Tile Viewer             | This enables an overlay that shows the tiles near Samus at all times, disconnected from the camera. This allows you to navigate OOB areas where neither Samus nor the actual tiles are visible in-game. Samus hitbox is drawn at the center of the overlay to show the position relative to the tiles.
 |&nbsp;|
 | **Game**                      | Toggle game options
 | - Japanese Text               | Standard game option to toggle between English and Japanese text.
