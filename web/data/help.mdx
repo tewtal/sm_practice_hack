@@ -4,12 +4,14 @@
 1. Status display defaults to first enemy's HP, but can be configured to show Charge Timer, X-Factor timer, Shinespark timer and more.
 2. Item collection percentage
 3. Number of E-tanks
-4. Current total energy
+4. Current total energy (excluding reserves), sometimes overridden by status display contents.
 5. Segment timer in minutes.seconds.frames. Resets when starting a new game, loading a preset, or by controller shortcut.
 6. Timer in seconds.frames, resets when entering a new room and updates on item acquisition and room transitions. Can be set to realtime or gametime.
 7. Lag frames, updates same as above
 8. Frames spent by last door transition
-# Controller shortcuts
+
+
+# Controller Shortcuts
 
 | **Controller 1**          | 
 | :---                      | :---   |
@@ -26,7 +28,8 @@
 | Left                      | Restore game speed
   
 
-# Menu features
+# Menu Features
+
 | <th width="600" />            |       |
 | :---                          | :---  |
 | **Equipment**                 | Configure Samus' current equipment
@@ -43,11 +46,12 @@
 | - Power Bombs                 | Select your max Power Bombs with left/right or A to increment
 |&nbsp;|
 | **Category Presets**          | Presets are pre-configured savestates that are specific to a particular category.
+|                               | **Note**: Presets load a room but do not load any enemies for that room.
 |&nbsp;|
 | **Preset Options**            | Select a category or save/load custom presets
 | - Select Preset Category      | Select the desired category to be used with Category Presets
-| - Custom Preset Slot          | Select a slot in memory to save or load custom presets
-| - Save Custom Preset          | Save a custom preset to the current slot in SRAM
+| - Custom Preset Slot          | Select one of 40 slots in memory to save or load custom presets
+| - Save Custom Preset          | Save a custom preset to the current slot in SRAM.
 | - Load Custom Preset          | Load the custom preset in the current slot in SRAM.
 |                               | A grapple sound effect will play if a preset cannot be loaded from the current slot.
 |&nbsp;|
@@ -72,7 +76,7 @@
 |                               | **Note**: If Magic and Space Pants are both turned off, this option has no effect.
 | - Fanfare                     | Toggle the fanfare for collecting items
 | - Music                       | Toggle the music
-| - Samus on top                | Draw Samus on top of foreground objects/tiles
+| - Samus on Top                | Draw Samus on top of foreground objects/tiles
 | - Invincibility               | Prevents Samus from taking damage or knockback
 |&nbsp;|
 | **Infohud**                   | Configure the HUD
@@ -81,23 +85,27 @@
 | - Room Strat                  | Select which Room Strat to be displayed in the bottom-left of the HUD. 
 |                               | This only works if "Room Strat" is selected as the above Infohud Mode.
 | - Frame Counters              | Toggle the room timer in the top-right of the HUD between realtime and gametime
+| - Reset Segment in Next Room  | Sets the segment timer to reset automatically when exiting the next door transition.
 | - Artificial Lag              | Select a value to adjust how much lag occurs during normal gameplay. 
 |                               | This is to compensate for the lack of a minimap on the HUD which would normally consume CPU cycles.
-| - Reset Segment in Next Room  | Sets the segment timer to reset automatically when exiting the next door transition.
 | - Customize RAM Watch         | Setup addresses to be monitored by the RAM Watch HUD mode. Address 1 will appear in the bottom-left corner of the HUD, while Address 2 appears just to the right of Address 1. Memory at these locations can be edited by configuring a Value and selecting 'Write to Address'. Toggle 'Lock Value' to automatically write the value once every frame. RAM Watch must must be the selected HUD mode to continue writing to the address. Only one byte of hex can be configured at a time in the menu. 'Hi' refers to the first byte, while 'Lo' refers to the second. Set the Hi Address to 0D and the Lo Address to EC to monitor the memory address $0DEC, which stores the counter for Samus direction changes while held by Draygon (among other uses).
 | - Show Samus Hitbox           | Toggles an overlay of Samus hitbox that's drawn on top of Samus sprite.
 | - OOB Tile Viewer             | This enables an overlay that shows the tiles near Samus at all times, disconnected from the camera. This allows you to navigate OOB areas where neither Samus nor the actual tiles are visible in-game. Samus hitbox is drawn at the center of the overlay to show the position relative to the tiles.
 |&nbsp;|
 | **Game**                      | Toggle game options
-| - Japanese Text               | Standard game option to toggle between English and Japanese text.
+| - Japanese/French Text        | Standard game option to toggle between English and Japanese text (NTSC) or between German and French text (PAL).
 | - Moon Walk                   | Standard game option for Moon Walk.
 | - Icon Cancel                 | Standard game option for Icon Cancel.
 | - Debug Mode                  | Toggles the debug mode. Note that debug mode shortcuts and features may not be well supported in the practice rom.
 | - Debug CPU Brightness        | Toggles a built-in debug feature to darken the screen after the game is done processing the next frame. Useful for estimating CPU usage.
+| - PAL Debug Movement          | PAL-only feature that gives Samus extra movement correlated to the dpad input.
 | - Minimap                     | Restores the game minimap, which also allows the pause menu map to be updated. When enabled, a map tile counter will also be displayed.
 | - Clear Minimap               | Clears the map tile counter and all minimap data.
+| - Metronome                   | Toggles a metronome feature that will play a sound at a periodic rate
+| - Metronome Tickrate          | The number of frames between metronome sounds
+| - Metronome SFX               | The sound to play (Beep, Power Beam, Spazer, Missile, Click)
 |&nbsp;|
-| **RNG Control**               | Pre-determine boss patterns for Phantoon or Botwoon
+| **RNG Control**               | Pre-determine boss patterns
 | - Rerandomize                 | Toggles rerandomizing of RNG values upon loading a savestate. SD2SNES/FXPak versions only.
 | - Phan 1st Phase              | Choose the direction and eye opening pattern for Phantoon's first phase
 | - Phan 2nd Phase              | Choose the direction and eye opening pattern for Phantoon's second and subsequent phases
@@ -111,10 +119,36 @@
 |&nbsp;|
 | **Controller Shortcuts**      | Set or change button combinations for activating features. Press A to select the shortcut and then hold the desired button combination until it turns pink.
 | - Main Menu                   | Open the InfoHUD menu
+| - Save State                  | Sets the savestate. SD2SNES/FXPak versions only.
+| - Load State                  | Loads the savestate. SD2SNES/FXPak versions only.
 | - Reload Preset               | Reload the last selected category preset
-| - Reset Seg Timer             | Reset the segment timer. Takes effect immediately but only updates the display on certain events/actions.
-| - Full Equipment              | Refills your energy and ammo to their current max capacities
-| - Kill Enemies                | Instantly deletes all enemies in the current room
 | - Random Preset               | Randomly chooses a preset from your selected preset category
+| - Save Cust Preset            | Save a custom preset to the current slot in SRAM.
+| - Load Cust Preset            | Load the custom preset in the current slot in SRAM.
+| - Next Preset Slot            | Increments the custom preset slot.
+| - Prev Preset Slot            | Decrements the custom preset slot.
+| - Reset Seg Timer             | Reset the segment timer. Takes effect immediately but only updates the display on certain events/actions.
+| - Reset Seg Later             | Reset the segment timer. Takes effect when exiting the next door transition.
+| - Full Equipment              | Refills your energy and ammo to their current max capacities.
+| - Kill Enemies                | Instantly deletes all enemies in the current room.
 | - Clear Shortcuts             | Resets Main Menu shortcut to default and removes button combos for all others.
+
+
+# Lag Frames
+
+Super Metroid runs at ~60 fps (NTSC) or ~50 fps (PAL). On each frame, the game simultaneously renders the current frame while preparing the next frame. If it fails to prepare the next frame in time, then the previous frame is rendered again. We call this a lag frame.
+This means that game lag depends on how much work the CPU needs to do to prepare the next frame. It follows that any modification to game code could impact the game lag. Thus we need to balance the desire for practice ROM features with the desire for performance accuracy (matching the actual game lag).
+
+You might be wondering how we were able to add features at all, since generally adding features means adding work. In fact even if a feature is toggled off, the game may have to check that the feature is toggled off and that is more work.
+Fortunately it was discovered that the minimap adds a noticeable amount of work to each frame, and by disabling the minimap we freed up CPU for our features. In fact, we even had to add artificial lag in order to more closely match actual game performance.
+Unfortunately we weren't the only ones to notice this. Deer Force knew, and they also knew boss fights were laggy, so they disabled the minimap for most boss fights.
+As a result, with default settings the practice ROM will have very similar lag compared to the actual game, except the practice ROM may have more lag during boss fights.
+
+As we continue to maintain and add features to the practice ROM, this is our strategy for managing lag:
+| - Normal Gameplay             | With default settings (enemy HP selected in the infohud), we really try not to change lag. If we do, it will be communicated.
+|                               | If you select other infohud or room strat options, lag may have a slight variance although it typically won't be noticeable.
+| - Events                      | On events (when drops appear, when an item is collected, etc.), we may add features. It's conceivable this could add a lag frame, although in most circumstances it would be unlikely or impossible.
+| - Door/Elevator Transitions   | Similar to events, we may add features during this time. Some features require data to be reloaded during this time.
+| - Practice Features           | Once you start turning on practice features, lag may no longer be similar to actual game. Some features like magic pants or the metronome may not have much impact, but others like the OOB tile viewer add a significant amount of work for the CPU.
 <br />
+
