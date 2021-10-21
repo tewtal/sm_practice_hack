@@ -24,15 +24,20 @@ db $FF, $FF, $80, $80, $80, $80, $80, $80, $80, $80, $80, $80, $80, $80, $80, $8
 
 org $F0E000
 print pc, " spritefeat start"
+
 ; This runs every frame before any other sprites are drawn, this is needed so we can get priority over everything else
 update_sprite_features:
     PHA : PHX : PHY : PHP
 
     ; Draw OOB viewer if activated
+    LDA !ram_oob_watch_active : BEQ +
     JSR update_sprite_oob
+    +
 
     ; Draw Samus hitbox if activated
+    LDA !ram_sprite_hitbox_active : BEQ +
     JSR update_sprite_hitbox
+    +
 
     PLP : PLY : PLX : PLA
 
@@ -67,9 +72,6 @@ upload_sprite_oob_tiles:
     RTL
 
 update_sprite_oob:
-    LDA !ram_oob_watch_active : BNE +
-    RTS
-+
     !oob_width = $000D
     !oob_height = $0009
     LDA $590 : STA $C8
@@ -282,9 +284,6 @@ spr_clr_flags:
 
 ; draw hitbox around samus
 update_sprite_hitbox:
-    LDA !ram_sprite_hitbox_active : BNE +
-        RTS
-    +
     LDA $0AFA : SEC : SBC $0915 : PHA ; top edge
     LDA $0B04 : PHA ; left edge
 

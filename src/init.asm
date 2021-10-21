@@ -1,4 +1,4 @@
-!SRAM_VERSION = $0008
+!SRAM_VERSION = $0009
 
 
 ; hijack, runs as game is starting, JSR to RAM initialization to avoid bad values
@@ -77,7 +77,7 @@ init_sram:
     ; $0010 = R
 
     ; Features
-    LDA #$0016 : STA !sram_artificial_lag
+    LDA #$0015 : STA !sram_artificial_lag
     LDA #$0001 : STA !sram_rerandomize
     LDA #$0000 : STA !sram_fanfare_toggle
     LDA #$0001 : STA !sram_music_toggle
