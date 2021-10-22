@@ -138,13 +138,14 @@
 
 Super Metroid runs at ~60 fps (NTSC) or ~50 fps (PAL). On each frame, the game simultaneously renders the current frame while preparing the next frame. If it fails to prepare the next frame in time, then the previous frame is rendered again. We call this a lag frame.
 This means that game lag depends on how much work the CPU needs to do to prepare the next frame. It follows that any modification to game code could impact the game lag. Thus we need to balance the desire for practice ROM features with the desire for performance accuracy (matching the actual game lag).
-
+&nbsp;  
 You might be wondering how we were able to add features at all, since generally adding features means adding work. In fact even if a feature is toggled off, the game may have to check that the feature is toggled off and that is more work.
 Fortunately it was discovered that the minimap adds a noticeable amount of work to each frame, and by disabling the minimap we freed up CPU for our features. In fact, we even had to add artificial lag in order to more closely match actual game performance.
 Unfortunately we weren't the only ones to notice this. Deer Force knew, and they also knew boss fights were laggy, so they disabled the minimap for most boss fights.
 As a result, with default settings the practice ROM will have very similar lag compared to the actual game, except the practice ROM may have more lag during boss fights.
-
+&nbsp;  
 As we continue to maintain and add features to the practice ROM, this is our strategy for managing lag:
+| :---                          | :---  |
 | - Normal Gameplay             | With default settings (enemy HP selected in the infohud), we really try not to change lag. If we do, it will be communicated.
 |                               | If you select other infohud or room strat options, lag may have a slight variance although it typically won't be noticeable.
 | - Events                      | On events (when drops appear, when an item is collected, etc.), we may add features. It's conceivable this could add a lag frame, although in most circumstances it would be unlikely or impossible.
