@@ -46,7 +46,6 @@ org $82E488      ; write tiles to VRAM
     JMP mm_write_hud_tiles_during_door_transition
 
 
-
 org $9AB200      ; graphics for HUD
 incbin ../resources/hudgfx.bin
 
@@ -87,7 +86,7 @@ mm_write_and_clear_hud_tiles:
     LDA !ram_minimap : BNE .minimap_vram
 
     ; Load in normal vram
-    LDA #$80 : STA $2115
+    LDA #$80 : STA $2115 ; word-access, incr by 1
     LDX #$4000 : STX $2116 ; VRAM address (8000 in vram)
     LDX #$B200 : STX $4302 ; Source offset
     LDA #$9A : STA $4304 ; Source bank
@@ -99,7 +98,7 @@ mm_write_and_clear_hud_tiles:
     RTS
 
   .minimap_vram
-    LDA #$80 : STA $2115
+    LDA #$80 : STA $2115 ; word-access, incr by 1
     LDX #$4000 : STX $2116 ; VRAM address (8000 in vram)
     LDX #$D500 : STX $4302 ; Source offset
     LDA #$DF : STA $4304 ; Source bank

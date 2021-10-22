@@ -29,6 +29,7 @@ preset_nintendopower_crateria_ship:
     dl $7E09CC : db $02 : dw $0000 ; Max supers
     dl $7E09CE : db $02 : dw $0000 ; Pbs
     dl $7E09D0 : db $02 : dw $0000 ; Max pbs
+    dl $7E09D2 : db $02 : dw $0000 ; Currently selected item
     dl $7E09D4 : db $02 : dw $0000 ; Max reserves
     dl $7E09D6 : db $02 : dw $0000 ; Reserves
     dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
@@ -1198,6 +1199,7 @@ preset_nintendopower_maridia_aqueduct:
     dl $7E09C2 : db $02 : dw $0224 ; Health
     dl $7E09CA : db $02 : dw $000C ; Supers
     dl $7E09CC : db $02 : dw $000F ; Max supers
+    dl $7E09D2 : db $02 : dw $0003 ; Currently selected item
     dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0008 ; More position/state
     dl $7E0AF6 : db $02 : dw $01AF ; Samus X
@@ -1226,6 +1228,7 @@ preset_nintendopower_maridia_botwoon:
     dl $7E09CA : db $02 : dw $0011 ; Supers
     dl $7E09CC : db $02 : dw $0014 ; Max supers
     dl $7E09CE : db $02 : dw $0009 ; Pbs
+    dl $7E09D2 : db $02 : dw $0000 ; Currently selected item
     dl $7E0AF6 : db $02 : dw $0081 ; Samus X
     dl $7E0AFA : db $02 : dw $006B ; Samus Y
     dl $7ED882 : db $02 : dw $0070 ; Events, Items, Doors

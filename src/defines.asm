@@ -1,3 +1,12 @@
+; ---------------
+; Compiler Flags
+; ---------------
+!ORIGINAL_MESSAGE_TEXT ?= 0
+
+; ----
+; RAM
+; ----
+
 !ram_load_preset = $7FFB00
 
 !ram_gametime_room = $7FFB02
@@ -34,6 +43,9 @@
 !ram_minimap = $7FFB36
 !ram_map_counter = $7FFB38
 !ram_vcounter_data = $7FFB3A
+!ram_sprite_hitbox_active = $7FFB46
+!ram_oob_watch_active = $7FFB48
+!ram_custom_preset = $7FFB4C
 
 ; FREE SPACE ^
 
@@ -54,9 +66,10 @@
 !ram_draygon_rng_right = $7FFB6A
 
 !ram_game_loop_extras = $7FFB6C
+!ram_game_mode_extras = $7FFB6E
 
-!ram_metronome = $7FFB6E
-!ram_metronome_counter = $7FFB70
+!ram_metronome = $7FFB70
+!ram_metronome_counter = $7FFB72
 
 
 ; FREE SPACE ^
@@ -111,9 +124,9 @@
 !ram_watch_edit_lock_right = $7FFBFE
 
 
-; -------------
+; -----
 ; Menu
-; -------------
+; -----
 
 !ram_cm_stack_index = $5D5
 !ram_cm_menu_stack = $7FFF00 ; 0x10
@@ -151,14 +164,16 @@
 !ACTION_NUMFIELD_HEX    = #$000C
 !ACTION_NUMFIELD_WORD   = #$000E
 !ACTION_TOGGLE_INVERTED = #$0010
+!ACTION_NUMFIELD_COLOR  = #$0012
 
 !SOUND_MENU_MOVE = $0039
 !SOUND_MENU_JSR = $0039
+!SOUND_MENU_FAIL = $0007
 
 
-; ------------
+; ---------
 ; Pointers
-; ------------
+; ---------
 
 !IH_CONTROLLER_PRI = $8B
 !IH_CONTROLLER_PRI_NEW = $8F
@@ -224,6 +239,10 @@
 !sram_ctrl_save_state = $70200E
 !sram_ctrl_load_last_preset = $702010
 !sram_ctrl_random_preset = $702012
+!sram_ctrl_save_custom_preset = $702014
+!sram_ctrl_load_custom_preset = $702016
+!sram_ctrl_inc_custom_preset = $702018
+!sram_ctrl_dec_custom_preset = $70201A
 
 ; FREE SPACE ^
 
@@ -236,10 +255,11 @@
 !sram_last_preset = $70202C
 !sram_save_has_set_rng = $70202E
 !sram_preset_category = $702030
-!sram_room_strat = $702032
-!sram_sprite_prio_flag = $702034
-!sram_metronome_tickrate = $702036
-!sram_metronome_sfx = $702038
+!sram_custom_preset_slot = $702032
+!sram_room_strat = $702034
+!sram_sprite_prio_flag = $702036
+!sram_metronome_tickrate = $702038
+!sram_metronome_sfx = $70203A
 
 ; FREE SPACE ^
 

@@ -67,7 +67,7 @@ endif
     JSL ih_mb1_segment
 
 if !FEATURE_PAL
-org $A9BE33      ; update timers when baby spawns (off-screen) in MB2 fight
+org $A9BE70      ; update timers when baby spawns (off-screen) in MB2 fight
 else
 org $A9BE23      ; update timers when baby spawns (off-screen) in MB2 fight
 endif
@@ -377,7 +377,11 @@ ih_elevator_activation:
 ih_mb1_segment:
 {
     ; runs during MB1 cutscene when you regain control of Samus, just before music change
-    JSL $90F084    ; we overwrote this instruction to get here
+if !FEATURE_PAL
+    JSL $90F081 ; overwritten code
+else
+    JSL $90F084 ; overwritten code
+endif
 
     JML ih_update_hud_early
 }
@@ -406,7 +410,11 @@ ih_chozo_segment:
 ih_ceres_elevator_segment:
 {
     JSL ih_update_hud_early
+if !FEATURE_PAL
+    JML $90F081 ; overwritten code
+else
     JML $90F084 ; overwritten code
+endif
 }
 
 ih_ship_elevator_segment:
@@ -717,7 +725,7 @@ ih_hud_code:
 ++  STA $7EC608, X
     INX
     INX
-    CPX #$00C
+    CPX #$000C
     BNE -
 
     LDX #$0000
@@ -777,7 +785,7 @@ Draw2:
     RTS
 
   .blanktens
-    LDA #$0057 : STA $7EC600,X
+    LDA !IH_BLANK : STA $7EC600,X
     BRA .done
 }
 
@@ -812,11 +820,11 @@ Draw3:
     RTS
 
   .blanktens
-    LDA #$0057 : STA $7EC600,X : STA $7EC602,X
+    LDA !IH_BLANK : STA $7EC600,X : STA $7EC602,X
     BRA .done
 
   .blankhundreds
-    LDA #$0057 : STA $7EC600,X
+    LDA !IH_BLANK : STA $7EC600,X
     BRA .done
 }
 
@@ -862,15 +870,15 @@ Draw4:
     RTS
 
   .blanktens
-    LDA #$0057 : STA $7EC600,X : STA $7EC602,X : STA $7EC604,X
+    LDA !IH_BLANK : STA $7EC600,X : STA $7EC602,X : STA $7EC604,X
     BRA .done
 
   .blankhundreds
-    LDA #$0057 : STA $7EC600,X : STA $7EC602,X
+    LDA !IH_BLANK : STA $7EC600,X : STA $7EC602,X
     BRA .done
 
   .blankthousands
-    LDA #$0057 : STA $7EC600,X
+    LDA !IH_BLANK : STA $7EC600,X
     BRA .done
 }
 
@@ -969,6 +977,7 @@ CalcItem:
 CalcLargeItem:
 {
     LDA $09A4
+    AND #$F32F ; GT Code adds an unused item (10h)
     LDX #$0000
   .loop
     BIT #$0001 : BEQ .noItem
@@ -1017,7 +1026,7 @@ ih_game_loop_code:
     LDA !ram_metronome : BEQ +
     JSR metronome
 
-+   LDA !ram_magic_pants_enabled : BEQ .handleinputs
++   LDA !ram_magic_pants_enabled : AND #$0003 : BEQ .handleinputs
     CMP #$0001 : BEQ .magicpants
     CMP #$0002 : BEQ .spacepants
 
@@ -1126,11 +1135,11 @@ metronome:
     LDA !sram_metronome_sfx : ASL : TAX
     LDA.l MetronomeSFX,X : JSL !SFX_LIB1
     RTS
+}
 
 MetronomeSFX:
     ; missile, click, beep, shot, spazer
     dw #$0003, #$0039, #$0036, #$000B, #$000F
-}
 
 magic_pants:
 {
@@ -1148,11 +1157,17 @@ magic_pants:
     RTS
 
   .flash
-    LDA !ram_magic_pants_state : BNE +
-    LDA $7EC194 : STA !ram_magic_pants_pal1
+    LDA !ram_magic_pants_state : BNE ++
+
+    ; if loudpants are enabled, click
+    LDA !ram_magic_pants_enabled : AND #$0004 : BEQ +
+    LDA !sram_metronome_sfx : ASL : TAX
+    LDA.l MetronomeSFX,X : JSL !SFX_LIB1
+
++   LDA $7EC194 : STA !ram_magic_pants_pal1
     LDA $7EC196 : STA !ram_magic_pants_pal2
     LDA $7EC19E : STA !ram_magic_pants_pal3
-+   LDA #$FFFF
+++  LDA #$FFFF
     STA $7EC194 : STA $7EC196 : STA $7EC19E
     STA !ram_magic_pants_state
     RTS
@@ -1194,8 +1209,14 @@ space_pants:
 ; Screw Attack seems to write new palette data every frame, which overwrites the flash
   .flash
     LDA !ram_magic_pants_state : BNE .done
+
+    ; if loudpants are enabled, click
+    LDA !ram_magic_pants_enabled : AND #$0004 : BEQ +
+    LDA !sram_metronome_sfx : ASL : TAX
+    LDA.l MetronomeSFX,X : JSL !SFX_LIB1
+
     ; preserve palettes first
-    LDA $7EC194 : STA !ram_magic_pants_pal1
++   LDA $7EC194 : STA !ram_magic_pants_pal1
     LDA $7EC196 : STA !ram_magic_pants_pal2
     LDA $7EC198 : STA !ram_magic_pants_pal3
     ; then flash
@@ -1240,6 +1261,7 @@ ih_shinespark_code:
 }
 
 print pc, " infohud end"
+warnpc $F0E000
 
 
 ; Stuff that needs to be placed in bank 80

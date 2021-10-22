@@ -1,4 +1,4 @@
-!SRAM_VERSION = $0008
+!SRAM_VERSION = $0009
 
 
 ; hijack, runs as game is starting, JSR to RAM initialization to avoid bad values
@@ -27,11 +27,14 @@ init_code:
     }
 
     ; Check if we should initialize SRAM
-    LDA !sram_initialized : CMP #!SRAM_VERSION : BEQ .sram_initialized
++   LDA !sram_initialized : CMP #!SRAM_VERSION : BEQ .sram_initialized
 
     JSR init_sram
 
   .sram_initialized
+    ; Check if any less common controller shortcuts are configured
+    JSL GameModeExtras
+
     PLA
     ; Execute overwritten logic and return
 if !FEATURE_PAL
@@ -54,26 +57,27 @@ init_sram:
     LDA #$0000 : STA !sram_ctrl_reset_segment_timer
     LDA #$0000 : STA !sram_ctrl_reset_segment_later
     LDA #$0000 : STA !sram_ctrl_random_preset
+    LDA #$0000 : STA !sram_ctrl_save_custom_preset
+    LDA #$0000 : STA !sram_ctrl_load_custom_preset
+    LDA #$0000 : STA !sram_ctrl_inc_custom_preset
+    LDA #$0000 : STA !sram_ctrl_dec_custom_preset
 
-    ; Input Cheat Sheet  (#$XXYY)
-    ; $4218  (YY)
-    ; $80 = A
-    ; $40 = X
-    ; $20 = L
-    ; $10 = R
-    ; 
-    ; $4219  (XX)
-    ; $80 = B
-    ; $40 = Y
-    ; $20 = Select
-    ; $10 = Start
-    ; $08 = Up
-    ; $04 = Down
-    ; $02 = Left
-    ; $01 = Right
+    ; Input Cheat Sheet  ($4218)
+    ; $8000 = B
+    ; $4000 = Y
+    ; $2000 = Select
+    ; $1000 = Start
+    ; $0800 = Up
+    ; $0400 = Down
+    ; $0200 = Left
+    ; $0100 = Right
+    ; $0080 = A
+    ; $0040 = X
+    ; $0020 = L
+    ; $0010 = R
 
     ; Features
-    LDA #$0016 : STA !sram_artificial_lag
+    LDA #$0015 : STA !sram_artificial_lag
     LDA #$0001 : STA !sram_rerandomize
     LDA #$0000 : STA !sram_fanfare_toggle
     LDA #$0001 : STA !sram_music_toggle
@@ -82,6 +86,7 @@ init_sram:
     LDA #$0000 : STA !sram_last_preset
     LDA #$0000 : STA !sram_save_has_set_rng
     LDA #$0000 : STA !sram_preset_category
+    LDA #$0000 : STA !sram_custom_preset_slot
     LDA #$0000 : STA !sram_room_strat
     LDA #$0000 : STA !sram_sprite_prio_flag
     LDA #$000A : STA !sram_metronome_tickrate

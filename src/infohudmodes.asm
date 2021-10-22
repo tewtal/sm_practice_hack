@@ -104,6 +104,16 @@ status_dashcounter:
 
 status_shinetune:
 {
+if !FEATURE_PAL
+    !tap_1_to_2 = $0014
+    !tap_2_to_3 = $0014
+    !tap_3_to_4 = $000A
+else
+    !tap_1_to_2 = $0019
+    !tap_2_to_3 = $0014
+    !tap_3_to_4 = $000F
+endif
+
     ; Suppress Samus HP display
     ; The segment timer is also suppressed elsewhere just for shinetune
     LDA $09C2 : STA !ram_last_hp
@@ -150,7 +160,7 @@ status_shinetune:
     ; Assume we gear shifted up, so set flag indicating we are holding dash for this transition
     ; Also reset our shine counter
     ; For efficiency the shine counter is set to the dash counter instead of zero,
-    ; so keep that in mind when reviewing the logic to follo
+    ; so keep that in mind when reviewing the logic to follow
     STA !ram_shine_dash_held_late : STA !ram_shine_counter
 
     ; On gear shift, we have some numbers to draw
@@ -190,9 +200,9 @@ status_shinetune:
 
     ; We were, which means we let go of dash early
     LDA #$00FF : STA !ram_dash_counter
-    LDA #$001A : SEC : SBC !ram_shinetune_early_2 : LDX #$0090 : JSR Draw3
+    LDA #(!tap_1_to_2+1) : SEC : SBC !ram_shinetune_early_2 : LDX #$0090 : JSR Draw3
     LDA !IH_LETTER_E : STA $7EC696
-    LDA #$001B : SEC : SBC !ram_shine_counter
+    LDA #(!tap_1_to_2+2) : SEC : SBC !ram_shine_counter
     ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC698
     RTS
 
@@ -216,8 +226,8 @@ status_shinetune:
     RTS
 
   .checklatemiss1
-    ; Arbitrary give up waiting after 49 frames (23 past the time we should have pressed dash)
-    LDA !ram_shine_counter : CMP #$0031 : BMI .donecheck1
+    ; Arbitrary give up waiting after 50 frames (24 past the time we should have pressed dash)
+    LDA !ram_shine_counter : CMP #(!tap_1_to_2+!tap_1_to_2) : BMI .donecheck1
     LDA #$00FF : STA !ram_dash_counter
     LDA !IH_LETTER_L : STA $7EC692
     LDA !IH_LETTER_X : STA $7EC694
@@ -227,13 +237,13 @@ status_shinetune:
     ; Gear 1, pressed dash too late to reach gear 2
     LDA #$00FF : STA !ram_dash_counter
     LDA !IH_LETTER_L : STA $7EC692
-    LDA !ram_shine_counter : SEC : SBC #$001A
+    LDA !ram_shine_counter : SEC : SBC #(!tap_1_to_2+1)
     ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC694
     BRL .clear2
 
   .setnextearly1
     ; Gear 1, just pressed dash when trying to reach gear 2
-    LDA !ram_shine_counter : CMP #$001A : BPL .checklate1
+    LDA !ram_shine_counter : CMP #(!tap_1_to_2+1) : BPL .checklate1
     LDA !ram_shine_counter : STA !ram_shinetune_early_2
     RTS
 
@@ -246,9 +256,9 @@ status_shinetune:
 
     ; We were, which means we let go of dash early
     LDA #$00FF : STA !ram_dash_counter
-    LDA #$0016 : SEC : SBC !ram_shinetune_early_3 : LDX #$00AE : JSR Draw3
+    LDA #(!tap_2_to_3+2) : SEC : SBC !ram_shinetune_early_3 : LDX #$00AE : JSR Draw3
     LDA !IH_LETTER_E : STA $7EC6B4
-    LDA #$0017 : SEC : SBC !ram_shine_counter
+    LDA #(!tap_2_to_3+3) : SEC : SBC !ram_shine_counter
     ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC6B6
     RTS
 
@@ -273,7 +283,7 @@ status_shinetune:
 
   .checklatemiss2
     ; Arbitrary give up waiting after 40 frames (18 past the time we should have pressed dash)
-    LDA !ram_shine_counter : CMP #$0028 : BMI .donecheck2
+    LDA !ram_shine_counter : CMP #(!tap_2_to_3+!tap_2_to_3) : BMI .donecheck2
     LDA #$00FF : STA !ram_dash_counter
     LDA !IH_LETTER_L : STA $7EC6B0
     LDA !IH_LETTER_X : STA $7EC6B2
@@ -283,20 +293,20 @@ status_shinetune:
     ; Gear 2, pressed dash too late to reach gear 3
     LDA #$00FF : STA !ram_dash_counter
     LDA !IH_LETTER_L : STA $7EC6B0
-    LDA !ram_shine_counter : SEC : SBC #$0016
+    LDA !ram_shine_counter : SEC : SBC #(!tap_2_to_3+2)
     ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC6B2
     BRL .clear3
 
   .setnextearly2
     ; Gear 2, just pressed dash when trying to reach gear 3
-    LDA !ram_shine_counter : CMP #$0016 : BPL .checklate2
+    LDA !ram_shine_counter : CMP #(!tap_2_to_3+2) : BPL .checklate2
     LDA !ram_shine_counter : STA !ram_shinetune_early_3
     RTS
 
   .nodash3minimap
     ; We let go of dash early, but also we have the minimap displayed
     LDA !IH_LETTER_E : STA $7EC6B8
-    LDA #$0013 : SEC : SBC !ram_shine_counter
+    LDA #(!tap_3_to_4+4) : SEC : SBC !ram_shine_counter
     ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC6BA
     RTS
 
@@ -310,9 +320,9 @@ status_shinetune:
     ; We were, which means we let go of dash early
     LDA #$00FF : STA !ram_dash_counter
     LDA !ram_minimap : BNE .nodash3minimap
-    LDA #$0012 : SEC : SBC !ram_shinetune_early_4 : LDX #$00B8 : JSR Draw3
+    LDA #(!tap_3_to_4+3) : SEC : SBC !ram_shinetune_early_4 : LDX #$00B8 : JSR Draw3
     LDA !IH_LETTER_E : STA $7EC6BE
-    LDA #$0013 : SEC : SBC !ram_shine_counter
+    LDA #(!tap_3_to_4+4) : SEC : SBC !ram_shine_counter
     ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC6C0
     RTS
 
@@ -341,8 +351,8 @@ status_shinetune:
     RTS
 
   .checklatemiss3
-    ; Arbitrary give up waiting after 31 frames (13 past the time we should have pressed dash)
-    LDA !ram_shine_counter : CMP #$001F : BMI .donecheck3
+    ; Arbitrary give up waiting after 30 frames (12 past the time we should have pressed dash)
+    LDA !ram_shine_counter : CMP #(!tap_3_to_4+!tap_3_to_4) : BMI .donecheck3
     LDA #$00FF : STA !ram_dash_counter
     LDA !ram_minimap : BNE .checklatemiss3minimap
     LDA !IH_LETTER_X : STA $7EC6BC
@@ -352,7 +362,7 @@ status_shinetune:
     ; Gear 3, pressed dash too late to reach gear 4
     LDA #$00FF : STA !ram_dash_counter
     LDA !ram_minimap : BNE .checklate3minimap
-    LDA !ram_shine_counter : SEC : SBC #$0012
+    LDA !ram_shine_counter : SEC : SBC #(!tap_3_to_4+3)
     ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC6BC
 
   .checklateprint3
@@ -361,13 +371,13 @@ status_shinetune:
 
   .setnextearly3
     ; Gear 3, just pressed dash when trying to reach gear 4
-    LDA !ram_shine_counter : CMP #$0012 : BPL .checklate3
+    LDA !ram_shine_counter : CMP #(!tap_3_to_4+3) : BPL .checklate3
     LDA !ram_shine_counter : STA !ram_shinetune_early_4
     RTS
 
   .checklate3minimap
     LDA !IH_LETTER_L : STA $7EC6B8
-    LDA !ram_shine_counter : SEC : SBC #$0012
+    LDA !ram_shine_counter : SEC : SBC #(!tap_3_to_4+3)
     ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC6BA
     RTS
 
@@ -390,16 +400,16 @@ status_shinetune:
     RTS
 
   .drawearly4minimap
-    LDA #$0012 : SEC : SBC !ram_shinetune_early_4 : JSR Draw2
+    LDA #(!tap_3_to_4+3) : SEC : SBC !ram_shinetune_early_4 : JSR Draw2
     RTS
 
   .drawearly4
     LDA !ram_minimap : BNE .drawearly4minimap
-    LDA #$0012 : SEC : SBC !ram_shinetune_early_4 : JSR Draw3
+    LDA #(!tap_3_to_4+3) : SEC : SBC !ram_shinetune_early_4 : JSR Draw3
     BRA .clear4
 
   .drawearly3
-    LDA #$0016 : SEC : SBC !ram_shinetune_early_3 : LDX #$00AE : JSR Draw3
+    LDA #(!tap_2_to_3+2) : SEC : SBC !ram_shinetune_early_3 : LDX #$00AE : JSR Draw3
     BRA .clear3
 
   .draw4
@@ -407,7 +417,7 @@ status_shinetune:
     LDA !ram_shinetune_early_4 : BNE .drawearly4
     LDA !ram_shine_counter : STA !ram_shinetune_early_4
     LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_RUN : BEQ .drawearly4
-    LDA #$0012 : STA !ram_shinetune_early_4
+    LDA #(!tap_3_to_4+3) : STA !ram_shinetune_early_4
     BRA .drawearly4
 
   .draw3
@@ -415,7 +425,7 @@ status_shinetune:
     LDA !ram_shinetune_early_3 : BNE .drawearly3
     LDA !ram_shine_counter : STA !ram_shinetune_early_3
     LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_RUN : BEQ .drawearly3
-    LDA #$0016 : STA !ram_shinetune_early_3
+    LDA #(!tap_2_to_3+2) : STA !ram_shinetune_early_3
     BRA .drawearly3
 
   .draw1234
@@ -430,10 +440,10 @@ status_shinetune:
     LDA !ram_shinetune_early_2 : BNE .drawearly2
     LDA !ram_shine_counter : STA !ram_shinetune_early_2
     LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_RUN : BEQ .drawearly2
-    LDA #$001A : STA !ram_shinetune_early_2
+    LDA #(!tap_1_to_2+1) : STA !ram_shinetune_early_2
 
   .drawearly2
-    LDA #$001A : SEC : SBC !ram_shinetune_early_2 : JSR Draw3
+    LDA #(!tap_1_to_2+1) : SEC : SBC !ram_shinetune_early_2 : JSR Draw3
     BRL .clear2
 
   .draw1
@@ -652,6 +662,18 @@ status_hspeed:
 
 status_vspeed:
 {
+if !FEATURE_PAL
+    !first_spacejump_subspeed = $00A0
+    !allowed_spacejump_frames = $0024
+    !air_frame_delay = $0010
+    !water_frame_cutoff = $0007
+else
+    !first_spacejump_subspeed = $008C
+    !allowed_spacejump_frames = $002A
+    !air_frame_delay = $0012
+    !water_frame_cutoff = $0000
+endif
+
     ; Suppress Samus HP display
     LDA $09C2 : STA !ram_last_hp
 
@@ -683,7 +705,7 @@ status_vspeed:
     LDA $0B36 : CMP #$0002 : BNE .prepareresetcounters
 
     ; Check if we are falling and have enough vertical speed for space jump
-    LDA $0B2C : CMP #$8C00 : BNE .incstate
+    LDA $0B2D : CMP #!first_spacejump_subspeed : BNE .incstate
 
     ; We are, so initialize state
     ; Note this sets the state one larger than it should be
@@ -699,23 +721,21 @@ status_vspeed:
 
   .preparecompare
     ; Compare when we jumped to when we are allowed to jump
-    LDA $0AD2 : BNE .compare
+    LDA $0AD2 : BEQ .compareair
 
+    ; If not in air, we may have fewer frames to jump
+    LDA !ram_roomstrat_state : CLC : ADC #!water_frame_cutoff : STA !ram_roomstrat_state
+    LDA !ram_roomstrat_counter : CLC : ADC #!water_frame_cutoff : STA !ram_roomstrat_counter
+    BRA .compare
+
+  .compareair
     ; If in air, we needed to jump 18 frames later
-    LDA !ram_roomstrat_counter : CLC : ADC #$0012 : STA !ram_roomstrat_counter
+    LDA !ram_roomstrat_counter : CLC : ADC #!air_frame_delay : STA !ram_roomstrat_counter
 
   .compare
     LDA !ram_roomstrat_state : DEC : CMP !ram_roomstrat_counter : BMI .earlyprint
-    LDA !ram_roomstrat_state : CMP #$002B : BPL .lateprint
-
-    ; We must have jumped on time
-    LDA !ram_roomstrat_state : SEC : SBC !ram_roomstrat_counter
-    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC698
-    LDA !IH_LETTER_Y : STA $7EC696
-
-  .comparefinish
-    LDA #$0000 : STA !ram_roomstrat_state : STA !ram_roomstrat_counter
-    RTS
+    LDA !ram_roomstrat_state : CMP #(!allowed_spacejump_frames+1) : BPL .lateprint
+    BRA .ontime
 
   .prepareresetcounters
     ; If we're resetting counters because we aren't falling,
@@ -729,7 +749,7 @@ status_vspeed:
     BRA .checkjump
 
   .preparenewjump
-    BRA .newjump
+    BRL .newjump
 
   .incstate
     ; Arbitrary wait of 96 frames before giving up
@@ -743,11 +763,21 @@ status_vspeed:
     LDA !IH_LETTER_E : STA $7EC696
 
     ; If we're early, we can try again, so only reset the jump counter
-    BRA .resetjumpcounter
+    BRL .resetjumpcounter
 
   .lateprint
-    SEC : SBC #$002A : ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC698
+    SEC : SBC #!allowed_spacejump_frames : ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC698
     LDA !IH_LETTER_L : STA $7EC696
+
+  .comparefinish
+    LDA #$0000 : STA !ram_roomstrat_state : STA !ram_roomstrat_counter
+    RTS
+
+  .ontime
+    ; We must have jumped on time
+    LDA !ram_roomstrat_state : SEC : SBC !ram_roomstrat_counter
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC698
+    LDA !IH_LETTER_Y : STA $7EC696
     BRA .comparefinish
 
   .checkjump
@@ -772,15 +802,16 @@ status_vspeed:
     LDA #$0001 : STA !ram_roomstrat_counter : STA !ram_walljump_counter
 
     ; Print initial jump speed over item%
-    LDA $0B1A : BNE +
+    LDA $0B1A : BNE .skipprint
     LDA $7EC612 : STA $14
     LDA $0B2D : AND #$0FFF
     LDX #$0012 : JSR Draw4Hex
     INC $0B1A
     LDA $14 : STA $7EC612
 
+  .skipprint
     ; If we started falling and space jump might be allowed, time to compare
-+   LDA !ram_roomstrat_state : BEQ .done
+    LDA !ram_roomstrat_state : BEQ .done
     BRL .preparecompare
 
   .resetjumpcounter
@@ -913,12 +944,16 @@ status_walljump:
 
   .jump
     LDA !ram_walljump_counter : LDX #$008C : JSR Draw2
-    BRA .roomcheck
+    BRL .roomcheck
 
   .ignore
     ; We can provide extra feedback on max-delayed walljumps near the target position
     ; Only clear that information if we have another max-delayed walljump
-    LDA !ram_walljump_counter : CMP #$0009 : BNE .reset
+    LDA !ram_walljump_counter
+if !FEATURE_PAL
+    CMP #$0007 : BEQ .clear
+endif
+    CMP #$0009 : BNE .reset
 
   .clear
     LDA !IH_BLANK : STA $7EC688 : STA $7EC68A
@@ -931,7 +966,13 @@ status_walljump:
     ; If we are more than 65 pixels away from the target walljump position,
     ; assume this is a regular walljump and ignore the target position
     SEC : SBC !ram_ypos : CMP #$0042 : BPL .ignore
-    ASL : TAY : LDA !ram_walljump_counter : CMP #$0009 : BNE .clear
+    ASL : TAY : LDA !ram_walljump_counter
+if !FEATURE_PAL
+    CMP #$0007 : BEQ .printlow
+endif
+    CMP #$0009 : BNE .clear
+
+  .printlow
     LDA.w NumberGFXTable,Y : STA $7EC68A
     LDA !IH_LETTER_L : STA $7EC688
     BRA .reset
@@ -943,14 +984,20 @@ status_walljump:
     ; If we are more than 65 pixels away from the target walljump position,
     ; assume this is a regular walljump and ignore the target position
     LDA !ram_ypos : DEC : SEC : SBC $0AFA : CMP #$0042 : BPL .ignore
-    ASL : TAY : LDA !ram_walljump_counter : CMP #$0009 : BNE .clear
+    ASL : TAY : LDA !ram_walljump_counter
+if !FEATURE_PAL
+    CMP #$0007 : BEQ .printhigh
+endif
+    CMP #$0009 : BNE .clear
+
+  .printhigh
     LDA.w NumberGFXTable,Y : STA $7EC68A
     LDA !IH_LETTER_H : STA $7EC688
     BRA .reset
 
   .roomcheck
     LDA $079B : CMP #$B4AD : BEQ .writg : CMP #$D2AA : BEQ .plasma : CMP #$ACB3 : BEQ .bubble
-    BRA .clear
+    BRL .clear
 
   .writg
     LDA #$042F : STA !ram_ypos
@@ -1010,6 +1057,14 @@ status_ramwatch:
 
 status_tacotank:
 {
+if !FEATURE_PAL
+    !expected_subspeed = $3C00
+    !first_possible_x = $002D
+else
+    !expected_subspeed = $3000
+    !first_possible_x = $0036
+endif
+
     ; Suppress Samus HP display
     LDA $09C2 : STA !ram_last_hp
 
@@ -1024,11 +1079,16 @@ status_tacotank:
     LDA #$0001 : STA !ram_roomstrat_state
 
   .checkstart
-    ; Check if Samus is in starting position not facing right and not holding left
+    ; Check if Samus is in starting position not facing right with no animation delay and not holding left
     LDA $0AF6 : CMP #$022B : BNE .donestart
     LDA $0AF8 : CMP #$FFFF : BNE .donestart
-    LDA $0AFA : CMP #$02BB : BNE .donestart
+    LDA $0B36 : CMP #$0000 : BNE .donestart
     LDA $0A1E : AND #$0004 : CMP #$0004 : BNE .donestart
+if !FEATURE_PAL
+    LDA $0A60 : CMP #$E910 : BNE .donestart
+else
+    LDA $0A60 : CMP #$E913 : BNE .donestart
+endif
     LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_LEFT : BNE .donestart
 
     ; Ready to start
@@ -1069,20 +1129,26 @@ status_tacotank:
     LDA !IH_BLANK : STA $7EC688 : STA $7EC68A
     BRL .returnstart
 
-  .incleft
-    ; Arbitrary wait of 64 frames before giving up
-    LDA !ram_roomstrat_counter : CMP #$0040 : BPL .clearreturnstart
-    INC : STA !ram_roomstrat_counter
-    RTS
-
   .incstate
     LDA !ram_roomstrat_state : INC : STA !ram_roomstrat_state
     LDA #$0000 : STA !ram_roomstrat_counter
     RTS
 
+  .incleft
+    ; Arbitrary wait of 64 frames before giving up
+    LDA !ram_roomstrat_counter : CMP #$0040 : BPL .clearreturnstart
+    INC : STA !ram_roomstrat_counter
+
+  .donerising
+    RTS
+
   .rising
     ; If our speed is still good then we haven't broken spin
-    LDA $0B48 : CMP #$6000 : BEQ .done
+if !FEATURE_PAL
+    LDA $0B48 : CMP #$A600 : BEQ .donerising
+else
+    LDA $0B48 : CMP #$6000 : BEQ .donerising
+endif
 
     ; We have broken spin, combine starting X position with walljump to see how we did
     LDA !ram_xpos : CLC : ADC !ram_walljump_counter : STA !ram_xpos
@@ -1091,6 +1157,9 @@ status_tacotank:
   .initialjump
     LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_JUMP : BEQ .checkleft
 
+    ; If we haven't pressed left yet, move back to previous state
+    LDA !ram_roomstrat_counter : BEQ .clearreturnstart
+
     ; Print number of frames after holding left that we pressed jump
     LDA !ram_roomstrat_counter : ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC68A
 
@@ -1098,21 +1167,17 @@ status_tacotank:
     LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_LEFT : BNE .incleft
 
     ; Nothing to do if we haven't pressed left yet
-    LDA !ram_roomstrat_counter : BEQ .done
+    LDA !ram_roomstrat_counter : BEQ .donerising
 
-    ; Print number of frames we were holding left
-    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC688
+    ; Print number of frames we were holding left, if we haven't already
+    ASL : TAY : LDA $7EC688 : CMP !IH_LETTER_Y : BNE .noleftcheckjump
+    LDA.w NumberGFXTable,Y : STA $7EC688
 
+  .noleftcheckjump
     ; If we stopped holding left, but we haven't jumped yet,
     ; then we aren't ready to move to the next state
     LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_JUMP : BNE .incstate
-
-  .done
-    RTS
-
-  .wjfail
-    LDA !IH_LETTER_X : STA $7EC694
-    BRL .returnstart
+    BRA .incleft
 
   .checkotherstates
     ; Most states require the walljump counter incremented, so just do it for all of them
@@ -1121,13 +1186,24 @@ status_tacotank:
     CMP #$0006 : BEQ .peaking : CMP #$0004 : BEQ .accel
     BRA .walljump
 
+  .wjfail
+    LDA !IH_LETTER_X : STA $7EC694
+    BRL .returnstart
+
+  .done
+    RTS
+
   .accel
     ; We can't evaluate the horizontal movement for a few frames
-    LDA !ram_walljump_counter : AND #$0004 : BNE .done
+    LDA !ram_walljump_counter : AND #$0004 : BEQ .done
 
     ; Once we can evaluate, make sure it is good
-    LDA $0B44 : CMP #$3000 : BNE .wjfail
+    LDA $0B44 : CMP #!expected_subspeed : BNE .wjfail
+if !FEATURE_PAL
+    LDA !ram_xpos : CMP #$0032 : BPL .wjfail
+else
     LDA !ram_xpos : CMP #$0039 : BPL .wjfail
+endif
     BRL .incstate
 
   .peakfail
@@ -1147,8 +1223,12 @@ status_tacotank:
     ; Fail if not falling with proper speed and pose
     CMP #$0002 : BNE .peakfail
     LDA $0AFA : CMP #$0243 : BPL .peakfail
-    LDA $0B44 : CMP #$3000 : BNE .peakfail
+    LDA $0B44 : CMP #!expected_subspeed : BNE .peakfail
+if !FEATURE_PAL
+    LDA $0B48 : CMP #$8000 : BNE .peakfail
+else
     LDA $0B48 : CMP #$4000 : BNE .peakfail
+endif
     LDA $0A1C : CMP #$0018 : BNE .peakfail
     BRL .incstate
 
@@ -1164,10 +1244,16 @@ status_tacotank:
 
     ; We jumped, first calculate our distance from the wall
     LDA #$022B : SEC : SBC $0AF6 : CMP #$0042 : BPL .wjfar
-    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC692
+    STA !ram_xpos : ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC692
 
     ; Store this for later, each pixel counts as 8 frames of good horizontal movement
-    TYA : ASL : ASL : STA !ram_xpos
+    TYA : ASL : ASL
+if !FEATURE_PAL
+    ; Actually on PAL it only counts as ~6.75 frames, which we'll round to 7 frames
+    ; We have the value multiplied by 8, subtract the original value to get multiplied by 7
+    SEC : SBC !ram_xpos
+endif
+    STA !ram_xpos
 
   .wjcontinue
     LDA !IH_BLANK : STA $7EC6A4
@@ -1175,7 +1261,11 @@ status_tacotank:
 
     ; Now time to evaluate the jump height
     ; If necessary evaluate down to the subpixel
+if !FEATURE_PAL
+    LDA $0AFA : CMP #$029E : BEQ .bonk : CMP #$029F : BEQ .threey : BPL .maybelow
+else
     LDA $0AFA : CMP #$029D : BEQ .bonk : CMP #$029E : BEQ .threey : BPL .maybelow
+endif
 
   .high
     LDA #$029E : SEC : SBC $0AFA : CMP #$0042 : BPL .toohigh
@@ -1190,11 +1280,19 @@ status_tacotank:
     BRL .wjfail
 
   .bonk
+if !FEATURE_PAL
+    LDA $0AFC : CMP #$F000 : BCS .printtwob : CMP #$8C00 : BCS .printoneb
+else
     LDA $0AFC : CMP #$F000 : BCS .printtwob : CMP #$B000 : BCS .printoneb
+endif
     BRA .high
 
   .maybelow
+if !FEATURE_PAL
+    CMP #$02A0 : BEQ .printtwoy : CMP #$02A1 : BEQ .twoy : CMP #$02A2 : BEQ .oney
+else
     CMP #$029F : BEQ .twoy : CMP #$02A0 : BEQ .printoney : CMP #$02A1 : BEQ .oney
+endif
 
   .low
     LDA $0AFA : SEC : SBC #$02A0
@@ -1203,8 +1301,13 @@ status_tacotank:
     BRL .wjfail
 
   .threey
+if !FEATURE_PAL
+    LDA $0AFC : CMP #$A800 : BCS .printtwoy : CMP #$2C00 : BCC .printtwob
+    CMP #$4000 : BCC .printthreeb
+else
     LDA $0AFC : CMP #$9400 : BCS .printtwoy : CMP #$1400 : BCC .printtwob
     CMP #$1C00 : BCC .printthreeb
+endif
     LDA #$0003
 
   .printy
@@ -1212,11 +1315,15 @@ status_tacotank:
     LDA !IH_LETTER_Y : STA $7EC68C
 
     ; Determine last frame where we can gather the tank
-    LDA #$0036 : CLC : ADC !ram_ypos : STA !ram_ypos
+    LDA #!first_possible_x : CLC : ADC !ram_ypos : STA !ram_ypos
     BRL .incstate
 
   .twoy
+if !FEATURE_PAL
+    LDA $0AFC : CMP #$3800 : BCS .printoney
+else
     LDA $0AFC : CMP #$E400 : BCS .printoney
+endif
 
   .printtwoy
     LDA #$0002
@@ -1231,7 +1338,11 @@ status_tacotank:
     BRA .printb
 
   .oney
+if !FEATURE_PAL
+    LDA $0AFC : CMP #$A000 : BCS .low
+else
     LDA $0AFC : CMP #$1800 : BCS .low
+endif
 
   .printoney
     LDA #$0001
@@ -1245,24 +1356,28 @@ status_tacotank:
     LDA !IH_LETTER_B : STA $7EC68C
 
     ; Determine last frame where we can gather the tank
-    LDA #$0036 : CLC : ADC !ram_ypos : STA !ram_ypos
+    LDA #!first_possible_x : CLC : ADC !ram_ypos : STA !ram_ypos
     BRL .incstate
 
   .setx
     ; Determine first frame where we can gather the tank
+if !FEATURE_PAL
+    LDA !ram_xpos : CMP #$0045 : BPL .threex : CMP #$0039 : BPL .twox : CMP #$002C : BPL .onex
+else
     LDA !ram_xpos : CMP #$0051 : BPL .threex : CMP #$0046 : BPL .twox : CMP #$003A : BPL .onex
+endif
     BRA .predictfail
 
   .threex
-    LDA #$0036 : STA !ram_xpos
+    LDA #!first_possible_x : STA !ram_xpos
     BRA .predict
 
   .twox
-    LDA #$0037 : STA !ram_xpos
+    LDA #(!first_possible_x+1) : STA !ram_xpos
     BRA .predict
 
   .onex
-    LDA #$0038 : STA !ram_xpos
+    LDA #(!first_possible_x+2) : STA !ram_xpos
 
   .predict
     ; Compare first frame we can get the tank to the last frame
@@ -1589,6 +1704,12 @@ status_shinetopb:
 
 status_elevatorcf:
 {
+if !FEATURE_PAL
+    !elevatorcf_frame = $0092
+else
+    !elevatorcf_frame = $009A
+endif
+
     ; Counter used to check if a power bomb has been laid
     LDA !ram_roomstrat_counter : CMP $09CE : BNE .roomcheck
     LDA !ram_roomstrat_state : CMP #$0000 : BEQ .setxy
@@ -1645,10 +1766,10 @@ status_elevatorcf:
 
   .timecheck
     ; Need to activate the elevator 154 frames after laying the power bomb
-    LDA !ram_roomstrat_state : CMP #$009A : BEQ .frameperfect : BMI .early
+    LDA !ram_roomstrat_state : CMP #!elevatorcf_frame : BEQ .frameperfect : BMI .early
 
     ; Late
-    SEC : SBC #$009A
+    SEC : SBC #!elevatorcf_frame
     ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC68E
     LDA !IH_LETTER_L : STA $7EC68C
 
@@ -1670,7 +1791,7 @@ status_elevatorcf:
     RTS
 
   .early
-    LDA #$009A : SEC : SBC !ram_roomstrat_state
+    LDA #!elevatorcf_frame : SEC : SBC !ram_roomstrat_state
     ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC68E
     LDA !IH_LETTER_E : STA $7EC68C
     BRA .reset
@@ -1682,6 +1803,12 @@ status_elevatorcf:
 
 status_botwooncf:
 {
+if !FEATURE_PAL
+    !botwooncf_frame = $0091
+else
+    !botwooncf_frame = $0099
+endif
+
     ; Counter used to check if a power bomb has been laid
     LDA !ram_roomstrat_counter : CMP $09CE : BNE .pbcheck
     LDA !ram_roomstrat_state : BEQ .setxy
@@ -1725,10 +1852,10 @@ status_botwooncf:
 
   .timecheck
     ; Need to be in position 153 frames after laying the power bomb
-    LDA !ram_roomstrat_state : CMP #$0099 : BEQ .frameperfect : BMI .early
+    LDA !ram_roomstrat_state : CMP #!botwooncf_frame : BEQ .frameperfect : BMI .early
 
     ; Late
-    SEC : SBC #$0099
+    SEC : SBC #!botwooncf_frame
     ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC68E
     LDA !IH_LETTER_L : STA $7EC68C
 
@@ -1737,7 +1864,7 @@ status_botwooncf:
     RTS
 
   .early
-    LDA #$0099 : SEC : SBC !ram_roomstrat_state
+    LDA #!botwooncf_frame : SEC : SBC !ram_roomstrat_state
     ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC68E
     LDA !IH_LETTER_E : STA $7EC68C
     ; Keep waiting if we are early

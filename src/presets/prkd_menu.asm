@@ -5,6 +5,7 @@ PresetsMenuPrkd:
     dw #presets_goto_prkd_red_brinstar_revisit
     dw #presets_goto_prkd_upper_norfair
     dw #presets_goto_prkd_lower_norfair
+    dw #presets_goto_prkd_lower_norfair_nox
     dw #presets_goto_prkd_kraid
     dw #presets_goto_prkd_maridia
     dw #presets_goto_prkd_backtracking
@@ -29,6 +30,9 @@ presets_goto_prkd_upper_norfair:
 
 presets_goto_prkd_lower_norfair:
     %cm_submenu("Lower Norfair", #presets_submenu_prkd_lower_norfair)
+
+presets_goto_prkd_lower_norfair_nox:
+    %cm_submenu("Lower Norfair No-X Ridley", #presets_submenu_prkd_lower_norfair_nox)
 
 presets_goto_prkd_kraid:
     %cm_submenu("Kraid", #presets_submenu_prkd_kraid)
@@ -106,11 +110,12 @@ presets_submenu_prkd_red_brinstar_revisit:
     dw #presets_prkd_red_brinstar_revisit_below_spazer
     dw #presets_prkd_red_brinstar_revisit_leaving_spazer
     dw #presets_prkd_red_brinstar_revisit_breaking_tube
+    dw #presets_prkd_red_brinstar_revisit_business_center_preelev
     dw #$0000
     %cm_header("RED BRINSTAR REVISIT")
 
 presets_submenu_prkd_upper_norfair:
-    dw #presets_prkd_upper_norfair_business_center
+    dw #presets_prkd_upper_norfair_business_center_postelev
     dw #presets_prkd_upper_norfair_hi_jump_etank
     dw #presets_prkd_upper_norfair_leaving_hi_jump
     dw #presets_prkd_upper_norfair_business_center_2
@@ -158,6 +163,31 @@ presets_submenu_prkd_lower_norfair:
     dw #presets_prkd_lower_norfair_business_center_final
     dw #$0000
     %cm_header("LOWER NORFAIR")
+
+presets_submenu_prkd_lower_norfair_nox:
+    dw #presets_prkd_lower_norfair_nox_ln_main_hall
+    dw #presets_prkd_lower_norfair_nox_prepillars
+    dw #presets_prkd_lower_norfair_nox_worst_room_in_the_game
+    dw #presets_prkd_lower_norfair_nox_amphitheatre
+    dw #presets_prkd_lower_norfair_nox_kihunter_stairs_down
+    dw #presets_prkd_lower_norfair_nox_wasteland
+    dw #presets_prkd_lower_norfair_nox_metal_ninja_pirates
+    dw #presets_prkd_lower_norfair_nox_plowerhouse
+    dw #presets_prkd_lower_norfair_nox_ridley_farming_room
+    dw #presets_prkd_lower_norfair_nox_ridley
+    dw #presets_prkd_lower_norfair_leaving_ridley
+    dw #presets_prkd_lower_norfair_reverse_plowerhouse
+    dw #presets_prkd_lower_norfair_wasteland_revisit
+    dw #presets_prkd_lower_norfair_kihunter_stairs_up
+    dw #presets_prkd_lower_norfair_fire_flea_room
+    dw #presets_prkd_lower_norfair_springball_maze
+    dw #presets_prkd_lower_norfair_three_musketeers
+    dw #presets_prkd_lower_norfair_single_chamber_final
+    dw #presets_prkd_lower_norfair_bubble_mountain_final
+    dw #presets_prkd_lower_norfair_frog_speedway
+    dw #presets_prkd_lower_norfair_business_center_final
+    dw #$0000
+    %cm_header("LOWER NORFAIR NO-X RIDLEY")
 
 presets_submenu_prkd_kraid:
     dw #presets_prkd_kraid_entering_kraids_lair
@@ -380,10 +410,13 @@ presets_prkd_red_brinstar_revisit_leaving_spazer:
 presets_prkd_red_brinstar_revisit_breaking_tube:
     %cm_preset("Breaking Tube", #preset_prkd_red_brinstar_revisit_breaking_tube)
 
+presets_prkd_red_brinstar_revisit_business_center_preelev:
+    %cm_preset("Business Center Pre-Elev", #preset_prkd_red_brinstar_revisit_business_center_preelev)
+
 
 ; Upper Norfair
-presets_prkd_upper_norfair_business_center:
-    %cm_preset("Business Center", #preset_prkd_upper_norfair_business_center)
+presets_prkd_upper_norfair_business_center_postelev:
+    %cm_preset("Business Center Post-Elev", #preset_prkd_upper_norfair_business_center_postelev)
 
 presets_prkd_upper_norfair_hi_jump_etank:
     %cm_preset("Hi Jump E-tank", #preset_prkd_upper_norfair_hi_jump_etank)
@@ -476,6 +509,36 @@ presets_prkd_lower_norfair_ridley_farming_room:
 
 presets_prkd_lower_norfair_ridley:
     %cm_preset("Ridley", #preset_prkd_lower_norfair_ridley)
+
+presets_prkd_lower_norfair_nox_ln_main_hall:
+    %cm_preset("LN Main Hall", #preset_prkd_lower_norfair_nox_ln_main_hall)
+
+presets_prkd_lower_norfair_nox_prepillars:
+    %cm_preset("Pre-Pillars", #preset_prkd_lower_norfair_nox_prepillars)
+
+presets_prkd_lower_norfair_nox_worst_room_in_the_game:
+    %cm_preset("Worst Room in the Game", #preset_prkd_lower_norfair_nox_worst_room_in_the_game)
+
+presets_prkd_lower_norfair_nox_amphitheatre:
+    %cm_preset("Amphitheatre", #preset_prkd_lower_norfair_nox_amphitheatre)
+
+presets_prkd_lower_norfair_nox_kihunter_stairs_down:
+    %cm_preset("Kihunter Stairs Down", #preset_prkd_lower_norfair_nox_kihunter_stairs_down)
+
+presets_prkd_lower_norfair_nox_wasteland:
+    %cm_preset("Wasteland", #preset_prkd_lower_norfair_nox_wasteland)
+
+presets_prkd_lower_norfair_nox_metal_ninja_pirates:
+    %cm_preset("Metal Ninja Pirates", #preset_prkd_lower_norfair_nox_metal_ninja_pirates)
+
+presets_prkd_lower_norfair_nox_plowerhouse:
+    %cm_preset("Plowerhouse", #preset_prkd_lower_norfair_nox_plowerhouse)
+
+presets_prkd_lower_norfair_nox_ridley_farming_room:
+    %cm_preset("Ridley Farming Room", #preset_prkd_lower_norfair_nox_ridley_farming_room)
+
+presets_prkd_lower_norfair_nox_ridley:
+    %cm_preset("Ridley", #preset_prkd_lower_norfair_nox_ridley)
 
 presets_prkd_lower_norfair_leaving_ridley:
     %cm_preset("Leaving Ridley", #preset_prkd_lower_norfair_leaving_ridley)
