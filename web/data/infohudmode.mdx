@@ -50,7 +50,9 @@ For example, consider the following 3-tap short charge: *9 2 10 0 ... 814 14 7*
 
 The last number is the frames it took to complete the charge by pressing down or for the charge to be cancelled. The first and last numbers can be rather large; in fact the first number will be displayed as XX if it is larger than 99. If you miss a tap then you will get early or late feedback on that. In this example if the second tap were one frame sooner then you would see:
 9 2 11E1 ...
-This indicates the second tap started 11 frames early and ended 1 frame too early. For reference, on NTSC the magic frames are 25 frames apart between first and second tap, 20 frames apart between second and third tap, and 15 frames apart between third and fourth tap.
+This indicates the second tap started 11 frames early and ended 1 frame too early.
+For reference, on NTSC the magic frames are 25 frames apart between first and second tap, 20 frames apart between second and third tap, and 15 frames apart between third and fourth tap.
+On PAL the magic frames are 20 frames apart between first and second tap, 20 frames apart between second and third tap, and 10 frames apart between third and fourth tap.
 
 ## I Frames
 Counts down the invulnerability frames after Samus takes damage.
@@ -88,7 +90,7 @@ Displays the vertical speed in pixels. Initial jump speed will displayed as a th
 First two characters = Number of frames that the jump button was held.
 Last two characters = Feedback on the time when you jumped, with respect to space jump.
 E# indicates you were early where the number tells you how many frames you were early.
-Y# indicates you made a valid space jump. Normally you have 23 frames, but if underwater you have 41 frames.
+Y# indicates you made a valid space jump. On NTSC, you normally have 23 frames, but if underwater you have 41 frames. On PAL, you normally have 19 frames, but if underwater you have 28 frames.
 L# indicates you were late where the number tells you how many frames you were late.
 
 ## Quick Drop
@@ -102,11 +104,13 @@ L# indicates you jumped low where the number tells you how many pixels you were 
 Unfortunately there is no single pixel that is guaranteed to work for these specific walljumps; it also depends on the subpixels. If you get H0 9 or L0 9, then the jump is possible an estimated 75% of the time. With H0 9 you will know it is possible if you do not bonk the ledge.
 Additionally Samus HP will be overwritten with the average climb speed in approximate pixels per frame (inflated by 2.4%). It averages vertical speed between jump presses, assuming the presses are within 2 seconds of each other and assuming the total speed does not overflow (if either of these happen then average will be blank). If total speed drops below zero then the average will be recorded as zero.
 
+Note: This feature may not be as accurate on PAL. It will consider either a 7-frame or a 9-frame walljump as a max-delayed walljump (strangely an 8-frame delayed walljump does not work on PAL).
+
 ## Shot Timer
 Displays the number of frames between pressing the shoot button.
 
 ## RAM Watch
-Displays the value of two configurable memory addresses in $7E. Values can also be "locked" or rewritten each frame while the RAM Watch HUD mode is enabled. These addresses and values can be configured in the 'Customize RAM Watch' submenu.
+Displays the value of two configurable memory addresses in bank $7E. Values can also be "locked" or rewritten each frame while the RAM Watch HUD mode is enabled. These addresses and values can be configured in the 'Customize RAM Watch' submenu.
 
 # Room strat features
 ## Taco Tank
@@ -141,7 +145,7 @@ Last two characters = Feedback on the timing of your shot (only visible if numbe
 
 Note: This only gives feedback on whether the missile could have been fired through the gate. It does not predict if the missile would hit the blue or green switch that activates the gate.
 
-## Moat CWJ
+## Moat CWJ (currently only supported on NTSC)
 Provides feedback on attempts to cross the moat using a Continuous Wall Jump:  
 First Y = You started from the correct position. Acceptable starting positions are in the previous room pressed against the door, or are as far left as possible in the moat room with the door open. Other positions may work for moat CWJ, but these are the two normalized positions providing a good chance of success. If you try other starting positions, the trick may become more difficult (double-frame-perfect) or even impossible.  
 First two characters = Feedback on the first jump (this will overwrite the first Y):
@@ -196,3 +200,5 @@ Note: If using the bombs method, there is a two-frame window where Samus will re
 
 ## MB HP
 Displays the HP of the second enemy. Most useful for the Mother Brain fight since Mother Brain uses the second enemy slot.
+<br />
+
