@@ -8,6 +8,11 @@ org $828963
 org $82896E
     end_of_normal_gameplay:
 
+if !FEATURE_SD2SNES
+org $82E526
+    JSL gamemode_door_transition : NOP
+endif
+
 org $85F800
 print pc, " gamemode start"
 
@@ -205,6 +210,21 @@ endif
     ; SEC to skip normal gameplay for one frame after handling the menu
     SEC : RTS
 }
+
+if !FEATURE_SD2SNES
+gamemode_door_transition:
+{
+  .checkloadstate
+    LDA !IH_CONTROLLER_PRI : CMP !sram_ctrl_load_state : BNE .checktransition
+    PHB : PHK : PLB
+    JSL load_state
+    PLB : RTL
+
+  .checktransition
+    LDA $0931 : BPL .checkloadstate
+    RTL
+}
+endif
 
 print pc, " gamemode end"
 warnpc $85FE00
