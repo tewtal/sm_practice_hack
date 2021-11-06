@@ -36,6 +36,9 @@ org $82E764      ; hijack, runs when Samus is coming out of a room transition
 org $809B4C      ; hijack, HUD routine (game timer by Quote58)
     JSL ih_hud_code : NOP
 
+org $8290F6      ; hijack, HUD routine while paused
+    JSL ih_hud_code_paused
+
 org $82894F      ; hijack, main game loop: runs EVERY frame (used for room transition timer)
     JSL ih_game_loop_code
 
@@ -708,7 +711,7 @@ ih_hud_code:
     PLB
     PLB
 
-    ; -- input display--
+    ; -- input display --
     ; -- check if we want to update --
     LDA !IH_CONTROLLER_PRI : CMP !ram_ih_controller : BEQ .status_display
 
@@ -880,6 +883,12 @@ Draw4:
   .blankthousands
     LDA !IH_BLANK : STA $7EC600,X
     BRA .done
+}
+
+Draw4JSL:
+{
+    JSR Draw4
+    RTL
 }
 
 Draw4Hex:
@@ -1267,6 +1276,30 @@ warnpc $F0E000
 ; Stuff that needs to be placed in bank 80
 org $80FC00
 print pc, " infohud bank80 start"
+
+ih_hud_code_paused:
+{
+    ; overwritten code
+    PHP
+    PHB
+    PHK
+    PLB
+    %a8()
+    STZ $02
+    %ai16()
+
+    ; Update Samus' HP
+    LDA $7E09C2 : CMP !ram_last_hp : BEQ .end : STA !ram_last_hp
+    PHY : PHX
+    LDX #$0092 : JSL Draw4JSL
+    PLX : PLY
+    LDA !IH_BLANK : STA $7EC690
+
+  .end
+    ; overwritten code
+    LDA $7E09C0
+    JMP $9B51
+}
 
 NumberGFXTable:
     dw #$0C09, #$0C00, #$0C01, #$0C02, #$0C03, #$0C04, #$0C05, #$0C06, #$0C07, #$0C08
