@@ -1,4 +1,4 @@
-!SRAM_VERSION = $0009
+!SRAM_VERSION = $000A
 
 
 ; hijack, runs as game is starting, JSR to RAM initialization to avoid bad values
@@ -47,6 +47,18 @@ endif
 
 init_sram:
 {
+    CMP #$0009 : BEQ .sram_upgrade_9to10
+    JSR init_sram_upto9
+
+  .sram_upgrade_9to10
+    LDA #$0000 : STA !sram_ctrl_toggle_tileviewer
+
+    LDA #!SRAM_VERSION : STA !sram_initialized
+    RTS
+}
+
+init_sram_upto9:
+{
     ; Controllers
     LDA #$3000 : STA !sram_ctrl_menu                  ; Start + Select
     LDA #$6010 : STA !sram_ctrl_save_state            ; Select + Y + R
@@ -91,8 +103,6 @@ init_sram:
     LDA #$0000 : STA !sram_sprite_prio_flag
     LDA #$000A : STA !sram_metronome_tickrate
     LDA #$0002 : STA !sram_metronome_sfx
-
-    LDA #!SRAM_VERSION : STA !sram_initialized
     RTS
 }
 

@@ -100,6 +100,10 @@ gamemode_shortcuts:
     AND !IH_CONTROLLER_PRI_NEW : BEQ +
     JMP .full_equipment
 
+  + LDA !IH_CONTROLLER_PRI : AND !sram_ctrl_toggle_tileviewer : CMP !sram_ctrl_toggle_tileviewer : BNE +
+    AND !IH_CONTROLLER_PRI_NEW : BEQ +
+    JMP .toggle_tileviewer
+
   .check_menu
   + LDA !IH_CONTROLLER_PRI : AND !sram_ctrl_menu : CMP !sram_ctrl_menu : BNE +
     AND !IH_CONTROLLER_PRI_NEW : BEQ +
@@ -152,6 +156,18 @@ endif
     LDA $7E09D0 : STA $7E09CE ; pbs
     LDA $7E09D4 : STA $7E09D6 ; reserves
     ; CLC to continue normal gameplay after equipment refill
+    CLC : RTS
+
+  .toggle_tileviewer
+    LDA !ram_oob_watch_active : BEQ .turnOnTileViewer
+    LDA #$0000 : STA !ram_oob_watch_active
+    ; CLC to continue normal gameplay after disabling OOB Tile Viewer
+    CLC : RTS
+
+  .turnOnTileViewer
+    LDA #$0001 : STA !ram_oob_watch_active
+    JSL upload_sprite_oob_tiles
+    ; CLC to continue normal gameplay after enabling OOB Tile Viewer
     CLC : RTS
 
   .random_preset
