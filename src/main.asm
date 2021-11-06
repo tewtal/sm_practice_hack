@@ -2,6 +2,7 @@ lorom
 
 !FEATURE_SD2SNES ?= 1
 !FEATURE_PAL ?= 1
+!ORIGINAL_MESSAGE_TEXT ?= 0
 
 table ../resources/normal.tbl
 
@@ -14,8 +15,8 @@ if !FEATURE_SD2SNES
     incsrc save.asm
 endif
 incsrc minimap.asm
-incsrc infohud.asm
 incsrc menu.asm
+incsrc infohud.asm
 incsrc rng.asm
 incsrc presets.asm
 incsrc misc.asm

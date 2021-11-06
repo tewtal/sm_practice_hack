@@ -1,11 +1,12 @@
-; ---------------
-; Compiler Flags
-; ---------------
-!ORIGINAL_MESSAGE_TEXT ?= 0
+; --------------
+; RAM (Bank 7E)
+; --------------
 
-; ----
-; RAM
-; ----
+!ram_slowdown_mode = $7EFFFC
+
+; --------------
+; RAM (Bank 7F)
+; --------------
 
 !ram_load_preset = $7FFB00
 
@@ -28,7 +29,6 @@
 !ram_slowdown_controller_1 = $7FFB1E
 !ram_slowdown_controller_2 = $7FFB20
 !ram_slowdown_frames = $7FFB22
-!ram_slowdown_mode = $7EFFFC ; $7E
 
 !ram_tmp_1 = $7FFB24
 !ram_tmp_2 = $7FFB26
@@ -43,11 +43,12 @@
 !ram_minimap = $7FFB36
 !ram_map_counter = $7FFB38
 !ram_vcounter_data = $7FFB3A
-!ram_sprite_hitbox_active = $7FFB46
-!ram_oob_watch_active = $7FFB48
-!ram_custom_preset = $7FFB4C
 
 ; FREE SPACE ^
+
+!ram_sprite_hitbox_active = $7FFB4A
+!ram_oob_watch_active = $7FFB4C
+!ram_custom_preset = $7FFB4E
 
 !ram_magic_pants_enabled = $7FFB50
 !ram_magic_pants_state = $7FFB52
@@ -71,9 +72,7 @@
 !ram_metronome = $7FFB70
 !ram_metronome_counter = $7FFB72
 
-
 ; FREE SPACE ^
-
 
 ; --------
 ; Infohud
@@ -207,10 +206,12 @@
 !IH_STATUS_R = #$0010 ; r
 !IH_STATUS_L = #$0020 ; l
 
-!IH_INPUT_UP = $7E09AA
-!IH_INPUT_DOWN = $7E09AC
-!IH_INPUT_LEFT = $7E09AE
-!IH_INPUT_RIGHT = $7E09B0
+!IH_INPUT_START = #$1000
+!IH_INPUT_UP = #$0800
+!IH_INPUT_DOWN = #$0400
+!IH_INPUT_LEFT = #$0200
+!IH_INPUT_RIGHT = #$0100
+
 !IH_INPUT_SHOOT = $7E09B2
 !IH_INPUT_JUMP = $7E09B4
 !IH_INPUT_RUN = $7E09B6

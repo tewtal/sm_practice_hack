@@ -175,7 +175,7 @@ MainMenu:
     dw #mm_goto_rngmenu
     dw #mm_goto_ctrlsmenu
     dw #$0000
-    %cm_header("SM PRACTICE HACK 2.3.0")
+    %cm_header("SM PRACTICE HACK 2.3.1")
 
 mm_goto_equipment:
     %cm_submenu("Equipment", #EquipmentMenu)
@@ -1093,6 +1093,7 @@ DisplayModeMenu:
 ihmode_enemyhp:
     %cm_jsr("Enemy HP", #action_select_infohud_mode, #$0000)
 
+!IH_MODE_ROOMSTRAT_INDEX = $0001
 ihmode_roomstrat:
     %cm_jsr("Room Strat", #action_select_infohud_mode, #$0001)
 
@@ -1111,6 +1112,7 @@ ihmode_shinetimer:
 ihmode_dashcounter:
     %cm_jsr("Dash Counter", #action_select_infohud_mode, #$0006)
 
+!IH_MODE_SHINETUNE_INDEX = $0007
 ihmode_shinetune:
     %cm_jsr("Shine Tune", #action_select_infohud_mode, #$0007)
 
@@ -1217,13 +1219,14 @@ ihstrat_elevatorcf:
 ihstrat_botwooncf:
     %cm_jsr("Botwoon Crystal Flash", #action_select_room_strat, #$0006)
 
+!IH_STRAT_MBHP_INDEX = $0007
 ihstrat_mbhp:
     %cm_jsr("Mother Brain HP", #action_select_room_strat, #$0007)
 
 action_select_room_strat:
 {
     TYA : STA !sram_room_strat
-    LDA #$0001 : STA !sram_display_mode
+    LDA #!IH_MODE_ROOMSTRAT_INDEX : STA !sram_display_mode
     JSR cm_go_back
     JSR cm_calculate_max
     RTS
@@ -1698,7 +1701,6 @@ GameModeExtras:
     LDA !sram_ctrl_load_custom_preset : BNE .enabled
     LDA !sram_ctrl_inc_custom_preset : BNE .enabled
     LDA !sram_ctrl_dec_custom_preset : BNE .enabled
-    RTL
 
   .enabled
     STA !ram_game_mode_extras

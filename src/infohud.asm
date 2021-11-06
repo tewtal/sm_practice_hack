@@ -275,8 +275,8 @@ ih_after_room_transition:
     LDA #$0000 : STA !ram_transition_flag
 
     ; Check if MBHP needs to be disabled
-    LDA !sram_display_mode : CMP #$0001 : BNE +
-    LDA !sram_room_strat : CMP #$0007 : BNE +
+    LDA !sram_display_mode : CMP #!IH_MODE_ROOMSTRAT_INDEX : BNE +
+    LDA !sram_room_strat : CMP #!IH_STRAT_MBHP_INDEX : BNE +
     LDA $079B : CMP #$DD58 : BEQ +
     LDA #$0000 : STA !sram_display_mode
 
@@ -445,7 +445,7 @@ ih_update_hud_code:
   .minimap_hud
     ; Map visible, so draw map counter over item%
     LDA !ram_map_counter : LDX #$0014 : JSR Draw3
-    LDA !sram_display_mode : CMP #$0007 : BNE .minimap_roomtimer
+    LDA !sram_display_mode : CMP #!IH_MODE_SHINETUNE_INDEX : BNE .minimap_roomtimer
     BRL .map_doorlag
 
   .minimap_roomtimer
@@ -629,7 +629,7 @@ ih_update_hud_code:
     LDA !ram_last_room_lag : LDX #$0080 : JSR Draw4
 
     ; Skip door lag and segment timer when shinetune enabled
-    LDA !sram_display_mode : CMP #$0007 : BEQ .end
+    LDA !sram_display_mode : CMP #!IH_MODE_SHINETUNE_INDEX : BEQ .end
 
     ; Door lag
     LDA !ram_last_door_lag_frames : LDX #$00C2 : JSR Draw3
