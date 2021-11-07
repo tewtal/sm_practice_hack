@@ -41,6 +41,7 @@ status_roomstrat:
     RTS
 
   .status_room_table
+    dw status_doorskip
     dw status_tacotank
     dw status_gateglitch
     dw status_moatcwj
@@ -1053,6 +1054,122 @@ status_ramwatch:
 
   .done
     RTS
+}
+
+status_doorskip:
+{
+if !FEATURE_PAL
+    !start_to_jump_delay = $0011
+else
+    !start_to_jump_delay = $0007
+endif
+
+    ; Check if Samus is in starting position
+    LDA $0AFA : CMP #$04BB : BEQ .startpos
+
+    ; Reset state if Samus is well out of position
+    CMP #$0300 : BMI .clearstate
+    BRL .notinit
+
+    ; Check if we are initial state, which means no vertical speed
+    ; and no animation delay in normal gamestate holding jump and not holding start
+  .startpos
+    LDA $0B2D : BNE .notinit
+if !FEATURE_PAL
+    LDA $0A60 : CMP #$E910 : BNE .notinit
+else
+    LDA $0A60 : CMP #$E913 : BNE .notinit
+endif
+    LDA $0998 : CMP #$0008 : BNE .notinit
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_JUMP : BEQ .notinit
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_START : BNE .notinit
+
+    ; Initial state
+    LDA !IH_LETTER_Y : STA $7EC688
+    LDA !IH_BLANK : STA $7EC68A : STA $7EC68C : STA $7EC68E
+    LDA #$0001 : STA !ram_roomstrat_state
+    RTS
+
+  .clearstate
+    LDA !ram_roomstrat_state : CMP #$0001 : BNE .resetstate : CMP #$0004 : BNE .clear
+    BRL .expandlate
+
+  .clear
+    LDA !IH_BLANK : STA $7EC688 : STA $7EC68A : STA $7EC68C : STA $7EC68E
+    BRA .resetstate
+
+  .notinit
+    LDA !ram_roomstrat_state : CMP #$0001 : BEQ .checkpause : CMP #$0002 : BEQ .checkjump
+    CMP #$0003 : BEQ .checkfall : CMP #$0004 : BEQ .checkexpand
+
+  .resetstate
+    LDA #$0000 : STA !ram_roomstrat_state : STA !ram_roomstrat_counter
+    RTS
+
+  .checkpause
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_START : BEQ .done
+    LDA #$0002 : STA !ram_roomstrat_counter : STA !ram_roomstrat_state
+    RTS
+
+  .checkfall
+    ; Check if we are falling in aim down pose
+    LDA $0B36 : CMP #$0002 : BNE .inccounter
+    LDA $0A1C : CMP #$0017 : BEQ .readyexpand : CMP #$0018 : BEQ .readyexpand
+
+  .inccounter
+    LDA !ram_roomstrat_counter : INC : STA !ram_roomstrat_counter
+
+  .done
+    RTS
+
+  .checkjump
+    LDA $0B36 : CMP #$0001 : BNE .inccounter
+    LDA !ram_roomstrat_counter : CMP #!start_to_jump_delay : BEQ .jumpframeperfect : BMI .jumpearly
+
+    ; Jumped late
+    SEC : SBC #!start_to_jump_delay : ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC68A
+    LDA !IH_LETTER_L : STA $7EC688
+    BRA .resetstate
+
+  .checkexpand
+    LDA $0A1C : CMP #$0017 : BEQ .inccounter : CMP #$0018 : BEQ .inccounter
+    LDA !ram_roomstrat_counter : CMP #$003D : BEQ .expandoneframelate
+    CMP #$003C : BEQ .expandframeperfect : BMI .expandearly
+
+  .expandlate
+    LDA !IH_LETTER_L : STA $7EC68C
+    LDA !IH_LETTER_X : STA $7EC68E
+    BRL .resetstate
+
+  .readyexpand
+    LDA #$0004 : STA !ram_roomstrat_state
+    BRA .inccounter
+
+  .jumpearly
+    LDA #!start_to_jump_delay : SEC : SBC !ram_roomstrat_counter
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC68A
+    LDA !IH_LETTER_E : STA $7EC688
+    BRL .resetstate
+
+  .jumpframeperfect
+    LDA !IH_LETTER_Y : STA $7EC688 : STA $7EC68A
+    LDA #$0003 : STA !ram_roomstrat_state
+    RTS
+
+  .expandoneframelate
+    LDA !IH_LETTER_L : STA $7EC68C
+    LDY #$0002 : LDA.w NumberGFXTable,Y : STA $7EC68E
+    BRL .resetstate
+
+  .expandframeperfect
+    LDA !IH_LETTER_Y : STA $7EC68C : STA $7EC68E
+    BRL .resetstate
+
+  .expandearly
+    LDA #$003C : SEC : SBC !ram_roomstrat_counter
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC68E
+    LDA !IH_LETTER_E : STA $7EC68C
+    BRL .resetstate
 }
 
 status_tacotank:
