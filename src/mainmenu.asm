@@ -817,12 +817,14 @@ MiscMenu:
     dw #misc_bluesuit
     dw #misc_flashsuit
     dw #misc_hyperbeam
-    dw #misc_babyslowdown
+    dw #misc_gooslowdown
     dw #misc_magicpants
     dw #misc_spacepants
     dw #misc_loudpants
     dw #misc_fanfare_toggle
     dw #misc_music_toggle
+    dw #misc_elevatorstanding
+    dw #misc_elevatorriding
     dw #misc_transparent
     dw #misc_invincibility
     dw #$0000
@@ -837,8 +839,8 @@ misc_flashsuit:
 misc_hyperbeam:
     %cm_toggle("Hyper Beam", $7E0A76, #$0001, #0)
 
-misc_babyslowdown:
-    %cm_toggle("Baby Slowdown", $7E0A66, #$0002, #0)
+misc_gooslowdown:
+    %cm_numfield("Goo Slowdown", $7E0A66, 0, 4, 1, #0)
 
 misc_magicpants:
     %cm_toggle_bit("Magic Pants", !ram_magic_pants_enabled, #$0001, GameLoopExtras)
@@ -875,6 +877,12 @@ misc_music_toggle:
     STA $063F
     STA $2140
     RTS
+
+misc_elevatorstanding:
+    %cm_toggle("Standing On Elevator", $7E0E16, #$0001, #0)
+
+misc_elevatorriding:
+    %cm_toggle("Riding Elevator", $7E0E16, #$0080, #0)
 
 misc_transparent:
     %cm_toggle_bit("Samus on Top", !sram_sprite_prio_flag, #$3000, #0)
