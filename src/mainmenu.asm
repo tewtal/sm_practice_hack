@@ -839,6 +839,7 @@ MiscMenu:
     dw #misc_music_toggle
     dw #misc_transparent
     dw #misc_invincibility
+    dw #misc_forcestand
     dw #$0000
     %cm_header("MISC")
 
@@ -895,6 +896,13 @@ misc_transparent:
 
 misc_invincibility:
     %cm_toggle_bit("Invincibility", $7E0DE0, #$0007, #0)
+
+misc_forcestand:
+    %cm_jsr("Force Samus to Stand Up", .routine, #0)
+
+  .routine
+    JSL $90E2D4
+    RTS
 
 
 ; -----------
