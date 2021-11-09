@@ -823,8 +823,6 @@ MiscMenu:
     dw #misc_loudpants
     dw #misc_fanfare_toggle
     dw #misc_music_toggle
-    dw #misc_elevatorstanding
-    dw #misc_elevatorriding
     dw #misc_transparent
     dw #misc_invincibility
     dw #$0000
@@ -877,12 +875,6 @@ misc_music_toggle:
     STA $063F
     STA $2140
     RTS
-
-misc_elevatorstanding:
-    %cm_toggle("Standing On Elevator", $7E0E16, #$0001, #0)
-
-misc_elevatorriding:
-    %cm_toggle("Riding Elevator", $7E0E16, #$0080, #0)
 
 misc_transparent:
     %cm_toggle_bit("Samus on Top", !sram_sprite_prio_flag, #$3000, #0)
@@ -1142,6 +1134,7 @@ ihmode_ypos:
 ihmode_hspeed:
     %cm_jsr("Horizontal Speed", #action_select_infohud_mode, #$000D)
 
+!IH_MODE_VSPEED_INDEX = $000E
 ihmode_vspeed:
     %cm_jsr("Vertical Speed", #action_select_infohud_mode, #$000E)
 

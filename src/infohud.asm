@@ -12,9 +12,6 @@ org $8094DF
 org $828B4B      ; disable debug functions
     JML ih_debug_patch
 
-org $828115
-    JSL ih_max_etank_code
-
 org $82EE92      ; runs on START GAME
     JSL startgame_seg_timer
 
@@ -160,13 +157,6 @@ endif
 ; Main bank stuff
 org $F08000
 print pc, " infohud start"
-ih_max_etank_code:
-{
-    ; Reset max-etanks value
-    LDA #$0000 : STA !ram_etanks
-    LDA $7EC200,X
-    RTL
-}
 
 ih_debug_patch:
 {
@@ -594,13 +584,13 @@ ih_update_hud_code:
     ; Draw Item percent
     .pct
     {
+        ; skip item% if display mode = vspeed
+        LDA !sram_display_mode : CMP #!IH_MODE_VSPEED_INDEX : BEQ .skipToLag
+
         LDA #$0000 : STA !ram_pct_1
 
         ; Max HP (E tanks)
-        LDA $09C4 : JSR CalcEtank : LDA $4214 : STA !ram_etanks
-
-        ; skip item% if display mode = vspeed
-        LDA !sram_display_mode : CMP #$000E : BEQ .skipToEtanks
+        LDA $09C4 : JSR CalcEtank
 
         ; Max Reserve Tanks
         LDA $09D4 : JSR CalcEtank
@@ -621,10 +611,7 @@ ih_update_hud_code:
         LDA !IH_PERCENT : STA $7EC618
     }
 
-  .skipToEtanks
-    ; E-tanks
-    LDA !ram_etanks : LDX #$0054 : JSR Draw3
-
+  .skipToLag
     ; Lag
     LDA !ram_last_room_lag : LDX #$0080 : JSR Draw4
 
@@ -753,9 +740,19 @@ ih_hud_code:
     JSR (.status_display_table,X)
 
     ; Samus' HP
-    LDA $09C2 : CMP !ram_last_hp : BEQ .end : STA !ram_last_hp
+    LDA $09C2 : CMP !ram_last_hp : BEQ .elevator : STA !ram_last_hp
     LDX #$0092 : JSR Draw4
     LDA !IH_BLANK : STA $7EC690
+
+    ; Elevator
+  .elevator
+    LDA $0E16 : CMP !ram_last_elevator : BEQ .end : STA !ram_last_elevator
+    CMP #$0000 : BEQ .clearelevator
+    LDA !IH_ELEVATOR : STA $7EC658
+    BRA .end
+
+  .clearelevator
+    LDA !IH_BLANK : STA $7EC658
 
   .end
     PLB
