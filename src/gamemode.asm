@@ -243,4 +243,4 @@ gamemode_door_transition:
 endif
 
 print pc, " gamemode end"
-warnpc $85FE00
+warnpc $85FD00

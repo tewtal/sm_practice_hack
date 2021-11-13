@@ -1,6 +1,6 @@
 !ram_tilemap_buffer = $7E5800
 
-org $85FE00
+org $85FD00
 print pc, " menu bank85 start"
 
 wait_for_lag_frame_long:
@@ -24,7 +24,7 @@ maybe_trigger_pause_long:
   rtl
 
 print pc, " menu bank85 end"
-warnpc $85FF00
+warnpc $85FE00
 
 org $B88000
 print pc, " menu start"
