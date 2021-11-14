@@ -3,6 +3,7 @@ lorom
 !FEATURE_SD2SNES ?= 1
 !FEATURE_PAL ?= 1
 !ORIGINAL_MESSAGE_TEXT ?= 0
+!PRESERVE_WRAM_DURING_SPACETIME ?= 1
 
 table ../resources/normal.tbl
 

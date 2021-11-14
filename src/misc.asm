@@ -24,6 +24,11 @@ endif
 org $8C9607
     dw #$0E2F
 
+if !PRESERVE_WRAM_DURING_SPACETIME
+org $90AD18
+    JMP spacetime_routine
+endif
+
 ; Skips the waiting time after teleporting
 if !FEATURE_PAL
 org $90E874
@@ -74,7 +79,10 @@ org $808F24
 org $83AAD2
     dw #MotherBrainHP
 
+
 org $8FEA00 ; free space for door asm
+print pc, " misc bank8F start"
+
 MotherBrainHP:
 {
     LDA !sram_display_mode : BNE .done
@@ -85,8 +93,12 @@ MotherBrainHP:
     RTS
 }
 
-org $87D000
-print pc, " misc start"
+print pc, " misc bank8F end"
+
+
+org $90F800
+print pc, " misc bank90 start"
+
 hook_set_music_track:
 {
     STZ $07F6
@@ -123,7 +135,6 @@ hook_unpause:
     JSL $80834B
     RTL
 }
-
 
 gamemode_end:
 {
@@ -165,5 +176,38 @@ stop_all_sounds:
     RTL
 }
 
-print pc, " misc end"
+if !PRESERVE_WRAM_DURING_SPACETIME
+spacetime_routine:
+{
+    CPY #$0000 : BPL .normal_load_palette
+
+    ; Spacetime, check if Y will cause us to reach WRAM
+    TYA : CLC : ADC !WRAM_START-$7EC1E0 : CMP #$0000 : BPL .normal_load_palette
+
+    ; It will, so run our own loop
+    LDA !WRAM_START-$7EC1C0 : STA $18
+    INX : INX : INY : INY
+  .loop_before_wram
+    LDA [$00],Y
+    STA $7EC1C0,X
+    INX : INX : INY : INY
+    CPX $18 : BMI .loop_before_wram
+
+    ; Skip over WRAM and resume normal loop
+    TXA : CLC : ADC !WRAM_SIZE : TAX
+    TYA : CLC : ADC !WRAM_SIZE : TAY
+    CPY #$0020 : BMI .normal_load_loop
+    RTS
+
+  .normal_load_loop
+    LDA [$00],Y
+    STA $7EC1C0,X
+  .normal_load_palette
+    INX : INX : INY : INY
+    CPY #$0020 : BMI .normal_load_loop
+    RTS
+}
+endif
+
+print pc, " misc bank90 end"
 

@@ -15,11 +15,10 @@ init_code:
 
     ; Clear WRAM
     {
-        ; We mostly use $7FFB00 and upward, so just zero everything
         LDA #$0000
-        LDX #$04FE
+        LDX !WRAM_SIZE-2
       .loop
-        STA $7FFB00,X
+        STA !WRAM_START,X
         DEX : DEX : BPL .loop
 
         LDA #$0000
