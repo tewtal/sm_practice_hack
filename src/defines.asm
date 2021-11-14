@@ -2,6 +2,7 @@
 ; Work RAM
 ; ---------
 
+!WRAM_BANK = #$007E
 !WRAM_SIZE = #$0200
 !WRAM_START = $7EFB00
 

@@ -652,7 +652,7 @@ ih_update_hud_code:
     {
         LDA !sram_frame_counter_mode : BNE .ingameSeg
         LDA.w #!ram_seg_rt_frames : STA $00
-        LDA #$007F : STA $02
+        LDA !WRAM_BANK : STA $02
         BRA .drawSeg
 
       .ingameSeg

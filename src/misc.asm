@@ -113,7 +113,6 @@ hook_set_music_track:
     RTL
 }
 
-
 hook_unpause:
 {
     ; RT room
@@ -182,16 +181,15 @@ spacetime_routine:
     CPY #$0000 : BPL .normal_load_palette
 
     ; Spacetime, check if Y will cause us to reach WRAM
-    TYA : CLC : ADC !WRAM_START-$7EC1E0 : CMP #$0000 : BPL .normal_load_palette
+    TYA : CLC : ADC #(!WRAM_START-$7EC1E0) : CMP #$0000 : BPL .normal_load_palette
 
     ; It will, so run our own loop
-    LDA !WRAM_START-$7EC1C0 : STA $18
     INX : INX : INY : INY
   .loop_before_wram
     LDA [$00],Y
     STA $7EC1C0,X
     INX : INX : INY : INY
-    CPX $18 : BMI .loop_before_wram
+    CPX #(!WRAM_START-$7EC1C0) : BMI .loop_before_wram
 
     ; Skip over WRAM and resume normal loop
     TXA : CLC : ADC !WRAM_SIZE : TAX
