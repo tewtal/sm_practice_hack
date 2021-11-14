@@ -544,7 +544,6 @@ ToggleCategoryMenu:
     dw #$0000
     %cm_header("TOGGLE CATEGORY")
 
-
 cat_100:
     %cm_jsr("100%", action_category, #$0000)
 
@@ -680,9 +679,9 @@ ti_xray:
         RTS
 
 
-; ------------------
+; -----------------
 ; Toggle Beams menu
-; ------------------
+; -----------------
 
 ToggleBeamsMenu:
     dw tb_chargebeam
@@ -690,6 +689,7 @@ ToggleBeamsMenu:
     dw tb_wavebeam
     dw tb_spazerbeam
     dw tb_plasmabeam
+    dw tb_glitchedbeams
     dw #$0000
     %cm_header("TOGGLE BEAMS")
 
@@ -708,10 +708,46 @@ tb_spazerbeam:
 tb_plasmabeam:
     %cm_toggle_bit("Plasma", $7E09A8, #$0008, #0)
 
+tb_glitchedbeams:
+    %cm_submenu("Glitched Beams", #GlitchedBeamsMenu)
 
-; ---------------
+
+; -------------------
+; Glitched Beams menu
+; -------------------
+
+GlitchedBeamsMenu:
+    dw #gb_murder
+    dw #gb_spacetime
+    dw #gb_chainsaw
+    dw #gb_unnamed
+    dw #$0000
+    %cm_header("GLITCHED BEAMS")
+
+gb_murder:
+    %cm_jsr("Murder Beam", action_glitched_beam, #$100F)
+
+gb_spacetime:
+    %cm_jsr("Spacetime Beam", action_glitched_beam, #$100E)
+
+gb_chainsaw:
+    %cm_jsr("Chainsaw Beam", action_glitched_beam, #$100D)
+
+gb_unnamed:
+    %cm_jsr("Unnamed Glitched Beam", action_glitched_beam, #$100C)
+
+action_glitched_beam:
+{
+    TYA
+    STA $09A6 : STA $09A8
+    LDA #$0042 : JSL !SFX_LIB1 ; unlabeled, song dependent sound
+    RTS
+}
+
+
+; -------------
 ; Teleport menu
-; ---------------
+; -------------
 
 TeleportMenu:
     dw #tel_crateriaship
@@ -823,6 +859,7 @@ action_teleport:
     RTS
 }
 
+
 ; -----------
 ; Misc menu
 ; -----------
@@ -902,6 +939,7 @@ misc_forcestand:
 
   .routine
     JSL $90E2D4
+    LDA #!SOUND_MENU_JSR : JSL $80903F
     RTS
 
 
@@ -971,7 +1009,6 @@ events_zebesexploding:
 
 events_animals:
     %cm_toggle_bit("Animals Saved", $7ED820, #$8000, #0)
-
 
 action_reset_events:
 {
@@ -1056,16 +1093,6 @@ boss_gt:
 
 boss_ridley:
     %cm_toggle_bit("Ridley", #$7ED82A, #$0001, #0)
-
-
-; ------------
-; Config menu
-; ------------
-
-ConfigMenu:
-    dw #$0000
-    %cm_header("CONFIG")
-
 
 
 ; --------------
@@ -1492,6 +1519,7 @@ game_clear_minimap:
     STA $7EDB1C,X : STA $7EDC1C,X
     STA $7EDD1C,X : STA $7E07F7,X
     DEX : DEX : BPL .clear_minimap_loop
+    LDA #!SOUND_MENU_JSR : JSL $80903F
     RTS
 
 game_metronome:
