@@ -33,7 +33,9 @@
 !ram_tmp_4 = !WRAM_START+$2A
  
 !ram_last_hp = !WRAM_START+$2C
-!ram_last_elevator = !WRAM_START+$2E
+
+; ^ FREE SPACE ^
+
 !ram_pct_1 = !WRAM_START+$30
 !ram_pct_2 = !WRAM_START+$32
 !ram_armed_shine_duration = !WRAM_START+$34
@@ -198,6 +200,7 @@
 !IH_LETTER_X = #$0C66
 !IH_LETTER_Y = #$0C67
 !IH_ELEVATOR = #$1C0B
+!IH_SHINETIMER = #$0047
 
 !IH_PAUSE = #$0100 ; right
 !IH_SLOWDOWN = #$0400 ; down
@@ -262,6 +265,7 @@
 !sram_sprite_prio_flag = $702036
 !sram_metronome_tickrate = $702038
 !sram_metronome_sfx = $70203A
+!sram_status_icons = $70203C
 
 ; ^ FREE SPACE ^ up to $703000
 

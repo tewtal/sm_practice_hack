@@ -767,18 +767,28 @@ ih_hud_code:
     JSR (.status_display_table,X)
 
     ; Samus' HP
-    LDA $09C2 : CMP !ram_last_hp : BEQ .elevator : STA !ram_last_hp
+    LDA $09C2 : CMP !ram_last_hp : BEQ .status_icons : STA !ram_last_hp
     LDX #$0092 : JSR Draw4
     LDA !IH_BLANK : STA $7EC690
 
+  .status_icons
+    LDA !sram_status_icons : BEQ .end
+
     ; Elevator
-  .elevator
-    LDA $0E16 : CMP !ram_last_elevator : BEQ .end : STA !ram_last_elevator
-    CMP #$0000 : BEQ .clearelevator
-    LDA !IH_ELEVATOR : STA $7EC658
+    LDA $0E16 : BEQ .clear_elevator
+    LDA !IH_ELEVATOR : STA $7EC656
+    BRA .check_shinetimer
+
+  .clear_elevator
+    LDA !IH_BLANK : STA $7EC656
+
+    ; Shine timer
+  .check_shinetimer
+    LDA $0A68 : BEQ .clear_shinetimer
+    LDA !IH_SHINETIMER : STA $7EC658
     BRA .end
 
-  .clearelevator
+  .clear_shinetimer
     LDA !IH_BLANK : STA $7EC658
 
   .end

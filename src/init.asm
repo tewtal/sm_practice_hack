@@ -51,6 +51,7 @@ init_sram:
 
   .sram_upgrade_9to10
     LDA #$0000 : STA !sram_ctrl_toggle_tileviewer
+    LDA #$0000 : STA !sram_status_icons
 
     LDA #!SRAM_VERSION : STA !sram_initialized
     RTS
