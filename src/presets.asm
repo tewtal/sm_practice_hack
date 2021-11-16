@@ -359,6 +359,7 @@ preset_scroll_fixes:
     BRA .done
 
   .ceres
+    LDA #$00 : STA $7E005F       ; Initialize mode 7
     CPX #$DF45 : BNE +           ; Ceres Elevator
     LDA #$00 : STA $7E091E : STA $7E0920
     BRA .ceresdone
