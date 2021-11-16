@@ -1835,20 +1835,21 @@ endif
     LDA $0B2C : CMP #$0000 : BNE .downcheck
     LDA !IH_LETTER_Y : STA $7EC68A
 
-  .downcheck
-    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_DOWN : BEQ .inc
-    BRA .timecheck
-
   .setxy
     LDA $0AF6 : STA !ram_xpos
     LDA $0AFA : STA !ram_ypos
     RTS
 
+  .downcheck
+    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_DOWN : BEQ .inc
+    BRA .timecheck
+
   .roomcheck
-    LDA $079B : CMP #$94CC : BEQ .forgotten : CMP #$962A : BEQ .redbrin : CMP #$97B5 : BEQ .morph
-    CMP #$9938 : BEQ .greenbrin : CMP #$AF3F : BEQ .lowernorfair : CMP #$A6A1 : BEQ .warehouse
+    LDA $079B : CMP #$94CC : BEQ .forgotten : CMP #$962A : BEQ .redbrin
+    CMP #$97B5 : BEQ .morph : CMP #$9938 : BEQ .greenbrin : CMP #$9CB3 : BEQ .dachora
+    CMP #$AF3F : BEQ .lowernorfair : CMP #$A6A1 : BEQ .warehouse
     LDA !IH_BLANK : STA $7EC688
-    BRA .setpb
+    BRL .setpb
 
   .inc
     ; Arbitrary give up waiting after 192 frames
@@ -1868,6 +1869,10 @@ endif
   .warehouse
     LDA #$0080 : CMP !ram_xpos : BEQ .questionpb
     LDA #$008B : CMP !ram_ypos : BEQ .goodpb
+    BRA .badpb
+
+  .dachora
+    LDA #$00AA : CMP !ram_ypos : BEQ .goodpb
     BRA .badpb
 
   .questionpb
