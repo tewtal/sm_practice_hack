@@ -5,6 +5,12 @@ lorom
 !ORIGINAL_MESSAGE_TEXT ?= 0
 !PRESERVE_WRAM_DURING_SPACETIME ?= 1
 
+!VERSION_MAJOR = 2
+!VERSION_MINOR = 3
+!VERSION_BUILD = 1
+!VERSION_REV_1 = 0
+!VERSION_REV_2 = 0
+
 table ../resources/normal.tbl
 
 incsrc macros.asm

@@ -8,6 +8,20 @@ macro cm_header(title)
     table ../resources/normal.tbl
 endmacro
 
+macro cm_version_header(title, major, minor, build, rev_1, rev_2)
+    table ../resources/header.tbl
+if !VERSION_REV_1
+    db #$28, "<title> <major>.<minor>.<build>.<rev_1><rev_2>", #$FF
+else
+if !VERSION_REV_2
+    db #$28, "<title> <major>.<minor>.<build>.<rev_2>", #$FF
+else
+    db #$28, "<title> <major>.<minor>.<build>", #$FF
+endif
+endif
+    table ../resources/normal.tbl
+endmacro
+
 macro cm_numfield(title, addr, start, end, increment, jsrtarget)
     dw !ACTION_NUMFIELD
     dl <addr>
@@ -175,7 +189,7 @@ MainMenu:
     dw #mm_goto_rngmenu
     dw #mm_goto_ctrlsmenu
     dw #$0000
-    %cm_header("SM PRACTICE HACK 2.3.1")
+    %cm_version_header("SM PRACTICE HACK", !VERSION_MAJOR, !VERSION_MINOR, !VERSION_BUILD, !VERSION_REV_1, !VERSION_REV_2)
 
 mm_goto_equipment:
     %cm_submenu("Equipment", #EquipmentMenu)

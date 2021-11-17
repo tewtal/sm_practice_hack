@@ -2,6 +2,7 @@
 org $008000
     db $FF
 
+
 ; Set SRAM size
 if !FEATURE_SD2SNES
     org $00FFD8
@@ -10,6 +11,7 @@ else
     org $00FFD8
         db $05 ; 64kb
 endif
+
 
 ; Skip intro
 ; $82:EEDF A9 95 A3    LDA #$A395
@@ -20,9 +22,38 @@ else
     LDA #$C100
 endif
 
+
+; Enable version display
+org $8B8697
+    NOP
+
+
+if !FEATURE_PAL
+org $8BF6DC
+else
+org $8BF754
+endif
+    db #$20, #($30+!VERSION_MAJOR)
+    db #$2E, #($30+!VERSION_MINOR)
+    db #$2E, #($30+!VERSION_BUILD)
+if !VERSION_REV_1
+    db #$2E, #($30+!VERSION_REV_1)
+    db #($30+!VERSION_REV_2)
+    db #$20, #$20
+else
+if !VERSION_REV_2
+    db #$2E, #($30+!VERSION_REV_2)
+    db #$20, #$20, #$20
+else
+    db #$20, #$20, #$20, #$20, #$20
+endif
+endif
+
+
 ; Fix Zebes planet tiling error
 org $8C9607
     dw #$0E2F
+
 
 if !PRESERVE_WRAM_DURING_SPACETIME
 org $90ACF6
@@ -31,6 +62,7 @@ org $90ACF6
 org $90AD18
     JMP spacetime_routine
 endif
+
 
 ; Skips the waiting time after teleporting
 if !FEATURE_PAL
@@ -77,6 +109,7 @@ org $CF8BBF       ; Set map scroll beep to high priority
 org $808F24
     JSL hook_set_music_track
     NOP #2
+
 
 ; swap Enemy HP to MB HP when entering MB's room
 org $83AAD2
