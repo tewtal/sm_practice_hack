@@ -230,13 +230,18 @@ original_load_projectile_palette:
 
 spacetime_routine:
 {
-    CPY #$0000 : BPL .normal_load_palette
+    ; The normal routine shouldn't come here, but sanity check just in case
+    ; Also skips out if spacetime but Y value is positive
+    INY : INY : CPY #$0000 : BPL .normal_load_palette
+
+    ; Spacetime, sanity check that X is 0 (if not then do the original routine)
+    CPX #$0000 : BNE .normal_load_palette
 
     ; Spacetime, check if Y will cause us to reach WRAM
-    TYA : CLC : ADC #(!WRAM_START-$7EC1E0) : CMP #$0000 : BPL .normal_load_palette
+    TYA : CLC : ADC #(!WRAM_START-$7EC1E2) : CMP #$0000 : BPL .normal_load_palette
 
     ; It will, so run our own loop
-    INX : INX : INY : INY
+    INX : INX
   .loop_before_wram
     LDA [$00],Y
     STA $7EC1C0,X
@@ -252,8 +257,9 @@ spacetime_routine:
   .normal_load_loop
     LDA [$00],Y
     STA $7EC1C0,X
+    INY : INY
   .normal_load_palette
-    INX : INX : INY : INY
+    INX : INX
     CPY #$0020 : BMI .normal_load_loop
     RTS
 }
