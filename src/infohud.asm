@@ -273,10 +273,9 @@ ih_nmi_end:
 ih_gamemode_frame:
 {
     PHA
-    LDA !ram_gametime_room : CMP #$EA5F : BEQ +
-    INC : STA !ram_gametime_room
+    LDA !ram_gametime_room : INC : STA !ram_gametime_room
+    PLA
 
-+   PLA
     ; overwritten code
     STZ $0A30
     STZ $0A32

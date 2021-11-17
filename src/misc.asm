@@ -25,6 +25,9 @@ org $8C9607
     dw #$0E2F
 
 if !PRESERVE_WRAM_DURING_SPACETIME
+org $90ACF6
+    JSR original_load_projectile_palette
+
 org $90AD18
     JMP spacetime_routine
 endif
@@ -176,6 +179,22 @@ stop_all_sounds:
 }
 
 if !PRESERVE_WRAM_DURING_SPACETIME
+original_load_projectile_palette:
+{
+    AND #$0FFF : ASL : TAY
+    LDA #$0090 : XBA : STA $01
+    LDA $C3C9,Y : STA $00
+    LDY #$0000
+    LDX #$0000
+
+  .original_load_palette_loop
+    LDA [$00],Y
+    STA $7EC1C0,X
+    INX : INX : INY : INY
+    CPY #$0020 : BMI .original_load_palette_loop
+    RTS
+}
+
 spacetime_routine:
 {
     CPY #$0000 : BPL .normal_load_palette
