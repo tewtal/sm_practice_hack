@@ -68,7 +68,10 @@
  
 !ram_metronome = !WRAM_START+$62
 !ram_metronome_counter = !WRAM_START+$64
- 
+
+!ram_suits_enemy_damage_check = !WRAM_START+$66
+!ram_suits_periodic_damage_check = !WRAM_START+$68
+
 ; ^ FREE SPACE ^ up to +$7E
  
 !ram_watch_left = !WRAM_START+$80
@@ -113,14 +116,12 @@
 !ram_quickdrop_counter = !WRAM_START+$CC
 !ram_walljump_counter = !WRAM_START+$CE
  
-; ^ FREE SPACE ^ up to +$F8
+; ^ FREE SPACE ^ up to +$FC
  
 ; -----------------------
 ; RAM (Bank 7E required)
 ; -----------------------
 
-!ram_suits_enemy_damage_check = $7EFBFA
-!ram_suits_periodic_damage_check = $7EFBFC
 !ram_slowdown_mode = $7EFBFE
  
 ; ---------

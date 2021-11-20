@@ -54,16 +54,27 @@ org $8C9607
 
 ; Suit periodic damage
 org $8DE37C
-    AND !ram_suits_periodic_damage_check
-    BNE $29
-    LDA $0A4E
-    CLC : ADC #$4000
-    STA $0A4E
-    ; The above AND added a byte, so we need to free up some space
-    ; Fortunately there is an unnecessary add command here we can skip over
-    ; Add in some NOPs to balance out the CPU
-    NOP : NOP : NOP : NOP : NOP
-    BRA $01
+    ; Replaced the check and also take one additional byte
+    ; Thus the following logic is the same but shifted down
+    AND !ram_suits_periodic_damage_check : BNE $29
+    LDA $0A4E : CLC : ADC #$4000 : STA $0A4E
+    ; We don't have enough space to add the carry bit inline,
+    ; so we need to jump to freespace, but only do that if the carry bit is set
+    BCC $06
+    JMP increment_periodic_damage
+
+
+org $8DFFF1
+print pc, " misc bank8D start"
+
+increment_periodic_damage:
+{
+    LDA $0A50 : INC : STA $0A50
+    JMP $E394
+}
+
+print pc, " misc bank8D end"
+
 
 ; We now have three separate periodic damage routines,
 ; so we need to load an index to jump to the correct routine

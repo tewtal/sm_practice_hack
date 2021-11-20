@@ -28,8 +28,10 @@ init_code:
 
   .sram_initialized
     ; Initialize RAM (Bank 7E required)
-    JSL misc_init_suits_ram
     LDA #$0000 : STA !ram_slowdown_mode
+
+    ; Initialize RAM that shouldn't be initialized to zero
+    JSL misc_init_suits_ram
     LDA #$FFFE : STA !ram_watch_left : STA !ram_watch_right
 
     ; Check if any less common controller shortcuts are configured
