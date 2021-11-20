@@ -6,6 +6,29 @@ org $808455
     JML init_code
 
 
+; hijack when clearing bank 7E
+if !PRESERVE_WRAM_DURING_SPACETIME
+org $808490
+    PHA
+    LDX #$3FFE
+  .clear_bank_loop
+    STZ $0000,X
+    STZ $4000,X
+    STZ $8000,X
+    STZ $C000,X
+    DEX : DEX
+    BPL .clear_bank_loop
+    JSL init_nonzero_wram
+    PLA
+    BRA .end_clear_bank
+
+warnpc $8084AF
+
+org $8084AF
+  .end_clear_bank
+endif
+
+
 org $81F000
 print pc, " init start"
 
@@ -14,6 +37,17 @@ init_code:
     REP #$30
     PHA
 
+    ; Initialize RAM (Bank 7E required)
+    LDA #$0000 : STA !ram_slowdown_mode
+
+    ; Check if we should initialize SRAM
+    LDA !sram_initialized : CMP #!SRAM_VERSION : BEQ .sram_initialized
+    JSR init_sram
+
+  .sram_initialized
+if !PRESERVE_WRAM_DURING_SPACETIME
+    ; WRAM located in bank 7E, clear it later
+else
     ; Clear WRAM
     LDA #$0000
     LDX !WRAM_SIZE-2
@@ -21,21 +55,8 @@ init_code:
     STA !WRAM_START,X
     DEX : DEX : BPL .wram_loop
 
-    ; Check if we should initialize SRAM
-    LDA !sram_initialized : CMP #!SRAM_VERSION : BEQ .sram_initialized
-
-    JSR init_sram
-
-  .sram_initialized
-    ; Initialize RAM (Bank 7E required)
-    LDA #$0000 : STA !ram_slowdown_mode
-
-    ; Initialize RAM that shouldn't be initialized to zero
-    JSL misc_init_suits_ram
-    LDA #$FFFE : STA !ram_watch_left : STA !ram_watch_right
-
-    ; Check if any less common controller shortcuts are configured
-    JSL GameModeExtras
+    JSL init_nonzero_wram
+endif
 
     PLA
     ; Execute overwritten logic and return
@@ -45,6 +66,19 @@ else
     JSL $8B9146
 endif
     JML $808459
+}
+
+init_nonzero_wram:
+{
+    JSL misc_init_suits_ram
+
+    ; RAM $7E0000 fluctuates so it is not a good default value
+    LDA #$FFFE : STA !ram_watch_left : STA !ram_watch_right
+    LDA #$00FF : STA !ram_watch_left_hi : STA !ram_watch_right_hi
+    LDA #$00FE : STA !ram_watch_left_lo : STA !ram_watch_right_lo
+
+    ; Check if any less common controller shortcuts are configured
+    JML GameModeExtras
 }
 
 init_sram:
