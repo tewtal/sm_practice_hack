@@ -874,6 +874,7 @@ MiscMenu:
     dw #misc_loudpants
     dw #misc_fanfare_toggle
     dw #misc_music_toggle
+    dw #misc_suit_properties
     dw #misc_transparent
     dw #misc_invincibility
     dw #misc_forcestand
@@ -927,6 +928,35 @@ misc_music_toggle:
     STA $063F
     STA $2140
     RTS
+
+misc_suit_properties:
+    dw !ACTION_CHOICE
+    dl #!sram_suit_properties
+    dw .routine
+    db #$28, "Suit Propertie", #$FF
+    db #$28, "s   VANILLA", #$FF
+    db #$28, "s  BALANCED", #$FF
+    db #$28, "s  PROGRESS", #$FF
+    db #$FF
+
+  .routine
+    JSL misc_init_suits_ram
+    RTS
+
+misc_init_suits_ram:
+{
+    LDA #$0021 : STA !ram_suits_enemy_damage_check : STA !ram_suits_periodic_damage_check
+
+    LDA !sram_suit_properties : CMP #$0002 : BNE .init_periodic_damage
+    LDA #$0001 : STA !ram_suits_enemy_damage_check
+
+  .init_periodic_damage
+    LDA !sram_suit_properties : BEQ .end
+    LDA #$0001 : STA !ram_suits_periodic_damage_check
+
+  .end
+    RTL
+}
 
 misc_transparent:
     %cm_toggle_bit("Samus on Top", !sram_sprite_prio_flag, #$3000, #0)

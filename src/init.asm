@@ -8,29 +8,30 @@ org $808455
 
 org $81F000
 print pc, " init start"
+
 init_code:
 {
     REP #$30
     PHA
 
     ; Clear WRAM
-    {
-        LDA #$0000
-        LDX !WRAM_SIZE-2
-      .loop
-        STA !WRAM_START,X
-        DEX : DEX : BPL .loop
-
-        LDA #$0000
-        STA !ram_slowdown_mode
-    }
+    LDA #$0000
+    LDX !WRAM_SIZE-2
+  .wram_loop
+    STA !WRAM_START,X
+    DEX : DEX : BPL .wram_loop
 
     ; Check if we should initialize SRAM
-+   LDA !sram_initialized : CMP #!SRAM_VERSION : BEQ .sram_initialized
+    LDA !sram_initialized : CMP #!SRAM_VERSION : BEQ .sram_initialized
 
     JSR init_sram
 
   .sram_initialized
+    ; Initialize RAM (Bank 7E required)
+    JSL misc_init_suits_ram
+    LDA #$0000 : STA !ram_slowdown_mode
+    LDA #$FFFE : STA !ram_watch_left : STA !ram_watch_right
+
     ; Check if any less common controller shortcuts are configured
     JSL GameModeExtras
 
@@ -52,6 +53,7 @@ init_sram:
   .sram_upgrade_9to10
     LDA #$0000 : STA !sram_ctrl_toggle_tileviewer
     LDA #$0000 : STA !sram_status_icons
+    LDA #$0000 : STA !sram_suit_properties
 
     LDA #!SRAM_VERSION : STA !sram_initialized
     RTS

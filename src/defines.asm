@@ -113,13 +113,15 @@
 !ram_quickdrop_counter = !WRAM_START+$CC
 !ram_walljump_counter = !WRAM_START+$CE
  
-; ^ FREE SPACE ^ up to +$FA
+; ^ FREE SPACE ^ up to +$F8
  
 ; -----------------------
 ; RAM (Bank 7E required)
 ; -----------------------
- 
-!ram_slowdown_mode = $7EFBFC
+
+!ram_suits_enemy_damage_check = $7EFBFA
+!ram_suits_periodic_damage_check = $7EFBFC
+!ram_slowdown_mode = $7EFBFE
  
 ; ---------
 ; RAM Menu
@@ -183,7 +185,7 @@
 !IH_CONTROLLER_SEC_NEW = $91
 !IH_CONTROLLER_SEC_PREV = $99
 
-!IH_BLANK = #$0057
+!IH_BLANK = #$2C0F
 !IH_PERCENT = #$0C0A
 !IH_DECIMAL = #$0CCB
 !IH_HYPHEN = #$0C55
@@ -266,6 +268,7 @@
 !sram_metronome_tickrate = $702038
 !sram_metronome_sfx = $70203A
 !sram_status_icons = $70203C
+!sram_suit_properties = $70203E
 
 ; ^ FREE SPACE ^ up to $703000
 

@@ -2,14 +2,12 @@
 org $008000
     db $FF
 
-
 ; Set SRAM size
+org $00FFD8
 if !FEATURE_SD2SNES
-    org $00FFD8
-        db $08 ; 256kb
+    db $08 ; 256kb
 else
-    org $00FFD8
-        db $05 ; 64kb
+    db $05 ; 64kb
 endif
 
 
@@ -26,7 +24,6 @@ endif
 ; Enable version display
 org $8B8697
     NOP
-
 
 if !FEATURE_PAL
 org $8BF6DC
@@ -53,6 +50,102 @@ endif
 ; Fix Zebes planet tiling error
 org $8C9607
     dw #$0E2F
+
+
+; Suit periodic damage
+org $8DE37C
+    AND !ram_suits_periodic_damage_check
+    BNE $29
+    LDA $0A4E
+    CLC : ADC #$4000
+    STA $0A4E
+    ; The above AND added a byte, so we need to free up some space
+    ; Fortunately there is an unnecessary add command here we can skip over
+    ; Add in some NOPs to balance out the CPU
+    NOP : NOP : NOP : NOP : NOP
+    BRA $01
+
+; We now have three separate periodic damage routines,
+; so we need to load an index to jump to the correct routine
+org $90E72B
+    LDA !sram_suit_properties : ASL : PHA
+    JSR misc_overwritten_movement_routine
+
+; Handle periodic damage based on suit properties
+; Overwritten logic will be transferred
+org $90E74D
+    PLA : PHX : TAX
+    JSR (periodic_damage_table,X)
+    PLX : NOP : NOP
+
+; Transfer logic here by overwriting redundant end of periodic damage
+; Also repoint jump and branch to avoid the redundant section
+if !FEATURE_PAL
+org $90E9D3
+    JMP $EA32
+else
+org $90E9D6
+    JMP $EA35
+endif
+
+if !FEATURE_PAL
+org $90EA2A
+else
+org $90EA2D
+endif
+    BPL $06
+
+; Optimize CPU by overwriting our PLP/RTS
+; and skipping over the PHP/REP #$30 in the pause check routine
+if !FEATURE_PAL
+org $90EA38
+else
+org $90EA3B
+    ; The optimizations were too good,
+    ; now need to waste 6 cycles to balance CPU
+    NOP : NOP : NOP
+    BRA $08
+endif
+
+; Optimize CPU by removing RTS so we go straight to the low health check
+if !FEATURE_PAL
+org $90EA7B
+else
+org $90EA7E
+endif
+    NOP
+
+
+; Suit enemy damage
+if !FEATURE_PAL
+org $A0A473
+else
+org $A0A463
+endif
+    BIT #$0020 : BEQ .checksuit
+    LSR $12
+  .checksuit
+    AND !ram_suits_enemy_damage_check : BEQ .return
+    LSR $12
+  .return
+    LDA $12
+    RTL
+
+
+; Suit metroid damage
+if !FEATURE_PAL
+org $A3EEF4
+else
+org $A3EED8
+endif
+    LDA #$C000 : STA $12
+    LDA $09A2 : AND !ram_suits_enemy_damage_check : BEQ .metroidcheckgravity
+    LSR $12
+  .metroidcheckgravity
+    LDA $09A2 : BIT #$0020 : BEQ .metroidnogravity
+    LSR $12
+  .metroidnogravity
+    ; Continue vanilla routine
 
 
 if !PRESERVE_WRAM_DURING_SPACETIME
@@ -210,6 +303,75 @@ stop_all_sounds:
     LDA #$0000 : STA $0A6A
     RTL
 }
+
+
+misc_overwritten_movement_routine:
+    ; We overwrote an unnecessary JSR, a STZ command, and a jump to the movement routine
+    STZ $0A6E
+    JMP ($0A58)
+
+periodic_damage_table:
+if !FEATURE_PAL
+    dw $E9CB   ; vanilla routine
+else
+    dw $E9CE   ; vanilla routine
+endif
+    dw periodic_damage_balanced
+    dw periodic_damage_progressive
+
+; Make our minor adjustments and jump back to the vanilla routine
+periodic_damage_balanced:
+{
+    PHP : REP #$30
+    LDA $0A78 : BEQ $03
+if !FEATURE_PAL
+    JMP $EA32
+else
+    JMP $EA35
+endif
+    LDA $09A2 : BIT #$0001 : BNE $03
+if !FEATURE_PAL
+    JMP $EA0E   ; Varia not equipped
+    JMP $E9F9   ; Varia equipped
+else
+    JMP $EA11   ; Varia not equipped
+    JMP $E9FC   ; Varia equipped
+endif
+}
+
+periodic_damage_progressive:
+{
+    PHP : REP #$30
+    LDA $0A78 : BEQ $03
+    ; Nothing to do, jump back to vanilla routine
+if !FEATURE_PAL
+    JMP $EA32
+else
+    JMP $EA35
+endif
+
+    LDA $09A2 : BIT #$0020 : BEQ .nogravity
+    ; Gravity equipped, so halve damage
+    LDA $0A4F : LSR
+    PHA : XBA : AND #$FF00 : STA $0A4E
+    PLA : XBA : AND #$00FF : STA $0A50
+
+  .nogravity
+    LDA $09A2 : BIT #$0001 : BEQ .novaria
+    ; Varia equipped, so halve damage
+    LDA $0A4F : LSR
+    PHA : XBA : AND #$FF00 : STA $0A4E
+    PLA : XBA : AND #$00FF : STA $0A50
+
+  .novaria
+    ; Jump back into the vanilla routine
+if !FEATURE_PAL
+    JMP $EA0E
+else
+    JMP $EA11
+endif
+}
+
 
 if !PRESERVE_WRAM_DURING_SPACETIME
 original_load_projectile_palette:

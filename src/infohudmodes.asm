@@ -1033,8 +1033,16 @@ status_ramwatch:
 
   .readright
     LDA !ram_watch_right : TAX
-    LDA $7E0000,X : CMP !ram_watch_right_hud : BEQ .writeleft
+    LDA $7E0000,X : CMP !ram_watch_right_hud : BEQ .drawleft
     STA !ram_watch_right_hud : LDX #$0092 : JSR Draw4Hex
+
+  .drawleft
+    LDA $7EC688 : CMP !IH_BLANK : BNE .drawright
+    LDA !ram_watch_left_hud : LDX #$0088 : JSR Draw4Hex
+
+  .drawright
+    LDA $7EC692 : CMP !IH_BLANK : BNE .writeleft
+    LDA !ram_watch_right_hud : LDX #$0092 : JSR Draw4Hex
 
   .writeleft
     LDA !ram_watch_edit_lock_left : BEQ .writeright
