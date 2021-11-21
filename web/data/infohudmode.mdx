@@ -117,6 +117,22 @@ Displays the number of frames between pressing the shoot button.
 Displays the value of two configurable memory addresses in bank $7E. Values can also be "locked" or rewritten each frame while the RAM Watch HUD mode is enabled. These addresses and values can be configured in the 'Customize RAM Watch' submenu.
 
 # Room strat features
+## Parlor-Climb Door Skip
+Provides feedback on attempts to get out of bounds while falling through the door from parlor to climb:  
+&nbsp;  
+First Y = You started from the correct position and you are holding jump (ready to do a buffered jump upon turning around). Currently only the non-moonfall starting position is accepted.
+&nbsp;  
+First two characters = Feedback on timing the first jump after pausing (this will overwrite the first Y):
+- E# indicates you jumped early where the number tells you how many frames you were early.
+- YY indicates you jumped on the correct frame.
+- L# indicates you jumped late where the number tells you how many frames you were late.
+
+Last two characters = Feedback on breaking out of the aim down pose:
+- E# indicates you broke pose early where the number tells you how many frames you were early.
+- YY indicates you broke pose on time.
+- L1 indicates you broke pose one frame late. You will get this feedback just as you hit the door transition.
+- LX indicates you broke pose more than one frame late. You will not get this feedback until after the door transition.
+
 ## Taco Tank
 Provides feedback on attempts to collect the Retro Brinstar E-Tank using a precise walljump:  
 &nbsp;  
