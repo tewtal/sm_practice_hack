@@ -1,73 +1,11 @@
 ; $84:8BDD: Instruction - clear music queue and queue music track [[Y]] ;;;
 org $848BDD
-    PHA
-    LDA !sram_fanfare_toggle : BNE .playfanfare
-    PLA
-    INY              ; increment over fanfare byte and continue without fanfare
-    RTS
+    JML play_or_skip_fanfare
 
-  .playfanfare
-    PLA
-    BRL .prepareloop
-
-warnpc $848BEB       ; we are only overwriting original logic up to this point
-
-; $84:8BEB: Resume original logic
-org $848BEB
-  .continue
-
-
-org $84EFD9
-print pc, " fanfare restore start"
-  .prepareloop
-    PHX              ; start of logic that was overwritten
-    LDX #$000E
-
-  .clearloop
-    STZ $0619,x
-    STZ $0629,x
-    DEX
-    DEX
-    BPL .clearloop
-    BRL .continue    ; jump back to the original logic
-
-
-kill_enemies:
-{
-    LDA #$0000
-  .kill_loop
-    TAX : LDA $0F86,X : ORA #$0200 : STA $0F86,X
-    TXA : CLC : ADC #$0040 : CMP #$0400 : BNE .kill_loop
-
-if !ORIGINAL_MESSAGE_TEXT
-    RTL
-else
-    ; Play fanfare
-    LDA #$0002 : STA $C1
-    LDY #$00C1 : JSR $8BDD
-    LDA #$0168 : JSL $82E118
-
-    ; Open message box
-    LDA $079B : CMP #$DD58 : BEQ .kill_mb
-    CMP #$CD13 : BEQ .kill_phantoon : CMP #$91F8 : BEQ .kill_ship
-    LDA #$001E : JML $858080
-  .kill_mb
-    LDA #$001F : JML $858080
-  .kill_phantoon
-    LDA #$0020 : JML $858080
-  .kill_ship
-    LDA #$0021 : JML $858080
-endif
-}
-
-print pc, " fanfare restore end"
-
-
-; $85:8493 20 36 81    JSR $8136  [$85:8136]
+; $85:8493: Handle message box interaction
 org $858493
     JSR hook_message_box_wait
     BRA $0B
-
 
 ; $82:E126: Logic to queue room music after fanfare
 org $82E126
@@ -176,8 +114,59 @@ warnpc $85F800
 endif
 
 
-org $85FF00
+org $85FE00
 print pc, " fanfare start"
+
+; List this first since it affects bank $84 where we are trying to minimize change
+play_or_skip_fanfare:
+{
+    PHA
+    LDA !sram_fanfare_toggle : BNE .playfanfare
+    PLA
+    JML $848C05
+
+  .playfanfare
+    PLA
+
+    ; overwritten logic
+    PHX
+    LDX #$000E
+    JML $848BE1
+}
+
+prepare_fanfare_from_non_plm:
+{
+    LDA #$0002 : STA $C1 : LDY #$00C1
+    ; $848BDD ends with an RTS, but we need an RTL
+    ; Have the RTS return to $848031 which is an RTL
+    PEA $8030 : JML $848BDD
+}
+
+kill_enemies:
+{
+    LDA #$0000
+  .kill_loop
+    TAX : LDA $0F86,X : ORA #$0200 : STA $0F86,X
+    TXA : CLC : ADC #$0040 : CMP #$0400 : BNE .kill_loop
+
+if !ORIGINAL_MESSAGE_TEXT
+    RTL
+else
+    JSL prepare_fanfare_from_non_plm
+    LDA #$0168 : JSL $82E118
+
+    ; Open message box
+    LDA $079B : CMP #$DD58 : BEQ .kill_mb
+    CMP #$CD13 : BEQ .kill_phantoon : CMP #$91F8 : BEQ .kill_ship
+    LDA #$001E : JML $858080
+  .kill_mb
+    LDA #$001F : JML $858080
+  .kill_phantoon
+    LDA #$0020 : JML $858080
+  .kill_ship
+    LDA #$0021 : JML $858080
+endif
+}
 
 hook_message_box_wait:
 {

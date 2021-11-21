@@ -76,8 +76,13 @@
 |                               | **Note**: If Magic and Space Pants are both turned off, this option has no effect.
 | - Fanfare                     | Toggle the fanfare for collecting items
 | - Music                       | Toggle the music
+| - Suit Properties             | Modify the suit properties similar to some randomizers
+|                               | Vanilla = No change, Varia has full heat protection and 50% enemy/environmental damage reduction, Gravity (with or without Varia) has full heat protection and 75% enemy/environment damage reduction)
+|                               | Balanced = Varia now has 75% environmental damage reduction, Gravity (without Varia) has no heat protection and no environment damage reduction
+|                               | Progressive = Varia has no changes, Gravity (without Varia) has half heat protection and 50% enemy/environmental damage reduction
 | - Samus on Top                | Draw Samus on top of foreground objects/tiles
 | - Invincibility               | Prevents Samus from taking damage or knockback
+| - Force Samus to Stand Up     | Forces Samus into a standing pose
 |&nbsp;|
 | **Infohud**                   | Configure the HUD
 | - Infohud Mode                | Select the value from RAM to be displayed in the bottom-left of the HUD.
@@ -86,6 +91,7 @@
 |                               | This only works if "Room Strat" is selected as the above Infohud Mode.
 | - Frame Counters              | Toggle the room timer in the top-right of the HUD between realtime and gametime
 | - Reset Segment in Next Room  | Sets the segment timer to reset automatically when exiting the next door transition.
+| - Status Icons                | Toggle icons to appear when standing on an elevator or when the shine timer is active (e.g. while carrying a spikesuit).
 | - Artificial Lag              | Select a value to adjust how much lag occurs during normal gameplay. 
 |                               | This is to compensate for the lack of a minimap on the HUD which would normally consume CPU cycles.
 | - Customize RAM Watch         | Setup addresses to be monitored by the RAM Watch HUD mode. Address 1 will appear in the bottom-left corner of the HUD, while Address 2 appears just to the right of Address 1. Memory at these locations can be edited by configuring a Value and selecting 'Write to Address'. Toggle 'Lock Value' to automatically write the value once every frame. RAM Watch must must be the selected HUD mode to continue writing to the address. Only one byte of hex can be configured at a time in the menu. 'Hi' refers to the first byte, while 'Lo' refers to the second. Set the Hi Address to 0D and the Lo Address to EC to monitor the memory address $0DEC, which stores the counter for Samus direction changes while held by Draygon (among other uses).

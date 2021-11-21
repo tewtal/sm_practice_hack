@@ -12,9 +12,6 @@ org $8094DF
 org $828B4B      ; disable debug functions
     JML ih_debug_patch
 
-org $828115
-    JSL ih_max_etank_code
-
 org $82EE92      ; runs on START GAME
     JSL startgame_seg_timer
 
@@ -35,6 +32,9 @@ org $82E764      ; hijack, runs when Samus is coming out of a room transition
 
 org $809B4C      ; hijack, HUD routine (game timer by Quote58)
     JSL ih_hud_code : NOP
+
+org $8290F6      ; hijack, HUD routine while paused
+    JSL ih_hud_code_paused
 
 org $82894F      ; hijack, main game loop: runs EVERY frame (used for room transition timer)
     JSL ih_game_loop_code
@@ -157,11 +157,31 @@ endif
 ; Main bank stuff
 org $F08000
 print pc, " infohud start"
-ih_max_etank_code:
+
+; List this first since it affects bank $84 where we are trying to minimize change
+ih_get_item_code:
 {
-    ; Reset max-etanks value
-    LDA #$0000 : STA !ram_etanks
-    LDA $7EC200,X
+    PHA
+
+    ; calculate lag frames
+    LDA !ram_realtime_room : SEC : SBC !ram_transition_counter : STA !ram_last_room_lag
+
+    LDA !ram_gametime_room : STA !ram_last_gametime_room
+    LDA !ram_realtime_room : STA !ram_last_realtime_room
+
+    ; save temp variables
+    LDA $12 : PHA
+    LDA $14 : PHA
+
+    ; Update HUD
+    JSL ih_update_hud_code
+
+    ; restore temp variables
+    PLA : STA $14
+    PLA : STA $12
+
+    PLA
+    JSL $80818E
     RTL
 }
 
@@ -253,10 +273,9 @@ ih_nmi_end:
 ih_gamemode_frame:
 {
     PHA
-    LDA !ram_gametime_room : CMP #$EA5F : BEQ +
-    INC : STA !ram_gametime_room
+    LDA !ram_gametime_room : INC : STA !ram_gametime_room
+    PLA
 
-+   PLA
     ; overwritten code
     STZ $0A30
     STZ $0A32
@@ -272,8 +291,8 @@ ih_after_room_transition:
     LDA #$0000 : STA !ram_transition_flag
 
     ; Check if MBHP needs to be disabled
-    LDA !sram_display_mode : CMP #$0001 : BNE +
-    LDA !sram_room_strat : CMP #$0007 : BNE +
+    LDA !sram_display_mode : CMP #!IH_MODE_ROOMSTRAT_INDEX : BNE +
+    LDA !sram_room_strat : CMP #!IH_STRAT_MBHP_INDEX : BNE +
     LDA $079B : CMP #$DD58 : BEQ +
     LDA #$0000 : STA !sram_display_mode
 
@@ -442,7 +461,7 @@ ih_update_hud_code:
   .minimap_hud
     ; Map visible, so draw map counter over item%
     LDA !ram_map_counter : LDX #$0014 : JSR Draw3
-    LDA !sram_display_mode : CMP #$0007 : BNE .minimap_roomtimer
+    LDA !sram_display_mode : CMP #!IH_MODE_SHINETUNE_INDEX : BNE .minimap_roomtimer
     BRL .map_doorlag
 
   .minimap_roomtimer
@@ -591,13 +610,13 @@ ih_update_hud_code:
     ; Draw Item percent
     .pct
     {
+        ; skip item% if display mode = vspeed
+        LDA !sram_display_mode : CMP #!IH_MODE_VSPEED_INDEX : BEQ .skipToLag
+
         LDA #$0000 : STA !ram_pct_1
 
         ; Max HP (E tanks)
-        LDA $09C4 : JSR CalcEtank : LDA $4214 : STA !ram_etanks
-
-        ; skip item% if display mode = vspeed
-        LDA !sram_display_mode : CMP #$000E : BEQ .skipToEtanks
+        LDA $09C4 : JSR CalcEtank
 
         ; Max Reserve Tanks
         LDA $09D4 : JSR CalcEtank
@@ -618,15 +637,12 @@ ih_update_hud_code:
         LDA !IH_PERCENT : STA $7EC618
     }
 
-  .skipToEtanks
-    ; E-tanks
-    LDA !ram_etanks : LDX #$0054 : JSR Draw3
-
+  .skipToLag
     ; Lag
     LDA !ram_last_room_lag : LDX #$0080 : JSR Draw4
 
     ; Skip door lag and segment timer when shinetune enabled
-    LDA !sram_display_mode : CMP #$0007 : BEQ .end
+    LDA !sram_display_mode : CMP #!IH_MODE_SHINETUNE_INDEX : BEQ .end
 
     ; Door lag
     LDA !ram_last_door_lag_frames : LDX #$00C2 : JSR Draw3
@@ -635,7 +651,7 @@ ih_update_hud_code:
     {
         LDA !sram_frame_counter_mode : BNE .ingameSeg
         LDA.w #!ram_seg_rt_frames : STA $00
-        LDA #$007F : STA $02
+        LDA !WRAM_BANK : STA $02
         BRA .drawSeg
 
       .ingameSeg
@@ -708,7 +724,7 @@ ih_hud_code:
     PLB
     PLB
 
-    ; -- input display--
+    ; -- input display --
     ; -- check if we want to update --
     LDA !IH_CONTROLLER_PRI : CMP !ram_ih_controller : BEQ .status_display
 
@@ -750,9 +766,29 @@ ih_hud_code:
     JSR (.status_display_table,X)
 
     ; Samus' HP
-    LDA $09C2 : CMP !ram_last_hp : BEQ .end : STA !ram_last_hp
+    LDA $09C2 : CMP !ram_last_hp : BEQ .status_icons : STA !ram_last_hp
     LDX #$0092 : JSR Draw4
     LDA !IH_BLANK : STA $7EC690
+
+  .status_icons
+    LDA !sram_status_icons : BEQ .end
+
+    ; Elevator
+    LDA $0E16 : BEQ .clear_elevator
+    LDA !IH_ELEVATOR : STA $7EC656
+    BRA .check_shinetimer
+
+  .clear_elevator
+    LDA !IH_BLANK : STA $7EC656
+
+    ; Shine timer
+  .check_shinetimer
+    LDA $0A68 : BEQ .clear_shinetimer
+    LDA !IH_SHINETIMER : STA $7EC658
+    BRA .end
+
+  .clear_shinetimer
+    LDA !IH_BLANK : STA $7EC658
 
   .end
     PLB
@@ -880,6 +916,12 @@ Draw4:
   .blankthousands
     LDA !IH_BLANK : STA $7EC600,X
     BRA .done
+}
+
+Draw4JSL:
+{
+    JSR Draw4
+    RTL
 }
 
 Draw4Hex:
@@ -1226,32 +1268,6 @@ space_pants:
     RTS
 }
 
-ih_get_item_code:
-{
-    PHA
-
-    ; calculate lag frames
-    LDA !ram_realtime_room : SEC : SBC !ram_transition_counter : STA !ram_last_room_lag
-
-    LDA !ram_gametime_room : STA !ram_last_gametime_room
-    LDA !ram_realtime_room : STA !ram_last_realtime_room
-
-    ; save temp variables
-    LDA $12 : PHA
-    LDA $14 : PHA
-
-    ; Update HUD
-    JSL ih_update_hud_code
-
-    ; restore temp variables
-    PLA : STA $14
-    PLA : STA $12
-
-    PLA
-    JSL $80818E
-    RTL
-}
-
 ih_shinespark_code:
 {
     DEC
@@ -1267,6 +1283,30 @@ warnpc $F0E000
 ; Stuff that needs to be placed in bank 80
 org $80FC00
 print pc, " infohud bank80 start"
+
+ih_hud_code_paused:
+{
+    ; overwritten code
+    PHP
+    PHB
+    PHK
+    PLB
+    %a8()
+    STZ $02
+    %ai16()
+
+    ; Update Samus' HP
+    LDA $7E09C2 : CMP !ram_last_hp : BEQ .end : STA !ram_last_hp
+    PHY : PHX
+    LDX #$0092 : JSL Draw4JSL
+    PLX : PLY
+    LDA !IH_BLANK : STA $7EC690
+
+  .end
+    ; overwritten code
+    LDA $7E09C0
+    JMP $9B51
+}
 
 NumberGFXTable:
     dw #$0C09, #$0C00, #$0C01, #$0C02, #$0C03, #$0C04, #$0C05, #$0C06, #$0C07, #$0C08

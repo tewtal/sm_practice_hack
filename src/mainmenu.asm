@@ -8,6 +8,20 @@ macro cm_header(title)
     table ../resources/normal.tbl
 endmacro
 
+macro cm_version_header(title, major, minor, build, rev_1, rev_2)
+    table ../resources/header.tbl
+if !VERSION_REV_1
+    db #$28, "<title> <major>.<minor>.<build>.<rev_1><rev_2>", #$FF
+else
+if !VERSION_REV_2
+    db #$28, "<title> <major>.<minor>.<build>.<rev_2>", #$FF
+else
+    db #$28, "<title> <major>.<minor>.<build>", #$FF
+endif
+endif
+    table ../resources/normal.tbl
+endmacro
+
 macro cm_numfield(title, addr, start, end, increment, jsrtarget)
     dw !ACTION_NUMFIELD
     dl <addr>
@@ -175,7 +189,7 @@ MainMenu:
     dw #mm_goto_rngmenu
     dw #mm_goto_ctrlsmenu
     dw #$0000
-    %cm_header("SM PRACTICE HACK 2.3.0")
+    %cm_version_header("SM PRACTICE HACK", !VERSION_MAJOR, !VERSION_MINOR, !VERSION_BUILD, !VERSION_REV_1, !VERSION_REV_2)
 
 mm_goto_equipment:
     %cm_submenu("Equipment", #EquipmentMenu)
@@ -530,7 +544,6 @@ ToggleCategoryMenu:
     dw #$0000
     %cm_header("TOGGLE CATEGORY")
 
-
 cat_100:
     %cm_jsr("100%", action_category, #$0000)
 
@@ -666,9 +679,9 @@ ti_xray:
         RTS
 
 
-; ------------------
+; -----------------
 ; Toggle Beams menu
-; ------------------
+; -----------------
 
 ToggleBeamsMenu:
     dw tb_chargebeam
@@ -676,6 +689,7 @@ ToggleBeamsMenu:
     dw tb_wavebeam
     dw tb_spazerbeam
     dw tb_plasmabeam
+    dw tb_glitchedbeams
     dw #$0000
     %cm_header("TOGGLE BEAMS")
 
@@ -694,10 +708,46 @@ tb_spazerbeam:
 tb_plasmabeam:
     %cm_toggle_bit("Plasma", $7E09A8, #$0008, #0)
 
+tb_glitchedbeams:
+    %cm_submenu("Glitched Beams", #GlitchedBeamsMenu)
 
-; ---------------
+
+; -------------------
+; Glitched Beams menu
+; -------------------
+
+GlitchedBeamsMenu:
+    dw #gb_murder
+    dw #gb_spacetime
+    dw #gb_chainsaw
+    dw #gb_unnamed
+    dw #$0000
+    %cm_header("GLITCHED BEAMS")
+
+gb_murder:
+    %cm_jsr("Murder Beam", action_glitched_beam, #$100F)
+
+gb_spacetime:
+    %cm_jsr("Spacetime Beam", action_glitched_beam, #$100E)
+
+gb_chainsaw:
+    %cm_jsr("Chainsaw Beam", action_glitched_beam, #$100D)
+
+gb_unnamed:
+    %cm_jsr("Unnamed Glitched Beam", action_glitched_beam, #$100C)
+
+action_glitched_beam:
+{
+    TYA
+    STA $09A6 : STA $09A8
+    LDA #$0042 : JSL !SFX_LIB1 ; unlabeled, song dependent sound
+    RTS
+}
+
+
+; -------------
 ; Teleport menu
-; ---------------
+; -------------
 
 TeleportMenu:
     dw #tel_crateriaship
@@ -809,6 +859,7 @@ action_teleport:
     RTS
 }
 
+
 ; -----------
 ; Misc menu
 ; -----------
@@ -817,14 +868,16 @@ MiscMenu:
     dw #misc_bluesuit
     dw #misc_flashsuit
     dw #misc_hyperbeam
-    dw #misc_babyslowdown
+    dw #misc_gooslowdown
     dw #misc_magicpants
     dw #misc_spacepants
     dw #misc_loudpants
     dw #misc_fanfare_toggle
     dw #misc_music_toggle
+    dw #misc_suit_properties
     dw #misc_transparent
     dw #misc_invincibility
+    dw #misc_forcestand
     dw #$0000
     %cm_header("MISC")
 
@@ -837,8 +890,8 @@ misc_flashsuit:
 misc_hyperbeam:
     %cm_toggle("Hyper Beam", $7E0A76, #$0001, #0)
 
-misc_babyslowdown:
-    %cm_toggle("Baby Slowdown", $7E0A66, #$0002, #0)
+misc_gooslowdown:
+    %cm_numfield("Goo Slowdown", $7E0A66, 0, 4, 1, #0)
 
 misc_magicpants:
     %cm_toggle_bit("Magic Pants", !ram_magic_pants_enabled, #$0001, GameLoopExtras)
@@ -876,11 +929,48 @@ misc_music_toggle:
     STA $2140
     RTS
 
+misc_suit_properties:
+    dw !ACTION_CHOICE
+    dl #!sram_suit_properties
+    dw .routine
+    db #$28, "Suit Propertie", #$FF
+    db #$28, "s   VANILLA", #$FF
+    db #$28, "s  BALANCED", #$FF
+    db #$28, "s  PROGRESS", #$FF
+    db #$FF
+
+  .routine
+    JSL misc_init_suits_ram
+    RTS
+
+misc_init_suits_ram:
+{
+    LDA #$0021 : STA !ram_suits_enemy_damage_check : STA !ram_suits_periodic_damage_check
+
+    LDA !sram_suit_properties : CMP #$0002 : BNE .init_periodic_damage
+    LDA #$0001 : STA !ram_suits_enemy_damage_check
+
+  .init_periodic_damage
+    LDA !sram_suit_properties : BEQ .end
+    LDA #$0001 : STA !ram_suits_periodic_damage_check
+
+  .end
+    RTL
+}
+
 misc_transparent:
     %cm_toggle_bit("Samus on Top", !sram_sprite_prio_flag, #$3000, #0)
 
 misc_invincibility:
     %cm_toggle_bit("Invincibility", $7E0DE0, #$0007, #0)
+
+misc_forcestand:
+    %cm_jsr("Force Samus to Stand Up", .routine, #0)
+
+  .routine
+    JSL $90E2D4
+    LDA #!SOUND_MENU_JSR : JSL $80903F
+    RTS
 
 
 ; -----------
@@ -949,7 +1039,6 @@ events_zebesexploding:
 
 events_animals:
     %cm_toggle_bit("Animals Saved", $7ED820, #$8000, #0)
-
 
 action_reset_events:
 {
@@ -1036,16 +1125,6 @@ boss_ridley:
     %cm_toggle_bit("Ridley", #$7ED82A, #$0001, #0)
 
 
-; ------------
-; Config menu
-; ------------
-
-ConfigMenu:
-    dw #$0000
-    %cm_header("CONFIG")
-
-
-
 ; --------------
 ; Infohud menu
 ; --------------
@@ -1057,6 +1136,7 @@ InfoHudMenu:
     dw #ih_room_strat
     dw #ih_room_counter
     dw #ih_reset_seg_later
+    dw #ih_status_icons
     dw #ih_lag
     dw #ih_ram_watch
     dw #ih_show_hitbox
@@ -1093,6 +1173,7 @@ DisplayModeMenu:
 ihmode_enemyhp:
     %cm_jsr("Enemy HP", #action_select_infohud_mode, #$0000)
 
+!IH_MODE_ROOMSTRAT_INDEX = $0001
 ihmode_roomstrat:
     %cm_jsr("Room Strat", #action_select_infohud_mode, #$0001)
 
@@ -1111,6 +1192,7 @@ ihmode_shinetimer:
 ihmode_dashcounter:
     %cm_jsr("Dash Counter", #action_select_infohud_mode, #$0006)
 
+!IH_MODE_SHINETUNE_INDEX = $0007
 ihmode_shinetune:
     %cm_jsr("Shine Tune", #action_select_infohud_mode, #$0007)
 
@@ -1132,6 +1214,7 @@ ihmode_ypos:
 ihmode_hspeed:
     %cm_jsr("Horizontal Speed", #action_select_infohud_mode, #$000D)
 
+!IH_MODE_VSPEED_INDEX = $000E
 ihmode_vspeed:
     %cm_jsr("Vertical Speed", #action_select_infohud_mode, #$000E)
 
@@ -1185,6 +1268,7 @@ ih_goto_room_strat:
     %cm_submenu("Select Room Strat", #RoomStratMenu)
 
 RoomStratMenu:
+    dw ihstrat_doorskip
     dw ihstrat_tacotank
     dw ihstrat_gateglitch
     dw ihstrat_moatcwj
@@ -1196,34 +1280,38 @@ RoomStratMenu:
     dw #$0000
     %cm_header("INFOHUD ROOM STRAT")
 
+ihstrat_doorskip:
+    %cm_jsr("Parlor-Climb Door Skip", #action_select_room_strat, #$0000)
+
 ihstrat_tacotank:
-    %cm_jsr("Taco Tank", #action_select_room_strat, #$0000)
+    %cm_jsr("Taco Tank", #action_select_room_strat, #$0001)
 
 ihstrat_gateglitch:
-    %cm_jsr("Gate Glitch", #action_select_room_strat, #$0001)
+    %cm_jsr("Gate Glitch", #action_select_room_strat, #$0002)
 
 ihstrat_moatcwj:
-    %cm_jsr("Moat CWJ", #action_select_room_strat, #$0002)
+    %cm_jsr("Moat CWJ", #action_select_room_strat, #$0003)
 
 ihstrat_robotflush:
-    %cm_jsr("Robot Flush", #action_select_room_strat, #$0003)
+    %cm_jsr("Robot Flush", #action_select_room_strat, #$0004)
 
 ihstrat_shinetopb:
-    %cm_jsr("Shine to PB", #action_select_room_strat, #$0004)
+    %cm_jsr("Shine to PB", #action_select_room_strat, #$0005)
 
 ihstrat_elevatorcf:
-    %cm_jsr("Elevator Crystal Flash", #action_select_room_strat, #$0005)
+    %cm_jsr("Elevator Crystal Flash", #action_select_room_strat, #$0006)
 
 ihstrat_botwooncf:
-    %cm_jsr("Botwoon Crystal Flash", #action_select_room_strat, #$0006)
+    %cm_jsr("Botwoon Crystal Flash", #action_select_room_strat, #$0007)
 
+!IH_STRAT_MBHP_INDEX = $0008
 ihstrat_mbhp:
-    %cm_jsr("Mother Brain HP", #action_select_room_strat, #$0007)
+    %cm_jsr("Mother Brain HP", #action_select_room_strat, #$0008)
 
 action_select_room_strat:
 {
     TYA : STA !sram_room_strat
-    LDA #$0001 : STA !sram_display_mode
+    LDA #!IH_MODE_ROOMSTRAT_INDEX : STA !sram_display_mode
     JSR cm_go_back
     JSR cm_calculate_max
     RTS
@@ -1234,6 +1322,7 @@ ih_room_strat:
     dl #!sram_room_strat
     dw #$0000
     db #$28, "Current Strat", #$FF
+    db #$28, "  DOOR SKIP", #$FF
     db #$28, "  TACO TANK", #$FF
     db #$28, "GATE GLITCH", #$FF
     db #$28, "   MOAT CWJ", #$FF
@@ -1252,6 +1341,15 @@ ih_room_counter:
     db #$28, "   REALTIME", #$FF
     db #$28, "     INGAME", #$FF
     db #$FF
+
+ih_status_icons:
+    %cm_toggle("Status Icons", !sram_status_icons, #1, #toggle_status_icons)
+
+toggle_status_icons:
+{
+    LDA !IH_BLANK : STA $7EC656 : STA $7EC658
+    RTS
+}
 
 ih_lag:
     %cm_numfield("Artificial Lag", !sram_artificial_lag, 0, 64, 1, #0)
@@ -1451,6 +1549,7 @@ game_clear_minimap:
     STA $7EDB1C,X : STA $7EDC1C,X
     STA $7EDD1C,X : STA $7E07F7,X
     DEX : DEX : BPL .clear_minimap_loop
+    LDA #!SOUND_MENU_JSR : JSL $80903F
     RTS
 
 game_metronome:
@@ -1620,6 +1719,7 @@ CtrlMenu:
     dw #ctrl_reset_segment_later
     dw #ctrl_full_equipment
     dw #ctrl_kill_enemies
+    dw #ctrl_toggle_tileviewer
     dw #ctrl_clear_shortcuts
     dw #$0000
     %cm_header("CONTROLLER SHORTCUTS")
@@ -1663,6 +1763,9 @@ ctrl_inc_custom_preset:
 ctrl_dec_custom_preset:
     %cm_ctrl_shortcut("Prev Preset Slot", !sram_ctrl_dec_custom_preset)
 
+ctrl_toggle_tileviewer:
+    %cm_ctrl_shortcut("Toggle OOB Tiles", !sram_ctrl_toggle_tileviewer)
+
 ctrl_clear_shortcuts:
     %cm_jsr("Clear Shortcuts", action_clear_shortcuts, #$0000)
 
@@ -1682,6 +1785,7 @@ action_clear_shortcuts:
     STA !sram_ctrl_dec_custom_preset
     STA !sram_ctrl_reset_segment_timer
     STA !sram_ctrl_reset_segment_later
+    STA !sram_ctrl_toggle_tileviewer
     ; menu to default, Start + Select
     LDA #$3000 : STA !sram_ctrl_menu
     RTS
@@ -1698,7 +1802,7 @@ GameModeExtras:
     LDA !sram_ctrl_load_custom_preset : BNE .enabled
     LDA !sram_ctrl_inc_custom_preset : BNE .enabled
     LDA !sram_ctrl_dec_custom_preset : BNE .enabled
-    RTL
+    LDA !sram_ctrl_toggle_tileviewer : BNE .enabled
 
   .enabled
     STA !ram_game_mode_extras
