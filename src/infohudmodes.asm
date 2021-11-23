@@ -1026,33 +1026,91 @@ status_shottimer:
 
 status_ramwatch:
 {
+    ; Store Samus HP so it doesn't overwrite our HUD
     LDA $09C2 : STA !ram_last_hp
+
+    ; Determine bank and store in Y (0=7E, 1=7F, else SRAM)
+    LDA !ram_watch_bank : TAY : BEQ .readLeft7E
+    CPY #$0001 : BEQ .readLeft7F
+    BRA .readLeftSRAM
+
+  .readLeft7E
     LDA !ram_watch_left : TAX
-    LDA $7E0000,X : CMP !ram_watch_left_hud : BEQ .readright
+    LDA $7E0000,X : CMP !ram_watch_left_hud : BEQ .readRight7E
     STA !ram_watch_left_hud : LDX #$0088 : JSR Draw4Hex
 
-  .readright
+  .readRight7E
     LDA !ram_watch_right : TAX
-    LDA $7E0000,X : CMP !ram_watch_right_hud : BEQ .drawleft
+    LDA $7E0000,X : CMP !ram_watch_right_hud : BEQ .drawLeft
+    STA !ram_watch_right_hud : LDX #$0092 : JSR Draw4Hex
+    BRA .drawLeft
+
+  .readLeft7F
+    LDA !ram_watch_left : TAX
+    LDA $7F0000,X : CMP !ram_watch_left_hud : BEQ .readRight7F
+    STA !ram_watch_left_hud : LDX #$0088 : JSR Draw4Hex
+
+  .readRight7F
+    LDA !ram_watch_right : TAX
+    LDA $7F0000,X : CMP !ram_watch_right_hud : BEQ .drawLeft
+    STA !ram_watch_right_hud : LDX #$0092 : JSR Draw4Hex
+    BRA .drawLeft
+
+  .readLeftSRAM
+    LDA !ram_watch_left : TAX
+    LDA $F00000,X : CMP !ram_watch_left_hud : BEQ .readRightSRAM
+    STA !ram_watch_left_hud : LDX #$0088 : JSR Draw4Hex
+
+  .readRightSRAM
+    LDA !ram_watch_right : TAX
+    LDA $F00000,X : CMP !ram_watch_right_hud : BEQ .drawLeft
     STA !ram_watch_right_hud : LDX #$0092 : JSR Draw4Hex
 
-  .drawleft
-    LDA $7EC688 : CMP !IH_BLANK : BNE .drawright
+  .drawLeft
+    LDA $7EC688 : CMP !IH_BLANK : BNE .drawRight
     LDA !ram_watch_left_hud : LDX #$0088 : JSR Draw4Hex
 
-  .drawright
-    LDA $7EC692 : CMP !IH_BLANK : BNE .writeleft
+  .drawRight
+    LDA $7EC692 : CMP !IH_BLANK : BNE .writeLock
     LDA !ram_watch_right_hud : LDX #$0092 : JSR Draw4Hex
 
-  .writeleft
-    LDA !ram_watch_edit_lock_left : BEQ .writeright
+  .writeLock
+    ; Bank from Y (0=7E, 1=7F, else SRAM)
+    TYA : BEQ .writeLeft7E
+    CMP #$0001 : BEQ .writeLeft7F
+    BRA .writeLeftSRAM
+
+  .writeLeft7E
+    LDA !ram_watch_edit_lock_left : BEQ .writeRight7E
     LDA !ram_watch_left : TAX
     LDA !ram_watch_edit_left : STA $7E0000,X
 
-  .writeright
+  .writeRight7E
     LDA !ram_watch_edit_lock_right : BEQ .done
     LDA !ram_watch_right : TAX
     LDA !ram_watch_edit_right : STA $7E0000,X
+    RTS
+
+  .writeLeft7F
+    LDA !ram_watch_edit_lock_left : BEQ .writeRight7F
+    LDA !ram_watch_left : TAX
+    LDA !ram_watch_edit_left : STA $7F0000,X
+
+  .writeRight7F
+    LDA !ram_watch_edit_lock_right : BEQ .done
+    LDA !ram_watch_right : TAX
+    LDA !ram_watch_edit_right : STA $7F0000,X
+    RTS
+
+  .writeLeftSRAM
+    LDA !ram_watch_edit_lock_left : BEQ .writeRightSRAM
+    LDA !ram_watch_left : TAX
+    LDA !ram_watch_edit_left : STA $F00000,X
+
+  .writeRightSRAM
+    LDA !ram_watch_edit_lock_right : BEQ .done
+    LDA !ram_watch_right : TAX
+    LDA !ram_watch_edit_right : STA $F00000,X
 
   .done
     RTS

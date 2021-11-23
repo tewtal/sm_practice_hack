@@ -1227,6 +1227,7 @@ ihmode_walljump:
 ihmode_shottimer:
     %cm_jsr("Shot Timer", #action_select_infohud_mode, #$0011)
 
+!IH_MODE_RAMWATCH_INDEX = $0012
 ihmode_ramwatch:
     %cm_jsr("RAM Watch", #action_select_infohud_mode, #$0012)
 
@@ -1379,6 +1380,8 @@ toggle_oob_viewer:
 }
 
 RAMWatchMenu:
+    dw ramwatch_enable
+    dw ramwatch_bank
     dw ramwatch_left_hi
     dw ramwatch_left_lo
     dw ramwatch_left_edit_hi
@@ -1393,6 +1396,23 @@ RAMWatchMenu:
     dw ramwatch_lock_right
     dw #$0000
     %cm_header("READ AND WRITE TO MEMORY")
+
+ramwatch_enable:
+    %cm_jsr("Turn On RAM Watch", .routine, #!IH_MODE_RAMWATCH_INDEX)
+  .routine
+    TYA : STA !sram_display_mode
+    LDA #!SOUND_MENU_JSR : JSL $80903F
+    RTS
+
+ramwatch_bank:
+    dw !ACTION_CHOICE
+    dl #!ram_watch_bank
+    dw #$0000
+    db #$28, "Select Bank", #$FF
+    db #$28, "        $7E", #$FF
+    db #$28, "        $7F", #$FF
+    db #$28, "       SRAM", #$FF
+    db #$FF
 
 ramwatch_left_hi:
     %cm_numfield_hex("Address 1 High", !ram_watch_left_hi, 0, 255, 1, #.routine)
@@ -1465,22 +1485,36 @@ ramwatch_lock_right:
 action_ramwatch_edit_left:
 {
     LDA !ram_watch_left : TAX
-    LDA !ram_watch_edit_left : STA $7E0000,X
-    LDA #$0012 : STA !sram_display_mode
+    LDA !ram_watch_bank : BEQ .bank7E
+    CMP #$0001 : BEQ .bank7F : BRA .bankSRAM
+  .bank7E
+    LDA !ram_watch_edit_left : STA $7E0000,X : BRA +
+  .bank7F
+    LDA !ram_watch_edit_left : STA $7F0000,X : BRA +
+  .bankSRAM
+    LDA !ram_watch_edit_left : STA $F00000,X
++   LDA #!IH_MODE_RAMWATCH_INDEX : STA !sram_display_mode
     RTS
 }
 
 action_ramwatch_edit_right:
 {
     LDA !ram_watch_right : TAX
-    LDA !ram_watch_edit_right : STA $7E0000,X
-    LDA #$0012 : STA !sram_display_mode
+    LDA !ram_watch_bank : BEQ .bank7E
+    CMP #$0001 : BEQ .bank7F : BRA .bankSRAM
+  .bank7E
+    LDA !ram_watch_edit_right : STA $7E0000,X : BRA +
+  .bank7F
+    LDA !ram_watch_edit_right : STA $7F0000,X : BRA +
+  .bankSRAM
+    LDA !ram_watch_edit_right : STA $F00000,X
++   LDA #!IH_MODE_RAMWATCH_INDEX : STA !sram_display_mode
     RTS
 }
 
 action_HUD_ramwatch:
 {
-    LDA #$0012 : STA !sram_display_mode
+    LDA #!IH_MODE_RAMWATCH_INDEX : STA !sram_display_mode
     RTS
 }
 

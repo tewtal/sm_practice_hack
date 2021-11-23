@@ -72,8 +72,9 @@
 !ram_suits_enemy_damage_check = !WRAM_START+$66
 !ram_suits_periodic_damage_check = !WRAM_START+$68
 
-; ^ FREE SPACE ^ up to +$7E
- 
+; ^ FREE SPACE ^ up to +$7C
+
+!ram_watch_bank = !WRAM_START+$7E
 !ram_watch_left = !WRAM_START+$80
 !ram_watch_left_hud = !WRAM_START+$82
 !ram_watch_left_hi = !WRAM_START+$84
