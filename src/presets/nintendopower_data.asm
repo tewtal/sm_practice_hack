@@ -22,7 +22,7 @@ preset_nintendopower_crateria_ship:
     dl $7E09A8 : db $02 : dw $0000 ; Beams
     dl $7E09C0 : db $02 : dw $0000 ; Manual/Auto reserve tank
     dl $7E09C2 : db $02 : dw $0063 ; Health
-    dl $7E09C4 : db $02 : dw $0063 ; Max helath
+    dl $7E09C4 : db $02 : dw $0063 ; Max health
     dl $7E09C6 : db $02 : dw $0000 ; Missiles
     dl $7E09C8 : db $02 : dw $0000 ; Max missiles
     dl $7E09CA : db $02 : dw $0000 ; Supers
@@ -319,7 +319,7 @@ preset_nintendopower_brinstar_green_brinstar_elevator:
     dl $7E090F : db $02 : dw $8000 ; Screen subpixel X position.
     dl $7E0913 : db $02 : dw $9800 ; Screen subpixel Y position
     dl $7E09C2 : db $02 : dw $00C7 ; Health
-    dl $7E09C4 : db $02 : dw $00C7 ; Max helath
+    dl $7E09C4 : db $02 : dw $00C7 ; Max health
     dl $7E0AF6 : db $02 : dw $0080 ; Samus X
     dl $7ED870 : db $02 : dw $0180 ; Events, Items, Doors
     dl $7ED91A : db $02 : dw $000B ; Events, Items, Doors
@@ -444,7 +444,7 @@ preset_nintendopower_norfair_kraid_warehouse:
     dl $7E09A2 : db $02 : dw $1104 ; Equipped Items
     dl $7E09A4 : db $02 : dw $1104 ; Collected Items
     dl $7E09C2 : db $02 : dw $012B ; Health
-    dl $7E09C4 : db $02 : dw $012B ; Max helath
+    dl $7E09C4 : db $02 : dw $012B ; Max health
     dl $7E09C6 : db $02 : dw $0019 ; Missiles
     dl $7E09C8 : db $02 : dw $0019 ; Max missiles
     dl $7E09CA : db $02 : dw $0003 ; Supers
@@ -494,7 +494,7 @@ preset_nintendopower_norfair_rising_tide:
     dl $7E09A2 : db $02 : dw $1105 ; Equipped Items
     dl $7E09A4 : db $02 : dw $1105 ; Collected Items
     dl $7E09C2 : db $02 : dw $0177 ; Health
-    dl $7E09C4 : db $02 : dw $018F ; Max helath
+    dl $7E09C4 : db $02 : dw $018F ; Max health
     dl $7E09C6 : db $02 : dw $001E ; Missiles
     dl $7E09C8 : db $02 : dw $001E ; Max missiles
     dl $7E09CA : db $02 : dw $0002 ; Supers
@@ -656,7 +656,7 @@ preset_nintendopower_norfair_grapple_beam:
     dl $7E0913 : db $02 : dw $1000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $041F ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $012A ; Health
-    dl $7E09C4 : db $02 : dw $01F3 ; Max helath
+    dl $7E09C4 : db $02 : dw $01F3 ; Max health
     dl $7E09CA : db $02 : dw $0004 ; Supers
     dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0008 ; More position/state
@@ -1176,7 +1176,7 @@ preset_nintendopower_maridia_crab_supers:
     dl $7E0913 : db $02 : dw $8400 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0300 ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $0257 ; Health
-    dl $7E09C4 : db $02 : dw $0257 ; Max helath
+    dl $7E09C4 : db $02 : dw $0257 ; Max health
     dl $7E09C6 : db $02 : dw $004B ; Missiles
     dl $7E09C8 : db $02 : dw $004B ; Max missiles
     dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
@@ -1269,7 +1269,7 @@ preset_nintendopower_maridia_draygon:
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $2800 ; Screen subpixel Y position
     dl $7E09C2 : db $02 : dw $02BB ; Health
-    dl $7E09C4 : db $02 : dw $02BB ; Max helath
+    dl $7E09C4 : db $02 : dw $02BB ; Max health
     dl $7E09C6 : db $02 : dw $0050 ; Missiles
     dl $7E09CA : db $02 : dw $000E ; Supers
     dl $7E09CE : db $02 : dw $0009 ; Pbs
@@ -1512,7 +1512,7 @@ preset_nintendopower_norfair_2_escape_from_ridley:
     dl $7E090F : db $02 : dw $9000 ; Screen subpixel X position.
     dl $7E0913 : db $02 : dw $2400 ; Screen subpixel Y position
     dl $7E09C2 : db $02 : dw $031F ; Health
-    dl $7E09C4 : db $02 : dw $031F ; Max helath
+    dl $7E09C4 : db $02 : dw $031F ; Max health
     dl $7E09CE : db $02 : dw $0007 ; Pbs
     dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0008 ; More position/state

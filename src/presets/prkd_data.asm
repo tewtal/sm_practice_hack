@@ -22,7 +22,7 @@ preset_prkd_crateria_ship:
     dl $7E09A8 : db $02 : dw $0000 ; Beams
     dl $7E09C0 : db $02 : dw $0000 ; Manual/Auto reserve tank
     dl $7E09C2 : db $02 : dw $0063 ; Health
-    dl $7E09C4 : db $02 : dw $0063 ; Max helath
+    dl $7E09C4 : db $02 : dw $0063 ; Max health
     dl $7E09C6 : db $02 : dw $0000 ; Missiles
     dl $7E09C8 : db $02 : dw $0000 ; Max missiles
     dl $7E09CA : db $02 : dw $0000 ; Supers
@@ -465,7 +465,7 @@ preset_prkd_crateria_green_pirate_shaft:
     dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $01FC ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $00C7 ; Health
-    dl $7E09C4 : db $02 : dw $00C7 ; Max helath
+    dl $7E09C4 : db $02 : dw $00C7 ; Max health
     dl $7E0AF6 : db $02 : dw $0063 ; Samus X
     dl $7E0AFA : db $02 : dw $029B ; Samus Y
     dl $7E0B3F : db $02 : dw $0000 ; Blue suit
@@ -1182,7 +1182,7 @@ preset_prkd_upper_norfair_leaving_hi_jump:
     dl $7E09A2 : db $02 : dw $1124 ; Equipped Items
     dl $7E09A4 : db $02 : dw $1124 ; Collected Items
     dl $7E09C2 : db $02 : dw $012B ; Health
-    dl $7E09C4 : db $02 : dw $012B ; Max helath
+    dl $7E09C4 : db $02 : dw $012B ; Max health
     dl $7E09CA : db $02 : dw $0008 ; Supers
     dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0008 ; More position/state
@@ -2291,7 +2291,7 @@ preset_prkd_maridia_halfie_setup:
     dl $7E0913 : db $02 : dw $8000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $001F ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $018F ; Health
-    dl $7E09C4 : db $02 : dw $018F ; Max helath
+    dl $7E09C4 : db $02 : dw $018F ; Max health
     dl $7E09C6 : db $02 : dw $0010 ; Missiles
     dl $7E0AF6 : db $02 : dw $0099 ; Samus X
     dl $7E0AFA : db $02 : dw $009B ; Samus Y

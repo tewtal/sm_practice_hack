@@ -22,7 +22,7 @@ preset_100early_crateria_ceres_elevator:
     dl $7E09A8 : db $02 : dw $0000 ; Beams
     dl $7E09C0 : db $02 : dw $0000 ; Manual/Auto reserve tank
     dl $7E09C2 : db $02 : dw $0063 ; Health
-    dl $7E09C4 : db $02 : dw $0063 ; Max helath
+    dl $7E09C4 : db $02 : dw $0063 ; Max health
     dl $7E09C6 : db $02 : dw $0000 ; Missiles
     dl $7E09C8 : db $02 : dw $0000 ; Max missiles
     dl $7E09CA : db $02 : dw $0000 ; Supers
@@ -429,7 +429,7 @@ preset_100early_crateria_green_pirate_shaft:
     dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $01FD ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $00C7 ; Health
-    dl $7E09C4 : db $02 : dw $00C7 ; Max helath
+    dl $7E09C4 : db $02 : dw $00C7 ; Max health
     dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0004 ; More position/state
     dl $7E0AF6 : db $02 : dw $0077 ; Samus X
@@ -695,7 +695,7 @@ preset_100early_brinstar_leaving_kraid_etank:
     dl $7E090F : db $02 : dw $2000 ; Screen subpixel X position.
     dl $7E0913 : db $02 : dw $1C00 ; Screen subpixel Y position
     dl $7E09C2 : db $02 : dw $012B ; Health
-    dl $7E09C4 : db $02 : dw $012B ; Max helath
+    dl $7E09C4 : db $02 : dw $012B ; Max health
     dl $7E09D6 : db $02 : dw $0014 ; Reserves
     dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0008 ; More position/state
@@ -755,7 +755,7 @@ preset_100early_upper_norfair_business_center_climb:
     dl $7E09A2 : db $02 : dw $1105 ; Equipped Items
     dl $7E09A4 : db $02 : dw $1105 ; Collected Items
     dl $7E09C2 : db $02 : dw $018F ; Health
-    dl $7E09C4 : db $02 : dw $018F ; Max helath
+    dl $7E09C4 : db $02 : dw $018F ; Max health
     dl $7E09C6 : db $02 : dw $0017 ; Missiles
     dl $7E09C8 : db $02 : dw $0019 ; Max missiles
     dl $7E09D6 : db $02 : dw $0028 ; Reserves
@@ -996,7 +996,7 @@ preset_100early_upper_norfair_postcrocomire:
     dl $7E0913 : db $02 : dw $3800 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $01F3 ; Health
-    dl $7E09C4 : db $02 : dw $01F3 ; Max helath
+    dl $7E09C4 : db $02 : dw $01F3 ; Max health
     dl $7E09C6 : db $02 : dw $0028 ; Missiles
     dl $7E09CA : db $02 : dw $0002 ; Supers
     dl $7E09D6 : db $02 : dw $0064 ; Reserves
@@ -1485,7 +1485,7 @@ preset_100early_wrecked_ship_spiky_room_revisit:
     dl $7E0913 : db $02 : dw $9000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $021F ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $0248 ; Health
-    dl $7E09C4 : db $02 : dw $0257 ; Max helath
+    dl $7E09C4 : db $02 : dw $0257 ; Max health
     dl $7E0AF6 : db $02 : dw $0025 ; Samus X
     dl $7E0AFA : db $02 : dw $02BB ; Samus Y
     dl $7ED880 : db $02 : dw $0071 ; Events, Items, Doors
@@ -1711,7 +1711,7 @@ preset_100early_brinstar_cleanup_leaving_gauntlet:
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $4000 ; Screen subpixel Y position
     dl $7E09C2 : db $02 : dw $028D ; Health
-    dl $7E09C4 : db $02 : dw $02BB ; Max helath
+    dl $7E09C4 : db $02 : dw $02BB ; Max health
     dl $7E09CA : db $02 : dw $000C ; Supers
     dl $7E09CE : db $02 : dw $0007 ; Pbs
     dl $7E0AF6 : db $02 : dw $0049 ; Samus X
@@ -1784,7 +1784,7 @@ preset_100early_brinstar_cleanup_etecoon_room:
     dl $7E0913 : db $02 : dw $9000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0100 ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $030F ; Health
-    dl $7E09C4 : db $02 : dw $031F ; Max helath
+    dl $7E09C4 : db $02 : dw $031F ; Max health
     dl $7E09C6 : db $02 : dw $004F ; Missiles
     dl $7E09CA : db $02 : dw $0010 ; Supers
     dl $7E09CC : db $02 : dw $0014 ; Max supers
@@ -1889,7 +1889,7 @@ preset_100early_brinstar_cleanup_spore_spawn_supers:
     dl $7E0913 : db $02 : dw $2800 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0100 ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $0383 ; Health
-    dl $7E09C4 : db $02 : dw $0383 ; Max helath
+    dl $7E09C4 : db $02 : dw $0383 ; Max health
     dl $7E09C6 : db $02 : dw $004C ; Missiles
     dl $7E0A1C : db $02 : dw $008A ; Samus position/state
     dl $7E0A1E : db $02 : dw $1504 ; More position/state
@@ -1934,7 +1934,7 @@ preset_100early_brinstar_cleanup_green_hills_revisit:
     dl $7E0911 : db $02 : dw $02ED ; Screen X position in pixels
     dl $7E0915 : db $02 : dw $061E ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $03E7 ; Health
-    dl $7E09C4 : db $02 : dw $03E7 ; Max helath
+    dl $7E09C4 : db $02 : dw $03E7 ; Max health
     dl $7E09C6 : db $02 : dw $0057 ; Missiles
     dl $7E09D6 : db $02 : dw $0096 ; Reserves
     dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
@@ -2036,7 +2036,7 @@ preset_100early_maridia_predraygon_fish_tank_revisit:
     dl $7E0913 : db $02 : dw $F800 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0309 ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $044B ; Health
-    dl $7E09C4 : db $02 : dw $044B ; Max helath
+    dl $7E09C4 : db $02 : dw $044B ; Max health
     dl $7E09C6 : db $02 : dw $0066 ; Missiles
     dl $7E09C8 : db $02 : dw $0082 ; Max missiles
     dl $7E09CA : db $02 : dw $000F ; Supers
@@ -2503,7 +2503,7 @@ preset_100early_maridia_postdraygon_aqueduct_final:
     dl $7E0913 : db $02 : dw $EC00 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $04A0 ; Health
-    dl $7E09C4 : db $02 : dw $04AF ; Max helath
+    dl $7E09C4 : db $02 : dw $04AF ; Max health
     dl $7E0AF6 : db $02 : dw $01AA ; Samus X
     dl $7E0AFA : db $02 : dw $00AB ; Samus Y
     dl $7ED882 : db $02 : dw $05CC ; Events, Items, Doors
@@ -2938,7 +2938,7 @@ preset_100early_lower_norfair_ridley_escape:
     dl $7E090F : db $02 : dw $6000 ; Screen subpixel X position.
     dl $7E0913 : db $02 : dw $A800 ; Screen subpixel Y position
     dl $7E09C2 : db $02 : dw $0513 ; Health
-    dl $7E09C4 : db $02 : dw $0513 ; Max helath
+    dl $7E09C4 : db $02 : dw $0513 ; Max health
     dl $7E09CA : db $02 : dw $0022 ; Supers
     dl $7E09CE : db $02 : dw $000E ; Pbs
     dl $7E0A1C : db $02 : dw $0027 ; Samus position/state
@@ -3016,7 +3016,7 @@ preset_100early_lower_norfair_springball_maze:
     dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $001C ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $0576 ; Health
-    dl $7E09C4 : db $02 : dw $0577 ; Max helath
+    dl $7E09C4 : db $02 : dw $0577 ; Max health
     dl $7E09CA : db $02 : dw $0021 ; Supers
     dl $7E09CE : db $02 : dw $000D ; Pbs
     dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
@@ -3253,7 +3253,7 @@ preset_100early_final_cleanup_boulder_room:
     dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $001D ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $05DB ; Health
-    dl $7E09C4 : db $02 : dw $05DB ; Max helath
+    dl $7E09C4 : db $02 : dw $05DB ; Max health
     dl $7E09CA : db $02 : dw $0020 ; Supers
     dl $7E09CE : db $02 : dw $0011 ; Pbs
     dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
