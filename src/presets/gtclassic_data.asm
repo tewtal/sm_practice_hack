@@ -2331,7 +2331,7 @@ preset_gtclassic_tourian_baby_skip:
     dw #$FFFF
 .after
 
-preset_gtclassic_tourian_gedora_room:
+preset_gtclassic_tourian_gadora_room:
     dw #preset_gtclassic_tourian_baby_skip ; Tourian: Baby Skip
     dl $7E078D : db $02 : dw $AA44 ; DDB
     dl $7E079B : db $02 : dw $DCFF ; MDB
@@ -2351,7 +2351,7 @@ preset_gtclassic_tourian_gedora_room:
 .after
 
 preset_gtclassic_tourian_zeb_skip:
-    dw #preset_gtclassic_tourian_gedora_room ; Tourian: Gedora Room
+    dw #preset_gtclassic_tourian_gadora_room ; Tourian: Gadora Room
     dl $7E078D : db $02 : dw $AAA4 ; DDB
     dl $7E079B : db $02 : dw $DDF3 ; MDB
     dl $7E090F : db $02 : dw $9000 ; Screen subpixel X position.

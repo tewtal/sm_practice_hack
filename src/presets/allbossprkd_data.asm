@@ -1908,7 +1908,7 @@ preset_allbossprkd_tourian_baby_skip:
     dw #$FFFF
 .after
 
-preset_allbossprkd_tourian_gedora_room:
+preset_allbossprkd_tourian_gadora_room:
     dw #preset_allbossprkd_tourian_baby_skip ; Tourian: Baby Skip
     dl $7E078D : db $02 : dw $AA44 ; DDB
     dl $7E079B : db $02 : dw $DCFF ; MDB
@@ -1928,7 +1928,7 @@ preset_allbossprkd_tourian_gedora_room:
 .after
 
 preset_allbossprkd_tourian_zeb_skip:
-    dw #preset_allbossprkd_tourian_gedora_room ; Tourian: Gedora Room
+    dw #preset_allbossprkd_tourian_gadora_room ; Tourian: Gadora Room
     dl $7E078D : db $02 : dw $AAA4 ; DDB
     dl $7E079B : db $02 : dw $DDF3 ; MDB
     dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position

@@ -2672,7 +2672,7 @@ preset_prkd_tourian_baby_skip:
     dw #$FFFF
 .after
 
-preset_prkd_tourian_gedora_room:
+preset_prkd_tourian_gadora_room:
     dw #preset_prkd_tourian_baby_skip ; Tourian: Baby Skip
     dl $7E078D : db $02 : dw $AA44 ; DDB
     dl $7E079B : db $02 : dw $DCFF ; MDB
@@ -2692,7 +2692,7 @@ preset_prkd_tourian_gedora_room:
 .after
 
 preset_prkd_tourian_rinka_shaft:
-    dw #preset_prkd_tourian_gedora_room ; Tourian: Gedora Room
+    dw #preset_prkd_tourian_gadora_room ; Tourian: Gadora Room
     dl $7E078D : db $02 : dw $AA5C ; DDB
     dl $7E079B : db $02 : dw $DDC4 ; MDB
     dl $7E090F : db $02 : dw $4000 ; Screen subpixel X position.

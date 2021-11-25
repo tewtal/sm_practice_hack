@@ -211,7 +211,7 @@ presets_submenu_pkrd_tourian:
     dw #presets_pkrd_tourian_metroids_4
     dw #presets_pkrd_tourian_giant_hoppers
     dw #presets_pkrd_tourian_baby_skip
-    dw #presets_pkrd_tourian_gedora_room
+    dw #presets_pkrd_tourian_gadora_room
     dw #presets_pkrd_tourian_rinka_shaft
     dw #presets_pkrd_tourian_zeb_skip
     dw #presets_pkrd_tourian_escape_room_3
@@ -635,8 +635,8 @@ presets_pkrd_tourian_giant_hoppers:
 presets_pkrd_tourian_baby_skip:
     %cm_preset("Baby Skip", #preset_pkrd_tourian_baby_skip)
 
-presets_pkrd_tourian_gedora_room:
-    %cm_preset("Gedora Room", #preset_pkrd_tourian_gedora_room)
+presets_pkrd_tourian_gadora_room:
+    %cm_preset("Gadora Room", #preset_pkrd_tourian_gadora_room)
 
 presets_pkrd_tourian_rinka_shaft:
     %cm_preset("Rinka Shaft", #preset_pkrd_tourian_rinka_shaft)
