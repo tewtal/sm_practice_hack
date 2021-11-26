@@ -74,8 +74,6 @@ init_nonzero_wram:
 
     ; RAM $7E0000 fluctuates so it is not a good default value
     LDA #$FFFE : STA !ram_watch_left : STA !ram_watch_right
-    LDA #$00FF : STA !ram_watch_left_hi : STA !ram_watch_right_hi
-    LDA #$00FE : STA !ram_watch_left_lo : STA !ram_watch_right_lo
 
     ; Check if any less common controller shortcuts are configured
     JML GameModeExtras
