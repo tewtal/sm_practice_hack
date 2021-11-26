@@ -1361,6 +1361,7 @@ ih_ram_watch:
     %cm_jsr("Customize RAM Watch", #ih_prepare_ram_watch_menu, #RAMWatchMenu)
 
 ih_prepare_ram_watch_menu:
+    ; Assume RAM watch menu RAM is out of date
     LDA !ram_watch_left : XBA : AND #$00FF : STA !ram_cm_watch_left_hi
     LDA !ram_watch_left : AND #$00FF : STA !ram_cm_watch_left_lo
     LDA !ram_watch_right : XBA : AND #$00FF : STA !ram_cm_watch_right_hi
@@ -1371,6 +1372,22 @@ ih_prepare_ram_watch_menu:
     LDA !ram_watch_edit_right : AND #$00FF : STA !ram_cm_watch_edit_right_lo
     LDA #$0000 : STA !ram_cm_watch_left_enemy_property : STA !ram_cm_watch_left_enemy_index
     STA !ram_cm_watch_right_enemy_property : STA !ram_cm_watch_right_enemy_index
+
+    ; See if we can better initialize enemy properties and indices
+    LDA !ram_watch_left : CMP #$0F78 : BCC .checkright : CMP #$1778 : BCS .checkright
+    SEC : SBC #$0F78 : STA !ram_cm_watch_left_enemy_index
+    AND #$003E : LSR : STA !ram_cm_watch_left_enemy_property
+    LDA !ram_cm_watch_left_enemy_index : AND #$07C0
+    ASL : ASL : XBA : STA !ram_cm_watch_left_enemy_index
+
+  .checkright
+    LDA !ram_watch_right : CMP #$0F78 : BCC .submenu : CMP #$1778 : BCS .submenu
+    SEC : SBC #$0F78 : STA !ram_cm_watch_right_enemy_index
+    AND #$003E : LSR : STA !ram_cm_watch_right_enemy_property
+    LDA !ram_cm_watch_right_enemy_index : AND #$07C0
+    ASL : ASL : XBA : STA !ram_cm_watch_right_enemy_index
+
+  .submenu
     JMP action_submenu
 
 ih_show_hitbox:
