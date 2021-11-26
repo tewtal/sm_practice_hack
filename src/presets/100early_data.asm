@@ -2931,24 +2931,16 @@ preset_100early_lower_norfair_ridley:
 
 preset_100early_lower_norfair_ridley_escape:
     dw #preset_100early_lower_norfair_ridley ; Lower Norfair: Ridley
-    dl $7E078D : db $02 : dw $98B2 ; DDB
-    dl $7E079B : db $02 : dw $B698 ; MDB
+    dl $7E078D : db $02 : dw $98CA ; DDB
+    dl $7E079B : db $02 : dw $B32E ; MDB
     dl $7E07F3 : db $02 : dw $0024 ; Music Bank
     dl $7E07F5 : db $02 : dw $0003 ; Music Track
-    dl $7E090F : db $02 : dw $6000 ; Screen subpixel X position.
-    dl $7E0913 : db $02 : dw $A800 ; Screen subpixel Y position
-    dl $7E09C2 : db $02 : dw $0513 ; Health
-    dl $7E09C4 : db $02 : dw $0513 ; Max health
+    dl $7E0915 : db $02 : dw $011F ; Screen Y position in pixels
     dl $7E09CA : db $02 : dw $0022 ; Supers
     dl $7E09CE : db $02 : dw $000E ; Pbs
-    dl $7E0A1C : db $02 : dw $0027 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0508 ; More position/state
     dl $7E0AF6 : db $02 : dw $00C9 ; Samus X
-    dl $7E0AFA : db $02 : dw $00B0 ; Samus Y
+    dl $7E0AFA : db $02 : dw $019B ; Samus Y
     dl $7ED82A : db $02 : dw $0107 ; Events, Items, Doors
-    dl $7ED878 : db $02 : dw $D2DE ; Events, Items, Doors
-    dl $7ED8BA : db $02 : dw $DBF7 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $008E ; Events, Items, Doors
     dw #$FFFF
 .after
 
@@ -2963,11 +2955,14 @@ preset_100early_lower_norfair_wasteland_revisit:
     dl $7E0911 : db $02 : dw $0200 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $8400 ; Screen subpixel Y position
     dl $7E09C2 : db $02 : dw $04F1 ; Health
+    dl $7E09C4 : db $02 : dw $0513 ; Max health
     dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0008 ; More position/state
     dl $7E0AF6 : db $02 : dw $02DB ; Samus X
     dl $7E0AFA : db $02 : dw $00AB ; Samus Y
+    dl $7ED878 : db $02 : dw $D2DE ; Events, Items, Doors
     dl $7ED8BA : db $02 : dw $DFF7 ; Events, Items, Doors
+    dl $7ED91A : db $02 : dw $008E ; Events, Items, Doors
     dw #$FFFF
 .after
 

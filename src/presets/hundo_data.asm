@@ -2776,25 +2776,19 @@ preset_hundo_ridley_ridley_2:
 
 preset_hundo_ridley_ridley_escape:
     dw #preset_hundo_ridley_ridley_2 ; Ridley: Ridley
-    dl $7E078D : db $02 : dw $98B2 ; DDB
-    dl $7E079B : db $02 : dw $B698 ; MDB
+    dl $7E078D : db $02 : dw $98CA ; DDB
+    dl $7E079B : db $02 : dw $B32E ; MDB
     dl $7E07F3 : db $02 : dw $0024 ; Music Bank
     dl $7E07F5 : db $02 : dw $0003 ; Music Track
-    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position.
-    dl $7E0913 : db $02 : dw $FC00 ; Screen subpixel Y position
-    dl $7E09C2 : db $02 : dw $04AF ; Health
-    dl $7E09C4 : db $02 : dw $04AF ; Max health
+    dl $7E0915 : db $02 : dw $011F ; Screen Y position in pixels
     dl $7E09C6 : db $02 : dw $0067 ; Missiles
     dl $7E09CA : db $02 : dw $000F ; Supers
     dl $7E09CE : db $02 : dw $0012 ; Pbs
-    dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
+    dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0008 ; More position/state
-    dl $7E0AF6 : db $02 : dw $00C8 ; Samus X
-    dl $7E0AFA : db $02 : dw $00AB ; Samus Y
+    dl $7E0AF6 : db $02 : dw $00C9 ; Samus X
+    dl $7E0AFA : db $02 : dw $019B ; Samus Y
     dl $7ED82A : db $02 : dw $0105 ; Events, Items, Doors
-    dl $7ED878 : db $02 : dw $D2DE ; Events, Items, Doors
-    dl $7ED8BA : db $02 : dw $DBF1 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $0086 ; Events, Items, Doors
     dw #$FFFF
 .after
 
@@ -2809,12 +2803,15 @@ preset_hundo_ridley_wasteland_up:
     dl $7E0911 : db $02 : dw $0200 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $5C00 ; Screen subpixel Y position
     dl $7E09C2 : db $02 : dw $048E ; Health
+    dl $7E09C4 : db $02 : dw $04AF ; Max health
     dl $7E0A1C : db $02 : dw $007D ; Samus position/state
     dl $7E0A1E : db $02 : dw $1308 ; More position/state
     dl $7E0AF6 : db $02 : dw $02D4 ; Samus X
     dl $7E0AFA : db $02 : dw $0085 ; Samus Y
     dl $7E0B3F : db $02 : dw $0003 ; Blue suit
+    dl $7ED878 : db $02 : dw $D2DE ; Events, Items, Doors
     dl $7ED8BA : db $02 : dw $DFF1 ; Events, Items, Doors
+    dl $7ED91A : db $02 : dw $0086 ; Events, Items, Doors
     dw #$FFFF
 .after
 
