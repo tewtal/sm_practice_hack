@@ -48,11 +48,10 @@ music_done:
     ; Rerandomize
     lda !sram_save_has_set_rng : bne +
     lda !sram_rerandomize : and #$00ff : beq +
-    lda $770080
-    sta $05e5
-    lda $770082
-    sta $05b6
+    lda $770080 : sta $05e5
+    lda $770082 : sta $05b6
     +
+    jsl init_wram_based_on_sram
     rts
 ; end of post_load_state
 

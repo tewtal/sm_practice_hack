@@ -70,7 +70,7 @@ endif
 
 init_nonzero_wram:
 {
-    JSL misc_init_suits_ram
+    JSL init_wram_based_on_sram
 
     ; RAM $7E0000 fluctuates so it is not a good default value
     LDA #$0F8C : STA !ram_watch_left   ; Enemy HP
