@@ -1,5 +1,6 @@
 org $82FA00
 print pc, " presets start"
+
 preset_load:
 {
     PHP
@@ -8,18 +9,19 @@ preset_load:
     LDA !MUSIC_TRACK : STA !SRAM_MUSIC_TRACK
 
     JSL $809E93  ; Clear timer RAM
-    JSR $819B  ; Initialise IO registers
-    JSR $82E2  ; Load standard BG3 tiles and sprite tiles, clear tilemaps
-    JSR $82C5  ; Load initial palette
+    JSR $819B    ; Initialize IO registers
+    JSR $82E2    ; Load standard BG3 tiles and sprite tiles, clear tilemaps
+    JSR $82C5    ; Load initial palette
 if !FEATURE_PAL
-    JSL $91DF72  ; Initialise Samus
+    JSL $91DF72  ; Initialize Samus
 else
-    JSL $91E00D  ; Initialise Samus
+    JSL $91E00D  ; Initialize Samus
 endif
 
     JSL preset_load_preset
 
     JSL preset_start_gameplay  ; Start gameplay
+
     JSL $809A79  ; HUD routine when game is loading
 
     PHP
@@ -34,8 +36,8 @@ endif
     PLP
 
     LDA #$0001
-    STA $0723  ; Screen fade delay = 1
-    STA $0725  ; Screen fade counter = 1
+    STA $0723    ; Screen fade delay = 1
+    STA $0725    ; Screen fade counter = 1
 
     JSL $80834B  ; Enable NMI with $84 options
     JSL $868000  ; Enable enemy projectiles
@@ -43,17 +45,17 @@ endif
     JSL $8DC4C2  ; Enable palette FX objects
     JSL $888288  ; Enable HDMA objects
     JSL $878000  ; Enable animated tile objects
-    JSL $908E0F  ; Something to do with setting $0AD2 FX1-related
+    JSL $908E0F  ; Set liquid physics type
 
     LDA #$0006 : STA $0DA0
   .loopSomething
 if !FEATURE_PAL
-    JSL $A08CE7  ; Load enemies
+    JSL $A08CE7  ; Transfer enemy tiles to VRAM and initialize enemies
 else
-    JSL $A08CD7  ; Load enemies
+    JSL $A08CD7  ; Transfer enemy tiles to VRAM and initialize enemies
 endif
     JSL $808338  ; Wait for NMI
-    DEC $0DA0  ; Decrement $0DA0
+    DEC $0DA0    ; Decrement $0DA0
     BPL .loopSomething
 
     LDA #$0008 : STA $0998
@@ -227,31 +229,33 @@ print pc, " presets end"
 
 org $80F000
 print pc, " preset_start_gameplay start"
+
+; This method is very similar to $80A07B (start gameplay)
 preset_start_gameplay:
 {
     PHP
     PHB
-    PHK : PLB
+    PHK : PLB    ; DB = $80
     %ai16()
-    SEI  ; Enable interrupts
-    STZ $420B  ; Disable all (H)DMA
-    STZ $07E9  ; Clear $07E9
-    STZ $0943  ; Disable timer
+    SEI          ; Disable IRQ
+    STZ $420B    ; Disable all (H)DMA
+    STZ $07E9    ; Scrolling finished hook = 0
+    STZ $0943    ; Timer status = inactive
 
-    JSL $828A9A  ; Execute subroutine $82:8A9A
+    JSL $828A9A  ; Reset sound queues
 
     LDA #$FFFF : STA $05F5  ; Disable sounds
 
     JSL $80835D  ; Disable NMI
     JSL $80985F  ; Disable horizontal and vertical timer interrupts
-    JSL $82E76B  ; Execute subroutine $82:E76B
+    JSL $82E76B  ; Load destination room CRE bitset, door/room/state headers, tiles
     JSR $A12B    ; Play 14h frames of music
-    JSL $878016  ; Clear misc. animations
-    JSL $88829E  ; Execute subroutine $88:829E
-    JSL $8882C1  ; Execute subroutine $88:82C1
+    JSL $878016  ; Clear animated tile objects
+    JSL $88829E  ; Wait until the end of a v-blank and clear (H)DMA enable flags
+    JSL $8882C1  ; Initialize special effects for new room
     JSL $8483C3  ; Clear PLMs
-    JSL $868016  ; Clear E/R projectiles
-    JSL $8DC4D8  ; Clear $8D PLM-esque headers
+    JSL $868016  ; Clear enemy projectiles
+    JSL $8DC4D8  ; Clear palette FX objects
     JSL $90AC8D  ; Update beam graphics
     JSL $82E139  ; Load target colours for common sprites, beams and slashing enemies / pickups
 if !FEATURE_PAL
@@ -259,14 +263,14 @@ if !FEATURE_PAL
 else
     JSL $A08A1E  ; Load enemies
 endif
-    JSL $82E071  ; Clear music
+    JSL $82E071  ; Load room music
     JSR $A12B    ; Play 14h frames of music
-    JSL $82E09B  ; Execute subroutine $82:E09B
-    JSL $82E113  ; Execute subroutine $82:E113
-    JSL $80A23F  ; VRAM $4800..4FFF = 3838h
-    JSL $82E7D3  ; Execute subroutine $82:E7D3
-    JSL $89AB82  ; Load FX1
-    JSL $82E97C  ; Execute subroutine $82:E97C
+    JSL $82E09B  ; Update music track index
+    JSL $82E113  ; RTL
+    JSL $80A23F  ; Clear BG2 tilemap
+    JSL $82E7D3  ; Load level data, CRE, tile table, scroll data, create PLMs and execute door ASM and room setup ASM
+    JSL $89AB82  ; Load FX
+    JSL $82E97C  ; Load library background
 
     JSR preset_scroll_fixes
     JSR $A2F9    ; Calculate layer 2 X position
@@ -284,7 +288,7 @@ endif
 
     LDA #$E695 : STA $0A42 ; Unlock Samus
     LDA #$E725 : STA $0A44 ; Unlock Samus
-    STZ $0E18 ; Set elevator to inactive
+    STZ $0E18    ; Set elevator to inactive
 
 +   LDA #$0000 : STA $05F5  ; Enable sounds
     JSL stop_all_sounds
