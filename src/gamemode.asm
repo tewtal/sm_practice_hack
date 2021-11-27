@@ -11,6 +11,9 @@ org $82896E
 if !FEATURE_SD2SNES
 org $82E526
     JSL gamemode_door_transition : NOP
+
+org $858136
+    JMP messagebox_wait_for_lag_frame
 endif
 
 org $85F800
@@ -233,12 +236,33 @@ gamemode_door_transition:
   .checkloadstate
     LDA !IH_CONTROLLER_PRI : CMP !sram_ctrl_load_state : BNE .checktransition
     PHB : PHK : PLB
-    JSL load_state
-    PLB : RTL
+    JML load_state
 
   .checktransition
     LDA $0931 : BPL .checkloadstate
     RTL
+}
+
+messagebox_wait_for_lag_frame:
+{
+    PHP
+    %ai8()
+  .wait_for_auto_joypad_read
+    LDA $4212 : BIT #$01 : BNE .wait_for_auto_joypad_read
+
+    %ai16()
+    LDA $4218 : CMP !sram_ctrl_load_state : BNE .wait_for_lag_frame
+    PHB : PHK : PLB
+    JML load_state
+
+    ; Original logic
+  .wait_for_lag_frame
+    %ai8()
+    LDA $05B8
+  .wait_loop
+    CMP $05B8 : BEQ .wait_loop
+    PLP
+    RTS
 }
 endif
 
