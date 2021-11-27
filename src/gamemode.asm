@@ -246,18 +246,18 @@ gamemode_door_transition:
 messagebox_wait_for_lag_frame:
 {
     PHP
-    %ai8()
+    %a8()
   .wait_for_auto_joypad_read
     LDA $4212 : BIT #$01 : BNE .wait_for_auto_joypad_read
 
-    %ai16()
+    %a16()
     LDA $4218 : CMP !sram_ctrl_load_state : BNE .wait_for_lag_frame
     PHB : PHK : PLB
     JML load_state
 
     ; Original logic
   .wait_for_lag_frame
-    %ai8()
+    %a8()
     LDA $05B8
   .wait_loop
     CMP $05B8 : BEQ .wait_loop
