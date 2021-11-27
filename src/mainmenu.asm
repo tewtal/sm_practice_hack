@@ -1273,6 +1273,7 @@ RoomStratMenu:
     dw ihstrat_shinetopb
     dw ihstrat_elevatorcf
     dw ihstrat_botwooncf
+    dw ihstrat_snailclip
     dw ihstrat_mbhp
     dw #$0000
     %cm_header("INFOHUD ROOM STRAT")
@@ -1301,9 +1302,12 @@ ihstrat_elevatorcf:
 ihstrat_botwooncf:
     %cm_jsr("Botwoon Crystal Flash", #action_select_room_strat, #$0007)
 
-!IH_STRAT_MBHP_INDEX = $0008
+ihstrat_snailclip:
+    %cm_jsr("Aqueduct Snail Clip", #action_select_room_strat, #$0008)
+
+!IH_STRAT_MBHP_INDEX = $0009
 ihstrat_mbhp:
-    %cm_jsr("Mother Brain HP", #action_select_room_strat, #$0008)
+    %cm_jsr("Mother Brain HP", #action_select_room_strat, #$0009)
 
 action_select_room_strat:
 {
@@ -1327,6 +1331,7 @@ ih_room_strat:
     db #$28, "SHINE TO PB", #$FF
     db #$28, "ELEVATOR CF", #$FF
     db #$28, " BOTWOON CF", #$FF
+    db #$28, " SNAIL CLIP", #$FF
     db #$28, "      MB HP", #$FF
     db #$FF
 

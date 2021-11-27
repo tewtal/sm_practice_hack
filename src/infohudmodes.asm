@@ -49,6 +49,7 @@ status_roomstrat:
     dw status_shinetopb
     dw status_elevatorcf
     dw status_botwooncf
+    dw status_snailclip
     dw status_mbhp
 }
 
@@ -2055,6 +2056,80 @@ endif
   .frameperfect
     LDA !IH_LETTER_Y : STA $7EC68C : STA $7EC68E
     BRA .reset
+}
+
+status_snailclip:
+{
+    !snailclip_ypos_hi = $014B
+if !FEATURE_PAL
+    !snailclip_ypos_lo = $014E
+else
+    !snailclip_ypos_lo = $014D
+endif
+
+    LDA $0F7A : CMP !ram_xpos : BEQ .checkypos
+    STA !ram_xpos : LDA $0F7E : STA !ram_ypos
+    BRA .resetcounter
+
+  .checkypos
+    LDA $0F7E : CMP !ram_ypos : BEQ .checkcounter
+    STA !ram_ypos
+
+  .resetcounter
+    LDA #$0000 : STA !ram_roomstrat_counter
+    RTS
+
+  .checkcounter
+    ; Arbitrary wait of 15 frames with no X or Y change
+    LDA !ram_roomstrat_counter : CMP #$000F : BEQ .checkpos : BPL .done
+    INC : STA !ram_roomstrat_counter
+
+  .done
+    RTS
+
+  .ignore
+    LDA !IH_BLANK : STA $7EC688 : STA $7EC68A : STA $7EC68C : STA $7EC68E
+    RTS
+
+  .checkpos
+    ; Increment counter so we don't check again
+    INC : STA !ram_roomstrat_counter
+    LDA !ram_xpos : CMP #$0478 : BMI .ignore : CMP #$0489 : BPL .ignore
+    LDA !ram_ypos : CMP #$0120 : BMI .ignore : CMP #$0165 : BPL .ignore
+
+    ; Snail is in range
+    LDA !IH_BLANK : STA $7EC688 : STA $7EC68A
+
+    ; Check the height
+    LDA !ram_ypos : CMP #!snailclip_ypos_hi : BEQ .yeshigh : BMI .high
+    CMP #!snailclip_ypos_lo : BEQ .yeslow : BPL .low
+
+    ; Height is good and centered
+    LDA !IH_BLANK : STA $7EC68E
+    BRA .printy
+
+  .yeshigh
+    LDA !IH_LETTER_H : STA $7EC68E
+    BRA .printy
+
+  .high
+    LDA #!snailclip_ypos_hi : SEC : SBC !ram_ypos
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC68E
+    LDA !IH_LETTER_H : STA $7EC68C
+    RTS
+
+  .yeslow
+    LDA !IH_LETTER_L : STA $7EC68E
+
+  .printy
+    LDA !IH_LETTER_Y : STA $7EC68C
+    RTS
+
+  .low
+    LDA !ram_ypos : SEC : SBC #!snailclip_ypos_lo
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC68E
+    LDA !IH_LETTER_L : STA $7EC68C
+    RTS
 }
 
 status_mbhp:

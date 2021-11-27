@@ -204,7 +204,7 @@ Thus 1122 indicates both robots were successfully flushed.
 ## Shine to PB
 Similar to shinespark, except Samus HP is overwritten to display information for the power bomb. Counts down the frames from the time you charge a shinespark until the time the charge runs out. If you activate the shinespark in time, it will display the number of frames to spare. If you lay a power bomb, it will display the number of frames to spare.
 
-## Elevator CF
+## Elevator Crystal Flash
 Provides feedback on attempts to crystal flash while initiating a downward elevator on the same frame, which grants Samus a spikesuit:  
 &nbsp;  
 First character = Feedback on the power bomb:
@@ -221,7 +221,7 @@ Last two characters = Feedback on your timing in pressing down at the correct po
 
 Note: This will also give feedback on the power bomb height in the Dachora room, in order to convert a spikesuit into a blue suit by interrupting the shinespark animation with a crystal flash.
 
-## Botwoon CF
+## Botwoon Crystal Flash
 Provides feedback on attempts to crystal flash clip in Botwoon Hallway:  
 &nbsp;  
 First Y = You laid a power bomb at the correct height (maximum height that you can).
@@ -235,7 +235,19 @@ Last two characters = Feedback on your timing in returning to the correct positi
 
 Note: If using the bombs method, there is a two-frame window where Samus will reach the correct position with 0 speed for two frames. In this case, you will get your best case feedback. For example, instead of seeing YYL2 followed by YYL3, you will just see YYL2.
 
-## MB HP
+## Aqueduct Snail Clip
+Provides feedback on attempts to stop a particular snail in a position where you can jump up and clip through pipes to reach the two Aqueduct items:  
+&nbsp;  
+Last two characters = Feedback on your timing in returning to the correct position:
+- H# indicates the snail is too high where the number tells you how many pixels it is high.
+- YH indicates the snail is in the highest of the three or four pixels where the clip works.
+- Y  indicates the snail is in the middle of the three or four pixels where the clip works.
+- YL indicates the snail is in the lowest of the three or four pixels where the clip works.
+- L# indicates the snail is too low where the number tells you how many pixels it is low.
+
+Note: Snail clip works with three pixels on NTSC and four pixels on PAL. This assumes subpixel position is irrelevant, and assumes hi jump boots have no effect.
+
+## Mother Brain HP
 Displays the HP of the second enemy. Most useful for the Mother Brain fight since Mother Brain uses the second enemy slot.
 <br />
 
