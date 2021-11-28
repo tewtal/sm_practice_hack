@@ -4,7 +4,14 @@ org $85FD00
 print pc, " menu bank85 start"
 
 wait_for_lag_frame_long:
+if !FEATURE_SD2SNES
+  ; Avoid messagebox_wait_for_lag_frame so we don't load save state from the menu,
+  ; which we want to avoid since you might be in the process of changing controller shortcuts
+  jsr vanilla_wait_for_lag_frame
+else
+  ; There is no vanilla_wait_for_lag_frame since we never modified the actual vanilla method
   jsr $8136
+endif
   rtl
 
 initialize_ppu_long:
@@ -612,8 +619,8 @@ cm_draw_action_table:
         LDA [$04] : INC $04 : INC $04 : STA $08
         LDA [$04] : INC $04 : STA $0A
 
-        ; skip bounds and increment value
-        INC $04 : INC $04 : INC $04
+        ; skip bounds and increment values
+        INC $04 : INC $04 : INC $04 : INC $04
 
         ; increment past JSR
         INC $04 : INC $04
@@ -659,9 +666,9 @@ cm_draw_action_table:
         LDA [$04] : INC $04 : INC $04 : STA $08
         LDA [$04] : INC $04 : STA $0A
 
-        ; skip bounds and increment value
-        INC $04 : INC $04 : INC $04
-        INC $04 : INC $04 : INC $04
+        ; skip bounds and increment values
+        INC $04 : INC $04 : INC $04 : INC $04
+        INC $04 : INC $04 : INC $04 : INC $04
 
         ; increment past JSR
         INC $04 : INC $04
@@ -712,8 +719,8 @@ cm_draw_action_table:
         LDA [$04] : INC $04 : INC $04 : STA $08
         LDA [$04] : INC $04 : STA $0A
 
-        ; skip bounds and increment value
-        INC $04 : INC $04 : INC $04
+        ; skip bounds and increment values
+        INC $04 : INC $04 : INC $04 : INC $04
 
         ; increment past JSR
         INC $04 : INC $04
@@ -950,10 +957,6 @@ cm_loop:
     JSR cm_calculate_max
     BRA .redraw
 
-  ; .pressedY
-  ; .pressedX
-  ;   BRA .inputLoop
-
   .pressedDown
     LDA #$0002
     JSR cm_move
@@ -1005,7 +1008,7 @@ cm_ctrl_mode:
     LDA $8B : BEQ .clear_and_draw
     CMP !ram_cm_ctrl_last_input : BNE .clear_and_draw
 
-    ; Holding an input for more than 1f
+    ; Holding an input for more than one second
     LDA !ram_cm_ctrl_timer : INC : STA !ram_cm_ctrl_timer : CMP.w #0060 : BNE .next_frame
 
     LDA $8B : STA [$C5]
@@ -1099,15 +1102,15 @@ cm_get_inputs:
     RTS
 
   .check_holding
-    ; Check if we're holding up or down
+    ; Check if we're holding the dpad
     LDA $8B : AND #$0F00 : BEQ .noinput
 
     ; Decrement delay timer and check if it's zero
     LDA !ram_cm_input_timer : DEC : STA !ram_cm_input_timer : BNE .noinput
 
-    ; Set new delay to 4 frames and return the input we're holding
+    ; Set new delay to two frames and return the input we're holding
     LDA #$0002 : STA !ram_cm_input_timer
-    LDA $8B : AND #$0F00
+    LDA $8B : AND #$0F00 : ORA !IH_INPUT_HELD
     RTS
 
   .noinput
@@ -1229,7 +1232,8 @@ cm_execute_action_table:
     execute_jsr:
     {
         ; <, > and X should do nothing here
-        LDA !ram_cm_controller : BIT #$0340 : BNE .end
+        ; also ignore input held flag
+        LDA !ram_cm_controller : BIT #$0341 : BNE .end
 
         ; $02 = JSR target
         LDA [$00] : INC $00 : INC $00 : STA $04
@@ -1250,15 +1254,23 @@ cm_execute_action_table:
         ; $04[0x3] = memory address to manipulate
         ; $08[0x1] = min
         ; $0A[0x1] = max
-        ; $0C[0x1] = increment
+        ; $0C[0x1] = increment (normal)
+        ; $0C[0x1] = increment (input held)
         ; $20[0x2] = JSR target
         LDA [$00] : INC $00 : INC $00 : STA $04
         LDA [$00] : INC $00 : STA $06
 
         LDA [$00] : INC $00 : AND #$00FF : STA $08
         LDA [$00] : INC $00 : AND #$00FF : INC : STA $0A ; INC for convenience
-        LDA [$00] : INC $00 : AND #$00FF : STA $0C
 
+        LDA !ram_cm_controller : BIT !IH_INPUT_HELD : BNE .input_held
+        LDA [$00] : INC $00 : INC $00 : AND #$00FF : STA $0C
+        BRA .load_jsr_target
+
+      .input_held
+        INC $00 : LDA [$00] : INC $00 : AND #$00FF : STA $0C
+
+      .load_jsr_target
         LDA [$00] : INC $00 : INC $00 : STA $20
 
         LDA !ram_cm_controller : BIT #$0200 : BNE .pressed_left
@@ -1299,15 +1311,23 @@ cm_execute_action_table:
         ; $04[0x3] = memory address to manipulate
         ; $08[0x2] = min
         ; $0A[0x2] = max
-        ; $0C[0x2] = increment
+        ; $0C[0x2] = increment (normal)
+        ; $0C[0x2] = increment (input held)
         ; $20[0x2] = JSR target
         LDA [$00] : INC $00 : INC $00 : STA $04
         LDA [$00] : INC $00 : STA $06
 
         LDA [$00] : INC $00 : INC $00 : STA $08
         LDA [$00] : INC $00 : INC $00 : INC : STA $0A ; INC for convenience
-        LDA [$00] : INC $00 : INC $00 : STA $0C
 
+        LDA !ram_cm_controller : BIT !IH_INPUT_HELD : BNE .input_held
+        LDA [$00] : INC $00 : INC $00 : INC $00 : INC $00 : STA $0C
+        BRA .load_jsr_target
+
+      .input_held
+        INC $00 : INC $00 : LDA [$00] : INC $00 : INC $00 : STA $0C
+
+      .load_jsr_target
         LDA [$00] : INC $00 : INC $00 : STA $20
 
         LDA !ram_cm_controller : BIT #$0200 : BNE .pressed_left
@@ -1355,12 +1375,16 @@ cm_execute_action_table:
         LDA !ram_cm_controller : BIT #$0200 : BNE .pressed_left
 
         LDA [$04] : INC : CMP #$0020 : BCS .set_to_min
+        STA [$04] : LDA !ram_cm_controller : BIT !IH_INPUT_LEFT : BEQ .jsr
 
+        LDA [$04] : INC : CMP #$0020 : BCS .set_to_min
         STA [$04] : BRA .jsr
 
       .pressed_left
         LDA [$04] : DEC : BMI .set_to_max
+        STA [$04] : LDA !ram_cm_controller : BIT !IH_INPUT_LEFT : BEQ .jsr
 
+        LDA [$04] : DEC : BMI .set_to_max
         STA [$04] : BRA .jsr
 
       .set_to_min
@@ -1450,7 +1474,8 @@ cm_execute_action_table:
     execute_ctrl_shortcut:
     {
         ; < and > should do nothing here
-        LDA !ram_cm_controller : BIT #$0300 : BNE .end
+        ; also ignore the input held flag
+        LDA !ram_cm_controller : BIT #$0301 : BNE .end
 
         LDA [$00] : STA $C5 : INC $00 : INC $00
         LDA [$00] : STA $C7 : INC $00
@@ -1461,7 +1486,7 @@ cm_execute_action_table:
         LDA #$0000 : STA !ram_cm_ctrl_timer
         RTS
 
-        .reset_shortcut
+      .reset_shortcut
         LDA.w #!sram_ctrl_menu : CMP $C5 : BEQ .end
         LDA #!SOUND_MENU_MOVE : JSL $80903F
 

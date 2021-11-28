@@ -22,26 +22,26 @@ endif
     table ../resources/normal.tbl
 endmacro
 
-macro cm_numfield(title, addr, start, end, increment, jsrtarget)
+macro cm_numfield(title, addr, start, end, increment, heldincrement, jsrtarget)
     dw !ACTION_NUMFIELD
     dl <addr>
-    db <start>, <end>, <increment>
+    db <start>, <end>, <increment>, <heldincrement>
     dw <jsrtarget>
     db #$28, "<title>", #$FF
 endmacro
 
-macro cm_numfield_word(title, addr, start, end, increment, jsrtarget)
+macro cm_numfield_word(title, addr, start, end, increment, heldincrement, jsrtarget)
     dw !ACTION_NUMFIELD_WORD
     dl <addr>
-    dw <start>, <end>, <increment>
+    dw <start>, <end>, <increment>, <heldincrement>
     dw <jsrtarget>
     db #$28, "<title>", #$FF
 endmacro
 
-macro cm_numfield_hex(title, addr, start, end, increment, jsrtarget)
+macro cm_numfield_hex(title, addr, start, end, increment, heldincrement, jsrtarget)
     dw !ACTION_NUMFIELD_HEX
     dl <addr>
-    db <start>, <end>, <increment>
+    db <start>, <end>, <increment>, <heldincrement>
     dw <jsrtarget>
     db #$28, "<title>", #$FF
 endmacro
@@ -239,7 +239,7 @@ presets_goto_select_preset_category:
     %cm_submenu("Select Preset Category", #SelectPresetCategoryMenu)
 
 presets_custom_preset_slot:
-    %cm_numfield("Custom Preset Slot", !sram_custom_preset_slot, 0, 39, 1, #0) ; update total slots in gamemode.asm
+    %cm_numfield("Custom Preset Slot", !sram_custom_preset_slot, 0, 39, 1, 2, #0) ; update total slots in gamemode.asm
 
 presets_save_custom_preset:
     %cm_jsr("Save Custom Preset", #action_save_custom_preset, #$0000)
@@ -472,10 +472,10 @@ eq_goto_togglebeams:
     %cm_submenu("Toggle Beams", #ToggleBeamsMenu)
 
 eq_currentenergy:
-    %cm_numfield_word("Current Energy", $7E09C2, 0, 2100, 1, #0)
+    %cm_numfield_word("Current Energy", $7E09C2, 0, 2100, 1, 20, #0)
 
 eq_setetanks:
-    %cm_numfield("Energy Tanks", !ram_cm_etanks, 0, 21, 1, .routine)
+    %cm_numfield("Energy Tanks", !ram_cm_etanks, 0, 21, 1, 1, .routine)
     .routine
         TAX
         LDA #$0000
@@ -490,10 +490,10 @@ eq_setetanks:
         RTS
 
 eq_currentreserves:
-    %cm_numfield_word("Current Reserves", $7E09D6, 0, 700, 1, #0)
+    %cm_numfield_word("Current Reserves", $7E09D6, 0, 700, 1, 20, #0)
 
 eq_setreserves:
-    %cm_numfield("Reserve Tanks", !ram_cm_reserve, 0, 7, 1, .routine)
+    %cm_numfield("Reserve Tanks", !ram_cm_reserve, 0, 7, 1, 1, .routine)
     .routine
         TAX
         LDA #$0000
@@ -506,22 +506,22 @@ eq_setreserves:
         RTS
 
 eq_setmissiles:
-    %cm_numfield_word("Missiles", $7E09C8, 0, 325, 5, .routine)
+    %cm_numfield_word("Missiles", $7E09C8, 0, 325, 5, 20, .routine)
     .routine
         LDA $09C8 : STA $09C6 ; missiles
         RTS
 
 eq_setsupers:
-    %cm_numfield("Super Missiles", $7E09CC, 0, 65, 5, .routine)
+    %cm_numfield("Super Missiles", $7E09CC, 0, 65, 5, 5, .routine)
     .routine
         LDA $09CC : STA $09CA ; supers
         RTS
 
 eq_setpbs:
 if !FEATURE_PAL
-    %cm_numfield("Power Bombs", $7E09D0, 0, 70, 5, .routine)
+    %cm_numfield("Power Bombs", $7E09D0, 0, 70, 5, 5, .routine)
 else
-    %cm_numfield("Power Bombs", $7E09D0, 0, 65, 5, .routine)
+    %cm_numfield("Power Bombs", $7E09D0, 0, 65, 5, 5, .routine)
 endif
     .routine
         LDA $09D0 : STA $09CE ; pbs
@@ -891,7 +891,7 @@ misc_hyperbeam:
     %cm_toggle("Hyper Beam", $7E0A76, #$0001, #0)
 
 misc_gooslowdown:
-    %cm_numfield("Goo Slowdown", $7E0A66, 0, 4, 1, #0)
+    %cm_numfield("Goo Slowdown", $7E0A66, 0, 4, 1, 1, #0)
 
 misc_magicpants:
     %cm_toggle_bit("Magic Pants", !ram_magic_pants_enabled, #$0001, GameLoopExtras)
@@ -932,18 +932,14 @@ misc_music_toggle:
 misc_suit_properties:
     dw !ACTION_CHOICE
     dl #!sram_suit_properties
-    dw .routine
+    dw init_suit_properties_ram
     db #$28, "Suit Propertie", #$FF
     db #$28, "s   VANILLA", #$FF
     db #$28, "s  BALANCED", #$FF
     db #$28, "s  PROGRESS", #$FF
     db #$FF
 
-  .routine
-    JSL misc_init_suits_ram
-    RTS
-
-misc_init_suits_ram:
+init_suit_properties_ram:
 {
     LDA #$0021 : STA !ram_suits_enemy_damage_check : STA !ram_suits_periodic_damage_check
 
@@ -955,7 +951,7 @@ misc_init_suits_ram:
     LDA #$0001 : STA !ram_suits_periodic_damage_check
 
   .end
-    RTL
+    RTS
 }
 
 misc_transparent:
@@ -1227,6 +1223,7 @@ ihmode_walljump:
 ihmode_shottimer:
     %cm_jsr("Shot Timer", #action_select_infohud_mode, #$0011)
 
+!IH_MODE_RAMWATCH_INDEX = $0012
 ihmode_ramwatch:
     %cm_jsr("RAM Watch", #action_select_infohud_mode, #$0012)
 
@@ -1276,6 +1273,7 @@ RoomStratMenu:
     dw ihstrat_shinetopb
     dw ihstrat_elevatorcf
     dw ihstrat_botwooncf
+    dw ihstrat_snailclip
     dw ihstrat_mbhp
     dw #$0000
     %cm_header("INFOHUD ROOM STRAT")
@@ -1304,9 +1302,12 @@ ihstrat_elevatorcf:
 ihstrat_botwooncf:
     %cm_jsr("Botwoon Crystal Flash", #action_select_room_strat, #$0007)
 
-!IH_STRAT_MBHP_INDEX = $0008
+ihstrat_snailclip:
+    %cm_jsr("Aqueduct Snail Clip", #action_select_room_strat, #$0008)
+
+!IH_STRAT_MBHP_INDEX = $0009
 ihstrat_mbhp:
-    %cm_jsr("Mother Brain HP", #action_select_room_strat, #$0008)
+    %cm_jsr("Mother Brain HP", #action_select_room_strat, #$0009)
 
 action_select_room_strat:
 {
@@ -1330,6 +1331,7 @@ ih_room_strat:
     db #$28, "SHINE TO PB", #$FF
     db #$28, "ELEVATOR CF", #$FF
     db #$28, " BOTWOON CF", #$FF
+    db #$28, " SNAIL CLIP", #$FF
     db #$28, "      MB HP", #$FF
     db #$FF
 
@@ -1352,7 +1354,7 @@ toggle_status_icons:
 }
 
 ih_lag:
-    %cm_numfield("Artificial Lag", !sram_artificial_lag, 0, 64, 1, #0)
+    %cm_numfield("Artificial Lag", !sram_artificial_lag, 0, 64, 1, 4, #0)
 
 ih_reset_seg_later:
     %cm_jsr("Reset Segment in Next Room", #.routine, #$FFFF)
@@ -1361,7 +1363,37 @@ ih_reset_seg_later:
         RTS
 
 ih_ram_watch:
-    %cm_submenu("Customize RAM Watch", #RAMWatchMenu)
+    %cm_jsr("Customize RAM Watch", #ih_prepare_ram_watch_menu, #RAMWatchMenu)
+
+ih_prepare_ram_watch_menu:
+    ; Assume RAM watch menu RAM is out of date
+    LDA !ram_watch_left : XBA : AND #$00FF : STA !ram_cm_watch_left_hi
+    LDA !ram_watch_left : AND #$00FF : STA !ram_cm_watch_left_lo
+    LDA !ram_watch_right : XBA : AND #$00FF : STA !ram_cm_watch_right_hi
+    LDA !ram_watch_right : AND #$00FF : STA !ram_cm_watch_right_lo
+    LDA !ram_watch_edit_left : XBA : AND #$00FF : STA !ram_cm_watch_edit_left_hi
+    LDA !ram_watch_edit_left : AND #$00FF : STA !ram_cm_watch_edit_left_lo
+    LDA !ram_watch_edit_right : XBA : AND #$00FF : STA !ram_cm_watch_edit_right_hi
+    LDA !ram_watch_edit_right : AND #$00FF : STA !ram_cm_watch_edit_right_lo
+    LDA #$0000 : STA !ram_cm_watch_left_enemy_property : STA !ram_cm_watch_left_enemy_index
+    STA !ram_cm_watch_right_enemy_property : STA !ram_cm_watch_right_enemy_index
+
+    ; See if we can better initialize enemy properties and indices
+    LDA !ram_watch_left : CMP #$0F78 : BCC .checkright : CMP #$1778 : BCS .checkright
+    SEC : SBC #$0F78 : STA !ram_cm_watch_left_enemy_index
+    AND #$003E : LSR : STA !ram_cm_watch_left_enemy_property
+    LDA !ram_cm_watch_left_enemy_index : AND #$07C0
+    ASL : ASL : XBA : STA !ram_cm_watch_left_enemy_index
+
+  .checkright
+    LDA !ram_watch_right : CMP #$0F78 : BCC .submenu : CMP #$1778 : BCS .submenu
+    SEC : SBC #$0F78 : STA !ram_cm_watch_right_enemy_index
+    AND #$003E : LSR : STA !ram_cm_watch_right_enemy_property
+    LDA !ram_cm_watch_right_enemy_index : AND #$07C0
+    ASL : ASL : XBA : STA !ram_cm_watch_right_enemy_index
+
+  .submenu
+    JMP action_submenu
 
 ih_show_hitbox:
     %cm_toggle("Show Samus Hitbox", !ram_sprite_hitbox_active, #1, #0)
@@ -1379,14 +1411,20 @@ toggle_oob_viewer:
 }
 
 RAMWatchMenu:
+    dw ramwatch_enable
+    dw ramwatch_bank
     dw ramwatch_left_hi
     dw ramwatch_left_lo
+    dw ramwatch_left_enemy_property
+    dw ramwatch_left_enemy_index
     dw ramwatch_left_edit_hi
     dw ramwatch_left_edit_lo
     dw ramwatch_execute_left
     dw ramwatch_lock_left
     dw ramwatch_right_hi
     dw ramwatch_right_lo
+    dw ramwatch_right_enemy_property
+    dw ramwatch_right_enemy_index
     dw ramwatch_right_edit_hi
     dw ramwatch_right_edit_lo
     dw ramwatch_execute_right
@@ -1394,59 +1432,188 @@ RAMWatchMenu:
     dw #$0000
     %cm_header("READ AND WRITE TO MEMORY")
 
+ramwatch_enable:
+    %cm_jsr("Turn On RAM Watch", .routine, #!IH_MODE_RAMWATCH_INDEX)
+  .routine
+    TYA : STA !sram_display_mode
+    LDA #!SOUND_MENU_JSR : JSL $80903F
+    RTS
+
+ramwatch_bank:
+    dw !ACTION_CHOICE
+    dl #!ram_watch_bank
+    dw #$0000
+    db #$28, "Select Bank", #$FF
+    db #$28, "        $7E", #$FF
+    db #$28, "        $7F", #$FF
+    db #$28, "       SRAM", #$FF
+    db #$FF
+
 ramwatch_left_hi:
-    %cm_numfield_hex("Address 1 High", !ram_watch_left_hi, 0, 255, 1, #.routine)
+    %cm_numfield_hex("Address 1 High", !ram_cm_watch_left_hi, 0, 255, 1, 8, #.routine)
     .routine
-        XBA : ORA !ram_watch_left_lo
+        XBA : ORA !ram_cm_watch_left_lo
         STA !ram_watch_left
         RTS
 
 ramwatch_left_lo:
-    %cm_numfield_hex("Address 1 Low", !ram_watch_left_lo, 0, 255, 1, #.routine)
+    %cm_numfield_hex("Address 1 Low", !ram_cm_watch_left_lo, 0, 255, 1, 8, #.routine)
     .routine
-        XBA : ORA !ram_watch_left_hi
+        XBA : ORA !ram_cm_watch_left_hi
         XBA : STA !ram_watch_left
         RTS
 
-ramwatch_left_edit_hi:
-    %cm_numfield_hex("Value 1 High", !ram_watch_edit_left_hi, 0, 255, 1, #.routine)
+ramwatch_left_enemy_property:
+    dw !ACTION_CHOICE
+    dl #!ram_cm_watch_left_enemy_property
+    dw .routine
+    db #$28, "Set to Enemy  ", #$FF
+    db #$28, "         ID", #$FF
+    db #$28, " X POSITION", #$FF
+    db #$28, "   X SUBPOS", #$FF
+    db #$28, " Y POSITION", #$FF
+    db #$28, "   Y SUBPOS", #$FF
+    db #$28, "   X RADIUS", #$FF
+    db #$28, "   Y RADIUS", #$FF
+    db #$28, " PROPERTIES", #$FF
+    db #$28, "EXTRA PROPS", #$FF
+    db #$28, " AI HANDLER", #$FF
+    db #$28, "     HEALTH", #$FF
+    db #$28, "  SPRITEMAP", #$FF
+    db #$28, "    COUNTER", #$FF
+    db #$28, " INIT PARAM", #$FF
+    db #$28, "      TIMER", #$FF
+    db #$28, "PALETTE IDX", #$FF
+    db #$28, "   VRAM IDX", #$FF
+    db #$28, "      LAYER", #$FF
+    db #$28, "FLASH TIMER", #$FF
+    db #$28, "FROZE TIMER", #$FF
+    db #$28, "   I FRAMES", #$FF
+    db #$28, "SHAKE TIMER", #$FF
+    db #$28, "FRAME COUNT", #$FF
+    db #$28, "       BANK", #$FF
+    db #$28, "   AI VAR 0", #$FF
+    db #$28, "   AI VAR 1", #$FF
+    db #$28, "   AI VAR 2", #$FF
+    db #$28, "   AI VAR 3", #$FF
+    db #$28, "   AI VAR 4", #$FF
+    db #$28, "   AI VAR 5", #$FF
+    db #$28, "    PARAM 1", #$FF
+    db #$28, "    PARAM 2", #$FF
+    db #$FF
     .routine
-        XBA : ORA !ram_watch_edit_left_lo
+        ASL : CLC : ADC #$0F78 : STA !ram_watch_left
+        LDA !ram_cm_watch_left_enemy_index : XBA : LSR : LSR
+        ADC !ram_watch_left : STA !ram_watch_left
+        XBA : AND #$00FF : STA !ram_cm_watch_left_hi
+        LDA !ram_watch_left : AND #$00FF : STA !ram_cm_watch_left_lo
+        RTS
+
+ramwatch_left_enemy_index:
+    %cm_numfield_hex("Set to Enemy Index", !ram_cm_watch_left_enemy_index, 0, 31, 1, 2, #.routine)
+    .routine
+        XBA : LSR : LSR : STA !ram_watch_left
+        LDA !ram_cm_watch_left_enemy_property : ASL : CLC : ADC #$0F78
+        ADC !ram_watch_left : STA !ram_watch_left
+        XBA : AND #$00FF : STA !ram_cm_watch_left_hi
+        LDA !ram_watch_left : AND #$00FF : STA !ram_cm_watch_left_lo
+        RTS
+
+ramwatch_left_edit_hi:
+    %cm_numfield_hex("Value 1 High", !ram_cm_watch_edit_left_hi, 0, 255, 1, 8, #.routine)
+    .routine
+        XBA : ORA !ram_cm_watch_edit_left_lo
         STA !ram_watch_edit_left
         RTS
 
 ramwatch_left_edit_lo:
-    %cm_numfield_hex("Value 1 Low", !ram_watch_edit_left_lo, 0, 255, 1, #.routine)
+    %cm_numfield_hex("Value 1 Low", !ram_cm_watch_edit_left_lo, 0, 255, 1, 8, #.routine)
     .routine
-        XBA : ORA !ram_watch_edit_left_hi
+        XBA : ORA !ram_cm_watch_edit_left_hi
         XBA : STA !ram_watch_edit_left
         RTS
 
 ramwatch_right_hi:
-    %cm_numfield_hex("Address 2 High", !ram_watch_right_hi, 0, 255, 1, #.routine)
+    %cm_numfield_hex("Address 2 High", !ram_cm_watch_right_hi, 0, 255, 1, 8, #.routine)
     .routine
-        XBA : ORA !ram_watch_right_lo
+        XBA : ORA !ram_cm_watch_right_lo
         STA !ram_watch_right
         RTS
 
 ramwatch_right_lo:
-    %cm_numfield_hex("Address 2 Low", !ram_watch_right_lo, 0, 255, 1, #.routine)
+    %cm_numfield_hex("Address 2 Low", !ram_cm_watch_right_lo, 0, 255, 1, 8, #.routine)
     .routine
-        XBA : ORA !ram_watch_right_hi
+        XBA : ORA !ram_cm_watch_right_hi
         XBA : STA !ram_watch_right
         RTS
 
-ramwatch_right_edit_hi:
-    %cm_numfield_hex("Value 2 High", !ram_watch_edit_right_hi, 0, 255, 1, #.routine)
+ramwatch_right_enemy_property:
+    dw !ACTION_CHOICE
+    dl #!ram_cm_watch_right_enemy_property
+    dw .routine
+    db #$28, "Set to Enemy  ", #$FF
+    db #$28, "         ID", #$FF
+    db #$28, " X POSITION", #$FF
+    db #$28, "   X SUBPOS", #$FF
+    db #$28, " Y POSITION", #$FF
+    db #$28, "   Y SUBPOS", #$FF
+    db #$28, "   X RADIUS", #$FF
+    db #$28, "   Y RADIUS", #$FF
+    db #$28, " PROPERTIES", #$FF
+    db #$28, "EXTRA PROPS", #$FF
+    db #$28, " AI HANDLER", #$FF
+    db #$28, "     HEALTH", #$FF
+    db #$28, "  SPRITEMAP", #$FF
+    db #$28, "    COUNTER", #$FF
+    db #$28, " INIT PARAM", #$FF
+    db #$28, "      TIMER", #$FF
+    db #$28, "PALETTE IDX", #$FF
+    db #$28, "   VRAM IDX", #$FF
+    db #$28, "      LAYER", #$FF
+    db #$28, "FLASH TIMER", #$FF
+    db #$28, "FROZE TIMER", #$FF
+    db #$28, "   I FRAMES", #$FF
+    db #$28, "SHAKE TIMER", #$FF
+    db #$28, "FRAME COUNT", #$FF
+    db #$28, "       BANK", #$FF
+    db #$28, "   AI VAR 0", #$FF
+    db #$28, "   AI VAR 1", #$FF
+    db #$28, "   AI VAR 2", #$FF
+    db #$28, "   AI VAR 3", #$FF
+    db #$28, "   AI VAR 4", #$FF
+    db #$28, "   AI VAR 5", #$FF
+    db #$28, "    PARAM 1", #$FF
+    db #$28, "    PARAM 2", #$FF
+    db #$FF
     .routine
-        XBA : ORA !ram_watch_edit_right_lo
+        ASL : CLC : ADC #$0F78 : STA !ram_watch_right
+        LDA !ram_cm_watch_right_enemy_index : XBA : LSR : LSR
+        ADC !ram_watch_right : STA !ram_watch_right
+        XBA : AND #$00FF : STA !ram_cm_watch_right_hi
+        LDA !ram_watch_right : AND #$00FF : STA !ram_cm_watch_right_lo
+        RTS
+
+ramwatch_right_enemy_index:
+    %cm_numfield_hex("Set to Enemy Index", !ram_cm_watch_right_enemy_index, 0, 31, 1, 2, #.routine)
+    .routine
+        XBA : LSR : LSR : STA !ram_watch_right
+        LDA !ram_cm_watch_right_enemy_property : ASL : CLC : ADC #$0F78
+        ADC !ram_watch_right : STA !ram_watch_right
+        XBA : AND #$00FF : STA !ram_cm_watch_right_hi
+        LDA !ram_watch_right : AND #$00FF : STA !ram_cm_watch_right_lo
+        RTS
+
+ramwatch_right_edit_hi:
+    %cm_numfield_hex("Value 2 High", !ram_cm_watch_edit_right_hi, 0, 255, 1, 8, #.routine)
+    .routine
+        XBA : ORA !ram_cm_watch_edit_right_lo
         STA !ram_watch_edit_right
         RTS
 
 ramwatch_right_edit_lo:
-    %cm_numfield_hex("Value 2 Low", !ram_watch_edit_right_lo, 0, 255, 1, #.routine)
+    %cm_numfield_hex("Value 2 Low", !ram_cm_watch_edit_right_lo, 0, 255, 1, 8, #.routine)
     .routine
-        XBA : ORA !ram_watch_edit_right_hi
+        XBA : ORA !ram_cm_watch_edit_right_hi
         XBA : STA !ram_watch_edit_right
         RTS
 
@@ -1465,22 +1632,38 @@ ramwatch_lock_right:
 action_ramwatch_edit_left:
 {
     LDA !ram_watch_left : TAX
-    LDA !ram_watch_edit_left : STA $7E0000,X
-    LDA #$0012 : STA !sram_display_mode
+    LDA !ram_watch_bank : BEQ .bank7E
+    CMP #$0001 : BEQ .bank7F : BRA .bankSRAM
+  .bank7E
+    LDA !ram_watch_edit_left : STA $7E0000,X : BRA +
+  .bank7F
+    LDA !ram_watch_edit_left : STA $7F0000,X : BRA +
+  .bankSRAM
+    LDA !ram_watch_edit_left : STA $F00000,X
++   LDA #!IH_MODE_RAMWATCH_INDEX : STA !sram_display_mode
+    LDA #!SOUND_MENU_JSR : JSL $80903F
     RTS
 }
 
 action_ramwatch_edit_right:
 {
     LDA !ram_watch_right : TAX
-    LDA !ram_watch_edit_right : STA $7E0000,X
-    LDA #$0012 : STA !sram_display_mode
+    LDA !ram_watch_bank : BEQ .bank7E
+    CMP #$0001 : BEQ .bank7F : BRA .bankSRAM
+  .bank7E
+    LDA !ram_watch_edit_right : STA $7E0000,X : BRA +
+  .bank7F
+    LDA !ram_watch_edit_right : STA $7F0000,X : BRA +
+  .bankSRAM
+    LDA !ram_watch_edit_right : STA $F00000,X
++   LDA #!IH_MODE_RAMWATCH_INDEX : STA !sram_display_mode
+    LDA #!SOUND_MENU_JSR : JSL $80903F
     RTS
 }
 
 action_HUD_ramwatch:
 {
-    LDA #$0012 : STA !sram_display_mode
+    LDA #!IH_MODE_RAMWATCH_INDEX : STA !sram_display_mode
     RTS
 }
 
@@ -1556,7 +1739,7 @@ game_metronome:
     %cm_toggle("Metronome", !ram_metronome, #$0001, GameLoopExtras)
 
 game_metronome_tickrate:
-    %cm_numfield("Metronome Tickrate", !sram_metronome_tickrate, 1, 255, 1, #.routine)
+    %cm_numfield("Metronome Tickrate", !sram_metronome_tickrate, 1, 255, 1, 8, #.routine)
     .routine
         LDA #$0000 : STA !ram_metronome_counter
         RTS
@@ -1789,6 +1972,12 @@ action_clear_shortcuts:
     ; menu to default, Start + Select
     LDA #$3000 : STA !sram_ctrl_menu
     RTS
+}
+
+init_wram_based_on_sram:
+{
+    JSR init_suit_properties_ram
+    RTL
 }
 
 GameModeExtras:

@@ -22,7 +22,7 @@ preset_gtclassic_crateria_ship:
     dl $7E09A8 : db $02 : dw $0000 ; Beams
     dl $7E09C0 : db $02 : dw $0000 ; Manual/Auto reserve tank
     dl $7E09C2 : db $02 : dw $0063 ; Health
-    dl $7E09C4 : db $02 : dw $0063 ; Max helath
+    dl $7E09C4 : db $02 : dw $0063 ; Max health
     dl $7E09C6 : db $02 : dw $0000 ; Missiles
     dl $7E09C8 : db $02 : dw $0000 ; Max missiles
     dl $7E09CA : db $02 : dw $0000 ; Supers
@@ -465,7 +465,7 @@ preset_gtclassic_crateria_green_pirate_shaft:
     dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $01FC ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $00C7 ; Health
-    dl $7E09C4 : db $02 : dw $00C7 ; Max helath
+    dl $7E09C4 : db $02 : dw $00C7 ; Max health
     dl $7E0AF6 : db $02 : dw $0063 ; Samus X
     dl $7E0AFA : db $02 : dw $029B ; Samus Y
     dl $7E0B3F : db $02 : dw $0000 ; Blue suit
@@ -902,7 +902,7 @@ preset_gtclassic_kraid_leaving_kraids_lair:
     dl $7E0913 : db $02 : dw $F000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $001D ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $012B ; Health
-    dl $7E09C4 : db $02 : dw $012B ; Max helath
+    dl $7E09C4 : db $02 : dw $012B ; Max health
     dl $7E09C6 : db $02 : dw $0004 ; Missiles
     dl $7E09CE : db $02 : dw $0005 ; Pbs
     dl $7E0AF6 : db $02 : dw $0025 ; Samus X
@@ -1145,7 +1145,7 @@ preset_gtclassic_hi_jump_upper_norfair_leaving_hi_jump:
     dl $7E09A2 : db $02 : dw $1105 ; Equipped Items
     dl $7E09A4 : db $02 : dw $1105 ; Collected Items
     dl $7E09C2 : db $02 : dw $0121 ; Health
-    dl $7E09C4 : db $02 : dw $012B ; Max helath
+    dl $7E09C4 : db $02 : dw $012B ; Max health
     dl $7E09CA : db $02 : dw $0004 ; Supers
     dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0008 ; More position/state
@@ -1364,7 +1364,7 @@ preset_gtclassic_lower_norfair_leaving_golden_torizo:
     dl $7E09A6 : db $02 : dw $100B ; Beams
     dl $7E09A8 : db $02 : dw $100F ; Beams
     dl $7E09C2 : db $02 : dw $02BC ; Health
-    dl $7E09C4 : db $02 : dw $02BC ; Max helath
+    dl $7E09C4 : db $02 : dw $02BC ; Max health
     dl $7E09C6 : db $02 : dw $0064 ; Missiles
     dl $7E09C8 : db $02 : dw $0064 ; Max missiles
     dl $7E09CA : db $02 : dw $0014 ; Supers
@@ -2331,7 +2331,7 @@ preset_gtclassic_tourian_baby_skip:
     dw #$FFFF
 .after
 
-preset_gtclassic_tourian_gedora_room:
+preset_gtclassic_tourian_gadora_room:
     dw #preset_gtclassic_tourian_baby_skip ; Tourian: Baby Skip
     dl $7E078D : db $02 : dw $AA44 ; DDB
     dl $7E079B : db $02 : dw $DCFF ; MDB
@@ -2351,7 +2351,7 @@ preset_gtclassic_tourian_gedora_room:
 .after
 
 preset_gtclassic_tourian_zeb_skip:
-    dw #preset_gtclassic_tourian_gedora_room ; Tourian: Gedora Room
+    dw #preset_gtclassic_tourian_gadora_room ; Tourian: Gadora Room
     dl $7E078D : db $02 : dw $AAA4 ; DDB
     dl $7E079B : db $02 : dw $DDF3 ; MDB
     dl $7E090F : db $02 : dw $9000 ; Screen subpixel X position.

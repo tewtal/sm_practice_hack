@@ -16,22 +16,22 @@
 !ram_transition_counter = !WRAM_START+$0E
 !ram_transition_flag = !WRAM_START+$10
 !ram_transition_flag_2 = !WRAM_START+$12
- 
+
 !ram_seg_rt_frames = !WRAM_START+$14
 !ram_seg_rt_seconds = !WRAM_START+$16
 !ram_seg_rt_minutes = !WRAM_START+$18
 !ram_reset_segment_later = !WRAM_START+$1A
- 
+
 !ram_ih_controller = !WRAM_START+$1C
 !ram_slowdown_controller_1 = !WRAM_START+$1E
 !ram_slowdown_controller_2 = !WRAM_START+$20
 !ram_slowdown_frames = !WRAM_START+$22
- 
+
 !ram_tmp_1 = !WRAM_START+$24
 !ram_tmp_2 = !WRAM_START+$26
 !ram_tmp_3 = !WRAM_START+$28
 !ram_tmp_4 = !WRAM_START+$2A
- 
+
 !ram_last_hp = !WRAM_START+$2C
 
 ; ^ FREE SPACE ^
@@ -42,17 +42,17 @@
 !ram_minimap = !WRAM_START+$36
 !ram_map_counter = !WRAM_START+$38
 !ram_vcounter_data = !WRAM_START+$3A
- 
+
 !ram_sprite_hitbox_active = !WRAM_START+$3C
 !ram_oob_watch_active = !WRAM_START+$3E
 !ram_custom_preset = !WRAM_START+$40
- 
+
 !ram_magic_pants_enabled = !WRAM_START+$42
 !ram_magic_pants_state = !WRAM_START+$44
 !ram_magic_pants_pal1 = !WRAM_START+$46
 !ram_magic_pants_pal2 = !WRAM_START+$48
 !ram_magic_pants_pal3 = !WRAM_START+$4A
- 
+
 !ram_room_has_set_rng = !WRAM_START+$4C
 !ram_kraid_rng = !WRAM_START+$4E
 !ram_crocomire_rng = !WRAM_START+$50
@@ -62,35 +62,28 @@
 !ram_botwoon_rng = !WRAM_START+$58
 !ram_draygon_rng_left = !WRAM_START+$5A
 !ram_draygon_rng_right = !WRAM_START+$5C
- 
+
 !ram_game_loop_extras = !WRAM_START+$5E
 !ram_game_mode_extras = !WRAM_START+$60
- 
+
 !ram_metronome = !WRAM_START+$62
 !ram_metronome_counter = !WRAM_START+$64
 
 !ram_suits_enemy_damage_check = !WRAM_START+$66
 !ram_suits_periodic_damage_check = !WRAM_START+$68
 
-; ^ FREE SPACE ^ up to +$7E
- 
-!ram_watch_left = !WRAM_START+$80
-!ram_watch_left_hud = !WRAM_START+$82
-!ram_watch_left_hi = !WRAM_START+$84
-!ram_watch_left_lo = !WRAM_START+$86
-!ram_watch_right = !WRAM_START+$88
-!ram_watch_right_hud = !WRAM_START+$8A
-!ram_watch_right_hi = !WRAM_START+$8C
-!ram_watch_right_lo = !WRAM_START+$8E
-!ram_watch_edit_left = !WRAM_START+$90
-!ram_watch_edit_left_hi = !WRAM_START+$92
-!ram_watch_edit_left_lo = !WRAM_START+$94
-!ram_watch_edit_right = !WRAM_START+$96
-!ram_watch_edit_right_hi = !WRAM_START+$98
-!ram_watch_edit_right_lo = !WRAM_START+$9A
+; ^ FREE SPACE ^ up to +$8C
+
+!ram_watch_bank = !WRAM_START+$8E
+!ram_watch_left = !WRAM_START+$90
+!ram_watch_left_hud = !WRAM_START+$92
+!ram_watch_right = !WRAM_START+$94
+!ram_watch_right_hud = !WRAM_START+$96
+!ram_watch_edit_left = !WRAM_START+$98
+!ram_watch_edit_right = !WRAM_START+$9A
 !ram_watch_edit_lock_left = !WRAM_START+$9C
 !ram_watch_edit_lock_right = !WRAM_START+$9E
- 
+
 !ram_HUD_check = !WRAM_START+$A0
 !ram_roomstrat_counter = !WRAM_START+$A2
 !ram_roomstrat_state = !WRAM_START+$A4
@@ -115,42 +108,64 @@
 !ram_vertical_speed = !WRAM_START+$CA
 !ram_quickdrop_counter = !WRAM_START+$CC
 !ram_walljump_counter = !WRAM_START+$CE
- 
+
 ; ^ FREE SPACE ^ up to +$FC
- 
+
 ; -----------------------
 ; RAM (Bank 7E required)
 ; -----------------------
 
 !ram_slowdown_mode = $7EFBFE
- 
+
 ; ---------
 ; RAM Menu
 ; ---------
- 
+
 !WRAM_MENU_START = $7EFC00
- 
+
 !ram_cm_stack_index = $5D5
 !ram_cm_menu_stack = !WRAM_MENU_START+$00         ; 16 bytes
 !ram_cm_cursor_stack = !WRAM_MENU_START+$10       ; 16 bytes
- 
+
 !ram_cm_cursor_max = !WRAM_MENU_START+$20
 !ram_cm_input_timer = !WRAM_MENU_START+$24
 !ram_cm_controller = !WRAM_MENU_START+$26
 !ram_cm_menu_bank = !WRAM_MENU_START+$28
- 
+
 !ram_cm_etanks = !WRAM_MENU_START+$2A
 !ram_cm_reserve = !WRAM_MENU_START+$2C
 !ram_cm_leave = !WRAM_MENU_START+$2E
 !ram_cm_input_counter = !WRAM_MENU_START+$30
 !ram_cm_last_nmi_counter = !WRAM_MENU_START+$32
- 
+
 !ram_cm_ctrl_mode = !WRAM_MENU_START+$34
 !ram_cm_ctrl_timer = !WRAM_MENU_START+$36
 !ram_cm_ctrl_last_input = !WRAM_MENU_START+$38
- 
+
+; ^ FREE SPACE ^ up to +$7E
+
+; ------------------
+; Reusable RAM Menu
+; ------------------
+
+; The following RAM may be used multiple times,
+; as long as it isn't used multiple times on the same menu page
+
+!ram_cm_watch_left_hi = !WRAM_MENU_START+$80
+!ram_cm_watch_left_lo = !WRAM_MENU_START+$82
+!ram_cm_watch_left_enemy_property = !WRAM_MENU_START+$84
+!ram_cm_watch_left_enemy_index = !WRAM_MENU_START+$86
+!ram_cm_watch_right_hi = !WRAM_MENU_START+$88
+!ram_cm_watch_right_lo = !WRAM_MENU_START+$8A
+!ram_cm_watch_right_enemy_property = !WRAM_MENU_START+$8C
+!ram_cm_watch_right_enemy_index = !WRAM_MENU_START+$8E
+!ram_cm_watch_edit_left_hi = !WRAM_MENU_START+$90
+!ram_cm_watch_edit_left_lo = !WRAM_MENU_START+$92
+!ram_cm_watch_edit_right_hi = !WRAM_MENU_START+$94
+!ram_cm_watch_edit_right_lo = !WRAM_MENU_START+$96
+
 ; ^ FREE SPACE ^ up to +$CE
- 
+
 !ram_cgram_cache = !WRAM_MENU_START+$D0         ; 20 bytes
 
 !ram_hex2dec_first_digit = $14
@@ -217,6 +232,7 @@
 !IH_INPUT_DOWN = #$0400
 !IH_INPUT_LEFT = #$0200
 !IH_INPUT_RIGHT = #$0100
+!IH_INPUT_HELD = #$0001 ; used by menu
 
 !IH_INPUT_SHOOT = $7E09B2
 !IH_INPUT_JUMP = $7E09B4

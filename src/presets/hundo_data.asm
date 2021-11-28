@@ -22,7 +22,7 @@ preset_hundo_bombs_ceres_elevator:
     dl $7E09A8 : db $02 : dw $0000 ; Beams
     dl $7E09C0 : db $02 : dw $0000 ; Manual/Auto reserve tank
     dl $7E09C2 : db $02 : dw $0063 ; Health
-    dl $7E09C4 : db $02 : dw $0063 ; Max helath
+    dl $7E09C4 : db $02 : dw $0063 ; Max health
     dl $7E09C6 : db $02 : dw $0000 ; Missiles
     dl $7E09C8 : db $02 : dw $0000 ; Max missiles
     dl $7E09CA : db $02 : dw $0000 ; Supers
@@ -441,7 +441,7 @@ preset_hundo_kraid_pirates_shaft:
     dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $01EB ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $00C7 ; Health
-    dl $7E09C4 : db $02 : dw $00C7 ; Max helath
+    dl $7E09C4 : db $02 : dw $00C7 ; Max health
     dl $7E09C6 : db $02 : dw $0005 ; Missiles
     dl $7E0A1C : db $02 : dw $000C ; Samus position/state
     dl $7E0A1E : db $02 : dw $0104 ; More position/state
@@ -702,7 +702,7 @@ preset_hundo_kraid_kraid_escape:
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $C400 ; Screen subpixel Y position
     dl $7E09C2 : db $02 : dw $012B ; Health
-    dl $7E09C4 : db $02 : dw $012B ; Max helath
+    dl $7E09C4 : db $02 : dw $012B ; Max health
     dl $7E0A1C : db $02 : dw $0009 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0108 ; More position/state
     dl $7E0AF6 : db $02 : dw $00AA ; Samus X
@@ -762,7 +762,7 @@ preset_hundo_speed_booster_business_center_climb:
     dl $7E09A2 : db $02 : dw $1105 ; Equipped Items
     dl $7E09A4 : db $02 : dw $1105 ; Collected Items
     dl $7E09C2 : db $02 : dw $018F ; Health
-    dl $7E09C4 : db $02 : dw $018F ; Max helath
+    dl $7E09C4 : db $02 : dw $018F ; Max health
     dl $7E09C6 : db $02 : dw $0018 ; Missiles
     dl $7E09C8 : db $02 : dw $0019 ; Max missiles
     dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
@@ -1322,7 +1322,7 @@ preset_hundo_gravity_spiky_room_of_death_revisit:
     dl $7E0913 : db $02 : dw $1800 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0005 ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $01F3 ; Health
-    dl $7E09C4 : db $02 : dw $01F3 ; Max helath
+    dl $7E09C4 : db $02 : dw $01F3 ; Max health
     dl $7E09CA : db $02 : dw $000E ; Supers
     dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0008 ; More position/state
@@ -1556,7 +1556,7 @@ preset_hundo_brinstar_cleanup_green_pirates_shaft:
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $7400 ; Screen subpixel Y position
     dl $7E09C2 : db $02 : dw $01F8 ; Health
-    dl $7E09C4 : db $02 : dw $0257 ; Max helath
+    dl $7E09C4 : db $02 : dw $0257 ; Max health
     dl $7E09CE : db $02 : dw $0009 ; Pbs
     dl $7E0AF6 : db $02 : dw $002B ; Samus X
     dl $7ED870 : db $02 : dw $81BF ; Events, Items, Doors
@@ -1641,7 +1641,7 @@ preset_hundo_brinstar_cleanup_etecoon_room:
     dl $7E0913 : db $02 : dw $0400 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0100 ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $029B ; Health
-    dl $7E09C4 : db $02 : dw $02BB ; Max helath
+    dl $7E09C4 : db $02 : dw $02BB ; Max health
     dl $7E0AF6 : db $02 : dw $04D8 ; Samus X
     dl $7E0AFA : db $02 : dw $018B ; Samus Y
     dl $7ED872 : db $02 : dw $C48F ; Events, Items, Doors
@@ -1740,7 +1740,7 @@ preset_hundo_brinstar_cleanup_spore_spawn_supers:
     dl $7E0913 : db $02 : dw $E000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $053F ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $0308 ; Health
-    dl $7E09C4 : db $02 : dw $031F ; Max helath
+    dl $7E09C4 : db $02 : dw $031F ; Max health
     dl $7E09CA : db $02 : dw $0006 ; Supers
     dl $7E09CE : db $02 : dw $0012 ; Pbs
     dl $7E0A1C : db $02 : dw $0007 ; Samus position/state
@@ -1787,7 +1787,7 @@ preset_hundo_mama_turtle_etank_big_pink_charge_escape:
     dl $7E0913 : db $02 : dw $C800 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0900 ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $0383 ; Health
-    dl $7E09C4 : db $02 : dw $0383 ; Max helath
+    dl $7E09C4 : db $02 : dw $0383 ; Max health
     dl $7E09C6 : db $02 : dw $0041 ; Missiles
     dl $7E09CE : db $02 : dw $0012 ; Pbs
     dl $7E09D6 : db $02 : dw $005D ; Reserves
@@ -1906,7 +1906,7 @@ preset_hundo_maridia_cleanup_fish_tank_revisit:
     dl $7E0913 : db $02 : dw $1400 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0301 ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $03E7 ; Health
-    dl $7E09C4 : db $02 : dw $03E7 ; Max helath
+    dl $7E09C4 : db $02 : dw $03E7 ; Max health
     dl $7E09C6 : db $02 : dw $0049 ; Missiles
     dl $7E09C8 : db $02 : dw $0073 ; Max missiles
     dl $7E09CA : db $02 : dw $0008 ; Supers
@@ -2188,7 +2188,7 @@ preset_hundo_maridia_cleanup_2_aqueduct_revisit_1:
     dl $7E09A2 : db $02 : dw $3324 ; Equipped Items
     dl $7E09A6 : db $02 : dw $1007 ; Beams
     dl $7E09C2 : db $02 : dw $044B ; Health
-    dl $7E09C4 : db $02 : dw $044B ; Max helath
+    dl $7E09C4 : db $02 : dw $044B ; Max health
     dl $7E0A1C : db $02 : dw $001F ; Samus position/state
     dl $7E0A1E : db $02 : dw $0404 ; More position/state
     dl $7E0A68 : db $02 : dw $0000 ; Flash suit
@@ -2776,25 +2776,19 @@ preset_hundo_ridley_ridley_2:
 
 preset_hundo_ridley_ridley_escape:
     dw #preset_hundo_ridley_ridley_2 ; Ridley: Ridley
-    dl $7E078D : db $02 : dw $98B2 ; DDB
-    dl $7E079B : db $02 : dw $B698 ; MDB
+    dl $7E078D : db $02 : dw $98CA ; DDB
+    dl $7E079B : db $02 : dw $B32E ; MDB
     dl $7E07F3 : db $02 : dw $0024 ; Music Bank
     dl $7E07F5 : db $02 : dw $0003 ; Music Track
-    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position.
-    dl $7E0913 : db $02 : dw $FC00 ; Screen subpixel Y position
-    dl $7E09C2 : db $02 : dw $04AF ; Health
-    dl $7E09C4 : db $02 : dw $04AF ; Max helath
+    dl $7E0915 : db $02 : dw $011F ; Screen Y position in pixels
     dl $7E09C6 : db $02 : dw $0067 ; Missiles
     dl $7E09CA : db $02 : dw $000F ; Supers
     dl $7E09CE : db $02 : dw $0012 ; Pbs
-    dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
+    dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0008 ; More position/state
-    dl $7E0AF6 : db $02 : dw $00C8 ; Samus X
-    dl $7E0AFA : db $02 : dw $00AB ; Samus Y
+    dl $7E0AF6 : db $02 : dw $00C9 ; Samus X
+    dl $7E0AFA : db $02 : dw $019B ; Samus Y
     dl $7ED82A : db $02 : dw $0105 ; Events, Items, Doors
-    dl $7ED878 : db $02 : dw $D2DE ; Events, Items, Doors
-    dl $7ED8BA : db $02 : dw $DBF1 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $0086 ; Events, Items, Doors
     dw #$FFFF
 .after
 
@@ -2809,12 +2803,15 @@ preset_hundo_ridley_wasteland_up:
     dl $7E0911 : db $02 : dw $0200 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $5C00 ; Screen subpixel Y position
     dl $7E09C2 : db $02 : dw $048E ; Health
+    dl $7E09C4 : db $02 : dw $04AF ; Max health
     dl $7E0A1C : db $02 : dw $007D ; Samus position/state
     dl $7E0A1E : db $02 : dw $1308 ; More position/state
     dl $7E0AF6 : db $02 : dw $02D4 ; Samus X
     dl $7E0AFA : db $02 : dw $0085 ; Samus Y
     dl $7E0B3F : db $02 : dw $0003 ; Blue suit
+    dl $7ED878 : db $02 : dw $D2DE ; Events, Items, Doors
     dl $7ED8BA : db $02 : dw $DFF1 ; Events, Items, Doors
+    dl $7ED91A : db $02 : dw $0086 ; Events, Items, Doors
     dw #$FFFF
 .after
 
@@ -2863,7 +2860,7 @@ preset_hundo_ridley_hotarubi_special:
     dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $001D ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $0512 ; Health
-    dl $7E09C4 : db $02 : dw $0513 ; Max helath
+    dl $7E09C4 : db $02 : dw $0513 ; Max health
     dl $7E09CA : db $02 : dw $000E ; Supers
     dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0004 ; More position/state
@@ -3001,7 +2998,7 @@ preset_hundo_crocomire_grapple_shaft_down:
     dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $056E ; Health
-    dl $7E09C4 : db $02 : dw $0577 ; Max helath
+    dl $7E09C4 : db $02 : dw $0577 ; Max health
     dl $7E09C6 : db $02 : dw $0085 ; Missiles
     dl $7E09CA : db $02 : dw $000C ; Supers
     dl $7E09CE : db $02 : dw $0019 ; Pbs
@@ -3246,7 +3243,7 @@ preset_hundo_brinstar_cleanup_2_billy_mays:
     dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $001D ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $05DB ; Health
-    dl $7E09C4 : db $02 : dw $05DB ; Max helath
+    dl $7E09C4 : db $02 : dw $05DB ; Max health
     dl $7E09CA : db $02 : dw $000C ; Supers
     dl $7E09CE : db $02 : dw $001A ; Pbs
     dl $7E0A1C : db $02 : dw $0002 ; Samus position/state

@@ -49,6 +49,7 @@ status_roomstrat:
     dw status_shinetopb
     dw status_elevatorcf
     dw status_botwooncf
+    dw status_snailclip
     dw status_mbhp
 }
 
@@ -1026,33 +1027,91 @@ status_shottimer:
 
 status_ramwatch:
 {
+    ; Store Samus HP so it doesn't overwrite our HUD
     LDA $09C2 : STA !ram_last_hp
+
+    ; Determine bank and store in Y (0=7E, 1=7F, else SRAM)
+    LDA !ram_watch_bank : TAY : BEQ .readLeft7E
+    CPY #$0001 : BEQ .readLeft7F
+    BRA .readLeftSRAM
+
+  .readLeft7E
     LDA !ram_watch_left : TAX
-    LDA $7E0000,X : CMP !ram_watch_left_hud : BEQ .readright
+    LDA $7E0000,X : CMP !ram_watch_left_hud : BEQ .readRight7E
     STA !ram_watch_left_hud : LDX #$0088 : JSR Draw4Hex
 
-  .readright
+  .readRight7E
     LDA !ram_watch_right : TAX
-    LDA $7E0000,X : CMP !ram_watch_right_hud : BEQ .drawleft
+    LDA $7E0000,X : CMP !ram_watch_right_hud : BEQ .drawLeft
+    STA !ram_watch_right_hud : LDX #$0092 : JSR Draw4Hex
+    BRA .drawLeft
+
+  .readLeft7F
+    LDA !ram_watch_left : TAX
+    LDA $7F0000,X : CMP !ram_watch_left_hud : BEQ .readRight7F
+    STA !ram_watch_left_hud : LDX #$0088 : JSR Draw4Hex
+
+  .readRight7F
+    LDA !ram_watch_right : TAX
+    LDA $7F0000,X : CMP !ram_watch_right_hud : BEQ .drawLeft
+    STA !ram_watch_right_hud : LDX #$0092 : JSR Draw4Hex
+    BRA .drawLeft
+
+  .readLeftSRAM
+    LDA !ram_watch_left : TAX
+    LDA $F00000,X : CMP !ram_watch_left_hud : BEQ .readRightSRAM
+    STA !ram_watch_left_hud : LDX #$0088 : JSR Draw4Hex
+
+  .readRightSRAM
+    LDA !ram_watch_right : TAX
+    LDA $F00000,X : CMP !ram_watch_right_hud : BEQ .drawLeft
     STA !ram_watch_right_hud : LDX #$0092 : JSR Draw4Hex
 
-  .drawleft
-    LDA $7EC688 : CMP !IH_BLANK : BNE .drawright
+  .drawLeft
+    LDA $7EC688 : CMP !IH_BLANK : BNE .drawRight
     LDA !ram_watch_left_hud : LDX #$0088 : JSR Draw4Hex
 
-  .drawright
-    LDA $7EC692 : CMP !IH_BLANK : BNE .writeleft
+  .drawRight
+    LDA $7EC692 : CMP !IH_BLANK : BNE .writeLock
     LDA !ram_watch_right_hud : LDX #$0092 : JSR Draw4Hex
 
-  .writeleft
-    LDA !ram_watch_edit_lock_left : BEQ .writeright
+  .writeLock
+    ; Bank from Y (0=7E, 1=7F, else SRAM)
+    TYA : BEQ .writeLeft7E
+    CMP #$0001 : BEQ .writeLeft7F
+    BRA .writeLeftSRAM
+
+  .writeLeft7E
+    LDA !ram_watch_edit_lock_left : BEQ .writeRight7E
     LDA !ram_watch_left : TAX
     LDA !ram_watch_edit_left : STA $7E0000,X
 
-  .writeright
+  .writeRight7E
     LDA !ram_watch_edit_lock_right : BEQ .done
     LDA !ram_watch_right : TAX
     LDA !ram_watch_edit_right : STA $7E0000,X
+    RTS
+
+  .writeLeft7F
+    LDA !ram_watch_edit_lock_left : BEQ .writeRight7F
+    LDA !ram_watch_left : TAX
+    LDA !ram_watch_edit_left : STA $7F0000,X
+
+  .writeRight7F
+    LDA !ram_watch_edit_lock_right : BEQ .done
+    LDA !ram_watch_right : TAX
+    LDA !ram_watch_edit_right : STA $7F0000,X
+    RTS
+
+  .writeLeftSRAM
+    LDA !ram_watch_edit_lock_left : BEQ .writeRightSRAM
+    LDA !ram_watch_left : TAX
+    LDA !ram_watch_edit_left : STA $F00000,X
+
+  .writeRightSRAM
+    LDA !ram_watch_edit_lock_right : BEQ .done
+    LDA !ram_watch_right : TAX
+    LDA !ram_watch_edit_right : STA $F00000,X
 
   .done
     RTS
@@ -1997,6 +2056,80 @@ endif
   .frameperfect
     LDA !IH_LETTER_Y : STA $7EC68C : STA $7EC68E
     BRA .reset
+}
+
+status_snailclip:
+{
+    !snailclip_ypos_hi = $014B
+if !FEATURE_PAL
+    !snailclip_ypos_lo = $014E
+else
+    !snailclip_ypos_lo = $014D
+endif
+
+    LDA $0F7A : CMP !ram_xpos : BEQ .checkypos
+    STA !ram_xpos : LDA $0F7E : STA !ram_ypos
+    BRA .resetcounter
+
+  .checkypos
+    LDA $0F7E : CMP !ram_ypos : BEQ .checkcounter
+    STA !ram_ypos
+
+  .resetcounter
+    LDA #$0000 : STA !ram_roomstrat_counter
+    RTS
+
+  .checkcounter
+    ; Arbitrary wait of 15 frames with no X or Y change
+    LDA !ram_roomstrat_counter : CMP #$000F : BEQ .checkpos : BPL .done
+    INC : STA !ram_roomstrat_counter
+
+  .done
+    RTS
+
+  .ignore
+    LDA !IH_BLANK : STA $7EC688 : STA $7EC68A : STA $7EC68C : STA $7EC68E
+    RTS
+
+  .checkpos
+    ; Increment counter so we don't check again
+    INC : STA !ram_roomstrat_counter
+    LDA !ram_xpos : CMP #$0478 : BMI .ignore : CMP #$0489 : BPL .ignore
+    LDA !ram_ypos : CMP #$0120 : BMI .ignore : CMP #$0165 : BPL .ignore
+
+    ; Snail is in range
+    LDA !IH_BLANK : STA $7EC688 : STA $7EC68A
+
+    ; Check the height
+    LDA !ram_ypos : CMP #!snailclip_ypos_hi : BEQ .yeshigh : BMI .high
+    CMP #!snailclip_ypos_lo : BEQ .yeslow : BPL .low
+
+    ; Height is good and centered
+    LDA !IH_BLANK : STA $7EC68E
+    BRA .printy
+
+  .yeshigh
+    LDA !IH_LETTER_H : STA $7EC68E
+    BRA .printy
+
+  .high
+    LDA #!snailclip_ypos_hi : SEC : SBC !ram_ypos
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC68E
+    LDA !IH_LETTER_H : STA $7EC68C
+    RTS
+
+  .yeslow
+    LDA !IH_LETTER_L : STA $7EC68E
+
+  .printy
+    LDA !IH_LETTER_Y : STA $7EC68C
+    RTS
+
+  .low
+    LDA !ram_ypos : SEC : SBC #!snailclip_ypos_lo
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC68E
+    LDA !IH_LETTER_L : STA $7EC68C
+    RTS
 }
 
 status_mbhp:

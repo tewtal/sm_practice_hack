@@ -22,7 +22,7 @@ preset_kpdr21_crateria_ship:
     dl $7E09A8 : db $02 : dw $0000 ; Beams
     dl $7E09C0 : db $02 : dw $0000 ; Manual/Auto reserve tank
     dl $7E09C2 : db $02 : dw $0063 ; Health
-    dl $7E09C4 : db $02 : dw $0063 ; Max helath
+    dl $7E09C4 : db $02 : dw $0063 ; Max health
     dl $7E09C6 : db $02 : dw $0000 ; Missiles
     dl $7E09C8 : db $02 : dw $0000 ; Max missiles
     dl $7E09CA : db $02 : dw $0000 ; Supers
@@ -465,7 +465,7 @@ preset_kpdr21_crateria_green_pirate_shaft:
     dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $01FC ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $00C7 ; Health
-    dl $7E09C4 : db $02 : dw $00C7 ; Max helath
+    dl $7E09C4 : db $02 : dw $00C7 ; Max health
     dl $7E0AF6 : db $02 : dw $0063 ; Samus X
     dl $7E0AFA : db $02 : dw $029B ; Samus Y
     dl $7E0B3F : db $02 : dw $0000 ; Blue suit
@@ -818,7 +818,7 @@ preset_kpdr21_upper_norfair_leaving_hi_jump:
     dl $7E09A2 : db $02 : dw $1105 ; Equipped Items
     dl $7E09A4 : db $02 : dw $1105 ; Collected Items
     dl $7E09C2 : db $02 : dw $012B ; Health
-    dl $7E09C4 : db $02 : dw $012B ; Max helath
+    dl $7E09C4 : db $02 : dw $012B ; Max health
     dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0008 ; More position/state
     dl $7E0AF6 : db $02 : dw $00B5 ; Samus X
@@ -1676,7 +1676,7 @@ preset_kpdr21_maridia_halfie_setup:
     dl $7E0913 : db $02 : dw $4400 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $001F ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $018F ; Health
-    dl $7E09C4 : db $02 : dw $018F ; Max helath
+    dl $7E09C4 : db $02 : dw $018F ; Max health
     dl $7E0AF6 : db $02 : dw $008D ; Samus X
     dl $7E0AFA : db $02 : dw $009B ; Samus Y
     dl $7ED882 : db $02 : dw $0100 ; Events, Items, Doors
@@ -2603,7 +2603,7 @@ preset_kpdr21_tourian_baby_skip:
     dw #$FFFF
 .after
 
-preset_kpdr21_tourian_gedora_room:
+preset_kpdr21_tourian_gadora_room:
     dw #preset_kpdr21_tourian_baby_skip ; Tourian: Baby Skip
     dl $7E078D : db $02 : dw $AA44 ; DDB
     dl $7E079B : db $02 : dw $DCFF ; MDB
@@ -2623,7 +2623,7 @@ preset_kpdr21_tourian_gedora_room:
 .after
 
 preset_kpdr21_tourian_zeb_skip:
-    dw #preset_kpdr21_tourian_gedora_room ; Tourian: Gedora Room
+    dw #preset_kpdr21_tourian_gadora_room ; Tourian: Gadora Room
     dl $7E078D : db $02 : dw $AAA4 ; DDB
     dl $7E079B : db $02 : dw $DDF3 ; MDB
     dl $7E090F : db $02 : dw $E000 ; Screen subpixel X position.

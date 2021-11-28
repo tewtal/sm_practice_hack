@@ -773,6 +773,15 @@ ih_hud_code:
   .status_icons
     LDA !sram_status_icons : BEQ .end
 
+    ; health bomb
+    LDA $0E1A : BEQ .clear_healthbomb
+    LDA !IH_LETTER_E : STA $7EC654
+    BRA .check_elevator
+
+  .clear_healthbomb
+    LDA !IH_BLANK : STA $7EC654
+
+  .check_elevator
     ; Elevator
     LDA $0E16 : BEQ .clear_elevator
     LDA !IH_ELEVATOR : STA $7EC656
