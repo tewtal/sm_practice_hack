@@ -1641,6 +1641,7 @@ action_ramwatch_edit_left:
   .bankSRAM
     LDA !ram_watch_edit_left : STA $F00000,X
 +   LDA #!IH_MODE_RAMWATCH_INDEX : STA !sram_display_mode
+    LDA #!SOUND_MENU_JSR : JSL $80903F
     RTS
 }
 
@@ -1656,6 +1657,7 @@ action_ramwatch_edit_right:
   .bankSRAM
     LDA !ram_watch_edit_right : STA $F00000,X
 +   LDA #!IH_MODE_RAMWATCH_INDEX : STA !sram_display_mode
+    LDA #!SOUND_MENU_JSR : JSL $80903F
     RTS
 }
 
