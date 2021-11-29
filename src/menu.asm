@@ -402,7 +402,9 @@ cm_tilemap_menu:
   .continue
     STA $0E
 
-    LDA [$00],Y : BEQ .done : STA $04
+    LDA [$00],Y : BEQ .header
+    CMP #$FFFF : BEQ .blank
+    STA $04
 
     PHY : PHX
 
@@ -415,16 +417,30 @@ cm_tilemap_menu:
     JSR (cm_draw_action_table,X)
 
     PLX : PLY
+
+  .blank
+    ; skip drawing blank lines
     INY : INY
     BRA .loop
 
-  .done
-    ; Draw submenu title
+  .header
+    ; Draw menu header
     STZ $0E
-    TYA : CLC : ADC $00 : INC : INC : STA $04
+    TYA : CLC : ADC $00 : INC #2 : STA $04
     LDX #$00C6
     JSR cm_draw_text
 
+    ; Optional footer
+    TYA : CLC : ADC $04 : INC : STA $04
+    LDA [$04] : CMP #$F007 : BNE .done
+
+    INC $04 : INC $04 : STZ $0E
+    LDX #$0606
+    JSR cm_draw_text
+    RTS
+
+  .done
+    DEC $04 : DEC $04
     RTS
 }
 
@@ -848,16 +864,19 @@ cm_draw_action_table:
 }
 
 cm_draw_text:
+    ; X = pointer to tilemap area (STA !ram_tilemap_buffer,X)
+    ; $04[0x3] = address
   %a8()
     LDY #$0000
-    ; grab palette info
+    ; terminator
     LDA [$04],Y : INY : CMP #$FF : BEQ .end
+    ; ORA with palette info
     ORA $0E : STA $0E
 
   .loop
-    LDA [$04],Y : CMP #$FF : BEQ .end
-    STA !ram_tilemap_buffer,X : INX
-    LDA $0E : STA !ram_tilemap_buffer,X : INX
+    LDA [$04],Y : CMP #$FF : BEQ .end           ; terminator
+    STA !ram_tilemap_buffer,X : INX             ; tile
+    LDA $0E : STA !ram_tilemap_buffer,X : INX   ; palette
     INY : JMP .loop
 
   .end
@@ -1120,21 +1139,28 @@ cm_get_inputs:
 
 cm_move:
 {
+    STA $12
     LDX !ram_cm_stack_index
     CLC : ADC !ram_cm_cursor_stack,X : BPL .positive
-    LDA !ram_cm_cursor_max : DEC #2
+    LDA !ram_cm_cursor_max : DEC #2 : BRA .inBounds
 
   .positive
     CMP !ram_cm_cursor_max : BNE .inBounds
     LDA #$0000
 
   .inBounds
-    STA !ram_cm_cursor_stack,X
+    STA !ram_cm_cursor_stack,X : TAY
 
+    ; check for blank menu line ($FFFF)
+    LDA [$00],Y : CMP #$FFFF : BNE .end
+
+    LDA $12 : BRA cm_move
+
+  .end
     LDA #!SOUND_MENU_MOVE : JSL $80903F
-
     RTS
 }
+
 
 ; --------
 ; Execute
@@ -1152,9 +1178,12 @@ cm_execute:
     ; Increment past the action index
     LDA [$00] : INC $00 : INC $00 : TAX
 
+    ; Safety net incase blank line selected
+    CPX #$FFFF : BEQ +
+
     ; Execute action
     JSR (cm_execute_action_table,X)
-    RTS
++   RTS
 }
 
 cm_execute_action_table:
