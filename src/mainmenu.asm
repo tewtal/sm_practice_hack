@@ -8,6 +8,12 @@ macro cm_header(title)
     table ../resources/normal.tbl
 endmacro
 
+macro cm_footer(title)
+    table ../resources/header.tbl
+    dw #$F007 : db #$28, "<title>", #$FF
+    table ../resources/normal.tbl
+endmacro
+
 macro cm_version_header(title, major, minor, build, rev_1, rev_2)
     table ../resources/header.tbl
 if !VERSION_REV_1
@@ -229,6 +235,7 @@ mm_goto_ctrlsmenu:
 PresetsMenu:
     dw #presets_goto_select_preset_category
     dw #presets_current
+    dw #$FFFF
     dw #presets_custom_preset_slot
     dw #presets_save_custom_preset
     dw #presets_load_custom_preset
@@ -249,6 +256,7 @@ presets_load_custom_preset:
 
 SelectPresetCategoryMenu:
     dw #presets_current
+    dw #$FFFF
     dw #precat_prkd
     dw #precat_kpdr21
     dw #precat_hundo
@@ -440,6 +448,7 @@ EquipmentMenu:
     dw #eq_toggle_category
     dw #eq_goto_toggleitems
     dw #eq_goto_togglebeams
+    dw #$FFFF
     dw #eq_currentenergy
     dw #eq_setetanks
     dw #eq_currentreserves
@@ -463,7 +472,7 @@ eq_refill:
     RTS
 
 eq_toggle_category:
-    %cm_submenu("Toggle Category", #ToggleCategoryMenu)
+    %cm_submenu("Category Loadouts", #ToggleCategoryMenu)
 
 eq_goto_toggleitems:
     %cm_submenu("Toggle Items", #ToggleItemsMenu)
@@ -627,13 +636,16 @@ action_category:
 ToggleItemsMenu:
     dw #ti_variasuit
     dw #ti_gravitysuit
+    dw #$FFFF
     dw #ti_morphball
     dw #ti_bomb
     dw #ti_springball
     dw #ti_screwattack
+    dw #$FFFF
     dw #ti_hijumpboots
     dw #ti_spacejump
     dw #ti_speedbooster
+    dw #$FFFF
     dw #ti_grapple
     dw #ti_xray
     dw #$0000
@@ -689,6 +701,7 @@ ToggleBeamsMenu:
     dw tb_wavebeam
     dw tb_spazerbeam
     dw tb_plasmabeam
+    dw #$FFFF
     dw tb_glitchedbeams
     dw #$0000
     %cm_header("TOGGLE BEAMS")
@@ -723,6 +736,7 @@ GlitchedBeamsMenu:
     dw #gb_unnamed
     dw #$0000
     %cm_header("GLITCHED BEAMS")
+    %cm_footer("BEWARE OF CRASHES")
 
 gb_murder:
     %cm_jsr("Murder Beam", action_glitched_beam, #$100F)
@@ -868,15 +882,16 @@ MiscMenu:
     dw #misc_bluesuit
     dw #misc_flashsuit
     dw #misc_hyperbeam
+    dw #$FFFF
+    dw #misc_invincibility
     dw #misc_gooslowdown
+    dw #misc_suit_properties
+    dw #$FFFF
     dw #misc_magicpants
     dw #misc_spacepants
     dw #misc_loudpants
-    dw #misc_fanfare_toggle
-    dw #misc_music_toggle
-    dw #misc_suit_properties
-    dw #misc_transparent
-    dw #misc_invincibility
+    dw #$FFFF
+    dw #misc_killenemies
     dw #misc_forcestand
     dw #$0000
     %cm_header("MISC")
@@ -901,33 +916,6 @@ misc_spacepants:
 
 misc_loudpants:
     %cm_toggle_bit("Loud Pants", !ram_magic_pants_enabled, #$0004, GameLoopExtras)
-
-misc_fanfare_toggle:
-    %cm_toggle("Fanfare", !sram_fanfare_toggle, #$0001, #0)
-
-misc_music_toggle:
-    %cm_toggle("Music", !sram_music_toggle, #$0001, .routine)
-
-  .routine
-    BIT #$0001 : BEQ .noMusic
-
-    LDA $07F5 : STA $2140
-
-    RTS
-
-  .noMusic
-    LDA #$0000 
-    STA $0629
-    STA $062B
-    STA $062D
-    STA $062F
-    STA $0631
-    STA $0633
-    STA $0635
-    STA $0637
-    STA $063F
-    STA $2140
-    RTS
 
 misc_suit_properties:
     dw !ACTION_CHOICE
@@ -960,6 +948,16 @@ misc_transparent:
 misc_invincibility:
     %cm_toggle_bit("Invincibility", $7E0DE0, #$0007, #0)
 
+misc_killenemies:
+    %cm_jsr("Kill Enemies", .kill_loop, #0)
+  .kill_loop
+    ; 8000 = solid to Samus, 0400 = Ignore Samus projectiles
+    TAX : LDA $0F86,X : BIT #$8400 : BNE +
+    ORA #$0200 : STA $0F86,X
++   TXA : CLC : ADC #$0040 : CMP #$0400 : BNE .kill_loop
+    LDA #!SOUND_MENU_JSR : JSL !SFX_LIB1
+    RTS
+
 misc_forcestand:
     %cm_jsr("Force Samus to Stand Up", .routine, #0)
 
@@ -976,7 +974,9 @@ EventsMenu:
     dw #events_resetevents
     dw #events_resetdoors
     dw #events_resetitems
+    dw #$FFFF
     dw #events_goto_bosses
+    dw #$FFFF
     dw #events_zebesawake
     dw #events_maridiatubebroken
     dw #events_chozoacid
@@ -1128,12 +1128,15 @@ boss_ridley:
 InfoHudMenu:
     dw #ih_goto_display_mode
     dw #ih_display_mode
+    dw #$FFFF
     dw #ih_goto_room_strat
     dw #ih_room_strat
+    dw #$FFFF
     dw #ih_room_counter
     dw #ih_reset_seg_later
-    dw #ih_status_icons
     dw #ih_lag
+    dw #ih_status_icons
+    dw #$FFFF
     dw #ih_ram_watch
     dw #ih_show_hitbox
     dw #ih_oob_viewer
@@ -1277,6 +1280,7 @@ RoomStratMenu:
     dw ihstrat_mbhp
     dw #$0000
     %cm_header("INFOHUD ROOM STRAT")
+    %cm_footer("ROOM STRAT MUST BE ACTIVE")
 
 ihstrat_doorskip:
     %cm_jsr("Parlor-Climb Door Skip", #action_select_room_strat, #$0000)
@@ -1321,7 +1325,7 @@ action_select_room_strat:
 ih_room_strat:
     dw !ACTION_CHOICE
     dl #!sram_room_strat
-    dw #$0000
+    dw #.routine
     db #$28, "Current Strat", #$FF
     db #$28, "  DOOR SKIP", #$FF
     db #$28, "  TACO TANK", #$FF
@@ -1334,6 +1338,9 @@ ih_room_strat:
     db #$28, " SNAIL CLIP", #$FF
     db #$28, "      MB HP", #$FF
     db #$FF
+    .routine
+        LDA #$0001 : STA !sram_display_mode
+        RTS
 
 ih_room_counter:
     dw !ACTION_CHOICE
@@ -1349,7 +1356,7 @@ ih_status_icons:
 
 toggle_status_icons:
 {
-    LDA !IH_BLANK : STA $7EC656 : STA $7EC658
+    LDA !IH_BLANK : STA $7EC654 : STA $7EC656 : STA $7EC658
     RTS
 }
 
@@ -1413,6 +1420,7 @@ toggle_oob_viewer:
 RAMWatchMenu:
     dw ramwatch_enable
     dw ramwatch_bank
+    dw #$FFFF
     dw ramwatch_left_hi
     dw ramwatch_left_lo
     dw ramwatch_left_enemy_property
@@ -1421,6 +1429,7 @@ RAMWatchMenu:
     dw ramwatch_left_edit_lo
     dw ramwatch_execute_left
     dw ramwatch_lock_left
+    dw #$FFFF
     dw ramwatch_right_hi
     dw ramwatch_right_lo
     dw ramwatch_right_enemy_property
@@ -1507,6 +1516,7 @@ ramwatch_left_enemy_property:
         ADC !ram_watch_left : STA !ram_watch_left
         XBA : AND #$00FF : STA !ram_cm_watch_left_hi
         LDA !ram_watch_left : AND #$00FF : STA !ram_cm_watch_left_lo
+        LDA #$0000 : STA !ram_watch_bank
         RTS
 
 ramwatch_left_enemy_index:
@@ -1517,6 +1527,7 @@ ramwatch_left_enemy_index:
         ADC !ram_watch_left : STA !ram_watch_left
         XBA : AND #$00FF : STA !ram_cm_watch_left_hi
         LDA !ram_watch_left : AND #$00FF : STA !ram_cm_watch_left_lo
+        LDA #$0000 : STA !ram_watch_bank
         RTS
 
 ramwatch_left_edit_hi:
@@ -1591,6 +1602,7 @@ ramwatch_right_enemy_property:
         ADC !ram_watch_right : STA !ram_watch_right
         XBA : AND #$00FF : STA !ram_cm_watch_right_hi
         LDA !ram_watch_right : AND #$00FF : STA !ram_cm_watch_right_lo
+        LDA #$0000 : STA !ram_watch_bank
         RTS
 
 ramwatch_right_enemy_index:
@@ -1601,6 +1613,7 @@ ramwatch_right_enemy_index:
         ADC !ram_watch_right : STA !ram_watch_right
         XBA : AND #$00FF : STA !ram_cm_watch_right_hi
         LDA !ram_watch_right : AND #$00FF : STA !ram_cm_watch_right_lo
+        LDA #$0000 : STA !ram_watch_bank
         RTS
 
 ramwatch_right_edit_hi:
@@ -1676,13 +1689,19 @@ GameMenu:
     dw #game_alternatetext
     dw #game_moonwalk
     dw #game_iconcancel
+    dw #$FFFF
+    dw #game_fanfare_toggle
+    dw #game_music_toggle
+    dw #$FFFF
     dw #game_debugmode
     dw #game_debugbrightness
 if !FEATURE_PAL
     dw #game_paldebug
 endif
+    dw #$FFFF
     dw #game_minimap
     dw #game_clear_minimap
+    dw #$FFFF
     dw #game_metronome
     dw #game_metronome_tickrate
     dw #game_metronome_sfx
@@ -1701,6 +1720,30 @@ game_moonwalk:
 
 game_iconcancel:
     %cm_toggle("Icon Cancel", $7E09EA, #$0001, #0)
+
+game_fanfare_toggle:
+    %cm_toggle("Fanfare", !sram_fanfare_toggle, #$0001, #0)
+
+game_music_toggle:
+    %cm_toggle("Music", !sram_music_toggle, #$0001, .routine)
+  .routine
+    BIT #$0001 : BEQ .noMusic
+    LDA $07F5 : STA $2140
+    RTS
+
+  .noMusic
+    LDA #$0000 
+    STA $0629
+    STA $062B
+    STA $062D
+    STA $062F
+    STA $0631
+    STA $0633
+    STA $0635
+    STA $0637
+    STA $063F
+    STA $2140
+    RTS
 
 game_debugmode:
     %cm_toggle("Debug Mode", $7E05D1, #$0001, #0)
@@ -1779,10 +1822,14 @@ RngMenu:
     dw #rng_phan_first_phase
     dw #rng_phan_second_phase
     dw #rng_phan_eyeclose
+    dw #$FFFF
     dw #rng_botwoon_rng
+    dw #$FFFF
     dw #rng_draygon_rng_right
     dw #rng_draygon_rng_left
+    dw #$FFFF
     dw #rng_crocomire_rng
+    dw #$FFFF
     dw #rng_kraid_rng
     dw #$0000
     %cm_header("BOSS RNG CONTROL")
@@ -1903,9 +1950,11 @@ CtrlMenu:
     dw #ctrl_full_equipment
     dw #ctrl_kill_enemies
     dw #ctrl_toggle_tileviewer
+    dw #$FFFF
     dw #ctrl_clear_shortcuts
     dw #$0000
     %cm_header("CONTROLLER SHORTCUTS")
+    %cm_footer("PRESS AND HOLD FOR 2 SEC")
 
 ctrl_menu:
     %cm_ctrl_shortcut("Main menu", !sram_ctrl_menu)
@@ -1971,6 +2020,7 @@ action_clear_shortcuts:
     STA !sram_ctrl_toggle_tileviewer
     ; menu to default, Start + Select
     LDA #$3000 : STA !sram_ctrl_menu
+    LDA #!SOUND_MENU_JSR : JSL !SFX_LIB1
     RTS
 }
 

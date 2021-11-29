@@ -123,7 +123,7 @@
 
 !WRAM_MENU_START = $7EFC00
 
-!ram_cm_stack_index = $5D5
+!ram_cm_stack_index = $05D5
 !ram_cm_menu_stack = !WRAM_MENU_START+$00         ; 16 bytes
 !ram_cm_cursor_stack = !WRAM_MENU_START+$10       ; 16 bytes
 
