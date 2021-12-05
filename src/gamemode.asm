@@ -163,12 +163,12 @@ endif
 
   .toggle_tileviewer
     LDA !ram_oob_watch_active : BEQ .turnOnTileViewer
-    LDA #$0000 : STA !ram_oob_watch_active
+    LDA #$0000 : STA !ram_oob_watch_active : STA !ram_sprite_features_active
     ; CLC to continue normal gameplay after disabling OOB Tile Viewer
     CLC : RTS
 
   .turnOnTileViewer
-    LDA #$0001 : STA !ram_oob_watch_active
+    LDA #$0001 : STA !ram_oob_watch_active : STA !ram_sprite_features_active
     JSL upload_sprite_oob_tiles
     ; CLC to continue normal gameplay after enabling OOB Tile Viewer
     CLC : RTS
