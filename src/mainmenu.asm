@@ -283,7 +283,7 @@ SelectPresetCategoryMenu:
 presets_current:
     dw !ACTION_CHOICE
     dl #!sram_preset_category
-    dw #$0000
+    dw #.routine
     db #$28, "CURRENT PRESET", #$FF
         db #$28, "       PRKD", #$FF
         db #$28, "       KPDR", #$FF
@@ -302,6 +302,9 @@ presets_current:
         db #$28, "   ALL PKDR", #$FF
         db #$28, "   ALL PRKD", #$FF
     db #$FF
+  .routine
+    LDA #$0000 : STA !sram_last_preset
+    RTS
 
 precat_prkd:
     %cm_jsr("Any% PRKD", #action_select_preset_category, #$0000)
@@ -354,6 +357,7 @@ precat_allbossprkd:
 action_select_preset_category:
 {
     TYA : STA !sram_preset_category
+    LDA #$0000 : STA !sram_last_preset
     JSR cm_go_back
     JSR cm_calculate_max
     RTS
