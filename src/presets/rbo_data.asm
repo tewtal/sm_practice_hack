@@ -1759,10 +1759,10 @@ preset_rbo_norfair_escape_firefleas_exit_spikesuit:
     dl $7E079B : db $02 : dw $B6EE ; MDB
     dl $7E07C5 : db $02 : dw $BBBD ; GFX Pointers
     dl $7E07C7 : db $02 : dw $C2B6 ; GFX Pointers
-    dl $7E090F : db $02 : dw $1000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $1800 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $001D ; Screen Y position in pixels
+    dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
+    dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $0383 ; Health
     dl $7E09C6 : db $02 : dw $0005 ; Missiles
     dl $7E09CA : db $02 : dw $0000 ; Supers
