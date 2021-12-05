@@ -191,6 +191,7 @@ MainMenu:
     dw #mm_goto_events
     dw #mm_goto_misc
     dw #mm_goto_infohud
+    dw #mm_goto_sprites
     dw #mm_goto_gamemenu
     dw #mm_goto_rngmenu
     dw #mm_goto_ctrlsmenu
@@ -217,6 +218,9 @@ mm_goto_misc:
 
 mm_goto_infohud:
     %cm_submenu("Infohud", #InfoHudMenu)
+
+mm_goto_sprites:
+    %cm_submenu("Sprite Features", #SpritesMenu)
 
 mm_goto_gamemenu:
     %cm_submenu("Game", #GameMenu)
@@ -942,9 +946,6 @@ init_suit_properties_ram:
     RTS
 }
 
-misc_transparent:
-    %cm_toggle_bit("Samus on Top", !sram_sprite_prio_flag, #$3000, #0)
-
 misc_invincibility:
     %cm_toggle_bit("Invincibility", $7E0DE0, #$0007, #0)
 
@@ -965,6 +966,64 @@ misc_forcestand:
     JSL $90E2D4
     LDA #!SOUND_MENU_JSR : JSL $80903F
     RTS
+
+
+; ---------------
+; Sprite Features
+; ---------------
+
+SpritesMenu:
+    dw #sprites_samus_prio
+    dw #sprites_show_samus_hitbox
+    dw #sprites_show_enemy_hitbox
+    dw #sprites_show_samusproj_hitbox
+    dw #sprites_show_enemyproj_hitbox
+    dw #sprites_oob_viewer
+    dw #$0000
+    %cm_header("SPRITE FEATURES")
+
+sprites_samus_prio:
+    %cm_toggle_bit("Samus on Top", !sram_sprite_prio_flag, #$3000, #0)
+
+sprites_show_samus_hitbox:
+    %cm_toggle("Show Samus Hitbox", !ram_sprite_samus_hitbox_active, #1, #action_sprite_features)
+
+sprites_show_enemy_hitbox:
+    %cm_toggle("Show Enemy Hitboxes", !ram_sprite_enemy_hitbox_active, #1, #action_sprite_features)
+
+sprites_show_enemyproj_hitbox:
+    %cm_toggle("E Projectile Hitboxes", !ram_sprite_enemyproj_hitbox_active, #1, #action_sprite_features)
+
+sprites_show_samusproj_hitbox:
+    %cm_toggle("S Projectile Hitboxes", !ram_sprite_samusproj_hitbox_active, #1, #action_sprite_features)
+
+sprites_oob_viewer:
+    %cm_toggle("OOB Tile Viewer", !ram_oob_watch_active, #1, #.routine)
+  .routine
+    LDA !ram_oob_watch_active : BEQ .oob_off
+    STA !ram_sprite_features_active
+    JSL upload_sprite_oob_tiles
+    RTS
+
+  .oob_off
+    LDA #$0000 : STA !ram_sprite_features_active
+    RTS
+}
+
+action_sprite_features:
+{
+    LDA !ram_sprite_samus_hitbox_active : BNE .enabled
+    LDA !ram_sprite_enemy_hitbox_active : BNE .enabled
+    LDA !ram_sprite_enemyproj_hitbox_active : BNE .enabled
+    LDA !ram_sprite_samusproj_hitbox_active : BNE .enabled
+    LDA !ram_oob_watch_active : BNE .enabled
+    LDA #$0000 : STA !ram_sprite_features_active
+    RTS
+
+  .enabled
+    STA !ram_sprite_features_active
+    RTS
+}
 
 
 ; -----------
@@ -1138,8 +1197,6 @@ InfoHudMenu:
     dw #ih_status_icons
     dw #$FFFF
     dw #ih_ram_watch
-    dw #ih_show_hitbox
-    dw #ih_oob_viewer
     dw #$0000
     %cm_header("INFOHUD")
 
@@ -1406,21 +1463,6 @@ ih_prepare_ram_watch_menu:
 
   .submenu
     JMP action_submenu
-
-ih_show_hitbox:
-    %cm_toggle("Show Samus Hitbox", !ram_sprite_hitbox_active, #1, #0)
-
-ih_oob_viewer:
-    %cm_toggle("OOB Tile Viewer", !ram_oob_watch_active, #1, #toggle_oob_viewer)
-
-toggle_oob_viewer:
-{
-    LDA !ram_oob_watch_active
-    BEQ +
-        JSL upload_sprite_oob_tiles
-    +
-    RTS
-}
 
 RAMWatchMenu:
     dw ramwatch_enable
@@ -1703,6 +1745,7 @@ GameMenu:
 if !FEATURE_PAL
     dw #game_paldebug
 endif
+    dw game_debugprojectiles
     dw #$FFFF
     dw #game_minimap
     dw #game_clear_minimap
@@ -1719,6 +1762,9 @@ if !FEATURE_PAL
 else
     %cm_toggle("Japanese Text", $7E09E2, #$0001, #0)
 endif
+
+game_debugprojectiles:
+    %cm_toggle_bit("Enable Projectiles", $7E198D, #$8000, #0)
 
 game_moonwalk:
     %cm_toggle("Moon Walk", $7E09E4, #$0001, #0)
