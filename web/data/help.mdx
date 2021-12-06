@@ -1,7 +1,7 @@
 # HUD Modifications
 ![HUD Image](/smhud.png)
 
-1. Status display defaults to first enemy's HP, but can be configured to show Charge Timer, X-Factor timer, Shinespark timer and more.
+1. Status display defaults to first enemy's HP, but can be configured to show Charge Timer, X-Factor timer, Shinespark timer and more (see InfoHUD Modes)
 2. Item collection percentage
 3. Number of E-tanks
 4. Current total energy (excluding reserves), sometimes overridden by status display contents.
@@ -34,9 +34,9 @@
 | :---                          | :---  |
 | **Equipment**                 | Configure Samus' current equipment
 | - Refill                      | Refills your ammo and energy to their current max
-| - Toggle Category             | Select a category to set your current equipment
+| - Category Loadouts           | Select a category to set your current equipment
 | - Toggle Items                | Toggle major items
-| - Toggle Beams                | Toggle beams
+| - Toggle Beams                | Toggle beams or activate glitched beams
 | - Current Energy              | Set your current energy with left/right or A to increment
 | - Energy Tanks                | Select your max E-tanks with left/right or A to increment
 | - Current Reserves            | Set your current reserves with left/right or A to increment
@@ -67,21 +67,19 @@
 | - Blue Suit                   | Give Samus the Blue Suit
 | - Flash Suit                  | Give Samus the Flash Suit (aka Spike Suit)
 | - Hyper Beam                  | Toggle Hyper Beam
-| - Baby Slowdown               | Toggle ultra slow horizontal movement, as if grabbed by the Baby Metroid
+| - Goo Slowdown                | Toggle ultra slow horizontal movement, as if grabbed by the Baby Metroid (2) or Draygon's goo (1-4)
 | - Magic Pants                 | Toggle a flashing animation on Samus to show when dash should be held for short charging
 | - Space Pants                 | Toggle a flashing animation on Samus during a space jump to show when you should jump.
 |                               | **Note**: If you have both Magic Pants and Space Pants on, only one of them will be used. 
 |                               | If Space Jump is equipped then Space Pants will be used, otherwise Magic Pants will be used.
 | - Loud Pants                  | Toggle sound effects for Magic Pants and Space Pants. Uses the sound selected in Game->Metronome SFX.
 |                               | **Note**: If Magic and Space Pants are both turned off, this option has no effect.
-| - Fanfare                     | Toggle the fanfare for collecting items
-| - Music                       | Toggle the music
 | - Suit Properties             | Modify the suit properties similar to some randomizers
 |                               | Vanilla = No change, Varia has full heat protection and 50% enemy/environmental damage reduction, Gravity (with or without Varia) has full heat protection and 75% enemy/environment damage reduction)
 |                               | Balanced = Varia now has 75% environmental damage reduction, Gravity (without Varia) has no heat protection and no environment damage reduction
 |                               | Progressive = Varia has no changes, Gravity (without Varia) has half heat protection and 50% enemy/environmental damage reduction
-| - Samus on Top                | Draw Samus on top of foreground objects/tiles
 | - Invincibility               | Prevents Samus from taking damage or knockback
+| - Kill Enemies                | Kills all non-solid enemies in the current room
 | - Force Samus to Stand Up     | Forces Samus into a standing pose
 |&nbsp;|
 | **Infohud**                   | Configure the HUD
@@ -95,16 +93,25 @@
 | - Artificial Lag              | Select a value to adjust how much lag occurs during normal gameplay. 
 |                               | This is to compensate for the lack of a minimap on the HUD which would normally consume CPU cycles.
 | - Customize RAM Watch         | Setup addresses to be monitored by the RAM Watch HUD mode. Address 1 will appear in the bottom-left corner of the HUD, while Address 2 appears just to the right of Address 1. Memory at these locations can be edited by configuring a Value and selecting 'Write to Address'. Toggle 'Lock Value' to automatically write the value once every frame. RAM Watch must must be the selected HUD mode to continue writing to the address. Only one byte of hex can be configured at a time in the menu. 'Hi' refers to the first byte, while 'Lo' refers to the second. Set the Hi Address to 0D and the Lo Address to EC to monitor the memory address $0DEC, which stores the counter for Samus direction changes while held by Draygon (among other uses).
+|&nbsp;|
+| **Sprite Features**           | Features that draw sprites over normal gameplay. Beware of CPU performance impact
+| - Samus on Top                | Draw Samus on top of foreground objects/tiles
 | - Show Samus Hitbox           | Toggles an overlay of Samus hitbox that's drawn on top of Samus sprite.
-| - OOB Tile Viewer             | This enables an overlay that shows the tiles near Samus at all times, disconnected from the camera. This allows you to navigate OOB areas where neither Samus nor the actual tiles are visible in-game. Samus hitbox is drawn at the center of the overlay to show the position relative to the tiles.
+| - Show Enemy Hitboxes         | Toggles an overlay of enemy hitboxes that are drawn on top of enemy sprite. Some enemies, especially bosses, use a different spritemap format and are not compatible at this time
+| - Samus Projectile Hitbox     | Toggles an overlay of Samus projectile hitboxes that are drawn on top of Samus projectile sprites.
+| - Enemy Projectile Hitbox     | Toggles an overlay of enemy projectile hitboxes that are drawn on top of enemy projectile sprites.
+| - OOB Tile Viewer             | This enables an overlay that shows the tiles near Samus at all times, disconnected from the camera. This allows you to navigate OOB (Out of Bounds) areas where neither Samus nor the actual tiles are visible in-game. Samus hitbox is drawn at the center of the overlay to show the position relative to the tiles.
 |&nbsp;|
 | **Game**                      | Toggle game options
 | - Japanese/French Text        | Standard game option to toggle between English and Japanese text (NTSC) or between German and French text (PAL).
 | - Moon Walk                   | Standard game option for Moon Walk.
 | - Icon Cancel                 | Standard game option for Icon Cancel.
+| - Fanfare                     | Toggle the fanfare for collecting items
+| - Music                       | Toggle the music
 | - Debug Mode                  | Toggles the debug mode. Note that debug mode shortcuts and features may not be well supported in the practice rom.
 | - Debug CPU Brightness        | Toggles a built-in debug feature to darken the screen after the game is done processing the next frame. Useful for estimating CPU usage.
 | - PAL Debug Movement          | PAL-only feature that gives Samus extra movement correlated to the dpad input.
+| - Enable Projectiles          | Toggles a built-in debug feature to disable enemy projectiles.
 | - Minimap                     | Restores the game minimap, which also allows the pause menu map to be updated. When enabled, a map tile counter will also be displayed.
 | - Clear Minimap               | Clears the map tile counter and all minimap data.
 | - Metronome                   | Toggles a metronome feature that will play a sound at a periodic rate
@@ -123,7 +130,7 @@
 | - Kraid Claw RNG              | Set Kraid's claws to spawn above or below. Kraid is laggier when coming out of the ground if both claws spawn below. 
 |                               | **Note**: It is not possible for both claws to spawn above Kraid, so there will always be some lag generated by a claw below.
 |&nbsp;|
-| **Controller Shortcuts**      | Set or change button combinations for activating features. Press A to select the shortcut and then hold the desired button combination until it turns pink.
+| **Controller Shortcuts**      | Set or change button combinations for activating features. Press A to edit the shortcut and then hold the desired button combination until it turns pink.
 | - Main Menu                   | Open the InfoHUD menu
 | - Save State                  | Sets the savestate. SD2SNES/FXPak versions only.
 | - Load State                  | Loads the savestate. SD2SNES/FXPak versions only.
@@ -137,6 +144,7 @@
 | - Reset Seg Later             | Reset the segment timer. Takes effect when exiting the next door transition.
 | - Full Equipment              | Refills your energy and ammo to their current max capacities.
 | - Kill Enemies                | Instantly deletes all enemies in the current room.
+| - Toggle OOB Tiles            | Toggles the OOB Tile Viewer.
 | - Clear Shortcuts             | Resets Main Menu shortcut to default and removes button combos for all others.
 
 
@@ -161,4 +169,3 @@ As we continue to maintain and add features to the practice ROM, this is our str
 | - Practice Features           | Once you start turning on practice features, lag may no longer be similar to actual game. Some features like magic pants or the metronome may not have much impact, but others like the OOB tile viewer add a significant amount of work for the CPU.
 | - Sprite Patches              | Sprite patches such as SpriteSomething should be supported. These patches sometimes modify the game and theoretically could affect lag on their own, although if you intend to play the vanilla game or randomizer with a sprite patch then you might as well apply it to the practice ROM.
 <br />
-
