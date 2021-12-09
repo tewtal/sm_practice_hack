@@ -1840,24 +1840,24 @@ rng_phan_flamepattern:
     dw !ACTION_CHOICE
     dl #!ram_phantoon_rng_4
     dw #$0000
-    db #$28, "Phan Flame Pat", #$FF
-    db #$28, "tern RANDOM", #$FF
-    db #$28, "tern      1", #$FF
-    db #$28, "tern      2", #$FF
-    db #$28, "tern      3", #$FF
-    db #$28, "tern      4", #$FF
+    db #$28, "Phan Flames   ", #$FF
+    db #$28, "     RANDOM", #$FF
+    db #$28, "      22222", #$FF
+    db #$28, "        111", #$FF
+    db #$28, "    3333333", #$FF
+    db #$28, "    1424212", #$FF
     db #$FF
 
 rng_next_flamepattern:
     dw !ACTION_CHOICE
     dl #!ram_phantoon_rng_5
     dw #$0000
-    db #$28, "Next Flame Pat", #$FF
-    db #$28, "tern RANDOM", #$FF
-    db #$28, "tern      1", #$FF
-    db #$28, "tern      2", #$FF
-    db #$28, "tern      3", #$FF
-    db #$28, "tern      4", #$FF
+    db #$28, "Next Flames   ", #$FF
+    db #$28, "     RANDOM", #$FF
+    db #$28, "      22222", #$FF
+    db #$28, "        111", #$FF
+    db #$28, "    3333333", #$FF
+    db #$28, "    1424212", #$FF
     db #$FF
 
 rng_botwoon_rng:
