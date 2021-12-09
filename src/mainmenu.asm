@@ -1784,6 +1784,8 @@ RngMenu:
     dw #rng_phan_first_phase
     dw #rng_phan_second_phase
     dw #rng_phan_eyeclose
+    dw #rng_phan_flamepattern
+    dw #rng_next_flamepattern
     dw #rng_botwoon_rng
     dw #rng_draygon_rng_right
     dw #rng_draygon_rng_left
@@ -1794,18 +1796,6 @@ RngMenu:
 
 rng_rerandomize:
     %cm_toggle("Rerandomize", !sram_rerandomize, #$0001, #0)
-
-rng_botwoon_rng:
-    dw !ACTION_CHOICE
-    dl #!ram_botwoon_rng
-    dw #$0000
-    db #$28, "Botwoon RNG", #$FF
-    db #$28, "     RANDOM", #$FF
-    db #$28, "       DOWN", #$FF
-    db #$28, "         UP", #$FF
-    db #$28, "      RIGHT", #$FF
-    db #$28, "       LEFT", #$FF
-    db #$FF
 
 rng_phan_first_phase:
     dw !ACTION_CHOICE
@@ -1844,6 +1834,42 @@ rng_phan_eyeclose:
     db #$28, "       SLOW", #$FF
     db #$28, "        MID", #$FF
     db #$28, "       FAST", #$FF
+    db #$FF
+
+rng_phan_flamepattern:
+    dw !ACTION_CHOICE
+    dl #!ram_phantoon_rng_4
+    dw #$0000
+    db #$28, "Phan Flame Pat", #$FF
+    db #$28, "tern RANDOM", #$FF
+    db #$28, "tern      1", #$FF
+    db #$28, "tern      2", #$FF
+    db #$28, "tern      3", #$FF
+    db #$28, "tern      4", #$FF
+    db #$FF
+
+rng_next_flamepattern:
+    dw !ACTION_CHOICE
+    dl #!ram_phantoon_rng_5
+    dw #$0000
+    db #$28, "Next Flame Pat", #$FF
+    db #$28, "tern RANDOM", #$FF
+    db #$28, "tern      1", #$FF
+    db #$28, "tern      2", #$FF
+    db #$28, "tern      3", #$FF
+    db #$28, "tern      4", #$FF
+    db #$FF
+
+rng_botwoon_rng:
+    dw !ACTION_CHOICE
+    dl #!ram_botwoon_rng
+    dw #$0000
+    db #$28, "Botwoon RNG", #$FF
+    db #$28, "     RANDOM", #$FF
+    db #$28, "       DOWN", #$FF
+    db #$28, "         UP", #$FF
+    db #$28, "      RIGHT", #$FF
+    db #$28, "       LEFT", #$FF
     db #$FF
 
 rng_draygon_rng_right:

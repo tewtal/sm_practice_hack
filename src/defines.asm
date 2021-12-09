@@ -59,18 +59,20 @@
 !ram_phantoon_rng_1 = !WRAM_START+$52
 !ram_phantoon_rng_2 = !WRAM_START+$54
 !ram_phantoon_rng_3 = !WRAM_START+$56
-!ram_botwoon_rng = !WRAM_START+$58
-!ram_draygon_rng_left = !WRAM_START+$5A
-!ram_draygon_rng_right = !WRAM_START+$5C
+!ram_phantoon_rng_4 = !WRAM_START+$58
+!ram_phantoon_rng_5 = !WRAM_START+$5A
+!ram_botwoon_rng = !WRAM_START+$5C
+!ram_draygon_rng_left = !WRAM_START+$5E
+!ram_draygon_rng_right = !WRAM_START+$60
 
-!ram_game_loop_extras = !WRAM_START+$5E
-!ram_game_mode_extras = !WRAM_START+$60
+!ram_game_loop_extras = !WRAM_START+$62
+!ram_game_mode_extras = !WRAM_START+$64
 
-!ram_metronome = !WRAM_START+$62
-!ram_metronome_counter = !WRAM_START+$64
+!ram_metronome = !WRAM_START+$66
+!ram_metronome_counter = !WRAM_START+$68
 
-!ram_suits_enemy_damage_check = !WRAM_START+$66
-!ram_suits_periodic_damage_check = !WRAM_START+$68
+!ram_suits_enemy_damage_check = !WRAM_START+$6A
+!ram_suits_periodic_damage_check = !WRAM_START+$6C
 
 ; ^ FREE SPACE ^ up to +$8C
 
