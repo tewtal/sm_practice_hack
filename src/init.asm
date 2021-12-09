@@ -126,7 +126,7 @@ init_sram_upto9:
     ; $0010 = R
 
     ; Features
-    LDA #$0015 : STA !sram_artificial_lag
+    LDA #$001B : STA !sram_artificial_lag
     LDA #$0001 : STA !sram_rerandomize
     LDA #$0000 : STA !sram_fanfare_toggle
     LDA #$0001 : STA !sram_music_toggle

@@ -330,8 +330,6 @@
 ; ----------
 
 ; Savestate code variables
-!SS_BANK = $8000
-
 !SS_INPUT_CUR = $8B
 !SS_INPUT_NEW = $8F
 !SS_INPUT_PREV = $97
