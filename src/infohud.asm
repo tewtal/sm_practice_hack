@@ -768,7 +768,7 @@ ih_hud_code:
     ; Samus' HP
     LDA $09C2 : CMP !ram_last_hp : BEQ .status_icons : STA !ram_last_hp
     LDX #$0092 : JSR Draw4
-    LDA !IH_BLANK : STA $7EC690
+    LDA !IH_BLANK : STA $7EC690 : STA $7EC69A
 
   .status_icons
     LDA !sram_status_icons : BEQ .end
@@ -1309,7 +1309,7 @@ ih_hud_code_paused:
     PHY : PHX
     LDX #$0092 : JSL Draw4JSL
     PLX : PLY
-    LDA !IH_BLANK : STA $7EC690
+    LDA !IH_BLANK : STA $7EC690 : STA $7EC69A
 
   .end
     ; overwritten code

@@ -1274,6 +1274,7 @@ RoomStratMenu:
     dw ihstrat_elevatorcf
     dw ihstrat_botwooncf
     dw ihstrat_snailclip
+    dw ihstrat_threejumpskip
     dw ihstrat_mbhp
     dw #$0000
     %cm_header("INFOHUD ROOM STRAT")
@@ -1305,9 +1306,12 @@ ihstrat_botwooncf:
 ihstrat_snailclip:
     %cm_jsr("Aqueduct Snail Clip", #action_select_room_strat, #$0008)
 
-!IH_STRAT_MBHP_INDEX = $0009
+ihstrat_threejumpskip:
+    %cm_jsr("Three Jump Baby Skip", #action_select_room_strat, #$0009)
+
+!IH_STRAT_MBHP_INDEX = $000A
 ihstrat_mbhp:
-    %cm_jsr("Mother Brain HP", #action_select_room_strat, #$0009)
+    %cm_jsr("Mother Brain HP", #action_select_room_strat, #$000A)
 
 action_select_room_strat:
 {
@@ -1332,6 +1336,7 @@ ih_room_strat:
     db #$28, "ELEVATOR CF", #$FF
     db #$28, " BOTWOON CF", #$FF
     db #$28, " SNAIL CLIP", #$FF
+    db #$28, "3 JUMP SKIP", #$FF
     db #$28, "      MB HP", #$FF
     db #$FF
 
