@@ -141,6 +141,7 @@ preset_load_preset:
     LDA #$0000
     STA $7E09D2 ; Current selected weapon
     STA $7E0A04 ; Auto-cancel item
+    LDA #$5AFE : STA $0917 ; Load garbage into Layer 2 X position
 
     ; check if custom preset is being loaded
     LDA !ram_custom_preset : BEQ .normal_preset
@@ -252,6 +253,13 @@ preset_start_gameplay:
     JSR $A12B    ; Play 14h frames of music
     JSL $878016  ; Clear animated tile objects
     JSL $88829E  ; Wait until the end of a v-blank and clear (H)DMA enable flags
+
+    ; Preserve layer 2 values we may have loaded from presets
+    LDA $0923 : PHA
+    LDA $0921 : PHA
+    LDA $0919 : PHA
+    LDA $0917 : PHA
+
     JSL $8882C1  ; Initialize special effects for new room
     JSL $8483C3  ; Clear PLMs
     JSL $868016  ; Clear enemy projectiles
@@ -273,10 +281,22 @@ endif
     JSL $82E97C  ; Load library background
 
     JSR preset_scroll_fixes
+
+    PLA : CMP #$5AFE : BEQ .calculate_layer_2
+    STA $0917
+    PLA : STA $0919
+    PLA : STA $0921
+    PLA : STA $0923
+    BRA .layer_2_loaded
+
+  .calculate_layer_2
+    PLA : PLA : PLA
     JSR $A2F9    ; Calculate layer 2 X position
     JSR $A33A    ; Calculate layer 2 Y position
     LDA $0917 : STA $0921  ; BG2 X scroll = layer 2 X scroll position
     LDA $0919 : STA $0923  ; BG2 Y scroll = layer 2 Y scroll position
+
+  .layer_2_loaded
     JSR $A37B    ; Calculate BG positions
     JSL $80A176  ; Display the viewable part of the room
     JSL $80834B  ; Enable NMI
