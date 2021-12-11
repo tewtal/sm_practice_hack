@@ -258,6 +258,7 @@ preset_room_setup_asm_fixes:
     LDA $0998 : CMP #$0006 : BEQ .execute_setup_asm
     CMP #$001F : BEQ .execute_setup_asm
     CMP #$0028 : BEQ .execute_setup_asm
+    STZ $07DF
     BRA .end
 }
 
