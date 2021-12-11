@@ -228,6 +228,42 @@ preset_banks:
 print pc, " presets end"
 
 
+org $82E8D9
+    JSL preset_room_setup_asm_fixes
+
+
+org $8FEB00
+print pc, " preset bank8F start"
+
+preset_room_setup_asm_fixes:
+{
+    ; Start with original logic
+    PHP : PHB
+    %ai16()
+    LDX $07BB
+    LDA $0018,X : BEQ .end
+
+    ; Check if this is scrolling sky
+    CMP #$91C9 : BEQ .scrolling_sky
+    CMP #$91CE : BEQ .scrolling_sky
+
+  .execute_setup_asm
+    PHK : PLB
+    JSR ($0018,X)
+
+  .end
+    PLB : PLP : RTL
+
+  .scrolling_sky
+    LDA $0998 : CMP #$0006 : BEQ .execute_setup_asm
+    CMP #$001F : BEQ .execute_setup_asm
+    CMP #$0028 : BEQ .execute_setup_asm
+    BRA .end
+}
+
+print pc, " preset bank8F end"
+
+
 org $80F000
 print pc, " preset_start_gameplay start"
 
