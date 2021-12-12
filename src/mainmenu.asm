@@ -2031,6 +2031,7 @@ CtrlMenu:
     dw #ctrl_full_equipment
     dw #ctrl_kill_enemies
     dw #ctrl_toggle_tileviewer
+    dw #ctrl_update_timers
     dw #$FFFF
     dw #ctrl_clear_shortcuts
     dw #$0000
@@ -2079,6 +2080,9 @@ ctrl_dec_custom_preset:
 ctrl_toggle_tileviewer:
     %cm_ctrl_shortcut("Toggle OOB Tiles", !sram_ctrl_toggle_tileviewer)
 
+ctrl_update_timers:
+    %cm_ctrl_shortcut("Update Timers", !sram_ctrl_update_timers)
+
 ctrl_clear_shortcuts:
     %cm_jsr("Clear Shortcuts", action_clear_shortcuts, #$0000)
 
@@ -2099,6 +2103,7 @@ action_clear_shortcuts:
     STA !sram_ctrl_reset_segment_timer
     STA !sram_ctrl_reset_segment_later
     STA !sram_ctrl_toggle_tileviewer
+    STA !sram_ctrl_update_timers
     ; menu to default, Start + Select
     LDA #$3000 : STA !sram_ctrl_menu
     LDA #!SOUND_MENU_JSR : JSL !SFX_LIB1
@@ -2123,6 +2128,7 @@ GameModeExtras:
     LDA !sram_ctrl_inc_custom_preset : BNE .enabled
     LDA !sram_ctrl_dec_custom_preset : BNE .enabled
     LDA !sram_ctrl_toggle_tileviewer : BNE .enabled
+    LDA !sram_ctrl_update_timers : BNE .enabled
 
   .enabled
     STA !ram_game_mode_extras
