@@ -29,6 +29,7 @@ print pc, " spritefeat start"
 update_sprite_features:
     PHA
     LDA !ram_sprite_features_active : BNE .spriteFeatures
+    NOP #15 ; overhead CPU cycles
     PLA : BRA .done
 
   .spriteFeatures

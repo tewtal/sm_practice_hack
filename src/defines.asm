@@ -302,8 +302,7 @@
 !sram_ctrl_inc_custom_preset = $702018
 !sram_ctrl_dec_custom_preset = $70201A
 !sram_ctrl_toggle_tileviewer = $70201C
-
-; ^ FREE SPACE ^
+!sram_ctrl_update_timers = $70201E
 
 !sram_artificial_lag = $702020
 !sram_rerandomize = $702022
