@@ -50,6 +50,7 @@ status_roomstrat:
     dw status_elevatorcf
     dw status_botwooncf
     dw status_snailclip
+    dw status_threejumpskip
     dw status_mbhp
 }
 
@@ -2130,6 +2131,242 @@ endif
     ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC68E
     LDA !IH_LETTER_L : STA $7EC68C
     RTS
+}
+
+status_threejumpskip:
+{
+if !FEATURE_PAL
+    !threejumpskip_firstrun_early = $003E
+    !threejumpskip_firstrun_late = $0048
+    !threejumpskip_firstjump = $0020
+    !threejumpskip_release_early = $000D
+    !threejumpskip_release_late = $0010
+else
+    !threejumpskip_firstrun = $0037
+    !threejumpskip_firstjump = $0024
+    !threejumpskip_secondrun_early = $003B
+    !threejumpskip_secondrun_late = $003E
+    !threejumpskip_secondjump_early = $0042
+    !threejumpskip_secondjump_late = $0045
+    !threejumpskip_release_early = $0010
+    !threejumpskip_release_late = $0013
+endif
+
+    LDA $09C2 : STA !ram_last_hp
+    LDA $079B : CMP #$DCB1 : BNE .reset
+    LDA !ram_roomstrat_state : CMP #$0009 : BPL .reset
+    ASL : TAX : JMP (.threejumpskip_table,X)
+
+  .threejumpskip_table
+    dw .eathopper
+    dw .babyrise
+    dw .firstrun
+    dw .firstjump
+    dw .firstfall
+    dw .firstland
+    dw .secondrun
+    dw .secondjump
+    dw .secondrelease
+
+  .reset
+    LDA #$0000 : STA !ram_roomstrat_state
+    RTS
+
+  .eathopper
+    LDA $0F7A : CMP #$02D0 : BMI .done
+    LDA $0F7E : CMP #$009C : BNE .done
+    LDA !IH_BLANK : STA $7EC688 : STA $7EC68A : STA $7EC68C
+    STA $7EC68E : STA $7EC690 : STA $7EC692 : STA $7EC694
+    STA $7EC696 : STA $7EC698 : STA $7EC69A
+    BRA .incstate
+
+  .babyrise
+    LDA $0F7E : CMP #$0060 : BNE .checkfirsty
+
+  .clearcounterincstate
+    LDA #$0000 : STA !ram_roomstrat_counter
+
+  .incstate
+    LDA !ram_roomstrat_state : INC : STA !ram_roomstrat_state
+
+  .done
+    RTS
+
+  .firstrun
+    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_LEFT : BNE .checkfirstrun
+    LDA !ram_roomstrat_counter : INC : STA !ram_roomstrat_counter
+
+  .checkfirsty
+    LDA $0AF6 : CMP #$023B : BNE .clearfirsty
+    LDA $0AF8 : CMP #$FFFF : BNE .clearfirsty
+    LDA !IH_LETTER_Y : STA $7EC688
+    RTS
+
+  .clearfirsty
+    LDA !IH_BLANK : STA $7EC688
+    RTS
+
+  .checkfirstrun
+if !FEATURE_PAL
+    LDA !ram_roomstrat_counter : CMP #!threejumpskip_firstrun_late : BPL .firstrunlate
+    CMP #(!threejumpskip_firstrun_early+1) : BMI .firstrunearly
+
+    ; First run on time
+    SEC : SBC #!threejumpskip_firstrun_early
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC68A
+    LDA !IH_LETTER_Y : STA $7EC688
+    BRL .clearcounterincstate
+
+  .firstrunlate
+    SEC : SBC #(!threejumpskip_firstrun_late-1)
+else
+    LDA !ram_roomstrat_counter : CMP #!threejumpskip_firstrun
+    BEQ .firstrunperfect : BMI .firstrunearly
+
+    ; First run late
+    SEC : SBC #!threejumpskip_firstrun
+endif
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC68A
+    LDA !IH_LETTER_L : STA $7EC688
+    BRL .clearcounterincstate
+
+  .firstrunearly
+if !FEATURE_PAL
+    LDA #(!threejumpskip_firstrun_early+1)
+else
+    LDA #!threejumpskip_firstrun
+endif
+    SEC : SBC !ram_roomstrat_counter
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC68A
+    LDA !IH_LETTER_E : STA $7EC688
+    BRL .clearcounterincstate
+
+if !FEATURE_PAL
+else
+  .firstrunperfect
+    LDA !IH_LETTER_Y : STA $7EC688 : STA $7EC68A
+    BRL .clearcounterincstate
+endif
+
+  .firstjumpperfect
+    LDA !IH_LETTER_Y : STA $7EC68C : STA $7EC68E
+    BRL .clearcounterincstate
+
+  .firstjumpearly
+    LDA #!threejumpskip_firstjump : SEC : SBC !ram_roomstrat_counter
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC68E
+    LDA !IH_LETTER_E : STA $7EC68C
+    BRL .clearcounterincstate
+
+  .secondreleaselate
+    SEC : SBC #(!threejumpskip_release_late-1)
+    ASL : TAY : LDA.w NumberGFXTable,Y
+if !FEATURE_PAL
+    STA $7EC698 : LDA !IH_LETTER_L : STA $7EC696
+else
+    STA $7EC69A : LDA !IH_LETTER_L : STA $7EC698
+endif
+    BRL .reset
+
+  .secondreleaseearly
+    LDA #(!threejumpskip_release_early+1) : SEC : SBC !ram_roomstrat_counter
+    ASL : TAY : LDA.w NumberGFXTable,Y
+if !FEATURE_PAL
+    STA $7EC698 : LDA !IH_LETTER_E : STA $7EC696
+else
+    STA $7EC69A : LDA !IH_LETTER_E : STA $7EC698
+endif
+    BRL .reset
+
+  .firstjump
+    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_JUMP : BEQ .inccounter
+    LDA !ram_roomstrat_counter : CMP #!threejumpskip_firstjump
+    BEQ .firstjumpperfect : BMI .firstjumpearly
+
+    ; First jump late
+    SEC : SBC #!threejumpskip_firstjump
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC68E
+    LDA !IH_LETTER_L : STA $7EC68C
+    BRL .clearcounterincstate
+
+  .firstfall
+    LDA $0B36 : CMP #$0002 : BNE .inccounter
+    BRL .incstate
+
+  .firstland
+    LDA $0B36 : BNE .inccounter
+    BRL .incstate
+
+  .secondrelease
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_JUMP : BNE .inccounter
+    LDA !ram_roomstrat_counter : CMP #!threejumpskip_release_late : BPL .secondreleaselate
+    CMP #(!threejumpskip_release_early+1) : BMI .secondreleaseearly
+
+    ; Second jump released on time
+    SEC : SBC #!threejumpskip_release_early
+    ASL : TAY : LDA.w NumberGFXTable,Y
+if !FEATURE_PAL
+    STA $7EC698 : LDA !IH_LETTER_Y : STA $7EC696
+else
+    STA $7EC69A : LDA !IH_LETTER_Y : STA $7EC698
+endif
+    BRL .reset
+
+  .inccounter
+    LDA !ram_roomstrat_counter : INC : STA !ram_roomstrat_counter
+    RTS
+
+  .secondrun
+    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_LEFT : BEQ .inccounter
+if !FEATURE_PAL
+else
+    LDA !ram_roomstrat_counter : CMP #!threejumpskip_secondrun_late : BPL .secondrunlate
+    CMP #(!threejumpskip_secondrun_early+1) : BMI .secondrunearly
+
+    ; Second run on time
+    SEC : SBC #!threejumpskip_secondrun_early
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC692
+    LDA !IH_LETTER_Y : STA $7EC690
+endif
+    BRL .incstate
+
+  .secondjump
+    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_JUMP : BEQ .inccounter
+if !FEATURE_PAL
+else
+    LDA !ram_roomstrat_counter : CMP #!threejumpskip_secondjump_late : BPL .secondjumplate
+    CMP #(!threejumpskip_secondjump_early+1) : BMI .secondjumpearly
+
+    ; Second jump on time
+    SEC : SBC #!threejumpskip_secondjump_early
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC696
+    LDA !IH_LETTER_Y : STA $7EC694
+    BRL .clearcounterincstate
+
+  .secondrunlate
+    SEC : SBC #(!threejumpskip_secondrun_late-1)
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC692
+    LDA !IH_LETTER_L : STA $7EC690
+    BRL .incstate
+
+  .secondrunearly
+    LDA #(!threejumpskip_secondrun_early+1) : SEC : SBC !ram_roomstrat_counter
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC692
+    LDA !IH_LETTER_E : STA $7EC690
+    BRL .incstate
+
+  .secondjumplate
+    SEC : SBC #(!threejumpskip_secondjump_late-1)
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC696
+    LDA !IH_LETTER_L : STA $7EC694
+    BRL .clearcounterincstate
+
+  .secondjumpearly
+    LDA #(!threejumpskip_secondjump_early+1) : SEC : SBC !ram_roomstrat_counter
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC696
+    LDA !IH_LETTER_E : STA $7EC694
+endif
+    BRL .clearcounterincstate
 }
 
 status_mbhp:

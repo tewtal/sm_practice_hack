@@ -33,14 +33,16 @@ local MEMTRACK = { -- {{{
     { 0x0911, 0x2, 'Screen X position in pixels' },
     { 0x0913, 0x2, 'Screen subpixel Y position' },
     { 0x0915, 0x2, 'Screen Y position in pixels' },
-    --[[
     { 0x0917, 0x2, 'Layer 2 X scroll in room in pixels?' },
     { 0x0919, 0x2, 'Layer 2 Y scroll in room in pixels? (up = positive)' },
+    --[[
     { 0x091B, 0x2, 'BG2 scroll percent to screen scroll (0 = 100, 1 = ?) (1 byte for X, 1 byte for Y)' },
     { 0x091D, 0x2, 'BG1 X scroll offset due to room transitions (Translates between screen scroll and BG1 scroll)' },
     { 0x091F, 0x2, 'BG1 Y scroll offset due to room transitions (Translates between screen scroll and BG1 scroll)' },
+    --]]
     { 0x0921, 0x2, 'BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)' },
     { 0x0923, 0x2, 'BG2 Y scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)' },
+    --[[
     { 0x0925, 0x2, 'How many times the screen has scrolled? Stops at 40.' },
     { 0x0927, 0x2, 'X offset of room entrance for room transition (multiple of 100, screens)' },
     { 0x0929, 0x2, 'Y offset of room entrance for room transition (multiple of 100, screens. Adjusted by 20 when moving up)' },

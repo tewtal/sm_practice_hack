@@ -1877,10 +1877,10 @@ preset_pkrd_lower_norfair_springball_maze:
     dl $7E079B : db $02 : dw $B6EE ; MDB
     dl $7E07C5 : db $02 : dw $BBBD ; GFX Pointers
     dl $7E07C7 : db $02 : dw $C2B6 ; GFX Pointers
-    dl $7E090F : db $02 : dw $1000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $6800 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $000B ; Screen Y position in pixels
+    dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
+    dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
     dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0004 ; More position/state
     dl $7E0AF6 : db $02 : dw $016D ; Samus X

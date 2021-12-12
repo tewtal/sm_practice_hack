@@ -2858,7 +2858,7 @@ preset_hundo_ridley_hotarubi_special:
     dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $001D ; Screen Y position in pixels
+    dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $0512 ; Health
     dl $7E09C4 : db $02 : dw $0513 ; Max health
     dl $7E09CA : db $02 : dw $000E ; Supers

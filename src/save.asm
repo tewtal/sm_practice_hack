@@ -94,8 +94,7 @@ save_dma_regs_done:
     ldx #save_write_table
 
 run_vm:
-    pea !SS_BANK
-    plb
+    phk
     plb
     jmp vm
 

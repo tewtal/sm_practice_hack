@@ -107,6 +107,10 @@ gamemode_shortcuts:
     AND !IH_CONTROLLER_PRI_NEW : BEQ +
     JMP .toggle_tileviewer
 
+  + LDA !IH_CONTROLLER_PRI : AND !sram_ctrl_update_timers : CMP !sram_ctrl_update_timers : BNE +
+    AND !IH_CONTROLLER_PRI_NEW : BEQ +
+    JMP .update_timers
+
   .check_menu
   + LDA !IH_CONTROLLER_PRI : AND !sram_ctrl_menu : CMP !sram_ctrl_menu : BNE +
     AND !IH_CONTROLLER_PRI_NEW : BEQ +
@@ -163,12 +167,12 @@ endif
 
   .toggle_tileviewer
     LDA !ram_oob_watch_active : BEQ .turnOnTileViewer
-    LDA #$0000 : STA !ram_oob_watch_active
+    LDA #$0000 : STA !ram_oob_watch_active : STA !ram_sprite_features_active
     ; CLC to continue normal gameplay after disabling OOB Tile Viewer
     CLC : RTS
 
   .turnOnTileViewer
-    LDA #$0001 : STA !ram_oob_watch_active
+    LDA #$0001 : STA !ram_oob_watch_active : STA !ram_sprite_features_active
     JSL upload_sprite_oob_tiles
     ; CLC to continue normal gameplay after enabling OOB Tile Viewer
     CLC : RTS
@@ -213,6 +217,11 @@ endif
 +   DEC : STA !sram_custom_preset_slot
     ASL : TAX : LDA.l NumberGFXTable,X : STA $7EC67C
     ; CLC to continue normal gameplay after decrementing preset slot
+    CLC : RTS
+
+  .update_timers
+    JSL ih_update_hud_early
+    ; CLC to continue normal gameplay after updating HUD timers
     CLC : RTS
 
   .menu
