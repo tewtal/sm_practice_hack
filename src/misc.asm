@@ -112,10 +112,7 @@ if !FEATURE_PAL
 org $90EA38
 else
 org $90EA3B
-    ; The optimizations were too good,
-    ; now need to waste 6 cycles to balance CPU
-    NOP : NOP : NOP
-    BRA $08
+    BRA $0B
 endif
 
 ; Optimize CPU by removing RTS so we go straight to the low health check
@@ -289,13 +286,23 @@ endif
     LDA !ram_minimap : BNE .endlag
 
     ; Ignore artifical lag if OOB viewer is active
-    LDA !ram_oob_watch_active : BNE .endlag
+    LDA !ram_sprite_features_active : BNE .endlag
 
     ; Artificial lag, multiplied by 16 to get loop count
     ; Each loop takes 5 clock cycles (assuming branch taken)
     ; For reference, 41 loops ~= 1 scanline
     LDA !sram_artificial_lag : BEQ .endlag
-    ASL #4 : TAX
+
+    ; To account for various changes, we may need to tack on more clock cycles
+    ; These can be removed as code is added to maintain CPU parity during normal gameplay
+    ASL
+    ASL
+    INC  ; Add 4 loops (22 clock cycles including the INC)
+    ASL
+    INC  ; Add 2 loops (12 clock cycles including the INC)
+    ASL
+    NOP  ; Add 2 more clock cycles
+    TAX
   .lagloop
     DEX : BNE .lagloop
   .endlag
