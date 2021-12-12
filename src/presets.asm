@@ -232,40 +232,6 @@ org $82E8D9
     JSL preset_room_setup_asm_fixes
 
 
-org $8FEB00
-print pc, " preset bank8F start"
-
-preset_room_setup_asm_fixes:
-{
-    ; Start with original logic
-    PHP : PHB
-    %ai16()
-    LDX $07BB
-    LDA $0018,X : BEQ .end
-
-    ; Check if this is scrolling sky
-    CMP #$91C9 : BEQ .scrolling_sky
-    CMP #$91CE : BEQ .scrolling_sky
-
-  .execute_setup_asm
-    PHK : PLB
-    JSR ($0018,X)
-
-  .end
-    PLB : PLP : RTL
-
-  .scrolling_sky
-    LDA $0998 : CMP #$0006 : BEQ .execute_setup_asm
-    CMP #$001F : BEQ .execute_setup_asm
-    CMP #$0028 : BEQ .execute_setup_asm
-    STZ $07DF
-    LDA #$0080 : STA $091B
-    BRA .end
-}
-
-print pc, " preset bank8F end"
-
-
 org $80F000
 print pc, " preset_start_gameplay start"
 
@@ -320,6 +286,7 @@ endif
 
     JSR preset_scroll_fixes
 
+    ; Pull layer 2 values, and use them if they are valid
     PLA : CMP #$5AFE : BEQ .calculate_layer_2
     STA $0917
     PLA : STA $0919
@@ -328,9 +295,9 @@ endif
     BRA .layer_2_loaded
 
   .calculate_layer_2
-    PLA : PLA : PLA
-    JSR $A2F9    ; Calculate layer 2 X position
-    JSR $A33A    ; Calculate layer 2 Y position
+    PLA : PLA : PLA        ; Values are not useful, but still need to pull them out of the stack
+    JSR $A2F9              ; Calculate layer 2 X position
+    JSR $A33A              ; Calculate layer 2 Y position
     LDA $0917 : STA $0921  ; BG2 X scroll = layer 2 X scroll position
     LDA $0919 : STA $0923  ; BG2 Y scroll = layer 2 Y scroll position
 
@@ -355,6 +322,37 @@ endif
     PLB
     PLP
     RTL
+}
+
+preset_room_setup_asm_fixes:
+{
+    ; Start with original logic
+    PHP : PHB
+    %ai16()
+    LDX $07BB
+    LDA $0018,X : BEQ .end
+
+    ; Check if this is scrolling sky
+    CMP #$91C9 : BEQ .scrolling_sky
+    CMP #$91CE : BEQ .scrolling_sky
+
+  .execute_setup_asm
+    ; Resume execution
+    JML $8FE89B
+
+  .scrolling_sky
+    ; If we got here through normal gameplay, allow scrolling sky
+    LDA $0998 : CMP #$0006 : BEQ .execute_setup_asm
+    CMP #$001F : BEQ .execute_setup_asm
+    CMP #$0028 : BEQ .execute_setup_asm
+
+    ; Disable scrolling sky asm
+    STZ $07DF
+    ; Clear layer 2 library bits (change 0181 to 0080)
+    LDA #$0080 : STA $091B
+
+  .end
+    PLB : PLP : RTL
 }
 
 preset_scroll_fixes:
