@@ -7,7 +7,7 @@ lorom
 
 !VERSION_MAJOR = 2
 !VERSION_MINOR = 3
-!VERSION_BUILD = 3
+!VERSION_BUILD = 4
 !VERSION_REV_1 = 0
 !VERSION_REV_2 = 0
 
@@ -27,6 +27,7 @@ incsrc infohud.asm
 incsrc rng.asm
 incsrc presets.asm
 incsrc misc.asm
+incsrc layout.asm
 incsrc init.asm
 incsrc fanfare.asm
 incsrc spriteprio.asm

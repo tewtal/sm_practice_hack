@@ -152,6 +152,8 @@
 !ram_cm_ctrl_timer = !WRAM_MENU_START+$36
 !ram_cm_ctrl_last_input = !WRAM_MENU_START+$38
 
+!ram_cm_magnetstairs = !WRAM_MENU_START+$3A
+
 ; ^ FREE SPACE ^ up to +$7E
 
 ; ------------------

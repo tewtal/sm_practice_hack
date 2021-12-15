@@ -212,27 +212,6 @@ org $808F24
     NOP #2
 
 
-; swap Enemy HP to MB HP when entering MB's room
-org $83AAD2
-    dw #MotherBrainHP
-
-
-org $8FEA00 ; free space for door asm
-print pc, " misc bank8F start"
-
-MotherBrainHP:
-{
-    LDA !sram_display_mode : BNE .done
-    LDA #!IH_MODE_ROOMSTRAT_INDEX : STA !sram_display_mode
-    LDA #!IH_STRAT_MBHP_INDEX : STA !sram_room_strat
-
-  .done
-    RTS
-}
-
-print pc, " misc bank8F end"
-
-
 org $90F800
 print pc, " misc bank90 start"
 
