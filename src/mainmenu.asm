@@ -192,6 +192,7 @@ MainMenu:
     dw #mm_goto_misc
     dw #mm_goto_infohud
     dw #mm_goto_sprites
+    dw #mm_goto_layout
     dw #mm_goto_gamemenu
     dw #mm_goto_rngmenu
     dw #mm_goto_ctrlsmenu
@@ -221,6 +222,9 @@ mm_goto_infohud:
 
 mm_goto_sprites:
     %cm_submenu("Sprite Features", #SpritesMenu)
+
+mm_goto_layout:
+    %cm_submenu("Room Layout", #LayoutMenu)
 
 mm_goto_gamemenu:
     %cm_submenu("Game", #GameMenu)
@@ -1760,6 +1764,20 @@ action_HUD_ramwatch:
     LDA #!IH_MODE_RAMWATCH_INDEX : STA !sram_display_mode
     RTS
 }
+
+
+; -----------------
+; Room Layout menu
+; -----------------
+
+LayoutMenu:
+    dw #layout_magnetstairs
+    dw #$0000
+    %cm_header("ROOM LAYOUT")
+    %cm_footer("APPLIED WHEN ROOM RELOADED")
+
+layout_magnetstairs:
+    %cm_toggle("Remove Magnet Stairs", !ram_cm_magnetstairs, #$0001, #0)
 
 
 ; ----------
