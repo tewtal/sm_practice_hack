@@ -1772,12 +1772,17 @@ action_HUD_ramwatch:
 
 LayoutMenu:
     dw #layout_magnetstairs
+    dw #$FFFF
+    dw #layout_arearando
     dw #$0000
     %cm_header("ROOM LAYOUT")
     %cm_footer("APPLIED WHEN ROOM RELOADED")
 
 layout_magnetstairs:
     %cm_toggle("Remove Magnet Stairs", !ram_cm_magnetstairs, #$0001, #0)
+
+layout_arearando:
+    %cm_toggle("Area Rando Patches", !ram_cm_arearando, #$0001, #0)
 
 
 ; ----------

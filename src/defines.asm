@@ -155,6 +155,7 @@
 !ram_cm_ctrl_last_input = !WRAM_MENU_START+$38
 
 !ram_cm_magnetstairs = !WRAM_MENU_START+$3A
+!ram_cm_arearando = !WRAM_MENU_START+$3C
 
 ; ^ FREE SPACE ^ up to +$7E
 
