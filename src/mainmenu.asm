@@ -898,7 +898,6 @@ MiscMenu:
     dw #misc_invincibility
     dw #misc_gooslowdown
     dw #misc_suit_properties
-    dw #misc_magnetstairs
     dw #$FFFF
     dw #misc_magicpants
     dw #misc_spacepants
@@ -954,9 +953,6 @@ init_suit_properties_ram:
   .end
     RTS
 }
-
-misc_magnetstairs:
-    %cm_toggle("Remove Magnet Stairs", !ram_cm_magnetstairs, #$0001, #0)
 
 misc_invincibility:
     %cm_toggle_bit("Invincibility", $7E0DE0, #$0007, #0)
