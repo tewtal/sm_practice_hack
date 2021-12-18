@@ -3,11 +3,14 @@
 ;=======================================================
 
 org $809490
-    jmp $9497    ; skip resetting player 2 inputs
+    JMP $9497    ; skip resetting player 2 inputs
 
 org $8094DF
     PLP          ; patch out resetting of controller 2 buttons and enable debug mode
     RTL
+
+org $80AE29      ; fix for scroll offset misalignment
+    JSR ih_fix_scroll_offsets
 
 org $828B4B      ; disable debug functions
     JML ih_debug_patch
@@ -1292,6 +1295,20 @@ warnpc $F0E000
 ; Stuff that needs to be placed in bank 80
 org $80FC00
 print pc, " infohud bank80 start"
+
+ih_fix_scroll_offsets:
+{
+    LDA !ram_fix_scroll_offsets : BEQ .done
+    %a8()
+    LDA $0911 : STA $B1 : STA $B5
+    LDA $0915 : STA $B3 : STA $B7
+    %a16()
+
+  .done
+    ; overwritten code
+    LDA $B1 : SEC
+    RTS
+}
 
 ih_hud_code_paused:
 {

@@ -33,8 +33,7 @@
 !ram_tmp_4 = !WRAM_START+$2A
 
 !ram_last_hp = !WRAM_START+$2C
-
-; ^ FREE SPACE ^
+!ram_fix_scroll_offsets = !WRAM_START+$2E
 
 !ram_pct_1 = !WRAM_START+$30
 !ram_pct_2 = !WRAM_START+$32
