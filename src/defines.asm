@@ -49,6 +49,7 @@
 !ram_sprite_samusproj_hitbox_active = !WRAM_START+$44
 !ram_sprite_enemyproj_hitbox_active = !WRAM_START+$46
 !ram_custom_preset = !WRAM_START+$48
+!ram_fix_scroll_offsets = !WRAM_START+$4A
 
 ; ^ FREE SPACE ^ up to +$4E
 

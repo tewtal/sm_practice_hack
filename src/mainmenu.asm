@@ -1779,7 +1779,8 @@ GameMenu:
 if !FEATURE_PAL
     dw #game_paldebug
 endif
-    dw game_debugprojectiles
+    dw #game_debugprojectiles
+    dw #game_debugfixscrolloffsets
     dw #$FFFF
     dw #game_minimap
     dw #game_clear_minimap
@@ -1799,6 +1800,9 @@ endif
 
 game_debugprojectiles:
     %cm_toggle_bit("Enable Projectiles", $7E198D, #$8000, #0)
+
+game_debugfixscrolloffsets:
+    %cm_toggle_bit("Fix Scroll Offsets", !ram_fix_scroll_offsets, #$0001, #0)
 
 game_moonwalk:
     %cm_toggle("Moon Walk", $7E09E4, #$0001, #0)
