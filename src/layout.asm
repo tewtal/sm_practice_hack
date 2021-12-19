@@ -91,27 +91,38 @@ layout_asm_mbhp:
 
 layout_asm_magnetstairs:
 {
+    PHP
+    %a16()
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_MAGNET_STAIRS : BEQ .done
-    PHP : %a8()
 
     ; Modify graphics to indicate magnet stairs removed
+    %a8()
     LDA #$47 : STA $7F01F8 : STA $7F02EA
 
     ; Convert solid tiles to slope tiles
     LDA #$10 : STA $7F01F9 : STA $7F02EB
     LDA #$53 : STA $7F64FD : STA $7F6576
 
-    PLP
   .done
+    PLP
     RTS
 }
 
 layout_asm_greenhillzone:
 {
+    PHP
+    %a16()
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ .done
-    PHP : %a8()
+
+    ; Remove gate and corner tile next to gate
+    LDA #$00FF : STA $7F37C8 : STA $7F37CA : STA $7F37CC
+    STA $7F38CA : STA $7F39CA : STA $7F3ACA : STA $7F3BCA
+
+    ; Clear gate PLMs and projectiles
+    LDA #$0000 : STA $1C83 : STA $1C85 : STA $19B9
 
     ; Add platform for ease of access to top-right door
+    %a8()
     LDA #$6A : STA $7F0F24 : LDA #$6C : STA $7F0F26
     LDA #$81 : STA $7F0F25 : STA $7F0F27
 
@@ -122,27 +133,15 @@ layout_asm_greenhillzone:
     LDA #$00 : STA $7F7FE5 : STA $7F7FE6
     STA $7F8066 : STA $7F80E6 : STA $7F8166 : STA $7F81E6
 
-    ; Remove gate and corner tile next to gate
-    %a16()
-    LDA #$00FF : STA $7F37C8 : STA $7F37CA : STA $7F37CC
-    STA $7F38CA : STA $7F39CA : STA $7F3ACA : STA $7F3BCA
-
-    ; Clear gate PLMs and projectiles
-    LDA #$0000 : STA $1C83 : STA $1C85 : STA $19B9
-
-    PLP
   .done
+    PLP
     RTS
 }
 
 layout_asm_caterpillar_no_scrolls:
 {
-    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ .done
-    PHP : %a8()
+    PHP
     BRA layout_asm_caterpillar_after_scrolls
-
-  .done
-    RTS
 }
 
 layout_asm_caterpillar_update_scrolls:
@@ -152,8 +151,8 @@ layout_asm_caterpillar_update_scrolls:
 
 layout_asm_caterpillar_after_scrolls:
 {
-    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ .done
     %a16()
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ .done
 
     ; Decorate gap with blocks
     LDA #$8562 : STA $7F145E : STA $7F1460 : STA $7F151E : STA $7F1520
@@ -184,8 +183,8 @@ layout_asm_caterpillar_after_scrolls:
 layout_asm_singlechamber:
 {
     PHP
-    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ .done
     %a16()
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ .done
 
     ; Move right wall back one to create a ledge
     LDA #$810C : STA $7F06E0 : STA $7F0A9E
