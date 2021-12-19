@@ -83,8 +83,9 @@
 !ram_metronome = !WRAM_START+$7A
 !ram_metronome_counter = !WRAM_START+$7C
 
-; ^ FREE SPACE ^ up to +$8C
+; ^ FREE SPACE ^ up to +$8A
 
+!ram_watch_write_mode = !WRAM_START+$8C
 !ram_watch_bank = !WRAM_START+$8E
 !ram_watch_left = !WRAM_START+$90
 !ram_watch_left_hud = !WRAM_START+$92

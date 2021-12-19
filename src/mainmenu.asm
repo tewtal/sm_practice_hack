@@ -1474,6 +1474,7 @@ ih_prepare_ram_watch_menu:
 RAMWatchMenu:
     dw ramwatch_enable
     dw ramwatch_bank
+    dw ramwatch_write_mode
     dw #$FFFF
     dw ramwatch_left_hi
     dw ramwatch_left_lo
@@ -1510,6 +1511,15 @@ ramwatch_bank:
     db #$28, "        $7E", #$FF
     db #$28, "        $7F", #$FF
     db #$28, "       SRAM", #$FF
+    db #$FF
+
+ramwatch_write_mode:
+    dw !ACTION_CHOICE
+    dl #!ram_watch_write_mode
+    dw #$0000
+    db #$28, "Write Mode", #$FF
+    db #$28, "     16-BIT", #$FF
+    db #$28, "      8-BIT", #$FF
     db #$FF
 
 ramwatch_left_hi:
@@ -1699,7 +1709,9 @@ ramwatch_lock_right:
 action_ramwatch_edit_left:
 {
     LDA !ram_watch_left : TAX
-    LDA !ram_watch_bank : BEQ .bank7E
+    LDA !ram_watch_write_mode : BEQ +
+    %a8()
++   LDA !ram_watch_bank : BEQ .bank7E
     CMP #$0001 : BEQ .bank7F : BRA .bankSRAM
   .bank7E
     LDA !ram_watch_edit_left : STA $7E0000,X : BRA +
@@ -1707,7 +1719,8 @@ action_ramwatch_edit_left:
     LDA !ram_watch_edit_left : STA $7F0000,X : BRA +
   .bankSRAM
     LDA !ram_watch_edit_left : STA $F00000,X
-+   LDA #!IH_MODE_RAMWATCH_INDEX : STA !sram_display_mode
++   %a16()
+    LDA #!IH_MODE_RAMWATCH_INDEX : STA !sram_display_mode
     LDA #!SOUND_MENU_JSR : JSL $80903F
     RTS
 }
@@ -1715,7 +1728,9 @@ action_ramwatch_edit_left:
 action_ramwatch_edit_right:
 {
     LDA !ram_watch_right : TAX
-    LDA !ram_watch_bank : BEQ .bank7E
+    LDA !ram_watch_write_mode : BEQ +
+    %a8()
++   LDA !ram_watch_bank : BEQ .bank7E
     CMP #$0001 : BEQ .bank7F : BRA .bankSRAM
   .bank7E
     LDA !ram_watch_edit_right : STA $7E0000,X : BRA +
@@ -1723,7 +1738,8 @@ action_ramwatch_edit_right:
     LDA !ram_watch_edit_right : STA $7F0000,X : BRA +
   .bankSRAM
     LDA !ram_watch_edit_right : STA $F00000,X
-+   LDA #!IH_MODE_RAMWATCH_INDEX : STA !sram_display_mode
++   %a16()
+    LDA #!IH_MODE_RAMWATCH_INDEX : STA !sram_display_mode
     LDA #!SOUND_MENU_JSR : JSL $80903F
     RTS
 }
