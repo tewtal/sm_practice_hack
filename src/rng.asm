@@ -283,8 +283,6 @@ hook_botwoon_rng:
     JSL $808111 ; Trying to preserve the number of RNG calls being done in the frame
 
     LDA !ram_botwoon_rng : BEQ .no_manip
-
-    DEC : ASL #3 : INC
     RTL
 
   .no_manip

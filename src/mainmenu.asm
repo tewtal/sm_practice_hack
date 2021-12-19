@@ -1978,8 +1978,8 @@ rng_next_flamepattern:
 
 rng_botwoon_rng:
     dw !ACTION_CHOICE
-    dl #!ram_botwoon_rng
-    dw #$0000
+    dl #!ram_cm_botwoon_rng
+    dw #.routine
     db #$28, "Botwoon RNG", #$FF
     db #$28, "     RANDOM", #$FF
     db #$28, "       DOWN", #$FF
@@ -1987,6 +1987,11 @@ rng_botwoon_rng:
     db #$28, "      RIGHT", #$FF
     db #$28, "       LEFT", #$FF
     db #$FF
+  .routine
+    LDA !ram_cm_botwoon_rng
+    DEC : ASL #3 : INC
+    STA !ram_botwoon_rng
+    RTS
 
 rng_draygon_rng_right:
     dw !ACTION_CHOICE

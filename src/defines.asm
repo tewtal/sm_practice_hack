@@ -176,6 +176,8 @@
 !ram_cm_watch_edit_right_hi = !WRAM_MENU_START+$94
 !ram_cm_watch_edit_right_lo = !WRAM_MENU_START+$96
 
+!ram_cm_botwoon_rng = !WRAM_MENU_START+$80
+
 ; ^ FREE SPACE ^ up to +$CE
 
 !ram_cgram_cache = !WRAM_MENU_START+$D0         ; 20 bytes
