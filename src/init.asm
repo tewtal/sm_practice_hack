@@ -1,5 +1,3 @@
-!SRAM_VERSION = $000C
-
 
 ; hijack, runs as game is starting, JSR to RAM initialization to avoid bad values
 org $808455

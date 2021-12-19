@@ -1779,10 +1779,10 @@ LayoutMenu:
     %cm_footer("APPLIED WHEN ROOM RELOADED")
 
 layout_magnetstairs:
-    %cm_toggle("Remove Magnet Stairs", !ram_cm_magnetstairs, #$0001, #0)
+    %cm_toggle_bit("Remove Magnet Stairs", !sram_room_layout, !ROOM_LAYOUT_MAGNET_STAIRS, #0)
 
 layout_arearando:
-    %cm_toggle("Area Rando Patches", !ram_cm_arearando, #$0001, #0)
+    %cm_toggle_bit("Area Rando Patches", !sram_room_layout, !ROOM_LAYOUT_AREA_RANDO, #0)
 
 
 ; ----------
