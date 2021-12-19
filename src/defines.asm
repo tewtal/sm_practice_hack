@@ -338,6 +338,7 @@
 !sram_status_icons = $70203C
 !sram_suit_properties = $70203E
 !sram_top_display_mode = $702040
+!sram_healthalarm = $702042
 
 ; ^ FREE SPACE ^ up to $703000
 

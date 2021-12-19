@@ -124,6 +124,39 @@ endif
     NOP
 
 
+; Turn off health alarm
+if !FEATURE_PAL
+org $90EA89
+else
+org $90EA8C
+endif
+    LDA !sram_healthalarm : ASL : PHX : TAX
+    JMP (healthalarm_turn_off_table,X)
+
+; Turn on health alarm
+if !FEATURE_PAL
+org $90EA9A
+else
+org $90EA9D
+endif
+    LDA !sram_healthalarm : ASL : PHX : TAX
+    JMP (healthalarm_turn_on_table,X)
+
+; Turn on health alarm
+if !FEATURE_PAL
+org $90F336
+    JSR $EA9A
+else
+org $90F339
+    JSR $EA9D
+endif
+    BRA $02
+
+; Turn on health alarm from bank 91
+org $91E6DA
+    JML healthalarm_turn_on_remote
+
+
 ; Suit enemy damage
 if !FEATURE_PAL
 org $A0A473
@@ -389,6 +422,60 @@ else
     JMP $EA11
 endif
 }
+
+
+healthalarm_turn_on_table:
+    dw healthalarm_turn_on_never
+    dw healthalarm_turn_on_vanilla
+    dw healthalarm_turn_on_pb_fix
+    dw healthalarm_turn_on_improved
+
+healthalarm_turn_on_improved:
+    ; Do not sound alarm until below 30 combined health
+    LDA $09C2 : CLC : ADC $09D6 : CMP #$001E : BPL healthalarm_turn_on_done
+
+healthalarm_turn_on_pb_fix:
+    ; Do not sound alarm if it won't play due to power bomb explosion
+    LDA $0592 : BMI healthalarm_turn_on_done
+
+healthalarm_turn_on_vanilla:
+    LDA #$0002 : JSL $80914D
+
+healthalarm_turn_on_never:
+    LDA #$0001 : STA $0A6A
+
+healthalarm_turn_on_done:
+    PLX : RTS
+
+
+healthalarm_turn_off_table:
+    dw healthalarm_turn_off_never
+    dw healthalarm_turn_off_vanilla
+    dw healthalarm_turn_off_pb_fix
+    dw healthalarm_turn_off_improved
+
+healthalarm_turn_off_improved:
+healthalarm_turn_off_pb_fix:
+    ; Do not stop alarm if it won't stop due to power bomb explosion
+    LDA $0592 : BMI healthalarm_turn_off_done
+
+healthalarm_turn_off_vanilla:
+    LDA #$0001 : JSL $80914D
+
+healthalarm_turn_off_never:
+    STZ $0A6A
+
+healthalarm_turn_off_done:
+    PLX : RTS
+
+
+healthalarm_turn_on_remote:
+if !FEATURE_PAL
+    JSR $EA9A
+else
+    JSR $EA9D
+endif
+    PLB : PLP : RTL
 
 
 if !PRESERVE_WRAM_DURING_SPACETIME
