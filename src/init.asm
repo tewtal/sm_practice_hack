@@ -95,6 +95,7 @@ init_sram:
 
   .sram_upgrade_11to12
     LDA #$0000 : STA !sram_room_layout
+    LDA #$0001 : STA !sram_healthalarm
 
     LDA #!SRAM_VERSION : STA !sram_initialized
     RTS
