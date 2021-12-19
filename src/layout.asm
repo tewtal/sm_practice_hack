@@ -1,4 +1,16 @@
 
+; Green Hill Zone top-left door asm pointer
+org $838DF4
+    dw #layout_asm_greenhillzone
+
+; Green Hill Zone top-right door asm pointer
+org $838EA8
+    dw #layout_asm_greenhillzone
+
+; Green Hill Zone bottom-right door asm pointer
+org $838F08
+    dw #layout_asm_greenhillzone
+
 ; Caterpillar middle-left door asm pointer
 org $839094
     ; Use same asm as elevator door, freeing up asm at $BE1A
@@ -12,17 +24,25 @@ org $8390E8
 org $839274
     dw #layout_asm_caterpillar_no_scrolls
 
-; Green Hill Zone top-left door asm pointer
-org $838DF4
-    dw #layout_asm_greenhillzone
+; Single Chamber top-left door asm pointer
+org $83958C
+    dw #layout_asm_singlechamber
 
-; Green Hill Zone top-right door asm pointer
-org $838EA8
-    dw #layout_asm_greenhillzone
+; Single Chamber near-top-right door asm pointer
+org $839610
+    dw #layout_asm_singlechamber
 
-; Green Hill Zone bottom-right door asm pointer
-org $838F08
-    dw #layout_asm_greenhillzone
+; Single Chamber near-middle-right door asm pointer
+org $83961C
+    dw #layout_asm_singlechamber
+
+; Single Chamber near-bottom-right door asm pointer
+org $839640
+    dw #layout_asm_singlechamber
+
+; Single Chamber far-top-right door asm pointer
+org $839A54
+    dw #layout_asm_singlechamber
 
 ; Swap Enemy HP to MB HP when entering MB's room
 org $83AAD2
@@ -186,6 +206,40 @@ layout_asm_caterpillar_after_scrolls:
     %a8()
     LDA #$00 : STA $7F6E17 : STA $7F6E18 : STA $7F6E19
     STA $7F6E48 : STA $7F6E78 : STA $7F6EA8 : STA $7F6ED8
+
+  .done
+    PLP
+    RTS
+}
+
+layout_asm_singlechamber:
+{
+    PHP
+    LDA !ram_cm_arearando : BEQ .done
+    %a16()
+
+    ; Move right wall back one to create a ledge
+    LDA #$810C : STA $7F06E0 : STA $7F0A9E
+    LDA #$8507 : STA $7F07A0 : STA $7F0920
+    DEC : DEC : STA $7F0860 : STA $7F09E0
+
+    ; Clear out the ledge
+    LDA #$00FF : STA $7F06DE : STA $7F079E
+    STA $7F085E : STA $7F091E : STA $7F09DE
+
+    ; Remove crumble blocks from vertical shaft
+    STA $7F05E0 : STA $7F05E2
+    STA $7F06A0 : STA $7F06A2 : STA $7F0760 : STA $7F0762
+
+    ; Remove blocks from horizontal shaft
+    STA $7F061E : STA $7F0620 : STA $7F0624
+    ; Careful with the block that is also a scroll block
+    LDA #$30FF : STA $7F0622
+
+    ; Normal BTS for crumble blocks
+    %a8()
+    INC : STA $7F66F1 : STA $7F66F2
+    STA $7F6751 : STA $7F6752 : STA $7F67B1 : STA $7F67B2
 
   .done
     PLP
