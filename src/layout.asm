@@ -91,7 +91,7 @@ layout_asm_mbhp:
 
 layout_asm_magnetstairs:
 {
-    LDA !ram_cm_magnetstairs : BEQ .done
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_MAGNET_STAIRS : BEQ .done
     PHP : %a8()
 
     ; Modify graphics to indicate magnet stairs removed
@@ -108,7 +108,7 @@ layout_asm_magnetstairs:
 
 layout_asm_greenhillzone:
 {
-    LDA !ram_cm_arearando : BEQ .done
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ .done
     PHP : %a8()
 
     ; Add platform for ease of access to top-right door
@@ -137,7 +137,7 @@ layout_asm_greenhillzone:
 
 layout_asm_caterpillar_no_scrolls:
 {
-    LDA !ram_cm_arearando : BEQ .done
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ .done
     PHP : %a8()
     BRA layout_asm_caterpillar_after_scrolls
 
@@ -152,7 +152,7 @@ layout_asm_caterpillar_update_scrolls:
 
 layout_asm_caterpillar_after_scrolls:
 {
-    LDA !ram_cm_arearando : BEQ .done
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ .done
     %a16()
 
     ; Decorate gap with blocks
@@ -184,7 +184,7 @@ layout_asm_caterpillar_after_scrolls:
 layout_asm_singlechamber:
 {
     PHP
-    LDA !ram_cm_arearando : BEQ .done
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ .done
     %a16()
 
     ; Move right wall back one to create a ledge

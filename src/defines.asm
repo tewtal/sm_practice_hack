@@ -151,9 +151,6 @@
 !ram_cm_ctrl_timer = !WRAM_MENU_START+$36
 !ram_cm_ctrl_last_input = !WRAM_MENU_START+$38
 
-!ram_cm_magnetstairs = !WRAM_MENU_START+$3A
-!ram_cm_arearando = !WRAM_MENU_START+$3C
-
 ; ^ FREE SPACE ^ up to +$7E
 
 ; ------------------
@@ -292,6 +289,8 @@
 ; SRAM
 ; -----
 
+!SRAM_VERSION = $000C
+
 !sram_initialized = $702000
 
 !sram_ctrl_menu = $702002
@@ -326,8 +325,12 @@
 !sram_metronome_sfx = $70203A
 !sram_status_icons = $70203C
 !sram_suit_properties = $70203E
+!sram_room_layout = $702040
 
 ; ^ FREE SPACE ^ up to $703000
+
+!ROOM_LAYOUT_MAGNET_STAIRS = #$0001
+!ROOM_LAYOUT_AREA_RANDO = #$0002
 
 
 ; ----------
