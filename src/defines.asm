@@ -45,10 +45,11 @@
 
 !ram_sprite_samus_hitbox_active = !WRAM_START+$3C
 !ram_sprite_enemy_hitbox_active = !WRAM_START+$3E
-!ram_oob_watch_active = !WRAM_START+$40
-!ram_sprite_samusproj_hitbox_active = !WRAM_START+$42
-!ram_sprite_enemyproj_hitbox_active = !WRAM_START+$44
-!ram_custom_preset = !WRAM_START+$46
+!ram_sprite_extended_hitbox_active = !WRAM_START+$40
+!ram_oob_watch_active = !WRAM_START+$42
+!ram_sprite_samusproj_hitbox_active = !WRAM_START+$44
+!ram_sprite_enemyproj_hitbox_active = !WRAM_START+$46
+!ram_custom_preset = !WRAM_START+$48
 
 ; ^ FREE SPACE ^ up to +$4E
 
@@ -280,6 +281,9 @@
 !ENEMY_Y = $0F7E
 !ENEMY_X_RADIUS = $0F82
 !ENEMY_Y_RADIUS = $0F84
+!ENEMY_PROPERTIES_2 = $0F88
+!ENEMY_SPRITEMAP = $0F8E
+!ENEMY_BANK = $0FA6
 !ENEMY_PROJ_ID = $1997
 !ENEMY_PROJ_X = $1A4B
 !ENEMY_PROJ_Y = $1A93
