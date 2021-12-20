@@ -153,7 +153,11 @@ endif
     BRA $02
 
 ; Turn on health alarm from bank 91
+if !FEATURE_PAL
+org $91E63F
+else
 org $91E6DA
+endif
     JML healthalarm_turn_on_remote
 
 
