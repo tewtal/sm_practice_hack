@@ -44,6 +44,14 @@ org $839640
 org $839A54
     dw #layout_asm_singlechamber
 
+; Crab Tunnel left door asm pointer
+org $83A3B2
+    dw #layout_asm_crabtunnel
+
+; Crab Tunnel right door asm pointer
+org $83A502
+    dw #layout_asm_crabtunnel
+
 ; Swap Enemy HP to MB HP when entering MB's room
 org $83AAD2
     dw #layout_asm_mbhp
@@ -208,6 +216,33 @@ layout_asm_singlechamber:
     %a8()
     INC : STA $7F66F1 : STA $7F66F2
     STA $7F6751 : STA $7F6752 : STA $7F67B1 : STA $7F67B2
+
+  .done
+    PLP
+    RTS
+}
+
+layout_asm_crabtunnel:
+{
+    PHP
+    %a16()
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ .done
+
+    ; Replace top of gate with slope tiles
+    LDA #$1D87 : STA $7F039C : LDA #$1987 : STA $7F039E
+
+    ; Remove remaining gate tiles
+    LDA #$00FF : STA $7F041E : STA $7F049E : STA $7F051E : STA $7F059E
+
+    ; Clear gate PLMs and projectiles
+    LDA #$0000 : STA $1C83 : STA $1C85 : STA $19B9
+
+    ; Slope BTS for top of the gate tiles
+    %a8()
+    LDA #$D2 : STA $7F65CF : LDA #$92 : STA $7F65D0
+
+    ; Normal BTS for remaining gate tiles
+    LDA #$00 : STA $7F6610 : STA $7F6650 : STA $7F6690 : STA $7F66D0
 
   .done
     PLP
