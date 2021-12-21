@@ -20,6 +20,11 @@ org $839094
 org $8390E8
     dw #layout_asm_caterpillar_no_scrolls
 
+; East Tunnel bottom-right door asm pointer
+org $839238
+    ; Use same asm as bottom-left door
+    dw $E345
+
 ; Caterpillar near-right door asm pointer
 org $839274
     dw #layout_asm_caterpillar_no_scrolls
@@ -52,6 +57,10 @@ org $83A3B2
 org $83A502
     dw #layout_asm_crabtunnel
 
+; East Tunnel top-right door asm pointer
+org $83A51A
+    dw #layout_asm_easttunnel_no_scrolls
+
 ; Swap Enemy HP to MB HP when entering MB's room
 org $83AAD2
     dw #layout_asm_mbhp
@@ -83,6 +92,13 @@ org $8FE0C0
 ; Ceres Ridley room setup asm when timer is not running
 org $8FE0DF
     dw layout_asm_ceres_ridley_room_no_timer
+
+; East Tunnel bottom-left and bottom-right door asm
+org $8FE34E
+    ; Optimize existing logic by one byte
+    INC : STA $7ECD24
+    ; Overwrite extra byte : PLP : RTS with jump
+    JMP layout_asm_easttunnel_after_scrolls
 
 ; Caterpillar far-right door asm
 org $8FE370
@@ -132,7 +148,7 @@ layout_asm_magnetstairs:
 {
     PHP
     %a16()
-    LDA !sram_room_layout : BIT !ROOM_LAYOUT_MAGNET_STAIRS : BEQ .done
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_MAGNET_STAIRS : BEQ layout_asm_magnetstairs_done
 
     ; Modify graphics to indicate magnet stairs removed
     %a8()
@@ -141,17 +157,17 @@ layout_asm_magnetstairs:
     ; Convert solid tiles to slope tiles
     LDA #$10 : STA $7F01F9 : STA $7F02EB
     LDA #$53 : STA $7F64FD : STA $7F6576
+}
 
-  .done
+layout_asm_magnetstairs_done:
     PLP
     RTS
-}
 
 layout_asm_greenhillzone:
 {
     PHP
     %a16()
-    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ .done
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ layout_asm_magnetstairs_done
 
     ; Remove gate and corner tile next to gate
     LDA #$00FF : STA $7F37C8 : STA $7F37CA : STA $7F37CC
@@ -171,27 +187,23 @@ layout_asm_greenhillzone:
     ; Normal BTS for gate tiles
     LDA #$00 : STA $7F7FE5 : STA $7F7FE6
     STA $7F8066 : STA $7F80E6 : STA $7F8166 : STA $7F81E6
+}
 
-  .done
+layout_asm_greenhillzone_done:
     PLP
     RTS
-}
 
 layout_asm_caterpillar_no_scrolls:
-{
     PHP
     BRA layout_asm_caterpillar_after_scrolls
-}
 
 layout_asm_caterpillar_update_scrolls:
-{
     STA $7ECD26
-}
 
 layout_asm_caterpillar_after_scrolls:
 {
     %a16()
-    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ .done
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ layout_asm_greenhillzone_done
 
     ; Decorate gap with blocks
     LDA #$8562 : STA $7F145E : STA $7F1460 : STA $7F151E : STA $7F1520
@@ -213,22 +225,22 @@ layout_asm_caterpillar_after_scrolls:
     %a8()
     LDA #$00 : STA $7F6E17 : STA $7F6E18 : STA $7F6E19
     STA $7F6E48 : STA $7F6E78 : STA $7F6EA8 : STA $7F6ED8
+}
 
-  .done
+layout_asm_caterpillar_done:
     PLP
     RTS
-}
 
 layout_asm_singlechamber:
 {
     PHP
     %a16()
-    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ .done
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ layout_asm_caterpillar_done
 
     ; Move right wall back one to create a ledge
     LDA #$810C : STA $7F06E0 : STA $7F0A9E
     LDA #$8507 : STA $7F07A0 : STA $7F0920
-    DEC : DEC : STA $7F0860 : STA $7F09E0
+    LDA #$8505 : STA $7F0860 : STA $7F09E0
 
     ; Clear out the ledge
     LDA #$00FF : STA $7F06DE : STA $7F079E
@@ -245,22 +257,25 @@ layout_asm_singlechamber:
 
     ; Normal BTS for crumble blocks
     %a8()
-    INC : STA $7F66F1 : STA $7F66F2
+    LDA #$00 : STA $7F66F1 : STA $7F66F2
     STA $7F6751 : STA $7F6752 : STA $7F67B1 : STA $7F67B2
+}
 
-  .done
+layout_asm_singlechamber_done:
     PLP
     RTS
-}
 
 layout_asm_crabtunnel:
 {
     PHP
     %a16()
-    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ .done
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ layout_asm_singlechamber_done
 
     ; Replace top of gate with slope tiles
-    LDA #$1D87 : STA $7F039C : LDA #$1987 : STA $7F039E
+    LDA #$1D87 : STA $7F039C : LDA #$1194 : STA $7F039E
+
+    ; Fix tiles to the right of the gate
+    LDA #$89A0 : STA $7F03A0 : LDA #$811D : STA $7F0320
 
     ; Remove remaining gate tiles
     LDA #$00FF : STA $7F041E : STA $7F049E : STA $7F051E : STA $7F059E
@@ -274,11 +289,52 @@ layout_asm_crabtunnel:
 
     ; Normal BTS for remaining gate tiles
     LDA #$00 : STA $7F6610 : STA $7F6650 : STA $7F6690 : STA $7F66D0
+}
 
-  .done
+layout_asm_crabtunnel_done:
     PLP
     RTS
+
+layout_asm_easttunnel_no_scrolls:
+    PHP
+
+layout_asm_easttunnel_after_scrolls:
+{
+    %a16()
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ layout_asm_crabtunnel_done
+
+    ; Clear gate PLMs and projectiles
+    LDA #$0000 : STA $1C7B : STA $1C7D : STA $19B9
+
+    ; Remove gate tiles
+    LDA #$00FF : STA $7F02AE : STA $7F02B0
+    STA $7F032E : STA $7F03AE : STA $7F042E : STA $7F04AE
+
+    ; Remove blocks from vertical shaft
+    STA $7F078C : STA $7F088C : STA $7F090C
+    STA $7F098C : STA $7F0A0C : STA $7F0A8C
+    ; Careful with the block that is also a scroll block
+    LDA #$30FF : STA $7F080C
+
+    ; Normal BTS for gate tiles
+    %a8()
+    LDA #$00 : STA $7F6558 : STA $7F6559
+    STA $7F6598 : STA $7F65D8 : STA $7F6618 : STA $7F6658
+
+    ; Decorate vertical shaft
+    LDA #$22 : STA $7F070A : STA $7F070E
+    STA $7F078A : STA $7F078E : STA $7F080A : STA $7F080E
+    STA $7F088A : STA $7F088E : STA $7F090A : STA $7F090E
+    STA $7F098A : STA $7F098E : STA $7F0A0A : STA $7F0A0E
+    LDA #$85 : STA $7F078B : STA $7F080B : STA $7F088B
+    STA $7F090B : STA $7F098B : STA $7F0A0B
+    STA $7F0A8A : STA $7F0A8E
+    LDA #$8D : STA $7F0A8B
 }
+
+layout_asm_easttunnel_done:
+    PLP
+    RTS
 
 print pc, " layout end"
 
