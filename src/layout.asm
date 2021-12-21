@@ -3,9 +3,17 @@
 org $80C995
     db #$A3, #$D1, #$68, #$A4, #$00, #$00, #$00, #$00, #$00, #$02, #$78, #$00, #$60, #$00
 
+; Main Street save station load point
+org $80C9A3
+    db #$C9, #$CF, #$D8, #$A3, #$00, #$00, #$00, #$01, #$00, #$05, #$78, #$00, #$10, #$00
+
 ; Crab Shaft save station map icon location
 org $82CA17
     db #$90, #$00, #$50, #$00
+
+; Main Street save station map icon location
+org $82CA1B
+    db #$58, #$00, #$78, #$00
 
 
 ; East Ocean left door asm pointer
@@ -66,9 +74,29 @@ org $839A54
 org $83A26E
     dw #layout_asm_eastocean
 
+; Main Street bottom door asm pointer
+org $83A33A
+    dw #layout_asm_mainstreet
+
 ; Crab Tunnel left door asm pointer
 org $83A3B2
     dw #layout_asm_crabtunnel
+
+; Main Street middle-right door asm pointer
+org $83A3E2
+    dw #layout_asm_mainstreet
+
+; Main Street bottom-right door asm pointer
+org $83A41E
+    dw #layout_asm_mainstreet
+
+; Main Street top-right door asm pointer
+org $83A442
+    dw #layout_asm_mainstreet
+
+; Main Street hidden door asm pointer
+org $83A45A
+    dw #layout_asm_mainstreet
 
 ; Crab Shaft left door asm pointer
 org $83A472
@@ -390,6 +418,25 @@ layout_asm_crabshaft_done:
 
 layout_asm_crabshaft_plm_data:
     db #$6F, #$B7, #$0D, #$29, #$09, #$00
+
+layout_asm_mainstreet:
+{
+    PHP
+    %a16()
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ layout_asm_crabshaft_done
+
+    ; Add save station PLM
+    %ai16()
+    PHX : LDX #layout_asm_mainstreet_plm_data
+    JSL $84846A : PLX
+}
+
+layout_asm_mainstreet_done:
+    PLP
+    RTS
+
+layout_asm_mainstreet_plm_data:
+    db #$6F, #$B7, #$18, #$59, #$0A, #$00
 
 print pc, " layout end"
 
