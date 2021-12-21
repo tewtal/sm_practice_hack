@@ -1,4 +1,8 @@
 
+; East Ocean left door asm pointer
+org $838A88
+    dw #layout_asm_eastocean
+
 ; Green Hill Zone top-left door asm pointer
 org $838DF4
     dw #layout_asm_greenhillzone
@@ -48,6 +52,10 @@ org $839640
 ; Single Chamber far-top-right door asm pointer
 org $839A54
     dw #layout_asm_singlechamber
+
+; East Ocean right door asm pointer
+org $83A26E
+    dw #layout_asm_eastocean
 
 ; Crab Tunnel left door asm pointer
 org $83A3B2
@@ -302,6 +310,34 @@ layout_asm_easttunnel_after_scrolls:
 }
 
 layout_asm_easttunnel_done:
+    PLP
+    RTS
+
+layout_asm_eastocean:
+{
+    PHP
+    %a16()
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ layout_asm_easttunnel_done
+
+    ; Add platforms for ease of access to right door
+    LDA #$8100 : STA $7F4506 : STA $7F4876
+    INC : STA $7F4508 : STA $7F4878
+    LDA #$8501 : STA $7F450A : STA $7F487A
+    DEC : STA $7F450C : STA $7F487C
+    LDA #$1120 : STA $7F45E6 : STA $7F4956
+    INC : STA $7F45E8 : STA $7F4958
+    LDA #$1521 : STA $7F45EA : STA $7F495A
+    DEC : STA $7F45EC : STA $7F495C
+
+    ; Slope BTS for platform bottoms
+    %a8()
+    LDA #$94 : STA $7F86F4 : STA $7F88AC
+    INC : STA $7F86F5 : STA $7F88AD
+    LDA #$D5 : STA $7F86F6 : STA $7F88AE
+    DEC : STA $7F86F7 : STA $7F88AF
+}
+
+layout_asm_eastocean_done:
     PLP
     RTS
 
