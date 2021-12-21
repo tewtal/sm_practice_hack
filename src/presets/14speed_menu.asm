@@ -8,7 +8,7 @@ PresetsMenu14speed:
     dw #presets_goto_14speed_maridia
     dw #presets_goto_14speed_tourian
     dw #$0000
-    %cm_header("PRESETS FOR 14 SPEED")
+    %cm_header("PRESETS FOR 14% SPEED")
 
 presets_goto_14speed_crateria:
     %cm_submenu("Crateria", #presets_submenu_14speed_crateria)
@@ -226,7 +226,7 @@ presets_14speed_brinstar_revisit_breaking_tube:
     %cm_preset("Breaking Tube", #preset_14speed_brinstar_revisit_breaking_tube)
 
 presets_14speed_brinstar_revisit_entering_kraids_lair:
-    %cm_preset("Entering Kraids Lair", #preset_14speed_brinstar_revisit_entering_kraids_lair)
+    %cm_preset("Entering Kraid's Lair", #preset_14speed_brinstar_revisit_entering_kraids_lair)
 
 presets_14speed_brinstar_revisit_baby_kraid_entering:
     %cm_preset("Baby Kraid (Entering)", #preset_14speed_brinstar_revisit_baby_kraid_entering)

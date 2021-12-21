@@ -11,7 +11,7 @@ PresetsMenuKpdr21:
     dw #presets_goto_kpdr21_backtracking
     dw #presets_goto_kpdr21_tourian
     dw #$0000
-    %cm_header("PRESETS FOR ANY KPDR")
+    %cm_header("PRESETS FOR ANY% KPDR")
 
 presets_goto_kpdr21_crateria:
     %cm_submenu("Crateria", #presets_submenu_kpdr21_crateria)

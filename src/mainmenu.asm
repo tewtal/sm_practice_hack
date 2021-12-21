@@ -1712,7 +1712,7 @@ action_ramwatch_edit_left:
     LDA !ram_watch_write_mode : BEQ +
     %a8()
 +   LDA !ram_watch_bank : BEQ .bank7E
-    CMP #$0001 : BEQ .bank7F : BRA .bankSRAM
+    DEC : BEQ .bank7F : BRA .bankSRAM
   .bank7E
     LDA !ram_watch_edit_left : STA $7E0000,X : BRA +
   .bank7F
@@ -1731,7 +1731,7 @@ action_ramwatch_edit_right:
     LDA !ram_watch_write_mode : BEQ +
     %a8()
 +   LDA !ram_watch_bank : BEQ .bank7E
-    CMP #$0001 : BEQ .bank7F : BRA .bankSRAM
+    DEC : BEQ .bank7F : BRA .bankSRAM
   .bank7E
     LDA !ram_watch_edit_right : STA $7E0000,X : BRA +
   .bank7F
