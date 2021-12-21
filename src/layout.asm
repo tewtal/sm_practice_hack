@@ -1,4 +1,13 @@
 
+; Crab Shaft save station load point
+org $80C995
+    db #$A3, #$D1, #$68, #$A4, #$00, #$00, #$00, #$00, #$00, #$02, #$78, #$00, #$60, #$00
+
+; Crab Shaft save station map icon location
+org $82CA17
+    db #$90, #$00, #$50, #$00
+
+
 ; East Ocean left door asm pointer
 org $838A88
     dw #layout_asm_eastocean
@@ -61,6 +70,14 @@ org $83A26E
 org $83A3B2
     dw #layout_asm_crabtunnel
 
+; Crab Shaft left door asm pointer
+org $83A472
+    dw #layout_asm_crabshaft_no_scrolls
+
+; Crab Shaft top door asm pointer
+org $83A4EA
+    dw #layout_asm_crabshaft_no_scrolls
+
 ; Crab Tunnel right door asm pointer
 org $83A502
     dw #layout_asm_crabtunnel
@@ -114,6 +131,11 @@ org $8FE370
     INC : STA $7ECD2A
     ; Overwrite extra byte : PLP : RTS with jump
     JMP layout_asm_caterpillar_after_scrolls
+
+; Crab Shaft right door asm
+org $8FE39D
+    ; Replace STA with jump to STA
+    JMP layout_asm_crabshaft_update_scrolls
 
 
 org $8FEA00 ; free space for door asm
@@ -371,6 +393,34 @@ layout_asm_eastocean:
 layout_asm_eastocean_done:
     PLP
     RTS
+
+layout_asm_crabshaft_no_scrolls:
+    PHP
+    BRA layout_asm_crabshaft_after_scrolls
+
+layout_asm_crabshaft_update_scrolls:
+    STA $7ECD26
+
+layout_asm_crabshaft_after_scrolls:
+{
+    %a16()
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ layout_asm_eastocean_done
+
+    ; Clear space above save station
+    LDA #$00FF : STA $7F095C : STA $7F095E
+
+    ; Add save station PLM
+    %ai16()
+    PHX : LDX #layout_asm_crabshaft_plm_data
+    JSL $84846A : PLX
+}
+
+layout_asm_crabshaft_done:
+    PLP
+    RTS
+
+layout_asm_crabshaft_plm_data:
+    db #$6F, #$B7, #$0D, #$29, #$09, #$00
 
 print pc, " layout end"
 
