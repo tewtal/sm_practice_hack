@@ -15,6 +15,10 @@ org $82CA17
 org $82CA1B
     db #$58, #$00, #$78, #$00
 
+; Allow debug save stations to be used
+org $848D0C
+    AND #$000F
+
 
 ; East Ocean left door asm pointer
 org $838A88
