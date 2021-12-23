@@ -518,7 +518,7 @@ eq_setetanks:
         CLC : ADC #$0064
         BRA .loop
       .endloop
-        STA $09C4 : STA $09C2
+        STA !SAMUS_HP_MAX : STA !SAMUS_HP
         RTS
 
 eq_currentreserves:
@@ -534,7 +534,7 @@ eq_setreserves:
         CLC : ADC #$0064
         BRA .loop
       .endloop
-        STA $09D6 : STA $09D4
+        STA !SAMUS_RESERVE_ENERGY : STA !SAMUS_RESERVE_MAX
         RTS
 
 eq_currentmissiles:
@@ -543,7 +543,7 @@ eq_currentmissiles:
 eq_setmissiles:
     %cm_numfield_word("Missiles", $7E09C8, 0, 325, 5, 20, .routine)
     .routine
-        LDA $09C8 : STA $09C6 ; missiles
+        LDA !SAMUS_MISSILES_MAX : STA !SAMUS_MISSILES ; missiles
         RTS
 
 eq_currentsupers:
@@ -552,7 +552,7 @@ eq_currentsupers:
 eq_setsupers:
     %cm_numfield("Super Missiles", $7E09CC, 0, 65, 5, 5, .routine)
     .routine
-        LDA $09CC : STA $09CA ; supers
+        LDA !SAMUS_SUPERS : STA !SAMUS_SUPERS_MAX ; supers
         RTS
 
 eq_currentpbs:
@@ -569,7 +569,7 @@ else
     %cm_numfield("Power Bombs", $7E09D0, 0, 65, 5, 5, .routine)
 endif
     .routine
-        LDA $09D0 : STA $09CE ; pbs
+        LDA !SAMUS_PBS_MAX : STA !SAMUS_PBS ; pbs
         RTS
 
 ; ---------------------
@@ -721,13 +721,13 @@ ti_speedbooster:
 ti_grapple:
     %cm_toggle_bit("Grapple", $7E09A2, #$4000, .routine)
     .routine
-        LDA $09A4 : EOR #$4000 : STA $09A4
+        LDA !SAMUS_ITEMS_COLLECTED : EOR #$4000 : STA !SAMUS_ITEMS_COLLECTED
         RTS
 
 ti_xray:
     %cm_toggle_bit("X-Ray", $7E09A2, #$8000, .routine)
     .routine
-        LDA $09A4 : EOR #$8000 : STA $09A4
+        LDA !SAMUS_ITEMS_COLLECTED : EOR #$8000 : STA !SAMUS_ITEMS_COLLECTED
         RTS
 
 

@@ -57,7 +57,7 @@ endif
     DEC $0DA0    ; Decrement $0DA0
     BPL .loopSomething
 
-    LDA #$0008 : STA $0998
+    LDA #$0008 : STA !GAMEMODE
     %a8() : LDA #$0F : STA $51 : %a16()
 
     PHP
@@ -378,7 +378,7 @@ preset_room_setup_asm_fixes:
 
   .scrolling_sky
     ; If we got here through normal gameplay, allow scrolling sky
-    LDA $0998 : CMP #$0006 : BEQ .execute_setup_asm
+    LDA !GAMEMODE : CMP #$0006 : BEQ .execute_setup_asm
     CMP #$001F : BEQ .execute_setup_asm
     CMP #$0028 : BEQ .execute_setup_asm
 
@@ -397,7 +397,7 @@ preset_scroll_fixes:
     ; is normally hidden until passing over a red scroll block.
     ; These fixes can often be found in nearby door asm.
     PHP : %a8() : %i16()
-    LDA #$01 : LDX $079B         ; X = room ID
+    LDA #$01 : LDX !ROOM_ID      ; X = room ID
     CPX #$C000 : BPL .halfway    ; organized by room ID so we only have to check half
 
     CPX #$A011 : BNE +           ; bottom-left of Etecoons Etank
@@ -417,7 +417,7 @@ preset_scroll_fixes:
     LDA #$00 : STA $7ECD23 : STA $7ECD24
     BRA .done
 +   CPX #$B3A5 : BNE +           ; bottom of Pre-Pillars
-    LDY $0AFA : CPY #$0190       ; no scroll fix if Ypos < 400
+    LDY !SAMUS_Y : CPY #$0190    ; no scroll fix if Ypos < 400
     BMI .done
     STA $7ECD22 : STA $7ECD24
     LDA #$00 : STA $7ECD21
