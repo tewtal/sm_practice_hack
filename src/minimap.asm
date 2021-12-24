@@ -130,7 +130,7 @@ mm_write_hud_tiles_during_door_transition:
 }
 
 print pc, " minimap bank82 end"
-warnpc $82FA00
+warnpc $82F800
 
 
 ; Placed in bank 90 so that the jumps work
