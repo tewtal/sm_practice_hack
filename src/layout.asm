@@ -15,9 +15,47 @@ org $82CA17
 org $82CA1B
     db #$58, #$00, #$78, #$00
 
-; Allow debug save stations to be used
-org $848D0C
-    AND #$000F
+; Hijack room transition between loading level data and setting up scrolling
+org $82E388
+    dw hijack_after_load_level_data
+
+; Hijack call to create door closing PLM
+org $82E4C9
+    JSR hijack_door_closing_plm
+
+
+org $82F800
+print pc, " layout bank82 start"
+
+hijack_after_load_level_data:
+{
+    LDA $079B : CMP #$D6FD : BNE .done
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ .done
+
+    ; Aqueduct Farm Sand Pit needs to be handled before the door scroll
+    JSL layout_asm_aqueductfarmsandpit_external
+
+  .done
+    JMP $E38E
+}
+
+hijack_door_closing_plm:
+{
+    PHP : PHB
+    %ai16()
+    LDA $078D : CMP #$A654 : BNE .done
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BNE .done
+
+    ; Aqueduct Farm Sand Pit should not have a door closing PLM
+    ; if using the warp door while Area Rando off
+    PLB : PLP : RTS
+
+  .done
+    JMP $E8EF
+}
+
+print pc, " layout bank82 end"
+warnpc $82FA00
 
 
 ; East Ocean left door asm pointer
@@ -127,7 +165,7 @@ org $83A654
     dw #$D6FD
     db #$00, #$05, #$3E, #$06, #$03, #$00
     dw #$8000
-    dw #layout_asm_aqueductfarmsandpit
+    dw #$0000
 
 ; West Sand Hall right door asm pointer
 org $83A66A
@@ -136,18 +174,6 @@ org $83A66A
 ; West Sand Hall top sand door asm pointer
 org $83A6BE
     dw #layout_asm_westsandhall
-
-; Aqueduct Farm Sand Pit left door asm pointer
-org $83A742
-    dw #layout_asm_aqueductfarmsandpit
-
-; Aqueduct Farm Sand Pit top-left sand door asm pointer
-org $83A8B6
-    dw #layout_asm_aqueductfarmsandpit
-
-; Aqueduct Farm Sand Pit top-right sand door asm pointer
-org $83A8C2
-    dw #layout_asm_aqueductfarmsandpit
 
 ; Swap Enemy HP to MB HP when entering MB's room
 org $83AAD2
@@ -160,6 +186,11 @@ org $83AB6E
 ; Magnet Stairs right door asm pointer
 org $83AB92
     dw #layout_asm_magnetstairs
+
+
+; Allow debug save stations to be used
+org $848D0C
+    AND #$000F
 
 
 ; Caterpillar elevator and middle-left door asm
@@ -511,13 +542,16 @@ layout_asm_mainstreet_plm_data:
 layout_asm_aqueductfarmsandpit_door_list:
     dw #$A7D4, #$A534
 
-layout_asm_aqueductfarmsandpit:
+layout_asm_aqueductfarmsandpit_external:
 {
-    PHP
-    %a16()
-    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ layout_asm_mainstreet_done
+    ; Place door BTS
+    %a8()
+    LDA #$40 : STA $7F65C0 : LDA #$FF : STA $7F6600
+    DEC : STA $7F6640 : DEC : STA $7F6680 : LDA #$01
+    STA $7F65C1 : STA $7F6601 : STA $7F6641 : STA $7F6681
 
     ; Move right wall one to the left
+    %a16()
     LDA #$8A09 : STA $7F01FE : LDA #$820E : STA $7F067E
     LDA #$820A : STA $7F027E : STA $7F05FE
     LDA #$8A0B : STA $7F02FE : LDA #$8A07 : STA $7F0300
@@ -531,14 +565,7 @@ layout_asm_aqueductfarmsandpit:
     LDA #$D02C : STA $7F03FE : LDA #$9060 : STA $7F0400
     LDA #$D82C : STA $7F047E : LDA #$9860 : STA $7F0480
     LDA #$D80C : STA $7F04FE : LDA #$9840 : STA $7F0500
-
-    ; Place door BTS
-    %a8()
-    LDA #$40 : STA $7F65C0 : LDA #$FF : STA $7F6600
-    DEC : STA $7F6640 : DEC : STA $7F6680 : LDA #$01
-    STA $7F65C1 : STA $7F6601 : STA $7F6641 : STA $7F6681
-    PLP
-    RTS
+    RTL
 }
 
 layout_asm_westsandhall:
