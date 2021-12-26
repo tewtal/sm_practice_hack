@@ -1198,6 +1198,8 @@ InfoHudMenu:
     dw #ih_goto_room_strat
     dw #ih_room_strat
     dw #$FFFF
+    dw #ih_top_HUD_mode
+    dw #$FFFF
     dw #ih_room_counter
     dw #ih_reset_seg_later
     dw #ih_lag
@@ -1410,6 +1412,15 @@ ih_room_strat:
     .routine
         LDA #$0001 : STA !sram_display_mode
         RTS
+
+ih_top_HUD_mode:
+    dw !ACTION_CHOICE
+    dl #!sram_top_display_mode
+    dw #$0000
+    db #$28, "Top-Left Displ", #$FF
+    db #$28, "ay   ITEM %", #$FF
+    db #$28, "ay RESERVES", #$FF
+    db #$FF
 
 ih_room_counter:
     dw !ACTION_CHOICE

@@ -572,7 +572,7 @@ ih_update_hud_code:
         LDA HexToNumberGFX1,X : STA $7EC644
         LDA HexToNumberGFX2,X : STA $7EC646
 
-        BRA .pct
+        BRA .topLeftHUD
     }
 
     ; Room time
@@ -607,12 +607,16 @@ ih_update_hud_code:
         LDA HexToNumberGFX2,X : STA $7EC646
     }
 
-    ; Draw Item percent
-    .pct
+    ; 3 tiles between input display and missile icon
+    .topLeftHUD
     {
         ; skip item% if display mode = vspeed
         LDA !sram_display_mode : CMP #!IH_MODE_VSPEED_INDEX : BEQ .skipToLag
 
+        LDA !sram_top_display_mode : BNE .skipToLag
+
+        ; Draw Item percent
+      .pct
         LDA #$0000 : STA !ram_pct_1
 
         ; Max HP (E tanks)
@@ -766,11 +770,35 @@ ih_hud_code:
     JSR (.status_display_table,X)
 
     ; Samus' HP
-    LDA $09C2 : CMP !ram_last_hp : BEQ .status_icons : STA !ram_last_hp
+    LDA $09C2 : CMP !ram_last_hp : BEQ .reserves : STA !ram_last_hp
     LDX #$0092 : JSR Draw4
     LDA !IH_BLANK : STA $7EC690 : STA $7EC69A
 
-  .status_icons
+    ; Reserve energy counter
+  .reserves
+    LDA !sram_top_display_mode : BEQ .statusIcons
+
+    LDA !SAMUS_RESERVE_MAX : BEQ .noReserves
+    LDA !SAMUS_RESERVE_ENERGY : CMP !ram_reserves_last : BEQ .checkAuto
+    STA !ram_reserves_last : LDX #$0014 : JSR Draw3
+
+  .checkAuto
+    LDA !SAMUS_RESERVE_MODE : CMP #$0001 : BEQ .autoOn
+
+    LDA !IH_BLANK : STA $7EC61A : BRA .statusIcons
+
+  .autoOn
+    LDA !SAMUS_RESERVE_ENERGY : BEQ .autoEmpty
+    LDA !IH_RESERVE_AUTO : STA $7EC61A : BRA .statusIcons
+
+  .autoEmpty
+    LDA !IH_RESERVE_EMPTY : STA $7EC61A : BRA .statusIcons
+
+  .noReserves
+    LDA !IH_BLANK : STA $7EC614 : STA $7EC616 : STA $7EC618 : STA $7EC61A
+
+; Status Icons
+  .statusIcons
     LDA !sram_status_icons : BEQ .end
 
     ; health bomb
@@ -1311,9 +1339,12 @@ ih_hud_code_paused:
     PLX : PLY
     LDA !IH_BLANK : STA $7EC690 : STA $7EC69A
 
+
   .end
-    ; overwritten code
-    LDA $7E09C0
+    ; Force Samus' Reserves to update after pause
+    LDA #$FFFF : STA !ram_reserves_last
+
+    LDA $7E09C0 ; overwritten code
     JMP $9B51
 }
 
