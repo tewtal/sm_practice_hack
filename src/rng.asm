@@ -269,14 +269,14 @@ hook_phantoon_flame_pattern:
 }
 
 phantoon_dirs:
-db $FF
-db $01, $01, $01
-db $00, $00, $00
+    db #$FF
+    db #$01, #$01, #$01
+    db #$00, #$00, #$00
 
 phantoon_pats:
-db $FF
-db $01, $02, $03
-db $01, $02, $03
+    db #$FF
+    db #$01, #$02, #$03
+    db #$01, #$02, #$03
 
 hook_botwoon_rng:
 {
@@ -292,38 +292,10 @@ hook_botwoon_rng:
 
 print pc, " rng end"
 
-if !FEATURE_PAL
-org $A5FA00
-else
-org $A5F960
-endif
-print pc, " draygon rng start"
-hook_draygon_rng_left:
-{
-    LDA !ram_draygon_rng_left : BEQ .no_manip
-    DEC    ; return with 1-swoop or 0-goop
-    RTS
-    
-  .no_manip
-    LDA $05E5   ; return with random number (overwritten code)
-    RTS
-}
-
-hook_draygon_rng_right:
-{
-    LDA !ram_draygon_rng_right : BEQ .no_manip
-    DEC    ; return with 1-swoop or 0-goop
-    RTS
-    
-  .no_manip
-    LDA $05E5   ; return with random number (overwritten code)
-    RTS
-}
-
-print pc, " draygon rng end"
 
 org $A4F700
 print pc, " crocomire rng start"
+
 hook_crocomire_rng:
 {
     LDA !ram_crocomire_rng : BEQ .no_manip
@@ -341,6 +313,125 @@ hook_crocomire_rng:
 }
 
 print pc, " crocomire rng end"
+
+
+org $A5FA00
+print pc, " draygon rng start"
+
+hook_draygon_rng_left:
+{
+    LDA !ram_draygon_rng_left : BEQ .no_manip
+    DEC    ; return with 1-swoop or 0-goop
+    RTS
+
+  .no_manip
+    LDA $05E5   ; return with random number (overwritten code)
+    RTS
+}
+
+hook_draygon_rng_right:
+{
+    LDA !ram_draygon_rng_right : BEQ .no_manip
+    DEC    ; return with 1-swoop or 0-goop
+    RTS
+
+  .no_manip
+    LDA $05E5   ; return with random number (overwritten code)
+    RTS
+}
+
+print pc, " draygon rng end"
+
+
+; This is actually for preset support instead of RNG
+; Keep Ceres Ridley enemy alive even if the main boss flag is set
+if !FEATURE_PAL
+org $A6A10C
+else
+org $A6A0FC
+endif
+    LSR : BCC $0F
+    CPX #$0006 : BEQ $0A
+    LDA $0F86
+
+if !FEATURE_PAL
+org $A6A302
+else
+org $A6A2F2
+endif
+    JMP ceres_ridley_draw_metroid
+
+if !FEATURE_PAL
+org $A6A371
+else
+org $A6A361
+endif
+    dw ridley_init_hook
+
+; Lock ceres ridley door if timer not started or if boss not dead
+if !FEATURE_PAL
+org $A6F641
+else
+org $A6F66A
+endif
+    LDA $0943 : BEQ $F6
+    LDA $7ED82E
+
+
+org $A6FEC0
+print pc, " ridley rng start"
+
+ridley_init_hook:
+{
+    LDA $079B : CMP #$E0B5 : BNE .continue
+    LDA $7ED82E : BIT #$0001 : BEQ .continue
+
+    ; Ceres Ridley is already dead, so skip to the escape
+    ; We do need to mark Ceres Ridley alive
+    ; to keep the door locked until the timer starts
+    AND #$FFFE : STA $7ED82E
+
+    ; Clear out the room main asm so it doesn't also trigger the escape
+    STZ $07DF
+    LDA #$0001 : STA $093F
+if !FEATURE_PAL
+    LDA #$AB47
+else
+    LDA #$AB37
+endif
+    STA $0FA8
+    JMP ($0FA8)
+
+  .continue
+if !FEATURE_PAL
+    LDA #$A387
+else
+    LDA #$A377
+endif
+    STA $0FA8
+    JMP ($0FA8)
+}
+
+ceres_ridley_draw_metroid:
+{
+    LDA $7ED82E : BIT #$0001 : BNE .end
+    LDA $093F : BNE .end
+if !FEATURE_PAL
+    JSR $BF2A
+else
+    JSR $BF1A
+endif
+
+  .end
+if !FEATURE_PAL
+    JMP $A30A
+else
+    JMP $A2FA
+endif
+}
+
+print pc, " ridley rng end"
+
 
 org $A7FFB6
 print pc, " kraid rng start"

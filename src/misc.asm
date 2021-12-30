@@ -254,6 +254,11 @@ org $83AAD2
     dw #MotherBrainHP
 
 
+; Ceres Ridley modified state check to support presets
+org $8FE0C0
+    dw layout_asm_ceres_ridley_room_state_check
+
+
 org $8FEA00 ; free space for door asm
 print pc, " misc bank8F start"
 
@@ -264,6 +269,17 @@ MotherBrainHP:
     LDA #!IH_STRAT_MBHP_INDEX : STA !sram_room_strat
 
   .done
+    RTS
+}
+
+layout_asm_ceres_ridley_room_state_check:
+{
+    LDA $0943 : BEQ .no_timer
+    LDA $0001,X : TAX
+    JMP $E5E6
+  .no_timer
+    STZ $093F
+    INX : INX : INX
     RTS
 }
 
