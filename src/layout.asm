@@ -175,8 +175,12 @@ org $83A66A
 org $83A6BE
     dw #layout_asm_westsandhall
 
-; Swap Enemy HP to MB HP when entering MB's room
+; Mother Brain right door asm pointer
 org $83AAD2
+    dw #layout_asm_mbhp
+
+; Mother Brain left door asm pointer
+org $83AAEA
     dw #layout_asm_mbhp
 
 ; Magnet Stairs left door asm pointer
@@ -208,6 +212,10 @@ org $8FBE18
 org $8FD706
     dw layout_asm_aqueductfarmsandpit_door_list
 
+; Ceres Ridley modified state check to support presets
+org $8FE0C0
+    dw layout_asm_ceres_ridley_room_state_check
+
 ; East Tunnel bottom-left and bottom-right door asm
 org $8FE34E
     ; Optimize existing logic by one byte
@@ -238,6 +246,17 @@ layout_asm_mbhp:
     LDA #!IH_STRAT_MBHP_INDEX : STA !sram_room_strat
 
   .done
+    RTS
+}
+
+layout_asm_ceres_ridley_room_state_check:
+{
+    LDA $0943 : BEQ .no_timer
+    LDA $0001,X : TAX
+    JMP $E5E6
+  .no_timer
+    STZ $093F
+    INX : INX : INX
     RTS
 }
 
