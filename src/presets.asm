@@ -4,9 +4,7 @@ print pc, " presets start"
 preset_load:
 {
     PHP
-
-    LDA !MUSIC_BANK : STA !SRAM_MUSIC_BANK
-    LDA !MUSIC_TRACK : STA !SRAM_MUSIC_TRACK
+    LDA !MUSIC_DATA : STA !SRAM_MUSIC_DATA
 
     JSL $809E93  ; Clear timer RAM
     JSR $819B    ; Initialize IO registers
@@ -86,15 +84,28 @@ endif
     JSL upload_sprite_oob_tiles
 
   .done_upload_sprite_oob_tiles
-    LDA !SRAM_MUSIC_BANK : CMP !MUSIC_BANK : BEQ .done_load_music_track
+    LDA $0639 : CMP $063B : BEQ .music_queue_empty
 
-    ; loads new music bank
-    LDA #$FF00 : CLC : ADC !MUSIC_BANK
-    JSL !MUSIC_ROUTINE
+  .music_queue_data_search
+    DEC : DEC : AND #$000E : TAX
+    LDA $0619,X : BMI .music_check_data
+    TXA : CMP $063B : BNE .music_queue_data_search
 
-  .done_load_music_track
-    LDA !MUSIC_TRACK
-    JSL !MUSIC_ROUTINE
+    ; No music data found, treat same as empty queue
+    BRA .music_queue_empty
+
+  .music_queue_empty
+    LDA !SRAM_MUSIC_DATA
+
+  .music_check_data
+    CMP !MUSIC_DATA : BEQ .done_load_music_data
+
+    ; Clear track and load data
+    LDA #$0000 : JSL !MUSIC_ROUTINE
+    LDA #$FF00 : CLC : ADC !MUSIC_DATA : JSL !MUSIC_ROUTINE
+
+  .done_load_music_data
+    LDA !MUSIC_TRACK : JSL !MUSIC_ROUTINE
 
     JSL reset_all_counters
     STZ $0795 ; clear door transition flag
