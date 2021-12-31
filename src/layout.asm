@@ -216,6 +216,10 @@ org $8FD706
 org $8FE0C0
     dw layout_asm_ceres_ridley_room_state_check
 
+; Ceres Ridley room setup asm when timer is not running
+org $8FE0DF
+    dw layout_asm_ceres_ridley_room_no_timer
+
 ; East Tunnel bottom-left and bottom-right door asm
 org $8FE34E
     ; Optimize existing logic by one byte
@@ -257,6 +261,18 @@ layout_asm_ceres_ridley_room_state_check:
   .no_timer
     STZ $093F
     INX : INX : INX
+    RTS
+}
+
+layout_asm_ceres_ridley_room_no_timer:
+{
+    ; Same as original setup asm, except force blue background
+    PHP
+    SEP #$20
+    LDA #$66 : STA $5D
+    PLP
+    JSL $88DDD0
+    LDA #$0009 : STA $07EB
     RTS
 }
 

@@ -370,6 +370,16 @@ org $A6A361
 endif
     dw ridley_init_hook
 
+; Fix ceres ridley door instruction list to keep door visible when skipping ridley fight
+if !FEATURE_PAL
+org $A6F533
+    dw $F64F, ridley_ceres_door_original_instructions
+else
+org $A6F55C
+    dw $F678, ridley_ceres_door_original_instructions
+endif
+    dw $80ED, ridley_ceres_door_escape_instructions
+
 ; Lock ceres ridley door if timer not started or if boss not dead
 if !FEATURE_PAL
 org $A6F641
@@ -431,6 +441,34 @@ else
     JMP $A2FA
 endif
 }
+
+ridley_ceres_door_original_instructions:
+if !FEATURE_PAL
+    dw $F67D
+    dw #$0002, $F9EA
+    dw $F641, $F533
+    dw $F687
+    dw $80ED, $F56F
+else
+    dw $F6A6
+    dw #$0002, $FA13
+    dw $F66A, $F55C
+    dw $F6B0
+    dw $80ED, $F598
+endif
+
+ridley_ceres_door_escape_instructions:
+if !FEATURE_PAL
+    dw $F687
+    dw #$0002, $F9EA
+    dw $F641, $F533
+    dw $80ED, $F56F
+else
+    dw $F6B0
+    dw #$0002, $FA13
+    dw $F66A, $F55C
+    dw $80ED, $F598
+endif
 
 print pc, " ridley rng end"
 
