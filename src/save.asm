@@ -9,10 +9,12 @@ print pc, " save start"
 ; Both A and X/Y are 16-bit here
 pre_load_state:
 {
-    LDA !MUSIC_BANK
-    STA !SRAM_MUSIC_BANK
+    LDA !MUSIC_DATA
+    STA !SRAM_MUSIC_DATA
     LDA !MUSIC_TRACK
     STA !SRAM_MUSIC_TRACK
+    LDA !SOUND_TIMER
+    STA !SRAM_SOUND_TIMER
 
     ; Rerandomize
     LDA !sram_save_has_set_rng : BNE .done
@@ -28,24 +30,54 @@ post_load_state:
 {
     JSL stop_all_sounds
 
-    LDA !SRAM_MUSIC_BANK
-    CMP !MUSIC_BANK
-    BNE .music_load_bank
+    ; Fix the music
+    LDA $0639 : CMP $063B : BEQ .music_queue_empty
 
-    LDA !SRAM_MUSIC_TRACK
-    CMP !MUSIC_TRACK
-    BNE .music_load_track
+  .music_queue_data_search
+    DEC : DEC : AND #$000E : TAX
+    LDA $0619,X : BMI .queued_music_data
+    TXA : CMP $063B : BNE .music_queue_data_search
+
+    ; No data found in queue, check if we need to insert it
+    LDA !SRAM_MUSIC_DATA : CMP !MUSIC_DATA : BEQ .music_queue_increase_timer
+
+    ; Insert queued music data
+    DEX : DEX : TXA : AND #$000E : TAX
+    LDA !MUSIC_DATA : STA $0619,X
+    LDA #$0008 : STA $0629,X
+
+  .queued_music_data
+    ; Insert clear track before queued music data and start queue there
+    DEX : DEX : TXA : AND #$000E : STA $063B : TAX
+    LDA #$0000 : STA $0619,X : STA $063D
+
+  .queued_music_prepare_set_timer
+    LDA !SRAM_SOUND_TIMER : BNE .queued_music_set_timer
+    INC
+
+  .queued_music_set_timer
+    STA $0629,X : STA $0686 : STA $063F
     BRA .music_done
 
-  .music_load_bank
-    LDA #$FF00
-    CLC
-    ADC !MUSIC_BANK
-    JSL !MUSIC_ROUTINE
+  .music_queue_increase_timer
+    ; Data is correct, but we may need to increase our sound timer
+    LDA !SRAM_SOUND_TIMER : CMP $063F : BMI .music_done
+    STA $063F : STA $0686
+    BRA .music_done
+
+  .music_queue_empty
+    LDA !SRAM_MUSIC_DATA : CMP !MUSIC_DATA : BEQ .music_check_track
+
+    ; Clear track and load data
+    LDA #$0000 : JSL !MUSIC_ROUTINE
+    LDA #$FF00 : CLC : ADC !MUSIC_DATA : JSL !MUSIC_ROUTINE
+    BRA .music_load_track
+
+  .music_check_track
+    LDA !SRAM_MUSIC_TRACK : CMP !MUSIC_TRACK : BEQ .music_done
 
   .music_load_track
-    LDA !MUSIC_TRACK
-    JSL !MUSIC_ROUTINE
+    LDA !MUSIC_TRACK : JSL !MUSIC_ROUTINE
 
   .music_done
     ; Rerandomize
