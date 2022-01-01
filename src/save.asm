@@ -43,7 +43,7 @@ post_load_state:
 
     ; Insert queued music data
     DEX : DEX : TXA : AND #$000E : TAX
-    LDA !MUSIC_DATA : STA $0619,X
+    LDA #$FF00 : CLC : ADC !MUSIC_DATA : STA $0619,X
     LDA #$0008 : STA $0629,X
 
   .queued_music_data
