@@ -340,6 +340,8 @@
 !sram_suit_properties = $70203E
 !sram_top_display_mode = $702040
 !sram_healthalarm = $702042
+!sram_room_layout = $702044
+!sram_cutscenes = $702046
 
 ; ^ FREE SPACE ^ up to $703000
 
