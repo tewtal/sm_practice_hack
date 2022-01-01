@@ -91,20 +91,38 @@ endif
     LDA $0619,X : BMI .music_check_data
     TXA : CMP $063B : BNE .music_queue_data_search
 
-    ; No music data found, treat same as empty queue
-  .music_queue_empty
+    ; No music data found in queue
     LDA !SRAM_MUSIC_DATA
 
   .music_check_data
     CMP !MUSIC_DATA : BEQ .done_load_music_data
 
+    ; Reset music queue, clear track and load data
+    LDX $063B : LDA $0629,X : BNE .music_reset_queue_keep_timer
+    LDA #$0008 : STA $0629,X
+
+  .music_reset_queue_keep_timer
+    LDA #0000 : STA $0619,X : STA $063D
+    INX : INX : TXA : AND #$000E : TAX
+    LDA #$FF00 : CLC : ADC !MUSIC_DATA : STA $0619,X
+    LDA #$0008 : STA $0629,X
+    INX : INX : TXA : AND #$000E : STA $0639
+    BRA .done_fixing_music_data
+
+  .music_queue_empty
+    LDA !SRAM_MUSIC_DATA : CMP !MUSIC_DATA : BEQ .done_load_music_data
+
     ; Clear track and load data
     LDA #$0000 : JSL !MUSIC_ROUTINE
     LDA #$FF00 : CLC : ADC !MUSIC_DATA : JSL !MUSIC_ROUTINE
 
+  .done_fixing_music_data
+    LDA !MUSIC_TRACK : BEQ .done_load_music_track
+
   .done_load_music_data
     LDA !MUSIC_TRACK : JSL !MUSIC_ROUTINE
 
+  .done_load_music_track
     JSL reset_all_counters
     STZ $0795 ; clear door transition flag
 
