@@ -1815,24 +1815,38 @@ game_fanfare_toggle:
     %cm_toggle("Fanfare", !sram_fanfare_toggle, #$0001, #0)
 
 game_music_toggle:
-    %cm_toggle("Music", !sram_music_toggle, #$0001, .routine)
+    dw !ACTION_CHOICE
+    dl #!sram_music_toggle
+    dw .routine
+    db #$28, "Music         ", #$FF
+    db #$28, "VANILLA OFF", #$FF
+    db #$28, "         ON", #$FF
+    db #$28, "   FAST OFF", #$FF
+if !FEATURE_SD2SNES
+    db #$28, "LOADSAVEOFF", #$FF
+endif
+    db #$FF
   .routine
-    BIT #$0001 : BEQ .noMusic
-    LDA $07F5 : STA $2140
-    RTS
-
-  .noMusic
-    LDA #$0000
-    STA $0629
-    STA $062B
-    STA $062D
-    STA $062F
-    STA $0631
-    STA $0633
-    STA $0635
-    STA $0637
-    STA $063F
+    CMP #$0002 : BEQ .no_music_ever
+    CMP #$0001 : BNE .no_music
+    LDA $07F5 : BEQ .skip_music
     STA $2140
+  .skip_music
+    RTS
+  .no_music_ever
+    STZ $07F3
+    STZ $07F5
+  .no_music
+    STZ $0629
+    STZ $062B
+    STZ $062D
+    STZ $062F
+    STZ $0631
+    STZ $0633
+    STZ $0635
+    STZ $0637
+    STZ $063F
+    STZ $2140
     RTS
 
 game_healthalarm:
