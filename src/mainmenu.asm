@@ -1819,7 +1819,7 @@ game_music_toggle:
     dl #!sram_music_toggle
     dw .routine
     db #$28, "Music         ", #$FF
-    db #$28, "VANILLA OFF", #$FF
+    db #$28, "        OFF", #$FF
     db #$28, "         ON", #$FF
     db #$28, "   FAST OFF", #$FF
 if !FEATURE_SD2SNES

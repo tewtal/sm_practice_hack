@@ -109,7 +109,9 @@
 | - Moon Walk                   | Standard game option for Moon Walk.
 | - Icon Cancel                 | Standard game option for Icon Cancel.
 | - Fanfare                     | Toggle the fanfare for collecting items
-| - Music                       | Toggle the music
+| - Music                       | Toggle the music off, on, or additional options:
+|                               | Fast Off = Eliminates lag caused by loading music data, turning music back on will not work until the game loads music data again
+|                               | LoadSaveOff = Experimental, skips loading music data when loading from a savestate, beware game may crash if you turn music on before the game loads music data again
 | - Low Health Alarm            | Modify the behavior of the low-health alarm
 |                               | Never = Self-explanatory
 |                               | Vanilla = No change (triggers on when <=30 health, off when >30 health, ignoring reserves, breaks if power bomb explosion is active)
@@ -119,6 +121,7 @@
 | - Debug CPU Brightness        | Toggles a built-in debug feature to darken the screen after the game is done processing the next frame. Useful for estimating CPU usage.
 | - PAL Debug Movement          | PAL-only feature that gives Samus extra movement correlated to the dpad input.
 | - Enable Projectiles          | Toggles a built-in debug feature to disable enemy projectiles.
+| - Fix Scroll Offsets          | Fixes the glitchy state where the camera and scroll offsets are out of sync, typically occurring when using major glitches
 | - Minimap                     | Restores the game minimap, which also allows the pause menu map to be updated. When enabled, a map tile counter will also be displayed.
 | - Clear Minimap               | Clears the map tile counter and all minimap data.
 | - Metronome                   | Toggles a metronome feature that will play a sound at a periodic rate
