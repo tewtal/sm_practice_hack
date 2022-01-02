@@ -4,24 +4,30 @@ org $85FD00
 print pc, " menu bank85 start"
 
 wait_for_lag_frame_long:
-  jsr $8136
-  rtl
+    JSR $8136
+    RTL
 
 initialize_ppu_long:
-  jsr $8143
-  rtl
+    PHP : %a16()
+    LDA $7E33EA : STA !ram_cgram_cache+$2E
+    PLP
+    JSR $8143
+    RTL
 
 restore_ppu_long:
-  jsr $861A
-  rtl
+    JSR $861A
+    PHP : %a16()
+    LDA !ram_cgram_cache+$2E : STA $7E33EA
+    PLP
+    RTL
 
 play_music_long:
-  jsr $8574
-  rtl
+    JSR $8574
+    RTL
 
 maybe_trigger_pause_long:
-  jsr $80FA
-  rtl
+    JSR $80FA
+    RTL
 
 print pc, " menu bank85 end"
 warnpc $85FE00
