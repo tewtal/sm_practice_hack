@@ -773,7 +773,7 @@ ih_hud_code:
     JSR (.status_display_table,X)
 
     ; Samus' HP
-    LDA $09C2 : CMP !ram_last_hp : BEQ .reserves : STA !ram_last_hp
+    LDA !SAMUS_HP : CMP !ram_last_hp : BEQ .reserves : STA !ram_last_hp
     LDX #$0092 : JSR Draw4
     LDA !IH_BLANK : STA $7EC690 : STA $7EC69A
 
@@ -802,11 +802,18 @@ ih_hud_code:
 
 ; Status Icons
   .statusIcons
-    LDA !sram_status_icons : BEQ .end
+    LDA !sram_status_icons : BNE .check_healthbomb
+    JMP .end
 
+  .check_healthbomb
     ; health bomb
     LDA $0E1A : BEQ .clear_healthbomb
+    LDA !SAMUS_HP : CMP #$0032 : BMI .pink
     LDA !IH_LETTER_E : STA $7EC654
+    BRA .check_elevator
+
+  .pink
+    LDA !IH_HEALTHBOMB : STA $7EC654
     BRA .check_elevator
 
   .clear_healthbomb
@@ -825,10 +832,28 @@ ih_hud_code:
   .check_shinetimer
     LDA $0A68 : BEQ .clear_shinetimer
     LDA !IH_SHINETIMER : STA $7EC658
-    BRA .end
+    BRA .check_reserves
 
   .clear_shinetimer
     LDA !IH_BLANK : STA $7EC658
+
+    ; reserve tank
+  .check_reserves
+    LDA !sram_top_display_mode : BNE .end
+    LDA !SAMUS_RESERVE_MODE : CMP #$0001 : BNE .clearReserve
+    LDA !SAMUS_RESERVE_ENERGY : BEQ .empty
+    LDA !SAMUS_RESERVE_MAX : BEQ .clearReserve
+
+    LDA !IH_RESERVE_AUTO : STA $7EC61A
+    BRA .end
+
+  .empty
+    LDA !SAMUS_RESERVE_MAX : BEQ .clearReserve
+    LDA !IH_RESERVE_EMPTY : STA $7EC61A
+    BRA .end
+
+  .clearReserve
+    LDA !IH_BLANK : STA $7EC61A
 
   .end
     PLB
