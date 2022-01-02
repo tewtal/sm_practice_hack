@@ -456,16 +456,16 @@ preset_scroll_fixes:
 
   .ceres
     LDA #$00 : STA $7E005F       ; Initialize mode 7
-    STA $7E0078 : STA $7E0079
-    STA $7E007A : STA $7E007B
+    CPX #$DF45 : BNE +           ; Ceres Elevator
+    LDA #$00 : STA $7E091E : STA $7E0920
+    BRL .ceresdone
++   STA $7E0078 : STA $7E0079    ; Ceres Elevator room already does this
+    STA $7E007A : STA $7E007B    ; Other rooms should zero out the values
     STA $7E007C : STA $7E007D
     STA $7E007E : STA $7E007F
     STA $7E0080 : STA $7E0081
     STA $7E0082 : STA $7E0083
-    CPX #$DF45 : BNE +           ; Ceres Elevator
-    LDA #$00 : STA $7E091E : STA $7E0920
-    BRA .ceresdone
-+   CPX #$DF8D : BNE +           ; Ceres Falling Tiles
+    CPX #$DF8D : BNE +           ; Ceres Falling Tiles
     LDA #$01 : STA $7E091E
     LDA #$02 : STA $7E0920
     BRA .ceresdone
