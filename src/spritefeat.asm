@@ -46,6 +46,10 @@ update_sprite_features:
 +   LDA !ram_sprite_enemy_hitbox_active : BEQ +
     JSR update_enemy_sprite_hitbox
 
+    ; Draw extended spritemap hitboxes if activated
++   LDA !ram_sprite_extended_hitbox_active : BEQ +
+    JSR update_extended_spritemap_hitbox
+
     ; Draw enemy projectile hitboxes if activated
 +   LDA !ram_sprite_enemyproj_hitbox_active : BEQ +
     JSR update_enemyproj_sprite_hitbox
@@ -340,8 +344,11 @@ update_enemy_sprite_hitbox:
     LDX #$0000 ; X = enemy index
     LDY !OAM_STACK_POINTER ; Y = OAM stack pointer
 
+    ; skip enemy if extended spritemap
+    LDA !ENEMY_PROPERTIES_2 : AND #$0004 : BNE .skipEnemy
+
   .loopEnemies
-    ; check if on-screen
+    ; skip enemy if off-screen
     LDA !ENEMY_X,X : CLC : ADC !ENEMY_X_RADIUS,X
     CMP !LAYER1_X : BMI .skipEnemy
     LDA !LAYER1_X : CLC : ADC #$0100 : CLC : ADC !ENEMY_X_RADIUS,X
@@ -349,11 +356,10 @@ update_enemy_sprite_hitbox:
     LDA !ENEMY_Y,X : CLC : ADC #$0008
     CMP !LAYER1_Y : BMI .skipEnemy
     LDA !LAYER1_Y : CLC : ADC #$00F8
-    CMP !ENEMY_Y,X : BMI .skipEnemy
-    BRA .drawHitbox
+    CMP !ENEMY_Y,X : BPL .drawHitbox
 
   .skipEnemy
-    CPX #$0200 : BEQ .end ; limit # of hitboxes drawn
+    CPX #$0300 : BEQ .end ; limit # of hitboxes drawn
     TXA : CLC : ADC #$0040 : TAX : BRA .loopEnemies
 
   .end
@@ -391,7 +397,110 @@ update_enemy_sprite_hitbox:
     ; inc oam stack
     TYA : CLC : ADC #$0010 : STA !OAM_STACK_POINTER : TAY
 
-    CPX #$0200 : BEQ .done ; limit # of hitboxes drawn
+    CPX #$0300 : BEQ .done ; limit # of hitboxes drawn
+    TXA : CLC : ADC #$0040 : TAX : JMP .loopEnemies
+
+  .done
+    RTS
+}
+
+update_extended_spritemap_hitbox:
+; draw hitboxes around enemies that use extended spritemaps
+{
+    ; Kraid, Crocomire, and Mother Brain use a custom hitbox format
+    ; Kraid causes a crash, while everything else seems ok?
+    LDA $079B : CMP #$A59F : BEQ .end ; check for Kraid's room
+
+    LDX #$0000 ; X = enemy index
+    LDY !OAM_STACK_POINTER ; Y = OAM stack pointer
+
+  .loopEnemies
+    ; check if extended spritemap
+    LDA !ENEMY_PROPERTIES_2,X : AND #$0004 : BNE .extended
+
+  .nextEnemy
+    TXA : CLC : ADC #$0040 : CMP #$0340 : BEQ .end
+    TAX : BRA .loopEnemies
+
+  .end
+    RTS
+
+  .extended
+    ; get spritemap pointer
+    LDA !ENEMY_SPRITEMAP,X : CLC : ADC #$0008 : STA $10
+    LDA !ENEMY_BANK,X : STA $12
+
+    ; get hitbox pointer
+    LDA [$10] : STA $10 ; hitbox pointer
+
+    LDA [$10] : BEQ .nextEnemy : PHA ; number of entries on stack
+
+  .nextHitbox
+    ; grab X and Y offsets
+    INC $10 : INC $10
+    LDA [$10] : STA $14 ; left offset
+    INC $10 : INC $10
+    LDA [$10] : STA $16 ; top offset
+    INC $10 : INC $10
+    LDA [$10] : STA $18 ; right offset
+    INC $10 : INC $10
+    LDA [$10] : STA $1A ; bottom offset
+
+    LDA $10 : CLC : ADC #$0004 : STA $10 ; skip to next hitbox
+
+    ; check if on-screen
+    LDA !ENEMY_X,X : CLC : ADC $14
+    CMP !LAYER1_X : BMI .decHitbox
+    LDA !LAYER1_X : CLC : ADC #$0100 : SEC : SBC $18
+    CMP !ENEMY_X,X : BMI .decHitbox
+    LDA !ENEMY_Y,X : SEC : SBC #$0018
+    CMP !LAYER1_Y : BMI .decHitbox
+    LDA !LAYER1_Y : CLC : ADC #$00F8
+    CMP !ENEMY_Y,X : BPL .drawHitbox
+
+  .decHitbox
+    ; check for remaining hitboxes
+    PLA : DEC : BEQ .nextEnemy2
+    PHA : BRA .nextHitbox
+
+  .drawHitbox
+    LDA !ENEMY_Y,X : SEC : SBC !LAYER1_Y : STA $1C ; top edge
+    LDA !ENEMY_X,X : SEC : SBC !LAYER1_X : STA $1D ; left edge
+
+    ; calculate sprite positions
+    %a8()
+    LDA $1D ; X coord
+    CLC : ADC $14
+    STA $0370,Y : STA $0378,Y ; sprite X pos
+    LDA $1D : CLC : ADC $18
+    SEC : SBC #$08
+    STA $0374,Y : STA $037C,Y
+
+    LDA $1C : DEC ; Y coord
+    CLC : ADC $16
+    STA $0371,Y : STA $0375,Y ; sprite Y pos
+    LDA $1C : CLC : ADC $1A
+    SEC : SBC #$08
+    STA $0379,Y : STA $037D,Y
+
+    ; Sprite Attributes - xxxxxxxx yyyyyyyy YXPPpppt tttttttt
+    ; x=X pos, y=Y pos, Y=Y flip, X=X flip
+    ; P=Priority, p=Palette, t=Tile number
+    %ai16()
+    LDA #$3A47 : STA $0372,Y ; %00111010 top-left
+    LDA #$7A47 : STA $0376,Y ; %01111010 top-right
+    LDA #$BA47 : STA $037A,Y ; %10111010 bottom-left
+    LDA #$FA47 : STA $037E,Y ; %11111010 bottom-right
+
+    ; inc oam stack
+    TYA : CLC : ADC #$0010 : STA !OAM_STACK_POINTER : TAY
+
+    ; check for remaining hitboxes
+    PLA : DEC : BEQ .nextEnemy2
+    PHA : JMP .nextHitbox
+
+  .nextEnemy2
+    CPX #$0300 : BEQ .done ; limit # of hitboxes drawn
     TXA : CLC : ADC #$0040 : TAX : JMP .loopEnemies
 
   .done

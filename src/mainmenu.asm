@@ -980,6 +980,7 @@ SpritesMenu:
     dw #sprites_samus_prio
     dw #sprites_show_samus_hitbox
     dw #sprites_show_enemy_hitbox
+    dw #sprites_show_extended_spritemap_hitbox
     dw #sprites_show_samusproj_hitbox
     dw #sprites_show_enemyproj_hitbox
     dw #sprites_oob_viewer
@@ -994,6 +995,9 @@ sprites_show_samus_hitbox:
 
 sprites_show_enemy_hitbox:
     %cm_toggle("Show Enemy Hitboxes", !ram_sprite_enemy_hitbox_active, #1, #action_sprite_features)
+
+sprites_show_extended_spritemap_hitbox:
+    %cm_toggle("Phan + Dray Hitboxes", !ram_sprite_extended_hitbox_active, #1, #action_sprite_features)
 
 sprites_show_enemyproj_hitbox:
     %cm_toggle("E Projectile Hitboxes", !ram_sprite_enemyproj_hitbox_active, #1, #action_sprite_features)
@@ -1018,11 +1022,10 @@ action_sprite_features:
 {
     LDA !ram_sprite_samus_hitbox_active : BNE .enabled
     LDA !ram_sprite_enemy_hitbox_active : BNE .enabled
+    LDA !ram_sprite_extended_hitbox_active : BNE .enabled
     LDA !ram_sprite_enemyproj_hitbox_active : BNE .enabled
     LDA !ram_sprite_samusproj_hitbox_active : BNE .enabled
-    LDA !ram_oob_watch_active : BNE .enabled
-    LDA #$0000 : STA !ram_sprite_features_active
-    RTS
+    LDA !ram_oob_watch_active
 
   .enabled
     STA !ram_sprite_features_active
@@ -1194,6 +1197,8 @@ InfoHudMenu:
     dw #$FFFF
     dw #ih_goto_room_strat
     dw #ih_room_strat
+    dw #$FFFF
+    dw #ih_top_HUD_mode
     dw #$FFFF
     dw #ih_room_counter
     dw #ih_reset_seg_later
@@ -1408,6 +1413,15 @@ ih_room_strat:
         LDA #$0001 : STA !sram_display_mode
         RTS
 
+ih_top_HUD_mode:
+    dw !ACTION_CHOICE
+    dl #!sram_top_display_mode
+    dw #$0000
+    db #$28, "Top-Left Displ", #$FF
+    db #$28, "ay   ITEM %", #$FF
+    db #$28, "ay RESERVES", #$FF
+    db #$FF
+
 ih_room_counter:
     dw !ACTION_CHOICE
     dl #!sram_frame_counter_mode
@@ -1471,6 +1485,7 @@ ih_prepare_ram_watch_menu:
 RAMWatchMenu:
     dw ramwatch_enable
     dw ramwatch_bank
+    dw ramwatch_write_mode
     dw #$FFFF
     dw ramwatch_left_hi
     dw ramwatch_left_lo
@@ -1507,6 +1522,15 @@ ramwatch_bank:
     db #$28, "        $7E", #$FF
     db #$28, "        $7F", #$FF
     db #$28, "       SRAM", #$FF
+    db #$FF
+
+ramwatch_write_mode:
+    dw !ACTION_CHOICE
+    dl #!ram_watch_write_mode
+    dw #$0000
+    db #$28, "Write Mode", #$FF
+    db #$28, "     16-BIT", #$FF
+    db #$28, "      8-BIT", #$FF
     db #$FF
 
 ramwatch_left_hi:
@@ -1696,15 +1720,18 @@ ramwatch_lock_right:
 action_ramwatch_edit_left:
 {
     LDA !ram_watch_left : TAX
-    LDA !ram_watch_bank : BEQ .bank7E
-    CMP #$0001 : BEQ .bank7F : BRA .bankSRAM
+    LDA !ram_watch_write_mode : BEQ +
+    %a8()
++   LDA !ram_watch_bank : BEQ .bank7E
+    DEC : BEQ .bank7F : BRA .bankSRAM
   .bank7E
     LDA !ram_watch_edit_left : STA $7E0000,X : BRA +
   .bank7F
     LDA !ram_watch_edit_left : STA $7F0000,X : BRA +
   .bankSRAM
     LDA !ram_watch_edit_left : STA $F00000,X
-+   LDA #!IH_MODE_RAMWATCH_INDEX : STA !sram_display_mode
++   %a16()
+    LDA #!IH_MODE_RAMWATCH_INDEX : STA !sram_display_mode
     LDA #!SOUND_MENU_JSR : JSL $80903F
     RTS
 }
@@ -1712,15 +1739,18 @@ action_ramwatch_edit_left:
 action_ramwatch_edit_right:
 {
     LDA !ram_watch_right : TAX
-    LDA !ram_watch_bank : BEQ .bank7E
-    CMP #$0001 : BEQ .bank7F : BRA .bankSRAM
+    LDA !ram_watch_write_mode : BEQ +
+    %a8()
++   LDA !ram_watch_bank : BEQ .bank7E
+    DEC : BEQ .bank7F : BRA .bankSRAM
   .bank7E
     LDA !ram_watch_edit_right : STA $7E0000,X : BRA +
   .bank7F
     LDA !ram_watch_edit_right : STA $7F0000,X : BRA +
   .bankSRAM
     LDA !ram_watch_edit_right : STA $F00000,X
-+   LDA #!IH_MODE_RAMWATCH_INDEX : STA !sram_display_mode
++   %a16()
+    LDA #!IH_MODE_RAMWATCH_INDEX : STA !sram_display_mode
     LDA #!SOUND_MENU_JSR : JSL $80903F
     RTS
 }
@@ -1743,13 +1773,15 @@ GameMenu:
     dw #$FFFF
     dw #game_fanfare_toggle
     dw #game_music_toggle
+    dw #game_healthalarm
     dw #$FFFF
     dw #game_debugmode
     dw #game_debugbrightness
 if !FEATURE_PAL
     dw #game_paldebug
 endif
-    dw game_debugprojectiles
+    dw #game_debugprojectiles
+    dw #game_debugfixscrolloffsets
     dw #$FFFF
     dw #game_minimap
     dw #game_clear_minimap
@@ -1770,6 +1802,9 @@ endif
 game_debugprojectiles:
     %cm_toggle_bit("Enable Projectiles", $7E198D, #$8000, #0)
 
+game_debugfixscrolloffsets:
+    %cm_toggle_bit("Fix Scroll Offsets", !ram_fix_scroll_offsets, #$0001, #0)
+
 game_moonwalk:
     %cm_toggle("Moon Walk", $7E09E4, #$0001, #0)
 
@@ -1780,25 +1815,50 @@ game_fanfare_toggle:
     %cm_toggle("Fanfare", !sram_fanfare_toggle, #$0001, #0)
 
 game_music_toggle:
-    %cm_toggle("Music", !sram_music_toggle, #$0001, .routine)
+    dw !ACTION_CHOICE
+    dl #!sram_music_toggle
+    dw .routine
+    db #$28, "Music         ", #$FF
+    db #$28, "        OFF", #$FF
+    db #$28, "         ON", #$FF
+    db #$28, "   FAST OFF", #$FF
+if !FEATURE_SD2SNES
+    db #$28, "LOADSAVEOFF", #$FF
+endif
+    db #$FF
   .routine
-    BIT #$0001 : BEQ .noMusic
-    LDA $07F5 : STA $2140
+    CMP #$0002 : BEQ .no_music_ever
+    CMP #$0001 : BNE .no_music
+    LDA $07F5 : BEQ .skip_music
+    STA $2140
+  .skip_music
+    RTS
+  .no_music_ever
+    STZ $07F3
+    STZ $07F5
+  .no_music
+    STZ $0629
+    STZ $062B
+    STZ $062D
+    STZ $062F
+    STZ $0631
+    STZ $0633
+    STZ $0635
+    STZ $0637
+    STZ $063F
+    STZ $2140
     RTS
 
-  .noMusic
-    LDA #$0000
-    STA $0629
-    STA $062B
-    STA $062D
-    STA $062F
-    STA $0631
-    STA $0633
-    STA $0635
-    STA $0637
-    STA $063F
-    STA $2140
-    RTS
+game_healthalarm:
+    dw !ACTION_CHOICE
+    dl #!sram_healthalarm
+    dw #$0000
+    db #$28, "Low Health Ala", #$FF
+    db #$28, "rm    NEVER", #$FF
+    db #$28, "rm  VANILLA", #$FF
+    db #$28, "rm   PB FIX", #$FF
+    db #$28, "rm IMPROVED", #$FF
+    db #$FF
 
 game_debugmode:
     %cm_toggle("Debug Mode", $7E05D1, #$0001, #0)
@@ -1959,8 +2019,8 @@ rng_next_flamepattern:
 
 rng_botwoon_rng:
     dw !ACTION_CHOICE
-    dl #!ram_botwoon_rng
-    dw #$0000
+    dl #!ram_cm_botwoon_rng
+    dw #.routine
     db #$28, "Botwoon RNG", #$FF
     db #$28, "     RANDOM", #$FF
     db #$28, "       DOWN", #$FF
@@ -1968,6 +2028,11 @@ rng_botwoon_rng:
     db #$28, "      RIGHT", #$FF
     db #$28, "       LEFT", #$FF
     db #$FF
+  .routine
+    LDA !ram_cm_botwoon_rng
+    DEC : ASL #3 : INC
+    STA !ram_botwoon_rng
+    RTS
 
 rng_draygon_rng_right:
     dw !ACTION_CHOICE

@@ -12,7 +12,7 @@ PresetsMenuGtmax:
     dw #presets_goto_gtmax_brinstar_cleanup_2
     dw #presets_goto_gtmax_tourian
     dw #$0000
-    %cm_header("PRESETS FOR GT MAX")
+    %cm_header("PRESETS FOR GT MAX%")
 
 presets_goto_gtmax_crateria:
     %cm_submenu("Crateria", #presets_submenu_gtmax_crateria)
@@ -21,7 +21,7 @@ presets_goto_gtmax_brinstar:
     %cm_submenu("Brinstar", #presets_submenu_gtmax_brinstar)
 
 presets_goto_gtmax_kraid:
-    %cm_submenu("Kraid", #presets_submenu_gtmax_kraid)
+    %cm_submenu("Kraid's Lair", #presets_submenu_gtmax_kraid)
 
 presets_goto_gtmax_upper_norfair:
     %cm_submenu("Upper Norfair", #presets_submenu_gtmax_upper_norfair)
@@ -100,7 +100,7 @@ presets_submenu_gtmax_kraid:
     dw #presets_gtmax_kraid_kraid_kihunters_revisit
     dw #presets_gtmax_kraid_leaving_kraids_lair
     dw #$0000
-    %cm_header("KRAID")
+    %cm_header("KRAID'S LAIR")
 
 presets_submenu_gtmax_upper_norfair:
     dw #presets_gtmax_upper_norfair_business_center
@@ -379,7 +379,7 @@ presets_gtmax_brinstar_breaking_tube:
     %cm_preset("Breaking Tube", #preset_gtmax_brinstar_breaking_tube)
 
 
-; Kraid
+; Kraid's Lair
 presets_gtmax_kraid_entering_kraids_lair:
     %cm_preset("Entering Kraid's Lair", #preset_gtmax_kraid_entering_kraids_lair)
 

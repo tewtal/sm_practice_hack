@@ -12,7 +12,7 @@ PresetsMenu100early:
     dw #presets_goto_100early_final_cleanup
     dw #presets_goto_100early_tourian
     dw #$0000
-    %cm_header("ALL ITEMS EARLY CROC")
+    %cm_header("100% ITEMS - EARLY CROC")
 
 presets_goto_100early_crateria:
     %cm_submenu("Crateria", #presets_submenu_100early_crateria)

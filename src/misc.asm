@@ -124,6 +124,43 @@ endif
     NOP
 
 
+; Turn off health alarm
+if !FEATURE_PAL
+org $90EA89
+else
+org $90EA8C
+endif
+    LDA !sram_healthalarm : ASL : PHX : TAX
+    JMP (healthalarm_turn_off_table,X)
+
+; Turn on health alarm
+if !FEATURE_PAL
+org $90EA9A
+else
+org $90EA9D
+endif
+    LDA !sram_healthalarm : ASL : PHX : TAX
+    JMP (healthalarm_turn_on_table,X)
+
+; Turn on health alarm
+if !FEATURE_PAL
+org $90F336
+    JSR $EA9A
+else
+org $90F339
+    JSR $EA9D
+endif
+    BRA $02
+
+; Turn on health alarm from bank 91
+if !FEATURE_PAL
+org $91E63F
+else
+org $91E6DA
+endif
+    JML healthalarm_turn_on_remote
+
+
 ; Suit enemy damage
 if !FEATURE_PAL
 org $A0A473
@@ -211,10 +248,24 @@ org $808F24
     JSL hook_set_music_track
     NOP #2
 
+; $80:8F65 8D F3 07    STA $07F3  [$7E:07F3]  ;} Music data = [music entry] & FFh
+; $80:8F68 AA          TAX                    ; X = [music data]
+org $808F65
+    JML hook_set_music_data
+
 
 ; swap Enemy HP to MB HP when entering MB's room
 org $83AAD2
     dw #MotherBrainHP
+
+
+; Ceres Ridley modified state check to support presets
+org $8FE0C0
+    dw layout_asm_ceres_ridley_room_state_check
+
+; Ceres Ridley room setup asm when timer is not running
+org $8FE0DF
+    dw layout_asm_ceres_ridley_room_no_timer
 
 
 org $8FEA00 ; free space for door asm
@@ -230,6 +281,29 @@ MotherBrainHP:
     RTS
 }
 
+layout_asm_ceres_ridley_room_state_check:
+{
+    LDA $0943 : BEQ .no_timer
+    LDA $0001,X : TAX
+    JMP $E5E6
+  .no_timer
+    STZ $093F
+    INX : INX : INX
+    RTS
+}
+
+layout_asm_ceres_ridley_room_no_timer:
+{
+    ; Same as original setup asm, except force blue background
+    PHP
+    SEP #$20
+    LDA #$66 : STA $5D
+    PLP
+    JSL $88DDD0
+    LDA #$0009 : STA $07EB
+    RTS
+}
+
 print pc, " misc bank8F end"
 
 
@@ -239,15 +313,29 @@ print pc, " misc bank90 start"
 hook_set_music_track:
 {
     STZ $07F6
-
     PHA
-    LDA !sram_music_toggle : BEQ .noMusic
+    LDA !sram_music_toggle : CMP #$02 : BEQ .fast_no_music
+    CMP #$01 : BNE .no_music
+    LDA $07F3 : BEQ .no_music
     PLA : STA $2140
     RTL
 
-  .noMusic
+  .fast_no_music
+    STZ $07F5
+  .no_music
     PLA
     RTL
+}
+
+hook_set_music_data:
+{
+    TAX
+    LDA !sram_music_toggle : CMP #$0002 : BEQ .fast_no_music
+    TXA : STA $07F3
+    JML $808F69
+
+  .fast_no_music
+    JML $808F89
 }
 
 hook_unpause:
@@ -389,6 +477,60 @@ else
     JMP $EA11
 endif
 }
+
+
+healthalarm_turn_on_table:
+    dw healthalarm_turn_on_never
+    dw healthalarm_turn_on_vanilla
+    dw healthalarm_turn_on_pb_fix
+    dw healthalarm_turn_on_improved
+
+healthalarm_turn_on_improved:
+    ; Do not sound alarm until below 30 combined health
+    LDA $09C2 : CLC : ADC $09D6 : CMP #$001E : BPL healthalarm_turn_on_done
+
+healthalarm_turn_on_pb_fix:
+    ; Do not sound alarm if it won't play due to power bomb explosion
+    LDA $0592 : BMI healthalarm_turn_on_done
+
+healthalarm_turn_on_vanilla:
+    LDA #$0002 : JSL $80914D
+
+healthalarm_turn_on_never:
+    LDA #$0001 : STA $0A6A
+
+healthalarm_turn_on_done:
+    PLX : RTS
+
+
+healthalarm_turn_off_table:
+    dw healthalarm_turn_off_never
+    dw healthalarm_turn_off_vanilla
+    dw healthalarm_turn_off_pb_fix
+    dw healthalarm_turn_off_improved
+
+healthalarm_turn_off_improved:
+healthalarm_turn_off_pb_fix:
+    ; Do not stop alarm if it won't stop due to power bomb explosion
+    LDA $0592 : BMI healthalarm_turn_off_done
+
+healthalarm_turn_off_vanilla:
+    LDA #$0001 : JSL $80914D
+
+healthalarm_turn_off_never:
+    STZ $0A6A
+
+healthalarm_turn_off_done:
+    PLX : RTS
+
+
+healthalarm_turn_on_remote:
+if !FEATURE_PAL
+    JSR $EA9A
+else
+    JSR $EA9D
+endif
+    PLB : PLP : RTL
 
 
 if !PRESERVE_WRAM_DURING_SPACETIME

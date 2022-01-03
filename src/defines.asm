@@ -33,8 +33,7 @@
 !ram_tmp_4 = !WRAM_START+$2A
 
 !ram_last_hp = !WRAM_START+$2C
-
-; ^ FREE SPACE ^
+!ram_reserves_last = !WRAM_START+$2E
 
 !ram_pct_1 = !WRAM_START+$30
 !ram_pct_2 = !WRAM_START+$32
@@ -45,10 +44,12 @@
 
 !ram_sprite_samus_hitbox_active = !WRAM_START+$3C
 !ram_sprite_enemy_hitbox_active = !WRAM_START+$3E
-!ram_oob_watch_active = !WRAM_START+$40
-!ram_sprite_samusproj_hitbox_active = !WRAM_START+$42
-!ram_sprite_enemyproj_hitbox_active = !WRAM_START+$44
-!ram_custom_preset = !WRAM_START+$46
+!ram_sprite_extended_hitbox_active = !WRAM_START+$40
+!ram_oob_watch_active = !WRAM_START+$42
+!ram_sprite_samusproj_hitbox_active = !WRAM_START+$44
+!ram_sprite_enemyproj_hitbox_active = !WRAM_START+$46
+!ram_custom_preset = !WRAM_START+$48
+!ram_fix_scroll_offsets = !WRAM_START+$4A
 
 ; ^ FREE SPACE ^ up to +$4E
 
@@ -82,8 +83,9 @@
 !ram_metronome = !WRAM_START+$7A
 !ram_metronome_counter = !WRAM_START+$7C
 
-; ^ FREE SPACE ^ up to +$8C
+; ^ FREE SPACE ^ up to +$8A
 
+!ram_watch_write_mode = !WRAM_START+$8C
 !ram_watch_bank = !WRAM_START+$8E
 !ram_watch_left = !WRAM_START+$90
 !ram_watch_left_hud = !WRAM_START+$92
@@ -174,6 +176,8 @@
 !ram_cm_watch_edit_right_hi = !WRAM_MENU_START+$94
 !ram_cm_watch_edit_right_lo = !WRAM_MENU_START+$96
 
+!ram_cm_botwoon_rng = !WRAM_MENU_START+$80
+
 ; ^ FREE SPACE ^ up to +$CE
 
 !ram_cgram_cache = !WRAM_MENU_START+$D0         ; 20 bytes
@@ -215,6 +219,9 @@
 !IH_PERCENT = #$0C0A
 !IH_DECIMAL = #$0CCB
 !IH_HYPHEN = #$0C55
+!IH_RESERVE_AUTO = #$0C32
+!IH_RESERVE_EMPTY = #$0C33
+!IH_HEALTHBOMB = #$085A
 !IH_LETTER_A = #$0C64
 !IH_LETTER_B = #$0C65
 !IH_LETTER_C = #$0C58
@@ -263,10 +270,15 @@
 !SFX_LIB3 = $809143
 
 !OAM_STACK_POINTER = $0590
-!MUSIC_BANK = $07F3
+!SOUND_TIMER = $0686
+!MUSIC_DATA = $07F3
 !MUSIC_TRACK = $07F5
 !LAYER1_X = $0911
 !LAYER1_Y = $0915
+!SAMUS_RESERVE_MODE = $09C0
+!SAMUS_HP = $09C2
+!SAMUS_RESERVE_MAX = $09D4
+!SAMUS_RESERVE_ENERGY = $09D6
 !SAMUS_X = $0AF6
 !SAMUS_Y = $0AFA
 !SAMUS_X_RADIUS = $0AFE
@@ -280,6 +292,9 @@
 !ENEMY_Y = $0F7E
 !ENEMY_X_RADIUS = $0F82
 !ENEMY_Y_RADIUS = $0F84
+!ENEMY_PROPERTIES_2 = $0F88
+!ENEMY_SPRITEMAP = $0F8E
+!ENEMY_BANK = $0FA6
 !ENEMY_PROJ_ID = $1997
 !ENEMY_PROJ_X = $1A4B
 !ENEMY_PROJ_Y = $1A93
@@ -324,6 +339,10 @@
 !sram_metronome_sfx = $70203A
 !sram_status_icons = $70203C
 !sram_suit_properties = $70203E
+!sram_top_display_mode = $702040
+!sram_healthalarm = $702042
+!sram_room_layout = $702044
+!sram_cutscenes = $702046
 
 ; ^ FREE SPACE ^ up to $703000
 
@@ -341,6 +360,7 @@
 !SRAM_SAVED_SP = $774004
 
 ; SM specific things
-!SRAM_MUSIC_BANK = $701FD0
+!SRAM_MUSIC_DATA = $701FD0
 !SRAM_MUSIC_TRACK = $701FD2
+!SRAM_SOUND_TIMER = $701FD4
 

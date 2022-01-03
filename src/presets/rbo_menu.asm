@@ -307,10 +307,10 @@ presets_rbo_norfair_first_visit_bubble_mountain:
     %cm_preset("Bubble Mountain", #preset_rbo_norfair_first_visit_bubble_mountain)
 
 presets_rbo_norfair_first_visit_bat_cave_speed_farm:
-    %cm_preset("Bat Cave (Speed Farm)", #preset_rbo_norfair_first_visit_bat_cave_speed_farm)
+    %cm_preset("Bat Cave (Farm 1)", #preset_rbo_norfair_first_visit_bat_cave_speed_farm)
 
 presets_rbo_norfair_first_visit_leaving_speed_speed_farm_2:
-    %cm_preset("Leaving Speed (Speed Farm 2)", #preset_rbo_norfair_first_visit_leaving_speed_speed_farm_2)
+    %cm_preset("Leaving Speed (Farm 2)", #preset_rbo_norfair_first_visit_leaving_speed_speed_farm_2)
 
 presets_rbo_norfair_first_visit_wave_escape:
     %cm_preset("Wave Escape", #preset_rbo_norfair_first_visit_wave_escape)
@@ -348,7 +348,7 @@ presets_rbo_brinstar_cleanup_etecoon_supers:
     %cm_preset("Etecoon Supers", #preset_rbo_brinstar_cleanup_etecoon_supers)
 
 presets_rbo_brinstar_cleanup_etecoon_power_bombs_optional:
-    %cm_preset("Etecoon Power Bombs (Optional)", #preset_rbo_brinstar_cleanup_etecoon_power_bombs_optional)
+    %cm_preset("Etecoon PBs (Optional)", #preset_rbo_brinstar_cleanup_etecoon_power_bombs_optional)
 
 presets_rbo_brinstar_cleanup_green_shaft_up:
     %cm_preset("Green Shaft (Up)", #preset_rbo_brinstar_cleanup_green_shaft_up)
@@ -549,7 +549,7 @@ presets_rbo_kraidg4_red_brinstar_elevator_down:
     %cm_preset("Red Brinstar Elevator (Down)", #preset_rbo_kraidg4_red_brinstar_elevator_down)
 
 presets_rbo_kraidg4_red_tower_moonfall_screw_attack:
-    %cm_preset("Red Tower Moonfall (Screw Attack)", #preset_rbo_kraidg4_red_tower_moonfall_screw_attack)
+    %cm_preset("Red Tower Screwfall", #preset_rbo_kraidg4_red_tower_moonfall_screw_attack)
 
 presets_rbo_kraidg4_kraid_entry:
     %cm_preset("Kraid Entry", #preset_rbo_kraidg4_kraid_entry)

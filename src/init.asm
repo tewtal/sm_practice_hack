@@ -1,4 +1,4 @@
-!SRAM_VERSION = $000B
+!SRAM_VERSION = $000C
 
 
 ; hijack, runs as game is starting, JSR to RAM initialization to avoid bad values
@@ -84,6 +84,7 @@ init_sram:
 {
     CMP #$0009 : BEQ .sram_upgrade_9to10
     CMP #$000A : BEQ .sram_upgrade_10to11
+    CMP #$000B : BEQ .sram_upgrade_11to12
     JSR init_sram_upto9
 
   .sram_upgrade_9to10
@@ -93,6 +94,12 @@ init_sram:
 
   .sram_upgrade_10to11
     LDA #$0000 : STA !sram_ctrl_update_timers
+
+  .sram_upgrade_11to12
+    LDA #$0000 : STA !sram_top_display_mode
+    LDA #$0001 : STA !sram_healthalarm
+    LDA #$0000 : STA !sram_room_layout
+    LDA #$0003 : STA !sram_cutscenes
 
     LDA #!SRAM_VERSION : STA !sram_initialized
     RTS

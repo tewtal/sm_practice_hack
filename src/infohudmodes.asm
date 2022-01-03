@@ -1080,39 +1080,59 @@ status_ramwatch:
     ; Bank from Y (0=7E, 1=7F, else SRAM)
     TYA : BEQ .writeLeft7E
     CMP #$0001 : BEQ .writeLeft7F
-    BRA .writeLeftSRAM
+    JMP .writeLeftSRAM
 
   .writeLeft7E
     LDA !ram_watch_edit_lock_left : BEQ .writeRight7E
     LDA !ram_watch_left : TAX
-    LDA !ram_watch_edit_left : STA $7E0000,X
+    LDA !ram_watch_write_mode : BEQ +
+    %a8()
++   LDA !ram_watch_edit_left : STA $7E0000,X
+    %a16()
 
   .writeRight7E
-    LDA !ram_watch_edit_lock_right : BEQ .done
+    LDA !ram_watch_edit_lock_right : BEQ .end
     LDA !ram_watch_right : TAX
-    LDA !ram_watch_edit_right : STA $7E0000,X
+    LDA !ram_watch_write_mode : BEQ +
+    %a8()
++   LDA !ram_watch_edit_right : STA $7E0000,X
+    %a16()
+
+  .end
     RTS
 
   .writeLeft7F
     LDA !ram_watch_edit_lock_left : BEQ .writeRight7F
     LDA !ram_watch_left : TAX
-    LDA !ram_watch_edit_left : STA $7F0000,X
+    LDA !ram_watch_write_mode : BEQ +
+    %a8()
++   LDA !ram_watch_edit_left : STA $7F0000,X
+    %a16()
 
   .writeRight7F
-    LDA !ram_watch_edit_lock_right : BEQ .done
+    LDA !ram_watch_edit_lock_right : BEQ .end
     LDA !ram_watch_right : TAX
-    LDA !ram_watch_edit_right : STA $7F0000,X
+    LDA !ram_watch_write_mode : BEQ +
+    %a8()
++   LDA !ram_watch_edit_right : STA $7F0000,X
+    %a16()
     RTS
 
   .writeLeftSRAM
     LDA !ram_watch_edit_lock_left : BEQ .writeRightSRAM
     LDA !ram_watch_left : TAX
-    LDA !ram_watch_edit_left : STA $F00000,X
+    LDA !ram_watch_write_mode : BEQ +
+    %a8()
++   LDA !ram_watch_edit_left : STA $F00000,X
+    %a16()
 
   .writeRightSRAM
     LDA !ram_watch_edit_lock_right : BEQ .done
     LDA !ram_watch_right : TAX
-    LDA !ram_watch_edit_right : STA $F00000,X
+    LDA !ram_watch_write_mode : BEQ +
+    %a8()
++   LDA !ram_watch_edit_right : STA $F00000,X
+    %a16()
 
   .done
     RTS
