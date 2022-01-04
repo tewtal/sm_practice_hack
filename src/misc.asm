@@ -11,16 +11,6 @@ else
 endif
 
 
-; Skip intro
-; $82:EEDF A9 95 A3    LDA #$A395
-org $82EEDF
-if !FEATURE_PAL
-    LDA #$C065
-else
-    LDA #$C100
-endif
-
-
 ; Enable version display
 org $8B8697
     NOP

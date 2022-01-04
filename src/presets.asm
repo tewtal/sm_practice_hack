@@ -127,8 +127,15 @@ endif
     STZ $0795 ; clear door transition flag
 
     ; Clear enemies if not in certain rooms
-    LDA $079B : CMP #$DD58 : BEQ .done_clearing_enemies
+    LDA $079B : CMP #$DD58 : BEQ .set_mb_state
     JSR clear_all_enemies
+    BRA .done_clearing_enemies
+
+  .set_mb_state
+    ; If glass is broken, assume we should skip MB1
+    LDA $7ED820 : BIT #$0004 : BEQ .done_clearing_enemies
+    ; Set health to 1 as a hint this was done by a preset
+    LDA #$0001 : STA $0FCC
 
   .done_clearing_enemies
     PLP

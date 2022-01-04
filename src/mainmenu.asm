@@ -903,6 +903,10 @@ MiscMenu:
     dw #misc_spacepants
     dw #misc_loudpants
     dw #$FFFF
+    dw #misc_metronome
+    dw #misc_metronome_tickrate
+    dw #misc_metronome_sfx
+    dw #$FFFF
     dw #misc_killenemies
     dw #misc_forcestand
     dw #$0000
@@ -915,7 +919,7 @@ misc_flashsuit:
     %cm_toggle("Flash Suit", $7E0A68, #$0001, #0)
 
 misc_hyperbeam:
-    %cm_toggle("Hyper Beam", $7E0A76, #$0001, #0)
+    %cm_toggle("Hyper Beam", $7E0A76, #$8000, #0)
 
 misc_gooslowdown:
     %cm_numfield("Goo Slowdown", $7E0A66, 0, 4, 1, 1, #0)
@@ -928,6 +932,27 @@ misc_spacepants:
 
 misc_loudpants:
     %cm_toggle_bit("Loud Pants", !ram_magic_pants_enabled, #$0004, GameLoopExtras)
+
+misc_metronome:
+    %cm_toggle("Metronome", !ram_metronome, #$0001, GameLoopExtras)
+
+misc_metronome_tickrate:
+    %cm_numfield("Metronome Tickrate", !sram_metronome_tickrate, 1, 255, 1, 8, #.routine)
+    .routine
+        LDA #$0000 : STA !ram_metronome_counter
+        RTS
+
+misc_metronome_sfx:
+    dw !ACTION_CHOICE
+    dl #!sram_metronome_sfx
+    dw #$0000
+    db #$28, "Metronome SFX", #$FF
+    db #$28, "    MISSILE", #$FF
+    db #$28, "      CLICK", #$FF
+    db #$28, "       BEEP", #$FF
+    db #$28, " POWER BEAM", #$FF
+    db #$28, "     SPAZER", #$FF
+    db #$FF
 
 misc_suit_properties:
     dw !ACTION_CHOICE
@@ -1056,6 +1081,7 @@ EventsMenu:
     dw #events_metroid2
     dw #events_metroid3
     dw #events_metroid4
+    dw #events_mb1glass
     dw #events_zebesexploding
     dw #events_animals
     dw #$0000
@@ -1099,6 +1125,9 @@ events_metroid3:
 
 events_metroid4:
     %cm_toggle_bit("4th Metroids Cleared", $7ED822, #$0008, #0)
+
+events_mb1glass:
+    %cm_toggle_bit("MB1 Glass Broken", $7ED820, #$0004, #0)
 
 events_zebesexploding:
     %cm_toggle_bit("Zebes Set Ablaze", $7ED820, #$4000, #0)
@@ -1151,6 +1180,7 @@ action_reset_items:
 ; ------------
 
 BossesMenu:
+    dw #boss_ceresridley
     dw #boss_bombtorizo
     dw #boss_spospo
     dw #boss_kraid
@@ -1160,8 +1190,12 @@ BossesMenu:
     dw #boss_crocomire
     dw #boss_gt
     dw #boss_ridley
+    dw #boss_mb
     dw #$0000
     %cm_header("BOSSES")
+
+boss_ceresridley:
+    %cm_toggle_bit("Ceres Ridley", #$7ED82E, #$0001, #0)
 
 boss_bombtorizo:
     %cm_toggle_bit("Bomb Torizo", #$7ED828, #$0004, #0)
@@ -1189,6 +1223,9 @@ boss_gt:
 
 boss_ridley:
     %cm_toggle_bit("Ridley", #$7ED82A, #$0001, #0)
+
+boss_mb:
+    %cm_toggle_bit("Mother Brain", #$7ED82C, #$0200, #0)
 
 
 ; --------------
@@ -1794,6 +1831,7 @@ GameMenu:
     dw #game_moonwalk
     dw #game_iconcancel
     dw #$FFFF
+    dw #game_cutscenes
     dw #game_fanfare_toggle
     dw #game_music_toggle
     dw #game_healthalarm
@@ -1808,10 +1846,6 @@ endif
     dw #$FFFF
     dw #game_minimap
     dw #game_clear_minimap
-    dw #$FFFF
-    dw #game_metronome
-    dw #game_metronome_tickrate
-    dw #game_metronome_sfx
     dw #$0000
     %cm_header("GAME")
 
@@ -1833,6 +1867,32 @@ game_moonwalk:
 
 game_iconcancel:
     %cm_toggle("Icon Cancel", $7E09EA, #$0001, #0)
+
+game_cutscenes:
+    %cm_submenu("Cutscenes", #CutscenesMenu)
+
+
+; ---------------
+; Cutscenes menu
+; ---------------
+
+CutscenesMenu:
+    dw #cutscenes_skip_intro
+    dw #cutscenes_skip_ceres_arrival
+    dw #$FFFF
+    dw #cutscenes_fast_mb
+    dw #$0000
+    %cm_header("CUTSCENES")
+
+cutscenes_skip_intro:
+    %cm_toggle_bit("Skip Intro", !sram_cutscenes, !CUTSCENE_SKIP_INTRO, #0)
+
+cutscenes_skip_ceres_arrival:
+    %cm_toggle_bit("Skip Ceres Arrival", !sram_cutscenes, !CUTSCENE_SKIP_CERES_ARRIVAL, #0)
+
+cutscenes_fast_mb:
+    %cm_toggle_bit("Fast Mother Brain", !sram_cutscenes, !CUTSCENE_FAST_MB, #0)
+
 
 game_fanfare_toggle:
     %cm_toggle("Fanfare", !sram_fanfare_toggle, #$0001, #0)
@@ -1915,27 +1975,6 @@ game_clear_minimap:
     DEX : DEX : BPL .clear_minimap_loop
     LDA #!SOUND_MENU_JSR : JSL $80903F
     RTS
-
-game_metronome:
-    %cm_toggle("Metronome", !ram_metronome, #$0001, GameLoopExtras)
-
-game_metronome_tickrate:
-    %cm_numfield("Metronome Tickrate", !sram_metronome_tickrate, 1, 255, 1, 8, #.routine)
-    .routine
-        LDA #$0000 : STA !ram_metronome_counter
-        RTS
-
-game_metronome_sfx:
-    dw !ACTION_CHOICE
-    dl #!sram_metronome_sfx
-    dw #$0000
-    db #$28, "Metronome SFX", #$FF
-        db #$28, "    MISSILE", #$FF
-        db #$28, "      CLICK", #$FF
-        db #$28, "       BEEP", #$FF
-        db #$28, " POWER BEAM", #$FF
-        db #$28, "     SPAZER", #$FF
-    db #$FF
 
 GameLoopExtras:
 {

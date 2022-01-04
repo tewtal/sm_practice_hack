@@ -175,8 +175,12 @@ org $83A66A
 org $83A6BE
     dw #layout_asm_westsandhall
 
-; Swap Enemy HP to MB HP when entering MB's room
+; Mother Brain right door asm pointer
 org $83AAD2
+    dw #layout_asm_mbhp
+
+; Mother Brain left door asm pointer
+org $83AAEA
     dw #layout_asm_mbhp
 
 ; Magnet Stairs left door asm pointer
