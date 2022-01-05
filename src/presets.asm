@@ -220,7 +220,6 @@ preset_load_preset:
 
 preset_to_memory:
 {
-    PHX
     STZ $00
     LDA $7F0002,X
     INC #2 : TAY
@@ -232,18 +231,15 @@ preset_to_memory:
 
   .two
     LDA ($00),Y : INY : INY : STA [$C3]
-    INX #6
     BRA .loop
 
   .one
     %a8()
     LDA ($00),Y : INY : STA [$C3]
     %a16()
-    INX #5
     BRA .loop
 
   .done
-    PLX
     RTS
 }
 
