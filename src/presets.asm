@@ -200,14 +200,13 @@ preset_load_preset:
 
     LDX #$0000
   .loop_path
-    LDA $C1 : STA $7FF000,X
+    LDA $C1 : STA $7F0002,X
     INX #2
     LDA ($C1) : STA $C1 : BNE .loop_path
 
-  ; then traverse $7FF000 from the first preset until the last one, and apply them
+  ; then traverse from the first preset until the last one, and apply them
   .loop_presets
     DEX #2 : BMI .done
-
     JSR preset_to_memory
     BRA .loop_presets
 
@@ -223,7 +222,7 @@ preset_to_memory:
 {
     PHX
     STZ $00
-    LDA $7FF000,X
+    LDA $7F0002,X
     INC #2 : TAY
 
   .loop
@@ -249,24 +248,22 @@ preset_to_memory:
 }
 
 preset_banks:
-{
-  dw preset_prkd_crateria_ceres_elevator>>16
-  dw preset_kpdr21_crateria_ceres_elevator>>16
-  dw preset_hundo_bombs_ceres_elevator>>16
-  dw preset_100early_crateria_ceres_elevator>>16
-  dw preset_rbo_bombs_ceres_elevator>>16
-  dw preset_pkrd_crateria_ship>>16
-  dw preset_kpdr25_bombs_ceres_elevator>>16
-  dw preset_gtclassic_crateria_ceres_elevator>>16
-  dw preset_gtmax_crateria_ship>>16
-  dw preset_14ice_crateria_ceres_elevator>>16
-  dw preset_14speed_crateria_ceres_elevator>>16
-  dw preset_100map_varia_landing_site>>16
-  dw preset_nintendopower_crateria_ship>>16
-  dw preset_allbosskpdr_crateria_ceres_elevator>>16
-  dw preset_allbosspkdr_crateria_ceres_elevator>>16
-  dw preset_allbossprkd_crateria_ceres_elevator>>16
-}
+    dw preset_prkd_crateria_ceres_elevator>>16
+    dw preset_kpdr21_crateria_ceres_elevator>>16
+    dw preset_hundo_bombs_ceres_elevator>>16
+    dw preset_100early_crateria_ceres_elevator>>16
+    dw preset_rbo_bombs_ceres_elevator>>16
+    dw preset_pkrd_crateria_ship>>16
+    dw preset_kpdr25_bombs_ceres_elevator>>16
+    dw preset_gtclassic_crateria_ceres_elevator>>16
+    dw preset_gtmax_crateria_ship>>16
+    dw preset_14ice_crateria_ceres_elevator>>16
+    dw preset_14speed_crateria_ceres_elevator>>16
+    dw preset_100map_varia_landing_site>>16
+    dw preset_nintendopower_crateria_ship>>16
+    dw preset_allbosskpdr_crateria_ceres_elevator>>16
+    dw preset_allbosspkdr_crateria_ceres_elevator>>16
+    dw preset_allbossprkd_crateria_ceres_elevator>>16
 
 print pc, " presets end"
 
@@ -297,7 +294,6 @@ preset_start_gameplay:
     JSL $80835D  ; Disable NMI
     JSL $80985F  ; Disable horizontal and vertical timer interrupts
     JSL $82E76B  ; Load destination room CRE bitset, door/room/state headers, tiles
-    JSR $A12B    ; Play 14h frames of music
     JSL $878016  ; Clear animated tile objects
     JSL $88829E  ; Wait until the end of a v-blank and clear (H)DMA enable flags
 
@@ -318,10 +314,6 @@ if !FEATURE_PAL
 else
     JSL $A08A1E  ; Load enemies
 endif
-    JSL $82E071  ; Load room music
-    JSR $A12B    ; Play 14h frames of music
-    JSL $82E09B  ; Update music track index
-    JSL $82E113  ; RTL
     JSL $80A23F  ; Clear BG2 tilemap
     JSL $82E7D3  ; Load level data, CRE, tile table, scroll data, create PLMs and execute door ASM and room setup ASM
     JSL $89AB82  ; Load FX
@@ -352,7 +344,6 @@ endif
     LDA #$0004 : STA $A7  ; Set optional next interrupt to Main gameplay
 
     JSL $80982A  ; Enable horizontal and vertical timer interrupts
-    JSR $A12B    ; Play 14h frames of music
 
     LDA #$E695 : STA $0A42 ; Unlock Samus
     LDA #$E725 : STA $0A44 ; Unlock Samus
