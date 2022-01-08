@@ -4,6 +4,7 @@ lorom
 !FEATURE_PAL ?= 1
 !ORIGINAL_MESSAGE_TEXT ?= 0
 !PRESERVE_WRAM_DURING_SPACETIME ?= 1
+!RAW_TILE_GRAPHICS ?= 1
 
 !VERSION_MAJOR = 2
 !VERSION_MINOR = 4
@@ -36,6 +37,10 @@ incsrc init.asm
 incsrc fanfare.asm
 incsrc spriteprio.asm
 incsrc spritefeat.asm
+if !RAW_TILE_GRAPHICS
+    incsrc tilegraphics.asm
+endif
 
 ; Make sure the ROM expands to 4MB
-org $ffffff : db $ff
+org $FFFFFF : db $FF
+

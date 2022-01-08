@@ -154,6 +154,24 @@ clear_all_enemies:
     RTS
 }
 
+preset_load_destination_state_and_tiles:
+{
+    ; Original logic from $82E76B
+    PHP : PHB
+    REP #$30
+    PEA $8F00
+    PLB : PLB
+    JSR $DDF1  ; Load destination room CRE bitset
+    JSR $DE12  ; Load door header
+    JSR $DE6F  ; Load room header
+    JSR $DEF2  ; Load state header
+if !RAW_TILE_GRAPHICS
+    JML load_raw_tile_graphics
+else
+    JMP $E78C
+endif
+}
+
 reset_all_counters:
 {
     LDA #$0000
@@ -289,7 +307,7 @@ preset_start_gameplay:
 
     JSL $80835D  ; Disable NMI
     JSL $80985F  ; Disable horizontal and vertical timer interrupts
-    JSL $82E76B  ; Load destination room CRE bitset, door/room/state headers, tiles
+    JSL preset_load_destination_state_and_tiles
     JSL $878016  ; Clear animated tile objects
     JSL $88829E  ; Wait until the end of a v-blank and clear (H)DMA enable flags
 
