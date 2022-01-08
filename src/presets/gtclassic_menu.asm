@@ -18,7 +18,7 @@ presets_goto_gtclassic_brinstar:
     %cm_submenu("Brinstar", #presets_submenu_gtclassic_brinstar)
 
 presets_goto_gtclassic_kraid:
-    %cm_submenu("Kraid", #presets_submenu_gtclassic_kraid)
+    %cm_submenu("Kraid's Lair", #presets_submenu_gtclassic_kraid)
 
 presets_goto_gtclassic_bootless_upper_norfair:
     %cm_submenu("Bootless Upper Norfair", #presets_submenu_gtclassic_bootless_upper_norfair)
@@ -89,7 +89,7 @@ presets_submenu_gtclassic_kraid:
     dw #presets_gtclassic_kraid_kraid_etank
     dw #presets_gtclassic_kraid_leaving_kraids_lair
     dw #$0000
-    %cm_header("KRAID")
+    %cm_header("KRAID'S LAIR")
 
 presets_submenu_gtclassic_bootless_upper_norfair:
     dw #presets_gtclassic_bootless_upper_norfair_business_center
@@ -196,7 +196,7 @@ presets_submenu_gtclassic_tourian:
     dw #presets_gtclassic_tourian_metroids_4
     dw #presets_gtclassic_tourian_giant_hoppers
     dw #presets_gtclassic_tourian_baby_skip
-    dw #presets_gtclassic_tourian_gedora_room
+    dw #presets_gtclassic_tourian_gadora_room
     dw #presets_gtclassic_tourian_zeb_skip
     dw #presets_gtclassic_tourian_escape_room_3
     dw #presets_gtclassic_tourian_escape_room_4
@@ -305,7 +305,7 @@ presets_gtclassic_brinstar_breaking_tube:
     %cm_preset("Breaking Tube", #preset_gtclassic_brinstar_breaking_tube)
 
 
-; Kraid
+; Kraid's Lair
 presets_gtclassic_kraid_entering_kraids_lair:
     %cm_preset("Entering Kraid's Lair", #preset_gtclassic_kraid_entering_kraids_lair)
 
@@ -331,7 +331,7 @@ presets_gtclassic_kraid_kraid_etank:
     %cm_preset("Kraid E-tank", #preset_gtclassic_kraid_kraid_etank)
 
 presets_gtclassic_kraid_leaving_kraids_lair:
-    %cm_preset("Leaving Kraids Lair", #preset_gtclassic_kraid_leaving_kraids_lair)
+    %cm_preset("Leaving Kraid's Lair", #preset_gtclassic_kraid_leaving_kraids_lair)
 
 
 ; Bootless Upper Norfair
@@ -597,8 +597,8 @@ presets_gtclassic_tourian_giant_hoppers:
 presets_gtclassic_tourian_baby_skip:
     %cm_preset("Baby Skip", #preset_gtclassic_tourian_baby_skip)
 
-presets_gtclassic_tourian_gedora_room:
-    %cm_preset("Gedora Room", #preset_gtclassic_tourian_gedora_room)
+presets_gtclassic_tourian_gadora_room:
+    %cm_preset("Gadora Room", #preset_gtclassic_tourian_gadora_room)
 
 presets_gtclassic_tourian_zeb_skip:
     %cm_preset("Zeb Skip", #preset_gtclassic_tourian_zeb_skip)

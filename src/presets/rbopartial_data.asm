@@ -22,7 +22,7 @@ preset_rbo_bombs_parlor_down:
     dl $7E09A8 : db $02 : dw $0000 ; Beams
     dl $7E09C0 : db $02 : dw $0000 ; Manual/Auto reserve tank
     dl $7E09C2 : db $02 : dw $0063 ; Health
-    dl $7E09C4 : db $02 : dw $0063 ; Max helath
+    dl $7E09C4 : db $02 : dw $0063 ; Max health
     dl $7E09C6 : db $02 : dw $0000 ; Missiles
     dl $7E09C8 : db $02 : dw $0000 ; Max missiles
     dl $7E09CA : db $02 : dw $0000 ; Supers
@@ -278,7 +278,7 @@ preset_rbo_bombs_climb:
     dl $7E07C7 : db $02 : dw $C2AF ; GFX Pointers
     dl $7E0913 : db $02 : dw $AC00 ; Screen subpixel Y position
     dl $7E09C2 : db $02 : dw $00B8 ; Health
-    dl $7E09C4 : db $02 : dw $00C7 ; Max helath
+    dl $7E09C4 : db $02 : dw $00C7 ; Max health
     dl $7E09C6 : db $02 : dw $0007 ; Missiles
     dl $7E09C8 : db $02 : dw $000A ; Max missiles
     dl $7E0A1C : db $02 : dw $000A ; Samus position/state
@@ -354,7 +354,7 @@ preset_rbo_brinstar_green_brinstar_elevator:
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $A400 ; Screen subpixel Y position
     dl $7E09C2 : db $02 : dw $00EF ; Health
-    dl $7E09C4 : db $02 : dw $012B ; Max helath
+    dl $7E09C4 : db $02 : dw $012B ; Max health
     dl $7E0A1C : db $02 : dw $0010 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0104 ; More position/state
     dl $7E0AF6 : db $02 : dw $00D8 ; Samus X
@@ -532,7 +532,7 @@ preset_rbo_norfair_first_visit_first_hell_run:
     dl $7E09A2 : db $02 : dw $1104 ; Equipped Items
     dl $7E09A4 : db $02 : dw $1104 ; Collected Items
     dl $7E09C2 : db $02 : dw $018F ; Health
-    dl $7E09C4 : db $02 : dw $018F ; Max helath
+    dl $7E09C4 : db $02 : dw $018F ; Max health
     dl $7E09CE : db $02 : dw $0003 ; Pbs
     dl $7E09D6 : db $02 : dw $0028 ; Reserves
     dl $7E0A1C : db $02 : dw $00A4 ; Samus position/state
@@ -670,7 +670,7 @@ preset_rbo_brinstar_cleanup_dachora_room:
     dl $7E0913 : db $02 : dw $D000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $01F2 ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $01A3 ; Health
-    dl $7E09C4 : db $02 : dw $01F3 ; Max helath
+    dl $7E09C4 : db $02 : dw $01F3 ; Max health
     dl $7E09C6 : db $02 : dw $000F ; Missiles
     dl $7E09CA : db $02 : dw $0006 ; Supers
     dl $7E09CC : db $02 : dw $000A ; Max supers
@@ -730,7 +730,7 @@ preset_rbo_brinstar_cleanup_green_shaft_up:
     dl $7E0913 : db $02 : dw $0800 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0700 ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $0203 ; Health
-    dl $7E09C4 : db $02 : dw $0257 ; Max helath
+    dl $7E09C4 : db $02 : dw $0257 ; Max health
     dl $7E09CA : db $02 : dw $000A ; Supers
     dl $7E09CC : db $02 : dw $000F ; Max supers
     dl $7E09CE : db $02 : dw $0009 ; Pbs
@@ -943,7 +943,7 @@ preset_rbo_norfair_second_visit_grapple_escape:
     dl $7E09A2 : db $02 : dw $7104 ; Equipped Items
     dl $7E09A4 : db $02 : dw $7104 ; Collected Items
     dl $7E09C2 : db $02 : dw $0255 ; Health
-    dl $7E09C4 : db $02 : dw $02BB ; Max helath
+    dl $7E09C4 : db $02 : dw $02BB ; Max health
     dl $7E09CA : db $02 : dw $000D ; Supers
     dl $7E09CE : db $02 : dw $000E ; Pbs
     dl $7E09D0 : db $02 : dw $0014 ; Max pbs
@@ -1110,7 +1110,7 @@ preset_rbo_lower_norfair_kihunter_stairs_down:
     dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0322 ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $0317 ; Health
-    dl $7E09C4 : db $02 : dw $031F ; Max helath
+    dl $7E09C4 : db $02 : dw $031F ; Max health
     dl $7E09C6 : db $02 : dw $000F ; Missiles
     dl $7E09CE : db $02 : dw $000B ; Pbs
     dl $7E0A1C : db $02 : dw $0012 ; Samus position/state
@@ -1171,7 +1171,7 @@ preset_rbo_norfair_escape_postridley:
     dl $7E0915 : db $02 : dw $011F ; Screen Y position in pixels
     dl $7E09A6 : db $02 : dw $1007 ; Beams
     dl $7E09C2 : db $02 : dw $036D ; Health
-    dl $7E09C4 : db $02 : dw $0383 ; Max helath
+    dl $7E09C4 : db $02 : dw $0383 ; Max health
     dl $7E09C6 : db $02 : dw $000E ; Missiles
     dl $7E09CA : db $02 : dw $0004 ; Supers
     dl $7E09CE : db $02 : dw $0001 ; Pbs

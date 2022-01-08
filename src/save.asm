@@ -2,102 +2,147 @@
 ; by acmlm, total, Myria
 ;
 
-org $80D000
+org $80F800
+print pc, " save start"
+
 ; These can be modified to do game-specific things before and after saving and loading
 ; Both A and X/Y are 16-bit here
-
-; SM specific features to restore the correct music when loading a state below
 pre_load_state:
-    lda !MUSIC_BANK
-    sta !SRAM_MUSIC_BANK
-    lda !MUSIC_TRACK
-    sta !SRAM_MUSIC_TRACK
+{
+    LDA !MUSIC_DATA
+    STA !SRAM_MUSIC_DATA
+    LDA !MUSIC_TRACK
+    STA !SRAM_MUSIC_TRACK
+    LDA !SOUND_TIMER
+    STA !SRAM_SOUND_TIMER
 
     ; Rerandomize
-    lda !sram_save_has_set_rng : bne +
-    lda !sram_rerandomize : and #$00ff : beq +
-    lda $05e5 : sta $770080
-    lda $05b6 : sta $770082
-    +
-    rts
+    LDA !sram_save_has_set_rng : BNE .done
+    LDA !sram_rerandomize : AND #$00FF : BEQ .done
+    LDA $05E5 : STA $770080
+    LDA $05B6 : STA $770082
+
+  .done
+    RTS
+}
 
 post_load_state:
+{
     JSL stop_all_sounds
 
-    lda !SRAM_MUSIC_BANK
-    cmp !MUSIC_BANK
-    bne music_load_bank
+    ; Skip fixing the music for load/save off option
+    ; Note: This may cause the game to crash if music is later turned on
+    LDA !sram_music_toggle : CMP #$0003 : BNE .fix_music
+    BRL .music_done
 
-    lda !SRAM_MUSIC_TRACK
-    cmp !MUSIC_TRACK
-    bne music_load_track
-    jmp music_done
+  .fix_music
+    LDA $0639 : CMP $063B : BEQ .music_queue_empty
 
-music_load_bank:
-    lda #$FF00
-    clc
-    adc !MUSIC_BANK
-    JSL !MUSIC_ROUTINE
+  .music_queue_data_search
+    DEC : DEC : AND #$000E : TAX
+    LDA $0619,X : BMI .queued_music_data
+    TXA : CMP $063B : BNE .music_queue_data_search
 
-music_load_track:
-    lda !MUSIC_TRACK
-    jsl !MUSIC_ROUTINE
+    ; No data found in queue, check if we need to insert it
+    LDA !SRAM_MUSIC_DATA : CMP !MUSIC_DATA : BEQ .music_queue_increase_timer
 
-music_done:
+    ; Insert queued music data
+    DEX : DEX : TXA : AND #$000E : TAX
+    LDA #$FF00 : CLC : ADC !MUSIC_DATA : STA $0619,X
+    LDA #$0008 : STA $0629,X
+
+  .queued_music_data
+    ; Insert clear track before queued music data and start queue there
+    DEX : DEX : TXA : AND #$000E : STA $063B : TAX
+    LDA #$0000 : STA $0619,X : STA $063D
+
+  .queued_music_prepare_set_timer
+    LDA !SRAM_SOUND_TIMER : BNE .queued_music_set_timer
+    INC
+
+  .queued_music_set_timer
+    STA $0629,X : STA $0686 : STA $063F
+    BRA .music_done
+
+  .music_queue_increase_timer
+    ; Data is correct, but we may need to increase our sound timer
+    LDA !SRAM_SOUND_TIMER : CMP $063F : BMI .music_done
+    STA $063F : STA $0686
+    BRA .music_done
+
+  .music_queue_empty
+    LDA !SRAM_MUSIC_DATA : CMP !MUSIC_DATA : BEQ .music_check_track
+
+    ; Clear track and load data
+    LDA #$0000 : JSL !MUSIC_ROUTINE
+    LDA #$FF00 : CLC : ADC !MUSIC_DATA : JSL !MUSIC_ROUTINE
+    BRA .music_load_track
+
+  .music_check_track
+    LDA !SRAM_MUSIC_TRACK : CMP !MUSIC_TRACK : BEQ .music_done
+
+  .music_load_track
+    LDA !MUSIC_TRACK : JSL !MUSIC_ROUTINE
+
+  .music_done
     ; Rerandomize
-    lda !sram_save_has_set_rng : bne +
-    lda !sram_rerandomize : and #$00ff : beq +
-    lda $770080
-    sta $05e5
-    lda $770082
-    sta $05b6
-    +
-    rts
-; end of post_load_state
+    LDA !sram_save_has_set_rng : BNE .done
+    LDA !sram_rerandomize : AND #$00FF : BEQ .done
+    LDA $770080 : STA $05E5
+    LDA $770082 : STA $05B6
 
+  .done
+    JSL init_wram_based_on_sram
+    RTS
+}
 
 ; These restored registers are game-specific and needs to be updated for different games
 register_restore_return:
+{
     %a8()
-    lda $84
-    sta $4200
-    lda #$0F
-    sta $13
-    sta $2100
-    rtl
+    LDA $84
+    STA $4200
+    LDA #$0F
+    STA $13
+    STA $2100
+    RTL
+}
 
 save_state:
-    pea $0000
-    plb
-    plb
+{
+    PEA $0000
+    PLB
+    PLB
 
     ; Store DMA registers to SRAM
     %a8();
-    ldy #$0000
-    tyx
+    LDY #$0000
+    TYX
 
-save_dma_regs:
-    lda $4300, x
-    sta !SRAM_DMA_BANK, x
-    inx
-    iny
-    cpy #$000B
-    bne save_dma_regs
-    cpx #$007B
-    beq save_dma_regs_done
-    inx #5
-    ldy #$0000
-    bra save_dma_regs
+  .save_dma_regs
+    LDA $4300,X
+    STA !SRAM_DMA_BANK,X
+    INX
+    INY
+    CPY #$000B
+    BNE .save_dma_regs
+    CPX #$007B
+    BEQ .save_dma_regs_done
+    INX #5
+    LDY #$0000
+    BRA .save_dma_regs
 
-save_dma_regs_done:
+  .save_dma_regs_done
     %ai16()
-    ldx #save_write_table
+    LDX #save_write_table
+}
 
 run_vm:
-    pea !SS_BANK
-    plb
-    plb
-    jmp vm
+{
+    PHK
+    PLB
+    JMP vm
+}
 
 save_write_table:
     ; Turn PPU off
@@ -161,27 +206,30 @@ save_write_table:
     dw $0000, save_return
 
 save_return:
-    pea $0000
-    plb
-    plb
+{
+    PEA $0000
+    PLB
+    PLB
 
     %ai16()
     LDA !ram_room_has_set_rng : STA !sram_save_has_set_rng
 
-    tsc
-    sta !SRAM_SAVED_SP
-    jmp register_restore_return
-
+    TSC
+    STA !SRAM_SAVED_SP
+    JMP register_restore_return
+}
 
 load_state:
-    jsr pre_load_state
-    pea $0000
-    plb
-    plb
+{
+    JSR pre_load_state
+    PEA $0000
+    PLB
+    PLB
 
     %a8()
-    ldx #load_write_table
-    jmp run_vm
+    LDX #load_write_table
+    JMP run_vm
+}
 
 load_write_table:
     ; Disable HDMA
@@ -245,46 +293,49 @@ load_write_table:
     dw $0000, load_return
 
 load_return:
+{
     %ai16()
-    lda !SRAM_SAVED_SP
-    tcs
+    LDA !SRAM_SAVED_SP
+    TCS
 
-    pea $0000
-    plb
-    plb
+    PEA $0000
+    PLB
+    PLB
 
     ; rewrite inputs so that holding load won't keep loading, as well as rewriting saving input to loading input
-    lda !SS_INPUT_CUR
-    eor !sram_ctrl_save_state
-    ora !sram_ctrl_load_state
-    sta !SS_INPUT_CUR
-    sta !SS_INPUT_NEW
-    sta !SS_INPUT_PREV
+    LDA !SS_INPUT_CUR
+    EOR !sram_ctrl_save_state
+    ORA !sram_ctrl_load_state
+    STA !SS_INPUT_CUR
+    STA !SS_INPUT_NEW
+    STA !SS_INPUT_PREV
 
     %a8()
-    ldx #$0000
-    txy
+    LDX #$0000
+    TXY
 
-load_dma_regs:
-    lda !SRAM_DMA_BANK, x
-    sta $4300, x
-    inx
-    iny
-    cpy #$000B
-    bne load_dma_regs
-    cpx #$007B
-    beq load_dma_regs_done
-    inx #5
-    ldy #$0000
-    jmp load_dma_regs
+  .load_dma_regs
+    LDA !SRAM_DMA_BANK,X
+    STA $4300,X
+    INX
+    INY
+    CPY #$000B
+    BNE .load_dma_regs
+    CPX #$007B
+    BEQ .load_dma_regs_done
+    INX #5
+    LDY #$0000
+    BRA .load_dma_regs
 
-load_dma_regs_done:
+  .load_dma_regs_done
     ; Restore registers and return.
     %ai16()
-    jsr post_load_state
-    jmp register_restore_return
+    JSR post_load_state
+    JMP register_restore_return
+}
 
 vm:
+{
     ; Data format: xx xx yy yy
     ; xxxx = little-endian address to write to .vm's bank
     ; yyyy = little-endian value to write
@@ -292,37 +343,40 @@ vm:
     ; If xxxx has bit 12 set ($1000), byte instead of word.
     ; If yyyy has $DD in the low half, it means that this operation is a byte
     ; write instead of a word write.  If xxxx is $0000, end the VM.
-    rep #$30
+    REP #$30
     ; Read address to write to
-    lda.w $0000, x
-    beq vm_done
-    tay
-    inx
-    inx
+    LDA.w $0000,X
+    BEQ .vm_done
+    TAY
+    INX
+    INX
     ; Check for byte mode
-    bit.w #$1000
-    beq vm_word_mode
-    and.w #$EFFF
-    tay
-    sep #$20
-vm_word_mode:
+    BIT.w #$1000
+    BEQ .vm_word_mode
+    AND.w #$EFFF
+    TAY
+    SEP #$20
+  .vm_word_mode
     ; Read value
-    lda.w $0000, x
-    inx
-    inx
-vm_write:
+    LDA.w $0000,X
+    INX
+    INX
+  .vm_write
     ; Check for read mode (high bit of address)
-    cpy.w #$8000
-    bcs vm_read
-    sta $0000, y
-    bra vm
-vm_read:
+    CPY.w #$8000
+    BCS .vm_read
+    STA $0000,Y
+    BRA vm
+  .vm_read
     ; "Subtract" $8000 from y by taking advantage of bank wrapping.
-    lda $8000, y
-    bra vm
-
-vm_done:
+    LDA $8000,Y
+    BRA vm
+  .vm_done
     ; A, X and Y are 16-bit at exit.
     ; Return to caller.  The word in the table after the terminator is the
     ; code address to return to.
-    jmp ($0002,x)
+    JMP ($0002,X)
+}
+
+print pc, " save end"
+warnpc $80FC00

@@ -1,0 +1,32 @@
+{
+    "name": "Super Metroid Practice Hack",
+    "version": "2.3.4",
+    "variants": ["NTSC", "PAL"],
+    "base": {
+        "NTSC": {
+            "name": "Super Metroid (JU)",
+            "crc": "D63ED5F8"
+        },
+        "PAL": {
+            "name": "Super Metroid (E)",
+            "crc": "AD2CBF9C"
+        }
+    },
+    "configurations": [
+        {
+            "id": "platform",
+            "name": "Platform",
+            "options": [
+                { "id": "sd2snes", "name": "SD2SNES / FXPAK"},
+                { "id": "emulator", "name": "Emulator, Everdrive, SNES Classic" }
+            ]
+        }
+    ],
+    "patches": [
+        { "platform": "emulator", "variant": "NTSC", "file": "/patches/emulator-ntsc.ips", "size": 4194304},
+        { "platform": "emulator", "variant": "PAL", "file": "/patches/emulator-pal.ips", "size": 4194304},
+
+        { "platform": "sd2snes", "variant": "NTSC", "file": "/patches/sd2snes-ntsc.ips", "size": 4194304},
+        { "platform": "sd2snes", "variant": "PAL", "file": "/patches/sd2snes-pal.ips", "size": 4194304}
+    ]    
+}

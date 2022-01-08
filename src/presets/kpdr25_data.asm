@@ -22,13 +22,14 @@ preset_kpdr25_bombs_ceres_elevator:
     dl $7E09A8 : db $02 : dw $0000 ; Beams
     dl $7E09C0 : db $02 : dw $0000 ; Manual/Auto reserve tank
     dl $7E09C2 : db $02 : dw $0063 ; Health
-    dl $7E09C4 : db $02 : dw $0063 ; Max helath
+    dl $7E09C4 : db $02 : dw $0063 ; Max health
     dl $7E09C6 : db $02 : dw $0000 ; Missiles
     dl $7E09C8 : db $02 : dw $0000 ; Max missiles
     dl $7E09CA : db $02 : dw $0000 ; Supers
     dl $7E09CC : db $02 : dw $0000 ; Max supers
     dl $7E09CE : db $02 : dw $0000 ; Pbs
     dl $7E09D0 : db $02 : dw $0000 ; Max pbs
+    dl $7E09D2 : db $02 : dw $0000 ; Currently selected item
     dl $7E09D4 : db $02 : dw $0000 ; Max reserves
     dl $7E09D6 : db $02 : dw $0000 ; Reserves
     dl $7E0A1C : db $02 : dw $0026 ; Samus position/state
@@ -371,7 +372,7 @@ preset_kpdr25_kraid_green_brinstar_elevator:
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $C000 ; Screen subpixel Y position
     dl $7E09C2 : db $02 : dw $008B ; Health
-    dl $7E09C4 : db $02 : dw $00C7 ; Max helath
+    dl $7E09C4 : db $02 : dw $00C7 ; Max health
     dl $7E0A1C : db $02 : dw $0000 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0000 ; More position/state
     dl $7E0AF6 : db $02 : dw $0080 ; Samus X
@@ -536,7 +537,7 @@ preset_kpdr25_upper_norfair_business_center:
     dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $023B ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $012B ; Health
-    dl $7E09C4 : db $02 : dw $012B ; Max helath
+    dl $7E09C4 : db $02 : dw $012B ; Max health
     dl $7E09C6 : db $02 : dw $0009 ; Missiles
     dl $7E09CA : db $02 : dw $0004 ; Supers
     dl $7E0AF6 : db $02 : dw $007C ; Samus X
@@ -557,7 +558,7 @@ preset_kpdr25_upper_norfair_precathedral:
     dl $7E09A2 : db $02 : dw $1105 ; Equipped Items
     dl $7E09A4 : db $02 : dw $1105 ; Collected Items
     dl $7E09C2 : db $02 : dw $018F ; Health
-    dl $7E09C4 : db $02 : dw $018F ; Max helath
+    dl $7E09C4 : db $02 : dw $018F ; Max health
     dl $7E09C6 : db $02 : dw $000E ; Missiles
     dl $7E09C8 : db $02 : dw $000F ; Max missiles
     dl $7E09CA : db $02 : dw $0003 ; Supers
@@ -764,6 +765,7 @@ preset_kpdr25_wrecked_ship_post_power_bombs:
     dl $7E09CA : db $02 : dw $0002 ; Supers
     dl $7E09CE : db $02 : dw $0005 ; Pbs
     dl $7E09D0 : db $02 : dw $0005 ; Max pbs
+    dl $7E09D2 : db $02 : dw $0003 ; Currently selected item
     dl $7E0A1C : db $02 : dw $000B ; Samus position/state
     dl $7E0AF6 : db $02 : dw $02CA ; Samus X
     dl $7ED874 : db $02 : dw $0D04 ; Events, Items, Doors
@@ -813,6 +815,7 @@ preset_kpdr25_wrecked_ship_phantoon:
     dl $7E09C8 : db $02 : dw $0019 ; Max missiles
     dl $7E09CA : db $02 : dw $0001 ; Supers
     dl $7E09CE : db $02 : dw $0002 ; Pbs
+    dl $7E09D2 : db $02 : dw $0000 ; Currently selected item
     dl $7E0A1C : db $02 : dw $0089 ; Samus position/state
     dl $7E0A1E : db $02 : dw $1508 ; More position/state
     dl $7E0AF6 : db $02 : dw $04DB ; Samus X
@@ -948,6 +951,7 @@ preset_kpdr25_maridia_the_tube:
     dl $7E0915 : db $02 : dw $0100 ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $00F3 ; Health
     dl $7E09CA : db $02 : dw $0009 ; Supers
+    dl $7E09D2 : db $02 : dw $0003 ; Currently selected item
     dl $7E0A1C : db $02 : dw $0009 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0108 ; More position/state
     dl $7E0AF6 : db $02 : dw $01B9 ; Samus X
@@ -972,6 +976,7 @@ preset_kpdr25_maridia_botwoon:
     dl $7E09C2 : db $02 : dw $00B8 ; Health
     dl $7E09CA : db $02 : dw $0008 ; Supers
     dl $7E09CE : db $02 : dw $0002 ; Pbs
+    dl $7E09D2 : db $02 : dw $0000 ; Currently selected item
     dl $7E0AF6 : db $02 : dw $03BC ; Samus X
     dl $7E0AFA : db $02 : dw $008B ; Samus Y
     dl $7ED820 : db $02 : dw $0801 ; Events, Items, Doors
@@ -990,7 +995,7 @@ preset_kpdr25_maridia_halfie:
     dl $7E0913 : db $02 : dw $E400 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $001F ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $01F3 ; Health
-    dl $7E09C4 : db $02 : dw $01F3 ; Max helath
+    dl $7E09C4 : db $02 : dw $01F3 ; Max health
     dl $7E09C6 : db $02 : dw $0019 ; Missiles
     dl $7E09CA : db $02 : dw $0002 ; Supers
     dl $7E0AF6 : db $02 : dw $00AD ; Samus X
@@ -1023,32 +1028,21 @@ preset_kpdr25_maridia_draygon:
 
 preset_kpdr25_maridia_whomple_jump:
     dw #preset_kpdr25_maridia_draygon ; Maridia: Draygon
-    dl $7E078D : db $02 : dw $A924 ; DDB
+    dl $7E078D : db $02 : dw $A96C ; DDB
     dl $7E078F : db $02 : dw $0000 ; DoorOut Index
-    dl $7E079B : db $02 : dw $DA60 ; MDB
-    dl $7E07C3 : db $02 : dw $9DEA ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $2CBF ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2BA ; GFX Pointers
-    dl $7E07F3 : db $02 : dw $0024 ; Music Bank
-    dl $7E07F5 : db $02 : dw $0003 ; Music Track
-    dl $7E090F : db $02 : dw $6000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $2C00 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0012 ; Screen Y position in pixels
+    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position.
+    dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
     dl $7E09A2 : db $02 : dw $3325 ; Equipped Items
     dl $7E09A4 : db $02 : dw $3325 ; Collected Items
     dl $7E09C2 : db $02 : dw $0184 ; Health
     dl $7E09C6 : db $02 : dw $0006 ; Missiles
     dl $7E09CA : db $02 : dw $0003 ; Supers
     dl $7E09CE : db $02 : dw $0005 ; Pbs
-    dl $7E0A1C : db $02 : dw $0009 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0108 ; More position/state
-    dl $7E0AF6 : db $02 : dw $01C7 ; Samus X
+    dl $7E0AF6 : db $02 : dw $003F ; Samus X
     dl $7E0AFA : db $02 : dw $008B ; Samus Y
     dl $7ED82C : db $02 : dw $0003 ; Events, Items, Doors
-    dl $7ED882 : db $02 : dw $0500 ; Events, Items, Doors
-    dl $7ED8C2 : db $02 : dw $CC00 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $0040 ; Events, Items, Doors
+    dl $7ED8C2 : db $02 : dw $4C00 ; Events, Items, Doors
+    dl $7ED91A : db $02 : dw $0044 ; Events, Items, Doors
     dw #$FFFF
 .after
 
@@ -1148,6 +1142,7 @@ preset_kpdr25_lower_norfair_ln_elevator:
     dl $7E09C2 : db $02 : dw $01F0 ; Health
     dl $7E09C6 : db $02 : dw $0008 ; Missiles
     dl $7E09CE : db $02 : dw $0004 ; Pbs
+    dl $7E09D2 : db $02 : dw $0003 ; Currently selected item
     dl $7E0A1C : db $02 : dw $0007 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0008 ; More position/state
     dl $7E0AF6 : db $02 : dw $007B ; Samus X
@@ -1183,6 +1178,7 @@ preset_kpdr25_lower_norfair_kihunter_stairs:
     dl $7E0915 : db $02 : dw $003F ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $017B ; Health
     dl $7E09C6 : db $02 : dw $000A ; Missiles
+    dl $7E09D2 : db $02 : dw $0000 ; Currently selected item
     dl $7E0A1C : db $02 : dw $0011 ; Samus position/state
     dl $7E0AF6 : db $02 : dw $0309 ; Samus X
     dl $7E0AFA : db $02 : dw $00AF ; Samus Y
@@ -1237,7 +1233,7 @@ preset_kpdr25_lower_norfair_ridley_etank:
     dl $7E090F : db $02 : dw $C000 ; Screen subpixel X position.
     dl $7E0913 : db $02 : dw $B000 ; Screen subpixel Y position
     dl $7E09C2 : db $02 : dw $0257 ; Health
-    dl $7E09C4 : db $02 : dw $0257 ; Max helath
+    dl $7E09C4 : db $02 : dw $0257 ; Max health
     dl $7E09C6 : db $02 : dw $000E ; Missiles
     dl $7E09CA : db $02 : dw $0009 ; Supers
     dl $7E09CE : db $02 : dw $0005 ; Pbs

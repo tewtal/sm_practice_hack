@@ -8,7 +8,7 @@ PresetsMenuKpdr25:
     dw #presets_goto_kpdr25_golden_4
     dw #presets_goto_kpdr25_tourian
     dw #$0000
-    %cm_header("ANY KPDR EARLY ICE PRESETS")
+    %cm_header("ANY% KPDR - EARLY ICE")
 
 presets_goto_kpdr25_bombs:
     %cm_submenu("Bombs", #presets_submenu_kpdr25_bombs)

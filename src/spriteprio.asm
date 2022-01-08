@@ -16,6 +16,7 @@ org $908643
 ; keeping the change in timing down as much as possible.
 
 org $81ef20
+print pc, " spriteprio start"
 oam_add_samus_sprite_with_prio:
     PHB
     PEA $9200
@@ -72,7 +73,7 @@ oam_add_samus_sprite_with_prio:
     ADC $12           ;} OAM entry Y position = [[Y] + 2] + [$12] (Y position)
     STA $0371,x       ;/
     LDA $0003,y       ;\
-    ORA !ram_sprite_prio_flag
+    ORA !sram_sprite_prio_flag
     STA $0372,x       ;} OAM entry tile number and attributes = [[Y] + 3]
     TYA               ;\
     CLC               ;|
@@ -90,4 +91,5 @@ oam_add_samus_sprite_with_prio:
     PLB
     RTL
 
+print pc, " spriteprio end"
 warnpc $81f000

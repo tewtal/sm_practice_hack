@@ -1,36 +1,47 @@
 !ram_tilemap_buffer = $7E5800
 
-org $85FE00
+org $85FD00
+print pc, " menu bank85 start"
 
 wait_for_lag_frame_long:
-  jsr $8136
-  rtl
+    JSR $8136
+    RTL
 
 initialize_ppu_long:
-  jsr $8143
-  rtl
+    PHP : %a16()
+    LDA $7E33EA : STA !ram_cgram_cache+$2E
+    PLP
+    JSR $8143
+    RTL
 
 restore_ppu_long:
-  jsr $861A
-  rtl
+    JSR $861A
+    PHP : %a16()
+    LDA !ram_cgram_cache+$2E : STA $7E33EA
+    PLP
+    RTL
 
 play_music_long:
-  jsr $8574
-  rtl
+    JSR $8574
+    RTL
 
 maybe_trigger_pause_long:
-  jsr $80FA
-  rtl
+    JSR $80FA
+    RTL
+
+print pc, " menu bank85 end"
+warnpc $85FE00
+
 
 org $B88000
 print pc, " menu start"
 
 cm_start:
 {
-  PHP
-  PHB
-  PHX
-  PHY
+    PHP
+    PHB
+    PHX
+    PHY
     PHK : PLB
 
     %a8()
@@ -38,7 +49,6 @@ cm_start:
     LDA #$80 : STA $2100
     LDA #$A1 : STA $4200
     LDA #$09 : STA $2105
-    LDA #$04 : STA $210C
     LDA #$0F : STA $2100
 
     %a16()
@@ -66,6 +76,7 @@ cm_start:
     LDA $C1 : STA !ram_gametime_room
     LDA $C3 : STA !ram_last_gametime_room
     JSL $809B44
+    JSR GameLoopExtras            ; check if game_loop_extras needs to be disabled
 
     ; I think the above subroutines erases some of infohud, so we make sure we redraw it.
     JSL ih_update_hud_code
@@ -75,10 +86,10 @@ cm_start:
     JSL play_music_long           ; Play 2 lag frames of music and sound effects
     JSL maybe_trigger_pause_long  ; Maybe trigger pause screen or return save confirmation selection
 
-  PLY
-  PLX
-  PLB
-  PLP
+    PLY
+    PLX
+    PLB
+    PLP
     RTL
 }
 
@@ -94,7 +105,7 @@ cm_init:
     STA !ram_cm_ctrl_timer
     STA $8F
     STA $8B
-    LDA $05B6 : STA !ram_last_lag_counter
+    LDA $05B6 : STA !ram_cm_input_counter
 
     LDA.w #MainMenu
     STA.l !ram_cm_menu_stack
@@ -107,8 +118,8 @@ cm_init:
 
 cm_set_etanks_and_reserve:
 {
-    LDA $09C4 : SBC #$0063 : CLC : INC : JSR cm_divide_100 : STA !ram_cm_etanks
-    LDA $09D4 : CLC : INC : JSR cm_divide_100 : STA !ram_cm_reserve
+    LDA $09C4 : JSR cm_divide_100 : STA !ram_cm_etanks
+    LDA $09D4 : JSR cm_divide_100 : STA !ram_cm_reserve
     RTS
 }
 
@@ -120,10 +131,13 @@ cm_set_etanks_and_reserve:
 cm_transfer_custom_tileset:
 {
     PHP
-    %a8()
-    ; word-access, incr by 1
-    LDA #$80 : STA $2115
+    %a16()
+    LDA $079B : CMP #$A59F : BEQ .kraid_vram
 
+    ; Load custom vram to normal BG3 location
+    %a8()
+    LDA #$04 : STA $210C ; BG3 starts at $4000 (8000 in vram)
+    LDA #$80 : STA $2115 ; word-access, incr by 1
     LDX #$4000 : STX $2116 ; VRAM address (8000 in vram)
     LDX #cm_hud_table : STX $4302 ; Source offset
     LDA #cm_hud_table>>16 : STA $4304 ; Source bank
@@ -131,7 +145,21 @@ cm_transfer_custom_tileset:
     LDA #$01 : STA $4300 ; word, normal increment (DMA MODE)
     LDA #$18 : STA $4301 ; destination (VRAM write)
     LDA #$01 : STA $420B ; initiate DMA (channel 1)
+    PLP
+    RTS
 
+  .kraid_vram
+    ; Load custom vram to kraid BG3 location
+    %a8()
+    LDA #$02 : STA $210C ; BG3 starts at $2000 (4000 in vram)
+    LDA #$80 : STA $2115 ; word-access, incr by 1
+    LDX #$2000 : STX $2116 ; VRAM address (4000 in vram)
+    LDX #cm_hud_table : STX $4302 ; Source offset
+    LDA #cm_hud_table>>16 : STA $4304 ; Source bank
+    LDX #$0900 : STX $4305 ; Size (0x10 = 1 tile)
+    LDA #$01 : STA $4300 ; word, normal increment (DMA MODE)
+    LDA #$18 : STA $4301 ; destination (VRAM write)
+    LDA #$01 : STA $420B ; initiate DMA (channel 1)
     PLP
     RTS
 }
@@ -139,18 +167,67 @@ cm_transfer_custom_tileset:
 cm_transfer_original_tileset:
 {
     PHP
-    %a8()
-    ; word-access, incr by 1
-    LDA #$80 : STA $2115
+    %a16()
+    LDA $079B : CMP #$A59F : BEQ .kraid_vram
 
+    %a8()
+    LDA !ram_minimap : CMP #$00 : BNE .minimap_vram
+
+    ; Load in normal vram to normal BG3 location
+    LDA #$04 : STA $210C ; BG3 starts at $4000 (8000 in vram)
+    LDA #$80 : STA $2115 ; word-access, incr by 1
     LDX #$4000 : STX $2116 ; VRAM address (8000 in vram)
     LDX #$B200 : STX $4302 ; Source offset
     LDA #$9A : STA $4304 ; Source bank
-    LDX #$0900 : STX $4305 ; Size (0x10 = 1 tile)
+    LDX #$1000 : STX $4305 ; Size (0x10 = 1 tile)
     LDA #$01 : STA $4300 ; word, normal increment (DMA MODE)
     LDA #$18 : STA $4301 ; destination (VRAM write)
     LDA #$01 : STA $420B ; initiate DMA (channel 1)
+    PLP
+    RTS
 
+  .kraid_vram
+    %a8()
+    LDA !ram_minimap : CMP #$00 : BNE .kraid_minimap_vram
+
+    ; Load in normal vram to kraid BG3 location
+    LDA #$02 : STA $210C ; BG3 starts at $2000 (4000 in vram)
+    LDA #$80 : STA $2115 ; word-access, incr by 1
+    LDX #$2000 : STX $2116 ; VRAM address (4000 in vram)
+    LDX #$B200 : STX $4302 ; Source offset
+    LDA #$9A : STA $4304 ; Source bank
+    LDX #$1000 : STX $4305 ; Size (0x10 = 1 tile)
+    LDA #$01 : STA $4300 ; word, normal increment (DMA MODE)
+    LDA #$18 : STA $4301 ; destination (VRAM write)
+    LDA #$01 : STA $420B ; initiate DMA (channel 1)
+    PLP
+    RTS
+
+  .minimap_vram
+    ; Load in minimap vram to normal BG3 location
+    LDA #$04 : STA $210C ; BG3 starts at $4000 (8000 in vram)
+    LDA #$80 : STA $2115 ; word-access, incr by 1
+    LDX #$4000 : STX $2116 ; VRAM address (8000 in vram)
+    LDX #$D500 : STX $4302 ; Source offset
+    LDA #$DF : STA $4304 ; Source bank
+    LDX #$1000 : STX $4305 ; Size (0x10 = 1 tile)
+    LDA #$01 : STA $4300 ; word, normal increment (DMA MODE)
+    LDA #$18 : STA $4301 ; destination (VRAM write)
+    LDA #$01 : STA $420B ; initiate DMA (channel 1)
+    PLP
+    RTS
+
+  .kraid_minimap_vram
+    ; Load in minimap vram to kraid BG3 location
+    LDA #$02 : STA $210C ; BG3 starts at $2000 (4000 in vram)
+    LDA #$80 : STA $2115 ; word-access, incr by 1
+    LDX #$2000 : STX $2116 ; VRAM address (4000 in vram)
+    LDX #$D500 : STX $4302 ; Source offset
+    LDA #$DF : STA $4304 ; Source bank
+    LDX #$1000 : STX $4305 ; Size (0x10 = 1 tile)
+    LDA #$01 : STA $4300 ; word, normal increment (DMA MODE)
+    LDA #$18 : STA $4301 ; destination (VRAM write)
+    LDA #$01 : STA $420B ; initiate DMA (channel 1)
     PLP
     RTS
 }
@@ -208,13 +285,13 @@ cm_transfer_original_cgram:
 
 cm_draw:
 {
-  PHP
+    PHP
     %ai16()
     JSR cm_tilemap_clear
     JSR cm_tilemap_bg
     JSR cm_tilemap_menu
     JSR cm_tilemap_transfer
-  PLP
+    PLP
     RTS
 }
 
@@ -224,7 +301,7 @@ cm_tilemap_clear:
     ; top right corner = $07C
     ; bot left corner  = $682
     ; bot right corner = $6BC
-	; Empty out !ram_tilemap_buffer
+	 ; Empty out !ram_tilemap_buffer
     {
         LDX #$07FE
         LDA #$000E
@@ -325,7 +402,9 @@ cm_tilemap_menu:
   .continue
     STA $0E
 
-    LDA [$00],Y : BEQ .done : STA $04
+    LDA [$00],Y : BEQ .header
+    CMP #$FFFF : BEQ .blank
+    STA $04
 
     PHY : PHX
 
@@ -338,16 +417,30 @@ cm_tilemap_menu:
     JSR (cm_draw_action_table,X)
 
     PLX : PLY
+
+  .blank
+    ; skip drawing blank lines
     INY : INY
     BRA .loop
 
-  .done
-    ; Draw submenu title
+  .header
+    ; Draw menu header
     STZ $0E
-    TYA : CLC : ADC $00 : INC : INC : STA $04
+    TYA : CLC : ADC $00 : INC #2 : STA $04
     LDX #$00C6
     JSR cm_draw_text
 
+    ; Optional footer
+    TYA : CLC : ADC $04 : INC : STA $04
+    LDA [$04] : CMP #$F007 : BNE .done
+
+    INC $04 : INC $04 : STZ $0E
+    LDX #$0606
+    JSR cm_draw_text
+    RTS
+
+  .done
+    DEC $04 : DEC $04
     RTS
 }
 
@@ -393,6 +486,10 @@ cm_draw_action_table:
     dw draw_numfield
     dw draw_choice
     dw draw_ctrl_shortcut
+    dw draw_numfield_hex
+    dw draw_numfield_word
+    dw draw_toggle_inverted
+    dw draw_numfield_color
 
     draw_toggle:
     {
@@ -422,6 +519,50 @@ cm_draw_action_table:
 
         ; grab the value at that memory address
         LDA [$08] : CMP $0C : BEQ .checked
+
+        ; Off
+        %a16()
+        LDA #$244B : STA !ram_tilemap_buffer+0,X
+        LDA #$244D : STA !ram_tilemap_buffer+2,X
+        LDA #$244D : STA !ram_tilemap_buffer+4,X
+        RTS
+
+      .checked
+        ; On
+        %a16()
+        LDA #$384B : STA !ram_tilemap_buffer+2,X
+        LDA #$384C : STA !ram_tilemap_buffer+4,X
+        RTS
+    }
+
+    draw_toggle_inverted:
+    {
+        ; grab the memory address (long)
+        LDA [$04] : INC $04 : INC $04 : STA $08
+        LDA [$04] : INC $04 : STA $0A
+
+        ; grab the toggle value
+        LDA [$04] : AND #$00FF : INC $04 : STA $0C
+
+        ; increment past JSR
+        INC $04 : INC $04
+
+        ; Draw the text
+        %item_index_to_vram_index()
+        PHX : JSR cm_draw_text : PLX
+
+        ; Set position for ON/OFF
+        TXA : CLC : ADC #$002C : TAX
+
+        %a8()
+        ; set palette
+        LDA $0E
+        STA !ram_tilemap_buffer+1,X
+        STA !ram_tilemap_buffer+3,X
+        STA !ram_tilemap_buffer+5,X
+
+        ; grab the value at that memory address
+        LDA [$08] : CMP $0C : BNE .checked
 
         ; Off
         %a16()
@@ -494,8 +635,8 @@ cm_draw_action_table:
         LDA [$04] : INC $04 : INC $04 : STA $08
         LDA [$04] : INC $04 : STA $0A
 
-        ; skip bounds and increment value
-        INC $04 : INC $04 : INC $04
+        ; skip bounds and increment values
+        INC $04 : INC $04 : INC $04 : INC $04
 
         ; increment past JSR
         INC $04 : INC $04
@@ -530,6 +671,133 @@ cm_draw_action_table:
 
         LDA !ram_hex2dec_first_digit : BEQ .done
         CLC : ADC $0E : STA !ram_tilemap_buffer,X
+
+      .done
+        RTS
+    }
+
+    draw_numfield_word:
+    {
+        ; grab the memory address (long)
+        LDA [$04] : INC $04 : INC $04 : STA $08
+        LDA [$04] : INC $04 : STA $0A
+
+        ; skip bounds and increment values
+        INC $04 : INC $04 : INC $04 : INC $04
+        INC $04 : INC $04 : INC $04 : INC $04
+
+        ; increment past JSR
+        INC $04 : INC $04
+
+        ; Draw the text
+        %item_index_to_vram_index()
+        PHX : JSR cm_draw_text : PLX
+
+        ; set position for the number
+        TXA : CLC : ADC #$002A : TAX
+
+        LDA [$08] : JSR cm_hex2dec
+
+        ; Clear out the area (black tile)
+        LDA #$281F : STA !ram_tilemap_buffer+0,X
+                     STA !ram_tilemap_buffer+2,X
+                     STA !ram_tilemap_buffer+4,X
+                     STA !ram_tilemap_buffer+6,X
+
+        ; Set palette
+        %a8()
+        LDA.b #$24 : ORA $0E : STA $0F
+        LDA.b #$70 : STA $0E
+
+        ; Draw numbers
+        %a16()
+        ; ones
+        LDA !ram_hex2dec_third_digit : CLC : ADC $0E : STA !ram_tilemap_buffer+6,X
+
+        ; tens
+        LDA !ram_hex2dec_second_digit : ORA !ram_hex2dec_first_digit
+        ORA !ram_hex2dec_rest : BEQ .done
+        LDA !ram_hex2dec_second_digit : CLC : ADC $0E : STA !ram_tilemap_buffer+4,X
+
+        LDA !ram_hex2dec_first_digit : ORA !ram_hex2dec_rest : BEQ .done
+        LDA !ram_hex2dec_first_digit : CLC : ADC $0E : STA !ram_tilemap_buffer+2,X
+
+        LDA !ram_hex2dec_rest : BEQ .done
+        CLC : ADC $0E : STA !ram_tilemap_buffer,X
+
+      .done
+        RTS
+    }
+
+    draw_numfield_hex:
+    {
+        ; grab the memory address (long)
+        LDA [$04] : INC $04 : INC $04 : STA $08
+        LDA [$04] : INC $04 : STA $0A
+
+        ; skip bounds and increment values
+        INC $04 : INC $04 : INC $04 : INC $04
+
+        ; increment past JSR
+        INC $04 : INC $04
+
+        ; Draw the text
+        %item_index_to_vram_index()
+        PHX : JSR cm_draw_text : PLX
+
+        ; set position for the number
+        TXA : CLC : ADC #$002E : TAX
+
+        LDA [$08] : AND #$00FF : STA !ram_tmp_2
+
+        ; Clear out the area (black tile)
+        LDA #$281F : STA !ram_tilemap_buffer+0,X
+                     STA !ram_tilemap_buffer+2,X
+
+        ; Draw numbers
+        ; (00X0)
+        LDA !ram_tmp_2 : AND #$00F0 : LSR #3 : TAY
+        LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer,X
+        
+        ; (000X)
+        LDA !ram_tmp_2 : AND #$000F : ASL : TAY
+        LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer+2,X
+
+      .done
+        RTS
+    }
+
+    draw_numfield_color:
+    {
+        ; grab the memory address (long)
+        LDA [$04] : INC $04 : INC $04 : STA $08
+        LDA [$04] : INC $04 : STA $0A
+
+        ; increment past JSR
+        INC $04 : INC $04
+
+        ; Draw the text
+        %item_index_to_vram_index()
+        PHX : JSR cm_draw_text : PLX
+
+        ; set position for the number
+        TXA : CLC : ADC #$002E : TAX
+
+        LDA [$08] : AND #$00FF : STA !ram_tmp_2
+
+        ; Clear out the area (black tile)
+        LDA #$281F : STA !ram_tilemap_buffer+0,X
+                     STA !ram_tilemap_buffer+2,X
+
+        ; Draw numbers
+        ; (00X0)
+        LDA !ram_tmp_2 : AND #$001E : TAY
+        LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer,X
+
+        ; (000X)
+        LDA !ram_tmp_2 : AND #$0001 : ASL #4 : STA $0E
+        LDA !ram_tmp_2 : AND #$001C : LSR : CLC : ADC $0E : TAY
+        LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer+2,X
 
       .done
         RTS
@@ -596,16 +864,19 @@ cm_draw_action_table:
 }
 
 cm_draw_text:
+    ; X = pointer to tilemap area (STA !ram_tilemap_buffer,X)
+    ; $04[0x3] = address
   %a8()
     LDY #$0000
-    ; grab palette info
+    ; terminator
     LDA [$04],Y : INY : CMP #$FF : BEQ .end
+    ; ORA with palette info
     ORA $0E : STA $0E
 
   .loop
-    LDA [$04],Y : CMP #$FF : BEQ .end
-    STA !ram_tilemap_buffer,X : INX
-    LDA $0E : STA !ram_tilemap_buffer,X : INX
+    LDA [$04],Y : CMP #$FF : BEQ .end           ; terminator
+    STA !ram_tilemap_buffer,X : INX             ; tile
+    LDA $0E : STA !ram_tilemap_buffer,X : INX   ; palette
     INY : JMP .loop
 
   .end
@@ -705,10 +976,6 @@ cm_loop:
     JSR cm_calculate_max
     BRA .redraw
 
-  ; .pressedY
-  ; .pressedX
-  ;   BRA .inputLoop
-
   .pressedDown
     LDA #$0002
     JSR cm_move
@@ -760,10 +1027,11 @@ cm_ctrl_mode:
     LDA $8B : BEQ .clear_and_draw
     CMP !ram_cm_ctrl_last_input : BNE .clear_and_draw
 
-    ; Holding an input for more than 1f
+    ; Holding an input for more than one second
     LDA !ram_cm_ctrl_timer : INC : STA !ram_cm_ctrl_timer : CMP.w #0060 : BNE .next_frame
 
     LDA $8B : STA [$C5]
+    JSL GameModeExtras
     LDA #!SOUND_MENU_MOVE : JSL $80903F
     BRA .exit
 
@@ -838,7 +1106,7 @@ cm_calculate_max:
 cm_get_inputs:
 {
     ; Make sure we don't read joysticks twice in the same frame
-    LDA $05B6 : CMP !ram_last_lag_counter : PHP : STA !ram_last_lag_counter : PLP : BNE +
+    LDA $05B6 : CMP !ram_cm_input_counter : PHP : STA !ram_cm_input_counter : PLP : BNE +
 
     JSL $809459 ; Read controller input
 
@@ -853,15 +1121,15 @@ cm_get_inputs:
     RTS
 
   .check_holding
-    ; Check if we're holding up or down
+    ; Check if we're holding the dpad
     LDA $8B : AND #$0F00 : BEQ .noinput
 
     ; Decrement delay timer and check if it's zero
     LDA !ram_cm_input_timer : DEC : STA !ram_cm_input_timer : BNE .noinput
 
-    ; Set new delay to 4 frames and return the input we're holding
+    ; Set new delay to two frames and return the input we're holding
     LDA #$0002 : STA !ram_cm_input_timer
-    LDA $8B : AND #$0F00
+    LDA $8B : AND #$0F00 : ORA !IH_INPUT_HELD
     RTS
 
   .noinput
@@ -871,21 +1139,28 @@ cm_get_inputs:
 
 cm_move:
 {
+    STA $12
     LDX !ram_cm_stack_index
     CLC : ADC !ram_cm_cursor_stack,X : BPL .positive
-    LDA !ram_cm_cursor_max : DEC #2
+    LDA !ram_cm_cursor_max : DEC #2 : BRA .inBounds
 
   .positive
     CMP !ram_cm_cursor_max : BNE .inBounds
     LDA #$0000
 
   .inBounds
-    STA !ram_cm_cursor_stack,X
+    STA !ram_cm_cursor_stack,X : TAY
 
+    ; check for blank menu line ($FFFF)
+    LDA [$00],Y : CMP #$FFFF : BNE .end
+
+    LDA $12 : BRA cm_move
+
+  .end
     LDA #!SOUND_MENU_MOVE : JSL $80903F
-
     RTS
 }
+
 
 ; --------
 ; Execute
@@ -903,9 +1178,12 @@ cm_execute:
     ; Increment past the action index
     LDA [$00] : INC $00 : INC $00 : TAX
 
+    ; Safety net incase blank line selected
+    CPX #$FFFF : BEQ +
+
     ; Execute action
     JSR (cm_execute_action_table,X)
-    RTS
++   RTS
 }
 
 cm_execute_action_table:
@@ -916,6 +1194,10 @@ cm_execute_action_table:
     dw execute_numfield
     dw execute_choice
     dw execute_ctrl_shortcut
+    dw execute_numfield_hex
+    dw execute_numfield_word
+    dw execute_toggle
+    dw execute_numfield_color
 
     execute_toggle:
     {
@@ -979,7 +1261,8 @@ cm_execute_action_table:
     execute_jsr:
     {
         ; <, > and X should do nothing here
-        LDA !ram_cm_controller : BIT #$0340 : BNE .end
+        ; also ignore input held flag
+        LDA !ram_cm_controller : BIT #$0341 : BNE .end
 
         ; $02 = JSR target
         LDA [$00] : INC $00 : INC $00 : STA $04
@@ -995,19 +1278,28 @@ cm_execute_action_table:
     }
 
     execute_numfield:
+    execute_numfield_hex:
     {
-        ; $02[0x3] = memory address to manipulate
-        ; $06[0x1] = min
-        ; $08[0x1] = max
-        ; $0A[0x1] = increment
-        ; $0C[0x2] = JSR target
+        ; $04[0x3] = memory address to manipulate
+        ; $08[0x1] = min
+        ; $0A[0x1] = max
+        ; $0C[0x1] = increment (normal)
+        ; $0C[0x1] = increment (input held)
+        ; $20[0x2] = JSR target
         LDA [$00] : INC $00 : INC $00 : STA $04
         LDA [$00] : INC $00 : STA $06
 
         LDA [$00] : INC $00 : AND #$00FF : STA $08
         LDA [$00] : INC $00 : AND #$00FF : INC : STA $0A ; INC for convenience
-        LDA [$00] : INC $00 : AND #$00FF : STA $0C
 
+        LDA !ram_cm_controller : BIT !IH_INPUT_HELD : BNE .input_held
+        LDA [$00] : INC $00 : INC $00 : AND #$00FF : STA $0C
+        BRA .load_jsr_target
+
+      .input_held
+        INC $00 : LDA [$00] : INC $00 : AND #$00FF : STA $0C
+
+      .load_jsr_target
         LDA [$00] : INC $00 : INC $00 : STA $20
 
         LDA !ram_cm_controller : BIT #$0200 : BNE .pressed_left
@@ -1043,10 +1335,109 @@ cm_execute_action_table:
         RTS
     }
 
+    execute_numfield_word:
+    {
+        ; $04[0x3] = memory address to manipulate
+        ; $08[0x2] = min
+        ; $0A[0x2] = max
+        ; $0C[0x2] = increment (normal)
+        ; $0C[0x2] = increment (input held)
+        ; $20[0x2] = JSR target
+        LDA [$00] : INC $00 : INC $00 : STA $04
+        LDA [$00] : INC $00 : STA $06
+
+        LDA [$00] : INC $00 : INC $00 : STA $08
+        LDA [$00] : INC $00 : INC $00 : INC : STA $0A ; INC for convenience
+
+        LDA !ram_cm_controller : BIT !IH_INPUT_HELD : BNE .input_held
+        LDA [$00] : INC $00 : INC $00 : INC $00 : INC $00 : STA $0C
+        BRA .load_jsr_target
+
+      .input_held
+        INC $00 : INC $00 : LDA [$00] : INC $00 : INC $00 : STA $0C
+
+      .load_jsr_target
+        LDA [$00] : INC $00 : INC $00 : STA $20
+
+        LDA !ram_cm_controller : BIT #$0200 : BNE .pressed_left
+
+        LDA [$04] : CLC : ADC $0C
+
+        CMP $0A : BCS .set_to_min
+
+        STA [$04] : BRA .jsr
+
+      .pressed_left
+        LDA [$04] : SEC : SBC $0C : BMI .set_to_max
+
+        CMP $0A : BCS .set_to_max
+
+        STA [$04] : BRA .jsr
+
+      .set_to_min
+        LDA $08 : STA [$04] : CLC : BRA .jsr
+
+      .set_to_max
+        LDA $0A : DEC : STA [$04] : CLC
+
+      .jsr
+        LDA $20 : BEQ .end
+
+        LDA [$04]
+        LDX #$0000
+        JSR ($0020,X)
+
+      .end
+        LDA #!SOUND_MENU_MOVE : JSL $80903F
+        RTS
+    }
+
+    execute_numfield_color:
+    {
+        ; $04[0x3] = memory address to manipulate
+        ; $20[0x2] = JSR target
+        LDA [$00] : INC $00 : INC $00 : STA $04
+        LDA [$00] : INC $00 : STA $06
+
+        LDA [$00] : INC $00 : INC $00 : STA $20
+
+        LDA !ram_cm_controller : BIT #$0200 : BNE .pressed_left
+
+        LDA [$04] : INC : CMP #$0020 : BCS .set_to_min
+        STA [$04] : LDA !ram_cm_controller : BIT !IH_INPUT_LEFT : BEQ .jsr
+
+        LDA [$04] : INC : CMP #$0020 : BCS .set_to_min
+        STA [$04] : BRA .jsr
+
+      .pressed_left
+        LDA [$04] : DEC : BMI .set_to_max
+        STA [$04] : LDA !ram_cm_controller : BIT !IH_INPUT_LEFT : BEQ .jsr
+
+        LDA [$04] : DEC : BMI .set_to_max
+        STA [$04] : BRA .jsr
+
+      .set_to_min
+        LDA #$0000 : STA [$04] : CLC : BRA .jsr
+
+      .set_to_max
+        LDA #$001F : STA [$04] : CLC
+
+      .jsr
+        LDA $20 : BEQ .end
+
+        LDA [$04]
+        LDX #$0000
+        JSR ($0020,X)
+
+      .end
+        LDA #!SOUND_MENU_MOVE : JSL $80903F
+        RTS
+    }
+
     execute_choice:
     {
-        ; $02[0x3] = memory to manipulate
-        ; $06[0x2] = jsr target
+        ; $04[0x3] = memory to manipulate
+        ; $08[0x2] = jsr target
         %a16()
         LDA [$00] : INC $00 : INC $00 : STA $04
         LDA [$00] : INC $00 : STA $06
@@ -1112,7 +1503,8 @@ cm_execute_action_table:
     execute_ctrl_shortcut:
     {
         ; < and > should do nothing here
-        LDA !ram_cm_controller : BIT #$0300 : BNE .end
+        ; also ignore the input held flag
+        LDA !ram_cm_controller : BIT #$0301 : BNE .end
 
         LDA [$00] : STA $C5 : INC $00 : INC $00
         LDA [$00] : STA $C7 : INC $00
@@ -1123,7 +1515,7 @@ cm_execute_action_table:
         LDA #$0000 : STA !ram_cm_ctrl_timer
         RTS
 
-        .reset_shortcut
+      .reset_shortcut
         LDA.w #!sram_ctrl_menu : CMP $C5 : BEQ .end
         LDA #!SOUND_MENU_MOVE : JSL $80903F
 
@@ -1179,6 +1571,8 @@ cm_divide_100:
 ; -----------
 
 incsrc mainmenu.asm
+incsrc custompresets.asm
+
 
 ; ----------
 ; Resources
@@ -1186,5 +1580,8 @@ incsrc mainmenu.asm
 
 cm_hud_table:
     incbin ../resources/cm_gfx.bin
+
+HexMenuGFXTable:
+    dw $2C70, $2C71, $2C72, $2C73, $2C74, $2C75, $2C76, $2C77, $2C78, $2C79, $2C50, $2C51, $2C52, $2C53, $2C54, $2C55
 
 print pc, " menu end"

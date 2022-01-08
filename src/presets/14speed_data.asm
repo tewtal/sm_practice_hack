@@ -15,6 +15,10 @@ preset_14speed_crateria_ceres_elevator:
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $4000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
+    dl $7E0917 : db $02 : dw $0000 ; Layer 2 X scroll in room in pixels?
+    dl $7E0919 : db $02 : dw $0000 ; Layer 2 Y scroll in room in pixels? (up = positive)
+    dl $7E0921 : db $02 : dw $0000 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
+    dl $7E0923 : db $02 : dw $0000 ; BG2 Y scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E093F : db $02 : dw $0000 ; Ceres escape flag
     dl $7E09A2 : db $02 : dw $0000 ; Equipped Items
     dl $7E09A4 : db $02 : dw $0000 ; Collected Items
@@ -22,13 +26,14 @@ preset_14speed_crateria_ceres_elevator:
     dl $7E09A8 : db $02 : dw $0000 ; Beams
     dl $7E09C0 : db $02 : dw $0000 ; Manual/Auto reserve tank
     dl $7E09C2 : db $02 : dw $0063 ; Health
-    dl $7E09C4 : db $02 : dw $0063 ; Max helath
+    dl $7E09C4 : db $02 : dw $0063 ; Max health
     dl $7E09C6 : db $02 : dw $0000 ; Missiles
     dl $7E09C8 : db $02 : dw $0000 ; Max missiles
     dl $7E09CA : db $02 : dw $0000 ; Supers
     dl $7E09CC : db $02 : dw $0000 ; Max supers
     dl $7E09CE : db $02 : dw $0000 ; Pbs
     dl $7E09D0 : db $02 : dw $0000 ; Max pbs
+    dl $7E09D2 : db $02 : dw $0000 ; Currently selected item
     dl $7E09D4 : db $02 : dw $0000 ; Max reserves
     dl $7E09D6 : db $02 : dw $0000 ; Reserves
     dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
@@ -227,6 +232,7 @@ preset_14speed_crateria_ceres_last_3_rooms:
     dl $7E07F5 : db $02 : dw $0007 ; Music Track
     dl $7E090F : db $02 : dw $7400 ; Screen subpixel X position.
     dl $7E0913 : db $02 : dw $F000 ; Screen subpixel Y position
+    dl $7E0921 : db $02 : dw $FE00 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E093F : db $02 : dw $0002 ; Ceres escape flag
     dl $7E09C2 : db $02 : dw $0018 ; Health
     dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
@@ -251,6 +257,8 @@ preset_14speed_crateria_ship:
     dl $7E0911 : db $02 : dw $03FB ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $C000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $03D3 ; Screen Y position in pixels
+    dl $7E0917 : db $02 : dw $01FD ; Layer 2 X scroll in room in pixels?
+    dl $7E0921 : db $02 : dw $0200 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E093F : db $02 : dw $0000 ; Ceres escape flag
     dl $7E09C2 : db $02 : dw $0063 ; Health
     dl $7E0AF6 : db $02 : dw $047E ; Samus X
@@ -278,6 +286,10 @@ preset_14speed_crateria_morph:
     dl $7E090F : db $02 : dw $7000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $04FB ; Screen X position in pixels
     dl $7E0915 : db $02 : dw $0200 ; Screen Y position in pixels
+    dl $7E0917 : db $02 : dw $03BC ; Layer 2 X scroll in room in pixels?
+    dl $7E0919 : db $02 : dw $0180 ; Layer 2 Y scroll in room in pixels? (up = positive)
+    dl $7E0921 : db $02 : dw $FB00 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
+    dl $7E0923 : db $02 : dw $00E0 ; BG2 Y scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E0AF6 : db $02 : dw $057D ; Samus X
     dl $7E0AFA : db $02 : dw $02AB ; Samus Y
     dl $7ED91A : db $02 : dw $0001 ; Events, Items, Doors
@@ -299,6 +311,10 @@ preset_14speed_crateria_climb:
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $DC00 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
+    dl $7E0917 : db $02 : dw $0000 ; Layer 2 X scroll in room in pixels?
+    dl $7E0919 : db $02 : dw $0000 ; Layer 2 Y scroll in room in pixels? (up = positive)
+    dl $7E0921 : db $02 : dw $FD00 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
+    dl $7E0923 : db $02 : dw $0000 ; BG2 Y scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09A2 : db $02 : dw $0004 ; Equipped Items
     dl $7E09A4 : db $02 : dw $0004 ; Collected Items
     dl $7E09C2 : db $02 : dw $0054 ; Health
@@ -322,6 +338,8 @@ preset_14speed_crateria_bomb_torizo:
     dl $7E090F : db $02 : dw $4000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0200 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $8C00 ; Screen subpixel Y position
+    dl $7E0917 : db $02 : dw $0180 ; Layer 2 X scroll in room in pixels?
+    dl $7E0921 : db $02 : dw $0100 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09C2 : db $02 : dw $0063 ; Health
     dl $7E09C6 : db $02 : dw $0000 ; Missiles
     dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
@@ -342,6 +360,9 @@ preset_14speed_crateria_terminator:
     dl $7E090F : db $02 : dw $0400 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $87FF ; Screen subpixel Y position
+    dl $7E0917 : db $02 : dw $00C0 ; Layer 2 X scroll in room in pixels?
+    dl $7E0921 : db $02 : dw $FC00 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
+    dl $7E0923 : db $02 : dw $FE00 ; BG2 Y scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09A2 : db $02 : dw $1004 ; Equipped Items
     dl $7E09A4 : db $02 : dw $1004 ; Collected Items
     dl $7E09C6 : db $02 : dw $0005 ; Missiles
@@ -368,8 +389,11 @@ preset_14speed_brinstar_green_brinstar_elevator:
     dl $7E090F : db $02 : dw $4000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $A800 ; Screen subpixel Y position
+    dl $7E0917 : db $02 : dw $0000 ; Layer 2 X scroll in room in pixels?
+    dl $7E0921 : db $02 : dw $FF00 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
+    dl $7E0923 : db $02 : dw $0000 ; BG2 Y scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09C2 : db $02 : dw $00C7 ; Health
-    dl $7E09C4 : db $02 : dw $00C7 ; Max helath
+    dl $7E09C4 : db $02 : dw $00C7 ; Max health
     dl $7E09C6 : db $02 : dw $0002 ; Missiles
     dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0004 ; More position/state
@@ -394,6 +418,8 @@ preset_14speed_brinstar_big_pink:
     dl $7E090F : db $02 : dw $6000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0600 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $C000 ; Screen subpixel Y position
+    dl $7E0917 : db $02 : dw $0480 ; Layer 2 X scroll in room in pixels?
+    dl $7E0921 : db $02 : dw $0100 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09C6 : db $02 : dw $0000 ; Missiles
     dl $7E09CA : db $02 : dw $0004 ; Supers
     dl $7E09CC : db $02 : dw $0005 ; Max supers
@@ -414,6 +440,7 @@ preset_14speed_brinstar_red_tower:
     dl $7E090F : db $02 : dw $3000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0500 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $E800 ; Screen subpixel Y position
+    dl $7E0917 : db $02 : dw $03C0 ; Layer 2 X scroll in room in pixels?
     dl $7E09A6 : db $02 : dw $1000 ; Beams
     dl $7E09A8 : db $02 : dw $1000 ; Beams
     dl $7E0AF6 : db $02 : dw $05C1 ; Samus X
@@ -437,6 +464,9 @@ preset_14speed_brinstar_hellway:
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $A400 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $000B ; Screen Y position in pixels
+    dl $7E0917 : db $02 : dw $0000 ; Layer 2 X scroll in room in pixels?
+    dl $7E0919 : db $02 : dw $0008 ; Layer 2 Y scroll in room in pixels? (up = positive)
+    dl $7E0923 : db $02 : dw $FC00 ; BG2 Y scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E0AF6 : db $02 : dw $0098 ; Samus X
     dw #$FFFF
 .after
@@ -450,6 +480,9 @@ preset_14speed_brinstar_caterpillar_room:
     dl $7E0911 : db $02 : dw $0200 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $4400 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
+    dl $7E0917 : db $02 : dw $0180 ; Layer 2 X scroll in room in pixels?
+    dl $7E0919 : db $02 : dw $0000 ; Layer 2 Y scroll in room in pixels? (up = positive)
+    dl $7E0923 : db $02 : dw $0000 ; BG2 Y scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09C2 : db $02 : dw $00B7 ; Health
     dl $7E09C6 : db $02 : dw $0002 ; Missiles
     dl $7E0AF6 : db $02 : dw $0298 ; Samus X
@@ -464,10 +497,13 @@ preset_14speed_brinstar_leaving_power_bombs:
     dl $7E090F : db $02 : dw $0001 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $0C00 ; Screen subpixel Y position
+    dl $7E0917 : db $02 : dw $00C0 ; Layer 2 X scroll in room in pixels?
+    dl $7E0921 : db $02 : dw $FD00 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09C2 : db $02 : dw $00AD ; Health
     dl $7E09CA : db $02 : dw $0003 ; Supers
     dl $7E09CE : db $02 : dw $0005 ; Pbs
     dl $7E09D0 : db $02 : dw $0005 ; Max pbs
+    dl $7E09D2 : db $02 : dw $0003 ; Currently selected item
     dl $7E0AF6 : db $02 : dw $0157 ; Samus X
     dl $7E0AFA : db $02 : dw $00AB ; Samus Y
     dl $7ED874 : db $02 : dw $0104 ; Events, Items, Doors
@@ -488,6 +524,9 @@ preset_14speed_brinstar_kihunter_room:
     dl $7E090F : db $02 : dw $C000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $5000 ; Screen subpixel Y position
+    dl $7E0917 : db $02 : dw $0000 ; Layer 2 X scroll in room in pixels?
+    dl $7E0921 : db $02 : dw $0000 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
+    dl $7E0923 : db $02 : dw $FF00 ; BG2 Y scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09C2 : db $02 : dw $009E ; Health
     dl $7E09CA : db $02 : dw $0005 ; Supers
     dl $7E09CE : db $02 : dw $0003 ; Pbs
@@ -512,6 +551,9 @@ preset_14speed_brinstar_moat:
     dl $7E090F : db $02 : dw $5C00 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0200 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $4800 ; Screen subpixel Y position
+    dl $7E0917 : db $02 : dw $0180 ; Layer 2 X scroll in room in pixels?
+    dl $7E0921 : db $02 : dw $FF00 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
+    dl $7E0923 : db $02 : dw $FD00 ; BG2 Y scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09CE : db $02 : dw $0001 ; Pbs
     dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0008 ; More position/state
@@ -529,8 +571,12 @@ preset_14speed_brinstar_ocean:
     dl $7E090F : db $02 : dw $2000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
+    dl $7E0917 : db $02 : dw $00C0 ; Layer 2 X scroll in room in pixels?
+    dl $7E0921 : db $02 : dw $0100 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
+    dl $7E0923 : db $02 : dw $0000 ; BG2 Y scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09C6 : db $02 : dw $0007 ; Missiles
     dl $7E09C8 : db $02 : dw $000A ; Max missiles
+    dl $7E09D2 : db $02 : dw $0000 ; Currently selected item
     dl $7E0AF6 : db $02 : dw $01A1 ; Samus X
     dl $7ED870 : db $02 : dw $0190 ; Events, Items, Doors
     dl $7ED91A : db $02 : dw $0013 ; Events, Items, Doors
@@ -548,6 +594,7 @@ preset_14speed_wrecked_ship_wrecked_ship_shaft:
     dl $7E07F3 : db $02 : dw $0030 ; Music Bank
     dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $02D8 ; Screen X position in pixels
+    dl $7E0917 : db $02 : dw $0222 ; Layer 2 X scroll in room in pixels?
     dl $7E09CA : db $02 : dw $0004 ; Supers
     dl $7E0AF6 : db $02 : dw $0338 ; Samus X
     dl $7ED8B0 : db $02 : dw $7000 ; Events, Items, Doors
@@ -563,6 +610,8 @@ preset_14speed_wrecked_ship_phantoon:
     dl $7E090F : db $02 : dw $F000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0400 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $7400 ; Screen subpixel Y position
+    dl $7E0917 : db $02 : dw $0300 ; Layer 2 X scroll in room in pixels?
+    dl $7E0921 : db $02 : dw $FE00 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09CA : db $02 : dw $0002 ; Supers
     dl $7E0AF6 : db $02 : dw $04CF ; Samus X
     dl $7ED8C0 : db $02 : dw $0030 ; Events, Items, Doors
@@ -580,6 +629,8 @@ preset_14speed_wrecked_ship_wrecked_ship_supers:
     dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0229 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $AC00 ; Screen subpixel Y position
+    dl $7E0917 : db $02 : dw $019E ; Layer 2 X scroll in room in pixels?
+    dl $7E0921 : db $02 : dw $FB00 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09C2 : db $02 : dw $00C7 ; Health
     dl $7E09C6 : db $02 : dw $000A ; Missiles
     dl $7E09CA : db $02 : dw $0005 ; Supers
@@ -601,6 +652,8 @@ preset_14speed_wrecked_ship_shaft_revisit:
     dl $7E090F : db $02 : dw $7000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $4800 ; Screen subpixel Y position
+    dl $7E0917 : db $02 : dw $0000 ; Layer 2 X scroll in room in pixels?
+    dl $7E0921 : db $02 : dw $FF00 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09CA : db $02 : dw $000A ; Supers
     dl $7E09CC : db $02 : dw $000A ; Max supers
     dl $7E09CE : db $02 : dw $0001 ; Pbs
@@ -622,6 +675,9 @@ preset_14speed_wrecked_ship_attic:
     dl $7E090F : db $02 : dw $E000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0400 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $B000 ; Screen subpixel Y position
+    dl $7E0917 : db $02 : dw $0300 ; Layer 2 X scroll in room in pixels?
+    dl $7E0921 : db $02 : dw $FD00 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
+    dl $7E0923 : db $02 : dw $FA00 ; BG2 Y scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E0AF6 : db $02 : dw $044D ; Samus X
     dl $7E0AFA : db $02 : dw $006B ; Samus Y
     dl $7ED91A : db $02 : dw $001A ; Events, Items, Doors
@@ -643,6 +699,9 @@ preset_14speed_wrecked_ship_bowling_alley_path:
     dl $7E0911 : db $02 : dw $0200 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $1800 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0202 ; Screen Y position in pixels
+    dl $7E0917 : db $02 : dw $0100 ; Layer 2 X scroll in room in pixels?
+    dl $7E0921 : db $02 : dw $F800 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
+    dl $7E0923 : db $02 : dw $0000 ; BG2 Y scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09C6 : db $02 : dw $0002 ; Missiles
     dl $7E09CA : db $02 : dw $0009 ; Supers
     dl $7E09CE : db $02 : dw $0000 ; Pbs
@@ -662,6 +721,8 @@ preset_14speed_wrecked_ship_bowling_alley:
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $BC00 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
+    dl $7E0917 : db $02 : dw $0000 ; Layer 2 X scroll in room in pixels?
+    dl $7E0921 : db $02 : dw $0100 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09C2 : db $02 : dw $00BD ; Health
     dl $7E0AF6 : db $02 : dw $002E ; Samus X
     dl $7E0AFA : db $02 : dw $008B ; Samus Y
@@ -681,6 +742,8 @@ preset_14speed_wrecked_ship_leaving_gravity:
     dl $7E07F5 : db $02 : dw $0003 ; Music Track
     dl $7E090F : db $02 : dw $3000 ; Screen subpixel X position.
     dl $7E0913 : db $02 : dw $5800 ; Screen subpixel Y position
+    dl $7E0917 : db $02 : dw $0001 ; Layer 2 X scroll in room in pixels?
+    dl $7E0921 : db $02 : dw $FF00 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09A2 : db $02 : dw $1024 ; Equipped Items
     dl $7E09A4 : db $02 : dw $1024 ; Collected Items
     dl $7E09C2 : db $02 : dw $0045 ; Health
@@ -706,6 +769,10 @@ preset_14speed_brinstar_revisit_red_tower_elevator:
     dl $7E07F5 : db $02 : dw $0005 ; Music Track
     dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0238 ; Screen Y position in pixels
+    dl $7E0917 : db $02 : dw $0000 ; Layer 2 X scroll in room in pixels?
+    dl $7E0919 : db $02 : dw $0238 ; Layer 2 Y scroll in room in pixels? (up = positive)
+    dl $7E0921 : db $02 : dw $0000 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
+    dl $7E0923 : db $02 : dw $00E0 ; BG2 Y scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09C2 : db $02 : dw $0043 ; Health
     dl $7E09C6 : db $02 : dw $0000 ; Missiles
     dl $7E09CE : db $02 : dw $0002 ; Pbs
@@ -726,9 +793,13 @@ preset_14speed_brinstar_revisit_breaking_tube:
     dl $7E090F : db $02 : dw $C000 ; Screen subpixel X position.
     dl $7E0913 : db $02 : dw $5C00 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
+    dl $7E0919 : db $02 : dw $0000 ; Layer 2 Y scroll in room in pixels? (up = positive)
+    dl $7E0921 : db $02 : dw $0100 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
+    dl $7E0923 : db $02 : dw $0000 ; BG2 Y scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09C2 : db $02 : dw $0052 ; Health
     dl $7E09C6 : db $02 : dw $0008 ; Missiles
     dl $7E09CA : db $02 : dw $000A ; Supers
+    dl $7E09D2 : db $02 : dw $0003 ; Currently selected item
     dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0008 ; More position/state
     dl $7E0AF6 : db $02 : dw $002C ; Samus X
@@ -744,7 +815,10 @@ preset_14speed_brinstar_revisit_entering_kraids_lair:
     dl $7E090F : db $02 : dw $5000 ; Screen subpixel X position.
     dl $7E0913 : db $02 : dw $1801 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0100 ; Screen Y position in pixels
+    dl $7E0919 : db $02 : dw $0100 ; Layer 2 Y scroll in room in pixels? (up = positive)
+    dl $7E0923 : db $02 : dw $FF00 ; BG2 Y scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09CE : db $02 : dw $0001 ; Pbs
+    dl $7E09D2 : db $02 : dw $0000 ; Currently selected item
     dl $7E0AF6 : db $02 : dw $002E ; Samus X
     dl $7E0AFA : db $02 : dw $018B ; Samus Y
     dl $7ED820 : db $02 : dw $0801 ; Events, Items, Doors
@@ -762,6 +836,8 @@ preset_14speed_brinstar_revisit_baby_kraid_entering:
     dl $7E090F : db $02 : dw $3000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $DC00 ; Screen subpixel Y position
+    dl $7E0917 : db $02 : dw $00C0 ; Layer 2 X scroll in room in pixels?
+    dl $7E0921 : db $02 : dw $0000 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09CA : db $02 : dw $0007 ; Supers
     dl $7E0AF6 : db $02 : dw $0171 ; Samus X
     dl $7ED91A : db $02 : dw $0025 ; Events, Items, Doors
@@ -777,6 +853,8 @@ preset_14speed_brinstar_revisit_kraid:
     dl $7E07F5 : db $02 : dw $0006 ; Music Track
     dl $7E090F : db $02 : dw $5000 ; Screen subpixel X position.
     dl $7E0913 : db $02 : dw $3800 ; Screen subpixel Y position
+    dl $7E0917 : db $02 : dw $0100 ; Layer 2 X scroll in room in pixels?
+    dl $7E0921 : db $02 : dw $0100 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09C2 : db $02 : dw $004D ; Health
     dl $7E09C6 : db $02 : dw $0005 ; Missiles
     dl $7E09CA : db $02 : dw $0009 ; Supers
@@ -793,6 +871,8 @@ preset_14speed_brinstar_revisit_baby_kraid_exiting:
     dl $7E090F : db $02 : dw $8000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $A800 ; Screen subpixel Y position
+    dl $7E0917 : db $02 : dw $0000 ; Layer 2 X scroll in room in pixels?
+    dl $7E0921 : db $02 : dw $FE00 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09A2 : db $02 : dw $1025 ; Equipped Items
     dl $7E09A4 : db $02 : dw $1025 ; Collected Items
     dl $7E09C2 : db $02 : dw $008A ; Health
@@ -817,6 +897,8 @@ preset_14speed_brinstar_revisit_kraid_etank:
     dl $7E07F5 : db $02 : dw $0005 ; Music Track
     dl $7E090F : db $02 : dw $4000 ; Screen subpixel X position.
     dl $7E0913 : db $02 : dw $CC00 ; Screen subpixel Y position
+    dl $7E0921 : db $02 : dw $FF00 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
+    dl $7E0923 : db $02 : dw $FFE0 ; BG2 Y scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09C2 : db $02 : dw $0085 ; Health
     dl $7E09CA : db $02 : dw $000A ; Supers
     dl $7E09CE : db $02 : dw $0002 ; Pbs
@@ -839,8 +921,11 @@ preset_14speed_upper_norfair_precathedral:
     dl $7E090F : db $02 : dw $8000 ; Screen subpixel X position.
     dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0238 ; Screen Y position in pixels
+    dl $7E0919 : db $02 : dw $01AA ; Layer 2 Y scroll in room in pixels? (up = positive)
+    dl $7E0921 : db $02 : dw $0000 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
+    dl $7E0923 : db $02 : dw $00E0 ; BG2 Y scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09C2 : db $02 : dw $012B ; Health
-    dl $7E09C4 : db $02 : dw $012B ; Max helath
+    dl $7E09C4 : db $02 : dw $012B ; Max health
     dl $7E09CA : db $02 : dw $0009 ; Supers
     dl $7E09CE : db $02 : dw $0005 ; Pbs
     dl $7E0A1C : db $02 : dw $009B ; Samus position/state
@@ -864,6 +949,10 @@ preset_14speed_upper_norfair_bubble_mountain:
     dl $7E0911 : db $02 : dw $0400 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $F400 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
+    dl $7E0917 : db $02 : dw $0300 ; Layer 2 X scroll in room in pixels?
+    dl $7E0919 : db $02 : dw $0000 ; Layer 2 Y scroll in room in pixels? (up = positive)
+    dl $7E0921 : db $02 : dw $0100 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
+    dl $7E0923 : db $02 : dw $0000 ; BG2 Y scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09C2 : db $02 : dw $0120 ; Health
     dl $7E09C6 : db $02 : dw $0009 ; Missiles
     dl $7E09CA : db $02 : dw $0007 ; Supers
@@ -885,6 +974,9 @@ preset_14speed_upper_norfair_bubble_mountain_revisit:
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $FC00 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0100 ; Screen Y position in pixels
+    dl $7E0917 : db $02 : dw $0000 ; Layer 2 X scroll in room in pixels?
+    dl $7E0919 : db $02 : dw $0100 ; Layer 2 Y scroll in room in pixels? (up = positive)
+    dl $7E0921 : db $02 : dw $FF00 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09A2 : db $02 : dw $3025 ; Equipped Items
     dl $7E09A4 : db $02 : dw $3025 ; Collected Items
     dl $7E09C2 : db $02 : dw $0129 ; Health
@@ -909,6 +1001,9 @@ preset_14speed_upper_norfair_magdollite_room:
     dl $7E090F : db $02 : dw $D000 ; Screen subpixel X position.
     dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $01F5 ; Screen Y position in pixels
+    dl $7E0919 : db $02 : dw $0177 ; Layer 2 Y scroll in room in pixels? (up = positive)
+    dl $7E0921 : db $02 : dw $0000 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
+    dl $7E0923 : db $02 : dw $00E0 ; BG2 Y scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09CE : db $02 : dw $0004 ; Pbs
     dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0008 ; More position/state
@@ -927,6 +1022,9 @@ preset_14speed_upper_norfair_lava_spark:
     dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $C400 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0200 ; Screen Y position in pixels
+    dl $7E0917 : db $02 : dw $0100 ; Layer 2 X scroll in room in pixels?
+    dl $7E0919 : db $02 : dw $0200 ; Layer 2 Y scroll in room in pixels? (up = positive)
+    dl $7E0923 : db $02 : dw $0000 ; BG2 Y scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09C2 : db $02 : dw $012B ; Health
     dl $7E09C6 : db $02 : dw $0008 ; Missiles
     dl $7E09CE : db $02 : dw $0005 ; Pbs
@@ -945,7 +1043,12 @@ preset_14speed_lower_norfair_ln_main_hall:
     dl $7E090F : db $02 : dw $B000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0400 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
+    dl $7E0917 : db $02 : dw $0300 ; Layer 2 X scroll in room in pixels?
+    dl $7E0919 : db $02 : dw $0301 ; Layer 2 Y scroll in room in pixels? (up = positive)
+    dl $7E0921 : db $02 : dw $FC00 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
+    dl $7E0923 : db $02 : dw $00E0 ; BG2 Y scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09C2 : db $02 : dw $00D7 ; Health
+    dl $7E09D2 : db $02 : dw $0003 ; Currently selected item
     dl $7E0A1C : db $02 : dw $009B ; Samus position/state
     dl $7E0A1E : db $02 : dw $0000 ; More position/state
     dl $7E0AF6 : db $02 : dw $0480 ; Samus X
@@ -960,6 +1063,10 @@ preset_14speed_lower_norfair_pillars:
     dl $7E090F : db $02 : dw $5700 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $4000 ; Screen subpixel Y position
+    dl $7E0917 : db $02 : dw $0000 ; Layer 2 X scroll in room in pixels?
+    dl $7E0919 : db $02 : dw $0180 ; Layer 2 Y scroll in room in pixels? (up = positive)
+    dl $7E0921 : db $02 : dw $0100 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
+    dl $7E0923 : db $02 : dw $FF00 ; BG2 Y scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09C2 : db $02 : dw $00DC ; Health
     dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0008 ; More position/state
@@ -977,6 +1084,9 @@ preset_14speed_lower_norfair_worst_room:
     dl $7E0911 : db $02 : dw $0300 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $9C00 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
+    dl $7E0917 : db $02 : dw $0240 ; Layer 2 X scroll in room in pixels?
+    dl $7E0919 : db $02 : dw $0000 ; Layer 2 Y scroll in room in pixels? (up = positive)
+    dl $7E0923 : db $02 : dw $0000 ; BG2 Y scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09C2 : db $02 : dw $0092 ; Health
     dl $7E0AF6 : db $02 : dw $03DB ; Samus X
     dl $7E0AFA : db $02 : dw $008B ; Samus Y
@@ -992,9 +1102,13 @@ preset_14speed_lower_norfair_amphitheatre:
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $1C00 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $011F ; Screen Y position in pixels
+    dl $7E0917 : db $02 : dw $0000 ; Layer 2 X scroll in room in pixels?
+    dl $7E0919 : db $02 : dw $00D7 ; Layer 2 Y scroll in room in pixels? (up = positive)
+    dl $7E0923 : db $02 : dw $FB00 ; BG2 Y scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09C6 : db $02 : dw $0005 ; Missiles
     dl $7E09CA : db $02 : dw $0006 ; Supers
     dl $7E09CE : db $02 : dw $0004 ; Pbs
+    dl $7E09D2 : db $02 : dw $0000 ; Currently selected item
     dl $7E0AF6 : db $02 : dw $00B3 ; Samus X
     dl $7E0AFA : db $02 : dw $018B ; Samus Y
     dw #$FFFF
@@ -1008,6 +1122,9 @@ preset_14speed_lower_norfair_kihunter_stairs:
     dl $7E0911 : db $02 : dw $0244 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0043 ; Screen Y position in pixels
+    dl $7E0917 : db $02 : dw $01B3 ; Layer 2 X scroll in room in pixels?
+    dl $7E0919 : db $02 : dw $0032 ; Layer 2 Y scroll in room in pixels? (up = positive)
+    dl $7E0923 : db $02 : dw $FF00 ; BG2 Y scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E0AF6 : db $02 : dw $02E4 ; Samus X
     dl $7E0AFA : db $02 : dw $00B3 ; Samus Y
     dw #$FFFF
@@ -1021,6 +1138,9 @@ preset_14speed_lower_norfair_wasteland:
     dl $7E0911 : db $02 : dw $0200 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $9000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0419 ; Screen Y position in pixels
+    dl $7E0917 : db $02 : dw $0180 ; Layer 2 X scroll in room in pixels?
+    dl $7E0919 : db $02 : dw $0312 ; Layer 2 Y scroll in room in pixels? (up = positive)
+    dl $7E0923 : db $02 : dw $0000 ; BG2 Y scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09C2 : db $02 : dw $00B7 ; Health
     dl $7E09CE : db $02 : dw $0002 ; Pbs
     dl $7E0A1C : db $02 : dw $001D ; Samus position/state
@@ -1040,6 +1160,10 @@ preset_14speed_lower_norfair_metal_pirates:
     dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $021F ; Screen Y position in pixels
+    dl $7E0917 : db $02 : dw $00C0 ; Layer 2 X scroll in room in pixels?
+    dl $7E0919 : db $02 : dw $0197 ; Layer 2 Y scroll in room in pixels? (up = positive)
+    dl $7E0921 : db $02 : dw $FB00 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
+    dl $7E0923 : db $02 : dw $00E0 ; BG2 Y scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09C2 : db $02 : dw $00A1 ; Health
     dl $7E09CA : db $02 : dw $0005 ; Supers
     dl $7E09CE : db $02 : dw $0001 ; Pbs
@@ -1060,7 +1184,12 @@ preset_14speed_lower_norfair_ridley_farming_room:
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $4400 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
+    dl $7E0917 : db $02 : dw $0000 ; Layer 2 X scroll in room in pixels?
+    dl $7E0919 : db $02 : dw $0000 ; Layer 2 Y scroll in room in pixels? (up = positive)
+    dl $7E0921 : db $02 : dw $FD00 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
+    dl $7E0923 : db $02 : dw $0000 ; BG2 Y scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09C2 : db $02 : dw $00F4 ; Health
+    dl $7E09C6 : db $02 : dw $000A ; Missiles
     dl $7E09CA : db $02 : dw $000A ; Supers
     dl $7E0AF6 : db $02 : dw $004D ; Samus X
     dl $7E0AFA : db $02 : dw $008B ; Samus Y
@@ -1091,8 +1220,12 @@ preset_14speed_lower_norfair_leaving_ridley:
     dl $7E090F : db $02 : dw $1000 ; Screen subpixel X position.
     dl $7E0913 : db $02 : dw $1800 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $011C ; Screen Y position in pixels
+    dl $7E0917 : db $02 : dw $0001 ; Layer 2 X scroll in room in pixels?
+    dl $7E0919 : db $02 : dw $00D5 ; Layer 2 Y scroll in room in pixels? (up = positive)
+    dl $7E0921 : db $02 : dw $0100 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
+    dl $7E0923 : db $02 : dw $FF00 ; BG2 Y scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09C2 : db $02 : dw $018F ; Health
-    dl $7E09C4 : db $02 : dw $018F ; Max helath
+    dl $7E09C4 : db $02 : dw $018F ; Max health
     dl $7E09C6 : db $02 : dw $0006 ; Missiles
     dl $7E09CA : db $02 : dw $0006 ; Supers
     dl $7E09CE : db $02 : dw $0002 ; Pbs
@@ -1118,6 +1251,9 @@ preset_14speed_lower_norfair_wasteland_revisit:
     dl $7E0911 : db $02 : dw $0200 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $9C00 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
+    dl $7E0917 : db $02 : dw $0180 ; Layer 2 X scroll in room in pixels?
+    dl $7E0919 : db $02 : dw $0000 ; Layer 2 Y scroll in room in pixels? (up = positive)
+    dl $7E0923 : db $02 : dw $0000 ; BG2 Y scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09C2 : db $02 : dw $015E ; Health
     dl $7E09C6 : db $02 : dw $0005 ; Missiles
     dl $7E09CE : db $02 : dw $0005 ; Pbs
@@ -1136,6 +1272,9 @@ preset_14speed_lower_norfair_kihunter_stairs_revisit:
     dl $7E090F : db $02 : dw $C000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0500 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $8800 ; Screen subpixel Y position
+    dl $7E0917 : db $02 : dw $03C0 ; Layer 2 X scroll in room in pixels?
+    dl $7E0921 : db $02 : dw $0000 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
+    dl $7E0923 : db $02 : dw $FE00 ; BG2 Y scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09C2 : db $02 : dw $012F ; Health
     dl $7E09CE : db $02 : dw $0004 ; Pbs
     dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
@@ -1154,6 +1293,10 @@ preset_14speed_lower_norfair_fireflea_room:
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $7400 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $001A ; Screen Y position in pixels
+    dl $7E0917 : db $02 : dw $0000 ; Layer 2 X scroll in room in pixels?
+    dl $7E0919 : db $02 : dw $0013 ; Layer 2 Y scroll in room in pixels? (up = positive)
+    dl $7E0921 : db $02 : dw $FE00 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
+    dl $7E0923 : db $02 : dw $FB00 ; BG2 Y scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0008 ; More position/state
     dl $7E0AF6 : db $02 : dw $00B9 ; Samus X
@@ -1169,6 +1312,8 @@ preset_14speed_lower_norfair_three_musketeers:
     dl $7E090F : db $02 : dw $DFFF ; Screen subpixel X position.
     dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $001D ; Screen Y position in pixels
+    dl $7E0919 : db $02 : dw $0015 ; Layer 2 Y scroll in room in pixels? (up = positive)
+    dl $7E0923 : db $02 : dw $FF00 ; BG2 Y scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0004 ; More position/state
     dl $7E0AF6 : db $02 : dw $005F ; Samus X
@@ -1183,6 +1328,9 @@ preset_14speed_lower_norfair_bubble_mountain_revisit_2:
     dl $7E07F3 : db $02 : dw $0015 ; Music Bank
     dl $7E090F : db $02 : dw $8000 ; Screen subpixel X position.
     dl $7E0915 : db $02 : dw $001B ; Screen Y position in pixels
+    dl $7E0919 : db $02 : dw $0014 ; Layer 2 Y scroll in room in pixels? (up = positive)
+    dl $7E0921 : db $02 : dw $FA00 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
+    dl $7E0923 : db $02 : dw $0000 ; BG2 Y scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09C2 : db $02 : dw $0084 ; Health
     dl $7E09CE : db $02 : dw $0003 ; Pbs
     dl $7E0AF6 : db $02 : dw $008A ; Samus X
@@ -1203,6 +1351,9 @@ preset_14speed_maridia_entering_maridia:
     dl $7E07F5 : db $02 : dw $0003 ; Music Track
     dl $7E090F : db $02 : dw $6000 ; Screen subpixel X position.
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
+    dl $7E0919 : db $02 : dw $0000 ; Layer 2 Y scroll in room in pixels? (up = positive)
+    dl $7E0921 : db $02 : dw $0000 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
+    dl $7E0923 : db $02 : dw $FF00 ; BG2 Y scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09C2 : db $02 : dw $00FB ; Health
     dl $7E09C6 : db $02 : dw $000A ; Missiles
     dl $7E09CA : db $02 : dw $000A ; Supers
@@ -1229,6 +1380,9 @@ preset_14speed_maridia_mt_everest:
     dl $7E090F : db $02 : dw $D000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $006D ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $7400 ; Screen subpixel Y position
+    dl $7E0917 : db $02 : dw $0051 ; Layer 2 X scroll in room in pixels?
+    dl $7E0921 : db $02 : dw $0100 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
+    dl $7E0923 : db $02 : dw $FE00 ; BG2 Y scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0004 ; More position/state
     dl $7E0AF6 : db $02 : dw $00D0 ; Samus X
@@ -1246,8 +1400,11 @@ preset_14speed_maridia_aqueduct:
     dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $47FF ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0300 ; Screen Y position in pixels
+    dl $7E0917 : db $02 : dw $0100 ; Layer 2 X scroll in room in pixels?
+    dl $7E0919 : db $02 : dw $0240 ; Layer 2 Y scroll in room in pixels? (up = positive)
     dl $7E09C2 : db $02 : dw $00C3 ; Health
     dl $7E09CA : db $02 : dw $0009 ; Supers
+    dl $7E09D2 : db $02 : dw $0003 ; Currently selected item
     dl $7E0A1C : db $02 : dw $001D ; Samus position/state
     dl $7E0A1E : db $02 : dw $0408 ; More position/state
     dl $7E0AF6 : db $02 : dw $01BD ; Samus X
@@ -1269,7 +1426,12 @@ preset_14speed_maridia_botwoon:
     dl $7E0911 : db $02 : dw $0300 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $73FF ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0013 ; Screen Y position in pixels
+    dl $7E0917 : db $02 : dw $0240 ; Layer 2 X scroll in room in pixels?
+    dl $7E0919 : db $02 : dw $0013 ; Layer 2 Y scroll in room in pixels? (up = positive)
+    dl $7E0921 : db $02 : dw $0000 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
+    dl $7E0923 : db $02 : dw $FF00 ; BG2 Y scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09CE : db $02 : dw $0004 ; Pbs
+    dl $7E09D2 : db $02 : dw $0000 ; Currently selected item
     dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0008 ; More position/state
     dl $7E0AF6 : db $02 : dw $03AD ; Samus X
@@ -1289,6 +1451,10 @@ preset_14speed_maridia_botwoon_etank_room:
     dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $A000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
+    dl $7E0917 : db $02 : dw $0100 ; Layer 2 X scroll in room in pixels?
+    dl $7E0919 : db $02 : dw $0000 ; Layer 2 Y scroll in room in pixels? (up = positive)
+    dl $7E0921 : db $02 : dw $0100 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
+    dl $7E0923 : db $02 : dw $0000 ; BG2 Y scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09C2 : db $02 : dw $0125 ; Health
     dl $7E09C6 : db $02 : dw $0005 ; Missiles
     dl $7E09CA : db $02 : dw $0004 ; Supers
@@ -1308,6 +1474,9 @@ preset_14speed_maridia_colosseum:
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $8400 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0003 ; Screen Y position in pixels
+    dl $7E0917 : db $02 : dw $0000 ; Layer 2 X scroll in room in pixels?
+    dl $7E0919 : db $02 : dw $0003 ; Layer 2 Y scroll in room in pixels? (up = positive)
+    dl $7E0923 : db $02 : dw $FE00 ; BG2 Y scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09C2 : db $02 : dw $018F ; Health
     dl $7E09C6 : db $02 : dw $0009 ; Missiles
     dl $7E09CA : db $02 : dw $0007 ; Supers
@@ -1325,6 +1494,8 @@ preset_14speed_maridia_draygon:
     dl $7E090F : db $02 : dw $A000 ; Screen subpixel X position.
     dl $7E0913 : db $02 : dw $EC00 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0200 ; Screen Y position in pixels
+    dl $7E0919 : db $02 : dw $0180 ; Layer 2 Y scroll in room in pixels? (up = positive)
+    dl $7E0923 : db $02 : dw $0000 ; BG2 Y scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09C2 : db $02 : dw $0180 ; Health
     dl $7E09CA : db $02 : dw $0005 ; Supers
     dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
@@ -1343,6 +1514,8 @@ preset_14speed_maridia_colosseum_revisit:
     dl $7E090F : db $02 : dw $8001 ; Screen subpixel X position.
     dl $7E0913 : db $02 : dw $4000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
+    dl $7E0919 : db $02 : dw $0000 ; Layer 2 Y scroll in room in pixels? (up = positive)
+    dl $7E0923 : db $02 : dw $FE00 ; BG2 Y scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09C2 : db $02 : dw $0172 ; Health
     dl $7E09C6 : db $02 : dw $0006 ; Missiles
     dl $7E09CA : db $02 : dw $0008 ; Supers
@@ -1362,6 +1535,9 @@ preset_14speed_maridia_reverse_botwoon:
     dl $7E090F : db $02 : dw $7001 ; Screen subpixel X position.
     dl $7E0913 : db $02 : dw $4400 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0200 ; Screen Y position in pixels
+    dl $7E0919 : db $02 : dw $0200 ; Layer 2 Y scroll in room in pixels? (up = positive)
+    dl $7E0921 : db $02 : dw $FF00 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
+    dl $7E0923 : db $02 : dw $0000 ; BG2 Y scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09C2 : db $02 : dw $00F7 ; Health
     dl $7E09C6 : db $02 : dw $0008 ; Missiles
     dl $7E0A68 : db $02 : dw $0000 ; Flash suit
@@ -1377,6 +1553,8 @@ preset_14speed_maridia_aqueduct_revisit:
     dl $7E090F : db $02 : dw $C000 ; Screen subpixel X position.
     dl $7E0913 : db $02 : dw $9400 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $001F ; Screen Y position in pixels
+    dl $7E0919 : db $02 : dw $001F ; Layer 2 Y scroll in room in pixels? (up = positive)
+    dl $7E0921 : db $02 : dw $FC00 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09C2 : db $02 : dw $00FC ; Health
     dl $7E0AF6 : db $02 : dw $009D ; Samus X
     dl $7E0AFA : db $02 : dw $008B ; Samus Y
@@ -1396,6 +1574,9 @@ preset_14speed_maridia_everest_revisit:
     dl $7E090F : db $02 : dw $8001 ; Screen subpixel X position.
     dl $7E0913 : db $02 : dw $7800 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0207 ; Screen Y position in pixels
+    dl $7E0919 : db $02 : dw $0185 ; Layer 2 Y scroll in room in pixels? (up = positive)
+    dl $7E0921 : db $02 : dw $FE00 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
+    dl $7E0923 : db $02 : dw $FD00 ; BG2 Y scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E0AF6 : db $02 : dw $006F ; Samus X
     dl $7E0AFA : db $02 : dw $028B ; Samus Y
     dl $7ED91A : db $02 : dw $0040 ; Events, Items, Doors
@@ -1410,6 +1591,9 @@ preset_14speed_maridia_red_tower_green_gate:
     dl $7E0911 : db $02 : dw $0013 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $CC00 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
+    dl $7E0917 : db $02 : dw $0013 ; Layer 2 X scroll in room in pixels?
+    dl $7E0919 : db $02 : dw $0000 ; Layer 2 Y scroll in room in pixels? (up = positive)
+    dl $7E0923 : db $02 : dw $FE00 ; BG2 Y scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09C2 : db $02 : dw $00C8 ; Health
     dl $7E0AF6 : db $02 : dw $0074 ; Samus X
     dl $7E0AFA : db $02 : dw $008B ; Samus Y
@@ -1430,6 +1614,9 @@ preset_14speed_tourian_kihunter_room_revisit:
     dl $7E090F : db $02 : dw $C000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $AC00 ; Screen subpixel Y position
+    dl $7E0917 : db $02 : dw $0000 ; Layer 2 X scroll in room in pixels?
+    dl $7E0921 : db $02 : dw $0000 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
+    dl $7E0923 : db $02 : dw $FF00 ; BG2 Y scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09CA : db $02 : dw $0007 ; Supers
     dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0008 ; More position/state
@@ -1451,6 +1638,9 @@ preset_14speed_tourian_terminator_revisit:
     dl $7E090F : db $02 : dw $FC00 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $4000 ; Screen subpixel Y position
+    dl $7E0917 : db $02 : dw $00C0 ; Layer 2 X scroll in room in pixels?
+    dl $7E0921 : db $02 : dw $FB00 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
+    dl $7E0923 : db $02 : dw $0000 ; BG2 Y scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09C2 : db $02 : dw $00C7 ; Health
     dl $7E09C6 : db $02 : dw $0007 ; Missiles
     dl $7E0A1C : db $02 : dw $008A ; Samus position/state
@@ -1471,6 +1661,9 @@ preset_14speed_tourian_pirate_shaft_revisit:
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $01FB ; Screen Y position in pixels
+    dl $7E0917 : db $02 : dw $0000 ; Layer 2 X scroll in room in pixels?
+    dl $7E0919 : db $02 : dw $017C ; Layer 2 Y scroll in room in pixels? (up = positive)
+    dl $7E0921 : db $02 : dw $FA00 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09C2 : db $02 : dw $00C5 ; Health
     dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0004 ; More position/state
@@ -1493,6 +1686,9 @@ preset_14speed_tourian_metroids_1:
     dl $7E090F : db $02 : dw $A001 ; Screen subpixel X position.
     dl $7E0913 : db $02 : dw $03FF ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0300 ; Screen Y position in pixels
+    dl $7E0919 : db $02 : dw $0240 ; Layer 2 Y scroll in room in pixels? (up = positive)
+    dl $7E0921 : db $02 : dw $0000 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
+    dl $7E0923 : db $02 : dw $00E0 ; BG2 Y scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09C6 : db $02 : dw $0006 ; Missiles
     dl $7E09CA : db $02 : dw $0006 ; Supers
     dl $7E0AF6 : db $02 : dw $0036 ; Samus X
@@ -1512,6 +1708,9 @@ preset_14speed_tourian_metroids_2:
     dl $7E090F : db $02 : dw $7000 ; Screen subpixel X position.
     dl $7E0913 : db $02 : dw $DC00 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
+    dl $7E0919 : db $02 : dw $0000 ; Layer 2 Y scroll in room in pixels? (up = positive)
+    dl $7E0921 : db $02 : dw $FA00 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
+    dl $7E0923 : db $02 : dw $0000 ; BG2 Y scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09C2 : db $02 : dw $018E ; Health
     dl $7E09C6 : db $02 : dw $000A ; Missiles
     dl $7E09CA : db $02 : dw $000A ; Supers
@@ -1532,6 +1731,8 @@ preset_14speed_tourian_metroids_3:
     dl $7E090F : db $02 : dw $2000 ; Screen subpixel X position.
     dl $7E0913 : db $02 : dw $3800 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $00F6 ; Screen Y position in pixels
+    dl $7E0919 : db $02 : dw $00B8 ; Layer 2 Y scroll in room in pixels? (up = positive)
+    dl $7E0921 : db $02 : dw $FF00 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09C2 : db $02 : dw $015E ; Health
     dl $7E09CE : db $02 : dw $0003 ; Pbs
     dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
@@ -1551,6 +1752,9 @@ preset_14speed_tourian_metroids_4:
     dl $7E0911 : db $02 : dw $0500 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $CC00 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
+    dl $7E0917 : db $02 : dw $03C0 ; Layer 2 X scroll in room in pixels?
+    dl $7E0919 : db $02 : dw $0000 ; Layer 2 Y scroll in room in pixels? (up = positive)
+    dl $7E0921 : db $02 : dw $0100 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09C2 : db $02 : dw $011B ; Health
     dl $7E0AF6 : db $02 : dw $05AA ; Samus X
     dl $7E0AFA : db $02 : dw $008B ; Samus Y
@@ -1569,6 +1773,8 @@ preset_14speed_tourian_doors_and_refills:
     dl $7E090F : db $02 : dw $1000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $0800 ; Screen subpixel Y position
+    dl $7E0917 : db $02 : dw $0000 ; Layer 2 X scroll in room in pixels?
+    dl $7E0921 : db $02 : dw $FC00 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09C2 : db $02 : dw $0001 ; Health
     dl $7E09CE : db $02 : dw $0001 ; Pbs
     dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
@@ -1588,6 +1794,8 @@ preset_14speed_tourian_zeb_skip:
     dl $7E090F : db $02 : dw $3FFF ; Screen subpixel X position.
     dl $7E0913 : db $02 : dw $4C00 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $021C ; Screen Y position in pixels
+    dl $7E0919 : db $02 : dw $0195 ; Layer 2 Y scroll in room in pixels? (up = positive)
+    dl $7E0921 : db $02 : dw $0100 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09C2 : db $02 : dw $018F ; Health
     dl $7E09CA : db $02 : dw $0009 ; Supers
     dl $7E0AF6 : db $02 : dw $00DB ; Samus X
@@ -1605,6 +1813,9 @@ preset_14speed_tourian_escape_room_3:
     dl $7E090F : db $02 : dw $F000 ; Screen subpixel X position.
     dl $7E0913 : db $02 : dw $7000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0100 ; Screen Y position in pixels
+    dl $7E0919 : db $02 : dw $00C0 ; Layer 2 Y scroll in room in pixels? (up = positive)
+    dl $7E0921 : db $02 : dw $0000 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
+    dl $7E0923 : db $02 : dw $00E0 ; BG2 Y scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09A6 : db $02 : dw $1009 ; Beams
     dl $7E09C6 : db $02 : dw $0000 ; Missiles
     dl $7E09CA : db $02 : dw $0000 ; Supers
@@ -1612,7 +1823,8 @@ preset_14speed_tourian_escape_room_3:
     dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0008 ; More position/state
     dl $7E0A76 : db $02 : dw $8000 ; Hyper beam
-    dl $7E0AFA : db $02 : dw $01BB ; Samus Y
+    dl $7E0AF6 : db $02 : dw $00DF ; Samus X
+    dl $7E0AFA : db $02 : dw $018B ; Samus Y
     dl $7ED820 : db $02 : dw $4FC5 ; Events, Items, Doors
     dl $7ED82C : db $02 : dw $0203 ; Events, Items, Doors
     dw #$FFFF
@@ -1630,6 +1842,10 @@ preset_14speed_tourian_escape_parlor:
     dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $6801 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
+    dl $7E0917 : db $02 : dw $00C0 ; Layer 2 X scroll in room in pixels?
+    dl $7E0919 : db $02 : dw $0000 ; Layer 2 Y scroll in room in pixels? (up = positive)
+    dl $7E0921 : db $02 : dw $0100 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
+    dl $7E0923 : db $02 : dw $F800 ; BG2 Y scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09C2 : db $02 : dw $00E0 ; Health
     dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0004 ; More position/state

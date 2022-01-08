@@ -1,0 +1,13 @@
+/* ./styles/globals.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  a {
+    @apply text-indigo-400;
+  }
+  a:hover {
+    @apply text-indigo-600;
+  }
+}

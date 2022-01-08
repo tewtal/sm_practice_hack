@@ -11,7 +11,7 @@ PresetsMenuKpdr21:
     dw #presets_goto_kpdr21_backtracking
     dw #presets_goto_kpdr21_tourian
     dw #$0000
-    %cm_header("PRESETS FOR ANY KPDR")
+    %cm_header("PRESETS FOR ANY% KPDR")
 
 presets_goto_kpdr21_crateria:
     %cm_submenu("Crateria", #presets_submenu_kpdr21_crateria)
@@ -228,7 +228,7 @@ presets_submenu_kpdr21_tourian:
     dw #presets_kpdr21_tourian_metroids_4
     dw #presets_kpdr21_tourian_giant_hoppers
     dw #presets_kpdr21_tourian_baby_skip
-    dw #presets_kpdr21_tourian_gedora_room
+    dw #presets_kpdr21_tourian_gadora_room
     dw #presets_kpdr21_tourian_zeb_skip
     dw #presets_kpdr21_tourian_escape_room_3
     dw #presets_kpdr21_tourian_climb_spark
@@ -680,8 +680,8 @@ presets_kpdr21_tourian_giant_hoppers:
 presets_kpdr21_tourian_baby_skip:
     %cm_preset("Baby Skip", #preset_kpdr21_tourian_baby_skip)
 
-presets_kpdr21_tourian_gedora_room:
-    %cm_preset("Gedora Room", #preset_kpdr21_tourian_gedora_room)
+presets_kpdr21_tourian_gadora_room:
+    %cm_preset("Gadora Room", #preset_kpdr21_tourian_gadora_room)
 
 presets_kpdr21_tourian_zeb_skip:
     %cm_preset("Zeb Skip", #preset_kpdr21_tourian_zeb_skip)

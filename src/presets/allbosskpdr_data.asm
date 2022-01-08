@@ -22,13 +22,14 @@ preset_allbosskpdr_crateria_ceres_elevator:
     dl $7E09A8 : db $02 : dw $0000 ; Beams
     dl $7E09C0 : db $02 : dw $0000 ; Manual/Auto reserve tank
     dl $7E09C2 : db $02 : dw $0063 ; Health
-    dl $7E09C4 : db $02 : dw $0063 ; Max helath
+    dl $7E09C4 : db $02 : dw $0063 ; Max health
     dl $7E09C6 : db $02 : dw $0000 ; Missiles
     dl $7E09C8 : db $02 : dw $0000 ; Max missiles
     dl $7E09CA : db $02 : dw $0000 ; Supers
     dl $7E09CC : db $02 : dw $0000 ; Max supers
     dl $7E09CE : db $02 : dw $0000 ; Pbs
     dl $7E09D0 : db $02 : dw $0000 ; Max pbs
+    dl $7E09D2 : db $02 : dw $0000 ; Currently selected item
     dl $7E09D4 : db $02 : dw $0000 ; Max reserves
     dl $7E09D6 : db $02 : dw $0000 ; Reserves
     dl $7E0A1C : db $02 : dw $0000 ; Samus position/state
@@ -418,7 +419,7 @@ preset_allbosskpdr_brinstar_green_brinstar_elevator:
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $67FF ; Screen subpixel Y position
     dl $7E09C2 : db $02 : dw $0095 ; Health
-    dl $7E09C4 : db $02 : dw $00C7 ; Max helath
+    dl $7E09C4 : db $02 : dw $00C7 ; Max health
     dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0004 ; More position/state
     dl $7E0AF6 : db $02 : dw $007F ; Samus X
@@ -620,7 +621,7 @@ preset_allbosskpdr_upper_norfair_leaving_hi_jump:
     dl $7E09A2 : db $02 : dw $1105 ; Equipped Items
     dl $7E09A4 : db $02 : dw $1105 ; Collected Items
     dl $7E09C2 : db $02 : dw $012B ; Health
-    dl $7E09C4 : db $02 : dw $012B ; Max helath
+    dl $7E09C4 : db $02 : dw $012B ; Max health
     dl $7E09C6 : db $02 : dw $000A ; Missiles
     dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0008 ; More position/state
@@ -816,6 +817,7 @@ preset_allbosskpdr_wrecked_ship_leaving_power_bombs:
     dl $7E09CA : db $02 : dw $0004 ; Supers
     dl $7E09CE : db $02 : dw $0005 ; Pbs
     dl $7E09D0 : db $02 : dw $0005 ; Max pbs
+    dl $7E09D2 : db $02 : dw $0003 ; Currently selected item
     dl $7E0AF6 : db $02 : dw $0157 ; Samus X
     dl $7E0AFA : db $02 : dw $00AB ; Samus Y
     dl $7ED874 : db $02 : dw $0104 ; Events, Items, Doors
@@ -865,6 +867,7 @@ preset_allbosskpdr_wrecked_ship_entering_wrecked_ship:
     dl $7E09C2 : db $02 : dw $0082 ; Health
     dl $7E09CA : db $02 : dw $0003 ; Supers
     dl $7E09CE : db $02 : dw $0002 ; Pbs
+    dl $7E09D2 : db $02 : dw $0000 ; Currently selected item
     dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0008 ; More position/state
     dl $7E0AF6 : db $02 : dw $07DB ; Samus X
@@ -1043,6 +1046,7 @@ preset_allbosskpdr_maridia_breaking_tube:
     dl $7E0915 : db $02 : dw $0100 ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $0090 ; Health
     dl $7E09CA : db $02 : dw $000A ; Supers
+    dl $7E09D2 : db $02 : dw $0003 ; Currently selected item
     dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0008 ; More position/state
     dl $7E0AF6 : db $02 : dw $01AD ; Samus X
@@ -1066,6 +1070,7 @@ preset_allbosskpdr_maridia_mt_everest:
     dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0004 ; Screen Y position in pixels
     dl $7E09CE : db $02 : dw $0004 ; Pbs
+    dl $7E09D2 : db $02 : dw $0000 ; Currently selected item
     dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0004 ; More position/state
     dl $7E0AF6 : db $02 : dw $00C8 ; Samus X
@@ -1111,7 +1116,7 @@ preset_allbosskpdr_maridia_halfie:
     dl $7E0913 : db $02 : dw $8C00 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $001F ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $018F ; Health
-    dl $7E09C4 : db $02 : dw $018F ; Max helath
+    dl $7E09C4 : db $02 : dw $018F ; Max health
     dl $7E09C6 : db $02 : dw $0010 ; Missiles
     dl $7E09CA : db $02 : dw $0003 ; Supers
     dl $7E09CE : db $02 : dw $0002 ; Pbs
@@ -1392,6 +1397,7 @@ preset_allbosskpdr_lower_norfair_ln_main_hall:
     dl $7E0915 : db $02 : dw $0200 ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $0162 ; Health
     dl $7E09CE : db $02 : dw $0004 ; Pbs
+    dl $7E09D2 : db $02 : dw $0003 ; Currently selected item
     dl $7E0A1C : db $02 : dw $0026 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0E08 ; More position/state
     dl $7E0AF6 : db $02 : dw $0480 ; Samus X
@@ -1408,6 +1414,7 @@ preset_allbosskpdr_lower_norfair_green_gate_glitch:
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $9400 ; Screen subpixel Y position
     dl $7E09CE : db $02 : dw $0005 ; Pbs
+    dl $7E09D2 : db $02 : dw $0000 ; Currently selected item
     dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0004 ; More position/state
     dl $7E0AF6 : db $02 : dw $0025 ; Samus X
@@ -1886,8 +1893,8 @@ preset_allbosskpdr_tourian_escape_room_3:
     dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0008 ; More position/state
     dl $7E0A76 : db $02 : dw $8000 ; Hyper beam
-    dl $7E0AF6 : db $02 : dw $00DB ; Samus X
-    dl $7E0AFA : db $02 : dw $01BB ; Samus Y
+    dl $7E0AF6 : db $02 : dw $00DF ; Samus X
+    dl $7E0AFA : db $02 : dw $018B ; Samus Y
     dl $7ED820 : db $02 : dw $4FC5 ; Events, Items, Doors
     dl $7ED82C : db $02 : dw $0203 ; Events, Items, Doors
     dw #$FFFF

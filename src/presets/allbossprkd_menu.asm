@@ -159,7 +159,7 @@ presets_submenu_allbossprkd_tourian:
     dw #presets_allbossprkd_tourian_metroids_3
     dw #presets_allbossprkd_tourian_metroids_4
     dw #presets_allbossprkd_tourian_baby_skip
-    dw #presets_allbossprkd_tourian_gedora_room
+    dw #presets_allbossprkd_tourian_gadora_room
     dw #presets_allbossprkd_tourian_zeb_skip
     dw #presets_allbossprkd_tourian_escape_room_3
     dw #presets_allbossprkd_tourian_escape_parlor
@@ -447,8 +447,8 @@ presets_allbossprkd_tourian_metroids_4:
 presets_allbossprkd_tourian_baby_skip:
     %cm_preset("Baby Skip", #preset_allbossprkd_tourian_baby_skip)
 
-presets_allbossprkd_tourian_gedora_room:
-    %cm_preset("Gedora Room", #preset_allbossprkd_tourian_gedora_room)
+presets_allbossprkd_tourian_gadora_room:
+    %cm_preset("Gadora Room", #preset_allbossprkd_tourian_gadora_room)
 
 presets_allbossprkd_tourian_zeb_skip:
     %cm_preset("Zeb Skip", #preset_allbossprkd_tourian_zeb_skip)
