@@ -318,7 +318,7 @@ cm_tilemap_bg:
     ; Vertical edges
     {
         LDX #$0000
-        LDY #$0017
+        LDY #$0018
 
         -
         LDA.w #$647A : STA !ram_tilemap_buffer+$082,X
@@ -334,7 +334,7 @@ cm_tilemap_bg:
 
         -
         LDA.w #$A47B : STA !ram_tilemap_buffer+$044,X
-        LDA.w #$247B : STA !ram_tilemap_buffer+$684,X
+        LDA.w #$247B : STA !ram_tilemap_buffer+$6C4,X
 
         INX #2
         DEY : BPL -
@@ -372,6 +372,7 @@ cm_tilemap_bg:
         STA !ram_tilemap_buffer+$5C4,X
         STA !ram_tilemap_buffer+$604,X
         STA !ram_tilemap_buffer+$644,X
+        STA !ram_tilemap_buffer+$684,X
 
         INX #2
         DEY : BPL -
