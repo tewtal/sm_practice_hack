@@ -431,7 +431,7 @@ preset_scroll_fixes:
     BRA .done
 +   CPX #$B4AD : BNE +           ; top of Worst Room in the Game
     LDA #$02 : STA $7ECD20
-+   CPX #$B585 : BNE .done
++   CPX #$B585 : BNE .done       ; top of Kihunter Stairs
     LDY !SAMUS_Y : CPY #$008C    ; no scroll fix if Ypos > 140
     BPL .done
     STA $7ECD20

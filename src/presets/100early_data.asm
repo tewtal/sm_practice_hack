@@ -2200,6 +2200,7 @@ preset_100early_brinstar_cleanup_blockbuster:
     dl $7E0915 : db $02 : dw $0300 ; Screen Y position in pixels
     dl $7E0917 : db $02 : dw $0540 ; Layer 2 X scroll in room in pixels?
     dl $7E0919 : db $02 : dw $0240 ; Layer 2 Y scroll in room in pixels? (up = positive)
+    dl $7E0921 : db $02 : dw $0100 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E0923 : db $02 : dw $0000 ; BG2 Y scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09C6 : db $02 : dw $005C ; Missiles
     dl $7E09C8 : db $02 : dw $0078 ; Max missiles
@@ -2226,9 +2227,8 @@ preset_100early_maridia_predraygon_main_street:
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $2C01 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0100 ; Screen Y position in pixels
-    dl $7E0915 : db $02 : dw $0003 ; Screen Y position in pixels
     dl $7E0917 : db $02 : dw $0000 ; Layer 2 X scroll in room in pixels?
-    dl $7E0919 : db $02 : dw $0002 ; Layer 2 Y scroll in room in pixels? (up = positive)
+    dl $7E0919 : db $02 : dw $00C0 ; Layer 2 Y scroll in room in pixels? (up = positive)
     dl $7E0923 : db $02 : dw $FF00 ; BG2 Y scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09C2 : db $02 : dw $03E5 ; Health
     dl $7E09CA : db $02 : dw $0011 ; Supers
