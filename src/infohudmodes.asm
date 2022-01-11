@@ -1029,7 +1029,7 @@ status_shottimer:
 status_ramwatch:
 {
     ; Store Samus HP so it doesn't overwrite our HUD
-    LDA $09C2 : STA !ram_last_hp
+    LDA !SAMUS_HP : STA !ram_last_hp
 
     ; Determine bank and store in Y (0=7E, 1=7F, else SRAM)
     LDA !ram_watch_bank : TAY : BEQ .readLeft7E
@@ -1037,34 +1037,37 @@ status_ramwatch:
     BRA .readLeftSRAM
 
   .readLeft7E
-    LDA !ram_watch_left : TAX
+    LDA !ram_watch_left : CLC : ADC !ram_watch_left_index : TAX
     LDA $7E0000,X : CMP !ram_watch_left_hud : BEQ .readRight7E
     STA !ram_watch_left_hud : LDX #$0088 : JSR Draw4Hex
 
   .readRight7E
-    LDA !ram_watch_right : TAX
-    LDA $7E0000,X : CMP !ram_watch_right_hud : BEQ .drawLeft
+    LDA !ram_watch_right : CLC : ADC !ram_watch_right_index : TAX
+    LDA $7E0000,X : CMP !ram_watch_right_hud : BEQ .step_drawLeft
     STA !ram_watch_right_hud : LDX #$0092 : JSR Draw4Hex
     BRA .drawLeft
 
   .readLeft7F
-    LDA !ram_watch_left : TAX
+    LDA !ram_watch_left : CLC : ADC !ram_watch_left_index : TAX
     LDA $7F0000,X : CMP !ram_watch_left_hud : BEQ .readRight7F
     STA !ram_watch_left_hud : LDX #$0088 : JSR Draw4Hex
 
   .readRight7F
-    LDA !ram_watch_right : TAX
+    LDA !ram_watch_right : CLC : ADC !ram_watch_right_index : TAX
     LDA $7F0000,X : CMP !ram_watch_right_hud : BEQ .drawLeft
     STA !ram_watch_right_hud : LDX #$0092 : JSR Draw4Hex
     BRA .drawLeft
 
+  .step_drawLeft
+    BRA .drawLeft
+
   .readLeftSRAM
-    LDA !ram_watch_left : TAX
+    LDA !ram_watch_left : CLC : ADC !ram_watch_left_index : TAX
     LDA $F00000,X : CMP !ram_watch_left_hud : BEQ .readRightSRAM
     STA !ram_watch_left_hud : LDX #$0088 : JSR Draw4Hex
 
   .readRightSRAM
-    LDA !ram_watch_right : TAX
+    LDA !ram_watch_right : CLC : ADC !ram_watch_right_index : TAX
     LDA $F00000,X : CMP !ram_watch_right_hud : BEQ .drawLeft
     STA !ram_watch_right_hud : LDX #$0092 : JSR Draw4Hex
 
@@ -1084,7 +1087,7 @@ status_ramwatch:
 
   .writeLeft7E
     LDA !ram_watch_edit_lock_left : BEQ .writeRight7E
-    LDA !ram_watch_left : TAX
+    LDA !ram_watch_left : CLC : ADC !ram_watch_left_index : TAX
     LDA !ram_watch_write_mode : BEQ +
     %a8()
 +   LDA !ram_watch_edit_left : STA $7E0000,X
@@ -1092,7 +1095,7 @@ status_ramwatch:
 
   .writeRight7E
     LDA !ram_watch_edit_lock_right : BEQ .end
-    LDA !ram_watch_right : TAX
+    LDA !ram_watch_right : CLC : ADC !ram_watch_right_index : TAX
     LDA !ram_watch_write_mode : BEQ +
     %a8()
 +   LDA !ram_watch_edit_right : STA $7E0000,X
@@ -1103,15 +1106,15 @@ status_ramwatch:
 
   .writeLeft7F
     LDA !ram_watch_edit_lock_left : BEQ .writeRight7F
-    LDA !ram_watch_left : TAX
+    LDA !ram_watch_left : CLC : ADC !ram_watch_left_index : TAX
     LDA !ram_watch_write_mode : BEQ +
     %a8()
 +   LDA !ram_watch_edit_left : STA $7F0000,X
     %a16()
 
   .writeRight7F
-    LDA !ram_watch_edit_lock_right : BEQ .end
-    LDA !ram_watch_right : TAX
+    LDA !ram_watch_edit_lock_right : BEQ .done
+    LDA !ram_watch_right : CLC : ADC !ram_watch_right_index : TAX
     LDA !ram_watch_write_mode : BEQ +
     %a8()
 +   LDA !ram_watch_edit_right : STA $7F0000,X
@@ -1120,7 +1123,7 @@ status_ramwatch:
 
   .writeLeftSRAM
     LDA !ram_watch_edit_lock_left : BEQ .writeRightSRAM
-    LDA !ram_watch_left : TAX
+    LDA !ram_watch_left : CLC : ADC !ram_watch_left_index : TAX
     LDA !ram_watch_write_mode : BEQ +
     %a8()
 +   LDA !ram_watch_edit_left : STA $F00000,X
@@ -1128,7 +1131,7 @@ status_ramwatch:
 
   .writeRightSRAM
     LDA !ram_watch_edit_lock_right : BEQ .done
-    LDA !ram_watch_right : TAX
+    LDA !ram_watch_right : CLC : ADC !ram_watch_right_index : TAX
     LDA !ram_watch_write_mode : BEQ +
     %a8()
 +   LDA !ram_watch_edit_right : STA $F00000,X

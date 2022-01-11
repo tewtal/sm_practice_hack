@@ -83,8 +83,10 @@
 !ram_metronome = !WRAM_START+$7A
 !ram_metronome_counter = !WRAM_START+$7C
 
-; ^ FREE SPACE ^ up to +$8A
+; ^ FREE SPACE ^ up to +$86
 
+!ram_watch_left_index = !WRAM_START+$88
+!ram_watch_right_index = !WRAM_START+$8A
 !ram_watch_write_mode = !WRAM_START+$8C
 !ram_watch_bank = !WRAM_START+$8E
 !ram_watch_left = !WRAM_START+$90
@@ -167,16 +169,21 @@
 
 !ram_cm_watch_left_hi = !WRAM_MENU_START+$80
 !ram_cm_watch_left_lo = !WRAM_MENU_START+$82
-!ram_cm_watch_left_enemy_property = !WRAM_MENU_START+$84
-!ram_cm_watch_left_enemy_index = !WRAM_MENU_START+$86
-!ram_cm_watch_right_hi = !WRAM_MENU_START+$88
-!ram_cm_watch_right_lo = !WRAM_MENU_START+$8A
-!ram_cm_watch_right_enemy_property = !WRAM_MENU_START+$8C
-!ram_cm_watch_right_enemy_index = !WRAM_MENU_START+$8E
+!ram_cm_watch_right_hi = !WRAM_MENU_START+$84
+!ram_cm_watch_right_lo = !WRAM_MENU_START+$86
+!ram_cm_watch_left_index_lo = !WRAM_MENU_START+$88
+!ram_cm_watch_left_index_hi = !WRAM_MENU_START+$8A
+!ram_cm_watch_right_index_lo = !WRAM_MENU_START+$8C
+!ram_cm_watch_right_index_hi = !WRAM_MENU_START+$8E
 !ram_cm_watch_edit_left_hi = !WRAM_MENU_START+$90
 !ram_cm_watch_edit_left_lo = !WRAM_MENU_START+$92
 !ram_cm_watch_edit_right_hi = !WRAM_MENU_START+$94
 !ram_cm_watch_edit_right_lo = !WRAM_MENU_START+$96
+!ram_cm_watch_enemy_property = !WRAM_MENU_START+$98
+!ram_cm_watch_enemy_index = !WRAM_MENU_START+$9A
+!ram_cm_watch_enemy_side = !WRAM_MENU_START+$9C
+!ram_cm_watch_bank = !WRAM_MENU_START+$9E
+!ram_cm_watch_common_address = !WRAM_MENU_START+$A0
 
 !ram_cm_botwoon_rng = !WRAM_MENU_START+$80
 
