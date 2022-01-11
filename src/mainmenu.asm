@@ -467,10 +467,17 @@ EquipmentMenu:
     dw #$FFFF
     dw #eq_currentenergy
     dw #eq_setetanks
+    dw #$FFFF
     dw #eq_currentreserves
     dw #eq_setreserves
+    dw #$FFFF
+    dw #eq_currentmissiles
     dw #eq_setmissiles
+    dw #$FFFF
+    dw #eq_currentsupers
     dw #eq_setsupers
+    dw #$FFFF
+    dw #eq_currentpbs
     dw #eq_setpbs
     dw #$0000
     %cm_header("EQUIPMENT")
@@ -530,17 +537,30 @@ eq_setreserves:
         STA $09D6 : STA $09D4
         RTS
 
+eq_currentmissiles:
+    %cm_numfield_word("Current Missiles", $7E09C6, 0, 325, 1, 20, #0)
+
 eq_setmissiles:
     %cm_numfield_word("Missiles", $7E09C8, 0, 325, 5, 20, .routine)
     .routine
         LDA $09C8 : STA $09C6 ; missiles
         RTS
 
+eq_currentsupers:
+    %cm_numfield("Current Super Missiles", $7E09CA, 0, 65, 1, 5, #0)
+
 eq_setsupers:
     %cm_numfield("Super Missiles", $7E09CC, 0, 65, 5, 5, .routine)
     .routine
         LDA $09CC : STA $09CA ; supers
         RTS
+
+eq_currentpbs:
+if !FEATURE_PAL
+    %cm_numfield("Current Power Bombs", $7E09CE, 0, 70, 1, 5, #0)
+else
+    %cm_numfield("Current Power Bombs", $7E09CE, 0, 65, 1, 5, #0)
+endif
 
 eq_setpbs:
 if !FEATURE_PAL
@@ -587,8 +607,11 @@ cat_14speed:
 cat_gt_code:
     %cm_jsr("GT Code", action_category, #$0005)
 
+cat_gt_135:
+    %cm_jsr("GT Max%", action_category, #$0006)
+
 cat_rbo:
-    %cm_jsr("RBO", action_category, #$0006)
+    %cm_jsr("RBO", action_category, #$0007)
 
 cat_any_glitched:
     %cm_jsr("Any% glitched", action_category, #$0007)
@@ -638,7 +661,8 @@ action_category:
     dw #$3325, #$100B, #$018F, #$000F, #$000A, #$0005, #$0000, #$0000        ; any% old
     dw #$1025, #$1002, #$018F, #$000A, #$000A, #$0005, #$0000, #$0000        ; 14% ice
     dw #$3025, #$1000, #$018F, #$000A, #$000A, #$0005, #$0000, #$0000        ; 14% speed
-    dw #$F32F, #$100F, #$02BC, #$0064, #$0014, #$0014, #$012C, #$0000        ; gt code
+    dw #$F33F, #$100F, #$02BC, #$0064, #$0014, #$0014, #$012C, #$0000        ; gt code
+    dw #$F33F, #$100F, #$0834, #$0145, #$0041, #$0041, #$02BC, #$0000        ; 135%
     dw #$710C, #$1001, #$031F, #$001E, #$0019, #$0014, #$0064, #$0000        ; rbo
     dw #$9004, #$0000, #$00C7, #$0005, #$0005, #$0005, #$0000, #$0000        ; any% glitched
     dw #$0000, #$0000, #$0063, #$0000, #$0000, #$0000, #$0000, #$0000        ; nothing
