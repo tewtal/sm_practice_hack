@@ -197,6 +197,10 @@ org $848D0C
     AND #$000F
 
 
+; Dachora setup asm
+org $8F9CD8
+    dw #layout_asm_dachora
+
 ; Big Pink setup asm
 org $8F9D3E
     dw #layout_asm_bigpink
@@ -608,7 +612,7 @@ layout_asm_bigpink:
     ; A small part of the path is decorated
     LDA #$0B24 : STA $7F03F4
     LDA #$0B02 : STA $7F03F6
-    LDA #$0B05 : STA $7F03F8
+    LDA #$0B05 : STA $7F0494
 
     ; Decorate wall above path
     LDA #$8B08 : STA $7F0354 : STA $7F0356 : STA $7F0358
@@ -633,6 +637,25 @@ layout_asm_bigpink:
 }
 
 layout_asm_bigpink_done:
+    PLP
+    RTS
+
+layout_asm_dachora:
+{
+    PHP
+    %a16()
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANTISOFTLOCK : BEQ layout_asm_bigpink_done
+
+    ; Use non-respawning speed booster block BTS for dachora pitfall
+    %a8()
+    LDA #$0F : STA $7F6987 : STA $7F6988 : STA $7F6989
+    STA $7F698A : STA $7F698B : STA $7F698C
+
+    ; Allow screen scrolling along the path
+    LDA #$02 : STA $7ECD21
+}
+
+layout_asm_dachora_done:
     PLP
     RTS
 
