@@ -153,6 +153,8 @@
 !ram_cm_ctrl_mode = !WRAM_MENU_START+$34
 !ram_cm_ctrl_timer = !WRAM_MENU_START+$36
 !ram_cm_ctrl_last_input = !WRAM_MENU_START+$38
+!ram_cm_botwoon_rng = !WRAM_MENU_START+$3A
+!ram_cm_slow_graphics = !WRAM_MENU_START+$3C
 
 ; ^ FREE SPACE ^ up to +$7E
 
@@ -175,8 +177,6 @@
 !ram_cm_watch_edit_left_lo = !WRAM_MENU_START+$92
 !ram_cm_watch_edit_right_hi = !WRAM_MENU_START+$94
 !ram_cm_watch_edit_right_lo = !WRAM_MENU_START+$96
-
-!ram_cm_botwoon_rng = !WRAM_MENU_START+$80
 
 ; ^ FREE SPACE ^ up to +$CE
 

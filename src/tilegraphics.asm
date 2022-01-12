@@ -86,8 +86,8 @@ load_raw_tile_graphics:
     CLC : ADC #tileset_palettes
 
     ; Save that for later and prepare for DMA
-    PHA : %a8()
-    LDA.l raw_tile_graphics_table,X : BPL .separate_dmas
+    PHA : LDA !ram_cm_slow_graphics : BNE .slow_tile_decompression
+    %a8() : LDA.l raw_tile_graphics_table,X : BPL .separate_dmas
 
     ; A few tilesets also include the CRE and can be done in one DMA
     LDA #$80 : STA $2115            ; word-access, incr by 1
@@ -101,6 +101,21 @@ load_raw_tile_graphics:
     LDA #$01 : STA $4300            ; word, normal increment (DMA MODE)
     LDA #$18 : STA $4301            ; destination (VRAM write)
     LDA #$01 : STA $420B            ; initiate DMA (channel 1)
+    BRL .tileset_palette
+
+  .slow_tile_decompression
+    ; Slower method from $82E78C
+    LDA #$0080 : STA $2115
+    LDA #$B900 : STA $48
+    LDA #$8000 : STA $47
+    LDA #$5000 : STA $4C
+    LSR : STA $2116
+    JSL $80B271
+    LDA $07C4 : STA $48
+    LDA $07C3 : STA $47
+    STZ $2116 : STZ $4C
+    JSL $80B271
+    %a8()
     BRL .tileset_palette
 
   .separate_dmas
