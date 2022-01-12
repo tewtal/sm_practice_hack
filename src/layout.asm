@@ -197,6 +197,10 @@ org $848D0C
     AND #$000F
 
 
+; Big Pink setup asm
+org $8F9D3E
+    dw #layout_asm_bigpink
+
 ; Caterpillar elevator and middle-left door asm
 org $8FBA26
     ; Replace STA with jump to STA
@@ -584,6 +588,51 @@ layout_asm_westsandhall:
 }
 
 layout_asm_westsandhall_done:
+    PLP
+    RTS
+
+layout_asm_bigpink:
+{
+    PHP
+    %a16()
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANTISOFTLOCK : BEQ layout_asm_westsandhall_done
+
+    ; Clear out path to save room
+    LDA #$00FF : STA $7F03F2 : STA $7F03F8 : STA $7F03FA
+    STA $7F03FC : STA $7F03FE : STA $7F0400 : STA $7F0402
+    STA $7F0404 : STA $7F0406 : STA $7F0408 : STA $7F0492
+    STA $7F0496 : STA $7F0498 : STA $7F049A : STA $7F049C
+    STA $7F049E : STA $7F04A0 : STA $7F04A2 : STA $7F04A4
+    STA $7F04A6 : STA $7F04A8 : STA $7F0542
+
+    ; A small part of the path is decorated
+    LDA #$0B24 : STA $7F03F4
+    LDA #$0B02 : STA $7F03F6
+    LDA #$0B05 : STA $7F03F8
+
+    ; Decorate wall above path
+    LDA #$8B08 : STA $7F0354 : STA $7F0356 : STA $7F0358
+    STA $7F035A : STA $7F035C : STA $7F035E : STA $7F0360
+    STA $7F0362 : STA $7F0364 : STA $7F0366
+
+    ; Fade in wall above path
+    LDA #$8B28 : STA $7F02B4 : STA $7F02B6 : STA $7F02B8
+    STA $7F02BA : STA $7F02BC : STA $7F02BE : STA $7F02C0
+    STA $7F02C2 : STA $7F02C4
+
+    ; Decorate the corner
+    LDA #$8B17 : STA $7F0368
+    LDA #$8B29 : STA $7F02C6
+
+    ; Normal BTS for path replacing scrolls
+    %a8()
+    LDA #$00 : STA $7F66A1 : STA $7F66A2 : STA $7F66A3
+
+    ; Allow screen scrolling along the path
+    LDA #$02 : STA $7ECD21
+}
+
+layout_asm_bigpink_done:
     PLP
     RTS
 
