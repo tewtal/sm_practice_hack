@@ -247,6 +247,10 @@ PresetsMenu:
     dw #presets_custom_preset_slot
     dw #presets_save_custom_preset
     dw #presets_load_custom_preset
+if !RAW_TILE_GRAPHICS
+    dw #$FFFF
+    dw #presets_slow_graphics
+endif
     dw #$0000
     %cm_header("PRESET OPTIONS MENU")
 
@@ -261,6 +265,11 @@ presets_save_custom_preset:
 
 presets_load_custom_preset:
     %cm_jsr("Load Custom Preset", #action_load_custom_preset, #$0000)
+
+if !RAW_TILE_GRAPHICS
+presets_slow_graphics:
+    %cm_toggle("Slower Graphics Load", !ram_cm_slow_graphics, #$0001, #0)
+endif
 
 SelectPresetCategoryMenu:
     dw #presets_current
@@ -1905,31 +1914,16 @@ game_music_toggle:
     db #$28, "        OFF", #$FF
     db #$28, "         ON", #$FF
     db #$28, "   FAST OFF", #$FF
-if !FEATURE_SD2SNES
-    db #$28, "LOADSAVEOFF", #$FF
-endif
     db #$FF
   .routine
-    CMP #$0002 : BEQ .no_music_ever
-    CMP #$0001 : BNE .no_music
-    LDA $07F5 : BEQ .skip_music
-    STA $2140
-  .skip_music
-    RTS
-  .no_music_ever
-    STZ $07F3
-    STZ $07F5
-  .no_music
-    STZ $0629
-    STZ $062B
-    STZ $062D
-    STZ $062F
-    STZ $0631
-    STZ $0633
-    STZ $0635
-    STZ $0637
-    STZ $063F
+    ; Clear music queue
+    STZ $0639 : STZ $063B : STZ $063D
+    CMP #$0001 : BEQ .resume_music
     STZ $2140
+    RTS
+  .resume_music
+    LDA !MUSIC_DATA : CLC : ADC #$FF00 : PHA : STZ !MUSIC_DATA : PLA : JSL !MUSIC_ROUTINE
+    LDA !MUSIC_TRACK : PHA : STZ !MUSIC_TRACK : PLA : JSL !MUSIC_ROUTINE
     RTS
 
 game_healthalarm:

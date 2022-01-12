@@ -5,6 +5,7 @@ preset_load:
 {
     PHP
     LDA !MUSIC_DATA : STA !SRAM_MUSIC_DATA
+    LDA !MUSIC_TRACK : STA !SRAM_MUSIC_TRACK
 
     JSL $809E93  ; Clear timer RAM
     JSR $819B    ; Initialize IO registers
@@ -84,6 +85,7 @@ endif
     JSL upload_sprite_oob_tiles
 
   .done_upload_sprite_oob_tiles
+    LDA !sram_music_toggle : CMP #$0001 : BNE .music_off
     LDA $0639 : CMP $063B : BEQ .music_queue_empty
 
   .music_queue_data_search
@@ -91,7 +93,7 @@ endif
     LDA $0619,X : BMI .music_check_data
     TXA : CMP $063B : BNE .music_queue_data_search
 
-    ; No music data found in queue
+    ; No music data found in queue, so compare to currently loaded music data
     LDA !SRAM_MUSIC_DATA
 
   .music_check_data
@@ -109,6 +111,11 @@ endif
     INX : INX : TXA : AND #$000E : STA $0639
     BRA .done_fixing_music_data
 
+  .music_off
+    ; Treat music as already loaded
+    STZ $0639 : STZ $063B : STZ $063D
+    BRA .done_load_music_track
+
   .music_queue_empty
     LDA !SRAM_MUSIC_DATA : CMP !MUSIC_DATA : BEQ .done_load_music_data
 
@@ -118,9 +125,16 @@ endif
 
   .done_fixing_music_data
     LDA !MUSIC_TRACK : BEQ .done_load_music_track
+    STZ !MUSIC_TRACK : JSL !MUSIC_ROUTINE
+    BRA .done_load_music_track
 
   .done_load_music_data
-    LDA !MUSIC_TRACK : JSL !MUSIC_ROUTINE
+    ; Ensure the music queue is clear
+    STZ $0639 : STZ $063B : STZ $063D
+
+    ; Load new music if needed
+    LDA !SRAM_MUSIC_TRACK : CMP !MUSIC_TRACK : BEQ .done_load_music_track
+    LDX !MUSIC_TRACK : STA !MUSIC_TRACK : TXA : JSL !MUSIC_ROUTINE
 
   .done_load_music_track
     JSL reset_all_counters
