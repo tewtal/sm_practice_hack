@@ -209,6 +209,10 @@ org $8F9CD8
 org $8F9D3E
     dw #layout_asm_bigpink
 
+; Mission Impossible setup asm
+org $8F9E36
+    dw #layout_asm_missionimpossible
+
 ; Caterpillar elevator and middle-left door asm
 org $8FBA26
     ; Replace STA with jump to STA
@@ -678,6 +682,21 @@ layout_asm_moat:
 }
 
 layout_asm_moat_done:
+    PLP
+    RTS
+
+layout_asm_missionimpossible:
+{
+    PHP
+    %a16()
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANTISOFTLOCK : BEQ layout_asm_moat_done
+
+    ; Use shootable block
+    %a8()
+    LDA #$C0 : STA $7F0687
+}
+
+layout_asm_missionimpossible_done:
     PLP
     RTS
 
