@@ -197,6 +197,10 @@ org $848D0C
     AND #$000F
 
 
+; Moat setup asm
+org $8F9624
+    dw #layout_asm_moat
+
 ; Dachora setup asm
 org $8F9CD8
     dw #layout_asm_dachora
@@ -650,12 +654,30 @@ layout_asm_dachora:
     %a8()
     LDA #$0F : STA $7F6987 : STA $7F6988 : STA $7F6989
     STA $7F698A : STA $7F698B : STA $7F698C
-
-    ; Allow screen scrolling along the path
-    LDA #$02 : STA $7ECD21
 }
 
 layout_asm_dachora_done:
+    PLP
+    RTS
+
+layout_asm_moat:
+{
+    PHP
+    %a16()
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANTISOFTLOCK : BEQ layout_asm_dachora_done
+
+    ; Use shootable blocks on the moat pillar
+    %a8()
+    LDA #$C0 : STA $7F059F : STA $7F061F
+    LDA #$BE : STA $7F05DE
+    LDA #$D0 : STA $7F05DF
+
+    ; Set BTS so the top block is 1x2
+    LDA #$02 : STA $7F66D0
+    LDA #$FF : STA $7F66F0
+}
+
+layout_asm_moat_done:
     PLP
     RTS
 
