@@ -213,6 +213,9 @@ org $8F9D3E
 org $8F9E36
     dw #layout_asm_missionimpossible
 
+org $8FA278
+    dw #layout_asm_redtower
+
 ; Caterpillar elevator and middle-left door asm
 org $8FBA26
     ; Replace STA with jump to STA
@@ -697,6 +700,30 @@ layout_asm_missionimpossible:
 }
 
 layout_asm_missionimpossible_done:
+    PLP
+    RTS
+
+layout_asm_redtower:
+{
+    PHP
+    %a16()
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANTISOFTLOCK : BEQ layout_asm_missionimpossible_done
+
+    ; Create opening along bottom left of red tower
+    LDA #$00FF : STA $7F0E66 : STA $7F0E88 : STA $7F0EA6 : STA $7F0EA8
+    STA $7F0EC6 : STA $7F0EC8 : STA $7F0ECA : STA $7F0EE8
+
+    ; Decorate opening background
+    LDA #$014B : STA $7F0E68 : STA $7F0EAA : LDA #$0169 : STA $7F0E6A
+    LDA #$014A : STA $7F0E8A : LDA #$094B : STA $7F0EEA
+
+    ; Move the wall further to the left
+    LDA #$8101 : STA $7F0E64 : LDA #$8121 : STA $7F0EC4
+    LDA #$8103 : STA $7F0E84 : STA $7F0EA4
+    LDA #$8143 : STA $7F0EE6 : LDA #$072D : STA $7F0E86
+}
+
+layout_asm_redtower_done:
     PLP
     RTS
 
