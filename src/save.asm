@@ -61,13 +61,8 @@ post_load_state:
 
   .music_off
     ; Treat music as already loaded
-    STZ $0639 : STZ $063B : STZ $063D
+    STZ $0639 : STZ $063B : STZ $063D : STZ $063F : STZ $0686
     STY !MUSIC_TRACK
-
-  .music_queue_increase_timer
-    ; Data is correct, but we may need to increase our sound timer
-    LDA !SRAM_SOUND_TIMER : CMP $063F : BMI .music_done
-    STA $063F : STA $0686
     BRA .music_done
 
   .music_queue_empty
@@ -78,6 +73,12 @@ post_load_state:
     LDA #$0000 : JSL !MUSIC_ROUTINE
     LDA #$FF00 : CLC : ADC !MUSIC_DATA : JSL !MUSIC_ROUTINE
     BRA .music_load_track
+
+  .music_queue_increase_timer
+    ; Data is correct, but we may need to increase our sound timer
+    LDA !SRAM_SOUND_TIMER : CMP $063F : BMI .music_done
+    STA $063F : STA $0686
+    BRA .music_done
 
   .queued_music_data_clear_track
     ; Insert clear track before queued music data and start queue there

@@ -85,58 +85,6 @@ endif
     JSL upload_sprite_oob_tiles
 
   .done_upload_sprite_oob_tiles
-    LDA !sram_music_toggle : CMP #$0001 : BNE .music_off
-    LDA $0639 : CMP $063B : BEQ .music_queue_empty
-
-  .music_queue_data_search
-    DEC : DEC : AND #$000E : TAX
-    LDA $0619,X : BMI .music_check_data
-    TXA : CMP $063B : BNE .music_queue_data_search
-
-    ; No music data found in queue, so compare to currently loaded music data
-    LDA !SRAM_MUSIC_DATA
-
-  .music_check_data
-    CMP !MUSIC_DATA : BEQ .done_load_music_data
-
-    ; Reset music queue, clear track and load data
-    LDX $063B : LDA $0629,X : BNE .music_reset_queue_keep_timer
-    LDA #$0008 : STA $0629,X
-
-  .music_reset_queue_keep_timer
-    LDA #0000 : STA $0619,X : STA $063D
-    INX : INX : TXA : AND #$000E : TAX
-    LDA #$FF00 : CLC : ADC !MUSIC_DATA : STA $0619,X
-    LDA #$0008 : STA $0629,X
-    INX : INX : TXA : AND #$000E : STA $0639
-    BRA .done_fixing_music_data
-
-  .music_off
-    ; Treat music as already loaded
-    STZ $0639 : STZ $063B : STZ $063D
-    BRA .done_load_music_track
-
-  .music_queue_empty
-    LDA !SRAM_MUSIC_DATA : CMP !MUSIC_DATA : BEQ .done_load_music_data
-
-    ; Clear track and load data
-    LDA #$0000 : JSL !MUSIC_ROUTINE
-    LDA #$FF00 : CLC : ADC !MUSIC_DATA : JSL !MUSIC_ROUTINE
-
-  .done_fixing_music_data
-    LDA !MUSIC_TRACK : BEQ .done_load_music_track
-    STZ !MUSIC_TRACK : JSL !MUSIC_ROUTINE
-    BRA .done_load_music_track
-
-  .done_load_music_data
-    ; Ensure the music queue is clear
-    STZ $0639 : STZ $063B : STZ $063D
-
-    ; Load new music if needed
-    LDA !SRAM_MUSIC_TRACK : CMP !MUSIC_TRACK : BEQ .done_load_music_track
-    LDX !MUSIC_TRACK : STA !MUSIC_TRACK : TXA : JSL !MUSIC_ROUTINE
-
-  .done_load_music_track
     JSL reset_all_counters
     STZ $0795 ; clear door transition flag
 
@@ -371,6 +319,39 @@ endif
   .layer_2_loaded
     JSR $A37B    ; Calculate BG positions
     JSL $80A176  ; Display the viewable part of the room
+
+    LDA #$0000 : STA $05F5  ; Enable sounds
+    JSL stop_all_sounds
+
+    ; Clear music queue
+    STZ $0639 : STZ $063B : STZ $063D : STZ $063F
+
+    ; If music off, treat music as already loaded
+    LDA !sram_music_toggle : CMP #$0001 : BNE .done_music
+
+    ; Compare to currently loaded music data
+    LDA !SRAM_MUSIC_DATA : CMP !MUSIC_DATA : BEQ .done_load_music_data
+
+    ; Clear track if necessary
+    LDA !SRAM_MUSIC_TRACK : BEQ .load_music_data
+    LDA #$0000 : JSL !MUSIC_ROUTINE
+
+  .load_music_data
+    LDA !MUSIC_DATA : TAX
+    LDA !SRAM_MUSIC_DATA : STA !MUSIC_DATA
+    TXA : CLC : ADC #$FF00 : JSL !MUSIC_ROUTINE
+    BRA .load_music_track
+
+  .done_load_music_data
+    ; Compare to currently playing music
+    LDA !SRAM_MUSIC_TRACK : CMP !MUSIC_TRACK : BEQ .done_music
+
+  .load_music_track
+    LDA !MUSIC_TRACK : TAX
+    LDA !SRAM_MUSIC_TRACK : STA !MUSIC_TRACK
+    TXA : JSL !MUSIC_ROUTINE
+
+  .done_music
     JSL $80834B  ; Enable NMI
 
     LDA #$0004 : STA $A7  ; Set optional next interrupt to Main gameplay
@@ -380,9 +361,6 @@ endif
     LDA #$E695 : STA $0A42 ; Unlock Samus
     LDA #$E725 : STA $0A44 ; Unlock Samus
     STZ $0E18    ; Set elevator to inactive
-
-    LDA #$0000 : STA $05F5  ; Enable sounds
-    JSL stop_all_sounds
 
     LDA #$E737 : STA $099C  ; Pointer to next frame's room transition code = $82:E737
     PLB

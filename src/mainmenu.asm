@@ -1921,7 +1921,7 @@ game_music_toggle:
     db #$FF
   .routine
     ; Clear music queue
-    STZ $0639 : STZ $063B : STZ $063D
+    STZ $0639 : STZ $063B : STZ $063D : STZ $063F
     CMP #$0001 : BEQ .resume_music
     STZ $2140
     RTS
