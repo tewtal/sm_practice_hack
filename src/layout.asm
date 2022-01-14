@@ -229,6 +229,10 @@ org $8FA4FF
 org $8FA7D8
     dw #layout_asm_cathedralentrance
 
+; Hi-Jump Boots E-Tank setup asm
+org $8FAA66
+    dw #layout_asm_hjbetank
+
 ; Caterpillar elevator and middle-left door asm
 org $8FBA26
     ; Replace STA with jump to STA
@@ -785,6 +789,21 @@ layout_asm_cathedralentrance:
 }
 
 layout_asm_cathedralentrance_done:
+    PLP
+    RTS
+
+layout_asm_hjbetank:
+{
+    PHP
+    %a16()
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANTISOFTLOCK : BEQ layout_asm_cathedralentrance_done
+
+    ; Use shootable block
+    %a8()
+    LDA #$C5 : STA $7F015D
+}
+
+layout_asm_hjbetank_done:
     PLP
     RTS
 
