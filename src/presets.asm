@@ -324,6 +324,8 @@ endif
     JSL stop_all_sounds
 
     ; Clear music queue
+    STZ $0629 : STZ $062B : STZ $062D : STZ $062F
+    STZ $0631 : STZ $0633 : STZ $0635 : STZ $0637
     STZ $0639 : STZ $063B : STZ $063D : STZ $063F
 
     ; If music off, treat music as already loaded
