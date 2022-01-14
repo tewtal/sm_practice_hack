@@ -221,6 +221,10 @@ org $8FA278
 org $8FA42D
     dw #layout_asm_belowspazer
 
+; Warehouse Kihunters setup asm
+org $8FA4FF
+    dw #layout_asm_warehousekihunters
+
 ; Caterpillar elevator and middle-left door asm
 org $8FBA26
     ; Replace STA with jump to STA
@@ -743,6 +747,21 @@ layout_asm_belowspazer:
 }
 
 layout_asm_belowspazer_done:
+    PLP
+    RTS
+
+layout_asm_warehousekihunters:
+{
+    PHP
+    %a16()
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANTISOFTLOCK : BEQ layout_asm_belowspazer_done
+
+    ; Use shootable block
+    %a8()
+    LDA #$C5 : STA $7F064F
+}
+
+layout_asm_warehousekihunters_done:
     PLP
     RTS
 
