@@ -225,6 +225,10 @@ org $8FA42D
 org $8FA4FF
     dw #layout_asm_warehousekihunters
 
+; Cathedral Entrance setup asm
+org $8FA7D8
+    dw #layout_asm_cathedralentrance
+
 ; Caterpillar elevator and middle-left door asm
 org $8FBA26
     ; Replace STA with jump to STA
@@ -762,6 +766,25 @@ layout_asm_warehousekihunters:
 }
 
 layout_asm_warehousekihunters_done:
+    PLP
+    RTS
+
+layout_asm_cathedralentrance:
+{
+    PHP
+    %a16()
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANTISOFTLOCK : BEQ layout_asm_warehousekihunters_done
+
+    ; Remove protruding ledge
+    LDA #$8106 : STA $7F040C
+    LDA #$00FF : STA $7F03AC : STA $7F040E : STA $7F0410
+
+    ; Remove slope BTS
+    %a8()
+    LDA #$00 : STA $7F65B7 : STA $7F6609
+}
+
+layout_asm_cathedralentrance_done:
     PLP
     RTS
 
