@@ -213,8 +213,13 @@ org $8F9D3E
 org $8F9E36
     dw #layout_asm_missionimpossible
 
+; Red Tower setup asm
 org $8FA278
     dw #layout_asm_redtower
+
+; Below Spazer setup asm
+org $8FA42D
+    dw #layout_asm_belowspazer
 
 ; Caterpillar elevator and middle-left door asm
 org $8FBA26
@@ -724,6 +729,20 @@ layout_asm_redtower:
 }
 
 layout_asm_redtower_done:
+    PLP
+    RTS
+
+layout_asm_belowspazer:
+{
+    PHP
+    %a16()
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANTISOFTLOCK : BEQ layout_asm_redtower_done
+
+    ; Use shootable block
+    LDA #$C1EB : STA $7F018E
+}
+
+layout_asm_belowspazer_done:
     PLP
     RTS
 
