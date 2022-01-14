@@ -201,6 +201,10 @@ org $848D0C
 org $8F9624
     dw #layout_asm_moat
 
+; Early Supers setup asm
+org $8F9BED
+    dw #layout_asm_earlysupers
+
 ; Dachora setup asm
 org $8F9CD8
     dw #layout_asm_dachora
@@ -804,6 +808,29 @@ layout_asm_hjbetank:
 }
 
 layout_asm_hjbetank_done:
+    PLP
+    RTS
+
+layout_asm_earlysupers:
+{
+    PHP
+    %a16()
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANTISOFTLOCK : BEQ layout_asm_hjbetank_done
+
+    ; Use shootable block on the bridge
+    %a8()
+    LDA #$C1 : STA $7F08BD
+
+    ; Use shootable blocks on the divider
+    STA $7F0935 : STA $7F09F5
+    LDA #$D1 : STA $7F0995 : STA $7F0A55
+
+    ; Set BTS to make 1x2 blocks
+    LDA #$02 : STA $7F689B : STA $7F68FB
+    LDA #$FF : STA $7F68CB : STA $7F692B
+}
+
+layout_asm_earlysupers_done:
     PLP
     RTS
 
