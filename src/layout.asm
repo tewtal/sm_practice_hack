@@ -62,6 +62,10 @@ warnpc $82FA00
 org $838A88
     dw #layout_asm_eastocean
 
+; Green Pirates Shaft bottom-right door asm pointer
+org $838C5C
+    dw #layout_asm_cutscene_g4skip
+
 ; Green Hill Zone top-left door asm pointer
 org $838DF4
     dw #layout_asm_greenhillzone
@@ -280,8 +284,24 @@ org $8FE39D
     JMP layout_asm_crabshaft_update_scrolls
 
 
-org $8FEA00 ; free space for door asm
+org $8FEA00
 print pc, " layout start"
+
+layout_asm_cutscene_g4skip:
+{
+    LDA !sram_cutscenes : BIT !CUTSCENE_SKIP_G4 : BEQ .done
+
+    ; Verify all four G4 bosses killed
+    LDA $7ED828 : BIT #$0100 : BEQ .done
+    LDA $7ED82C : BIT #$0001 : BEQ .done
+    LDA $7ED82A : AND #$0101 : CMP #$0101 : BNE .done
+
+    ; Set Tourian open
+    LDA $7ED820 : ORA #$0400 : STA $7ED820
+
+  .done
+    RTS
+}
 
 layout_asm_mbhp:
 {

@@ -1892,6 +1892,7 @@ game_cutscenes:
 CutscenesMenu:
     dw #cutscenes_skip_intro
     dw #cutscenes_skip_ceres_arrival
+    dw #cutscenes_skip_g4
     dw #$FFFF
     dw #cutscenes_fast_mb
     dw #$0000
@@ -1902,6 +1903,9 @@ cutscenes_skip_intro:
 
 cutscenes_skip_ceres_arrival:
     %cm_toggle_bit("Skip Ceres Arrival", !sram_cutscenes, !CUTSCENE_SKIP_CERES_ARRIVAL, #0)
+
+cutscenes_skip_g4:
+    %cm_toggle_bit("Skip G4", !sram_cutscenes, !CUTSCENE_SKIP_G4, #0)
 
 cutscenes_fast_mb:
     %cm_toggle_bit("Fast Mother Brain", !sram_cutscenes, !CUTSCENE_FAST_MB, #0)
