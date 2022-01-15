@@ -589,3 +589,4 @@ action_HUD_ramwatch:
     LDA !IH_MODE_RAMWATCH_INDEX : STA !sram_display_mode
     RTS
 }
+

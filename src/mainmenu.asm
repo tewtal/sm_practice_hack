@@ -582,9 +582,15 @@ ToggleCategoryMenu:
     dw #cat_any_old
     dw #cat_14ice
     dw #cat_14speed
+if !FEATURE_PAL
+    dw #cat_14xice
+    dw #cat_14iceboots
+    dw #cat_14speedboots
+endif
     dw #cat_gt_code
     dw #cat_rbo
     dw #cat_any_glitched
+    dw #cat_inf_cf
     dw #cat_nothing
     dw #$0000
     %cm_header("TOGGLE CATEGORY")
@@ -614,10 +620,24 @@ cat_rbo:
     %cm_jsr("RBO", action_category, #$0007)
 
 cat_any_glitched:
-    %cm_jsr("Any% glitched", action_category, #$0007)
+    %cm_jsr("Any% Glitched", action_category, #$0008)
+
+cat_inf_cf:
+    %cm_jsr("Infinite Crystal Flashes", action_category, #$0009)
 
 cat_nothing:
-    %cm_jsr("Nothing", action_category, #$0008)
+    %cm_jsr("Nothing", action_category, #$000A)
+
+if !FEATURE_PAL
+cat_14xice:
+    %cm_jsr("14% X-Ice", action_category, #$000B)
+
+cat_14iceboots:
+    %cm_jsr("14% Ice Boots", action_category, #$000C)
+
+cat_14speedboots:
+    %cm_jsr("14% Speed Boots", action_category, #$000D)
+endif
 
 
 action_category:
@@ -662,10 +682,20 @@ action_category:
     dw #$1025, #$1002, #$018F, #$000A, #$000A, #$0005, #$0000, #$0000        ; 14% ice
     dw #$3025, #$1000, #$018F, #$000A, #$000A, #$0005, #$0000, #$0000        ; 14% speed
     dw #$F33F, #$100F, #$02BC, #$0064, #$0014, #$0014, #$012C, #$0000        ; gt code
-    dw #$F33F, #$100F, #$0834, #$0145, #$0041, #$0041, #$02BC, #$0000        ; 135%
+if !FEATURE_PAL
+    dw #$F33F, #$100F, #$0834, #$0145, #$0041, #$0046, #$02BC, #$0000        ; 135%
+else
+    dw #$F33F, #$100F, #$0834, #$0145, #$0041, #$0041, #$02BC, #$0000        ; 136%
+endif
     dw #$710C, #$1001, #$031F, #$001E, #$0019, #$0014, #$0064, #$0000        ; rbo
     dw #$9004, #$0000, #$00C7, #$0005, #$0005, #$0005, #$0000, #$0000        ; any% glitched
+    dw #$F32F, #$100F, #$0031, #$01A4, #$005A, #$0063, #$0000, #$0000        ; crystal flash
     dw #$0000, #$0000, #$0063, #$0000, #$0000, #$0000, #$0000, #$0000        ; nothing
+if !FEATURE_PAL
+    dw #$9005, #$1002, #$012B, #$000A, #$000A, #$0005, #$0064, #$0000        ; 14% x-ice
+    dw #$1105, #$1002, #$018F, #$000A, #$000A, #$0005, #$0000, #$0000        ; 14% iceboots
+    dw #$3105, #$1000, #$018F, #$000A, #$000A, #$0005, #$0000, #$0000        ; 14% speedboots
+endif
 }
 
 
@@ -1914,7 +1944,7 @@ ControllerCommonMenu:
     dw #controls_common_d4
     dw #controls_common_d5
     dw #$0000
-    %cm_header("Common Controller Layouts")
+    %cm_header("COMMON CONTROLLER LAYOUTS")
     %cm_footer("WIKI.SUPERMETROID.RUN")
 
 controls_common_default:
