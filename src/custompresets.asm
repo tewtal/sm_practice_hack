@@ -8,7 +8,7 @@ custom_preset_save:
     LDA !sram_custom_preset_slot
     ASL : XBA : TAX ; multiply by 200h (slot offset)
     LDA #$5AFE : STA $703000,X   ; mark this slot as "SAFE" to load
-    LDA #$01B8 : STA $703002,X   ; record slot size for future compatibility
+    LDA #$01EA : STA $703002,X   ; record slot size for future compatibility
     LDA $078B : STA $703004,X    ; Elevator Index
     LDA $078D : STA $703006,X    ; DDB
     LDA $078F : STA $703008,X    ; DoorOut Index
@@ -67,6 +67,15 @@ custom_preset_save:
     LDA $0919 : STA $7031B2,X    ; Layer 2 Y position
     LDA $0921 : STA $7031B4,X    ; BG2 X offset
     LDA $0923 : STA $7031B6,X    ; BG2 Y offset
+
+    PHX : PHB
+    TXA : CLC : ADC #$31B8 : TAY ; Y = Destination
+    LDX #$CD20 : LDA #$0031      ; X = Source, A = Size
+    MVN $7E70                    ; srcBank, destBank
+    PLB : PLX
+
+    ; next available byte is $7031EA
+
     RTL
 }
 
@@ -132,14 +141,20 @@ custom_preset_load:
     DEX : TXA : BIT #$0100 : BEQ .load_events_items_doors_loop
 
     ; Restore X for sanity, then check if we have layer 2 values
-    INX : LDA $703002,X : CMP #$01B0 : BEQ .done_loading
+    INX : LDA $703002,X : CMP #$01B0 : BEQ .done_no_scrolls
 
     LDA $7031B0,X : STA $0917    ; Layer 2 X position
     LDA $7031B2,X : STA $0919    ; Layer 2 Y position
     LDA $7031B4,X : STA $0921    ; BG2 X offset
     LDA $7031B6,X : STA $0923    ; BG2 Y offset
 
-  .done_loading
+    LDA $703002,X : CMP #$01BA : BMI .done_no_scrolls
+    LDA #$5AFE : STA !ram_custom_preset
+    RTL
+
+    ; next available byte is $7031EA
+
+  .done_no_scrolls
     LDA #$0000 : STA !ram_custom_preset
     RTL
 }

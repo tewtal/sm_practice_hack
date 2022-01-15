@@ -2095,9 +2095,9 @@ rng_botwoon_rng:
     db #$28, "       LEFT", #$FF
     db #$FF
   .routine
-    LDA !ram_cm_botwoon_rng
+    LDA !ram_cm_botwoon_rng : BEQ +
     DEC : ASL #3 : INC
-    STA !ram_botwoon_rng
++   STA !ram_botwoon_rng
     RTS
 
 rng_draygon_rng_right:
