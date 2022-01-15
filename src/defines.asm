@@ -83,8 +83,10 @@
 !ram_metronome = !WRAM_START+$7A
 !ram_metronome_counter = !WRAM_START+$7C
 
-; ^ FREE SPACE ^ up to +$8A
+; ^ FREE SPACE ^ up to +$86
 
+!ram_watch_left_index = !WRAM_START+$88
+!ram_watch_right_index = !WRAM_START+$8A
 !ram_watch_write_mode = !WRAM_START+$8C
 !ram_watch_bank = !WRAM_START+$8E
 !ram_watch_left = !WRAM_START+$90
@@ -153,8 +155,10 @@
 !ram_cm_ctrl_mode = !WRAM_MENU_START+$34
 !ram_cm_ctrl_timer = !WRAM_MENU_START+$36
 !ram_cm_ctrl_last_input = !WRAM_MENU_START+$38
-!ram_cm_botwoon_rng = !WRAM_MENU_START+$3A
-!ram_cm_slow_graphics = !WRAM_MENU_START+$3C
+!ram_cm_ctrl_assign = !WRAM_MENU_START+$3A
+!ram_cm_ctrl_swap = !WRAM_MENU_START+$3C
+!ram_cm_botwoon_rng = !WRAM_MENU_START+$3E
+!ram_cm_slow_graphics = !WRAM_MENU_START+$40
 
 ; ^ FREE SPACE ^ up to +$7E
 
@@ -167,16 +171,21 @@
 
 !ram_cm_watch_left_hi = !WRAM_MENU_START+$80
 !ram_cm_watch_left_lo = !WRAM_MENU_START+$82
-!ram_cm_watch_left_enemy_property = !WRAM_MENU_START+$84
-!ram_cm_watch_left_enemy_index = !WRAM_MENU_START+$86
-!ram_cm_watch_right_hi = !WRAM_MENU_START+$88
-!ram_cm_watch_right_lo = !WRAM_MENU_START+$8A
-!ram_cm_watch_right_enemy_property = !WRAM_MENU_START+$8C
-!ram_cm_watch_right_enemy_index = !WRAM_MENU_START+$8E
+!ram_cm_watch_right_hi = !WRAM_MENU_START+$84
+!ram_cm_watch_right_lo = !WRAM_MENU_START+$86
+!ram_cm_watch_left_index_lo = !WRAM_MENU_START+$88
+!ram_cm_watch_left_index_hi = !WRAM_MENU_START+$8A
+!ram_cm_watch_right_index_lo = !WRAM_MENU_START+$8C
+!ram_cm_watch_right_index_hi = !WRAM_MENU_START+$8E
 !ram_cm_watch_edit_left_hi = !WRAM_MENU_START+$90
 !ram_cm_watch_edit_left_lo = !WRAM_MENU_START+$92
 !ram_cm_watch_edit_right_hi = !WRAM_MENU_START+$94
 !ram_cm_watch_edit_right_lo = !WRAM_MENU_START+$96
+!ram_cm_watch_enemy_property = !WRAM_MENU_START+$98
+!ram_cm_watch_enemy_index = !WRAM_MENU_START+$9A
+!ram_cm_watch_enemy_side = !WRAM_MENU_START+$9C
+!ram_cm_watch_bank = !WRAM_MENU_START+$9E
+!ram_cm_watch_common_address = !WRAM_MENU_START+$A0
 
 ; ^ FREE SPACE ^ up to +$CE
 
@@ -197,6 +206,7 @@
 !ACTION_NUMFIELD_WORD   = #$000E
 !ACTION_TOGGLE_INVERTED = #$0010
 !ACTION_NUMFIELD_COLOR  = #$0012
+!ACTION_CTRL_INPUT      = #$0014
 
 !SOUND_MENU_MOVE = $0039
 !SOUND_MENU_JSR = $0039
@@ -251,13 +261,21 @@
 !IH_INPUT_RIGHT = #$0100
 !IH_INPUT_HELD = #$0001 ; used by menu
 
+!CTRL_B = #$8000
+!CTRL_Y = #$4000
+!CTRL_SELECT = #$2000
+!CTRL_A = #$0080
+!CTRL_X = #$0040
+!CTRL_L = #$0020
+!CTRL_R = #$0010
+
 !IH_INPUT_SHOOT = $7E09B2
 !IH_INPUT_JUMP = $7E09B4
 !IH_INPUT_RUN = $7E09B6
 !IH_INPUT_ITEM_CANCEL = $7E09B8
 !IH_INPUT_ITEM_SELECT = $7E09BA
-!IH_INPUT_ANGLE_UP = $7E09BC
-!IH_INPUT_ANGLE_DOWN = $7E09BE
+!IH_INPUT_ANGLE_UP = $7E09BE
+!IH_INPUT_ANGLE_DOWN = $7E09BC
 
 
 ; --------------
@@ -271,30 +289,56 @@
 
 !OAM_STACK_POINTER = $0590
 !SOUND_TIMER = $0686
+!ROOM_ID = $079B
 !MUSIC_DATA = $07F3
 !MUSIC_TRACK = $07F5
 !LAYER1_X = $0911
 !LAYER1_Y = $0915
+!GAMEMODE = $0998
+!SAMUS_ITEMS_EQUIPPED = $09A2
+!SAMUS_ITEMS_COLLECTED = $09A4
+!SAMUS_BEAMS_EQUIPPED = $09A6
+!SAMUS_BEAMS_COLLECTED = $09A8
 !SAMUS_RESERVE_MODE = $09C0
 !SAMUS_HP = $09C2
+!SAMUS_HP_MAX = $09C4
+!SAMUS_MISSILES = $09C6
+!SAMUS_MISSILES_MAX = $09C8
+!SAMUS_SUPERS = $09CA
+!SAMUS_SUPERS_MAX = $09CC
+!SAMUS_PBS = $09CE
+!SAMUS_PBS_MAX = $09D0
 !SAMUS_RESERVE_MAX = $09D4
 !SAMUS_RESERVE_ENERGY = $09D6
+!SAMUS_POSE = $0A1C
+!SAMUS_POSE_DIRECTION = $0A1E
+!SAMUS_MOVEMENT_TYPE = $0A1F
 !SAMUS_X = $0AF6
+!SAMUS_X_SUBPX = $0AF8
 !SAMUS_Y = $0AFA
+!SAMUS_Y_SUBPX = $0AFC
 !SAMUS_X_RADIUS = $0AFE
 !SAMUS_Y_RADIUS = $0B00
 !SAMUS_SPRITEMAP_X = $0B04
+!SAMUS_Y_SUBSPEED = $0B2C
+!SAMUS_Y_SPEED = $0B2E
+!SAMUS_Y_DIRECTION = $0B36
+!SAMUS_DASH_COUNTER = $0B3F
 !SAMUS_PROJ_X = $0B64
 !SAMUS_PROJ_Y = $0B78
 !SAMUS_PROJ_RADIUS_X = $0BB4
 !SAMUS_PROJ_RADIUS_Y = $0BC8
+!SAMUS_COOLDOWN = $0CCC
+!SAMUS_CHARGE_TIMER = $0CD0
 !ENEMY_X = $0F7A
 !ENEMY_Y = $0F7E
 !ENEMY_X_RADIUS = $0F82
 !ENEMY_Y_RADIUS = $0F84
 !ENEMY_PROPERTIES_2 = $0F88
+!ENEMY_HP = $0F8C
 !ENEMY_SPRITEMAP = $0F8E
 !ENEMY_BANK = $0FA6
+!SAMUS_IFRAME_TIMER = $18A8
 !ENEMY_PROJ_ID = $1997
 !ENEMY_PROJ_X = $1A4B
 !ENEMY_PROJ_Y = $1A93
