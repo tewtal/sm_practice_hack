@@ -436,7 +436,7 @@ cm_tilemap_menu:
     LDA [$04] : CMP #$F007 : BNE .done
 
     INC $04 : INC $04 : STZ $0E
-    LDX #$0606
+    LDX #$0646
     JSR cm_draw_text
     RTS
 

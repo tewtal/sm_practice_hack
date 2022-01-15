@@ -83,6 +83,7 @@ init_sram:
     CMP #$0009 : BEQ .sram_upgrade_9to10
     CMP #$000A : BEQ .sram_upgrade_10to11
     CMP #$000B : BEQ .sram_upgrade_11to12
+    CMP #$000C : BEQ .sram_upgrade_12to13
     JSR init_sram_upto9
 
   .sram_upgrade_9to10
@@ -98,6 +99,10 @@ init_sram:
     LDA #$0001 : STA !sram_healthalarm
     LDA #$0000 : STA !sram_room_layout
     LDA #$0003 : STA !sram_cutscenes
+
+  .sram_upgrade_12to13
+    LDA #$0000 : STA !sram_compressed_graphics
+    LDA #$0000 : STA !sram_lag_counter_mode
 
     LDA #!SRAM_VERSION : STA !sram_initialized
     RTS

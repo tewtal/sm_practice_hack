@@ -158,7 +158,6 @@
 !ram_cm_ctrl_assign = !WRAM_MENU_START+$3A
 !ram_cm_ctrl_swap = !WRAM_MENU_START+$3C
 !ram_cm_botwoon_rng = !WRAM_MENU_START+$3E
-!ram_cm_slow_graphics = !WRAM_MENU_START+$40
 
 ; ^ FREE SPACE ^ up to +$7E
 
@@ -349,7 +348,7 @@
 ; SRAM
 ; -----
 
-!SRAM_VERSION = $000C
+!SRAM_VERSION = $000D
 
 !sram_initialized = $702000
 
@@ -389,6 +388,8 @@
 !sram_healthalarm = $702042
 !sram_room_layout = $702044
 !sram_cutscenes = $702046
+!sram_compressed_graphics = $702048
+!sram_lag_counter_mode = $70204A
 
 ; ^ FREE SPACE ^ up to $703000
 
@@ -400,6 +401,10 @@
 !CUTSCENE_SKIP_CERES_ARRIVAL = #$0002
 !CUTSCENE_SKIP_G4 = #$0080
 !CUTSCENE_FAST_MB = #$0100
+
+!COMPRESSED_GRAPHICS = #$0001
+!COMPRESSED_PALETTES = #$0002
+!COMPRESSED_PALETTES_8BIT = #$02
 
 
 ; ----------

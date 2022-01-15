@@ -86,7 +86,7 @@ load_raw_tile_graphics:
     CLC : ADC #tileset_palettes
 
     ; Save that for later and prepare for DMA
-    PHA : LDA !ram_cm_slow_graphics : BNE .slow_tile_decompression
+    PHA : LDA !sram_compressed_graphics : BIT !COMPRESSED_GRAPHICS : BNE .tile_decompression
     %a8() : LDA.l raw_tile_graphics_table,X : BPL .separate_dmas
 
     ; A few tilesets also include the CRE and can be done in one DMA
@@ -103,7 +103,7 @@ load_raw_tile_graphics:
     LDA #$01 : STA $420B            ; initiate DMA (channel 1)
     BRL .tileset_palette
 
-  .slow_tile_decompression
+  .tile_decompression
     ; Slower method from $82E78C
     LDA #$0080 : STA $2115
     LDA #$B900 : STA $48
@@ -181,12 +181,18 @@ load_raw_tile_graphics:
     LDA #$01 : STA $420B            ; initiate DMA (channel 1)
 
   .tileset_palette
+    LDA !sram_compressed_graphics : BIT !COMPRESSED_PALETTES_8BIT : BNE .palette_decompression
+
     ; Copy tileset palette to $7EC200
     PLX : LDY #$C200 : TDC : DEC
     MVN $F47E
 
     PLX : PLB : PLP
     RTL
+
+  .palette_decompression
+    PLX : PLX : %a16()
+    JML $82E7BF
 }
 
 preset_load_level_tile_tables_scrolls_plms_and_execute_asm:

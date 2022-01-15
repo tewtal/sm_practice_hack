@@ -403,7 +403,12 @@ ridley_init_hook:
 
     ; Clear out the room main asm so it doesn't also trigger the escape
     STZ $07DF
+
+    ; Set up the escape timer routine
     LDA #$0001 : STA $093F
+    LDA #$E0E6 : STA $0A5A
+
+    ; Jump to the escape
 if !FEATURE_PAL
     LDA #$AB47
 else
