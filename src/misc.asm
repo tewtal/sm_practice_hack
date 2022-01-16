@@ -11,16 +11,6 @@ else
 endif
 
 
-; Skip intro
-; $82:EEDF A9 95 A3    LDA #$A395
-org $82EEDF
-if !FEATURE_PAL
-    LDA #$C065
-else
-    LDA #$C100
-endif
-
-
 ; Enable version display
 org $8B8697
     NOP
@@ -254,59 +244,6 @@ org $808F65
     JML hook_set_music_data
 
 
-; swap Enemy HP to MB HP when entering MB's room
-org $83AAD2
-    dw #MotherBrainHP
-
-
-; Ceres Ridley modified state check to support presets
-org $8FE0C0
-    dw layout_asm_ceres_ridley_room_state_check
-
-; Ceres Ridley room setup asm when timer is not running
-org $8FE0DF
-    dw layout_asm_ceres_ridley_room_no_timer
-
-
-org $8FEA00 ; free space for door asm
-print pc, " misc bank8F start"
-
-MotherBrainHP:
-{
-    LDA !sram_display_mode : BNE .done
-    LDA #!IH_MODE_ROOMSTRAT_INDEX : STA !sram_display_mode
-    LDA #!IH_STRAT_MBHP_INDEX : STA !sram_room_strat
-
-  .done
-    RTS
-}
-
-layout_asm_ceres_ridley_room_state_check:
-{
-    LDA $0943 : BEQ .no_timer
-    LDA $0001,X : TAX
-    JMP $E5E6
-  .no_timer
-    STZ $093F
-    INX : INX : INX
-    RTS
-}
-
-layout_asm_ceres_ridley_room_no_timer:
-{
-    ; Same as original setup asm, except force blue background
-    PHP
-    SEP #$20
-    LDA #$66 : STA $5D
-    PLP
-    JSL $88DDD0
-    LDA #$0009 : STA $07EB
-    RTS
-}
-
-print pc, " misc bank8F end"
-
-
 org $90F800
 print pc, " misc bank90 start"
 
@@ -314,14 +251,10 @@ hook_set_music_track:
 {
     STZ $07F6
     PHA
-    LDA !sram_music_toggle : CMP #$02 : BEQ .fast_no_music
-    CMP #$01 : BNE .no_music
-    LDA $07F3 : BEQ .no_music
+    LDA !sram_music_toggle : CMP #$01 : BNE .no_music
     PLA : STA $2140
     RTL
 
-  .fast_no_music
-    STZ $07F5
   .no_music
     PLA
     RTL
@@ -329,9 +262,8 @@ hook_set_music_track:
 
 hook_set_music_data:
 {
-    TAX
+    STA $07F3 : TAX
     LDA !sram_music_toggle : CMP #$0002 : BEQ .fast_no_music
-    TXA : STA $07F3
     JML $808F69
 
   .fast_no_music

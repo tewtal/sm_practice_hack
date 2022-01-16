@@ -132,7 +132,7 @@ cm_transfer_custom_tileset:
 {
     PHP
     %a16()
-    LDA $079B : CMP #$A59F : BEQ .kraid_vram
+    LDA !ROOM_ID : CMP #$A59F : BEQ .kraid_vram
 
     ; Load custom vram to normal BG3 location
     %a8()
@@ -168,7 +168,7 @@ cm_transfer_original_tileset:
 {
     PHP
     %a16()
-    LDA $079B : CMP #$A59F : BEQ .kraid_vram
+    LDA !ROOM_ID : CMP #$A59F : BEQ .kraid_vram
 
     %a8()
     LDA !ram_minimap : CMP #$00 : BNE .minimap_vram
@@ -318,7 +318,7 @@ cm_tilemap_bg:
     ; Vertical edges
     {
         LDX #$0000
-        LDY #$0017
+        LDY #$0018
 
         -
         LDA.w #$647A : STA !ram_tilemap_buffer+$082,X
@@ -334,7 +334,7 @@ cm_tilemap_bg:
 
         -
         LDA.w #$A47B : STA !ram_tilemap_buffer+$044,X
-        LDA.w #$247B : STA !ram_tilemap_buffer+$684,X
+        LDA.w #$247B : STA !ram_tilemap_buffer+$6C4,X
 
         INX #2
         DEY : BPL -
@@ -372,6 +372,7 @@ cm_tilemap_bg:
         STA !ram_tilemap_buffer+$5C4,X
         STA !ram_tilemap_buffer+$604,X
         STA !ram_tilemap_buffer+$644,X
+        STA !ram_tilemap_buffer+$684,X
 
         INX #2
         DEY : BPL -
@@ -435,7 +436,7 @@ cm_tilemap_menu:
     LDA [$04] : CMP #$F007 : BNE .done
 
     INC $04 : INC $04 : STZ $0E
-    LDX #$0606
+    LDX #$0646
     JSR cm_draw_text
     RTS
 
@@ -490,6 +491,7 @@ cm_draw_action_table:
     dw draw_numfield_word
     dw draw_toggle_inverted
     dw draw_numfield_color
+    dw draw_controller_input
 
     draw_toggle:
     {
@@ -861,6 +863,51 @@ cm_draw_action_table:
 
         RTS
     }
+
+    draw_controller_input:
+    {
+        ; grab the memory address (long)
+        LDA [$04] : INC $04 : INC $04 : STA $08
+        STA !ram_cm_ctrl_assign
+        LDA [$04] : INC $04 : STA $0A
+
+        ; grab JSR target
+        LDA [$04] : INC $04 : INC $04 : STA $0C
+
+        ; skip JSR argument
+        INC $04 : INC $04
+
+        ; Draw the text
+        %item_index_to_vram_index()
+        PHX : JSR cm_draw_text : PLX
+
+        ; set position for the input
+        TXA : CLC : ADC #$0020 : TAX
+
+        LDA ($08) : AND #$E0F0 : BEQ .unbound
+
+        ; determine which input to draw, using Y to refresh A
+        TAY : AND #$0080 : BEQ + : LDY #$0000 : BRA .draw
++       TYA : AND #$8000 : BEQ + : LDY #$0002 : BRA .draw
++       TYA : AND #$0040 : BEQ + : LDY #$0004 : BRA .draw
++       TYA : AND #$4000 : BEQ + : LDY #$0006 : BRA .draw
++       TYA : AND #$0020 : BEQ + : LDY #$0008 : BRA .draw
++       TYA : AND #$0010 : BEQ + : LDY #$000A : BRA .draw
++       TYA : AND #$2000 : BEQ .unbound : LDY #$000C
+
+      .draw
+        LDA.w CtrlMenuGFXTable,Y : STA !ram_tilemap_buffer,X
+        RTS
+
+      .unbound
+        LDA #$281F : STA !ram_tilemap_buffer,X
+        RTS
+
+    CtrlMenuGFXTable:
+        ;  A      B      X      Y      L      R      Select
+        ;  0080   8000   0040   4000   0020   0010   2000
+        dw $288F, $2887, $288E, $2886, $288D, $288C, $2885
+    }
 }
 
 cm_draw_text:
@@ -1198,6 +1245,7 @@ cm_execute_action_table:
     dw execute_numfield_word
     dw execute_toggle
     dw execute_numfield_color
+    dw execute_controller_input
 
     execute_toggle:
     {
@@ -1522,6 +1570,29 @@ cm_execute_action_table:
         LDA #$0000 : STA [$C5]
 
         .end
+        RTS
+    }
+
+    execute_controller_input:
+    {
+        ; <, > and X should do nothing here
+        ; also ignore input held flag
+        LDA !ram_cm_controller : BIT #$0341 : BNE .end
+
+        ; store long address as short address for now
+        LDA [$00] : INC $00 : INC $00 : INC $00
+        STA !ram_cm_ctrl_assign
+
+        ; $02 = JSR target
+        LDA [$00] : INC $00 : INC $00 : STA $04
+
+        ; Y = Argument
+        LDA [$00] : TAY
+
+        LDX #$0000
+        JSR ($0004,X)
+
+      .end
         RTS
     }
 }

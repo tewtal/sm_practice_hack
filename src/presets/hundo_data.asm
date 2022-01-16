@@ -1210,8 +1210,10 @@ preset_hundo_phantoon_phantoon_2:
     dl $7E07C7 : db $02 : dw $C2B1 ; GFX Pointers
     dl $7E07F3 : db $02 : dw $0030 ; Music Bank
     dl $7E090F : db $02 : dw $2000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $01F8 ; Screen X position in pixels
+    dl $7E0911 : db $02 : dw $01D0 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $E800 ; Screen subpixel Y position
+    dl $7E0917 : db $02 : dw $015C ; Layer 2 X scroll in room in pixels?
+    dl $7E0921 : db $02 : dw $017A ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09C2 : db $02 : dw $008F ; Health
     dl $7E09C6 : db $02 : dw $0032 ; Missiles
     dl $7E09C8 : db $02 : dw $0037 ; Max missiles
@@ -1656,8 +1658,11 @@ preset_hundo_brinstar_cleanup_dachora_room_revisit:
     dl $7E079B : db $02 : dw $9AD9 ; MDB
     dl $7E090F : db $02 : dw $4000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $05F5 ; Screen Y position in pixels
+    dl $7E0915 : db $02 : dw $061F ; Screen Y position in pixels
+    dl $7E0917 : db $02 : dw $0000 ; Layer 2 X scroll in room in pixels?
+    dl $7E0919 : db $02 : dw $0497 ; Layer 2 Y scroll in room in pixels? (up = positive)
+    dl $7E0921 : db $02 : dw $0000 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
+    dl $7E0923 : db $02 : dw $0477 ; BG2 Y scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09C2 : db $02 : dw $028F ; Health
     dl $7E09CE : db $02 : dw $000F ; Pbs
     dl $7E09D0 : db $02 : dw $0014 ; Max pbs
@@ -1676,9 +1681,12 @@ preset_hundo_brinstar_cleanup_big_pink_revisit:
     dl $7E078F : db $02 : dw $0005 ; DoorOut Index
     dl $7E079B : db $02 : dw $9CB3 ; MDB
     dl $7E090F : db $02 : dw $7000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $04ED ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $A400 ; Screen subpixel Y position
+    dl $7E0911 : db $02 : dw $054A ; Screen X position in pixels
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
+    dl $7E0917 : db $02 : dw $03F7 ; Layer 2 X scroll in room in pixels?
+    dl $7E0919 : db $02 : dw $0000 ; Layer 2 Y scroll in room in pixels? (up = positive)
+    dl $7E0921 : db $02 : dw $03B1 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
+    dl $7E0923 : db $02 : dw $0000 ; BG2 Y scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E0A1C : db $02 : dw $000B ; Samus position/state
     dl $7E0A1E : db $02 : dw $0108 ; More position/state
     dl $7E0AF6 : db $02 : dw $05AA ; Samus X
@@ -1699,6 +1707,7 @@ preset_hundo_brinstar_cleanup_mission_impossible_pbs:
     dl $7E09C6 : db $02 : dw $003D ; Missiles
     dl $7E09C8 : db $02 : dw $005F ; Max missiles
     dl $7E09CE : db $02 : dw $000E ; Pbs
+    dl $7E09D2 : db $02 : dw $0003 ; Currently selected item
     dl $7E0A1C : db $02 : dw $000A ; Samus position/state
     dl $7E0A1E : db $02 : dw $0104 ; More position/state
     dl $7E0AF6 : db $02 : dw $0264 ; Samus X
@@ -1721,6 +1730,7 @@ preset_hundo_brinstar_cleanup_pink_brinstar_etank:
     dl $7E09CA : db $02 : dw $0007 ; Supers
     dl $7E09CE : db $02 : dw $0013 ; Pbs
     dl $7E09D0 : db $02 : dw $0019 ; Max pbs
+    dl $7E09D2 : db $02 : dw $0000 ; Currently selected item
     dl $7E0A1C : db $02 : dw $000B ; Samus position/state
     dl $7E0A1E : db $02 : dw $0108 ; More position/state
     dl $7E0AF6 : db $02 : dw $02F6 ; Samus X
@@ -1743,6 +1753,7 @@ preset_hundo_brinstar_cleanup_spore_spawn_supers:
     dl $7E09C4 : db $02 : dw $031F ; Max health
     dl $7E09CA : db $02 : dw $0006 ; Supers
     dl $7E09CE : db $02 : dw $0012 ; Pbs
+    dl $7E09D2 : db $02 : dw $0003 ; Currently selected item
     dl $7E0A1C : db $02 : dw $0007 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0008 ; More position/state
     dl $7E0AF6 : db $02 : dw $0389 ; Samus X
@@ -1767,6 +1778,7 @@ preset_hundo_brinstar_cleanup_waterway_etank:
     dl $7E09CA : db $02 : dw $0007 ; Supers
     dl $7E09CC : db $02 : dw $0019 ; Max supers
     dl $7E09CE : db $02 : dw $000F ; Pbs
+    dl $7E09D2 : db $02 : dw $0000 ; Currently selected item
     dl $7E0A1C : db $02 : dw $000A ; Samus position/state
     dl $7E0A1E : db $02 : dw $0104 ; More position/state
     dl $7E0AF6 : db $02 : dw $0051 ; Samus X
@@ -2156,8 +2168,11 @@ preset_hundo_draygon_draygon_escape:
     dl $7E07F3 : db $02 : dw $0024 ; Music Bank
     dl $7E07F5 : db $02 : dw $0003 ; Music Track
     dl $7E090F : db $02 : dw $5000 ; Screen subpixel X position.
+    dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $7800 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
+    dl $7E0917 : db $02 : dw $0000 ; Layer 2 X scroll in room in pixels?
+    dl $7E0921 : db $02 : dw $0000 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09A2 : db $02 : dw $3325 ; Equipped Items
     dl $7E09A4 : db $02 : dw $3325 ; Collected Items
     dl $7E09C2 : db $02 : dw $0291 ; Health
@@ -2183,8 +2198,10 @@ preset_hundo_maridia_cleanup_2_aqueduct_revisit_1:
     dl $7E07F3 : db $02 : dw $001B ; Music Bank
     dl $7E07F5 : db $02 : dw $0005 ; Music Track
     dl $7E090F : db $02 : dw $A000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $02B9 ; Screen X position in pixels
+    dl $7E0911 : db $02 : dw $0289 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $6000 ; Screen subpixel Y position
+    dl $7E0917 : db $02 : dw $01E6 ; Layer 2 X scroll in room in pixels?
+    dl $7E0921 : db $02 : dw $020A ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09A2 : db $02 : dw $3324 ; Equipped Items
     dl $7E09A6 : db $02 : dw $1007 ; Beams
     dl $7E09C2 : db $02 : dw $044B ; Health
@@ -2357,8 +2374,13 @@ preset_hundo_maridia_cleanup_2_plasma_spark_room_down:
     dl $7E078D : db $02 : dw $A540 ; DDB
     dl $7E078F : db $02 : dw $0000 ; DoorOut Index
     dl $7E079B : db $02 : dw $D387 ; MDB
-    dl $7E090F : db $02 : dw $A000 ; Screen subpixel X position.
-    dl $7E0915 : db $02 : dw $0319 ; Screen Y position in pixels
+    dl $7E090F : db $02 : dw $D000 ; Screen subpixel X position.
+    dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
+    dl $7E0915 : db $02 : dw $031B ; Screen Y position in pixels
+    dl $7E0917 : db $02 : dw $0000 ; Layer 2 X scroll in room in pixels?
+    dl $7E0919 : db $02 : dw $0254 ; Layer 2 Y scroll in room in pixels? (up = positive)
+    dl $7E0921 : db $02 : dw $0000 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
+    dl $7E0923 : db $02 : dw $0252 ; BG2 Y scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09C2 : db $02 : dw $0310 ; Health
     dl $7E0A1C : db $02 : dw $000A ; Samus position/state
     dl $7E0A1E : db $02 : dw $0104 ; More position/state
@@ -2371,10 +2393,14 @@ preset_hundo_maridia_cleanup_2_cac_alley:
     dw #preset_hundo_maridia_cleanup_2_plasma_spark_room_down ; Maridia Cleanup 2: Plasma Spark Room Down
     dl $7E078D : db $02 : dw $A5D0 ; DDB
     dl $7E079B : db $02 : dw $D340 ; MDB
-    dl $7E090F : db $02 : dw $6000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0125 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $FC00 ; Screen subpixel Y position
+    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position.
+    dl $7E0911 : db $02 : dw $015B ; Screen X position in pixels
+    dl $7E0913 : db $02 : dw $F000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0500 ; Screen Y position in pixels
+    dl $7E0917 : db $02 : dw $012F ; Layer 2 X scroll in room in pixels?
+    dl $7E0919 : db $02 : dw $0500 ; Layer 2 Y scroll in room in pixels? (up = positive)
+    dl $7E0921 : db $02 : dw $0100 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
+    dl $7E0923 : db $02 : dw $0500 ; BG2 Y scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E0A1C : db $02 : dw $0067 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0608 ; More position/state
     dl $7E0AF6 : db $02 : dw $01BB ; Samus X
@@ -2710,10 +2736,10 @@ preset_hundo_ridley_wasteland_down:
     dl $7E0913 : db $02 : dw $E400 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $041F ; Screen Y position in pixels
     dl $7E09CE : db $02 : dw $000C ; Pbs
-    dl $7E0A1C : db $02 : dw $007D ; Samus position/state
-    dl $7E0A1E : db $02 : dw $1308 ; More position/state
-    dl $7E0AF6 : db $02 : dw $026E ; Samus X
-    dl $7E0AFA : db $02 : dw $04AC ; Samus Y
+    dl $7E0A1C : db $02 : dw $0079 ; Samus position/state
+    dl $7E0A1E : db $02 : dw $1108 ; More position/state
+    dl $7E0AF6 : db $02 : dw $0245 ; Samus X
+    dl $7E0AFA : db $02 : dw $0489 ; Samus Y
     dl $7ED8BA : db $02 : dw $43F1 ; Events, Items, Doors
     dw #$FFFF
 .after
@@ -2726,7 +2752,11 @@ preset_hundo_ridley_ninja_pirates:
     dl $7E090F : db $02 : dw $8000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $021D ; Screen Y position in pixels
+    dl $7E0915 : db $02 : dw $021B ; Screen Y position in pixels
+    dl $7E0917 : db $02 : dw $00C0 ; Layer 2 X scroll in room in pixels?
+    dl $7E0919 : db $02 : dw $0194 ; Layer 2 Y scroll in room in pixels? (up = positive)
+    dl $7E0921 : db $02 : dw $00C0 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
+    dl $7E0923 : db $02 : dw $0195 ; BG2 Y scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09C2 : db $02 : dw $0191 ; Health
     dl $7E09CA : db $02 : dw $0014 ; Supers
     dl $7E09CE : db $02 : dw $0011 ; Pbs
@@ -2746,9 +2776,13 @@ preset_hundo_ridley_plowerhouse_room:
     dl $7E078D : db $02 : dw $9A1A ; DDB
     dl $7E079B : db $02 : dw $B62B ; MDB
     dl $7E090F : db $02 : dw $D000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $017B ; Screen X position in pixels
+    dl $7E0911 : db $02 : dw $013C ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $D400 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
+    dl $7E0917 : db $02 : dw $00ED ; Layer 2 X scroll in room in pixels?
+    dl $7E0919 : db $02 : dw $0000 ; Layer 2 Y scroll in room in pixels? (up = positive)
+    dl $7E0921 : db $02 : dw $011C ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
+    dl $7E0923 : db $02 : dw $0000 ; BG2 Y scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09C2 : db $02 : dw $0213 ; Health
     dl $7E09CA : db $02 : dw $0018 ; Supers
     dl $7E0AF6 : db $02 : dw $01DC ; Samus X
@@ -2801,13 +2835,17 @@ preset_hundo_ridley_wasteland_up:
     dl $7E07F5 : db $02 : dw $0005 ; Music Track
     dl $7E090F : db $02 : dw $8000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0200 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $5C00 ; Screen subpixel Y position
+    dl $7E0913 : db $02 : dw $4000 ; Screen subpixel Y position
+    dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
+    dl $7E0917 : db $02 : dw $0180 ; Layer 2 X scroll in room in pixels?
+    dl $7E0919 : db $02 : dw $0000 ; Layer 2 Y scroll in room in pixels? (up = positive)
+    dl $7E0921 : db $02 : dw $0180 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09C2 : db $02 : dw $048E ; Health
     dl $7E09C4 : db $02 : dw $04AF ; Max health
-    dl $7E0A1C : db $02 : dw $007D ; Samus position/state
-    dl $7E0A1E : db $02 : dw $1308 ; More position/state
+    dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
+    dl $7E0A1E : db $02 : dw $0008 ; More position/state
     dl $7E0AF6 : db $02 : dw $02D4 ; Samus X
-    dl $7E0AFA : db $02 : dw $0085 ; Samus Y
+    dl $7E0AFA : db $02 : dw $00AB ; Samus Y
     dl $7E0B3F : db $02 : dw $0003 ; Blue suit
     dl $7ED878 : db $02 : dw $D2DE ; Events, Items, Doors
     dl $7ED8BA : db $02 : dw $DFF1 ; Events, Items, Doors
@@ -2819,9 +2857,10 @@ preset_hundo_ridley_kihunter_shaft_up:
     dw #preset_hundo_ridley_wasteland_up ; Ridley: Wasteland Up
     dl $7E078D : db $02 : dw $9A3E ; DDB
     dl $7E079B : db $02 : dw $B5D5 ; MDB
-    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0500 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $EC01 ; Screen subpixel Y position
+    dl $7E0913 : db $02 : dw $EC02 ; Screen subpixel Y position
+    dl $7E0917 : db $02 : dw $03C0 ; Layer 2 X scroll in room in pixels?
+    dl $7E0921 : db $02 : dw $03C0 ; BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E09C2 : db $02 : dw $03F3 ; Health
     dl $7E09CE : db $02 : dw $0011 ; Pbs
     dl $7E0A1C : db $02 : dw $000A ; Samus position/state

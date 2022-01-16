@@ -130,7 +130,7 @@ mm_write_hud_tiles_during_door_transition:
 }
 
 print pc, " minimap bank82 end"
-warnpc $82FA00
+warnpc $82F800
 
 
 ; Placed in bank 90 so that the jumps work
@@ -140,7 +140,7 @@ print pc, " minimap bank90 start"
 mm_initialize_minimap:
 {
     ; If we just left Ceres, increment segment timer
-    LDA $0998 : AND #$00FF : CMP #$0006 : BNE .init_minimap
+    LDA !GAMEMODE : AND #$00FF : CMP #$0006 : BNE .init_minimap
     LDA #$0000 : STA $12 : STA $14 : STA !ram_room_has_set_rng
     STA $09DA : STA $09DC : STA $09DE : STA $09E0
     STA !ram_realtime_room : STA !ram_last_realtime_room

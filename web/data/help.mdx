@@ -54,6 +54,10 @@
 | - Save Custom Preset          | Save a custom preset to the current slot in SRAM.
 | - Load Custom Preset          | Load the custom preset in the current slot in SRAM.
 |                               | A grapple sound effect will play if a preset cannot be loaded from the current slot.
+| - Compressed Graphics         | Use built-in and slower compressed tile graphics when loading presets.
+|                               | Only enable this if you are applying patches that use banks F5-FE and loading prests crashes the game.
+| - Compressed Palettes         | Use built-in compressed palettes when loading presets.
+|                               | Only enable this if you are applying custom room palettes.
 |&nbsp;|
 | **Teleport**                  | Warp to any save station
 |&nbsp;|
@@ -67,18 +71,21 @@
 | - Blue Suit                   | Give Samus the Blue Suit
 | - Flash Suit                  | Give Samus the Flash Suit (aka Spike Suit)
 | - Hyper Beam                  | Toggle Hyper Beam
+| - Invincibility               | Prevents Samus from taking damage or knockback
 | - Goo Slowdown                | Toggle ultra slow horizontal movement, as if grabbed by the Baby Metroid (2) or Draygon's goo (1-4)
+| - Suit Properties             | Modify the suit properties similar to some randomizers
+|                               | Vanilla = No change, Varia has full heat protection and 50% enemy/environmental damage reduction, Gravity (with or without Varia) has full heat protection and 75% enemy/environment damage reduction)
+|                               | Balanced = Varia now has 75% environmental damage reduction, Gravity (without Varia) has no heat protection and no environment damage reduction
+|                               | Progressive = Varia has no changes, Gravity (without Varia) has half heat protection and 50% enemy/environmental damage reduction
 | - Magic Pants                 | Toggle a flashing animation on Samus to show when dash should be held for short charging
 | - Space Pants                 | Toggle a flashing animation on Samus during a space jump to show when you should jump.
 |                               | **Note**: If you have both Magic Pants and Space Pants on, only one of them will be used. 
 |                               | If Space Jump is equipped then Space Pants will be used, otherwise Magic Pants will be used.
 | - Loud Pants                  | Toggle sound effects for Magic Pants and Space Pants. Uses the sound selected in Game->Metronome SFX.
 |                               | **Note**: If Magic and Space Pants are both turned off, this option has no effect.
-| - Suit Properties             | Modify the suit properties similar to some randomizers
-|                               | Vanilla = No change, Varia has full heat protection and 50% enemy/environmental damage reduction, Gravity (with or without Varia) has full heat protection and 75% enemy/environment damage reduction)
-|                               | Balanced = Varia now has 75% environmental damage reduction, Gravity (without Varia) has no heat protection and no environment damage reduction
-|                               | Progressive = Varia has no changes, Gravity (without Varia) has half heat protection and 50% enemy/environmental damage reduction
-| - Invincibility               | Prevents Samus from taking damage or knockback
+| - Metronome                   | Toggles a metronome feature that will play a sound at a periodic rate
+| - Metronome Tickrate          | The number of frames between metronome sounds
+| - Metronome SFX               | The sound to play (Beep, Power Beam, Spazer, Missile, Click)
 | - Kill Enemies                | Kills all non-solid enemies in the current room
 | - Force Samus to Stand Up     | Forces Samus into a standing pose
 |&nbsp;|
@@ -89,11 +96,12 @@
 |                               | This only works if "Room Strat" is selected as the above Infohud Mode.
 | - Top-Left Display            | Choose item collection percentage or reserve energy to be displayed at the top-left of the HUD.
 | - Frame Counters              | Toggle the room timer in the top-right of the HUD between realtime and gametime.
+| - Transition Lag              | Toggle the door time to include the full length of the room transition.
 | - Reset Segment in Next Room  | Sets the segment timer to reset automatically when exiting the next door transition.
 | - Status Icons                | Toggle icons to appear when standing on an elevator or when the shine timer is active (e.g. while carrying a spikesuit).
 | - Artificial Lag              | Select a value to adjust how much lag occurs during normal gameplay. 
 |                               | This is to compensate for the lack of a minimap on the HUD which would normally consume CPU cycles.
-| - Customize RAM Watch         | Setup addresses to be monitored by the RAM Watch HUD mode. Address 1 will appear in the bottom-left corner of the HUD, while Address 2 appears just to the right of Address 1. Memory at these locations can be edited by configuring a Value and selecting 'Write to Address'. Toggle 'Lock Value' to automatically write the value once every frame. RAM Watch must must be the selected HUD mode to continue writing to the address. Only one byte of hex can be configured at a time in the menu. 'Hi' refers to the first byte, while 'Lo' refers to the second. Set the Hi Address to 0D and the Lo Address to EC to monitor the memory address $0DEC, which stores the counter for Samus direction changes while held by Draygon (among other uses).
+| - Customize RAM Watch         | Setup addresses to be monitored by the RAM Watch HUD mode. Address 1 will appear in the bottom-left corner of the HUD, while Address 2 appears just to the right of Address 1. Memory at these locations can be edited by configuring a Value and selecting 'Write to Address'. Toggle 'Lock Value' to automatically write the value once every frame. RAM Watch must must be the selected HUD mode to continue writing to the address. Only one byte of hex can be configured at a time in the menu. 'Hi' refers to the first byte, while 'Lo' refers to the second. Set the Hi Address to 0D and the Lo Address to EC to monitor the memory address $0DEC, which stores the counter for Samus direction changes while held by Draygon (among other uses). You can find lists of known RAM addresses by selecting 'Select Common Addresses'.
 |&nbsp;|
 | **Sprite Features**           | Features that draw sprites over normal gameplay. Beware of CPU performance impact
 | - Samus on Top                | Draw Samus on top of foreground objects/tiles
@@ -104,14 +112,18 @@
 | - Enemy Projectile Hitbox     | Toggles an overlay of enemy projectile hitboxes that are drawn on top of enemy projectile sprites.
 | - OOB Tile Viewer             | This enables an overlay that shows the tiles near Samus at all times, disconnected from the camera. This allows you to navigate OOB (Out of Bounds) areas where neither Samus nor the actual tiles are visible in-game. Samus hitbox is drawn at the center of the overlay to show the position relative to the tiles.
 |&nbsp;|
+| **Room Layout**               | Modify the room layout, usually to help practice rando scenarios
+| - Remove Magnet Stairs        | Adds slope tiles to prevent the magnet stairs effect
+| - Area Rando Patches          | Room modifications as you would see in a VARIA area randomizer
+| - Anti-softlock Patches       | Room modifications as you would see in a typical VARIA randomizer
+|&nbsp;|
 | **Game**                      | Toggle game options
 | - Japanese/French Text        | Standard game option to toggle between English and Japanese text (NTSC) or between German and French text (PAL).
 | - Moon Walk                   | Standard game option for Moon Walk.
 | - Icon Cancel                 | Standard game option for Icon Cancel.
+| - Cutscenes                   | Turn off specific cutscenes, or make specific game sequences faster.
 | - Fanfare                     | Toggle the fanfare for collecting items
-| - Music                       | Toggle the music off, on, or additional options:
-|                               | Fast Off = Eliminates lag caused by loading music data, turning music back on will not work until the game loads music data again
-|                               | LoadSaveOff = Experimental, skips loading music data when loading from a savestate, beware game may crash if you turn music on before the game loads music data again
+| - Music                       | Toggle the music off, on, or fast off which eliminates lag caused by loading music data.
 | - Low Health Alarm            | Modify the behavior of the low-health alarm
 |                               | Never = Self-explanatory
 |                               | Vanilla = No change (triggers on when <=30 health, off when >30 health, ignoring reserves, breaks if power bomb explosion is active)
@@ -124,9 +136,6 @@
 | - Fix Scroll Offsets          | Fixes the glitchy state where the camera and scroll offsets are out of sync, typically occurring when using major glitches
 | - Minimap                     | Restores the game minimap, which also allows the pause menu map to be updated. When enabled, a map tile counter will also be displayed.
 | - Clear Minimap               | Clears the map tile counter and all minimap data.
-| - Metronome                   | Toggles a metronome feature that will play a sound at a periodic rate
-| - Metronome Tickrate          | The number of frames between metronome sounds
-| - Metronome SFX               | The sound to play (Beep, Power Beam, Spazer, Missile, Click)
 |&nbsp;|
 | **RNG Control**               | Pre-determine boss patterns
 | - Rerandomize                 | Toggles rerandomizing of RNG values upon loading a savestate. SD2SNES/FXPak versions only.

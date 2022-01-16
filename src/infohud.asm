@@ -291,12 +291,15 @@ ih_after_room_transition:
     PHY
 
     LDA !ram_transition_counter : STA !ram_last_door_lag_frames
+    LDA !sram_lag_counter_mode : BEQ .done_set_door_lag
+    LDA !ram_realtime_room : STA !ram_last_door_lag_frames
+  .done_set_door_lag
     LDA #$0000 : STA !ram_transition_flag
 
     ; Check if MBHP needs to be disabled
     LDA !sram_display_mode : CMP #!IH_MODE_ROOMSTRAT_INDEX : BNE +
     LDA !sram_room_strat : CMP #!IH_STRAT_MBHP_INDEX : BNE +
-    LDA $079B : CMP #$DD58 : BEQ +
+    LDA !ROOM_ID : CMP #$DD58 : BEQ +
     LDA #$0000 : STA !sram_display_mode
 
     ; Maybe reset segment timer
@@ -319,7 +322,7 @@ ih_after_room_transition:
 
     ; original hijacked code
     LDA #$0008
-    STA $0998
+    STA !GAMEMODE
     RTL
 }
 
@@ -362,7 +365,7 @@ ih_before_room_transition:
     PLY
     PLX
     PLA
-    STA $0998
+    STA !GAMEMODE
     CLC
     RTL
 }
@@ -385,7 +388,7 @@ ih_elevator_activation:
     PHA
     ; Only update if we're in a room and activate an elevator.
     ; Otherwise this will also run when you enter a room already riding one.
-    LDA $0998 : CMP #$0008 : BNE .done
+    LDA !GAMEMODE : CMP #$0008 : BNE .done
 
     JSL ih_update_hud_early
 
@@ -623,13 +626,13 @@ ih_update_hud_code:
         LDA #$0000 : STA !ram_pct_1
 
         ; Max HP (E tanks)
-        LDA $09C4 : JSR CalcEtank
+        LDA !SAMUS_HP_MAX : JSR CalcEtank
 
         ; Max Reserve Tanks
-        LDA $09D4 : JSR CalcEtank
+        LDA !SAMUS_RESERVE_MAX : JSR CalcEtank
 
         ; Max Missiles, Supers & Power Bombs
-        LDA $09C8 : CLC : ADC $09CC : CLC : ADC $09D0 : JSR CalcItem
+        LDA !SAMUS_MISSILES_MAX : CLC : ADC !SAMUS_SUPERS_MAX : CLC : ADC !SAMUS_PBS_MAX : JSR CalcItem
 
         ; Collected items
         JSR CalcLargeItem
@@ -744,7 +747,7 @@ ih_hud_code:
     BEQ +
     LDA ControllerGfx1, X
     JMP ++
-+   LDA #$2C0F
++   LDA !IH_BLANK
 ++  STA $7EC608, X
     INX
     INX
@@ -758,7 +761,7 @@ ih_hud_code:
     BEQ +
     LDA ControllerGfx2, X
     JMP ++
-+   LDA #$2C0F
++   LDA !IH_BLANK
 ++  STA $7EC648, X
     INX
     INX

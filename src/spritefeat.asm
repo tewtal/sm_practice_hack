@@ -409,7 +409,7 @@ update_extended_spritemap_hitbox:
 {
     ; Kraid, Crocomire, and Mother Brain use a custom hitbox format
     ; Kraid causes a crash, while everything else seems ok?
-    LDA $079B : CMP #$A59F : BEQ .end ; check for Kraid's room
+    LDA !ROOM_ID : CMP #$A59F : BEQ .end ; check for Kraid's room
 
     LDX #$0000 ; X = enemy index
     LDY !OAM_STACK_POINTER ; Y = OAM stack pointer
