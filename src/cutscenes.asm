@@ -582,8 +582,15 @@ cutscenes_mb_choose_phase_2_or_3:
     LDA $7ED82D : BIT #$0002 : BEQ .phase2
 
     ; Phase 3
-    LDA #$8CA0 : STA $0FCC
     LDA #$0004 : STA $7E7800
+
+    ; 36000 health
+    LDA #$8CA0 : STA $0FCC
+
+    ; Enable health-based palette
+    TDC : STA $7E7860 : STA $7E7868
+    INC : STA $7E7862
+    INC : STA $7E783E
 
     ; Allow Samus to stand up and enable hyper beam
 if !FEATURE_PAL
@@ -597,8 +604,10 @@ else
 endif
 
   .phase2
-    LDA #$4650 : STA $0FCC
     LDA #$0002 : STA $7E7800
+
+    ; 18000 health
+    LDA #$4650 : STA $0FCC
 if !FEATURE_PAL
     JMP $8EE1
 else
