@@ -259,6 +259,7 @@ if !RAW_TILE_GRAPHICS
     dw #$FFFF
     dw #presets_compressed_graphics
     dw #presets_compressed_palettes
+    dw #presets_compressed_tables
 endif
     dw #$0000
     %cm_header("PRESET OPTIONS MENU")
@@ -284,6 +285,9 @@ presets_compressed_graphics:
 
 presets_compressed_palettes:
     %cm_toggle_bit("Compressed Palettes", !sram_compressed_graphics, !COMPRESSED_PALETTES, #0)
+
+presets_compressed_tables:
+    %cm_toggle_bit("Compressed Tables", !sram_compressed_graphics, !COMPRESSED_TABLES, #0)
 endif
 
 SelectPresetCategoryMenu:

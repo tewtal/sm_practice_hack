@@ -1,4 +1,59 @@
 
+org $E58800
+check bankcross off
+print pc, " raw tile tables crossbank start"
+
+; 30K tile tables (6K each)
+tile_table_00_01_upper_crateria:
+incbin ../resources/tile_table_00_01_upper_crateria.bin
+
+tile_table_02_03_lower_crateria:
+incbin ../resources/tile_table_02_03_lower_crateria.bin
+
+tile_table_04_05_wrecked_ship:
+incbin ../resources/tile_table_04_05_wrecked_ship.bin
+
+tile_table_06_green_blue_brinstar:
+incbin ../resources/tile_table_06_green_blue_brinstar.bin
+
+tile_table_07_08_red_brinstar:
+incbin ../resources/tile_table_07_08_red_brinstar.bin
+
+; 24K tile tables (6K each)
+tile_table_09_10_norfair:
+incbin ../resources/tile_table_09_10_norfair.bin
+
+tile_table_11_sandless_maridia:
+incbin ../resources/tile_table_11_sandless_maridia.bin
+
+tile_table_12_sandy_maridia:
+incbin ../resources/tile_table_12_sandy_maridia.bin
+
+tile_table_13_14_tourian:
+incbin ../resources/tile_table_13_14_tourian.bin
+
+; 8K Ceres tile table
+tile_table_15_20_ceres:
+incbin ../resources/tile_table_15_20_ceres.bin
+
+; 24K tile tables (6K each)
+tile_table_21_25_utility:
+incbin ../resources/tile_table_21_25_utility.bin
+
+tile_table_26_kraid:
+incbin ../resources/tile_table_26_kraid.bin
+
+tile_table_27_croc:
+incbin ../resources/tile_table_27_croc.bin
+
+tile_table_28_draygon:
+incbin ../resources/tile_table_28_draygon.bin
+
+print pc, " raw tile tables crossbank end"
+warnpc $E7E000
+check bankcross on
+
+
 org $F48000
 print pc, " tilegraphics start"
 
@@ -233,13 +288,30 @@ preset_load_level_tile_tables_scrolls_plms_and_execute_asm:
     SBC #$6401 : MVP $7F7F
 
     PEA $8F00 : PLB : PLB
+    LDA !sram_compressed_graphics : BIT !COMPRESSED_GRAPHICS : BNE .tile_table_decompression
+
+    ; Jump to routine based on graphics set
+    LDX $07BB : LDA $0003,X : AND #$00FF
+    ASL : TAX : PHB
+    JSR (load_tile_tables_jump_table,X)
+
+    ; Jump back to vanilla method
+    PLB
+    JML $82E870
+
+  .tile_table_decompression
     LDA $079F : CMP #$0006 : BEQ .ceres
 
-    ; Copy CRE tile table to $7EA000
-    LDX #tile_table_cre : LDY #$A000 : LDA #$07FF
-    PHB : MVN $F47E : PLB
+    ; Decompress CRE tile table to $7EA000
+    LDA #$B9A0 : STA $48
+    LDA #$7EA0 : STA $4D
+    %a8()
+    LDA #$9D : STA $47
+    STZ $4C
+    JSL optimized_decompression
 
     ; Decompress tileset tile table to $7EA800
+    %a16()
     LDA $07C1 : STA $48
     LDA #$7EA8 : STA $4D
     %a8()
@@ -264,6 +336,188 @@ preset_load_level_tile_tables_scrolls_plms_and_execute_asm:
     ; Jump back to vanilla method
     %a16()
     JML $82E870
+}
+
+load_tile_tables_jump_table:
+    dw load_tile_table_00_01_upper_crateria
+    dw load_tile_table_00_01_upper_crateria
+    dw load_tile_table_02_03_lower_crateria
+    dw load_tile_table_02_03_lower_crateria
+    dw load_tile_table_04_05_wrecked_ship
+    dw load_tile_table_04_05_wrecked_ship
+    dw load_tile_table_06_green_blue_brinstar
+    dw load_tile_table_07_08_red_brinstar
+    dw load_tile_table_07_08_red_brinstar
+    dw load_tile_table_09_10_norfair
+    dw load_tile_table_09_10_norfair
+    dw load_tile_table_11_sandless_maridia
+    dw load_tile_table_12_sandy_maridia
+    dw load_tile_table_13_14_tourian
+    dw load_tile_table_13_14_tourian
+    dw load_tile_table_15_20_ceres
+    dw load_tile_table_15_20_ceres
+    dw load_tile_table_15_20_ceres
+    dw load_tile_table_15_20_ceres
+    dw load_tile_table_15_20_ceres
+    dw load_tile_table_15_20_ceres
+    dw load_tile_table_21_25_utility
+    dw load_tile_table_21_25_utility
+    dw load_tile_table_21_25_utility
+    dw load_tile_table_21_25_utility
+    dw load_tile_table_21_25_utility
+    dw load_tile_table_26_kraid
+    dw load_tile_table_27_croc
+    dw load_tile_table_28_draygon
+
+load_tile_table_00_01_upper_crateria:
+{
+    ; Copy CRE tile table to $7EA000
+    LDX #tile_table_cre : LDY #$A000 : LDA #$07FF
+    MVN $7E,tile_table_cre>>16
+    ; Copy tileset tile table to $7EA800
+    LDX #tile_table_00_01_upper_crateria : LDA #$17FF
+    MVN $7E,tile_table_00_01_upper_crateria>>16
+    RTS
+}
+
+load_tile_table_02_03_lower_crateria:
+{
+    ; Copy CRE tile table to $7EA000
+    LDX #tile_table_cre : LDY #$A000 : LDA #$07FF
+    MVN $7E,tile_table_cre>>16
+    ; Copy tileset tile table to $7EA800
+    LDX #tile_table_02_03_lower_crateria : LDA #$17FF
+    MVN $7E,tile_table_02_03_lower_crateria>>16
+    RTS
+}
+
+load_tile_table_04_05_wrecked_ship:
+{
+    ; Copy CRE tile table to $7EA000
+    LDX #tile_table_cre : LDY #$A000 : LDA #$07FF
+    MVN $7E,tile_table_cre>>16
+    ; Copy tileset tile table to $7EA800
+    LDX #tile_table_04_05_wrecked_ship : LDA #$17FF
+    MVN $7E,tile_table_04_05_wrecked_ship>>16
+    RTS
+}
+
+load_tile_table_06_green_blue_brinstar:
+{
+    ; Copy CRE tile table to $7EA000
+    LDX #tile_table_cre : LDY #$A000 : LDA #$07FF
+    MVN $7E,tile_table_cre>>16
+    ; Copy tileset tile table to $7EA800
+    LDX #tile_table_06_green_blue_brinstar : LDA #$17FF
+    MVN $7E,tile_table_06_green_blue_brinstar>>16
+    RTS
+}
+
+load_tile_table_07_08_red_brinstar:
+{
+    ; Copy CRE tile table to $7EA000
+    LDX #tile_table_cre : LDY #$A000 : LDA #$07FF
+    MVN $7E,tile_table_cre>>16
+    ; Copy tileset tile table to $7EA800
+    LDX #tile_table_07_08_red_brinstar : LDA #$17FF
+    MVN $7E,tile_table_07_08_red_brinstar>>16
+    RTS
+}
+
+load_tile_table_09_10_norfair:
+{
+    ; Copy CRE tile table to $7EA000
+    LDX #tile_table_cre : LDY #$A000 : LDA #$07FF
+    MVN $7E,tile_table_cre>>16
+    ; Copy tileset tile table to $7EA800
+    LDX #tile_table_09_10_norfair : LDA #$17FF
+    MVN $7E,tile_table_09_10_norfair>>16
+    RTS
+}
+
+load_tile_table_11_sandless_maridia:
+{
+    ; Copy CRE tile table to $7EA000
+    LDX #tile_table_cre : LDY #$A000 : LDA #$07FF
+    MVN $7E,tile_table_cre>>16
+    ; Copy tileset tile table to $7EA800
+    LDX #tile_table_11_sandless_maridia : LDA #$17FF
+    MVN $7E,tile_table_11_sandless_maridia>>16
+    RTS
+}
+
+load_tile_table_12_sandy_maridia:
+{
+    ; Copy CRE tile table to $7EA000
+    LDX #tile_table_cre : LDY #$A000 : LDA #$07FF
+    MVN $7E,tile_table_cre>>16
+    ; Copy tileset tile table to $7EA800
+    LDX #tile_table_12_sandy_maridia : LDA #$17FF
+    MVN $7E,tile_table_12_sandy_maridia>>16
+    RTS
+}
+
+load_tile_table_13_14_tourian:
+{
+    ; Copy CRE tile table to $7EA000
+    LDX #tile_table_cre : LDY #$A000 : LDA #$07FF
+    MVN $7E,tile_table_cre>>16
+    ; Copy tileset tile table to $7EA800
+    LDX #tile_table_13_14_tourian : LDA #$17FF
+    MVN $7E,tile_table_13_14_tourian>>16
+    RTS
+}
+
+load_tile_table_15_20_ceres:
+{
+    ; Copy larger tileset tile table to $7EA000
+    LDX #tile_table_15_20_ceres : LDY #$A000 : LDA #$1FFF
+    MVN $7E,tile_table_15_20_ceres>>16
+    RTS
+}
+
+load_tile_table_21_25_utility:
+{
+    ; Copy CRE tile table to $7EA000
+    LDX #tile_table_cre : LDY #$A000 : LDA #$07FF
+    MVN $7E,tile_table_cre>>16
+    ; Copy tileset tile table to $7EA800
+    LDX #tile_table_21_25_utility : LDA #$17FF
+    MVN $7E,tile_table_21_25_utility>>16
+    RTS
+}
+
+load_tile_table_26_kraid:
+{
+    ; Copy CRE tile table to $7EA000
+    LDX #tile_table_cre : LDY #$A000 : LDA #$07FF
+    MVN $7E,tile_table_cre>>16
+    ; Copy tileset tile table to $7EA800
+    LDX #tile_table_26_kraid : LDA #$17FF
+    MVN $7E,tile_table_26_kraid>>16
+    RTS
+}
+
+load_tile_table_27_croc:
+{
+    ; Copy CRE tile table to $7EA000
+    LDX #tile_table_cre : LDY #$A000 : LDA #$07FF
+    MVN $7E,tile_table_cre>>16
+    ; Copy tileset tile table to $7EA800
+    LDX #tile_table_27_croc : LDA #$17FF
+    MVN $7E,tile_table_27_croc>>16
+    RTS
+}
+
+load_tile_table_28_draygon:
+{
+    ; Copy CRE tile table to $7EA000
+    LDX #tile_table_cre : LDY #$A000 : LDA #$07FF
+    MVN $7E,tile_table_cre>>16
+    ; Copy tileset tile table to $7EA800
+    LDX #tile_table_28_draygon : LDA #$17FF
+    MVN $7E,tile_table_28_draygon>>16
+    RTS
 }
 
 ; Decompression optimization adapted from Kejardon
