@@ -1,5 +1,14 @@
 ; Phantoon hijacks
 {
+    ; Intro
+    if !FEATURE_PAL
+        org $A7D4DD
+    else
+        org $A7D4A9
+    endif
+    JSL hook_phantoon_init
+    NOP
+    BNE $3D
 
     ; 1st pattern
 if !FEATURE_PAL
@@ -148,9 +157,32 @@ hook_beetom_set_rng:
     RTL
 }
 
+; Patch to the following code (which waits a few frames
+;  before spawning flames in a circle)
+; $A7:D4A9 DE B0 0F    DEC $0FB0,x[$7E:0FB0]    ; decrement timer
+; $A7:D4AC F0 02       BEQ $02    [$D4B0]       ; if zero, proceed
+; $A7:D4AE 10 3D       BPL $3D    [$D4ED]       ; else, return
+hook_phantoon_init:
+{
+    LDA !ram_phantoon_rng_2     ; skip cutscene flag
+    BNE .skip_cutscene
 
+    DEC $0FB0, x
     RTL
 
+.skip_cutscene:
+    ; get rid of the return address
+    PLA     ; pop 16 bytes
+    PHP     ; push 8
+    PLA     ; pop 16
+
+    ; start boss music & fade-in animation
+    if !FEATURE_PAL
+        JML $A7D543
+    else
+        JML $A7D50F
+    endif
+}
 
 ; Table of Phantoon pattern durations & directions
 ; bit 0 is direction, remaining bits are duration

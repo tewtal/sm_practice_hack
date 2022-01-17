@@ -2167,6 +2167,7 @@ PhantoonMenu:
     dw #phan_eyeclose
     dw #phan_flamepattern
     dw #phan_next_flamepattern
+    dw #phan_skip_intro
     dw #$0000
     %cm_header("PHANTOON CONTROL")
 
@@ -2222,6 +2223,9 @@ phan_next_flamepattern:
     db #$28, "    3333333", #$FF
     db #$28, "    1424212", #$FF
     db #$FF
+
+phan_skip_intro:
+    %cm_toggle_bit("Skip Intro", !ram_phantoon_rng_2, #$0001, 0)
 
 ; ----------
 ; Ctrl Menu
