@@ -2077,11 +2077,7 @@ RngMenu:
     if !FEATURE_SD2SNES
         dw #rng_rerandomize
     endif
-    dw #rng_phan_first_phase
-    dw #rng_phan_second_phase
-    dw #rng_phan_eyeclose
-    dw #rng_phan_flamepattern
-    dw #rng_next_flamepattern
+    dw #rng_goto_phanmenu
     dw #$FFFF
     dw #rng_botwoon_rng
     dw #$FFFF
@@ -2097,68 +2093,8 @@ RngMenu:
 rng_rerandomize:
     %cm_toggle("Rerandomize", !sram_rerandomize, #$0001, #0)
 
-rng_phan_first_phase:
-    dw !ACTION_CHOICE
-    dl #!ram_phantoon_rng_1
-    dw #$0000
-    db #$28, "Phan 1st Phase", #$FF
-    db #$28, "     RANDOM", #$FF
-    db #$28, "  FAST LEFT", #$FF
-    db #$28, "   MID LEFT", #$FF
-    db #$28, "  SLOW LEFT", #$FF
-    db #$28, " FAST RIGHT", #$FF
-    db #$28, "  MID RIGHT", #$FF
-    db #$28, " SLOW RIGHT", #$FF
-    db #$FF
-
-rng_phan_second_phase:
-    dw !ACTION_CHOICE
-    dl #!ram_phantoon_rng_2
-    dw #$0000
-    db #$28, "Phan 2nd Phase", #$FF
-    db #$28, "     RANDOM", #$FF
-    db #$28, "  FAST LEFT", #$FF
-    db #$28, "   MID LEFT", #$FF
-    db #$28, "  SLOW LEFT", #$FF
-    db #$28, " FAST RIGHT", #$FF
-    db #$28, "  MID RIGHT", #$FF
-    db #$28, " SLOW RIGHT", #$FF
-    db #$FF
-
-rng_phan_eyeclose:
-    dw !ACTION_CHOICE
-    dl #!ram_phantoon_rng_3
-    dw #$0000
-    db #$28, "Phan Eye Close", #$FF
-    db #$28, "     RANDOM", #$FF
-    db #$28, "       SLOW", #$FF
-    db #$28, "        MID", #$FF
-    db #$28, "       FAST", #$FF
-    db #$FF
-
-rng_phan_flamepattern:
-    dw !ACTION_CHOICE
-    dl #!ram_phantoon_rng_4
-    dw #$0000
-    db #$28, "Phan Flames   ", #$FF
-    db #$28, "     RANDOM", #$FF
-    db #$28, "      22222", #$FF
-    db #$28, "        111", #$FF
-    db #$28, "    3333333", #$FF
-    db #$28, "    1424212", #$FF
-    db #$FF
-
-rng_next_flamepattern:
-    dw !ACTION_CHOICE
-    dl #!ram_phantoon_rng_5
-    dw #$0000
-    db #$28, "Next Flames   ", #$FF
-    db #$28, "     RANDOM", #$FF
-    db #$28, "      22222", #$FF
-    db #$28, "        111", #$FF
-    db #$28, "    3333333", #$FF
-    db #$28, "    1424212", #$FF
-    db #$FF
+rng_goto_phanmenu:
+    %cm_submenu("Phantoon", #PhantoonMenu)
 
 rng_botwoon_rng:
     dw !ACTION_CHOICE
@@ -2217,6 +2153,75 @@ rng_kraid_rng:
     db #$28, "    LAGGIER", #$FF
     db #$FF
 
+
+; --------------
+; Phantoon Menu
+; --------------
+PhantoonMenu:
+    dw #phan_fast_left
+    dw #phan_mid_left
+    dw #phan_slow_left
+    dw #phan_fast_right
+    dw #phan_mid_right
+    dw #phan_slow_right
+    dw #phan_eyeclose
+    dw #phan_flamepattern
+    dw #phan_next_flamepattern
+    dw #$0000
+    %cm_header("PHANTOON CONTROL")
+
+phan_fast_left:
+    %cm_toggle_bit("Fast Left", !ram_phantoon_rng_1, #$0020, 0)
+
+phan_mid_left:
+    %cm_toggle_bit(" Mid Left", !ram_phantoon_rng_1, #$0008, 0)
+
+phan_slow_left:
+    %cm_toggle_bit("Slow Left", !ram_phantoon_rng_1, #$0002, 0)
+
+phan_fast_right:
+    %cm_toggle_bit("Fast Right", !ram_phantoon_rng_1, #$0010, 0)
+
+phan_mid_right:
+    %cm_toggle_bit(" Mid Right", !ram_phantoon_rng_1, #$0004, 0)
+
+phan_slow_right:
+    %cm_toggle_bit("Slow Right", !ram_phantoon_rng_1, #$0001, 0)
+
+phan_eyeclose:
+    dw !ACTION_CHOICE
+    dl #!ram_phantoon_rng_3
+    dw #$0000
+    db #$28, "Phan Eye Close", #$FF
+    db #$28, "     RANDOM", #$FF
+    db #$28, "       SLOW", #$FF
+    db #$28, "        MID", #$FF
+    db #$28, "       FAST", #$FF
+    db #$FF
+
+phan_flamepattern:
+    dw !ACTION_CHOICE
+    dl #!ram_phantoon_rng_4
+    dw #$0000
+    db #$28, "Phan Flames   ", #$FF
+    db #$28, "     RANDOM", #$FF
+    db #$28, "      22222", #$FF
+    db #$28, "        111", #$FF
+    db #$28, "    3333333", #$FF
+    db #$28, "    1424212", #$FF
+    db #$FF
+
+phan_next_flamepattern:
+    dw !ACTION_CHOICE
+    dl #!ram_phantoon_rng_5
+    dw #$0000
+    db #$28, "Next Flames   ", #$FF
+    db #$28, "     RANDOM", #$FF
+    db #$28, "      22222", #$FF
+    db #$28, "        111", #$FF
+    db #$28, "    3333333", #$FF
+    db #$28, "    1424212", #$FF
+    db #$FF
 
 ; ----------
 ; Ctrl Menu
