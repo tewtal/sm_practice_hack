@@ -167,13 +167,13 @@ preset_load_preset:
     LDA #$5AFE : STA $0917 ; Load garbage into Layer 2 X position
 
     ; check if custom preset is being loaded
-    LDA !ram_custom_preset : BEQ .normal_preset
+    LDA !ram_custom_preset : BEQ .category_preset
     JSL custom_preset_load
     BRA .done
 
-  .normal_preset
+  .category_preset
     LDA !sram_preset_category : ASL : TAX
-    LDA.l preset_banks,X : %a8() : PHA : PLB : %a16()
+    LDA.l category_preset_banks,X : %a8() : PHA : PLB : %a16()
 
     LDA !ram_load_preset : STA !sram_last_preset : STA $C1
     LDA #$0000 : STA !ram_load_preset
@@ -223,7 +223,7 @@ preset_to_memory:
     RTS
 }
 
-preset_banks:
+category_preset_banks:
     dw preset_prkd_crateria_ceres_elevator>>16
     dw preset_kpdr21_crateria_ceres_elevator>>16
     dw preset_hundo_bombs_ceres_elevator>>16

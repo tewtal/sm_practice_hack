@@ -1637,11 +1637,14 @@ cm_divide_100:
     LDA $4214
     RTS
 
+
 ; -----------
 ; Main menu
 ; -----------
 
 incsrc mainmenu.asm
+
+; Preset logic also belongs somewhere in banks 80-BF
 incsrc custompresets.asm
 
 

@@ -2,7 +2,6 @@
 ; Custom Presets
 ; --------------
 
-print pc, " custom presets start"
 custom_preset_save:
 {
     LDA !sram_custom_preset_slot
@@ -159,4 +158,3 @@ custom_preset_load:
     RTL
 }
 
-print pc, " custom presets end"

@@ -6,7 +6,7 @@ preset_pkrd_crateria_ship:
     dl $7E079B : db $02 : dw $91F8 ; MDB
     dl $7E07F3 : db $02 : dw $0006 ; Music Bank
     dl $7E07F5 : db $02 : dw $0005 ; Music Track
-    dl $7E090F : db $02 : dw $8000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $8000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0400 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $03D0 ; Screen Y position in pixels
@@ -34,39 +34,39 @@ preset_pkrd_crateria_ship:
     dl $7E0AF6 : db $02 : dw $0481 ; Samus X
     dl $7E0AFA : db $02 : dw $0440 ; Samus Y
     dl $7E0B3F : db $02 : dw $0000 ; Blue suit
-    dl $7ED820 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED822 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED828 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED82A : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED82C : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED82E : db $02 : dw $0001 ; Events, Items, Doors
-    dl $7ED870 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED872 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED874 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED876 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED878 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED87A : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED87C : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED87E : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED880 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED882 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8B0 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8B2 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8B4 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8B6 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8B8 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8BA : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8BC : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8BE : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8C0 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8C2 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8C4 : db $02 : dw $0000 ; Events, Items, Doors
+    dl $7ED820 : db $02 : dw $0000 ; Events
+    dl $7ED822 : db $02 : dw $0000 ; Events
+    dl $7ED828 : db $02 : dw $0000 ; Bosses
+    dl $7ED82A : db $02 : dw $0000 ; Bosses
+    dl $7ED82C : db $02 : dw $0000 ; Bosses
+    dl $7ED82E : db $02 : dw $0001 ; Bosses
+    dl $7ED870 : db $02 : dw $0000 ; Items
+    dl $7ED872 : db $02 : dw $0000 ; Items
+    dl $7ED874 : db $02 : dw $0000 ; Items
+    dl $7ED876 : db $02 : dw $0000 ; Items
+    dl $7ED878 : db $02 : dw $0000 ; Items
+    dl $7ED87A : db $02 : dw $0000 ; Items
+    dl $7ED87C : db $02 : dw $0000 ; Items
+    dl $7ED87E : db $02 : dw $0000 ; Items
+    dl $7ED880 : db $02 : dw $0000 ; Items
+    dl $7ED882 : db $02 : dw $0000 ; Items
+    dl $7ED8B0 : db $02 : dw $0000 ; Doors
+    dl $7ED8B2 : db $02 : dw $0000 ; Doors
+    dl $7ED8B4 : db $02 : dw $0000 ; Doors
+    dl $7ED8B6 : db $02 : dw $0000 ; Doors
+    dl $7ED8B8 : db $02 : dw $0000 ; Doors
+    dl $7ED8BA : db $02 : dw $0000 ; Doors
+    dl $7ED8BC : db $02 : dw $0000 ; Doors
+    dl $7ED8BE : db $02 : dw $0000 ; Doors
+    dl $7ED8C0 : db $02 : dw $0000 ; Doors
+    dl $7ED8C2 : db $02 : dw $0000 ; Doors
+    dl $7ED8C4 : db $02 : dw $0000 ; Doors
     dw #$FFFF
 .after
 
 preset_pkrd_crateria_parlor:
     dw #preset_pkrd_crateria_ship ; Crateria: Ship
-    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $1400 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0400 ; Screen Y position in pixels
@@ -81,7 +81,7 @@ preset_pkrd_crateria_parlor_downback:
     dw #preset_pkrd_crateria_parlor ; Crateria: Parlor
     dl $7E078D : db $02 : dw $8916 ; DDB
     dl $7E079B : db $02 : dw $92FD ; MDB
-    dl $7E090F : db $02 : dw $F000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $F000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $9C00 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $032A ; Screen Y position in pixels
@@ -92,7 +92,7 @@ preset_pkrd_crateria_parlor_downback:
 
 preset_pkrd_crateria_climb_down:
     dw #preset_pkrd_crateria_parlor_downback ; Crateria: Parlor Downback
-    dl $7E090F : db $02 : dw $3000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $3000 ; Screen subpixel X position
     dl $7E0913 : db $02 : dw $4000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $041F ; Screen Y position in pixels
     dl $7E0AF6 : db $02 : dw $01A8 ; Samus X
@@ -104,7 +104,7 @@ preset_pkrd_crateria_pit_room:
     dw #preset_pkrd_crateria_climb_down ; Crateria: Climb Down
     dl $7E078D : db $02 : dw $898E ; DDB
     dl $7E079B : db $02 : dw $96BA ; MDB
-    dl $7E090F : db $02 : dw $6FFF ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $6FFF ; Screen subpixel X position
     dl $7E0913 : db $02 : dw $3800 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0800 ; Screen Y position in pixels
     dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
@@ -119,7 +119,7 @@ preset_pkrd_crateria_morph:
     dl $7E078D : db $02 : dw $8B9E ; DDB
     dl $7E079B : db $02 : dw $9E9F ; MDB
     dl $7E07F5 : db $02 : dw $0007 ; Music Track
-    dl $7E090F : db $02 : dw $6000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $6000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0500 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0200 ; Screen Y position in pixels
@@ -132,7 +132,7 @@ preset_pkrd_crateria_morph:
 
 preset_pkrd_crateria_construction_zone_down:
     dw #preset_pkrd_crateria_morph ; Crateria: Morph
-    dl $7E090F : db $02 : dw $2000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $2000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0700 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $E400 ; Screen subpixel Y position
     dl $7E09A2 : db $02 : dw $0004 ; Equipped Items
@@ -141,7 +141,7 @@ preset_pkrd_crateria_construction_zone_down:
     dl $7E0A1E : db $02 : dw $0008 ; More position/state
     dl $7E0AF6 : db $02 : dw $07AC ; Samus X
     dl $7E0AFA : db $02 : dw $028B ; Samus Y
-    dl $7ED872 : db $02 : dw $0400 ; Events, Items, Doors
+    dl $7ED872 : db $02 : dw $0400 ; Items
     dw #$FFFF
 .after
 
@@ -149,7 +149,7 @@ preset_pkrd_crateria_construction_zone_up:
     dw #preset_pkrd_crateria_construction_zone_down ; Crateria: Construction Zone Down
     dl $7E078D : db $02 : dw $8EDA ; DDB
     dl $7E079B : db $02 : dw $A107 ; MDB
-    dl $7E090F : db $02 : dw $D000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $D000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $6800 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
@@ -157,7 +157,7 @@ preset_pkrd_crateria_construction_zone_up:
     dl $7E09C8 : db $02 : dw $0005 ; Max missiles
     dl $7E0AF6 : db $02 : dw $0055 ; Samus X
     dl $7E0AFA : db $02 : dw $008B ; Samus Y
-    dl $7ED874 : db $02 : dw $0004 ; Events, Items, Doors
+    dl $7ED874 : db $02 : dw $0004 ; Items
     dw #$FFFF
 .after
 
@@ -166,7 +166,7 @@ preset_pkrd_crateria_pit_room_revisit:
     dl $7E078D : db $02 : dw $8EB6 ; DDB
     dl $7E079B : db $02 : dw $97B5 ; MDB
     dl $7E07F5 : db $02 : dw $0003 ; Music Track
-    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position
     dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
     dl $7E0A1C : db $02 : dw $0000 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0000 ; More position/state
@@ -181,14 +181,14 @@ preset_pkrd_crateria_climb_up:
     dl $7E079B : db $02 : dw $975C ; MDB
     dl $7E07F3 : db $02 : dw $0009 ; Music Bank
     dl $7E07F5 : db $02 : dw $0005 ; Music Track
-    dl $7E090F : db $02 : dw $4000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $4000 ; Screen subpixel X position
     dl $7E0913 : db $02 : dw $CC00 ; Screen subpixel Y position
     dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0004 ; More position/state
     dl $7E0AF6 : db $02 : dw $0083 ; Samus X
     dl $7E0AFA : db $02 : dw $008B ; Samus Y
-    dl $7ED820 : db $02 : dw $0001 ; Events, Items, Doors
-    dl $7ED8B2 : db $02 : dw $0400 ; Events, Items, Doors
+    dl $7ED820 : db $02 : dw $0001 ; Events
+    dl $7ED8B2 : db $02 : dw $0400 ; Doors
     dw #$FFFF
 .after
 
@@ -196,7 +196,7 @@ preset_pkrd_crateria_parlor_revisit:
     dw #preset_pkrd_crateria_climb_up ; Crateria: Climb Up
     dl $7E078D : db $02 : dw $8B7A ; DDB
     dl $7E079B : db $02 : dw $96BA ; MDB
-    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $C000 ; Screen subpixel Y position
     dl $7E0AF6 : db $02 : dw $01A0 ; Samus X
@@ -208,7 +208,7 @@ preset_pkrd_crateria_flyway:
     dw #preset_pkrd_crateria_parlor_revisit ; Crateria: Parlor Revisit
     dl $7E078D : db $02 : dw $8B3E ; DDB
     dl $7E079B : db $02 : dw $92FD ; MDB
-    dl $7E090F : db $02 : dw $C000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $C000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0300 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $2BFF ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $01E6 ; Screen Y position in pixels
@@ -223,21 +223,21 @@ preset_pkrd_crateria_bomb_torizo:
     dw #preset_pkrd_crateria_flyway ; Crateria: Flyway
     dl $7E078D : db $02 : dw $8982 ; DDB
     dl $7E079B : db $02 : dw $9879 ; MDB
-    dl $7E090F : db $02 : dw $4000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $4000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0200 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $D000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
     dl $7E09C6 : db $02 : dw $0000 ; Missiles
     dl $7E0AF6 : db $02 : dw $02BE ; Samus X
     dl $7E0AFA : db $02 : dw $008B ; Samus Y
-    dl $7ED8B2 : db $02 : dw $2400 ; Events, Items, Doors
+    dl $7ED8B2 : db $02 : dw $2400 ; Doors
     dw #$FFFF
 .after
 
 preset_pkrd_crateria_alcatraz:
     dw #preset_pkrd_crateria_bomb_torizo ; Crateria: Bomb Torizo
     dl $7E078D : db $02 : dw $8BAA ; DDB
-    dl $7E090F : db $02 : dw $2001 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $2001 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E09A2 : db $02 : dw $1004 ; Equipped Items
     dl $7E09A4 : db $02 : dw $1004 ; Collected Items
@@ -245,9 +245,9 @@ preset_pkrd_crateria_alcatraz:
     dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0004 ; More position/state
     dl $7E0AF6 : db $02 : dw $0040 ; Samus X
-    dl $7ED828 : db $02 : dw $0004 ; Events, Items, Doors
-    dl $7ED870 : db $02 : dw $0080 ; Events, Items, Doors
-    dl $7ED8B2 : db $02 : dw $2C00 ; Events, Items, Doors
+    dl $7ED828 : db $02 : dw $0004 ; Bosses
+    dl $7ED870 : db $02 : dw $0080 ; Items
+    dl $7ED8B2 : db $02 : dw $2C00 ; Doors
     dw #$FFFF
 .after
 
@@ -255,7 +255,7 @@ preset_pkrd_crateria_terminator:
     dw #preset_pkrd_crateria_alcatraz ; Crateria: Alcatraz
     dl $7E078D : db $02 : dw $8BB6 ; DDB
     dl $7E079B : db $02 : dw $92FD ; MDB
-    dl $7E090F : db $02 : dw $F400 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $F400 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $8800 ; Screen subpixel Y position
     dl $7E0AF6 : db $02 : dw $0115 ; Samus X
@@ -267,7 +267,7 @@ preset_pkrd_crateria_green_pirate_shaft:
     dw #preset_pkrd_crateria_terminator ; Crateria: Terminator
     dl $7E078D : db $02 : dw $895E ; DDB
     dl $7E079B : db $02 : dw $990D ; MDB
-    dl $7E090F : db $02 : dw $9F00 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $9F00 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $01FC ; Screen Y position in pixels
@@ -276,7 +276,7 @@ preset_pkrd_crateria_green_pirate_shaft:
     dl $7E0AF6 : db $02 : dw $0063 ; Samus X
     dl $7E0AFA : db $02 : dw $029B ; Samus Y
     dl $7E0B3F : db $02 : dw $0000 ; Blue suit
-    dl $7ED870 : db $02 : dw $0180 ; Events, Items, Doors
+    dl $7ED870 : db $02 : dw $0180 ; Items
     dw #$FFFF
 .after
 
@@ -285,7 +285,7 @@ preset_pkrd_brinstar_green_brinstar_elevator:
     dl $7E078D : db $02 : dw $8C22 ; DDB
     dl $7E079B : db $02 : dw $9938 ; MDB
     dl $7E07F5 : db $02 : dw $0003 ; Music Track
-    dl $7E090F : db $02 : dw $1C80 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $1C80 ; Screen subpixel X position
     dl $7E0913 : db $02 : dw $C400 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
     dl $7E09C6 : db $02 : dw $0002 ; Missiles
@@ -300,7 +300,7 @@ preset_pkrd_brinstar_early_supers:
     dl $7E079B : db $02 : dw $9AD9 ; MDB
     dl $7E07F3 : db $02 : dw $000F ; Music Bank
     dl $7E07F5 : db $02 : dw $0005 ; Music Track
-    dl $7E090F : db $02 : dw $7000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $7000 ; Screen subpixel X position
     dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $041C ; Screen Y position in pixels
     dl $7E09C6 : db $02 : dw $0000 ; Missiles
@@ -308,22 +308,22 @@ preset_pkrd_brinstar_early_supers:
     dl $7E0A1E : db $02 : dw $0008 ; More position/state
     dl $7E0AF6 : db $02 : dw $00A1 ; Samus X
     dl $7E0AFA : db $02 : dw $048B ; Samus Y
-    dl $7ED8B4 : db $02 : dw $0002 ; Events, Items, Doors
+    dl $7ED8B4 : db $02 : dw $0002 ; Doors
     dw #$FFFF
 .after
 
 preset_pkrd_brinstar_dachora_room:
     dw #preset_pkrd_brinstar_early_supers ; Brinstar: Early Supers
     dl $7E078D : db $02 : dw $8D4E ; DDB
-    dl $7E090F : db $02 : dw $8000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $8000 ; Screen subpixel X position
     dl $7E0915 : db $02 : dw $061A ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $00BD ; Health
     dl $7E09CA : db $02 : dw $0004 ; Supers
     dl $7E09CC : db $02 : dw $0005 ; Max supers
     dl $7E0AF6 : db $02 : dw $0053 ; Samus X
     dl $7E0AFA : db $02 : dw $068B ; Samus Y
-    dl $7ED872 : db $02 : dw $0401 ; Events, Items, Doors
-    dl $7ED8B4 : db $02 : dw $0006 ; Events, Items, Doors
+    dl $7ED872 : db $02 : dw $0401 ; Items
+    dl $7ED8B4 : db $02 : dw $0006 ; Doors
     dw #$FFFF
 .after
 
@@ -331,7 +331,7 @@ preset_pkrd_brinstar_big_pink:
     dw #preset_pkrd_brinstar_dachora_room ; Brinstar: Dachora Room
     dl $7E078D : db $02 : dw $8CE2 ; DDB
     dl $7E079B : db $02 : dw $9CB3 ; MDB
-    dl $7E090F : db $02 : dw $7000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $7000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0600 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $9400 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
@@ -346,7 +346,7 @@ preset_pkrd_brinstar_green_hill_zone:
     dw #preset_pkrd_brinstar_big_pink ; Brinstar: Big Pink
     dl $7E078D : db $02 : dw $8DAE ; DDB
     dl $7E079B : db $02 : dw $9D19 ; MDB
-    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0300 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $E000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0611 ; Screen Y position in pixels
@@ -357,8 +357,8 @@ preset_pkrd_brinstar_green_hill_zone:
     dl $7E09CA : db $02 : dw $0003 ; Supers
     dl $7E0AF6 : db $02 : dw $036C ; Samus X
     dl $7E0AFA : db $02 : dw $068B ; Samus Y
-    dl $7ED872 : db $02 : dw $04C1 ; Events, Items, Doors
-    dl $7ED8B4 : db $02 : dw $0206 ; Events, Items, Doors
+    dl $7ED872 : db $02 : dw $04C1 ; Items
+    dl $7ED8B4 : db $02 : dw $0206 ; Doors
     dw #$FFFF
 .after
 
@@ -366,7 +366,7 @@ preset_pkrd_brinstar_noob_bridge:
     dw #preset_pkrd_brinstar_green_hill_zone ; Brinstar: Green Hill Zone
     dl $7E078D : db $02 : dw $8DEA ; DDB
     dl $7E079B : db $02 : dw $9E52 ; MDB
-    dl $7E090F : db $02 : dw $5000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $5000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $068B ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $8C00 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0300 ; Screen Y position in pixels
@@ -380,14 +380,14 @@ preset_pkrd_brinstar_red_tower:
     dw #preset_pkrd_brinstar_noob_bridge ; Brinstar: Noob Bridge
     dl $7E078D : db $02 : dw $8E92 ; DDB
     dl $7E079B : db $02 : dw $9FBA ; MDB
-    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0500 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $6400 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
     dl $7E09CA : db $02 : dw $0004 ; Supers
     dl $7E0AF6 : db $02 : dw $05BC ; Samus X
     dl $7E0AFA : db $02 : dw $008B ; Samus Y
-    dl $7ED8B6 : db $02 : dw $0008 ; Events, Items, Doors
+    dl $7ED8B6 : db $02 : dw $0008 ; Doors
     dw #$FFFF
 .after
 
@@ -396,7 +396,7 @@ preset_pkrd_brinstar_hellway:
     dl $7E078D : db $02 : dw $8F0A ; DDB
     dl $7E079B : db $02 : dw $A253 ; MDB
     dl $7E07F3 : db $02 : dw $0012 ; Music Bank
-    dl $7E090F : db $02 : dw $BFFF ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $BFFF ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $E400 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0006 ; Screen Y position in pixels
@@ -408,7 +408,7 @@ preset_pkrd_brinstar_caterpillars_down:
     dw #preset_pkrd_brinstar_hellway ; Brinstar: Hellway
     dl $7E078D : db $02 : dw $901E ; DDB
     dl $7E079B : db $02 : dw $A2F7 ; MDB
-    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0200 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $4400 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
@@ -421,7 +421,7 @@ preset_pkrd_brinstar_alpha_power_bombs:
     dw #preset_pkrd_brinstar_caterpillars_down ; Brinstar: Caterpillars Down
     dl $7E078D : db $02 : dw $908A ; DDB
     dl $7E079B : db $02 : dw $A322 ; MDB
-    dl $7E090F : db $02 : dw $B000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $B000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $5C00 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0717 ; Screen Y position in pixels
@@ -430,7 +430,7 @@ preset_pkrd_brinstar_alpha_power_bombs:
     dl $7E0A1E : db $02 : dw $0004 ; More position/state
     dl $7E0AF6 : db $02 : dw $0049 ; Samus X
     dl $7E0AFA : db $02 : dw $078B ; Samus Y
-    dl $7ED8B6 : db $02 : dw $2008 ; Events, Items, Doors
+    dl $7ED8B6 : db $02 : dw $2008 ; Doors
     dw #$FFFF
 .after
 
@@ -439,7 +439,7 @@ preset_pkrd_brinstar_caterpillars_up:
     dl $7E078D : db $02 : dw $9096 ; DDB
     dl $7E079B : db $02 : dw $A3AE ; MDB
     dl $7E07F5 : db $02 : dw $0003 ; Music Track
-    dl $7E090F : db $02 : dw $1000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $1000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0200 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $CC00 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
@@ -451,7 +451,7 @@ preset_pkrd_brinstar_caterpillars_up:
     dl $7E0A1E : db $02 : dw $0008 ; More position/state
     dl $7E0AF6 : db $02 : dw $02AF ; Samus X
     dl $7E0AFA : db $02 : dw $008B ; Samus Y
-    dl $7ED874 : db $02 : dw $0104 ; Events, Items, Doors
+    dl $7ED874 : db $02 : dw $0104 ; Items
     dw #$FFFF
 .after
 
@@ -459,7 +459,7 @@ preset_pkrd_brinstar_crateria_kihunters:
     dw #preset_pkrd_brinstar_caterpillars_up ; Brinstar: Caterpillars Up
     dl $7E078D : db $02 : dw $90BA ; DDB
     dl $7E079B : db $02 : dw $962A ; MDB
-    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $6400 ; Screen subpixel Y position
     dl $7E09CA : db $02 : dw $0005 ; Supers
@@ -468,8 +468,8 @@ preset_pkrd_brinstar_crateria_kihunters:
     dl $7E0A1E : db $02 : dw $0004 ; More position/state
     dl $7E0AF6 : db $02 : dw $007E ; Samus X
     dl $7E0AFA : db $02 : dw $005B ; Samus Y
-    dl $7ED8B2 : db $02 : dw $2C01 ; Events, Items, Doors
-    dl $7ED8B6 : db $02 : dw $3008 ; Events, Items, Doors
+    dl $7ED8B2 : db $02 : dw $2C01 ; Doors
+    dl $7ED8B6 : db $02 : dw $3008 ; Doors
     dw #$FFFF
 .after
 
@@ -478,7 +478,7 @@ preset_pkrd_brinstar_continuous_wall_jump:
     dl $7E078D : db $02 : dw $8AF6 ; DDB
     dl $7E079B : db $02 : dw $948C ; MDB
     dl $7E07F5 : db $02 : dw $0005 ; Music Track
-    dl $7E090F : db $02 : dw $0400 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $0400 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0200 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $3000 ; Screen subpixel Y position
     dl $7E09CE : db $02 : dw $0001 ; Pbs
@@ -487,7 +487,7 @@ preset_pkrd_brinstar_continuous_wall_jump:
     dl $7E0A1E : db $02 : dw $1508 ; More position/state
     dl $7E0AF6 : db $02 : dw $02DB ; Samus X
     dl $7E0AFA : db $02 : dw $008B ; Samus Y
-    dl $7ED8B0 : db $02 : dw $6000 ; Events, Items, Doors
+    dl $7ED8B0 : db $02 : dw $6000 ; Doors
     dw #$FFFF
 .after
 
@@ -495,7 +495,7 @@ preset_pkrd_brinstar_horizontal_bomb_jump:
     dw #preset_pkrd_brinstar_continuous_wall_jump ; Brinstar: Continuous Wall Jump
     dl $7E078D : db $02 : dw $8A36 ; DDB
     dl $7E079B : db $02 : dw $95FF ; MDB
-    dl $7E090F : db $02 : dw $4000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $4000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0085 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
     dl $7E09C6 : db $02 : dw $000C ; Missiles
@@ -503,13 +503,13 @@ preset_pkrd_brinstar_horizontal_bomb_jump:
     dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0008 ; More position/state
     dl $7E0AF6 : db $02 : dw $00EB ; Samus X
-    dl $7ED870 : db $02 : dw $0190 ; Events, Items, Doors
+    dl $7ED870 : db $02 : dw $0190 ; Items
     dw #$FFFF
 .after
 
 preset_pkrd_brinstar_ocean:
     dw #preset_pkrd_brinstar_horizontal_bomb_jump ; Brinstar: Horizontal Bomb Jump
-    dl $7E090F : db $02 : dw $8000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $8000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $3C00 ; Screen subpixel Y position
     dl $7E0AF6 : db $02 : dw $01A8 ; Samus X
@@ -521,12 +521,12 @@ preset_pkrd_wrecked_ship_shaft_down:
     dl $7E078D : db $02 : dw $89D6 ; DDB
     dl $7E079B : db $02 : dw $CA08 ; MDB
     dl $7E07F3 : db $02 : dw $0030 ; Music Bank
-    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0300 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
     dl $7E09CA : db $02 : dw $0004 ; Supers
     dl $7E0AF6 : db $02 : dw $038E ; Samus X
-    dl $7ED8B0 : db $02 : dw $7000 ; Events, Items, Doors
+    dl $7ED8B0 : db $02 : dw $7000 ; Doors
     dw #$FFFF
 .after
 
@@ -534,14 +534,14 @@ preset_pkrd_wrecked_ship_basement:
     dw #preset_pkrd_wrecked_ship_shaft_down ; Wrecked Ship: Shaft Down
     dl $7E078D : db $02 : dw $A1BC ; DDB
     dl $7E079B : db $02 : dw $CAF6 ; MDB
-    dl $7E090F : db $02 : dw $6000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $6000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0400 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $4000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $071F ; Screen Y position in pixels
     dl $7E09CA : db $02 : dw $0003 ; Supers
     dl $7E0AF6 : db $02 : dw $045C ; Samus X
     dl $7E0AFA : db $02 : dw $07BB ; Samus Y
-    dl $7ED8C0 : db $02 : dw $0010 ; Events, Items, Doors
+    dl $7ED8C0 : db $02 : dw $0010 ; Doors
     dw #$FFFF
 .after
 
@@ -549,13 +549,13 @@ preset_pkrd_wrecked_ship_phantoon:
     dw #preset_pkrd_wrecked_ship_basement ; Wrecked Ship: Basement
     dl $7E078D : db $02 : dw $A21C ; DDB
     dl $7E079B : db $02 : dw $CC6F ; MDB
-    dl $7E090F : db $02 : dw $C000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $C000 ; Screen subpixel X position
     dl $7E0913 : db $02 : dw $7400 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
     dl $7E09CA : db $02 : dw $0002 ; Supers
     dl $7E0AF6 : db $02 : dw $04CE ; Samus X
     dl $7E0AFA : db $02 : dw $008B ; Samus Y
-    dl $7ED8C0 : db $02 : dw $0030 ; Events, Items, Doors
+    dl $7ED8C0 : db $02 : dw $0030 ; Doors
     dw #$FFFF
 .after
 
@@ -563,7 +563,7 @@ preset_pkrd_wrecked_ship_leaving_phantoon:
     dw #preset_pkrd_wrecked_ship_phantoon ; Wrecked Ship: Phantoon
     dl $7E078D : db $02 : dw $A2C4 ; DDB
     dl $7E07F5 : db $02 : dw $0006 ; Music Track
-    dl $7E090F : db $02 : dw $1000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $1000 ; Screen subpixel X position
     dl $7E0913 : db $02 : dw $E800 ; Screen subpixel Y position
     dl $7E09C2 : db $02 : dw $00C7 ; Health
     dl $7E09C6 : db $02 : dw $000F ; Missiles
@@ -572,14 +572,14 @@ preset_pkrd_wrecked_ship_leaving_phantoon:
     dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0004 ; More position/state
     dl $7E0AF6 : db $02 : dw $04DB ; Samus X
-    dl $7ED82A : db $02 : dw $0100 ; Events, Items, Doors
-    dl $7ED8C0 : db $02 : dw $0070 ; Events, Items, Doors
+    dl $7ED82A : db $02 : dw $0100 ; Bosses
+    dl $7ED8C0 : db $02 : dw $0070 ; Doors
     dw #$FFFF
 .after
 
 preset_pkrd_wrecked_ship_shaft_to_supers:
     dw #preset_pkrd_wrecked_ship_leaving_phantoon ; Wrecked Ship: Leaving Phantoon
-    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0226 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $FC00 ; Screen subpixel Y position
     dl $7E0AF6 : db $02 : dw $02C6 ; Samus X
@@ -591,7 +591,7 @@ preset_pkrd_wrecked_ship_shaft_up:
     dw #preset_pkrd_wrecked_ship_shaft_to_supers ; Wrecked Ship: Shaft to Supers
     dl $7E078D : db $02 : dw $A210 ; DDB
     dl $7E079B : db $02 : dw $CDA8 ; MDB
-    dl $7E090F : db $02 : dw $5000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $5000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $7400 ; Screen subpixel Y position
     dl $7E09CA : db $02 : dw $0008 ; Supers
@@ -601,8 +601,8 @@ preset_pkrd_wrecked_ship_shaft_up:
     dl $7E0A1E : db $02 : dw $0008 ; More position/state
     dl $7E0AF6 : db $02 : dw $00C7 ; Samus X
     dl $7E0AFA : db $02 : dw $008B ; Samus Y
-    dl $7ED880 : db $02 : dw $0020 ; Events, Items, Doors
-    dl $7ED8C0 : db $02 : dw $0074 ; Events, Items, Doors
+    dl $7ED880 : db $02 : dw $0020 ; Items
+    dl $7ED8C0 : db $02 : dw $0074 ; Doors
     dw #$FFFF
 .after
 
@@ -610,7 +610,7 @@ preset_pkrd_wrecked_ship_attic:
     dw #preset_pkrd_wrecked_ship_shaft_up ; Wrecked Ship: Shaft Up
     dl $7E078D : db $02 : dw $A2E8 ; DDB
     dl $7E079B : db $02 : dw $CAF6 ; MDB
-    dl $7E090F : db $02 : dw $1C00 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $1C00 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0400 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $CC00 ; Screen subpixel Y position
     dl $7E0AF6 : db $02 : dw $0445 ; Samus X
@@ -622,7 +622,7 @@ preset_pkrd_wrecked_ship_upper_west_ocean:
     dw #preset_pkrd_wrecked_ship_attic ; Wrecked Ship: Attic
     dl $7E078D : db $02 : dw $A228 ; DDB
     dl $7E079B : db $02 : dw $CA52 ; MDB
-    dl $7E090F : db $02 : dw $1000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $1000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $AC00 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $001F ; Screen Y position in pixels
@@ -633,7 +633,7 @@ preset_pkrd_wrecked_ship_upper_west_ocean:
     dl $7E0A1E : db $02 : dw $0004 ; More position/state
     dl $7E0AF6 : db $02 : dw $003B ; Samus X
     dl $7E0AFA : db $02 : dw $008B ; Samus Y
-    dl $7ED8C0 : db $02 : dw $0174 ; Events, Items, Doors
+    dl $7ED8C0 : db $02 : dw $0174 ; Doors
     dw #$FFFF
 .after
 
@@ -643,7 +643,7 @@ preset_pkrd_wrecked_ship_pancakes_and_wavers:
     dl $7E079B : db $02 : dw $93FE ; MDB
     dl $7E07F3 : db $02 : dw $000C ; Music Bank
     dl $7E07F5 : db $02 : dw $0005 ; Music Track
-    dl $7E090F : db $02 : dw $8000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $8000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0200 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $4C00 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $01FD ; Screen Y position in pixels
@@ -659,7 +659,7 @@ preset_pkrd_wrecked_ship_bowling_alley:
     dw #preset_pkrd_wrecked_ship_pancakes_and_wavers ; Wrecked Ship: Pancakes and Wavers
     dl $7E078D : db $02 : dw $89E2 ; DDB
     dl $7E079B : db $02 : dw $9461 ; MDB
-    dl $7E090F : db $02 : dw $1800 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $1800 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $7400 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
@@ -676,7 +676,7 @@ preset_pkrd_wrecked_ship_leaving_gravity:
     dl $7E079B : db $02 : dw $CE40 ; MDB
     dl $7E07F3 : db $02 : dw $0030 ; Music Bank
     dl $7E07F5 : db $02 : dw $0003 ; Music Track
-    dl $7E090F : db $02 : dw $4000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $4000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $F800 ; Screen subpixel Y position
     dl $7E09A2 : db $02 : dw $1024 ; Equipped Items
@@ -686,7 +686,7 @@ preset_pkrd_wrecked_ship_leaving_gravity:
     dl $7E0A1E : db $02 : dw $0000 ; More position/state
     dl $7E0AF6 : db $02 : dw $0078 ; Samus X
     dl $7E0AFA : db $02 : dw $0088 ; Samus Y
-    dl $7ED880 : db $02 : dw $00A0 ; Events, Items, Doors
+    dl $7ED880 : db $02 : dw $00A0 ; Items
     dw #$FFFF
 .after
 
@@ -696,7 +696,7 @@ preset_pkrd_wrecked_ship_reverse_moat:
     dl $7E079B : db $02 : dw $93FE ; MDB
     dl $7E07F3 : db $02 : dw $000C ; Music Bank
     dl $7E07F5 : db $02 : dw $0005 ; Music Track
-    dl $7E090F : db $02 : dw $5400 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $5400 ; Screen subpixel X position
     dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $040B ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $0043 ; Health
@@ -711,7 +711,7 @@ preset_pkrd_wrecked_ship_crateria_kihunters_return:
     dw #preset_pkrd_wrecked_ship_reverse_moat ; Wrecked Ship: Reverse Moat
     dl $7E078D : db $02 : dw $89CA ; DDB
     dl $7E079B : db $02 : dw $95FF ; MDB
-    dl $7E090F : db $02 : dw $F000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $F000 ; Screen subpixel X position
     dl $7E0915 : db $02 : dw $0004 ; Screen Y position in pixels
     dl $7E0AF6 : db $02 : dw $0038 ; Samus X
     dl $7E0AFA : db $02 : dw $0094 ; Samus Y
@@ -723,7 +723,7 @@ preset_pkrd_red_brinstar_revisit_red_brinstar_elevator:
     dl $7E078D : db $02 : dw $8A42 ; DDB
     dl $7E079B : db $02 : dw $962A ; MDB
     dl $7E07F5 : db $02 : dw $0003 ; Music Track
-    dl $7E090F : db $02 : dw $7000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $7000 ; Screen subpixel X position
     dl $7E0913 : db $02 : dw $5800 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $0057 ; Health
@@ -740,7 +740,7 @@ preset_pkrd_red_brinstar_revisit_hellway_revisit:
     dl $7E079B : db $02 : dw $A322 ; MDB
     dl $7E07F3 : db $02 : dw $0012 ; Music Bank
     dl $7E07F5 : db $02 : dw $0005 ; Music Track
-    dl $7E090F : db $02 : dw $A000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $A000 ; Screen subpixel X position
     dl $7E0913 : db $02 : dw $2800 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0500 ; Screen Y position in pixels
     dl $7E09C6 : db $02 : dw $000C ; Missiles
@@ -756,7 +756,7 @@ preset_pkrd_red_brinstar_revisit_red_tower_down:
     dw #preset_pkrd_red_brinstar_revisit_hellway_revisit ; Red Brinstar Revisit: Hellway Revisit
     dl $7E078D : db $02 : dw $90AE ; DDB
     dl $7E079B : db $02 : dw $A2F7 ; MDB
-    dl $7E090F : db $02 : dw $8000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $8000 ; Screen subpixel X position
     dl $7E0913 : db $02 : dw $9C00 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $004F ; Health
@@ -769,7 +769,7 @@ preset_pkrd_red_brinstar_revisit_skree_boost:
     dw #preset_pkrd_red_brinstar_revisit_red_tower_down ; Red Brinstar Revisit: Red Tower Down
     dl $7E078D : db $02 : dw $907E ; DDB
     dl $7E079B : db $02 : dw $A253 ; MDB
-    dl $7E090F : db $02 : dw $2000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $2000 ; Screen subpixel X position
     dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $091A ; Screen Y position in pixels
     dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
@@ -783,7 +783,7 @@ preset_pkrd_red_brinstar_revisit_below_spazer:
     dw #preset_pkrd_red_brinstar_revisit_skree_boost ; Red Brinstar Revisit: Skree Boost
     dl $7E078D : db $02 : dw $9042 ; DDB
     dl $7E079B : db $02 : dw $A3DD ; MDB
-    dl $7E090F : db $02 : dw $E000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $E000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $7400 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
@@ -798,7 +798,7 @@ preset_pkrd_red_brinstar_revisit_leaving_spazer:
     dl $7E078D : db $02 : dw $9126 ; DDB
     dl $7E079B : db $02 : dw $A447 ; MDB
     dl $7E07F5 : db $02 : dw $0003 ; Music Track
-    dl $7E090F : db $02 : dw $D000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $D000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $0C00 ; Screen subpixel Y position
     dl $7E09A6 : db $02 : dw $1004 ; Beams
@@ -807,8 +807,8 @@ preset_pkrd_red_brinstar_revisit_leaving_spazer:
     dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0004 ; More position/state
     dl $7E0AF6 : db $02 : dw $0053 ; Samus X
-    dl $7ED874 : db $02 : dw $0504 ; Events, Items, Doors
-    dl $7ED8B6 : db $02 : dw $B008 ; Events, Items, Doors
+    dl $7ED874 : db $02 : dw $0504 ; Items
+    dl $7ED8B6 : db $02 : dw $B008 ; Doors
     dw #$FFFF
 .after
 
@@ -817,7 +817,7 @@ preset_pkrd_red_brinstar_revisit_breaking_tube:
     dl $7E078D : db $02 : dw $9132 ; DDB
     dl $7E079B : db $02 : dw $A408 ; MDB
     dl $7E07F5 : db $02 : dw $0005 ; Music Track
-    dl $7E090F : db $02 : dw $5000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $5000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $4400 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0100 ; Screen Y position in pixels
@@ -834,13 +834,13 @@ preset_pkrd_kraid_entering_kraids_lair:
     dw #preset_pkrd_red_brinstar_revisit_breaking_tube ; Red Brinstar Revisit: Breaking Tube
     dl $7E078D : db $02 : dw $A348 ; DDB
     dl $7E079B : db $02 : dw $CF80 ; MDB
-    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $2001 ; Screen subpixel Y position
     dl $7E09CE : db $02 : dw $0002 ; Pbs
     dl $7E09D2 : db $02 : dw $0000 ; Currently selected item
     dl $7E0AF6 : db $02 : dw $002E ; Samus X
-    dl $7ED820 : db $02 : dw $0801 ; Events, Items, Doors
+    dl $7ED820 : db $02 : dw $0801 ; Events
     dw #$FFFF
 .after
 
@@ -848,7 +848,7 @@ preset_pkrd_kraid_kraid_kihunters:
     dw #preset_pkrd_kraid_entering_kraids_lair ; Kraid: Entering Kraids Lair
     dl $7E078D : db $02 : dw $923A ; DDB
     dl $7E079B : db $02 : dw $A471 ; MDB
-    dl $7E090F : db $02 : dw $8000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $8000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $0C00 ; Screen subpixel Y position
     dl $7E09CA : db $02 : dw $0007 ; Supers
@@ -860,7 +860,7 @@ preset_pkrd_kraid_mini_kraid:
     dw #preset_pkrd_kraid_kraid_kihunters ; Kraid: Kraid Kihunters
     dl $7E078D : db $02 : dw $9156 ; DDB
     dl $7E079B : db $02 : dw $A4DA ; MDB
-    dl $7E090F : db $02 : dw $5000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $5000 ; Screen subpixel X position
     dl $7E0913 : db $02 : dw $1000 ; Screen subpixel Y position
     dl $7E0AF6 : db $02 : dw $016B ; Samus X
     dw #$FFFF
@@ -872,13 +872,13 @@ preset_pkrd_kraid_kraid_2:
     dl $7E079B : db $02 : dw $A56B ; MDB
     dl $7E07F3 : db $02 : dw $0027 ; Music Bank
     dl $7E07F5 : db $02 : dw $0006 ; Music Track
-    dl $7E090F : db $02 : dw $A000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $A000 ; Screen subpixel X position
     dl $7E0913 : db $02 : dw $C000 ; Screen subpixel Y position
     dl $7E09C2 : db $02 : dw $0049 ; Health
     dl $7E09C6 : db $02 : dw $000A ; Missiles
     dl $7E09CA : db $02 : dw $0009 ; Supers
     dl $7E0AF6 : db $02 : dw $01C6 ; Samus X
-    dl $7ED8B8 : db $02 : dw $0024 ; Events, Items, Doors
+    dl $7ED8B8 : db $02 : dw $0024 ; Doors
     dw #$FFFF
 .after
 
@@ -887,7 +887,7 @@ preset_pkrd_kraid_leaving_varia:
     dl $7E078D : db $02 : dw $91DA ; DDB
     dl $7E079B : db $02 : dw $A6E2 ; MDB
     dl $7E07F5 : db $02 : dw $0003 ; Music Track
-    dl $7E090F : db $02 : dw $8000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $8000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $9000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
@@ -900,9 +900,9 @@ preset_pkrd_kraid_leaving_varia:
     dl $7E0A1E : db $02 : dw $0000 ; More position/state
     dl $7E0AF6 : db $02 : dw $0078 ; Samus X
     dl $7E0AFA : db $02 : dw $0088 ; Samus Y
-    dl $7ED828 : db $02 : dw $0104 ; Events, Items, Doors
-    dl $7ED876 : db $02 : dw $0001 ; Events, Items, Doors
-    dl $7ED8B8 : db $02 : dw $0064 ; Events, Items, Doors
+    dl $7ED828 : db $02 : dw $0104 ; Bosses
+    dl $7ED876 : db $02 : dw $0001 ; Items
+    dl $7ED8B8 : db $02 : dw $0064 ; Doors
     dw #$FFFF
 .after
 
@@ -910,7 +910,7 @@ preset_pkrd_kraid_mini_kraid_revisit:
     dw #preset_pkrd_kraid_leaving_varia ; Kraid: Leaving Varia
     dl $7E078D : db $02 : dw $91CE ; DDB
     dl $7E079B : db $02 : dw $A56B ; MDB
-    dl $7E090F : db $02 : dw $5000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $5000 ; Screen subpixel X position
     dl $7E0913 : db $02 : dw $9C00 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0100 ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $005E ; Health
@@ -918,7 +918,7 @@ preset_pkrd_kraid_mini_kraid_revisit:
     dl $7E0A1E : db $02 : dw $0004 ; More position/state
     dl $7E0AF6 : db $02 : dw $0059 ; Samus X
     dl $7E0AFA : db $02 : dw $018B ; Samus Y
-    dl $7ED8B8 : db $02 : dw $00E4 ; Events, Items, Doors
+    dl $7ED8B8 : db $02 : dw $00E4 ; Doors
     dw #$FFFF
 .after
 
@@ -926,7 +926,7 @@ preset_pkrd_kraid_kraid_kihunters_revisit:
     dw #preset_pkrd_kraid_mini_kraid_revisit ; Kraid: Mini Kraid Revisit
     dl $7E078D : db $02 : dw $91AA ; DDB
     dl $7E079B : db $02 : dw $A521 ; MDB
-    dl $7E090F : db $02 : dw $7000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $7000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0084 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $6400 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
@@ -934,7 +934,7 @@ preset_pkrd_kraid_kraid_kihunters_revisit:
     dl $7E09CA : db $02 : dw $000A ; Supers
     dl $7E0AF6 : db $02 : dw $00F2 ; Samus X
     dl $7E0AFA : db $02 : dw $00AB ; Samus Y
-    dl $7ED8B8 : db $02 : dw $00EC ; Events, Items, Doors
+    dl $7ED8B8 : db $02 : dw $00EC ; Doors
     dw #$FFFF
 .after
 
@@ -944,13 +944,13 @@ preset_pkrd_kraid_kraid_etank:
     dl $7E079B : db $02 : dw $A471 ; MDB
     dl $7E07F3 : db $02 : dw $0012 ; Music Bank
     dl $7E07F5 : db $02 : dw $0005 ; Music Track
-    dl $7E090F : db $02 : dw $9000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $9000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $5800 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0100 ; Screen Y position in pixels
     dl $7E0AF6 : db $02 : dw $0057 ; Samus X
     dl $7E0AFA : db $02 : dw $018B ; Samus Y
-    dl $7ED8B8 : db $02 : dw $00ED ; Events, Items, Doors
+    dl $7ED8B8 : db $02 : dw $00ED ; Doors
     dw #$FFFF
 .after
 
@@ -958,7 +958,7 @@ preset_pkrd_kraid_leaving_kraids_lair:
     dw #preset_pkrd_kraid_kraid_etank ; Kraid: Kraid E-tank
     dl $7E078D : db $02 : dw $914A ; DDB
     dl $7E079B : db $02 : dw $A4B1 ; MDB
-    dl $7E090F : db $02 : dw $6000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $6000 ; Screen subpixel X position
     dl $7E0913 : db $02 : dw $1C00 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $012B ; Health
@@ -968,8 +968,8 @@ preset_pkrd_kraid_leaving_kraids_lair:
     dl $7E0A1E : db $02 : dw $0008 ; More position/state
     dl $7E0AF6 : db $02 : dw $0085 ; Samus X
     dl $7E0AFA : db $02 : dw $009B ; Samus Y
-    dl $7ED874 : db $02 : dw $0D04 ; Events, Items, Doors
-    dl $7ED8B8 : db $02 : dw $00EF ; Events, Items, Doors
+    dl $7ED874 : db $02 : dw $0D04 ; Items
+    dl $7ED8B8 : db $02 : dw $00EF ; Doors
     dw #$FFFF
 .after
 
@@ -978,7 +978,7 @@ preset_pkrd_upper_norfair_business_center:
     dl $7E078D : db $02 : dw $913E ; DDB
     dl $7E079B : db $02 : dw $A6A1 ; MDB
     dl $7E07F5 : db $02 : dw $0003 ; Music Track
-    dl $7E090F : db $02 : dw $3000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $3000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0006 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
     dl $7E09C6 : db $02 : dw $000D ; Missiles
@@ -996,13 +996,13 @@ preset_pkrd_upper_norfair_hi_jump_etank:
     dl $7E079B : db $02 : dw $A7DE ; MDB
     dl $7E07F3 : db $02 : dw $0015 ; Music Bank
     dl $7E07F5 : db $02 : dw $0005 ; Music Track
-    dl $7E090F : db $02 : dw $4000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $4000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0915 : db $02 : dw $051B ; Screen Y position in pixels
     dl $7E09CA : db $02 : dw $0008 ; Supers
     dl $7E0AF6 : db $02 : dw $003C ; Samus X
     dl $7E0AFA : db $02 : dw $058B ; Samus Y
-    dl $7ED8B8 : db $02 : dw $20EF ; Events, Items, Doors
+    dl $7ED8B8 : db $02 : dw $20EF ; Doors
     dw #$FFFF
 .after
 
@@ -1011,7 +1011,7 @@ preset_pkrd_upper_norfair_leaving_hi_jump:
     dl $7E078D : db $02 : dw $9426 ; DDB
     dl $7E079B : db $02 : dw $A9E5 ; MDB
     dl $7E07F5 : db $02 : dw $0003 ; Music Track
-    dl $7E090F : db $02 : dw $F000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $F000 ; Screen subpixel X position
     dl $7E0913 : db $02 : dw $B800 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
     dl $7E09A2 : db $02 : dw $1125 ; Equipped Items
@@ -1022,8 +1022,8 @@ preset_pkrd_upper_norfair_leaving_hi_jump:
     dl $7E0A1E : db $02 : dw $0008 ; More position/state
     dl $7E0AF6 : db $02 : dw $0046 ; Samus X
     dl $7E0AFA : db $02 : dw $00BB ; Samus Y
-    dl $7ED876 : db $02 : dw $0121 ; Events, Items, Doors
-    dl $7ED8BA : db $02 : dw $0001 ; Events, Items, Doors
+    dl $7ED876 : db $02 : dw $0121 ; Items
+    dl $7ED8BA : db $02 : dw $0001 ; Doors
     dw #$FFFF
 .after
 
@@ -1032,7 +1032,7 @@ preset_pkrd_upper_norfair_business_center_2:
     dl $7E078D : db $02 : dw $93F6 ; DDB
     dl $7E079B : db $02 : dw $AA41 ; MDB
     dl $7E07F5 : db $02 : dw $0005 ; Music Track
-    dl $7E090F : db $02 : dw $FFFF ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $FFFF ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $27FF ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $000B ; Screen Y position in pixels
@@ -1047,7 +1047,7 @@ preset_pkrd_upper_norfair_ice_beam_gates:
     dw #preset_pkrd_upper_norfair_business_center_2 ; Upper Norfair: Business Center 2
     dl $7E078D : db $02 : dw $941A ; DDB
     dl $7E079B : db $02 : dw $A7DE ; MDB
-    dl $7E090F : db $02 : dw $8000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $8000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $A800 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $030B ; Screen Y position in pixels
@@ -1056,7 +1056,7 @@ preset_pkrd_upper_norfair_ice_beam_gates:
     dl $7E0A1E : db $02 : dw $0004 ; More position/state
     dl $7E0AF6 : db $02 : dw $003C ; Samus X
     dl $7E0AFA : db $02 : dw $039A ; Samus Y
-    dl $7ED8B8 : db $02 : dw $28EF ; Events, Items, Doors
+    dl $7ED8B8 : db $02 : dw $28EF ; Doors
     dw #$FFFF
 .after
 
@@ -1064,7 +1064,7 @@ preset_pkrd_upper_norfair_ice_maze_up:
     dw #preset_pkrd_upper_norfair_ice_beam_gates ; Upper Norfair: Ice Beam Gates
     dl $7E078D : db $02 : dw $931E ; DDB
     dl $7E079B : db $02 : dw $A75D ; MDB
-    dl $7E090F : db $02 : dw $A000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $A000 ; Screen subpixel X position
     dl $7E0913 : db $02 : dw $E400 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
     dl $7E0AF6 : db $02 : dw $0038 ; Samus X
@@ -1077,12 +1077,12 @@ preset_pkrd_upper_norfair_ice_maze_down:
     dl $7E078D : db $02 : dw $937E ; DDB
     dl $7E079B : db $02 : dw $A890 ; MDB
     dl $7E07F5 : db $02 : dw $0003 ; Music Track
-    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position
     dl $7E0913 : db $02 : dw $3400 ; Screen subpixel Y position
     dl $7E09A6 : db $02 : dw $1006 ; Beams
     dl $7E09A8 : db $02 : dw $1006 ; Beams
     dl $7E0AF6 : db $02 : dw $00B9 ; Samus X
-    dl $7ED876 : db $02 : dw $0125 ; Events, Items, Doors
+    dl $7ED876 : db $02 : dw $0125 ; Items
     dw #$FFFF
 .after
 
@@ -1091,7 +1091,7 @@ preset_pkrd_upper_norfair_ice_escape:
     dl $7E078D : db $02 : dw $935A ; DDB
     dl $7E079B : db $02 : dw $A8B9 ; MDB
     dl $7E07F5 : db $02 : dw $0005 ; Music Track
-    dl $7E090F : db $02 : dw $0001 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $0001 ; Screen subpixel X position
     dl $7E0913 : db $02 : dw $0800 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0200 ; Screen Y position in pixels
     dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
@@ -1105,7 +1105,7 @@ preset_pkrd_upper_norfair_precathedral:
     dw #preset_pkrd_upper_norfair_ice_escape ; Upper Norfair: Ice Escape
     dl $7E078D : db $02 : dw $932A ; DDB
     dl $7E079B : db $02 : dw $A7DE ; MDB
-    dl $7E090F : db $02 : dw $5FFF ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $5FFF ; Screen subpixel X position
     dl $7E0913 : db $02 : dw $DBFF ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0319 ; Screen Y position in pixels
     dl $7E0AF6 : db $02 : dw $00A4 ; Samus X
@@ -1117,14 +1117,14 @@ preset_pkrd_upper_norfair_cathedral:
     dw #preset_pkrd_upper_norfair_precathedral ; Upper Norfair: Pre-Cathedral
     dl $7E078D : db $02 : dw $92CA ; DDB
     dl $7E079B : db $02 : dw $A7B3 ; MDB
-    dl $7E090F : db $02 : dw $C000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $C000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0200 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $5400 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
     dl $7E09CA : db $02 : dw $0007 ; Supers
     dl $7E0AF6 : db $02 : dw $02A2 ; Samus X
     dl $7E0AFA : db $02 : dw $008B ; Samus Y
-    dl $7ED8B8 : db $02 : dw $2CEF ; Events, Items, Doors
+    dl $7ED8B8 : db $02 : dw $2CEF ; Doors
     dw #$FFFF
 .after
 
@@ -1132,13 +1132,13 @@ preset_pkrd_upper_norfair_rising_tide:
     dw #preset_pkrd_upper_norfair_cathedral ; Upper Norfair: Cathedral
     dl $7E078D : db $02 : dw $92B2 ; DDB
     dl $7E079B : db $02 : dw $A788 ; MDB
-    dl $7E090F : db $02 : dw $867F ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $867F ; Screen subpixel X position
     dl $7E0913 : db $02 : dw $2800 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0100 ; Screen Y position in pixels
     dl $7E09CA : db $02 : dw $0006 ; Supers
     dl $7E0AF6 : db $02 : dw $02B5 ; Samus X
     dl $7E0AFA : db $02 : dw $018B ; Samus Y
-    dl $7ED8B8 : db $02 : dw $2EEF ; Events, Items, Doors
+    dl $7ED8B8 : db $02 : dw $2EEF ; Doors
     dw #$FFFF
 .after
 
@@ -1146,7 +1146,7 @@ preset_pkrd_upper_norfair_bubble_mountain:
     dw #preset_pkrd_upper_norfair_rising_tide ; Upper Norfair: Rising Tide
     dl $7E078D : db $02 : dw $929A ; DDB
     dl $7E079B : db $02 : dw $AFA3 ; MDB
-    dl $7E090F : db $02 : dw $1000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $1000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0400 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $B400 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
@@ -1163,7 +1163,7 @@ preset_pkrd_upper_norfair_bat_cave:
     dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
     dl $7E0AF6 : db $02 : dw $01BC ; Samus X
-    dl $7ED8BA : db $02 : dw $0011 ; Events, Items, Doors
+    dl $7ED8BA : db $02 : dw $0011 ; Doors
     dw #$FFFF
 .after
 
@@ -1172,7 +1172,7 @@ preset_pkrd_upper_norfair_leaving_speedbooster:
     dl $7E078D : db $02 : dw $95B2 ; DDB
     dl $7E079B : db $02 : dw $AD1B ; MDB
     dl $7E07F5 : db $02 : dw $0003 ; Music Track
-    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $EC00 ; Screen subpixel Y position
     dl $7E09A2 : db $02 : dw $3125 ; Equipped Items
@@ -1182,8 +1182,8 @@ preset_pkrd_upper_norfair_leaving_speedbooster:
     dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0004 ; More position/state
     dl $7E0AF6 : db $02 : dw $0041 ; Samus X
-    dl $7ED878 : db $02 : dw $0004 ; Events, Items, Doors
-    dl $7ED8BA : db $02 : dw $0031 ; Events, Items, Doors
+    dl $7ED878 : db $02 : dw $0004 ; Items
+    dl $7ED8BA : db $02 : dw $0031 ; Doors
     dw #$FFFF
 .after
 
@@ -1192,7 +1192,7 @@ preset_pkrd_upper_norfair_single_chamber:
     dl $7E078D : db $02 : dw $97AA ; DDB
     dl $7E079B : db $02 : dw $ACB3 ; MDB
     dl $7E07F5 : db $02 : dw $0005 ; Music Track
-    dl $7E090F : db $02 : dw $A000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $A000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $00FD ; Screen Y position in pixels
@@ -1202,7 +1202,7 @@ preset_pkrd_upper_norfair_single_chamber:
     dl $7E0A1E : db $02 : dw $0008 ; More position/state
     dl $7E0AF6 : db $02 : dw $01B1 ; Samus X
     dl $7E0AFA : db $02 : dw $018B ; Samus Y
-    dl $7ED822 : db $02 : dw $0020 ; Events, Items, Doors
+    dl $7ED822 : db $02 : dw $0020 ; Events
     dw #$FFFF
 .after
 
@@ -1210,14 +1210,14 @@ preset_pkrd_upper_norfair_double_chamber:
     dw #preset_pkrd_upper_norfair_single_chamber ; Upper Norfair: Single Chamber
     dl $7E078D : db $02 : dw $9582 ; DDB
     dl $7E079B : db $02 : dw $AD5E ; MDB
-    dl $7E090F : db $02 : dw $8000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $8000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $E000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0125 ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $0181 ; Health
     dl $7E09CA : db $02 : dw $0008 ; Supers
     dl $7E0AF6 : db $02 : dw $00BF ; Samus X
-    dl $7ED8BA : db $02 : dw $0071 ; Events, Items, Doors
+    dl $7ED8BA : db $02 : dw $0071 ; Doors
     dw #$FFFF
 .after
 
@@ -1237,8 +1237,8 @@ preset_pkrd_upper_norfair_double_chamber_revisited:
     dl $7E0A1E : db $02 : dw $0004 ; More position/state
     dl $7E0AF6 : db $02 : dw $0054 ; Samus X
     dl $7E0AFA : db $02 : dw $008B ; Samus Y
-    dl $7ED878 : db $02 : dw $001C ; Events, Items, Doors
-    dl $7ED8BA : db $02 : dw $00F1 ; Events, Items, Doors
+    dl $7ED878 : db $02 : dw $001C ; Items
+    dl $7ED8BA : db $02 : dw $00F1 ; Doors
     dw #$FFFF
 .after
 
@@ -1247,7 +1247,7 @@ preset_pkrd_upper_norfair_single_chamber_revisited:
     dl $7E078D : db $02 : dw $962A ; DDB
     dl $7E079B : db $02 : dw $ADAD ; MDB
     dl $7E07F5 : db $02 : dw $0005 ; Music Track
-    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $013B ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $0800 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $011F ; Screen Y position in pixels
@@ -1260,7 +1260,7 @@ preset_pkrd_upper_norfair_volcano_room:
     dw #preset_pkrd_upper_norfair_single_chamber_revisited ; Upper Norfair: Single Chamber Revisited
     dl $7E078D : db $02 : dw $95EE ; DDB
     dl $7E079B : db $02 : dw $AE07 ; MDB
-    dl $7E090F : db $02 : dw $7200 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $7200 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0300 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $0400 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
@@ -1276,7 +1276,7 @@ preset_pkrd_upper_norfair_kronic_boost:
     dw #preset_pkrd_upper_norfair_volcano_room ; Upper Norfair: Volcano Room
     dl $7E078D : db $02 : dw $9642 ; DDB
     dl $7E079B : db $02 : dw $AE32 ; MDB
-    dl $7E090F : db $02 : dw $1C01 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $1C01 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $E400 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0200 ; Screen Y position in pixels
@@ -1292,14 +1292,14 @@ preset_pkrd_upper_norfair_lava_spark:
     dw #preset_pkrd_upper_norfair_kronic_boost ; Upper Norfair: Kronic Boost
     dl $7E078D : db $02 : dw $965A ; DDB
     dl $7E079B : db $02 : dw $AE74 ; MDB
-    dl $7E090F : db $02 : dw $E000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $E000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $3800 ; Screen subpixel Y position
     dl $7E09C2 : db $02 : dw $0175 ; Health
     dl $7E09C6 : db $02 : dw $0012 ; Missiles
     dl $7E09CE : db $02 : dw $0005 ; Pbs
     dl $7E0AF6 : db $02 : dw $01EB ; Samus X
-    dl $7ED8BA : db $02 : dw $01F1 ; Events, Items, Doors
+    dl $7ED8BA : db $02 : dw $01F1 ; Doors
     dw #$FFFF
 .after
 
@@ -1308,7 +1308,7 @@ preset_pkrd_lower_norfair_ln_main_hall:
     dl $7E078D : db $02 : dw $96F6 ; DDB
     dl $7E079B : db $02 : dw $B236 ; MDB
     dl $7E07F3 : db $02 : dw $0018 ; Music Bank
-    dl $7E090F : db $02 : dw $2000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $2000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0400 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
     dl $7E09C2 : db $02 : dw $0120 ; Health
@@ -1322,7 +1322,7 @@ preset_pkrd_lower_norfair_ln_main_hall:
 
 preset_pkrd_lower_norfair_prepillars:
     dw #preset_pkrd_lower_norfair_ln_main_hall ; Lower Norfair: LN Main Hall
-    dl $7E090F : db $02 : dw $4000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $4000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0700 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $7400 ; Screen subpixel Y position
     dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
@@ -1336,7 +1336,7 @@ preset_pkrd_lower_norfair_worst_room_in_the_game:
     dw #preset_pkrd_lower_norfair_prepillars ; Lower Norfair: Pre-Pillars
     dl $7E078D : db $02 : dw $9912 ; DDB
     dl $7E079B : db $02 : dw $B457 ; MDB
-    dl $7E090F : db $02 : dw $02FF ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $02FF ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0300 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $9800 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
@@ -1350,7 +1350,7 @@ preset_pkrd_lower_norfair_amphitheatre:
     dw #preset_pkrd_lower_norfair_worst_room_in_the_game ; Lower Norfair: Worst Room in the Game
     dl $7E078D : db $02 : dw $994E ; DDB
     dl $7E079B : db $02 : dw $B4AD ; MDB
-    dl $7E090F : db $02 : dw $B000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $B000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $B800 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $011F ; Screen Y position in pixels
@@ -1367,7 +1367,7 @@ preset_pkrd_lower_norfair_kihunter_stairs_down:
     dw #preset_pkrd_lower_norfair_amphitheatre ; Lower Norfair: Amphitheatre
     dl $7E078D : db $02 : dw $997E ; DDB
     dl $7E079B : db $02 : dw $B4E5 ; MDB
-    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0275 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0047 ; Screen Y position in pixels
@@ -1382,7 +1382,7 @@ preset_pkrd_lower_norfair_wasteland:
     dw #preset_pkrd_lower_norfair_kihunter_stairs_down ; Lower Norfair: Kihunter Stairs Down
     dl $7E078D : db $02 : dw $99A2 ; DDB
     dl $7E079B : db $02 : dw $B585 ; MDB
-    dl $7E090F : db $02 : dw $3400 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $3400 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0200 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $F3FF ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0416 ; Screen Y position in pixels
@@ -1392,7 +1392,7 @@ preset_pkrd_lower_norfair_wasteland:
     dl $7E0A1E : db $02 : dw $0408 ; More position/state
     dl $7E0AF6 : db $02 : dw $024A ; Samus X
     dl $7E0AFA : db $02 : dw $0489 ; Samus Y
-    dl $7ED8BA : db $02 : dw $41F1 ; Events, Items, Doors
+    dl $7ED8BA : db $02 : dw $41F1 ; Doors
     dw #$FFFF
 .after
 
@@ -1400,7 +1400,7 @@ preset_pkrd_lower_norfair_metal_ninja_pirates:
     dw #preset_pkrd_lower_norfair_wasteland ; Lower Norfair: Wasteland
     dl $7E078D : db $02 : dw $99EA ; DDB
     dl $7E079B : db $02 : dw $B5D5 ; MDB
-    dl $7E090F : db $02 : dw $9000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $9000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $021B ; Screen Y position in pixels
@@ -1411,7 +1411,7 @@ preset_pkrd_lower_norfair_metal_ninja_pirates:
     dl $7E0A1E : db $02 : dw $0004 ; More position/state
     dl $7E0AF6 : db $02 : dw $0167 ; Samus X
     dl $7E0AFA : db $02 : dw $028B ; Samus Y
-    dl $7ED8BA : db $02 : dw $C1F1 ; Events, Items, Doors
+    dl $7ED8BA : db $02 : dw $C1F1 ; Doors
     dw #$FFFF
 .after
 
@@ -1419,14 +1419,14 @@ preset_pkrd_lower_norfair_plowerhouse:
     dw #preset_pkrd_lower_norfair_metal_ninja_pirates ; Lower Norfair: Metal Ninja Pirates
     dl $7E078D : db $02 : dw $9A1A ; DDB
     dl $7E079B : db $02 : dw $B62B ; MDB
-    dl $7E090F : db $02 : dw $F000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $F000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0156 ; Screen X position in pixels
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $0181 ; Health
     dl $7E09CA : db $02 : dw $0009 ; Supers
     dl $7E0AF6 : db $02 : dw $01CA ; Samus X
     dl $7E0AFA : db $02 : dw $00BB ; Samus Y
-    dl $7ED8BC : db $02 : dw $0001 ; Events, Items, Doors
+    dl $7ED8BC : db $02 : dw $0001 ; Doors
     dw #$FFFF
 .after
 
@@ -1434,7 +1434,7 @@ preset_pkrd_lower_norfair_ridley_farming_room:
     dw #preset_pkrd_lower_norfair_plowerhouse ; Lower Norfair: Plowerhouse
     dl $7E078D : db $02 : dw $9A32 ; DDB
     dl $7E079B : db $02 : dw $B482 ; MDB
-    dl $7E090F : db $02 : dw $D000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $D000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $B000 ; Screen subpixel Y position
     dl $7E09C2 : db $02 : dw $0159 ; Health
@@ -1447,13 +1447,13 @@ preset_pkrd_lower_norfair_ridley:
     dw #preset_pkrd_lower_norfair_ridley_farming_room ; Lower Norfair: Ridley Farming Room
     dl $7E078D : db $02 : dw $995A ; DDB
     dl $7E079B : db $02 : dw $B37A ; MDB
-    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position
     dl $7E0913 : db $02 : dw $D800 ; Screen subpixel Y position
     dl $7E09C2 : db $02 : dw $0146 ; Health
     dl $7E09CA : db $02 : dw $000A ; Supers
     dl $7E0AF6 : db $02 : dw $003C ; Samus X
     dl $7E0AFA : db $02 : dw $009B ; Samus Y
-    dl $7ED8BA : db $02 : dw $D1F1 ; Events, Items, Doors
+    dl $7ED8BA : db $02 : dw $D1F1 ; Doors
     dw #$FFFF
 .after
 
@@ -1474,7 +1474,7 @@ preset_pkrd_lower_norfair_leaving_ridley:
     dl $7E0A1E : db $02 : dw $0008 ; More position/state
     dl $7E0AF6 : db $02 : dw $0064 ; Samus X
     dl $7E0AFA : db $02 : dw $019B ; Samus Y
-    dl $7ED82A : db $02 : dw $0101 ; Events, Items, Doors
+    dl $7ED82A : db $02 : dw $0101 ; Bosses
     dw #$FFFF
 .after
 
@@ -1484,14 +1484,14 @@ preset_pkrd_lower_norfair_reverse_plowerhouse:
     dl $7E079B : db $02 : dw $B37A ; MDB
     dl $7E07F3 : db $02 : dw $0018 ; Music Bank
     dl $7E07F5 : db $02 : dw $0005 ; Music Track
-    dl $7E090F : db $02 : dw $4000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $4000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0200 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $9800 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $0101 ; Health
     dl $7E0AF6 : db $02 : dw $02C9 ; Samus X
     dl $7E0AFA : db $02 : dw $008B ; Samus Y
-    dl $7ED8BA : db $02 : dw $D5F1 ; Events, Items, Doors
+    dl $7ED8BA : db $02 : dw $D5F1 ; Doors
     dw #$FFFF
 .after
 
@@ -1499,7 +1499,7 @@ preset_pkrd_lower_norfair_wasteland_revisit:
     dw #preset_pkrd_lower_norfair_reverse_plowerhouse ; Lower Norfair: Reverse Plowerhouse
     dl $7E078D : db $02 : dw $9966 ; DDB
     dl $7E079B : db $02 : dw $B62B ; MDB
-    dl $7E090F : db $02 : dw $9000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $9000 ; Screen subpixel X position
     dl $7E0913 : db $02 : dw $4C00 ; Screen subpixel Y position
     dl $7E09C2 : db $02 : dw $00D3 ; Health
     dl $7E09CA : db $02 : dw $0006 ; Supers
@@ -1511,7 +1511,7 @@ preset_pkrd_lower_norfair_kihunter_stairs_up:
     dw #preset_pkrd_lower_norfair_wasteland_revisit ; Lower Norfair: Wasteland Revisit
     dl $7E078D : db $02 : dw $9A3E ; DDB
     dl $7E079B : db $02 : dw $B5D5 ; MDB
-    dl $7E090F : db $02 : dw $B200 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $B200 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0500 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $E800 ; Screen subpixel Y position
     dl $7E09C2 : db $02 : dw $00A4 ; Health
@@ -1525,7 +1525,7 @@ preset_pkrd_lower_norfair_fire_flea_room:
     dw #preset_pkrd_lower_norfair_kihunter_stairs_up ; Lower Norfair: Kihunter Stairs Up
     dl $7E078D : db $02 : dw $9A26 ; DDB
     dl $7E079B : db $02 : dw $B585 ; MDB
-    dl $7E090F : db $02 : dw $2000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $2000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $8800 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $000F ; Screen Y position in pixels
@@ -1538,7 +1538,7 @@ preset_pkrd_lower_norfair_springball_maze:
     dw #preset_pkrd_lower_norfair_fire_flea_room ; Lower Norfair: Fire Flea Room
     dl $7E078D : db $02 : dw $9A02 ; DDB
     dl $7E079B : db $02 : dw $B6EE ; MDB
-    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
@@ -1552,7 +1552,7 @@ preset_pkrd_lower_norfair_three_musketeers:
     dw #preset_pkrd_lower_norfair_springball_maze ; Lower Norfair: Springball Maze
     dl $7E078D : db $02 : dw $9A92 ; DDB
     dl $7E079B : db $02 : dw $B510 ; MDB
-    dl $7E090F : db $02 : dw $5000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $5000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $EC00 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
@@ -1577,7 +1577,7 @@ preset_pkrd_lower_norfair_bubble_mountain_final:
     dl $7E078D : db $02 : dw $9A4A ; DDB
     dl $7E079B : db $02 : dw $AD5E ; MDB
     dl $7E07F3 : db $02 : dw $0015 ; Music Bank
-    dl $7E090F : db $02 : dw $A000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $A000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $5C00 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $000D ; Screen Y position in pixels
@@ -1590,7 +1590,7 @@ preset_pkrd_lower_norfair_frog_speedway:
     dw #preset_pkrd_lower_norfair_bubble_mountain_final ; Lower Norfair: Bubble Mountain Final
     dl $7E078D : db $02 : dw $956A ; DDB
     dl $7E079B : db $02 : dw $AF72 ; MDB
-    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0024 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $5800 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
@@ -1605,7 +1605,7 @@ preset_pkrd_lower_norfair_business_center_final:
     dw #preset_pkrd_lower_norfair_frog_speedway ; Lower Norfair: Frog Speedway
     dl $7E078D : db $02 : dw $97DA ; DDB
     dl $7E079B : db $02 : dw $B167 ; MDB
-    dl $7E090F : db $02 : dw $8000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $8000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $EC00 ; Screen subpixel Y position
     dl $7E0AF6 : db $02 : dw $002A ; Samus X
@@ -1618,7 +1618,7 @@ preset_pkrd_maridia_maridia_tube_revisit:
     dl $7E079B : db $02 : dw $A6A1 ; MDB
     dl $7E07F3 : db $02 : dw $0012 ; Music Bank
     dl $7E07F5 : db $02 : dw $0003 ; Music Track
-    dl $7E090F : db $02 : dw $6000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $6000 ; Screen subpixel X position
     dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
     dl $7E09C2 : db $02 : dw $0075 ; Health
     dl $7E09C6 : db $02 : dw $0010 ; Missiles
@@ -1635,7 +1635,7 @@ preset_pkrd_maridia_fish_tank:
     dl $7E079B : db $02 : dw $CFC9 ; MDB
     dl $7E07F3 : db $02 : dw $001B ; Music Bank
     dl $7E07F5 : db $02 : dw $0006 ; Music Track
-    dl $7E090F : db $02 : dw $2000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $2000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0102 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $8800 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $05F4 ; Screen Y position in pixels
@@ -1650,7 +1650,7 @@ preset_pkrd_maridia_mt_everest:
     dw #preset_pkrd_maridia_fish_tank ; Maridia: Fish Tank
     dl $7E078D : db $02 : dw $A3F0 ; DDB
     dl $7E079B : db $02 : dw $D0B9 ; MDB
-    dl $7E090F : db $02 : dw $8000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $8000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $4000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $031F ; Screen Y position in pixels
@@ -1661,7 +1661,7 @@ preset_pkrd_maridia_mt_everest:
 
 preset_pkrd_maridia_crab_shaft:
     dw #preset_pkrd_maridia_mt_everest ; Maridia: Mt Everest
-    dl $7E090F : db $02 : dw $F800 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $F800 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0500 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
@@ -1676,7 +1676,7 @@ preset_pkrd_maridia_botwoon_hallway:
     dl $7E078D : db $02 : dw $A4C8 ; DDB
     dl $7E079B : db $02 : dw $D5A7 ; MDB
     dl $7E07F5 : db $02 : dw $0005 ; Music Track
-    dl $7E090F : db $02 : dw $8000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $8000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0001 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $FC00 ; Screen subpixel Y position
     dl $7E09CA : db $02 : dw $0007 ; Supers
@@ -1685,7 +1685,7 @@ preset_pkrd_maridia_botwoon_hallway:
     dl $7E0A1E : db $02 : dw $0004 ; More position/state
     dl $7E0AF6 : db $02 : dw $009E ; Samus X
     dl $7E0AFA : db $02 : dw $006B ; Samus Y
-    dl $7ED8C0 : db $02 : dw $8174 ; Events, Items, Doors
+    dl $7ED8C0 : db $02 : dw $8174 ; Doors
     dw #$FFFF
 .after
 
@@ -1693,7 +1693,7 @@ preset_pkrd_maridia_botwoon:
     dw #preset_pkrd_maridia_botwoon_hallway ; Maridia: Botwoon Hallway
     dl $7E078D : db $02 : dw $A72C ; DDB
     dl $7E079B : db $02 : dw $D617 ; MDB
-    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0300 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $F800 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0001 ; Screen Y position in pixels
@@ -1711,7 +1711,7 @@ preset_pkrd_maridia_botwoon_etank:
     dl $7E079B : db $02 : dw $D95E ; MDB
     dl $7E07F3 : db $02 : dw $002A ; Music Bank
     dl $7E07F5 : db $02 : dw $0003 ; Music Track
-    dl $7E090F : db $02 : dw $F000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $F000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $EC00 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
@@ -1720,7 +1720,7 @@ preset_pkrd_maridia_botwoon_etank:
     dl $7E09CA : db $02 : dw $0004 ; Supers
     dl $7E09CE : db $02 : dw $0001 ; Pbs
     dl $7E0AF6 : db $02 : dw $01CB ; Samus X
-    dl $7ED82C : db $02 : dw $0002 ; Events, Items, Doors
+    dl $7ED82C : db $02 : dw $0002 ; Bosses
     dw #$FFFF
 .after
 
@@ -1730,7 +1730,7 @@ preset_pkrd_maridia_halfie_setup:
     dl $7E079B : db $02 : dw $D7E4 ; MDB
     dl $7E07F3 : db $02 : dw $001B ; Music Bank
     dl $7E07F5 : db $02 : dw $0005 ; Music Track
-    dl $7E090F : db $02 : dw $E000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $E000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $9000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $001F ; Screen Y position in pixels
@@ -1739,7 +1739,7 @@ preset_pkrd_maridia_halfie_setup:
     dl $7E09CA : db $02 : dw $0005 ; Supers
     dl $7E0AF6 : db $02 : dw $0087 ; Samus X
     dl $7E0AFA : db $02 : dw $009B ; Samus Y
-    dl $7ED882 : db $02 : dw $0100 ; Events, Items, Doors
+    dl $7ED882 : db $02 : dw $0100 ; Items
     dw #$FFFF
 .after
 
@@ -1747,7 +1747,7 @@ preset_pkrd_maridia_draygon:
     dw #preset_pkrd_maridia_halfie_setup ; Maridia: Halfie Setup
     dl $7E078D : db $02 : dw $A7F8 ; DDB
     dl $7E079B : db $02 : dw $D78F ; MDB
-    dl $7E090F : db $02 : dw $8000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $8000 ; Screen subpixel X position
     dl $7E0913 : db $02 : dw $0400 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0200 ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $0173 ; Health
@@ -1756,14 +1756,14 @@ preset_pkrd_maridia_draygon:
     dl $7E0A1E : db $02 : dw $0004 ; More position/state
     dl $7E0AF6 : db $02 : dw $0056 ; Samus X
     dl $7E0AFA : db $02 : dw $028B ; Samus Y
-    dl $7ED8C2 : db $02 : dw $0C00 ; Events, Items, Doors
+    dl $7ED8C2 : db $02 : dw $0C00 ; Doors
     dw #$FFFF
 .after
 
 preset_pkrd_maridia_spikesuit_reverse_halfie:
     dw #preset_pkrd_maridia_draygon ; Maridia: Draygon
     dl $7E078D : db $02 : dw $A96C ; DDB
-    dl $7E090F : db $02 : dw $A000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $A000 ; Screen subpixel X position
     dl $7E0913 : db $02 : dw $DC00 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $00C1 ; Health
@@ -1772,8 +1772,8 @@ preset_pkrd_maridia_spikesuit_reverse_halfie:
     dl $7E0A68 : db $02 : dw $0001 ; Flash suit
     dl $7E0AF6 : db $02 : dw $003C ; Samus X
     dl $7E0AFA : db $02 : dw $008B ; Samus Y
-    dl $7ED82C : db $02 : dw $0003 ; Events, Items, Doors
-    dl $7ED8C2 : db $02 : dw $4C00 ; Events, Items, Doors
+    dl $7ED82C : db $02 : dw $0003 ; Bosses
+    dl $7ED8C2 : db $02 : dw $4C00 ; Doors
     dw #$FFFF
 .after
 
@@ -1787,7 +1787,7 @@ preset_pkrd_maridia_reverse_halfie_climb:
     dw #preset_pkrd_maridia_reverse_colosseum ; Maridia: Reverse Colosseum
     dl $7E078D : db $02 : dw $A834 ; DDB
     dl $7E079B : db $02 : dw $D72A ; MDB
-    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position
     dl $7E0913 : db $02 : dw $6000 ; Screen subpixel Y position
     dl $7E09C2 : db $02 : dw $0051 ; Health
     dl $7E0A68 : db $02 : dw $0000 ; Flash suit
@@ -1799,7 +1799,7 @@ preset_pkrd_maridia_reverse_botwoon_etank:
     dw #preset_pkrd_maridia_reverse_halfie_climb ; Maridia: Reverse Halfie Climb
     dl $7E078D : db $02 : dw $A7E0 ; DDB
     dl $7E079B : db $02 : dw $D913 ; MDB
-    dl $7E090F : db $02 : dw $C000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $C000 ; Screen subpixel X position
     dl $7E0913 : db $02 : dw $4000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0200 ; Screen Y position in pixels
     dl $7E09C6 : db $02 : dw $0007 ; Missiles
@@ -1826,12 +1826,12 @@ preset_pkrd_maridia_reverse_crab_shaft:
     dl $7E078D : db $02 : dw $A768 ; DDB
     dl $7E079B : db $02 : dw $D5A7 ; MDB
     dl $7E07F5 : db $02 : dw $0005 ; Music Track
-    dl $7E090F : db $02 : dw $8000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $8000 ; Screen subpixel X position
     dl $7E0913 : db $02 : dw $E800 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $00FF ; Screen Y position in pixels
     dl $7E0AF6 : db $02 : dw $0068 ; Samus X
     dl $7E0AFA : db $02 : dw $018B ; Samus Y
-    dl $7ED8C2 : db $02 : dw $6C00 ; Events, Items, Doors
+    dl $7ED8C2 : db $02 : dw $6C00 ; Doors
     dw #$FFFF
 .after
 
@@ -1840,7 +1840,7 @@ preset_pkrd_maridia_mt_everest_revisit:
     dl $7E078D : db $02 : dw $A708 ; DDB
     dl $7E079B : db $02 : dw $D1A3 ; MDB
     dl $7E07F5 : db $02 : dw $0006 ; Music Track
-    dl $7E090F : db $02 : dw $AFFF ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $AFFF ; Screen subpixel X position
     dl $7E0913 : db $02 : dw $3400 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0200 ; Screen Y position in pixels
     dl $7E0AF6 : db $02 : dw $0071 ; Samus X
@@ -1852,7 +1852,7 @@ preset_pkrd_backtracking_red_brinstar_green_gate:
     dw #preset_pkrd_maridia_mt_everest_revisit ; Maridia: Mt Everest Revisit
     dl $7E078D : db $02 : dw $A42C ; DDB
     dl $7E079B : db $02 : dw $D104 ; MDB
-    dl $7E090F : db $02 : dw $F000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $F000 ; Screen subpixel X position
     dl $7E0913 : db $02 : dw $9800 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
     dl $7E09C2 : db $02 : dw $0079 ; Health
@@ -1868,7 +1868,7 @@ preset_pkrd_backtracking_crateria_kihunters_final:
     dl $7E079B : db $02 : dw $962A ; MDB
     dl $7E07F3 : db $02 : dw $0012 ; Music Bank
     dl $7E07F5 : db $02 : dw $0003 ; Music Track
-    dl $7E090F : db $02 : dw $E000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $E000 ; Screen subpixel X position
     dl $7E0913 : db $02 : dw $4400 ; Screen subpixel Y position
     dl $7E09CA : db $02 : dw $0002 ; Supers
     dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
@@ -1884,7 +1884,7 @@ preset_pkrd_backtracking_parlor_return:
     dl $7E079B : db $02 : dw $91F8 ; MDB
     dl $7E07F3 : db $02 : dw $000C ; Music Bank
     dl $7E07F5 : db $02 : dw $0005 ; Music Track
-    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0399 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $0400 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0400 ; Screen Y position in pixels
@@ -1901,7 +1901,7 @@ preset_pkrd_backtracking_terminator_revisit:
     dl $7E078D : db $02 : dw $8916 ; DDB
     dl $7E079B : db $02 : dw $92FD ; MDB
     dl $7E07F3 : db $02 : dw $0009 ; Music Bank
-    dl $7E090F : db $02 : dw $6800 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $6800 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $AC00 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
@@ -1917,7 +1917,7 @@ preset_pkrd_backtracking_green_pirate_shaft_revisit:
     dw #preset_pkrd_backtracking_terminator_revisit ; Backtracking: Terminator Revisit
     dl $7E078D : db $02 : dw $895E ; DDB
     dl $7E079B : db $02 : dw $990D ; MDB
-    dl $7E090F : db $02 : dw $A680 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $A680 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $01FB ; Screen Y position in pixels
@@ -1933,7 +1933,7 @@ preset_pkrd_backtracking_g4_hallway:
     dw #preset_pkrd_backtracking_green_pirate_shaft_revisit ; Backtracking: Green Pirate Shaft Revisit
     dl $7E078D : db $02 : dw $8BE6 ; DDB
     dl $7E079B : db $02 : dw $99BD ; MDB
-    dl $7E090F : db $02 : dw $F000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $F000 ; Screen subpixel X position
     dl $7E0913 : db $02 : dw $E400 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0600 ; Screen Y position in pixels
     dl $7E09C6 : db $02 : dw $0005 ; Missiles
@@ -1942,7 +1942,7 @@ preset_pkrd_backtracking_g4_hallway:
     dl $7E0A1E : db $02 : dw $0008 ; More position/state
     dl $7E0AF6 : db $02 : dw $00BC ; Samus X
     dl $7E0AFA : db $02 : dw $068B ; Samus Y
-    dl $7ED8B2 : db $02 : dw $6C01 ; Events, Items, Doors
+    dl $7ED8B2 : db $02 : dw $6C01 ; Doors
     dw #$FFFF
 .after
 
@@ -1951,12 +1951,12 @@ preset_pkrd_backtracking_g4_elevator:
     dl $7E078D : db $02 : dw $91F2 ; DDB
     dl $7E079B : db $02 : dw $A66A ; MDB
     dl $7E07F5 : db $02 : dw $0006 ; Music Track
-    dl $7E090F : db $02 : dw $B000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $B000 ; Screen subpixel X position
     dl $7E0913 : db $02 : dw $0800 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $011F ; Screen Y position in pixels
     dl $7E0AF6 : db $02 : dw $007B ; Samus X
     dl $7E0AFA : db $02 : dw $019B ; Samus Y
-    dl $7ED820 : db $02 : dw $0FC1 ; Events, Items, Doors
+    dl $7ED820 : db $02 : dw $0FC1 ; Events
     dw #$FFFF
 .after
 
@@ -1978,7 +1978,7 @@ preset_pkrd_tourian_tourian_elevator_room:
 
 preset_pkrd_tourian_metroids_1:
     dw #preset_pkrd_tourian_tourian_elevator_room ; Tourian: Tourian Elevator Room
-    dl $7E090F : db $02 : dw $4000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $4000 ; Screen subpixel X position
     dl $7E0913 : db $02 : dw $F7FF ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0300 ; Screen Y position in pixels
     dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
@@ -1992,7 +1992,7 @@ preset_pkrd_tourian_metroids_2:
     dw #preset_pkrd_tourian_metroids_1 ; Tourian: Metroids 1
     dl $7E078D : db $02 : dw $A984 ; DDB
     dl $7E079B : db $02 : dw $DAE1 ; MDB
-    dl $7E090F : db $02 : dw $E000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $E000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $00A1 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $1400 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
@@ -2002,7 +2002,7 @@ preset_pkrd_tourian_metroids_2:
     dl $7E09CE : db $02 : dw $0002 ; Pbs
     dl $7E0AF6 : db $02 : dw $012B ; Samus X
     dl $7E0AFA : db $02 : dw $00AB ; Samus Y
-    dl $7ED822 : db $02 : dw $0021 ; Events, Items, Doors
+    dl $7ED822 : db $02 : dw $0021 ; Events
     dw #$FFFF
 .after
 
@@ -2010,7 +2010,7 @@ preset_pkrd_tourian_metroids_3:
     dw #preset_pkrd_tourian_metroids_2 ; Tourian: Metroids 2
     dl $7E078D : db $02 : dw $A9B4 ; DDB
     dl $7E079B : db $02 : dw $DB31 ; MDB
-    dl $7E090F : db $02 : dw $D000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $D000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $011D ; Screen Y position in pixels
@@ -2022,8 +2022,8 @@ preset_pkrd_tourian_metroids_3:
     dl $7E0A1E : db $02 : dw $0008 ; More position/state
     dl $7E0AF6 : db $02 : dw $00C1 ; Samus X
     dl $7E0AFA : db $02 : dw $018B ; Samus Y
-    dl $7ED822 : db $02 : dw $0023 ; Events, Items, Doors
-    dl $7ED8C4 : db $02 : dw $0003 ; Events, Items, Doors
+    dl $7ED822 : db $02 : dw $0023 ; Events
+    dl $7ED8C4 : db $02 : dw $0003 ; Doors
     dw #$FFFF
 .after
 
@@ -2031,7 +2031,7 @@ preset_pkrd_tourian_metroids_4:
     dw #preset_pkrd_tourian_metroids_3 ; Tourian: Metroids 3
     dl $7E078D : db $02 : dw $A9CC ; DDB
     dl $7E079B : db $02 : dw $DB7D ; MDB
-    dl $7E090F : db $02 : dw $A000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $A000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0500 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $9C00 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
@@ -2040,8 +2040,8 @@ preset_pkrd_tourian_metroids_4:
     dl $7E09CE : db $02 : dw $0005 ; Pbs
     dl $7E0AF6 : db $02 : dw $05A7 ; Samus X
     dl $7E0AFA : db $02 : dw $008B ; Samus Y
-    dl $7ED822 : db $02 : dw $0027 ; Events, Items, Doors
-    dl $7ED8C4 : db $02 : dw $0007 ; Events, Items, Doors
+    dl $7ED822 : db $02 : dw $0027 ; Events
+    dl $7ED8C4 : db $02 : dw $0007 ; Doors
     dw #$FFFF
 .after
 
@@ -2049,7 +2049,7 @@ preset_pkrd_tourian_giant_hoppers:
     dw #preset_pkrd_tourian_metroids_4 ; Tourian: Metroids 4
     dl $7E078D : db $02 : dw $A9E4 ; DDB
     dl $7E079B : db $02 : dw $DBCD ; MDB
-    dl $7E090F : db $02 : dw $F000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $F000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $4C00 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $011F ; Screen Y position in pixels
@@ -2059,7 +2059,7 @@ preset_pkrd_tourian_giant_hoppers:
     dl $7E0A1E : db $02 : dw $0508 ; More position/state
     dl $7E0AF6 : db $02 : dw $0074 ; Samus X
     dl $7E0AFA : db $02 : dw $01D0 ; Samus Y
-    dl $7ED822 : db $02 : dw $002F ; Events, Items, Doors
+    dl $7ED822 : db $02 : dw $002F ; Events
     dw #$FFFF
 .after
 
@@ -2069,7 +2069,7 @@ preset_pkrd_tourian_baby_skip:
     dl $7E079B : db $02 : dw $DC65 ; MDB
     dl $7E07F3 : db $02 : dw $0045 ; Music Bank
     dl $7E07F5 : db $02 : dw $0006 ; Music Track
-    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $0800 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
@@ -2078,7 +2078,7 @@ preset_pkrd_tourian_baby_skip:
     dl $7E0A1E : db $02 : dw $0004 ; More position/state
     dl $7E0AF6 : db $02 : dw $01D2 ; Samus X
     dl $7E0AFA : db $02 : dw $00AB ; Samus Y
-    dl $7ED8C4 : db $02 : dw $000F ; Events, Items, Doors
+    dl $7ED8C4 : db $02 : dw $000F ; Doors
     dw #$FFFF
 .after
 
@@ -2088,7 +2088,7 @@ preset_pkrd_tourian_gadora_room:
     dl $7E079B : db $02 : dw $DCFF ; MDB
     dl $7E07F3 : db $02 : dw $001E ; Music Bank
     dl $7E07F5 : db $02 : dw $0005 ; Music Track
-    dl $7E090F : db $02 : dw $CFFF ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $CFFF ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $1000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $011F ; Screen Y position in pixels
@@ -2097,7 +2097,7 @@ preset_pkrd_tourian_gadora_room:
     dl $7E0A1E : db $02 : dw $0008 ; More position/state
     dl $7E0AF6 : db $02 : dw $00BF ; Samus X
     dl $7E0AFA : db $02 : dw $019B ; Samus Y
-    dl $7ED8C4 : db $02 : dw $00AF ; Events, Items, Doors
+    dl $7ED8C4 : db $02 : dw $00AF ; Doors
     dw #$FFFF
 .after
 
@@ -2105,7 +2105,7 @@ preset_pkrd_tourian_rinka_shaft:
     dw #preset_pkrd_tourian_gadora_room ; Tourian: Gadora Room
     dl $7E078D : db $02 : dw $AA5C ; DDB
     dl $7E079B : db $02 : dw $DDC4 ; MDB
-    dl $7E090F : db $02 : dw $C000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $C000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0300 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $8800 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
@@ -2114,7 +2114,7 @@ preset_pkrd_tourian_rinka_shaft:
     dl $7E0A1E : db $02 : dw $0004 ; More position/state
     dl $7E0AF6 : db $02 : dw $03DB ; Samus X
     dl $7E0AFA : db $02 : dw $008B ; Samus Y
-    dl $7ED8C4 : db $02 : dw $01AF ; Events, Items, Doors
+    dl $7ED8C4 : db $02 : dw $01AF ; Doors
     dw #$FFFF
 .after
 
@@ -2122,7 +2122,7 @@ preset_pkrd_tourian_zeb_skip:
     dw #preset_pkrd_tourian_rinka_shaft ; Tourian: Rinka Shaft
     dl $7E078D : db $02 : dw $AAA4 ; DDB
     dl $7E079B : db $02 : dw $DDF3 ; MDB
-    dl $7E090F : db $02 : dw $3000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $3000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $021B ; Screen Y position in pixels
@@ -2130,7 +2130,7 @@ preset_pkrd_tourian_zeb_skip:
     dl $7E0A1C : db $02 : dw $0006 ; Samus position/state
     dl $7E0AF6 : db $02 : dw $0037 ; Samus X
     dl $7E0AFA : db $02 : dw $028B ; Samus Y
-    dl $7ED8C4 : db $02 : dw $03AF ; Events, Items, Doors
+    dl $7ED8C4 : db $02 : dw $03AF ; Doors
     dw #$FFFF
 .after
 
@@ -2140,7 +2140,7 @@ preset_pkrd_tourian_escape_room_3:
     dl $7E079B : db $02 : dw $DE7A ; MDB
     dl $7E07F3 : db $02 : dw $0024 ; Music Bank
     dl $7E07F5 : db $02 : dw $0007 ; Music Track
-    dl $7E090F : db $02 : dw $7000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $7000 ; Screen subpixel X position
     dl $7E0913 : db $02 : dw $2400 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $00FA ; Screen Y position in pixels
     dl $7E09A6 : db $02 : dw $1009 ; Beams
@@ -2153,8 +2153,8 @@ preset_pkrd_tourian_escape_room_3:
     dl $7E0A76 : db $02 : dw $8000 ; Hyper beam
     dl $7E0AF6 : db $02 : dw $00DF ; Samus X
     dl $7E0AFA : db $02 : dw $018B ; Samus Y
-    dl $7ED820 : db $02 : dw $4FC5 ; Events, Items, Doors
-    dl $7ED82C : db $02 : dw $0203 ; Events, Items, Doors
+    dl $7ED820 : db $02 : dw $4FC5 ; Events
+    dl $7ED82C : db $02 : dw $0203 ; Bosses
     dw #$FFFF
 .after
 
@@ -2162,7 +2162,7 @@ preset_pkrd_tourian_climb_spark:
     dw #preset_pkrd_tourian_escape_room_3 ; Tourian: Escape Room 3
     dl $7E078D : db $02 : dw $AB1C ; DDB
     dl $7E079B : db $02 : dw $DEDE ; MDB
-    dl $7E090F : db $02 : dw $B000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $B000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $00BA ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $C000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $00F4 ; Screen Y position in pixels
@@ -2175,7 +2175,7 @@ preset_pkrd_tourian_escape_parlor:
     dw #preset_pkrd_tourian_climb_spark ; Tourian: Climb Spark
     dl $7E078D : db $02 : dw $AB34 ; DDB
     dl $7E079B : db $02 : dw $96BA ; MDB
-    dl $7E090F : db $02 : dw $E000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $E000 ; Screen subpixel X position
     dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $6801 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
