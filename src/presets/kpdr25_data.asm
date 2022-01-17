@@ -3,12 +3,7 @@ preset_kpdr25_bombs_ceres_elevator:
     dw #$0000
     dl $7E078B : db $02 : dw $0000 ; Elevator Index
     dl $7E078D : db $02 : dw $AB58 ; DDB
-    dl $7E078F : db $02 : dw $0000 ; DoorOut Index
     dl $7E079B : db $02 : dw $DF45 ; MDB
-    dl $7E079F : db $02 : dw $0006 ; Region
-    dl $7E07C3 : db $02 : dw $E22A ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $04C0 ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2C1 ; GFX Pointers
     dl $7E07F3 : db $02 : dw $002D ; Music Bank
     dl $7E07F5 : db $02 : dw $0006 ; Music Track
     dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position.
@@ -42,94 +37,12 @@ preset_kpdr25_bombs_ceres_elevator:
     dl $7E0AF6 : db $02 : dw $0080 ; Samus X
     dl $7E0AFA : db $02 : dw $0048 ; Samus Y
     dl $7E0B3F : db $02 : dw $0000 ; Blue suit
-    dl $7ED7C0 : db $02 : dw $0000 ; SRAM copy
-    dl $7ED7C2 : db $02 : dw $0000 ; SRAM copy
-    dl $7ED7C4 : db $02 : dw $0000 ; SRAM copy
-    dl $7ED7C6 : db $02 : dw $0000 ; SRAM copy
-    dl $7ED7C8 : db $02 : dw $0800 ; SRAM copy
-    dl $7ED7CA : db $02 : dw $0400 ; SRAM copy
-    dl $7ED7CC : db $02 : dw $0200 ; SRAM copy
-    dl $7ED7CE : db $02 : dw $0100 ; SRAM copy
-    dl $7ED7D0 : db $02 : dw $4000 ; SRAM copy
-    dl $7ED7D2 : db $02 : dw $8000 ; SRAM copy
-    dl $7ED7D4 : db $02 : dw $0080 ; SRAM copy
-    dl $7ED7D6 : db $02 : dw $0040 ; SRAM copy
-    dl $7ED7D8 : db $02 : dw $2000 ; SRAM copy
-    dl $7ED7DA : db $02 : dw $0020 ; SRAM copy
-    dl $7ED7DC : db $02 : dw $0010 ; SRAM copy
-    dl $7ED7DE : db $02 : dw $0000 ; SRAM copy
-    dl $7ED7E0 : db $02 : dw $0063 ; SRAM copy
-    dl $7ED7E2 : db $02 : dw $0063 ; SRAM copy
-    dl $7ED7E4 : db $02 : dw $0000 ; SRAM copy
-    dl $7ED7E6 : db $02 : dw $0000 ; SRAM copy
-    dl $7ED7E8 : db $02 : dw $0000 ; SRAM copy
-    dl $7ED7EA : db $02 : dw $0000 ; SRAM copy
-    dl $7ED7EC : db $02 : dw $0000 ; SRAM copy
-    dl $7ED7EE : db $02 : dw $0000 ; SRAM copy
-    dl $7ED7F0 : db $02 : dw $0000 ; SRAM copy
-    dl $7ED7F2 : db $02 : dw $0000 ; SRAM copy
-    dl $7ED7F4 : db $02 : dw $0000 ; SRAM copy
-    dl $7ED7F6 : db $02 : dw $0000 ; SRAM copy
-    dl $7ED7F8 : db $02 : dw $0000 ; SRAM copy
-    dl $7ED7FA : db $02 : dw $0000 ; SRAM copy
-    dl $7ED7FC : db $02 : dw $0000 ; SRAM copy
-    dl $7ED7FE : db $02 : dw $0000 ; SRAM copy
-    dl $7ED800 : db $02 : dw $0000 ; SRAM copy
-    dl $7ED802 : db $02 : dw $0000 ; SRAM copy
-    dl $7ED804 : db $02 : dw $0001 ; SRAM copy
-    dl $7ED806 : db $02 : dw $0001 ; SRAM copy
-    dl $7ED808 : db $02 : dw $0000 ; SRAM copy
-    dl $7ED80A : db $02 : dw $0000 ; SRAM copy
-    dl $7ED80C : db $02 : dw $0000 ; SRAM copy
-    dl $7ED80E : db $02 : dw $0000 ; SRAM copy
-    dl $7ED810 : db $02 : dw $0000 ; SRAM copy
-    dl $7ED812 : db $02 : dw $0000 ; SRAM copy
-    dl $7ED814 : db $02 : dw $0000 ; SRAM copy
-    dl $7ED816 : db $02 : dw $0000 ; SRAM copy
-    dl $7ED818 : db $02 : dw $0000 ; SRAM copy
-    dl $7ED81A : db $02 : dw $0000 ; SRAM copy
-    dl $7ED81C : db $02 : dw $0000 ; SRAM copy
-    dl $7ED81E : db $02 : dw $0000 ; SRAM copy
     dl $7ED820 : db $02 : dw $0000 ; Events, Items, Doors
     dl $7ED822 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED824 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED826 : db $02 : dw $0000 ; Events, Items, Doors
     dl $7ED828 : db $02 : dw $0000 ; Events, Items, Doors
     dl $7ED82A : db $02 : dw $0000 ; Events, Items, Doors
     dl $7ED82C : db $02 : dw $0000 ; Events, Items, Doors
     dl $7ED82E : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED830 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED832 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED834 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED836 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED838 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED83A : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED83C : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED83E : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED840 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED842 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED844 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED846 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED848 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED84A : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED84C : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED84E : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED850 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED852 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED854 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED856 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED858 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED85A : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED85C : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED85E : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED860 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED862 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED864 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED866 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED868 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED86A : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED86C : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED86E : db $02 : dw $0000 ; Events, Items, Doors
     dl $7ED870 : db $02 : dw $0000 ; Events, Items, Doors
     dl $7ED872 : db $02 : dw $0000 ; Events, Items, Doors
     dl $7ED874 : db $02 : dw $0000 ; Events, Items, Doors
@@ -140,28 +53,6 @@ preset_kpdr25_bombs_ceres_elevator:
     dl $7ED87E : db $02 : dw $0000 ; Events, Items, Doors
     dl $7ED880 : db $02 : dw $0000 ; Events, Items, Doors
     dl $7ED882 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED884 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED886 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED888 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED88A : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED88C : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED88E : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED890 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED892 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED894 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED896 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED898 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED89A : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED89C : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED89E : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8A0 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8A2 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8A4 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8A6 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8A8 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8AA : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8AC : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8AE : db $02 : dw $0000 ; Events, Items, Doors
     dl $7ED8B0 : db $02 : dw $0000 ; Events, Items, Doors
     dl $7ED8B2 : db $02 : dw $0000 ; Events, Items, Doors
     dl $7ED8B4 : db $02 : dw $0000 ; Events, Items, Doors
@@ -173,51 +64,6 @@ preset_kpdr25_bombs_ceres_elevator:
     dl $7ED8C0 : db $02 : dw $0000 ; Events, Items, Doors
     dl $7ED8C2 : db $02 : dw $0000 ; Events, Items, Doors
     dl $7ED8C4 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8C6 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8C8 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8CA : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8CC : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8CE : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8D0 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8D2 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8D4 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8D6 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8D8 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8DA : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8DC : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8DE : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8E0 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8E2 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8E4 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8E6 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8E8 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8EA : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8EC : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8EE : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8F0 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8F2 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8F4 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8F6 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8F8 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8FA : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8FC : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8FE : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED900 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED902 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED904 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED906 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED908 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED90A : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED90C : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED90E : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED910 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED912 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED914 : db $02 : dw $001F ; Events, Items, Doors
-    dl $7ED916 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED918 : db $02 : dw $0006 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED91C : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED91E : db $02 : dw $0000 ; Events, Items, Doors
     dw #$FFFF
 .after
 
@@ -225,8 +71,6 @@ preset_kpdr25_bombs_ceres_last_3_rooms:
     dw #preset_kpdr25_bombs_ceres_elevator ; Bombs: Ceres Elevator
     dl $7E078D : db $02 : dw $ABA0 ; DDB
     dl $7E079B : db $02 : dw $E021 ; MDB
-    dl $7E07C3 : db $02 : dw $B004 ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $E3C0 ; GFX Pointers
     dl $7E07F3 : db $02 : dw $0024 ; Music Bank
     dl $7E07F5 : db $02 : dw $0007 ; Music Track
     dl $7E090F : db $02 : dw $B000 ; Screen subpixel X position.
@@ -246,10 +90,6 @@ preset_kpdr25_bombs_ship:
     dw #preset_kpdr25_bombs_ceres_last_3_rooms ; Bombs: Ceres Last 3 Rooms
     dl $7E078D : db $02 : dw $88FE ; DDB
     dl $7E079B : db $02 : dw $91F8 ; MDB
-    dl $7E079F : db $02 : dw $0000 ; Region
-    dl $7E07C3 : db $02 : dw $C629 ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $7CBA ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2AD ; GFX Pointers
     dl $7E07F3 : db $02 : dw $0006 ; Music Bank
     dl $7E07F5 : db $02 : dw $0005 ; Music Track
     dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position.
@@ -264,13 +104,6 @@ preset_kpdr25_bombs_ship:
     dl $7E0A1E : db $02 : dw $0E04 ; More position/state
     dl $7E0AF6 : db $02 : dw $0481 ; Samus X
     dl $7E0AFA : db $02 : dw $0440 ; Samus Y
-    dl $7ED7F8 : db $02 : dw $0005 ; SRAM copy
-    dl $7ED7FA : db $02 : dw $0008 ; SRAM copy
-    dl $7ED7FC : db $02 : dw $0001 ; SRAM copy
-    dl $7ED8F8 : db $02 : dw $0001 ; Events, Items, Doors
-    dl $7ED914 : db $02 : dw $0005 ; Events, Items, Doors
-    dl $7ED918 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED91C : db $02 : dw $1010 ; Events, Items, Doors
     dw #$FFFF
 .after
 
@@ -294,12 +127,7 @@ preset_kpdr25_bombs_climb_down:
 preset_kpdr25_bombs_morph:
     dw #preset_kpdr25_bombs_climb_down ; Bombs: Climb Down
     dl $7E078D : db $02 : dw $8B9E ; DDB
-    dl $7E078F : db $02 : dw $0001 ; DoorOut Index
     dl $7E079B : db $02 : dw $9E9F ; MDB
-    dl $7E079F : db $02 : dw $0001 ; Region
-    dl $7E07C3 : db $02 : dw $E6B0 ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $64BB ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2B2 ; GFX Pointers
     dl $7E07F5 : db $02 : dw $0007 ; Music Track
     dl $7E0911 : db $02 : dw $0500 ; Screen X position in pixels
     dl $7E0915 : db $02 : dw $0200 ; Screen Y position in pixels
@@ -310,14 +138,12 @@ preset_kpdr25_bombs_morph:
     dl $7E0A1E : db $02 : dw $0E04 ; More position/state
     dl $7E0AF6 : db $02 : dw $0580 ; Samus X
     dl $7E0AFA : db $02 : dw $02A8 ; Samus Y
-    dl $7ED91A : db $02 : dw $0001 ; Events, Items, Doors
     dw #$FFFF
 .after
 
 preset_kpdr25_bombs_first_missiles:
     dw #preset_kpdr25_bombs_morph ; Bombs: Morph
     dl $7E078D : db $02 : dw $8EDA ; DDB
-    dl $7E078F : db $02 : dw $0002 ; DoorOut Index
     dl $7E079B : db $02 : dw $A107 ; MDB
     dl $7E090F : db $02 : dw $7001 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
@@ -334,7 +160,6 @@ preset_kpdr25_bombs_first_missiles:
     dl $7E0AF6 : db $02 : dw $00CB ; Samus X
     dl $7E0AFA : db $02 : dw $008B ; Samus Y
     dl $7ED872 : db $02 : dw $0400 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $0002 ; Events, Items, Doors
     dw #$FFFF
 .after
 
@@ -342,10 +167,6 @@ preset_kpdr25_bombs_reverse_pit:
     dw #preset_kpdr25_bombs_first_missiles ; Bombs: First Missiles
     dl $7E078D : db $02 : dw $8EB6 ; DDB
     dl $7E079B : db $02 : dw $97B5 ; MDB
-    dl $7E079F : db $02 : dw $0000 ; Region
-    dl $7E07C3 : db $02 : dw $F911 ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $43BA ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2AF ; GFX Pointers
     dl $7E07F5 : db $02 : dw $0003 ; Music Track
     dl $7E090F : db $02 : dw $8000 ; Screen subpixel X position.
     dl $7E0913 : db $02 : dw $C000 ; Screen subpixel Y position
@@ -356,14 +177,12 @@ preset_kpdr25_bombs_reverse_pit:
     dl $7E09C8 : db $02 : dw $0005 ; Max missiles
     dl $7E0AF6 : db $02 : dw $007B ; Samus X
     dl $7ED874 : db $02 : dw $0004 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $0003 ; Events, Items, Doors
     dw #$FFFF
 .after
 
 preset_kpdr25_bombs_climb:
     dw #preset_kpdr25_bombs_reverse_pit ; Bombs: Reverse Pit
     dl $7E078D : db $02 : dw $8B92 ; DDB
-    dl $7E078F : db $02 : dw $0000 ; DoorOut Index
     dl $7E079B : db $02 : dw $975C ; MDB
     dl $7E07F3 : db $02 : dw $0009 ; Music Bank
     dl $7E07F5 : db $02 : dw $0005 ; Music Track
@@ -376,7 +195,6 @@ preset_kpdr25_bombs_climb:
     dl $7E0AF6 : db $02 : dw $003C ; Samus X
     dl $7ED820 : db $02 : dw $0001 ; Events, Items, Doors
     dl $7ED8B2 : db $02 : dw $0400 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $0004 ; Events, Items, Doors
     dw #$FFFF
 .after
 
@@ -399,7 +217,6 @@ preset_kpdr25_bombs_parlor:
 preset_kpdr25_bombs_bomb_torizo:
     dw #preset_kpdr25_bombs_parlor ; Bombs: Parlor
     dl $7E078D : db $02 : dw $8982 ; DDB
-    dl $7E078F : db $02 : dw $0003 ; DoorOut Index
     dl $7E079B : db $02 : dw $9879 ; MDB
     dl $7E0911 : db $02 : dw $0200 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $A400 ; Screen subpixel Y position
@@ -417,7 +234,6 @@ preset_kpdr25_bombs_bomb_torizo:
 preset_kpdr25_bombs_alcatraz:
     dw #preset_kpdr25_bombs_bomb_torizo ; Bombs: Bomb Torizo
     dl $7E078D : db $02 : dw $8BAA ; DDB
-    dl $7E078F : db $02 : dw $0000 ; DoorOut Index
     dl $7E090F : db $02 : dw $E000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $7C00 ; Screen subpixel Y position
@@ -432,7 +248,6 @@ preset_kpdr25_bombs_alcatraz:
     dl $7ED828 : db $02 : dw $0004 ; Events, Items, Doors
     dl $7ED870 : db $02 : dw $0080 ; Events, Items, Doors
     dl $7ED8B2 : db $02 : dw $2C00 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $0005 ; Events, Items, Doors
     dw #$FFFF
 .after
 
@@ -440,9 +255,6 @@ preset_kpdr25_bombs_terminator:
     dw #preset_kpdr25_bombs_alcatraz ; Bombs: Alcatraz
     dl $7E078D : db $02 : dw $8BB6 ; DDB
     dl $7E079B : db $02 : dw $92FD ; MDB
-    dl $7E07C3 : db $02 : dw $C629 ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $7CBA ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2AD ; GFX Pointers
     dl $7E090F : db $02 : dw $C000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $4000 ; Screen subpixel Y position
@@ -460,9 +272,6 @@ preset_kpdr25_bombs_mushrooms:
     dw #preset_kpdr25_bombs_terminator ; Bombs: Terminator
     dl $7E078D : db $02 : dw $8BE6 ; DDB
     dl $7E079B : db $02 : dw $99BD ; MDB
-    dl $7E07C3 : db $02 : dw $F911 ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $43BA ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2AF ; GFX Pointers
     dl $7E090F : db $02 : dw $7000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $1800 ; Screen subpixel Y position
@@ -478,14 +287,12 @@ preset_kpdr25_bombs_mushrooms:
     dl $7E0AF6 : db $02 : dw $0037 ; Samus X
     dl $7E0AFA : db $02 : dw $068B ; Samus Y
     dl $7ED870 : db $02 : dw $0180 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $0008 ; Events, Items, Doors
     dw #$FFFF
 .after
 
 preset_kpdr25_kraid_green_brinstar_elevator:
     dw #preset_kpdr25_bombs_mushrooms ; Bombs: Mushrooms
     dl $7E078D : db $02 : dw $8C22 ; DDB
-    dl $7E078F : db $02 : dw $0002 ; DoorOut Index
     dl $7E079B : db $02 : dw $9938 ; MDB
     dl $7E07F5 : db $02 : dw $0003 ; Music Track
     dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position.
@@ -504,12 +311,7 @@ preset_kpdr25_kraid_green_brinstar_elevator:
 preset_kpdr25_kraid_dachora_room:
     dw #preset_kpdr25_kraid_green_brinstar_elevator ; Kraid: Green Brinstar Elevator
     dl $7E078D : db $02 : dw $8D4E ; DDB
-    dl $7E078F : db $02 : dw $0000 ; DoorOut Index
     dl $7E079B : db $02 : dw $9AD9 ; MDB
-    dl $7E079F : db $02 : dw $0001 ; Region
-    dl $7E07C3 : db $02 : dw $E6B0 ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $64BB ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2B2 ; GFX Pointers
     dl $7E07F3 : db $02 : dw $000F ; Music Bank
     dl $7E07F5 : db $02 : dw $0005 ; Music Track
     dl $7E090F : db $02 : dw $B000 ; Screen subpixel X position.
@@ -527,14 +329,12 @@ preset_kpdr25_kraid_dachora_room:
     dl $7E0AFA : db $02 : dw $068B ; Samus Y
     dl $7ED872 : db $02 : dw $0401 ; Events, Items, Doors
     dl $7ED8B4 : db $02 : dw $0006 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $000C ; Events, Items, Doors
     dw #$FFFF
 .after
 
 preset_kpdr25_kraid_big_pink:
     dw #preset_kpdr25_kraid_dachora_room ; Kraid: Dachora Room
     dl $7E078D : db $02 : dw $8CE2 ; DDB
-    dl $7E078F : db $02 : dw $0005 ; DoorOut Index
     dl $7E079B : db $02 : dw $9CB3 ; MDB
     dl $7E090F : db $02 : dw $D000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0600 ; Screen X position in pixels
@@ -553,7 +353,6 @@ preset_kpdr25_kraid_big_pink:
 preset_kpdr25_kraid_green_hills:
     dw #preset_kpdr25_kraid_big_pink ; Kraid: Big Pink
     dl $7E078D : db $02 : dw $8DAE ; DDB
-    dl $7E078F : db $02 : dw $0001 ; DoorOut Index
     dl $7E079B : db $02 : dw $9D19 ; MDB
     dl $7E090F : db $02 : dw $C000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0300 ; Screen X position in pixels
@@ -572,14 +371,12 @@ preset_kpdr25_kraid_green_hills:
     dl $7E0AFA : db $02 : dw $068B ; Samus Y
     dl $7ED872 : db $02 : dw $04C1 ; Events, Items, Doors
     dl $7ED8B4 : db $02 : dw $0206 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $000F ; Events, Items, Doors
     dw #$FFFF
 .after
 
 preset_kpdr25_kraid_red_tower_descent:
     dw #preset_kpdr25_kraid_green_hills ; Kraid: Green Hills
     dl $7E078D : db $02 : dw $8E92 ; DDB
-    dl $7E078F : db $02 : dw $0002 ; DoorOut Index
     dl $7E079B : db $02 : dw $9FBA ; MDB
     dl $7E090F : db $02 : dw $8000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0500 ; Screen X position in pixels
@@ -595,18 +392,13 @@ preset_kpdr25_kraid_red_tower_descent:
     dl $7E0AF6 : db $02 : dw $0574 ; Samus X
     dl $7E0AFA : db $02 : dw $00AB ; Samus Y
     dl $7ED8B6 : db $02 : dw $0008 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $0010 ; Events, Items, Doors
     dw #$FFFF
 .after
 
 preset_kpdr25_kraid_bat_room:
     dw #preset_kpdr25_kraid_red_tower_descent ; Kraid: Red Tower Descent
     dl $7E078D : db $02 : dw $8F0A ; DDB
-    dl $7E078F : db $02 : dw $0001 ; DoorOut Index
     dl $7E079B : db $02 : dw $A253 ; MDB
-    dl $7E07C3 : db $02 : dw $A5AA ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $5FBC ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2B3 ; GFX Pointers
     dl $7E07F3 : db $02 : dw $0012 ; Music Bank
     dl $7E090F : db $02 : dw $F000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
@@ -641,12 +433,7 @@ preset_kpdr25_kraid_spazer:
 preset_kpdr25_kraid_warehouse_entrance:
     dw #preset_kpdr25_kraid_spazer ; Kraid: Spazer
     dl $7E078D : db $02 : dw $A348 ; DDB
-    dl $7E078F : db $02 : dw $0002 ; DoorOut Index
     dl $7E079B : db $02 : dw $CF80 ; MDB
-    dl $7E079F : db $02 : dw $0004 ; Region
-    dl $7E07C3 : db $02 : dw $B130 ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $3CBE ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2B8 ; GFX Pointers
     dl $7E090F : db $02 : dw $8000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $7400 ; Screen subpixel Y position
@@ -660,7 +447,6 @@ preset_kpdr25_kraid_warehouse_entrance:
     dl $7E0AF6 : db $02 : dw $0048 ; Samus X
     dl $7E0AFA : db $02 : dw $018B ; Samus Y
     dl $7ED874 : db $02 : dw $0404 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $0011 ; Events, Items, Doors
     dw #$FFFF
 .after
 
@@ -668,10 +454,6 @@ preset_kpdr25_kraid_baby_kraid:
     dw #preset_kpdr25_kraid_warehouse_entrance ; Kraid: Warehouse Entrance
     dl $7E078D : db $02 : dw $9156 ; DDB
     dl $7E079B : db $02 : dw $A4DA ; MDB
-    dl $7E079F : db $02 : dw $0001 ; Region
-    dl $7E07C3 : db $02 : dw $A5AA ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $5FBC ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2B3 ; GFX Pointers
     dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $00F4 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $9400 ; Screen subpixel Y position
@@ -685,14 +467,12 @@ preset_kpdr25_kraid_baby_kraid:
     dl $7E0A1C : db $02 : dw $0011 ; Samus position/state
     dl $7E0AF6 : db $02 : dw $0154 ; Samus X
     dl $7E0AFA : db $02 : dw $00AB ; Samus Y
-    dl $7ED91A : db $02 : dw $0012 ; Events, Items, Doors
     dw #$FFFF
 .after
 
 preset_kpdr25_kraid_kraid_2:
     dw #preset_kpdr25_kraid_baby_kraid ; Kraid: Baby Kraid
     dl $7E078D : db $02 : dw $919E ; DDB
-    dl $7E078F : db $02 : dw $0001 ; DoorOut Index
     dl $7E079B : db $02 : dw $A56B ; MDB
     dl $7E07F3 : db $02 : dw $0027 ; Music Bank
     dl $7E07F5 : db $02 : dw $0006 ; Music Track
@@ -738,14 +518,12 @@ preset_kpdr25_kraid_leaving_varia:
     dl $7ED828 : db $02 : dw $0104 ; Events, Items, Doors
     dl $7ED876 : db $02 : dw $0001 ; Events, Items, Doors
     dl $7ED8B8 : db $02 : dw $0064 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $0013 ; Events, Items, Doors
     dw #$FFFF
 .after
 
 preset_kpdr25_kraid_baby_kraid_exiting:
     dw #preset_kpdr25_kraid_leaving_varia ; Kraid: Leaving Varia
     dl $7E078D : db $02 : dw $91CE ; DDB
-    dl $7E078F : db $02 : dw $0000 ; DoorOut Index
     dl $7E079B : db $02 : dw $A56B ; MDB
     dl $7E0913 : db $02 : dw $3BFF ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0100 ; Screen Y position in pixels
@@ -775,19 +553,13 @@ preset_kpdr25_kraid_kraid_etank:
     dl $7E09CA : db $02 : dw $0005 ; Supers
     dl $7E0AF6 : db $02 : dw $0045 ; Samus X
     dl $7ED8B8 : db $02 : dw $00ED ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $0014 ; Events, Items, Doors
     dw #$FFFF
 .after
 
 preset_kpdr25_upper_norfair_business_center:
     dw #preset_kpdr25_kraid_kraid_etank ; Kraid: Kraid E-tank
     dl $7E078D : db $02 : dw $9246 ; DDB
-    dl $7E078F : db $02 : dw $0005 ; DoorOut Index
     dl $7E079B : db $02 : dw $A7DE ; MDB
-    dl $7E079F : db $02 : dw $0002 ; Region
-    dl $7E07C3 : db $02 : dw $C3F9 ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $BBBD ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2B6 ; GFX Pointers
     dl $7E07F3 : db $02 : dw $0015 ; Music Bank
     dl $7E090F : db $02 : dw $E000 ; Screen subpixel X position.
     dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
@@ -803,14 +575,12 @@ preset_kpdr25_upper_norfair_business_center:
     dl $7E0AFA : db $02 : dw $02AB ; Samus Y
     dl $7ED874 : db $02 : dw $0C04 ; Events, Items, Doors
     dl $7ED8B8 : db $02 : dw $00EF ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $0015 ; Events, Items, Doors
     dw #$FFFF
 .after
 
 preset_kpdr25_upper_norfair_leaving_hijump:
     dw #preset_kpdr25_upper_norfair_business_center ; Upper Norfair: Business Center
     dl $7E078D : db $02 : dw $9426 ; DDB
-    dl $7E078F : db $02 : dw $0001 ; DoorOut Index
     dl $7E079B : db $02 : dw $A9E5 ; MDB
     dl $7E07F5 : db $02 : dw $0003 ; Music Track
     dl $7E090F : db $02 : dw $C000 ; Screen subpixel X position.
@@ -831,14 +601,12 @@ preset_kpdr25_upper_norfair_leaving_hijump:
     dl $7ED876 : db $02 : dw $0121 ; Events, Items, Doors
     dl $7ED8B8 : db $02 : dw $20EF ; Events, Items, Doors
     dl $7ED8BA : db $02 : dw $0001 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $0018 ; Events, Items, Doors
     dw #$FFFF
 .after
 
 preset_kpdr25_upper_norfair_precathedral:
     dw #preset_kpdr25_upper_norfair_leaving_hijump ; Upper Norfair: Leaving Hijump
     dl $7E078D : db $02 : dw $941A ; DDB
-    dl $7E078F : db $02 : dw $0000 ; DoorOut Index
     dl $7E079B : db $02 : dw $A7DE ; MDB
     dl $7E07F5 : db $02 : dw $0005 ; Music Track
     dl $7E090F : db $02 : dw $A000 ; Screen subpixel X position.
@@ -852,17 +620,13 @@ preset_kpdr25_upper_norfair_precathedral:
     dl $7E0AF6 : db $02 : dw $00B8 ; Samus X
     dl $7E0AFA : db $02 : dw $038B ; Samus Y
     dl $7ED876 : db $02 : dw $01A1 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $001A ; Events, Items, Doors
     dw #$FFFF
 .after
 
 preset_kpdr25_upper_norfair_rising_tide:
     dw #preset_kpdr25_upper_norfair_precathedral ; Upper Norfair: Pre-Cathedral
     dl $7E078D : db $02 : dw $92B2 ; DDB
-    dl $7E078F : db $02 : dw $0001 ; DoorOut Index
     dl $7E079B : db $02 : dw $A788 ; MDB
-    dl $7E07C5 : db $02 : dw $E4BD ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2B5 ; GFX Pointers
     dl $7E090F : db $02 : dw $9000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0200 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $2800 ; Screen subpixel Y position
@@ -875,7 +639,6 @@ preset_kpdr25_upper_norfair_rising_tide:
     dl $7E0AF6 : db $02 : dw $02D7 ; Samus X
     dl $7E0AFA : db $02 : dw $018B ; Samus Y
     dl $7ED8B8 : db $02 : dw $26EF ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $001B ; Events, Items, Doors
     dw #$FFFF
 .after
 
@@ -907,14 +670,12 @@ preset_kpdr25_upper_norfair_bat_cave:
     dl $7E09C2 : db $02 : dw $0188 ; Health
     dl $7E0AF6 : db $02 : dw $01D0 ; Samus X
     dl $7ED8BA : db $02 : dw $0011 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $001C ; Events, Items, Doors
     dw #$FFFF
 .after
 
 preset_kpdr25_upper_norfair_speed_hallway:
     dw #preset_kpdr25_upper_norfair_bat_cave ; Upper Norfair: Bat Cave
     dl $7E078D : db $02 : dw $958E ; DDB
-    dl $7E078F : db $02 : dw $0005 ; DoorOut Index
     dl $7E079B : db $02 : dw $B07A ; MDB
     dl $7E090F : db $02 : dw $EFFF ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
@@ -930,7 +691,6 @@ preset_kpdr25_upper_norfair_speed_hallway:
 preset_kpdr25_upper_norfair_bat_cave_return:
     dw #preset_kpdr25_upper_norfair_speed_hallway ; Upper Norfair: Speed Hallway
     dl $7E078D : db $02 : dw $95BE ; DDB
-    dl $7E078F : db $02 : dw $0000 ; DoorOut Index
     dl $7E079B : db $02 : dw $ACF0 ; MDB
     dl $7E090F : db $02 : dw $C000 ; Screen subpixel X position.
     dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
@@ -947,7 +707,6 @@ preset_kpdr25_upper_norfair_bat_cave_return:
     dl $7ED822 : db $02 : dw $0020 ; Events, Items, Doors
     dl $7ED878 : db $02 : dw $0004 ; Events, Items, Doors
     dl $7ED8BA : db $02 : dw $0031 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $001F ; Events, Items, Doors
     dw #$FFFF
 .after
 
@@ -969,14 +728,12 @@ preset_kpdr25_upper_norfair_single_chamber:
     dl $7E0AF6 : db $02 : dw $01B3 ; Samus X
     dl $7E0AFA : db $02 : dw $018B ; Samus Y
     dl $7E0B3F : db $02 : dw $0000 ; Blue suit
-    dl $7ED91A : db $02 : dw $0020 ; Events, Items, Doors
     dw #$FFFF
 .after
 
 preset_kpdr25_upper_norfair_leaving_wave:
     dw #preset_kpdr25_upper_norfair_single_chamber ; Upper Norfair: Single Chamber
     dl $7E078D : db $02 : dw $961E ; DDB
-    dl $7E078F : db $02 : dw $0002 ; DoorOut Index
     dl $7E079B : db $02 : dw $ADDE ; MDB
     dl $7E07F5 : db $02 : dw $0003 ; Music Track
     dl $7E090F : db $02 : dw $8000 ; Screen subpixel X position.
@@ -997,14 +754,12 @@ preset_kpdr25_upper_norfair_leaving_wave:
     dl $7E0AFA : db $02 : dw $007B ; Samus Y
     dl $7ED878 : db $02 : dw $001C ; Events, Items, Doors
     dl $7ED8BA : db $02 : dw $00F1 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $0022 ; Events, Items, Doors
     dw #$FFFF
 .after
 
 preset_kpdr25_upper_norfair_leaving_single_chamber:
     dw #preset_kpdr25_upper_norfair_leaving_wave ; Upper Norfair: Leaving Wave
     dl $7E078D : db $02 : dw $9606 ; DDB
-    dl $7E078F : db $02 : dw $0000 ; DoorOut Index
     dl $7E079B : db $02 : dw $AD5E ; MDB
     dl $7E07F5 : db $02 : dw $0005 ; Music Track
     dl $7E090F : db $02 : dw $C000 ; Screen subpixel X position.
@@ -1017,14 +772,12 @@ preset_kpdr25_upper_norfair_leaving_single_chamber:
     dl $7E0A1E : db $02 : dw $0004 ; More position/state
     dl $7E0AF6 : db $02 : dw $008E ; Samus X
     dl $7E0AFA : db $02 : dw $008B ; Samus Y
-    dl $7ED91A : db $02 : dw $0023 ; Events, Items, Doors
     dw #$FFFF
 .after
 
 preset_kpdr25_upper_norfair_frog_speedway:
     dw #preset_kpdr25_upper_norfair_leaving_single_chamber ; Upper Norfair: Leaving Single Chamber
     dl $7E078D : db $02 : dw $956A ; DDB
-    dl $7E078F : db $02 : dw $0002 ; DoorOut Index
     dl $7E079B : db $02 : dw $AF72 ; MDB
     dl $7E090F : db $02 : dw $1000 ; Screen subpixel X position.
     dl $7E0913 : db $02 : dw $5400 ; Screen subpixel Y position
@@ -1039,17 +792,13 @@ preset_kpdr25_upper_norfair_frog_speedway:
     dl $7E0A1E : db $02 : dw $0104 ; More position/state
     dl $7E0AF6 : db $02 : dw $0042 ; Samus X
     dl $7E0B3F : db $02 : dw $0001 ; Blue suit
-    dl $7ED91A : db $02 : dw $0024 ; Events, Items, Doors
     dw #$FFFF
 .after
 
 preset_kpdr25_upper_norfair_entering_ice:
     dw #preset_kpdr25_upper_norfair_frog_speedway ; Upper Norfair: Frog Speedway
     dl $7E078D : db $02 : dw $9816 ; DDB
-    dl $7E078F : db $02 : dw $0001 ; DoorOut Index
     dl $7E079B : db $02 : dw $A7DE ; MDB
-    dl $7E07C5 : db $02 : dw $BBBD ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2B6 ; GFX Pointers
     dl $7E090F : db $02 : dw $6800 ; Screen subpixel X position.
     dl $7E0913 : db $02 : dw $2400 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0309 ; Screen Y position in pixels
@@ -1067,10 +816,7 @@ preset_kpdr25_upper_norfair_entering_ice:
 preset_kpdr25_upper_norfair_ice_escape:
     dw #preset_kpdr25_upper_norfair_entering_ice ; Upper Norfair: Entering Ice
     dl $7E078D : db $02 : dw $935A ; DDB
-    dl $7E078F : db $02 : dw $0000 ; DoorOut Index
     dl $7E079B : db $02 : dw $A8B9 ; MDB
-    dl $7E07C5 : db $02 : dw $E4BD ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2B5 ; GFX Pointers
     dl $7E090F : db $02 : dw $5001 ; Screen subpixel X position.
     dl $7E0913 : db $02 : dw $7000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0200 ; Screen Y position in pixels
@@ -1084,19 +830,13 @@ preset_kpdr25_upper_norfair_ice_escape:
     dl $7E0AF6 : db $02 : dw $00C7 ; Samus X
     dl $7E0AFA : db $02 : dw $028B ; Samus Y
     dl $7ED876 : db $02 : dw $01A5 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $0025 ; Events, Items, Doors
     dw #$FFFF
 .after
 
 preset_kpdr25_wrecked_ship_alpha_spark:
     dw #preset_kpdr25_upper_norfair_ice_escape ; Upper Norfair: Ice Escape
     dl $7E078D : db $02 : dw $92EE ; DDB
-    dl $7E078F : db $02 : dw $0004 ; DoorOut Index
     dl $7E079B : db $02 : dw $A6A1 ; MDB
-    dl $7E079F : db $02 : dw $0001 ; Region
-    dl $7E07C3 : db $02 : dw $A5AA ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $5FBC ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2B3 ; GFX Pointers
     dl $7E07F3 : db $02 : dw $0012 ; Music Bank
     dl $7E07F5 : db $02 : dw $0003 ; Music Track
     dl $7E090F : db $02 : dw $3000 ; Screen subpixel X position.
@@ -1114,7 +854,6 @@ preset_kpdr25_wrecked_ship_alpha_spark:
 preset_kpdr25_wrecked_ship_red_tower:
     dw #preset_kpdr25_wrecked_ship_alpha_spark ; Wrecked Ship: Alpha Spark
     dl $7E078D : db $02 : dw $910E ; DDB
-    dl $7E078F : db $02 : dw $0000 ; DoorOut Index
     dl $7E079B : db $02 : dw $A3DD ; MDB
     dl $7E07F5 : db $02 : dw $0005 ; Music Track
     dl $7E090F : db $02 : dw $6C00 ; Screen subpixel X position.
@@ -1151,7 +890,6 @@ preset_kpdr25_wrecked_ship_hellway:
 preset_kpdr25_wrecked_ship_alpha_power_bombs:
     dw #preset_kpdr25_wrecked_ship_hellway ; Wrecked Ship: Hellway
     dl $7E078D : db $02 : dw $908A ; DDB
-    dl $7E078F : db $02 : dw $0001 ; DoorOut Index
     dl $7E079B : db $02 : dw $A322 ; MDB
     dl $7E090F : db $02 : dw $FFFF ; Screen subpixel X position.
     dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
@@ -1172,7 +910,6 @@ preset_kpdr25_wrecked_ship_alpha_power_bombs:
 preset_kpdr25_wrecked_ship_post_power_bombs:
     dw #preset_kpdr25_wrecked_ship_alpha_power_bombs ; Wrecked Ship: Alpha Power Bombs
     dl $7E078D : db $02 : dw $9096 ; DDB
-    dl $7E078F : db $02 : dw $0000 ; DoorOut Index
     dl $7E079B : db $02 : dw $A3AE ; MDB
     dl $7E07F5 : db $02 : dw $0003 ; Music Track
     dl $7E090F : db $02 : dw $F000 ; Screen subpixel X position.
@@ -1191,19 +928,13 @@ preset_kpdr25_wrecked_ship_post_power_bombs:
     dl $7E0AF6 : db $02 : dw $02CA ; Samus X
     dl $7E0AFA : db $02 : dw $008B ; Samus Y
     dl $7ED874 : db $02 : dw $0D04 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $0027 ; Events, Items, Doors
     dw #$FFFF
 .after
 
 preset_kpdr25_wrecked_ship_premoat:
     dw #preset_kpdr25_wrecked_ship_post_power_bombs ; Wrecked Ship: Post Power Bombs
     dl $7E078D : db $02 : dw $90BA ; DDB
-    dl $7E078F : db $02 : dw $0002 ; DoorOut Index
     dl $7E079B : db $02 : dw $962A ; MDB
-    dl $7E079F : db $02 : dw $0000 ; Region
-    dl $7E07C3 : db $02 : dw $F911 ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $43BA ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2AF ; GFX Pointers
     dl $7E090F : db $02 : dw $3000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $C000 ; Screen subpixel Y position
@@ -1223,11 +954,7 @@ preset_kpdr25_wrecked_ship_premoat:
 preset_kpdr25_wrecked_ship_ocean_spark:
     dw #preset_kpdr25_wrecked_ship_premoat ; Wrecked Ship: Pre-Moat
     dl $7E078D : db $02 : dw $8A36 ; DDB
-    dl $7E078F : db $02 : dw $0001 ; DoorOut Index
     dl $7E079B : db $02 : dw $95FF ; MDB
-    dl $7E07C3 : db $02 : dw $C629 ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $7CBA ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2AD ; GFX Pointers
     dl $7E07F5 : db $02 : dw $0005 ; Music Track
     dl $7E090F : db $02 : dw $C3FF ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
@@ -1246,7 +973,6 @@ preset_kpdr25_wrecked_ship_ocean_spark:
     dl $7ED870 : db $02 : dw $0190 ; Events, Items, Doors
     dl $7ED8B0 : db $02 : dw $6000 ; Events, Items, Doors
     dl $7ED8B2 : db $02 : dw $2C01 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $0028 ; Events, Items, Doors
     dw #$FFFF
 .after
 
@@ -1268,19 +994,13 @@ preset_kpdr25_wrecked_ship_ws_entrance:
     dl $7E0AF6 : db $02 : dw $07DB ; Samus X
     dl $7E0AFA : db $02 : dw $048B ; Samus Y
     dl $7ED8B0 : db $02 : dw $7000 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $002B ; Events, Items, Doors
     dw #$FFFF
 .after
 
 preset_kpdr25_wrecked_ship_phantoon:
     dw #preset_kpdr25_wrecked_ship_ws_entrance ; Wrecked Ship: WS Entrance
     dl $7E078D : db $02 : dw $A21C ; DDB
-    dl $7E078F : db $02 : dw $0003 ; DoorOut Index
     dl $7E079B : db $02 : dw $CC6F ; MDB
-    dl $7E079F : db $02 : dw $0003 ; Region
-    dl $7E07C3 : db $02 : dw $AE9E ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $A6BB ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2B1 ; GFX Pointers
     dl $7E07F3 : db $02 : dw $0030 ; Music Bank
     dl $7E090F : db $02 : dw $C000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0400 ; Screen X position in pixels
@@ -1293,16 +1013,12 @@ preset_kpdr25_wrecked_ship_phantoon:
     dl $7E0AF6 : db $02 : dw $04DB ; Samus X
     dl $7E0AFA : db $02 : dw $008B ; Samus Y
     dl $7ED8C0 : db $02 : dw $0030 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $002C ; Events, Items, Doors
     dw #$FFFF
 .after
 
 preset_kpdr25_wrecked_ship_ws_shaft:
     dw #preset_kpdr25_wrecked_ship_phantoon ; Wrecked Ship: Phantoon
     dl $7E078D : db $02 : dw $A2C4 ; DDB
-    dl $7E078F : db $02 : dw $0000 ; DoorOut Index
-    dl $7E07C5 : db $02 : dw $E7BB ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2B0 ; GFX Pointers
     dl $7E07F5 : db $02 : dw $0006 ; Music Track
     dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $01F3 ; Screen X position in pixels
@@ -1324,7 +1040,6 @@ preset_kpdr25_wrecked_ship_ws_shaft:
 preset_kpdr25_wrecked_ship_post_ws_supers:
     dw #preset_kpdr25_wrecked_ship_ws_shaft ; Wrecked Ship: WS Shaft
     dl $7E078D : db $02 : dw $A210 ; DDB
-    dl $7E078F : db $02 : dw $0002 ; DoorOut Index
     dl $7E079B : db $02 : dw $CDA8 ; MDB
     dl $7E090F : db $02 : dw $6000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
@@ -1339,14 +1054,12 @@ preset_kpdr25_wrecked_ship_post_ws_supers:
     dl $7E0AFA : db $02 : dw $008B ; Samus Y
     dl $7ED880 : db $02 : dw $0020 ; Events, Items, Doors
     dl $7ED8C0 : db $02 : dw $0074 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $002E ; Events, Items, Doors
     dw #$FFFF
 .after
 
 preset_kpdr25_wrecked_ship_attic:
     dw #preset_kpdr25_wrecked_ship_post_ws_supers ; Wrecked Ship: Post WS Supers
     dl $7E078D : db $02 : dw $A2E8 ; DDB
-    dl $7E078F : db $02 : dw $0000 ; DoorOut Index
     dl $7E079B : db $02 : dw $CAF6 ; MDB
     dl $7E090F : db $02 : dw $3C00 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0400 ; Screen X position in pixels
@@ -1358,19 +1071,13 @@ preset_kpdr25_wrecked_ship_attic:
     dl $7E0A1E : db $02 : dw $0008 ; More position/state
     dl $7E0AF6 : db $02 : dw $0445 ; Samus X
     dl $7E0AFA : db $02 : dw $006B ; Samus Y
-    dl $7ED91A : db $02 : dw $002F ; Events, Items, Doors
     dw #$FFFF
 .after
 
 preset_kpdr25_wrecked_ship_pre_bowling:
     dw #preset_kpdr25_wrecked_ship_attic ; Wrecked Ship: Attic
     dl $7E078D : db $02 : dw $A1E0 ; DDB
-    dl $7E078F : db $02 : dw $0002 ; DoorOut Index
     dl $7E079B : db $02 : dw $93FE ; MDB
-    dl $7E079F : db $02 : dw $0000 ; Region
-    dl $7E07C3 : db $02 : dw $C629 ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $7CBA ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2AD ; GFX Pointers
     dl $7E07F3 : db $02 : dw $000C ; Music Bank
     dl $7E07F5 : db $02 : dw $0005 ; Music Track
     dl $7E090F : db $02 : dw $0800 ; Screen subpixel X position.
@@ -1388,19 +1095,13 @@ preset_kpdr25_wrecked_ship_pre_bowling:
     dl $7E0AF6 : db $02 : dw $02D8 ; Samus X
     dl $7E0AFA : db $02 : dw $028B ; Samus Y
     dl $7ED8C0 : db $02 : dw $0174 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $0032 ; Events, Items, Doors
     dw #$FFFF
 .after
 
 preset_kpdr25_wrecked_ship_gravity:
     dw #preset_kpdr25_wrecked_ship_pre_bowling ; Wrecked Ship: Pre Bowling
     dl $7E078D : db $02 : dw $8B32 ; DDB
-    dl $7E078F : db $02 : dw $0001 ; DoorOut Index
     dl $7E079B : db $02 : dw $C98E ; MDB
-    dl $7E079F : db $02 : dw $0003 ; Region
-    dl $7E07C3 : db $02 : dw $AE9E ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $E7BB ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2B0 ; GFX Pointers
     dl $7E07F3 : db $02 : dw $0030 ; Music Bank
     dl $7E07F5 : db $02 : dw $0003 ; Music Track
     dl $7E090F : db $02 : dw $8000 ; Screen subpixel X position.
@@ -1415,19 +1116,13 @@ preset_kpdr25_wrecked_ship_gravity:
     dl $7E0A1E : db $02 : dw $0204 ; More position/state
     dl $7E0AF6 : db $02 : dw $0125 ; Samus X
     dl $7E0AFA : db $02 : dw $02AB ; Samus Y
-    dl $7ED91A : db $02 : dw $0034 ; Events, Items, Doors
     dw #$FFFF
 .after
 
 preset_kpdr25_wrecked_ship_impulse_mockball:
     dw #preset_kpdr25_wrecked_ship_gravity ; Wrecked Ship: Gravity
     dl $7E078D : db $02 : dw $A300 ; DDB
-    dl $7E078F : db $02 : dw $0000 ; DoorOut Index
     dl $7E079B : db $02 : dw $93FE ; MDB
-    dl $7E079F : db $02 : dw $0000 ; Region
-    dl $7E07C3 : db $02 : dw $C629 ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $7CBA ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2AD ; GFX Pointers
     dl $7E07F3 : db $02 : dw $000C ; Music Bank
     dl $7E07F5 : db $02 : dw $0005 ; Music Track
     dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position.
@@ -1445,18 +1140,13 @@ preset_kpdr25_wrecked_ship_impulse_mockball:
     dl $7E0AF6 : db $02 : dw $0186 ; Samus X
     dl $7E0AFA : db $02 : dw $04D2 ; Samus Y
     dl $7ED880 : db $02 : dw $00A0 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $0038 ; Events, Items, Doors
     dw #$FFFF
 .after
 
 preset_kpdr25_wrecked_ship_red_tower_elevator:
     dw #preset_kpdr25_wrecked_ship_impulse_mockball ; Wrecked Ship: Impulse Mockball
     dl $7E078D : db $02 : dw $8A42 ; DDB
-    dl $7E078F : db $02 : dw $0002 ; DoorOut Index
     dl $7E079B : db $02 : dw $962A ; MDB
-    dl $7E07C3 : db $02 : dw $F911 ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $43BA ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2AF ; GFX Pointers
     dl $7E07F5 : db $02 : dw $0003 ; Music Track
     dl $7E090F : db $02 : dw $9000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
@@ -1470,19 +1160,13 @@ preset_kpdr25_wrecked_ship_red_tower_elevator:
     dl $7E0A1E : db $02 : dw $0008 ; More position/state
     dl $7E0AF6 : db $02 : dw $007F ; Samus X
     dl $7E0AFA : db $02 : dw $00AB ; Samus Y
-    dl $7ED91A : db $02 : dw $0039 ; Events, Items, Doors
     dw #$FFFF
 .after
 
 preset_kpdr25_maridia_hellway_return:
     dw #preset_kpdr25_wrecked_ship_red_tower_elevator ; Wrecked Ship: Red Tower Elevator
     dl $7E078D : db $02 : dw $8B02 ; DDB
-    dl $7E078F : db $02 : dw $0005 ; DoorOut Index
     dl $7E079B : db $02 : dw $A322 ; MDB
-    dl $7E079F : db $02 : dw $0001 ; Region
-    dl $7E07C3 : db $02 : dw $A5AA ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $5FBC ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2B3 ; GFX Pointers
     dl $7E07F3 : db $02 : dw $0012 ; Music Bank
     dl $7E07F5 : db $02 : dw $0005 ; Music Track
     dl $7E0915 : db $02 : dw $0500 ; Screen Y position in pixels
@@ -1498,7 +1182,6 @@ preset_kpdr25_maridia_hellway_return:
 preset_kpdr25_maridia_bat_room_2:
     dw #preset_kpdr25_maridia_hellway_return ; Maridia: Hellway Return
     dl $7E078D : db $02 : dw $907E ; DDB
-    dl $7E078F : db $02 : dw $0000 ; DoorOut Index
     dl $7E079B : db $02 : dw $A253 ; MDB
     dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position.
     dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
@@ -1517,7 +1200,6 @@ preset_kpdr25_maridia_bat_room_2:
 preset_kpdr25_maridia_the_tube:
     dw #preset_kpdr25_maridia_bat_room_2 ; Maridia: Bat Room
     dl $7E078D : db $02 : dw $9102 ; DDB
-    dl $7E078F : db $02 : dw $0001 ; DoorOut Index
     dl $7E079B : db $02 : dw $A408 ; MDB
     dl $7E090F : db $02 : dw $D000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
@@ -1536,12 +1218,7 @@ preset_kpdr25_maridia_the_tube:
 preset_kpdr25_maridia_fish_tank:
     dw #preset_kpdr25_maridia_the_tube ; Maridia: The Tube
     dl $7E078D : db $02 : dw $A330 ; DDB
-    dl $7E078F : db $02 : dw $0000 ; DoorOut Index
     dl $7E079B : db $02 : dw $CFC9 ; MDB
-    dl $7E079F : db $02 : dw $0004 ; Region
-    dl $7E07C3 : db $02 : dw $B130 ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $3CBE ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2B8 ; GFX Pointers
     dl $7E07F3 : db $02 : dw $001B ; Music Bank
     dl $7E07F5 : db $02 : dw $0006 ; Music Track
     dl $7E090F : db $02 : dw $FFFF ; Screen subpixel X position.
@@ -1557,14 +1234,12 @@ preset_kpdr25_maridia_fish_tank:
     dl $7E0AF6 : db $02 : dw $0173 ; Samus X
     dl $7E0AFA : db $02 : dw $068B ; Samus Y
     dl $7ED820 : db $02 : dw $0801 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $003B ; Events, Items, Doors
     dw #$FFFF
 .after
 
 preset_kpdr25_maridia_crab_shaft:
     dw #preset_kpdr25_maridia_fish_tank ; Maridia: Fish Tank
     dl $7E078D : db $02 : dw $A3F0 ; DDB
-    dl $7E078F : db $02 : dw $0002 ; DoorOut Index
     dl $7E079B : db $02 : dw $D0B9 ; MDB
     dl $7E090F : db $02 : dw $A000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0500 ; Screen X position in pixels
@@ -1584,9 +1259,6 @@ preset_kpdr25_maridia_botwoon_hall:
     dw #preset_kpdr25_maridia_crab_shaft ; Maridia: Crab Shaft
     dl $7E078D : db $02 : dw $A4C8 ; DDB
     dl $7E079B : db $02 : dw $D5A7 ; MDB
-    dl $7E07C3 : db $02 : dw $E78D ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $2EBE ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2B9 ; GFX Pointers
     dl $7E07F5 : db $02 : dw $0005 ; Music Track
     dl $7E090F : db $02 : dw $6000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
@@ -1601,14 +1273,12 @@ preset_kpdr25_maridia_botwoon_hall:
     dl $7E0AF6 : db $02 : dw $007A ; Samus X
     dl $7E0AFA : db $02 : dw $006B ; Samus Y
     dl $7ED8C0 : db $02 : dw $8174 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $003D ; Events, Items, Doors
     dw #$FFFF
 .after
 
 preset_kpdr25_maridia_botwoon:
     dw #preset_kpdr25_maridia_botwoon_hall ; Maridia: Botwoon Hall
     dl $7E078D : db $02 : dw $A72C ; DDB
-    dl $7E078F : db $02 : dw $0003 ; DoorOut Index
     dl $7E079B : db $02 : dw $D617 ; MDB
     dl $7E090F : db $02 : dw $DFFF ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0300 ; Screen X position in pixels
@@ -1627,7 +1297,6 @@ preset_kpdr25_maridia_botwoon:
 preset_kpdr25_maridia_halfie:
     dw #preset_kpdr25_maridia_botwoon ; Maridia: Botwoon
     dl $7E078D : db $02 : dw $A918 ; DDB
-    dl $7E078F : db $02 : dw $0001 ; DoorOut Index
     dl $7E079B : db $02 : dw $D7E4 ; MDB
     dl $7E090F : db $02 : dw $C000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $000E ; Screen X position in pixels
@@ -1645,14 +1314,12 @@ preset_kpdr25_maridia_halfie:
     dl $7E0AFA : db $02 : dw $009B ; Samus Y
     dl $7ED82C : db $02 : dw $0002 ; Events, Items, Doors
     dl $7ED882 : db $02 : dw $0100 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $003E ; Events, Items, Doors
     dw #$FFFF
 .after
 
 preset_kpdr25_maridia_draygon:
     dw #preset_kpdr25_maridia_halfie ; Maridia: Halfie
     dl $7E078D : db $02 : dw $A7F8 ; DDB
-    dl $7E078F : db $02 : dw $0002 ; DoorOut Index
     dl $7E079B : db $02 : dw $D78F ; MDB
     dl $7E090F : db $02 : dw $1001 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
@@ -1667,14 +1334,12 @@ preset_kpdr25_maridia_draygon:
     dl $7E0AF6 : db $02 : dw $0025 ; Samus X
     dl $7E0AFA : db $02 : dw $028B ; Samus Y
     dl $7ED8C2 : db $02 : dw $0C00 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $003F ; Events, Items, Doors
     dw #$FFFF
 .after
 
 preset_kpdr25_maridia_post_space_jump:
     dw #preset_kpdr25_maridia_draygon ; Maridia: Draygon
     dl $7E078D : db $02 : dw $A978 ; DDB
-    dl $7E078F : db $02 : dw $0001 ; DoorOut Index
     dl $7E079B : db $02 : dw $D9AA ; MDB
     dl $7E07F3 : db $02 : dw $0024 ; Music Bank
     dl $7E07F5 : db $02 : dw $0003 ; Music Track
@@ -1696,14 +1361,12 @@ preset_kpdr25_maridia_post_space_jump:
     dl $7ED82C : db $02 : dw $0003 ; Events, Items, Doors
     dl $7ED882 : db $02 : dw $0500 ; Events, Items, Doors
     dl $7ED8C2 : db $02 : dw $8C00 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $0040 ; Events, Items, Doors
     dw #$FFFF
 .after
 
 preset_kpdr25_maridia_whomple_jump:
     dw #preset_kpdr25_maridia_post_space_jump ; Maridia: Post Space Jump
     dl $7E078D : db $02 : dw $A96C ; DDB
-    dl $7E078F : db $02 : dw $0000 ; DoorOut Index
     dl $7E079B : db $02 : dw $D78F ; MDB
     dl $7E07F3 : db $02 : dw $001B ; Music Bank
     dl $7E07F5 : db $02 : dw $0005 ; Music Track
@@ -1717,7 +1380,6 @@ preset_kpdr25_maridia_whomple_jump:
     dl $7E0A1E : db $02 : dw $0104 ; More position/state
     dl $7E0AF6 : db $02 : dw $003F ; Samus X
     dl $7ED8C2 : db $02 : dw $CC00 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $0041 ; Events, Items, Doors
     dw #$FFFF
 .after
 
@@ -1757,9 +1419,6 @@ preset_kpdr25_maridia_kassiuz_room:
     dw #preset_kpdr25_maridia_plasma_spark_room ; Maridia: Plasma Spark Room
     dl $7E078D : db $02 : dw $A750 ; DDB
     dl $7E079B : db $02 : dw $D340 ; MDB
-    dl $7E07C3 : db $02 : dw $B130 ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $3CBE ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2B8 ; GFX Pointers
     dl $7E090F : db $02 : dw $6000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0200 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $6C00 ; Screen subpixel Y position
@@ -1799,7 +1458,6 @@ preset_kpdr25_maridia_plasma_spark_revisit:
     dl $7E0AFA : db $02 : dw $038B ; Samus Y
     dl $7ED880 : db $02 : dw $80A0 ; Events, Items, Doors
     dl $7ED8C2 : db $02 : dw $DC0A ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $0042 ; Events, Items, Doors
     dw #$FFFF
 .after
 
@@ -1807,9 +1465,6 @@ preset_kpdr25_maridia_sand_hall:
     dw #preset_kpdr25_maridia_plasma_spark_revisit ; Maridia: Plasma Spark Revisit
     dl $7E078D : db $02 : dw $A600 ; DDB
     dl $7E079B : db $02 : dw $D48E ; MDB
-    dl $7E07C3 : db $02 : dw $E78D ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $2EBE ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2B9 ; GFX Pointers
     dl $7E090F : db $02 : dw $C000 ; Screen subpixel X position.
     dl $7E0913 : db $02 : dw $1400 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $011D ; Screen Y position in pixels
@@ -1828,12 +1483,7 @@ preset_kpdr25_maridia_sand_hall:
 preset_kpdr25_lower_norfair_business_center_revisit:
     dw #preset_kpdr25_maridia_sand_hall ; Maridia: Sand Hall
     dl $7E078D : db $02 : dw $9246 ; DDB
-    dl $7E078F : db $02 : dw $0002 ; DoorOut Index
     dl $7E079B : db $02 : dw $A7DE ; MDB
-    dl $7E079F : db $02 : dw $0002 ; Region
-    dl $7E07C3 : db $02 : dw $C3F9 ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $BBBD ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2B6 ; GFX Pointers
     dl $7E07F3 : db $02 : dw $0015 ; Music Bank
     dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0239 ; Screen Y position in pixels
@@ -1850,24 +1500,19 @@ preset_kpdr25_lower_norfair_business_center_revisit:
 preset_kpdr25_lower_norfair_magdollite_tunnel:
     dw #preset_kpdr25_lower_norfair_business_center_revisit ; Lower Norfair: Business Center Revisit
     dl $7E078D : db $02 : dw $9576 ; DDB
-    dl $7E078F : db $02 : dw $0003 ; DoorOut Index
     dl $7E079B : db $02 : dw $AEDF ; MDB
-    dl $7E07C5 : db $02 : dw $E4BD ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2B5 ; GFX Pointers
     dl $7E0915 : db $02 : dw $01EC ; Screen Y position in pixels
     dl $7E0919 : db $02 : dw $0171 ; Layer 2 Y scroll in room in pixels? (up = positive)
     dl $7E0A1C : db $02 : dw $0009 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0108 ; More position/state
     dl $7E0AF6 : db $02 : dw $006F ; Samus X
     dl $7E0AFA : db $02 : dw $028B ; Samus Y
-    dl $7ED91A : db $02 : dw $0043 ; Events, Items, Doors
     dw #$FFFF
 .after
 
 preset_kpdr25_lower_norfair_ln_elevator:
     dw #preset_kpdr25_lower_norfair_magdollite_tunnel ; Lower Norfair: Magdollite Tunnel
     dl $7E078D : db $02 : dw $96DE ; DDB
-    dl $7E078F : db $02 : dw $0002 ; DoorOut Index
     dl $7E079B : db $02 : dw $AF3F ; MDB
     dl $7E0913 : db $02 : dw $4800 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
@@ -1888,7 +1533,6 @@ preset_kpdr25_lower_norfair_ln_elevator:
 preset_kpdr25_lower_norfair_fast_pillars:
     dw #preset_kpdr25_lower_norfair_ln_elevator ; Lower Norfair: LN Elevator
     dl $7E078D : db $02 : dw $96F6 ; DDB
-    dl $7E078F : db $02 : dw $0003 ; DoorOut Index
     dl $7E079B : db $02 : dw $B236 ; MDB
     dl $7E07F3 : db $02 : dw $0018 ; Music Bank
     dl $7E0911 : db $02 : dw $0700 ; Screen X position in pixels
@@ -1908,7 +1552,6 @@ preset_kpdr25_lower_norfair_fast_pillars:
 preset_kpdr25_lower_norfair_amphitheatre:
     dw #preset_kpdr25_lower_norfair_fast_pillars ; Lower Norfair: Fast Pillars
     dl $7E078D : db $02 : dw $994E ; DDB
-    dl $7E078F : db $02 : dw $0001 ; DoorOut Index
     dl $7E079B : db $02 : dw $B4AD ; MDB
     dl $7E090F : db $02 : dw $E000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
@@ -1945,7 +1588,6 @@ preset_kpdr25_lower_norfair_kihunter_stairs:
 preset_kpdr25_lower_norfair_metal_pirates:
     dw #preset_kpdr25_lower_norfair_kihunter_stairs ; Lower Norfair: Kihunter Stairs
     dl $7E078D : db $02 : dw $99EA ; DDB
-    dl $7E078F : db $02 : dw $0000 ; DoorOut Index
     dl $7E079B : db $02 : dw $B5D5 ; MDB
     dl $7E090F : db $02 : dw $4000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
@@ -1962,7 +1604,6 @@ preset_kpdr25_lower_norfair_metal_pirates:
     dl $7E0AF6 : db $02 : dw $013F ; Samus X
     dl $7E0AFA : db $02 : dw $028B ; Samus Y
     dl $7ED8BA : db $02 : dw $C1F1 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $0044 ; Events, Items, Doors
     dw #$FFFF
 .after
 
@@ -2011,14 +1652,12 @@ preset_kpdr25_lower_norfair_ridley_etank:
     dl $7ED82A : db $02 : dw $0101 ; Events, Items, Doors
     dl $7ED878 : db $02 : dw $401C ; Events, Items, Doors
     dl $7ED8BA : db $02 : dw $D9F1 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $0045 ; Events, Items, Doors
     dw #$FFFF
 .after
 
 preset_kpdr25_lower_norfair_wasteland_revisit:
     dw #preset_kpdr25_lower_norfair_ridley_etank ; Lower Norfair: Ridley E-tank
     dl $7E078D : db $02 : dw $9966 ; DDB
-    dl $7E078F : db $02 : dw $0001 ; DoorOut Index
     dl $7E079B : db $02 : dw $B62B ; MDB
     dl $7E07F3 : db $02 : dw $0018 ; Music Bank
     dl $7E07F5 : db $02 : dw $0005 ; Music Track
@@ -2054,7 +1693,6 @@ preset_kpdr25_lower_norfair_kihunter_revisit:
     dl $7E0AF6 : db $02 : dw $056B ; Samus X
     dl $7E0AFA : db $02 : dw $006B ; Samus Y
     dl $7E0B3F : db $02 : dw $0000 ; Blue suit
-    dl $7ED91A : db $02 : dw $0046 ; Events, Items, Doors
     dw #$FFFF
 .after
 
@@ -2080,7 +1718,6 @@ preset_kpdr25_lower_norfair_fireflea_room:
 preset_kpdr25_lower_norfair_three_musketeers:
     dw #preset_kpdr25_lower_norfair_fireflea_room ; Lower Norfair: Fireflea Room
     dl $7E078D : db $02 : dw $9A92 ; DDB
-    dl $7E078F : db $02 : dw $0000 ; DoorOut Index
     dl $7E079B : db $02 : dw $B510 ; MDB
     dl $7E090F : db $02 : dw $D000 ; Screen subpixel X position.
     dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
@@ -2092,14 +1729,12 @@ preset_kpdr25_lower_norfair_three_musketeers:
     dl $7E0A1C : db $02 : dw $000A ; Samus position/state
     dl $7E0A1E : db $02 : dw $0104 ; More position/state
     dl $7E0AF6 : db $02 : dw $006A ; Samus X
-    dl $7ED91A : db $02 : dw $0048 ; Events, Items, Doors
     dw #$FFFF
 .after
 
 preset_kpdr25_golden_4_frog_speedway_2:
     dw #preset_kpdr25_lower_norfair_three_musketeers ; Lower Norfair: Three Musketeers
     dl $7E078D : db $02 : dw $956A ; DDB
-    dl $7E078F : db $02 : dw $0002 ; DoorOut Index
     dl $7E079B : db $02 : dw $AF72 ; MDB
     dl $7E07F3 : db $02 : dw $0015 ; Music Bank
     dl $7E090F : db $02 : dw $6000 ; Screen subpixel X position.
@@ -2113,19 +1748,13 @@ preset_kpdr25_golden_4_frog_speedway_2:
     dl $7E09CE : db $02 : dw $0002 ; Pbs
     dl $7E0A1C : db $02 : dw $0010 ; Samus position/state
     dl $7E0AF6 : db $02 : dw $0087 ; Samus X
-    dl $7ED91A : db $02 : dw $004A ; Events, Items, Doors
     dw #$FFFF
 .after
 
 preset_kpdr25_golden_4_maridia_tube_revisit:
     dw #preset_kpdr25_golden_4_frog_speedway_2 ; Golden 4: Frog Speedway
     dl $7E078D : db $02 : dw $92EE ; DDB
-    dl $7E078F : db $02 : dw $0004 ; DoorOut Index
     dl $7E079B : db $02 : dw $A6A1 ; MDB
-    dl $7E079F : db $02 : dw $0001 ; Region
-    dl $7E07C3 : db $02 : dw $A5AA ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $5FBC ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2B3 ; GFX Pointers
     dl $7E07F3 : db $02 : dw $0012 ; Music Bank
     dl $7E07F5 : db $02 : dw $0003 ; Music Track
     dl $7E090F : db $02 : dw $5000 ; Screen subpixel X position.
@@ -2142,12 +1771,7 @@ preset_kpdr25_golden_4_maridia_tube_revisit:
 preset_kpdr25_golden_4_red_fish_room:
     dw #preset_kpdr25_golden_4_maridia_tube_revisit ; Golden 4: Maridia Tube Revisit
     dl $7E078D : db $02 : dw $A3F0 ; DDB
-    dl $7E078F : db $02 : dw $0002 ; DoorOut Index
     dl $7E079B : db $02 : dw $D0B9 ; MDB
-    dl $7E079F : db $02 : dw $0004 ; Region
-    dl $7E07C3 : db $02 : dw $B130 ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $3CBE ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2B8 ; GFX Pointers
     dl $7E07F3 : db $02 : dw $001B ; Music Bank
     dl $7E07F5 : db $02 : dw $0006 ; Music Track
     dl $7E090F : db $02 : dw $A000 ; Screen subpixel X position.
@@ -2162,19 +1786,13 @@ preset_kpdr25_golden_4_red_fish_room:
     dl $7E0A1E : db $02 : dw $0208 ; More position/state
     dl $7E0AF6 : db $02 : dw $026F ; Samus X
     dl $7E0AFA : db $02 : dw $00AB ; Samus Y
-    dl $7ED91A : db $02 : dw $004C ; Events, Items, Doors
     dw #$FFFF
 .after
 
 preset_kpdr25_golden_4_premoat_revisit:
     dw #preset_kpdr25_golden_4_red_fish_room ; Golden 4: Red Fish Room
     dl $7E078D : db $02 : dw $90BA ; DDB
-    dl $7E078F : db $02 : dw $0003 ; DoorOut Index
     dl $7E079B : db $02 : dw $962A ; MDB
-    dl $7E079F : db $02 : dw $0000 ; Region
-    dl $7E07C3 : db $02 : dw $F911 ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $43BA ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2AF ; GFX Pointers
     dl $7E07F3 : db $02 : dw $0012 ; Music Bank
     dl $7E07F5 : db $02 : dw $0003 ; Music Track
     dl $7E090F : db $02 : dw $9000 ; Screen subpixel X position.
@@ -2196,11 +1814,7 @@ preset_kpdr25_golden_4_premoat_revisit:
 preset_kpdr25_golden_4_ship_revisit:
     dw #preset_kpdr25_golden_4_premoat_revisit ; Golden 4: Pre-Moat Revisit
     dl $7E078D : db $02 : dw $8AC6 ; DDB
-    dl $7E078F : db $02 : dw $0000 ; DoorOut Index
     dl $7E079B : db $02 : dw $91F8 ; MDB
-    dl $7E07C3 : db $02 : dw $C629 ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $7CBA ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2AD ; GFX Pointers
     dl $7E07F3 : db $02 : dw $000C ; Music Bank
     dl $7E07F5 : db $02 : dw $0005 ; Music Track
     dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position.
@@ -2222,11 +1836,7 @@ preset_kpdr25_golden_4_ship_revisit:
 preset_kpdr25_golden_4_g4_elevator:
     dw #preset_kpdr25_golden_4_ship_revisit ; Golden 4: Ship Revisit
     dl $7E078D : db $02 : dw $91F2 ; DDB
-    dl $7E078F : db $02 : dw $0002 ; DoorOut Index
     dl $7E079B : db $02 : dw $A66A ; MDB
-    dl $7E07C3 : db $02 : dw $860B ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $9CC0 ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2BC ; GFX Pointers
     dl $7E07F3 : db $02 : dw $0009 ; Music Bank
     dl $7E07F5 : db $02 : dw $0006 ; Music Track
     dl $7E090F : db $02 : dw $1000 ; Screen subpixel X position.
@@ -2244,7 +1854,6 @@ preset_kpdr25_golden_4_g4_elevator:
     dl $7E0B3F : db $02 : dw $0000 ; Blue suit
     dl $7ED820 : db $02 : dw $0FC1 ; Events, Items, Doors
     dl $7ED8B2 : db $02 : dw $6C01 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $004F ; Events, Items, Doors
     dw #$FFFF
 .after
 
@@ -2252,10 +1861,6 @@ preset_kpdr25_tourian_metroids_1:
     dw #preset_kpdr25_golden_4_g4_elevator ; Golden 4: G4 Elevator
     dl $7E078D : db $02 : dw $9222 ; DDB
     dl $7E079B : db $02 : dw $DAAE ; MDB
-    dl $7E079F : db $02 : dw $0005 ; Region
-    dl $7E07C3 : db $02 : dw $D414 ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $EDBF ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2BA ; GFX Pointers
     dl $7E07F3 : db $02 : dw $001E ; Music Bank
     dl $7E07F5 : db $02 : dw $0005 ; Music Track
     dl $7E090F : db $02 : dw $2000 ; Screen subpixel X position.
@@ -2268,14 +1873,12 @@ preset_kpdr25_tourian_metroids_1:
     dl $7E0A1E : db $02 : dw $0104 ; More position/state
     dl $7E0AF6 : db $02 : dw $0039 ; Samus X
     dl $7E0AFA : db $02 : dw $038B ; Samus Y
-    dl $7ED90C : db $02 : dw $0100 ; Events, Items, Doors
     dw #$FFFF
 .after
 
 preset_kpdr25_tourian_metroids_2:
     dw #preset_kpdr25_tourian_metroids_1 ; Tourian: Metroids 1
     dl $7E078D : db $02 : dw $A984 ; DDB
-    dl $7E078F : db $02 : dw $0000 ; DoorOut Index
     dl $7E079B : db $02 : dw $DAE1 ; MDB
     dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0034 ; Screen X position in pixels
@@ -2299,7 +1902,6 @@ preset_kpdr25_tourian_metroids_2:
 preset_kpdr25_tourian_metroids_3:
     dw #preset_kpdr25_tourian_metroids_2 ; Tourian: Metroids 2
     dl $7E078D : db $02 : dw $A9B4 ; DDB
-    dl $7E078F : db $02 : dw $0001 ; DoorOut Index
     dl $7E079B : db $02 : dw $DB31 ; MDB
     dl $7E090F : db $02 : dw $2000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
@@ -2415,10 +2017,6 @@ preset_kpdr25_tourian_escape_parlor:
     dw #preset_kpdr25_tourian_escape_room_3 ; Tourian: Escape Room 3
     dl $7E078D : db $02 : dw $AB34 ; DDB
     dl $7E079B : db $02 : dw $96BA ; MDB
-    dl $7E079F : db $02 : dw $0000 ; Region
-    dl $7E07C3 : db $02 : dw $F911 ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $43BA ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2AF ; GFX Pointers
     dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $A401 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
@@ -2431,6 +2029,5 @@ preset_kpdr25_tourian_escape_parlor:
     dl $7E0A1E : db $02 : dw $0104 ; More position/state
     dl $7E0AF6 : db $02 : dw $019E ; Samus X
     dl $7E0AFA : db $02 : dw $005B ; Samus Y
-    dl $7ED90C : db $02 : dw $FF00 ; Events, Items, Doors
     dw #$FFFF
 .after
