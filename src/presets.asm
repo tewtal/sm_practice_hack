@@ -1,5 +1,5 @@
 org $82FA00
-print pc, " presets start"
+print pc, " presets bank82 start"
 
 preset_load:
 {
@@ -172,23 +172,7 @@ preset_load_preset:
     BRA .done
 
   .category_preset
-    LDA !sram_preset_category : ASL : TAX
-    LDA.l category_preset_banks,X : %a8() : PHA : PLB : %a16()
-
-    LDA !ram_load_preset : STA !sram_last_preset : STA $C1
-    LDA #$0000 : STA !ram_load_preset
-
-    LDX #$0000
-  .loop_path
-    LDA $C1 : STA $7F0002,X
-    INX : INX
-    LDA ($C1) : STA $C1 : BNE .loop_path
-
-  .loop_presets
-    ; then traverse from the first preset until the last one, and apply them
-    DEX : DEX : BMI .done
-    JSR category_preset_to_memory
-    BRA .loop_presets
+    JSR category_preset_load
 
   .done
     LDA #$0000
@@ -198,41 +182,111 @@ preset_load_preset:
     RTL
 }
 
-category_preset_to_memory:
+category_preset_load:
 {
-    LDA #$7E00 : STA $C4
-    STZ $00
-    LDA $7F0002,X
-    INC : INC : TAY
+    ; Get offset into preset data table
+    LDA !sram_preset_category : STA $C3
+    ASL : CLC : ADC $C3 : TAX
 
-  .loop
-    LDA ($00),Y : INY : INY : CMP #$FFFF : BEQ .done : STA $C3
-    LDA ($00),Y : INY : INY : STA [$C3]
-    BRA .loop
+    ; Get starting preset data bank into $C5
+    INX : LDA.l category_preset_data_table,X : STA $C4 : DEX
 
-  .done
+    ; Get preset address to load into $C3
+    LDA !ram_load_preset : STA !sram_last_preset : STA $C3 : STA $7F0002
+    LDA #$0000 : STA !ram_load_preset
+
+    ; Get start of preset data into $C1
+    LDA.l category_preset_data_table,X : LDX #$0000 : STA $C1
+
+    ; If start of preset data is greater than preset address,
+    ; then our preset address is in the next bank
+    CMP $C3 : BCC .build_list_loop : BEQ .build_list_loop
+    INC $C5
+
+  .build_list_loop
+    ; Build list of presets to traverse
+    LDA [$C3] : BEQ .prepare_traverse_list_loop
+    INX : INX : STA $7F0002,X
+    CMP $C3 : STA $C3 : BCC .build_list_loop
+    ; We just crossed back into the starting bank
+    DEC $C5
+    BRA .build_list_loop
+
+  .prepare_traverse_list_loop
+    ; Set bank to read data from
+    STZ $00 : %a8() : LDA $C5 : PHA : PLB
+    ; Set bank to store data to
+    LDA #$7E : STA $C5 : %a16()
+
+  .traverse_list_loop_with_bank_check
+    ; Now traverse from the first preset until the last one
+    LDA $7F0002,X : TAY : CMP $C1 : BCC .increment_bank_before_inner_loop
+    INY : INY
+    BRA .inner_loop_with_bank_check_load_address
+
+    ; For each preset, load and store address and value pairs
+  .inner_loop_with_bank_check
+    STA $C3 : INY : INY
+    CPY #$0000 : BEQ .increment_bank_before_load_value
+    LDA ($00),Y : STA [$C3] : INY : INY
+  .inner_loop_with_bank_check_load_address
+    CPY #$0000 : BEQ .increment_bank_before_load_address
+    LDA ($00),Y : CMP #$FFFF : BNE .inner_loop_with_bank_check
+
+    DEX : DEX : BPL .traverse_list_loop_with_bank_check
+    RTS
+
+  .increment_bank_before_inner_loop
+    %a8() : PHB : PLA : INC : PHA : PLB : %a16()
+    INY : INY
+    BRA .inner_loop_load_address
+
+  .increment_bank_before_load_address
+    %a8() : PHB : PLA : INC : PHA : PLB : %a16()
+    LDY #$8000
+    BRA .inner_loop_load_address
+
+  .increment_bank_before_load_value
+    %a8() : PHB : PLA : INC : PHA : PLB : %a16()
+    LDY #$8000
+    BRA .inner_loop_load_value
+
+  .traverse_list_loop
+    ; Continue traversing from the first preset until the last one
+    LDA $7F0002,X : TAY : INY : INY
+    BRA .inner_loop_load_address
+
+    ; For each preset, load and store address and value pairs
+  .inner_loop
+    STA $C3 : INY : INY
+  .inner_loop_load_value
+    LDA ($00),Y : STA [$C3] : INY : INY
+  .inner_loop_load_address
+    LDA ($00),Y : CMP #$FFFF : BNE .inner_loop
+
+    DEX : DEX : BPL .traverse_list_loop
     RTS
 }
 
-category_preset_banks:
-    dw preset_prkd_crateria_ceres_elevator>>16
-    dw preset_kpdr21_crateria_ceres_elevator>>16
-    dw preset_hundo_bombs_ceres_elevator>>16
-    dw preset_100early_crateria_ceres_elevator>>16
-    dw preset_rbo_bombs_ceres_elevator>>16
-    dw preset_pkrd_crateria_ship>>16
-    dw preset_kpdr25_bombs_ceres_elevator>>16
-    dw preset_gtclassic_crateria_ceres_elevator>>16
-    dw preset_gtmax_crateria_ship>>16
-    dw preset_14ice_crateria_ceres_elevator>>16
-    dw preset_14speed_crateria_ceres_elevator>>16
-    dw preset_100map_varia_landing_site>>16
-    dw preset_nintendopower_crateria_ship>>16
-    dw preset_allbosskpdr_crateria_ceres_elevator>>16
-    dw preset_allbosspkdr_crateria_ceres_elevator>>16
-    dw preset_allbossprkd_crateria_ceres_elevator>>16
+category_preset_data_table:
+    dl preset_prkd_crateria_ceres_elevator
+    dl preset_kpdr21_crateria_ceres_elevator
+    dl preset_hundo_bombs_ceres_elevator
+    dl preset_100early_crateria_ceres_elevator
+    dl preset_rbo_bombs_ceres_elevator
+    dl preset_pkrd_crateria_ship
+    dl preset_kpdr25_bombs_ceres_elevator
+    dl preset_gtclassic_crateria_ceres_elevator
+    dl preset_gtmax_crateria_ship
+    dl preset_14ice_crateria_ceres_elevator
+    dl preset_14speed_crateria_ceres_elevator
+    dl preset_100map_varia_landing_site
+    dl preset_nintendopower_crateria_ship
+    dl preset_allbosskpdr_crateria_ceres_elevator
+    dl preset_allbosspkdr_crateria_ceres_elevator
+    dl preset_allbossprkd_crateria_ceres_elevator
 
-print pc, " presets end"
+print pc, " presets bank82 end"
 
 
 org $82E8D9
@@ -240,7 +294,7 @@ org $82E8D9
 
 
 org $80F000
-print pc, " preset_start_gameplay start"
+print pc, " presets bank80 start"
 
 ; This method is very similar to $80A07B (start gameplay)
 preset_start_gameplay:
@@ -536,7 +590,7 @@ add_grapple_and_xray_to_hud:
     JMP .resume_infohud_icon_initialization
 }
 
-print pc, " preset_start_gameplay end"
+print pc, " presets bank80 end"
 warnpc $80FC00
 
 
@@ -559,65 +613,50 @@ org $809AC9
 ; Category Menus/Data
 ; -------------------
 
-org $F18000
-  incsrc presets/prkd_menu.asm
-  incsrc presets/kpdr21_menu.asm
-  incsrc presets/hundo_menu.asm
-  incsrc presets/100early_menu.asm
-  incsrc presets/rbo_menu.asm
-  incsrc presets/pkrd_menu.asm
-  incsrc presets/kpdr25_menu.asm
-  print pc, " preset_menu bankF1 end"
-
-org $F28000
-  incsrc presets/gtclassic_menu.asm
-  incsrc presets/14ice_menu.asm
-  incsrc presets/14speed_menu.asm
-  incsrc presets/allbosskpdr_menu.asm
-  incsrc presets/allbosspkdr_menu.asm
-  incsrc presets/allbossprkd_menu.asm
-  incsrc presets/gtmax_menu.asm
-  incsrc presets/nintendopower_menu.asm
-  incsrc presets/100map_menu.asm
-  print pc, " preset_menu bankF2 end"
-
-org $EF8000
-  incsrc presets/prkd_data.asm
-  print pc, " preset_data bankEF end"
-
-org $EE8000
-  incsrc presets/kpdr21_data.asm
-  incsrc presets/rbo_data.asm
-  print pc, " preset_data bankEE end"
-
-org $ED8000
-  incsrc presets/gtclassic_data.asm
+org $EAE000
+check bankcross off
+print pc, " preset data crossbank start"
   incsrc presets/14ice_data.asm
   incsrc presets/14speed_data.asm
-  print pc, " preset_data bankED end"
-
-org $EC8000
+  incsrc presets/100early_data.asm
+  incsrc presets/100map_data.asm
   incsrc presets/allbosskpdr_data.asm
   incsrc presets/allbosspkdr_data.asm
   incsrc presets/allbossprkd_data.asm
-  print pc, " preset_data bankEC end"
-
-org $EB8000
-  incsrc presets/100early_data.asm
-  incsrc presets/kpdr25_data.asm
-  print pc, " preset_data bankEB end"
-
-org $EA8000
-  incsrc presets/pkrd_data.asm
+  incsrc presets/gtclassic_data.asm
   incsrc presets/gtmax_data.asm
-  print pc, " preset_data bankEA end"
-
-org $E98000
-  incsrc presets/nintendopower_data.asm
-  incsrc presets/100map_data.asm
-  print pc, " preset_data bankE9 end"
-
-org $E88000
   incsrc presets/hundo_data.asm
-  print pc, " preset_data bankE8 end"
+  incsrc presets/kpdr21_data.asm
+  incsrc presets/kpdr25_data.asm
+  incsrc presets/nintendopower_data.asm
+  incsrc presets/pkrd_data.asm
+  incsrc presets/prkd_data.asm
+  incsrc presets/rbo_data.asm
+print pc, " preset data crossbank end"
+warnpc $F08000
+check bankcross on
+
+org $F18000
+print pc, " preset menu bankF1 start"
+  incsrc presets/14ice_menu.asm
+  incsrc presets/14speed_menu.asm
+  incsrc presets/100early_menu.asm
+  incsrc presets/100map_menu.asm
+  incsrc presets/allbosskpdr_menu.asm
+  incsrc presets/allbosspkdr_menu.asm
+  incsrc presets/allbossprkd_menu.asm
+  incsrc presets/gtclassic_menu.asm
+print pc, " preset menu bankF1 end"
+
+org $F28000
+print pc, " preset menu bankF2 start"
+  incsrc presets/gtmax_menu.asm
+  incsrc presets/hundo_menu.asm
+  incsrc presets/kpdr21_menu.asm
+  incsrc presets/kpdr25_menu.asm
+  incsrc presets/nintendopower_menu.asm
+  incsrc presets/pkrd_menu.asm
+  incsrc presets/prkd_menu.asm
+  incsrc presets/rbo_menu.asm
+print pc, " preset menu bankF2 end"
 

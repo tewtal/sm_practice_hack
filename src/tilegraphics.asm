@@ -1,5 +1,5 @@
 
-org $E58800
+org $E88800
 check bankcross off
 print pc, " raw tile tables crossbank start"
 
@@ -50,7 +50,7 @@ tile_table_28_draygon:
 incbin ../resources/tile_table_28_draygon.bin
 
 print pc, " raw tile tables crossbank end"
-warnpc $E7E000
+warnpc $EAE000
 check bankcross on
 
 
