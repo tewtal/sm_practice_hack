@@ -1,1612 +1,1612 @@
 
 preset_allbossprkd_crateria_ceres_elevator:
     dw #$0000
-    dl $7E078B : db $02 : dw $0000 ; Elevator Index
-    dl $7E078D : db $02 : dw $AB58 ; DDB
-    dl $7E079B : db $02 : dw $DF45 ; MDB
-    dl $7E07F3 : db $02 : dw $002D ; Music Bank
-    dl $7E07F5 : db $02 : dw $0006 ; Music Track
-    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position
-    dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
-    dl $7E093F : db $02 : dw $0000 ; Ceres escape flag
-    dl $7E09A2 : db $02 : dw $0000 ; Equipped Items
-    dl $7E09A4 : db $02 : dw $0000 ; Collected Items
-    dl $7E09A6 : db $02 : dw $0000 ; Beams
-    dl $7E09A8 : db $02 : dw $0000 ; Beams
-    dl $7E09C0 : db $02 : dw $0000 ; Manual/Auto reserve tank
-    dl $7E09C2 : db $02 : dw $0063 ; Health
-    dl $7E09C4 : db $02 : dw $0063 ; Max health
-    dl $7E09C6 : db $02 : dw $0000 ; Missiles
-    dl $7E09C8 : db $02 : dw $0000 ; Max missiles
-    dl $7E09CA : db $02 : dw $0000 ; Supers
-    dl $7E09CC : db $02 : dw $0000 ; Max supers
-    dl $7E09CE : db $02 : dw $0000 ; Pbs
-    dl $7E09D0 : db $02 : dw $0000 ; Max pbs
-    dl $7E09D2 : db $02 : dw $0000 ; Currently selected item
-    dl $7E09D4 : db $02 : dw $0000 ; Max reserves
-    dl $7E09D6 : db $02 : dw $0000 ; Reserves
-    dl $7E0A1C : db $02 : dw $0000 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0000 ; More position/state
-    dl $7E0A68 : db $02 : dw $0000 ; Flash suit
-    dl $7E0A76 : db $02 : dw $0000 ; Hyper beam
-    dl $7E0AF6 : db $02 : dw $0080 ; Samus X
-    dl $7E0AFA : db $02 : dw $0048 ; Samus Y
-    dl $7E0B3F : db $02 : dw $0000 ; Blue suit
-    dl $7ED820 : db $02 : dw $0000 ; Events
-    dl $7ED822 : db $02 : dw $0000 ; Events
-    dl $7ED828 : db $02 : dw $0000 ; Bosses
-    dl $7ED82A : db $02 : dw $0000 ; Bosses
-    dl $7ED82C : db $02 : dw $0000 ; Bosses
-    dl $7ED82E : db $02 : dw $0000 ; Bosses
-    dl $7ED870 : db $02 : dw $0000 ; Items
-    dl $7ED872 : db $02 : dw $0000 ; Items
-    dl $7ED874 : db $02 : dw $0000 ; Items
-    dl $7ED876 : db $02 : dw $0000 ; Items
-    dl $7ED878 : db $02 : dw $0000 ; Items
-    dl $7ED87A : db $02 : dw $0000 ; Items
-    dl $7ED87C : db $02 : dw $0000 ; Items
-    dl $7ED87E : db $02 : dw $0000 ; Items
-    dl $7ED880 : db $02 : dw $0000 ; Items
-    dl $7ED882 : db $02 : dw $0000 ; Items
-    dl $7ED8B0 : db $02 : dw $0000 ; Doors
-    dl $7ED8B2 : db $02 : dw $0000 ; Doors
-    dl $7ED8B4 : db $02 : dw $0000 ; Doors
-    dl $7ED8B6 : db $02 : dw $0000 ; Doors
-    dl $7ED8B8 : db $02 : dw $0000 ; Doors
-    dl $7ED8BA : db $02 : dw $0000 ; Doors
-    dl $7ED8BC : db $02 : dw $0000 ; Doors
-    dl $7ED8BE : db $02 : dw $0000 ; Doors
-    dl $7ED8C0 : db $02 : dw $0000 ; Doors
-    dl $7ED8C2 : db $02 : dw $0000 ; Doors
-    dl $7ED8C4 : db $02 : dw $0000 ; Doors
+    dw $078B, $0000  ; Elevator Index
+    dw $078D, $AB58  ; DDB
+    dw $079B, $DF45  ; MDB
+    dw $07F3, $002D  ; Music Bank
+    dw $07F5, $0006  ; Music Track
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $093F, $0000  ; Ceres escape flag
+    dw $09A2, $0000  ; Equipped Items
+    dw $09A4, $0000  ; Collected Items
+    dw $09A6, $0000  ; Beams
+    dw $09A8, $0000  ; Beams
+    dw $09C0, $0000  ; Manual/Auto reserve tank
+    dw $09C2, $0063  ; Health
+    dw $09C4, $0063  ; Max health
+    dw $09C6, $0000  ; Missiles
+    dw $09C8, $0000  ; Max missiles
+    dw $09CA, $0000  ; Supers
+    dw $09CC, $0000  ; Max supers
+    dw $09CE, $0000  ; Pbs
+    dw $09D0, $0000  ; Max pbs
+    dw $09D2, $0000  ; Currently selected item
+    dw $09D4, $0000  ; Max reserves
+    dw $09D6, $0000  ; Reserves
+    dw $0A1C, $0000  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
+    dw $0A68, $0000  ; Flash suit
+    dw $0A76, $0000  ; Hyper beam
+    dw $0AF6, $0080  ; Samus X
+    dw $0AFA, $0048  ; Samus Y
+    dw $0B3F, $0000  ; Blue suit
+    dw $D820, $0000  ; Events
+    dw $D822, $0000  ; Events
+    dw $D828, $0000  ; Bosses
+    dw $D82A, $0000  ; Bosses
+    dw $D82C, $0000  ; Bosses
+    dw $D82E, $0000  ; Bosses
+    dw $D870, $0000  ; Items
+    dw $D872, $0000  ; Items
+    dw $D874, $0000  ; Items
+    dw $D876, $0000  ; Items
+    dw $D878, $0000  ; Items
+    dw $D87A, $0000  ; Items
+    dw $D87C, $0000  ; Items
+    dw $D87E, $0000  ; Items
+    dw $D880, $0000  ; Items
+    dw $D882, $0000  ; Items
+    dw $D8B0, $0000  ; Doors
+    dw $D8B2, $0000  ; Doors
+    dw $D8B4, $0000  ; Doors
+    dw $D8B6, $0000  ; Doors
+    dw $D8B8, $0000  ; Doors
+    dw $D8BA, $0000  ; Doors
+    dw $D8BC, $0000  ; Doors
+    dw $D8BE, $0000  ; Doors
+    dw $D8C0, $0000  ; Doors
+    dw $D8C2, $0000  ; Doors
+    dw $D8C4, $0000  ; Doors
     dw #$FFFF
 .after
 
 preset_allbossprkd_crateria_ceres_last_3_rooms:
     dw #preset_allbossprkd_crateria_ceres_elevator ; Crateria: Ceres Elevator
-    dl $7E078D : db $02 : dw $ABA0 ; DDB
-    dl $7E079B : db $02 : dw $E021 ; MDB
-    dl $7E07F3 : db $02 : dw $0024 ; Music Bank
-    dl $7E07F5 : db $02 : dw $0007 ; Music Track
-    dl $7E090F : db $02 : dw $0900 ; Screen subpixel X position
-    dl $7E0913 : db $02 : dw $AC00 ; Screen subpixel Y position
-    dl $7E093F : db $02 : dw $0002 ; Ceres escape flag
-    dl $7E09C2 : db $02 : dw $0018 ; Health
-    dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0004 ; More position/state
-    dl $7E0AF6 : db $02 : dw $0047 ; Samus X
-    dl $7E0AFA : db $02 : dw $009B ; Samus Y
-    dl $7ED82E : db $02 : dw $0001 ; Bosses
+    dw $078D, $ABA0  ; DDB
+    dw $079B, $E021  ; MDB
+    dw $07F3, $0024  ; Music Bank
+    dw $07F5, $0007  ; Music Track
+    dw $090F, $0900  ; Screen subpixel X position
+    dw $0913, $AC00  ; Screen subpixel Y position
+    dw $093F, $0002  ; Ceres escape flag
+    dw $09C2, $0018  ; Health
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0047  ; Samus X
+    dw $0AFA, $009B  ; Samus Y
+    dw $D82E, $0001  ; Bosses
     dw #$FFFF
 .after
 
 preset_allbossprkd_crateria_ship:
     dw #preset_allbossprkd_crateria_ceres_last_3_rooms ; Crateria: Ceres Last 3 Rooms
-    dl $7E078D : db $02 : dw $88FE ; DDB
-    dl $7E079B : db $02 : dw $91F8 ; MDB
-    dl $7E07F3 : db $02 : dw $0006 ; Music Bank
-    dl $7E07F5 : db $02 : dw $0005 ; Music Track
-    dl $7E090F : db $02 : dw $8000 ; Screen subpixel X position
-    dl $7E0911 : db $02 : dw $0400 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $03D0 ; Screen Y position in pixels
-    dl $7E093F : db $02 : dw $0000 ; Ceres escape flag
-    dl $7E09C2 : db $02 : dw $0063 ; Health
-    dl $7E0A1C : db $02 : dw $0000 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0000 ; More position/state
-    dl $7E0AF6 : db $02 : dw $0481 ; Samus X
-    dl $7E0AFA : db $02 : dw $0440 ; Samus Y
+    dw $078D, $88FE  ; DDB
+    dw $079B, $91F8  ; MDB
+    dw $07F3, $0006  ; Music Bank
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $8000  ; Screen subpixel X position
+    dw $0911, $0400  ; Screen X position in pixels
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $03D0  ; Screen Y position in pixels
+    dw $093F, $0000  ; Ceres escape flag
+    dw $09C2, $0063  ; Health
+    dw $0A1C, $0000  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
+    dw $0AF6, $0481  ; Samus X
+    dw $0AFA, $0440  ; Samus Y
     dw #$FFFF
 .after
 
 preset_allbossprkd_crateria_pit_room:
     dw #preset_allbossprkd_crateria_ship ; Crateria: Ship
-    dl $7E078D : db $02 : dw $898E ; DDB
-    dl $7E079B : db $02 : dw $96BA ; MDB
-    dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $2000 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0800 ; Screen Y position in pixels
-    dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0008 ; More position/state
-    dl $7E0AF6 : db $02 : dw $01DB ; Samus X
-    dl $7E0AFA : db $02 : dw $088B ; Samus Y
+    dw $078D, $898E  ; DDB
+    dw $079B, $96BA  ; MDB
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $2000  ; Screen subpixel Y position
+    dw $0915, $0800  ; Screen Y position in pixels
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $01DB  ; Samus X
+    dw $0AFA, $088B  ; Samus Y
     dw #$FFFF
 .after
 
 preset_allbossprkd_crateria_morph:
     dw #preset_allbossprkd_crateria_pit_room ; Crateria: Pit Room
-    dl $7E078D : db $02 : dw $8B9E ; DDB
-    dl $7E079B : db $02 : dw $9E9F ; MDB
-    dl $7E07F5 : db $02 : dw $0007 ; Music Track
-    dl $7E090F : db $02 : dw $6000 ; Screen subpixel X position
-    dl $7E0911 : db $02 : dw $0500 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0200 ; Screen Y position in pixels
-    dl $7E0A1C : db $02 : dw $0000 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0000 ; More position/state
-    dl $7E0AF6 : db $02 : dw $0580 ; Samus X
-    dl $7E0AFA : db $02 : dw $02A8 ; Samus Y
+    dw $078D, $8B9E  ; DDB
+    dw $079B, $9E9F  ; MDB
+    dw $07F5, $0007  ; Music Track
+    dw $090F, $6000  ; Screen subpixel X position
+    dw $0911, $0500  ; Screen X position in pixels
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $0200  ; Screen Y position in pixels
+    dw $0A1C, $0000  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
+    dw $0AF6, $0580  ; Samus X
+    dw $0AFA, $02A8  ; Samus Y
     dw #$FFFF
 .after
 
 preset_allbossprkd_crateria_pit_room_revisit:
     dw #preset_allbossprkd_crateria_morph ; Crateria: Morph
-    dl $7E078D : db $02 : dw $8EB6 ; DDB
-    dl $7E079B : db $02 : dw $97B5 ; MDB
-    dl $7E07F5 : db $02 : dw $0003 ; Music Track
-    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position
-    dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
-    dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
-    dl $7E09A2 : db $02 : dw $0004 ; Equipped Items
-    dl $7E09A4 : db $02 : dw $0004 ; Collected Items
-    dl $7E09C6 : db $02 : dw $0005 ; Missiles
-    dl $7E09C8 : db $02 : dw $0005 ; Max missiles
-    dl $7E0AF6 : db $02 : dw $0080 ; Samus X
-    dl $7E0AFA : db $02 : dw $0088 ; Samus Y
-    dl $7ED872 : db $02 : dw $0400 ; Items
-    dl $7ED874 : db $02 : dw $0004 ; Items
+    dw $078D, $8EB6  ; DDB
+    dw $079B, $97B5  ; MDB
+    dw $07F5, $0003  ; Music Track
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $09A2, $0004  ; Equipped Items
+    dw $09A4, $0004  ; Collected Items
+    dw $09C6, $0005  ; Missiles
+    dw $09C8, $0005  ; Max missiles
+    dw $0AF6, $0080  ; Samus X
+    dw $0AFA, $0088  ; Samus Y
+    dw $D872, $0400  ; Items
+    dw $D874, $0004  ; Items
     dw #$FFFF
 .after
 
 preset_allbossprkd_crateria_climb:
     dw #preset_allbossprkd_crateria_pit_room_revisit ; Crateria: Pit Room Revisit
-    dl $7E078D : db $02 : dw $8B92 ; DDB
-    dl $7E079B : db $02 : dw $975C ; MDB
-    dl $7E07F3 : db $02 : dw $0009 ; Music Bank
-    dl $7E07F5 : db $02 : dw $0005 ; Music Track
-    dl $7E090F : db $02 : dw $2000 ; Screen subpixel X position
-    dl $7E0913 : db $02 : dw $AC00 ; Screen subpixel Y position
-    dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0004 ; More position/state
-    dl $7E0AF6 : db $02 : dw $0087 ; Samus X
-    dl $7E0AFA : db $02 : dw $008B ; Samus Y
-    dl $7ED820 : db $02 : dw $0001 ; Events
+    dw $078D, $8B92  ; DDB
+    dw $079B, $975C  ; MDB
+    dw $07F3, $0009  ; Music Bank
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $2000  ; Screen subpixel X position
+    dw $0913, $AC00  ; Screen subpixel Y position
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0087  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw $D820, $0001  ; Events
     dw #$FFFF
 .after
 
 preset_allbossprkd_crateria_parlor:
     dw #preset_allbossprkd_crateria_climb ; Crateria: Climb
-    dl $7E078D : db $02 : dw $8B7A ; DDB
-    dl $7E079B : db $02 : dw $96BA ; MDB
-    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position
-    dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $BC00 ; Screen subpixel Y position
-    dl $7E0AF6 : db $02 : dw $01A0 ; Samus X
-    dl $7E0AFA : db $02 : dw $005B ; Samus Y
-    dl $7ED8B2 : db $02 : dw $0400 ; Doors
+    dw $078D, $8B7A  ; DDB
+    dw $079B, $96BA  ; MDB
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $BC00  ; Screen subpixel Y position
+    dw $0AF6, $01A0  ; Samus X
+    dw $0AFA, $005B  ; Samus Y
+    dw $D8B2, $0400  ; Doors
     dw #$FFFF
 .after
 
 preset_allbossprkd_crateria_bomb_torizo:
     dw #preset_allbossprkd_crateria_parlor ; Crateria: Parlor
-    dl $7E078D : db $02 : dw $8982 ; DDB
-    dl $7E079B : db $02 : dw $9879 ; MDB
-    dl $7E090F : db $02 : dw $C000 ; Screen subpixel X position
-    dl $7E0911 : db $02 : dw $0200 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $E800 ; Screen subpixel Y position
-    dl $7E09C6 : db $02 : dw $0000 ; Missiles
-    dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0008 ; More position/state
-    dl $7E0AF6 : db $02 : dw $02BC ; Samus X
-    dl $7E0AFA : db $02 : dw $008B ; Samus Y
-    dl $7ED8B2 : db $02 : dw $2400 ; Doors
+    dw $078D, $8982  ; DDB
+    dw $079B, $9879  ; MDB
+    dw $090F, $C000  ; Screen subpixel X position
+    dw $0911, $0200  ; Screen X position in pixels
+    dw $0913, $E800  ; Screen subpixel Y position
+    dw $09C6, $0000  ; Missiles
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $02BC  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw $D8B2, $2400  ; Doors
     dw #$FFFF
 .after
 
 preset_allbossprkd_crateria_terminator:
     dw #preset_allbossprkd_crateria_bomb_torizo ; Crateria: Bomb Torizo
-    dl $7E078D : db $02 : dw $8BB6 ; DDB
-    dl $7E079B : db $02 : dw $92FD ; MDB
-    dl $7E090F : db $02 : dw $0400 ; Screen subpixel X position
-    dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $F400 ; Screen subpixel Y position
-    dl $7E09A2 : db $02 : dw $1004 ; Equipped Items
-    dl $7E09A4 : db $02 : dw $1004 ; Collected Items
-    dl $7E09C6 : db $02 : dw $0005 ; Missiles
-    dl $7E0A1C : db $02 : dw $008A ; Samus position/state
-    dl $7E0A1E : db $02 : dw $1504 ; More position/state
-    dl $7E0AF6 : db $02 : dw $0115 ; Samus X
-    dl $7E0B3F : db $02 : dw $0104 ; Blue suit
-    dl $7ED828 : db $02 : dw $0004 ; Bosses
-    dl $7ED870 : db $02 : dw $0080 ; Items
-    dl $7ED8B2 : db $02 : dw $2C00 ; Doors
+    dw $078D, $8BB6  ; DDB
+    dw $079B, $92FD  ; MDB
+    dw $090F, $0400  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $F400  ; Screen subpixel Y position
+    dw $09A2, $1004  ; Equipped Items
+    dw $09A4, $1004  ; Collected Items
+    dw $09C6, $0005  ; Missiles
+    dw $0A1C, $008A  ; Samus position/state
+    dw $0A1E, $1504  ; More position/state
+    dw $0AF6, $0115  ; Samus X
+    dw $0B3F, $0104  ; Blue suit
+    dw $D828, $0004  ; Bosses
+    dw $D870, $0080  ; Items
+    dw $D8B2, $2C00  ; Doors
     dw #$FFFF
 .after
 
 preset_allbossprkd_crateria_green_pirate_shaft:
     dw #preset_allbossprkd_crateria_terminator ; Crateria: Terminator
-    dl $7E078D : db $02 : dw $895E ; DDB
-    dl $7E079B : db $02 : dw $990D ; MDB
-    dl $7E090F : db $02 : dw $3D00 ; Screen subpixel X position
-    dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $01EF ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $00C7 ; Health
-    dl $7E09C4 : db $02 : dw $00C7 ; Max health
-    dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0004 ; More position/state
-    dl $7E0AF6 : db $02 : dw $0046 ; Samus X
-    dl $7E0AFA : db $02 : dw $028F ; Samus Y
-    dl $7E0B3F : db $02 : dw $0000 ; Blue suit
-    dl $7ED870 : db $02 : dw $0180 ; Items
+    dw $078D, $895E  ; DDB
+    dw $079B, $990D  ; MDB
+    dw $090F, $3D00  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $01EF  ; Screen Y position in pixels
+    dw $09C2, $00C7  ; Health
+    dw $09C4, $00C7  ; Max health
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0046  ; Samus X
+    dw $0AFA, $028F  ; Samus Y
+    dw $0B3F, $0000  ; Blue suit
+    dw $D870, $0180  ; Items
     dw #$FFFF
 .after
 
 preset_allbossprkd_brinstar_green_brinstar_elevator:
     dw #preset_allbossprkd_crateria_green_pirate_shaft ; Crateria: Green Pirate Shaft
-    dl $7E078D : db $02 : dw $8C22 ; DDB
-    dl $7E079B : db $02 : dw $9938 ; MDB
-    dl $7E07F5 : db $02 : dw $0003 ; Music Track
-    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position
-    dl $7E0913 : db $02 : dw $1800 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
-    dl $7E09C6 : db $02 : dw $0002 ; Missiles
-    dl $7E0AF6 : db $02 : dw $007E ; Samus X
-    dl $7E0AFA : db $02 : dw $008B ; Samus Y
+    dw $078D, $8C22  ; DDB
+    dw $079B, $9938  ; MDB
+    dw $07F5, $0003  ; Music Track
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0913, $1800  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $09C6, $0002  ; Missiles
+    dw $0AF6, $007E  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 .after
 
 preset_allbossprkd_brinstar_dachora_room:
     dw #preset_allbossprkd_brinstar_green_brinstar_elevator ; Brinstar: Green Brinstar Elevator
-    dl $7E078D : db $02 : dw $8D4E ; DDB
-    dl $7E079B : db $02 : dw $9AD9 ; MDB
-    dl $7E07F3 : db $02 : dw $000F ; Music Bank
-    dl $7E07F5 : db $02 : dw $0005 ; Music Track
-    dl $7E090F : db $02 : dw $F000 ; Screen subpixel X position
-    dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $061A ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $00BD ; Health
-    dl $7E09C6 : db $02 : dw $0000 ; Missiles
-    dl $7E09CA : db $02 : dw $0004 ; Supers
-    dl $7E09CC : db $02 : dw $0005 ; Max supers
-    dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0008 ; More position/state
-    dl $7E0AF6 : db $02 : dw $0056 ; Samus X
-    dl $7E0AFA : db $02 : dw $068B ; Samus Y
-    dl $7ED872 : db $02 : dw $0401 ; Items
-    dl $7ED8B4 : db $02 : dw $0006 ; Doors
+    dw $078D, $8D4E  ; DDB
+    dw $079B, $9AD9  ; MDB
+    dw $07F3, $000F  ; Music Bank
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $F000  ; Screen subpixel X position
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $061A  ; Screen Y position in pixels
+    dw $09C2, $00BD  ; Health
+    dw $09C6, $0000  ; Missiles
+    dw $09CA, $0004  ; Supers
+    dw $09CC, $0005  ; Max supers
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $0056  ; Samus X
+    dw $0AFA, $068B  ; Samus Y
+    dw $D872, $0401  ; Items
+    dw $D8B4, $0006  ; Doors
     dw #$FFFF
 .after
 
 preset_allbossprkd_brinstar_big_pink:
     dw #preset_allbossprkd_brinstar_dachora_room ; Brinstar: Dachora Room
-    dl $7E078D : db $02 : dw $8CE2 ; DDB
-    dl $7E079B : db $02 : dw $9CB3 ; MDB
-    dl $7E090F : db $02 : dw $9000 ; Screen subpixel X position
-    dl $7E0911 : db $02 : dw $0600 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $9400 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
-    dl $7E09C6 : db $02 : dw $0002 ; Missiles
-    dl $7E0AF6 : db $02 : dw $069C ; Samus X
-    dl $7E0AFA : db $02 : dw $008B ; Samus Y
+    dw $078D, $8CE2  ; DDB
+    dw $079B, $9CB3  ; MDB
+    dw $090F, $9000  ; Screen subpixel X position
+    dw $0911, $0600  ; Screen X position in pixels
+    dw $0913, $9400  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $09C6, $0002  ; Missiles
+    dw $0AF6, $069C  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 .after
 
 preset_allbossprkd_brinstar_spore_spawn:
     dw #preset_allbossprkd_brinstar_big_pink ; Brinstar: Big Pink
-    dl $7E078D : db $02 : dw $8DC6 ; DDB
-    dl $7E079B : db $02 : dw $9D9C ; MDB
-    dl $7E090F : db $02 : dw $6000 ; Screen subpixel X position
-    dl $7E0911 : db $02 : dw $0300 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $0800 ; Screen subpixel Y position
-    dl $7E09C2 : db $02 : dw $00C2 ; Health
-    dl $7E09C6 : db $02 : dw $0001 ; Missiles
-    dl $7E09CA : db $02 : dw $0003 ; Supers
-    dl $7E0AF6 : db $02 : dw $0377 ; Samus X
-    dl $7E0AFA : db $02 : dw $007B ; Samus Y
-    dl $7ED8B4 : db $02 : dw $2406 ; Doors
+    dw $078D, $8DC6  ; DDB
+    dw $079B, $9D9C  ; MDB
+    dw $090F, $6000  ; Screen subpixel X position
+    dw $0911, $0300  ; Screen X position in pixels
+    dw $0913, $0800  ; Screen subpixel Y position
+    dw $09C2, $00C2  ; Health
+    dw $09C6, $0001  ; Missiles
+    dw $09CA, $0003  ; Supers
+    dw $0AF6, $0377  ; Samus X
+    dw $0AFA, $007B  ; Samus Y
+    dw $D8B4, $2406  ; Doors
     dw #$FFFF
 .after
 
 preset_allbossprkd_brinstar_sporefall:
     dw #preset_allbossprkd_brinstar_spore_spawn ; Brinstar: Spore Spawn
-    dl $7E078D : db $02 : dw $8E3E ; DDB
-    dl $7E079B : db $02 : dw $9DC7 ; MDB
-    dl $7E07F3 : db $02 : dw $002A ; Music Bank
-    dl $7E090F : db $02 : dw $DFFF ; Screen subpixel X position
-    dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $2C00 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0002 ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $00C7 ; Health
-    dl $7E09C6 : db $02 : dw $0005 ; Missiles
-    dl $7E0A1C : db $02 : dw $0089 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $1508 ; More position/state
-    dl $7E0AF6 : db $02 : dw $00DB ; Samus X
-    dl $7E0AFA : db $02 : dw $008B ; Samus Y
-    dl $7ED828 : db $02 : dw $0204 ; Bosses
+    dw $078D, $8E3E  ; DDB
+    dw $079B, $9DC7  ; MDB
+    dw $07F3, $002A  ; Music Bank
+    dw $090F, $DFFF  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $2C00  ; Screen subpixel Y position
+    dw $0915, $0002  ; Screen Y position in pixels
+    dw $09C2, $00C7  ; Health
+    dw $09C6, $0005  ; Missiles
+    dw $0A1C, $0089  ; Samus position/state
+    dw $0A1E, $1508  ; More position/state
+    dw $0AF6, $00DB  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw $D828, $0204  ; Bosses
     dw #$FFFF
 .after
 
 preset_allbossprkd_brinstar_big_pink_revisit:
     dw #preset_allbossprkd_brinstar_sporefall ; Brinstar: Sporefall
-    dl $7E078D : db $02 : dw $8D1E ; DDB
-    dl $7E079B : db $02 : dw $A0A4 ; MDB
-    dl $7E07F3 : db $02 : dw $000F ; Music Bank
-    dl $7E090F : db $02 : dw $C000 ; Screen subpixel X position
-    dl $7E0911 : db $02 : dw $0001 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $A000 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
-    dl $7E09CA : db $02 : dw $000A ; Supers
-    dl $7E09CC : db $02 : dw $000A ; Max supers
-    dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0004 ; More position/state
-    dl $7E0AF6 : db $02 : dw $0071 ; Samus X
-    dl $7E0AFA : db $02 : dw $00AB ; Samus Y
-    dl $7ED870 : db $02 : dw $4180 ; Items
-    dl $7ED8B6 : db $02 : dw $0020 ; Doors
+    dw $078D, $8D1E  ; DDB
+    dw $079B, $A0A4  ; MDB
+    dw $07F3, $000F  ; Music Bank
+    dw $090F, $C000  ; Screen subpixel X position
+    dw $0911, $0001  ; Screen X position in pixels
+    dw $0913, $A000  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $09CA, $000A  ; Supers
+    dw $09CC, $000A  ; Max supers
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0071  ; Samus X
+    dw $0AFA, $00AB  ; Samus Y
+    dw $D870, $4180  ; Items
+    dw $D8B6, $0020  ; Doors
     dw #$FFFF
 .after
 
 preset_allbossprkd_brinstar_red_tower:
     dw #preset_allbossprkd_brinstar_big_pink_revisit ; Brinstar: Big Pink Revisit
-    dl $7E078D : db $02 : dw $8E92 ; DDB
-    dl $7E079B : db $02 : dw $9FBA ; MDB
-    dl $7E090F : db $02 : dw $F000 ; Screen subpixel X position
-    dl $7E0911 : db $02 : dw $0500 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $2800 ; Screen subpixel Y position
-    dl $7E09A6 : db $02 : dw $1000 ; Beams
-    dl $7E09A8 : db $02 : dw $1000 ; Beams
-    dl $7E09C2 : db $02 : dw $00B3 ; Health
-    dl $7E09C6 : db $02 : dw $000A ; Missiles
-    dl $7E09C8 : db $02 : dw $000A ; Max missiles
-    dl $7E09CA : db $02 : dw $0009 ; Supers
-    dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0008 ; More position/state
-    dl $7E0AF6 : db $02 : dw $05C1 ; Samus X
-    dl $7E0AFA : db $02 : dw $008B ; Samus Y
-    dl $7ED872 : db $02 : dw $04C1 ; Items
-    dl $7ED8B4 : db $02 : dw $2606 ; Doors
-    dl $7ED8B6 : db $02 : dw $0028 ; Doors
+    dw $078D, $8E92  ; DDB
+    dw $079B, $9FBA  ; MDB
+    dw $090F, $F000  ; Screen subpixel X position
+    dw $0911, $0500  ; Screen X position in pixels
+    dw $0913, $2800  ; Screen subpixel Y position
+    dw $09A6, $1000  ; Beams
+    dw $09A8, $1000  ; Beams
+    dw $09C2, $00B3  ; Health
+    dw $09C6, $000A  ; Missiles
+    dw $09C8, $000A  ; Max missiles
+    dw $09CA, $0009  ; Supers
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $05C1  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw $D872, $04C1  ; Items
+    dw $D8B4, $2606  ; Doors
+    dw $D8B6, $0028  ; Doors
     dw #$FFFF
 .after
 
 preset_allbossprkd_brinstar_hellway:
     dw #preset_allbossprkd_brinstar_red_tower ; Brinstar: Red Tower
-    dl $7E078D : db $02 : dw $8F0A ; DDB
-    dl $7E079B : db $02 : dw $A253 ; MDB
-    dl $7E07F3 : db $02 : dw $0012 ; Music Bank
-    dl $7E090F : db $02 : dw $9FFF ; Screen subpixel X position
-    dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $CC00 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0014 ; Screen Y position in pixels
-    dl $7E0AF6 : db $02 : dw $009B ; Samus X
+    dw $078D, $8F0A  ; DDB
+    dw $079B, $A253  ; MDB
+    dw $07F3, $0012  ; Music Bank
+    dw $090F, $9FFF  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $CC00  ; Screen subpixel Y position
+    dw $0915, $0014  ; Screen Y position in pixels
+    dw $0AF6, $009B  ; Samus X
     dw #$FFFF
 .after
 
 preset_allbossprkd_brinstar_leaving_power_bombs:
     dw #preset_allbossprkd_brinstar_hellway ; Brinstar: Hellway
-    dl $7E078D : db $02 : dw $9096 ; DDB
-    dl $7E079B : db $02 : dw $A3AE ; MDB
-    dl $7E07F5 : db $02 : dw $0003 ; Music Track
-    dl $7E090F : db $02 : dw $E000 ; Screen subpixel X position
-    dl $7E0911 : db $02 : dw $0200 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $AC00 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $007F ; Health
-    dl $7E09CA : db $02 : dw $0008 ; Supers
-    dl $7E09CE : db $02 : dw $0005 ; Pbs
-    dl $7E09D0 : db $02 : dw $0005 ; Max pbs
-    dl $7E09D2 : db $02 : dw $0003 ; Currently selected item
-    dl $7E0AF6 : db $02 : dw $02BE ; Samus X
-    dl $7ED874 : db $02 : dw $0104 ; Items
-    dl $7ED8B6 : db $02 : dw $2028 ; Doors
+    dw $078D, $9096  ; DDB
+    dw $079B, $A3AE  ; MDB
+    dw $07F5, $0003  ; Music Track
+    dw $090F, $E000  ; Screen subpixel X position
+    dw $0911, $0200  ; Screen X position in pixels
+    dw $0913, $AC00  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $09C2, $007F  ; Health
+    dw $09CA, $0008  ; Supers
+    dw $09CE, $0005  ; Pbs
+    dw $09D0, $0005  ; Max pbs
+    dw $09D2, $0003  ; Currently selected item
+    dw $0AF6, $02BE  ; Samus X
+    dw $D874, $0104  ; Items
+    dw $D8B6, $2028  ; Doors
     dw #$FFFF
 .after
 
 preset_allbossprkd_wrecked_ship_moat:
     dw #preset_allbossprkd_brinstar_leaving_power_bombs ; Brinstar: Leaving Power Bombs
-    dl $7E078D : db $02 : dw $8AF6 ; DDB
-    dl $7E079B : db $02 : dw $948C ; MDB
-    dl $7E07F5 : db $02 : dw $0005 ; Music Track
-    dl $7E090F : db $02 : dw $9C00 ; Screen subpixel X position
-    dl $7E0913 : db $02 : dw $6800 ; Screen subpixel Y position
-    dl $7E09CA : db $02 : dw $000A ; Supers
-    dl $7E09CE : db $02 : dw $0001 ; Pbs
-    dl $7E09D2 : db $02 : dw $0000 ; Currently selected item
-    dl $7E0A1C : db $02 : dw $0089 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $1508 ; More position/state
-    dl $7E0AF6 : db $02 : dw $02DB ; Samus X
-    dl $7ED8B0 : db $02 : dw $6000 ; Doors
-    dl $7ED8B2 : db $02 : dw $2C01 ; Doors
-    dl $7ED8B6 : db $02 : dw $3028 ; Doors
+    dw $078D, $8AF6  ; DDB
+    dw $079B, $948C  ; MDB
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $9C00  ; Screen subpixel X position
+    dw $0913, $6800  ; Screen subpixel Y position
+    dw $09CA, $000A  ; Supers
+    dw $09CE, $0001  ; Pbs
+    dw $09D2, $0000  ; Currently selected item
+    dw $0A1C, $0089  ; Samus position/state
+    dw $0A1E, $1508  ; More position/state
+    dw $0AF6, $02DB  ; Samus X
+    dw $D8B0, $6000  ; Doors
+    dw $D8B2, $2C01  ; Doors
+    dw $D8B6, $3028  ; Doors
     dw #$FFFF
 .after
 
 preset_allbossprkd_wrecked_ship_ocean:
     dw #preset_allbossprkd_wrecked_ship_moat ; Wrecked Ship: Moat
-    dl $7E078D : db $02 : dw $8A36 ; DDB
-    dl $7E079B : db $02 : dw $95FF ; MDB
-    dl $7E090F : db $02 : dw $B000 ; Screen subpixel X position
-    dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $1000 ; Screen subpixel Y position
-    dl $7E09C6 : db $02 : dw $000F ; Missiles
-    dl $7E09C8 : db $02 : dw $000F ; Max missiles
-    dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0008 ; More position/state
-    dl $7E0AF6 : db $02 : dw $01A1 ; Samus X
-    dl $7ED870 : db $02 : dw $4190 ; Items
+    dw $078D, $8A36  ; DDB
+    dw $079B, $95FF  ; MDB
+    dw $090F, $B000  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $1000  ; Screen subpixel Y position
+    dw $09C6, $000F  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $01A1  ; Samus X
+    dw $D870, $4190  ; Items
     dw #$FFFF
 .after
 
 preset_allbossprkd_wrecked_ship_entering_wrecked_ship:
     dw #preset_allbossprkd_wrecked_ship_ocean ; Wrecked Ship: Ocean
-    dl $7E078D : db $02 : dw $8AEA ; DDB
-    dl $7E079B : db $02 : dw $93FE ; MDB
-    dl $7E07F3 : db $02 : dw $000C ; Music Bank
-    dl $7E090F : db $02 : dw $0800 ; Screen subpixel X position
-    dl $7E0911 : db $02 : dw $0700 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0404 ; Screen Y position in pixels
-    dl $7E09CA : db $02 : dw $0009 ; Supers
-    dl $7E0AF6 : db $02 : dw $07D7 ; Samus X
-    dl $7E0AFA : db $02 : dw $048B ; Samus Y
-    dl $7ED8B0 : db $02 : dw $7000 ; Doors
+    dw $078D, $8AEA  ; DDB
+    dw $079B, $93FE  ; MDB
+    dw $07F3, $000C  ; Music Bank
+    dw $090F, $0800  ; Screen subpixel X position
+    dw $0911, $0700  ; Screen X position in pixels
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $0404  ; Screen Y position in pixels
+    dw $09CA, $0009  ; Supers
+    dw $0AF6, $07D7  ; Samus X
+    dw $0AFA, $048B  ; Samus Y
+    dw $D8B0, $7000  ; Doors
     dw #$FFFF
 .after
 
 preset_allbossprkd_wrecked_ship_phantoon:
     dw #preset_allbossprkd_wrecked_ship_entering_wrecked_ship ; Wrecked Ship: Entering Wrecked Ship
-    dl $7E078D : db $02 : dw $A21C ; DDB
-    dl $7E079B : db $02 : dw $CC6F ; MDB
-    dl $7E07F3 : db $02 : dw $0030 ; Music Bank
-    dl $7E090F : db $02 : dw $6FFF ; Screen subpixel X position
-    dl $7E0911 : db $02 : dw $0400 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $7400 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
-    dl $7E09CA : db $02 : dw $0007 ; Supers
-    dl $7E0AF6 : db $02 : dw $04CC ; Samus X
-    dl $7E0AFA : db $02 : dw $008B ; Samus Y
-    dl $7ED8C0 : db $02 : dw $0030 ; Doors
+    dw $078D, $A21C  ; DDB
+    dw $079B, $CC6F  ; MDB
+    dw $07F3, $0030  ; Music Bank
+    dw $090F, $6FFF  ; Screen subpixel X position
+    dw $0911, $0400  ; Screen X position in pixels
+    dw $0913, $7400  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $09CA, $0007  ; Supers
+    dw $0AF6, $04CC  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw $D8C0, $0030  ; Doors
     dw #$FFFF
 .after
 
 preset_allbossprkd_wrecked_ship_wrecked_ship_shaft:
     dw #preset_allbossprkd_wrecked_ship_phantoon ; Wrecked Ship: Phantoon
-    dl $7E078D : db $02 : dw $A210 ; DDB
-    dl $7E079B : db $02 : dw $CDA8 ; MDB
-    dl $7E07F5 : db $02 : dw $0006 ; Music Track
-    dl $7E090F : db $02 : dw $A000 ; Screen subpixel X position
-    dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $5400 ; Screen subpixel Y position
-    dl $7E09C2 : db $02 : dw $00C7 ; Health
-    dl $7E09CA : db $02 : dw $000F ; Supers
-    dl $7E09CC : db $02 : dw $000F ; Max supers
-    dl $7E09CE : db $02 : dw $0004 ; Pbs
-    dl $7E0AF6 : db $02 : dw $00D5 ; Samus X
-    dl $7ED82A : db $02 : dw $0100 ; Bosses
-    dl $7ED880 : db $02 : dw $0020 ; Items
-    dl $7ED8C0 : db $02 : dw $0074 ; Doors
+    dw $078D, $A210  ; DDB
+    dw $079B, $CDA8  ; MDB
+    dw $07F5, $0006  ; Music Track
+    dw $090F, $A000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $5400  ; Screen subpixel Y position
+    dw $09C2, $00C7  ; Health
+    dw $09CA, $000F  ; Supers
+    dw $09CC, $000F  ; Max supers
+    dw $09CE, $0004  ; Pbs
+    dw $0AF6, $00D5  ; Samus X
+    dw $D82A, $0100  ; Bosses
+    dw $D880, $0020  ; Items
+    dw $D8C0, $0074  ; Doors
     dw #$FFFF
 .after
 
 preset_allbossprkd_wrecked_ship_attic:
     dw #preset_allbossprkd_wrecked_ship_wrecked_ship_shaft ; Wrecked Ship: Wrecked Ship Shaft
-    dl $7E078D : db $02 : dw $A2E8 ; DDB
-    dl $7E079B : db $02 : dw $CAF6 ; MDB
-    dl $7E090F : db $02 : dw $4000 ; Screen subpixel X position
-    dl $7E0911 : db $02 : dw $0400 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $0C00 ; Screen subpixel Y position
-    dl $7E0AF6 : db $02 : dw $043C ; Samus X
-    dl $7E0AFA : db $02 : dw $006B ; Samus Y
+    dw $078D, $A2E8  ; DDB
+    dw $079B, $CAF6  ; MDB
+    dw $090F, $4000  ; Screen subpixel X position
+    dw $0911, $0400  ; Screen X position in pixels
+    dw $0913, $0C00  ; Screen subpixel Y position
+    dw $0AF6, $043C  ; Samus X
+    dw $0AFA, $006B  ; Samus Y
     dw #$FFFF
 .after
 
 preset_allbossprkd_wrecked_ship_bowling_alley:
     dw #preset_allbossprkd_wrecked_ship_attic ; Wrecked Ship: Attic
-    dl $7E078D : db $02 : dw $8A1E ; DDB
-    dl $7E079B : db $02 : dw $968F ; MDB
-    dl $7E07F3 : db $02 : dw $000C ; Music Bank
-    dl $7E07F5 : db $02 : dw $0005 ; Music Track
-    dl $7E090F : db $02 : dw $0C00 ; Screen subpixel X position
-    dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $8400 ; Screen subpixel Y position
-    dl $7E09C2 : db $02 : dw $00BD ; Health
-    dl $7E09C6 : db $02 : dw $000A ; Missiles
-    dl $7E09CA : db $02 : dw $000E ; Supers
-    dl $7E09CE : db $02 : dw $0003 ; Pbs
-    dl $7E0AF6 : db $02 : dw $002E ; Samus X
-    dl $7E0AFA : db $02 : dw $008B ; Samus Y
-    dl $7ED8C0 : db $02 : dw $0174 ; Doors
+    dw $078D, $8A1E  ; DDB
+    dw $079B, $968F  ; MDB
+    dw $07F3, $000C  ; Music Bank
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $0C00  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $8400  ; Screen subpixel Y position
+    dw $09C2, $00BD  ; Health
+    dw $09C6, $000A  ; Missiles
+    dw $09CA, $000E  ; Supers
+    dw $09CE, $0003  ; Pbs
+    dw $0AF6, $002E  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw $D8C0, $0174  ; Doors
     dw #$FFFF
 .after
 
 preset_allbossprkd_wrecked_ship_leaving_gravity:
     dw #preset_allbossprkd_wrecked_ship_bowling_alley ; Wrecked Ship: Bowling Alley
-    dl $7E078D : db $02 : dw $A1A4 ; DDB
-    dl $7E079B : db $02 : dw $CE40 ; MDB
-    dl $7E07F3 : db $02 : dw $0030 ; Music Bank
-    dl $7E07F5 : db $02 : dw $0003 ; Music Track
-    dl $7E090F : db $02 : dw $C000 ; Screen subpixel X position
-    dl $7E0913 : db $02 : dw $3400 ; Screen subpixel Y position
-    dl $7E09A2 : db $02 : dw $1024 ; Equipped Items
-    dl $7E09A4 : db $02 : dw $1024 ; Collected Items
-    dl $7E09C2 : db $02 : dw $0045 ; Health
-    dl $7E0A1C : db $02 : dw $009B ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0000 ; More position/state
-    dl $7E0AF6 : db $02 : dw $0078 ; Samus X
-    dl $7E0AFA : db $02 : dw $0088 ; Samus Y
-    dl $7ED880 : db $02 : dw $00A0 ; Items
+    dw $078D, $A1A4  ; DDB
+    dw $079B, $CE40  ; MDB
+    dw $07F3, $0030  ; Music Bank
+    dw $07F5, $0003  ; Music Track
+    dw $090F, $C000  ; Screen subpixel X position
+    dw $0913, $3400  ; Screen subpixel Y position
+    dw $09A2, $1024  ; Equipped Items
+    dw $09A4, $1024  ; Collected Items
+    dw $09C2, $0045  ; Health
+    dw $0A1C, $009B  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
+    dw $0AF6, $0078  ; Samus X
+    dw $0AFA, $0088  ; Samus Y
+    dw $D880, $00A0  ; Items
     dw #$FFFF
 .after
 
 preset_allbossprkd_wrecked_ship_red_tower_elevator:
     dw #preset_allbossprkd_wrecked_ship_leaving_gravity ; Wrecked Ship: Leaving Gravity
-    dl $7E078D : db $02 : dw $8B02 ; DDB
-    dl $7E079B : db $02 : dw $A322 ; MDB
-    dl $7E07F3 : db $02 : dw $0012 ; Music Bank
-    dl $7E07F5 : db $02 : dw $0005 ; Music Track
-    dl $7E090F : db $02 : dw $A000 ; Screen subpixel X position
-    dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0238 ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $0043 ; Health
-    dl $7E09CE : db $02 : dw $0004 ; Pbs
-    dl $7E0AF6 : db $02 : dw $0080 ; Samus X
-    dl $7E0AFA : db $02 : dw $02A8 ; Samus Y
+    dw $078D, $8B02  ; DDB
+    dw $079B, $A322  ; MDB
+    dw $07F3, $0012  ; Music Bank
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $A000  ; Screen subpixel X position
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $0238  ; Screen Y position in pixels
+    dw $09C2, $0043  ; Health
+    dw $09CE, $0004  ; Pbs
+    dw $0AF6, $0080  ; Samus X
+    dw $0AFA, $02A8  ; Samus Y
     dw #$FFFF
 .after
 
 preset_allbossprkd_wrecked_ship_red_tower_descent:
     dw #preset_allbossprkd_wrecked_ship_red_tower_elevator ; Wrecked Ship: Red Tower Elevator
-    dl $7E078D : db $02 : dw $90AE ; DDB
-    dl $7E079B : db $02 : dw $A2F7 ; MDB
-    dl $7E090F : db $02 : dw $C000 ; Screen subpixel X position
-    dl $7E0913 : db $02 : dw $2400 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $003B ; Health
-    dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0004 ; More position/state
-    dl $7E0AF6 : db $02 : dw $0034 ; Samus X
-    dl $7E0AFA : db $02 : dw $008B ; Samus Y
+    dw $078D, $90AE  ; DDB
+    dw $079B, $A2F7  ; MDB
+    dw $090F, $C000  ; Screen subpixel X position
+    dw $0913, $2400  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $09C2, $003B  ; Health
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0034  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 .after
 
 preset_allbossprkd_wrecked_ship_spazer:
     dw #preset_allbossprkd_wrecked_ship_red_tower_descent ; Wrecked Ship: Red Tower Descent
-    dl $7E078D : db $02 : dw $9042 ; DDB
-    dl $7E079B : db $02 : dw $A3DD ; MDB
-    dl $7E090F : db $02 : dw $2000 ; Screen subpixel X position
-    dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $B800 ; Screen subpixel Y position
-    dl $7E0A1C : db $02 : dw $0089 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $1508 ; More position/state
-    dl $7E0AF6 : db $02 : dw $01DB ; Samus X
-    dl $7E0AFA : db $02 : dw $009B ; Samus Y
+    dw $078D, $9042  ; DDB
+    dw $079B, $A3DD  ; MDB
+    dw $090F, $2000  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $B800  ; Screen subpixel Y position
+    dw $0A1C, $0089  ; Samus position/state
+    dw $0A1E, $1508  ; More position/state
+    dw $0AF6, $01DB  ; Samus X
+    dw $0AFA, $009B  ; Samus Y
     dw #$FFFF
 .after
 
 preset_allbossprkd_wrecked_ship_breaking_tube:
     dw #preset_allbossprkd_wrecked_ship_spazer ; Wrecked Ship: Spazer
-    dl $7E078D : db $02 : dw $911A ; DDB
-    dl $7E079B : db $02 : dw $CF54 ; MDB
-    dl $7E090F : db $02 : dw $4000 ; Screen subpixel X position
-    dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $D000 ; Screen subpixel Y position
-    dl $7E09A6 : db $02 : dw $1004 ; Beams
-    dl $7E09A8 : db $02 : dw $1004 ; Beams
-    dl $7E09D2 : db $02 : dw $0003 ; Currently selected item
-    dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0008 ; More position/state
-    dl $7E0AF6 : db $02 : dw $002D ; Samus X
-    dl $7E0AFA : db $02 : dw $008B ; Samus Y
-    dl $7ED874 : db $02 : dw $0504 ; Items
-    dl $7ED8B6 : db $02 : dw $B028 ; Doors
+    dw $078D, $911A  ; DDB
+    dw $079B, $CF54  ; MDB
+    dw $090F, $4000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $D000  ; Screen subpixel Y position
+    dw $09A6, $1004  ; Beams
+    dw $09A8, $1004  ; Beams
+    dw $09D2, $0003  ; Currently selected item
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $002D  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw $D874, $0504  ; Items
+    dw $D8B6, $B028  ; Doors
     dw #$FFFF
 .after
 
 preset_allbossprkd_upper_norfair_business_center:
     dw #preset_allbossprkd_wrecked_ship_breaking_tube ; Wrecked Ship: Breaking Tube
-    dl $7E078D : db $02 : dw $9246 ; DDB
-    dl $7E079B : db $02 : dw $A7DE ; MDB
-    dl $7E07F3 : db $02 : dw $0015 ; Music Bank
-    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position
-    dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0238 ; Screen Y position in pixels
-    dl $7E09CE : db $02 : dw $0003 ; Pbs
-    dl $7E09D2 : db $02 : dw $0000 ; Currently selected item
-    dl $7E0A1C : db $02 : dw $009B ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0000 ; More position/state
-    dl $7E0AF6 : db $02 : dw $0080 ; Samus X
-    dl $7E0AFA : db $02 : dw $02A8 ; Samus Y
-    dl $7ED820 : db $02 : dw $0801 ; Events
+    dw $078D, $9246  ; DDB
+    dw $079B, $A7DE  ; MDB
+    dw $07F3, $0015  ; Music Bank
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $0238  ; Screen Y position in pixels
+    dw $09CE, $0003  ; Pbs
+    dw $09D2, $0000  ; Currently selected item
+    dw $0A1C, $009B  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
+    dw $0AF6, $0080  ; Samus X
+    dw $0AFA, $02A8  ; Samus Y
+    dw $D820, $0801  ; Events
     dw #$FFFF
 .after
 
 preset_allbossprkd_upper_norfair_hi_jump_etank:
     dw #preset_allbossprkd_upper_norfair_business_center ; Upper Norfair: Business Center
-    dl $7E090F : db $02 : dw $3001 ; Screen subpixel X position
-    dl $7E0915 : db $02 : dw $051B ; Screen Y position in pixels
-    dl $7E09CA : db $02 : dw $000D ; Supers
-    dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0004 ; More position/state
-    dl $7E0AF6 : db $02 : dw $003A ; Samus X
-    dl $7E0AFA : db $02 : dw $058B ; Samus Y
-    dl $7ED8B8 : db $02 : dw $2000 ; Doors
+    dw $090F, $3001  ; Screen subpixel X position
+    dw $0915, $051B  ; Screen Y position in pixels
+    dw $09CA, $000D  ; Supers
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $003A  ; Samus X
+    dw $0AFA, $058B  ; Samus Y
+    dw $D8B8, $2000  ; Doors
     dw #$FFFF
 .after
 
 preset_allbossprkd_upper_norfair_leaving_hi_jump:
     dw #preset_allbossprkd_upper_norfair_hi_jump_etank ; Upper Norfair: Hi Jump E-tank
-    dl $7E078D : db $02 : dw $9426 ; DDB
-    dl $7E079B : db $02 : dw $A9E5 ; MDB
-    dl $7E07F5 : db $02 : dw $0003 ; Music Track
-    dl $7E090F : db $02 : dw $B000 ; Screen subpixel X position
-    dl $7E0913 : db $02 : dw $CC00 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
-    dl $7E09A2 : db $02 : dw $1124 ; Equipped Items
-    dl $7E09A4 : db $02 : dw $1124 ; Collected Items
-    dl $7E09C2 : db $02 : dw $012B ; Health
-    dl $7E09C4 : db $02 : dw $012B ; Max health
-    dl $7E09C6 : db $02 : dw $000C ; Missiles
-    dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0008 ; More position/state
-    dl $7E0AF6 : db $02 : dw $0048 ; Samus X
-    dl $7E0AFA : db $02 : dw $00BB ; Samus Y
-    dl $7ED876 : db $02 : dw $0120 ; Items
-    dl $7ED8BA : db $02 : dw $0001 ; Doors
+    dw $078D, $9426  ; DDB
+    dw $079B, $A9E5  ; MDB
+    dw $07F5, $0003  ; Music Track
+    dw $090F, $B000  ; Screen subpixel X position
+    dw $0913, $CC00  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $09A2, $1124  ; Equipped Items
+    dw $09A4, $1124  ; Collected Items
+    dw $09C2, $012B  ; Health
+    dw $09C4, $012B  ; Max health
+    dw $09C6, $000C  ; Missiles
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $0048  ; Samus X
+    dw $0AFA, $00BB  ; Samus Y
+    dw $D876, $0120  ; Items
+    dw $D8BA, $0001  ; Doors
     dw #$FFFF
 .after
 
 preset_allbossprkd_upper_norfair_ice_beam_hallway:
     dw #preset_allbossprkd_upper_norfair_leaving_hi_jump ; Upper Norfair: Leaving Hi Jump
-    dl $7E078D : db $02 : dw $941A ; DDB
-    dl $7E079B : db $02 : dw $A7DE ; MDB
-    dl $7E07F5 : db $02 : dw $0005 ; Music Track
-    dl $7E090F : db $02 : dw $4000 ; Screen subpixel X position
-    dl $7E0913 : db $02 : dw $D800 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $030C ; Screen Y position in pixels
-    dl $7E09CA : db $02 : dw $000C ; Supers
-    dl $7E09CE : db $02 : dw $0002 ; Pbs
-    dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0004 ; More position/state
-    dl $7E0AF6 : db $02 : dw $0055 ; Samus X
-    dl $7E0AFA : db $02 : dw $039B ; Samus Y
-    dl $7ED8B8 : db $02 : dw $2800 ; Doors
+    dw $078D, $941A  ; DDB
+    dw $079B, $A7DE  ; MDB
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $4000  ; Screen subpixel X position
+    dw $0913, $D800  ; Screen subpixel Y position
+    dw $0915, $030C  ; Screen Y position in pixels
+    dw $09CA, $000C  ; Supers
+    dw $09CE, $0002  ; Pbs
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0055  ; Samus X
+    dw $0AFA, $039B  ; Samus Y
+    dw $D8B8, $2800  ; Doors
     dw #$FFFF
 .after
 
 preset_allbossprkd_upper_norfair_ice_maze:
     dw #preset_allbossprkd_upper_norfair_ice_beam_hallway ; Upper Norfair: Ice Beam Hallway
-    dl $7E078D : db $02 : dw $931E ; DDB
-    dl $7E079B : db $02 : dw $A75D ; MDB
-    dl $7E090F : db $02 : dw $9000 ; Screen subpixel X position
-    dl $7E0913 : db $02 : dw $1800 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
-    dl $7E0AF6 : db $02 : dw $0038 ; Samus X
-    dl $7E0AFA : db $02 : dw $008B ; Samus Y
+    dw $078D, $931E  ; DDB
+    dw $079B, $A75D  ; MDB
+    dw $090F, $9000  ; Screen subpixel X position
+    dw $0913, $1800  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0AF6, $0038  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 .after
 
 preset_allbossprkd_upper_norfair_ice_escape:
     dw #preset_allbossprkd_upper_norfair_ice_maze ; Upper Norfair: Ice Maze
-    dl $7E078D : db $02 : dw $935A ; DDB
-    dl $7E079B : db $02 : dw $A8B9 ; MDB
-    dl $7E090F : db $02 : dw $3000 ; Screen subpixel X position
-    dl $7E0913 : db $02 : dw $3000 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0200 ; Screen Y position in pixels
-    dl $7E09A6 : db $02 : dw $1006 ; Beams
-    dl $7E09A8 : db $02 : dw $1006 ; Beams
-    dl $7E09C2 : db $02 : dw $0121 ; Health
-    dl $7E09CA : db $02 : dw $000D ; Supers
-    dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0008 ; More position/state
-    dl $7E0AF6 : db $02 : dw $00C8 ; Samus X
-    dl $7E0AFA : db $02 : dw $028B ; Samus Y
-    dl $7ED876 : db $02 : dw $0124 ; Items
+    dw $078D, $935A  ; DDB
+    dw $079B, $A8B9  ; MDB
+    dw $090F, $3000  ; Screen subpixel X position
+    dw $0913, $3000  ; Screen subpixel Y position
+    dw $0915, $0200  ; Screen Y position in pixels
+    dw $09A6, $1006  ; Beams
+    dw $09A8, $1006  ; Beams
+    dw $09C2, $0121  ; Health
+    dw $09CA, $000D  ; Supers
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $00C8  ; Samus X
+    dw $0AFA, $028B  ; Samus Y
+    dw $D876, $0124  ; Items
     dw #$FFFF
 .after
 
 preset_allbossprkd_upper_norfair_precathedral:
     dw #preset_allbossprkd_upper_norfair_ice_escape ; Upper Norfair: Ice Escape
-    dl $7E078D : db $02 : dw $932A ; DDB
-    dl $7E079B : db $02 : dw $A7DE ; MDB
-    dl $7E090F : db $02 : dw $3FFF ; Screen subpixel X position
-    dl $7E0913 : db $02 : dw $BC00 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0310 ; Screen Y position in pixels
-    dl $7E0AF6 : db $02 : dw $00A0 ; Samus X
-    dl $7E0AFA : db $02 : dw $038B ; Samus Y
+    dw $078D, $932A  ; DDB
+    dw $079B, $A7DE  ; MDB
+    dw $090F, $3FFF  ; Screen subpixel X position
+    dw $0913, $BC00  ; Screen subpixel Y position
+    dw $0915, $0310  ; Screen Y position in pixels
+    dw $0AF6, $00A0  ; Samus X
+    dw $0AFA, $038B  ; Samus Y
     dw #$FFFF
 .after
 
 preset_allbossprkd_upper_norfair_bubble_mountain:
     dw #preset_allbossprkd_upper_norfair_precathedral ; Upper Norfair: Pre-Cathedral
-    dl $7E078D : db $02 : dw $929A ; DDB
-    dl $7E079B : db $02 : dw $AFA3 ; MDB
-    dl $7E090F : db $02 : dw $A000 ; Screen subpixel X position
-    dl $7E0911 : db $02 : dw $0400 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $1000 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $0111 ; Health
-    dl $7E09CA : db $02 : dw $000B ; Supers
-    dl $7E0AF6 : db $02 : dw $04B4 ; Samus X
-    dl $7E0AFA : db $02 : dw $008B ; Samus Y
-    dl $7ED8B8 : db $02 : dw $2E00 ; Doors
+    dw $078D, $929A  ; DDB
+    dw $079B, $AFA3  ; MDB
+    dw $090F, $A000  ; Screen subpixel X position
+    dw $0911, $0400  ; Screen X position in pixels
+    dw $0913, $1000  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $09C2, $0111  ; Health
+    dw $09CA, $000B  ; Supers
+    dw $0AF6, $04B4  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw $D8B8, $2E00  ; Doors
     dw #$FFFF
 .after
 
 preset_allbossprkd_upper_norfair_single_chamber:
     dw #preset_allbossprkd_upper_norfair_bubble_mountain ; Upper Norfair: Bubble Mountain
-    dl $7E078D : db $02 : dw $97AA ; DDB
-    dl $7E079B : db $02 : dw $ACB3 ; MDB
-    dl $7E090F : db $02 : dw $C000 ; Screen subpixel X position
-    dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0104 ; Screen Y position in pixels
-    dl $7E09A2 : db $02 : dw $3124 ; Equipped Items
-    dl $7E09A4 : db $02 : dw $3124 ; Collected Items
-    dl $7E09C2 : db $02 : dw $0129 ; Health
-    dl $7E09C6 : db $02 : dw $000F ; Missiles
-    dl $7E09CA : db $02 : dw $000F ; Supers
-    dl $7E0AF6 : db $02 : dw $01B4 ; Samus X
-    dl $7E0AFA : db $02 : dw $018B ; Samus Y
-    dl $7ED822 : db $02 : dw $0020 ; Events
-    dl $7ED878 : db $02 : dw $0004 ; Items
-    dl $7ED8BA : db $02 : dw $0031 ; Doors
+    dw $078D, $97AA  ; DDB
+    dw $079B, $ACB3  ; MDB
+    dw $090F, $C000  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $0104  ; Screen Y position in pixels
+    dw $09A2, $3124  ; Equipped Items
+    dw $09A4, $3124  ; Collected Items
+    dw $09C2, $0129  ; Health
+    dw $09C6, $000F  ; Missiles
+    dw $09CA, $000F  ; Supers
+    dw $0AF6, $01B4  ; Samus X
+    dw $0AFA, $018B  ; Samus Y
+    dw $D822, $0020  ; Events
+    dw $D878, $0004  ; Items
+    dw $D8BA, $0031  ; Doors
     dw #$FFFF
 .after
 
 preset_allbossprkd_upper_norfair_double_chamber_revisit:
     dw #preset_allbossprkd_upper_norfair_single_chamber ; Upper Norfair: Single Chamber
-    dl $7E078D : db $02 : dw $961E ; DDB
-    dl $7E079B : db $02 : dw $ADDE ; MDB
-    dl $7E07F5 : db $02 : dw $0003 ; Music Track
-    dl $7E090F : db $02 : dw $E000 ; Screen subpixel X position
-    dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $9C00 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
-    dl $7E09A6 : db $02 : dw $1007 ; Beams
-    dl $7E09A8 : db $02 : dw $1007 ; Beams
-    dl $7E09C6 : db $02 : dw $000D ; Missiles
-    dl $7E09C8 : db $02 : dw $0014 ; Max missiles
-    dl $7E09CA : db $02 : dw $000E ; Supers
-    dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0004 ; More position/state
-    dl $7E0AF6 : db $02 : dw $0053 ; Samus X
-    dl $7E0AFA : db $02 : dw $008B ; Samus Y
-    dl $7ED878 : db $02 : dw $001C ; Items
-    dl $7ED8BA : db $02 : dw $00F1 ; Doors
+    dw $078D, $961E  ; DDB
+    dw $079B, $ADDE  ; MDB
+    dw $07F5, $0003  ; Music Track
+    dw $090F, $E000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $9C00  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $09A6, $1007  ; Beams
+    dw $09A8, $1007  ; Beams
+    dw $09C6, $000D  ; Missiles
+    dw $09C8, $0014  ; Max missiles
+    dw $09CA, $000E  ; Supers
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0053  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw $D878, $001C  ; Items
+    dw $D8BA, $00F1  ; Doors
     dw #$FFFF
 .after
 
 preset_allbossprkd_upper_norfair_volcano_room:
     dw #preset_allbossprkd_upper_norfair_double_chamber_revisit ; Upper Norfair: Double Chamber Revisit
-    dl $7E078D : db $02 : dw $95EE ; DDB
-    dl $7E079B : db $02 : dw $AE07 ; MDB
-    dl $7E07F5 : db $02 : dw $0005 ; Music Track
-    dl $7E090F : db $02 : dw $CD80 ; Screen subpixel X position
-    dl $7E0911 : db $02 : dw $0300 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $7800 ; Screen subpixel Y position
-    dl $7E09C2 : db $02 : dw $011A ; Health
-    dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0008 ; More position/state
-    dl $7E0AF6 : db $02 : dw $03B4 ; Samus X
+    dw $078D, $95EE  ; DDB
+    dw $079B, $AE07  ; MDB
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $CD80  ; Screen subpixel X position
+    dw $0911, $0300  ; Screen X position in pixels
+    dw $0913, $7800  ; Screen subpixel Y position
+    dw $09C2, $011A  ; Health
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $03B4  ; Samus X
     dw #$FFFF
 .after
 
 preset_allbossprkd_upper_norfair_lava_spark:
     dw #preset_allbossprkd_upper_norfair_volcano_room ; Upper Norfair: Volcano Room
-    dl $7E078D : db $02 : dw $965A ; DDB
-    dl $7E079B : db $02 : dw $AE74 ; MDB
-    dl $7E090F : db $02 : dw $9FFF ; Screen subpixel X position
-    dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $0800 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0200 ; Screen Y position in pixels
-    dl $7E09C6 : db $02 : dw $000A ; Missiles
-    dl $7E09CE : db $02 : dw $0005 ; Pbs
-    dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0004 ; More position/state
-    dl $7E0AF6 : db $02 : dw $01EB ; Samus X
-    dl $7E0AFA : db $02 : dw $028B ; Samus Y
-    dl $7ED8BA : db $02 : dw $01F1 ; Doors
+    dw $078D, $965A  ; DDB
+    dw $079B, $AE74  ; MDB
+    dw $090F, $9FFF  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $0800  ; Screen subpixel Y position
+    dw $0915, $0200  ; Screen Y position in pixels
+    dw $09C6, $000A  ; Missiles
+    dw $09CE, $0005  ; Pbs
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $01EB  ; Samus X
+    dw $0AFA, $028B  ; Samus Y
+    dw $D8BA, $01F1  ; Doors
     dw #$FFFF
 .after
 
 preset_allbossprkd_lower_norfair_ln_main_hall:
     dw #preset_allbossprkd_upper_norfair_lava_spark ; Upper Norfair: Lava Spark
-    dl $7E078D : db $02 : dw $96F6 ; DDB
-    dl $7E079B : db $02 : dw $B236 ; MDB
-    dl $7E07F3 : db $02 : dw $0018 ; Music Bank
-    dl $7E090F : db $02 : dw $6000 ; Screen subpixel X position
-    dl $7E0911 : db $02 : dw $0400 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
-    dl $7E09A6 : db $02 : dw $1001 ; Beams
-    dl $7E09C2 : db $02 : dw $00C6 ; Health
-    dl $7E09D2 : db $02 : dw $0003 ; Currently selected item
-    dl $7E0A1C : db $02 : dw $009B ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0000 ; More position/state
-    dl $7E0AF6 : db $02 : dw $0480 ; Samus X
-    dl $7E0AFA : db $02 : dw $0288 ; Samus Y
+    dw $078D, $96F6  ; DDB
+    dw $079B, $B236  ; MDB
+    dw $07F3, $0018  ; Music Bank
+    dw $090F, $6000  ; Screen subpixel X position
+    dw $0911, $0400  ; Screen X position in pixels
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $09A6, $1001  ; Beams
+    dw $09C2, $00C6  ; Health
+    dw $09D2, $0003  ; Currently selected item
+    dw $0A1C, $009B  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
+    dw $0AF6, $0480  ; Samus X
+    dw $0AFA, $0288  ; Samus Y
     dw #$FFFF
 .after
 
 preset_allbossprkd_lower_norfair_green_gate_glitch:
     dw #preset_allbossprkd_lower_norfair_ln_main_hall ; Lower Norfair: LN Main Hall
-    dl $7E078D : db $02 : dw $985E ; DDB
-    dl $7E079B : db $02 : dw $B3A5 ; MDB
-    dl $7E090F : db $02 : dw $4000 ; Screen subpixel X position
-    dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $AC00 ; Screen subpixel Y position
-    dl $7E09D2 : db $02 : dw $0000 ; Currently selected item
-    dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0004 ; More position/state
-    dl $7E0AF6 : db $02 : dw $007C ; Samus X
-    dl $7E0AFA : db $02 : dw $029B ; Samus Y
+    dw $078D, $985E  ; DDB
+    dw $079B, $B3A5  ; MDB
+    dw $090F, $4000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $AC00  ; Screen subpixel Y position
+    dw $09D2, $0000  ; Currently selected item
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $007C  ; Samus X
+    dw $0AFA, $029B  ; Samus Y
     dw #$FFFF
 .after
 
 preset_allbossprkd_lower_norfair_golden_torizo:
     dw #preset_allbossprkd_lower_norfair_green_gate_glitch ; Lower Norfair: Green Gate Glitch
-    dl $7E078D : db $02 : dw $988E ; DDB
-    dl $7E079B : db $02 : dw $B6C1 ; MDB
-    dl $7E07F5 : db $02 : dw $0003 ; Music Track
-    dl $7E090F : db $02 : dw $8000 ; Screen subpixel X position
-    dl $7E0913 : db $02 : dw $4000 ; Screen subpixel Y position
-    dl $7E09C2 : db $02 : dw $00C4 ; Health
-    dl $7E09CA : db $02 : dw $000D ; Supers
-    dl $7E0A1C : db $02 : dw $008A ; Samus position/state
-    dl $7E0A1E : db $02 : dw $1504 ; More position/state
-    dl $7E0AF6 : db $02 : dw $0025 ; Samus X
+    dw $078D, $988E  ; DDB
+    dw $079B, $B6C1  ; MDB
+    dw $07F5, $0003  ; Music Track
+    dw $090F, $8000  ; Screen subpixel X position
+    dw $0913, $4000  ; Screen subpixel Y position
+    dw $09C2, $00C4  ; Health
+    dw $09CA, $000D  ; Supers
+    dw $0A1C, $008A  ; Samus position/state
+    dw $0A1E, $1504  ; More position/state
+    dw $0AF6, $0025  ; Samus X
     dw #$FFFF
 .after
 
 preset_allbossprkd_lower_norfair_screw_attack_escape:
     dw #preset_allbossprkd_lower_norfair_golden_torizo ; Lower Norfair: Golden Torizo
-    dl $7E078D : db $02 : dw $9A86 ; DDB
-    dl $7E079B : db $02 : dw $B283 ; MDB
-    dl $7E07F3 : db $02 : dw $0024 ; Music Bank
-    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position
-    dl $7E0913 : db $02 : dw $3400 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0100 ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $012B ; Health
-    dl $7E09C6 : db $02 : dw $0014 ; Missiles
-    dl $7E09CA : db $02 : dw $0009 ; Supers
-    dl $7E09CC : db $02 : dw $0014 ; Max supers
-    dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0008 ; More position/state
-    dl $7E0AFA : db $02 : dw $018B ; Samus Y
-    dl $7ED82A : db $02 : dw $0104 ; Bosses
-    dl $7ED878 : db $02 : dw $009C ; Items
+    dw $078D, $9A86  ; DDB
+    dw $079B, $B283  ; MDB
+    dw $07F3, $0024  ; Music Bank
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0913, $3400  ; Screen subpixel Y position
+    dw $0915, $0100  ; Screen Y position in pixels
+    dw $09C2, $012B  ; Health
+    dw $09C6, $0014  ; Missiles
+    dw $09CA, $0009  ; Supers
+    dw $09CC, $0014  ; Max supers
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AFA, $018B  ; Samus Y
+    dw $D82A, $0104  ; Bosses
+    dw $D878, $009C  ; Items
     dw #$FFFF
 .after
 
 preset_allbossprkd_lower_norfair_worst_room_in_the_game:
     dw #preset_allbossprkd_lower_norfair_screw_attack_escape ; Lower Norfair: Screw Attack Escape
-    dl $7E078D : db $02 : dw $9912 ; DDB
-    dl $7E079B : db $02 : dw $B457 ; MDB
-    dl $7E07F3 : db $02 : dw $0018 ; Music Bank
-    dl $7E07F5 : db $02 : dw $0005 ; Music Track
-    dl $7E090F : db $02 : dw $C000 ; Screen subpixel X position
-    dl $7E0911 : db $02 : dw $0300 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $3800 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
-    dl $7E09A2 : db $02 : dw $312C ; Equipped Items
-    dl $7E09A4 : db $02 : dw $312C ; Collected Items
-    dl $7E09C2 : db $02 : dw $00B8 ; Health
-    dl $7E09CA : db $02 : dw $000E ; Supers
-    dl $7E09CE : db $02 : dw $0004 ; Pbs
-    dl $7E0AF6 : db $02 : dw $03D3 ; Samus X
-    dl $7E0AFA : db $02 : dw $008B ; Samus Y
-    dl $7ED878 : db $02 : dw $809C ; Items
-    dl $7ED8BA : db $02 : dw $03F1 ; Doors
+    dw $078D, $9912  ; DDB
+    dw $079B, $B457  ; MDB
+    dw $07F3, $0018  ; Music Bank
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $C000  ; Screen subpixel X position
+    dw $0911, $0300  ; Screen X position in pixels
+    dw $0913, $3800  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $09A2, $312C  ; Equipped Items
+    dw $09A4, $312C  ; Collected Items
+    dw $09C2, $00B8  ; Health
+    dw $09CA, $000E  ; Supers
+    dw $09CE, $0004  ; Pbs
+    dw $0AF6, $03D3  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw $D878, $809C  ; Items
+    dw $D8BA, $03F1  ; Doors
     dw #$FFFF
 .after
 
 preset_allbossprkd_lower_norfair_amphitheatre:
     dw #preset_allbossprkd_lower_norfair_worst_room_in_the_game ; Lower Norfair: Worst Room in the Game
-    dl $7E078D : db $02 : dw $994E ; DDB
-    dl $7E079B : db $02 : dw $B4AD ; MDB
-    dl $7E090F : db $02 : dw $EFFF ; Screen subpixel X position
-    dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $A400 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $011D ; Screen Y position in pixels
-    dl $7E09CE : db $02 : dw $0003 ; Pbs
-    dl $7E0AF6 : db $02 : dw $00A7 ; Samus X
-    dl $7E0AFA : db $02 : dw $018B ; Samus Y
+    dw $078D, $994E  ; DDB
+    dw $079B, $B4AD  ; MDB
+    dw $090F, $EFFF  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $A400  ; Screen subpixel Y position
+    dw $0915, $011D  ; Screen Y position in pixels
+    dw $09CE, $0003  ; Pbs
+    dw $0AF6, $00A7  ; Samus X
+    dw $0AFA, $018B  ; Samus Y
     dw #$FFFF
 .after
 
 preset_allbossprkd_lower_norfair_kihunter_stairs:
     dw #preset_allbossprkd_lower_norfair_amphitheatre ; Lower Norfair: Amphitheatre
-    dl $7E078D : db $02 : dw $997E ; DDB
-    dl $7E079B : db $02 : dw $B4E5 ; MDB
-    dl $7E090F : db $02 : dw $7900 ; Screen subpixel X position
-    dl $7E0911 : db $02 : dw $0267 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0044 ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $00BD ; Health
-    dl $7E0AF6 : db $02 : dw $02DE ; Samus X
-    dl $7E0AFA : db $02 : dw $00B4 ; Samus Y
+    dw $078D, $997E  ; DDB
+    dw $079B, $B4E5  ; MDB
+    dw $090F, $7900  ; Screen subpixel X position
+    dw $0911, $0267  ; Screen X position in pixels
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $0044  ; Screen Y position in pixels
+    dw $09C2, $00BD  ; Health
+    dw $0AF6, $02DE  ; Samus X
+    dw $0AFA, $00B4  ; Samus Y
     dw #$FFFF
 .after
 
 preset_allbossprkd_lower_norfair_wasteland:
     dw #preset_allbossprkd_lower_norfair_kihunter_stairs ; Lower Norfair: Kihunter Stairs
-    dl $7E078D : db $02 : dw $99A2 ; DDB
-    dl $7E079B : db $02 : dw $B585 ; MDB
-    dl $7E090F : db $02 : dw $A000 ; Screen subpixel X position
-    dl $7E0911 : db $02 : dw $0200 ; Screen X position in pixels
-    dl $7E0915 : db $02 : dw $0419 ; Screen Y position in pixels
-    dl $7E09CE : db $02 : dw $0001 ; Pbs
-    dl $7E0A1C : db $02 : dw $001D ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0408 ; More position/state
-    dl $7E0AF6 : db $02 : dw $024E ; Samus X
-    dl $7E0AFA : db $02 : dw $0489 ; Samus Y
-    dl $7ED8BA : db $02 : dw $43F1 ; Doors
+    dw $078D, $99A2  ; DDB
+    dw $079B, $B585  ; MDB
+    dw $090F, $A000  ; Screen subpixel X position
+    dw $0911, $0200  ; Screen X position in pixels
+    dw $0915, $0419  ; Screen Y position in pixels
+    dw $09CE, $0001  ; Pbs
+    dw $0A1C, $001D  ; Samus position/state
+    dw $0A1E, $0408  ; More position/state
+    dw $0AF6, $024E  ; Samus X
+    dw $0AFA, $0489  ; Samus Y
+    dw $D8BA, $43F1  ; Doors
     dw #$FFFF
 .after
 
 preset_allbossprkd_lower_norfair_metal_pirates:
     dw #preset_allbossprkd_lower_norfair_wasteland ; Lower Norfair: Wasteland
-    dl $7E078D : db $02 : dw $99EA ; DDB
-    dl $7E079B : db $02 : dw $B5D5 ; MDB
-    dl $7E090F : db $02 : dw $9CFE ; Screen subpixel X position
-    dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
-    dl $7E0915 : db $02 : dw $021B ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $0089 ; Health
-    dl $7E09CA : db $02 : dw $000D ; Supers
-    dl $7E09CE : db $02 : dw $0000 ; Pbs
-    dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0004 ; More position/state
-    dl $7E0AF6 : db $02 : dw $0167 ; Samus X
-    dl $7E0AFA : db $02 : dw $028B ; Samus Y
-    dl $7ED8BA : db $02 : dw $C3F1 ; Doors
+    dw $078D, $99EA  ; DDB
+    dw $079B, $B5D5  ; MDB
+    dw $090F, $9CFE  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0915, $021B  ; Screen Y position in pixels
+    dw $09C2, $0089  ; Health
+    dw $09CA, $000D  ; Supers
+    dw $09CE, $0000  ; Pbs
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0167  ; Samus X
+    dw $0AFA, $028B  ; Samus Y
+    dw $D8BA, $C3F1  ; Doors
     dw #$FFFF
 .after
 
 preset_allbossprkd_lower_norfair_ridley:
     dw #preset_allbossprkd_lower_norfair_metal_pirates ; Lower Norfair: Metal Pirates
-    dl $7E078D : db $02 : dw $995A ; DDB
-    dl $7E079B : db $02 : dw $B37A ; MDB
-    dl $7E090F : db $02 : dw $A000 ; Screen subpixel X position
-    dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $D800 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $0105 ; Health
-    dl $7E09CA : db $02 : dw $0013 ; Supers
-    dl $7E09CE : db $02 : dw $0004 ; Pbs
-    dl $7E0AF6 : db $02 : dw $003A ; Samus X
-    dl $7E0AFA : db $02 : dw $009B ; Samus Y
-    dl $7ED8BA : db $02 : dw $D3F1 ; Doors
-    dl $7ED8BC : db $02 : dw $0001 ; Doors
+    dw $078D, $995A  ; DDB
+    dw $079B, $B37A  ; MDB
+    dw $090F, $A000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $D800  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $09C2, $0105  ; Health
+    dw $09CA, $0013  ; Supers
+    dw $09CE, $0004  ; Pbs
+    dw $0AF6, $003A  ; Samus X
+    dw $0AFA, $009B  ; Samus Y
+    dw $D8BA, $D3F1  ; Doors
+    dw $D8BC, $0001  ; Doors
     dw #$FFFF
 .after
 
 preset_allbossprkd_lower_norfair_leaving_ridley:
     dw #preset_allbossprkd_lower_norfair_ridley ; Lower Norfair: Ridley
-    dl $7E078D : db $02 : dw $98CA ; DDB
-    dl $7E079B : db $02 : dw $B32E ; MDB
-    dl $7E07F3 : db $02 : dw $0024 ; Music Bank
-    dl $7E07F5 : db $02 : dw $0003 ; Music Track
-    dl $7E090F : db $02 : dw $F000 ; Screen subpixel X position
-    dl $7E0913 : db $02 : dw $3C00 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $011F ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $012B ; Health
-    dl $7E09CA : db $02 : dw $000B ; Supers
-    dl $7E09CE : db $02 : dw $0005 ; Pbs
-    dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0008 ; More position/state
-    dl $7E0AF6 : db $02 : dw $0058 ; Samus X
-    dl $7E0AFA : db $02 : dw $019B ; Samus Y
-    dl $7ED82A : db $02 : dw $0105 ; Bosses
+    dw $078D, $98CA  ; DDB
+    dw $079B, $B32E  ; MDB
+    dw $07F3, $0024  ; Music Bank
+    dw $07F5, $0003  ; Music Track
+    dw $090F, $F000  ; Screen subpixel X position
+    dw $0913, $3C00  ; Screen subpixel Y position
+    dw $0915, $011F  ; Screen Y position in pixels
+    dw $09C2, $012B  ; Health
+    dw $09CA, $000B  ; Supers
+    dw $09CE, $0005  ; Pbs
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $0058  ; Samus X
+    dw $0AFA, $019B  ; Samus Y
+    dw $D82A, $0105  ; Bosses
     dw #$FFFF
 .after
 
 preset_allbossprkd_lower_norfair_wasteland_revisit:
     dw #preset_allbossprkd_lower_norfair_leaving_ridley ; Lower Norfair: Leaving Ridley
-    dl $7E078D : db $02 : dw $9966 ; DDB
-    dl $7E079B : db $02 : dw $B62B ; MDB
-    dl $7E07F3 : db $02 : dw $0018 ; Music Bank
-    dl $7E07F5 : db $02 : dw $0005 ; Music Track
-    dl $7E090F : db $02 : dw $6000 ; Screen subpixel X position
-    dl $7E0911 : db $02 : dw $0200 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $7400 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $0108 ; Health
-    dl $7E0A1C : db $02 : dw $0089 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $1508 ; More position/state
-    dl $7E0AF6 : db $02 : dw $02DB ; Samus X
-    dl $7E0AFA : db $02 : dw $00AB ; Samus Y
-    dl $7ED8BA : db $02 : dw $D7F1 ; Doors
+    dw $078D, $9966  ; DDB
+    dw $079B, $B62B  ; MDB
+    dw $07F3, $0018  ; Music Bank
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $6000  ; Screen subpixel X position
+    dw $0911, $0200  ; Screen X position in pixels
+    dw $0913, $7400  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $09C2, $0108  ; Health
+    dw $0A1C, $0089  ; Samus position/state
+    dw $0A1E, $1508  ; More position/state
+    dw $0AF6, $02DB  ; Samus X
+    dw $0AFA, $00AB  ; Samus Y
+    dw $D8BA, $D7F1  ; Doors
     dw #$FFFF
 .after
 
 preset_allbossprkd_lower_norfair_kihunter_stairs_revisit:
     dw #preset_allbossprkd_lower_norfair_wasteland_revisit ; Lower Norfair: Wasteland Revisit
-    dl $7E078D : db $02 : dw $9A3E ; DDB
-    dl $7E079B : db $02 : dw $B5D5 ; MDB
-    dl $7E090F : db $02 : dw $C000 ; Screen subpixel X position
-    dl $7E0911 : db $02 : dw $0500 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $0800 ; Screen subpixel Y position
-    dl $7E09C2 : db $02 : dw $00F7 ; Health
-    dl $7E09CE : db $02 : dw $0004 ; Pbs
-    dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0004 ; More position/state
-    dl $7E0AF6 : db $02 : dw $0583 ; Samus X
-    dl $7E0AFA : db $02 : dw $005B ; Samus Y
+    dw $078D, $9A3E  ; DDB
+    dw $079B, $B5D5  ; MDB
+    dw $090F, $C000  ; Screen subpixel X position
+    dw $0911, $0500  ; Screen X position in pixels
+    dw $0913, $0800  ; Screen subpixel Y position
+    dw $09C2, $00F7  ; Health
+    dw $09CE, $0004  ; Pbs
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0583  ; Samus X
+    dw $0AFA, $005B  ; Samus Y
     dw #$FFFF
 .after
 
 preset_allbossprkd_lower_norfair_fire_flea_room:
     dw #preset_allbossprkd_lower_norfair_kihunter_stairs_revisit ; Lower Norfair: Kihunter Stairs Revisit
-    dl $7E078D : db $02 : dw $9A26 ; DDB
-    dl $7E079B : db $02 : dw $B585 ; MDB
-    dl $7E090F : db $02 : dw $5000 ; Screen subpixel X position
-    dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $4C00 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $000A ; Screen Y position in pixels
-    dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0008 ; More position/state
-    dl $7E0AF6 : db $02 : dw $00B7 ; Samus X
-    dl $7E0AFA : db $02 : dw $008B ; Samus Y
+    dw $078D, $9A26  ; DDB
+    dw $079B, $B585  ; MDB
+    dw $090F, $5000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $4C00  ; Screen subpixel Y position
+    dw $0915, $000A  ; Screen Y position in pixels
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $00B7  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 .after
 
 preset_allbossprkd_lower_norfair_three_musketeers:
     dw #preset_allbossprkd_lower_norfair_fire_flea_room ; Lower Norfair: Fire Flea Room
-    dl $7E078D : db $02 : dw $9A92 ; DDB
-    dl $7E079B : db $02 : dw $B510 ; MDB
-    dl $7E090F : db $02 : dw $5001 ; Screen subpixel X position
-    dl $7E0913 : db $02 : dw $BC00 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0003 ; Screen Y position in pixels
-    dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0004 ; More position/state
-    dl $7E0AF6 : db $02 : dw $0063 ; Samus X
+    dw $078D, $9A92  ; DDB
+    dw $079B, $B510  ; MDB
+    dw $090F, $5001  ; Screen subpixel X position
+    dw $0913, $BC00  ; Screen subpixel Y position
+    dw $0915, $0003  ; Screen Y position in pixels
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0063  ; Samus X
     dw #$FFFF
 .after
 
 preset_allbossprkd_upper_norfair_revisit_bubble_mountain_revisit:
     dw #preset_allbossprkd_lower_norfair_three_musketeers ; Lower Norfair: Three Musketeers
-    dl $7E078D : db $02 : dw $9A4A ; DDB
-    dl $7E079B : db $02 : dw $AD5E ; MDB
-    dl $7E07F3 : db $02 : dw $0015 ; Music Bank
-    dl $7E090F : db $02 : dw $C000 ; Screen subpixel X position
-    dl $7E0913 : db $02 : dw $6FFF ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0022 ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $00E2 ; Health
-    dl $7E0AF6 : db $02 : dw $006E ; Samus X
+    dw $078D, $9A4A  ; DDB
+    dw $079B, $AD5E  ; MDB
+    dw $07F3, $0015  ; Music Bank
+    dw $090F, $C000  ; Screen subpixel X position
+    dw $0913, $6FFF  ; Screen subpixel Y position
+    dw $0915, $0022  ; Screen Y position in pixels
+    dw $09C2, $00E2  ; Health
+    dw $0AF6, $006E  ; Samus X
     dw #$FFFF
 .after
 
 preset_allbossprkd_upper_norfair_revisit_red_pirate_shaft:
     dw #preset_allbossprkd_upper_norfair_revisit_bubble_mountain_revisit ; Upper Norfair Revisit: Bubble Mountain Revisit
-    dl $7E078D : db $02 : dw $956A ; DDB
-    dl $7E079B : db $02 : dw $AF72 ; MDB
-    dl $7E090F : db $02 : dw $B000 ; Screen subpixel X position
-    dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $00ED ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $010F ; Health
-    dl $7E09CA : db $02 : dw $000E ; Supers
-    dl $7E09CE : db $02 : dw $0003 ; Pbs
-    dl $7E0AF6 : db $02 : dw $004C ; Samus X
-    dl $7E0AFA : db $02 : dw $018B ; Samus Y
+    dw $078D, $956A  ; DDB
+    dw $079B, $AF72  ; MDB
+    dw $090F, $B000  ; Screen subpixel X position
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $00ED  ; Screen Y position in pixels
+    dw $09C2, $010F  ; Health
+    dw $09CA, $000E  ; Supers
+    dw $09CE, $0003  ; Pbs
+    dw $0AF6, $004C  ; Samus X
+    dw $0AFA, $018B  ; Samus Y
     dw #$FFFF
 .after
 
 preset_allbossprkd_upper_norfair_revisit_acid_snakes_tunnel:
     dw #preset_allbossprkd_upper_norfair_revisit_red_pirate_shaft ; Upper Norfair Revisit: Red Pirate Shaft
-    dl $7E078D : db $02 : dw $9726 ; DDB
-    dl $7E079B : db $02 : dw $B139 ; MDB
-    dl $7E090F : db $02 : dw $8000 ; Screen subpixel X position
-    dl $7E0913 : db $02 : dw $4000 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $021F ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $010E ; Health
-    dl $7E0AF6 : db $02 : dw $00AF ; Samus X
-    dl $7E0AFA : db $02 : dw $02BB ; Samus Y
+    dw $078D, $9726  ; DDB
+    dw $079B, $B139  ; MDB
+    dw $090F, $8000  ; Screen subpixel X position
+    dw $0913, $4000  ; Screen subpixel Y position
+    dw $0915, $021F  ; Screen Y position in pixels
+    dw $09C2, $010E  ; Health
+    dw $0AF6, $00AF  ; Samus X
+    dw $0AFA, $02BB  ; Samus Y
     dw #$FFFF
 .after
 
 preset_allbossprkd_upper_norfair_revisit_crocomire:
     dw #preset_allbossprkd_upper_norfair_revisit_acid_snakes_tunnel ; Upper Norfair Revisit: Acid Snakes Tunnel
-    dl $7E078D : db $02 : dw $974A ; DDB
-    dl $7E079B : db $02 : dw $A923 ; MDB
-    dl $7E090F : db $02 : dw $9000 ; Screen subpixel X position
-    dl $7E0911 : db $02 : dw $0C00 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $A400 ; Screen subpixel Y position
-    dl $7E09CA : db $02 : dw $000D ; Supers
-    dl $7E0AF6 : db $02 : dw $0CB7 ; Samus X
-    dl $7E0AFA : db $02 : dw $02AB ; Samus Y
-    dl $7ED8B8 : db $02 : dw $6E00 ; Doors
+    dw $078D, $974A  ; DDB
+    dw $079B, $A923  ; MDB
+    dw $090F, $9000  ; Screen subpixel X position
+    dw $0911, $0C00  ; Screen X position in pixels
+    dw $0913, $A400  ; Screen subpixel Y position
+    dw $09CA, $000D  ; Supers
+    dw $0AF6, $0CB7  ; Samus X
+    dw $0AFA, $02AB  ; Samus Y
+    dw $D8B8, $6E00  ; Doors
     dw #$FFFF
 .after
 
 preset_allbossprkd_upper_norfair_revisit_leaving_crocomire:
     dw #preset_allbossprkd_upper_norfair_revisit_crocomire ; Upper Norfair Revisit: Crocomire
-    dl $7E078D : db $02 : dw $93D2 ; DDB
-    dl $7E079B : db $02 : dw $A98D ; MDB
-    dl $7E07F3 : db $02 : dw $0027 ; Music Bank
-    dl $7E07F5 : db $02 : dw $0006 ; Music Track
-    dl $7E090F : db $02 : dw $2000 ; Screen subpixel X position
-    dl $7E0911 : db $02 : dw $0300 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $5400 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $0150 ; Health
-    dl $7E09C4 : db $02 : dw $018F ; Max health
-    dl $7E09CA : db $02 : dw $0009 ; Supers
-    dl $7E0AF6 : db $02 : dw $036A ; Samus X
-    dl $7E0AFA : db $02 : dw $009B ; Samus Y
-    dl $7ED82A : db $02 : dw $0107 ; Bosses
-    dl $7ED876 : db $02 : dw $0134 ; Items
-    dl $7ED8B8 : db $02 : dw $EE00 ; Doors
+    dw $078D, $93D2  ; DDB
+    dw $079B, $A98D  ; MDB
+    dw $07F3, $0027  ; Music Bank
+    dw $07F5, $0006  ; Music Track
+    dw $090F, $2000  ; Screen subpixel X position
+    dw $0911, $0300  ; Screen X position in pixels
+    dw $0913, $5400  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $09C2, $0150  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $09CA, $0009  ; Supers
+    dw $0AF6, $036A  ; Samus X
+    dw $0AFA, $009B  ; Samus Y
+    dw $D82A, $0107  ; Bosses
+    dw $D876, $0134  ; Items
+    dw $D8B8, $EE00  ; Doors
     dw #$FFFF
 .after
 
 preset_allbossprkd_upper_norfair_revisit_crocomire_escape:
     dw #preset_allbossprkd_upper_norfair_revisit_leaving_crocomire ; Upper Norfair Revisit: Leaving Crocomire
-    dl $7E078D : db $02 : dw $93EA ; DDB
-    dl $7E079B : db $02 : dw $A923 ; MDB
-    dl $7E07F3 : db $02 : dw $0015 ; Music Bank
-    dl $7E07F5 : db $02 : dw $0005 ; Music Track
-    dl $7E090F : db $02 : dw $4000 ; Screen subpixel X position
-    dl $7E0911 : db $02 : dw $0C00 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $4800 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0016 ; Screen Y position in pixels
-    dl $7E09CA : db $02 : dw $000B ; Supers
-    dl $7E0AF6 : db $02 : dw $0C85 ; Samus X
-    dl $7E0AFA : db $02 : dw $00AB ; Samus Y
+    dw $078D, $93EA  ; DDB
+    dw $079B, $A923  ; MDB
+    dw $07F3, $0015  ; Music Bank
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $4000  ; Screen subpixel X position
+    dw $0911, $0C00  ; Screen X position in pixels
+    dw $0913, $4800  ; Screen subpixel Y position
+    dw $0915, $0016  ; Screen Y position in pixels
+    dw $09CA, $000B  ; Supers
+    dw $0AF6, $0C85  ; Samus X
+    dw $0AFA, $00AB  ; Samus Y
     dw #$FFFF
 .after
 
 preset_allbossprkd_upper_norfair_revisit_business_center_revisit:
     dw #preset_allbossprkd_upper_norfair_revisit_crocomire_escape ; Upper Norfair Revisit: Crocomire Escape
-    dl $7E078D : db $02 : dw $93AE ; DDB
-    dl $7E079B : db $02 : dw $AA0E ; MDB
-    dl $7E090F : db $02 : dw $9000 ; Screen subpixel X position
-    dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $5C00 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
-    dl $7E09CA : db $02 : dw $000A ; Supers
-    dl $7E0AF6 : db $02 : dw $004C ; Samus X
-    dl $7E0AFA : db $02 : dw $008B ; Samus Y
+    dw $078D, $93AE  ; DDB
+    dw $079B, $AA0E  ; MDB
+    dw $090F, $9000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $5C00  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $09CA, $000A  ; Supers
+    dw $0AF6, $004C  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 .after
 
 preset_allbossprkd_kraids_lair_entering_kraids_lair:
     dw #preset_allbossprkd_upper_norfair_revisit_business_center_revisit ; Upper Norfair Revisit: Business Center Revisit
-    dl $7E078D : db $02 : dw $92EE ; DDB
-    dl $7E079B : db $02 : dw $A6A1 ; MDB
-    dl $7E07F3 : db $02 : dw $0012 ; Music Bank
-    dl $7E07F5 : db $02 : dw $0003 ; Music Track
-    dl $7E090F : db $02 : dw $5000 ; Screen subpixel X position
-    dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
-    dl $7E09C2 : db $02 : dw $0178 ; Health
-    dl $7E0A1C : db $02 : dw $009B ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0000 ; More position/state
-    dl $7E0AF6 : db $02 : dw $0080 ; Samus X
-    dl $7E0AFA : db $02 : dw $0086 ; Samus Y
+    dw $078D, $92EE  ; DDB
+    dw $079B, $A6A1  ; MDB
+    dw $07F3, $0012  ; Music Bank
+    dw $07F5, $0003  ; Music Track
+    dw $090F, $5000  ; Screen subpixel X position
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $09C2, $0178  ; Health
+    dw $0A1C, $009B  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
+    dw $0AF6, $0080  ; Samus X
+    dw $0AFA, $0086  ; Samus Y
     dw #$FFFF
 .after
 
 preset_allbossprkd_kraids_lair_baby_kraid_entering:
     dw #preset_allbossprkd_kraids_lair_entering_kraids_lair ; Kraids Lair: Entering Kraids Lair
-    dl $7E078D : db $02 : dw $9156 ; DDB
-    dl $7E079B : db $02 : dw $A4DA ; MDB
-    dl $7E07F5 : db $02 : dw $0005 ; Music Track
-    dl $7E090F : db $02 : dw $A000 ; Screen subpixel X position
-    dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $4FFF ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0100 ; Screen Y position in pixels
-    dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0008 ; More position/state
-    dl $7E0AF6 : db $02 : dw $016B ; Samus X
-    dl $7E0AFA : db $02 : dw $018B ; Samus Y
+    dw $078D, $9156  ; DDB
+    dw $079B, $A4DA  ; MDB
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $A000  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $4FFF  ; Screen subpixel Y position
+    dw $0915, $0100  ; Screen Y position in pixels
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $016B  ; Samus X
+    dw $0AFA, $018B  ; Samus Y
     dw #$FFFF
 .after
 
 preset_allbossprkd_kraids_lair_kraid:
     dw #preset_allbossprkd_kraids_lair_baby_kraid_entering ; Kraids Lair: Baby Kraid (Entering)
-    dl $7E078D : db $02 : dw $919E ; DDB
-    dl $7E079B : db $02 : dw $A56B ; MDB
-    dl $7E07F3 : db $02 : dw $0027 ; Music Bank
-    dl $7E07F5 : db $02 : dw $0006 ; Music Track
-    dl $7E090F : db $02 : dw $C000 ; Screen subpixel X position
-    dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
-    dl $7E09C2 : db $02 : dw $0174 ; Health
-    dl $7E09CA : db $02 : dw $000D ; Supers
-    dl $7E0AF6 : db $02 : dw $01C7 ; Samus X
-    dl $7ED8B8 : db $02 : dw $EE24 ; Doors
+    dw $078D, $919E  ; DDB
+    dw $079B, $A56B  ; MDB
+    dw $07F3, $0027  ; Music Bank
+    dw $07F5, $0006  ; Music Track
+    dw $090F, $C000  ; Screen subpixel X position
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $09C2, $0174  ; Health
+    dw $09CA, $000D  ; Supers
+    dw $0AF6, $01C7  ; Samus X
+    dw $D8B8, $EE24  ; Doors
     dw #$FFFF
 .after
 
 preset_allbossprkd_kraids_lair_baby_kraid_entering_2:
     dw #preset_allbossprkd_kraids_lair_kraid ; Kraids Lair: Kraid
-    dl $7E078D : db $02 : dw $91CE ; DDB
-    dl $7E07F5 : db $02 : dw $0003 ; Music Track
-    dl $7E090F : db $02 : dw $D000 ; Screen subpixel X position
-    dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $A400 ; Screen subpixel Y position
-    dl $7E09A2 : db $02 : dw $312D ; Equipped Items
-    dl $7E09A4 : db $02 : dw $312D ; Collected Items
-    dl $7E09C2 : db $02 : dw $018B ; Health
-    dl $7E09CA : db $02 : dw $000C ; Supers
-    dl $7E09CE : db $02 : dw $0005 ; Pbs
-    dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0004 ; More position/state
-    dl $7E0AF6 : db $02 : dw $005B ; Samus X
-    dl $7ED828 : db $02 : dw $0304 ; Bosses
-    dl $7ED876 : db $02 : dw $0135 ; Items
-    dl $7ED8B8 : db $02 : dw $EEE4 ; Doors
+    dw $078D, $91CE  ; DDB
+    dw $07F5, $0003  ; Music Track
+    dw $090F, $D000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $A400  ; Screen subpixel Y position
+    dw $09A2, $312D  ; Equipped Items
+    dw $09A4, $312D  ; Collected Items
+    dw $09C2, $018B  ; Health
+    dw $09CA, $000C  ; Supers
+    dw $09CE, $0005  ; Pbs
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $005B  ; Samus X
+    dw $D828, $0304  ; Bosses
+    dw $D876, $0135  ; Items
+    dw $D8B8, $EEE4  ; Doors
     dw #$FFFF
 .after
 
 preset_allbossprkd_kraids_lair_leaving_kraids_lair:
     dw #preset_allbossprkd_kraids_lair_baby_kraid_entering_2 ; Kraids Lair: Baby Kraid (Entering)
-    dl $7E078D : db $02 : dw $916E ; DDB
-    dl $7E079B : db $02 : dw $A471 ; MDB
-    dl $7E07F3 : db $02 : dw $0012 ; Music Bank
-    dl $7E07F5 : db $02 : dw $0005 ; Music Track
-    dl $7E090F : db $02 : dw $7000 ; Screen subpixel X position
-    dl $7E0913 : db $02 : dw $F000 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $001B ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $018F ; Health
-    dl $7E09CA : db $02 : dw $0010 ; Supers
-    dl $7E0AF6 : db $02 : dw $0025 ; Samus X
-    dl $7E0AFA : db $02 : dw $008B ; Samus Y
-    dl $7ED8B8 : db $02 : dw $EEEC ; Doors
+    dw $078D, $916E  ; DDB
+    dw $079B, $A471  ; MDB
+    dw $07F3, $0012  ; Music Bank
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $7000  ; Screen subpixel X position
+    dw $0913, $F000  ; Screen subpixel Y position
+    dw $0915, $001B  ; Screen Y position in pixels
+    dw $09C2, $018F  ; Health
+    dw $09CA, $0010  ; Supers
+    dw $0AF6, $0025  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw $D8B8, $EEEC  ; Doors
     dw #$FFFF
 .after
 
 preset_allbossprkd_maridia_mt_everest:
     dw #preset_allbossprkd_kraids_lair_leaving_kraids_lair ; Kraids Lair: Leaving Kraids Lair
-    dl $7E078D : db $02 : dw $A3B4 ; DDB
-    dl $7E079B : db $02 : dw $D017 ; MDB
-    dl $7E07F3 : db $02 : dw $001B ; Music Bank
-    dl $7E07F5 : db $02 : dw $0006 ; Music Track
-    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position
-    dl $7E0911 : db $02 : dw $0068 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
-    dl $7E09CA : db $02 : dw $000F ; Supers
-    dl $7E0AF6 : db $02 : dw $00CA ; Samus X
-    dl $7E0AFA : db $02 : dw $006B ; Samus Y
+    dw $078D, $A3B4  ; DDB
+    dw $079B, $D017  ; MDB
+    dw $07F3, $001B  ; Music Bank
+    dw $07F5, $0006  ; Music Track
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $0068  ; Screen X position in pixels
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $09CA, $000F  ; Supers
+    dw $0AF6, $00CA  ; Samus X
+    dw $0AFA, $006B  ; Samus Y
     dw #$FFFF
 .after
 
 preset_allbossprkd_maridia_aqueduct:
     dw #preset_allbossprkd_maridia_mt_everest ; Maridia: Mt Everest
-    dl $7E078D : db $02 : dw $A468 ; DDB
-    dl $7E079B : db $02 : dw $D1A3 ; MDB
-    dl $7E090F : db $02 : dw $1FFF ; Screen subpixel X position
-    dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $B3FE ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0300 ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $0154 ; Health
-    dl $7E09CA : db $02 : dw $000E ; Supers
-    dl $7E09D2 : db $02 : dw $0003 ; Currently selected item
-    dl $7E0A1C : db $02 : dw $001D ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0408 ; More position/state
-    dl $7E0AF6 : db $02 : dw $01B6 ; Samus X
-    dl $7E0AFA : db $02 : dw $0399 ; Samus Y
-    dl $7ED8C0 : db $02 : dw $8174 ; Doors
+    dw $078D, $A468  ; DDB
+    dw $079B, $D1A3  ; MDB
+    dw $090F, $1FFF  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $B3FE  ; Screen subpixel Y position
+    dw $0915, $0300  ; Screen Y position in pixels
+    dw $09C2, $0154  ; Health
+    dw $09CA, $000E  ; Supers
+    dw $09D2, $0003  ; Currently selected item
+    dw $0A1C, $001D  ; Samus position/state
+    dw $0A1E, $0408  ; More position/state
+    dw $0AF6, $01B6  ; Samus X
+    dw $0AFA, $0399  ; Samus Y
+    dw $D8C0, $8174  ; Doors
     dw #$FFFF
 .after
 
 preset_allbossprkd_maridia_botwoon:
     dw #preset_allbossprkd_maridia_aqueduct ; Maridia: Aqueduct
-    dl $7E078D : db $02 : dw $A72C ; DDB
-    dl $7E079B : db $02 : dw $D617 ; MDB
-    dl $7E07F5 : db $02 : dw $0005 ; Music Track
-    dl $7E090F : db $02 : dw $8000 ; Screen subpixel X position
-    dl $7E0911 : db $02 : dw $0300 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $F400 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
-    dl $7E09CE : db $02 : dw $0004 ; Pbs
-    dl $7E09D2 : db $02 : dw $0000 ; Currently selected item
-    dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0008 ; More position/state
-    dl $7E0AF6 : db $02 : dw $03A6 ; Samus X
-    dl $7E0AFA : db $02 : dw $008B ; Samus Y
+    dw $078D, $A72C  ; DDB
+    dw $079B, $D617  ; MDB
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $8000  ; Screen subpixel X position
+    dw $0911, $0300  ; Screen X position in pixels
+    dw $0913, $F400  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $09CE, $0004  ; Pbs
+    dw $09D2, $0000  ; Currently selected item
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $03A6  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 .after
 
 preset_allbossprkd_maridia_halfie:
     dw #preset_allbossprkd_maridia_botwoon ; Maridia: Botwoon
-    dl $7E078D : db $02 : dw $A918 ; DDB
-    dl $7E079B : db $02 : dw $D7E4 ; MDB
-    dl $7E090F : db $02 : dw $6000 ; Screen subpixel X position
-    dl $7E0911 : db $02 : dw $003A ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $EC00 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $001F ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $018F ; Health
-    dl $7E09CA : db $02 : dw $000A ; Supers
-    dl $7E09CE : db $02 : dw $0005 ; Pbs
-    dl $7E0AF6 : db $02 : dw $00D6 ; Samus X
-    dl $7E0AFA : db $02 : dw $009B ; Samus Y
-    dl $7ED82C : db $02 : dw $0002 ; Bosses
+    dw $078D, $A918  ; DDB
+    dw $079B, $D7E4  ; MDB
+    dw $090F, $6000  ; Screen subpixel X position
+    dw $0911, $003A  ; Screen X position in pixels
+    dw $0913, $EC00  ; Screen subpixel Y position
+    dw $0915, $001F  ; Screen Y position in pixels
+    dw $09C2, $018F  ; Health
+    dw $09CA, $000A  ; Supers
+    dw $09CE, $0005  ; Pbs
+    dw $0AF6, $00D6  ; Samus X
+    dw $0AFA, $009B  ; Samus Y
+    dw $D82C, $0002  ; Bosses
     dw #$FFFF
 .after
 
 preset_allbossprkd_maridia_draygon:
     dw #preset_allbossprkd_maridia_halfie ; Maridia: Halfie
-    dl $7E078D : db $02 : dw $A7F8 ; DDB
-    dl $7E079B : db $02 : dw $D78F ; MDB
-    dl $7E090F : db $02 : dw $D000 ; Screen subpixel X position
-    dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $C800 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0200 ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $0110 ; Health
-    dl $7E09CA : db $02 : dw $0009 ; Supers
-    dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0004 ; More position/state
-    dl $7E0AF6 : db $02 : dw $0039 ; Samus X
-    dl $7E0AFA : db $02 : dw $028B ; Samus Y
-    dl $7ED8C2 : db $02 : dw $0C00 ; Doors
+    dw $078D, $A7F8  ; DDB
+    dw $079B, $D78F  ; MDB
+    dw $090F, $D000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $C800  ; Screen subpixel Y position
+    dw $0915, $0200  ; Screen Y position in pixels
+    dw $09C2, $0110  ; Health
+    dw $09CA, $0009  ; Supers
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0039  ; Samus X
+    dw $0AFA, $028B  ; Samus Y
+    dw $D8C2, $0C00  ; Doors
     dw #$FFFF
 .after
 
 preset_allbossprkd_maridia_womple_jump:
     dw #preset_allbossprkd_maridia_draygon ; Maridia: Draygon
-    dl $7E078D : db $02 : dw $A96C ; DDB
-    dl $7E090F : db $02 : dw $4000 ; Screen subpixel X position
-    dl $7E0913 : db $02 : dw $6400 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $00C9 ; Health
-    dl $7E09C6 : db $02 : dw $0011 ; Missiles
-    dl $7E09CA : db $02 : dw $000D ; Supers
-    dl $7E0A68 : db $02 : dw $0001 ; Flash suit
-    dl $7E0AF6 : db $02 : dw $003A ; Samus X
-    dl $7E0AFA : db $02 : dw $008B ; Samus Y
-    dl $7ED82C : db $02 : dw $0003 ; Bosses
-    dl $7ED8C2 : db $02 : dw $4C00 ; Doors
+    dw $078D, $A96C  ; DDB
+    dw $090F, $4000  ; Screen subpixel X position
+    dw $0913, $6400  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $09C2, $00C9  ; Health
+    dw $09C6, $0011  ; Missiles
+    dw $09CA, $000D  ; Supers
+    dw $0A68, $0001  ; Flash suit
+    dw $0AF6, $003A  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw $D82C, $0003  ; Bosses
+    dw $D8C2, $4C00  ; Doors
     dw #$FFFF
 .after
 
 preset_allbossprkd_maridia_reverse_botwoon_hallway:
     dw #preset_allbossprkd_maridia_womple_jump ; Maridia: Womple Jump
-    dl $7E078D : db $02 : dw $A7E0 ; DDB
-    dl $7E079B : db $02 : dw $D913 ; MDB
-    dl $7E090F : db $02 : dw $1000 ; Screen subpixel X position
-    dl $7E0913 : db $02 : dw $1C00 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0200 ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $006C ; Health
-    dl $7E09C6 : db $02 : dw $000F ; Missiles
-    dl $7E0A68 : db $02 : dw $0000 ; Flash suit
-    dl $7E0AF6 : db $02 : dw $00A7 ; Samus X
-    dl $7E0AFA : db $02 : dw $028B ; Samus Y
+    dw $078D, $A7E0  ; DDB
+    dw $079B, $D913  ; MDB
+    dw $090F, $1000  ; Screen subpixel X position
+    dw $0913, $1C00  ; Screen subpixel Y position
+    dw $0915, $0200  ; Screen Y position in pixels
+    dw $09C2, $006C  ; Health
+    dw $09C6, $000F  ; Missiles
+    dw $0A68, $0000  ; Flash suit
+    dw $0AF6, $00A7  ; Samus X
+    dw $0AFA, $028B  ; Samus Y
     dw #$FFFF
 .after
 
 preset_allbossprkd_maridia_aqueduct_revisit:
     dw #preset_allbossprkd_maridia_reverse_botwoon_hallway ; Maridia: Reverse Botwoon Hallway
-    dl $7E078D : db $02 : dw $A90C ; DDB
-    dl $7E079B : db $02 : dw $D617 ; MDB
-    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position
-    dl $7E0911 : db $02 : dw $0015 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $DFFF ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $001F ; Screen Y position in pixels
-    dl $7E0A1C : db $02 : dw $0004 ; Samus position/state
-    dl $7E0AF6 : db $02 : dw $00B5 ; Samus X
-    dl $7E0AFA : db $02 : dw $00CB ; Samus Y
-    dl $7ED8C2 : db $02 : dw $6C00 ; Doors
+    dw $078D, $A90C  ; DDB
+    dw $079B, $D617  ; MDB
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $0015  ; Screen X position in pixels
+    dw $0913, $DFFF  ; Screen subpixel Y position
+    dw $0915, $001F  ; Screen Y position in pixels
+    dw $0A1C, $0004  ; Samus position/state
+    dw $0AF6, $00B5  ; Samus X
+    dw $0AFA, $00CB  ; Samus Y
+    dw $D8C2, $6C00  ; Doors
     dw #$FFFF
 .after
 
 preset_allbossprkd_maridia_mt_everest_revisit:
     dw #preset_allbossprkd_maridia_aqueduct_revisit ; Maridia: Aqueduct Revisit
-    dl $7E078D : db $02 : dw $A708 ; DDB
-    dl $7E079B : db $02 : dw $D1A3 ; MDB
-    dl $7E07F5 : db $02 : dw $0006 ; Music Track
-    dl $7E090F : db $02 : dw $C000 ; Screen subpixel X position
-    dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $7FFF ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0203 ; Screen Y position in pixels
-    dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
-    dl $7E0AF6 : db $02 : dw $006B ; Samus X
-    dl $7E0AFA : db $02 : dw $028B ; Samus Y
+    dw $078D, $A708  ; DDB
+    dw $079B, $D1A3  ; MDB
+    dw $07F5, $0006  ; Music Track
+    dw $090F, $C000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $7FFF  ; Screen subpixel Y position
+    dw $0915, $0203  ; Screen Y position in pixels
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0AF6, $006B  ; Samus X
+    dw $0AFA, $028B  ; Samus Y
     dw #$FFFF
 .after
 
 preset_allbossprkd_maridia_red_brinstar_gate:
     dw #preset_allbossprkd_maridia_mt_everest_revisit ; Maridia: Mt Everest Revisit
-    dl $7E078D : db $02 : dw $A42C ; DDB
-    dl $7E079B : db $02 : dw $D104 ; MDB
-    dl $7E090F : db $02 : dw $6000 ; Screen subpixel X position
-    dl $7E0911 : db $02 : dw $000F ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $A000 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $0094 ; Health
-    dl $7E09CA : db $02 : dw $000E ; Supers
-    dl $7E0AF6 : db $02 : dw $007A ; Samus X
-    dl $7E0AFA : db $02 : dw $008B ; Samus Y
+    dw $078D, $A42C  ; DDB
+    dw $079B, $D104  ; MDB
+    dw $090F, $6000  ; Screen subpixel X position
+    dw $0911, $000F  ; Screen X position in pixels
+    dw $0913, $A000  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $09C2, $0094  ; Health
+    dw $09CA, $000E  ; Supers
+    dw $0AF6, $007A  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 .after
 
 preset_allbossprkd_tourian_crateria_kihunters:
     dw #preset_allbossprkd_maridia_red_brinstar_gate ; Maridia: Red Brinstar Gate
-    dl $7E078D : db $02 : dw $90BA ; DDB
-    dl $7E079B : db $02 : dw $962A ; MDB
-    dl $7E07F3 : db $02 : dw $0012 ; Music Bank
-    dl $7E07F5 : db $02 : dw $0003 ; Music Track
-    dl $7E090F : db $02 : dw $A000 ; Screen subpixel X position
-    dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $A400 ; Screen subpixel Y position
-    dl $7E09CA : db $02 : dw $000D ; Supers
-    dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0008 ; More position/state
-    dl $7E0AF6 : db $02 : dw $006F ; Samus X
-    dl $7E0AFA : db $02 : dw $005B ; Samus Y
+    dw $078D, $90BA  ; DDB
+    dw $079B, $962A  ; MDB
+    dw $07F3, $0012  ; Music Bank
+    dw $07F5, $0003  ; Music Track
+    dw $090F, $A000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $A400  ; Screen subpixel Y position
+    dw $09CA, $000D  ; Supers
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $006F  ; Samus X
+    dw $0AFA, $005B  ; Samus Y
     dw #$FFFF
 .after
 
 preset_allbossprkd_tourian_terminator_revisit:
     dw #preset_allbossprkd_tourian_crateria_kihunters ; Tourian: Crateria Kihunters
-    dl $7E078D : db $02 : dw $8916 ; DDB
-    dl $7E079B : db $02 : dw $92FD ; MDB
-    dl $7E07F3 : db $02 : dw $0009 ; Music Bank
-    dl $7E07F5 : db $02 : dw $0005 ; Music Track
-    dl $7E090F : db $02 : dw $1C00 ; Screen subpixel X position
-    dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $8C00 ; Screen subpixel Y position
-    dl $7E09C6 : db $02 : dw $000E ; Missiles
-    dl $7E0A1C : db $02 : dw $008A ; Samus position/state
-    dl $7E0A1E : db $02 : dw $1504 ; More position/state
-    dl $7E0AF6 : db $02 : dw $0115 ; Samus X
-    dl $7E0AFA : db $02 : dw $008B ; Samus Y
-    dl $7E0B3F : db $02 : dw $0104 ; Blue suit
+    dw $078D, $8916  ; DDB
+    dw $079B, $92FD  ; MDB
+    dw $07F3, $0009  ; Music Bank
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $1C00  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $8C00  ; Screen subpixel Y position
+    dw $09C6, $000E  ; Missiles
+    dw $0A1C, $008A  ; Samus position/state
+    dw $0A1E, $1504  ; More position/state
+    dw $0AF6, $0115  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw $0B3F, $0104  ; Blue suit
     dw #$FFFF
 .after
 
 preset_allbossprkd_tourian_metroids_1:
     dw #preset_allbossprkd_tourian_terminator_revisit ; Tourian: Terminator Revisit
-    dl $7E078D : db $02 : dw $9222 ; DDB
-    dl $7E079B : db $02 : dw $DAAE ; MDB
-    dl $7E07F3 : db $02 : dw $001E ; Music Bank
-    dl $7E090F : db $02 : dw $F001 ; Screen subpixel X position
-    dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $C800 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0300 ; Screen Y position in pixels
-    dl $7E09A6 : db $02 : dw $1007 ; Beams
-    dl $7E09C6 : db $02 : dw $0010 ; Missiles
-    dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0004 ; More position/state
-    dl $7E0AF6 : db $02 : dw $003C ; Samus X
-    dl $7E0AFA : db $02 : dw $038B ; Samus Y
-    dl $7E0B3F : db $02 : dw $0000 ; Blue suit
-    dl $7ED820 : db $02 : dw $0FC1 ; Events
-    dl $7ED8B2 : db $02 : dw $6C01 ; Doors
+    dw $078D, $9222  ; DDB
+    dw $079B, $DAAE  ; MDB
+    dw $07F3, $001E  ; Music Bank
+    dw $090F, $F001  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $C800  ; Screen subpixel Y position
+    dw $0915, $0300  ; Screen Y position in pixels
+    dw $09A6, $1007  ; Beams
+    dw $09C6, $0010  ; Missiles
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $003C  ; Samus X
+    dw $0AFA, $038B  ; Samus Y
+    dw $0B3F, $0000  ; Blue suit
+    dw $D820, $0FC1  ; Events
+    dw $D8B2, $6C01  ; Doors
     dw #$FFFF
 .after
 
 preset_allbossprkd_tourian_metroids_2:
     dw #preset_allbossprkd_tourian_metroids_1 ; Tourian: Metroids 1
-    dl $7E078D : db $02 : dw $A984 ; DDB
-    dl $7E079B : db $02 : dw $DAE1 ; MDB
-    dl $7E090F : db $02 : dw $6000 ; Screen subpixel X position
-    dl $7E0913 : db $02 : dw $B400 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $00B5 ; Health
-    dl $7E09C6 : db $02 : dw $0014 ; Missiles
-    dl $7E09CA : db $02 : dw $0010 ; Supers
-    dl $7E0AF6 : db $02 : dw $0039 ; Samus X
-    dl $7E0AFA : db $02 : dw $008B ; Samus Y
-    dl $7ED822 : db $02 : dw $0021 ; Events
-    dl $7ED8C4 : db $02 : dw $0001 ; Doors
+    dw $078D, $A984  ; DDB
+    dw $079B, $DAE1  ; MDB
+    dw $090F, $6000  ; Screen subpixel X position
+    dw $0913, $B400  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $09C2, $00B5  ; Health
+    dw $09C6, $0014  ; Missiles
+    dw $09CA, $0010  ; Supers
+    dw $0AF6, $0039  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw $D822, $0021  ; Events
+    dw $D8C4, $0001  ; Doors
     dw #$FFFF
 .after
 
 preset_allbossprkd_tourian_metroids_3:
     dw #preset_allbossprkd_tourian_metroids_2 ; Tourian: Metroids 2
-    dl $7E078D : db $02 : dw $A9B4 ; DDB
-    dl $7E079B : db $02 : dw $DB31 ; MDB
-    dl $7E090F : db $02 : dw $1000 ; Screen subpixel X position
-    dl $7E0913 : db $02 : dw $8000 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $00FA ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $014F ; Health
-    dl $7E09CA : db $02 : dw $0011 ; Supers
-    dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0008 ; More position/state
-    dl $7E0AF6 : db $02 : dw $00C2 ; Samus X
-    dl $7E0AFA : db $02 : dw $018B ; Samus Y
-    dl $7ED822 : db $02 : dw $0023 ; Events
-    dl $7ED8C4 : db $02 : dw $0003 ; Doors
+    dw $078D, $A9B4  ; DDB
+    dw $079B, $DB31  ; MDB
+    dw $090F, $1000  ; Screen subpixel X position
+    dw $0913, $8000  ; Screen subpixel Y position
+    dw $0915, $00FA  ; Screen Y position in pixels
+    dw $09C2, $014F  ; Health
+    dw $09CA, $0011  ; Supers
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $00C2  ; Samus X
+    dw $0AFA, $018B  ; Samus Y
+    dw $D822, $0023  ; Events
+    dw $D8C4, $0003  ; Doors
     dw #$FFFF
 .after
 
 preset_allbossprkd_tourian_metroids_4:
     dw #preset_allbossprkd_tourian_metroids_3 ; Tourian: Metroids 3
-    dl $7E078D : db $02 : dw $A9CC ; DDB
-    dl $7E079B : db $02 : dw $DB7D ; MDB
-    dl $7E090F : db $02 : dw $2000 ; Screen subpixel X position
-    dl $7E0911 : db $02 : dw $0500 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $A400 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $018F ; Health
-    dl $7E09CA : db $02 : dw $0010 ; Supers
-    dl $7E0AF6 : db $02 : dw $05AC ; Samus X
-    dl $7E0AFA : db $02 : dw $008B ; Samus Y
-    dl $7ED822 : db $02 : dw $0027 ; Events
-    dl $7ED8C4 : db $02 : dw $0007 ; Doors
+    dw $078D, $A9CC  ; DDB
+    dw $079B, $DB7D  ; MDB
+    dw $090F, $2000  ; Screen subpixel X position
+    dw $0911, $0500  ; Screen X position in pixels
+    dw $0913, $A400  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $09C2, $018F  ; Health
+    dw $09CA, $0010  ; Supers
+    dw $0AF6, $05AC  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw $D822, $0027  ; Events
+    dw $D8C4, $0007  ; Doors
     dw #$FFFF
 .after
 
 preset_allbossprkd_tourian_baby_skip:
     dw #preset_allbossprkd_tourian_metroids_4 ; Tourian: Metroids 4
-    dl $7E078D : db $02 : dw $AA14 ; DDB
-    dl $7E079B : db $02 : dw $DC65 ; MDB
-    dl $7E07F3 : db $02 : dw $0045 ; Music Bank
-    dl $7E07F5 : db $02 : dw $0006 ; Music Track
-    dl $7E090F : db $02 : dw $BFFF ; Screen subpixel X position
-    dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $3400 ; Screen subpixel Y position
-    dl $7E09CA : db $02 : dw $0012 ; Supers
-    dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0004 ; More position/state
-    dl $7E0AF6 : db $02 : dw $01DA ; Samus X
-    dl $7E0AFA : db $02 : dw $00AB ; Samus Y
-    dl $7ED822 : db $02 : dw $002F ; Events
-    dl $7ED8C4 : db $02 : dw $000F ; Doors
+    dw $078D, $AA14  ; DDB
+    dw $079B, $DC65  ; MDB
+    dw $07F3, $0045  ; Music Bank
+    dw $07F5, $0006  ; Music Track
+    dw $090F, $BFFF  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $3400  ; Screen subpixel Y position
+    dw $09CA, $0012  ; Supers
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $01DA  ; Samus X
+    dw $0AFA, $00AB  ; Samus Y
+    dw $D822, $002F  ; Events
+    dw $D8C4, $000F  ; Doors
     dw #$FFFF
 .after
 
 preset_allbossprkd_tourian_gadora_room:
     dw #preset_allbossprkd_tourian_baby_skip ; Tourian: Baby Skip
-    dl $7E078D : db $02 : dw $AA44 ; DDB
-    dl $7E079B : db $02 : dw $DCFF ; MDB
-    dl $7E07F3 : db $02 : dw $001E ; Music Bank
-    dl $7E07F5 : db $02 : dw $0005 ; Music Track
-    dl $7E090F : db $02 : dw $E000 ; Screen subpixel X position
-    dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $1000 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $011F ; Screen Y position in pixels
-    dl $7E09CA : db $02 : dw $0011 ; Supers
-    dl $7E0A1C : db $02 : dw $0089 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $1508 ; More position/state
-    dl $7E0AF6 : db $02 : dw $00DB ; Samus X
-    dl $7E0AFA : db $02 : dw $019B ; Samus Y
-    dl $7ED8C4 : db $02 : dw $00AF ; Doors
+    dw $078D, $AA44  ; DDB
+    dw $079B, $DCFF  ; MDB
+    dw $07F3, $001E  ; Music Bank
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $E000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $1000  ; Screen subpixel Y position
+    dw $0915, $011F  ; Screen Y position in pixels
+    dw $09CA, $0011  ; Supers
+    dw $0A1C, $0089  ; Samus position/state
+    dw $0A1E, $1508  ; More position/state
+    dw $0AF6, $00DB  ; Samus X
+    dw $0AFA, $019B  ; Samus Y
+    dw $D8C4, $00AF  ; Doors
     dw #$FFFF
 .after
 
 preset_allbossprkd_tourian_zeb_skip:
     dw #preset_allbossprkd_tourian_gadora_room ; Tourian: Gadora Room
-    dl $7E078D : db $02 : dw $AAA4 ; DDB
-    dl $7E079B : db $02 : dw $DDF3 ; MDB
-    dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $021A ; Screen Y position in pixels
-    dl $7E09CA : db $02 : dw $000F ; Supers
-    dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0004 ; More position/state
-    dl $7E0AF6 : db $02 : dw $003B ; Samus X
-    dl $7E0AFA : db $02 : dw $028B ; Samus Y
-    dl $7ED8C4 : db $02 : dw $03AF ; Doors
+    dw $078D, $AAA4  ; DDB
+    dw $079B, $DDF3  ; MDB
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $021A  ; Screen Y position in pixels
+    dw $09CA, $000F  ; Supers
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $003B  ; Samus X
+    dw $0AFA, $028B  ; Samus Y
+    dw $D8C4, $03AF  ; Doors
     dw #$FFFF
 .after
 
 preset_allbossprkd_tourian_escape_room_3:
     dw #preset_allbossprkd_tourian_zeb_skip ; Tourian: Zeb Skip
-    dl $7E078D : db $02 : dw $AAEC ; DDB
-    dl $7E079B : db $02 : dw $DE7A ; MDB
-    dl $7E07F3 : db $02 : dw $0024 ; Music Bank
-    dl $7E07F5 : db $02 : dw $0007 ; Music Track
-    dl $7E090F : db $02 : dw $1000 ; Screen subpixel X position
-    dl $7E0913 : db $02 : dw $7000 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0100 ; Screen Y position in pixels
-    dl $7E09A6 : db $02 : dw $1009 ; Beams
-    dl $7E09C6 : db $02 : dw $0000 ; Missiles
-    dl $7E09CA : db $02 : dw $0000 ; Supers
-    dl $7E09CE : db $02 : dw $0000 ; Pbs
-    dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0008 ; More position/state
-    dl $7E0A76 : db $02 : dw $8000 ; Hyper beam
-    dl $7E0AF6 : db $02 : dw $00DF ; Samus X
-    dl $7E0AFA : db $02 : dw $018B ; Samus Y
-    dl $7ED820 : db $02 : dw $4FC5 ; Events
-    dl $7ED82C : db $02 : dw $0203 ; Bosses
+    dw $078D, $AAEC  ; DDB
+    dw $079B, $DE7A  ; MDB
+    dw $07F3, $0024  ; Music Bank
+    dw $07F5, $0007  ; Music Track
+    dw $090F, $1000  ; Screen subpixel X position
+    dw $0913, $7000  ; Screen subpixel Y position
+    dw $0915, $0100  ; Screen Y position in pixels
+    dw $09A6, $1009  ; Beams
+    dw $09C6, $0000  ; Missiles
+    dw $09CA, $0000  ; Supers
+    dw $09CE, $0000  ; Pbs
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0A76, $8000  ; Hyper beam
+    dw $0AF6, $00DF  ; Samus X
+    dw $0AFA, $018B  ; Samus Y
+    dw $D820, $4FC5  ; Events
+    dw $D82C, $0203  ; Bosses
     dw #$FFFF
 .after
 
 preset_allbossprkd_tourian_escape_parlor:
     dw #preset_allbossprkd_tourian_escape_room_3 ; Tourian: Escape Room 3
-    dl $7E078D : db $02 : dw $AB34 ; DDB
-    dl $7E079B : db $02 : dw $96BA ; MDB
-    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position
-    dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $A401 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $00DF ; Health
-    dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0004 ; More position/state
-    dl $7E0AF6 : db $02 : dw $019A ; Samus X
-    dl $7E0AFA : db $02 : dw $005B ; Samus Y
+    dw $078D, $AB34  ; DDB
+    dw $079B, $96BA  ; MDB
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $A401  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $09C2, $00DF  ; Health
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $019A  ; Samus X
+    dw $0AFA, $005B  ; Samus Y
     dw #$FFFF
 .after

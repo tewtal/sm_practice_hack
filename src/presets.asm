@@ -181,13 +181,13 @@ preset_load_preset:
     LDX #$0000
   .loop_path
     LDA $C1 : STA $7F0002,X
-    INX #2
+    INX : INX
     LDA ($C1) : STA $C1 : BNE .loop_path
 
-  ; then traverse from the first preset until the last one, and apply them
   .loop_presets
-    DEX #2 : BMI .done
-    JSR preset_to_memory
+    ; then traverse from the first preset until the last one, and apply them
+    DEX : DEX : BMI .done
+    JSR category_preset_to_memory
     BRA .loop_presets
 
   .done
@@ -198,25 +198,16 @@ preset_load_preset:
     RTL
 }
 
-preset_to_memory:
+category_preset_to_memory:
 {
+    LDA #$7E00 : STA $C4
     STZ $00
     LDA $7F0002,X
-    INC #2 : TAY
+    INC : INC : TAY
 
   .loop
     LDA ($00),Y : INY : INY : CMP #$FFFF : BEQ .done : STA $C3
-    LDA ($00),Y : INY : STA $C5
-    LDA ($00),Y : INY : AND #$00FF : CMP #$0001 : BEQ .one
-
-  .two
     LDA ($00),Y : INY : INY : STA [$C3]
-    BRA .loop
-
-  .one
-    %a8()
-    LDA ($00),Y : INY : STA [$C3]
-    %a16()
     BRA .loop
 
   .done
