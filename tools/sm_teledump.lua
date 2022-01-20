@@ -80,6 +80,7 @@ local MEMTRACK = { -- {{{
     { 0xD828, 0x08, 'Bosses' },
     { 0xD870, 0x14, 'Items' },
     { 0xD8B0, 0x16, 'Doors' },
+    { 0xD908, 0x06, 'Map Stations' },
     -- { 0xD914, 0x2, 'Game mode?' },
 
 } -- }}}
