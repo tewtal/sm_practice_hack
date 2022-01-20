@@ -7,7 +7,7 @@ custom_preset_save:
     LDA !sram_custom_preset_slot
     ASL : XBA : TAX ; multiply by 200h (slot offset)
     LDA #$5AFE : STA $703000,X   ; mark this slot as "SAFE" to load
-    LDA #$01EA : STA $703002,X   ; record slot size for future compatibility
+    LDA #$01EE : STA $703002,X   ; record slot size for future compatibility
     LDA $078B : STA $703004,X    ; Elevator Index
     LDA $078D : STA $703006,X    ; DDB
     LDA $078F : STA $703008,X    ; DoorOut Index
@@ -73,7 +73,9 @@ custom_preset_save:
     MVN $7E70                    ; srcBank, destBank
     PLB : PLX
 
-    ; next available byte is $7031EA
+    LDA $0AF8 : STA $7031EA,X    ; Samus subpixel X
+    LDA $0AFC : STA $7031EC,X    ; Samus subpixel Y
+    ; next available byte is $7031EE
 
     RTL
 }
@@ -149,9 +151,15 @@ custom_preset_load:
 
     LDA $703002,X : CMP #$01BA : BMI .done_no_scrolls
     LDA #$5AFE : STA !ram_custom_preset
+
+    LDA $703002,X : CMP #$01EC : BMI .done_with_scrolls
+    LDA $7031EA,X : STA $0AF8    ; Samus subpixel X
+    LDA $7031EC,X : STA $0AFC    ; Samus subpixel Y
+
+  .done_with_scrolls
     RTL
 
-    ; next available byte is $7031EA
+    ; next available byte is $7031EE
 
   .done_no_scrolls
     LDA #$0000 : STA !ram_custom_preset
