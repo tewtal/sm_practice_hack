@@ -345,7 +345,7 @@ endif
     LDA !AREA_ID : CMP #$0006 : BEQ .done_opening_doors
     LDA !LOAD_STATION_INDEX : CMP #$0012 : BEQ .done_opening_doors
     LDA !sram_preset_options : BIT !PRESETS_CLOSE_BLUE_DOORS : BNE .done_opening_doors
-    JSR preset_open_all_plain_doors
+    JSR preset_open_all_blue_doors
 
   .done_opening_doors
     JSL $89AB82  ; Load FX
@@ -422,10 +422,38 @@ endif
     RTL
 }
 
-preset_open_all_plain_doors:
+preset_open_all_blue_doors:
 {
     PHP : PHB : PHX : PHY
-    LDA $7E07A5 : STA $C1 : ASL : STA $C3
+    LDA #$8484 : STA $C3 : PHA : PLB : PLB
+
+    ; First resolve all door PLMs where the door has previously been opened
+    LDX #$004E
+  .plm_search_loop
+    LDA $1C37,X : BEQ .plm_search_done
+    LDY $1D27,X : LDA $0000,Y : CMP #$8A72 : BEQ .plm_door_found
+  .plm_search_resume
+    DEX : DEX : BRA .plm_search_loop
+
+  .plm_door_found
+    LDA $1DC7,X : BMI .plm_search_resume
+    PHX : JSL $80818E : LDA $7ED8B0,X : PLX
+    AND $05E7 : BEQ .plm_search_resume
+
+    ; Door has been previously opened
+    ; Execute the next PLM instruction to set the BTS as a blue door
+    LDA $0002,Y : TAY
+    LDA $0000,Y : CMP #$86BC : BEQ .plm_delete
+    INY : INY
+    JSL preset_execute_plm_instruction
+
+  .plm_delete
+    STZ $1C37,X
+    BRA .plm_search_resume
+
+  .plm_search_done
+    ; Now search all of the room BTS for doors
+    LDA $07A5 : STA $C1 : ASL : STA $C3
     LDA $7F0000 : LSR : TAY
     STZ $C5 : TDC : %a8() : LDA #$7F : PHA : PLB
 
@@ -433,6 +461,8 @@ preset_open_all_plain_doors:
     LDA $6401,Y : AND #$FC : CMP #$40 : BEQ .bts_found
   .bts_continue
     DEY : BNE .bts_search_loop
+
+    ; All blue doors opened
     PLY : PLX : PLB : PLP : RTS
 
   .bts_found
@@ -463,6 +493,17 @@ preset_open_all_plain_doors:
     TDC : %a8() : STA $C6 : STA $6401,Y
     STA $6402,Y : STA $6403,Y : STA $6404,Y
     BRL .bts_continue
+}
+
+preset_execute_plm_instruction:
+{
+    ; A = Bank 84 PLM instruction to execute
+    ; $C3 already set to $84
+    STA $C1
+    ; PLM instruction ends with an RTS, but we need an RTL
+    ; Have the RTS return to $848031 which is an RTL
+    PEA $8030
+    JML [$00C1]
 }
 
 preset_room_setup_asm_fixes:
