@@ -35,6 +35,8 @@ endif
     BNE .paletteLoop
     PLP
 
+    LDA #$0000
+    STA $7EC400  ; Used as door fade timer
     LDA #$0001
     STA $0723    ; Screen fade delay = 1
     STA $0725    ; Screen fade counter = 1
@@ -86,7 +88,7 @@ endif
 
   .done_upload_sprite_oob_tiles
     JSL reset_all_counters
-    STZ $0795 ; clear door transition flag
+    STZ $0795 : STZ $0797 ; clear door transition flags
 
     ; Clear enemies if not in certain rooms
     LDA $079B : CMP #$DD58 : BEQ .set_mb_state
@@ -191,9 +193,6 @@ preset_load_preset:
     BRA .loop_presets
 
   .done
-    LDA #$0000
-    STA $0795   ; "Currently transitioning"
-    STA $0797   ; "Currently transitioning"
     PLB
     RTL
 }
@@ -363,6 +362,7 @@ endif
     LDA #$E695 : STA $0A42 ; Unlock Samus
     LDA #$E725 : STA $0A44 ; Unlock Samus
     STZ $0E18    ; Set elevator to inactive
+    STZ $0E1A    ; Clear health bomb flag
 
     LDA #$E737 : STA $099C  ; Pointer to next frame's room transition code = $82:E737
     PLB
