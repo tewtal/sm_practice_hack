@@ -83,6 +83,14 @@ macro cm_toggle_bit(title, addr, mask, jsrtarget)
     db #$28, "<title>", #$FF
 endmacro
 
+macro cm_toggle_bit_inverted(title, addr, mask, jsrtarget)
+    dw !ACTION_TOGGLE_BIT_INVERTED
+    dl <addr>
+    dw <mask>
+    dw <jsrtarget>
+    db #$28, "<title>", #$FF
+endmacro
+
 macro cm_jsr(title, routine, argument)
     dw !ACTION_JSR
     dw <routine>
@@ -255,6 +263,8 @@ PresetsMenu:
     dw #presets_custom_preset_slot
     dw #presets_save_custom_preset
     dw #presets_load_custom_preset
+    dw #$FFFF
+    dw #presets_open_blue_doors
 if !RAW_TILE_GRAPHICS
     dw #$FFFF
     dw #presets_compressed_graphics
@@ -279,15 +289,18 @@ presets_save_custom_preset:
 presets_load_custom_preset:
     %cm_jsr("Load Custom Preset", #action_load_custom_preset, #$0000)
 
+presets_open_blue_doors:
+    %cm_toggle_bit_inverted("Open Blue Doors", !sram_preset_options, !PRESETS_CLOSE_BLUE_DOORS, #0)
+
 if !RAW_TILE_GRAPHICS
 presets_compressed_graphics:
-    %cm_toggle_bit("Compressed Graphics", !sram_compressed_graphics, !COMPRESSED_GRAPHICS, #0)
+    %cm_toggle_bit("Compressed Graphics", !sram_preset_options, !PRESETS_COMPRESSED_GRAPHICS, #0)
 
 presets_compressed_palettes:
-    %cm_toggle_bit("Compressed Palettes", !sram_compressed_graphics, !COMPRESSED_PALETTES, #0)
+    %cm_toggle_bit("Compressed Palettes", !sram_preset_options, !PRESETS_COMPRESSED_PALETTES, #0)
 
 presets_compressed_tables:
-    %cm_toggle_bit("Compressed Tables", !sram_compressed_graphics, !COMPRESSED_TABLES, #0)
+    %cm_toggle_bit("Compressed Tables", !sram_preset_options, !PRESETS_COMPRESSED_TABLES, #0)
 endif
 
 SelectPresetCategoryMenu:

@@ -492,6 +492,7 @@ cm_draw_action_table:
     dw draw_toggle_inverted
     dw draw_numfield_color
     dw draw_controller_input
+    dw draw_toggle_bit_inverted
 
     draw_toggle:
     {
@@ -602,6 +603,42 @@ cm_draw_action_table:
 
         ; grab the value at that memory address
         LDA [$08] : AND $0C : BNE .checked
+
+        ; Off
+        LDA #$244B : STA !ram_tilemap_buffer+0,X
+        LDA #$244D : STA !ram_tilemap_buffer+2,X
+        LDA #$244D : STA !ram_tilemap_buffer+4,X
+        RTS
+
+      .checked
+        ; On
+        %a16()
+        LDA #$384B : STA !ram_tilemap_buffer+2,X
+        LDA #$384C : STA !ram_tilemap_buffer+4,X
+        RTS
+    }
+
+    draw_toggle_bit_inverted:
+    {
+        ; grab the memory address (long)
+        LDA [$04] : INC $04 : INC $04 : STA $08
+        LDA [$04] : INC $04 : STA $0A
+
+        ; grab bitmask
+        LDA [$04] : INC $04 : INC $04 : STA $0C
+
+        ; increment past JSR
+        INC $04 : INC $04
+
+        ; Draw the text
+        %item_index_to_vram_index()
+        PHX : JSR cm_draw_text : PLX
+
+        ; Set position for ON/OFF
+        TXA : CLC : ADC #$002C : TAX
+
+        ; grab the value at that memory address
+        LDA [$08] : AND $0C : BEQ .checked
 
         ; Off
         LDA #$244B : STA !ram_tilemap_buffer+0,X
@@ -1246,6 +1283,7 @@ cm_execute_action_table:
     dw execute_toggle
     dw execute_numfield_color
     dw execute_controller_input
+    dw execute_toggle_bit
 
     execute_toggle:
     {

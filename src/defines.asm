@@ -195,17 +195,18 @@
 !ram_hex2dec_third_digit = $18
 !ram_hex2dec_rest = $1A
 
-!ACTION_TOGGLE          = #$0000
-!ACTION_TOGGLE_BIT      = #$0002
-!ACTION_JSR             = #$0004
-!ACTION_NUMFIELD        = #$0006
-!ACTION_CHOICE          = #$0008
-!ACTION_CTRL_SHORTCUT   = #$000A
-!ACTION_NUMFIELD_HEX    = #$000C
-!ACTION_NUMFIELD_WORD   = #$000E
-!ACTION_TOGGLE_INVERTED = #$0010
-!ACTION_NUMFIELD_COLOR  = #$0012
-!ACTION_CTRL_INPUT      = #$0014
+!ACTION_TOGGLE              = #$0000
+!ACTION_TOGGLE_BIT          = #$0002
+!ACTION_JSR                 = #$0004
+!ACTION_NUMFIELD            = #$0006
+!ACTION_CHOICE              = #$0008
+!ACTION_CTRL_SHORTCUT       = #$000A
+!ACTION_NUMFIELD_HEX        = #$000C
+!ACTION_NUMFIELD_WORD       = #$000E
+!ACTION_TOGGLE_INVERTED     = #$0010
+!ACTION_NUMFIELD_COLOR      = #$0012
+!ACTION_CTRL_INPUT          = #$0014
+!ACTION_TOGGLE_BIT_INVERTED = #$0016
 
 !SOUND_MENU_MOVE = $0039
 !SOUND_MENU_JSR = $0039
@@ -288,6 +289,7 @@
 
 !OAM_STACK_POINTER = $0590
 !SOUND_TIMER = $0686
+!LOAD_STATION_INDEX = $078B
 !ROOM_ID = $079B
 !AREA_ID = $079F
 !MUSIC_DATA = $07F3
@@ -351,48 +353,57 @@
 
 !SRAM_VERSION = $000D
 
-!sram_initialized = $702000
+!SRAM_START = $702000
 
-!sram_ctrl_menu = $702002
-!sram_ctrl_kill_enemies = $702004
-!sram_ctrl_full_equipment = $702006
-!sram_ctrl_reset_segment_timer = $702008
-!sram_ctrl_reset_segment_later = $70200A
-!sram_ctrl_load_state = $70200C
-!sram_ctrl_save_state = $70200E
-!sram_ctrl_load_last_preset = $702010
-!sram_ctrl_random_preset = $702012
-!sram_ctrl_save_custom_preset = $702014
-!sram_ctrl_load_custom_preset = $702016
-!sram_ctrl_inc_custom_preset = $702018
-!sram_ctrl_dec_custom_preset = $70201A
-!sram_ctrl_toggle_tileviewer = $70201C
-!sram_ctrl_update_timers = $70201E
+!sram_initialized = !SRAM_START+$00
 
-!sram_artificial_lag = $702020
-!sram_rerandomize = $702022
-!sram_fanfare_toggle = $702024
-!sram_frame_counter_mode = $702026
-!sram_display_mode = $702028
-!sram_music_toggle = $70202A
-!sram_last_preset = $70202C
-!sram_save_has_set_rng = $70202E
-!sram_preset_category = $702030
-!sram_custom_preset_slot = $702032
-!sram_room_strat = $702034
-!sram_sprite_prio_flag = $702036
-!sram_metronome_tickrate = $702038
-!sram_metronome_sfx = $70203A
-!sram_status_icons = $70203C
-!sram_suit_properties = $70203E
-!sram_top_display_mode = $702040
-!sram_healthalarm = $702042
-!sram_room_layout = $702044
-!sram_cutscenes = $702046
-!sram_compressed_graphics = $702048
-!sram_lag_counter_mode = $70204A
+!sram_ctrl_menu = !SRAM_START+$02
+!sram_ctrl_kill_enemies = !SRAM_START+$04
+!sram_ctrl_full_equipment = !SRAM_START+$06
+!sram_ctrl_reset_segment_timer = !SRAM_START+$08
+!sram_ctrl_reset_segment_later = !SRAM_START+$0A
+!sram_ctrl_load_state = !SRAM_START+$0C
+!sram_ctrl_save_state = !SRAM_START+$0E
+!sram_ctrl_load_last_preset = !SRAM_START+$10
+!sram_ctrl_random_preset = !SRAM_START+$12
+!sram_ctrl_save_custom_preset = !SRAM_START+$14
+!sram_ctrl_load_custom_preset = !SRAM_START+$16
+!sram_ctrl_inc_custom_preset = !SRAM_START+$18
+!sram_ctrl_dec_custom_preset = !SRAM_START+$1A
+!sram_ctrl_toggle_tileviewer = !SRAM_START+$1C
+!sram_ctrl_update_timers = !SRAM_START+$1E
 
-; ^ FREE SPACE ^ up to $703000
+!sram_artificial_lag = !SRAM_START+$20
+!sram_rerandomize = !SRAM_START+$22
+!sram_fanfare_toggle = !SRAM_START+$24
+!sram_frame_counter_mode = !SRAM_START+$26
+!sram_display_mode = !SRAM_START+$28
+!sram_music_toggle = !SRAM_START+$2A
+!sram_last_preset = !SRAM_START+$2C
+!sram_save_has_set_rng = !SRAM_START+$2E
+!sram_preset_category = !SRAM_START+$30
+!sram_custom_preset_slot = !SRAM_START+$32
+!sram_room_strat = !SRAM_START+$34
+!sram_sprite_prio_flag = !SRAM_START+$36
+!sram_metronome_tickrate = !SRAM_START+$38
+!sram_metronome_sfx = !SRAM_START+$3A
+!sram_status_icons = !SRAM_START+$3C
+!sram_suit_properties = !SRAM_START+$3E
+!sram_top_display_mode = !SRAM_START+$40
+!sram_healthalarm = !SRAM_START+$42
+!sram_room_layout = !SRAM_START+$44
+!sram_cutscenes = !SRAM_START+$46
+!sram_preset_options = !SRAM_START+$48
+!sram_lag_counter_mode = !SRAM_START+$4A
+
+; ^ FREE SPACE ^ up to +$0FCE
+
+; SM specific things
+!SRAM_MUSIC_DATA = !SRAM_START+$0FD0
+!SRAM_MUSIC_TRACK = !SRAM_START+$0FD2
+!SRAM_SOUND_TIMER = !SRAM_START+$0FD4
+
+; ^ FREE SPACE ^ up to +$0FFE
 
 !ROOM_LAYOUT_MAGNET_STAIRS = #$0001
 !ROOM_LAYOUT_AREA_RANDO = #$0002
@@ -403,10 +414,11 @@
 !CUTSCENE_SKIP_G4 = #$0080
 !CUTSCENE_FAST_MB = #$0100
 
-!COMPRESSED_GRAPHICS = #$0001
-!COMPRESSED_PALETTES = #$0002
-!COMPRESSED_PALETTES_8BIT = #$02
-!COMPRESSED_TABLES = #$0004
+!PRESETS_COMPRESSED_GRAPHICS = #$0001
+!PRESETS_COMPRESSED_PALETTES = #$0002
+!PRESETS_COMPRESSED_PALETTES_8BIT = #$02
+!PRESETS_COMPRESSED_TABLES = #$0004
+!PRESETS_CLOSE_BLUE_DOORS = #$0008
 
 
 ; ----------
@@ -420,9 +432,4 @@
 
 !SRAM_DMA_BANK = $770000
 !SRAM_SAVED_SP = $774004
-
-; SM specific things
-!SRAM_MUSIC_DATA = $701FD0
-!SRAM_MUSIC_TRACK = $701FD2
-!SRAM_SOUND_TIMER = $701FD4
 

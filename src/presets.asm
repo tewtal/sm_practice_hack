@@ -341,7 +341,13 @@ if !RAW_TILE_GRAPHICS
 else
     JSL $82E7D3  ; Load level data, CRE, tile table, scroll data, create PLMs and execute door ASM and room setup ASM
 endif
+
+    LDA !AREA_ID : CMP #$0006 : BEQ .done_opening_doors
+    LDA !LOAD_STATION_INDEX : CMP #$0012 : BEQ .done_opening_doors
+    LDA !sram_preset_options : BIT !PRESETS_CLOSE_BLUE_DOORS : BNE .done_opening_doors
     JSR preset_open_all_plain_doors
+
+  .done_opening_doors
     JSL $89AB82  ; Load FX
     JSL $82E97C  ; Load library background
 
@@ -418,7 +424,7 @@ endif
 
 preset_open_all_plain_doors:
 {
-    PHP : PHB
+    PHP : PHB : PHX : PHY
     LDA $7E07A5 : STA $C1 : ASL : STA $C3
     LDA $7F0000 : LSR : TAY
     STZ $C5 : TDC : %a8() : LDA #$7F : PHA : PLB
@@ -427,15 +433,17 @@ preset_open_all_plain_doors:
     LDA $6401,Y : AND #$FC : CMP #$40 : BEQ .bts_found
   .bts_continue
     DEY : BNE .bts_search_loop
-    PLB : PLP : RTS
+    PLY : PLX : PLB : PLP : RTS
 
   .bts_found
+    %a16() : TYA : ASL : TAX : %a8()
+    LDA $0001,X : BIT #$30 : BNE .bts_continue
     LDA $6401,Y : BIT #$02 : BNE .bts_check_up_or_down
     BIT #$01 : BEQ .bts_facing_left_right
     LDA #$04 : STA $C6
 
   .bts_facing_left_right
-    %a16() : TYA : ASL : TAX : LDA #$0082 : ORA $C5 : STA $0000,X
+    %a16() : LDA #$0082 : ORA $C5 : STA $0000,X
     TXA : CLC : ADC $C3 : TAX : LDA #$00A2 : ORA $C5 : STA $0000,X
     TXA : CLC : ADC $C3 : TAX : LDA #$08A2 : ORA $C5 : STA $0000,X
     TXA : CLC : ADC $C3 : TAX : LDA #$0882 : ORA $C5 : STA $0000,X
@@ -443,14 +451,14 @@ preset_open_all_plain_doors:
     %a16() : TYA : CLC : ADC $C1 : TAX : TDC : %a8() : STA $6401,X
     %a16() : TXA : CLC : ADC $C1 : TAX : TDC : %a8() : STA $6401,X
     %a16() : TXA : CLC : ADC $C1 : TAX : TDC : %a8() : STA $6401,X
-    BRA .bts_continue
+    BRL .bts_continue
 
   .bts_check_up_or_down
     BIT #$01 : BEQ .bts_facing_up_down
     LDA #$08 : STA $C6
 
   .bts_facing_up_down
-    %a16() : TYA : ASL : TAX : LDA #$0084 : ORA $C5 : STA $0006,X
+    %a16() : LDA #$0084 : ORA $C5 : STA $0006,X
     DEC : STA $0004,X : ORA #$0400 : STA $0002,X : INC : STA $0000,X
     TDC : %a8() : STA $C6 : STA $6401,Y
     STA $6402,Y : STA $6403,Y : STA $6404,Y

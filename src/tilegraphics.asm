@@ -141,7 +141,7 @@ load_raw_tile_graphics:
     CLC : ADC #tileset_palettes
 
     ; Save that for later and prepare for DMA
-    PHA : LDA !sram_compressed_graphics : BIT !COMPRESSED_GRAPHICS : BNE .tile_decompression
+    PHA : LDA !sram_preset_options : BIT !PRESETS_COMPRESSED_GRAPHICS : BNE .tile_decompression
     %a8() : LDA.l raw_tile_graphics_table,X : BPL .separate_dmas
 
     ; A few tilesets also include the CRE and can be done in one DMA
@@ -236,7 +236,7 @@ load_raw_tile_graphics:
     LDA #$01 : STA $420B            ; initiate DMA (channel 1)
 
   .tileset_palette
-    LDA !sram_compressed_graphics : BIT !COMPRESSED_PALETTES_8BIT : BNE .palette_decompression
+    LDA !sram_preset_options : BIT !PRESETS_COMPRESSED_PALETTES_8BIT : BNE .palette_decompression
 
     ; Copy tileset palette to $7EC200
     PLX : LDY #$C200 : TDC : DEC
@@ -288,7 +288,7 @@ preset_load_level_tile_tables_scrolls_plms_and_execute_asm:
     SBC #$6401 : MVP $7F7F
 
     PEA $8F00 : PLB : PLB
-    LDA !sram_compressed_graphics : BIT !COMPRESSED_GRAPHICS : BNE .tile_table_decompression
+    LDA !sram_preset_options : BIT !PRESETS_COMPRESSED_GRAPHICS : BNE .tile_table_decompression
 
     ; Jump to routine based on graphics set
     LDX $07BB : LDA $0003,X : AND #$00FF

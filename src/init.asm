@@ -101,7 +101,7 @@ init_sram:
     LDA #$0003 : STA !sram_cutscenes
 
   .sram_upgrade_12to13
-    LDA #$0000 : STA !sram_compressed_graphics
+    LDA #$0000 : STA !sram_preset_options
     LDA #$0000 : STA !sram_lag_counter_mode
 
     LDA #!SRAM_VERSION : STA !sram_initialized
