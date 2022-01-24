@@ -412,10 +412,13 @@ endif
 
     LDA #$E695 : STA $0A42 ; Unlock Samus
     LDA #$E725 : STA $0A44 ; Unlock Samus
-    STZ $0E18    ; Set elevator to inactive
-    STZ $0E1A    ; Clear health bomb flag
+    STZ $0E18              ; Set elevator to inactive
+    STZ $1C1F              ; Clear message box index
+    STZ $0E1A              ; Clear health bomb flag
+    STZ $0795 : STZ $0797  ; clear door transition flags
+    LDA #$0000 : STA !ram_transition_flag
 
-    LDA #$E737 : STA $099C  ; Pointer to next frame's room transition code = $82:E737
+    LDA #$E737 : STA $099C ; Pointer to next frame's room transition code = $82:E737
     PLB
     PLP
     RTL
