@@ -993,7 +993,7 @@ cm_loop:
     JSL $8289EF ; Sound fx queue
 
     LDA !ram_cm_leave : BEQ +
-    JMP .done
+    RTS ; Exit menu loop
 
     +
     LDA !ram_cm_ctrl_mode : BEQ +
@@ -1054,14 +1054,12 @@ cm_loop:
 
   .pressedStart
   .pressedSelect
-    BRA .done
+    LDA #$0001 : STA !ram_cm_leave
+    JMP .inputLoop
 
   .redraw
     JSR cm_draw
     JMP .inputLoop
-
-  .done
-    RTS
 }
 
 cm_ctrl_mode:
