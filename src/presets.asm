@@ -341,6 +341,7 @@ if !RAW_TILE_GRAPHICS
 else
     JSL $82E7D3  ; Load level data, CRE, tile table, scroll data, create PLMs and execute door ASM and room setup ASM
 endif
+    JSR preset_scroll_fixes
 
     LDA !AREA_ID : CMP #$0006 : BEQ .done_opening_doors
     LDA !LOAD_STATION_INDEX : CMP #$0012 : BEQ .done_opening_doors
@@ -350,8 +351,6 @@ endif
   .done_opening_doors
     JSL $89AB82  ; Load FX
     JSL $82E97C  ; Load library background
-
-    JSR preset_scroll_fixes
 
     ; Pull layer 2 values, and use them if they are valid
     PLA : CMP #$5AFE : BEQ .calculate_layer_2
@@ -453,7 +452,8 @@ preset_open_all_blue_doors:
 
   .plm_search_done
     ; Now search all of the room BTS for doors
-    LDA $07A5 : STA $C1 : ASL : STA $C3
+    LDA !ROOM_WIDTH_SCROLLS : STA $C7
+    LDA !ROOM_WIDTH_BLOCKS : STA $C1 : ASL : STA $C3
     LDA $7F0000 : LSR : TAY
     STZ $C5 : TDC : %a8() : LDA #$7F : PHA : PLB
 
@@ -466,8 +466,26 @@ preset_open_all_blue_doors:
     PLY : PLX : PLB : PLP : RTS
 
   .bts_found
+    ; Convert BTS index to tile index
+    ; Also verify this is a door and not a slope or half-tile
     %a16() : TYA : ASL : TAX : %a8()
     LDA $0001,X : BIT #$30 : BNE .bts_continue
+
+    ; If this door has a red scroll, then leave it closed
+    ; Most of the work is to determine the scroll index
+    %a16() : TYA : DEC : LSR : LSR : LSR : LSR : STA $004204
+    %a8() : LDA $C7 : STA $004206
+    %a16() : PHA : PLA : PHA : PLA
+    LDA $004216 : STA $C8
+    LDA $004214 : LSR : LSR : LSR : LSR
+    %a8() : STA $004202
+    LDA $C7 : STA $004203
+    PHA : PLA : TDC
+    LDA $004216 : CLC : ADC $C8
+    PHX : TAX : LDA $7ECD20,X : PLX
+    CMP #$00 : BEQ .bts_continue
+
+    ; Check what type of door we need to open
     LDA $6401,Y : BIT #$02 : BNE .bts_check_up_or_down
     BIT #$01 : BEQ .bts_facing_left_right
     LDA #$04 : STA $C6
