@@ -1,7 +1,6 @@
 
 preset_hundo_bombs_ceres_elevator:
     dw #$0000
-    dw $078B, $0000  ; Elevator Index
     dw $078D, $AB58  ; DDB
     dw $079B, $DF45  ; MDB
     dw $07F3, $002D  ; Music Bank
@@ -10,6 +9,10 @@ preset_hundo_bombs_ceres_elevator:
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $0921, $0000  ; BG2 X offset
+    dw $0923, $0000  ; BG2 Y offset
     dw $093F, $0000  ; Ceres escape flag
     dw $09A2, $0000  ; Equipped Items
     dw $09A4, $0000  ; Collected Items
@@ -32,7 +35,9 @@ preset_hundo_bombs_ceres_elevator:
     dw $0A68, $0000  ; Flash suit
     dw $0A76, $0000  ; Hyper beam
     dw $0AF6, $0080  ; Samus X
+    dw $0AF8, $0000  ; Samus subpixel X
     dw $0AFA, $0048  ; Samus Y
+    dw $0AFC, $0000  ; Samus subpixel Y
     dw $0B3F, $0000  ; Blue suit
     dw $D820, $0000  ; Events
     dw $D822, $0000  ; Events
@@ -61,58 +66,68 @@ preset_hundo_bombs_ceres_elevator:
     dw $D8C0, $0000  ; Doors
     dw $D8C2, $0000  ; Doors
     dw $D8C4, $0000  ; Doors
+    dw $D908, $0000  ; Map Stations
+    dw $D90A, $0000  ; Map Stations
+    dw $D90C, $0000  ; Map Stations
     dw #$FFFF
 .after
 
-preset_hundo_bombs_ceres_last_3_rooms:
-    dw #preset_hundo_bombs_ceres_elevator ; Bombs: Ceres elevator
-    dw $078D, $ABA0  ; DDB
-    dw $079B, $E021  ; MDB
+preset_hundo_bombs_ceres_escape:
+    dw #preset_hundo_bombs_ceres_elevator ; Bombs: Ceres Elevator
+    dw $078D, $ABAC  ; DDB
+    dw $079B, $E0B5  ; MDB
     dw $07F3, $0024  ; Music Bank
     dw $07F5, $0007  ; Music Track
-    dw $090F, $6900  ; Screen subpixel X position
-    dw $0913, $E800  ; Screen subpixel Y position
+    dw $090F, $8000  ; Screen subpixel X position
+    dw $0913, $9400  ; Screen subpixel Y position
+    dw $0921, $0100  ; BG2 X offset
     dw $093F, $0002  ; Ceres escape flag
     dw $09C2, $0018  ; Health
-    dw $0A1C, $0006  ; Samus position/state
+    dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $004A  ; Samus X
-    dw $0AFA, $009E  ; Samus Y
+    dw $0AF6, $0033  ; Samus X
+    dw $0AF8, $B000  ; Samus subpixel X
+    dw $0AFA, $008B  ; Samus Y
+    dw $0AFC, $FFFF  ; Samus subpixel Y
     dw $D82E, $0001  ; Bosses
     dw #$FFFF
 .after
 
 preset_hundo_bombs_ship:
-    dw #preset_hundo_bombs_ceres_last_3_rooms ; Bombs: Ceres Last 3 rooms
-    dw $078B, $0012  ; Elevator Index
+    dw #preset_hundo_bombs_ceres_escape ; Bombs: Ceres Escape
     dw $078D, $88FE  ; DDB
     dw $079B, $91F8  ; MDB
     dw $07F3, $0006  ; Music Bank
     dw $07F5, $0005  ; Music Track
-    dw $090F, $1000  ; Screen subpixel X position
+    dw $090F, $8000  ; Screen subpixel X position
     dw $0911, $0400  ; Screen X position in pixels
     dw $0913, $0000  ; Screen subpixel Y position
-    dw $0915, $03D0  ; Screen Y position in pixels
+    dw $0915, $0400  ; Screen Y position in pixels
     dw $093F, $0000  ; Ceres escape flag
     dw $09C2, $0063  ; Health
     dw $0A1C, $0000  ; Samus position/state
     dw $0A1E, $0000  ; More position/state
     dw $0AF6, $0481  ; Samus X
-    dw $0AFA, $0440  ; Samus Y
+    dw $0AF8, $0000  ; Samus subpixel X
+    dw $0AFA, $0471  ; Samus Y
+    dw $0AFC, $8000  ; Samus subpixel Y
+    dw $0917, $0200  ; Layer 2 X position
+    dw $0921, $0200  ; BG2 X offset
     dw #$FFFF
 .after
 
 preset_hundo_bombs_parlor_down:
     dw #preset_hundo_bombs_ship ; Bombs: Ship
-    dw $078B, $0000  ; Elevator Index
-    dw $090F, $F000  ; Screen subpixel X position
+    dw $090F, $A000  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $1400  ; Screen subpixel Y position
     dw $0915, $0400  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
     dw $0A1C, $000C  ; Samus position/state
     dw $0A1E, $0104  ; More position/state
-    dw $0AF6, $0033  ; Samus X
+    dw $0AF6, $0050  ; Samus X
     dw $0AFA, $048B  ; Samus Y
+    dw $0AFC, $FFFF  ; Samus subpixel Y
     dw #$FFFF
 .after
 
@@ -125,6 +140,7 @@ preset_hundo_bombs_morph:
     dw $0911, $0500  ; Screen X position in pixels
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $0200  ; Screen Y position in pixels
+    dw $0921, $0000  ; BG2 X offset
     dw $0A1C, $0000  ; Samus position/state
     dw $0A1E, $0000  ; More position/state
     dw $0AF6, $0580  ; Samus X

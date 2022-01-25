@@ -321,6 +321,19 @@ preset_start_gameplay:
     LDA !SAMUS_X : STA $0B10 : LDA !SAMUS_X_SUBPX : STA $0B12
     LDA !SAMUS_Y : STA $0B14 : LDA !SAMUS_Y_SUBPX : STA $0B16
 
+    ; Set loading game state for Ceres
+    LDA #$001F : STA $7ED914
+    LDA !AREA_ID : CMP #$0006 : BEQ .end_load_game_state
+    ; Set loading game state for Zebes
+    LDA #$0005 : STA $7ED914
+    LDA !SAMUS_POSE : BNE .end_load_game_state
+    LDA !ROOM_ID : CMP #$91F8 : BNE .end_load_game_state
+    ; If default pose at landing site then assume we are arriving on Zebes
+    LDA #$0022 : STA $7ED914
+    LDA #$E8CD : STA $0A42 ; Lock Samus
+    LDA #$E8DC : STA $0A44 ; Lock Samus
+  .end_load_game_state
+
     ; Preserve layer 2 values we may have loaded from presets
     LDA $0923 : PHA
     LDA $0921 : PHA
@@ -346,12 +359,11 @@ else
 endif
     JSR preset_scroll_fixes
 
-    LDA !AREA_ID : CMP #$0006 : BEQ .done_opening_doors
-    LDA !LOAD_STATION_INDEX : CMP #$0012 : BEQ .done_opening_doors
     LDA !sram_preset_options : BIT !PRESETS_CLOSE_BLUE_DOORS : BNE .done_opening_doors
+    LDA $7ED914 : CMP #$0005 : BNE .done_opening_doors
     JSR preset_open_all_blue_doors
-
   .done_opening_doors
+
     JSL $89AB82  ; Load FX
     JSL $82E97C  ; Load library background
 
@@ -414,8 +426,11 @@ endif
 
     JSL $80982A  ; Enable horizontal and vertical timer interrupts
 
+    LDA $7ED914 : CMP #$0022 : BEQ .done_unlock_samus
     LDA #$E695 : STA $0A42 ; Unlock Samus
     LDA #$E725 : STA $0A44 ; Unlock Samus
+  .done_unlock_samus
+
     STZ $0E18              ; Set elevator to inactive
     STZ $1C1F              ; Clear message box index
     STZ $0E1A              ; Clear health bomb flag

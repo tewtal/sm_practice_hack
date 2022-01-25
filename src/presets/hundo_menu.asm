@@ -68,7 +68,7 @@ presets_goto_hundo_tourian:
 
 presets_submenu_hundo_bombs:
     dw #presets_hundo_bombs_ceres_elevator
-    dw #presets_hundo_bombs_ceres_last_3_rooms
+    dw #presets_hundo_bombs_ceres_escape
     dw #presets_hundo_bombs_ship
     dw #presets_hundo_bombs_parlor_down
     dw #presets_hundo_bombs_morph
@@ -297,10 +297,10 @@ presets_submenu_hundo_tourian:
 
 ; Bombs
 presets_hundo_bombs_ceres_elevator:
-    %cm_preset("Ceres elevator", #preset_hundo_bombs_ceres_elevator)
+    %cm_preset("Ceres Elevator", #preset_hundo_bombs_ceres_elevator)
 
-presets_hundo_bombs_ceres_last_3_rooms:
-    %cm_preset("Ceres Last 3 rooms", #preset_hundo_bombs_ceres_last_3_rooms)
+presets_hundo_bombs_ceres_escape:
+    %cm_preset("Ceres Escape", #preset_hundo_bombs_ceres_escape)
 
 presets_hundo_bombs_ship:
     %cm_preset("Ship", #preset_hundo_bombs_ship)

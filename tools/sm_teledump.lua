@@ -6,7 +6,7 @@ local preset_output = ""
 local last_step = nil
 
 local MEMTRACK = { -- {{{
-    { 0x078B, 0x2, 'Elevator Index' },
+    -- { 0x078B, 0x2, 'Elevator Index' },
     { 0x078D, 0x2, 'DDB' },
     -- { 0x078F, 0x2, 'DoorOut Index' },
     { 0x079B, 0x2, 'MDB' },
