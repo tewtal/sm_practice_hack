@@ -1944,23 +1944,24 @@ preset_kpdr21_upper_norfair_revisit_croc_speedway_lower:
     dw $090F, $6781  ; Screen subpixel X position
     dw $0913, $0800  ; Screen subpixel Y position
     dw $0915, $0300  ; Screen Y position in pixels
+    dw $0919, $0240  ; Layer 2 Y position
     dw $0AF6, $00DD  ; Samus X
     dw $0AFA, $038B  ; Samus Y
     dw #$FFFF
 .after
 
 preset_kpdr21_upper_norfair_revisit_spiky_acid_snakes_lower:
-    dw #preset_kpdr21_upper_norfair_revisit_croc_speedway_lower ; Upper Norfair Revisit: Croc Speedway (Lower)
+    dw #preset_kpdr21_upper_norfair_revisit_croc_speedway_lower ; Upper Norfair Revisit: Croc Speedway (Lower
     dw $078D, $93C6  ; DDB
     dw $079B, $AFCE  ; MDB
     dw $090F, $A000  ; Screen subpixel X position
     dw $0911, $02A3  ; Screen X position in pixels
     dw $0913, $7400  ; Screen subpixel Y position
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $01FA  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
     dw $0AF6, $030E  ; Samus X
     dw $0AFA, $008B  ; Samus Y
-    dw $0B3F, $0000  ; Blue suit
     dw #$FFFF
 .after
 
@@ -1971,6 +1972,8 @@ preset_kpdr21_upper_norfair_revisit_kronic_boost_lower:
     dw $090F, $B000  ; Screen subpixel X position
     dw $0911, $0300  ; Screen X position in pixels
     dw $0913, $8C00  ; Screen subpixel Y position
+    dw $0917, $0240  ; Layer 2 X position
+    dw $09D2, $0003  ; Currently selected item
     dw $0AF6, $03BC  ; Samus X
     dw #$FFFF
 .after
@@ -1990,7 +1993,6 @@ preset_kpdr21_lower_norfair_ln_main_hall:
     dw $0923, $00E0  ; BG2 Y offset
     dw $09C2, $00BA  ; Health
     dw $09CE, $0004  ; Pbs
-    dw $09D2, $0003  ; Currently selected item
     dw $0A1C, $009B  ; Samus position/state
     dw $0A1E, $0000  ; More position/state
     dw $0AF6, $0480  ; Samus X
