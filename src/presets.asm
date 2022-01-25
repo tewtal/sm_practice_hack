@@ -167,6 +167,7 @@ preset_load_preset:
     STA $7E09D2 ; Current selected weapon
     STA $7E0A04 ; Auto-cancel item
     LDA #$5AFE : STA $0917 ; Load garbage into Layer 2 X position
+    LDA #$FFFF : STA !ram_reset_segment_later
 
     ; check if custom preset is being loaded
     LDA !ram_custom_preset : BEQ .normal_preset
@@ -364,7 +365,7 @@ endif
     STZ $0E18              ; Set elevator to inactive
     STZ $1C1F              ; Clear message box index
     STZ $0E1A              ; Clear health bomb flag
-    STZ $0795 : STZ $0797  ; clear door transition flags
+    STZ $0795 : STZ $0797  ; Clear door transition flags
     LDA #$0000 : STA !ram_transition_flag
 
     LDA #$E737 : STA $099C ; Pointer to next frame's room transition code = $82:E737
@@ -549,7 +550,7 @@ add_grapple_and_xray_to_hud:
 }
 
 print pc, " preset_start_gameplay end"
-warnpc $80FC00
+warnpc $80F800 ; save.asm
 
 
 ; $80:9AB1: Add x-ray and grapple HUD items if necessary
