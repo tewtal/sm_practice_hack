@@ -431,6 +431,7 @@ endif
     LDA #$E695 : STA $0A42 ; Unlock Samus
     LDA #$E725 : STA $0A44 ; Unlock Samus
   .done_unlock_samus
+    LDA #$9F55 : STA $0A6C ; Set X speed table pointer
 
     STZ $0E18              ; Set elevator to inactive
     STZ $1C1F              ; Clear message box index
