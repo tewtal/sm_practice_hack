@@ -52,13 +52,18 @@ presets_goto_100early_tourian:
 
 presets_submenu_100early_crateria:
     dw #presets_100early_crateria_ceres_elevator
-    dw #presets_100early_crateria_ceres_last_3_rooms
+    dw #presets_100early_crateria_ceres_escape
     dw #presets_100early_crateria_ship
+    dw #presets_100early_crateria_parlor
+    dw #presets_100early_crateria_climb_down
     dw #presets_100early_crateria_pit_room
     dw #presets_100early_crateria_morph
+    dw #presets_100early_crateria_construction_zone_down
+    dw #presets_100early_crateria_construction_zone_up
     dw #presets_100early_crateria_pit_room_revisit
-    dw #presets_100early_crateria_climb
+    dw #presets_100early_crateria_climb_up
     dw #presets_100early_crateria_parlor_revisit
+    dw #presets_100early_crateria_flyway
     dw #presets_100early_crateria_bomb_torizo
     dw #presets_100early_crateria_alcatraz
     dw #presets_100early_crateria_terminator
@@ -279,11 +284,17 @@ presets_submenu_100early_tourian:
 presets_100early_crateria_ceres_elevator:
     %cm_preset("Ceres Elevator", #preset_100early_crateria_ceres_elevator)
 
-presets_100early_crateria_ceres_last_3_rooms:
-    %cm_preset("Ceres Last 3 Rooms", #preset_100early_crateria_ceres_last_3_rooms)
+presets_100early_crateria_ceres_escape:
+    %cm_preset("Ceres Escape", #preset_100early_crateria_ceres_escape)
 
 presets_100early_crateria_ship:
     %cm_preset("Ship", #preset_100early_crateria_ship)
+
+presets_100early_crateria_parlor:
+    %cm_preset("Parlor", #preset_100early_crateria_parlor)
+
+presets_100early_crateria_climb_down:
+    %cm_preset("Climb Down", #preset_100early_crateria_climb_down)
 
 presets_100early_crateria_pit_room:
     %cm_preset("Pit Room", #preset_100early_crateria_pit_room)
@@ -291,14 +302,23 @@ presets_100early_crateria_pit_room:
 presets_100early_crateria_morph:
     %cm_preset("Morph", #preset_100early_crateria_morph)
 
+presets_100early_crateria_construction_zone_down:
+    %cm_preset("Construction Zone Down", #preset_100early_crateria_construction_zone_down)
+
+presets_100early_crateria_construction_zone_up:
+    %cm_preset("Construction Zone Up", #preset_100early_crateria_construction_zone_up)
+
 presets_100early_crateria_pit_room_revisit:
     %cm_preset("Pit Room Revisit", #preset_100early_crateria_pit_room_revisit)
 
-presets_100early_crateria_climb:
-    %cm_preset("Climb", #preset_100early_crateria_climb)
+presets_100early_crateria_climb_up:
+    %cm_preset("Climb Up", #preset_100early_crateria_climb_up)
 
 presets_100early_crateria_parlor_revisit:
     %cm_preset("Parlor Revisit", #preset_100early_crateria_parlor_revisit)
+
+presets_100early_crateria_flyway:
+    %cm_preset("Flyway", #preset_100early_crateria_flyway)
 
 presets_100early_crateria_bomb_torizo:
     %cm_preset("Bomb Torizo", #preset_100early_crateria_bomb_torizo)

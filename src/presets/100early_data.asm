@@ -1,7 +1,6 @@
 
 preset_100early_crateria_ceres_elevator:
     dw #$0000
-    dw $078B, $0000  ; Elevator Index
     dw $078D, $AB58  ; DDB
     dw $079B, $DF45  ; MDB
     dw $07F3, $002D  ; Music Bank
@@ -36,7 +35,9 @@ preset_100early_crateria_ceres_elevator:
     dw $0A68, $0000  ; Flash suit
     dw $0A76, $0000  ; Hyper beam
     dw $0AF6, $0080  ; Samus X
+    dw $0AF8, $0000  ; Samus subpixel X
     dw $0AFA, $0048  ; Samus Y
+    dw $0AFC, $0000  ; Samus subpixel Y
     dw $0B3F, $0000  ; Blue suit
     dw $D820, $0000  ; Events
     dw $D822, $0000  ; Events
@@ -65,30 +66,35 @@ preset_100early_crateria_ceres_elevator:
     dw $D8C0, $0000  ; Doors
     dw $D8C2, $0000  ; Doors
     dw $D8C4, $0000  ; Doors
+    dw $D908, $0000  ; Map Stations
+    dw $D90A, $0000  ; Map Stations
+    dw $D90C, $0000  ; Map Stations
     dw #$FFFF
 .after
 
-preset_100early_crateria_ceres_last_3_rooms:
+preset_100early_crateria_ceres_escape:
     dw #preset_100early_crateria_ceres_elevator ; Crateria: Ceres Elevator
-    dw $078D, $ABA0  ; DDB
-    dw $079B, $E021  ; MDB
+    dw $078D, $ABAC  ; DDB
+    dw $079B, $E0B5  ; MDB
     dw $07F3, $0024  ; Music Bank
     dw $07F5, $0007  ; Music Track
-    dw $090F, $0900  ; Screen subpixel X position
-    dw $0913, $AC00  ; Screen subpixel Y position
-    dw $0921, $FE00  ; BG2 X offset
+    dw $090F, $8000  ; Screen subpixel X position
+    dw $0913, $9400  ; Screen subpixel Y position
+    dw $0921, $0100  ; BG2 X offset
     dw $093F, $0002  ; Ceres escape flag
     dw $09C2, $0018  ; Health
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $0047  ; Samus X
-    dw $0AFA, $009B  ; Samus Y
+    dw $0AF6, $0033  ; Samus X
+    dw $0AF8, $B000  ; Samus subpixel X
+    dw $0AFA, $008B  ; Samus Y
+    dw $0AFC, $FFFF  ; Samus subpixel Y
     dw $D82E, $0001  ; Bosses
     dw #$FFFF
 .after
 
 preset_100early_crateria_ship:
-    dw #preset_100early_crateria_ceres_last_3_rooms ; Crateria: Ceres Last 3 Rooms
+    dw #preset_100early_crateria_ceres_escape ; Crateria: Ceres Escape
     dw $078D, $88FE  ; DDB
     dw $079B, $91F8  ; MDB
     dw $07F3, $0006  ; Music Bank
@@ -96,26 +102,60 @@ preset_100early_crateria_ship:
     dw $090F, $8000  ; Screen subpixel X position
     dw $0911, $0400  ; Screen X position in pixels
     dw $0913, $0000  ; Screen subpixel Y position
-    dw $0915, $03D0  ; Screen Y position in pixels
-    dw $0917, $0200  ; Layer 2 X position
-    dw $0921, $0200  ; BG2 X offset
+    dw $0915, $0400  ; Screen Y position in pixels
     dw $093F, $0000  ; Ceres escape flag
     dw $09C2, $0063  ; Health
     dw $0A1C, $0000  ; Samus position/state
     dw $0A1E, $0000  ; More position/state
     dw $0AF6, $0481  ; Samus X
-    dw $0AFA, $0440  ; Samus Y
+    dw $0AF8, $0000  ; Samus subpixel X
+    dw $0AFA, $0471  ; Samus Y
+    dw $0AFC, $8000  ; Samus subpixel Y
+    dw $0917, $0200  ; Layer 2 X position
+    dw $0921, $0200  ; BG2 X offset
+    dw #$FFFF
+.after
+
+preset_100early_crateria_parlor:
+    dw #preset_100early_crateria_ship ; Crateria: Ship
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $1400  ; Screen subpixel Y position
+    dw $0915, $0400  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0079  ; Samus X
+    dw $0AFA, $049B  ; Samus Y
+    dw $0AFC, $FFFF  ; Samus subpixel Y
+    dw #$FFFF
+.after
+
+preset_100early_crateria_climb_down:
+    dw #preset_100early_crateria_parlor ; Crateria: Parlor
+    dw $078D, $8916  ; DDB
+    dw $079B, $92FD  ; MDB
+    dw $090F, $3000  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $4000  ; Screen subpixel Y position
+    dw $0915, $041F  ; Screen Y position in pixels
+    dw $0917, $00C0  ; Layer 2 X position
+    dw $0919, $0317  ; Layer 2 Y position
+    dw $0921, $FB00  ; BG2 X offset
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $01A8  ; Samus X
+    dw $0AFA, $04BB  ; Samus Y
     dw #$FFFF
 .after
 
 preset_100early_crateria_pit_room:
-    dw #preset_100early_crateria_ship ; Crateria: Ship
+    dw #preset_100early_crateria_climb_down ; Crateria: Climb Down
     dw $078D, $898E  ; DDB
     dw $079B, $96BA  ; MDB
-    dw $0911, $0100  ; Screen X position in pixels
-    dw $0913, $2000  ; Screen subpixel Y position
+    dw $090F, $6FFF  ; Screen subpixel X position
+    dw $0913, $3800  ; Screen subpixel Y position
     dw $0915, $0800  ; Screen Y position in pixels
-    dw $0917, $00C0  ; Layer 2 X position
     dw $0919, $0600  ; Layer 2 Y position
     dw $0921, $FF00  ; BG2 X offset
     dw $0923, $00E0  ; BG2 Y offset
@@ -145,30 +185,60 @@ preset_100early_crateria_morph:
     dw #$FFFF
 .after
 
-preset_100early_crateria_pit_room_revisit:
+preset_100early_crateria_construction_zone_down:
     dw #preset_100early_crateria_morph ; Crateria: Morph
-    dw $078D, $8EB6  ; DDB
-    dw $079B, $97B5  ; MDB
-    dw $07F5, $0003  ; Music Track
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0917, $0000  ; Layer 2 X position
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $0000  ; BG2 X offset
-    dw $0923, $FF00  ; BG2 Y offset
+    dw $090F, $2000  ; Screen subpixel X position
+    dw $0911, $0700  ; Screen X position in pixels
+    dw $0913, $E400  ; Screen subpixel Y position
+    dw $0917, $0540  ; Layer 2 X position
     dw $09A2, $0004  ; Equipped Items
     dw $09A4, $0004  ; Collected Items
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $07AC  ; Samus X
+    dw $0AFA, $028B  ; Samus Y
+    dw $D872, $0400  ; Items
+    dw #$FFFF
+.after
+
+preset_100early_crateria_construction_zone_up:
+    dw #preset_100early_crateria_construction_zone_down ; Crateria: Construction Zone Down
+    dw $078D, $8EDA  ; DDB
+    dw $079B, $A107  ; MDB
+    dw $090F, $D000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $6800  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $0001  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $0921, $FF00  ; BG2 X offset
+    dw $0923, $0000  ; BG2 Y offset
     dw $09C6, $0005  ; Missiles
     dw $09C8, $0005  ; Max missiles
-    dw $0AF6, $0080  ; Samus X
-    dw $0AFA, $0088  ; Samus Y
-    dw $D872, $0400  ; Items
+    dw $0AF6, $0055  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
     dw $D874, $0004  ; Items
     dw #$FFFF
 .after
 
-preset_100early_crateria_climb:
+preset_100early_crateria_pit_room_revisit:
+    dw #preset_100early_crateria_construction_zone_up ; Crateria: Construction Zone Up
+    dw $078D, $8EB6  ; DDB
+    dw $079B, $97B5  ; MDB
+    dw $07F5, $0003  ; Music Track
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0921, $0000  ; BG2 X offset
+    dw $0923, $FF00  ; BG2 Y offset
+    dw $0A1C, $0000  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
+    dw $0AF6, $0080  ; Samus X
+    dw $0AFA, $0088  ; Samus Y
+    dw #$FFFF
+.after
+
+preset_100early_crateria_climb_up:
     dw #preset_100early_crateria_pit_room_revisit ; Crateria: Pit Room Revisit
     dw $078D, $8B92  ; DDB
     dw $079B, $975C  ; MDB
@@ -188,34 +258,55 @@ preset_100early_crateria_climb:
 .after
 
 preset_100early_crateria_parlor_revisit:
-    dw #preset_100early_crateria_climb ; Crateria: Climb
+    dw #preset_100early_crateria_climb_up ; Crateria: Climb Up
     dw $078D, $8B7A  ; DDB
     dw $079B, $96BA  ; MDB
     dw $090F, $0000  ; Screen subpixel X position
     dw $0911, $0100  ; Screen X position in pixels
-    dw $0913, $D400  ; Screen subpixel Y position
+    dw $0913, $C000  ; Screen subpixel Y position
     dw $0917, $00C0  ; Layer 2 X position
     dw $0921, $FE00  ; BG2 X offset
     dw $0923, $F800  ; BG2 Y offset
-    dw $0AF6, $019F  ; Samus X
+    dw $0AF6, $01A0  ; Samus X
     dw $0AFA, $005B  ; Samus Y
     dw #$FFFF
 .after
 
-preset_100early_crateria_bomb_torizo:
+preset_100early_crateria_flyway:
     dw #preset_100early_crateria_parlor_revisit ; Crateria: Parlor Revisit
+    dw $078D, $8B3E  ; DDB
+    dw $079B, $92FD  ; MDB
+    dw $090F, $C000  ; Screen subpixel X position
+    dw $0911, $0300  ; Screen X position in pixels
+    dw $0913, $2BFF  ; Screen subpixel Y position
+    dw $0915, $01E6  ; Screen Y position in pixels
+    dw $0917, $0240  ; Layer 2 X position
+    dw $0919, $016C  ; Layer 2 Y position
+    dw $0921, $FF00  ; BG2 X offset
+    dw $0923, $FB00  ; BG2 Y offset
+    dw $09D2, $0001  ; Currently selected item
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $0369  ; Samus X
+    dw $0AFA, $026B  ; Samus Y
+    dw #$FFFF
+.after
+
+preset_100early_crateria_bomb_torizo:
+    dw #preset_100early_crateria_flyway ; Crateria: Flyway
     dw $078D, $8982  ; DDB
     dw $079B, $9879  ; MDB
-    dw $090F, $C000  ; Screen subpixel X position
+    dw $090F, $4000  ; Screen subpixel X position
     dw $0911, $0200  ; Screen X position in pixels
-    dw $0913, $8C00  ; Screen subpixel Y position
+    dw $0913, $D000  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0180  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
     dw $0921, $0100  ; BG2 X offset
     dw $0923, $0000  ; BG2 Y offset
     dw $09C6, $0000  ; Missiles
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $02C8  ; Samus X
+    dw $09D2, $0000  ; Currently selected item
+    dw $0AF6, $02BE  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw $D8B2, $2400  ; Doors
     dw #$FFFF

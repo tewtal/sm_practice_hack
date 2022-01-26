@@ -361,7 +361,7 @@ endif
     JSR preset_scroll_fixes
 
     LDA !sram_preset_options : BIT !PRESETS_CLOSE_BLUE_DOORS : BNE .done_opening_doors
-    LDA $7ED914 : CMP #$0005 : BNE .done_opening_doors
+    LDA !SAMUS_POSE : BEQ .done_opening_doors
     JSR preset_open_all_blue_doors
   .done_opening_doors
 

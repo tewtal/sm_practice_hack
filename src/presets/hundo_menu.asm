@@ -70,11 +70,16 @@ presets_submenu_hundo_bombs:
     dw #presets_hundo_bombs_ceres_elevator
     dw #presets_hundo_bombs_ceres_escape
     dw #presets_hundo_bombs_ship
-    dw #presets_hundo_bombs_parlor_down
-    dw #presets_hundo_bombs_morph
+    dw #presets_hundo_bombs_parlor
+    dw #presets_hundo_bombs_climb_down
     dw #presets_hundo_bombs_pit_room
-    dw #presets_hundo_bombs_climb
-    dw #presets_hundo_bombs_parlor_up
+    dw #presets_hundo_bombs_morph
+    dw #presets_hundo_bombs_construction_zone_down
+    dw #presets_hundo_bombs_construction_zone_up
+    dw #presets_hundo_bombs_pit_room_revisit
+    dw #presets_hundo_bombs_climb_up
+    dw #presets_hundo_bombs_parlor_revisit
+    dw #presets_hundo_bombs_flyway
     dw #presets_hundo_bombs_bomb_torizo
     dw #$0000
     %cm_header("BOMBS")
@@ -305,20 +310,35 @@ presets_hundo_bombs_ceres_escape:
 presets_hundo_bombs_ship:
     %cm_preset("Ship", #preset_hundo_bombs_ship)
 
-presets_hundo_bombs_parlor_down:
-    %cm_preset("Parlor down", #preset_hundo_bombs_parlor_down)
+presets_hundo_bombs_parlor:
+    %cm_preset("Parlor", #preset_hundo_bombs_parlor)
 
-presets_hundo_bombs_morph:
-    %cm_preset("Morph", #preset_hundo_bombs_morph)
+presets_hundo_bombs_climb_down:
+    %cm_preset("Climb Down", #preset_hundo_bombs_climb_down)
 
 presets_hundo_bombs_pit_room:
     %cm_preset("Pit Room", #preset_hundo_bombs_pit_room)
 
-presets_hundo_bombs_climb:
-    %cm_preset("Climb", #preset_hundo_bombs_climb)
+presets_hundo_bombs_morph:
+    %cm_preset("Morph", #preset_hundo_bombs_morph)
 
-presets_hundo_bombs_parlor_up:
-    %cm_preset("Parlor up", #preset_hundo_bombs_parlor_up)
+presets_hundo_bombs_construction_zone_down:
+    %cm_preset("Construction Zone Down", #preset_hundo_bombs_construction_zone_down)
+
+presets_hundo_bombs_construction_zone_up:
+    %cm_preset("Construction Zone Up", #preset_hundo_bombs_construction_zone_up)
+
+presets_hundo_bombs_pit_room_revisit:
+    %cm_preset("Pit Room Revisit", #preset_hundo_bombs_pit_room_revisit)
+
+presets_hundo_bombs_climb_up:
+    %cm_preset("Climb Up", #preset_hundo_bombs_climb_up)
+
+presets_hundo_bombs_parlor_revisit:
+    %cm_preset("Parlor Revisit", #preset_hundo_bombs_parlor_revisit)
+
+presets_hundo_bombs_flyway:
+    %cm_preset("Flyway", #preset_hundo_bombs_flyway)
 
 presets_hundo_bombs_bomb_torizo:
     %cm_preset("Bomb Torizo", #preset_hundo_bombs_bomb_torizo)
