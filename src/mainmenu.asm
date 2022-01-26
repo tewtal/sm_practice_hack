@@ -589,7 +589,7 @@ eq_currentsupers:
 eq_setsupers:
     %cm_numfield("Super Missiles", $7E09CC, 0, 65, 5, 5, .routine)
     .routine
-        LDA !SAMUS_SUPERS : STA !SAMUS_SUPERS_MAX ; supers
+        LDA !SAMUS_SUPERS_MAX : STA !SAMUS_SUPERS ; supers
         RTS
 
 eq_currentpbs:
