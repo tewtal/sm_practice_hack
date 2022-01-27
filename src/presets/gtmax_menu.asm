@@ -51,8 +51,8 @@ presets_goto_gtmax_tourian:
     %cm_submenu("Tourian", #presets_submenu_gtmax_tourian)
 
 presets_submenu_gtmax_crateria:
-    dw #presets_gtmax_crateria_parlor
     dw #presets_gtmax_crateria_ship
+    dw #presets_gtmax_crateria_parlor
     dw #presets_gtmax_crateria_parlor_downback
     dw #presets_gtmax_crateria_climb_down
     dw #presets_gtmax_crateria_pit_room

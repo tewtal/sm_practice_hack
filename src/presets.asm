@@ -595,27 +595,52 @@ preset_scroll_fixes:
     CPX #$C000 : BMI +           ; organized by room ID so we only have to check half
     BRL .halfway
 
+  .topdone
+    PLP
+    RTS
+
 +   CPX #$A011 : BNE +           ; bottom-left of Etecoons Etank
     STA $7ECD25 : STA $7ECD26
-    BRA .done
+    BRA .topdone
++   CPX #$A3AE : BNE +           ; hidden area behind Alpha Power Bombs
+    LDY !SAMUS_X : CPY #$0100    ; no fix if Xpos > 255
+    BPL .topdone
+    STA $7ECD20
++   CPX #$A408 : BNE +           ; top of Below Spazer Room
+    LDY !SAMUS_Y : CPY #$00B0    ; no fix if Ypos > 176
+    BPL .topdone
+    LDA #$02
+    STA $7ECD20 : STA $7ECD21
+    BRA .topdone
++   CPX #$A6A1 : BNE +           ; Elevator to Upper Norfair (from Kraid's area)
+    STA $7ECD20
+    BRA .topdone
 +   CPX #$AC83 : BNE +           ; left of Green Bubbles Missile Room (Norfair Reserve)
     STA $7ECD20
-    BRA .done
+    BRA .topdone
 +   CPX #$AE32 : BNE +           ; bottom of Volcano Room
     STA $7ECD26
-    BRA .done
+    BRA .topdone
 +   CPX #$B07A : BNE +           ; top of Bat Cave
     STA $7ECD20
-    BRA .done
+    BRA .topdone
 +   CPX #$B1E5 : BNE +           ; bottom of Acid Chozo Room
     STA $7ECD26 : STA $7ECD27 : STA $7ECD28
     LDA #$00 : STA $7ECD23 : STA $7ECD24
     BRA .done
-+   CPX #$B3A5 : BNE +           ; bottom of Pre-Pillars
-    LDY !SAMUS_Y : CPY #$0190    ; no scroll fix if Ypos < 400
++   CPX #$B283 : BNE +           ; bottom of GT's Room
+    LDY !SAMUS_Y : CPY #$00D0    ; no fix if Ypos < 208
     BMI .done
-    STA $7ECD22 : STA $7ECD24
+    STA $7ECD22 : STA $7ECD23    ; leaving GT's room
+    LDA #$02
+    STA $7ECD20 : STA $7ECD21
++   CPX #$B3A5 : BNE +           ; Pre-Pillars
+    LDY !SAMUS_Y : CPY #$0199    ; no scroll fix if Ypos < 409
+    BMI ++
+    STA $7ECD22 : STA $7ECD24    ; bottom of Pre-Pillars
     LDA #$00 : STA $7ECD21
+    BRA .done
+++  LDA #$02 : STA $7ECD21       ; middle/top of Pre-Pillars
     BRA .done
 +   CPX #$B4AD : BNE +           ; top of Worst Room in the Game
     LDA #$02 : STA $7ECD20
@@ -630,10 +655,20 @@ preset_scroll_fixes:
     RTS
 
   .halfway
-    CPX #$DF45 : BPL .ceres      ; Ceres rooms set BG1 offsets manually
-    CPX #$CAF6 : BNE +           ; bottom of WS Shaft
-    LDA #$02
+    CPX #$DF45 : BMI +           ; Ceres rooms set BG1 offsets manually
+    BRL .ceres
++   CPX #$C98E : BNE +           ; bottom-left of Bowling Room
+    LDA #$00 : STA $7ECD26 : STA $7ECD27
+    STA $7ECD28 : STA $7ECD29
+    STA $7ECD2A : STA $7ECD2B
+    BRA .done
++   CPX #$CAF6 : BNE +           ; WS Shaft
+    LDY !SAMUS_X : CPY #$05A0    ; fix East Supers if Xpos > 1440
+    BPL ++
+    LDA #$02                     ; lower area before Basement
     STA $7ECD48 : STA $7ECD4E
+    BRA .done
+++  STA $7ECD49                  ; hidden area before WS East Supers
     BRA .done
 +   CPX #$CBD5 : BNE +           ; top of Electric Death Room (WS E-Tank)
     LDA #$02
@@ -641,19 +676,30 @@ preset_scroll_fixes:
     BRA .done
 +   CPX #$CC6F : BNE +           ; right of Basement (Phantoon)
     STA $7ECD24
-    BRA .done
+    BRA .bottomdone
 +   CPX #$D1A3 : BNE +           ; bottom of Crab Shaft
     STA $7ECD26
     LDA #$02 : STA $7ECD24
-    BRA .done
+    BRA .bottomdone
++   CPX #$D21C : BNE +           ; Crab Hole
+    LDY !SAMUS_Y : CPY #$00D0
+    BMI ++    
+    STA $7ECD21                  ; bottom of Crab Hole
+    LDA #$00 : STA $7ECD20
+    BRA .bottomdone
+++  LDA #$02 : STA $7ECD20       ; top of Crab Hole
+    BRA .bottomdone
 +   CPX #$D48E : BNE +           ; Oasis (bottom of Toilet)
     LDA #$02
     STA $7ECD20 : STA $7ECD21
-    BRA .done
-+   CPX #$D69A : BNE .done       ; Pants Room (door to Shaktool)
+    BRA .bottomdone
++   CPX #$D69A : BNE .bottomdone ; Pants Room (door to Shaktool)
     STA $7ECD21
     LDA #$00 : STA $7ECD22
-    BRA .done
+
+  .bottomdone
+    PLP
+    RTS
 
   .ceres
     LDA #$00 : STA $7E005F       ; Initialize mode 7
