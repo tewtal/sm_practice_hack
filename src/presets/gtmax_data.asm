@@ -1206,7 +1206,7 @@ preset_gtmax_lower_norfair_kihunter_stairs_down:
 
 preset_gtmax_lower_norfair_wasteland:
     dw #preset_gtmax_lower_norfair_kihunter_stairs_down ; Lower Norfair: Kihunter Stairs Down
-    dw $078D, $99EA  ; DDB
+    dw $078D, $99A2  ; DDB
     dw $079B, $B585  ; MDB
     dw $090F, $A000  ; Screen subpixel X position
     dw $0911, $0200  ; Screen X position in pixels

@@ -1623,7 +1623,6 @@ preset_prkd_lower_norfair_nox_ln_main_hall:
     dw $0919, $0301  ; Layer 2 Y position
     dw $0921, $FC00  ; BG2 X offset
     dw $0923, $00E0  ; BG2 Y offset
-    dw $09A6, $1001  ; Beams
     dw $09C2, $00B4  ; Health
     dw $09D2, $0003  ; Currently selected item
     dw $0A1C, $009B  ; Samus position/state
@@ -1801,6 +1800,7 @@ preset_prkd_lower_norfair_leaving_ridley:
     dw $0917, $0001  ; Layer 2 X position
     dw $0919, $00D7  ; Layer 2 Y position
     dw $0921, $FF00  ; BG2 X offset
+    dw $09A6, $1001  ; Beams
     dw $09C6, $0004  ; Missiles
     dw $09CA, $0003  ; Supers
     dw $09CE, $0005  ; Pbs
