@@ -1476,24 +1476,25 @@ preset_gtmax_lower_norfair_wasteland:
     dl $7E078D : db $02 : dw $99EA ; DDB
     dl $7E078F : db $02 : dw $0000 ; DoorOut Index
     dl $7E079B : db $02 : dw $B585 ; MDB
-    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position.
+    dl $7E090F : db $02 : dw $A000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0200 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $C000 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $041F ; Screen Y position in pixels
+    dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
+    dl $7E0915 : db $02 : dw $0419 ; Screen Y position in pixels
     dl $7E0917 : db $02 : dw $0180 ; Layer 2 X scroll in room in pixels?
-    dl $7E0919 : db $02 : dw $0317 ; Layer 2 Y scroll in room in pixels? (up = positive)
+    dl $7E0919 : db $02 : dw $0312 ; Layer 2 Y scroll in room in pixels? (up = positive)
     dl $7E0923 : db $02 : dw $0000 ; BG2 Y scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
-    dl $7E09CE : db $02 : dw $000F ; Pbs
-    dl $7E0A1C : db $02 : dw $007E ; Samus position/state
-    dl $7E0A1E : db $02 : dw $1304 ; More position/state
-    dl $7E0AF6 : db $02 : dw $0265 ; Samus X
-    dl $7E0AFA : db $02 : dw $04EC ; Samus Y
+    dl $7E09CE : db $02 : dw $000E ; Pbs
+    dl $7E0A1C : db $02 : dw $0079 ; Samus position/state
+    dl $7E0A1E : db $02 : dw $1108 ; More position/state
+    dl $7E0AF6 : db $02 : dw $0246 ; Samus X
+    dl $7E0AFA : db $02 : dw $0489 ; Samus Y
     dl $7ED8BA : db $02 : dw $4301 ; Events, Items, Doors
     dw #$FFFF
 .after
 
 preset_gtmax_lower_norfair_metal_ninja_pirates:
     dw #preset_gtmax_lower_norfair_wasteland ; Lower Norfair: Wasteland
+    dl $7E078D : db $02 : dw $99EA ; DDB
     dl $7E079B : db $02 : dw $B5D5 ; MDB
     dl $7E090F : db $02 : dw $C000 ; Screen subpixel X position.
     dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
