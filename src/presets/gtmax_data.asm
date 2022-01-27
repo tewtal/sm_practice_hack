@@ -1208,24 +1208,25 @@ preset_gtmax_lower_norfair_wasteland:
     dw #preset_gtmax_lower_norfair_kihunter_stairs_down ; Lower Norfair: Kihunter Stairs Down
     dw $078D, $99EA  ; DDB
     dw $079B, $B585  ; MDB
-    dw $090F, $0000  ; Screen subpixel X position
+    dw $090F, $A000  ; Screen subpixel X position
     dw $0911, $0200  ; Screen X position in pixels
-    dw $0913, $C000  ; Screen subpixel Y position
-    dw $0915, $041F  ; Screen Y position in pixels
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $0419  ; Screen Y position in pixels
     dw $0917, $0180  ; Layer 2 X position
-    dw $0919, $0317  ; Layer 2 Y position
+    dw $0919, $0312  ; Layer 2 Y position
     dw $0923, $0000  ; BG2 Y offset
-    dw $09CE, $000F  ; Pbs
-    dw $0A1C, $007E  ; Samus position/state
-    dw $0A1E, $1304  ; More position/state
-    dw $0AF6, $0265  ; Samus X
-    dw $0AFA, $04EC  ; Samus Y
+    dw $09CE, $000E  ; Pbs
+    dw $0A1C, $0079  ; Samus position/state
+    dw $0A1E, $1108  ; More position/state
+    dw $0AF6, $0246  ; Samus X
+    dw $0AFA, $0489  ; Samus Y
     dw $D8BA, $4301  ; Doors
     dw #$FFFF
 .after
 
 preset_gtmax_lower_norfair_metal_ninja_pirates:
     dw #preset_gtmax_lower_norfair_wasteland ; Lower Norfair: Wasteland
+    dw $078D, $99EA  ; DDB
     dw $079B, $B5D5  ; MDB
     dw $090F, $C000  ; Screen subpixel X position
     dw $0911, $0100  ; Screen X position in pixels
