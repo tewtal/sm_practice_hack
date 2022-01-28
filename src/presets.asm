@@ -753,7 +753,7 @@ preset_scroll_fixes:
     LDA !sram_custom_preset_slot
     ASL : XBA
     CLC : ADC #$31E9 : TAX       ; X = Source
-    LDY #$CD52 : LDA #$0031      ; Y = Destination, A = Size-1
+    LDY #$CD51 : LDA #$0031      ; Y = Destination, A = Size-1
     MVP $707E                    ; srcBank, destBank
     LDA #$0000 : STA !ram_custom_preset
     PLB
