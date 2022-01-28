@@ -385,6 +385,18 @@ endif
 
   .layer_2_loaded
     JSR $A37B    ; Calculate BG positions
+
+    ; Fix BG2 Y offsets for rooms with scrolling sky
+    LDA !ROOM_ID : CMP #$91F8 : BEQ .bg_offsets_scrolling_sky
+    CMP #$93FE : BEQ .bg_offsets_scrolling_sky
+    CMP #$94FD : BEQ .bg_offsets_scrolling_sky
+    BRA .bg_offsets_calculated
+
+  .bg_offsets_scrolling_sky
+    LDA $0915 : STA $0919 : STA $B7
+    STZ $0923
+
+  .bg_offsets_calculated
     JSL $80A176  ; Display the viewable part of the room
 
     LDA #$0000 : STA $05F5  ; Enable sounds
