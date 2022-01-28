@@ -3010,6 +3010,7 @@ preset_100early_lower_norfair_kihunter_shaft_revisit:
     dw $090F, $3000  ; Screen subpixel X position
     dw $0911, $0500  ; Screen X position in pixels
     dw $0913, $2FFF  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $03C0  ; Layer 2 X position
     dw $0921, $0000  ; BG2 X offset
     dw $0923, $FE00  ; BG2 Y offset
