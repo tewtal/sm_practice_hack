@@ -136,6 +136,49 @@ else
 endif
 }
 
+if !RAW_TILE_GRAPHICS
+; This is similar to $82E97C except we overwrite the door dependent transfer to VRAM
+preset_load_library_background:
+{
+    PHP : PHB : %ai16()
+    JSL $80A29C      ; Clear FX tilemap
+    LDA $1964 : BEQ .done_fx_tilemap
+
+    STA $4312
+    LDA #$5BE0 : STA $2116
+    LDA #$1801 : STA $4310
+    LDA #$008A : STA $4314
+    LDA #$0840 : STA $4315
+    %a8()
+    LDA #$80 : STA $2115
+    LDA #$02 : STA $420B
+    %a16() : CLC
+
+  .done_fx_tilemap
+    PEA $8F00 : PLB : PLB
+    REP #$20
+    LDX $07BB
+    LDY $0016,X : BPL .done
+
+  .load_library_loop
+    LDX $0000,Y : INY : INY
+    JSR (preset_load_library_background_jump_table,X)
+    BCC .load_library_loop
+
+  .done
+    PLB : PLP : RTL
+}
+
+preset_load_library_background_jump_table:
+    dw $E9E5, $E9F9, $EA2D, $EA4E, $EA66, $EA56, $EA5E, preset_load_library_start_transfer_to_vram
+
+preset_load_library_start_transfer_to_vram:
+    JML preset_load_library_transfer_to_vram
+
+preset_load_library_end_transfer_to_vram:
+    RTS
+endif
+
 reset_all_counters:
 {
     LDA #$0000
@@ -366,7 +409,11 @@ endif
   .done_opening_doors
 
     JSL $89AB82  ; Load FX
+if !RAW_TILE_GRAPHICS
+    JSL preset_load_library_background
+else
     JSL $82E97C  ; Load library background
+endif
 
     ; Pull layer 2 values, and use them if they are valid
     PLA : CMP #$5AFE : BEQ .calculate_layer_2
@@ -452,9 +499,17 @@ endif
     LDA #$0000 : STA !ram_transition_flag
 
     LDA #$E737 : STA $099C ; Pointer to next frame's room transition code = $82:E737
-    PLB
-    PLP
-    RTL
+
+if !RAW_TILE_GRAPHICS
+    LDX $07BB : LDA $8F0018,X
+    CMP #$91C9 : BEQ .post_preset_scrolling_sky
+    CMP #$91CE : BEQ .post_preset_scrolling_sky
+    PLB : PLP : RTL
+  .post_preset_scrolling_sky
+    JML $8FE89B
+else
+    PLB : PLP : RTL
+endif
 }
 
 preset_open_all_blue_doors:
@@ -582,10 +637,14 @@ preset_room_setup_asm_fixes:
     CMP #$001F : BEQ .execute_setup_asm
     CMP #$0028 : BEQ .execute_setup_asm
 
+if !RAW_TILE_GRAPHICS
+    ; Defer scrolling sky asm until later
+else
     ; Disable scrolling sky asm
     STZ $07DF
     ; Clear layer 2 library bits (change 0181 to 0080)
     LDA #$0080 : STA $091B
+endif
 
   .end
     PLB : PLP : RTL
