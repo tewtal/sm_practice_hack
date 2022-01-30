@@ -102,8 +102,8 @@ if !FEATURE_PAL
 org $90EA38
 else
 org $90EA3B
-    BRA $0B
 endif
+    BRA $0B
 
 ; Optimize CPU by removing RTS so we go straight to the low health check
 if !FEATURE_PAL
