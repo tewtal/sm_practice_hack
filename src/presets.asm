@@ -273,6 +273,9 @@ preset_start_gameplay:
     JSL $878016  ; Clear animated tile objects
     JSL $88829E  ; Wait until the end of a v-blank and clear (H)DMA enable flags
 
+    ; Set Samus last pose same as current pose
+    LDA !SAMUS_POSE : STA $0A20
+
     ; Preserve layer 2 values we may have loaded from presets
     LDA $0923 : PHA
     LDA $0921 : PHA
