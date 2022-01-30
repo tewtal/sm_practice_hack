@@ -331,14 +331,14 @@ endif
 
 stop_all_sounds:
 {
-    ; If $05F5 is non-zero, the game won't clear the sounds
-    LDA $05F5 : PHA
-    LDA #$0000 : STA $05F5
+    ; If sounds are not enabled, the game won't clear the sounds
+    LDA !DISABLE_SOUNDS : PHA
+    STZ !DISABLE_SOUNDS
     JSL $82BE17
-    PLA : STA $05F5
+    PLA : STA !DISABLE_SOUNDS
 
     ; Makes the game check Samus' health again, to see if we need annoying sound
-    LDA #$0000 : STA $0A6A
+    STZ !SAMUS_HEALTH_WARNING
     RTL
 }
 
@@ -429,7 +429,7 @@ healthalarm_turn_on_vanilla:
     LDA #$0002 : JSL $80914D
 
 healthalarm_turn_on_never:
-    LDA #$0001 : STA $0A6A
+    LDA #$0001 : STA !SAMUS_HEALTH_WARNING
 
 healthalarm_turn_on_done:
     PLX : RTS
@@ -450,7 +450,7 @@ healthalarm_turn_off_vanilla:
     LDA #$0001 : JSL $80914D
 
 healthalarm_turn_off_never:
-    STZ $0A6A
+    STZ !SAMUS_HEALTH_WARNING
 
 healthalarm_turn_off_done:
     PLX : RTS

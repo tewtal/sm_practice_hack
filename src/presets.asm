@@ -352,8 +352,7 @@ preset_start_gameplay:
     STZ $0943    ; Timer status = inactive
 
     JSL $828A9A  ; Reset sound queues
-
-    LDA #$FFFF : STA $05F5  ; Disable sounds
+    LDA #$FFFF : STA !DISABLE_SOUNDS
 
     JSL $80835D  ; Disable NMI
     JSL $80985F  ; Disable horizontal and vertical timer interrupts
@@ -446,7 +445,8 @@ endif
   .bg_offsets_calculated
     JSL $80A176  ; Display the viewable part of the room
 
-    LDA #$0000 : STA $05F5  ; Enable sounds
+    ; Enable sounds
+    STZ !DISABLE_SOUNDS
     JSL stop_all_sounds
 
     ; Clear music queue
