@@ -410,9 +410,19 @@ action_select_preset_category:
 
 action_save_custom_preset:
 {
+    ; check gamestate first
+    LDA $0998 : CMP #$0008 : BEQ .safe
+    CMP #$000C : BMI .not_safe
+    CMP #$0013 : BPL .not_safe
+
+  .safe
     JSL custom_preset_save
     LDA #$0001 : STA !ram_cm_leave
     LDA #!SOUND_MENU_MOVE : JSL !SFX_LIB1
+    RTS
+
+  .not_safe
+    LDA #!SOUND_MENU_FAIL : JSL !SFX_LIB1
     RTS
 }
 
