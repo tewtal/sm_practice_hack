@@ -149,14 +149,17 @@ preset_prkd_crateria_parlor_downback:
 
 preset_prkd_crateria_climb_down:
     dw #preset_prkd_crateria_parlor_downback ; Crateria: Parlor Downback
-    dw $090F, $3000  ; Screen subpixel X position
-    dw $0913, $4000  ; Screen subpixel Y position
-    dw $0915, $041F  ; Screen Y position in pixels
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
-    dw $0919, $0317  ; Layer 2 Y position
-    dw $0AF6, $01A8  ; Samus X
-    dw $0AFA, $04BB  ; Samus Y
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0913, $7BFF  ; Screen subpixel Y position
+    dw $0915, $03F2  ; Screen Y position in pixels
+    dw $0917, $00C0  ; Layer 2 X position
+    dw $0919, $02F5  ; Layer 2 Y position
+    dw $0A1C, $0018  ; Samus position/state
+    dw $0A1E, $0204  ; More position/state
+    dw $0AF6, $0199  ; Samus X
+    dw $0AF8, $8000  ; Samus subpixel X
+    dw $0AFA, $048A  ; Samus Y
+    dw $0AFC, $0000  ; Samus subpixel Y
     dw #$FFFF
 .after
 
@@ -173,7 +176,9 @@ preset_prkd_crateria_pit_room:
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $01DB  ; Samus X
+    dw $0AF8, $FFFF  ; Samus subpixel X
     dw $0AFA, $088B  ; Samus Y
+    dw $0AFC, $FFFF  ; Samus subpixel Y
     dw #$FFFF
 .after
 
