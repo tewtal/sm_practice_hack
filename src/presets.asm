@@ -458,8 +458,8 @@ endif
     STZ $0631 : STZ $0633 : STZ $0635 : STZ $0637
     STZ $0639 : STZ $063B : STZ $063D : STZ $063F
 
-    ; If music off, treat music as already loaded
-    LDA !sram_music_toggle : CMP #$0001 : BNE .done_music
+    ; If music fast off or preset off, treat music as already loaded
+    LDA !sram_music_toggle : CMP #$0002 : BPL .done_music
 
     ; Compare to currently loaded music data
     LDA !SRAM_MUSIC_DATA : CMP !MUSIC_DATA : BEQ .done_load_music_data

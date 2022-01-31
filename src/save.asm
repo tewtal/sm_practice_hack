@@ -43,7 +43,7 @@ post_load_state:
     TXA : CMP $063B : BNE .music_queue_data_search
 
   .no_music_data
-    LDA !sram_music_toggle : CMP #$0001 : BNE .music_off
+    LDA !sram_music_toggle : CMP #$0002 : BPL .music_fast_off_preset_off
 
     ; No data found in queue, check if we need to insert it
     LDA !SRAM_MUSIC_DATA : CMP !MUSIC_DATA : BEQ .music_queue_increase_timer
@@ -54,22 +54,23 @@ post_load_state:
     LDA #$0008 : STA $0629,X
 
   .queued_music_data
-    LDA !sram_music_toggle : CMP #$0001 : BEQ .queued_music_data_clear_track
+    LDA !sram_music_toggle : CMP #$0002 : BMI .queued_music_data_clear_track
 
     ; There is music data in the queue, assume it was loaded
     LDA $0619,X : STA !MUSIC_DATA
-    BRA .music_off
+    BRA .music_fast_off_preset_off
 
   .music_queue_empty
-    LDA !sram_music_toggle : CMP #$0001 : BNE .music_off
-    LDA !SRAM_MUSIC_DATA : CMP !MUSIC_DATA : BEQ .music_check_track
+    LDA !sram_music_toggle : CMP #$0002 : BPL .music_fast_off_preset_off
+    LDA !SRAM_MUSIC_DATA : CMP !MUSIC_DATA : BNE .music_clear_track_load_data
+    BRL .music_check_track
 
-    ; Clear track and load data
+  .music_clear_track_load_data
     LDA #$0000 : JSL !MUSIC_ROUTINE
     LDA #$FF00 : CLC : ADC !MUSIC_DATA : JSL !MUSIC_ROUTINE
     BRA .music_load_track
 
-  .music_off
+  .music_fast_off_preset_off
     ; Treat music as already loaded
     STZ $0629 : STZ $062B : STZ $062D : STZ $062F
     STZ $0631 : STZ $0633 : STZ $0635 : STZ $0637
@@ -86,7 +87,15 @@ post_load_state:
   .queued_music_data_clear_track
     ; Insert clear track before queued music data and start queue there
     DEX : DEX : TXA : AND #$000E : STA $063B : TAX
-    LDA #$0000 : STA $0619,X : STA $063D
+    STZ $0619,X : STZ $063D
+
+    ; Clear all timers before this point
+  .music_clear_timer_loop
+    TXA : DEC : DEC : AND #$000E : TAX
+    STZ $0629,X : CPX $0639 : BNE .music_clear_timer_loop
+
+    ; Set timer on the clear track command
+    LDX $063B
 
   .queued_music_prepare_set_timer
     LDA !SRAM_SOUND_TIMER : BNE .queued_music_set_timer
