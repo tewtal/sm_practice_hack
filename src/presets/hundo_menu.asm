@@ -95,6 +95,7 @@ presets_submenu_hundo_kraid:
     dw #presets_hundo_kraid_big_pink
     dw #presets_hundo_kraid_green_hill_zone
     dw #presets_hundo_kraid_red_tower
+    dw #presets_hundo_kraid_skree_boost
     dw #presets_hundo_kraid_kraid_entry
     dw #presets_hundo_kraid_kraid_2
     dw #presets_hundo_kraid_leaving_varia
@@ -374,6 +375,9 @@ presets_hundo_kraid_green_hill_zone:
 
 presets_hundo_kraid_red_tower:
     %cm_preset("Red Tower", #preset_hundo_kraid_red_tower)
+
+presets_hundo_kraid_skree_boost:
+    %cm_preset("Skree Boost", #preset_hundo_kraid_skree_boost)
 
 presets_hundo_kraid_kraid_entry:
     %cm_preset("Kraid Entry", #preset_hundo_kraid_kraid_entry)

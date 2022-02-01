@@ -403,7 +403,7 @@ preset_100early_brinstar_early_supers:
     dw $09C6, $0000  ; Missiles
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $00A6  ; Samus X
+    dw $0AF6, $00AB  ; Samus X
     dw $0AFA, $048B  ; Samus Y
     dw $D8B4, $0002  ; Doors
     dw #$FFFF
@@ -589,7 +589,7 @@ preset_100early_brinstar_leaving_varia:
     dw $09C2, $00A1  ; Health
     dw $09C6, $0011  ; Missiles
     dw $09CA, $0003  ; Supers
-    dw $0A1C, $009B  ; Samus position/state
+    dw $0A1C, $0000  ; Samus position/state
     dw $0A1E, $0000  ; More position/state
     dw $0AF6, $0078  ; Samus X
     dw $0AFA, $0088  ; Samus Y
@@ -651,7 +651,7 @@ preset_100early_upper_norfair_business_center:
     dw $0923, $00E0  ; BG2 Y offset
     dw $09C6, $0012  ; Missiles
     dw $09CA, $0004  ; Supers
-    dw $0A1C, $009B  ; Samus position/state
+    dw $0A1C, $0000  ; Samus position/state
     dw $0A1E, $0000  ; More position/state
     dw $0AF6, $0080  ; Samus X
     dw $0AFA, $02A8  ; Samus Y

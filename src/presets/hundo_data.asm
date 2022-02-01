@@ -337,14 +337,14 @@ preset_hundo_kraid_terminator:
     dw #preset_hundo_kraid_alcatraz ; Kraid: Alcatraz
     dw $078D, $8BB6  ; DDB
     dw $079B, $92FD  ; MDB
-    dw $090F, $0800  ; Screen subpixel X position
+    dw $090F, $C800  ; Screen subpixel X position
     dw $0911, $0100  ; Screen X position in pixels
-    dw $0913, $6400  ; Screen subpixel Y position
-    dw $0A1C, $0032  ; Samus position/state
-    dw $0A1E, $0804  ; More position/state
+    dw $0913, $5C00  ; Screen subpixel Y position
+    dw $0917, $00C0  ; Layer 2 X position
+    dw $0A1C, $0000  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
     dw $0AF6, $0115  ; Samus X
-    dw $0AFA, $0095  ; Samus Y
-    dw $0B3F, $0104  ; Blue suit
+    dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 .after
 
@@ -359,11 +359,10 @@ preset_hundo_kraid_pirates_shaft:
     dw $09C2, $00C7  ; Health
     dw $09C4, $00C7  ; Max health
     dw $09C6, $0005  ; Missiles
-    dw $0A1C, $000C  ; Samus position/state
-    dw $0A1E, $0104  ; More position/state
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
     dw $0AF6, $002E  ; Samus X
     dw $0AFA, $028B  ; Samus Y
-    dw $0B3F, $0000  ; Blue suit
     dw $D870, $0180  ; Items
     dw #$FFFF
 .after
@@ -373,13 +372,11 @@ preset_hundo_kraid_elevator:
     dw $078D, $8C22  ; DDB
     dw $079B, $9938  ; MDB
     dw $07F5, $0003  ; Music Track
-    dw $090F, $4000  ; Screen subpixel X position
-    dw $0913, $8C00  ; Screen subpixel Y position
+    dw $090F, $8000  ; Screen subpixel X position
+    dw $0913, $1800  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $09C6, $0002  ; Missiles
-    dw $0A1C, $0006  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $0084  ; Samus X
+    dw $0AF6, $0080  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 .after
@@ -390,9 +387,12 @@ preset_hundo_kraid_early_supers:
     dw $079B, $9AD9  ; MDB
     dw $07F3, $000F  ; Music Bank
     dw $07F5, $0005  ; Music Track
-    dw $090F, $0000  ; Screen subpixel X position
+    dw $090F, $C000  ; Screen subpixel X position
     dw $0913, $0000  ; Screen subpixel Y position
-    dw $0915, $041B  ; Screen Y position in pixels
+    dw $0915, $041C  ; Screen Y position in pixels
+    dw $0919, $0315  ; Layer 2 Y position
+    dw $0921, $0000  ; BG2 X offset
+    dw $0923, $00E0  ; BG2 Y offset
     dw $09C6, $0000  ; Missiles
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
@@ -407,9 +407,12 @@ preset_hundo_kraid_reverse_mockball:
     dw $078D, $8D5A  ; DDB
     dw $079B, $9C07  ; MDB
     dw $07F5, $0003  ; Music Track
-    dw $090F, $9000  ; Screen subpixel X position
+    dw $090F, $0001  ; Screen subpixel X position
     dw $0913, $3400  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $0921, $0100  ; BG2 X offset
+    dw $0923, $0000  ; BG2 Y offset
     dw $09C0, $0001  ; Manual/Auto reserve tank
     dw $09C2, $00B3  ; Health
     dw $09C6, $000A  ; Missiles
@@ -417,7 +420,7 @@ preset_hundo_kraid_reverse_mockball:
     dw $09CA, $0004  ; Supers
     dw $09CC, $0005  ; Max supers
     dw $09D4, $0064  ; Max reserves
-    dw $0A1C, $0008  ; Samus position/state
+    dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $003F  ; Samus X
     dw $0AFA, $008B  ; Samus Y
@@ -431,9 +434,12 @@ preset_hundo_kraid_dachora_room:
     dw $078D, $8D4E  ; DDB
     dw $079B, $9AD9  ; MDB
     dw $07F5, $0005  ; Music Track
-    dw $090F, $1000  ; Screen subpixel X position
+    dw $090F, $D000  ; Screen subpixel X position
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $061A  ; Screen Y position in pixels
+    dw $0919, $0493  ; Layer 2 Y position
+    dw $0921, $FF00  ; BG2 X offset
+    dw $0923, $FC00  ; BG2 Y offset
     dw $09C2, $00C7  ; Health
     dw $09C6, $000F  ; Missiles
     dw $09C8, $0014  ; Max missiles
@@ -453,12 +459,14 @@ preset_hundo_kraid_big_pink:
     dw $079B, $9CB3  ; MDB
     dw $090F, $8000  ; Screen subpixel X position
     dw $0911, $0600  ; Screen X position in pixels
-    dw $0913, $1800  ; Screen subpixel Y position
+    dw $0913, $2C00  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $0480  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $0921, $0100  ; BG2 X offset
+    dw $0923, $0000  ; BG2 Y offset
     dw $09C2, $00C2  ; Health
-    dw $0A1C, $000A  ; Samus position/state
-    dw $0A1E, $0104  ; More position/state
-    dw $0AF6, $06A5  ; Samus X
+    dw $0AF6, $06A3  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 .after
@@ -487,10 +495,14 @@ preset_hundo_kraid_red_tower:
     dw #preset_hundo_kraid_green_hill_zone ; Kraid: Green Hill Zone
     dw $078D, $8E92  ; DDB
     dw $079B, $9FBA  ; MDB
-    dw $090F, $5000  ; Screen subpixel X position
+    dw $090F, $0000  ; Screen subpixel X position
     dw $0911, $0500  ; Screen X position in pixels
-    dw $0913, $E000  ; Screen subpixel Y position
+    dw $0913, $7000  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $03C0  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $0921, $0100  ; BG2 X offset
+    dw $0923, $0000  ; BG2 Y offset
     dw $09C2, $00B8  ; Health
     dw $09C6, $000E  ; Missiles
     dw $09CA, $0003  ; Supers
@@ -500,20 +512,37 @@ preset_hundo_kraid_red_tower:
     dw #$FFFF
 .after
 
-preset_hundo_kraid_kraid_entry:
+preset_hundo_kraid_skree_boost:
     dw #preset_hundo_kraid_red_tower ; Kraid: Red Tower
+    dw $078D, $8F0A  ; DDB
+    dw $079B, $A253  ; MDB
+    dw $07F3, $0012  ; Music Bank
+    dw $090F, $D000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $091A  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $06D3  ; Layer 2 Y position
+    dw $0923, $FC00  ; BG2 Y offset
+    dw $0AF6, $0066  ; Samus X
+    dw $0AFA, $098B  ; Samus Y
+    dw #$FFFF
+.after
+
+preset_hundo_kraid_kraid_entry:
+    dw #preset_hundo_kraid_skree_boost ; Kraid: Skree Boost
     dw $078D, $A348  ; DDB
     dw $079B, $CF80  ; MDB
-    dw $07F3, $0012  ; Music Bank
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $5C00  ; Screen subpixel Y position
+    dw $090F, $3000  ; Screen subpixel X position
+    dw $0913, $B000  ; Screen subpixel Y position
     dw $0915, $0100  ; Screen Y position in pixels
+    dw $0919, $0100  ; Layer 2 Y position
+    dw $0923, $FF00  ; BG2 Y offset
     dw $09A6, $1004  ; Beams
     dw $09A8, $1004  ; Beams
     dw $09C2, $00AF  ; Health
     dw $09C6, $0010  ; Missiles
-    dw $0AF6, $004B  ; Samus X
+    dw $0AF6, $0050  ; Samus X
     dw $0AFA, $018B  ; Samus Y
     dw $D874, $0404  ; Items
     dw $D8B6, $8008  ; Doors
@@ -526,11 +555,13 @@ preset_hundo_kraid_kraid_2:
     dw $079B, $A56B  ; MDB
     dw $07F3, $0027  ; Music Bank
     dw $07F5, $0006  ; Music Track
-    dw $090F, $5000  ; Screen subpixel X position
+    dw $090F, $8000  ; Screen subpixel X position
     dw $0911, $0100  ; Screen X position in pixels
-    dw $0913, $0400  ; Screen subpixel Y position
+    dw $0913, $3800  ; Screen subpixel Y position
+    dw $0917, $0100  ; Layer 2 X position
     dw $09C2, $0099  ; Health
     dw $09C6, $000A  ; Missiles
+    dw $09CA, $0004  ; Supers
     dw $0AF6, $01CC  ; Samus X
     dw $D8B8, $0024  ; Doors
     dw #$FFFF
@@ -541,19 +572,23 @@ preset_hundo_kraid_leaving_varia:
     dw $078D, $91DA  ; DDB
     dw $079B, $A6E2  ; MDB
     dw $07F5, $0003  ; Music Track
-    dw $090F, $6001  ; Screen subpixel X position
+    dw $090F, $0000  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $1C00  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $0923, $0000  ; BG2 Y offset
     dw $09A2, $1005  ; Equipped Items
     dw $09A4, $1005  ; Collected Items
     dw $09C2, $00C7  ; Health
     dw $09C6, $0012  ; Missiles
     dw $09CA, $0002  ; Supers
     dw $09D6, $0004  ; Reserves
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $0027  ; Samus X
-    dw $0AFA, $008B  ; Samus Y
+    dw $0A1C, $0000  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
+    dw $0AF6, $0078  ; Samus X
+    dw $0AFA, $0088  ; Samus Y
     dw $D828, $0104  ; Bosses
     dw $D876, $0001  ; Items
     dw $D8B8, $0064  ; Doors
@@ -564,13 +599,15 @@ preset_hundo_kraid_leaving_kraid_hallway:
     dw #preset_hundo_kraid_leaving_varia ; Kraid: Leaving Varia
     dw $078D, $91AA  ; DDB
     dw $079B, $A521  ; MDB
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $0911, $0041  ; Screen X position in pixels
-    dw $0913, $0000  ; Screen subpixel Y position
+    dw $090F, $3000  ; Screen subpixel X position
+    dw $0913, $4000  ; Screen subpixel Y position
+    dw $0921, $FA00  ; BG2 X offset
     dw $09C2, $00BF  ; Health
     dw $09C6, $000F  ; Missiles
     dw $09CA, $0005  ; Supers
-    dw $0AF6, $00E1  ; Samus X
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0087  ; Samus X
     dw $0AFA, $00AB  ; Samus Y
     dw $D8B8, $00EC  ; Doors
     dw #$FFFF
@@ -582,14 +619,15 @@ preset_hundo_kraid_kraid_escape:
     dw $079B, $A4B1  ; MDB
     dw $07F3, $0012  ; Music Bank
     dw $07F5, $0005  ; Music Track
-    dw $090F, $9000  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $C400  ; Screen subpixel Y position
+    dw $090F, $2000  ; Screen subpixel X position
+    dw $0913, $1C00  ; Screen subpixel Y position
+    dw $0921, $FF00  ; BG2 X offset
     dw $09C2, $012B  ; Health
     dw $09C4, $012B  ; Max health
-    dw $0A1C, $0009  ; Samus position/state
-    dw $0A1E, $0108  ; More position/state
-    dw $0AF6, $00AA  ; Samus X
+    dw $09D6, $0014  ; Reserves
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $008D  ; Samus X
     dw $0AFA, $009B  ; Samus Y
     dw $D874, $0C04  ; Items
     dw $D8B8, $00EF  ; Doors
@@ -601,16 +639,19 @@ preset_hundo_speed_booster_business_center:
     dw $078D, $9246  ; DDB
     dw $079B, $A7DE  ; MDB
     dw $07F3, $0015  ; Music Bank
-    dw $090F, $3000  ; Screen subpixel X position
+    dw $090F, $A000  ; Screen subpixel X position
     dw $0913, $0000  ; Screen subpixel Y position
-    dw $0915, $0232  ; Screen Y position in pixels
+    dw $0915, $0238  ; Screen Y position in pixels
+    dw $0919, $01AA  ; Layer 2 Y position
+    dw $0921, $0000  ; BG2 X offset
+    dw $0923, $00E0  ; BG2 Y offset
     dw $09C6, $0011  ; Missiles
     dw $09CA, $0004  ; Supers
     dw $09D6, $0018  ; Reserves
-    dw $0A1C, $009B  ; Samus position/state
+    dw $0A1C, $0000  ; Samus position/state
     dw $0A1E, $0000  ; More position/state
     dw $0AF6, $0080  ; Samus X
-    dw $0AFA, $02A2  ; Samus Y
+    dw $0AFA, $02A8  ; Samus Y
     dw #$FFFF
 .after
 
