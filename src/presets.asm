@@ -500,6 +500,7 @@ endif
     STZ $0E18              ; Set elevator to inactive
     STZ $1C1F              ; Clear message box index
     STZ $0E1A              ; Clear health bomb flag
+    STZ $0E52              ; unlock grey doors that require killing enemies
     STZ $0795 : STZ $0797  ; Clear door transition flags
     LDA #$0000 : STA !ram_transition_flag
 
