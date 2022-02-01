@@ -252,23 +252,27 @@ cm_transfer_custom_cgram:
     ; $3A = Sel Num        $0000, $761F
     PHP
     %a16()
+    ; Backup gameplay palette
     LDA $7EC00A : STA !ram_cgram_cache
-    LDA $7EC012 : STA !ram_cgram_cache+2
-    LDA $7EC01A : STA !ram_cgram_cache+4
-    LDA $7EC01C : STA !ram_cgram_cache+6
-    LDA $7EC032 : STA !ram_cgram_cache+8
-    LDA $7EC034 : STA !ram_cgram_cache+10
-    LDA $7EC03A : STA !ram_cgram_cache+12
-    LDA $7EC03C : STA !ram_cgram_cache+14
+    LDA $7EC00E : STA !ram_cgram_cache+$02
+    LDA $7EC012 : STA !ram_cgram_cache+$04
+    LDA $7EC014 : STA !ram_cgram_cache+$06
+    LDA $7EC016 : STA !ram_cgram_cache+$08
+    LDA $7EC01A : STA !ram_cgram_cache+$0A
+    LDA $7EC01C : STA !ram_cgram_cache+$0C
+    LDA $7EC032 : STA !ram_cgram_cache+$0E
+    LDA $7EC034 : STA !ram_cgram_cache+$10
+    LDA $7EC03A : STA !ram_cgram_cache+$12
+    LDA $7EC03C : STA !ram_cgram_cache+$14
 
+    ; Set menu palette
     LDA #$7277 : STA $7EC00A
+    LDA #$0000 : STA $7EC00E : STA $7EC016
+    STA $7EC01A : STA $7EC036 : STA $7EC03A
     LDA #$48F3 : STA $7EC012
-    LDA #$0000 : STA $7EC01A
-    LDA #$7FFF : STA $7EC01C
+    LDA #$7FFF : STA $7EC014 : STA $7EC01C
     LDA #$4376 : STA $7EC032
-    LDA #$761F : STA $7EC034
-    LDA #$0000 : STA $7EC03A
-    LDA #$761F : STA $7EC03C
+    LDA #$761F : STA $7EC034 : STA $7EC03C
 
     JSL transfer_cgram_long
     PLP
@@ -279,14 +283,19 @@ cm_transfer_original_cgram:
 {
     PHP
     %a16()
+
+    ; Restore gameplay palette
     LDA !ram_cgram_cache : STA $7EC00A
-    LDA !ram_cgram_cache+2 : STA $7EC012
-    LDA !ram_cgram_cache+4 : STA $7EC01A
-    LDA !ram_cgram_cache+6 : STA $7EC01C
-    LDA !ram_cgram_cache+8 : STA $7EC032
-    LDA !ram_cgram_cache+10 : STA $7EC034
-    LDA !ram_cgram_cache+12 : STA $7EC03A
-    LDA !ram_cgram_cache+14 : STA $7EC03C
+    LDA !ram_cgram_cache+$02 : STA $7EC00E
+    LDA !ram_cgram_cache+$04 : STA $7EC012
+    LDA !ram_cgram_cache+$06 : STA $7EC014
+    LDA !ram_cgram_cache+$08 : STA $7EC016
+    LDA !ram_cgram_cache+$0A : STA $7EC01A
+    LDA !ram_cgram_cache+$0C : STA $7EC01C
+    LDA !ram_cgram_cache+$0E : STA $7EC032
+    LDA !ram_cgram_cache+$10 : STA $7EC034
+    LDA !ram_cgram_cache+$12 : STA $7EC03A
+    LDA !ram_cgram_cache+$14 : STA $7EC03C
 
     JSL transfer_cgram_long
     PLP
