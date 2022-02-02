@@ -324,7 +324,7 @@ category_preset_data_table:
     dl preset_gtmax_crateria_ship
     dl preset_14ice_crateria_ceres_elevator
     dl preset_14speed_crateria_ceres_elevator
-    dl preset_100map_varia_landing_site
+    dl preset_100map_bombs_ceres_elevator
     dl preset_nintendopower_crateria_ship
     dl preset_allbosskpdr_crateria_ceres_elevator
     dl preset_allbosspkdr_crateria_ceres_elevator

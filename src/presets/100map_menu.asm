@@ -1,4 +1,5 @@
 PresetsMenu100map:
+    dw #presets_goto_100map_bombs
     dw #presets_goto_100map_varia
     dw #presets_goto_100map_speed_booster
     dw #presets_goto_100map_grapple
@@ -16,6 +17,9 @@ PresetsMenu100map:
     dw #presets_goto_100map_tourian
     dw #$0000
     %cm_header("MAP COMPLETION PRESETS")
+
+presets_goto_100map_bombs:
+    %cm_submenu("Bombs", #presets_submenu_100map_bombs)
 
 presets_goto_100map_varia:
     %cm_submenu("Varia", #presets_submenu_100map_varia)
@@ -62,11 +66,25 @@ presets_goto_100map_blue_brinstar_cleanup:
 presets_goto_100map_tourian:
     %cm_submenu("Tourian", #presets_submenu_100map_tourian)
 
+presets_submenu_100map_bombs:
+    dw #presets_100map_bombs_ceres_elevator
+    dw #presets_100map_bombs_ceres_escape
+    dw #presets_100map_bombs_ship
+    dw #presets_100map_bombs_parlor
+    dw #presets_100map_bombs_climb_down
+    dw #presets_100map_bombs_pit_room
+    dw #presets_100map_bombs_morph
+    dw #presets_100map_bombs_construction_zone_down
+    dw #presets_100map_bombs_construction_zone_up
+    dw #presets_100map_bombs_pit_room_revisit
+    dw #presets_100map_bombs_climb_up
+    dw #presets_100map_bombs_parlor_revisit
+    dw #presets_100map_bombs_flyway
+    dw #presets_100map_bombs_bomb_torizo
+    dw #$0000
+    %cm_header("BOMBS")
+
 presets_submenu_100map_varia:
-    dw #presets_100map_varia_landing_site
-    dw #presets_100map_varia_morph
-    dw #presets_100map_varia_pit_room
-    dw #presets_100map_varia_bombs
     dw #presets_100map_varia_alcatraz
     dw #presets_100map_varia_early_supers
     dw #presets_100map_varia_brinstar_reserve
@@ -75,7 +93,7 @@ presets_submenu_100map_varia:
     dw #presets_100map_varia_red_tower_down
     dw #presets_100map_varia_kraid_entrance
     dw #presets_100map_varia_kraid_kihunter_room
-    dw #presets_100map_varia_kihunter_room_2
+    dw #presets_100map_varia_kihunter_save_room
     dw #presets_100map_varia_kraid
     dw #$0000
     %cm_header("VARIA")
@@ -328,19 +346,51 @@ presets_submenu_100map_tourian:
     dw #$0000
     %cm_header("TOURIAN")
 
+; Bombs
+presets_100map_bombs_ceres_elevator:
+    %cm_preset("Ceres Elevator", #preset_100map_bombs_ceres_elevator)
+
+presets_100map_bombs_ceres_escape:
+    %cm_preset("Ceres Escape", #preset_100map_bombs_ceres_escape)
+
+presets_100map_bombs_ship:
+    %cm_preset("Ship", #preset_100map_bombs_ship)
+
+presets_100map_bombs_parlor:
+    %cm_preset("Parlor", #preset_100map_bombs_parlor)
+
+presets_100map_bombs_climb_down:
+    %cm_preset("Climb Down", #preset_100map_bombs_climb_down)
+
+presets_100map_bombs_pit_room:
+    %cm_preset("Pit Room", #preset_100map_bombs_pit_room)
+
+presets_100map_bombs_morph:
+    %cm_preset("Morph", #preset_100map_bombs_morph)
+
+presets_100map_bombs_construction_zone_down:
+    %cm_preset("Construction Zone Down", #preset_100map_bombs_construction_zone_down)
+
+presets_100map_bombs_construction_zone_up:
+    %cm_preset("Construction Zone Up", #preset_100map_bombs_construction_zone_up)
+
+presets_100map_bombs_pit_room_revisit:
+    %cm_preset("Pit Room Revisit", #preset_100map_bombs_pit_room_revisit)
+
+presets_100map_bombs_climb_up:
+    %cm_preset("Climb Up", #preset_100map_bombs_climb_up)
+
+presets_100map_bombs_parlor_revisit:
+    %cm_preset("Parlor Revisit", #preset_100map_bombs_parlor_revisit)
+
+presets_100map_bombs_flyway:
+    %cm_preset("Flyway", #preset_100map_bombs_flyway)
+
+presets_100map_bombs_bomb_torizo:
+    %cm_preset("Bomb Torizo", #preset_100map_bombs_bomb_torizo)
+
+
 ; Varia
-presets_100map_varia_landing_site:
-    %cm_preset("Landing Site", #preset_100map_varia_landing_site)
-
-presets_100map_varia_morph:
-    %cm_preset("Morph", #preset_100map_varia_morph)
-
-presets_100map_varia_pit_room:
-    %cm_preset("Pit Room", #preset_100map_varia_pit_room)
-
-presets_100map_varia_bombs:
-    %cm_preset("Bombs", #preset_100map_varia_bombs)
-
 presets_100map_varia_alcatraz:
     %cm_preset("Alcatraz", #preset_100map_varia_alcatraz)
 
@@ -365,8 +415,8 @@ presets_100map_varia_kraid_entrance:
 presets_100map_varia_kraid_kihunter_room:
     %cm_preset("Kraid Kihunter Room", #preset_100map_varia_kraid_kihunter_room)
 
-presets_100map_varia_kihunter_room_2:
-    %cm_preset("Kihunter Room 2", #preset_100map_varia_kihunter_room_2)
+presets_100map_varia_kihunter_save_room:
+    %cm_preset("Kihunter Save Room", #preset_100map_varia_kihunter_save_room)
 
 presets_100map_varia_kraid:
     %cm_preset("Kraid", #preset_100map_varia_kraid)

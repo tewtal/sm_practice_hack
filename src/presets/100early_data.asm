@@ -554,8 +554,26 @@ preset_100early_brinstar_kraid_entry:
     dw #$FFFF
 .after
 
-preset_100early_brinstar_kraid:
+preset_100early_brinstar_kraid_kihunter_room:
     dw #preset_100early_brinstar_kraid_entry ; Brinstar: Kraid Entry
+    dw $078D, $923A  ; DDB
+    dw $079B, $A471  ; MDB
+    dw $090F, $4000  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $3000  ; Screen subpixel Y position
+    dw $0917, $00C0  ; Layer 2 X position
+    dw $0923, $0000  ; BG2 Y offset
+    dw $09C2, $0082  ; Health
+    dw $09CA, $0000  ; Supers
+    dw $0A1C, $0027  ; Samus position/state
+    dw $0A1E, $0508  ; More position/state
+    dw $0AF6, $016B  ; Samus X
+    dw $0AFA, $0190  ; Samus Y
+    dw #$FFFF
+.after
+
+preset_100early_brinstar_kraid:
+    dw #preset_100early_brinstar_kraid_entry ; Brinstar: Kraid Kihunter Room
     dw $078D, $919E  ; DDB
     dw $079B, $A56B  ; MDB
     dw $07F3, $0027  ; Music Bank

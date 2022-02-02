@@ -81,6 +81,7 @@ presets_submenu_100early_brinstar:
     dw #presets_100early_brinstar_red_tower
     dw #presets_100early_brinstar_skree_boost
     dw #presets_100early_brinstar_kraid_entry
+    dw #presets_100early_brinstar_kraid_kihunter_room
     dw #presets_100early_brinstar_kraid
     dw #presets_100early_brinstar_leaving_varia
     dw #presets_100early_brinstar_leaving_kraid_hallway
@@ -360,6 +361,9 @@ presets_100early_brinstar_skree_boost:
 
 presets_100early_brinstar_kraid_entry:
     %cm_preset("Kraid Entry", #preset_100early_brinstar_kraid_entry)
+
+presets_100early_brinstar_kraid_kihunter_room:
+    %cm_preset("Kraid Kihunter Room", #presets_100early_brinstar_kraid_kihunter_room)
 
 presets_100early_brinstar_kraid:
     %cm_preset("Kraid", #preset_100early_brinstar_kraid)

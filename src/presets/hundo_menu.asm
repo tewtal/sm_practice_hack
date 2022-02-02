@@ -97,7 +97,8 @@ presets_submenu_hundo_kraid:
     dw #presets_hundo_kraid_red_tower
     dw #presets_hundo_kraid_skree_boost
     dw #presets_hundo_kraid_kraid_entry
-    dw #presets_hundo_kraid_kraid_2
+    dw #presets_hundo_kraid_kraid_kihunter_room
+    dw #presets_hundo_kraid_kraid
     dw #presets_hundo_kraid_leaving_varia
     dw #presets_hundo_kraid_leaving_kraid_hallway
     dw #presets_hundo_kraid_kraid_escape
@@ -382,8 +383,11 @@ presets_hundo_kraid_skree_boost:
 presets_hundo_kraid_kraid_entry:
     %cm_preset("Kraid Entry", #preset_hundo_kraid_kraid_entry)
 
-presets_hundo_kraid_kraid_2:
-    %cm_preset("Kraid", #preset_hundo_kraid_kraid_2)
+presets_hundo_kraid_kraid_kihunter_room:
+    %cm_preset("Kraid Kihunter Room", #preset_hundo_kraid_kraid_kihunter_room)
+
+presets_hundo_kraid_kraid:
+    %cm_preset("Kraid", #preset_hundo_kraid_kraid)
 
 presets_hundo_kraid_leaving_varia:
     %cm_preset("Leaving Varia", #preset_hundo_kraid_leaving_varia)

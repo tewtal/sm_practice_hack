@@ -1,18 +1,17 @@
 
-preset_100map_varia_landing_site:
+preset_100map_bombs_ceres_elevator:
     dw #$0000
-    dw $078B, $0000  ; Elevator Index
-    dw $078D, $88FE  ; DDB
-    dw $079B, $91F8  ; MDB
-    dw $07F3, $0006  ; Music Bank
-    dw $07F5, $0005  ; Music Track
-    dw $090F, $9000  ; Screen subpixel X position
-    dw $0911, $0400  ; Screen X position in pixels
+    dw $078D, $AB58  ; DDB
+    dw $079B, $DF45  ; MDB
+    dw $07F3, $002D  ; Music Bank
+    dw $07F5, $0006  ; Music Track
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $0000  ; Screen subpixel Y position
-    dw $0915, $03D0  ; Screen Y position in pixels
-    dw $0917, $0200  ; Layer 2 X position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $0200  ; BG2 X offset
+    dw $0921, $0000  ; BG2 X offset
     dw $0923, $0000  ; BG2 Y offset
     dw $093F, $0000  ; Ceres escape flag
     dw $09A2, $0000  ; Equipped Items
@@ -35,15 +34,17 @@ preset_100map_varia_landing_site:
     dw $0A1E, $0000  ; More position/state
     dw $0A68, $0000  ; Flash suit
     dw $0A76, $0000  ; Hyper beam
-    dw $0AF6, $0481  ; Samus X
-    dw $0AFA, $0440  ; Samus Y
+    dw $0AF6, $0080  ; Samus X
+    dw $0AF8, $0000  ; Samus subpixel X
+    dw $0AFA, $0048  ; Samus Y
+    dw $0AFC, $0000  ; Samus subpixel Y
     dw $0B3F, $0000  ; Blue suit
     dw $D820, $0000  ; Events
     dw $D822, $0000  ; Events
     dw $D828, $0000  ; Bosses
     dw $D82A, $0000  ; Bosses
     dw $D82C, $0000  ; Bosses
-    dw $D82E, $0001  ; Bosses
+    dw $D82E, $0000  ; Bosses
     dw $D870, $0000  ; Items
     dw $D872, $0000  ; Items
     dw $D874, $0000  ; Items
@@ -65,73 +66,257 @@ preset_100map_varia_landing_site:
     dw $D8C0, $0000  ; Doors
     dw $D8C2, $0000  ; Doors
     dw $D8C4, $0000  ; Doors
+    dw $D908, $0000  ; Map Stations
+    dw $D90A, $0000  ; Map Stations
+    dw $D90C, $0000  ; Map Stations
     dw #$FFFF
 .after
 
-preset_100map_varia_morph:
-    dw #preset_100map_varia_landing_site ; Varia: Landing Site
+preset_100map_bombs_ceres_escape:
+    dw #preset_100map_bombs_ceres_elevator ; Bombs: Ceres Elevator
+    dw $078D, $ABAC  ; DDB
+    dw $079B, $E0B5  ; MDB
+    dw $07F3, $0024  ; Music Bank
+    dw $07F5, $0007  ; Music Track
+    dw $090F, $8000  ; Screen subpixel X position
+    dw $0913, $9400  ; Screen subpixel Y position
+    dw $0921, $0100  ; BG2 X offset
+    dw $093F, $0002  ; Ceres escape flag
+    dw $09C2, $0018  ; Health
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0033  ; Samus X
+    dw $0AF8, $B000  ; Samus subpixel X
+    dw $0AFA, $008B  ; Samus Y
+    dw $0AFC, $FFFF  ; Samus subpixel Y
+    dw $D82E, $0001  ; Bosses
+    dw #$FFFF
+.after
+
+preset_100map_bombs_ship:
+    dw #preset_100map_bombs_ceres_escape ; Bombs: Ceres Escape
+    dw $078D, $88FE  ; DDB
+    dw $079B, $91F8  ; MDB
+    dw $07F3, $0006  ; Music Bank
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $8000  ; Screen subpixel X position
+    dw $0911, $0400  ; Screen X position in pixels
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $0400  ; Screen Y position in pixels
+    dw $0917, $0200  ; Layer 2 X position
+    dw $0921, $0200  ; BG2 X offset
+    dw $093F, $0000  ; Ceres escape flag
+    dw $09C2, $0063  ; Health
+    dw $0A1C, $0000  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
+    dw $0AF6, $0481  ; Samus X
+    dw $0AF8, $0000  ; Samus subpixel X
+    dw $0AFA, $0471  ; Samus Y
+    dw $0AFC, $8000  ; Samus subpixel Y
+    dw #$FFFF
+.after
+
+preset_100map_bombs_parlor:
+    dw #preset_100map_bombs_ship ; Bombs: Ship
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $1400  ; Screen subpixel Y position
+    dw $0915, $0400  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0079  ; Samus X
+    dw $0AFA, $049B  ; Samus Y
+    dw $0AFC, $FFFF  ; Samus subpixel Y
+    dw #$FFFF
+.after
+
+preset_100map_bombs_climb_down:
+    dw #preset_100map_bombs_parlor ; Bombs: Parlor
+    dw $078D, $8916  ; DDB
+    dw $079B, $92FD  ; MDB
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $7BFF  ; Screen subpixel Y position
+    dw $0915, $03F2  ; Screen Y position in pixels
+    dw $0917, $00C0  ; Layer 2 X position
+    dw $0919, $02F5  ; Layer 2 Y position
+    dw $0921, $FB00  ; BG2 X offset
+    dw $0A1C, $0018  ; Samus position/state
+    dw $0A1E, $0204  ; More position/state
+    dw $0AF6, $0199  ; Samus X
+    dw $0AF8, $8000  ; Samus subpixel X
+    dw $0AFA, $048A  ; Samus Y
+    dw $0AFC, $0000  ; Samus subpixel Y
+    dw #$FFFF
+.after
+
+preset_100map_bombs_pit_room:
+    dw #preset_100map_bombs_climb_down ; Bombs: Climb Down
+    dw $078D, $898E  ; DDB
+    dw $079B, $96BA  ; MDB
+    dw $090F, $6FFF  ; Screen subpixel X position
+    dw $0913, $3800  ; Screen subpixel Y position
+    dw $0915, $0800  ; Screen Y position in pixels
+    dw $0919, $0600  ; Layer 2 Y position
+    dw $0921, $FF00  ; BG2 X offset
+    dw $0923, $00E0  ; BG2 Y offset
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $01DB  ; Samus X
+    dw $0AF8, $FFFF  ; Samus subpixel X
+    dw $0AFA, $088B  ; Samus Y
+    dw $0AFC, $FFFF  ; Samus subpixel Y
+    dw #$FFFF
+.after
+
+preset_100map_bombs_morph:
+    dw #preset_100map_bombs_pit_room ; Bombs: Pit Room
     dw $078D, $8B9E  ; DDB
     dw $079B, $9E9F  ; MDB
     dw $07F5, $0007  ; Music Track
-    dw $090F, $4000  ; Screen subpixel X position
+    dw $090F, $6000  ; Screen subpixel X position
     dw $0911, $0500  ; Screen X position in pixels
+    dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $0200  ; Screen Y position in pixels
     dw $0917, $03C0  ; Layer 2 X position
     dw $0919, $0180  ; Layer 2 Y position
     dw $0921, $FB00  ; BG2 X offset
-    dw $0923, $00E0  ; BG2 Y offset
+    dw $0A1C, $0000  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
     dw $0AF6, $0580  ; Samus X
     dw $0AFA, $02A8  ; Samus Y
     dw #$FFFF
 .after
 
-preset_100map_varia_pit_room:
-    dw #preset_100map_varia_morph ; Varia: Morph
-    dw $078D, $8EB6  ; DDB
-    dw $079B, $97B5  ; MDB
-    dw $07F5, $0003  ; Music Track
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0917, $0000  ; Layer 2 X position
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $0000  ; BG2 X offset
-    dw $0923, $FF00  ; BG2 Y offset
+preset_100map_bombs_construction_zone_down:
+    dw #preset_100map_bombs_morph ; Bombs: Morph
+    dw $090F, $2000  ; Screen subpixel X position
+    dw $0911, $0700  ; Screen X position in pixels
+    dw $0913, $E400  ; Screen subpixel Y position
+    dw $0917, $0540  ; Layer 2 X position
     dw $09A2, $0004  ; Equipped Items
     dw $09A4, $0004  ; Collected Items
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $07AC  ; Samus X
+    dw $0AFA, $028B  ; Samus Y
+    dw $D872, $0400  ; Items
+    dw #$FFFF
+.after
+
+preset_100map_bombs_construction_zone_up:
+    dw #preset_100map_bombs_construction_zone_down ; Bombs: Construction Zone Down
+    dw $078D, $8EDA  ; DDB
+    dw $079B, $A107  ; MDB
+    dw $090F, $D000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $6800  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $0001  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $0921, $FF00  ; BG2 X offset
+    dw $0923, $0000  ; BG2 Y offset
     dw $09C6, $0005  ; Missiles
     dw $09C8, $0005  ; Max missiles
-    dw $0AF6, $0080  ; Samus X
-    dw $0AFA, $0088  ; Samus Y
-    dw $D872, $0400  ; Items
+    dw $0AF6, $0055  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
     dw $D874, $0004  ; Items
     dw #$FFFF
 .after
 
-preset_100map_varia_bombs:
-    dw #preset_100map_varia_pit_room ; Varia: Pit Room
-    dw $078D, $8982  ; DDB
-    dw $079B, $9879  ; MDB
+preset_100map_bombs_pit_room_revisit:
+    dw #preset_100map_bombs_construction_zone_up ; Bombs: Construction Zone Up
+    dw $078D, $8EB6  ; DDB
+    dw $079B, $97B5  ; MDB
+    dw $07F5, $0003  ; Music Track
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0921, $0000  ; BG2 X offset
+    dw $0923, $FF00  ; BG2 Y offset
+    dw $0A1C, $0000  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
+    dw $0AF6, $0080  ; Samus X
+    dw $0AFA, $0088  ; Samus Y
+    dw #$FFFF
+.after
+
+preset_100map_bombs_climb_up:
+    dw #preset_100map_bombs_pit_room_revisit ; Bombs: Pit Room Revisit
+    dw $078D, $8B92  ; DDB
+    dw $079B, $975C  ; MDB
     dw $07F3, $0009  ; Music Bank
     dw $07F5, $0005  ; Music Track
-    dw $090F, $D000  ; Screen subpixel X position
+    dw $090F, $2000  ; Screen subpixel X position
+    dw $0913, $AC00  ; Screen subpixel Y position
+    dw $0921, $FD00  ; BG2 X offset
+    dw $0923, $0000  ; BG2 Y offset
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0087  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw $D820, $0001  ; Events
+    dw $D8B2, $0400  ; Doors
+    dw #$FFFF
+.after
+
+preset_100map_bombs_parlor_revisit:
+    dw #preset_100map_bombs_climb_up ; Bombs: Climb Up
+    dw $078D, $8B7A  ; DDB
+    dw $079B, $96BA  ; MDB
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $C000  ; Screen subpixel Y position
+    dw $0917, $00C0  ; Layer 2 X position
+    dw $0921, $FE00  ; BG2 X offset
+    dw $0923, $F800  ; BG2 Y offset
+    dw $0AF6, $01A0  ; Samus X
+    dw $0AFA, $005B  ; Samus Y
+    dw #$FFFF
+.after
+
+preset_100map_bombs_flyway:
+    dw #preset_100map_bombs_parlor_revisit ; Bombs: Parlor Revisit
+    dw $078D, $8B3E  ; DDB
+    dw $079B, $92FD  ; MDB
+    dw $090F, $C000  ; Screen subpixel X position
+    dw $0911, $0300  ; Screen X position in pixels
+    dw $0913, $2BFF  ; Screen subpixel Y position
+    dw $0915, $01E6  ; Screen Y position in pixels
+    dw $0917, $0240  ; Layer 2 X position
+    dw $0919, $016C  ; Layer 2 Y position
+    dw $0921, $FF00  ; BG2 X offset
+    dw $0923, $FB00  ; BG2 Y offset
+    dw $09D2, $0001  ; Currently selected item
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $0369  ; Samus X
+    dw $0AFA, $026B  ; Samus Y
+    dw #$FFFF
+.after
+
+preset_100map_bombs_bomb_torizo:
+    dw #preset_100map_bombs_flyway ; Bombs: Flyway
+    dw $078D, $8982  ; DDB
+    dw $079B, $9879  ; MDB
+    dw $090F, $4000  ; Screen subpixel X position
     dw $0911, $0200  ; Screen X position in pixels
-    dw $0913, $7C00  ; Screen subpixel Y position
+    dw $0913, $D000  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0180  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
     dw $0921, $0100  ; BG2 X offset
     dw $0923, $0000  ; BG2 Y offset
     dw $09C6, $0000  ; Missiles
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $02DB  ; Samus X
+    dw $09D2, $0000  ; Currently selected item
+    dw $0AF6, $02BE  ; Samus X
     dw $0AFA, $008B  ; Samus Y
-    dw $D820, $0001  ; Events
     dw $D8B2, $2400  ; Doors
     dw #$FFFF
 .after
 
 preset_100map_varia_alcatraz:
-    dw #preset_100map_varia_bombs ; Varia: Bombs
+    dw #preset_100map_bombs_bomb_torizo ; Bombs: Bomb Torizo
     dw $078D, $8BAA  ; DDB
     dw $090F, $0000  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
@@ -261,16 +446,31 @@ preset_100map_varia_red_tower_down:
     dw #$FFFF
 .after
 
+preset_100map_varia_skree_boost:
+    dw #preset_100map_varia_red_tower_down ; Varia: Red Tower Down
+    dw $078D, $8F0A  ; DDB
+    dw $079B, $A253  ; MDB
+    dw $07F3, $0012  ; Music Bank
+    dw $090F, $D000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $091A  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $06D3  ; Layer 2 Y position
+    dw $0923, $FC00  ; BG2 Y offset
+    dw $0AF6, $0066  ; Samus X
+    dw $0AFA, $098B  ; Samus Y
+    dw #$FFFF
+.after
+
 preset_100map_varia_kraid_entrance:
     dw #preset_100map_varia_red_tower_down ; Varia: Red Tower Down
     dw $078D, $A348  ; DDB
     dw $079B, $CF80  ; MDB
     dw $07F3, $0012  ; Music Bank
     dw $090F, $9000  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $B000  ; Screen subpixel Y position
     dw $0915, $0100  ; Screen Y position in pixels
-    dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0100  ; Layer 2 Y position
     dw $0923, $FF00  ; BG2 Y offset
     dw $09C2, $0078  ; Health
@@ -299,7 +499,7 @@ preset_100map_varia_kraid_kihunter_room:
     dw #$FFFF
 .after
 
-preset_100map_varia_kihunter_room_2:
+preset_100map_varia_kihunter_save_room:
     dw #preset_100map_varia_kraid_kihunter_room ; Varia: Kraid Kihunter Room
     dw $078D, $9186  ; DDB
     dw $079B, $A70B  ; MDB
@@ -317,7 +517,7 @@ preset_100map_varia_kihunter_room_2:
 .after
 
 preset_100map_varia_kraid:
-    dw #preset_100map_varia_kihunter_room_2 ; Varia: Kihunter Room 2
+    dw #preset_100map_varia_kihunter_save_room ; Varia: Kihunter Save Room
     dw $078D, $919E  ; DDB
     dw $079B, $A56B  ; MDB
     dw $07F3, $0027  ; Music Bank
