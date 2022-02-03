@@ -372,9 +372,10 @@ preset_hundo_kraid_elevator:
     dw $078D, $8C22  ; DDB
     dw $079B, $9938  ; MDB
     dw $07F5, $0003  ; Music Track
-    dw $090F, $8000  ; Screen subpixel X position
     dw $0913, $1800  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $0921, $FF00  ; BG2 X offset
     dw $09C6, $0002  ; Missiles
     dw $0AF6, $0080  ; Samus X
     dw $0AFA, $008B  ; Samus Y
