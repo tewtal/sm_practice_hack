@@ -263,6 +263,9 @@ PresetsMenu:
     dw #presets_custom_preset_slot
     dw #presets_save_custom_preset
     dw #presets_load_custom_preset
+if !FEATURE_DEV
+    dw #presets_random_preset_rng
+endif
     dw #$FFFF
     dw #presets_open_blue_doors
 if !RAW_TILE_GRAPHICS
@@ -288,6 +291,11 @@ presets_save_custom_preset:
 
 presets_load_custom_preset:
     %cm_jsr("Load Custom Preset", #action_load_custom_preset, #$0000)
+
+if !FEATURE_DEV
+presets_random_preset_rng:
+    %cm_toggle_inverted("Random Preset RNG", !ram_random_preset_rng, #$0001, #0)
+endif
 
 presets_open_blue_doors:
     %cm_toggle_bit_inverted("Open Blue Doors", !sram_preset_options, !PRESETS_CLOSE_BLUE_DOORS, #0)
@@ -444,8 +452,15 @@ action_load_custom_preset:
 LoadRandomPreset:
 {
     PHY : PHX
+    LDA !ram_random_preset_rng : BEQ .seedrandom
+    LDA !ram_random_preset_value : INC
+    STA !ram_random_preset_value : STA $12
+    BRA .seedpicked
+
+  .seedrandom
     JSL $808111 : STA $12     ; random number
 
+  .seedpicked
     LDA #$00B8 : STA $18      ; this routine lives in bank B8
     LDA !sram_preset_category : ASL : TAY
     LDA #preset_category_submenus : STA $16
@@ -480,9 +495,14 @@ LoadRandomPreset:
     %a16()
     PEA $0000 : PLA
     LDA $4216 : ASL : TAY     ; randomly selected preset
+    BNE .presetselected
+    LDA !ram_random_preset_rng : BEQ .presetselected
+    LDA !ram_random_preset_value : XBA : INC : XBA
+    AND #$FF00 : INC : STA !ram_random_preset_value
+
+  .presetselected
     LDA [$16],Y : STA $16     ; increment four bytes to get the data
     LDY #$0004 : LDA [$16],Y
-
     STA !ram_load_preset
 
     PLX : PLY

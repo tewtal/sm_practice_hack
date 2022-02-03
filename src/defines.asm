@@ -50,17 +50,14 @@
 !ram_sprite_enemyproj_hitbox_active = !WRAM_START+$46
 !ram_custom_preset = !WRAM_START+$48
 !ram_fix_scroll_offsets = !WRAM_START+$4A
-
-; ^ FREE SPACE ^ up to +$4E
+!ram_random_preset_rng = !WRAM_START+$4C
+!ram_random_preset_value = !WRAM_START+$4E
 
 !ram_magic_pants_enabled = !WRAM_START+$50
 !ram_magic_pants_state = !WRAM_START+$52
 !ram_magic_pants_pal1 = !WRAM_START+$54
 !ram_magic_pants_pal2 = !WRAM_START+$56
 !ram_magic_pants_pal3 = !WRAM_START+$58
-!ram_draygon_rng_left = !WRAM_START+$5E
-!ram_draygon_rng_right = !WRAM_START+$60
-
 !ram_room_has_set_rng = !WRAM_START+$5A
 !ram_kraid_rng = !WRAM_START+$5C
 !ram_crocomire_rng = !WRAM_START+$5E
