@@ -1588,6 +1588,7 @@ ih_top_HUD_mode:
     db #$28, "Top-Left Displ", #$FF
     db #$28, "ay   ITEM %", #$FF
     db #$28, "ay RESERVES", #$FF
+    db #$28, "ay  VANILLA", #$FF
     db #$FF
 
 ih_room_counter:

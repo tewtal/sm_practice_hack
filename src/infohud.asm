@@ -724,6 +724,38 @@ ih_update_hud_early:
     RTL
 }
 
+ih_hud_vanilla_health:
+{
+    LDA !SAMUS_HP : STA !SAMUS_LAST_HP : STA $4204
+    %a8()
+    LDA #$64 : STA $4206
+    %a16()
+    PHA : PLA : PHA : PLA
+    LDA $4214 : STA $C4
+    LDA $4216 : STA $C2
+    LDA !SAMUS_HP_MAX : STA $4204
+    %a8()
+    LDA #$64 : STA $4206
+    %ai16()
+    PHA : PLA : PHA : PLA
+    LDY #$0000 : LDA $4214
+    INC : STA $C6
+
+  .vanilla_loop_tanks
+    DEC $C6 : BEQ .vanilla_subtank_health
+    LDX #$3430
+    LDA $C4 : BEQ .vanilla_draw_tank_health
+    DEC $C4 : LDX #$2831
+  .vanilla_draw_tank_health
+    TXA : LDX $9CCE,Y : STA $7EC608,X
+    INY : INY : CPY #$001C : BMI .vanilla_loop_tanks
+
+  .vanilla_subtank_health
+    LDA $C2 : LDX #$0090 : JSR Draw3
+    LDA !IH_BLANK : STA $7EC696 : STA $7EC698 : STA $7EC69A
+    RTS
+}
+
 ih_hud_code:
 {
     %ai16()
@@ -734,42 +766,49 @@ ih_hud_code:
     PLB
     PLB
 
+    LDA !sram_top_display_mode : CMP #$0002 : BEQ .vanilla_infohud
+
     ; -- input display --
     ; -- check if we want to update --
     LDA !IH_CONTROLLER_PRI : CMP !ram_ih_controller : BEQ .status_display
 
     ; -- read input
-    TAY
-    LDX #$0000
-
--   TYA
-    AND ControllerTable1, X
-    BEQ +
-    LDA ControllerGfx1, X
-    JMP ++
-+   LDA !IH_BLANK
-++  STA $7EC608, X
-    INX
-    INX
-    CPX #$000C
-    BNE -
+    TAY : LDX #$0000
+  .controller_row_1_loop
+    TYA : AND ControllerTable1,X
+    BEQ .controller_row_1_blank
+    LDA ControllerGfx1,X
+    BRA .controller_row_1_draw
+  .controller_row_1_blank
+    LDA !IH_BLANK
+  .controller_row_1_draw
+    STA $7EC608,X
+    INX : INX : CPX #$000C : BNE .controller_row_1_loop
 
     LDX #$0000
+  .controller_row_2_loop
+    TYA : AND ControllerTable2,X
+    BEQ .controller_row_2_blank
+    LDA ControllerGfx2,X
+    BRA .controller_row_2_draw
+  .controller_row_2_blank
+    LDA !IH_BLANK
+  .controller_row_2_draw
+    STA $7EC648,X
+    INX : INX : CPX #$000C : BNE .controller_row_2_loop
 
--   TYA
-    AND ControllerTable2, X
-    BEQ +
-    LDA ControllerGfx2, X
-    JMP ++
-+   LDA !IH_BLANK
-++  STA $7EC648, X
-    INX
-    INX
-    CPX #$000C
-    BNE -
+    TYA : STA !ram_ih_controller
+    BRA .status_display
 
-    TYA
-    STA !ram_ih_controller
+  .vanilla_infohud
+    LDA !SAMUS_RESERVE_MODE : CMP #$0001 : BNE .status_display
+
+    ; Draw reserve icon
+    LDY #$998B : LDA !SAMUS_RESERVE_ENERGY : BNE .vanilla_draw_reserve_icon
+    LDY #$9997
+  .vanilla_draw_reserve_icon
+    LDA $0000,Y : STA $7EC618 : LDA $0002,Y : STA $7EC61A
+    LDA $0004,Y : STA $7EC658 : LDA $0006,Y : STA $7EC65A
 
   .status_display
     LDA !sram_display_mode : ASL : TAX
@@ -777,12 +816,22 @@ ih_hud_code:
 
     ; Samus' HP
     LDA !SAMUS_HP : CMP !ram_last_hp : BEQ .reserves : STA !ram_last_hp
-    LDX #$0092 : JSR Draw4
+    LDA !sram_top_display_mode : CMP #$0002 : BEQ .vanilla_draw_health
+    LDA !SAMUS_HP : LDX #$0092 : JSR Draw4
     LDA !IH_BLANK : STA $7EC690 : STA $7EC69A
+    BRA .reserves
+
+  .vanilla_check_health
+    LDA !SAMUS_HP : CMP !SAMUS_LAST_HP : BEQ .vanilla_health_end
+  .vanilla_draw_health
+    JSR ih_hud_vanilla_health
+  .vanilla_health_end
+    BRL .end
 
     ; Reserve energy counter
   .reserves
     LDA !sram_top_display_mode : BEQ .statusIcons
+    CMP #$0002 : BEQ .vanilla_check_health
 
     LDA !SAMUS_RESERVE_MAX : BEQ .noReserves
     LDA !SAMUS_RESERVE_ENERGY : CMP !ram_reserves_last : BEQ .checkAuto
