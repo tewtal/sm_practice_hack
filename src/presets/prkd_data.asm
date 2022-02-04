@@ -351,14 +351,15 @@ preset_prkd_crateria_terminator:
     dw #preset_prkd_crateria_alcatraz ; Crateria: Alcatraz
     dw $078D, $8BB6  ; DDB
     dw $079B, $92FD  ; MDB
-    dw $090F, $F400  ; Screen subpixel X position
+    dw $090F, $6000  ; Screen subpixel X position
     dw $0911, $0100  ; Screen X position in pixels
-    dw $0913, $8800  ; Screen subpixel Y position
+    dw $0913, $5800  ; Screen subpixel Y position
     dw $0917, $00C0  ; Layer 2 X position
     dw $0921, $FC00  ; BG2 X offset
     dw $0923, $FE00  ; BG2 Y offset
+    dw $0A1C, $008A  ; Samus position/state
+    dw $0A1E, $1504  ; More position/state
     dw $0AF6, $0115  ; Samus X
-    dw $0B3F, $0104  ; Blue suit
     dw #$FFFF
 .after
 

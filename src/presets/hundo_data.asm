@@ -321,6 +321,8 @@ preset_hundo_kraid_alcatraz:
     dw $090F, $E000  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $4400  ; Screen subpixel Y position
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0921, $FD00  ; BG2 X offset
     dw $09A2, $1004  ; Equipped Items
     dw $09A4, $1004  ; Collected Items
     dw $09C6, $0004  ; Missiles
@@ -337,14 +339,15 @@ preset_hundo_kraid_terminator:
     dw #preset_hundo_kraid_alcatraz ; Kraid: Alcatraz
     dw $078D, $8BB6  ; DDB
     dw $079B, $92FD  ; MDB
-    dw $090F, $C800  ; Screen subpixel X position
+    dw $090F, $6000  ; Screen subpixel X position
     dw $0911, $0100  ; Screen X position in pixels
-    dw $0913, $5C00  ; Screen subpixel Y position
+    dw $0913, $5800  ; Screen subpixel Y position
     dw $0917, $00C0  ; Layer 2 X position
-    dw $0A1C, $0000  ; Samus position/state
-    dw $0A1E, $0000  ; More position/state
+    dw $0921, $FC00  ; BG2 X offset
+    dw $0923, $FE00  ; BG2 Y offset
+    dw $0A1C, $008A  ; Samus position/state
+    dw $0A1E, $1504  ; More position/state
     dw $0AF6, $0115  ; Samus X
-    dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 .after
 
@@ -356,6 +359,10 @@ preset_hundo_kraid_pirates_shaft:
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $01EB  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $017D  ; Layer 2 Y position
+    dw $0921, $FA00  ; BG2 X offset
+    dw $0923, $0000  ; BG2 Y offset
     dw $09C2, $00C7  ; Health
     dw $09C4, $00C7  ; Max health
     dw $09C6, $0005  ; Missiles
