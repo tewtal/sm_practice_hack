@@ -731,28 +731,28 @@ ih_hud_vanilla_health:
     LDA #$64 : STA $4206
     %a16()
     PHA : PLA : PHA : PLA
-    LDA $4214 : STA $C4
-    LDA $4216 : STA $C2
+    LDA $4214 : STA $14
+    LDA $4216 : STA $12
     LDA !SAMUS_HP_MAX : STA $4204
     %a8()
     LDA #$64 : STA $4206
     %ai16()
     PHA : PLA : PHA : PLA
     LDY #$0000 : LDA $4214
-    INC : STA $C6
+    INC : STA $16
 
   .vanilla_loop_tanks
-    DEC $C6 : BEQ .vanilla_subtank_health
+    DEC $16 : BEQ .vanilla_subtank_health
     LDX #$3430
-    LDA $C4 : BEQ .vanilla_draw_tank_health
-    DEC $C4 : LDX #$2831
+    LDA $14 : BEQ .vanilla_draw_tank_health
+    DEC $14 : LDX #$2831
   .vanilla_draw_tank_health
     TXA : LDX $9CCE,Y : STA $7EC608,X
     INY : INY : CPY #$001C : BMI .vanilla_loop_tanks
 
   .vanilla_subtank_health
-    LDA $C2 : LDX #$0090 : JSR Draw3
-    LDA !IH_BLANK : STA $7EC696 : STA $7EC698 : STA $7EC69A
+    LDA $12 : LDX #$0092 : JSR Draw3
+    LDA !IH_BLANK : STA $7EC698 : STA $7EC69A
     RTS
 }
 
@@ -770,8 +770,10 @@ ih_hud_code:
 
     ; -- input display --
     ; -- check if we want to update --
-    LDA !IH_CONTROLLER_PRI : CMP !ram_ih_controller : BEQ .status_display
+    LDA !IH_CONTROLLER_PRI : CMP !ram_ih_controller : BNE .controller_update
+    BRL .status_display
 
+  .controller_update
     ; -- read input
     TAY : LDX #$0000
   .controller_row_1_loop
@@ -801,6 +803,12 @@ ih_hud_code:
     BRA .status_display
 
   .vanilla_infohud
+    ; Shift infohud status left by one
+    LDA $7EC68A : STA $7EC688
+    LDA $7EC68C : STA $7EC68A
+    LDA $7EC68E : STA $7EC68C
+    LDA $7EC690 : STA $7EC68E
+
     LDA !SAMUS_RESERVE_MODE : CMP #$0001 : BNE .status_display
 
     ; Draw reserve icon
@@ -826,6 +834,12 @@ ih_hud_code:
   .vanilla_draw_health
     JSR ih_hud_vanilla_health
   .vanilla_health_end
+    ; Shift infohud status right by one
+    LDA $7EC68E : STA $7EC690
+    LDA $7EC68C : STA $7EC68E
+    LDA $7EC68A : STA $7EC68C
+    LDA $7EC688 : STA $7EC68A
+    LDA !IH_BLANK : STA $7EC688
     BRL .end
 
     ; Reserve energy counter
@@ -852,7 +866,7 @@ ih_hud_code:
   .noReserves
     LDA !IH_BLANK : STA $7EC614 : STA $7EC616 : STA $7EC618 : STA $7EC61A
 
-; Status Icons
+    ; Status Icons
   .statusIcons
     LDA !sram_status_icons : BNE .check_healthbomb
     JMP .end
@@ -1449,7 +1463,7 @@ NumberGFXTable:
     dw #$0CD9, #$0CDA, #$0CDB, #$0C5C, #$0C5D, #$0CB8, #$0C8D, #$0C12, #$0C13, #$0C14
     dw #$0C15, #$0C16, #$0C17, #$0C18, #$0C19, #$0C1A, #$0C1B, #$0C20, #$0C21, #$0C22
     dw #$0C23, #$0C24, #$0C25, #$0C26, #$0C27, #$0C28, #$0C29, #$0C2A, #$0C2B, #$0C2C
-    dw #$0C2D, #$0C2E, #$0C2F, #$0C30, #$0C31, #$0CCA
+    dw #$0C2D, #$0C2E, #$0C2F, #$0C5E, #$0C5F, #$0CCA
 
 HexGFXTable:
     dw #$0C09, #$0C00, #$0C01, #$0C02, #$0C03, #$0C04, #$0C05, #$0C06, #$0C07, #$0C08
