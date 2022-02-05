@@ -611,7 +611,7 @@ preset_hundo_kraid_leaving_varia:
     dw $09C6, $0012  ; Missiles
     dw $09CA, $0002  ; Supers
     dw $09D6, $0004  ; Reserves
-    dw $0A1C, $0000  ; Samus position/state
+    dw $0A1C, $009B  ; Samus position/state
     dw $0A1E, $0000  ; More position/state
     dw $0AF6, $0078  ; Samus X
     dw $0AFA, $0088  ; Samus Y
@@ -639,7 +639,7 @@ preset_hundo_kraid_leaving_kraid_hallway:
     dw #$FFFF
 .after
 
-preset_hundo_kraid_kraid_escape:
+preset_hundo_kraid_leaving_kraid_etank:
     dw #preset_hundo_kraid_leaving_kraid_hallway ; Kraid: Leaving Kraid Hallway
     dw $078D, $914A  ; DDB
     dw $079B, $A4B1  ; MDB
@@ -661,7 +661,7 @@ preset_hundo_kraid_kraid_escape:
 .after
 
 preset_hundo_speed_booster_business_center:
-    dw #preset_hundo_kraid_kraid_escape ; Kraid: Kraid Escape
+    dw #preset_hundo_kraid_leaving_kraid_etank ; Kraid: Leaving Kraid E-Tank
     dw $078D, $9246  ; DDB
     dw $079B, $A7DE  ; MDB
     dw $07F3, $0015  ; Music Bank
@@ -681,28 +681,33 @@ preset_hundo_speed_booster_business_center:
     dw #$FFFF
 .after
 
-preset_hundo_speed_booster_hi_jump:
+preset_hundo_speed_booster_hijump:
     dw #preset_hundo_speed_booster_business_center ; Speed Booster: Business Center
     dw $090F, $6001  ; Screen subpixel X position
     dw $0915, $051B  ; Screen Y position in pixels
+    dw $0919, $03D4  ; Layer 2 Y position
     dw $09CA, $0003  ; Supers
     dw $09D6, $001D  ; Reserves
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $0041  ; Samus X
+    dw $0AF6, $0046  ; Samus X
     dw $0AFA, $058B  ; Samus Y
     dw $D8B8, $20EF  ; Doors
     dw #$FFFF
 .after
 
 preset_hundo_speed_booster_business_center_climb:
-    dw #preset_hundo_speed_booster_hi_jump ; Speed Booster: Hi Jump
+    dw #preset_hundo_speed_booster_hijump ; Speed Booster: Hi-Jump
     dw $078D, $93F6  ; DDB
     dw $079B, $AA41  ; MDB
-    dw $090F, $E000  ; Screen subpixel X position
+    dw $090F, $0000  ; Screen subpixel X position
     dw $0911, $0100  ; Screen X position in pixels
-    dw $0913, $5000  ; Screen subpixel Y position
+    dw $0913, $9400  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $00C0  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $0921, $0100  ; BG2 X offset
+    dw $0923, $FF00  ; BG2 Y offset
     dw $09A2, $1105  ; Equipped Items
     dw $09A4, $1105  ; Collected Items
     dw $09C2, $018F  ; Health
@@ -711,7 +716,7 @@ preset_hundo_speed_booster_business_center_climb:
     dw $09C8, $0019  ; Max missiles
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $019C  ; Samus X
+    dw $0AF6, $01A3  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw $D876, $01A1  ; Items
     dw $D8BA, $0001  ; Doors
@@ -722,13 +727,14 @@ preset_hundo_speed_booster_cathedral_entrance:
     dw #preset_hundo_speed_booster_business_center_climb ; Speed Booster: Business Center Climb
     dw $078D, $941A  ; DDB
     dw $079B, $A7DE  ; MDB
-    dw $090F, $5000  ; Screen subpixel X position
+    dw $090F, $C000  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $BFFF  ; Screen subpixel Y position
     dw $0915, $02F6  ; Screen Y position in pixels
-    dw $0A1C, $0009  ; Samus position/state
-    dw $0A1E, $0108  ; More position/state
-    dw $0AF6, $00B7  ; Samus X
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $0238  ; Layer 2 Y position
+    dw $0923, $FB00  ; BG2 Y offset
+    dw $0AF6, $00AB  ; Samus X
     dw $0AFA, $038B  ; Samus Y
     dw #$FFFF
 .after
@@ -737,15 +743,16 @@ preset_hundo_speed_booster_cathedral:
     dw #preset_hundo_speed_booster_cathedral_entrance ; Speed Booster: Cathedral Entrance
     dw $078D, $92CA  ; DDB
     dw $079B, $A7B3  ; MDB
-    dw $090F, $F000  ; Screen subpixel X position
+    dw $090F, $2000  ; Screen subpixel X position
     dw $0911, $0200  ; Screen X position in pixels
-    dw $0913, $5400  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0913, $A000  ; Screen subpixel Y position
+    dw $0915, $0001  ; Screen Y position in pixels
+    dw $0917, $0200  ; Layer 2 X position
+    dw $0919, $0001  ; Layer 2 Y position
+    dw $0923, $0000  ; BG2 Y offset
     dw $09CA, $0002  ; Supers
     dw $09D6, $0022  ; Reserves
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $02A6  ; Samus X
+    dw $0AF6, $02A4  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw $D8B8, $24EF  ; Doors
     dw #$FFFF
@@ -755,9 +762,10 @@ preset_hundo_speed_booster_rising_tide:
     dw #preset_hundo_speed_booster_cathedral ; Speed Booster: Cathedral
     dw $078D, $92B2  ; DDB
     dw $079B, $A788  ; MDB
-    dw $090F, $1000  ; Screen subpixel X position
-    dw $0913, $2000  ; Screen subpixel Y position
+    dw $090F, $F000  ; Screen subpixel X position
+    dw $0913, $2800  ; Screen subpixel Y position
     dw $0915, $0100  ; Screen Y position in pixels
+    dw $0919, $0100  ; Layer 2 Y position
     dw $09C2, $016E  ; Health
     dw $09C6, $001A  ; Missiles
     dw $09C8, $001E  ; Max missiles
@@ -777,8 +785,10 @@ preset_hundo_speed_booster_bubble_mountain:
     dw $0911, $0400  ; Screen X position in pixels
     dw $0913, $1000  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $0300  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
     dw $09C2, $0169  ; Health
-    dw $0AF6, $04C2  ; Samus X
+    dw $0AF6, $04B0  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 .after
@@ -787,9 +797,13 @@ preset_hundo_speed_booster_bat_cave:
     dw #preset_hundo_speed_booster_bubble_mountain ; Speed Booster: Bubble Mountain
     dw $078D, $973E  ; DDB
     dw $079B, $ACB3  ; MDB
-    dw $090F, $1000  ; Screen subpixel X position
+    dw $090F, $A000  ; Screen subpixel X position
     dw $0911, $0100  ; Screen X position in pixels
-    dw $0913, $6000  ; Screen subpixel Y position
+    dw $0913, $C000  ; Screen subpixel Y position
+    dw $0915, $0003  ; Screen Y position in pixels
+    dw $0917, $00C0  ; Layer 2 X position
+    dw $0919, $0002  ; Layer 2 Y position
+    dw $0923, $FE00  ; BG2 Y offset
     dw $09C2, $0178  ; Health
     dw $09C6, $001B  ; Missiles
     dw $09CA, $0002  ; Supers
@@ -805,7 +819,11 @@ preset_hundo_speed_booster_leaving_speed_booster:
     dw $07F5, $0003  ; Music Track
     dw $090F, $2000  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $3400  ; Screen subpixel Y position
+    dw $0913, $8C00  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $0923, $0000  ; BG2 Y offset
     dw $09A2, $3105  ; Equipped Items
     dw $09A4, $3105  ; Collected Items
     dw $09C2, $018F  ; Health
@@ -826,10 +844,13 @@ preset_hundo_ice_beam_single_chamber:
     dw $078D, $97AA  ; DDB
     dw $079B, $ACB3  ; MDB
     dw $07F5, $0005  ; Music Track
-    dw $090F, $3000  ; Screen subpixel X position
+    dw $090F, $C000  ; Screen subpixel X position
     dw $0911, $0100  ; Screen X position in pixels
     dw $0913, $0000  ; Screen subpixel Y position
-    dw $0915, $00FD  ; Screen Y position in pixels
+    dw $0915, $0104  ; Screen Y position in pixels
+    dw $0917, $00C0  ; Layer 2 X position
+    dw $0919, $00C3  ; Layer 2 Y position
+    dw $0921, $FE00  ; BG2 X offset
     dw $09C2, $018A  ; Health
     dw $09C6, $0020  ; Missiles
     dw $09CA, $0005  ; Supers
@@ -846,12 +867,16 @@ preset_hundo_ice_beam_double_chamber:
     dw #preset_hundo_ice_beam_single_chamber ; Ice Beam: Single Chamber
     dw $078D, $9582  ; DDB
     dw $079B, $AD5E  ; MDB
-    dw $090F, $A002  ; Screen subpixel X position
+    dw $090F, $B000  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
-    dw $0915, $011A  ; Screen Y position in pixels
+    dw $0913, $FC00  ; Screen subpixel Y position
+    dw $0915, $0126  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $00DC  ; Layer 2 Y position
+    dw $0921, $0100  ; BG2 X offset
     dw $09C2, $0171  ; Health
     dw $09CA, $0004  ; Supers
-    dw $0AF6, $0049  ; Samus X
+    dw $0AF6, $00B8  ; Samus X
     dw $D8BA, $0071  ; Doors
     dw #$FFFF
 .after
@@ -861,17 +886,18 @@ preset_hundo_ice_beam_double_chamber_revisited:
     dw $078D, $961E  ; DDB
     dw $079B, $ADDE  ; MDB
     dw $07F5, $0003  ; Music Track
-    dw $090F, $9000  ; Screen subpixel X position
-    dw $0913, $AC00  ; Screen subpixel Y position
+    dw $090F, $D000  ; Screen subpixel X position
+    dw $0913, $0400  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
+    dw $0919, $0000  ; Layer 2 Y position
     dw $09A6, $1005  ; Beams
     dw $09A8, $1005  ; Beams
     dw $09C6, $0025  ; Missiles
     dw $09C8, $0028  ; Max missiles
     dw $09CA, $0003  ; Supers
-    dw $0A1C, $000A  ; Samus position/state
-    dw $0A1E, $0104  ; More position/state
-    dw $0AF6, $004E  ; Samus X
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $004F  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw $D878, $001E  ; Items
     dw $D8BA, $00F1  ; Doors
@@ -883,13 +909,14 @@ preset_hundo_ice_beam_bubble_mountain_revisited:
     dw $078D, $9606  ; DDB
     dw $079B, $AD5E  ; MDB
     dw $07F5, $0005  ; Music Track
-    dw $090F, $4000  ; Screen subpixel X position
-    dw $0913, $6400  ; Screen subpixel Y position
-    dw $0915, $000D  ; Screen Y position in pixels
+    dw $090F, $1000  ; Screen subpixel X position
+    dw $0913, $F800  ; Screen subpixel Y position
+    dw $0915, $001B  ; Screen Y position in pixels
+    dw $0919, $0014  ; Layer 2 Y position
+    dw $0921, $FF00  ; BG2 X offset
+    dw $0923, $FF00  ; BG2 Y offset
     dw $09C6, $0023  ; Missiles
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $008C  ; Samus X
+    dw $0AF6, $008F  ; Samus X
     dw #$FFFF
 .after
 

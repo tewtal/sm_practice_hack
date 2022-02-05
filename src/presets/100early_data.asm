@@ -573,7 +573,7 @@ preset_100early_brinstar_kraid_kihunter_room:
 .after
 
 preset_100early_brinstar_kraid:
-    dw #preset_100early_brinstar_kraid_entry ; Brinstar: Kraid Kihunter Room
+    dw #preset_100early_brinstar_kraid_kihunter_room ; Brinstar: Kraid Kihunter Room
     dw $078D, $919E  ; DDB
     dw $079B, $A56B  ; MDB
     dw $07F3, $0027  ; Music Bank
@@ -607,7 +607,7 @@ preset_100early_brinstar_leaving_varia:
     dw $09C2, $00A1  ; Health
     dw $09C6, $0011  ; Missiles
     dw $09CA, $0003  ; Supers
-    dw $0A1C, $0000  ; Samus position/state
+    dw $0A1C, $009B  ; Samus position/state
     dw $0A1E, $0000  ; More position/state
     dw $0AF6, $0078  ; Samus X
     dw $0AFA, $0088  ; Samus Y
@@ -656,7 +656,7 @@ preset_100early_brinstar_leaving_kraid_etank:
     dw #$FFFF
 .after
 
-preset_100early_upper_norfair_business_center:
+preset_100early_speed_booster_business_center:
     dw #preset_100early_brinstar_leaving_kraid_etank ; Brinstar: Leaving Kraid E-Tank
     dw $078D, $9246  ; DDB
     dw $079B, $A7DE  ; MDB
@@ -676,8 +676,8 @@ preset_100early_upper_norfair_business_center:
     dw #$FFFF
 .after
 
-preset_100early_upper_norfair_hijump:
-    dw #preset_100early_upper_norfair_business_center ; Upper Norfair: Business Center
+preset_100early_speed_booster_hijump:
+    dw #preset_100early_speed_booster_business_center ; Speed Booster: Business Center
     dw $090F, $9000  ; Screen subpixel X position
     dw $0915, $051B  ; Screen Y position in pixels
     dw $0919, $03D4  ; Layer 2 Y position
@@ -690,8 +690,8 @@ preset_100early_upper_norfair_hijump:
     dw #$FFFF
 .after
 
-preset_100early_upper_norfair_business_center_climb:
-    dw #preset_100early_upper_norfair_hijump ; Upper Norfair: Hi-Jump
+preset_100early_speed_booster_business_center_climb:
+    dw #preset_100early_speed_booster_hijump ; Speed Booster: Hi-Jump
     dw $078D, $93F6  ; DDB
     dw $079B, $AA41  ; MDB
     dw $090F, $0000  ; Screen subpixel X position
@@ -718,8 +718,8 @@ preset_100early_upper_norfair_business_center_climb:
     dw #$FFFF
 .after
 
-preset_100early_upper_norfair_precathedral:
-    dw #preset_100early_upper_norfair_business_center_climb ; Upper Norfair: Business Center Climb
+preset_100early_speed_booster_cathedral_entrance:
+    dw #preset_100early_speed_booster_business_center_climb ; Speed Booster: Business Center Climb
     dw $078D, $941A  ; DDB
     dw $079B, $A7DE  ; MDB
     dw $090F, $C000  ; Screen subpixel X position
@@ -734,8 +734,8 @@ preset_100early_upper_norfair_precathedral:
     dw #$FFFF
 .after
 
-preset_100early_upper_norfair_cathedral:
-    dw #preset_100early_upper_norfair_precathedral ; Upper Norfair: Pre-Cathedral
+preset_100early_speed_booster_cathedral:
+    dw #preset_100early_speed_booster_cathedral_entrance ; Speed Booster: Cathedral Entrance
     dw $078D, $92CA  ; DDB
     dw $079B, $A7B3  ; MDB
     dw $090F, $2000  ; Screen subpixel X position
@@ -752,8 +752,8 @@ preset_100early_upper_norfair_cathedral:
     dw #$FFFF
 .after
 
-preset_100early_upper_norfair_rising_tide:
-    dw #preset_100early_upper_norfair_cathedral ; Upper Norfair: Cathedral
+preset_100early_speed_booster_rising_tide:
+    dw #preset_100early_speed_booster_cathedral ; Speed Booster: Cathedral
     dw $078D, $92B2  ; DDB
     dw $079B, $A788  ; MDB
     dw $090F, $F000  ; Screen subpixel X position
@@ -771,8 +771,8 @@ preset_100early_upper_norfair_rising_tide:
     dw #$FFFF
 .after
 
-preset_100early_upper_norfair_bubble_mountain:
-    dw #preset_100early_upper_norfair_rising_tide ; Upper Norfair: Rising Tide
+preset_100early_speed_booster_bubble_mountain:
+    dw #preset_100early_speed_booster_rising_tide ; Speed Booster: Rising Tide
     dw $078D, $929A  ; DDB
     dw $079B, $AFA3  ; MDB
     dw $090F, $B000  ; Screen subpixel X position
@@ -787,8 +787,8 @@ preset_100early_upper_norfair_bubble_mountain:
     dw #$FFFF
 .after
 
-preset_100early_upper_norfair_bat_cave:
-    dw #preset_100early_upper_norfair_bubble_mountain ; Upper Norfair: Bubble Mountain
+preset_100early_speed_booster_bat_cave:
+    dw #preset_100early_speed_booster_bubble_mountain ; Speed Booster: Bubble Mountain
     dw $078D, $973E  ; DDB
     dw $079B, $ACB3  ; MDB
     dw $090F, $A000  ; Screen subpixel X position
@@ -804,8 +804,8 @@ preset_100early_upper_norfair_bat_cave:
     dw #$FFFF
 .after
 
-preset_100early_upper_norfair_leaving_speed_booster:
-    dw #preset_100early_upper_norfair_bat_cave ; Upper Norfair: Bat Cave
+preset_100early_speed_booster_leaving_speed_booster:
+    dw #preset_100early_speed_booster_bat_cave ; Speed Booster: Bat Cave
     dw $078D, $95B2  ; DDB
     dw $079B, $AD1B  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -829,8 +829,8 @@ preset_100early_upper_norfair_leaving_speed_booster:
     dw #$FFFF
 .after
 
-preset_100early_upper_norfair_single_chamber:
-    dw #preset_100early_upper_norfair_leaving_speed_booster ; Upper Norfair: Leaving Speed Booster
+preset_100early_grapple_single_chamber:
+    dw #preset_100early_speed_booster_leaving_speed_booster ; Speed Booster: Leaving Speed Booster
     dw $078D, $97AA  ; DDB
     dw $079B, $ACB3  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -853,8 +853,8 @@ preset_100early_upper_norfair_single_chamber:
     dw #$FFFF
 .after
 
-preset_100early_upper_norfair_double_chamber:
-    dw #preset_100early_upper_norfair_single_chamber ; Upper Norfair: Single Chamber
+preset_100early_grapple_double_chamber:
+    dw #preset_100early_grapple_single_chamber ; Grapple: Single Chamber
     dw $078D, $9582  ; DDB
     dw $079B, $AD5E  ; MDB
     dw $090F, $B000  ; Screen subpixel X position
@@ -871,8 +871,8 @@ preset_100early_upper_norfair_double_chamber:
     dw #$FFFF
 .after
 
-preset_100early_upper_norfair_double_chamber_revisited:
-    dw #preset_100early_upper_norfair_double_chamber ; Upper Norfair: Double Chamber
+preset_100early_grapple_double_chamber_revisited:
+    dw #preset_100early_grapple_double_chamber ; Grapple: Double Chamber
     dw $078D, $961E  ; DDB
     dw $079B, $ADDE  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -894,8 +894,8 @@ preset_100early_upper_norfair_double_chamber_revisited:
     dw #$FFFF
 .after
 
-preset_100early_upper_norfair_bubble_mountain_revisited:
-    dw #preset_100early_upper_norfair_double_chamber_revisited ; Upper Norfair: Double Chamber Revisited
+preset_100early_grapple_bubble_mountain_revisited:
+    dw #preset_100early_grapple_double_chamber_revisited ; Grapple: Double Chamber Revisited
     dw $078D, $9606  ; DDB
     dw $079B, $AD5E  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -910,8 +910,8 @@ preset_100early_upper_norfair_bubble_mountain_revisited:
     dw #$FFFF
 .after
 
-preset_100early_upper_norfair_red_pirate_shaft:
-    dw #preset_100early_upper_norfair_bubble_mountain_revisited ; Upper Norfair: Bubble Mountain Revisited
+preset_100early_grapple_red_pirate_shaft:
+    dw #preset_100early_grapple_bubble_mountain_revisited ; Grapple: Bubble Mountain Revisited
     dw $078D, $956A  ; DDB
     dw $079B, $AF72  ; MDB
     dw $090F, $C000  ; Screen subpixel X position
@@ -927,8 +927,8 @@ preset_100early_upper_norfair_red_pirate_shaft:
     dw #$FFFF
 .after
 
-preset_100early_upper_norfair_crocomire:
-    dw #preset_100early_upper_norfair_red_pirate_shaft ; Upper Norfair: Red Pirate Shaft
+preset_100early_grapple_crocomire:
+    dw #preset_100early_grapple_red_pirate_shaft ; Grapple: Red Pirate Shaft
     dw $078D, $974A  ; DDB
     dw $079B, $A923  ; MDB
     dw $0911, $0C00  ; Screen X position in pixels
@@ -946,8 +946,8 @@ preset_100early_upper_norfair_crocomire:
     dw #$FFFF
 .after
 
-preset_100early_upper_norfair_postcrocomire:
-    dw #preset_100early_upper_norfair_crocomire ; Upper Norfair: Crocomire
+preset_100early_grapple_postcrocomire:
+    dw #preset_100early_grapple_crocomire ; Grapple: Crocomire
     dw $078D, $93D2  ; DDB
     dw $079B, $A98D  ; MDB
     dw $07F3, $0027  ; Music Bank
@@ -974,8 +974,8 @@ preset_100early_upper_norfair_postcrocomire:
     dw #$FFFF
 .after
 
-preset_100early_upper_norfair_leaving_power_bombs:
-    dw #preset_100early_upper_norfair_postcrocomire ; Upper Norfair: Post-Crocomire
+preset_100early_grapple_leaving_power_bombs:
+    dw #preset_100early_grapple_postcrocomire ; Grapple: Post-Crocomire
     dw $078D, $943E  ; DDB
     dw $079B, $AADE  ; MDB
     dw $07F3, $0015  ; Music Bank
@@ -997,8 +997,8 @@ preset_100early_upper_norfair_leaving_power_bombs:
     dw #$FFFF
 .after
 
-preset_100early_upper_norfair_postcrocomire_jump_room:
-    dw #preset_100early_upper_norfair_leaving_power_bombs ; Upper Norfair: Leaving Power Bombs
+preset_100early_grapple_postcrocomire_jump_room:
+    dw #preset_100early_grapple_leaving_power_bombs ; Grapple: Leaving Power Bombs
     dw $078D, $944A  ; DDB
     dw $079B, $AB07  ; MDB
     dw $090F, $E000  ; Screen subpixel X position
@@ -1014,8 +1014,8 @@ preset_100early_upper_norfair_postcrocomire_jump_room:
     dw #$FFFF
 .after
 
-preset_100early_upper_norfair_leaving_grapple:
-    dw #preset_100early_upper_norfair_postcrocomire_jump_room ; Upper Norfair: Post-Crocomire Jump Room
+preset_100early_grapple_leaving_grapple:
+    dw #preset_100early_grapple_postcrocomire_jump_room ; Grapple: Post-Crocomire Jump Room
     dw $078D, $94DA  ; DDB
     dw $079B, $AC2B  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -1037,8 +1037,8 @@ preset_100early_upper_norfair_leaving_grapple:
     dw #$FFFF
 .after
 
-preset_100early_upper_norfair_postcrocomire_missiles:
-    dw #preset_100early_upper_norfair_leaving_grapple ; Upper Norfair: Leaving Grapple
+preset_100early_grapple_postcrocomire_missiles:
+    dw #preset_100early_grapple_leaving_grapple ; Grapple: Leaving Grapple
     dw $078D, $94CE  ; DDB
     dw $079B, $AB07  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -1056,8 +1056,8 @@ preset_100early_upper_norfair_postcrocomire_missiles:
     dw #$FFFF
 .after
 
-preset_100early_upper_norfair_crocomire_revisit:
-    dw #preset_100early_upper_norfair_postcrocomire_missiles ; Upper Norfair: Post-Crocomire Missiles
+preset_100early_grapple_crocomire_revisit:
+    dw #preset_100early_grapple_postcrocomire_missiles ; Grapple: Post-Crocomire Missiles
     dw $078D, $947A  ; DDB
     dw $079B, $AA82  ; MDB
     dw $090F, $3D00  ; Screen subpixel X position
@@ -1077,8 +1077,8 @@ preset_100early_upper_norfair_crocomire_revisit:
     dw #$FFFF
 .after
 
-preset_100early_upper_norfair_crocomire_escape:
-    dw #preset_100early_upper_norfair_crocomire_revisit ; Upper Norfair: Crocomire Revisit
+preset_100early_grapple_crocomire_escape:
+    dw #preset_100early_grapple_crocomire_revisit ; Grapple: Crocomire Revisit
     dw $078D, $93EA  ; DDB
     dw $079B, $A923  ; MDB
     dw $090F, $0000  ; Screen subpixel X position
@@ -1098,8 +1098,8 @@ preset_100early_upper_norfair_crocomire_escape:
     dw #$FFFF
 .after
 
-preset_100early_upper_norfair_business_center_return:
-    dw #preset_100early_upper_norfair_crocomire_escape ; Upper Norfair: Crocomire Escape
+preset_100early_grapple_business_center_return:
+    dw #preset_100early_grapple_crocomire_escape ; Grapplegrapple: Crocomire Escape
     dw $078D, $93AE  ; DDB
     dw $079B, $AA0E  ; MDB
     dw $090F, $D348  ; Screen subpixel X position
@@ -1121,7 +1121,7 @@ preset_100early_upper_norfair_business_center_return:
 .after
 
 preset_100early_red_tower_and_crateria_warehouse_elevator:
-    dw #preset_100early_upper_norfair_business_center_return ; Upper Norfair: Business Center Return
+    dw #preset_100early_grapple_business_center_return ; Grapple: Business Center Return
     dw $078D, $92EE  ; DDB
     dw $079B, $A6A1  ; MDB
     dw $07F3, $0012  ; Music Bank

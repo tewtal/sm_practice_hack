@@ -101,13 +101,13 @@ presets_submenu_hundo_kraid:
     dw #presets_hundo_kraid_kraid
     dw #presets_hundo_kraid_leaving_varia
     dw #presets_hundo_kraid_leaving_kraid_hallway
-    dw #presets_hundo_kraid_kraid_escape
+    dw #presets_hundo_kraid_leaving_kraid_etank
     dw #$0000
     %cm_header("KRAID")
 
 presets_submenu_hundo_speed_booster:
     dw #presets_hundo_speed_booster_business_center
-    dw #presets_hundo_speed_booster_hi_jump
+    dw #presets_hundo_speed_booster_hijump
     dw #presets_hundo_speed_booster_business_center_climb
     dw #presets_hundo_speed_booster_cathedral_entrance
     dw #presets_hundo_speed_booster_cathedral
@@ -395,16 +395,16 @@ presets_hundo_kraid_leaving_varia:
 presets_hundo_kraid_leaving_kraid_hallway:
     %cm_preset("Leaving Kraid Hallway", #preset_hundo_kraid_leaving_kraid_hallway)
 
-presets_hundo_kraid_kraid_escape:
-    %cm_preset("Kraid Escape", #preset_hundo_kraid_kraid_escape)
+presets_hundo_kraid_leaving_kraid_etank:
+    %cm_preset("Kraid Escape", #preset_hundo_kraid_leaving_kraid_etank)
 
 
 ; Speed Booster
 presets_hundo_speed_booster_business_center:
     %cm_preset("Business Center", #preset_hundo_speed_booster_business_center)
 
-presets_hundo_speed_booster_hi_jump:
-    %cm_preset("Hi Jump", #preset_hundo_speed_booster_hi_jump)
+presets_hundo_speed_booster_hijump:
+    %cm_preset("Hi-Jump", #preset_hundo_speed_booster_hijump)
 
 presets_hundo_speed_booster_business_center_climb:
     %cm_preset("Business Center Climb", #preset_hundo_speed_booster_business_center_climb)

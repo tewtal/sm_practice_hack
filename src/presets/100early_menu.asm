@@ -1,7 +1,8 @@
 PresetsMenu100early:
     dw #presets_goto_100early_crateria
     dw #presets_goto_100early_brinstar
-    dw #presets_goto_100early_upper_norfair
+    dw #presets_goto_100early_speed_booster
+    dw #presets_goto_100early_grapple
     dw #presets_goto_100early_red_tower_and_crateria
     dw #presets_goto_100early_wrecked_ship
     dw #presets_goto_100early_brinstar_cleanup
@@ -20,8 +21,11 @@ presets_goto_100early_crateria:
 presets_goto_100early_brinstar:
     %cm_submenu("Brinstar", #presets_submenu_100early_brinstar)
 
-presets_goto_100early_upper_norfair:
-    %cm_submenu("Upper Norfair", #presets_submenu_100early_upper_norfair)
+presets_goto_100early_speed_booster:
+    %cm_submenu("Speed Booster", #presets_submenu_100early_speed_booster)
+
+presets_goto_100early_grapple:
+    %cm_submenu("Grapple", #presets_submenu_100early_grapple)
 
 presets_goto_100early_red_tower_and_crateria:
     %cm_submenu("Red Tower and Crateria", #presets_submenu_100early_red_tower_and_crateria)
@@ -89,32 +93,36 @@ presets_submenu_100early_brinstar:
     dw #$0000
     %cm_header("BRINSTAR")
 
-presets_submenu_100early_upper_norfair:
-    dw #presets_100early_upper_norfair_business_center
-    dw #presets_100early_upper_norfair_hijump
-    dw #presets_100early_upper_norfair_business_center_climb
-    dw #presets_100early_upper_norfair_precathedral
-    dw #presets_100early_upper_norfair_cathedral
-    dw #presets_100early_upper_norfair_rising_tide
-    dw #presets_100early_upper_norfair_bubble_mountain
-    dw #presets_100early_upper_norfair_bat_cave
-    dw #presets_100early_upper_norfair_leaving_speed_booster
-    dw #presets_100early_upper_norfair_single_chamber
-    dw #presets_100early_upper_norfair_double_chamber
-    dw #presets_100early_upper_norfair_double_chamber_revisited
-    dw #presets_100early_upper_norfair_bubble_mountain_revisited
-    dw #presets_100early_upper_norfair_red_pirate_shaft
-    dw #presets_100early_upper_norfair_crocomire
-    dw #presets_100early_upper_norfair_postcrocomire
-    dw #presets_100early_upper_norfair_leaving_power_bombs
-    dw #presets_100early_upper_norfair_postcrocomire_jump_room
-    dw #presets_100early_upper_norfair_leaving_grapple
-    dw #presets_100early_upper_norfair_postcrocomire_missiles
-    dw #presets_100early_upper_norfair_crocomire_revisit
-    dw #presets_100early_upper_norfair_crocomire_escape
-    dw #presets_100early_upper_norfair_business_center_return
+presets_submenu_100early_speed_booster:
+    dw #presets_100early_speed_booster_business_center
+    dw #presets_100early_speed_booster_hijump
+    dw #presets_100early_speed_booster_business_center_climb
+    dw #presets_100early_speed_booster_cathedral_entrance
+    dw #presets_100early_speed_booster_cathedral
+    dw #presets_100early_speed_booster_rising_tide
+    dw #presets_100early_speed_booster_bubble_mountain
+    dw #presets_100early_speed_booster_bat_cave
+    dw #presets_100early_speed_booster_leaving_speed_booster
     dw #$0000
-    %cm_header("UPPER NORFAIR")
+    %cm_header("SPEED BOOSTER")
+
+presets_submenu_100early_grapple:
+    dw #presets_100early_grapple_single_chamber
+    dw #presets_100early_grapple_double_chamber
+    dw #presets_100early_grapple_double_chamber_revisited
+    dw #presets_100early_grapple_bubble_mountain_revisited
+    dw #presets_100early_grapple_red_pirate_shaft
+    dw #presets_100early_grapple_crocomire
+    dw #presets_100early_grapple_postcrocomire
+    dw #presets_100early_grapple_leaving_power_bombs
+    dw #presets_100early_grapple_postcrocomire_jump_room
+    dw #presets_100early_grapple_leaving_grapple
+    dw #presets_100early_grapple_postcrocomire_missiles
+    dw #presets_100early_grapple_crocomire_revisit
+    dw #presets_100early_grapple_crocomire_escape
+    dw #presets_100early_grapple_business_center_return
+    dw #$0000
+    %cm_header("GRAPPLE")
 
 presets_submenu_100early_red_tower_and_crateria:
     dw #presets_100early_red_tower_and_crateria_warehouse_elevator
@@ -363,7 +371,7 @@ presets_100early_brinstar_kraid_entry:
     %cm_preset("Kraid Entry", #preset_100early_brinstar_kraid_entry)
 
 presets_100early_brinstar_kraid_kihunter_room:
-    %cm_preset("Kraid Kihunter Room", #presets_100early_brinstar_kraid_kihunter_room)
+    %cm_preset("Kraid Kihunter Room", #preset_100early_brinstar_kraid_kihunter_room)
 
 presets_100early_brinstar_kraid:
     %cm_preset("Kraid", #preset_100early_brinstar_kraid)
@@ -378,75 +386,77 @@ presets_100early_brinstar_leaving_kraid_etank:
     %cm_preset("Leaving Kraid E-Tank", #preset_100early_brinstar_leaving_kraid_etank)
 
 
-; Upper Norfair
-presets_100early_upper_norfair_business_center:
-    %cm_preset("Business Center", #preset_100early_upper_norfair_business_center)
+; Speed Booster
+presets_100early_speed_booster_business_center:
+    %cm_preset("Business Center", #preset_100early_speed_booster_business_center)
 
-presets_100early_upper_norfair_hijump:
-    %cm_preset("Hi-Jump", #preset_100early_upper_norfair_hijump)
+presets_100early_speed_booster_hijump:
+    %cm_preset("Hi-Jump", #preset_100early_speed_booster_hijump)
 
-presets_100early_upper_norfair_business_center_climb:
-    %cm_preset("Business Center Climb", #preset_100early_upper_norfair_business_center_climb)
+presets_100early_speed_booster_business_center_climb:
+    %cm_preset("Business Center Climb", #preset_100early_speed_booster_business_center_climb)
 
-presets_100early_upper_norfair_precathedral:
-    %cm_preset("Pre-Cathedral", #preset_100early_upper_norfair_precathedral)
+presets_100early_speed_booster_cathedral_entrance:
+    %cm_preset("Cathedral Entrance", #preset_100early_speed_booster_cathedral_entrance)
 
-presets_100early_upper_norfair_cathedral:
-    %cm_preset("Cathedral", #preset_100early_upper_norfair_cathedral)
+presets_100early_speed_booster_cathedral:
+    %cm_preset("Cathedral", #preset_100early_speed_booster_cathedral)
 
-presets_100early_upper_norfair_rising_tide:
-    %cm_preset("Rising Tide", #preset_100early_upper_norfair_rising_tide)
+presets_100early_speed_booster_rising_tide:
+    %cm_preset("Rising Tide", #preset_100early_speed_booster_rising_tide)
 
-presets_100early_upper_norfair_bubble_mountain:
-    %cm_preset("Bubble Mountain", #preset_100early_upper_norfair_bubble_mountain)
+presets_100early_speed_booster_bubble_mountain:
+    %cm_preset("Bubble Mountain", #preset_100early_speed_booster_bubble_mountain)
 
-presets_100early_upper_norfair_bat_cave:
-    %cm_preset("Bat Cave", #preset_100early_upper_norfair_bat_cave)
+presets_100early_speed_booster_bat_cave:
+    %cm_preset("Bat Cave", #preset_100early_speed_booster_bat_cave)
 
-presets_100early_upper_norfair_leaving_speed_booster:
-    %cm_preset("Leaving Speed Booster", #preset_100early_upper_norfair_leaving_speed_booster)
+presets_100early_speed_booster_leaving_speed_booster:
+    %cm_preset("Leaving Speed Booster", #preset_100early_speed_booster_leaving_speed_booster)
 
-presets_100early_upper_norfair_single_chamber:
-    %cm_preset("Single Chamber", #preset_100early_upper_norfair_single_chamber)
 
-presets_100early_upper_norfair_double_chamber:
-    %cm_preset("Double Chamber", #preset_100early_upper_norfair_double_chamber)
+; Grapple
+presets_100early_grapple_single_chamber:
+    %cm_preset("Single Chamber", #preset_100early_grapple_single_chamber)
 
-presets_100early_upper_norfair_double_chamber_revisited:
-    %cm_preset("Double Chamber Revisited", #preset_100early_upper_norfair_double_chamber_revisited)
+presets_100early_grapple_double_chamber:
+    %cm_preset("Double Chamber", #preset_100early_grapple_double_chamber)
 
-presets_100early_upper_norfair_bubble_mountain_revisited:
-    %cm_preset("Bubble Mountain Revisited", #preset_100early_upper_norfair_bubble_mountain_revisited)
+presets_100early_grapple_double_chamber_revisited:
+    %cm_preset("Double Chamber Revisited", #preset_100early_grapple_double_chamber_revisited)
 
-presets_100early_upper_norfair_red_pirate_shaft:
-    %cm_preset("Red Pirate Shaft", #preset_100early_upper_norfair_red_pirate_shaft)
+presets_100early_grapple_bubble_mountain_revisited:
+    %cm_preset("Bubble Mountain Revisited", #preset_100early_grapple_bubble_mountain_revisited)
 
-presets_100early_upper_norfair_crocomire:
-    %cm_preset("Crocomire", #preset_100early_upper_norfair_crocomire)
+presets_100early_grapple_red_pirate_shaft:
+    %cm_preset("Red Pirate Shaft", #preset_100early_grapple_red_pirate_shaft)
 
-presets_100early_upper_norfair_postcrocomire:
-    %cm_preset("Post-Crocomire", #preset_100early_upper_norfair_postcrocomire)
+presets_100early_grapple_crocomire:
+    %cm_preset("Crocomire", #preset_100early_grapple_crocomire)
 
-presets_100early_upper_norfair_leaving_power_bombs:
-    %cm_preset("Leaving Power Bombs", #preset_100early_upper_norfair_leaving_power_bombs)
+presets_100early_grapple_postcrocomire:
+    %cm_preset("Post-Crocomire", #preset_100early_grapple_postcrocomire)
 
-presets_100early_upper_norfair_postcrocomire_jump_room:
-    %cm_preset("Post-Crocomire Jump Room", #preset_100early_upper_norfair_postcrocomire_jump_room)
+presets_100early_grapple_leaving_power_bombs:
+    %cm_preset("Leaving Power Bombs", #preset_100early_grapple_leaving_power_bombs)
 
-presets_100early_upper_norfair_leaving_grapple:
-    %cm_preset("Leaving Grapple", #preset_100early_upper_norfair_leaving_grapple)
+presets_100early_grapple_postcrocomire_jump_room:
+    %cm_preset("Post-Crocomire Jump Room", #preset_100early_grapple_postcrocomire_jump_room)
 
-presets_100early_upper_norfair_postcrocomire_missiles:
-    %cm_preset("Post-Crocomire Missiles", #preset_100early_upper_norfair_postcrocomire_missiles)
+presets_100early_grapple_leaving_grapple:
+    %cm_preset("Leaving Grapple", #preset_100early_grapple_leaving_grapple)
 
-presets_100early_upper_norfair_crocomire_revisit:
-    %cm_preset("Crocomire Revisit", #preset_100early_upper_norfair_crocomire_revisit)
+presets_100early_grapple_postcrocomire_missiles:
+    %cm_preset("Post-Crocomire Missiles", #preset_100early_grapple_postcrocomire_missiles)
 
-presets_100early_upper_norfair_crocomire_escape:
-    %cm_preset("Crocomire Escape", #preset_100early_upper_norfair_crocomire_escape)
+presets_100early_grapple_crocomire_revisit:
+    %cm_preset("Crocomire Revisit", #preset_100early_grapple_crocomire_revisit)
 
-presets_100early_upper_norfair_business_center_return:
-    %cm_preset("Business Center Return", #preset_100early_upper_norfair_business_center_return)
+presets_100early_grapple_crocomire_escape:
+    %cm_preset("Crocomire Escape", #preset_100early_grapple_crocomire_escape)
+
+presets_100early_grapple_business_center_return:
+    %cm_preset("Business Center Return", #preset_100early_grapple_business_center_return)
 
 
 ; Red Tower and Crateria
