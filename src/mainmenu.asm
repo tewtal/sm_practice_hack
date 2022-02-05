@@ -1670,6 +1670,7 @@ CutscenesMenu:
     dw #cutscenes_skip_ceres_arrival
     dw #cutscenes_skip_g4
     dw #$FFFF
+    dw #kraid_skip_intro
     dw #cutscenes_fast_mb
     dw #$0000
     %cm_header("CUTSCENES")
@@ -1685,6 +1686,9 @@ cutscenes_skip_g4:
 
 cutscenes_fast_mb:
     %cm_toggle_bit("Fast Mother Brain", !sram_cutscenes, !CUTSCENE_FAST_MB, #0)
+
+kraid_skip_intro:
+    %cm_toggle_bit("Skip Kraid Intro", !sram_cutscenes, !CUTSCENE_FAST_KRAID, #0)
 
 
 game_fanfare_toggle:
@@ -1766,6 +1770,7 @@ GameLoopExtras:
     LDA #$0001 : STA !ram_game_loop_extras
     RTS
 }
+
 
 ; -------------------
 ; Controller Settings

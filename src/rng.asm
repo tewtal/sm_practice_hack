@@ -61,7 +61,9 @@ endif
 }
 
 
-; Botwoon hijacks
+; --------------
+; Botwoon hijack
+; --------------
 {
 if !FEATURE_PAL
     org $B39953
@@ -73,7 +75,9 @@ endif
 }
 
 
+; ---------------
 ; Draygon hijacks
+; ---------------
 {
 if !FEATURE_PAL
     org $A58AEC
@@ -91,7 +95,9 @@ endif
 }
 
 
+; ----------------
 ; Crocomire hijack
+; ----------------
 {
 if !FEATURE_PAL
     org $A48763
@@ -102,7 +108,9 @@ endif
 }
 
 
-; Kraid hijack
+; -------------
+; Kraid hijacks
+; -------------
 {
 if !FEATURE_PAL
     org $A7BDF3
@@ -112,8 +120,17 @@ endif
         JSR hook_kraid_rng
 }
 
+if !FEATURE_PAL
+org $A7AA7F
+else    ; Kraid intro
+org $A7AA69
+endif
+    JMP kraid_intro_skip : kraid_intro_skip_return:
 
+
+; -----------------
 ; "Set rng" hijacks
+; -----------------
 {
     ; $A3:AB0C A9 25 00    LDA #$0025
     ; $A3:AB0F 8D E5 05    STA $05E5  [$7E:05E5]
@@ -147,7 +164,9 @@ endif
 }
 
 
+; -----
 ; Hooks
+; -----
 
 org $83B000
 print pc, " rng start"
@@ -488,6 +507,20 @@ hook_kraid_rng:
     LDA $05E5     ; return with random number (overwritten code)
     RTS
 }
+
+
+kraid_intro_skip:
+    LDA !sram_cutscenes : AND !CUTSCENE_FAST_KRAID : BEQ .noSkip
+    LDA #$0001
+    JMP kraid_intro_skip_return
+
+  .noSkip
+if !FEATURE_PAL
+    LDA #$00FA
+else
+    LDA #$012C
+endif
+    JMP kraid_intro_skip_return
 
 print pc, " kraid rng end"
 
