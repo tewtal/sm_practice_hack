@@ -1715,6 +1715,7 @@ preset_hundo_brinstar_cleanup_mission_impossible_pbs:
     dl $7ED872 : db $02 : dw $C4AF ; Events, Items, Doors
     dl $7ED8B4 : db $02 : dw $0346 ; Events, Items, Doors
     dl $7ED91A : db $02 : dw $0051 ; Events, Items, Doors
+    dw !PRESET_SPECIAL, $0001 ; fix PB blocks
     dw #$FFFF
 .after
 
@@ -1739,6 +1740,7 @@ preset_hundo_brinstar_cleanup_pink_brinstar_etank:
     dl $7ED872 : db $02 : dw $C5AF ; Events, Items, Doors
     dl $7ED8B4 : db $02 : dw $8346 ; Events, Items, Doors
     dl $7ED91A : db $02 : dw $0055 ; Events, Items, Doors
+    dw !PRESET_SPECIAL, $0000 ; reset flag
     dw #$FFFF
 .after
 
@@ -3332,6 +3334,7 @@ preset_hundo_brinstar_cleanup_2_retro_brinstar_escape:
     dl $7E0AFA : db $02 : dw $02BB ; Samus Y
     dl $7ED872 : db $02 : dw $FFEF ; Events, Items, Doors
     dl $7ED91A : db $02 : dw $00A4 ; Events, Items, Doors
+    dw !PRESET_SPECIAL, $0001 ; clear PB blocks
     dw #$FFFF
 .after
 
@@ -3353,6 +3356,7 @@ preset_hundo_brinstar_cleanup_2_pit_room_2:
     dl $7E0AF6 : db $02 : dw $00EA ; Samus X
     dl $7E0AFA : db $02 : dw $008B ; Samus Y
     dl $7ED91A : db $02 : dw $00A5 ; Events, Items, Doors
+    dw !PRESET_SPECIAL, $0000 ; reset flag
     dw #$FFFF
 .after
 

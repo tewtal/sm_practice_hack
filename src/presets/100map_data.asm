@@ -4060,6 +4060,7 @@ preset_100map_greenpink_brin_cleanup_mission_impossible_room:
     dl $7E0AFA : db $02 : dw $038B ; Samus Y
     dl $7ED8B6 : db $02 : dw $EFF8 ; Events, Items, Doors
     dl $7ED91A : db $02 : dw $00AE ; Events, Items, Doors
+    dw !PRESET_SPECIAL, $0001 ; fix PB blocks
     dw #$FFFF
 .after
 
@@ -4083,6 +4084,7 @@ preset_100map_greenpink_brin_cleanup_green_hill_zone_final:
     dl $7E0AFA : db $02 : dw $068B ; Samus Y
     dl $7ED8B4 : db $02 : dw $2F6F ; Events, Items, Doors
     dl $7ED91A : db $02 : dw $00B6 ; Events, Items, Doors
+    dw !PRESET_SPECIAL, $0000 ; reset flag
     dw #$FFFF
 .after
 

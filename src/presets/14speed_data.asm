@@ -1299,8 +1299,9 @@ preset_14speed_lower_norfair_fireflea_room:
     dl $7E0923 : db $02 : dw $FB00 ; BG2 Y scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)
     dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0008 ; More position/state
-    dl $7E0AF6 : db $02 : dw $00B9 ; Samus X
+    dl $7E0AF6 : db $02 : dw $009C ; Samus X
     dl $7E0AFA : db $02 : dw $008B ; Samus Y
+    dw !PRESET_SPECIAL, $0001 ; clear shot blocks
     dw #$FFFF
 .after
 
@@ -1318,6 +1319,7 @@ preset_14speed_lower_norfair_three_musketeers:
     dl $7E0A1E : db $02 : dw $0004 ; More position/state
     dl $7E0AF6 : db $02 : dw $005F ; Samus X
     dl $7ED91A : db $02 : dw $0034 ; Events, Items, Doors
+    dw !PRESET_SPECIAL, $0000 ; reset flag
     dw #$FFFF
 .after
 

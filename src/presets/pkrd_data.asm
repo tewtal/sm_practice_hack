@@ -1323,6 +1323,7 @@ preset_pkrd_upper_norfair_leaving_hi_jump:
     dl $7ED876 : db $02 : dw $0121 ; Events, Items, Doors
     dl $7ED8BA : db $02 : dw $0001 ; Events, Items, Doors
     dl $7ED91A : db $02 : dw $002C ; Events, Items, Doors
+    dw !PRESET_SPECIAL, $0001 ; remove shot blocks
     dw #$FFFF
 .after
 
@@ -1341,6 +1342,7 @@ preset_pkrd_upper_norfair_business_center_2:
     dl $7E0AF6 : db $02 : dw $01C1 ; Samus X
     dl $7E0AFA : db $02 : dw $008B ; Samus Y
     dl $7ED91A : db $02 : dw $002E ; Events, Items, Doors
+    dw !PRESET_SPECIAL, $0000 ; reset flag
     dw #$FFFF
 .after
 
@@ -1865,8 +1867,9 @@ preset_pkrd_lower_norfair_fire_flea_room:
     dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
     dl $7E0913 : db $02 : dw $8800 ; Screen subpixel Y position
     dl $7E0915 : db $02 : dw $000F ; Screen Y position in pixels
-    dl $7E0AF6 : db $02 : dw $00B9 ; Samus X
+    dl $7E0AF6 : db $02 : dw $009C ; Samus X
     dl $7E0AFA : db $02 : dw $008B ; Samus Y
+    dw !PRESET_SPECIAL, $0001 ; clear shot blocks
     dw #$FFFF
 .after
 
@@ -1885,6 +1888,7 @@ preset_pkrd_lower_norfair_springball_maze:
     dl $7E0A1E : db $02 : dw $0004 ; More position/state
     dl $7E0AF6 : db $02 : dw $016D ; Samus X
     dl $7ED91A : db $02 : dw $003B ; Events, Items, Doors
+    dw !PRESET_SPECIAL, $0000 ; reset flag
     dw #$FFFF
 .after
 

@@ -2086,6 +2086,7 @@ preset_100early_brinstar_cleanup_big_pink_power_bombs:
     dl $7ED872 : db $02 : dw $C4AF ; Events, Items, Doors
     dl $7ED8B4 : db $02 : dw $0346 ; Events, Items, Doors
     dl $7ED91A : db $02 : dw $0058 ; Events, Items, Doors
+    dw !PRESET_SPECIAL, $0001 ; fix PB blocks
     dw #$FFFF
 .after
 
@@ -2109,6 +2110,7 @@ preset_100early_brinstar_cleanup_big_pink_hopper_room:
     dl $7ED872 : db $02 : dw $C5AF ; Events, Items, Doors
     dl $7ED8B4 : db $02 : dw $8346 ; Events, Items, Doors
     dl $7ED91A : db $02 : dw $005C ; Events, Items, Doors
+    dw !PRESET_SPECIAL, $0000 ; reset flag
     dw #$FFFF
 .after
 
@@ -3414,8 +3416,9 @@ preset_100early_lower_norfair_firefleas_room:
     dl $7E09CE : db $02 : dw $000C ; Pbs
     dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0008 ; More position/state
-    dl $7E0AF6 : db $02 : dw $00B8 ; Samus X
+    dl $7E0AF6 : db $02 : dw $009C ; Samus X
     dl $7E0AFA : db $02 : dw $008B ; Samus Y
+    dw !PRESET_SPECIAL, $0001 ; clear shot blocks
     dw #$FFFF
 .after
 
@@ -3443,6 +3446,7 @@ preset_100early_lower_norfair_springball_maze:
     dl $7E0AF6 : db $02 : dw $016B ; Samus X
     dl $7ED87A : db $02 : dw $0001 ; Events, Items, Doors
     dl $7ED91A : db $02 : dw $0090 ; Events, Items, Doors
+    dw !PRESET_SPECIAL, $0000 ; reset flag
     dw #$FFFF
 .after
 
@@ -3760,6 +3764,7 @@ preset_100early_final_cleanup_retro_brinstar_escape:
     dl $7E0AFA : db $02 : dw $02BB ; Samus Y
     dl $7ED872 : db $02 : dw $FFEF ; Events, Items, Doors
     dl $7ED91A : db $02 : dw $00A4 ; Events, Items, Doors
+    dw !PRESET_SPECIAL, $0001 ; clear PB blocks
     dw #$FFFF
 .after
 
@@ -3788,6 +3793,7 @@ preset_100early_final_cleanup_old_tourian_missiles:
     dl $7E0AF6 : db $02 : dw $0080 ; Samus X
     dl $7E0AFA : db $02 : dw $0088 ; Samus Y
     dl $7ED91A : db $02 : dw $00A5 ; Events, Items, Doors
+    dw !PRESET_SPECIAL, $0000 ; reset flag
     dw #$FFFF
 .after
 

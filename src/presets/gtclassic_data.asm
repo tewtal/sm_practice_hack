@@ -1365,6 +1365,7 @@ preset_gtclassic_hi_jump_upper_norfair_leaving_hi_jump:
     dl $7ED876 : db $02 : dw $0121 ; Events, Items, Doors
     dl $7ED8BA : db $02 : dw $0001 ; Events, Items, Doors
     dl $7ED91A : db $02 : dw $0018 ; Events, Items, Doors
+    dw !PRESET_SPECIAL, $0001 ; remove shot blocks
     dw #$FFFF
 .after
 
@@ -1385,6 +1386,7 @@ preset_gtclassic_hi_jump_upper_norfair_business_center_revisit:
     dl $7E0AF6 : db $02 : dw $01BF ; Samus X
     dl $7E0AFA : db $02 : dw $008B ; Samus Y
     dl $7ED91A : db $02 : dw $001A ; Events, Items, Doors
+    dw !PRESET_SPECIAL, $0000 ; reset flag
     dw #$FFFF
 .after
 
@@ -1876,8 +1878,9 @@ preset_gtclassic_lower_norfair_fireflea_room:
     dl $7E09CE : db $02 : dw $000F ; Pbs
     dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
     dl $7E0A1E : db $02 : dw $0008 ; More position/state
-    dl $7E0AF6 : db $02 : dw $00B6 ; Samus X
+    dl $7E0AF6 : db $02 : dw $009C ; Samus X
     dl $7E0AFA : db $02 : dw $008B ; Samus Y
+    dw !PRESET_SPECIAL, $0001 ; clear shot blocks
     dw #$FFFF
 .after
 
@@ -1900,6 +1903,7 @@ preset_gtclassic_lower_norfair_springball_maze:
     dl $7E0A1E : db $02 : dw $0004 ; More position/state
     dl $7E0AF6 : db $02 : dw $0167 ; Samus X
     dl $7ED91A : db $02 : dw $001F ; Events, Items, Doors
+    dw !PRESET_SPECIAL, $0000 ; reset flag
     dw #$FFFF
 .after
 

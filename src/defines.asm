@@ -123,12 +123,13 @@
 !ram_quickdrop_counter = !WRAM_START+$CC
 !ram_walljump_counter = !WRAM_START+$CE
 
-; ^ FREE SPACE ^ up to +$FC
+; ^ FREE SPACE ^ up to +$FA
 
 ; -----------------------
 ; RAM (Bank 7E required)
 ; -----------------------
 
+!PRESET_SPECIAL = $7EFBFC
 !ram_slowdown_mode = $7EFBFE
 
 ; ---------

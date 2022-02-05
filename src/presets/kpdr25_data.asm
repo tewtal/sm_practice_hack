@@ -832,6 +832,7 @@ preset_kpdr25_upper_norfair_leaving_hijump:
     dl $7ED8B8 : db $02 : dw $20EF ; Events, Items, Doors
     dl $7ED8BA : db $02 : dw $0001 ; Events, Items, Doors
     dl $7ED91A : db $02 : dw $0018 ; Events, Items, Doors
+    dw !PRESET_SPECIAL, $0001 ; remove shot blocks
     dw #$FFFF
 .after
 
@@ -853,6 +854,7 @@ preset_kpdr25_upper_norfair_precathedral:
     dl $7E0AFA : db $02 : dw $038B ; Samus Y
     dl $7ED876 : db $02 : dw $01A1 ; Events, Items, Doors
     dl $7ED91A : db $02 : dw $001A ; Events, Items, Doors
+    dw !PRESET_SPECIAL, $0000 ; reset flag
     dw #$FFFF
 .after
 
