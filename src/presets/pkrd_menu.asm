@@ -43,6 +43,8 @@ presets_goto_pkrd_tourian:
     %cm_submenu("Tourian", #presets_submenu_pkrd_tourian)
 
 presets_submenu_pkrd_crateria:
+    dw #presets_pkrd_crateria_ceres_elevator
+    dw #presets_pkrd_crateria_ceres_escape
     dw #presets_pkrd_crateria_ship
     dw #presets_pkrd_crateria_parlor
     dw #presets_pkrd_crateria_parlor_downback
@@ -221,6 +223,12 @@ presets_submenu_pkrd_tourian:
     %cm_header("TOURIAN")
 
 ; Crateria
+presets_pkrd_crateria_ceres_elevator:
+    %cm_preset("Ceres Elevator", #preset_pkrd_crateria_ceres_elevator)
+
+presets_pkrd_crateria_ceres_escape:
+    %cm_preset("Ceres Escape", #preset_pkrd_crateria_ceres_escape)
+
 presets_pkrd_crateria_ship:
     %cm_preset("Ship", #preset_pkrd_crateria_ship)
 

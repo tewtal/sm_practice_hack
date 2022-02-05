@@ -51,6 +51,8 @@ presets_goto_gtmax_tourian:
     %cm_submenu("Tourian", #presets_submenu_gtmax_tourian)
 
 presets_submenu_gtmax_crateria:
+    dw #presets_gtmax_crateria_ceres_elevator
+    dw #presets_gtmax_crateria_ceres_escape
     dw #presets_gtmax_crateria_ship
     dw #presets_gtmax_crateria_parlor
     dw #presets_gtmax_crateria_parlor_downback
@@ -280,11 +282,17 @@ presets_submenu_gtmax_tourian:
     %cm_header("TOURIAN")
 
 ; Crateria
-presets_gtmax_crateria_parlor:
-    %cm_preset("Parlor", #preset_gtmax_crateria_parlor)
+presets_gtmax_crateria_ceres_elevator:
+    %cm_preset("Ceres Elevator", #preset_gtmax_crateria_ceres_elevator)
+
+presets_gtmax_crateria_ceres_escape:
+    %cm_preset("Ceres Escape", #preset_gtmax_crateria_ceres_escape)
 
 presets_gtmax_crateria_ship:
     %cm_preset("Ship", #preset_gtmax_crateria_ship)
+
+presets_gtmax_crateria_parlor:
+    %cm_preset("Parlor", #preset_gtmax_crateria_parlor)
 
 presets_gtmax_crateria_parlor_downback:
     %cm_preset("Parlor Downback", #preset_gtmax_crateria_parlor_downback)

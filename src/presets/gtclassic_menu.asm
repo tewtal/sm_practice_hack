@@ -39,6 +39,8 @@ presets_goto_gtclassic_tourian:
     %cm_submenu("Tourian", #presets_submenu_gtclassic_tourian)
 
 presets_submenu_gtclassic_crateria:
+    dw #presets_gtclassic_crateria_ceres_elevator
+    dw #presets_gtclassic_crateria_ceres_escape
     dw #presets_gtclassic_crateria_ship
     dw #presets_gtclassic_crateria_parlor
     dw #presets_gtclassic_crateria_parlor_downback
@@ -206,6 +208,12 @@ presets_submenu_gtclassic_tourian:
     %cm_header("TOURIAN")
 
 ; Crateria
+presets_gtclassic_crateria_ceres_elevator:
+    %cm_preset("Ceres Elevator", #preset_gtclassic_crateria_ceres_elevator)
+
+presets_gtclassic_crateria_ceres_escape:
+    %cm_preset("Ceres Escape", #preset_gtclassic_crateria_ceres_escape)
+
 presets_gtclassic_crateria_ship:
     %cm_preset("Ship", #preset_gtclassic_crateria_ship)
 
