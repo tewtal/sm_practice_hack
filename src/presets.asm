@@ -409,6 +409,7 @@ endif
 
     LDA !sram_preset_options : BIT !PRESETS_CLOSE_BLUE_DOORS : BNE .done_opening_doors
     LDA !SAMUS_POSE : BEQ .done_opening_doors
+    CMP #$009B : BEQ .done_opening_doors
     JSR preset_open_all_blue_doors
   .done_opening_doors
 
