@@ -164,7 +164,8 @@ hook_beetom_set_rng:
 ; $A7:D4AE 10 3D       BPL $3D    [$D4ED]       ; else, return
 hook_phantoon_init:
 {
-    LDA !ram_phantoon_rng_2     ; skip cutscene flag
+    LDA !sram_cutscenes
+    AND !CUTSCENE_FAST_PHANTOON
     BNE .skip_cutscene
 
     DEC $0FB0, x
@@ -172,9 +173,9 @@ hook_phantoon_init:
 
 .skip_cutscene:
     ; get rid of the return address
-    PLA     ; pop 16 bytes
-    PHP     ; push 8
-    PLA     ; pop 16
+    PLA     ; pop 2 bytes
+    PHP     ; push 1
+    PLA     ; pop 2 (for a total of 3 bytes popped)
 
     ; start boss music & fade-in animation
     if !FEATURE_PAL
@@ -243,7 +244,7 @@ hook_phantoon_1st_rng:
 ; $A7:D08E 89 01 00    BIT #$0001
 hook_phantoon_2nd_rng:
 {
-    LDA !ram_phantoon_rng_1
+    LDA !ram_phantoon_rng_2
     ; If set to all-on or all-off, don't mess with RNG.
     BEQ .no_manip
     CMP #$003F
@@ -265,21 +266,24 @@ hook_phantoon_2nd_rng:
     RTL
 }
 
+; Selects a Phantoon pattern from a bitmask (passed in A).
 choose_phantoon_pattern:
 {
+    PHX     ; push enemy index
+    PHA     ; push pattern mask
+
     ; get random number in range 0-7
     JSL $808111
     AND #$0007
-
-    PHX
     TAX
+
     ; play a game of eeny-meeny-miny-moe with the enabled patterns
     ; X = number of enabled patterns to find before stopping
     ; Y = index in phan_pattern_table of pattern currently being checked
     ; A = bitmask of enabled patterns
 .reload:
+    LDA $01, S  ; reload pattern mask
     LDY #$0006  ; number of patterns (decremented immediately to index of last pattern)
-    LDA !ram_phantoon_rng_1
 .loop:
     DEY
     LSR
@@ -298,9 +302,10 @@ choose_phantoon_pattern:
 .done:
 
     ; We've found the pattern to use.
+    PLA ; we don't need the pattern mask anymore
     TYA : ASL : TAX
     LDA.l phan_pattern_table,X
-    PLX
+    PLX         ; pop enemy index
 
     ; Check if Phantoon is in the round 2 AI state
     LDY $0fb2
