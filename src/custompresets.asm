@@ -207,6 +207,31 @@ preset_scroll_fixes:
     LDY !SAMUS_Y : CPY #$06A0    ; no fix if Ypos < 1696
     BMI .topdone
     STA $CD27
+    BRA .topdone
+
+  .alpha_pbs
+    LDY !SAMUS_X : CPY #$0100    ; no fix if Xpos > 255
+    BPL .topdone
+    STA $CD20
+    BRA .topdone
+
+  .below_spazer
+    LDY !SAMUS_Y : CPY #$00B0    ; no fix if Ypos > 176
+    BPL .topdone
+    INC : STA $CD20 : STA $CD21
+    BRA .topdone
+
+  .warehouse_entrance
+    STA $CD20
+    BRA .topdone
+
+  .ice_snake_room
+    LDY !SAMUS_X : CPY #$0100    ; fix varies depending on X position
+    BPL .ice_snake_room_hidden
+    INC : STA $CD22 : TDC : STA $CD23
+    BRA .topdone
+  .ice_snake_room_hidden
+    INC : STA $CD23 : TDC : STA $CD22
 
   .topdone
     PLB
@@ -218,20 +243,11 @@ preset_scroll_fixes:
     CPX #$9CB3 : BEQ .dachora
     CPX #$A011 : BEQ .etecoons_etank
     CPX #$A253 : BEQ .red_tower
-    CPX #$A3AE : BNE +           ; hidden area behind Alpha Power Bombs
-    LDY !SAMUS_X : CPY #$0100    ; no fix if Xpos > 255
-    BPL .topdone
-    STA $7ECD20
-+   CPX #$A408 : BNE +           ; top of Below Spazer Room
-    LDY !SAMUS_Y : CPY #$00B0    ; no fix if Ypos > 176
-    BPL .topdone
-    LDA #$02
-    STA $7ECD20 : STA $7ECD21
-    BRA .topdone
-+   CPX #$A6A1 : BNE +           ; Elevator to Upper Norfair (from Kraid's area)
-    STA $7ECD20
-    BRA .topdone
-+   CPX #$AC83 : BNE +           ; left of Green Bubbles Missile Room (Norfair Reserve)
+    CPX #$A3AE : BEQ .alpha_pbs
+    CPX #$A408 : BEQ .below_spazer
+    CPX #$A6A1 : BEQ .warehouse_entrance
+    CPX #$A8B9 : BEQ .ice_snake_room
+    CPX #$AC83 : BNE +           ; left of Green Bubbles Missile Room (Norfair Reserve)
     STA $7ECD20
     BRA .topdone
 +   CPX #$AE32 : BNE +           ; bottom of Volcano Room

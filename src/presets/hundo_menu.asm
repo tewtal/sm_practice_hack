@@ -296,8 +296,12 @@ presets_submenu_hundo_tourian:
     dw #presets_hundo_tourian_metroids_3
     dw #presets_hundo_tourian_metroids_4
     dw #presets_hundo_tourian_baby_skip
+    dw #presets_hundo_tourian_after_baby_skip
     dw #presets_hundo_tourian_zeb_skip
+    dw #presets_hundo_tourian_mother_brain_2
+    dw #presets_hundo_tourian_zebes_escape
     dw #presets_hundo_tourian_escape_room_3
+    dw #presets_hundo_tourian_escape_room_4
     dw #presets_hundo_tourian_escape_parlor
     dw #$0000
     %cm_header("TOURIAN")
@@ -840,11 +844,23 @@ presets_hundo_tourian_metroids_4:
 presets_hundo_tourian_baby_skip:
     %cm_preset("Baby Skip", #preset_hundo_tourian_baby_skip)
 
+presets_hundo_tourian_after_baby_skip:
+    %cm_preset("After Baby Skip", #preset_hundo_tourian_after_baby_skip)
+
 presets_hundo_tourian_zeb_skip:
     %cm_preset("Zeb Skip", #preset_hundo_tourian_zeb_skip)
 
+presets_hundo_tourian_mother_brain_2:
+    %cm_preset("Mother Brain 2", #preset_hundo_tourian_mother_brain_2)
+
+presets_hundo_tourian_zebes_escape:
+    %cm_preset("Zebes Escape", #preset_hundo_tourian_zebes_escape)
+
 presets_hundo_tourian_escape_room_3:
     %cm_preset("Escape Room 3", #preset_hundo_tourian_escape_room_3)
+
+presets_hundo_tourian_escape_room_4:
+    %cm_preset("Escape Room 4", #preset_hundo_tourian_escape_room_4)
 
 presets_hundo_tourian_escape_parlor:
     %cm_preset("Escape Parlor", #preset_hundo_tourian_escape_parlor)

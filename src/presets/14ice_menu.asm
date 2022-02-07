@@ -144,8 +144,13 @@ presets_submenu_14ice_tourian:
     dw #presets_14ice_tourian_metroids_3
     dw #presets_14ice_tourian_metroids_4
     dw #presets_14ice_tourian_baby
+    dw #presets_14ice_tourian_after_baby
     dw #presets_14ice_tourian_zeb_skip
+    dw #presets_14ice_tourian_mother_brain_2
+    dw #presets_14ice_tourian_mother_brain_3
+    dw #presets_14ice_tourian_zebes_escape
     dw #presets_14ice_tourian_escape_room_3
+    dw #presets_14ice_tourian_escape_room_4
     dw #presets_14ice_tourian_escape_parlor
     dw #$0000
     %cm_header("TOURIAN")
@@ -408,11 +413,26 @@ presets_14ice_tourian_metroids_4:
 presets_14ice_tourian_baby:
     %cm_preset("Baby", #preset_14ice_tourian_baby)
 
+presets_14ice_tourian_after_baby:
+    %cm_preset("After Baby", #preset_14ice_tourian_after_baby)
+
 presets_14ice_tourian_zeb_skip:
     %cm_preset("Zeb Skip", #preset_14ice_tourian_zeb_skip)
 
+presets_14ice_tourian_mother_brain_2:
+    %cm_preset("Mother Brain 2", #preset_14ice_tourian_mother_brain_2)
+
+presets_14ice_tourian_mother_brain_3:
+    %cm_preset("Mother Brain 3", #preset_14ice_tourian_mother_brain_3)
+
+presets_14ice_tourian_zebes_escape:
+    %cm_preset("Zebes Escape", #preset_14ice_tourian_zebes_escape)
+
 presets_14ice_tourian_escape_room_3:
     %cm_preset("Escape Room 3", #preset_14ice_tourian_escape_room_3)
+
+presets_14ice_tourian_escape_room_4:
+    %cm_preset("Escape Room 4", #preset_14ice_tourian_escape_room_4)
 
 presets_14ice_tourian_escape_parlor:
     %cm_preset("Escape Parlor", #preset_14ice_tourian_escape_parlor)
