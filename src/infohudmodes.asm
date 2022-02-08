@@ -56,11 +56,32 @@ status_roomstrat:
 
 status_chargetimer:
 {
-    LDA #$003D : SEC : SBC !SAMUS_CHARGE_TIMER : CMP !ram_HUD_check : BEQ .done : STA !ram_HUD_check
-    CMP #$0000 : BPL .charging : LDA #$0000
+    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_SHOOT : BNE .pressedShot
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_SHOOT : BNE .charging
+
+    ; count up to 36 frames of shot released
+    LDA !ram_shot_timer : CMP #$0024 : BPL .reset
+    INC : STA !ram_shot_timer
+    ASL : TAX
+    LDA NumberGFXTable,X : STA $7EC688
+    RTS
+
+  .reset
+    LDA !IH_BLANK : STA $7EC688
+    LDA NumberGFXTable+12 : STA $7EC68C
+    LDA NumberGFXTable+2 : STA $7EC68E
+    RTS
+
+  .pressedShot
+    LDA #$0000 : STA !ram_shot_timer
 
   .charging
-    LDX #$0088 : JSR Draw4
+    LDA #$003D : SEC : SBC !SAMUS_CHARGE_TIMER : CMP !ram_HUD_check : BEQ .done : STA !ram_HUD_check
+    CMP #$0000 : BPL .drawCharge
+    LDA #$0000
+
+  .drawCharge
+    LDX #$008A : JSR Draw3
 
   .done
     RTS
