@@ -57,6 +57,7 @@ presets_goto_100early_tourian:
 presets_submenu_100early_crateria:
     dw #presets_100early_crateria_ceres_elevator
     dw #presets_100early_crateria_ceres_escape
+    dw #presets_100early_crateria_ceres_last_3_rooms
     dw #presets_100early_crateria_ship
     dw #presets_100early_crateria_parlor
     dw #presets_100early_crateria_climb_down
@@ -295,6 +296,9 @@ presets_100early_crateria_ceres_elevator:
 
 presets_100early_crateria_ceres_escape:
     %cm_preset("Ceres Escape", #preset_100early_crateria_ceres_escape)
+
+presets_100early_crateria_ceres_last_3_rooms:
+    %cm_preset("Ceres Last 3 rooms", #preset_100early_crateria_ceres_last_3_rooms)
 
 presets_100early_crateria_ship:
     %cm_preset("Ship", #preset_100early_crateria_ship)

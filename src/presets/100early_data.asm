@@ -93,8 +93,19 @@ preset_100early_crateria_ceres_escape:
     dw #$FFFF
 .after
 
+preset_100early_crateria_ceres_last_3_rooms:
+    dw #preset_100early_crateria_ceres_escape ; Bombs: Ceres Escape
+    dw $078D, $ABA0  ; DDB
+    dw $079B, $E021  ; MDB
+    dw $090F, $7400  ; Screen subpixel X position
+    dw $0913, $F000  ; Screen subpixel Y position
+    dw $0AF6, $004E  ; Samus X
+    dw $0AFA, $00A2  ; Samus Y
+    dw #$FFFF
+.after
+
 preset_100early_crateria_ship:
-    dw #preset_100early_crateria_ceres_escape ; Crateria: Ceres Escape
+    dw #preset_100early_crateria_ceres_last_3_rooms ; Crateria: Ceres Escape
     dw $078D, $88FE  ; DDB
     dw $079B, $91F8  ; MDB
     dw $07F3, $0006  ; Music Bank
