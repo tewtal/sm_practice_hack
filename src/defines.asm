@@ -61,11 +61,11 @@
 !ram_room_has_set_rng = !WRAM_START+$5A
 !ram_kraid_rng = !WRAM_START+$5C
 !ram_crocomire_rng = !WRAM_START+$5E
-!ram_phantoon_rng_1 = !WRAM_START+$60
-!ram_phantoon_rng_2 = !WRAM_START+$62
-!ram_phantoon_rng_3 = !WRAM_START+$64
-!ram_phantoon_rng_4 = !WRAM_START+$66
-!ram_phantoon_rng_5 = !WRAM_START+$68
+!ram_phantoon_rng_1 = !WRAM_START+$60 ; round 1 pattern bitmask
+!ram_phantoon_rng_2 = !WRAM_START+$62 ; round 2 pattern bitmask
+!ram_phantoon_rng_3 = !WRAM_START+$64 ; eye close
+!ram_phantoon_rng_4 = !WRAM_START+$66 ; flames
+!ram_phantoon_rng_5 = !WRAM_START+$68 ; next flame
 !ram_botwoon_rng = !WRAM_START+$6A
 !ram_draygon_rng_left = !WRAM_START+$6C
 !ram_draygon_rng_right = !WRAM_START+$6E
@@ -428,6 +428,7 @@
 !CUTSCENE_SKIP_CERES_ARRIVAL = #$0002
 !CUTSCENE_SKIP_G4 = #$0080
 !CUTSCENE_FAST_MB = #$0100
+!CUTSCENE_FAST_PHANTOON = #$0200
 !CUTSCENE_FAST_KRAID = #$0400
 
 !PRESETS_COMPRESSED_GRAPHICS = #$0001
