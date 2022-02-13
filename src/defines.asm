@@ -61,11 +61,11 @@
 !ram_room_has_set_rng = !WRAM_START+$5A
 !ram_kraid_rng = !WRAM_START+$5C
 !ram_crocomire_rng = !WRAM_START+$5E
-!ram_phantoon_rng_1 = !WRAM_START+$60 ; round 1 pattern bitmask
-!ram_phantoon_rng_2 = !WRAM_START+$62 ; round 2 pattern bitmask
-!ram_phantoon_rng_3 = !WRAM_START+$64 ; eye close
-!ram_phantoon_rng_4 = !WRAM_START+$66 ; flames
-!ram_phantoon_rng_5 = !WRAM_START+$68 ; next flame
+!ram_phantoon_rng_round_1 = !WRAM_START+$60
+!ram_phantoon_rng_round_2 = !WRAM_START+$62
+!ram_phantoon_rng_eyeclose = !WRAM_START+$64
+!ram_phantoon_rng_flames = !WRAM_START+$66
+!ram_phantoon_rng_next_flames = !WRAM_START+$68
 !ram_botwoon_rng = !WRAM_START+$6A
 !ram_draygon_rng_left = !WRAM_START+$6C
 !ram_draygon_rng_right = !WRAM_START+$6E
@@ -186,6 +186,9 @@
 !ram_cm_watch_enemy_side = !WRAM_MENU_START+$9C
 !ram_cm_watch_bank = !WRAM_MENU_START+$9E
 !ram_cm_watch_common_address = !WRAM_MENU_START+$A0
+
+!ram_cm_phan_first_phase = !WRAM_MENU_START+$80
+!ram_cm_phan_second_phase = !WRAM_MENU_START+$82
 
 ; ^ FREE SPACE ^ up to +$CE
 

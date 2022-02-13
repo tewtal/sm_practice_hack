@@ -3,46 +3,48 @@
 ; ----------------
 {
     ; Intro
-    if !FEATURE_PAL
-        org $A7D4DD
-    else
-        org $A7D4A9
-    endif
+if !FEATURE_PAL
+org $A7D4DD
+else
+org $A7D4A9
+endif
     JSL hook_phantoon_init
     NOP
     BNE $3D
 
     ; 1st pattern
 if !FEATURE_PAL
-    org $A7D5DA
+org $A7D5DA
 else
-    org $A7D5A6
+org $A7D5A6
 endif
-        JSL hook_phantoon_1st_rng
-        rep $12 : NOP
+    JSL hook_phantoon_1st_rng
+    REP #$12 : NOP
 
     ; 2nd pattern
 if !FEATURE_PAL
-    org $A7D0B0
+org $A7D0B0
 else
-    org $A7D07C
+org $A7D07C
 endif
-        JSL hook_phantoon_2nd_rng
-        rep $B : NOP
+    JSL hook_phantoon_2nd_rng
+    REP #$0B : NOP
 
+    ; Phantoon eye close timer
 if !FEATURE_PAL
-    org $A7D098 ; Phantoon eye close timer
+org $A7D098
 else
-    org $A7D064 ; Phantoon eye close timer
+org $A7D064
 endif
-        JSL hook_phantoon_eyeclose
+    JSL hook_phantoon_eyeclose
 
+    ; Phantoon flame pattern
 if !FEATURE_PAL
-    org $A7D00A ; Phantoon flame pattern
+org $A7D00A
 else
-    org $A7CFD6 ; Phantoon flame pattern
+org $A7CFD6
 endif
-        JSL hook_phantoon_flame_pattern
+    JSL hook_phantoon_flame_pattern
 }
 
 
@@ -51,12 +53,12 @@ endif
 ; --------------
 {
 if !FEATURE_PAL
-    org $B39953
+org $B39953
 else
-    org $B39943
+org $B39943
 endif
-        ; $B3:9943 22 11 81 80 JSL $808111[$80:8111]
-        JSL hook_botwoon_rng
+    ; $B3:9943 22 11 81 80 JSL $808111[$80:8111]
+    JSL hook_botwoon_rng
 }
 
 
@@ -65,18 +67,18 @@ endif
 ; ---------------
 {
 if !FEATURE_PAL
-    org $A58AEC
+org $A58AEC
 else
-    org $A58ADC
+org $A58ADC
 endif
-        JSR hook_draygon_rng_left
+    JSR hook_draygon_rng_left
 
 if !FEATURE_PAL
-    org $A589AD
+org $A589AD
 else
-    org $A5899D
+org $A5899D
 endif
-        JSR hook_draygon_rng_right
+    JSR hook_draygon_rng_right
 }
 
 
@@ -85,11 +87,11 @@ endif
 ; ----------------
 {
 if !FEATURE_PAL
-    org $A48763
+org $A48763
 else
-    org $A48753
+org $A48753
 endif
-        JSR hook_crocomire_rng
+    JSR hook_crocomire_rng
 }
 
 
@@ -98,19 +100,20 @@ endif
 ; -------------
 {
 if !FEATURE_PAL
-    org $A7BDF3
+org $A7BDF3
 else
-    org $A7BDBF
+org $A7BDBF
 endif
-        JSR hook_kraid_rng
-}
+    JSR hook_kraid_rng
 
 if !FEATURE_PAL
 org $A7AA7F
-else    ; Kraid intro
+else
 org $A7AA69
 endif
-    JMP kraid_intro_skip : kraid_intro_skip_return:
+    JMP kraid_intro_skip
+kraid_intro_skip_return:
+}
 
 
 ; -----------------
@@ -121,31 +124,31 @@ endif
     ; $A3:AB0F 8D E5 05    STA $05E5  [$7E:05E5]
     ; $A3:AB12 22 11 81 80 JSL $808111[$80:8111]
 if !FEATURE_PAL
-    org $A3AB2E
+org $A3AB2E
 else
-    org $A3AB12
+org $A3AB12
 endif
-        JSL hook_hopper_set_rng
+    JSL hook_hopper_set_rng
 
     ; $A2:B588 A9 11 00    LDA #$0011
     ; $A2:B58B 8D E5 05    STA $05E5  [$7E:05E5]
 if !FEATURE_PAL
-    org $A2B5A0
+org $A2B5A0
 else
-    org $A2B588
+org $A2B588
 endif
-        JSL hook_lavarocks_set_rng
-        NOP #2
+    JSL hook_lavarocks_set_rng
+    NOP #2
 
     ; $A8:B798 A9 17 00    LDA #$0017
     ; $A8:B79B 8D E5 05    STA $05E5  [$7E:05E5]
 if !FEATURE_PAL
-    org $A8B7A8
+org $A8B7A8
 else
-    org $A8B798
+org $A8B798
 endif
-        JSL hook_beetom_set_rng
-        NOP #2
+    JSL hook_beetom_set_rng
+    NOP #2
 }
 
 
@@ -189,7 +192,7 @@ hook_phantoon_init:
     AND !CUTSCENE_FAST_PHANTOON
     BNE .skip_cutscene
 
-    DEC $0FB0, x
+    DEC $0FB0,X
     RTL
 
 .skip_cutscene:
@@ -199,11 +202,11 @@ hook_phantoon_init:
     PLA     ; pop 2 (for a total of 3 bytes popped)
 
     ; start boss music & fade-in animation
-    if !FEATURE_PAL
-        JML $A7D543
-    else
-        JML $A7D50F
-    endif
+if !FEATURE_PAL
+    JML $A7D543
+else
+    JML $A7D50F
+endif
 }
 
 ; Table of Phantoon pattern durations & directions
@@ -230,7 +233,7 @@ phan_pattern_table:
 ; $A7:D5B9 89 01 00    BIT #$0001               ; Sets Z for left pattern, !Z for right
 hook_phantoon_1st_rng:
 {
-    LDA !ram_phantoon_rng_1
+    LDA !ram_phantoon_rng_round_1
     ; If set to all-on or all-off, don't mess with RNG.
     BEQ .no_manip
     CMP #$003F
@@ -242,11 +245,11 @@ hook_phantoon_1st_rng:
     AND #$0003
     ASL A
     TAY
-    if !FEATURE_PAL
-        LDA $CD87,Y
-    else
-        LDA $CD53,Y
-    endif
+if !FEATURE_PAL
+    LDA $CD87,Y
+else
+    LDA $CD53,Y
+endif
     STA $0FE8
     JSL $808111
     BIT #$0001
@@ -265,7 +268,7 @@ hook_phantoon_1st_rng:
 ; $A7:D08E 89 01 00    BIT #$0001
 hook_phantoon_2nd_rng:
 {
-    LDA !ram_phantoon_rng_2
+    LDA !ram_phantoon_rng_round_2
     ; If set to all-on or all-off, don't mess with RNG.
     BEQ .no_manip
     CMP #$003F
@@ -276,11 +279,11 @@ hook_phantoon_2nd_rng:
     AND #$0007
     ASL A
     TAY
-    if !FEATURE_PAL
-        LDA $CD87,Y
-    else
-        LDA $CD53,Y
-    endif
+if !FEATURE_PAL
+    LDA $CD87,Y
+else
+    LDA $CD53,Y
+endif
     STA $0FE8
     LDA $05B6
     BIT #$0001
@@ -329,13 +332,13 @@ choose_phantoon_pattern:
     PLX         ; pop enemy index
 
     ; Check if Phantoon is in the round 2 AI state
-    LDY $0fb2
-    if !FEATURE_PAL
-        CPY #$D716
-    else
-        CPY #$D6E2
-    endif
-    beq .round2
+    LDY $0FB2
+if !FEATURE_PAL
+    CPY #$D716
+else
+    CPY #$D6E2
+endif
+    BEQ .round2
 
     ; If not, save the pattern timer and return the direction in the zero flag.
     LSR         ; shift direction into carry
@@ -370,10 +373,9 @@ choose_phantoon_pattern:
     RTL
 }
 
-
 hook_phantoon_eyeclose:
 {
-    LDA !ram_phantoon_rng_3 : BEQ .no_manip
+    LDA !ram_phantoon_rng_eyeclose : BEQ .no_manip
     DEC : ASL ; return with 0-slow, 2-mid, 4-fast
     RTL
 
@@ -387,9 +389,9 @@ hook_phantoon_flame_pattern:
 {
     JSL $808111 ; Trying to preserve the number of RNG calls being done in the frame
 
-    LDA !ram_phantoon_rng_4 : TAY
-    LDA !ram_phantoon_rng_5 : STA !ram_phantoon_rng_4
-    TYA : STA !ram_phantoon_rng_5 : BEQ .no_manip
+    LDA !ram_phantoon_rng_flames : TAY
+    LDA !ram_phantoon_rng_next_flames : STA !ram_phantoon_rng_flames
+    TYA : STA !ram_phantoon_rng_next_flames : BEQ .no_manip
     DEC
     RTL
 
@@ -397,16 +399,6 @@ hook_phantoon_flame_pattern:
     LDA $05E5 ; return with random number
     RTL
 }
-
-phantoon_dirs:
-    db #$FF
-    db #$01, #$01, #$01
-    db #$00, #$00, #$00
-
-phantoon_pats:
-    db #$FF
-    db #$01, #$02, #$03
-    db #$01, #$02, #$03
 
 hook_botwoon_rng:
 {
@@ -608,6 +600,7 @@ print pc, " ridley rng end"
 
 org $A7FFB6
 print pc, " kraid rng start"
+
 hook_kraid_rng:
 {
     LDA !ram_kraid_rng : BEQ .no_manip
@@ -618,7 +611,6 @@ hook_kraid_rng:
     LDA $05E5     ; return with random number (overwritten code)
     RTS
 }
-
 
 kraid_intro_skip:
     LDA !sram_cutscenes : AND !CUTSCENE_FAST_KRAID : BEQ .noSkip
