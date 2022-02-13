@@ -383,8 +383,6 @@ preset_start_gameplay:
   .end_load_game_state
 
     ; Preserve layer 2 values we may have loaded from presets
-    LDA $0923 : PHA
-    LDA $0921 : PHA
     LDA $0919 : PHA
     LDA $0917 : PHA
 
@@ -424,12 +422,10 @@ endif
     PLA : CMP #$5AFE : BEQ .calculate_layer_2
     STA $0917
     PLA : STA $0919
-    PLA : STA $0921
-    PLA : STA $0923
     BRA .layer_2_loaded
 
   .calculate_layer_2
-    PLA : PLA : PLA        ; Values are not useful, but still need to pull them out of the stack
+    PLA                    ; Pull other layer 2 value but do not use it
     JSR $A2F9              ; Calculate layer 2 X position
     JSR $A33A              ; Calculate layer 2 Y position
     LDA $0917 : STA $0921  ; BG2 X scroll = layer 2 X scroll position

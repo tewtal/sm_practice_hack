@@ -38,10 +38,8 @@ local MEMTRACK = { -- {{{
     { 0x091B, 0x2, 'BG2 scroll percent to screen scroll (0 = 100, 1 = ?) (1 byte for X, 1 byte for Y)' },
     { 0x091D, 0x2, 'BG1 X scroll offset due to room transitions (Translates between screen scroll and BG1 scroll)' },
     { 0x091F, 0x2, 'BG1 Y scroll offset due to room transitions (Translates between screen scroll and BG1 scroll)' },
-    --]]
     { 0x0921, 0x2, 'BG2 X offset' },
     { 0x0923, 0x2, 'BG2 Y offset' },
-    --[[
     { 0x0925, 0x2, 'How many times the screen has scrolled? Stops at 40.' },
     { 0x0927, 0x2, 'X offset of room entrance for room transition (multiple of 100, screens)' },
     { 0x0929, 0x2, 'Y offset of room entrance for room transition (multiple of 100, screens. Adjusted by 20 when moving up)' },
@@ -2638,7 +2636,7 @@ local function save_preset(step)
     end
 
     preset_output = preset_output .. "    dw #$FFFF\n"
-    preset_output = preset_output .. ".after\n"
+    -- preset_output = preset_output .. ".after\n"
 end
 
 local function save_preset_file()

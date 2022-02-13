@@ -11,8 +11,6 @@ preset_100map_bombs_ceres_elevator:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $0000  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $093F, $0000  ; Ceres escape flag
     dw $09A2, $0000  ; Equipped Items
     dw $09A4, $0000  ; Collected Items
@@ -70,7 +68,6 @@ preset_100map_bombs_ceres_elevator:
     dw $D90A, $0000  ; Map Stations
     dw $D90C, $0000  ; Map Stations
     dw #$FFFF
-.after
 
 preset_100map_bombs_ceres_escape:
     dw #preset_100map_bombs_ceres_elevator ; Bombs: Ceres Elevator
@@ -80,7 +77,6 @@ preset_100map_bombs_ceres_escape:
     dw $07F5, $0007  ; Music Track
     dw $090F, $8000  ; Screen subpixel X position
     dw $0913, $9400  ; Screen subpixel Y position
-    dw $0921, $0100  ; BG2 X offset
     dw $093F, $0002  ; Ceres escape flag
     dw $09C2, $0018  ; Health
     dw $0A1C, $0002  ; Samus position/state
@@ -91,7 +87,6 @@ preset_100map_bombs_ceres_escape:
     dw $0AFC, $FFFF  ; Samus subpixel Y
     dw $D82E, $0001  ; Bosses
     dw #$FFFF
-.after
 
 preset_100map_bombs_ship:
     dw #preset_100map_bombs_ceres_escape ; Bombs: Ceres Escape
@@ -104,7 +99,6 @@ preset_100map_bombs_ship:
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $0400  ; Screen Y position in pixels
     dw $0917, $0200  ; Layer 2 X position
-    dw $0921, $0200  ; BG2 X offset
     dw $093F, $0000  ; Ceres escape flag
     dw $09C2, $0063  ; Health
     dw $0A1C, $0000  ; Samus position/state
@@ -114,7 +108,6 @@ preset_100map_bombs_ship:
     dw $0AFA, $0471  ; Samus Y
     dw $0AFC, $8000  ; Samus subpixel Y
     dw #$FFFF
-.after
 
 preset_100map_bombs_parlor:
     dw #preset_100map_bombs_ship ; Bombs: Ship
@@ -129,7 +122,6 @@ preset_100map_bombs_parlor:
     dw $0AFA, $049B  ; Samus Y
     dw $0AFC, $FFFF  ; Samus subpixel Y
     dw #$FFFF
-.after
 
 preset_100map_bombs_climb_down:
     dw #preset_100map_bombs_parlor ; Bombs: Parlor
@@ -140,7 +132,6 @@ preset_100map_bombs_climb_down:
     dw $0915, $03F2  ; Screen Y position in pixels
     dw $0917, $00C0  ; Layer 2 X position
     dw $0919, $02F5  ; Layer 2 Y position
-    dw $0921, $FB00  ; BG2 X offset
     dw $0A1C, $0018  ; Samus position/state
     dw $0A1E, $0204  ; More position/state
     dw $0AF6, $0199  ; Samus X
@@ -148,7 +139,6 @@ preset_100map_bombs_climb_down:
     dw $0AFA, $048A  ; Samus Y
     dw $0AFC, $0000  ; Samus subpixel Y
     dw #$FFFF
-.after
 
 preset_100map_bombs_pit_room:
     dw #preset_100map_bombs_climb_down ; Bombs: Climb Down
@@ -158,8 +148,6 @@ preset_100map_bombs_pit_room:
     dw $0913, $3800  ; Screen subpixel Y position
     dw $0915, $0800  ; Screen Y position in pixels
     dw $0919, $0600  ; Layer 2 Y position
-    dw $0921, $FF00  ; BG2 X offset
-    dw $0923, $00E0  ; BG2 Y offset
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $01DB  ; Samus X
@@ -167,7 +155,6 @@ preset_100map_bombs_pit_room:
     dw $0AFA, $088B  ; Samus Y
     dw $0AFC, $FFFF  ; Samus subpixel Y
     dw #$FFFF
-.after
 
 preset_100map_bombs_morph:
     dw #preset_100map_bombs_pit_room ; Bombs: Pit Room
@@ -180,13 +167,11 @@ preset_100map_bombs_morph:
     dw $0915, $0200  ; Screen Y position in pixels
     dw $0917, $03C0  ; Layer 2 X position
     dw $0919, $0180  ; Layer 2 Y position
-    dw $0921, $FB00  ; BG2 X offset
     dw $0A1C, $0000  ; Samus position/state
     dw $0A1E, $0000  ; More position/state
     dw $0AF6, $0580  ; Samus X
     dw $0AFA, $02A8  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_bombs_construction_zone_down:
     dw #preset_100map_bombs_morph ; Bombs: Morph
@@ -202,7 +187,6 @@ preset_100map_bombs_construction_zone_down:
     dw $0AFA, $028B  ; Samus Y
     dw $D872, $0400  ; Items
     dw #$FFFF
-.after
 
 preset_100map_bombs_construction_zone_up:
     dw #preset_100map_bombs_construction_zone_down ; Bombs: Construction Zone Down
@@ -214,15 +198,12 @@ preset_100map_bombs_construction_zone_up:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0001  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $FF00  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09C6, $0005  ; Missiles
     dw $09C8, $0005  ; Max missiles
     dw $0AF6, $0055  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw $D874, $0004  ; Items
     dw #$FFFF
-.after
 
 preset_100map_bombs_pit_room_revisit:
     dw #preset_100map_bombs_construction_zone_up ; Bombs: Construction Zone Up
@@ -232,14 +213,11 @@ preset_100map_bombs_pit_room_revisit:
     dw $090F, $0000  ; Screen subpixel X position
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0917, $0000  ; Layer 2 X position
-    dw $0921, $0000  ; BG2 X offset
-    dw $0923, $FF00  ; BG2 Y offset
     dw $0A1C, $0000  ; Samus position/state
     dw $0A1E, $0000  ; More position/state
     dw $0AF6, $0080  ; Samus X
     dw $0AFA, $0088  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_bombs_climb_up:
     dw #preset_100map_bombs_pit_room_revisit ; Bombs: Pit Room Revisit
@@ -249,8 +227,6 @@ preset_100map_bombs_climb_up:
     dw $07F5, $0005  ; Music Track
     dw $090F, $2000  ; Screen subpixel X position
     dw $0913, $AC00  ; Screen subpixel Y position
-    dw $0921, $FD00  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $0087  ; Samus X
@@ -258,7 +234,6 @@ preset_100map_bombs_climb_up:
     dw $D820, $0001  ; Events
     dw $D8B2, $0400  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_bombs_parlor_revisit:
     dw #preset_100map_bombs_climb_up ; Bombs: Climb Up
@@ -268,12 +243,9 @@ preset_100map_bombs_parlor_revisit:
     dw $0911, $0100  ; Screen X position in pixels
     dw $0913, $C000  ; Screen subpixel Y position
     dw $0917, $00C0  ; Layer 2 X position
-    dw $0921, $FE00  ; BG2 X offset
-    dw $0923, $F800  ; BG2 Y offset
     dw $0AF6, $01A0  ; Samus X
     dw $0AFA, $005B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_bombs_flyway:
     dw #preset_100map_bombs_parlor_revisit ; Bombs: Parlor Revisit
@@ -285,15 +257,12 @@ preset_100map_bombs_flyway:
     dw $0915, $01E6  ; Screen Y position in pixels
     dw $0917, $0240  ; Layer 2 X position
     dw $0919, $016C  ; Layer 2 Y position
-    dw $0921, $FF00  ; BG2 X offset
-    dw $0923, $FB00  ; BG2 Y offset
     dw $09D2, $0001  ; Currently selected item
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $0369  ; Samus X
     dw $0AFA, $026B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_bombs_bomb_torizo:
     dw #preset_100map_bombs_flyway ; Bombs: Flyway
@@ -305,15 +274,12 @@ preset_100map_bombs_bomb_torizo:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0180  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $0100  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09C6, $0000  ; Missiles
     dw $09D2, $0000  ; Currently selected item
     dw $0AF6, $02BE  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw $D8B2, $2400  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_varia_alcatraz:
     dw #preset_100map_bombs_bomb_torizo ; Bombs: Bomb Torizo
@@ -322,7 +288,6 @@ preset_100map_varia_alcatraz:
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $5400  ; Screen subpixel Y position
     dw $0917, $0000  ; Layer 2 X position
-    dw $0921, $FD00  ; BG2 X offset
     dw $09A2, $1004  ; Equipped Items
     dw $09A4, $1004  ; Collected Items
     dw $09C6, $0005  ; Missiles
@@ -333,7 +298,6 @@ preset_100map_varia_alcatraz:
     dw $D870, $0080  ; Items
     dw $D8B2, $2C00  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_varia_early_supers:
     dw #preset_100map_varia_alcatraz ; Varia: Alcatraz
@@ -344,8 +308,6 @@ preset_100map_varia_early_supers:
     dw $0913, $8000  ; Screen subpixel Y position
     dw $0915, $0409  ; Screen Y position in pixels
     dw $0919, $0306  ; Layer 2 Y position
-    dw $0921, $FF00  ; BG2 X offset
-    dw $0923, $FC00  ; BG2 Y offset
     dw $09C2, $008B  ; Health
     dw $09C4, $00C7  ; Max health
     dw $09C6, $0000  ; Missiles
@@ -356,7 +318,6 @@ preset_100map_varia_early_supers:
     dw $D870, $0180  ; Items
     dw $D8B4, $0002  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_varia_brinstar_reserve:
     dw #preset_100map_varia_early_supers ; Varia: Early Supers
@@ -368,8 +329,6 @@ preset_100map_varia_brinstar_reserve:
     dw $0915, $0100  ; Screen Y position in pixels
     dw $0917, $0180  ; Layer 2 X position
     dw $0919, $00C0  ; Layer 2 Y position
-    dw $0921, $0100  ; BG2 X offset
-    dw $0923, $FF00  ; BG2 Y offset
     dw $09C2, $0077  ; Health
     dw $09CA, $0004  ; Supers
     dw $09CC, $0005  ; Max supers
@@ -378,7 +337,6 @@ preset_100map_varia_brinstar_reserve:
     dw $D872, $0401  ; Items
     dw $D8B4, $0042  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_varia_reverse_mockball:
     dw #preset_100map_varia_brinstar_reserve ; Varia: Brinstar Reserve
@@ -391,13 +349,11 @@ preset_100map_varia_reverse_mockball:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0923, $0000  ; BG2 Y offset
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $003F  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_varia_green_hill_zone:
     dw #preset_100map_varia_reverse_mockball ; Varia: Reverse Mockball
@@ -410,8 +366,6 @@ preset_100map_varia_green_hill_zone:
     dw $0915, $061D  ; Screen Y position in pixels
     dw $0917, $0240  ; Layer 2 X position
     dw $0919, $0495  ; Layer 2 Y position
-    dw $0921, $FF00  ; BG2 X offset
-    dw $0923, $FE00  ; BG2 Y offset
     dw $09A6, $1000  ; Beams
     dw $09A8, $1000  ; Beams
     dw $09C6, $0005  ; Missiles
@@ -424,7 +378,6 @@ preset_100map_varia_green_hill_zone:
     dw $D872, $04C1  ; Items
     dw $D8B4, $0246  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_varia_red_tower_down:
     dw #preset_100map_varia_green_hill_zone ; Varia: Green Hill Zone
@@ -436,15 +389,12 @@ preset_100map_varia_red_tower_down:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $03C0  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $0100  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09C6, $0004  ; Missiles
     dw $09CA, $0003  ; Supers
     dw $0AF6, $05BD  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw $D8B6, $0008  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_varia_skree_boost:
     dw #preset_100map_varia_red_tower_down ; Varia: Red Tower Down
@@ -457,11 +407,9 @@ preset_100map_varia_skree_boost:
     dw $0915, $091A  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $06D3  ; Layer 2 Y position
-    dw $0923, $FC00  ; BG2 Y offset
     dw $0AF6, $0066  ; Samus X
     dw $0AFA, $098B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_varia_kraid_entrance:
     dw #preset_100map_varia_red_tower_down ; Varia: Red Tower Down
@@ -472,14 +420,12 @@ preset_100map_varia_kraid_entrance:
     dw $0913, $B000  ; Screen subpixel Y position
     dw $0915, $0100  ; Screen Y position in pixels
     dw $0919, $0100  ; Layer 2 Y position
-    dw $0923, $FF00  ; BG2 Y offset
     dw $09C2, $0078  ; Health
     dw $09CA, $0002  ; Supers
     dw $0AF6, $004C  ; Samus X
     dw $0AFA, $018B  ; Samus Y
     dw $D8B6, $8108  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_varia_kraid_kihunter_room:
     dw #preset_100map_varia_kraid_entrance ; Varia: Kraid Entrance
@@ -489,7 +435,6 @@ preset_100map_varia_kraid_kihunter_room:
     dw $0911, $0100  ; Screen X position in pixels
     dw $0913, $3000  ; Screen subpixel Y position
     dw $0917, $00C0  ; Layer 2 X position
-    dw $0923, $0000  ; BG2 Y offset
     dw $09C2, $006E  ; Health
     dw $09CA, $0001  ; Supers
     dw $0A1C, $0027  ; Samus position/state
@@ -497,7 +442,6 @@ preset_100map_varia_kraid_kihunter_room:
     dw $0AF6, $016B  ; Samus X
     dw $0AFA, $0190  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_varia_kihunter_save_room:
     dw #preset_100map_varia_kraid_kihunter_room ; Varia: Kraid Kihunter Room
@@ -514,7 +458,6 @@ preset_100map_varia_kihunter_save_room:
     dw $0AF6, $0028  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_varia_kraid:
     dw #preset_100map_varia_kihunter_save_room ; Varia: Kihunter Save Room
@@ -528,7 +471,6 @@ preset_100map_varia_kraid:
     dw $0915, $0100  ; Screen Y position in pixels
     dw $0917, $0100  ; Layer 2 X position
     dw $0919, $0100  ; Layer 2 Y position
-    dw $0923, $FF00  ; BG2 Y offset
     dw $09C2, $005D  ; Health
     dw $09C6, $0003  ; Missiles
     dw $09CA, $0004  ; Supers
@@ -538,7 +480,6 @@ preset_100map_varia_kraid:
     dw $0AFA, $018B  ; Samus Y
     dw $D8B8, $0024  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_speed_booster_kraid_dboost_room_out:
     dw #preset_100map_varia_kraid ; Varia: Kraid
@@ -551,7 +492,6 @@ preset_100map_speed_booster_kraid_dboost_room_out:
     dw $0915, $00FE  ; Screen Y position in pixels
     dw $0917, $0001  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $FE00  ; BG2 X offset
     dw $09A2, $1005  ; Equipped Items
     dw $09A4, $1005  ; Collected Items
     dw $09C2, $00A3  ; Health
@@ -564,7 +504,6 @@ preset_100map_speed_booster_kraid_dboost_room_out:
     dw $D876, $0001  ; Items
     dw $D8B8, $00E4  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_speed_booster_leaving_kraid_refill:
     dw #preset_100map_speed_booster_kraid_dboost_room_out ; Speed Booster: Kraid D-Boost Room Out
@@ -574,15 +513,12 @@ preset_100map_speed_booster_leaving_kraid_refill:
     dw $0913, $B000  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
-    dw $0921, $0100  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09C2, $009B  ; Health
     dw $09CA, $0002  ; Supers
     dw $0AF6, $0029  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw $D8B8, $00F4  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_speed_booster_kihunter_room_leaving:
     dw #preset_100map_speed_booster_leaving_kraid_refill ; Speed Booster: Leaving Kraid Refill
@@ -592,14 +528,12 @@ preset_100map_speed_booster_kihunter_room_leaving:
     dw $0911, $003A  ; Screen X position in pixels
     dw $0913, $E800  ; Screen subpixel Y position
     dw $0917, $002B  ; Layer 2 X position
-    dw $0921, $FA00  ; BG2 X offset
     dw $09C6, $0006  ; Missiles
     dw $09CA, $0005  ; Supers
     dw $0AF6, $00BA  ; Samus X
     dw $0AFA, $00AB  ; Samus Y
     dw $D8B8, $00FC  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_speed_booster_mouthball:
     dw #preset_100map_speed_booster_kihunter_room_leaving ; Speed Booster: Kihunter Room Leaving
@@ -613,8 +547,6 @@ preset_100map_speed_booster_mouthball:
     dw $0915, $001C  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $001C  ; Layer 2 Y position
-    dw $0921, $0100  ; BG2 X offset
-    dw $0923, $FF00  ; BG2 Y offset
     dw $09C2, $012B  ; Health
     dw $09C4, $012B  ; Max health
     dw $09C6, $000A  ; Missiles
@@ -623,7 +555,6 @@ preset_100map_speed_booster_mouthball:
     dw $D874, $0804  ; Items
     dw $D8B8, $00FF  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_speed_booster_precathedral:
     dw #preset_100map_speed_booster_mouthball ; Speed Booster: Mouthball
@@ -634,7 +565,6 @@ preset_100map_speed_booster_precathedral:
     dw $0913, $BFFF  ; Screen subpixel Y position
     dw $0915, $02F6  ; Screen Y position in pixels
     dw $0919, $0238  ; Layer 2 Y position
-    dw $0923, $FB00  ; BG2 Y offset
     dw $09A2, $1105  ; Equipped Items
     dw $09A4, $1105  ; Collected Items
     dw $09C2, $018F  ; Health
@@ -650,7 +580,6 @@ preset_100map_speed_booster_precathedral:
     dw $D8B8, $20FF  ; Doors
     dw $D8BA, $0001  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_speed_booster_cathedral:
     dw #preset_100map_speed_booster_precathedral ; Speed Booster: Pre-Cathedral
@@ -662,13 +591,11 @@ preset_100map_speed_booster_cathedral:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0200  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0923, $0000  ; BG2 Y offset
     dw $09CA, $0002  ; Supers
     dw $0AF6, $02A3  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw $D8B8, $24FF  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_speed_booster_bubble_mountain:
     dw #preset_100map_speed_booster_cathedral ; Speed Booster: Cathedral
@@ -678,13 +605,11 @@ preset_100map_speed_booster_bubble_mountain:
     dw $0911, $0400  ; Screen X position in pixels
     dw $0913, $1000  ; Screen subpixel Y position
     dw $0917, $0300  ; Layer 2 X position
-    dw $0921, $FB00  ; BG2 X offset
     dw $09C2, $0185  ; Health
     dw $09CA, $0001  ; Supers
     dw $0AF6, $04B0  ; Samus X
     dw $D8B8, $26FF  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_speed_booster_bubble_mountain_climb:
     dw #preset_100map_speed_booster_bubble_mountain ; Speed Booster: Bubble Mountain
@@ -694,10 +619,8 @@ preset_100map_speed_booster_bubble_mountain_climb:
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $8000  ; Screen subpixel Y position
     dw $0917, $0000  ; Layer 2 X position
-    dw $0921, $FF00  ; BG2 X offset
     dw $0AF6, $00C7  ; Samus X
     dw #$FFFF
-.after
 
 preset_100map_speed_booster_bat_cave:
     dw #preset_100map_speed_booster_bubble_mountain_climb ; Speed Booster: Bubble Mountain Climb
@@ -707,13 +630,10 @@ preset_100map_speed_booster_bat_cave:
     dw $0911, $0100  ; Screen X position in pixels
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0917, $00C0  ; Layer 2 X position
-    dw $0921, $0100  ; BG2 X offset
-    dw $0923, $FF00  ; BG2 Y offset
     dw $09C6, $000E  ; Missiles
     dw $0AF6, $01BC  ; Samus X
     dw $D8BA, $0011  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_speed_booster_speed_hallway_in:
     dw #preset_100map_speed_booster_bat_cave ; Speed Booster: Bat Cave
@@ -728,7 +648,6 @@ preset_100map_speed_booster_speed_hallway_in:
     dw $09CA, $0003  ; Supers
     dw $0AF6, $00B6  ; Samus X
     dw #$FFFF
-.after
 
 preset_100map_speed_booster_speed_booster_2:
     dw #preset_100map_speed_booster_speed_hallway_in ; Speed Booster: Speed Hallway In
@@ -739,13 +658,11 @@ preset_100map_speed_booster_speed_booster_2:
     dw $0915, $0100  ; Screen Y position in pixels
     dw $0917, $0840  ; Layer 2 X position
     dw $0919, $00C0  ; Layer 2 Y position
-    dw $0923, $0000  ; BG2 Y offset
     dw $09CA, $0002  ; Supers
     dw $0AF6, $0BAD  ; Samus X
     dw $0AFA, $018B  ; Samus Y
     dw $D8BA, $0031  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_grapple_single_chamber:
     dw #preset_100map_speed_booster_speed_booster_2 ; Speed Booster: Speed Booster
@@ -756,7 +673,6 @@ preset_100map_grapple_single_chamber:
     dw $0915, $00FD  ; Screen Y position in pixels
     dw $0917, $00C0  ; Layer 2 X position
     dw $0919, $00BD  ; Layer 2 Y position
-    dw $0921, $FE00  ; BG2 X offset
     dw $09A2, $3105  ; Equipped Items
     dw $09A4, $3105  ; Collected Items
     dw $09C2, $018D  ; Health
@@ -766,7 +682,6 @@ preset_100map_grapple_single_chamber:
     dw $D822, $0020  ; Events
     dw $D878, $0004  ; Items
     dw #$FFFF
-.after
 
 preset_100map_grapple_double_chamber:
     dw #preset_100map_grapple_single_chamber ; Grapple: Single Chamber
@@ -778,13 +693,10 @@ preset_100map_grapple_double_chamber:
     dw $0915, $0104  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $00C3  ; Layer 2 Y position
-    dw $0921, $FF00  ; BG2 X offset
-    dw $0923, $FF00  ; BG2 Y offset
     dw $09C6, $0008  ; Missiles
     dw $0AF6, $00B1  ; Samus X
     dw $D8BA, $0071  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_grapple_double_chamber_out:
     dw #preset_100map_grapple_double_chamber ; Grapple: Double Chamber
@@ -795,8 +707,6 @@ preset_100map_grapple_double_chamber_out:
     dw $0913, $CC00  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $0100  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09A6, $1001  ; Beams
     dw $09A8, $1001  ; Beams
     dw $09C6, $000D  ; Missiles
@@ -809,7 +719,6 @@ preset_100map_grapple_double_chamber_out:
     dw $D878, $001C  ; Items
     dw $D8BA, $00F1  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_grapple_river_styx:
     dw #preset_100map_grapple_double_chamber_out ; Grapple: Double Chamber Out
@@ -820,15 +729,12 @@ preset_100map_grapple_river_styx:
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $0300  ; Screen Y position in pixels
     dw $0919, $0240  ; Layer 2 Y position
-    dw $0921, $FF00  ; BG2 X offset
-    dw $0923, $FE00  ; BG2 Y offset
     dw $09C2, $0188  ; Health
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $0025  ; Samus X
     dw $0AFA, $036B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_grapple_volcano_room:
     dw #preset_100map_grapple_river_styx ; Grapple: River Styx
@@ -840,13 +746,10 @@ preset_100map_grapple_volcano_room:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0240  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $0100  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09C2, $0131  ; Health
     dw $0AF6, $03AC  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_grapple_reverse_magdollite_room:
     dw #preset_100map_grapple_volcano_room ; Grapple: Volcano Room
@@ -858,13 +761,11 @@ preset_100map_grapple_reverse_magdollite_room:
     dw $0915, $0022  ; Screen Y position in pixels
     dw $0917, $0100  ; Layer 2 X position
     dw $0919, $0022  ; Layer 2 Y position
-    dw $0921, $FE00  ; BG2 X offset
     dw $09C2, $00DA  ; Health
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $0152  ; Samus X
     dw #$FFFF
-.after
 
 preset_100map_grapple_purple_shaft:
     dw #preset_100map_grapple_reverse_magdollite_room ; Grapple: Reverse Magdollite Room
@@ -876,12 +777,10 @@ preset_100map_grapple_purple_shaft:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $FD00  ; BG2 X offset
     dw $09C2, $00F3  ; Health
     dw $09C6, $000C  ; Missiles
     dw $0AF6, $0052  ; Samus X
     dw #$FFFF
-.after
 
 preset_100map_grapple_bubble_mountain_corner:
     dw #preset_100map_grapple_purple_shaft ; Grapple: Purple Shaft
@@ -890,10 +789,8 @@ preset_100map_grapple_bubble_mountain_corner:
     dw $090F, $2000  ; Screen subpixel X position
     dw $0913, $3C00  ; Screen subpixel Y position
     dw $0917, $0001  ; Layer 2 X position
-    dw $0921, $0100  ; BG2 X offset
     dw $0AF6, $002A  ; Samus X
     dw #$FFFF
-.after
 
 preset_100map_grapple_crocomire:
     dw #preset_100map_grapple_bubble_mountain_corner ; Grapple: Bubble Mountain Corner
@@ -903,15 +800,12 @@ preset_100map_grapple_crocomire:
     dw $0915, $021F  ; Screen Y position in pixels
     dw $0917, $0900  ; Layer 2 X position
     dw $0919, $0197  ; Layer 2 Y position
-    dw $0921, $F300  ; BG2 X offset
-    dw $0923, $FE00  ; BG2 Y offset
     dw $09C2, $0105  ; Health
     dw $09C6, $0012  ; Missiles
     dw $0AF6, $0CA9  ; Samus X
     dw $0AFA, $02BB  ; Samus Y
     dw $D8B8, $66FF  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_grapple_leaving_croc_spikesuit:
     dw #preset_100map_grapple_crocomire ; Grapple: Crocomire
@@ -925,8 +819,6 @@ preset_100map_grapple_leaving_croc_spikesuit:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0001  ; Layer 2 Y position
-    dw $0921, $FD00  ; BG2 X offset
-    dw $0923, $00E0  ; BG2 Y offset
     dw $09C2, $01F3  ; Health
     dw $09C4, $01F3  ; Max health
     dw $09C6, $0014  ; Missiles
@@ -937,7 +829,6 @@ preset_100map_grapple_leaving_croc_spikesuit:
     dw $D82A, $0002  ; Bosses
     dw $D876, $01B1  ; Items
     dw #$FFFF
-.after
 
 preset_100map_grapple_crocomire_shaft:
     dw #preset_100map_grapple_leaving_croc_spikesuit ; Grapple: Leaving Croc (Spikesuit)
@@ -949,8 +840,6 @@ preset_100map_grapple_crocomire_shaft:
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $7000  ; Screen subpixel Y position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $FF00  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09CA, $0002  ; Supers
     dw $09CE, $0005  ; Pbs
     dw $09D0, $0005  ; Max pbs
@@ -961,7 +850,6 @@ preset_100map_grapple_crocomire_shaft:
     dw $D876, $03B1  ; Items
     dw $D8BA, $00F3  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_grapple_cosine_missile_room:
     dw #preset_100map_grapple_crocomire_shaft ; Grapple: Crocomire Shaft
@@ -971,14 +859,11 @@ preset_100map_grapple_cosine_missile_room:
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $02FB  ; Screen Y position in pixels
     dw $0919, $023C  ; Layer 2 Y position
-    dw $0921, $0000  ; BG2 X offset
-    dw $0923, $00E0  ; BG2 Y offset
     dw $09CA, $0001  ; Supers
     dw $0AF6, $00DB  ; Samus X
     dw $0AFA, $038B  ; Samus Y
     dw $D8BA, $00F7  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_grapple_indiana_jones_room:
     dw #preset_100map_grapple_cosine_missile_room ; Grapple: Cosine Missile Room
@@ -987,8 +872,6 @@ preset_100map_grapple_indiana_jones_room:
     dw $0913, $1000  ; Screen subpixel Y position
     dw $0915, $041F  ; Screen Y position in pixels
     dw $0919, $0317  ; Layer 2 Y position
-    dw $0921, $FF00  ; BG2 X offset
-    dw $0923, $FD00  ; BG2 Y offset
     dw $09C2, $0179  ; Health
     dw $09D2, $0003  ; Currently selected item
     dw $0A1C, $0002  ; Samus position/state
@@ -996,7 +879,6 @@ preset_100map_grapple_indiana_jones_room:
     dw $0AF6, $00A7  ; Samus X
     dw $0AFA, $04BB  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_grapple_grapple_beam:
     dw #preset_100map_grapple_indiana_jones_room ; Grapple: Indiana Jones Room
@@ -1007,14 +889,11 @@ preset_100map_grapple_grapple_beam:
     dw $0915, $00F6  ; Screen Y position in pixels
     dw $0917, $000C  ; Layer 2 X position
     dw $0919, $00F6  ; Layer 2 Y position
-    dw $0921, $FA00  ; BG2 X offset
-    dw $0923, $FEE0  ; BG2 Y offset
     dw $09C2, $0183  ; Health
     dw $09CE, $0004  ; Pbs
     dw $0AF6, $00B0  ; Samus X
     dw $0AFA, $018B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_xray_grapple_playground_1:
     dw #preset_100map_grapple_grapple_beam ; Grapple: Grapple Beam
@@ -1027,8 +906,6 @@ preset_100map_xray_grapple_playground_1:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $FF00  ; BG2 X offset
-    dw $0923, $FE00  ; BG2 Y offset
     dw $09A2, $7105  ; Equipped Items
     dw $09A4, $7105  ; Collected Items
     dw $0A1C, $0001  ; Samus position/state
@@ -1037,7 +914,6 @@ preset_100map_xray_grapple_playground_1:
     dw $0AFA, $008B  ; Samus Y
     dw $D876, $13B1  ; Items
     dw #$FFFF
-.after
 
 preset_100map_xray_grapple_playground_2:
     dw #preset_100map_xray_grapple_playground_1 ; X-Ray: Grapple Playground 1
@@ -1048,11 +924,8 @@ preset_100map_xray_grapple_playground_2:
     dw $0911, $0100  ; Screen X position in pixels
     dw $0913, $AC00  ; Screen subpixel Y position
     dw $0917, $00C0  ; Layer 2 X position
-    dw $0921, $0100  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $0AF6, $0181  ; Samus X
     dw #$FFFF
-.after
 
 preset_100map_xray_grapple_playground_final:
     dw #preset_100map_xray_grapple_playground_2 ; X-Ray: Grapple Playground 2
@@ -1064,11 +937,9 @@ preset_100map_xray_grapple_playground_final:
     dw $0915, $000C  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0009  ; Layer 2 Y position
-    dw $0923, $FE00  ; BG2 Y offset
     dw $0AF6, $00A9  ; Samus X
     dw $0AFA, $009B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_xray_crocomire_farm_room:
     dw #preset_100map_xray_grapple_playground_final ; X-Ray: Grapple Playground Final
@@ -1078,14 +949,12 @@ preset_100map_xray_crocomire_farm_room:
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0923, $0000  ; BG2 Y offset
     dw $09C2, $0165  ; Health
     dw $09CA, $0000  ; Supers
     dw $09D2, $0000  ; Currently selected item
     dw $0AF6, $002C  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_xray_crocomire_cac_shaft:
     dw #preset_100map_xray_crocomire_farm_room ; X-Ray: Crocomire Farm Room
@@ -1100,7 +969,6 @@ preset_100map_xray_crocomire_cac_shaft:
     dw $0AF6, $013B  ; Samus X
     dw $0AFA, $009B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_xray_crocomire_escape:
     dw #preset_100map_xray_crocomire_cac_shaft ; X-Ray: Crocomire Cac Shaft
@@ -1118,7 +986,6 @@ preset_100map_xray_crocomire_escape:
     dw $0AFA, $008B  ; Samus Y
     dw $D8B8, $E6FF  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_xray_business_center:
     dw #preset_100map_xray_crocomire_escape ; X-Ray: Crocomire Escape
@@ -1128,8 +995,6 @@ preset_100map_xray_business_center:
     dw $0913, $DC00  ; Screen subpixel Y position
     dw $0915, $0004  ; Screen Y position in pixels
     dw $0919, $0004  ; Layer 2 Y position
-    dw $0921, $FC00  ; BG2 X offset
-    dw $0923, $FF00  ; BG2 Y offset
     dw $09C2, $01B8  ; Health
     dw $09C6, $0019  ; Missiles
     dw $09C8, $0019  ; Max missiles
@@ -1137,7 +1002,6 @@ preset_100map_xray_business_center:
     dw $0AF6, $0053  ; Samus X
     dw $D876, $13F1  ; Items
     dw #$FFFF
-.after
 
 preset_100map_xray_below_spazer:
     dw #preset_100map_xray_business_center ; X-Ray: Business Center
@@ -1148,14 +1012,11 @@ preset_100map_xray_below_spazer:
     dw $0913, $8000  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $FF00  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09CA, $0005  ; Supers
     dw $09CE, $0003  ; Pbs
     dw $0AF6, $00C5  ; Samus X
     dw $D8B8, $F6FF  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_xray_red_tower_climb:
     dw #preset_100map_xray_below_spazer ; X-Ray: Below Spazer
@@ -1168,7 +1029,6 @@ preset_100map_xray_red_tower_climb:
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $00D2  ; Samus X
     dw #$FFFF
-.after
 
 preset_100map_xray_xray_hall_in_spikesuit:
     dw #preset_100map_xray_red_tower_climb ; X-Ray: Red Tower Climb
@@ -1178,8 +1038,6 @@ preset_100map_xray_xray_hall_in_spikesuit:
     dw $0913, $9C00  ; Screen subpixel Y position
     dw $0915, $061C  ; Screen Y position in pixels
     dw $0919, $0495  ; Layer 2 Y position
-    dw $0921, $0100  ; BG2 X offset
-    dw $0923, $F700  ; BG2 Y offset
     dw $09CE, $0002  ; Pbs
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
@@ -1187,7 +1045,6 @@ preset_100map_xray_xray_hall_in_spikesuit:
     dw $0AFA, $068B  ; Samus Y
     dw $D8B6, $8308  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_xray_xray_hall_out:
     dw #preset_100map_xray_xray_hall_in_spikesuit ; X-Ray: X-Ray Hall In (Spikesuit)
@@ -1200,8 +1057,6 @@ preset_100map_xray_xray_hall_out:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $00C0  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $FE00  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09C2, $0135  ; Health
     dw $09CA, $0004  ; Supers
     dw $09D2, $0003  ; Currently selected item
@@ -1212,7 +1067,6 @@ preset_100map_xray_xray_hall_out:
     dw $0AFA, $008B  ; Samus Y
     dw $D8B6, $8708  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_phantoon_red_tower_up:
     dw #preset_100map_xray_xray_hall_out ; X-Ray: X-Ray Hall Out
@@ -1223,11 +1077,9 @@ preset_100map_phantoon_red_tower_up:
     dw $0911, $0700  ; Screen X position in pixels
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0917, $0700  ; Layer 2 X position
-    dw $0921, $0100  ; BG2 X offset
     dw $09C2, $00D7  ; Health
     dw $0AF6, $07A4  ; Samus X
     dw #$FFFF
-.after
 
 preset_100map_phantoon_hellway:
     dw #preset_100map_phantoon_red_tower_up ; Phantoon: Red Tower Up
@@ -1239,11 +1091,9 @@ preset_100map_phantoon_hellway:
     dw $0915, $0014  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $000F  ; Layer 2 Y position
-    dw $0923, $FA00  ; BG2 Y offset
     dw $09CE, $0001  ; Pbs
     dw $0AF6, $0091  ; Samus X
     dw #$FFFF
-.after
 
 preset_100map_phantoon_alpha_pbs:
     dw #preset_100map_phantoon_hellway ; Phantoon: Hellway
@@ -1253,7 +1103,6 @@ preset_100map_phantoon_alpha_pbs:
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $071C  ; Screen Y position in pixels
     dw $0919, $071C  ; Layer 2 Y position
-    dw $0923, $FB00  ; BG2 Y offset
     dw $09C2, $00C7  ; Health
     dw $09CA, $0003  ; Supers
     dw $09D2, $0000  ; Currently selected item
@@ -1263,7 +1112,6 @@ preset_100map_phantoon_alpha_pbs:
     dw $0AFA, $078B  ; Samus Y
     dw $D8B6, $A708  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_phantoon_caterpillar_room_up:
     dw #preset_100map_phantoon_alpha_pbs ; Phantoon: Alpha PBs
@@ -1276,8 +1124,6 @@ preset_100map_phantoon_caterpillar_room_up:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0180  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $FD00  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09C2, $00BD  ; Health
     dw $09CE, $0005  ; Pbs
     dw $09D0, $000A  ; Max pbs
@@ -1287,7 +1133,6 @@ preset_100map_phantoon_caterpillar_room_up:
     dw $0AFA, $008B  ; Samus Y
     dw $D874, $0904  ; Items
     dw #$FFFF
-.after
 
 preset_100map_phantoon_beta_pbs:
     dw #preset_100map_phantoon_caterpillar_room_up ; Phantoon: Caterpillar Room Up
@@ -1300,8 +1145,6 @@ preset_100map_phantoon_beta_pbs:
     dw $0915, $02F1  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $02F1  ; Layer 2 Y position
-    dw $0921, $FF00  ; BG2 X offset
-    dw $0923, $FC00  ; BG2 Y offset
     dw $09C2, $00E3  ; Health
     dw $09CA, $0004  ; Supers
     dw $09D2, $0003  ; Currently selected item
@@ -1311,7 +1154,6 @@ preset_100map_phantoon_beta_pbs:
     dw $0AFA, $038B  ; Samus Y
     dw $D8B6, $AF08  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_phantoon_crateria_kihunters_room:
     dw #preset_100map_phantoon_beta_pbs ; Phantoon: Beta PBs
@@ -1322,8 +1164,6 @@ preset_100map_phantoon_crateria_kihunters_room:
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $0000  ; BG2 X offset
-    dw $0923, $FF00  ; BG2 Y offset
     dw $09C2, $00DB  ; Health
     dw $09CA, $0005  ; Supers
     dw $09CE, $0009  ; Pbs
@@ -1335,7 +1175,6 @@ preset_100map_phantoon_crateria_kihunters_room:
     dw $D874, $0984  ; Items
     dw $D8B6, $EF08  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_phantoon_ws_shaft_down_no_save:
     dw #preset_100map_phantoon_crateria_kihunters_room ; Phantoon: Crateria Kihunters Room
@@ -1347,8 +1186,6 @@ preset_100map_phantoon_ws_shaft_down_no_save:
     dw $0911, $02FD  ; Screen X position in pixels
     dw $0913, $1C00  ; Screen subpixel Y position
     dw $0917, $023D  ; Layer 2 X position
-    dw $0921, $0100  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09C2, $0062  ; Health
     dw $09C6, $0018  ; Missiles
     dw $09CA, $0004  ; Supers
@@ -1361,7 +1198,6 @@ preset_100map_phantoon_ws_shaft_down_no_save:
     dw $D8B0, $3000  ; Doors
     dw $D8B2, $2C01  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_phantoon_basement:
     dw #preset_100map_phantoon_ws_shaft_down_no_save ; Phantoon: WS Shaft Down (No Save)
@@ -1373,8 +1209,6 @@ preset_100map_phantoon_basement:
     dw $0915, $071F  ; Screen Y position in pixels
     dw $0917, $0300  ; Layer 2 X position
     dw $0919, $0557  ; Layer 2 Y position
-    dw $0921, $FB00  ; BG2 X offset
-    dw $0923, $FD00  ; BG2 Y offset
     dw $09CA, $0003  ; Supers
     dw $09CE, $0006  ; Pbs
     dw $0A1C, $0002  ; Samus position/state
@@ -1383,7 +1217,6 @@ preset_100map_phantoon_basement:
     dw $0AFA, $07BB  ; Samus Y
     dw $D8C0, $0010  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_phantoon_basement_speedball:
     dw #preset_100map_phantoon_basement ; Phantoon: Basement
@@ -1395,14 +1228,11 @@ preset_100map_phantoon_basement_speedball:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $FF00  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $0A1C, $0089  ; Samus position/state
     dw $0A1E, $1508  ; More position/state
     dw $0AF6, $00DB  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_phantoon_phantoon_2:
     dw #preset_100map_phantoon_basement_speedball ; Phantoon: Basement Speedball
@@ -1412,14 +1242,12 @@ preset_100map_phantoon_phantoon_2:
     dw $0911, $0400  ; Screen X position in pixels
     dw $0913, $0400  ; Screen subpixel Y position
     dw $0917, $0300  ; Layer 2 X position
-    dw $0921, $0100  ; BG2 X offset
     dw $09CA, $0002  ; Supers
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $04D4  ; Samus X
     dw $D8C0, $0030  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_gravity_right_supers:
     dw #preset_100map_phantoon_phantoon_2 ; Phantoon: Phantoon
@@ -1428,7 +1256,6 @@ preset_100map_gravity_right_supers:
     dw $0911, $0217  ; Screen X position in pixels
     dw $0913, $DC00  ; Screen subpixel Y position
     dw $0917, $0191  ; Layer 2 X position
-    dw $0921, $FB00  ; BG2 X offset
     dw $09C2, $00BC  ; Health
     dw $09C6, $0019  ; Missiles
     dw $09CA, $0004  ; Supers
@@ -1440,7 +1267,6 @@ preset_100map_gravity_right_supers:
     dw $D82A, $0102  ; Bosses
     dw $D8C0, $0070  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_gravity_main_shaft_climb:
     dw #preset_100map_gravity_right_supers ; Gravity: Right Supers
@@ -1450,7 +1276,6 @@ preset_100map_gravity_main_shaft_climb:
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $3800  ; Screen subpixel Y position
     dw $0917, $0000  ; Layer 2 X position
-    dw $0921, $FF00  ; BG2 X offset
     dw $09C2, $00A5  ; Health
     dw $09C6, $0018  ; Missiles
     dw $09CA, $000E  ; Supers
@@ -1463,7 +1288,6 @@ preset_100map_gravity_main_shaft_climb:
     dw $D880, $0060  ; Items
     dw $D8C0, $0074  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_gravity_attic:
     dw #preset_100map_gravity_main_shaft_climb ; Gravity: Main Shaft Climb
@@ -1473,14 +1297,11 @@ preset_100map_gravity_attic:
     dw $0911, $0400  ; Screen X position in pixels
     dw $0913, $2000  ; Screen subpixel Y position
     dw $0917, $0300  ; Layer 2 X position
-    dw $0921, $FD00  ; BG2 X offset
-    dw $0923, $FA00  ; BG2 Y offset
     dw $09C2, $00B9  ; Health
     dw $09C6, $0017  ; Missiles
     dw $0AF6, $0443  ; Samus X
     dw $0AFA, $006B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_gravity_robots_of_pain:
     dw #preset_100map_gravity_attic ; Gravity: Attic
@@ -1492,8 +1313,6 @@ preset_100map_gravity_robots_of_pain:
     dw $0915, $001F  ; Screen Y position in pixels
     dw $0917, $0480  ; Layer 2 X position
     dw $0919, $001E  ; Layer 2 Y position
-    dw $0921, $FC00  ; BG2 X offset
-    dw $0923, $FF00  ; BG2 Y offset
     dw $09C2, $00CB  ; Health
     dw $09C6, $0014  ; Missiles
     dw $09CA, $0009  ; Supers
@@ -1501,7 +1320,6 @@ preset_100map_gravity_robots_of_pain:
     dw $0AFA, $008B  ; Samus Y
     dw $D8C0, $0374  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_gravity_west_ocean:
     dw #preset_100map_gravity_robots_of_pain ; Gravity: Robots of Pain
@@ -1510,8 +1328,6 @@ preset_100map_gravity_west_ocean:
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $77FF  ; Screen subpixel Y position
     dw $0917, $0000  ; Layer 2 X position
-    dw $0921, $F900  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09C2, $00B2  ; Health
     dw $09C6, $0011  ; Missiles
     dw $09CA, $0008  ; Supers
@@ -1519,7 +1335,6 @@ preset_100map_gravity_west_ocean:
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $003C  ; Samus X
     dw #$FFFF
-.after
 
 preset_100map_gravity_puddles:
     dw #preset_100map_gravity_west_ocean ; Gravity: West Ocean
@@ -1533,14 +1348,11 @@ preset_100map_gravity_puddles:
     dw $0915, $01FD  ; Screen Y position in pixels
     dw $0917, $0100  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $F800  ; BG2 X offset
-    dw $0923, $FF00  ; BG2 Y offset
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $02BE  ; Samus X
     dw $0AFA, $028B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_gravity_bowling_area:
     dw #preset_100map_gravity_puddles ; Gravity: Puddles
@@ -1551,13 +1363,10 @@ preset_100map_gravity_bowling_area:
     dw $0913, $6800  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $00C0  ; Layer 2 X position
-    dw $0921, $0100  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09C2, $00AD  ; Health
     dw $0AF6, $017B  ; Samus X
     dw $0AFA, $0090  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_forgotten_highway_leaving_gravity:
     dw #preset_100map_gravity_bowling_area ; Gravity: Bowling Area
@@ -1569,7 +1378,6 @@ preset_100map_forgotten_highway_leaving_gravity:
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $8000  ; Screen subpixel Y position
     dw $0917, $0001  ; Layer 2 X position
-    dw $0921, $FF00  ; BG2 X offset
     dw $09A2, $7125  ; Equipped Items
     dw $09A4, $7125  ; Collected Items
     dw $09C2, $0055  ; Health
@@ -1582,7 +1390,6 @@ preset_100map_forgotten_highway_leaving_gravity:
     dw $0AFA, $0088  ; Samus Y
     dw $D880, $00E4  ; Items
     dw #$FFFF
-.after
 
 preset_100map_forgotten_highway_moat_revisit:
     dw #preset_100map_forgotten_highway_leaving_gravity ; Forgotten Highway: Leaving Gravity
@@ -1594,14 +1401,11 @@ preset_100map_forgotten_highway_moat_revisit:
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $0401  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
-    dw $0921, $FA00  ; BG2 X offset
-    dw $0923, $FD00  ; BG2 Y offset
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $0028  ; Samus X
     dw $0AFA, $048B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_forgotten_highway_west_ocean_final:
     dw #preset_100map_forgotten_highway_moat_revisit ; Forgotten Highway: Moat Revisit
@@ -1612,14 +1416,11 @@ preset_100map_forgotten_highway_west_ocean_final:
     dw $0913, $6C00  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $00C0  ; Layer 2 X position
-    dw $0921, $FE00  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $01A7  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_forgotten_highway_sponge_bath:
     dw #preset_100map_forgotten_highway_west_ocean_final ; Forgotten Highway: West Ocean Final
@@ -1633,13 +1434,10 @@ preset_100map_forgotten_highway_sponge_bath:
     dw $0915, $0445  ; Screen Y position in pixels
     dw $0917, $0300  ; Layer 2 X position
     dw $0919, $0333  ; Layer 2 Y position
-    dw $0921, $FD00  ; BG2 X offset
-    dw $0923, $FD00  ; BG2 Y offset
     dw $0AF6, $0487  ; Samus X
     dw $0AFA, $04B4  ; Samus Y
     dw $D8C0, $037C  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_forgotten_highway_electric_death_room:
     dw #preset_100map_forgotten_highway_sponge_bath ; Forgotten Highway: Sponge Bath
@@ -1651,14 +1449,11 @@ preset_100map_forgotten_highway_electric_death_room:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $00C0  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $0100  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09C2, $0014  ; Health
     dw $09C6, $000E  ; Missiles
     dw $0AF6, $01DB  ; Samus X
     dw $0AFA, $00BB  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_forgotten_highway_wrecked_ship_etank:
     dw #preset_100map_forgotten_highway_electric_death_room ; Forgotten Highway: Electric Death Room
@@ -1670,7 +1465,6 @@ preset_100map_forgotten_highway_wrecked_ship_etank:
     dw $0915, $001C  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0015  ; Layer 2 Y position
-    dw $0923, $FE00  ; BG2 Y offset
     dw $09C2, $000D  ; Health
     dw $09CA, $0007  ; Supers
     dw $09D2, $0004  ; Currently selected item
@@ -1680,7 +1474,6 @@ preset_100map_forgotten_highway_wrecked_ship_etank:
     dw $0AFA, $008B  ; Samus Y
     dw $D8C0, $0B7C  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_forgotten_highway_east_ocean:
     dw #preset_100map_forgotten_highway_wrecked_ship_etank ; Forgotten Highway: Wrecked Ship E-Tank
@@ -1688,7 +1481,6 @@ preset_100map_forgotten_highway_east_ocean:
     dw $090F, $F000  ; Screen subpixel X position
     dw $0915, $011B  ; Screen Y position in pixels
     dw $0919, $00D4  ; Layer 2 Y position
-    dw $0923, $0000  ; BG2 Y offset
     dw $09C2, $0253  ; Health
     dw $09C4, $0257  ; Max health
     dw $09D2, $0000  ; Currently selected item
@@ -1698,7 +1490,6 @@ preset_100map_forgotten_highway_east_ocean:
     dw $0AFA, $018B  ; Samus Y
     dw $D880, $00F4  ; Items
     dw #$FFFF
-.after
 
 preset_100map_forgotten_highway_kago_room:
     dw #preset_100map_forgotten_highway_east_ocean ; Forgotten Highway: East Ocean
@@ -1712,14 +1503,12 @@ preset_100map_forgotten_highway_kago_room:
     dw $0915, $041A  ; Screen Y position in pixels
     dw $0917, $0300  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0923, $FC00  ; BG2 Y offset
     dw $09C2, $022B  ; Health
     dw $09C6, $000D  ; Missiles
     dw $09CA, $0008  ; Supers
     dw $0AF6, $06A6  ; Samus X
     dw $0AFA, $049B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_forgotten_highway_crab_maze:
     dw #preset_100map_forgotten_highway_kago_room ; Forgotten Highway: Kago Room
@@ -1731,13 +1520,11 @@ preset_100map_forgotten_highway_crab_maze:
     dw $0915, $031F  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0257  ; Layer 2 Y position
-    dw $0923, $0000  ; BG2 Y offset
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $00A9  ; Samus X
     dw $0AFA, $03BB  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_forgotten_highway_maridia_elevator:
     dw #preset_100map_forgotten_highway_crab_maze ; Forgotten Highway: Crab Maze
@@ -1749,8 +1536,6 @@ preset_100map_forgotten_highway_maridia_elevator:
     dw $0913, $2800  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $0000  ; BG2 X offset
-    dw $0923, $00E0  ; BG2 Y offset
     dw $09CE, $0004  ; Pbs
     dw $09D2, $0003  ; Currently selected item
     dw $0A1C, $0001  ; Samus position/state
@@ -1759,7 +1544,6 @@ preset_100map_forgotten_highway_maridia_elevator:
     dw $0AFA, $00AB  ; Samus Y
     dw $D8B0, $B000  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_forgotten_highway_pancakes_from_hell:
     dw #preset_100map_forgotten_highway_maridia_elevator ; Forgotten Highway: Maridia Elevator
@@ -1771,8 +1555,6 @@ preset_100map_forgotten_highway_pancakes_from_hell:
     dw $0913, $F000  ; Screen subpixel Y position
     dw $0915, $0500  ; Screen Y position in pixels
     dw $0919, $03C0  ; Layer 2 Y position
-    dw $0921, $FF00  ; BG2 X offset
-    dw $0923, $FC00  ; BG2 Y offset
     dw $09C2, $022A  ; Health
     dw $09CA, $0007  ; Supers
     dw $09D2, $0000  ; Currently selected item
@@ -1782,7 +1564,6 @@ preset_100map_forgotten_highway_pancakes_from_hell:
     dw $0AFA, $058B  ; Samus Y
     dw $D8C2, $0004  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_forgotten_highway_plasma_spark_room_1:
     dw #preset_100map_forgotten_highway_pancakes_from_hell ; Forgotten Highway: Pancakes from Hell
@@ -1792,14 +1573,11 @@ preset_100map_forgotten_highway_plasma_spark_room_1:
     dw $0913, $A800  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $0000  ; BG2 X offset
-    dw $0923, $00E0  ; BG2 Y offset
     dw $09C2, $021B  ; Health
     dw $0A1C, $008A  ; Samus position/state
     dw $0A1E, $1504  ; More position/state
     dw $0AFA, $00AB  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_forgotten_highway_west_sand_hall:
     dw #preset_100map_forgotten_highway_plasma_spark_room_1 ; Forgotten Highway: Plasma Spark Room 1
@@ -1818,7 +1596,6 @@ preset_100map_forgotten_highway_west_sand_hall:
     dw $0AFA, $018B  ; Samus Y
     dw $D8C2, $0014  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_forgotten_highway_crab_ggg:
     dw #preset_100map_forgotten_highway_west_sand_hall ; Forgotten Highway: West Sand Hall
@@ -1828,8 +1605,6 @@ preset_100map_forgotten_highway_crab_ggg:
     dw $0913, $7800  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $FF00  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09C2, $01D2  ; Health
     dw $09D2, $0004  ; Currently selected item
     dw $0A1C, $0002  ; Samus position/state
@@ -1837,7 +1612,6 @@ preset_100map_forgotten_highway_crab_ggg:
     dw $0AF6, $0038  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_space_jump_main_street:
     dw #preset_100map_forgotten_highway_crab_ggg ; Forgotten Highway: Crab GGG
@@ -1848,14 +1622,12 @@ preset_100map_space_jump_main_street:
     dw $0911, $0055  ; Screen X position in pixels
     dw $0913, $37FF  ; Screen subpixel Y position
     dw $0917, $003F  ; Layer 2 X position
-    dw $0921, $FC00  ; BG2 X offset
     dw $09C2, $0196  ; Health
     dw $09CA, $0005  ; Supers
     dw $09D2, $0000  ; Currently selected item
     dw $0AF6, $00E1  ; Samus X
     dw $0AFA, $00AB  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_space_jump_mt_everest_1:
     dw #preset_100map_space_jump_main_street ; Space Jump: Main Street
@@ -1866,15 +1638,12 @@ preset_100map_space_jump_mt_everest_1:
     dw $0915, $001C  ; Screen Y position in pixels
     dw $0917, $008A  ; Layer 2 X position
     dw $0919, $0015  ; Layer 2 Y position
-    dw $0921, $FE00  ; BG2 X offset
-    dw $0923, $F900  ; BG2 Y offset
     dw $09C2, $0178  ; Health
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $0118  ; Samus X
     dw $0AFA, $0093  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_space_jump_fish_tank_right:
     dw #preset_100map_space_jump_mt_everest_1 ; Space Jump: Mt Everest 1
@@ -1886,14 +1655,11 @@ preset_100map_space_jump_fish_tank_right:
     dw $0915, $0293  ; Screen Y position in pixels
     dw $0917, $0300  ; Layer 2 X position
     dw $0919, $01EE  ; Layer 2 Y position
-    dw $0921, $0100  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $04A8  ; Samus X
     dw $0AFA, $0323  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_space_jump_mamma_turtle:
     dw #preset_100map_space_jump_fish_tank_right ; Space Jump: Fish Tank Right
@@ -1905,14 +1671,11 @@ preset_100map_space_jump_mamma_turtle:
     dw $0915, $0218  ; Screen Y position in pixels
     dw $0917, $00F5  ; Layer 2 X position
     dw $0919, $0192  ; Layer 2 Y position
-    dw $0921, $FD00  ; BG2 X offset
-    dw $0923, $00E0  ; BG2 Y offset
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $01DF  ; Samus X
     dw $0AFA, $028B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_space_jump_fish_tank_left:
     dw #preset_100map_space_jump_mamma_turtle ; Space Jump: Mamma Turtle
@@ -1924,8 +1687,6 @@ preset_100map_space_jump_fish_tank_left:
     dw $0915, $030A  ; Screen Y position in pixels
     dw $0917, $00F4  ; Layer 2 X position
     dw $0919, $0247  ; Layer 2 Y position
-    dw $0921, $0100  ; BG2 X offset
-    dw $0923, $FD00  ; BG2 Y offset
     dw $09C2, $0140  ; Health
     dw $09CA, $0004  ; Supers
     dw $0A1C, $0002  ; Samus position/state
@@ -1934,7 +1695,6 @@ preset_100map_space_jump_fish_tank_left:
     dw $0AFA, $037B  ; Samus Y
     dw $D8C0, $4B7C  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_space_jump_everest_post_fish_tank:
     dw #preset_100map_space_jump_fish_tank_left ; Space Jump: Fish Tank Left
@@ -1945,12 +1705,9 @@ preset_100map_space_jump_everest_post_fish_tank:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0033  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $FC00  ; BG2 X offset
-    dw $0923, $FE00  ; BG2 Y offset
     dw $0AF6, $00DE  ; Samus X
     dw $0AFA, $006B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_space_jump_everest_post_crab_supers:
     dw #preset_100map_space_jump_everest_post_fish_tank ; Space Jump: Everest Post Fish Tank
@@ -1962,13 +1719,11 @@ preset_100map_space_jump_everest_post_crab_supers:
     dw $0915, $0200  ; Screen Y position in pixels
     dw $0917, $00E8  ; Layer 2 X position
     dw $0919, $0180  ; Layer 2 Y position
-    dw $0921, $FD00  ; BG2 X offset
     dw $0A1C, $0027  ; Samus position/state
     dw $0A1E, $0508  ; More position/state
     dw $0AF6, $01D6  ; Samus X
     dw $0AFA, $028F  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_space_jump_beach:
     dw #preset_100map_space_jump_everest_post_crab_supers ; Space Jump: Everest Post Crab Supers
@@ -1980,14 +1735,12 @@ preset_100map_space_jump_beach:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $0100  ; BG2 X offset
     dw $09C2, $010D  ; Health
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $0083  ; Samus X
     dw $0AFA, $005B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_space_jump_swiss_cheese_room:
     dw #preset_100map_space_jump_beach ; Space Jump: Beach
@@ -1997,13 +1750,10 @@ preset_100map_space_jump_swiss_cheese_room:
     dw $0913, $2800  ; Screen subpixel Y position
     dw $0915, $0102  ; Screen Y position in pixels
     dw $0919, $0102  ; Layer 2 Y position
-    dw $0921, $0000  ; BG2 X offset
-    dw $0923, $FD00  ; BG2 Y offset
     dw $09C2, $00F9  ; Health
     dw $0AF6, $0071  ; Samus X
     dw $0AFA, $018B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_space_jump_swiss_cheese_revisit:
     dw #preset_100map_space_jump_swiss_cheese_room ; Space Jump: Swiss Cheese Room
@@ -2015,8 +1765,6 @@ preset_100map_space_jump_swiss_cheese_revisit:
     dw $0915, $0022  ; Screen Y position in pixels
     dw $0917, $003C  ; Layer 2 X position
     dw $0919, $0022  ; Layer 2 Y position
-    dw $0921, $FE00  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09C2, $00FE  ; Health
     dw $09C6, $000E  ; Missiles
     dw $09CA, $000A  ; Supers
@@ -2027,7 +1775,6 @@ preset_100map_space_jump_swiss_cheese_revisit:
     dw $0AFA, $008B  ; Samus Y
     dw $D880, $10F4  ; Items
     dw #$FFFF
-.after
 
 preset_100map_space_jump_beach_revisit:
     dw #preset_100map_space_jump_swiss_cheese_revisit ; Space Jump: Swiss Cheese Revisit
@@ -2039,12 +1786,10 @@ preset_100map_space_jump_beach_revisit:
     dw $0915, $0100  ; Screen Y position in pixels
     dw $0917, $0240  ; Layer 2 X position
     dw $0919, $0100  ; Layer 2 Y position
-    dw $0921, $0100  ; BG2 X offset
     dw $09C2, $00EF  ; Health
     dw $0AF6, $03A2  ; Samus X
     dw $0AFA, $018B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_space_jump_crab_shaft_down:
     dw #preset_100map_space_jump_beach_revisit ; Space Jump: Beach Revisit
@@ -2056,13 +1801,11 @@ preset_100map_space_jump_crab_shaft_down:
     dw $0915, $021F  ; Screen Y position in pixels
     dw $0917, $000A  ; Layer 2 X position
     dw $0919, $021F  ; Layer 2 Y position
-    dw $0923, $FF00  ; BG2 Y offset
     dw $09CA, $000B  ; Supers
     dw $0A1C, $0002  ; Samus position/state
     dw $0AF6, $00AB  ; Samus X
     dw $0AFA, $02B0  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_space_jump_aqueduct_post_save:
     dw #preset_100map_space_jump_crab_shaft_down ; Space Jump: Crab Shaft Down
@@ -2075,8 +1818,6 @@ preset_100map_space_jump_aqueduct_post_save:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $FF00  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09C6, $0009  ; Missiles
     dw $09CA, $000A  ; Supers
     dw $09CE, $0002  ; Pbs
@@ -2085,7 +1826,6 @@ preset_100map_space_jump_aqueduct_post_save:
     dw $D8C0, $CB7C  ; Doors
     dw $D8C2, $0054  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_space_jump_prebotwoon:
     dw #preset_100map_space_jump_aqueduct_post_save ; Space Jump: Aqueduct (Post Save)
@@ -2094,14 +1834,11 @@ preset_100map_space_jump_prebotwoon:
     dw $090F, $2000  ; Screen subpixel X position
     dw $0913, $6400  ; Screen subpixel Y position
     dw $09D2, $0003  ; Currently selected item
-    dw $0921, $0100  ; BG2 X offset
-    dw $0923, $FE00  ; BG2 Y offset
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $008D  ; Samus X
     dw $0AFA, $006B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_space_jump_botwoon:
     dw #preset_100map_space_jump_prebotwoon ; Space Jump: Pre-Botwoon
@@ -2113,14 +1850,11 @@ preset_100map_space_jump_botwoon:
     dw $0915, $0014  ; Screen Y position in pixels
     dw $0917, $0240  ; Layer 2 X position
     dw $0919, $0014  ; Layer 2 Y position
-    dw $0921, $0000  ; BG2 X offset
-    dw $0923, $FF00  ; BG2 Y offset
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $03B9  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_space_jump_over_under_spark:
     dw #preset_100map_space_jump_botwoon ; Space Jump: Botwoon
@@ -2132,8 +1866,6 @@ preset_100map_space_jump_over_under_spark:
     dw $0915, $001F  ; Screen Y position in pixels
     dw $0917, $002A  ; Layer 2 X position
     dw $0919, $001F  ; Layer 2 Y position
-    dw $0921, $0100  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09C2, $02BB  ; Health
     dw $09C4, $02BB  ; Max health
     dw $09C6, $0012  ; Missiles
@@ -2145,7 +1877,6 @@ preset_100map_space_jump_over_under_spark:
     dw $D82C, $0002  ; Bosses
     dw $D882, $0100  ; Items
     dw #$FFFF
-.after
 
 preset_100map_space_jump_under_over_spark:
     dw #preset_100map_space_jump_over_under_spark ; Space Jump: Over Under Spark
@@ -2164,7 +1895,6 @@ preset_100map_space_jump_under_over_spark:
     dw $0AF6, $002C  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_space_jump_colosseum:
     dw #preset_100map_space_jump_under_over_spark ; Space Jump: Under Over Spark
@@ -2174,15 +1904,12 @@ preset_100map_space_jump_colosseum:
     dw $0913, $F400  ; Screen subpixel Y position
     dw $0915, $001B  ; Screen Y position in pixels
     dw $0919, $001B  ; Layer 2 Y position
-    dw $0921, $FB00  ; BG2 X offset
-    dw $0923, $FE00  ; BG2 Y offset
     dw $09C2, $0260  ; Health
     dw $09CA, $0008  ; Supers
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $00C2  ; Samus X
     dw #$FFFF
-.after
 
 preset_100map_space_jump_precious_room:
     dw #preset_100map_space_jump_colosseum ; Space Jump: Colosseum
@@ -2194,14 +1921,11 @@ preset_100map_space_jump_precious_room:
     dw $0915, $00FD  ; Screen Y position in pixels
     dw $0917, $0600  ; Layer 2 X position
     dw $0919, $00FD  ; Layer 2 Y position
-    dw $0921, $F900  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09CA, $0006  ; Supers
     dw $0AF6, $06BB  ; Samus X
     dw $0AFA, $018B  ; Samus Y
     dw $D8C2, $0554  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_space_jump_draygon:
     dw #preset_100map_space_jump_precious_room ; Space Jump: Precious Room
@@ -2213,7 +1937,6 @@ preset_100map_space_jump_draygon:
     dw $0915, $01FC  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $017D  ; Layer 2 Y position
-    dw $0921, $0100  ; BG2 X offset
     dw $09CA, $0005  ; Supers
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
@@ -2221,7 +1944,6 @@ preset_100map_space_jump_draygon:
     dw $0AFA, $028B  ; Samus Y
     dw $D8C2, $0D54  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_maridia_cleanup_reverse_halfie:
     dw #preset_100map_space_jump_draygon ; Space Jump: Draygon
@@ -2230,7 +1952,6 @@ preset_100map_maridia_cleanup_reverse_halfie:
     dw $0913, $7C00  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0923, $FE00  ; BG2 Y offset
     dw $09A2, $7325  ; Equipped Items
     dw $09A4, $7325  ; Collected Items
     dw $09C2, $0224  ; Health
@@ -2243,7 +1964,6 @@ preset_100map_maridia_cleanup_reverse_halfie:
     dw $D882, $0500  ; Items
     dw $D8C2, $CD54  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_maridia_cleanup_botwoon_hallway_revisit_1:
     dw #preset_100map_maridia_cleanup_reverse_halfie ; Maridia Cleanup: Reverse Halfie
@@ -2253,14 +1973,11 @@ preset_100map_maridia_cleanup_botwoon_hallway_revisit_1:
     dw $0913, $E400  ; Screen subpixel Y position
     dw $0915, $0200  ; Screen Y position in pixels
     dw $0919, $0200  ; Layer 2 Y position
-    dw $0921, $FF00  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09C2, $01B4  ; Health
     dw $0A68, $0000  ; Flash suit
     dw $0AF6, $00B4  ; Samus X
     dw $0AFA, $028B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_maridia_cleanup_right_sand_pit:
     dw #preset_100map_maridia_cleanup_botwoon_hallway_revisit_1 ; Maridia Cleanup: Botwoon Hallway Revisit 1
@@ -2271,13 +1988,10 @@ preset_100map_maridia_cleanup_right_sand_pit:
     dw $0915, $021F  ; Screen Y position in pixels
     dw $0917, $027F  ; Layer 2 X position
     dw $0919, $021F  ; Layer 2 Y position
-    dw $0921, $FA00  ; BG2 X offset
-    dw $0923, $FF00  ; BG2 Y offset
     dw $09C2, $019B  ; Health
     dw $0AF6, $03F5  ; Samus X
     dw $0AFA, $02CB  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_maridia_cleanup_east_sand_hall:
     dw #preset_100map_maridia_cleanup_right_sand_pit ; Maridia Cleanup: Right Sand Pit
@@ -2289,13 +2003,10 @@ preset_100map_maridia_cleanup_east_sand_hall:
     dw $0915, $011F  ; Screen Y position in pixels
     dw $0917, $0100  ; Layer 2 X position
     dw $0919, $011F  ; Layer 2 Y position
-    dw $0921, $0000  ; BG2 X offset
-    dw $0923, $00E0  ; BG2 Y offset
     dw $09C2, $0199  ; Health
     dw $0AF6, $01C8  ; Samus X
     dw $0AFA, $01AB  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_maridia_cleanup_pants_room:
     dw #preset_100map_maridia_cleanup_east_sand_hall ; Maridia Cleanup: East Sand Hall
@@ -2307,14 +2018,12 @@ preset_100map_maridia_cleanup_pants_room:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0180  ; Layer 2 X position
     dw $0919, $0001  ; Layer 2 Y position
-    dw $0921, $FF00  ; BG2 X offset
     dw $09C2, $0180  ; Health
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $02AE  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_maridia_cleanup_spring_ball_room:
     dw #preset_100map_maridia_cleanup_pants_room ; Maridia Cleanup: Pants Room
@@ -2325,14 +2034,11 @@ preset_100map_maridia_cleanup_spring_ball_room:
     dw $0913, $B400  ; Screen subpixel Y position
     dw $0917, $0240  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $0100  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09C2, $0171  ; Health
     dw $09CE, $0003  ; Pbs
     dw $0AF6, $03DD  ; Samus X
     dw $D820, $2001  ; Events
     dw #$FFFF
-.after
 
 preset_100map_maridia_cleanup_pants_room_corner:
     dw #preset_100map_maridia_cleanup_spring_ball_room ; Maridia Cleanup: Spring Ball Room
@@ -2341,7 +2047,6 @@ preset_100map_maridia_cleanup_pants_room_corner:
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $4C00  ; Screen subpixel Y position
     dw $0917, $0000  ; Layer 2 X position
-    dw $0921, $FC00  ; BG2 X offset
     dw $09A2, $7327  ; Equipped Items
     dw $09A4, $7327  ; Collected Items
     dw $0A1C, $008A  ; Samus position/state
@@ -2350,7 +2055,6 @@ preset_100map_maridia_cleanup_pants_room_corner:
     dw $0AFA, $00AB  ; Samus Y
     dw $D882, $0540  ; Items
     dw #$FFFF
-.after
 
 preset_100map_maridia_cleanup_plasma_spark_room_2:
     dw #preset_100map_maridia_cleanup_pants_room_corner ; Maridia Cleanup: Pants Room Corner
@@ -2358,14 +2062,12 @@ preset_100map_maridia_cleanup_plasma_spark_room_2:
     dw $079B, $D4C2  ; MDB
     dw $090F, $0000  ; Screen subpixel X position
     dw $0913, $3400  ; Screen subpixel Y position
-    dw $0921, $FD00  ; BG2 X offset
     dw $09C2, $0162  ; Health
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $0052  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_maridia_cleanup_kassiuz_room:
     dw #preset_100map_maridia_cleanup_plasma_spark_room_2 ; Maridia Cleanup: Plasma Spark Room 2
@@ -2377,15 +2079,12 @@ preset_100map_maridia_cleanup_kassiuz_room:
     dw $0915, $011C  ; Screen Y position in pixels
     dw $0917, $01C0  ; Layer 2 X position
     dw $0919, $011C  ; Layer 2 Y position
-    dw $0921, $0000  ; BG2 X offset
-    dw $0923, $FD00  ; BG2 Y offset
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $0289  ; Samus X
     dw $0AFA, $018B  ; Samus Y
     dw $D8C2, $CD7C  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_maridia_cleanup_plasma_room:
     dw #preset_100map_maridia_cleanup_kassiuz_room ; Maridia Cleanup: Kassiuz Room
@@ -2397,19 +2096,15 @@ preset_100map_maridia_cleanup_plasma_room:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $0100  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $0AF6, $008D  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_maridia_cleanup_kassiuz_room_down:
     dw #preset_100map_maridia_cleanup_plasma_room ; Maridia Cleanup: Plasma Room
     dw $078D, $A558  ; DDB
     dw $090F, $1000  ; Screen subpixel X position
     dw $0913, $0800  ; Screen subpixel Y position
-    dw $0921, $FF00  ; BG2 X offset
     dw $09A6, $1009  ; Beams
     dw $09A8, $1009  ; Beams
     dw $09C2, $01B7  ; Health
@@ -2422,7 +2117,6 @@ preset_100map_maridia_cleanup_kassiuz_room_down:
     dw $D880, $90F4  ; Items
     dw $D8C2, $CD7E  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_maridia_cleanup_plasma_spark_room_final:
     dw #preset_100map_maridia_cleanup_kassiuz_room_down ; Maridia Cleanup: Kassiuz Room Down
@@ -2434,7 +2128,6 @@ preset_100map_maridia_cleanup_plasma_spark_room_final:
     dw $0AF6, $002A  ; Samus X
     dw $0AFA, $038B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_maridia_cleanup_west_cac_alley:
     dw #preset_100map_maridia_cleanup_plasma_spark_room_final ; Maridia Cleanup: Plasma Spark Room Final
@@ -2446,15 +2139,12 @@ preset_100map_maridia_cleanup_west_cac_alley:
     dw $0915, $0500  ; Screen Y position in pixels
     dw $0917, $012D  ; Layer 2 X position
     dw $0919, $0500  ; Layer 2 Y position
-    dw $0921, $FD00  ; BG2 X offset
-    dw $0923, $FF00  ; BG2 Y offset
     dw $09C2, $01BC  ; Health
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $01C3  ; Samus X
     dw $0AFA, $05BB  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_maridia_cleanup_east_cac_alley:
     dw #preset_100map_maridia_cleanup_west_cac_alley ; Maridia Cleanup: West Cac Alley
@@ -2466,13 +2156,11 @@ preset_100map_maridia_cleanup_east_cac_alley:
     dw $0915, $0011  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $000C  ; Layer 2 Y position
-    dw $0921, $0100  ; BG2 X offset
     dw $09CA, $000C  ; Supers
     dw $0AF6, $00C8  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw $D8C2, $CDFE  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_maridia_cleanup_botwoon_hallway_revisit_2:
     dw #preset_100map_maridia_cleanup_east_cac_alley ; Maridia Cleanup: East Cac Alley
@@ -2488,7 +2176,6 @@ preset_100map_maridia_cleanup_botwoon_hallway_revisit_2:
     dw $0AF6, $009C  ; Samus X
     dw $0AFA, $028B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_maridia_cleanup_aqueduct_final:
     dw #preset_100map_maridia_cleanup_botwoon_hallway_revisit_2 ; Maridia Cleanup: Botwoon Hallway Revisit 2
@@ -2500,13 +2187,10 @@ preset_100map_maridia_cleanup_aqueduct_final:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $011E  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $FE00  ; BG2 X offset
-    dw $0923, $00E0  ; BG2 Y offset
     dw $09C2, $0199  ; Health
     dw $0AF6, $01A5  ; Samus X
     dw $0AFA, $00AB  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_maridia_cleanup_left_sand_pit:
     dw #preset_100map_maridia_cleanup_aqueduct_final ; Maridia Cleanup: Aqueduct Final
@@ -2518,12 +2202,9 @@ preset_100map_maridia_cleanup_left_sand_pit:
     dw $0915, $021F  ; Screen Y position in pixels
     dw $0917, $00F6  ; Layer 2 X position
     dw $0919, $021F  ; Layer 2 Y position
-    dw $0921, $FA00  ; BG2 X offset
-    dw $0923, $FF00  ; BG2 Y offset
     dw $0AF6, $01E8  ; Samus X
     dw $0AFA, $02CB  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_maridia_cleanup_west_sand_hall_revisit:
     dw #preset_100map_maridia_cleanup_left_sand_pit ; Maridia Cleanup: Left Sand Pit
@@ -2535,15 +2216,12 @@ preset_100map_maridia_cleanup_west_sand_hall_revisit:
     dw $0915, $011F  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $011F  ; Layer 2 Y position
-    dw $0921, $FF00  ; BG2 X offset
-    dw $0923, $00E0  ; BG2 Y offset
     dw $09C2, $0197  ; Health
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $0031  ; Samus X
     dw $0AFA, $01AB  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_maridia_cleanup_crab_hole:
     dw #preset_100map_maridia_cleanup_west_sand_hall_revisit ; Maridia Cleanup: West Sand Hall Revisit
@@ -2553,14 +2231,12 @@ preset_100map_maridia_cleanup_crab_hole:
     dw $0913, $5C00  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0919, $0101  ; Layer 2 Y position
-    dw $0921, $FE00  ; BG2 X offset
     dw $09C2, $017E  ; Health
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $0033  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_maridia_cleanup_kpdr_exit:
     dw #preset_100map_maridia_cleanup_crab_hole ; Maridia Cleanup: Crab Hole
@@ -2570,8 +2246,6 @@ preset_100map_maridia_cleanup_kpdr_exit:
     dw $0913, $7000  ; Screen subpixel Y position
     dw $0915, $0100  ; Screen Y position in pixels
     dw $0919, $0100  ; Layer 2 Y position
-    dw $0921, $FF00  ; BG2 X offset
-    dw $0923, $FF00  ; BG2 Y offset
     dw $09C2, $0192  ; Health
     dw $09CA, $000E  ; Supers
     dw $09CE, $0006  ; Pbs
@@ -2580,7 +2254,6 @@ preset_100map_maridia_cleanup_kpdr_exit:
     dw $0AFA, $018B  ; Samus Y
     dw $D8C2, $CDFF  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_screw_attack_business_center_2:
     dw #preset_100map_maridia_cleanup_kpdr_exit ; Maridia Cleanup: KPDR Exit
@@ -2591,15 +2264,12 @@ preset_100map_screw_attack_business_center_2:
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $0238  ; Screen Y position in pixels
     dw $0919, $01AA  ; Layer 2 Y position
-    dw $0921, $0000  ; BG2 X offset
-    dw $0923, $00E0  ; BG2 Y offset
     dw $09CA, $000D  ; Supers
     dw $0A1C, $009B  ; Samus position/state
     dw $0A1E, $0000  ; More position/state
     dw $0AF6, $0080  ; Samus X
     dw $0AFA, $02A8  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_screw_attack_ice_beam_snake_room:
     dw #preset_100map_screw_attack_business_center_2 ; Screw Attack: Business Center
@@ -2609,8 +2279,6 @@ preset_100map_screw_attack_ice_beam_snake_room:
     dw $0913, $BC00  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $FE00  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09CA, $000C  ; Supers
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
@@ -2618,7 +2286,6 @@ preset_100map_screw_attack_ice_beam_snake_room:
     dw $0AFA, $008B  ; Samus Y
     dw $D8B8, $FEFF  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_screw_attack_ice_beam_foosball:
     dw #preset_100map_screw_attack_ice_beam_snake_room ; Screw Attack: Ice Beam Snake Room
@@ -2628,7 +2295,6 @@ preset_100map_screw_attack_ice_beam_foosball:
     dw $090F, $9000  ; Screen subpixel X position
     dw $0913, $C800  ; Screen subpixel Y position
     dw $0917, $0001  ; Layer 2 X position
-    dw $0921, $0100  ; BG2 X offset
     dw $09A6, $100B  ; Beams
     dw $09A8, $100B  ; Beams
     dw $09C2, $018D  ; Health
@@ -2636,7 +2302,6 @@ preset_100map_screw_attack_ice_beam_foosball:
     dw $0AF6, $00B9  ; Samus X
     dw $D876, $13F5  ; Items
     dw #$FFFF
-.after
 
 preset_100map_screw_attack_ice_beam_boyon_room:
     dw #preset_100map_screw_attack_ice_beam_foosball ; Screw Attack: Ice Beam Foosball
@@ -2649,13 +2314,10 @@ preset_100map_screw_attack_ice_beam_boyon_room:
     dw $09D2, $0000  ; Currently selected item
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0012  ; Layer 2 Y position
-    dw $0921, $FE00  ; BG2 X offset
-    dw $0923, $FF00  ; BG2 Y offset
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $00DD  ; Samus X
     dw #$FFFF
-.after
 
 preset_100map_screw_attack_crumble_tower:
     dw #preset_100map_screw_attack_ice_beam_boyon_room ; Screw Attack: Ice Beam Boyon Room
@@ -2665,14 +2327,12 @@ preset_100map_screw_attack_crumble_tower:
     dw $0913, $BC00  ; Screen subpixel Y position
     dw $0915, $0300  ; Screen Y position in pixels
     dw $0919, $0240  ; Layer 2 Y position
-    dw $0923, $0000  ; BG2 Y offset
     dw $09CE, $0005  ; Pbs
     dw $0A1C, $008A  ; Samus position/state
     dw $0A1E, $1504  ; More position/state
     dw $0AF6, $0025  ; Samus X
     dw $0AFA, $038B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_screw_attack_crocomire_speedway:
     dw #preset_100map_screw_attack_crumble_tower ; Screw Attack: Crumble Tower
@@ -2680,12 +2340,10 @@ preset_100map_screw_attack_crocomire_speedway:
     dw $079B, $A8F8  ; MDB
     dw $090F, $C400  ; Screen subpixel X position
     dw $0913, $2800  ; Screen subpixel Y position
-    dw $0921, $FF00  ; BG2 X offset
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $00DC  ; Samus X
     dw #$FFFF
-.after
 
 preset_100map_screw_attack_kronic_boost_room:
     dw #preset_100map_screw_attack_crocomire_speedway ; Screw Attack: Crocomire Speedway
@@ -2698,11 +2356,9 @@ preset_100map_screw_attack_kronic_boost_room:
     dw $09D2, $0003  ; Currently selected item
     dw $0917, $0240  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $0100  ; BG2 X offset
     dw $0AF6, $03AD  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_screw_attack_lava_dive_room:
     dw #preset_100map_screw_attack_kronic_boost_room ; Screw Attack: Kronic Boost Room
@@ -2713,7 +2369,6 @@ preset_100map_screw_attack_lava_dive_room:
     dw $0915, $0200  ; Screen Y position in pixels
     dw $0917, $0100  ; Layer 2 X position
     dw $0919, $0200  ; Layer 2 Y position
-    dw $0923, $FF00  ; BG2 Y offset
     dw $09CE, $0006  ; Pbs
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
@@ -2721,7 +2376,6 @@ preset_100map_screw_attack_lava_dive_room:
     dw $0AFA, $028B  ; Samus Y
     dw $D8BA, $01F7  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_screw_attack_lower_norfair_main_hall:
     dw #preset_100map_screw_attack_lava_dive_room ; Screw Attack: Lava Dive Room
@@ -2733,15 +2387,12 @@ preset_100map_screw_attack_lower_norfair_main_hall:
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0917, $0300  ; Layer 2 X position
     dw $0919, $0301  ; Layer 2 Y position
-    dw $0921, $FC00  ; BG2 X offset
-    dw $0923, $00E0  ; BG2 Y offset
     dw $09C2, $015B  ; Health
     dw $0A1C, $009B  ; Samus position/state
     dw $0A1E, $0000  ; More position/state
     dw $0AF6, $0480  ; Samus X
     dw $0AFA, $0288  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_screw_attack_blue_fireball:
     dw #preset_100map_screw_attack_lower_norfair_main_hall ; Screw Attack: Lower Norfair Main Hall
@@ -2753,8 +2404,6 @@ preset_100map_screw_attack_blue_fireball:
     dw $0915, $0100  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $00C0  ; Layer 2 Y position
-    dw $0921, $FF00  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09C2, $014D  ; Health
     dw $09C6, $0012  ; Missiles
     dw $0A1C, $0002  ; Samus position/state
@@ -2763,7 +2412,6 @@ preset_100map_screw_attack_blue_fireball:
     dw $0AFA, $018B  ; Samus Y
     dw $D8BA, $21F7  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_screw_attack_acid_chozo:
     dw #preset_100map_screw_attack_blue_fireball ; Screw Attack: Blue Fireball
@@ -2773,12 +2421,9 @@ preset_100map_screw_attack_acid_chozo:
     dw $0913, $DBFF  ; Screen subpixel Y position
     dw $0915, $0200  ; Screen Y position in pixels
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $F800  ; BG2 X offset
-    dw $0923, $FE00  ; BG2 Y offset
     dw $0AF6, $003B  ; Samus X
     dw $0AFA, $028B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_screw_attack_golden_torizo:
     dw #preset_100map_screw_attack_acid_chozo ; Screw Attack: Acid Chozo
@@ -2789,8 +2434,6 @@ preset_100map_screw_attack_golden_torizo:
     dw $0913, $1400  ; Screen subpixel Y position
     dw $0917, $0180  ; Layer 2 X position
     dw $0919, $0180  ; Layer 2 Y position
-    dw $0921, $FE00  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09C2, $012F  ; Health
     dw $09CE, $0004  ; Pbs
     dw $09D2, $0000  ; Currently selected item
@@ -2799,7 +2442,6 @@ preset_100map_screw_attack_golden_torizo:
     dw $0AF6, $02AE  ; Samus X
     dw $D820, $3001  ; Events
     dw #$FFFF
-.after
 
 preset_100map_screw_attack_screw_attack_2:
     dw #preset_100map_screw_attack_golden_torizo ; Screw Attack: Golden Torizo
@@ -2813,7 +2455,6 @@ preset_100map_screw_attack_screw_attack_2:
     dw $0915, $0100  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0100  ; Layer 2 Y position
-    dw $0921, $0100  ; BG2 X offset
     dw $09C2, $0198  ; Health
     dw $09C6, $001E  ; Missiles
     dw $09CA, $0011  ; Supers
@@ -2822,7 +2463,6 @@ preset_100map_screw_attack_screw_attack_2:
     dw $0AFA, $018B  ; Samus Y
     dw $D82A, $0106  ; Bosses
     dw #$FFFF
-.after
 
 preset_100map_lower_norfair_fast_ripper_room:
     dw #preset_100map_screw_attack_screw_attack_2 ; Screw Attack: Screw Attack
@@ -2833,8 +2473,6 @@ preset_100map_lower_norfair_fast_ripper_room:
     dw $0915, $001C  ; Screen Y position in pixels
     dw $0917, $0001  ; Layer 2 X position
     dw $0919, $0015  ; Layer 2 Y position
-    dw $0921, $FF00  ; BG2 X offset
-    dw $0923, $FF00  ; BG2 Y offset
     dw $09A2, $732F  ; Equipped Items
     dw $09A4, $732F  ; Collected Items
     dw $0AF6, $00B2  ; Samus X
@@ -2842,7 +2480,6 @@ preset_100map_lower_norfair_fast_ripper_room:
     dw $D878, $801C  ; Items
     dw $D8BA, $23F7  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_lower_norfair_worst_room_in_the_game:
     dw #preset_100map_lower_norfair_fast_ripper_room ; Lower Norfair: Fast Ripper Room
@@ -2856,13 +2493,10 @@ preset_100map_lower_norfair_worst_room_in_the_game:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0240  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $0100  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09C2, $0146  ; Health
     dw $09CA, $0010  ; Supers
     dw $0AF6, $03DB  ; Samus X
     dw #$FFFF
-.after
 
 preset_100map_lower_norfair_mickey_mouse:
     dw #preset_100map_lower_norfair_worst_room_in_the_game ; Lower Norfair: Worst Room in the Game
@@ -2874,12 +2508,10 @@ preset_100map_lower_norfair_mickey_mouse:
     dw $0915, $001C  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0015  ; Layer 2 Y position
-    dw $0923, $FB00  ; BG2 Y offset
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $004A  ; Samus X
     dw #$FFFF
-.after
 
 preset_100map_lower_norfair_amphitheatre:
     dw #preset_100map_lower_norfair_mickey_mouse ; Lower Norfair: Mickey Mouse
@@ -2888,13 +2520,11 @@ preset_100map_lower_norfair_amphitheatre:
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $011D  ; Screen Y position in pixels
     dw $0919, $00D5  ; Layer 2 Y position
-    dw $0923, $0000  ; BG2 Y offset
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $00A9  ; Samus X
     dw $0AFA, $018B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_lower_norfair_kihunter_stairs_down:
     dw #preset_100map_lower_norfair_amphitheatre ; Lower Norfair: Amphitheatre
@@ -2906,11 +2536,9 @@ preset_100map_lower_norfair_kihunter_stairs_down:
     dw $09D2, $0003  ; Currently selected item
     dw $0917, $01E0  ; Layer 2 X position
     dw $0919, $0032  ; Layer 2 Y position
-    dw $0923, $FF00  ; BG2 Y offset
     dw $0AF6, $02ED  ; Samus X
     dw $0AFA, $00B3  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_lower_norfair_wasteland:
     dw #preset_100map_lower_norfair_kihunter_stairs_down ; Lower Norfair: Kihunter Stairs Down
@@ -2922,7 +2550,6 @@ preset_100map_lower_norfair_wasteland:
     dw $0915, $041F  ; Screen Y position in pixels
     dw $0917, $0180  ; Layer 2 X position
     dw $0919, $0317  ; Layer 2 Y position
-    dw $0923, $0000  ; BG2 Y offset
     dw $09C2, $015A  ; Health
     dw $09CE, $0008  ; Pbs
     dw $09D2, $0000  ; Currently selected item
@@ -2930,7 +2557,6 @@ preset_100map_lower_norfair_wasteland:
     dw $0AFA, $04BB  ; Samus Y
     dw $D8BA, $63F7  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_lower_norfair_metal_pirates:
     dw #preset_100map_lower_norfair_wasteland ; Lower Norfair: Wasteland
@@ -2942,8 +2568,6 @@ preset_100map_lower_norfair_metal_pirates:
     dw $0915, $021F  ; Screen Y position in pixels
     dw $0917, $00C0  ; Layer 2 X position
     dw $0919, $0197  ; Layer 2 Y position
-    dw $0921, $FB00  ; BG2 X offset
-    dw $0923, $00E0  ; BG2 Y offset
     dw $09C2, $0149  ; Health
     dw $09CA, $000F  ; Supers
     dw $09CE, $0007  ; Pbs
@@ -2953,7 +2577,6 @@ preset_100map_lower_norfair_metal_pirates:
     dw $0AFA, $028B  ; Samus Y
     dw $D8BA, $E3F7  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_lower_norfair_ridley:
     dw #preset_100map_lower_norfair_metal_pirates ; Lower Norfair: Metal Pirates
@@ -2965,8 +2588,6 @@ preset_100map_lower_norfair_ridley:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $FD00  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09C2, $01E4  ; Health
     dw $09CA, $0011  ; Supers
     dw $0AF6, $003E  ; Samus X
@@ -2974,7 +2595,6 @@ preset_100map_lower_norfair_ridley:
     dw $D8BA, $F3F7  ; Doors
     dw $D8BC, $0001  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_lower_norfair_leaving_ridley:
     dw #preset_100map_lower_norfair_ridley ; Lower Norfair: Ridley
@@ -2987,8 +2607,6 @@ preset_100map_lower_norfair_leaving_ridley:
     dw $0915, $011C  ; Screen Y position in pixels
     dw $0917, $0001  ; Layer 2 X position
     dw $0919, $00D5  ; Layer 2 Y position
-    dw $0921, $0100  ; BG2 X offset
-    dw $0923, $FF00  ; BG2 Y offset
     dw $09C2, $031F  ; Health
     dw $09C4, $031F  ; Max health
     dw $09CA, $0014  ; Supers
@@ -3001,7 +2619,6 @@ preset_100map_lower_norfair_leaving_ridley:
     dw $D878, $C01C  ; Items
     dw $D8BA, $FBF7  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_lower_norfair_wasteland_revisit:
     dw #preset_100map_lower_norfair_leaving_ridley ; Lower Norfair: Leaving Ridley
@@ -3015,7 +2632,6 @@ preset_100map_lower_norfair_wasteland_revisit:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0180  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0923, $0000  ; BG2 Y offset
     dw $09C2, $02FB  ; Health
     dw $09C6, $001D  ; Missiles
     dw $09D2, $0003  ; Currently selected item
@@ -3025,7 +2641,6 @@ preset_100map_lower_norfair_wasteland_revisit:
     dw $0AFA, $00AB  ; Samus Y
     dw $D8BA, $FFF7  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_lower_norfair_kihunter_stairs_up:
     dw #preset_100map_lower_norfair_wasteland_revisit ; Lower Norfair: Wasteland Revisit
@@ -3035,8 +2650,6 @@ preset_100map_lower_norfair_kihunter_stairs_up:
     dw $0911, $0500  ; Screen X position in pixels
     dw $0913, $A000  ; Screen subpixel Y position
     dw $0917, $03C0  ; Layer 2 X position
-    dw $0921, $0000  ; BG2 X offset
-    dw $0923, $FE00  ; BG2 Y offset
     dw $09C2, $02F4  ; Health
     dw $09CE, $0008  ; Pbs
     dw $09D2, $0000  ; Currently selected item
@@ -3045,7 +2658,6 @@ preset_100map_lower_norfair_kihunter_stairs_up:
     dw $0AF6, $0561  ; Samus X
     dw $0AFA, $006B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_lower_norfair_kihunter_stairs_up_2:
     dw #preset_100map_lower_norfair_kihunter_stairs_up ; Lower Norfair: Kihunter Stairs Up
@@ -3055,15 +2667,12 @@ preset_100map_lower_norfair_kihunter_stairs_up_2:
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $B400  ; Screen subpixel Y position
     dw $0917, $0000  ; Layer 2 X position
-    dw $0921, $0100  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09CE, $0007  ; Pbs
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $0030  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_lower_norfair_fireflea_room:
     dw #preset_100map_lower_norfair_kihunter_stairs_up_2 ; Lower Norfair: Kihunter Stairs Up 2
@@ -3072,13 +2681,10 @@ preset_100map_lower_norfair_fireflea_room:
     dw $090F, $367F  ; Screen subpixel X position
     dw $0913, $4800  ; Screen subpixel Y position
     dw $0915, $0001  ; Screen Y position in pixels
-    dw $0921, $FF00  ; BG2 X offset
-    dw $0923, $FD00  ; BG2 Y offset
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $00AC  ; Samus X
     dw #$FFFF
-.after
 
 preset_100map_lower_norfair_hotarubi_missile_room:
     dw #preset_100map_lower_norfair_fireflea_room ; Lower Norfair: Fireflea Room
@@ -3092,7 +2698,6 @@ preset_100map_lower_norfair_hotarubi_missile_room:
     dw $0915, $001D  ; Screen Y position in pixels
     dw $0917, $0100  ; Layer 2 X position
     dw $0919, $001D  ; Layer 2 Y position
-    dw $0921, $0000  ; BG2 X offset
     dw $09C2, $02E5  ; Health
     dw $09C6, $001E  ; Missiles
     dw $09CA, $0013  ; Supers
@@ -3101,7 +2706,6 @@ preset_100map_lower_norfair_hotarubi_missile_room:
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $0169  ; Samus X
     dw #$FFFF
-.after
 
 preset_100map_lower_norfair_three_musketeers_room:
     dw #preset_100map_lower_norfair_hotarubi_missile_room ; Lower Norfair: Hotarubi Missile Room
@@ -3113,13 +2717,10 @@ preset_100map_lower_norfair_three_musketeers_room:
     dw $0915, $0007  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0005  ; Layer 2 Y position
-    dw $0921, $FE00  ; BG2 X offset
-    dw $0923, $FF00  ; BG2 Y offset
     dw $09C6, $001D  ; Missiles
     dw $09D2, $0000  ; Currently selected item
     dw $0AF6, $0067  ; Samus X
     dw #$FFFF
-.after
 
 preset_100map_cleanup_1_single_chamber_revisit:
     dw #preset_100map_lower_norfair_three_musketeers_room ; Lower Norfair: Three Musketeers Room
@@ -3131,12 +2732,9 @@ preset_100map_cleanup_1_single_chamber_revisit:
     dw $0915, $0014  ; Screen Y position in pixels
     dw $0917, $00C0  ; Layer 2 X position
     dw $0919, $000F  ; Layer 2 Y position
-    dw $0921, $FC00  ; BG2 X offset
-    dw $0923, $FE00  ; BG2 Y offset
     dw $09C2, $02E0  ; Health
     dw $0AF6, $0168  ; Samus X
     dw #$FFFF
-.after
 
 preset_100map_cleanup_1_bubble_mountain_dboost:
     dw #preset_100map_cleanup_1_single_chamber_revisit ; Cleanup 1: Single Chamber Revisit
@@ -3149,12 +2747,9 @@ preset_100map_cleanup_1_bubble_mountain_dboost:
     dw $0915, $0010  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $000C  ; Layer 2 Y position
-    dw $0921, $FA00  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09C6, $001E  ; Missiles
     dw $0AF6, $0086  ; Samus X
     dw #$FFFF
-.after
 
 preset_100map_cleanup_1_norfair_reserve_front:
     dw #preset_100map_cleanup_1_bubble_mountain_dboost ; Cleanup 1: Bubble Mountain D-Boost
@@ -3164,13 +2759,10 @@ preset_100map_cleanup_1_norfair_reserve_front:
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $FE00  ; BG2 X offset
-    dw $0923, $FF00  ; BG2 Y offset
     dw $09C2, $02DE  ; Health
     dw $0AF6, $0045  ; Samus X
     dw $D8BA, $FFFF  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_cleanup_1_norfair_reserve_back:
     dw #preset_100map_cleanup_1_norfair_reserve_front ; Cleanup 1: Norfair Reserve Front
@@ -3178,9 +2770,7 @@ preset_100map_cleanup_1_norfair_reserve_back:
     dw $079B, $AC83  ; MDB
     dw $090F, $4000  ; Screen subpixel X position
     dw $0913, $E000  ; Screen subpixel Y position
-    dw $0923, $0000  ; BG2 Y offset
     dw #$FFFF
-.after
 
 preset_100map_cleanup_1_bubble_mountain_final:
     dw #preset_100map_cleanup_1_norfair_reserve_back ; Cleanup 1: Norfair Reserve Back
@@ -3189,13 +2779,11 @@ preset_100map_cleanup_1_bubble_mountain_final:
     dw $0911, $0100  ; Screen X position in pixels
     dw $0913, $EC00  ; Screen subpixel Y position
     dw $0917, $00C0  ; Layer 2 X position
-    dw $0921, $0100  ; BG2 X offset
     dw $09C2, $02C9  ; Health
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $01C5  ; Samus X
     dw #$FFFF
-.after
 
 preset_100map_cleanup_1_business_center_final:
     dw #preset_100map_cleanup_1_bubble_mountain_final ; Cleanup 1: Bubble Mountain Final
@@ -3205,14 +2793,12 @@ preset_100map_cleanup_1_business_center_final:
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $A000  ; Screen subpixel Y position
     dw $0917, $0000  ; Layer 2 X position
-    dw $0921, $FF00  ; BG2 X offset
     dw $09C2, $02C7  ; Health
     dw $09CE, $0006  ; Pbs
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $003D  ; Samus X
     dw #$FFFF
-.after
 
 preset_100map_cleanup_1_tube:
     dw #preset_100map_cleanup_1_business_center_final ; Cleanup 1: Business Center Final
@@ -3223,11 +2809,9 @@ preset_100map_cleanup_1_tube:
     dw $0913, $8000  ; Screen subpixel Y position
     dw $0915, $0100  ; Screen Y position in pixels
     dw $0919, $0100  ; Layer 2 Y position
-    dw $0923, $FF00  ; BG2 Y offset
     dw $0AF6, $00D1  ; Samus X
     dw $0AFA, $018B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_cleanup_1_tube_climb:
     dw #preset_100map_cleanup_1_tube ; Cleanup 1: Tube
@@ -3237,8 +2821,6 @@ preset_100map_cleanup_1_tube_climb:
     dw $0913, $9C00  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $0100  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09CA, $0012  ; Supers
     dw $09CE, $0005  ; Pbs
     dw $0AF6, $0029  ; Samus X
@@ -3246,7 +2828,6 @@ preset_100map_cleanup_1_tube_climb:
     dw $D820, $3801  ; Events
     dw $D8C0, $DB7C  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_cleanup_1_fish_tank_final:
     dw #preset_100map_cleanup_1_tube_climb ; Cleanup 1: Tube Climb
@@ -3260,14 +2841,11 @@ preset_100map_cleanup_1_fish_tank_final:
     dw $0915, $0602  ; Screen Y position in pixels
     dw $0917, $00DD  ; Layer 2 X position
     dw $0919, $0481  ; Layer 2 Y position
-    dw $0921, $FF00  ; BG2 X offset
-    dw $0923, $F800  ; BG2 Y offset
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $0187  ; Samus X
     dw $0AFA, $068F  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_cleanup_1_mt_everest_final:
     dw #preset_100map_cleanup_1_fish_tank_final ; Cleanup 1: Fish Tank Final
@@ -3279,14 +2857,11 @@ preset_100map_cleanup_1_mt_everest_final:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $004B  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $0100  ; BG2 X offset
-    dw $0923, $FE00  ; BG2 Y offset
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $00C6  ; Samus X
     dw $0AFA, $006B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_cleanup_1_sephy_fish_room:
     dw #preset_100map_cleanup_1_mt_everest_final ; Cleanup 1: Mt Everest Final
@@ -3298,14 +2873,11 @@ preset_100map_cleanup_1_sephy_fish_room:
     dw $0915, $001C  ; Screen Y position in pixels
     dw $0917, $0192  ; Layer 2 X position
     dw $0919, $0015  ; Layer 2 Y position
-    dw $0921, $FF00  ; BG2 X offset
-    dw $0923, $FC00  ; BG2 Y offset
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $0279  ; Samus X
     dw $0AFA, $00AB  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_cleanup_1_red_tower_elevator:
     dw #preset_100map_cleanup_1_sephy_fish_room ; Cleanup 1: Sephy Fish Room
@@ -3317,14 +2889,11 @@ preset_100map_cleanup_1_red_tower_elevator:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $FE00  ; BG2 X offset
-    dw $0923, $FE00  ; BG2 Y offset
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $0071  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_cleanup_1_crateria_kihunters_2:
     dw #preset_100map_cleanup_1_red_tower_elevator ; Cleanup 1: Red Tower Elevator
@@ -3334,15 +2903,12 @@ preset_100map_cleanup_1_crateria_kihunters_2:
     dw $07F5, $0003  ; Music Track
     dw $090F, $2000  ; Screen subpixel X position
     dw $0913, $0000  ; Screen subpixel Y position
-    dw $0921, $0000  ; BG2 X offset
-    dw $0923, $FF00  ; BG2 Y offset
     dw $09CA, $0011  ; Supers
     dw $0A1C, $009B  ; Samus position/state
     dw $0A1E, $0000  ; More position/state
     dw $0AF6, $0080  ; Samus X
     dw $0AFA, $00A8  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_cleanup_1_landing_site_revisit:
     dw #preset_100map_cleanup_1_crateria_kihunters_2 ; Cleanup 1: Crateria Kihunters 2
@@ -3353,14 +2919,11 @@ preset_100map_cleanup_1_landing_site_revisit:
     dw $0911, $00FE  ; Screen X position in pixels
     dw $0913, $1400  ; Screen subpixel Y position
     dw $0917, $00BE  ; Layer 2 X position
-    dw $0921, $FF00  ; BG2 X offset
-    dw $0923, $FD00  ; BG2 Y offset
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $015E  ; Samus X
     dw $0AFA, $00BB  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_cleanup_1_crateria_pbs:
     dw #preset_100map_cleanup_1_landing_site_revisit ; Cleanup 1: Landing Site Revisit
@@ -3372,8 +2935,6 @@ preset_100map_cleanup_1_crateria_pbs:
     dw $0913, $0800  ; Screen subpixel Y position
     dw $0915, $00FB  ; Screen Y position in pixels
     dw $0917, $03F6  ; Layer 2 X position
-    dw $0921, $F700  ; BG2 X offset
-    dw $0923, $FC00  ; BG2 Y offset
     dw $09C2, $0277  ; Health
     dw $09CE, $0004  ; Pbs
     dw $09D2, $0003  ; Currently selected item
@@ -3383,7 +2944,6 @@ preset_100map_cleanup_1_crateria_pbs:
     dw $0AFA, $016B  ; Samus Y
     dw $D8B0, $B002  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_cleanup_1_gauntlet_etank:
     dw #preset_100map_cleanup_1_crateria_pbs ; Cleanup 1: Crateria PBs
@@ -3395,8 +2955,6 @@ preset_100map_cleanup_1_gauntlet_etank:
     dw $0913, $9C00  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
-    dw $0921, $FB00  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09C2, $0267  ; Health
     dw $09CE, $0005  ; Pbs
     dw $0A1C, $0002  ; Samus position/state
@@ -3404,7 +2962,6 @@ preset_100map_cleanup_1_gauntlet_etank:
     dw $0AF6, $0084  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_cleanup_1_quickdrops:
     dw #preset_100map_cleanup_1_gauntlet_etank ; Cleanup 1: Gauntlet E-Tank
@@ -3412,7 +2969,6 @@ preset_100map_cleanup_1_quickdrops:
     dw $079B, $965B  ; MDB
     dw $090F, $3000  ; Screen subpixel X position
     dw $0913, $C800  ; Screen subpixel Y position
-    dw $0921, $FA00  ; BG2 X offset
     dw $09C2, $0323  ; Health
     dw $09C4, $0383  ; Max health
     dw $09CE, $0004  ; Pbs
@@ -3420,7 +2976,6 @@ preset_100map_cleanup_1_quickdrops:
     dw $0AF6, $0025  ; Samus X
     dw $D870, $01A0  ; Items
     dw #$FFFF
-.after
 
 preset_100map_greenpink_brin_cleanup_green_brinstar_elevator:
     dw #preset_100map_cleanup_1_quickdrops ; Cleanup 1: Quickdrops
@@ -3429,12 +2984,10 @@ preset_100map_greenpink_brin_cleanup_green_brinstar_elevator:
     dw $07F5, $0003  ; Music Track
     dw $090F, $A000  ; Screen subpixel X position
     dw $0913, $6C00  ; Screen subpixel Y position
-    dw $0921, $FF00  ; BG2 X offset
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $0080  ; Samus X
     dw #$FFFF
-.after
 
 preset_100map_greenpink_brin_cleanup_brinstar_map_entrance:
     dw #preset_100map_greenpink_brin_cleanup_green_brinstar_elevator ; Green-Pink Brin Cleanup: Green Brinstar Elevator
@@ -3446,15 +2999,12 @@ preset_100map_greenpink_brin_cleanup_brinstar_map_entrance:
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $041D  ; Screen Y position in pixels
     dw $0919, $0315  ; Layer 2 Y position
-    dw $0921, $0000  ; BG2 X offset
-    dw $0923, $00E0  ; BG2 Y offset
     dw $09CA, $0012  ; Supers
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $0044  ; Samus X
     dw $0AFA, $048B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_greenpink_brin_cleanup_green_brin_fireflea_room:
     dw #preset_100map_greenpink_brin_cleanup_brinstar_map_entrance ; Green-Pink Brin Cleanup: Brinstar Map Entrance
@@ -3463,8 +3013,6 @@ preset_100map_greenpink_brin_cleanup_green_brin_fireflea_room:
     dw $0913, $2800  ; Screen subpixel Y position
     dw $0915, $0616  ; Screen Y position in pixels
     dw $0919, $0490  ; Layer 2 Y position
-    dw $0921, $0100  ; BG2 X offset
-    dw $0923, $FB00  ; BG2 Y offset
     dw $09C2, $0321  ; Health
     dw $09CA, $0010  ; Supers
     dw $09CE, $0002  ; Pbs
@@ -3473,7 +3021,6 @@ preset_100map_greenpink_brin_cleanup_green_brin_fireflea_room:
     dw $D8B2, $AC01  ; Doors
     dw $D8B4, $026F  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_greenpink_brin_cleanup_etecoons_etank_skip:
     dw #preset_100map_greenpink_brin_cleanup_green_brin_fireflea_room ; Green-Pink Brin Cleanup: Green Brin Fireflea Room
@@ -3484,14 +3031,11 @@ preset_100map_greenpink_brin_cleanup_etecoons_etank_skip:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0001  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $FF00  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09C2, $031A  ; Health
     dw $09CE, $0006  ; Pbs
     dw $0AF6, $0036  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_greenpink_brin_cleanup_etecoons_dboosts:
     dw #preset_100map_greenpink_brin_cleanup_etecoons_etank_skip ; Green-Pink Brin Cleanup: Etecoons E-Tank Skip
@@ -3506,7 +3050,6 @@ preset_100map_greenpink_brin_cleanup_etecoons_dboosts:
     dw $0AF6, $00C0  ; Samus X
     dw $D8B6, $EF18  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_greenpink_brin_cleanup_etecoons_climb:
     dw #preset_100map_greenpink_brin_cleanup_etecoons_dboosts ; Green-Pink Brin Cleanup: Etecoons D-Boosts
@@ -3518,13 +3061,10 @@ preset_100map_greenpink_brin_cleanup_etecoons_climb:
     dw $0915, $0100  ; Screen Y position in pixels
     dw $0917, $0300  ; Layer 2 X position
     dw $0919, $00C0  ; Layer 2 Y position
-    dw $0921, $0100  ; BG2 X offset
-    dw $0923, $FF00  ; BG2 Y offset
     dw $09C2, $030A  ; Health
     dw $0AF6, $04C6  ; Samus X
     dw $0AFA, $018B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_greenpink_brin_cleanup_dachora_moonfall:
     dw #preset_100map_greenpink_brin_cleanup_etecoons_climb ; Green-Pink Brin Cleanup: Etecoons Climb
@@ -3537,14 +3077,11 @@ preset_100map_greenpink_brin_cleanup_dachora_moonfall:
     dw $09D2, $0003  ; Currently selected item
     dw $0917, $0100  ; Layer 2 X position
     dw $0919, $0540  ; Layer 2 Y position
-    dw $0921, $FF00  ; BG2 X offset
-    dw $0923, $F500  ; BG2 Y offset
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $0137  ; Samus X
     dw $0AFA, $078B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_greenpink_brin_cleanup_big_pink_climb:
     dw #preset_100map_greenpink_brin_cleanup_dachora_moonfall ; Green-Pink Brin Cleanup: Dachora Moonfall
@@ -3556,8 +3093,6 @@ preset_100map_greenpink_brin_cleanup_big_pink_climb:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0348  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $0100  ; BG2 X offset
-    dw $0923, $FA00  ; BG2 Y offset
     dw $09C2, $0299  ; Health
     dw $09C6, $0019  ; Missiles
     dw $09CE, $0005  ; Pbs
@@ -3567,7 +3102,6 @@ preset_100map_greenpink_brin_cleanup_big_pink_climb:
     dw $0AF6, $0505  ; Samus X
     dw $0AFA, $00AB  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_greenpink_brin_cleanup_spo_spo_kihunters_room:
     dw #preset_100map_greenpink_brin_cleanup_big_pink_climb ; Green-Pink Brin Cleanup: Big Pink Climb
@@ -3579,12 +3113,9 @@ preset_100map_greenpink_brin_cleanup_spo_spo_kihunters_room:
     dw $0915, $0023  ; Screen Y position in pixels
     dw $0917, $01F2  ; Layer 2 X position
     dw $0919, $001A  ; Layer 2 Y position
-    dw $0921, $0000  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $0AF6, $02F8  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_greenpink_brin_cleanup_spore_spawn:
     dw #preset_100map_greenpink_brin_cleanup_spo_spo_kihunters_room ; Green-Pink Brin Cleanup: Spo Spo Kihunters Room
@@ -3596,14 +3127,12 @@ preset_100map_greenpink_brin_cleanup_spore_spawn:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0240  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $0100  ; BG2 X offset
     dw $09CA, $000E  ; Supers
     dw $09D2, $0003  ; Currently selected item
     dw $0AF6, $0370  ; Samus X
     dw $0AFA, $007B  ; Samus Y
     dw $D8B4, $266F  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_greenpink_brin_cleanup_spo_spo_moonfall:
     dw #preset_100map_greenpink_brin_cleanup_spore_spawn ; Green-Pink Brin Cleanup: Spore Spawn
@@ -3616,8 +3145,6 @@ preset_100map_greenpink_brin_cleanup_spo_spo_moonfall:
     dw $0915, $000D  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $000D  ; Layer 2 Y position
-    dw $0921, $0000  ; BG2 X offset
-    dw $0923, $FD00  ; BG2 Y offset
     dw $09C2, $02CE  ; Health
     dw $09C6, $001E  ; Missiles
     dw $09D2, $0000  ; Currently selected item
@@ -3625,7 +3152,6 @@ preset_100map_greenpink_brin_cleanup_spo_spo_moonfall:
     dw $0AFA, $008B  ; Samus Y
     dw $D828, $0304  ; Bosses
     dw #$FFFF
-.after
 
 preset_100map_greenpink_brin_cleanup_spo_spo_farm_room:
     dw #preset_100map_greenpink_brin_cleanup_spo_spo_moonfall ; Green-Pink Brin Cleanup: Spo Spo Moonfall
@@ -3638,14 +3164,11 @@ preset_100map_greenpink_brin_cleanup_spo_spo_farm_room:
     dw $0915, $0800  ; Screen Y position in pixels
     dw $0917, $0033  ; Layer 2 X position
     dw $0919, $0600  ; Layer 2 Y position
-    dw $0921, $0100  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $00E4  ; Samus X
     dw $0AFA, $088B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_greenpink_brin_cleanup_wave_gate_room:
     dw #preset_100map_greenpink_brin_cleanup_spo_spo_farm_room ; Green-Pink Brin Cleanup: Spo Spo Farm Room
@@ -3659,8 +3182,6 @@ preset_100map_greenpink_brin_cleanup_wave_gate_room:
     dw $0915, $0403  ; Screen Y position in pixels
     dw $0917, $0240  ; Layer 2 X position
     dw $0919, $0302  ; Layer 2 Y position
-    dw $0921, $FB00  ; BG2 X offset
-    dw $0923, $FB00  ; BG2 Y offset
     dw $09CA, $000C  ; Supers
     dw $09CE, $0004  ; Pbs
     dw $0A1C, $0001  ; Samus position/state
@@ -3670,7 +3191,6 @@ preset_100map_greenpink_brin_cleanup_wave_gate_room:
     dw $D8B4, $276F  ; Doors
     dw $D8B6, $EF38  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_greenpink_brin_cleanup_mission_impossible_room:
     dw #preset_100map_greenpink_brin_cleanup_wave_gate_room ; Green-Pink Brin Cleanup: Wave Gate Room
@@ -3681,8 +3201,6 @@ preset_100map_greenpink_brin_cleanup_mission_impossible_room:
     dw $0915, $031D  ; Screen Y position in pixels
     dw $0917, $0182  ; Layer 2 X position
     dw $0919, $0255  ; Layer 2 Y position
-    dw $0921, $FC00  ; BG2 X offset
-    dw $0923, $FC00  ; BG2 Y offset
     dw $09C2, $02BA  ; Health
     dw $09C6, $001C  ; Missiles
     dw $09CE, $0003  ; Pbs
@@ -3692,7 +3210,6 @@ preset_100map_greenpink_brin_cleanup_mission_impossible_room:
     dw $0AFA, $038B  ; Samus Y
     dw $D8B6, $EFF8  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_greenpink_brin_cleanup_green_hill_zone_final:
     dw #preset_100map_greenpink_brin_cleanup_mission_impossible_room ; Green-Pink Brin Cleanup: Mission Impossible Room
@@ -3702,8 +3219,6 @@ preset_100map_greenpink_brin_cleanup_green_hill_zone_final:
     dw $0915, $061D  ; Screen Y position in pixels
     dw $0917, $023E  ; Layer 2 X position
     dw $0919, $0495  ; Layer 2 Y position
-    dw $0921, $0100  ; BG2 X offset
-    dw $0923, $F700  ; BG2 Y offset
     dw $09C2, $028F  ; Health
     dw $09C6, $0017  ; Missiles
     dw $09CA, $000B  ; Supers
@@ -3714,7 +3229,6 @@ preset_100map_greenpink_brin_cleanup_green_hill_zone_final:
     dw $0AFA, $068B  ; Samus Y
     dw $D8B4, $2F6F  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_blue_brinstar_cleanup_blue_brinstar_hoppers:
     dw #preset_100map_greenpink_brin_cleanup_green_hill_zone_final ; Green-Pink Brin Cleanup: Green Hill Zone Final
@@ -3727,11 +3241,9 @@ preset_100map_blue_brinstar_cleanup_blue_brinstar_hoppers:
     dw $09D2, $0003  ; Currently selected item
     dw $0917, $00BB  ; Layer 2 X position
     dw $0919, $0015  ; Layer 2 Y position
-    dw $0923, $0000  ; BG2 Y offset
     dw $0AF6, $015A  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_blue_brinstar_cleanup_blue_brinstar_etank_room:
     dw #preset_100map_blue_brinstar_cleanup_blue_brinstar_hoppers ; Blue Brinstar Cleanup: Blue Brinstar Hoppers
@@ -3751,7 +3263,6 @@ preset_100map_blue_brinstar_cleanup_blue_brinstar_etank_room:
     dw $0AF6, $00D8  ; Samus X
     dw $D8B6, $EFFD  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_blue_brinstar_cleanup_john_cena_bridge:
     dw #preset_100map_blue_brinstar_cleanup_blue_brinstar_etank_room ; Blue Brinstar Cleanup: Blue Brinstar E-Tank Room
@@ -3763,14 +3274,12 @@ preset_100map_blue_brinstar_cleanup_john_cena_bridge:
     dw $0915, $001C  ; Screen Y position in pixels
     dw $0917, $0180  ; Layer 2 X position
     dw $0919, $0015  ; Layer 2 Y position
-    dw $0923, $FE00  ; BG2 Y offset
     dw $09C2, $028C  ; Health
     dw $09CE, $0002  ; Pbs
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $025B  ; Samus X
     dw #$FFFF
-.after
 
 preset_100map_blue_brinstar_cleanup_blue_brinstar_screwfall:
     dw #preset_100map_blue_brinstar_cleanup_john_cena_bridge ; Blue Brinstar Cleanup: John Cena Bridge
@@ -3782,13 +3291,11 @@ preset_100map_blue_brinstar_cleanup_blue_brinstar_screwfall:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $00C0  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0923, $0000  ; BG2 Y offset
     dw $09CA, $000A  ; Supers
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $01DC  ; Samus X
     dw #$FFFF
-.after
 
 preset_100map_blue_brinstar_cleanup_pit_room_final:
     dw #preset_100map_blue_brinstar_cleanup_blue_brinstar_screwfall ; Blue Brinstar Cleanup: Blue Brinstar Screwfall
@@ -3799,15 +3306,12 @@ preset_100map_blue_brinstar_cleanup_pit_room_final:
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $C000  ; Screen subpixel Y position
     dw $0917, $0000  ; Layer 2 X position
-    dw $0921, $0000  ; BG2 X offset
-    dw $0923, $FF00  ; BG2 Y offset
     dw $09C2, $0288  ; Health
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0A68, $002D  ; Flash suit
     dw $0AF6, $007E  ; Samus X
     dw #$FFFF
-.after
 
 preset_100map_blue_brinstar_cleanup_climb_supers:
     dw #preset_100map_blue_brinstar_cleanup_pit_room_final ; Blue Brinstar Cleanup: Pit Room Final
@@ -3820,8 +3324,6 @@ preset_100map_blue_brinstar_cleanup_climb_supers:
     dw $0915, $0700  ; Screen Y position in pixels
     dw $0917, $0180  ; Layer 2 X position
     dw $0919, $0540  ; Layer 2 Y position
-    dw $0921, $FE00  ; BG2 X offset
-    dw $0923, $F800  ; BG2 Y offset
     dw $09C2, $0249  ; Health
     dw $09C6, $0014  ; Missiles
     dw $09CE, $0001  ; Pbs
@@ -3832,7 +3334,6 @@ preset_100map_blue_brinstar_cleanup_climb_supers:
     dw $0AFA, $078B  ; Samus Y
     dw $D8B2, $AC09  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_blue_brinstar_cleanup_parlor_again:
     dw #preset_100map_blue_brinstar_cleanup_climb_supers ; Blue Brinstar Cleanup: Climb Supers
@@ -3843,8 +3344,6 @@ preset_100map_blue_brinstar_cleanup_parlor_again:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $00C0  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $FD00  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09C2, $01B9  ; Health
     dw $09CA, $000F  ; Supers
     dw $09CC, $0019  ; Max supers
@@ -3854,7 +3353,6 @@ preset_100map_blue_brinstar_cleanup_parlor_again:
     dw $0AFA, $005B  ; Samus Y
     dw $D870, $09A0  ; Items
     dw #$FFFF
-.after
 
 preset_100map_blue_brinstar_cleanup_crateria_map_entry:
     dw #preset_100map_blue_brinstar_cleanup_parlor_again ; Blue Brinstar Cleanup: Parlor Again
@@ -3864,8 +3362,6 @@ preset_100map_blue_brinstar_cleanup_crateria_map_entry:
     dw $0913, $47FF  ; Screen subpixel Y position
     dw $0915, $030C  ; Screen Y position in pixels
     dw $0919, $0249  ; Layer 2 Y position
-    dw $0921, $FF00  ; BG2 X offset
-    dw $0923, $FB00  ; BG2 Y offset
     dw $09CA, $000E  ; Supers
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
@@ -3873,7 +3369,6 @@ preset_100map_blue_brinstar_cleanup_crateria_map_entry:
     dw $0AFA, $039B  ; Samus Y
     dw $D8B0, $B022  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_blue_brinstar_cleanup_crateria_map_exit:
     dw #preset_100map_blue_brinstar_cleanup_crateria_map_entry ; Blue Brinstar Cleanup: Crateria Map Entry
@@ -3886,14 +3381,11 @@ preset_100map_blue_brinstar_cleanup_crateria_map_exit:
     dw $09D2, $0003  ; Currently selected item
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $0100  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $002B  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_blue_brinstar_cleanup_230_missiles:
     dw #preset_100map_blue_brinstar_cleanup_crateria_map_exit ; Blue Brinstar Cleanup: Crateria Map Exit
@@ -3906,12 +3398,9 @@ preset_100map_blue_brinstar_cleanup_230_missiles:
     dw $09D2, $0000  ; Currently selected item
     dw $0917, $00C0  ; Layer 2 X position
     dw $0919, $0257  ; Layer 2 Y position
-    dw $0921, $FE00  ; BG2 X offset
-    dw $0923, $FD00  ; BG2 Y offset
     dw $0AF6, $015D  ; Samus X
     dw $0AFA, $039B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_blue_brinstar_cleanup_230_mockball:
     dw #preset_100map_blue_brinstar_cleanup_230_missiles ; Blue Brinstar Cleanup: 230 Missiles
@@ -3923,8 +3412,6 @@ preset_100map_blue_brinstar_cleanup_230_mockball:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $FF00  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09CE, $0000  ; Pbs
     dw $09D2, $0004  ; Currently selected item
     dw $0A1C, $0001  ; Samus position/state
@@ -3932,7 +3419,6 @@ preset_100map_blue_brinstar_cleanup_230_mockball:
     dw $0AF6, $006F  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_blue_brinstar_cleanup_parlor_not_final_climb:
     dw #preset_100map_blue_brinstar_cleanup_230_mockball ; Blue Brinstar Cleanup: 230 Mockball
@@ -3943,7 +3429,6 @@ preset_100map_blue_brinstar_cleanup_parlor_not_final_climb:
     dw $09D2, $0000  ; Currently selected item
     dw $0AF6, $00C0  ; Samus X
     dw #$FFFF
-.after
 
 preset_100map_blue_brinstar_cleanup_terminator_final:
     dw #preset_100map_blue_brinstar_cleanup_parlor_not_final_climb ; Blue Brinstar Cleanup: Parlor (not) Final Climb
@@ -3951,14 +3436,11 @@ preset_100map_blue_brinstar_cleanup_terminator_final:
     dw $079B, $92FD  ; MDB
     dw $090F, $7000  ; Screen subpixel X position
     dw $0913, $C800  ; Screen subpixel Y position
-    dw $0921, $0000  ; BG2 X offset
-    dw $0923, $FE00  ; BG2 Y offset
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $010F  ; Samus X
     dw $0B3F, $0104  ; Blue suit
     dw #$FFFF
-.after
 
 preset_100map_tourian_tourian_elevator:
     dw #preset_100map_blue_brinstar_cleanup_terminator_final ; Blue Brinstar Cleanup: Terminator Final
@@ -3968,8 +3450,6 @@ preset_100map_tourian_tourian_elevator:
     dw $090F, $C000  ; Screen subpixel X position
     dw $0913, $1000  ; Screen subpixel Y position
     dw $0915, $011F  ; Screen Y position in pixels
-    dw $0921, $0100  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09CA, $000D  ; Supers
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
@@ -3979,7 +3459,6 @@ preset_100map_tourian_tourian_elevator:
     dw $D820, $3FC1  ; Events
     dw $D8B2, $EC09  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_tourian_metroids_1:
     dw #preset_100map_tourian_tourian_elevator ; Tourian: Tourian Elevator
@@ -3992,14 +3471,11 @@ preset_100map_tourian_metroids_1:
     dw $0915, $0300  ; Screen Y position in pixels
     dw $0917, $0001  ; Layer 2 X position
     dw $0919, $0240  ; Layer 2 Y position
-    dw $0921, $FF00  ; BG2 X offset
-    dw $0923, $FD00  ; BG2 Y offset
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $0037  ; Samus X
     dw $0AFA, $038B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_tourian_metroids_2:
     dw #preset_100map_tourian_metroids_1 ; Tourian: Metroids 1
@@ -4010,8 +3486,6 @@ preset_100map_tourian_metroids_2:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $FA00  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09C2, $01DE  ; Health
     dw $09C6, $001E  ; Missiles
     dw $09CA, $000B  ; Supers
@@ -4021,7 +3495,6 @@ preset_100map_tourian_metroids_2:
     dw $D822, $0021  ; Events
     dw $D8C4, $0001  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_tourian_metroids_3:
     dw #preset_100map_tourian_metroids_2 ; Tourian: Metroids 2
@@ -4031,7 +3504,6 @@ preset_100map_tourian_metroids_3:
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $0119  ; Screen Y position in pixels
     dw $0919, $00D2  ; Layer 2 Y position
-    dw $0921, $FF00  ; BG2 X offset
     dw $09C2, $022A  ; Health
     dw $09CA, $000C  ; Supers
     dw $09CE, $0004  ; Pbs
@@ -4042,7 +3514,6 @@ preset_100map_tourian_metroids_3:
     dw $D822, $0023  ; Events
     dw $D8C4, $0003  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_tourian_metroids_4:
     dw #preset_100map_tourian_metroids_3 ; Tourian: Metroids 3
@@ -4054,7 +3525,6 @@ preset_100map_tourian_metroids_4:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $03C0  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $0100  ; BG2 X offset
     dw $09C2, $02CF  ; Health
     dw $09CE, $0006  ; Pbs
     dw $0AF6, $05AF  ; Samus X
@@ -4062,7 +3532,6 @@ preset_100map_tourian_metroids_4:
     dw $D822, $0027  ; Events
     dw $D8C4, $0007  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_tourian_baby_skip:
     dw #preset_100map_tourian_metroids_4 ; Tourian: Metroids 4
@@ -4074,7 +3543,6 @@ preset_100map_tourian_baby_skip:
     dw $0911, $0100  ; Screen X position in pixels
     dw $0913, $1000  ; Screen subpixel Y position
     dw $0917, $00C0  ; Layer 2 X position
-    dw $0921, $FE00  ; BG2 X offset
     dw $09C2, $0329  ; Health
     dw $09CA, $000D  ; Supers
     dw $0A1C, $0002  ; Samus position/state
@@ -4084,7 +3552,6 @@ preset_100map_tourian_baby_skip:
     dw $D822, $002F  ; Events
     dw $D8C4, $000F  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_tourian_dusty_shaft_revisit:
     dw #preset_100map_tourian_baby_skip ; Tourian: Baby Skip
@@ -4096,14 +3563,12 @@ preset_100map_tourian_dusty_shaft_revisit:
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $FC00  ; Screen subpixel Y position
     dw $0917, $0000  ; Layer 2 X position
-    dw $0921, $FF00  ; BG2 X offset
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $00D9  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw $D8C4, $002F  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_tourian_zeb_skip:
     dw #preset_100map_tourian_dusty_shaft_revisit ; Tourian: Dusty Shaft Revisit
@@ -4113,8 +3578,6 @@ preset_100map_tourian_zeb_skip:
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $021A  ; Screen Y position in pixels
     dw $0919, $0193  ; Layer 2 Y position
-    dw $0921, $0100  ; BG2 X offset
-    dw $0923, $FF00  ; BG2 Y offset
     dw $09CA, $000A  ; Supers
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
@@ -4122,7 +3585,6 @@ preset_100map_tourian_zeb_skip:
     dw $0AFA, $028B  ; Samus Y
     dw $D8C4, $03AF  ; Doors
     dw #$FFFF
-.after
 
 preset_100map_tourian_escape_room_3:
     dw #preset_100map_tourian_zeb_skip ; Tourian: Zeb Skip
@@ -4134,8 +3596,6 @@ preset_100map_tourian_escape_room_3:
     dw $0913, $2800  ; Screen subpixel Y position
     dw $0915, $0100  ; Screen Y position in pixels
     dw $0919, $00C0  ; Layer 2 Y position
-    dw $0921, $0000  ; BG2 X offset
-    dw $0923, $00E0  ; BG2 Y offset
     dw $09A6, $1009  ; Beams
     dw $09C2, $0383  ; Health
     dw $09C6, $0000  ; Missiles
@@ -4149,7 +3609,6 @@ preset_100map_tourian_escape_room_3:
     dw $D820, $7FC5  ; Events
     dw $D82C, $0203  ; Bosses
     dw #$FFFF
-.after
 
 preset_100map_tourian_escape_room_4:
     dw #preset_100map_tourian_escape_room_3 ; Tourian: Escape Room 3
@@ -4160,12 +3619,9 @@ preset_100map_tourian_escape_room_4:
     dw $0915, $0014  ; Screen Y position in pixels
     dw $0917, $0161  ; Layer 2 X position
     dw $0919, $000F  ; Layer 2 Y position
-    dw $0921, $0100  ; BG2 X offset
-    dw $0923, $FF00  ; BG2 Y offset
     dw $0AF6, $0237  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_tourian_escape_parlor:
     dw #preset_100map_tourian_escape_room_4 ; Tourian: Escape Room 4
@@ -4177,14 +3633,12 @@ preset_100map_tourian_escape_parlor:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $00C0  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0923, $F800  ; BG2 Y offset
     dw $09C2, $02BC  ; Health
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $019D  ; Samus X
     dw $0AFA, $005B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_100map_tourian_landing_site_final:
     dw #preset_100map_tourian_escape_parlor ; Tourian: Escape Parlor
@@ -4194,11 +3648,8 @@ preset_100map_tourian_landing_site_final:
     dw $0911, $0400  ; Screen X position in pixels
     dw $0913, $EC00  ; Screen subpixel Y position
     dw $0917, $0300  ; Layer 2 X position
-    dw $0921, $FF00  ; BG2 X offset
-    dw $0923, $FB00  ; BG2 Y offset
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $047A  ; Samus X
     dw $0AFA, $009B  ; Samus Y
     dw #$FFFF
-.after

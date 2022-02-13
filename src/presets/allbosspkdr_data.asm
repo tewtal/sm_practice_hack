@@ -62,7 +62,6 @@ preset_allbosspkdr_crateria_ceres_elevator:
     dw $D8C2, $0000  ; Doors
     dw $D8C4, $0000  ; Doors
     dw #$FFFF
-.after
 
 preset_allbosspkdr_crateria_ceres_last_3_rooms:
     dw #preset_allbosspkdr_crateria_ceres_elevator ; Crateria: Ceres Elevator
@@ -80,7 +79,6 @@ preset_allbosspkdr_crateria_ceres_last_3_rooms:
     dw $0AFA, $009B  ; Samus Y
     dw $D82E, $0001  ; Bosses
     dw #$FFFF
-.after
 
 preset_allbosspkdr_crateria_ship:
     dw #preset_allbosspkdr_crateria_ceres_last_3_rooms ; Crateria: Ceres Last 3 Rooms
@@ -99,7 +97,6 @@ preset_allbosspkdr_crateria_ship:
     dw $0AF6, $0481  ; Samus X
     dw $0AFA, $0440  ; Samus Y
     dw #$FFFF
-.after
 
 preset_allbosspkdr_crateria_pit_room:
     dw #preset_allbosspkdr_crateria_ship ; Crateria: Ship
@@ -113,7 +110,6 @@ preset_allbosspkdr_crateria_pit_room:
     dw $0AF6, $01DB  ; Samus X
     dw $0AFA, $088B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_allbosspkdr_crateria_morph:
     dw #preset_allbosspkdr_crateria_pit_room ; Crateria: Pit Room
@@ -129,7 +125,6 @@ preset_allbosspkdr_crateria_morph:
     dw $0AF6, $0580  ; Samus X
     dw $0AFA, $02A8  ; Samus Y
     dw #$FFFF
-.after
 
 preset_allbosspkdr_crateria_pit_room_revisit:
     dw #preset_allbosspkdr_crateria_morph ; Crateria: Morph
@@ -148,7 +143,6 @@ preset_allbosspkdr_crateria_pit_room_revisit:
     dw $D872, $0400  ; Items
     dw $D874, $0004  ; Items
     dw #$FFFF
-.after
 
 preset_allbosspkdr_crateria_climb:
     dw #preset_allbosspkdr_crateria_pit_room_revisit ; Crateria: Pit Room Revisit
@@ -164,7 +158,6 @@ preset_allbosspkdr_crateria_climb:
     dw $0AFA, $008B  ; Samus Y
     dw $D820, $0001  ; Events
     dw #$FFFF
-.after
 
 preset_allbosspkdr_crateria_parlor:
     dw #preset_allbosspkdr_crateria_climb ; Crateria: Climb
@@ -177,7 +170,6 @@ preset_allbosspkdr_crateria_parlor:
     dw $0AFA, $005B  ; Samus Y
     dw $D8B2, $0400  ; Doors
     dw #$FFFF
-.after
 
 preset_allbosspkdr_crateria_bomb_torizo:
     dw #preset_allbosspkdr_crateria_parlor ; Crateria: Parlor
@@ -193,7 +185,6 @@ preset_allbosspkdr_crateria_bomb_torizo:
     dw $0AFA, $008B  ; Samus Y
     dw $D8B2, $2400  ; Doors
     dw #$FFFF
-.after
 
 preset_allbosspkdr_crateria_terminator:
     dw #preset_allbosspkdr_crateria_bomb_torizo ; Crateria: Bomb Torizo
@@ -213,7 +204,6 @@ preset_allbosspkdr_crateria_terminator:
     dw $D870, $0080  ; Items
     dw $D8B2, $2C00  ; Doors
     dw #$FFFF
-.after
 
 preset_allbosspkdr_crateria_green_pirate_shaft:
     dw #preset_allbosspkdr_crateria_terminator ; Crateria: Terminator
@@ -232,7 +222,6 @@ preset_allbosspkdr_crateria_green_pirate_shaft:
     dw $0B3F, $0000  ; Blue suit
     dw $D870, $0180  ; Items
     dw #$FFFF
-.after
 
 preset_allbosspkdr_brinstar_green_brinstar_elevator:
     dw #preset_allbosspkdr_crateria_green_pirate_shaft ; Crateria: Green Pirate Shaft
@@ -246,7 +235,6 @@ preset_allbosspkdr_brinstar_green_brinstar_elevator:
     dw $0AF6, $007E  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_allbosspkdr_brinstar_dachora_room:
     dw #preset_allbosspkdr_brinstar_green_brinstar_elevator ; Brinstar: Green Brinstar Elevator
@@ -268,7 +256,6 @@ preset_allbosspkdr_brinstar_dachora_room:
     dw $D872, $0401  ; Items
     dw $D8B4, $0006  ; Doors
     dw #$FFFF
-.after
 
 preset_allbosspkdr_brinstar_big_pink:
     dw #preset_allbosspkdr_brinstar_dachora_room ; Brinstar: Dachora Room
@@ -282,7 +269,6 @@ preset_allbosspkdr_brinstar_big_pink:
     dw $0AF6, $06A4  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_allbosspkdr_brinstar_red_tower:
     dw #preset_allbosspkdr_brinstar_big_pink ; Brinstar: Big Pink
@@ -300,7 +286,6 @@ preset_allbosspkdr_brinstar_red_tower:
     dw $D8B4, $0206  ; Doors
     dw $D8B6, $0008  ; Doors
     dw #$FFFF
-.after
 
 preset_allbosspkdr_brinstar_hellway:
     dw #preset_allbosspkdr_brinstar_red_tower ; Brinstar: Red Tower
@@ -313,7 +298,6 @@ preset_allbosspkdr_brinstar_hellway:
     dw $0915, $000F  ; Screen Y position in pixels
     dw $0AF6, $0094  ; Samus X
     dw #$FFFF
-.after
 
 preset_allbosspkdr_brinstar_leaving_power_bombs:
     dw #preset_allbosspkdr_brinstar_hellway ; Brinstar: Hellway
@@ -333,7 +317,6 @@ preset_allbosspkdr_brinstar_leaving_power_bombs:
     dw $D874, $0104  ; Items
     dw $D8B6, $2008  ; Doors
     dw #$FFFF
-.after
 
 preset_allbosspkdr_brinstar_crateria_elevator:
     dw #preset_allbosspkdr_brinstar_leaving_power_bombs ; Brinstar: Leaving Power Bombs
@@ -351,7 +334,6 @@ preset_allbosspkdr_brinstar_crateria_elevator:
     dw $D8B2, $2C01  ; Doors
     dw $D8B6, $3008  ; Doors
     dw #$FFFF
-.after
 
 preset_allbosspkdr_brinstar_moat:
     dw #preset_allbosspkdr_brinstar_crateria_elevator ; Brinstar: Crateria Elevator
@@ -369,7 +351,6 @@ preset_allbosspkdr_brinstar_moat:
     dw $0AFA, $008B  ; Samus Y
     dw $D8B0, $6000  ; Doors
     dw #$FFFF
-.after
 
 preset_allbosspkdr_brinstar_ocean:
     dw #preset_allbosspkdr_brinstar_moat ; Brinstar: Moat
@@ -385,7 +366,6 @@ preset_allbosspkdr_brinstar_ocean:
     dw $0AF6, $01B2  ; Samus X
     dw $D870, $0190  ; Items
     dw #$FFFF
-.after
 
 preset_allbosspkdr_wrecked_ship_entering_wrecked_ship:
     dw #preset_allbosspkdr_brinstar_ocean ; Brinstar: Ocean
@@ -401,7 +381,6 @@ preset_allbosspkdr_wrecked_ship_entering_wrecked_ship:
     dw $0AFA, $048B  ; Samus Y
     dw $D8B0, $7000  ; Doors
     dw #$FFFF
-.after
 
 preset_allbosspkdr_wrecked_ship_phantoon:
     dw #preset_allbosspkdr_wrecked_ship_entering_wrecked_ship ; Wrecked Ship: Entering Wrecked Ship
@@ -417,7 +396,6 @@ preset_allbosspkdr_wrecked_ship_phantoon:
     dw $0AFA, $008B  ; Samus Y
     dw $D8C0, $0030  ; Doors
     dw #$FFFF
-.after
 
 preset_allbosspkdr_wrecked_ship_leaving_phantoon:
     dw #preset_allbosspkdr_wrecked_ship_phantoon ; Wrecked Ship: Phantoon
@@ -438,7 +416,6 @@ preset_allbosspkdr_wrecked_ship_leaving_phantoon:
     dw $D82A, $0100  ; Bosses
     dw $D8C0, $0070  ; Doors
     dw #$FFFF
-.after
 
 preset_allbosspkdr_wrecked_ship_wrecked_ship_shaft:
     dw #preset_allbosspkdr_wrecked_ship_leaving_phantoon ; Wrecked Ship: Leaving Phantoon
@@ -458,7 +435,6 @@ preset_allbosspkdr_wrecked_ship_wrecked_ship_shaft:
     dw $D880, $0020  ; Items
     dw $D8C0, $0074  ; Doors
     dw #$FFFF
-.after
 
 preset_allbosspkdr_wrecked_ship_attic:
     dw #preset_allbosspkdr_wrecked_ship_wrecked_ship_shaft ; Wrecked Ship: Wrecked Ship Shaft
@@ -470,7 +446,6 @@ preset_allbosspkdr_wrecked_ship_attic:
     dw $0AF6, $044E  ; Samus X
     dw $0AFA, $006B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_allbosspkdr_wrecked_ship_bowling_spark:
     dw #preset_allbosspkdr_wrecked_ship_attic ; Wrecked Ship: Attic
@@ -488,7 +463,6 @@ preset_allbosspkdr_wrecked_ship_bowling_spark:
     dw $0AFA, $008B  ; Samus Y
     dw $D8C0, $0174  ; Doors
     dw #$FFFF
-.after
 
 preset_allbosspkdr_wrecked_ship_leaving_gravity:
     dw #preset_allbosspkdr_wrecked_ship_bowling_spark ; Wrecked Ship: Bowling Spark
@@ -507,7 +481,6 @@ preset_allbosspkdr_wrecked_ship_leaving_gravity:
     dw $0AFA, $0088  ; Samus Y
     dw $D880, $00A0  ; Items
     dw #$FFFF
-.after
 
 preset_allbosspkdr_wrecked_ship_red_tower_elevator:
     dw #preset_allbosspkdr_wrecked_ship_leaving_gravity ; Wrecked Ship: Leaving Gravity
@@ -523,7 +496,6 @@ preset_allbosspkdr_wrecked_ship_red_tower_elevator:
     dw $0AF6, $0080  ; Samus X
     dw $0AFA, $02A8  ; Samus Y
     dw #$FFFF
-.after
 
 preset_allbosspkdr_wrecked_ship_red_tower_descent:
     dw #preset_allbosspkdr_wrecked_ship_red_tower_elevator ; Wrecked Ship: Red Tower Elevator
@@ -537,7 +509,6 @@ preset_allbosspkdr_wrecked_ship_red_tower_descent:
     dw $0AF6, $002D  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_allbosspkdr_wrecked_ship_breaking_tube:
     dw #preset_allbosspkdr_wrecked_ship_red_tower_descent ; Wrecked Ship: Red Tower Descent
@@ -551,7 +522,6 @@ preset_allbosspkdr_wrecked_ship_breaking_tube:
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $002C  ; Samus X
     dw #$FFFF
-.after
 
 preset_allbosspkdr_upper_norfair_business_center:
     dw #preset_allbosspkdr_wrecked_ship_breaking_tube ; Wrecked Ship: Breaking Tube
@@ -569,7 +539,6 @@ preset_allbosspkdr_upper_norfair_business_center:
     dw $0AFA, $02A8  ; Samus Y
     dw $D820, $0801  ; Events
     dw #$FFFF
-.after
 
 preset_allbosspkdr_upper_norfair_hi_jump_etank:
     dw #preset_allbosspkdr_upper_norfair_business_center ; Upper Norfair: Business Center
@@ -582,7 +551,6 @@ preset_allbosspkdr_upper_norfair_hi_jump_etank:
     dw $0AFA, $058B  ; Samus Y
     dw $D8B8, $2000  ; Doors
     dw #$FFFF
-.after
 
 preset_allbosspkdr_upper_norfair_leaving_hi_jump:
     dw #preset_allbosspkdr_upper_norfair_hi_jump_etank ; Upper Norfair: Hi Jump E-tank
@@ -604,7 +572,6 @@ preset_allbosspkdr_upper_norfair_leaving_hi_jump:
     dw $D876, $0120  ; Items
     dw $D8BA, $0001  ; Doors
     dw #$FFFF
-.after
 
 preset_allbosspkdr_upper_norfair_precathedral:
     dw #preset_allbosspkdr_upper_norfair_leaving_hi_jump ; Upper Norfair: Leaving Hi Jump
@@ -617,7 +584,6 @@ preset_allbosspkdr_upper_norfair_precathedral:
     dw $0AF6, $00B4  ; Samus X
     dw $0AFA, $038B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_allbosspkdr_upper_norfair_bubble_mountain:
     dw #preset_allbosspkdr_upper_norfair_precathedral ; Upper Norfair: Pre-Cathedral
@@ -635,7 +601,6 @@ preset_allbosspkdr_upper_norfair_bubble_mountain:
     dw $0AFA, $008B  ; Samus Y
     dw $D8B8, $2600  ; Doors
     dw #$FFFF
-.after
 
 preset_allbosspkdr_upper_norfair_single_chamber:
     dw #preset_allbosspkdr_upper_norfair_bubble_mountain ; Upper Norfair: Bubble Mountain
@@ -657,7 +622,6 @@ preset_allbosspkdr_upper_norfair_single_chamber:
     dw $D878, $0004  ; Items
     dw $D8BA, $0031  ; Doors
     dw #$FFFF
-.after
 
 preset_allbosspkdr_upper_norfair_double_chamber_revisit:
     dw #preset_allbosspkdr_upper_norfair_single_chamber ; Upper Norfair: Single Chamber
@@ -680,7 +644,6 @@ preset_allbosspkdr_upper_norfair_double_chamber_revisit:
     dw $D878, $001C  ; Items
     dw $D8BA, $00F1  ; Doors
     dw #$FFFF
-.after
 
 preset_allbosspkdr_upper_norfair_bubble_mountain_revisit:
     dw #preset_allbosspkdr_upper_norfair_double_chamber_revisit ; Upper Norfair: Double Chamber Revisit
@@ -693,7 +656,6 @@ preset_allbosspkdr_upper_norfair_bubble_mountain_revisit:
     dw $09C6, $000B  ; Missiles
     dw $0AF6, $008F  ; Samus X
     dw #$FFFF
-.after
 
 preset_allbosspkdr_upper_norfair_business_center_revisit:
     dw #preset_allbosspkdr_upper_norfair_bubble_mountain_revisit ; Upper Norfair: Bubble Mountain Revisit
@@ -707,7 +669,6 @@ preset_allbosspkdr_upper_norfair_business_center_revisit:
     dw $09CE, $0003  ; Pbs
     dw $0AF6, $0035  ; Samus X
     dw #$FFFF
-.after
 
 preset_allbosspkdr_kraids_lair_entering_kraids_lair:
     dw #preset_allbosspkdr_upper_norfair_business_center_revisit ; Upper Norfair: Business Center Revisit
@@ -722,7 +683,6 @@ preset_allbosspkdr_kraids_lair_entering_kraids_lair:
     dw $0AF6, $0080  ; Samus X
     dw $0AFA, $0086  ; Samus Y
     dw #$FFFF
-.after
 
 preset_allbosspkdr_kraids_lair_baby_kraid_entering:
     dw #preset_allbosspkdr_kraids_lair_entering_kraids_lair ; Kraids Lair: Entering Kraids Lair
@@ -740,7 +700,6 @@ preset_allbosspkdr_kraids_lair_baby_kraid_entering:
     dw $0AF6, $016B  ; Samus X
     dw $0AFA, $018B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_allbosspkdr_kraids_lair_kraid:
     dw #preset_allbosspkdr_kraids_lair_baby_kraid_entering ; Kraids Lair: Baby Kraid (Entering)
@@ -755,7 +714,6 @@ preset_allbosspkdr_kraids_lair_kraid:
     dw $0AF6, $01C2  ; Samus X
     dw $D8B8, $2624  ; Doors
     dw #$FFFF
-.after
 
 preset_allbosspkdr_kraids_lair_baby_kraid_entering_2:
     dw #preset_allbosspkdr_kraids_lair_kraid ; Kraids Lair: Kraid
@@ -776,7 +734,6 @@ preset_allbosspkdr_kraids_lair_baby_kraid_entering_2:
     dw $D876, $0121  ; Items
     dw $D8B8, $26E4  ; Doors
     dw #$FFFF
-.after
 
 preset_allbosspkdr_kraids_lair_leaving_kraids_lair:
     dw #preset_allbosspkdr_kraids_lair_baby_kraid_entering_2 ; Kraids Lair: Baby Kraid (Entering)
@@ -795,7 +752,6 @@ preset_allbosspkdr_kraids_lair_leaving_kraids_lair:
     dw $0AFA, $008B  ; Samus Y
     dw $D8B8, $26EC  ; Doors
     dw #$FFFF
-.after
 
 preset_allbosspkdr_maridia_mt_everest:
     dw #preset_allbosspkdr_kraids_lair_leaving_kraids_lair ; Kraids Lair: Leaving Kraids Lair
@@ -811,7 +767,6 @@ preset_allbosspkdr_maridia_mt_everest:
     dw $0AF6, $00D0  ; Samus X
     dw $0AFA, $006B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_allbosspkdr_maridia_botwoon:
     dw #preset_allbosspkdr_maridia_mt_everest ; Maridia: Mt Everest
@@ -830,7 +785,6 @@ preset_allbosspkdr_maridia_botwoon:
     dw $0AFA, $008B  ; Samus Y
     dw $D8C0, $8174  ; Doors
     dw #$FFFF
-.after
 
 preset_allbosspkdr_maridia_halfie:
     dw #preset_allbosspkdr_maridia_botwoon ; Maridia: Botwoon
@@ -848,7 +802,6 @@ preset_allbosspkdr_maridia_halfie:
     dw $D82C, $0002  ; Bosses
     dw $D882, $0100  ; Items
     dw #$FFFF
-.after
 
 preset_allbosspkdr_maridia_draygon:
     dw #preset_allbosspkdr_maridia_halfie ; Maridia: Halfie
@@ -867,7 +820,6 @@ preset_allbosspkdr_maridia_draygon:
     dw $0AFA, $028B  ; Samus Y
     dw $D8C2, $0C00  ; Doors
     dw #$FFFF
-.after
 
 preset_allbosspkdr_maridia_womple_jump:
     dw #preset_allbosspkdr_maridia_draygon ; Maridia: Draygon
@@ -887,7 +839,6 @@ preset_allbosspkdr_maridia_womple_jump:
     dw $D882, $0500  ; Items
     dw $D8C2, $CC00  ; Doors
     dw #$FFFF
-.after
 
 preset_allbosspkdr_maridia_cac_alley:
     dw #preset_allbosspkdr_maridia_womple_jump ; Maridia: Womple Jump
@@ -902,7 +853,6 @@ preset_allbosspkdr_maridia_cac_alley:
     dw $0AF6, $0034  ; Samus X
     dw $0AFA, $018B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_allbosspkdr_maridia_plasma_spark:
     dw #preset_allbosspkdr_maridia_cac_alley ; Maridia: Cac Alley
@@ -918,7 +868,6 @@ preset_allbosspkdr_maridia_plasma_spark:
     dw $0AFA, $00AB  ; Samus Y
     dw $D8C2, $DC00  ; Doors
     dw #$FFFF
-.after
 
 preset_allbosspkdr_maridia_plasma_beam:
     dw #preset_allbosspkdr_maridia_plasma_spark ; Maridia: Plasma Spark
@@ -933,7 +882,6 @@ preset_allbosspkdr_maridia_plasma_beam:
     dw $0AFA, $008B  ; Samus Y
     dw $D8C2, $DC08  ; Doors
     dw #$FFFF
-.after
 
 preset_allbosspkdr_maridia_plasma_spark_revisit:
     dw #preset_allbosspkdr_maridia_plasma_beam ; Maridia: Plasma Beam
@@ -953,7 +901,6 @@ preset_allbosspkdr_maridia_plasma_spark_revisit:
     dw $D880, $80A0  ; Items
     dw $D8C2, $DC0A  ; Doors
     dw #$FFFF
-.after
 
 preset_allbosspkdr_maridia_sewers:
     dw #preset_allbosspkdr_maridia_plasma_spark_revisit ; Maridia: Plasma Spark Revisit
@@ -967,7 +914,6 @@ preset_allbosspkdr_maridia_sewers:
     dw $0AFA, $006B  ; Samus Y
     dw $D8C2, $DC1A  ; Doors
     dw #$FFFF
-.after
 
 preset_allbosspkdr_upper_norfair_revisit_ice_beam_hallway:
     dw #preset_allbosspkdr_maridia_sewers ; Maridia: Sewers
@@ -982,7 +928,6 @@ preset_allbosspkdr_upper_norfair_revisit_ice_beam_hallway:
     dw $0A1E, $0000  ; More position/state
     dw $0AFA, $02A8  ; Samus Y
     dw #$FFFF
-.after
 
 preset_allbosspkdr_upper_norfair_revisit_ice_maze:
     dw #preset_allbosspkdr_upper_norfair_revisit_ice_beam_hallway ; Upper Norfair Revisit: Ice Beam Hallway
@@ -998,7 +943,6 @@ preset_allbosspkdr_upper_norfair_revisit_ice_maze:
     dw $0AFA, $008B  ; Samus Y
     dw $D8B8, $2EEC  ; Doors
     dw #$FFFF
-.after
 
 preset_allbosspkdr_upper_norfair_revisit_ice_escape:
     dw #preset_allbosspkdr_upper_norfair_revisit_ice_maze ; Upper Norfair Revisit: Ice Maze
@@ -1016,7 +960,6 @@ preset_allbosspkdr_upper_norfair_revisit_ice_escape:
     dw $0AFA, $028B  ; Samus Y
     dw $D876, $0125  ; Items
     dw #$FFFF
-.after
 
 preset_allbosspkdr_upper_norfair_revisit_crocomire_speedway:
     dw #preset_allbosspkdr_upper_norfair_revisit_ice_escape ; Upper Norfair Revisit: Ice Escape
@@ -1029,7 +972,6 @@ preset_allbosspkdr_upper_norfair_revisit_crocomire_speedway:
     dw $0AF6, $00DB  ; Samus X
     dw $0AFA, $03BB  ; Samus Y
     dw #$FFFF
-.after
 
 preset_allbosspkdr_upper_norfair_revisit_crocomire:
     dw #preset_allbosspkdr_upper_norfair_revisit_crocomire_speedway ; Upper Norfair Revisit: Crocomire Speedway
@@ -1046,7 +988,6 @@ preset_allbosspkdr_upper_norfair_revisit_crocomire:
     dw $0AFA, $02AB  ; Samus Y
     dw $D8B8, $6EEC  ; Doors
     dw #$FFFF
-.after
 
 preset_allbosspkdr_upper_norfair_revisit_leaving_crocomire:
     dw #preset_allbosspkdr_upper_norfair_revisit_crocomire ; Upper Norfair Revisit: Crocomire
@@ -1064,7 +1005,6 @@ preset_allbosspkdr_upper_norfair_revisit_leaving_crocomire:
     dw $D82A, $0102  ; Bosses
     dw $D8B8, $EEEC  ; Doors
     dw #$FFFF
-.after
 
 preset_allbosspkdr_upper_norfair_revisit_kronic_boost:
     dw #preset_allbosspkdr_upper_norfair_revisit_leaving_crocomire ; Upper Norfair Revisit: Leaving Crocomire
@@ -1077,7 +1017,6 @@ preset_allbosspkdr_upper_norfair_revisit_kronic_boost:
     dw $0AF6, $03C7  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_allbosspkdr_lower_norfair_ln_main_hall:
     dw #preset_allbosspkdr_upper_norfair_revisit_kronic_boost ; Upper Norfair Revisit: Kronic Boost
@@ -1097,7 +1036,6 @@ preset_allbosspkdr_lower_norfair_ln_main_hall:
     dw $0AFA, $0288  ; Samus Y
     dw $D8BA, $01F1  ; Doors
     dw #$FFFF
-.after
 
 preset_allbosspkdr_lower_norfair_green_gate_glitch:
     dw #preset_allbosspkdr_lower_norfair_ln_main_hall ; Lower Norfair: LN Main Hall
@@ -1114,7 +1052,6 @@ preset_allbosspkdr_lower_norfair_green_gate_glitch:
     dw $0AF6, $006D  ; Samus X
     dw $0AFA, $029B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_allbosspkdr_lower_norfair_golden_torizo:
     dw #preset_allbosspkdr_lower_norfair_green_gate_glitch ; Lower Norfair: Green Gate Glitch
@@ -1129,7 +1066,6 @@ preset_allbosspkdr_lower_norfair_golden_torizo:
     dw $0A1E, $1504  ; More position/state
     dw $0AF6, $0025  ; Samus X
     dw #$FFFF
-.after
 
 preset_allbosspkdr_lower_norfair_screw_attack_escape:
     dw #preset_allbosspkdr_lower_norfair_golden_torizo ; Lower Norfair: Golden Torizo
@@ -1147,7 +1083,6 @@ preset_allbosspkdr_lower_norfair_screw_attack_escape:
     dw $D82A, $0106  ; Bosses
     dw $D8BA, $03F1  ; Doors
     dw #$FFFF
-.after
 
 preset_allbosspkdr_lower_norfair_worst_room_in_the_game:
     dw #preset_allbosspkdr_lower_norfair_screw_attack_escape ; Lower Norfair: Screw Attack Escape
@@ -1167,7 +1102,6 @@ preset_allbosspkdr_lower_norfair_worst_room_in_the_game:
     dw $0AFA, $008B  ; Samus Y
     dw $D878, $801C  ; Items
     dw #$FFFF
-.after
 
 preset_allbosspkdr_lower_norfair_kihunter_stairs:
     dw #preset_allbosspkdr_lower_norfair_worst_room_in_the_game ; Lower Norfair: Worst Room in the Game
@@ -1181,7 +1115,6 @@ preset_allbosspkdr_lower_norfair_kihunter_stairs:
     dw $0AF6, $02DB  ; Samus X
     dw $0AFA, $00B6  ; Samus Y
     dw #$FFFF
-.after
 
 preset_allbosspkdr_lower_norfair_metal_pirates:
     dw #preset_allbosspkdr_lower_norfair_kihunter_stairs ; Lower Norfair: Kihunter Stairs
@@ -1199,7 +1132,6 @@ preset_allbosspkdr_lower_norfair_metal_pirates:
     dw $0AFA, $028B  ; Samus Y
     dw $D8BA, $C3F1  ; Doors
     dw #$FFFF
-.after
 
 preset_allbosspkdr_lower_norfair_ridley:
     dw #preset_allbosspkdr_lower_norfair_metal_pirates ; Lower Norfair: Metal Pirates
@@ -1218,7 +1150,6 @@ preset_allbosspkdr_lower_norfair_ridley:
     dw $D8BA, $D3F1  ; Doors
     dw $D8BC, $0001  ; Doors
     dw #$FFFF
-.after
 
 preset_allbosspkdr_lower_norfair_leaving_ridley:
     dw #preset_allbosspkdr_lower_norfair_ridley ; Lower Norfair: Ridley
@@ -1238,7 +1169,6 @@ preset_allbosspkdr_lower_norfair_leaving_ridley:
     dw $0AFA, $019B  ; Samus Y
     dw $D82A, $0107  ; Bosses
     dw #$FFFF
-.after
 
 preset_allbosspkdr_lower_norfair_wasteland_revisit:
     dw #preset_allbosspkdr_lower_norfair_leaving_ridley ; Lower Norfair: Leaving Ridley
@@ -1257,7 +1187,6 @@ preset_allbosspkdr_lower_norfair_wasteland_revisit:
     dw $0AFA, $00AB  ; Samus Y
     dw $D8BA, $D7F1  ; Doors
     dw #$FFFF
-.after
 
 preset_allbosspkdr_lower_norfair_fire_flea_room:
     dw #preset_allbosspkdr_lower_norfair_wasteland_revisit ; Lower Norfair: Wasteland Revisit
@@ -1274,7 +1203,6 @@ preset_allbosspkdr_lower_norfair_fire_flea_room:
     dw $0AF6, $00B9  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_allbosspkdr_lower_norfair_three_musketeers:
     dw #preset_allbosspkdr_lower_norfair_fire_flea_room ; Lower Norfair: Fire Flea Room
@@ -1288,7 +1216,6 @@ preset_allbosspkdr_lower_norfair_three_musketeers:
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $0060  ; Samus X
     dw #$FFFF
-.after
 
 preset_allbosspkdr_lower_norfair_bubble_mountain_rerevisit:
     dw #preset_allbosspkdr_lower_norfair_three_musketeers ; Lower Norfair: Three Musketeers
@@ -1301,7 +1228,6 @@ preset_allbosspkdr_lower_norfair_bubble_mountain_rerevisit:
     dw $09C6, $0012  ; Missiles
     dw $0AF6, $0085  ; Samus X
     dw #$FFFF
-.after
 
 preset_allbosspkdr_spore_spawn_maridia_passthrough:
     dw #preset_allbosspkdr_lower_norfair_bubble_mountain_rerevisit ; Lower Norfair: Bubble Mountain ReRevisit
@@ -1320,7 +1246,6 @@ preset_allbosspkdr_spore_spawn_maridia_passthrough:
     dw $0AF6, $0080  ; Samus X
     dw $0AFA, $0086  ; Samus Y
     dw #$FFFF
-.after
 
 preset_allbosspkdr_spore_spawn_red_tower_2:
     dw #preset_allbosspkdr_spore_spawn_maridia_passthrough ; Spore Spawn: Maridia Passthrough
@@ -1335,7 +1260,6 @@ preset_allbosspkdr_spore_spawn_red_tower_2:
     dw $0AF6, $0025  ; Samus X
     dw $0AFA, $009B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_allbosspkdr_spore_spawn_lower_green_brinstar:
     dw #preset_allbosspkdr_spore_spawn_red_tower_2 ; Spore Spawn: Red Tower
@@ -1349,7 +1273,6 @@ preset_allbosspkdr_spore_spawn_lower_green_brinstar:
     dw $0AF6, $003A  ; Samus X
     dw $0AFA, $048B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_allbosspkdr_spore_spawn_big_pink_up:
     dw #preset_allbosspkdr_spore_spawn_lower_green_brinstar ; Spore Spawn: Lower Green Brinstar
@@ -1363,7 +1286,6 @@ preset_allbosspkdr_spore_spawn_big_pink_up:
     dw $0AF6, $0040  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_allbosspkdr_spore_spawn_spore_spawn_2:
     dw #preset_allbosspkdr_spore_spawn_big_pink_up ; Spore Spawn: Big Pink Up
@@ -1380,7 +1302,6 @@ preset_allbosspkdr_spore_spawn_spore_spawn_2:
     dw $0AFA, $007B  ; Samus Y
     dw $D8B4, $2606  ; Doors
     dw #$FFFF
-.after
 
 preset_allbosspkdr_spore_spawn_big_pink_down:
     dw #preset_allbosspkdr_spore_spawn_spore_spawn_2 ; Spore Spawn: Spore Spawn
@@ -1396,7 +1317,6 @@ preset_allbosspkdr_spore_spawn_big_pink_down:
     dw $D828, $0304  ; Bosses
     dw $D8B4, $7606  ; Doors
     dw #$FFFF
-.after
 
 preset_allbosspkdr_spore_spawn_dachora_room_revisit:
     dw #preset_allbosspkdr_spore_spawn_big_pink_down ; Spore Spawn: Big Pink Down
@@ -1409,7 +1329,6 @@ preset_allbosspkdr_spore_spawn_dachora_room_revisit:
     dw $0AF6, $0225  ; Samus X
     dw $0AFA, $028B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_allbosspkdr_spore_spawn_crateria_2:
     dw #preset_allbosspkdr_spore_spawn_dachora_room_revisit ; Spore Spawn: Dachora Room Revisit
@@ -1426,7 +1345,6 @@ preset_allbosspkdr_spore_spawn_crateria_2:
     dw $0AF6, $0080  ; Samus X
     dw $0AFA, $0088  ; Samus Y
     dw #$FFFF
-.after
 
 preset_allbosspkdr_tourian_metroids_1:
     dw #preset_allbosspkdr_spore_spawn_crateria_2 ; Spore Spawn: Crateria
@@ -1445,7 +1363,6 @@ preset_allbosspkdr_tourian_metroids_1:
     dw $D820, $0FC1  ; Events
     dw $D8B2, $6C01  ; Doors
     dw #$FFFF
-.after
 
 preset_allbosspkdr_tourian_metroids_2:
     dw #preset_allbosspkdr_tourian_metroids_1 ; Tourian: Metroids 1
@@ -1462,7 +1379,6 @@ preset_allbosspkdr_tourian_metroids_2:
     dw $D822, $0021  ; Events
     dw $D8C4, $0001  ; Doors
     dw #$FFFF
-.after
 
 preset_allbosspkdr_tourian_metroids_3:
     dw #preset_allbosspkdr_tourian_metroids_2 ; Tourian: Metroids 2
@@ -1478,7 +1394,6 @@ preset_allbosspkdr_tourian_metroids_3:
     dw $D822, $0023  ; Events
     dw $D8C4, $0003  ; Doors
     dw #$FFFF
-.after
 
 preset_allbosspkdr_tourian_metroids_4:
     dw #preset_allbosspkdr_tourian_metroids_3 ; Tourian: Metroids 3
@@ -1494,7 +1409,6 @@ preset_allbosspkdr_tourian_metroids_4:
     dw $D822, $0027  ; Events
     dw $D8C4, $0007  ; Doors
     dw #$FFFF
-.after
 
 preset_allbosspkdr_tourian_baby_skip:
     dw #preset_allbosspkdr_tourian_metroids_4 ; Tourian: Metroids 4
@@ -1513,7 +1427,6 @@ preset_allbosspkdr_tourian_baby_skip:
     dw $D822, $002F  ; Events
     dw $D8C4, $000F  ; Doors
     dw #$FFFF
-.after
 
 preset_allbosspkdr_tourian_zeb_skip:
     dw #preset_allbosspkdr_tourian_baby_skip ; Tourian: Baby Skip
@@ -1532,7 +1445,6 @@ preset_allbosspkdr_tourian_zeb_skip:
     dw $0AFA, $028B  ; Samus Y
     dw $D8C4, $03AF  ; Doors
     dw #$FFFF
-.after
 
 preset_allbosspkdr_tourian_escape_room_3:
     dw #preset_allbosspkdr_tourian_zeb_skip ; Tourian: Zeb Skip
@@ -1555,7 +1467,6 @@ preset_allbosspkdr_tourian_escape_room_3:
     dw $D820, $4FC5  ; Events
     dw $D82C, $0203  ; Bosses
     dw #$FFFF
-.after
 
 preset_allbosspkdr_tourian_escape_parlor:
     dw #preset_allbosspkdr_tourian_escape_room_3 ; Tourian: Escape Room 3
@@ -1571,4 +1482,3 @@ preset_allbosspkdr_tourian_escape_parlor:
     dw $0AF6, $019B  ; Samus X
     dw $0AFA, $005B  ; Samus Y
     dw #$FFFF
-.after

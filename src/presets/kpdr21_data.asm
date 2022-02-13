@@ -12,8 +12,6 @@ preset_kpdr21_crateria_ceres_elevator:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $0000  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $093F, $0000  ; Ceres escape flag
     dw $09A2, $0000  ; Equipped Items
     dw $09A4, $0000  ; Collected Items
@@ -66,7 +64,6 @@ preset_kpdr21_crateria_ceres_elevator:
     dw $D8C2, $0000  ; Doors
     dw $D8C4, $0000  ; Doors
     dw #$FFFF
-.after
 
 preset_kpdr21_crateria_ceres_last_3_rooms:
     dw #preset_kpdr21_crateria_ceres_elevator ; Crateria: Ceres Elevator
@@ -84,7 +81,6 @@ preset_kpdr21_crateria_ceres_last_3_rooms:
     dw $0AFA, $00A2  ; Samus Y
     dw $D82E, $0001  ; Bosses
     dw #$FFFF
-.after
 
 preset_kpdr21_crateria_ship:
     dw #preset_kpdr21_crateria_ceres_last_3_rooms ; Crateria: Ceres Last 3 Rooms
@@ -98,13 +94,11 @@ preset_kpdr21_crateria_ship:
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $03D0  ; Screen Y position in pixels
     dw $0917, $0200  ; Layer 2 X position
-    dw $0921, $0200  ; BG2 X offset
     dw $09C2, $0063  ; Health
     dw $09C4, $0063  ; Max health
     dw $0AF6, $0481  ; Samus X
     dw $0AFA, $0440  ; Samus Y
     dw #$FFFF
-.after
 
 preset_kpdr21_crateria_parlor:
     dw #preset_kpdr21_crateria_ship ; Crateria: Ship
@@ -118,7 +112,6 @@ preset_kpdr21_crateria_parlor:
     dw $0AF6, $0079  ; Samus X
     dw $0AFA, $049B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_kpdr21_crateria_parlor_downback:
     dw #preset_kpdr21_crateria_parlor ; Crateria: Parlor
@@ -130,11 +123,9 @@ preset_kpdr21_crateria_parlor_downback:
     dw $0915, $032A  ; Screen Y position in pixels
     dw $0917, $00C0  ; Layer 2 X position
     dw $0919, $025F  ; Layer 2 Y position
-    dw $0921, $FB00  ; BG2 X offset
     dw $0AF6, $01B5  ; Samus X
     dw $0AFA, $039B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_kpdr21_crateria_climb_down:
     dw #preset_kpdr21_crateria_parlor_downback ; Crateria: Parlor Downback
@@ -147,7 +138,6 @@ preset_kpdr21_crateria_climb_down:
     dw $0AF6, $01A8  ; Samus X
     dw $0AFA, $04BB  ; Samus Y
     dw #$FFFF
-.after
 
 preset_kpdr21_crateria_pit_room:
     dw #preset_kpdr21_crateria_climb_down ; Crateria: Climb Down
@@ -157,14 +147,11 @@ preset_kpdr21_crateria_pit_room:
     dw $0913, $3800  ; Screen subpixel Y position
     dw $0915, $0800  ; Screen Y position in pixels
     dw $0919, $0600  ; Layer 2 Y position
-    dw $0921, $FF00  ; BG2 X offset
-    dw $0923, $00E0  ; BG2 Y offset
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $01DB  ; Samus X
     dw $0AFA, $088B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_kpdr21_crateria_morph:
     dw #preset_kpdr21_crateria_pit_room ; Crateria: Pit Room
@@ -177,13 +164,11 @@ preset_kpdr21_crateria_morph:
     dw $0915, $0200  ; Screen Y position in pixels
     dw $0917, $03C0  ; Layer 2 X position
     dw $0919, $0180  ; Layer 2 Y position
-    dw $0921, $FB00  ; BG2 X offset
     dw $0A1C, $0000  ; Samus position/state
     dw $0A1E, $0000  ; More position/state
     dw $0AF6, $0580  ; Samus X
     dw $0AFA, $02A8  ; Samus Y
     dw #$FFFF
-.after
 
 preset_kpdr21_crateria_construction_zone:
     dw #preset_kpdr21_crateria_morph ; Crateria: Morph
@@ -199,7 +184,6 @@ preset_kpdr21_crateria_construction_zone:
     dw $0AFA, $028B  ; Samus Y
     dw $D872, $0400  ; Items
     dw #$FFFF
-.after
 
 preset_kpdr21_crateria_construction_zone_revisit:
     dw #preset_kpdr21_crateria_construction_zone ; Crateria: Construction Zone
@@ -211,15 +195,12 @@ preset_kpdr21_crateria_construction_zone_revisit:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0001  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $FF00  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09C6, $0005  ; Missiles
     dw $09C8, $0005  ; Max missiles
     dw $0AF6, $0055  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw $D874, $0004  ; Items
     dw #$FFFF
-.after
 
 preset_kpdr21_crateria_pit_room_revisit:
     dw #preset_kpdr21_crateria_construction_zone_revisit ; Crateria: Construction Zone Revisit
@@ -229,14 +210,11 @@ preset_kpdr21_crateria_pit_room_revisit:
     dw $090F, $0000  ; Screen subpixel X position
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0917, $0000  ; Layer 2 X position
-    dw $0921, $0000  ; BG2 X offset
-    dw $0923, $FF00  ; BG2 Y offset
     dw $0A1C, $0000  ; Samus position/state
     dw $0A1E, $0000  ; More position/state
     dw $0AF6, $0080  ; Samus X
     dw $0AFA, $0088  ; Samus Y
     dw #$FFFF
-.after
 
 preset_kpdr21_crateria_climb_up:
     dw #preset_kpdr21_crateria_pit_room_revisit ; Crateria: Pit Room Revisit
@@ -246,8 +224,6 @@ preset_kpdr21_crateria_climb_up:
     dw $07F5, $0005  ; Music Track
     dw $090F, $4000  ; Screen subpixel X position
     dw $0913, $CC00  ; Screen subpixel Y position
-    dw $0921, $FD00  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $0083  ; Samus X
@@ -255,7 +231,6 @@ preset_kpdr21_crateria_climb_up:
     dw $D820, $0001  ; Events
     dw $D8B2, $0400  ; Doors
     dw #$FFFF
-.after
 
 preset_kpdr21_crateria_parlor_revisit:
     dw #preset_kpdr21_crateria_climb_up ; Crateria: Climb Up
@@ -265,12 +240,9 @@ preset_kpdr21_crateria_parlor_revisit:
     dw $0911, $0100  ; Screen X position in pixels
     dw $0913, $C000  ; Screen subpixel Y position
     dw $0917, $00C0  ; Layer 2 X position
-    dw $0921, $FE00  ; BG2 X offset
-    dw $0923, $F800  ; BG2 Y offset
     dw $0AF6, $01A0  ; Samus X
     dw $0AFA, $005B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_kpdr21_crateria_flyway:
     dw #preset_kpdr21_crateria_parlor_revisit ; Crateria: Parlor Revisit
@@ -282,14 +254,11 @@ preset_kpdr21_crateria_flyway:
     dw $0915, $01E6  ; Screen Y position in pixels
     dw $0917, $0240  ; Layer 2 X position
     dw $0919, $016C  ; Layer 2 Y position
-    dw $0921, $FF00  ; BG2 X offset
-    dw $0923, $FB00  ; BG2 Y offset
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $0369  ; Samus X
     dw $0AFA, $026B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_kpdr21_crateria_bomb_torizo:
     dw #preset_kpdr21_crateria_flyway ; Crateria: Flyway
@@ -301,14 +270,11 @@ preset_kpdr21_crateria_bomb_torizo:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0180  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $0100  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09C6, $0000  ; Missiles
     dw $0AF6, $02BE  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw $D8B2, $2400  ; Doors
     dw #$FFFF
-.after
 
 preset_kpdr21_crateria_alcatraz:
     dw #preset_kpdr21_crateria_bomb_torizo ; Crateria: Bomb Torizo
@@ -316,7 +282,6 @@ preset_kpdr21_crateria_alcatraz:
     dw $090F, $2001  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
     dw $0917, $0000  ; Layer 2 X position
-    dw $0921, $FD00  ; BG2 X offset
     dw $09A2, $1004  ; Equipped Items
     dw $09A4, $1004  ; Collected Items
     dw $09C6, $0005  ; Missiles
@@ -327,7 +292,6 @@ preset_kpdr21_crateria_alcatraz:
     dw $D870, $0080  ; Items
     dw $D8B2, $2C00  ; Doors
     dw #$FFFF
-.after
 
 preset_kpdr21_crateria_terminator:
     dw #preset_kpdr21_crateria_alcatraz ; Crateria: Alcatraz
@@ -337,12 +301,9 @@ preset_kpdr21_crateria_terminator:
     dw $0911, $0100  ; Screen X position in pixels
     dw $0913, $8800  ; Screen subpixel Y position
     dw $0917, $00C0  ; Layer 2 X position
-    dw $0921, $FC00  ; BG2 X offset
-    dw $0923, $FE00  ; BG2 Y offset
     dw $0AF6, $0115  ; Samus X
     dw $0B3F, $0104  ; Blue suit
     dw #$FFFF
-.after
 
 preset_kpdr21_crateria_green_pirate_shaft:
     dw #preset_kpdr21_crateria_terminator ; Crateria: Terminator
@@ -354,8 +315,6 @@ preset_kpdr21_crateria_green_pirate_shaft:
     dw $0915, $01FC  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $017D  ; Layer 2 Y position
-    dw $0921, $FA00  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09C2, $00C7  ; Health
     dw $09C4, $00C7  ; Max health
     dw $0AF6, $0063  ; Samus X
@@ -363,7 +322,6 @@ preset_kpdr21_crateria_green_pirate_shaft:
     dw $0B3F, $0000  ; Blue suit
     dw $D870, $0180  ; Items
     dw #$FFFF
-.after
 
 preset_kpdr21_brinstar_green_brinstar_elevator:
     dw #preset_kpdr21_crateria_green_pirate_shaft ; Crateria: Green Pirate Shaft
@@ -374,12 +332,10 @@ preset_kpdr21_brinstar_green_brinstar_elevator:
     dw $0913, $C400  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $FF00  ; BG2 X offset
     dw $09C2, $008B  ; Health
     dw $0AF6, $007E  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_kpdr21_brinstar_early_supers:
     dw #preset_kpdr21_brinstar_green_brinstar_elevator ; Brinstar: Green Brinstar Elevator
@@ -391,8 +347,6 @@ preset_kpdr21_brinstar_early_supers:
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $041B  ; Screen Y position in pixels
     dw $0919, $0314  ; Layer 2 Y position
-    dw $0921, $0000  ; BG2 X offset
-    dw $0923, $00E0  ; BG2 Y offset
     dw $09C6, $0000  ; Missiles
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
@@ -400,7 +354,6 @@ preset_kpdr21_brinstar_early_supers:
     dw $0AFA, $048B  ; Samus Y
     dw $D8B4, $0002  ; Doors
     dw #$FFFF
-.after
 
 preset_kpdr21_brinstar_dachora_room:
     dw #preset_kpdr21_brinstar_early_supers ; Brinstar: Early Supers
@@ -408,8 +361,6 @@ preset_kpdr21_brinstar_dachora_room:
     dw $090F, $B000  ; Screen subpixel X position
     dw $0915, $061B  ; Screen Y position in pixels
     dw $0919, $0494  ; Layer 2 Y position
-    dw $0921, $FF00  ; BG2 X offset
-    dw $0923, $FC00  ; BG2 Y offset
     dw $09C2, $0081  ; Health
     dw $09CA, $0004  ; Supers
     dw $09CC, $0005  ; Max supers
@@ -418,7 +369,6 @@ preset_kpdr21_brinstar_dachora_room:
     dw $D872, $0401  ; Items
     dw $D8B4, $0006  ; Doors
     dw #$FFFF
-.after
 
 preset_kpdr21_brinstar_big_pink:
     dw #preset_kpdr21_brinstar_dachora_room ; Brinstar: Dachora Room
@@ -430,13 +380,10 @@ preset_kpdr21_brinstar_big_pink:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0480  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $0100  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09C6, $0002  ; Missiles
     dw $0AF6, $069C  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_kpdr21_brinstar_green_hill_zone:
     dw #preset_kpdr21_brinstar_big_pink ; Brinstar: Big Pink
@@ -448,8 +395,6 @@ preset_kpdr21_brinstar_green_hill_zone:
     dw $0915, $0611  ; Screen Y position in pixels
     dw $0917, $0240  ; Layer 2 X position
     dw $0919, $048C  ; Layer 2 Y position
-    dw $0921, $FF00  ; BG2 X offset
-    dw $0923, $FE00  ; BG2 Y offset
     dw $09A6, $1000  ; Beams
     dw $09A8, $1000  ; Beams
     dw $09C6, $0007  ; Missiles
@@ -460,7 +405,6 @@ preset_kpdr21_brinstar_green_hill_zone:
     dw $D872, $04C1  ; Items
     dw $D8B4, $0206  ; Doors
     dw #$FFFF
-.after
 
 preset_kpdr21_brinstar_noob_bridge:
     dw #preset_kpdr21_brinstar_green_hill_zone ; Brinstar: Green Hill Zone
@@ -472,13 +416,10 @@ preset_kpdr21_brinstar_noob_bridge:
     dw $0915, $0300  ; Screen Y position in pixels
     dw $0917, $0540  ; Layer 2 X position
     dw $0919, $0240  ; Layer 2 Y position
-    dw $0921, $0100  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09C2, $0077  ; Health
     dw $0AF6, $07B9  ; Samus X
     dw $0AFA, $038B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_kpdr21_brinstar_red_tower:
     dw #preset_kpdr21_brinstar_noob_bridge ; Brinstar: Noob Bridge
@@ -494,7 +435,6 @@ preset_kpdr21_brinstar_red_tower:
     dw $0AFA, $00AB  ; Samus Y
     dw $D8B6, $0008  ; Doors
     dw #$FFFF
-.after
 
 preset_kpdr21_brinstar_skree_boost:
     dw #preset_kpdr21_brinstar_red_tower ; Brinstar: Red Tower
@@ -507,11 +447,9 @@ preset_kpdr21_brinstar_skree_boost:
     dw $0915, $091A  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $06D3  ; Layer 2 Y position
-    dw $0923, $FC00  ; BG2 Y offset
     dw $0AF6, $0056  ; Samus X
     dw $0AFA, $098B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_kpdr21_brinstar_below_spazer:
     dw #preset_kpdr21_brinstar_skree_boost ; Brinstar: Skree Boost
@@ -523,12 +461,10 @@ preset_kpdr21_brinstar_below_spazer:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $00C0  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0923, $0000  ; BG2 Y offset
     dw $09C2, $006D  ; Health
     dw $0AF6, $01DC  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_kpdr21_brinstar_entering_kraids_lair:
     dw #preset_kpdr21_brinstar_below_spazer ; Brinstar: Below Spazer
@@ -540,13 +476,11 @@ preset_kpdr21_brinstar_entering_kraids_lair:
     dw $0915, $0100  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0100  ; Layer 2 Y position
-    dw $0923, $FF00  ; BG2 Y offset
     dw $09C6, $0006  ; Missiles
     dw $09CA, $0005  ; Supers
     dw $0AF6, $002E  ; Samus X
     dw $0AFA, $018B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_kpdr21_brinstar_kraid_kihunters:
     dw #preset_kpdr21_brinstar_entering_kraids_lair ; Brinstar: Entering Kraids Lair
@@ -556,11 +490,9 @@ preset_kpdr21_brinstar_kraid_kihunters:
     dw $0911, $0100  ; Screen X position in pixels
     dw $0913, $8000  ; Screen subpixel Y position
     dw $0917, $00C0  ; Layer 2 X position
-    dw $0923, $0000  ; BG2 Y offset
     dw $09CA, $0004  ; Supers
     dw $0AF6, $0167  ; Samus X
     dw #$FFFF
-.after
 
 preset_kpdr21_brinstar_mini_kraid:
     dw #preset_kpdr21_brinstar_kraid_kihunters ; Brinstar: Kraid Kihunters
@@ -568,12 +500,9 @@ preset_kpdr21_brinstar_mini_kraid:
     dw $079B, $A4DA  ; MDB
     dw $090F, $E000  ; Screen subpixel X position
     dw $0913, $FC00  ; Screen subpixel Y position
-    dw $0921, $0000  ; BG2 X offset
-    dw $0923, $FF00  ; BG2 Y offset
     dw $09C2, $0059  ; Health
     dw $0AF6, $016B  ; Samus X
     dw #$FFFF
-.after
 
 preset_kpdr21_brinstar_kraid:
     dw #preset_kpdr21_brinstar_mini_kraid ; Brinstar: Mini Kraid
@@ -584,13 +513,11 @@ preset_kpdr21_brinstar_kraid:
     dw $090F, $7000  ; Screen subpixel X position
     dw $0913, $0800  ; Screen subpixel Y position
     dw $0917, $0100  ; Layer 2 X position
-    dw $0921, $0100  ; BG2 X offset
     dw $09C2, $0043  ; Health
     dw $09C6, $0005  ; Missiles
     dw $0AF6, $01C1  ; Samus X
     dw $D8B8, $0024  ; Doors
     dw #$FFFF
-.after
 
 preset_kpdr21_brinstar_leaving_varia:
     dw #preset_kpdr21_brinstar_kraid ; Brinstar: Kraid
@@ -603,7 +530,6 @@ preset_kpdr21_brinstar_leaving_varia:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0923, $0000  ; BG2 Y offset
     dw $09A2, $1005  ; Equipped Items
     dw $09A4, $1005  ; Collected Items
     dw $09C2, $0084  ; Health
@@ -616,7 +542,6 @@ preset_kpdr21_brinstar_leaving_varia:
     dw $D876, $0001  ; Items
     dw $D8B8, $0064  ; Doors
     dw #$FFFF
-.after
 
 preset_kpdr21_brinstar_mini_kraid_revisit:
     dw #preset_kpdr21_brinstar_leaving_varia ; Brinstar: Leaving Varia
@@ -626,8 +551,6 @@ preset_kpdr21_brinstar_mini_kraid_revisit:
     dw $0913, $7800  ; Screen subpixel Y position
     dw $0915, $0100  ; Screen Y position in pixels
     dw $0919, $0100  ; Layer 2 Y position
-    dw $0921, $FE00  ; BG2 X offset
-    dw $0923, $FF00  ; BG2 Y offset
     dw $09C2, $007C  ; Health
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
@@ -635,7 +558,6 @@ preset_kpdr21_brinstar_mini_kraid_revisit:
     dw $0AFA, $018B  ; Samus Y
     dw $D8B8, $00E4  ; Doors
     dw #$FFFF
-.after
 
 preset_kpdr21_brinstar_kraid_kihunters_revisit:
     dw #preset_kpdr21_brinstar_mini_kraid_revisit ; Brinstar: Mini Kraid Revisit
@@ -645,15 +567,12 @@ preset_kpdr21_brinstar_kraid_kihunters_revisit:
     dw $0913, $4000  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $FA00  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09C6, $0004  ; Missiles
     dw $09CA, $0005  ; Supers
     dw $0AF6, $009A  ; Samus X
     dw $0AFA, $00AB  ; Samus Y
     dw $D8B8, $00EC  ; Doors
     dw #$FFFF
-.after
 
 preset_kpdr21_brinstar_kraid_etank:
     dw #preset_kpdr21_brinstar_kraid_kihunters_revisit ; Brinstar: Kraid Kihunters Revisit
@@ -665,13 +584,10 @@ preset_kpdr21_brinstar_kraid_etank:
     dw $0913, $D400  ; Screen subpixel Y position
     dw $0915, $0100  ; Screen Y position in pixels
     dw $0919, $0100  ; Layer 2 Y position
-    dw $0921, $FF00  ; BG2 X offset
-    dw $0923, $FFE0  ; BG2 Y offset
     dw $0AF6, $0051  ; Samus X
     dw $0AFA, $018B  ; Samus Y
     dw $D8B8, $00ED  ; Doors
     dw #$FFFF
-.after
 
 preset_kpdr21_upper_norfair_business_center:
     dw #preset_kpdr21_brinstar_kraid_etank ; Brinstar: Kraid E-tank
@@ -682,8 +598,6 @@ preset_kpdr21_upper_norfair_business_center:
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $0238  ; Screen Y position in pixels
     dw $0919, $01AA  ; Layer 2 Y position
-    dw $0921, $0000  ; BG2 X offset
-    dw $0923, $00E0  ; BG2 Y offset
     dw $09C6, $0006  ; Missiles
     dw $09CA, $0004  ; Supers
     dw $0A1C, $009B  ; Samus position/state
@@ -691,7 +605,6 @@ preset_kpdr21_upper_norfair_business_center:
     dw $0AF6, $0080  ; Samus X
     dw $0AFA, $02A8  ; Samus Y
     dw #$FFFF
-.after
 
 preset_kpdr21_upper_norfair_hi_jump_etank:
     dw #preset_kpdr21_upper_norfair_business_center ; Upper Norfair: Business Center
@@ -705,7 +618,6 @@ preset_kpdr21_upper_norfair_hi_jump_etank:
     dw $0AFA, $058B  ; Samus Y
     dw $D8B8, $20ED  ; Doors
     dw #$FFFF
-.after
 
 preset_kpdr21_upper_norfair_leaving_hi_jump:
     dw #preset_kpdr21_upper_norfair_hi_jump_etank ; Upper Norfair: Hi Jump E-tank
@@ -716,8 +628,6 @@ preset_kpdr21_upper_norfair_leaving_hi_jump:
     dw $0913, $0800  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $FF00  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09A2, $1105  ; Equipped Items
     dw $09A4, $1105  ; Collected Items
     dw $09C2, $012B  ; Health
@@ -729,7 +639,6 @@ preset_kpdr21_upper_norfair_leaving_hi_jump:
     dw $D876, $0121  ; Items
     dw $D8BA, $0001  ; Doors
     dw #$FFFF
-.after
 
 preset_kpdr21_upper_norfair_business_center_2:
     dw #preset_kpdr21_upper_norfair_leaving_hi_jump ; Upper Norfair: Leaving Hi Jump
@@ -740,14 +649,11 @@ preset_kpdr21_upper_norfair_business_center_2:
     dw $0911, $0100  ; Screen X position in pixels
     dw $0913, $E400  ; Screen subpixel Y position
     dw $0917, $00C0  ; Layer 2 X position
-    dw $0921, $0100  ; BG2 X offset
-    dw $0923, $FF00  ; BG2 Y offset
     dw $09C6, $000B  ; Missiles
     dw $09C8, $000F  ; Max missiles
     dw $0AF6, $019C  ; Samus X
     dw $D876, $01A1  ; Items
     dw #$FFFF
-.after
 
 preset_kpdr21_upper_norfair_precathedral:
     dw #preset_kpdr21_upper_norfair_business_center_2 ; Upper Norfair: Business Center 2
@@ -759,11 +665,9 @@ preset_kpdr21_upper_norfair_precathedral:
     dw $0915, $02F8  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $023A  ; Layer 2 Y position
-    dw $0923, $FB00  ; BG2 Y offset
     dw $0AF6, $00A5  ; Samus X
     dw $0AFA, $038B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_kpdr21_upper_norfair_cathedral:
     dw #preset_kpdr21_upper_norfair_precathedral ; Upper Norfair: Pre-Cathedral
@@ -775,14 +679,12 @@ preset_kpdr21_upper_norfair_cathedral:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0200  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0923, $0000  ; BG2 Y offset
     dw $09C6, $0009  ; Missiles
     dw $09CA, $0002  ; Supers
     dw $0AF6, $02A6  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw $D8B8, $24ED  ; Doors
     dw #$FFFF
-.after
 
 preset_kpdr21_upper_norfair_rising_tide:
     dw #preset_kpdr21_upper_norfair_cathedral ; Upper Norfair: Cathedral
@@ -797,7 +699,6 @@ preset_kpdr21_upper_norfair_rising_tide:
     dw $0AFA, $018B  ; Samus Y
     dw $D8B8, $26ED  ; Doors
     dw #$FFFF
-.after
 
 preset_kpdr21_upper_norfair_bubble_mountain:
     dw #preset_kpdr21_upper_norfair_rising_tide ; Upper Norfair: Rising Tide
@@ -813,7 +714,6 @@ preset_kpdr21_upper_norfair_bubble_mountain:
     dw $0AF6, $04AD  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_kpdr21_upper_norfair_bat_cave:
     dw #preset_kpdr21_upper_norfair_bubble_mountain ; Upper Norfair: Bubble Mountain
@@ -823,13 +723,11 @@ preset_kpdr21_upper_norfair_bat_cave:
     dw $0911, $0100  ; Screen X position in pixels
     dw $0913, $2000  ; Screen subpixel Y position
     dw $0917, $00C0  ; Layer 2 X position
-    dw $0923, $FE00  ; BG2 Y offset
     dw $09C2, $0110  ; Health
     dw $09C6, $0008  ; Missiles
     dw $0AF6, $01C2  ; Samus X
     dw $D8BA, $0011  ; Doors
     dw #$FFFF
-.after
 
 preset_kpdr21_upper_norfair_single_chamber:
     dw #preset_kpdr21_upper_norfair_bat_cave ; Upper Norfair: Bat Cave
@@ -838,8 +736,6 @@ preset_kpdr21_upper_norfair_single_chamber:
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $0104  ; Screen Y position in pixels
     dw $0919, $00C3  ; Layer 2 Y position
-    dw $0921, $FE00  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09A2, $3105  ; Equipped Items
     dw $09A4, $3105  ; Collected Items
     dw $09C2, $0126  ; Health
@@ -851,7 +747,6 @@ preset_kpdr21_upper_norfair_single_chamber:
     dw $D878, $0004  ; Items
     dw $D8BA, $0031  ; Doors
     dw #$FFFF
-.after
 
 preset_kpdr21_upper_norfair_double_chamber:
     dw #preset_kpdr21_upper_norfair_single_chamber ; Upper Norfair: Single Chamber
@@ -863,12 +758,10 @@ preset_kpdr21_upper_norfair_double_chamber:
     dw $0915, $011C  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $00D5  ; Layer 2 Y position
-    dw $0921, $0100  ; BG2 X offset
     dw $09C6, $0008  ; Missiles
     dw $0AF6, $00BE  ; Samus X
     dw $D8BA, $0071  ; Doors
     dw #$FFFF
-.after
 
 preset_kpdr21_upper_norfair_double_chamber_revisit:
     dw #preset_kpdr21_upper_norfair_double_chamber ; Upper Norfair: Double Chamber
@@ -891,7 +784,6 @@ preset_kpdr21_upper_norfair_double_chamber_revisit:
     dw $D878, $001C  ; Items
     dw $D8BA, $00F1  ; Doors
     dw #$FFFF
-.after
 
 preset_kpdr21_upper_norfair_single_chamber_revisit:
     dw #preset_kpdr21_upper_norfair_double_chamber_revisit ; Upper Norfair: Double Chamber Revisit
@@ -900,10 +792,8 @@ preset_kpdr21_upper_norfair_single_chamber_revisit:
     dw $07F5, $0005  ; Music Track
     dw $090F, $3000  ; Screen subpixel X position
     dw $0913, $6000  ; Screen subpixel Y position
-    dw $0921, $FC00  ; BG2 X offset
     dw $0AF6, $0050  ; Samus X
     dw #$FFFF
-.after
 
 preset_kpdr21_upper_norfair_bubble_mountain_revisit:
     dw #preset_kpdr21_upper_norfair_single_chamber_revisit ; Upper Norfair: Single Chamber Revisit
@@ -913,11 +803,8 @@ preset_kpdr21_upper_norfair_bubble_mountain_revisit:
     dw $0913, $EC00  ; Screen subpixel Y position
     dw $0915, $0002  ; Screen Y position in pixels
     dw $0919, $0001  ; Layer 2 Y position
-    dw $0921, $FF00  ; BG2 X offset
-    dw $0923, $FF00  ; BG2 Y offset
     dw $0AF6, $008F  ; Samus X
     dw #$FFFF
-.after
 
 preset_kpdr21_upper_norfair_frog_speedway:
     dw #preset_kpdr21_upper_norfair_bubble_mountain_revisit ; Upper Norfair: Bubble Mountain Revisit
@@ -927,14 +814,11 @@ preset_kpdr21_upper_norfair_frog_speedway:
     dw $0913, $1400  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $FE00  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09C2, $012B  ; Health
     dw $09C6, $000E  ; Missiles
     dw $09CA, $0004  ; Supers
     dw $0AF6, $008E  ; Samus X
     dw #$FFFF
-.after
 
 preset_kpdr21_upper_norfair_business_center_3:
     dw #preset_kpdr21_upper_norfair_frog_speedway ; Upper Norfair: Frog Speedway
@@ -942,10 +826,8 @@ preset_kpdr21_upper_norfair_business_center_3:
     dw $079B, $B167  ; MDB
     dw $090F, $0000  ; Screen subpixel X position
     dw $0913, $A800  ; Screen subpixel Y position
-    dw $0921, $FF00  ; BG2 X offset
     dw $0AF6, $0029  ; Samus X
     dw #$FFFF
-.after
 
 preset_kpdr21_red_brinstar_alpha_spark:
     dw #preset_kpdr21_upper_norfair_business_center_3 ; Upper Norfair: Business Center 3
@@ -955,15 +837,12 @@ preset_kpdr21_red_brinstar_alpha_spark:
     dw $07F5, $0003  ; Music Track
     dw $090F, $E000  ; Screen subpixel X position
     dw $0913, $0000  ; Screen subpixel Y position
-    dw $0921, $0000  ; BG2 X offset
-    dw $0923, $FF00  ; BG2 Y offset
     dw $09C6, $0014  ; Missiles
     dw $0A1C, $009B  ; Samus position/state
     dw $0A1E, $0000  ; More position/state
     dw $0AF6, $0080  ; Samus X
     dw $0AFA, $0086  ; Samus Y
     dw #$FFFF
-.after
 
 preset_kpdr21_red_brinstar_reverse_skree_boost:
     dw #preset_kpdr21_red_brinstar_alpha_spark ; Red Brinstar: Alpha Spark
@@ -974,14 +853,12 @@ preset_kpdr21_red_brinstar_reverse_skree_boost:
     dw $0913, $B400  ; Screen subpixel Y position
     dw $0915, $0100  ; Screen Y position in pixels
     dw $0919, $00C0  ; Layer 2 Y position
-    dw $0921, $FE00  ; BG2 X offset
     dw $09CA, $0005  ; Supers
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $003F  ; Samus X
     dw $0AFA, $018B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_kpdr21_red_brinstar_red_tower_climb:
     dw #preset_kpdr21_red_brinstar_reverse_skree_boost ; Red Brinstar: Reverse Skree Boost
@@ -991,12 +868,10 @@ preset_kpdr21_red_brinstar_red_tower_climb:
     dw $0913, $EC00  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0923, $0000  ; BG2 Y offset
     dw $09C2, $0129  ; Health
     dw $0AF6, $0024  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_kpdr21_red_brinstar_hellway:
     dw #preset_kpdr21_red_brinstar_red_tower_climb ; Red Brinstar: Red Tower Climb
@@ -1004,13 +879,10 @@ preset_kpdr21_red_brinstar_hellway:
     dw $079B, $A253  ; MDB
     dw $090F, $D000  ; Screen subpixel X position
     dw $0913, $6800  ; Screen subpixel Y position
-    dw $0921, $FF00  ; BG2 X offset
-    dw $0923, $F700  ; BG2 Y offset
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $008F  ; Samus X
     dw #$FFFF
-.after
 
 preset_kpdr21_red_brinstar_caterpillars_down:
     dw #preset_kpdr21_red_brinstar_hellway ; Red Brinstar: Hellway
@@ -1020,12 +892,9 @@ preset_kpdr21_red_brinstar_caterpillars_down:
     dw $0911, $01FB  ; Screen X position in pixels
     dw $0913, $4400  ; Screen subpixel Y position
     dw $0917, $017C  ; Layer 2 X position
-    dw $0921, $0100  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09C2, $0119  ; Health
     dw $0AF6, $0291  ; Samus X
     dw #$FFFF
-.after
 
 preset_kpdr21_red_brinstar_alpha_power_bombs:
     dw #preset_kpdr21_red_brinstar_caterpillars_down ; Red Brinstar: Caterpillars Down
@@ -1037,7 +906,6 @@ preset_kpdr21_red_brinstar_alpha_power_bombs:
     dw $0915, $071C  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $071C  ; Layer 2 Y position
-    dw $0923, $FB00  ; BG2 Y offset
     dw $09CA, $0004  ; Supers
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
@@ -1045,7 +913,6 @@ preset_kpdr21_red_brinstar_alpha_power_bombs:
     dw $0AFA, $078B  ; Samus Y
     dw $D8B6, $2008  ; Doors
     dw #$FFFF
-.after
 
 preset_kpdr21_red_brinstar_caterpillars_up:
     dw #preset_kpdr21_red_brinstar_alpha_power_bombs ; Red Brinstar: Alpha Power Bombs
@@ -1058,8 +925,6 @@ preset_kpdr21_red_brinstar_caterpillars_up:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0180  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $FD00  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09C2, $010F  ; Health
     dw $09CE, $0005  ; Pbs
     dw $09D0, $0005  ; Max pbs
@@ -1070,7 +935,6 @@ preset_kpdr21_red_brinstar_caterpillars_up:
     dw $0AFA, $008B  ; Samus Y
     dw $D874, $0104  ; Items
     dw #$FFFF
-.after
 
 preset_kpdr21_wrecked_ship_crateria_kihunters:
     dw #preset_kpdr21_red_brinstar_caterpillars_up ; Red Brinstar: Caterpillars Up
@@ -1080,8 +944,6 @@ preset_kpdr21_wrecked_ship_crateria_kihunters:
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $A400  ; Screen subpixel Y position
     dw $0917, $0000  ; Layer 2 X position
-    dw $0921, $0000  ; BG2 X offset
-    dw $0923, $FF00  ; BG2 Y offset
     dw $09C2, $0123  ; Health
     dw $09CA, $0005  ; Supers
     dw $09CE, $0003  ; Pbs
@@ -1092,7 +954,6 @@ preset_kpdr21_wrecked_ship_crateria_kihunters:
     dw $D8B2, $2C01  ; Doors
     dw $D8B6, $3008  ; Doors
     dw #$FFFF
-.after
 
 preset_kpdr21_wrecked_ship_oceanfly_setup:
     dw #preset_kpdr21_wrecked_ship_crateria_kihunters ; Wrecked Ship: Crateria Kihunters
@@ -1103,8 +964,6 @@ preset_kpdr21_wrecked_ship_oceanfly_setup:
     dw $0913, $3000  ; Screen subpixel Y position
     dw $09CE, $0002  ; Pbs
     dw $09D2, $0000  ; Currently selected item
-    dw $0921, $FF00  ; BG2 X offset
-    dw $0923, $FD00  ; BG2 Y offset
     dw $09CE, $0001  ; Pbs
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
@@ -1112,7 +971,6 @@ preset_kpdr21_wrecked_ship_oceanfly_setup:
     dw $0AFA, $008B  ; Samus Y
     dw $D8B0, $6000  ; Doors
     dw #$FFFF
-.after
 
 preset_kpdr21_wrecked_ship_ocean_spark:
     dw #preset_kpdr21_wrecked_ship_oceanfly_setup ; Wrecked Ship: Oceanfly Setup
@@ -1122,12 +980,9 @@ preset_kpdr21_wrecked_ship_ocean_spark:
     dw $0911, $0100  ; Screen X position in pixels
     dw $0913, $6C00  ; Screen subpixel Y position
     dw $0917, $00C0  ; Layer 2 X position
-    dw $0921, $0100  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09C2, $00EE  ; Health
     dw $0AF6, $01C6  ; Samus X
     dw #$FFFF
-.after
 
 preset_kpdr21_wrecked_ship_entering_wrecked_ship:
     dw #preset_kpdr21_wrecked_ship_ocean_spark ; Wrecked Ship: Ocean Spark
@@ -1139,14 +994,12 @@ preset_kpdr21_wrecked_ship_entering_wrecked_ship:
     dw $0913, $B000  ; Screen subpixel Y position
     dw $0915, $0400  ; Screen Y position in pixels
     dw $0917, $0380  ; Layer 2 X position
-    dw $0923, $FC00  ; BG2 Y offset
     dw $09C2, $0074  ; Health
     dw $09CA, $0004  ; Supers
     dw $0AF6, $07DB  ; Samus X
     dw $0AFA, $048B  ; Samus Y
     dw $D8B0, $7000  ; Doors
     dw #$FFFF
-.after
 
 preset_kpdr21_wrecked_ship_basement:
     dw #preset_kpdr21_wrecked_ship_entering_wrecked_ship ; Wrecked Ship: Entering Wrecked Ship
@@ -1159,14 +1012,11 @@ preset_kpdr21_wrecked_ship_basement:
     dw $0915, $071F  ; Screen Y position in pixels
     dw $0917, $0300  ; Layer 2 X position
     dw $0919, $0557  ; Layer 2 Y position
-    dw $0921, $FD00  ; BG2 X offset
-    dw $0923, $FD00  ; BG2 Y offset
     dw $09CA, $0003  ; Supers
     dw $0AF6, $0455  ; Samus X
     dw $0AFA, $07BB  ; Samus Y
     dw $D8C0, $0010  ; Doors
     dw #$FFFF
-.after
 
 preset_kpdr21_wrecked_ship_phantoon:
     dw #preset_kpdr21_wrecked_ship_basement ; Wrecked Ship: Basement
@@ -1176,14 +1026,11 @@ preset_kpdr21_wrecked_ship_phantoon:
     dw $0913, $7000  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $FE00  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09CA, $0002  ; Supers
     dw $0AF6, $04CC  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw $D8C0, $0030  ; Doors
     dw #$FFFF
-.after
 
 preset_kpdr21_wrecked_ship_leaving_phantoon:
     dw #preset_kpdr21_wrecked_ship_phantoon ; Wrecked Ship: Phantoon
@@ -1191,7 +1038,6 @@ preset_kpdr21_wrecked_ship_leaving_phantoon:
     dw $07F5, $0006  ; Music Track
     dw $090F, $7000  ; Screen subpixel X position
     dw $0913, $8000  ; Screen subpixel Y position
-    dw $0921, $FB00  ; BG2 X offset
     dw $09C2, $00E2  ; Health
     dw $09CA, $0005  ; Supers
     dw $09CE, $0003  ; Pbs
@@ -1202,7 +1048,6 @@ preset_kpdr21_wrecked_ship_leaving_phantoon:
     dw $D82A, $0100  ; Bosses
     dw $D8C0, $0070  ; Doors
     dw #$FFFF
-.after
 
 preset_kpdr21_wrecked_ship_shaft_to_supers:
     dw #preset_kpdr21_wrecked_ship_leaving_phantoon ; Wrecked Ship: Leaving Phantoon
@@ -1213,7 +1058,6 @@ preset_kpdr21_wrecked_ship_shaft_to_supers:
     dw $0AF6, $02C4  ; Samus X
     dw $0AFA, $006B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_kpdr21_wrecked_ship_wrecked_ship_shaft:
     dw #preset_kpdr21_wrecked_ship_shaft_to_supers ; Wrecked Ship: Shaft to Supers
@@ -1223,7 +1067,6 @@ preset_kpdr21_wrecked_ship_wrecked_ship_shaft:
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $7800  ; Screen subpixel Y position
     dw $0917, $0000  ; Layer 2 X position
-    dw $0921, $FF00  ; BG2 X offset
     dw $09CA, $000A  ; Supers
     dw $09CC, $000A  ; Max supers
     dw $0A1C, $0001  ; Samus position/state
@@ -1233,7 +1076,6 @@ preset_kpdr21_wrecked_ship_wrecked_ship_shaft:
     dw $D880, $0020  ; Items
     dw $D8C0, $0074  ; Doors
     dw #$FFFF
-.after
 
 preset_kpdr21_wrecked_ship_attic:
     dw #preset_kpdr21_wrecked_ship_wrecked_ship_shaft ; Wrecked Ship: Wrecked Ship Shaft
@@ -1243,12 +1085,9 @@ preset_kpdr21_wrecked_ship_attic:
     dw $0911, $0400  ; Screen X position in pixels
     dw $0913, $B000  ; Screen subpixel Y position
     dw $0917, $0300  ; Layer 2 X position
-    dw $0921, $FD00  ; BG2 X offset
-    dw $0923, $FA00  ; BG2 Y offset
     dw $0AF6, $0445  ; Samus X
     dw $0AFA, $006B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_kpdr21_wrecked_ship_upper_west_ocean:
     dw #preset_kpdr21_wrecked_ship_attic ; Wrecked Ship: Attic
@@ -1260,8 +1099,6 @@ preset_kpdr21_wrecked_ship_upper_west_ocean:
     dw $0915, $001F  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $001E  ; Layer 2 Y position
-    dw $0921, $FC00  ; BG2 X offset
-    dw $0923, $FF00  ; BG2 Y offset
     dw $09C2, $00EE  ; Health
     dw $09CA, $0009  ; Supers
     dw $0A1C, $0002  ; Samus position/state
@@ -1270,7 +1107,6 @@ preset_kpdr21_wrecked_ship_upper_west_ocean:
     dw $0AFA, $008B  ; Samus Y
     dw $D8C0, $0174  ; Doors
     dw #$FFFF
-.after
 
 preset_kpdr21_wrecked_ship_pancakes_and_wavers:
     dw #preset_kpdr21_wrecked_ship_upper_west_ocean ; Wrecked Ship: Upper West Ocean
@@ -1284,15 +1120,12 @@ preset_kpdr21_wrecked_ship_pancakes_and_wavers:
     dw $0915, $01FC  ; Screen Y position in pixels
     dw $0917, $0100  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $F800  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09C2, $0102  ; Health
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $02C2  ; Samus X
     dw $0AFA, $028B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_kpdr21_wrecked_ship_bowling_spark:
     dw #preset_kpdr21_wrecked_ship_pancakes_and_wavers ; Wrecked Ship: Pancakes and Wavers
@@ -1303,11 +1136,9 @@ preset_kpdr21_wrecked_ship_bowling_spark:
     dw $0913, $2400  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $00C0  ; Layer 2 X position
-    dw $0921, $0100  ; BG2 X offset
     dw $0AF6, $016E  ; Samus X
     dw $0AFA, $009D  ; Samus Y
     dw #$FFFF
-.after
 
 preset_kpdr21_wrecked_ship_leaving_gravity:
     dw #preset_kpdr21_wrecked_ship_bowling_spark ; Wrecked Ship: Bowling Spark
@@ -1319,7 +1150,6 @@ preset_kpdr21_wrecked_ship_leaving_gravity:
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $E400  ; Screen subpixel Y position
     dw $0917, $0001  ; Layer 2 X position
-    dw $0921, $FF00  ; BG2 X offset
     dw $09A2, $3125  ; Equipped Items
     dw $09A4, $3125  ; Collected Items
     dw $09C2, $00A9  ; Health
@@ -1329,7 +1159,6 @@ preset_kpdr21_wrecked_ship_leaving_gravity:
     dw $0AFA, $0088  ; Samus Y
     dw $D880, $00A0  ; Items
     dw #$FFFF
-.after
 
 preset_kpdr21_wrecked_ship_moat_ball:
     dw #preset_kpdr21_wrecked_ship_leaving_gravity ; Wrecked Ship: Leaving Gravity
@@ -1342,14 +1171,11 @@ preset_kpdr21_wrecked_ship_moat_ball:
     dw $0913, $2800  ; Screen subpixel Y position
     dw $0915, $0445  ; Screen Y position in pixels
     dw $0917, $0072  ; Layer 2 X position
-    dw $0921, $FA00  ; BG2 X offset
-    dw $0923, $FD00  ; BG2 Y offset
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $0184  ; Samus X
     dw $0AFA, $04D0  ; Samus Y
     dw #$FFFF
-.after
 
 preset_kpdr21_wrecked_ship_crateria_kihunters_return:
     dw #preset_kpdr21_wrecked_ship_moat_ball ; Wrecked Ship: Moat Ball
@@ -1361,12 +1187,9 @@ preset_kpdr21_wrecked_ship_crateria_kihunters_return:
     dw $0915, $0007  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0005  ; Layer 2 Y position
-    dw $0921, $FE00  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $0AF6, $003B  ; Samus X
     dw $0AFA, $0097  ; Samus Y
     dw #$FFFF
-.after
 
 preset_kpdr21_red_brinstar_final_red_tower_elevator:
     dw #preset_kpdr21_wrecked_ship_crateria_kihunters_return ; Wrecked Ship: Crateria Kihunters Return
@@ -1376,8 +1199,6 @@ preset_kpdr21_red_brinstar_final_red_tower_elevator:
     dw $090F, $F000  ; Screen subpixel X position
     dw $0915, $0238  ; Screen Y position in pixels
     dw $0919, $0238  ; Layer 2 Y position
-    dw $0921, $0000  ; BG2 X offset
-    dw $0923, $00E0  ; BG2 Y offset
     dw $09C2, $00BD  ; Health
     dw $09C6, $0012  ; Missiles
     dw $09CE, $0003  ; Pbs
@@ -1386,7 +1207,6 @@ preset_kpdr21_red_brinstar_final_red_tower_elevator:
     dw $0AF6, $0080  ; Samus X
     dw $0AFA, $02A8  ; Samus Y
     dw #$FFFF
-.after
 
 preset_kpdr21_red_brinstar_final_hellway_revisit:
     dw #preset_kpdr21_red_brinstar_final_red_tower_elevator ; Red Brinstar Final: Red Tower Elevator
@@ -1399,7 +1219,6 @@ preset_kpdr21_red_brinstar_final_hellway_revisit:
     dw $0AF6, $0040  ; Samus X
     dw $0AFA, $058B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_kpdr21_red_brinstar_final_red_tower_down:
     dw #preset_kpdr21_red_brinstar_final_hellway_revisit ; Red Brinstar Final: Hellway Revisit
@@ -1408,13 +1227,10 @@ preset_kpdr21_red_brinstar_final_red_tower_down:
     dw $0913, $9000  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $FD00  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09C2, $00B5  ; Health
     dw $0AF6, $003D  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_kpdr21_red_brinstar_final_skree_boost_final:
     dw #preset_kpdr21_red_brinstar_final_red_tower_down ; Red Brinstar Final: Red Tower Down
@@ -1424,13 +1240,11 @@ preset_kpdr21_red_brinstar_final_skree_boost_final:
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $091A  ; Screen Y position in pixels
     dw $0919, $06D3  ; Layer 2 Y position
-    dw $0921, $FF00  ; BG2 X offset
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $0054  ; Samus X
     dw $0AFA, $098B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_kpdr21_red_brinstar_final_below_spazer_final:
     dw #preset_kpdr21_red_brinstar_final_skree_boost_final ; Red Brinstar Final: Skree Boost Final
@@ -1442,12 +1256,10 @@ preset_kpdr21_red_brinstar_final_below_spazer_final:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $00C0  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $0100  ; BG2 X offset
     dw $09C2, $00B4  ; Health
     dw $0AF6, $01DC  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_kpdr21_maridia_breaking_tube:
     dw #preset_kpdr21_red_brinstar_final_below_spazer_final ; Red Brinstar Final: Below Spazer Final
@@ -1461,7 +1273,6 @@ preset_kpdr21_maridia_breaking_tube:
     dw $09CA, $000A  ; Supers
     dw $0AF6, $002D  ; Samus X
     dw #$FFFF
-.after
 
 preset_kpdr21_maridia_fish_tank:
     dw #preset_kpdr21_maridia_breaking_tube ; Maridia: Breaking Tube
@@ -1475,15 +1286,12 @@ preset_kpdr21_maridia_fish_tank:
     dw $0915, $05F4  ; Screen Y position in pixels
     dw $0917, $00BE  ; Layer 2 X position
     dw $0919, $0477  ; Layer 2 Y position
-    dw $0921, $FF00  ; BG2 X offset
-    dw $0923, $F800  ; BG2 Y offset
     dw $09CE, $0002  ; Pbs
     dw $09D2, $0000  ; Currently selected item
     dw $0AF6, $0167  ; Samus X
     dw $0AFA, $068B  ; Samus Y
     dw $D820, $0801  ; Events
     dw #$FFFF
-.after
 
 preset_kpdr21_maridia_mt_everest:
     dw #preset_kpdr21_maridia_fish_tank ; Maridia: Fish Tank
@@ -1495,11 +1303,9 @@ preset_kpdr21_maridia_mt_everest:
     dw $0915, $031F  ; Screen Y position in pixels
     dw $0917, $00C0  ; Layer 2 X position
     dw $0919, $0257  ; Layer 2 Y position
-    dw $0923, $FC00  ; BG2 Y offset
     dw $0AF6, $017C  ; Samus X
     dw $0AFA, $03BB  ; Samus Y
     dw #$FFFF
-.after
 
 preset_kpdr21_maridia_crab_shaft:
     dw #preset_kpdr21_maridia_mt_everest ; Maridia: Mt Everest
@@ -1513,7 +1319,6 @@ preset_kpdr21_maridia_crab_shaft:
     dw $0AF6, $05C0  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_kpdr21_maridia_aqueduct:
     dw #preset_kpdr21_maridia_crab_shaft ; Maridia: Crab Shaft
@@ -1525,15 +1330,12 @@ preset_kpdr21_maridia_aqueduct:
     dw $0915, $0300  ; Screen Y position in pixels
     dw $0917, $0100  ; Layer 2 X position
     dw $0919, $0240  ; Layer 2 Y position
-    dw $0921, $0100  ; BG2 X offset
-    dw $0923, $FE00  ; BG2 Y offset
     dw $09CA, $0009  ; Supers
     dw $09D2, $0003  ; Currently selected item
     dw $0AF6, $01AD  ; Samus X
     dw $0AFA, $038B  ; Samus Y
     dw $D8C0, $8174  ; Doors
     dw #$FFFF
-.after
 
 preset_kpdr21_maridia_botwoon_hallway:
     dw #preset_kpdr21_maridia_aqueduct ; Maridia: Aqueduct
@@ -1546,7 +1348,6 @@ preset_kpdr21_maridia_botwoon_hallway:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0923, $FF00  ; BG2 Y offset
     dw $09CE, $0001  ; Pbs
     dw $09D2, $0000  ; Currently selected item
     dw $0A1C, $0002  ; Samus position/state
@@ -1554,7 +1355,6 @@ preset_kpdr21_maridia_botwoon_hallway:
     dw $0AF6, $009D  ; Samus X
     dw $0AFA, $006B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_kpdr21_maridia_botwoon:
     dw #preset_kpdr21_maridia_botwoon_hallway ; Maridia: Botwoon Hallway
@@ -1564,13 +1364,11 @@ preset_kpdr21_maridia_botwoon:
     dw $0911, $0300  ; Screen X position in pixels
     dw $0913, $5800  ; Screen subpixel Y position
     dw $0917, $0240  ; Layer 2 X position
-    dw $0921, $0000  ; BG2 X offset
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $03A4  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_kpdr21_maridia_botwoon_etank:
     dw #preset_kpdr21_maridia_botwoon ; Maridia: Botwoon
@@ -1582,8 +1380,6 @@ preset_kpdr21_maridia_botwoon_etank:
     dw $0911, $0100  ; Screen X position in pixels
     dw $0913, $C000  ; Screen subpixel Y position
     dw $0917, $0100  ; Layer 2 X position
-    dw $0921, $0100  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09C2, $00A1  ; Health
     dw $09C6, $0014  ; Missiles
     dw $09CA, $0003  ; Supers
@@ -1591,7 +1387,6 @@ preset_kpdr21_maridia_botwoon_etank:
     dw $0AF6, $01C6  ; Samus X
     dw $D82C, $0002  ; Bosses
     dw #$FFFF
-.after
 
 preset_kpdr21_maridia_halfie_setup:
     dw #preset_kpdr21_maridia_botwoon_etank ; Maridia: Botwoon E-tank
@@ -1610,7 +1405,6 @@ preset_kpdr21_maridia_halfie_setup:
     dw $0AFA, $009B  ; Samus Y
     dw $D882, $0100  ; Items
     dw #$FFFF
-.after
 
 preset_kpdr21_maridia_draygon:
     dw #preset_kpdr21_maridia_halfie_setup ; Maridia: Halfie Setup
@@ -1628,7 +1422,6 @@ preset_kpdr21_maridia_draygon:
     dw $0AFA, $028B  ; Samus Y
     dw $D8C2, $0C00  ; Doors
     dw #$FFFF
-.after
 
 preset_kpdr21_maridia_reverse_halfie_spikesuit:
     dw #preset_kpdr21_maridia_draygon ; Maridia: Draygon
@@ -1637,7 +1430,6 @@ preset_kpdr21_maridia_reverse_halfie_spikesuit:
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0923, $FE00  ; BG2 Y offset
     dw $09A2, $3325  ; Equipped Items
     dw $09A4, $3325  ; Collected Items
     dw $09C2, $00BA  ; Health
@@ -1651,13 +1443,11 @@ preset_kpdr21_maridia_reverse_halfie_spikesuit:
     dw $D882, $0500  ; Items
     dw $D8C2, $CC00  ; Doors
     dw #$FFFF
-.after
 
 preset_kpdr21_maridia_womple_jump:
     dw #preset_kpdr21_maridia_reverse_halfie_spikesuit ; Maridia: Reverse Halfie (Spikesuit)
     dw $0A68, $0000  ; Flash suit
     dw #$FFFF
-.after
 
 preset_kpdr21_maridia_cac_alley_east:
     dw #preset_kpdr21_maridia_womple_jump ; Maridia: Womple Jump
@@ -1667,8 +1457,6 @@ preset_kpdr21_maridia_cac_alley_east:
     dw $0915, $011A  ; Screen Y position in pixels
     dw $09C2, $00BA  ; Health
     dw $0919, $011A  ; Layer 2 Y position
-    dw $0921, $FF00  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09C2, $004A  ; Health
     dw $09C6, $000C  ; Missiles
     dw $0A68, $0000  ; Flash suit
@@ -1676,7 +1464,6 @@ preset_kpdr21_maridia_cac_alley_east:
     dw $0AFA, $018B  ; Samus Y
     dw $D8C2, $DC00  ; Doors
     dw #$FFFF
-.after
 
 preset_kpdr21_maridia_cac_alley_west:
     dw #preset_kpdr21_maridia_cac_alley_east ; Maridia: Cac Alley East
@@ -1685,14 +1472,11 @@ preset_kpdr21_maridia_cac_alley_west:
     dw $090F, $B000  ; Screen subpixel X position
     dw $0915, $0002  ; Screen Y position in pixels
     dw $0919, $0002  ; Layer 2 Y position
-    dw $0921, $FB00  ; BG2 X offset
-    dw $0923, $FF00  ; BG2 Y offset
     dw $09C6, $000B  ; Missiles
     dw $09CA, $0007  ; Supers
     dw $0AF6, $005B  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_kpdr21_maridia_plasma_spark:
     dw #preset_kpdr21_maridia_cac_alley_west ; Maridia: Cac Alley West
@@ -1702,13 +1486,10 @@ preset_kpdr21_maridia_plasma_spark:
     dw $0913, $7400  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $FF00  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09CA, $0008  ; Supers
     dw $0AF6, $0024  ; Samus X
     dw $0AF6, $001F  ; Samus X
     dw #$FFFF
-.after
 
 preset_kpdr21_maridia_plasma_climb:
     dw #preset_kpdr21_maridia_plasma_spark ; Maridia: Plasma Spark
@@ -1720,14 +1501,11 @@ preset_kpdr21_maridia_plasma_climb:
     dw $0915, $00F3  ; Screen Y position in pixels
     dw $0917, $01C0  ; Layer 2 X position
     dw $0919, $00F3  ; Layer 2 Y position
-    dw $0921, $FC00  ; BG2 X offset
-    dw $0923, $FB00  ; BG2 Y offset
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $027F  ; Samus X
     dw $0AFA, $018B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_kpdr21_maridia_plasma_beam:
     dw #preset_kpdr21_maridia_plasma_climb ; Maridia: Plasma Climb
@@ -1739,13 +1517,10 @@ preset_kpdr21_maridia_plasma_beam:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $0100  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $0AF6, $0095  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw $D8C2, $DC08  ; Doors
     dw #$FFFF
-.after
 
 preset_kpdr21_maridia_plasma_spark_revisit:
     dw #preset_kpdr21_maridia_plasma_beam ; Maridia: Plasma Beam
@@ -1755,7 +1530,6 @@ preset_kpdr21_maridia_plasma_spark_revisit:
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $031A  ; Screen Y position in pixels
     dw $0919, $0253  ; Layer 2 Y position
-    dw $0921, $FF00  ; BG2 X offset
     dw $09A6, $1009  ; Beams
     dw $09A8, $1009  ; Beams
     dw $09C2, $00A4  ; Health
@@ -1768,7 +1542,6 @@ preset_kpdr21_maridia_plasma_spark_revisit:
     dw $D880, $80A0  ; Items
     dw $D8C2, $DC0A  ; Doors
     dw #$FFFF
-.after
 
 preset_kpdr21_maridia_toilet:
     dw #preset_kpdr21_maridia_plasma_spark_revisit ; Maridia: Plasma Spark Revisit
@@ -1779,15 +1552,12 @@ preset_kpdr21_maridia_toilet:
     dw $0915, $021F  ; Screen Y position in pixels
     dw $0917, $0028  ; Layer 2 X position
     dw $0919, $021F  ; Layer 2 Y position
-    dw $0921, $FD00  ; BG2 X offset
-    dw $0923, $FF00  ; BG2 Y offset
     dw $09C2, $00A9  ; Health
     dw $09CA, $0009  ; Supers
     dw $0AF6, $00A3  ; Samus X
     dw $0AFA, $02AB  ; Samus Y
     dw $D8C2, $DC1A  ; Doors
     dw #$FFFF
-.after
 
 preset_kpdr21_maridia_sewers:
     dw #preset_kpdr21_maridia_toilet ; Maridia: Toilet
@@ -1799,12 +1569,9 @@ preset_kpdr21_maridia_sewers:
     dw $0915, $011C  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $00D5  ; Layer 2 Y position
-    dw $0921, $0000  ; BG2 X offset
-    dw $0923, $00E0  ; BG2 Y offset
     dw $0AF6, $00BB  ; Samus X
     dw $0AFA, $018B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_kpdr21_maridia_lower_maridia_gate:
     dw #preset_kpdr21_maridia_sewers ; Maridia: Sewers
@@ -1814,13 +1581,10 @@ preset_kpdr21_maridia_lower_maridia_gate:
     dw $0913, $5C00  ; Screen subpixel Y position
     dw $0915, $0100  ; Screen Y position in pixels
     dw $0919, $0100  ; Layer 2 Y position
-    dw $0921, $FF00  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09C2, $00AE  ; Health
     dw $09CE, $0005  ; Pbs
     dw $0AF6, $002E  ; Samus X
     dw #$FFFF
-.after
 
 preset_kpdr21_upper_norfair_revisit_ice_beam_gates:
     dw #preset_kpdr21_maridia_lower_maridia_gate ; Maridia: Lower Maridia Gate
@@ -1831,14 +1595,11 @@ preset_kpdr21_upper_norfair_revisit_ice_beam_gates:
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $0326  ; Screen Y position in pixels
     dw $0919, $025C  ; Layer 2 Y position
-    dw $0921, $0000  ; BG2 X offset
-    dw $0923, $00E0  ; BG2 Y offset
     dw $09CA, $0007  ; Supers
     dw $0AF6, $0032  ; Samus X
     dw $0AFA, $0395  ; Samus Y
     dw $D8B8, $2EED  ; Doors
     dw #$FFFF
-.after
 
 preset_kpdr21_upper_norfair_revisit_ice_maze_up:
     dw #preset_kpdr21_upper_norfair_revisit_ice_beam_gates ; Upper Norfair Revisit: Ice Beam Gates
@@ -1847,12 +1608,9 @@ preset_kpdr21_upper_norfair_revisit_ice_maze_up:
     dw $0913, $1800  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $FE00  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $0AF6, $0025  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_kpdr21_upper_norfair_revisit_ice_maze_down:
     dw #preset_kpdr21_upper_norfair_revisit_ice_maze_up ; Upper Norfair Revisit: Ice Maze Up
@@ -1862,14 +1620,12 @@ preset_kpdr21_upper_norfair_revisit_ice_maze_down:
     dw $090F, $5000  ; Screen subpixel X position
     dw $0913, $7000  ; Screen subpixel Y position
     dw $0917, $0001  ; Layer 2 X position
-    dw $0921, $0100  ; BG2 X offset
     dw $09A6, $100B  ; Beams
     dw $09A8, $100B  ; Beams
     dw $09C2, $00BD  ; Health
     dw $0AF6, $00BA  ; Samus X
     dw $D876, $01A5  ; Items
     dw #$FFFF
-.after
 
 preset_kpdr21_upper_norfair_revisit_ice_escape:
     dw #preset_kpdr21_upper_norfair_revisit_ice_maze_down ; Upper Norfair Revisit: Ice Maze Down
@@ -1881,14 +1637,11 @@ preset_kpdr21_upper_norfair_revisit_ice_escape:
     dw $0915, $0200  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0180  ; Layer 2 Y position
-    dw $0921, $FE00  ; BG2 X offset
-    dw $0923, $FF00  ; BG2 Y offset
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $00C5  ; Samus X
     dw $0AFA, $028B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_kpdr21_upper_norfair_revisit_purple_shaft_upper:
     dw #preset_kpdr21_upper_norfair_revisit_ice_escape ; Upper Norfair Revisit: Ice Escape
@@ -1898,12 +1651,9 @@ preset_kpdr21_upper_norfair_revisit_purple_shaft_upper:
     dw $0913, $E800  ; Screen subpixel Y position
     dw $0915, $0300  ; Screen Y position in pixels
     dw $0919, $0240  ; Layer 2 Y position
-    dw $0921, $0100  ; BG2 X offset
-    dw $0923, $FD00  ; BG2 Y offset
     dw $0AF6, $0036  ; Samus X
     dw $0AFA, $038B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_kpdr21_upper_norfair_revisit_magdollite_tunnel_upper:
     dw #preset_kpdr21_upper_norfair_revisit_purple_shaft_upper ; Upper Norfair Revisit: Purple Shaft (Upper)
@@ -1913,12 +1663,9 @@ preset_kpdr21_upper_norfair_revisit_magdollite_tunnel_upper:
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $01F4  ; Screen Y position in pixels
     dw $0919, $0177  ; Layer 2 Y position
-    dw $0921, $0000  ; BG2 X offset
-    dw $0923, $00E0  ; BG2 Y offset
     dw $0AF6, $0059  ; Samus X
     dw $0AFA, $028B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_kpdr21_upper_norfair_revisit_kronic_boost_upper:
     dw #preset_kpdr21_upper_norfair_revisit_magdollite_tunnel_upper ; Upper Norfair Revisit: Magdollite Tunnel (Upper)
@@ -1930,12 +1677,9 @@ preset_kpdr21_upper_norfair_revisit_kronic_boost_upper:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0180  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $0100  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $0AF6, $02B7  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_kpdr21_upper_norfair_revisit_croc_speedway_lower:
     dw #preset_kpdr21_upper_norfair_revisit_ice_escape ; Upper Norfair Revisit: Ice Escape
@@ -1948,7 +1692,6 @@ preset_kpdr21_upper_norfair_revisit_croc_speedway_lower:
     dw $0AF6, $00DD  ; Samus X
     dw $0AFA, $038B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_kpdr21_upper_norfair_revisit_spiky_acid_snakes_lower:
     dw #preset_kpdr21_upper_norfair_revisit_croc_speedway_lower ; Upper Norfair Revisit: Croc Speedway (Lower
@@ -1963,7 +1706,6 @@ preset_kpdr21_upper_norfair_revisit_spiky_acid_snakes_lower:
     dw $0AF6, $030E  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_kpdr21_upper_norfair_revisit_kronic_boost_lower:
     dw #preset_kpdr21_upper_norfair_revisit_spiky_acid_snakes_lower ; Upper Norfair Revisit: Spiky Acid Snakes (Lower)
@@ -1976,7 +1718,6 @@ preset_kpdr21_upper_norfair_revisit_kronic_boost_lower:
     dw $09D2, $0003  ; Currently selected item
     dw $0AF6, $03BC  ; Samus X
     dw #$FFFF
-.after
 
 preset_kpdr21_lower_norfair_ln_main_hall:
     dw #preset_kpdr21_upper_norfair_revisit_kronic_boost_upper ; Upper Norfair Revisit: Kronic Boost (Upper)
@@ -1989,8 +1730,6 @@ preset_kpdr21_lower_norfair_ln_main_hall:
     dw $0915, $0200  ; Screen Y position in pixels
     dw $0917, $0300  ; Layer 2 X position
     dw $0919, $0301  ; Layer 2 Y position
-    dw $0921, $FC00  ; BG2 X offset
-    dw $0923, $00E0  ; BG2 Y offset
     dw $09C2, $00BA  ; Health
     dw $09CE, $0004  ; Pbs
     dw $0A1C, $009B  ; Samus position/state
@@ -1999,7 +1738,6 @@ preset_kpdr21_lower_norfair_ln_main_hall:
     dw $0AFA, $0288  ; Samus Y
     dw $D8BA, $01F1  ; Doors
     dw #$FFFF
-.after
 
 preset_kpdr21_lower_norfair_prepillars:
     dw #preset_kpdr21_lower_norfair_ln_main_hall ; Lower Norfair: LN Main Hall
@@ -2012,7 +1750,6 @@ preset_kpdr21_lower_norfair_prepillars:
     dw $0AF6, $07A2  ; Samus X
     dw $0AFA, $028B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_kpdr21_lower_norfair_fast_pillars_setup:
     dw #preset_kpdr21_lower_norfair_prepillars ; Lower Norfair: Pre-Pillars
@@ -2023,13 +1760,10 @@ preset_kpdr21_lower_norfair_fast_pillars_setup:
     dw $0913, $7000  ; Screen subpixel Y position
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0180  ; Layer 2 Y position
-    dw $0921, $0100  ; BG2 X offset
-    dw $0923, $FF00  ; BG2 Y offset
     dw $09C6, $0013  ; Missiles
     dw $09CE, $0005  ; Pbs
     dw $0AF6, $0025  ; Samus X
     dw #$FFFF
-.after
 
 preset_kpdr21_lower_norfair_worst_room_in_the_game:
     dw #preset_kpdr21_lower_norfair_fast_pillars_setup ; Lower Norfair: Fast Pillars Setup
@@ -2041,12 +1775,10 @@ preset_kpdr21_lower_norfair_worst_room_in_the_game:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0240  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0923, $0000  ; BG2 Y offset
     dw $09C2, $0070  ; Health
     dw $0AF6, $03DB  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_kpdr21_lower_norfair_amphitheatre:
     dw #preset_kpdr21_lower_norfair_worst_room_in_the_game ; Lower Norfair: Worst Room in the Game
@@ -2058,14 +1790,12 @@ preset_kpdr21_lower_norfair_amphitheatre:
     dw $0915, $011D  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $00D5  ; Layer 2 Y position
-    dw $0923, $FB00  ; BG2 Y offset
     dw $09C2, $0084  ; Health
     dw $09CE, $0004  ; Pbs
     dw $09D2, $0000  ; Currently selected item
     dw $0AF6, $00A7  ; Samus X
     dw $0AFA, $018B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_kpdr21_lower_norfair_kihunter_stairs_down:
     dw #preset_kpdr21_lower_norfair_amphitheatre ; Lower Norfair: Amphitheatre
@@ -2077,11 +1807,9 @@ preset_kpdr21_lower_norfair_kihunter_stairs_down:
     dw $0915, $0043  ; Screen Y position in pixels
     dw $0917, $01E1  ; Layer 2 X position
     dw $0919, $0032  ; Layer 2 Y position
-    dw $0923, $FF00  ; BG2 Y offset
     dw $0AF6, $02E2  ; Samus X
     dw $0AFA, $00B3  ; Samus Y
     dw #$FFFF
-.after
 
 preset_kpdr21_lower_norfair_wasteland:
     dw #preset_kpdr21_lower_norfair_kihunter_stairs_down ; Lower Norfair: Kihunter Stairs Down
@@ -2092,7 +1820,6 @@ preset_kpdr21_lower_norfair_wasteland:
     dw $0915, $0419  ; Screen Y position in pixels
     dw $0917, $0180  ; Layer 2 X position
     dw $0919, $0312  ; Layer 2 Y position
-    dw $0923, $0000  ; BG2 Y offset
     dw $09C2, $00AC  ; Health
     dw $09CE, $0002  ; Pbs
     dw $0A1C, $001D  ; Samus position/state
@@ -2101,7 +1828,6 @@ preset_kpdr21_lower_norfair_wasteland:
     dw $0AFA, $0489  ; Samus Y
     dw $D8BA, $41F1  ; Doors
     dw #$FFFF
-.after
 
 preset_kpdr21_lower_norfair_metal_ninja_pirates:
     dw #preset_kpdr21_lower_norfair_wasteland ; Lower Norfair: Wasteland
@@ -2119,7 +1845,6 @@ preset_kpdr21_lower_norfair_metal_ninja_pirates:
     dw $0AFA, $028B  ; Samus Y
     dw $D8BA, $C1F1  ; Doors
     dw #$FFFF
-.after
 
 preset_kpdr21_lower_norfair_plowerhouse:
     dw #preset_kpdr21_lower_norfair_metal_ninja_pirates ; Lower Norfair: Metal Ninja Pirates
@@ -2131,8 +1856,6 @@ preset_kpdr21_lower_norfair_plowerhouse:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $FD00  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09C2, $0122  ; Health
     dw $09C6, $0014  ; Missiles
     dw $09CA, $0009  ; Supers
@@ -2140,7 +1863,6 @@ preset_kpdr21_lower_norfair_plowerhouse:
     dw $0AFA, $00BB  ; Samus Y
     dw $D8BC, $0001  ; Doors
     dw #$FFFF
-.after
 
 preset_kpdr21_lower_norfair_ridley:
     dw #preset_kpdr21_lower_norfair_plowerhouse ; Lower Norfair: Plowerhouse
@@ -2154,7 +1876,6 @@ preset_kpdr21_lower_norfair_ridley:
     dw $0AFA, $009B  ; Samus Y
     dw $D8BA, $D1F1  ; Doors
     dw #$FFFF
-.after
 
 preset_kpdr21_lower_norfair_leaving_ridley:
     dw #preset_kpdr21_lower_norfair_ridley ; Lower Norfair: Ridley
@@ -2167,7 +1888,6 @@ preset_kpdr21_lower_norfair_leaving_ridley:
     dw $0915, $011F  ; Screen Y position in pixels
     dw $0917, $0001  ; Layer 2 X position
     dw $0919, $00D7  ; Layer 2 Y position
-    dw $0921, $FF00  ; BG2 X offset
     dw $09C2, $00D9  ; Health
     dw $09CA, $000A  ; Supers
     dw $09CE, $0003  ; Pbs
@@ -2177,7 +1897,6 @@ preset_kpdr21_lower_norfair_leaving_ridley:
     dw $0AFA, $019B  ; Samus Y
     dw $D82A, $0101  ; Bosses
     dw #$FFFF
-.after
 
 preset_kpdr21_lower_norfair_reverse_plowerhouse:
     dw #preset_kpdr21_lower_norfair_leaving_ridley ; Lower Norfair: Leaving Ridley
@@ -2191,13 +1910,11 @@ preset_kpdr21_lower_norfair_reverse_plowerhouse:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0180  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $0100  ; BG2 X offset
     dw $09C2, $00D6  ; Health
     dw $0AF6, $02B8  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw $D8BA, $D5F1  ; Doors
     dw #$FFFF
-.after
 
 preset_kpdr21_lower_norfair_wasteland_revisit:
     dw #preset_kpdr21_lower_norfair_reverse_plowerhouse ; Lower Norfair: Reverse Plowerhouse
@@ -2208,7 +1925,6 @@ preset_kpdr21_lower_norfair_wasteland_revisit:
     dw $09C2, $00B4  ; Health
     dw $0AF6, $02DC  ; Samus X
     dw #$FFFF
-.after
 
 preset_kpdr21_lower_norfair_kihunter_stairs_up:
     dw #preset_kpdr21_lower_norfair_wasteland_revisit ; Lower Norfair: Wasteland Revisit
@@ -2218,14 +1934,11 @@ preset_kpdr21_lower_norfair_kihunter_stairs_up:
     dw $0911, $0500  ; Screen X position in pixels
     dw $0913, $B000  ; Screen subpixel Y position
     dw $0917, $03C0  ; Layer 2 X position
-    dw $0921, $0000  ; BG2 X offset
-    dw $0923, $FE00  ; BG2 Y offset
     dw $09C2, $00B2  ; Health
     dw $09CE, $0002  ; Pbs
     dw $0AF6, $055B  ; Samus X
     dw $0AFA, $009B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_kpdr21_lower_norfair_fire_flea_room:
     dw #preset_kpdr21_lower_norfair_kihunter_stairs_up ; Lower Norfair: Kihunter Stairs Up
@@ -2237,12 +1950,9 @@ preset_kpdr21_lower_norfair_fire_flea_room:
     dw $0915, $000D  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0009  ; Layer 2 Y position
-    dw $0921, $FE00  ; BG2 X offset
-    dw $0923, $FB00  ; BG2 Y offset
     dw $0AF6, $00B7  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_kpdr21_lower_norfair_springball_maze:
     dw #preset_kpdr21_lower_norfair_fire_flea_room ; Lower Norfair: Fire Flea Room
@@ -2255,13 +1965,10 @@ preset_kpdr21_lower_norfair_springball_maze:
     dw $0915, $0001  ; Screen Y position in pixels
     dw $0917, $0100  ; Layer 2 X position
     dw $0919, $0001  ; Layer 2 Y position
-    dw $0921, $0000  ; BG2 X offset
-    dw $0923, $FD00  ; BG2 Y offset
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $016C  ; Samus X
     dw #$FFFF
-.after
 
 preset_kpdr21_lower_norfair_three_musketeers:
     dw #preset_kpdr21_lower_norfair_springball_maze ; Lower Norfair: Springball Maze
@@ -2273,11 +1980,8 @@ preset_kpdr21_lower_norfair_three_musketeers:
     dw $0915, $0003  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0002  ; Layer 2 Y position
-    dw $0921, $FE00  ; BG2 X offset
-    dw $0923, $FF00  ; BG2 Y offset
     dw $0AF6, $0060  ; Samus X
     dw #$FFFF
-.after
 
 preset_kpdr21_lower_norfair_single_chamber_final:
     dw #preset_kpdr21_lower_norfair_three_musketeers ; Lower Norfair: Three Musketeers
@@ -2287,12 +1991,9 @@ preset_kpdr21_lower_norfair_single_chamber_final:
     dw $0911, $0100  ; Screen X position in pixels
     dw $0913, $E000  ; Screen subpixel Y position
     dw $0917, $00C0  ; Layer 2 X position
-    dw $0921, $FC00  ; BG2 X offset
-    dw $0923, $FE00  ; BG2 Y offset
     dw $09C2, $0080  ; Health
     dw $0AF6, $016E  ; Samus X
     dw #$FFFF
-.after
 
 preset_kpdr21_lower_norfair_bubble_mountain_final:
     dw #preset_kpdr21_lower_norfair_single_chamber_final ; Lower Norfair: Single Chamber Final
@@ -2305,12 +2006,9 @@ preset_kpdr21_lower_norfair_bubble_mountain_final:
     dw $0915, $0016  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0010  ; Layer 2 Y position
-    dw $0921, $FA00  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09C2, $0074  ; Health
     dw $0AF6, $0075  ; Samus X
     dw #$FFFF
-.after
 
 preset_kpdr21_lower_norfair_business_center_final:
     dw #preset_kpdr21_lower_norfair_bubble_mountain_final ; Lower Norfair: Bubble Mountain Final
@@ -2320,13 +2018,11 @@ preset_kpdr21_lower_norfair_business_center_final:
     dw $0913, $5000  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $FF00  ; BG2 X offset
     dw $09C2, $0088  ; Health
     dw $09C6, $0011  ; Missiles
     dw $09CE, $0001  ; Pbs
     dw $0AF6, $0032  ; Samus X
     dw #$FFFF
-.after
 
 preset_kpdr21_backtracking_maridia_tube_revisit:
     dw #preset_kpdr21_lower_norfair_business_center_final ; Lower Norfair: Business Center Final
@@ -2335,14 +2031,11 @@ preset_kpdr21_backtracking_maridia_tube_revisit:
     dw $07F3, $0012  ; Music Bank
     dw $07F5, $0003  ; Music Track
     dw $0913, $0000  ; Screen subpixel Y position
-    dw $0921, $0000  ; BG2 X offset
-    dw $0923, $FF00  ; BG2 Y offset
     dw $0A1C, $009B  ; Samus position/state
     dw $0A1E, $0000  ; More position/state
     dw $0AF6, $0080  ; Samus X
     dw $0AFA, $0086  ; Samus Y
     dw #$FFFF
-.after
 
 preset_kpdr21_backtracking_fish_tank_revisit:
     dw #preset_kpdr21_backtracking_maridia_tube_revisit ; Backtracking: Maridia Tube Revisit
@@ -2355,14 +2048,11 @@ preset_kpdr21_backtracking_fish_tank_revisit:
     dw $0915, $05F3  ; Screen Y position in pixels
     dw $0917, $00BB  ; Layer 2 X position
     dw $0919, $0476  ; Layer 2 Y position
-    dw $0921, $FF00  ; BG2 X offset
-    dw $0923, $F800  ; BG2 Y offset
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $0168  ; Samus X
     dw $0AFA, $068B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_kpdr21_backtracking_mt_everest_revisit_revisit:
     dw #preset_kpdr21_backtracking_fish_tank_revisit ; Backtracking: Fish Tank Revisit
@@ -2374,14 +2064,11 @@ preset_kpdr21_backtracking_mt_everest_revisit_revisit:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $004E  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $0100  ; BG2 X offset
-    dw $0923, $FE00  ; BG2 Y offset
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $00C8  ; Samus X
     dw $0AFA, $006B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_kpdr21_backtracking_red_brinstar_green_gate:
     dw #preset_kpdr21_backtracking_mt_everest_revisit_revisit ; Backtracking: Mt Everest Revisit Revisit
@@ -2391,11 +2078,9 @@ preset_kpdr21_backtracking_red_brinstar_green_gate:
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $2000  ; Screen subpixel Y position
     dw $0917, $0000  ; Layer 2 X position
-    dw $0921, $FE00  ; BG2 X offset
     dw $0AF6, $0079  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_kpdr21_backtracking_crateria_kihunters_final:
     dw #preset_kpdr21_backtracking_red_brinstar_green_gate ; Backtracking: Red Brinstar Green Gate
@@ -2405,15 +2090,12 @@ preset_kpdr21_backtracking_crateria_kihunters_final:
     dw $07F5, $0003  ; Music Track
     dw $090F, $A000  ; Screen subpixel X position
     dw $0913, $2800  ; Screen subpixel Y position
-    dw $0921, $0000  ; BG2 X offset
-    dw $0923, $FF00  ; BG2 Y offset
     dw $09CA, $0009  ; Supers
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $0063  ; Samus X
     dw $0AFA, $005B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_kpdr21_backtracking_parlor_spacejump:
     dw #preset_kpdr21_backtracking_crateria_kihunters_final ; Backtracking: Crateria Kihunters Final
@@ -2426,15 +2108,12 @@ preset_kpdr21_backtracking_parlor_spacejump:
     dw $0913, $CC00  ; Screen subpixel Y position
     dw $0915, $0400  ; Screen Y position in pixels
     dw $0917, $02EE  ; Layer 2 X position
-    dw $0921, $F700  ; BG2 X offset
-    dw $0923, $FC00  ; BG2 Y offset
     dw $09C6, $0010  ; Missiles
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $067C  ; Samus X
     dw $0AFA, $04BB  ; Samus Y
     dw #$FFFF
-.after
 
 preset_kpdr21_backtracking_terminator_revisit:
     dw #preset_kpdr21_backtracking_parlor_spacejump ; Backtracking: Parlor Spacejump
@@ -2446,15 +2125,12 @@ preset_kpdr21_backtracking_terminator_revisit:
     dw $0913, $B400  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $00C0  ; Layer 2 X position
-    dw $0921, $FB00  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $0A1C, $001C  ; Samus position/state
     dw $0A1E, $0304  ; More position/state
     dw $0AF6, $0101  ; Samus X
     dw $0AFA, $0086  ; Samus Y
     dw $0B3F, $0104  ; Blue suit
     dw #$FFFF
-.after
 
 preset_kpdr21_backtracking_green_pirate_shaft_revisit:
     dw #preset_kpdr21_backtracking_terminator_revisit ; Backtracking: Terminator Revisit
@@ -2466,14 +2142,12 @@ preset_kpdr21_backtracking_green_pirate_shaft_revisit:
     dw $0915, $0200  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0180  ; Layer 2 Y position
-    dw $0921, $FA00  ; BG2 X offset
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $0073  ; Samus X
     dw $0AFA, $029B  ; Samus Y
     dw $0B3F, $0000  ; Blue suit
     dw #$FFFF
-.after
 
 preset_kpdr21_tourian_metroids_1:
     dw #preset_kpdr21_backtracking_green_pirate_shaft_revisit ; Backtracking: Green Pirate Shaft Revisit
@@ -2484,8 +2158,6 @@ preset_kpdr21_tourian_metroids_1:
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $0238  ; Screen Y position in pixels
     dw $0919, $01AA  ; Layer 2 Y position
-    dw $0921, $0000  ; BG2 X offset
-    dw $0923, $00E0  ; BG2 Y offset
     dw $09C2, $00B0  ; Health
     dw $09C6, $0012  ; Missiles
     dw $09CA, $0008  ; Supers
@@ -2496,7 +2168,6 @@ preset_kpdr21_tourian_metroids_1:
     dw $D820, $0FC1  ; Events
     dw $D8B2, $6C01  ; Doors
     dw #$FFFF
-.after
 
 preset_kpdr21_tourian_metroids_2:
     dw #preset_kpdr21_tourian_metroids_1 ; Tourian: Metroids 1
@@ -2506,8 +2177,6 @@ preset_kpdr21_tourian_metroids_2:
     dw $0913, $5000  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $FA00  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09C2, $00EC  ; Health
     dw $09C6, $0014  ; Missiles
     dw $09CA, $0009  ; Supers
@@ -2519,7 +2188,6 @@ preset_kpdr21_tourian_metroids_2:
     dw $D822, $0021  ; Events
     dw $D8C4, $0001  ; Doors
     dw #$FFFF
-.after
 
 preset_kpdr21_tourian_metroids_3:
     dw #preset_kpdr21_tourian_metroids_2 ; Tourian: Metroids 2
@@ -2529,7 +2197,6 @@ preset_kpdr21_tourian_metroids_3:
     dw $0913, $1000  ; Screen subpixel Y position
     dw $0915, $0109  ; Screen Y position in pixels
     dw $0919, $00C6  ; Layer 2 Y position
-    dw $0921, $FF00  ; BG2 X offset
     dw $09C2, $0164  ; Health
     dw $09CA, $0009  ; Supers
     dw $0A1C, $0001  ; Samus position/state
@@ -2539,7 +2206,6 @@ preset_kpdr21_tourian_metroids_3:
     dw $D822, $0023  ; Events
     dw $D8C4, $0003  ; Doors
     dw #$FFFF
-.after
 
 preset_kpdr21_tourian_metroids_4:
     dw #preset_kpdr21_tourian_metroids_3 ; Tourian: Metroids 3
@@ -2551,14 +2217,12 @@ preset_kpdr21_tourian_metroids_4:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $03C0  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $0100  ; BG2 X offset
     dw $09C2, $018F  ; Health
     dw $0AF6, $059E  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw $D822, $0027  ; Events
     dw $D8C4, $0007  ; Doors
     dw #$FFFF
-.after
 
 preset_kpdr21_tourian_giant_hoppers:
     dw #preset_kpdr21_tourian_metroids_4 ; Tourian: Metroids 4
@@ -2577,7 +2241,6 @@ preset_kpdr21_tourian_giant_hoppers:
     dw $D822, $002F  ; Events
     dw $D8C4, $000F  ; Doors
     dw #$FFFF
-.after
 
 preset_kpdr21_tourian_baby_skip:
     dw #preset_kpdr21_tourian_giant_hoppers ; Tourian: Giant Hoppers
@@ -2591,14 +2254,12 @@ preset_kpdr21_tourian_baby_skip:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $00C0  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $FE00  ; BG2 X offset
     dw $09C2, $0171  ; Health
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $01D8  ; Samus X
     dw $0AFA, $00AB  ; Samus Y
     dw #$FFFF
-.after
 
 preset_kpdr21_tourian_gadora_room:
     dw #preset_kpdr21_tourian_baby_skip ; Tourian: Baby Skip
@@ -2612,7 +2273,6 @@ preset_kpdr21_tourian_gadora_room:
     dw $0915, $0117  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $00D1  ; Layer 2 Y position
-    dw $0921, $FF00  ; BG2 X offset
     dw $09CA, $0009  ; Supers
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
@@ -2620,7 +2280,6 @@ preset_kpdr21_tourian_gadora_room:
     dw $0AFA, $018B  ; Samus Y
     dw $D8C4, $00AF  ; Doors
     dw #$FFFF
-.after
 
 preset_kpdr21_tourian_zeb_skip:
     dw #preset_kpdr21_tourian_gadora_room ; Tourian: Gadora Room
@@ -2630,7 +2289,6 @@ preset_kpdr21_tourian_zeb_skip:
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $021A  ; Screen Y position in pixels
     dw $0919, $0193  ; Layer 2 Y position
-    dw $0921, $0100  ; BG2 X offset
     dw $09CA, $0007  ; Supers
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
@@ -2638,7 +2296,6 @@ preset_kpdr21_tourian_zeb_skip:
     dw $0AFA, $028B  ; Samus Y
     dw $D8C4, $03AF  ; Doors
     dw #$FFFF
-.after
 
 preset_kpdr21_tourian_escape_room_3:
     dw #preset_kpdr21_tourian_zeb_skip ; Tourian: Zeb Skip
@@ -2650,8 +2307,6 @@ preset_kpdr21_tourian_escape_room_3:
     dw $0913, $2800  ; Screen subpixel Y position
     dw $0915, $0100  ; Screen Y position in pixels
     dw $0919, $00C0  ; Layer 2 Y position
-    dw $0921, $0000  ; BG2 X offset
-    dw $0923, $00E0  ; BG2 Y offset
     dw $09A6, $1009  ; Beams
     dw $09C2, $018F  ; Health
     dw $09C6, $0000  ; Missiles
@@ -2665,7 +2320,6 @@ preset_kpdr21_tourian_escape_room_3:
     dw $D820, $4FC5  ; Events
     dw $D82C, $0203  ; Bosses
     dw #$FFFF
-.after
 
 preset_kpdr21_tourian_climb_spark:
     dw #preset_kpdr21_tourian_escape_room_3 ; Tourian: Escape Room 3
@@ -2676,12 +2330,9 @@ preset_kpdr21_tourian_climb_spark:
     dw $0915, $00EF  ; Screen Y position in pixels
     dw $0917, $00B8  ; Layer 2 X position
     dw $0919, $00B3  ; Layer 2 Y position
-    dw $0921, $0100  ; BG2 X offset
-    dw $0923, $FD00  ; BG2 Y offset
     dw $09C2, $0171  ; Health
     dw $0AF6, $0156  ; Samus X
     dw #$FFFF
-.after
 
 preset_kpdr21_tourian_escape_parlor:
     dw #preset_kpdr21_tourian_climb_spark ; Tourian: Climb Spark
@@ -2693,11 +2344,9 @@ preset_kpdr21_tourian_escape_parlor:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $00C0  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0923, $F800  ; BG2 Y offset
     dw $09C2, $00DE  ; Health
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $01DA  ; Samus X
     dw $0AFA, $004B  ; Samus Y
     dw #$FFFF
-.after

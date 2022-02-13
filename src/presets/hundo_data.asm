@@ -11,8 +11,6 @@ preset_hundo_bombs_ceres_elevator:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $0000  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $093F, $0000  ; Ceres escape flag
     dw $09A2, $0000  ; Equipped Items
     dw $09A4, $0000  ; Collected Items
@@ -70,7 +68,6 @@ preset_hundo_bombs_ceres_elevator:
     dw $D90A, $0000  ; Map Stations
     dw $D90C, $0000  ; Map Stations
     dw #$FFFF
-.after
 
 preset_hundo_bombs_ceres_escape:
     dw #preset_hundo_bombs_ceres_elevator ; Bombs: Ceres Elevator
@@ -80,7 +77,6 @@ preset_hundo_bombs_ceres_escape:
     dw $07F5, $0007  ; Music Track
     dw $090F, $8000  ; Screen subpixel X position
     dw $0913, $9400  ; Screen subpixel Y position
-    dw $0921, $0100  ; BG2 X offset
     dw $093F, $0002  ; Ceres escape flag
     dw $09C2, $0018  ; Health
     dw $0A1C, $0002  ; Samus position/state
@@ -91,7 +87,6 @@ preset_hundo_bombs_ceres_escape:
     dw $0AFC, $FFFF  ; Samus subpixel Y
     dw $D82E, $0001  ; Bosses
     dw #$FFFF
-.after
 
 preset_hundo_bombs_ceres_last_3_rooms:
     dw #preset_hundo_bombs_ceres_escape ; Bombs: Ceres Escape
@@ -102,7 +97,6 @@ preset_hundo_bombs_ceres_last_3_rooms:
     dw $0AF6, $004E  ; Samus X
     dw $0AFA, $00A2  ; Samus Y
     dw #$FFFF
-.after
 
 preset_hundo_bombs_ship:
     dw #preset_hundo_bombs_ceres_last_3_rooms ; Bombs: Ceres Last 3 Rooms
@@ -115,7 +109,6 @@ preset_hundo_bombs_ship:
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $0400  ; Screen Y position in pixels
     dw $0917, $0200  ; Layer 2 X position
-    dw $0921, $0200  ; BG2 X offset
     dw $093F, $0000  ; Ceres escape flag
     dw $09C2, $0063  ; Health
     dw $0A1C, $0000  ; Samus position/state
@@ -125,7 +118,6 @@ preset_hundo_bombs_ship:
     dw $0AFA, $0471  ; Samus Y
     dw $0AFC, $8000  ; Samus subpixel Y
     dw #$FFFF
-.after
 
 preset_hundo_bombs_parlor:
     dw #preset_hundo_bombs_ship ; Bombs: Ship
@@ -140,7 +132,6 @@ preset_hundo_bombs_parlor:
     dw $0AFA, $049B  ; Samus Y
     dw $0AFC, $FFFF  ; Samus subpixel Y
     dw #$FFFF
-.after
 
 preset_hundo_bombs_climb_down:
     dw #preset_hundo_bombs_parlor ; Bombs: Parlor
@@ -151,7 +142,6 @@ preset_hundo_bombs_climb_down:
     dw $0915, $03F2  ; Screen Y position in pixels
     dw $0917, $00C0  ; Layer 2 X position
     dw $0919, $02F5  ; Layer 2 Y position
-    dw $0921, $FB00  ; BG2 X offset
     dw $0A1C, $0018  ; Samus position/state
     dw $0A1E, $0204  ; More position/state
     dw $0AF6, $0199  ; Samus X
@@ -159,7 +149,6 @@ preset_hundo_bombs_climb_down:
     dw $0AFA, $048A  ; Samus Y
     dw $0AFC, $0000  ; Samus subpixel Y
     dw #$FFFF
-.after
 
 preset_hundo_bombs_pit_room:
     dw #preset_hundo_bombs_climb_down ; Bombs: Climb Down
@@ -169,8 +158,6 @@ preset_hundo_bombs_pit_room:
     dw $0913, $3800  ; Screen subpixel Y position
     dw $0915, $0800  ; Screen Y position in pixels
     dw $0919, $0600  ; Layer 2 Y position
-    dw $0921, $FF00  ; BG2 X offset
-    dw $0923, $00E0  ; BG2 Y offset
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $01DB  ; Samus X
@@ -178,7 +165,6 @@ preset_hundo_bombs_pit_room:
     dw $0AFA, $088B  ; Samus Y
     dw $0AFC, $FFFF  ; Samus subpixel Y
     dw #$FFFF
-.after
 
 preset_hundo_bombs_morph:
     dw #preset_hundo_bombs_pit_room ; Bombs: Pit Room
@@ -191,13 +177,11 @@ preset_hundo_bombs_morph:
     dw $0915, $0200  ; Screen Y position in pixels
     dw $0917, $03C0  ; Layer 2 X position
     dw $0919, $0180  ; Layer 2 Y position
-    dw $0921, $FB00  ; BG2 X offset
     dw $0A1C, $0000  ; Samus position/state
     dw $0A1E, $0000  ; More position/state
     dw $0AF6, $0580  ; Samus X
     dw $0AFA, $02A8  ; Samus Y
     dw #$FFFF
-.after
 
 preset_hundo_bombs_construction_zone_down:
     dw #preset_hundo_bombs_morph ; Bombs: Morph
@@ -213,7 +197,6 @@ preset_hundo_bombs_construction_zone_down:
     dw $0AFA, $028B  ; Samus Y
     dw $D872, $0400  ; Items
     dw #$FFFF
-.after
 
 preset_hundo_bombs_construction_zone_up:
     dw #preset_hundo_bombs_construction_zone_down ; Bombs: Construction Zone Down
@@ -225,15 +208,12 @@ preset_hundo_bombs_construction_zone_up:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0001  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $FF00  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09C6, $0005  ; Missiles
     dw $09C8, $0005  ; Max missiles
     dw $0AF6, $0055  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw $D874, $0004  ; Items
     dw #$FFFF
-.after
 
 preset_hundo_bombs_pit_room_revisit:
     dw #preset_hundo_bombs_construction_zone_up ; Bombs: Construction Zone Up
@@ -243,14 +223,11 @@ preset_hundo_bombs_pit_room_revisit:
     dw $090F, $0000  ; Screen subpixel X position
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0917, $0000  ; Layer 2 X position
-    dw $0921, $0000  ; BG2 X offset
-    dw $0923, $FF00  ; BG2 Y offset
     dw $0A1C, $0000  ; Samus position/state
     dw $0A1E, $0000  ; More position/state
     dw $0AF6, $0080  ; Samus X
     dw $0AFA, $0088  ; Samus Y
     dw #$FFFF
-.after
 
 preset_hundo_bombs_climb_up:
     dw #preset_hundo_bombs_pit_room_revisit ; Bombs: Pit Room Revisit
@@ -260,8 +237,6 @@ preset_hundo_bombs_climb_up:
     dw $07F5, $0005  ; Music Track
     dw $090F, $2000  ; Screen subpixel X position
     dw $0913, $AC00  ; Screen subpixel Y position
-    dw $0921, $FD00  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $0087  ; Samus X
@@ -269,7 +244,6 @@ preset_hundo_bombs_climb_up:
     dw $D820, $0001  ; Events
     dw $D8B2, $0400  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_bombs_parlor_revisit:
     dw #preset_hundo_bombs_climb_up ; Bombs: Climb Up
@@ -279,12 +253,9 @@ preset_hundo_bombs_parlor_revisit:
     dw $0911, $0100  ; Screen X position in pixels
     dw $0913, $C000  ; Screen subpixel Y position
     dw $0917, $00C0  ; Layer 2 X position
-    dw $0921, $FE00  ; BG2 X offset
-    dw $0923, $F800  ; BG2 Y offset
     dw $0AF6, $01A0  ; Samus X
     dw $0AFA, $005B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_hundo_bombs_flyway:
     dw #preset_hundo_bombs_parlor_revisit ; Bombs: Parlor Revisit
@@ -296,15 +267,12 @@ preset_hundo_bombs_flyway:
     dw $0915, $01E6  ; Screen Y position in pixels
     dw $0917, $0240  ; Layer 2 X position
     dw $0919, $016C  ; Layer 2 Y position
-    dw $0921, $FF00  ; BG2 X offset
-    dw $0923, $FB00  ; BG2 Y offset
     dw $09D2, $0001  ; Currently selected item
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $0369  ; Samus X
     dw $0AFA, $026B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_hundo_bombs_bomb_torizo:
     dw #preset_hundo_bombs_flyway ; Bombs: Flyway
@@ -316,15 +284,12 @@ preset_hundo_bombs_bomb_torizo:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0180  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $0100  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09C6, $0000  ; Missiles
     dw $09D2, $0000  ; Currently selected item
     dw $0AF6, $02BE  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw $D8B2, $2400  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_kraid_alcatraz:
     dw #preset_hundo_bombs_bomb_torizo ; Bombs: Bomb Torizo
@@ -333,7 +298,6 @@ preset_hundo_kraid_alcatraz:
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $4400  ; Screen subpixel Y position
     dw $0917, $0000  ; Layer 2 X position
-    dw $0921, $FD00  ; BG2 X offset
     dw $09A2, $1004  ; Equipped Items
     dw $09A4, $1004  ; Collected Items
     dw $09C6, $0004  ; Missiles
@@ -344,7 +308,6 @@ preset_hundo_kraid_alcatraz:
     dw $D870, $0080  ; Items
     dw $D8B2, $2C00  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_kraid_terminator:
     dw #preset_hundo_kraid_alcatraz ; Kraid: Alcatraz
@@ -354,13 +317,10 @@ preset_hundo_kraid_terminator:
     dw $0911, $0100  ; Screen X position in pixels
     dw $0913, $5800  ; Screen subpixel Y position
     dw $0917, $00C0  ; Layer 2 X position
-    dw $0921, $FC00  ; BG2 X offset
-    dw $0923, $FE00  ; BG2 Y offset
     dw $0A1C, $008A  ; Samus position/state
     dw $0A1E, $1504  ; More position/state
     dw $0AF6, $0115  ; Samus X
     dw #$FFFF
-.after
 
 preset_hundo_kraid_pirates_shaft:
     dw #preset_hundo_kraid_terminator ; Kraid: Terminator
@@ -372,8 +332,6 @@ preset_hundo_kraid_pirates_shaft:
     dw $0915, $01EB  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $017D  ; Layer 2 Y position
-    dw $0921, $FA00  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09C2, $00C7  ; Health
     dw $09C4, $00C7  ; Max health
     dw $09C6, $0005  ; Missiles
@@ -383,7 +341,6 @@ preset_hundo_kraid_pirates_shaft:
     dw $0AFA, $028B  ; Samus Y
     dw $D870, $0180  ; Items
     dw #$FFFF
-.after
 
 preset_hundo_kraid_elevator:
     dw #preset_hundo_kraid_pirates_shaft ; Kraid: Pirates Shaft
@@ -393,12 +350,10 @@ preset_hundo_kraid_elevator:
     dw $0913, $1800  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $FF00  ; BG2 X offset
     dw $09C6, $0002  ; Missiles
     dw $0AF6, $0080  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_hundo_kraid_early_supers:
     dw #preset_hundo_kraid_elevator ; Kraid: Elevator
@@ -410,8 +365,6 @@ preset_hundo_kraid_early_supers:
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $041C  ; Screen Y position in pixels
     dw $0919, $0315  ; Layer 2 Y position
-    dw $0921, $0000  ; BG2 X offset
-    dw $0923, $00E0  ; BG2 Y offset
     dw $09C6, $0000  ; Missiles
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
@@ -419,7 +372,6 @@ preset_hundo_kraid_early_supers:
     dw $0AFA, $048B  ; Samus Y
     dw $D8B4, $0002  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_kraid_reverse_mockball:
     dw #preset_hundo_kraid_early_supers ; Kraid: Early Supers
@@ -430,8 +382,6 @@ preset_hundo_kraid_reverse_mockball:
     dw $0913, $3400  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $0100  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09C0, $0001  ; Manual/Auto reserve tank
     dw $09C2, $00B3  ; Health
     dw $09C6, $000A  ; Missiles
@@ -446,7 +396,6 @@ preset_hundo_kraid_reverse_mockball:
     dw $D872, $040F  ; Items
     dw $D8B4, $0042  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_kraid_dachora_room:
     dw #preset_hundo_kraid_reverse_mockball ; Kraid: Reverse Mockball
@@ -457,8 +406,6 @@ preset_hundo_kraid_dachora_room:
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $061A  ; Screen Y position in pixels
     dw $0919, $0493  ; Layer 2 Y position
-    dw $0921, $FF00  ; BG2 X offset
-    dw $0923, $FC00  ; BG2 Y offset
     dw $09C2, $00C7  ; Health
     dw $09C6, $000F  ; Missiles
     dw $09C8, $0014  ; Max missiles
@@ -470,7 +417,6 @@ preset_hundo_kraid_dachora_room:
     dw $D870, $8180  ; Items
     dw $D8B4, $0046  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_kraid_big_pink:
     dw #preset_hundo_kraid_dachora_room ; Kraid: Dachora Room
@@ -482,13 +428,10 @@ preset_hundo_kraid_big_pink:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0480  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $0100  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09C2, $00C2  ; Health
     dw $0AF6, $06A3  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_hundo_kraid_green_hill_zone:
     dw #preset_hundo_kraid_big_pink ; Kraid: Big Pink
@@ -508,7 +451,6 @@ preset_hundo_kraid_green_hill_zone:
     dw $D872, $048F  ; Items
     dw $D8B4, $0246  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_kraid_red_tower:
     dw #preset_hundo_kraid_green_hill_zone ; Kraid: Green Hill Zone
@@ -520,8 +462,6 @@ preset_hundo_kraid_red_tower:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $03C0  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $0100  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09C2, $00B8  ; Health
     dw $09C6, $000E  ; Missiles
     dw $09CA, $0003  ; Supers
@@ -529,7 +469,6 @@ preset_hundo_kraid_red_tower:
     dw $0AFA, $00AB  ; Samus Y
     dw $D8B6, $0008  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_kraid_skree_boost:
     dw #preset_hundo_kraid_red_tower ; Kraid: Red Tower
@@ -542,11 +481,9 @@ preset_hundo_kraid_skree_boost:
     dw $0915, $091A  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $06D3  ; Layer 2 Y position
-    dw $0923, $FC00  ; BG2 Y offset
     dw $0AF6, $0066  ; Samus X
     dw $0AFA, $098B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_hundo_kraid_kraid_entry:
     dw #preset_hundo_kraid_skree_boost ; Kraid: Skree Boost
@@ -556,7 +493,6 @@ preset_hundo_kraid_kraid_entry:
     dw $0913, $B000  ; Screen subpixel Y position
     dw $0915, $0100  ; Screen Y position in pixels
     dw $0919, $0100  ; Layer 2 Y position
-    dw $0923, $FF00  ; BG2 Y offset
     dw $09A6, $1004  ; Beams
     dw $09A8, $1004  ; Beams
     dw $09C2, $00AF  ; Health
@@ -566,7 +502,6 @@ preset_hundo_kraid_kraid_entry:
     dw $D874, $0404  ; Items
     dw $D8B6, $8008  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_kraid_kraid_kihunter_room:
     dw #preset_hundo_kraid_kraid_entry ; Kraid: Kraid Entry
@@ -576,7 +511,6 @@ preset_hundo_kraid_kraid_kihunter_room:
     dw $0911, $0100  ; Screen X position in pixels
     dw $0913, $3000  ; Screen subpixel Y position
     dw $0917, $00C0  ; Layer 2 X position
-    dw $0923, $0000  ; BG2 Y offset
     dw $09C2, $00A5  ; Health
     dw $09CA, $0000  ; Supers
     dw $0A1C, $0027  ; Samus position/state
@@ -584,7 +518,6 @@ preset_hundo_kraid_kraid_kihunter_room:
     dw $0AF6, $016B  ; Samus X
     dw $0AFA, $0190  ; Samus Y
     dw #$FFFF
-.after
 
 preset_hundo_kraid_kraid:
     dw #preset_hundo_kraid_kraid_kihunter_room ; Kraid: Kraid Kihunter Room
@@ -602,7 +535,6 @@ preset_hundo_kraid_kraid:
     dw $0AF6, $01CC  ; Samus X
     dw $D8B8, $0024  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_kraid_leaving_varia:
     dw #preset_hundo_kraid_kraid ; Kraid: Kraid
@@ -615,7 +547,6 @@ preset_hundo_kraid_leaving_varia:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0923, $0000  ; BG2 Y offset
     dw $09A2, $1005  ; Equipped Items
     dw $09A4, $1005  ; Collected Items
     dw $09C2, $00C7  ; Health
@@ -630,7 +561,6 @@ preset_hundo_kraid_leaving_varia:
     dw $D876, $0001  ; Items
     dw $D8B8, $0064  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_kraid_leaving_kraid_hallway:
     dw #preset_hundo_kraid_leaving_varia ; Kraid: Leaving Varia
@@ -638,7 +568,6 @@ preset_hundo_kraid_leaving_kraid_hallway:
     dw $079B, $A521  ; MDB
     dw $090F, $3000  ; Screen subpixel X position
     dw $0913, $4000  ; Screen subpixel Y position
-    dw $0921, $FA00  ; BG2 X offset
     dw $09C2, $00BF  ; Health
     dw $09C6, $000F  ; Missiles
     dw $09CA, $0005  ; Supers
@@ -648,7 +577,6 @@ preset_hundo_kraid_leaving_kraid_hallway:
     dw $0AFA, $00AB  ; Samus Y
     dw $D8B8, $00EC  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_kraid_leaving_kraid_etank:
     dw #preset_hundo_kraid_leaving_kraid_hallway ; Kraid: Leaving Kraid Hallway
@@ -658,7 +586,6 @@ preset_hundo_kraid_leaving_kraid_etank:
     dw $07F5, $0005  ; Music Track
     dw $090F, $2000  ; Screen subpixel X position
     dw $0913, $1C00  ; Screen subpixel Y position
-    dw $0921, $FF00  ; BG2 X offset
     dw $09C2, $012B  ; Health
     dw $09C4, $012B  ; Max health
     dw $09D6, $0014  ; Reserves
@@ -669,7 +596,6 @@ preset_hundo_kraid_leaving_kraid_etank:
     dw $D874, $0C04  ; Items
     dw $D8B8, $00EF  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_speed_booster_business_center:
     dw #preset_hundo_kraid_leaving_kraid_etank ; Kraid: Leaving Kraid E-Tank
@@ -680,8 +606,6 @@ preset_hundo_speed_booster_business_center:
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $0238  ; Screen Y position in pixels
     dw $0919, $01AA  ; Layer 2 Y position
-    dw $0921, $0000  ; BG2 X offset
-    dw $0923, $00E0  ; BG2 Y offset
     dw $09C6, $0011  ; Missiles
     dw $09CA, $0004  ; Supers
     dw $09D6, $0018  ; Reserves
@@ -690,7 +614,6 @@ preset_hundo_speed_booster_business_center:
     dw $0AF6, $0080  ; Samus X
     dw $0AFA, $02A8  ; Samus Y
     dw #$FFFF
-.after
 
 preset_hundo_speed_booster_hijump:
     dw #preset_hundo_speed_booster_business_center ; Speed Booster: Business Center
@@ -705,7 +628,6 @@ preset_hundo_speed_booster_hijump:
     dw $0AFA, $058B  ; Samus Y
     dw $D8B8, $20EF  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_speed_booster_business_center_climb:
     dw #preset_hundo_speed_booster_hijump ; Speed Booster: Hi-Jump
@@ -717,8 +639,6 @@ preset_hundo_speed_booster_business_center_climb:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $00C0  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $0100  ; BG2 X offset
-    dw $0923, $FF00  ; BG2 Y offset
     dw $09A2, $1105  ; Equipped Items
     dw $09A4, $1105  ; Collected Items
     dw $09C2, $018F  ; Health
@@ -732,7 +652,6 @@ preset_hundo_speed_booster_business_center_climb:
     dw $D876, $01A1  ; Items
     dw $D8BA, $0001  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_speed_booster_cathedral_entrance:
     dw #preset_hundo_speed_booster_business_center_climb ; Speed Booster: Business Center Climb
@@ -744,11 +663,9 @@ preset_hundo_speed_booster_cathedral_entrance:
     dw $0915, $02F6  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0238  ; Layer 2 Y position
-    dw $0923, $FB00  ; BG2 Y offset
     dw $0AF6, $00AB  ; Samus X
     dw $0AFA, $038B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_hundo_speed_booster_cathedral:
     dw #preset_hundo_speed_booster_cathedral_entrance ; Speed Booster: Cathedral Entrance
@@ -760,14 +677,12 @@ preset_hundo_speed_booster_cathedral:
     dw $0915, $0001  ; Screen Y position in pixels
     dw $0917, $0200  ; Layer 2 X position
     dw $0919, $0001  ; Layer 2 Y position
-    dw $0923, $0000  ; BG2 Y offset
     dw $09CA, $0002  ; Supers
     dw $09D6, $0022  ; Reserves
     dw $0AF6, $02A4  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw $D8B8, $24EF  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_speed_booster_rising_tide:
     dw #preset_hundo_speed_booster_cathedral ; Speed Booster: Cathedral
@@ -786,7 +701,6 @@ preset_hundo_speed_booster_rising_tide:
     dw $D876, $01A3  ; Items
     dw $D8B8, $26EF  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_speed_booster_bubble_mountain:
     dw #preset_hundo_speed_booster_rising_tide ; Speed Booster: Rising Tide
@@ -802,7 +716,6 @@ preset_hundo_speed_booster_bubble_mountain:
     dw $0AF6, $04B0  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_hundo_speed_booster_bat_cave:
     dw #preset_hundo_speed_booster_bubble_mountain ; Speed Booster: Bubble Mountain
@@ -814,14 +727,12 @@ preset_hundo_speed_booster_bat_cave:
     dw $0915, $0003  ; Screen Y position in pixels
     dw $0917, $00C0  ; Layer 2 X position
     dw $0919, $0002  ; Layer 2 Y position
-    dw $0923, $FE00  ; BG2 Y offset
     dw $09C2, $0178  ; Health
     dw $09C6, $001B  ; Missiles
     dw $09CA, $0002  ; Supers
     dw $0AF6, $01B8  ; Samus X
     dw $D8BA, $0011  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_speed_booster_leaving_speed_booster:
     dw #preset_hundo_speed_booster_bat_cave ; Speed Booster: Bat Cave
@@ -834,7 +745,6 @@ preset_hundo_speed_booster_leaving_speed_booster:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0923, $0000  ; BG2 Y offset
     dw $09A2, $3105  ; Equipped Items
     dw $09A4, $3105  ; Collected Items
     dw $09C2, $018F  ; Health
@@ -848,7 +758,6 @@ preset_hundo_speed_booster_leaving_speed_booster:
     dw $D878, $0006  ; Items
     dw $D8BA, $0031  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_ice_beam_single_chamber:
     dw #preset_hundo_speed_booster_leaving_speed_booster ; Speed Booster: Leaving Speed Booster
@@ -861,7 +770,6 @@ preset_hundo_ice_beam_single_chamber:
     dw $0915, $0104  ; Screen Y position in pixels
     dw $0917, $00C0  ; Layer 2 X position
     dw $0919, $00C3  ; Layer 2 Y position
-    dw $0921, $FE00  ; BG2 X offset
     dw $09C2, $018A  ; Health
     dw $09C6, $0020  ; Missiles
     dw $09CA, $0005  ; Supers
@@ -872,7 +780,6 @@ preset_hundo_ice_beam_single_chamber:
     dw $0AFA, $018B  ; Samus Y
     dw $D822, $0020  ; Events
     dw #$FFFF
-.after
 
 preset_hundo_ice_beam_double_chamber:
     dw #preset_hundo_ice_beam_single_chamber ; Ice Beam: Single Chamber
@@ -884,13 +791,11 @@ preset_hundo_ice_beam_double_chamber:
     dw $0915, $0126  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $00DC  ; Layer 2 Y position
-    dw $0921, $0100  ; BG2 X offset
     dw $09C2, $0171  ; Health
     dw $09CA, $0004  ; Supers
     dw $0AF6, $00B8  ; Samus X
     dw $D8BA, $0071  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_ice_beam_double_chamber_revisited:
     dw #preset_hundo_ice_beam_double_chamber ; Ice Beam: Double Chamber
@@ -913,7 +818,6 @@ preset_hundo_ice_beam_double_chamber_revisited:
     dw $D878, $001E  ; Items
     dw $D8BA, $00F1  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_ice_beam_bubble_mountain_revisited:
     dw #preset_hundo_ice_beam_double_chamber_revisited ; Ice Beam: Double Chamber Revisited
@@ -924,12 +828,9 @@ preset_hundo_ice_beam_bubble_mountain_revisited:
     dw $0913, $F800  ; Screen subpixel Y position
     dw $0915, $001B  ; Screen Y position in pixels
     dw $0919, $0014  ; Layer 2 Y position
-    dw $0921, $FF00  ; BG2 X offset
-    dw $0923, $FF00  ; BG2 Y offset
     dw $09C6, $0023  ; Missiles
     dw $0AF6, $008F  ; Samus X
     dw #$FFFF
-.after
 
 preset_hundo_ice_beam_business_center_climb_ice:
     dw #preset_hundo_ice_beam_bubble_mountain_revisited ; Ice Beam: Bubble Mountain Revisited
@@ -942,7 +843,6 @@ preset_hundo_ice_beam_business_center_climb_ice:
     dw $09CA, $0005  ; Supers
     dw $0AF6, $0040  ; Samus X
     dw #$FFFF
-.after
 
 preset_hundo_ice_beam_ice_beam_gate_room:
     dw #preset_hundo_ice_beam_business_center_climb_ice ; Ice Beam: Business Center Climb Ice
@@ -957,7 +857,6 @@ preset_hundo_ice_beam_ice_beam_gate_room:
     dw $0AFA, $038C  ; Samus Y
     dw $D8B8, $2EEF  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_ice_beam_ice_beam_snake_room:
     dw #preset_hundo_ice_beam_ice_beam_gate_room ; Ice Beam: Ice Beam Gate Room
@@ -971,7 +870,6 @@ preset_hundo_ice_beam_ice_beam_snake_room:
     dw $0AF6, $0030  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_hundo_ice_beam_ice_beam_snake_room_revisit:
     dw #preset_hundo_ice_beam_ice_beam_snake_room ; Ice Beam: Ice Beam Snake Room
@@ -986,7 +884,6 @@ preset_hundo_ice_beam_ice_beam_snake_room_revisit:
     dw $0AF6, $00BA  ; Samus X
     dw $D876, $01A7  ; Items
     dw #$FFFF
-.after
 
 preset_hundo_ice_beam_ice_beam_gate_room_escape:
     dw #preset_hundo_ice_beam_ice_beam_snake_room_revisit ; Ice Beam: Ice Beam Snake Room Revisit
@@ -1001,7 +898,6 @@ preset_hundo_ice_beam_ice_beam_gate_room_escape:
     dw $0AF6, $00C7  ; Samus X
     dw $0AFA, $028B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_hundo_ice_beam_business_center_elevator:
     dw #preset_hundo_ice_beam_ice_beam_gate_room_escape ; Ice Beam: Ice Beam Gate Room Escape
@@ -1014,7 +910,6 @@ preset_hundo_ice_beam_business_center_elevator:
     dw $0A1E, $0108  ; More position/state
     dw $0AF6, $042A  ; Samus X
     dw #$FFFF
-.after
 
 preset_hundo_phantoon_alpha_spark:
     dw #preset_hundo_ice_beam_business_center_elevator ; Ice Beam: Business Center Elevator
@@ -1031,7 +926,6 @@ preset_hundo_phantoon_alpha_spark:
     dw $0AF6, $0030  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_hundo_phantoon_red_tower_revisit:
     dw #preset_hundo_phantoon_alpha_spark ; Phantoon: Alpha Spark
@@ -1049,7 +943,6 @@ preset_hundo_phantoon_red_tower_revisit:
     dw $0AFA, $007A  ; Samus Y
     dw $0B3F, $0004  ; Blue suit
     dw #$FFFF
-.after
 
 preset_hundo_phantoon_hellway:
     dw #preset_hundo_phantoon_red_tower_revisit ; Phantoon: Red Tower Revisit
@@ -1066,7 +959,6 @@ preset_hundo_phantoon_hellway:
     dw $0AFA, $008B  ; Samus Y
     dw $0B3F, $0000  ; Blue suit
     dw #$FFFF
-.after
 
 preset_hundo_phantoon_leaving_alpha_pbs:
     dw #preset_hundo_phantoon_hellway ; Phantoon: Hellway
@@ -1089,7 +981,6 @@ preset_hundo_phantoon_leaving_alpha_pbs:
     dw $D874, $0F04  ; Items
     dw $D8B6, $A008  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_phantoon_kihunter_room:
     dw #preset_hundo_phantoon_leaving_alpha_pbs ; Phantoon: Leaving Alpha PBs
@@ -1110,7 +1001,6 @@ preset_hundo_phantoon_kihunter_room:
     dw $D8B2, $2C01  ; Doors
     dw $D8B6, $E808  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_phantoon_ocean_fly:
     dw #preset_hundo_phantoon_kihunter_room ; Phantoon: Kihunter Room
@@ -1129,7 +1019,6 @@ preset_hundo_phantoon_ocean_fly:
     dw $0AFA, $00BB  ; Samus Y
     dw $D8B0, $2000  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_phantoon_phantoon_2:
     dw #preset_hundo_phantoon_ocean_fly ; Phantoon: Ocean Fly
@@ -1140,7 +1029,6 @@ preset_hundo_phantoon_phantoon_2:
     dw $0911, $01D0  ; Screen X position in pixels
     dw $0913, $E800  ; Screen subpixel Y position
     dw $0917, $015C  ; Layer 2 X position
-    dw $0921, $017A  ; BG2 X offset
     dw $09C2, $008F  ; Health
     dw $09C6, $0032  ; Missiles
     dw $09C8, $0037  ; Max missiles
@@ -1156,7 +1044,6 @@ preset_hundo_phantoon_phantoon_2:
     dw $D8B0, $3000  ; Doors
     dw $D8C0, $0010  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_gravity_ws_shaft_up_1:
     dw #preset_hundo_phantoon_phantoon_2 ; Phantoon: Phantoon
@@ -1176,7 +1063,6 @@ preset_hundo_gravity_ws_shaft_up_1:
     dw $D82A, $0100  ; Bosses
     dw $D8C0, $0070  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_gravity_ws_right_supers:
     dw #preset_hundo_gravity_ws_shaft_up_1 ; Gravity: WS Shaft Up 1
@@ -1193,7 +1079,6 @@ preset_hundo_gravity_ws_right_supers:
     dw $0AFA, $0690  ; Samus Y
     dw $D8C0, $0074  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_gravity_spiky_room_of_death:
     dw #preset_hundo_gravity_ws_right_supers ; Gravity: WS Right Supers
@@ -1213,7 +1098,6 @@ preset_hundo_gravity_spiky_room_of_death:
     dw $0AFA, $04E6  ; Samus Y
     dw $D880, $0061  ; Items
     dw #$FFFF
-.after
 
 preset_hundo_gravity_ws_etank:
     dw #preset_hundo_gravity_spiky_room_of_death ; Gravity: Spiky Room of Death
@@ -1231,7 +1115,6 @@ preset_hundo_gravity_ws_etank:
     dw $0AFA, $016B  ; Samus Y
     dw $D8C0, $007C  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_gravity_spiky_room_of_death_revisit:
     dw #preset_hundo_gravity_ws_etank ; Gravity: WS E-Tank
@@ -1252,7 +1135,6 @@ preset_hundo_gravity_spiky_room_of_death_revisit:
     dw $D880, $0071  ; Items
     dw $D8C0, $087C  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_gravity_ws_shaft_up_2:
     dw #preset_hundo_gravity_spiky_room_of_death_revisit ; Gravity: Spiky Room of Death Revisit
@@ -1269,7 +1151,6 @@ preset_hundo_gravity_ws_shaft_up_2:
     dw $0AF6, $004E  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_hundo_gravity_attic:
     dw #preset_hundo_gravity_ws_shaft_up_2 ; Gravity: WS Shaft Up 2
@@ -1285,7 +1166,6 @@ preset_hundo_gravity_attic:
     dw $0AF6, $0449  ; Samus X
     dw $0AFA, $006B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_hundo_gravity_ws_robot_missiles:
     dw #preset_hundo_gravity_attic ; Gravity: Attic
@@ -1305,7 +1185,6 @@ preset_hundo_gravity_ws_robot_missiles:
     dw $0B3F, $0104  ; Blue suit
     dw $D8C0, $0B7C  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_gravity_attic_revisit:
     dw #preset_hundo_gravity_ws_robot_missiles ; Gravity: WS Robot Missiles
@@ -1325,7 +1204,6 @@ preset_hundo_gravity_attic_revisit:
     dw $0B3F, $0000  ; Blue suit
     dw $D880, $0079  ; Items
     dw #$FFFF
-.after
 
 preset_hundo_gravity_sky_missiles:
     dw #preset_hundo_gravity_attic_revisit ; Gravity: Attic Revisit
@@ -1339,7 +1217,6 @@ preset_hundo_gravity_sky_missiles:
     dw $09CA, $0007  ; Supers
     dw $0AF6, $003C  ; Samus X
     dw #$FFFF
-.after
 
 preset_hundo_gravity_bowling:
     dw #preset_hundo_gravity_sky_missiles ; Gravity: Sky Missiles
@@ -1362,7 +1239,6 @@ preset_hundo_gravity_bowling:
     dw $0B3F, $0001  ; Blue suit
     dw $D870, $819C  ; Items
     dw #$FFFF
-.after
 
 preset_hundo_gravity_leaving_gravity:
     dw #preset_hundo_gravity_bowling ; Gravity: Bowling
@@ -1386,7 +1262,6 @@ preset_hundo_gravity_leaving_gravity:
     dw $0B3F, $0000  ; Blue suit
     dw $D880, $00FF  ; Items
     dw #$FFFF
-.after
 
 preset_hundo_brinstar_cleanup_crateria_pbs:
     dw #preset_hundo_gravity_leaving_gravity ; Gravity: Leaving Gravity
@@ -1404,7 +1279,6 @@ preset_hundo_brinstar_cleanup_crateria_pbs:
     dw $0B3F, $0003  ; Blue suit
     dw $D870, $819E  ; Items
     dw #$FFFF
-.after
 
 preset_hundo_brinstar_cleanup_ship_room:
     dw #preset_hundo_brinstar_cleanup_crateria_pbs ; Brinstar Cleanup: Crateria PBs
@@ -1423,7 +1297,6 @@ preset_hundo_brinstar_cleanup_ship_room:
     dw $D870, $819F  ; Items
     dw $D8B0, $3002  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_brinstar_cleanup_gauntlet_etank:
     dw #preset_hundo_brinstar_cleanup_ship_room ; Brinstar Cleanup: Ship Room
@@ -1439,7 +1312,6 @@ preset_hundo_brinstar_cleanup_gauntlet_etank:
     dw $0A1C, $000A  ; Samus position/state
     dw $0AF6, $0074  ; Samus X
     dw #$FFFF
-.after
 
 preset_hundo_brinstar_cleanup_green_pirates_shaft:
     dw #preset_hundo_brinstar_cleanup_gauntlet_etank ; Brinstar Cleanup: Gauntlet E-Tank
@@ -1454,7 +1326,6 @@ preset_hundo_brinstar_cleanup_green_pirates_shaft:
     dw $0AF6, $002B  ; Samus X
     dw $D870, $81BF  ; Items
     dw #$FFFF
-.after
 
 preset_hundo_brinstar_cleanup_green_shaft_revisit:
     dw #preset_hundo_brinstar_cleanup_green_pirates_shaft ; Brinstar Cleanup: Green Pirates Shaft
@@ -1470,7 +1341,6 @@ preset_hundo_brinstar_cleanup_green_shaft_revisit:
     dw $0AF6, $0088  ; Samus X
     dw $D870, $87BF  ; Items
     dw #$FFFF
-.after
 
 preset_hundo_brinstar_cleanup_green_brinstar_beetoms:
     dw #preset_hundo_brinstar_cleanup_green_shaft_revisit ; Brinstar Cleanup: Green Shaft Revisit
@@ -1487,7 +1357,6 @@ preset_hundo_brinstar_cleanup_green_brinstar_beetoms:
     dw $0AF6, $0032  ; Samus X
     dw $0AFA, $0A8B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_hundo_brinstar_cleanup_etecoon_energy_tank_room:
     dw #preset_hundo_brinstar_cleanup_green_brinstar_beetoms ; Brinstar Cleanup: Green Brinstar Beetoms
@@ -1508,7 +1377,6 @@ preset_hundo_brinstar_cleanup_etecoon_energy_tank_room:
     dw $D872, $848F  ; Items
     dw $D8B6, $E818  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_brinstar_cleanup_etecoon_room:
     dw #preset_hundo_brinstar_cleanup_etecoon_energy_tank_room ; Brinstar Cleanup: Etecoon Energy Tank Room
@@ -1524,7 +1392,6 @@ preset_hundo_brinstar_cleanup_etecoon_room:
     dw $0AFA, $018B  ; Samus Y
     dw $D872, $C48F  ; Items
     dw #$FFFF
-.after
 
 preset_hundo_brinstar_cleanup_dachora_room_revisit:
     dw #preset_hundo_brinstar_cleanup_etecoon_room ; Brinstar Cleanup: Etecoon Room
@@ -1535,8 +1402,6 @@ preset_hundo_brinstar_cleanup_dachora_room_revisit:
     dw $0915, $061F  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0497  ; Layer 2 Y position
-    dw $0921, $0000  ; BG2 X offset
-    dw $0923, $0477  ; BG2 Y offset
     dw $09C2, $028F  ; Health
     dw $09CE, $000F  ; Pbs
     dw $09D0, $0014  ; Max pbs
@@ -1546,7 +1411,6 @@ preset_hundo_brinstar_cleanup_dachora_room_revisit:
     dw $0AFA, $0690  ; Samus Y
     dw $D870, $A7BF  ; Items
     dw #$FFFF
-.after
 
 preset_hundo_brinstar_cleanup_big_pink_revisit:
     dw #preset_hundo_brinstar_cleanup_dachora_room_revisit ; Brinstar Cleanup: Dachora Room Revisit
@@ -1557,14 +1421,11 @@ preset_hundo_brinstar_cleanup_big_pink_revisit:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $03F7  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $03B1  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $0A1C, $000B  ; Samus position/state
     dw $0A1E, $0108  ; More position/state
     dw $0AF6, $05AA  ; Samus X
     dw $0AFA, $00AB  ; Samus Y
     dw #$FFFF
-.after
 
 preset_hundo_brinstar_cleanup_mission_impossible_pbs:
     dw #preset_hundo_brinstar_cleanup_big_pink_revisit ; Brinstar Cleanup: Big Pink Revisit
@@ -1586,7 +1447,6 @@ preset_hundo_brinstar_cleanup_mission_impossible_pbs:
     dw $D872, $C4AF  ; Items
     dw $D8B4, $0346  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_brinstar_cleanup_pink_brinstar_etank:
     dw #preset_hundo_brinstar_cleanup_mission_impossible_pbs ; Brinstar Cleanup: Mission Impossible PBs
@@ -1608,7 +1468,6 @@ preset_hundo_brinstar_cleanup_pink_brinstar_etank:
     dw $D872, $C5AF  ; Items
     dw $D8B4, $8346  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_brinstar_cleanup_spore_spawn_supers:
     dw #preset_hundo_brinstar_cleanup_pink_brinstar_etank ; Brinstar Cleanup: Pink Brinstar E-Tank
@@ -1630,7 +1489,6 @@ preset_hundo_brinstar_cleanup_spore_spawn_supers:
     dw $D874, $0F8C  ; Items
     dw $D8B6, $E8D8  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_brinstar_cleanup_waterway_etank:
     dw #preset_hundo_brinstar_cleanup_spore_spawn_supers ; Brinstar Cleanup: Spore Spawn Supers
@@ -1654,7 +1512,6 @@ preset_hundo_brinstar_cleanup_waterway_etank:
     dw $D8B4, $8B46  ; Doors
     dw $D8B6, $E8F8  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_mama_turtle_etank_big_pink_charge_escape:
     dw #preset_hundo_brinstar_cleanup_waterway_etank ; Brinstar Cleanup: Waterway E-Tank
@@ -1672,7 +1529,6 @@ preset_hundo_mama_turtle_etank_big_pink_charge_escape:
     dw $0AF6, $0048  ; Samus X
     dw $D874, $0F8E  ; Items
     dw #$FFFF
-.after
 
 preset_hundo_mama_turtle_etank_green_hills_revisit:
     dw #preset_hundo_mama_turtle_etank_big_pink_charge_escape ; Mama Turtle E-Tank: Big Pink Charge Escape
@@ -1686,7 +1542,6 @@ preset_hundo_mama_turtle_etank_green_hills_revisit:
     dw $0AF6, $0352  ; Samus X
     dw $0AFA, $068B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_hundo_mama_turtle_etank_blockbuster:
     dw #preset_hundo_mama_turtle_etank_green_hills_revisit ; Mama Turtle E-Tank: Green Hills Revisit
@@ -1706,7 +1561,6 @@ preset_hundo_mama_turtle_etank_blockbuster:
     dw $D872, $C7EF  ; Items
     dw $D8B6, $E8F9  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_mama_turtle_etank_main_street:
     dw #preset_hundo_mama_turtle_etank_blockbuster ; Mama Turtle E-Tank: Blockbuster
@@ -1727,7 +1581,6 @@ preset_hundo_mama_turtle_etank_main_street:
     dw $0AFA, $07A8  ; Samus Y
     dw $D820, $0801  ; Events
     dw #$FFFF
-.after
 
 preset_hundo_mama_turtle_etank_fish_tank:
     dw #preset_hundo_mama_turtle_etank_main_street ; Mama Turtle E-Tank: Main Street
@@ -1744,7 +1597,6 @@ preset_hundo_mama_turtle_etank_fish_tank:
     dw $0AFA, $068B  ; Samus Y
     dw $D880, $01FF  ; Items
     dw #$FFFF
-.after
 
 preset_hundo_mama_turtle_etank_mama_turtle_etank_2:
     dw #preset_hundo_mama_turtle_etank_fish_tank ; Mama Turtle E-Tank: Fish Tank
@@ -1760,7 +1612,6 @@ preset_hundo_mama_turtle_etank_mama_turtle_etank_2:
     dw $0AFA, $028B  ; Samus Y
     dw $0B3F, $0001  ; Blue suit
     dw #$FFFF
-.after
 
 preset_hundo_maridia_cleanup_fish_tank_revisit:
     dw #preset_hundo_mama_turtle_etank_mama_turtle_etank_2 ; Mama Turtle E-Tank: Mama Turtle E-Tank
@@ -1783,7 +1634,6 @@ preset_hundo_maridia_cleanup_fish_tank_revisit:
     dw $D880, $0DFF  ; Items
     dw $D8C0, $4B7C  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_maridia_cleanup_crab_supers:
     dw #preset_hundo_maridia_cleanup_fish_tank_revisit ; Maridia Cleanup: Fish Tank Revisit
@@ -1796,7 +1646,6 @@ preset_hundo_maridia_cleanup_crab_supers:
     dw $0AF6, $0180  ; Samus X
     dw $0AFA, $03BB  ; Samus Y
     dw #$FFFF
-.after
 
 preset_hundo_maridia_cleanup_mt_everest:
     dw #preset_hundo_maridia_cleanup_crab_supers ; Maridia Cleanup: Crab Supers
@@ -1814,7 +1663,6 @@ preset_hundo_maridia_cleanup_mt_everest:
     dw $0AFA, $0299  ; Samus Y
     dw $D880, $0FFF  ; Items
     dw #$FFFF
-.after
 
 preset_hundo_maridia_cleanup_beach_missiles:
     dw #preset_hundo_maridia_cleanup_mt_everest ; Maridia Cleanup: Mt Everest
@@ -1830,7 +1678,6 @@ preset_hundo_maridia_cleanup_beach_missiles:
     dw $0AF6, $0079  ; Samus X
     dw $0AFA, $005B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_hundo_maridia_cleanup_maridia_bug_room:
     dw #preset_hundo_maridia_cleanup_beach_missiles ; Maridia Cleanup: Beach Missiles
@@ -1848,7 +1695,6 @@ preset_hundo_maridia_cleanup_maridia_bug_room:
     dw $0AFA, $018B  ; Samus Y
     dw $D880, $4FFF  ; Items
     dw #$FFFF
-.after
 
 preset_hundo_maridia_cleanup_watering_hole:
     dw #preset_hundo_maridia_cleanup_maridia_bug_room ; Maridia Cleanup: Maridia Bug Room
@@ -1860,7 +1706,6 @@ preset_hundo_maridia_cleanup_watering_hole:
     dw $0AF6, $005F  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_hundo_maridia_cleanup_maridia_bug_room_revisit:
     dw #preset_hundo_maridia_cleanup_watering_hole ; Maridia Cleanup: Watering Hole
@@ -1880,7 +1725,6 @@ preset_hundo_maridia_cleanup_maridia_bug_room_revisit:
     dw $0AF6, $012C  ; Samus X
     dw $D880, $7FFF  ; Items
     dw #$FFFF
-.after
 
 preset_hundo_maridia_cleanup_beach_revisit:
     dw #preset_hundo_maridia_cleanup_maridia_bug_room_revisit ; Maridia Cleanup: Maridia Bug Room Revisit
@@ -1896,7 +1740,6 @@ preset_hundo_maridia_cleanup_beach_revisit:
     dw $0AF6, $03A2  ; Samus X
     dw $0AFA, $0183  ; Samus Y
     dw #$FFFF
-.after
 
 preset_hundo_draygon_aqueduct:
     dw #preset_hundo_maridia_cleanup_beach_revisit ; Maridia Cleanup: Beach Revisit
@@ -1913,7 +1756,6 @@ preset_hundo_draygon_aqueduct:
     dw $0AFA, $0390  ; Samus Y
     dw $D8C0, $CB7C  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_draygon_botwoon:
     dw #preset_hundo_draygon_aqueduct ; Draygon: Aqueduct
@@ -1932,7 +1774,6 @@ preset_hundo_draygon_botwoon:
     dw $0AFA, $0085  ; Samus Y
     dw $0B3F, $0104  ; Blue suit
     dw #$FFFF
-.after
 
 preset_hundo_draygon_full_halfie:
     dw #preset_hundo_draygon_botwoon ; Draygon: Botwoon
@@ -1953,7 +1794,6 @@ preset_hundo_draygon_full_halfie:
     dw $0B3F, $0000  ; Blue suit
     dw $D82C, $0002  ; Bosses
     dw #$FFFF
-.after
 
 preset_hundo_draygon_draygon_missiles:
     dw #preset_hundo_draygon_full_halfie ; Draygon: Full Halfie
@@ -1971,7 +1811,6 @@ preset_hundo_draygon_draygon_missiles:
     dw $0AFA, $018B  ; Samus Y
     dw $D8C2, $0400  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_draygon_draygon_2:
     dw #preset_hundo_draygon_draygon_missiles ; Draygon: Draygon Missiles
@@ -1991,7 +1830,6 @@ preset_hundo_draygon_draygon_2:
     dw $D882, $0080  ; Items
     dw $D8C2, $0C00  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_draygon_draygon_escape:
     dw #preset_hundo_draygon_draygon_2 ; Draygon: Draygon
@@ -2004,7 +1842,6 @@ preset_hundo_draygon_draygon_escape:
     dw $0913, $7800  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
-    dw $0921, $0000  ; BG2 X offset
     dw $09A2, $3325  ; Equipped Items
     dw $09A4, $3325  ; Collected Items
     dw $09C2, $0291  ; Health
@@ -2019,7 +1856,6 @@ preset_hundo_draygon_draygon_escape:
     dw $D882, $0480  ; Items
     dw $D8C2, $8C00  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_maridia_cleanup_2_aqueduct_revisit_1:
     dw #preset_hundo_draygon_draygon_escape ; Draygon: Draygon Escape
@@ -2031,7 +1867,6 @@ preset_hundo_maridia_cleanup_2_aqueduct_revisit_1:
     dw $0911, $0289  ; Screen X position in pixels
     dw $0913, $6000  ; Screen subpixel Y position
     dw $0917, $01E6  ; Layer 2 X position
-    dw $0921, $020A  ; BG2 X offset
     dw $09A2, $3324  ; Equipped Items
     dw $09A6, $1007  ; Beams
     dw $09C2, $044B  ; Health
@@ -2044,7 +1879,6 @@ preset_hundo_maridia_cleanup_2_aqueduct_revisit_1:
     dw $D882, $0580  ; Items
     dw $D8C2, $CC00  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_maridia_cleanup_2_right_sandpit:
     dw #preset_hundo_maridia_cleanup_2_aqueduct_revisit_1 ; Maridia Cleanup 2: Aqueduct Revisit 1
@@ -2060,7 +1894,6 @@ preset_hundo_maridia_cleanup_2_right_sandpit:
     dw $0AF6, $05B6  ; Samus X
     dw $0AFA, $02CB  ; Samus Y
     dw #$FFFF
-.after
 
 preset_hundo_maridia_cleanup_2_puyo_ice_clip_springball:
     dw #preset_hundo_maridia_cleanup_2_right_sandpit ; Maridia Cleanup 2: Right Sandpit
@@ -2080,7 +1913,6 @@ preset_hundo_maridia_cleanup_2_puyo_ice_clip_springball:
     dw $0AFA, $038B  ; Samus Y
     dw $D882, $058C  ; Items
     dw #$FFFF
-.after
 
 preset_hundo_maridia_cleanup_2_shaktool:
     dw #preset_hundo_maridia_cleanup_2_puyo_ice_clip_springball ; Maridia Cleanup 2: Puyo Ice Clip (Springball)
@@ -2095,7 +1927,6 @@ preset_hundo_maridia_cleanup_2_shaktool:
     dw $0AF6, $00D0  ; Samus X
     dw $0AFA, $018B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_hundo_maridia_cleanup_2_shaktool_revisit:
     dw #preset_hundo_maridia_cleanup_2_shaktool ; Maridia Cleanup 2: Shaktool
@@ -2115,7 +1946,6 @@ preset_hundo_maridia_cleanup_2_shaktool_revisit:
     dw $D820, $2801  ; Events
     dw $D882, $05CC  ; Items
     dw #$FFFF
-.after
 
 preset_hundo_maridia_cleanup_2_east_sand_hall:
     dw #preset_hundo_maridia_cleanup_2_shaktool_revisit ; Maridia Cleanup 2: Shaktool Revisit
@@ -2131,7 +1961,6 @@ preset_hundo_maridia_cleanup_2_east_sand_hall:
     dw $0AF6, $003D  ; Samus X
     dw $0AFA, $038B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_hundo_maridia_cleanup_2_kassiuz_room:
     dw #preset_hundo_maridia_cleanup_2_east_sand_hall ; Maridia Cleanup 2: East Sand Hall
@@ -2148,7 +1977,6 @@ preset_hundo_maridia_cleanup_2_kassiuz_room:
     dw $0AFA, $018B  ; Samus Y
     dw $D8C2, $CC28  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_maridia_cleanup_2_plasma:
     dw #preset_hundo_maridia_cleanup_2_kassiuz_room ; Maridia Cleanup 2: Kassiuz Room
@@ -2167,7 +1995,6 @@ preset_hundo_maridia_cleanup_2_plasma:
     dw $0AFA, $008B  ; Samus Y
     dw $0B3F, $0001  ; Blue suit
     dw #$FFFF
-.after
 
 preset_hundo_maridia_cleanup_2_kassiuz_room_revisit:
     dw #preset_hundo_maridia_cleanup_2_plasma ; Maridia Cleanup 2: Plasma
@@ -2186,7 +2013,6 @@ preset_hundo_maridia_cleanup_2_kassiuz_room_revisit:
     dw $D880, $FFFF  ; Items
     dw $D8C2, $CC2A  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_maridia_cleanup_2_plasma_spark_room_down:
     dw #preset_hundo_maridia_cleanup_2_kassiuz_room_revisit ; Maridia Cleanup 2: Kassiuz Room Revisit
@@ -2197,15 +2023,12 @@ preset_hundo_maridia_cleanup_2_plasma_spark_room_down:
     dw $0915, $031B  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0254  ; Layer 2 Y position
-    dw $0921, $0000  ; BG2 X offset
-    dw $0923, $0252  ; BG2 Y offset
     dw $09C2, $0310  ; Health
     dw $0A1C, $000A  ; Samus position/state
     dw $0A1E, $0104  ; More position/state
     dw $0AF6, $0035  ; Samus X
     dw $0AFA, $038B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_hundo_maridia_cleanup_2_cac_alley:
     dw #preset_hundo_maridia_cleanup_2_plasma_spark_room_down ; Maridia Cleanup 2: Plasma Spark Room Down
@@ -2217,14 +2040,11 @@ preset_hundo_maridia_cleanup_2_cac_alley:
     dw $0915, $0500  ; Screen Y position in pixels
     dw $0917, $012F  ; Layer 2 X position
     dw $0919, $0500  ; Layer 2 Y position
-    dw $0921, $0100  ; BG2 X offset
-    dw $0923, $0500  ; BG2 Y offset
     dw $0A1C, $0067  ; Samus position/state
     dw $0A1E, $0608  ; More position/state
     dw $0AF6, $01BB  ; Samus X
     dw $0AFA, $05B7  ; Samus Y
     dw #$FFFF
-.after
 
 preset_hundo_maridia_cleanup_2_aqueduct_revisit_2:
     dw #preset_hundo_maridia_cleanup_2_cac_alley ; Maridia Cleanup 2: Cac Alley
@@ -2243,7 +2063,6 @@ preset_hundo_maridia_cleanup_2_aqueduct_revisit_2:
     dw $0AFA, $028B  ; Samus Y
     dw $D8C2, $CCAA  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_maridia_cleanup_2_left_sandpit:
     dw #preset_hundo_maridia_cleanup_2_aqueduct_revisit_2 ; Maridia Cleanup 2: Aqueduct Revisit 2
@@ -2263,7 +2082,6 @@ preset_hundo_maridia_cleanup_2_left_sandpit:
     dw $0AFA, $02CB  ; Samus Y
     dw $D882, $05FC  ; Items
     dw #$FFFF
-.after
 
 preset_hundo_maridia_cleanup_2_thread_the_needle_room:
     dw #preset_hundo_maridia_cleanup_2_left_sandpit ; Maridia Cleanup 2: Left Sandpit
@@ -2282,7 +2100,6 @@ preset_hundo_maridia_cleanup_2_thread_the_needle_room:
     dw $0AFA, $018B  ; Samus Y
     dw $D882, $05FF  ; Items
     dw #$FFFF
-.after
 
 preset_hundo_golden_torizo_kraid_entrance_revisit:
     dw #preset_hundo_maridia_cleanup_2_thread_the_needle_room ; Maridia Cleanup 2: Thread the Needle Room
@@ -2297,7 +2114,6 @@ preset_hundo_golden_torizo_kraid_entrance_revisit:
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $005B  ; Samus X
     dw #$FFFF
-.after
 
 preset_hundo_golden_torizo_kraid_missiles:
     dw #preset_hundo_golden_torizo_kraid_entrance_revisit ; Golden Torizo: Kraid Entrance Revisit
@@ -2313,7 +2129,6 @@ preset_hundo_golden_torizo_kraid_missiles:
     dw $0AF6, $016E  ; Samus X
     dw $0AFA, $0190  ; Samus Y
     dw #$FFFF
-.after
 
 preset_hundo_golden_torizo_kraid_missiles_escape:
     dw #preset_hundo_golden_torizo_kraid_missiles ; Golden Torizo: Kraid Missiles
@@ -2331,7 +2146,6 @@ preset_hundo_golden_torizo_kraid_missiles_escape:
     dw $0AFA, $00AD  ; Samus Y
     dw $D874, $1F8E  ; Items
     dw #$FFFF
-.after
 
 preset_hundo_golden_torizo_ice_missiles:
     dw #preset_hundo_golden_torizo_kraid_missiles_escape ; Golden Torizo: Kraid Missiles Escape
@@ -2350,7 +2164,6 @@ preset_hundo_golden_torizo_ice_missiles:
     dw $0AF6, $002E  ; Samus X
     dw $0AFA, $0393  ; Samus Y
     dw #$FFFF
-.after
 
 preset_hundo_golden_torizo_croc_speedway:
     dw #preset_hundo_golden_torizo_ice_missiles ; Golden Torizo: Ice Missiles
@@ -2369,7 +2182,6 @@ preset_hundo_golden_torizo_croc_speedway:
     dw $0AFA, $038B  ; Samus Y
     dw $D876, $01AF  ; Items
     dw #$FFFF
-.after
 
 preset_hundo_golden_torizo_kronic_boost:
     dw #preset_hundo_golden_torizo_croc_speedway ; Golden Torizo: Croc Speedway
@@ -2383,7 +2195,6 @@ preset_hundo_golden_torizo_kronic_boost:
     dw $0AF6, $03C6  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_hundo_golden_torizo_blue_fireball:
     dw #preset_hundo_golden_torizo_kronic_boost ; Golden Torizo: Kronic Boost
@@ -2402,7 +2213,6 @@ preset_hundo_golden_torizo_blue_fireball:
     dw $0AFA, $0285  ; Samus Y
     dw $D8BA, $01F1  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_golden_torizo_golden_torizo_2:
     dw #preset_hundo_golden_torizo_blue_fireball ; Golden Torizo: Blue Fireball
@@ -2421,7 +2231,6 @@ preset_hundo_golden_torizo_golden_torizo_2:
     dw $0AFA, $008B  ; Samus Y
     dw $D820, $3801  ; Events
     dw #$FFFF
-.after
 
 preset_hundo_ridley_fast_ripper_room:
     dw #preset_hundo_golden_torizo_golden_torizo_2 ; Golden Torizo: Golden Torizo
@@ -2445,7 +2254,6 @@ preset_hundo_ridley_fast_ripper_room:
     dw $D878, $80DE  ; Items
     dw $D8BA, $03F1  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_ridley_writg:
     dw #preset_hundo_ridley_fast_ripper_room ; Ridley: Fast Ripper Room
@@ -2462,7 +2270,6 @@ preset_hundo_ridley_writg:
     dw $0A1C, $00A4  ; Samus position/state
     dw $0AF6, $03DB  ; Samus X
     dw #$FFFF
-.after
 
 preset_hundo_ridley_mickey_mouse_missiles:
     dw #preset_hundo_ridley_writg ; Ridley: WRITG
@@ -2476,7 +2283,6 @@ preset_hundo_ridley_mickey_mouse_missiles:
     dw $0AF6, $0071  ; Samus X
     dw $0AFA, $017B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_hundo_ridley_amphitheatre:
     dw #preset_hundo_ridley_mickey_mouse_missiles ; Ridley: Mickey Mouse Missiles
@@ -2493,7 +2299,6 @@ preset_hundo_ridley_amphitheatre:
     dw $0AFA, $018B  ; Samus Y
     dw $D878, $82DE  ; Items
     dw #$FFFF
-.after
 
 preset_hundo_ridley_kihunter_shaft_down:
     dw #preset_hundo_ridley_amphitheatre ; Ridley: Amphitheatre
@@ -2508,7 +2313,6 @@ preset_hundo_ridley_kihunter_shaft_down:
     dw $0AF6, $02DE  ; Samus X
     dw $0AFA, $00B4  ; Samus Y
     dw #$FFFF
-.after
 
 preset_hundo_ridley_wasteland_down:
     dw #preset_hundo_ridley_kihunter_shaft_down ; Ridley: Kihunter Shaft Down
@@ -2525,7 +2329,6 @@ preset_hundo_ridley_wasteland_down:
     dw $0AFA, $0489  ; Samus Y
     dw $D8BA, $43F1  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_ridley_ninja_pirates:
     dw #preset_hundo_ridley_wasteland_down ; Ridley: Wasteland Down
@@ -2537,8 +2340,6 @@ preset_hundo_ridley_ninja_pirates:
     dw $0915, $021B  ; Screen Y position in pixels
     dw $0917, $00C0  ; Layer 2 X position
     dw $0919, $0194  ; Layer 2 Y position
-    dw $0921, $00C0  ; BG2 X offset
-    dw $0923, $0195  ; BG2 Y offset
     dw $09C2, $0191  ; Health
     dw $09CA, $0014  ; Supers
     dw $09CE, $0011  ; Pbs
@@ -2550,7 +2351,6 @@ preset_hundo_ridley_ninja_pirates:
     dw $D878, $92DE  ; Items
     dw $D8BA, $C3F1  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_ridley_plowerhouse_room:
     dw #preset_hundo_ridley_ninja_pirates ; Ridley: Ninja Pirates
@@ -2562,15 +2362,12 @@ preset_hundo_ridley_plowerhouse_room:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $00ED  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $011C  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09C2, $0213  ; Health
     dw $09CA, $0018  ; Supers
     dw $0AF6, $01DC  ; Samus X
     dw $0AFA, $00BB  ; Samus Y
     dw $D8BC, $0001  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_ridley_ridley_2:
     dw #preset_hundo_ridley_plowerhouse_room ; Ridley: Plowerhouse Room
@@ -2587,7 +2384,6 @@ preset_hundo_ridley_ridley_2:
     dw $0AFA, $0095  ; Samus Y
     dw $D8BA, $D3F1  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_ridley_ridley_escape:
     dw #preset_hundo_ridley_ridley_2 ; Ridley: Ridley
@@ -2605,7 +2401,6 @@ preset_hundo_ridley_ridley_escape:
     dw $0AFA, $019B  ; Samus Y
     dw $D82A, $0105  ; Bosses
     dw #$FFFF
-.after
 
 preset_hundo_ridley_wasteland_up:
     dw #preset_hundo_ridley_ridley_escape ; Ridley: Ridley Escape
@@ -2619,7 +2414,6 @@ preset_hundo_ridley_wasteland_up:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0180  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $0180  ; BG2 X offset
     dw $09C2, $048E  ; Health
     dw $09C4, $04AF  ; Max health
     dw $0A1C, $0001  ; Samus position/state
@@ -2630,7 +2424,6 @@ preset_hundo_ridley_wasteland_up:
     dw $D878, $D2DE  ; Items
     dw $D8BA, $DFF1  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_ridley_kihunter_shaft_up:
     dw #preset_hundo_ridley_wasteland_up ; Ridley: Wasteland Up
@@ -2639,7 +2432,6 @@ preset_hundo_ridley_kihunter_shaft_up:
     dw $0911, $0500  ; Screen X position in pixels
     dw $0913, $EC02  ; Screen subpixel Y position
     dw $0917, $03C0  ; Layer 2 X position
-    dw $0921, $03C0  ; BG2 X offset
     dw $09C2, $03F3  ; Health
     dw $09CE, $0011  ; Pbs
     dw $0A1C, $000A  ; Samus position/state
@@ -2648,7 +2440,6 @@ preset_hundo_ridley_kihunter_shaft_up:
     dw $0AFA, $005B  ; Samus Y
     dw $0B3F, $0000  ; Blue suit
     dw #$FFFF
-.after
 
 preset_hundo_ridley_firefleas_room:
     dw #preset_hundo_ridley_kihunter_shaft_up ; Ridley: Kihunter Shaft Up
@@ -2663,7 +2454,6 @@ preset_hundo_ridley_firefleas_room:
     dw $0AF6, $00A2  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_hundo_ridley_hotarubi_special:
     dw #preset_hundo_ridley_firefleas_room ; Ridley: Firefleas Room
@@ -2681,7 +2471,6 @@ preset_hundo_ridley_hotarubi_special:
     dw $0AF6, $016B  ; Samus X
     dw $D87A, $0001  ; Items
     dw #$FFFF
-.after
 
 preset_hundo_ridley_3_muskateers:
     dw #preset_hundo_ridley_hotarubi_special ; Ridley: Hotarubi Special
@@ -2697,7 +2486,6 @@ preset_hundo_ridley_3_muskateers:
     dw $0AF6, $0071  ; Samus X
     dw $D878, $DEDE  ; Items
     dw #$FFFF
-.after
 
 preset_hundo_crocomire_bubble_mountain_revisit:
     dw #preset_hundo_ridley_3_muskateers ; Ridley: 3 Muskateers
@@ -2714,7 +2502,6 @@ preset_hundo_crocomire_bubble_mountain_revisit:
     dw $0AF6, $0078  ; Samus X
     dw $D878, $FEDE  ; Items
     dw #$FFFF
-.after
 
 preset_hundo_crocomire_norfair_reserve:
     dw #preset_hundo_crocomire_bubble_mountain_revisit ; Crocomire: Bubble Mountain Revisit
@@ -2729,7 +2516,6 @@ preset_hundo_crocomire_norfair_reserve:
     dw $0AF6, $0044  ; Samus X
     dw $D8BA, $DFF9  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_crocomire_bubble_mountain_cleanup:
     dw #preset_hundo_crocomire_norfair_reserve ; Crocomire: Norfair Reserve
@@ -2749,7 +2535,6 @@ preset_hundo_crocomire_bubble_mountain_cleanup:
     dw $0AFA, $0090  ; Samus Y
     dw $D876, $E1AF  ; Items
     dw #$FFFF
-.after
 
 preset_hundo_crocomire_red_pirate_shaft:
     dw #preset_hundo_crocomire_bubble_mountain_cleanup ; Crocomire: Bubble Mountain Cleanup
@@ -2769,7 +2554,6 @@ preset_hundo_crocomire_red_pirate_shaft:
     dw $0AFA, $018B  ; Samus Y
     dw $D878, $FEDF  ; Items
     dw #$FFFF
-.after
 
 preset_hundo_crocomire_crocomire_2:
     dw #preset_hundo_crocomire_red_pirate_shaft ; Crocomire: Red Pirate Shaft
@@ -2787,7 +2571,6 @@ preset_hundo_crocomire_crocomire_2:
     dw $0AFA, $02DB  ; Samus Y
     dw $D8B8, $6EEF  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_crocomire_grapple_shaft_down:
     dw #preset_hundo_crocomire_crocomire_2 ; Crocomire: Crocomire
@@ -2812,7 +2595,6 @@ preset_hundo_crocomire_grapple_shaft_down:
     dw $D876, $E3BF  ; Items
     dw $D8BA, $DFFB  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_crocomire_grapple_shaft_up:
     dw #preset_hundo_crocomire_grapple_shaft_down ; Crocomire: Grapple Shaft Down
@@ -2831,7 +2613,6 @@ preset_hundo_crocomire_grapple_shaft_up:
     dw $0AFA, $028B  ; Samus Y
     dw $D876, $FBBF  ; Items
     dw #$FFFF
-.after
 
 preset_hundo_crocomire_crocomire_room_revisit:
     dw #preset_hundo_crocomire_grapple_shaft_up ; Crocomire: Grapple Shaft Up
@@ -2851,7 +2632,6 @@ preset_hundo_crocomire_crocomire_room_revisit:
     dw $D876, $FFBF  ; Items
     dw $D8BA, $DFFF  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_crocomire_croc_escape:
     dw #preset_hundo_crocomire_crocomire_room_revisit ; Crocomire: Crocomire Room Revisit
@@ -2869,7 +2649,6 @@ preset_hundo_crocomire_croc_escape:
     dw $0AFA, $00AB  ; Samus Y
     dw $D8B8, $EEEF  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_crocomire_business_center_climb_final:
     dw #preset_hundo_crocomire_croc_escape ; Crocomire: Croc Escape
@@ -2888,7 +2667,6 @@ preset_hundo_crocomire_business_center_climb_final:
     dw $0AFA, $008B  ; Samus Y
     dw $D876, $FFFF  ; Items
     dw #$FFFF
-.after
 
 preset_hundo_brinstar_cleanup_2_below_spazer:
     dw #preset_hundo_crocomire_business_center_climb_final ; Crocomire: Business Center Climb Final
@@ -2901,7 +2679,6 @@ preset_hundo_brinstar_cleanup_2_below_spazer:
     dw $0A1E, $0104  ; More position/state
     dw $0AF6, $00C7  ; Samus X
     dw #$FFFF
-.after
 
 preset_hundo_brinstar_cleanup_2_red_tower_xray:
     dw #preset_hundo_brinstar_cleanup_2_below_spazer ; Brinstar Cleanup: Below Spazer
@@ -2914,7 +2691,6 @@ preset_hundo_brinstar_cleanup_2_red_tower_xray:
     dw $0AF6, $004A  ; Samus X
     dw $0AFA, $0098  ; Samus Y
     dw #$FFFF
-.after
 
 preset_hundo_brinstar_cleanup_2_red_brinstar_firefleas:
     dw #preset_hundo_brinstar_cleanup_2_red_tower_xray ; Brinstar Cleanup: Red Tower X-Ray
@@ -2930,7 +2706,6 @@ preset_hundo_brinstar_cleanup_2_red_brinstar_firefleas:
     dw $0AFA, $068B  ; Samus Y
     dw $D8B6, $EAF9  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_brinstar_cleanup_2_red_brinstar_firefleas_2:
     dw #preset_hundo_brinstar_cleanup_2_red_brinstar_firefleas ; Brinstar Cleanup: Red Brinstar Firefleas
@@ -2953,7 +2728,6 @@ preset_hundo_brinstar_cleanup_2_red_brinstar_firefleas_2:
     dw $D874, $1FCE  ; Items
     dw $D8B6, $EEF9  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_brinstar_cleanup_2_reverse_slinky:
     dw #preset_hundo_brinstar_cleanup_2_red_brinstar_firefleas_2 ; Brinstar Cleanup: Red Brinstar Firefleas 2
@@ -2971,7 +2745,6 @@ preset_hundo_brinstar_cleanup_2_reverse_slinky:
     dw $0AF6, $0467  ; Samus X
     dw $0AFA, $004B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_hundo_brinstar_cleanup_2_retro_brinstar_hoppers:
     dw #preset_hundo_brinstar_cleanup_2_reverse_slinky ; Brinstar Cleanup: Reverse Slinky
@@ -2986,7 +2759,6 @@ preset_hundo_brinstar_cleanup_2_retro_brinstar_hoppers:
     dw $0AF6, $0155  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_hundo_brinstar_cleanup_2_retro_brinstar_etank:
     dw #preset_hundo_brinstar_cleanup_2_retro_brinstar_hoppers ; Brinstar Cleanup: Retro Brinstar Hoppers
@@ -3005,7 +2777,6 @@ preset_hundo_brinstar_cleanup_2_retro_brinstar_etank:
     dw $0AFA, $02BB  ; Samus Y
     dw $D872, $CFEF  ; Items
     dw #$FFFF
-.after
 
 preset_hundo_brinstar_cleanup_2_billy_mays:
     dw #preset_hundo_brinstar_cleanup_2_retro_brinstar_etank ; Brinstar Cleanup: Retro Brinstar E-Tank
@@ -3026,7 +2797,6 @@ preset_hundo_brinstar_cleanup_2_billy_mays:
     dw $D872, $EFEF  ; Items
     dw $D8B6, $EEFD  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_brinstar_cleanup_2_billy_mays_escape:
     dw #preset_hundo_brinstar_cleanup_2_billy_mays ; Brinstar Cleanup: Billy Mays
@@ -3043,7 +2813,6 @@ preset_hundo_brinstar_cleanup_2_billy_mays_escape:
     dw $0AF6, $00E0  ; Samus X
     dw $D874, $1FFE  ; Items
     dw #$FFFF
-.after
 
 preset_hundo_brinstar_cleanup_2_retro_brinstar_escape:
     dw #preset_hundo_brinstar_cleanup_2_billy_mays_escape ; Brinstar Cleanup: Billy Mays Escape
@@ -3063,7 +2832,6 @@ preset_hundo_brinstar_cleanup_2_retro_brinstar_escape:
     dw $0AFA, $02BB  ; Samus Y
     dw $D872, $FFEF  ; Items
     dw #$FFFF
-.after
 
 preset_hundo_brinstar_cleanup_2_pit_room_2:
     dw #preset_hundo_brinstar_cleanup_2_retro_brinstar_escape ; Brinstar Cleanup: Retro Brinstar Escape
@@ -3078,7 +2846,6 @@ preset_hundo_brinstar_cleanup_2_pit_room_2:
     dw $0AF6, $00EA  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_hundo_brinstar_cleanup_2_climb_supers:
     dw #preset_hundo_brinstar_cleanup_2_pit_room_2 ; Brinstar Cleanup: Pit Room
@@ -3092,7 +2859,6 @@ preset_hundo_brinstar_cleanup_2_climb_supers:
     dw $0AF6, $0045  ; Samus X
     dw $D870, $E7FF  ; Items
     dw #$FFFF
-.after
 
 preset_hundo_brinstar_cleanup_2_the_last_missiles:
     dw #preset_hundo_brinstar_cleanup_2_climb_supers ; Brinstar Cleanup: Climb Supers
@@ -3113,7 +2879,6 @@ preset_hundo_brinstar_cleanup_2_the_last_missiles:
     dw $D870, $EFFF  ; Items
     dw $D8B2, $2C09  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_brinstar_cleanup_2_the_last_missiles_escape:
     dw #preset_hundo_brinstar_cleanup_2_the_last_missiles ; Brinstar Cleanup: The Last Missiles
@@ -3132,7 +2897,6 @@ preset_hundo_brinstar_cleanup_2_the_last_missiles_escape:
     dw $0AFA, $008B  ; Samus Y
     dw $D870, $FFFF  ; Items
     dw #$FFFF
-.after
 
 preset_hundo_tourian_metroids_1:
     dw #preset_hundo_brinstar_cleanup_2_the_last_missiles_escape ; Brinstar Cleanup: The Last Missiles Escape
@@ -3145,7 +2909,6 @@ preset_hundo_tourian_metroids_1:
     dw $0915, $0300  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0240  ; Layer 2 Y position
-    dw $0923, $00E0  ; BG2 Y offset
     dw $09C2, $054B  ; Health
     dw $09C6, $00B5  ; Missiles
     dw $09CA, $0010  ; Supers
@@ -3157,7 +2920,6 @@ preset_hundo_tourian_metroids_1:
     dw $D8B2, $6C09  ; Doors
     dw $D90C, $0100  ; Map Stations
     dw #$FFFF
-.after
 
 preset_hundo_tourian_metroids_2:
     dw #preset_hundo_tourian_metroids_1 ; Tourian: Metroids 1
@@ -3167,8 +2929,6 @@ preset_hundo_tourian_metroids_2:
     dw $0913, $8800  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $FA00  ; BG2 X offset
-    dw $0923, $0000  ; BG2 Y offset
     dw $09C2, $056C  ; Health
     dw $09C6, $00BF  ; Missiles
     dw $09CA, $000F  ; Supers
@@ -3178,7 +2938,6 @@ preset_hundo_tourian_metroids_2:
     dw $D822, $0021  ; Events
     dw $D8C4, $0001  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_tourian_metroids_3:
     dw #preset_hundo_tourian_metroids_2 ; Tourian: Metroids 2
@@ -3188,7 +2947,6 @@ preset_hundo_tourian_metroids_3:
     dw $0913, $AC00  ; Screen subpixel Y position
     dw $0915, $00F2  ; Screen Y position in pixels
     dw $0919, $00B5  ; Layer 2 Y position
-    dw $0921, $FF00  ; BG2 X offset
     dw $09C2, $059D  ; Health
     dw $09C6, $00C7  ; Missiles
     dw $09CA, $0011  ; Supers
@@ -3200,7 +2958,6 @@ preset_hundo_tourian_metroids_3:
     dw $D822, $0023  ; Events
     dw $D8C4, $0003  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_tourian_metroids_4:
     dw #preset_hundo_tourian_metroids_3 ; Tourian: Metroids 3
@@ -3212,7 +2969,6 @@ preset_hundo_tourian_metroids_4:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $03C0  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $0100  ; BG2 X offset
     dw $09C2, $05DB  ; Health
     dw $09C6, $00D1  ; Missiles
     dw $09CA, $0010  ; Supers
@@ -3223,7 +2979,6 @@ preset_hundo_tourian_metroids_4:
     dw $D822, $0027  ; Events
     dw $D8C4, $0007  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_tourian_baby_skip:
     dw #preset_hundo_tourian_metroids_4 ; Tourian: Metroids 4
@@ -3235,7 +2990,6 @@ preset_hundo_tourian_baby_skip:
     dw $0911, $0100  ; Screen X position in pixels
     dw $0913, $5800  ; Screen subpixel Y position
     dw $0917, $00C0  ; Layer 2 X position
-    dw $0921, $FE00  ; BG2 X offset
     dw $09C6, $00D9  ; Missiles
     dw $09CA, $000F  ; Supers
     dw $09CE, $001E  ; Pbs
@@ -3247,7 +3001,6 @@ preset_hundo_tourian_baby_skip:
     dw $D822, $002F  ; Events
     dw $D8C4, $000F  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_tourian_after_baby_skip:
     dw #preset_hundo_tourian_baby_skip ; Tourian: Baby Skip
@@ -3260,13 +3013,11 @@ preset_hundo_tourian_after_baby_skip:
     dw $0913, $0800  ; Screen subpixel Y position
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0006  ; Layer 2 Y position
-    dw $0921, $FF00  ; BG2 X offset
     dw $0AF6, $00AC  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw $D822, $002F  ; Events
     dw $D8C4, $002F  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_tourian_zeb_skip:
     dw #preset_hundo_tourian_after_baby_skip ; Tourian: After Baby Skip
@@ -3277,12 +3028,10 @@ preset_hundo_tourian_zeb_skip:
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $021D  ; Screen Y position in pixels
     dw $0919, $0195  ; Layer 2 Y position
-    dw $0921, $0100  ; BG2 X offset
     dw $0AF6, $0037  ; Samus X
     dw $0AFA, $028B  ; Samus Y
     dw $D8C4, $03AF  ; Doors
     dw #$FFFF
-.after
 
 preset_hundo_tourian_mother_brain_2:
     dw #preset_hundo_tourian_zeb_skip ; Tourian: Zeb Skip
@@ -3292,7 +3041,6 @@ preset_hundo_tourian_mother_brain_2:
     dw $090F, $79FF  ; Screen subpixel X position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0921, $FC00  ; BG2 X offset
     dw $09C2, $05CC  ; Health
     dw $09C6, $00D0  ; Missiles
     dw $09CA, $0001  ; Supers
@@ -3300,7 +3048,6 @@ preset_hundo_tourian_mother_brain_2:
     dw $0AFA, $009B  ; Samus Y
     dw $D820, $3FC5  ; Events
     dw #$FFFF
-.after
 
 preset_hundo_tourian_zebes_escape:
     dw #preset_hundo_tourian_mother_brain_2 ; Tourian: Mother Brain 2
@@ -3318,7 +3065,6 @@ preset_hundo_tourian_zebes_escape:
     dw $D820, $7FC5  ; Events
     dw $D82C, $0203  ; Bosses
     dw #$FFFF
-.after
 
 preset_hundo_tourian_escape_room_3:
     dw #preset_hundo_tourian_zebes_escape ; Tourian: Zebes Escape
@@ -3328,14 +3074,11 @@ preset_hundo_tourian_escape_room_3:
     dw $0913, $8000  ; Screen subpixel Y position
     dw $0915, $0100  ; Screen Y position in pixels
     dw $0919, $00C0  ; Layer 2 Y position
-    dw $0921, $0000  ; BG2 X offset
-    dw $0923, $00E0  ; BG2 Y offset
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $00DF  ; Samus X
     dw $0AFA, $018B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_hundo_tourian_escape_room_4:
     dw #preset_hundo_tourian_escape_room_3 ; Tourian: Escape Room 3
@@ -3347,12 +3090,9 @@ preset_hundo_tourian_escape_room_4:
     dw $0915, $001C  ; Screen Y position in pixels
     dw $0917, $03C0  ; Layer 2 X position
     dw $0919, $0015  ; Layer 2 Y position
-    dw $0921, $0100  ; BG2 X offset
-    dw $0923, $FF00  ; BG2 Y offset
     dw $0AF6, $05D6  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_hundo_tourian_escape_parlor:
     dw #preset_hundo_tourian_escape_room_4 ; Tourian: Escape Room 4
@@ -3364,11 +3104,9 @@ preset_hundo_tourian_escape_parlor:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $00C0  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0923, $F800  ; BG2 Y offset
     dw $09C2, $0548  ; Health
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $019A  ; Samus X
     dw $0AFA, $005B  ; Samus Y
     dw #$FFFF
-.after
