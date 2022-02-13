@@ -115,7 +115,7 @@ cm_init:
     STA !ram_cm_ctrl_timer
     STA $8F
     STA $8B
-    LDA $05B6 : STA !ram_cm_input_counter
+    LDA !FRAME_COUNTER : STA !ram_cm_input_counter
 
     LDA.w #MainMenu
     STA.l !ram_cm_menu_stack
@@ -1207,7 +1207,7 @@ cm_calculate_max:
 cm_get_inputs:
 {
     ; Make sure we don't read joysticks twice in the same frame
-    LDA $05B6 : CMP !ram_cm_input_counter : PHP : STA !ram_cm_input_counter : PLP : BNE +
+    LDA !FRAME_COUNTER : CMP !ram_cm_input_counter : PHP : STA !ram_cm_input_counter : PLP : BNE +
 
     JSL $809459 ; Read controller input
 

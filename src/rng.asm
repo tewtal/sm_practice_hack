@@ -19,7 +19,7 @@ else
 org $A7D5A6
 endif
     JSL hook_phantoon_1st_rng
-    REP #$12 : NOP
+    BRA $10
 
     ; 2nd pattern
 if !FEATURE_PAL
@@ -28,7 +28,7 @@ else
 org $A7D07C
 endif
     JSL hook_phantoon_2nd_rng
-    REP #$0B : NOP
+    BRA $0F
 
     ; Phantoon eye close timer
 if !FEATURE_PAL
@@ -168,16 +168,14 @@ hook_hopper_set_rng:
 hook_lavarocks_set_rng:
 {
     LDA #$0001 : STA !ram_room_has_set_rng
-    LDA #$0011
-    STA $05E5
+    LDA #$0011 : STA !CACHED_RANDOM_NUMBER
     RTL
 }
 
 hook_beetom_set_rng:
 {
     LDA #$0001 : STA !ram_room_has_set_rng
-    LDA #$0017
-    STA $05E5
+    LDA #$0017 : STA !CACHED_RANDOM_NUMBER
     RTL
 }
 
@@ -240,7 +238,7 @@ hook_phantoon_1st_rng:
     BNE choose_phantoon_pattern
 
 .no_manip:
-    LDA $05B6
+    LDA !FRAME_COUNTER
     LSR A
     AND #$0003
     ASL A
@@ -285,8 +283,29 @@ else
     LDA $CD53,Y
 endif
     STA $0FE8
-    LDA $05B6
-    BIT #$0001
+    ; Intentional fallthrough to invert logic
+}
+
+hook_phantoon_invert:
+{
+    LDA !ram_phantoon_rng_inverted : BEQ .vanilla_inverted
+    CMP #$0001 : BEQ .inverted
+    CMP #$0002 : BEQ .not_inverted
+
+    ; Random
+    LDA !CACHED_RANDOM_NUMBER : BIT #$0080
+    RTL
+
+  .inverted
+    LDA #$0000 : BIT #$0001
+    RTL
+
+  .not_inverted
+    LDA #$0001 : BIT #$0001
+    RTL
+
+  .vanilla_inverted
+    LDA !FRAME_COUNTER : BIT #$0001
     RTL
 }
 
@@ -306,7 +325,7 @@ choose_phantoon_pattern:
     ; Y = index in phan_pattern_table of pattern currently being checked
     ; A = bitmask of enabled patterns
 .reload:
-    LDA $01, S  ; reload pattern mask
+    LDA $01,S   ; reload pattern mask
     LDY #$0006  ; number of patterns (decremented immediately to index of last pattern)
 .loop:
     DEY
@@ -338,38 +357,42 @@ if !FEATURE_PAL
 else
     CPY #$D6E2
 endif
-    BEQ .round2
+    BNE .round1
 
-    ; If not, save the pattern timer and return the direction in the zero flag.
-    LSR         ; shift direction into carry
-    STA $0FE8
-
-    LDA #$0000
-    ROL         ; shift carry into A (and zero flag)
-    RTL
-
-.round2:
-    ; Save the pattern timer, check the direction, and
-    ; set Phantoon's starting point and pattern index.
+    ; Save the pattern timer, check the direction,
+    ; and set Phantoon's starting point and pattern index.
     LSR
     STA $0FE8
-    BCS .left
+    BCS .round2left
 
     ; Right pattern
     LDA #$0088
     LDY #$00D0
     BRA .round2done
 
-.left:
+.round2left
     LDA #$018F
     LDY #$0030
 
-.round2done:
+.round2done
     STA $0FA8  ; Index into figure-8 movement table
     STY $0F7A  ; X position
     LDA #$0060
     STA $0F7E  ; Y position
+    BRA hook_phantoon_invert
 
+.round1
+    ; Save the pattern timer and check the direction
+    LSR
+    STA $0FE8
+    BCS .round1left
+
+    ; Round 1 right pattern
+    SEP #$02
+    RTL
+
+.round1left:
+    REP #$02
     RTL
 }
 
@@ -380,7 +403,7 @@ hook_phantoon_eyeclose:
     RTL
 
   .no_manip
-    LDA $05E5 ; return with random number
+    LDA !CACHED_RANDOM_NUMBER
     AND #$0007 : ASL   ; overwritten code
     RTL
 }
@@ -396,7 +419,7 @@ hook_phantoon_flame_pattern:
     RTL
 
   .no_manip
-    LDA $05E5 ; return with random number
+    LDA !CACHED_RANDOM_NUMBER
     RTL
 }
 
@@ -408,7 +431,7 @@ hook_botwoon_rng:
     RTL
 
   .no_manip
-    LDA $05E5
+    LDA !CACHED_RANDOM_NUMBER
     RTL
 }
 
@@ -430,7 +453,7 @@ hook_crocomire_rng:
     RTS
 
   .no_manip
-    LDA $05E5     ; return with random number (overwritten code)
+    LDA !CACHED_RANDOM_NUMBER
     RTS
 }
 
@@ -447,7 +470,7 @@ hook_draygon_rng_left:
     RTS
 
   .no_manip
-    LDA $05E5   ; return with random number (overwritten code)
+    LDA !CACHED_RANDOM_NUMBER
     RTS
 }
 
@@ -458,7 +481,7 @@ hook_draygon_rng_right:
     RTS
 
   .no_manip
-    LDA $05E5   ; return with random number (overwritten code)
+    LDA !CACHED_RANDOM_NUMBER
     RTS
 }
 
@@ -608,7 +631,7 @@ hook_kraid_rng:
     RTS
 
   .no_manip
-    LDA $05E5     ; return with random number (overwritten code)
+    LDA !CACHED_RANDOM_NUMBER
     RTS
 }
 

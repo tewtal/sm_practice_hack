@@ -2236,6 +2236,7 @@ PhantoonMenu:
     dw #phan_fast_right_2
     dw #phan_mid_right_2
     dw #phan_slow_right_2
+    dw #phan_second_phase_inverted
     dw #$FFFF
     dw #phan_eyeclose
     dw #phan_flamepattern
@@ -2355,6 +2356,17 @@ phan_mid_right_2:
 phan_slow_right_2:
     %cm_toggle_bit("#2 Slow Right", !ram_phantoon_rng_round_2, #$0001, phan_set_phan_second_phase)
 
+
+phan_second_phase_inverted:
+    dw !ACTION_CHOICE
+    dl #!ram_phantoon_rng_inverted
+    dw #$0000
+    db #$28, "2nd Phase Inve", #$FF
+    db #$28, "rt  VANILLA", #$FF
+    db #$28, "rt       ON", #$FF
+    db #$28, "rt      OFF", #$FF
+    db #$28, "rt   RANDOM", #$FF
+    db #$FF
 
 phan_eyeclose:
     dw !ACTION_CHOICE

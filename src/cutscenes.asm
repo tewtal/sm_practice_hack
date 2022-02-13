@@ -546,7 +546,7 @@ endif
 cutscenes_mb_fake_death_raise_mb:
 {
     LDA $0FCC : BNE .continue
-    LDA $05B6 : AND #$0001 : BNE .done
+    LDA !FRAME_COUNTER : AND #$0001 : BNE .done
 if !FEATURE_PAL
     JMP $8E65
 else
