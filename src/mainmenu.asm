@@ -2216,8 +2216,10 @@ rng_kraid_rng:
 ; Phantoon Menu
 ; --------------
 ih_prepare_phantoon_menu:
+    LDA !ram_phantoon_rng_inverted : PHA
     JSR phan_set_phan_first_phase
     JSR phan_set_phan_second_phase
+    PLA : STA !ram_phantoon_rng_inverted
     JMP action_submenu
 
 PhantoonMenu:
@@ -2267,6 +2269,10 @@ phan_set_phan_second_phase:
     INX : INX : CPX #$0018 : BNE .second_loop
   .end_second_loop
     TXA : LSR : STA !ram_cm_phan_second_phase
+    BEQ .set_inverted : TXA : BEQ .set_inverted
+    LDA #$0002
+  .set_inverted
+    STA !ram_phantoon_rng_inverted
     RTS
 
 
@@ -2336,6 +2342,10 @@ phan_second_phase:
   .routine
     ASL : TAX
     LDA phan_set_phan_phase_table,X : STA !ram_phantoon_rng_round_2
+    BEQ .set_inverted : TXA : BEQ .set_inverted
+    LDA #$0002
+  .set_inverted
+    STA !ram_phantoon_rng_inverted
     RTS
 
 phan_fast_left_2:
