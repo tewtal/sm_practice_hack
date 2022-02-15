@@ -1699,9 +1699,6 @@ cm_divide_100:
 
 incsrc mainmenu.asm
 
-; Preset logic also belongs somewhere in banks 80-BF
-incsrc custompresets.asm
-
 
 ; ----------
 ; Resources

@@ -2,6 +2,9 @@
 ; Custom Presets
 ; --------------
 
+org $83B400
+print pc, " custompresets start"
+
 custom_preset_save:
 {
     LDA !sram_custom_preset_slot
@@ -182,7 +185,7 @@ preset_scroll_fixes:
     PEA $7E7E : PLB : PLB
     %a8()
     LDA #$01 : LDX !ROOM_ID      ; X = room ID
-    CPX #$C000 : BMI .tophalf    ; organized by room ID so we only have to check half
+    CPX #$C000 : BMI .tophalf    ; organized by room ID for efficiency
     BRL .halfway
 
   .parlor
@@ -222,24 +225,8 @@ preset_scroll_fixes:
     INC : STA $CD20 : STA $CD21
     BRA .topdone
 
-  .warehouse_entrance
-    STA $CD20
-    BRA .topdone
-
-  .ice_snake_room
-    LDY !SAMUS_X : CPY #$0100    ; fix varies depending on X position
-    BPL .ice_snake_room_hidden
-    INC : STA $CD22 : TDC : STA $CD23
-    BRA .topdone
-  .ice_snake_room_hidden
-    INC : STA $CD23 : TDC : STA $CD22
-
-  .topdone
-    PLB
-    PLP
-    RTL
-
   .tophalf
+    CPX #$A75D : BPL .norfair
     CPX #$92FD : BEQ .parlor
     CPX #$9CB3 : BEQ .dachora
     CPX #$A011 : BEQ .etecoons_etank
@@ -247,130 +234,188 @@ preset_scroll_fixes:
     CPX #$A3AE : BEQ .alpha_pbs
     CPX #$A408 : BEQ .below_spazer
     CPX #$A6A1 : BEQ .warehouse_entrance
-    CPX #$A8B9 : BEQ .ice_snake_room
-    CPX #$AC83 : BNE +           ; left of Green Bubbles Missile Room (Norfair Reserve)
-    STA $7ECD20
-    BRA .topdone
-+   CPX #$AE32 : BNE +           ; bottom of Volcano Room
-    STA $7ECD26
-    BRA .topdone
-+   CPX #$B07A : BNE +           ; top of Bat Cave
-    STA $7ECD20
-    BRA .topdone
-+   CPX #$B1E5 : BNE +           ; bottom of Acid Chozo Room
-    STA $7ECD26 : STA $7ECD27 : STA $7ECD28
-    LDA #$00 : STA $7ECD23 : STA $7ECD24
-    BRA .done
-+   CPX #$B283 : BNE +           ; bottom of GT's Room
-    LDY !SAMUS_Y : CPY #$00D0    ; no fix if Ypos < 208
-    BMI .done
-    STA $7ECD22 : STA $7ECD23    ; leaving GT's room
-    LDA #$02
-    STA $7ECD20 : STA $7ECD21
-+   CPX #$B3A5 : BNE +           ; Pre-Pillars
-    LDY !SAMUS_Y : CPY #$0199    ; no scroll fix if Ypos < 409
-    BMI ++
-    STA $7ECD22 : STA $7ECD24    ; bottom of Pre-Pillars
-    LDA #$00 : STA $7ECD21
-    BRA .done
-++  LDA #$02 : STA $7ECD21       ; middle/top of Pre-Pillars
-    BRA .done
-+   CPX #$B4AD : BNE +           ; top of Worst Room in the Game
-    LDA #$02 : STA $7ECD20
-+   CPX #$B585 : BNE .done       ; top of Kihunter Stairs
-    LDY !SAMUS_Y : CPY #$008C    ; no scroll fix if Ypos > 140
-    BPL .done
-    STA $7ECD20
-    LDA #$00 : STA $7ECD23
-
-  .done
+  .topdone
     PLB
     PLP
     RTL
+
+  .warehouse_entrance
+    STA $CD20
+    BRA .topdone
+
+  .ice_snake_room
+    LDY !SAMUS_X : CPY #$0100    ; fix varies depending on X position
+    BPL .ice_snake_room_hidden
+    INC : STA $CD22 : STZ $CD23
+    BRA .norfairdone
+  .ice_snake_room_hidden
+    INC : STA $CD23 : STZ $CD22
+    BRA .norfairdone
+
+  .green_bubble_missiles
+    STA $CD20
+    BRA .norfairdone
+
+  .volcano_room
+    STA $CD26
+    BRA .norfairdone
+
+  .bat_cave
+    INC : STA $CD20
+    BRA .norfairdone
+
+  .norfair
+    CPX #$A8B9 : BEQ .ice_snake_room
+    CPX #$AC83 : BEQ .green_bubble_missiles
+    CPX #$AE32 : BEQ .volcano_room
+    CPX #$B07A : BEQ .bat_cave
+    CPX #$B1E5 : BEQ .acid_chozo_room
+    CPX #$B283 : BEQ .golden_torizo
+    CPX #$B3A5 : BEQ .fast_pillars_setup
+    CPX #$B4AD : BEQ .worst_room
+    CPX #$B585 : BEQ .kihunter_stairs
+  .norfairdone
+    PLB
+    PLP
+    RTL
+
+  .acid_chozo_room
+    STA $CD26 : STA $CD27 : STA $CD28
+    STZ $CD23 : STZ $CD24
+    BRA .norfairdone
+
+  .golden_torizo
+    LDY !SAMUS_Y : CPY #$00D0    ; no fix if Ypos < 208
+    BMI .norfairdone
+    STA $CD22 : STA $CD23
+    INC : STA $CD20 : STA $CD21
+    BRA .norfairdone
+
+  .fast_pillars_setup
+    LDY !SAMUS_Y : CPY #$0199    ; fix varies depending on Y position
+    BMI .above_pillars
+    STA $CD24 : INC : STA $CD22
+    STZ $CD21
+    BRA .norfairdone
+  .above_pillars
+    INC : STA $CD21
+    BRA .norfairdone
+
+  .worst_room
+    INC : STA $CD20
+    BRA .norfairdone
+
+  .kihunter_stairs
+    LDY !SAMUS_Y : CPY #$008C    ; no fix if Ypos > 140
+    BPL .norfairdone
+    INC : STA $CD20
+    STZ $CD23
+    BRA .norfairdone
+
+  .bowling
+    STZ $CD26 : STZ $CD27
+    STZ $CD28 : STZ $CD29
+    STZ $CD2A : STZ $CD2B
+    BRA .halfwaydone
+
+  .wrecked_ship_shaft
+    LDY !SAMUS_X : CPY #$05A0    ; fix varies depending on X position
+    BMI .lower_ws_shaft
+    STA $CD49
+    BRA .halfwaydone
+  .lower_ws_shaft
+    INC : STA $CD48 : STA $CD4E
+    BRA .halfwaydone
+
+  .electric_death
+    INC : STA $CD20
+    BRA .halfwaydone
+
+  .basement
+    STA $CD24
+    BRA .halfwaydone
 
   .halfway
-    CPX #$DF45 : BMI +           ; Ceres rooms set BG1 offsets manually
-    BRL .ceres
-+   CPX #$C98E : BNE +           ; bottom-left of Bowling Room
-    LDA #$00 : STA $7ECD26 : STA $7ECD27
-    STA $7ECD28 : STA $7ECD29
-    STA $7ECD2A : STA $7ECD2B
-    BRA .done
-+   CPX #$CAF6 : BNE +           ; WS Shaft
-    LDY !SAMUS_X : CPY #$05A0    ; fix East Supers if Xpos > 1440
-    BPL ++
-    LDA #$02                     ; lower area before Basement
-    STA $7ECD48 : STA $7ECD4E
-    BRA .done
-++  STA $7ECD49                  ; hidden area before WS East Supers
-    BRA .done
-+   CPX #$CBD5 : BNE +           ; top of Electric Death Room (WS E-Tank)
-    LDA #$02
-    STA $7ECD20
-    BRA .done
-+   CPX #$CC6F : BNE +           ; right of Basement (Phantoon)
-    STA $7ECD24
-    BRA .bottomdone
-+   CPX #$D1A3 : BNE +           ; bottom of Crab Shaft
-    STA $7ECD26
-    LDA #$02 : STA $7ECD24
-    BRA .bottomdone
-+   CPX #$D21C : BNE +           ; Crab Hole
-    LDY !SAMUS_Y : CPY #$00D0
-    BMI ++    
-    STA $7ECD21                  ; bottom of Crab Hole
-    LDA #$00 : STA $7ECD20
-    BRA .bottomdone
-++  LDA #$02 : STA $7ECD20       ; top of Crab Hole
-    BRA .bottomdone
-+   CPX #$D48E : BNE +           ; Oasis (bottom of Toilet)
-    LDA #$02
-    STA $7ECD20 : STA $7ECD21
-    BRA .bottomdone
-+   CPX #$D69A : BNE .bottomdone ; Pants Room (door to Shaktool)
-    STA $7ECD21
-    LDA #$00 : STA $7ECD22
-
-  .bottomdone
+    CPX #$DF45 : BPL .ceres
+    CPX #$C98E : BEQ .bowling
+    CPX #$CAF6 : BEQ .wrecked_ship_shaft
+    CPX #$CBD5 : BEQ .electric_death
+    CPX #$CC6F : BEQ .basement
+    CPX #$D1A3 : BEQ .crab_shaft
+    CPX #$D21C : BEQ .crab_hole
+    CPX #$D48E : BEQ .oasis
+    CPX #$D69A : BEQ .pants_room
+  .halfwaydone
     PLB
     PLP
     RTL
 
-  .ceres
-    LDA #$00 : STA $7E005F       ; Initialize mode 7
-    CPX #$DF45 : BNE +           ; Ceres Elevator
-    LDA #$00 : STA $7E091E : STA $7E0920
-    BRL .ceresdone
-+   STA $7E0078 : STA $7E0079    ; Ceres Elevator room already does this
-    STA $7E007A : STA $7E007B    ; Other rooms should zero out the values
-    STA $7E007C : STA $7E007D
-    STA $7E007E : STA $7E007F
-    STA $7E0080 : STA $7E0081
-    STA $7E0082 : STA $7E0083
-    CPX #$DF8D : BNE +           ; Ceres Falling Tiles
-    LDA #$01 : STA $7E091E
-    LDA #$02 : STA $7E0920
-    BRA .ceresdone
-+   CPX #$DFD7 : BNE +           ; Ceres Magnet Stairs
-    LDA #$03 : STA $7E091E
-    LDA #$02 : STA $7E0920
-    BRA .ceresdone
-+   CPX #$E021 : BNE +           ; Ceres Dead Scientists
-    LDA #$04 : STA $7E091E
-    LDA #$03 : STA $7E0920
-    BRA .ceresdone
-+   CPX #$E06B : BNE +           ; Ceres 58 Escape
-    LDA #$06 : STA $7E091E
-    LDA #$03 : STA $7E0920
-    BRA .ceresdone
-+   CPX #$E0B5 : BNE .ceresdone  ; Ceres Ridley
-    LDA #$08 : STA $7E091E
-    LDA #$03 : STA $7E0920
+  .crab_shaft
+    STA $CD26 : INC : STA $CD24
+    BRA .halfwaydone
 
+  .crab_hole
+    LDY !SAMUS_Y : CPY #$00D0    ; fix varies depending on Y position
+    BPL .lower_crab_hole
+    INC : STA $CD20
+    BRA .halfwaydone
+  .lower_crab_hole
+    STA $CD21 : STZ $CD20
+    BRA .halfwaydone
+
+  .oasis
+    INC : STA $CD20 : STA $CD21
+    BRA .halfwaydone
+
+  .pants_room
+    STA $CD21 : STZ $CD22
+    BRA .halfwaydone
+
+  .ceres_elevator
+    STZ $091E : STZ $0920
+    BRA .ceresdone
+
+  .ceres
+    STZ $5F                      ; Initialize mode 7
+    CPX #$DF45 : BEQ .ceres_elevator
+    %a16() : STZ $78             ; Ceres Elevator room already does this
+    STZ $7A : STZ $7C            ; Other Ceres rooms should zero out the values
+    STZ $7E : STZ $80
+    STZ $82 : %a8()
+    CPX #$DF8D : BEQ .ceres_falling_tiles
+    CPX #$DFD7 : BEQ .ceres_magnet_stairs
+    CPX #$E021 : BEQ .ceres_dead_scientists
+    CPX #$E06B : BEQ .ceres_58_escape
+    CPX #$E0B5 : BEQ .ceres_ridley
   .ceresdone
     PLB
     PLP
     RTL
+
+  .ceres_falling_tiles
+    LDA #$01 : STA $091E
+    LDA #$02 : STA $0920
+    BRA .ceresdone
+
+  .ceres_magnet_stairs
+    LDA #$03 : STA $091E
+    LDA #$02 : STA $0920
+    BRA .ceresdone
+
+  .ceres_dead_scientists
+    LDA #$04 : STA $091E
+    LDA #$03 : STA $0920
+    BRA .ceresdone
+
+  .ceres_58_escape
+    LDA #$06 : STA $091E
+    LDA #$03 : STA $0920
+    BRA .ceresdone
+
+  .ceres_ridley
+    LDA #$08 : STA $091E
+    LDA #$03 : STA $0920
+    BRA .ceresdone
 
   .custom_presets
     LDA !sram_custom_preset_slot
@@ -383,4 +428,6 @@ preset_scroll_fixes:
     PLP
     RTL
 }
+
+print pc, " custompresets end"
 
