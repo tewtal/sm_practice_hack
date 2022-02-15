@@ -188,6 +188,9 @@ preset_scroll_fixes:
     CPX #$C000 : BMI .tophalf    ; organized by room ID for efficiency
     BRL .halfway
 
+    ; -------------------------------------------------
+    ; Crateria/Brinstar Scroll Fixes (Category Presets)
+    ; -------------------------------------------------
   .parlor
     LDY !SAMUS_Y : CPY #$00D0    ; fix varies depending on Y position
     BPL .parlor_lower
@@ -239,10 +242,16 @@ preset_scroll_fixes:
     PLP
     RTL
 
+    ; -----------------------------------------
+    ; Warehouse Scroll Fixes (Category Presets)
+    ; -----------------------------------------
   .warehouse_entrance
     STA $CD20
     BRA .topdone
 
+    ; ---------------------------------------------
+    ; Upper Norfair Scroll Fixes (Category Presets)
+    ; ---------------------------------------------
   .ice_snake_room
     LDY !SAMUS_X : CPY #$0100    ; fix varies depending on X position
     BPL .ice_snake_room_hidden
@@ -279,6 +288,9 @@ preset_scroll_fixes:
     PLP
     RTL
 
+    ; ---------------------------------------------
+    ; Lower Norfair Scroll Fixes (Category Presets)
+    ; ---------------------------------------------
   .acid_chozo_room
     STA $CD26 : STA $CD27 : STA $CD28
     STZ $CD23 : STZ $CD24
@@ -312,6 +324,9 @@ preset_scroll_fixes:
     STZ $CD23
     BRA .norfairdone
 
+    ; --------------------------------------------
+    ; Wrecked Ship Scroll Fixes (Category Presets)
+    ; --------------------------------------------
   .bowling
     STZ $CD26 : STZ $CD27
     STZ $CD28 : STZ $CD29
@@ -350,6 +365,9 @@ preset_scroll_fixes:
     PLP
     RTL
 
+    ; -----------------------------------------------
+    ; Maridia/Tourian Scroll Fixes (Category Presets)
+    ; -----------------------------------------------
   .crab_shaft
     STA $CD26 : INC : STA $CD24
     BRA .halfwaydone
@@ -371,6 +389,9 @@ preset_scroll_fixes:
     STA $CD21 : STZ $CD22
     BRA .halfwaydone
 
+    ; -----------------------------------------
+    ; Ceres Fixes (Category and Custom Presets)
+    ; -----------------------------------------
   .ceres_elevator
     STZ $091E : STZ $0920
     BRA .ceresdone
@@ -423,7 +444,13 @@ preset_scroll_fixes:
     CLC : ADC #$31E9 : TAX       ; X = Source
     LDY #$CD51 : LDA #$0031      ; Y = Destination, A = Size-1
     MVP $707E                    ; srcBank, destBank
-    LDA #$0000 : STA !ram_custom_preset
+    TDC : STA !ram_custom_preset
+
+    %a8() : LDX !ROOM_ID         ; X = room ID
+    CPX #$DF45 : BMI .custom_fixes
+    BRL .ceres                   ; For ceres, use same fixes as category presets
+
+  .custom_fixes
     PLB
     PLP
     RTL
