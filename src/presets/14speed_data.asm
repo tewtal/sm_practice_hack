@@ -1052,7 +1052,7 @@ preset_14speed_lower_norfair_fireflea_room:
     dw $0919, $0013  ; Layer 2 Y position
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $00B9  ; Samus X
+    dw $0AF6, $009C  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 

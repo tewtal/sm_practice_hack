@@ -1256,7 +1256,7 @@ preset_gtmax_lower_norfair_fireflea_room:
     dw $09CE, $0017  ; Pbs
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $00B2  ; Samus X
+    dw $0AF6, $009C  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 

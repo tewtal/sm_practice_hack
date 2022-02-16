@@ -116,6 +116,7 @@ clear_all_enemies:
     ORA #$0200 : STA $0F86,X
   .done_clearing
     TXA : CLC : ADC #$0040 : CMP #$0400 : BNE .loop
+    STZ $0E52 ; unlock grey doors that require killing enemies
     RTS
 }
 
@@ -497,7 +498,6 @@ endif
     STZ $0E18              ; Set elevator to inactive
     STZ $1C1F              ; Clear message box index
     STZ $0E1A              ; Clear health bomb flag
-    STZ $0E52              ; unlock grey doors that require killing enemies
     STZ $0795 : STZ $0797  ; Clear door transition flags
     LDA #$0000 : STA !ram_transition_flag
 

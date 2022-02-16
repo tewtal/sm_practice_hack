@@ -1950,7 +1950,7 @@ preset_kpdr21_lower_norfair_fire_flea_room:
     dw $0915, $000D  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0009  ; Layer 2 Y position
-    dw $0AF6, $00B7  ; Samus X
+    dw $0AF6, $009C  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 

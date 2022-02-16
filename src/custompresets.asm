@@ -171,7 +171,7 @@ custom_preset_load:
 
 preset_scroll_fixes:
 {
-    ; Fixes bad scrolling caused by a loading into a position that
+    ; Fixes bad scrolling caused by loading into a position that
     ; is normally hidden until passing over a red scroll block.
     ; These fixes can often be found in nearby door asm.
     PHP
@@ -206,6 +206,12 @@ preset_scroll_fixes:
     STA $CD24
     BRA .topdone
 
+  .big_pink
+    BRL .specialized_big_pink
+
+  .taco_tank_room
+    BRL .specialized_taco_tank_room
+
   .etecoons_etank
     STA $CD25 : STA $CD26
     BRA .topdone
@@ -226,21 +232,23 @@ preset_scroll_fixes:
     LDY !SAMUS_Y : CPY #$00B0    ; no fix if Ypos > 176
     BPL .topdone
     INC : STA $CD20 : STA $CD21
-    BRA .topdone
+  .topdone
+    PLB
+    PLP
+    RTL
 
   .tophalf
     CPX #$A75D : BPL .norfair
     CPX #$92FD : BEQ .parlor
     CPX #$9CB3 : BEQ .dachora
+    CPX #$9D19 : BEQ .big_pink
+    CPX #$9F64 : BEQ .taco_tank_room
     CPX #$A011 : BEQ .etecoons_etank
     CPX #$A253 : BEQ .red_tower
     CPX #$A3AE : BEQ .alpha_pbs
     CPX #$A408 : BEQ .below_spazer
     CPX #$A6A1 : BEQ .warehouse_entrance
-  .topdone
-    PLB
-    PLP
-    RTL
+    BRA .topdone
 
     ; -----------------------------------------
     ; Warehouse Scroll Fixes (Category Presets)
@@ -261,6 +269,9 @@ preset_scroll_fixes:
     INC : STA $CD23 : STZ $CD22
     BRA .norfairdone
 
+  .hjb_room
+    BRL .specialized_hjb_room
+
   .green_bubble_missiles
     STA $CD20
     BRA .norfairdone
@@ -275,6 +286,7 @@ preset_scroll_fixes:
 
   .norfair
     CPX #$A8B9 : BEQ .ice_snake_room
+    CPX #$A9E5 : BEQ .hjb_room
     CPX #$AC83 : BEQ .green_bubble_missiles
     CPX #$AE32 : BEQ .volcano_room
     CPX #$B07A : BEQ .bat_cave
@@ -319,10 +331,11 @@ preset_scroll_fixes:
 
   .kihunter_stairs
     LDY !SAMUS_Y : CPY #$008C    ; no fix if Ypos > 140
-    BPL .norfairdone
+    BPL .kihunter_stairs_done
     INC : STA $CD20
     STZ $CD23
-    BRA .norfairdone
+  .kihunter_stairs_done
+    BRL .specialized_kihunter_stairs
 
     ; --------------------------------------------
     ; Wrecked Ship Scroll Fixes (Category Presets)
@@ -447,13 +460,58 @@ preset_scroll_fixes:
     TDC : STA !ram_custom_preset
 
     %a8() : LDX !ROOM_ID         ; X = room ID
-    CPX #$DF45 : BMI .custom_fixes
+    CPX #$DF45 : BMI .specialized_fixes
     BRL .ceres                   ; For ceres, use same fixes as category presets
 
-  .custom_fixes
+    ; -----------------------------------------------
+    ; Specialized Fixes (Category and Custom Presets)
+    ; -----------------------------------------------
+  .specialized_big_pink
+    LDY !SAMUS_Y : CPY #$02C0    ; no fix if Ypos < 704
+    BMI .specialdone
+    CPY #$03C9                   ; no fix if Ypos > 969
+    BPL .specialdone
+    %a16() : LDA #$00FF
+    STA $7F2208 : STA $7F220A : STA $7F22A8 : STA $7F22AA
+    STA $7F2348 : STA $7F234A : STA $7F23E8 : STA $7F23EA
+    BRA .specialdone
+
+  .specialized_taco_tank_room
+    LDY !SAMUS_X : CPY #$022B    ; no fix if Xpos < 555
+    BMI .specialdone
+    LDY !SAMUS_PBS_MAX           ; no fix if no power bombs
+    BEQ .specialdone
+    %a16() : LDA #$00FF
+    LDX #$0000
+  .specialized_taco_tank_loop
+    STA $7F1008,X : STA $7F1068,X : INX : INX
+    CPX #$0011 : BMI .specialized_taco_tank_loop
+    BRA .specialdone
+
+  .specialized_fixes
+    CPX #$9D19 : BEQ .specialized_big_pink
+    CPX #$9F64 : BEQ .specialized_taco_tank_room
+    CPX #$A9E5 : BEQ .specialized_hjb_room
+    CPX #$B585 : BEQ .specialized_kihunter_stairs
+  .specialdone
     PLB
     PLP
     RTL
+
+  .specialized_hjb_room
+    LDY !SAMUS_X : CPY #$0095    ; no fix if Xpos > 149
+    BPL .specialdone
+    %a16() : LDA #$00FF
+    STA $7F0052 : STA $7F0072 : STA $7F0092
+    BRA .specialdone
+
+  .specialized_kihunter_stairs
+    LDY !SAMUS_Y : CPY #$00F0    ; no fix if Ypos > 240
+    BPL .specialdone
+    %a16() : LDA #$00FF
+    STA $7F036E : STA $7F0370 : STA $7F0374 : STA $7F0376
+    STA $7F03D4 : STA $7F0610 : STA $7F0612
+    BRA .specialdone
 }
 
 print pc, " custompresets end"
