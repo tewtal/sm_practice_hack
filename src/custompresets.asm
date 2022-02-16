@@ -195,10 +195,10 @@ preset_scroll_fixes:
     LDY !SAMUS_Y : CPY #$00D0    ; fix varies depending on Y position
     BPL .parlor_lower
     STA $CD24
-    BRA .topdone
+    BRL .specialized_parlor
   .parlor_lower
     INC : STA $CD26 : STA $CD28
-    BRA .topdone
+    BRL .specialized_parlor
 
   .dachora
     LDY !SAMUS_X : CPY #$0405    ; no fix if Xpos < 1029
@@ -466,6 +466,15 @@ preset_scroll_fixes:
     ; -----------------------------------------------
     ; Specialized Fixes (Category and Custom Presets)
     ; -----------------------------------------------
+  .specialized_parlor
+    LDY !SAMUS_Y : CPY #$00D0    ; no fix if Ypos > 208
+    BPL .specialdone
+    LDY !SAMUS_X : CPY #$0175    ; no fix if Xpos > 373
+    BPL .specialdone
+    %a16() : LDA #$00FF
+    STA $7F05C0 : STA $7F05C2
+    BRA .specialdone
+
   .specialized_big_pink
     LDY !SAMUS_Y : CPY #$02C0    ; no fix if Ypos < 704
     BMI .specialdone
@@ -475,6 +484,17 @@ preset_scroll_fixes:
     STA $7F2208 : STA $7F220A : STA $7F22A8 : STA $7F22AA
     STA $7F2348 : STA $7F234A : STA $7F23E8 : STA $7F23EA
     BRA .specialdone
+
+  .specialized_fixes
+    CPX #$92FD : BEQ .specialized_parlor
+    CPX #$9D19 : BEQ .specialized_big_pink
+    CPX #$9F64 : BEQ .specialized_taco_tank_room
+    CPX #$A9E5 : BEQ .specialized_hjb_room
+    CPX #$B585 : BEQ .specialized_kihunter_stairs
+  .specialdone
+    PLB
+    PLP
+    RTL
 
   .specialized_taco_tank_room
     LDY !SAMUS_X : CPY #$022B    ; no fix if Xpos < 555
@@ -487,16 +507,6 @@ preset_scroll_fixes:
     STA $7F1008,X : STA $7F1068,X : INX : INX
     CPX #$0011 : BMI .specialized_taco_tank_loop
     BRA .specialdone
-
-  .specialized_fixes
-    CPX #$9D19 : BEQ .specialized_big_pink
-    CPX #$9F64 : BEQ .specialized_taco_tank_room
-    CPX #$A9E5 : BEQ .specialized_hjb_room
-    CPX #$B585 : BEQ .specialized_kihunter_stairs
-  .specialdone
-    PLB
-    PLP
-    RTL
 
   .specialized_hjb_room
     LDY !SAMUS_X : CPY #$0095    ; no fix if Xpos > 149
