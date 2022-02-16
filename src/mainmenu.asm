@@ -1001,6 +1001,7 @@ action_teleport:
     LDA #$05 : STA $7ED914
     REP #$20
 
+    STZ $0727 ; Pause menu index
     STZ $1C1F ; Clear message box index
 
 +   JSL reset_all_counters

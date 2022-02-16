@@ -37,6 +37,7 @@ endif
 
     LDA #$0000
     STA $7EC400  ; Used as door fade timer
+    STA $0727    ; Pause menu index
     LDA #$0001
     STA $0723    ; Screen fade delay = 1
     STA $0725    ; Screen fade counter = 1
