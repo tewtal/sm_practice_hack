@@ -303,6 +303,7 @@ presets_submenu_hundo_tourian:
     dw #presets_hundo_tourian_zebes_escape
     dw #presets_hundo_tourian_escape_room_3
     dw #presets_hundo_tourian_escape_room_4
+    dw #presets_hundo_tourian_escape_climb
     dw #presets_hundo_tourian_escape_parlor
     dw #$0000
     %cm_header("TOURIAN")
@@ -865,6 +866,9 @@ presets_hundo_tourian_escape_room_3:
 
 presets_hundo_tourian_escape_room_4:
     %cm_preset("Escape Room 4", #preset_hundo_tourian_escape_room_4)
+
+presets_hundo_tourian_escape_climb:
+    %cm_preset("Escape Climb", #preset_hundo_tourian_escape_climb)
 
 presets_hundo_tourian_escape_parlor:
     %cm_preset("Escape Parlor", #preset_hundo_tourian_escape_parlor)

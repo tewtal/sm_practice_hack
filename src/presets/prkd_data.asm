@@ -88,8 +88,18 @@ preset_prkd_crateria_ceres_escape:
     dw $D82E, $0001  ; Bosses
     dw #$FFFF
 
-preset_prkd_crateria_ship:
+preset_prkd_crateria_ceres_last_3_rooms:
     dw #preset_prkd_crateria_ceres_escape ; Crateria: Ceres Escape
+    dw $078D, $ABA0  ; DDB
+    dw $079B, $E021  ; MDB
+    dw $090F, $7400  ; Screen subpixel X position
+    dw $0913, $F000  ; Screen subpixel Y position
+    dw $0AF6, $004E  ; Samus X
+    dw $0AFA, $00A2  ; Samus Y
+    dw #$FFFF
+
+preset_prkd_crateria_ship:
+    dw #preset_prkd_crateria_ceres_last_3_rooms ; Crateria: Ceres Last 3 Rooms
     dw $078D, $88FE  ; DDB
     dw $079B, $91F8  ; MDB
     dw $07F3, $0006  ; Music Bank
@@ -318,9 +328,10 @@ preset_prkd_crateria_terminator:
     dw $0911, $0100  ; Screen X position in pixels
     dw $0913, $5800  ; Screen subpixel Y position
     dw $0917, $00C0  ; Layer 2 X position
-    dw $0A1C, $008A  ; Samus position/state
-    dw $0A1E, $1504  ; More position/state
+    dw $0A1C, $0041  ; Samus position/state
+    dw $0A1E, $0404  ; More position/state
     dw $0AF6, $0115  ; Samus X
+    dw $0AFA, $0099  ; Samus Y
     dw #$FFFF
 
 preset_prkd_crateria_green_pirate_shaft:
@@ -335,9 +346,10 @@ preset_prkd_crateria_green_pirate_shaft:
     dw $0919, $017D  ; Layer 2 Y position
     dw $09C2, $00C7  ; Health
     dw $09C4, $00C7  ; Max health
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
     dw $0AF6, $0063  ; Samus X
     dw $0AFA, $029B  ; Samus Y
-    dw $0B3F, $0000  ; Blue suit
     dw $D870, $0180  ; Items
     dw #$FFFF
 
@@ -2276,6 +2288,7 @@ preset_prkd_tourian_tourian_elevator_room:
     dw $0A1E, $0000  ; More position/state
     dw $0AF6, $0080  ; Samus X
     dw $0AFA, $02A8  ; Samus Y
+    dw $D90C, $0100  ; Map Stations
     dw #$FFFF
 
 preset_prkd_tourian_metroids_1:
@@ -2437,8 +2450,45 @@ preset_prkd_tourian_zeb_skip:
     dw $D8C4, $03AF  ; Doors
     dw #$FFFF
 
-preset_prkd_tourian_escape_room_3:
+preset_prkd_tourian_mother_brain_2:
     dw #preset_prkd_tourian_zeb_skip ; Tourian: Zeb Skip
+    dw $078D, $AAC8  ; DDB
+    dw $079B, $DD58  ; MDB
+    dw $07F3, $0021  ; Music Bank
+    dw $090F, $79FF  ; Screen subpixel X position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09C2, $0176  ; Health
+    dw $09C6, $0005  ; Missiles
+    dw $09CA, $0000  ; Supers
+    dw $0AF6, $00CF  ; Samus X
+    dw $0AFA, $009B  ; Samus Y
+    dw $D820, $0FC5  ; Events
+    dw #$FFFF
+
+preset_prkd_tourian_mother_brain_3:
+    dw #preset_prkd_tourian_mother_brain_2 ; Tourian: Mother Brain 2
+    dw $07F3, $0048  ; Music Bank
+    dw $09A6, $1009  ; Beams
+    dw $09C2, $018F  ; Health
+    dw $09C6, $0000  ; Missiles
+    dw $09CE, $0000  ; Pbs
+    dw $0A76, $8000  ; Hyper beam
+    dw $D82C, $0203  ; Bosses
+    dw #$FFFF
+
+preset_prkd_tourian_zebes_escape:
+    dw #preset_prkd_tourian_mother_brain_3 ; Tourian: Mother Brain 3
+    dw $07F3, $0024  ; Music Bank
+    dw $07F5, $0007  ; Music Track
+    dw $09A6, $1009  ; Beams
+    dw $0AF6, $0025  ; Samus X
+    dw $0AFA, $00C3  ; Samus Y
+    dw $D820, $4FC5  ; Events
+    dw #$FFFF
+
+preset_prkd_tourian_escape_room_3:
+    dw #preset_prkd_tourian_zebes_escape ; Tourian: Zebes Escape
     dw $078D, $AAEC  ; DDB
     dw $079B, $DE7A  ; MDB
     dw $07F3, $0024  ; Music Bank
@@ -2447,22 +2497,29 @@ preset_prkd_tourian_escape_room_3:
     dw $0913, $CC00  ; Screen subpixel Y position
     dw $0915, $0100  ; Screen Y position in pixels
     dw $0919, $00C0  ; Layer 2 Y position
-    dw $09A6, $1009  ; Beams
-    dw $09C2, $018F  ; Health
-    dw $09C6, $0000  ; Missiles
-    dw $09CA, $0000  ; Supers
-    dw $09CE, $0000  ; Pbs
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0A76, $8000  ; Hyper beam
     dw $0AF6, $00DF  ; Samus X
     dw $0AFA, $018B  ; Samus Y
-    dw $D820, $4FC5  ; Events
-    dw $D82C, $0203  ; Bosses
     dw #$FFFF
 
-preset_prkd_tourian_climb_spark:
-    dw #preset_prkd_tourian_escape_room_3 ; Tourian: Escape Room 3
+preset_prkd_tourian_escape_room_4:
+    dw #preset_14ice_tourian_escape_room_3 ; Tourian: Escape Room 3
+    dw $078D, $AB04  ; DDB
+    dw $079B, $DEA7  ; MDB
+    dw $090F, $3000  ; Screen subpixel X position
+    dw $0911, $0500  ; Screen X position in pixels
+    dw $0913, $4C00  ; Screen subpixel Y position
+    dw $0915, $001C  ; Screen Y position in pixels
+    dw $0917, $03C0  ; Layer 2 X position
+    dw $0919, $0015  ; Layer 2 Y position
+    dw $0AF6, $05D6  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw #$FFFF
+
+preset_prkd_tourian_escape_climb:
+    dw #preset_prkd_tourian_escape_room_4 ; Tourian: Escape Room 4
     dw $078D, $AB1C  ; DDB
     dw $079B, $DEDE  ; MDB
     dw $090F, $0000  ; Screen subpixel X position
@@ -2476,7 +2533,7 @@ preset_prkd_tourian_climb_spark:
     dw #$FFFF
 
 preset_prkd_tourian_escape_parlor:
-    dw #preset_prkd_tourian_climb_spark ; Tourian: Climb Spark
+    dw #preset_prkd_tourian_escape_climb ; Tourian: Escape Climb
     dw $078D, $AB34  ; DDB
     dw $079B, $96BA  ; MDB
     dw $090F, $8FFF  ; Screen subpixel X position

@@ -41,6 +41,7 @@ presets_goto_gtclassic_tourian:
 presets_submenu_gtclassic_crateria:
     dw #presets_gtclassic_crateria_ceres_elevator
     dw #presets_gtclassic_crateria_ceres_escape
+    dw #presets_gtclassic_crateria_ceres_last_3_rooms
     dw #presets_gtclassic_crateria_ship
     dw #presets_gtclassic_crateria_parlor
     dw #presets_gtclassic_crateria_parlor_downback
@@ -200,9 +201,11 @@ presets_submenu_gtclassic_tourian:
     dw #presets_gtclassic_tourian_baby_skip
     dw #presets_gtclassic_tourian_gadora_room
     dw #presets_gtclassic_tourian_zeb_skip
+    dw #presets_gtclassic_tourian_mother_brain_2
+    dw #presets_gtclassic_tourian_zebes_escape
     dw #presets_gtclassic_tourian_escape_room_3
     dw #presets_gtclassic_tourian_escape_room_4
-    dw #presets_gtclassic_tourian_climb_spark
+    dw #presets_gtclassic_tourian_escape_climb
     dw #presets_gtclassic_tourian_escape_parlor
     dw #$0000
     %cm_header("TOURIAN")
@@ -213,6 +216,9 @@ presets_gtclassic_crateria_ceres_elevator:
 
 presets_gtclassic_crateria_ceres_escape:
     %cm_preset("Ceres Escape", #preset_gtclassic_crateria_ceres_escape)
+
+presets_gtclassic_crateria_ceres_last_3_rooms:
+    %cm_preset("Ceres Last 3 rooms", #preset_gtclassic_crateria_ceres_last_3_rooms)
 
 presets_gtclassic_crateria_ship:
     %cm_preset("Ship", #preset_gtclassic_crateria_ship)
@@ -611,14 +617,20 @@ presets_gtclassic_tourian_gadora_room:
 presets_gtclassic_tourian_zeb_skip:
     %cm_preset("Zeb Skip", #preset_gtclassic_tourian_zeb_skip)
 
+presets_gtclassic_tourian_mother_brain_2:
+    %cm_preset("Mother Brain 2", #preset_gtclassic_tourian_mother_brain_2)
+
+presets_gtclassic_tourian_zebes_escape:
+    %cm_preset("Zebes Escape", #preset_gtclassic_tourian_zebes_escape)
+
 presets_gtclassic_tourian_escape_room_3:
     %cm_preset("Escape Room 3", #preset_gtclassic_tourian_escape_room_3)
 
 presets_gtclassic_tourian_escape_room_4:
     %cm_preset("Escape Room 4", #preset_gtclassic_tourian_escape_room_4)
 
-presets_gtclassic_tourian_climb_spark:
-    %cm_preset("Climb Spark", #preset_gtclassic_tourian_climb_spark)
+presets_gtclassic_tourian_escape_climb:
+    %cm_preset("Escape Climb", #preset_gtclassic_tourian_escape_climb)
 
 presets_gtclassic_tourian_escape_parlor:
     %cm_preset("Escape Parlor", #preset_gtclassic_tourian_escape_parlor)

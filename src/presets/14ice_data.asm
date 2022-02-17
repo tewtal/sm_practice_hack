@@ -88,8 +88,18 @@ preset_14ice_crateria_ceres_escape:
     dw $D82E, $0001  ; Bosses
     dw #$FFFF
 
-preset_14ice_crateria_ship:
+preset_14ice_crateria_ceres_last_3_rooms:
     dw #preset_14ice_crateria_ceres_escape ; Crateria: Ceres Escape
+    dw $078D, $ABA0  ; DDB
+    dw $079B, $E021  ; MDB
+    dw $090F, $7400  ; Screen subpixel X position
+    dw $0913, $F000  ; Screen subpixel Y position
+    dw $0AF6, $004E  ; Samus X
+    dw $0AFA, $00A2  ; Samus Y
+    dw #$FFFF
+
+preset_14ice_crateria_ship:
+    dw #preset_14ice_crateria_ceres_last_3_rooms ; Crateria: Ceres Last 3 Rooms
     dw $078D, $88FE  ; DDB
     dw $079B, $91F8  ; MDB
     dw $07F3, $0006  ; Music Bank
@@ -302,12 +312,14 @@ preset_14ice_crateria_terminator:
     dw #preset_14ice_crateria_alcatraz ; Crateria: Alcatraz
     dw $078D, $8BB6  ; DDB
     dw $079B, $92FD  ; MDB
-    dw $090F, $F400  ; Screen subpixel X position
+    dw $090F, $6000  ; Screen subpixel X position
     dw $0911, $0100  ; Screen X position in pixels
-    dw $0913, $8800  ; Screen subpixel Y position
+    dw $0913, $5800  ; Screen subpixel Y position
     dw $0917, $00C0  ; Layer 2 X position
+    dw $0A1C, $0041  ; Samus position/state
+    dw $0A1E, $0404  ; More position/state
     dw $0AF6, $0115  ; Samus X
-    dw $0B3F, $0104  ; Blue suit
+    dw $0AFA, $0099  ; Samus Y
     dw #$FFFF
 
 preset_14ice_crateria_green_pirate_shaft:
@@ -322,9 +334,10 @@ preset_14ice_crateria_green_pirate_shaft:
     dw $0919, $017D  ; Layer 2 Y position
     dw $09C2, $00C7  ; Health
     dw $09C4, $00C7  ; Max health
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
     dw $0AF6, $0063  ; Samus X
     dw $0AFA, $029B  ; Samus Y
-    dw $0B3F, $0000  ; Blue suit
     dw $D870, $0180  ; Items
     dw #$FFFF
 
@@ -1511,8 +1524,22 @@ preset_14ice_tourian_escape_room_4:
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 
-preset_14ice_tourian_escape_parlor:
+preset_14ice_tourian_escape_climb:
     dw #preset_14ice_tourian_escape_room_4 ; Tourian: Escape Room 4
+    dw $078D, $AB1C  ; DDB
+    dw $079B, $DEDE  ; MDB
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $00F1  ; Screen X position in pixels
+    dw $0913, $A400  ; Screen subpixel Y position
+    dw $0915, $00FB  ; Screen Y position in pixels
+    dw $0917, $00B4  ; Layer 2 X position
+    dw $0919, $00BC  ; Layer 2 Y position
+    dw $09C2, $0171  ; Health
+    dw $0AF6, $0151  ; Samus X
+    dw #$FFFF
+
+preset_14ice_tourian_escape_parlor:
+    dw #preset_14ice_tourian_escape_climb ; Tourian: Escape Climb
     dw $078D, $AB34  ; DDB
     dw $079B, $96BA  ; MDB
     dw $090F, $8000  ; Screen subpixel X position

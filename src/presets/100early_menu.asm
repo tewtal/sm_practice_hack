@@ -283,9 +283,13 @@ presets_submenu_100early_tourian:
     dw #presets_100early_tourian_metroids_3
     dw #presets_100early_tourian_metroids_4
     dw #presets_100early_tourian_baby_skip
+    dw #presets_100early_tourian_after_baby_skip
     dw #presets_100early_tourian_zeb_skip
+    dw #presets_100early_tourian_mother_brain_2
+    dw #presets_100early_tourian_zebes_escape
     dw #presets_100early_tourian_escape_room_3
     dw #presets_100early_tourian_escape_room_4
+    dw #presets_100early_tourian_escape_climb
     dw #presets_100early_tourian_escape_parlor
     dw #$0000
     %cm_header("TOURIAN")
@@ -855,14 +859,26 @@ presets_100early_tourian_metroids_4:
 presets_100early_tourian_baby_skip:
     %cm_preset("Baby Skip", #preset_100early_tourian_baby_skip)
 
+presets_100early_tourian_after_baby_skip:
+    %cm_preset("After Baby Skip", #preset_100early_tourian_after_baby_skip)
+
 presets_100early_tourian_zeb_skip:
     %cm_preset("Zeb Skip", #preset_100early_tourian_zeb_skip)
+
+presets_100early_tourian_mother_brain_2:
+    %cm_preset("Mother Brain 2", #preset_100early_tourian_mother_brain_2)
+
+presets_100early_tourian_zebes_escape:
+    %cm_preset("Zebes Escape", #preset_100early_tourian_zebes_escape)
 
 presets_100early_tourian_escape_room_3:
     %cm_preset("Escape Room 3", #preset_100early_tourian_escape_room_3)
 
 presets_100early_tourian_escape_room_4:
     %cm_preset("Escape Room 4", #preset_100early_tourian_escape_room_4)
+
+presets_100early_tourian_escape_climb:
+    %cm_preset("Escape Climb", #preset_100early_tourian_escape_climb)
 
 presets_100early_tourian_escape_parlor:
     %cm_preset("Escape Parlor", #preset_100early_tourian_escape_parlor)

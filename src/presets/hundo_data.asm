@@ -3029,6 +3029,7 @@ preset_hundo_tourian_zeb_skip:
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $021D  ; Screen Y position in pixels
     dw $0919, $0195  ; Layer 2 Y position
+    dw $09CA, $000C  ; Supers
     dw $0AF6, $0037  ; Samus X
     dw $0AFA, $028B  ; Samus Y
     dw $D8C4, $03AF  ; Doors
@@ -3095,13 +3096,26 @@ preset_hundo_tourian_escape_room_4:
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 
-preset_hundo_tourian_escape_parlor:
+preset_hundo_tourian_escape_climb:
     dw #preset_hundo_tourian_escape_room_4 ; Tourian: Escape Room 4
+    dw $078D, $AB1C  ; DDB
+    dw $079B, $DEDE  ; MDB
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $00F1  ; Screen X position in pixels
+    dw $0913, $A400  ; Screen subpixel Y position
+    dw $0915, $00FB  ; Screen Y position in pixels
+    dw $0917, $00B4  ; Layer 2 X position
+    dw $0919, $00BC  ; Layer 2 Y position
+    dw $0AF6, $0151  ; Samus X
+    dw $0AFA, $018B  ; Samus Y
+    dw #$FFFF
+
+preset_hundo_tourian_escape_parlor:
+    dw #preset_hundo_tourian_escape_climb ; Tourian: Escape Climb
     dw $078D, $AB34  ; DDB
     dw $079B, $96BA  ; MDB
     dw $090F, $E000  ; Screen subpixel X position
     dw $0911, $0100  ; Screen X position in pixels
-    dw $0913, $A401  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $00C0  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position

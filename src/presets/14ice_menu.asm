@@ -37,6 +37,7 @@ presets_goto_14ice_tourian:
 presets_submenu_14ice_crateria:
     dw #presets_14ice_crateria_ceres_elevator
     dw #presets_14ice_crateria_ceres_escape
+    dw #presets_14ice_crateria_ceres_last_3_rooms
     dw #presets_14ice_crateria_ship
     dw #presets_14ice_crateria_parlor
     dw #presets_14ice_crateria_climb_down
@@ -151,6 +152,7 @@ presets_submenu_14ice_tourian:
     dw #presets_14ice_tourian_zebes_escape
     dw #presets_14ice_tourian_escape_room_3
     dw #presets_14ice_tourian_escape_room_4
+    dw #presets_14ice_tourian_escape_climb
     dw #presets_14ice_tourian_escape_parlor
     dw #$0000
     %cm_header("TOURIAN")
@@ -161,6 +163,9 @@ presets_14ice_crateria_ceres_elevator:
 
 presets_14ice_crateria_ceres_escape:
     %cm_preset("Ceres Escape", #preset_14ice_crateria_ceres_escape)
+
+presets_14ice_crateria_ceres_last_3_rooms:
+    %cm_preset("Ceres Last 3 rooms", #preset_14ice_crateria_ceres_last_3_rooms)
 
 presets_14ice_crateria_ship:
     %cm_preset("Ship", #preset_14ice_crateria_ship)
@@ -433,6 +438,9 @@ presets_14ice_tourian_escape_room_3:
 
 presets_14ice_tourian_escape_room_4:
     %cm_preset("Escape Room 4", #preset_14ice_tourian_escape_room_4)
+
+presets_14ice_tourian_escape_climb:
+    %cm_preset("Escape Climb", #preset_14ice_tourian_escape_climb)
 
 presets_14ice_tourian_escape_parlor:
     %cm_preset("Escape Parlor", #preset_14ice_tourian_escape_parlor)
