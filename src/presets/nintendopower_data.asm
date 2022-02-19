@@ -88,8 +88,18 @@ preset_nintendopower_crateria_ceres_escape:
     dw $D82E, $0001  ; Bosses
     dw #$FFFF
 
-preset_nintendopower_crateria_ship:
+preset_nintendopower_crateria_ceres_last_3_rooms:
     dw #preset_nintendopower_crateria_ceres_escape ; Crateria: Ceres Escape
+    dw $078D, $ABA0  ; DDB
+    dw $079B, $E021  ; MDB
+    dw $090F, $7400  ; Screen subpixel X position
+    dw $0913, $F000  ; Screen subpixel Y position
+    dw $0AF6, $004E  ; Samus X
+    dw $0AFA, $00A2  ; Samus Y
+    dw #$FFFF
+
+preset_nintendopower_crateria_ship:
+    dw #preset_nintendopower_crateria_ceres_last_3_rooms ; Crateria: Ceres Last 3 Rooms
     dw $078D, $88FE  ; DDB
     dw $079B, $91F8  ; MDB
     dw $07F3, $0006  ; Music Bank
@@ -311,9 +321,10 @@ preset_nintendopower_crateria_terminator:
     dw $0911, $0100  ; Screen X position in pixels
     dw $0913, $5800  ; Screen subpixel Y position
     dw $0917, $00C0  ; Layer 2 X position
-    dw $0A1C, $008A  ; Samus position/state
-    dw $0A1E, $1504  ; More position/state
+    dw $0A1C, $0041  ; Samus position/state
+    dw $0A1E, $0404  ; More position/state
     dw $0AF6, $0115  ; Samus X
+    dw $0AFA, $0099  ; Samus Y
     dw #$FFFF
 
 preset_nintendopower_crateria_green_pirate_shaft:
@@ -1350,6 +1361,7 @@ preset_nintendopower_tourian_metroids_1:
     dw $0AFA, $02A8  ; Samus Y
     dw $D820, $3FC1  ; Events
     dw $D8B2, $6C01  ; Doors
+    dw $D90C, $0100  ; Map Stations
     dw #$FFFF
 
 preset_nintendopower_tourian_metroids_2:
@@ -1437,32 +1449,83 @@ preset_nintendopower_tourian_zeb_skip:
     dw $D8C4, $01AF  ; Doors
     dw #$FFFF
 
-preset_nintendopower_tourian_escape_room_2:
+preset_nintendopower_tourian_mother_brain_2:
     dw #preset_nintendopower_tourian_zeb_skip ; Tourian: Zeb Skip
-    dw $078D, $AA8C  ; DDB
-    dw $079B, $DE4D  ; MDB
-    dw $07F3, $0024  ; Music Bank
-    dw $07F5, $0007  ; Music Track
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $0911, $000F  ; Screen X position in pixels
-    dw $0913, $B000  ; Screen subpixel Y position
-    dw $0915, $000F  ; Screen Y position in pixels
-    dw $09A6, $1009  ; Beams
-    dw $09C2, $02A7  ; Health
-    dw $09C6, $0000  ; Missiles
-    dw $09CA, $0000  ; Supers
-    dw $09CE, $0000  ; Pbs
-    dw $0A1C, $0010  ; Samus position/state
-    dw $0A1E, $0104  ; More position/state
-    dw $0A76, $8000  ; Hyper beam
-    dw $0AF6, $00AF  ; Samus X
-    dw $D820, $7FC5  ; Events
-    dw $D82C, $0203  ; Bosses
+    dw $078D, $AAC8  ; DDB
+    dw $079B, $DD58  ; MDB
+    dw $07F3, $0021  ; Music Bank
+    dw $090F, $79FF  ; Screen subpixel X position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09C2, $02C2  ; Health
+    dw $09C6, $0051  ; Missiles
+    dw $09CA, $000D  ; Supers
+    dw $0AF6, $00CF  ; Samus X
+    dw $0AFA, $009B  ; Samus Y
+    dw $D820, $3FC5  ; Events
     dw $D8C4, $03AF  ; Doors
     dw #$FFFF
 
+preset_nintendopower_tourian_zebes_escape:
+    dw #preset_nintendopower_tourian_mother_brain_2 ; Tourian: Mother Brain 2
+    dw $07F3, $0024  ; Music Bank
+    dw $07F5, $0007  ; Music Track
+    dw $09A6, $1009  ; Beams
+    dw $09C2, $031F  ; Health
+    dw $09C6, $0000  ; Missiles
+    dw $09CA, $0000  ; Supers
+    dw $09CE, $0000  ; Pbs
+    dw $0A76, $8000  ; Hyper beam
+    dw $0AF6, $0025  ; Samus X
+    dw $0AFA, $00C3  ; Samus Y
+    dw $D820, $7FC5  ; Events
+    dw $D82C, $0203  ; Bosses
+    dw #$FFFF
+
+preset_nintendopower_tourian_escape_room_3:
+    dw #preset_nintendopower_tourian_zebes_escape ; Tourian: Zebes Escape
+    dw $078D, $AAEC  ; DDB
+    dw $079B, $DE7A  ; MDB
+    dw $090F, $7000  ; Screen subpixel X position
+    dw $0913, $0C00  ; Screen subpixel Y position
+    dw $0915, $00F5  ; Screen Y position in pixels
+    dw $0919, $00B7  ; Layer 2 Y position
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $00DF  ; Samus X
+    dw $0AFA, $018B  ; Samus Y
+    dw #$FFFF
+
+preset_nintendopower_tourian_escape_room_4:
+    dw #preset_nintendopower_tourian_escape_room_3 ; Tourian: Escape Room 3
+    dw $078D, $AB04  ; DDB
+    dw $079B, $DEA7  ; MDB
+    dw $090F, $D000  ; Screen subpixel X position
+    dw $0911, $0500  ; Screen X position in pixels
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $001A  ; Screen Y position in pixels
+    dw $0917, $03C0  ; Layer 2 X position
+    dw $0919, $0013  ; Layer 2 Y position
+    dw $0AF6, $05DB  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw #$FFFF
+
+preset_nintendopower_tourian_escape_climb:
+    dw #preset_nintendopower_tourian_escape_room_4 ; Tourian: Escape Room 4
+    dw $078D, $AB1C  ; DDB
+    dw $079B, $DEDE  ; MDB
+    dw $090F, $6000  ; Screen subpixel X position
+    dw $0911, $00F4  ; Screen X position in pixels
+    dw $0913, $6C00  ; Screen subpixel Y position
+    dw $0915, $0103  ; Screen Y position in pixels
+    dw $0917, $00B7  ; Layer 2 X position
+    dw $0919, $00C2  ; Layer 2 Y position
+    dw $0AF6, $0154  ; Samus X
+    dw $0AFA, $018B  ; Samus Y
+    dw #$FFFF
+
 preset_nintendopower_tourian_escape_parlor:
-    dw #preset_nintendopower_tourian_escape_room_2 ; Tourian: Escape Room 2
+    dw #preset_nintendopower_tourian_escape_climb ; Tourian: Escape Climb
     dw $078D, $AB34  ; DDB
     dw $079B, $96BA  ; MDB
     dw $090F, $EFFF  ; Screen subpixel X position

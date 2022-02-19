@@ -33,6 +33,7 @@ presets_goto_nintendopower_tourian:
 presets_submenu_nintendopower_crateria:
     dw #presets_nintendopower_crateria_ceres_elevator
     dw #presets_nintendopower_crateria_ceres_escape
+    dw #presets_nintendopower_crateria_ceres_last_3_rooms
     dw #presets_nintendopower_crateria_ship
     dw #presets_nintendopower_crateria_parlor
     dw #presets_nintendopower_crateria_climb_down
@@ -135,7 +136,11 @@ presets_submenu_nintendopower_tourian:
     dw #presets_nintendopower_tourian_metroids_4
     dw #presets_nintendopower_tourian_baby_skip
     dw #presets_nintendopower_tourian_zeb_skip
-    dw #presets_nintendopower_tourian_escape_room_2
+    dw #presets_nintendopower_tourian_mother_brain_2
+    dw #presets_nintendopower_tourian_zebes_escape
+    dw #presets_nintendopower_tourian_escape_room_3
+    dw #presets_nintendopower_tourian_escape_room_4
+    dw #presets_nintendopower_tourian_escape_climb
     dw #presets_nintendopower_tourian_escape_parlor
     dw #$0000
     %cm_header("TOURIAN")
@@ -146,6 +151,9 @@ presets_nintendopower_crateria_ceres_elevator:
 
 presets_nintendopower_crateria_ceres_escape:
     %cm_preset("Ceres Escape", #preset_nintendopower_crateria_ceres_escape)
+
+presets_nintendopower_crateria_ceres_last_3_rooms:
+    %cm_preset("Ceres Last 3 rooms", #preset_nintendopower_crateria_ceres_last_3_rooms)
 
 presets_nintendopower_crateria_ship:
     %cm_preset("Ship", #preset_nintendopower_crateria_ship)
@@ -393,8 +401,20 @@ presets_nintendopower_tourian_baby_skip:
 presets_nintendopower_tourian_zeb_skip:
     %cm_preset("Zeb Skip", #preset_nintendopower_tourian_zeb_skip)
 
-presets_nintendopower_tourian_escape_room_2:
-    %cm_preset("Escape Room 2", #preset_nintendopower_tourian_escape_room_2)
+presets_nintendopower_tourian_mother_brain_2:
+    %cm_preset("Mother Brain 2", #preset_nintendopower_tourian_mother_brain_2)
+
+presets_nintendopower_tourian_zebes_escape:
+    %cm_preset("Zebes Escape", #preset_nintendopower_tourian_zebes_escape)
+
+presets_nintendopower_tourian_escape_room_3:
+    %cm_preset("Escape Room 3", #preset_nintendopower_tourian_escape_room_3)
+
+presets_nintendopower_tourian_escape_room_4:
+    %cm_preset("Escape Room 4", #preset_nintendopower_tourian_escape_room_4)
+
+presets_nintendopower_tourian_escape_climb:
+    %cm_preset("Escape Climb", #preset_nintendopower_tourian_escape_climb)
 
 presets_nintendopower_tourian_escape_parlor:
     %cm_preset("Escape Parlor", #preset_nintendopower_tourian_escape_parlor)

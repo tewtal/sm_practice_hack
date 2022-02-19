@@ -2491,21 +2491,18 @@ preset_prkd_tourian_escape_room_3:
     dw #preset_prkd_tourian_zebes_escape ; Tourian: Zebes Escape
     dw $078D, $AAEC  ; DDB
     dw $079B, $DE7A  ; MDB
-    dw $07F3, $0024  ; Music Bank
-    dw $07F5, $0007  ; Music Track
     dw $090F, $F000  ; Screen subpixel X position
     dw $0913, $CC00  ; Screen subpixel Y position
     dw $0915, $0100  ; Screen Y position in pixels
     dw $0919, $00C0  ; Layer 2 Y position
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
-    dw $0A76, $8000  ; Hyper beam
     dw $0AF6, $00DF  ; Samus X
     dw $0AFA, $018B  ; Samus Y
     dw #$FFFF
 
 preset_prkd_tourian_escape_room_4:
-    dw #preset_14ice_tourian_escape_room_3 ; Tourian: Escape Room 3
+    dw #preset_prkd_tourian_escape_room_3 ; Tourian: Escape Room 3
     dw $078D, $AB04  ; DDB
     dw $079B, $DEA7  ; MDB
     dw $090F, $3000  ; Screen subpixel X position

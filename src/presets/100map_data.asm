@@ -88,8 +88,18 @@ preset_100map_bombs_ceres_escape:
     dw $D82E, $0001  ; Bosses
     dw #$FFFF
 
-preset_100map_bombs_ship:
+preset_100map_bombs_ceres_last_3_rooms:
     dw #preset_100map_bombs_ceres_escape ; Bombs: Ceres Escape
+    dw $078D, $ABA0  ; DDB
+    dw $079B, $E021  ; MDB
+    dw $090F, $7400  ; Screen subpixel X position
+    dw $0913, $F000  ; Screen subpixel Y position
+    dw $0AF6, $004E  ; Samus X
+    dw $0AFA, $00A2  ; Samus Y
+    dw #$FFFF
+
+preset_100map_bombs_ship:
+    dw #preset_100map_bombs_ceres_last_3_rooms ; Bombs: Ceres Last 3 Rooms
     dw $078D, $88FE  ; DDB
     dw $079B, $91F8  ; MDB
     dw $07F3, $0006  ; Music Bank
@@ -3475,6 +3485,7 @@ preset_100map_tourian_metroids_1:
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $0037  ; Samus X
     dw $0AFA, $038B  ; Samus Y
+    dw $D90C, $0100  ; Map Stations
     dw #$FFFF
 
 preset_100map_tourian_metroids_2:
@@ -3586,28 +3597,51 @@ preset_100map_tourian_zeb_skip:
     dw $D8C4, $03AF  ; Doors
     dw #$FFFF
 
-preset_100map_tourian_escape_room_3:
+preset_100map_tourian_mother_brain_2:
     dw #preset_100map_tourian_zeb_skip ; Tourian: Zeb Skip
-    dw $078D, $AAEC  ; DDB
-    dw $079B, $DE7A  ; MDB
+    dw $078D, $AAC8  ; DDB
+    dw $079B, $DD58  ; MDB
+    dw $07F3, $0021  ; Music Bank
+    dw $090F, $79FF  ; Screen subpixel X position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09C2, $031A  ; Health
+    dw $09C6, $0015  ; Missiles
+    dw $09CA, $0001  ; Supers
+    dw $0AF6, $00CF  ; Samus X
+    dw $0AFA, $009B  ; Samus Y
+    dw $D820, $3FC5  ; Events
+    dw #$FFFF
+
+preset_100map_tourian_zebes_escape:
+    dw #preset_100map_tourian_mother_brain_2 ; Tourian: Mother Brain 2
     dw $07F3, $0024  ; Music Bank
     dw $07F5, $0007  ; Music Track
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $0913, $2800  ; Screen subpixel Y position
-    dw $0915, $0100  ; Screen Y position in pixels
-    dw $0919, $00C0  ; Layer 2 Y position
     dw $09A6, $1009  ; Beams
     dw $09C2, $0383  ; Health
     dw $09C6, $0000  ; Missiles
     dw $09CA, $0000  ; Supers
     dw $09CE, $0000  ; Pbs
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
+    dw $09D6, $0190  ; Reserves
     dw $0A76, $8000  ; Hyper beam
-    dw $0AF6, $00DE  ; Samus X
-    dw $0AFA, $018B  ; Samus Y
+    dw $0AF6, $0025  ; Samus X
+    dw $0AFA, $00C3  ; Samus Y
     dw $D820, $7FC5  ; Events
     dw $D82C, $0203  ; Bosses
+    dw #$FFFF
+
+preset_100map_tourian_escape_room_3:
+    dw #preset_100map_tourian_zebes_escape ; Tourian: Zebes Escape
+    dw $078D, $AAEC  ; DDB
+    dw $079B, $DE7A  ; MDB
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0913, $2800  ; Screen subpixel Y position
+    dw $0915, $0100  ; Screen Y position in pixels
+    dw $0919, $00C0  ; Layer 2 Y position
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $00DE  ; Samus X
+    dw $0AFA, $018B  ; Samus Y
     dw #$FFFF
 
 preset_100map_tourian_escape_room_4:
@@ -3623,13 +3657,26 @@ preset_100map_tourian_escape_room_4:
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 
-preset_100map_tourian_escape_parlor:
+preset_100map_tourian_escape_climb:
     dw #preset_100map_tourian_escape_room_4 ; Tourian: Escape Room 4
+    dw $078D, $AB1C  ; DDB
+    dw $079B, $DEDE  ; MDB
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $00F1  ; Screen X position in pixels
+    dw $0913, $A400  ; Screen subpixel Y position
+    dw $0915, $00FB  ; Screen Y position in pixels
+    dw $0917, $00B4  ; Layer 2 X position
+    dw $0919, $00BC  ; Layer 2 Y position
+    dw $0AF6, $0151  ; Samus X
+    dw $0AFA, $018B  ; Samus Y
+    dw #$FFFF
+
+preset_100map_tourian_escape_parlor:
+    dw #preset_100map_tourian_escape_climb ; Tourian: Escape Climb
     dw $078D, $AB34  ; DDB
     dw $079B, $96BA  ; MDB
     dw $090F, $1000  ; Screen subpixel X position
     dw $0911, $0100  ; Screen X position in pixels
-    dw $0913, $A401  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $00C0  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position

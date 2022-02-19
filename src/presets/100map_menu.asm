@@ -69,6 +69,7 @@ presets_goto_100map_tourian:
 presets_submenu_100map_bombs:
     dw #presets_100map_bombs_ceres_elevator
     dw #presets_100map_bombs_ceres_escape
+    dw #presets_100map_bombs_ceres_last_3_rooms
     dw #presets_100map_bombs_ship
     dw #presets_100map_bombs_parlor
     dw #presets_100map_bombs_climb_down
@@ -339,8 +340,11 @@ presets_submenu_100map_tourian:
     dw #presets_100map_tourian_baby_skip
     dw #presets_100map_tourian_dusty_shaft_revisit
     dw #presets_100map_tourian_zeb_skip
+    dw #presets_100map_tourian_mother_brain_2
+    dw #presets_100map_tourian_zebes_escape
     dw #presets_100map_tourian_escape_room_3
     dw #presets_100map_tourian_escape_room_4
+    dw #presets_100map_tourian_escape_climb
     dw #presets_100map_tourian_escape_parlor
     dw #presets_100map_tourian_landing_site_final
     dw #$0000
@@ -352,6 +356,9 @@ presets_100map_bombs_ceres_elevator:
 
 presets_100map_bombs_ceres_escape:
     %cm_preset("Ceres Escape", #preset_100map_bombs_ceres_escape)
+
+presets_100map_bombs_ceres_last_3_rooms:
+    %cm_preset("Ceres Last 3 rooms", #preset_100map_bombs_ceres_last_3_rooms)
 
 presets_100map_bombs_ship:
     %cm_preset("Ship", #preset_100map_bombs_ship)
@@ -1013,11 +1020,20 @@ presets_100map_tourian_dusty_shaft_revisit:
 presets_100map_tourian_zeb_skip:
     %cm_preset("Zeb Skip", #preset_100map_tourian_zeb_skip)
 
+presets_100map_tourian_mother_brain_2:
+    %cm_preset("Mother Brain 2", #preset_100map_tourian_mother_brain_2)
+
+presets_100map_tourian_zebes_escape:
+    %cm_preset("Zebes Escape", #preset_100map_tourian_zebes_escape)
+
 presets_100map_tourian_escape_room_3:
     %cm_preset("Escape Room 3", #preset_100map_tourian_escape_room_3)
 
 presets_100map_tourian_escape_room_4:
     %cm_preset("Escape Room 4", #preset_100map_tourian_escape_room_4)
+
+presets_100map_tourian_escape_climb:
+    %cm_preset("Escape Climb", #preset_100map_tourian_escape_climb)
 
 presets_100map_tourian_escape_parlor:
     %cm_preset("Escape Parlor", #preset_100map_tourian_escape_parlor)

@@ -2146,7 +2146,7 @@ preset_gtclassic_tourian_zebes_escape:
     dw #$FFFF
 
 preset_gtclassic_tourian_escape_room_3:
-    dw #preset_gtclassic_tourian_zeb_skip ; Tourian: Zebes Escape
+    dw #preset_gtclassic_tourian_zebes_escape ; Tourian: Zebes Escape
     dw $078D, $AAEC  ; DDB
     dw $079B, $DE7A  ; MDB
     dw $090F, $7000  ; Screen subpixel X position
