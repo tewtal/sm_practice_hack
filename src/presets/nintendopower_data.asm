@@ -347,7 +347,7 @@ preset_nintendopower_crateria_green_pirate_shaft:
     dw #$FFFF
 
 preset_nintendopower_brinstar_green_brinstar_elevator:
-    dw #preset_nintendopower_crateria_terminator ; Crateria: Green Pirate Shaft
+    dw #preset_nintendopower_crateria_green_pirate_shaft ; Crateria: Green Pirate Shaft
     dw $078D, $8C22  ; DDB
     dw $079B, $9938  ; MDB
     dw $07F5, $0003  ; Music Track

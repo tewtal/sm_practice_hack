@@ -422,7 +422,7 @@ preset_100map_varia_skree_boost:
     dw #$FFFF
 
 preset_100map_varia_kraid_entrance:
-    dw #preset_100map_varia_red_tower_down ; Varia: Red Tower Down
+    dw #preset_100map_varia_skree_boost ; Varia: Skree Boost
     dw $078D, $A348  ; DDB
     dw $079B, $CF80  ; MDB
     dw $07F3, $0012  ; Music Bank

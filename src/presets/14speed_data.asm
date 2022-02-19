@@ -1517,7 +1517,7 @@ preset_14speed_tourian_escape_room_3:
     dw #$FFFF
 
 preset_14speed_tourian_escape_room_4:
-    dw #preset_14ice_tourian_escape_room_3 ; Tourian: Escape Room 3
+    dw #preset_14speed_tourian_escape_room_3 ; Tourian: Escape Room 3
     dw $078D, $AB04  ; DDB
     dw $079B, $DEA7  ; MDB
     dw $090F, $3000  ; Screen subpixel X position
@@ -1531,7 +1531,7 @@ preset_14speed_tourian_escape_room_4:
     dw #$FFFF
 
 preset_14speed_tourian_escape_climb:
-    dw #preset_14ice_tourian_escape_room_4 ; Tourian: Escape Room 4
+    dw #preset_14speed_tourian_escape_room_4 ; Tourian: Escape Room 4
     dw $078D, $AB1C  ; DDB
     dw $079B, $DEDE  ; MDB
     dw $090F, $0000  ; Screen subpixel X position

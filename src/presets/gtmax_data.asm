@@ -89,7 +89,7 @@ preset_gtmax_crateria_ceres_escape:
     dw #$FFFF
 
 preset_gtmax_crateria_ceres_last_3_rooms:
-    dw #preset_100early_crateria_ceres_escape ; Crateria: Ceres Escape
+    dw #preset_gtmax_crateria_ceres_escape ; Crateria: Ceres Escape
     dw $078D, $ABA0  ; DDB
     dw $079B, $E021  ; MDB
     dw $090F, $7400  ; Screen subpixel X position
