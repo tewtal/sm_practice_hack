@@ -473,6 +473,10 @@ preset_scroll_fixes:
     BPL .specialdone
     %a16() : LDA #$00FF
     STA $7F05C0 : STA $7F05C2
+    LDY !SAMUS_PBS_MAX           ; only clear bottom row if no power bombs
+    BEQ .specialdone
+    STA $7F0520 : STA $7F0522
+    STA $7F0480 : STA $7F0482
     BRA .specialdone
 
   .specialized_big_pink
