@@ -27,16 +27,17 @@
 !ram_slowdown_controller_2 = !WRAM_START+$20
 !ram_slowdown_frames = !WRAM_START+$22
 
-!ram_tmp_1 = !WRAM_START+$24
-!ram_tmp_2 = !WRAM_START+$26
-!ram_tmp_3 = !WRAM_START+$28
-!ram_tmp_4 = !WRAM_START+$2A
+!ram_momentum_sum = !WRAM_START+$24
+!ram_momentum_count = !WRAM_START+$26
+!ram_momentum_direction = !WRAM_START+$28
+!ram_momentum_last = !WRAM_START+$2A
 
 !ram_last_hp = !WRAM_START+$2C
 !ram_reserves_last = !WRAM_START+$2E
 
-!ram_pct_1 = !WRAM_START+$30
-!ram_pct_2 = !WRAM_START+$32
+!ram_metronome = !WRAM_START+$30
+!ram_metronome_counter = !WRAM_START+$32
+
 !ram_armed_shine_duration = !WRAM_START+$34
 !ram_minimap = !WRAM_START+$36
 !ram_map_counter = !WRAM_START+$38
@@ -78,9 +79,6 @@
 !ram_suits_enemy_damage_check = !WRAM_START+$78
 !ram_suits_periodic_damage_check = !WRAM_START+$7A
 
-!ram_metronome = !WRAM_START+$7C
-!ram_metronome_counter = !WRAM_START+$7E
-
 ; ^ FREE SPACE ^ up to +$86
 
 !ram_watch_left_index = !WRAM_START+$88
@@ -120,10 +118,6 @@
 !ram_vertical_speed = !WRAM_START+$CA
 !ram_quickdrop_counter = !WRAM_START+$CC
 !ram_walljump_counter = !WRAM_START+$CE
-!ram_momentum_sum = !WRAM_START+$D0
-!ram_momentum_count = !WRAM_START+$D2
-!ram_momentum_direction = !WRAM_START+$D4
-!ram_momentum_last = !WRAM_START+$D6
 
 ; ^ FREE SPACE ^ up to +$FC
 
@@ -425,6 +419,8 @@
 !SRAM_SOUND_TIMER = !SRAM_START+$0FD4
 
 ; ^ FREE SPACE ^ up to +$0FFE
+
+!TOP_DISPLAY_VANILLA = #$0002
 
 !ROOM_LAYOUT_MAGNET_STAIRS = #$0001
 !ROOM_LAYOUT_AREA_RANDO = #$0002
