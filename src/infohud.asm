@@ -563,7 +563,7 @@ endif
     LDA !IH_PERCENT : STA $7EC618
 
   .skipToLag
-    LDA !sram_top_display_mode : CMP !TOP_DISPLAY_VANILLA : BEQ .vanilla_infohud_draw_lag
+    LDA !sram_top_display_mode : CMP !TOP_DISPLAY_VANILLA : BEQ .vanilla_infohud_draw_lag_and_reserves
     LDA !ram_last_room_lag : LDX #$0080 : JSR Draw4
 
     ; Skip door lag and segment timer when shinetune enabled
@@ -572,6 +572,16 @@ endif
     ; Door lag
     LDA !ram_last_door_lag_frames : LDX #$00C2 : JSR Draw3
     BRA .pick_segment_timer
+
+  .vanilla_infohud_draw_lag_and_reserves
+    LDA !SAMUS_RESERVE_MODE : CMP #$0001 : BNE .vanilla_infohud_draw_lag
+
+    ; Draw reserve icon
+    LDY #$998B : LDA !SAMUS_RESERVE_ENERGY : BNE .vanilla_draw_reserve_icon
+    LDY #$9997
+  .vanilla_draw_reserve_icon
+    LDA $0000,Y : STA $7EC618 : LDA $0002,Y : STA $7EC61A
+    LDA $0004,Y : STA $7EC658 : LDA $0006,Y : STA $7EC65A
 
   .vanilla_infohud_draw_lag
     LDA !ram_last_room_lag : LDX #$007E : JSR Draw4
@@ -692,6 +702,19 @@ ih_hud_vanilla_health:
   .vanilla_subtank_whitespace
     LDA !IH_BLANK : STA $7EC692 : STA $7EC698 : STA $7EC69A
     STA $7EC608 : STA $7EC648 : STA $7EC688
+
+    LDA !SAMUS_RESERVE_MODE : CMP #$0001 : BNE .vanilla_no_reserves
+
+    ; Draw reserve icon
+    LDY #$998B : LDA !SAMUS_RESERVE_ENERGY : BNE .vanilla_draw_reserve_icon
+    LDY #$9997
+  .vanilla_draw_reserve_icon
+    LDA $0000,Y : STA $7EC618 : LDA $0002,Y : STA $7EC61A
+    LDA $0004,Y : STA $7EC658 : LDA $0006,Y : STA $7EC65A
+    RTS
+
+  .vanilla_no_reserves
+    LDA !IH_BLANK : STA $7EC618 : STA $7EC61A : STA $7EC658 : STA $7EC65A
     RTS
 }
 
@@ -747,15 +770,6 @@ ih_hud_code:
     LDA $7EC68C : STA $7EC68A
     LDA $7EC68E : STA $7EC68C
     LDA $7EC690 : STA $7EC68E
-
-    LDA !SAMUS_RESERVE_MODE : CMP #$0001 : BNE .status_display
-
-    ; Draw reserve icon
-    LDY #$998B : LDA !SAMUS_RESERVE_ENERGY : BNE .vanilla_draw_reserve_icon
-    LDY #$9997
-  .vanilla_draw_reserve_icon
-    LDA $0000,Y : STA $7EC618 : LDA $0002,Y : STA $7EC61A
-    LDA $0004,Y : STA $7EC658 : LDA $0006,Y : STA $7EC65A
 
   .status_display
     LDA !sram_display_mode : ASL : TAX
@@ -1015,18 +1029,6 @@ DrawHealthPaused:
 
   .vanilla_draw_health
     JSR ih_hud_vanilla_health
-    LDA !SAMUS_RESERVE_MODE : CMP #$0001 : BNE .vanilla_no_reserves
-
-    ; Draw reserve icon
-    LDY #$998B : LDA !SAMUS_RESERVE_ENERGY : BNE .vanilla_draw_reserve_icon
-    LDY #$9997
-  .vanilla_draw_reserve_icon
-    LDA $0000,Y : STA $7EC618 : LDA $0002,Y : STA $7EC61A
-    LDA $0004,Y : STA $7EC658 : LDA $0006,Y : STA $7EC65A
-    RTL
-
-  .vanilla_no_reserves
-    LDA !IH_BLANK : STA $7EC618 : STA $7EC61A : STA $7EC658 : STA $7EC65A
     RTL
 }
 
