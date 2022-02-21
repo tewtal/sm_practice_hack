@@ -349,7 +349,7 @@ preset_14ice_brinstar_green_brinstar_elevator:
     dw $090F, $4000  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $A800  ; Screen subpixel Y position
-    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
     dw $09C2, $00C7  ; Health
     dw $09C4, $00C7  ; Max health
     dw $09C6, $0002  ; Missiles
@@ -1536,6 +1536,7 @@ preset_14ice_tourian_escape_climb:
     dw $0919, $00BC  ; Layer 2 Y position
     dw $09C2, $0171  ; Health
     dw $0AF6, $0151  ; Samus X
+    dw $0AFA, $018B  ; Samus Y
     dw #$FFFF
 
 preset_14ice_tourian_escape_parlor:

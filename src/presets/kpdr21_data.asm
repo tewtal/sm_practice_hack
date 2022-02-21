@@ -2398,6 +2398,7 @@ preset_kpdr21_tourian_escape_climb:
     dw $0919, $00BC  ; Layer 2 Y position
     dw $09C2, $0171  ; Health
     dw $0AF6, $0151  ; Samus X
+    dw $0AFA, $018B  ; Samus Y
     dw #$FFFF
 
 preset_kpdr21_tourian_escape_parlor:

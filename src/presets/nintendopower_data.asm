@@ -353,6 +353,7 @@ preset_nintendopower_brinstar_green_brinstar_elevator:
     dw $07F5, $0003  ; Music Track
     dw $090F, $8000  ; Screen subpixel X position
     dw $0913, $9800  ; Screen subpixel Y position
+    dw $0919, $0000  ; Layer 2 Y position
     dw $0AF6, $0080  ; Samus X
     dw $D870, $0180  ; Items
     dw #$FFFF

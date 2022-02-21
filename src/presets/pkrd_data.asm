@@ -336,6 +336,7 @@ preset_pkrd_brinstar_green_brinstar_elevator:
     dw $090F, $1C80  ; Screen subpixel X position
     dw $0913, $C400  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
+    dw $0919, $0000  ; Layer 2 Y position
     dw $09C6, $0002  ; Missiles
     dw $0AF6, $007C  ; Samus X
     dw $0AFA, $008B  ; Samus Y
@@ -2142,6 +2143,7 @@ preset_pkrd_tourian_escape_climb:
     dw $0919, $00BC  ; Layer 2 Y position
     dw $09C2, $0199  ; Health
     dw $0AF6, $0151  ; Samus X
+    dw $0AFA, $018B  ; Samus Y
     dw #$FFFF
 
 preset_pkrd_tourian_escape_parlor:
