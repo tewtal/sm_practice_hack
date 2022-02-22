@@ -141,15 +141,16 @@ endif
     ; Suppress Samus HP display
     ; The segment timer is also suppressed elsewhere just for shinetune
     LDA !SAMUS_HP : STA !ram_last_hp
+    BRA .shinetune_start
 
     ; Track Samus momentum
-    LDA !ram_momentum_count : BEQ .wait_for_start : BMI .wait_for_stop
-    CMP #$002C : BEQ .average_momentum
+    ;LDA !ram_momentum_count : BEQ .wait_for_start : BMI .wait_for_stop
+    ;CMP #$002C : BEQ .average_momentum
 
     ; Check if momentum has stopped or if direction changed
-    LDA !IH_CONTROLLER_PRI : AND !ram_momentum_direction : BNE .increment_momentum
-    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_LEFTRIGHT : BNE .invalid_momentum
-    LDA !ram_momentum_last : BEQ .momentum_stopped
+    ;LDA !IH_CONTROLLER_PRI : AND !ram_momentum_direction : BNE .increment_momentum
+    ;LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_LEFTRIGHT : BNE .invalid_momentum
+    ;LDA !ram_momentum_last : BEQ .momentum_stopped
 
   .increment_momentum
     LDA !ram_momentum_count : INC : STA !ram_momentum_count
@@ -186,8 +187,8 @@ endif
 
   .shinetune_start
     ; Track momentum
-    LDA !SAMUS_X_SUBMOMENTUM : XBA : AND #$00FF : STA $12
-    LDA !SAMUS_X_MOMENTUM : XBA : AND #$FF00 : ORA $12 : STA !ram_momentum_last
+    ;LDA !SAMUS_X_SUBMOMENTUM : XBA : AND #$00FF : STA $12
+    ;LDA !SAMUS_X_MOMENTUM : XBA : AND #$FF00 : ORA $12 : STA !ram_momentum_last
 
     ; Think of Samus as a five-speed bike with gears 0-4 (dash counter)
     LDA !ram_dash_counter : CMP #$0003 : BEQ .checkgearshift3
