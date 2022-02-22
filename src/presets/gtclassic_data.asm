@@ -2120,6 +2120,7 @@ preset_gtclassic_tourian_mother_brain_2:
     dw $078D, $AAC8  ; DDB
     dw $079B, $DD58  ; MDB
     dw $07F3, $0021  ; Music Bank
+    dw $07F5, $0000  ; Music Track
     dw $090F, $79FF  ; Screen subpixel X position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0919, $0000  ; Layer 2 Y position
@@ -2132,8 +2133,6 @@ preset_gtclassic_tourian_mother_brain_2:
 
 preset_gtclassic_tourian_zebes_escape:
     dw #preset_gtclassic_tourian_mother_brain_2 ; Tourian: Mother Brain 2
-    dw $07F3, $0024  ; Music Bank
-    dw $07F5, $0007  ; Music Track
     dw $09A6, $1009  ; Beams
     dw $09C6, $0000  ; Missiles
     dw $09CA, $0000  ; Supers
@@ -2149,6 +2148,8 @@ preset_gtclassic_tourian_escape_room_3:
     dw #preset_gtclassic_tourian_zebes_escape ; Tourian: Zebes Escape
     dw $078D, $AAEC  ; DDB
     dw $079B, $DE7A  ; MDB
+    dw $07F3, $0024  ; Music Bank
+    dw $07F5, $0007  ; Music Track
     dw $090F, $7000  ; Screen subpixel X position
     dw $0913, $0C00  ; Screen subpixel Y position
     dw $0915, $00F5  ; Screen Y position in pixels

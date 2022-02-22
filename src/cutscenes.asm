@@ -111,13 +111,6 @@ endif
     dw cutscenes_mb_fake_death_lock
 
 if !FEATURE_PAL
-org $A98871
-else
-org $A98861
-endif
-    dw cutscenes_mb_fake_death_music
-
-if !FEATURE_PAL
 org $A98889
 else
 org $A98879
@@ -338,28 +331,43 @@ cutscenes_mb_fake_death_lock:
     LDA #$0001 : STA $0FB2
 
   .continue
-if !FEATURE_PAL
-    LDA #$885D
-else
-    LDA #$884D
-endif
+    LDA #cutscenes_mb_fake_death_music
     STA $0FA8
-    JMP ($0FA8)
+    ; Fall through to next method
 }
 
 cutscenes_mb_fake_death_music:
 {
-    LDA $0FCC : BEQ .continue
-    LDA #$0001 : STA $0FB2
+    DEC $0FB2 : BPL .return
 
-  .continue
+    LDA #$0000 : JSL !MUSIC_ROUTINE
+    LDA $7ED82D : BIT #$0002 : BEQ .phase2
+    LDA $7ED821 : BIT #$0040 : BEQ .phase3
+    LDA #$FF24
+    BRA .load_music
+  .phase2
+    LDA #$FF21
+    BRA .load_music
+  .phase3
+    LDA #$FF48
+  .load_music
+    JSL !MUSIC_ROUTINE
+
 if !FEATURE_PAL
     LDA #$887C
 else
     LDA #$886C
 endif
     STA $0FA8
+
+    LDA #$000C : STA $0FB2
+    LDA $0FCC : BEQ .continue
+    LDA #$0002 : STA $0FB2
+  .continue
     JMP ($0FA8)
+
+  .return
+    RTS
 }
 
 cutscenes_mb_fake_death_unlock:

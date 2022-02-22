@@ -3207,6 +3207,7 @@ preset_100early_tourian_mother_brain_2:
     dw $078D, $AAC8  ; DDB
     dw $079B, $DD58  ; MDB
     dw $07F3, $0021  ; Music Bank
+    dw $07F5, $0000  ; Music Track
     dw $090F, $79FF  ; Screen subpixel X position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0919, $0000  ; Layer 2 Y position
@@ -3220,8 +3221,6 @@ preset_100early_tourian_mother_brain_2:
 
 preset_100early_tourian_zebes_escape:
     dw #preset_100early_tourian_mother_brain_2 ; Tourian: Mother Brain 2
-    dw $07F3, $0024  ; Music Bank
-    dw $07F5, $0007  ; Music Track
     dw $09A6, $1009  ; Beams
     dw $09C2, $05DB  ; Health
     dw $09C6, $007F  ; Missiles
@@ -3239,6 +3238,8 @@ preset_100early_tourian_escape_room_3:
     dw #preset_100early_tourian_zebes_escape ; Tourian: Zebes Escape
     dw $078D, $AAEC  ; DDB
     dw $079B, $DE7A  ; MDB
+    dw $07F3, $0024  ; Music Bank
+    dw $07F5, $0007  ; Music Track
     dw $090F, $B000  ; Screen subpixel X position
     dw $0913, $8000  ; Screen subpixel Y position
     dw $0915, $0100  ; Screen Y position in pixels

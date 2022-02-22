@@ -1461,6 +1461,7 @@ preset_14speed_tourian_mother_brain_2:
     dw $078D, $AAC8  ; DDB
     dw $079B, $DD58  ; MDB
     dw $07F3, $0021  ; Music Bank
+    dw $07F5, $0000  ; Music Track
     dw $090F, $79FF  ; Screen subpixel X position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0919, $0000  ; Layer 2 Y position
@@ -1485,8 +1486,6 @@ preset_14speed_tourian_mother_brain_3:
 
 preset_14speed_tourian_zebes_escape:
     dw #preset_14speed_tourian_mother_brain_3 ; Tourian: Mother Brain 3
-    dw $07F3, $0024  ; Music Bank
-    dw $07F5, $0007  ; Music Track
     dw $09A6, $1009  ; Beams
     dw $0AF6, $0025  ; Samus X
     dw $0AFA, $00C3  ; Samus Y
