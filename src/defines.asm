@@ -187,7 +187,10 @@
 
 ; ^ FREE SPACE ^ up to +$CE
 
-!ram_cgram_cache = !WRAM_MENU_START+$D0         ; 20 bytes
+; Reserve 48 bytes for CGRAM cache
+; Currently first 22 bytes and last 2 bytes are used
+
+!ram_cgram_cache = !WRAM_MENU_START+$D0
 
 !ram_hex2dec_first_digit = $14
 !ram_hex2dec_second_digit = $16

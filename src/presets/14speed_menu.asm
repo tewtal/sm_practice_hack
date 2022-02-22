@@ -146,7 +146,12 @@ presets_submenu_14speed_tourian:
     dw #presets_14speed_tourian_metroids_4
     dw #presets_14speed_tourian_doors_and_refills
     dw #presets_14speed_tourian_zeb_skip
+    dw #presets_14speed_tourian_mother_brain_2
+    dw #presets_14speed_tourian_mother_brain_3
+    dw #presets_14speed_tourian_zebes_escape
     dw #presets_14speed_tourian_escape_room_3
+    dw #presets_14speed_tourian_escape_room_4
+    dw #presets_14speed_tourian_escape_climb
     dw #presets_14speed_tourian_escape_parlor
     dw #$0000
     %cm_header("TOURIAN")
