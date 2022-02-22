@@ -71,8 +71,8 @@ init_nonzero_wram:
     JSL init_wram_based_on_sram
 
     ; RAM $7E0000 fluctuates so it is not a good default value
-    LDA #$0F8C : STA !ram_watch_left   ; Enemy HP
-    LDA #$09C2 : STA !ram_watch_right  ; Samus HP
+    LDA #$0F8C : STA !ram_watch_left        ; Enemy HP
+    LDA #$09C2 : STA !ram_watch_right       ; Samus HP
 
     ; Check if any less common controller shortcuts are configured
     JML GameModeExtras
@@ -101,7 +101,7 @@ init_sram:
     LDA #$0003 : STA !sram_cutscenes
 
   .sram_upgrade_12to13
-    LDA #$0000 : STA !sram_compressed_graphics
+    LDA #$0000 : STA !sram_preset_options
     LDA #$0000 : STA !sram_lag_counter_mode
 
     LDA #!SRAM_VERSION : STA !sram_initialized

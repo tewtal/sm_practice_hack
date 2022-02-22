@@ -36,12 +36,23 @@ presets_goto_14ice_tourian:
 
 presets_submenu_14ice_crateria:
     dw #presets_14ice_crateria_ceres_elevator
+    dw #presets_14ice_crateria_ceres_escape
     dw #presets_14ice_crateria_ceres_last_3_rooms
     dw #presets_14ice_crateria_ship
+    dw #presets_14ice_crateria_parlor
+    dw #presets_14ice_crateria_climb_down
+    dw #presets_14ice_crateria_pit_room
     dw #presets_14ice_crateria_morph
-    dw #presets_14ice_crateria_climb
+    dw #presets_14ice_crateria_construction_zone_down
+    dw #presets_14ice_crateria_construction_zone_up
+    dw #presets_14ice_crateria_pit_room_revisit
+    dw #presets_14ice_crateria_climb_up
+    dw #presets_14ice_crateria_parlor_revisit
+    dw #presets_14ice_crateria_flyway
     dw #presets_14ice_crateria_bomb_torizo
+    dw #presets_14ice_crateria_alcatraz
     dw #presets_14ice_crateria_terminator
+    dw #presets_14ice_crateria_green_pirate_shaft
     dw #$0000
     %cm_header("CRATERIA")
 
@@ -134,8 +145,14 @@ presets_submenu_14ice_tourian:
     dw #presets_14ice_tourian_metroids_3
     dw #presets_14ice_tourian_metroids_4
     dw #presets_14ice_tourian_baby
+    dw #presets_14ice_tourian_after_baby
     dw #presets_14ice_tourian_zeb_skip
+    dw #presets_14ice_tourian_mother_brain_2
+    dw #presets_14ice_tourian_mother_brain_3
+    dw #presets_14ice_tourian_zebes_escape
     dw #presets_14ice_tourian_escape_room_3
+    dw #presets_14ice_tourian_escape_room_4
+    dw #presets_14ice_tourian_escape_climb
     dw #presets_14ice_tourian_escape_parlor
     dw #$0000
     %cm_header("TOURIAN")
@@ -144,23 +161,56 @@ presets_submenu_14ice_tourian:
 presets_14ice_crateria_ceres_elevator:
     %cm_preset("Ceres Elevator", #preset_14ice_crateria_ceres_elevator)
 
+presets_14ice_crateria_ceres_escape:
+    %cm_preset("Ceres Escape", #preset_14ice_crateria_ceres_escape)
+
 presets_14ice_crateria_ceres_last_3_rooms:
-    %cm_preset("Ceres Last 3 Rooms", #preset_14ice_crateria_ceres_last_3_rooms)
+    %cm_preset("Ceres Last 3 rooms", #preset_14ice_crateria_ceres_last_3_rooms)
 
 presets_14ice_crateria_ship:
     %cm_preset("Ship", #preset_14ice_crateria_ship)
 
+presets_14ice_crateria_parlor:
+    %cm_preset("Parlor", #preset_14ice_crateria_parlor)
+
+presets_14ice_crateria_climb_down:
+    %cm_preset("Climb Down", #preset_14ice_crateria_climb_down)
+
+presets_14ice_crateria_pit_room:
+    %cm_preset("Pit Room", #preset_14ice_crateria_pit_room)
+
 presets_14ice_crateria_morph:
     %cm_preset("Morph", #preset_14ice_crateria_morph)
 
-presets_14ice_crateria_climb:
-    %cm_preset("Climb", #preset_14ice_crateria_climb)
+presets_14ice_crateria_construction_zone_down:
+    %cm_preset("Construction Zone Down", #preset_14ice_crateria_construction_zone_down)
+
+presets_14ice_crateria_construction_zone_up:
+    %cm_preset("Construction Zone Up", #preset_14ice_crateria_construction_zone_up)
+
+presets_14ice_crateria_pit_room_revisit:
+    %cm_preset("Pit Room Revisit", #preset_14ice_crateria_pit_room_revisit)
+
+presets_14ice_crateria_climb_up:
+    %cm_preset("Climb Up", #preset_14ice_crateria_climb_up)
+
+presets_14ice_crateria_parlor_revisit:
+    %cm_preset("Parlor Revisit", #preset_14ice_crateria_parlor_revisit)
+
+presets_14ice_crateria_flyway:
+    %cm_preset("Flyway", #preset_14ice_crateria_flyway)
 
 presets_14ice_crateria_bomb_torizo:
     %cm_preset("Bomb Torizo", #preset_14ice_crateria_bomb_torizo)
 
+presets_14ice_crateria_alcatraz:
+    %cm_preset("Alcatraz", #preset_14ice_crateria_alcatraz)
+
 presets_14ice_crateria_terminator:
     %cm_preset("Terminator", #preset_14ice_crateria_terminator)
+
+presets_14ice_crateria_green_pirate_shaft:
+    %cm_preset("Green Pirate Shaft", #preset_14ice_crateria_green_pirate_shaft)
 
 
 ; Brinstar
@@ -368,11 +418,29 @@ presets_14ice_tourian_metroids_4:
 presets_14ice_tourian_baby:
     %cm_preset("Baby", #preset_14ice_tourian_baby)
 
+presets_14ice_tourian_after_baby:
+    %cm_preset("After Baby", #preset_14ice_tourian_after_baby)
+
 presets_14ice_tourian_zeb_skip:
     %cm_preset("Zeb Skip", #preset_14ice_tourian_zeb_skip)
 
+presets_14ice_tourian_mother_brain_2:
+    %cm_preset("Mother Brain 2", #preset_14ice_tourian_mother_brain_2)
+
+presets_14ice_tourian_mother_brain_3:
+    %cm_preset("Mother Brain 3", #preset_14ice_tourian_mother_brain_3)
+
+presets_14ice_tourian_zebes_escape:
+    %cm_preset("Zebes Escape", #preset_14ice_tourian_zebes_escape)
+
 presets_14ice_tourian_escape_room_3:
     %cm_preset("Escape Room 3", #preset_14ice_tourian_escape_room_3)
+
+presets_14ice_tourian_escape_room_4:
+    %cm_preset("Escape Room 4", #preset_14ice_tourian_escape_room_4)
+
+presets_14ice_tourian_escape_climb:
+    %cm_preset("Escape Climb", #preset_14ice_tourian_escape_climb)
 
 presets_14ice_tourian_escape_parlor:
     %cm_preset("Escape Parlor", #preset_14ice_tourian_escape_parlor)

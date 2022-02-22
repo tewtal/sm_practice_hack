@@ -181,6 +181,12 @@ endif
     SEC : RTS
 
   .save_custom_preset
+    ; check gamestate first
+    LDA $0998 : CMP #$0008 : BEQ .save_safe
+    CMP #$000C : BMI .not_safe
+    CMP #$0013 : BPL .not_safe
+
+  .save_safe
     JSL custom_preset_save
     ; CLC to continue normal gameplay after saving preset
     LDA #!SOUND_MENU_JSR : JSL !SFX_LIB1
@@ -190,12 +196,14 @@ endif
     ; check if slot is populated first
     LDA !sram_custom_preset_slot
     ASL : XBA : TAX
-    LDA $703000,X : CMP #$5AFE : BEQ .safe
+    LDA $703000,X : CMP #$5AFE : BEQ .load_safe
+
+  .not_safe
     LDA #!SOUND_MENU_FAIL : JSL !SFX_LIB1
-    ; CLC to continue normal gameplay after failing to load preset
+    ; CLC to continue normal gameplay after failing to save or load preset
     CLC : RTS
 
-  .safe
+  .load_safe
     STA !ram_custom_preset
     JSL preset_load
     ; SEC to skip normal gameplay for one frame after loading preset

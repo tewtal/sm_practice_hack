@@ -1,1713 +1,1541 @@
 
-preset_nintendopower_crateria_ship:
+preset_nintendopower_crateria_ceres_elevator:
     dw #$0000
-    dl $7E078B : db $02 : dw $0000 ; Elevator Index
-    dl $7E078D : db $02 : dw $88FE ; DDB
-    dl $7E078F : db $02 : dw $0000 ; DoorOut Index
-    dl $7E079B : db $02 : dw $91F8 ; MDB
-    dl $7E079F : db $02 : dw $0000 ; Region
-    dl $7E07C3 : db $02 : dw $C629 ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $7CBA ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2AD ; GFX Pointers
-    dl $7E07F3 : db $02 : dw $0006 ; Music Bank
-    dl $7E07F5 : db $02 : dw $0005 ; Music Track
-    dl $7E090F : db $02 : dw $D000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $03F0 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $C000 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $03D3 ; Screen Y position in pixels
-    dl $7E093F : db $02 : dw $0000 ; Ceres escape flag
-    dl $7E09A2 : db $02 : dw $0000 ; Equipped Items
-    dl $7E09A4 : db $02 : dw $0000 ; Collected Items
-    dl $7E09A6 : db $02 : dw $0000 ; Beams
-    dl $7E09A8 : db $02 : dw $0000 ; Beams
-    dl $7E09C0 : db $02 : dw $0000 ; Manual/Auto reserve tank
-    dl $7E09C2 : db $02 : dw $0063 ; Health
-    dl $7E09C4 : db $02 : dw $0063 ; Max health
-    dl $7E09C6 : db $02 : dw $0000 ; Missiles
-    dl $7E09C8 : db $02 : dw $0000 ; Max missiles
-    dl $7E09CA : db $02 : dw $0000 ; Supers
-    dl $7E09CC : db $02 : dw $0000 ; Max supers
-    dl $7E09CE : db $02 : dw $0000 ; Pbs
-    dl $7E09D0 : db $02 : dw $0000 ; Max pbs
-    dl $7E09D2 : db $02 : dw $0000 ; Currently selected item
-    dl $7E09D4 : db $02 : dw $0000 ; Max reserves
-    dl $7E09D6 : db $02 : dw $0000 ; Reserves
-    dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0004 ; More position/state
-    dl $7E0A68 : db $02 : dw $0000 ; Flash suit
-    dl $7E0A76 : db $02 : dw $0000 ; Hyper beam
-    dl $7E0AF6 : db $02 : dw $0478 ; Samus X
-    dl $7E0AFA : db $02 : dw $0443 ; Samus Y
-    dl $7E0B3F : db $02 : dw $0000 ; Blue suit
-    dl $7ED7C0 : db $02 : dw $0000 ; SRAM copy
-    dl $7ED7C2 : db $02 : dw $0000 ; SRAM copy
-    dl $7ED7C4 : db $02 : dw $0000 ; SRAM copy
-    dl $7ED7C6 : db $02 : dw $0000 ; SRAM copy
-    dl $7ED7C8 : db $02 : dw $0800 ; SRAM copy
-    dl $7ED7CA : db $02 : dw $0400 ; SRAM copy
-    dl $7ED7CC : db $02 : dw $0200 ; SRAM copy
-    dl $7ED7CE : db $02 : dw $0100 ; SRAM copy
-    dl $7ED7D0 : db $02 : dw $4000 ; SRAM copy
-    dl $7ED7D2 : db $02 : dw $0080 ; SRAM copy
-    dl $7ED7D4 : db $02 : dw $8000 ; SRAM copy
-    dl $7ED7D6 : db $02 : dw $2000 ; SRAM copy
-    dl $7ED7D8 : db $02 : dw $0040 ; SRAM copy
-    dl $7ED7DA : db $02 : dw $0020 ; SRAM copy
-    dl $7ED7DC : db $02 : dw $0010 ; SRAM copy
-    dl $7ED7DE : db $02 : dw $0000 ; SRAM copy
-    dl $7ED7E0 : db $02 : dw $0063 ; SRAM copy
-    dl $7ED7E2 : db $02 : dw $0063 ; SRAM copy
-    dl $7ED7E4 : db $02 : dw $0000 ; SRAM copy
-    dl $7ED7E6 : db $02 : dw $0000 ; SRAM copy
-    dl $7ED7E8 : db $02 : dw $0000 ; SRAM copy
-    dl $7ED7EA : db $02 : dw $0000 ; SRAM copy
-    dl $7ED7EC : db $02 : dw $0000 ; SRAM copy
-    dl $7ED7EE : db $02 : dw $0000 ; SRAM copy
-    dl $7ED7F0 : db $02 : dw $0000 ; SRAM copy
-    dl $7ED7F2 : db $02 : dw $0000 ; SRAM copy
-    dl $7ED7F4 : db $02 : dw $0000 ; SRAM copy
-    dl $7ED7F6 : db $02 : dw $0000 ; SRAM copy
-    dl $7ED7F8 : db $02 : dw $002C ; SRAM copy
-    dl $7ED7FA : db $02 : dw $0010 ; SRAM copy
-    dl $7ED7FC : db $02 : dw $0001 ; SRAM copy
-    dl $7ED7FE : db $02 : dw $0000 ; SRAM copy
-    dl $7ED800 : db $02 : dw $0001 ; SRAM copy
-    dl $7ED802 : db $02 : dw $0001 ; SRAM copy
-    dl $7ED804 : db $02 : dw $0001 ; SRAM copy
-    dl $7ED806 : db $02 : dw $0001 ; SRAM copy
-    dl $7ED808 : db $02 : dw $0000 ; SRAM copy
-    dl $7ED80A : db $02 : dw $0000 ; SRAM copy
-    dl $7ED80C : db $02 : dw $0000 ; SRAM copy
-    dl $7ED80E : db $02 : dw $0000 ; SRAM copy
-    dl $7ED810 : db $02 : dw $0000 ; SRAM copy
-    dl $7ED812 : db $02 : dw $0000 ; SRAM copy
-    dl $7ED814 : db $02 : dw $0000 ; SRAM copy
-    dl $7ED816 : db $02 : dw $0000 ; SRAM copy
-    dl $7ED818 : db $02 : dw $0000 ; SRAM copy
-    dl $7ED81A : db $02 : dw $0000 ; SRAM copy
-    dl $7ED81C : db $02 : dw $0000 ; SRAM copy
-    dl $7ED81E : db $02 : dw $0000 ; SRAM copy
-    dl $7ED820 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED822 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED824 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED826 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED828 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED82A : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED82C : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED82E : db $02 : dw $0001 ; Events, Items, Doors
-    dl $7ED830 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED832 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED834 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED836 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED838 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED83A : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED83C : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED83E : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED840 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED842 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED844 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED846 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED848 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED84A : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED84C : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED84E : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED850 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED852 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED854 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED856 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED858 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED85A : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED85C : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED85E : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED860 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED862 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED864 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED866 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED868 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED86A : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED86C : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED86E : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED870 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED872 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED874 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED876 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED878 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED87A : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED87C : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED87E : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED880 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED882 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED884 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED886 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED888 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED88A : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED88C : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED88E : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED890 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED892 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED894 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED896 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED898 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED89A : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED89C : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED89E : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8A0 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8A2 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8A4 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8A6 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8A8 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8AA : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8AC : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8AE : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8B0 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8B2 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8B4 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8B6 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8B8 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8BA : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8BC : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8BE : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8C0 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8C2 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8C4 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8C6 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8C8 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8CA : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8CC : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8CE : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8D0 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8D2 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8D4 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8D6 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8D8 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8DA : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8DC : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8DE : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8E0 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8E2 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8E4 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8E6 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8E8 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8EA : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8EC : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8EE : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8F0 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8F2 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8F4 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8F6 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8F8 : db $02 : dw $0001 ; Events, Items, Doors
-    dl $7ED8FA : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8FC : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED8FE : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED900 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED902 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED904 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED906 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED908 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED90A : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED90C : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED90E : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED910 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED912 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED914 : db $02 : dw $0005 ; Events, Items, Doors
-    dl $7ED916 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED918 : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $0000 ; Events, Items, Doors
-    dl $7ED91C : db $02 : dw $1010 ; Events, Items, Doors
-    dl $7ED91E : db $02 : dw $0000 ; Events, Items, Doors
+    dw $078D, $AB58  ; DDB
+    dw $079B, $DF45  ; MDB
+    dw $07F3, $002D  ; Music Bank
+    dw $07F5, $0006  ; Music Track
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $093F, $0000  ; Ceres escape flag
+    dw $09A2, $0000  ; Equipped Items
+    dw $09A4, $0000  ; Collected Items
+    dw $09A6, $0000  ; Beams
+    dw $09A8, $0000  ; Beams
+    dw $09C0, $0000  ; Manual/Auto reserve tank
+    dw $09C2, $0063  ; Health
+    dw $09C4, $0063  ; Max health
+    dw $09C6, $0000  ; Missiles
+    dw $09C8, $0000  ; Max missiles
+    dw $09CA, $0000  ; Supers
+    dw $09CC, $0000  ; Max supers
+    dw $09CE, $0000  ; Pbs
+    dw $09D0, $0000  ; Max pbs
+    dw $09D2, $0000  ; Currently selected item
+    dw $09D4, $0000  ; Max reserves
+    dw $09D6, $0000  ; Reserves
+    dw $0A1C, $0000  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
+    dw $0A68, $0000  ; Flash suit
+    dw $0A76, $0000  ; Hyper beam
+    dw $0AF6, $0080  ; Samus X
+    dw $0AF8, $0000  ; Samus subpixel X
+    dw $0AFA, $0048  ; Samus Y
+    dw $0AFC, $0000  ; Samus subpixel Y
+    dw $0B3F, $0000  ; Blue suit
+    dw $D820, $0000  ; Events
+    dw $D822, $0000  ; Events
+    dw $D828, $0000  ; Bosses
+    dw $D82A, $0000  ; Bosses
+    dw $D82C, $0000  ; Bosses
+    dw $D82E, $0000  ; Bosses
+    dw $D870, $0000  ; Items
+    dw $D872, $0000  ; Items
+    dw $D874, $0000  ; Items
+    dw $D876, $0000  ; Items
+    dw $D878, $0000  ; Items
+    dw $D87A, $0000  ; Items
+    dw $D87C, $0000  ; Items
+    dw $D87E, $0000  ; Items
+    dw $D880, $0000  ; Items
+    dw $D882, $0000  ; Items
+    dw $D8B0, $0000  ; Doors
+    dw $D8B2, $0000  ; Doors
+    dw $D8B4, $0000  ; Doors
+    dw $D8B6, $0000  ; Doors
+    dw $D8B8, $0000  ; Doors
+    dw $D8BA, $0000  ; Doors
+    dw $D8BC, $0000  ; Doors
+    dw $D8BE, $0000  ; Doors
+    dw $D8C0, $0000  ; Doors
+    dw $D8C2, $0000  ; Doors
+    dw $D8C4, $0000  ; Doors
+    dw $D908, $0000  ; Map Stations
+    dw $D90A, $0000  ; Map Stations
+    dw $D90C, $0000  ; Map Stations
     dw #$FFFF
-.after
+
+preset_nintendopower_crateria_ceres_escape:
+    dw #preset_nintendopower_crateria_ceres_elevator ; Crateria: Ceres Elevator
+    dw $078D, $ABAC  ; DDB
+    dw $079B, $E0B5  ; MDB
+    dw $07F3, $0024  ; Music Bank
+    dw $07F5, $0007  ; Music Track
+    dw $090F, $8000  ; Screen subpixel X position
+    dw $0913, $9400  ; Screen subpixel Y position
+    dw $093F, $0002  ; Ceres escape flag
+    dw $09C2, $0018  ; Health
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0033  ; Samus X
+    dw $0AF8, $B000  ; Samus subpixel X
+    dw $0AFA, $008B  ; Samus Y
+    dw $0AFC, $FFFF  ; Samus subpixel Y
+    dw $D82E, $0001  ; Bosses
+    dw #$FFFF
+
+preset_nintendopower_crateria_ceres_last_3_rooms:
+    dw #preset_nintendopower_crateria_ceres_escape ; Crateria: Ceres Escape
+    dw $078D, $ABA0  ; DDB
+    dw $079B, $E021  ; MDB
+    dw $090F, $7400  ; Screen subpixel X position
+    dw $0913, $F000  ; Screen subpixel Y position
+    dw $0AF6, $004E  ; Samus X
+    dw $0AFA, $00A2  ; Samus Y
+    dw #$FFFF
+
+preset_nintendopower_crateria_ship:
+    dw #preset_nintendopower_crateria_ceres_last_3_rooms ; Crateria: Ceres Last 3 Rooms
+    dw $078D, $88FE  ; DDB
+    dw $079B, $91F8  ; MDB
+    dw $07F3, $0006  ; Music Bank
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $8000  ; Screen subpixel X position
+    dw $0911, $0400  ; Screen X position in pixels
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $0400  ; Screen Y position in pixels
+    dw $093F, $0000  ; Ceres escape flag
+    dw $09C2, $0063  ; Health
+    dw $0A1C, $0000  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
+    dw $0AF6, $0481  ; Samus X
+    dw $0AF8, $0000  ; Samus subpixel X
+    dw $0AFA, $0471  ; Samus Y
+    dw $0AFC, $8000  ; Samus subpixel Y
+    dw $0917, $0200  ; Layer 2 X position
+    dw #$FFFF
+
+preset_nintendopower_crateria_parlor:
+    dw #preset_nintendopower_crateria_ship ; Crateria: Ship
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $1400  ; Screen subpixel Y position
+    dw $0915, $0400  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0079  ; Samus X
+    dw $0AFA, $049B  ; Samus Y
+    dw $0AFC, $FFFF  ; Samus subpixel Y
+    dw #$FFFF
+
+preset_nintendopower_crateria_climb_down:
+    dw #preset_nintendopower_crateria_parlor ; Crateria: Parlor
+    dw $078D, $8916  ; DDB
+    dw $079B, $92FD  ; MDB
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $7BFF  ; Screen subpixel Y position
+    dw $0915, $03F2  ; Screen Y position in pixels
+    dw $0917, $00C0  ; Layer 2 X position
+    dw $0919, $02F5  ; Layer 2 Y position
+    dw $0A1C, $0018  ; Samus position/state
+    dw $0A1E, $0204  ; More position/state
+    dw $0AF6, $0199  ; Samus X
+    dw $0AF8, $8000  ; Samus subpixel X
+    dw $0AFA, $048A  ; Samus Y
+    dw $0AFC, $0000  ; Samus subpixel Y
+    dw #$FFFF
+
+preset_nintendopower_crateria_pit_room:
+    dw #preset_nintendopower_crateria_climb_down ; Crateria: Climb Down
+    dw $078D, $898E  ; DDB
+    dw $079B, $96BA  ; MDB
+    dw $090F, $6FFF  ; Screen subpixel X position
+    dw $0913, $3800  ; Screen subpixel Y position
+    dw $0915, $0800  ; Screen Y position in pixels
+    dw $0919, $0600  ; Layer 2 Y position
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $01DB  ; Samus X
+    dw $0AF8, $FFFF  ; Samus subpixel X
+    dw $0AFA, $088B  ; Samus Y
+    dw $0AFC, $FFFF  ; Samus subpixel Y
+    dw #$FFFF
 
 preset_nintendopower_crateria_morph:
-    dw #preset_nintendopower_crateria_ship ; Crateria: Ship
-    dl $7E078D : db $02 : dw $8B9E ; DDB
-    dl $7E078F : db $02 : dw $0003 ; DoorOut Index
-    dl $7E079B : db $02 : dw $9E9F ; MDB
-    dl $7E079F : db $02 : dw $0001 ; Region
-    dl $7E07C3 : db $02 : dw $E6B0 ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $64BB ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2B2 ; GFX Pointers
-    dl $7E07F5 : db $02 : dw $0007 ; Music Track
-    dl $7E090F : db $02 : dw $C000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $04FC ; Screen X position in pixels
-    dl $7E0915 : db $02 : dw $0200 ; Screen Y position in pixels
-    dl $7E0AF6 : db $02 : dw $057E ; Samus X
-    dl $7E0AFA : db $02 : dw $02AB ; Samus Y
-    dl $7ED91A : db $02 : dw $0001 ; Events, Items, Doors
+    dw #preset_nintendopower_crateria_pit_room ; Crateria: Pit Room
+    dw $078D, $8B9E  ; DDB
+    dw $079B, $9E9F  ; MDB
+    dw $07F5, $0007  ; Music Track
+    dw $090F, $6000  ; Screen subpixel X position
+    dw $0911, $0500  ; Screen X position in pixels
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $0200  ; Screen Y position in pixels
+    dw $0917, $03C0  ; Layer 2 X position
+    dw $0919, $0180  ; Layer 2 Y position
+    dw $0A1C, $0000  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
+    dw $0AF6, $0580  ; Samus X
+    dw $0AFA, $02A8  ; Samus Y
     dw #$FFFF
-.after
 
-preset_nintendopower_crateria_climb:
+preset_nintendopower_crateria_construction_zone_down:
     dw #preset_nintendopower_crateria_morph ; Crateria: Morph
-    dl $7E078D : db $02 : dw $8B92 ; DDB
-    dl $7E078F : db $02 : dw $0000 ; DoorOut Index
-    dl $7E079B : db $02 : dw $975C ; MDB
-    dl $7E079F : db $02 : dw $0000 ; Region
-    dl $7E07C3 : db $02 : dw $F911 ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $43BA ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2AF ; GFX Pointers
-    dl $7E07F3 : db $02 : dw $0009 ; Music Bank
-    dl $7E07F5 : db $02 : dw $0005 ; Music Track
-    dl $7E090F : db $02 : dw $2000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $7800 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
-    dl $7E09A2 : db $02 : dw $0004 ; Equipped Items
-    dl $7E09A4 : db $02 : dw $0004 ; Collected Items
-    dl $7E09C6 : db $02 : dw $000A ; Missiles
-    dl $7E09C8 : db $02 : dw $000A ; Max missiles
-    dl $7E0AF6 : db $02 : dw $0059 ; Samus X
-    dl $7E0AFA : db $02 : dw $008B ; Samus Y
-    dl $7ED820 : db $02 : dw $0001 ; Events, Items, Doors
-    dl $7ED872 : db $02 : dw $1400 ; Events, Items, Doors
-    dl $7ED874 : db $02 : dw $0004 ; Events, Items, Doors
-    dl $7ED8B2 : db $02 : dw $0400 ; Events, Items, Doors
-    dl $7ED8B6 : db $02 : dw $0004 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $0006 ; Events, Items, Doors
+    dw $090F, $2000  ; Screen subpixel X position
+    dw $0911, $0700  ; Screen X position in pixels
+    dw $0913, $E400  ; Screen subpixel Y position
+    dw $0917, $0540  ; Layer 2 X position
+    dw $09A2, $0004  ; Equipped Items
+    dw $09A4, $0004  ; Collected Items
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $07AC  ; Samus X
+    dw $0AFA, $028B  ; Samus Y
+    dw $D872, $0400  ; Items
     dw #$FFFF
-.after
+
+preset_nintendopower_crateria_construction_zone_up:
+    dw #preset_nintendopower_crateria_construction_zone_down ; Crateria: Construction Zone Down
+    dw $078D, $8EDA  ; DDB
+    dw $079B, $A107  ; MDB
+    dw $090F, $D000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $6800  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $0001  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09C6, $0005  ; Missiles
+    dw $09C8, $0005  ; Max missiles
+    dw $0AF6, $0055  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw $D874, $0004  ; Items
+    dw #$FFFF
+
+preset_nintendopower_crateria_pit_room_revisit:
+    dw #preset_nintendopower_crateria_construction_zone_up ; Crateria: Construction Zone Up
+    dw $078D, $8EB6  ; DDB
+    dw $079B, $97B5  ; MDB
+    dw $07F5, $0003  ; Music Track
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0917, $0000  ; Layer 2 X position
+    dw $09C8, $000A  ; Max missiles
+    dw $0A1C, $0000  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
+    dw $0AF6, $0080  ; Samus X
+    dw $0AFA, $0088  ; Samus Y
+    dw $D872, $1400  ; Items
+    dw $D8B6, $0004  ; Doors
+    dw #$FFFF
+
+preset_nintendopower_crateria_climb_up:
+    dw #preset_nintendopower_crateria_pit_room_revisit ; Crateria: Pit Room Revisit
+    dw $078D, $8B92  ; DDB
+    dw $079B, $975C  ; MDB
+    dw $07F3, $0009  ; Music Bank
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $2000  ; Screen subpixel X position
+    dw $0913, $AC00  ; Screen subpixel Y position
+    dw $09C6, $000A  ; Missiles
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0087  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw $D820, $0001  ; Events
+    dw $D8B2, $0400  ; Doors
+    dw #$FFFF
+
+preset_nintendopower_crateria_parlor_revisit:
+    dw #preset_nintendopower_crateria_climb_up ; Crateria: Climb Up
+    dw $078D, $8B7A  ; DDB
+    dw $079B, $96BA  ; MDB
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $C000  ; Screen subpixel Y position
+    dw $0917, $00C0  ; Layer 2 X position
+    dw $0AF6, $01A0  ; Samus X
+    dw $0AFA, $005B  ; Samus Y
+    dw #$FFFF
+
+preset_nintendopower_crateria_flyway:
+    dw #preset_nintendopower_crateria_parlor_revisit ; Crateria: Parlor Revisit
+    dw $078D, $8B3E  ; DDB
+    dw $079B, $92FD  ; MDB
+    dw $090F, $C000  ; Screen subpixel X position
+    dw $0911, $0300  ; Screen X position in pixels
+    dw $0913, $2BFF  ; Screen subpixel Y position
+    dw $0915, $01E6  ; Screen Y position in pixels
+    dw $0917, $0240  ; Layer 2 X position
+    dw $0919, $016C  ; Layer 2 Y position
+    dw $09D2, $0001  ; Currently selected item
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $0369  ; Samus X
+    dw $0AFA, $026B  ; Samus Y
+    dw #$FFFF
 
 preset_nintendopower_crateria_bomb_torizo:
-    dw #preset_nintendopower_crateria_climb ; Crateria: Climb
-    dl $7E078D : db $02 : dw $8982 ; DDB
-    dl $7E078F : db $02 : dw $0003 ; DoorOut Index
-    dl $7E079B : db $02 : dw $9879 ; MDB
-    dl $7E090F : db $02 : dw $C000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0200 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $B400 ; Screen subpixel Y position
-    dl $7E09C6 : db $02 : dw $0005 ; Missiles
-    dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0008 ; More position/state
-    dl $7E0AF6 : db $02 : dw $02D3 ; Samus X
-    dl $7ED8B2 : db $02 : dw $2400 ; Events, Items, Doors
+    dw #preset_nintendopower_crateria_flyway ; Crateria: Flyway
+    dw $078D, $8982  ; DDB
+    dw $079B, $9879  ; MDB
+    dw $090F, $4000  ; Screen subpixel X position
+    dw $0911, $0200  ; Screen X position in pixels
+    dw $0913, $D000  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $0180  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09C6, $0005  ; Missiles
+    dw $09D2, $0000  ; Currently selected item
+    dw $0AF6, $02BE  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw $D8B2, $2400  ; Doors
     dw #$FFFF
-.after
+
+preset_nintendopower_crateria_alcatraz:
+    dw #preset_nintendopower_crateria_bomb_torizo ; Crateria: Bomb Torizo
+    dw $078D, $8BAA  ; DDB
+    dw $090F, $8000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $1800  ; Screen subpixel Y position
+    dw $0917, $0000  ; Layer 2 X position
+    dw $09A2, $1004  ; Equipped Items
+    dw $09A4, $1004  ; Collected Items
+    dw $09C6, $000A  ; Missiles
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0037  ; Samus X
+    dw $D828, $0004  ; Bosses
+    dw $D870, $0080  ; Items
+    dw $D8B2, $2C00  ; Doors
+    dw #$FFFF
 
 preset_nintendopower_crateria_terminator:
-    dw #preset_nintendopower_crateria_bomb_torizo ; Crateria: Bomb Torizo
-    dl $7E078D : db $02 : dw $8BF2 ; DDB
-    dl $7E078F : db $02 : dw $0001 ; DoorOut Index
-    dl $7E079B : db $02 : dw $92FD ; MDB
-    dl $7E07C3 : db $02 : dw $C629 ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $7CBA ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2AD ; GFX Pointers
-    dl $7E090F : db $02 : dw $A401 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $C800 ; Screen subpixel Y position
-    dl $7E09A2 : db $02 : dw $1004 ; Equipped Items
-    dl $7E09A4 : db $02 : dw $1004 ; Collected Items
-    dl $7E09C6 : db $02 : dw $000A ; Missiles
-    dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0004 ; More position/state
-    dl $7E0AF6 : db $02 : dw $0032 ; Samus X
-    dl $7ED828 : db $02 : dw $0004 ; Events, Items, Doors
-    dl $7ED870 : db $02 : dw $0080 ; Events, Items, Doors
-    dl $7ED8B2 : db $02 : dw $2C00 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $0008 ; Events, Items, Doors
+    dw #preset_nintendopower_crateria_alcatraz ; Crateria: Alcatraz
+    dw $078D, $8BB6  ; DDB
+    dw $079B, $92FD  ; MDB
+    dw $090F, $6000  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $5800  ; Screen subpixel Y position
+    dw $0917, $00C0  ; Layer 2 X position
+    dw $0A1C, $0041  ; Samus position/state
+    dw $0A1E, $0404  ; More position/state
+    dw $0AF6, $0115  ; Samus X
+    dw $0AFA, $0099  ; Samus Y
     dw #$FFFF
-.after
+
+preset_nintendopower_crateria_green_pirate_shaft:
+    dw #preset_nintendopower_crateria_terminator ; Crateria: Terminator
+    dw $078D, $895E  ; DDB
+    dw $079B, $990D  ; MDB
+    dw $090F, $8000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $01FD  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $017D  ; Layer 2 Y position
+    dw $09C2, $00C7  ; Health
+    dw $09C4, $00C7  ; Max health
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0077  ; Samus X
+    dw $0AFA, $029B  ; Samus Y
+    dw $D870, $0180  ; Items
+    dw #$FFFF
 
 preset_nintendopower_brinstar_green_brinstar_elevator:
-    dw #preset_nintendopower_crateria_terminator ; Crateria: Terminator
-    dl $7E078D : db $02 : dw $8C22 ; DDB
-    dl $7E078F : db $02 : dw $0002 ; DoorOut Index
-    dl $7E079B : db $02 : dw $9938 ; MDB
-    dl $7E07C3 : db $02 : dw $F911 ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $43BA ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2AF ; GFX Pointers
-    dl $7E07F5 : db $02 : dw $0003 ; Music Track
-    dl $7E090F : db $02 : dw $8000 ; Screen subpixel X position.
-    dl $7E0913 : db $02 : dw $9800 ; Screen subpixel Y position
-    dl $7E09C2 : db $02 : dw $00C7 ; Health
-    dl $7E09C4 : db $02 : dw $00C7 ; Max health
-    dl $7E0AF6 : db $02 : dw $0080 ; Samus X
-    dl $7ED870 : db $02 : dw $0180 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $000B ; Events, Items, Doors
+    dw #preset_nintendopower_crateria_green_pirate_shaft ; Crateria: Green Pirate Shaft
+    dw $078D, $8C22  ; DDB
+    dw $079B, $9938  ; MDB
+    dw $07F5, $0003  ; Music Track
+    dw $090F, $8000  ; Screen subpixel X position
+    dw $0913, $9800  ; Screen subpixel Y position
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $0AF6, $0080  ; Samus X
+    dw $D870, $0180  ; Items
     dw #$FFFF
-.after
 
 preset_nintendopower_brinstar_big_pink:
     dw #preset_nintendopower_brinstar_green_brinstar_elevator ; Brinstar: Green Brinstar Elevator
-    dl $7E078D : db $02 : dw $8DD2 ; DDB
-    dl $7E078F : db $02 : dw $0001 ; DoorOut Index
-    dl $7E079B : db $02 : dw $9CB3 ; MDB
-    dl $7E079F : db $02 : dw $0001 ; Region
-    dl $7E07C3 : db $02 : dw $E6B0 ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $64BB ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2B2 ; GFX Pointers
-    dl $7E07F3 : db $02 : dw $000F ; Music Bank
-    dl $7E07F5 : db $02 : dw $0005 ; Music Track
-    dl $7E090F : db $02 : dw $CC00 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0600 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $D000 ; Screen subpixel Y position
-    dl $7E09C2 : db $02 : dw $00A9 ; Health
-    dl $7E09C6 : db $02 : dw $0009 ; Missiles
-    dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0008 ; More position/state
-    dl $7E0AF6 : db $02 : dw $06C0 ; Samus X
-    dl $7ED8B4 : db $02 : dw $0004 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $000F ; Events, Items, Doors
+    dw $078D, $8DD2  ; DDB
+    dw $079B, $9CB3  ; MDB
+    dw $07F3, $000F  ; Music Bank
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $CC00  ; Screen subpixel X position
+    dw $0911, $0600  ; Screen X position in pixels
+    dw $0913, $D000  ; Screen subpixel Y position
+    dw $09C2, $00A9  ; Health
+    dw $09C6, $0009  ; Missiles
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $06C0  ; Samus X
+    dw $D8B4, $0004  ; Doors
     dw #$FFFF
-.after
 
 preset_nintendopower_brinstar_spore_spawn:
     dw #preset_nintendopower_brinstar_big_pink ; Brinstar: Big Pink
-    dl $7E078D : db $02 : dw $8DC6 ; DDB
-    dl $7E078F : db $02 : dw $0000 ; DoorOut Index
-    dl $7E079B : db $02 : dw $9D9C ; MDB
-    dl $7E090F : db $02 : dw $A000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $02F0 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $0C00 ; Screen subpixel Y position
-    dl $7E09A6 : db $02 : dw $1000 ; Beams
-    dl $7E09A8 : db $02 : dw $1000 ; Beams
-    dl $7E09C6 : db $02 : dw $0007 ; Missiles
-    dl $7E09C8 : db $02 : dw $000F ; Max missiles
-    dl $7E0AF6 : db $02 : dw $037E ; Samus X
-    dl $7E0AFA : db $02 : dw $007B ; Samus Y
-    dl $7ED872 : db $02 : dw $14C0 ; Events, Items, Doors
-    dl $7ED8B4 : db $02 : dw $2404 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $0012 ; Events, Items, Doors
+    dw $078D, $8DC6  ; DDB
+    dw $079B, $9D9C  ; MDB
+    dw $090F, $A000  ; Screen subpixel X position
+    dw $0911, $02F0  ; Screen X position in pixels
+    dw $0913, $0C00  ; Screen subpixel Y position
+    dw $09A6, $1000  ; Beams
+    dw $09A8, $1000  ; Beams
+    dw $09C6, $0007  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $0AF6, $037E  ; Samus X
+    dw $0AFA, $007B  ; Samus Y
+    dw $D872, $14C0  ; Items
+    dw $D8B4, $2404  ; Doors
     dw #$FFFF
-.after
 
 preset_nintendopower_brinstar_spore_fall:
     dw #preset_nintendopower_brinstar_spore_spawn ; Brinstar: Spore Spawn
-    dl $7E078D : db $02 : dw $8E3E ; DDB
-    dl $7E078F : db $02 : dw $0001 ; DoorOut Index
-    dl $7E079B : db $02 : dw $9DC7 ; MDB
-    dl $7E07F3 : db $02 : dw $002A ; Music Bank
-    dl $7E090F : db $02 : dw $5000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $001C ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $00C7 ; Health
-    dl $7E09C6 : db $02 : dw $000F ; Missiles
-    dl $7E0AF6 : db $02 : dw $00CE ; Samus X
-    dl $7E0AFA : db $02 : dw $008B ; Samus Y
-    dl $7ED828 : db $02 : dw $0204 ; Events, Items, Doors
+    dw $078D, $8E3E  ; DDB
+    dw $079B, $9DC7  ; MDB
+    dw $07F3, $002A  ; Music Bank
+    dw $090F, $5000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $001C  ; Screen Y position in pixels
+    dw $09C2, $00C7  ; Health
+    dw $09C6, $000F  ; Missiles
+    dw $0AF6, $00CE  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw $D828, $0204  ; Bosses
     dw #$FFFF
-.after
 
 preset_nintendopower_brinstar_red_tower:
     dw #preset_nintendopower_brinstar_spore_fall ; Brinstar: Spore Fall
-    dl $7E078D : db $02 : dw $902A ; DDB
-    dl $7E079B : db $02 : dw $9FBA ; MDB
-    dl $7E07F3 : db $02 : dw $000F ; Music Bank
-    dl $7E090F : db $02 : dw $C000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0500 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $2400 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $00A9 ; Health
-    dl $7E09C6 : db $02 : dw $0014 ; Missiles
-    dl $7E09C8 : db $02 : dw $0014 ; Max missiles
-    dl $7E09CA : db $02 : dw $0004 ; Supers
-    dl $7E09CC : db $02 : dw $0005 ; Max supers
-    dl $7E0AF6 : db $02 : dw $05C5 ; Samus X
-    dl $7ED870 : db $02 : dw $4180 ; Events, Items, Doors
-    dl $7ED872 : db $02 : dw $16C0 ; Events, Items, Doors
-    dl $7ED8B4 : db $02 : dw $2604 ; Events, Items, Doors
-    dl $7ED8B6 : db $02 : dw $002C ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $0017 ; Events, Items, Doors
+    dw $078D, $902A  ; DDB
+    dw $079B, $9FBA  ; MDB
+    dw $07F3, $000F  ; Music Bank
+    dw $090F, $C000  ; Screen subpixel X position
+    dw $0911, $0500  ; Screen X position in pixels
+    dw $0913, $2400  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $09C2, $00A9  ; Health
+    dw $09C6, $0014  ; Missiles
+    dw $09C8, $0014  ; Max missiles
+    dw $09CA, $0004  ; Supers
+    dw $09CC, $0005  ; Max supers
+    dw $0AF6, $05C5  ; Samus X
+    dw $D870, $4180  ; Items
+    dw $D872, $16C0  ; Items
+    dw $D8B4, $2604  ; Doors
+    dw $D8B6, $002C  ; Doors
     dw #$FFFF
-.after
 
 preset_nintendopower_norfair_business_center:
     dw #preset_nintendopower_brinstar_red_tower ; Brinstar: Red Tower
-    dl $7E078D : db $02 : dw $A384 ; DDB
-    dl $7E078F : db $02 : dw $0003 ; DoorOut Index
-    dl $7E079B : db $02 : dw $A6A1 ; MDB
-    dl $7E07C3 : db $02 : dw $A5AA ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $5FBC ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2B3 ; GFX Pointers
-    dl $7E07F3 : db $02 : dw $0012 ; Music Bank
-    dl $7E07F5 : db $02 : dw $0003 ; Music Track
-    dl $7E090F : db $02 : dw $9000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $7C00 ; Screen subpixel Y position
-    dl $7E09A6 : db $02 : dw $1004 ; Beams
-    dl $7E09A8 : db $02 : dw $1004 ; Beams
-    dl $7E0A1C : db $02 : dw $0005 ; Samus position/state
-    dl $7E0AF6 : db $02 : dw $0081 ; Samus X
-    dl $7ED874 : db $02 : dw $0404 ; Events, Items, Doors
-    dl $7ED8B6 : db $02 : dw $802C ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $0018 ; Events, Items, Doors
+    dw $078D, $A384  ; DDB
+    dw $079B, $A6A1  ; MDB
+    dw $07F3, $0012  ; Music Bank
+    dw $07F5, $0003  ; Music Track
+    dw $090F, $9000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $7C00  ; Screen subpixel Y position
+    dw $09A6, $1004  ; Beams
+    dw $09A8, $1004  ; Beams
+    dw $0A1C, $0005  ; Samus position/state
+    dw $0AF6, $0081  ; Samus X
+    dw $D874, $0404  ; Items
+    dw $D8B6, $802C  ; Doors
     dw #$FFFF
-.after
 
 preset_nintendopower_norfair_kraid_warehouse:
     dw #preset_nintendopower_norfair_business_center ; Norfair: Business Center
-    dl $7E078D : db $02 : dw $92EE ; DDB
-    dl $7E090F : db $02 : dw $6000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0176 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $0800 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0014 ; Screen Y position in pixels
-    dl $7E09A2 : db $02 : dw $1104 ; Equipped Items
-    dl $7E09A4 : db $02 : dw $1104 ; Collected Items
-    dl $7E09C2 : db $02 : dw $012B ; Health
-    dl $7E09C4 : db $02 : dw $012B ; Max health
-    dl $7E09C6 : db $02 : dw $0019 ; Missiles
-    dl $7E09C8 : db $02 : dw $0019 ; Max missiles
-    dl $7E09CA : db $02 : dw $0003 ; Supers
-    dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
-    dl $7E0AF6 : db $02 : dw $01D6 ; Samus X
-    dl $7E0AFA : db $02 : dw $009B ; Samus Y
-    dl $7ED876 : db $02 : dw $01A0 ; Events, Items, Doors
-    dl $7ED8B8 : db $02 : dw $2000 ; Events, Items, Doors
-    dl $7ED8BA : db $02 : dw $0001 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $001D ; Events, Items, Doors
+    dw $078D, $92EE  ; DDB
+    dw $090F, $6000  ; Screen subpixel X position
+    dw $0911, $0176  ; Screen X position in pixels
+    dw $0913, $0800  ; Screen subpixel Y position
+    dw $0915, $0014  ; Screen Y position in pixels
+    dw $09A2, $1104  ; Equipped Items
+    dw $09A4, $1104  ; Collected Items
+    dw $09C2, $012B  ; Health
+    dw $09C4, $012B  ; Max health
+    dw $09C6, $0019  ; Missiles
+    dw $09C8, $0019  ; Max missiles
+    dw $09CA, $0003  ; Supers
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0AF6, $01D6  ; Samus X
+    dw $0AFA, $009B  ; Samus Y
+    dw $D876, $01A0  ; Items
+    dw $D8B8, $2000  ; Doors
+    dw $D8BA, $0001  ; Doors
     dw #$FFFF
-.after
 
 preset_nintendopower_norfair_kraid_fight:
     dw #preset_nintendopower_norfair_kraid_warehouse ; Norfair: Kraid Warehouse
-    dl $7E078D : db $02 : dw $919E ; DDB
-    dl $7E078F : db $02 : dw $0001 ; DoorOut Index
-    dl $7E079B : db $02 : dw $A56B ; MDB
-    dl $7E07F3 : db $02 : dw $0027 ; Music Bank
-    dl $7E07F5 : db $02 : dw $0006 ; Music Track
-    dl $7E090F : db $02 : dw $2000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $2000 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0100 ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $010D ; Health
-    dl $7E09CA : db $02 : dw $0004 ; Supers
-    dl $7E0AF6 : db $02 : dw $01CC ; Samus X
-    dl $7E0AFA : db $02 : dw $018B ; Samus Y
-    dl $7ED8B8 : db $02 : dw $2024 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $001E ; Events, Items, Doors
+    dw $078D, $919E  ; DDB
+    dw $079B, $A56B  ; MDB
+    dw $07F3, $0027  ; Music Bank
+    dw $07F5, $0006  ; Music Track
+    dw $090F, $2000  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $2000  ; Screen subpixel Y position
+    dw $0915, $0100  ; Screen Y position in pixels
+    dw $09C2, $010D  ; Health
+    dw $09CA, $0004  ; Supers
+    dw $0AF6, $01CC  ; Samus X
+    dw $0AFA, $018B  ; Samus Y
+    dw $D8B8, $2024  ; Doors
     dw #$FFFF
-.after
 
 preset_nintendopower_norfair_rising_tide:
     dw #preset_nintendopower_norfair_kraid_fight ; Norfair: Kraid Fight
-    dl $7E078D : db $02 : dw $92B2 ; DDB
-    dl $7E079B : db $02 : dw $A788 ; MDB
-    dl $7E079F : db $02 : dw $0002 ; Region
-    dl $7E07C3 : db $02 : dw $C3F9 ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $E4BD ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2B5 ; GFX Pointers
-    dl $7E07F3 : db $02 : dw $0015 ; Music Bank
-    dl $7E07F5 : db $02 : dw $0005 ; Music Track
-    dl $7E090F : db $02 : dw $5F80 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0200 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $7800 ; Screen subpixel Y position
-    dl $7E09A2 : db $02 : dw $1105 ; Equipped Items
-    dl $7E09A4 : db $02 : dw $1105 ; Collected Items
-    dl $7E09C2 : db $02 : dw $0177 ; Health
-    dl $7E09C4 : db $02 : dw $018F ; Max health
-    dl $7E09C6 : db $02 : dw $001E ; Missiles
-    dl $7E09C8 : db $02 : dw $001E ; Max missiles
-    dl $7E09CA : db $02 : dw $0002 ; Supers
-    dl $7E0AF6 : db $02 : dw $02C4 ; Samus X
-    dl $7ED828 : db $02 : dw $0304 ; Events, Items, Doors
-    dl $7ED874 : db $02 : dw $0C04 ; Events, Items, Doors
-    dl $7ED876 : db $02 : dw $01A3 ; Events, Items, Doors
-    dl $7ED8B8 : db $02 : dw $26EF ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $0022 ; Events, Items, Doors
+    dw $078D, $92B2  ; DDB
+    dw $079B, $A788  ; MDB
+    dw $07F3, $0015  ; Music Bank
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $5F80  ; Screen subpixel X position
+    dw $0911, $0200  ; Screen X position in pixels
+    dw $0913, $7800  ; Screen subpixel Y position
+    dw $09A2, $1105  ; Equipped Items
+    dw $09A4, $1105  ; Collected Items
+    dw $09C2, $0177  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $09C6, $001E  ; Missiles
+    dw $09C8, $001E  ; Max missiles
+    dw $09CA, $0002  ; Supers
+    dw $0AF6, $02C4  ; Samus X
+    dw $D828, $0304  ; Bosses
+    dw $D874, $0C04  ; Items
+    dw $D876, $01A3  ; Items
+    dw $D8B8, $26EF  ; Doors
     dw #$FFFF
-.after
 
 preset_nintendopower_norfair_reserve_tank:
     dw #preset_nintendopower_norfair_rising_tide ; Norfair: Rising Tide
-    dl $7E078D : db $02 : dw $95A6 ; DDB
-    dl $7E078F : db $02 : dw $0000 ; DoorOut Index
-    dl $7E079B : db $02 : dw $B07A ; MDB
-    dl $7E090F : db $02 : dw $C000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $B400 ; Screen subpixel Y position
-    dl $7E09A2 : db $02 : dw $3105 ; Equipped Items
-    dl $7E09A4 : db $02 : dw $3105 ; Collected Items
-    dl $7E09C2 : db $02 : dw $0184 ; Health
-    dl $7E09C6 : db $02 : dw $0028 ; Missiles
-    dl $7E09C8 : db $02 : dw $0028 ; Max missiles
-    dl $7E09CA : db $02 : dw $0005 ; Supers
-    dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0004 ; More position/state
-    dl $7E0AF6 : db $02 : dw $0038 ; Samus X
-    dl $7ED822 : db $02 : dw $0020 ; Events, Items, Doors
-    dl $7ED878 : db $02 : dw $0007 ; Events, Items, Doors
-    dl $7ED8BA : db $02 : dw $0031 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $002A ; Events, Items, Doors
+    dw $078D, $95A6  ; DDB
+    dw $079B, $B07A  ; MDB
+    dw $090F, $C000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $B400  ; Screen subpixel Y position
+    dw $09A2, $3105  ; Equipped Items
+    dw $09A4, $3105  ; Collected Items
+    dw $09C2, $0184  ; Health
+    dw $09C6, $0028  ; Missiles
+    dw $09C8, $0028  ; Max missiles
+    dw $09CA, $0005  ; Supers
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0038  ; Samus X
+    dw $D822, $0020  ; Events
+    dw $D878, $0007  ; Items
+    dw $D8BA, $0031  ; Doors
     dw #$FFFF
-.after
 
 preset_nintendopower_norfair_ice_beam:
     dw #preset_nintendopower_norfair_reserve_tank ; Norfair: Reserve Tank
-    dl $7E078D : db $02 : dw $97DA ; DDB
-    dl $7E079B : db $02 : dw $B167 ; MDB
-    dl $7E07C3 : db $02 : dw $860B ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $21C0 ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2C0 ; GFX Pointers
-    dl $7E090F : db $02 : dw $3000 ; Screen subpixel X position.
-    dl $7E0913 : db $02 : dw $CC00 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
-    dl $7E09C0 : db $02 : dw $0001 ; Manual/Auto reserve tank
-    dl $7E09C2 : db $02 : dw $0104 ; Health
-    dl $7E09C6 : db $02 : dw $0032 ; Missiles
-    dl $7E09C8 : db $02 : dw $0032 ; Max missiles
-    dl $7E09CA : db $02 : dw $0003 ; Supers
-    dl $7E09D4 : db $02 : dw $0064 ; Max reserves
-    dl $7E0AF6 : db $02 : dw $003B ; Samus X
-    dl $7E0AFA : db $02 : dw $008B ; Samus Y
-    dl $7ED876 : db $02 : dw $E1A3 ; Events, Items, Doors
-    dl $7ED8BA : db $02 : dw $0039 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $0030 ; Events, Items, Doors
+    dw $078D, $97DA  ; DDB
+    dw $079B, $B167  ; MDB
+    dw $090F, $3000  ; Screen subpixel X position
+    dw $0913, $CC00  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $09C0, $0001  ; Manual/Auto reserve tank
+    dw $09C2, $0104  ; Health
+    dw $09C6, $0032  ; Missiles
+    dw $09C8, $0032  ; Max missiles
+    dw $09CA, $0003  ; Supers
+    dw $09D4, $0064  ; Max reserves
+    dw $0AF6, $003B  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw $D876, $E1A3  ; Items
+    dw $D8BA, $0039  ; Doors
     dw #$FFFF
-.after
 
 preset_nintendopower_norfair_ice_escape:
     dw #preset_nintendopower_norfair_ice_beam ; Norfair: Ice Beam
-    dl $7E078D : db $02 : dw $935A ; DDB
-    dl $7E079B : db $02 : dw $A8B9 ; MDB
-    dl $7E07C3 : db $02 : dw $C3F9 ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $E4BD ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2B5 ; GFX Pointers
-    dl $7E090F : db $02 : dw $E001 ; Screen subpixel X position.
-    dl $7E0913 : db $02 : dw $7800 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0200 ; Screen Y position in pixels
-    dl $7E09A6 : db $02 : dw $1006 ; Beams
-    dl $7E09A8 : db $02 : dw $1006 ; Beams
-    dl $7E09C2 : db $02 : dw $00FE ; Health
-    dl $7E09CA : db $02 : dw $0002 ; Supers
-    dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0008 ; More position/state
-    dl $7E0AF6 : db $02 : dw $00BD ; Samus X
-    dl $7E0AFA : db $02 : dw $028B ; Samus Y
-    dl $7ED876 : db $02 : dw $E1A7 ; Events, Items, Doors
-    dl $7ED8B8 : db $02 : dw $2EEF ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $0031 ; Events, Items, Doors
+    dw $078D, $935A  ; DDB
+    dw $079B, $A8B9  ; MDB
+    dw $090F, $E001  ; Screen subpixel X position
+    dw $0913, $7800  ; Screen subpixel Y position
+    dw $0915, $0200  ; Screen Y position in pixels
+    dw $09A6, $1006  ; Beams
+    dw $09A8, $1006  ; Beams
+    dw $09C2, $00FE  ; Health
+    dw $09CA, $0002  ; Supers
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $00BD  ; Samus X
+    dw $0AFA, $028B  ; Samus Y
+    dw $D876, $E1A7  ; Items
+    dw $D8B8, $2EEF  ; Doors
     dw #$FFFF
-.after
 
 preset_nintendopower_norfair_shinespark_to_power_bombs:
     dw #preset_nintendopower_norfair_ice_escape ; Norfair: Ice Escape
-    dl $7E078D : db $02 : dw $92EE ; DDB
-    dl $7E078F : db $02 : dw $0003 ; DoorOut Index
-    dl $7E079B : db $02 : dw $A6A1 ; MDB
-    dl $7E079F : db $02 : dw $0001 ; Region
-    dl $7E07C3 : db $02 : dw $A5AA ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $5FBC ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2B3 ; GFX Pointers
-    dl $7E07F3 : db $02 : dw $0012 ; Music Bank
-    dl $7E07F5 : db $02 : dw $0003 ; Music Track
-    dl $7E090F : db $02 : dw $9000 ; Screen subpixel X position.
-    dl $7E0913 : db $02 : dw $8000 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $011B ; Health
-    dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0004 ; More position/state
-    dl $7E0AF6 : db $02 : dw $007E ; Samus X
-    dl $7E0AFA : db $02 : dw $008B ; Samus Y
+    dw $078D, $92EE  ; DDB
+    dw $079B, $A6A1  ; MDB
+    dw $07F3, $0012  ; Music Bank
+    dw $07F5, $0003  ; Music Track
+    dw $090F, $9000  ; Screen subpixel X position
+    dw $0913, $8000  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $09C2, $011B  ; Health
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $007E  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_nintendopower_norfair_business_center_2:
     dw #preset_nintendopower_norfair_shinespark_to_power_bombs ; Norfair: Shinespark to Power Bombs
-    dl $7E078D : db $02 : dw $A384 ; DDB
-    dl $7E090F : db $02 : dw $4000 ; Screen subpixel X position.
-    dl $7E0913 : db $02 : dw $7400 ; Screen subpixel Y position
-    dl $7E09C2 : db $02 : dw $00E4 ; Health
-    dl $7E09C6 : db $02 : dw $0037 ; Missiles
-    dl $7E09C8 : db $02 : dw $0037 ; Max missiles
-    dl $7E09CA : db $02 : dw $0003 ; Supers
-    dl $7E09CE : db $02 : dw $0004 ; Pbs
-    dl $7E09D0 : db $02 : dw $0005 ; Max pbs
-    dl $7E0AF6 : db $02 : dw $0082 ; Samus X
-    dl $7ED874 : db $02 : dw $0F04 ; Events, Items, Doors
-    dl $7ED8B6 : db $02 : dw $B02C ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $0033 ; Events, Items, Doors
+    dw $078D, $A384  ; DDB
+    dw $090F, $4000  ; Screen subpixel X position
+    dw $0913, $7400  ; Screen subpixel Y position
+    dw $09C2, $00E4  ; Health
+    dw $09C6, $0037  ; Missiles
+    dw $09C8, $0037  ; Max missiles
+    dw $09CA, $0003  ; Supers
+    dw $09CE, $0004  ; Pbs
+    dw $09D0, $0005  ; Max pbs
+    dw $0AF6, $0082  ; Samus X
+    dw $D874, $0F04  ; Items
+    dw $D8B6, $B02C  ; Doors
     dw #$FFFF
-.after
 
 preset_nintendopower_norfair_crocomire:
     dw #preset_nintendopower_norfair_business_center_2 ; Norfair: Business Center 2
-    dl $7E078D : db $02 : dw $9396 ; DDB
-    dl $7E078F : db $02 : dw $0001 ; DoorOut Index
-    dl $7E079B : db $02 : dw $A923 ; MDB
-    dl $7E079F : db $02 : dw $0002 ; Region
-    dl $7E07C3 : db $02 : dw $C3F9 ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $E4BD ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2B5 ; GFX Pointers
-    dl $7E07F3 : db $02 : dw $0015 ; Music Bank
-    dl $7E07F5 : db $02 : dw $0005 ; Music Track
-    dl $7E090F : db $02 : dw $5C80 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0C00 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $1400 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $021F ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $00C4 ; Health
-    dl $7E09CA : db $02 : dw $0002 ; Supers
-    dl $7E09CE : db $02 : dw $0005 ; Pbs
-    dl $7E0AF6 : db $02 : dw $0CB5 ; Samus X
-    dl $7E0AFA : db $02 : dw $02AB ; Samus Y
-    dl $7ED8B8 : db $02 : dw $6EEF ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $0034 ; Events, Items, Doors
+    dw $078D, $9396  ; DDB
+    dw $079B, $A923  ; MDB
+    dw $07F3, $0015  ; Music Bank
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $5C80  ; Screen subpixel X position
+    dw $0911, $0C00  ; Screen X position in pixels
+    dw $0913, $1400  ; Screen subpixel Y position
+    dw $0915, $021F  ; Screen Y position in pixels
+    dw $09C2, $00C4  ; Health
+    dw $09CA, $0002  ; Supers
+    dw $09CE, $0005  ; Pbs
+    dw $0AF6, $0CB5  ; Samus X
+    dw $0AFA, $02AB  ; Samus Y
+    dw $D8B8, $6EEF  ; Doors
     dw #$FFFF
-.after
 
 preset_nintendopower_norfair_grapple_beam:
     dw #preset_nintendopower_norfair_crocomire ; Norfair: Crocomire
-    dl $7E078D : db $02 : dw $944A ; DDB
-    dl $7E078F : db $02 : dw $0002 ; DoorOut Index
-    dl $7E079B : db $02 : dw $AB07 ; MDB
-    dl $7E07C5 : db $02 : dw $BBBD ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2B6 ; GFX Pointers
-    dl $7E090F : db $02 : dw $4000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $1000 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $041F ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $012A ; Health
-    dl $7E09C4 : db $02 : dw $01F3 ; Max health
-    dl $7E09CA : db $02 : dw $0004 ; Supers
-    dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0008 ; More position/state
-    dl $7E0AF6 : db $02 : dw $004A ; Samus X
-    dl $7E0AFA : db $02 : dw $04BB ; Samus Y
-    dl $7ED82A : db $02 : dw $0002 ; Events, Items, Doors
-    dl $7ED876 : db $02 : dw $E1B7 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $0035 ; Events, Items, Doors
+    dw $078D, $944A  ; DDB
+    dw $079B, $AB07  ; MDB
+    dw $090F, $4000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $1000  ; Screen subpixel Y position
+    dw $0915, $041F  ; Screen Y position in pixels
+    dw $09C2, $012A  ; Health
+    dw $09C4, $01F3  ; Max health
+    dw $09CA, $0004  ; Supers
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $004A  ; Samus X
+    dw $0AFA, $04BB  ; Samus Y
+    dw $D82A, $0002  ; Bosses
+    dw $D876, $E1B7  ; Items
     dw #$FFFF
-.after
 
 preset_nintendopower_norfair_exit_grapple_beam:
     dw #preset_nintendopower_norfair_grapple_beam ; Norfair: Grapple Beam
-    dl $7E078D : db $02 : dw $94DA ; DDB
-    dl $7E078F : db $02 : dw $0001 ; DoorOut Index
-    dl $7E079B : db $02 : dw $AC2B ; MDB
-    dl $7E07F5 : db $02 : dw $0003 ; Music Track
-    dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0200 ; Screen Y position in pixels
-    dl $7E09A2 : db $02 : dw $7105 ; Equipped Items
-    dl $7E09A4 : db $02 : dw $7105 ; Collected Items
-    dl $7E09C2 : db $02 : dw $0139 ; Health
-    dl $7E09C6 : db $02 : dw $003C ; Missiles
-    dl $7E09C8 : db $02 : dw $003C ; Max missiles
-    dl $7E09CE : db $02 : dw $0004 ; Pbs
-    dl $7E0AF6 : db $02 : dw $0055 ; Samus X
-    dl $7E0AFA : db $02 : dw $028B ; Samus Y
-    dl $7ED876 : db $02 : dw $F9B7 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $0037 ; Events, Items, Doors
+    dw $078D, $94DA  ; DDB
+    dw $079B, $AC2B  ; MDB
+    dw $07F5, $0003  ; Music Track
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $0200  ; Screen Y position in pixels
+    dw $09A2, $7105  ; Equipped Items
+    dw $09A4, $7105  ; Collected Items
+    dw $09C2, $0139  ; Health
+    dw $09C6, $003C  ; Missiles
+    dw $09C8, $003C  ; Max missiles
+    dw $09CE, $0004  ; Pbs
+    dw $0AF6, $0055  ; Samus X
+    dw $0AFA, $028B  ; Samus Y
+    dw $D876, $F9B7  ; Items
     dw #$FFFF
-.after
 
 preset_nintendopower_norfair_power_bombs_post_croc:
     dw #preset_nintendopower_norfair_exit_grapple_beam ; Norfair: Exit Grapple Beam
-    dl $7E078D : db $02 : dw $944A ; DDB
-    dl $7E078F : db $02 : dw $0002 ; DoorOut Index
-    dl $7E079B : db $02 : dw $AB07 ; MDB
-    dl $7E07F5 : db $02 : dw $0005 ; Music Track
-    dl $7E0913 : db $02 : dw $0C00 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
-    dl $7E09CE : db $02 : dw $0005 ; Pbs
-    dl $7E0AF6 : db $02 : dw $0075 ; Samus X
-    dl $7E0AFA : db $02 : dw $008B ; Samus Y
-    dl $7ED91A : db $02 : dw $0038 ; Events, Items, Doors
+    dw $078D, $944A  ; DDB
+    dw $079B, $AB07  ; MDB
+    dw $07F5, $0005  ; Music Track
+    dw $0913, $0C00  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $09CE, $0005  ; Pbs
+    dw $0AF6, $0075  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_nintendopower_norfair_red_pirate_shaft:
     dw #preset_nintendopower_norfair_power_bombs_post_croc ; Norfair: Power Bombs Post Croc
-    dl $7E078D : db $02 : dw $93C6 ; DDB
-    dl $7E078F : db $02 : dw $0003 ; DoorOut Index
-    dl $7E079B : db $02 : dw $AFCE ; MDB
-    dl $7E07C5 : db $02 : dw $E4BD ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2B5 ; GFX Pointers
-    dl $7E090F : db $02 : dw $A000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $02FE ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $9800 ; Screen subpixel Y position
-    dl $7E09C2 : db $02 : dw $0168 ; Health
-    dl $7E09CA : db $02 : dw $0003 ; Supers
-    dl $7E09CE : db $02 : dw $000A ; Pbs
-    dl $7E09D0 : db $02 : dw $000A ; Max pbs
-    dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0004 ; More position/state
-    dl $7E0AF6 : db $02 : dw $038D ; Samus X
-    dl $7ED876 : db $02 : dw $FBB7 ; Events, Items, Doors
-    dl $7ED8B8 : db $02 : dw $EEEF ; Events, Items, Doors
-    dl $7ED8BA : db $02 : dw $003B ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $003A ; Events, Items, Doors
+    dw $078D, $93C6  ; DDB
+    dw $079B, $AFCE  ; MDB
+    dw $090F, $A000  ; Screen subpixel X position
+    dw $0911, $02FE  ; Screen X position in pixels
+    dw $0913, $9800  ; Screen subpixel Y position
+    dw $09C2, $0168  ; Health
+    dw $09CA, $0003  ; Supers
+    dw $09CE, $000A  ; Pbs
+    dw $09D0, $000A  ; Max pbs
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $038D  ; Samus X
+    dw $D876, $FBB7  ; Items
+    dw $D8B8, $EEEF  ; Doors
+    dw $D8BA, $003B  ; Doors
     dw #$FFFF
-.after
 
 preset_nintendopower_norfair_bubble_mountain:
     dw #preset_nintendopower_norfair_red_pirate_shaft ; Norfair: Red Pirate Shaft
-    dl $7E078D : db $02 : dw $97F2 ; DDB
-    dl $7E078F : db $02 : dw $0000 ; DoorOut Index
-    dl $7E079B : db $02 : dw $AF72 ; MDB
-    dl $7E090F : db $02 : dw $D000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $6C00 ; Screen subpixel Y position
-    dl $7E09C2 : db $02 : dw $01F3 ; Health
-    dl $7E09CA : db $02 : dw $0005 ; Supers
-    dl $7E09D6 : db $02 : dw $0064 ; Reserves
-    dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0008 ; More position/state
-    dl $7E0AF6 : db $02 : dw $01C2 ; Samus X
+    dw $078D, $97F2  ; DDB
+    dw $079B, $AF72  ; MDB
+    dw $090F, $D000  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $6C00  ; Screen subpixel Y position
+    dw $09C2, $01F3  ; Health
+    dw $09CA, $0005  ; Supers
+    dw $09D6, $0064  ; Reserves
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $01C2  ; Samus X
     dw #$FFFF
-.after
 
 preset_nintendopower_norfair_wave_beam:
     dw #preset_nintendopower_norfair_bubble_mountain ; Norfair: Bubble Mountain
-    dl $7E078D : db $02 : dw $9582 ; DDB
-    dl $7E078F : db $02 : dw $0004 ; DoorOut Index
-    dl $7E079B : db $02 : dw $AD5E ; MDB
-    dl $7E090F : db $02 : dw $9FFF ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $3C00 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0103 ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $01DA ; Health
-    dl $7E09CA : db $02 : dw $0004 ; Supers
-    dl $7E09CE : db $02 : dw $0009 ; Pbs
-    dl $7E0AF6 : db $02 : dw $00B6 ; Samus X
-    dl $7E0AFA : db $02 : dw $018B ; Samus Y
-    dl $7ED8BA : db $02 : dw $007B ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $003B ; Events, Items, Doors
+    dw $078D, $9582  ; DDB
+    dw $079B, $AD5E  ; MDB
+    dw $090F, $9FFF  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $3C00  ; Screen subpixel Y position
+    dw $0915, $0103  ; Screen Y position in pixels
+    dw $09C2, $01DA  ; Health
+    dw $09CA, $0004  ; Supers
+    dw $09CE, $0009  ; Pbs
+    dw $0AF6, $00B6  ; Samus X
+    dw $0AFA, $018B  ; Samus Y
+    dw $D8BA, $007B  ; Doors
     dw #$FFFF
-.after
 
 preset_nintendopower_norfair_shinespark_2:
     dw #preset_nintendopower_norfair_wave_beam ; Norfair: Wave Beam
-    dl $7E078D : db $02 : dw $92EE ; DDB
-    dl $7E078F : db $02 : dw $0003 ; DoorOut Index
-    dl $7E079B : db $02 : dw $A6A1 ; MDB
-    dl $7E079F : db $02 : dw $0001 ; Region
-    dl $7E07C3 : db $02 : dw $A5AA ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $5FBC ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2B3 ; GFX Pointers
-    dl $7E07F3 : db $02 : dw $0012 ; Music Bank
-    dl $7E07F5 : db $02 : dw $0003 ; Music Track
-    dl $7E090F : db $02 : dw $B000 ; Screen subpixel X position.
-    dl $7E0913 : db $02 : dw $8000 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
-    dl $7E09A6 : db $02 : dw $1007 ; Beams
-    dl $7E09A8 : db $02 : dw $1007 ; Beams
-    dl $7E09C2 : db $02 : dw $01DF ; Health
-    dl $7E09C6 : db $02 : dw $0041 ; Missiles
-    dl $7E09C8 : db $02 : dw $0041 ; Max missiles
-    dl $7E09CA : db $02 : dw $0003 ; Supers
-    dl $7E09CE : db $02 : dw $000A ; Pbs
-    dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0004 ; More position/state
-    dl $7E0AF6 : db $02 : dw $0077 ; Samus X
-    dl $7E0AFA : db $02 : dw $008B ; Samus Y
-    dl $7ED878 : db $02 : dw $001F ; Events, Items, Doors
-    dl $7ED8BA : db $02 : dw $00FB ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $003F ; Events, Items, Doors
+    dw $078D, $92EE  ; DDB
+    dw $079B, $A6A1  ; MDB
+    dw $07F3, $0012  ; Music Bank
+    dw $07F5, $0003  ; Music Track
+    dw $090F, $B000  ; Screen subpixel X position
+    dw $0913, $8000  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $09A6, $1007  ; Beams
+    dw $09A8, $1007  ; Beams
+    dw $09C2, $01DF  ; Health
+    dw $09C6, $0041  ; Missiles
+    dw $09C8, $0041  ; Max missiles
+    dw $09CA, $0003  ; Supers
+    dw $09CE, $000A  ; Pbs
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0077  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw $D878, $001F  ; Items
+    dw $D8BA, $00FB  ; Doors
     dw #$FFFF
-.after
 
 preset_nintendopower_norfair_xray_beam:
     dw #preset_nintendopower_norfair_shinespark_2 ; Norfair: Shinespark 2
-    dl $7E078D : db $02 : dw $90F6 ; DDB
-    dl $7E078F : db $02 : dw $0000 ; DoorOut Index
-    dl $7E079B : db $02 : dw $A253 ; MDB
-    dl $7E07F5 : db $02 : dw $0005 ; Music Track
-    dl $7E090F : db $02 : dw $6000 ; Screen subpixel X position.
-    dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $061D ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $019B ; Health
-    dl $7E09CA : db $02 : dw $0002 ; Supers
-    dl $7E0AF6 : db $02 : dw $003B ; Samus X
-    dl $7E0AFA : db $02 : dw $068B ; Samus Y
-    dl $7ED8B6 : db $02 : dw $B22C ; Events, Items, Doors
+    dw $078D, $90F6  ; DDB
+    dw $079B, $A253  ; MDB
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $6000  ; Screen subpixel X position
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $061D  ; Screen Y position in pixels
+    dw $09C2, $019B  ; Health
+    dw $09CA, $0002  ; Supers
+    dw $0AF6, $003B  ; Samus X
+    dw $0AFA, $068B  ; Samus Y
+    dw $D8B6, $B22C  ; Doors
     dw #$FFFF
-.after
 
 preset_nintendopower_norfair_xray_beam_2:
     dw #preset_nintendopower_norfair_xray_beam ; Norfair: X-Ray Beam
-    dl $7E078D : db $02 : dw $9036 ; DDB
-    dl $7E078F : db $02 : dw $0002 ; DoorOut Index
-    dl $7E079B : db $02 : dw $A293 ; MDB
-    dl $7E090F : db $02 : dw $9000 ; Screen subpixel X position.
-    dl $7E0913 : db $02 : dw $BC00 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $01E6 ; Health
-    dl $7E0AF6 : db $02 : dw $004A ; Samus X
-    dl $7E0AFA : db $02 : dw $008B ; Samus Y
-    dl $7ED8B6 : db $02 : dw $B62C ; Events, Items, Doors
+    dw $078D, $9036  ; DDB
+    dw $079B, $A293  ; MDB
+    dw $090F, $9000  ; Screen subpixel X position
+    dw $0913, $BC00  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $09C2, $01E6  ; Health
+    dw $0AF6, $004A  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw $D8B6, $B62C  ; Doors
     dw #$FFFF
-.after
 
 preset_nintendopower_norfair_xray_beam_3:
     dw #preset_nintendopower_norfair_xray_beam_2 ; Norfair: X-Ray Beam 2
-    dl $7E078D : db $02 : dw $905A ; DDB
-    dl $7E078F : db $02 : dw $0000 ; DoorOut Index
-    dl $7E079B : db $02 : dw $A2CE ; MDB
-    dl $7E07F5 : db $02 : dw $0003 ; Music Track
-    dl $7E090F : db $02 : dw $5000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $00E2 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $4401 ; Screen subpixel Y position
-    dl $7E09A2 : db $02 : dw $F105 ; Equipped Items
-    dl $7E09A4 : db $02 : dw $F105 ; Collected Items
-    dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0008 ; More position/state
-    dl $7E0AF6 : db $02 : dw $0175 ; Samus X
-    dl $7ED874 : db $02 : dw $0F44 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $0040 ; Events, Items, Doors
+    dw $078D, $905A  ; DDB
+    dw $079B, $A2CE  ; MDB
+    dw $07F5, $0003  ; Music Track
+    dw $090F, $5000  ; Screen subpixel X position
+    dw $0911, $00E2  ; Screen X position in pixels
+    dw $0913, $4401  ; Screen subpixel Y position
+    dw $09A2, $F105  ; Equipped Items
+    dw $09A4, $F105  ; Collected Items
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $0175  ; Samus X
+    dw $D874, $0F44  ; Items
     dw #$FFFF
-.after
 
 preset_nintendopower_wrecked_ship_red_brinstar_elevator:
     dw #preset_nintendopower_norfair_xray_beam_3 ; Norfair: X-Ray Beam 3
-    dl $7E078D : db $02 : dw $90BA ; DDB
-    dl $7E078F : db $02 : dw $0002 ; DoorOut Index
-    dl $7E079B : db $02 : dw $962A ; MDB
-    dl $7E079F : db $02 : dw $0000 ; Region
-    dl $7E07C3 : db $02 : dw $F911 ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $43BA ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2AF ; GFX Pointers
-    dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $C000 ; Screen subpixel Y position
-    dl $7E09C2 : db $02 : dw $01D6 ; Health
-    dl $7E09CA : db $02 : dw $0005 ; Supers
-    dl $7E09CE : db $02 : dw $0008 ; Pbs
-    dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0004 ; More position/state
-    dl $7E0AF6 : db $02 : dw $007E ; Samus X
-    dl $7E0AFA : db $02 : dw $00AB ; Samus Y
+    dw $078D, $90BA  ; DDB
+    dw $079B, $962A  ; MDB
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $C000  ; Screen subpixel Y position
+    dw $09C2, $01D6  ; Health
+    dw $09CA, $0005  ; Supers
+    dw $09CE, $0008  ; Pbs
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $007E  ; Samus X
+    dw $0AFA, $00AB  ; Samus Y
     dw #$FFFF
-.after
 
 preset_nintendopower_wrecked_ship_moat_missiles:
     dw #preset_nintendopower_wrecked_ship_red_brinstar_elevator ; Wrecked Ship: Red Brinstar Elevator
-    dl $7E078D : db $02 : dw $8AF6 ; DDB
-    dl $7E078F : db $02 : dw $0000 ; DoorOut Index
-    dl $7E079B : db $02 : dw $948C ; MDB
-    dl $7E07C3 : db $02 : dw $C629 ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $7CBA ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2AD ; GFX Pointers
-    dl $7E07F5 : db $02 : dw $0005 ; Music Track
-    dl $7E090F : db $02 : dw $B000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0200 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $B000 ; Screen subpixel Y position
-    dl $7E09C2 : db $02 : dw $01EF ; Health
-    dl $7E09CE : db $02 : dw $0005 ; Pbs
-    dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0008 ; More position/state
-    dl $7E0AF6 : db $02 : dw $02B7 ; Samus X
-    dl $7E0AFA : db $02 : dw $008B ; Samus Y
-    dl $7ED8B0 : db $02 : dw $6000 ; Events, Items, Doors
-    dl $7ED8B2 : db $02 : dw $2C01 ; Events, Items, Doors
+    dw $078D, $8AF6  ; DDB
+    dw $079B, $948C  ; MDB
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $B000  ; Screen subpixel X position
+    dw $0911, $0200  ; Screen X position in pixels
+    dw $0913, $B000  ; Screen subpixel Y position
+    dw $09C2, $01EF  ; Health
+    dw $09CE, $0005  ; Pbs
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $02B7  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw $D8B0, $6000  ; Doors
+    dw $D8B2, $2C01  ; Doors
     dw #$FFFF
-.after
 
 preset_nintendopower_wrecked_ship_shinespark_to_phantoon:
     dw #preset_nintendopower_wrecked_ship_moat_missiles ; Wrecked Ship: Moat Missiles
-    dl $7E078D : db $02 : dw $8A36 ; DDB
-    dl $7E078F : db $02 : dw $0001 ; DoorOut Index
-    dl $7E079B : db $02 : dw $95FF ; MDB
-    dl $7E090F : db $02 : dw $1FC0 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $8A99 ; Screen subpixel Y position
-    dl $7E09C6 : db $02 : dw $0046 ; Missiles
-    dl $7E09C8 : db $02 : dw $0046 ; Max missiles
-    dl $7E0AF6 : db $02 : dw $01AC ; Samus X
-    dl $7ED870 : db $02 : dw $4190 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $0041 ; Events, Items, Doors
+    dw $078D, $8A36  ; DDB
+    dw $079B, $95FF  ; MDB
+    dw $090F, $1FC0  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $8A99  ; Screen subpixel Y position
+    dw $09C6, $0046  ; Missiles
+    dw $09C8, $0046  ; Max missiles
+    dw $0AF6, $01AC  ; Samus X
+    dw $D870, $4190  ; Items
     dw #$FFFF
-.after
 
 preset_nintendopower_wrecked_ship_phantoon:
     dw #preset_nintendopower_wrecked_ship_shinespark_to_phantoon ; Wrecked Ship: Shinespark to Phantoon
-    dl $7E078D : db $02 : dw $A1BC ; DDB
-    dl $7E079B : db $02 : dw $CAF6 ; MDB
-    dl $7E079F : db $02 : dw $0003 ; Region
-    dl $7E07C3 : db $02 : dw $AE9E ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $A6BB ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2B1 ; GFX Pointers
-    dl $7E07F3 : db $02 : dw $0030 ; Music Bank
-    dl $7E090F : db $02 : dw $7400 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0400 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $D000 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $071F ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $01BB ; Health
-    dl $7E09CA : db $02 : dw $0003 ; Supers
-    dl $7E0AF6 : db $02 : dw $044C ; Samus X
-    dl $7E0AFA : db $02 : dw $07BB ; Samus Y
-    dl $7ED8B0 : db $02 : dw $7000 ; Events, Items, Doors
-    dl $7ED8C0 : db $02 : dw $0010 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $0045 ; Events, Items, Doors
+    dw $078D, $A1BC  ; DDB
+    dw $079B, $CAF6  ; MDB
+    dw $07F3, $0030  ; Music Bank
+    dw $090F, $7400  ; Screen subpixel X position
+    dw $0911, $0400  ; Screen X position in pixels
+    dw $0913, $D000  ; Screen subpixel Y position
+    dw $0915, $071F  ; Screen Y position in pixels
+    dw $09C2, $01BB  ; Health
+    dw $09CA, $0003  ; Supers
+    dw $0AF6, $044C  ; Samus X
+    dw $0AFA, $07BB  ; Samus Y
+    dw $D8B0, $7000  ; Doors
+    dw $D8C0, $0010  ; Doors
     dw #$FFFF
-.after
 
 preset_nintendopower_wrecked_ship_movement_before_attic:
     dw #preset_nintendopower_wrecked_ship_phantoon ; Wrecked Ship: Phantoon
-    dl $7E078D : db $02 : dw $A210 ; DDB
-    dl $7E078F : db $02 : dw $0002 ; DoorOut Index
-    dl $7E079B : db $02 : dw $CDA8 ; MDB
-    dl $7E07C5 : db $02 : dw $E7BB ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2B0 ; GFX Pointers
-    dl $7E07F5 : db $02 : dw $0006 ; Music Track
-    dl $7E090F : db $02 : dw $D000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $B000 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $0076 ; Health
-    dl $7E09CA : db $02 : dw $000A ; Supers
-    dl $7E09CC : db $02 : dw $000A ; Max supers
-    dl $7E09CE : db $02 : dw $0009 ; Pbs
-    dl $7E0AF6 : db $02 : dw $00CD ; Samus X
-    dl $7E0AFA : db $02 : dw $008B ; Samus Y
-    dl $7ED82A : db $02 : dw $0102 ; Events, Items, Doors
-    dl $7ED880 : db $02 : dw $0020 ; Events, Items, Doors
-    dl $7ED8C0 : db $02 : dw $0074 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $0047 ; Events, Items, Doors
+    dw $078D, $A210  ; DDB
+    dw $079B, $CDA8  ; MDB
+    dw $07F5, $0006  ; Music Track
+    dw $090F, $D000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $B000  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $09C2, $0076  ; Health
+    dw $09CA, $000A  ; Supers
+    dw $09CC, $000A  ; Max supers
+    dw $09CE, $0009  ; Pbs
+    dw $0AF6, $00CD  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw $D82A, $0102  ; Bosses
+    dw $D880, $0020  ; Items
+    dw $D8C0, $0074  ; Doors
     dw #$FFFF
-.after
 
 preset_nintendopower_wrecked_ship_attic:
     dw #preset_nintendopower_wrecked_ship_movement_before_attic ; Wrecked Ship: Movement before Attic
-    dl $7E078D : db $02 : dw $A2E8 ; DDB
-    dl $7E078F : db $02 : dw $0000 ; DoorOut Index
-    dl $7E079B : db $02 : dw $CAF6 ; MDB
-    dl $7E090F : db $02 : dw $B000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0400 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
-    dl $7E09C2 : db $02 : dw $00C6 ; Health
-    dl $7E0AF6 : db $02 : dw $0482 ; Samus X
-    dl $7E0AFA : db $02 : dw $005B ; Samus Y
-    dl $7ED91A : db $02 : dw $0048 ; Events, Items, Doors
+    dw $078D, $A2E8  ; DDB
+    dw $079B, $CAF6  ; MDB
+    dw $090F, $B000  ; Screen subpixel X position
+    dw $0911, $0400  ; Screen X position in pixels
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $09C2, $00C6  ; Health
+    dw $0AF6, $0482  ; Samus X
+    dw $0AFA, $005B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_nintendopower_wrecked_ship_bowling_alley:
     dw #preset_nintendopower_wrecked_ship_attic ; Wrecked Ship: Attic
-    dl $7E078D : db $02 : dw $A1E0 ; DDB
-    dl $7E078F : db $02 : dw $0002 ; DoorOut Index
-    dl $7E079B : db $02 : dw $93FE ; MDB
-    dl $7E079F : db $02 : dw $0000 ; Region
-    dl $7E07C3 : db $02 : dw $C629 ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $7CBA ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2AD ; GFX Pointers
-    dl $7E07F3 : db $02 : dw $000C ; Music Bank
-    dl $7E07F5 : db $02 : dw $0005 ; Music Track
-    dl $7E090F : db $02 : dw $9800 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0200 ; Screen X position in pixels
-    dl $7E0915 : db $02 : dw $0203 ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $01F3 ; Health
-    dl $7E09CE : db $02 : dw $0008 ; Pbs
-    dl $7E0AF6 : db $02 : dw $02DC ; Samus X
-    dl $7E0AFA : db $02 : dw $028B ; Samus Y
-    dl $7ED8C0 : db $02 : dw $0174 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $004B ; Events, Items, Doors
+    dw $078D, $A1E0  ; DDB
+    dw $079B, $93FE  ; MDB
+    dw $07F3, $000C  ; Music Bank
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $9800  ; Screen subpixel X position
+    dw $0911, $0200  ; Screen X position in pixels
+    dw $0915, $0203  ; Screen Y position in pixels
+    dw $09C2, $01F3  ; Health
+    dw $09CE, $0008  ; Pbs
+    dw $0AF6, $02DC  ; Samus X
+    dw $0AFA, $028B  ; Samus Y
+    dw $D8C0, $0174  ; Doors
     dw #$FFFF
-.after
 
 preset_nintendopower_wrecked_ship_gravity_suit_room:
     dw #preset_nintendopower_wrecked_ship_bowling_alley ; Wrecked Ship: Bowling Alley
-    dl $7E078D : db $02 : dw $A1A4 ; DDB
-    dl $7E079B : db $02 : dw $CE40 ; MDB
-    dl $7E079F : db $02 : dw $0003 ; Region
-    dl $7E07C3 : db $02 : dw $AE9E ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $E7BB ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2B0 ; GFX Pointers
-    dl $7E07F3 : db $02 : dw $0030 ; Music Bank
-    dl $7E07F5 : db $02 : dw $0003 ; Music Track
-    dl $7E090F : db $02 : dw $9000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $7400 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
-    dl $7E09A2 : db $02 : dw $F125 ; Equipped Items
-    dl $7E09A4 : db $02 : dw $F125 ; Collected Items
-    dl $7E09C2 : db $02 : dw $0149 ; Health
-    dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0004 ; More position/state
-    dl $7E0AF6 : db $02 : dw $0075 ; Samus X
-    dl $7E0AFA : db $02 : dw $008B ; Samus Y
-    dl $7ED880 : db $02 : dw $00A0 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $004E ; Events, Items, Doors
+    dw $078D, $A1A4  ; DDB
+    dw $079B, $CE40  ; MDB
+    dw $07F3, $0030  ; Music Bank
+    dw $07F5, $0003  ; Music Track
+    dw $090F, $9000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $7400  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $09A2, $F125  ; Equipped Items
+    dw $09A4, $F125  ; Collected Items
+    dw $09C2, $0149  ; Health
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0075  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw $D880, $00A0  ; Items
     dw #$FFFF
-.after
 
 preset_nintendopower_wrecked_ship_red_tower_3:
     dw #preset_nintendopower_wrecked_ship_gravity_suit_room ; Wrecked Ship: Gravity Suit Room
-    dl $7E078D : db $02 : dw $90AE ; DDB
-    dl $7E079B : db $02 : dw $A2F7 ; MDB
-    dl $7E079F : db $02 : dw $0001 ; Region
-    dl $7E07C3 : db $02 : dw $A5AA ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $5FBC ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2B3 ; GFX Pointers
-    dl $7E07F3 : db $02 : dw $0012 ; Music Bank
-    dl $7E07F5 : db $02 : dw $0005 ; Music Track
-    dl $7E090F : db $02 : dw $D000 ; Screen subpixel X position.
-    dl $7E0913 : db $02 : dw $3800 ; Screen subpixel Y position
-    dl $7E09C2 : db $02 : dw $01DD ; Health
-    dl $7E09CE : db $02 : dw $0009 ; Pbs
-    dl $7E0AF6 : db $02 : dw $0034 ; Samus X
-    dl $7ED91A : db $02 : dw $0052 ; Events, Items, Doors
+    dw $078D, $90AE  ; DDB
+    dw $079B, $A2F7  ; MDB
+    dw $07F3, $0012  ; Music Bank
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $D000  ; Screen subpixel X position
+    dw $0913, $3800  ; Screen subpixel Y position
+    dw $09C2, $01DD  ; Health
+    dw $09CE, $0009  ; Pbs
+    dw $0AF6, $0034  ; Samus X
     dw #$FFFF
-.after
 
 preset_nintendopower_maridia_mainstreet:
     dw #preset_nintendopower_wrecked_ship_red_tower_3 ; Wrecked Ship: Red Tower 3
-    dl $7E078D : db $02 : dw $A330 ; DDB
-    dl $7E078F : db $02 : dw $0000 ; DoorOut Index
-    dl $7E079B : db $02 : dw $CFC9 ; MDB
-    dl $7E079F : db $02 : dw $0004 ; Region
-    dl $7E07C3 : db $02 : dw $B130 ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $3CBE ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2B8 ; GFX Pointers
-    dl $7E07F3 : db $02 : dw $001B ; Music Bank
-    dl $7E07F5 : db $02 : dw $0006 ; Music Track
-    dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $5800 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $071C ; Screen Y position in pixels
-    dl $7E09A6 : db $02 : dw $1001 ; Beams
-    dl $7E09C2 : db $02 : dw $01F3 ; Health
-    dl $7E09CA : db $02 : dw $0009 ; Supers
-    dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0008 ; More position/state
-    dl $7E0AF6 : db $02 : dw $01AA ; Samus X
-    dl $7E0AFA : db $02 : dw $0791 ; Samus Y
-    dl $7ED820 : db $02 : dw $0801 ; Events, Items, Doors
-    dl $7ED8B6 : db $02 : dw $B72C ; Events, Items, Doors
-    dl $7ED8C0 : db $02 : dw $2174 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $0054 ; Events, Items, Doors
+    dw $078D, $A330  ; DDB
+    dw $079B, $CFC9  ; MDB
+    dw $07F3, $001B  ; Music Bank
+    dw $07F5, $0006  ; Music Track
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $5800  ; Screen subpixel Y position
+    dw $0915, $071C  ; Screen Y position in pixels
+    dw $09A6, $1001  ; Beams
+    dw $09C2, $01F3  ; Health
+    dw $09CA, $0009  ; Supers
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $01AA  ; Samus X
+    dw $0AFA, $0791  ; Samus Y
+    dw $D820, $0801  ; Events
+    dw $D8B6, $B72C  ; Doors
+    dw $D8C0, $2174  ; Doors
     dw #$FFFF
-.after
 
 preset_nintendopower_maridia_pants_room:
     dw #preset_nintendopower_maridia_mainstreet ; Maridia: Mainstreet
-    dl $7E078D : db $02 : dw $A66C ; DDB
-    dl $7E078F : db $02 : dw $0001 ; DoorOut Index
-    dl $7E079B : db $02 : dw $D4C2 ; MDB
-    dl $7E07C3 : db $02 : dw $E78D ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $2EBE ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2B9 ; GFX Pointers
-    dl $7E07F5 : db $02 : dw $0005 ; Music Track
-    dl $7E090F : db $02 : dw $2000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0200 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $F000 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $017A ; Health
-    dl $7E09CA : db $02 : dw $0008 ; Supers
-    dl $7E09CE : db $02 : dw $000A ; Pbs
-    dl $7E0AF6 : db $02 : dw $02C7 ; Samus X
-    dl $7E0AFA : db $02 : dw $008B ; Samus Y
+    dw $078D, $A66C  ; DDB
+    dw $079B, $D4C2  ; MDB
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $2000  ; Screen subpixel X position
+    dw $0911, $0200  ; Screen X position in pixels
+    dw $0913, $F000  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $09C2, $017A  ; Health
+    dw $09CA, $0008  ; Supers
+    dw $09CE, $000A  ; Pbs
+    dw $0AF6, $02C7  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_nintendopower_maridia_east_pants_room:
     dw #preset_nintendopower_maridia_pants_room ; Maridia: Pants Room
-    dl $7E078D : db $02 : dw $A7C8 ; DDB
-    dl $7E078F : db $02 : dw $0000 ; DoorOut Index
-    dl $7E079B : db $02 : dw $D8C5 ; MDB
-    dl $7E090F : db $02 : dw $8000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $B800 ; Screen subpixel Y position
-    dl $7E09A2 : db $02 : dw $F127 ; Equipped Items
-    dl $7E09A4 : db $02 : dw $F127 ; Collected Items
-    dl $7E09C2 : db $02 : dw $014D ; Health
-    dl $7E09CE : db $02 : dw $0009 ; Pbs
-    dl $7E0A1C : db $02 : dw $008A ; Samus position/state
-    dl $7E0A1E : db $02 : dw $1504 ; More position/state
-    dl $7E0AF6 : db $02 : dw $0025 ; Samus X
-    dl $7E0AFA : db $02 : dw $00AB ; Samus Y
-    dl $7ED820 : db $02 : dw $2801 ; Events, Items, Doors
-    dl $7ED882 : db $02 : dw $0040 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $0055 ; Events, Items, Doors
+    dw $078D, $A7C8  ; DDB
+    dw $079B, $D8C5  ; MDB
+    dw $090F, $8000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $B800  ; Screen subpixel Y position
+    dw $09A2, $F127  ; Equipped Items
+    dw $09A4, $F127  ; Collected Items
+    dw $09C2, $014D  ; Health
+    dw $09CE, $0009  ; Pbs
+    dw $0A1C, $008A  ; Samus position/state
+    dw $0A1E, $1504  ; More position/state
+    dw $0AF6, $0025  ; Samus X
+    dw $0AFA, $00AB  ; Samus Y
+    dw $D820, $2801  ; Events
+    dw $D882, $0040  ; Items
     dw #$FFFF
-.after
 
 preset_nintendopower_maridia_super_door:
     dw #preset_nintendopower_maridia_east_pants_room ; Maridia: East Pants Room
-    dl $7E078D : db $02 : dw $A420 ; DDB
-    dl $7E078F : db $02 : dw $0001 ; DoorOut Index
-    dl $7E079B : db $02 : dw $D21C ; MDB
-    dl $7E07C3 : db $02 : dw $B130 ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $3CBE ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2B8 ; GFX Pointers
-    dl $7E090F : db $02 : dw $7000 ; Screen subpixel X position.
-    dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $002D ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $0120 ; Health
-    dl $7E09C6 : db $02 : dw $0045 ; Missiles
-    dl $7E09CE : db $02 : dw $000A ; Pbs
-    dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0004 ; More position/state
-    dl $7E0AF6 : db $02 : dw $007C ; Samus X
-    dl $7E0AFA : db $02 : dw $009B ; Samus Y
+    dw $078D, $A420  ; DDB
+    dw $079B, $D21C  ; MDB
+    dw $090F, $7000  ; Screen subpixel X position
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $002D  ; Screen Y position in pixels
+    dw $09C2, $0120  ; Health
+    dw $09C6, $0045  ; Missiles
+    dw $09CE, $000A  ; Pbs
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $007C  ; Samus X
+    dw $0AFA, $009B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_nintendopower_maridia_fish_tank:
     dw #preset_nintendopower_maridia_super_door ; Maridia: Super Door
-    dl $7E078D : db $02 : dw $A330 ; DDB
-    dl $7E078F : db $02 : dw $0000 ; DoorOut Index
-    dl $7E079B : db $02 : dw $CFC9 ; MDB
-    dl $7E07F5 : db $02 : dw $0006 ; Music Track
-    dl $7E090F : db $02 : dw $A200 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0200 ; Screen X position in pixels
-    dl $7E0915 : db $02 : dw $061B ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $01F3 ; Health
-    dl $7E09C6 : db $02 : dw $0046 ; Missiles
-    dl $7E09CA : db $02 : dw $0009 ; Supers
-    dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0008 ; More position/state
-    dl $7E0AF6 : db $02 : dw $02AB ; Samus X
-    dl $7E0AFA : db $02 : dw $068B ; Samus Y
-    dl $7ED91A : db $02 : dw $0057 ; Events, Items, Doors
+    dw $078D, $A330  ; DDB
+    dw $079B, $CFC9  ; MDB
+    dw $07F5, $0006  ; Music Track
+    dw $090F, $A200  ; Screen subpixel X position
+    dw $0911, $0200  ; Screen X position in pixels
+    dw $0915, $061B  ; Screen Y position in pixels
+    dw $09C2, $01F3  ; Health
+    dw $09C6, $0046  ; Missiles
+    dw $09CA, $0009  ; Supers
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $02AB  ; Samus X
+    dw $0AFA, $068B  ; Samus Y
     dw #$FFFF
-.after
 
 preset_nintendopower_maridia_mama_turtle:
     dw #preset_nintendopower_maridia_fish_tank ; Maridia: Fish Tank
-    dl $7E078D : db $02 : dw $A3B4 ; DDB
-    dl $7E078F : db $02 : dw $0002 ; DoorOut Index
-    dl $7E079B : db $02 : dw $D017 ; MDB
-    dl $7E090F : db $02 : dw $F000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $01F1 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $9400 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0204 ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $01B7 ; Health
-    dl $7E09CA : db $02 : dw $0008 ; Supers
-    dl $7E0AF6 : db $02 : dw $026F ; Samus X
-    dl $7E0AFA : db $02 : dw $028B ; Samus Y
-    dl $7ED8C0 : db $02 : dw $6174 ; Events, Items, Doors
+    dw $078D, $A3B4  ; DDB
+    dw $079B, $D017  ; MDB
+    dw $090F, $F000  ; Screen subpixel X position
+    dw $0911, $01F1  ; Screen X position in pixels
+    dw $0913, $9400  ; Screen subpixel Y position
+    dw $0915, $0204  ; Screen Y position in pixels
+    dw $09C2, $01B7  ; Health
+    dw $09CA, $0008  ; Supers
+    dw $0AF6, $026F  ; Samus X
+    dw $0AFA, $028B  ; Samus Y
+    dw $D8C0, $6174  ; Doors
     dw #$FFFF
-.after
 
 preset_nintendopower_maridia_crab_supers:
     dw #preset_nintendopower_maridia_mama_turtle ; Maridia: Mama Turtle
-    dl $7E078D : db $02 : dw $A3E4 ; DDB
-    dl $7E078F : db $02 : dw $0001 ; DoorOut Index
-    dl $7E079B : db $02 : dw $D055 ; MDB
-    dl $7E090F : db $02 : dw $6000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $8400 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0300 ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $0257 ; Health
-    dl $7E09C4 : db $02 : dw $0257 ; Max health
-    dl $7E09C6 : db $02 : dw $004B ; Missiles
-    dl $7E09C8 : db $02 : dw $004B ; Max missiles
-    dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0004 ; More position/state
-    dl $7E0AF6 : db $02 : dw $0064 ; Samus X
-    dl $7E0AFA : db $02 : dw $038B ; Samus Y
-    dl $7ED880 : db $02 : dw $0CA0 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $005B ; Events, Items, Doors
+    dw $078D, $A3E4  ; DDB
+    dw $079B, $D055  ; MDB
+    dw $090F, $6000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $8400  ; Screen subpixel Y position
+    dw $0915, $0300  ; Screen Y position in pixels
+    dw $09C2, $0257  ; Health
+    dw $09C4, $0257  ; Max health
+    dw $09C6, $004B  ; Missiles
+    dw $09C8, $004B  ; Max missiles
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0064  ; Samus X
+    dw $0AFA, $038B  ; Samus Y
+    dw $D880, $0CA0  ; Items
     dw #$FFFF
-.after
 
 preset_nintendopower_maridia_aqueduct:
     dw #preset_nintendopower_maridia_crab_supers ; Maridia: Crab Supers
-    dl $7E078D : db $02 : dw $A468 ; DDB
-    dl $7E078F : db $02 : dw $0005 ; DoorOut Index
-    dl $7E079B : db $02 : dw $D1A3 ; MDB
-    dl $7E090F : db $02 : dw $C000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $6400 ; Screen subpixel Y position
-    dl $7E09C2 : db $02 : dw $0224 ; Health
-    dl $7E09CA : db $02 : dw $000C ; Supers
-    dl $7E09CC : db $02 : dw $000F ; Max supers
-    dl $7E09D2 : db $02 : dw $0003 ; Currently selected item
-    dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0008 ; More position/state
-    dl $7E0AF6 : db $02 : dw $01AF ; Samus X
-    dl $7ED880 : db $02 : dw $0EA0 ; Events, Items, Doors
-    dl $7ED8C0 : db $02 : dw $E174 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $005D ; Events, Items, Doors
+    dw $078D, $A468  ; DDB
+    dw $079B, $D1A3  ; MDB
+    dw $090F, $C000  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $6400  ; Screen subpixel Y position
+    dw $09C2, $0224  ; Health
+    dw $09CA, $000C  ; Supers
+    dw $09CC, $000F  ; Max supers
+    dw $09D2, $0003  ; Currently selected item
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $01AF  ; Samus X
+    dw $D880, $0EA0  ; Items
+    dw $D8C0, $E174  ; Doors
     dw #$FFFF
-.after
 
 preset_nintendopower_maridia_botwoon:
     dw #preset_nintendopower_maridia_aqueduct ; Maridia: Aqueduct
-    dl $7E078D : db $02 : dw $A768 ; DDB
-    dl $7E078F : db $02 : dw $0000 ; DoorOut Index
-    dl $7E079B : db $02 : dw $D5A7 ; MDB
-    dl $7E07C3 : db $02 : dw $E78D ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $2EBE ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2B9 ; GFX Pointers
-    dl $7E07F5 : db $02 : dw $0005 ; Music Track
-    dl $7E090F : db $02 : dw $7000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0010 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $8800 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $01FC ; Health
-    dl $7E09C6 : db $02 : dw $0050 ; Missiles
-    dl $7E09C8 : db $02 : dw $0050 ; Max missiles
-    dl $7E09CA : db $02 : dw $0011 ; Supers
-    dl $7E09CC : db $02 : dw $0014 ; Max supers
-    dl $7E09CE : db $02 : dw $0009 ; Pbs
-    dl $7E09D2 : db $02 : dw $0000 ; Currently selected item
-    dl $7E0AF6 : db $02 : dw $0081 ; Samus X
-    dl $7E0AFA : db $02 : dw $006B ; Samus Y
-    dl $7ED882 : db $02 : dw $0070 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $0061 ; Events, Items, Doors
+    dw $078D, $A768  ; DDB
+    dw $079B, $D5A7  ; MDB
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $7000  ; Screen subpixel X position
+    dw $0911, $0010  ; Screen X position in pixels
+    dw $0913, $8800  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $09C2, $01FC  ; Health
+    dw $09C6, $0050  ; Missiles
+    dw $09C8, $0050  ; Max missiles
+    dw $09CA, $0011  ; Supers
+    dw $09CC, $0014  ; Max supers
+    dw $09CE, $0009  ; Pbs
+    dw $09D2, $0000  ; Currently selected item
+    dw $0AF6, $0081  ; Samus X
+    dw $0AFA, $006B  ; Samus Y
+    dw $D882, $0070  ; Items
     dw #$FFFF
-.after
 
 preset_nintendopower_maridia_full_halfie:
     dw #preset_nintendopower_maridia_botwoon ; Maridia: Botwoon
-    dl $7E078D : db $02 : dw $A774 ; DDB
-    dl $7E078F : db $02 : dw $0001 ; DoorOut Index
-    dl $7E079B : db $02 : dw $D95E ; MDB
-    dl $7E07F3 : db $02 : dw $002A ; Music Bank
-    dl $7E07F5 : db $02 : dw $0003 ; Music Track
-    dl $7E090F : db $02 : dw $4000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $A800 ; Screen subpixel Y position
-    dl $7E09C2 : db $02 : dw $0208 ; Health
-    dl $7E09C6 : db $02 : dw $004F ; Missiles
-    dl $7E09CA : db $02 : dw $000A ; Supers
-    dl $7E09CE : db $02 : dw $0008 ; Pbs
-    dl $7E0AF6 : db $02 : dw $0197 ; Samus X
-    dl $7E0AFA : db $02 : dw $009B ; Samus Y
-    dl $7ED82C : db $02 : dw $0002 ; Events, Items, Doors
+    dw $078D, $A774  ; DDB
+    dw $079B, $D95E  ; MDB
+    dw $07F3, $002A  ; Music Bank
+    dw $07F5, $0003  ; Music Track
+    dw $090F, $4000  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $A800  ; Screen subpixel Y position
+    dw $09C2, $0208  ; Health
+    dw $09C6, $004F  ; Missiles
+    dw $09CA, $000A  ; Supers
+    dw $09CE, $0008  ; Pbs
+    dw $0AF6, $0197  ; Samus X
+    dw $0AFA, $009B  ; Samus Y
+    dw $D82C, $0002  ; Bosses
     dw #$FFFF
-.after
 
 preset_nintendopower_maridia_draygon:
     dw #preset_nintendopower_maridia_full_halfie ; Maridia: Full Halfie
-    dl $7E078D : db $02 : dw $A7EC ; DDB
-    dl $7E079B : db $02 : dw $D81A ; MDB
-    dl $7E07C3 : db $02 : dw $860B ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $21C0 ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2C0 ; GFX Pointers
-    dl $7E07F3 : db $02 : dw $001B ; Music Bank
-    dl $7E07F5 : db $02 : dw $0005 ; Music Track
-    dl $7E090F : db $02 : dw $5001 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $2800 ; Screen subpixel Y position
-    dl $7E09C2 : db $02 : dw $02BB ; Health
-    dl $7E09C4 : db $02 : dw $02BB ; Max health
-    dl $7E09C6 : db $02 : dw $0050 ; Missiles
-    dl $7E09CA : db $02 : dw $000E ; Supers
-    dl $7E09CE : db $02 : dw $0009 ; Pbs
-    dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0004 ; More position/state
-    dl $7E0AF6 : db $02 : dw $0044 ; Samus X
-    dl $7E0AFA : db $02 : dw $008B ; Samus Y
-    dl $7ED882 : db $02 : dw $0170 ; Events, Items, Doors
-    dl $7ED8C2 : db $02 : dw $0500 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $0063 ; Events, Items, Doors
+    dw $078D, $A7EC  ; DDB
+    dw $079B, $D81A  ; MDB
+    dw $07F3, $001B  ; Music Bank
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $5001  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $2800  ; Screen subpixel Y position
+    dw $09C2, $02BB  ; Health
+    dw $09C4, $02BB  ; Max health
+    dw $09C6, $0050  ; Missiles
+    dw $09CA, $000E  ; Supers
+    dw $09CE, $0009  ; Pbs
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0044  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw $D882, $0170  ; Items
+    dw $D8C2, $0500  ; Doors
     dw #$FFFF
-.after
 
 preset_nintendopower_maridia_going_to_plasma_beam:
     dw #preset_nintendopower_maridia_draygon ; Maridia: Draygon
-    dl $7E078D : db $02 : dw $A5A0 ; DDB
-    dl $7E078F : db $02 : dw $0000 ; DoorOut Index
-    dl $7E079B : db $02 : dw $D5EC ; MDB
-    dl $7E07C3 : db $02 : dw $E78D ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $2EBE ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2B9 ; GFX Pointers
-    dl $7E090F : db $02 : dw $D000 ; Screen subpixel X position.
-    dl $7E0913 : db $02 : dw $6400 ; Screen subpixel Y position
-    dl $7E09A2 : db $02 : dw $F327 ; Equipped Items
-    dl $7E09A4 : db $02 : dw $F327 ; Collected Items
-    dl $7E09C6 : db $02 : dw $0055 ; Missiles
-    dl $7E09C8 : db $02 : dw $0055 ; Max missiles
-    dl $7E09CA : db $02 : dw $0014 ; Supers
-    dl $7E09CE : db $02 : dw $000A ; Pbs
-    dl $7E0AF6 : db $02 : dw $004D ; Samus X
-    dl $7E0AFA : db $02 : dw $00AB ; Samus Y
-    dl $7ED82C : db $02 : dw $0003 ; Events, Items, Doors
-    dl $7ED882 : db $02 : dw $05F0 ; Events, Items, Doors
-    dl $7ED8C2 : db $02 : dw $DD80 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $0066 ; Events, Items, Doors
+    dw $078D, $A5A0  ; DDB
+    dw $079B, $D5EC  ; MDB
+    dw $090F, $D000  ; Screen subpixel X position
+    dw $0913, $6400  ; Screen subpixel Y position
+    dw $09A2, $F327  ; Equipped Items
+    dw $09A4, $F327  ; Collected Items
+    dw $09C6, $0055  ; Missiles
+    dw $09C8, $0055  ; Max missiles
+    dw $09CA, $0014  ; Supers
+    dw $09CE, $000A  ; Pbs
+    dw $0AF6, $004D  ; Samus X
+    dw $0AFA, $00AB  ; Samus Y
+    dw $D82C, $0003  ; Bosses
+    dw $D882, $05F0  ; Items
+    dw $D8C2, $DD80  ; Doors
     dw #$FFFF
-.after
 
 preset_nintendopower_maridia_plasma_beam:
     dw #preset_nintendopower_maridia_going_to_plasma_beam ; Maridia: Going to Plasma Beam
-    dl $7E078D : db $02 : dw $A5DC ; DDB
-    dl $7E078F : db $02 : dw $0001 ; DoorOut Index
-    dl $7E079B : db $02 : dw $D27E ; MDB
-    dl $7E07C3 : db $02 : dw $B130 ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $3CBE ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2B8 ; GFX Pointers
-    dl $7E090F : db $02 : dw $C000 ; Screen subpixel X position.
-    dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
-    dl $7E09C6 : db $02 : dw $0052 ; Missiles
-    dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0008 ; More position/state
-    dl $7E0AF6 : db $02 : dw $00D9 ; Samus X
-    dl $7E0AFA : db $02 : dw $008B ; Samus Y
-    dl $7ED8C2 : db $02 : dw $DD88 ; Events, Items, Doors
+    dw $078D, $A5DC  ; DDB
+    dw $079B, $D27E  ; MDB
+    dw $090F, $C000  ; Screen subpixel X position
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $09C6, $0052  ; Missiles
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $00D9  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw $D8C2, $DD88  ; Doors
     dw #$FFFF
-.after
 
 preset_nintendopower_maridia_long_tube:
     dw #preset_nintendopower_maridia_plasma_beam ; Maridia: Plasma Beam
-    dl $7E078D : db $02 : dw $A5D0 ; DDB
-    dl $7E078F : db $02 : dw $0000 ; DoorOut Index
-    dl $7E079B : db $02 : dw $D340 ; MDB
-    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $001A ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $2000 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $021F ; Screen Y position in pixels
-    dl $7E09A6 : db $02 : dw $1009 ; Beams
-    dl $7E09A8 : db $02 : dw $100F ; Beams
-    dl $7E09C2 : db $02 : dw $0298 ; Health
-    dl $7E09C6 : db $02 : dw $0055 ; Missiles
-    dl $7E09CA : db $02 : dw $0013 ; Supers
-    dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0004 ; More position/state
-    dl $7E0AF6 : db $02 : dw $00BA ; Samus X
-    dl $7E0AFA : db $02 : dw $02AB ; Samus Y
-    dl $7ED880 : db $02 : dw $8EA0 ; Events, Items, Doors
-    dl $7ED8C2 : db $02 : dw $DD9A ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $0067 ; Events, Items, Doors
+    dw $078D, $A5D0  ; DDB
+    dw $079B, $D340  ; MDB
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $001A  ; Screen X position in pixels
+    dw $0913, $2000  ; Screen subpixel Y position
+    dw $0915, $021F  ; Screen Y position in pixels
+    dw $09A6, $1009  ; Beams
+    dw $09A8, $100F  ; Beams
+    dw $09C2, $0298  ; Health
+    dw $09C6, $0055  ; Missiles
+    dw $09CA, $0013  ; Supers
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $00BA  ; Samus X
+    dw $0AFA, $02AB  ; Samus Y
+    dw $D880, $8EA0  ; Items
+    dw $D8C2, $DD9A  ; Doors
     dw #$FFFF
-.after
 
 preset_nintendopower_norfair_2_pre_gt_fight:
     dw #preset_nintendopower_maridia_long_tube ; Maridia: Long Tube
-    dl $7E078D : db $02 : dw $9246 ; DDB
-    dl $7E078F : db $02 : dw $0005 ; DoorOut Index
-    dl $7E079B : db $02 : dw $A7DE ; MDB
-    dl $7E079F : db $02 : dw $0002 ; Region
-    dl $7E07C3 : db $02 : dw $C3F9 ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $BBBD ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2B6 ; GFX Pointers
-    dl $7E07F3 : db $02 : dw $0015 ; Music Bank
-    dl $7E090F : db $02 : dw $4000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $023B ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $02BB ; Health
-    dl $7E09CA : db $02 : dw $0012 ; Supers
-    dl $7E0AF6 : db $02 : dw $007A ; Samus X
+    dw $078D, $9246  ; DDB
+    dw $079B, $A7DE  ; MDB
+    dw $07F3, $0015  ; Music Bank
+    dw $090F, $4000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $023B  ; Screen Y position in pixels
+    dw $09C2, $02BB  ; Health
+    dw $09CA, $0012  ; Supers
+    dw $0AF6, $007A  ; Samus X
     dw #$FFFF
-.after
 
 preset_nintendopower_norfair_2_elevator_menu:
     dw #preset_nintendopower_norfair_2_pre_gt_fight ; Norfair 2: Pre GT Fight
-    dl $7E078D : db $02 : dw $96EA ; DDB
-    dl $7E078F : db $02 : dw $0000 ; DoorOut Index
-    dl $7E079B : db $02 : dw $AF14 ; MDB
-    dl $7E07C5 : db $02 : dw $E4BD ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2B5 ; GFX Pointers
-    dl $7E090F : db $02 : dw $F000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $00BC ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $B000 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0036 ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $027F ; Health
-    dl $7E0AF6 : db $02 : dw $0129 ; Samus X
-    dl $7E0AFA : db $02 : dw $00AB ; Samus Y
-    dl $7ED8BA : db $02 : dw $01FB ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $0069 ; Events, Items, Doors
+    dw $078D, $96EA  ; DDB
+    dw $079B, $AF14  ; MDB
+    dw $090F, $F000  ; Screen subpixel X position
+    dw $0911, $00BC  ; Screen X position in pixels
+    dw $0913, $B000  ; Screen subpixel Y position
+    dw $0915, $0036  ; Screen Y position in pixels
+    dw $09C2, $027F  ; Health
+    dw $0AF6, $0129  ; Samus X
+    dw $0AFA, $00AB  ; Samus Y
+    dw $D8BA, $01FB  ; Doors
     dw #$FFFF
-.after
 
 preset_nintendopower_norfair_2_golden_torizo:
     dw #preset_nintendopower_norfair_2_elevator_menu ; Norfair 2: Elevator Menu
-    dl $7E078D : db $02 : dw $9852 ; DDB
-    dl $7E079B : db $02 : dw $B1E5 ; MDB
-    dl $7E07F3 : db $02 : dw $0018 ; Music Bank
-    dl $7E090F : db $02 : dw $D000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0200 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0200 ; Screen Y position in pixels
-    dl $7E09A6 : db $02 : dw $100B ; Beams
-    dl $7E09C2 : db $02 : dw $01D7 ; Health
-    dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0008 ; More position/state
-    dl $7E0AF6 : db $02 : dw $02BB ; Samus X
-    dl $7E0AFA : db $02 : dw $028B ; Samus Y
-    dl $7ED820 : db $02 : dw $3801 ; Events, Items, Doors
+    dw $078D, $9852  ; DDB
+    dw $079B, $B1E5  ; MDB
+    dw $07F3, $0018  ; Music Bank
+    dw $090F, $D000  ; Screen subpixel X position
+    dw $0911, $0200  ; Screen X position in pixels
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $0200  ; Screen Y position in pixels
+    dw $09A6, $100B  ; Beams
+    dw $09C2, $01D7  ; Health
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $02BB  ; Samus X
+    dw $0AFA, $028B  ; Samus Y
+    dw $D820, $3801  ; Events
     dw #$FFFF
-.after
 
 preset_nintendopower_norfair_2_on_route_to_ridley:
     dw #preset_nintendopower_norfair_2_golden_torizo ; Norfair 2: Golden Torizo
-    dl $7E078D : db $02 : dw $9A7A ; DDB
-    dl $7E078F : db $02 : dw $0001 ; DoorOut Index
-    dl $7E079B : db $02 : dw $B305 ; MDB
-    dl $7E07C3 : db $02 : dw $860B ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $58C0 ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2BE ; GFX Pointers
-    dl $7E07F3 : db $02 : dw $0024 ; Music Bank
-    dl $7E07F5 : db $02 : dw $0003 ; Music Track
-    dl $7E090F : db $02 : dw $6000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $9000 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
-    dl $7E09A2 : db $02 : dw $F32F ; Equipped Items
-    dl $7E09A4 : db $02 : dw $F32F ; Collected Items
-    dl $7E09C2 : db $02 : dw $02BB ; Health
-    dl $7E09C6 : db $02 : dw $005A ; Missiles
-    dl $7E09C8 : db $02 : dw $005A ; Max missiles
-    dl $7E09CA : db $02 : dw $0018 ; Supers
-    dl $7E09CC : db $02 : dw $0019 ; Max supers
-    dl $7E09CE : db $02 : dw $0009 ; Pbs
-    dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0004 ; More position/state
-    dl $7E0AF6 : db $02 : dw $003D ; Samus X
-    dl $7E0AFA : db $02 : dw $008B ; Samus Y
-    dl $7ED82A : db $02 : dw $0106 ; Events, Items, Doors
-    dl $7ED878 : db $02 : dw $80DF ; Events, Items, Doors
-    dl $7ED8BA : db $02 : dw $03FB ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $006C ; Events, Items, Doors
+    dw $078D, $9A7A  ; DDB
+    dw $079B, $B305  ; MDB
+    dw $07F3, $0024  ; Music Bank
+    dw $07F5, $0003  ; Music Track
+    dw $090F, $6000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $9000  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $09A2, $F32F  ; Equipped Items
+    dw $09A4, $F32F  ; Collected Items
+    dw $09C2, $02BB  ; Health
+    dw $09C6, $005A  ; Missiles
+    dw $09C8, $005A  ; Max missiles
+    dw $09CA, $0018  ; Supers
+    dw $09CC, $0019  ; Max supers
+    dw $09CE, $0009  ; Pbs
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $003D  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw $D82A, $0106  ; Bosses
+    dw $D878, $80DF  ; Items
+    dw $D8BA, $03FB  ; Doors
     dw #$FFFF
-.after
 
 preset_nintendopower_norfair_2_worst_room_in_the_game:
     dw #preset_nintendopower_norfair_2_on_route_to_ridley ; Norfair 2: On Route to Ridley
-    dl $7E078D : db $02 : dw $9912 ; DDB
-    dl $7E078F : db $02 : dw $0004 ; DoorOut Index
-    dl $7E079B : db $02 : dw $B457 ; MDB
-    dl $7E07C3 : db $02 : dw $C3F9 ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $E4BD ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2B5 ; GFX Pointers
-    dl $7E07F3 : db $02 : dw $0018 ; Music Bank
-    dl $7E07F5 : db $02 : dw $0005 ; Music Track
-    dl $7E090F : db $02 : dw $9400 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0300 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $7000 ; Screen subpixel Y position
-    dl $7E09C2 : db $02 : dw $0274 ; Health
-    dl $7E09CA : db $02 : dw $0017 ; Supers
-    dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0008 ; More position/state
-    dl $7E0AF6 : db $02 : dw $03DB ; Samus X
-    dl $7ED91A : db $02 : dw $006D ; Events, Items, Doors
+    dw $078D, $9912  ; DDB
+    dw $079B, $B457  ; MDB
+    dw $07F3, $0018  ; Music Bank
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $9400  ; Screen subpixel X position
+    dw $0911, $0300  ; Screen X position in pixels
+    dw $0913, $7000  ; Screen subpixel Y position
+    dw $09C2, $0274  ; Health
+    dw $09CA, $0017  ; Supers
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $03DB  ; Samus X
     dw #$FFFF
-.after
 
 preset_nintendopower_norfair_2_metal_ninja_pirates:
     dw #preset_nintendopower_norfair_2_worst_room_in_the_game ; Norfair 2: Worst Room in the Game
-    dl $7E078D : db $02 : dw $99EA ; DDB
-    dl $7E078F : db $02 : dw $0000 ; DoorOut Index
-    dl $7E079B : db $02 : dw $B5D5 ; MDB
-    dl $7E090F : db $02 : dw $1000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $021B ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $01BA ; Health
-    dl $7E09CA : db $02 : dw $0016 ; Supers
-    dl $7E09CE : db $02 : dw $0003 ; Pbs
-    dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0004 ; More position/state
-    dl $7E0AF6 : db $02 : dw $0153 ; Samus X
-    dl $7E0AFA : db $02 : dw $028B ; Samus Y
-    dl $7ED8BA : db $02 : dw $C3FB ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $006E ; Events, Items, Doors
+    dw $078D, $99EA  ; DDB
+    dw $079B, $B5D5  ; MDB
+    dw $090F, $1000  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $021B  ; Screen Y position in pixels
+    dw $09C2, $01BA  ; Health
+    dw $09CA, $0016  ; Supers
+    dw $09CE, $0003  ; Pbs
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0153  ; Samus X
+    dw $0AFA, $028B  ; Samus Y
+    dw $D8BA, $C3FB  ; Doors
     dw #$FFFF
-.after
 
 preset_nintendopower_norfair_2_ridley:
     dw #preset_nintendopower_norfair_2_metal_ninja_pirates ; Norfair 2: Metal Ninja Pirates
-    dl $7E078D : db $02 : dw $995A ; DDB
-    dl $7E079B : db $02 : dw $B37A ; MDB
-    dl $7E090F : db $02 : dw $C000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $A000 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $02BB ; Health
-    dl $7E09CA : db $02 : dw $0019 ; Supers
-    dl $7E09CE : db $02 : dw $0006 ; Pbs
-    dl $7E0AF6 : db $02 : dw $004D ; Samus X
-    dl $7E0AFA : db $02 : dw $00AB ; Samus Y
-    dl $7ED8BA : db $02 : dw $D3FB ; Events, Items, Doors
-    dl $7ED8BC : db $02 : dw $0001 ; Events, Items, Doors
+    dw $078D, $995A  ; DDB
+    dw $079B, $B37A  ; MDB
+    dw $090F, $C000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $A000  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $09C2, $02BB  ; Health
+    dw $09CA, $0019  ; Supers
+    dw $09CE, $0006  ; Pbs
+    dw $0AF6, $004D  ; Samus X
+    dw $0AFA, $00AB  ; Samus Y
+    dw $D8BA, $D3FB  ; Doors
+    dw $D8BC, $0001  ; Doors
     dw #$FFFF
-.after
 
 preset_nintendopower_norfair_2_escape_from_ridley:
     dw #preset_nintendopower_norfair_2_ridley ; Norfair 2: Ridley
-    dl $7E078D : db $02 : dw $98B2 ; DDB
-    dl $7E079B : db $02 : dw $B698 ; MDB
-    dl $7E07F3 : db $02 : dw $0024 ; Music Bank
-    dl $7E07F5 : db $02 : dw $0003 ; Music Track
-    dl $7E090F : db $02 : dw $9000 ; Screen subpixel X position.
-    dl $7E0913 : db $02 : dw $2400 ; Screen subpixel Y position
-    dl $7E09C2 : db $02 : dw $031F ; Health
-    dl $7E09C4 : db $02 : dw $031F ; Max health
-    dl $7E09CE : db $02 : dw $0007 ; Pbs
-    dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0008 ; More position/state
-    dl $7E0AF6 : db $02 : dw $00B7 ; Samus X
-    dl $7ED82A : db $02 : dw $0107 ; Events, Items, Doors
-    dl $7ED878 : db $02 : dw $C0DF ; Events, Items, Doors
-    dl $7ED8BA : db $02 : dw $DBFB ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $006F ; Events, Items, Doors
+    dw $078D, $98B2  ; DDB
+    dw $079B, $B698  ; MDB
+    dw $07F3, $0024  ; Music Bank
+    dw $07F5, $0003  ; Music Track
+    dw $090F, $9000  ; Screen subpixel X position
+    dw $0913, $2400  ; Screen subpixel Y position
+    dw $09C2, $031F  ; Health
+    dw $09C4, $031F  ; Max health
+    dw $09CE, $0007  ; Pbs
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $00B7  ; Samus X
+    dw $D82A, $0107  ; Bosses
+    dw $D878, $C0DF  ; Items
+    dw $D8BA, $DBFB  ; Doors
     dw #$FFFF
-.after
 
 preset_nintendopower_norfair_2_landing_site:
     dw #preset_nintendopower_norfair_2_escape_from_ridley ; Norfair 2: Escape from Ridley
-    dl $7E078D : db $02 : dw $8AC6 ; DDB
-    dl $7E079B : db $02 : dw $91F8 ; MDB
-    dl $7E079F : db $02 : dw $0000 ; Region
-    dl $7E07C3 : db $02 : dw $C629 ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $7CBA ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2AD ; GFX Pointers
-    dl $7E07F3 : db $02 : dw $000C ; Music Bank
-    dl $7E07F5 : db $02 : dw $0005 ; Music Track
-    dl $7E090F : db $02 : dw $E800 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0401 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $6C00 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0400 ; Screen Y position in pixels
-    dl $7E09CE : db $02 : dw $000A ; Pbs
-    dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0004 ; More position/state
-    dl $7E0AF6 : db $02 : dw $047E ; Samus X
-    dl $7E0AFA : db $02 : dw $04BB ; Samus Y
-    dl $7ED8BA : db $02 : dw $DFFB ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $0076 ; Events, Items, Doors
+    dw $078D, $8AC6  ; DDB
+    dw $079B, $91F8  ; MDB
+    dw $07F3, $000C  ; Music Bank
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $E800  ; Screen subpixel X position
+    dw $0911, $0401  ; Screen X position in pixels
+    dw $0913, $6C00  ; Screen subpixel Y position
+    dw $0915, $0400  ; Screen Y position in pixels
+    dw $09CE, $000A  ; Pbs
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $047E  ; Samus X
+    dw $0AFA, $04BB  ; Samus Y
+    dw $D8BA, $DFFB  ; Doors
     dw #$FFFF
-.after
 
 preset_nintendopower_tourian_metroids_1:
     dw #preset_nintendopower_norfair_2_landing_site ; Norfair 2: Landing Site
-    dl $7E078D : db $02 : dw $9222 ; DDB
-    dl $7E078F : db $02 : dw $0001 ; DoorOut Index
-    dl $7E079B : db $02 : dw $DAAE ; MDB
-    dl $7E079F : db $02 : dw $0005 ; Region
-    dl $7E07C3 : db $02 : dw $D414 ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $EDBF ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2BA ; GFX Pointers
-    dl $7E07F3 : db $02 : dw $001E ; Music Bank
-    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0000 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0238 ; Screen Y position in pixels
-    dl $7E09A2 : db $02 : dw $F327 ; Equipped Items
-    dl $7E09CA : db $02 : dw $0018 ; Supers
-    dl $7E0A1C : db $02 : dw $009B ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0000 ; More position/state
-    dl $7E0AF6 : db $02 : dw $0080 ; Samus X
-    dl $7E0AFA : db $02 : dw $02A8 ; Samus Y
-    dl $7ED820 : db $02 : dw $3FC1 ; Events, Items, Doors
-    dl $7ED8B2 : db $02 : dw $6C01 ; Events, Items, Doors
-    dl $7ED90C : db $02 : dw $0100 ; Events, Items, Doors
-    dl $7ED91A : db $02 : dw $0079 ; Events, Items, Doors
+    dw $078D, $9222  ; DDB
+    dw $079B, $DAAE  ; MDB
+    dw $07F3, $001E  ; Music Bank
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $0238  ; Screen Y position in pixels
+    dw $09A2, $F327  ; Equipped Items
+    dw $09CA, $0018  ; Supers
+    dw $0A1C, $009B  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
+    dw $0AF6, $0080  ; Samus X
+    dw $0AFA, $02A8  ; Samus Y
+    dw $D820, $3FC1  ; Events
+    dw $D8B2, $6C01  ; Doors
+    dw $D90C, $0100  ; Map Stations
     dw #$FFFF
-.after
 
 preset_nintendopower_tourian_metroids_2:
     dw #preset_nintendopower_tourian_metroids_1 ; Tourian: Metroids 1
-    dl $7E078D : db $02 : dw $A984 ; DDB
-    dl $7E078F : db $02 : dw $0000 ; DoorOut Index
-    dl $7E079B : db $02 : dw $DAE1 ; MDB
-    dl $7E090F : db $02 : dw $E000 ; Screen subpixel X position.
-    dl $7E0913 : db $02 : dw $0800 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
-    dl $7E0A1C : db $02 : dw $001C ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0304 ; More position/state
-    dl $7E0AF6 : db $02 : dw $0095 ; Samus X
-    dl $7E0AFA : db $02 : dw $0096 ; Samus Y
-    dl $7E0B3F : db $02 : dw $0001 ; Blue suit
-    dl $7ED822 : db $02 : dw $0021 ; Events, Items, Doors
-    dl $7ED8C4 : db $02 : dw $0001 ; Events, Items, Doors
+    dw $078D, $A984  ; DDB
+    dw $079B, $DAE1  ; MDB
+    dw $090F, $E000  ; Screen subpixel X position
+    dw $0913, $0800  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0A1C, $001C  ; Samus position/state
+    dw $0A1E, $0304  ; More position/state
+    dw $0AF6, $0095  ; Samus X
+    dw $0AFA, $0096  ; Samus Y
+    dw $0B3F, $0001  ; Blue suit
+    dw $D822, $0021  ; Events
+    dw $D8C4, $0001  ; Doors
     dw #$FFFF
-.after
 
 preset_nintendopower_tourian_metroids_3:
     dw #preset_nintendopower_tourian_metroids_2 ; Tourian: Metroids 2
-    dl $7E078D : db $02 : dw $A9B4 ; DDB
-    dl $7E078F : db $02 : dw $0001 ; DoorOut Index
-    dl $7E079B : db $02 : dw $DB31 ; MDB
-    dl $7E090F : db $02 : dw $8000 ; Screen subpixel X position.
-    dl $7E0913 : db $02 : dw $1400 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $00EF ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $02DD ; Health
-    dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0008 ; More position/state
-    dl $7E0AF6 : db $02 : dw $00D4 ; Samus X
-    dl $7E0AFA : db $02 : dw $018B ; Samus Y
-    dl $7E0B3F : db $02 : dw $0000 ; Blue suit
-    dl $7ED822 : db $02 : dw $0023 ; Events, Items, Doors
-    dl $7ED8C4 : db $02 : dw $0003 ; Events, Items, Doors
-    dl $7ED90C : db $02 : dw $FF00 ; Events, Items, Doors
+    dw $078D, $A9B4  ; DDB
+    dw $079B, $DB31  ; MDB
+    dw $090F, $8000  ; Screen subpixel X position
+    dw $0913, $1400  ; Screen subpixel Y position
+    dw $0915, $00EF  ; Screen Y position in pixels
+    dw $09C2, $02DD  ; Health
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $00D4  ; Samus X
+    dw $0AFA, $018B  ; Samus Y
+    dw $0B3F, $0000  ; Blue suit
+    dw $D822, $0023  ; Events
+    dw $D8C4, $0003  ; Doors
     dw #$FFFF
-.after
 
 preset_nintendopower_tourian_metroids_4:
     dw #preset_nintendopower_tourian_metroids_3 ; Tourian: Metroids 3
-    dl $7E078D : db $02 : dw $A9CC ; DDB
-    dl $7E079B : db $02 : dw $DB7D ; MDB
-    dl $7E090F : db $02 : dw $E000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0500 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $CC00 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $0000 ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $031F ; Health
-    dl $7E09CA : db $02 : dw $0019 ; Supers
-    dl $7E0AF6 : db $02 : dw $05DA ; Samus X
-    dl $7E0AFA : db $02 : dw $008B ; Samus Y
-    dl $7ED822 : db $02 : dw $0027 ; Events, Items, Doors
-    dl $7ED8C4 : db $02 : dw $0007 ; Events, Items, Doors
+    dw $078D, $A9CC  ; DDB
+    dw $079B, $DB7D  ; MDB
+    dw $090F, $E000  ; Screen subpixel X position
+    dw $0911, $0500  ; Screen X position in pixels
+    dw $0913, $CC00  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $09C2, $031F  ; Health
+    dw $09CA, $0019  ; Supers
+    dw $0AF6, $05DA  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw $D822, $0027  ; Events
+    dw $D8C4, $0007  ; Doors
     dw #$FFFF
-.after
 
 preset_nintendopower_tourian_baby_skip:
     dw #preset_nintendopower_tourian_metroids_4 ; Tourian: Metroids 4
-    dl $7E078D : db $02 : dw $AA14 ; DDB
-    dl $7E079B : db $02 : dw $DC65 ; MDB
-    dl $7E07F3 : db $02 : dw $0045 ; Music Bank
-    dl $7E07F5 : db $02 : dw $0006 ; Music Track
-    dl $7E090F : db $02 : dw $0FFF ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $F400 ; Screen subpixel Y position
-    dl $7E09C2 : db $02 : dw $02D1 ; Health
-    dl $7E0A1C : db $02 : dw $0002 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0004 ; More position/state
-    dl $7E0AF6 : db $02 : dw $01CC ; Samus X
-    dl $7E0AFA : db $02 : dw $00AB ; Samus Y
-    dl $7ED822 : db $02 : dw $002F ; Events, Items, Doors
-    dl $7ED8C4 : db $02 : dw $002F ; Events, Items, Doors
+    dw $078D, $AA14  ; DDB
+    dw $079B, $DC65  ; MDB
+    dw $07F3, $0045  ; Music Bank
+    dw $07F5, $0006  ; Music Track
+    dw $090F, $0FFF  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $F400  ; Screen subpixel Y position
+    dw $09C2, $02D1  ; Health
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $01CC  ; Samus X
+    dw $0AFA, $00AB  ; Samus Y
+    dw $D822, $002F  ; Events
+    dw $D8C4, $002F  ; Doors
     dw #$FFFF
-.after
 
 preset_nintendopower_tourian_zeb_skip:
     dw #preset_nintendopower_tourian_baby_skip ; Tourian: Baby Skip
-    dl $7E078D : db $02 : dw $AA5C ; DDB
-    dl $7E079B : db $02 : dw $DDC4 ; MDB
-    dl $7E07F3 : db $02 : dw $001E ; Music Bank
-    dl $7E07F5 : db $02 : dw $0005 ; Music Track
-    dl $7E090F : db $02 : dw $A000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0300 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $3000 ; Screen subpixel Y position
-    dl $7E09C2 : db $02 : dw $031F ; Health
-    dl $7E09CA : db $02 : dw $0017 ; Supers
-    dl $7E0A1C : db $02 : dw $0001 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0008 ; More position/state
-    dl $7E0AF6 : db $02 : dw $03B9 ; Samus X
-    dl $7E0AFA : db $02 : dw $008B ; Samus Y
-    dl $7ED8C4 : db $02 : dw $01AF ; Events, Items, Doors
+    dw $078D, $AA5C  ; DDB
+    dw $079B, $DDC4  ; MDB
+    dw $07F3, $001E  ; Music Bank
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $A000  ; Screen subpixel X position
+    dw $0911, $0300  ; Screen X position in pixels
+    dw $0913, $3000  ; Screen subpixel Y position
+    dw $09C2, $031F  ; Health
+    dw $09CA, $0017  ; Supers
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $03B9  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw $D8C4, $01AF  ; Doors
     dw #$FFFF
-.after
 
-preset_nintendopower_tourian_escape_room_2:
+preset_nintendopower_tourian_mother_brain_2:
     dw #preset_nintendopower_tourian_zeb_skip ; Tourian: Zeb Skip
-    dl $7E078D : db $02 : dw $AA8C ; DDB
-    dl $7E079B : db $02 : dw $DE4D ; MDB
-    dl $7E07F3 : db $02 : dw $0024 ; Music Bank
-    dl $7E07F5 : db $02 : dw $0007 ; Music Track
-    dl $7E090F : db $02 : dw $0000 ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $000F ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $B000 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $000F ; Screen Y position in pixels
-    dl $7E09A6 : db $02 : dw $1009 ; Beams
-    dl $7E09C2 : db $02 : dw $02A7 ; Health
-    dl $7E09C6 : db $02 : dw $0000 ; Missiles
-    dl $7E09CA : db $02 : dw $0000 ; Supers
-    dl $7E09CE : db $02 : dw $0000 ; Pbs
-    dl $7E0A1C : db $02 : dw $0010 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0104 ; More position/state
-    dl $7E0A76 : db $02 : dw $8000 ; Hyper beam
-    dl $7E0AF6 : db $02 : dw $00AF ; Samus X
-    dl $7ED820 : db $02 : dw $7FC5 ; Events, Items, Doors
-    dl $7ED82C : db $02 : dw $0203 ; Events, Items, Doors
-    dl $7ED8C4 : db $02 : dw $03AF ; Events, Items, Doors
+    dw $078D, $AAC8  ; DDB
+    dw $079B, $DD58  ; MDB
+    dw $07F3, $0021  ; Music Bank
+    dw $07F5, $0000  ; Music Track
+    dw $090F, $79FF  ; Screen subpixel X position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09C2, $02C2  ; Health
+    dw $09C6, $0051  ; Missiles
+    dw $09CA, $000D  ; Supers
+    dw $0AF6, $00CF  ; Samus X
+    dw $0AFA, $009B  ; Samus Y
+    dw $D820, $3FC5  ; Events
+    dw $D8C4, $03AF  ; Doors
     dw #$FFFF
-.after
+
+preset_nintendopower_tourian_zebes_escape:
+    dw #preset_nintendopower_tourian_mother_brain_2 ; Tourian: Mother Brain 2
+    dw $09A6, $1009  ; Beams
+    dw $09C2, $031F  ; Health
+    dw $09C6, $0000  ; Missiles
+    dw $09CA, $0000  ; Supers
+    dw $09CE, $0000  ; Pbs
+    dw $0A76, $8000  ; Hyper beam
+    dw $0AF6, $0025  ; Samus X
+    dw $0AFA, $00C3  ; Samus Y
+    dw $D820, $7FC5  ; Events
+    dw $D82C, $0203  ; Bosses
+    dw #$FFFF
+
+preset_nintendopower_tourian_escape_room_3:
+    dw #preset_nintendopower_tourian_zebes_escape ; Tourian: Zebes Escape
+    dw $078D, $AAEC  ; DDB
+    dw $079B, $DE7A  ; MDB
+    dw $07F3, $0024  ; Music Bank
+    dw $07F5, $0007  ; Music Track
+    dw $090F, $7000  ; Screen subpixel X position
+    dw $0913, $0C00  ; Screen subpixel Y position
+    dw $0915, $00F5  ; Screen Y position in pixels
+    dw $0919, $00B7  ; Layer 2 Y position
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $00DF  ; Samus X
+    dw $0AFA, $018B  ; Samus Y
+    dw #$FFFF
+
+preset_nintendopower_tourian_escape_room_4:
+    dw #preset_nintendopower_tourian_escape_room_3 ; Tourian: Escape Room 3
+    dw $078D, $AB04  ; DDB
+    dw $079B, $DEA7  ; MDB
+    dw $090F, $D000  ; Screen subpixel X position
+    dw $0911, $0500  ; Screen X position in pixels
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $001A  ; Screen Y position in pixels
+    dw $0917, $03C0  ; Layer 2 X position
+    dw $0919, $0013  ; Layer 2 Y position
+    dw $0AF6, $05DB  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw #$FFFF
+
+preset_nintendopower_tourian_escape_climb:
+    dw #preset_nintendopower_tourian_escape_room_4 ; Tourian: Escape Room 4
+    dw $078D, $AB1C  ; DDB
+    dw $079B, $DEDE  ; MDB
+    dw $090F, $6000  ; Screen subpixel X position
+    dw $0911, $00F4  ; Screen X position in pixels
+    dw $0913, $6C00  ; Screen subpixel Y position
+    dw $0915, $0103  ; Screen Y position in pixels
+    dw $0917, $00B7  ; Layer 2 X position
+    dw $0919, $00C2  ; Layer 2 Y position
+    dw $0AF6, $0154  ; Samus X
+    dw $0AFA, $018B  ; Samus Y
+    dw #$FFFF
 
 preset_nintendopower_tourian_escape_parlor:
-    dw #preset_nintendopower_tourian_escape_room_2 ; Tourian: Escape Room 2
-    dl $7E078D : db $02 : dw $AB34 ; DDB
-    dl $7E079B : db $02 : dw $96BA ; MDB
-    dl $7E079F : db $02 : dw $0000 ; Region
-    dl $7E07C3 : db $02 : dw $F911 ; GFX Pointers
-    dl $7E07C5 : db $02 : dw $43BA ; GFX Pointers
-    dl $7E07C7 : db $02 : dw $C2AF ; GFX Pointers
-    dl $7E090F : db $02 : dw $EFFF ; Screen subpixel X position.
-    dl $7E0911 : db $02 : dw $0100 ; Screen X position in pixels
-    dl $7E0913 : db $02 : dw $0000 ; Screen subpixel Y position
-    dl $7E0915 : db $02 : dw $001C ; Screen Y position in pixels
-    dl $7E09C2 : db $02 : dw $01EB ; Health
-    dl $7E0A1C : db $02 : dw $0006 ; Samus position/state
-    dl $7E0A1E : db $02 : dw $0004 ; More position/state
-    dl $7E0AF6 : db $02 : dw $01C4 ; Samus X
+    dw #preset_nintendopower_tourian_escape_climb ; Tourian: Escape Climb
+    dw $078D, $AB34  ; DDB
+    dw $079B, $96BA  ; MDB
+    dw $090F, $EFFF  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $001C  ; Screen Y position in pixels
+    dw $09C2, $01EB  ; Health
+    dw $0A1C, $0006  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $01C4  ; Samus X
     dw #$FFFF
-.after

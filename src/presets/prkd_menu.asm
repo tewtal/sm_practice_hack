@@ -47,6 +47,9 @@ presets_goto_prkd_tourian:
     %cm_submenu("Tourian", #presets_submenu_prkd_tourian)
 
 presets_submenu_prkd_crateria:
+    dw #presets_prkd_crateria_ceres_elevator
+    dw #presets_prkd_crateria_ceres_escape
+    dw #presets_prkd_crateria_ceres_last_3_rooms
     dw #presets_prkd_crateria_ship
     dw #presets_prkd_crateria_parlor
     dw #presets_prkd_crateria_parlor_downback
@@ -244,13 +247,26 @@ presets_submenu_prkd_tourian:
     dw #presets_prkd_tourian_gadora_room
     dw #presets_prkd_tourian_rinka_shaft
     dw #presets_prkd_tourian_zeb_skip
+    dw #presets_prkd_tourian_mother_brain_2
+    dw #presets_prkd_tourian_mother_brain_3
+    dw #presets_prkd_tourian_zebes_escape
     dw #presets_prkd_tourian_escape_room_3
-    dw #presets_prkd_tourian_climb_spark
+    dw #presets_prkd_tourian_escape_room_4
+    dw #presets_prkd_tourian_escape_climb
     dw #presets_prkd_tourian_escape_parlor
     dw #$0000
     %cm_header("TOURIAN")
 
 ; Crateria
+presets_prkd_crateria_ceres_elevator:
+    %cm_preset("Ceres Elevator", #preset_prkd_crateria_ceres_elevator)
+
+presets_prkd_crateria_ceres_escape:
+    %cm_preset("Ceres Escape", #preset_prkd_crateria_ceres_escape)
+
+presets_prkd_crateria_ceres_last_3_rooms:
+    %cm_preset("Ceres Last 3 rooms", #preset_prkd_crateria_ceres_last_3_rooms)
+
 presets_prkd_crateria_ship:
     %cm_preset("Ship", #preset_prkd_crateria_ship)
 
@@ -707,11 +723,23 @@ presets_prkd_tourian_rinka_shaft:
 presets_prkd_tourian_zeb_skip:
     %cm_preset("Zeb Skip", #preset_prkd_tourian_zeb_skip)
 
+presets_prkd_tourian_mother_brain_2:
+    %cm_preset("Mother Brain 2", #preset_prkd_tourian_mother_brain_2)
+
+presets_prkd_tourian_mother_brain_3:
+    %cm_preset("Mother Brain 3", #preset_prkd_tourian_mother_brain_3)
+
+presets_prkd_tourian_zebes_escape:
+    %cm_preset("Zebes Escape", #preset_prkd_tourian_zebes_escape)
+
 presets_prkd_tourian_escape_room_3:
     %cm_preset("Escape Room 3", #preset_prkd_tourian_escape_room_3)
 
-presets_prkd_tourian_climb_spark:
-    %cm_preset("Climb Spark", #preset_prkd_tourian_climb_spark)
+presets_prkd_tourian_escape_room_4:
+    %cm_preset("Escape Room 4", #preset_prkd_tourian_escape_room_4)
+
+presets_prkd_tourian_escape_climb:
+    %cm_preset("Escape Climb", #preset_prkd_tourian_escape_climb)
 
 presets_prkd_tourian_escape_parlor:
     %cm_preset("Escape Parlor", #preset_prkd_tourian_escape_parlor)

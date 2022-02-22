@@ -36,6 +36,7 @@ presets_goto_kpdr25_tourian:
 
 presets_submenu_kpdr25_bombs:
     dw #presets_kpdr25_bombs_ceres_elevator
+    dw #presets_kpdr25_bombs_ceres_escape
     dw #presets_kpdr25_bombs_ceres_last_3_rooms
     dw #presets_kpdr25_bombs_ship
     dw #presets_kpdr25_bombs_climb_down
@@ -160,7 +161,12 @@ presets_submenu_kpdr25_tourian:
     dw #presets_kpdr25_tourian_metroids_4
     dw #presets_kpdr25_tourian_baby_skip
     dw #presets_kpdr25_tourian_zeb_skip
+    dw #presets_kpdr25_tourian_mother_brain_2
+    dw #presets_kpdr25_tourian_mother_brain_3
+    dw #presets_kpdr25_tourian_zebes_escape
     dw #presets_kpdr25_tourian_escape_room_3
+    dw #presets_kpdr25_tourian_escape_room_4
+    dw #presets_kpdr25_tourian_escape_climb
     dw #presets_kpdr25_tourian_escape_parlor
     dw #$0000
     %cm_header("TOURIAN")
@@ -168,6 +174,9 @@ presets_submenu_kpdr25_tourian:
 ; Bombs
 presets_kpdr25_bombs_ceres_elevator:
     %cm_preset("Ceres Elevator", #preset_kpdr25_bombs_ceres_elevator)
+
+presets_kpdr25_bombs_ceres_escape:
+    %cm_preset("Ceres Escape", #preset_kpdr25_bombs_ceres_escape)
 
 presets_kpdr25_bombs_ceres_last_3_rooms:
     %cm_preset("Ceres Last 3 Rooms", #preset_kpdr25_bombs_ceres_last_3_rooms)
@@ -471,8 +480,23 @@ presets_kpdr25_tourian_baby_skip:
 presets_kpdr25_tourian_zeb_skip:
     %cm_preset("Zeb Skip", #preset_kpdr25_tourian_zeb_skip)
 
+presets_kpdr25_tourian_mother_brain_2:
+    %cm_preset("Mother Brain 2", #preset_kpdr25_tourian_mother_brain_2)
+
+presets_kpdr25_tourian_mother_brain_3:
+    %cm_preset("Mother Brain 3", #preset_kpdr25_tourian_mother_brain_3)
+
+presets_kpdr25_tourian_zebes_escape:
+    %cm_preset("Zebes Escape", #preset_kpdr25_tourian_zebes_escape)
+
 presets_kpdr25_tourian_escape_room_3:
     %cm_preset("Escape Room 3", #preset_kpdr25_tourian_escape_room_3)
+
+presets_kpdr25_tourian_escape_room_4:
+    %cm_preset("Escape Room 4", #preset_kpdr25_tourian_escape_room_4)
+
+presets_kpdr25_tourian_escape_climb:
+    %cm_preset("Escape Climb", #preset_kpdr25_tourian_escape_climb)
 
 presets_kpdr25_tourian_escape_parlor:
     %cm_preset("Escape Parlor", #preset_kpdr25_tourian_escape_parlor)

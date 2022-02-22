@@ -1,6 +1,7 @@
 lorom
 
 !FEATURE_SD2SNES ?= 1
+!FEATURE_DEV ?= 0
 !FEATURE_PAL ?= 1
 !ORIGINAL_MESSAGE_TEXT ?= 0
 !PRESERVE_WRAM_DURING_SPACETIME ?= 1
@@ -8,7 +9,7 @@ lorom
 
 !VERSION_MAJOR = 2
 !VERSION_MINOR = 4
-!VERSION_BUILD = 0
+!VERSION_BUILD = 1
 !VERSION_REV_1 = 0
 !VERSION_REV_2 = 0
 
@@ -29,6 +30,7 @@ incsrc minimap.asm
 incsrc menu.asm
 incsrc infohud.asm
 incsrc rng.asm
+incsrc custompresets.asm
 incsrc presets.asm
 incsrc misc.asm
 incsrc layout.asm

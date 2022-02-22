@@ -83,6 +83,14 @@ macro cm_toggle_bit(title, addr, mask, jsrtarget)
     db #$28, "<title>", #$FF
 endmacro
 
+macro cm_toggle_bit_inverted(title, addr, mask, jsrtarget)
+    dw !ACTION_TOGGLE_BIT_INVERTED
+    dl <addr>
+    dw <mask>
+    dw <jsrtarget>
+    db #$28, "<title>", #$FF
+endmacro
+
 macro cm_jsr(title, routine, argument)
     dw !ACTION_JSR
     dw <routine>
@@ -255,10 +263,16 @@ PresetsMenu:
     dw #presets_custom_preset_slot
     dw #presets_save_custom_preset
     dw #presets_load_custom_preset
+if !FEATURE_DEV
+    dw #presets_random_preset_rng
+endif
+    dw #$FFFF
+    dw #presets_open_blue_doors
 if !RAW_TILE_GRAPHICS
     dw #$FFFF
     dw #presets_compressed_graphics
     dw #presets_compressed_palettes
+    dw #presets_compressed_tables
 endif
     dw #$0000
     %cm_header("PRESET OPTIONS MENU")
@@ -278,12 +292,23 @@ presets_save_custom_preset:
 presets_load_custom_preset:
     %cm_jsr("Load Custom Preset", #action_load_custom_preset, #$0000)
 
+if !FEATURE_DEV
+presets_random_preset_rng:
+    %cm_toggle_inverted("Random Preset RNG", !ram_random_preset_rng, #$0001, #0)
+endif
+
+presets_open_blue_doors:
+    %cm_toggle_bit_inverted("Open Blue Doors", !sram_preset_options, !PRESETS_CLOSE_BLUE_DOORS, #0)
+
 if !RAW_TILE_GRAPHICS
 presets_compressed_graphics:
-    %cm_toggle_bit("Compressed Graphics", !sram_compressed_graphics, !COMPRESSED_GRAPHICS, #0)
+    %cm_toggle_bit("Compressed Graphics", !sram_preset_options, !PRESETS_COMPRESSED_GRAPHICS, #0)
 
 presets_compressed_palettes:
-    %cm_toggle_bit("Compressed Palettes", !sram_compressed_graphics, !COMPRESSED_PALETTES, #0)
+    %cm_toggle_bit("Compressed Palettes", !sram_preset_options, !PRESETS_COMPRESSED_PALETTES, #0)
+
+presets_compressed_tables:
+    %cm_toggle_bit("Compressed Tables", !sram_preset_options, !PRESETS_COMPRESSED_TABLES, #0)
 endif
 
 SelectPresetCategoryMenu:
@@ -393,9 +418,19 @@ action_select_preset_category:
 
 action_save_custom_preset:
 {
+    ; check gamestate first
+    LDA $0998 : CMP #$0008 : BEQ .safe
+    CMP #$000C : BMI .not_safe
+    CMP #$0013 : BPL .not_safe
+
+  .safe
     JSL custom_preset_save
     LDA #$0001 : STA !ram_cm_leave
     LDA #!SOUND_MENU_MOVE : JSL !SFX_LIB1
+    RTS
+
+  .not_safe
+    LDA #!SOUND_MENU_FAIL : JSL !SFX_LIB1
     RTS
 }
 
@@ -417,8 +452,14 @@ action_load_custom_preset:
 LoadRandomPreset:
 {
     PHY : PHX
+    LDA !ram_random_preset_rng : BEQ .seedrandom
+    LDA !ram_random_preset_value : STA $12
+    BRA .seedpicked
+
+  .seedrandom
     JSL $808111 : STA $12     ; random number
 
+  .seedpicked
     LDA #$00B8 : STA $18      ; this routine lives in bank B8
     LDA !sram_preset_category : ASL : TAY
     LDA #preset_category_submenus : STA $16
@@ -436,7 +477,7 @@ LoadRandomPreset:
     %a8()
     STY $4206                 ; divide top half of random number by Y
     %a16()
-    PEA $0000 : PLA
+    PEA $0000 : PLA : PEA $0000 : PLA
     LDA $4216 : ASL : TAY     ; randomly selected subcategory
     LDA [$16],Y : STA $16     ; increment four bytes to get the subcategory table
     LDY #$0004 : LDA [$16],Y : STA $16
@@ -449,15 +490,22 @@ LoadRandomPreset:
 
     LDA $12 : AND #$00FF : STA $4204
     %a8()
-    STY $4206                 ; divide bottom half of random number by Y
+    STY $14 : STY $4206       ; divide bottom half of random number by Y
     %a16()
-    PEA $0000 : PLA
-    LDA $4216 : ASL : TAY     ; randomly selected preset
+    PEA $0000 : PLA : PEA $0000 : PLA
+    LDA $4216 : STA $12       ; randomly selected preset
+
+    ASL : TAY
     LDA [$16],Y : STA $16     ; increment four bytes to get the data
     LDY #$0004 : LDA [$16],Y
-
     STA !ram_load_preset
+    LDA !ram_random_preset_rng : BEQ .done
+    LDA !ram_random_preset_value : INC : STA !ram_random_preset_value
+    LDA $12 : INC : CMP $14 : BMI .done
+    LDA !ram_random_preset_value : XBA : INC : XBA
+    AND #$FF00 : STA !ram_random_preset_value
 
+  .done
     PLX : PLY
     RTL
 }
@@ -572,7 +620,7 @@ eq_currentsupers:
 eq_setsupers:
     %cm_numfield("Super Missiles", $7E09CC, 0, 65, 5, 5, .routine)
     .routine
-        LDA !SAMUS_SUPERS : STA !SAMUS_SUPERS_MAX ; supers
+        LDA !SAMUS_SUPERS_MAX : STA !SAMUS_SUPERS ; supers
         RTS
 
 eq_currentpbs:
@@ -953,6 +1001,7 @@ action_teleport:
     LDA #$05 : STA $7ED914
     REP #$20
 
+    STZ $0727 ; Pause menu index
     STZ $1C1F ; Clear message box index
 
 +   JSL reset_all_counters
@@ -1540,6 +1589,7 @@ ih_top_HUD_mode:
     db #$28, "Top-Left Displ", #$FF
     db #$28, "ay   ITEM %", #$FF
     db #$28, "ay RESERVES", #$FF
+    db #$28, "ay  VANILLA", #$FF
     db #$FF
 
 ih_room_counter:
@@ -1670,6 +1720,8 @@ CutscenesMenu:
     dw #cutscenes_skip_ceres_arrival
     dw #cutscenes_skip_g4
     dw #$FFFF
+    dw #cutscenes_fast_kraid
+    dw #cutscenes_fast_phantoon
     dw #cutscenes_fast_mb
     dw #$0000
     %cm_header("CUTSCENES")
@@ -1683,9 +1735,14 @@ cutscenes_skip_ceres_arrival:
 cutscenes_skip_g4:
     %cm_toggle_bit("Skip G4", !sram_cutscenes, !CUTSCENE_SKIP_G4, #0)
 
+cutscenes_fast_kraid:
+    %cm_toggle_bit("Skip Kraid Intro", !sram_cutscenes, !CUTSCENE_FAST_KRAID, #0)
+
+cutscenes_fast_phantoon:
+    %cm_toggle_bit("Skip Phantoon Intro", !sram_cutscenes, !CUTSCENE_FAST_PHANTOON, #0)
+
 cutscenes_fast_mb:
     %cm_toggle_bit("Fast Mother Brain", !sram_cutscenes, !CUTSCENE_FAST_MB, #0)
-
 
 game_fanfare_toggle:
     %cm_toggle("Fanfare", !sram_fanfare_toggle, #$0001, #0)
@@ -1698,6 +1755,7 @@ game_music_toggle:
     db #$28, "        OFF", #$FF
     db #$28, "         ON", #$FF
     db #$28, "   FAST OFF", #$FF
+    db #$28, " PRESET OFF", #$FF
     db #$FF
   .routine
     ; Clear music queue
@@ -1766,6 +1824,7 @@ GameLoopExtras:
     LDA #$0001 : STA !ram_game_loop_extras
     RTS
 }
+
 
 ; -------------------
 ; Controller Settings
@@ -2077,11 +2136,7 @@ RngMenu:
     if !FEATURE_SD2SNES
         dw #rng_rerandomize
     endif
-    dw #rng_phan_first_phase
-    dw #rng_phan_second_phase
-    dw #rng_phan_eyeclose
-    dw #rng_phan_flamepattern
-    dw #rng_next_flamepattern
+    dw #rng_goto_phanmenu
     dw #$FFFF
     dw #rng_botwoon_rng
     dw #$FFFF
@@ -2097,68 +2152,8 @@ RngMenu:
 rng_rerandomize:
     %cm_toggle("Rerandomize", !sram_rerandomize, #$0001, #0)
 
-rng_phan_first_phase:
-    dw !ACTION_CHOICE
-    dl #!ram_phantoon_rng_1
-    dw #$0000
-    db #$28, "Phan 1st Phase", #$FF
-    db #$28, "     RANDOM", #$FF
-    db #$28, "  FAST LEFT", #$FF
-    db #$28, "   MID LEFT", #$FF
-    db #$28, "  SLOW LEFT", #$FF
-    db #$28, " FAST RIGHT", #$FF
-    db #$28, "  MID RIGHT", #$FF
-    db #$28, " SLOW RIGHT", #$FF
-    db #$FF
-
-rng_phan_second_phase:
-    dw !ACTION_CHOICE
-    dl #!ram_phantoon_rng_2
-    dw #$0000
-    db #$28, "Phan 2nd Phase", #$FF
-    db #$28, "     RANDOM", #$FF
-    db #$28, "  FAST LEFT", #$FF
-    db #$28, "   MID LEFT", #$FF
-    db #$28, "  SLOW LEFT", #$FF
-    db #$28, " FAST RIGHT", #$FF
-    db #$28, "  MID RIGHT", #$FF
-    db #$28, " SLOW RIGHT", #$FF
-    db #$FF
-
-rng_phan_eyeclose:
-    dw !ACTION_CHOICE
-    dl #!ram_phantoon_rng_3
-    dw #$0000
-    db #$28, "Phan Eye Close", #$FF
-    db #$28, "     RANDOM", #$FF
-    db #$28, "       SLOW", #$FF
-    db #$28, "        MID", #$FF
-    db #$28, "       FAST", #$FF
-    db #$FF
-
-rng_phan_flamepattern:
-    dw !ACTION_CHOICE
-    dl #!ram_phantoon_rng_4
-    dw #$0000
-    db #$28, "Phan Flames   ", #$FF
-    db #$28, "     RANDOM", #$FF
-    db #$28, "      22222", #$FF
-    db #$28, "        111", #$FF
-    db #$28, "    3333333", #$FF
-    db #$28, "    1424212", #$FF
-    db #$FF
-
-rng_next_flamepattern:
-    dw !ACTION_CHOICE
-    dl #!ram_phantoon_rng_5
-    dw #$0000
-    db #$28, "Next Flames   ", #$FF
-    db #$28, "     RANDOM", #$FF
-    db #$28, "      22222", #$FF
-    db #$28, "        111", #$FF
-    db #$28, "    3333333", #$FF
-    db #$28, "    1424212", #$FF
-    db #$FF
+rng_goto_phanmenu:
+    %cm_jsr("Phantoon", #ih_prepare_phantoon_menu, #PhantoonMenu)
 
 rng_botwoon_rng:
     dw !ACTION_CHOICE
@@ -2215,6 +2210,208 @@ rng_kraid_rng:
     db #$28, "     RANDOM", #$FF
     db #$28, "      LAGGY", #$FF
     db #$28, "    LAGGIER", #$FF
+    db #$FF
+
+
+; --------------
+; Phantoon Menu
+; --------------
+ih_prepare_phantoon_menu:
+    LDA !ram_phantoon_rng_inverted : PHA
+    JSR phan_set_phan_first_phase
+    JSR phan_set_phan_second_phase
+    PLA : STA !ram_phantoon_rng_inverted
+    JMP action_submenu
+
+PhantoonMenu:
+    dw #phan_first_phase
+    dw #phan_fast_left_1
+    dw #phan_mid_left_1
+    dw #phan_slow_left_1
+    dw #phan_fast_right_1
+    dw #phan_mid_right_1
+    dw #phan_slow_right_1
+    dw #$FFFF
+    dw #phan_second_phase
+    dw #phan_fast_left_2
+    dw #phan_mid_left_2
+    dw #phan_slow_left_2
+    dw #phan_fast_right_2
+    dw #phan_mid_right_2
+    dw #phan_slow_right_2
+    dw #phan_second_phase_inverted
+    dw #$FFFF
+    dw #phan_eyeclose
+    dw #phan_flamepattern
+    dw #phan_next_flamepattern
+    dw #$0000
+    %cm_header("PHANTOON CONTROL")
+
+
+phan_set_phan_phase_table:
+    dw #$003F, #$0020, #$0008, #$0002, #$0010, #$0004, #$0001
+    dw #$0030, #$000C, #$0003, #$002A, #$0015, #$0000
+
+phan_set_phan_first_phase:
+    LDX #$0000
+    LDA !ram_phantoon_rng_round_1 : BEQ .end_first_loop
+  .first_loop
+    CMP phan_set_phan_phase_table,X : BEQ .end_first_loop
+    INX : INX : CPX #$0018 : BNE .first_loop
+  .end_first_loop
+    TXA : LSR : STA !ram_cm_phan_first_phase
+    RTS
+
+phan_set_phan_second_phase:
+    LDX #$0000
+    LDA !ram_phantoon_rng_round_2 : BEQ .end_second_loop
+  .second_loop
+    CMP phan_set_phan_phase_table,X : BEQ .end_second_loop
+    INX : INX : CPX #$0018 : BNE .second_loop
+  .end_second_loop
+    TXA : LSR : STA !ram_cm_phan_second_phase
+    BEQ .set_inverted : TXA : BEQ .set_inverted
+    LDA #$0002
+  .set_inverted
+    STA !ram_phantoon_rng_inverted
+    RTS
+
+
+phan_first_phase:
+    dw !ACTION_CHOICE
+    dl #!ram_cm_phan_first_phase
+    dw .routine
+    db #$28, "Phan 1st Phase", #$FF
+    db #$28, "     RANDOM", #$FF
+    db #$28, "  FAST LEFT", #$FF
+    db #$28, "   MID LEFT", #$FF
+    db #$28, "  SLOW LEFT", #$FF
+    db #$28, " FAST RIGHT", #$FF
+    db #$28, "  MID RIGHT", #$FF
+    db #$28, " SLOW RIGHT", #$FF
+    db #$28, "       FAST", #$FF
+    db #$28, "        MID", #$FF
+    db #$28, "       SLOW", #$FF
+    db #$28, "       LEFT", #$FF
+    db #$28, "      RIGHT", #$FF
+    db #$28, "     CUSTOM", #$FF
+    db #$FF
+  .routine
+    ASL : TAX
+    LDA phan_set_phan_phase_table,X : STA !ram_phantoon_rng_round_1
+    RTS
+
+phan_fast_left_1:
+    %cm_toggle_bit("#1 Fast Left", !ram_phantoon_rng_round_1, #$0020, phan_set_phan_first_phase)
+
+phan_mid_left_1:
+    %cm_toggle_bit("#1 Mid  Left", !ram_phantoon_rng_round_1, #$0008, phan_set_phan_first_phase)
+
+phan_slow_left_1:
+    %cm_toggle_bit("#1 Slow Left", !ram_phantoon_rng_round_1, #$0002, phan_set_phan_first_phase)
+
+phan_fast_right_1:
+    %cm_toggle_bit("#1 Fast Right", !ram_phantoon_rng_round_1, #$0010, phan_set_phan_first_phase)
+
+phan_mid_right_1:
+    %cm_toggle_bit("#1 Mid  Right", !ram_phantoon_rng_round_1, #$0004, phan_set_phan_first_phase)
+
+phan_slow_right_1:
+    %cm_toggle_bit("#1 Slow Right", !ram_phantoon_rng_round_1, #$0001, phan_set_phan_first_phase)
+
+
+
+phan_second_phase:
+    dw !ACTION_CHOICE
+    dl #!ram_cm_phan_second_phase
+    dw .routine
+    db #$28, "Phan 2nd Phase", #$FF
+    db #$28, "     RANDOM", #$FF
+    db #$28, "  FAST LEFT", #$FF
+    db #$28, "   MID LEFT", #$FF
+    db #$28, "  SLOW LEFT", #$FF
+    db #$28, " FAST RIGHT", #$FF
+    db #$28, "  MID RIGHT", #$FF
+    db #$28, " SLOW RIGHT", #$FF
+    db #$28, "       FAST", #$FF
+    db #$28, "        MID", #$FF
+    db #$28, "       SLOW", #$FF
+    db #$28, "       LEFT", #$FF
+    db #$28, "      RIGHT", #$FF
+    db #$28, "     CUSTOM", #$FF
+    db #$FF
+  .routine
+    ASL : TAX
+    LDA phan_set_phan_phase_table,X : STA !ram_phantoon_rng_round_2
+    BEQ .set_inverted : TXA : BEQ .set_inverted
+    LDA #$0002
+  .set_inverted
+    STA !ram_phantoon_rng_inverted
+    RTS
+
+phan_fast_left_2:
+    %cm_toggle_bit("#2 Fast Left", !ram_phantoon_rng_round_2, #$0020, phan_set_phan_second_phase)
+
+phan_mid_left_2:
+    %cm_toggle_bit("#2 Mid  Left", !ram_phantoon_rng_round_2, #$0008, phan_set_phan_second_phase)
+
+phan_slow_left_2:
+    %cm_toggle_bit("#2 Slow Left", !ram_phantoon_rng_round_2, #$0002, phan_set_phan_second_phase)
+
+phan_fast_right_2:
+    %cm_toggle_bit("#2 Fast Right", !ram_phantoon_rng_round_2, #$0010, phan_set_phan_second_phase)
+
+phan_mid_right_2:
+    %cm_toggle_bit("#2 Mid  Right", !ram_phantoon_rng_round_2, #$0004, phan_set_phan_second_phase)
+
+phan_slow_right_2:
+    %cm_toggle_bit("#2 Slow Right", !ram_phantoon_rng_round_2, #$0001, phan_set_phan_second_phase)
+
+
+phan_second_phase_inverted:
+    dw !ACTION_CHOICE
+    dl #!ram_phantoon_rng_inverted
+    dw #$0000
+    db #$28, "2nd Phase Inve", #$FF
+    db #$28, "rt  VANILLA", #$FF
+    db #$28, "rt       ON", #$FF
+    db #$28, "rt      OFF", #$FF
+    db #$28, "rt   RANDOM", #$FF
+    db #$FF
+
+phan_eyeclose:
+    dw !ACTION_CHOICE
+    dl #!ram_phantoon_rng_eyeclose
+    dw #$0000
+    db #$28, "Phan Eye Close", #$FF
+    db #$28, "     RANDOM", #$FF
+    db #$28, "       SLOW", #$FF
+    db #$28, "        MID", #$FF
+    db #$28, "       FAST", #$FF
+    db #$FF
+
+phan_flamepattern:
+    dw !ACTION_CHOICE
+    dl #!ram_phantoon_rng_flames
+    dw #$0000
+    db #$28, "Phan Flames   ", #$FF
+    db #$28, "     RANDOM", #$FF
+    db #$28, "      22222", #$FF
+    db #$28, "        111", #$FF
+    db #$28, "    3333333", #$FF
+    db #$28, "    1424212", #$FF
+    db #$FF
+
+phan_next_flamepattern:
+    dw !ACTION_CHOICE
+    dl #!ram_phantoon_rng_next_flames
+    dw #$0000
+    db #$28, "Next Flames   ", #$FF
+    db #$28, "     RANDOM", #$FF
+    db #$28, "      22222", #$FF
+    db #$28, "        111", #$FF
+    db #$28, "    3333333", #$FF
+    db #$28, "    1424212", #$FF
     db #$FF
 
 

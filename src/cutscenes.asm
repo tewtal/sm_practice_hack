@@ -111,13 +111,6 @@ endif
     dw cutscenes_mb_fake_death_lock
 
 if !FEATURE_PAL
-org $A98871
-else
-org $A98861
-endif
-    dw cutscenes_mb_fake_death_music
-
-if !FEATURE_PAL
 org $A98889
 else
 org $A98879
@@ -274,32 +267,17 @@ endif
     ; Make dead MB invisible and intangible, in case we jump here from a preset
     ORA #$0500
 
-if !FEATURE_PAL
-org $A9BDDF
-else
-org $A9BD92
-endif
-    dw cutscenes_mb_end_phase_2
-
 
 org $A9FBC0
 print pc, " cutscenes MB start"
 
-cutscenes_mb_init_health_first_phase:
-{
-    LDA $7E7800 : BEQ .normal_health
-    LDA #$0000
-    RTS
-
-  .normal_health
-    LDA #$0BB8
-    RTS
-}
-
 cutscenes_mb_fake_death_fast_init:
 {
-    ; Set health to 1 indicating we want fast logic
-    LDA #$0001 : STA $0FCC
+    ; Set health to non-zero value indicating we want fast logic
+    ; If loading a preset, certain flags may already be set
+    ; which allow MB to take damage, so setting value high,
+    ; but also set below 18000 to avoid confusion with vanilla logic
+    LDA #$464F : STA $0FCC
 
     ; If MB already defeated, reset health to full to simulate baby metroid refill
     LDA $7ED82D : BIT #$0002 : BEQ .end_refill
@@ -353,28 +331,43 @@ cutscenes_mb_fake_death_lock:
     LDA #$0001 : STA $0FB2
 
   .continue
-if !FEATURE_PAL
-    LDA #$885D
-else
-    LDA #$884D
-endif
+    LDA #cutscenes_mb_fake_death_music
     STA $0FA8
-    JMP ($0FA8)
+    ; Fall through to next method
 }
 
 cutscenes_mb_fake_death_music:
 {
-    LDA $0FCC : BEQ .continue
-    LDA #$0001 : STA $0FB2
+    DEC $0FB2 : BPL .return
 
-  .continue
+    LDA #$0000 : JSL !MUSIC_ROUTINE
+    LDA $7ED82D : BIT #$0002 : BEQ .phase2
+    LDA $7ED821 : BIT #$0040 : BEQ .phase3
+    LDA #$FF24
+    BRA .load_music
+  .phase2
+    LDA #$FF21
+    BRA .load_music
+  .phase3
+    LDA #$FF48
+  .load_music
+    JSL !MUSIC_ROUTINE
+
 if !FEATURE_PAL
     LDA #$887C
 else
     LDA #$886C
 endif
     STA $0FA8
+
+    LDA #$000C : STA $0FB2
+    LDA $0FCC : BEQ .continue
+    LDA #$0002 : STA $0FB2
+  .continue
     JMP ($0FA8)
+
+  .return
+    RTS
 }
 
 cutscenes_mb_fake_death_unlock:
@@ -511,8 +504,12 @@ else
 endif
 
   .mb
-    LDA $0FCC : BEQ .continue
-    LDA #$0000 : STA $0FB2
+    LDA $0FCC : BEQ .init_health
+    LDA #$0000 : STA $0FB2 : STA $0FCC
+    BRA .continue
+
+  .init_health
+    LDA #$4650 : STA $0FCC
 
   .continue
 if !FEATURE_PAL
@@ -526,7 +523,7 @@ endif
 
 cutscenes_mb_fake_death_pause_phase_2:
 {
-    LDA $0FCC : BEQ .continue
+    LDA $0FCC : BNE .continue
     LDA #$0000 : STA $0FB2
 
   .continue
@@ -541,7 +538,7 @@ endif
 
 cutscenes_mb_fake_death_load_tiles_phase_2:
 {
-    LDA $0FCC : BEQ .continue
+    LDA $0FCC : BNE .continue
     LDA #$0000 : STA $0FB2
 
   .continue
@@ -556,8 +553,8 @@ endif
 
 cutscenes_mb_fake_death_raise_mb:
 {
-    LDA $0FCC : BEQ .continue
-    LDA $05B6 : AND #$0001 : BNE .done
+    LDA $0FCC : BNE .continue
+    LDA !FRAME_COUNTER : AND #$0001 : BNE .done
 if !FEATURE_PAL
     JMP $8E65
 else
@@ -750,21 +747,6 @@ if !FEATURE_PAL
     LDA #$B1C8
 else
     LDA #$B1B8
-endif
-    STA $0FA8
-    JMP ($0FA8)
-}
-
-cutscenes_mb_end_phase_2:
-{
-    ; Set MB flag early at end of phase 2
-    ; This way a preset will take us to phase 3
-    LDA $7ED82D : ORA #$0002 : STA $7ED82D
-
-if !FEATURE_PAL
-    LDA #$BDE5
-else
-    LDA #$BD98
 endif
     STA $0FA8
     JMP ($0FA8)

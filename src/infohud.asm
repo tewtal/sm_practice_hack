@@ -464,191 +464,106 @@ ih_update_hud_code:
     LDA !ram_minimap : BNE .minimap_hud
     BRL .start_update
 
+  .minimap_vanilla_infohud
+    BRL .end
+
   .minimap_hud
     ; Map visible, so draw map counter over item%
+    LDA !sram_top_display_mode : CMP !TOP_DISPLAY_VANILLA : BEQ .minimap_vanilla_infohud
     LDA !ram_map_counter : LDX #$0014 : JSR Draw3
     LDA !sram_display_mode : CMP #!IH_MODE_SHINETUNE_INDEX : BNE .minimap_roomtimer
-    BRL .map_doorlag
+    BRL .minimap_doorlag
 
   .minimap_roomtimer
-    LDA !sram_frame_counter_mode : BNE .ingameRoomMap
+    STZ $4205
+    LDA !sram_frame_counter_mode : BNE .minimap_ingame_roomtimer
+    LDA !ram_last_realtime_room
+    BRA .minimap_calculate_roomtimer
+  .minimap_ingame_roomtimer
+    LDA !ram_last_gametime_room
+  .minimap_calculate_roomtimer
+    ; Divide time by 60 or 50 and draw seconds and frames
+    STA $4204
+    %a8()
+if !FEATURE_PAL
+    LDA #$32
+else
+    LDA #$3C
+endif
+    STA $4206
+    PHA : PLA : PHA : PLA
+    %a16()
+    LDA $4216 : STA $C1
+    LDA $4214 : LDX #$00B0 : JSR Draw2
+    LDA !IH_DECIMAL : STA $7EC6B4
+    LDA $C1 : ASL : TAX
+    LDA HexToNumberGFX1,X : STA $7EC6B6
+    LDA HexToNumberGFX2,X : STA $7EC6B8
 
-    ; Real time with minimap
-    {
-        ; Divide real time by 60/50, save seconds, frame seperately
-        {
-            STZ $4205
-            LDA !ram_last_realtime_room : STA $4204
-            %a8()
-            if !FEATURE_PAL
-                LDA #$32
-            else
-                LDA #$3C
-            endif
-            STA $4206
-            PHA : PLA : PHA : PLA
-            %a16()
-            LDA $4214 : STA !ram_tmp_1
-            LDA $4216 : STA !ram_tmp_2
-        }
-        ; Draw seconds
-        LDA !ram_tmp_1 : LDX #$00B0 : JSR Draw2
-
-        ; Draw decimal seperator
-        LDA !IH_DECIMAL : STA $7EC6B4
-
-        ; Draw frames
-        LDA !ram_tmp_2 : ASL : TAX
-        LDA HexToNumberGFX1,X : STA $7EC6B6
-        LDA HexToNumberGFX2,X : STA $7EC6B8
-
-        BRA .map_doorlag
-    }
-
-    ; Room time with minimap
-    .ingameRoomMap
-    {
-        ; Divide game time by 60/50, save seconds, frames seperately
-        {
-            STZ $4205
-            LDA !ram_last_gametime_room : STA $4204
-            %a8()
-            if !FEATURE_PAL
-                LDA #$32
-            else
-                LDA #$3C
-            endif
-            STA $4206
-            PHA : PLA : PHA : PLA
-            %a16()
-            LDA $4214 : STA !ram_tmp_3
-            LDA $4216 : STA !ram_tmp_4
-        }
-        ; Draw seconds
-        LDA !ram_tmp_3 : LDX #$0080 : JSR Draw2
-
-        ; Draw decimal seperator
-        LDA !IH_DECIMAL : STA $7EC6B4
-
-        ; Draw frames
-        LDA !ram_tmp_4 : ASL : TAX
-        LDA HexToNumberGFX1,X : STA $7EC6B6
-        LDA HexToNumberGFX2,X : STA $7EC6B8
-    }
-
-  .map_doorlag
-    ; Lag
+  .minimap_doorlag
     LDA !ram_last_door_lag_frames : LDX #$0054 : JSR Draw3
-
-  .minimap_end
     BRL .end
 
   .start_update
     LDA #$FFFF : STA !ram_last_hp : STA !ram_enemy_hp
 
-    LDA !sram_frame_counter_mode : BNE .ingameRoom
+    ; Determine starting point of time display
+    LDX #$003C
+    LDA !sram_top_display_mode : CMP !TOP_DISPLAY_VANILLA : BNE .pick_roomtimer
+    LDX #$003A
 
-    ; Real time
-    {
-        ; Divide real time by 60/50, save seconds, frame seperately
-        {
-            STZ $4205
-            LDA !ram_last_realtime_room : STA $4204
-            %a8()
-            if !FEATURE_PAL
-                LDA #$32
-            else
-                LDA #$3C
-            endif
-            STA $4206
-            PHA : PLA : PHA : PLA
-            %a16()
-            LDA $4214 : STA !ram_tmp_1
-            LDA $4216 : STA !ram_tmp_2
-        }
-
-        ; Draw seconds
-        LDA !ram_tmp_1 : LDX #$003C : JSR Draw3
-
-        ; Draw decimal seperator
-        LDA !IH_DECIMAL : STA $7EC642
-
-        ; Draw frames
-        LDA !ram_tmp_2 : ASL : TAX
-        LDA HexToNumberGFX1,X : STA $7EC644
-        LDA HexToNumberGFX2,X : STA $7EC646
-
-        BRA .topLeftHUD
-    }
-
-    ; Room time
-    .ingameRoom
-    {
-        ; Divide game time by 60/50, save seconds, frames seperately
-        {
-            STZ $4205
-            LDA !ram_last_gametime_room : STA $4204
-            %a8()
-            if !FEATURE_PAL
-                LDA #$32
-            else
-                LDA #$3C
-            endif
-            STA $4206
-            PHA : PLA : PHA : PLA
-            %a16()
-            LDA $4214 : STA !ram_tmp_3
-            LDA $4216 : STA !ram_tmp_4
-        }
-
-        ; Draw seconds
-        LDA !ram_tmp_3 : LDX #$003C : JSR Draw3
-
-        ; Draw decimal seperator
-        LDA !IH_DECIMAL : STA $7EC642
-
-        ; Draw frames
-        LDA !ram_tmp_4 : ASL : TAX
-        LDA HexToNumberGFX1,X : STA $7EC644
-        LDA HexToNumberGFX2,X : STA $7EC646
-    }
+  .pick_roomtimer
+    STZ $4205
+    LDA !sram_frame_counter_mode : BNE .ingame_roomtimer
+    LDA !ram_last_realtime_room
+    BRA .calculate_roomtimer
+  .ingame_roomtimer
+    LDA !ram_last_gametime_room
+  .calculate_roomtimer
+    ; Divide time by 60 or 50 and draw seconds and frames
+    STA $4204
+    %a8()
+if !FEATURE_PAL
+    LDA #$32
+else
+    LDA #$3C
+endif
+    STA $4206
+    PHA : PLA : PHA : PLA
+    %a16()
+    LDA $4216 : STA $C1
+    LDA $4214 : JSR Draw3 : TXY
+    LDA !IH_DECIMAL : STA $7EC600,X
+    LDA $C1 : ASL : TAX
+    LDA HexToNumberGFX1,X : PHX : TYX : STA $7EC602,X
+    PLX : LDA HexToNumberGFX2,X : TYX : STA $7EC604,X
 
     ; 3 tiles between input display and missile icon
-    .topLeftHUD
-    {
-        ; skip item% if display mode = vspeed
-        LDA !sram_display_mode : CMP #!IH_MODE_VSPEED_INDEX : BEQ .skipToLag
+    ; skip item% if display mode = vspeed
+    LDA !sram_display_mode : CMP #!IH_MODE_VSPEED_INDEX : BEQ .skipToLag
+    LDA !sram_top_display_mode : BNE .skipToLag
 
-        LDA !sram_top_display_mode : BNE .skipToLag
+    ; Draw Item percent
+    ; Max HP and Reserves
+    LDA !SAMUS_HP_MAX : CLC : ADC !SAMUS_RESERVE_MAX
+    JSR CalcEtank : STA $C1
 
-        ; Draw Item percent
-      .pct
-        LDA #$0000 : STA !ram_pct_1
+    ; Max Missiles, Supers & Power Bombs
+    LDA !SAMUS_MISSILES_MAX : CLC : ADC !SAMUS_SUPERS_MAX : CLC : ADC !SAMUS_PBS_MAX
+    JSR CalcItem : CLC : ADC $C1 : STA $C1
 
-        ; Max HP (E tanks)
-        LDA !SAMUS_HP_MAX : JSR CalcEtank
+    ; Collected items
+    JSR CalcLargeItem : CLC : ADC $C1 : STA $C1
 
-        ; Max Reserve Tanks
-        LDA !SAMUS_RESERVE_MAX : JSR CalcEtank
+    ; Collected beams and charge
+    JSR CalcBeams : CLC : ADC $C1
 
-        ; Max Missiles, Supers & Power Bombs
-        LDA !SAMUS_MISSILES_MAX : CLC : ADC !SAMUS_SUPERS_MAX : CLC : ADC !SAMUS_PBS_MAX : JSR CalcItem
-
-        ; Collected items
-        JSR CalcLargeItem
-
-        ; Collected beams & charge
-        JSR CalcBeams
-
-        ; Percent counter -> decimal form and drawn on HUD
-        LDA !ram_pct_1 : LDX #$0012 : JSR Draw3
-
-        ; Percent symbol on HUD
-        LDA !IH_PERCENT : STA $7EC618
-    }
+    ; Percent counter -> decimal form and drawn on HUD
+    LDX #$0012 : JSR Draw3
+    LDA !IH_PERCENT : STA $7EC618
 
   .skipToLag
-    ; Lag
+    LDA !sram_top_display_mode : CMP !TOP_DISPLAY_VANILLA : BEQ .vanilla_infohud_draw_lag_and_reserves
     LDA !ram_last_room_lag : LDX #$0080 : JSR Draw4
 
     ; Skip door lag and segment timer when shinetune enabled
@@ -656,35 +571,37 @@ ih_update_hud_code:
 
     ; Door lag
     LDA !ram_last_door_lag_frames : LDX #$00C2 : JSR Draw3
+    BRA .pick_segment_timer
 
-    ; Segment timer
-    {
-        LDA !sram_frame_counter_mode : BNE .ingameSeg
-        LDA.w #!ram_seg_rt_frames : STA $00
-        LDA !WRAM_BANK : STA $02
-        BRA .drawSeg
+  .vanilla_infohud_draw_lag_and_reserves
+    LDA !SAMUS_RESERVE_MODE : CMP #$0001 : BNE .vanilla_infohud_draw_lag
 
-      .ingameSeg
-        LDA #$09DA : STA $00
-        LDA #$007E : STA $02
+    ; Draw reserve icon
+    LDY #$998B : LDA !SAMUS_RESERVE_ENERGY : BNE .vanilla_draw_reserve_icon
+    LDY #$9997
+  .vanilla_draw_reserve_icon
+    LDA $0000,Y : STA $7EC618 : LDA $0002,Y : STA $7EC61A
+    LDA $0004,Y : STA $7EC658 : LDA $0006,Y : STA $7EC65A
 
-      .drawSeg
-        ; Frames
-        LDA [$00] : INC $00 : INC $00 : ASL : TAX
-        LDA HexToNumberGFX1, X : STA $7EC6BC
-        LDA HexToNumberGFX2, X : STA $7EC6BE
+  .vanilla_infohud_draw_lag
+    LDA !ram_last_room_lag : LDX #$007E : JSR Draw4
 
-        ; Seconds
-        LDA [$00] : INC $00 : INC $00 : ASL : TAX
-        LDA HexToNumberGFX1, X : STA $7EC6B6
-        LDA HexToNumberGFX2, X : STA $7EC6B8
+    ; Skip door lag and segment timer when shinetune enabled
+    LDA !sram_display_mode : CMP #!IH_MODE_SHINETUNE_INDEX : BEQ .end
 
-        ; Minutes
-        LDA [$00] : LDX #$00AE : JSR Draw3
+    ; Door lag
+    LDA !ram_last_door_lag_frames : LDX #$00C2 : JSR Draw2
 
-        ; Draw decimal seperators
-        LDA !IH_DECIMAL : STA $7EC6B4 : STA $7EC6BA
-    }
+  .pick_segment_timer
+    LDA !sram_frame_counter_mode : BNE .ingame_segment_timer
+    LDA.w #!ram_seg_rt_frames : STA $00
+    LDA !WRAM_BANK : STA $02
+    BRA .draw_segment_timer
+
+  .ingame_segment_timer
+    LDA #$09DA : STA $00
+    LDA #$007E : STA $02
+    BRA .draw_segment_timer
 
   .end
     PLB
@@ -692,6 +609,25 @@ ih_update_hud_code:
     PLY
     PLX
     RTL
+
+  .draw_segment_timer
+    ; Frames
+    LDA [$00] : INC $00 : INC $00 : ASL : TAX
+    LDA HexToNumberGFX1,X : STA $7EC6BC
+    LDA HexToNumberGFX2,X : STA $7EC6BE
+
+    ; Seconds
+    LDA [$00] : INC $00 : INC $00 : ASL : TAX
+    LDA HexToNumberGFX1,X : STA $7EC6B6
+    LDA HexToNumberGFX2,X : STA $7EC6B8
+
+    ; Minutes
+    LDA [$00] : LDX #$00AE : JSR Draw3
+
+    ; Draw decimal seperators
+    LDA !IH_DECIMAL : STA $7EC6B4 : STA $7EC6BA
+    LDA !IH_BLANK : STA $7EC6C0
+    BRA .end
 }
 
 ih_update_hud_early:
@@ -724,6 +660,64 @@ ih_update_hud_early:
     RTL
 }
 
+ih_hud_vanilla_health:
+{
+    LDA !SAMUS_HP : STA !SAMUS_LAST_HP : STA $4204
+    %a8()
+    LDA #$64 : STA $4206
+    %a16()
+    PHA : PLA : PHA : PLA
+    LDA $4214 : STA $14
+    LDA $4216 : STA $12
+    LDA !SAMUS_HP_MAX : STA $4204
+    %a8()
+    LDA #$64 : STA $4206
+    %ai16()
+    PHA : PLA : PHA : PLA
+    LDY #$0000 : LDA $4214
+    INC : STA $16
+
+  .vanilla_loop_tanks
+    DEC $16 : BEQ .vanilla_draw_empty_tanks
+    LDX #$3430
+    LDA $14 : BEQ .vanilla_draw_tank_health
+    DEC $14 : LDX #$2831
+  .vanilla_draw_tank_health
+    TXA : LDX $9CCE,Y : STA $7EC608,X
+    INY : INY : CPY #$001C : BMI .vanilla_loop_tanks
+    BRA .vanilla_subtank_health
+
+  .vanilla_draw_empty_tanks
+     LDA !IH_BLANK
+  .vanilla_loop_empty_tanks
+     LDX $9CCE,Y : STA $7EC608,X
+     INY : INY : CPY #$001C : BMI .vanilla_loop_empty_tanks
+
+  .vanilla_subtank_health
+    LDA $12 : LDX #$0094 : JSR Draw2
+    LDA $16 : BNE .vanilla_subtank_whitespace
+    ; Draw the leading zero
+    LDA.w NumberGFXTable : STA $7EC694
+
+  .vanilla_subtank_whitespace
+    LDA !IH_BLANK : STA $7EC692 : STA $7EC698 : STA $7EC69A
+    STA $7EC608 : STA $7EC648 : STA $7EC688
+
+    LDA !SAMUS_RESERVE_MODE : CMP #$0001 : BNE .vanilla_no_reserves
+
+    ; Draw reserve icon
+    LDY #$998B : LDA !SAMUS_RESERVE_ENERGY : BNE .vanilla_draw_reserve_icon
+    LDY #$9997
+  .vanilla_draw_reserve_icon
+    LDA $0000,Y : STA $7EC618 : LDA $0002,Y : STA $7EC61A
+    LDA $0004,Y : STA $7EC658 : LDA $0006,Y : STA $7EC65A
+    RTS
+
+  .vanilla_no_reserves
+    LDA !IH_BLANK : STA $7EC618 : STA $7EC61A : STA $7EC658 : STA $7EC65A
+    RTS
+}
+
 ih_hud_code:
 {
     %ai16()
@@ -734,42 +728,48 @@ ih_hud_code:
     PLB
     PLB
 
+    LDA !sram_top_display_mode : CMP !TOP_DISPLAY_VANILLA : BEQ .vanilla_infohud
+
     ; -- input display --
     ; -- check if we want to update --
-    LDA !IH_CONTROLLER_PRI : CMP !ram_ih_controller : BEQ .status_display
+    LDA !IH_CONTROLLER_PRI : CMP !ram_ih_controller : BNE .controller_update
+    BRL .status_display
 
+  .controller_update
     ; -- read input
-    TAY
-    LDX #$0000
-
--   TYA
-    AND ControllerTable1, X
-    BEQ +
-    LDA ControllerGfx1, X
-    JMP ++
-+   LDA !IH_BLANK
-++  STA $7EC608, X
-    INX
-    INX
-    CPX #$000C
-    BNE -
+    TAY : LDX #$0000
+  .controller_row_1_loop
+    TYA : AND ControllerTable1,X
+    BEQ .controller_row_1_blank
+    LDA ControllerGfx1,X
+    BRA .controller_row_1_draw
+  .controller_row_1_blank
+    LDA !IH_BLANK
+  .controller_row_1_draw
+    STA $7EC608,X
+    INX : INX : CPX #$000C : BNE .controller_row_1_loop
 
     LDX #$0000
+  .controller_row_2_loop
+    TYA : AND ControllerTable2,X
+    BEQ .controller_row_2_blank
+    LDA ControllerGfx2,X
+    BRA .controller_row_2_draw
+  .controller_row_2_blank
+    LDA !IH_BLANK
+  .controller_row_2_draw
+    STA $7EC648,X
+    INX : INX : CPX #$000C : BNE .controller_row_2_loop
 
--   TYA
-    AND ControllerTable2, X
-    BEQ +
-    LDA ControllerGfx2, X
-    JMP ++
-+   LDA !IH_BLANK
-++  STA $7EC648, X
-    INX
-    INX
-    CPX #$000C
-    BNE -
+    TYA : STA !ram_ih_controller
+    BRA .status_display
 
-    TYA
-    STA !ram_ih_controller
+  .vanilla_infohud
+    ; Shift infohud status left by one
+    LDA $7EC68A : STA $7EC688
+    LDA $7EC68C : STA $7EC68A
+    LDA $7EC68E : STA $7EC68C
+    LDA $7EC690 : STA $7EC68E
 
   .status_display
     LDA !sram_display_mode : ASL : TAX
@@ -777,12 +777,28 @@ ih_hud_code:
 
     ; Samus' HP
     LDA !SAMUS_HP : CMP !ram_last_hp : BEQ .reserves : STA !ram_last_hp
-    LDX #$0092 : JSR Draw4
+    LDA !sram_top_display_mode : CMP !TOP_DISPLAY_VANILLA : BEQ .vanilla_draw_health
+    LDA !SAMUS_HP : LDX #$0092 : JSR Draw4
     LDA !IH_BLANK : STA $7EC690 : STA $7EC69A
+    BRA .reserves
+
+  .vanilla_check_health
+    LDA !SAMUS_HP : CMP !SAMUS_LAST_HP : BEQ .vanilla_health_end
+  .vanilla_draw_health
+    JSR ih_hud_vanilla_health
+  .vanilla_health_end
+    ; Shift infohud status right by one
+    LDA $7EC68E : STA $7EC690
+    LDA $7EC68C : STA $7EC68E
+    LDA $7EC68A : STA $7EC68C
+    LDA $7EC688 : STA $7EC68A
+    LDA !IH_BLANK : STA $7EC688
+    BRL .end
 
     ; Reserve energy counter
   .reserves
     LDA !sram_top_display_mode : BEQ .statusIcons
+    CMP !TOP_DISPLAY_VANILLA : BEQ .vanilla_check_health
 
     LDA !SAMUS_RESERVE_MAX : BEQ .noReserves
     LDA !SAMUS_RESERVE_ENERGY : CMP !ram_reserves_last : BEQ .checkAuto
@@ -790,7 +806,6 @@ ih_hud_code:
 
   .checkAuto
     LDA !SAMUS_RESERVE_MODE : CMP #$0001 : BEQ .autoOn
-
     LDA !IH_BLANK : STA $7EC61A : BRA .statusIcons
 
   .autoOn
@@ -803,7 +818,7 @@ ih_hud_code:
   .noReserves
     LDA !IH_BLANK : STA $7EC614 : STA $7EC616 : STA $7EC618 : STA $7EC61A
 
-; Status Icons
+    ; Status Icons
   .statusIcons
     LDA !sram_status_icons : BNE .check_healthbomb
     JMP .end
@@ -986,9 +1001,34 @@ Draw4:
     BRA .done
 }
 
-Draw4JSL:
+DrawHealthPaused:
 {
-    JSR Draw4
+    LDA !sram_top_display_mode : BEQ .draw_health
+    CMP !TOP_DISPLAY_VANILLA : BEQ .vanilla_draw_health
+
+    LDA !SAMUS_RESERVE_MAX : BEQ .noReserves
+    LDA !SAMUS_RESERVE_ENERGY : STA !ram_reserves_last : LDX #$0014 : JSR Draw3
+    LDA !SAMUS_RESERVE_MODE : CMP #$0001 : BEQ .autoOn
+    LDA !IH_BLANK : STA $7EC61A : BRA .draw_health
+
+  .autoOn
+    LDA !SAMUS_RESERVE_ENERGY : BEQ .autoEmpty
+    LDA !IH_RESERVE_AUTO : STA $7EC61A : BRA .draw_health
+
+  .autoEmpty
+    LDA !IH_RESERVE_EMPTY : STA $7EC61A : BRA .draw_health
+
+  .noReserves
+    LDA !IH_BLANK : STA $7EC614 : STA $7EC616 : STA $7EC618 : STA $7EC61A
+    LDA !SAMUS_RESERVE_ENERGY : STA !ram_reserves_last
+
+  .draw_health
+    LDA !SAMUS_HP : LDX #$0092 : JSR Draw4
+    LDA !IH_BLANK : STA $7EC690 : STA $7EC69A
+    RTL
+
+  .vanilla_draw_health
+    JSR ih_hud_vanilla_health
     RTL
 }
 
@@ -1069,7 +1109,7 @@ CalcEtank:
     LDA #$64 : STA $4206
     %a16()
     PEA $0000 : PLA
-    LDA $4214 : CLC : ADC !ram_pct_1 : STA !ram_pct_1
+    LDA $4214
     RTS
 }
 
@@ -1080,7 +1120,7 @@ CalcItem:
     LDA #$05 : STA $4206
     %a16()
     PEA $0000 : PLA
-    LDA $4214 : CLC : ADC !ram_pct_1 : STA !ram_pct_1
+    LDA $4214
     RTS
 }
 
@@ -1096,7 +1136,7 @@ CalcLargeItem:
 
   .noItem
     LSR : BNE .loop
-    TXA : CLC : ADC !ram_pct_1 : STA !ram_pct_1
+    TXA
     RTS
 }
 
@@ -1119,7 +1159,7 @@ CalcBeams:
     INX
 
   .done
-    TXA : CLC : ADC !ram_pct_1 : STA !ram_pct_1
+    TXA
 
     PLP
     RTS
@@ -1316,7 +1356,7 @@ space_pants:
     BRA .reset
 +   CMP $909E9D : BPL .reset              ; check against max SJ vspeed for liquids
 
-; Screw Attack seems to write new palette data every frame, which overwrites the flash
+    ; Screw Attack seems to write new palette data every frame, which overwrites the flash
   .flash
     LDA !ram_magic_pants_state : BNE .done
 
@@ -1377,18 +1417,17 @@ ih_hud_code_paused:
     STZ $02
     %ai16()
 
-    ; Update Samus' HP
-    LDA $7E09C2 : CMP !ram_last_hp : BEQ .end : STA !ram_last_hp
+    ; Update Samus' HP and reserves
+    LDA $7E09C2 : CMP !ram_last_hp : BEQ .check_reserves : STA !ram_last_hp
+    BRA .draw_health
+  .check_reserves
+    LDA $7E09D6 : CMP !ram_reserves_last : BEQ .end
+  .draw_health
     PHY : PHX
-    LDX #$0092 : JSL Draw4JSL
+    LDX #$0092 : JSL DrawHealthPaused
     PLX : PLY
-    LDA !IH_BLANK : STA $7EC690 : STA $7EC69A
-
 
   .end
-    ; Force Samus' Reserves to update after pause
-    LDA #$FFFF : STA !ram_reserves_last
-
     LDA $7E09C0 ; overwritten code
     JMP $9B51
 }
@@ -1400,7 +1439,7 @@ NumberGFXTable:
     dw #$0CD9, #$0CDA, #$0CDB, #$0C5C, #$0C5D, #$0CB8, #$0C8D, #$0C12, #$0C13, #$0C14
     dw #$0C15, #$0C16, #$0C17, #$0C18, #$0C19, #$0C1A, #$0C1B, #$0C20, #$0C21, #$0C22
     dw #$0C23, #$0C24, #$0C25, #$0C26, #$0C27, #$0C28, #$0C29, #$0C2A, #$0C2B, #$0C2C
-    dw #$0C2D, #$0C2E, #$0C2F, #$0C30, #$0C31, #$0CCA
+    dw #$0C2D, #$0C2E, #$0C2F, #$0C5E, #$0C5F, #$0CCA
 
 HexGFXTable:
     dw #$0C09, #$0C00, #$0C01, #$0C02, #$0C03, #$0C04, #$0C05, #$0C06, #$0C07, #$0C08

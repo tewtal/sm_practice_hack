@@ -68,13 +68,19 @@ presets_goto_hundo_tourian:
 
 presets_submenu_hundo_bombs:
     dw #presets_hundo_bombs_ceres_elevator
+    dw #presets_hundo_bombs_ceres_escape
     dw #presets_hundo_bombs_ceres_last_3_rooms
     dw #presets_hundo_bombs_ship
-    dw #presets_hundo_bombs_parlor_down
-    dw #presets_hundo_bombs_morph
+    dw #presets_hundo_bombs_parlor
+    dw #presets_hundo_bombs_climb_down
     dw #presets_hundo_bombs_pit_room
-    dw #presets_hundo_bombs_climb
-    dw #presets_hundo_bombs_parlor_up
+    dw #presets_hundo_bombs_morph
+    dw #presets_hundo_bombs_construction_zone_down
+    dw #presets_hundo_bombs_construction_zone_up
+    dw #presets_hundo_bombs_pit_room_revisit
+    dw #presets_hundo_bombs_climb_up
+    dw #presets_hundo_bombs_parlor_revisit
+    dw #presets_hundo_bombs_flyway
     dw #presets_hundo_bombs_bomb_torizo
     dw #$0000
     %cm_header("BOMBS")
@@ -90,17 +96,19 @@ presets_submenu_hundo_kraid:
     dw #presets_hundo_kraid_big_pink
     dw #presets_hundo_kraid_green_hill_zone
     dw #presets_hundo_kraid_red_tower
+    dw #presets_hundo_kraid_skree_boost
     dw #presets_hundo_kraid_kraid_entry
-    dw #presets_hundo_kraid_kraid_2
+    dw #presets_hundo_kraid_kraid_kihunter_room
+    dw #presets_hundo_kraid_kraid
     dw #presets_hundo_kraid_leaving_varia
     dw #presets_hundo_kraid_leaving_kraid_hallway
-    dw #presets_hundo_kraid_kraid_escape
+    dw #presets_hundo_kraid_leaving_kraid_etank
     dw #$0000
     %cm_header("KRAID")
 
 presets_submenu_hundo_speed_booster:
     dw #presets_hundo_speed_booster_business_center
-    dw #presets_hundo_speed_booster_hi_jump
+    dw #presets_hundo_speed_booster_hijump
     dw #presets_hundo_speed_booster_business_center_climb
     dw #presets_hundo_speed_booster_cathedral_entrance
     dw #presets_hundo_speed_booster_cathedral
@@ -289,15 +297,23 @@ presets_submenu_hundo_tourian:
     dw #presets_hundo_tourian_metroids_3
     dw #presets_hundo_tourian_metroids_4
     dw #presets_hundo_tourian_baby_skip
+    dw #presets_hundo_tourian_after_baby_skip
     dw #presets_hundo_tourian_zeb_skip
+    dw #presets_hundo_tourian_mother_brain_2
+    dw #presets_hundo_tourian_zebes_escape
     dw #presets_hundo_tourian_escape_room_3
+    dw #presets_hundo_tourian_escape_room_4
+    dw #presets_hundo_tourian_escape_climb
     dw #presets_hundo_tourian_escape_parlor
     dw #$0000
     %cm_header("TOURIAN")
 
 ; Bombs
 presets_hundo_bombs_ceres_elevator:
-    %cm_preset("Ceres elevator", #preset_hundo_bombs_ceres_elevator)
+    %cm_preset("Ceres Elevator", #preset_hundo_bombs_ceres_elevator)
+
+presets_hundo_bombs_ceres_escape:
+    %cm_preset("Ceres Escape", #preset_hundo_bombs_ceres_escape)
 
 presets_hundo_bombs_ceres_last_3_rooms:
     %cm_preset("Ceres Last 3 rooms", #preset_hundo_bombs_ceres_last_3_rooms)
@@ -305,20 +321,35 @@ presets_hundo_bombs_ceres_last_3_rooms:
 presets_hundo_bombs_ship:
     %cm_preset("Ship", #preset_hundo_bombs_ship)
 
-presets_hundo_bombs_parlor_down:
-    %cm_preset("Parlor down", #preset_hundo_bombs_parlor_down)
+presets_hundo_bombs_parlor:
+    %cm_preset("Parlor", #preset_hundo_bombs_parlor)
 
-presets_hundo_bombs_morph:
-    %cm_preset("Morph", #preset_hundo_bombs_morph)
+presets_hundo_bombs_climb_down:
+    %cm_preset("Climb Down", #preset_hundo_bombs_climb_down)
 
 presets_hundo_bombs_pit_room:
     %cm_preset("Pit Room", #preset_hundo_bombs_pit_room)
 
-presets_hundo_bombs_climb:
-    %cm_preset("Climb", #preset_hundo_bombs_climb)
+presets_hundo_bombs_morph:
+    %cm_preset("Morph", #preset_hundo_bombs_morph)
 
-presets_hundo_bombs_parlor_up:
-    %cm_preset("Parlor up", #preset_hundo_bombs_parlor_up)
+presets_hundo_bombs_construction_zone_down:
+    %cm_preset("Construction Zone Down", #preset_hundo_bombs_construction_zone_down)
+
+presets_hundo_bombs_construction_zone_up:
+    %cm_preset("Construction Zone Up", #preset_hundo_bombs_construction_zone_up)
+
+presets_hundo_bombs_pit_room_revisit:
+    %cm_preset("Pit Room Revisit", #preset_hundo_bombs_pit_room_revisit)
+
+presets_hundo_bombs_climb_up:
+    %cm_preset("Climb Up", #preset_hundo_bombs_climb_up)
+
+presets_hundo_bombs_parlor_revisit:
+    %cm_preset("Parlor Revisit", #preset_hundo_bombs_parlor_revisit)
+
+presets_hundo_bombs_flyway:
+    %cm_preset("Flyway", #preset_hundo_bombs_flyway)
 
 presets_hundo_bombs_bomb_torizo:
     %cm_preset("Bomb Torizo", #preset_hundo_bombs_bomb_torizo)
@@ -355,11 +386,17 @@ presets_hundo_kraid_green_hill_zone:
 presets_hundo_kraid_red_tower:
     %cm_preset("Red Tower", #preset_hundo_kraid_red_tower)
 
+presets_hundo_kraid_skree_boost:
+    %cm_preset("Skree Boost", #preset_hundo_kraid_skree_boost)
+
 presets_hundo_kraid_kraid_entry:
     %cm_preset("Kraid Entry", #preset_hundo_kraid_kraid_entry)
 
-presets_hundo_kraid_kraid_2:
-    %cm_preset("Kraid", #preset_hundo_kraid_kraid_2)
+presets_hundo_kraid_kraid_kihunter_room:
+    %cm_preset("Kraid Kihunter Room", #preset_hundo_kraid_kraid_kihunter_room)
+
+presets_hundo_kraid_kraid:
+    %cm_preset("Kraid", #preset_hundo_kraid_kraid)
 
 presets_hundo_kraid_leaving_varia:
     %cm_preset("Leaving Varia", #preset_hundo_kraid_leaving_varia)
@@ -367,16 +404,16 @@ presets_hundo_kraid_leaving_varia:
 presets_hundo_kraid_leaving_kraid_hallway:
     %cm_preset("Leaving Kraid Hallway", #preset_hundo_kraid_leaving_kraid_hallway)
 
-presets_hundo_kraid_kraid_escape:
-    %cm_preset("Kraid Escape", #preset_hundo_kraid_kraid_escape)
+presets_hundo_kraid_leaving_kraid_etank:
+    %cm_preset("Kraid Escape", #preset_hundo_kraid_leaving_kraid_etank)
 
 
 ; Speed Booster
 presets_hundo_speed_booster_business_center:
     %cm_preset("Business Center", #preset_hundo_speed_booster_business_center)
 
-presets_hundo_speed_booster_hi_jump:
-    %cm_preset("Hi Jump", #preset_hundo_speed_booster_hi_jump)
+presets_hundo_speed_booster_hijump:
+    %cm_preset("Hi-Jump", #preset_hundo_speed_booster_hijump)
 
 presets_hundo_speed_booster_business_center_climb:
     %cm_preset("Business Center Climb", #preset_hundo_speed_booster_business_center_climb)
@@ -812,11 +849,26 @@ presets_hundo_tourian_metroids_4:
 presets_hundo_tourian_baby_skip:
     %cm_preset("Baby Skip", #preset_hundo_tourian_baby_skip)
 
+presets_hundo_tourian_after_baby_skip:
+    %cm_preset("After Baby Skip", #preset_hundo_tourian_after_baby_skip)
+
 presets_hundo_tourian_zeb_skip:
     %cm_preset("Zeb Skip", #preset_hundo_tourian_zeb_skip)
 
+presets_hundo_tourian_mother_brain_2:
+    %cm_preset("Mother Brain 2", #preset_hundo_tourian_mother_brain_2)
+
+presets_hundo_tourian_zebes_escape:
+    %cm_preset("Zebes Escape", #preset_hundo_tourian_zebes_escape)
+
 presets_hundo_tourian_escape_room_3:
     %cm_preset("Escape Room 3", #preset_hundo_tourian_escape_room_3)
+
+presets_hundo_tourian_escape_room_4:
+    %cm_preset("Escape Room 4", #preset_hundo_tourian_escape_room_4)
+
+presets_hundo_tourian_escape_climb:
+    %cm_preset("Escape Climb", #preset_hundo_tourian_escape_climb)
 
 presets_hundo_tourian_escape_parlor:
     %cm_preset("Escape Parlor", #preset_hundo_tourian_escape_parlor)

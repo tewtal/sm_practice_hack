@@ -1,20 +1,19 @@
 local CAT = "gtclassic" -- prkd, hundo, rbo, kpdr25, gtclassic, kpdr21, 14ice, 14speed, allbosskpdr, allbosspkdr, allbossprkd, 100early, pkrd, nintendopower, gtmax, 100map
 
-local last_state = {} -- holds all state that has been changed up untill last save
+local last_state = {} -- holds all state that has been changed up until last save
 
 local preset_output = ""
 local last_step = nil
 
 local MEMTRACK = { -- {{{
-    { 0x07C3, 0x6, 'GFX Pointers' },
+    -- { 0x078B, 0x2, 'Elevator Index' },
+    { 0x078D, 0x2, 'DDB' },
+    -- { 0x078F, 0x2, 'DoorOut Index' },
+    { 0x079B, 0x2, 'MDB' },
+    -- { 0x079F, 0x2, 'Region' },
+    -- { 0x07C3, 0x6, 'GFX Pointers' },
     { 0x07F3, 0x2, 'Music Bank' },
     { 0x07F5, 0x2, 'Music Track' },
-    { 0x078B, 0x2, 'Elevator Index' },
-    { 0x078D, 0x2, 'DDB' },
-    { 0x078F, 0x2, 'DoorOut Index' },
-    { 0x079B, 0x2, 'MDB' },
-    { 0x079F, 0x2, 'Region' },
-
     --[[
     { 0x08F7, 0x2, 'How many blocks X the screen is scrolled?' },
     { 0x08F9, 0x2, 'How many blocks Y the screen is scrolled? (up = positive)' },
@@ -29,20 +28,18 @@ local MEMTRACK = { -- {{{
     { 0x090B, 0x2, 'How many blocks X BG2 is scrolled?' },
     { 0x090D, 0x2, 'How many blocks Y BG2 is scrolled? (up = positive)' },
     ]]
-    { 0x090F, 0x2, 'Screen subpixel X position.' },
+    { 0x090F, 0x2, 'Screen subpixel X position' },
     { 0x0911, 0x2, 'Screen X position in pixels' },
     { 0x0913, 0x2, 'Screen subpixel Y position' },
     { 0x0915, 0x2, 'Screen Y position in pixels' },
-    { 0x0917, 0x2, 'Layer 2 X scroll in room in pixels?' },
-    { 0x0919, 0x2, 'Layer 2 Y scroll in room in pixels? (up = positive)' },
+    { 0x0917, 0x2, 'Layer 2 X position' },
+    { 0x0919, 0x2, 'Layer 2 Y position' },
     --[[
     { 0x091B, 0x2, 'BG2 scroll percent to screen scroll (0 = 100, 1 = ?) (1 byte for X, 1 byte for Y)' },
     { 0x091D, 0x2, 'BG1 X scroll offset due to room transitions (Translates between screen scroll and BG1 scroll)' },
     { 0x091F, 0x2, 'BG1 Y scroll offset due to room transitions (Translates between screen scroll and BG1 scroll)' },
-    --]]
-    { 0x0921, 0x2, 'BG2 X scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)' },
-    { 0x0923, 0x2, 'BG2 Y scroll offset due to room transitions (Translates between Layer 2 scroll and BG2 scroll)' },
-    --[[
+    { 0x0921, 0x2, 'BG2 X offset' },
+    { 0x0923, 0x2, 'BG2 Y offset' },
     { 0x0925, 0x2, 'How many times the screen has scrolled? Stops at 40.' },
     { 0x0927, 0x2, 'X offset of room entrance for room transition (multiple of 100, screens)' },
     { 0x0929, 0x2, 'Y offset of room entrance for room transition (multiple of 100, screens. Adjusted by 20 when moving up)' },
@@ -50,11 +47,9 @@ local MEMTRACK = { -- {{{
     { 0x092D, 0x2, 'Movement speed for room transitions (pixels per frame of room transition movement)' },
     --]]
     { 0x093F, 0x2, 'Ceres escape flag' },
-
     { 0x09A2, 0x2, 'Equipped Items' },
     { 0x09A4, 0x2, 'Collected Items' },
-    { 0x09A6, 0x2, 'Beams' },
-    { 0x09A8, 0x2, 'Beams' },
+    { 0x09A6, 0x4, 'Beams' },
     { 0x09C0, 0x2, 'Manual/Auto reserve tank' },
     { 0x09C2, 0x2, 'Health' },
     { 0x09C4, 0x2, 'Max health' },
@@ -64,7 +59,7 @@ local MEMTRACK = { -- {{{
     { 0x09CC, 0x2, 'Max supers' },
     { 0x09CE, 0x2, 'Pbs' },
     { 0x09D0, 0x2, 'Max pbs' },
-    -- { 0x09D2, 0x2, 'Current selected weapon' },
+    { 0x09D2, 0x2, 'Currently selected item' },
     { 0x09D4, 0x2, 'Max reserves' },
     { 0x09D6, 0x2, 'Reserves' },
     -- { 0x0A04, 0x2, 'Auto-cancel item' },
@@ -73,12 +68,17 @@ local MEMTRACK = { -- {{{
     { 0x0A68, 0x2, 'Flash suit' },
     { 0x0A76, 0x2, 'Hyper beam' },
     { 0x0AF6, 0x2, 'Samus X' },
+    { 0x0AF8, 0x2, 'Samus subpixel X' },
     { 0x0AFA, 0x2, 'Samus Y' },
+    { 0x0AFC, 0x2, 'Samus subpixel Y' },
     { 0x0B3F, 0x2, 'Blue suit' },
-    { 0xD7C0, 0x60, 'SRAM copy' }, -- Prob not doing much?
-    { 0xD820, 0x100, 'Events, Items, Doors' },
-    -- { 0xD840, 0x40, 'Items' },
-    -- { 0xD8B0, 0x40, 'Doors' },
+    -- { 0xD7C0, 0x60, 'SRAM copy' },
+    -- { 0xD820, 0x100, 'Events, Items, Doors' },
+    { 0xD820, 0x04, 'Events' },
+    { 0xD828, 0x08, 'Bosses' },
+    { 0xD870, 0x14, 'Items' },
+    { 0xD8B0, 0x16, 'Doors' },
+    { 0xD908, 0x06, 'Map Stations' },
     -- { 0xD914, 0x2, 'Game mode?' },
 
 } -- }}}
@@ -2625,15 +2625,18 @@ local function save_preset(step)
         if last_state[addr] ~= val then
             last_state[addr] = val
 
-            preset_output = preset_output ..  "    dl " ..  tohex(addr, 6) .. " : "
-            preset_output = preset_output ..  "db " ..  tohex(size, 2) .. " : "
-            preset_output = preset_output .. (size == 1 and "db " or "dw ") ..  tohex(val, size == 1 and 2 or 4)
-            preset_output = preset_output .. " ; " .. annotate_address(addr, val) .. "\n"
+            preset_output = preset_output ..  "    dw " ..  tohex(addr - 0x7E0000, 4)
+            -- preset_output = preset_output ..  "    dl " ..  tohex(addr, 6) .. " : "
+            -- preset_output = preset_output ..  "db " ..  tohex(size, 2) .. " : "
+            -- preset_output = preset_output .. (size == 1 and "db " or "dw ")
+            preset_output = preset_output .. (size == 1 and ", $??" or ", $")
+            preset_output = preset_output .. tohex(val, size == 1 and 2 or 4)
+            preset_output = preset_output .. "  ; " .. annotate_address(addr, val) .. "\n"
         end
     end
 
     preset_output = preset_output .. "    dw #$FFFF\n"
-    preset_output = preset_output .. ".after\n"
+    -- preset_output = preset_output .. ".after\n"
 end
 
 local function save_preset_file()

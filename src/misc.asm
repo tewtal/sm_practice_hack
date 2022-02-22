@@ -102,8 +102,8 @@ if !FEATURE_PAL
 org $90EA38
 else
 org $90EA3B
-    BRA $0B
 endif
+    BRA $0B
 
 ; Optimize CPU by removing RTS so we go straight to the low health check
 if !FEATURE_PAL
@@ -315,30 +315,47 @@ endif
 
     ; To account for various changes, we may need to tack on more clock cycles
     ; These can be removed as code is added to maintain CPU parity during normal gameplay
+    LDA !sram_top_display_mode : CMP !TOP_DISPLAY_VANILLA : BEQ .vanilla_display_lag_loop
+    LDA !sram_artificial_lag
     ASL
     ASL
-    INC  ; Add 4 loops (22 clock cycles including the INC)
     ASL
-    INC  ; Add 2 loops (12 clock cycles including the INC)
     ASL
+    NOP  ; Add 2 more clock cycles
     NOP  ; Add 2 more clock cycles
     TAX
   .lagloop
     DEX : BNE .lagloop
   .endlag
     RTL
+
+  .vanilla_display_lag_loop
+    ; Vanilla display logic uses more CPU so reduce artificial lag
+    LDA !sram_artificial_lag
+    DEC : BEQ .endlag   ; Remove 76 clock cycles
+    DEC : BEQ .endlag   ; Remove 76 clock cycles
+    ASL
+    ASL
+    INC  ; Add 4 loops (22 clock cycles including the INC)
+    ASL
+    ASL
+    INC  ; Add 1 loop (7 clock cycles including the INC)
+    TAX
+  .vanilla_lagloop
+    DEX : BNE .vanilla_lagloop
+    RTL
 }
 
 stop_all_sounds:
 {
-    ; If $05F5 is non-zero, the game won't clear the sounds
-    LDA $05F5 : PHA
-    LDA #$0000 : STA $05F5
+    ; If sounds are not enabled, the game won't clear the sounds
+    LDA !DISABLE_SOUNDS : PHA
+    STZ !DISABLE_SOUNDS
     JSL $82BE17
-    PLA : STA $05F5
+    PLA : STA !DISABLE_SOUNDS
 
     ; Makes the game check Samus' health again, to see if we need annoying sound
-    LDA #$0000 : STA $0A6A
+    STZ !SAMUS_HEALTH_WARNING
     RTL
 }
 
@@ -429,7 +446,7 @@ healthalarm_turn_on_vanilla:
     LDA #$0002 : JSL $80914D
 
 healthalarm_turn_on_never:
-    LDA #$0001 : STA $0A6A
+    LDA #$0001 : STA !SAMUS_HEALTH_WARNING
 
 healthalarm_turn_on_done:
     PLX : RTS
@@ -450,7 +467,7 @@ healthalarm_turn_off_vanilla:
     LDA #$0001 : JSL $80914D
 
 healthalarm_turn_off_never:
-    STZ $0A6A
+    STZ !SAMUS_HEALTH_WARNING
 
 healthalarm_turn_off_done:
     PLX : RTS

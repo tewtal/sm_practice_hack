@@ -215,7 +215,7 @@ hook_resume_room_music:
     LDA !sram_fanfare_toggle : BNE .resume
 
     ; This method is also used when starting game at Ceres
-    LDA $7ED914 : CMP #$001F : BEQ .resume
+    LDA !AREA_ID : CMP #$0006 : BEQ .resume
     RTL
 
   .resume

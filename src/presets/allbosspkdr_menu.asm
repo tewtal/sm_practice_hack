@@ -44,6 +44,7 @@ presets_goto_allbosspkdr_tourian:
 
 presets_submenu_allbosspkdr_crateria:
     dw #presets_allbosspkdr_crateria_ceres_elevator
+    dw #presets_allbosspkdr_crateria_ceres_escape
     dw #presets_allbosspkdr_crateria_ceres_last_3_rooms
     dw #presets_allbosspkdr_crateria_ship
     dw #presets_allbosspkdr_crateria_pit_room
@@ -175,6 +176,9 @@ presets_submenu_allbosspkdr_tourian:
 ; Crateria
 presets_allbosspkdr_crateria_ceres_elevator:
     %cm_preset("Ceres Elevator", #preset_allbosspkdr_crateria_ceres_elevator)
+
+presets_allbosspkdr_crateria_ceres_escape:
+    %cm_preset("Ceres Escape", #preset_allbosspkdr_crateria_ceres_escape)
 
 presets_allbosspkdr_crateria_ceres_last_3_rooms:
     %cm_preset("Ceres Last 3 Rooms", #preset_allbosspkdr_crateria_ceres_last_3_rooms)
