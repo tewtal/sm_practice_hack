@@ -370,9 +370,11 @@
 ; SRAM
 ; -----
 
-!SRAM_VERSION = $000D
+!SRAM_VERSION = $000E
 
 !SRAM_START = $702000
+
+!CRASHDUMP = $702F00
 
 !sram_initialized = !SRAM_START+$00
 
@@ -455,4 +457,3 @@
 
 !SRAM_DMA_BANK = $770000
 !SRAM_SAVED_SP = $774004
-

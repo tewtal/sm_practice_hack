@@ -1410,7 +1410,7 @@ boss_mb:
 ; --------------
 
 pushpc
-org $B3C000
+org $85C000
 print pc, " mainmenu InfoHUD start"
 
 InfoHudMenu:

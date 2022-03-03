@@ -23,6 +23,7 @@ gamemode_start:
     PHK : PLB
 
     JSR gamemode_shortcuts
+  .return
     %ai16()
     PHP
 

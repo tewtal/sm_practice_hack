@@ -1048,8 +1048,10 @@ cm_loop:
     LDA !ram_cm_leave : BEQ +
     RTS ; Exit menu loop
 
-    +
-    LDA !ram_cm_ctrl_mode : BEQ +
++   LDA !CRASHDUMP+$0E : BEQ +
+    INC : JSL cm_crash
+
++   LDA !ram_cm_ctrl_mode : BEQ +
     JSR cm_ctrl_mode
     BRA .inputLoop
 
