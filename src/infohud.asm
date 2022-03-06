@@ -293,6 +293,7 @@ ih_after_room_transition:
     LDA !ram_transition_counter : STA !ram_last_door_lag_frames
     LDA !sram_lag_counter_mode : BEQ .done_set_door_lag
     LDA !ram_realtime_room : STA !ram_last_door_lag_frames
+    LDA !ram_realtime_room : STA !ram_last_realtime_door
   .done_set_door_lag
     LDA #$0000 : STA !ram_transition_flag
 
@@ -348,6 +349,7 @@ ih_before_room_transition:
     ; Realtime
     LDA !ram_realtime_room : STA !ram_last_realtime_room
     LDA #$0000 : STA !ram_realtime_room
+    LDA #$0000 : STA !ram_last_realtime_door
 
     ; Save temp variables
     LDA $12 : PHA
