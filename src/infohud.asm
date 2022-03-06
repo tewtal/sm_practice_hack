@@ -572,8 +572,7 @@ endif
     LDA !sram_display_mode : CMP #!IH_MODE_SHINETUNE_INDEX : BEQ .end
 
     ; Door lag
-    LDA !ram_last_door_lag_frames : LDX #$00C2 : JSR Draw3
-    BRA .pick_segment_timer
+    BRA .vanilla_infohud_draw_door_lag
 
   .vanilla_infohud_draw_lag_and_reserves
     LDA !SAMUS_RESERVE_MODE : CMP #$0001 : BNE .vanilla_infohud_draw_lag
@@ -591,6 +590,7 @@ endif
     ; Skip door lag and segment timer when shinetune enabled
     LDA !sram_display_mode : CMP #!IH_MODE_SHINETUNE_INDEX : BEQ .end
 
+  .vanilla_infohud_draw_door_lag
     ; Door lag
     LDA !ram_last_door_lag_frames : LDX #$00C2 : JSR Draw2
 
