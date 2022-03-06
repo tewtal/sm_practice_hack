@@ -119,7 +119,7 @@ post_load_state:
     LDA $770082 : STA $05B6
 
   .done
-    JSL init_wram_based_on_sram
+    JSL init_suit_properties_ram
     RTS
 }
 
@@ -406,4 +406,4 @@ vm:
 }
 
 print pc, " save end"
-warnpc $80FC00
+warnpc $80FC00 ; infohud.asm

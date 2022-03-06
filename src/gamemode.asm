@@ -189,7 +189,7 @@ endif
   .save_safe
     JSL custom_preset_save
     ; CLC to continue normal gameplay after saving preset
-    LDA #!SOUND_MENU_JSR : JSL !SFX_LIB1
+    LDA #!SOUND_MENU_JSL : JSL !SFX_LIB1
     CLC : RTS
 
   .load_custom_preset
@@ -261,4 +261,4 @@ gamemode_door_transition:
 endif
 
 print pc, " gamemode end"
-warnpc $85FD00
+warnpc $85FD00 ; menu.asm

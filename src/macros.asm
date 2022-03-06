@@ -10,6 +10,12 @@ macro ppu_on()
     PLA : STA $9B : STA $420C
 endmacro
 
+macro item_index_to_vram_index()
+    ; Find screen position from Y (item number)
+    TYA : ASL #5
+    CLC : ADC #$0146 : TAX
+endmacro
+
 macro a8()
     sep #$20
 endmacro

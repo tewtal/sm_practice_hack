@@ -110,7 +110,7 @@ SpecialButtonTilemapOffsets:
     dw #$0000  ; 26h: Reserved
 
 print pc, " fanfare message end"
-warnpc $85F800
+warnpc $85F800 ; gamemode.asm
 endif
 
 

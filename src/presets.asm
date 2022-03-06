@@ -675,7 +675,7 @@ add_grapple_and_xray_to_hud:
 }
 
 print pc, " presets bank80 end"
-warnpc $80F800
+warnpc $80F800 ; save.asm
 
 
 ; $80:9AB1: Add x-ray and grapple HUD items if necessary
@@ -717,7 +717,7 @@ print pc, " preset data crossbank start"
   incsrc presets/prkd_data.asm
   incsrc presets/rbo_data.asm
 print pc, " preset data crossbank end"
-warnpc $F08000
+warnpc $F08000 ; infohud.asm
 check bankcross on
 
 org $F18000

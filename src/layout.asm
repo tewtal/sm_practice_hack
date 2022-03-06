@@ -55,7 +55,7 @@ hijack_door_closing_plm:
 }
 
 print pc, " layout bank82 end"
-warnpc $82FA00
+warnpc $82FA00 ; presets.asm
 
 
 ; East Ocean left door asm pointer
