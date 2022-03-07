@@ -3227,9 +3227,11 @@ preset_100early_tourian_zebes_escape:
     dw $09CA, $0000  ; Supers
     dw $09CE, $0000  ; Pbs
     dw $09D6, $0190  ; Reserves
+    dw $0A1C, $009B  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
     dw $0A76, $8000  ; Hyper beam
     dw $0AF6, $0025  ; Samus X
-    dw $0AFA, $00C3  ; Samus Y
+    dw $0AFA, $009E  ; Samus Y
     dw $D820, $7FC5  ; Events
     dw $D82C, $0203  ; Bosses
     dw #$FFFF
