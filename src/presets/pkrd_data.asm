@@ -2098,7 +2098,6 @@ preset_pkrd_tourian_zebes_escape:
     dw $09C2, $01B7  ; Health
     dw $0A1C, $009B  ; Samus position/state
     dw $0A1E, $0000  ; More position/state
-    dw $0A76, $8000  ; Hyper beam
     dw $0AF6, $0025  ; Samus X
     dw $0AFA, $009E  ; Samus Y
     dw $D820, $4FC5  ; Events

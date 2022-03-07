@@ -119,7 +119,7 @@ post_load_state:
     LDA $770082 : STA $05B6
 
   .done
-    JSL init_suit_properties_ram
+    JSL init_wram_based_on_sram
     RTS
 }
 

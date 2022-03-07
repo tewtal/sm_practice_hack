@@ -10,10 +10,6 @@ else
     db $05 ; 64kb
 endif
 
-; Set version in game header
-org $00FFDB
-    db !VERSION_HEADER
-
 ; Enable version display
 org $8B8697
     NOP

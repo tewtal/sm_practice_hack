@@ -101,7 +101,7 @@ cm_crash:
     ; clear crashdump flag
     LDA #$0000 : STA !CRASHDUMP+$0E
 
- 	; Clear out !ram_tilemap_buffer
+    ; Clear out !ram_tilemap_buffer
     LDA #$000E : LDX #$07FE
 -   STA !ram_tilemap_buffer,X : DEX #2 : BPL -
 
@@ -232,16 +232,16 @@ CrashLoop:
     JSL $809459 ; Read controller input
 
     ; new inputs in X, to be copied back to A later
-    LDA $8F : TAX : BEQ CrashLoop
+    LDA !IH_CONTROLLER_PRI_NEW : TAX : BEQ CrashLoop
 
     ; check for soft reset shortcut (Select+Start+L+R)
-    LDA $8B : AND #$3030 : CMP #$3030 : BNE +
-    AND $8F : BNE .reset
+    LDA !IH_CONTROLLER_PRI : AND #$3030 : CMP #$3030 : BNE +
+    AND !IH_CONTROLLER_PRI_NEW : BNE .reset
 
 if !FEATURE_SD2SNES
     ; check for load state shortcut
-+   LDA $8B : CMP !sram_ctrl_load_state : BNE +
-    AND $8F : BEQ +
++   LDA !IH_CONTROLLER_PRI : CMP !sram_ctrl_load_state : BNE +
+    AND !IH_CONTROLLER_PRI_NEW : BEQ +
 
     ; prepare to jump to load_state
     %a8()
@@ -252,8 +252,8 @@ if !FEATURE_SD2SNES
 endif
 
     ; palette selection
-+   TXA : AND #$0810 : BNE .incPalette ; Up + R
-    TXA : AND #$0420 : BNE .decPalette ; Down + L
++   TXA : AND #$0810 : BNE .incPalette ; Up or R
+    TXA : AND #$0420 : BNE .decPalette ; Down or L
     JMP CrashLoop
 
   .decPalette
@@ -393,4 +393,4 @@ HexCrashGFXTable:
     dw $2C70, $2C71, $2C72, $2C73, $2C74, $2C75, $2C76, $2C77, $2C78, $2C79, $2C50, $2C51, $2C52, $2C53, $2C54, $2C55
 
 print pc, " crash handler end"
-warnpc $80F000
+warnpc $80F000 ; presets.asm
