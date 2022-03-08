@@ -107,7 +107,6 @@ init_sram:
 
   .sram_upgrade_13to14
     LDA #$0000 : STA !CRASHDUMP+$0C
-    LDA #$0000 : STA !CRASHDUMP+$0E
 
     LDA #!SRAM_VERSION : STA !sram_initialized
     RTS

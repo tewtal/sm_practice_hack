@@ -493,12 +493,6 @@ cm_tilemap_transfer:
     RTS
 }
 
-cm_tilemap_transfer_long:
-{
-    JSR cm_tilemap_transfer
-    RTL
-}
-
 cm_draw_action_table:
 {
     dw draw_toggle
@@ -1054,15 +1048,11 @@ cm_loop:
     LDA !ram_cm_leave : BEQ +
     RTS ; Exit menu loop
 
-+   LDA !CRASHDUMP+$0E : BEQ +
-    JSL cm_crash
-
 +   LDA !ram_cm_ctrl_mode : BEQ +
     JSR cm_ctrl_mode
     BRA .inputLoop
 
-    +
-    JSR cm_get_inputs : STA !ram_cm_controller : BEQ .inputLoop
++   JSR cm_get_inputs : STA !ram_cm_controller : BEQ .inputLoop
 
     BIT #$0080 : BNE .pressedA
     BIT #$8000 : BNE .pressedB
@@ -1783,3 +1773,10 @@ HexMenuGFXTable:
     dw $2C70, $2C71, $2C72, $2C73, $2C74, $2C75, $2C76, $2C77, $2C78, $2C79, $2C50, $2C51, $2C52, $2C53, $2C54, $2C55
 
 print pc, " menu end"
+
+
+; -------------
+; Crash handler
+; -------------
+
+incsrc crash.asm
