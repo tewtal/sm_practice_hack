@@ -103,6 +103,8 @@ CrashViewer:
     LDA #$80 : STA $2100 ; Force blank on, zero brightness
     LDA #$A1 : STA $4200 ; NMI, V-blank IRQ, and auto-joypad read on
     LDA #$09 : STA $2105 ; BG3 priority on , BG Mode 1
+    LDA #$02 : STA $2130 ; Add subscreen to color math
+    LDA #$33 : STA $2131 ; Enable color math on backgrounds and OAM
     LDA #$0F : STA $2100 ; Force blank off, max brightness
     %a16()
 
