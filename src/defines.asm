@@ -82,8 +82,12 @@
 !ram_suits_enemy_damage_check = !WRAM_START+$78
 !ram_suits_periodic_damage_check = !WRAM_START+$7A
 
-; ^ FREE SPACE ^ up to +$86
+; ^ FREE SPACE ^ up to +$7E
 
+!ram_spacetime_read_address = !WRAM_START+$80
+!ram_spacetime_read_bank = !WRAM_START+$82
+!ram_spacetime_y = !WRAM_START+$84
+!ram_spacetime_infohud = !WRAM_START+$86
 !ram_watch_left_index = !WRAM_START+$88
 !ram_watch_right_index = !WRAM_START+$8A
 !ram_watch_write_mode = !WRAM_START+$8C
