@@ -1140,6 +1140,8 @@ SpritesMenu:
     dw #sprites_show_samusproj_hitbox
     dw #sprites_show_enemyproj_hitbox
     dw #sprites_oob_viewer
+    dw #$FFFF
+    dw #sprites_spacetime_infohud
     dw #$0000
     %cm_header("SPRITE FEATURES")
 
@@ -1162,6 +1164,7 @@ sprites_show_samusproj_hitbox:
     %cm_toggle("S Projectile Hitboxes", !ram_sprite_samusproj_hitbox_active, #1, #action_sprite_features)
 
 sprites_oob_viewer:
+{
     %cm_toggle("OOB Tile Viewer", !ram_oob_watch_active, #1, #.routine)
   .routine
     LDA !ram_oob_watch_active : BEQ .oob_off
@@ -1173,6 +1176,15 @@ sprites_oob_viewer:
     LDA #$0000 : STA !ram_sprite_features_active
     RTS
 }
+
+sprites_spacetime_infohud:
+    dw !ACTION_CHOICE
+    dl #!ram_spacetime_infohud
+    dw #$0000
+    db #$28, "Spacetime HUD ", #$FF
+    db #$28, "    VANILLA", #$FF
+    db #$28, "  PRESERVED", #$FF
+    db #$FF
 
 action_sprite_features:
 {

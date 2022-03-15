@@ -505,14 +505,53 @@ spacetime_routine:
     ; Also skips out if spacetime but Y value is positive
     INY : INY : CPY #$0000 : BPL .normal_load_palette
 
-    ; Spacetime, sanity check that X is 0 (if not then do the original routine)
+    ; Sanity check that X is 0 (if not then do the original routine)
     CPX #$0000 : BNE .normal_load_palette
 
-    ; Spacetime, check if Y will cause us to reach WRAM
-    TYA : CLC : ADC #(!WRAM_START-$7EC1E2) : CMP #$0000 : BPL .normal_load_palette
+    ; Spacetime
+    LDA $00 : STA !ram_spacetime_read_address
+    LDA $02 : STA !ram_spacetime_read_bank
+    TYA : DEC : DEC : STA !ram_spacetime_y
+
+    ; Check if Y will cause us to reach infohud
+    CLC : ADC #($7EC608-$7EC1E0) : CMP #$0000 : BPL .normal_load_palette
 
     ; It will, so run our own loop
     INX : INX
+  .loop_before_infohud
+    LDA [$00],Y
+    STA $7EC1C0,X
+    INX : INX : INY : INY
+    CPX #($7EC608-$7EC1C0) : BMI .loop_before_infohud
+ 
+    ; Check if we should skip over infohud
+    LDA !ram_spacetime_infohud : BEQ .check_wram
+
+    ; Skip over infohud and check for wram
+    TXA : CLC : ADC #($7EC6C8-$7EC608) : TAX
+    TYA : CLC : ADC #($7EC6C8-$7EC608) : TAY
+    CPY #$0020 : BMI .check_wram
+    RTS
+
+  .normal_load_loop
+    LDA [$00],Y
+    STA $7EC1C0,X
+    INY : INY
+  .normal_load_palette
+    INX : INX
+    CPY #$0020 : BMI .normal_load_loop
+    RTS
+
+  .check_wram_overwrite_infohud
+    ; Check if Y will cause us to reach WRAM
+    TYA : CLC : ADC #(!WRAM_START-$7EC62A) : CMP #$0000 : BPL .normal_load_palette
+    BRA .loop_before_wram
+
+  .check_wram
+    ; Check if Y will cause us to reach WRAM
+    TYA : CLC : ADC #(!WRAM_START-$7EC6EA) : CMP #$0000 : BPL .normal_load_palette
+
+    ; It will, so run our own loop
   .loop_before_wram
     LDA [$00],Y
     STA $7EC1C0,X
@@ -522,15 +561,6 @@ spacetime_routine:
     ; Skip over WRAM and resume normal loop
     TXA : CLC : ADC !WRAM_SIZE : TAX
     TYA : CLC : ADC !WRAM_SIZE : TAY
-    CPY #$0020 : BMI .normal_load_loop
-    RTS
-
-  .normal_load_loop
-    LDA [$00],Y
-    STA $7EC1C0,X
-    INY : INY
-  .normal_load_palette
-    INX : INX
     CPY #$0020 : BMI .normal_load_loop
     RTS
 }
