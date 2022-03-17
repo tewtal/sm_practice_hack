@@ -1,4 +1,3 @@
-!ram_tilemap_buffer = $7E5800
 
 org $85FD00
 print pc, " menu bank85 start"
