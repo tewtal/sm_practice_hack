@@ -2,9 +2,12 @@
 ; Work RAM
 ; ---------
 
+!ram_tilemap_buffer = $7E5800
+!CRASHDUMP_TILEMAP_BUFFER = !ram_tilemap_buffer
+
 !WRAM_BANK = #$007E
 !WRAM_SIZE = #$0200
-!WRAM_START = $7EFB00
+!WRAM_START = $7EFD00
 
 !ram_load_preset = !WRAM_START+$00
 !ram_gametime_room = !WRAM_START+$02
@@ -125,13 +128,13 @@
 ; RAM (Bank 7E required)
 ; -----------------------
 
-!ram_slowdown_mode = $7EFBFE
+!ram_slowdown_mode = $7EFDFE
 
 ; ---------
 ; RAM Menu
 ; ---------
 
-!WRAM_MENU_START = $7EFC00
+!WRAM_MENU_START = $7EFE00
 
 !ram_cm_stack_index = $05D5
 !ram_cm_menu_stack = !WRAM_MENU_START+$00         ; 16 bytes
@@ -191,6 +194,8 @@
 ; Currently first 22 bytes and last 2 bytes are used
 
 !ram_cgram_cache = !WRAM_MENU_START+$D0
+
+!CRASHDUMP = $7EFF00
 
 !ram_hex2dec_first_digit = $14
 !ram_hex2dec_second_digit = $16
@@ -373,8 +378,6 @@
 !SRAM_VERSION = $000E
 
 !SRAM_START = $702000
-
-!CRASHDUMP = $702F00
 
 !sram_initialized = !SRAM_START+$00
 

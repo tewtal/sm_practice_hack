@@ -7,6 +7,30 @@
 ; This resource adds a crash handler to dump data to SRAM
 ; whenever one of these "crash vectors" is triggered
 
+!ram_crash_a = !CRASHDUMP
+!ram_crash_x = !CRASHDUMP+$02
+!ram_crash_y = !CRASHDUMP+$04
+!ram_crash_dbp = !CRASHDUMP+$06
+!ram_crash_sp = !CRASHDUMP+$08
+!ram_crash_type = !CRASHDUMP+$0A
+!ram_crash_draw_value = !CRASHDUMP+$0C
+!ram_crash_stack_size = !CRASHDUMP+$0E
+
+; Reserve 48 bytes for stack
+!ram_crash_stack = !CRASHDUMP+$10
+
+!ram_crash_page = !CRASHDUMP+$40
+!ram_crash_palette = !CRASHDUMP+$42
+!ram_crash_cursor = !CRASHDUMP+$44
+!ram_crash_stack_bytes_written = !CRASHDUMP+$46
+!ram_crash_stack_bytes_to_be_written = !CRASHDUMP+$48
+!ram_crash_stack_line_loop_counter = !CRASHDUMP+$4A
+!ram_crash_text = !CRASHDUMP+$4C
+!ram_crash_text_bank = !CRASHDUMP+$4E
+!ram_crash_text_palette = !CRASHDUMP+$50
+!ram_crash_mem_viewer = !CRASHDUMP+$52
+!ram_crash_mem_viewer_bank = !CRASHDUMP+$54
+
 pushpc
 
 ; Hijack generic crash handler
@@ -23,24 +47,29 @@ org $00FFFE
 
 org $80E000
 print pc, " crash handler bank80 start"
-CrashHandler:
+
 ; This routine (or a bridge to it) must live in bank $80
+CrashHandler:
 {
     PHP : PHB
     PHK : PLB
     %ai16()
 
     ; store CPU registers
-    STA !CRASHDUMP+$00        ; A
-    TXA : STA !CRASHDUMP+$02  ; X
-    TYA : STA !CRASHDUMP+$04  ; Y
-    PLA : STA !CRASHDUMP+$06  ; DB + P
-    TSC : STA !CRASHDUMP+$08  ; SP
+    STA !ram_crash_a
+    TXA : STA !ram_crash_x
+    TYA : STA !ram_crash_y
+    PLA : STA !ram_crash_dbp
+    TSC : STA !ram_crash_sp
 
-    ; loop: stack -> SRAM
+    ; prep for .loopStack
     INC : TAY : LDX #$0000
+
+    ; store crash type, 0 = handler
+    LDA #$0000 : STA !ram_crash_type
+
   .loopStack
-    LDA $0000,Y : STA !CRASHDUMP+$10,X
+    LDA $0000,Y : STA !ram_crash_stack,X
     INX #2 : CPX #$0030 : BPL .maxStack ; max 30h bytes
     INY #2 : CPY #$2000 : BMI .loopStack
     BRA .stackSize
@@ -54,10 +83,9 @@ CrashHandler:
     ; check if we copied an extra byte
     CPY #$2000 : BEQ +
     DEX ; don't count it
-+   TXA : STA !CRASHDUMP+$0A
++   TXA : STA !ram_crash_stack_size
 
     ; launch CrashViewer to display dump
-    LDA #$0004 : STA $AB
     JSL CrashViewer
 
   .crash
@@ -73,17 +101,17 @@ BRKHandler:
     %ai16()
 
     ; store CPU registers
-    STA !CRASHDUMP+$00        ; A
-    TXA : STA !CRASHDUMP+$02  ; X
-    TYA : STA !CRASHDUMP+$04  ; Y
-    PLA : STA !CRASHDUMP+$06  ; DB + P
-    TSC : STA !CRASHDUMP+$08  ; SP
+    STA !ram_crash_a
+    TXA : STA !ram_crash_x
+    TYA : STA !ram_crash_y
+    PLA : STA !ram_crash_dbp
+    TSC : STA !ram_crash_sp
 
     ; prep for .loopStack
     INC : TAY : LDX #$0000
 
     ; store crash type, 1 = BRK
-    LDA #$0001 : STA !CRASHDUMP+$0C
+    LDA #$0001 : STA !ram_crash_type
 
     JMP CrashHandler_loopStack
 }
@@ -108,10 +136,10 @@ CrashViewer:
     LDA #$0F : STA $2100 ; Force blank off, max brightness
     %a16()
 
+    LDA #$0000 : STA !ram_crash_page : STA !ram_crash_palette : STA !ram_crash_cursor
     STZ !IH_CONTROLLER_PRI_NEW : STZ !IH_CONTROLLER_PRI
-    STZ $C9 : STZ $CB
-    LDA #$0A44 : STA $04 : STA $08
-    LDA #$007E : STA $06 : STA $0A
+    LDA #$0A44 : STA !ram_crash_mem_viewer
+    LDA #$007E : STA !ram_crash_mem_viewer_bank
 
     JSL initialize_ppu_long   ; Initialise PPU for message boxes
 
@@ -125,12 +153,12 @@ CrashViewer:
 CrashLoop:
 {
     %ai16()
- 	; Clear the screen
+    ; Clear the screen
     LDA #$000E : LDX #$07FE
--   STA !ram_tilemap_buffer,X : DEX #2 : BPL -
+-   STA !CRASHDUMP_TILEMAP_BUFFER,X : DEX #2 : BPL -
 
     ; Determine which page to draw
-    LDA $C9 : ASL : TAX
+    LDA !ram_crash_page : ASL : TAX
     JSR (CrashPageTable,X)
 
     ; Transfer to VRAM
@@ -153,7 +181,6 @@ if !FEATURE_SD2SNES
     ; check for load state shortcut
 +   LDA !IH_CONTROLLER_PRI : CMP !sram_ctrl_load_state : BNE +
     AND !IH_CONTROLLER_PRI_NEW : BEQ +
-
     ; prepare to jump to load_state
     %a8()
     LDA #gamemode_start>>16 : PHA : PLB
@@ -169,27 +196,27 @@ endif
     JMP CrashLoop
 
   .previous
-    LDA $C9 : BNE +
-    LDA #$0003 : STA $C9 ; total pages
-+   DEC $C9
+    LDA !ram_crash_page : BNE +
+    LDA #$0003
++   DEC : STA !ram_crash_page
     JMP CrashLoop
 
   .next
-    LDA $C9 : CMP #$0002 : BMI +
-    LDA #$FFFF : STA $C9
-+   INC $C9
+    LDA !ram_crash_page : CMP #$0002 : BMI +
+    LDA #$FFFF
++   INC : STA !ram_crash_page
     JMP CrashLoop
 
   .decPalette
-    LDA $CB : BNE +
-    LDA #$0004 : STA $CB ; total palettes
-+   DEC $CB
+    LDA !ram_crash_palette : BNE +
+    LDA #$0004
++   DEC : STA !ram_crash_palette
     BRA .updateCGRAM
 
   .incPalette
-    LDA $CB : CMP #$0003 : BMI +
-    LDA #$FFFF : STA $CB
-+   INC $CB
+    LDA !ram_crash_palette : CMP #$0003 : BMI +
+    LDA #$FFFF
++   INC : STA !ram_crash_palette
 
   .updateCGRAM
     JSL crash_cgram_transfer
@@ -203,125 +230,122 @@ CrashPageTable:
 
 CrashDump:
 {
-    ; $00[0x4] = Table Address (Long)
-    ; $C1[0x2] = Value to be Drawn
-    ; $C3[0x2] = Line Loop Counter
-    ; $C5[0x2] = Stack Bytes Written
-    ; $C7[0x2] = Stack Bytes to be Written
     %ai16()
 
     ; -- Draw header --
-    LDA.l #CrashTextHeader : STA $00
-    LDA.l #CrashTextHeader>>16 : STA $02
+    LDA.l #CrashTextHeader : STA !ram_crash_text
+    LDA.l #CrashTextHeader>>16 : STA !ram_crash_text_bank
     LDX #$0086 : JSR crash_draw_text
 
     ; -- Draw footer message --
-    LDA.l #CrashTextFooter1 : STA $00
-    LDA.l #CrashTextFooter1>>16 : STA $02
+    LDA.l #CrashTextFooter1 : STA !ram_crash_text
+    LDA.l #CrashTextFooter1>>16 : STA !ram_crash_text_bank
     LDX #$0646 : JSR crash_draw_text
 
-    LDA.l #CrashTextFooter2 : STA $00
-    LDA.l #CrashTextFooter2>>16 : STA $02
+    LDA.l #CrashTextFooter2 : STA !ram_crash_text
+    LDA.l #CrashTextFooter2>>16 : STA !ram_crash_text_bank
     LDX #$0686 : JSR crash_draw_text
 
     ; -- Draw register labels --
-    LDA #$2800 : STA !ram_tilemap_buffer+$14A  ; A
-    LDA #$2817 : STA !ram_tilemap_buffer+$154  ; X
-    LDA #$2818 : STA !ram_tilemap_buffer+$15E  ; Y
-    LDA #$2803 : STA !ram_tilemap_buffer+$166  ; D
-    LDA #$2801 : STA !ram_tilemap_buffer+$168  ; B
-    LDA #$284F : STA !ram_tilemap_buffer+$16A  ; +
-    LDA #$280F : STA !ram_tilemap_buffer+$16C  ; P
-    LDA #$2812 : STA !ram_tilemap_buffer+$172  ; S
-    LDA #$280F : STA !ram_tilemap_buffer+$174  ; P
+    LDA #$2800 : STA !CRASHDUMP_TILEMAP_BUFFER+$14A  ; A
+    LDA #$2817 : STA !CRASHDUMP_TILEMAP_BUFFER+$154  ; X
+    LDA #$2818 : STA !CRASHDUMP_TILEMAP_BUFFER+$15E  ; Y
+    LDA #$2803 : STA !CRASHDUMP_TILEMAP_BUFFER+$166  ; D
+    LDA #$2801 : STA !CRASHDUMP_TILEMAP_BUFFER+$168  ; B
+    LDA #$284F : STA !CRASHDUMP_TILEMAP_BUFFER+$16A  ; +
+    LDA #$280F : STA !CRASHDUMP_TILEMAP_BUFFER+$16C  ; P
+    LDA #$2812 : STA !CRASHDUMP_TILEMAP_BUFFER+$172  ; S
+    LDA #$280F : STA !CRASHDUMP_TILEMAP_BUFFER+$174  ; P
 
     ; -- Draw stack label --
-    LDA.l #CrashTextStack1 : STA $00
-    LDA.l #CrashTextStack1>>16 : STA $02
+    LDA.l #CrashTextStack1 : STA !ram_crash_text
+    LDA.l #CrashTextStack1>>16 : STA !ram_crash_text_bank
     LDX #$024E : JSR crash_draw_text
 
     ; -- Draw stack text --
-    LDA.l #CrashTextStack2 : STA $00
-    LDA.l #CrashTextStack2>>16 : STA $02
+    LDA.l #CrashTextStack2 : STA !ram_crash_text
+    LDA.l #CrashTextStack2>>16 : STA !ram_crash_text_bank
     LDX #$028C : JSR crash_draw_text
 
     ; -- Draw register values --
-    LDA !CRASHDUMP : STA $C1 : LDX #$0188
+    LDA !ram_crash_a : STA !ram_crash_draw_value : LDX #$0188
     JSR crash_draw4  ; A
-    LDA !CRASHDUMP+$02 : STA $C1 : LDX #$0192
+    LDA !ram_crash_x : STA !ram_crash_draw_value : LDX #$0192
     JSR crash_draw4  ; X
-    LDA !CRASHDUMP+$04 : STA $C1 : LDX #$019C
+    LDA !ram_crash_y : STA !ram_crash_draw_value : LDX #$019C
     JSR crash_draw4  ; Y
-    LDA !CRASHDUMP+$06 : XBA : STA $C1 : LDX #$01A6
+    LDA !ram_crash_dbp : XBA : STA !ram_crash_draw_value : LDX #$01A6
     JSR crash_draw4  ; DB+P
-    LDA !CRASHDUMP+$08 : STA $C1 : LDX #$01B0
+    LDA !ram_crash_sp : STA !ram_crash_draw_value : LDX #$01B0
     JSR crash_draw4  ; SP
 
     ; -- Draw starting position of stack dump
-    INC $C1 : LDX #$02A8
+    LDA !ram_crash_draw_value : INC : STA !ram_crash_draw_value : LDX #$02A8
     JSR crash_draw4
 
     ; -- Draw stack bytes written --
-    LDA !CRASHDUMP+$0A
-    STA $C1 : STA $C5 : STA $C7
+    LDA !ram_crash_stack_size : STA !ram_crash_draw_value
+    STA !ram_crash_stack_bytes_to_be_written
     LDX #$025E
     JSR crash_draw4
 
     ; -- Detect and Draw BRK --
-    LDA !CRASHDUMP+$0C : BEQ +
+    LDA !ram_crash_type : BEQ +
     %a8()
-    LDA !CRASHDUMP+$10 : STA $C1
+    LDA !ram_crash_stack : STA !ram_crash_draw_value
     LDX #$031C : JSR crash_draw2 ; P
 
-    LDA !CRASHDUMP+$13 : STA $C1
+    LDA !ram_crash_stack+$03 : STA !ram_crash_draw_value
     LDX #$0324 : JSR crash_draw2 ; bank
 
     %a16()
-    LDA !CRASHDUMP+$11 : DEC #2 : STA $C1
+    LDA !ram_crash_stack+$01 : DEC #2 : STA !ram_crash_draw_value
     LDX #$0328 : JSR crash_draw4 ; addr
 
-    LDA #$2C51 : STA !ram_tilemap_buffer+$310 ; B
-    LDA #$2C61 : STA !ram_tilemap_buffer+$312 ; R
-    LDA #$2C5A : STA !ram_tilemap_buffer+$314 ; K
-    LDA #$2C4A : STA !ram_tilemap_buffer+$316 ; :
-    LDA #$2C4E : STA !ram_tilemap_buffer+$322 ; $
+    LDA #$2C51 : STA !CRASHDUMP_TILEMAP_BUFFER+$310 ; B
+    LDA #$2C61 : STA !CRASHDUMP_TILEMAP_BUFFER+$312 ; R
+    LDA #$2C5A : STA !CRASHDUMP_TILEMAP_BUFFER+$314 ; K
+    LDA #$2C4A : STA !CRASHDUMP_TILEMAP_BUFFER+$316 ; :
+    LDA #$2C4E : STA !CRASHDUMP_TILEMAP_BUFFER+$322 ; $
 
     ; -- Draw Stack Values --
     ; start by setting up tilemap position
 +   %ai16()
     LDX #$0388
-    STZ $C3
+    LDA #$0000 : STA !ram_crash_stack_line_loop_counter
 
     ; determine starting offset
--   LDA $C5 : AND #$0007 : BEQ +
+    LDA !ram_crash_stack_bytes_to_be_written
+-   PHA : AND #$0007 : BEQ +
     TXA : CLC : ADC #$0006 : TAX
-    INC $C5 : INC $C3 : BRA -
+    LDA !ram_crash_stack_line_loop_counter : INC : STA !ram_crash_stack_line_loop_counter
+    PLA : INC : BRA -
 
-+   %a8()
-    LDA #$00 : STA $C5
++   PLA : %a8()
+    LDA #$00 : STA !ram_crash_stack_bytes_written
 
   .drawStack
     ; draw a byte
     PHX : %i8()
-    LDA $C5 : TAX
-    LDA !CRASHDUMP+$10,X : STA $C1
+    LDA !ram_crash_stack_bytes_written : TAX
+    LDA !ram_crash_stack,X : STA !ram_crash_draw_value
     %i16() : PLX
     JSR crash_draw2
 
     ; inc tilemap position
-    INX #6 : INC $C3
-    LDA $C3 : AND #$08 : BEQ +
+    INX #6 : LDA !ram_crash_stack_line_loop_counter : INC
+    STA !ram_crash_stack_line_loop_counter : AND #$08 : BEQ +
 
     ; start a new line
-    LDA #$00 : STA $C3
+    LDA #$00 : STA !ram_crash_stack_line_loop_counter
     %a16()
     TXA : CLC : ADC #$0050 : TAX
     CPX #$05B4 : BPL .done
     %a8()
 
     ; inc bytes drawn
-+   LDA $C5 : INC : STA $C5
-    CMP $C7 : BNE .drawStack
++   LDA !ram_crash_stack_bytes_written : INC : STA !ram_crash_stack_bytes_written
+    CMP !ram_crash_stack_bytes_to_be_written : BNE .drawStack
 
   .done
     RTS
@@ -329,13 +353,6 @@ CrashDump:
 
 CrashMemViewer:
 {
-    ; $00[0x4] = Table Address (Long)
-    ; $04[0x3] = Memory Viewer Address (Long)
-    ; $08[0x4] = Memory Viewer Address (Long)
-    ; $C1[0x2] = Value to be Drawn
-    ; $C3[0x2] = Line Loop Counter
-    ; $C5[0x2] = Stack Bytes Written
-    ; $CD[0x2] = cursor position
     ; -- Handle Dpad Inputs --
     %ai16()
     LDA !IH_CONTROLLER_PRI_NEW : TAX
@@ -346,153 +363,207 @@ CrashMemViewer:
     JMP .handleSelectedLine
 
   .pressedUp
-    LDA $CD : BNE +
-    LDA #$0003 : STA $CD ; total cursor positions
-+   DEC $CD
+    LDA !ram_crash_cursor : BNE +
+    LDA #$0003
++   DEC : STA !ram_crash_cursor
     JMP .handleSelectedLine
 
   .pressedDown
-    LDA $CD : CMP #$0002 : BMI + ; max cursor index
-    LDA #$FFFF : STA $CD
-+   INC $CD
+    LDA !ram_crash_cursor : CMP #$0002 : BMI +
+    LDA #$FFFF
++   INC : STA !ram_crash_cursor
     JMP .handleSelectedLine
 
-  .pressedRight
-    LDA $CD : BEQ .incBank
-    DEC : BEQ .incHigh
-    LDA !IH_CONTROLLER_PRI : AND #$4040 : BNE .incLowFast
-    INC $04 : BRA .handleSelectedLine
-  .incLowFast
-    INC $04 : INC $04 : INC $04 : INC $04
-    BRA .handleSelectedLine
-  .incHigh
-    LDA !IH_CONTROLLER_PRI : AND #$4040 : BNE .incHighFast
-    INC $05 : BRA .handleSelectedLine
-  .incHighFast
-    INC $05 : INC $05 : INC $05 : INC $05
-    BRA .handleSelectedLine
-  .incBank
-    LDA !IH_CONTROLLER_PRI : AND #$4040 : BNE .incBankFast
-    INC $06 : BRA .handleSelectedLine
-  .incBankFast
-    INC $06 : INC $06 : INC $06 : INC $06
-    BRA .handleSelectedLine
-
+  .decLowFast
+    LDA !ram_crash_mem_viewer : DEC #4 : STA !ram_crash_mem_viewer
+    JMP .handleSelectedLine
   .pressedLeft
-    LDA $CD : BEQ .decBank
+    LDA !ram_crash_cursor : BEQ .decBank
     DEC : BEQ .decHigh
     LDA !IH_CONTROLLER_PRI : AND #$4040 : BNE .decLowFast
-    DEC $04 : BRA .handleSelectedLine
-  .decLowFast
-    DEC $04 : DEC $04 : DEC $04 : DEC $04
-    BRA .handleSelectedLine
-  .decHigh
-    LDA !IH_CONTROLLER_PRI : AND #$4040 : BNE .decHighFast
-    DEC $05 : BRA .handleSelectedLine
-  .decHighFast
-    DEC $05 : DEC $05 : DEC $05 : DEC $05
-    BRA .handleSelectedLine
+    LDA !ram_crash_mem_viewer : DEC : STA !ram_crash_mem_viewer
+    JMP .handleSelectedLine
+
+  .incLowFast
+    LDA !ram_crash_mem_viewer : INC #4 : STA !ram_crash_mem_viewer
+    JMP .handleSelectedLine
+  .pressedRight
+    LDA !ram_crash_cursor : BEQ .incBank
+    DEC : BEQ .incHigh
+    LDA !IH_CONTROLLER_PRI : AND #$4040 : BNE .incLowFast
+    LDA !ram_crash_mem_viewer : INC : STA !ram_crash_mem_viewer
+    JMP .handleSelectedLine
+
   .decBank
     LDA !IH_CONTROLLER_PRI : AND #$4040 : BNE .decBankFast
-    DEC $06 : BRA .handleSelectedLine
+    LDA !ram_crash_mem_viewer_bank : DEC : STA !ram_crash_mem_viewer_bank
+    BRA .handleSelectedLine
   .decBankFast
-    DEC $06 : DEC $06 : DEC $06 : DEC $06
+    LDA !ram_crash_mem_viewer_bank : DEC #4 : STA !ram_crash_mem_viewer_bank
+    BRA .handleSelectedLine
+
+  .decHigh
+    LDA !IH_CONTROLLER_PRI : AND #$4040 : BNE .decHighFast
+    LDA !ram_crash_mem_viewer : XBA : DEC : XBA : STA !ram_crash_mem_viewer
+    BRA .handleSelectedLine
+  .decHighFast
+    LDA !ram_crash_mem_viewer : XBA : DEC #4 : XBA : STA !ram_crash_mem_viewer
+    BRA .handleSelectedLine
+
+  .incBank
+    LDA !IH_CONTROLLER_PRI : AND #$4040 : BNE .incBankFast
+    LDA !ram_crash_mem_viewer_bank : INC : STA !ram_crash_mem_viewer_bank
+    BRA .handleSelectedLine
+  .incBankFast
+    LDA !ram_crash_mem_viewer_bank : INC #4 : STA !ram_crash_mem_viewer_bank
+    BRA .handleSelectedLine
+
+  .incHigh
+    LDA !IH_CONTROLLER_PRI : AND #$4040 : BNE .incHighFast
+    LDA !ram_crash_mem_viewer : XBA : INC : XBA : STA !ram_crash_mem_viewer
+    BRA .handleSelectedLine
+  .incHighFast
+    LDA !ram_crash_mem_viewer : XBA : INC #4 : XBA : STA !ram_crash_mem_viewer
 
     ; -- Draw Memory Viewer --
   .handleSelectedLine
     %a16()
-    LDA $CD : ASL : TAX
+    LDA !ram_crash_cursor : ASL : TAX
     LDA.l CDSelectedLineOffset,X : TAX
-    LDA #$2C80 : STA !ram_tilemap_buffer,X
-    LDA #$2C81 : STA !ram_tilemap_buffer+$32,X
+    LDA #$2C80 : STA !CRASHDUMP_TILEMAP_BUFFER,X
+    LDA #$2C81 : STA !CRASHDUMP_TILEMAP_BUFFER+$32,X
 
     ; draw header text
-    LDA.l #CrashTextHeader2 : STA $00
-    LDA.l #CrashTextHeader2>>16 : STA $02
+    LDA.l #CrashTextHeader2 : STA !ram_crash_text
+    LDA.l #CrashTextHeader2>>16 : STA !ram_crash_text_bank
     LDX #$008C : JSR crash_draw_text
 
     ; draw footer text
-    LDA.l #CrashTextFooter1 : STA $00
-    LDA.l #CrashTextFooter1>>16 : STA $02
+    LDA.l #CrashTextFooter1 : STA !ram_crash_text
+    LDA.l #CrashTextFooter1>>16 : STA !ram_crash_text_bank
     LDX #$0646 : JSR crash_draw_text
 
-    LDA.l #CrashTextFooter2 : STA $00
-    LDA.l #CrashTextFooter2>>16 : STA $02
+    LDA.l #CrashTextFooter2 : STA !ram_crash_text
+    LDA.l #CrashTextFooter2>>16 : STA !ram_crash_text_bank
     LDX #$0686 : JSR crash_draw_text
 
     ; draw address text
-    LDA.l #CrashTextMemAddress : STA $00
-    LDA.l #CrashTextMemAddress>>16 : STA $02
+    LDA.l #CrashTextMemAddress : STA !ram_crash_text
+    LDA.l #CrashTextMemAddress>>16 : STA !ram_crash_text_bank
     LDX #$014E : JSR crash_draw_text
 
     ; draw value text
-    LDA.l #CrashTextMemValue : STA $00
-    LDA.l #CrashTextMemValue>>16 : STA $02
+    LDA.l #CrashTextMemValue : STA !ram_crash_text
+    LDA.l #CrashTextMemValue>>16 : STA !ram_crash_text_bank
     LDX #$01D2 : JSR crash_draw_text
 
     ; draw select bank
-    LDA.l #CrashTextMemSelectBank : STA $00
-    LDA.l #CrashTextMemSelectBank>>16 : STA $02
+    LDA.l #CrashTextMemSelectBank : STA !ram_crash_text
+    LDA.l #CrashTextMemSelectBank>>16 : STA !ram_crash_text_bank
     LDX #$0288 : JSR crash_draw_text
 
     ; draw select high
-    LDA.l #CrashTextMemSelectHigh : STA $00
-    LDA.l #CrashTextMemSelectHigh>>16 : STA $02
+    LDA.l #CrashTextMemSelectHigh : STA !ram_crash_text
+    LDA.l #CrashTextMemSelectHigh>>16 : STA !ram_crash_text_bank
     LDX #$0308 : JSR crash_draw_text
 
     ; draw select low
-    LDA.l #CrashTextMemSelectLow : STA $00
-    LDA.l #CrashTextMemSelectLow>>16 : STA $02
+    LDA.l #CrashTextMemSelectLow : STA !ram_crash_text
+    LDA.l #CrashTextMemSelectLow>>16 : STA !ram_crash_text_bank
     LDX #$0388 : JSR crash_draw_text
 
     ; draw the address
     %a8()
-    LDA $06 : STA $C1
-    LDX #$0164 : JSR crash_draw2 ; 
+    LDA !ram_crash_mem_viewer_bank : STA !ram_crash_draw_value
+    LDX #$0164 : JSR crash_draw2
     LDX #$02B4 : JSR crash_draw2
     %a16()
-    LDA $04 : STA $C1
+    LDA !ram_crash_mem_viewer : STA !ram_crash_draw_value
     LDX #$0168 : JSR crash_draw4
     %a8()
     LDX #$03B4 : JSR crash_draw2
-    LDA $C2 : STA $C1
-    LDX #$0334 : JSR crash_draw2
     %a16()
+    LDA !ram_crash_mem_viewer : XBA : STA !ram_crash_draw_value
+    %a8()
+    LDX #$0334 : JSR crash_draw2
 
-    ; draw the current value
-    LDA [$04] : STA $C1
+    ; draw the current value and nearby bytes
+    LDA !ram_crash_mem_viewer : BMI .drawUpperHalf
+    %a16()
+    LDA $C1 : PHA : LDA $C3 : PHA
+    LDA !ram_crash_mem_viewer_bank : STA $C3
+    LDA !ram_crash_mem_viewer : STA $C1
+    LDA [$C1] : STA !ram_crash_draw_value
     LDX #$01E8 : JSR crash_draw4
 
-    ; -- Draw 16 Nearby Bytes
-    STZ $C3 : STZ $C5
-    LDA $04 : AND #$FFF0 : STA $08
-    %a16()
-    LDA $06 : STA $0A
     LDX #$048A
     %a8()
+    LDA #$00 : STA !ram_crash_stack_line_loop_counter : STA !ram_crash_stack_bytes_written
+    LDA $C1 : AND #$F0 : STA $C1
 
-  .drawMem
+  .drawLowerHalfNearby
     ; draw a byte
-    LDA [$08] : STA $C1
-    INC $08
+    LDA [$C1] : STA !ram_crash_draw_value
     JSR crash_draw2
+    INC $C1
 
     ; inc tilemap position
-    INX #6 : INC $C3
-    LDA $C3 : AND #$08 : BEQ +
+    INX #6 : LDA !ram_crash_stack_line_loop_counter : INC
+    STA !ram_crash_stack_line_loop_counter : AND #$08 : BEQ +
 
     ; start a new line
+    LDA #$00 : STA !ram_crash_stack_line_loop_counter
     %a16()
-    STZ $C3
     TXA : CLC : ADC #$0050 : TAX
-    CPX #$05BA : BPL .done
+    CPX #$05BA : BPL .doneLowerHalf
     %a8()
 
     ; inc bytes drawn
-+   LDA $C5 : INC : STA $C5
-    CMP #$10 : BNE .drawMem
++   LDA !ram_crash_stack_bytes_written : INC : STA !ram_crash_stack_bytes_written
+    CMP #$10 : BNE .drawLowerHalfNearby
+    %a16()
 
-  .done
+  .doneLowerHalf
+    PLA : STA $C3 : PLA : STA $C1
+    RTS
+
+  .drawUpperHalf
+    %a16()
+    LDA $41 : PHA : LDA $43 : PHA
+    LDA !ram_crash_mem_viewer_bank : STA $43
+    LDA !ram_crash_mem_viewer : STA $41
+    LDA [$41] : STA !ram_crash_draw_value
+    LDX #$01E8 : JSR crash_draw4
+
+    LDX #$048A
+    %a8()
+    LDA #$00 : STA !ram_crash_stack_line_loop_counter : STA !ram_crash_stack_bytes_written
+    LDA $41 : AND #$F0 : STA $41
+
+  .drawUpperHalfNearby
+    ; draw a byte
+    LDA [$41] : STA !ram_crash_draw_value
+    JSR crash_draw2
+    INC $41
+
+    ; inc tilemap position
+    INX #6 : LDA !ram_crash_stack_line_loop_counter : INC
+    STA !ram_crash_stack_line_loop_counter : AND #$08 : BEQ +
+
+    ; start a new line
+    LDA #$00 : STA !ram_crash_stack_line_loop_counter
+    %a16()
+    TXA : CLC : ADC #$0050 : TAX
+    CPX #$05BA : BPL .doneUpperHalf
+    %a8()
+
+    ; inc bytes drawn
++   LDA !ram_crash_stack_bytes_written : INC : STA !ram_crash_stack_bytes_written
+    CMP #$10 : BNE .drawUpperHalfNearby
+    %a16()
+
+  .doneUpperHalf
+    PLA : STA $C3 : PLA : STA $C1
     RTS
 
 CDSelectedLineOffset:
@@ -501,68 +572,67 @@ CDSelectedLineOffset:
 
 CrashInfo:
 {
-    ; $00[0x4] = Table Address (Long)
     %ai16()
 
     ; draw header text
-    LDA.l #CrashTextHeader3 : STA $00
-    LDA.l #CrashTextHeader3>>16 : STA $02
+    LDA.l #CrashTextHeader3 : STA !ram_crash_text
+    LDA.l #CrashTextHeader3>>16 : STA !ram_crash_text_bank
     LDX #$0086 : JSR crash_draw_text
 
     ; draw a bunch of text
-    LDA.l #CrashTextInfo1 : STA $00
-    LDA.l #CrashTextInfo1>>16 : STA $02
+    LDA.l #CrashTextInfo1 : STA !ram_crash_text
+    LDA.l #CrashTextInfo1>>16 : STA !ram_crash_text_bank
     LDX #$0106 : JSR crash_draw_text
 
-    LDA.l #CrashTextInfo2 : STA $00
-    LDA.l #CrashTextInfo2>>16 : STA $02
+    LDA.l #CrashTextInfo2 : STA !ram_crash_text
+    LDA.l #CrashTextInfo2>>16 : STA !ram_crash_text_bank
     LDX #$01C6 : JSR crash_draw_text
 
-    LDA.l #CrashTextInfo3 : STA $00
-    LDA.l #CrashTextInfo3>>16 : STA $02
+    LDA.l #CrashTextInfo3 : STA !ram_crash_text
+    LDA.l #CrashTextInfo3>>16 : STA !ram_crash_text_bank
     LDX #$0206 : JSR crash_draw_text
 
-    LDA.l #CrashTextInfo4 : STA $00
-    LDA.l #CrashTextInfo4>>16 : STA $02
+    LDA.l #CrashTextInfo4 : STA !ram_crash_text
+    LDA.l #CrashTextInfo4>>16 : STA !ram_crash_text_bank
     LDX #$024A : JSR crash_draw_text
 
-    LDA.l #CrashTextInfo5 : STA $00
-    LDA.l #CrashTextInfo5>>16 : STA $02
+    LDA.l #CrashTextInfo5 : STA !ram_crash_text
+    LDA.l #CrashTextInfo5>>16 : STA !ram_crash_text_bank
     LDX #$02C6 : JSR crash_draw_text
 
-    LDA.l #CrashTextInfo6 : STA $00
-    LDA.l #CrashTextInfo6>>16 : STA $02
+    LDA.l #CrashTextInfo6 : STA !ram_crash_text
+    LDA.l #CrashTextInfo6>>16 : STA !ram_crash_text_bank
     LDX #$030A : JSR crash_draw_text
 
-    LDA.l #CrashTextInfo7 : STA $00
-    LDA.l #CrashTextInfo7>>16 : STA $02
+    LDA.l #CrashTextInfo7 : STA !ram_crash_text
+    LDA.l #CrashTextInfo7>>16 : STA !ram_crash_text_bank
     LDX #$034E : JSR crash_draw_text
 
-    LDA.l #CrashTextInfo8 : STA $00
-    LDA.l #CrashTextInfo8>>16 : STA $02
+    LDA.l #CrashTextInfo8 : STA !ram_crash_text
+    LDA.l #CrashTextInfo8>>16 : STA !ram_crash_text_bank
     LDX #$040A : JSR crash_draw_text
 
-    LDA.l #CrashTextInfo9 : STA $00
-    LDA.l #CrashTextInfo9>>16 : STA $02
+    LDA.l #CrashTextInfo9 : STA !ram_crash_text
+    LDA.l #CrashTextInfo9>>16 : STA !ram_crash_text_bank
     LDX #$048A : JSR crash_draw_text
 
 if !FEATURE_SD2SNES
-    LDA.l #CrashTextInfo10 : STA $00
-    LDA.l #CrashTextInfo10>>16 : STA $02
+    LDA.l #CrashTextInfo10 : STA !ram_crash_text
+    LDA.l #CrashTextInfo10>>16 : STA !ram_crash_text_bank
     LDX #$0546 : JSR crash_draw_text
 endif
 
-    LDA.l #CrashTextInfo11 : STA $00
-    LDA.l #CrashTextInfo11>>16 : STA $02
+    LDA.l #CrashTextInfo11 : STA !ram_crash_text
+    LDA.l #CrashTextInfo11>>16 : STA !ram_crash_text_bank
     LDX #$0586 : JSR crash_draw_text
 
     ; draw footer text
-    LDA.l #CrashTextFooter1 : STA $00
-    LDA.l #CrashTextFooter1>>16 : STA $02
+    LDA.l #CrashTextFooter1 : STA !ram_crash_text
+    LDA.l #CrashTextFooter1>>16 : STA !ram_crash_text_bank
     LDX #$0646 : JSR crash_draw_text
 
-    LDA.l #CrashTextFooter2 : STA $00
-    LDA.l #CrashTextFooter2>>16 : STA $02
+    LDA.l #CrashTextFooter2 : STA !ram_crash_text
+    LDA.l #CrashTextFooter2>>16 : STA !ram_crash_text_bank
     LDX #$0686 : JSR crash_draw_text
 
     RTS
@@ -570,23 +640,27 @@ endif
 
 crash_draw_text:
 {
-    ; X = pointer to tilemap area (STA !ram_tilemap_buffer,X)
-    ; $00[0x3] = address
+    ; X = pointer to tilemap area (STA !CRASHDUMP_TILEMAP_BUFFER,X)
+    LDA $C5 : PHA : LDA $C7 : PHA
+    LDA !ram_crash_text_bank : STA $C7
+    LDA !ram_crash_text : STA $C5
     %a8()
     LDY #$0000
+
     ; terminator
-    LDA [$00],Y : INY : CMP #$FF : BEQ .end
+    LDA [$C5],Y : INY : CMP #$FF : BEQ .end
     ; palette
-    STA $0E
+    STA !ram_crash_text_palette
 
   .loop
-    LDA [$00],Y : CMP #$FF : BEQ .end           ; terminator
-    STA !ram_tilemap_buffer,X : INX             ; tile
-    LDA $0E : STA !ram_tilemap_buffer,X : INX   ; palette
+    LDA [$C5],Y : CMP #$FF : BEQ .end                 ; terminator
+    STA !CRASHDUMP_TILEMAP_BUFFER,X : INX             ; tile
+    LDA !ram_crash_text_palette : STA !CRASHDUMP_TILEMAP_BUFFER,X : INX   ; palette
     INY : BRA .loop
 
   .end
     %a16()
+    PLA : STA $C7 : PLA : STA $C5
     RTS
 }
 
@@ -594,17 +668,17 @@ crash_draw4:
 {
     PHP : %a16()
     ; (X000)
-    LDA $C1 : AND #$F000 : XBA : LSR #3 : TAY
-    LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer,X
+    LDA !ram_crash_draw_value : AND #$F000 : XBA : LSR #3 : TAY
+    LDA.w HexMenuGFXTable,Y : STA !CRASHDUMP_TILEMAP_BUFFER,X
     ; (0X00)
-    LDA $C1 : AND #$0F00 : XBA : ASL : TAY
-    LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer+2,X
+    LDA !ram_crash_draw_value : AND #$0F00 : XBA : ASL : TAY
+    LDA.w HexMenuGFXTable,Y : STA !CRASHDUMP_TILEMAP_BUFFER+2,X
     ; (00X0)
-    LDA $C1 : AND #$00F0 : LSR #3 : TAY
-    LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer+4,X
+    LDA !ram_crash_draw_value : AND #$00F0 : LSR #3 : TAY
+    LDA.w HexMenuGFXTable,Y : STA !CRASHDUMP_TILEMAP_BUFFER+4,X
     ; (000X)
-    LDA $C1 : AND #$000F : ASL : TAY
-    LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer+6,X
+    LDA !ram_crash_draw_value : AND #$000F : ASL : TAY
+    LDA.w HexMenuGFXTable,Y : STA !CRASHDUMP_TILEMAP_BUFFER+6,X
     PLP
     RTS
 }
@@ -613,11 +687,11 @@ crash_draw2:
 {
     PHP : %a16()
     ; (00X0)
-    LDA $C1 : AND #$00F0 : LSR #3 : TAY
-    LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer,X
+    LDA !ram_crash_draw_value : AND #$00F0 : LSR #3 : TAY
+    LDA.w HexMenuGFXTable,Y : STA !CRASHDUMP_TILEMAP_BUFFER,X
     ; (000X)
-    LDA $C1 : AND #$000F : ASL : TAY
-    LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer+2,X
+    LDA !ram_crash_draw_value : AND #$000F : ASL : TAY
+    LDA.w HexMenuGFXTable,Y : STA !CRASHDUMP_TILEMAP_BUFFER+2,X
     PLP
     RTS
 }
@@ -626,7 +700,7 @@ crash_cgram_transfer:
 {
     PHP : %a16()
 
-    LDA $CB : BEQ .white ; 0 index
+    LDA !ram_crash_palette : BEQ .white ; 0 index
     DEC : BEQ .grey      ; 1
     DEC : BEQ .green     ; 2
     DEC : BEQ .blue      ; 3
@@ -665,8 +739,8 @@ crash_tilemap_transfer:
     %a16()
     LDA #$5800 : STA $2116 ; VRAM address ($B000 in VRAM)
     LDA #$1801 : STA $4310 ; low = word, normal increment (DMA MODE), high = destination (VRAM write)
-    LDA.w #!ram_tilemap_buffer : STA $4312 ; source offset
-    LDA.w #!ram_tilemap_buffer>>16 : STA $4314 ; source bank
+    LDA.w #!CRASHDUMP_TILEMAP_BUFFER : STA $4312 ; source offset
+    LDA.w #!CRASHDUMP_TILEMAP_BUFFER>>16 : STA $4314 ; source bank
     LDA #$0800 : STA $4315 ; size
     STZ $4317 : STZ $4319
     %a8()
