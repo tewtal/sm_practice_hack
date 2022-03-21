@@ -31,6 +31,11 @@
 !ram_crash_mem_viewer = !CRASHDUMP+$52
 !ram_crash_mem_viewer_bank = !CRASHDUMP+$54
 
+!ram_crash_input = !CRASHDUMP+$60
+!ram_crash_input_new = !CRASHDUMP+$62
+!ram_crash_input_prev = !CRASHDUMP+$64
+!ram_crash_input_timer = !CRASHDUMP+$66
+
 pushpc
 
 ; Hijack generic crash handler
@@ -160,24 +165,27 @@ CrashViewer:
     PHK : PLB
     %a8()
     STZ $420C
-    LDA #$80 : STA $2100 ; Force blank on, zero brightness
-    LDA #$A1 : STA $4200 ; NMI, V-blank IRQ, and auto-joypad read on
-    LDA #$09 : STA $2105 ; BG3 priority on , BG Mode 1
-    LDA #$02 : STA $2130 ; Add subscreen to color math
-    LDA #$33 : STA $2131 ; Enable color math on backgrounds and OAM
-    LDA #$0F : STA $2100 ; Force blank off, max brightness
-    %a16()
+    LDA #$80 : STA $2100  ; Force blank on, zero brightness
+    LDA #$A1 : STA $4200  ; NMI, V-blank IRQ, and auto-joypad read on
+    LDA #$09 : STA $2105  ; BG3 priority on, BG Mode 1
+    LDA #$58 : STA $2109  ; BG3 address, 32x32 size
+    LDA #$04 : STA $212C  ; Enable BG3 on main screen
+    LDA #$04 : STA $212D  ; Enable BG3 on subscreen
+    LDA #$02 : STA $2130  ; Add subscreen to color math
+    LDA #$33 : STA $2131  ; Enable color math on backgrounds and OAM
+    LDA #$0F : STA $2100  ; Force blank off, max brightness
+    STZ $2111 : STZ $2111 ; BG3 X scroll, write twice
+    STZ $2112 : STZ $2112 ; BG3 Y scroll, write twice
 
-    LDA #$0000 : STA !ram_crash_page : STA !ram_crash_palette : STA !ram_crash_cursor
-    STZ !IH_CONTROLLER_PRI_NEW : STZ !IH_CONTROLLER_PRI
-    LDA #$0A44 : STA !ram_crash_mem_viewer
-    LDA #$007E : STA !ram_crash_mem_viewer_bank
-
-    JSL initialize_ppu_long   ; Initialise PPU for message boxes
-
+    %ai16()
+    JSL crash_next_frame
     JSL crash_cgram_transfer
     JSL cm_transfer_custom_tileset
-    JSL wait_for_lag_frame_long ; Wait for lag frame
+
+    LDA #$0000 : STA !ram_crash_page : STA !ram_crash_palette : STA !ram_crash_cursor
+    STA !ram_crash_input : STA !ram_crash_input_new : STA !ram_crash_input_prev
+    LDA #$0A44 : STA !ram_crash_mem_viewer
+    LDA #$007E : STA !ram_crash_mem_viewer_bank
 
     ; fall through to CrashLoop
 }
@@ -195,24 +203,23 @@ CrashLoop:
 
     ; Transfer to VRAM
     %ai16()
-    JSL wait_for_lag_frame_long ; Wait for lag frame
-    JSL $809459 ; Read controller input
+    JSL crash_next_frame
+    JSL crash_read_inputs
     JSL crash_tilemap_transfer
 
-    ; check for new inputs
-    LDA !IH_CONTROLLER_PRI_NEW : BEQ CrashLoop
-    TAX ; new inputs in X, to be copied back to A later
+    ; check for new inputs, copy to X
+    LDA !ram_crash_input_new : TAX : BEQ CrashLoop
 
     ; check for soft reset shortcut (Select+Start+L+R)
-    LDA !IH_CONTROLLER_PRI : AND #$3030 : CMP #$3030 : BNE +
-    AND !IH_CONTROLLER_PRI_NEW : BEQ +
+    LDA !ram_crash_input : AND #$3030 : CMP #$3030 : BNE +
+    AND !ram_crash_input_new : BEQ +
     STZ $05F5   ; Enable sounds
     JML $808462 ; Soft Reset
 
 if !FEATURE_SD2SNES
     ; check for load state shortcut
-+   LDA !IH_CONTROLLER_PRI : CMP !sram_ctrl_load_state : BNE +
-    AND !IH_CONTROLLER_PRI_NEW : BEQ +
++   LDA !ram_crash_input : CMP !sram_ctrl_load_state : BNE +
+    AND !ram_crash_input_new : BEQ +
     ; prepare to jump to load_state
     %a8()
     LDA #gamemode_start>>16 : PHA : PLB
@@ -407,8 +414,19 @@ CrashMemViewer:
 {
     ; -- Handle Dpad Inputs --
     %ai16()
-    LDA !IH_CONTROLLER_PRI_NEW : TAX
-    TXA : AND #$0800 : BNE .pressedUp
+    LDA !ram_crash_input_new : TAX : BNE .new_inputs
+    LDA !ram_crash_input : BNE +
+-   JMP .drawMemViewer
+
+    ; check if any input held more than 24 frames
++   LDA !ram_crash_input_timer : CMP #$0018 : BMI -
+    ; pass held input every other frame (slow down)
+    AND #$0001 : BEQ -
+    ; treat held (left/right) inputs as new
+    LDA !ram_crash_input : AND #$0300 : TAX
+
+  .new_inputs
+    AND #$0800 : BNE .pressedUp
     TXA : AND #$0400 : BNE .pressedDown
     TXA : AND #$0200 : BNE .pressedLeft
     TXA : AND #$0100 : BNE .pressedRight
@@ -432,7 +450,7 @@ CrashMemViewer:
   .pressedLeft
     LDA !ram_crash_cursor : BEQ .decBank
     DEC : BEQ .decHigh
-    LDA !IH_CONTROLLER_PRI : AND #$4040 : BNE .decLowFast
+    LDA !ram_crash_input : AND #$4040 : BNE .decLowFast
     LDA !ram_crash_mem_viewer : DEC : STA !ram_crash_mem_viewer
     JMP .drawMemViewer
 
@@ -442,12 +460,12 @@ CrashMemViewer:
   .pressedRight
     LDA !ram_crash_cursor : BEQ .incBank
     DEC : BEQ .incHigh
-    LDA !IH_CONTROLLER_PRI : AND #$4040 : BNE .incLowFast
+    LDA !ram_crash_input : AND #$4040 : BNE .incLowFast
     LDA !ram_crash_mem_viewer : INC : STA !ram_crash_mem_viewer
     JMP .drawMemViewer
 
   .decBank
-    LDA !IH_CONTROLLER_PRI : AND #$4040 : BNE .decBankFast
+    LDA !ram_crash_input : AND #$4040 : BNE .decBankFast
     LDA !ram_crash_mem_viewer_bank : DEC : STA !ram_crash_mem_viewer_bank
     BRA .drawMemViewer
   .decBankFast
@@ -455,7 +473,7 @@ CrashMemViewer:
     BRA .drawMemViewer
 
   .decHigh
-    LDA !IH_CONTROLLER_PRI : AND #$4040 : BNE .decHighFast
+    LDA !ram_crash_input : AND #$4040 : BNE .decHighFast
     LDA !ram_crash_mem_viewer : XBA : DEC : XBA : STA !ram_crash_mem_viewer
     BRA .drawMemViewer
   .decHighFast
@@ -463,7 +481,7 @@ CrashMemViewer:
     BRA .drawMemViewer
 
   .incBank
-    LDA !IH_CONTROLLER_PRI : AND #$4040 : BNE .incBankFast
+    LDA !ram_crash_input : AND #$4040 : BNE .incBankFast
     LDA !ram_crash_mem_viewer_bank : INC : STA !ram_crash_mem_viewer_bank
     BRA .drawMemViewer
   .incBankFast
@@ -471,7 +489,7 @@ CrashMemViewer:
     BRA .drawMemViewer
 
   .incHigh
-    LDA !IH_CONTROLLER_PRI : AND #$4040 : BNE .incHighFast
+    LDA !ram_crash_input : AND #$4040 : BNE .incHighFast
     LDA !ram_crash_mem_viewer : XBA : INC : XBA : STA !ram_crash_mem_viewer
     BRA .drawMemViewer
   .incHighFast
@@ -775,6 +793,9 @@ crash_cgram_transfer:
     LDA $7EC012 : STA $7EC01A
     LDA $7EC014 : STA $7EC01C
 
+    LDA #$0000 : STA $7EC000
+    STA $7EC016 : STA $7EC01E
+
     JSL transfer_cgram_long
     PLP
     PHK : PLB
@@ -796,6 +817,53 @@ crash_tilemap_transfer:
     %a16()
     RTL
 }
+
+crash_next_frame:
+{
+    PHP : %a8()
+    LDA $05B8 : PHA
+-   CMP $05B8 : BEQ -
+    PLA : STA $05B8
+    PLP
+    RTL
+}
+
+crash_read_inputs:
+{
+    PHP : %a8()
+-   LDA $4212 : AND #$01 : BNE -
+
+    %a16()
+    LDA $4218 : STA !crash_input
+    EOR !ram_crash_input_prev : AND !ram_crash_input : STA !ram_crash_input_new
+
+    LDA !ram_crash_input : BEQ .no_input
+    CMP !ram_crash_input_prev : BNE .new_input
+
+    ; inc timer while input held
+    LDA !ram_crash_input_timer : INC : STA !ram_crash_input_timer : BPL .done
+    LDA #$0018 : STA !ram_crash_input_timer ; wrap at 8000h
+    BRA .done
+
+  .no_input
+    ; clear timer
+    STA !ram_crash_input_timer
+    BRA .done
+
+  .new_input
+    ; reset timer
+    LDA #$0001 : STA !ram_crash_input_timer
+
+  .done
+    LDA !ram_crash_input : STA !ram_crash_input_prev
+    PLP
+    RTL
+}
+
+
+; ------------
+; Text Strings
+; ------------
 
 CrashTextHeader:
     table ../resources/header.tbl
