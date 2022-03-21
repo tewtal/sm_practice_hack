@@ -248,12 +248,12 @@ endif
 
   .decPalette
     LDA !ram_crash_palette : BNE +
-    LDA #$0004
+    LDA #$0008
 +   DEC : STA !ram_crash_palette
     BRA .updateCGRAM
 
   .incPalette
-    LDA !ram_crash_palette : CMP #$0003 : BMI +
+    LDA !ram_crash_palette : CMP #$0007 : BMI +
     LDA #$FFFF
 +   INC : STA !ram_crash_palette
 
@@ -768,26 +768,50 @@ crash_cgram_transfer:
     LDA !ram_crash_palette : BEQ .white ; 0 index
     DEC : BEQ .grey      ; 1
     DEC : BEQ .green     ; 2
-    DEC : BEQ .blue      ; 3
+    DEC : BEQ .pink      ; 3
+    DEC : BEQ .yellow    ; 4
+    DEC : BEQ .blue      ; 5
+    DEC : BEQ .red       ; 6
+    DEC : BEQ .orange    ; 7
 
   .white
-    LDA #$44E5 : STA $7EC012 ; outline
-    LDA #$7FFF : STA $7EC014 ; text
+    LDA #$44E5 : STA $7EC012
+    LDA #$7FFF : STA $7EC014
     BRA .transfer
 
   .grey
-    LDA #$1CE7 : STA $7EC012 ; outline
-    LDA #$3DEF : STA $7EC014 ; text/numbers
+    LDA #$1CE7 : STA $7EC012
+    LDA #$3DEF : STA $7EC014
     BRA .transfer
 
   .green
-    LDA #$000E : STA $7EC012 ; outline
-    LDA #$0A20 : STA $7EC014 ; text
+    LDA #$0000 : STA $7EC012
+    LDA #$03E0 : STA $7EC014
+    BRA .transfer
+
+  .pink
+    LDA #$0000 : STA $7EC012
+    LDA #$5156 : STA $7EC014
+    BRA .transfer
+
+  .yellow
+    LDA #$7C00 : STA $7EC012
+    LDA #$03FF : STA $7EC014
     BRA .transfer
 
   .blue
-    LDA #$7FFF : STA $7EC012 ; outline
-    LDA #$7A02 : STA $7EC014 ; text
+    LDA #$7FFF : STA $7EC012
+    LDA #$7A02 : STA $7EC014
+    BRA .transfer
+
+  .red
+    LDA #$001F : STA $7EC012
+    LDA #$7FE0 : STA $7EC014
+    BRA .transfer
+
+  .orange
+    LDA #$7C60 : STA $7EC012
+    LDA #$01FF : STA $7EC014
 
   .transfer
     LDA $7EC012 : STA $7EC01A
@@ -834,7 +858,7 @@ crash_read_inputs:
 -   LDA $4212 : AND #$01 : BNE -
 
     %a16()
-    LDA $4218 : STA !crash_input
+    LDA $4218 : STA !ram_crash_input
     EOR !ram_crash_input_prev : AND !ram_crash_input : STA !ram_crash_input_new
 
     LDA !ram_crash_input : BEQ .no_input
