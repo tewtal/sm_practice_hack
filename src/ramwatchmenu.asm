@@ -550,38 +550,40 @@ ramwatch_lock_right:
 
 action_ramwatch_edit_left:
 {
-    LDA !ram_watch_left : CLC : ADC !ram_watch_left_index : TAX
+    LDA !ram_watch_left : CLC : ADC !ram_watch_left_index : STA $C1
+    LDA !ram_watch_bank : BEQ .bank7E
+    CMP #$0001 : BEQ .bank7F
+    LDA #$0070 : BRA +
+  .bank7E
+    LDA #$007E : BRA +
+  .bank7F
+    LDA #$007F
++   STA $C3
     LDA !ram_watch_write_mode : BEQ +
     %a8()
-+   LDA !ram_watch_bank : BEQ .bank7E
-    DEC : BEQ .bank7F : BRA .bankSRAM
-  .bank7E
-    LDA !ram_watch_edit_left : STA $7E0000,X : BRA +
-  .bank7F
-    LDA !ram_watch_edit_left : STA $7F0000,X : BRA +
-  .bankSRAM
-    LDA !ram_watch_edit_left : STA $F00000,X
-+   %a16()
-    LDA #!IH_MODE_RAMWATCH_INDEX : STA !sram_display_mode
++   LDA !ram_watch_edit_left : STA [$C1]
+    %a16()
+    LDA !IH_MODE_RAMWATCH_INDEX : STA !sram_display_mode
     LDA #!SOUND_MENU_JSL : JSL !SFX_LIB1
     RTL
 }
 
 action_ramwatch_edit_right:
 {
-    LDA !ram_watch_right : CLC : ADC !ram_watch_right_index : TAX
+    LDA !ram_watch_right : CLC : ADC !ram_watch_right_index : STA $C1
+    LDA !ram_watch_bank : BEQ .bank7E
+    CMP #$0001 : BEQ .bank7F
+    LDA #$0070 : BRA +
+  .bank7E
+    LDA #$007E : BRA +
+  .bank7F
+    LDA #$007F
++   STA $C3
     LDA !ram_watch_write_mode : BEQ +
     %a8()
-+   LDA !ram_watch_bank : BEQ .bank7E
-    DEC : BEQ .bank7F : BRA .bankSRAM
-  .bank7E
-    LDA !ram_watch_edit_right : STA $7E0000,X : BRA +
-  .bank7F
-    LDA !ram_watch_edit_right : STA $7F0000,X : BRA +
-  .bankSRAM
-    LDA !ram_watch_edit_right : STA $F00000,X
-+   %a16()
-    LDA #!IH_MODE_RAMWATCH_INDEX : STA !sram_display_mode
++   LDA !ram_watch_edit_right : STA [$C1]
+    %a16()
+    LDA !IH_MODE_RAMWATCH_INDEX : STA !sram_display_mode
     LDA #!SOUND_MENU_JSL : JSL !SFX_LIB1
     RTL
 }
