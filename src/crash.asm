@@ -22,14 +22,15 @@
 !ram_crash_page = !CRASHDUMP+$40
 !ram_crash_palette = !CRASHDUMP+$42
 !ram_crash_cursor = !CRASHDUMP+$44
-!ram_crash_stack_size = !CRASHDUMP+$46
-!ram_crash_stack_bytes_written = !CRASHDUMP+$48
+!ram_crash_loop_counter = !CRASHDUMP+$46
+!ram_crash_bytes_to_write = !CRASHDUMP+$48
 !ram_crash_stack_line_position = !CRASHDUMP+$4A
 !ram_crash_text = !CRASHDUMP+$4C
 !ram_crash_text_bank = !CRASHDUMP+$4E
 !ram_crash_text_palette = !CRASHDUMP+$50
 !ram_crash_mem_viewer = !CRASHDUMP+$52
 !ram_crash_mem_viewer_bank = !CRASHDUMP+$54
+!ram_crash_temp = !CRASHDUMP+$56
 
 !ram_crash_input = !CRASHDUMP+$60
 !ram_crash_input_new = !CRASHDUMP+$62
@@ -65,7 +66,6 @@ print pc, " crash handler bank80 start"
 CrashHandler:
 {
     PHP : PHB
-    PHK : PLB
     %ai16()
 
     ; store CPU registers
@@ -75,34 +75,64 @@ CrashHandler:
     PLA : STA !ram_crash_dbp
     TSC : STA !ram_crash_sp
 
-    ; prep for .loopStack
-    INC : TAY : LDX #$0000
+    ; check condition of stack
+    BMI .overflow
+    CMP #$2000 : BPL .underflow
 
-    ; store crash type, 0 = handler
-    LDA #$0000 : STA !ram_crash_type
+    ; store crash type, 0 = handler, 8000 = overflow, 4000 = underflow
+    LDA #$0000 : STA !ram_crash_type      ; xxx0 = generic
+    PHK : PLB
+    LDA !ram_crash_sp : INC : TAY
+    LDX #$0000
+    BRA .loopStack
+
+  .overflow
+    LDA #$8000 : STA !ram_crash_type      ; 8xxx = stack overflow
+    LDA #$1FFF : TCS                      ; repair stack
+    PHB : PHB : PLA : STA !ram_crash_dbp  ; salvage crash DB
+    PHK : PLB                             ; set new DB
+    LDY #$0000                            ; dump $0000-$002F
+    LDX #$0000
+    BRA .loopStack
+
+  .underflow
+    LDA #$4000 : STA !ram_crash_type      ; 4xxx = stack underflow
+    LDA #$1FFF : TCS                      ; repair stack
+    LDA $001FFE : STA !ram_crash_temp     ; preserve stack bytes
+    PHB : PHB : PLA : STA !ram_crash_dbp  ; salvage crash DB
+    PHK : PLB                             ; set new DB
+    LDY #$1FD0                            ; dump $1FD0-$1FFF
+    LDX #$0000
 
   .loopStack
     LDA $0000,Y : STA !ram_crash_stack,X
-    INX #2 : CPX #$0030 : BPL .maxStack ; max 30h bytes
+    INX #2 : CPX #$0030 : BEQ .saveStackSize
+    BPL .maxStack ; max 30h bytes
     INY #2 : CPY #$2000 : BMI .loopStack
     BRA .stackSize
 
   .maxStack
-    ; we only saved 30h bytes, so inc until we
-    ; know the total number of bytes on the stack
+    ; we only saved 30h bytes, so check for overflow
+    LDA !ram_crash_type : BPL .countStackRemaining
+    LDX #$FFFF : BRA .saveStackSize
+
+  .countStackRemaining
+    ; inc until we know the total number of bytes on the stack
     INY : INX : CPY #$2000 : BMI .maxStack
 
   .stackSize
     ; check if we copied an extra byte
-    CPY #$2000 : BEQ +
+    CPY #$2000 : BEQ .saveStackSize
     DEX ; don't count it
-+   TXA : STA !ram_crash_stack_size
+  .saveStackSize
+    TXA : STA !ram_crash_stack_size
+
+    ; restore last two stack bytes if underflow
+    LDA !ram_crash_type : AND #$4000 : BEQ +
+    LDA !ram_crash_temp : STA !ram_crash_stack+$3E
 
     ; launch CrashViewer to display dump
-    JSL CrashViewer
-
-  .crash
-    JML .crash
++   JML CrashViewer
 }
 
 BRKHandler:
@@ -110,7 +140,6 @@ BRKHandler:
     JML .setBank
   .setBank
     PHP : PHB
-    PHK : PLB
     %ai16()
 
     ; store CPU registers
@@ -120,12 +149,34 @@ BRKHandler:
     PLA : STA !ram_crash_dbp
     TSC : STA !ram_crash_sp
 
-    ; prep for .loopStack
-    INC : TAY : LDX #$0000
+    ; check condition of stack
+    BMI .overflow
+    CMP #$2000 : BPL .underflow
 
-    ; store crash type, 1 = BRK
-    LDA #$0001 : STA !ram_crash_type
+    ; store crash type
+    LDA #$0001 : STA !ram_crash_type      ; xxx1 = BRK
+    PHK : PLB
+    LDA !ram_crash_sp : INC : TAY
+    LDX #$0000
+    JMP CrashHandler_loopStack
 
+  .overflow
+    LDA #$8001 : STA !ram_crash_type      ; 8xxx = stack overflow
+    LDA #$1FFF : TCS                      ; repair stack
+    PHB : PHB : PLA : STA !ram_crash_dbp  ; salvage crash DB
+    PHK : PLB                             ; set new DB
+    LDY #$0000                            ; dump $0000-$002F
+    LDX #$0000
+    JMP CrashHandler_loopStack
+
+  .underflow
+    LDA #$4001 : STA !ram_crash_type      ; 4xxx = stack underflow
+    LDA #$1FFF : TCS                      ; repair stack
+    LDA $001FFE : STA !ram_crash_temp     ; preserve stack bytes
+    PHB : PHB : PLA : STA !ram_crash_dbp  ; salvage crash DB
+    PHK : PLB                             ; set new DB
+    LDY #$1FD0                            ; dump $1FD0-$1FFF
+    LDX #$0000
     JMP CrashHandler_loopStack
 }
 
@@ -134,7 +185,6 @@ COPHandler:
     JML .setBank
   .setBank
     PHP : PHB
-    PHK : PLB
     %ai16()
 
     ; store CPU registers
@@ -144,12 +194,34 @@ COPHandler:
     PLA : STA !ram_crash_dbp
     TSC : STA !ram_crash_sp
 
-    ; prep for .loopStack
-    INC : TAY : LDX #$0000
+    ; check condition of stack
+    BMI .overflow
+    CMP #$2000 : BPL .underflow
 
-    ; store crash type, 2 = COP
-    LDA #$0002 : STA !ram_crash_type
+    ; store crash type
+    LDA #$0002 : STA !ram_crash_type      ; xxx2 = COP
+    PHK : PLB
+    LDA !ram_crash_sp : INC : TAY
+    LDX #$0000
+    JMP CrashHandler_loopStack
 
+  .overflow
+    LDA #$8002 : STA !ram_crash_type      ; 8xxx = stack overflow
+    LDA #$1FFF : TCS                      ; repair stack
+    PHB : PHB : PLA : STA !ram_crash_dbp  ; salvage crash DB
+    PHK : PLB                             ; set new DB
+    LDY #$0000                            ; dump $0000-$002F
+    LDX #$0000
+    JMP CrashHandler_loopStack
+
+  .underflow
+    LDA #$4002 : STA !ram_crash_type      ; 4xxx = stack underflow
+    LDA #$1FFF : TCS                      ; repair stack
+    LDA $001FFE : STA !ram_crash_temp     ; preserve stack bytes
+    PHB : PHB : PLA : STA !ram_crash_dbp  ; salvage crash DB
+    PHK : PLB                             ; set new DB
+    LDY #$1FD0                            ; dump $1FD0-$1FFF
+    LDX #$0000
     JMP CrashHandler_loopStack
 }
 
@@ -286,107 +358,163 @@ CrashDump:
     LDX #$0686 : JSR crash_draw_text
 
     ; -- Draw register labels --
-    LDA #$2800 : STA !CRASHDUMP_TILEMAP_BUFFER+$14A  ; A
-    LDA #$2817 : STA !CRASHDUMP_TILEMAP_BUFFER+$154  ; X
-    LDA #$2818 : STA !CRASHDUMP_TILEMAP_BUFFER+$15E  ; Y
-    LDA #$2803 : STA !CRASHDUMP_TILEMAP_BUFFER+$166  ; D
-    LDA #$2801 : STA !CRASHDUMP_TILEMAP_BUFFER+$168  ; B
-    LDA #$284F : STA !CRASHDUMP_TILEMAP_BUFFER+$16A  ; +
-    LDA #$280F : STA !CRASHDUMP_TILEMAP_BUFFER+$16C  ; P
-    LDA #$2812 : STA !CRASHDUMP_TILEMAP_BUFFER+$172  ; S
-    LDA #$280F : STA !CRASHDUMP_TILEMAP_BUFFER+$174  ; P
+    LDA #$2800 : STA !CRASHDUMP_TILEMAP_BUFFER+$10A  ; A
+    LDA #$2817 : STA !CRASHDUMP_TILEMAP_BUFFER+$114  ; X
+    LDA #$2818 : STA !CRASHDUMP_TILEMAP_BUFFER+$11E  ; Y
+    LDA #$2803 : STA !CRASHDUMP_TILEMAP_BUFFER+$126  ; D
+    LDA #$2801 : STA !CRASHDUMP_TILEMAP_BUFFER+$128  ; B
+    LDA #$284F : STA !CRASHDUMP_TILEMAP_BUFFER+$12A  ; +
+    LDA #$280F : STA !CRASHDUMP_TILEMAP_BUFFER+$12C  ; P
+    LDA #$2812 : STA !CRASHDUMP_TILEMAP_BUFFER+$132  ; S
+    LDA #$280F : STA !CRASHDUMP_TILEMAP_BUFFER+$134  ; P
 
     ; -- Draw stack label --
     LDA.l #CrashTextStack1 : STA !ram_crash_text
     LDA.l #CrashTextStack1>>16 : STA !ram_crash_text_bank
-    LDX #$024E : JSR crash_draw_text
+    LDX #$01CE : JSR crash_draw_text
 
     ; -- Draw stack text --
     LDA.l #CrashTextStack2 : STA !ram_crash_text
     LDA.l #CrashTextStack2>>16 : STA !ram_crash_text_bank
-    LDX #$028C : JSR crash_draw_text
+    LDX #$020C : JSR crash_draw_text
 
+    ; -- Draw overflow/underflow warning text --
+    LDA !ram_crash_type : AND #$C000 : BEQ .drawRegisters
+    BMI .overflow
+
+    LDA.l #CrashTextStack3 : STA !ram_crash_text
+    LDA.l #CrashTextStack3>>16 : STA !ram_crash_text_bank
+    LDX #$024E : JSR crash_draw_text
+    BRA .drawRegisters
+
+  .overflow
+    LDA.l #CrashTextStack4 : STA !ram_crash_text
+    LDA.l #CrashTextStack4>>16 : STA !ram_crash_text_bank
+    LDX #$024E : JSR crash_draw_text
+
+  .drawRegisters
     ; -- Draw register values --
     LDA !ram_crash_a : STA !ram_crash_draw_value
-    LDX #$0188 : JSR crash_draw4  ; A
+    LDX #$0148 : JSR crash_draw4  ; A
     LDA !ram_crash_x : STA !ram_crash_draw_value
-    LDX #$0192 : JSR crash_draw4  ; X
+    LDX #$0152 : JSR crash_draw4  ; X
     LDA !ram_crash_y : STA !ram_crash_draw_value
-    LDX #$019C : JSR crash_draw4  ; Y
+    LDX #$015C : JSR crash_draw4  ; Y
+
+    ; DB/P is corrupt if over/underflow
+    LDA !ram_crash_type : AND #$C000 : BNE .corruptP
     LDA !ram_crash_dbp : XBA : STA !ram_crash_draw_value
-    LDX #$01A6 : JSR crash_draw4  ; DB+P
-    LDA !ram_crash_sp : STA !ram_crash_draw_value
-    LDX #$01B0 : JSR crash_draw4  ; SP
+    LDX #$0166 : JSR crash_draw4  ; DB+P
+    BRA +
+  .corruptP
+    LDA !ram_crash_dbp : XBA : STA !ram_crash_draw_value
+    LDX #$0166 : JSR crash_draw2  ; DB
+    LDA #$288E  ; draw XX instead of P
+    STA !CRASHDUMP_TILEMAP_BUFFER+$16A
+    STA !CRASHDUMP_TILEMAP_BUFFER+$16C
 
-    ; -- Draw starting position of stack dump
++   LDA !ram_crash_sp : STA !ram_crash_draw_value
+    LDX #$0170 : JSR crash_draw4  ; SP
+
+    ; -- Draw starting position of stack dump --
+    LDA !ram_crash_type : AND #$C000 : BMI .overflowStart
+    BNE .underflowStart
     LDA !ram_crash_draw_value : INC : STA !ram_crash_draw_value
-    LDX #$02A8 : JSR crash_draw4
+    BRA .drawStartingPosition
+  .overflowStart
+    LDA #$0000 : STA !ram_crash_draw_value
+    BRA .drawStartingPosition
+  .underflowStart
+    LDA #$1FD0 : STA !ram_crash_draw_value
 
+  .drawStartingPosition
+    LDX #$0228 : JSR crash_draw4
+    BRA .drawStackBytesWritten
+
+  .drawStackBytesWritten
     ; -- Draw stack bytes written --
     LDA !ram_crash_stack_size : STA !ram_crash_draw_value
-    STA !ram_crash_stack_bytes_written
-    LDX #$025E : JSR crash_draw4
+    BPL +
+    LDA #$0030
++   STA !ram_crash_bytes_to_write
+    LDX #$01DE : JSR crash_draw4
 
     ; -- Detect and Draw COP/BRK --
-    LDA !ram_crash_type : BEQ .drawStack_bridge
+    LDA !ram_crash_type : AND #$0003 : BEQ .drawStack_bridge
+    LDA !ram_crash_type : AND #$C000 : BNE .corruptBRKCOP
 
     %a8()
     LDA !ram_crash_stack : STA !ram_crash_draw_value
-    LDX #$0320 : JSR crash_draw2 ; P
+    LDX #$02E0 : JSR crash_draw2 ; P
 
     LDA !ram_crash_stack+$03 : STA !ram_crash_draw_value
     STA $C3
-    LDX #$0328 : JSR crash_draw2 ; bank
+    LDX #$02E8 : JSR crash_draw2 ; bank
 
     %a16()
     LDA !ram_crash_stack+$01 : DEC : STA $C1
     DEC : STA !ram_crash_draw_value
-    LDX #$032C : JSR crash_draw4 ; addr
+    LDX #$02EC : JSR crash_draw4 ; addr
 
     LDA [$C1] : STA !ram_crash_draw_value
-    LDX #$0318 : JSR crash_draw2 ; operand
-
-    %a16()
-    LDA !ram_crash_type : CMP #$0002 : BEQ .COPcrash
-    LDA #$2C01 : STA !CRASHDUMP_TILEMAP_BUFFER+$30C ; B
-    LDA #$2C11 : STA !CRASHDUMP_TILEMAP_BUFFER+$30E ; R
-    LDA #$2C0A : STA !CRASHDUMP_TILEMAP_BUFFER+$310 ; K
-    LDA #$2C44 : STA !CRASHDUMP_TILEMAP_BUFFER+$314 ; #
-    LDA #$2C4E : STA !CRASHDUMP_TILEMAP_BUFFER+$316 ; $
-    STA !CRASHDUMP_TILEMAP_BUFFER+$326 ; $
+    LDX #$02D8 : JSR crash_draw2 ; operand
+    BRA .drawBRKCOPText
 
   .drawStack_bridge
+    JMP .drawStack
+
+  .corruptBRKCOP
+    LDA #$288E  ; draw X's instead
+    STA !CRASHDUMP_TILEMAP_BUFFER+$2D8
+    STA !CRASHDUMP_TILEMAP_BUFFER+$2DA
+    STA !CRASHDUMP_TILEMAP_BUFFER+$2E0
+    STA !CRASHDUMP_TILEMAP_BUFFER+$2E2
+    STA !CRASHDUMP_TILEMAP_BUFFER+$2E8
+    STA !CRASHDUMP_TILEMAP_BUFFER+$2EA
+    STA !CRASHDUMP_TILEMAP_BUFFER+$2EC
+    STA !CRASHDUMP_TILEMAP_BUFFER+$2EE
+    STA !CRASHDUMP_TILEMAP_BUFFER+$2F0
+    STA !CRASHDUMP_TILEMAP_BUFFER+$2F2
+
+  .drawBRKCOPText
+    LDA !ram_crash_type : AND #$000F : CMP #$0002 : BEQ .COPcrash
+    LDA #$2C01 : STA !CRASHDUMP_TILEMAP_BUFFER+$2CC ; B
+    LDA #$2C11 : STA !CRASHDUMP_TILEMAP_BUFFER+$2CE ; R
+    LDA #$2C0A : STA !CRASHDUMP_TILEMAP_BUFFER+$2D0 ; K
+    LDA #$2C44 : STA !CRASHDUMP_TILEMAP_BUFFER+$2D4 ; #
+    LDA #$2C4E : STA !CRASHDUMP_TILEMAP_BUFFER+$2D6 ; $
+    STA !CRASHDUMP_TILEMAP_BUFFER+$2E6 ; $
     BRA .drawStack
 
   .COPcrash
-    LDA #$2C02 : STA !CRASHDUMP_TILEMAP_BUFFER+$30C ; C
-    LDA #$2C7D : STA !CRASHDUMP_TILEMAP_BUFFER+$30E ; O
-    LDA #$2C0F : STA !CRASHDUMP_TILEMAP_BUFFER+$310 ; P
-    LDA #$2C44 : STA !CRASHDUMP_TILEMAP_BUFFER+$314 ; #
-    LDA #$2C4E : STA !CRASHDUMP_TILEMAP_BUFFER+$316 ; $
-    STA !CRASHDUMP_TILEMAP_BUFFER+$326 ; $
+    LDA #$2C02 : STA !CRASHDUMP_TILEMAP_BUFFER+$2CC ; C
+    LDA #$2C7D : STA !CRASHDUMP_TILEMAP_BUFFER+$2CE ; O
+    LDA #$2C0F : STA !CRASHDUMP_TILEMAP_BUFFER+$2D0 ; P
+    LDA #$2C44 : STA !CRASHDUMP_TILEMAP_BUFFER+$2D4 ; #
+    LDA #$2C4E : STA !CRASHDUMP_TILEMAP_BUFFER+$2D6 ; $
+    STA !CRASHDUMP_TILEMAP_BUFFER+$2E6 ; $
 
   .drawStack
     ; -- Draw Stack Values --
     ; start by setting up tilemap position
     %ai16()
-    LDX #$0388
+    LDX #$0348
     LDA #$0000 : STA !ram_crash_stack_line_position
 
     ; determine starting offset
-    LDA !ram_crash_stack_bytes_written
+    LDA !ram_crash_bytes_to_write
 -   PHA : AND #$0007 : BEQ +
     TXA : CLC : ADC #$0006 : TAX
     LDA !ram_crash_stack_line_position : INC : STA !ram_crash_stack_line_position
     PLA : INC : BRA -
 
 +   PLA : %a8()
-    LDA #$00 : STA !ram_crash_stack_size
+    LDA #$00 : STA !ram_crash_loop_counter
 
   .drawStackLoop
     ; draw a byte
     PHX : %i8()
-    LDA !ram_crash_stack_size : TAX
+    LDA !ram_crash_loop_counter : TAX
     LDA !ram_crash_stack,X : STA !ram_crash_draw_value
     %i16() : PLX
     JSR crash_draw2
@@ -399,12 +527,12 @@ CrashDump:
     LDA #$00 : STA !ram_crash_stack_line_position
     %a16()
     TXA : CLC : ADC #$0050 : TAX
-    CPX #$05B4 : BPL .done
+    CPX #$05F4 : BPL .done
     %a8()
 
     ; inc bytes drawn
-+   LDA !ram_crash_stack_size : INC : STA !ram_crash_stack_size
-    CMP !ram_crash_stack_bytes_written : BNE .drawStackLoop
++   LDA !ram_crash_loop_counter : INC : STA !ram_crash_loop_counter
+    CMP !ram_crash_bytes_to_write : BNE .drawStackLoop
 
   .done
     RTS
@@ -568,7 +696,7 @@ CrashMemViewer:
 
     LDX #$048A
     %a8()
-    LDA #$00 : STA !ram_crash_stack_line_position : STA !ram_crash_stack_size
+    LDA #$00 : STA !ram_crash_stack_line_position : STA !ram_crash_loop_counter
     LDA $C1 : AND #$F0 : STA $C1
 
   .drawLowerHalfNearby
@@ -589,7 +717,7 @@ CrashMemViewer:
     %a8()
 
     ; inc bytes drawn
-+   LDA !ram_crash_stack_size : INC : STA !ram_crash_stack_size
++   LDA !ram_crash_loop_counter : INC : STA !ram_crash_loop_counter
     CMP #$10 : BNE .drawLowerHalfNearby
     %a16()
 
@@ -607,7 +735,7 @@ CrashMemViewer:
 
     LDX #$048A
     %a8()
-    LDA #$00 : STA !ram_crash_stack_line_position : STA !ram_crash_stack_size
+    LDA #$00 : STA !ram_crash_stack_line_position : STA !ram_crash_loop_counter
     LDA $C1 : AND #$F0 : STA $C1
 
   .drawUpperHalfNearby
@@ -628,7 +756,7 @@ CrashMemViewer:
     %a8()
 
     ; inc bytes drawn
-+   LDA !ram_crash_stack_size : INC : STA !ram_crash_stack_size
++   LDA !ram_crash_loop_counter : INC : STA !ram_crash_loop_counter
     CMP #$10 : BNE .drawUpperHalfNearby
     %a16()
 
@@ -907,6 +1035,12 @@ CrashTextStack1:
 
 CrashTextStack2:
     db "(starting at $    )", #$FF
+
+CrashTextStack3:
+    db "Stack UNDERFLOW!!", #$FF
+
+CrashTextStack4:
+    db "Stack OVERFLOW!!!", #$FF
 
 CrashTextHeader2:
     table ../resources/header.tbl
