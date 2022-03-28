@@ -910,10 +910,10 @@ status_quickdrop:
     ; Arbitrary wait of 20 frames before resetting
     LDA !ram_quickdrop_counter : BEQ .done : CMP #$0014 : BPL .reset
     LDA !ram_quickdrop_counter : INC : STA !ram_quickdrop_counter
+    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_DOWN : BNE .down
     RTS
 
   .leftright
-    LDA !IH_BLANK : STA $7EC688 : STA $7EC68A
     LDA !ram_quickdrop_counter : BEQ .firstleftright
     LDX #$008C : JSR Draw2
 
@@ -924,11 +924,31 @@ status_quickdrop:
     RTS
 
   .firstleftright
-    LDA !IH_BLANK : STA $7EC68C : STA $7EC68E : STA $7EC690
+    LDA !IH_BLANK : STA $7EC688 : STA $7EC68A
+    STA $7EC68C : STA $7EC68E : STA $7EC690
     BRA .setcounter
 
   .reset
     LDA #$0000 : STA !ram_quickdrop_counter
+    RTS
+
+  .down
+    LDA !ram_quickdrop_counter : CMP #$0008 : BEQ .frameperfect : BMI .early
+
+    ; Late
+    SEC : SBC #$0008
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC68A
+    LDA !IH_LETTER_L : STA $7EC688
+    RTS
+
+  .early
+    LDA #$0008 : SEC : SBC !ram_quickdrop_counter
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC68A
+    LDA !IH_LETTER_E : STA $7EC688
+    RTS
+
+  .frameperfect
+    LDA !IH_LETTER_Y : STA $7EC688 : STA $7EC68A
     RTS
 }
 
@@ -1944,14 +1964,14 @@ endif
     LDA !SAMUS_Y_SUBSPEED : CMP #$0000 : BNE .downcheck
     LDA !IH_LETTER_Y : STA $7EC68A
 
+  .downcheck
+    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_DOWN : BEQ .inc
+    BRL .timecheck
+
   .setxy
     LDA !SAMUS_X : STA !ram_xpos
     LDA !SAMUS_Y : STA !ram_ypos
     RTS
-
-  .downcheck
-    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_DOWN : BEQ .inc
-    BRA .timecheck
 
   .roomcheck
     LDA !ROOM_ID : CMP #$94CC : BEQ .forgotten : CMP #$962A : BEQ .redbrin
