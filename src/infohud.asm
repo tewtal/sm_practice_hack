@@ -291,9 +291,8 @@ ih_after_room_transition:
     PHY
 
     LDA !ram_transition_counter : STA !ram_last_door_lag_frames
-    LDA !sram_lag_counter_mode : BEQ .done_set_door_lag
-    LDA !ram_realtime_room : STA !ram_last_door_lag_frames
-  .done_set_door_lag
+    LDA !ram_realtime_room : STA !ram_last_realtime_door
+
     LDA #$0000 : STA !ram_transition_flag
 
     ; Check if MBHP needs to be disabled
@@ -348,6 +347,7 @@ ih_before_room_transition:
     ; Realtime
     LDA !ram_realtime_room : STA !ram_last_realtime_room
     LDA #$0000 : STA !ram_realtime_room
+    LDA #$0000 : STA !ram_last_realtime_door
 
     ; Save temp variables
     LDA $12 : PHA
@@ -472,7 +472,7 @@ ih_update_hud_code:
     LDA !sram_top_display_mode : CMP !TOP_DISPLAY_VANILLA : BEQ .minimap_vanilla_infohud
     LDA !ram_map_counter : LDX #$0014 : JSR Draw3
     LDA !sram_display_mode : CMP #!IH_MODE_SHINETUNE_INDEX : BNE .minimap_roomtimer
-    BRL .minimap_doorlag
+    BRL .pick_minimap_transition_time
 
   .minimap_roomtimer
     STZ $4205
@@ -500,8 +500,14 @@ endif
     LDA HexToNumberGFX1,X : STA $7EC6B6
     LDA HexToNumberGFX2,X : STA $7EC6B8
 
-  .minimap_doorlag
-    LDA !ram_last_door_lag_frames : LDX #$0054 : JSR Draw3
+  .pick_minimap_transition_time
+    LDA !sram_lag_counter_mode : BNE .minimap_transition_time_full
+    LDA !ram_last_door_lag_frames
+    BRA .draw_minimap_transition_time
+  .minimap_transition_time_full
+    LDA !ram_last_realtime_door
+  .draw_minimap_transition_time
+    LDX #$0054 : JSR Draw3
     BRL .end
 
   .start_update
@@ -570,8 +576,7 @@ endif
     LDA !sram_display_mode : CMP #!IH_MODE_SHINETUNE_INDEX : BEQ .end
 
     ; Door lag
-    LDA !ram_last_door_lag_frames : LDX #$00C2 : JSR Draw3
-    BRA .pick_segment_timer
+    BRA .pick_vanilla_infohud_transition_time
 
   .vanilla_infohud_draw_lag_and_reserves
     LDA !SAMUS_RESERVE_MODE : CMP #$0001 : BNE .vanilla_infohud_draw_lag
@@ -589,8 +594,15 @@ endif
     ; Skip door lag and segment timer when shinetune enabled
     LDA !sram_display_mode : CMP #!IH_MODE_SHINETUNE_INDEX : BEQ .end
 
-    ; Door lag
-    LDA !ram_last_door_lag_frames : LDX #$00C2 : JSR Draw2
+  .pick_vanilla_infohud_transition_time
+    ; Door lag / transition time
+    LDA !sram_lag_counter_mode : BNE .vanilla_infohud_transition_time_full
+    LDA !ram_last_door_lag_frames
+    BRA .draw_vanilla_infohud_transition_time
+  .vanilla_infohud_transition_time_full
+    LDA !ram_last_realtime_door
+  .draw_vanilla_infohud_transition_time
+    LDX #$00C2 : JSR Draw2
 
   .pick_segment_timer
     LDA !sram_frame_counter_mode : BNE .ingame_segment_timer

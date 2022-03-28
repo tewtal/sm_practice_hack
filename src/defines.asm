@@ -18,7 +18,7 @@
 !ram_last_door_lag_frames = !WRAM_START+$0C
 !ram_transition_counter = !WRAM_START+$0E
 !ram_transition_flag = !WRAM_START+$10
-!ram_transition_flag_2 = !WRAM_START+$12
+!ram_last_realtime_door = !WRAM_START+$12
 
 !ram_seg_rt_frames = !WRAM_START+$14
 !ram_seg_rt_seconds = !WRAM_START+$16
