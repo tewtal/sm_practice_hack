@@ -442,6 +442,7 @@ CrashDump:
     ; -- Detect and Draw COP/BRK --
     LDA !ram_crash_type : AND #$0003 : BEQ .drawStack_bridge
     LDA !ram_crash_type : AND #$C000 : BNE .corruptBRKCOP
+    LDA $C1 : PHA : LDA $C3 : PHA
 
     %a8()
     LDA !ram_crash_stack : STA !ram_crash_draw_value
@@ -458,6 +459,7 @@ CrashDump:
 
     LDA [$C1] : STA !ram_crash_draw_value
     LDX #$02D8 : JSR crash_draw2 ; operand
+    PLA : STA $C3 : PLA : STA $C1
     BRA .drawBRKCOPText
 
   .drawStack_bridge
@@ -727,22 +729,22 @@ CrashMemViewer:
 
   .drawUpperHalf
     %a16()
-    LDA $C1 : PHA : LDA $C3 : PHA
-    LDA !ram_crash_mem_viewer_bank : STA $C3
-    LDA !ram_crash_mem_viewer : STA $C1
-    LDA [$C1] : STA !ram_crash_draw_value
+    LDA $41 : PHA : LDA $43 : PHA
+    LDA !ram_crash_mem_viewer_bank : STA $43
+    LDA !ram_crash_mem_viewer : STA $41
+    LDA [$41] : STA !ram_crash_draw_value
     LDX #$01E8 : JSR crash_draw4
 
     LDX #$048A
     %a8()
     LDA #$00 : STA !ram_crash_stack_line_position : STA !ram_crash_loop_counter
-    LDA $C1 : AND #$F0 : STA $C1
+    LDA $41 : AND #$F0 : STA $41
 
   .drawUpperHalfNearby
     ; draw a byte
-    LDA [$C1] : STA !ram_crash_draw_value
+    LDA [$41] : STA !ram_crash_draw_value
     JSR crash_draw2
-    INC $C1
+    INC $41
 
     ; inc tilemap position
     INX #6 : LDA !ram_crash_stack_line_position : INC
@@ -761,7 +763,7 @@ CrashMemViewer:
     %a16()
 
   .doneUpperHalf
-    PLA : STA $C3 : PLA : STA $C1
+    PLA : STA $43 : PLA : STA $41
     RTS
 
 CursorPositions:
