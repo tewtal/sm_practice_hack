@@ -1686,7 +1686,7 @@ ih_lag:
     %cm_numfield("Artificial Lag", !sram_artificial_lag, 0, 64, 1, 4, #0)
 
 ih_reset_seg_later:
-    %cm_jsl("Reset Segment in Next Room", #.routine, #$FFFF)
+    %cm_jsl("Reset Segment Next Event", #.routine, #$FFFF)
   .routine
     TYA : STA !ram_reset_segment_later
     RTL

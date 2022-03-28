@@ -296,19 +296,19 @@ ih_after_room_transition:
     LDA #$0000 : STA !ram_transition_flag
 
     ; Check if MBHP needs to be disabled
-    LDA !sram_display_mode : CMP #!IH_MODE_ROOMSTRAT_INDEX : BNE +
-    LDA !sram_room_strat : CMP #!IH_STRAT_MBHP_INDEX : BNE +
-    LDA !ROOM_ID : CMP #$DD58 : BEQ +
+    LDA !sram_display_mode : CMP #!IH_MODE_ROOMSTRAT_INDEX : BNE .check_reset_segment_timer
+    LDA !sram_room_strat : CMP #!IH_STRAT_MBHP_INDEX : BNE .check_reset_segment_timer
+    LDA !ROOM_ID : CMP #$DD58 : BEQ .check_reset_segment_timer
     LDA #$0000 : STA !sram_display_mode
 
-    ; Maybe reset segment timer
-+   LDA !ram_reset_segment_later : BEQ +
+  .check_reset_segment_timer
+    LDA !ram_reset_segment_later : BEQ .update_hud
     LDA #$0000 : STA !ram_reset_segment_later
     STA !ram_seg_rt_frames : STA !ram_seg_rt_seconds
     STA !ram_seg_rt_minutes
 
-    ; Update HUD
-+   JSL ih_update_hud_code
+  .update_hud
+    JSL ih_update_hud_code
 
     ; Reset gametime/transition timer
     LDA #$0000 : STA !ram_transition_counter
@@ -654,18 +654,17 @@ ih_update_hud_early:
     LDA !ram_gametime_room : STA !ram_last_gametime_room
     LDA !ram_realtime_room : STA !ram_last_realtime_room
 
-    ; save temp variables
-    LDA $12 : PHA
-    LDA $14 : PHA
+    ; check if we should reset segment timer
+    LDA !ram_reset_segment_later : BEQ .update_hud
+    LDA #$0000 : STA !ram_reset_segment_later
+    STA !ram_seg_rt_frames : STA !ram_seg_rt_seconds
+    STA !ram_seg_rt_minutes
 
-    ; Update HUD
+  .update_hud
+    LDA $12 : PHA : LDA $14 : PHA
     JSL ih_update_hud_code
+    PLA : STA $14 : PLA : STA $12
 
-    ; restore temp variables
-    PLA : STA $14
-    PLA : STA $12
-
-    ; Run standard code and return
     PLY
     PLX
     PLA
