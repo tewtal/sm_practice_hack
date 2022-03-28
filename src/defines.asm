@@ -81,6 +81,7 @@
 
 !ram_suits_enemy_damage_check = !WRAM_START+$78
 !ram_suits_periodic_damage_check = !WRAM_START+$7A
+!ram_pacifist = !WRAM_START+$7C
 
 ; ^ FREE SPACE ^ up to +$86
 
