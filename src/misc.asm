@@ -567,3 +567,73 @@ endif
 
 print pc, " misc bank90 end"
 
+
+if !FEATURE_PAL
+org $A0A872
+else            ; general damage hijack
+org $A0A862
+endif
+    JSR EnemyDamage
+
+if !FEATURE_PAL
+org $A0A55C
+else            ; shinespark damage
+org $A0A54C
+endif
+    JSR EnemyDamageShinespark
+
+if !FEATURE_PAL
+org $A0A63B
+else            ; power bomb damage
+org $A0A62B
+endif
+    JSR EnemyDamagePowerBomb
+
+org $A0FFD0
+print pc, " misc bankA0 start"
+EnemyDamage:
+{
+    LDA !ram_pacifist : BNE .no_damage
+    LDA $0F8C,X ; original code
+    RTS
+
+  .no_damage
+    PLA ; pull return address and jump past storing enemy hp
+if !FEATURE_PAL
+    JMP $A8CA
+else
+    JMP $A8BA
+endif
+}
+
+EnemyDamageShinespark:
+{
+    LDA !ram_pacifist : BNE .no_damage
+    LDA $0F8C,X ; original code
+    RTS
+
+  .no_damage
+    PLA ; pull return address and jump past storing enemy hp
+if !FEATURE_PAL
+    JMP $A86A
+else
+    JMP $A55A
+endif
+}
+
+EnemyDamagePowerBomb:
+{
+    LDA !ram_pacifist : BNE .no_damage
+    LDA $0F8C,X ; original code
+    RTS
+
+  .no_damage
+    PLA ; pull return address and jump past storing enemy hp
+if !FEATURE_PAL
+    JMP $A64C
+else
+    JMP $A63C
+endif
+
+print pc, " misc bankA0 end"
+

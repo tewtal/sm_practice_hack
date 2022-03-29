@@ -1748,6 +1748,7 @@ GameMenu:
 if !FEATURE_PAL
     dw #game_paldebug
 endif
+    dw #game_pacifist
     dw #game_debugprojectiles
     dw #game_debugfixscrolloffsets
     dw #$FFFF
@@ -1762,6 +1763,9 @@ if !FEATURE_PAL
 else
     %cm_toggle("Japanese Text", $7E09E2, #$0001, #0)
 endif
+
+game_pacifist:
+    %cm_toggle("Pacifist Mode", !ram_pacifist, #$0001, #0)
 
 game_debugprojectiles:
     %cm_toggle_bit("Enable Projectiles", $7E198D, #$8000, #0)
