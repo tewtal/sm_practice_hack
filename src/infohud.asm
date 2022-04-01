@@ -660,13 +660,7 @@ ih_update_hud_early:
     LDA !ram_gametime_room : STA !ram_last_gametime_room
     LDA !ram_realtime_room : STA !ram_last_realtime_room
 
-    ; check if we should reset segment timer
-    LDA !ram_reset_segment_later : BEQ .update_hud
-    LDA #$0000 : STA !ram_reset_segment_later
-    STA !ram_seg_rt_frames : STA !ram_seg_rt_seconds
-    STA !ram_seg_rt_minutes
-
-  .update_hud
+    ; update HUD
     LDA $12 : PHA : LDA $14 : PHA
     JSL ih_update_hud_code
     PLA : STA $14 : PLA : STA $12
@@ -1488,5 +1482,5 @@ HexToNumberGFX2:
     dw #$0C09, #$0C00, #$0C01, #$0C02, #$0C03, #$0C04, #$0C05, #$0C06, #$0C07, #$0C08
 
 print pc, " infohud bank80 end"
-warnpc $80FFC0 ; header
+warnpc $80FFB0 ; header
 

@@ -1194,8 +1194,10 @@ SpritesMenu:
     dw #sprites_show_samusproj_hitbox
     dw #sprites_show_enemyproj_hitbox
     dw #sprites_oob_viewer
+if !PRESERVE_WRAM_DURING_SPACETIME
     dw #$FFFF
     dw #sprites_spacetime_infohud
+endif
     dw #$0000
     %cm_header("SPRITE FEATURES")
 
@@ -1686,7 +1688,7 @@ ih_lag:
     %cm_numfield("Artificial Lag", !sram_artificial_lag, 0, 64, 1, 4, #0)
 
 ih_reset_seg_later:
-    %cm_jsl("Reset Segment Next Event", #.routine, #$FFFF)
+    %cm_jsl("Reset Segment Next Room", #.routine, #$FFFF)
   .routine
     TYA : STA !ram_reset_segment_later
     RTL
