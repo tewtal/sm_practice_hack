@@ -197,7 +197,9 @@ org $90E874
 else
 org $90E877
 endif
-    BRA $1F
+    LDA $07F5
+    JSL $808FC1 ; queue room music track
+    BRA $18
 
 
 ; Adds frames when unpausing (nmi is turned off during vram transfers)
