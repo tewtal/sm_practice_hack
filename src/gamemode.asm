@@ -259,6 +259,8 @@ endif
     LDA $AB : PHA
     LDA #$0004 : STA $AB
 
+    JSR skip_pause
+
     ; Enter MainMenu
     JSL cm_start
 
@@ -266,7 +268,7 @@ endif
     PLA : STA $AB
 
     ; SEC to skip normal gameplay for one frame after handling the menu
-    SEC : JMP skip_pause
+    SEC : RTS
 }
 
 if !FEATURE_SD2SNES
