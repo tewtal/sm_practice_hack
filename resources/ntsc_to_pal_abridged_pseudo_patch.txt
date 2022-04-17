@@ -45,6 +45,7 @@ org $80CD8E
 org $80FFC0
 
 ; Country code and checksum
+; NOTE: This section is also different on Virtual Console NTSC and JU
 org $80FFD9
     db #$02,#$01,#$00,#$04,#$84,#$FB,#$7B
 
@@ -1779,6 +1780,18 @@ org $8DCA4E
     dw ...
 org $8DCAAA
 
+; Tourian red flashing
+; NOTE: This section is the same on NTSC and PAL but different on Virtual Console NTSC and JU
+org $8DF895
+    dw ...
+org $8DF941
+
+; Old Tourian escape shaft flashing
+; NOTE: This section is the same on NTSC and PAL but different on Virtual Console NTSC and JU
+org $8DFA6D
+    dw ...
+org $8DFBC1
+
 ; Freespace
 org $8DFFF1
 
@@ -2813,6 +2826,12 @@ org $A49A6C  <--  org $A49A53
 org $A49A79  <--  org $A49A60
     ADC #$0001    ; previously ADC #$0000
 
+; Crocomire palette
+; NOTE: This section is the same on NTSC and PAL but different on Virtual Console NTSC and JU
+org $A4B936  <--  org $A4B91D
+    dw ...
+org $A4B956  <--  org $A4B93D
+
 ; Crocomire instruction lists (timing differences)
 org $A4BB03  <--  org $A4BAEA
     dw ...
@@ -3166,6 +3185,18 @@ org $A7A93A  <--  org $A7A924
 ; Kraid timer
 org $A7AA7F  <--  org $A7AA69
     LDA #$00FA    ; previously LDA #$012C
+
+; Kraid background palette
+; NOTE: This section is the same on NTSC and PAL and Virtual Console NTSC but different on JU
+org $A7B3E9  <--  org $A7B3D3
+    dw ...
+org $A7B409  <--  org $A7B3F3
+
+; Kraid sprite palette
+; NOTE: This section is the same on NTSC and PAL and Virtual Console NTSC but different on JU
+org $A7B529  <--  org $A7B513
+    dw ...
+org $A7B549  <--  org $A7B533
 
 ; Kraid X position
 org $A7B671  <--  org $A7B65B
@@ -3641,6 +3672,12 @@ org $A9BB9E  <--  org $A9BB51
 ; MB2 AI velocity?
 org $A9BBC0  <--  org $A9BB73
     ADC #$01CC    ; previously ADC #$0180
+
+; MB1 phase ended room palettes
+; NOTE: This section is the same on NTSC and PAL but different on Virtual Console NTSC and JU
+org $A9D0FF  <--  org $A9D0B2
+    dw ...
+org $A9D18F  <--  org $A9D142
 
 ; Freespace
 org $A9FBBD  <--  org $A9FB70
@@ -4147,6 +4184,12 @@ org $B88000
 ; Bank CD
 ; Bank CE
 ;=======================================================
+
+; Tileset 9 Heated Norfair palette
+; NOTE: This section is the same on NTSC and PAL and Virtual Console NTSC but different on JU
+org $C2B5E4
+    dw ...
+org $C2B6BB
 
 ; Freespace
 org $CEB22D
