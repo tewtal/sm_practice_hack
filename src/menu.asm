@@ -1448,7 +1448,8 @@ cm_execute_action_table:
         STA [$04] : BRA .jsl
 
       .pressed_left
-        LDA [$04] : SEC : SBC $0C : BMI .set_to_max
+        LDA [$04] : SEC : SBC $0C
+        CMP $08 : BMI .set_to_max
 
         CMP $0A : BCS .set_to_max
 
@@ -1509,7 +1510,8 @@ cm_execute_action_table:
         STA [$04] : BRA .jsl
 
       .pressed_left
-        LDA [$04] : SEC : SBC $0C : BMI .set_to_max
+        LDA [$04] : SEC : SBC $0C
+        CMP $08 : BMI .set_to_max
 
         CMP $0A : BCS .set_to_max
 
