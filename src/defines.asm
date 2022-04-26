@@ -82,8 +82,7 @@
 !ram_suits_enemy_damage_check = !WRAM_START+$78
 !ram_suits_periodic_damage_check = !WRAM_START+$7A
 !ram_pacifist = !WRAM_START+$7C
-
-; ^ FREE SPACE ^ up to +$7E
+!ram_freeze_on_load = !WRAM_START+$7E
 
 !ram_spacetime_read_address = !WRAM_START+$80
 !ram_spacetime_read_bank = !WRAM_START+$82

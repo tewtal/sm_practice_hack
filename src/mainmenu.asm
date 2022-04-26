@@ -1439,8 +1439,11 @@ InfoHudMenu:
     dw #ih_room_counter
     dw #ih_lag_counter
     dw #ih_reset_seg_later
-    dw #ih_lag
+if !FEATURE_SD2SNES
+    dw #ih_freeze_on_load
+endif
     dw #ih_status_icons
+    dw #ih_lag
     dw #$FFFF
     dw #ih_ram_watch
     dw #$0000
@@ -1678,6 +1681,15 @@ ih_lag_counter:
     db #$28, "       FULL", #$FF
     db #$FF
 
+ih_freeze_on_load:
+    %cm_toggle("Freeze on Load State", !ram_freeze_on_load, #$0001, #0)
+
+ih_reset_seg_later:
+    %cm_jsl("Reset Segment Next Room", #.routine, #$FFFF)
+  .routine
+    TYA : STA !ram_reset_segment_later
+    RTL
+
 ih_status_icons:
     %cm_toggle("Status Icons", !sram_status_icons, #1, #.routine)
   .routine
@@ -1686,12 +1698,6 @@ ih_status_icons:
 
 ih_lag:
     %cm_numfield("Artificial Lag", !sram_artificial_lag, 0, 64, 1, 4, #0)
-
-ih_reset_seg_later:
-    %cm_jsl("Reset Segment Next Room", #.routine, #$FFFF)
-  .routine
-    TYA : STA !ram_reset_segment_later
-    RTL
 
 ih_ram_watch:
     %cm_jsl("Customize RAM Watch", #ih_prepare_ram_watch_menu, #RAMWatchMenu)

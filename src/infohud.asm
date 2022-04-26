@@ -255,6 +255,14 @@ ih_nmi_end:
     LDA #$0000 : STA !ram_slowdown_mode : STA !ram_slowdown_frames
     JMP .done
 
++   LDA !ram_freeze_on_load : BEQ +
+    LDA !IH_CONTROLLER_PRI_NEW : BEQ +
+
+    LDA #$0000 : STA !ram_reset_segment_later
+    STA !ram_seg_rt_frames : STA !ram_seg_rt_seconds
+    STA !ram_seg_rt_minutes : STA !ram_slowdown_mode : STA !ram_slowdown_frames
+    JMP .done
+
 +   %a8() : LDA #$01 : STA $05B4 : %a16()
     JMP .done
 
