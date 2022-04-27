@@ -102,6 +102,8 @@
 | - Frame Counters              | Toggle the room timer in the top-right of the HUD between realtime and gametime.
 | - Transition Lag              | Toggle the door time to include the full length of the room transition.
 | - Reset Segment in Next Room  | Sets the segment timer to reset automatically when exiting the next door transition.
+| - Freeze on Load State        | Experimental feature that causes the game to be frozen until a new controller 1 input is made.
+|                               | It also resets the segment timer. Beware that since it leverages the existing frame advance feature, toggling this on changes the way frame advance works.
 | - Status Icons                | Toggle icons to appear when standing on an elevator or when the shine timer is active (e.g. while carrying a spikesuit).
 | - Artificial Lag              | Select a value to adjust how much lag occurs during normal gameplay. 
 |                               | This is to compensate for the lack of a minimap on the HUD which would normally consume CPU cycles.
@@ -115,6 +117,7 @@
 | - Samus Projectile Hitbox     | Toggles an overlay of Samus projectile hitboxes that are drawn on top of Samus projectile sprites.
 | - Enemy Projectile Hitbox     | Toggles an overlay of enemy projectile hitboxes that are drawn on top of enemy projectile sprites.
 | - OOB Tile Viewer             | This enables an overlay that shows the tiles near Samus at all times, disconnected from the camera. This allows you to navigate OOB (Out of Bounds) areas where neither Samus nor the actual tiles are visible in-game. Samus hitbox is drawn at the center of the overlay to show the position relative to the tiles.
+| - Spacetime HUD               | Option to preserve the infohud when firing the spacetime beam
 |&nbsp;|
 | **Room Layout**               | Modify the room layout, usually to help practice rando scenarios
 | - Remove Magnet Stairs        | Adds slope tiles to prevent the magnet stairs effect
@@ -136,6 +139,7 @@
 | - Debug Mode                  | Toggles the debug mode. Note that debug mode shortcuts and features may not be well supported in the practice rom.
 | - Debug CPU Brightness        | Toggles a built-in debug feature to darken the screen after the game is done processing the next frame. Useful for estimating CPU usage.
 | - PAL Debug Movement          | PAL-only feature that gives Samus extra movement correlated to the dpad input.
+| - Pacifist Mode               | Reduces Samus' attack damage to zero, allowing for never-ending boss battles.
 | - Enable Projectiles          | Toggles a built-in debug feature to disable enemy projectiles.
 | - Fix Scroll Offsets          | Fixes the glitchy state where the camera and scroll offsets are out of sync, typically occurring when using major glitches
 | - Minimap                     | Restores the game minimap, which also allows the pause menu map to be updated. When enabled, a map tile counter will also be displayed.

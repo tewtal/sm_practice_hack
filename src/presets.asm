@@ -105,6 +105,10 @@ endif
     LDA $7ED820 : BIT #$0004 : BEQ .done_clearing_enemies
     ; Set health to 1 as a hint this was done by a preset
     LDA #$0001 : STA $0FCC
+    ; Reset segment timer now
+    LDA #$0000 : STA !ram_reset_segment_later
+    STA !ram_seg_rt_frames : STA !ram_seg_rt_seconds
+    STA !ram_seg_rt_minutes
     BRA .done_clearing_enemies
 }
 
@@ -675,7 +679,7 @@ add_grapple_and_xray_to_hud:
 }
 
 print pc, " presets bank80 end"
-warnpc $80F800
+warnpc $80F800 ; save.asm
 
 
 ; $80:9AB1: Add x-ray and grapple HUD items if necessary
@@ -717,7 +721,7 @@ print pc, " preset data crossbank start"
   incsrc presets/prkd_data.asm
   incsrc presets/rbo_data.asm
 print pc, " preset data crossbank end"
-warnpc $F08000
+warnpc $F08000 ; infohud.asm
 check bankcross on
 
 org $F18000

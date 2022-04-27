@@ -255,6 +255,14 @@ ih_nmi_end:
     LDA #$0000 : STA !ram_slowdown_mode : STA !ram_slowdown_frames
     JMP .done
 
++   LDA !ram_freeze_on_load : BEQ +
+    LDA !IH_CONTROLLER_PRI_NEW : BEQ +
+
+    LDA #$0000 : STA !ram_reset_segment_later
+    STA !ram_seg_rt_frames : STA !ram_seg_rt_seconds
+    STA !ram_seg_rt_minutes : STA !ram_slowdown_mode : STA !ram_slowdown_frames
+    JMP .done
+
 +   %a8() : LDA #$01 : STA $05B4 : %a16()
     JMP .done
 
@@ -291,25 +299,24 @@ ih_after_room_transition:
     PHY
 
     LDA !ram_transition_counter : STA !ram_last_door_lag_frames
-    LDA !sram_lag_counter_mode : BEQ .done_set_door_lag
-    LDA !ram_realtime_room : STA !ram_last_door_lag_frames
-  .done_set_door_lag
+    LDA !ram_realtime_room : STA !ram_last_realtime_door
+
     LDA #$0000 : STA !ram_transition_flag
 
     ; Check if MBHP needs to be disabled
-    LDA !sram_display_mode : CMP #!IH_MODE_ROOMSTRAT_INDEX : BNE +
-    LDA !sram_room_strat : CMP #!IH_STRAT_MBHP_INDEX : BNE +
-    LDA !ROOM_ID : CMP #$DD58 : BEQ +
+    LDA !sram_display_mode : CMP #!IH_MODE_ROOMSTRAT_INDEX : BNE .check_reset_segment_timer
+    LDA !sram_room_strat : CMP #!IH_STRAT_MBHP_INDEX : BNE .check_reset_segment_timer
+    LDA !ROOM_ID : CMP #$DD58 : BEQ .check_reset_segment_timer
     LDA #$0000 : STA !sram_display_mode
 
-    ; Maybe reset segment timer
-+   LDA !ram_reset_segment_later : BEQ +
+  .check_reset_segment_timer
+    LDA !ram_reset_segment_later : BEQ .update_hud
     LDA #$0000 : STA !ram_reset_segment_later
     STA !ram_seg_rt_frames : STA !ram_seg_rt_seconds
     STA !ram_seg_rt_minutes
 
-    ; Update HUD
-+   JSL ih_update_hud_code
+  .update_hud
+    JSL ih_update_hud_code
 
     ; Reset gametime/transition timer
     LDA #$0000 : STA !ram_transition_counter
@@ -348,6 +355,7 @@ ih_before_room_transition:
     ; Realtime
     LDA !ram_realtime_room : STA !ram_last_realtime_room
     LDA #$0000 : STA !ram_realtime_room
+    LDA #$0000 : STA !ram_last_realtime_door
 
     ; Save temp variables
     LDA $12 : PHA
@@ -472,7 +480,7 @@ ih_update_hud_code:
     LDA !sram_top_display_mode : CMP !TOP_DISPLAY_VANILLA : BEQ .minimap_vanilla_infohud
     LDA !ram_map_counter : LDX #$0014 : JSR Draw3
     LDA !sram_display_mode : CMP #!IH_MODE_SHINETUNE_INDEX : BNE .minimap_roomtimer
-    BRL .minimap_doorlag
+    BRL .pick_minimap_transition_time
 
   .minimap_roomtimer
     STZ $4205
@@ -500,8 +508,14 @@ endif
     LDA HexToNumberGFX1,X : STA $7EC6B6
     LDA HexToNumberGFX2,X : STA $7EC6B8
 
-  .minimap_doorlag
-    LDA !ram_last_door_lag_frames : LDX #$0054 : JSR Draw3
+  .pick_minimap_transition_time
+    LDA !sram_lag_counter_mode : BNE .minimap_transition_time_full
+    LDA !ram_last_door_lag_frames
+    BRA .draw_minimap_transition_time
+  .minimap_transition_time_full
+    LDA !ram_last_realtime_door
+  .draw_minimap_transition_time
+    LDX #$0054 : JSR Draw3
     BRL .end
 
   .start_update
@@ -569,9 +583,22 @@ endif
     ; Skip door lag and segment timer when shinetune enabled
     LDA !sram_display_mode : CMP #!IH_MODE_SHINETUNE_INDEX : BEQ .end
 
-    ; Door lag
-    LDA !ram_last_door_lag_frames : LDX #$00C2 : JSR Draw3
+    ; Door lag / transition time
+    LDA !sram_lag_counter_mode : BNE .transition_time_full
+    LDA !ram_last_door_lag_frames
+    BRA .infohud_transition_time
+  .transition_time_full
+    LDA !ram_last_realtime_door
+  .infohud_transition_time
+    LDX #$00C2 : JSR Draw3
     BRA .pick_segment_timer
+
+  .end
+    PLB
+    PLP
+    PLY
+    PLX
+    RTL
 
   .vanilla_infohud_draw_lag_and_reserves
     LDA !SAMUS_RESERVE_MODE : CMP #$0001 : BNE .vanilla_infohud_draw_lag
@@ -589,8 +616,14 @@ endif
     ; Skip door lag and segment timer when shinetune enabled
     LDA !sram_display_mode : CMP #!IH_MODE_SHINETUNE_INDEX : BEQ .end
 
-    ; Door lag
-    LDA !ram_last_door_lag_frames : LDX #$00C2 : JSR Draw2
+    ; Door lag / transition time
+    LDA !sram_lag_counter_mode : BNE .vanilla_infohud_transition_time_full
+    LDA !ram_last_door_lag_frames
+    BRA .draw_vanilla_infohud_transition_time
+  .vanilla_infohud_transition_time_full
+    LDA !ram_last_realtime_door
+  .draw_vanilla_infohud_transition_time
+    LDX #$00C2 : JSR Draw2
 
   .pick_segment_timer
     LDA !sram_frame_counter_mode : BNE .ingame_segment_timer
@@ -602,13 +635,6 @@ endif
     LDA #$09DA : STA $00
     LDA #$007E : STA $02
     BRA .draw_segment_timer
-
-  .end
-    PLB
-    PLP
-    PLY
-    PLX
-    RTL
 
   .draw_segment_timer
     ; Frames
@@ -627,7 +653,7 @@ endif
     ; Draw decimal seperators
     LDA !IH_DECIMAL : STA $7EC6B4 : STA $7EC6BA
     LDA !IH_BLANK : STA $7EC6C0
-    BRA .end
+    BRL .end
 }
 
 ih_update_hud_early:
@@ -642,18 +668,11 @@ ih_update_hud_early:
     LDA !ram_gametime_room : STA !ram_last_gametime_room
     LDA !ram_realtime_room : STA !ram_last_realtime_room
 
-    ; save temp variables
-    LDA $12 : PHA
-    LDA $14 : PHA
-
-    ; Update HUD
+    ; update HUD
+    LDA $12 : PHA : LDA $14 : PHA
     JSL ih_update_hud_code
+    PLA : STA $14 : PLA : STA $12
 
-    ; restore temp variables
-    PLA : STA $14
-    PLA : STA $12
-
-    ; Run standard code and return
     PLY
     PLX
     PLA
@@ -1385,7 +1404,7 @@ ih_shinespark_code:
 }
 
 print pc, " infohud end"
-warnpc $F0E000
+warnpc $F0E000 ; spritefeat.asm
 
 
 ; Stuff that needs to be placed in bank 80
@@ -1471,5 +1490,5 @@ HexToNumberGFX2:
     dw #$0C09, #$0C00, #$0C01, #$0C02, #$0C03, #$0C04, #$0C05, #$0C06, #$0C07, #$0C08
 
 print pc, " infohud bank80 end"
-warnpc $80FFC0 ; header
+warnpc $80FFB0 ; header
 

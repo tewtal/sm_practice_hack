@@ -50,7 +50,7 @@ tile_table_28_draygon:
 incbin ../resources/tile_table_28_draygon.bin
 
 print pc, " raw tile tables crossbank end"
-warnpc $EAE000
+warnpc $EAE000 ; presets.asm
 check bankcross on
 
 

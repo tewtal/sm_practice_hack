@@ -2480,8 +2480,10 @@ preset_prkd_tourian_mother_brain_3:
 preset_prkd_tourian_zebes_escape:
     dw #preset_prkd_tourian_mother_brain_3 ; Tourian: Mother Brain 3
     dw $09A6, $1009  ; Beams
+    dw $0A1C, $009B  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
     dw $0AF6, $0025  ; Samus X
-    dw $0AFA, $00C3  ; Samus Y
+    dw $0AFA, $009E  ; Samus Y
     dw $D820, $4FC5  ; Events
     dw #$FFFF
 

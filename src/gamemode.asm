@@ -23,6 +23,7 @@ gamemode_start:
     PHK : PLB
 
     JSR gamemode_shortcuts
+  .return
     %ai16()
     PHP
 
@@ -38,6 +39,30 @@ gamemode_start:
     PLP
     PLB
     RTL
+}
+
+; If the current game mode is $C (fading out to pause), set it to $8 (normal), so that
+;  shortcuts involving the start button don't trigger accidental pauses.
+; Called after handling most controller shortcuts, except save/load state (because the 
+;  user might want to practice gravity jumps or something) and load preset (because
+;  presets reset the game mode anyway).
+skip_pause:
+{
+    PHP ; preserve carry
+    LDA !GAMEMODE
+    CMP #$000C
+    BNE .done
+    LDA #$0008
+    STA !GAMEMODE
+    LDA #$0001
+    STZ $0723   ; Screen fade delay = 0
+    STZ $0725   ; Screen fade counter = 0
+    LDA $0051
+    ORA #$000F
+    STA $0051   ; Brightness = $F (max)
+.done:
+    PLP
+    RTS
 }
 
 gamemode_shortcuts:
@@ -134,7 +159,7 @@ endif
   .kill_enemies
     JSL kill_enemies
     ; CLC to continue normal gameplay after killing enemies
-    CLC : RTS
+    CLC : JMP skip_pause
 
   .load_last_preset
     LDA !sram_last_preset : BEQ + : STA !ram_load_preset
@@ -147,12 +172,12 @@ endif
     LDA #$0000 : STA !ram_seg_rt_frames
     STA !ram_seg_rt_seconds : STA !ram_seg_rt_minutes
     ; CLC to continue normal gameplay after resetting segment timer
-    CLC : RTS
+    CLC : JMP skip_pause
 
   .reset_segment_later
     LDA #$7FFF : STA !ram_reset_segment_later
     ; CLC to continue normal gameplay after setting segement timer reset
-    CLC : RTS
+    CLC : JMP skip_pause
 
   .full_equipment
     LDA $7E09C4 : STA $7E09C2 ; health
@@ -161,19 +186,19 @@ endif
     LDA $7E09D0 : STA $7E09CE ; pbs
     LDA $7E09D4 : STA $7E09D6 ; reserves
     ; CLC to continue normal gameplay after equipment refill
-    CLC : RTS
+    CLC : JMP skip_pause
 
   .toggle_tileviewer
     LDA !ram_oob_watch_active : BEQ .turnOnTileViewer
     LDA #$0000 : STA !ram_oob_watch_active : STA !ram_sprite_features_active
     ; CLC to continue normal gameplay after disabling OOB Tile Viewer
-    CLC : RTS
+    CLC : JMP skip_pause
 
   .turnOnTileViewer
     LDA #$0001 : STA !ram_oob_watch_active : STA !ram_sprite_features_active
     JSL upload_sprite_oob_tiles
     ; CLC to continue normal gameplay after enabling OOB Tile Viewer
-    CLC : RTS
+    CLC : JMP skip_pause
 
   .random_preset
     JSL LoadRandomPreset
@@ -189,8 +214,8 @@ endif
   .save_safe
     JSL custom_preset_save
     ; CLC to continue normal gameplay after saving preset
-    LDA #!SOUND_MENU_JSR : JSL !SFX_LIB1
-    CLC : RTS
+    LDA #!SOUND_MENU_JSL : JSL !SFX_LIB1
+    CLC : JMP skip_pause
 
   .load_custom_preset
     ; check if slot is populated first
@@ -201,7 +226,7 @@ endif
   .not_safe
     LDA #!SOUND_MENU_FAIL : JSL !SFX_LIB1
     ; CLC to continue normal gameplay after failing to save or load preset
-    CLC : RTS
+    CLC : JMP skip_pause
 
   .load_safe
     STA !ram_custom_preset
@@ -215,7 +240,7 @@ endif
 +   INC : STA !sram_custom_preset_slot
     ASL : TAX : LDA.l NumberGFXTable,X : STA $7EC67C
     ; CLC to continue normal gameplay after incrementing preset slot
-    CLC : RTS
+    CLC : JMP skip_pause
 
   .prev_preset_slot
     LDA !sram_custom_preset_slot : BNE +
@@ -223,17 +248,19 @@ endif
 +   DEC : STA !sram_custom_preset_slot
     ASL : TAX : LDA.l NumberGFXTable,X : STA $7EC67C
     ; CLC to continue normal gameplay after decrementing preset slot
-    CLC : RTS
+    CLC : JMP skip_pause
 
   .update_timers
     JSL ih_update_hud_early
     ; CLC to continue normal gameplay after updating HUD timers
-    CLC : RTS
+    CLC : JMP skip_pause
 
   .menu
     ; Set IRQ vector
     LDA $AB : PHA
     LDA #$0004 : STA $AB
+
+    JSR skip_pause
 
     ; Enter MainMenu
     JSL cm_start
@@ -261,4 +288,4 @@ gamemode_door_transition:
 endif
 
 print pc, " gamemode end"
-warnpc $85FD00
+warnpc $85FD00 ; menu.asm

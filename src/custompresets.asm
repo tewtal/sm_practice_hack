@@ -529,4 +529,5 @@ preset_scroll_fixes:
 }
 
 print pc, " custompresets end"
+warnpc $B3C000 ; mainmenu.asm
 

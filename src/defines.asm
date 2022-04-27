@@ -2,9 +2,12 @@
 ; Work RAM
 ; ---------
 
+!ram_tilemap_buffer = $7E5800
+!CRASHDUMP_TILEMAP_BUFFER = !ram_tilemap_buffer
+
 !WRAM_BANK = #$007E
 !WRAM_SIZE = #$0200
-!WRAM_START = $7EFB00
+!WRAM_START = $7EFD00
 
 !ram_load_preset = !WRAM_START+$00
 !ram_gametime_room = !WRAM_START+$02
@@ -15,7 +18,7 @@
 !ram_last_door_lag_frames = !WRAM_START+$0C
 !ram_transition_counter = !WRAM_START+$0E
 !ram_transition_flag = !WRAM_START+$10
-!ram_transition_flag_2 = !WRAM_START+$12
+!ram_last_realtime_door = !WRAM_START+$12
 
 !ram_seg_rt_frames = !WRAM_START+$14
 !ram_seg_rt_seconds = !WRAM_START+$16
@@ -78,9 +81,13 @@
 
 !ram_suits_enemy_damage_check = !WRAM_START+$78
 !ram_suits_periodic_damage_check = !WRAM_START+$7A
+!ram_pacifist = !WRAM_START+$7C
+!ram_freeze_on_load = !WRAM_START+$7E
 
-; ^ FREE SPACE ^ up to +$86
-
+!ram_spacetime_read_address = !WRAM_START+$80
+!ram_spacetime_read_bank = !WRAM_START+$82
+!ram_spacetime_y = !WRAM_START+$84
+!ram_spacetime_infohud = !WRAM_START+$86
 !ram_watch_left_index = !WRAM_START+$88
 !ram_watch_right_index = !WRAM_START+$8A
 !ram_watch_write_mode = !WRAM_START+$8C
@@ -125,13 +132,13 @@
 ; RAM (Bank 7E required)
 ; -----------------------
 
-!ram_slowdown_mode = $7EFBFE
+!ram_slowdown_mode = $7EFDFE
 
 ; ---------
 ; RAM Menu
 ; ---------
 
-!WRAM_MENU_START = $7EFC00
+!WRAM_MENU_START = $7EFE00
 
 !ram_cm_stack_index = $05D5
 !ram_cm_menu_stack = !WRAM_MENU_START+$00         ; 16 bytes
@@ -192,6 +199,8 @@
 
 !ram_cgram_cache = !WRAM_MENU_START+$D0
 
+!CRASHDUMP = $7EFF00
+
 !ram_hex2dec_first_digit = $14
 !ram_hex2dec_second_digit = $16
 !ram_hex2dec_third_digit = $18
@@ -199,7 +208,7 @@
 
 !ACTION_TOGGLE              = #$0000
 !ACTION_TOGGLE_BIT          = #$0002
-!ACTION_JSR                 = #$0004
+!ACTION_JSL                 = #$0004
 !ACTION_NUMFIELD            = #$0006
 !ACTION_CHOICE              = #$0008
 !ACTION_CTRL_SHORTCUT       = #$000A
@@ -209,9 +218,10 @@
 !ACTION_NUMFIELD_COLOR      = #$0012
 !ACTION_CTRL_INPUT          = #$0014
 !ACTION_TOGGLE_BIT_INVERTED = #$0016
+!ACTION_JSL_SUBMENU         = #$0018
 
 !SOUND_MENU_MOVE = $0039
-!SOUND_MENU_JSR = $0039
+!SOUND_MENU_JSL = $0039
 !SOUND_MENU_FAIL = $0007
 
 
@@ -454,4 +464,3 @@
 
 !SRAM_DMA_BANK = $770000
 !SRAM_SAVED_SP = $774004
-

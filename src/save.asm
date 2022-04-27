@@ -120,6 +120,14 @@ post_load_state:
 
   .done
     JSL init_wram_based_on_sram
+
+    ; Freeze inputs if necessary
+    LDA !ram_freeze_on_load : BEQ .return
+    LDA #$FFFF : STA !ram_slowdown_mode
+    INC : STA !ram_slowdown_controller_1 : STA !ram_slowdown_controller_2
+    INC : STA !ram_slowdown_frames
+
+  .return
     RTS
 }
 
@@ -406,4 +414,4 @@ vm:
 }
 
 print pc, " save end"
-warnpc $80FC00
+warnpc $80FC00 ; infohud.asm

@@ -158,4 +158,4 @@ init_sram_upto9:
 }
 
 print pc, " init end"
-warnpc $81FF00
+warnpc $81FF00 ; Special thanks

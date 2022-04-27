@@ -10,7 +10,6 @@ else
     db $05 ; 64kb
 endif
 
-
 ; Enable version display
 org $8B8697
     NOP
@@ -198,7 +197,9 @@ org $90E874
 else
 org $90E877
 endif
-    BRA $1F
+    LDA $07F5
+    JSL $808FC1 ; queue room music track
+    BRA $18
 
 
 ; Adds frames when unpausing (nmi is turned off during vram transfers)
@@ -505,14 +506,53 @@ spacetime_routine:
     ; Also skips out if spacetime but Y value is positive
     INY : INY : CPY #$0000 : BPL .normal_load_palette
 
-    ; Spacetime, sanity check that X is 0 (if not then do the original routine)
+    ; Sanity check that X is 0 (if not then do the original routine)
     CPX #$0000 : BNE .normal_load_palette
 
-    ; Spacetime, check if Y will cause us to reach WRAM
-    TYA : CLC : ADC #(!WRAM_START-$7EC1E2) : CMP #$0000 : BPL .normal_load_palette
+    ; Spacetime
+    LDA $00 : STA !ram_spacetime_read_address
+    LDA $02 : STA !ram_spacetime_read_bank
+    TYA : DEC : DEC : STA !ram_spacetime_y
+
+    ; Check if Y will cause us to reach infohud
+    CLC : ADC #($7EC608-$7EC1E0) : CMP #$0000 : BPL .normal_load_palette
 
     ; It will, so run our own loop
     INX : INX
+  .loop_before_infohud
+    LDA [$00],Y
+    STA $7EC1C0,X
+    INX : INX : INY : INY
+    CPX #($7EC608-$7EC1C0) : BMI .loop_before_infohud
+ 
+    ; Check if we should skip over infohud
+    LDA !ram_spacetime_infohud : BEQ .check_wram_overwrite_infohud
+
+    ; Skip over infohud and check for wram
+    TXA : CLC : ADC #($7EC6C8-$7EC608) : TAX
+    TYA : CLC : ADC #($7EC6C8-$7EC608) : TAY
+    CPY #$0020 : BMI .check_wram
+    RTS
+
+  .normal_load_loop
+    LDA [$00],Y
+    STA $7EC1C0,X
+    INY : INY
+  .normal_load_palette
+    INX : INX
+    CPY #$0020 : BMI .normal_load_loop
+    RTS
+
+  .check_wram_overwrite_infohud
+    ; Check if Y will cause us to reach WRAM
+    TYA : CLC : ADC #(!WRAM_START-$7EC62A) : CMP #$0000 : BPL .normal_load_palette
+    BRA .loop_before_wram
+
+  .check_wram
+    ; Check if Y will cause us to reach WRAM
+    TYA : CLC : ADC #(!WRAM_START-$7EC6EA) : CMP #$0000 : BPL .normal_load_palette
+
+    ; It will, so run our own loop
   .loop_before_wram
     LDA [$00],Y
     STA $7EC1C0,X
@@ -524,17 +564,78 @@ spacetime_routine:
     TYA : CLC : ADC !WRAM_SIZE : TAY
     CPY #$0020 : BMI .normal_load_loop
     RTS
-
-  .normal_load_loop
-    LDA [$00],Y
-    STA $7EC1C0,X
-    INY : INY
-  .normal_load_palette
-    INX : INX
-    CPY #$0020 : BMI .normal_load_loop
-    RTS
 }
 endif
 
 print pc, " misc bank90 end"
+
+
+if !FEATURE_PAL
+org $A0A872
+else            ; general damage hijack
+org $A0A862
+endif
+    JSR EnemyDamage
+
+if !FEATURE_PAL
+org $A0A55C
+else            ; shinespark damage
+org $A0A54C
+endif
+    JSR EnemyDamageShinespark
+
+if !FEATURE_PAL
+org $A0A63B
+else            ; power bomb damage
+org $A0A62B
+endif
+    JSR EnemyDamagePowerBomb
+
+org $A0FFD0
+print pc, " misc bankA0 start"
+EnemyDamage:
+{
+    LDA !ram_pacifist : BNE .no_damage
+    LDA $0F8C,X ; original code
+    RTS
+
+  .no_damage
+    PLA ; pull return address and jump past storing enemy hp
+if !FEATURE_PAL
+    JMP $A8CA
+else
+    JMP $A8BA
+endif
+}
+
+EnemyDamageShinespark:
+{
+    LDA !ram_pacifist : BNE .no_damage
+    LDA $0F8C,X ; original code
+    RTS
+
+  .no_damage
+    PLA ; pull return address and jump past storing enemy hp
+if !FEATURE_PAL
+    JMP $A86A
+else
+    JMP $A55A
+endif
+}
+
+EnemyDamagePowerBomb:
+{
+    LDA !ram_pacifist : BNE .no_damage
+    LDA $0F8C,X ; original code
+    RTS
+
+  .no_damage
+    PLA ; pull return address and jump past storing enemy hp
+if !FEATURE_PAL
+    JMP $A64C
+else
+    JMP $A63C
+endif
+
+print pc, " misc bankA0 end"
 
