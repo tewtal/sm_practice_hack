@@ -526,7 +526,7 @@ spacetime_routine:
     CPX #($7EC608-$7EC1C0) : BMI .loop_before_infohud
  
     ; Check if we should skip over infohud
-    LDA !ram_spacetime_infohud : BEQ .check_wram
+    LDA !ram_spacetime_infohud : BEQ .check_wram_overwrite_infohud
 
     ; Skip over infohud and check for wram
     TXA : CLC : ADC #($7EC6C8-$7EC608) : TAX
