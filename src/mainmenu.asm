@@ -668,18 +668,10 @@ eq_setsupers:
         RTL
 
 eq_currentpbs:
-if !FEATURE_PAL
     %cm_numfield("Current Power Bombs", $7E09CE, 0, 70, 1, 5, #0)
-else
-    %cm_numfield("Current Power Bombs", $7E09CE, 0, 65, 1, 5, #0)
-endif
 
 eq_setpbs:
-if !FEATURE_PAL
     %cm_numfield("Power Bombs", $7E09D0, 0, 70, 5, 5, .routine)
-else
-    %cm_numfield("Power Bombs", $7E09D0, 0, 65, 5, 5, .routine)
-endif
     .routine
         LDA !SAMUS_PBS_MAX : STA !SAMUS_PBS ; pbs
         RTL
