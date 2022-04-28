@@ -5,8 +5,7 @@ name: PR Build
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
 on:
-  pull_request:
-    branches: [ master ]
+  - pull_request
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -36,13 +35,19 @@ jobs:
         cp ./asar/asar-1.71/asar/asar-standalone ./tools/asar
         chmod +x ./build.sh
         chmod +x ./build_PAL.sh
-        ./build.sh
-        ./build_PAL.sh
+        ./build.sh -DPRERELEASE=$(git rev-parse --short HEAD)
+        ./build_PAL.sh -DPRERELEASE=$(git rev-parse --short HEAD)
         mkdir ./web/public/patches
         cp build/smhack20_sd2snes.ips ./web/public/patches/sd2snes-ntsc.ips
         cp build/smhack20.ips ./web/public/patches/emulator-ntsc.ips
         cp build/smpalhack20_sd2snes.ips ./web/public/patches/sd2snes-pal.ips
         cp build/smpalhack20.ips ./web/public/patches/emulator-pal.ips
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: Patches
+        path: ./web/public/patches
     
     - name: Set up node
       uses: actions/setup-node@v2

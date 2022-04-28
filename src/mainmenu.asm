@@ -245,6 +245,9 @@ MainMenu:
     dw #mm_goto_ctrlsmenu
     dw #$0000
     %cm_version_header("SM PRACTICE HACK", !VERSION_MAJOR, !VERSION_MINOR, !VERSION_BUILD, !VERSION_REV_1, !VERSION_REV_2)
+if defined("PRERELEASE")
+    %cm_footer("PRERELEASE COMMIT !PRERELEASE")
+endif
 
 MainMenuBanks:
     dw #EquipmentMenu>>16
