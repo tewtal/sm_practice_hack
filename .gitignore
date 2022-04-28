@@ -10,6 +10,7 @@ build/*.sfc
 tools/*.smv
 tools/*.asm
 tools/*.log
+tools/asar
 tools/asar.exe
 tools/dll/*
 .vscode/launch.json
