@@ -427,26 +427,45 @@ update_extended_spritemap_hitbox:
 
   .extended
     ; get spritemap pointer
-    LDA !ENEMY_SPRITEMAP,X : CLC : ADC #$0008 : STA $10
+    LDA !ENEMY_SPRITEMAP,X : STA $10
     LDA !ENEMY_BANK,X : STA $12
 
-    ; get hitbox pointer
+    ; get number of spritemaps
+    ; Ceres steam has $1001 here ??
+    LDA [$10] : AND #$00FF : BEQ .nextEnemy
+    STA $C1
+
+    ; get spritemap X/Y offsets
+    LDA $10 : CLC : ADC #$0002 : STA $10
+    LDA [$10] : STA $C5 ; X
+    LDA $10 : CLC : ADC #$0002 : STA $10
+    LDA [$10] : STA $C7 ; Y
+
+    ; set hitbox pointer
+    LDA $10 : CLC : ADC #$0004 : STA $10
+    STA $C3 ; hitbox pointer for later
     LDA [$10] : STA $10 ; hitbox pointer
 
-    LDA [$10] : BEQ .nextEnemy : PHA ; number of entries on stack
+  .multiSpritemap
+    LDA [$10] : BNE .continueHitboxes
+    JMP .nextSpritemap
+
+  .continueHitboxes
+    PHA ; number of hitbox entries on stack
 
   .nextHitbox
     ; grab X and Y offsets
-    INC $10 : INC $10
+    LDA $10 : CLC : ADC #$0002 : STA $10
     LDA [$10] : STA $14 ; left offset
-    INC $10 : INC $10
+    LDA $10 : CLC : ADC #$0002 : STA $10
     LDA [$10] : STA $16 ; top offset
-    INC $10 : INC $10
+    LDA $10 : CLC : ADC #$0002 : STA $10
     LDA [$10] : STA $18 ; right offset
-    INC $10 : INC $10
+    LDA $10 : CLC : ADC #$0002 : STA $10
     LDA [$10] : STA $1A ; bottom offset
 
-    LDA $10 : CLC : ADC #$0004 : STA $10 ; skip to next hitbox
+    ; skip two pointers to reach next hitbox
+    LDA $10 : CLC : ADC #$0004 : STA $10
 
     ; check if on-screen
     LDA !ENEMY_X,X : CLC : ADC $14
@@ -460,12 +479,12 @@ update_extended_spritemap_hitbox:
 
   .decHitbox
     ; check for remaining hitboxes
-    PLA : DEC : BEQ .nextEnemy2
+    PLA : DEC : BEQ .nextSpritemap
     PHA : BRA .nextHitbox
 
   .drawHitbox
-    LDA !ENEMY_Y,X : SEC : SBC !LAYER1_Y : STA $1C ; top edge
-    LDA !ENEMY_X,X : SEC : SBC !LAYER1_X : STA $1D ; left edge
+    LDA !ENEMY_Y,X : SEC : SBC !LAYER1_Y : CLC : ADC $C7 : STA $1C ; top edge
+    LDA !ENEMY_X,X : SEC : SBC !LAYER1_X : CLC : ADC $C5 : STA $1D ; left edge
 
     ; calculate sprite positions
     %a8()
@@ -496,12 +515,24 @@ update_extended_spritemap_hitbox:
     TYA : CLC : ADC #$0010 : STA !OAM_STACK_POINTER : TAY
 
     ; check for remaining hitboxes
-    PLA : DEC : BEQ .nextEnemy2
+    PLA : DEC : BEQ .nextSpritemap
     PHA : JMP .nextHitbox
+
+  .nextSpritemap
+    DEC $C1 : BEQ .nextEnemy2
+    ; add 2 and grab X, add 2 and grab Y, add 4 and grab hitbox
+    LDA $C3 : CLC : ADC #$0002 : STA $10
+    LDA [$10] : STA $C5 ; X
+    LDA $10 : CLC : ADC #$0002 : STA $10
+    LDA [$10] : STA $C7 ; Y
+    LDA $10 : CLC : ADC #$0004 : STA $10 : STA $C3
+    LDA [$10] : STA $10 ; next hitbox pointer
+    JMP .multiSpritemap
 
   .nextEnemy2
     CPX #$0300 : BEQ .done ; limit # of hitboxes drawn
-    TXA : CLC : ADC #$0040 : TAX : JMP .loopEnemies
+    TXA : CLC : ADC #$0040 : TAX
+    JMP .loopEnemies
 
   .done
     RTS
