@@ -126,6 +126,8 @@
 !ram_quickdrop_counter = !WRAM_START+$CC
 !ram_walljump_counter = !WRAM_START+$CE
 
+!ram_sprite_custom_hitbox_active = !WRAM_START+$D0
+
 ; ^ FREE SPACE ^ up to +$FC
 
 ; -----------------------
