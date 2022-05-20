@@ -4,10 +4,14 @@ org $008000
 
 ; Set SRAM size
 org $00FFD8
-if !FEATURE_SD2SNES
-    db $08 ; 256kb
+IF !FEATURE_TINYSTATES
+    db $07 ; 128kb
 else
-    db $05 ; 64kb
+    if !FEATURE_SD2SNES
+        db $08 ; 256kb
+    else
+        db $05 ; 64kb
+    endif
 endif
 
 ; Enable version display
