@@ -330,7 +330,7 @@ presets_goto_select_preset_category:
 
 presets_custom_preset_slot:
 if !FEATURE_TINYSTATES
-    %cm_numfield("Custom Preset Slot", !sram_custom_preset_slot, 0, 8, 1, 2, #0) ; update total slots in gamemode.asm
+    %cm_numfield("Custom Preset Slot", !sram_custom_preset_slot, 0, 7, 1, 2, #0) ; update total slots in gamemode.asm
 else
     %cm_numfield("Custom Preset Slot", !sram_custom_preset_slot, 0, 39, 1, 2, #0) ; update total slots in gamemode.asm
 endif
