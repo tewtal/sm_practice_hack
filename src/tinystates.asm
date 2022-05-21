@@ -22,6 +22,8 @@ pre_load_state:
     LDA $05E5 : STA $737F80
     LDA $05B6 : STA $737F82
     
+
+  .done
     ; Force blank and disable NMI
     SEP #$20
     LDA #$80
@@ -30,7 +32,8 @@ pre_load_state:
     STA $4200
     REP #$30
 
-    ; Restore LoRAM so we can load in the proper graphics etc
+    ; Restore parts of LoRAM so we can load in the proper graphics etc
+    ; This doesn't overwrite the stack.
     LDA #$8000
     STA $4310
     LDA #$4000
@@ -44,14 +47,16 @@ pre_load_state:
     LDA #$0002
     STA $420B
 
-    ; Load all room elements (before restoring the reset of the RAM so we can overwrite parts of it)
-    JSL preset_load_level_tile_tables_scrolls_plms_and_execute_asm
-    JSL $82E783
+    ; Load graphics tiles and tile tables back into RAM/WRAM
+    ; before restoring the rest of the state from SRAM
+    JSL preset_load_destination_state_and_tiles
+    JSL preset_load_library_background
+    JSL tinystates_load_level_tile_tables_scrolls_plms_and_execute_asm
 
-  .done
     RTS
 }
 
+print pc
 post_load_state:
 {
     JSL stop_all_sounds
@@ -154,6 +159,13 @@ post_load_state:
     INC : STA !ram_slowdown_frames
 
   .return
+
+    ; Re-enable NMI, turn on force-blank and wait NMI to execute.
+    ; This prevents some annoying flashing when loading states where
+    ; graphics changes otherwise happens mid-frame    
+    JSL $80834B
+    JSL $80836F
+
     RTS
 }
 
@@ -165,6 +177,7 @@ register_restore_return:
     STA $4200
     LDA #$0F
     STA $13
+    STA $51
     STA $2100
     RTL
 }

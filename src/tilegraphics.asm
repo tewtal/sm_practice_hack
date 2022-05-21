@@ -250,6 +250,15 @@ load_raw_tile_graphics:
     JML $82E7BF
 }
 
+; Alternate entry point to the function below
+; skips clearing/loading level data
+tinystates_load_level_tile_tables_scrolls_plms_and_execute_asm:
+{
+    PHB : PHB
+    REP #$30
+    JMP preset_load_level_tile_tables_scrolls_plms_and_execute_asm_level_data_done
+}
+
 preset_load_level_tile_tables_scrolls_plms_and_execute_asm:
 {
     ; Original logic from $82E7D3
@@ -287,6 +296,7 @@ preset_load_level_tile_tables_scrolls_plms_and_execute_asm:
     LDA $0000 : LSR : CLC : ADC #$6401 : TAY
     SBC #$6401 : MVP $7F7F
 
+  .level_data_done
     PEA $8F00 : PLB : PLB
     LDA !sram_preset_options : BIT !PRESETS_COMPRESSED_GRAPHICS : BNE .tile_table_decompression
 
