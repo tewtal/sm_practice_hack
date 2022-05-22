@@ -52,13 +52,14 @@ pre_load_state:
     JSL preset_load_destination_state_and_tiles
     JSL preset_load_library_background
     JSL tinystates_load_level_tile_tables_scrolls_plms_and_execute_asm
+    JSL tinystates_preload_bg_data
 
     RTS
 }
 
-print pc
 post_load_state:
 {
+    JSL tinystates_mirror_bg_data
     JSL stop_all_sounds
 
     LDY !MUSIC_TRACK
@@ -443,3 +444,36 @@ vm:
 
 print pc, " tinysave end"
 warnpc $80FC00 ; infohud.asm
+
+print pc, " tinysave bank82 start"
+org $82FE00
+
+tinystates_preload_bg_data:
+  JSR $82E2 ; Re-load BG3 tiles
+  RTL
+
+tinystates_mirror_bg_data:
+  PHB        
+  PEA $7F00  
+  PLB        
+  PLB        
+  LDA $0000  
+  TAX        
+  LSR A      
+  ADC $0000  
+  ADC $0000  
+  TAY        
+  BRA +
+-             
+  LDA $0002,y
+  STA $9602,x
++             
+  DEY        
+  DEY        
+  DEX        
+  DEX        
+  BPL -
+  PLB
+  RTL
+
+print pc, " tinysave bank82 end"
