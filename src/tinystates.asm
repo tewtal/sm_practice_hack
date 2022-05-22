@@ -56,7 +56,6 @@ pre_load_state:
     RTS
 }
 
-print pc
 post_load_state:
 {
     JSL stop_all_sounds
