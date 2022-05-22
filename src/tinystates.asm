@@ -262,10 +262,10 @@ save_write_table:
     %vram_to_sram($5000, $2000, $730000)
     %vram_to_sram($6000, $4000, $732000)
 
-    ; Copy CGRAM 000-1FF to SRAM 735000-7351FF
+    ; Copy CGRAM 000-1FF to SRAM 736000-7361FF
     dw $1000|$2121, $00    ; CGRAM address
     dw $0000|$4310, $3B80  ; direction = B->A, byte reg, B addr = $213B
-    dw $0000|$4312, $5000  ; A addr = $xx2000
+    dw $0000|$4312, $6000  ; A addr = $xx2000
     dw $0000|$4314, $0073  ; A addr = $77xxxx, size = $xx00
     dw $0000|$4316, $0002  ; size = $02xx ($0200), unused bank reg = $00.
     dw $1000|$420B, $02    ; Trigger DMA on channel 1
@@ -344,12 +344,12 @@ load_write_table:
     %sram_to_vram($5000, $2000, $730000)
     %sram_to_vram($6000, $4000, $732000)
 
-    ; Copy SRAM 735000-7351FF to CGRAM 000-1FF.
+    ; Copy SRAM 736000-7361FF to CGRAM 000-1FF.
     dw $1000|$2121, $00    ; CGRAM address
     dw $0000|$4310, $2200  ; direction = A->B, byte reg, B addr = $2122
     dw $0000|$4312, $2000  ; A addr = $xx2000
     dw $0000|$4314, $0073  ; A addr = $77xxxx, size = $xx00
-    dw $0000|$4316, $0005  ; size = $02xx ($0200), unused bank reg = $00.
+    dw $0000|$4316, $0006  ; size = $02xx ($0200), unused bank reg = $00.
     dw $1000|$420B, $02    ; Trigger DMA on channel 1
     
     ; Done
