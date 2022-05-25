@@ -220,7 +220,11 @@ endif
   .load_custom_preset
     ; check if slot is populated first
     LDA !sram_custom_preset_slot
-    ASL : XBA : TAX
+if !FEATURE_TINYSTATES
+    XBA : TAX                    ; multiply by 100h (slot offset)
+else
+    ASL : XBA : TAX              ; multiply by 200h (slot offset)
+endif
     LDA $703000,X : CMP #$5AFE : BEQ .load_safe
 
   .not_safe
@@ -235,11 +239,11 @@ endif
     SEC : RTS
 
   .next_preset_slot
-    if !FEATURE_TINYSTATES
-      LDA !sram_custom_preset_slot : CMP #$0007 ; total slots minus one
-    else
-      LDA !sram_custom_preset_slot : CMP #$0027 ; total slots minus one
-    endif
+if !FEATURE_TINYSTATES
+    LDA !sram_custom_preset_slot : CMP #$000F ; total slots minus one
+else
+    LDA !sram_custom_preset_slot : CMP #$0027 ; total slots minus one
+endif
     BNE + : LDA #$FFFF
 +   INC : STA !sram_custom_preset_slot
     ASL : TAX : LDA.l NumberGFXTable,X : STA $7EC67C
@@ -248,11 +252,11 @@ endif
 
   .prev_preset_slot
     LDA !sram_custom_preset_slot : BNE +
-    if !FEATURE_TINYSTATES
-      LDA #$0008 ; total slots
-    else
-      LDA #$0028 ; total slots
-    endif
+if !FEATURE_TINYSTATES
+    LDA #$0010 ; total slots
+else
+    LDA #$0028 ; total slots
+endif
 +   DEC : STA !sram_custom_preset_slot
     ASL : TAX : LDA.l NumberGFXTable,X : STA $7EC67C
     ; CLC to continue normal gameplay after decrementing preset slot
