@@ -445,8 +445,8 @@ vm:
 print pc, " tinysave end"
 warnpc $80FC00 ; infohud.asm
 
-print pc, " tinysave bank82 start"
 org $82FE00
+print pc, " tinysave bank82 start"
 
 tinystates_preload_bg_data:
   JSR $82E2 ; Re-load BG3 tiles
