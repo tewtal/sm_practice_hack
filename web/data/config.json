@@ -18,7 +18,8 @@
             "name": "Platform",
             "options": [
                 { "id": "sd2snes", "name": "SD2SNES / FXPAK"},
-                { "id": "emulator", "name": "Emulator, Everdrive, SNES Classic" }
+                { "id": "tinystates", "name": "MiSTer, Modern Emulators" },
+                { "id": "emulator", "name": "Older Emulators, Everdrive, SNES Classic" }
             ]
         }
     ],
@@ -27,6 +28,9 @@
         { "platform": "emulator", "variant": "PAL", "file": "/patches/emulator-pal.ips", "size": 4194304},
 
         { "platform": "sd2snes", "variant": "NTSC", "file": "/patches/sd2snes-ntsc.ips", "size": 4194304},
-        { "platform": "sd2snes", "variant": "PAL", "file": "/patches/sd2snes-pal.ips", "size": 4194304}
+        { "platform": "sd2snes", "variant": "PAL", "file": "/patches/sd2snes-pal.ips", "size": 4194304},
+
+        { "platform": "tinystates", "variant": "NTSC", "file": "/patches/tinystates-ntsc.ips", "size": 4194304},
+        { "platform": "tinystates", "variant": "PAL", "file": "/patches/tinystates-pal.ips", "size": 4194304}
     ]    
 }
