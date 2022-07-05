@@ -1740,6 +1740,7 @@ GameMenu:
     dw #$FFFF
     dw #game_cutscenes
     dw #game_fanfare_toggle
+    dw #game_fast_doors_toggle
     dw #game_music_toggle
     dw #game_healthalarm
     dw #$FFFF
@@ -1821,6 +1822,9 @@ cutscenes_fast_mb:
 
 game_fanfare_toggle:
     %cm_toggle("Fanfare", !sram_fanfare_toggle, #$0001, #0)
+
+game_fast_doors_toggle:
+    %cm_toggle("Fast Doors+Elevators", !sram_fast_doors, #$0001, #0)
 
 game_music_toggle:
     dw !ACTION_CHOICE

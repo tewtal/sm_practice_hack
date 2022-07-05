@@ -80,29 +80,33 @@ init_nonzero_wram:
 
 init_sram:
 {
-    CMP #$0009 : BEQ .sram_upgrade_9to10
-    CMP #$000A : BEQ .sram_upgrade_10to11
-    CMP #$000B : BEQ .sram_upgrade_11to12
-    CMP #$000C : BEQ .sram_upgrade_12to13
+    CMP #$0009 : BEQ .sram_upgrade_9toA
+    CMP #$000A : BEQ .sram_upgrade_AtoB
+    CMP #$000B : BEQ .sram_upgrade_BtoC
+    CMP #$000C : BEQ .sram_upgrade_CtoD
+    CMP #$000D : BEQ .sram_upgrade_DtoE
     JSR init_sram_upto9
 
-  .sram_upgrade_9to10
+  .sram_upgrade_9toA
     LDA #$0000 : STA !sram_ctrl_toggle_tileviewer
     LDA #$0000 : STA !sram_status_icons
     LDA #$0000 : STA !sram_suit_properties
 
-  .sram_upgrade_10to11
+  .sram_upgrade_AtoB
     LDA #$0000 : STA !sram_ctrl_update_timers
 
-  .sram_upgrade_11to12
+  .sram_upgrade_BtoC
     LDA #$0000 : STA !sram_top_display_mode
     LDA #$0001 : STA !sram_healthalarm
     LDA #$0000 : STA !sram_room_layout
     LDA #$0003 : STA !sram_cutscenes
 
-  .sram_upgrade_12to13
+  .sram_upgrade_CtoD
     LDA #$0000 : STA !sram_preset_options
     LDA #$0000 : STA !sram_lag_counter_mode
+
+  .sram_upgrade_DtoE
+    LDA #$0000 : STA !sram_fast_doors
 
     LDA #!SRAM_VERSION : STA !sram_initialized
     RTS

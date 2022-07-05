@@ -379,7 +379,7 @@
 ; SRAM
 ; -----
 
-!SRAM_VERSION = $000D
+!SRAM_VERSION = $000E
 
 !SRAM_START = $702000
 
@@ -423,6 +423,7 @@
 !sram_cutscenes = !SRAM_START+$46
 !sram_preset_options = !SRAM_START+$48
 !sram_lag_counter_mode = !SRAM_START+$4A
+!sram_fast_doors = !SRAM_START+$4C
 
 ; ^ FREE SPACE ^ up to +$0FCE
 
