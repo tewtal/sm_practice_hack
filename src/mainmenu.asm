@@ -1072,6 +1072,7 @@ MiscMenu:
     dw #$FFFF
     dw #misc_killenemies
     dw #misc_forcestand
+    dw #misc_clearliquid
     dw #$0000
     %cm_header("MISC")
 
@@ -1173,6 +1174,12 @@ misc_forcestand:
     LDA #!SOUND_MENU_JSL : JSL $80903F
     RTL
 
+misc_clearliquid:
+    %cm_jsl("Remove Liquid", .clear_liquid, #0)
+
+    .clear_liquid
+    LDA $197E : ORA #$0004 : STA $197E
+    RTL
 
 ; ---------------
 ; Sprite Features
