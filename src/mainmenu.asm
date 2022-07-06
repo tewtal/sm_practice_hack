@@ -1156,7 +1156,12 @@ misc_hyperbeam:
     %cm_toggle_bit("Hyper Beam", $7E0A76, #$8000, #.routine)
   .routine
     AND #$8000 : BEQ .off
-    LDA #$0003 : JSL $91E4AD ; setup Samus for Hyper Beam
+    LDA #$0003
+if !FEATURE_PAL
+    JSL $91E412 ; setup Samus for Hyper Beam
+else
+    JSL $91E4AD ; setup Samus for Hyper Beam
+endif
     RTL
 
   .off
