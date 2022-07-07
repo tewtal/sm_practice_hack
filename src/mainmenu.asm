@@ -1228,10 +1228,10 @@ misc_suit_properties:
     dw !ACTION_CHOICE
     dl #!sram_suit_properties
     dw init_suit_properties_ram
-    db #$28, "Suit Propertie", #$FF
-    db #$28, "s   VANILLA", #$FF
-    db #$28, "s  BALANCED", #$FF
-    db #$28, "s  PROGRESS", #$FF
+    db #$28, "Suit Properties", #$FF
+    db #$28, "    VANILLA", #$FF
+    db #$28, "   BALANCED", #$FF
+    db #$28, "   PROGRESS", #$FF
     db #$FF
 
 init_suit_properties_ram:
@@ -1330,7 +1330,7 @@ sprites_spacetime_infohud:
     dw !ACTION_CHOICE
     dl #!ram_spacetime_infohud
     dw #$0000
-    db #$28, "Spacetime HUD ", #$FF
+    db #$28, "Spacetime HUD", #$FF
     db #$28, "    VANILLA", #$FF
     db #$28, "  PRESERVED", #$FF
     db #$FF
@@ -1751,10 +1751,10 @@ ih_top_HUD_mode:
     dw !ACTION_CHOICE
     dl #!sram_top_display_mode
     dw #$0000
-    db #$28, "Top-Left Displ", #$FF
-    db #$28, "ay   ITEM %", #$FF
-    db #$28, "ay RESERVES", #$FF
-    db #$28, "ay  VANILLA", #$FF
+    db #$28, "Top-Left Displa", #$FF
+    db #$28, "y    ITEM %", #$FF
+    db #$28, "y  RESERVES", #$FF
+    db #$28, "y   VANILLA", #$FF
     db #$FF
 
 ih_room_counter:
@@ -1928,7 +1928,7 @@ game_music_toggle:
     dw !ACTION_CHOICE
     dl #!sram_music_toggle
     dw .routine
-    db #$28, "Music         ", #$FF
+    db #$28, "Music", #$FF
     db #$28, "        OFF", #$FF
     db #$28, "         ON", #$FF
     db #$28, "   FAST OFF", #$FF
@@ -1951,11 +1951,11 @@ game_healthalarm:
     dw !ACTION_CHOICE
     dl #!sram_healthalarm
     dw #$0000
-    db #$28, "Low Health Ala", #$FF
-    db #$28, "rm    NEVER", #$FF
-    db #$28, "rm  VANILLA", #$FF
-    db #$28, "rm   PB FIX", #$FF
-    db #$28, "rm IMPROVED", #$FF
+    db #$28, "Low Health Alar", #$FF
+    db #$28, "m     NEVER", #$FF
+    db #$28, "m   VANILLA", #$FF
+    db #$28, "m    PB FIX", #$FF
+    db #$28, "m  IMPROVED", #$FF
     db #$FF
 
 game_debugmode:
@@ -2345,20 +2345,20 @@ rng_draygon_rng_right:
     dw !ACTION_CHOICE
     dl #!ram_draygon_rng_right
     dw #$0000
-    db #$28, "Draygon from R", #$FF
-    db #$28, "ight RANDOM", #$FF
-    db #$28, "ight   GOOP", #$FF
-    db #$28, "ight  SWOOP", #$FF
+    db #$28, "Draygon from Ri", #$FF
+    db #$28, "ght  RANDOM", #$FF
+    db #$28, "ght    GOOP", #$FF
+    db #$28, "ght   SWOOP", #$FF
     db #$FF
 
 rng_draygon_rng_left:
     dw !ACTION_CHOICE
     dl #!ram_draygon_rng_left
     dw #$0000
-    db #$28, "Draygon from L", #$FF
-    db #$28, "eft  RANDOM", #$FF
-    db #$28, "eft    GOOP", #$FF
-    db #$28, "eft   SWOOP", #$FF
+    db #$28, "Draygon from Le", #$FF
+    db #$28, "ft   RANDOM", #$FF
+    db #$28, "ft     GOOP", #$FF
+    db #$28, "ft    SWOOP", #$FF
     db #$FF
 
 rng_crocomire_rng:
@@ -2542,11 +2542,11 @@ phan_second_phase_inverted:
     dw !ACTION_CHOICE
     dl #!ram_phantoon_rng_inverted
     dw #$0000
-    db #$28, "2nd Phase Inve", #$FF
-    db #$28, "rt  VANILLA", #$FF
-    db #$28, "rt       ON", #$FF
-    db #$28, "rt      OFF", #$FF
-    db #$28, "rt   RANDOM", #$FF
+    db #$28, "2nd Phase Inver", #$FF
+    db #$28, "t   VANILLA", #$FF
+    db #$28, "t        ON", #$FF
+    db #$28, "t       OFF", #$FF
+    db #$28, "t    RANDOM", #$FF
     db #$FF
 
 phan_eyeclose:
@@ -2564,7 +2564,7 @@ phan_flamepattern:
     dw !ACTION_CHOICE
     dl #!ram_phantoon_rng_flames
     dw #$0000
-    db #$28, "Phan Flames   ", #$FF
+    db #$28, "Phantoon Flames", #$FF
     db #$28, "     RANDOM", #$FF
     db #$28, "      22222", #$FF
     db #$28, "        111", #$FF
@@ -2576,7 +2576,7 @@ phan_next_flamepattern:
     dw !ACTION_CHOICE
     dl #!ram_phantoon_rng_next_flames
     dw #$0000
-    db #$28, "Next Flames   ", #$FF
+    db #$28, "Next Flames", #$FF
     db #$28, "     RANDOM", #$FF
     db #$28, "      22222", #$FF
     db #$28, "        111", #$FF

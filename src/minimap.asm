@@ -47,12 +47,14 @@ org $82E488      ; write tiles to VRAM
 
 
 org $9AB200      ; graphics for HUD
+hudgfx_bin:
 incbin ../resources/hudgfx.bin
 
 
 ; Place minimap graphics in bank DF
 org $DFD500
 print pc, " minimap bankDF start"
+mapgfx_bin:
 incbin ../resources/mapgfx.bin
 
 ; Next block needs to be all zeros to clear a tilemap
@@ -88,8 +90,8 @@ mm_write_and_clear_hud_tiles:
     ; Load in normal vram
     LDA #$80 : STA $2115 ; word-access, incr by 1
     LDX #$4000 : STX $2116 ; VRAM address (8000 in vram)
-    LDX #$B200 : STX $4302 ; Source offset
-    LDA #$9A : STA $4304 ; Source bank
+    LDX.w #hudgfx_bin : STX $4302 ; Source offset
+    LDA.b #hudgfx_bin>>16 : STA $4304 ; Source bank
     LDX #$2000 : STX $4305 ; Size (0x10 = 1 tile)
     LDA #$01 : STA $4300 ; word, normal increment (DMA MODE)
     LDA #$18 : STA $4301 ; destination (VRAM write)
@@ -100,8 +102,8 @@ mm_write_and_clear_hud_tiles:
   .minimap_vram
     LDA #$80 : STA $2115 ; word-access, incr by 1
     LDX #$4000 : STX $2116 ; VRAM address (8000 in vram)
-    LDX #$D500 : STX $4302 ; Source offset
-    LDA #$DF : STA $4304 ; Source bank
+    LDX.w #mapgfx_bin : STX $4302 ; Source offset
+    LDA.b #mapgfx_bin>>16 : STA $4304 ; Source bank
     LDX #$2000 : STX $4305 ; Size (0x10 = 1 tile)
     LDA #$01 : STA $4300 ; word, normal increment (DMA MODE)
     LDA #$18 : STA $4301 ; destination (VRAM write)
@@ -116,14 +118,14 @@ mm_write_hud_tiles_during_door_transition:
 
     ; Load in normal vram
     JSR $E039
-    dl $9AB200
+    dl hudgfx_bin
     dw $4000
     dw $1000
     JMP $E492  ; resume logic
 
   .minimap_vram
     JSR $E039
-    dl $DFD500
+    dl mapgfx_bin
     dw $4000
     dw $1000
     JMP $E492  ; resume logic
