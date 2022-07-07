@@ -1070,9 +1070,9 @@ MiscMenu:
     dw #misc_metronome_tickrate
     dw #misc_metronome_sfx
     dw #$FFFF
+    dw #misc_clearliquid
     dw #misc_killenemies
     dw #misc_forcestand
-    dw #misc_clearliquid
     dw #$0000
     %cm_header("MISC")
 
@@ -1175,11 +1175,7 @@ misc_forcestand:
     RTL
 
 misc_clearliquid:
-    %cm_jsl("Remove Liquid", .clear_liquid, #0)
-
-    .clear_liquid
-    LDA $197E : ORA #$0004 : STA $197E
-    RTL
+    %cm_toggle_bit("Ignore Water this Room", $197E, #$0004, #0)
 
 ; ---------------
 ; Sprite Features
