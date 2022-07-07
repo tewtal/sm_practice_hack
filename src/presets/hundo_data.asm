@@ -1773,7 +1773,6 @@ preset_hundo_draygon_botwoon:
     dw $0A1E, $0208  ; More position/state
     dw $0AF6, $03DA  ; Samus X
     dw $0AFA, $0085  ; Samus Y
-    dw $0B3F, $0104  ; Blue suit
     dw #$FFFF
 
 preset_hundo_draygon_full_halfie:
@@ -1792,7 +1791,6 @@ preset_hundo_draygon_full_halfie:
     dw $0A1E, $0608  ; More position/state
     dw $0AF6, $004B  ; Samus X
     dw $0AFA, $0091  ; Samus Y
-    dw $0B3F, $0000  ; Blue suit
     dw $D82C, $0002  ; Bosses
     dw #$FFFF
 
