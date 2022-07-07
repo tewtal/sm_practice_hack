@@ -374,6 +374,8 @@ load_return:
     STA !SS_INPUT_NEW
     STA !SS_INPUT_PREV
 
+    JSL tinystates_load_kraid
+
     %a8()
     LDX #$0000
     TXY
@@ -475,5 +477,99 @@ tinystates_mirror_bg_data:
   BPL -
   PLB
   RTL
+
+tinystates_load_kraid:
+{
+    ; Are we fighting Kraid? Check to see if either of his unpause hooks are active
+    LDA $0604
+  if !FEATURE_PAL
+    CMP #$C282
+  else
+    CMP #$C24E
+  endif
+    BEQ .yes
+  if !FEATURE_PAL
+    CMP #$C2D4
+  else
+    CMP #$C2A0
+  endif
+    BNE .done
+
+  .yes
+    ; We need to restore Kraid's graphics.
+    ; Load a mask that the decompressor expects
+    LDA #$DFFF : STA $12
+    JSL .decompress_kraid   ; Decompress Kraid into WRAM
+
+    PHB
+    PEA $7E7E : PLB : PLB
+
+    ; Has Kraid risen through the ceiling yet? If so, we need to set the priority bit in
+    ; each of Kraid's tiles so he's visible in front of the background.
+    LDA $7808 : CMP #$00A4 : BNE .update_priority_done
+    LDX #$FFE
+  .priority_loop
+    LDA $2000,X : ORA #$2000 : STA $2000,X
+    DEX : DEX : BPL .priority_loop
+.update_priority_done
+
+    PLB
+
+    ; Copy Kraid to VRAM
+    LDA #$0080 : STA $2115              ; set write mode
+    LDA $58 : AND #$FC00 : STA $2116    ; VRAM address = BG2
+    PHA
+    LDA #$1801 : STA $4310              ; write a word at a time to VMDATA
+    LDA #$7E20 : STZ $4312 : STA $4313  ; source address = $7E2000
+    LDA #$0800 : STA $4315              ; $0800 bytes
+    LDY #$0002 : STY $420B              ; start transfer
+
+    ; Clear the right half of BG2
+    LDA #$0338 : LDX #$0400
+    ; we can't DMA a repeated word, so just transfer it manually
+  .bg2_clear_loop
+    STA $2118 : DEX : BNE .bg2_clear_loop
+
+    ; Most of Kraid is static, but his mouth can update dynamically based on these instruction lists:
+    ;   https://patrickjohnston.org/bank/A7#f96D2
+    ; Look backwards from the instruction list pointer to find the last state we executed,
+    ;   grab its mouth tilemap, and upload it to VRAM.
+    ;
+    ; NOTE: we assume the previous instruction is a valid 8-byte instruction.
+    ; It turns out this is always the case, because all Kraid's 2-byte instructions immediately
+    ;   process the next instruction without delay, so we'll never see the pointer pointing at the
+    ;   instruction after an 8-byte instruction. Additionally, the first instruction in each list
+    ;   is never executed, so we don't have to worry about reading out-of-bounds.
+    PLA                                 ; restore VRAM address from stack
+    LDX $0FAA : BEQ .done
+    STA $2116                           ; VRAM address = BG2
+    ; tilemap = *((instruction_list - 8) + 2) = *(instruction_list - 6)
+    LDA $A6FFFA, x : STA $4312          ; source address = tilemap
+    LDA #$A7A7 : STA $4314              ; source bank = $A7
+    LDA #$02C0 : STA $4315              ; $0800 bytes
+    STY $420B                           ; start transfer (Y is still 2)
+
+  .done
+    RTL
+
+  .decompress_kraid
+    ; $AAC6 ends with a RTS, but we need an RTL.
+    ; Have the RTS return to $A78AA3 which is an RTL
+  if !FEATURE_PAL
+    PEA $8AB2 : JML $A7AADC
+  else
+    PEA $8AA2 : JML $A7AAC6
+  endif
+
+  .call_pause_hook
+    ; We jump into the middle of the hook (to skip waiting for an NMI), so we have to be careful
+    ;   with the stack & processor status
+    PHP : SEP #$20
+  if !FEATURE_PAL
+    JML $A7C289
+  else
+    JML $A7C255
+  endif
+}
 
 print pc, " tinysave bank82 end"
