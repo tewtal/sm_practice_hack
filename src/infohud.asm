@@ -1321,11 +1321,20 @@ magic_pants:
 +   RTS
 
   .check
-    LDA $0A1C : CMP #$0009 : BEQ .flash
-    CMP #$000A : BEQ .flash
-    RTS
+    ; Enable magic pants in the following states:
+    ; 9: Moving right - not aiming
+    ; Ah: Moving left  - not aiming
+    ; Bh: Moving right - gun extended
+    ; Ch: Moving left  - gun extended
+    ; Dh: Moving right - aiming up (unused)
+    ; Eh: Moving left  - aiming up (unused)
+    ; Fh: Moving right - aiming up-right
+    ; 10h: Moving left  - aiming up-left
+    ; 11h: Moving right - aiming down-right
+    ; 12h: Moving left  - aiming down-left
+    LDA $0A1C : CMP #$0009 : BCC .done
+    CMP #$0013 : BCS .done
 
-  .flash
     LDA !ram_magic_pants_state : BNE ++
 
     ; if loudpants are enabled, click
@@ -1339,6 +1348,8 @@ magic_pants:
 ++  LDA #$FFFF
     STA $7EC194 : STA $7EC196 : STA $7EC19E
     STA !ram_magic_pants_state
+
+  .done
     RTS
 }
 
