@@ -1792,6 +1792,7 @@ game_cutscenes:
 ; ---------------
 
 CutscenesMenu:
+    dw #cutscenes_skip_splash
     dw #cutscenes_skip_intro
     dw #cutscenes_skip_ceres_arrival
     dw #cutscenes_skip_g4
@@ -1801,6 +1802,9 @@ CutscenesMenu:
     dw #cutscenes_fast_mb
     dw #$0000
     %cm_header("CUTSCENES")
+
+cutscenes_skip_splash:
+    %cm_toggle_bit("Fast Nintendo splash", !sram_cutscenes, !CUTSCENE_SKIP_SPLASH, #0)
 
 cutscenes_skip_intro:
     %cm_toggle_bit("Skip Intro", !sram_cutscenes, !CUTSCENE_SKIP_INTRO, #0)

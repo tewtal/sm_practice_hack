@@ -10,13 +10,13 @@ org $8BB240
 endif
     JSR cutscenes_load_ceres_arrival
 
-; Change Nintendo logo timer to 1 frame
 if !FEATURE_PAL
 org $8B92B5
 else
 org $8B930C
 endif
-LDA #$0001
+    JSL cutscenes_nintendo_splash
+    NOP : NOP
 
 org $80FF00
 print pc, " cutscenes bank80 start"
@@ -55,6 +55,18 @@ org $82E18E
 
 org $8BF800
 print pc, " cutscenes start"
+
+cutscenes_nintendo_splash:
+{
+    LDX #$0078
+    LDA !sram_cutscenes
+    AND !CUTSCENE_SKIP_SPLASH
+    BEQ .done
+    LDX #$0001
+  .done
+    STX $0DE2
+    RTL
+}
 
 cutscenes_add_elevator_speed:
 {
