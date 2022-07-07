@@ -25,18 +25,36 @@ cutscenes_door_transition:
     LDA !sram_fast_doors : BEQ .slow
     ; If fast doors are enabled, run the door transition twice per frame.
     PHX
-    JSR ($AE76,x)   ; TODO PAL
+    JSR ($AE76,x)
     PLX
     BCC .slow
     RTS             ; If the door transition is done, don't run it again.
   .slow
-    JMP ($AE76,x)   ; TODO PAL
+    JMP ($AE76,x)
 }
 warnpc $80FFB0  ; header
+print pc, " cutscenes bank80 end"
 
-org $80AE5C     ; TODO PAL
+org $80AE5C
     JSR cutscenes_door_transition
 
+if !FEATURE_PAL
+org $A39597
+    JSL cutscenes_add_elevator_speed
+    BRA $0D
+org $A395B2
+    JSL cutscenes_sub_elevator_speed
+    BRA $0D
+org $A395D4
+    JSL cutscenes_add_elevator_speed
+    BRA $0D
+org $A395EE
+    JSL cutscenes_sub_elevator_speed
+    BRA $0D
+org $82E18E
+    JSL cutscenes_set_elevator_delay
+    NOP : NOP
+else
 org $A39587
     JSL cutscenes_add_elevator_speed
     BRA $0D
@@ -52,6 +70,7 @@ org $A395DE
 org $82E18E
     JSL cutscenes_set_elevator_delay
     NOP : NOP
+endif
 
 org $8BF800
 print pc, " cutscenes start"
@@ -95,9 +114,15 @@ cutscenes_sub_elevator_speed:
 cutscenes_set_elevator_delay:
 {
     ; We tripled the elevator speed, so decrease the room transition delay accordingly
+if !FEATURE_PAL
+    LDX #$0028
+    LDA !sram_fast_doors : BEQ .slow
+    LDX #$000D
+else
     LDX #$0030
     LDA !sram_fast_doors : BEQ .slow
     LDX #$0010
+endif
   .slow
     STX $092F
     RTL
