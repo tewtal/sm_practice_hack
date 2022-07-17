@@ -143,17 +143,32 @@ gamemode_shortcuts:
   + CLC : RTS
 
 if !FEATURE_SD2SNES
+  .save_state
 ; This if statement is to prevent an assembler error from an unknown method. The one on the call to this
 ; prevents the button combo from being intercepted by the non-sd2snes rom
-  .save_state
+if !FEATURE_TINYSTATES
+    ; Disallow tiny states outside of gameplay
+    ; Most other gamemodes will crash on load
+    LDA !GAMEMODE : CMP #$0020 : BEQ .save ; end of Ceres allowed
+    CMP #$0007 : BMI .fail
+    CMP #$001C : BPL .fail
+
+  .save
+endif
     JSL save_state
     ; SEC to skip normal gameplay for one frame after saving state
     SEC : RTS
 
   .load_state
+    ; check if a saved state exists
+    LDA !SRAM_SAVED_STATE : CMP #$5AFE : BNE .fail
     JSL load_state
     ; SEC to skip normal gameplay for one frame after loading state
     SEC : RTS
+
+  .fail
+    ; CLC to continue normal gameplay
+    CLC : JMP skip_pause
 endif
 
   .kill_enemies

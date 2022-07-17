@@ -19,8 +19,8 @@ pre_load_state:
     ; Rerandomize
     LDA !sram_save_has_set_rng : BNE .done
     LDA !sram_rerandomize : AND #$00FF : BEQ .done
-    LDA $05E5 : STA $737F80
-    LDA $05B6 : STA $737F82
+    LDA !CACHED_RANDOM_NUMBER : STA !SRAM_SAVED_RNG
+    LDA !FRAME_COUNTER : STA !SRAM_SAVED_FRAME_COUNTER
     
 
   .done
@@ -147,8 +147,8 @@ post_load_state:
     ; Rerandomize
     LDA !sram_save_has_set_rng : BNE .done
     LDA !sram_rerandomize : AND #$00FF : BEQ .done
-    LDA $737F80 : STA $05E5
-    LDA $737F82 : STA $05B6
+    LDA !SRAM_SAVED_RNG : STA !CACHED_RANDOM_NUMBER
+    LDA !SRAM_SAVED_FRAME_COUNTER : STA !FRAME_COUNTER
 
   .done
     JSL init_wram_based_on_sram
@@ -163,7 +163,7 @@ post_load_state:
 
     ; Re-enable NMI, turn on force-blank and wait NMI to execute.
     ; This prevents some annoying flashing when loading states where
-    ; graphics changes otherwise happens mid-frame    
+    ; graphics changes otherwise happens mid-frame
     JSL $80834B
     JSL $80836F
 
@@ -190,7 +190,7 @@ save_state:
     PLB
 
     ; Store DMA registers to SRAM
-    %a8();
+    %a8()
     LDY #$0000
     TYX
 
@@ -282,6 +282,8 @@ save_return:
 
     %ai16()
     LDA !ram_room_has_set_rng : STA !sram_save_has_set_rng
+
+    LDA #$5AFE : STA !SRAM_SAVED_STATE
 
     TSC
     STA !SRAM_SAVED_SP
@@ -445,7 +447,7 @@ vm:
 }
 
 print pc, " tinysave end"
-warnpc $80FC00 ; infohud.asm
+warnpc $80FD00 ; infohud.asm
 
 org $82FE00
 print pc, " tinysave bank82 start"
