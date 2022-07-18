@@ -18,7 +18,7 @@ endif
     JSL cutscenes_nintendo_splash
     NOP : NOP
 
-org $80FF00
+org $80FF80
 print pc, " cutscenes bank80 start"
 cutscenes_door_transition:
 {
