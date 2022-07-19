@@ -247,9 +247,10 @@ save_write_table:
     
     ; Copy WRAM segments
     %wram_to_sram($7E0000, $2000, $704000)
-    %wram_to_sram($7E7000, $1000, $706000) 
-    %wram_to_sram($7E8000, $2000, $710000) 
-    %wram_to_sram($7EC000, $34A0, $712000)    
+    %wram_to_sram($7E7000, $1000, $706000)
+    %wram_to_sram($7E3300, $0200, $707000)
+    %wram_to_sram($7E8000, $2000, $710000)
+    %wram_to_sram($7EC000, $34A0, $712000)
     %wram_to_sram($7F0000, $2B00, $715500)
     %wram_to_sram($7F2B00, $6B01, $720000)
     
@@ -266,8 +267,8 @@ save_write_table:
     ; Copy CGRAM 000-1FF to SRAM 736000-7361FF
     dw $1000|$2121, $00    ; CGRAM address
     dw $0000|$4310, $3B80  ; direction = B->A, byte reg, B addr = $213B
-    dw $0000|$4312, $6000  ; A addr = $xx2000
-    dw $0000|$4314, $0073  ; A addr = $77xxxx, size = $xx00
+    dw $0000|$4312, $6000  ; A addr = $xx6000
+    dw $0000|$4314, $0073  ; A addr = $73xxxx, size = $xx00
     dw $0000|$4316, $0002  ; size = $02xx ($0200), unused bank reg = $00.
     dw $1000|$420B, $02    ; Trigger DMA on channel 1
     
@@ -331,8 +332,9 @@ load_write_table:
 
     ; Copy WRAM segments, uses $703000-$724B02
     %sram_to_wram($7E0000, $2000, $704000)
-    %sram_to_wram($7E7000, $1000, $706000) 
-    %sram_to_wram($7E8000, $2000, $710000) 
+    %sram_to_wram($7E7000, $1000, $706000)
+    %sram_to_wram($7E3300, $0200, $707000)
+    %sram_to_wram($7E8000, $2000, $710000)
     %sram_to_wram($7EC000, $34A0, $712000)
     %sram_to_wram($7F0000, $2B00, $715500)
     %sram_to_wram($7F2B00, $6B01, $720000)
@@ -347,11 +349,11 @@ load_write_table:
     %sram_to_vram($5000, $2000, $730000)
     %sram_to_vram($6000, $4000, $732000)
 
-    ; Copy SRAM 736000-7361FF to CGRAM 000-1FF.
+    ; Copy SRAM $736000-$7361FF to CGRAM 000-1FF.
     dw $1000|$2121, $00    ; CGRAM address
     dw $0000|$4310, $2200  ; direction = A->B, byte reg, B addr = $2122
-    dw $0000|$4312, $2000  ; A addr = $xx2000
-    dw $0000|$4314, $0073  ; A addr = $77xxxx, size = $xx00
+    dw $0000|$4312, $6000  ; A addr = $xx6000
+    dw $0000|$4314, $0073  ; A addr = $73xxxx, size = $xx00
     dw $0000|$4316, $0006  ; size = $02xx ($0200), unused bank reg = $00.
     dw $1000|$420B, $02    ; Trigger DMA on channel 1
     
@@ -378,6 +380,12 @@ load_return:
 
     JSL tinystates_load_kraid
 
+    ; pause menu graphics
+    LDA !GAMEMODE : CMP #$0010 : BPL .not_paused
+    CMP #$000C : BMI .not_paused
+    JSL tinystates_load_paused
+
+  .not_paused
     %a8()
     LDX #$0000
     TXY
@@ -444,6 +452,34 @@ vm:
     ; Return to caller.  The word in the table after the terminator is the
     ; code address to return to.
     JMP ($0002,X)
+}
+
+tinystates_load_paused:
+{
+    ; restore gameplay palettes before running pause routines
+    LDX #$0000 : LDY #$0100
+-   LDA $7E3300,X : STA $7EC000,X
+    INX #2
+    DEY : BNE -
+
+    JSL $828E75 ; Load pause menu tiles and clear BG2 tilemap
+    JSL $828EDA ; Load pause screen base tilemaps
+    JSL $8293C3 ; Load pause menu map tilemap and area label
+
+    ; backup gameplay palettes
+    LDX #$0000 : LDY #$0100
+-   LDA $7EC000,X : STA $7E3300,X
+    INX #2
+    DEY : BNE -
+
+    ; load pause screen palettes
+    LDX #$0000 : LDY #$0100
+-   LDA $B6F000,X : STA $7EC000,X
+    INX #2
+    DEY : BNE -
+
+    JSL $82B62B ; Draw pause menu during fade in
+    RTL
 }
 
 print pc, " tinysave end"
