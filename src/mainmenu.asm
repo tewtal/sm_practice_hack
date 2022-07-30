@@ -3,18 +3,21 @@
 ; --------
 
 macro cm_header(title)
+; outlined text to be drawn above the menu items
     table ../resources/header.tbl
     db #$28, "<title>", #$FF
     table ../resources/normal.tbl
 endmacro
 
 macro cm_footer(title)
+; optional outlined text below the menu items
     table ../resources/header.tbl
     dw #$F007 : db #$28, "<title>", #$FF
     table ../resources/normal.tbl
 endmacro
 
 macro cm_version_header(title, major, minor, build, rev_1, rev_2)
+; header text with automatic version number appended
     table ../resources/header.tbl
 if !VERSION_REV_1
     db #$28, "<title> <major>.<minor>.<build>.<rev_1><rev_2>", #$FF
@@ -30,108 +33,128 @@ endmacro
 
 macro cm_numfield(title, addr, start, end, increment, heldincrement, jsltarget)
     dw !ACTION_NUMFIELD
-    dl <addr>
-    db <start>, <end>, <increment>, <heldincrement>
-    dw <jsltarget>
+    dl <addr> ; 24bit RAM address to display/manipulate
+    db <start>, <end> ; minimum and maximum values allowed
+    db <increment> ; inc/dec amount when pressed
+    db <heldincrement> ; inc/dec amount when direction is held (scroll faster)
+    dw <jsltarget> ; 16bit address to code in the same bank as current menu/submenu
     db #$28, "<title>", #$FF
 endmacro
 
 macro cm_numfield_word(title, addr, start, end, increment, heldincrement, jsltarget)
     dw !ACTION_NUMFIELD_WORD
-    dl <addr>
-    dw <start>, <end>, <increment>, <heldincrement>
-    dw <jsltarget>
+    dl <addr> ; 24bit RAM address to display/manipulate
+    db <start>, <end> ; minimum and maximum values allowed
+    db <increment> ; inc/dec amount when pressed
+    db <heldincrement> ; inc/dec amount when direction is held (scroll faster)
+    dw <jsltarget> ; 16bit address to code in the same bank as current menu/submenu
     db #$28, "<title>", #$FF
 endmacro
 
 macro cm_numfield_hex(title, addr, start, end, increment, heldincrement, jsltarget)
     dw !ACTION_NUMFIELD_HEX
-    dl <addr>
-    db <start>, <end>, <increment>, <heldincrement>
-    dw <jsltarget>
+    dl <addr> ; 24bit RAM address to display/manipulate
+    db <start>, <end> ; minimum and maximum values allowed
+    db <increment> ; inc/dec amount when pressed
+    db <heldincrement> ; inc/dec amount when direction is held (scroll faster)
+    dw <jsltarget> ; 16bit address to code in the same bank as current menu/submenu
     db #$28, "<title>", #$FF
 endmacro
 
 macro cm_numfield_color(title, addr, jsltarget)
     dw !ACTION_NUMFIELD_COLOR
-    dl <addr>
-    dw <jsltarget>
+    dl <addr> ; 24bit RAM address to display/manipulate
+    dw <jsltarget> ; 16bit address to code in the same bank as current menu/submenu
     db #$28, "<title>", #$FF
 endmacro
 
 macro cm_toggle(title, addr, value, jsltarget)
+; toggle between zero (OFF) and value (ON)
     dw !ACTION_TOGGLE
-    dl <addr>
-    db <value>
-    dw <jsltarget>
+    dl <addr> ; 24bit RAM address to display/manipulate
+    db <value> ; value to write when toggled on
+    dw <jsltarget> ; 16bit address to code in the same bank as current menu/submenu
     db #$28, "<title>", #$FF
 endmacro
 
 macro cm_toggle_inverted(title, addr, value, jsltarget)
+; for toggles where zero = ON
     dw !ACTION_TOGGLE_INVERTED
-    dl <addr>
-    db <value>
-    dw <jsltarget>
+    dl <addr> ; 24bit RAM address to display/manipulate
+    db <value> ; value to write when toggled off
+    dw <jsltarget> ; 16bit address to code in the same bank as current menu/submenu
     db #$28, "<title>", #$FF
 endmacro
 
 macro cm_toggle_bit(title, addr, mask, jsltarget)
+; toggle specific bits, draw OFF if bits cleared
     dw !ACTION_TOGGLE_BIT
-    dl <addr>
-    dw <mask>
-    dw <jsltarget>
+    dl <addr> ; 24bit RAM address to display/manipulate
+    dw <mask> ; which bits to flip
+    dw <jsltarget> ; 16bit address to code in the same bank as current menu/submenu
     db #$28, "<title>", #$FF
 endmacro
 
 macro cm_toggle_bit_inverted(title, addr, mask, jsltarget)
-    dw !ACTION_TOGGLE_BIT_INVERTED
-    dl <addr>
+; toggle specific bits, draw ON if bits cleared
+    dw <mask> ; which bits to flip
+    dl <addr> ; 24bit RAM address to display/manipulate
     dw <mask>
-    dw <jsltarget>
+    dw <jsltarget> ; 16bit address to code in the same bank as current menu/submenu
     db #$28, "<title>", #$FF
 endmacro
 
 macro cm_jsl(title, routine, argument)
+; run code when menu item executed
     dw !ACTION_JSL
-    dw <routine>
-    dw <argument>
+    dw <routine> ; 16bit address to code in the same bank as current menu/submenu
+    dw <argument> ; value passed to routine in Y
     db #$28, "<title>", #$FF
 endmacro
 
 macro cm_jsl_submenu(title, routine, argument)
+; only used within submenu and mainmenu macros
     dw !ACTION_JSL_SUBMENU
-    dw <routine>
-    dw <argument>
+    dw <routine> ; 16bit address to code in the same bank as current menu/submenu
+    dw <argument> ; value passed to routine in Y
     db #$28, "<title>", #$FF
 endmacro
 
 macro cm_mainmenu(title, target)
+; runs action_mainmenu to set the bank of the next menu and continue into action_submenu
+; can only used for submenus listed on the mainmenu
     %cm_jsl("<title>", #action_mainmenu, <target>)
 endmacro
 
 macro cm_submenu(title, target)
+; run action_submenu to load the next menu from the same bank
     %cm_jsl_submenu("<title>", #action_submenu, <target>)
 endmacro
 
 macro cm_preset(title, target)
+; runs action_load_preset to set the bank of the preset menu that matches the current category
     %cm_jsl_submenu("<title>", #action_load_preset, <target>)
 endmacro
 
 macro cm_ctrl_shortcut(title, addr)
+; configure controller shortcuts
     dw !ACTION_CTRL_SHORTCUT
-    dl <addr>
+    dl <addr> ; 24bit RAM address to display/manipulate
     db #$28, "<title>", #$FF
 endmacro
 
 macro cm_ctrl_input(title, addr, routine, argument)
+; set a single controller binding
     dw !ACTION_CTRL_INPUT
-    dl <addr>
-    dw <routine>
-    dw <argument>
+    dl <addr> ; 24bit RAM address to display/manipulate
+    dw <routine> ; 16bit address to code in the same bank as current menu/submenu
+    dw <argument> ; value passed to routine in Y
     db #$28, "<title>", #$FF
 endmacro
 
 macro setmenubank()
+; used to set the menu bank before a manual submenu jump
+; assumes 16bit A
     PHK : PHK : PLA
     STA !ram_cm_menu_bank
 endmacro
@@ -144,12 +167,14 @@ action_mainmenu:
     LDA.l MainMenuBanks,X : STA !ram_cm_menu_bank
     STA $02 : STA $06
 
-    BRA action_submenu+1
+    ; Skip stack operation in action_submenu
+    BRA action_submenu_skipStackOp
 }
 
 action_submenu:
 {
     PHB
+  .skipStackOp
     ; Increment stack pointer by 2, then store current menu
     LDA !ram_cm_stack_index : INC #2 : STA !ram_cm_stack_index : TAX
     TYA : STA !ram_cm_menu_stack,X
@@ -162,17 +187,20 @@ action_presets_submenu:
     PHB
     PHK : PLB
 
-    ; Increment stack pointer by 2, then store current menu
+    ; Increment stack pointer by 2
     LDA !ram_cm_stack_index : INC #2 : STA !ram_cm_stack_index : TAX
+
+    ; Lookup preset menu pointer for current category
     LDA !sram_preset_category : ASL : TAY
-    
     LDA.w preset_category_submenus,Y : STA !ram_cm_menu_stack,X
     LDA.w preset_category_banks,Y : STA !ram_cm_menu_bank
 
     ; continue into action_submenu_jump
+}
 
 action_submenu_jump:
 {
+    ; Set cursor to top for new menus
     LDA #$0000 : STA !ram_cm_cursor_stack,X
 
     LDA #!SOUND_MENU_MOVE : JSL !SFX_LIB1
@@ -229,6 +257,10 @@ preset_category_banks:
 ; -----------
 ; Main menu
 ; -----------
+
+; MainMenu must exist in the same bank as the menu code.
+; From here, submenus can branch out into different banks
+; as long as all of its menu items and submenus are included.
 
 MainMenu:
     dw #mm_goto_equipment
@@ -297,9 +329,9 @@ mm_goto_ctrlsmenu:
     %cm_mainmenu("Controller Shortcuts", #CtrlMenu)
 
 
-; -------------
-; Presets menu
-; -------------
+; --------------------
+; Presets Options menu
+; --------------------
 
 PresetsMenu:
     dw #presets_goto_select_preset_category
@@ -604,7 +636,7 @@ eq_refill:
     LDA $7E09CC : STA $7E09CA ; supers
     LDA $7E09D0 : STA $7E09CE ; pbs
     LDA $7E09D4 : STA $7E09D6 ; reserves
-    LDA #!SOUND_MENU_JSL : JSL $80903F
+    LDA #!SOUND_MENU_JSL : JSL !SFX_LIB1
     RTL
 
 eq_toggle_category:
@@ -768,31 +800,20 @@ action_category:
 {
     TYA : ASL #4 : TAX
 
-    ; Items
-    LDA.l .table,X : STA $7E09A4 : STA $7E09A2 : INX #2
+    LDA.l .table,X : STA !SAMUS_ITEMS_COLLECTED : STA !SAMUS_ITEMS_EQUIPPED : INX #2
 
-    ; Beams
-    LDA.l .table,X : STA $7E09A8 : TAY
+    LDA.l .table,X : STA !SAMUS_BEAMS_COLLECTED : TAY
     AND #$000C : CMP #$000C : BEQ .murderBeam
-    TYA : STA $7E09A6 : INX #2 : BRA +
+    TYA : STA !SAMUS_BEAMS_EQUIPPED : INX #2 : BRA +
 
   .murderBeam
-    TYA : AND #$100B : STA $7E09A6 : INX #2
+    TYA : AND #$100B : STA !SAMUS_BEAMS_EQUIPPED : INX #2
 
-    ; Health
-+   LDA.l .table,X : STA $7E09C2 : STA $7E09C4 : INX #2
-
-    ; Missiles
-    LDA.l .table,X : STA $7E09C6 : STA $7E09C8 : INX #2
-
-    ; Supers
-    LDA.l .table,X : STA $7E09CA : STA $7E09CC : INX #2
-
-    ; PBs
-    LDA.l .table,X : STA $7E09CE : STA $7E09D0 : INX #2
-
-    ; Reserves
-    LDA.l .table,X : STA $7E09D4 : STA $7E09D6 : INX #2
++   LDA.l .table,X : STA !SAMUS_HP : STA !SAMUS_HP_MAX : INX #2
+    LDA.l .table,X : STA !SAMUS_MISSILES : STA !SAMUS_MISSILES_MAX : INX #2
+    LDA.l .table,X : STA !SAMUS_SUPERS : STA !SAMUS_SUPERS_MAX : INX #2
+    LDA.l .table,X : STA !SAMUS_PBS : STA !SAMUS_PBS_MAX : INX #2
+    LDA.l .table,X : STA !SAMUS_RESERVE_MAX : STA !SAMUS_RESERVE_ENERGY : INX #2
 
     JSL cm_set_etanks_and_reserve
     LDA #!SOUND_MENU_JSL : JSL !SFX_LIB1
@@ -1111,7 +1132,7 @@ action_teleport:
     STZ $0727 ; Pause menu index
     STZ $1C1F ; Clear message box index
 
-+   JSL reset_all_counters
+    JSL reset_all_counters
     JSL stop_all_sounds
 
     LDA #$0001 : STA !ram_cm_leave
@@ -1267,7 +1288,7 @@ misc_forcestand:
 
   .routine
     JSL $90E2D4
-    LDA #!SOUND_MENU_JSL : JSL $80903F
+    LDA #!SOUND_MENU_JSL : JSL !SFX_LIB1
     RTL
 
 
