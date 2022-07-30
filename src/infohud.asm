@@ -77,67 +77,67 @@ endif
     JSL ih_mb2_segment
 
 if !FEATURE_PAL
-org $A0B9BE      ; update timers when Ridley drops spawn
+org $A0B937      ; update timers when Ridley drops spawn
 else
-org $A0B9AE      ; update timers when Ridley drops spawn
+org $A0B9D4      ; update timers when Ridley drops spawn
 endif
-    JSL ih_drops_segment
+    JML ih_drops_segment
 
 if !FEATURE_PAL
-org $A0B9F1      ; update timers when Crocomire drops spawn
+org $A0BA17      ; update timers when Crocomire drops spawn
 else
-org $A0B9E1      ; update timers when Crocomire drops spawn
+org $A0BA07      ; update timers when Crocomire drops spawn
 endif
-    JSL ih_drops_segment
+    JML ih_drops_segment
 
 if !FEATURE_PAL
-org $A0BA24      ; update timers when Phantoon drops spawn
+org $A0BA4A      ; update timers when Phantoon drops spawn
 else
-org $A0BA14      ; update timers when Phantoon drops spawn
+org $A0BA3A      ; update timers when Phantoon drops spawn
 endif
-    JSL ih_drops_segment
+    JML ih_drops_segment
 
 if !FEATURE_PAL
-org $A0BA57      ; update timers when Botwoon drops spawn
+org $A0BA7D      ; update timers when Botwoon drops spawn
 else
-org $A0BA47      ; update timers when Botwoon drops spawn
+org $A0BA6D      ; update timers when Botwoon drops spawn
 endif
-    JSL ih_drops_segment
+    JML ih_drops_segment
 
 if !FEATURE_PAL
-org $A0BA8A      ; update timers when Kraid drops spawn
+org $A0BAB0      ; update timers when Kraid drops spawn
 else
-org $A0BA7A      ; update timers when Kraid drops spawn
+org $A0BAA0      ; update timers when Kraid drops spawn
 endif
-    JSL ih_drops_segment
+    JML ih_drops_segment
 
 if !FEATURE_PAL
-org $A0BABD      ; update timers when Bomb Torizo drops spawn
+org $A0BAE3      ; update timers when Bomb Torizo drops spawn
 else
-org $A0BAAD      ; update timers when Bomb Torizo drops spawn
+org $A0BAD3      ; update timers when Bomb Torizo drops spawn
 endif
-    JSL ih_drops_segment
+    JML ih_drops_segment
 
 if !FEATURE_PAL
-org $A0BAF0      ; update timers when Golden Torizo drops spawn
+org $A0BB16      ; update timers when Golden Torizo drops spawn
 else
-org $A0BAE0      ; update timers when Golden Torizo drops spawn
+org $A0BB04      ; update timers when Golden Torizo drops spawn
 endif
-    JSL ih_drops_segment
+    JML ih_drops_segment
 
 if !FEATURE_PAL
-org $A0BB23      ; update timers when Spore Spawn drops spawn
+org $A0BB49      ; update timers when Spore Spawn drops spawn
 else
-org $A0BB13      ; update timers when Spore Spawn drops spawn
+org $A0BB39      ; update timers when Spore Spawn drops spawn
 endif
-    JSL ih_drops_segment
+    JML ih_drops_segment
 
 if !FEATURE_PAL
-org $A0BB56      ; update timers when Draygon drops spawn
+org $A0BB7C      ; update timers when Draygon drops spawn
 else
-org $A0BB46      ; update timers when Draygon drops spawn
+org $A0BB6C      ; update timers when Draygon drops spawn
 endif
-    JSL ih_drops_segment
+    JML ih_drops_segment
 
 if !FEATURE_PAL
 org $AAE592      ; update timers when statue grabs Samus
@@ -431,7 +431,9 @@ ih_drops_segment:
 {
     ; runs when boss drops spawn
     JSL ih_update_hud_early
-    JML $808111 ; overwritten code
+    ; overwritten code
+    PLP : PLY : PLX
+    RTL
 }
 
 ih_chozo_segment:
@@ -658,10 +660,6 @@ endif
 
 ih_update_hud_early:
 {
-    PHA
-    PHX
-    PHY
-
     ; calculate lag frames
     LDA !ram_realtime_room : SEC : SBC !ram_transition_counter : STA !ram_last_room_lag
 
@@ -673,9 +671,6 @@ ih_update_hud_early:
     JSL ih_update_hud_code
     PLA : STA $14 : PLA : STA $12
 
-    PLY
-    PLX
-    PLA
     RTL
 }
 
