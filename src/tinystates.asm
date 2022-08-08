@@ -32,6 +32,10 @@ pre_load_state:
     STA $4200
     REP #$30
 
+    ; Save the old room ID
+    LDA !ROOM_ID
+    PHA
+
     ; Restore parts of LoRAM so we can load in the proper graphics etc
     ; This doesn't overwrite the stack.
     LDA #$8000
@@ -51,15 +55,20 @@ pre_load_state:
     ; before restoring the rest of the state from SRAM
     JSL preset_load_destination_state_and_tiles
     JSL preset_load_library_background
-    JSL tinystates_load_level_tile_tables_scrolls_plms_and_execute_asm
-    JSL tinystates_preload_bg_data
 
+    ; If we're in the same room, we don't need to reload the level
+    PLA
+    CMP !ROOM_ID
+    BEQ .skip_load_level
+    JSL preset_load_level_tile_tables_scrolls_plms_and_execute_asm
+
+  .skip_load_level:
+    JSL tinystates_preload_bg_data
     RTS
 }
 
 post_load_state:
 {
-    JSL tinystates_mirror_bg_data
     JSL stop_all_sounds
 
     LDY !MUSIC_TRACK
@@ -452,30 +461,6 @@ print pc, " tinysave bank82 start"
 
 tinystates_preload_bg_data:
   JSR $82E2 ; Re-load BG3 tiles
-  RTL
-
-tinystates_mirror_bg_data:
-  PHB        
-  PEA $7F00  
-  PLB        
-  PLB        
-  LDA $0000  
-  TAX        
-  LSR A      
-  ADC $0000  
-  ADC $0000  
-  TAY        
-  BRA +
--             
-  LDA $0002,y
-  STA $9602,x
-+             
-  DEY        
-  DEY        
-  DEX        
-  DEX        
-  BPL -
-  PLB
   RTL
 
 tinystates_load_kraid:
