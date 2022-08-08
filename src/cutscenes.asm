@@ -72,6 +72,20 @@ org $82E18E
     NOP : NOP
 endif
 
+; Patch room loading to use optimized_decompression for the tilesets
+; if fast doors are enabled.
+; This is because the room state can be affected by the timing of the
+; decompression; for example, the Rinkas in Mother Brain's room will spawn
+; differently deoending on how far the door has scrolled when decompression finishes.
+
+org $82E41D     ; TODO PAL
+    LDA #$7E70
+    JSL cutscenes_fast_decompress_if_fast_doors
+
+org $82E42E     ; TODO PAL
+    LDA #$7E20
+    JSL cutscenes_fast_decompress_if_fast_doors
+
 org $8BF800
 print pc, " cutscenes start"
 
@@ -128,6 +142,18 @@ endif
     RTL
 }
 
+cutscenes_fast_decompress_if_fast_doors:
+{
+    STZ $4C
+    STA $4D
+    ; decompress, but fast if fast doors & slow if slow doors
+    ; this is because the room state (e.g. rinkas in MBs room) can be affected
+    ; by the timing of the decompression
+    LDA !sram_fast_doors : BEQ .slow
+    JML optimized_decompression
+  .slow
+    JML $80B119   ; TODO PAL
+}
 
 cutscenes_load_intro:
 {

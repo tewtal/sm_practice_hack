@@ -525,12 +525,13 @@ load_tile_table_28_draygon:
 ; XXX = instruction, YYYYYYYYYY = counter
 optimized_decompression_end:
 {
-    PLB
+    PLB : PLP
     RTL
 }
 
 optimized_decompression:
 {
+    PHP : %a8() : %i16()
     ; Set bank
     PHB : LDA $49 : PHA : PLB
 
