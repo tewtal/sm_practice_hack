@@ -150,7 +150,6 @@ mm_initialize_minimap:
     ; If we just left Ceres, increment segment timer
     LDA !GAMEMODE : AND #$00FF : CMP #$0006 : BNE .init_minimap
     LDA #$0000 : STA $12 : STA $14 : STA !ram_room_has_set_rng
-    STA $09DA : STA $09DC : STA $09DE : STA $09E0
     STA !ram_realtime_room : STA !ram_last_realtime_room
     STA !ram_gametime_room : STA !ram_last_gametime_room
     STA !ram_last_room_lag : STA !ram_last_door_lag_frames : STA !ram_transition_counter
