@@ -305,6 +305,7 @@ gamemode_door_transition:
   .checkloadstate
     LDA !IH_CONTROLLER_PRI : BEQ .checktransition
     CMP !sram_ctrl_load_state : BNE .checktransition
+    LDA !SRAM_SAVED_STATE : CMP #$5AFE : BNE .checktransition
     PHB : PHK : PLB
     JML load_state
 
