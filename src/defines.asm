@@ -90,8 +90,10 @@
 !ram_vertical_speed                 = !WRAM_START+$78
 !ram_quickdrop_counter              = !WRAM_START+$7A
 !ram_walljump_counter               = !WRAM_START+$7C
+!ram_fail_sum                       = !WRAM_START+$7E
+!ram_fail_count                     = !WRAM_START+$80
 
-!WRAM_PERSIST_START = !ram_walljump_counter+$02
+!WRAM_PERSIST_START = !ram_fail_count+$02
 ; ----------------------------------------------------------
 ; Variables below this point are PERSISTENT -- they maintain
 ; their value across savestates. Use this section for
@@ -148,7 +150,7 @@
 !ram_game_mode_extras               = !WRAM_PERSIST_START+$52
 !ram_sprite_features_active         = !WRAM_PERSIST_START+$54
 
-; ^ FREE SPACE ^ up to +$FC
+; ^ FREE SPACE ^ up to +$7A
 
 ; -----------------------
 ; RAM (Bank 7E required)

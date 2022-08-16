@@ -22,6 +22,7 @@
     dw status_vspeed
     dw status_quickdrop
     dw status_walljump
+    dw status_armpump
     dw status_shottimer
     dw status_ramwatch
 
@@ -1104,6 +1105,66 @@ endif
   .bubble
     LDA #$0117 : STA !ram_ypos
     BRA .heightcheck
+}
+
+status_armpump:
+{
+    ; Store Samus HP so it doesn't overwrite our HUD
+    LDA !SAMUS_HP : STA !ram_last_hp
+
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_ANGLE_DOWN : BNE .downHeld
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_ANGLE_UP : BNE .onlyUpHeld
+
+    ; Neither angle up or down held
+    STA !ram_momentum_direction : BRA .checkArmpumpChange
+
+  .downHeld
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_ANGLE_UP : BNE .upAndDownHeld
+
+    ; Only down held
+    LDA #$0001 : STA !ram_momentum_direction : BRA .checkArmpumpChange
+
+  .onlyUpHeld
+    LDA #$0002 : STA !ram_momentum_direction : BRA .checkArmpumpChange
+
+  .upAndDownHeld
+    LDA #$0003 : STA !ram_momentum_direction
+
+  .checkArmpumpChange
+    CMP !ram_momentum_last : BEQ .incTimer
+    EOR !ram_momentum_last : CMP #$0003 : BNE .checkPose
+
+    ; Both angles changed in same frame, which is a waste
+    LDA !ram_fail_count : INC : STA !ram_fail_count
+
+  .checkPose
+    LDA !ram_momentum_direction : STA !ram_momentum_last
+    LDA !SAMUS_POSE : CMP !ram_roomstrat_state : BEQ .incFail
+    STA !ram_roomstrat_state
+
+    ; Pose changed, assume it was an armpump
+    LDA !ram_momentum_count : INC : STA !ram_momentum_count
+    BRA .incTimer
+
+  .incFail
+    ; Angle change did not result in an armpump
+    LDA !ram_fail_count : INC : STA !ram_fail_count
+
+  .incTimer
+    LDA !ram_roomstrat_counter : INC : STA !ram_roomstrat_counter
+    CMP #$003C : BMI .done
+
+    ; Draw counts once per second
+    LDA !ram_momentum_count : LDX #$0088 : JSR Draw4
+    LDA !ram_fail_count : LDX #$0092 : JSR Draw4
+
+    ; Add to room totals and reset counts and counters
+    LDA !ram_momentum_sum : CLC : ADC !ram_momentum_count : STA !ram_momentum_sum
+    LDA !ram_fail_sum : CLC : ADC !ram_fail_count : STA !ram_fail_sum
+    LDA #$0000 : STA !ram_momentum_count : STA !ram_fail_count : STA !ram_roomstrat_counter
+
+  .done
+    RTS
 }
 
 status_shottimer:

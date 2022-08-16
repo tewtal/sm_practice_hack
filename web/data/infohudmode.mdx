@@ -111,9 +111,16 @@ First two characters = Feedback on the max-delayed walljump:
 - L# indicates you jumped low where the number tells you how many pixels you were low (can be zero).
 
 Unfortunately there is no single pixel that is guaranteed to work for these specific walljumps; it also depends on the subpixels. If you get H0 9 or L0 9, then the jump is possible an estimated 75% of the time. With H0 9 you will know it is possible if you do not bonk the ledge.
+&nbsp;  
 Additionally Samus HP will be overwritten with the average climb speed in approximate pixels per frame (inflated by 2.4%). It averages vertical speed between jump presses, assuming the presses are within 2 seconds of each other and assuming the total speed does not overflow (if either of these happen then average will be blank). If total speed drops below zero then the average will be recorded as zero.
 &nbsp;  
 Note: This feature may not be as accurate on PAL. It will consider either a 7-frame or a 9-frame walljump as a max-delayed walljump (strangely an 8-frame delayed walljump does not work on PAL).
+
+## Arm Pump
+Displays the number of armpumps (pose changes) per second, and the number of wasted angle down and/or angle up inputs per second.
+An input is considered wasted if it does not change the pose, or if both angle down and angle up are changed on the same frame.
+When exiting the room, the totals for the room are displayed.
+Note that the specific pose is not actually checked, so other actions performed by Samus may be counted.
 
 ## Shot Timer
 Displays the number of frames between pressing the shoot button.

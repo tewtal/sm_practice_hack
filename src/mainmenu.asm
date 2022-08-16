@@ -1772,6 +1772,7 @@ DisplayModeMenu:
     dw ihmode_vspeed
     dw ihmode_quickdrop
     dw ihmode_walljump
+    dw ihmode_armpump
     dw ihmode_shottimer
     dw ihmode_ramwatch
     dw #$0000
@@ -1831,12 +1832,16 @@ ihmode_quickdrop:
 ihmode_walljump:
     %cm_jsl("Walljump Trainer", #action_select_infohud_mode, #$0010)
 
-ihmode_shottimer:
-    %cm_jsl("Shot Timer", #action_select_infohud_mode, #$0011)
+!IH_MODE_ARMPUMP_INDEX = $0011
+ihmode_armpump:
+    %cm_jsl("Armpump Trainer", #action_select_infohud_mode, #$0011)
 
-!IH_MODE_RAMWATCH_INDEX = $0012
+ihmode_shottimer:
+    %cm_jsl("Shot Timer", #action_select_infohud_mode, #$0012)
+
+!IH_MODE_RAMWATCH_INDEX = $0013
 ihmode_ramwatch:
-    %cm_jsl("RAM Watch", #action_select_infohud_mode, #$0012)
+    %cm_jsl("RAM Watch", #action_select_infohud_mode, #$0013)
 
 action_select_infohud_mode:
 {
@@ -1868,6 +1873,7 @@ ih_display_mode:
     db #$28, " VERT SPEED", #$FF
     db #$28, " QUICK DROP", #$FF
     db #$28, "  WALL JUMP", #$FF
+    db #$28, "   ARM PUMP", #$FF
     db #$28, " SHOT TIMER", #$FF
     db #$28, "  RAM WATCH", #$FF
     db #$FF
