@@ -287,6 +287,7 @@ preset_load_level_tile_tables_scrolls_plms_and_execute_asm:
     LDA $0000 : LSR : CLC : ADC #$6401 : TAY
     SBC #$6401 : MVP $7F7F
 
+  .level_data_done
     PEA $8F00 : PLB : PLB
     LDA !sram_preset_options : BIT !PRESETS_COMPRESSED_GRAPHICS : BNE .tile_table_decompression
 

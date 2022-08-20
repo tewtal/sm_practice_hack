@@ -19,12 +19,22 @@ incsrc macros.asm
 incsrc defines.asm
 
 print ""
+
 if !FEATURE_SD2SNES
     print "SD2SNES ENABLED"
     incsrc save.asm
 else
     print "SD2SNES DISABLED"
 endif
+
+if !FEATURE_TINYSTATES
+    print "TINYSTATES ENABLED"
+    incsrc tinystates.asm
+    !FEATURE_SD2SNES = 1       ; Set this to enable savestate features
+else
+    print "TINYSTATES DISABLED"
+endif
+
 incsrc gamemode.asm
 incsrc minimap.asm
 incsrc menu.asm

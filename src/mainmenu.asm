@@ -332,7 +332,11 @@ presets_goto_select_preset_category:
     %cm_submenu("Select Preset Category", #SelectPresetCategoryMenu)
 
 presets_custom_preset_slot:
+if !FEATURE_TINYSTATES
+    %cm_numfield("Custom Preset Slot", !sram_custom_preset_slot, 0, 15, 1, 2, #0) ; update total slots in gamemode.asm
+else
     %cm_numfield("Custom Preset Slot", !sram_custom_preset_slot, 0, 39, 1, 2, #0) ; update total slots in gamemode.asm
+endif
 
 presets_save_custom_preset:
     %cm_jsl("Save Custom Preset", #action_save_custom_preset, #$0000)
@@ -486,7 +490,11 @@ action_load_custom_preset:
 {
     ; check if slot is populated first
     LDA !sram_custom_preset_slot
-    ASL : XBA : TAX
+if !FEATURE_TINYSTATES
+    XBA : TAX                    ; multiply by 100h (slot offset)
+else
+    ASL : XBA : TAX              ; multiply by 200h (slot offset)
+endif
     LDA $703000,X : CMP #$5AFE : BEQ .safe
     LDA #!SOUND_MENU_FAIL : JSL !SFX_LIB1
     RTL

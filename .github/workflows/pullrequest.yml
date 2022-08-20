@@ -39,8 +39,10 @@ jobs:
         ./build_PAL.sh -DPRERELEASE=$(git rev-parse --short HEAD)
         mkdir ./web/public/patches
         cp build/smhack20_sd2snes.ips ./web/public/patches/sd2snes-ntsc.ips
+        cp build/smhack20_tinystates.ips ./web/public/patches/tinystates-ntsc.ips
         cp build/smhack20.ips ./web/public/patches/emulator-ntsc.ips
         cp build/smpalhack20_sd2snes.ips ./web/public/patches/sd2snes-pal.ips
+        cp build/smpalhack20_tinystates.ips ./web/public/patches/tinystates-pal.ips
         cp build/smpalhack20.ips ./web/public/patches/emulator-pal.ips
 
     - name: Upload artifacts
