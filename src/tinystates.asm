@@ -19,8 +19,8 @@ pre_load_state:
     ; Rerandomize
     LDA !sram_save_has_set_rng : BNE .done
     LDA !sram_rerandomize : AND #$00FF : BEQ .done
-    LDA $05E5 : STA $737F80
-    LDA $05B6 : STA $737F82
+    LDA !CACHED_RANDOM_NUMBER : STA !SRAM_SAVED_RNG
+    LDA !FRAME_COUNTER : STA !SRAM_SAVED_FRAME_COUNTER
     
 
   .done
@@ -156,8 +156,8 @@ post_load_state:
     ; Rerandomize
     LDA !sram_save_has_set_rng : BNE .done
     LDA !sram_rerandomize : AND #$00FF : BEQ .done
-    LDA $737F80 : STA $05E5
-    LDA $737F82 : STA $05B6
+    LDA !SRAM_SAVED_RNG : STA !CACHED_RANDOM_NUMBER
+    LDA !SRAM_SAVED_FRAME_COUNTER : STA !FRAME_COUNTER
 
   .done
     JSL init_wram_based_on_sram
@@ -172,7 +172,7 @@ post_load_state:
 
     ; Re-enable NMI, turn on force-blank and wait NMI to execute.
     ; This prevents some annoying flashing when loading states where
-    ; graphics changes otherwise happens mid-frame    
+    ; graphics changes otherwise happens mid-frame
     JSL $80834B
     JSL $80836F
 
@@ -199,7 +199,7 @@ save_state:
     PLB
 
     ; Store DMA registers to SRAM
-    %a8();
+    %a8()
     LDY #$0000
     TYX
 
@@ -256,9 +256,11 @@ save_write_table:
     
     ; Copy WRAM segments
     %wram_to_sram($7E0000, $2000, $704000)
-    %wram_to_sram($7E7000, $1000, $706000) 
-    %wram_to_sram($7E8000, $2000, $710000) 
-    %wram_to_sram($7EC000, $34A0, $712000)    
+    %wram_to_sram($7E7000, $1000, $706000)
+    %wram_to_sram($7E3300, $0200, $707000)
+    %wram_to_sram(!WRAM_START, $0200, $707200)
+    %wram_to_sram($7E8000, $2000, $710000)
+    %wram_to_sram($7EC000, $34A0, $712000)
     %wram_to_sram($7F0000, $2B00, $715500)
     %wram_to_sram($7F2B00, $6B01, $720000)
     
@@ -275,8 +277,8 @@ save_write_table:
     ; Copy CGRAM 000-1FF to SRAM 736000-7361FF
     dw $1000|$2121, $00    ; CGRAM address
     dw $0000|$4310, $3B80  ; direction = B->A, byte reg, B addr = $213B
-    dw $0000|$4312, $6000  ; A addr = $xx2000
-    dw $0000|$4314, $0073  ; A addr = $77xxxx, size = $xx00
+    dw $0000|$4312, $6000  ; A addr = $xx6000
+    dw $0000|$4314, $0073  ; A addr = $73xxxx, size = $xx00
     dw $0000|$4316, $0002  ; size = $02xx ($0200), unused bank reg = $00.
     dw $1000|$420B, $02    ; Trigger DMA on channel 1
     
@@ -291,6 +293,8 @@ save_return:
 
     %ai16()
     LDA !ram_room_has_set_rng : STA !sram_save_has_set_rng
+
+    LDA #$5AFE : STA !SRAM_SAVED_STATE
 
     TSC
     STA !SRAM_SAVED_SP
@@ -338,8 +342,10 @@ load_write_table:
 
     ; Copy WRAM segments, uses $703000-$724B02
     %sram_to_wram($7E0000, $2000, $704000)
-    %sram_to_wram($7E7000, $1000, $706000) 
-    %sram_to_wram($7E8000, $2000, $710000) 
+    %sram_to_wram($7E7000, $1000, $706000)
+    %sram_to_wram($7E3300, $0200, $707000)
+    %sram_to_wram(!WRAM_START, $0200, $707200)
+    %sram_to_wram($7E8000, $2000, $710000)
     %sram_to_wram($7EC000, $34A0, $712000)
     %sram_to_wram($7F0000, $2B00, $715500)
     %sram_to_wram($7F2B00, $6B01, $720000)
@@ -354,11 +360,11 @@ load_write_table:
     %sram_to_vram($5000, $2000, $730000)
     %sram_to_vram($6000, $4000, $732000)
 
-    ; Copy SRAM 736000-7361FF to CGRAM 000-1FF.
+    ; Copy SRAM $736000-$7361FF to CGRAM 000-1FF.
     dw $1000|$2121, $00    ; CGRAM address
     dw $0000|$4310, $2200  ; direction = A->B, byte reg, B addr = $2122
-    dw $0000|$4312, $2000  ; A addr = $xx2000
-    dw $0000|$4314, $0073  ; A addr = $77xxxx, size = $xx00
+    dw $0000|$4312, $6000  ; A addr = $xx6000
+    dw $0000|$4314, $0073  ; A addr = $73xxxx, size = $xx00
     dw $0000|$4316, $0006  ; size = $02xx ($0200), unused bank reg = $00.
     dw $1000|$420B, $02    ; Trigger DMA on channel 1
     
@@ -385,6 +391,12 @@ load_return:
 
     JSL tinystates_load_kraid
 
+    ; pause menu graphics
+    LDA !GAMEMODE : CMP #$0010 : BPL .not_paused
+    CMP #$000C : BMI .not_paused
+    JSL tinystates_load_paused
+
+  .not_paused
     %a8()
     LDX #$0000
     TXY
@@ -453,8 +465,36 @@ vm:
     JMP ($0002,X)
 }
 
+tinystates_load_paused:
+{
+    ; restore gameplay palettes before running pause routines
+    LDX #$0000 : LDY #$0100
+-   LDA $7E3300,X : STA $7EC000,X
+    INX #2
+    DEY : BNE -
+
+    JSL $828E75 ; Load pause menu tiles and clear BG2 tilemap
+    JSL $828EDA ; Load pause screen base tilemaps
+    JSL $8293C3 ; Load pause menu map tilemap and area label
+
+    ; backup gameplay palettes
+    LDX #$0000 : LDY #$0100
+-   LDA $7EC000,X : STA $7E3300,X
+    INX #2
+    DEY : BNE -
+
+    ; load pause screen palettes
+    LDX #$0000 : LDY #$0100
+-   LDA $B6F000,X : STA $7EC000,X
+    INX #2
+    DEY : BNE -
+
+    JSL $82B62B ; Draw pause menu during fade in
+    RTL
+}
+
 print pc, " tinysave end"
-warnpc $80FC00 ; infohud.asm
+warnpc $80FD00 ; infohud.asm
 
 org $82FE00
 print pc, " tinysave bank82 start"

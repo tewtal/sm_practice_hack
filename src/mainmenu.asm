@@ -1173,6 +1173,7 @@ MiscMenu:
     dw #misc_metronome_tickrate
     dw #misc_metronome_sfx
     dw #$FFFF
+    dw #misc_clearliquid
     dw #misc_killenemies
     dw #misc_forcestand
     dw #$0000
@@ -1302,6 +1303,8 @@ misc_forcestand:
     LDA #!SOUND_MENU_JSL : JSL !SFX_LIB1
     RTL
 
+misc_clearliquid:
+    %cm_toggle_bit("Ignore Water this Room", $197E, #$0004, #0)
 
 ; ---------------
 ; Sprite Features
@@ -1874,6 +1877,7 @@ GameMenu:
     dw #$FFFF
     dw #game_cutscenes
     dw #game_fanfare_toggle
+    dw #game_fast_doors_toggle
     dw #game_music_toggle
     dw #game_healthalarm
     dw #$FFFF
@@ -1925,6 +1929,7 @@ game_cutscenes:
 ; ---------------
 
 CutscenesMenu:
+    dw #cutscenes_skip_splash
     dw #cutscenes_skip_intro
     dw #cutscenes_skip_ceres_arrival
     dw #cutscenes_skip_g4
@@ -1934,6 +1939,9 @@ CutscenesMenu:
     dw #cutscenes_fast_mb
     dw #$0000
     %cm_header("CUTSCENES")
+
+cutscenes_skip_splash:
+    %cm_toggle_bit("Fast Nintendo splash", !sram_cutscenes, !CUTSCENE_SKIP_SPLASH, #0)
 
 cutscenes_skip_intro:
     %cm_toggle_bit("Skip Intro", !sram_cutscenes, !CUTSCENE_SKIP_INTRO, #0)
@@ -1955,6 +1963,9 @@ cutscenes_fast_mb:
 
 game_fanfare_toggle:
     %cm_toggle("Fanfare", !sram_fanfare_toggle, #$0001, #0)
+
+game_fast_doors_toggle:
+    %cm_toggle("Fast Doors+Elevators", !sram_fast_doors, #$0001, #0)
 
 game_music_toggle:
     dw !ACTION_CHOICE

@@ -1316,11 +1316,20 @@ magic_pants:
 +   RTS
 
   .check
-    LDA $0A1C : CMP #$0009 : BEQ .flash
-    CMP #$000A : BEQ .flash
-    RTS
+    ; Enable magic pants in the following states:
+    ; 9: Moving right - not aiming
+    ; Ah: Moving left  - not aiming
+    ; Bh: Moving right - gun extended
+    ; Ch: Moving left  - gun extended
+    ; Dh: Moving right - aiming up (unused)
+    ; Eh: Moving left  - aiming up (unused)
+    ; Fh: Moving right - aiming up-right
+    ; 10h: Moving left  - aiming up-left
+    ; 11h: Moving right - aiming down-right
+    ; 12h: Moving left  - aiming down-left
+    LDA $0A1C : CMP #$0009 : BCC .done
+    CMP #$0013 : BCS .done
 
-  .flash
     LDA !ram_magic_pants_state : BNE ++
 
     ; if loudpants are enabled, click
@@ -1334,6 +1343,8 @@ magic_pants:
 ++  LDA #$FFFF
     STA $7EC194 : STA $7EC196 : STA $7EC19E
     STA !ram_magic_pants_state
+
+  .done
     RTS
 }
 
@@ -1403,7 +1414,7 @@ warnpc $F0E000 ; spritefeat.asm
 
 
 ; Stuff that needs to be placed in bank 80
-org $80FC00
+org $80FD00
 print pc, " infohud bank80 start"
 
 ih_fix_scroll_offsets:
@@ -1485,5 +1496,5 @@ HexToNumberGFX2:
     dw #$0C09, #$0C00, #$0C01, #$0C02, #$0C03, #$0C04, #$0C05, #$0C06, #$0C07, #$0C08
 
 print pc, " infohud bank80 end"
-warnpc $80FFB0 ; header
+warnpc $80FF00 ; cutscenes.asm door transition code
 
