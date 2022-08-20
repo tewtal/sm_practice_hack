@@ -3,18 +3,21 @@
 ; --------
 
 macro cm_header(title)
+; outlined text to be drawn above the menu items
     table ../resources/header.tbl
     db #$28, "<title>", #$FF
     table ../resources/normal.tbl
 endmacro
 
 macro cm_footer(title)
+; optional outlined text below the menu items
     table ../resources/header.tbl
     dw #$F007 : db #$28, "<title>", #$FF
     table ../resources/normal.tbl
 endmacro
 
 macro cm_version_header(title, major, minor, build, rev_1, rev_2)
+; header text with automatic version number appended
     table ../resources/header.tbl
 if !VERSION_REV_1
     db #$28, "<title> <major>.<minor>.<build>.<rev_1><rev_2>", #$FF
@@ -30,108 +33,128 @@ endmacro
 
 macro cm_numfield(title, addr, start, end, increment, heldincrement, jsltarget)
     dw !ACTION_NUMFIELD
-    dl <addr>
-    db <start>, <end>, <increment>, <heldincrement>
-    dw <jsltarget>
+    dl <addr> ; 24bit RAM address to display/manipulate
+    db <start>, <end> ; minimum and maximum values allowed
+    db <increment> ; inc/dec amount when pressed
+    db <heldincrement> ; inc/dec amount when direction is held (scroll faster)
+    dw <jsltarget> ; 16bit address to code in the same bank as current menu/submenu
     db #$28, "<title>", #$FF
 endmacro
 
 macro cm_numfield_word(title, addr, start, end, increment, heldincrement, jsltarget)
     dw !ACTION_NUMFIELD_WORD
-    dl <addr>
-    dw <start>, <end>, <increment>, <heldincrement>
-    dw <jsltarget>
+    dl <addr> ; 24bit RAM address to display/manipulate
+    db <start>, <end> ; minimum and maximum values allowed
+    db <increment> ; inc/dec amount when pressed
+    db <heldincrement> ; inc/dec amount when direction is held (scroll faster)
+    dw <jsltarget> ; 16bit address to code in the same bank as current menu/submenu
     db #$28, "<title>", #$FF
 endmacro
 
 macro cm_numfield_hex(title, addr, start, end, increment, heldincrement, jsltarget)
     dw !ACTION_NUMFIELD_HEX
-    dl <addr>
-    db <start>, <end>, <increment>, <heldincrement>
-    dw <jsltarget>
+    dl <addr> ; 24bit RAM address to display/manipulate
+    db <start>, <end> ; minimum and maximum values allowed
+    db <increment> ; inc/dec amount when pressed
+    db <heldincrement> ; inc/dec amount when direction is held (scroll faster)
+    dw <jsltarget> ; 16bit address to code in the same bank as current menu/submenu
     db #$28, "<title>", #$FF
 endmacro
 
 macro cm_numfield_color(title, addr, jsltarget)
     dw !ACTION_NUMFIELD_COLOR
-    dl <addr>
-    dw <jsltarget>
+    dl <addr> ; 24bit RAM address to display/manipulate
+    dw <jsltarget> ; 16bit address to code in the same bank as current menu/submenu
     db #$28, "<title>", #$FF
 endmacro
 
 macro cm_toggle(title, addr, value, jsltarget)
+; toggle between zero (OFF) and value (ON)
     dw !ACTION_TOGGLE
-    dl <addr>
-    db <value>
-    dw <jsltarget>
+    dl <addr> ; 24bit RAM address to display/manipulate
+    db <value> ; value to write when toggled on
+    dw <jsltarget> ; 16bit address to code in the same bank as current menu/submenu
     db #$28, "<title>", #$FF
 endmacro
 
 macro cm_toggle_inverted(title, addr, value, jsltarget)
+; for toggles where zero = ON
     dw !ACTION_TOGGLE_INVERTED
-    dl <addr>
-    db <value>
-    dw <jsltarget>
+    dl <addr> ; 24bit RAM address to display/manipulate
+    db <value> ; value to write when toggled off
+    dw <jsltarget> ; 16bit address to code in the same bank as current menu/submenu
     db #$28, "<title>", #$FF
 endmacro
 
 macro cm_toggle_bit(title, addr, mask, jsltarget)
+; toggle specific bits, draw OFF if bits cleared
     dw !ACTION_TOGGLE_BIT
-    dl <addr>
-    dw <mask>
-    dw <jsltarget>
+    dl <addr> ; 24bit RAM address to display/manipulate
+    dw <mask> ; which bits to flip
+    dw <jsltarget> ; 16bit address to code in the same bank as current menu/submenu
     db #$28, "<title>", #$FF
 endmacro
 
 macro cm_toggle_bit_inverted(title, addr, mask, jsltarget)
-    dw !ACTION_TOGGLE_BIT_INVERTED
-    dl <addr>
+; toggle specific bits, draw ON if bits cleared
+    dw <mask> ; which bits to flip
+    dl <addr> ; 24bit RAM address to display/manipulate
     dw <mask>
-    dw <jsltarget>
+    dw <jsltarget> ; 16bit address to code in the same bank as current menu/submenu
     db #$28, "<title>", #$FF
 endmacro
 
 macro cm_jsl(title, routine, argument)
+; run code when menu item executed
     dw !ACTION_JSL
-    dw <routine>
-    dw <argument>
+    dw <routine> ; 16bit address to code in the same bank as current menu/submenu
+    dw <argument> ; value passed to routine in Y
     db #$28, "<title>", #$FF
 endmacro
 
 macro cm_jsl_submenu(title, routine, argument)
+; only used within submenu and mainmenu macros
     dw !ACTION_JSL_SUBMENU
-    dw <routine>
-    dw <argument>
+    dw <routine> ; 16bit address to code in the same bank as current menu/submenu
+    dw <argument> ; value passed to routine in Y
     db #$28, "<title>", #$FF
 endmacro
 
 macro cm_mainmenu(title, target)
+; runs action_mainmenu to set the bank of the next menu and continue into action_submenu
+; can only used for submenus listed on the mainmenu
     %cm_jsl("<title>", #action_mainmenu, <target>)
 endmacro
 
 macro cm_submenu(title, target)
+; run action_submenu to load the next menu from the same bank
     %cm_jsl_submenu("<title>", #action_submenu, <target>)
 endmacro
 
 macro cm_preset(title, target)
+; runs action_load_preset to set the bank of the preset menu that matches the current category
     %cm_jsl_submenu("<title>", #action_load_preset, <target>)
 endmacro
 
 macro cm_ctrl_shortcut(title, addr)
+; configure controller shortcuts
     dw !ACTION_CTRL_SHORTCUT
-    dl <addr>
+    dl <addr> ; 24bit RAM address to display/manipulate
     db #$28, "<title>", #$FF
 endmacro
 
 macro cm_ctrl_input(title, addr, routine, argument)
+; set a single controller binding
     dw !ACTION_CTRL_INPUT
-    dl <addr>
-    dw <routine>
-    dw <argument>
+    dl <addr> ; 24bit RAM address to display/manipulate
+    dw <routine> ; 16bit address to code in the same bank as current menu/submenu
+    dw <argument> ; value passed to routine in Y
     db #$28, "<title>", #$FF
 endmacro
 
 macro setmenubank()
+; used to set the menu bank before a manual submenu jump
+; assumes 16bit A
     PHK : PHK : PLA
     STA !ram_cm_menu_bank
 endmacro
@@ -144,12 +167,14 @@ action_mainmenu:
     LDA.l MainMenuBanks,X : STA !ram_cm_menu_bank
     STA $02 : STA $06
 
-    BRA action_submenu+1
+    ; Skip stack operation in action_submenu
+    BRA action_submenu_skipStackOp
 }
 
 action_submenu:
 {
     PHB
+  .skipStackOp
     ; Increment stack pointer by 2, then store current menu
     LDA !ram_cm_stack_index : INC #2 : STA !ram_cm_stack_index : TAX
     TYA : STA !ram_cm_menu_stack,X
@@ -162,17 +187,20 @@ action_presets_submenu:
     PHB
     PHK : PLB
 
-    ; Increment stack pointer by 2, then store current menu
+    ; Increment stack pointer by 2
     LDA !ram_cm_stack_index : INC #2 : STA !ram_cm_stack_index : TAX
+
+    ; Lookup preset menu pointer for current category
     LDA !sram_preset_category : ASL : TAY
-    
     LDA.w preset_category_submenus,Y : STA !ram_cm_menu_stack,X
     LDA.w preset_category_banks,Y : STA !ram_cm_menu_bank
 
     ; continue into action_submenu_jump
+}
 
 action_submenu_jump:
 {
+    ; Set cursor to top for new menus
     LDA #$0000 : STA !ram_cm_cursor_stack,X
 
     LDA #!SOUND_MENU_MOVE : JSL !SFX_LIB1
@@ -229,6 +257,10 @@ preset_category_banks:
 ; -----------
 ; Main menu
 ; -----------
+
+; MainMenu must exist in the same bank as the menu code.
+; From here, submenus can branch out into different banks
+; as long as all of its menu items and submenus are included.
 
 MainMenu:
     dw #mm_goto_equipment
@@ -300,9 +332,9 @@ mm_goto_ctrlsmenu:
     %cm_mainmenu("Controller Shortcuts", #CtrlMenu)
 
 
-; -------------
-; Presets menu
-; -------------
+; --------------------
+; Presets Options menu
+; --------------------
 
 PresetsMenu:
     dw #presets_goto_select_preset_category
@@ -594,6 +626,7 @@ EquipmentMenu:
     dw #$FFFF
     dw #eq_currentreserves
     dw #eq_setreserves
+    dw #eq_reservemode
     dw #$FFFF
     dw #eq_currentmissiles
     dw #eq_setmissiles
@@ -614,7 +647,7 @@ eq_refill:
     LDA $7E09CC : STA $7E09CA ; supers
     LDA $7E09D0 : STA $7E09CE ; pbs
     LDA $7E09D4 : STA $7E09D6 ; reserves
-    LDA #!SOUND_MENU_JSL : JSL $80903F
+    LDA #!SOUND_MENU_JSL : JSL !SFX_LIB1
     RTL
 
 eq_toggle_category:
@@ -631,34 +664,53 @@ eq_currentenergy:
 
 eq_setetanks:
     %cm_numfield("Energy Tanks", !ram_cm_etanks, 0, 21, 1, 1, .routine)
-    .routine
-        TAX
-        LDA #$0000
-        CPX #$000F : BPL .loop
-        LDA #$0063
-      .loop
-        DEX : BMI .endloop
-        CLC : ADC #$0064
-        BRA .loop
-      .endloop
-        STA !SAMUS_HP_MAX : STA !SAMUS_HP
-        RTL
+  .routine
+    TAX : BEQ .zero
+    LDA #$0000
+    CPX #$000F : BPL .loop
+    LDA #$0063
+  .loop
+    DEX : BMI .endloop
+    CLC : ADC #$0064
+    BRA .loop
+  .zero
+    LDA #$0063
+  .endloop
+    STA !SAMUS_HP_MAX : STA !SAMUS_HP
+    RTL
 
 eq_currentreserves:
     %cm_numfield_word("Current Reserves", $7E09D6, 0, 700, 1, 20, #0)
 
 eq_setreserves:
     %cm_numfield("Reserve Tanks", !ram_cm_reserve, 0, 7, 1, 1, .routine)
-    .routine
-        TAX
-        LDA #$0000
-      .loop
-        DEX : BMI .endloop
-        CLC : ADC #$0064
-        BRA .loop
-      .endloop
-        STA !SAMUS_RESERVE_ENERGY : STA !SAMUS_RESERVE_MAX
-        RTL
+  .routine
+    TAX : BEQ .zero
+    LDA #$0000
+  .loop
+    DEX : BMI .endloop
+    CLC : ADC #$0064
+    BRA .loop
+  .zero
+    STA !SAMUS_RESERVE_MODE
+  .endloop
+    STA !SAMUS_RESERVE_ENERGY : STA !SAMUS_RESERVE_MAX
+    RTL
+
+eq_reservemode:
+    dw !ACTION_CHOICE
+    dl #$7E0000+!SAMUS_RESERVE_MODE
+    dw #.routine
+    db #$28, "Reserve Mode", #$FF
+    db #$28, " UNOBTAINED", #$FF
+    db #$28, "       AUTO", #$FF
+    db #$28, "     MANUAL", #$FF
+    db #$FF
+  .routine
+    LDA !SAMUS_RESERVE_MAX : BNE +
+    STA !SAMUS_RESERVE_MODE
+    LDA #$0035 : JSL !SFX_LIB1 ; disallowed, play damage boost sound
++   RTL
 
 eq_currentmissiles:
     %cm_numfield_word("Current Missiles", $7E09C6, 0, 325, 1, 20, #0)
@@ -759,31 +811,20 @@ action_category:
 {
     TYA : ASL #4 : TAX
 
-    ; Items
-    LDA.l .table,X : STA $7E09A4 : STA $7E09A2 : INX #2
+    LDA.l .table,X : STA !SAMUS_ITEMS_COLLECTED : STA !SAMUS_ITEMS_EQUIPPED : INX #2
 
-    ; Beams
-    LDA.l .table,X : STA $7E09A8 : TAY
+    LDA.l .table,X : STA !SAMUS_BEAMS_COLLECTED : TAY
     AND #$000C : CMP #$000C : BEQ .murderBeam
-    TYA : STA $7E09A6 : INX #2 : BRA +
+    TYA : STA !SAMUS_BEAMS_EQUIPPED : INX #2 : BRA +
 
   .murderBeam
-    TYA : AND #$100B : STA $7E09A6 : INX #2
+    TYA : AND #$100B : STA !SAMUS_BEAMS_EQUIPPED : INX #2
 
-    ; Health
-+   LDA.l .table,X : STA $7E09C2 : STA $7E09C4 : INX #2
-
-    ; Missiles
-    LDA.l .table,X : STA $7E09C6 : STA $7E09C8 : INX #2
-
-    ; Supers
-    LDA.l .table,X : STA $7E09CA : STA $7E09CC : INX #2
-
-    ; PBs
-    LDA.l .table,X : STA $7E09CE : STA $7E09D0 : INX #2
-
-    ; Reserves
-    LDA.l .table,X : STA $7E09D4 : STA $7E09D6 : INX #2
++   LDA.l .table,X : STA !SAMUS_HP : STA !SAMUS_HP_MAX : INX #2
+    LDA.l .table,X : STA !SAMUS_MISSILES : STA !SAMUS_MISSILES_MAX : INX #2
+    LDA.l .table,X : STA !SAMUS_SUPERS : STA !SAMUS_SUPERS_MAX : INX #2
+    LDA.l .table,X : STA !SAMUS_PBS : STA !SAMUS_PBS_MAX : INX #2
+    LDA.l .table,X : STA !SAMUS_RESERVE_MAX : STA !SAMUS_RESERVE_ENERGY : INX #2
 
     JSL cm_set_etanks_and_reserve
     LDA #!SOUND_MENU_JSL : JSL !SFX_LIB1
@@ -837,43 +878,70 @@ ToggleItemsMenu:
     %cm_header("TOGGLE ITEMS")
 
 ti_variasuit:
-    %cm_toggle_bit("Varia Suit", $7E09A4, #$0001, #0)
+    %cm_toggle_bit("Varia Suit", $7E0000+!SAMUS_ITEMS_COLLECTED, #$0001, #.routine)
+  .routine
+    LDA !SAMUS_ITEMS_EQUIPPED : EOR #$0001 : STA !SAMUS_ITEMS_EQUIPPED
+    RTL
 
 ti_gravitysuit:
-    %cm_toggle_bit("Gravity Suit", $7E09A4, #$0020, #0)
+    %cm_toggle_bit("Gravity Suit", $7E0000+!SAMUS_ITEMS_COLLECTED, #$0020, #.routine)
+  .routine
+    LDA !SAMUS_ITEMS_EQUIPPED : EOR #$0020 : STA !SAMUS_ITEMS_EQUIPPED
+    RTL
 
 ti_morphball:
-    %cm_toggle_bit("Morphing Ball", $7E09A4, #$0004, #0)
+    %cm_toggle_bit("Morphing Ball", $7E0000+!SAMUS_ITEMS_COLLECTED, #$0004, #.routine)
+  .routine
+    LDA !SAMUS_ITEMS_EQUIPPED : EOR #$0004 : STA !SAMUS_ITEMS_EQUIPPED
+    RTL
 
 ti_bomb:
-    %cm_toggle_bit("Bombs", $7E09A4, #$1000, #0)
+    %cm_toggle_bit("Bombs", $7E0000+!SAMUS_ITEMS_COLLECTED, #$1000, #.routine)
+  .routine
+    LDA !SAMUS_ITEMS_EQUIPPED : EOR #$1000 : STA !SAMUS_ITEMS_EQUIPPED
+    RTL
 
 ti_springball:
-    %cm_toggle_bit("Spring Ball", $7E09A4, #$0002, #0)
+    %cm_toggle_bit("Spring Ball", $7E0000+!SAMUS_ITEMS_COLLECTED, #$0002, #.routine)
+  .routine
+    LDA !SAMUS_ITEMS_EQUIPPED : EOR #$0002 : STA !SAMUS_ITEMS_EQUIPPED
+    RTL
 
 ti_screwattack:
-    %cm_toggle_bit("Screw Attack", $7E09A4, #$0008, #0)
+    %cm_toggle_bit("Screw Attack", $7E0000+!SAMUS_ITEMS_COLLECTED, #$0008, #.routine)
+  .routine
+    LDA !SAMUS_ITEMS_EQUIPPED : EOR #$0008 : STA !SAMUS_ITEMS_EQUIPPED
+    RTL
 
 ti_hijumpboots:
-    %cm_toggle_bit("Hi Jump Boots", $7E09A4, #$0100, #0)
+    %cm_toggle_bit("Hi Jump Boots", $7E0000+!SAMUS_ITEMS_COLLECTED, #$0100, #.routine)
+  .routine
+    LDA !SAMUS_ITEMS_EQUIPPED : EOR #$0100 : STA !SAMUS_ITEMS_EQUIPPED
+    RTL
 
 ti_spacejump:
-    %cm_toggle_bit("Space Jump", $7E09A4, #$0200, #0)
+    %cm_toggle_bit("Space Jump", $7E0000+!SAMUS_ITEMS_COLLECTED, #$0200, #.routine)
+  .routine
+    LDA !SAMUS_ITEMS_EQUIPPED : EOR #$0200 : STA !SAMUS_ITEMS_EQUIPPED
+    RTL
 
 ti_speedbooster:
-    %cm_toggle_bit("Speed Booster", $7E09A4, #$2000, #0)
+    %cm_toggle_bit("Speed Booster", $7E0000+!SAMUS_ITEMS_COLLECTED, #$2000, #.routine)
+  .routine
+    LDA !SAMUS_ITEMS_EQUIPPED : EOR #$2000 : STA !SAMUS_ITEMS_EQUIPPED
+    RTL
 
 ti_grapple:
-    %cm_toggle_bit("Grapple", $7E09A2, #$4000, .routine)
-    .routine
-        LDA !SAMUS_ITEMS_COLLECTED : EOR #$4000 : STA !SAMUS_ITEMS_COLLECTED
-        RTL
+    %cm_toggle_bit("Grapple", $7E0000+!SAMUS_ITEMS_COLLECTED, #$4000, .routine)
+  .routine
+    LDA !SAMUS_ITEMS_EQUIPPED : EOR #$4000 : STA !SAMUS_ITEMS_EQUIPPED
+    RTL
 
 ti_xray:
-    %cm_toggle_bit("X-Ray", $7E09A2, #$8000, .routine)
-    .routine
-        LDA !SAMUS_ITEMS_COLLECTED : EOR #$8000 : STA !SAMUS_ITEMS_COLLECTED
-        RTL
+    %cm_toggle_bit("X-Ray", $7E0000+!SAMUS_ITEMS_COLLECTED, #$8000, .routine)
+  .routine
+    LDA !SAMUS_ITEMS_EQUIPPED : EOR #$8000 : STA !SAMUS_ITEMS_EQUIPPED
+    RTL
 
 
 ; -----------------
@@ -887,27 +955,50 @@ ToggleBeamsMenu:
     dw tb_spazerbeam
     dw tb_plasmabeam
     dw #$FFFF
+    dw misc_hyperbeam
+    dw #$FFFF
     dw tb_glitchedbeams
     dw #$0000
     %cm_header("TOGGLE BEAMS")
 
 tb_chargebeam:
-    %cm_toggle_bit("Charge", $7E09A8, #$1000, #0)
+    %cm_toggle_bit("Charge", $7E0000+!SAMUS_BEAMS_COLLECTED, #$1000, #action_equip_safe_beams)
 
 tb_icebeam:
-    %cm_toggle_bit("Ice", $7E09A8, #$0002, #0)
+    %cm_toggle_bit("Ice", $7E0000+!SAMUS_BEAMS_COLLECTED, #$0002, #action_equip_safe_beams)
 
 tb_wavebeam:
-    %cm_toggle_bit("Wave", $7E09A8, #$0001, #0)
+    %cm_toggle_bit("Wave", $7E0000+!SAMUS_BEAMS_COLLECTED, #$0001, #action_equip_safe_beams)
 
 tb_spazerbeam:
-    %cm_toggle_bit("Spazer", $7E09A8, #$0004, #0)
+    %cm_toggle_bit("Spazer", $7E0000+!SAMUS_BEAMS_COLLECTED, #$0004, #.routine)
+  .routine
+    AND #$1007 : STA !SAMUS_BEAMS_EQUIPPED
+    JSL $90AC8D ; update beam gfx
+    RTL
 
 tb_plasmabeam:
-    %cm_toggle_bit("Plasma", $7E09A8, #$0008, #0)
+    %cm_toggle_bit("Plasma", $7E0000+!SAMUS_BEAMS_COLLECTED, #$0008, #.routine)
+  .routine
+    AND #$100B : STA !SAMUS_BEAMS_EQUIPPED
+    JSL $90AC8D ; update beam gfx
+    RTL
 
 tb_glitchedbeams:
     %cm_submenu("Glitched Beams", #GlitchedBeamsMenu)
+
+action_equip_safe_beams:
+{
+    AND #$000C : CMP #$000C : BEQ .disableMurder
+    LDA !SAMUS_BEAMS_COLLECTED : STA !SAMUS_BEAMS_EQUIPPED
+    JSL $90AC8D ; update beam gfx
+    RTL
+
+  .disableMurder
+    LDA !SAMUS_BEAMS_COLLECTED : AND #$000B : STA !SAMUS_BEAMS_EQUIPPED
+    JSL $90AC8D ; update beam gfx
+    RTL
+}
 
 
 ; -------------------
@@ -938,8 +1029,9 @@ gb_unnamed:
 action_glitched_beam:
 {
     TYA
-    STA $09A6 : STA $09A8
-    LDA #$0042 : JSL !SFX_LIB1 ; unlabeled, song dependent sound
+    STA !SAMUS_BEAMS_EQUIPPED : STA !SAMUS_BEAMS_COLLECTED
+    LDA #$0042 : JSL !SFX_LIB1 ; unlabled, song dependent sound
+    JSL $90AC8D ; update beam gfx
     RTL
 }
 
@@ -1051,7 +1143,7 @@ action_teleport:
     STZ $0727 ; Pause menu index
     STZ $1C1F ; Clear message box index
 
-+   JSL reset_all_counters
+    JSL reset_all_counters
     JSL stop_all_sounds
 
     LDA #$0001 : STA !ram_cm_leave
@@ -1093,7 +1185,33 @@ misc_flashsuit:
     %cm_toggle("Flash Suit", $7E0A68, #$0001, #0)
 
 misc_hyperbeam:
-    %cm_toggle_bit("Hyper Beam", $7E0A76, #$8000, #0)
+    %cm_toggle_bit("Hyper Beam", $7E0A76, #$8000, #.routine)
+  .routine
+    AND #$8000 : BEQ .off
+    LDA #$0003
+if !FEATURE_PAL
+    JSL $91E412 ; setup Samus for Hyper Beam
+else
+    JSL $91E4AD ; setup Samus for Hyper Beam
+endif
+    RTL
+
+  .off
+    LDA !SAMUS_BEAMS_COLLECTED : JSL action_equip_safe_beams
+    LDX #$000E
+
+  .loopFXobjects
+    LDA $1E7D,X : CMP #$E1F0 : BEQ .found
+    DEX #2 : BPL .loopFXobjects
+
+  .found
+    ; clear Hyper Beam palette FX object
+    STZ $1E7D,X ; this is probably the only one that matters
+    STZ $1E8D,X : STZ $1E9D,X : STZ $1EAD,X
+    STZ $1EBD,X : STZ $1ECD,X : STZ $1EDD,X
+
+    JSL $90AC8D ; update beam gfx
+    RTL
 
 misc_gooslowdown:
     %cm_numfield("Goo Slowdown", $7E0A66, 0, 4, 1, 1, #0)
@@ -1142,10 +1260,10 @@ misc_suit_properties:
     dw !ACTION_CHOICE
     dl #!sram_suit_properties
     dw init_suit_properties_ram
-    db #$28, "Suit Propertie", #$FF
-    db #$28, "s   VANILLA", #$FF
-    db #$28, "s  BALANCED", #$FF
-    db #$28, "s  PROGRESS", #$FF
+    db #$28, "Suit Properties", #$FF
+    db #$28, "    VANILLA", #$FF
+    db #$28, "   BALANCED", #$FF
+    db #$28, "   PROGRESS", #$FF
     db #$FF
 
 init_suit_properties_ram:
@@ -1181,7 +1299,7 @@ misc_forcestand:
 
   .routine
     JSL $90E2D4
-    LDA #!SOUND_MENU_JSL : JSL $80903F
+    LDA #!SOUND_MENU_JSL : JSL !SFX_LIB1
     RTL
 
 
@@ -1194,6 +1312,7 @@ SpritesMenu:
     dw #sprites_show_samus_hitbox
     dw #sprites_show_enemy_hitbox
     dw #sprites_show_extended_spritemap_hitbox
+    dw #sprites_show_custom_boss_hitbox
     dw #sprites_show_samusproj_hitbox
     dw #sprites_show_enemyproj_hitbox
     dw #sprites_oob_viewer
@@ -1211,10 +1330,13 @@ sprites_show_samus_hitbox:
     %cm_toggle("Show Samus Hitbox", !ram_sprite_samus_hitbox_active, #1, #action_sprite_features)
 
 sprites_show_enemy_hitbox:
-    %cm_toggle("Show Enemy Hitboxes", !ram_sprite_enemy_hitbox_active, #1, #action_sprite_features)
+    %cm_toggle("Normal Enemy Hitboxes", !ram_sprite_enemy_hitbox_active, #1, #action_sprite_features)
 
 sprites_show_extended_spritemap_hitbox:
-    %cm_toggle("Phan + Dray Hitboxes", !ram_sprite_extended_hitbox_active, #1, #action_sprite_features)
+    %cm_toggle("Large Enemy Hitboxes", !ram_sprite_extended_hitbox_active, #1, #action_sprite_features)
+
+sprites_show_custom_boss_hitbox:
+    %cm_toggle("Special Boss Hitboxes", !ram_sprite_custom_hitbox_active, #1, #action_sprite_features)
 
 sprites_show_enemyproj_hitbox:
     %cm_toggle("E Projectile Hitboxes", !ram_sprite_enemyproj_hitbox_active, #1, #action_sprite_features)
@@ -1240,7 +1362,7 @@ sprites_spacetime_infohud:
     dw !ACTION_CHOICE
     dl #!ram_spacetime_infohud
     dw #$0000
-    db #$28, "Spacetime HUD ", #$FF
+    db #$28, "Spacetime HUD", #$FF
     db #$28, "    VANILLA", #$FF
     db #$28, "  PRESERVED", #$FF
     db #$FF
@@ -1250,6 +1372,7 @@ action_sprite_features:
     LDA !ram_sprite_samus_hitbox_active : BNE .enabled
     LDA !ram_sprite_enemy_hitbox_active : BNE .enabled
     LDA !ram_sprite_extended_hitbox_active : BNE .enabled
+    LDA !ram_sprite_custom_hitbox_active : BNE .enabled
     LDA !ram_sprite_enemyproj_hitbox_active : BNE .enabled
     LDA !ram_sprite_samusproj_hitbox_active : BNE .enabled
     LDA !ram_oob_watch_active
@@ -1660,10 +1783,10 @@ ih_top_HUD_mode:
     dw !ACTION_CHOICE
     dl #!sram_top_display_mode
     dw #$0000
-    db #$28, "Top-Left Displ", #$FF
-    db #$28, "ay   ITEM %", #$FF
-    db #$28, "ay RESERVES", #$FF
-    db #$28, "ay  VANILLA", #$FF
+    db #$28, "Top-Left Displa", #$FF
+    db #$28, "y    ITEM %", #$FF
+    db #$28, "y  RESERVES", #$FF
+    db #$28, "y   VANILLA", #$FF
     db #$FF
 
 ih_room_counter:
@@ -1837,7 +1960,7 @@ game_music_toggle:
     dw !ACTION_CHOICE
     dl #!sram_music_toggle
     dw .routine
-    db #$28, "Music         ", #$FF
+    db #$28, "Music", #$FF
     db #$28, "        OFF", #$FF
     db #$28, "         ON", #$FF
     db #$28, "   FAST OFF", #$FF
@@ -1860,11 +1983,11 @@ game_healthalarm:
     dw !ACTION_CHOICE
     dl #!sram_healthalarm
     dw #$0000
-    db #$28, "Low Health Ala", #$FF
-    db #$28, "rm    NEVER", #$FF
-    db #$28, "rm  VANILLA", #$FF
-    db #$28, "rm   PB FIX", #$FF
-    db #$28, "rm IMPROVED", #$FF
+    db #$28, "Low Health Alar", #$FF
+    db #$28, "m     NEVER", #$FF
+    db #$28, "m   VANILLA", #$FF
+    db #$28, "m    PB FIX", #$FF
+    db #$28, "m  IMPROVED", #$FF
     db #$FF
 
 game_debugmode:
@@ -2254,20 +2377,20 @@ rng_draygon_rng_right:
     dw !ACTION_CHOICE
     dl #!ram_draygon_rng_right
     dw #$0000
-    db #$28, "Draygon from R", #$FF
-    db #$28, "ight RANDOM", #$FF
-    db #$28, "ight   GOOP", #$FF
-    db #$28, "ight  SWOOP", #$FF
+    db #$28, "Draygon from Ri", #$FF
+    db #$28, "ght  RANDOM", #$FF
+    db #$28, "ght    GOOP", #$FF
+    db #$28, "ght   SWOOP", #$FF
     db #$FF
 
 rng_draygon_rng_left:
     dw !ACTION_CHOICE
     dl #!ram_draygon_rng_left
     dw #$0000
-    db #$28, "Draygon from L", #$FF
-    db #$28, "eft  RANDOM", #$FF
-    db #$28, "eft    GOOP", #$FF
-    db #$28, "eft   SWOOP", #$FF
+    db #$28, "Draygon from Le", #$FF
+    db #$28, "ft   RANDOM", #$FF
+    db #$28, "ft     GOOP", #$FF
+    db #$28, "ft    SWOOP", #$FF
     db #$FF
 
 rng_crocomire_rng:
@@ -2451,11 +2574,11 @@ phan_second_phase_inverted:
     dw !ACTION_CHOICE
     dl #!ram_phantoon_rng_inverted
     dw #$0000
-    db #$28, "2nd Phase Inve", #$FF
-    db #$28, "rt  VANILLA", #$FF
-    db #$28, "rt       ON", #$FF
-    db #$28, "rt      OFF", #$FF
-    db #$28, "rt   RANDOM", #$FF
+    db #$28, "2nd Phase Inver", #$FF
+    db #$28, "t   VANILLA", #$FF
+    db #$28, "t        ON", #$FF
+    db #$28, "t       OFF", #$FF
+    db #$28, "t    RANDOM", #$FF
     db #$FF
 
 phan_eyeclose:
@@ -2473,7 +2596,7 @@ phan_flamepattern:
     dw !ACTION_CHOICE
     dl #!ram_phantoon_rng_flames
     dw #$0000
-    db #$28, "Phan Flames   ", #$FF
+    db #$28, "Phantoon Flames", #$FF
     db #$28, "     RANDOM", #$FF
     db #$28, "      22222", #$FF
     db #$28, "        111", #$FF
@@ -2485,7 +2608,7 @@ phan_next_flamepattern:
     dw !ACTION_CHOICE
     dl #!ram_phantoon_rng_next_flames
     dw #$0000
-    db #$28, "Next Flames   ", #$FF
+    db #$28, "Next Flames", #$FF
     db #$28, "     RANDOM", #$FF
     db #$28, "      22222", #$FF
     db #$28, "        111", #$FF

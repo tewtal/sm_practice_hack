@@ -135,7 +135,7 @@ ramwatch_common_enemy_property:
     dw !ACTION_CHOICE
     dl #!ram_cm_watch_enemy_property
     dw #$0000
-    db #$28, "Set to Enemy  ", #$FF
+    db #$28, "Set to Enemy", #$FF
     db #$28, "         ID", #$FF
     db #$28, " X POSITION", #$FF
     db #$28, "   X SUBPOS", #$FF
