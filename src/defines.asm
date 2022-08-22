@@ -214,6 +214,21 @@
 !ram_cm_phan_first_phase = !WRAM_MENU_START+$80
 !ram_cm_phan_second_phase = !WRAM_MENU_START+$82
 
+!ram_cm_varia = !WRAM_MENU_START+$80
+!ram_cm_gravity = !WRAM_MENU_START+$82
+!ram_cm_morph = !WRAM_MENU_START+$84
+!ram_cm_bombs = !WRAM_MENU_START+$86
+!ram_cm_spring = !WRAM_MENU_START+$88
+!ram_cm_screw = !WRAM_MENU_START+$8A
+!ram_cm_hijump = !WRAM_MENU_START+$8C
+!ram_cm_space = !WRAM_MENU_START+$8E
+!ram_cm_speed = !WRAM_MENU_START+$90
+!ram_cm_charge = !WRAM_MENU_START+$92
+!ram_cm_ice = !WRAM_MENU_START+$94
+!ram_cm_wave = !WRAM_MENU_START+$96
+!ram_cm_spazer = !WRAM_MENU_START+$98
+!ram_cm_plasma = !WRAM_MENU_START+$9A
+
 ; ^ FREE SPACE ^ up to +$CE
 
 ; Reserve 48 bytes for CGRAM cache

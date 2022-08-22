@@ -152,6 +152,62 @@ macro cm_ctrl_input(title, addr, routine, argument)
     db #$28, "<title>", #$FF
 endmacro
 
+macro cm_equipment_item(name, addr, bitmask, inverse)
+    dw !ACTION_CHOICE
+    dl <addr>
+    dw #.routine
+    db #$28, "<name>", #$FF
+    db #$28, " UNOBTAINED", #$FF
+    db #$28, "         ON", #$FF
+    db #$28, "        OFF", #$FF
+    db #$FF
+  .routine
+    LDA <addr> : BEQ .unobtained
+    DEC : BEQ .equipped
+    ; unquipped
+    LDA !SAMUS_ITEMS_EQUIPPED : AND <inverse> : STA !SAMUS_ITEMS_EQUIPPED
+    LDA !SAMUS_ITEMS_COLLECTED : ORA <bitmask> : STA !SAMUS_ITEMS_COLLECTED
+    RTL
+
+  .equipped
+    LDA !SAMUS_ITEMS_EQUIPPED : ORA <bitmask> : STA !SAMUS_ITEMS_EQUIPPED
+    LDA !SAMUS_ITEMS_COLLECTED : ORA <bitmask> : STA !SAMUS_ITEMS_COLLECTED
+    RTL
+
+  .unobtained
+    LDA !SAMUS_ITEMS_EQUIPPED : AND <inverse> : STA !SAMUS_ITEMS_EQUIPPED
+    LDA !SAMUS_ITEMS_COLLECTED : AND <inverse> : STA !SAMUS_ITEMS_COLLECTED
+    RTL
+endmacro
+
+macro cm_equipment_beam(name, addr, bitmask, inverse, and)
+    dw !ACTION_CHOICE
+    dl <addr>
+    dw #.routine
+    db #$28, "<name>", #$FF
+    db #$28, " UNOBTAINED", #$FF
+    db #$28, "         ON", #$FF
+    db #$28, "        OFF", #$FF
+    db #$FF
+  .routine
+    LDA <addr> : BEQ .unobtained
+    DEC : BEQ .equipped
+    ; unquipped
+    LDA !SAMUS_BEAMS_EQUIPPED : AND <inverse> : STA !SAMUS_BEAMS_EQUIPPED
+    LDA !SAMUS_BEAMS_COLLECTED : ORA <bitmask> : STA !SAMUS_BEAMS_COLLECTED
+    JML action_equip_safe_beams
+
+  .equipped
+    LDA !SAMUS_BEAMS_EQUIPPED : ORA <bitmask> : AND <and> : STA !SAMUS_BEAMS_EQUIPPED
+    LDA !SAMUS_BEAMS_COLLECTED : ORA <bitmask> : STA !SAMUS_BEAMS_COLLECTED
+    JML $90AC8D ; update beam gfx
+
+  .unobtained
+    LDA !SAMUS_BEAMS_EQUIPPED : AND <inverse> : STA !SAMUS_BEAMS_EQUIPPED
+    LDA !SAMUS_BEAMS_COLLECTED : AND <inverse> : STA !SAMUS_BEAMS_COLLECTED
+    JML action_equip_safe_beams
+endmacro
+
 macro setmenubank()
 ; used to set the menu bank before a manual submenu jump
 ; assumes 16bit A
@@ -654,10 +710,10 @@ eq_toggle_category:
     %cm_submenu("Category Loadouts", #ToggleCategoryMenu)
 
 eq_goto_toggleitems:
-    %cm_submenu("Toggle Items", #ToggleItemsMenu)
+    %cm_jsl("Toggle Items", #eq_prepare_items_menu, #ToggleItemsMenu)
 
 eq_goto_togglebeams:
-    %cm_submenu("Toggle Beams", #ToggleBeamsMenu)
+    %cm_jsl("Toggle Beams", #eq_prepare_beams_menu, #ToggleBeamsMenu)
 
 eq_currentenergy:
     %cm_numfield_word("Current Energy", $7E09C2, 0, 2100, 1, 20, #0)
@@ -859,6 +915,93 @@ endif
 ; Toggle Items menu
 ; ------------------
 
+eq_prepare_items_menu:
+{
+    LDA !SAMUS_ITEMS_COLLECTED : BIT #$0001 : BEQ .noVaria
+    LDA !SAMUS_ITEMS_EQUIPPED : BIT #$0001 : BNE .equipVaria
+    ; unequip
+    LDA #$0002 : STA !ram_cm_varia : BRA +
+  .equipVaria
+    LDA #$0001 : STA !ram_cm_varia : BRA +
+  .noVaria
+    LDA #$0000 : STA !ram_cm_varia
+
++   LDA !SAMUS_ITEMS_COLLECTED : BIT #$0020 : BEQ .noGravity
+    LDA !SAMUS_ITEMS_EQUIPPED : BIT #$0020 : BNE .equipGravity
+    ; unequip
+    LDA #$0002 : STA !ram_cm_gravity : BRA +
+  .equipGravity
+    LDA #$0001 : STA !ram_cm_gravity : BRA +
+  .noGravity
+    LDA #$0000 : STA !ram_cm_gravity
+
++   LDA !SAMUS_ITEMS_COLLECTED : BIT #$0004 : BEQ .noMorph
+    LDA !SAMUS_ITEMS_EQUIPPED : BIT #$0004 : BNE .equipMorph
+    ; unequip
+    LDA #$0002 : STA !ram_cm_morph : BRA +
+  .equipMorph
+    LDA #$0001 : STA !ram_cm_morph : BRA +
+  .noMorph
+    LDA #$0000 : STA !ram_cm_morph
+
++   LDA !SAMUS_ITEMS_COLLECTED : BIT #$1000 : BEQ .noBombs
+    LDA !SAMUS_ITEMS_EQUIPPED : BIT #$1000 : BNE .equipBombs
+    ; unequip
+    LDA #$0002 : STA !ram_cm_bombs : BRA +
+  .equipBombs
+    LDA #$0001 : STA !ram_cm_bombs : BRA +
+  .noBombs
+    LDA #$0000 : STA !ram_cm_bombs
+
++   LDA !SAMUS_ITEMS_COLLECTED : BIT #$0002 : BEQ .noSpring
+    LDA !SAMUS_ITEMS_EQUIPPED : BIT #$0002 : BNE .equipSpring
+    ; unequip
+    LDA #$0002 : STA !ram_cm_spring : BRA +
+  .equipSpring
+    LDA #$0001 : STA !ram_cm_spring : BRA +
+  .noSpring
+    LDA #$0000 : STA !ram_cm_spring
+
++   LDA !SAMUS_ITEMS_COLLECTED : BIT #$0008 : BEQ .noScrew
+    LDA !SAMUS_ITEMS_EQUIPPED : BIT #$0008 : BNE .equipScrew
+    ; unequip
+    LDA #$0002 : STA !ram_cm_screw : BRA +
+  .equipScrew
+    LDA #$0001 : STA !ram_cm_screw : BRA +
+  .noScrew
+    LDA #$0000 : STA !ram_cm_screw
+
++   LDA !SAMUS_ITEMS_COLLECTED : BIT #$0100 : BEQ .noHiJump
+    LDA !SAMUS_ITEMS_EQUIPPED : BIT #$0100 : BNE .equipHiJump
+    ; unequip
+    LDA #$0002 : STA !ram_cm_hijump : BRA +
+  .equipHiJump
+    LDA #$0001 : STA !ram_cm_hijump : BRA +
+  .noHiJump
+    LDA #$0000 : STA !ram_cm_hijump
+
++   LDA !SAMUS_ITEMS_COLLECTED : BIT #$0200 : BEQ .noSpace
+    LDA !SAMUS_ITEMS_EQUIPPED : BIT #$0200 : BNE .equipSpace
+    ; unequip
+    LDA #$0002 : STA !ram_cm_space : BRA +
+  .equipSpace
+    LDA #$0001 : STA !ram_cm_space : BRA +
+  .noSpace
+    LDA #$0000 : STA !ram_cm_space
+
++   LDA !SAMUS_ITEMS_COLLECTED : BIT #$2000 : BEQ .noSpeed
+    LDA !SAMUS_ITEMS_EQUIPPED : BIT #$2000 : BNE .equipSpeed
+    ; unequip
+    LDA #$0002 : STA !ram_cm_speed : BRA +
+  .equipSpeed
+    LDA #$0001 : STA !ram_cm_speed : BRA +
+  .noSpeed
+    LDA #$0000 : STA !ram_cm_speed
+
++   %setmenubank()
+    JML action_submenu
+}
+
 ToggleItemsMenu:
     dw #ti_variasuit
     dw #ti_gravitysuit
@@ -878,58 +1021,31 @@ ToggleItemsMenu:
     %cm_header("TOGGLE ITEMS")
 
 ti_variasuit:
-    %cm_toggle_bit("Varia Suit", $7E0000+!SAMUS_ITEMS_COLLECTED, #$0001, #.routine)
-  .routine
-    LDA !SAMUS_ITEMS_EQUIPPED : EOR #$0001 : STA !SAMUS_ITEMS_EQUIPPED
-    RTL
+    %cm_equipment_item("Varia Suit", !ram_cm_varia, #$0001, #$FFFE)
 
 ti_gravitysuit:
-    %cm_toggle_bit("Gravity Suit", $7E0000+!SAMUS_ITEMS_COLLECTED, #$0020, #.routine)
-  .routine
-    LDA !SAMUS_ITEMS_EQUIPPED : EOR #$0020 : STA !SAMUS_ITEMS_EQUIPPED
-    RTL
+    %cm_equipment_item("Gravity Suit", !ram_cm_gravity, #$0020, #$FFDF)
 
 ti_morphball:
-    %cm_toggle_bit("Morphing Ball", $7E0000+!SAMUS_ITEMS_COLLECTED, #$0004, #.routine)
-  .routine
-    LDA !SAMUS_ITEMS_EQUIPPED : EOR #$0004 : STA !SAMUS_ITEMS_EQUIPPED
-    RTL
+    %cm_equipment_item("Morph Ball", !ram_cm_morph, #$0004, #$FFFB)
 
 ti_bomb:
-    %cm_toggle_bit("Bombs", $7E0000+!SAMUS_ITEMS_COLLECTED, #$1000, #.routine)
-  .routine
-    LDA !SAMUS_ITEMS_EQUIPPED : EOR #$1000 : STA !SAMUS_ITEMS_EQUIPPED
-    RTL
+    %cm_equipment_item("Bombs", !ram_cm_bombs, #$1000, #$EFFF)
 
 ti_springball:
-    %cm_toggle_bit("Spring Ball", $7E0000+!SAMUS_ITEMS_COLLECTED, #$0002, #.routine)
-  .routine
-    LDA !SAMUS_ITEMS_EQUIPPED : EOR #$0002 : STA !SAMUS_ITEMS_EQUIPPED
-    RTL
+    %cm_equipment_item("Spring Ball", !ram_cm_spring, #$0002, #$FFFD)
 
 ti_screwattack:
-    %cm_toggle_bit("Screw Attack", $7E0000+!SAMUS_ITEMS_COLLECTED, #$0008, #.routine)
-  .routine
-    LDA !SAMUS_ITEMS_EQUIPPED : EOR #$0008 : STA !SAMUS_ITEMS_EQUIPPED
-    RTL
+    %cm_equipment_item("Screw Attack", !ram_cm_screw, #$0008, #$FFF7)
 
 ti_hijumpboots:
-    %cm_toggle_bit("Hi Jump Boots", $7E0000+!SAMUS_ITEMS_COLLECTED, #$0100, #.routine)
-  .routine
-    LDA !SAMUS_ITEMS_EQUIPPED : EOR #$0100 : STA !SAMUS_ITEMS_EQUIPPED
-    RTL
+    %cm_equipment_item("Hi Jump Boots", !ram_cm_hijump, #$0100, #$FEFF)
 
 ti_spacejump:
-    %cm_toggle_bit("Space Jump", $7E0000+!SAMUS_ITEMS_COLLECTED, #$0200, #.routine)
-  .routine
-    LDA !SAMUS_ITEMS_EQUIPPED : EOR #$0200 : STA !SAMUS_ITEMS_EQUIPPED
-    RTL
+    %cm_equipment_item("Space Jump", !ram_cm_space, #$0200, #$FDFF)
 
 ti_speedbooster:
-    %cm_toggle_bit("Speed Booster", $7E0000+!SAMUS_ITEMS_COLLECTED, #$2000, #.routine)
-  .routine
-    LDA !SAMUS_ITEMS_EQUIPPED : EOR #$2000 : STA !SAMUS_ITEMS_EQUIPPED
-    RTL
+    %cm_equipment_item("Speed Booster", !ram_cm_speed, #$2000, #$DFFF)
 
 ti_grapple:
     %cm_toggle_bit("Grapple", $7E0000+!SAMUS_ITEMS_COLLECTED, #$4000, .routine)
@@ -948,6 +1064,57 @@ ti_xray:
 ; Toggle Beams menu
 ; -----------------
 
+eq_prepare_beams_menu:
+{
++   LDA !SAMUS_BEAMS_COLLECTED : BIT #$1000 : BEQ .noCharge
+    LDA !SAMUS_BEAMS_EQUIPPED : BIT #$1000 : BNE .equipCharge
+    ; unequip Charge
+    LDA #$0002 : STA !ram_cm_charge : BRA +
+  .equipCharge
+    LDA #$0001 : STA !ram_cm_charge : BRA +
+  .noCharge
+    LDA #$0000 : STA !ram_cm_charge
+
++   LDA !SAMUS_BEAMS_COLLECTED : BIT #$0002 : BEQ .noIce
+    LDA !SAMUS_BEAMS_EQUIPPED : BIT #$0002 : BNE .equipIce
+    ; unequip Ice
+    LDA #$0002 : STA !ram_cm_ice : BRA +
+  .equipIce
+    LDA #$0001 : STA !ram_cm_ice : BRA +
+  .noIce
+    LDA #$0000 : STA !ram_cm_ice
+
++   LDA !SAMUS_BEAMS_COLLECTED : BIT #$0001 : BEQ .noWave
+    LDA !SAMUS_BEAMS_EQUIPPED : BIT #$0001 : BNE .equipWave
+    ; unequip Wave
+    LDA #$0002 : STA !ram_cm_wave : BRA +
+  .equipWave
+    LDA #$0001 : STA !ram_cm_wave : BRA +
+  .noWave
+    LDA #$0000 : STA !ram_cm_wave
+
++   LDA !SAMUS_BEAMS_COLLECTED : BIT #$0004 : BEQ .noSpazer
+    LDA !SAMUS_BEAMS_EQUIPPED : BIT #$0004 : BNE .equipSpazer
+    ; unequip Spazer
+    LDA #$0002 : STA !ram_cm_spazer : BRA +
+  .equipSpazer
+    LDA #$0001 : STA !ram_cm_spazer : BRA +
+  .noSpazer
+    LDA #$0000 : STA !ram_cm_spazer
+
++   LDA !SAMUS_BEAMS_COLLECTED : BIT #$0008 : BEQ .noPlasma
+    LDA !SAMUS_BEAMS_EQUIPPED : BIT #$0008 : BNE .equipPlasma
+    ; unequip Plasma
+    LDA #$0002 : STA !ram_cm_plasma : BRA +
+  .equipPlasma
+    LDA #$0001 : STA !ram_cm_plasma : BRA +
+  .noPlasma
+    LDA #$0000 : STA !ram_cm_plasma
+
++   %setmenubank()
+    JML action_submenu
+}
+
 ToggleBeamsMenu:
     dw tb_chargebeam
     dw tb_icebeam
@@ -962,27 +1129,19 @@ ToggleBeamsMenu:
     %cm_header("TOGGLE BEAMS")
 
 tb_chargebeam:
-    %cm_toggle_bit("Charge", $7E0000+!SAMUS_BEAMS_COLLECTED, #$1000, #action_equip_safe_beams)
+    %cm_equipment_beam("Charge", !ram_cm_charge, #$1000, #$EFFF, #$100F)
 
 tb_icebeam:
-    %cm_toggle_bit("Ice", $7E0000+!SAMUS_BEAMS_COLLECTED, #$0002, #action_equip_safe_beams)
+    %cm_equipment_beam("Ice", !ram_cm_ice, #$0002, #$FFFD, #$100F)
 
 tb_wavebeam:
-    %cm_toggle_bit("Wave", $7E0000+!SAMUS_BEAMS_COLLECTED, #$0001, #action_equip_safe_beams)
+    %cm_equipment_beam("Wave", !ram_cm_wave, #$0001, #$FFFE, #$100F)
 
 tb_spazerbeam:
-    %cm_toggle_bit("Spazer", $7E0000+!SAMUS_BEAMS_COLLECTED, #$0004, #.routine)
-  .routine
-    AND #$1007 : STA !SAMUS_BEAMS_EQUIPPED
-    JSL $90AC8D ; update beam gfx
-    RTL
+    %cm_equipment_beam("Spazer", !ram_cm_spazer, #$0004, #$FFFB, #$1007)
 
 tb_plasmabeam:
-    %cm_toggle_bit("Plasma", $7E0000+!SAMUS_BEAMS_COLLECTED, #$0008, #.routine)
-  .routine
-    AND #$100B : STA !SAMUS_BEAMS_EQUIPPED
-    JSL $90AC8D ; update beam gfx
-    RTL
+    %cm_equipment_beam("Plasma", !ram_cm_plasma, #$0008, #$FFF7, #$100B)
 
 tb_glitchedbeams:
     %cm_submenu("Glitched Beams", #GlitchedBeamsMenu)
@@ -1317,6 +1476,7 @@ misc_forcestand:
 
 misc_clearliquid:
     %cm_toggle_bit("Ignore Water this Room", $197E, #$0004, #0)
+
 
 ; ---------------
 ; Sprite Features
