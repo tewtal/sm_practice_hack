@@ -563,7 +563,7 @@ action_ramwatch_edit_left:
     %a8()
 +   LDA !ram_watch_edit_left : STA [$C1]
     %a16()
-    LDA !IH_MODE_RAMWATCH_INDEX : STA !sram_display_mode
+    LDA #!IH_MODE_RAMWATCH_INDEX : STA !sram_display_mode
     LDA #!SOUND_MENU_JSL : JSL !SFX_LIB1
     RTL
 }
@@ -583,7 +583,7 @@ action_ramwatch_edit_right:
     %a8()
 +   LDA !ram_watch_edit_right : STA [$C1]
     %a16()
-    LDA !IH_MODE_RAMWATCH_INDEX : STA !sram_display_mode
+    LDA #!IH_MODE_RAMWATCH_INDEX : STA !sram_display_mode
     LDA #!SOUND_MENU_JSL : JSL !SFX_LIB1
     RTL
 }

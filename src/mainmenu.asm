@@ -97,9 +97,9 @@ endmacro
 
 macro cm_toggle_bit_inverted(title, addr, mask, jsltarget)
 ; toggle specific bits, draw ON if bits cleared
-    dw <mask> ; which bits to flip
+    dw !ACTION_TOGGLE_BIT_INVERTED
     dl <addr> ; 24bit RAM address to display/manipulate
-    dw <mask>
+    dw <mask> ; which bits to flip
     dw <jsltarget> ; 16bit address to code in the same bank as current menu/submenu
     db #$28, "<title>", #$FF
 endmacro
@@ -332,9 +332,9 @@ mm_goto_ctrlsmenu:
     %cm_mainmenu("Controller Shortcuts", #CtrlMenu)
 
 
-; --------------------
-; Presets Options menu
-; --------------------
+; -------------------
+; Preset Options menu
+; -------------------
 
 PresetsMenu:
     dw #presets_goto_select_preset_category
