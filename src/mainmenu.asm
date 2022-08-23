@@ -2750,5 +2750,8 @@ GameModeExtras:
 init_wram_based_on_sram:
 {
     JSL init_suit_properties_ram
+
+    ; Check if any less common controller shortcuts are configured
+    JSL GameModeExtras
     RTL
 }
