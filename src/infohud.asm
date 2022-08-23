@@ -444,12 +444,12 @@ ih_chozo_segment:
 
 ih_ceres_elevator_segment:
 {
-    JSL ih_update_hud_early
 if !FEATURE_PAL
-    JML $90F081 ; overwritten code
+    JSL $90F081 ; overwritten code
 else
-    JML $90F084 ; overwritten code
+    JSL $90F084 ; overwritten code
 endif
+    JML ih_update_hud_early
 }
 
 ih_ship_elevator_segment:
