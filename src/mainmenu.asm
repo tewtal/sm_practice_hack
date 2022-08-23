@@ -44,9 +44,9 @@ endmacro
 macro cm_numfield_word(title, addr, start, end, increment, heldincrement, jsltarget)
     dw !ACTION_NUMFIELD_WORD
     dl <addr> ; 24bit RAM address to display/manipulate
-    db <start>, <end> ; minimum and maximum values allowed
-    db <increment> ; inc/dec amount when pressed
-    db <heldincrement> ; inc/dec amount when direction is held (scroll faster)
+    dw <start>, <end> ; minimum and maximum values allowed
+    dw <increment> ; inc/dec amount when pressed
+    dw <heldincrement> ; inc/dec amount when direction is held (scroll faster)
     dw <jsltarget> ; 16bit address to code in the same bank as current menu/submenu
     db #$28, "<title>", #$FF
 endmacro
