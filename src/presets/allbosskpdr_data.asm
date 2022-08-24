@@ -221,7 +221,6 @@ preset_allbosskpdr_crateria_terminator:
     dw $0A1C, $008A  ; Samus position/state
     dw $0A1E, $1504  ; More position/state
     dw $0AF6, $0115  ; Samus X
-    dw $0B3F, $0104  ; Blue suit
     dw $D828, $0004  ; Bosses
     dw $D870, $0080  ; Items
     dw $D8B2, $2C00  ; Doors
@@ -240,7 +239,6 @@ preset_allbosskpdr_brinstar_green_brinstar_elevator:
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $007F  ; Samus X
-    dw $0B3F, $0000  ; Blue suit
     dw $D870, $0180  ; Items
     dw #$FFFF
 
