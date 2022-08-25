@@ -60,7 +60,7 @@ If you experience crashes or severe glitches when using savestates, your platfor
 | **Category Presets**          | Presets are pre-configured savestates that are specific to a particular category.
 |                               | **Note**: Presets load a room but do not load any enemies for that room.
 |&nbsp;|
-| **Preset Options**            | Select a category or save/load custom presets
+| **Preset Options**            | Select a category, toggle doors, or save/load custom presets. Compressed OFF allows presets to load faster (see Sprite Patches below)
 | - Select Preset Category      | Select the desired category to be used with Category Presets
 | - Custom Preset Slot          | Select one of 40 slots in memory to save or load custom presets
 | - Save Custom Preset          | Save a custom preset to the current slot in SRAM.
@@ -101,6 +101,7 @@ If you experience crashes or severe glitches when using savestates, your platfor
 | - Metronome                   | Toggles a metronome feature that will play a sound at a periodic rate
 | - Metronome Tickrate          | The number of frames between metronome sounds
 | - Metronome SFX               | The sound to play (Beep, Power Beam, Spazer, Missile, Click)
+| - Ignore Water this Room      | Toggles the water physics for the current room.
 | - Kill Enemies                | Kills all non-solid enemies in the current room
 | - Force Samus to Stand Up     | Forces Samus into a standing pose
 |&nbsp;|
@@ -143,6 +144,7 @@ If you experience crashes or severe glitches when using savestates, your platfor
 | - Icon Cancel                 | Standard game option for Icon Cancel.
 | - Cutscenes                   | Turn off specific cutscenes, or make specific game sequences faster.
 | - Fanfare                     | Toggle the fanfare for collecting items
+| - Fast Doors + Elevators      | Toggle for fast doors and elevators similar to some randomizers.
 | - Music                       | Toggle the music off, on, or fast off which eliminates lag caused by loading music data.
 | - Low Health Alarm            | Modify the behavior of the low-health alarm
 |                               | Never = Self-explanatory
@@ -159,7 +161,7 @@ If you experience crashes or severe glitches when using savestates, your platfor
 | - Clear Minimap               | Clears the map tile counter and all minimap data.
 |&nbsp;|
 | **RNG Control**               | Pre-determine boss patterns
-| - Rerandomize                 | Toggles rerandomizing of RNG values upon loading a savestate. SD2SNES/FXPak versions only.
+| - Rerandomize                 | Toggles rerandomizing of RNG values upon loading a savestate. Not available on some platforms.
 | - Phantoon                    | Configure possible Phantoon patterns. You can enable or disable individual patterns per-round, allowing you to practice only a subset of possible patterns. The round-1 toggles apply only to the first round, whereas the round-2 toggles apply to all subsequent rounds, including rounds where Phantoon is invisible.
 |                               | If all patterns are enabled (or disabled) for a round, vanilla RNG is used with all its quirks and biases. However, if you customize the patterns for a round, that round will use a customized RNG that chooses patterns with mostly-balanced probabilities (though slower patterns may still tend to be slightly more common).
 |                               | - Phan Eye Close: Choose how long Phantoon's eye will remain open after a ring of flames
@@ -174,8 +176,8 @@ If you experience crashes or severe glitches when using savestates, your platfor
 |&nbsp;|
 | **Controller Shortcuts**      | Set or change button combinations for activating features. Press A to edit the shortcut and then hold the desired button combination until it turns pink.
 | - Main Menu                   | Open the InfoHUD menu
-| - Save State                  | Sets the savestate. SD2SNES/FXPak versions only.
-| - Load State                  | Loads the savestate. SD2SNES/FXPak versions only.
+| - Save State                  | Sets the savestate. Not available on some platforms.
+| - Load State                  | Loads the savestate. Not available on some platforms.
 | - Reload Preset               | Reload the last selected category preset
 | - Random Preset               | Randomly chooses a preset from your selected preset category
 | - Save Cust Preset            | Save a custom preset to the current slot in SRAM.
@@ -210,5 +212,5 @@ As we continue to maintain and add features to the practice ROM, this is our str
 | - Events                      | On events (when drops appear, when an item is collected, etc.), we may add features. It's conceivable this could add a lag frame, although in most circumstances it would be unlikely or impossible.
 | - Door/Elevator Transitions   | Similar to events, we may add features during this time. Some features require data to be reloaded during this time.
 | - Practice Features           | Once you start turning on practice features, lag may no longer be similar to actual game. Some features like magic pants or the metronome may not have much impact, but others like the OOB tile viewer add a significant amount of work for the CPU.
-| - Sprite Patches              | Sprite patches such as SpriteSomething should be supported. These patches sometimes modify the game and theoretically could affect lag on their own, although if you intend to play the vanilla game or randomizer with a sprite patch then you might as well apply it to the practice ROM.
+| - Sprite Patches              | Sprite patches such as SpriteSomething should be supported. These patches sometimes modify the game and theoretically could affect lag on their own, although if you intend to play the vanilla game or randomizer with a sprite patch then you might as well apply it to the practice ROM. You may need to turn on Compressed Graphics/Palettes/Tables in Preset Options as SpriteSomething will overwrite some data used to load presets faster.
 <br />
