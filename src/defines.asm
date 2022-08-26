@@ -8,6 +8,7 @@
 !WRAM_BANK = #$007E
 !WRAM_SIZE = #$0200
 !WRAM_START = $7EFD00
+!WRAM_PERSIST_START = !ram_ih_controller
 
 !ram_load_preset = !WRAM_START+$00
 !ram_gametime_room = !WRAM_START+$02
