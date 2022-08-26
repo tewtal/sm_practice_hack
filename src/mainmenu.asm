@@ -1167,7 +1167,6 @@ MiscMenu:
     dw #$FFFF
     dw #misc_magicpants
     dw #misc_spacepants
-    dw #misc_loudpants
     dw #$FFFF
     dw #misc_metronome
     dw #misc_metronome_tickrate
@@ -1218,13 +1217,26 @@ misc_gooslowdown:
     %cm_numfield("Goo Slowdown", $7E0A66, 0, 4, 1, 1, #0)
 
 misc_magicpants:
-    %cm_toggle_bit("Magic Pants", !ram_magic_pants_enabled, #$0001, GameLoopExtras)
+    dw !ACTION_CHOICE
+    dl #!ram_magic_pants_enabled
+    dw #$0000
+    db #$28, "Magic Pants", #$FF
+    db #$28, "        OFF", #$FF
+    db #$28, "      FLASH", #$FF
+    db #$28, "       LOUD", #$FF
+    db #$28, "       BOTH", #$FF
+    db #$FF
 
 misc_spacepants:
-    %cm_toggle_bit("Space Pants", !ram_magic_pants_enabled, #$0002, GameLoopExtras)
-
-misc_loudpants:
-    %cm_toggle_bit("Loud Pants", !ram_magic_pants_enabled, #$0004, GameLoopExtras)
+    dw !ACTION_CHOICE
+    dl #!ram_space_pants_enabled
+    dw #$0000
+    db #$28, "Space Pants", #$FF
+    db #$28, "        OFF", #$FF
+    db #$28, "      FLASH", #$FF
+    db #$28, "       LOUD", #$FF
+    db #$28, "       BOTH", #$FF
+    db #$FF
 
 misc_metronome:
     %cm_toggle("Metronome", !ram_metronome, #$0001, GameLoopExtras)
@@ -1238,6 +1250,7 @@ misc_metronome_tickrate:
 GameLoopExtras:
 {
     LDA !ram_magic_pants_enabled : BNE .enabled
+    LDA !ram_space_pants_enabled : BNE .enabled
     LDA !ram_metronome : BNE .enabled
     LDA #$0000
   .enabled

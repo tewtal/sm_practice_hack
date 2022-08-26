@@ -1190,9 +1190,11 @@ ih_game_loop_code:
     LDA !ram_metronome : BEQ +
     JSR metronome
 
-+   LDA !ram_magic_pants_enabled : AND #$0003 : BEQ .handleinputs
-    CMP #$0001 : BEQ .magicpants
-    CMP #$0002 : BEQ .spacepants
++   LDA !ram_magic_pants_enabled : XBA : ORA !ram_space_pants_enabled
+    BEQ .handleinputs
+
+    BIT #$00FF : BEQ .magicpants    ; if spacepants are disabled, handle magicpants
+    BIT #$FF00 : BEQ .spacepants    ; if magicpants are disabled, handle spacepants
 
     ; both are enabled, check Samus movement type to decide
     LDA $0A1F : AND #$00FF : CMP #$0001 : BEQ .magicpants    ; check if running
@@ -1309,10 +1311,12 @@ magic_pants:
 {
     LDA $0A96 : CMP #$0009 : BEQ .check
     LDA !ram_magic_pants_state : BEQ +
+    LDA #$0000 : STA !ram_magic_pants_state
+
+    LDA !ram_magic_pants_enabled : AND #$0001 : BEQ +
     LDA !ram_magic_pants_pal1 : STA $7EC194
     LDA !ram_magic_pants_pal2 : STA $7EC196
     LDA !ram_magic_pants_pal3 : STA $7EC19E
-    LDA #$0000 : STA !ram_magic_pants_state
 +   RTS
 
   .check
@@ -1330,21 +1334,25 @@ magic_pants:
     LDA $0A1C : CMP #$0009 : BCC .done
     CMP #$0013 : BCS .done
 
-    LDA !ram_magic_pants_state : BNE ++
+    LDA !ram_magic_pants_state : BNE +
 
     ; if loudpants are enabled, click
-    LDA !ram_magic_pants_enabled : AND #$0004 : BEQ +
+    LDA !ram_magic_pants_enabled : AND #$0002 : BEQ +
     LDA !sram_metronome_sfx : ASL : TAX
     LDA.l MetronomeSFX,X : JSL !SFX_LIB1
 
-+   LDA $7EC194 : STA !ram_magic_pants_pal1
+    ; if flashpants are enabled, flash
++   LDA !ram_magic_pants_enabled : AND #$0001 : BEQ .done
+    LDA !ram_magic_pants_state : BNE ++
+
+    LDA $7EC194 : STA !ram_magic_pants_pal1
     LDA $7EC196 : STA !ram_magic_pants_pal2
     LDA $7EC19E : STA !ram_magic_pants_pal3
 ++  LDA #$FFFF
     STA $7EC194 : STA $7EC196 : STA $7EC19E
-    STA !ram_magic_pants_state
 
   .done
+    LDA #$FFFF : STA !ram_magic_pants_state
     RTS
 }
 
@@ -1357,10 +1365,12 @@ space_pants:
   .reset
     ; restore palettes if needed
     LDA !ram_magic_pants_state : BEQ .done
+    LDA #$0000 : STA !ram_magic_pants_state
+
+    LDA !ram_space_pants_enabled : AND #$0001 : BEQ .done
     LDA !ram_magic_pants_pal1 : STA $7EC194
     LDA !ram_magic_pants_pal2 : STA $7EC196
     LDA !ram_magic_pants_pal3 : STA $7EC198
-    LDA #$0000 : STA !ram_magic_pants_state
   .done
     RTS
 
@@ -1374,7 +1384,7 @@ space_pants:
     LDA $0B2D : CMP $909E97 : BPL +       ; check against min SJ vspeed for air
     BRA .reset
 +   CMP $909E99 : BPL .reset              ; check against max SJ vspeed for air
-    BRA .flash
+    BRA .go
 
   .SJliquid
     LDA $0B2D : CMP $909E9B : BPL +       ; check against min SJ vspeed for liquids
@@ -1382,22 +1392,25 @@ space_pants:
 +   CMP $909E9D : BPL .reset              ; check against max SJ vspeed for liquids
 
     ; Screw Attack seems to write new palette data every frame, which overwrites the flash
-  .flash
+  .go
     LDA !ram_magic_pants_state : BNE .done
 
     ; if loudpants are enabled, click
-    LDA !ram_magic_pants_enabled : AND #$0004 : BEQ +
+    LDA !ram_space_pants_enabled : AND #$0002 : BEQ +
     LDA !sram_metronome_sfx : ASL : TAX
     LDA.l MetronomeSFX,X : JSL !SFX_LIB1
 
+    ; if flashpants are enabled, flash
++   LDA !ram_space_pants_enabled : AND #$0001 : BEQ ++
     ; preserve palettes first
-+   LDA $7EC194 : STA !ram_magic_pants_pal1
+    LDA $7EC194 : STA !ram_magic_pants_pal1
     LDA $7EC196 : STA !ram_magic_pants_pal2
     LDA $7EC198 : STA !ram_magic_pants_pal3
     ; then flash
     LDA #$FFFF
     STA $7EC194 : STA $7EC196 : STA $7EC198
-    STA !ram_magic_pants_state
+
+++  LDA #$FFFF : STA !ram_magic_pants_state
     RTS
 }
 

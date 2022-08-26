@@ -58,26 +58,25 @@
 !ram_random_preset_value = !WRAM_START+$4E
 
 !ram_magic_pants_enabled = !WRAM_START+$50
-!ram_magic_pants_state = !WRAM_START+$52
-!ram_magic_pants_pal1 = !WRAM_START+$54
-!ram_magic_pants_pal2 = !WRAM_START+$56
-!ram_magic_pants_pal3 = !WRAM_START+$58
-!ram_room_has_set_rng = !WRAM_START+$5A
-!ram_kraid_rng = !WRAM_START+$5C
-!ram_crocomire_rng = !WRAM_START+$5E
-!ram_phantoon_rng_round_1 = !WRAM_START+$60
-!ram_phantoon_rng_round_2 = !WRAM_START+$62
-!ram_phantoon_rng_inverted = !WRAM_START+$64
-!ram_phantoon_rng_eyeclose = !WRAM_START+$66
-!ram_phantoon_rng_flames = !WRAM_START+$68
-!ram_phantoon_rng_next_flames = !WRAM_START+$6A
-!ram_botwoon_rng = !WRAM_START+$6C
-!ram_draygon_rng_left = !WRAM_START+$6E
-!ram_draygon_rng_right = !WRAM_START+$70
+!ram_space_pants_enabled = !WRAM_START+$52
+!ram_magic_pants_state = !WRAM_START+$54
+!ram_magic_pants_pal1 = !WRAM_START+$56
+!ram_magic_pants_pal2 = !WRAM_START+$58
+!ram_magic_pants_pal3 = !WRAM_START+$5A
+!ram_room_has_set_rng = !WRAM_START+$5C
+!ram_kraid_rng = !WRAM_START+$5E
+!ram_crocomire_rng = !WRAM_START+$60
+!ram_phantoon_rng_round_1 = !WRAM_START+$62
+!ram_phantoon_rng_round_2 = !WRAM_START+$64
+!ram_phantoon_rng_inverted = !WRAM_START+$66
+!ram_phantoon_rng_eyeclose = !WRAM_START+$68
+!ram_phantoon_rng_flames = !WRAM_START+$6A
+!ram_phantoon_rng_next_flames = !WRAM_START+$6C
+!ram_botwoon_rng = !WRAM_START+$6E
+!ram_draygon_rng_left = !WRAM_START+$70
+!ram_draygon_rng_right = !WRAM_START+$72
 
-!ram_game_loop_extras = !WRAM_START+$72
-!ram_game_mode_extras = !WRAM_START+$74
-!ram_sprite_features_active = !WRAM_START+$76
+; FREE SPACE
 
 !ram_suits_enemy_damage_check = !WRAM_START+$78
 !ram_suits_periodic_damage_check = !WRAM_START+$7A
@@ -127,6 +126,10 @@
 !ram_walljump_counter = !WRAM_START+$CE
 
 !ram_sprite_custom_hitbox_active = !WRAM_START+$D0
+
+!ram_game_loop_extras = !WRAM_START+$D2
+!ram_game_mode_extras = !WRAM_START+$D4
+!ram_sprite_features_active = !WRAM_START+$D6
 
 ; ^ FREE SPACE ^ up to +$FC
 
