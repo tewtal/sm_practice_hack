@@ -78,11 +78,11 @@ endif
 ; decompression; for example, the Rinkas in Mother Brain's room will spawn
 ; differently deoending on how far the door has scrolled when decompression finishes.
 
-org $82E41D     ; TODO PAL
+org $82E41D
     LDA #$7E70
     JSL cutscenes_fast_decompress_if_fast_doors
 
-org $82E42E     ; TODO PAL
+org $82E42E
     LDA #$7E20
     JSL cutscenes_fast_decompress_if_fast_doors
 
@@ -152,7 +152,7 @@ cutscenes_fast_decompress_if_fast_doors:
     LDA !sram_fast_doors : BEQ .slow
     JML optimized_decompression
   .slow
-    JML $80B119   ; TODO PAL
+    JML $80B119
 }
 
 cutscenes_load_intro:
