@@ -263,6 +263,7 @@ save_write_table:
     %wram_to_sram($7EC000, $34A0, $712000)
     %wram_to_sram($7F0000, $2B00, $715500)
     %wram_to_sram($7F2B00, $6B01, $720000)
+    %wram_to_sram($7E2000, $1000, $736000)
     
     ; Address pair, B bus -> A bus.  B address = VRAM read ($2139).
     dw $0000|$4310, $3981  ; direction = B->A, word reg, B addr = $2139
@@ -274,11 +275,11 @@ save_write_table:
     %vram_to_sram($5000, $2000, $730000)
     %vram_to_sram($6000, $4000, $732000)
 
-    ; Copy CGRAM 000-1FF to SRAM 736000-7361FF
+    ; Copy CGRAM 000-1FF to SRAM $707E00-$707FFF
     dw $1000|$2121, $00    ; CGRAM address
     dw $0000|$4310, $3B80  ; direction = B->A, byte reg, B addr = $213B
-    dw $0000|$4312, $6000  ; A addr = $xx6000
-    dw $0000|$4314, $0073  ; A addr = $73xxxx, size = $xx00
+    dw $0000|$4312, $7E00  ; A addr = $xx6000
+    dw $0000|$4314, $0070  ; A addr = $73xxxx, size = $xx00
     dw $0000|$4316, $0002  ; size = $02xx ($0200), unused bank reg = $00.
     dw $1000|$420B, $02    ; Trigger DMA on channel 1
     
@@ -349,6 +350,7 @@ load_write_table:
     %sram_to_wram($7EC000, $34A0, $712000)
     %sram_to_wram($7F0000, $2B00, $715500)
     %sram_to_wram($7F2B00, $6B01, $720000)
+    %sram_to_wram($7E2000, $2000, $736000)
 
     ; Address pair, A bus -> B bus.  B address = VRAM write ($2118).
     dw $0000|$4310, $1801  ; direction = A->B, B addr = $2118
@@ -360,11 +362,11 @@ load_write_table:
     %sram_to_vram($5000, $2000, $730000)
     %sram_to_vram($6000, $4000, $732000)
 
-    ; Copy SRAM $736000-$7361FF to CGRAM 000-1FF.
+    ; Copy SRAM $707E00-$707FFF to CGRAM 000-1FF.
     dw $1000|$2121, $00    ; CGRAM address
     dw $0000|$4310, $2200  ; direction = A->B, byte reg, B addr = $2122
-    dw $0000|$4312, $6000  ; A addr = $xx6000
-    dw $0000|$4314, $0073  ; A addr = $73xxxx, size = $xx00
+    dw $0000|$4312, $7E00  ; A addr = $xx6000
+    dw $0000|$4314, $0070  ; A addr = $73xxxx, size = $xx00
     dw $0000|$4316, $0006  ; size = $02xx ($0200), unused bank reg = $00.
     dw $1000|$420B, $02    ; Trigger DMA on channel 1
     
