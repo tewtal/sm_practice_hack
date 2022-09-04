@@ -214,6 +214,7 @@ endif
 }
 
 print pc, " cutscenes end"
+warnpc $8BFA00 ; misc.asm
 
 
 if !FEATURE_PAL

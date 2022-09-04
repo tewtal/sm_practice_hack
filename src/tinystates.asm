@@ -54,13 +54,21 @@ pre_load_state:
     ; Load graphics tiles and tile tables back into RAM/WRAM
     ; before restoring the rest of the state from SRAM
     JSL preset_load_destination_state_and_tiles
+if !RAW_TILE_GRAPHICS
     JSL preset_load_library_background
+else
+    JSL $82E97C  ; Load library background
+endif
 
     ; If we're in the same room, we don't need to reload the level
     PLA
     CMP !ROOM_ID
     BEQ .skip_load_level
+if !RAW_TILE_GRAPHICS
     JSL preset_load_level_tile_tables_scrolls_plms_and_execute_asm
+else
+    JSL $82E7D3  ; Load level data, CRE, tile table, scroll data, create PLMs and execute door ASM and room setup ASM
+endif
 
   .skip_load_level:
     JSL tinystates_preload_bg_data
