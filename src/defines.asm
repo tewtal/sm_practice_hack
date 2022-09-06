@@ -240,10 +240,6 @@
 !ACTION_JSL                 = #$0016
 !ACTION_JSL_SUBMENU         = #$0018
 
-!SOUND_MENU_MOVE = $0039
-!SOUND_MENU_JSL = $0039
-!SOUND_MENU_FAIL = $0007
-
 
 ; ---------
 ; Pointers

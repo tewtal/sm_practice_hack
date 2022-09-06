@@ -203,7 +203,7 @@ action_submenu_jump:
     ; Set cursor to top for new menus
     LDA #$0000 : STA !ram_cm_cursor_stack,X
 
-    LDA #!SOUND_MENU_MOVE : JSL !SFX_LIB1
+    %sfxmove()
     JSL cm_calculate_max
     JSL cm_draw
 
@@ -510,11 +510,11 @@ action_save_custom_preset:
   .safe
     JSL custom_preset_save
     LDA #$0001 : STA !ram_cm_leave
-    LDA #!SOUND_MENU_MOVE : JSL !SFX_LIB1
+    %sfxconfirm()
     RTL
 
   .not_safe
-    LDA #!SOUND_MENU_FAIL : JSL !SFX_LIB1
+    %sfxfail()
     RTL
 }
 
@@ -528,7 +528,7 @@ else
     ASL : XBA : TAX              ; multiply by 200h (slot offset)
 endif
     LDA $703000,X : CMP #$5AFE : BEQ .safe
-    LDA #!SOUND_MENU_FAIL : JSL !SFX_LIB1
+    %sfxfail()
     RTL
 
   .safe
@@ -647,7 +647,7 @@ eq_refill:
     LDA $7E09CC : STA $7E09CA ; supers
     LDA $7E09D0 : STA $7E09CE ; pbs
     LDA $7E09D4 : STA $7E09D6 ; reserves
-    LDA #!SOUND_MENU_JSL : JSL !SFX_LIB1
+    LDA #$0002 : JSL !SFX_LIB2 ; big energy pickup
     RTL
 
 eq_toggle_category:
@@ -709,7 +709,7 @@ eq_reservemode:
   .routine
     LDA !SAMUS_RESERVE_MAX : BNE +
     STA !SAMUS_RESERVE_MODE
-    LDA #$0035 : JSL !SFX_LIB1 ; disallowed, play damage boost sound
+    %sfxfail()
 +   RTL
 
 eq_currentmissiles:
@@ -827,7 +827,7 @@ action_category:
     LDA.l .table,X : STA !SAMUS_RESERVE_MAX : STA !SAMUS_RESERVE_ENERGY : INX #2
 
     JSL cm_set_etanks_and_reserve
-    LDA #!SOUND_MENU_JSL : JSL !SFX_LIB1
+    %sfxconfirm()
     RTL
 
   .table
@@ -1305,15 +1305,14 @@ misc_killenemies:
     TAX : LDA $0F86,X : BIT #$8400 : BNE +
     ORA #$0200 : STA $0F86,X
 +   TXA : CLC : ADC #$0040 : CMP #$0400 : BNE .kill_loop
-    LDA #!SOUND_MENU_JSL : JSL !SFX_LIB1
+    LDA #$0009 : JSL !SFX_LIB2 ; enemy killed
     RTL
 
 misc_forcestand:
     %cm_jsl("Force Samus to Stand Up", .routine, #0)
-
   .routine
     JSL $90E2D4
-    LDA #!SOUND_MENU_JSL : JSL !SFX_LIB1
+    %sfxconfirm()
     RTL
 
 misc_clearliquid:
@@ -1477,7 +1476,7 @@ action_reset_events:
     LDA #$0000
     STA $7ED820
     STA $7ED822
-    LDA #!SOUND_MENU_JSL : JSL !SFX_LIB1
+    %sfxreset()
     RTL
 }
 
@@ -1490,7 +1489,7 @@ action_reset_doors:
 -   STA $7ED800,X
     INX : CPX #$D0 : BNE -
     PLP
-    LDA #!SOUND_MENU_JSL : JSL !SFX_LIB1
+    %sfxreset()
     RTL
 }
 
@@ -1503,7 +1502,7 @@ action_reset_items:
 -   STA $7ED800,X
     INX : CPX #$90 : BNE -
     PLP
-    LDA #!SOUND_MENU_JSL : JSL !SFX_LIB1
+    %sfxreset()
     RTL
 }
 
@@ -1830,6 +1829,7 @@ ih_reset_seg_later:
     %cm_jsl("Reset Segment Next Room", #.routine, #$FFFF)
   .routine
     TYA : STA !ram_reset_segment_later
+    %sfxconfirm()
     RTL
 
 ih_status_icons:
@@ -2044,7 +2044,7 @@ game_clear_minimap:
     STA $7EDB1C,X : STA $7EDC1C,X
     STA $7EDD1C,X : STA $7E07F7,X
     DEX : DEX : BPL .clear_minimap_loop
-    LDA #!SOUND_MENU_JSL : JSL !SFX_LIB1
+    %sfxreset()
     RTL
 
 
@@ -2099,7 +2099,7 @@ controls_save_to_file:
     CMP #$0002 : BEQ .fileC
 
   .fail
-    LDA #!SOUND_MENU_FAIL : JSL !SFX_LIB1
+    %sfxfail()
     RTL
 
   .fileA
@@ -2119,7 +2119,7 @@ controls_save_to_file:
     LDA $09BA : STA $F00000,X : INX #2
     LDA $09BC : STA $F00000,X : INX #2
     LDA $09BE : STA $F00000,X
-    LDA #!SOUND_MENU_JSL : JSL !SFX_LIB1
+    %sfxconfirm()
     RTL
 
 AssignControlsMenu:
@@ -2171,7 +2171,7 @@ action_assign_input:
     JSL check_duplicate_inputs
 
     CMP #$FFFF : BEQ +                       ; skip sfx if detection failed
-    LDA #!SOUND_MENU_JSL : JSL !SFX_LIB1
+    %sfxconfirm()
 +   JSL cm_go_back
     JSL cm_calculate_max
     RTL
@@ -2226,7 +2226,7 @@ check_duplicate_inputs:
 +   JMP .down
 
   .not_detected
-    LDA #!SOUND_MENU_FAIL : JSL !SFX_LIB1
+    %sfxfail()
     LDA #$FFFF
     JSL cm_go_back
     JML cm_calculate_max
@@ -2336,6 +2336,7 @@ action_set_common_controls:
     LDA.l ControllerLayoutTable+8,X : STA !IH_INPUT_ITEM_SELECT
     LDA.l ControllerLayoutTable+10,X : STA !IH_INPUT_ANGLE_UP
     LDA.l ControllerLayoutTable+12,X : STA !IH_INPUT_ANGLE_DOWN
+    %sfxconfirm()
     JSL cm_go_back
     JSL cm_calculate_max
     RTL
@@ -2737,7 +2738,7 @@ action_clear_shortcuts:
     STA !sram_ctrl_update_timers
     ; menu to default, Start + Select
     LDA #$3000 : STA !sram_ctrl_menu
-    LDA #!SOUND_MENU_JSL : JSL !SFX_LIB1
+    %sfxconfirm()
     RTL
 }
 

@@ -128,7 +128,7 @@ ramwatch_common_enemy_apply:
     JSL cm_go_back
     JSL cm_calculate_max
     JSL ih_prepare_ram_watch_menu
-    LDA #!SOUND_MENU_JSL : JSL !SFX_LIB1
+    %sfxconfirm()
     RTL
 
 ramwatch_common_enemy_property:
@@ -414,7 +414,7 @@ ramwatch_common_addr_done:
     JSL cm_go_back
     JSL cm_calculate_max
     JSL ih_prepare_ram_watch_menu
-    LDA #!SOUND_MENU_MOVE : JSL !SFX_LIB1
+    %sfxconfirm()
     RTL
 
 ramwatch_common_back:
@@ -430,7 +430,7 @@ ramwatch_enable:
     %cm_jsl("Turn On RAM Watch", .routine, #!IH_MODE_RAMWATCH_INDEX)
   .routine
     TYA : STA !sram_display_mode
-    LDA #!SOUND_MENU_JSL : JSL !SFX_LIB1
+    %sfxconfirm()
     RTL
 
 ramwatch_bank:
@@ -564,7 +564,7 @@ action_ramwatch_edit_left:
 +   LDA !ram_watch_edit_left : STA [$C1]
     %a16()
     LDA #!IH_MODE_RAMWATCH_INDEX : STA !sram_display_mode
-    LDA #!SOUND_MENU_JSL : JSL !SFX_LIB1
+    %sfxconfirm()
     RTL
 }
 
@@ -584,7 +584,7 @@ action_ramwatch_edit_right:
 +   LDA !ram_watch_edit_right : STA [$C1]
     %a16()
     LDA #!IH_MODE_RAMWATCH_INDEX : STA !sram_display_mode
-    LDA #!SOUND_MENU_JSL : JSL !SFX_LIB1
+    %sfxconfirm()
     RTL
 }
 

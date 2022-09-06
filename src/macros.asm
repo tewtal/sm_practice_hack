@@ -1,14 +1,3 @@
-macro ppu_off()
-    LDA #$80 : STA $2100 : STA $13
-    STZ $420C : LDA $9B : PHA : STZ $9B
-    STZ $4200
-endmacro
-
-macro ppu_on()
-    LDA #$A1 : STA $4200
-    LDA #$0F : STA $13 : STA $2100
-    PLA : STA $9B : STA $420C
-endmacro
 
 macro item_index_to_vram_index()
     ; Find screen position from Y (item number)
@@ -17,29 +6,41 @@ macro item_index_to_vram_index()
 endmacro
 
 macro a8()
-    sep #$20
+    SEP #$20
 endmacro
 
 macro a16()
-    rep #$20
+    REP #$20
 endmacro
 
 macro i8()
-    sep #$10
+    SEP #$10
 endmacro
 
 macro ai8()
-    sep #$30
+    SEP #$30
 endmacro
 
 macro ai16()
-    rep #$30
+    REP #$30
 endmacro
 
 macro i16()
-    rep #$10
+    REP #$10
 endmacro
 
-macro wdm()
-    dw $4242
+macro sfxmove()
+    LDA #$0039 : JSL !SFX_LIB1 ; item select
+endmacro
+
+macro sfxconfirm()
+    LDA #$0038 : JSL !SFX_LIB1 ; menu confirm
+endmacro
+
+macro sfxfail()
+    LDA #$0007 : JSL !SFX_LIB1 ; grapple end
+endmacro
+
+macro sfxreset()
+    LDA #$001E : JSL !SFX_LIB3 ; quake
 endmacro

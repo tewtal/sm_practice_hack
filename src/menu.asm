@@ -1109,14 +1109,14 @@ cm_loop:
     ; jump to top menu item
     LDX !ram_cm_stack_index
     LDA #$0000 : STA !ram_cm_cursor_stack,X
-    LDA #!SOUND_MENU_MOVE : JSL !SFX_LIB1
+    LDA #$0037 : JSL !SFX_LIB1 ; louder click
     BRA .redraw
 
   .pressedR
     ; jump to bottom menu item
     LDX !ram_cm_stack_index
     LDA !ram_cm_cursor_max : DEC #2 : STA !ram_cm_cursor_stack,X
-    LDA #!SOUND_MENU_MOVE : JSL !SFX_LIB1
+    LDA #$0037 : JSL !SFX_LIB1 ; louder click
     BRA .redraw
 
   .pressedA
@@ -1152,7 +1152,7 @@ cm_ctrl_mode:
 
     LDA !IH_CONTROLLER_PRI : STA [$C5]
     JSL GameModeExtras
-    LDA #!SOUND_MENU_MOVE : JSL !SFX_LIB1
+    %sfxconfirm()
     BRA .exit
 
   .clear_and_draw
@@ -1201,7 +1201,7 @@ cm_go_back:
     LDA.w #MainMenu>>16 : STA !ram_cm_menu_bank
 
   .end
-    LDA #!SOUND_MENU_MOVE : JSL !SFX_LIB1
+    %sfxmove()
     RTL
 }
 
@@ -1280,7 +1280,7 @@ cm_move:
     LDA $12 : BRA cm_move
 
   .end
-    LDA #!SOUND_MENU_MOVE : JSL !SFX_LIB1
+    %sfxmove()
     RTS
 }
 
@@ -1365,7 +1365,7 @@ cm_execute_action_table:
 
       .end
         %ai16()
-        LDA #!SOUND_MENU_MOVE : JSL !SFX_LIB1
+        %sfxmove()
         RTS
     }
 
@@ -1401,7 +1401,7 @@ cm_execute_action_table:
 
       .end
         %ai16()
-        LDA #!SOUND_MENU_MOVE : JSL !SFX_LIB1
+        %sfxmove()
         RTS
     }
 
@@ -1519,7 +1519,7 @@ cm_execute_action_table:
 
       .end
         %ai16()
-        LDA #!SOUND_MENU_MOVE : JSL !SFX_LIB1
+        %sfxmove()
         RTS
     }
 
@@ -1585,7 +1585,7 @@ cm_execute_action_table:
 
       .end
         %ai16()
-        LDA #!SOUND_MENU_MOVE : JSL !SFX_LIB1
+        %sfxmove()
         RTS
     }
 
@@ -1640,7 +1640,7 @@ cm_execute_action_table:
 
       .end
         %ai16()
-        LDA #!SOUND_MENU_MOVE : JSL !SFX_LIB1
+        %sfxmove()
         RTS
     }
 
@@ -1713,7 +1713,7 @@ cm_execute_action_table:
 
       .end
         %ai16()
-        LDA #!SOUND_MENU_MOVE : JSL !SFX_LIB1
+        %sfxmove()
         RTS
     }
 
@@ -1741,7 +1741,7 @@ cm_execute_action_table:
       .reset_shortcut
         ; disallow clearing menu shortcut
         LDA.w #!sram_ctrl_menu : CMP $C5 : BEQ .end
-        LDA #!SOUND_MENU_MOVE : JSL !SFX_LIB1
+        %sfxreset()
 
         LDA #$0000 : STA [$C5]
 

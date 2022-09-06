@@ -229,7 +229,7 @@ endif
   .save_safe
     JSL custom_preset_save
     ; CLC to continue normal gameplay after saving preset
-    LDA #!SOUND_MENU_JSL : JSL !SFX_LIB1
+    %sfxconfirm()
     CLC : JMP skip_pause
 
   .load_custom_preset
@@ -243,7 +243,7 @@ endif
     LDA $703000,X : CMP #$5AFE : BEQ .load_safe
 
   .not_safe
-    LDA #!SOUND_MENU_FAIL : JSL !SFX_LIB1
+    %sfxfail()
     ; CLC to continue normal gameplay after failing to save or load preset
     CLC : JMP skip_pause
 
