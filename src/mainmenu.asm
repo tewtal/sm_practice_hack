@@ -165,7 +165,7 @@ action_mainmenu:
     ; Set bank of new menu
     LDA !ram_cm_cursor_stack : TAX
     LDA.l MainMenuBanks,X : STA !ram_cm_menu_bank
-    STA $02 : STA $06
+    STA !DP_MenuIndices+2 : STA !DP_CurrentMenu+2
 
     ; Skip stack operation in action_submenu
     BRA action_submenu_skipStackOp
@@ -2093,8 +2093,8 @@ controls_angle_down:
 controls_save_to_file:
     %cm_jsl("Save to File", .routine, #0)
   .routine
-    LDA $0998 : CMP #$0002 : BEQ .fail
-    LDA $0952 : BEQ .fileA
+    LDA !GAMEMODE : CMP #$0002 : BEQ .fail
+    LDA !CURRENT_SAVE_FILE : BEQ .fileA
     CMP #$0001 : BEQ .fileB
     CMP #$0002 : BEQ .fileC
 
@@ -2112,13 +2112,13 @@ controls_save_to_file:
     LDX #$0CD8
 
   .save
-    LDA $09B2 : STA $F00000,X : INX #2
-    LDA $09B4 : STA $F00000,X : INX #2
-    LDA $09B6 : STA $F00000,X : INX #2
-    LDA $09B8 : STA $F00000,X : INX #2
-    LDA $09BA : STA $F00000,X : INX #2
-    LDA $09BC : STA $F00000,X : INX #2
-    LDA $09BE : STA $F00000,X
+    LDA.w !IH_INPUT_SHOOT : STA $700000,X : INX #2
+    LDA.w !IH_INPUT_JUMP : STA $700000,X : INX #2
+    LDA.w !IH_INPUT_RUN : STA $700000,X : INX #2
+    LDA.w !IH_INPUT_ITEM_CANCEL : STA $700000,X : INX #2
+    LDA.w !IH_INPUT_ITEM_SELECT : STA $700000,X : INX #2
+    LDA.w !IH_INPUT_ANGLE_UP : STA $700000,X : INX #2
+    LDA.w !IH_INPUT_ANGLE_DOWN : STA $700000,X
     %sfxconfirm()
     RTL
 
