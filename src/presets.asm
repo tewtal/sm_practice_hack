@@ -24,15 +24,14 @@ endif
     JSL $809A79  ; HUD routine when game is loading
     JSL $90AD22  ; Reset projectile data
 
-    PHP
-    REP #$30
+    PHP : %a16()
     LDY #$0020
     LDX #$0000
   .paletteLoop
+    ; Target Samus' palette = [Samus' palette]
     LDA $7EC180,x : STA $7EC380,x  ; Target Samus' palette = [Samus' palette]
     INX #2
-    DEY #2
-    BNE .paletteLoop
+    DEY #2 : BNE .paletteLoop
     PLP
 
     LDA #$0000
@@ -61,19 +60,18 @@ endif
     DEC $0DA0    ; Decrement $0DA0
     BPL .loopSomething
 
+    ; set gamemode and brightness
     LDA #$0008 : STA !GAMEMODE
     %a8() : LDA #$0F : STA $51 : %a16()
 
-    PHP
-    REP #$30
+    PHP : %a16()
     LDY #$0200
     LDX #$0000
   .paletteLoop2
-    LDA $7EC200,x
-    STA $7EC000,x  ; Palettes = [target palettes]
+    ; Palettes = [target palettes]
+    LDA $7EC200,X : STA $7EC000,X
     INX #2
-    DEY #2
-    BNE .paletteLoop2
+    DEY #2 : BNE .paletteLoop2
     PLP
 
     ; Fix Samus' palette
@@ -91,8 +89,8 @@ endif
     JSL reset_all_counters
     STZ $0795 : STZ $0797 ; clear door transition flags
 
-    ; Clear enemies if not in certain rooms
-    LDA $079B : CMP #$9804 : BEQ .done_clearing_enemies
+    ; Clear enemies if not in BT or MB rooms
+    LDA !ROOM_ID : CMP #$9804 : BEQ .done_clearing_enemies
     CMP #$DD58 : BEQ .set_mb_state
     JSR clear_all_enemies
 
@@ -129,7 +127,7 @@ preset_load_destination_state_and_tiles:
 {
     ; Original logic from $82E76B
     PHP : PHB
-    REP #$30
+    %ai16()
     PEA $8F00
     PLB : PLB
     JSR $DDF1  ; Load destination room CRE bitset
@@ -148,22 +146,22 @@ if !RAW_TILE_GRAPHICS
 preset_load_library_background:
 {
     PHP : PHB : %ai16()
-    JSL $80A29C      ; Clear FX tilemap
+    JSL $80A29C ; Clear FX tilemap
     LDA $1964 : BEQ .done_fx_tilemap
 
-    STA $4312
-    LDA #$5BE0 : STA $2116
-    LDA #$1801 : STA $4310
-    LDA #$008A : STA $4314
-    LDA #$0840 : STA $4315
+    STA $4312 ; src addr
+    LDA #$008A : STA $4314 ; src bank
+    LDA #$5BE0 : STA $2116 ; VRAM addr
+    LDA #$1801 : STA $4310 ; VRAM write, word
+    LDA #$0840 : STA $4315 ; size
     %a8()
-    LDA #$80 : STA $2115
-    LDA #$02 : STA $420B
+    LDA #$80 : STA $2115 ; inc on low byte
+    LDA #$02 : STA $420B ; initiate DMA channel 1
     %a16() : CLC
 
   .done_fx_tilemap
     PEA $8F00 : PLB : PLB
-    REP #$20
+    %a16()
     LDX $07BB
     LDY $0016,X : BPL .done
 
@@ -190,7 +188,7 @@ reset_all_counters:
 {
     LDA #$0000
     STA !ram_room_has_set_rng
-    STA $09DA : STA $09DC : STA $09DE : STA $09E0
+    STA !IGT_FRAMES : STA !IGT_SECONDS : STA !IGT_MINUTES : STA !IGT_HOURS
     STA !ram_seg_rt_frames : STA !ram_seg_rt_seconds : STA !ram_seg_rt_minutes
     STA !ram_realtime_room : STA !ram_last_realtime_room
     STA !ram_gametime_room : STA !ram_last_gametime_room
@@ -214,9 +212,8 @@ preset_load_preset:
 {
     PHB
     LDA #$0000
-    STA $7E09D2 ; Current selected weapon
-    STA $7E0A04 ; Auto-cancel item
-    LDA #$5AFE : STA $0917 ; Load garbage into Layer 2 X position
+    STA !SAMUS_ITEM_SELECTED : STA !SAMUS_AUTO_CANCEL
+    LDA #$5AFE : STA !LAYER2_X ; Load garbage into Layer 2 X position
     LDA #$FFFF : STA !ram_reset_segment_later
 
     ; check if custom preset is being loaded
@@ -389,8 +386,8 @@ preset_start_gameplay:
   .end_load_game_state
 
     ; Preserve layer 2 values we may have loaded from presets
-    LDA $0919 : PHA
-    LDA $0917 : PHA
+    LDA !LAYER2_Y : PHA
+    LDA !LAYER2_X : PHA
 
     JSL $8882C1  ; Initialize special effects for new room
     JSL $8483C3  ; Clear PLMs
@@ -412,8 +409,8 @@ endif
     JSL preset_scroll_fixes
 
     LDA !sram_preset_options : BIT !PRESETS_CLOSE_BLUE_DOORS : BNE .done_opening_doors
-    LDA !SAMUS_POSE : BEQ .done_opening_doors
-    CMP #$009B : BEQ .done_opening_doors
+    LDA !SAMUS_POSE : BEQ .done_opening_doors ; facing forward
+    CMP #$009B : BEQ .done_opening_doors ; facing forward with suit
     JSR preset_open_all_blue_doors
   .done_opening_doors
 
@@ -426,16 +423,16 @@ endif
 
     ; Pull layer 2 values, and use them if they are valid
     PLA : CMP #$5AFE : BEQ .calculate_layer_2
-    STA $0917
-    PLA : STA $0919
+    STA !LAYER2_X
+    PLA : STA !LAYER2_Y
     BRA .layer_2_loaded
 
   .calculate_layer_2
-    PLA                    ; Pull other layer 2 value but do not use it
-    JSR $A2F9              ; Calculate layer 2 X position
-    JSR $A33A              ; Calculate layer 2 Y position
-    LDA $0917 : STA $0921  ; BG2 X scroll = layer 2 X scroll position
-    LDA $0919 : STA $0923  ; BG2 Y scroll = layer 2 Y scroll position
+    PLA ; Pull other layer 2 value but do not use it
+    JSR $A2F9 ; Calculate layer 2 X position
+    JSR $A33A ; Calculate layer 2 Y position
+    LDA !LAYER2_X : STA !BG2_X_SCROLL ; BG2 X scroll = layer 2 X scroll position
+    LDA !LAYER2_Y : STA !BG2_Y_SCROLL ; BG2 Y scroll = layer 2 Y scroll position
 
   .layer_2_loaded
     JSR $A37B    ; Calculate BG positions
@@ -447,8 +444,8 @@ endif
     BRA .bg_offsets_calculated
 
   .bg_offsets_scrolling_sky
-    LDA $0915 : STA $0919 : STA $B7
-    STZ $0923
+    LDA !LAYER1_Y : STA !LAYER2_Y : STA $B7
+    STZ !BG2_Y_SCROLL
 
   .bg_offsets_calculated
     JSL $80A176  ; Display the viewable part of the room

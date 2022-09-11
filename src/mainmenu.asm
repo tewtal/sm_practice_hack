@@ -1835,7 +1835,7 @@ ih_reset_seg_later:
 ih_status_icons:
     %cm_toggle("Status Icons", !sram_status_icons, #1, #.routine)
   .routine
-    LDA !IH_BLANK : STA $7EC654 : STA $7EC656 : STA $7EC658
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$54 : STA !HUD_TILEMAP+$56 : STA !HUD_TILEMAP+$58
     RTL
 
 ih_lag:
