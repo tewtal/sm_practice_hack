@@ -201,6 +201,7 @@ if !FEATURE_SD2SNES
     %a16()
     LDA $4218 : BEQ .wait_for_lag_frame
     CMP !sram_ctrl_load_state : BNE .wait_for_lag_frame
+    LDA !SRAM_SAVED_STATE : CMP #$5AFE : BNE .wait_for_lag_frame
     PHB : PHK : PLB
     JML load_state
 

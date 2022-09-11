@@ -143,17 +143,32 @@ gamemode_shortcuts:
   + CLC : RTS
 
 if !FEATURE_SD2SNES
+  .save_state
 ; This if statement is to prevent an assembler error from an unknown method. The one on the call to this
 ; prevents the button combo from being intercepted by the non-sd2snes rom
-  .save_state
+if !FEATURE_TINYSTATES
+    ; Disallow tiny states outside of gameplay
+    ; Most other gamemodes will crash on load
+    LDA !GAMEMODE : CMP #$0020 : BEQ .save ; end of Ceres allowed
+    CMP #$0007 : BMI .fail
+    CMP #$001C : BPL .fail
+
+  .save
+endif
     JSL save_state
     ; SEC to skip normal gameplay for one frame after saving state
     SEC : RTS
 
   .load_state
+    ; check if a saved state exists
+    LDA !SRAM_SAVED_STATE : CMP #$5AFE : BNE .fail
     JSL load_state
     ; SEC to skip normal gameplay for one frame after loading state
     SEC : RTS
+
+  .fail
+    ; CLC to continue normal gameplay
+    CLC : JMP skip_pause
 endif
 
   .kill_enemies
@@ -214,17 +229,21 @@ endif
   .save_safe
     JSL custom_preset_save
     ; CLC to continue normal gameplay after saving preset
-    LDA #!SOUND_MENU_JSL : JSL !SFX_LIB1
+    %sfxconfirm()
     CLC : JMP skip_pause
 
   .load_custom_preset
     ; check if slot is populated first
     LDA !sram_custom_preset_slot
-    ASL : XBA : TAX
+if !FEATURE_TINYSTATES
+    XBA : TAX                    ; multiply by 100h (slot offset)
+else
+    ASL : XBA : TAX              ; multiply by 200h (slot offset)
+endif
     LDA $703000,X : CMP #$5AFE : BEQ .load_safe
 
   .not_safe
-    LDA #!SOUND_MENU_FAIL : JSL !SFX_LIB1
+    %sfxfail()
     ; CLC to continue normal gameplay after failing to save or load preset
     CLC : JMP skip_pause
 
@@ -235,7 +254,11 @@ endif
     SEC : RTS
 
   .next_preset_slot
+if !FEATURE_TINYSTATES
+    LDA !sram_custom_preset_slot : CMP #$000F ; total slots minus one
+else
     LDA !sram_custom_preset_slot : CMP #$0027 ; total slots minus one
+endif
     BNE + : LDA #$FFFF
 +   INC : STA !sram_custom_preset_slot
     ASL : TAX : LDA.l NumberGFXTable,X : STA $7EC67C
@@ -244,7 +267,11 @@ endif
 
   .prev_preset_slot
     LDA !sram_custom_preset_slot : BNE +
+if !FEATURE_TINYSTATES
+    LDA #$0010 ; total slots
+else
     LDA #$0028 ; total slots
+endif
 +   DEC : STA !sram_custom_preset_slot
     ASL : TAX : LDA.l NumberGFXTable,X : STA $7EC67C
     ; CLC to continue normal gameplay after decrementing preset slot
@@ -278,6 +305,7 @@ gamemode_door_transition:
   .checkloadstate
     LDA !IH_CONTROLLER_PRI : BEQ .checktransition
     CMP !sram_ctrl_load_state : BNE .checktransition
+    LDA !SRAM_SAVED_STATE : CMP #$5AFE : BNE .checktransition
     PHB : PHK : PLB
     JML load_state
 
