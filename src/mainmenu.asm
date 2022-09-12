@@ -1141,6 +1141,7 @@ action_teleport:
     %a16()
 
     STZ $0727 ; Pause menu index
+    STZ $0E18 ; Set elevator to inactive
     STZ $1C1F ; Clear message box index
 
     JSL reset_all_counters
