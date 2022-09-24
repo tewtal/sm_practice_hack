@@ -174,8 +174,12 @@ endif
     ASL
     ASL
     ASL
+if !FEATURE_SD2SNES
+; skip 4 (ideally 6) cycles for auto-savestate in doors check
+else
     NOP  ; Add 2 more clock cycles
     NOP  ; Add 2 more clock cycles
+endif
     TAX
   .lagloop
     DEX : BNE .lagloop
@@ -192,7 +196,10 @@ endif
     INC  ; Add 4 loops (22 clock cycles including the INC)
     ASL
     ASL
+if !FEATURE_SD2SNES
+else
     INC  ; Add 1 loop (7 clock cycles including the INC)
+endif
     TAX
   .vanilla_lagloop
     DEX : BNE .vanilla_lagloop

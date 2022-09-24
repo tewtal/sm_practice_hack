@@ -92,6 +92,8 @@
 !ram_fail_sum                       = !WRAM_START+$7E
 !ram_fail_count                     = !WRAM_START+$80
 
+!ram_auto_save_state                = !WRAM_START+$82
+
 !WRAM_PERSIST_START = !ram_fail_count+$02
 ; ----------------------------------------------------------
 ; Variables below this point are PERSISTENT -- they maintain
@@ -380,6 +382,7 @@
 !BG2_Y_SCROLL = $0923
 !CURRENT_SAVE_FILE = $0952
 !GAMEMODE = $0998
+!DOOR_FUNCTION_POINTER = $099C
 !SAMUS_ITEMS_EQUIPPED = $09A2
 !SAMUS_ITEMS_COLLECTED = $09A4
 !SAMUS_BEAMS_EQUIPPED = $09A6
@@ -481,6 +484,7 @@
 !sram_ctrl_dec_custom_preset = !SRAM_START+$1A
 !sram_ctrl_toggle_tileviewer = !SRAM_START+$1C
 !sram_ctrl_update_timers = !SRAM_START+$1E
+!sram_ctrl_auto_save_state = !SRAM_START+$F0 ; note the change of order
 
 !sram_artificial_lag = !SRAM_START+$20
 !sram_rerandomize = !SRAM_START+$22
@@ -513,7 +517,7 @@
 !sram_water_physics = !SRAM_START+$58
 !sram_double_jump = !SRAM_START+$5A
 
-; ^ FREE SPACE ^ up to +$0FCE
+; ^ FREE SPACE ^ up to +$EE, $100-FCE
 
 ; SM specific things
 !SRAM_MUSIC_DATA = !SRAM_START+$0FD0

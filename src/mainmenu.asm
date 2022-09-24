@@ -315,6 +315,9 @@ MainMenu:
     dw #mm_goto_layout
     dw #mm_goto_gamemenu
     dw #mm_goto_rngmenu
+if !FEATURE_SD2SNES
+    dw #mm_goto_savestate
+endif
     dw #mm_goto_ctrlsmenu
     dw #$0000
     %cm_version_header("SM PRACTICE HACK", !VERSION_MAJOR, !VERSION_MINOR, !VERSION_BUILD, !VERSION_REV_1, !VERSION_REV_2)
@@ -334,6 +337,9 @@ MainMenuBanks:
     dw #LayoutMenu>>16
     dw #GameMenu>>16
     dw #RngMenu>>16
+if !FEATURE_SD2SNES
+    dw #SavestateMenu>>16
+endif
     dw #CtrlMenu>>16
 
 mm_goto_equipment:
@@ -364,10 +370,13 @@ mm_goto_layout:
     %cm_mainmenu("Room Layout", #LayoutMenu)
 
 mm_goto_gamemenu:
-    %cm_mainmenu("Game", #GameMenu)
+    %cm_mainmenu("Game Options", #GameMenu)
 
 mm_goto_rngmenu:
     %cm_mainmenu("RNG Control", #RngMenu)
+
+mm_goto_savestate:
+    %cm_mainmenu("Savestate Settings", #SavestateMenu)
 
 mm_goto_ctrlsmenu:
     %cm_mainmenu("Controller Shortcuts", #CtrlMenu)
@@ -1999,9 +2008,6 @@ InfoHudMenu:
     dw #ih_lag_counter
     dw #$FFFF
     dw #ih_reset_seg_later
-if !FEATURE_SD2SNES
-    dw #ih_freeze_on_load
-endif
     dw #ih_status_icons
 if !PRESERVE_WRAM_DURING_SPACETIME
     dw #ih_spacetime_infohud
@@ -2249,9 +2255,6 @@ ih_lag_counter:
     db #$28, "       DOOR", #$FF
     db #$28, "       FULL", #$FF
     db #$FF
-
-ih_freeze_on_load:
-    %cm_toggle("Freeze on Load State", !ram_freeze_on_load, #$0001, #0)
 
 ih_reset_seg_later:
     %cm_jsl("Reset Segment Next Room", #.routine, #$FFFF)
@@ -2837,9 +2840,6 @@ pullpc
 ; ----------
 
 RngMenu:
-    if !FEATURE_SD2SNES
-        dw #rng_rerandomize
-    endif
     dw #rng_goto_phanmenu
     dw #$FFFF
     dw #rng_botwoon_first
@@ -2856,9 +2856,6 @@ RngMenu:
     dw #rng_kraid_wait_rng
     dw #$0000
     %cm_header("BOSS RNG CONTROL")
-
-rng_rerandomize:
-    %cm_toggle("Rerandomize", !sram_rerandomize, #$0001, #0)
 
 rng_goto_phanmenu:
     %cm_jsl("Phantoon", #ih_prepare_phantoon_menu, #PhantoonMenu)
@@ -3218,16 +3215,38 @@ phan_next_flamepattern:
     db #$FF
 
 
+; --------------
+; Savestate Menu
+; --------------
+
+SavestateMenu:
+    dw #save_rerandomize
+    dw #save_freeze
+    dw #save_middoorsave
+    dw #$0000
+    %cm_header("SAVESTATE SETTINGS")
+
+save_rerandomize:
+    %cm_toggle("Rerandomize", !sram_rerandomize, #$0001, #0)
+
+save_freeze:
+    %cm_toggle("Freeze on Load State", !ram_freeze_on_load, #$0001, #0)
+
+save_middoorsave:
+    %cm_toggle("Auto-Save Mid-Door", !ram_auto_save_state, #$0001, #0)
+
+
 ; ----------
 ; Ctrl Menu
 ; ----------
 
 CtrlMenu:
     dw #ctrl_menu
-    if !FEATURE_SD2SNES
-        dw #ctrl_save_state
-        dw #ctrl_load_state
-    endif
+if !FEATURE_SD2SNES
+    dw #ctrl_save_state
+    dw #ctrl_load_state
+    dw #ctrl_auto_save_state
+endif
     dw #ctrl_load_last_preset
     dw #ctrl_random_preset
     dw #ctrl_save_custom_preset
@@ -3257,6 +3276,9 @@ ctrl_save_state:
 
 ctrl_load_state:
     %cm_ctrl_shortcut("Load State", !sram_ctrl_load_state)
+
+ctrl_auto_save_state:
+    %cm_ctrl_shortcut("Auto Save State", !sram_ctrl_auto_save_state)
 
 ctrl_reset_segment_timer:
     %cm_ctrl_shortcut("Reset Seg Timer", !sram_ctrl_reset_segment_timer)
@@ -3300,6 +3322,7 @@ action_clear_shortcuts:
     STA !ram_game_mode_extras
     STA !sram_ctrl_save_state
     STA !sram_ctrl_load_state
+    STA !sram_ctrl_auto_save_state
     STA !sram_ctrl_load_last_preset
     STA !sram_ctrl_full_equipment
     STA !sram_ctrl_kill_enemies
