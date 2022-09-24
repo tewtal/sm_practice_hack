@@ -2501,11 +2501,14 @@ preset_gtmax_brinstar_cleanup_1_crateria_power_bombs:
     dw $0915, $00E2  ; Screen Y position in pixels
     dw $0917, $03CD  ; Layer 2 X position
     dw $09C2, $04E1  ; Health
+    dw $09C6, $00E9  ; Missiles
+    dw $09C8, $0109  ; Max missiles
     dw $09D2, $0003  ; Currently selected item
     dw $0A1C, $0079  ; Samus position/state
     dw $0A1E, $1108  ; More position/state
     dw $0AF6, $0803  ; Samus X
     dw $0AFA, $0159  ; Samus Y
+    dw $D870, $009E  ; Items
     dw #$FFFF
 
 preset_gtmax_brinstar_cleanup_1_landing_site_revisit:
@@ -2563,7 +2566,7 @@ preset_gtmax_brinstar_cleanup_1_kago_mushroom_room:
     dw $0919, $0480  ; Layer 2 Y position
     dw $09C2, $0640  ; Health
     dw $09C6, $00F0  ; Missiles
-    dw $09C8, $0109  ; Max missiles
+    dw $09C8, $0113  ; Max missiles
     dw $09D6, $0196  ; Reserves
     dw $0AF6, $00B5  ; Samus X
     dw $0AFA, $068B  ; Samus Y
@@ -2616,7 +2619,7 @@ preset_gtmax_brinstar_cleanup_1_reverse_mockball:
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
     dw $09C6, $00FA  ; Missiles
-    dw $09C8, $0113  ; Max missiles
+    dw $09C8, $0118  ; Max missiles
     dw $09CE, $002B  ; Pbs
     dw $09D4, $02BC  ; Max reserves
     dw $0A1C, $0002  ; Samus position/state
@@ -2638,7 +2641,7 @@ preset_gtmax_brinstar_cleanup_1_green_shaft_descent:
     dw $0917, $0023  ; Layer 2 X position
     dw $0919, $00C0  ; Layer 2 Y position
     dw $09C6, $00FF  ; Missiles
-    dw $09C8, $0118  ; Max missiles
+    dw $09C8, $011D  ; Max missiles
     dw $0AF6, $00CF  ; Samus X
     dw $0AFA, $015B  ; Samus Y
     dw $D870, $86BD  ; Items
@@ -2759,7 +2762,7 @@ preset_gtmax_brinstar_cleanup_1_mission_impossible:
     dw $0919, $0255  ; Layer 2 Y position
     dw $09C2, $0680  ; Health
     dw $09C6, $0103  ; Missiles
-    dw $09C8, $011D  ; Max missiles
+    dw $09C8, $0122  ; Max missiles
     dw $09CE, $002D  ; Pbs
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
@@ -2825,7 +2828,7 @@ preset_gtmax_brinstar_cleanup_1_waterway_etank:
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $06D7  ; Layer 2 Y position
     dw $09C6, $010C  ; Missiles
-    dw $09C8, $0122  ; Max missiles
+    dw $09C8, $0127  ; Max missiles
     dw $09CA, $001E  ; Supers
     dw $09CE, $002E  ; Pbs
     dw $0AF6, $0065  ; Samus X
@@ -2864,7 +2867,7 @@ preset_gtmax_brinstar_cleanup_2_blue_brinstar_hoppers:
     dw $0917, $00AB  ; Layer 2 X position
     dw $0919, $0015  ; Layer 2 Y position
     dw $09C6, $0111  ; Missiles
-    dw $09C8, $0127  ; Max missiles
+    dw $09C8, $012C  ; Max missiles
     dw $09CE, $002E  ; Pbs
     dw $09D6, $01B4  ; Reserves
     dw $0AF6, $0145  ; Samus X
@@ -2906,7 +2909,7 @@ preset_gtmax_brinstar_cleanup_2_leaving_blue_brinstar:
     dw $0919, $0180  ; Layer 2 Y position
     dw $09C2, $07B9  ; Health
     dw $09C6, $0120  ; Missiles
-    dw $09C8, $0136  ; Max missiles
+    dw $09C8, $013B  ; Max missiles
     dw $0AF6, $0229  ; Samus X
     dw $0AFA, $02BB  ; Samus Y
     dw $D872, $FF6F  ; Items
@@ -2945,7 +2948,7 @@ preset_gtmax_brinstar_cleanup_2_climb_supers:
     dw $0919, $0540  ; Layer 2 Y position
     dw $09C2, $078E  ; Health
     dw $09C6, $0125  ; Missiles
-    dw $09C8, $013B  ; Max missiles
+    dw $09C8, $0140  ; Max missiles
     dw $09CE, $002F  ; Pbs
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
@@ -2997,7 +3000,7 @@ preset_gtmax_brinstar_cleanup_2_parlor_again:
     dw $0913, $6401  ; Screen subpixel Y position
     dw $0917, $00C0  ; Layer 2 X position
     dw $09C6, $012A  ; Missiles
-    dw $09C8, $0140  ; Max missiles
+    dw $09C8, $0145  ; Max missiles
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $01B9  ; Samus X
