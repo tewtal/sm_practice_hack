@@ -367,9 +367,15 @@ preset_start_gameplay:
     JSL $878016  ; Clear animated tile objects
     JSL $88829E  ; Wait until the end of a v-blank and clear (H)DMA enable flags
 
-    ; Set Samus last pose same as current pose
-    LDA !SAMUS_POSE : STA !SAMUS_PREVIOUS_POSE
+    ; Set Samus last pose same as current pose if not shinesparking
     LDA !SAMUS_POSE_DIRECTION : STA !SAMUS_PREVIOUS_POSE_DIRECTION
+    LDA !SAMUS_POSE : CMP #$00C0 : BMI .store_prev_pose
+    CMP #$00C5 : BMI .store_prev_pose
+    ; Set timer type to shinespark, clear prev pose
+    LDA #$0006 : STA $0ACC
+    LDA #$0000
+  .store_prev_pose
+    STA !SAMUS_PREVIOUS_POSE
 
     ; Set Samus last position same as current position
     LDA !SAMUS_X : STA $0B10 : LDA !SAMUS_X_SUBPX : STA $0B12
