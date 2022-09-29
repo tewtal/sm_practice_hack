@@ -351,7 +351,7 @@ preset_hundo_kraid_elevator:
     dw $0913, $1800  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0919, $0000  ; Layer 2 Y position
-    dw $09C6, $0002  ; Missiles
+    dw $09C2, $008B  ; Health
     dw $0AF6, $0080  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
@@ -941,7 +941,7 @@ preset_hundo_phantoon_red_tower_revisit:
     dw $0A1E, $1B04  ; More position/state
     dw $0A68, $000E  ; Flash suit
     dw $0AF6, $0047  ; Samus X
-    dw $0AFA, $007A  ; Samus Y
+    dw $0AFA, $0070  ; Samus Y
     dw $0B3F, $0004  ; Blue suit
     dw #$FFFF
 
