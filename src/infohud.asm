@@ -63,6 +63,13 @@ endif
     JSL ih_elevator_activation
 
 if !FEATURE_PAL
+org $A9F053
+else             ; hijack, runs when the screen locks to start the hopper/baby cutscene
+org $A9F006
+endif
+    JSL ih_babyskip_segment
+
+if !FEATURE_PAL
 org $A98884      ; update timers after MB1 fight
 else
 org $A98874      ; update timers after MB1 fight
@@ -404,6 +411,14 @@ ih_elevator_activation:
     PLA
     STZ $0A56
     SEC
+    RTL
+}
+
+ih_babyskip_segment:
+{
+    ; runs when the screen locks to start the hopper/baby cutscene
+    STA $7ECD22 ; overwritten code
+    JSL ih_update_hud_early
     RTL
 }
 
