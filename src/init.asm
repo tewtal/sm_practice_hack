@@ -139,6 +139,9 @@ endif
     TDC : STA !sram_spin_lock : STA !sram_ctrl_toggle_spin_lock
     DEC : STA !sram_map_grid_alignment
 
+  .sram_upgrade_17to18
+    TDC : STA !sram_infidoppler_enabled
+
     LDA !SRAM_VERSION : STA !sram_initialized
     RTS
 

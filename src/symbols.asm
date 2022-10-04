@@ -77,8 +77,6 @@ ram_kraid_adjust_timer = !ram_kraid_adjust_timer ; !WRAM_START+$5A
 ram_print_segment_timer = !ram_print_segment_timer ; !WRAM_START+$5C
 ram_activated_shine_duration = !ram_activated_shine_duration ; !WRAM_START+$5E
 
-; ^ FREE SPACE ^ up to +$6C
-
 ; ----------------------------------------------------------
 ; Shinetune uses several variables not used by other modes,
 ; but also shinetune does not use many other variables,
@@ -103,6 +101,21 @@ ram_shinetune_early_3 = !ram_shinetune_early_3 ; !WRAM_START+$78
 ram_shinetune_late_3 = !ram_shinetune_late_3 ; !WRAM_START+$7A
 ram_shinetune_early_4 = !ram_shinetune_early_4 ; !WRAM_START+$7C
 ram_shinetune_late_4 = !ram_shinetune_late_4 ; !WRAM_START+$7E
+
+ram_infidoppler_active = !ram_infidoppler_active ; !WRAM_START+$80
+
+; An array of 5 words, one per projectile, representing
+; the distance Samus travelled horizontally before firing.
+; The low byte of each word is integer pixels, and the high
+; byte is fractional pixels. Yes, that sounds weird, but it
+; makes the math a little bit easier.
+ram_infidoppler_offsets = !ram_infidoppler_offsets ; !WRAM_START+$82 ; array of 5 words
+ram_infidoppler_x = !ram_infidoppler_x ; !WRAM_START+$8C
+ram_infidoppler_subx = !ram_infidoppler_subx ; !WRAM_START+$8E
+ram_infidoppler_y = !ram_infidoppler_y ; !WRAM_START+$90
+ram_infidoppler_suby = !ram_infidoppler_suby ; !WRAM_START+$92
+
+; No free space :(
 
 ; ----------------------------------------------------------
 ; WRAM variables below this point are PERSISTENT.
@@ -170,7 +183,7 @@ ram_baby_rng = !ram_baby_rng ; !WRAM_PERSIST_START+$66
 
 ram_quickboot_spc_state = !ram_quickboot_spc_state ; !WRAM_PERSIST_START+$68
 
-; ^ FREE SPACE ^ up to +$7C (!WRAM_START+$FC - !WRAM_PERSIST_START)
+; No free space :(
 
 ; -----------------------
 ; RAM (Bank 7E required)
@@ -427,6 +440,8 @@ sram_cm_fast_scroll_button = !sram_cm_fast_scroll_button ; !SRAM_START+$8A
 sram_cm_font = !sram_cm_font ; !SRAM_START+$8C
 sram_spin_lock = !sram_spin_lock ; !SRAM_START+$8E
 sram_map_grid_alignment = !sram_map_grid_alignment ; !SRAM_START+$90
+
+sram_infidoppler_enabled = !sram_infidoppler_enabled ; !SRAM_START+$92
 
 ; ^ FREE SPACE ^ up to +$EE
 

@@ -9,7 +9,7 @@
 !WRAM_BANK = !WRAM_START>>16
 !WRAM_SIZE = #$0200
 !WRAM_START = $7EFD00
-!WRAM_PERSIST_START = $7EFD80
+!WRAM_PERSIST_START = $7EFD94
 !WRAM_MENU_START = $7EFE00
 !WRAM_END = $7EFF00
 !CRASHDUMP = $7EFF00
@@ -79,7 +79,6 @@
 !ram_print_segment_timer            = !WRAM_START+$5C
 !ram_activated_shine_duration       = !WRAM_START+$5E
 
-; ^ FREE SPACE ^ up to +$6C
 
 ; ----------------------------------------------------------
 ; Shinetune uses several variables not used by other modes,
@@ -105,6 +104,22 @@
 !ram_shinetune_late_3               = !WRAM_START+$7A
 !ram_shinetune_early_4              = !WRAM_START+$7C
 !ram_shinetune_late_4               = !WRAM_START+$7E
+
+
+!ram_infidoppler_active             = !WRAM_START+$80
+
+; An array of 5 words, one per projectile, representing
+; the distance Samus travelled horizontally before firing.
+; The low byte of each word is integer pixels, and the high
+; byte is fractional pixels. Yes, that sounds weird, but it
+; makes the math a little bit easier.
+!ram_infidoppler_offsets         = !WRAM_START+$82 ; array of 5 words
+!ram_infidoppler_x               = !WRAM_START+$8C
+!ram_infidoppler_subx            = !WRAM_START+$8E
+!ram_infidoppler_y               = !WRAM_START+$90
+!ram_infidoppler_suby            = !WRAM_START+$92
+
+; No free space :(
 
 ; ----------------------------------------------------------
 ; WRAM variables below this point are PERSISTENT.
@@ -175,7 +190,7 @@
     ; 1: SPC load requested
     ; ROM address: routine to perform next initialization step
 
-; ^ FREE SPACE ^ up to +$7C (!WRAM_START+$FC - !WRAM_PERSIST_START)
+; No free space :(
 
 ; -----------------------
 ; RAM (Bank 7E required)
@@ -353,7 +368,7 @@
 ; SRAM
 ; -----
 
-!SRAM_VERSION = #$0017
+!SRAM_VERSION = #$0018
 
 !SRAM_START = $702000
 !PRESET_SLOTS = $703000
@@ -439,6 +454,8 @@
 !sram_cm_font = !SRAM_START+$8C
 !sram_spin_lock = !SRAM_START+$8E
 !sram_map_grid_alignment = !SRAM_START+$90
+
+!sram_infidoppler_enabled = !SRAM_START+$92
 
 ; ^ FREE SPACE ^ up to +$EE
 
