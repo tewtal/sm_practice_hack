@@ -390,7 +390,7 @@ RAMWatchCommonConfirm:
     dw ramwatch_common_addr2
     dw ramwatch_common_back
     dw #$0000
-    %cm_header("SELECT FROM ENEMY RAM")
+    %cm_header("SELECT HUD POSITION")
 
 ramwatch_common_addr1:
     %cm_jsl("Address 1 (Left)", .routine, #$0000)
