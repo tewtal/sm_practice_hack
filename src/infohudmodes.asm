@@ -63,13 +63,13 @@ status_chargetimer:
     LDA !ram_shot_timer : CMP #$0024 : BPL .reset
     INC : STA !ram_shot_timer
     ASL : TAX
-    LDA NumberGFXTable,X : STA $7EC688
+    LDA NumberGFXTable,X : STA !HUD_TILEMAP+$88
     RTS
 
   .reset
-    LDA !IH_BLANK : STA $7EC688
-    LDA NumberGFXTable+12 : STA $7EC68C
-    LDA NumberGFXTable+2 : STA $7EC68E
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$88
+    LDA NumberGFXTable+12 : STA !HUD_TILEMAP+$8C
+    LDA NumberGFXTable+2 : STA !HUD_TILEMAP+$8E
     RTS
 
   .pressedShot
@@ -273,9 +273,9 @@ endif
     ; We were, which means we let go of dash early
     LDA #$00FF : STA !ram_dash_counter
     LDA #(!tap_1_to_2+1) : SEC : SBC !ram_shinetune_early_2 : LDX #$0090 : JSR Draw3
-    LDA !IH_LETTER_E : STA $7EC696
+    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$96
     LDA #(!tap_1_to_2+2) : SEC : SBC !ram_shine_counter
-    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC698
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$98
     RTS
 
   .nodashheldlate1
@@ -301,16 +301,16 @@ endif
     ; Arbitrary give up waiting after 50 frames (24 past the time we should have pressed dash)
     LDA !ram_shine_counter : CMP #(!tap_1_to_2+!tap_1_to_2) : BMI .donecheck1
     LDA #$00FF : STA !ram_dash_counter
-    LDA !IH_LETTER_L : STA $7EC692
-    LDA !IH_LETTER_X : STA $7EC694
+    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$92
+    LDA !IH_LETTER_X : STA !HUD_TILEMAP+$94
     BRL .clear2
 
   .checklate1
     ; Gear 1, pressed dash too late to reach gear 2
     LDA #$00FF : STA !ram_dash_counter
-    LDA !IH_LETTER_L : STA $7EC692
+    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$92
     LDA !ram_shine_counter : SEC : SBC #(!tap_1_to_2+1)
-    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC694
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$94
     BRL .clear2
 
   .setnextearly1
@@ -329,9 +329,9 @@ endif
     ; We were, which means we let go of dash early
     LDA #$00FF : STA !ram_dash_counter
     LDA #(!tap_2_to_3+2) : SEC : SBC !ram_shinetune_early_3 : LDX #$00AE : JSR Draw3
-    LDA !IH_LETTER_E : STA $7EC6B4
+    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$B4
     LDA #(!tap_2_to_3+3) : SEC : SBC !ram_shine_counter
-    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC6B6
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$B6
     RTS
 
   .nodashheldlate2
@@ -357,16 +357,16 @@ endif
     ; Arbitrary give up waiting after 40 frames (18 past the time we should have pressed dash)
     LDA !ram_shine_counter : CMP #(!tap_2_to_3+!tap_2_to_3) : BMI .donecheck2
     LDA #$00FF : STA !ram_dash_counter
-    LDA !IH_LETTER_L : STA $7EC6B0
-    LDA !IH_LETTER_X : STA $7EC6B2
+    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$B0
+    LDA !IH_LETTER_X : STA !HUD_TILEMAP+$B2
     BRL .clear3
 
   .checklate2
     ; Gear 2, pressed dash too late to reach gear 3
     LDA #$00FF : STA !ram_dash_counter
-    LDA !IH_LETTER_L : STA $7EC6B0
+    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$B0
     LDA !ram_shine_counter : SEC : SBC #(!tap_2_to_3+2)
-    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC6B2
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$B2
     BRL .clear3
 
   .setnextearly2
@@ -377,9 +377,9 @@ endif
 
   .nodash3minimap
     ; We let go of dash early, but also we have the minimap displayed
-    LDA !IH_LETTER_E : STA $7EC6B8
+    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$B8
     LDA #(!tap_3_to_4+4) : SEC : SBC !ram_shine_counter
-    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC6BA
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$BA
     RTS
 
   .nodash3
@@ -393,9 +393,9 @@ endif
     LDA #$00FF : STA !ram_dash_counter
     LDA !ram_minimap : BNE .nodash3minimap
     LDA #(!tap_3_to_4+3) : SEC : SBC !ram_shinetune_early_4 : LDX #$00B8 : JSR Draw3
-    LDA !IH_LETTER_E : STA $7EC6BE
+    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$BE
     LDA #(!tap_3_to_4+4) : SEC : SBC !ram_shine_counter
-    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC6C0
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$C0
     RTS
 
   .nodashheldlate3
@@ -418,8 +418,8 @@ endif
     RTS
 
   .checklatemiss3minimap
-    LDA !IH_LETTER_L : STA $7EC6B8
-    LDA !IH_LETTER_X : STA $7EC6BA
+    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$B8
+    LDA !IH_LETTER_X : STA !HUD_TILEMAP+$BA
     RTS
 
   .checklatemiss3
@@ -427,7 +427,7 @@ endif
     LDA !ram_shine_counter : CMP #(!tap_3_to_4+!tap_3_to_4) : BMI .donecheck3
     LDA #$00FF : STA !ram_dash_counter
     LDA !ram_minimap : BNE .checklatemiss3minimap
-    LDA !IH_LETTER_X : STA $7EC6BC
+    LDA !IH_LETTER_X : STA !HUD_TILEMAP+$BC
     BRA .checklateprint3
 
   .checklate3
@@ -435,10 +435,10 @@ endif
     LDA #$00FF : STA !ram_dash_counter
     LDA !ram_minimap : BNE .checklate3minimap
     LDA !ram_shine_counter : SEC : SBC #(!tap_3_to_4+3)
-    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC6BC
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$BC
 
   .checklateprint3
-    LDA !IH_LETTER_L : STA $7EC6BA
+    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$BA
     BRA .clear4
 
   .setnextearly3
@@ -448,27 +448,27 @@ endif
     RTS
 
   .checklate3minimap
-    LDA !IH_LETTER_L : STA $7EC6B8
+    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$B8
     LDA !ram_shine_counter : SEC : SBC #(!tap_3_to_4+3)
-    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC6BA
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$BA
     RTS
 
   .clear1
-    LDA !IH_BLANK : STA $7EC68C : STA $7EC68E : STA $7EC690 : STA $7EC692 : STA $7EC694
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$8E : STA !HUD_TILEMAP+$90 : STA !HUD_TILEMAP+$92 : STA !HUD_TILEMAP+$94
 
   .clear2
-    LDA !IH_BLANK : STA $7EC696 : STA $7EC698 : STA $7EC6AE : STA $7EC6B0 : STA $7EC6B2
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$96 : STA !HUD_TILEMAP+$98 : STA !HUD_TILEMAP+$AE : STA !HUD_TILEMAP+$B0 : STA !HUD_TILEMAP+$B2
 
   .clear3
     LDA !ram_minimap : BNE .clear3minimap
-    LDA !IH_BLANK : STA $7EC6B4 : STA $7EC6B6 : STA $7EC6B8 : STA $7EC6BA : STA $7EC6BC
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$B4 : STA !HUD_TILEMAP+$B6 : STA !HUD_TILEMAP+$B8 : STA !HUD_TILEMAP+$BA : STA !HUD_TILEMAP+$BC
 
   .clear4
-    LDA !IH_BLANK : STA $7EC6BE : STA $7EC6C0 : STA $7EC6C2 : STA $7EC6C4 : STA $7EC6C6
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$BE : STA !HUD_TILEMAP+$C0 : STA !HUD_TILEMAP+$C2 : STA !HUD_TILEMAP+$C4 : STA !HUD_TILEMAP+$C6
     RTS
 
   .clear3minimap
-    LDA !IH_BLANK : STA $7EC6B4 : STA $7EC6B6 : STA $7EC6B8 : STA $7EC6BA
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$B4 : STA !HUD_TILEMAP+$B6 : STA !HUD_TILEMAP+$B8 : STA !HUD_TILEMAP+$BA
     RTS
 
   .drawearly4minimap
@@ -524,7 +524,7 @@ endif
     BRL .clear1
 
   .draw1miss
-    LDA !IH_LETTER_X : STA $7EC688 : STA $7EC68A
+    LDA !IH_LETTER_X : STA !HUD_TILEMAP+$88 : STA !HUD_TILEMAP+$8A
     BRL .clear1
 }
 
@@ -589,25 +589,25 @@ status_spikesuit:
     LDA !SAMUS_IFRAME_TIMER : CMP #$0033 : BEQ .sparkframeperfect : BPL .sparkearly
 
     ; Sparked late
-    LDA !IH_LETTER_L : STA $7EC68C
+    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$8C
     LDA #$0033 : SEC : SBC !SAMUS_IFRAME_TIMER
-    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC68E
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
     BRA .endstate
 
   .unmorphearly
-    LDA !IH_LETTER_E : STA $7EC688
-    LDA !IH_BLANK : STA $7EC68A : STA $7EC68C : STA $7EC68E : STA $7EC690
+    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$88
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$8A : STA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$8E : STA !HUD_TILEMAP+$90
     LDA #$0002 : STA !ram_roomstrat_state
     RTS
 
   .sparkframeperfect
-    LDA !IH_LETTER_Y : STA $7EC68C : STA $7EC68E
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$8E
     BRA .endstate
 
   .sparkearly
-    LDA !IH_LETTER_E : STA $7EC68C
+    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$8C
     LDA !SAMUS_IFRAME_TIMER : SEC : SBC #$0033
-    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC68E
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
 
   .endstate
     LDA #$0006 : STA !ram_roomstrat_state
@@ -618,10 +618,10 @@ status_spikesuit:
     CMP #$003B : BEQ .prepspark1 : CMP #$003A : BEQ .prepspark2
 
     ; Unmorphed late
-    LDA !IH_LETTER_L : STA $7EC688
+    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$88
     LDA #$003A : SEC : SBC !SAMUS_IFRAME_TIMER
-    ASL A : TAY : LDA.w NumberGFXTable,Y : STA $7EC68A
-    LDA !IH_BLANK : STA $7EC68C : STA $7EC68E : STA $7EC690
+    ASL A : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$8E : STA !HUD_TILEMAP+$90
     LDA #$0002 : STA !ram_roomstrat_state
     RTS
 
@@ -629,14 +629,14 @@ status_spikesuit:
     ; We unmorphed but have not taken damage
     ; We're either early or we're not attempting spikesuit right now
     LDA #$0001 : STA !ram_roomstrat_counter
-    LDA !IH_BLANK : STA $7EC688 : STA $7EC68A : STA $7EC68C : STA $7EC68E : STA $7EC690
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$88 : STA !HUD_TILEMAP+$8A : STA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$8E : STA !HUD_TILEMAP+$90
     RTS
 
   .damageunmorph
     ; We unmorphed on the same frame we took damage, which is one frame early
-    LDA !IH_LETTER_E : STA $7EC688
-    LDY #$0002 : LDA.w NumberGFXTable,Y : STA $7EC68A
-    LDA !IH_BLANK : STA $7EC68C : STA $7EC68E : STA $7EC690
+    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$88
+    LDY #$0002 : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$8E : STA !HUD_TILEMAP+$90
     LDA #$0002 : STA !ram_roomstrat_state
     RTS
 
@@ -649,9 +649,9 @@ status_spikesuit:
 
   .prepspark
     ; We unmorphed on one of the two good frames
-    TAY : LDA.w NumberGFXTable,Y : STA $7EC68A
-    LDA !IH_LETTER_Y : STA $7EC688
-    LDA !IH_BLANK : STA $7EC68C : STA $7EC68E : STA $7EC690
+    TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$88
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$8E : STA !HUD_TILEMAP+$90
     RTS
 }
 
@@ -663,7 +663,7 @@ status_lagcounter:
     %a8() : LDA #$E1 : STA $4206 : %a16()
     PHA : PLA : PHA : PLA : LDA $4214
     LDX #$0088 : JSR Draw3
-    LDA !IH_PERCENT : STA $7EC68E
+    LDA !IH_PERCENT : STA !HUD_TILEMAP+$8E
 
   .done
     RTS
@@ -683,7 +683,7 @@ status_xpos:
 
   .drawsubpixel
     STA !ram_subpixel_pos : LDX #$0092 : JSR Draw4Hex
-    LDA !IH_DECIMAL : STA $7EC690
+    LDA !IH_DECIMAL : STA !HUD_TILEMAP+$90
 
   .done
     RTS
@@ -703,7 +703,7 @@ status_ypos:
 
   .drawsubpixel
     STA !ram_subpixel_pos : LDX #$0092 : JSR Draw4Hex
-    LDA !IH_DECIMAL : STA $7EC690
+    LDA !IH_DECIMAL : STA !HUD_TILEMAP+$90
 
   .done
     RTS
@@ -727,7 +727,7 @@ status_hspeed:
 
   .drawsubpixel
     LDX #$0092 : JSR Draw4Hex
-    LDA !IH_DECIMAL : STA $7EC690
+    LDA !IH_DECIMAL : STA !HUD_TILEMAP+$90
 
   .done
     RTS
@@ -758,8 +758,8 @@ endif
     ; If speed was previously negative, then proceed as normal to draw 65535
     TAY : LDA !ram_vertical_speed : AND #$8000 : BNE .restorespeed
 
-    LDA !IH_BLANK : STA $7EC688 : STA $7EC68A : STA $7EC68C : STA $7EC690
-    LDA !IH_HYPHEN : STA $7EC68E
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$88 : STA !HUD_TILEMAP+$8A : STA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$90
+    LDA !IH_HYPHEN : STA !HUD_TILEMAP+$8E
 
     ; Store speed as some negative value that isn't FFFF,
     ; so if it is negative again we'll update it to 65535
@@ -771,7 +771,7 @@ endif
 
   .drawspeed
     STA !ram_vertical_speed : LDX #$0088 : JSR Draw4
-    LDA !IH_BLANK : STA $7EC690
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$90
 
   .checkfalling
     ; If we're not falling reset counters
@@ -832,15 +832,15 @@ endif
 
   .earlyprint
     LDA !ram_roomstrat_counter : INC : SEC : SBC !ram_roomstrat_state
-    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC698
-    LDA !IH_LETTER_E : STA $7EC696
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$98
+    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$96
 
     ; If we're early, we can try again, so only reset the jump counter
     BRL .resetjumpcounter
 
   .lateprint
-    SEC : SBC #!allowed_spacejump_frames : ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC698
-    LDA !IH_LETTER_L : STA $7EC696
+    SEC : SBC #!allowed_spacejump_frames : ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$98
+    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$96
 
   .comparefinish
     LDA #$0000 : STA !ram_roomstrat_state : STA !ram_roomstrat_counter
@@ -849,8 +849,8 @@ endif
   .ontime
     ; We must have jumped on time
     LDA !ram_roomstrat_state : SEC : SBC !ram_roomstrat_counter
-    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC698
-    LDA !IH_LETTER_Y : STA $7EC696
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$98
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$96
     BRA .comparefinish
 
   .checkjump
@@ -877,11 +877,11 @@ endif
     ; Print initial jump speed over item%
     LDA !sram_top_display_mode : BNE .skipprint
     LDA $0B1A : BNE .skipprint
-    LDA $7EC612 : STA $14
+    LDA !HUD_TILEMAP+$12 : STA $14
     LDA $0B2D : AND #$0FFF
     LDX #$0012 : JSR Draw4Hex
     INC $0B1A
-    LDA $14 : STA $7EC612
+    LDA $14 : STA !HUD_TILEMAP+$12
 
   .skipprint
     ; If we started falling and space jump might be allowed, time to compare
@@ -924,8 +924,8 @@ status_quickdrop:
     RTS
 
   .firstleftright
-    LDA !IH_BLANK : STA $7EC688 : STA $7EC68A
-    STA $7EC68C : STA $7EC68E : STA $7EC690
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$88 : STA !HUD_TILEMAP+$8A
+    STA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$8E : STA !HUD_TILEMAP+$90
     BRA .setcounter
 
   .reset
@@ -937,18 +937,18 @@ status_quickdrop:
 
     ; Late
     SEC : SBC #$0008
-    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC68A
-    LDA !IH_LETTER_L : STA $7EC688
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A
+    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$88
     RTS
 
   .early
     LDA #$0008 : SEC : SBC !ram_quickdrop_counter
-    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC68A
-    LDA !IH_LETTER_E : STA $7EC688
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A
+    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$88
     RTS
 
   .frameperfect
-    LDA !IH_LETTER_Y : STA $7EC688 : STA $7EC68A
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$88 : STA !HUD_TILEMAP+$8A
     RTS
 }
 
@@ -975,14 +975,14 @@ status_walljump:
 
     ; Result is mulitiplied by 128 already, multiply by 8 for a nice decimal number
     LDA $4214 : ASL : ASL : ASL : LDX #$0092 : JSR Draw4Hundredths
-    LDA !IH_BLANK : STA $7EC690
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$90
 
   .startaverage
     LDA #$0000 : STA !ram_vertical_speed : INC : STA !ram_roomstrat_counter
     BRA .incspeed
 
   .blankaverage
-    LDA !IH_BLANK : STA $7EC690 : STA $7EC692 : STA $7EC694 : STA $7EC696 : STA $7EC698
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$90 : STA !HUD_TILEMAP+$92 : STA !HUD_TILEMAP+$94 : STA !HUD_TILEMAP+$96 : STA !HUD_TILEMAP+$98
     BRA .startaverage
 
   .clearaverage
@@ -1051,7 +1051,7 @@ endif
     CMP #$0009 : BNE .reset
 
   .clear
-    LDA !IH_BLANK : STA $7EC688 : STA $7EC68A
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$88 : STA !HUD_TILEMAP+$8A
 
   .reset
     LDA #$0000 : STA !ram_walljump_counter
@@ -1068,8 +1068,8 @@ endif
     CMP #$0009 : BNE .clear
 
   .printlow
-    LDA.w NumberGFXTable,Y : STA $7EC68A
-    LDA !IH_LETTER_L : STA $7EC688
+    LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A
+    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$88
     BRA .reset
 
   .heightcheck
@@ -1086,8 +1086,8 @@ endif
     CMP #$0009 : BNE .clear
 
   .printhigh
-    LDA.w NumberGFXTable,Y : STA $7EC68A
-    LDA !IH_LETTER_H : STA $7EC688
+    LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A
+    LDA !IH_LETTER_H : STA !HUD_TILEMAP+$88
     BRA .reset
 
   .roomcheck
@@ -1151,11 +1151,11 @@ status_ramwatch:
 
   .checkBlank
     ; Redraw if HUD is blank
-    LDA $7EC688 : CMP !IH_BLANK : BNE .checkRight
+    LDA !HUD_TILEMAP+$88 : CMP !IH_BLANK : BNE .checkRight
     LDA !ram_watch_left_hud : LDX #$0088 : JSR Draw4Hex
 
   .checkRight
-    LDA $7EC692 : CMP !IH_BLANK : BNE .writeLock
+    LDA !HUD_TILEMAP+$92 : CMP !IH_BLANK : BNE .writeLock
     LDA !ram_watch_right_hud : LDX #$0092 : JSR Draw4Hex
 
   .writeLock
@@ -1208,8 +1208,8 @@ endif
     LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_START : BNE .notinit
 
     ; Initial state
-    LDA !IH_LETTER_Y : STA $7EC688
-    LDA !IH_BLANK : STA $7EC68A : STA $7EC68C : STA $7EC68E
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$88
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$8A : STA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$8E
     LDA #$0001 : STA !ram_roomstrat_state
     RTS
 
@@ -1218,7 +1218,7 @@ endif
     BRL .expandlate
 
   .clear
-    LDA !IH_BLANK : STA $7EC688 : STA $7EC68A : STA $7EC68C : STA $7EC68E
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$88 : STA !HUD_TILEMAP+$8A : STA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$8E
     BRA .resetstate
 
   .notinit
@@ -1250,8 +1250,8 @@ endif
     LDA !ram_roomstrat_counter : CMP #!start_to_jump_delay : BEQ .jumpframeperfect : BMI .jumpearly
 
     ; Jumped late
-    SEC : SBC #!start_to_jump_delay : ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC68A
-    LDA !IH_LETTER_L : STA $7EC688
+    SEC : SBC #!start_to_jump_delay : ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A
+    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$88
     BRA .resetstate
 
   .checkexpand
@@ -1260,8 +1260,8 @@ endif
     CMP #$003C : BEQ .expandframeperfect : BMI .expandearly
 
   .expandlate
-    LDA !IH_LETTER_L : STA $7EC68C
-    LDA !IH_LETTER_X : STA $7EC68E
+    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$8C
+    LDA !IH_LETTER_X : STA !HUD_TILEMAP+$8E
     BRL .resetstate
 
   .readyexpand
@@ -1270,28 +1270,28 @@ endif
 
   .jumpearly
     LDA #!start_to_jump_delay : SEC : SBC !ram_roomstrat_counter
-    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC68A
-    LDA !IH_LETTER_E : STA $7EC688
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A
+    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$88
     BRL .resetstate
 
   .jumpframeperfect
-    LDA !IH_LETTER_Y : STA $7EC688 : STA $7EC68A
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$88 : STA !HUD_TILEMAP+$8A
     LDA #$0003 : STA !ram_roomstrat_state
     RTS
 
   .expandoneframelate
-    LDA !IH_LETTER_L : STA $7EC68C
-    LDY #$0002 : LDA.w NumberGFXTable,Y : STA $7EC68E
+    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$8C
+    LDY #$0002 : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
     BRL .resetstate
 
   .expandframeperfect
-    LDA !IH_LETTER_Y : STA $7EC68C : STA $7EC68E
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$8E
     BRL .resetstate
 
   .expandearly
     LDA #$003C : SEC : SBC !ram_roomstrat_counter
-    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC68E
-    LDA !IH_LETTER_E : STA $7EC68C
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
+    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$8C
     BRL .resetstate
 }
 
@@ -1332,9 +1332,9 @@ endif
     LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_LEFT : BNE .donestart
 
     ; Ready to start
-    LDA !IH_LETTER_Y : STA $7EC688
-    LDA !IH_BLANK : STA $7EC68A : STA $7EC68C : STA $7EC68E : STA $7EC690
-    STA $7EC692 : STA $7EC694 : STA $7EC696 : STA $7EC698
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$88
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$8A : STA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$8E : STA !HUD_TILEMAP+$90
+    STA !HUD_TILEMAP+$92 : STA !HUD_TILEMAP+$94 : STA !HUD_TILEMAP+$96 : STA !HUD_TILEMAP+$98
     BRL .incstate
 
   .falling
@@ -1349,24 +1349,24 @@ endif
 
     ; We expanded hitbox on time
     INC : SEC : SBC !ram_xpos
-    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC698
-    LDA !IH_LETTER_Y : STA $7EC696
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$98
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$96
     BRL .returnstart
 
   .expandearly
     LDA !ram_xpos : SEC : SBC !ram_walljump_counter
-    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC698
-    LDA !IH_LETTER_E : STA $7EC696
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$98
+    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$96
     BRL .returnstart
 
   .expandlate
     INC : SEC : SBC !ram_ypos
-    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC698
-    LDA !IH_LETTER_L : STA $7EC696
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$98
+    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$96
     BRL .returnstart
 
   .clearreturnstart
-    LDA !IH_BLANK : STA $7EC688 : STA $7EC68A
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$88 : STA !HUD_TILEMAP+$8A
     BRL .returnstart
 
   .incstate
@@ -1401,7 +1401,7 @@ endif
     LDA !ram_roomstrat_counter : BEQ .clearreturnstart
 
     ; Print number of frames after holding left that we pressed jump
-    LDA !ram_roomstrat_counter : ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC68A
+    LDA !ram_roomstrat_counter : ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A
 
   .checkleft
     LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_LEFT : BNE .incleft
@@ -1410,8 +1410,8 @@ endif
     LDA !ram_roomstrat_counter : BEQ .donerising
 
     ; Print number of frames we were holding left, if we haven't already
-    ASL : TAY : LDA $7EC688 : CMP !IH_LETTER_Y : BNE .noleftcheckjump
-    LDA.w NumberGFXTable,Y : STA $7EC688
+    ASL : TAY : LDA !HUD_TILEMAP+$88 : CMP !IH_LETTER_Y : BNE .noleftcheckjump
+    LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$88
 
   .noleftcheckjump
     ; If we stopped holding left, but we haven't jumped yet,
@@ -1427,7 +1427,7 @@ endif
     BRA .walljump
 
   .wjfail
-    LDA !IH_LETTER_X : STA $7EC694
+    LDA !IH_LETTER_X : STA !HUD_TILEMAP+$94
     BRL .returnstart
 
   .done
@@ -1447,7 +1447,7 @@ endif
     BRL .incstate
 
   .peakfail
-    LDA !IH_LETTER_X : STA $7EC696 : STA $7EC698
+    LDA !IH_LETTER_X : STA !HUD_TILEMAP+$96 : STA !HUD_TILEMAP+$98
     BRL .returnstart
 
   .checkground
@@ -1475,7 +1475,7 @@ endif
   .wjfar
     ; We jumped so late we are more than 65 pixels from the wall
     ; Set ram_xpos to an arbitrarily large value to ensure we'll fail later
-    LDA !IH_LETTER_X : STA $7EC692 : STA !ram_xpos
+    LDA !IH_LETTER_X : STA !HUD_TILEMAP+$92 : STA !ram_xpos
     BRA .wjcontinue
 
   .walljump
@@ -1484,7 +1484,7 @@ endif
 
     ; We jumped, first calculate our distance from the wall
     LDA #$022B : SEC : SBC !SAMUS_X : CMP #$0042 : BPL .wjfar
-    STA !ram_xpos : ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC692
+    STA !ram_xpos : ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$92
 
     ; Store this for later, each pixel counts as 8 frames of good horizontal movement
     TYA : ASL : ASL
@@ -1496,7 +1496,7 @@ endif
     STA !ram_xpos
 
   .wjcontinue
-    LDA !IH_BLANK : STA $7EC6A4
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$A4
     LDA #$0000 : STA !ram_walljump_counter
 
     ; Now time to evaluate the jump height
@@ -1509,14 +1509,14 @@ endif
 
   .high
     LDA #$029E : SEC : SBC !SAMUS_Y : CMP #$0042 : BPL .toohigh
-    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC68E
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
     BRA .highprint
 
   .toohigh
-    LDA !IH_LETTER_X : STA $7EC68E
+    LDA !IH_LETTER_X : STA !HUD_TILEMAP+$8E
 
   .highprint
-    LDA !IH_LETTER_H : STA $7EC68C
+    LDA !IH_LETTER_H : STA !HUD_TILEMAP+$8C
     BRL .wjfail
 
   .bonk
@@ -1536,8 +1536,8 @@ endif
 
   .low
     LDA !SAMUS_Y : SEC : SBC #$02A0
-    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC68E
-    LDA !IH_LETTER_L : STA $7EC68C
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
+    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$8C
     BRL .wjfail
 
   .threey
@@ -1551,8 +1551,8 @@ endif
     LDA #$0003
 
   .printy
-    STA !ram_ypos : ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC68E
-    LDA !IH_LETTER_Y : STA $7EC68C
+    STA !ram_ypos : ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$8C
 
     ; Determine last frame where we can gather the tank
     LDA #!first_possible_x : CLC : ADC !ram_ypos : STA !ram_ypos
@@ -1592,8 +1592,8 @@ endif
     LDA #$0003
 
   .printb
-    STA !ram_ypos : ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC68E
-    LDA !IH_LETTER_B : STA $7EC68C
+    STA !ram_ypos : ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
+    LDA !IH_LETTER_B : STA !HUD_TILEMAP+$8C
 
     ; Determine last frame where we can gather the tank
     LDA #!first_possible_x : CLC : ADC !ram_ypos : STA !ram_ypos
@@ -1625,13 +1625,13 @@ endif
 
   .predictfail
     ; There are no frames where we can gather the tank
-    LDY #$0000 : LDA.w NumberGFXTable,Y : STA $7EC694
+    LDY #$0000 : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$94
     BRL .returnstart
 
   .predictchance
     ; There is at least one frame where we can gather the tank
     LDA !ram_ypos : SEC : SBC !ram_xpos
-    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC694
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$94
     BRL .incstate
 }
 
@@ -1646,8 +1646,8 @@ status_gateglitch:
     BRL .late
 
   .clearprint
-    LDA #$0000 : TAY : LDA.w NumberGFXTable,Y : STA $7EC688
-    LDA !IH_BLANK : STA $7EC68A : STA $7EC68C : STA $7EC68E : STA $7EC690
+    LDA #$0000 : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$88
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$8A : STA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$8E : STA !HUD_TILEMAP+$90
     BRA .checkcounter
 
   .incshot
@@ -1732,13 +1732,13 @@ status_gateglitch:
 
   .early
     LDA !ram_shot_timer : INC : SEC : SBC !ram_roomstrat_state
-    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC68E
-    LDA !IH_LETTER_E : STA $7EC68C
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
+    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$8C
 
   .reset
     ; Print number of frames where you could have glitched
-    LDA !ram_roomstrat_state : ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC688
-    LDA !IH_BLANK : STA $7EC68A
+    LDA !ram_roomstrat_state : ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$88
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$8A
     LDA #$0000 : STA !ram_roomstrat_state
     LDA #$0014 : STA !ram_roomstrat_counter : STA !ram_shot_timer
     RTS
@@ -1746,18 +1746,18 @@ status_gateglitch:
   .gotit
     ; Check if this should be YY or Y2
     LDA !ram_roomstrat_state : CMP #$0001 : BNE .gottwoframe
-    LDA !IH_LETTER_Y : STA $7EC68C : STA $7EC68E
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$8E
     BRA .reset
 
   .gottwoframe
-    LDA !IH_LETTER_Y : STA $7EC68C
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$8C
     LDA #$0002 : SEC : SBC !ram_shot_timer
-    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC68E
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
     BRA .reset
 
   .late
-    LDA !ram_roomstrat_counter : ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC68E
-    LDA !IH_LETTER_L : STA $7EC68C
+    LDA !ram_roomstrat_counter : ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
+    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$8C
     BRA .reset
 }
 
@@ -1781,10 +1781,10 @@ status_moatcwj:
 
   .checkfirstjump
     LDA !ram_roomstrat_counter : CMP #$0013 : BEQ .firstframeperfect : BMI .firstjumpearly
-    SEC : SBC #$0013 : ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC68A
+    SEC : SBC #$0013 : ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A
 
     ; First jump late
-    LDA !IH_LETTER_L : STA $7EC688
+    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$88
     LDA #$0000 : STA !ram_roomstrat_state : STA !ram_roomstrat_counter
     RTS
 
@@ -1797,7 +1797,7 @@ status_moatcwj:
     BRL .nochange
 
   .firstframeperfect
-    LDA !IH_LETTER_Y : STA $7EC688 : STA $7EC68A
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$88 : STA !HUD_TILEMAP+$8A
     LDA #$0002 : STA !ram_roomstrat_counter : STA !ram_roomstrat_state
 
   .done
@@ -1805,8 +1805,8 @@ status_moatcwj:
 
   .firstjumpearly
     LDA #$0013 : SEC : SBC !ram_roomstrat_counter
-    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC68A
-    LDA !IH_LETTER_E : STA $7EC688
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A
+    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$88
     LDA #$0000 : STA !ram_roomstrat_state : STA !ram_roomstrat_counter
     RTS
 
@@ -1835,15 +1835,15 @@ status_moatcwj:
 
     ; If X and Y did not change and we aren't holding a direction, reset
     LDA #$0000 : STA !ram_roomstrat_state : STA !ram_roomstrat_counter
-    LDA !IH_BLANK : STA $7EC688 : STA $7EC68A : STA $7EC68C : STA $7EC68E : STA $7EC690
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$88 : STA !HUD_TILEMAP+$8A : STA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$8E : STA !HUD_TILEMAP+$90
     RTS
 
   .startcounter
     ; Prevent redundacy on start
     CMP !ram_roomstrat_state : BEQ .resetcounter
     STA !ram_roomstrat_state
-    LDA !IH_LETTER_Y : STA $7EC688
-    LDA !IH_BLANK : STA $7EC68A : STA $7EC68C : STA $7EC68E : STA $7EC690
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$88
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$8A : STA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$8E : STA !HUD_TILEMAP+$90
 
   .resetcounter
     LDA #$0000 : STA !ram_roomstrat_counter
@@ -1854,19 +1854,19 @@ status_moatcwj:
     CMP #$004A : BEQ .secondframe2
 
     ; Second jump late
-    SEC : SBC #$004A : ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC68E
-    LDA !IH_LETTER_L : STA $7EC68C
+    SEC : SBC #$004A : ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
+    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$8C
     BRA .clear
 
   .secondframe1
-    LDA #$0C00 : STA $7EC68E
+    LDA #$0C00 : STA !HUD_TILEMAP+$8E
     BRA .secondgotit
 
   .secondframe2
-    LDA #$0C01 : STA $7EC68E
+    LDA #$0C01 : STA !HUD_TILEMAP+$8E
 
   .secondgotit
-    LDA !IH_LETTER_Y : STA $7EC68C
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$8C
 
   .clear
     LDA #$0000 : STA !ram_roomstrat_state : STA !ram_roomstrat_counter
@@ -1874,32 +1874,32 @@ status_moatcwj:
 
   .secondjumpearly
     LDA #$0049 : SEC : SBC !ram_roomstrat_counter
-    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC68E
-    LDA !IH_LETTER_E : STA $7EC68C
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
+    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$8C
     BRA .clear
 }
 
 status_robotflush:
 {
     ; Checking hit on first robot
-    LDA !IH_BLANK : STA $7EC688
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$88
     LDA $0FEA : CMP #$0030 : BMI .checkfirstfall
-    LDA #$0C3C : STA $7EC688
+    LDA #$0C3C : STA !HUD_TILEMAP+$88
 
   .checkfirstfall
-    LDA !IH_BLANK : STA $7EC68A
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$8A
     LDA $0FBE : CMP #$0280 : BMI .checksecondhit
-    LDA #$0C3C : STA $7EC68A
+    LDA #$0C3C : STA !HUD_TILEMAP+$8A
 
   .checksecondhit
-    LDA !IH_BLANK : STA $7EC68C
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$8C
     LDA $102A : CMP #$0030 : BMI .checksecondfall
-    LDA #$0C3D : STA $7EC68C
+    LDA #$0C3D : STA !HUD_TILEMAP+$8C
 
   .checksecondfall
-    LDA !IH_BLANK : STA $7EC68E
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$8E
     LDA $0FFE : CMP #$0280 : BMI .done
-    LDA #$0C3D : STA $7EC68E
+    LDA #$0C3D : STA !HUD_TILEMAP+$8E
 
   .done
     RTS
@@ -1931,7 +1931,7 @@ status_shinetopb:
     RTS
 
   .clearpb
-    LDA !IH_BLANK : STA $7EC690 : STA $7EC692 : STA $7EC694 : STA $7EC696 : STA $7EC698
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$90 : STA !HUD_TILEMAP+$92 : STA !HUD_TILEMAP+$94 : STA !HUD_TILEMAP+$96 : STA !HUD_TILEMAP+$98
     BRA .setcounter
 
   .drawpb
@@ -1962,7 +1962,7 @@ endif
     LDA !SAMUS_Y : CMP !ram_ypos : BNE .downcheck
     LDA !SAMUS_Y_SPEED : CMP #$0000 : BNE .downcheck
     LDA !SAMUS_Y_SUBSPEED : CMP #$0000 : BNE .downcheck
-    LDA !IH_LETTER_Y : STA $7EC68A
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$8A
 
   .downcheck
     LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_DOWN : BEQ .inc
@@ -1977,7 +1977,7 @@ endif
     LDA !ROOM_ID : CMP #$94CC : BEQ .forgotten : CMP #$962A : BEQ .redbrin
     CMP #$97B5 : BEQ .morph : CMP #$9938 : BEQ .greenbrin : CMP #$9CB3 : BEQ .dachora
     CMP #$AF3F : BEQ .lowernorfair : CMP #$A6A1 : BEQ .warehouse
-    LDA !IH_BLANK : STA $7EC688
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$88
     BRL .setpb
 
   .inc
@@ -2006,7 +2006,7 @@ endif
 
   .questionpb
     ; Draw a percent character (laying the PB dead-center on the elevator is questionable)
-    LDA !IH_PERCENT : STA $7EC688
+    LDA !IH_PERCENT : STA !HUD_TILEMAP+$88
     BRA .setpb
 
   .timecheck
@@ -2015,34 +2015,34 @@ endif
 
     ; Late
     SEC : SBC #!elevatorcf_frame
-    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC68E
-    LDA !IH_LETTER_L : STA $7EC68C
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
+    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$8C
 
   .reset
     LDA #$0000 : STA !ram_roomstrat_state
     RTS
 
   .badpb
-    LDA !IH_LETTER_X : STA $7EC688
+    LDA !IH_LETTER_X : STA !HUD_TILEMAP+$88
     BRA .setpb
 
   .goodpb
-    LDA !IH_LETTER_Y : STA $7EC688
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$88
 
   .setpb
     LDA !SAMUS_PBS : STA !ram_roomstrat_counter
     LDA #$0001 : STA !ram_roomstrat_state
-    LDA !IH_BLANK : STA $7EC68A : STA $7EC68C : STA $7EC68E : STA $7EC690
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$8A : STA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$8E : STA !HUD_TILEMAP+$90
     RTS
 
   .early
     LDA #!elevatorcf_frame : SEC : SBC !ram_roomstrat_state
-    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC68E
-    LDA !IH_LETTER_E : STA $7EC68C
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
+    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$8C
     BRA .reset
 
   .frameperfect
-    LDA !IH_LETTER_Y : STA $7EC68C : STA $7EC68E
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$8E
     BRA .reset
 }
 
@@ -2066,22 +2066,22 @@ endif
     LDA !SAMUS_Y : CMP #$00B7 : BNE .inc
     LDA !SAMUS_Y_SPEED : CMP #$0000 : BNE .inc
     LDA !SAMUS_Y_SUBSPEED : CMP #$0000 : BNE .inc
-    LDA !IH_LETTER_Y : STA $7EC68A
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$8A
     BRA .timecheck
 
   .pbcheck
     ; Height check specific for botwoon hallway
     LDA !ram_ypos : CMP #$00B7 : BEQ .startpb
-    LDA !IH_BLANK : STA $7EC688
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$88
     BRA .setpb
 
   .startpb
     LDA #$0001 : STA !ram_roomstrat_state
-    LDA !IH_LETTER_Y : STA $7EC688
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$88
 
   .setpb
     LDA !SAMUS_PBS : STA !ram_roomstrat_counter
-    LDA !IH_BLANK : STA $7EC68A : STA $7EC68C : STA $7EC68E : STA $7EC690
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$8A : STA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$8E : STA !HUD_TILEMAP+$90
     RTS
 
   .setxy
@@ -2101,8 +2101,8 @@ endif
 
     ; Late
     SEC : SBC #!botwooncf_frame
-    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC68E
-    LDA !IH_LETTER_L : STA $7EC68C
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
+    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$8C
 
   .reset
     LDA #$0000 : STA !ram_roomstrat_state
@@ -2110,13 +2110,13 @@ endif
 
   .early
     LDA #!botwooncf_frame : SEC : SBC !ram_roomstrat_state
-    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC68E
-    LDA !IH_LETTER_E : STA $7EC68C
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
+    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$8C
     ; Keep waiting if we are early
     BRA .inc
 
   .frameperfect
-    LDA !IH_LETTER_Y : STA $7EC68C : STA $7EC68E
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$8E
     BRA .reset
 }
 
@@ -2150,7 +2150,7 @@ endif
     RTS
 
   .ignore
-    LDA !IH_BLANK : STA $7EC688 : STA $7EC68A : STA $7EC68C : STA $7EC68E
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$88 : STA !HUD_TILEMAP+$8A : STA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$8E
     RTS
 
   .checkpos
@@ -2160,37 +2160,37 @@ endif
     LDA !ram_ypos : CMP #$0120 : BMI .ignore : CMP #$0165 : BPL .ignore
 
     ; Snail is in range
-    LDA !IH_BLANK : STA $7EC688 : STA $7EC68A
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$88 : STA !HUD_TILEMAP+$8A
 
     ; Check the height
     LDA !ram_ypos : CMP #!snailclip_ypos_hi : BEQ .yeshigh : BMI .high
     CMP #!snailclip_ypos_lo : BEQ .yeslow : BPL .low
 
     ; Height is good and centered
-    LDA !IH_BLANK : STA $7EC68E
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$8E
     BRA .printy
 
   .yeshigh
-    LDA !IH_LETTER_H : STA $7EC68E
+    LDA !IH_LETTER_H : STA !HUD_TILEMAP+$8E
     BRA .printy
 
   .high
     LDA #!snailclip_ypos_hi : SEC : SBC !ram_ypos
-    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC68E
-    LDA !IH_LETTER_H : STA $7EC68C
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
+    LDA !IH_LETTER_H : STA !HUD_TILEMAP+$8C
     RTS
 
   .yeslow
-    LDA !IH_LETTER_L : STA $7EC68E
+    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$8E
 
   .printy
-    LDA !IH_LETTER_Y : STA $7EC68C
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$8C
     RTS
 
   .low
     LDA !ram_ypos : SEC : SBC #!snailclip_ypos_lo
-    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC68E
-    LDA !IH_LETTER_L : STA $7EC68C
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
+    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$8C
     RTS
 }
 
@@ -2236,9 +2236,9 @@ endif
   .eathopper
     LDA !ENEMY_X : CMP #$02D0 : BMI .done
     LDA !ENEMY_Y : CMP #$009C : BNE .done
-    LDA !IH_BLANK : STA $7EC688 : STA $7EC68A : STA $7EC68C
-    STA $7EC68E : STA $7EC690 : STA $7EC692 : STA $7EC694
-    STA $7EC696 : STA $7EC698 : STA $7EC69A
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$88 : STA !HUD_TILEMAP+$8A : STA !HUD_TILEMAP+$8C
+    STA !HUD_TILEMAP+$8E : STA !HUD_TILEMAP+$90 : STA !HUD_TILEMAP+$92 : STA !HUD_TILEMAP+$94
+    STA !HUD_TILEMAP+$96 : STA !HUD_TILEMAP+$98 : STA !HUD_TILEMAP+$9A
     BRA .incstate
 
   .babyrise
@@ -2260,11 +2260,11 @@ endif
   .checkfirsty
     LDA !SAMUS_X : CMP #$023B : BNE .clearfirsty
     LDA !SAMUS_X_SUBPX : CMP #$FFFF : BNE .clearfirsty
-    LDA !IH_LETTER_Y : STA $7EC688
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$88
     RTS
 
   .clearfirsty
-    LDA !IH_BLANK : STA $7EC688
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$88
     RTS
 
   .checkfirstrun
@@ -2274,8 +2274,8 @@ if !FEATURE_PAL
 
     ; First run on time
     SEC : SBC #!threejumpskip_firstrun_early
-    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC68A
-    LDA !IH_LETTER_Y : STA $7EC688
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$88
     BRL .clearcounterincstate
 
   .firstrunlate
@@ -2287,8 +2287,8 @@ else
     ; First run late
     SEC : SBC #!threejumpskip_firstrun
 endif
-    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC68A
-    LDA !IH_LETTER_L : STA $7EC688
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A
+    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$88
     BRL .clearcounterincstate
 
   .firstrunearly
@@ -2298,34 +2298,34 @@ else
     LDA #!threejumpskip_firstrun
 endif
     SEC : SBC !ram_roomstrat_counter
-    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC68A
-    LDA !IH_LETTER_E : STA $7EC688
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A
+    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$88
     BRL .clearcounterincstate
 
 if !FEATURE_PAL
 else
   .firstrunperfect
-    LDA !IH_LETTER_Y : STA $7EC688 : STA $7EC68A
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$88 : STA !HUD_TILEMAP+$8A
     BRL .clearcounterincstate
 endif
 
   .firstjumpperfect
-    LDA !IH_LETTER_Y : STA $7EC68C : STA $7EC68E
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$8E
     BRL .clearcounterincstate
 
   .firstjumpearly
     LDA #!threejumpskip_firstjump : SEC : SBC !ram_roomstrat_counter
-    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC68E
-    LDA !IH_LETTER_E : STA $7EC68C
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
+    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$8C
     BRL .clearcounterincstate
 
   .secondreleaselate
     SEC : SBC #(!threejumpskip_release_late-1)
     ASL : TAY : LDA.w NumberGFXTable,Y
 if !FEATURE_PAL
-    STA $7EC698 : LDA !IH_LETTER_L : STA $7EC696
+    STA !HUD_TILEMAP+$98 : LDA !IH_LETTER_L : STA !HUD_TILEMAP+$96
 else
-    STA $7EC69A : LDA !IH_LETTER_L : STA $7EC698
+    STA !HUD_TILEMAP+$9A : LDA !IH_LETTER_L : STA !HUD_TILEMAP+$98
 endif
     BRL .reset
 
@@ -2333,9 +2333,9 @@ endif
     LDA #(!threejumpskip_release_early+1) : SEC : SBC !ram_roomstrat_counter
     ASL : TAY : LDA.w NumberGFXTable,Y
 if !FEATURE_PAL
-    STA $7EC698 : LDA !IH_LETTER_E : STA $7EC696
+    STA !HUD_TILEMAP+$98 : LDA !IH_LETTER_E : STA !HUD_TILEMAP+$96
 else
-    STA $7EC69A : LDA !IH_LETTER_E : STA $7EC698
+    STA !HUD_TILEMAP+$9A : LDA !IH_LETTER_E : STA !HUD_TILEMAP+$98
 endif
     BRL .reset
 
@@ -2346,8 +2346,8 @@ endif
 
     ; First jump late
     SEC : SBC #!threejumpskip_firstjump
-    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC68E
-    LDA !IH_LETTER_L : STA $7EC68C
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
+    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$8C
     BRL .clearcounterincstate
 
   .firstfall
@@ -2367,9 +2367,9 @@ endif
     SEC : SBC #!threejumpskip_release_early
     ASL : TAY : LDA.w NumberGFXTable,Y
 if !FEATURE_PAL
-    STA $7EC698 : LDA !IH_LETTER_Y : STA $7EC696
+    STA !HUD_TILEMAP+$98 : LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$96
 else
-    STA $7EC69A : LDA !IH_LETTER_Y : STA $7EC698
+    STA !HUD_TILEMAP+$9A : LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$98
 endif
     BRL .reset
 
@@ -2386,8 +2386,8 @@ else
 
     ; Second run on time
     SEC : SBC #!threejumpskip_secondrun_early
-    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC692
-    LDA !IH_LETTER_Y : STA $7EC690
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$92
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$90
 endif
     BRL .incstate
 
@@ -2400,32 +2400,32 @@ else
 
     ; Second jump on time
     SEC : SBC #!threejumpskip_secondjump_early
-    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC696
-    LDA !IH_LETTER_Y : STA $7EC694
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$96
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$94
     BRL .clearcounterincstate
 
   .secondrunlate
     SEC : SBC #(!threejumpskip_secondrun_late-1)
-    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC692
-    LDA !IH_LETTER_L : STA $7EC690
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$92
+    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$90
     BRL .incstate
 
   .secondrunearly
     LDA #(!threejumpskip_secondrun_early+1) : SEC : SBC !ram_roomstrat_counter
-    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC692
-    LDA !IH_LETTER_E : STA $7EC690
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$92
+    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$90
     BRL .incstate
 
   .secondjumplate
     SEC : SBC #(!threejumpskip_secondjump_late-1)
-    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC696
-    LDA !IH_LETTER_L : STA $7EC694
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$96
+    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$94
     BRL .clearcounterincstate
 
   .secondjumpearly
     LDA #(!threejumpskip_secondjump_early+1) : SEC : SBC !ram_roomstrat_counter
-    ASL : TAY : LDA.w NumberGFXTable,Y : STA $7EC696
-    LDA !IH_LETTER_E : STA $7EC694
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$96
+    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$94
 endif
     BRL .clearcounterincstate
 }

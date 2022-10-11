@@ -1,3 +1,4 @@
+
 ; ---------
 ; Work RAM
 ; ---------
@@ -213,6 +214,21 @@
 !ram_cm_phan_first_phase = !WRAM_MENU_START+$80
 !ram_cm_phan_second_phase = !WRAM_MENU_START+$82
 
+!ram_cm_varia = !WRAM_MENU_START+$80
+!ram_cm_gravity = !WRAM_MENU_START+$82
+!ram_cm_morph = !WRAM_MENU_START+$84
+!ram_cm_bombs = !WRAM_MENU_START+$86
+!ram_cm_spring = !WRAM_MENU_START+$88
+!ram_cm_screw = !WRAM_MENU_START+$8A
+!ram_cm_hijump = !WRAM_MENU_START+$8C
+!ram_cm_space = !WRAM_MENU_START+$8E
+!ram_cm_speed = !WRAM_MENU_START+$90
+!ram_cm_charge = !WRAM_MENU_START+$92
+!ram_cm_ice = !WRAM_MENU_START+$94
+!ram_cm_wave = !WRAM_MENU_START+$96
+!ram_cm_spazer = !WRAM_MENU_START+$98
+!ram_cm_plasma = !WRAM_MENU_START+$9A
+
 ; ^ FREE SPACE ^ up to +$CE
 
 ; Reserve 48 bytes for CGRAM cache
@@ -221,10 +237,22 @@
 
 !CRASHDUMP = $7EFF00
 
-!ram_hex2dec_first_digit = $14
-!ram_hex2dec_second_digit = $16
-!ram_hex2dec_third_digit = $18
-!ram_hex2dec_rest = $1A
+!DP_MenuIndices = $00 ; 0x4
+!DP_CurrentMenu = $04 ; 0x4
+!DP_Address = $08 ; 0x4
+!DP_JSLTarget = $0C ; 0x4
+!DP_CtrlInput = $10 ; 0x4
+!DP_Palette = $14
+!DP_Temp = $16
+; v these repreat v
+!DP_ToggleValue = $18
+!DP_Increment = $1A
+!DP_Minimum = $1C
+!DP_Maximum = $1E
+!DP_DrawValue = $18
+!DP_FirstDigit = $1A
+!DP_SecondDigit = $1C
+!DP_ThirdDigit = $1E
 
 !ACTION_TOGGLE              = #$0000
 !ACTION_TOGGLE_BIT          = #$0002
@@ -319,6 +347,8 @@
 
 !OAM_STACK_POINTER = $0590
 !PB_EXPLOSION_STATUS = $0592
+!NMI_REQUEST_FLAG = $05B4
+!FRAME_COUNTER_8BIT = $05B5
 !FRAME_COUNTER = $05B6
 !CACHED_RANDOM_NUMBER = $05E5
 !DISABLE_SOUNDS = $05F5
@@ -331,6 +361,11 @@
 !MUSIC_TRACK = $07F5
 !LAYER1_X = $0911
 !LAYER1_Y = $0915
+!LAYER2_X = $0917
+!LAYER2_Y = $0919
+!BG2_X_SCROLL = $0921
+!BG2_Y_SCROLL = $0923
+!CURRENT_SAVE_FILE = $0952
 !GAMEMODE = $0998
 !SAMUS_ITEMS_EQUIPPED = $09A2
 !SAMUS_ITEMS_COLLECTED = $09A4
@@ -345,8 +380,14 @@
 !SAMUS_SUPERS_MAX = $09CC
 !SAMUS_PBS = $09CE
 !SAMUS_PBS_MAX = $09D0
+!SAMUS_ITEM_SELECTED = $09D2
 !SAMUS_RESERVE_MAX = $09D4
 !SAMUS_RESERVE_ENERGY = $09D6
+!IGT_FRAMES = $09DA
+!IGT_SECONDS = $09DC
+!IGT_MINUTES = $09DE
+!IGT_HOURS = $09E0
+!SAMUS_AUTO_CANCEL = $0A04
 !SAMUS_LAST_HP = $0A06
 !SAMUS_POSE = $0A1C
 !SAMUS_POSE_DIRECTION = $0A1E
@@ -391,6 +432,8 @@
 !ENEMY_PROJ_X = $1A4B
 !ENEMY_PROJ_Y = $1A93
 !ENEMY_PROJ_RADIUS = $1BB3
+
+!HUD_TILEMAP = $7EC600
 
 
 ; -----
