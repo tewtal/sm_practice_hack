@@ -52,6 +52,7 @@ status_roomstrat:
     dw status_snailclip
     dw status_threejumpskip
     dw status_mbhp
+    dw status_ridleyai
 }
 
 status_chargetimer:
@@ -2437,5 +2438,166 @@ status_mbhp:
 
   .done
     RTS
+}
+
+status_ridleyai:
+{
+    ; check if Ridley's room
+    LDA !ROOM_ID : CMP #$B32E : BNE .enemyhp
+
+    ; load AI pointer and check if it matches the HUD
+    LDA $0FA8 : CMP !ram_HUD_check : BNE .update_HUD
+
+    ; fallbacks for convenience
+    LDA !ENEMY_HP : BEQ .ridleygrab
+  .enemyhp
+    JMP status_enemyhp
+  .ridleygrab
+    JMP .status_ridleygrab
+
+  .update_HUD
+    STA !ram_HUD_check
+    CMP #$B2F3 : BMI .stall
+    LDX #$0000
+
+  .loop_pointers
+    CMP.l .AI_pointers,X : BEQ .found
+    INX #2 : CPX #$0034 : BMI .loop_pointers
+
+  .dead
+    ; not found
+    LDA.w #RidleyAIText_DEAD : STA $C1
+    BRA .draw_branch
+    
+  .found
+    LDA.l .text_pointers,X : STA $C1
+    BRA .draw_branch
+
+  .stall
+    LDA.w #RidleyAIText_WAIT : STA $C1
+
+  .draw_branch
+    %ai8()
+    LDA.b #RidleyAIText>>16 : STA $C3 ; data bank
+    LDA #$0C : STA $C5 ; palette
+    LDY #$00 : LDX #$00
+  .loop_text
+    LDA [$C1],Y : CMP #$FF : BEQ .blank_tiles
+    STA !HUD_TILEMAP+$B0,X ; tile
+    LDA $C5 : STA !HUD_TILEMAP+$B1,X ; palette
+    INY : INX #2
+    BRA .loop_text
+
+  .blank_tiles
+    ; clear out any remaining tiles
+    CPX #$1A : BPL .left_HUD
+    %a16()
+  .loop_blank
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$B0,X
+    INX #2 : CPX #$1A : BMI .loop_blank
+
+  .left_HUD
+    %ai16()
+    LDA !ENEMY_HP : BEQ .status_ridleygrab
+    JMP status_enemyhp
+
+  .status_ridleygrab
+    ; display number of grab attempts
+    LDA $7E800A : CMP !ram_roomstrat_counter : BEQ .done
+    STA !ram_roomstrat_counter
+    LDX #$008C : JSR Draw2
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$8A
+
+  .done
+    RTS
+
+  .AI_pointers
+    dw $B2F3 ; liftoff
+    dw $B321 ; choose ai
+    dw $B3EC ; move
+    dw $B3F8 ; move mid
+    dw $B441 ; swoop start
+    dw $B455 ; swoop positioning
+    dw $B493 ; swoop dive
+    dw $B4D1 ; swooping
+    dw $B516 ; climb
+    dw $B554 ; climbing
+    dw $B594 ; swoop end
+    dw $B5E5 ; hover
+    dw $B613 ; hover 2
+    dw $B6A7 ; pogo start
+    dw $B6DD ; pogo start 2
+    dw $B70E ; pogo down
+    dw $B7B9 ; pogo up
+    dw $BAB7 ; lunge
+    dw $BB8F ; grabbed
+    dw $BBC4 ; grab move
+    dw $BBF1 ; dropping
+    dw $BC2E ; dropped
+    dw $BC54 ; hover start
+    dw $BD4E ; dodge power bomb
+    dw $C538 ; dead move
+    dw $C588 ; explode
+
+  .text_pointers
+    dw #RidleyAIText_B2F3 ; liftoff
+    dw #RidleyAIText_B321 ; choose ai
+    dw #RidleyAIText_B3EC ; move
+    dw #RidleyAIText_B3F8 ; move mid
+    dw #RidleyAIText_B441 ; swoop start
+    dw #RidleyAIText_B455 ; swoop positioning
+    dw #RidleyAIText_B493 ; swoop dive
+    dw #RidleyAIText_B4D1 ; swooping
+    dw #RidleyAIText_B516 ; climb
+    dw #RidleyAIText_B554 ; climbing
+    dw #RidleyAIText_B594 ; swoop end
+    dw #RidleyAIText_B5E5 ; hover
+    dw #RidleyAIText_B613 ; hover 2
+    dw #RidleyAIText_B6A7 ; pogo start
+    dw #RidleyAIText_B6DD ; pogo start 2
+    dw #RidleyAIText_B70E ; pogo down
+    dw #RidleyAIText_B7B9 ; pogo up
+    dw #RidleyAIText_BAB7 ; lunge
+    dw #RidleyAIText_BB8F ; grabbed
+    dw #RidleyAIText_BBC4 ; grab move
+    dw #RidleyAIText_BBF1 ; dropping
+    dw #RidleyAIText_BC2E ; dropped
+    dw #RidleyAIText_BC54 ; hover start
+    dw #RidleyAIText_BD4E ; dodge power bomb
+    dw #RidleyAIText_C538 ; dead move
+    dw #RidleyAIText_C588 ; explode
+
+RidleyAIText:
+; this could live anywhere in the ROM
+    table ../resources/HUDfont.tbl
+  .WAIT : db "STALLING"     : db $FF
+  .B2F3 : db "LIFTOFF"      : db $FF
+  .B321 : db "CHOOSE AI"    : db $FF
+  .B3EC : db "MOVE"         : db $FF
+  .B3F8 : db "MOVE TO MID"  : db $FF
+  .B441 : db "SWOOP START"  : db $FF
+  .B455 : db "SWOOP MOVE"   : db $FF
+  .B493 : db "SWOOP DIVE"   : db $FF
+  .B4D1 : db "SWOOPING"     : db $FF
+  .B516 : db "CLIMB"        : db $FF
+  .B554 : db "CLIMBING"     : db $FF
+  .B594 : db "SWOOP END"    : db $FF
+  .B5E5 : db "HOVER"        : db $FF
+  .B613 : db "HOVER 2"      : db $FF
+  .B6A7 : db "POGO START"   : db $FF
+  .B6DD : db "POGO START 2" : db $FF
+  .B70E : db "POGO DOWN"    : db $FF
+  .B7B9 : db "POGO UP"      : db $FF
+  .BAB7 : db "LUNGE"        : db $FF
+  .BB8F : db "GRAB SAMUS"   : db $FF
+  .BBC4 : db "GRAB MOVE"    : db $FF
+  .BBF1 : db "DROP SAMUS"   : db $FF
+  .BC2E : db "DROPPED"      : db $FF
+  .BC54 : db "HOVER START"  : db $FF
+  .BD4E : db "DODGE PB"     : db $FF
+  .C538 : db "DEAD MOVE"    : db $FF
+  .C588 : db "EXPLODE"      : db $FF
+  .DEAD : db "END"          : db $FF
+    table ../resources/normal.tbl
 }
 
