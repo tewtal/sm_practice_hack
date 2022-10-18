@@ -679,7 +679,7 @@ add_grapple_and_xray_to_hud:
 }
 
 print pc, " presets bank80 end"
-warnpc $80F700 ; save.asm
+warnpc $80F600 ; save.asm
 
 
 ; $80:9AB1: Add x-ray and grapple HUD items if necessary

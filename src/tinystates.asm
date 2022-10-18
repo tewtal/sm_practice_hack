@@ -2,7 +2,7 @@
 ; by acmlm, total, Myria
 ;
 
-org $80F700
+org $80F600
 print pc, " tinysave start"
 
 ; These can be modified to do game-specific things before and after saving and loading
@@ -191,7 +191,6 @@ post_load_state:
     INC : STA !ram_slowdown_frames
 
   .return
-
     ; Re-enable NMI, turn on force-blank and wait NMI to execute.
     ; This prevents some annoying flashing when loading states where
     ; graphics changes otherwise happens mid-frame

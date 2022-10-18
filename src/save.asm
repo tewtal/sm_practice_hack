@@ -2,7 +2,7 @@
 ; by acmlm, total, Myria
 ;
 
-org $80F700
+org $80F600
 print pc, " save start"
 
 ; These can be modified to do game-specific things before and after saving and loading
