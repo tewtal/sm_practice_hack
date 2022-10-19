@@ -350,6 +350,7 @@ endif
     dw #presets_open_blue_doors
     dw #presets_load_with_enemies
     dw #presets_clear_map_tiles
+    dw #presets_auto_segment_reset
 if !RAW_TILE_GRAPHICS
     dw #$FFFF
     dw #presets_compressed_graphics
@@ -391,6 +392,9 @@ presets_load_with_enemies:
 
 presets_clear_map_tiles:
     %cm_toggle_bit("Clear Map Tiles", !sram_preset_options, !PRESETS_CLEAR_MAP_TILES, #0)
+
+presets_auto_segment_reset:
+    %cm_toggle_bit_inverted("Auto Reset Segment", !sram_preset_options, !PRESETS_AUTO_SEGMENT_OFF, #0)
 
 if !RAW_TILE_GRAPHICS
 presets_compressed_graphics:

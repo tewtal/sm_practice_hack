@@ -220,10 +220,13 @@ preset_load_preset:
     STA $7E09D2 ; Current selected weapon
     STA $7E0A04 ; Auto-cancel item
     LDA #$5AFE : STA $0917 ; Load garbage into Layer 2 X position
+
+    ; check if segment timer should be reset now or after a door
+    LDA !sram_preset_options : BIT !PRESETS_AUTO_SEGMENT_OFF : BNE +
     LDA #$FFFF : STA !ram_reset_segment_later
 
     ; check if custom preset is being loaded
-    LDA !ram_custom_preset : BEQ .category_preset
++   LDA !ram_custom_preset : BEQ .category_preset
     JSL custom_preset_load
     BRA .done
 
