@@ -209,9 +209,9 @@ mm_clear_boss_room_tiles:
     LDA #$2C1F
     LDX #$0000
   .loop
-    STA $7EC63C,X
-    STA $7EC67C,X
-    STA $7EC6BC,X
+    STA !HUD_TILEMAP+$3C,X
+    STA !HUD_TILEMAP+$7C,X
+    STA !HUD_TILEMAP+$BC,X
     INX : INX : CPX #$000A : BMI .loop
     JMP $A80A
 }

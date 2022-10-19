@@ -261,7 +261,7 @@ else
 endif
     BNE + : LDA #$FFFF
 +   INC : STA !sram_custom_preset_slot
-    ASL : TAX : LDA.l NumberGFXTable,X : STA $7EC67C
+    ASL : TAX : LDA.l NumberGFXTable,X : STA !HUD_TILEMAP+$7C
     ; CLC to continue normal gameplay after incrementing preset slot
     CLC : JMP skip_pause
 
@@ -273,7 +273,7 @@ else
     LDA #$0028 ; total slots
 endif
 +   DEC : STA !sram_custom_preset_slot
-    ASL : TAX : LDA.l NumberGFXTable,X : STA $7EC67C
+    ASL : TAX : LDA.l NumberGFXTable,X : STA !HUD_TILEMAP+$7C
     ; CLC to continue normal gameplay after decrementing preset slot
     CLC : JMP skip_pause
 
