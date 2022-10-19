@@ -348,6 +348,7 @@ if !FEATURE_DEV
 endif
     dw #$FFFF
     dw #presets_open_blue_doors
+    dw #presets_load_with_enemies
 if !RAW_TILE_GRAPHICS
     dw #$FFFF
     dw #presets_compressed_graphics
@@ -383,6 +384,9 @@ endif
 
 presets_open_blue_doors:
     %cm_toggle_bit_inverted("Open Blue Doors", !sram_preset_options, !PRESETS_CLOSE_BLUE_DOORS, #0)
+
+presets_load_with_enemies:
+    %cm_toggle_bit("Load with Enemies", !sram_preset_options, !PRESETS_PRESERVE_ENEMIES, #0)
 
 if !RAW_TILE_GRAPHICS
 presets_compressed_graphics:

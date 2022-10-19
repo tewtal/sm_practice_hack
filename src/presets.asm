@@ -94,6 +94,7 @@ endif
     ; Clear enemies if not in certain rooms
     LDA $079B : CMP #$9804 : BEQ .done_clearing_enemies
     CMP #$DD58 : BEQ .set_mb_state
+    LDA !sram_preset_options : BIT !PRESETS_PRESERVE_ENEMIES : BNE .done_clearing_enemies
     JSR clear_all_enemies
 
   .done_clearing_enemies
