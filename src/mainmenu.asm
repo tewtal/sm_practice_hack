@@ -349,6 +349,7 @@ endif
     dw #$FFFF
     dw #presets_open_blue_doors
     dw #presets_load_with_enemies
+    dw #presets_clear_map_tiles
 if !RAW_TILE_GRAPHICS
     dw #$FFFF
     dw #presets_compressed_graphics
@@ -387,6 +388,9 @@ presets_open_blue_doors:
 
 presets_load_with_enemies:
     %cm_toggle_bit("Load with Enemies", !sram_preset_options, !PRESETS_PRESERVE_ENEMIES, #0)
+
+presets_clear_map_tiles:
+    %cm_toggle_bit("Clear Map Tiles", !sram_preset_options, !PRESETS_CLEAR_MAP_TILES, #0)
 
 if !RAW_TILE_GRAPHICS
 presets_compressed_graphics:

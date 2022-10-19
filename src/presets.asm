@@ -25,14 +25,13 @@ endif
     JSL $90AD22  ; Reset projectile data
 
     PHP
-    REP #$30
+    %ai16()
     LDY #$0020
     LDX #$0000
   .paletteLoop
-    LDA $7EC180,x : STA $7EC380,x  ; Target Samus' palette = [Samus' palette]
+    LDA $7EC180,X : STA $7EC380,X  ; Target Samus' palette = [Samus' palette]
     INX #2
-    DEY #2
-    BNE .paletteLoop
+    DEY #2 : BNE .paletteLoop
     PLP
 
     LDA #$0000
@@ -65,15 +64,13 @@ endif
     %a8() : LDA #$0F : STA $51 : %a16()
 
     PHP
-    REP #$30
+    %ai16()
     LDY #$0200
     LDX #$0000
   .paletteLoop2
-    LDA $7EC200,x
-    STA $7EC000,x  ; Palettes = [target palettes]
+    LDA $7EC200,X : STA $7EC000,X  ; Palettes = [target palettes]
     INX #2
-    DEY #2
-    BNE .paletteLoop2
+    DEY #2 : BNE .paletteLoop2
     PLP
 
     ; Fix Samus' palette
@@ -91,6 +88,11 @@ endif
     JSL reset_all_counters
     STZ $0795 : STZ $0797 ; clear door transition flags
 
+    ; Clear minimap tiles
+    LDA !sram_preset_options : BIT !PRESETS_CLEAR_MAP_TILES : BEQ .clear_enemies
+    JSL game_clear_minimap_clear_minimap
+
+  .clear_enemies
     ; Clear enemies if not in certain rooms
     LDA $079B : CMP #$9804 : BEQ .done_clearing_enemies
     CMP #$DD58 : BEQ .set_mb_state
