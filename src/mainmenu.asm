@@ -343,6 +343,9 @@ PresetsMenu:
     dw #presets_custom_preset_slot
     dw #presets_save_custom_preset
     dw #presets_load_custom_preset
+    dw #$FFFF
+    dw #presets_reload_last
+    dw #presets_load_random
 if !FEATURE_DEV
     dw #presets_random_preset_rng
 endif
@@ -378,6 +381,19 @@ presets_save_custom_preset:
 
 presets_load_custom_preset:
     %cm_jsl("Load Custom Preset", #action_load_custom_preset, #$0000)
+
+presets_reload_last:
+    %cm_jsl("Reload Last Preset", .routine, #$0001)
+  .routine
+    LDA !sram_last_preset : STA !ram_load_preset
+    TYA : STA !ram_cm_leave
+    RTL
+
+presets_load_random:
+    %cm_jsl("Load Random Preset", .routine, #$0001)
+  .routine
+    TYA : STA !ram_cm_leave
+    JML LoadRandomPreset
 
 if !FEATURE_DEV
 presets_random_preset_rng:
