@@ -91,7 +91,20 @@
 !ram_quickdrop_counter              = !WRAM_START+$7A
 !ram_walljump_counter               = !WRAM_START+$7C
 
-!WRAM_PERSIST_START = !ram_walljump_counter+$02
+!ram_infidoppler_enabled         = !WRAM_START+$7E
+
+; An array of 5 words, one per projectile, representing
+; the distance Samus travelled horizontally before firing.
+; The low byte of each word is integer pixels, and the high
+; byte is fractional pixels. Yes, that sounds weird, but it
+; makes the math a little bit easier.
+!ram_infidoppler_offsets         = !WRAM_START+$80 ; array of 5 words
+!ram_infidoppler_x               = !WRAM_START+$8A
+!ram_infidoppler_subx            = !WRAM_START+$8C
+!ram_infidoppler_y               = !WRAM_START+$8E
+!ram_infidoppler_suby            = !WRAM_START+$90
+
+!WRAM_PERSIST_START = !ram_infidoppler_suby+$02
 ; ----------------------------------------------------------
 ; Variables below this point are PERSISTENT -- they maintain
 ; their value across savestates. Use this section for

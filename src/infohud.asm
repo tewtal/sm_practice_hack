@@ -1437,9 +1437,142 @@ ih_shinespark_code:
     RTL
 }
 
+; Infidoppler routines.
+;
+; When Samus presses L+R during a Phantoon swoop, record
+; her position. Each time she fires a missile, teleport
+; her back to the initial position. Each time a missile
+; hits, teleport it back by the amount Samus moved
+; before firing it, and allow it to hit again. This way,
+; Phantoon's cooldowns behave as if we were dopplering,
+; but we never run out of room.
+infidoppler_hook_phantoon_swoop:
+{
+    PHP
+
+    LDA !IH_CONTROLLER_PRI : AND #$0030 : CMP #$0030 ; (L+R)
+    BNE .done
+    LDA !ram_infidoppler_enabled
+    BNE .done
+
+    LDA #$FFFF
+    STA !ram_infidoppler_enabled
+    LDA !SAMUS_X
+    STA !ram_infidoppler_x
+    LDA !SAMUS_X_SUBPX
+    STA !ram_infidoppler_subx
+    LDA !SAMUS_Y
+    STA !ram_infidoppler_y
+    LDA !SAMUS_Y_SUBPX
+    STA !ram_infidoppler_suby
+
+.done:
+    PLP
+    BEQ .swoop_done
+    LDA #$0033
+    CLC
+    PHX
+    TSX
+    ADC $0003,x
+    STA $0003,x
+    PLX
+.swoop_done:
+    RTL
+}
+
+infidoppler_hook_fire_missile:
+{
+    LDA !ram_infidoppler_enabled
+    BEQ .decrement_missiles
+
+    LDA !IH_CONTROLLER_PRI : AND #$0030 : CMP #$0030 ; (L+R)
+    BNE .enabled
+
+    ; turn it off
+    LDA #$0000
+    STA !ram_infidoppler_enabled
+    BRA .done
+    
+.enabled:
+    LDX $14     ; projectile index
+    SEC 
+
+    LDA !SAMUS_X_SUBPX : SBC !ram_infidoppler_subx
+    AND #$FF00 : STA !ram_infidoppler_offsets,x
+    LDA !SAMUS_X       : SBC !ram_infidoppler_x
+    AND #$00FF : ORA !ram_infidoppler_offsets,x : STA !ram_infidoppler_offsets,x
+
+    LDA !ram_infidoppler_x
+    STA !SAMUS_X
+    LDA !ram_infidoppler_subx
+    STA !SAMUS_X_SUBPX
+
+    LDA !ram_infidoppler_y
+    STA !SAMUS_Y
+    LDA !ram_infidoppler_suby
+    STA !SAMUS_Y_SUBPX
+
+    BRA .done
+
+.decrement_missiles:
+    DEC $09C6
+
+.done:
+    JML $90BEC7
+}
+
+infidoppler_hook_projectile_collision:
+{
+    LDA !ram_infidoppler_enabled    ; is infidoppler enabled?
+    BNE .check
+
+    LDA $0C18,y
+.no:
+    BIT #$0008
+    RTL
+
+.check:
+    LDA $0C18,y
+    AND #$F00 : CMP #$100 : BNE .no ; is this a missile?
+    CPX #$0000 : BNE .no            ; is this phantoon?
+
+    TYX
+
+    ; We've shot Phantoon with a missile in infidoppler mode.
+    LDA !ram_infidoppler_offsets,x
+    BEQ .done                       ; if projectile variable is 0, this missile has already hit
+
+    ; Subtract projectile variable from missile position
+    ; the LOW 8 bits are pixels, the HIGH 8 bits are fractional
+    ; yes, it's weird. but it saves a couple XBAs
+    PHA : AND #$FF00 : SEC
+    EOR #$FFFF : ADC $0B8C,y : STA $0B8C,y
+    PLA : AND #$00FF
+    EOR #$FFFF : ADC $0B64,y : STA $0B64,y
+
+    LDA #$0000
+    LSR $0C2C,x                     ; halve damage, since it will double hit
+    STA !ram_infidoppler_offsets,x
+    TAX
+    LDA #$0001
+
+.done:
+    ; if zero flag is set, the projectile despawns
+    RTL
+}
+
 print pc, " infohud end"
 warnpc $F0E000 ; spritefeat.asm
 
+org $A7D681
+    JSL infidoppler_hook_phantoon_swoop
+
+org $90BEBF
+    JML infidoppler_hook_fire_missile
+
+org $A09CC8
+    JSL infidoppler_hook_projectile_collision
+    NOP : NOP
 
 ; Stuff that needs to be placed in bank 80
 org $80FD00
