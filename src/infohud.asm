@@ -121,7 +121,7 @@ endif
 if !FEATURE_PAL
 org $A0BB16      ; update timers when Golden Torizo drops spawn
 else
-org $A0BB04      ; update timers when Golden Torizo drops spawn
+org $A0BB06      ; update timers when Golden Torizo drops spawn
 endif
     JML ih_drops_segment
 
