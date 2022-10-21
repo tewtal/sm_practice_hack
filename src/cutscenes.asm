@@ -18,6 +18,7 @@ endif
     JSL cutscenes_nintendo_splash
     NOP : NOP
 
+
 org $80FF80
 print pc, " cutscenes bank80 start"
 cutscenes_door_transition:
@@ -86,6 +87,7 @@ org $82E42E
     LDA #$7E20
     JSL cutscenes_fast_decompress_if_fast_doors
 
+
 org $8BF800
 print pc, " cutscenes start"
 
@@ -113,6 +115,7 @@ cutscenes_add_elevator_speed:
     LDA $0F7E,x : ADC #$0001 : STA $0F7E,x
     RTL
 }
+
 cutscenes_sub_elevator_speed:
 {
     SEC
@@ -125,6 +128,7 @@ cutscenes_sub_elevator_speed:
     LDA $0F7E,x : SBC #$0001 : STA $0F7E,x
     RTL
 }
+
 cutscenes_set_elevator_delay:
 {
     ; We tripled the elevator speed, so decrease the room transition delay accordingly
@@ -215,6 +219,47 @@ endif
 
 print pc, " cutscenes end"
 warnpc $8BFA00 ; misc.asm
+
+
+; Non-flashing palette instruction
+; Overwriting unused C19A-C2E9 space
+org $8DC19A
+crateria_1_palette_fx_preinstruction:
+{
+    ; Start with copy of original preinstruction at $8DEC59
+    LDA $0AFA : CMP #$0380 : BCS .end
+    LDA #$0001 : STA $1ECD,X
+    LDA #crateria_1_palette_loop : STA $1EBD,X
+
+  .end
+    RTS
+}
+
+crateria_1_set_palette_fx_preinstruction:
+{
+    LDA !sram_suppress_flashing : BIT !SUPPRESS_CRATERIA_LIGHTNING : BNE .suppress
+
+    ; Set vanilla parameters
+    LDA #$EC59 : STA $1EAD,X
+    LDY #$EB3F
+    RTS
+
+  .suppress
+    LDA #crateria_1_palette_fx_preinstruction : STA $1EAD,X
+    RTS
+}
+
+crateria_1_palette:
+    dw #crateria_1_set_palette_fx_preinstruction
+    dw $C655, $00A8
+crateria_1_palette_loop:
+    dw $00F0, $2D6C, $294B, $252A, $2109, $1CE8, $18C7, $14A6, $1085, $C595
+    dw $C61E, #crateria_1_palette_loop
+
+warnpc $8DC2E9
+
+org $8DF767
+    dw #crateria_1_palette
 
 
 if !FEATURE_PAL

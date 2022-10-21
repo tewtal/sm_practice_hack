@@ -2095,7 +2095,7 @@ game_goto_controls:
     %cm_submenu("Controller Setting Mode", #ControllerSettingMenu)
 
 game_cutscenes:
-    %cm_submenu("Cutscenes", #CutscenesMenu)
+    %cm_submenu("Cutscenes and Effects", #CutscenesMenu)
 
 
 ; ---------------
@@ -2111,8 +2111,10 @@ CutscenesMenu:
     dw #cutscenes_fast_kraid
     dw #cutscenes_fast_phantoon
     dw #cutscenes_fast_mb
+    dw #$FFFF
+    dw #cutscenes_suppress_crateria_lightning
     dw #$0000
-    %cm_header("CUTSCENES")
+    %cm_header("CUTSCENES AND EFFECTS")
 
 cutscenes_skip_splash:
     %cm_toggle_bit("Fast Nintendo splash", !sram_cutscenes, !CUTSCENE_SKIP_SPLASH, #0)
@@ -2134,6 +2136,9 @@ cutscenes_fast_phantoon:
 
 cutscenes_fast_mb:
     %cm_toggle_bit("Fast Mother Brain", !sram_cutscenes, !CUTSCENE_FAST_MB, #0)
+
+cutscenes_suppress_crateria_lightning:
+    %cm_toggle_bit_inverted("Crateria Lightning", !sram_suppress_flashing, !SUPPRESS_CRATERIA_LIGHTNING, #0)
 
 game_fanfare_toggle:
     %cm_toggle("Fanfare", !sram_fanfare_toggle, #$0001, #0)
