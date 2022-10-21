@@ -39,6 +39,9 @@ org $809B4C      ; hijack, HUD routine (game timer by Quote58)
 org $8290F6      ; hijack, HUD routine while paused
     JSL ih_hud_code_paused
 
+org $80A16B      ; hijack, adjust room times and update HUD when unpausing
+    JSL ih_unpause
+
 org $82894F      ; hijack, main game loop: runs EVERY frame (used for room transition timer)
     JSL ih_game_loop_code
 
@@ -389,6 +392,30 @@ ceres_start_timers:
     STZ $0725
     
     JML ceres_start_timers_return
+}
+
+ih_unpause:
+; Adds frames when unpausing (nmi is turned off during vram transfers)
+{
+    ; RT room
+    LDA !ram_realtime_room : CLC : ADC.w #41 : STA !ram_realtime_room
+
+    ; RT seg
+    LDA !ram_seg_rt_frames : CLC : ADC.w #41 : STA !ram_seg_rt_frames
+    CMP.w #60 : BCC .updateHUD
+    SEC : SBC.w #60 : STA !ram_seg_rt_frames
+
+    LDA !ram_seg_rt_seconds : INC : STA !ram_seg_rt_seconds
+    CMP.w #60 : BCC .updateHUD
+    LDA #$0000 : STA !ram_seg_rt_seconds
+
+    LDA !ram_seg_rt_minutes : INC : STA !ram_seg_rt_minutes
+
+  .updateHUD
+    JSL ih_update_hud_early
+
+    ; Replace overwritten logic to enable NMI
+    JML $80834B
 }
 
 ih_elevator_activation:
