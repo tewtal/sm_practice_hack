@@ -343,6 +343,389 @@ org $8DFFCF
     dw $C685, #crateria_4_palette
 
 
+org $88F000
+print pc, " cutscenes bank88 start"
+
+power_bomb_soft_explosion_colors:
+    db $01, $01, $00
+    db $02, $02, $00
+    db $03, $03, $00
+    db $04, $04, $00
+    db $05, $05, $00
+    db $06, $06, $00
+    db $07, $07, $00
+    db $08, $08, $00
+    db $09, $09, $00
+    db $08, $08, $00
+    db $07, $07, $00
+    db $06, $06, $00
+    db $05, $05, $00
+    db $04, $04, $00
+    db $03, $03, $00
+    db $02, $02, $00
+    db $01, $01, $00
+power_bomb_transparent_explosion_colors:
+    db $00, $00, $00
+    db $00, $00, $00
+    db $00, $00, $00
+    db $00, $00, $00
+    db $00, $00, $00
+    db $00, $00, $00
+    db $00, $00, $00
+    db $00, $00, $00
+    db $00, $00, $00
+    db $00, $00, $00
+    db $00, $00, $00
+    db $00, $00, $00
+    db $00, $00, $00
+    db $00, $00, $00
+    db $00, $00, $00
+    db $00, $00, $00
+
+power_bomb_stage_1_explosion:
+{
+    ; Copy of $8890DF routine, except uses above power bomb transparent colors
+    LDA $0592 : BMI .continue
+    RTL
+
+  .continue
+    PHP : PHB : %ai16() : PHX : PHY
+    JSL $888F56   ; Calculate power bomb pre-explosion HDMA object table pointers
+    PEA $8800 : PLB : PLB
+    %ai8() : LDA #$00 : XBA : LDY #$60
+    LDA $0CED : STA $4202
+    LDA $A286 : STA $4203
+    NOP : NOP : NOP
+    LDA $4217 : STA $12 : TAX
+    PEA .loop1
+    LDA $0CE7 : AND #$FF : BEQ .offscreenleft
+    DEC : BEQ .onscreen
+    JMP $8D46
+  .onscreen
+    JMP $8D04
+  .offscreenleft
+    JMP $8CC6
+
+  .loop1
+    NOP           ; Account for PEA skipping one byte
+    STA $7EC406,X : XBA
+    STA $7EC506,X : XBA
+    DEX : BPL .loop1
+    LDX $12 : INX
+    CPX #$C0 : BEQ .loopend
+    LDA #$FF
+  .loop2
+    STA $7EC406,X : INC
+    STA $7EC506,X : DEC
+    INX : CPX #$C0 : BNE .loop2
+  .loopend
+    LDA $0CED : LSR : LSR : LSR
+    AND #$0F : STA $12
+    ASL : CLC : ADC $12 : TAX
+    LDA.l power_bomb_transparent_explosion_colors,X
+    ORA #$20 : STA $0074
+    LDA.l power_bomb_transparent_explosion_colors+1,X
+    ORA #$40 : STA $0075
+    LDA.l power_bomb_transparent_explosion_colors+2,X
+    ORA #$80 : STA $0076
+    %ai16() : PLY : PLX
+    LDA $0CEC : CLC : ADC $0CF0 : STA $0CEC
+    CMP #$9200 : BCC .radius
+    LDA #$0001 : STA $18E4,X
+    INC $18CC,X : INC $18CC,X
+    STZ $1908,X
+    JMP .end
+  .radius
+    LDA $0CF0 : SEC : SBC $8890DD : STA $0CF0
+  .end
+    PLB : PLP : RTL
+}
+
+power_bomb_stage_2_explosion:
+{
+    ; Copy of $8891A8 routine, except uses above power bomb transparent colors
+    LDA $0592 : BMI .continue
+    RTL
+
+  .continue
+    PHP : PHB : %ai16() : PHX : PHY
+    JSL $888F56   ; Calculate power bomb pre-explosion HDMA object table pointers
+    PEA $8800 : PLB : PLB
+    LDY $0CF2 : LDX #$0000 : %a8()
+    PEA .loop1
+    LDA $0CE7 : AND #$FF : BEQ .offscreenleft
+    DEC : BEQ .onscreen
+    JMP $8C3A
+  .onscreen
+    JMP $8C12
+  .offscreenleft
+    JMP $8BEA
+
+  .loop1
+    NOP           ; Account for PEA skipping one byte
+    %ai8() : LDA #$00 : XBA
+    LDA $0CED : LSR : LSR : LSR
+    AND #$0F : STA $12
+    ASL : CLC : ADC $12 : TAX
+    LDA.l power_bomb_transparent_explosion_colors,X
+    ORA #$20 : STA $0074
+    LDA.l power_bomb_transparent_explosion_colors+1,X
+    ORA #$40 : STA $0075
+    LDA.l power_bomb_transparent_explosion_colors+2,X
+    ORA #$80 : STA $0076
+    %ai16() : PLY : PLX
+    LDA $0CF2 : CLC : ADC #$00C0 : STA $0CF2
+    CMP #$A206 : BNE .radius
+    LDA #$0001 : STA $18E4,X
+    INC $18CC,X : INC $18CC,X
+    STZ $1908,X
+  .radius
+    LDA $0CEC : CLC : ADC $0CF0 : BCS .end
+    STA $0CEC
+    LDA $0CF0 : SEC : SBC $8890DD : STA $0CF0
+  .end
+    PLB : PLP : RTL
+}
+
+power_bomb_stage_3_explosion:
+{
+    ; Copy of $888DE9 routine, except uses above power bomb soft colors
+    LDA $0592 : BMI .continue
+    RTL
+
+  .continue
+    PHP : PHB : %ai16() : PHX : PHY
+    JSL $888C62   ; Calculate power bomb explosion HDMA object table pointers
+    PEA $8800 : PLB : PLB
+    %ai8() : LDA #$00 : XBA : LDY #$60
+    LDA $0CEB : STA $4202
+    LDA $A286 : STA $4203
+    NOP : NOP : NOP
+    LDA $4217 : STA $12 : TAX
+    PEA .loop1
+    LDA $0CE7 : AND #$FF : BEQ .offscreenleft
+    DEC : BEQ .onscreen
+    JMP $8D46
+  .onscreen
+    JMP $8D04
+  .offscreenleft
+    JMP $8CC6
+
+  .loop1
+    NOP           ; Account for PEA skipping one byte
+    STA $7EC406,X : XBA
+    STA $7EC506,X : XBA
+    DEX : BPL .loop1
+    LDX $12 : INX
+    CPX #$C0 : BEQ .loopend
+    LDA #$FF
+  .loop2
+    STA $7EC406,X : INC
+    STA $7EC506,X : DEC
+    INX : CPX #$C0 : BNE .loop2
+  .loopend
+    LDA $0CEB : LSR : LSR : LSR
+    AND #$1F : STA $12
+    ASL : CLC : ADC $12 : TAX
+    LDA.l power_bomb_soft_explosion_colors,X
+    ORA #$20 : STA $0074
+    LDA.l power_bomb_soft_explosion_colors+1,X
+    ORA #$40 : STA $0075
+    LDA.l power_bomb_soft_explosion_colors+2,X
+    ORA #$80 : STA $0076
+    %ai16() : PLY : PLX
+    LDA $0CEA : CLC : ADC $0CF0 : STA $0CEA
+    CMP #$8600 : BCC .radius
+    LDA #$0001 : STA $18E4,X
+    INC $18CC,X : INC $18CC,X
+    STZ $1908,X
+    JMP .end
+  .radius
+    LDA $0CF0 : CLC : ADC.l $888DE7 : STA $0CF0
+  .end
+    PLB : PLP : RTL
+}
+
+power_bomb_stage_4_explosion:
+{
+    ; Copy of $888EB2 routine, except uses above power bomb soft colors
+    LDA $0592 : BMI .continue
+    RTL
+
+  .continue
+    PHP : PHB : %ai16() : PHX : PHY
+    JSL $888C62   ; Calculate power bomb explosion HDMA object table pointers
+    PEA $8800 : PLB : PLB
+    LDY $0CF2 : LDX #$0000 : %a8()
+    PEA .loop1
+    LDA $0CE7 : AND #$FF : BEQ .offscreenleft
+    DEC : BEQ .onscreen
+    JMP $8C3A
+  .onscreen
+    JMP $8C12
+  .offscreenleft
+    JMP $8BEA
+
+  .loop1
+    NOP           ; Account for PEA skipping one byte
+    %ai8() : LDA #$00 : XBA
+    LDA $0CEB : LSR : LSR : LSR
+    AND #$1F : STA $12
+    ASL : CLC : ADC $12 : TAX
+    LDA.l power_bomb_soft_explosion_colors,X
+    ORA #$20 : STA $0074
+    LDA.l power_bomb_soft_explosion_colors+1,X
+    ORA #$40 : STA $0075
+    LDA.l power_bomb_soft_explosion_colors+2,X
+    ORA #$80 : STA $0076
+    %ai16() : PLY : PLX
+    LDA $0CF2 : CLC : ADC #$00C0 : STA $0CF2
+    CMP #$9F06 : BNE .radius
+    LDA #$0001 : STA $18E4,X
+    INC $18CC,X : INC $18CC,X
+    STZ $1908,X
+    LDA #$0020 : STA $1938,X
+  .radius
+    LDA $0CEA : CLC : ADC $0CF0 : BCS .end
+    STA $0CEA
+    LDA $0CF0 : CLC : ADC.l $888DE7 : STA $0CF0
+  .end
+    PLB : PLP : RTL
+}
+
+crystal_flash_stage_1_explosion:
+{
+    ; Copy of $88A552 routine, except uses above power bomb soft colors
+    LDA $0592 : BMI .continue
+    RTL
+
+  .continue
+    PHP : PHB : %ai16() : PHX : PHY
+    JSL $888C62   ; Calculate power bomb explosion HDMA object table pointers
+    PEA $8800 : PLB : PLB
+    %ai8() : LDA #$00 : XBA : LDY #$60
+    LDA $0CEB : STA $4202
+    LDA $A286 : STA $4203
+    NOP : NOP : NOP
+    LDA $4217 : STA $12 : TAX
+    PEA .loop1
+    LDA $0CE7 : AND #$FF : BEQ .offscreenleft
+    DEC : BEQ .onscreen
+    JMP $8D46
+  .onscreen
+    JMP $8D04
+  .offscreenleft
+    JMP $8CC6
+
+  .loop1
+    NOP           ; Account for PEA skipping one byte
+    STA $7EC406,X : XBA
+    STA $7EC506,X : XBA
+    DEX : BPL .loop1
+    LDX $12 : INX
+    CPX #$C0 : BEQ .loopend
+    LDA #$FF
+  .loop2
+    STA $7EC406,X : INC
+    STA $7EC506,X : DEC
+    INX : CPX #$C0 : BNE .loop2
+  .loopend
+    LDA $0CEB : LSR : LSR : LSR
+    AND #$1F : STA $12
+    ASL : CLC : ADC $12 : TAX
+    LDA.l power_bomb_soft_explosion_colors,X
+    ORA #$20 : STA $0074
+    LDA.l power_bomb_soft_explosion_colors+1,X
+    ORA #$40 : STA $0075
+    LDA.l power_bomb_soft_explosion_colors+2,X
+    ORA #$80 : STA $0076
+    %ai16() : PLY : PLX
+    LDA $0CEA : CLC : ADC $0CF0 : STA $0CEA
+    CMP #$2000 : BCC .radius
+    LDA #$0001 : STA $18E4,X
+    INC $18CC,X : INC $18CC,X
+    STZ $1908,X
+    JMP .end
+  .radius
+    LDA $0CF0 : CLC : ADC.l $888DE7 : STA $0CF0
+  .end
+    PLB : PLP : RTL
+}
+
+power_bomb_instruction_list:
+    ; Copy of $888ACE instruction list, except uses above power bomb soft colors
+    dw $85B4      ; Power bomb explosion - stage 1 setup
+    dl $888B14
+    dw $8570      ; Pre-instruction = power bomb explosion - stage 1
+    dl #power_bomb_stage_1_explosion
+    dw $8682      ; Sleep
+    dw $85B4      ; Power bomb explosion - stage 2 setup
+    dl $888B32
+    dw $8570      ; Pre-instruction = power bomb explosion - stage 2
+    dl #power_bomb_stage_2_explosion
+    dw $8682      ; Sleep
+    dw $85B4      ; Power bomb explosion - stage 3 setup
+    dl $888B39
+    dw $8570      ; Pre-instruction = power bomb explosion - stage 3
+    dl #power_bomb_stage_3_explosion
+    dw $8682      ; Sleep
+    dw $85B4      ; Power bomb explosion - stage 4 setup
+    dl $888B47
+    dw $8570      ; Pre-instruction = power bomb explosion - stage 4
+    dl #power_bomb_stage_4_explosion
+    dw $8682      ; Sleep
+    dw $8570      ; Pre-instruction = power bomb explosion - stage 5
+    dl $888B98
+    dw $8682      ; Sleep
+    dw $85B4      ; Power bomb explosion - clean up
+    dl $888B4E
+    dw $8682      ; Sleep
+    dw $8569      ; Delete
+
+crystal_flash_instruction_list:
+    ; Copy of $88A2BD instruction list, except uses above power bomb soft colors
+    dw $85B4      ; Crystal flash - setup - part 1
+    dl $88A2E4
+    dw $85B4      ; Crystal flash - setup - part 2
+    dl $88A309
+    dw $8570      ; Pre-instruction = crystal flash - stage 1 - explosion
+    dl #crystal_flash_stage_1_explosion
+    dw $8682      ; Sleep
+    dw $8570      ; Pre-instruction = crystal flash - stage 2 - after-glow
+    dl $88A35D
+    dw $8682      ; Sleep
+    dw $85B4      ; Crystal flash - clean up
+    dl $88A317
+    dw $8682      ; Sleep
+    dw $8569      ; Delete
+
+power_bomb_crystal_flash_set_data_bank:
+{
+    ; Start with copy of original instruction at $88866A
+    PHX : LDA $18C0,X : AND #$00FF : TAX
+    %a8() : LDA #$7E : STA $4307,X : %a16() : PLX
+    LDA !sram_suppress_flashing : BIT !SUPPRESS_POWER_BOMB_FLASH : BNE .suppress
+    INY : RTS
+
+  .suppress
+    CPY #$A2C2 : BEQ .suppress_crystal_flash
+    LDY #power_bomb_instruction_list
+    RTS
+
+  .suppress_crystal_flash
+    LDY #crystal_flash_instruction_list
+    RTS
+}
+
+print pc, " cutscenes bank88 end"
+
+org $888AD1
+    dw #power_bomb_crystal_flash_set_data_bank
+
+org $88A2C0
+    dw #power_bomb_crystal_flash_set_data_bank
+
+
 if !FEATURE_PAL
 org $A9880C
 else

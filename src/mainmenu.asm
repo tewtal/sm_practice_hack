@@ -2114,6 +2114,7 @@ CutscenesMenu:
     dw #$FFFF
     dw #cutscenes_suppress_crateria_lightning
     dw #cutscenes_suppress_escape_flashing
+    dw #cutscenes_suppress_power_bomb_flash
     dw #$0000
     %cm_header("CUTSCENES AND EFFECTS")
 
@@ -2143,6 +2144,9 @@ cutscenes_suppress_crateria_lightning:
 
 cutscenes_suppress_escape_flashing:
     %cm_toggle_bit_inverted("Escape Flashing", !sram_suppress_flashing, !SUPPRESS_ESCAPE_FLASHING, #0)
+
+cutscenes_suppress_power_bomb_flash:
+    %cm_toggle_bit_inverted("Power Bomb Flash", !sram_suppress_flashing, !SUPPRESS_POWER_BOMB_FLASH, #0)
 
 game_fanfare_toggle:
     %cm_toggle("Fanfare", !sram_fanfare_toggle, #$0001, #0)
