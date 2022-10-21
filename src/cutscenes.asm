@@ -39,6 +39,7 @@ print pc, " cutscenes bank80 end"
 org $80AE5C
     JSR cutscenes_door_transition
 
+
 if !FEATURE_PAL
 org $A39597
     JSL cutscenes_add_elevator_speed
@@ -769,6 +770,13 @@ endif
     dw cutscenes_mb_fake_death_unlock
 
 if !FEATURE_PAL
+org $A98899
+else
+org $A98889
+endif
+    JSR cutscenes_mb_fake_death_begin_screen_flashing
+
+if !FEATURE_PAL
 org $A98987
 else
 org $A98977
@@ -1034,6 +1042,18 @@ else
 endif
     STA $0FA8
     JMP ($0FA8)
+}
+
+cutscenes_mb_fake_death_begin_screen_flashing:
+{
+    LDA #$0001 : STA $7E781E
+    LDA !sram_suppress_flashing : BIT !SUPPRESS_MB1_FLASHING : BNE .suppress
+    LDA #$D046 : STA $7E781C
+    RTS
+
+  .suppress
+    LDA #$0000 : STA $7E781C
+    RTS
 }
 
 cutscenes_mb_clear_bottom_left_tube:
