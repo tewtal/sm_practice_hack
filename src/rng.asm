@@ -156,6 +156,7 @@ else
 org $A7B393
 endif
     JMP kraid_palette_handling
+    TAY
 
 if !FEATURE_PAL
 org $A7BDF3
@@ -723,19 +724,19 @@ endif
 kraid_palette_handling:
 {
     LDA !sram_suppress_flashing : BIT !SUPPRESS_BOSS_DAMAGE_FLASH : BNE .suppress
-    LDY #$0000
+    TDC
 if !FEATURE_PAL
-    JMP $B3AD
+    JMP $B3AC
 else
-    JMP $B397
+    JMP $B396
 endif
 
   .suppress
-    LDY #$0020
+    LDA #$0020
 if !FEATURE_PAL
-    JMP $B3AD
+    JMP $B3AC
 else
-    JMP $B397
+    JMP $B396
 endif
 }
 
@@ -753,7 +754,7 @@ hook_kraid_rng:
 kraid_intro_skip:
 {
     LDA !sram_cutscenes : AND !CUTSCENE_FAST_KRAID : BEQ .noSkip
-    LDA #$0001
+    TDC : INC
     JMP kraid_intro_skip_return
 
   .noSkip
