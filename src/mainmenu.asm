@@ -2116,6 +2116,7 @@ CutscenesMenu:
     dw #cutscenes_suppress_escape_flashing
     dw #cutscenes_suppress_power_bomb_flash
     dw #cutscenes_suppress_mb1_flashing
+    dw #cutscenes_suppress_boss_damage_flash
     dw #$0000
     %cm_header("CUTSCENES AND EFFECTS")
 
@@ -2151,6 +2152,9 @@ cutscenes_suppress_power_bomb_flash:
 
 cutscenes_suppress_mb1_flashing:
     %cm_toggle_bit_inverted("MB1 Flashing", !sram_suppress_flashing, !SUPPRESS_MB1_FLASHING, #0)
+
+cutscenes_suppress_boss_damage_flash:
+    %cm_toggle_bit_inverted("Boss Damage Flash", !sram_suppress_flashing, !SUPPRESS_BOSS_DAMAGE_FLASH, #0)
 
 game_fanfare_toggle:
     %cm_toggle("Fanfare", !sram_fanfare_toggle, #$0001, #0)
