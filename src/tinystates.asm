@@ -2,7 +2,7 @@
 ; by acmlm, total, Myria
 ;
 
-org $80F700
+org $80F600
 print pc, " tinysave start"
 
 ; These can be modified to do game-specific things before and after saving and loading
@@ -161,6 +161,20 @@ post_load_state:
     LDA !MUSIC_TRACK : JSL !MUSIC_ROUTINE
 
   .music_done
+    ; Reload BG3 GFX if minimap setting changed
+    LDA !ram_minimap : CMP !SRAM_SAVED_MINIMAP : BEQ .rng
+    JSL cm_transfer_original_tileset
+    LDA !ram_minimap : BEQ .disableMinimap
+    ; Enabled minimap, clear stale tiles
+    LDA #$2C0F ; blank
+    STA !HUD_TILEMAP+$3A : STA !HUD_TILEMAP+$7A : STA !HUD_TILEMAP+$BA
+    LDA #$2C1E ; minimap border
+    STA !HUD_TILEMAP+$46 : STA !HUD_TILEMAP+$86 : STA !HUD_TILEMAP+$C6
+    BRA .rng
+  .disableMinimap
+    LDA #$2C0F : STA !HUD_TILEMAP+$7C : STA !HUD_TILEMAP+$7E
+
+  .rng
     ; Rerandomize
     LDA !sram_save_has_set_rng : BNE .done
     LDA !sram_rerandomize : AND #$00FF : BEQ .done
@@ -177,7 +191,6 @@ post_load_state:
     INC : STA !ram_slowdown_frames
 
   .return
-
     ; Re-enable NMI, turn on force-blank and wait NMI to execute.
     ; This prevents some annoying flashing when loading states where
     ; graphics changes otherwise happens mid-frame
@@ -302,6 +315,7 @@ save_return:
 
     %ai16()
     LDA !ram_room_has_set_rng : STA !sram_save_has_set_rng
+    LDA !ram_minimap : STA !SRAM_SAVED_MINIMAP
 
     LDA #$5AFE : STA !SRAM_SAVED_STATE
 

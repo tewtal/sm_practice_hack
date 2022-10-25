@@ -60,7 +60,7 @@ cm_start:
     ; Makes the game check Samus' health again, to see if we need annoying sound
     STZ !SAMUS_HEALTH_WARNING
 
-    JSR cm_transfer_original_tileset
+    JSL cm_transfer_original_tileset
     JSR cm_transfer_original_cgram
 
     ; Update HUD (in case we added missiles etc.)
@@ -190,7 +190,7 @@ cm_transfer_original_tileset:
     LDA #$01 : STA $420B ; initiate DMA (channel 1)
     LDA #$0F : STA $0F2100 ; disable forced blanking
     PLP
-    RTS
+    RTL
 
   .kraid_vram
     %a8()
@@ -209,7 +209,7 @@ cm_transfer_original_tileset:
     LDA #$01 : STA $420B ; initiate DMA (channel 1)
     LDA #$0F : STA $0F2100 ; disable forced blanking
     PLP
-    RTS
+    RTL
 
   .minimap_vram
     ; Load in minimap vram to normal BG3 location
@@ -225,7 +225,7 @@ cm_transfer_original_tileset:
     LDA #$01 : STA $420B ; initiate DMA (channel 1)
     LDA #$0F : STA $0F2100 ; disable forced blanking
     PLP
-    RTS
+    RTL
 
   .kraid_minimap_vram
     ; Load in minimap vram to kraid BG3 location
@@ -241,7 +241,7 @@ cm_transfer_original_tileset:
     LDA #$01 : STA $420B ; initiate DMA (channel 1)
     LDA #$0F : STA $0F2100 ; disable forced blanking
     PLP
-    RTS
+    RTL
 }
 
 cm_transfer_custom_cgram:
