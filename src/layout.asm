@@ -252,6 +252,10 @@ org $8FBE18
     ; Okay to overwrite $BE1A since we freed up that space
     JMP layout_asm_caterpillar_after_scrolls
 
+; Aqueduct setup asm
+org $8FD5CC
+    dw #layout_asm_aqueduct
+
 ; Aqueduct Farm Sand Pit header
 org $8FD706
     dw layout_asm_aqueductfarmsandpit_door_list
@@ -602,6 +606,25 @@ layout_asm_mainstreet_done:
 
 layout_asm_mainstreet_plm_data:
     db #$6F, #$B7, #$18, #$59, #$0A, #$00
+
+layout_asm_aqueduct:
+{
+    PHP
+    %a16()
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ layout_asm_mainstreet_done
+
+    ; Replace power bomb blocks with bomb blocks
+    LDA #$F09D : STA $7F1690 : STA $7F18D0
+
+    ; Replace BTS
+    %a8()
+    LDA #$05 : STA $7F6F49 : STA $7F7069
+    LDA #$FF : STA $7F6F4A : STA $7F706A
+}
+
+layout_asm_aqueduct_done:
+    PLP
+    RTS
 
 layout_asm_aqueductfarmsandpit_door_list:
     dw #$A7D4, #$A534
