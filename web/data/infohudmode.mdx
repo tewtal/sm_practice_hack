@@ -111,9 +111,16 @@ First two characters = Feedback on the max-delayed walljump:
 - L# indicates you jumped low where the number tells you how many pixels you were low (can be zero).
 
 Unfortunately there is no single pixel that is guaranteed to work for these specific walljumps; it also depends on the subpixels. If you get H0 9 or L0 9, then the jump is possible an estimated 75% of the time. With H0 9 you will know it is possible if you do not bonk the ledge.
+&nbsp;  
 Additionally Samus HP will be overwritten with the average climb speed in approximate pixels per frame (inflated by 2.4%). It averages vertical speed between jump presses, assuming the presses are within 2 seconds of each other and assuming the total speed does not overflow (if either of these happen then average will be blank). If total speed drops below zero then the average will be recorded as zero.
 &nbsp;  
 Note: This feature may not be as accurate on PAL. It will consider either a 7-frame or a 9-frame walljump as a max-delayed walljump (strangely an 8-frame delayed walljump does not work on PAL).
+
+## Arm Pump
+Displays the number of armpumps (pose changes) per second, and the number of wasted angle down and/or angle up inputs per second.
+An input is considered wasted if it does not change the pose, or if both angle down and angle up are changed on the same frame.
+When exiting the room, the totals for the room are displayed.
+Note that the specific pose is not actually checked, so other actions performed by Samus may be counted.
 
 ## Shot Timer
 Displays the number of frames between pressing the shoot button.
@@ -251,53 +258,6 @@ Last two characters = Feedback on your timing in returning to the correct positi
 - L# indicates the snail is too low where the number tells you how many pixels it is low.
 
 Note: Snail clip works with three pixels on NTSC and four pixels on PAL. This assumes subpixel position is irrelevant, and assumes hi jump boots have no effect.
-
-## Three Jump Baby Skip (NTSC)
-Provides feedback on attempts to perform the baby skip without space jump and only three jumps. On NTSC, this is very specific.
-This method assumes a normalized start and full first jump, but there may be other methods to perform this trick.
-&nbsp;  
-First Y = You started from the correct position (pressed against the bump on the floor facing left).  
-&nbsp;  
-First two pairs of characters = Feedback on start of first run and start of first jump (this will replace the first Y):
-- E# indicates you were early to start running and/or start jumping
-- YY indicates you started running and/or started jumping on time
-- L# indicates you were late to start running and/or start jumping
-
-Additionally Samus HP will be overwritten with more feedback on start of second run, start of second jump and release of second jump:  
-&nbsp;  
-- E# indicates you were early to start running/jumping/releasing jump
-- Y# indicates you started running/jumping/releasing jump on time*
-- L# indicates you were late to start running/jumping/releasing jump
-
-*Unfortunately not all combinations work, and you may also find combinations that work despite being early or late.
-For example, when testing (at reduced speed) YYYYY1Y1Y1 did not work while YYYYE1E1Y2 did.
-
-## Three Jump Baby Skip (PAL)
-Provides feedback on attempts to perform the baby skip without space jump and only three jumps. On PAL, Samus has superior movement compared to the baby making this trick less specific.
-This method assumes a normalized start and full first jump, but there may be other methods to perform this trick.
-&nbsp;  
-First Y = You started from the correct position (pressed against the bump on the floor facing left).  
-&nbsp;  
-First two characters = Feedback on start of first run (this will replace the first Y):
-- E# indicates you were early to start running (although the trick may still work)
-- Y# indicates you started running on time
-- L# indicates you were late to start running (although the trick may still work)
-&nbsp;  
-Next two characters = Feedback on start of first jump:
-&nbsp;  
-- E# indicates you were early to start jumping (the trick is much less likely to work)
-- YY indicates you started jumping on time
-- L# indicates you were late start jumping (the trick will not work since you will bonk)
-
-Additionally Samus HP will be overwritten with more feedback on release of second jump:  
-&nbsp;  
-- E# indicates you were early to release jump (although the trick may still work)
-- Y# indicates you released jump on time (although Y2 may cause you to bonk the dust hopper)
-- L# indicates you were late to release jump (although the trick may still work)
-
-Note: The last jump on PAL is different from NTSC, since Samus is quite slow morphed and in the air on PAL.
-You may want to start the last jump unmorphed and then only morph after bonking the ceiling and approaching the ground.
-It is also possible to get through without morphing at all (walljump check recommended to trigger the door transition sooner).
 
 ## Mother Brain HP
 Displays the HP of the second enemy. Most useful for the Mother Brain fight since Mother Brain uses the second enemy slot.

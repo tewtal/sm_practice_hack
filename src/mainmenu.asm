@@ -1772,6 +1772,7 @@ DisplayModeMenu:
     dw ihmode_vspeed
     dw ihmode_quickdrop
     dw ihmode_walljump
+    dw ihmode_armpump
     dw ihmode_shottimer
     dw ihmode_ramwatch
     dw #$0000
@@ -1831,12 +1832,16 @@ ihmode_quickdrop:
 ihmode_walljump:
     %cm_jsl("Walljump Trainer", #action_select_infohud_mode, #$0010)
 
-ihmode_shottimer:
-    %cm_jsl("Shot Timer", #action_select_infohud_mode, #$0011)
+!IH_MODE_ARMPUMP_INDEX = $0011
+ihmode_armpump:
+    %cm_jsl("Armpump Trainer", #action_select_infohud_mode, #$0011)
 
-!IH_MODE_RAMWATCH_INDEX = $0012
+ihmode_shottimer:
+    %cm_jsl("Shot Timer", #action_select_infohud_mode, #$0012)
+
+!IH_MODE_RAMWATCH_INDEX = $0013
 ihmode_ramwatch:
-    %cm_jsl("RAM Watch", #action_select_infohud_mode, #$0012)
+    %cm_jsl("RAM Watch", #action_select_infohud_mode, #$0013)
 
 action_select_infohud_mode:
 {
@@ -1868,6 +1873,7 @@ ih_display_mode:
     db #$28, " VERT SPEED", #$FF
     db #$28, " QUICK DROP", #$FF
     db #$28, "  WALL JUMP", #$FF
+    db #$28, "   ARM PUMP", #$FF
     db #$28, " SHOT TIMER", #$FF
     db #$28, "  RAM WATCH", #$FF
     db #$FF
@@ -1885,7 +1891,6 @@ RoomStratMenu:
     dw ihstrat_elevatorcf
     dw ihstrat_botwooncf
     dw ihstrat_snailclip
-    dw ihstrat_threejumpskip
     dw ihstrat_mbhp
     dw #$0000
     %cm_header("INFOHUD ROOM STRAT")
@@ -1918,12 +1923,9 @@ ihstrat_botwooncf:
 ihstrat_snailclip:
     %cm_jsl("Aqueduct Snail Clip", #action_select_room_strat, #$0008)
 
-ihstrat_threejumpskip:
-    %cm_jsl("Three Jump Baby Skip", #action_select_room_strat, #$0009)
-
-!IH_STRAT_MBHP_INDEX = $000A
+!IH_STRAT_MBHP_INDEX = $0009
 ihstrat_mbhp:
-    %cm_jsl("Mother Brain HP", #action_select_room_strat, #$000A)
+    %cm_jsl("Mother Brain HP", #action_select_room_strat, #$0009)
 
 action_select_room_strat:
 {
@@ -1948,7 +1950,6 @@ ih_room_strat:
     db #$28, "ELEVATOR CF", #$FF
     db #$28, " BOTWOON CF", #$FF
     db #$28, " SNAIL CLIP", #$FF
-    db #$28, "3 JUMP SKIP", #$FF
     db #$28, "      MB HP", #$FF
     db #$FF
     .routine
@@ -2095,7 +2096,7 @@ game_goto_controls:
     %cm_submenu("Controller Setting Mode", #ControllerSettingMenu)
 
 game_cutscenes:
-    %cm_submenu("Cutscenes", #CutscenesMenu)
+    %cm_submenu("Cutscenes and Effects", #CutscenesMenu)
 
 
 ; ---------------
@@ -2111,8 +2112,14 @@ CutscenesMenu:
     dw #cutscenes_fast_kraid
     dw #cutscenes_fast_phantoon
     dw #cutscenes_fast_mb
+    dw #$FFFF
+    dw #cutscenes_suppress_crateria_lightning
+    dw #cutscenes_suppress_escape_flashing
+    dw #cutscenes_suppress_power_bomb_flash
+    dw #cutscenes_suppress_mb1_flashing
+    dw #cutscenes_suppress_boss_damage_flash
     dw #$0000
-    %cm_header("CUTSCENES")
+    %cm_header("CUTSCENES AND EFFECTS")
 
 cutscenes_skip_splash:
     %cm_toggle_bit("Fast Nintendo splash", !sram_cutscenes, !CUTSCENE_SKIP_SPLASH, #0)
@@ -2134,6 +2141,21 @@ cutscenes_fast_phantoon:
 
 cutscenes_fast_mb:
     %cm_toggle_bit("Fast Mother Brain", !sram_cutscenes, !CUTSCENE_FAST_MB, #0)
+
+cutscenes_suppress_crateria_lightning:
+    %cm_toggle_bit_inverted("Crateria Lightning", !sram_suppress_flashing, !SUPPRESS_CRATERIA_LIGHTNING, #0)
+
+cutscenes_suppress_escape_flashing:
+    %cm_toggle_bit_inverted("Escape Flashing", !sram_suppress_flashing, !SUPPRESS_ESCAPE_FLASHING, #0)
+
+cutscenes_suppress_power_bomb_flash:
+    %cm_toggle_bit_inverted("Power Bomb Flash", !sram_suppress_flashing, !SUPPRESS_POWER_BOMB_FLASH, #0)
+
+cutscenes_suppress_mb1_flashing:
+    %cm_toggle_bit_inverted("MB1 Flashing", !sram_suppress_flashing, !SUPPRESS_MB1_FLASHING, #0)
+
+cutscenes_suppress_boss_damage_flash:
+    %cm_toggle_bit_inverted("Boss Damage Flash", !sram_suppress_flashing, !SUPPRESS_BOSS_DAMAGE_FLASH, #0)
 
 game_fanfare_toggle:
     %cm_toggle("Fanfare", !sram_fanfare_toggle, #$0001, #0)

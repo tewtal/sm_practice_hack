@@ -22,6 +22,7 @@
     dw status_vspeed
     dw status_quickdrop
     dw status_walljump
+    dw status_armpump
     dw status_shottimer
     dw status_ramwatch
 
@@ -50,7 +51,6 @@ status_roomstrat:
     dw status_elevatorcf
     dw status_botwooncf
     dw status_snailclip
-    dw status_threejumpskip
     dw status_mbhp
 }
 
@@ -1105,6 +1105,66 @@ endif
   .bubble
     LDA #$0117 : STA !ram_ypos
     BRA .heightcheck
+}
+
+status_armpump:
+{
+    ; Store Samus HP so it doesn't overwrite our HUD
+    LDA !SAMUS_HP : STA !ram_last_hp
+
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_ANGLE_DOWN : BNE .downHeld
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_ANGLE_UP : BNE .onlyUpHeld
+
+    ; Neither angle up or down held
+    STA !ram_momentum_direction : BRA .checkArmpumpChange
+
+  .downHeld
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_ANGLE_UP : BNE .upAndDownHeld
+
+    ; Only down held
+    LDA #$0001 : STA !ram_momentum_direction : BRA .checkArmpumpChange
+
+  .onlyUpHeld
+    LDA #$0002 : STA !ram_momentum_direction : BRA .checkArmpumpChange
+
+  .upAndDownHeld
+    LDA #$0003 : STA !ram_momentum_direction
+
+  .checkArmpumpChange
+    CMP !ram_momentum_last : BEQ .incTimer
+    EOR !ram_momentum_last : CMP #$0003 : BNE .checkPose
+
+    ; Both angles changed in same frame, which is a waste
+    LDA !ram_fail_count : INC : STA !ram_fail_count
+
+  .checkPose
+    LDA !ram_momentum_direction : STA !ram_momentum_last
+    LDA !SAMUS_POSE : CMP !ram_roomstrat_state : BEQ .incFail
+    STA !ram_roomstrat_state
+
+    ; Pose changed, assume it was an armpump
+    LDA !ram_momentum_count : INC : STA !ram_momentum_count
+    BRA .incTimer
+
+  .incFail
+    ; Angle change did not result in an armpump
+    LDA !ram_fail_count : INC : STA !ram_fail_count
+
+  .incTimer
+    LDA !ram_roomstrat_counter : INC : STA !ram_roomstrat_counter
+    CMP #$003C : BMI .done
+
+    ; Draw counts once per second
+    LDA !ram_momentum_count : LDX #$0088 : JSR Draw4
+    LDA !ram_fail_count : LDX #$0092 : JSR Draw4
+
+    ; Add to room totals and reset counts and counters
+    LDA !ram_momentum_sum : CLC : ADC !ram_momentum_count : STA !ram_momentum_sum
+    LDA !ram_fail_sum : CLC : ADC !ram_fail_count : STA !ram_fail_sum
+    LDA #$0000 : STA !ram_momentum_count : STA !ram_fail_count : STA !ram_roomstrat_counter
+
+  .done
+    RTS
 }
 
 status_shottimer:
@@ -2192,242 +2252,6 @@ endif
     ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
     LDA !IH_LETTER_L : STA !HUD_TILEMAP+$8C
     RTS
-}
-
-status_threejumpskip:
-{
-if !FEATURE_PAL
-    !threejumpskip_firstrun_early = $003E
-    !threejumpskip_firstrun_late = $0048
-    !threejumpskip_firstjump = $0020
-    !threejumpskip_release_early = $000D
-    !threejumpskip_release_late = $0010
-else
-    !threejumpskip_firstrun = $0037
-    !threejumpskip_firstjump = $0024
-    !threejumpskip_secondrun_early = $003B
-    !threejumpskip_secondrun_late = $003E
-    !threejumpskip_secondjump_early = $0042
-    !threejumpskip_secondjump_late = $0045
-    !threejumpskip_release_early = $0010
-    !threejumpskip_release_late = $0013
-endif
-
-    LDA !SAMUS_HP : STA !ram_last_hp
-    LDA !ROOM_ID : CMP #$DCB1 : BNE .reset
-    LDA !ram_roomstrat_state : CMP #$0009 : BPL .reset
-    ASL : TAX : JMP (.threejumpskip_table,X)
-
-  .threejumpskip_table
-    dw .eathopper
-    dw .babyrise
-    dw .firstrun
-    dw .firstjump
-    dw .firstfall
-    dw .firstland
-    dw .secondrun
-    dw .secondjump
-    dw .secondrelease
-
-  .reset
-    LDA #$0000 : STA !ram_roomstrat_state
-    RTS
-
-  .eathopper
-    LDA !ENEMY_X : CMP #$02D0 : BMI .done
-    LDA !ENEMY_Y : CMP #$009C : BNE .done
-    LDA !IH_BLANK : STA !HUD_TILEMAP+$88 : STA !HUD_TILEMAP+$8A : STA !HUD_TILEMAP+$8C
-    STA !HUD_TILEMAP+$8E : STA !HUD_TILEMAP+$90 : STA !HUD_TILEMAP+$92 : STA !HUD_TILEMAP+$94
-    STA !HUD_TILEMAP+$96 : STA !HUD_TILEMAP+$98 : STA !HUD_TILEMAP+$9A
-    BRA .incstate
-
-  .babyrise
-    LDA !ENEMY_Y : CMP #$0060 : BNE .checkfirsty
-
-  .clearcounterincstate
-    LDA #$0000 : STA !ram_roomstrat_counter
-
-  .incstate
-    LDA !ram_roomstrat_state : INC : STA !ram_roomstrat_state
-
-  .done
-    RTS
-
-  .firstrun
-    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_LEFT : BNE .checkfirstrun
-    LDA !ram_roomstrat_counter : INC : STA !ram_roomstrat_counter
-
-  .checkfirsty
-    LDA !SAMUS_X : CMP #$023B : BNE .clearfirsty
-    LDA !SAMUS_X_SUBPX : CMP #$FFFF : BNE .clearfirsty
-    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$88
-    RTS
-
-  .clearfirsty
-    LDA !IH_BLANK : STA !HUD_TILEMAP+$88
-    RTS
-
-  .checkfirstrun
-if !FEATURE_PAL
-    LDA !ram_roomstrat_counter : CMP #!threejumpskip_firstrun_late : BPL .firstrunlate
-    CMP #(!threejumpskip_firstrun_early+1) : BMI .firstrunearly
-
-    ; First run on time
-    SEC : SBC #!threejumpskip_firstrun_early
-    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A
-    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$88
-    BRL .clearcounterincstate
-
-  .firstrunlate
-    SEC : SBC #(!threejumpskip_firstrun_late-1)
-else
-    LDA !ram_roomstrat_counter : CMP #!threejumpskip_firstrun
-    BEQ .firstrunperfect : BMI .firstrunearly
-
-    ; First run late
-    SEC : SBC #!threejumpskip_firstrun
-endif
-    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A
-    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$88
-    BRL .clearcounterincstate
-
-  .firstrunearly
-if !FEATURE_PAL
-    LDA #(!threejumpskip_firstrun_early+1)
-else
-    LDA #!threejumpskip_firstrun
-endif
-    SEC : SBC !ram_roomstrat_counter
-    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A
-    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$88
-    BRL .clearcounterincstate
-
-if !FEATURE_PAL
-else
-  .firstrunperfect
-    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$88 : STA !HUD_TILEMAP+$8A
-    BRL .clearcounterincstate
-endif
-
-  .firstjumpperfect
-    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$8E
-    BRL .clearcounterincstate
-
-  .firstjumpearly
-    LDA #!threejumpskip_firstjump : SEC : SBC !ram_roomstrat_counter
-    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
-    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$8C
-    BRL .clearcounterincstate
-
-  .secondreleaselate
-    SEC : SBC #(!threejumpskip_release_late-1)
-    ASL : TAY : LDA.w NumberGFXTable,Y
-if !FEATURE_PAL
-    STA !HUD_TILEMAP+$98 : LDA !IH_LETTER_L : STA !HUD_TILEMAP+$96
-else
-    STA !HUD_TILEMAP+$9A : LDA !IH_LETTER_L : STA !HUD_TILEMAP+$98
-endif
-    BRL .reset
-
-  .secondreleaseearly
-    LDA #(!threejumpskip_release_early+1) : SEC : SBC !ram_roomstrat_counter
-    ASL : TAY : LDA.w NumberGFXTable,Y
-if !FEATURE_PAL
-    STA !HUD_TILEMAP+$98 : LDA !IH_LETTER_E : STA !HUD_TILEMAP+$96
-else
-    STA !HUD_TILEMAP+$9A : LDA !IH_LETTER_E : STA !HUD_TILEMAP+$98
-endif
-    BRL .reset
-
-  .firstjump
-    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_JUMP : BEQ .inccounter
-    LDA !ram_roomstrat_counter : CMP #!threejumpskip_firstjump
-    BEQ .firstjumpperfect : BMI .firstjumpearly
-
-    ; First jump late
-    SEC : SBC #!threejumpskip_firstjump
-    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
-    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$8C
-    BRL .clearcounterincstate
-
-  .firstfall
-    LDA !SAMUS_Y_DIRECTION : CMP #$0002 : BNE .inccounter
-    BRL .incstate
-
-  .firstland
-    LDA !SAMUS_Y_DIRECTION : BNE .inccounter
-    BRL .incstate
-
-  .secondrelease
-    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_JUMP : BNE .inccounter
-    LDA !ram_roomstrat_counter : CMP #!threejumpskip_release_late : BPL .secondreleaselate
-    CMP #(!threejumpskip_release_early+1) : BMI .secondreleaseearly
-
-    ; Second jump released on time
-    SEC : SBC #!threejumpskip_release_early
-    ASL : TAY : LDA.w NumberGFXTable,Y
-if !FEATURE_PAL
-    STA !HUD_TILEMAP+$98 : LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$96
-else
-    STA !HUD_TILEMAP+$9A : LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$98
-endif
-    BRL .reset
-
-  .inccounter
-    LDA !ram_roomstrat_counter : INC : STA !ram_roomstrat_counter
-    RTS
-
-  .secondrun
-    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_LEFT : BEQ .inccounter
-if !FEATURE_PAL
-else
-    LDA !ram_roomstrat_counter : CMP #!threejumpskip_secondrun_late : BPL .secondrunlate
-    CMP #(!threejumpskip_secondrun_early+1) : BMI .secondrunearly
-
-    ; Second run on time
-    SEC : SBC #!threejumpskip_secondrun_early
-    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$92
-    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$90
-endif
-    BRL .incstate
-
-  .secondjump
-    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_JUMP : BEQ .inccounter
-if !FEATURE_PAL
-else
-    LDA !ram_roomstrat_counter : CMP #!threejumpskip_secondjump_late : BPL .secondjumplate
-    CMP #(!threejumpskip_secondjump_early+1) : BMI .secondjumpearly
-
-    ; Second jump on time
-    SEC : SBC #!threejumpskip_secondjump_early
-    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$96
-    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$94
-    BRL .clearcounterincstate
-
-  .secondrunlate
-    SEC : SBC #(!threejumpskip_secondrun_late-1)
-    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$92
-    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$90
-    BRL .incstate
-
-  .secondrunearly
-    LDA #(!threejumpskip_secondrun_early+1) : SEC : SBC !ram_roomstrat_counter
-    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$92
-    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$90
-    BRL .incstate
-
-  .secondjumplate
-    SEC : SBC #(!threejumpskip_secondjump_late-1)
-    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$96
-    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$94
-    BRL .clearcounterincstate
-
-  .secondjumpearly
-    LDA #(!threejumpskip_secondjump_early+1) : SEC : SBC !ram_roomstrat_counter
-    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$96
-    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$94
-endif
-    BRL .clearcounterincstate
 }
 
 status_mbhp:

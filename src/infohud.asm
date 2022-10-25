@@ -369,7 +369,7 @@ ih_before_room_transition:
     LDA $14 : PHA
 
     ; Update HUD
-    JSL ih_update_hud_code
+    JSL ih_update_hud_code_before_transition
 
     ; Restore temp variables
     PLA : STA $14
@@ -477,6 +477,27 @@ else
 endif
 }
 
+ih_update_hud_code_before_transition:
+{
+    PHX
+    PHY
+    PHP
+    PHB
+    ; Bank 80
+    PEA $8080 : PLB : PLB
+
+    LDA !sram_display_mode : CMP #!IH_MODE_ARMPUMP_INDEX : BNE .update_hud_code
+
+    ; Report armpump room totals
+    LDA !ram_momentum_sum : CLC : ADC !ram_momentum_count : LDX #$0088 : JSR Draw4
+    LDA !ram_fail_sum : CLC : ADC !ram_fail_count : LDX #$0092 : JSR Draw4
+    LDA #$0000 : STA !ram_momentum_count : STA !ram_fail_count
+    STA !ram_momentum_sum : STA !ram_fail_sum : STA !ram_roomstrat_counter
+
+  .update_hud_code
+    BRA ih_update_hud_code_start
+}
+
 ih_update_hud_code:
 {
     PHX
@@ -486,6 +507,7 @@ ih_update_hud_code:
     ; Bank 80
     PEA $8080 : PLB : PLB
 
+  .start
     LDA !ram_minimap : BNE .minimap_hud
     BRL .start_update
 
@@ -1264,26 +1286,30 @@ ih_game_loop_code:
   .inc_statusdisplay
     LDA !sram_display_mode
     INC A
-    CMP #$0013
+    CMP #$0014
     BNE +
     LDA #$0000
 +   STA !sram_display_mode
-    JMP .update_status
+    BRA .update_status
 
   .dec_statusdisplay
     LDA !sram_display_mode
     DEC A
     CMP #$FFFF
     BNE +
-    LDA #$0012
+    LDA #$0013
 +   STA !sram_display_mode
-    JMP .update_status
-
 
   .update_status
     LDA #$0000
+    STA !ram_momentum_sum
+    STA !ram_momentum_count
     STA !ram_HUD_check
+    STA !ram_roomstrat_counter
+    STA !ram_roomstrat_state
     STA !ram_armed_shine_duration
+    STA !ram_fail_count
+    STA !ram_fail_sum
     INC A
     STA !ram_dash_counter
     STA !ram_xpos

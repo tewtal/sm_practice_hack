@@ -90,8 +90,10 @@
 !ram_vertical_speed                 = !WRAM_START+$78
 !ram_quickdrop_counter              = !WRAM_START+$7A
 !ram_walljump_counter               = !WRAM_START+$7C
+!ram_fail_sum                       = !WRAM_START+$7E
+!ram_fail_count                     = !WRAM_START+$80
 
-!WRAM_PERSIST_START = !ram_walljump_counter+$02
+!WRAM_PERSIST_START = !ram_fail_count+$02
 ; ----------------------------------------------------------
 ; Variables below this point are PERSISTENT -- they maintain
 ; their value across savestates. Use this section for
@@ -148,7 +150,7 @@
 !ram_game_mode_extras               = !WRAM_PERSIST_START+$52
 !ram_sprite_features_active         = !WRAM_PERSIST_START+$54
 
-; ^ FREE SPACE ^ up to +$FC
+; ^ FREE SPACE ^ up to +$7A
 
 ; -----------------------
 ; RAM (Bank 7E required)
@@ -440,7 +442,7 @@
 ; SRAM
 ; -----
 
-!SRAM_VERSION = $000E
+!SRAM_VERSION = $000F
 
 !SRAM_START = $702000
 
@@ -485,6 +487,7 @@
 !sram_preset_options = !SRAM_START+$48
 !sram_lag_counter_mode = !SRAM_START+$4A
 !sram_fast_doors = !SRAM_START+$4C
+!sram_suppress_flashing = !SRAM_START+$4E
 
 ; ^ FREE SPACE ^ up to +$0FCE
 
@@ -508,6 +511,12 @@
 !CUTSCENE_FAST_PHANTOON = #$0200
 !CUTSCENE_FAST_KRAID = #$0400
 !CUTSCENE_SKIP_SPLASH = #$0800
+
+!SUPPRESS_CRATERIA_LIGHTNING = #$0001
+!SUPPRESS_ESCAPE_FLASHING = #$0002
+!SUPPRESS_POWER_BOMB_FLASH = #$0004
+!SUPPRESS_MB1_FLASHING = #$0008
+!SUPPRESS_BOSS_DAMAGE_FLASH = #$0010
 
 !PRESETS_COMPRESSED_GRAPHICS = #$0001
 !PRESETS_COMPRESSED_PALETTES = #$0002
