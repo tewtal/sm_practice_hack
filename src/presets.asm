@@ -94,7 +94,7 @@ endif
     JSL game_clear_minimap_clear_minimap
 
   .clear_enemies
-    ; Clear enemies if not in certain rooms
+    ; Clear enemies if not in BT or MB rooms
     LDA !ROOM_ID : CMP #$9804 : BEQ .done_clearing_enemies
     CMP #$DD58 : BEQ .set_mb_state
     LDA !sram_preset_options : BIT !PRESETS_PRESERVE_ENEMIES : BNE .done_clearing_enemies
