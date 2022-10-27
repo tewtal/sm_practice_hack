@@ -399,11 +399,17 @@ PresetsMenu:
     dw #presets_custom_preset_slot
     dw #presets_save_custom_preset
     dw #presets_load_custom_preset
+    dw #$FFFF
+    dw #presets_reload_last
+    dw #presets_load_random
 if !FEATURE_DEV
     dw #presets_random_preset_rng
 endif
     dw #$FFFF
     dw #presets_open_blue_doors
+    dw #presets_load_with_enemies
+    dw #presets_clear_map_tiles
+    dw #presets_auto_segment_reset
 if !RAW_TILE_GRAPHICS
     dw #$FFFF
     dw #presets_compressed_graphics
@@ -432,6 +438,19 @@ presets_save_custom_preset:
 presets_load_custom_preset:
     %cm_jsl("Load Custom Preset", #action_load_custom_preset, #$0000)
 
+presets_reload_last:
+    %cm_jsl("Reload Last Preset", .routine, #$0001)
+  .routine
+    LDA !sram_last_preset : STA !ram_load_preset
+    TYA : STA !ram_cm_leave
+    RTL
+
+presets_load_random:
+    %cm_jsl("Load Random Preset", .routine, #$0001)
+  .routine
+    TYA : STA !ram_cm_leave
+    JML LoadRandomPreset
+
 if !FEATURE_DEV
 presets_random_preset_rng:
     %cm_toggle_inverted("Random Preset RNG", !ram_random_preset_rng, #$0001, #0)
@@ -439,6 +458,15 @@ endif
 
 presets_open_blue_doors:
     %cm_toggle_bit_inverted("Open Blue Doors", !sram_preset_options, !PRESETS_CLOSE_BLUE_DOORS, #0)
+
+presets_load_with_enemies:
+    %cm_toggle_bit("Load with Enemies", !sram_preset_options, !PRESETS_PRESERVE_ENEMIES, #0)
+
+presets_clear_map_tiles:
+    %cm_toggle_bit("Clear Map Tiles", !sram_preset_options, !PRESETS_CLEAR_MAP_TILES, #0)
+
+presets_auto_segment_reset:
+    %cm_toggle_bit_inverted("Auto Reset Segment", !sram_preset_options, !PRESETS_AUTO_SEGMENT_OFF, #0)
 
 if !RAW_TILE_GRAPHICS
 presets_compressed_graphics:

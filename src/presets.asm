@@ -24,12 +24,12 @@ endif
     JSL $809A79  ; HUD routine when game is loading
     JSL $90AD22  ; Reset projectile data
 
-    PHP : %a16()
+    PHP : %ai16()
     LDY #$0020
     LDX #$0000
   .paletteLoop
     ; Target Samus' palette = [Samus' palette]
-    LDA $7EC180,x : STA $7EC380,x  ; Target Samus' palette = [Samus' palette]
+    LDA $7EC180,X : STA $7EC380,X
     INX #2
     DEY #2 : BNE .paletteLoop
     PLP
@@ -64,7 +64,7 @@ endif
     LDA #$0008 : STA !GAMEMODE
     %a8() : LDA #$0F : STA $51 : %a16()
 
-    PHP : %a16()
+    PHP : %ai16()
     LDY #$0200
     LDX #$0000
   .paletteLoop2
@@ -89,9 +89,15 @@ endif
     JSL reset_all_counters
     STZ $0795 : STZ $0797 ; clear door transition flags
 
+    ; Clear minimap tiles
+    LDA !sram_preset_options : BIT !PRESETS_CLEAR_MAP_TILES : BEQ .clear_enemies
+    JSL game_clear_minimap_clear_minimap
+
+  .clear_enemies
     ; Clear enemies if not in BT or MB rooms
     LDA !ROOM_ID : CMP #$9804 : BEQ .done_clearing_enemies
     CMP #$DD58 : BEQ .set_mb_state
+    LDA !sram_preset_options : BIT !PRESETS_PRESERVE_ENEMIES : BNE .done_clearing_enemies
     JSR clear_all_enemies
 
   .done_clearing_enemies
@@ -214,10 +220,13 @@ preset_load_preset:
     LDA #$0000
     STA !SAMUS_ITEM_SELECTED : STA !SAMUS_AUTO_CANCEL
     LDA #$5AFE : STA !LAYER2_X ; Load garbage into Layer 2 X position
+
+    ; check if segment timer should be reset now or after a door
+    LDA !sram_preset_options : BIT !PRESETS_AUTO_SEGMENT_OFF : BNE +
     LDA #$FFFF : STA !ram_reset_segment_later
 
     ; check if custom preset is being loaded
-    LDA !ram_custom_preset : BEQ .category_preset
++   LDA !ram_custom_preset : BEQ .category_preset
     JSL custom_preset_load
     BRA .done
 
