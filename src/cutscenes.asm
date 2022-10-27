@@ -718,6 +718,20 @@ power_bomb_crystal_flash_set_data_bank:
     RTS
 }
 
+wait_to_rise_earthquake_start:
+{
+    LDA #$0015 : STA $183E
+    LDA #$0020 : TSB $1840
+    JMP wait_to_rise_earthquake_end
+}
+
+rising_earthquake_start:
+{
+    LDA #$0015 : STA $183E
+    LDA #$0020 : TSB $1840
+    JMP rising_earthquake_end
+}
+
 print pc, " cutscenes bank88 end"
 
 org $888AD1
@@ -725,6 +739,16 @@ org $888AD1
 
 org $88A2C0
     dw #power_bomb_crystal_flash_set_data_bank
+
+org $88B36A
+    LDA !sram_suppress_flashing : BIT !SUPPRESS_EARTHQUAKE : BNE wait_to_rise_earthquake_end
+    JMP wait_to_rise_earthquake_start
+wait_to_rise_earthquake_end:
+
+org $88B385
+    LDA !sram_suppress_flashing : BIT !SUPPRESS_EARTHQUAKE : BNE rising_earthquake_end
+    JMP rising_earthquake_start
+rising_earthquake_end:
 
 
 if !FEATURE_PAL
@@ -826,6 +850,15 @@ endif
     dw cutscenes_mb_clear_ceiling_column_8
 
 if !FEATURE_PAL
+org $A98C15
+else
+org $A98C05
+endif
+    JMP cutscenes_mb_fake_death_earthquake_start
+    NOP : NOP : NOP : NOP
+cutscenes_mb_fake_death_earthquake_end:
+
+if !FEATURE_PAL
 org $A98D78
 else
 org $A98D68
@@ -905,6 +938,15 @@ endif
     JMP cutscenes_mb_death_brain_falling
 
 if !FEATURE_PAL
+org $A9B154
+else
+org $A9B144
+endif
+    JMP cutscenes_mb_death_earthquake_start
+    NOP : NOP : NOP : NOP
+cutscenes_mb_death_earthquake_end:
+
+if !FEATURE_PAL
 org $A9B177
 else
 org $A9B167
@@ -925,6 +967,15 @@ org $A9B1EB
 endif
     ; Make dead MB invisible and intangible, in case we jump here from a preset
     ORA #$0500
+
+if !FEATURE_PAL
+org $A9B2E1
+else
+org $A9B289
+endif
+    LDA !sram_suppress_flashing : BIT !SUPPRESS_EARTHQUAKE : BNE cutscenes_mb_escape_earthquake_end
+    JMP cutscenes_mb_escape_earthquake_start
+cutscenes_mb_escape_earthquake_end:
 
 
 org $A9FBC0
@@ -1421,6 +1472,35 @@ else
 endif
     STA $0FA8
     JMP ($0FA8)
+}
+
+cutscenes_mb_fake_death_earthquake_start:
+{
+    LDA !sram_suppress_flashing : BIT !SUPPRESS_EARTHQUAKE : BNE .suppress
+    LDA #$0019 : STA $183E
+    LDA #$0014 : STA $1840
+
+  .suppress
+    LDA #$0025 : JSL $8090CB
+    JMP cutscenes_mb_fake_death_earthquake_end
+}
+
+cutscenes_mb_death_earthquake_start:
+{
+    LDA !sram_suppress_flashing : BIT !SUPPRESS_EARTHQUAKE : BNE .suppress
+    LDA #$0002 : STA $183E
+    LDA #$0014 : STA $1840
+
+  .suppress
+    LDA #$0025 : JSL $8090CB
+    JMP cutscenes_mb_death_earthquake_end
+}
+
+cutscenes_mb_escape_earthquake_start:
+{
+    LDA #$0005 : STA $183E
+    LDA #$FFFF : STA $1840
+    JMP cutscenes_mb_escape_earthquake_end
 }
 
 print pc, " cutscenes MB end"
