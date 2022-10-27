@@ -201,6 +201,21 @@ org $848D0C
     AND #$000F
 
 
+; Parlor escape setup asm
+org $8F919C
+    LDA !sram_suppress_flashing : BIT !SUPPRESS_EARTHQUAKE : BNE .parlor_escape_rts
+    JMP layout_asm_vanilla_parlor_escape
+  .parlor_escape_rts
+    RTS
+warnpc $8F91A9
+
+; Landing site setup asm
+org $8F91BD
+    LDA !sram_suppress_flashing : BIT !SUPPRESS_EARTHQUAKE : BNE .scrolling_sky
+    JSR layout_asm_vanilla_landing_site_escape
+  .scrolling_sky
+warnpc $8F91C9
+
 ; Moat setup asm
 org $8F9624
     dw #layout_asm_moat
@@ -252,6 +267,62 @@ org $8FBE18
     ; Okay to overwrite $BE1A since we freed up that space
     JMP layout_asm_caterpillar_after_scrolls
 
+; Escape screen shake and explosion main asm
+org $8FC124
+    ; Start with copy of $8FC131 routine (replacing JSR with inlined version)
+    LDA $0A78 : BNE .end_explosion
+    LDA $05B6 : AND #$0001 : BNE .end_explosion
+    JSL $808111
+    PHA : AND #$00FF : CLC : ADC $0911 : STA $12 : PLA
+    XBA : AND #$00FF : CLC : ADC $0915 : STA $14
+    LSR : LSR : LSR : LSR
+    %a8() : PHA : LDA $07A5 : STA $4202
+    PLA : STA $4203 : %a16()
+    LDA $12 : LSR : LSR : LSR : LSR
+    CLC : ADC $4216 : ASL : TAX
+    LDA $7F0002,X : AND #$03FF
+    CMP #$00FF : BEQ .end_explosion
+
+    ; Jump to earthquake check after explosion
+    PEA layout_asm_escape_screen_shake_pea
+    JMP $C1A9
+
+  .end_explosion
+    JMP layout_asm_escape_screen_shake
+warnpc $8FC183
+
+; Tourian escape room 1 setup asm
+org $8FC926
+    LDA !sram_suppress_flashing : BIT !SUPPRESS_EARTHQUAKE : BNE .tourian_escape_room_1_rts
+    JMP layout_asm_vanilla_tourian_escape_room_1
+  .tourian_escape_room_1_rts
+    RTS
+warnpc $8FC933
+
+; Tourian escape room 2 setup asm
+org $8FC933
+    LDA !sram_suppress_flashing : BIT !SUPPRESS_EARTHQUAKE : BNE .tourian_escape_room_2_rts
+    JMP layout_asm_vanilla_tourian_escape_room_2
+  .tourian_escape_room_2_rts
+    RTS
+warnpc $8FC946
+
+; Tourian escape room 3 setup asm
+org $8FC946
+    LDA !sram_suppress_flashing : BIT !SUPPRESS_EARTHQUAKE : BNE .tourian_escape_room_3_rts
+    JMP layout_asm_vanilla_tourian_escape_room_3
+  .tourian_escape_room_3_rts
+    RTS
+warnpc $8FC953
+
+; Tourian escape room 4 setup asm
+org $8FC95B
+    LDA !sram_suppress_flashing : BIT !SUPPRESS_EARTHQUAKE : BNE .tourian_escape_room_4_rts
+    JMP layout_asm_vanilla_tourian_escape_room_4
+  .tourian_escape_room_4_rts
+    RTS
+warnpc $8FC96E
+
 ; Aqueduct setup asm
 org $8FD5CC
     dw #layout_asm_aqueduct
@@ -259,6 +330,14 @@ org $8FD5CC
 ; Aqueduct Farm Sand Pit header
 org $8FD706
     dw layout_asm_aqueductfarmsandpit_door_list
+
+; Tourian escape room 2 main asm
+org $8FDE99
+    dw #layout_asm_tourian_escape_room_2
+
+; Tourian escape room 4 main asm
+org $8FDEFD
+    dw #layout_asm_tourian_escape_room_4
 
 ; Ceres Ridley modified state check to support presets
 org $8FE0C0
@@ -290,6 +369,79 @@ org $8FE39D
 
 org $8FEA00
 print pc, " layout start"
+
+layout_asm_vanilla_parlor_escape:
+{
+    LDA #$0018 : STA $183E
+    LDA #$FFFF : STA $1840
+    RTS
+}
+
+layout_asm_vanilla_landing_site_escape:
+{
+    LDA #$0006 : STA $183E
+    LDA #$FFFF : STA $1840
+    RTS
+}
+
+layout_asm_escape_screen_shake_pea:
+    NOP
+layout_asm_escape_screen_shake:
+{
+    LDA !sram_suppress_flashing : BIT !SUPPRESS_EARTHQUAKE : BNE .suppress
+    LDA $1840 : ORA #$8000 : STA $1840
+
+  .suppress
+    RTS
+}
+
+layout_asm_vanilla_tourian_escape_room_1:
+{
+    LDA #$0012 : STA $183E
+    LDA #$FFFF : STA $1840
+    RTS
+}
+
+layout_asm_vanilla_tourian_escape_room_2:
+{
+    LDA #$0012 : STA $183E
+    STA $07E3 : STZ $07E1
+    LDA #$FFFF : STA $1840
+    RTS
+}
+
+layout_asm_vanilla_tourian_escape_room_3:
+{
+    LDA #$0015 : STA $183E
+    LDA #$FFFF : STA $1840
+    RTS
+}
+
+layout_asm_vanilla_tourian_escape_room_4:
+{
+    LDA #$0015 : STA $183E
+    STA $07E3 : STZ $07E1
+    LDA #$FFFF : STA $1840
+    RTS
+}
+
+layout_asm_tourian_escape_room_2:
+{
+    LDA !sram_suppress_flashing : BIT !SUPPRESS_EARTHQUAKE : BNE .suppress
+    JMP $E57C
+
+  .suppress
+    RTS
+}
+
+layout_asm_tourian_escape_room_4:
+{
+    LDA !sram_suppress_flashing : BIT !SUPPRESS_EARTHQUAKE : BNE .suppress
+    JMP $E5A4
+
+  .suppress
+    JMP $C183
+}
 
 layout_asm_cutscene_g4skip:
 {

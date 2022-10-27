@@ -2123,6 +2123,7 @@ CutscenesMenu:
     dw #cutscenes_suppress_power_bomb_flash
     dw #cutscenes_suppress_mb1_flashing
     dw #cutscenes_suppress_boss_damage_flash
+    dw #cutscenes_suppress_earthquake
     dw #$0000
     %cm_header("CUTSCENES AND EFFECTS")
 
@@ -2161,6 +2162,9 @@ cutscenes_suppress_mb1_flashing:
 
 cutscenes_suppress_boss_damage_flash:
     %cm_toggle_bit_inverted("Boss Damage Flash", !sram_suppress_flashing, !SUPPRESS_BOSS_DAMAGE_FLASH, #0)
+
+cutscenes_suppress_earthquake:
+    %cm_toggle_bit_inverted("Vanilla Earthquake", !sram_suppress_flashing, !SUPPRESS_EARTHQUAKE, #0)
 
 game_fanfare_toggle:
     %cm_toggle("Fanfare", !sram_fanfare_toggle, #$0001, #0)
