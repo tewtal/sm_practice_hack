@@ -143,12 +143,12 @@ endif
 kraid_intro_skip_return:
 
 if !FEATURE_PAL
-org $A7BD81
+org $A7B381
 else
 org $A7B36B
+endif
     ; Combined two methods, so overwrite JSR
     PLY : PLX : RTS
-endif
 
 if !FEATURE_PAL
 org $A7B3A9
