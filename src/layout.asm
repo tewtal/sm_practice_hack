@@ -1,26 +1,32 @@
 
 ; Crab Shaft save station load point
 org $80C995
+maridia_save_station_9:
     db #$A3, #$D1, #$68, #$A4, #$00, #$00, #$00, #$00, #$00, #$02, #$78, #$00, #$60, #$00
 
 ; Main Street save station load point
 org $80C9A3
+maridia_save_station_10:
     db #$C9, #$CF, #$D8, #$A3, #$00, #$00, #$00, #$01, #$00, #$05, #$78, #$00, #$10, #$00
 
 ; Crab Shaft save station map icon location
 org $82CA17
+maridia_save_station_map_icon_9:
     db #$90, #$00, #$50, #$00
 
 ; Main Street save station map icon location
 org $82CA1B
+maridia_save_station_map_icon_10:
     db #$58, #$00, #$78, #$00
 
 ; Hijack room transition between loading level data and setting up scrolling
 org $82E388
+hook_after_load_level_data:
     dw hijack_after_load_level_data
 
 ; Hijack call to create door closing PLM
 org $82E4C9
+hook_door_closing_plm:
     JSR hijack_door_closing_plm
 
 
@@ -60,112 +66,139 @@ warnpc $82FA00 ; presets.asm
 
 ; East Ocean left door asm pointer
 org $838A88
+hook_layout_asm_eastocean_left_door:
     dw #layout_asm_eastocean
 
 ; Green Pirates Shaft bottom-right door asm pointer
 org $838C5C
+hook_layout_asm_greenpirateshaft_bottom_right_door:
     dw #layout_asm_cutscene_g4skip
 
 ; Green Hill Zone top-left door asm pointer
 org $838DF4
+hook_layout_asm_greenhillzone_top_left_door:
     dw #layout_asm_greenhillzone
 
 ; Green Hill Zone top-right door asm pointer
 org $838EA8
+hook_layout_asm_greenhillzone_top_right_door:
     dw #layout_asm_greenhillzone
 
 ; Green Hill Zone bottom-right door asm pointer
 org $838F08
+hook_layout_asm_greenhillzone_bottom_right_door:
     dw #layout_asm_greenhillzone
 
 ; Caterpillar middle-left door asm pointer
 org $839094
+hook_layout_asm_caterpillar_middle_left_door:
     ; Use same asm as elevator door, freeing up asm at $BE1A
     dw $BA21
 
 ; Caterpillar top-left door asm pointer
 org $8390E8
+hook_layout_asm_caterpillar_top_left_door:
     dw #layout_asm_caterpillar_no_scrolls
 
 ; East Tunnel bottom-right door asm pointer
 org $839238
+hook_layout_asm_easttunnel_bottom_right_door:
     ; Use same asm as bottom-left door
     dw $E345
 
 ; Caterpillar near-right door asm pointer
 org $839274
+hook_layout_asm_caterpillar_near_right_door:
     dw #layout_asm_caterpillar_no_scrolls
 
 ; Single Chamber top-left door asm pointer
 org $83958C
+hook_layout_asm_singlechamber_top_left_door:
     dw #layout_asm_singlechamber
 
 ; Single Chamber near-top-right door asm pointer
 org $839610
+hook_layout_asm_singlechamber_near_top_right_door:
     dw #layout_asm_singlechamber
 
 ; Single Chamber near-middle-right door asm pointer
 org $83961C
+hook_layout_asm_singlechamber_near_middle_right_door:
     dw #layout_asm_singlechamber
 
 ; Single Chamber near-bottom-right door asm pointer
 org $839640
+hook_layout_asm_singlechamber_near_bottom_right_door:
     dw #layout_asm_singlechamber
 
 ; Single Chamber far-top-right door asm pointer
 org $839A54
+hook_layout_asm_singlechamber_far_top_right_door:
     dw #layout_asm_singlechamber
 
 ; East Ocean right door asm pointer
 org $83A26E
+hook_layout_asm_eastocean_right_door:
     dw #layout_asm_eastocean
 
 ; Main Street bottom door asm pointer
 org $83A33A
+hook_layout_asm_mainstreet_bottom_door:
     dw #layout_asm_mainstreet
 
 ; Crab Tunnel left door asm pointer
 org $83A3B2
+hook_layout_asm_crabtunnel_left_door:
     dw #layout_asm_crabtunnel
 
 ; Main Street middle-right door asm pointer
 org $83A3E2
+hook_layout_asm_mainstreet_middle_right_door:
     dw #layout_asm_mainstreet
 
 ; Main Street bottom-right door asm pointer
 org $83A41E
+hook_layout_asm_mainstreet_bottom_right_door:
     dw #layout_asm_mainstreet
 
 ; Main Street top-right door asm pointer
 org $83A442
+hook_layout_asm_mainstreet_top_right_door:
     dw #layout_asm_mainstreet
 
 ; Main Street hidden door asm pointer
 org $83A45A
+hook_layout_asm_mainstreet_hidden_door:
     dw #layout_asm_mainstreet
 
 ; Crab Shaft left door asm pointer
 org $83A472
+hook_layout_asm_crabshaft_left_door:
     dw #layout_asm_crabshaft_no_scrolls
 
 ; Crab Shaft top door asm pointer
 org $83A4EA
+hook_layout_asm_crabshaft_top_door:
     dw #layout_asm_crabshaft_no_scrolls
 
 ; Crab Tunnel right door asm pointer
 org $83A502
+hook_layout_asm_crabtunnel_right_door:
     dw #layout_asm_crabtunnel
 
 ; East Tunnel top-right door asm pointer
 org $83A51A
+hook_layout_asm_easttunnel_top_right_door:
     dw #layout_asm_easttunnel_no_scrolls
 
 ; West Sand Hall left door asm pointer
 org $83A53E
+hook_layout_asm_westsandhall_left_door:
     dw #layout_asm_westsandhall
 
 ; West Sand Hall unused door definition
 org $83A654
+hook_layout_asm_westsandhall_unused_door:
     dw #$D6FD
     db #$00, #$05, #$3E, #$06, #$03, #$00
     dw #$8000
@@ -173,36 +206,44 @@ org $83A654
 
 ; West Sand Hall right door asm pointer
 org $83A66A
+hook_layout_asm_westsandhall_right_door:
     dw #layout_asm_westsandhall
 
 ; West Sand Hall top sand door asm pointer
 org $83A6BE
+hook_layout_asm_westsandhall_top_sand_door:
     dw #layout_asm_westsandhall
 
 ; Mother Brain right door asm pointer
 org $83AAD2
+hook_layout_asm_mbhp_right_door:
     dw #layout_asm_mbhp
 
 ; Mother Brain left door asm pointer
 org $83AAEA
+hook_layout_asm_mbhp_left_door:
     dw #layout_asm_mbhp
 
 ; Magnet Stairs left door asm pointer
 org $83AB6E
+hook_layout_asm_magnetstairs_left_door:
     dw #layout_asm_magnetstairs
 
 ; Magnet Stairs right door asm pointer
 org $83AB92
+hook_layout_asm_magnetstairs_right_door:
     dw #layout_asm_magnetstairs
 
 
 ; Allow debug save stations to be used
 org $848D0C
+hook_activate_savestation_logic:
     AND #$000F
 
 
 ; Parlor escape setup asm
 org $8F919C
+hook_layout_asm_parlor_escape:
     LDA !sram_suppress_flashing : BIT !SUPPRESS_EARTHQUAKE : BNE .parlor_escape_rts
     JMP layout_asm_vanilla_parlor_escape
   .parlor_escape_rts
@@ -211,6 +252,7 @@ warnpc $8F91A9
 
 ; Landing site setup asm
 org $8F91BD
+hook_layout_asm_landingsite_escape:
     LDA !sram_suppress_flashing : BIT !SUPPRESS_EARTHQUAKE : BNE .scrolling_sky
     JSR layout_asm_vanilla_landing_site_escape
   .scrolling_sky
@@ -218,57 +260,70 @@ warnpc $8F91C9
 
 ; Moat setup asm
 org $8F9624
+hook_layout_asm_moat:
     dw #layout_asm_moat
 
 ; Early Supers setup asm
 org $8F9BED
+hook_layout_asm_earlysupers:
     dw #layout_asm_earlysupers
 
 ; Dachora setup asm
 org $8F9CD8
+hook_layout_asm_dachora:
     dw #layout_asm_dachora
 
 ; Big Pink setup asm
 org $8F9D3E
+hook_layout_asm_bigpink:
     dw #layout_asm_bigpink
 
 ; Mission Impossible setup asm
 org $8F9E36
+hook_layout_asm_missionimpossible:
     dw #layout_asm_missionimpossible
 
 ; Red Tower setup asm
 org $8FA278
+hook_layout_asm_redtower:
     dw #layout_asm_redtower
 
 ; Below Spazer setup asm
 org $8FA42D
+hook_layout_asm_belowspazer:
     dw #layout_asm_belowspazer
 
 ; Warehouse Kihunters setup asm
 org $8FA4FF
+hook_layout_asm_warehousekihunters:
     dw #layout_asm_warehousekihunters
 
 ; Cathedral Entrance setup asm
 org $8FA7D8
+hook_layout_asm_cathedralentrance:
     dw #layout_asm_cathedralentrance
 
 ; Hi-Jump Boots E-Tank setup asm
 org $8FAA66
+hook_layout_asm_hjbetank:
     dw #layout_asm_hjbetank
 
 ; Caterpillar elevator and middle-left door asm
 org $8FBA26
+hook_layout_asm_caterpillar_elevator_and_middle_left_door:
     ; Replace STA with jump to STA
     JMP layout_asm_caterpillar_update_scrolls
 
 ; Caterpillar bottom-left door asm
 org $8FBE18
+hook_layout_asm_caterpillar_bottom_left_door:
     ; Overwrite PLP : RTS with jump
     ; Okay to overwrite $BE1A since we freed up that space
     JMP layout_asm_caterpillar_after_scrolls
 
 ; Escape screen shake and explosion main asm
 org $8FC124
+hook_layout_asm_set_screen_shaking_and_explosions:
     ; Start with copy of $8FC131 routine (replacing JSR with inlined version)
     LDA $0A78 : BNE .end_explosion
     LDA $05B6 : AND #$0001 : BNE .end_explosion
@@ -293,6 +348,7 @@ warnpc $8FC183
 
 ; Tourian escape room 1 setup asm
 org $8FC926
+hook_layout_asm_tourian_escape_room_1:
     LDA !sram_suppress_flashing : BIT !SUPPRESS_EARTHQUAKE : BNE .tourian_escape_room_1_rts
     JMP layout_asm_vanilla_tourian_escape_room_1
   .tourian_escape_room_1_rts
@@ -301,6 +357,7 @@ warnpc $8FC933
 
 ; Tourian escape room 2 setup asm
 org $8FC933
+hook_layout_asm_tourian_escape_room_2:
     LDA !sram_suppress_flashing : BIT !SUPPRESS_EARTHQUAKE : BNE .tourian_escape_room_2_rts
     JMP layout_asm_vanilla_tourian_escape_room_2
   .tourian_escape_room_2_rts
@@ -309,6 +366,7 @@ warnpc $8FC946
 
 ; Tourian escape room 3 setup asm
 org $8FC946
+hook_layout_asm_tourian_escape_room_3:
     LDA !sram_suppress_flashing : BIT !SUPPRESS_EARTHQUAKE : BNE .tourian_escape_room_3_rts
     JMP layout_asm_vanilla_tourian_escape_room_3
   .tourian_escape_room_3_rts
@@ -317,6 +375,7 @@ warnpc $8FC953
 
 ; Tourian escape room 4 setup asm
 org $8FC95B
+hook_layout_asm_tourian_escape_room_4:
     LDA !sram_suppress_flashing : BIT !SUPPRESS_EARTHQUAKE : BNE .tourian_escape_room_4_rts
     JMP layout_asm_vanilla_tourian_escape_room_4
   .tourian_escape_room_4_rts
@@ -325,30 +384,37 @@ warnpc $8FC96E
 
 ; Aqueduct setup asm
 org $8FD5CC
+hook_layout_asm_aqueduct:
     dw #layout_asm_aqueduct
 
 ; Aqueduct Farm Sand Pit header
 org $8FD706
+hook_layout_door_list_aqueductfarmsandpit:
     dw layout_asm_aqueductfarmsandpit_door_list
 
 ; Tourian escape room 2 main asm
 org $8FDE99
+hook_layout_main_asm_tourian_escape_room_2:
     dw #layout_asm_tourian_escape_room_2
 
 ; Tourian escape room 4 main asm
 org $8FDEFD
+hook_layout_main_asm_tourian_escape_room_4:
     dw #layout_asm_tourian_escape_room_4
 
 ; Ceres Ridley modified state check to support presets
 org $8FE0C0
+hook_layout_asm_ceres_ridley_room_state_check:
     dw layout_asm_ceres_ridley_room_state_check
 
 ; Ceres Ridley room setup asm when timer is not running
 org $8FE0DF
+hook_layout_asm_ceres_ridley_room_no_timer:
     dw layout_asm_ceres_ridley_room_no_timer
 
 ; East Tunnel bottom-left and bottom-right door asm
 org $8FE34E
+hook_layout_asm_easttunnel_bottom_left_and_bottom_right_door:
     ; Optimize existing logic by one byte
     INC : STA $7ECD24
     ; Overwrite extra byte : PLP : RTS with jump
@@ -356,6 +422,7 @@ org $8FE34E
 
 ; Caterpillar far-right door asm
 org $8FE370
+hook_layout_asm_caterpillar_far_right_door:
     ; Optimize existing logic by one byte
     INC : STA $7ECD2A
     ; Overwrite extra byte : PLP : RTS with jump
@@ -363,6 +430,7 @@ org $8FE370
 
 ; Crab Shaft right door asm
 org $8FE39D
+hook_layout_asm_crabshaft_right_door:
     ; Replace STA with jump to STA
     JMP layout_asm_crabshaft_update_scrolls
 

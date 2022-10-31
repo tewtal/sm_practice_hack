@@ -553,15 +553,17 @@ action_ramwatch_edit_left:
     LDA !ram_watch_left : CLC : ADC !ram_watch_left_index : STA $C1
     LDA !ram_watch_bank : BEQ .bank7E
     CMP #$0001 : BEQ .bank7F
-    LDA #$0070 : BRA +
+    LDA #$0070 : BRA .bankDone
   .bank7E
-    LDA #$007E : BRA +
+    LDA #$007E : BRA .bankDone
   .bank7F
     LDA #$007F
-+   STA $C3
-    LDA !ram_watch_write_mode : BEQ +
+  .bankDone
+    STA $C3
+    LDA !ram_watch_write_mode : BEQ .setValue
     %a8()
-+   LDA !ram_watch_edit_left : STA [$C1]
+  .setValue
+    LDA !ram_watch_edit_left : STA [$C1]
     %a16()
     LDA #!IH_MODE_RAMWATCH_INDEX : STA !sram_display_mode
     %sfxconfirm()
@@ -573,15 +575,17 @@ action_ramwatch_edit_right:
     LDA !ram_watch_right : CLC : ADC !ram_watch_right_index : STA $C1
     LDA !ram_watch_bank : BEQ .bank7E
     CMP #$0001 : BEQ .bank7F
-    LDA #$0070 : BRA +
+    LDA #$0070 : BRA .bankDone
   .bank7E
-    LDA #$007E : BRA +
+    LDA #$007E : BRA .bankDone
   .bank7F
     LDA #$007F
-+   STA $C3
-    LDA !ram_watch_write_mode : BEQ +
+  .bankDone
+    STA $C3
+    LDA !ram_watch_write_mode : BEQ .setValue
     %a8()
-+   LDA !ram_watch_edit_right : STA [$C1]
+  .setValue
+    LDA !ram_watch_edit_right : STA [$C1]
     %a16()
     LDA #!IH_MODE_RAMWATCH_INDEX : STA !sram_display_mode
     %sfxconfirm()

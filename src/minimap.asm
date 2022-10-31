@@ -2,47 +2,57 @@
 ;Patches to support the minimap
 ;=======================================================
 
-org $809B51
-    JMP $9BFB    ; skip drawing auto reserve icon and normal energy numbers and tanks during HUD routine
-
-org $82AED9      ; routine to draw auto reserve icon on HUD from equip screen
-    JSR mm_refresh_reserves
-
-org $82AEAF      ; routine to remove auto reserve icon on HUD from equip screen
-    JSR mm_refresh_reserves
-
 org $809AF3
+mm_initialize_minimap_hook:
     JSL mm_initialize_minimap
 
+org $809B51
+skip_drawing_vanilla_tanks_and_auto_reserve_icon:
+    JMP $9BFB
+
+org $82AEAF      ; routine to remove auto reserve icon on HUD from equip screen
+mm_refresh_reserves_remove_hook:
+    JSR mm_refresh_reserves
+
+org $82AED9      ; routine to draw auto reserve icon on HUD from equip screen
+mm_refresh_reserves_draw_hook:
+    JSR mm_refresh_reserves
+
 org $90A91B
+mm_update_minimap_hook:
     LDA !ram_minimap : BNE .update_minimap
     RTL
   .update_minimap
     JMP mm_update_minimap
 
 org $90A97E
+mm_inc_tile_count_hook:
     JMP mm_inc_tile_count
 
 org $90A7EE      ; only clear minimap if it is visible
+mm_clear_boss_room_tiles_hook:
     LDA !ram_minimap : BEQ .skip_minimap
     JMP mm_clear_boss_room_tiles
 
 org $90A80A      ; normally runs after minimap grid has been drawn
     .skip_minimap
 
-org $8282E5      ; write and clear tiles to VRAM
+org $8282E5
+mm_write_and_clear_hud_tiles_hook:
     JSR mm_write_and_clear_hud_tiles
     BRA .write_next_tiles
 
 org $828305
     .write_next_tiles
 
-org $828EB8      ; write and clear tiles to VRAM
+org $828EB8
+mm_write_and_clear_hud_tiles_during_pause_menu_hook:
     JSR mm_write_and_clear_hud_tiles
     PLP
     RTL
 
-org $82E488      ; write tiles to VRAM
+org $82E488
+mm_write_and_clear_hud_tiles_during_door_transition_hook:
     JMP mm_write_hud_tiles_during_door_transition
 
 
@@ -64,17 +74,21 @@ print pc, " minimap bankDF end"
 
 
 ; The default HUD minimap should be cleared
-org $8098FF    ; row 1
+org $8098FF
+mm_default_HUD_row_1:
     dw #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F
 
-org $80993F    ; row 2
+org $80993F
+mm_default_HUD_row_2:
     dw #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F
 
-org $80997F    ; row 3
+org $80997F
+mm_default_HUD_row_3:
     dw #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F
 
 ; The default energy 0 text should be cleared
 org $80994D
+mm_default_HUD_energy:
     dw #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F
 
 

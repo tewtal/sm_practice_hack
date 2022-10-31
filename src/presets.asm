@@ -222,11 +222,12 @@ preset_load_preset:
     LDA #$5AFE : STA !LAYER2_X ; Load garbage into Layer 2 X position
 
     ; check if segment timer should be reset now or after a door
-    LDA !sram_preset_options : BIT !PRESETS_AUTO_SEGMENT_OFF : BNE +
+    LDA !sram_preset_options : BIT !PRESETS_AUTO_SEGMENT_OFF : BNE .check_preset_load
     LDA #$FFFF : STA !ram_reset_segment_later
 
+  .check_preset_load
     ; check if custom preset is being loaded
-+   LDA !ram_custom_preset : BEQ .category_preset
+    LDA !ram_custom_preset : BEQ .category_preset
     JSL custom_preset_load
     BRA .done
 
@@ -343,9 +344,11 @@ category_preset_data_table:
     dl preset_allbossprkd_crateria_ceres_elevator
 
 print pc, " presets bank82 end"
-warnpc $82FE00
+warnpc $82FE00 ; tinystates.asm
+
 
 org $82E8D9
+hook_preset_room_setup_asm_fixes:
     JSL preset_room_setup_asm_fixes
 
 
@@ -687,25 +690,26 @@ add_grapple_and_xray_to_hud:
     JSL $809A3E            ; Add x-ray to HUD tilemap
     LDA $09A2 : BIT #$4000 : BEQ $04
     JSL $809A2E            ; Add grapple to HUD tilemap
-    JMP .resume_infohud_icon_initialization
+    JMP hook_resume_infohud_icon_initialization
 }
 
 print pc, " presets bank80 end"
-warnpc $80F600 ; save.asm
+warnpc $80F600 ; save.asm or tinystates.asm
 
 
 ; $80:9AB1: Add x-ray and grapple HUD items if necessary
 org $809AB1
+hook_infohud_icon_initialization:
     ; Skip x-ray and grapple if max HP is a multiple of 4,
     ; which is only possible if GT code was used
-    LDA $09C4 : AND #$0003 : BEQ .resume_infohud_icon_initialization
+    LDA $09C4 : AND #$0003 : BEQ hook_resume_infohud_icon_initialization
     JMP add_grapple_and_xray_to_hud
 
 warnpc $809AC9
 
 ; $80:9AC9: Resume original logic
 org $809AC9
-  .resume_infohud_icon_initialization
+hook_resume_infohud_icon_initialization:
 
 
 

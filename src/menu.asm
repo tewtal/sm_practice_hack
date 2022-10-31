@@ -181,11 +181,12 @@ cm_transfer_original_tileset:
     LDA !ROOM_ID : CMP #$A59F : BEQ .kraid_vram
 
     %a8()
-    LDA !ram_minimap : CMP #$00 : BEQ +
+    LDA !ram_minimap : CMP #$00 : BEQ .normal_vram
     BRL .minimap_vram
 
+  .normal_vram
     ; Load in normal vram to normal BG3 location
-+   LDA #$80 : STA $802100 ; enable forced blanking
+    LDA #$80 : STA $802100 ; enable forced blanking
     LDA #$04 : STA $210C ; BG3 starts at $4000 (8000 in vram)
     LDA #$80 : STA $2115 ; word-access, incr by 1
     LDX #$4000 : STX $2116 ; VRAM address (8000 in vram)
@@ -920,13 +921,19 @@ draw_controller_input:
     LDA (!DP_Address) : AND #$E0F0 : BEQ .unbound
 
     ; determine which input to draw, using Y to refresh A
-    TAY : AND !CTRL_A : BEQ + : LDY #$0000 : BRA .draw
-+   TYA : AND !CTRL_B : BEQ + : LDY #$0002 : BRA .draw
-+   TYA : AND !CTRL_X : BEQ + : LDY #$0004 : BRA .draw
-+   TYA : AND !CTRL_Y : BEQ + : LDY #$0006 : BRA .draw
-+   TYA : AND !CTRL_L : BEQ + : LDY #$0008 : BRA .draw
-+   TYA : AND !CTRL_R : BEQ + : LDY #$000A : BRA .draw
-+   TYA : AND !CTRL_SELECT : BEQ .unbound : LDY #$000C
+    TAY : AND !CTRL_A : BEQ .check_b : LDY #$0000 : BRA .draw
+  .check_b
+    TYA : AND !CTRL_B : BEQ .check_x : LDY #$0002 : BRA .draw
+  .check_x
+    TYA : AND !CTRL_X : BEQ .check_y : LDY #$0004 : BRA .draw
+  .check_y
+    TYA : AND !CTRL_Y : BEQ .check_l : LDY #$0006 : BRA .draw
+  .check_l
+    TYA : AND !CTRL_L : BEQ .check_r : LDY #$0008 : BRA .draw
+  .check_r
+    TYA : AND !CTRL_R : BEQ .check_s : LDY #$000A : BRA .draw
+  .check_s
+    TYA : AND !CTRL_SELECT : BEQ .unbound : LDY #$000C
 
   .draw
     LDA.w CtrlMenuGFXTable,Y : STA !ram_tilemap_buffer,X
@@ -1035,16 +1042,16 @@ cm_loop:
     JSL $808F0C ; Music queue
     JSL $8289EF ; Sound fx queue
 
-    LDA !ram_cm_leave : BEQ +
+    LDA !ram_cm_leave : BEQ .check_editing_controller_shortcut
     RTS ; Exit menu loop
 
-    ; check if editing controller shortcut
-+   LDA !ram_cm_ctrl_mode : BEQ +
+  .check_editing_controller_shortcut
+    LDA !ram_cm_ctrl_mode : BEQ .get_player_inputs
     JSR cm_ctrl_mode
     BRA cm_loop
 
-    ; get player inputs
-+   JSR cm_get_inputs : STA !ram_cm_controller : BEQ cm_loop
+  .get_player_inputs
+    JSR cm_get_inputs : STA !ram_cm_controller : BEQ cm_loop
     BIT #$0080 : BNE .pressedA
     BIT #$8000 : BNE .pressedB
     BIT #$0040 : BNE .pressedX
@@ -1198,11 +1205,13 @@ cm_calculate_max:
 cm_get_inputs:
 {
     ; Make sure we don't read joysticks twice in the same frame
-    LDA !FRAME_COUNTER : CMP !ram_cm_input_counter : PHP : STA !ram_cm_input_counter : PLP : BNE +
+    LDA !FRAME_COUNTER : CMP !ram_cm_input_counter
+    PHP : STA !ram_cm_input_counter : PLP : BNE .done_reading_controller_input
 
     JSL $809459 ; Read controller input
 
-+   LDA !IH_CONTROLLER_PRI_NEW : BEQ .check_holding
+  .done_reading_controller_input
+    LDA !IH_CONTROLLER_PRI_NEW : BEQ .check_holding
 
     ; Initial delay of $0E frames
     LDA #$000E : STA !ram_cm_input_timer
@@ -1270,11 +1279,13 @@ cm_execute:
     LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : INC !DP_CurrentMenu : TAX
 
     ; Safety net incase blank line selected
-    CPX #$FFFF : BEQ +
+    CPX #$FFFF : BEQ .end
 
     ; Execute action
     JSR (cm_execute_action_table,X)
-+   RTS
+
+  .end
+    RTS
 }
 
 cm_execute_action_table:
@@ -1451,7 +1462,7 @@ execute_numfield_word:
     INC !DP_CurrentMenu : INC !DP_CurrentMenu
 
   .load_jsl_target
-+   LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : INC !DP_CurrentMenu : STA !DP_JSLTarget
+    LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : INC !DP_CurrentMenu : STA !DP_JSLTarget
 
     ; determine dpad direction
     LDA !ram_cm_controller : BIT #$0200 : BNE .pressed_left

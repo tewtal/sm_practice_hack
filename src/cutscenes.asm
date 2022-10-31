@@ -1,5 +1,6 @@
 
 org $82EEE0
+hook_start_game_load_intro:
     dw cutscenes_load_intro
 
 
@@ -8,6 +9,7 @@ org $8BB124
 else
 org $8BB240
 endif
+hook_cutscenes_load_ceres_arrival:
     JSR cutscenes_load_ceres_arrival
 
 if !FEATURE_PAL
@@ -15,12 +17,14 @@ org $8B92B5
 else
 org $8B930C
 endif
+hook_cutscenes_nintendo_splash:
     JSL cutscenes_nintendo_splash
     NOP : NOP
 
 
 org $80FF80
 print pc, " cutscenes bank80 start"
+
 cutscenes_door_transition:
 {
     LDA !sram_fast_doors : BEQ .slow
@@ -33,46 +37,56 @@ cutscenes_door_transition:
   .slow
     JMP ($AE76,x)
 }
+
 warnpc $80FFB0  ; header
 print pc, " cutscenes bank80 end"
 
+
 org $80AE5C
+hook_cutscenes_door_transition:
     JSR cutscenes_door_transition
 
 
 if !FEATURE_PAL
 org $A39597
-    JSL cutscenes_add_elevator_speed
-    BRA $0D
-org $A395B2
-    JSL cutscenes_sub_elevator_speed
-    BRA $0D
-org $A395D4
-    JSL cutscenes_add_elevator_speed
-    BRA $0D
-org $A395EE
-    JSL cutscenes_sub_elevator_speed
-    BRA $0D
-org $82E18E
-    JSL cutscenes_set_elevator_delay
-    NOP : NOP
 else
 org $A39587
+endif
+hook_elevator_ai_leaving_room_going_down:
     JSL cutscenes_add_elevator_speed
     BRA $0D
+
+if !FEATURE_PAL
+org $A395B2
+else
 org $A395A2
+endif
+hook_elevator_ai_leaving_room_going_up:
     JSL cutscenes_sub_elevator_speed
     BRA $0D
+
+if !FEATURE_PAL
+org $A395D4
+else
 org $A395C4
+endif
+hook_elevator_ai_entering_room_going_down:
     JSL cutscenes_add_elevator_speed
     BRA $0D
+
+if !FEATURE_PAL
+org $A395EE
+else
 org $A395DE
+endif
+hook_elevator_ai_entering_room_going_up:
     JSL cutscenes_sub_elevator_speed
     BRA $0D
+
 org $82E18E
+hook_elevator_door_transition:
     JSL cutscenes_set_elevator_delay
     NOP : NOP
-endif
 
 ; Patch room loading to use optimized_decompression for the tilesets
 ; if fast doors are enabled.
@@ -81,10 +95,12 @@ endif
 ; differently deoending on how far the door has scrolled when decompression finishes.
 
 org $82E41D
+hook_cutscenes_decompress_tiles_for_doors:
     LDA #$7E70
     JSL cutscenes_fast_decompress_if_fast_doors
 
 org $82E42E
+hook_cutscenes_decompress_tiles_for_doors_may_overwrite_cre:
     LDA #$7E20
     JSL cutscenes_fast_decompress_if_fast_doors
 
@@ -331,9 +347,11 @@ crateria_4_palette_loop:
 warnpc $8DC2E9
 
 org $8DF767
+hook_crateria_1_palette_fx_object:
     dw #crateria_1_palette
 
 org $8DFFCF
+hook_tourian_crateria_palette_fx_objects:
     dw #tourian_10_palette
     dw $C685, #tourian_20_palette
     dw $C685, #tourian_40_palette
@@ -734,18 +752,23 @@ rising_earthquake_start:
 
 print pc, " cutscenes bank88 end"
 
+
 org $888AD1
+hook_power_bomb_instruction_list:
     dw #power_bomb_crystal_flash_set_data_bank
 
 org $88A2C0
+hook_crystal_flash_instruction_list:
     dw #power_bomb_crystal_flash_set_data_bank
 
 org $88B36A
+hook_wait_to_rise_earthquake:
     LDA !sram_suppress_flashing : BIT !SUPPRESS_EARTHQUAKE : BNE wait_to_rise_earthquake_end
     JMP wait_to_rise_earthquake_start
 wait_to_rise_earthquake_end:
 
 org $88B385
+hook_rising_earthquake:
     LDA !sram_suppress_flashing : BIT !SUPPRESS_EARTHQUAKE : BNE rising_earthquake_end
     JMP rising_earthquake_start
 rising_earthquake_end:
@@ -756,7 +779,7 @@ org $A9880C
 else
 org $A987FC
 endif
-cutscenes_mb_fake_death_check:
+hook_cutscenes_mb_fake_death_check:
 {
     BEQ .check_fast_mb
     CMP #$0001 : BNE $15
@@ -777,6 +800,7 @@ org $A9882E
 else
 org $A9881E
 endif
+hook_cutscenes_mb_fake_death_pause:
     dw cutscenes_mb_fake_death_pause
 
 if !FEATURE_PAL
@@ -784,6 +808,7 @@ org $A98852
 else
 org $A98842
 endif
+hook_cutscenes_mb_fake_death_lock:
     dw cutscenes_mb_fake_death_lock
 
 if !FEATURE_PAL
@@ -791,6 +816,7 @@ org $A98889
 else
 org $A98879
 endif
+hook_cutscenes_mb_fake_death_unlock:
     dw cutscenes_mb_fake_death_unlock
 
 if !FEATURE_PAL
@@ -798,6 +824,7 @@ org $A98899
 else
 org $A98889
 endif
+hook_cutscenes_mb_fake_death_begin_screen_flashing:
     JSR cutscenes_mb_fake_death_begin_screen_flashing
 
 if !FEATURE_PAL
@@ -805,6 +832,7 @@ org $A98987
 else
 org $A98977
 endif
+hook_cutscenes_mb_clear_bottom_left_tube:
     dw cutscenes_mb_clear_bottom_left_tube
 
 if !FEATURE_PAL
@@ -812,6 +840,7 @@ org $A989B9
 else
 org $A989A9
 endif
+hook_cutscenes_mb_clear_ceiling_column_9:
     dw cutscenes_mb_clear_ceiling_column_9
 
 if !FEATURE_PAL
@@ -819,6 +848,7 @@ org $A989EB
 else
 org $A989DB
 endif
+hook_cutscenes_mb_clear_ceiling_column_6:
     dw cutscenes_mb_clear_ceiling_column_6
 
 if !FEATURE_PAL
@@ -826,6 +856,7 @@ org $A98A13
 else
 org $A98A03
 endif
+hook_cutscenes_mb_clear_bottom_right_tube:
     dw cutscenes_mb_clear_bottom_right_tube
 
 if !FEATURE_PAL
@@ -833,6 +864,7 @@ org $A98A3B
 else
 org $A98A2B
 endif
+hook_cutscenes_mb_clear_bottom_middle_left_tube:
     dw cutscenes_mb_clear_bottom_middle_left_tube
 
 if !FEATURE_PAL
@@ -840,6 +872,7 @@ org $A98A6D
 else
 org $A98A5D
 endif
+hook_cutscenes_mb_clear_ceiling_column_7:
     dw cutscenes_mb_clear_ceiling_column_7
 
 if !FEATURE_PAL
@@ -847,6 +880,7 @@ org $A98A9F
 else
 org $A98A8F
 endif
+hook_cutscenes_mb_clear_ceiling_column_8:
     dw cutscenes_mb_clear_ceiling_column_8
 
 if !FEATURE_PAL
@@ -854,6 +888,7 @@ org $A98C15
 else
 org $A98C05
 endif
+hook_cutscenes_mb_fake_death_earthquake:
     JMP cutscenes_mb_fake_death_earthquake_start
     NOP : NOP : NOP : NOP
 cutscenes_mb_fake_death_earthquake_end:
@@ -863,6 +898,7 @@ org $A98D78
 else
 org $A98D68
 endif
+hook_cutscenes_mb_fake_death_setup_mb_fight_or_escape:
     ; Do not initialize health here, wait until later
     dw cutscenes_mb_fake_death_setup_mb_fight_or_escape
     BRA $04
@@ -872,6 +908,7 @@ org $A98D90
 else
 org $A98D80
 endif
+hook_cutscenes_mb_fake_death_pause_phase_2:
     dw cutscenes_mb_fake_death_pause_phase_2
 
 if !FEATURE_PAL
@@ -879,6 +916,7 @@ org $A98DCE
 else
 org $A98DBE
 endif
+hook_cutscenes_mb_fake_death_load_tiles_phase_2:
     dw cutscenes_mb_fake_death_load_tiles_phase_2
 
 if !FEATURE_PAL
@@ -886,6 +924,7 @@ org $A98E57
 else
 org $A98E47
 endif
+hook_cutscenes_mb_fake_death_raise_mb:
     dw cutscenes_mb_fake_death_raise_mb
 
 if !FEATURE_PAL
@@ -893,6 +932,7 @@ org $A98EDC
 else
 org $A98ECC
 endif
+hook_cutscenes_mb_choose_phase_2_or_3:
     JMP cutscenes_mb_choose_phase_2_or_3
 
 if !FEATURE_PAL
@@ -900,6 +940,7 @@ org $A98EF9
 else
 org $A98EE9
 endif
+hook_cutscenes_mb_shaking_head:
     dw cutscenes_mb_shaking_head
 
 if !FEATURE_PAL
@@ -907,6 +948,7 @@ org $A98F12
 else
 org $A98F02
 endif
+hook_cutscenes_mb_bring_head_back_up:
     dw cutscenes_mb_bring_head_back_up
 
 if !FEATURE_PAL
@@ -914,6 +956,7 @@ org $A9AF17
 else
 org $A9AF07
 endif
+hook_cutscenes_mb_death_move_to_back_of_room:
     dw cutscenes_mb_death_move_to_back_of_room
 
 if !FEATURE_PAL
@@ -921,6 +964,7 @@ org $A9AF58
 else
 org $A9AF48
 endif
+hook_cutscenes_mb_death_first_stumble:
     dw cutscenes_mb_death_first_stumble
 
 if !FEATURE_PAL
@@ -928,6 +972,7 @@ org $A9B017
 else
 org $A9B007
 endif
+hook_cutscenes_mb_death_final_explosions:
     dw cutscenes_mb_death_final_explosions
 
 if !FEATURE_PAL
@@ -935,6 +980,7 @@ org $A9B137
 else
 org $A9B127
 endif
+hook_cutscenes_mb_death_brain_falling:
     JMP cutscenes_mb_death_brain_falling
 
 if !FEATURE_PAL
@@ -942,6 +988,7 @@ org $A9B154
 else
 org $A9B144
 endif
+hook_cutscenes_mb_death_earthquake:
     JMP cutscenes_mb_death_earthquake_start
     NOP : NOP : NOP : NOP
 cutscenes_mb_death_earthquake_end:
@@ -951,6 +998,7 @@ org $A9B177
 else
 org $A9B167
 endif
+hook_cutscenes_mb_death_load_corpse:
     dw cutscenes_mb_death_load_corpse
 
 if !FEATURE_PAL
@@ -958,6 +1006,7 @@ org $A9B1BC
 else
 org $A9B1AC
 endif
+hook_cutscenes_mb_death_corpse_tips_over:
     dw cutscenes_mb_death_corpse_tips_over
 
 if !FEATURE_PAL
@@ -965,6 +1014,7 @@ org $A9B1FB
 else
 org $A9B1EB
 endif
+hook_cutscenes_mb_death_corpse_hidden:
     ; Make dead MB invisible and intangible, in case we jump here from a preset
     ORA #$0500
 
@@ -973,6 +1023,7 @@ org $A9B2E1
 else
 org $A9B289
 endif
+hook_cutscenes_mb_escape_earthquake:
     LDA !sram_suppress_flashing : BIT !SUPPRESS_EARTHQUAKE : BNE cutscenes_mb_escape_earthquake_end
     JMP cutscenes_mb_escape_earthquake_start
 cutscenes_mb_escape_earthquake_end:

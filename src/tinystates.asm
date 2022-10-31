@@ -493,9 +493,10 @@ tinystates_load_paused:
 {
     ; restore gameplay palettes before running pause routines
     LDX #$0000 : LDY #$0100
--   LDA $7E3300,X : STA $7EC000,X
-    INX #2
-    DEY : BNE -
+  .restore_gameplay_loop
+    LDA $7E3300,X : STA $7EC000,X
+    INX : INX
+    DEY : BNE .restore_gameplay_loop
 
     JSL $828E75 ; Load pause menu tiles and clear BG2 tilemap
     JSL $828EDA ; Load pause screen base tilemaps
@@ -503,15 +504,17 @@ tinystates_load_paused:
 
     ; backup gameplay palettes
     LDX #$0000 : LDY #$0100
--   LDA $7EC000,X : STA $7E3300,X
-    INX #2
-    DEY : BNE -
+  .backup_gameplay_loop
+    LDA $7EC000,X : STA $7E3300,X
+    INX : INX
+    DEY : BNE .backup_gameplay_loop
 
     ; load pause screen palettes
     LDX #$0000 : LDY #$0100
--   LDA $B6F000,X : STA $7EC000,X
-    INX #2
-    DEY : BNE -
+  .load_palettes_loop
+    LDA $B6F000,X : STA $7EC000,X
+    INX : INX
+    DEY : BNE .load_palettes_loop
 
     JSL $82B62B ; Draw pause menu during fade in
     RTL
@@ -520,28 +523,29 @@ tinystates_load_paused:
 print pc, " tinysave end"
 warnpc $80FD00 ; infohud.asm
 
+
 org $82FE00
 print pc, " tinysave bank82 start"
 
 tinystates_preload_bg_data:
-  JSR $82E2 ; Re-load BG3 tiles
-  RTL
+    JSR $82E2 ; Re-load BG3 tiles
+    RTL
 
 tinystates_load_kraid:
 {
     ; Are we fighting Kraid? Check to see if either of his unpause hooks are active
     LDA $0604
-  if !FEATURE_PAL
+if !FEATURE_PAL
     CMP #$C282
-  else
+else
     CMP #$C24E
-  endif
+endif
     BEQ .yes
-  if !FEATURE_PAL
+if !FEATURE_PAL
     CMP #$C2D4
-  else
+else
     CMP #$C2A0
-  endif
+endif
     BNE .done
 
   .yes
@@ -560,8 +564,7 @@ tinystates_load_kraid:
   .priority_loop
     LDA $2000,X : ORA #$2000 : STA $2000,X
     DEX : DEX : BPL .priority_loop
-.update_priority_done
-
+  .update_priority_done
     PLB
 
     ; Copy Kraid to VRAM
@@ -604,21 +607,21 @@ tinystates_load_kraid:
   .decompress_kraid
     ; $AAC6 ends with a RTS, but we need an RTL.
     ; Have the RTS return to $A78AA3 which is an RTL
-  if !FEATURE_PAL
+if !FEATURE_PAL
     PEA $8AB2 : JML $A7AADC
-  else
+else
     PEA $8AA2 : JML $A7AAC6
-  endif
+endif
 
   .call_pause_hook
     ; We jump into the middle of the hook (to skip waiting for an NMI), so we have to be careful
     ;   with the stack & processor status
     PHP : SEP #$20
-  if !FEATURE_PAL
+if !FEATURE_PAL
     JML $A7C289
-  else
+else
     JML $A7C255
-  endif
+endif
 }
 
 print pc, " tinysave bank82 end"

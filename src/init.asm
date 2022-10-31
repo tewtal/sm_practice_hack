@@ -1,12 +1,14 @@
 
 ; hijack, runs as game is starting, JSR to RAM initialization to avoid bad values
 org $808455
+hook_init_code:
     JML init_code
 
 
 ; hijack when clearing bank 7E
 if !PRESERVE_WRAM_DURING_SPACETIME
 org $808490
+hook_init_clear_bank_7E:
     PHA
     LDX #$3FFE
   .clear_bank_loop

@@ -1,14 +1,17 @@
 ; $84:8BDD: Instruction - clear music queue and queue music track [[Y]] ;;;
 org $848BDD
+hook_play_fanfare:
     JML play_or_skip_fanfare
 
 ; $85:8493: Handle message box interaction
 org $858493
+hook_message_box_interaction:
     JSR hook_message_box_wait
     BRA $0B
 
 ; $82:E126: Logic to queue room music after fanfare
 org $82E126
+hook_resume_music_after_fanfare:
     JSL hook_resume_room_music
     BRA $08
 
@@ -17,10 +20,12 @@ if !ORIGINAL_MESSAGE_TEXT
 else
 
 org $858412
+hook_read_from_button_tilemap_offset_table:
     ; Relocated this table to make room for more message box types
     LDA SpecialButtonTilemapOffsets,X
 
 org $858749
+hook_original_button_tilemap_offset_table:
     ; Expand message definitions
     dw #$8436, #$8289, EnemiesKilledText
     dw #$8436, #$8289, BrainBusterText
@@ -33,6 +38,7 @@ org $858749
     dw #$8436, #$8289, EndFanfareText
     dw #$8436, #$8289, EndFanfareText
     dw #$8436, #$8289, EndFanfareText
+
 
 org $859643
 print pc, " fanfare message start"

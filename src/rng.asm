@@ -8,6 +8,7 @@ org $A7D4DD
 else
 org $A7D4A9
 endif
+rng_hook_phantoon_init:
     JSL hook_phantoon_init
     NOP
     BNE $3D
@@ -18,6 +19,7 @@ org $A7D5DA
 else
 org $A7D5A6
 endif
+rng_hook_phantoon_1st_rng:
     JSL hook_phantoon_1st_rng
     BRA $10
 
@@ -27,6 +29,7 @@ org $A7D0B0
 else
 org $A7D07C
 endif
+rng_hook_phantoon_2nd_rng:
     JSL hook_phantoon_2nd_rng
     BRA $0F
 
@@ -36,6 +39,7 @@ org $A7D098
 else
 org $A7D064
 endif
+rng_hook_phantoon_eyeclose:
     JSL hook_phantoon_eyeclose
 
     ; Phantoon flame pattern
@@ -44,6 +48,7 @@ org $A7D00A
 else
 org $A7CFD6
 endif
+rng_hook_phantoon_flame_pattern:
     JSL hook_phantoon_flame_pattern
 
 if !FEATURE_PAL
@@ -51,6 +56,7 @@ org $A7DDB3
 else
 org $A7DD7F
 endif
+rng_hook_phantoon_damage_palette:
     JMP phantoon_damage_palette
 }
 
@@ -64,6 +70,7 @@ org $B39953
 else
 org $B39943
 endif
+rng_hook_botwoon_rng:
     ; $B3:9943 22 11 81 80 JSL $808111[$80:8111]
     JSL hook_botwoon_rng
 }
@@ -78,6 +85,7 @@ org $A58AEC
 else
 org $A58ADC
 endif
+rng_hook_draygon_rng_left:
     JSR hook_draygon_rng_left
 
 if !FEATURE_PAL
@@ -85,13 +93,7 @@ org $A589AD
 else
 org $A5899D
 endif
-    JSR hook_draygon_rng_right
-
-if !FEATURE_PAL
-org $A589AD
-else
-org $A5899D
-endif
+rng_hook_draygon_rng_right:
     JSR hook_draygon_rng_right
 
 if !FEATURE_PAL
@@ -99,6 +101,7 @@ org $A5956B
 else
 org $A5955B
 endif
+rng_hook_1_draygon_damage:
     JSR hook_draygon_damage
 
 if !FEATURE_PAL
@@ -106,6 +109,7 @@ org $A595BA
 else
 org $A595AA
 endif
+rng_hook_2_draygon_damage:
     JSR hook_draygon_damage
 }
 
@@ -119,6 +123,7 @@ org $A48763
 else
 org $A48753
 endif
+rng_hook_crocomire_rng:
     JSR hook_crocomire_rng
 
 if !FEATURE_PAL
@@ -126,6 +131,7 @@ org $A48CED
 else
 org $A48CDD
 endif
+rng_hook_crocomire_damage:
     JMP hook_crocomire_damage
 }
 
@@ -139,6 +145,7 @@ org $A7AA7F
 else
 org $A7AA69
 endif
+kraid_intro_hook:
     JMP kraid_intro_skip
 kraid_intro_skip_return:
 
@@ -147,6 +154,7 @@ org $A7B381
 else
 org $A7B36B
 endif
+kraid_palette_hurt_handling_hook:
     ; Combined two methods, so overwrite JSR
     PLY : PLX : RTS
 
@@ -155,6 +163,7 @@ org $A7B3A9
 else
 org $A7B393
 endif
+kraid_palette_handling_hook:
     JMP kraid_palette_handling
     TAY
 
@@ -163,6 +172,7 @@ org $A7BDF3
 else
 org $A7BDBF
 endif
+rng_hook_kraid_rng:
     JSR hook_kraid_rng
 }
 
@@ -179,6 +189,7 @@ org $A3AB2E
 else
 org $A3AB12
 endif
+rng_hook_hopper_set_rng:
     JSL hook_hopper_set_rng
 
     ; $A2:B588 A9 11 00    LDA #$0011
@@ -188,8 +199,9 @@ org $A2B5A0
 else
 org $A2B588
 endif
+rng_hook_lavarocks_set_rng:
     JSL hook_lavarocks_set_rng
-    NOP #2
+    NOP : NOP
 
     ; $A8:B798 A9 17 00    LDA #$0017
     ; $A8:B79B 8D E5 05    STA $05E5  [$7E:05E5]
@@ -198,8 +210,9 @@ org $A8B7A8
 else
 org $A8B798
 endif
+rng_hook_beetom_set_rng:
     JSL hook_beetom_set_rng
-    NOP #2
+    NOP : NOP
 }
 
 
@@ -244,7 +257,7 @@ hook_phantoon_init:
     DEC $0FB0,X
     RTL
 
-.skip_cutscene:
+  .skip_cutscene
     ; get rid of the return address
     PLA     ; pop 2 bytes
     PHP     ; push 1
@@ -288,7 +301,7 @@ hook_phantoon_1st_rng:
     CMP #$003F
     BNE choose_phantoon_pattern
 
-.no_manip:
+  .no_manip
     LDA !FRAME_COUNTER
     LSR A
     AND #$0003
@@ -323,7 +336,7 @@ hook_phantoon_2nd_rng:
     CMP #$003F
     BNE choose_phantoon_pattern
 
-.no_manip:
+  .no_manip
     JSL $808111
     AND #$0007
     ASL A
@@ -375,10 +388,10 @@ choose_phantoon_pattern:
     ; X = number of enabled patterns to find before stopping
     ; Y = index in phan_pattern_table of pattern currently being checked
     ; A = bitmask of enabled patterns
-.reload:
+  .reload
     LDA $01,S   ; reload pattern mask
     LDY #$0006  ; number of patterns (decremented immediately to index of last pattern)
-.loop:
+  .loop
     DEY
     LSR
     BCC .skip
@@ -388,13 +401,12 @@ choose_phantoon_pattern:
     BMI .done
     BRA .loop   ; no, keep looping
 
-.skip:
+  .skip
     ; Pattern Y is not enabled, try the next pattern
     BEQ .reload ; if we've tried all the patterns, start over
     BRA .loop
 
-.done:
-
+  .done
     ; We've found the pattern to use.
     PLA ; we don't need the pattern mask anymore
     TYA : ASL : TAX
@@ -421,18 +433,18 @@ endif
     LDY #$00D0
     BRA .round2done
 
-.round2left
+  .round2left
     LDA #$018F
     LDY #$0030
 
-.round2done
+  .round2done
     STA $0FA8  ; Index into figure-8 movement table
     STY $0F7A  ; X position
     LDA #$0060
     STA $0F7E  ; Y position
     BRA hook_phantoon_invert
 
-.round1
+  .round1
     ; Save the pattern timer and check the direction
     LSR
     STA $0FE8
@@ -442,7 +454,7 @@ endif
     SEP #$02
     RTL
 
-.round1left:
+  .round1left:
     REP #$02
     RTL
 }
@@ -573,6 +585,7 @@ org $A6A10C
 else
 org $A6A0FC
 endif
+hook_ceres_ridley_init_ai:
     LSR : BCC $0F
     CPX #$0006 : BEQ $0A
     LDA $0F86
@@ -582,6 +595,7 @@ org $A6A302
 else
 org $A6A2F2
 endif
+hook_ceres_ridley_draw_metroid:
     JMP ceres_ridley_draw_metroid
 
 if !FEATURE_PAL
@@ -589,14 +603,19 @@ org $A6A371
 else
 org $A6A361
 endif
+hook_ridley_init_hook:
     dw ridley_init_hook
 
 ; Fix ceres ridley door instruction list to keep door visible when skipping ridley fight
 if !FEATURE_PAL
 org $A6F533
-    dw $F64F, ridley_ceres_door_original_instructions
 else
 org $A6F55C
+endif
+hook_ceres_ridley_door_instructions:
+if !FEATURE_PAL
+    dw $F64F, ridley_ceres_door_original_instructions
+else
     dw $F678, ridley_ceres_door_original_instructions
 endif
     dw $80ED, ridley_ceres_door_escape_instructions
@@ -607,6 +626,7 @@ org $A6F641
 else
 org $A6F66A
 endif
+hook_ceres_ridley_door_logic:
     LDA $0943 : BEQ $F6
     LDA $7ED82E
 

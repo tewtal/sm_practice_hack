@@ -2,10 +2,12 @@
 
 ; $90:861C 22 AE 89 81 JSL $8189AE[$81:89AE]  ; Add Samus spritemap to OAM
 org $90861C
+hook_oam_add_samus_sprite_with_prio_1:
     JSL oam_add_samus_sprite_with_prio
 
 ; $90:8643 22 AE 89 81 JSL $8189AE[$81:89AE]  ; Add Samus spritemap to OAM
 org $908643
+hook_oam_add_samus_sprite_with_prio_2:
     JSL oam_add_samus_sprite_with_prio
 
 
@@ -16,6 +18,7 @@ org $908643
 
 org $81EF20
 print pc, " spriteprio start"
+
 oam_add_samus_sprite_with_prio:
     PHB
     PEA $9200
@@ -23,7 +26,7 @@ oam_add_samus_sprite_with_prio:
     PLB
     STY $12         ; $12 = [Y] (Y position of spritemap centre)
     STX $14         ; $14 = [X] (X position of spritemap centre)
-    ASL A           ;\
+    ASL             ;\
     TAX             ;} Y = [$92:808D + [A] * 2] (address of spritemap)
     LDY $808D,X     ;/
     LDA $0000,Y     ;\
@@ -34,7 +37,7 @@ oam_add_samus_sprite_with_prio:
     LDX $0590       ; X = OAM data index
     CLC
 
-.loop
+  .loop
     LDA $0000,Y     ;\
     ADC $14         ;} OAM data entry X position = [[Y]] + [$14] (X position)
     STA $0370,X     ;/
@@ -49,7 +52,7 @@ oam_add_samus_sprite_with_prio:
     STA ($16)         ;/
     JMP .l4
 
-.l2
+  .l2
     LDA $81859F,X   ;\ Else (size bit = 0):
     STA $16           ;|
     LDA ($16)         ;} Set OAM entry high X position bit
@@ -57,7 +60,7 @@ oam_add_samus_sprite_with_prio:
     STA ($16)         ;/
     JMP .l4
 
-.l3     
+  .l3     
     LDA $0000,Y       ;\ Else (X position & 100h == 0):
     BPL $0E           ;} If [[Y]] & 8000h (size bit) != 0:
     LDA $81859F,X   ;\
@@ -66,7 +69,7 @@ oam_add_samus_sprite_with_prio:
     ORA $8183A1,X     ;|
     STA ($16)         ;/
 
-.l4
+  .l4
     LDA $0002,Y       ;\
     CLC               ;|
     ADC $12           ;} OAM entry Y position = [[Y] + 2] + [$12] (Y position)
@@ -86,7 +89,7 @@ oam_add_samus_sprite_with_prio:
     BNE .loop          ;} If not processed all sprite map entries: next!
     STX $0590         ; OAM index = [X]
 
-.end
+  .end
     PLB
     RTL
 

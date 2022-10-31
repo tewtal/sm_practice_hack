@@ -1,6 +1,7 @@
 lorom
 
 !FEATURE_SD2SNES ?= 1
+!FEATURE_TINYSTATES ?= 0
 !FEATURE_DEV ?= 0
 !FEATURE_PAL ?= 1
 !ORIGINAL_MESSAGE_TEXT ?= 0
@@ -23,16 +24,15 @@ print ""
 if !FEATURE_SD2SNES
     print "SD2SNES ENABLED"
     incsrc save.asm
+    !FEATURE_TINYSTATES = 0
 else
-    print "SD2SNES DISABLED"
-endif
-
 if !FEATURE_TINYSTATES
     print "TINYSTATES ENABLED"
     incsrc tinystates.asm
     !FEATURE_SD2SNES = 1       ; Set this to enable savestate features
 else
-    print "TINYSTATES DISABLED"
+    print "SD2SNES AND TINYSTATES DISABLED"
+endif
 endif
 
 incsrc gamemode.asm

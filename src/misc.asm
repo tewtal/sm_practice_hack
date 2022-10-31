@@ -1,21 +1,25 @@
 ; Patch out copy protection
 org $008000
+hook_copy_protection:
     db $FF
 
 ; Set SRAM size
 org $00FFD8
-IF !FEATURE_TINYSTATES
+hook_sram_size:
+if !FEATURE_TINYSTATES
     db $07 ; 128kb
 else
-    if !FEATURE_SD2SNES
-        db $08 ; 256kb
-    else
-        db $05 ; 64kb
-    endif
+if !FEATURE_SD2SNES
+    db $08 ; 256kb
+else
+    db $05 ; 64kb
 endif
+endif
+
 
 ; Enable version display
 org $8B8697
+hook_version_display:
     NOP
 
 if !FEATURE_PAL
@@ -23,6 +27,7 @@ org $8BF6DC
 else
 org $8BF754
 endif
+hook_version_data:
     db #$20, #($30+!VERSION_MAJOR)
     db #$2E, #($30+!VERSION_MINOR)
     db #$2E, #($30+!VERSION_BUILD)
@@ -42,11 +47,13 @@ endif
 
 ; Fix Zebes planet tiling error
 org $8C9607
+zebes_planet_tile_data:
     dw #$0E2F
 
 
 ; Suit periodic damage
 org $8DE37C
+hook_heat_damage:
     ; Replaced the check and also take one additional byte
     ; Thus the following logic is the same but shifted down
     AND !ram_suits_periodic_damage_check : BNE $29
@@ -72,12 +79,14 @@ print pc, " misc bank8D end"
 ; We now have three separate periodic damage routines,
 ; so we need to load an index to jump to the correct routine
 org $90E72B
+hook_samus_movement_handler:
     LDA !sram_suit_properties : ASL : PHA
     JSR misc_overwritten_movement_routine
 
 ; Handle periodic damage based on suit properties
 ; Overwritten logic will be transferred
 org $90E74D
+hook_samus_periodic_damage:
     PLA : PHX : TAX
     JSR (periodic_damage_table,X)
     PLX : NOP : NOP
@@ -86,9 +95,13 @@ org $90E74D
 ; Also repoint jump and branch to avoid the redundant section
 if !FEATURE_PAL
 org $90E9D3
-    JMP $EA32
 else
 org $90E9D6
+endif
+hook_samus_periodic_damage_repoint_jump:
+if !FEATURE_PAL
+    JMP $EA32
+else
     JMP $EA35
 endif
 
@@ -97,6 +110,7 @@ org $90EA2A
 else
 org $90EA2D
 endif
+hook_samus_periodic_damage_repoint_branch:
     BPL $06
 
 ; Optimize CPU by overwriting our PLP/RTS
@@ -106,6 +120,7 @@ org $90EA38
 else
 org $90EA3B
 endif
+hook_samus_periodic_damage_repoint_rts:
     BRA $0B
 
 ; Optimize CPU by removing RTS so we go straight to the low health check
@@ -114,6 +129,7 @@ org $90EA7B
 else
 org $90EA7E
 endif
+hook_samus_periodic_damage_remove_rts:
     NOP
 
 
@@ -123,6 +139,7 @@ org $90EA89
 else
 org $90EA8C
 endif
+hook_low_health_check_turn_off_alarm:
     LDA !sram_healthalarm : ASL : PHX : TAX
     JMP (healthalarm_turn_off_table,X)
 
@@ -132,17 +149,18 @@ org $90EA9A
 else
 org $90EA9D
 endif
+hook_low_health_check_turn_on_alarm:
     LDA !sram_healthalarm : ASL : PHX : TAX
     JMP (healthalarm_turn_on_table,X)
 
 ; Turn on health alarm
 if !FEATURE_PAL
 org $90F336
-    JSR $EA9A
 else
 org $90F339
-    JSR $EA9D
 endif
+hook_healthalarm_and_grapple:
+    JSR hook_low_health_check_turn_on_alarm
     BRA $02
 
 ; Turn on health alarm from bank 91
@@ -151,6 +169,7 @@ org $91E63F
 else
 org $91E6DA
 endif
+hook_healthalarm_turn_on_remote:
     JML healthalarm_turn_on_remote
 
 
@@ -160,6 +179,7 @@ org $A0A473
 else
 org $A0A463
 endif
+hook_suit_damage_division:
     BIT #$0020 : BEQ .checksuit
     LSR $12
   .checksuit
@@ -176,6 +196,7 @@ org $A3EEF4
 else
 org $A3EED8
 endif
+hook_suit_metroid_damage:
     LDA #$C000 : STA $12
     LDA $09A2 : AND !ram_suits_enemy_damage_check : BEQ .metroidcheckgravity
     LSR $12
@@ -188,9 +209,11 @@ endif
 
 if !PRESERVE_WRAM_DURING_SPACETIME
 org $90ACF6
+hook_load_projectile_palette_remote:
     JSR original_load_projectile_palette
 
 org $90AD18
+hook_load_projectile_palette:
     JMP spacetime_routine
 endif
 
@@ -201,6 +224,7 @@ org $90E874
 else
 org $90E877
 endif
+hook_samus_teleport:
     LDA $07F5
     JSL $808FC1 ; queue room music track
     BRA $18
@@ -208,12 +232,14 @@ endif
 
 ; $82:8BB3 22 69 91 A0 JSL $A09169[$A0:9169]  ; Handles Samus getting hurt?
 org $828BB3
+hook_gamemode_end:
     JSL gamemode_end
 
 
 ; Replace unnecessary logic checking controller input to toggle debug CPU brightness
 ; with logic to collect the v-counter data
 org $828AB1
+hook_original_spare_cpu_logic:
     %a8() : LDA $4201 : ORA #$80 : STA $4201 : %ai16()
     LDA $2137 : LDA $213D : STA !ram_vcounter_data
 
@@ -228,27 +254,32 @@ org $828ADD       ; Resume original logic
 
 
 org $CF8BBF       ; Set map scroll beep to high priority
+hook_spc_engine_map_scroll_beep_priority:
     dw $2A97
 
 
 ; $80:8F24 9C F6 07    STZ $07F6  [$7E:07F6]  ;/
 ; $80:8F27 8D 40 21    STA $2140  [$7E:2140]  ; APU IO 0 = [music track]
 org $808F24
+hook_music_track:
     JSL hook_set_music_track
-    NOP #2
+    NOP : NOP
 
 ; $80:8F65 8D F3 07    STA $07F3  [$7E:07F3]  ;} Music data = [music entry] & FFh
 ; $80:8F68 AA          TAX                    ; X = [music data]
 org $808F65
+hook_music_data:
     JML hook_set_music_data
 
 
 ; Continue drawing escape timer after reaching ship
 org $90E908
+hook_samus_escape_clear_timer:
     JSR preserve_escape_timer
 
 ; Stop drawing timer when its VRAM is overwritten
 org $A2ABFD
+hook_samus_escape_clear_vram:
     JML clear_escape_timer
 
 
@@ -280,7 +311,7 @@ hook_set_music_data:
 
 gamemode_end:
 {
-   ; overwritten logic
+    ; overwritten logic
 if !FEATURE_PAL
     JSL $A09179
 else
@@ -582,6 +613,7 @@ org $A0A872
 else            ; general damage hijack
 org $A0A862
 endif
+hook_EnemyDamage:
     JSR EnemyDamage
 
 if !FEATURE_PAL
@@ -589,6 +621,7 @@ org $A0A55C
 else            ; shinespark damage
 org $A0A54C
 endif
+hook_EnemyDamageShinespark:
     JSR EnemyDamageShinespark
 
 if !FEATURE_PAL
@@ -596,10 +629,13 @@ org $A0A63B
 else            ; power bomb damage
 org $A0A62B
 endif
+hook_EnemyDamagePowerBomb:
     JSR EnemyDamagePowerBomb
+
 
 org $A0FFD0
 print pc, " misc bankA0 start"
+
 EnemyDamage:
 {
     LDA !ram_pacifist : BNE .no_damage
@@ -649,6 +685,7 @@ print pc, " misc bankA0 end"
 
 org $8BFA00
 print pc, " misc bank8B start"
+
 ; Decompression optimization adapted from Kejardon
 ; Compression format: One byte (XXX YYYYY) or two byte (111 XXX YY-YYYYYYYY) headers
 ; XXX = instruction, YYYYYYYYYY = counter
@@ -814,5 +851,6 @@ decompression_increment_bank:
     PLA
     RTS
 }
+
 print pc, " misc bank8B end"
 
