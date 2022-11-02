@@ -84,6 +84,7 @@ init_sram:
     CMP #$000B : BEQ .sram_upgrade_BtoC
     CMP #$000C : BEQ .sram_upgrade_CtoD
     CMP #$000D : BEQ .sram_upgrade_DtoE
+    CMP #$000E : BEQ .sram_upgrade_EtoF
     JSR init_sram_upto9
 
   .sram_upgrade_9toA
@@ -106,6 +107,9 @@ init_sram:
 
   .sram_upgrade_DtoE
     LDA #$0000 : STA !sram_fast_doors
+
+  .sram_upgrade_EtoF
+    LDA #$0000 : STA !sram_suppress_flashing
 
     LDA #!SRAM_VERSION : STA !sram_initialized
     RTS

@@ -206,12 +206,6 @@ endif
     BRA $18
 
 
-; Adds frames when unpausing (nmi is turned off during vram transfers)
-; $80:A16B 22 4B 83 80 JSL $80834B[$80:834B]
-org $80A16B
-    JSL hook_unpause
-
-
 ; $82:8BB3 22 69 91 A0 JSL $A09169[$A0:9169]  ; Handles Samus getting hurt?
 org $828BB3
     JSL gamemode_end
@@ -249,6 +243,15 @@ org $808F65
     JML hook_set_music_data
 
 
+; Continue drawing escape timer after reaching ship
+org $90E908
+    JSR preserve_escape_timer
+
+; Stop drawing timer when its VRAM is overwritten
+org $A2ABFD
+    JML clear_escape_timer
+
+
 org $90F800
 print pc, " misc bank90 start"
 
@@ -273,28 +276,6 @@ hook_set_music_data:
 
   .fast_no_music
     JML $808F89
-}
-
-hook_unpause:
-{
-    ; RT room
-    LDA !ram_realtime_room : CLC : ADC.w #41 : STA !ram_realtime_room
-
-    ; RT seg
-    LDA !ram_seg_rt_frames : CLC : ADC.w #41 : STA !ram_seg_rt_frames
-    CMP.w #60 : BCC .done
-    SEC : SBC.w #60 : STA !ram_seg_rt_frames
-
-    LDA !ram_seg_rt_seconds : INC : STA !ram_seg_rt_seconds
-    CMP.w #60 : BCC .done
-    LDA #$0000 : STA !ram_seg_rt_seconds
-
-    LDA !ram_seg_rt_minutes : INC : STA !ram_seg_rt_minutes
-
-  .done
-    ; Replace overwritten logic to enable NMI
-    JSL $80834B
-    RTL
 }
 
 gamemode_end:
@@ -570,6 +551,28 @@ spacetime_routine:
     RTS
 }
 endif
+
+
+preserve_escape_timer:
+{
+    ; check if timer is active
+    LDA $0943 : AND #$0006 : BEQ .done
+    JSL $809F6C ; Draw timer
+
+  .done
+    JMP $EA7F ; overwritten code
+}
+
+clear_escape_timer:
+{
+    ; clear timer status
+    STZ $0943
+
+    ; overwritten code
+    LDA #$AC1B : STA $0FB2,X
+    STZ $0DEC
+    RTL
+}
 
 print pc, " misc bank90 end"
 

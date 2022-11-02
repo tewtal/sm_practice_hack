@@ -177,11 +177,10 @@ endif
     CLC : JMP skip_pause
 
   .load_last_preset
-    LDA !sram_last_preset : BEQ + : STA !ram_load_preset
+    ; Choose a random preset if zero
+    LDA !sram_last_preset : BEQ .random_preset : STA !ram_load_preset
     ; SEC to skip normal gameplay for one frame after loading preset
     SEC : RTS
-    ; Choose a random preset if zero
-+   JMP .random_preset
 
   .reset_segment_timer
     LDA #$0000 : STA !ram_seg_rt_frames
@@ -261,7 +260,7 @@ else
 endif
     BNE + : LDA #$FFFF
 +   INC : STA !sram_custom_preset_slot
-    ASL : TAX : LDA.l NumberGFXTable,X : STA $7EC67C
+    ASL : TAX : LDA.l NumberGFXTable,X : STA !HUD_TILEMAP+$7C
     ; CLC to continue normal gameplay after incrementing preset slot
     CLC : JMP skip_pause
 
@@ -273,7 +272,7 @@ else
     LDA #$0028 ; total slots
 endif
 +   DEC : STA !sram_custom_preset_slot
-    ASL : TAX : LDA.l NumberGFXTable,X : STA $7EC67C
+    ASL : TAX : LDA.l NumberGFXTable,X : STA !HUD_TILEMAP+$7C
     ; CLC to continue normal gameplay after decrementing preset slot
     CLC : JMP skip_pause
 

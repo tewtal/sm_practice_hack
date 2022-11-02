@@ -1,12 +1,9 @@
 *.srm
 *.bst
-resources/sm_orig.s[mf]c
-resources/smpal_orig.s[mf]c
-build/*.exe
-build/*.ips
-build/*.smc
-build/*.sfc
+*.s[mf]c
 *.sw[op]
+build/*
+!build/Debugging_Symbols.sym
 tools/*.smv
 tools/*.asm
 tools/*.log
@@ -15,4 +12,3 @@ tools/asar.exe
 tools/dll/*
 .vscode/launch.json
 .vscode/tasks.json
-build/*

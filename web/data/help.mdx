@@ -56,16 +56,21 @@ If you experience crashes or severe glitches when using savestates, your platfor
 | - Power Bombs                 | Select your max Power Bombs with left/right or A to increment
 |&nbsp;|
 | **Category Presets**          | Presets are pre-configured savestates that are specific to a particular category.
-|                               | **Note**: Presets load a room but do not load any enemies for that room.
+|                               | **Note**: Presets load a room but do not load any enemies for that room by default.
 |&nbsp;|
 | **Preset Options**            | Select a category, toggle doors, or save/load custom presets. Compressed OFF allows presets to load faster (see Sprite Patches below)
 | - Select Preset Category      | Select the desired category to be used with Category Presets
+| - Reload Last Preset          | Reload the last selected category preset
+| - Load Random Preset          | Randomly chooses a preset from your selected preset category
 | - Custom Preset Slot          | Select one of 40 slots in memory to save or load custom presets
 | - Save Custom Preset          | Save a custom preset to the current slot in SRAM.
 |                               | A grapple sound effect will play if a preset cannot be saved (for example during room transition).
 | - Load Custom Preset          | Load the custom preset in the current slot in SRAM.
 |                               | A grapple sound effect will play if a preset cannot be loaded from the current slot.
-| - Open Blue Doors             | Open all blue doors, except when Samus is in default pose or when door is in a hidden area.
+| - Auto-Open Blue Doors        | Open all blue doors, except when Samus is in default pose or when door is in a hidden area.
+| - Load with Enemies           | Skips clearing enemies when loading presets. NOTE: Enemy data is not saved with presets. Therefore, enemies will always be loaded in their starting positions for the room
+| - Clear Map Tiles             | Clears all explored map tiles when loading a preset
+| - Auto Segment Reset          | When enabled, the segment timer will not be reset until the next door transition
 | - Compressed Graphics         | Use built-in and slower compressed tile graphics when loading presets.
 |                               | Only enable this if you are applying patches that use banks F5-FE and loading prests crashes the game.
 | - Compressed Palettes         | Use built-in compressed palettes when loading presets.
@@ -140,7 +145,8 @@ If you experience crashes or severe glitches when using savestates, your platfor
 | - Japanese/French Text        | Standard game option to toggle between English and Japanese text (NTSC) or between German and French text (PAL).
 | - Moon Walk                   | Standard game option for Moon Walk.
 | - Icon Cancel                 | Standard game option for Icon Cancel.
-| - Cutscenes                   | Turn off specific cutscenes, or make specific game sequences faster.
+| - Cutscenes and Effects       | Turn off specific cutscenes, or make specific game sequences faster.
+|                               | Also includes karafruit's options to disable or reduce flashing effects.
 | - Fanfare                     | Toggle the fanfare for collecting items
 | - Fast Doors + Elevators      | Toggle for fast doors and elevators similar to some randomizers.
 | - Music                       | Toggle the music off, on, or fast off which eliminates lag caused by loading music data.
@@ -159,7 +165,7 @@ If you experience crashes or severe glitches when using savestates, your platfor
 | - Clear Minimap               | Clears the map tile counter and all minimap data.
 |&nbsp;|
 | **RNG Control**               | Pre-determine boss patterns
-| - Rerandomize                 | Toggles rerandomizing of RNG values upon loading a savestate. Not available on some platforms.
+| - Rerandomize                 | Toggles rerandomizing of RNG values upon loading a savestate. Automatically disabled in rooms with "seeded" RNG, but some of these situations may not be accounted for yet. Not available on some platforms.
 | - Phantoon                    | Configure possible Phantoon patterns. You can enable or disable individual patterns per-round, allowing you to practice only a subset of possible patterns. The round-1 toggles apply only to the first round, whereas the round-2 toggles apply to all subsequent rounds, including rounds where Phantoon is invisible.
 |                               | If all patterns are enabled (or disabled) for a round, vanilla RNG is used with all its quirks and biases. However, if you customize the patterns for a round, that round will use a customized RNG that chooses patterns with mostly-balanced probabilities (though slower patterns may still tend to be slightly more common).
 |                               | - Phan Eye Close: Choose how long Phantoon's eye will remain open after a ring of flames
