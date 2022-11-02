@@ -72,11 +72,18 @@ cm_start:
     JSL $809B44 ; Handle HUD tilemap
     JSL ih_update_hud_code
 
-    JSL GameLoopExtras            ; check if game_loop_extras needs to be disabled
-    JSL restore_ppu_long          ; Restore PPU
-    JSL $82BE2F                   ; Queue Samus movement sound effects
-    JSL play_music_long           ; Play 2 lag frames of music and sound effects
-    JSL maybe_trigger_pause_long  ; Maybe trigger pause screen or return save confirmation selection
+    JSL GameLoopExtras ; check if game_loop_extras needs to be disabled
+    JSL restore_ppu_long ; Restore PPU registers and tilemaps
+
+    ; skip sound effects if not gameplay ($7-13 allowed)
+    %ai16()
+    LDA !GAMEMODE : CMP #$0006 : BMI .skipSFX
+    CMP #$0014 : BPL .skipSFX
+    JSL $82BE2F ; Queue Samus movement sound effects
+
+  .skipSFX
+    JSL play_music_long ; Play 2 lag frames of music and sound effects
+    JSL maybe_trigger_pause_long ; Maybe trigger pause screen or return save confirmation selection
 
     PLY : PLX : PLB
     PLP

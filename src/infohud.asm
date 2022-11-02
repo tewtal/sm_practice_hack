@@ -39,6 +39,9 @@ org $809B4C      ; hijack, HUD routine (game timer by Quote58)
 org $8290F6      ; hijack, HUD routine while paused
     JSL ih_hud_code_paused
 
+org $80A16B      ; hijack, adjust room times and update HUD when unpausing
+    JSL ih_unpause
+
 org $82894F      ; hijack, main game loop: runs EVERY frame (used for room transition timer)
     JSL ih_game_loop_code
 
@@ -396,6 +399,30 @@ ceres_start_timers:
     STZ $0725
     
     JML ceres_start_timers_return
+}
+
+ih_unpause:
+; Adds frames when unpausing (nmi is turned off during vram transfers)
+{
+    ; RT room
+    LDA !ram_realtime_room : CLC : ADC.w #41 : STA !ram_realtime_room
+
+    ; RT seg
+    LDA !ram_seg_rt_frames : CLC : ADC.w #41 : STA !ram_seg_rt_frames
+    CMP.w #60 : BCC .updateHUD
+    SEC : SBC.w #60 : STA !ram_seg_rt_frames
+
+    LDA !ram_seg_rt_seconds : INC : STA !ram_seg_rt_seconds
+    CMP.w #60 : BCC .updateHUD
+    LDA #$0000 : STA !ram_seg_rt_seconds
+
+    LDA !ram_seg_rt_minutes : INC : STA !ram_seg_rt_minutes
+
+  .updateHUD
+    JSL ih_update_hud_early
+
+    ; Replace overwritten logic to enable NMI
+    JML $80834B
 }
 
 ih_elevator_activation:
@@ -1258,50 +1285,40 @@ ih_game_loop_code:
     RTL
 
   .toggle_pause
-    LDA #$FFFF
-    STA !ram_slowdown_mode
-    LDA #$0000
-    STA !ram_slowdown_frames
+    TDC : STA !ram_slowdown_frames
+    DEC : STA !ram_slowdown_mode
     JMP .done
 
   .toggle_slowdown
     LDA !ram_slowdown_mode
-    INC A
-    STA !ram_slowdown_mode
+    INC : STA !ram_slowdown_mode
     JMP .done
 
   .toggle_speedup
-    LDA !ram_slowdown_mode
-    BEQ +
-    DEC A
-    STA !ram_slowdown_mode
+    LDA !ram_slowdown_mode : BEQ +
+    DEC : STA !ram_slowdown_mode
 +   JMP .done
 
   .reset_slowdown
-    LDA #$0000
+    TDC
     STA !ram_slowdown_mode
     STA !ram_slowdown_frames
     JMP .done
 
   .inc_statusdisplay
-    LDA !sram_display_mode
-    INC A
-    CMP #$0014
-    BNE +
-    LDA #$0000
-+   STA !sram_display_mode
+    LDA !sram_display_mode : INC
+    CMP #$0014 : BNE +
+    TDC : STA !sram_display_mode
     BRA .update_status
 
   .dec_statusdisplay
-    LDA !sram_display_mode
-    DEC A
-    CMP #$FFFF
-    BNE +
+    LDA !sram_display_mode : DEC
+    CMP #$FFFF : BNE +
     LDA #$0013
 +   STA !sram_display_mode
 
   .update_status
-    LDA #$0000
+    TDC
     STA !ram_momentum_sum
     STA !ram_momentum_count
     STA !ram_HUD_check
@@ -1310,7 +1327,7 @@ ih_game_loop_code:
     STA !ram_armed_shine_duration
     STA !ram_fail_count
     STA !ram_fail_sum
-    INC A
+    INC
     STA !ram_dash_counter
     STA !ram_xpos
     STA !ram_ypos
@@ -1352,7 +1369,7 @@ magic_pants:
 {
     LDA $0A96 : CMP #$0009 : BEQ .check
     LDA !ram_magic_pants_state : BEQ +
-    LDA #$0000 : STA !ram_magic_pants_state
+    TDC : STA !ram_magic_pants_state
 
     LDA !ram_magic_pants_enabled : AND #$0001 : BEQ +
     LDA !ram_magic_pants_pal1 : STA $7EC194
@@ -1406,7 +1423,7 @@ space_pants:
   .reset
     ; restore palettes if needed
     LDA !ram_magic_pants_state : BEQ .done
-    LDA #$0000 : STA !ram_magic_pants_state
+    TDC : STA !ram_magic_pants_state
 
     LDA !ram_space_pants_enabled : AND #$0001 : BEQ .done
     LDA !ram_magic_pants_pal1 : STA $7EC194
@@ -1422,15 +1439,13 @@ space_pants:
     LDA $0AD2 : BNE .SJliquid             ; check if air
 
   .SJair
-    LDA $0B2D : CMP $909E97 : BPL +       ; check against min SJ vspeed for air
-    BRA .reset
-+   CMP $909E99 : BPL .reset              ; check against max SJ vspeed for air
+    LDA $0B2D : CMP $909E97 : BMI .reset  ; check against min SJ vspeed for air
+    CMP $909E99 : BPL .reset              ; check against max SJ vspeed for air
     BRA .go
 
   .SJliquid
-    LDA $0B2D : CMP $909E9B : BPL +       ; check against min SJ vspeed for liquids
-    BRA .reset
-+   CMP $909E9D : BPL .reset              ; check against max SJ vspeed for liquids
+    LDA $0B2D : CMP $909E9B : BMI .reset  ; check against min SJ vspeed for liquids
+    CMP $909E9D : BPL .reset              ; check against max SJ vspeed for liquids
 
     ; Screw Attack seems to write new palette data every frame, which overwrites the flash
   .go
