@@ -19,7 +19,7 @@ jobs:
     
     - name: Install packages
       run: |
-        sudo apt-get update -yq && sudo apt-get install cmake build-essential python3.7 -yq
+        sudo apt-get update -yq && sudo apt-get install cmake build-essential python3.10 -yq
         mkdir asar
 
     - name: Download and build asar
