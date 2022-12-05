@@ -348,10 +348,11 @@ update_enemy_sprite_hitbox:
     LDX #$0000 ; X = enemy index
     LDY !OAM_STACK_POINTER ; Y = OAM stack pointer
 
-    ; skip enemy if extended spritemap
-    LDA !ENEMY_PROPERTIES_2 : AND #$0004 : BNE .skipEnemy
-
   .loopEnemies
+    ; skip enemy if extended spritemap or deleted enemy
+    LDA !ENEMY_PROPERTIES_2,X : AND #$0004 : BNE .skipEnemy
+    LDA !ENEMY_PROPERTIES,X : AND #$0200 : BNE .skipEnemy
+
     ; skip enemy if off-screen
     LDA !ENEMY_X,X : CLC : ADC !ENEMY_X_RADIUS,X
     CMP !LAYER1_X : BMI .skipEnemy
