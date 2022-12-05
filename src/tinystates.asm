@@ -161,6 +161,10 @@ post_load_state:
     LDA !MUSIC_TRACK : JSL !MUSIC_ROUTINE
 
   .music_done
+    ; Reload OOB tile viewer if enabled
+    LDA !ram_oob_watch_active : BEQ .tileviewer_done
+    JSL upload_sprite_oob_tiles
+  .tileviewer_done
     ; Reload BG3 GFX if minimap setting changed
     LDA !ram_minimap : CMP !SRAM_SAVED_MINIMAP : BEQ .rng
     JSL cm_transfer_original_tileset
