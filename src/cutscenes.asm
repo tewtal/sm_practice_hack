@@ -223,7 +223,7 @@ warnpc $8BFA00 ; misc.asm
 
 
 ; Non-flashing palette instruction
-; Overwriting unused C19A-C2E9 space
+; Overwriting unused C19A-C2E8 space
 org $8DC19A
 crateria_1_palette_fx_preinstruction:
 {
@@ -1099,7 +1099,12 @@ cutscenes_mb_fake_death_begin_screen_flashing:
 {
     LDA #$0001 : STA $7E781E
     LDA !sram_suppress_flashing : BIT !SUPPRESS_MB1_FLASHING : BNE .suppress
-    LDA #$D046 : STA $7E781C
+if !FEATURE_PAL
+    LDA #$D093
+else
+    LDA #$D046
+endif
+    STA $7E781C
     RTS
 
   .suppress

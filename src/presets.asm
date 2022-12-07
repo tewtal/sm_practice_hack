@@ -396,8 +396,13 @@ preset_start_gameplay:
     LDA !ROOM_ID : CMP #$91F8 : BNE .end_load_game_state
     ; If default pose at landing site then assume we are arriving on Zebes
     LDA #$0022 : STA $7ED914
+if !FEATURE_PAL
+    LDA #$E8CA : STA $0A42 ; Lock Samus
+    LDA #$E867 : STA $0A44 ; Lock Samus
+else
     LDA #$E8CD : STA $0A42 ; Lock Samus
     LDA #$E8DC : STA $0A44 ; Lock Samus
+endif
   .end_load_game_state
 
     ; Preserve layer 2 values we may have loaded from presets
