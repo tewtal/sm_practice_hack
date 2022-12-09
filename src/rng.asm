@@ -555,11 +555,19 @@ hook_draygon_rng_right:
 hook_draygon_damage:
 {
     LDA !sram_suppress_flashing : BIT !SUPPRESS_BOSS_DAMAGE_FLASH : BNE .suppress
+if !FEATURE_PAL
+    LDY #$A2A3
+else
     LDY #$A297
+endif
     RTS
 
   .suppress
+if !FEATURE_PAL
+    LDY #$A263
+else
     LDY #$A257
+endif
     RTS
 }
 
