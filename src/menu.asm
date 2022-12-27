@@ -271,8 +271,9 @@ cm_transfer_custom_cgram:
     LDA $7EC01C : STA !ram_cgram_cache+$0C
     LDA $7EC032 : STA !ram_cgram_cache+$0E
     LDA $7EC034 : STA !ram_cgram_cache+$10
-    LDA $7EC03A : STA !ram_cgram_cache+$12
-    LDA $7EC03C : STA !ram_cgram_cache+$14
+    LDA $7EC036 : STA !ram_cgram_cache+$12
+    LDA $7EC03A : STA !ram_cgram_cache+$14
+    LDA $7EC03C : STA !ram_cgram_cache+$16
 
     ; Set menu palette
     LDA #$7277 : STA $7EC00A                ; light pink
@@ -303,8 +304,9 @@ cm_transfer_original_cgram:
     LDA !ram_cgram_cache+$0C : STA $7EC01C
     LDA !ram_cgram_cache+$0E : STA $7EC032
     LDA !ram_cgram_cache+$10 : STA $7EC034
-    LDA !ram_cgram_cache+$12 : STA $7EC03A
-    LDA !ram_cgram_cache+$14 : STA $7EC03C
+    LDA !ram_cgram_cache+$12 : STA $7EC036
+    LDA !ram_cgram_cache+$14 : STA $7EC03A
+    LDA !ram_cgram_cache+$16 : STA $7EC03C
 
     JSL transfer_cgram_long
     PLP
