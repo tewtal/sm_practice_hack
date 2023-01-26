@@ -767,11 +767,12 @@ layout_asm_aqueduct:
 
     ; Replace power bomb blocks with bomb blocks
     LDA #$F09D : STA $7F1690 : STA $7F18D0
+    LDA #$F49D : STA $7F1692 : STA $7F18D2
 
     ; Replace BTS
     %a8()
-    LDA #$05 : STA $7F6F49 : STA $7F7069
-    LDA #$FF : STA $7F6F4A : STA $7F706A
+    LDA #$04 : STA $7F6F49 : STA $7F6F4A
+    STA $7F7069 : STA $7F706A
 }
 
 layout_asm_aqueduct_done:
