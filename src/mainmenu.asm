@@ -2695,15 +2695,19 @@ PhantoonMenu:
     %cm_header("PHANTOON CONTROL")
 
 
-phan_set_phan_phase_table:
+phan_phase_1_table:
     dw #$003F, #$0020, #$0008, #$0002, #$0010, #$0004, #$0001
-    dw #$0030, #$000C, #$0003, #$002A, #$0015, #$0000
+    dw #$0030, #$000C, #$0003, #$002A, #$0015, #$003C, #$0000
+
+phan_phase_2_table:
+    dw #$003F, #$0020, #$0008, #$0002, #$0010, #$0004, #$0001
+    dw #$0030, #$000C, #$0003, #$002A, #$0015, #$0024, #$0000
 
 phan_set_phan_first_phase:
     LDX #$0000
     LDA !ram_phantoon_rng_round_1 : BEQ .end_first_loop
   .first_loop
-    CMP.l phan_set_phan_phase_table,X : BEQ .end_first_loop
+    CMP.l phan_phase_1_table,X : BEQ .end_first_loop
     INX : INX : CPX #$0018 : BNE .first_loop
   .end_first_loop
     TXA : LSR : STA !ram_cm_phan_first_phase
@@ -2713,7 +2717,7 @@ phan_set_phan_second_phase:
     LDX #$0000
     LDA !ram_phantoon_rng_round_2 : BEQ .end_second_loop
   .second_loop
-    CMP.l phan_set_phan_phase_table,X : BEQ .end_second_loop
+    CMP.l phan_phase_2_table,X : BEQ .end_second_loop
     INX : INX : CPX #$0018 : BNE .second_loop
   .end_second_loop
     TXA : LSR : STA !ram_cm_phan_second_phase
@@ -2741,11 +2745,12 @@ phan_first_phase:
     db #$28, "       SLOW", #$FF
     db #$28, "       LEFT", #$FF
     db #$28, "      RIGHT", #$FF
+    db #$28, "   NO SLOWS", #$FF
     db #$28, "     CUSTOM", #$FF
     db #$FF
   .routine
     ASL : TAX
-    LDA.l phan_set_phan_phase_table,X : STA !ram_phantoon_rng_round_1
+    LDA.l phan_phase_1_table,X : STA !ram_phantoon_rng_round_1
     RTL
 
 phan_fast_left_1:
@@ -2785,11 +2790,12 @@ phan_second_phase:
     db #$28, "       SLOW", #$FF
     db #$28, "       LEFT", #$FF
     db #$28, "      RIGHT", #$FF
+    db #$28, "   NO SLOWS", #$FF
     db #$28, "     CUSTOM", #$FF
     db #$FF
   .routine
     ASL : TAX
-    LDA.l phan_set_phan_phase_table,X : STA !ram_phantoon_rng_round_2
+    LDA.l phan_phase_2_table,X : STA !ram_phantoon_rng_round_2
     BEQ .set_inverted : TXA : BEQ .set_inverted
     LDA #$0002
   .set_inverted
