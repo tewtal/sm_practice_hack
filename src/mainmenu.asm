@@ -2086,6 +2086,7 @@ GameMenu:
     dw #game_cutscenes
     dw #game_fanfare_toggle
     dw #game_fast_doors_toggle
+    dw #game_fast_elevators
     dw #game_music_toggle
     dw #game_healthalarm
     dw #$FFFF
@@ -2131,74 +2132,14 @@ game_goto_controls:
 game_cutscenes:
     %cm_submenu("Cutscenes and Effects", #CutscenesMenu)
 
-
-; ---------------
-; Cutscenes menu
-; ---------------
-
-CutscenesMenu:
-    dw #cutscenes_skip_splash
-    dw #cutscenes_skip_intro
-    dw #cutscenes_skip_ceres_arrival
-    dw #cutscenes_skip_g4
-    dw #$FFFF
-    dw #cutscenes_fast_kraid
-    dw #cutscenes_fast_phantoon
-    dw #cutscenes_fast_mb
-    dw #$FFFF
-    dw #cutscenes_suppress_crateria_lightning
-    dw #cutscenes_suppress_escape_flashing
-    dw #cutscenes_suppress_power_bomb_flash
-    dw #cutscenes_suppress_mb1_flashing
-    dw #cutscenes_suppress_boss_damage_flash
-    dw #cutscenes_suppress_earthquake
-    dw #$0000
-    %cm_header("CUTSCENES AND EFFECTS")
-
-cutscenes_skip_splash:
-    %cm_toggle_bit("Fast Nintendo splash", !sram_cutscenes, !CUTSCENE_SKIP_SPLASH, #0)
-
-cutscenes_skip_intro:
-    %cm_toggle_bit("Skip Intro", !sram_cutscenes, !CUTSCENE_SKIP_INTRO, #0)
-
-cutscenes_skip_ceres_arrival:
-    %cm_toggle_bit("Skip Ceres Arrival", !sram_cutscenes, !CUTSCENE_SKIP_CERES_ARRIVAL, #0)
-
-cutscenes_skip_g4:
-    %cm_toggle_bit("Skip G4", !sram_cutscenes, !CUTSCENE_SKIP_G4, #0)
-
-cutscenes_fast_kraid:
-    %cm_toggle_bit("Skip Kraid Intro", !sram_cutscenes, !CUTSCENE_FAST_KRAID, #0)
-
-cutscenes_fast_phantoon:
-    %cm_toggle_bit("Skip Phantoon Intro", !sram_cutscenes, !CUTSCENE_FAST_PHANTOON, #0)
-
-cutscenes_fast_mb:
-    %cm_toggle_bit("Fast Mother Brain", !sram_cutscenes, !CUTSCENE_FAST_MB, #0)
-
-cutscenes_suppress_crateria_lightning:
-    %cm_toggle_bit_inverted("Crateria Lightning", !sram_suppress_flashing, !SUPPRESS_CRATERIA_LIGHTNING, #0)
-
-cutscenes_suppress_escape_flashing:
-    %cm_toggle_bit_inverted("Escape Flashing", !sram_suppress_flashing, !SUPPRESS_ESCAPE_FLASHING, #0)
-
-cutscenes_suppress_power_bomb_flash:
-    %cm_toggle_bit_inverted("Power Bomb Flash", !sram_suppress_flashing, !SUPPRESS_POWER_BOMB_FLASH, #0)
-
-cutscenes_suppress_mb1_flashing:
-    %cm_toggle_bit_inverted("MB1 Flashing", !sram_suppress_flashing, !SUPPRESS_MB1_FLASHING, #0)
-
-cutscenes_suppress_boss_damage_flash:
-    %cm_toggle_bit_inverted("Boss Damage Flash", !sram_suppress_flashing, !SUPPRESS_BOSS_DAMAGE_FLASH, #0)
-
-cutscenes_suppress_earthquake:
-    %cm_toggle_bit_inverted("Vanilla Earthquake", !sram_suppress_flashing, !SUPPRESS_EARTHQUAKE, #0)
-
 game_fanfare_toggle:
     %cm_toggle("Fanfare", !sram_fanfare_toggle, #$0001, #0)
 
 game_fast_doors_toggle:
-    %cm_toggle("Fast Doors+Elevators", !sram_fast_doors, #$0001, #0)
+    %cm_toggle("Fast Doors", !sram_fast_doors, #$0001, #0)
+
+game_fast_elevators:
+    %cm_toggle("Fast Elevators", !sram_fast_elevators, #$0001, #0)
 
 game_music_toggle:
     dw !ACTION_CHOICE
@@ -2266,6 +2207,69 @@ game_clear_minimap:
     DEX : DEX : BPL .clear_minimap_loop
     %sfxreset()
     RTL
+
+
+; ---------------
+; Cutscenes menu
+; ---------------
+
+CutscenesMenu:
+    dw #cutscenes_skip_splash
+    dw #cutscenes_skip_intro
+    dw #cutscenes_skip_ceres_arrival
+    dw #cutscenes_skip_g4
+    dw #$FFFF
+    dw #cutscenes_fast_kraid
+    dw #cutscenes_fast_phantoon
+    dw #cutscenes_fast_mb
+    dw #$FFFF
+    dw #cutscenes_suppress_crateria_lightning
+    dw #cutscenes_suppress_escape_flashing
+    dw #cutscenes_suppress_power_bomb_flash
+    dw #cutscenes_suppress_mb1_flashing
+    dw #cutscenes_suppress_boss_damage_flash
+    dw #cutscenes_suppress_earthquake
+    dw #$0000
+    %cm_header("CUTSCENES AND EFFECTS")
+
+cutscenes_skip_splash:
+    %cm_toggle_bit("Fast Nintendo splash", !sram_cutscenes, !CUTSCENE_SKIP_SPLASH, #0)
+
+cutscenes_skip_intro:
+    %cm_toggle_bit("Skip Intro", !sram_cutscenes, !CUTSCENE_SKIP_INTRO, #0)
+
+cutscenes_skip_ceres_arrival:
+    %cm_toggle_bit("Skip Ceres Arrival", !sram_cutscenes, !CUTSCENE_SKIP_CERES_ARRIVAL, #0)
+
+cutscenes_skip_g4:
+    %cm_toggle_bit("Skip G4", !sram_cutscenes, !CUTSCENE_SKIP_G4, #0)
+
+cutscenes_fast_kraid:
+    %cm_toggle_bit("Skip Kraid Intro", !sram_cutscenes, !CUTSCENE_FAST_KRAID, #0)
+
+cutscenes_fast_phantoon:
+    %cm_toggle_bit("Skip Phantoon Intro", !sram_cutscenes, !CUTSCENE_FAST_PHANTOON, #0)
+
+cutscenes_fast_mb:
+    %cm_toggle_bit("Fast Mother Brain", !sram_cutscenes, !CUTSCENE_FAST_MB, #0)
+
+cutscenes_suppress_crateria_lightning:
+    %cm_toggle_bit_inverted("Crateria Lightning", !sram_suppress_flashing, !SUPPRESS_CRATERIA_LIGHTNING, #0)
+
+cutscenes_suppress_escape_flashing:
+    %cm_toggle_bit_inverted("Escape Flashing", !sram_suppress_flashing, !SUPPRESS_ESCAPE_FLASHING, #0)
+
+cutscenes_suppress_power_bomb_flash:
+    %cm_toggle_bit_inverted("Power Bomb Flash", !sram_suppress_flashing, !SUPPRESS_POWER_BOMB_FLASH, #0)
+
+cutscenes_suppress_mb1_flashing:
+    %cm_toggle_bit_inverted("MB1 Flashing", !sram_suppress_flashing, !SUPPRESS_MB1_FLASHING, #0)
+
+cutscenes_suppress_boss_damage_flash:
+    %cm_toggle_bit_inverted("Boss Damage Flash", !sram_suppress_flashing, !SUPPRESS_BOSS_DAMAGE_FLASH, #0)
+
+cutscenes_suppress_earthquake:
+    %cm_toggle_bit_inverted("Vanilla Earthquake", !sram_suppress_flashing, !SUPPRESS_EARTHQUAKE, #0)
 
 
 ; -------------------

@@ -79,12 +79,14 @@ init_nonzero_wram:
 
 init_sram:
 {
+    ; check SRAM version from !sram_initialized
     CMP #$0009 : BEQ .sram_upgrade_9toA
     CMP #$000A : BEQ .sram_upgrade_AtoB
     CMP #$000B : BEQ .sram_upgrade_BtoC
     CMP #$000C : BEQ .sram_upgrade_CtoD
     CMP #$000D : BEQ .sram_upgrade_DtoE
     CMP #$000E : BEQ .sram_upgrade_EtoF
+    CMP #$000F : BEQ .sram_upgrade_Fto10
     JSR init_sram_upto9
 
   .sram_upgrade_9toA
@@ -110,6 +112,9 @@ init_sram:
 
   .sram_upgrade_EtoF
     LDA #$0000 : STA !sram_suppress_flashing
+
+  .sram_upgrade_Fto10
+    LDA #$0000 : STA !sram_fast_elevators
 
     LDA #!SRAM_VERSION : STA !sram_initialized
     RTS

@@ -19,6 +19,9 @@ endif
     NOP : NOP
 
 
+org $80AE5C
+    JSR cutscenes_door_transition
+
 org $80FF80
 print pc, " cutscenes bank80 start"
 cutscenes_door_transition:
@@ -35,9 +38,6 @@ cutscenes_door_transition:
 }
 warnpc $80FFB0  ; header
 print pc, " cutscenes bank80 end"
-
-org $80AE5C
-    JSR cutscenes_door_transition
 
 
 if !FEATURE_PAL
@@ -107,7 +107,7 @@ cutscenes_nintendo_splash:
 cutscenes_add_elevator_speed:
 {
     CLC
-    LDA !sram_fast_doors : BEQ .slow
+    LDA !sram_fast_elevators : BEQ .slow
     LDA $0F80,x : ADC #$8000 : STA $0F80,x
     LDA $0F7E,x : ADC #$0004 : STA $0F7E,x
     RTL
@@ -120,7 +120,7 @@ cutscenes_add_elevator_speed:
 cutscenes_sub_elevator_speed:
 {
     SEC
-    LDA !sram_fast_doors : BEQ .slow
+    LDA !sram_fast_elevators : BEQ .slow
     LDA $0F80,x : SBC #$8000 : STA $0F80,x
     LDA $0F7E,x : SBC #$0004 : STA $0F7E,x
     RTL
@@ -135,11 +135,11 @@ cutscenes_set_elevator_delay:
     ; We tripled the elevator speed, so decrease the room transition delay accordingly
 if !FEATURE_PAL
     LDX #$0028
-    LDA !sram_fast_doors : BEQ .slow
+    LDA !sram_fast_elevators : BEQ .slow
     LDX #$000D
 else
     LDX #$0030
-    LDA !sram_fast_doors : BEQ .slow
+    LDA !sram_fast_elevators : BEQ .slow
     LDX #$0010
 endif
   .slow
