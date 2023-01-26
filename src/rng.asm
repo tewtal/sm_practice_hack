@@ -88,13 +88,6 @@ endif
     JSR hook_draygon_rng_right
 
 if !FEATURE_PAL
-org $A589AD
-else
-org $A5899D
-endif
-    JSR hook_draygon_rng_right
-
-if !FEATURE_PAL
 org $A5956B
 else
 org $A5955B
