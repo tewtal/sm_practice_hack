@@ -32,6 +32,7 @@ endif
 endmacro
 
 macro cm_numfield(title, addr, start, end, increment, heldincrement, jsltarget)
+; Allows editing an 8-bit value at the specified address
     dw !ACTION_NUMFIELD
     dl <addr> ; 24bit RAM address to display/manipulate
     db <start>, <end> ; minimum and maximum values allowed
@@ -42,6 +43,7 @@ macro cm_numfield(title, addr, start, end, increment, heldincrement, jsltarget)
 endmacro
 
 macro cm_numfield_word(title, addr, start, end, increment, heldincrement, jsltarget)
+; Allows editing a 16-bit value at the specified address
     dw !ACTION_NUMFIELD_WORD
     dl <addr> ; 24bit RAM address to display/manipulate
     dw <start>, <end> ; minimum and maximum values allowed
@@ -52,6 +54,7 @@ macro cm_numfield_word(title, addr, start, end, increment, heldincrement, jsltar
 endmacro
 
 macro cm_numfield_hex(title, addr, start, end, increment, heldincrement, jsltarget)
+; Allows editing an 8-bit value displayed in hexadecimal
     dw !ACTION_NUMFIELD_HEX
     dl <addr> ; 24bit RAM address to display/manipulate
     db <start>, <end> ; minimum and maximum values allowed
@@ -62,6 +65,7 @@ macro cm_numfield_hex(title, addr, start, end, increment, heldincrement, jsltarg
 endmacro
 
 macro cm_numfield_color(title, addr, jsltarget)
+; Allows editing an 8-bit value in increments consistent with SNES color values
     dw !ACTION_NUMFIELD_COLOR
     dl <addr> ; 24bit RAM address to display/manipulate
     dw <jsltarget> ; 16bit address to code in the same bank as current menu/submenu
@@ -153,6 +157,7 @@ macro cm_ctrl_input(title, addr, routine, argument)
 endmacro
 
 macro cm_equipment_item(name, addr, bitmask, inverse)
+; Allows three-way toggling of items:  ON/OFF/UNOBTAINED
     dw !ACTION_CHOICE
     dl <addr>
     dw #.routine
@@ -162,25 +167,15 @@ macro cm_equipment_item(name, addr, bitmask, inverse)
     db #$28, "        OFF", #$FF
     db #$FF
   .routine
-    LDA <addr> : BEQ .unobtained
-    DEC : BEQ .equipped
-    ; unquipped
-    LDA !SAMUS_ITEMS_EQUIPPED : AND <inverse> : STA !SAMUS_ITEMS_EQUIPPED
-    LDA !SAMUS_ITEMS_COLLECTED : ORA <bitmask> : STA !SAMUS_ITEMS_COLLECTED
-    RTL
-
-  .equipped
-    LDA !SAMUS_ITEMS_EQUIPPED : ORA <bitmask> : STA !SAMUS_ITEMS_EQUIPPED
-    LDA !SAMUS_ITEMS_COLLECTED : ORA <bitmask> : STA !SAMUS_ITEMS_COLLECTED
-    RTL
-
-  .unobtained
-    LDA !SAMUS_ITEMS_EQUIPPED : AND <inverse> : STA !SAMUS_ITEMS_EQUIPPED
-    LDA !SAMUS_ITEMS_COLLECTED : AND <inverse> : STA !SAMUS_ITEMS_COLLECTED
-    RTL
+    LDA.w <addr> : STA !DP_Address
+    LDA.w <addr>>>16 : STA !DP_Address+2
+    LDA <bitmask> : STA !DP_ToggleValue
+    LDA <inverse> : STA !DP_Increment
+    JMP equipment_toggle_items
 endmacro
 
 macro cm_equipment_beam(name, addr, bitmask, inverse, and)
+; Allows three-way toggling of beams:  ON/OFF/UNOBTAINED
     dw !ACTION_CHOICE
     dl <addr>
     dw #.routine
@@ -190,22 +185,12 @@ macro cm_equipment_beam(name, addr, bitmask, inverse, and)
     db #$28, "        OFF", #$FF
     db #$FF
   .routine
-    LDA <addr> : BEQ .unobtained
-    DEC : BEQ .equipped
-    ; unquipped
-    LDA !SAMUS_BEAMS_EQUIPPED : AND <inverse> : STA !SAMUS_BEAMS_EQUIPPED
-    LDA !SAMUS_BEAMS_COLLECTED : ORA <bitmask> : STA !SAMUS_BEAMS_COLLECTED
-    JML action_equip_safe_beams
-
-  .equipped
-    LDA !SAMUS_BEAMS_EQUIPPED : ORA <bitmask> : AND <and> : STA !SAMUS_BEAMS_EQUIPPED
-    LDA !SAMUS_BEAMS_COLLECTED : ORA <bitmask> : STA !SAMUS_BEAMS_COLLECTED
-    JML $90AC8D ; update beam gfx
-
-  .unobtained
-    LDA !SAMUS_BEAMS_EQUIPPED : AND <inverse> : STA !SAMUS_BEAMS_EQUIPPED
-    LDA !SAMUS_BEAMS_COLLECTED : AND <inverse> : STA !SAMUS_BEAMS_COLLECTED
-    JML action_equip_safe_beams
+    LDA.w #<addr> : STA !DP_Address
+    LDA.w #<addr>>>16 : STA !DP_Address+2
+    LDA <bitmask> : STA !DP_ToggleValue
+    LDA <inverse> : STA !DP_Increment
+    LDA <and> : STA !DP_Temp
+    JMP equipment_toggle_beams
 endmacro
 
 macro setmenubank()
@@ -1087,6 +1072,28 @@ ti_xray:
     LDA !SAMUS_ITEMS_EQUIPPED : EOR #$8000 : STA !SAMUS_ITEMS_EQUIPPED
     RTL
 
+equipment_toggle_items:
+{
+; DP values are passed in from the cm_equipment_item macro that calls this routine
+; Address is a 24-bit pointer to !ram_cm_<item>, Increment is the inverse, ToggleValue is the bitmask
+    LDA [!DP_Address] : BEQ .unobtained
+    DEC : BEQ .equipped
+    ; unquipped
+    LDA !SAMUS_ITEMS_EQUIPPED : AND !DP_Increment : STA !SAMUS_ITEMS_EQUIPPED
+    LDA !SAMUS_ITEMS_COLLECTED : ORA !DP_ToggleValue : STA !SAMUS_ITEMS_COLLECTED
+    RTL
+
+  .equipped
+    LDA !SAMUS_ITEMS_EQUIPPED : ORA !DP_ToggleValue : STA !SAMUS_ITEMS_EQUIPPED
+    LDA !SAMUS_ITEMS_COLLECTED : ORA !DP_ToggleValue : STA !SAMUS_ITEMS_COLLECTED
+    RTL
+
+  .unobtained
+    LDA !SAMUS_ITEMS_EQUIPPED : AND !DP_Increment : STA !SAMUS_ITEMS_EQUIPPED
+    LDA !SAMUS_ITEMS_COLLECTED : AND !DP_Increment : STA !SAMUS_ITEMS_COLLECTED
+    RTL
+}
+
 
 ; -----------------
 ; Toggle Beams menu
@@ -1174,17 +1181,28 @@ tb_plasmabeam:
 tb_glitchedbeams:
     %cm_submenu("Glitched Beams", #GlitchedBeamsMenu)
 
-action_equip_safe_beams:
+equipment_toggle_beams:
 {
-    AND #$000C : CMP #$000C : BEQ .disableMurder
-    LDA !SAMUS_BEAMS_COLLECTED : STA !SAMUS_BEAMS_EQUIPPED
-    JSL $90AC8D ; update beam gfx
-    RTL
+; DP values are passed in from the cm_equipment_beam macro that calls this routine
+; Address is a 24-bit pointer to !ram_cm_<beam>, Increment is the inverse, ToggleValue is the bitmask, Temp is the AND for Spazer+Plasma safety
+    LDA [!DP_Address] : BEQ .unobtained
+    DEC : BEQ .equipped
+    ; unquipped
+    LDA !SAMUS_BEAMS_EQUIPPED : AND !DP_Increment : STA !SAMUS_BEAMS_EQUIPPED
+    LDA !SAMUS_BEAMS_COLLECTED : ORA !DP_ToggleValue : STA !SAMUS_BEAMS_COLLECTED
+    BRA .done
 
-  .disableMurder
-    LDA !SAMUS_BEAMS_COLLECTED : AND #$000B : STA !SAMUS_BEAMS_EQUIPPED
-    JSL $90AC8D ; update beam gfx
-    RTL
+  .equipped
+    LDA !SAMUS_BEAMS_EQUIPPED : ORA !DP_ToggleValue : AND !DP_Temp : STA !SAMUS_BEAMS_EQUIPPED
+    LDA !SAMUS_BEAMS_COLLECTED : ORA !DP_ToggleValue : STA !SAMUS_BEAMS_COLLECTED
+    BRA .done
+
+  .unobtained
+    LDA !SAMUS_BEAMS_EQUIPPED : AND !DP_Increment : STA !SAMUS_BEAMS_EQUIPPED
+    LDA !SAMUS_BEAMS_COLLECTED : AND !DP_Increment : STA !SAMUS_BEAMS_COLLECTED
+
+  .done
+    JML $90AC8D ; update beam gfx
 }
 
 
@@ -1385,7 +1403,15 @@ endif
     RTL
 
   .off
-    LDA !SAMUS_BEAMS_COLLECTED : JSL action_equip_safe_beams
+    ; check for Spazer+Plasma
+    LDA !SAMUS_BEAMS_COLLECTED : AND #$000C : CMP #$000C : BEQ .disableMurder
+    LDA !SAMUS_BEAMS_COLLECTED : STA !SAMUS_BEAMS_EQUIPPED
+    BRA .FXobjects
+
+  .disableMurder
+    LDA !SAMUS_BEAMS_COLLECTED : AND #$000B : STA !SAMUS_BEAMS_EQUIPPED
+
+  .FXobjects
     LDX #$000E
 
   .loopFXobjects
