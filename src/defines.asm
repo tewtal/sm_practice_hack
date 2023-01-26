@@ -246,7 +246,7 @@
 !DP_CtrlInput = $10 ; 0x4
 !DP_Palette = $14
 !DP_Temp = $16
-; v these repreat v
+; v these repeat v
 !DP_ToggleValue = $18
 !DP_Increment = $1A
 !DP_Minimum = $1C
