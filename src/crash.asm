@@ -241,13 +241,13 @@ CrashViewer:
     LDA #$A1 : STA $4200  ; NMI, V-blank IRQ, and auto-joypad read on
     LDA #$09 : STA $2105  ; BG3 priority on, BG Mode 1
     LDA #$58 : STA $2109  ; BG3 address, 32x32 size
-    LDA #$04 : STA $212C  ; Enable BG3 on main screen
+    LDA #$17 : STA $212C  ; Enable BG3 on main screen
     LDA #$04 : STA $212D  ; Enable BG3 on subscreen
     LDA #$02 : STA $2130  ; Add subscreen to color math
     LDA #$33 : STA $2131  ; Enable color math on backgrounds and OAM
-    LDA #$0F : STA $2100  ; Force blank off, max brightness
     STZ $2111 : STZ $2111 ; BG3 X scroll, write twice
     STZ $2112 : STZ $2112 ; BG3 Y scroll, write twice
+    LDA #$0F : STA $2100  ; Force blank off, max brightness
 
     %ai16()
     JSL crash_next_frame

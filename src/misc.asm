@@ -244,11 +244,19 @@ org $808F65
 
 
 ; Continue drawing escape timer after reaching ship
+if !FEATURE_PAL
+org $90E905
+else
 org $90E908
+endif
     JSR preserve_escape_timer
 
 ; Stop drawing timer when its VRAM is overwritten
+if !FEATURE_PAL
+org $A2AC15
+else
 org $A2ABFD
+endif
     JML clear_escape_timer
 
 
@@ -560,7 +568,11 @@ preserve_escape_timer:
     JSL $809F6C ; Draw timer
 
   .done
+if !FEATURE_PAL
+    JMP $EA7C
+else
     JMP $EA7F ; overwritten code
+endif
 }
 
 clear_escape_timer:
@@ -569,7 +581,12 @@ clear_escape_timer:
     STZ $0943
 
     ; overwritten code
-    LDA #$AC1B : STA $0FB2,X
+if !FEATURE_PAL
+    LDA #$AC33
+else
+    LDA #$AC1B
+endif
+    STA $0FB2,X
     STZ $0DEC
     RTL
 }

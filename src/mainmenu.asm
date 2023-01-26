@@ -32,6 +32,7 @@ endif
 endmacro
 
 macro cm_numfield(title, addr, start, end, increment, heldincrement, jsltarget)
+; Allows editing an 8-bit value at the specified address
     dw !ACTION_NUMFIELD
     dl <addr> ; 24bit RAM address to display/manipulate
     db <start>, <end> ; minimum and maximum values allowed
@@ -42,6 +43,7 @@ macro cm_numfield(title, addr, start, end, increment, heldincrement, jsltarget)
 endmacro
 
 macro cm_numfield_word(title, addr, start, end, increment, heldincrement, jsltarget)
+; Allows editing a 16-bit value at the specified address
     dw !ACTION_NUMFIELD_WORD
     dl <addr> ; 24bit RAM address to display/manipulate
     dw <start>, <end> ; minimum and maximum values allowed
@@ -52,6 +54,7 @@ macro cm_numfield_word(title, addr, start, end, increment, heldincrement, jsltar
 endmacro
 
 macro cm_numfield_hex(title, addr, start, end, increment, heldincrement, jsltarget)
+; Allows editing an 8-bit value displayed in hexadecimal
     dw !ACTION_NUMFIELD_HEX
     dl <addr> ; 24bit RAM address to display/manipulate
     db <start>, <end> ; minimum and maximum values allowed
@@ -62,6 +65,7 @@ macro cm_numfield_hex(title, addr, start, end, increment, heldincrement, jsltarg
 endmacro
 
 macro cm_numfield_color(title, addr, jsltarget)
+; Allows editing an 8-bit value in increments consistent with SNES color values
     dw !ACTION_NUMFIELD_COLOR
     dl <addr> ; 24bit RAM address to display/manipulate
     dw <jsltarget> ; 16bit address to code in the same bank as current menu/submenu
@@ -153,6 +157,7 @@ macro cm_ctrl_input(title, addr, routine, argument)
 endmacro
 
 macro cm_equipment_item(name, addr, bitmask, inverse)
+; Allows three-way toggling of items:  ON/OFF/UNOBTAINED
     dw !ACTION_CHOICE
     dl <addr>
     dw #.routine
@@ -162,25 +167,15 @@ macro cm_equipment_item(name, addr, bitmask, inverse)
     db #$28, "        OFF", #$FF
     db #$FF
   .routine
-    LDA <addr> : BEQ .unobtained
-    DEC : BEQ .equipped
-    ; unquipped
-    LDA !SAMUS_ITEMS_EQUIPPED : AND <inverse> : STA !SAMUS_ITEMS_EQUIPPED
-    LDA !SAMUS_ITEMS_COLLECTED : ORA <bitmask> : STA !SAMUS_ITEMS_COLLECTED
-    RTL
-
-  .equipped
-    LDA !SAMUS_ITEMS_EQUIPPED : ORA <bitmask> : STA !SAMUS_ITEMS_EQUIPPED
-    LDA !SAMUS_ITEMS_COLLECTED : ORA <bitmask> : STA !SAMUS_ITEMS_COLLECTED
-    RTL
-
-  .unobtained
-    LDA !SAMUS_ITEMS_EQUIPPED : AND <inverse> : STA !SAMUS_ITEMS_EQUIPPED
-    LDA !SAMUS_ITEMS_COLLECTED : AND <inverse> : STA !SAMUS_ITEMS_COLLECTED
-    RTL
+    LDA.w <addr> : STA !DP_Address
+    LDA.w <addr>>>16 : STA !DP_Address+2
+    LDA <bitmask> : STA !DP_ToggleValue
+    LDA <inverse> : STA !DP_Increment
+    JMP equipment_toggle_items
 endmacro
 
 macro cm_equipment_beam(name, addr, bitmask, inverse, and)
+; Allows three-way toggling of beams:  ON/OFF/UNOBTAINED
     dw !ACTION_CHOICE
     dl <addr>
     dw #.routine
@@ -190,22 +185,12 @@ macro cm_equipment_beam(name, addr, bitmask, inverse, and)
     db #$28, "        OFF", #$FF
     db #$FF
   .routine
-    LDA <addr> : BEQ .unobtained
-    DEC : BEQ .equipped
-    ; unquipped
-    LDA !SAMUS_BEAMS_EQUIPPED : AND <inverse> : STA !SAMUS_BEAMS_EQUIPPED
-    LDA !SAMUS_BEAMS_COLLECTED : ORA <bitmask> : STA !SAMUS_BEAMS_COLLECTED
-    JML action_equip_safe_beams
-
-  .equipped
-    LDA !SAMUS_BEAMS_EQUIPPED : ORA <bitmask> : AND <and> : STA !SAMUS_BEAMS_EQUIPPED
-    LDA !SAMUS_BEAMS_COLLECTED : ORA <bitmask> : STA !SAMUS_BEAMS_COLLECTED
-    JML $90AC8D ; update beam gfx
-
-  .unobtained
-    LDA !SAMUS_BEAMS_EQUIPPED : AND <inverse> : STA !SAMUS_BEAMS_EQUIPPED
-    LDA !SAMUS_BEAMS_COLLECTED : AND <inverse> : STA !SAMUS_BEAMS_COLLECTED
-    JML action_equip_safe_beams
+    LDA.w #<addr> : STA !DP_Address
+    LDA.w #<addr>>>16 : STA !DP_Address+2
+    LDA <bitmask> : STA !DP_ToggleValue
+    LDA <inverse> : STA !DP_Increment
+    LDA <and> : STA !DP_Temp
+    JMP equipment_toggle_beams
 endmacro
 
 macro setmenubank()
@@ -1087,6 +1072,28 @@ ti_xray:
     LDA !SAMUS_ITEMS_EQUIPPED : EOR #$8000 : STA !SAMUS_ITEMS_EQUIPPED
     RTL
 
+equipment_toggle_items:
+{
+; DP values are passed in from the cm_equipment_item macro that calls this routine
+; Address is a 24-bit pointer to !ram_cm_<item>, Increment is the inverse, ToggleValue is the bitmask
+    LDA [!DP_Address] : BEQ .unobtained
+    DEC : BEQ .equipped
+    ; unquipped
+    LDA !SAMUS_ITEMS_EQUIPPED : AND !DP_Increment : STA !SAMUS_ITEMS_EQUIPPED
+    LDA !SAMUS_ITEMS_COLLECTED : ORA !DP_ToggleValue : STA !SAMUS_ITEMS_COLLECTED
+    RTL
+
+  .equipped
+    LDA !SAMUS_ITEMS_EQUIPPED : ORA !DP_ToggleValue : STA !SAMUS_ITEMS_EQUIPPED
+    LDA !SAMUS_ITEMS_COLLECTED : ORA !DP_ToggleValue : STA !SAMUS_ITEMS_COLLECTED
+    RTL
+
+  .unobtained
+    LDA !SAMUS_ITEMS_EQUIPPED : AND !DP_Increment : STA !SAMUS_ITEMS_EQUIPPED
+    LDA !SAMUS_ITEMS_COLLECTED : AND !DP_Increment : STA !SAMUS_ITEMS_COLLECTED
+    RTL
+}
+
 
 ; -----------------
 ; Toggle Beams menu
@@ -1174,17 +1181,28 @@ tb_plasmabeam:
 tb_glitchedbeams:
     %cm_submenu("Glitched Beams", #GlitchedBeamsMenu)
 
-action_equip_safe_beams:
+equipment_toggle_beams:
 {
-    AND #$000C : CMP #$000C : BEQ .disableMurder
-    LDA !SAMUS_BEAMS_COLLECTED : STA !SAMUS_BEAMS_EQUIPPED
-    JSL $90AC8D ; update beam gfx
-    RTL
+; DP values are passed in from the cm_equipment_beam macro that calls this routine
+; Address is a 24-bit pointer to !ram_cm_<beam>, Increment is the inverse, ToggleValue is the bitmask, Temp is the AND for Spazer+Plasma safety
+    LDA [!DP_Address] : BEQ .unobtained
+    DEC : BEQ .equipped
+    ; unquipped
+    LDA !SAMUS_BEAMS_EQUIPPED : AND !DP_Increment : STA !SAMUS_BEAMS_EQUIPPED
+    LDA !SAMUS_BEAMS_COLLECTED : ORA !DP_ToggleValue : STA !SAMUS_BEAMS_COLLECTED
+    BRA .done
 
-  .disableMurder
-    LDA !SAMUS_BEAMS_COLLECTED : AND #$000B : STA !SAMUS_BEAMS_EQUIPPED
-    JSL $90AC8D ; update beam gfx
-    RTL
+  .equipped
+    LDA !SAMUS_BEAMS_EQUIPPED : ORA !DP_ToggleValue : AND !DP_Temp : STA !SAMUS_BEAMS_EQUIPPED
+    LDA !SAMUS_BEAMS_COLLECTED : ORA !DP_ToggleValue : STA !SAMUS_BEAMS_COLLECTED
+    BRA .done
+
+  .unobtained
+    LDA !SAMUS_BEAMS_EQUIPPED : AND !DP_Increment : STA !SAMUS_BEAMS_EQUIPPED
+    LDA !SAMUS_BEAMS_COLLECTED : AND !DP_Increment : STA !SAMUS_BEAMS_COLLECTED
+
+  .done
+    JML $90AC8D ; update beam gfx
 }
 
 
@@ -1385,7 +1403,15 @@ endif
     RTL
 
   .off
-    LDA !SAMUS_BEAMS_COLLECTED : JSL action_equip_safe_beams
+    ; check for Spazer+Plasma
+    LDA !SAMUS_BEAMS_COLLECTED : AND #$000C : CMP #$000C : BEQ .disableMurder
+    LDA !SAMUS_BEAMS_COLLECTED : STA !SAMUS_BEAMS_EQUIPPED
+    BRA .FXobjects
+
+  .disableMurder
+    LDA !SAMUS_BEAMS_COLLECTED : AND #$000B : STA !SAMUS_BEAMS_EQUIPPED
+
+  .FXobjects
     LDX #$000E
 
   .loopFXobjects
@@ -2086,6 +2112,7 @@ GameMenu:
     dw #game_cutscenes
     dw #game_fanfare_toggle
     dw #game_fast_doors_toggle
+    dw #game_fast_elevators
     dw #game_music_toggle
     dw #game_healthalarm
     dw #$FFFF
@@ -2131,74 +2158,14 @@ game_goto_controls:
 game_cutscenes:
     %cm_submenu("Cutscenes and Effects", #CutscenesMenu)
 
-
-; ---------------
-; Cutscenes menu
-; ---------------
-
-CutscenesMenu:
-    dw #cutscenes_skip_splash
-    dw #cutscenes_skip_intro
-    dw #cutscenes_skip_ceres_arrival
-    dw #cutscenes_skip_g4
-    dw #$FFFF
-    dw #cutscenes_fast_kraid
-    dw #cutscenes_fast_phantoon
-    dw #cutscenes_fast_mb
-    dw #$FFFF
-    dw #cutscenes_suppress_crateria_lightning
-    dw #cutscenes_suppress_escape_flashing
-    dw #cutscenes_suppress_power_bomb_flash
-    dw #cutscenes_suppress_mb1_flashing
-    dw #cutscenes_suppress_boss_damage_flash
-    dw #cutscenes_suppress_earthquake
-    dw #$0000
-    %cm_header("CUTSCENES AND EFFECTS")
-
-cutscenes_skip_splash:
-    %cm_toggle_bit("Fast Nintendo splash", !sram_cutscenes, !CUTSCENE_SKIP_SPLASH, #0)
-
-cutscenes_skip_intro:
-    %cm_toggle_bit("Skip Intro", !sram_cutscenes, !CUTSCENE_SKIP_INTRO, #0)
-
-cutscenes_skip_ceres_arrival:
-    %cm_toggle_bit("Skip Ceres Arrival", !sram_cutscenes, !CUTSCENE_SKIP_CERES_ARRIVAL, #0)
-
-cutscenes_skip_g4:
-    %cm_toggle_bit("Skip G4", !sram_cutscenes, !CUTSCENE_SKIP_G4, #0)
-
-cutscenes_fast_kraid:
-    %cm_toggle_bit("Skip Kraid Intro", !sram_cutscenes, !CUTSCENE_FAST_KRAID, #0)
-
-cutscenes_fast_phantoon:
-    %cm_toggle_bit("Skip Phantoon Intro", !sram_cutscenes, !CUTSCENE_FAST_PHANTOON, #0)
-
-cutscenes_fast_mb:
-    %cm_toggle_bit("Fast Mother Brain", !sram_cutscenes, !CUTSCENE_FAST_MB, #0)
-
-cutscenes_suppress_crateria_lightning:
-    %cm_toggle_bit_inverted("Crateria Lightning", !sram_suppress_flashing, !SUPPRESS_CRATERIA_LIGHTNING, #0)
-
-cutscenes_suppress_escape_flashing:
-    %cm_toggle_bit_inverted("Escape Flashing", !sram_suppress_flashing, !SUPPRESS_ESCAPE_FLASHING, #0)
-
-cutscenes_suppress_power_bomb_flash:
-    %cm_toggle_bit_inverted("Power Bomb Flash", !sram_suppress_flashing, !SUPPRESS_POWER_BOMB_FLASH, #0)
-
-cutscenes_suppress_mb1_flashing:
-    %cm_toggle_bit_inverted("MB1 Flashing", !sram_suppress_flashing, !SUPPRESS_MB1_FLASHING, #0)
-
-cutscenes_suppress_boss_damage_flash:
-    %cm_toggle_bit_inverted("Boss Damage Flash", !sram_suppress_flashing, !SUPPRESS_BOSS_DAMAGE_FLASH, #0)
-
-cutscenes_suppress_earthquake:
-    %cm_toggle_bit_inverted("Vanilla Earthquake", !sram_suppress_flashing, !SUPPRESS_EARTHQUAKE, #0)
-
 game_fanfare_toggle:
     %cm_toggle("Fanfare", !sram_fanfare_toggle, #$0001, #0)
 
 game_fast_doors_toggle:
-    %cm_toggle("Fast Doors+Elevators", !sram_fast_doors, #$0001, #0)
+    %cm_toggle("Fast Doors", !sram_fast_doors, #$0001, #0)
+
+game_fast_elevators:
+    %cm_toggle("Fast Elevators", !sram_fast_elevators, #$0001, #0)
 
 game_music_toggle:
     dw !ACTION_CHOICE
@@ -2266,6 +2233,69 @@ game_clear_minimap:
     DEX : DEX : BPL .clear_minimap_loop
     %sfxreset()
     RTL
+
+
+; ---------------
+; Cutscenes menu
+; ---------------
+
+CutscenesMenu:
+    dw #cutscenes_skip_splash
+    dw #cutscenes_skip_intro
+    dw #cutscenes_skip_ceres_arrival
+    dw #cutscenes_skip_g4
+    dw #$FFFF
+    dw #cutscenes_fast_kraid
+    dw #cutscenes_fast_phantoon
+    dw #cutscenes_fast_mb
+    dw #$FFFF
+    dw #cutscenes_suppress_crateria_lightning
+    dw #cutscenes_suppress_escape_flashing
+    dw #cutscenes_suppress_power_bomb_flash
+    dw #cutscenes_suppress_mb1_flashing
+    dw #cutscenes_suppress_boss_damage_flash
+    dw #cutscenes_suppress_earthquake
+    dw #$0000
+    %cm_header("CUTSCENES AND EFFECTS")
+
+cutscenes_skip_splash:
+    %cm_toggle_bit("Fast Nintendo splash", !sram_cutscenes, !CUTSCENE_SKIP_SPLASH, #0)
+
+cutscenes_skip_intro:
+    %cm_toggle_bit("Skip Intro", !sram_cutscenes, !CUTSCENE_SKIP_INTRO, #0)
+
+cutscenes_skip_ceres_arrival:
+    %cm_toggle_bit("Skip Ceres Arrival", !sram_cutscenes, !CUTSCENE_SKIP_CERES_ARRIVAL, #0)
+
+cutscenes_skip_g4:
+    %cm_toggle_bit("Skip G4", !sram_cutscenes, !CUTSCENE_SKIP_G4, #0)
+
+cutscenes_fast_kraid:
+    %cm_toggle_bit("Skip Kraid Intro", !sram_cutscenes, !CUTSCENE_FAST_KRAID, #0)
+
+cutscenes_fast_phantoon:
+    %cm_toggle_bit("Skip Phantoon Intro", !sram_cutscenes, !CUTSCENE_FAST_PHANTOON, #0)
+
+cutscenes_fast_mb:
+    %cm_toggle_bit("Fast Mother Brain", !sram_cutscenes, !CUTSCENE_FAST_MB, #0)
+
+cutscenes_suppress_crateria_lightning:
+    %cm_toggle_bit_inverted("Crateria Lightning", !sram_suppress_flashing, !SUPPRESS_CRATERIA_LIGHTNING, #0)
+
+cutscenes_suppress_escape_flashing:
+    %cm_toggle_bit_inverted("Escape Flashing", !sram_suppress_flashing, !SUPPRESS_ESCAPE_FLASHING, #0)
+
+cutscenes_suppress_power_bomb_flash:
+    %cm_toggle_bit_inverted("Power Bomb Flash", !sram_suppress_flashing, !SUPPRESS_POWER_BOMB_FLASH, #0)
+
+cutscenes_suppress_mb1_flashing:
+    %cm_toggle_bit_inverted("MB1 Flashing", !sram_suppress_flashing, !SUPPRESS_MB1_FLASHING, #0)
+
+cutscenes_suppress_boss_damage_flash:
+    %cm_toggle_bit_inverted("Boss Damage Flash", !sram_suppress_flashing, !SUPPRESS_BOSS_DAMAGE_FLASH, #0)
+
+cutscenes_suppress_earthquake:
+    %cm_toggle_bit_inverted("Vanilla Earthquake", !sram_suppress_flashing, !SUPPRESS_EARTHQUAKE, #0)
 
 
 ; -------------------
@@ -2695,15 +2725,19 @@ PhantoonMenu:
     %cm_header("PHANTOON CONTROL")
 
 
-phan_set_phan_phase_table:
+phan_phase_1_table:
     dw #$003F, #$0020, #$0008, #$0002, #$0010, #$0004, #$0001
-    dw #$0030, #$000C, #$0003, #$002A, #$0015, #$0000
+    dw #$0030, #$000C, #$0003, #$002A, #$0015, #$003C, #$0000
+
+phan_phase_2_table:
+    dw #$003F, #$0020, #$0008, #$0002, #$0010, #$0004, #$0001
+    dw #$0030, #$000C, #$0003, #$002A, #$0015, #$0024, #$0000
 
 phan_set_phan_first_phase:
     LDX #$0000
     LDA !ram_phantoon_rng_round_1 : BEQ .end_first_loop
   .first_loop
-    CMP.l phan_set_phan_phase_table,X : BEQ .end_first_loop
+    CMP.l phan_phase_1_table,X : BEQ .end_first_loop
     INX : INX : CPX #$0018 : BNE .first_loop
   .end_first_loop
     TXA : LSR : STA !ram_cm_phan_first_phase
@@ -2713,7 +2747,7 @@ phan_set_phan_second_phase:
     LDX #$0000
     LDA !ram_phantoon_rng_round_2 : BEQ .end_second_loop
   .second_loop
-    CMP.l phan_set_phan_phase_table,X : BEQ .end_second_loop
+    CMP.l phan_phase_2_table,X : BEQ .end_second_loop
     INX : INX : CPX #$0018 : BNE .second_loop
   .end_second_loop
     TXA : LSR : STA !ram_cm_phan_second_phase
@@ -2741,11 +2775,12 @@ phan_first_phase:
     db #$28, "       SLOW", #$FF
     db #$28, "       LEFT", #$FF
     db #$28, "      RIGHT", #$FF
+    db #$28, "   NO SLOWS", #$FF
     db #$28, "     CUSTOM", #$FF
     db #$FF
   .routine
     ASL : TAX
-    LDA.l phan_set_phan_phase_table,X : STA !ram_phantoon_rng_round_1
+    LDA.l phan_phase_1_table,X : STA !ram_phantoon_rng_round_1
     RTL
 
 phan_fast_left_1:
@@ -2785,11 +2820,12 @@ phan_second_phase:
     db #$28, "       SLOW", #$FF
     db #$28, "       LEFT", #$FF
     db #$28, "      RIGHT", #$FF
+    db #$28, "   NO SLOWS", #$FF
     db #$28, "     CUSTOM", #$FF
     db #$FF
   .routine
     ASL : TAX
-    LDA.l phan_set_phan_phase_table,X : STA !ram_phantoon_rng_round_2
+    LDA.l phan_phase_2_table,X : STA !ram_phantoon_rng_round_2
     BEQ .set_inverted : TXA : BEQ .set_inverted
     LDA #$0002
   .set_inverted
