@@ -15,7 +15,7 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     
     - name: Install packages
       run: |
@@ -47,7 +47,7 @@ jobs:
         cp build/smpalhack20.ips ./web/public/patches/emulator-pal.ips
     
     - name: Set up node
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v3
 
     - name: Build and export web application
       working-directory: ./web
@@ -58,7 +58,7 @@ jobs:
         touch ./out/.nojekyll
 
     - name: Deploy 🚀
-      uses: JamesIves/github-pages-deploy-action@4.1.4
+      uses: JamesIves/github-pages-deploy-action@4.4.1
       with:
         branch: gh-pages   # The branch the action should deploy to.
         folder: ./web/out/ # The folder the action should deploy.
