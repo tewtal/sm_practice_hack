@@ -2621,7 +2621,8 @@ RngMenu:
     dw #$FFFF
     dw #rng_crocomire_rng
     dw #$FFFF
-    dw #rng_kraid_rng
+    dw #rng_kraid_claw_rng
+    dw #rng_kraid_wait_rng
     dw #$0000
     %cm_header("BOSS RNG CONTROL")
 
@@ -2678,14 +2679,29 @@ rng_crocomire_rng:
     db #$28, "      SWIPE", #$FF
     db #$FF
 
-rng_kraid_rng:
+rng_kraid_claw_rng:
     dw !ACTION_CHOICE
-    dl #!ram_kraid_rng
+    dl #!ram_kraid_claw_rng
     dw #$0000
     db #$28, "Kraid Claw RNG", #$FF
     db #$28, "     RANDOM", #$FF
     db #$28, "      LAGGY", #$FF
     db #$28, "    LAGGIER", #$FF
+    db #$FF
+
+rng_kraid_wait_rng:
+    dw !ACTION_CHOICE
+    dl #!ram_kraid_wait_rng
+    dw #$0000
+    db #$28, "Kraid Wait RNG", #$FF
+    db #$28, "     RANDOM", #$FF
+    db #$28, "         64", #$FF
+    db #$28, "        128", #$FF
+    db #$28, "        192", #$FF
+    db #$28, "        256", #$FF
+    db #$28, "        320", #$FF
+    db #$28, "        384", #$FF
+    db #$28, "        448", #$FF
     db #$FF
 
 

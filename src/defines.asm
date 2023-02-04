@@ -115,7 +115,7 @@
 
 !ram_magic_pants_enabled            = !WRAM_PERSIST_START+$16
 !ram_space_pants_enabled            = !WRAM_PERSIST_START+$18
-!ram_kraid_rng                      = !WRAM_PERSIST_START+$1A
+!ram_kraid_claw_rng                 = !WRAM_PERSIST_START+$1A
 !ram_crocomire_rng                  = !WRAM_PERSIST_START+$1C
 !ram_phantoon_rng_round_1           = !WRAM_PERSIST_START+$1E
 !ram_phantoon_rng_round_2           = !WRAM_PERSIST_START+$20
@@ -149,6 +149,7 @@
 !ram_game_loop_extras               = !WRAM_PERSIST_START+$50
 !ram_game_mode_extras               = !WRAM_PERSIST_START+$52
 !ram_sprite_features_active         = !WRAM_PERSIST_START+$54
+!ram_kraid_wait_rng                 = !WRAM_PERSIST_START+$56
 
 ; ^ FREE SPACE ^ up to +$7A
 
