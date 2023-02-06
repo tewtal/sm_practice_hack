@@ -323,6 +323,10 @@ org $8FC95B
     RTS
 warnpc $8FC96E
 
+; Plasma setup asm
+org $8FD2CF
+    dw #layout_asm_plasma
+
 ; Aqueduct setup asm
 org $8FD5CC
     dw #layout_asm_aqueduct
@@ -759,11 +763,76 @@ layout_asm_mainstreet_done:
 layout_asm_mainstreet_plm_data:
     db #$6F, #$B7, #$18, #$59, #$0A, #$00
 
+layout_asm_plasma:
+{
+    PHP
+    %a16()
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_DASH_RECALL : BEQ layout_asm_mainstreet_done
+
+    ; Add platform and surrounding decoration
+    LDA #$00FF : STA $7F04AE : STA $7F04B4
+    STA $7F04EC : STA $7F04EE : STA $7F04F4
+    STA $7F051E : STA $7F0520 : STA $7F0522
+    STA $7F0530 : STA $7F0532 : STA $7F0534
+    STA $7F055E : STA $7F0560 : STA $7F0562
+    STA $7F0570 : STA $7F0572 : STA $7F0574
+    STA $7F05B0 : STA $7F05B2 : STA $7F05B4
+    STA $7F05F0 : STA $7F05F2 : STA $7F05F4
+    STA $7F062C : STA $7F062E : STA $7F0630 : STA $7F0632 : STA $7F0634
+    STA $7F066C : STA $7F066E : STA $7F0670 : STA $7F0672 : STA $7F0674
+    STA $7F06AE : STA $7F06B0 : STA $7F06B2 : STA $7F06B4
+    STA $7F06EE : STA $7F06F0 : STA $7F06F2 : STA $7F06F4
+    STA $7F072E : STA $7F0730 : STA $7F0732 : STA $7F0734
+    STA $7F076E : STA $7F0770 : STA $7F0772 : STA $7F0774
+    STA $7F07AE : STA $7F07B0 : STA $7F07B2 : STA $7F07B4
+    LDA #$0202 : STA $7F0524
+    LDA #$0382 : STA $7F0430 : STA $7F0432
+    INC : STA $7F03F0 : STA $7F03F2
+    LDA #$0386 : STA $7F0434
+    INC : STA $7F03F4
+    INC : STA $7F046E : STA $7F04F0
+    INC : STA $7F03EE : STA $7F0470
+    INC : STA $7F0472
+    INC : STA $7F0474 : STA $7F04DE : STA $7F04F2
+    INC : STA $7F042E : STA $7F04B0
+    INC : STA $7F03B4 : STA $7F04B2
+    INC : INC : STA $7F04AC : STA $7F059C
+    LDA #$0398 : STA $7F042C : STA $7F051C
+    INC : STA $7F046C : STA $7F055C
+    LDA #$039C : STA $7F03EC : STA $7F04DC
+    LDA #$0602 : STA $7F052E
+    LDA #$1212 : STA $7F05A4
+    INC : INC : STA $7F0564
+    LDA #$1612 : STA $7F05AE
+    INC : INC : STA $7F056E
+    LDA #$8200 : STA $7F0528 : STA $7F052A
+    STA $7F07EE : STA $7F07F0 : STA $7F07F2 : STA $7F07F4
+    INC : STA $7F0526
+    LDA #$8210 : STA $7F0568 : STA $7F056A
+    STA $7F05A6 : STA $7F05A8 : STA $7F05AA : STA $7F05AC
+    LDA #$8215 : STA $7F0566
+    LDA #$8601 : STA $7F052C
+    LDA #$8615 : STA $7F056C
+    LDA #$8A07 : STA $7F05E6 : STA $7F05E8
+    STA $7F05EA : STA $7F05EC
+    LDA #$8A0B : STA $7F05E4
+    LDA #$8E0B : STA $7F05EE
+
+    ; Add slope BTS to new platform
+    %a8()
+    LDA #$1B : STA $7F66B3 : INC : STA $7F66D3
+    LDA #$5B : STA $7F66B8 : INC : STA $7F66D8
+}
+
+layout_asm_plasma_done:
+    PLP
+    RTS
+
 layout_asm_aqueduct:
 {
     PHP
     %a16()
-    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ layout_asm_mainstreet_done
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ layout_asm_plasma_done
 
     ; Replace power bomb blocks with bomb blocks
     LDA #$F09D : STA $7F1690 : STA $7F18D0

@@ -2081,6 +2081,7 @@ LayoutMenu:
     dw #$FFFF
     dw #layout_arearando
     dw #layout_antisoftlock
+    dw #layout_dashrecall
     dw #$0000
     %cm_header("ROOM LAYOUT")
     %cm_footer("APPLIED WHEN ROOM RELOADED")
@@ -2093,6 +2094,9 @@ layout_arearando:
 
 layout_antisoftlock:
     %cm_toggle_bit("Anti-Softlock Patches", !sram_room_layout, !ROOM_LAYOUT_ANTISOFTLOCK, #0)
+
+layout_dashrecall:
+    %cm_toggle_bit("DASH Recall Patches", !sram_room_layout, !ROOM_LAYOUT_DASH_RECALL, #0)
 
 
 ; ----------
