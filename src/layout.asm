@@ -331,6 +331,10 @@ org $8FD2CF
 org $8FD5CC
     dw #layout_asm_aqueduct
 
+; Pants room setup asm
+org $8FD66B
+    dw #layout_asm_pants_room
+
 ; Aqueduct Farm Sand Pit header
 org $8FD706
     dw layout_asm_aqueductfarmsandpit_door_list
@@ -845,6 +849,25 @@ layout_asm_aqueduct:
 }
 
 layout_asm_aqueduct_done:
+    PLP
+    RTS
+
+layout_asm_pants_room:
+{
+    PHP
+    %a16()
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_DASH_RECALL : BEQ layout_asm_aqueduct_done
+
+    ; Open grapple blocks to shaktool
+    LDA #$00FF : STA $7F0CCC : STA $7F0CCE : STA $7F0CD0
+    STA $7F0CD2 : STA $7F0CD4 : STA $7F0CD6
+    STA $7F0D0E : STA $7F0D14 : STA $7F0D16
+
+    ; Replace BTS
+    TDC : STA $7F6A69
+}
+
+layout_asm_pants_room_done:
     PLP
     RTS
 
