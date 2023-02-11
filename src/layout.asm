@@ -964,7 +964,7 @@ layout_asm_dachora:
 {
     PHP
     %a16()
-    LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANTISOFTLOCK : BEQ layout_asm_bigpink_done
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANTISOFTLOCK_OR_DASH_RECALL : BEQ layout_asm_bigpink_done
 
     ; Use non-respawning speed booster block BTS for dachora pitfall
     %a8()
@@ -980,7 +980,8 @@ layout_asm_moat:
 {
     PHP
     %a16()
-    LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANTISOFTLOCK : BEQ layout_asm_dachora_done
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANTISOFTLOCK_OR_DASH_RECALL : BEQ layout_asm_dachora_done
+    BIT !ROOM_LAYOUT_DASH_RECALL : BNE layout_asm_moat_dash
 
     ; Use shootable blocks on the moat pillar
     %a8()
@@ -991,7 +992,13 @@ layout_asm_moat:
     ; Set BTS so the top block is 1x2
     LDA #$02 : STA $7F66D0
     LDA #$FF : STA $7F66F0
+    PLP
+    RTS
 }
+
+layout_asm_moat_dash:
+    ; Use a single shootable block on the moat pillar
+    LDA #$F05F : STA $7F061E
 
 layout_asm_moat_done:
     PLP
@@ -1016,7 +1023,7 @@ layout_asm_redtower:
 {
     PHP
     %a16()
-    LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANTISOFTLOCK : BEQ layout_asm_missionimpossible_done
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANTISOFTLOCK_OR_DASH_RECALL : BEQ layout_asm_missionimpossible_done
 
     ; Create opening along bottom left of red tower
     LDA #$00FF : STA $7F0E66 : STA $7F0E88 : STA $7F0EA6 : STA $7F0EA8
@@ -1040,7 +1047,7 @@ layout_asm_belowspazer:
 {
     PHP
     %a16()
-    LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANTISOFTLOCK : BEQ layout_asm_redtower_done
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANTISOFTLOCK_OR_DASH_RECALL : BEQ layout_asm_redtower_done
 
     ; Use shootable block
     LDA #$C1EB : STA $7F018E
@@ -1069,7 +1076,7 @@ layout_asm_cathedralentrance:
 {
     PHP
     %a16()
-    LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANTISOFTLOCK : BEQ layout_asm_warehousekihunters_done
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANTISOFTLOCK_OR_DASH_RECALL : BEQ layout_asm_warehousekihunters_done
 
     ; Remove protruding ledge
     LDA #$8106 : STA $7F040C
@@ -1088,12 +1095,21 @@ layout_asm_hjbetank:
 {
     PHP
     %a16()
-    LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANTISOFTLOCK : BEQ layout_asm_cathedralentrance_done
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANTISOFTLOCK_OR_DASH_RECALL : BEQ layout_asm_cathedralentrance_done
+    BIT !ROOM_LAYOUT_DASH_RECALL : BNE layout_asm_hjbetank_dash
 
-    ; Use shootable block
+    ; Use one shootable block
     %a8()
     LDA #$C5 : STA $7F015D
+    PLP
+    RTS
 }
+
+layout_asm_hjbetank_dash:
+    ; Use multiple shootable blocks
+    %a8()
+    LDA #$C5 : STA $7F015D
+    LDA #$C3 : STA $7F02B5 : STA $7F02B9
 
 layout_asm_hjbetank_done:
     PLP
@@ -1103,7 +1119,8 @@ layout_asm_earlysupers:
 {
     PHP
     %a16()
-    LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANTISOFTLOCK : BEQ layout_asm_hjbetank_done
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANTISOFTLOCK_OR_DASH_RECALL : BEQ layout_asm_hjbetank_done
+    BIT !ROOM_LAYOUT_DASH_RECALL : BNE layout_asm_earlysupers_dash
 
     ; Use shootable block on the bridge
     %a8()
@@ -1116,7 +1133,14 @@ layout_asm_earlysupers:
     ; Set BTS to make 1x2 blocks
     LDA #$02 : STA $7F689B : STA $7F68FB
     LDA #$FF : STA $7F68CB : STA $7F692B
+    PLP
+    RTS
 }
+
+layout_asm_earlysupers_dash:
+    ; Use shootable block on the bridge
+    %a8()
+    LDA #$C1 : STA $7F08BD
 
 layout_asm_earlysupers_done:
     PLP
