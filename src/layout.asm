@@ -357,6 +357,10 @@ org $8FD2CF
 org $8FD5CC
     dw #layout_asm_aqueduct
 
+; Botwoon hallway setup asm
+org $8FD63C
+    dw #layout_asm_botwoon_hallway
+
 ; Pants room setup asm
 org $8FD66B
     dw #layout_asm_pants_room
@@ -878,11 +882,34 @@ layout_asm_aqueduct_done:
     PLP
     RTS
 
-layout_asm_pants_room:
+layout_asm_botwoon_hallway:
 {
     PHP
     %a16()
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_DASH_RECALL : BEQ layout_asm_aqueduct_done
+
+    ; Convert speed blocks to bomb blocks
+    %a8()
+    LDA #$F0 : STA $7F05A1 : STA $7F05E3 : STA $7F05ED
+    STA $7F0663 : STA $7F06A1 : STA $7F06ED
+    LDA #$F3 : STA $7F0621
+    LDA #$F8 : STA $7F066D : STA $7F06E3
+
+    ; Use spazer block BTS
+    LDA #$09 : STA $7F66D1 : STA $7F66F2 : STA $7F66F7
+    STA $7F6711 : STA $7F6732 : STA $7F6737
+    STA $7F6751 : STA $7F6772 : STA $7F6777
+}
+
+layout_asm_botwoon_hallway_done:
+    PLP
+    RTS
+
+layout_asm_pants_room:
+{
+    PHP
+    %a16()
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_DASH_RECALL : BEQ layout_asm_botwoon_hallway_done
 
     ; Open grapple blocks to shaktool
     LDA #$00FF : STA $7F0CCC : STA $7F0CCE : STA $7F0CD0
