@@ -349,6 +349,10 @@ org $8FC95B
     RTS
 warnpc $8FC96E
 
+; Bowling setup asm
+org $8FC9D2
+    dw #layout_asm_bowling
+
 ; Plasma setup asm
 org $8FD2CF
     dw #layout_asm_plasma
@@ -797,11 +801,31 @@ layout_asm_mainstreet_done:
 layout_asm_mainstreet_plm_data:
     db #$6F, #$B7, #$18, #$59, #$0A, #$00
 
-layout_asm_plasma:
+layout_asm_bowling:
 {
     PHP
     %a16()
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_DASH_RECALL : BEQ layout_asm_mainstreet_done
+
+    ; Clear speed blocks in front of Wrecked Ship reserve item
+    LDA #$00FF : STA $7F053E
+    STA $7F05BE : STA $7F05C0 : STA $7F05C4
+    STA $7F05C6 : STA $7F05CA : STA $7F05CC
+    STA $7F067E : STA $7F0680 : STA $7F0684
+    STA $7F0686 : STA $7F068A : STA $7F068C
+    STA $7F073E : STA $7F0740 : STA $7F0744
+    STA $7F0746 : STA $7F074A : STA $7F074C
+}
+
+layout_asm_bowling_done:
+    PLP
+    RTS
+
+layout_asm_plasma:
+{
+    PHP
+    %a16()
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_DASH_RECALL : BEQ layout_asm_bowling_done
 
     ; Add platform and surrounding decoration
     LDA #$00FF : STA $7F04AE : STA $7F04B4
