@@ -200,6 +200,28 @@ org $83AB92
 org $848D0C
     AND #$000F
 
+; Allow spazer blocks to be shot
+org $84D014
+layout_spazer_block_plm_entry:
+    dw layout_spazer_block_plm, $CBB7
+
+org $84D476
+layout_spazer_block_plm:
+{
+    LDX $0DDE : LDA $0C18,X : BIT #$0004 : BEQ .delete_plm
+    JMP $CF0C ; Break block
+  .delete_plm
+    TDC : STA $1C37,Y
+    RTS
+}
+warnpc $84D490
+
+org $94937D
+    dw $D040
+
+org $94A024
+    dw layout_spazer_block_plm_entry
+
 
 ; Parlor escape setup asm
 org $8F919C
@@ -235,6 +257,10 @@ org $8F9D3E
 ; Mission Impossible setup asm
 org $8F9E36
     dw #layout_asm_missionimpossible
+
+; Waterway setup asm
+org $8FA0F7
+    dw #layout_asm_waterway
 
 ; Red Tower setup asm
 org $8FA278
@@ -1019,11 +1045,47 @@ layout_asm_missionimpossible_done:
     PLP
     RTS
 
+layout_asm_waterway:
+{
+    PHP
+    %a16()
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_DASH_RECALL : BEQ layout_asm_missionimpossible_done
+
+    ; Convert speed blocks to bomb blocks
+    LDA #$F306 : STA $7F0802 : STA $7F08E2 : STA $7F09C2
+    LDA #$F34E : STA $7F0818 : STA $7F0836 : STA $7F083A
+    STA $7F083C : STA $7F08F6 : STA $7F08FA : STA $7F0916
+    STA $7F0918 : STA $7F091A : STA $7F09D6 : STA $7F09D8
+    STA $7F09F6 : STA $7F09F8 : STA $7F09FC : STA $7F09FE : STA $7F0A00
+    LDA #$F350 : STA $7F0804 : STA $7F081C : STA $7F0844
+    STA $7F08E4 : STA $7F08FC : STA $7F0924
+    STA $7F09C4 : STA $7F09DC : STA $7F0A04
+    LDA #$F74E : STA $7F081A : STA $7F0838 : STA $7F0914
+    STA $7F091C : STA $7F091E : STA $7F0922 : STA $7F09DA
+    LDA #$F750 : STA $7F0814 : STA $7F0832 : STA $7F08F4
+    STA $7F0912 : STA $7F09D4 : STA $7F09F2
+    LDA #$FB4E : STA $7F0816 : STA $7F0840 : STA $7F0842
+    STA $7F0920 : STA $7F09F4 : STA $7F09FA : STA $7F0A02
+    LDA #$FF4E : STA $7F0834 : STA $7F083E : STA $7F08F8
+
+    ; Use spazer block BTS
+    LDA #$0909 : STA $7F6802 : STA $7F680B : STA $7F680C : STA $7F680E
+    STA $7F681A : STA $7F681C : STA $7F681E : STA $7F6820 : STA $7F6822
+    STA $7F6872 : STA $7F687B : STA $7F687C : STA $7F687E
+    STA $7F688A : STA $7F688C : STA $7F688E : STA $7F6890 : STA $7F6892
+    STA $7F68E2 : STA $7F68EB : STA $7F68EC : STA $7F68EE
+    STA $7F68FA : STA $7F68FC : STA $7F68FE : STA $7F6900 : STA $7F6902
+}
+
+layout_asm_waterway_done:
+    PLP
+    RTS
+
 layout_asm_redtower:
 {
     PHP
     %a16()
-    LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANTISOFTLOCK_OR_DASH_RECALL : BEQ layout_asm_missionimpossible_done
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANTISOFTLOCK_OR_DASH_RECALL : BEQ layout_asm_waterway_done
 
     ; Create opening along bottom left of red tower
     LDA #$00FF : STA $7F0E66 : STA $7F0E88 : STA $7F0EA6 : STA $7F0EA8
