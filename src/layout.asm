@@ -353,9 +353,9 @@ warnpc $8FC96E
 org $8FC9D2
     dw #layout_asm_bowling
 
-; Plasma setup asm
-org $8FD2CF
-    dw #layout_asm_plasma
+; Plasma state check asm
+org $8FD2B5
+    dw #layout_asm_plasma_state_check
 
 ; Aqueduct setup asm
 org $8FD5CC
@@ -825,11 +825,24 @@ layout_asm_bowling_done:
     PLP
     RTS
 
+layout_asm_plasma_dash_header:
+    dl $CB8BD4
+    db $0B, $00, $00
+    dw $9D94, layout_asm_plasma_dash_enemies, layout_asm_plasma_dash_enemy_set
+    dw $00C0, $D2D3, $0000, $0000, $C553, $0000, layout_asm_plasma
+
+layout_asm_plasma_state_check:
+{
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_DASH_RECALL : BEQ .end_check
+    LDX #layout_asm_plasma_dash_header
+  .end_check
+    JMP $E5E6
+}
+
 layout_asm_plasma:
 {
     PHP
     %a16()
-    LDA !sram_room_layout : BIT !ROOM_LAYOUT_DASH_RECALL : BEQ layout_asm_bowling_done
 
     ; Add platform and surrounding decoration
     LDA #$00FF : STA $7F04AE : STA $7F04B4
@@ -1335,4 +1348,29 @@ layout_asm_earlysupers_done:
     RTS
 
 print pc, " layout end"
+
+
+org $A1EBD1
+print pc, " layout bankA1 start"
+
+layout_asm_plasma_dash_enemies:
+    dw $F693, #$0100, #$0080, #$0000, #$2000, #$0004, #$8001, #$0020
+    dw $F693, #$0080, #$01D0, #$0000, #$2000, #$0004, #$8000, #$0030
+    dw $F693, #$01B0, #$01D0, #$0000, #$2000, #$0004, #$8001, #$0030
+    dw $F393, #$0030, #$0180, #$0000, #$2000, #$0004, #$0000, #$01A0
+    dw $F393, #$01D0, #$0130, #$0000, #$2000, #$0004, #$0001, #$01A0
+    dw $F693, #$0078, #$0280, #$0000, #$2000, #$0004, #$8001, #$0080
+    db #$FF, #$FF, #$06
+
+print pc, " layout bankA1 end"
+
+
+org $B4F4B8
+print pc, " layout bankB4 start"
+
+layout_asm_plasma_dash_enemy_set:
+    dw $F693, #$0001, $F393, #$0002
+    db #$FF, #$FF, #$00
+
+print pc, " layout bankB4 end"
 
