@@ -663,7 +663,8 @@ layout_asm_crabtunnel:
 {
     PHP
     %a16()
-    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ layout_asm_singlechamber_done
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO_OR_DASH_RECALL : BEQ layout_asm_singlechamber_done
+    BIT !ROOM_LAYOUT_DASH_RECALL : BNE layout_asm_crabtunnel_dash
 
     ; Replace top of gate with slope tiles
     LDA #$1D87 : STA $7F039C : LDA #$1194 : STA $7F039E
@@ -675,7 +676,7 @@ layout_asm_crabtunnel:
     LDA #$00FF : STA $7F041E : STA $7F049E : STA $7F051E : STA $7F059E
 
     ; Clear gate PLMs and projectiles
-    LDA #$0000 : STA $1C83 : STA $1C85 : STA $19B9
+    TDC : STA $1C83 : STA $1C85 : STA $19B9
 
     ; Slope BTS for top of the gate tiles
     %a8()
@@ -683,7 +684,20 @@ layout_asm_crabtunnel:
 
     ; Normal BTS for remaining gate tiles
     LDA #$00 : STA $7F6610 : STA $7F6650 : STA $7F6690 : STA $7F66D0
+    PLP
+    RTS
 }
+
+layout_asm_crabtunnel_dash:
+    ; Remove remaining gate tiles
+    LDA #$00FF : STA $7F041E : STA $7F049E : STA $7F051E : STA $7F059E
+
+    ; Change gate PLM to open gate
+    LDA #$C826 : STA $1C85
+    LDA #$BC13 : STA $1D75
+
+    ; Clear gate projectile
+    TDC : STA $19B9
 
 layout_asm_crabtunnel_done:
     PLP
