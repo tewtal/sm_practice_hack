@@ -1160,6 +1160,10 @@ ToggleBeamsMenu:
     dw misc_hyperbeam
     dw #$FFFF
     dw tb_glitchedbeams
+    dw #$FFFF
+    dw tb_customdamage
+    dw tb_customchargedamage
+    dw tb_customunchargedamage
     dw #$0000
     %cm_header("TOGGLE BEAMS")
 
@@ -1180,6 +1184,15 @@ tb_plasmabeam:
 
 tb_glitchedbeams:
     %cm_submenu("Glitched Beams", #GlitchedBeamsMenu)
+
+tb_customdamage:
+    %cm_toggle("Custom Beam Damage", !sram_custom_damage, #1, #0)
+
+tb_customchargedamage:
+    %cm_numfield_word("Custom Charge Damage", !sram_custom_charge_damage, 0, 1000, 10, 50, #0)
+
+tb_customunchargedamage:
+    %cm_numfield_word("Custom Normal Damage", !sram_custom_uncharge_damage, 0, 1000, 10, 50, #0)
 
 equipment_toggle_beams:
 {

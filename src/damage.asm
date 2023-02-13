@@ -267,6 +267,52 @@ endif
 print pc, " damage bank90 end"
 
 
+org $90B8E8
+    JSL damage_init_beam_shot
+
+org $90B9E2
+    JSL damage_init_beam_shot
+
+
+org $93F61D
+print pc, " damage bank93 start"
+
+damage_init_beam_shot:
+{
+    ; Based on $938000 initialize projectile method,
+    ; but optimized for beam shots
+    ; so we can inject custom damage without a CPU hit
+    PHP : PHB : PHK : PLB
+    %ai16()
+    LDA $0C04,X : AND #$000F
+    ASL : STA $12
+    LDA $0C18,X
+    BIT #$0010 : BNE .charged_shot
+    AND #$000F : ASL
+    TAY : LDA $83C1,Y : TAY
+    LDA !sram_custom_damage : BNE .custom_uncharged_damage
+    LDA $0000,Y : STA $0C2C,X
+    JMP $8048
+
+  .charged_shot
+    AND #$000F : ASL
+    TAY : LDA $83D9,Y : TAY
+    LDA !sram_custom_damage : BNE .custom_charged_damage
+    LDA $0000,Y : STA $0C2C,X
+    JMP $8048
+
+  .custom_uncharged_damage
+    LDA !sram_custom_uncharge_damage : STA $0C2C,X
+    JMP $8048
+
+  .custom_charged_damage
+    LDA !sram_custom_charge_damage : STA $0C2C,X
+    JMP $8048
+}
+
+print pc, " damage bank93 end"
+
+
 if !FEATURE_PAL
 org $A0A872
 else            ; general damage hijack

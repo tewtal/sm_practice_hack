@@ -87,34 +87,40 @@ init_sram:
     CMP #$000D : BEQ .sram_upgrade_DtoE
     CMP #$000E : BEQ .sram_upgrade_EtoF
     CMP #$000F : BEQ .sram_upgrade_Fto10
+    CMP #$0010 : BEQ .sram_upgrade_10to11
     JSR init_sram_upto9
 
   .sram_upgrade_9toA
-    LDA #$0000 : STA !sram_ctrl_toggle_tileviewer
-    LDA #$0000 : STA !sram_status_icons
-    LDA #$0000 : STA !sram_suit_properties
+    TDC : STA !sram_ctrl_toggle_tileviewer
+    STA !sram_status_icons
+    STA !sram_suit_properties
 
   .sram_upgrade_AtoB
-    LDA #$0000 : STA !sram_ctrl_update_timers
+    TDC : STA !sram_ctrl_update_timers
 
   .sram_upgrade_BtoC
-    LDA #$0000 : STA !sram_top_display_mode
-    LDA #$0001 : STA !sram_healthalarm
-    LDA #$0000 : STA !sram_room_layout
+    TDC : STA !sram_top_display_mode
+    STA !sram_room_layout
+    INC : STA !sram_healthalarm
     LDA #$0003 : STA !sram_cutscenes
 
   .sram_upgrade_CtoD
-    LDA #$0000 : STA !sram_preset_options
-    LDA #$0000 : STA !sram_lag_counter_mode
+    TDC : STA !sram_preset_options
+    STA !sram_lag_counter_mode
 
   .sram_upgrade_DtoE
-    LDA #$0000 : STA !sram_fast_doors
+    TDC : STA !sram_fast_doors
 
   .sram_upgrade_EtoF
-    LDA #$0000 : STA !sram_suppress_flashing
+    TDC : STA !sram_suppress_flashing
 
   .sram_upgrade_Fto10
-    LDA #$0000 : STA !sram_fast_elevators
+    TDC : STA !sram_fast_elevators
+
+  .sram_upgrade_10to11
+    TDC : STA !sram_custom_damage
+    STA !sram_custom_charge_damage
+    STA !sram_custom_uncharge_damage
 
     LDA #!SRAM_VERSION : STA !sram_initialized
     RTS

@@ -444,7 +444,7 @@
 ; SRAM
 ; -----
 
-!SRAM_VERSION = $0010
+!SRAM_VERSION = $0011
 
 !SRAM_START = $702000
 
@@ -491,6 +491,9 @@
 !sram_fast_doors = !SRAM_START+$4C
 !sram_suppress_flashing = !SRAM_START+$4E
 !sram_fast_elevators = !SRAM_START+$50
+!sram_custom_damage = !SRAM_START+$52
+!sram_custom_charge_damage = !SRAM_START+$54
+!sram_custom_uncharge_damage = !SRAM_START+$56
 
 ; ^ FREE SPACE ^ up to +$0FCE
 
