@@ -1505,22 +1505,66 @@ misc_suit_properties:
     db #$28, "    VANILLA", #$FF
     db #$28, "   BALANCED", #$FF
     db #$28, "   PROGRESS", #$FF
+    db #$28, " DASHRECALL", #$FF
+    db #$28, " HEATSHIELD", #$FF
     db #$FF
 
 init_suit_properties_ram:
 {
-    LDA #$0021 : STA !ram_suits_enemy_damage_check : STA !ram_suits_periodic_damage_check
+    ; Default to both suits getting 50% damage reduction (gravity gets extra 50%)
+    ; and both suits getting full heat protection
+    LDA #$0021 : STA !ram_suits_enemy_damage_check : STA !ram_suits_heat_damage_check
 
-    LDA !sram_suit_properties : CMP #$0002 : BNE .init_periodic_damage
+    LDA !sram_suit_properties : CMP #$0002 : BMI .init_heat_damage
+
+    ; Progressive and DASH give less enemy damage protection to gravity
     LDA #$0001 : STA !ram_suits_enemy_damage_check
 
-  .init_periodic_damage
+  .init_heat_damage
     LDA !sram_suit_properties : BEQ .end
-    LDA #$0001 : STA !ram_suits_periodic_damage_check
+
+    ; Not vanilla, so only varia gets full heat protection
+    CMP #$0004 : BEQ .init_heat_shield
+    LDA #$0001 : STA !ram_suits_heat_damage_check
+    BRA .end
+
+  .init_heat_shield
+    ; Heat Shield also doesn't give any enemy protection
+    TDC : STA !ram_suits_enemy_damage_check : STA !ram_suits_heat_damage_check
+
+  .end
+    ; Fallthrough to init_heat_damage_ram
+}
+
+init_heat_damage_ram:
+{
+    ; Default to 0.25 damage per frame
+    LDA #$4000 : STA !ram_suits_heat_damage_value
+    LDA !sram_suit_properties : CMP #$0003 : BEQ .dash_recall : BMI .end
+
+    ; Check if heat shield is actually equipped
+    LDA $09A2 : BIT #$0001 : BNE .heat_shield
+
+  .dash_recall
+    ; If no gravity than nothing to do
+    LDA $09A2 : BIT #$0020 : BEQ .end
+
+    ; Without heat shield but with gravity we want damage to be 75%
+    ; Since damage is halved by gravity we'll set it to 150%
+    LDA #$6000 : STA !ram_suits_heat_damage_value
+    RTL
+
+  .heat_shield
+    ; If heat shield equipped, we want it to be 50%
+    ; However if gravity is equipped then the damage is already halved
+    LDA $09A2 : BIT #$0020 : BNE .end
+    LDA #$2000 : STA !ram_suits_heat_damage_value
+    RTL
 
   .end
     RTL
 }
+
 
 misc_invincibility:
     %cm_toggle_bit("Invincibility", $7E0DE0, #$0007, #0)

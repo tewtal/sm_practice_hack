@@ -188,6 +188,7 @@ ih_get_item_code:
 
     ; Update HUD
     JSL ih_update_hud_code
+    JSL init_heat_damage_ram
 
     ; restore temp variables
     PLA : STA $14
@@ -1522,6 +1523,7 @@ ih_hud_code_paused:
     PLX : PLY
 
   .end
+    JSL init_heat_damage_ram
     LDA $7E09C0 ; overwritten code
     JMP $9B51
 }

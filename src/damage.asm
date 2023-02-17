@@ -3,24 +3,12 @@
 org $8DE37C
     ; Replaced the check and also take one additional byte
     ; Thus the following logic is the same but shifted down
-    AND !ram_suits_periodic_damage_check : BNE $29
-    LDA $0A4E : CLC : ADC #$4000 : STA $0A4E
-    ; We don't have enough space to add the carry bit inline,
-    ; so we need to jump to freespace, but only do that if the carry bit is set
-    BCC $06
-    JMP increment_periodic_damage
-
-
-org $8DFFF1
-print pc, " damage bank8D start"
-
-increment_periodic_damage:
-{
-    LDA $0A50 : INC : STA $0A50
-    JMP $E394
-}
-
-print pc, " damage bank8D end"
+    AND !ram_suits_heat_damage_check : BNE $29
+    LDA $0A4E : CLC : ADC !ram_suits_heat_damage_value : STA $0A4E
+    ; Now we've taken another byte, but fortunately we can optimize the rest
+    ; We even have two bytes left over
+    NOP : NOP : BCC $03
+    INC $0A50
 
 
 ; We now have three separate periodic damage routines,
@@ -156,6 +144,8 @@ else
 endif
     dw periodic_damage_balanced
     dw periodic_damage_progressive
+    dw periodic_damage_progressive
+    dw periodic_damage_heat_shield
 
 ; Make our minor adjustments and jump back to the vanilla routine
 periodic_damage_balanced:
@@ -202,6 +192,32 @@ endif
     PLA : XBA : AND #$00FF : STA $0A50
 
   .novaria
+    ; Jump back into the vanilla routine
+if !FEATURE_PAL
+    JMP $EA0E
+else
+    JMP $EA11
+endif
+}
+
+periodic_damage_heat_shield:
+{
+    PHP : REP #$30
+    LDA $0A78 : BEQ $03
+    ; Nothing to do, jump back to vanilla routine
+if !FEATURE_PAL
+    JMP $EA32
+else
+    JMP $EA35
+endif
+
+    LDA $09A2 : BIT #$0020 : BEQ .nogravity
+    ; Gravity equipped, so halve damage
+    LDA $0A4F : LSR
+    PHA : XBA : AND #$FF00 : STA $0A4E
+    PLA : XBA : AND #$00FF : STA $0A50
+
+  .nogravity
     ; Jump back into the vanilla routine
 if !FEATURE_PAL
     JMP $EA0E

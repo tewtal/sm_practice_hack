@@ -128,7 +128,7 @@
 !ram_draygon_rng_right              = !WRAM_PERSIST_START+$2E
 
 !ram_suits_enemy_damage_check       = !WRAM_PERSIST_START+$30
-!ram_suits_periodic_damage_check    = !WRAM_PERSIST_START+$32
+!ram_suits_heat_damage_check        = !WRAM_PERSIST_START+$32
 !ram_pacifist                       = !WRAM_PERSIST_START+$34
 !ram_freeze_on_load                 = !WRAM_PERSIST_START+$36
 
@@ -150,6 +150,7 @@
 !ram_game_mode_extras               = !WRAM_PERSIST_START+$52
 !ram_sprite_features_active         = !WRAM_PERSIST_START+$54
 !ram_kraid_wait_rng                 = !WRAM_PERSIST_START+$56
+!ram_suits_heat_damage_value        = !WRAM_PERSIST_START+$58
 
 ; ^ FREE SPACE ^ up to +$7A
 
