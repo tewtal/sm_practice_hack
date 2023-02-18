@@ -1383,6 +1383,7 @@ MiscMenu:
     dw #misc_invincibility
     dw #misc_gooslowdown
     dw #misc_suit_properties
+    dw #misc_water_physics
     dw #$FFFF
     dw #misc_magicpants
     dw #misc_spacepants
@@ -1524,13 +1525,7 @@ init_suit_properties_ram:
     LDA !sram_suit_properties : BEQ .end
 
     ; Not vanilla, so only varia gets full heat protection
-    CMP #$0004 : BEQ .init_heat_shield
     LDA #$0001 : STA !ram_suits_heat_damage_check
-    BRA .end
-
-  .init_heat_shield
-    ; Heat Shield also doesn't give any enemy protection
-    TDC : STA !ram_suits_enemy_damage_check : STA !ram_suits_heat_damage_check
 
   .end
     ; Fallthrough to init_heat_damage_ram
@@ -1540,12 +1535,15 @@ init_heat_damage_ram:
 {
     ; Default to 0.25 damage per frame
     LDA #$4000 : STA !ram_suits_heat_damage_value
-    LDA !sram_suit_properties : CMP #$0003 : BEQ .dash_recall : BMI .end
+    LDA !sram_suit_properties : CMP #$0003 : BPL .dash_recall
+    RTL
 
     ; Check if heat shield is actually equipped
     LDA $09A2 : BIT #$0001 : BNE .heat_shield
 
   .dash_recall
+    BNE .heat_shield
+
     ; If no gravity than nothing to do
     LDA $09A2 : BIT #$0020 : BEQ .end
 
@@ -1555,16 +1553,72 @@ init_heat_damage_ram:
     RTL
 
   .heat_shield
-    ; If heat shield equipped, we want it to be 50%
+    LDA !ROOM_ID : CMP #$B1E4 : BMI .no_damage : CMP #$B742 : BPL .no_damage
+
+    ; We want Lower Norfair heat damage to be 50%
     ; However if gravity is equipped then the damage is already halved
     LDA $09A2 : BIT #$0020 : BNE .end
     LDA #$2000 : STA !ram_suits_heat_damage_value
     RTL
 
+  .no_damage
+    TDC : STA !ram_suits_heat_damage_value
+
   .end
     RTL
 }
 
+
+misc_water_physics:
+    dw !ACTION_CHOICE
+    dl #!ram_water_physics
+    dw init_water_physics_ram
+    db #$28, "Water Physics", #$FF
+    db #$28, "    VANILLA", #$FF
+    db #$28, "PRESS VALVE", #$FF
+    db #$28, "        OFF", #$FF
+    db #$28, "         ON", #$FF
+    db #$28, "  OFF TO ON", #$FF
+    db #$28, "  ON TO OFF", #$FF
+    db #$FF
+
+init_water_physics_ram:
+{
+    LDA !ram_water_physics : BNE init_water_physics_ram_non_vanilla
+    LDA !SAMUS_ITEMS_EQUIPPED : STA !SAMUS_WATER_PHYSICS
+    RTL
+}
+
+init_water_physics_after_room_transition:
+{
+    LDA !ram_water_physics : BNE .check_toggle
+    LDA !SAMUS_ITEMS_EQUIPPED : STA !SAMUS_WATER_PHYSICS
+    RTL
+
+  .check_toggle
+    CMP #$0004 : BMI init_water_physics_ram_non_vanilla
+    EOR #$0001 : STA !ram_water_physics
+}
+
+init_water_physics_ram_non_vanilla:
+{
+    CMP #$0001 : BEQ .pressure_valve
+    BIT #$0001 : BNE .on
+
+  .off
+    LDA #$0020 : STA !SAMUS_WATER_PHYSICS
+    RTL
+
+  .pressure_valve
+    LDA !ROOM_ID : CMP #$D4EE : BMI .off : CMP #$DA61 : BPL .off
+    CMP #$D5EC : BEQ .off : CMP #$D646 : BEQ .off
+    CMP #$D69A : BEQ .off : CMP #$D6D0 : BEQ .off
+    CMP #$D86E : BEQ .off : CMP #$D8C5 : BEQ .off
+
+  .on
+    TDC : STA !SAMUS_WATER_PHYSICS
+    RTL
+}
 
 misc_invincibility:
     %cm_toggle_bit("Invincibility", $7E0DE0, #$0007, #0)
@@ -1573,9 +1627,10 @@ misc_killenemies:
     %cm_jsl("Kill Enemies", .kill_loop, #0)
   .kill_loop
     ; 8000 = solid to Samus, 0400 = Ignore Samus projectiles
-    TAX : LDA $0F86,X : BIT #$8400 : BNE +
+    TAX : LDA $0F86,X : BIT #$8400 : BNE .next_enemy
     ORA #$0200 : STA $0F86,X
-+   TXA : CLC : ADC #$0040 : CMP #$0400 : BNE .kill_loop
+  .next_enemy
+    TXA : CLC : ADC #$0040 : CMP #$0400 : BNE .kill_loop
     LDA #$0009 : JSL !SFX_LIB2 ; enemy killed
     RTL
 
@@ -3097,6 +3152,7 @@ GameModeExtras:
 init_wram_based_on_sram:
 {
     JSL init_suit_properties_ram
+    JSL init_water_physics_ram
 
     ; Check if any less common controller shortcuts are configured
     JSL GameModeExtras

@@ -51,7 +51,6 @@
 !ram_vcounter_data                  = !WRAM_START+$36
 !ram_custom_preset                  = !WRAM_START+$38
 
-
 !ram_magic_pants_state              = !WRAM_START+$3A
 !ram_magic_pants_pal1               = !WRAM_START+$3C
 !ram_magic_pants_pal2               = !WRAM_START+$3E
@@ -151,6 +150,7 @@
 !ram_sprite_features_active         = !WRAM_PERSIST_START+$54
 !ram_kraid_wait_rng                 = !WRAM_PERSIST_START+$56
 !ram_suits_heat_damage_value        = !WRAM_PERSIST_START+$58
+!ram_water_physics                  = !WRAM_PERSIST_START+$5A
 
 ; ^ FREE SPACE ^ up to +$7A
 
@@ -401,6 +401,7 @@
 !SAMUS_PREVIOUS_MOVEMENT_TYPE = $0A23
 !SAMUS_SHINE_TIMER = $0A68
 !SAMUS_HEALTH_WARNING = $0A6A
+!SAMUS_WATER_PHYSICS = $0A70  ; Not used in vanilla
 !SAMUS_X = $0AF6
 !SAMUS_X_SUBPX = $0AF8
 !SAMUS_Y = $0AFA

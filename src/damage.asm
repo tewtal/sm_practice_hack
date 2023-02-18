@@ -1,14 +1,11 @@
 
 ; Suit periodic damage
 org $8DE37C
-    ; Replaced the check and also take one additional byte
-    ; Thus the following logic is the same but shifted down
     AND !ram_suits_heat_damage_check : BNE $29
-    LDA $0A4E : CLC : ADC !ram_suits_heat_damage_value : STA $0A4E
-    ; Now we've taken another byte, but fortunately we can optimize the rest
-    ; We even have two bytes left over
-    NOP : NOP : BCC $03
-    INC $0A50
+    LDA !ram_suits_heat_damage_value : BEQ $23
+    CLC : ADC $0A4E : STA $0A4E
+    BCC $03 : INC $0A50
+warnpc $8DE394
 
 
 ; We now have three separate periodic damage routines,

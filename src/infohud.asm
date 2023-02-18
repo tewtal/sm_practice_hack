@@ -189,6 +189,7 @@ ih_get_item_code:
     ; Update HUD
     JSL ih_update_hud_code
     JSL init_heat_damage_ram
+    JSL init_water_physics_ram
 
     ; restore temp variables
     PLA : STA $14
@@ -335,6 +336,8 @@ ih_after_room_transition:
     ; Reset realtime timer
     LDA #$0000 : STA !ram_realtime_room
 
+    JSL init_heat_damage_ram
+    JSL init_water_physics_after_room_transition
     PLY
     PLX
 
@@ -1524,6 +1527,7 @@ ih_hud_code_paused:
 
   .end
     JSL init_heat_damage_ram
+    JSL init_water_physics_ram
     LDA $7E09C0 ; overwritten code
     JMP $9B51
 }

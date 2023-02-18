@@ -521,7 +521,9 @@ endif
     STZ $1C1F              ; Clear message box index
     STZ $0E1A              ; Clear health bomb flag
     STZ $0795 : STZ $0797  ; Clear door transition flags
-    LDA #$0000 : STA !ram_transition_flag
+    TDC : STA !ram_transition_flag
+    JSL init_heat_damage_ram
+    JSL init_water_physics_ram
 
     LDA #$E737 : STA $099C ; Pointer to next frame's room transition code = $82:E737
 
