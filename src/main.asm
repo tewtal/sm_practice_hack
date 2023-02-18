@@ -11,7 +11,7 @@ lorom
 !VERSION_MINOR = 5
 !VERSION_BUILD = 2
 !VERSION_REV_1 = 0
-!VERSION_REV_2 = 3
+!VERSION_REV_2 = 4
 
 table ../resources/normal.tbl
 
@@ -43,6 +43,7 @@ incsrc rng.asm
 incsrc custompresets.asm
 incsrc presets.asm
 incsrc damage.asm
+incsrc physics.asm
 incsrc misc.asm
 incsrc layout.asm
 incsrc cutscenes.asm

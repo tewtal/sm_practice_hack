@@ -151,6 +151,7 @@
 !ram_kraid_wait_rng                 = !WRAM_PERSIST_START+$56
 !ram_suits_heat_damage_value        = !WRAM_PERSIST_START+$58
 !ram_water_physics                  = !WRAM_PERSIST_START+$5A
+!ram_double_jump                    = !WRAM_PERSIST_START+$5C
 
 ; ^ FREE SPACE ^ up to +$7A
 
@@ -393,6 +394,7 @@
 !IGT_HOURS = $09E0
 !SAMUS_AUTO_CANCEL = $0A04
 !SAMUS_LAST_HP = $0A06
+!SAMUS_DOUBLE_JUMP = $0A14  ; Only used during demos in vanilla
 !SAMUS_POSE = $0A1C
 !SAMUS_POSE_DIRECTION = $0A1E
 !SAMUS_MOVEMENT_TYPE = $0A1F
@@ -402,6 +404,7 @@
 !SAMUS_SHINE_TIMER = $0A68
 !SAMUS_HEALTH_WARNING = $0A6A
 !SAMUS_WATER_PHYSICS = $0A70  ; Not used in vanilla
+!SAMUS_ANIMATION_FRAME = $0A96
 !SAMUS_X = $0AF6
 !SAMUS_X_SUBPX = $0AF8
 !SAMUS_Y = $0AFA

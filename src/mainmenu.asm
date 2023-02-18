@@ -1384,6 +1384,7 @@ MiscMenu:
     dw #misc_gooslowdown
     dw #misc_suit_properties
     dw #misc_water_physics
+    dw #misc_double_jump
     dw #$FFFF
     dw #misc_magicpants
     dw #misc_spacepants
@@ -1582,20 +1583,26 @@ misc_water_physics:
     db #$28, "  ON TO OFF", #$FF
     db #$FF
 
+misc_double_jump:
+    %cm_toggle_bit("Double Jump", !ram_double_jump, #$0200, init_water_physics_ram)
+
 init_water_physics_ram:
 {
     LDA !ram_water_physics : BNE init_water_physics_ram_non_vanilla
-    LDA !SAMUS_ITEMS_EQUIPPED : STA !SAMUS_WATER_PHYSICS
+    ; Fallthrough to init_water_physics_vanilla
+}
+
+init_water_physics_vanilla:
+{
+    LDA !SAMUS_ITEMS_EQUIPPED : ORA !ram_double_jump : STA !SAMUS_WATER_PHYSICS
     RTL
 }
 
 init_water_physics_after_room_transition:
 {
-    LDA !ram_water_physics : BNE .check_toggle
-    LDA !SAMUS_ITEMS_EQUIPPED : STA !SAMUS_WATER_PHYSICS
-    RTL
+    LDA !ram_water_physics : BEQ init_water_physics_vanilla
 
-  .check_toggle
+    ; Check if we need to toggle on-to-off or off-to-on states
     CMP #$0004 : BMI init_water_physics_ram_non_vanilla
     EOR #$0001 : STA !ram_water_physics
 }
@@ -1606,7 +1613,13 @@ init_water_physics_ram_non_vanilla:
     BIT #$0001 : BNE .on
 
   .off
-    LDA #$0020 : STA !SAMUS_WATER_PHYSICS
+    LDA !SAMUS_ITEMS_EQUIPPED : AND #$0200
+    ORA !ram_double_jump : ORA #$0020 : STA !SAMUS_WATER_PHYSICS
+    RTL
+
+  .on
+    LDA !SAMUS_ITEMS_EQUIPPED : AND #$0200
+    ORA !ram_double_jump : STA !SAMUS_WATER_PHYSICS
     RTL
 
   .pressure_valve
@@ -1614,11 +1627,11 @@ init_water_physics_ram_non_vanilla:
     CMP #$D5EC : BEQ .off : CMP #$D646 : BEQ .off
     CMP #$D69A : BEQ .off : CMP #$D6D0 : BEQ .off
     CMP #$D86E : BEQ .off : CMP #$D8C5 : BEQ .off
-
-  .on
-    TDC : STA !SAMUS_WATER_PHYSICS
+    LDA !SAMUS_ITEMS_EQUIPPED : AND #$0220
+    ORA !ram_double_jump : STA !SAMUS_WATER_PHYSICS
     RTL
 }
+
 
 misc_invincibility:
     %cm_toggle_bit("Invincibility", $7E0DE0, #$0007, #0)
