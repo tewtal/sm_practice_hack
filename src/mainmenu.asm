@@ -167,8 +167,8 @@ macro cm_equipment_item(name, addr, bitmask, inverse)
     db #$28, "        OFF", #$FF
     db #$FF
   .routine
-    LDA.w <addr> : STA !DP_Address
-    LDA.w <addr>>>16 : STA !DP_Address+2
+    LDA.w #<addr> : STA !DP_Address
+    LDA.w #<addr>>>16 : STA !DP_Address+2
     LDA <bitmask> : STA !DP_ToggleValue
     LDA <inverse> : STA !DP_Increment
     JMP equipment_toggle_items
