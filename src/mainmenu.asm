@@ -1702,13 +1702,23 @@ init_water_physics_ram_non_vanilla:
     RTL
 
   .pressure_valve
-    LDA !ROOM_ID : CMP #$D4EE : BMI .off : CMP #$DA61 : BPL .off
+    LDA !ROOM_ID : CMP #$C98D : BMI .pressure_valve_more_checks
+    CMP #$D4EE : BMI .off : CMP #$D8C6 : BPL .pressure_valve_on
     CMP #$D5EC : BEQ .off : CMP #$D646 : BEQ .off
     CMP #$D69A : BEQ .off : CMP #$D6D0 : BEQ .off
     CMP #$D86E : BEQ .off : CMP #$D8C5 : BEQ .off
+
+  .pressure_valve_on
     LDA !SAMUS_ITEMS_EQUIPPED : AND #$0220
     ORA.l !sram_double_jump : STA !SAMUS_WATER_PHYSICS
     RTL
+
+  .pressure_valve_more_checks
+    CMP #$AC00 : BEQ .off : CMP #$AB64 : BEQ .off
+    CMP #$A5EF : BPL .pressure_valve_on
+    CMP #$99FA : BPL .off : CMP #$965A : BPL .pressure_valve_on
+    CMP #$93AB : BMI .pressure_valve_on
+    BRA .off
 }
 
 
