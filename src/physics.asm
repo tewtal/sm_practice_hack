@@ -96,10 +96,10 @@ misc_water_physics_grapple:
 org $9092EA
 double_jump_check:
 {
-    LDA !SAMUS_ITEMS_EQUIPPED : BIT #0200 : BEQ .no_space_jump
+    LDA !SAMUS_ITEMS_EQUIPPED : BIT #$0200 : BEQ .no_space_jump
 
   .jump_allowed
-    BRL vanilla_make_samus_jump
+    JMP $98BC
 
   .no_space_jump
     LDA !SAMUS_DOUBLE_JUMP : BNE .end
@@ -108,15 +108,12 @@ double_jump_check:
     ; Increment counter unless in a walljump pose
     LDA !SAMUS_ANIMATION_FRAME : AND #$000F : CMP #$000B : BEQ .jump_allowed
     INC !SAMUS_DOUBLE_JUMP
-    BRL vanilla_make_samus_jump
+    JMP $98BC
 
   .end
     RTL
 }
 warnpc $909348
-
-org $9098BC
-vanilla_make_samus_jump:
 
 org $90A46E
 double_jump_eligible_check:
