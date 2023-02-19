@@ -200,6 +200,73 @@ org $83AB92
 org $848D0C
     AND #$000F
 
+; Ignore bombs for bomb torizo with VARIA tweaks
+org $848258
+layout_bomb_torizo_finish_crumbling:
+    INC $1D27,X : INC $1D27,X
+    LDA #$D356 : STA $1CD7,X
+    RTS
+warnpc $848270
+
+org $84BA50
+    dw layout_bomb_grey_door_new_instruction
+
+org $84BA6F
+layout_bomb_grey_door_original_instruction:
+
+org $84BA7A
+layout_bomb_grey_door_original_skip:
+
+org $84BAD1
+layout_bomb_grey_door_new_instruction:
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_VARIA_TWEAKS : BNE layout_bomb_grey_door_original_skip
+    BRA layout_bomb_grey_door_original_instruction
+
+layout_bomb_set_room_argument:
+{
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_VARIA_TWEAKS : BEQ .end
+    LDA #layout_bomb_torizo_start_crumbling : STA $1D21
+    LDA #$BA54 : STA $1D75
+  .end
+    JMP $8899
+}
+warnpc $84BAF4
+
+org $84D33B
+layout_bomb_torizo_crumbling_chozo_preinstruction:
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_VARIA_TWEAKS : BNE layout_bomb_torizo_end_preinstruction
+    LDA !SAMUS_ITEMS_COLLECTED : AND #$1000 : BEQ layout_bomb_torizo_end_preinstruction
+
+layout_bomb_torizo_start_crumbling:
+    LDA #$0001 : STA $7EDE1C,X
+    JMP layout_bomb_torizo_finish_crumbling
+
+layout_bomb_torizo_end_preinstruction:
+warnpc $84D356
+
+org $84E53D
+    dw layout_bomb_set_room_argument
+
+; Ignore picky chozo in DASH or VARIA tweaks
+org $84D18F
+layout_picky_chozo:
+{
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_DASH_RECALL_OR_VARIA_TWEAKS : BNE .skip_picky_chozo
+    LDA !SAMUS_ITEMS_COLLECTED : AND #$0200 : BEQ layout_picky_chozo_end
+  .skip_picky_chozo
+    ; Shift existing logic nine bytes down
+    LDA !SAMUS_COLLISION_DIRECTION : AND #$000F : CMP #$0003 : BNE layout_picky_chozo_end
+    LDA !SAMUS_POSE : CMP #$001D : BEQ .start_chozo_event
+    CMP #$0079 : BEQ .start_chozo_event : CMP #$007A : BNE layout_picky_chozo_end
+  .start_chozo_event
+    ; Make up for overridden code
+    JSL ih_set_picky_chozo_event_and_enemy_speed
+}
+warnpc $84D1C1
+
+org $84D1DE
+layout_picky_chozo_end:
+
 ; Allow spazer blocks to be shot
 org $84D014
 layout_spazer_block_plm_entry:
@@ -282,6 +349,10 @@ org $8FA7D8
 org $8FAA66
     dw #layout_asm_hjbetank
 
+; Acid Statue setup asm
+org $8FB20A
+    dw #layout_asm_acidstatue
+
 ; Caterpillar elevator and middle-left door asm
 org $8FBA26
     ; Replace STA with jump to STA
@@ -316,6 +387,14 @@ org $8FC124
   .end_explosion
     JMP layout_asm_escape_screen_shake
 warnpc $8FC183
+
+; Electric Death state check asm
+org $8FCBE5
+    dw #layout_asm_electric_death_state_check
+
+; Wrecked Ship Energy Tank state check asm
+org $8FCC37
+    dw #layout_asm_wrecked_ship_energy_tank_state_check
 
 ; Tourian escape room 1 setup asm
 org $8FC926
@@ -839,6 +918,32 @@ layout_asm_bowling_done:
     PLP
     RTS
 
+layout_asm_electric_death_varia_tweaks_header:
+    dl $C4D3EE
+    db $05, $30, $05
+    dw $9C04, $C1AB, $8BF7, $C1C1, $CC21, $0000, $0000, $C323, $E19E, $C8C7
+
+layout_asm_electric_death_state_check:
+{
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_VARIA_TWEAKS : BEQ .end_check
+    LDX #layout_asm_electric_death_varia_tweaks_header
+  .end_check
+    JMP $E5E6
+}
+
+layout_asm_wrecked_ship_energy_tank_varia_tweaks_header:
+    dl $C4D883
+    db $05, $00, $03
+    dw $9C14, $C1E7, $8C27, $00C0, $0000, $0000, $0000, $C337, $0000, $C8C7
+
+layout_asm_wrecked_ship_energy_tank_state_check:
+{
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_VARIA_TWEAKS : BEQ .end_check
+    LDX #layout_asm_wrecked_ship_energy_tank_varia_tweaks_header
+  .end_check
+    JMP $E5E6
+}
+
 layout_asm_plasma_dash_header:
     dl $CB8BD4
     db $0B, $00, $00
@@ -1330,11 +1435,26 @@ layout_asm_hjbetank_done:
     PLP
     RTS
 
+layout_asm_acidstatue:
+{
+    PHP
+    %a16()
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_VARIA_TWEAKS : BEQ layout_asm_hjbetank_done
+
+    ; Add platform
+    LDA #$836B : STA $7F049E : STA $7F04A0
+    STA $7F04A2 : STA $7F04A4
+}
+
+layout_asm_acidstatue_done:
+    PLP
+    RTS
+
 layout_asm_earlysupers:
 {
     PHP
     %a16()
-    LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANTISOFTLOCK_OR_DASH_RECALL : BEQ layout_asm_hjbetank_done
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANTISOFTLOCK_OR_DASH_RECALL : BEQ layout_asm_acidstatue_done
     BIT !ROOM_LAYOUT_DASH_RECALL : BNE layout_asm_earlysupers_dash
 
     ; Use shootable block on the bridge

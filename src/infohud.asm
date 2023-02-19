@@ -1490,6 +1490,13 @@ warnpc $F0E000 ; spritefeat.asm
 org $80FD00
 print pc, " infohud bank80 start"
 
+; Used by room layout
+ih_set_picky_chozo_event_and_enemy_speed:
+{
+    LDA #$0001 : STA $0FB4
+    LDA #$000C : JMP $81FA
+}
+
 ih_fix_scroll_offsets:
 {
     LDA !ram_fix_scroll_offsets : BEQ .done
