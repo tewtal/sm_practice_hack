@@ -150,8 +150,6 @@
 !ram_sprite_features_active         = !WRAM_PERSIST_START+$54
 !ram_kraid_wait_rng                 = !WRAM_PERSIST_START+$56
 !ram_suits_heat_damage_value        = !WRAM_PERSIST_START+$58
-!ram_water_physics                  = !WRAM_PERSIST_START+$5A
-!ram_double_jump                    = !WRAM_PERSIST_START+$5C
 
 ; ^ FREE SPACE ^ up to +$7A
 
@@ -499,6 +497,8 @@
 !sram_custom_damage = !SRAM_START+$52
 !sram_custom_charge_damage = !SRAM_START+$54
 !sram_custom_uncharge_damage = !SRAM_START+$56
+!sram_water_physics = !SRAM_START+$58
+!sram_double_jump = !SRAM_START+$5A
 
 ; ^ FREE SPACE ^ up to +$0FCE
 

@@ -303,25 +303,118 @@ damage_init_beam_shot:
     BIT #$0010 : BNE .charged_shot
     AND #$000F : ASL
     TAY : LDA $83C1,Y : TAY
-    LDA !sram_custom_damage : BNE .custom_uncharged_damage
+    LDA !sram_custom_damage : BNE .non_vanilla_uncharged_damage
     LDA $0000,Y : STA $0C2C,X
     JMP $8048
 
   .charged_shot
     AND #$000F : ASL
     TAY : LDA $83D9,Y : TAY
-    LDA !sram_custom_damage : BNE .custom_charged_damage
+    LDA !sram_custom_damage : BNE .non_vanilla_charged_damage
     LDA $0000,Y : STA $0C2C,X
+    JMP $8048
+
+  .non_vanilla_uncharged_damage
+    DEC : BEQ .custom_uncharged_damage
+
+  .dash_charge_0
+    PHX : JSL compute_dash_charge_0_beam_damage : PLX : STA $0C2C,X
     JMP $8048
 
   .custom_uncharged_damage
     LDA !sram_custom_uncharge_damage : STA $0C2C,X
     JMP $8048
 
+  .non_vanilla_charged_damage
+    DEC : BEQ .custom_charged_damage
+    DEC : BEQ .dash_charge_0
+    DEC : BEQ .dash_charge_1
+    DEC : BEQ .dash_charge_2
+    DEC : BEQ .dash_charge_3
+    PHX : JSL compute_dash_charge_4_beam_damage : PLX : STA $0C2C,X
+    JMP $8048
+
   .custom_charged_damage
     LDA !sram_custom_charge_damage : STA $0C2C,X
     JMP $8048
+
+  .dash_charge_1
+    PHX : JSL compute_dash_charge_1_beam_damage : PLX : STA $0C2C,X
+    JMP $8048
+
+  .dash_charge_2
+    PHX : JSL compute_dash_charge_2_beam_damage : PLX : STA $0C2C,X
+    JMP $8048
+
+  .dash_charge_3
+    PHX : JSL compute_dash_charge_3_beam_damage : PLX : STA $0C2C,X
+    JMP $8048
 }
+
+compute_vanilla_uncharged_beam_damage:
+{
+    LDA !SAMUS_BEAMS_EQUIPPED : AND #$000F : ASL : TAX
+    LDA.l vanilla_uncharged_beam_damage_table,X
+    RTL
+}
+
+compute_vanilla_charged_beam_damage:
+{
+    LDA !SAMUS_BEAMS_EQUIPPED : AND #$000F : ASL : TAX
+    LDA.l vanilla_charged_beam_damage_table,X
+    RTL
+}
+
+compute_dash_charge_0_beam_damage:
+{
+    LDA !SAMUS_BEAMS_EQUIPPED : AND #$000F : ASL : TAX
+    LDA.l dash_charge_0_beam_damage_table,X
+    RTL
+}
+
+compute_dash_charge_1_beam_damage:
+{
+    LDA !SAMUS_BEAMS_EQUIPPED : AND #$000F : ASL : TAX
+    LDA.l dash_charge_1_beam_damage_table,X
+    RTL
+}
+
+compute_dash_charge_2_beam_damage:
+{
+    LDA !SAMUS_BEAMS_EQUIPPED : AND #$000F : ASL : TAX
+    LDA.l dash_charge_2_beam_damage_table,X
+    RTL
+}
+
+compute_dash_charge_3_beam_damage:
+{
+    LDA !SAMUS_BEAMS_EQUIPPED : AND #$000F : ASL : TAX
+    LDA.l dash_charge_3_beam_damage_table,X
+    RTL
+}
+
+compute_dash_charge_4_beam_damage:
+{
+    LDA !SAMUS_BEAMS_EQUIPPED : AND #$000F : ASL : TAX
+    LDA.l dash_charge_4_beam_damage_table,X
+    RTL
+}
+
+vanilla_uncharged_beam_damage_table:
+    dw #$0014, #$0032, #$001E, #$003C, #$0028, #$0046, #$003C, #$0064, #$0096, #$00FA, #$00C8, #$012C, #$0000, #$0000, #$0000, #$0000
+vanilla_charged_beam_damage_table:
+    dw #$003C, #$0096, #$005A, #$00B4, #$0078, #$00D2, #$00B4, #$012C, #$01C2, #$02EE, #$0258, #$0384, #$0000, #$0000, #$0000, #$0000
+
+dash_charge_0_beam_damage_table:
+    dw #$0014, #$0032, #$001E, #$003C, #$0028, #$0050, #$0032, #$0064, #$0064, #$0064, #$0064, #$0064, #$0000, #$0000, #$0000, #$0000
+dash_charge_1_beam_damage_table:
+    dw #$0028, #$0064, #$003C, #$0078, #$0050, #$00B4, #$0064, #$00C8, #$00C8, #$00C8, #$00C8, #$00C8, #$0000, #$0000, #$0000, #$0000
+dash_charge_2_beam_damage_table:
+    dw #$003C, #$0096, #$005A, #$00B4, #$0078, #$00FA, #$0096, #$012C, #$012C, #$012C, #$012C, #$012C, #$0000, #$0000, #$0000, #$0000
+dash_charge_3_beam_damage_table:
+    dw #$0050, #$00C8, #$0078, #$00F0, #$00A0, #$0168, #$00C8, #$0190, #$0190, #$0190, #$0190, #$0190, #$0000, #$0000, #$0000, #$0000
+dash_charge_4_beam_damage_table:
+    dw #$0064, #$00FA, #$0096, #$012C, #$00C8, #$01C2, #$00FA, #$01F4, #$01F4, #$01F4, #$01F4, #$01F4, #$0000, #$0000, #$0000, #$0000
 
 print pc, " damage bank93 end"
 

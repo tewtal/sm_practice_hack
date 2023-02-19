@@ -121,6 +121,8 @@ init_sram:
     TDC : STA !sram_custom_damage
     STA !sram_custom_charge_damage
     STA !sram_custom_uncharge_damage
+    STA !sram_water_physics
+    STA !sram_double_jump
 
     LDA #!SRAM_VERSION : STA !sram_initialized
     RTS

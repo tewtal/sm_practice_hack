@@ -99,7 +99,7 @@ double_jump_check:
     LDA !SAMUS_ITEMS_EQUIPPED : BIT #0200 : BEQ .no_space_jump
 
   .jump_allowed
-    JMP $98BC
+    BRL vanilla_make_samus_jump
 
   .no_space_jump
     LDA !SAMUS_DOUBLE_JUMP : BNE .end
@@ -108,18 +108,23 @@ double_jump_check:
     ; Increment counter unless in a walljump pose
     LDA !SAMUS_ANIMATION_FRAME : AND #$000F : CMP #$000B : BEQ .jump_allowed
     INC !SAMUS_DOUBLE_JUMP
-    BRA .jump_allowed
+    BRL vanilla_make_samus_jump
 
   .end
     RTL
 }
 warnpc $909348
 
+org $9098BC
+vanilla_make_samus_jump:
+
 org $90A46E
+double_jump_eligible_check:
     ; Water physics flag also used to determine if space jump or double jump equipped
     LDA !SAMUS_WATER_PHYSICS
 
 org $90A4C4
+double_jump_check_hook:
     ; Replace JSL $9098BC so we can check if double jump allowed
     JSL double_jump_check
 

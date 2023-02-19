@@ -1030,6 +1030,10 @@ ToggleItemsMenu:
     dw #$FFFF
     dw #ti_grapple
     dw #ti_xray
+    dw #$FFFF
+    dw #misc_suit_properties
+    dw #misc_water_physics
+    dw #misc_double_jump
     dw #$0000
     %cm_header("TOGGLE ITEMS")
 
@@ -1146,7 +1150,8 @@ eq_prepare_beams_menu:
   .noPlasma
     LDA #$0000 : STA !ram_cm_plasma
 
-+   %setmenubank()
++   JSL tb_init_custom_damage
+    %setmenubank()
     JML action_submenu
 }
 
@@ -1186,7 +1191,59 @@ tb_glitchedbeams:
     %cm_submenu("Glitched Beams", #GlitchedBeamsMenu)
 
 tb_customdamage:
-    %cm_toggle("Custom Beam Damage", !sram_custom_damage, #1, #0)
+    dw !ACTION_CHOICE
+    dl #!sram_custom_damage
+    dw tb_init_custom_damage
+    db #$28, "Beam Damage", #$FF
+    db #$28, "    VANILLA", #$FF
+    db #$28, "     CUSTOM", #$FF
+    db #$28, "DASH CHRG 0", #$FF
+    db #$28, "DASH CHRG 1", #$FF
+    db #$28, "DASH CHRG 2", #$FF
+    db #$28, "DASH CHRG 3", #$FF
+    db #$28, "DASH CHRG 4", #$FF
+    db #$FF
+
+tb_init_custom_damage:
+{
+    LDA !sram_custom_damage : BEQ .vanilla
+    DEC : DEC : BEQ .dash_charge_0
+    DEC : BEQ .dash_charge_1
+    DEC : BEQ .dash_charge_2
+    DEC : BEQ .dash_charge_3
+    DEC : BEQ .dash_charge_4
+    RTL
+
+  .vanilla
+    JSL compute_vanilla_charged_beam_damage : STA !sram_custom_charge_damage
+    JSL compute_vanilla_uncharged_beam_damage : STA !sram_custom_uncharge_damage
+    RTL
+
+  .dash_charge_0
+    JSL compute_dash_charge_0_beam_damage : STA !sram_custom_charge_damage
+    JSL compute_dash_charge_0_beam_damage : STA !sram_custom_uncharge_damage
+    RTL
+
+  .dash_charge_1
+    JSL compute_dash_charge_1_beam_damage : STA !sram_custom_charge_damage
+    JSL compute_dash_charge_0_beam_damage : STA !sram_custom_uncharge_damage
+    RTL
+
+  .dash_charge_2
+    JSL compute_dash_charge_2_beam_damage : STA !sram_custom_charge_damage
+    JSL compute_dash_charge_0_beam_damage : STA !sram_custom_uncharge_damage
+    RTL
+
+  .dash_charge_3
+    JSL compute_dash_charge_3_beam_damage : STA !sram_custom_charge_damage
+    JSL compute_dash_charge_0_beam_damage : STA !sram_custom_uncharge_damage
+    RTL
+
+  .dash_charge_4
+    JSL compute_dash_charge_4_beam_damage : STA !sram_custom_charge_damage
+    JSL compute_dash_charge_0_beam_damage : STA !sram_custom_uncharge_damage
+    RTL
+}
 
 tb_customchargedamage:
     %cm_numfield_word("Custom Charge Damage", !sram_custom_charge_damage, 0, 1000, 10, 50, #0)
@@ -1203,18 +1260,40 @@ equipment_toggle_beams:
     ; unquipped
     LDA !SAMUS_BEAMS_EQUIPPED : AND !DP_Increment : STA !SAMUS_BEAMS_EQUIPPED
     LDA !SAMUS_BEAMS_COLLECTED : ORA !DP_ToggleValue : STA !SAMUS_BEAMS_COLLECTED
-    BRA .done
+    BRA .checkSpazer
 
   .equipped
     LDA !SAMUS_BEAMS_EQUIPPED : ORA !DP_ToggleValue : AND !DP_Temp : STA !SAMUS_BEAMS_EQUIPPED
     LDA !SAMUS_BEAMS_COLLECTED : ORA !DP_ToggleValue : STA !SAMUS_BEAMS_COLLECTED
-    BRA .done
+    BRA .checkSpazer
 
   .unobtained
     LDA !SAMUS_BEAMS_EQUIPPED : AND !DP_Increment : STA !SAMUS_BEAMS_EQUIPPED
     LDA !SAMUS_BEAMS_COLLECTED : AND !DP_Increment : STA !SAMUS_BEAMS_COLLECTED
 
+  .checkSpazer
+    ; Reinitialize Spazer and Plasma since they affect each other
+    LDA !SAMUS_BEAMS_COLLECTED : BIT #$0004 : BEQ .noSpazer
+    LDA !SAMUS_BEAMS_EQUIPPED : BIT #$0004 : BNE .equipSpazer
+    ; unequip Spazer
+    LDA #$0002 : STA !ram_cm_spazer : BRA .checkPlasma
+  .equipSpazer
+    LDA #$0001 : STA !ram_cm_spazer : BRA .checkPlasma
+  .noSpazer
+    LDA #$0000 : STA !ram_cm_spazer
+
+  .checkPlasma
+    LDA !SAMUS_BEAMS_COLLECTED : BIT #$0008 : BEQ .noPlasma
+    LDA !SAMUS_BEAMS_EQUIPPED : BIT #$0008 : BNE .equipPlasma
+    ; unequip Plasma
+    LDA #$0002 : STA !ram_cm_plasma : BRA .done
+  .equipPlasma
+    LDA #$0001 : STA !ram_cm_plasma : BRA .done
+  .noPlasma
+    LDA #$0000 : STA !ram_cm_plasma
+
   .done
+    JSL tb_init_custom_damage
     JML $90AC8D ; update beam gfx
 }
 
@@ -1572,7 +1651,7 @@ init_heat_damage_ram:
 
 misc_water_physics:
     dw !ACTION_CHOICE
-    dl #!ram_water_physics
+    dl #!sram_water_physics
     dw init_water_physics_ram
     db #$28, "Water Physics", #$FF
     db #$28, "    VANILLA", #$FF
@@ -1584,27 +1663,27 @@ misc_water_physics:
     db #$FF
 
 misc_double_jump:
-    %cm_toggle_bit("Double Jump", !ram_double_jump, #$0200, init_water_physics_ram)
+    %cm_toggle_bit("Double Jump", !sram_double_jump, #$0200, init_water_physics_ram)
 
 init_water_physics_ram:
 {
-    LDA !ram_water_physics : BNE init_water_physics_ram_non_vanilla
+    LDA !sram_water_physics : BNE init_water_physics_ram_non_vanilla
     ; Fallthrough to init_water_physics_vanilla
 }
 
 init_water_physics_vanilla:
 {
-    LDA !SAMUS_ITEMS_EQUIPPED : ORA !ram_double_jump : STA !SAMUS_WATER_PHYSICS
+    LDA !SAMUS_ITEMS_EQUIPPED : ORA.l !sram_double_jump : STA !SAMUS_WATER_PHYSICS
     RTL
 }
 
 init_water_physics_after_room_transition:
 {
-    LDA !ram_water_physics : BEQ init_water_physics_vanilla
+    LDA !sram_water_physics : BEQ init_water_physics_vanilla
 
     ; Check if we need to toggle on-to-off or off-to-on states
     CMP #$0004 : BMI init_water_physics_ram_non_vanilla
-    EOR #$0001 : STA !ram_water_physics
+    EOR #$0001 : STA !sram_water_physics
 }
 
 init_water_physics_ram_non_vanilla:
@@ -1614,12 +1693,12 @@ init_water_physics_ram_non_vanilla:
 
   .off
     LDA !SAMUS_ITEMS_EQUIPPED : AND #$0200
-    ORA !ram_double_jump : ORA #$0020 : STA !SAMUS_WATER_PHYSICS
+    ORA.l !sram_double_jump : ORA #$0020 : STA !SAMUS_WATER_PHYSICS
     RTL
 
   .on
     LDA !SAMUS_ITEMS_EQUIPPED : AND #$0200
-    ORA !ram_double_jump : STA !SAMUS_WATER_PHYSICS
+    ORA.l !sram_double_jump : STA !SAMUS_WATER_PHYSICS
     RTL
 
   .pressure_valve
@@ -1628,7 +1707,7 @@ init_water_physics_ram_non_vanilla:
     CMP #$D69A : BEQ .off : CMP #$D6D0 : BEQ .off
     CMP #$D86E : BEQ .off : CMP #$D8C5 : BEQ .off
     LDA !SAMUS_ITEMS_EQUIPPED : AND #$0220
-    ORA !ram_double_jump : STA !SAMUS_WATER_PHYSICS
+    ORA.l !sram_double_jump : STA !SAMUS_WATER_PHYSICS
     RTL
 }
 
