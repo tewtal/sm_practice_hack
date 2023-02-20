@@ -23,19 +23,24 @@ org $82E388
 org $82E4C9
     JSR hijack_door_closing_plm
 
-
 org $82F800
 print pc, " layout bank82 start"
 
 hijack_after_load_level_data:
 {
-    LDA $079B : CMP #$D6FD : BNE .done
-    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ .done
+    LDA $079B : CMP #$D646 : BEQ .pants_room : CMP #$D6FD : BNE .done
 
     ; Aqueduct Farm Sand Pit needs to be handled before the door scroll
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ .done
     JSL layout_asm_aqueductfarmsandpit_external
 
   .done
+    JMP $E38E
+
+  .pants_room
+    ; Pants Room needs to be handled before the door scroll
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_DASH_RECALL : BEQ .done
+    JSL layout_asm_pants_room_external
     JMP $E38E
 }
 
@@ -388,13 +393,14 @@ org $8FC124
     JMP layout_asm_escape_screen_shake
 warnpc $8FC183
 
-; Electric Death state check asm
-org $8FCBE5
-    dw #layout_asm_electric_death_state_check
+;WS_Save_Blinking_Door
+;WS_Main_Open_Grey
 
-; Wrecked Ship Energy Tank state check asm
-org $8FCC37
-    dw #layout_asm_wrecked_ship_energy_tank_state_check
+;    org $8FC571 ; Plasma Spark
+;    dw NoopPLM : dw $0000, $0000 ; Plasma door blue
+
+;    org $8FC773         ; Halfie Shaft
+;    skip 38 : dw NoopPLM : dw $0000, $0000  ; Plasma door blue
 
 ; Tourian escape room 1 setup asm
 org $8FC926
@@ -432,21 +438,33 @@ warnpc $8FC96E
 org $8FC9D2
     dw #layout_asm_bowling
 
+; Electric Death state check asm
+org $8FCBE5
+    dw #layout_asm_electric_death_state_check
+
+; Wrecked Ship Energy Tank state check asm
+org $8FCC37
+    dw #layout_asm_wrecked_ship_energy_tank_state_check
+
 ; Plasma state check asm
 org $8FD2B5
     dw #layout_asm_plasma_state_check
+
+; Plasma spark setup asm
+org $8FD365
+    dw #layout_asm_plasma_spark
 
 ; Aqueduct setup asm
 org $8FD5CC
     dw #layout_asm_aqueduct
 
+; Butterfly setup asm
+org $8FD611
+    dw #layout_asm_butterfly
+
 ; Botwoon hallway setup asm
 org $8FD63C
     dw #layout_asm_botwoon_hallway
-
-; Pants room setup asm
-org $8FD66B
-    dw #layout_asm_pants_room
 
 ; Aqueduct Farm Sand Pit header
 org $8FD706
@@ -455,6 +473,10 @@ org $8FD706
 ; Shaktool room setup asm
 org $8FD8EF
     dw #layout_asm_shaktool_room
+
+; Halfie Climb setup asm
+org $8FD938
+    dw #layout_asm_halfie_climb
 
 ; Tourian escape room 2 main asm
 org $8FDE99
@@ -1022,11 +1044,25 @@ layout_asm_plasma_done:
     PLP
     RTS
 
+layout_asm_plasma_spark:
+{
+    PHP
+    %a16()
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_DASH_RECALL : BEQ layout_asm_plasma_done
+
+    ; Set grey door as already opened
+    LDA $7ED8C2 : ORA #$0008 : STA $7ED8C2
+}
+
+layout_asm_plasma_spark_done:
+    PLP
+    RTS
+
 layout_asm_aqueduct:
 {
     PHP
     %a16()
-    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ layout_asm_plasma_done
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ layout_asm_plasma_spark_done
 
     ; Replace power bomb blocks with bomb blocks
     LDA #$F09D : STA $7F1690 : STA $7F18D0
@@ -1042,11 +1078,25 @@ layout_asm_aqueduct_done:
     PLP
     RTS
 
-layout_asm_botwoon_hallway:
+layout_asm_butterfly:
 {
     PHP
     %a16()
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_DASH_RECALL : BEQ layout_asm_aqueduct_done
+
+    ; Set grey door as already opened
+    LDA $7ED8C2 : ORA #$0080 : STA $7ED8C2
+}
+
+layout_asm_butterfly_done:
+    PLP
+    RTS
+
+layout_asm_botwoon_hallway:
+{
+    PHP
+    %a16()
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_DASH_RECALL : BEQ layout_asm_botwoon_hallway_done
 
     ; Convert speed blocks to bomb blocks
     %a8()
@@ -1065,12 +1115,8 @@ layout_asm_botwoon_hallway_done:
     PLP
     RTS
 
-layout_asm_pants_room:
+layout_asm_pants_room_external:
 {
-    PHP
-    %a16()
-    LDA !sram_room_layout : BIT !ROOM_LAYOUT_DASH_RECALL : BEQ layout_asm_botwoon_hallway_done
-
     ; Open grapple blocks to shaktool
     LDA #$00FF : STA $7F0CCC : STA $7F0CCE : STA $7F0CD0
     STA $7F0CD2 : STA $7F0CD4 : STA $7F0CD6
@@ -1078,11 +1124,7 @@ layout_asm_pants_room:
 
     ; Replace BTS
     TDC : STA $7F6A69
-}
-
-layout_asm_pants_room_done:
-    PLP
-    RTS
+    RTL
 
 layout_asm_shaktool_room:
 {
@@ -1092,7 +1134,7 @@ layout_asm_shaktool_room:
 
     PHP
     %a16()
-    LDA !sram_room_layout : BIT !ROOM_LAYOUT_DASH_RECALL : BEQ layout_asm_pants_room_done
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_DASH_RECALL : BEQ layout_asm_botwoon_hallway_done
 
     ; Clear shaktool sand
     LDA #$00FF : STA $7F02A2 : STA $7F02A4 : STA $7F02A6 : STA $7F02A8
@@ -1152,6 +1194,20 @@ layout_asm_shaktool_room:
 }
 
 layout_asm_shaktool_room_done:
+    PLP
+    RTS
+
+layout_asm_halfie_climb:
+{
+    PHP
+    %a16()
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_DASH_RECALL : BEQ layout_asm_shaktool_room_done
+
+    ; Set grey door as already opened
+    LDA $7ED8C2 : ORA #$1000 : STA $7ED8C2
+}
+
+layout_asm_halfie_climb_done:
     PLP
     RTS
 

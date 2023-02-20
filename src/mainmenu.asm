@@ -1633,8 +1633,10 @@ init_heat_damage_ram:
     RTL
 
   .heat_shield
-    LDA !ROOM_ID : CMP #$B1E4 : BMI .no_damage : CMP #$B742 : BPL .no_damage
+    LDA !ROOM_ID : CMP #$B742 : BPL .no_damage : CMP #$AF13 : BMI .no_damage
+    CMP #$B1BA : BPL .heat_shield_damage : CMP #$AF40 : BPL .no_damage
 
+  .heat_shield_damage
     ; We want Lower Norfair heat damage to be 50%
     ; However if gravity is equipped then the damage is already halved
     LDA $09A2 : BIT #$0020 : BNE .end
