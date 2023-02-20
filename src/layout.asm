@@ -393,15 +393,6 @@ org $8FC124
     JMP layout_asm_escape_screen_shake
 warnpc $8FC183
 
-;WS_Save_Blinking_Door
-;WS_Main_Open_Grey
-
-;    org $8FC571 ; Plasma Spark
-;    dw NoopPLM : dw $0000, $0000 ; Plasma door blue
-
-;    org $8FC773         ; Halfie Shaft
-;    skip 38 : dw NoopPLM : dw $0000, $0000  ; Plasma door blue
-
 ; Tourian escape room 1 setup asm
 org $8FC926
     LDA !sram_suppress_flashing : BIT !SUPPRESS_EARTHQUAKE : BNE .tourian_escape_room_1_rts
@@ -437,6 +428,10 @@ warnpc $8FC96E
 ; Bowling setup asm
 org $8FC9D2
     dw #layout_asm_bowling
+
+; Wrecked Ship Main setup asm
+org $8FCB20
+    dw #layout_asm_wreckedshipmain
 
 ; Electric Death state check asm
 org $8FCBE5
@@ -937,6 +932,20 @@ layout_asm_bowling:
 }
 
 layout_asm_bowling_done:
+    PLP
+    RTS
+
+layout_asm_wreckedshipmain:
+{
+    PHP
+    %a16()
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ layout_asm_bowling_done
+
+    ; Set grey door as already opened
+    LDA $7ED8C0 : ORA #$0008 : STA $7ED8C0
+}
+
+layout_asm_wreckedshipmain_done:
     PLP
     RTS
 
