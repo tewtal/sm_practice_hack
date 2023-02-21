@@ -310,6 +310,10 @@ org $8F91BD
   .scrolling_sky
 warnpc $8F91C9
 
+; Forgotten Highway Elbow setup asm
+org $8F95CD
+    dw layout_asm_forgotten_highway_elbow
+
 ; Moat setup asm
 org $8F9624
     dw #layout_asm_moat
@@ -349,6 +353,14 @@ org $8FA4FF
 ; Cathedral Entrance setup asm
 org $8FA7D8
     dw #layout_asm_cathedralentrance
+
+; Crocomire Speedway asm pointer
+org $8FA948
+    dw #layout_asm_crocspeedway
+
+; Crocomire asm pointer
+org $8FA9B7
+    dw #layout_asm_croc
 
 ; Hi-Jump Boots E-Tank setup asm
 org $8FAA66
@@ -440,6 +452,10 @@ org $8FCBE5
 ; Wrecked Ship Energy Tank state check asm
 org $8FCC37
     dw #layout_asm_wrecked_ship_energy_tank_state_check
+
+; Wrecked Ship Save setup asm
+org $8FCEB4
+    dw layout_asm_wreckedshipsave
 
 ; Plasma state check asm
 org $8FD2B5
@@ -915,6 +931,20 @@ layout_asm_mainstreet_done:
 layout_asm_mainstreet_plm_data:
     db #$6F, #$B7, #$18, #$59, #$0A, #$00
 
+layout_asm_forgotten_highway_elbow:
+{
+    PHP
+    %a16()
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO_OR_DASH_RECALL : BEQ layout_asm_mainstreet_done
+
+    ; Set yellow door as already opened
+    LDA $7ED8B0 : ORA #$8000 : STA $7ED8B0
+}
+
+layout_asm_forgotten_highway_elbow_done:
+    PLP
+    RTS
+
 layout_asm_bowling:
 {
     PHP
@@ -956,7 +986,7 @@ layout_asm_electric_death_varia_tweaks_header:
 
 layout_asm_electric_death_state_check:
 {
-    LDA !sram_room_layout : BIT !ROOM_LAYOUT_VARIA_TWEAKS : BEQ .end_check
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_DASH_RECALL_OR_VARIA_TWEAKS : BEQ .end_check
     LDX #layout_asm_electric_death_varia_tweaks_header
   .end_check
     JMP $E5E6
@@ -969,11 +999,26 @@ layout_asm_wrecked_ship_energy_tank_varia_tweaks_header:
 
 layout_asm_wrecked_ship_energy_tank_state_check:
 {
-    LDA !sram_room_layout : BIT !ROOM_LAYOUT_VARIA_TWEAKS : BEQ .end_check
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_DASH_RECALL_OR_VARIA_TWEAKS : BEQ .end_check
     LDX #layout_asm_wrecked_ship_energy_tank_varia_tweaks_header
   .end_check
     JMP $E5E6
 }
+
+layout_asm_wreckedshipsave:
+{
+    PHP
+    %a16()
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO_OR_DASH_RECALL : BEQ layout_asm_wreckedshipmain_done
+
+    ; Activate save station
+    JSL $8483D7
+    db $07, $0B, $6F, $B7
+}
+
+layout_asm_wreckedshipsave_done:
+    PLP
+    RTS
 
 layout_asm_plasma_dash_header:
     dl $CB8BD4
@@ -1264,11 +1309,39 @@ layout_asm_westsandhall_done:
     PLP
     RTS
 
+layout_asm_crocspeedway:
+{
+    PHP
+    %a16()
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO_OR_DASH_RECALL : BEQ layout_asm_westsandhall_done
+
+    ; Set green door as already opened
+    LDA $7ED8B8 : ORA #$4000 : STA $7ED8B8
+}
+
+layout_asm_crocspeedway_done:
+    PLP
+    RTS
+
+layout_asm_croc:
+{
+    PHP
+    %a16()
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO_OR_DASH_RECALL : BEQ layout_asm_crocspeedway_done
+
+    ; Set grey door as already opened?
+    LDA $7ED8B8 : ORA #$8000 : STA $7ED8B8
+}
+
+layout_asm_croc_done:
+    PLP
+    RTS
+
 layout_asm_bigpink:
 {
     PHP
     %a16()
-    LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANTISOFTLOCK : BEQ layout_asm_westsandhall_done
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANTISOFTLOCK : BEQ layout_asm_croc_done
 
     ; Clear out path to save room
     LDA #$00FF : STA $7F03F2 : STA $7F03F8 : STA $7F03FA
