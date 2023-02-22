@@ -79,6 +79,10 @@ org $838DF4
 org $838EA8
     dw #layout_asm_greenhillzone
 
+; Construction Zone left door asm pointer
+org $838EB4
+    dw #layout_asm_constructionzone
+
 ; Green Hill Zone bottom-right door asm pointer
 org $838F08
     dw #layout_asm_greenhillzone
@@ -318,6 +322,22 @@ org $8F95CD
 org $8F9624
     dw #layout_asm_moat
 
+; Red Tower Elevator setup asm
+org $8F964F
+    dw #layout_asm_redtowerelevator
+
+; Pit Room state check
+org $8F9767
+    dw #layout_asm_morph_missiles_state_check
+
+; Pit Room Elevator state check
+org $8F97C0
+    dw #layout_asm_morph_missiles_state_check
+
+; Brinstar Pre-Map Room setup asm
+org $8F9BC2
+    dw #layout_asm_brinstarpremaproom
+
 ; Early Supers setup asm
 org $8F9BED
     dw #layout_asm_earlysupers
@@ -333,6 +353,10 @@ org $8F9D3E
 ; Mission Impossible setup asm
 org $8F9E36
     dw #layout_asm_missionimpossible
+
+; Morph Ball Room setup asm
+org $8F9EE3
+    dw #layout_asm_morphballroom
 
 ; Waterway setup asm
 org $8FA0F7
@@ -524,6 +548,39 @@ org $8FE39D
     ; Replace STA with jump to STA
     JMP layout_asm_crabshaft_update_scrolls
 
+; Morph and Missiles state check asm
+org $8FE640
+layout_asm_morph_missiles_state_check:
+{
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANY_RANDO : BEQ layout_asm_vanilla_morph_missiles_state_check
+    BIT !ROOM_LAYOUT_DASH_RECALL : BNE layout_asm_dash_morph_missiles_state_check
+    BRA layout_asm_varia_morph_missiles_state_check
+}
+warnpc $8FE652
+
+org $8FE652
+layout_asm_vanilla_morph_missiles_state_check:
+
+org $8FE65F
+layout_asm_vanilla_morph_missiles_found:
+
+org $8FE666
+layout_asm_vanilla_morph_missiles_not_found:
+
+org $8FE678
+layout_asm_dash_morph_missiles_state_check:
+{
+    LDA !SAMUS_ITEMS_COLLECTED : BNE layout_asm_vanilla_morph_missiles_found
+    BRA layout_asm_vanilla_morph_missiles_not_found
+}
+
+layout_asm_varia_morph_missiles_state_check:
+{
+    LDA $7ED820 : BIT #$0001 : BNE layout_asm_vanilla_morph_missiles_found
+    BRA layout_asm_vanilla_morph_missiles_not_found
+}
+warnpc $8FE68A
+
 
 org $8FEA00
 print pc, " layout start"
@@ -699,6 +756,44 @@ layout_asm_greenhillzone_done:
     PLP
     RTS
 
+layout_asm_morphballroom:
+{
+    PHP
+    %a16()
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANY_RANDO : BEQ layout_asm_greenhillzone_done
+    BIT !ROOM_LAYOUT_DASH_RECALL : BNE layout_asm_greenhillzone_done
+
+    ; Add back morph ball item
+    JSL $8483D7
+    dw $2945, $EF23
+}
+
+layout_asm_morphballroom_done:
+    PLP
+    RTS
+
+layout_asm_constructionzone:
+{
+    PHP
+    %a16()
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANY_RANDO : BEQ layout_asm_morphballroom_done
+    BIT !ROOM_LAYOUT_DASH_RECALL : BEQ .set_zebes_awake
+
+    ; DASH requires first item to be collected before waking the planet
+    LDA $7ED872 : BIT #$0400 : BEQ .done_zebes_awake
+
+  .set_zebes_awake
+    LDA $7ED820 : ORA #$0001 : STA $7ED820
+
+  .done_zebes_awake
+    ; Set red door as already opened
+    LDA $7ED8B6 : ORA #$0004 : STA $7ED8B6
+}
+
+layout_asm_constructionzone_done:
+    PLP
+    RTS
+
 layout_asm_caterpillar_no_scrolls:
     PHP
     BRA layout_asm_caterpillar_after_scrolls
@@ -709,7 +804,7 @@ layout_asm_caterpillar_update_scrolls:
 layout_asm_caterpillar_after_scrolls:
 {
     %a16()
-    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ layout_asm_greenhillzone_done
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ layout_asm_constructionzone_done
 
     ; Decorate gap with blocks
     LDA #$8562 : STA $7F145E : STA $7F1460 : STA $7F151E : STA $7F1520
@@ -1013,7 +1108,7 @@ layout_asm_wreckedshipsave:
 
     ; Activate save station
     JSL $8483D7
-    db $07, $0B, $6F, $B7
+    dw $0B07, $B76F
 }
 
 layout_asm_wreckedshipsave_done:
@@ -1426,11 +1521,25 @@ layout_asm_moat_done:
     PLP
     RTS
 
+layout_asm_redtowerelevator:
+{
+    PHP
+    %a16()
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANY_RANDO : BEQ layout_asm_moat_done
+
+    ; Set red door as already opened
+    LDA $7ED8B2 : ORA #$0001 : STA $7ED8B2
+}
+
+layout_asm_redtowerelevator_done:
+    PLP
+    RTS
+
 layout_asm_missionimpossible:
 {
     PHP
     %a16()
-    LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANTISOFTLOCK : BEQ layout_asm_moat_done
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANTISOFTLOCK : BEQ layout_asm_redtowerelevator_done
 
     ; Use shootable block
     %a8()
@@ -1588,11 +1697,25 @@ layout_asm_acidstatue_done:
     PLP
     RTS
 
+layout_asm_brinstarpremaproom:
+{
+    PHP
+    %a16()
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANTISOFTLOCK : BEQ layout_asm_acidstatue_done
+
+    ; Set grey door as already opened
+    LDA $7ED8B4 : ORA #$0020 : STA $7ED8B4
+}
+
+layout_asm_brinstarpremaproom_done:
+    PLP
+    RTS
+
 layout_asm_earlysupers:
 {
     PHP
     %a16()
-    LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANTISOFTLOCK_OR_DASH_RECALL : BEQ layout_asm_acidstatue_done
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANTISOFTLOCK_OR_DASH_RECALL : BEQ layout_asm_brinstarpremaproom_done
     BIT !ROOM_LAYOUT_DASH_RECALL : BNE layout_asm_earlysupers_dash
 
     ; Use shootable block on the bridge
