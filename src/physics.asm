@@ -134,3 +134,9 @@ double_jump_handle_landing_graphics:
     ; Replace a JSR to next routine with a STZ followed by the next routine
     STZ !SAMUS_DOUBLE_JUMP : NOP
 
+
+; Re-initialize water physics variables after Init Samus routine clears it
+; Overwrites a JSL to an RTL at the end of game state 6
+org $828067
+    JSL init_water_physics_ram
+
