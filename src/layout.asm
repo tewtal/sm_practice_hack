@@ -314,6 +314,10 @@ org $8F91BD
   .scrolling_sky
 warnpc $8F91C9
 
+; Crateria Kihunters setup asm
+org $8F94B1
+    dw layout_asm_crateria_kihunters
+
 ; Forgotten Highway Elbow setup asm
 org $8F95CD
     dw layout_asm_forgotten_highway_elbow
@@ -333,6 +337,10 @@ org $8F9767
 ; Pit Room Elevator state check
 org $8F97C0
     dw #layout_asm_morph_missiles_state_check
+
+; Green Pirates Shaft setup asm
+org $8F99E2
+    dw #layout_asm_green_pirates_shaft
 
 ; Brinstar Pre-Map Room setup asm
 org $8F9BC2
@@ -357,6 +365,10 @@ org $8F9E36
 ; Morph Ball Room setup asm
 org $8F9EE3
     dw #layout_asm_morphballroom
+
+; Noob bridge setup asm
+org $8F9FDF
+    dw #layout_asm_noobbridge
 
 ; Waterway setup asm
 org $8FA0F7
@@ -389,6 +401,10 @@ org $8FA9B7
 ; Hi-Jump Boots E-Tank setup asm
 org $8FAA66
     dw #layout_asm_hjbetank
+
+; Kronic Boost asm pointer
+org $8FAE99
+    dw #layout_asm_kronicboost
 
 ; Acid Statue setup asm
 org $8FB20A
@@ -732,6 +748,9 @@ layout_asm_greenhillzone:
     %a16()
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ layout_asm_magnetstairs_done
 
+    ; Set yellow door as already opened
+    LDA $7ED8B6 : ORA #$0001 : STA $7ED8B6
+
     ; Remove gate and corner tile next to gate
     LDA #$00FF : STA $7F37C8 : STA $7F37CA : STA $7F37CC
     STA $7F38CA : STA $7F39CA : STA $7F3ACA : STA $7F3BCA
@@ -762,7 +781,12 @@ layout_asm_morphballroom:
     %a16()
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANY_RANDO : BEQ layout_asm_greenhillzone_done
     BIT !ROOM_LAYOUT_DASH_RECALL : BNE layout_asm_greenhillzone_done
+    BIT !ROOM_LAYOUT_AREA_RANDO : BEQ .add_morph_ball
 
+    ; Set grey door as already opened
+    LDA $7ED8B6 : ORA #$0002 : STA $7ED8B6
+
+  .add_morph_ball
     ; Add back morph ball item
     JSL $8483D7
     dw $2945, $EF23
@@ -991,6 +1015,9 @@ layout_asm_crabshaft_after_scrolls:
     %a16()
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ layout_asm_eastocean_done
 
+    ; Set green door as already opened
+    LDA $7ED8C0 : ORA #$8000 : STA $7ED8C0
+
     ; Clear space above save station
     LDA #$00FF : STA $7F095C : STA $7F095E
 
@@ -1026,11 +1053,25 @@ layout_asm_mainstreet_done:
 layout_asm_mainstreet_plm_data:
     db #$6F, #$B7, #$18, #$59, #$0A, #$00
 
+layout_asm_crateria_kihunters:
+{
+    PHP
+    %a16()
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ layout_asm_mainstreet_done
+
+    ; Set yellow door as already opened
+    LDA $7ED8B0 : ORA #$4000 : STA $7ED8B0
+}
+
+layout_asm_crateria_kihunters_done:
+    PLP
+    RTS
+
 layout_asm_forgotten_highway_elbow:
 {
     PHP
     %a16()
-    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO_OR_DASH_RECALL : BEQ layout_asm_mainstreet_done
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO_OR_DASH_RECALL : BEQ layout_asm_crateria_kihunters_done
 
     ; Set yellow door as already opened
     LDA $7ED8B0 : ORA #$8000 : STA $7ED8B0
@@ -1040,11 +1081,25 @@ layout_asm_forgotten_highway_elbow_done:
     PLP
     RTS
 
+layout_asm_green_pirates_shaft:
+{
+    PHP
+    %a16()
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ layout_asm_forgotten_highway_elbow_done
+
+    ; Set red door as already opened
+    LDA $7ED8B2 : ORA #$4000 : STA $7ED8B2
+}
+
+layout_asm_green_pirates_shaft_done:
+    PLP
+    RTS
+
 layout_asm_bowling:
 {
     PHP
     %a16()
-    LDA !sram_room_layout : BIT !ROOM_LAYOUT_DASH_RECALL : BEQ layout_asm_mainstreet_done
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_DASH_RECALL : BEQ layout_asm_green_pirates_shaft_done
 
     ; Clear speed blocks in front of Wrecked Ship reserve item
     LDA #$00FF : STA $7F053E
@@ -1424,7 +1479,7 @@ layout_asm_croc:
     %a16()
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO_OR_DASH_RECALL : BEQ layout_asm_crocspeedway_done
 
-    ; Set grey door as already opened?
+    ; Set grey door as already opened
     LDA $7ED8B8 : ORA #$8000 : STA $7ED8B8
 }
 
@@ -1432,11 +1487,25 @@ layout_asm_croc_done:
     PLP
     RTS
 
+layout_asm_kronicboost:
+{
+    PHP
+    %a16()
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ layout_asm_croc_done
+
+    ; Set yellow door as already opened
+    LDA $7ED8BA : ORA #$0100 : STA $7ED8BA
+}
+
+layout_asm_kronicboost_done:
+    PLP
+    RTS
+
 layout_asm_bigpink:
 {
     PHP
     %a16()
-    LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANTISOFTLOCK : BEQ layout_asm_croc_done
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANTISOFTLOCK : BEQ layout_asm_kronicboost_done
 
     ; Clear out path to save room
     LDA #$00FF : STA $7F03F2 : STA $7F03F8 : STA $7F03FA
@@ -1550,11 +1619,25 @@ layout_asm_missionimpossible_done:
     PLP
     RTS
 
+layout_asm_noobbridge:
+{
+    PHP
+    %a16()
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ layout_asm_missionimpossible_done
+
+    ; Set green door as already opened
+    LDA $7ED8B6 : ORA #$0008 : STA $7ED8B6
+}
+
+layout_asm_noobbridge_done:
+    PLP
+    RTS
+
 layout_asm_waterway:
 {
     PHP
     %a16()
-    LDA !sram_room_layout : BIT !ROOM_LAYOUT_DASH_RECALL : BEQ layout_asm_missionimpossible_done
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_DASH_RECALL : BEQ layout_asm_noobbridge_done
 
     ; Convert speed blocks to bomb blocks
     LDA #$F306 : STA $7F0802 : STA $7F08E2 : STA $7F09C2
