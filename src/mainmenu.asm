@@ -1472,7 +1472,6 @@ MiscMenu:
     dw #misc_metronome_tickrate
     dw #misc_metronome_sfx
     dw #$FFFF
-    dw #misc_clearliquid
     dw #misc_killenemies
     dw #misc_forcestand
     dw #$0000
@@ -1744,9 +1743,6 @@ misc_forcestand:
     JSL $90E2D4
     %sfxconfirm()
     RTL
-
-misc_clearliquid:
-    %cm_toggle_bit("Ignore Water this Room", $197E, #$0004, #0)
 
 
 ; ---------------
