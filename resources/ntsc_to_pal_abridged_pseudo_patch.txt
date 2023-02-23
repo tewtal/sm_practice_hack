@@ -3625,7 +3625,7 @@ org $A9B2CB  <--  org $A9B273
 
 ;======== Remove 8 bytes ========
 ; MB3 AI
-org $A9B31D  <--  org $A9B2CD
+org $A9B31D  <--  org $A9B2C5
                   ; previously LDA $09E2
                   ; previously BNE $03
                   ; previously LDY $B2E3
