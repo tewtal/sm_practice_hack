@@ -1259,6 +1259,11 @@ cutscenes_mb_fake_death_pause_phase_2:
 {
     LDA $0FCC : BNE .continue
     LDA #$0000 : STA $0FB2
+    LDA !sram_cutscenes : BIT !CUTSCENE_FAST_MB : BEQ .lower_acid
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_DASH_RECALL : BEQ .continue
+
+  .lower_acid
+    LDA #$00E8 : STA $1962 : STA $1978
 
   .continue
 if !FEATURE_PAL
