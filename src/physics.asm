@@ -1,4 +1,9 @@
 
+; Re-initialize water physics variables after Init Samus routine clears it
+; Overwrites a JSL to an RTL in game state 6
+org $828067
+    JSL init_water_physics_ram
+
 ; Replace gravity suit checks with the water physics check
 org $84B423
 misc_water_physics_quicksand_air_surface:
@@ -134,9 +139,12 @@ double_jump_handle_landing_graphics:
     ; Replace a JSR to next routine with a STZ followed by the next routine
     STZ !SAMUS_DOUBLE_JUMP : NOP
 
+; The following three fix double jump when landing on spikes
+org $948EA9
+    STA $0A4E : STZ !SAMUS_DOUBLE_JUMP
 
-; Re-initialize water physics variables after Init Samus routine clears it
-; Overwrites a JSL to an RTL at the end of game state 6
-org $828067
-    JSL init_water_physics_ram
+org $948EE4
+    STA $0A4E : STZ !SAMUS_DOUBLE_JUMP
 
+org $948F1F
+    STA $0A4E : STZ !SAMUS_DOUBLE_JUMP
