@@ -1105,7 +1105,15 @@ equipment_toggle_items:
 
 eq_prepare_beams_menu:
 {
-+   LDA !SAMUS_BEAMS_COLLECTED : BIT #$1000 : BEQ .noCharge
+    JSL setup_beams_ram
+    JSL tb_init_custom_damage
+    %setmenubank()
+    JML action_submenu
+}
+
+setup_beams_ram:
+{
+    LDA !SAMUS_BEAMS_COLLECTED : BIT #$1000 : BEQ .noCharge
     LDA !SAMUS_BEAMS_EQUIPPED : BIT #$1000 : BNE .equipCharge
     ; unequip Charge
     LDA #$0002 : STA !ram_cm_charge : BRA +
@@ -1150,9 +1158,7 @@ eq_prepare_beams_menu:
   .noPlasma
     LDA #$0000 : STA !ram_cm_plasma
 
-+   JSL tb_init_custom_damage
-    %setmenubank()
-    JML action_submenu
++   RTL
 }
 
 ToggleBeamsMenu:
@@ -1325,8 +1331,9 @@ gb_unnamed:
 
 action_glitched_beam:
 {
-    TYA
-    STA !SAMUS_BEAMS_EQUIPPED : STA !SAMUS_BEAMS_COLLECTED
+    TYA : STA !SAMUS_BEAMS_EQUIPPED
+    LDA !SAMUS_BEAMS_COLLECTED : ORA !SAMUS_BEAMS_EQUIPPED : STA !SAMUS_BEAMS_COLLECTED
+    JSL setup_beams_ram
     LDA #$0042 : JSL !SFX_LIB1 ; unlabled, song dependent sound
     JSL $90AC8D ; update beam gfx
     RTL
