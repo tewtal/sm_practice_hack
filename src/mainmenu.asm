@@ -167,8 +167,8 @@ macro cm_equipment_item(name, addr, bitmask, inverse)
     db #$28, "        OFF", #$FF
     db #$FF
   .routine
-    LDA.w <addr> : STA !DP_Address
-    LDA.w <addr>>>16 : STA !DP_Address+2
+    LDA.w #<addr> : STA !DP_Address
+    LDA.w #<addr>>>16 : STA !DP_Address+2
     LDA <bitmask> : STA !DP_ToggleValue
     LDA <inverse> : STA !DP_Increment
     JMP equipment_toggle_items
@@ -1030,6 +1030,10 @@ ToggleItemsMenu:
     dw #$FFFF
     dw #ti_grapple
     dw #ti_xray
+    dw #$FFFF
+    dw #misc_suit_properties
+    dw #misc_water_physics
+    dw #misc_double_jump
     dw #$0000
     %cm_header("TOGGLE ITEMS")
 
@@ -1101,7 +1105,15 @@ equipment_toggle_items:
 
 eq_prepare_beams_menu:
 {
-+   LDA !SAMUS_BEAMS_COLLECTED : BIT #$1000 : BEQ .noCharge
+    JSL setup_beams_ram
+    JSL tb_init_custom_damage
+    %setmenubank()
+    JML action_submenu
+}
+
+setup_beams_ram:
+{
+    LDA !SAMUS_BEAMS_COLLECTED : BIT #$1000 : BEQ .noCharge
     LDA !SAMUS_BEAMS_EQUIPPED : BIT #$1000 : BNE .equipCharge
     ; unequip Charge
     LDA #$0002 : STA !ram_cm_charge : BRA +
@@ -1146,8 +1158,7 @@ eq_prepare_beams_menu:
   .noPlasma
     LDA #$0000 : STA !ram_cm_plasma
 
-+   %setmenubank()
-    JML action_submenu
++   RTL
 }
 
 ToggleBeamsMenu:
@@ -1160,6 +1171,10 @@ ToggleBeamsMenu:
     dw misc_hyperbeam
     dw #$FFFF
     dw tb_glitchedbeams
+    dw #$FFFF
+    dw tb_customdamage
+    dw tb_customchargedamage
+    dw tb_customunchargedamage
     dw #$0000
     %cm_header("TOGGLE BEAMS")
 
@@ -1181,6 +1196,67 @@ tb_plasmabeam:
 tb_glitchedbeams:
     %cm_submenu("Glitched Beams", #GlitchedBeamsMenu)
 
+tb_customdamage:
+    dw !ACTION_CHOICE
+    dl #!sram_custom_damage
+    dw tb_init_custom_damage
+    db #$28, "Beam Damage", #$FF
+    db #$28, "    VANILLA", #$FF
+    db #$28, "     CUSTOM", #$FF
+    db #$28, "DASH CHRG 0", #$FF
+    db #$28, "DASH CHRG 1", #$FF
+    db #$28, "DASH CHRG 2", #$FF
+    db #$28, "DASH CHRG 3", #$FF
+    db #$28, "DASH CHRG 4", #$FF
+    db #$FF
+
+tb_init_custom_damage:
+{
+    LDA !sram_custom_damage : BEQ .vanilla
+    DEC : DEC : BEQ .dash_charge_0
+    DEC : BEQ .dash_charge_1
+    DEC : BEQ .dash_charge_2
+    DEC : BEQ .dash_charge_3
+    DEC : BEQ .dash_charge_4
+    RTL
+
+  .vanilla
+    JSL compute_vanilla_charged_beam_damage : STA !sram_custom_charge_damage
+    JSL compute_vanilla_uncharged_beam_damage : STA !sram_custom_uncharge_damage
+    RTL
+
+  .dash_charge_0
+    JSL compute_dash_charge_0_beam_damage : STA !sram_custom_charge_damage
+    JSL compute_dash_charge_0_beam_damage : STA !sram_custom_uncharge_damage
+    RTL
+
+  .dash_charge_1
+    JSL compute_dash_charge_1_beam_damage : STA !sram_custom_charge_damage
+    JSL compute_dash_charge_0_beam_damage : STA !sram_custom_uncharge_damage
+    RTL
+
+  .dash_charge_2
+    JSL compute_dash_charge_2_beam_damage : STA !sram_custom_charge_damage
+    JSL compute_dash_charge_0_beam_damage : STA !sram_custom_uncharge_damage
+    RTL
+
+  .dash_charge_3
+    JSL compute_dash_charge_3_beam_damage : STA !sram_custom_charge_damage
+    JSL compute_dash_charge_0_beam_damage : STA !sram_custom_uncharge_damage
+    RTL
+
+  .dash_charge_4
+    JSL compute_dash_charge_4_beam_damage : STA !sram_custom_charge_damage
+    JSL compute_dash_charge_0_beam_damage : STA !sram_custom_uncharge_damage
+    RTL
+}
+
+tb_customchargedamage:
+    %cm_numfield_word("Custom Charge Damage", !sram_custom_charge_damage, 0, 1000, 10, 50, #0)
+
+tb_customunchargedamage:
+    %cm_numfield_word("Custom Normal Damage", !sram_custom_uncharge_damage, 0, 1000, 10, 50, #0)
+
 equipment_toggle_beams:
 {
 ; DP values are passed in from the cm_equipment_beam macro that calls this routine
@@ -1190,18 +1266,40 @@ equipment_toggle_beams:
     ; unquipped
     LDA !SAMUS_BEAMS_EQUIPPED : AND !DP_Increment : STA !SAMUS_BEAMS_EQUIPPED
     LDA !SAMUS_BEAMS_COLLECTED : ORA !DP_ToggleValue : STA !SAMUS_BEAMS_COLLECTED
-    BRA .done
+    BRA .checkSpazer
 
   .equipped
     LDA !SAMUS_BEAMS_EQUIPPED : ORA !DP_ToggleValue : AND !DP_Temp : STA !SAMUS_BEAMS_EQUIPPED
     LDA !SAMUS_BEAMS_COLLECTED : ORA !DP_ToggleValue : STA !SAMUS_BEAMS_COLLECTED
-    BRA .done
+    BRA .checkSpazer
 
   .unobtained
     LDA !SAMUS_BEAMS_EQUIPPED : AND !DP_Increment : STA !SAMUS_BEAMS_EQUIPPED
     LDA !SAMUS_BEAMS_COLLECTED : AND !DP_Increment : STA !SAMUS_BEAMS_COLLECTED
 
+  .checkSpazer
+    ; Reinitialize Spazer and Plasma since they affect each other
+    LDA !SAMUS_BEAMS_COLLECTED : BIT #$0004 : BEQ .noSpazer
+    LDA !SAMUS_BEAMS_EQUIPPED : BIT #$0004 : BNE .equipSpazer
+    ; unequip Spazer
+    LDA #$0002 : STA !ram_cm_spazer : BRA .checkPlasma
+  .equipSpazer
+    LDA #$0001 : STA !ram_cm_spazer : BRA .checkPlasma
+  .noSpazer
+    LDA #$0000 : STA !ram_cm_spazer
+
+  .checkPlasma
+    LDA !SAMUS_BEAMS_COLLECTED : BIT #$0008 : BEQ .noPlasma
+    LDA !SAMUS_BEAMS_EQUIPPED : BIT #$0008 : BNE .equipPlasma
+    ; unequip Plasma
+    LDA #$0002 : STA !ram_cm_plasma : BRA .done
+  .equipPlasma
+    LDA #$0001 : STA !ram_cm_plasma : BRA .done
+  .noPlasma
+    LDA #$0000 : STA !ram_cm_plasma
+
   .done
+    JSL tb_init_custom_damage
     JML $90AC8D ; update beam gfx
 }
 
@@ -1233,8 +1331,9 @@ gb_unnamed:
 
 action_glitched_beam:
 {
-    TYA
-    STA !SAMUS_BEAMS_EQUIPPED : STA !SAMUS_BEAMS_COLLECTED
+    TYA : STA !SAMUS_BEAMS_EQUIPPED
+    LDA !SAMUS_BEAMS_COLLECTED : ORA !SAMUS_BEAMS_EQUIPPED : STA !SAMUS_BEAMS_COLLECTED
+    JSL setup_beams_ram
     LDA #$0042 : JSL !SFX_LIB1 ; unlabled, song dependent sound
     JSL $90AC8D ; update beam gfx
     RTL
@@ -1370,6 +1469,8 @@ MiscMenu:
     dw #misc_invincibility
     dw #misc_gooslowdown
     dw #misc_suit_properties
+    dw #misc_water_physics
+    dw #misc_double_jump
     dw #$FFFF
     dw #misc_magicpants
     dw #misc_spacepants
@@ -1378,7 +1479,6 @@ MiscMenu:
     dw #misc_metronome_tickrate
     dw #misc_metronome_sfx
     dw #$FFFF
-    dw #misc_clearliquid
     dw #misc_killenemies
     dw #misc_forcestand
     dw #$0000
@@ -1492,22 +1592,143 @@ misc_suit_properties:
     db #$28, "    VANILLA", #$FF
     db #$28, "   BALANCED", #$FF
     db #$28, "   PROGRESS", #$FF
+    db #$28, " DASHRECALL", #$FF
+    db #$28, " HEATSHIELD", #$FF
     db #$FF
 
 init_suit_properties_ram:
 {
-    LDA #$0021 : STA !ram_suits_enemy_damage_check : STA !ram_suits_periodic_damage_check
+    ; Default to both suits getting 50% damage reduction (gravity gets extra 50%)
+    ; and both suits getting full heat protection
+    LDA #$0021 : STA !ram_suits_enemy_damage_check : STA !ram_suits_heat_damage_check
 
-    LDA !sram_suit_properties : CMP #$0002 : BNE .init_periodic_damage
+    LDA !sram_suit_properties : CMP #$0002 : BMI .init_heat_damage
+
+    ; Progressive and DASH give less enemy damage protection to gravity
     LDA #$0001 : STA !ram_suits_enemy_damage_check
 
-  .init_periodic_damage
+  .init_heat_damage
     LDA !sram_suit_properties : BEQ .end
-    LDA #$0001 : STA !ram_suits_periodic_damage_check
+
+    ; Not vanilla, so only varia gets full heat protection
+    LDA #$0001 : STA !ram_suits_heat_damage_check
+
+  .end
+    ; Fallthrough to init_heat_damage_ram
+}
+
+init_heat_damage_ram:
+{
+    ; Default to 0.25 damage per frame
+    LDA #$4000 : STA !ram_suits_heat_damage_value
+    LDA !sram_suit_properties : CMP #$0003 : BPL .dash_recall
+    RTL
+
+    ; Check if heat shield is actually equipped
+    LDA $09A2 : BIT #$0001 : BNE .heat_shield
+
+  .dash_recall
+    BNE .heat_shield
+
+    ; If no gravity than nothing to do
+    LDA $09A2 : BIT #$0020 : BEQ .end
+
+    ; Without heat shield but with gravity we want damage to be 75%
+    ; Since damage is halved by gravity we'll set it to 150%
+    LDA #$6000 : STA !ram_suits_heat_damage_value
+    RTL
+
+  .heat_shield
+    LDA !ROOM_ID : CMP #$B742 : BPL .no_damage : CMP #$AF13 : BMI .no_damage
+    CMP #$B1BA : BPL .heat_shield_damage : CMP #$AF40 : BPL .no_damage
+
+  .heat_shield_damage
+    ; We want Lower Norfair heat damage to be 50%
+    ; However if gravity is equipped then the damage is already halved
+    LDA $09A2 : BIT #$0020 : BNE .end
+    LDA #$2000 : STA !ram_suits_heat_damage_value
+    RTL
+
+  .no_damage
+    TDC : STA !ram_suits_heat_damage_value
 
   .end
     RTL
 }
+
+
+misc_water_physics:
+    dw !ACTION_CHOICE
+    dl #!sram_water_physics
+    dw init_water_physics_ram
+    db #$28, "Water Physics", #$FF
+    db #$28, "    VANILLA", #$FF
+    db #$28, "PRESS VALVE", #$FF
+    db #$28, "        OFF", #$FF
+    db #$28, "         ON", #$FF
+    db #$28, "  OFF TO ON", #$FF
+    db #$28, "  ON TO OFF", #$FF
+    db #$FF
+
+misc_double_jump:
+    %cm_toggle_bit("Double Jump", !sram_double_jump, #$0200, init_water_physics_ram)
+
+init_water_physics_ram:
+{
+    LDA !sram_water_physics : BNE init_water_physics_ram_non_vanilla
+    ; Fallthrough to init_water_physics_vanilla
+}
+
+init_water_physics_vanilla:
+{
+    LDA !SAMUS_ITEMS_EQUIPPED : ORA.l !sram_double_jump : STA !SAMUS_WATER_PHYSICS
+    RTL
+}
+
+init_water_physics_after_room_transition:
+{
+    LDA !sram_water_physics : BEQ init_water_physics_vanilla
+
+    ; Check if we need to toggle on-to-off or off-to-on states
+    CMP #$0004 : BMI init_water_physics_ram_non_vanilla
+    EOR #$0001 : STA !sram_water_physics
+}
+
+init_water_physics_ram_non_vanilla:
+{
+    CMP #$0001 : BEQ .pressure_valve
+    BIT #$0001 : BNE .on
+
+  .off
+    LDA !SAMUS_ITEMS_EQUIPPED : AND #$0200
+    ORA.l !sram_double_jump : ORA #$0020 : STA !SAMUS_WATER_PHYSICS
+    RTL
+
+  .on
+    LDA !SAMUS_ITEMS_EQUIPPED : AND #$0200
+    ORA.l !sram_double_jump : STA !SAMUS_WATER_PHYSICS
+    RTL
+
+  .pressure_valve
+    LDA !ROOM_ID : CMP #$C98D : BMI .pressure_valve_more_checks
+    CMP #$D4EE : BMI .off : CMP #$D8C6 : BPL .pressure_valve_on
+    CMP #$D5EC : BEQ .off : CMP #$D646 : BEQ .off
+    CMP #$D69A : BEQ .off : CMP #$D6D0 : BEQ .off
+    CMP #$D86E : BEQ .off : CMP #$D8C5 : BEQ .off
+
+  .pressure_valve_on
+    LDA !SAMUS_ITEMS_EQUIPPED : AND #$0220
+    ORA.l !sram_double_jump : STA !SAMUS_WATER_PHYSICS
+    RTL
+
+  .pressure_valve_more_checks
+    CMP #$AC00 : BEQ .off : CMP #$AB64 : BEQ .off
+    CMP #$A5EF : BPL .pressure_valve_on
+    CMP #$99FA : BPL .off : CMP #$965A : BPL .pressure_valve_on
+    CMP #$93AB : BMI .pressure_valve_on
+    BRA .off
+}
+
 
 misc_invincibility:
     %cm_toggle_bit("Invincibility", $7E0DE0, #$0007, #0)
@@ -1516,9 +1737,10 @@ misc_killenemies:
     %cm_jsl("Kill Enemies", .kill_loop, #0)
   .kill_loop
     ; 8000 = solid to Samus, 0400 = Ignore Samus projectiles
-    TAX : LDA $0F86,X : BIT #$8400 : BNE +
+    TAX : LDA $0F86,X : BIT #$8400 : BNE .next_enemy
     ORA #$0200 : STA $0F86,X
-+   TXA : CLC : ADC #$0040 : CMP #$0400 : BNE .kill_loop
+  .next_enemy
+    TXA : CLC : ADC #$0040 : CMP #$0400 : BNE .kill_loop
     LDA #$0009 : JSL !SFX_LIB2 ; enemy killed
     RTL
 
@@ -1528,9 +1750,6 @@ misc_forcestand:
     JSL $90E2D4
     %sfxconfirm()
     RTL
-
-misc_clearliquid:
-    %cm_toggle_bit("Ignore Water this Room", $197E, #$0004, #0)
 
 
 ; ---------------
@@ -2081,6 +2300,8 @@ LayoutMenu:
     dw #$FFFF
     dw #layout_arearando
     dw #layout_antisoftlock
+    dw #layout_variatweaks
+    dw #layout_dashrecall
     dw #$0000
     %cm_header("ROOM LAYOUT")
     %cm_footer("APPLIED WHEN ROOM RELOADED")
@@ -2093,6 +2314,12 @@ layout_arearando:
 
 layout_antisoftlock:
     %cm_toggle_bit("Anti-Softlock Patches", !sram_room_layout, !ROOM_LAYOUT_ANTISOFTLOCK, #0)
+
+layout_variatweaks:
+    %cm_toggle_bit("VARIA Tweaks", !sram_room_layout, !ROOM_LAYOUT_VARIA_TWEAKS, #0)
+
+layout_dashrecall:
+    %cm_toggle_bit("DASH Recall Patches", !sram_room_layout, !ROOM_LAYOUT_DASH_RECALL, #0)
 
 
 ; ----------
@@ -2621,7 +2848,8 @@ RngMenu:
     dw #$FFFF
     dw #rng_crocomire_rng
     dw #$FFFF
-    dw #rng_kraid_rng
+    dw #rng_kraid_claw_rng
+    dw #rng_kraid_wait_rng
     dw #$0000
     %cm_header("BOSS RNG CONTROL")
 
@@ -2678,14 +2906,29 @@ rng_crocomire_rng:
     db #$28, "      SWIPE", #$FF
     db #$FF
 
-rng_kraid_rng:
+rng_kraid_claw_rng:
     dw !ACTION_CHOICE
-    dl #!ram_kraid_rng
+    dl #!ram_kraid_claw_rng
     dw #$0000
     db #$28, "Kraid Claw RNG", #$FF
     db #$28, "     RANDOM", #$FF
     db #$28, "      LAGGY", #$FF
     db #$28, "    LAGGIER", #$FF
+    db #$FF
+
+rng_kraid_wait_rng:
+    dw !ACTION_CHOICE
+    dl #!ram_kraid_wait_rng
+    dw #$0000
+    db #$28, "Kraid Wait RNG", #$FF
+    db #$28, "     RANDOM", #$FF
+    db #$28, "         64", #$FF
+    db #$28, "        128", #$FF
+    db #$28, "        192", #$FF
+    db #$28, "        256", #$FF
+    db #$28, "        320", #$FF
+    db #$28, "        384", #$FF
+    db #$28, "        448", #$FF
     db #$FF
 
 
@@ -3020,6 +3263,7 @@ GameModeExtras:
 init_wram_based_on_sram:
 {
     JSL init_suit_properties_ram
+    JSL init_water_physics_ram
 
     ; Check if any less common controller shortcuts are configured
     JSL GameModeExtras

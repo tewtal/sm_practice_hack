@@ -72,6 +72,8 @@ cm_start:
     JSL $809B44 ; Handle HUD tilemap
     JSL ih_update_hud_code
 
+    JSL init_heat_damage_ram
+    JSL init_water_physics_ram
     JSL GameLoopExtras ; check if game_loop_extras needs to be disabled
     JSL restore_ppu_long ; Restore PPU registers and tilemaps
 

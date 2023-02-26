@@ -51,7 +51,6 @@
 !ram_vcounter_data                  = !WRAM_START+$36
 !ram_custom_preset                  = !WRAM_START+$38
 
-
 !ram_magic_pants_state              = !WRAM_START+$3A
 !ram_magic_pants_pal1               = !WRAM_START+$3C
 !ram_magic_pants_pal2               = !WRAM_START+$3E
@@ -115,7 +114,7 @@
 
 !ram_magic_pants_enabled            = !WRAM_PERSIST_START+$16
 !ram_space_pants_enabled            = !WRAM_PERSIST_START+$18
-!ram_kraid_rng                      = !WRAM_PERSIST_START+$1A
+!ram_kraid_claw_rng                 = !WRAM_PERSIST_START+$1A
 !ram_crocomire_rng                  = !WRAM_PERSIST_START+$1C
 !ram_phantoon_rng_round_1           = !WRAM_PERSIST_START+$1E
 !ram_phantoon_rng_round_2           = !WRAM_PERSIST_START+$20
@@ -128,7 +127,7 @@
 !ram_draygon_rng_right              = !WRAM_PERSIST_START+$2E
 
 !ram_suits_enemy_damage_check       = !WRAM_PERSIST_START+$30
-!ram_suits_periodic_damage_check    = !WRAM_PERSIST_START+$32
+!ram_suits_heat_damage_check        = !WRAM_PERSIST_START+$32
 !ram_pacifist                       = !WRAM_PERSIST_START+$34
 !ram_freeze_on_load                 = !WRAM_PERSIST_START+$36
 
@@ -149,6 +148,8 @@
 !ram_game_loop_extras               = !WRAM_PERSIST_START+$50
 !ram_game_mode_extras               = !WRAM_PERSIST_START+$52
 !ram_sprite_features_active         = !WRAM_PERSIST_START+$54
+!ram_kraid_wait_rng                 = !WRAM_PERSIST_START+$56
+!ram_suits_heat_damage_value        = !WRAM_PERSIST_START+$58
 
 ; ^ FREE SPACE ^ up to +$7A
 
@@ -391,6 +392,7 @@
 !IGT_HOURS = $09E0
 !SAMUS_AUTO_CANCEL = $0A04
 !SAMUS_LAST_HP = $0A06
+!SAMUS_DOUBLE_JUMP = $0A14  ; Only used during demos in vanilla
 !SAMUS_POSE = $0A1C
 !SAMUS_POSE_DIRECTION = $0A1E
 !SAMUS_MOVEMENT_TYPE = $0A1F
@@ -399,12 +401,15 @@
 !SAMUS_PREVIOUS_MOVEMENT_TYPE = $0A23
 !SAMUS_SHINE_TIMER = $0A68
 !SAMUS_HEALTH_WARNING = $0A6A
+!SAMUS_WATER_PHYSICS = $0A70  ; Not used in vanilla
+!SAMUS_ANIMATION_FRAME = $0A96
 !SAMUS_X = $0AF6
 !SAMUS_X_SUBPX = $0AF8
 !SAMUS_Y = $0AFA
 !SAMUS_Y_SUBPX = $0AFC
 !SAMUS_X_RADIUS = $0AFE
 !SAMUS_Y_RADIUS = $0B00
+!SAMUS_COLLISION_DIRECTION = $0B02
 !SAMUS_SPRITEMAP_X = $0B04
 !SAMUS_Y_SUBSPEED = $0B2C
 !SAMUS_Y_SPEEDCOMBINED = $0B2D
@@ -421,6 +426,8 @@
 !SAMUS_PROJ_RADIUS_Y = $0BC8
 !SAMUS_COOLDOWN = $0CCC
 !SAMUS_CHARGE_TIMER = $0CD0
+!ENEMY_INDEX = $0E54
+!ENEMY_ID = $0F78
 !ENEMY_X = $0F7A
 !ENEMY_Y = $0F7E
 !ENEMY_X_RADIUS = $0F82
@@ -443,7 +450,7 @@
 ; SRAM
 ; -----
 
-!SRAM_VERSION = $0010
+!SRAM_VERSION = $0011
 
 !SRAM_START = $702000
 
@@ -490,6 +497,11 @@
 !sram_fast_doors = !SRAM_START+$4C
 !sram_suppress_flashing = !SRAM_START+$4E
 !sram_fast_elevators = !SRAM_START+$50
+!sram_custom_damage = !SRAM_START+$52
+!sram_custom_charge_damage = !SRAM_START+$54
+!sram_custom_uncharge_damage = !SRAM_START+$56
+!sram_water_physics = !SRAM_START+$58
+!sram_double_jump = !SRAM_START+$5A
 
 ; ^ FREE SPACE ^ up to +$0FCE
 
@@ -505,6 +517,12 @@
 !ROOM_LAYOUT_MAGNET_STAIRS = #$0001
 !ROOM_LAYOUT_AREA_RANDO = #$0002
 !ROOM_LAYOUT_ANTISOFTLOCK = #$0004
+!ROOM_LAYOUT_DASH_RECALL = #$0008
+!ROOM_LAYOUT_AREA_RANDO_OR_DASH_RECALL = #$000A
+!ROOM_LAYOUT_ANTISOFTLOCK_OR_DASH_RECALL = #$000C
+!ROOM_LAYOUT_VARIA_TWEAKS = #$0010
+!ROOM_LAYOUT_DASH_RECALL_OR_VARIA_TWEAKS = #$0018
+!ROOM_LAYOUT_ANY_RANDO = #$001E
 
 !CUTSCENE_SKIP_INTRO = #$0001
 !CUTSCENE_SKIP_CERES_ARRIVAL = #$0002

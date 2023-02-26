@@ -977,6 +977,13 @@ endif
     JMP cutscenes_mb_escape_earthquake_start
 cutscenes_mb_escape_earthquake_end:
 
+if !FEATURE_PAL
+org $A9B62E
+else
+org $A9B5E1
+endif
+    JSL cutscenes_mb_custom_damage
+
 
 org $A9FBC0
 print pc, " cutscenes MB start"
@@ -1252,6 +1259,11 @@ cutscenes_mb_fake_death_pause_phase_2:
 {
     LDA $0FCC : BNE .continue
     LDA #$0000 : STA $0FB2
+    LDA !sram_cutscenes : BIT !CUTSCENE_FAST_MB : BEQ .lower_acid
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_DASH_RECALL : BEQ .continue
+
+  .lower_acid
+    LDA #$00E8 : STA $1962 : STA $1978
 
   .continue
 if !FEATURE_PAL
@@ -1280,7 +1292,7 @@ endif
 
 cutscenes_mb_fake_death_raise_mb:
 {
-    LDA $0FCC : BNE .continue
+    LDA !sram_cutscenes : BIT !CUTSCENE_FAST_MB : BEQ .continue
     LDA !FRAME_COUNTER : AND #$0001 : BNE .done
 if !FEATURE_PAL
     JMP $8E65
@@ -1506,6 +1518,24 @@ cutscenes_mb_escape_earthquake_start:
     LDA #$0005 : STA $183E
     LDA #$FFFF : STA $1840
     JMP cutscenes_mb_escape_earthquake_end
+}
+
+cutscenes_mb_custom_damage:
+{
+    LDA !sram_suit_properties : CMP #$0003 : BPL .dash_custom_damage
+    JML $A6D453
+
+  .dash_custom_damage
+    LDX !ENEMY_INDEX
+    LDA !ENEMY_ID,X : TAX
+    LDA $A00006,X : STA $12
+    LDA !SAMUS_ITEMS_EQUIPPED : AND #$0021 : BEQ .end
+    LSR $12
+    BIT #$0020 : BEQ .end
+    LSR $12
+  .end
+    LDA $12
+    JML $91DF51
 }
 
 print pc, " cutscenes MB end"

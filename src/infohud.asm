@@ -188,6 +188,8 @@ ih_get_item_code:
 
     ; Update HUD
     JSL ih_update_hud_code
+    JSL init_heat_damage_ram
+    JSL init_water_physics_ram
 
     ; restore temp variables
     PLA : STA $14
@@ -334,6 +336,8 @@ ih_after_room_transition:
     ; Reset realtime timer
     LDA #$0000 : STA !ram_realtime_room
 
+    JSL init_heat_damage_ram
+    JSL init_water_physics_after_room_transition
     PLY
     PLX
 
@@ -1486,6 +1490,13 @@ warnpc $F0E000 ; spritefeat.asm
 org $80FD00
 print pc, " infohud bank80 start"
 
+; Used by room layout
+ih_set_picky_chozo_event_and_enemy_speed:
+{
+    LDA #$0001 : STA $0FB4
+    LDA #$000C : JMP $81FA
+}
+
 ih_fix_scroll_offsets:
 {
     LDA !ram_fix_scroll_offsets : BEQ .done
@@ -1522,6 +1533,8 @@ ih_hud_code_paused:
     PLX : PLY
 
   .end
+    JSL init_heat_damage_ram
+    JSL init_water_physics_ram
     LDA $7E09C0 ; overwritten code
     JMP $9B51
 }
