@@ -73,6 +73,13 @@ endif
     JSL ih_babyskip_segment
 
 if !FEATURE_PAL
+    ; TODO
+else
+org $90E5E9
+endif
+    JSL ih_door_bonk_tool
+
+if !FEATURE_PAL
 org $A98884      ; update timers after MB1 fight
 else
 org $A98874      ; update timers after MB1 fight
@@ -1480,6 +1487,116 @@ ih_shinespark_code:
     STA !ram_armed_shine_duration
     STA $0A68
     RTL
+}
+
+ih_door_bonk_tool:
+{
+    LDA $0DD0
+    BMI .done   ; ignore solid enemy collisions
+    LDA !ram_minimap : BEQ .ok
+ .done
+    ; hijacked code
+if !FEATURE_PAL
+    ; TODO
+else
+    JML $91DE53
+endif
+ 
+    
+  .ok
+    ; load collision tile
+    LDA $0DC4 : ASL : TAX
+    LDA $7F0002,x
+    AND #$F3FF  ; ignore horizontal/vertical flip bits
+    BPL .done   ; is it a door tile?
+    CMP #$8040
+    BPL .done
+
+    ; Search active PLMs and look for one corresponding to this tile
+    PHB : PEA $8484 : PLB : PLB
+
+    LDX #$0050
+  .plm_loop
+    DEX
+    DEX
+    BMI .plm_not_found
+    LDA $1C37, x
+    CMP #$C842  ; is it a door PLM?
+    BMI .plm_loop
+    CMP #$C8BA
+    BPL .plm_loop
+
+    PHX
+    ; It's a door PLM. Did it draw this block?
+    LDA $7EDE6C, x  ; Y = PLM draw instruction pointer
+    TAY
+    LDA $1C87, x    ; X = PLM block index
+    LSR
+    TAX
+
+    LDA $0000, y    ; A = PLM draw instruction
+    BPL .row
+
+    ; This PLM draws a column
+  .column
+    AND #$00FF
+    TAY
+    TXA
+
+  .column_loop
+    CMP $0DC4
+    BEQ .plm_found
+    CLC
+    ADC $07A5   ; next column!
+    DEY
+    BNE .column_loop
+  .mismatch  
+    PLX
+    BRA .plm_loop
+
+  .row
+    ; This PLM draws a row
+    ; Does the tile we collided with lie within its span?
+    DEX
+    CPX $0DC4
+    BPL .mismatch    ; branch if (PLM left edge - 1) >= tile
+    STA $16
+    TXA
+    SEC
+    ADC $17          ; calculate one past PLM right edge
+    CMP $0DC4
+    BPL .mismatch    ; branch if PLM right boundary >= tile
+
+    ; We found the PLM!
+  .plm_found
+    PLX
+    NOP
+
+    ; How much time is left until it's done?
+    LDA $1D27,x   ; instruction pointer
+    TAY
+    LDA $7EDE1C,x ; instruction timer
+  .timer_loop
+    LDX $0002,y
+    ; Look for a "erase doorshell" instruction
+    CPX #$A677
+    BMI .not_done
+    CPX #$A69C
+    BMI .time_done
+  .not_done
+    CLC
+    ADC $0000,y
+    INY : INY : INY : INY
+    BRA .timer_loop
+
+  .time_done
+    LDX #$007C
+    PEA $8080 : PLB : PLB
+    JSR Draw2
+    
+  .plm_not_found
+    PLB
+    JMP .done
 }
 
 print pc, " infohud end"
