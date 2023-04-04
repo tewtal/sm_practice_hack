@@ -2349,6 +2349,7 @@ if !FEATURE_PAL
     dw #game_paldebug
 endif
     dw #game_pacifist
+    dw #game_debugplms
     dw #game_debugprojectiles
     dw #game_debugfixscrolloffsets
     dw #$FFFF
@@ -2366,6 +2367,9 @@ endif
 
 game_pacifist:
     %cm_toggle("Pacifist Mode", !ram_pacifist, #$0001, #0)
+
+game_debugplms:
+    %cm_toggle_bit_inverted("Pseudo G-Mode", $7E1C23, #$8000, #0)
 
 game_debugprojectiles:
     %cm_toggle_bit("Enable Projectiles", $7E198D, #$8000, #0)
