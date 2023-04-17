@@ -1500,6 +1500,7 @@ ih_set_picky_chozo_event_and_enemy_speed:
 ih_fix_scroll_offsets:
 {
     LDA !ram_fix_scroll_offsets : BEQ .nofix
+    LDA $B3 : AND #$FF00 : STA $B3
     LDA $B1 : AND #$FF00
     SEC
     RTS
