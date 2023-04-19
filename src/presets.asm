@@ -389,6 +389,8 @@ preset_start_gameplay:
 
     ; Set loading game state for Ceres
     LDA #$001F : STA $7ED914
+    ; Set delay for first falling tile in Ceres
+    LDA #$0022 : STA $07E1
     LDA !AREA_ID : CMP #$0006 : BEQ .end_load_game_state
     ; Set loading game state for Zebes
     LDA #$0005 : STA $7ED914
