@@ -2845,7 +2845,10 @@ RngMenu:
     endif
     dw #rng_goto_phanmenu
     dw #$FFFF
-    dw #rng_botwoon_rng
+    dw #rng_botwoon_first
+    dw #rng_botwoon_hidden
+    dw #rng_botwoon_second
+    dw #rng_botwoon_spit
     dw #$FFFF
     dw #rng_draygon_rng_right
     dw #rng_draygon_rng_left
@@ -2863,21 +2866,92 @@ rng_rerandomize:
 rng_goto_phanmenu:
     %cm_jsl("Phantoon", #ih_prepare_phantoon_menu, #PhantoonMenu)
 
-rng_botwoon_rng:
+rng_botwoon_first:
     dw !ACTION_CHOICE
-    dl #!ram_cm_botwoon_rng
+    dl #!ram_cm_botwoon_first
     dw #.routine
-    db #$28, "Botwoon RNG", #$FF
+    db #$28, "Botwoon First", #$FF
     db #$28, "     RANDOM", #$FF
-    db #$28, "       DOWN", #$FF
-    db #$28, "         UP", #$FF
-    db #$28, "      RIGHT", #$FF
-    db #$28, "       LEFT", #$FF
+    db #$28, "  LB BOTTOM", #$FF
+    db #$28, "  LT    TOP", #$FF
+    db #$28, "  LR  RIGHT", #$FF
+    db #$28, "  LL   LEFT", #$FF
     db #$FF
   .routine
-    LDA !ram_cm_botwoon_rng : BEQ +
+    LDA !ram_cm_botwoon_first : BEQ .random
+    ; possible values are $01, $09, $11, $19
+    ; the 1s bit will be dropped, used here for convenience
     DEC : ASL #3 : INC
+    STA !ram_botwoon_first : STA !ram_botwoon_rng
+    RTL
+  .random
+    STA !ram_botwoon_first
+    LDA !ram_botwoon_second : BNE +
+    LDA !ram_botwoon_hidden
 +   STA !ram_botwoon_rng
+    RTL
+
+rng_botwoon_hidden:
+    dw !ACTION_CHOICE
+    dl #!ram_cm_botwoon_hidden
+    dw #.routine
+    db #$28, "Botwoon Hidden", #$FF
+    db #$28, "     RANDOM", #$FF
+    db #$28, "LB BL TL RL", #$FF
+    db #$28, "LT BT TB RB", #$FF
+    db #$28, "LR BR TR RT", #$FF
+    db #$FF
+  .routine
+    LDA !ram_cm_botwoon_hidden : BEQ .random
+    ; possible values are $01, $09, $11
+    ; the 1s bit will be dropped, used here for convenience
+    DEC : ASL #3 : INC
+    STA !ram_botwoon_hidden : STA !ram_botwoon_rng
+    RTL
+  .random
+    STA !ram_botwoon_hidden
+    LDA !ram_botwoon_first : BNE +
+    LDA !ram_botwoon_second
++   STA !ram_botwoon_rng
+    RTL
+
+rng_botwoon_second:
+    dw !ACTION_CHOICE
+    dl #!ram_cm_botwoon_second
+    dw #.routine
+    db #$28, "Botwoon Second", #$FF
+    db #$28, "     RANDOM", #$FF
+    db #$28, "LB BL TL RL", #$FF
+    db #$28, "LT BT TB RB", #$FF
+    db #$28, "LR BR TR RT", #$FF
+    db #$28, "LL BB TT RR", #$FF
+    db #$FF
+  .routine
+    LDA !ram_cm_botwoon_second : BEQ .random
+    ; possible values are $01, $09, $11, $19
+    ; the 1s bit will be dropped, used here for convenience
+    DEC : ASL #3 : INC
+    STA !ram_botwoon_second : STA !ram_botwoon_rng
+    RTL
+  .random
+    STA !ram_botwoon_second
+    LDA !ram_botwoon_first : BNE +
+    LDA !ram_botwoon_hidden
++   STA !ram_botwoon_rng
+    RTL
+
+rng_botwoon_spit:
+    dw !ACTION_CHOICE
+    dl #!ram_cm_botwoon_spit
+    dw #.routine
+    db #$28, "Botwoon Spit", #$FF
+    db #$28, "     RANDOM", #$FF
+    db #$28, " NEVER SPIT", #$FF
+    db #$28, "ALWAYS SPIT", #$FF
+    db #$FF
+  .routine
+    ; 0-4 = no spit, 6-E = spit
+    LDA !ram_cm_botwoon_spit : ASL #2 : STA !ram_botwoon_spit
     RTL
 
 rng_draygon_rng_right:

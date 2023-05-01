@@ -150,6 +150,10 @@
 !ram_sprite_features_active         = !WRAM_PERSIST_START+$54
 !ram_kraid_wait_rng                 = !WRAM_PERSIST_START+$56
 !ram_suits_heat_damage_value        = !WRAM_PERSIST_START+$58
+!ram_botwoon_first                  = !WRAM_PERSIST_START+$5A
+!ram_botwoon_second                 = !WRAM_PERSIST_START+$5C
+!ram_botwoon_hidden                 = !WRAM_PERSIST_START+$5E
+!ram_botwoon_spit                   = !WRAM_PERSIST_START+$60
 
 ; ^ FREE SPACE ^ up to +$7A
 
@@ -186,6 +190,10 @@
 !ram_cm_ctrl_assign = !WRAM_MENU_START+$3A
 !ram_cm_ctrl_swap = !WRAM_MENU_START+$3C
 !ram_cm_botwoon_rng = !WRAM_MENU_START+$3E
+!ram_cm_botwoon_first = !WRAM_MENU_START+$40
+!ram_cm_botwoon_second = !WRAM_MENU_START+$42
+!ram_cm_botwoon_hidden = !WRAM_MENU_START+$44
+!ram_cm_botwoon_spit = !WRAM_MENU_START+$46
 
 ; ^ FREE SPACE ^ up to +$7E
 
