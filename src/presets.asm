@@ -21,7 +21,11 @@ endif
 
     JSL preset_start_gameplay  ; Start gameplay
 
-    JSL $809A79  ; HUD routine when game is loading
+    ; Fix Phantoon's room
+    LDA !ROOM_ID : CMP #$CD13 : BNE +
+    JSL preset_clear_BG2_tilemap
+ 
++   JSL $809A79  ; HUD routine when game is loading
     JSL $90AD22  ; Reset projectile data
 
     PHP : %ai16()
@@ -539,6 +543,32 @@ if !RAW_TILE_GRAPHICS
 else
     PLB : PLP : RTL
 endif
+}
+
+preset_clear_BG2_tilemap:
+{
+    PHP : %ai16()
+
+    ; Clear BG2 Tilemap
+    LDA #$0338 : LDX #$07FE
+-   STA $7E4000,X : STA $7E4800,X
+    DEX #2 : BPL -
+
+    ; Upload BG2 Tilemap
+    %a8()
+    LDA #$80 : STA $802100 ; enable forced blanking
+    LDA #$04 : STA $210C ; BG3 starts at $4000 (8000 in vram)
+    LDA #$80 : STA $2115 ; word-access, incr by 1
+    LDX #$4800 : STX $2116 ; VRAM address (8000 in vram)
+    LDX #$4000 : STX $4302 ; Source offset
+    LDA #$7E : STA $4304 ; Source bank
+    LDX #$1000 : STX $4305 ; Size (0x10 = 1 tile)
+    LDA #$01 : STA $4300 ; word, normal increment (DMA MODE)
+    LDA #$18 : STA $4301 ; destination (VRAM write)
+    LDA #$01 : STA $420B ; initiate DMA (channel 1)
+    LDA #$0F : STA $0F2100 ; disable forced blanking
+    PLP
+    RTL
 }
 
 preset_open_all_blue_doors:
