@@ -1736,8 +1736,8 @@ misc_invincibility:
 misc_killenemies:
     %cm_jsl("Kill Enemies", .kill_loop, #0)
   .kill_loop
-    ; 8000 = solid to Samus, 0400 = Ignore Samus projectiles
-    TAX : LDA $0F86,X : BIT #$8400 : BNE .next_enemy
+    ; 8000 = solid to Samus, 0400 = Ignore Samus projectiles, 0100 = Invisible
+    TAX : LDA $0F86,X : BIT #$8500 : BNE .next_enemy
     ORA #$0200 : STA $0F86,X
   .next_enemy
     TXA : CLC : ADC #$0040 : CMP #$0400 : BNE .kill_loop
