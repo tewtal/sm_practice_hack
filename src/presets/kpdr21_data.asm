@@ -501,6 +501,7 @@ preset_kpdr21_brinstar_entering_kraids_lair:
     dw $0919, $0100  ; Layer 2 Y position
     dw $09C6, $0006  ; Missiles
     dw $09CA, $0005  ; Supers
+    dw $09D2, $0002  ; Currently selected item
     dw $0AF6, $002E  ; Samus X
     dw $0AFA, $018B  ; Samus Y
     dw #$FFFF
@@ -514,6 +515,7 @@ preset_kpdr21_brinstar_kraid_kihunters:
     dw $0913, $8000  ; Screen subpixel Y position
     dw $0917, $00C0  ; Layer 2 X position
     dw $09CA, $0004  ; Supers
+    dw $09D2, $0000  ; Currently selected item
     dw $0AF6, $0167  ; Samus X
     dw #$FFFF
 
@@ -524,6 +526,7 @@ preset_kpdr21_brinstar_mini_kraid:
     dw $090F, $E000  ; Screen subpixel X position
     dw $0913, $FC00  ; Screen subpixel Y position
     dw $09C2, $0059  ; Health
+    dw $09D2, $0001  ; Currently selected item
     dw $0AF6, $016B  ; Samus X
     dw #$FFFF
 
@@ -538,6 +541,7 @@ preset_kpdr21_brinstar_kraid:
     dw $0917, $0100  ; Layer 2 X position
     dw $09C2, $0043  ; Health
     dw $09C6, $0005  ; Missiles
+    dw $09D2, $0000  ; Currently selected item
     dw $0AF6, $01C1  ; Samus X
     dw $D8B8, $0024  ; Doors
     dw #$FFFF
@@ -575,6 +579,7 @@ preset_kpdr21_brinstar_mini_kraid_revisit:
     dw $0915, $0100  ; Screen Y position in pixels
     dw $0919, $0100  ; Layer 2 Y position
     dw $09C2, $007C  ; Health
+    dw $09D2, $0002  ; Currently selected item
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $0058  ; Samus X
@@ -592,6 +597,7 @@ preset_kpdr21_brinstar_kraid_kihunters_revisit:
     dw $0919, $0000  ; Layer 2 Y position
     dw $09C6, $0004  ; Missiles
     dw $09CA, $0005  ; Supers
+    dw $09D2, $0000  ; Currently selected item
     dw $0AF6, $009A  ; Samus X
     dw $0AFA, $00AB  ; Samus Y
     dw $D8B8, $00EC  ; Doors
@@ -1036,6 +1042,7 @@ preset_kpdr21_wrecked_ship_basement:
     dw $0917, $0300  ; Layer 2 X position
     dw $0919, $0557  ; Layer 2 Y position
     dw $09CA, $0003  ; Supers
+    dw $09D2, $0002  ; Currently selected item
     dw $0AF6, $0455  ; Samus X
     dw $0AFA, $07BB  ; Samus Y
     dw $D8C0, $0010  ; Doors
@@ -1050,6 +1057,7 @@ preset_kpdr21_wrecked_ship_phantoon:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0919, $0000  ; Layer 2 Y position
     dw $09CA, $0002  ; Supers
+    dw $09D2, $0000  ; Currently selected item
     dw $0AF6, $04CC  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw $D8C0, $0030  ; Doors
@@ -1108,6 +1116,7 @@ preset_kpdr21_wrecked_ship_attic:
     dw $0911, $0400  ; Screen X position in pixels
     dw $0913, $B000  ; Screen subpixel Y position
     dw $0917, $0300  ; Layer 2 X position
+    dw $09D2, $0003  ; Currently selected item
     dw $0AF6, $0445  ; Samus X
     dw $0AFA, $006B  ; Samus Y
     dw #$FFFF
@@ -1124,6 +1133,7 @@ preset_kpdr21_wrecked_ship_upper_west_ocean:
     dw $0919, $001E  ; Layer 2 Y position
     dw $09C2, $00EE  ; Health
     dw $09CA, $0009  ; Supers
+    dw $09D2, $0000  ; Currently selected item
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $003B  ; Samus X
@@ -1326,7 +1336,7 @@ preset_kpdr21_maridia_mt_everest:
     dw $0915, $031F  ; Screen Y position in pixels
     dw $0917, $00C0  ; Layer 2 X position
     dw $0919, $0257  ; Layer 2 Y position
-    dw $0AF6, $017C  ; Samus X
+    dw $0AF6, $019D  ; Samus X
     dw $0AFA, $03BB  ; Samus Y
     dw #$FFFF
 
@@ -1372,7 +1382,6 @@ preset_kpdr21_maridia_botwoon_hallway:
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
     dw $09CE, $0001  ; Pbs
-    dw $09D2, $0000  ; Currently selected item
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $009D  ; Samus X
@@ -1387,6 +1396,7 @@ preset_kpdr21_maridia_botwoon:
     dw $0911, $0300  ; Screen X position in pixels
     dw $0913, $5800  ; Screen subpixel Y position
     dw $0917, $0240  ; Layer 2 X position
+    dw $09D2, $0000  ; Currently selected item
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $03A4  ; Samus X
@@ -1540,6 +1550,7 @@ preset_kpdr21_maridia_plasma_beam:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
+    dw $09D2, $0003  ; Currently selected item
     dw $0AF6, $0095  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw $D8C2, $DC08  ; Doors
@@ -1558,6 +1569,7 @@ preset_kpdr21_maridia_plasma_spark_revisit:
     dw $09C2, $00A4  ; Health
     dw $09C6, $0011  ; Missiles
     dw $09CE, $0002  ; Pbs
+    dw $09D2, $0000  ; Currently selected item
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $0025  ; Samus X
@@ -2030,6 +2042,7 @@ preset_kpdr21_lower_norfair_bubble_mountain_final:
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0010  ; Layer 2 Y position
     dw $09C2, $0074  ; Health
+    dw $09D2, $0001  ; Currently selected item
     dw $0AF6, $0075  ; Samus X
     dw #$FFFF
 
@@ -2044,6 +2057,7 @@ preset_kpdr21_lower_norfair_business_center_final:
     dw $09C2, $0088  ; Health
     dw $09C6, $0011  ; Missiles
     dw $09CE, $0001  ; Pbs
+    dw $09D2, $0000  ; Currently selected item
     dw $0AF6, $0032  ; Samus X
     dw #$FFFF
 
@@ -2101,6 +2115,7 @@ preset_kpdr21_backtracking_red_brinstar_green_gate:
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $2000  ; Screen subpixel Y position
     dw $0917, $0000  ; Layer 2 X position
+    dw $09D2, $0002  ; Currently selected item
     dw $0AF6, $0079  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
@@ -2114,6 +2129,7 @@ preset_kpdr21_backtracking_crateria_kihunters_final:
     dw $090F, $A000  ; Screen subpixel X position
     dw $0913, $2800  ; Screen subpixel Y position
     dw $09CA, $0009  ; Supers
+    dw $09D2, $0000  ; Currently selected item
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $0063  ; Samus X
@@ -2152,7 +2168,6 @@ preset_kpdr21_backtracking_terminator_revisit:
     dw $0A1E, $0304  ; More position/state
     dw $0AF6, $0101  ; Samus X
     dw $0AFA, $0086  ; Samus Y
-    dw $0B3F, $0104  ; Blue suit
     dw #$FFFF
 
 preset_kpdr21_backtracking_green_pirate_shaft_revisit:
@@ -2169,7 +2184,6 @@ preset_kpdr21_backtracking_green_pirate_shaft_revisit:
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $0073  ; Samus X
     dw $0AFA, $029B  ; Samus Y
-    dw $0B3F, $0000  ; Blue suit
     dw #$FFFF
 
 preset_kpdr21_tourian_metroids_1:

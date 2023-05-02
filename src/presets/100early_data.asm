@@ -1342,6 +1342,7 @@ preset_100early_wrecked_ship_attic_missiles:
     dw $09C2, $022E  ; Health
     dw $09C6, $0045  ; Missiles
     dw $09CA, $000B  ; Supers
+    dw $09D2, $0001  ; Currently selected item
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $06CC  ; Samus X
@@ -1362,6 +1363,7 @@ preset_100early_wrecked_ship_attic_revisit:
     dw $09C2, $020D  ; Health
     dw $09C6, $003A  ; Missiles
     dw $09C8, $004B  ; Max missiles
+    dw $09D2, $0000  ; Currently selected item
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $00AA  ; Samus X
