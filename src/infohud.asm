@@ -857,6 +857,16 @@ ih_hud_code:
     LDA !sram_display_mode : ASL : TAX
     JSR (.status_display_table,X)
 
+if !INFOHUD_ALWAYS_SHOW_X_Y
+    LDA !SAMUS_X : LDX #$0070 : JSR Draw4
+    LDA !SAMUS_X_SUBPX : INX : INX : JSR Draw4Hex
+    LDA !SAMUS_Y : LDX #$00B0 : JSR Draw4
+    LDA !SAMUS_Y_SUBPX : INX : INX : JSR Draw4Hex
+    LDA !IH_DECIMAL : STA !HUD_TILEMAP+$78 : STA !HUD_TILEMAP+$B8
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$6E : STA !HUD_TILEMAP+$82
+    STA !HUD_TILEMAP+$AE : STA !HUD_TILEMAP+$C2
+endif
+
     ; Samus' HP
     LDA !SAMUS_HP : CMP !ram_last_hp : BEQ .reserves : STA !ram_last_hp
     LDA !sram_top_display_mode : CMP !TOP_DISPLAY_VANILLA : BEQ .vanilla_draw_health

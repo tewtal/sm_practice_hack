@@ -54,6 +54,10 @@ This indicates the second tap started 11 frames early and ended 1 frame too earl
 For reference, on NTSC the magic frames are 25 frames apart between first and second tap, 20 frames apart between second and third tap, and 15 frames apart between third and fourth tap.
 On PAL the magic frames are 20 frames apart between first and second tap, 20 frames apart between second and third tap, and 10 frames apart between third and fourth tap.
 
+There is also an "average starting momentum" number printed out which gives some feedback on how effective the start of the short charge was.
+Even a single stutter will lower this number from above 2 to below 2, but you can reduce the number further with more stutters.
+It also accounts for the amount of the time the dpad was released, since each frame the dpad is released while decelerating, Samus moves an extra pixel forward, so shorter releases of the dpad are more optimal.
+
 ## I Frames
 Counts down the invulnerability frames after Samus takes damage.
 
@@ -104,17 +108,21 @@ First two characters = Feedback on mid-air morph while beam is charged:
 - L# indicates you were late where the number tells you how many frames you were late.
 
 ## Wall Jump
-Displays the number of frames between pressing a left or right input and pressing the jump button, if the number of frames is between 1 and 20. On NTSC, to walljump this number should be between 2 and 9 inclusive. Also, if the number of frames is 9 (required for a max-delayed walljump) and the walljump is taking place in WRITG, plasma room, or bubble mountain, then additional information may be presented if you appear to be making hi-jump bootless walljump attempts:
+Displays the number of frames between pressing a left or right input and pressing the jump button, if the number of frames is between 1 and 20.
+To walljump this number should be between 2 and 9 inclusive, although on PAL 8 does not work due to Samus' animation running out and being in the incorrect pose on that particular frame.
+Also, if the number of frames is 7-9 (a delayed walljump) and the walljump is taking place in WRITG or bubble mountain, then additional information may be presented if you appear to be making hi-jump-less walljump attempts (also known as the hypo jump):
 &nbsp;  
-First two characters = Feedback on the max-delayed walljump:
-- H# indicates you jumped high where the number tells you how many pixels you were high (can be zero).
-- L# indicates you jumped low where the number tells you how many pixels you were low (can be zero).
+First two characters = Feedback on the delayed walljump:
+- H# indicates you jumped high where the number tells you how many pixels you were high (can be zero in bubble mountain; H0 does not work and will bonk).
+- B# indicates you jumped high and will bonk, but could save it with a quick mid-air wiggle (turn and turn back). This wiggle shrinks Samus' hitbox.
+It only works in WRITG. The number is the most amount of frames you can take to wiggle, with larger numbers indicating your jump was closer to the optimal YH position.
+- YH indicates you jumped at the optimum height with an 8 or 9 frame walljump.
+- YY indicates you jumped just below the optimum height with a 9 frame walljump (PAL only since PAL physics allow for a larger range of heights to work, although it must be a max-delayed 9 frame walljump since 8 frames won't work).
+- YL indicates you jumped below optimum height with an 8 or 9 frame walljump. Generally a YL height is still enough height to get the second walljump without too much trouble.
+- L0 indicates you jumped below optimum height with a 7-9 frame walljump. L0 jumps still work but the second walljump can be very tight. L0 jumps are the only ones that work with a 7-frame delayed walljump, so for a more optimal setup you want an 8 or 9 frame walljump.
+- L# indicates you jumped low where the number tells you how many pixels you were low.
 
-Unfortunately there is no single pixel that is guaranteed to work for these specific walljumps; it also depends on the subpixels. If you get H0 9 or L0 9, then the jump is possible an estimated 75% of the time. With H0 9 you will know it is possible if you do not bonk the ledge.
-&nbsp;  
 Additionally Samus HP will be overwritten with the average climb speed in approximate pixels per frame (inflated by 2.4%). It averages vertical speed between jump presses, assuming the presses are within 2 seconds of each other and assuming the total speed does not overflow (if either of these happen then average will be blank). If total speed drops below zero then the average will be recorded as zero.
-&nbsp;  
-Note: This feature may not be as accurate on PAL. It will consider either a 7-frame or a 9-frame walljump as a max-delayed walljump (strangely an 8-frame delayed walljump does not work on PAL).
 
 ## Arm Pump
 Displays the number of armpumps (pose changes) per second, and the number of wasted angle down and/or angle up inputs per second.
@@ -234,7 +242,7 @@ Last two characters = Feedback on your timing in pressing down at the correct po
 Note: This will also give feedback on the power bomb height in the Dachora room, in order to convert a spikesuit into a blue suit by interrupting the shinespark animation with a crystal flash.
 
 ## Botwoon Crystal Flash
-Provides feedback on attempts to crystal flash clip in Botwoon Hallway:  
+Provides feedback on attempts to crystal flash clip in Botwoon Hallway (also works for East Pants Room):
 &nbsp;  
 First Y = You laid a power bomb at the correct height (maximum height that you can).
 &nbsp;  

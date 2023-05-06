@@ -2202,7 +2202,7 @@ ihstrat_mbhp:
     %cm_jsl("Mother Brain HP", #action_select_room_strat, #$0009)
 
 ihstrat_ridleyai:
-    %cm_jsl("Ridley AI", #action_select_room_strat, #$000B)
+    %cm_jsl("Ridley AI", #action_select_room_strat, #$000A)
 
 action_select_room_strat:
 {
