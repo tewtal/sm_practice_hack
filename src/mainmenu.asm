@@ -1762,9 +1762,6 @@ SpritesMenu:
     dw #sprites_show_samusproj_hitbox
     dw #sprites_show_enemyproj_hitbox
     dw #sprites_oob_viewer
-if !PRESERVE_WRAM_DURING_SPACETIME
-    dw #$FFFF
-endif
     dw #$0000
     %cm_header("SPRITE FEATURES")
 
@@ -2006,7 +2003,9 @@ if !FEATURE_SD2SNES
     dw #ih_freeze_on_load
 endif
     dw #ih_status_icons
+if !PRESERVE_WRAM_DURING_SPACETIME
     dw #ih_spacetime_infohud
+endif
     dw #ih_lag
     dw #$FFFF
     dw #ih_ram_watch

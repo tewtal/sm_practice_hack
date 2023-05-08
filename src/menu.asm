@@ -1270,11 +1270,11 @@ cm_execute:
     LDA !ram_cm_cursor_stack,X : TAY
     LDA [!DP_CurrentMenu],Y : STA !DP_CurrentMenu
 
+    ; Safety net incase blank line selected
+    CMP #$FFFF : BEQ +
+
     ; Increment past the action index
     LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : INC !DP_CurrentMenu : TAX
-
-    ; Safety net incase blank line selected
-    CPX #$FFFF : BEQ +
 
     ; Execute action
     JSR (cm_execute_action_table,X)
