@@ -142,16 +142,16 @@ endif
     ; Suppress Samus HP display
     ; The segment timer is also suppressed elsewhere just for shinetune
     LDA !SAMUS_HP : STA !ram_last_hp
-    BRA .shinetune_start
 
     ; Track Samus momentum
-    ;LDA !ram_momentum_count : BEQ .wait_for_start : BMI .wait_for_stop
-    ;CMP #$002C : BEQ .average_momentum
+    LDA !ram_momentum_count : BEQ .wait_for_start : BMI .wait_for_stop
+    CMP #$002C : BEQ .average_momentum
 
     ; Check if momentum has stopped or if direction changed
-    ;LDA !IH_CONTROLLER_PRI : AND !ram_momentum_direction : BNE .increment_momentum
-    ;LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_LEFTRIGHT : BNE .invalid_momentum
-    ;LDA !ram_momentum_last : BEQ .momentum_stopped
+    LDA !IH_CONTROLLER_PRI : AND !ram_momentum_direction : BNE .increment_momentum
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_LEFTRIGHT : BNE .invalid_momentum
+    LDA !ram_momentum_last : BEQ .momentum_stopped
+    LDA !IH_CONTROLLER_PRI_PREV : AND !ram_momentum_direction : BEQ .release_direction_penalty
 
   .increment_momentum
     LDA !ram_momentum_count : INC : STA !ram_momentum_count
@@ -182,14 +182,19 @@ endif
   .wait_for_stop
     LDA !ram_momentum_last : BNE .shinetune_start
     LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_LEFTRIGHT : BNE .shinetune_start
+    BRA .momentum_stopped
+
+  .release_direction_penalty
+    LDA !ram_momentum_sum : XBA : INC : XBA : STA !ram_momentum_sum
+    BRA .increment_momentum
 
   .momentum_stopped
-    LDA #$0000 : STA !ram_momentum_sum : STA !ram_momentum_count : STA !ram_momentum_direction
+    TDC : STA !ram_momentum_sum : STA !ram_momentum_count : STA !ram_momentum_direction
 
   .shinetune_start
     ; Track momentum
-    ;LDA !SAMUS_X_SUBMOMENTUM : XBA : AND #$00FF : STA $12
-    ;LDA !SAMUS_X_MOMENTUM : XBA : AND #$FF00 : ORA $12 : STA !ram_momentum_last
+    LDA !SAMUS_X_SUBMOMENTUM : XBA : AND #$00FF : STA $12
+    LDA !SAMUS_X_MOMENTUM : XBA : AND #$FF00 : ORA $12 : STA !ram_momentum_last
 
     ; Think of Samus as a five-speed bike with gears 0-4 (dash counter)
     LDA !ram_dash_counter : CMP #$0003 : BEQ .checkgearshift3
@@ -204,11 +209,12 @@ endif
     LDA !ram_shinetune_late_4 : LDX #$00C0 : JSR Draw3
 
   .reset
-    LDA #$0000 : STA !ram_shine_counter
+    TDC : STA !ram_shine_counter : STA !ram_shine_dash_held_late
     STA !ram_shinetune_early_1 : STA !ram_shinetune_late_1
     STA !ram_shinetune_early_2 : STA !ram_shinetune_late_2
     STA !ram_shinetune_early_3 : STA !ram_shinetune_late_3
     STA !ram_shinetune_early_4 : STA !ram_shinetune_late_4
+    STA !ram_momentum_sum : STA !ram_momentum_count : STA !ram_momentum_direction
     RTS
 
   .chargespark
@@ -979,15 +985,16 @@ status_walljump:
     LDA !IH_BLANK : STA !HUD_TILEMAP+$90
 
   .startaverage
-    LDA #$0000 : STA !ram_vertical_speed : INC : STA !ram_roomstrat_counter
+    TDC : STA !ram_vertical_speed : INC : STA !ram_roomstrat_counter
     BRA .incspeed
 
   .blankaverage
-    LDA !IH_BLANK : STA !HUD_TILEMAP+$90 : STA !HUD_TILEMAP+$92 : STA !HUD_TILEMAP+$94 : STA !HUD_TILEMAP+$96 : STA !HUD_TILEMAP+$98
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$90 : STA !HUD_TILEMAP+$92
+    STA !HUD_TILEMAP+$94 : STA !HUD_TILEMAP+$96 : STA !HUD_TILEMAP+$98
     BRA .startaverage
 
   .clearaverage
-    LDA #$0000 : STA !ram_roomstrat_counter
+    TDC : STA !ram_roomstrat_counter
     BRA .checkleftright
 
   .incframecount
@@ -1019,8 +1026,20 @@ status_walljump:
     SEC : SBC $12 : STA !ram_vertical_speed
     BRA .checkleftright
 
+  .writg
+    LDA #$042F : STA !ram_ypos
+    BRL .heightcheck
+
+  .bubble
+    LDA #$0117 : STA !ram_ypos
+    BRL .heightcheck
+
+  .jump
+    LDA !ROOM_ID : CMP #$B4AD : BEQ .writg : CMP #$ACB3 : BEQ .bubble
+    BRL .clear
+
   .zerospeed
-    LDA #$0000 : STA !ram_vertical_speed
+    TDC : STA !ram_vertical_speed
 
   .checkleftright
     LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_LEFT : BNE .leftright
@@ -1038,74 +1057,212 @@ status_walljump:
   .done
     RTS
 
-  .jump
-    LDA !ram_walljump_counter : LDX #$008C : JSR Draw2
-    BRL .roomcheck
-
-  .ignore
-    ; We can provide extra feedback on max-delayed walljumps near the target position
-    ; Only clear that information if we have another max-delayed walljump
-    LDA !ram_walljump_counter
+  .printlow0
 if !FEATURE_PAL
-    CMP #$0007 : BEQ .clear
+    LDA !SAMUS_Y_SUBPX : CMP #$7000 : BCS .printlow
+    LDA !ram_walljump_counter : CMP #$0007 : BNE .printlowy
+    BRL .bonkminus2
+else
+    LDA !SAMUS_Y_SUBPX : CMP #$8400 : BCS .printlow
+    LDA !ram_walljump_counter : CMP #$0007 : BNE .printlowy
+    BRL .bonkminus1
 endif
-    CMP #$0009 : BNE .reset
 
-  .clear
-    LDA !IH_BLANK : STA !HUD_TILEMAP+$88 : STA !HUD_TILEMAP+$8A
-
-  .reset
-    LDA #$0000 : STA !ram_walljump_counter
-    RTS
+  .printlowy
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$88
+    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$8A
+    BRL .drawjumpcounter
 
   .low
     ; If we are more than 65 pixels away from the target walljump position,
     ; assume this is a regular walljump and ignore the target position
-    SEC : SBC !ram_ypos : CMP #$0042 : BPL .ignore
+    SEC : SBC !ram_ypos : CMP #$0042 : BPL .clear
     ASL : TAY : LDA !ram_walljump_counter
+    CMP #$0007 : BEQ .checklow0
 if !FEATURE_PAL
-    CMP #$0007 : BEQ .printlow
+else
+    CMP #$0008 : BEQ .checklow0
 endif
-    CMP #$0009 : BNE .clear
+    CMP #$0009 : BEQ .checklow0
+
+  .clear
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$88 : STA !HUD_TILEMAP+$8A
+
+  .drawjumpcounter
+    LDA !ram_walljump_counter : LDX #$008C : JSR Draw2
+
+  .reset
+    TDC : STA !ram_walljump_counter
+    RTS
+
+if !FEATURE_PAL
+  .printy
+    CMP #$0007 : BEQ .printybonk
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$88 : STA !HUD_TILEMAP+$8A
+    BRL .drawjumpcounter
+
+  .printybonk
+    LDA !SAMUS_Y_SUBPX : CMP #$4C00 : BCC .printybonkminus4
+    BRL .bonkminus3
+endif
+
+  .checklow0
+if !FEATURE_PAL
+    CPY #$0002 : BEQ .printlow0
+    CPY #$0000 : BEQ .printy
+else
+    CPY #$0000 : BEQ .printlow0
+endif
 
   .printlow
+if !FEATURE_PAL
+    DEY : DEY
+endif
     LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A
     LDA !IH_LETTER_L : STA !HUD_TILEMAP+$88
-    BRA .reset
+    BRA .drawjumpcounter
 
   .heightcheck
     LDA !SAMUS_Y : CMP !ram_ypos : BPL .low
 
     ; We must be high
-    ; If we are more than 65 pixels away from the target walljump position,
+    ; If we are more than 105 pixels away from the target walljump position,
     ; assume this is a regular walljump and ignore the target position
-    LDA !ram_ypos : DEC : SEC : SBC !SAMUS_Y : CMP #$0042 : BPL .ignore
+    LDA !ram_ypos : DEC : SEC : SBC !SAMUS_Y : CMP #$006A : BPL .clear
+
+    ; If we are more than 65 pixels away, then this may be the second walljump
+    ; of a hypo jump attempt, so nothing at all to report
+    CMP #$0042 : BPL .reset
+
     ASL : TAY : LDA !ram_walljump_counter
+    CMP #$0007 : BEQ .checkhigh0
 if !FEATURE_PAL
-    CMP #$0007 : BEQ .printhigh
-endif
+    CMP #$0009 : BEQ .checkhigh0
+    BRL .clear
+else
+    CMP #$0008 : BEQ .checkhigh0
     CMP #$0009 : BNE .clear
+endif
+
+  .checkhigh0
+    CPY #$0000 : BEQ .printhigh0 : LDA !SAMUS_Y_SUBPX
+    CPY #$0002 : BEQ .printhigh1 : CPY #$0004 : BEQ .printhigh2
+    CPY #$0006 : BEQ .printhigh3 : CPY #$0008 : BEQ .printhigh4
+if !FEATURE_PAL
+else
+    CPY #$000A : BEQ .printhigh5
+endif
 
   .printhigh
     LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A
     LDA !IH_LETTER_H : STA !HUD_TILEMAP+$88
-    BRA .reset
+    BRL .drawjumpcounter
 
-  .roomcheck
-    LDA !ROOM_ID : CMP #$B4AD : BEQ .writg : CMP #$D2AA : BEQ .plasma : CMP #$ACB3 : BEQ .bubble
-    BRL .clear
+if !FEATURE_PAL
+  .printybonkminus4
+    BRA .bonkminus4
+endif
 
-  .writg
-    LDA #$042F : STA !ram_ypos
-    BRA .heightcheck
+  .printhigh0
+    CMP #$0007 : BEQ .printhigh0bonk
+    LDA !SAMUS_Y_SUBPX
+if !FEATURE_PAL
+    CMP #$7000 : BCC .bonkminus5
+    CMP #$CC00 : BCC .bonkminus4
+else
+    CMP #$2C00 : BCC .bonkminus3
+endif
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$88
+    LDA !IH_LETTER_H : STA !HUD_TILEMAP+$8A
+    BRL .drawjumpcounter
 
-  .plasma
-    LDA #$014F : STA !ram_ypos
-    BRA .heightcheck
+  .printhigh1
+if !FEATURE_PAL
+    CMP #$6C00 : BCC .bonkminus6
+    BRA .bonkminus5
+else
+    CMP #$9800 : BCC .bonkminus4
+    BRA .bonkminus3
+endif
 
-  .bubble
-    LDA #$0117 : STA !ram_ypos
-    BRA .heightcheck
+  .printhigh2
+if !FEATURE_PAL
+    CMP #$4800 : BCC .bonkminus7
+    BRA .bonkminus6
+else
+    CMP #$CC00 : BCC .bonkminus5
+    BRA .bonkminus4
+endif
+
+  .printhigh3
+if !FEATURE_PAL
+    BRA .bonkminus7
+else
+    CMP #$E400 : BCC .bonkminus6
+    BRA .bonkminus5
+endif
+
+  .printhigh4
+if !FEATURE_PAL
+    CMP #$EC00 : BCC .printhigh
+    BRA .bonkminus7
+else
+    CMP #$E000 : BCC .bonkminus7
+    BRA .bonkminus6
+
+  .printhigh5
+    CMP #$C000 : BCC .printhigh
+    BRA .bonkminus7
+endif
+
+  .printhigh0bonk
+if !FEATURE_PAL
+    BRA .bonkminus4
+else
+    LDA !SAMUS_Y_SUBPX : CMP #$4800 : BCC .bonkminus3
+    CMP #$DC00 : BCC .bonkminus2
+endif
+
+  .bonkminus1
+    LDA !ram_walljump_counter : DEC
+    BRA .bonkcheck
+
+  .bonkminus2
+    LDA !ram_walljump_counter : DEC : DEC
+    BRA .bonkcheck
+
+  .bonkminus3
+    LDA !ram_walljump_counter : DEC : DEC : DEC
+    BRA .bonkcheck
+
+  .bonkminus4
+    LDA !ram_walljump_counter : DEC : DEC : DEC : DEC
+    BRA .bonkcheck
+
+  .bonkminus5
+    LDA !ram_walljump_counter : DEC : DEC : DEC : DEC : DEC
+    BRA .bonkcheck
+
+  .bonkminus6
+    LDA !ram_walljump_counter : DEC : DEC : DEC : DEC : DEC : DEC
+    BRA .bonkcheck
+
+  .bonkminus7
+    LDA !ram_walljump_counter : DEC : DEC : DEC : DEC : DEC : DEC : DEC
+
+  .bonkcheck
+    CMP #$0002 : BPL .bonkroomcheck
+    BRL .printhigh
+
+  .bonkroomcheck
+    ASL : TAX
+    LDA !ROOM_ID : CMP #$B4AD : BEQ .printbonk
+    BRL .printhigh
+
+  .printbonk
+    TXY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A
+    LDA !IH_LETTER_B : STA !HUD_TILEMAP+$88
+    BRL .drawjumpcounter
 }
 
 status_armpump:
@@ -2121,10 +2278,12 @@ endif
 
     ; Check if we have returned to PB location with zero vertical speed
     ; (we assume horizontal speed is also zero)
+    ; Note by only checking the lower byte of Y position,
+    ; the same check now works for the shaktool CF clip
     ; Arbitrary wait of 90 frames before checking
     CMP #$005A : BMI .inc
     LDA !SAMUS_X : CMP !ram_xpos : BNE .inc
-    LDA !SAMUS_Y : CMP #$00B7 : BNE .inc
+    LDA !SAMUS_Y : AND #$00FF : CMP #$00B7 : BNE .inc
     LDA !SAMUS_Y_SPEED : CMP #$0000 : BNE .inc
     LDA !SAMUS_Y_SUBSPEED : CMP #$0000 : BNE .inc
     LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$8A
@@ -2132,7 +2291,7 @@ endif
 
   .pbcheck
     ; Height check specific for botwoon hallway
-    LDA !ram_ypos : CMP #$00B7 : BEQ .startpb
+    LDA !ram_ypos : AND #$00FF : CMP #$00B7 : BEQ .startpb
     LDA !IH_BLANK : STA !HUD_TILEMAP+$88
     BRA .setpb
 
@@ -2211,7 +2370,8 @@ endif
     RTS
 
   .ignore
-    LDA !IH_BLANK : STA !HUD_TILEMAP+$88 : STA !HUD_TILEMAP+$8A : STA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$8E
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$88 : STA !HUD_TILEMAP+$8A
+    STA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$8E
     RTS
 
   .checkpos
