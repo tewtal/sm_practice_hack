@@ -824,6 +824,7 @@ if !FEATURE_PAL
     dw #cat_14speedboots
 endif
     dw #cat_gt_code
+    dw #cat_gt_max
     dw #cat_rbo
     dw #cat_any_glitched
     dw #cat_inf_cf
@@ -849,7 +850,7 @@ cat_14speed:
 cat_gt_code:
     %cm_jsl("GT Code", action_category, #$0005)
 
-cat_gt_135:
+cat_gt_max:
     %cm_jsl("GT Max%", action_category, #$0006)
 
 cat_rbo:
@@ -864,7 +865,6 @@ cat_inf_cf:
 cat_nothing:
     %cm_jsl("Nothing", action_category, #$000A)
 
-if !FEATURE_PAL
 cat_14xice:
     %cm_jsl("14% X-Ice", action_category, #$000B)
 
@@ -873,7 +873,6 @@ cat_14iceboots:
 
 cat_14speedboots:
     %cm_jsl("14% Speed Boots", action_category, #$000D)
-endif
 
 
 action_category:
@@ -916,11 +915,9 @@ endif
     dw #$9004, #$0000, #$00C7, #$0005, #$0005, #$0005, #$0000, #$0000        ; any% glitched
     dw #$F32F, #$100F, #$0031, #$01A4, #$005A, #$0063, #$0000, #$0000        ; crystal flash
     dw #$0000, #$0000, #$0063, #$0000, #$0000, #$0000, #$0000, #$0000        ; nothing
-if !FEATURE_PAL
     dw #$9005, #$1002, #$012B, #$000A, #$000A, #$0005, #$0064, #$0000        ; 14% x-ice
     dw #$1105, #$1002, #$018F, #$000A, #$000A, #$0005, #$0000, #$0000        ; 14% iceboots
     dw #$3105, #$1000, #$018F, #$000A, #$000A, #$0005, #$0000, #$0000        ; 14% speedboots
-endif
 }
 
 
@@ -1435,9 +1432,9 @@ tel_tourianmb:
 action_teleport:
 {
     ; teleport destination in Y when called
-    TYA : AND #$FF00 : XBA : STA $7E079F
-    TYA : AND #$00FF : STA $7E078B
-    LDA #$0006 : STA $7E0998
+    TYA : AND #$FF00 : XBA : STA !AREA_ID
+    TYA : AND #$00FF : STA !LOAD_STATION_INDEX
+    LDA #$0006 : STA !GAMEMODE
 
     ; Make sure we can teleport to Zebes from Ceres
     %a8()
@@ -1736,8 +1733,8 @@ misc_invincibility:
 misc_killenemies:
     %cm_jsl("Kill Enemies", .kill_loop, #0)
   .kill_loop
-    ; 8000 = solid to Samus, 0400 = Ignore Samus projectiles
-    TAX : LDA $0F86,X : BIT #$8400 : BNE .next_enemy
+    ; 8000 = solid to Samus, 0400 = Ignore Samus projectiles, 0100 = Invisible
+    TAX : LDA $0F86,X : BIT #$8500 : BNE .next_enemy
     ORA #$0200 : STA $0F86,X
   .next_enemy
     TXA : CLC : ADC #$0040 : CMP #$0400 : BNE .kill_loop
@@ -1767,7 +1764,6 @@ SpritesMenu:
     dw #sprites_oob_viewer
 if !PRESERVE_WRAM_DURING_SPACETIME
     dw #$FFFF
-    dw #sprites_spacetime_infohud
 endif
     dw #$0000
     %cm_header("SPRITE FEATURES")
@@ -1806,15 +1802,6 @@ sprites_oob_viewer:
     LDA #$0000 : STA !ram_sprite_features_active
     RTL
 }
-
-sprites_spacetime_infohud:
-    dw !ACTION_CHOICE
-    dl #!ram_spacetime_infohud
-    dw #$0000
-    db #$28, "Spacetime HUD", #$FF
-    db #$28, "    VANILLA", #$FF
-    db #$28, "  PRESERVED", #$FF
-    db #$FF
 
 action_sprite_features:
 {
@@ -2013,11 +2000,13 @@ InfoHudMenu:
     dw #$FFFF
     dw #ih_room_counter
     dw #ih_lag_counter
+    dw #$FFFF
     dw #ih_reset_seg_later
 if !FEATURE_SD2SNES
     dw #ih_freeze_on_load
 endif
     dw #ih_status_icons
+    dw #ih_spacetime_infohud
     dw #ih_lag
     dw #$FFFF
     dw #ih_ram_watch
@@ -2278,6 +2267,15 @@ ih_status_icons:
     LDA !IH_BLANK : STA !HUD_TILEMAP+$54 : STA !HUD_TILEMAP+$56 : STA !HUD_TILEMAP+$58
     RTL
 
+ih_spacetime_infohud:
+    dw !ACTION_CHOICE
+    dl #!ram_spacetime_infohud
+    dw #$0000
+    db #$28, "Spacetime HUD", #$FF
+    db #$28, "    VANILLA", #$FF
+    db #$28, "  PRESERVED", #$FF
+    db #$FF
+
 ih_lag:
     %cm_numfield("Artificial Lag", !sram_artificial_lag, 0, 64, 1, 4, #0)
 
@@ -2287,7 +2285,7 @@ ih_ram_watch:
 incsrc ramwatchmenu.asm
 
 print pc, " mainmenu InfoHUD end"
-warnpc $B3F000 ; mainmenu.asm
+warnpc $85F800 ; gamemode.asm
 pullpc
 
 
@@ -2349,6 +2347,7 @@ if !FEATURE_PAL
     dw #game_paldebug
 endif
     dw #game_pacifist
+    dw #game_debugplms
     dw #game_debugprojectiles
     dw #game_debugfixscrolloffsets
     dw #$FFFF
@@ -2363,15 +2362,6 @@ if !FEATURE_PAL
 else
     %cm_toggle("Japanese Text", $7E09E2, #$0001, #0)
 endif
-
-game_pacifist:
-    %cm_toggle("Pacifist Mode", !ram_pacifist, #$0001, #0)
-
-game_debugprojectiles:
-    %cm_toggle_bit("Enable Projectiles", $7E198D, #$8000, #0)
-
-game_debugfixscrolloffsets:
-    %cm_toggle_bit("Fix Scroll Offsets", !ram_fix_scroll_offsets, #$0001, #0)
 
 game_moonwalk:
     %cm_toggle("Moon Walk", $7E09E4, #$0001, #0)
@@ -2438,6 +2428,18 @@ if !FEATURE_PAL
 game_paldebug:
     %cm_toggle_inverted("PAL Debug Movement", $7E09E6, #$0001, #0)
 endif
+
+game_pacifist:
+    %cm_toggle("Pacifist Mode", !ram_pacifist, #$0001, #0)
+
+game_debugplms:
+    %cm_toggle_bit_inverted("Pseudo G-Mode", $7E1C23, #$8000, #0)
+
+game_debugprojectiles:
+    %cm_toggle_bit("Enable Projectiles", $7E198D, #$8000, #0)
+
+game_debugfixscrolloffsets:
+    %cm_toggle_bit("Fix Scroll Offsets", !ram_fix_scroll_offsets, #$0001, #0)
 
 game_minimap:
     %cm_toggle("Minimap", !ram_minimap, #$0001, #0)
@@ -2827,7 +2829,7 @@ ControllerLayoutTable:
     dw !CTRL_X, !CTRL_B, !CTRL_Y, !CTRL_SELECT, !CTRL_A,      !CTRL_R, !CTRL_L ; SMW Style (D5)
 }
 
-print pc, " mainmenu GameMenu start"
+print pc, " mainmenu GameMenu end"
 pullpc
 
 
@@ -2841,7 +2843,10 @@ RngMenu:
     endif
     dw #rng_goto_phanmenu
     dw #$FFFF
-    dw #rng_botwoon_rng
+    dw #rng_botwoon_first
+    dw #rng_botwoon_hidden
+    dw #rng_botwoon_second
+    dw #rng_botwoon_spit
     dw #$FFFF
     dw #rng_draygon_rng_right
     dw #rng_draygon_rng_left
@@ -2859,21 +2864,95 @@ rng_rerandomize:
 rng_goto_phanmenu:
     %cm_jsl("Phantoon", #ih_prepare_phantoon_menu, #PhantoonMenu)
 
-rng_botwoon_rng:
+rng_botwoon_first:
     dw !ACTION_CHOICE
-    dl #!ram_cm_botwoon_rng
+    dl #!ram_cm_botwoon_first
     dw #.routine
-    db #$28, "Botwoon RNG", #$FF
+    db #$28, "Botwoon First", #$FF
     db #$28, "     RANDOM", #$FF
-    db #$28, "       DOWN", #$FF
-    db #$28, "         UP", #$FF
-    db #$28, "      RIGHT", #$FF
-    db #$28, "       LEFT", #$FF
+    db #$28, "  LB BOTTOM", #$FF
+    db #$28, "  LT    TOP", #$FF
+    db #$28, "  LR  RIGHT", #$FF
+    db #$28, "  LL   LEFT", #$FF
     db #$FF
   .routine
-    LDA !ram_cm_botwoon_rng : BEQ +
+    LDA !ram_cm_botwoon_first : BEQ .random
+    ; possible values are $01, $09, $11, $19
+    ; the 1s bit will be dropped, used here for convenience
     DEC : ASL #3 : INC
+    STA !ram_botwoon_first : STA !ram_botwoon_rng
+    RTL
+  .random
+    STA !ram_botwoon_first
+    ; set _rng flag if any other patterns are set
+    LDA !ram_botwoon_second : BNE +
+    LDA !ram_botwoon_hidden
 +   STA !ram_botwoon_rng
+    RTL
+
+rng_botwoon_hidden:
+    dw !ACTION_CHOICE
+    dl #!ram_cm_botwoon_hidden
+    dw #.routine
+    db #$28, "Botwoon Hidden", #$FF
+    db #$28, "     RANDOM", #$FF
+    db #$28, "LB BL TL RL", #$FF
+    db #$28, "LT BT TB RB", #$FF
+    db #$28, "LR BR TR RT", #$FF
+    db #$FF
+  .routine
+    LDA !ram_cm_botwoon_hidden : BEQ .random
+    ; possible values are $01, $09, $11
+    ; the 1s bit will be dropped, used here for convenience
+    DEC : ASL #3 : INC
+    STA !ram_botwoon_hidden : STA !ram_botwoon_rng
+    RTL
+  .random
+    STA !ram_botwoon_hidden
+    ; set _rng flag if any other patterns are set
+    LDA !ram_botwoon_first : BNE +
+    LDA !ram_botwoon_second
++   STA !ram_botwoon_rng
+    RTL
+
+rng_botwoon_second:
+    dw !ACTION_CHOICE
+    dl #!ram_cm_botwoon_second
+    dw #.routine
+    db #$28, "Botwoon Second", #$FF
+    db #$28, "     RANDOM", #$FF
+    db #$28, "LB BL TL RL", #$FF
+    db #$28, "LT BT TB RB", #$FF
+    db #$28, "LR BR TR RT", #$FF
+    db #$28, "LL BB TT RR", #$FF
+    db #$FF
+  .routine
+    LDA !ram_cm_botwoon_second : BEQ .random
+    ; possible values are $01, $09, $11, $19
+    ; the 1s bit will be dropped, used here for convenience
+    DEC : ASL #3 : INC
+    STA !ram_botwoon_second : STA !ram_botwoon_rng
+    RTL
+  .random
+    STA !ram_botwoon_second
+    ; set _rng flag if any other patterns are set
+    LDA !ram_botwoon_first : BNE +
+    LDA !ram_botwoon_hidden
++   STA !ram_botwoon_rng
+    RTL
+
+rng_botwoon_spit:
+    dw !ACTION_CHOICE
+    dl #!ram_cm_botwoon_spit
+    dw #.routine
+    db #$28, "Botwoon Spit", #$FF
+    db #$28, "     RANDOM", #$FF
+    db #$28, " NEVER SPIT", #$FF
+    db #$28, "ALWAYS SPIT", #$FF
+    db #$FF
+  .routine
+    ; 0-4 = no spit, 6-E = spit
+    LDA !ram_cm_botwoon_spit : ASL #2 : STA !ram_botwoon_spit
     RTL
 
 rng_draygon_rng_right:
@@ -3043,7 +3122,6 @@ phan_mid_right_1:
 
 phan_slow_right_1:
     %cm_toggle_bit("#1 Slow Right", !ram_phantoon_rng_round_1, #$0001, phan_set_phan_first_phase)
-
 
 
 phan_second_phase:

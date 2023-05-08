@@ -852,7 +852,7 @@ preset_pkrd_kraid_entering_kraids_lair:
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $2001  ; Screen subpixel Y position
     dw $09CE, $0002  ; Pbs
-    dw $09D2, $0000  ; Currently selected item
+    dw $09D2, $0002  ; Currently selected item
     dw $0AF6, $002E  ; Samus X
     dw $D820, $0801  ; Events
     dw #$FFFF
@@ -865,6 +865,7 @@ preset_pkrd_kraid_kraid_kihunters:
     dw $0911, $0100  ; Screen X position in pixels
     dw $0913, $0C00  ; Screen subpixel Y position
     dw $09CA, $0007  ; Supers
+    dw $09D2, $0000  ; Currently selected item
     dw $0AF6, $0168  ; Samus X
     dw #$FFFF
 
@@ -923,6 +924,7 @@ preset_pkrd_kraid_mini_kraid_revisit:
     dw $0913, $9C00  ; Screen subpixel Y position
     dw $0915, $0100  ; Screen Y position in pixels
     dw $09C2, $005E  ; Health
+    dw $09D2, $0002  ; Currently selected item
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $0059  ; Samus X
@@ -940,6 +942,7 @@ preset_pkrd_kraid_kraid_kihunters_revisit:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $09C6, $000B  ; Missiles
     dw $09CA, $000A  ; Supers
+    dw $09D2, $0000  ; Currently selected item
     dw $0AF6, $00F2  ; Samus X
     dw $0AFA, $00AB  ; Samus Y
     dw $D8B8, $00EC  ; Doors
@@ -1021,6 +1024,7 @@ preset_pkrd_upper_norfair_leaving_hi_jump:
     dw $09A4, $1125  ; Collected Items
     dw $09C2, $018F  ; Health
     dw $09C4, $018F  ; Max health
+    dw $09D2, $0003  ; Currently selected item
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $0046  ; Samus X
@@ -1040,6 +1044,7 @@ preset_pkrd_upper_norfair_business_center_2:
     dw $0915, $000B  ; Screen Y position in pixels
     dw $09C2, $018A  ; Health
     dw $09CE, $0004  ; Pbs
+    dw $09D2, $0000  ; Currently selected item
     dw $0AF6, $01C1  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
@@ -1155,6 +1160,7 @@ preset_pkrd_upper_norfair_bat_cave:
     dw $079B, $ACB3  ; MDB
     dw $0911, $0100  ; Screen X position in pixels
     dw $0913, $0000  ; Screen subpixel Y position
+    dw $09D2, $0001  ; Currently selected item
     dw $0AF6, $01BC  ; Samus X
     dw $D8BA, $0011  ; Doors
     dw #$FFFF
@@ -1171,6 +1177,7 @@ preset_pkrd_upper_norfair_leaving_speedbooster:
     dw $09A4, $3125  ; Collected Items
     dw $09C2, $018F  ; Health
     dw $09CA, $0007  ; Supers
+    dw $09D2, $0000  ; Currently selected item
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $0041  ; Samus X
@@ -1615,7 +1622,7 @@ preset_pkrd_maridia_mt_everest:
     dw $0911, $0100  ; Screen X position in pixels
     dw $0913, $4000  ; Screen subpixel Y position
     dw $0915, $031F  ; Screen Y position in pixels
-    dw $0AF6, $0186  ; Samus X
+    dw $0AF6, $019D  ; Samus X
     dw $0AFA, $03BB  ; Samus Y
     dw #$FFFF
 
@@ -1656,6 +1663,7 @@ preset_pkrd_maridia_botwoon:
     dw $0913, $F800  ; Screen subpixel Y position
     dw $0915, $0001  ; Screen Y position in pixels
     dw $09CA, $0007  ; Supers
+    dw $09D2, $0003  ; Currently selected item
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $03A2  ; Samus X
@@ -1676,6 +1684,7 @@ preset_pkrd_maridia_botwoon_etank:
     dw $09C6, $0014  ; Missiles
     dw $09CA, $0004  ; Supers
     dw $09CE, $0001  ; Pbs
+    dw $09D2, $0000  ; Currently selected item
     dw $0AF6, $01CB  ; Samus X
     dw $D82C, $0002  ; Bosses
     dw #$FFFF
@@ -1804,6 +1813,7 @@ preset_pkrd_backtracking_red_brinstar_green_gate:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $09C2, $0079  ; Health
     dw $09CA, $0003  ; Supers
+    dw $09D2, $0002  ; Currently selected item
     dw $0AF6, $0078  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
@@ -1817,6 +1827,7 @@ preset_pkrd_backtracking_crateria_kihunters_final:
     dw $090F, $E000  ; Screen subpixel X position
     dw $0913, $4400  ; Screen subpixel Y position
     dw $09CA, $0002  ; Supers
+    dw $09D2, $0000  ; Currently selected item
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $006C  ; Samus X
@@ -1853,7 +1864,6 @@ preset_pkrd_backtracking_terminator_revisit:
     dw $0A1E, $1504  ; More position/state
     dw $0AF6, $0115  ; Samus X
     dw $0AFA, $008B  ; Samus Y
-    dw $0B3F, $0104  ; Blue suit
     dw #$FFFF
 
 preset_pkrd_backtracking_green_pirate_shaft_revisit:
@@ -1868,7 +1878,6 @@ preset_pkrd_backtracking_green_pirate_shaft_revisit:
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $005E  ; Samus X
     dw $0AFA, $029B  ; Samus Y
-    dw $0B3F, $0000  ; Blue suit
     dw #$FFFF
 
 preset_pkrd_backtracking_g4_hallway:

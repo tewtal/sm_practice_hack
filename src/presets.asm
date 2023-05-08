@@ -21,7 +21,11 @@ endif
 
     JSL preset_start_gameplay  ; Start gameplay
 
-    JSL $809A79  ; HUD routine when game is loading
+    ; Fix Phantoon's room
+    LDA !ROOM_ID : CMP #$CD13 : BNE +
+    JSL preset_clear_BG2_tilemap
+ 
++   JSL $809A79  ; HUD routine when game is loading
     JSL $90AD22  ; Reset projectile data
 
     PHP : %ai16()
@@ -118,10 +122,10 @@ endif
 
 clear_all_enemies:
 {
-    ; Clear enemies (8000 = solid to Samus, 0400 = Ignore Samus projectiles)
+    ; Clear enemies (8000 = solid to Samus, 0400 = Ignore Samus projectiles, 0100 = Invisible)
     LDA #$0000
   .loop
-    TAX : LDA $0F86,X : BIT #$8400 : BNE .done_clearing
+    TAX : LDA $0F86,X : BIT #$8500 : BNE .done_clearing
     ORA #$0200 : STA $0F86,X
   .done_clearing
     TXA : CLC : ADC #$0040 : CMP #$0400 : BNE .loop
@@ -389,6 +393,8 @@ preset_start_gameplay:
 
     ; Set loading game state for Ceres
     LDA #$001F : STA $7ED914
+    ; Set delay for first falling tile in Ceres
+    LDA #$0022 : STA $07E1
     LDA !AREA_ID : CMP #$0006 : BEQ .end_load_game_state
     ; Set loading game state for Zebes
     LDA #$0005 : STA $7ED914
@@ -537,6 +543,32 @@ if !RAW_TILE_GRAPHICS
 else
     PLB : PLP : RTL
 endif
+}
+
+preset_clear_BG2_tilemap:
+{
+    PHP : %ai16()
+
+    ; Clear BG2 Tilemap
+    LDA #$0338 : LDX #$07FE
+-   STA $7E4000,X : STA $7E4800,X
+    DEX #2 : BPL -
+
+    ; Upload BG2 Tilemap
+    %a8()
+    LDA #$80 : STA $802100 ; enable forced blanking
+    LDA #$04 : STA $210C ; BG2 starts at $4000 (8000 in vram)
+    LDA #$80 : STA $2115 ; word-access, incr by 1
+    LDX #$4800 : STX $2116 ; VRAM address (8000 in vram)
+    LDX #$4000 : STX $4302 ; Source offset
+    LDA #$7E : STA $4304 ; Source bank
+    LDX #$1000 : STX $4305 ; Size (0x10 = 1 tile)
+    LDA #$01 : STA $4300 ; word, normal increment (DMA MODE)
+    LDA #$18 : STA $4301 ; destination (VRAM write)
+    LDA #$01 : STA $420B ; initiate DMA (channel 1)
+    LDA #$0F : STA $0F2100 ; disable forced blanking
+    PLP
+    RTL
 }
 
 preset_open_all_blue_doors:

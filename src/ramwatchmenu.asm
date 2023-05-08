@@ -192,6 +192,7 @@ RAMWatchCommonSamusMenu1:
     dw ramwatch_common_samus_0CE2
     dw ramwatch_common_samus_0CE4
     dw ramwatch_common_samus_0DEC
+    dw ramwatch_common_samus_18A8
     dw ramwatch_common_samus_18AA
     dw #$0000
     %cm_header("SELECT FROM SAMUS RAM")
@@ -272,6 +273,9 @@ ramwatch_common_samus_0CE4:
 
 ramwatch_common_samus_0DEC:
     %cm_jsl("CF + Draygon Grab Counter", action_select_common_address, #$0DEC)
+
+ramwatch_common_samus_18A8:
+    %cm_jsl("I-Frame Timer", action_select_common_address, #$18A8)
 
 ramwatch_common_samus_18AA:
     %cm_jsl("Knockback Timer", action_select_common_address, #$18AA)
