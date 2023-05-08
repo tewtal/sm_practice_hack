@@ -1499,14 +1499,13 @@ ih_set_picky_chozo_event_and_enemy_speed:
 
 ih_fix_scroll_offsets:
 {
-    LDA !ram_fix_scroll_offsets : BEQ .done
-    %a8()
-    LDA $0911 : STA $B1 : STA $B5
-    LDA $0915 : STA $B3 : STA $B7
-    %a16()
+    LDA !ram_fix_scroll_offsets : BEQ .nofix
+    LDA $B3 : AND #$FF00 : STA $B3
+    LDA $B1 : AND #$FF00
+    SEC
+    RTS
 
-  .done
-    ; overwritten code
+  .nofix
     LDA $B1 : SEC
     RTS
 }
