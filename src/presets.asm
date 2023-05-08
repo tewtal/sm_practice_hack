@@ -557,7 +557,7 @@ preset_clear_BG2_tilemap:
     ; Upload BG2 Tilemap
     %a8()
     LDA #$80 : STA $802100 ; enable forced blanking
-    LDA #$04 : STA $210C ; BG3 starts at $4000 (8000 in vram)
+    LDA #$04 : STA $210C ; BG2 starts at $4000 (8000 in vram)
     LDA #$80 : STA $2115 ; word-access, incr by 1
     LDX #$4800 : STX $2116 ; VRAM address (8000 in vram)
     LDX #$4000 : STX $4302 ; Source offset

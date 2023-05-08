@@ -824,6 +824,7 @@ if !FEATURE_PAL
     dw #cat_14speedboots
 endif
     dw #cat_gt_code
+    dw #cat_gt_max
     dw #cat_rbo
     dw #cat_any_glitched
     dw #cat_inf_cf
@@ -849,7 +850,7 @@ cat_14speed:
 cat_gt_code:
     %cm_jsl("GT Code", action_category, #$0005)
 
-cat_gt_135:
+cat_gt_max:
     %cm_jsl("GT Max%", action_category, #$0006)
 
 cat_rbo:
@@ -864,7 +865,6 @@ cat_inf_cf:
 cat_nothing:
     %cm_jsl("Nothing", action_category, #$000A)
 
-if !FEATURE_PAL
 cat_14xice:
     %cm_jsl("14% X-Ice", action_category, #$000B)
 
@@ -873,7 +873,6 @@ cat_14iceboots:
 
 cat_14speedboots:
     %cm_jsl("14% Speed Boots", action_category, #$000D)
-endif
 
 
 action_category:
@@ -916,11 +915,9 @@ endif
     dw #$9004, #$0000, #$00C7, #$0005, #$0005, #$0005, #$0000, #$0000        ; any% glitched
     dw #$F32F, #$100F, #$0031, #$01A4, #$005A, #$0063, #$0000, #$0000        ; crystal flash
     dw #$0000, #$0000, #$0063, #$0000, #$0000, #$0000, #$0000, #$0000        ; nothing
-if !FEATURE_PAL
     dw #$9005, #$1002, #$012B, #$000A, #$000A, #$0005, #$0064, #$0000        ; 14% x-ice
     dw #$1105, #$1002, #$018F, #$000A, #$000A, #$0005, #$0000, #$0000        ; 14% iceboots
     dw #$3105, #$1000, #$018F, #$000A, #$000A, #$0005, #$0000, #$0000        ; 14% speedboots
-endif
 }
 
 
@@ -1435,9 +1432,9 @@ tel_tourianmb:
 action_teleport:
 {
     ; teleport destination in Y when called
-    TYA : AND #$FF00 : XBA : STA $7E079F
-    TYA : AND #$00FF : STA $7E078B
-    LDA #$0006 : STA $7E0998
+    TYA : AND #$FF00 : XBA : STA !AREA_ID
+    TYA : AND #$00FF : STA !LOAD_STATION_INDEX
+    LDA #$0006 : STA !GAMEMODE
 
     ; Make sure we can teleport to Zebes from Ceres
     %a8()
@@ -1767,7 +1764,6 @@ SpritesMenu:
     dw #sprites_oob_viewer
 if !PRESERVE_WRAM_DURING_SPACETIME
     dw #$FFFF
-    dw #sprites_spacetime_infohud
 endif
     dw #$0000
     %cm_header("SPRITE FEATURES")
@@ -1806,15 +1802,6 @@ sprites_oob_viewer:
     LDA #$0000 : STA !ram_sprite_features_active
     RTL
 }
-
-sprites_spacetime_infohud:
-    dw !ACTION_CHOICE
-    dl #!ram_spacetime_infohud
-    dw #$0000
-    db #$28, "Spacetime HUD", #$FF
-    db #$28, "    VANILLA", #$FF
-    db #$28, "  PRESERVED", #$FF
-    db #$FF
 
 action_sprite_features:
 {
@@ -2013,11 +2000,13 @@ InfoHudMenu:
     dw #$FFFF
     dw #ih_room_counter
     dw #ih_lag_counter
+    dw #$FFFF
     dw #ih_reset_seg_later
 if !FEATURE_SD2SNES
     dw #ih_freeze_on_load
 endif
     dw #ih_status_icons
+    dw #ih_spacetime_infohud
     dw #ih_lag
     dw #$FFFF
     dw #ih_ram_watch
@@ -2278,6 +2267,15 @@ ih_status_icons:
     LDA !IH_BLANK : STA !HUD_TILEMAP+$54 : STA !HUD_TILEMAP+$56 : STA !HUD_TILEMAP+$58
     RTL
 
+ih_spacetime_infohud:
+    dw !ACTION_CHOICE
+    dl #!ram_spacetime_infohud
+    dw #$0000
+    db #$28, "Spacetime HUD", #$FF
+    db #$28, "    VANILLA", #$FF
+    db #$28, "  PRESERVED", #$FF
+    db #$FF
+
 ih_lag:
     %cm_numfield("Artificial Lag", !sram_artificial_lag, 0, 64, 1, 4, #0)
 
@@ -2287,7 +2285,7 @@ ih_ram_watch:
 incsrc ramwatchmenu.asm
 
 print pc, " mainmenu InfoHUD end"
-warnpc $B3F000 ; mainmenu.asm
+warnpc $85F800 ; gamemode.asm
 pullpc
 
 
@@ -2365,18 +2363,6 @@ else
     %cm_toggle("Japanese Text", $7E09E2, #$0001, #0)
 endif
 
-game_pacifist:
-    %cm_toggle("Pacifist Mode", !ram_pacifist, #$0001, #0)
-
-game_debugplms:
-    %cm_toggle_bit_inverted("Pseudo G-Mode", $7E1C23, #$8000, #0)
-
-game_debugprojectiles:
-    %cm_toggle_bit("Enable Projectiles", $7E198D, #$8000, #0)
-
-game_debugfixscrolloffsets:
-    %cm_toggle_bit("Fix Scroll Offsets", !ram_fix_scroll_offsets, #$0001, #0)
-
 game_moonwalk:
     %cm_toggle("Moon Walk", $7E09E4, #$0001, #0)
 
@@ -2442,6 +2428,18 @@ if !FEATURE_PAL
 game_paldebug:
     %cm_toggle_inverted("PAL Debug Movement", $7E09E6, #$0001, #0)
 endif
+
+game_pacifist:
+    %cm_toggle("Pacifist Mode", !ram_pacifist, #$0001, #0)
+
+game_debugplms:
+    %cm_toggle_bit_inverted("Pseudo G-Mode", $7E1C23, #$8000, #0)
+
+game_debugprojectiles:
+    %cm_toggle_bit("Enable Projectiles", $7E198D, #$8000, #0)
+
+game_debugfixscrolloffsets:
+    %cm_toggle_bit("Fix Scroll Offsets", !ram_fix_scroll_offsets, #$0001, #0)
 
 game_minimap:
     %cm_toggle("Minimap", !ram_minimap, #$0001, #0)
@@ -2831,7 +2829,7 @@ ControllerLayoutTable:
     dw !CTRL_X, !CTRL_B, !CTRL_Y, !CTRL_SELECT, !CTRL_A,      !CTRL_R, !CTRL_L ; SMW Style (D5)
 }
 
-print pc, " mainmenu GameMenu start"
+print pc, " mainmenu GameMenu end"
 pullpc
 
 
@@ -2886,6 +2884,7 @@ rng_botwoon_first:
     RTL
   .random
     STA !ram_botwoon_first
+    ; set _rng flag if any other patterns are set
     LDA !ram_botwoon_second : BNE +
     LDA !ram_botwoon_hidden
 +   STA !ram_botwoon_rng
@@ -2910,6 +2909,7 @@ rng_botwoon_hidden:
     RTL
   .random
     STA !ram_botwoon_hidden
+    ; set _rng flag if any other patterns are set
     LDA !ram_botwoon_first : BNE +
     LDA !ram_botwoon_second
 +   STA !ram_botwoon_rng
@@ -2935,6 +2935,7 @@ rng_botwoon_second:
     RTL
   .random
     STA !ram_botwoon_second
+    ; set _rng flag if any other patterns are set
     LDA !ram_botwoon_first : BNE +
     LDA !ram_botwoon_hidden
 +   STA !ram_botwoon_rng
@@ -3121,7 +3122,6 @@ phan_mid_right_1:
 
 phan_slow_right_1:
     %cm_toggle_bit("#1 Slow Right", !ram_phantoon_rng_round_1, #$0001, phan_set_phan_first_phase)
-
 
 
 phan_second_phase:
