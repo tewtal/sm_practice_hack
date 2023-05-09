@@ -202,11 +202,10 @@ ih_get_item_code:
 
 ih_debug_patch:
 {
-    LDA $05D1
-    BNE +
-    JML $828B54
-+   JSL $B49809
-    JML $828B4F
+    LDA !DEBUG_MODE : BNE +
+    JML $828B54 ; return past debug handler
++   JSL $B49809 ; run debug handler
+    JML $828B4F ; return
 }
 
 ih_nmi_end:
@@ -216,41 +215,40 @@ ih_nmi_end:
     LDA !ram_realtime_room : INC : STA !ram_realtime_room
 
     ; Segment real timer
-    {
-        LDA !ram_seg_rt_frames : INC : STA !ram_seg_rt_frames : CMP.w #60 : BNE +
-        LDA #$0000 : STA !ram_seg_rt_frames
-        LDA !ram_seg_rt_seconds : INC : STA !ram_seg_rt_seconds : CMP.w #60 : BNE +
-        LDA #$0000 : STA !ram_seg_rt_seconds
-        LDA !ram_seg_rt_minutes : INC : STA !ram_seg_rt_minutes
-        +
-    }
+    LDA !ram_seg_rt_frames : INC : STA !ram_seg_rt_frames : CMP.w #60 : BNE +
+    LDA #$0000 : STA !ram_seg_rt_frames
+    LDA !ram_seg_rt_seconds : INC : STA !ram_seg_rt_seconds : CMP.w #60 : BNE +
+    LDA #$0000 : STA !ram_seg_rt_seconds
+    LDA !ram_seg_rt_minutes : INC : STA !ram_seg_rt_minutes
 
-    LDA !ram_slowdown_mode : BNE +
-
++   LDA !ram_slowdown_mode : BNE .controller2_slowdown
     JMP .done
 
-+   CMP #$FFFF
-    BEQ .pause
+  .controller2_slowdown
+    CMP #$FFFF : BEQ .pause
 
     LDA !ram_slowdown_frames : BNE .delay
+    ; Process next frame
     LDA !ram_slowdown_mode : STA !ram_slowdown_frames
     LDA !ram_slowdown_controller_1 : STA !IH_CONTROLLER_PRI_PREV
     LDA !ram_slowdown_controller_2 : STA !IH_CONTROLLER_SEC_PREV
 
-    JSL $809459
+    JSL $809459 ;  Read controller input
     JMP .done
 
   .delay
-    CMP !ram_slowdown_mode : BNE +
+    CMP !ram_slowdown_mode : BNE .dec_timer
 
     LDA !IH_CONTROLLER_PRI : EOR !IH_CONTROLLER_PRI_NEW : STA !ram_slowdown_controller_1
     LDA !IH_CONTROLLER_SEC : EOR !IH_CONTROLLER_SEC_NEW : STA !ram_slowdown_controller_2
 
     LDA !ram_slowdown_frames
 
-+   DEC : STA !ram_slowdown_frames
+  .dec_timer
+    DEC : STA !ram_slowdown_frames
 
-    %a8() : LDA #$01 : STA $05B4 : %a16()
+    ; Skip next frame
+    %a8() : LDA #$01 : STA !NMI_REQUEST_FLAG : %a16()
     JMP .done
 
   .pause
@@ -260,29 +258,31 @@ ih_nmi_end:
     LDA !IH_CONTROLLER_PRI : EOR !IH_CONTROLLER_PRI_NEW : STA !ram_slowdown_controller_1
     LDA !IH_CONTROLLER_SEC : EOR !IH_CONTROLLER_SEC_NEW : STA !ram_slowdown_controller_2
 
+    ; Check controller 2 inputs
 +   LDA !IH_CONTROLLER_SEC_NEW : CMP !IH_PAUSE : BEQ .frameAdvance
-
     CMP !IH_RESET : BNE +
-
+    ; Resume normal gameplay
     LDA #$0000 : STA !ram_slowdown_mode : STA !ram_slowdown_frames
     JMP .done
 
-+   LDA !ram_freeze_on_load : BEQ +
-    LDA !IH_CONTROLLER_PRI_NEW : BEQ +
-
+    ; Pause after load_state until new inputs
++   LDA !ram_freeze_on_load : BEQ .wait_for_next_nmi
+    LDA !IH_CONTROLLER_PRI_NEW : BEQ .wait_for_next_nmi
+    ; Reset timers and unpause
     LDA #$0000 : STA !ram_reset_segment_later
     STA !ram_seg_rt_frames : STA !ram_seg_rt_seconds
     STA !ram_seg_rt_minutes : STA !ram_slowdown_mode : STA !ram_slowdown_frames
     JMP .done
 
-+   %a8() : LDA #$01 : STA $05B4 : %a16()
+  .wait_for_next_nmi
+    %a8() : LDA #$01 : STA !NMI_REQUEST_FLAG : %a16()
     JMP .done
 
   .frameAdvance
     LDA #$0000 : STA !ram_slowdown_frames
-    LDA !ram_slowdown_controller_1 : STA $97
-    LDA !ram_slowdown_controller_2 : STA $99
-    JSL $809459
+    LDA !ram_slowdown_controller_1 : STA !IH_CONTROLLER_PRI_PREV
+    LDA !ram_slowdown_controller_2 : STA !IH_CONTROLLER_SEC_PREV
+    JSL $809459 ;  Read controller input
 
   .done
     PLY
@@ -300,15 +300,13 @@ ih_gamemode_frame:
     PLA
 
     ; overwritten code
-    STZ $0A30
-    STZ $0A32
+    STZ $0A30 : STZ $0A32
     RTL
 }
 
 ih_after_room_transition:
 {
-    PHX
-    PHY
+    PHX : PHY
 
     LDA !ram_transition_counter : STA !ram_last_door_lag_frames
     LDA !ram_realtime_room : STA !ram_last_realtime_door
@@ -338,20 +336,16 @@ ih_after_room_transition:
 
     JSL init_heat_damage_ram
     JSL init_water_physics_after_room_transition
-    PLY
-    PLX
+    PLY : PLX
 
     ; original hijacked code
-    LDA #$0008
-    STA !GAMEMODE
+    LDA #$0008 : STA !GAMEMODE
     RTL
 }
 
 ih_before_room_transition:
 {
-    PHA
-    PHX
-    PHY
+    PHA : PHX : PHY
 
     ; Save and reset timers
     LDA !ram_transition_flag : CMP #$0001 : BEQ .done
@@ -384,9 +378,7 @@ ih_before_room_transition:
 
   .done
     ; Run standard code and return
-    PLY
-    PLX
-    PLA
+    PLY : PLX : PLA
     STA !GAMEMODE
     CLC
     RTL
@@ -399,8 +391,8 @@ ceres_start_timers:
     STA !ram_gametime_room : STA !ram_last_gametime_room
     STA !ram_last_room_lag : STA !ram_last_door_lag_frames : STA !ram_transition_counter
 
-    STZ $0723 ; overwritten code
-    STZ $0725
+    ; overwritten code
+    STZ $0723 : STZ $0725
     
     JML ceres_start_timers_return
 }
@@ -510,10 +502,8 @@ endif
 
 ih_update_hud_code_before_transition:
 {
-    PHX
-    PHY
-    PHP
-    PHB
+    PHX : PHY
+    PHP : PHB
     ; Bank 80
     PEA $8080 : PLB : PLB
 
@@ -531,10 +521,8 @@ ih_update_hud_code_before_transition:
 
 ih_update_hud_code:
 {
-    PHX
-    PHY
-    PHP
-    PHB
+    PHX : PHY
+    PHP : PHB
     ; Bank 80
     PEA $8080 : PLB : PLB
 
@@ -569,8 +557,8 @@ else
     LDA #$3C
 endif
     STA $4206
-    PHA : PLA : PHA : PLA
     %a16()
+    PEA $0000 : PLA ; wait for CPU math
     LDA $4216 : STA $C1
     LDA $4214 : LDX #$00B0 : JSR Draw2
     LDA !IH_DECIMAL : STA !HUD_TILEMAP+$B4
@@ -613,8 +601,8 @@ else
     LDA #$3C
 endif
     STA $4206
-    PHA : PLA : PHA : PLA
     %a16()
+    PEA $0000 : PLA ; wait for CPU math
     LDA $4216 : STA $C1
     LDA $4214 : JSR Draw3 : TXY
     LDA !IH_DECIMAL : STA !HUD_TILEMAP+$00,X
@@ -664,10 +652,8 @@ endif
     BRA .pick_segment_timer
 
   .end
-    PLB
-    PLP
-    PLY
-    PLX
+    PLB : PLP
+    PLY : PLX
     RTL
 
   .vanilla_infohud_draw_lag_and_reserves
@@ -702,7 +688,7 @@ endif
     BRA .draw_segment_timer
 
   .ingame_segment_timer
-    LDA #$09DA : STA $00
+    LDA #!IGT_FRAMES : STA $00
     LDA #$007E : STA $02
     BRA .draw_segment_timer
 
@@ -748,7 +734,7 @@ ih_hud_vanilla_health:
     %a8()
     LDA #$64 : STA $4206
     %a16()
-    PHA : PLA : PHA : PLA
+    PEA $0000 : PLA ; wait for CPU math
     LDA $4214 : STA $14
     LDA $4216 : STA $12
     LDA !SAMUS_HP_MAX : STA $4204
@@ -857,6 +843,16 @@ ih_hud_code:
     LDA !sram_display_mode : ASL : TAX
     JSR (.status_display_table,X)
 
+if !INFOHUD_ALWAYS_SHOW_X_Y
+    LDA !SAMUS_X : LDX #$0070 : JSR Draw4
+    LDA !SAMUS_X_SUBPX : INX : INX : JSR Draw4Hex
+    LDA !SAMUS_Y : LDX #$00B0 : JSR Draw4
+    LDA !SAMUS_Y_SUBPX : INX : INX : JSR Draw4Hex
+    LDA !IH_DECIMAL : STA !HUD_TILEMAP+$78 : STA !HUD_TILEMAP+$B8
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$6E : STA !HUD_TILEMAP+$82
+    STA !HUD_TILEMAP+$AE : STA !HUD_TILEMAP+$C2
+endif
+
     ; Samus' HP
     LDA !SAMUS_HP : CMP !ram_last_hp : BEQ .reserves : STA !ram_last_hp
     LDA !sram_top_display_mode : CMP !TOP_DISPLAY_VANILLA : BEQ .vanilla_draw_health
@@ -930,7 +926,7 @@ ih_hud_code:
 
     ; Shine timer
   .check_shinetimer
-    LDA $0A68 : BEQ .clear_shinetimer
+    LDA !SAMUS_SHINE_TIMER : BEQ .clear_shinetimer
     LDA !IH_SHINETIMER : STA !HUD_TILEMAP+$58
     BRA .check_reserves
 
@@ -972,7 +968,7 @@ Draw2:
     %a8()
     LDA #$0A : STA $4206   ; divide by 10
     %a16()
-    PEA $0000 : PLA
+    PEA $0000 : PLA ; wait for CPU math
     LDA $4214 : STA $16
 
     ; Ones digit
@@ -996,7 +992,7 @@ Draw3:
     %a8()
     LDA #$0A : STA $4206   ; divide by 10
     %a16()
-    PEA $0000 : PLA
+    PEA $0000 : PLA ; wait for CPU math
     LDA $4214 : STA $16
 
     ; Ones digit
@@ -1007,7 +1003,7 @@ Draw3:
     %a8()
     LDA #$0A : STA $4206   ; divide by 10
     %a16()
-    PEA $0000 : PLA
+    PEA $0000 : PLA ; wait for CPU math
     LDA $4214 : STA $14
 
     ; Tens digit
@@ -1035,7 +1031,7 @@ Draw4:
     %a8()
     LDA #$0A : STA $4206   ; divide by 10
     %a16()
-    PEA $0000 : PLA
+    PEA $0000 : PLA ; wait for CPU math
     LDA $4214 : STA $16
 
     ; Ones digit
@@ -1046,7 +1042,7 @@ Draw4:
     %a8()
     LDA #$0A : STA $4206   ; divide by 10
     %a16()
-    PEA $0000 : PLA
+    PEA $0000 : PLA ; wait for CPU math
     LDA $4214 : STA $14
 
     ; Tens digit
@@ -1057,7 +1053,7 @@ Draw4:
     %a8()
     LDA #$0A : STA $4206   ; divide by 10
     %a16()
-    PEA $0000 : PLA
+    PEA $0000 : PLA ; wait for CPU math
     LDA $4214 : STA $12
 
     ; Hundreds digit
@@ -1150,7 +1146,7 @@ Draw4Hundredths:
     %a8()
     LDA #$0A : STA $4206   ; divide by 10
     %a16()
-    PEA $0000 : PLA
+    PEA $0000 : PLA ; wait for CPU math
     LDA $4214 : STA $14
 
     ; Tens digit
@@ -1161,7 +1157,7 @@ Draw4Hundredths:
     %a8()
     LDA #$0A : STA $4206   ; divide by 10
     %a16()
-    PEA $0000 : PLA
+    PEA $0000 : PLA ; wait for CPU math
     LDA $4214 : STA $12
 
     ; Hundreds digit
@@ -1190,7 +1186,7 @@ CalcEtank:
     %a8()
     LDA #$64 : STA $4206
     %a16()
-    PEA $0000 : PLA
+    PEA $0000 : PLA ; wait for CPU math
     LDA $4214
     RTS
 }
@@ -1201,49 +1197,45 @@ CalcItem:
     %a8()
     LDA #$05 : STA $4206
     %a16()
-    PEA $0000 : PLA
+    PEA $0000 : PLA ; wait for CPU math
     LDA $4214
     RTS
 }
 
 CalcLargeItem:
 {
-    LDA $09A4
-    AND #$F32F ; GT Code adds an unused item (10h)
+    LDA !SAMUS_ITEMS_COLLECTED : AND #$F32F ; GT Code adds an unused item (10h)
     LDX #$0000
+
   .loop
     BIT #$0001 : BEQ .noItem
-
     INX
-
   .noItem
     LSR : BNE .loop
-    TXA
+
+    TXA ; return result in A
     RTS
 }
 
 CalcBeams:
 {
-    PHP
     %a8()
-    LDA $09A8
+    LDA !SAMUS_BEAMS_COLLECTED
     LDX #$0000
+
   .loop
     BIT #$01 : BEQ .noItem
-
     INX
-
   .noItem
     LSR : BNE .loop
 
-    LDA $09A9 : CMP #$10 : BNE .done
-
+    ; count charge beam
+    LDA !SAMUS_BEAMS_COLLECTED+1 : CMP #$10 : BNE .done
     INX
 
   .done
-    TXA
-
-    PLP
+    %a16()
+    TXA ; return result in A
     RTS
 }
 
@@ -1265,7 +1257,7 @@ ih_game_loop_code:
     BIT #$FF00 : BEQ .spacepants    ; if magicpants are disabled, handle spacepants
 
     ; both are enabled, check Samus movement type to decide
-    LDA $0A1F : AND #$00FF : CMP #$0001 : BEQ .magicpants    ; check if running
+    LDA !SAMUS_MOVEMENT_TYPE : AND #$00FF : CMP #$0001 : BEQ .magicpants    ; check if running
 
   .spacepants
     JSR space_pants
@@ -1366,12 +1358,12 @@ metronome:
 }
 
 MetronomeSFX:
-    ; missile, click, beep, shot, spazer
+    ; missile, click,  beep,   shot,   spazer
     dw #$0003, #$0039, #$0036, #$000B, #$000F
 
 magic_pants:
 {
-    LDA $0A96 : CMP #$0009 : BEQ .check
+    LDA !SAMUS_ANIMATION_FRAME : CMP #$0009 : BEQ .check
     LDA !ram_magic_pants_state : BEQ +
     TDC : STA !ram_magic_pants_state
 
@@ -1393,7 +1385,7 @@ magic_pants:
     ; 10h: Moving left  - aiming up-left
     ; 11h: Moving right - aiming down-right
     ; 12h: Moving left  - aiming down-left
-    LDA $0A1C : CMP #$0009 : BCC .done
+    LDA !SAMUS_POSE : CMP #$0009 : BCC .done
     CMP #$0013 : BCS .done
 
     LDA !ram_magic_pants_state : BNE +
@@ -1405,12 +1397,13 @@ magic_pants:
 
     ; if flashpants are enabled, flash
 +   LDA !ram_magic_pants_enabled : AND #$0001 : BEQ .done
-    LDA !ram_magic_pants_state : BNE ++
-
+    LDA !ram_magic_pants_state : BNE .flash
+    ; backup palettes
     LDA $7EC194 : STA !ram_magic_pants_pal1
     LDA $7EC196 : STA !ram_magic_pants_pal2
     LDA $7EC19E : STA !ram_magic_pants_pal3
-++  LDA #$FFFF
+  .flash
+    LDA #$FFFF
     STA $7EC194 : STA $7EC196 : STA $7EC19E
 
   .done
@@ -1420,7 +1413,7 @@ magic_pants:
 
 space_pants:
 {
-+   LDA $0A1C : CMP #$001B : BEQ .checkFalling
+    LDA !SAMUS_POSE : CMP #$001B : BEQ .checkFalling
     CMP #$001C : BEQ .checkFalling
     CMP #$0081 : BEQ .done
     CMP #$0082 : BEQ .done
@@ -1437,18 +1430,18 @@ space_pants:
     RTS
 
   .checkFalling
-    LDA $0B36 : CMP #$0002 : BNE .reset    ; check if falling
+    LDA !SAMUS_Y_DIRECTION : CMP #$0002 : BNE .reset    ; check if falling
 
   .checkLiquid
     LDA $0AD2 : BNE .SJliquid             ; check if air
 
   .SJair
-    LDA $0B2D : CMP $909E97 : BMI .reset  ; check against min SJ vspeed for air
+    LDA !SAMUS_Y_SPEEDCOMBINED : CMP $909E97 : BMI .reset  ; check against min SJ vspeed for air
     CMP $909E99 : BPL .reset              ; check against max SJ vspeed for air
     BRA .go
 
   .SJliquid
-    LDA $0B2D : CMP $909E9B : BMI .reset  ; check against min SJ vspeed for liquids
+    LDA !SAMUS_Y_SPEEDCOMBINED : CMP $909E9B : BMI .reset  ; check against min SJ vspeed for liquids
     CMP $909E9D : BPL .reset              ; check against max SJ vspeed for liquids
 
     ; Screw Attack seems to write new palette data every frame, which overwrites the flash
@@ -1461,7 +1454,7 @@ space_pants:
     LDA.l MetronomeSFX,X : JSL !SFX_LIB1
 
     ; if flashpants are enabled, flash
-+   LDA !ram_space_pants_enabled : AND #$0001 : BEQ ++
++   LDA !ram_space_pants_enabled : AND #$0001 : BEQ +
     ; preserve palettes first
     LDA $7EC194 : STA !ram_magic_pants_pal1
     LDA $7EC196 : STA !ram_magic_pants_pal2
@@ -1470,7 +1463,7 @@ space_pants:
     LDA #$FFFF
     STA $7EC194 : STA $7EC196 : STA $7EC198
 
-++  LDA #$FFFF : STA !ram_magic_pants_state
++   LDA #$FFFF : STA !ram_magic_pants_state
     RTS
 }
 
@@ -1478,7 +1471,7 @@ ih_shinespark_code:
 {
     DEC
     STA !ram_armed_shine_duration
-    STA $0A68
+    STA !SAMUS_SHINE_TIMER
     RTL
 }
 
@@ -1499,14 +1492,13 @@ ih_set_picky_chozo_event_and_enemy_speed:
 
 ih_fix_scroll_offsets:
 {
-    LDA !ram_fix_scroll_offsets : BEQ .done
-    %a8()
-    LDA $0911 : STA $B1 : STA $B5
-    LDA $0915 : STA $B3 : STA $B7
-    %a16()
+    LDA !ram_fix_scroll_offsets : BEQ .nofix
+    LDA $B3 : AND #$FF00 : STA $B3
+    LDA $B1 : AND #$FF00
+    SEC
+    RTS
 
-  .done
-    ; overwritten code
+  .nofix
     LDA $B1 : SEC
     RTS
 }

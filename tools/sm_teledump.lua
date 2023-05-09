@@ -2629,7 +2629,7 @@ local function save_preset(step)
             -- preset_output = preset_output ..  "    dl " ..  tohex(addr, 6) .. " : "
             -- preset_output = preset_output ..  "db " ..  tohex(size, 2) .. " : "
             -- preset_output = preset_output .. (size == 1 and "db " or "dw ")
-            preset_output = preset_output .. (size == 1 and ", $??" or ", $")
+            preset_output = preset_output .. (size == 1 and ", $??" or ", ")
             preset_output = preset_output .. tohex(val, size == 1 and 2 or 4)
             preset_output = preset_output .. "  ; " .. annotate_address(addr, val) .. "\n"
         end
