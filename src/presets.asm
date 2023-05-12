@@ -712,9 +712,10 @@ endif
 transfer_cgram_long:
 {
     PHP
-    %a16()
-    %i8()
+    %a16() : %i8()
+    LDX #$80 : STX $2100 ; forced blanking
     JSR $933A
+    LDX #$0F : STX $2100
     PLP
     RTL
 }

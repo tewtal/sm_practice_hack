@@ -208,10 +208,10 @@ custompalettes_dec_blue:
     %cm_numfield("Decimal Blue", !ram_cm_custompalette_blue, 0, 31, 1, 2, #MixRGB)
 
 mc_dummy_on:
-    %cm_toggle("Example Toggle", !ram_cm_dummy_on, #$0001, #0)
+    %cm_toggle("Example Toggle ON", !ram_cm_dummy_on, #$0001, #0)
 
 mc_dummy_off:
-    %cm_toggle("Example Toggle", !ram_cm_dummy_off, #$0001, #0)
+    %cm_toggle("Example Toggle OFF", !ram_cm_dummy_off, #$0001, #0)
 
 mc_dummy_hexnum:
     %cm_numfield_hex("Example Hex Number", !ram_cm_dummy_num, 0, 255, 1, 8, #0)
@@ -360,7 +360,6 @@ PrepMenuPalette:
     LDA !sram_palette_numsel : STA !ram_cm_palette_numsel
     RTL
 }
-
 
 pushpc
 org $AEFD20
@@ -520,7 +519,7 @@ cm_colors:
     %a8()
     TAX : JSR (.ColorMenuTable,X)
     STX $C1 : STA $C3
-    %a16()
+    %ai16()
 
     ; split 15-bit BGR format into 5-bit red, green, and blue
     LDA [$C1] : AND #$7C00 : XBA : LSR #2 : STA !ram_cm_custompalette_blue
