@@ -190,17 +190,17 @@
 !ram_cm_ctrl_assign = !WRAM_MENU_START+$3A
 !ram_cm_ctrl_swap = !WRAM_MENU_START+$3C
 
-!ram_cm_palette_border = !WRAM_START+$3E
-!ram_cm_palette_headeroutline = !WRAM_START+$40
-!ram_cm_palette_text = !WRAM_START+$42
-!ram_cm_palette_background = !WRAM_START+$44
-!ram_cm_palette_numoutline = !WRAM_START+$46
-!ram_cm_palette_numfill = !WRAM_START+$48
-!ram_cm_palette_toggleon = !WRAM_START+$4A
-!ram_cm_palette_seltext = !WRAM_START+$4C
-!ram_cm_palette_seltextbg = !WRAM_START+$4E
-!ram_cm_palette_numseloutline = !WRAM_START+$50
-!ram_cm_palette_numsel = !WRAM_START+$52
+!ram_cm_palette_border = !WRAM_MENU_START+$3E
+!ram_cm_palette_headeroutline = !WRAM_MENU_START+$40
+!ram_cm_palette_text = !WRAM_MENU_START+$42
+!ram_cm_palette_background = !WRAM_MENU_START+$44
+!ram_cm_palette_numoutline = !WRAM_MENU_START+$46
+!ram_cm_palette_numfill = !WRAM_MENU_START+$48
+!ram_cm_palette_toggleon = !WRAM_MENU_START+$4A
+!ram_cm_palette_seltext = !WRAM_MENU_START+$4C
+!ram_cm_palette_seltextbg = !WRAM_MENU_START+$4E
+!ram_cm_palette_numseloutline = !WRAM_MENU_START+$50
+!ram_cm_palette_numsel = !WRAM_MENU_START+$52
 
 !ram_cm_botwoon_rng = !WRAM_MENU_START+$54
 !ram_cm_botwoon_first = !WRAM_MENU_START+$56
@@ -253,16 +253,16 @@
 !ram_cm_spazer = !WRAM_MENU_START+$98
 !ram_cm_plasma = !WRAM_MENU_START+$9A
 
-!ram_cm_custompalette_blue = !WRAM_START+$80
-!ram_cm_custompalette_green = !WRAM_START+$82
-!ram_cm_custompalette_red = !WRAM_START+$84
-!ram_cm_custompalette_hi = !WRAM_START+$86
-!ram_cm_custompalette_lo = !WRAM_START+$88
-!ram_cm_dummy_on = !WRAM_START+$8A
-!ram_cm_dummy_off = !WRAM_START+$8C
-!ram_cm_dummy_num = !WRAM_START+$8E
-!ram_seed_X = !WRAM_START+$90
-!ram_seed_Y = !WRAM_START+$92
+!ram_cm_custompalette_blue = !WRAM_MENU_START+$80
+!ram_cm_custompalette_green = !WRAM_MENU_START+$82
+!ram_cm_custompalette_red = !WRAM_MENU_START+$84
+!ram_cm_custompalette_hi = !WRAM_MENU_START+$86
+!ram_cm_custompalette_lo = !WRAM_MENU_START+$88
+!ram_cm_dummy_on = !WRAM_MENU_START+$8A
+!ram_cm_dummy_off = !WRAM_MENU_START+$8C
+!ram_cm_dummy_num = !WRAM_MENU_START+$8E
+!ram_seed_X = !WRAM_MENU_START+$90
+!ram_seed_Y = !WRAM_MENU_START+$92
 
 ; ^ FREE SPACE ^ up to +$CE
 
