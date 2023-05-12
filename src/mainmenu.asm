@@ -3092,7 +3092,7 @@ ctrl_update_timers:
     %cm_ctrl_shortcut("Update Timers", !sram_ctrl_update_timers)
 
 ctrl_clear_shortcuts:
-    %cm_jsl("Clear Shortcuts", .routine, #$0000)
+    %cm_jsl("Clear All Shortcuts", .routine, #$0000)
   .routine
     TYA
     STA !ram_game_mode_extras

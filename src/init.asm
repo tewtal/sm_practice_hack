@@ -169,6 +169,9 @@ init_sram_upto9:
     LDA #$0000 : STA !sram_ctrl_load_custom_preset
     LDA #$0000 : STA !sram_ctrl_inc_custom_preset
     LDA #$0000 : STA !sram_ctrl_dec_custom_preset
+    ; duplicates for reset defaults routine
+    LDA #$0000 : STA !sram_ctrl_toggle_tileviewer
+    LDA #$0000 : STA !sram_ctrl_update_timers
     RTL
 }
 
@@ -195,6 +198,7 @@ init_menu_customization:
     LDA.w #!SRAM_VERSION : STA !sram_seed_Y
 
   .soundFX
+    ; branch called by sfx_reset in customizemenu.asm
     LDA #$0037 : STA !sram_customsfx_move
     LDA #$002A : STA !sram_customsfx_toggle
     LDA #$0038 : STA !sram_customsfx_number
