@@ -208,6 +208,9 @@
 !ram_cm_botwoon_hidden = !WRAM_MENU_START+$5A
 !ram_cm_botwoon_spit = !WRAM_MENU_START+$5C
 
+!ram_seed_X = !WRAM_MENU_START+$5E
+!ram_seed_Y = !WRAM_MENU_START+$60
+
 ; ^ FREE SPACE ^ up to +$7E
 
 ; ------------------
@@ -261,8 +264,6 @@
 !ram_cm_dummy_on = !WRAM_MENU_START+$8A
 !ram_cm_dummy_off = !WRAM_MENU_START+$8C
 !ram_cm_dummy_num = !WRAM_MENU_START+$8E
-!ram_seed_X = !WRAM_MENU_START+$90
-!ram_seed_Y = !WRAM_MENU_START+$92
 
 ; ^ FREE SPACE ^ up to +$CE
 
