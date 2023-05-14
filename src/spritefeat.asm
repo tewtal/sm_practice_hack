@@ -551,7 +551,10 @@ update_enemyproj_sprite_hitbox:
   .nextProjectile
     INX #2
     LDA !ENEMY_PROJ_ID,X : BEQ .skipProjectile
+    LDA !ram_sprite_proj_32x32hitbox_active : BEQ .normalRadius
+    JMP .check32x32
 
+  .normalRadius
     ; split X/Y radius into separate 16bit values
     LDA !ENEMY_PROJ_RADIUS,X : BEQ .skipProjectile
     AND #$00FF : STA $12 ; X radius in $12
@@ -592,6 +595,7 @@ update_enemyproj_sprite_hitbox:
     STA $0379,Y : STA $037D,Y
     PLA
 
+  .setAttributes
     ; Sprite Attributes - xxxxxxxx yyyyyyyy YXPPpppt tttttttt
     ; x=X pos, y=Y pos (low nibbles only), Y=Y flip, X=X flip
     ; P=Priority, p=Palette, t=Tile number
@@ -611,6 +615,32 @@ update_enemyproj_sprite_hitbox:
 
   .fullStack
     RTS
+
+  .skipProjectile32x32
+    JMP .skipProjectile
+
+  .check32x32
+    LDA !ENEMY_PROJ_X : CMP !LAYER1_X : BMI .skipProjectile32x32
+    LDA !LAYER1_X : CLC : ADC #$0100 : CMP !ENEMY_PROJ_X,X : BMI .skipProjectile32x32
+    LDA !ENEMY_PROJ_Y : CMP !LAYER1_Y : BMI .skipProjectile32x32
+    LDA !LAYER1_Y : CLC : ADC #$0100 : CMP !ENEMY_PROJ_Y,X : BMI .skipProjectile32x32
+
+    LDA !ENEMY_PROJ_Y,X : AND #$FFE0 : SEC : SBC !LAYER1_Y : PHA ; top edge
+    LDA !ENEMY_PROJ_X,X : AND #$FFE0 : SEC : SBC !LAYER1_X : PHA ; left edge
+
+    %a8()
+    PLA ; X coord
+    STA $0370,Y : STA $0378,Y ; X pos
+    CLC : ADC #$17
+    STA $0374,Y : STA $037C,Y
+
+    PLA : PLA ; Y coord
+    STA $0371,Y : STA $0375,Y
+    CLC : ADC #$17
+    STA $0379,Y : STA $037D,Y
+    PLA
+
+    JMP .setAttributes
 }
 
 update_samusproj_sprite_hitbox:
@@ -623,7 +653,10 @@ update_samusproj_sprite_hitbox:
     INX #2
     LDA !SAMUS_PROJ_RADIUS_Y,X : BEQ .skipProjectile
     LDA !SAMUS_PROJ_RADIUS_X,X : BEQ .skipProjectile
+    LDA !ram_sprite_proj_32x32hitbox_active : BEQ .normalRadius
+    JMP .check32x32
 
+  .normalRadius
     ; check if on-screen
     LDA !SAMUS_PROJ_X,X : CLC : ADC !SAMUS_PROJ_RADIUS_X
     CMP !LAYER1_X : BMI .skipProjectile
@@ -658,6 +691,7 @@ update_samusproj_sprite_hitbox:
     STA $0379,Y : STA $037D,Y
     PLA
 
+  .setAttributes
     ; Sprite Attributes - xxxxxxxx yyyyyyyy YXPPpppt tttttttt
     ; x=X pos, y=Y pos (low nibbles only), Y=Y flip, X=X flip
     ; P=Priority, p=Palette, t=Tile number
@@ -677,6 +711,32 @@ update_samusproj_sprite_hitbox:
 
   .fullStack
     RTS
+
+  .skipProjectile32x32
+    JMP .skipProjectile
+
+  .check32x32
+    LDA !SAMUS_PROJ_X,X : CMP !LAYER1_X : BMI .skipProjectile32x32
+    LDA !LAYER1_X : CLC : ADC #$0100 : CMP !SAMUS_PROJ_X,X : BMI .skipProjectile32x32
+    LDA !SAMUS_PROJ_Y,X : CMP !LAYER1_Y : BMI .skipProjectile32x32
+    LDA !LAYER1_Y : CLC : ADC #$0100 : CMP !SAMUS_PROJ_Y,X : BMI .skipProjectile32x32
+
+    LDA !SAMUS_PROJ_Y,X : AND #$FFE0 : SEC : SBC !LAYER1_Y : PHA ; top edge
+    LDA !SAMUS_PROJ_X,X : AND #$FFE0 : SEC : SBC !LAYER1_X : PHA ; left edge
+
+    %a8()
+    PLA ; X coord
+    STA $0370,Y : STA $0378,Y ; X pos
+    CLC : ADC #$17
+    STA $0374,Y : STA $037C,Y
+
+    PLA : PLA ; Y coord
+    STA $0371,Y : STA $0375,Y
+    CLC : ADC #$17
+    STA $0379,Y : STA $037D,Y
+    PLA
+
+    JMP .setAttributes
 }
 
 custom_sprite_hitbox:

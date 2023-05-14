@@ -154,6 +154,7 @@
 !ram_botwoon_second                 = !WRAM_PERSIST_START+$5C
 !ram_botwoon_hidden                 = !WRAM_PERSIST_START+$5E
 !ram_botwoon_spit                   = !WRAM_PERSIST_START+$60
+!ram_sprite_proj_32x32hitbox_active = !WRAM_PERSIST_START+$62
 
 ; ^ FREE SPACE ^ up to +$7A
 

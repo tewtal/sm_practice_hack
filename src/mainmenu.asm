@@ -1761,6 +1761,7 @@ SpritesMenu:
     dw #sprites_show_custom_boss_hitbox
     dw #sprites_show_samusproj_hitbox
     dw #sprites_show_enemyproj_hitbox
+    dw #sprites_show_proj_as_32x32
     dw #sprites_oob_viewer
     dw #$0000
     %cm_header("SPRITE FEATURES")
@@ -1785,6 +1786,9 @@ sprites_show_enemyproj_hitbox:
 
 sprites_show_samusproj_hitbox:
     %cm_toggle("S Projectile Hitboxes", !ram_sprite_samusproj_hitbox_active, #1, #action_sprite_features)
+
+sprites_show_proj_as_32x32:
+    %cm_toggle("32x32 Projectile Boxes", !ram_sprite_proj_32x32hitbox_active, #1, #action_sprite_features)
 
 sprites_oob_viewer:
 {
