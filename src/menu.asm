@@ -989,7 +989,7 @@ endif
     STX !DP_Address
 
     ; check if slot has valid data
-    LDA !PRESET_SLOTS,X : CMP #$5AFE : BEQ .validPreset
+    LDA $703000,X : CMP #$5AFE : BEQ .validPreset
 
     ; slot is empty, set text pointer
     LDA.w #.emptyText : STA !DP_CurrentMenu
@@ -1004,9 +1004,9 @@ endif
   .validPreset
     ; load pointer for area text
 if !FEATURE_TINYSTATES
-    LDA !PRESET_SLOTS+$BE,X
+    LDA $703000+$BE,X
 else
-    LDA !PRESET_SLOTS+$0C,X
+    LDA $703000+$0C,X
 endif
     AND #$0007 : ASL : STA !DP_Temp : ASL : ADC !DP_Temp
     ADC.w #.areaText : STA !DP_CurrentMenu
@@ -1020,9 +1020,9 @@ endif
     ; draw room ID as 4 digit hex
     LDX !DP_Address
 if !FEATURE_TINYSTATES
-    LDA !PRESET_SLOTS+$06,X
+    LDA $703000+$06,X
 else
-    LDA !PRESET_SLOTS+$0A,X
+    LDA $703000+$0A,X
 endif
     STA !DP_DrawValue
     ; set tilemap position
@@ -1050,9 +1050,9 @@ endif
     ; draw Samus energy
     LDX !DP_Address
 if !FEATURE_TINYSTATES
-    LDA !PRESET_SLOTS+$28,X
+    LDA $703000+$28,X
 else
-    LDA !PRESET_SLOTS+$2C,X
+    LDA $703000+$2C,X
 endif
     STA !DP_DrawValue
     JSR cm_hex2dec
@@ -1080,9 +1080,9 @@ endif
   .drawSamusMissiles
     LDX !DP_Address
 if !FEATURE_TINYSTATES
-    LDA !PRESET_SLOTS+$2C,X
+    LDA $703000+$2C,X
 else
-    LDA !PRESET_SLOTS+$30,X
+    LDA $703000+$30,X
 endif
     STA !DP_DrawValue
     JSR cm_hex2dec
@@ -1107,9 +1107,9 @@ endif
   .drawSamusSupers
     LDX !DP_Address
 if !FEATURE_TINYSTATES
-    LDA !PRESET_SLOTS+$30,X
+    LDA $703000+$30,X
 else
-    LDA !PRESET_SLOTS+$34,X
+    LDA $703000+$34,X
 endif
     STA !DP_DrawValue
     JSR cm_hex2dec
@@ -1131,9 +1131,9 @@ endif
   .drawSamusPowerBombs
     LDX !DP_Address
 if !FEATURE_TINYSTATES
-    LDA !PRESET_SLOTS+$34,X
+    LDA $703000+$34,X
 else
-    LDA !PRESET_SLOTS+$38,X
+    LDA $703000+$38,X
 endif
     STA !DP_DrawValue
     JSR cm_hex2dec
