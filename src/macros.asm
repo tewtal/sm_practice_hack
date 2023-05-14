@@ -44,3 +44,14 @@ endmacro
 macro sfxreset()
     LDA #$001E : JSL !SFX_LIB3 ; quake
 endmacro
+
+macro cm_custompreset(slot)
+; Displays custom preset data and allows selecting active slot
+custompreset_<slot>:
+  .dm_actionIndex
+    dw !ACTION_CUSTOM_PRESET
+  .dm_slot
+    db <slot>
+  .dm_text
+    db #$28, "<slot>", #$FF
+endmacro

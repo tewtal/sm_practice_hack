@@ -412,10 +412,28 @@ presets_goto_select_preset_category:
 
 presets_custom_preset_slot:
 if !FEATURE_TINYSTATES
-    %cm_numfield("Custom Preset Slot", !sram_custom_preset_slot, 0, 15, 1, 2, #0) ; update total slots in gamemode.asm
+    %cm_numfield("Custom Preset Slot", !sram_custom_preset_slot, 0, 15, 1, 2, #.routine) ; update total slots in gamemode.asm
 else
-    %cm_numfield("Custom Preset Slot", !sram_custom_preset_slot, 0, 39, 1, 2, #0) ; update total slots in gamemode.asm
+    %cm_numfield("Custom Preset Slot", !sram_custom_preset_slot, 0, 39, 1, 2, #.routine) ; update total slots in gamemode.asm
 endif
+  .routine
+    ; ignore if not A, X, or Y
+    LDA !IH_CONTROLLER_PRI_NEW : BIT #$40C0 : BNE .submenu
+    RTL
+  .submenu
+    LDA !sram_custom_preset_slot : BEQ .zero
+    DEC : BRA +
+  .zero
+if !FEATURE_TINYSTATES
+    LDA #$000F
+else
+    LDA #$0027
+endif
++   STA !sram_custom_preset_slot
+    ; set bank for manual submenu jump
+    PHK : PHK : PLA : STA !ram_cm_menu_bank
+    LDY.w #CustomPresetsMenu
+    JML action_submenu
 
 presets_save_custom_preset:
     %cm_jsl("Save Custom Preset", #action_save_custom_preset, #$0000)
@@ -678,6 +696,118 @@ action_load_preset:
     PLB
     RTL
 }
+
+
+; -------------------
+; Custom Preset Slots
+; -------------------
+
+CustomPresetsMenu:
+    dw #custompreset_00
+    dw #custompreset_01
+    dw #custompreset_02
+    dw #custompreset_03
+    dw #custompreset_04
+    dw #custompreset_05
+    dw #custompreset_06
+    dw #custompreset_07
+    dw #custompreset_08
+    dw #custompreset_09
+    dw #custompreset_10
+    dw #custompreset_11
+    dw #custompreset_12
+    dw #custompreset_13
+    dw #custompreset_14
+    dw #custompreset_15
+if !FEATURE_TINYSTATES
+else
+    dw #custompreset_16
+    dw #custompreset_17
+    dw #custompreset_18
+    dw #custompreset_19
+    dw #$FFFF
+    dw #custompreset_goto_page2
+endif
+    dw #$0000
+    %cm_header("## AREA ROOM ENER MMM SS PB")
+
+CustomPresetsMenu2:
+    dw #custompreset_20
+    dw #custompreset_21
+    dw #custompreset_22
+    dw #custompreset_23
+    dw #custompreset_24
+    dw #custompreset_25
+    dw #custompreset_26
+    dw #custompreset_27
+    dw #custompreset_28
+    dw #custompreset_29
+    dw #custompreset_30
+    dw #custompreset_31
+    dw #custompreset_32
+    dw #custompreset_33
+    dw #custompreset_34
+    dw #custompreset_35
+    dw #custompreset_36
+    dw #custompreset_37
+    dw #custompreset_38
+    dw #custompreset_39
+    dw #$FFFF
+    dw #custompreset_goto_page1
+    dw #$0000
+    %cm_header("## AREA ROOM ENER MMM SS PB")
+
+    %cm_custompreset(00)
+    %cm_custompreset(01)
+    %cm_custompreset(02)
+    %cm_custompreset(03)
+    %cm_custompreset(04)
+    %cm_custompreset(05)
+    %cm_custompreset(06)
+    %cm_custompreset(07)
+    %cm_custompreset(08)
+    %cm_custompreset(09)
+    %cm_custompreset(10)
+    %cm_custompreset(11)
+    %cm_custompreset(12)
+    %cm_custompreset(13)
+    %cm_custompreset(14)
+    %cm_custompreset(15)
+    %cm_custompreset(16)
+    %cm_custompreset(17)
+    %cm_custompreset(18)
+    %cm_custompreset(19)
+    %cm_custompreset(20)
+    %cm_custompreset(21)
+    %cm_custompreset(22)
+    %cm_custompreset(23)
+    %cm_custompreset(24)
+    %cm_custompreset(25)
+    %cm_custompreset(26)
+    %cm_custompreset(27)
+    %cm_custompreset(28)
+    %cm_custompreset(29)
+    %cm_custompreset(30)
+    %cm_custompreset(31)
+    %cm_custompreset(32)
+    %cm_custompreset(33)
+    %cm_custompreset(34)
+    %cm_custompreset(35)
+    %cm_custompreset(36)
+    %cm_custompreset(37)
+    %cm_custompreset(38)
+    %cm_custompreset(39)
+
+custompreset_goto_page1:
+    %cm_jsl("GOTO PAGE ONE", custompreset_goto_page2_routine, #CustomPresetsMenu)
+
+custompreset_goto_page2:
+    %cm_jsl("GOTO PAGE TWO", .routine, #CustomPresetsMenu2)
+  .routine
+    JSL cm_go_back
+    ; set bank for manual submenu jump
+    PHK : PHK : PLA : STA !ram_cm_menu_bank
+    JML action_submenu
 
 
 ; ----------------
