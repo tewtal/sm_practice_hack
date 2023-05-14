@@ -979,52 +979,38 @@ draw_custom_preset:
     JSR cm_draw_text
 
     ; get preset slot offset
-    LDA !DP_ToggleValue
 if !FEATURE_TINYSTATES
-    XBA : TAX        ; multiply by 100h (slot offset)
+    LDA !DP_ToggleValue : XBA : TAX ; multiply by 100h (slot offset)
 else
-    ASL : XBA : TAX  ; multiply by 200h (slot offset)
+    LDA !DP_ToggleValue : ASL : XBA : TAX ; multiply by 200h (slot offset)
 endif
     ; store preset slot index in !DP_Address
     STX !DP_Address
 
     ; check if slot has valid data
     LDA $703000,X : CMP #$5AFE : BEQ .validPreset
-
     ; slot is empty, set text pointer
     LDA.w #.emptyText : STA !DP_CurrentMenu
-    LDA.w #draw_custom_preset>>16 : STA !DP_CurrentMenu+2
+    LDA.w #.emptyText>>16 : STA !DP_CurrentMenu+2
     ; set position of first data point
     LDA !DP_JSLTarget : CLC : ADC #$0006 : TAX
     ; draw "Empty Slot" text
     JSR cm_draw_text
     LDA !DP_MenuIndices+2 : STA !DP_CurrentMenu+2
-    BRL .done
+    RTS
 
   .validPreset
-    ; load pointer for area text
-if !FEATURE_TINYSTATES
-    LDA $703000+$BE,X
-else
-    LDA $703000+$0C,X
-endif
-    AND #$0007 : ASL : STA !DP_Temp : ASL : ADC !DP_Temp
+    ; load pointer for AREA TEXT
+    LDA !PRESET_SLOTS_AREA,X : AND #$0007 : ASL : STA !DP_Temp : ASL : ADC !DP_Temp
     ADC.w #.areaText : STA !DP_CurrentMenu
-    LDA.w #draw_custom_preset>>16 : STA !DP_CurrentMenu+2
-
-    ; set position and draw area text
+    LDA.w #.areaText>>16 : STA !DP_CurrentMenu+2
+    ; set tilemap position and draw area text
     LDA !DP_JSLTarget : CLC : ADC #$0006 : TAX
     JSR cm_draw_text
     LDA !DP_MenuIndices+2 : STA !DP_CurrentMenu+2
 
-    ; draw room ID as 4 digit hex
-    LDX !DP_Address
-if !FEATURE_TINYSTATES
-    LDA $703000+$06,X
-else
-    LDA $703000+$0A,X
-endif
-    STA !DP_DrawValue
+    ; draw ROOM ID as 4 digit hex
+    LDX !DP_Address : LDA !PRESET_SLOTS_ROOM,X : STA !DP_DrawValue
     ; set tilemap position
     LDA !DP_JSLTarget : CLC : ADC #$0010 : TAX
     ; (X000)
@@ -1039,22 +1025,9 @@ endif
     ; (000X)
     LDA !DP_DrawValue : AND #$000F : ASL : TAY
     LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer+6,X
-    ; overwrite palette bytes
-    LDA !DP_CtrlInput : STA !DP_Palette
-    %a8()
-    LDA #$2C : ORA !DP_Palette
-    STA !ram_tilemap_buffer+1,X : STA !ram_tilemap_buffer+3,X
-    STA !ram_tilemap_buffer+5,X : STA !ram_tilemap_buffer+7,X
-    %a16()
 
-    ; draw Samus energy
-    LDX !DP_Address
-if !FEATURE_TINYSTATES
-    LDA $703000+$28,X
-else
-    LDA $703000+$2C,X
-endif
-    STA !DP_DrawValue
+    ; draw Samus ENERGY
+    LDX !DP_Address : LDA !PRESET_SLOTS_ENERGY,X : STA !DP_DrawValue
     JSR cm_hex2dec
     ; set palette
     LDA !DP_CtrlInput : STA !DP_Palette
@@ -1078,20 +1051,8 @@ endif
     CLC : ADC !DP_Palette : STA !ram_tilemap_buffer,X
 
   .drawSamusMissiles
-    LDX !DP_Address
-if !FEATURE_TINYSTATES
-    LDA $703000+$2C,X
-else
-    LDA $703000+$30,X
-endif
-    STA !DP_DrawValue
+    LDX !DP_Address : LDA !PRESET_SLOTS_MISSILES,X : STA !DP_DrawValue
     JSR cm_hex2dec
-    ; set palette
-    LDA !DP_CtrlInput : STA !DP_Palette
-    %a8()
-    LDA #$2C : ORA !DP_Palette : STA !DP_Palette+1
-    LDA #$70 : STA !DP_Palette ; number tiles are 70-79
-    %a16()
     ; set tilemap position
     LDA !DP_JSLTarget : CLC : ADC #$0024 : TAX
     ; ones
@@ -1105,20 +1066,8 @@ endif
     LDA !DP_FirstDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer,X
 
   .drawSamusSupers
-    LDX !DP_Address
-if !FEATURE_TINYSTATES
-    LDA $703000+$30,X
-else
-    LDA $703000+$34,X
-endif
-    STA !DP_DrawValue
+    LDX !DP_Address : LDA !PRESET_SLOTS_SUPERS,X : STA !DP_DrawValue
     JSR cm_hex2dec
-    ; set palette
-    LDA !DP_CtrlInput : STA !DP_Palette
-    %a8()
-    LDA #$2C : ORA !DP_Palette : STA !DP_Palette+1
-    LDA #$70 : STA !DP_Palette ; number tiles are 70-79
-    %a16()
     ; set tilemap position
     LDA !DP_JSLTarget : CLC : ADC #$002C : TAX
     ; ones
@@ -1129,20 +1078,8 @@ endif
     LDA !DP_SecondDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer,X
 
   .drawSamusPowerBombs
-    LDX !DP_Address
-if !FEATURE_TINYSTATES
-    LDA $703000+$34,X
-else
-    LDA $703000+$38,X
-endif
-    STA !DP_DrawValue
+    LDX !DP_Address : LDA !PRESET_SLOTS_PBS,X : STA !DP_DrawValue
     JSR cm_hex2dec
-    ; set palette
-    LDA !DP_CtrlInput : STA !DP_Palette
-    %a8()
-    LDA #$2C : ORA !DP_Palette : STA !DP_Palette+1
-    LDA #$70 : STA !DP_Palette ; number tiles are 70-79
-    %a16()
     ; set tilemap position
     LDA !DP_JSLTarget : CLC : ADC #$0032 : TAX
     ; ones
@@ -1939,11 +1876,17 @@ execute_submenu:
 
 execute_custom_preset:
 {
+    ; ignore left/right inputs
+    LDA !IH_CONTROLLER_PRI_NEW : BIT !IH_INPUT_LEFTRIGHT : BNE .done
+
+    ; set preset slot and return to the previous menu
     %a8()
     LDA [!DP_CurrentMenu] : STA !sram_custom_preset_slot
     %a16()
     %sfxconfirm()
     JSL cm_go_back
+
+  .done
     RTS
 }
 
