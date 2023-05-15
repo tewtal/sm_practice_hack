@@ -415,6 +415,7 @@ endif
     LDA !IH_CONTROLLER_PRI_NEW : BIT #$40C0 : BNE .submenu
     RTL
   .submenu
+    ; undo increment from execute_numfield
     LDA !sram_custom_preset_slot : BEQ .zero
     DEC : BRA +
   .zero

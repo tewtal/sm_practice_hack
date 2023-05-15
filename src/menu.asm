@@ -1112,9 +1112,6 @@ endif
   .done
     RTS
 
-  .emptyText
-    db #$28, "Empty Slot", #$FF
-
 pushpc
 incsrc roomnames.asm
 pullpc
