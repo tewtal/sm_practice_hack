@@ -202,20 +202,16 @@ endmacro
 
 action_mainmenu:
 {
-    PHB
     ; Set bank of new menu
     LDA !ram_cm_cursor_stack : TAX
     LDA.l MainMenuBanks,X : STA !ram_cm_menu_bank
     STA !DP_MenuIndices+2 : STA !DP_CurrentMenu+2
 
-    ; Skip stack operation in action_submenu
-    BRA action_submenu_skipStackOp
+    ; continue into action_submenu
 }
 
 action_submenu:
 {
-    PHB
-  .skipStackOp
     ; Increment stack pointer by 2, then store current menu
     LDA !ram_cm_stack_index : INC #2 : STA !ram_cm_stack_index : TAX
     TYA : STA !ram_cm_menu_stack,X
@@ -225,16 +221,16 @@ action_submenu:
 
 action_presets_submenu:
 {
-    PHB
-    PHK : PLB
 
     ; Increment stack pointer by 2
     LDA !ram_cm_stack_index : INC #2 : STA !ram_cm_stack_index : TAX
 
     ; Lookup preset menu pointer for current category
     LDA !sram_preset_category : ASL : TAY
+    PHB : PHK : PLB
     LDA.w preset_category_submenus,Y : STA !ram_cm_menu_stack,X
     LDA.w preset_category_banks,Y : STA !ram_cm_menu_bank
+    PLB
 
     ; continue into action_submenu_jump
 }
@@ -247,8 +243,6 @@ action_submenu_jump:
     %sfxmove()
     JSL cm_calculate_max
     JSL cm_draw
-
-    PLB
     RTL
 }
 
@@ -430,9 +424,17 @@ else
     LDA #$0027
 endif
 +   STA !sram_custom_preset_slot
+    ; determine which page to load
+    CMP #$0010 : BPL .page2
+    LDY.w #CustomPresetsMenu : BRA .done
+  .page2
+    CMP #$0020 : BPL .page3
+    LDY.w #CustomPresetsMenu2 : BRA .done
+  .page3
+    LDY.w #CustomPresetsMenu3
+  .done
     ; set bank for manual submenu jump
     PHK : PHK : PLA : STA !ram_cm_menu_bank
-    LDY.w #CustomPresetsMenu
     JML action_submenu
 
 presets_save_custom_preset:
@@ -720,18 +722,21 @@ CustomPresetsMenu:
     dw #custompreset_14
     dw #custompreset_15
 if !FEATURE_TINYSTATES
+; Tinystates only has slots $00-15
 else
+    dw #$FFFF
+    dw #custompreset_goto_page2
+    dw #custompreset_goto_page3
+endif
+    dw #$0000
+    %cm_header("## ENERGY    RES MMM SS PB")
+    %cm_footer("PRESS Y TO TOGGLE DISPLAY")
+
+CustomPresetsMenu2:
     dw #custompreset_16
     dw #custompreset_17
     dw #custompreset_18
     dw #custompreset_19
-    dw #$FFFF
-    dw #custompreset_goto_page2
-endif
-    dw #$0000
-    %cm_header("## AREA ROOM ENER MMM SS PB")
-
-CustomPresetsMenu2:
     dw #custompreset_20
     dw #custompreset_21
     dw #custompreset_22
@@ -744,6 +749,14 @@ CustomPresetsMenu2:
     dw #custompreset_29
     dw #custompreset_30
     dw #custompreset_31
+    dw #$FFFF
+    dw #custompreset_goto_page1
+    dw #custompreset_goto_page3
+    dw #$0000
+    %cm_header("## ENERGY    RES MMM SS PB")
+    %cm_footer("PRESS Y TO TOGGLE DISPLAY")
+
+CustomPresetsMenu3:
     dw #custompreset_32
     dw #custompreset_33
     dw #custompreset_34
@@ -753,9 +766,19 @@ CustomPresetsMenu2:
     dw #custompreset_38
     dw #custompreset_39
     dw #$FFFF
+    dw #$FFFF
+    dw #$FFFF
+    dw #$FFFF
+    dw #$FFFF
+    dw #$FFFF
+    dw #$FFFF
+    dw #$FFFF
+    dw #$FFFF
     dw #custompreset_goto_page1
+    dw #custompreset_goto_page2
     dw #$0000
-    %cm_header("## AREA ROOM ENER MMM SS PB")
+    %cm_header("## ENERGY    RES MMM SS PB")
+    %cm_footer("PRESS Y TO TOGGLE DISPLAY")
 
     %cm_custompreset(00)
     %cm_custompreset(01)
@@ -799,15 +822,18 @@ CustomPresetsMenu2:
     %cm_custompreset(39)
 
 custompreset_goto_page1:
-    %cm_jsl("GOTO PAGE ONE", custompreset_goto_page2_routine, #CustomPresetsMenu)
-
-custompreset_goto_page2:
-    %cm_jsl("GOTO PAGE TWO", .routine, #CustomPresetsMenu2)
+    %cm_jsl("GOTO PAGE ONE", .routine, #CustomPresetsMenu)
   .routine
     JSL cm_go_back
     ; set bank for manual submenu jump
     PHK : PHK : PLA : STA !ram_cm_menu_bank
     JML action_submenu
+
+custompreset_goto_page2:
+    %cm_jsl("GOTO PAGE TWO", custompreset_goto_page1_routine, #CustomPresetsMenu2)
+
+custompreset_goto_page3:
+    %cm_jsl("GOTO PAGE THREE", custompreset_goto_page1_routine, #CustomPresetsMenu3)
 
 
 ; ----------------

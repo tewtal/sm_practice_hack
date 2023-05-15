@@ -989,44 +989,26 @@ endif
 
     ; check if slot has valid data
     LDA $703000,X : CMP #$5AFE : BEQ .validPreset
-    ; slot is empty, set text pointer
-    LDA.w #.emptyText : STA !DP_CurrentMenu
-    LDA.w #.emptyText>>16 : STA !DP_CurrentMenu+2
-    ; set position of first data point
-    LDA !DP_JSLTarget : CLC : ADC #$0006 : TAX
-    ; draw "Empty Slot" text
-    JSR cm_draw_text
+    ; slot is EMPTY, fix bank and exit
     LDA !DP_MenuIndices+2 : STA !DP_CurrentMenu+2
     RTS
 
   .validPreset
-    ; load pointer for AREA TEXT
-    LDA !PRESET_SLOTS_AREA,X : AND #$0007 : ASL : STA !DP_Temp : ASL : ADC !DP_Temp
-    ADC.w #.areaText : STA !DP_CurrentMenu
-    LDA.w #.areaText>>16 : STA !DP_CurrentMenu+2
+    ; determine what to draw
+    LDA !ram_cm_custom_preset_labels : BNE .drawSamusData
+
+    ; draw ROOM NAME using ID as pointer
+    LDX !DP_Address : LDA !PRESET_SLOTS_ROOM,X : STA !DP_CurrentMenu
+    LDA.w #RoomNameTextTable>>16 : STA !DP_CurrentMenu+2
     ; set tilemap position and draw area text
     LDA !DP_JSLTarget : CLC : ADC #$0006 : TAX
     JSR cm_draw_text
+    ; fix bank
     LDA !DP_MenuIndices+2 : STA !DP_CurrentMenu+2
+    RTS
 
-    ; draw ROOM ID as 4 digit hex
-    LDX !DP_Address : LDA !PRESET_SLOTS_ROOM,X : STA !DP_DrawValue
-    ; set tilemap position
-    LDA !DP_JSLTarget : CLC : ADC #$0010 : TAX
-    ; (X000)
-    LDA !DP_DrawValue : AND #$F000 : XBA : LSR #3 : TAY
-    LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer,X
-    ; (0X00)
-    LDA !DP_DrawValue : AND #$0F00 : XBA : ASL : TAY
-    LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer+2,X
-    ; (00X0)
-    LDA !DP_DrawValue : AND #$00F0 : LSR #3 : TAY
-    LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer+4,X
-    ; (000X)
-    LDA !DP_DrawValue : AND #$000F : ASL : TAY
-    LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer+6,X
-
-    ; draw Samus ENERGY
+  .drawSamusData
+    ; draw Samus CURRENT ENERGY
     LDX !DP_Address : LDA !PRESET_SLOTS_ENERGY,X : STA !DP_DrawValue
     JSR cm_hex2dec
     ; set palette
@@ -1036,25 +1018,63 @@ endif
     LDA #$70 : STA !DP_Palette ; number tiles are 70-79
     %a16()
     ; set tilemap position
-    LDA !DP_JSLTarget : CLC : ADC #$001A : TAX
+    LDA !DP_JSLTarget : CLC : ADC #$0006 : TAX
     ; ones
     LDA !DP_ThirdDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+6,X
     ; tens
     LDA !DP_SecondDigit : ORA !DP_FirstDigit
-    ORA !DP_Temp : BEQ .drawSamusMissiles
+    ORA !DP_Temp : BEQ .drawSamusMaxEnergy
     LDA !DP_SecondDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+4,X
     ; hundreds
-    LDA !DP_FirstDigit : ORA !DP_Temp : BEQ .drawSamusMissiles
+    LDA !DP_FirstDigit : ORA !DP_Temp : BEQ .drawSamusMaxEnergy
     LDA !DP_FirstDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+2,X
     ; thousands
-    LDA !DP_Temp : BEQ .drawSamusMissiles
+    LDA !DP_Temp : BEQ .drawSamusMaxEnergy
     CLC : ADC !DP_Palette : STA !ram_tilemap_buffer,X
+
+  .drawSamusMaxEnergy
+    ; set tilemap position and draw hyphen
+    LDA !DP_JSLTarget : CLC : ADC #$000E : TAX
+    LDA !MENU_SLASH : STA !ram_tilemap_buffer,X
+
+    ; get Samus max energy
+    LDX !DP_Address : LDA !PRESET_SLOTS_MAXENERGY,X : STA !DP_DrawValue
+    JSR cm_hex2dec
+    ; set tilemap position
+    LDA !DP_JSLTarget : CLC : ADC #$0010 : TAX
+    ; ones
+    LDA !DP_ThirdDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+6,X
+    ; tens
+    LDA !DP_SecondDigit : ORA !DP_FirstDigit
+    ORA !DP_Temp : BEQ .drawSamusReserves
+    LDA !DP_SecondDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+4,X
+    ; hundreds
+    LDA !DP_FirstDigit : ORA !DP_Temp : BEQ .drawSamusReserves
+    LDA !DP_FirstDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+2,X
+    ; thousands
+    LDA !DP_Temp : BEQ .drawSamusReserves
+    CLC : ADC !DP_Palette : STA !ram_tilemap_buffer,X
+
+  .drawSamusReserves
+    LDX !DP_Address : LDA !PRESET_SLOTS_RESERVES,X : STA !DP_DrawValue
+    JSR cm_hex2dec
+    ; set tilemap position
+    LDA !DP_JSLTarget : CLC : ADC #$001A : TAX
+    ; ones
+    LDA !DP_ThirdDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+4,X
+    ; tens
+    LDA !DP_SecondDigit : ORA !DP_FirstDigit
+    ORA !DP_Temp : BEQ .drawSamusMissiles
+    LDA !DP_SecondDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+2,X
+    ; hundreds
+    LDA !DP_FirstDigit : ORA !DP_Temp : BEQ .drawSamusMissiles
+    LDA !DP_FirstDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer,X
 
   .drawSamusMissiles
     LDX !DP_Address : LDA !PRESET_SLOTS_MISSILES,X : STA !DP_DrawValue
     JSR cm_hex2dec
     ; set tilemap position
-    LDA !DP_JSLTarget : CLC : ADC #$0024 : TAX
+    LDA !DP_JSLTarget : CLC : ADC #$0022 : TAX
     ; ones
     LDA !DP_ThirdDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+4,X
     ; tens
@@ -1069,7 +1089,7 @@ endif
     LDX !DP_Address : LDA !PRESET_SLOTS_SUPERS,X : STA !DP_DrawValue
     JSR cm_hex2dec
     ; set tilemap position
-    LDA !DP_JSLTarget : CLC : ADC #$002C : TAX
+    LDA !DP_JSLTarget : CLC : ADC #$002A : TAX
     ; ones
     LDA !DP_ThirdDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+2,X
     ; tens
@@ -1081,7 +1101,7 @@ endif
     LDX !DP_Address : LDA !PRESET_SLOTS_PBS,X : STA !DP_DrawValue
     JSR cm_hex2dec
     ; set tilemap position
-    LDA !DP_JSLTarget : CLC : ADC #$0032 : TAX
+    LDA !DP_JSLTarget : CLC : ADC #$0030 : TAX
     ; ones
     LDA !DP_ThirdDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+2,X
     ; tens
@@ -1095,15 +1115,9 @@ endif
   .emptyText
     db #$28, "Empty Slot", #$FF
 
-  .areaText
-    db #$28, "CRAT", #$FF
-    db #$28, "BRIN", #$FF
-    db #$28, "NORF", #$FF
-    db #$28, "WS  ", #$FF
-    db #$28, "MARI", #$FF
-    db #$28, "TOUR", #$FF
-    db #$28, "CERE", #$FF
-    db #$28, "DEBG", #$FF
+pushpc
+incsrc roomnames.asm
+pullpc
 }
 
 cm_draw_text:
@@ -1197,7 +1211,7 @@ cm_loop:
     BIT #$0080 : BNE .pressedA
     BIT #$8000 : BNE .pressedB
     BIT #$0040 : BNE .pressedX
-    ; BIT #$4000 : BNE .pressedY
+    BIT #$4000 : BNE .pressedY
     BIT #$2000 : BNE .pressedSelect
     BIT #$1000 : BNE .pressedStart
     BIT #$0800 : BNE .pressedUp
@@ -1239,6 +1253,7 @@ cm_loop:
 
   .pressedA
   .pressedX
+  .pressedY
   .pressedLeft
   .pressedRight
     JSR cm_execute
@@ -1876,7 +1891,23 @@ execute_submenu:
 
 execute_custom_preset:
 {
-    ; ignore left/right inputs
+    ; check if Y newly pressed
+    LDA !IH_CONTROLLER_PRI_NEW : BIT !CTRL_Y : BEQ .checkLeftRight
+
+    ; swap between room name and Samus data
+    LDA !ram_cm_custom_preset_labels : BEQ .turnOn
+    LDA #$0000 : STA !ram_cm_custom_preset_labels
+    BRA .redrawScreen
+  .turnOn
+    LDA #$0001 : STA !ram_cm_custom_preset_labels
+
+  .redrawScreen
+    JSL cm_draw
+    %sfxmove()
+    RTS
+
+  .checkLeftRight
+    ; don't activate submenu on left/right
     LDA !IH_CONTROLLER_PRI_NEW : BIT !IH_INPUT_LEFTRIGHT : BNE .done
 
     ; set preset slot and return to the previous menu
