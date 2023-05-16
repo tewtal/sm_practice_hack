@@ -1,6 +1,8 @@
 #!/bin/bash
 
 echo "Building SM PAL Practice Hack"
+mkdir src/generated
+python3 names/create_names.py ../src/generated/roomnames.asm default_names.txt custom_names.txt
 cd resources
 python3 create_dummies.py 00.sfc ff.sfc
 
