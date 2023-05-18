@@ -1113,7 +1113,7 @@ endif
     RTS
 
 pushpc
-incsrc generated/roomnames.asm
+incsrc roomnames.asm
 pullpc
 }
 
