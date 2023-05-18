@@ -612,6 +612,7 @@ preset_pkrd_wrecked_ship_shaft_to_supers:
     dw $090F, $0000  ; Screen subpixel X position
     dw $0911, $0226  ; Screen X position in pixels
     dw $0913, $FC00  ; Screen subpixel Y position
+    dw $09D2, $0003  ; Currently selected item
     dw $0AF6, $02C6  ; Samus X
     dw $0AFA, $006B  ; Samus Y
     dw #$FFFF
@@ -626,6 +627,7 @@ preset_pkrd_wrecked_ship_shaft_up:
     dw $09CA, $0008  ; Supers
     dw $09CC, $000A  ; Max supers
     dw $09CE, $0004  ; Pbs
+    dw $09D2, $0000  ; Currently selected item
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $00C7  ; Samus X
@@ -641,6 +643,7 @@ preset_pkrd_wrecked_ship_attic:
     dw $090F, $1C00  ; Screen subpixel X position
     dw $0911, $0400  ; Screen X position in pixels
     dw $0913, $CC00  ; Screen subpixel Y position
+    dw $09D2, $0003  ; Currently selected item
     dw $0AF6, $0445  ; Samus X
     dw $0AFA, $006B  ; Samus Y
     dw #$FFFF
@@ -656,6 +659,7 @@ preset_pkrd_wrecked_ship_upper_west_ocean:
     dw $09C6, $0009  ; Missiles
     dw $09CA, $0006  ; Supers
     dw $09CE, $0003  ; Pbs
+    dw $09D2, $0000  ; Currently selected item
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $003B  ; Samus X
