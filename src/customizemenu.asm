@@ -47,6 +47,7 @@ mc_paletteprofile:
         db #$28, "     LAYRUS", #$FF
         db #$28, "      DAYNE", #$FF
         db #$28, "DREAMCOWBOY", #$FF
+        db #$28, "       ZENI", #$FF
         db #$28, "       GREY", #$FF
         db #$28, "        RED", #$FF
         db #$28, "     PURPLE", #$FF
@@ -383,6 +384,7 @@ PaletteProfileTables:
     dw #LayrusProfileTable
     dw #DayneProfileTable
     dw #DreamCowboyProfileTable
+    dw #ZeniProfileTable
     dw #GreyProfileTable
     dw #RedProfileTable
     dw #PurpleProfileTable
@@ -433,6 +435,9 @@ DayneProfileTable:
 
 DreamCowboyProfileTable:
     dw $35B2, $35B2, $6B5A, $7FFF, $35B2, $7FFF, $35B2, $35B2, $7FFF, $35B2, $6B5A
+
+ZeniProfileTable:
+    dw $7D40, $3900, $7F00, $0000, $0000, $7FE0, $7EA0, $7FE0, $0000, $0000, $7E00
 
 GreyProfileTable:
     dw $0012, $1CE7, $3DEF, $0C63, $1CE7, $3DEF, $0EE3, $0012, $0C63, $1CE7, $3DEF
