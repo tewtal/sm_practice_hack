@@ -1318,7 +1318,6 @@ cm_loop:
     BRA .redraw
 
   .pressedA
-  .pressedY
   .pressedX
   .pressedY
   .pressedLeft
