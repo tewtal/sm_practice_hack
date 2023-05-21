@@ -241,6 +241,17 @@ macro cm_preset(title, target)
     %cm_jsl_submenu("<title>", #action_load_preset, <target>)
 endmacro
 
+macro cm_custompreset(slot)
+; Displays custom preset data and allows selecting active slot
+custompreset_<slot>:
+  .dm_actionIndex
+    dw !ACTION_CUSTOM_PRESET
+  .dm_slot
+    db <slot>
+  .dm_text
+    db #$28, "<slot>", #$FF
+endmacro
+
 macro cm_ctrl_shortcut(title, addr)
 ; configure controller shortcuts
     dw !ACTION_CTRL_SHORTCUT

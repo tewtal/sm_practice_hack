@@ -1,6 +1,7 @@
 #!/bin/bash
 
 echo "Building SM NTSC Practice Hack"
+python3 names/create_names.py ../src/roomnames.asm default_names.txt custom_names.txt
 cd resources
 python3 create_dummies.py 00.sfc ff.sfc
 
