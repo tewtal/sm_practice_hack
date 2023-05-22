@@ -28,38 +28,38 @@ print pc, " spritefeat start"
 ; This runs every frame before any other sprites are drawn, this is needed so we can get priority over everything else
 update_sprite_features:
     PHA
-    LDA !ram_sprite_features_active : BNE .spriteFeatures
+    LDA !ram_sprite_feature_flags : BNE .spriteFeatures
     PLA : BRA .done
 
   .spriteFeatures
     PHX : PHY : PHP
 
     ; Draw OoB viewer if activated
-    LDA !ram_oob_watch_active : BEQ +
+    LDA !ram_sprite_feature_flags : BIT !SPRITE_OOB_WATCH : BEQ +
     JSR update_sprite_oob
 
     ; Draw Samus hitbox if activated
-+   LDA !ram_sprite_samus_hitbox_active : BEQ +
++   LDA !ram_sprite_feature_flags : BIT !SPRITE_SAMUS_HITBOX : BEQ +
     JSR update_sprite_hitbox
 
     ; Draw enemy hitboxes if activated
-+   LDA !ram_sprite_enemy_hitbox_active : BEQ +
++   LDA !ram_sprite_feature_flags : BIT !SPRITE_ENEMY_HITBOX : BEQ +
     JSR update_enemy_sprite_hitbox
 
     ; Draw extended spritemap hitboxes if activated
-+   LDA !ram_sprite_extended_hitbox_active : BEQ +
++   LDA !ram_sprite_feature_flags : BIT !SPRITE_EXTENDED_HITBOX : BEQ +
     JSR update_extended_spritemap_hitbox
 
     ; Draw custom boss hitboxes if activated
-+   LDA !ram_sprite_custom_hitbox_active : BEQ +
++   LDA !ram_sprite_feature_flags : BIT !SPRITE_BOSS_HITBOX : BEQ +
     JSR custom_sprite_hitbox
 
     ; Draw enemy projectile hitboxes if activated
-+   LDA !ram_sprite_enemyproj_hitbox_active : BEQ +
++   LDA !ram_sprite_feature_flags : BIT !SPRITE_SAMUS_PROJ : BEQ +
     JSR update_enemyproj_sprite_hitbox
 
     ; Draw Samus projectile hitboxes if activated
-+   LDA !ram_sprite_samusproj_hitbox_active : BEQ +
++   LDA !ram_sprite_feature_flags : BIT !SPRITE_ENEMY_PROJ : BEQ +
     JSR update_samusproj_sprite_hitbox
 
 +   PLP : PLY : PLX : PLA
@@ -74,7 +74,7 @@ endif
 
 ; When loading into a game, do we need to update any sprite tiles?
 update_sprite_tiles_loading:
-    LDA !ram_oob_watch_active : BEQ +
+    LDA !ram_sprite_feature_flags : BIT !SPRITE_OOB_WATCH : BEQ +
     JSL upload_sprite_oob_tiles
 +   JSL $80894D
     RTL
@@ -551,7 +551,7 @@ update_enemyproj_sprite_hitbox:
   .nextProjectile
     INX #2
     LDA !ENEMY_PROJ_ID,X : BEQ .skipProjectile
-    LDA !ram_sprite_proj_32x32hitbox_active : BEQ .normalRadius
+    LDA !ram_sprite_feature_flags : BIT !SPRITE_32x32_PROJ : BEQ .normalRadius
     JMP .check32x32
 
   .normalRadius
@@ -653,7 +653,7 @@ update_samusproj_sprite_hitbox:
     INX #2
     LDA !SAMUS_PROJ_RADIUS_Y,X : BEQ .skipProjectile
     LDA !SAMUS_PROJ_RADIUS_X,X : BEQ .skipProjectile
-    LDA !ram_sprite_proj_32x32hitbox_active : BEQ .normalRadius
+    LDA !ram_sprite_feature_flags : BIT !SPRITE_32x32_PROJ : BEQ .normalRadius
     JMP .check32x32
 
   .normalRadius

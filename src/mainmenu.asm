@@ -1770,54 +1770,32 @@ sprites_samus_prio:
     %cm_toggle_bit("Samus on Top", !sram_sprite_prio_flag, #$3000, #0)
 
 sprites_show_samus_hitbox:
-    %cm_toggle("Show Samus Hitbox", !ram_sprite_samus_hitbox_active, #1, #action_sprite_features)
+    %cm_toggle_bit("Show Samus Hitbox", !ram_sprite_feature_flags, !SPRITE_SAMUS_HITBOX, #0)
 
 sprites_show_enemy_hitbox:
-    %cm_toggle("Normal Enemy Hitboxes", !ram_sprite_enemy_hitbox_active, #1, #action_sprite_features)
+    %cm_toggle_bit("Normal Enemy Hitboxes", !ram_sprite_feature_flags, !SPRITE_ENEMY_HITBOX, #0)
 
 sprites_show_extended_spritemap_hitbox:
-    %cm_toggle("Large Enemy Hitboxes", !ram_sprite_extended_hitbox_active, #1, #action_sprite_features)
+    %cm_toggle_bit("Large Enemy Hitboxes", !ram_sprite_feature_flags, !SPRITE_EXTENDED_HITBOX, #0)
 
 sprites_show_custom_boss_hitbox:
-    %cm_toggle("Special Boss Hitboxes", !ram_sprite_custom_hitbox_active, #1, #action_sprite_features)
+    %cm_toggle_bit("Special Boss Hitboxes", !ram_sprite_feature_flags, !SPRITE_BOSS_HITBOX, #0)
 
 sprites_show_enemyproj_hitbox:
-    %cm_toggle("E Projectile Hitboxes", !ram_sprite_enemyproj_hitbox_active, #1, #action_sprite_features)
+    %cm_toggle_bit("Enemy Projectile Hitbox", !ram_sprite_feature_flags, !SPRITE_ENEMY_PROJ, #0)
 
 sprites_show_samusproj_hitbox:
-    %cm_toggle("S Projectile Hitboxes", !ram_sprite_samusproj_hitbox_active, #1, #action_sprite_features)
+    %cm_toggle_bit("Samus Projectile Hitbox", !ram_sprite_feature_flags, !SPRITE_SAMUS_PROJ, #0)
 
 sprites_show_proj_as_32x32:
-    %cm_toggle("32x32 Projectile Boxes", !ram_sprite_proj_32x32hitbox_active, #1, #action_sprite_features)
+    %cm_toggle_bit("32x32 Projectile Boxes", !ram_sprite_feature_flags, !SPRITE_32x32_PROJ, #0)
 
 sprites_oob_viewer:
-{
-    %cm_toggle("OOB Tile Viewer", !ram_oob_watch_active, #1, #.routine)
+    %cm_toggle_bit("OoB Tile Viewer", !ram_sprite_feature_flags, !SPRITE_OOB_WATCH, .routine)
   .routine
-    LDA !ram_oob_watch_active : BEQ .oob_off
-    STA !ram_sprite_features_active
-    JSL upload_sprite_oob_tiles
-    RTL
-
-  .oob_off
-    LDA #$0000 : STA !ram_sprite_features_active
-    RTL
-}
-
-action_sprite_features:
-{
-    LDA !ram_sprite_samus_hitbox_active : BNE .enabled
-    LDA !ram_sprite_enemy_hitbox_active : BNE .enabled
-    LDA !ram_sprite_extended_hitbox_active : BNE .enabled
-    LDA !ram_sprite_custom_hitbox_active : BNE .enabled
-    LDA !ram_sprite_enemyproj_hitbox_active : BNE .enabled
-    LDA !ram_sprite_samusproj_hitbox_active : BNE .enabled
-    LDA !ram_oob_watch_active
-
-  .enabled
-    STA !ram_sprite_features_active
-    RTL
-}
+    LDA !ram_sprite_feature_flags : BIT !SPRITE_OOB_WATCH : BEQ +
+    JML upload_sprite_oob_tiles
++   RTL
 
 
 ; -----------

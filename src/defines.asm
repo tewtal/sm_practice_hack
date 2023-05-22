@@ -102,19 +102,19 @@
 !ram_metronome                      = !WRAM_PERSIST_START+$00
 !ram_minimap                        = !WRAM_PERSIST_START+$02
 
-!ram_sprite_samus_hitbox_active     = !WRAM_PERSIST_START+$04
-!ram_sprite_enemy_hitbox_active     = !WRAM_PERSIST_START+$06
-!ram_sprite_extended_hitbox_active  = !WRAM_PERSIST_START+$08
-!ram_oob_watch_active               = !WRAM_PERSIST_START+$0A
-!ram_sprite_samusproj_hitbox_active = !WRAM_PERSIST_START+$0C
-!ram_sprite_enemyproj_hitbox_active = !WRAM_PERSIST_START+$0E
-!ram_fix_scroll_offsets             = !WRAM_PERSIST_START+$10
-!ram_random_preset_rng              = !WRAM_PERSIST_START+$12
-!ram_random_preset_value            = !WRAM_PERSIST_START+$14
+!ram_fix_scroll_offsets             = !WRAM_PERSIST_START+$04
+!ram_random_preset_rng              = !WRAM_PERSIST_START+$06
+!ram_random_preset_value            = !WRAM_PERSIST_START+$08
 
-!ram_magic_pants_enabled            = !WRAM_PERSIST_START+$16
-!ram_space_pants_enabled            = !WRAM_PERSIST_START+$18
-!ram_kraid_claw_rng                 = !WRAM_PERSIST_START+$1A
+!ram_magic_pants_enabled            = !WRAM_PERSIST_START+$0A
+!ram_space_pants_enabled            = !WRAM_PERSIST_START+$0C
+!ram_kraid_claw_rng                 = !WRAM_PERSIST_START+$0E
+!ram_kraid_wait_rng                 = !WRAM_PERSIST_START+$10
+!ram_botwoon_first                  = !WRAM_PERSIST_START+$12
+!ram_botwoon_second                 = !WRAM_PERSIST_START+$14
+!ram_botwoon_hidden                 = !WRAM_PERSIST_START+$16
+!ram_botwoon_spit                   = !WRAM_PERSIST_START+$18
+!ram_botwoon_rng                    = !WRAM_PERSIST_START+$1A
 !ram_crocomire_rng                  = !WRAM_PERSIST_START+$1C
 !ram_phantoon_rng_round_1           = !WRAM_PERSIST_START+$1E
 !ram_phantoon_rng_round_2           = !WRAM_PERSIST_START+$20
@@ -122,9 +122,10 @@
 !ram_phantoon_rng_eyeclose          = !WRAM_PERSIST_START+$24
 !ram_phantoon_rng_flames            = !WRAM_PERSIST_START+$26
 !ram_phantoon_rng_next_flames       = !WRAM_PERSIST_START+$28
-!ram_botwoon_rng                    = !WRAM_PERSIST_START+$2A
-!ram_draygon_rng_left               = !WRAM_PERSIST_START+$2C
-!ram_draygon_rng_right              = !WRAM_PERSIST_START+$2E
+!ram_draygon_rng_left               = !WRAM_PERSIST_START+$2A
+!ram_draygon_rng_right              = !WRAM_PERSIST_START+$2C
+
+; FREE SPACE @ +$2E
 
 !ram_suits_enemy_damage_check       = !WRAM_PERSIST_START+$30
 !ram_suits_heat_damage_check        = !WRAM_PERSIST_START+$32
@@ -143,18 +144,11 @@
 !ram_watch_edit_lock_left           = !WRAM_PERSIST_START+$4A
 !ram_watch_edit_lock_right          = !WRAM_PERSIST_START+$4C
 
-!ram_sprite_custom_hitbox_active    = !WRAM_PERSIST_START+$4E
+!ram_game_loop_extras               = !WRAM_PERSIST_START+$4E
+!ram_game_mode_extras               = !WRAM_PERSIST_START+$50
+!ram_suits_heat_damage_value        = !WRAM_PERSIST_START+$52
 
-!ram_game_loop_extras               = !WRAM_PERSIST_START+$50
-!ram_game_mode_extras               = !WRAM_PERSIST_START+$52
-!ram_sprite_features_active         = !WRAM_PERSIST_START+$54
-!ram_kraid_wait_rng                 = !WRAM_PERSIST_START+$56
-!ram_suits_heat_damage_value        = !WRAM_PERSIST_START+$58
-!ram_botwoon_first                  = !WRAM_PERSIST_START+$5A
-!ram_botwoon_second                 = !WRAM_PERSIST_START+$5C
-!ram_botwoon_hidden                 = !WRAM_PERSIST_START+$5E
-!ram_botwoon_spit                   = !WRAM_PERSIST_START+$60
-!ram_sprite_proj_32x32hitbox_active = !WRAM_PERSIST_START+$62
+!ram_sprite_feature_flags           = !WRAM_PERSIST_START+$54
 
 ; ^ FREE SPACE ^ up to +$7A
 
@@ -558,6 +552,15 @@
 !PRESETS_PRESERVE_ENEMIES = #$0010
 !PRESETS_CLEAR_MAP_TILES = #$0020
 !PRESETS_AUTO_SEGMENT_OFF = #$0040
+
+!SPRITE_SAMUS_HITBOX = #$0001
+!SPRITE_ENEMY_HITBOX = #$0002
+!SPRITE_EXTENDED_HITBOX = #$0004
+!SPRITE_BOSS_HITBOX = #$0008
+!SPRITE_SAMUS_PROJ = #$0010
+!SPRITE_ENEMY_PROJ = #$0020
+!SPRITE_32x32_PROJ = #$0040
+!SPRITE_OOB_WATCH = #$0080
 
 
 ; ----------
