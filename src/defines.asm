@@ -191,11 +191,27 @@
 !ram_cm_ctrl_last_input = !WRAM_MENU_START+$38
 !ram_cm_ctrl_assign = !WRAM_MENU_START+$3A
 !ram_cm_ctrl_swap = !WRAM_MENU_START+$3C
-!ram_cm_botwoon_rng = !WRAM_MENU_START+$3E
-!ram_cm_botwoon_first = !WRAM_MENU_START+$40
-!ram_cm_botwoon_second = !WRAM_MENU_START+$42
-!ram_cm_botwoon_hidden = !WRAM_MENU_START+$44
-!ram_cm_botwoon_spit = !WRAM_MENU_START+$46
+
+!ram_cm_palette_border = !WRAM_MENU_START+$3E
+!ram_cm_palette_headeroutline = !WRAM_MENU_START+$40
+!ram_cm_palette_text = !WRAM_MENU_START+$42
+!ram_cm_palette_background = !WRAM_MENU_START+$44
+!ram_cm_palette_numoutline = !WRAM_MENU_START+$46
+!ram_cm_palette_numfill = !WRAM_MENU_START+$48
+!ram_cm_palette_toggleon = !WRAM_MENU_START+$4A
+!ram_cm_palette_seltext = !WRAM_MENU_START+$4C
+!ram_cm_palette_seltextbg = !WRAM_MENU_START+$4E
+!ram_cm_palette_numseloutline = !WRAM_MENU_START+$50
+!ram_cm_palette_numsel = !WRAM_MENU_START+$52
+
+!ram_cm_botwoon_rng = !WRAM_MENU_START+$54
+!ram_cm_botwoon_first = !WRAM_MENU_START+$56
+!ram_cm_botwoon_second = !WRAM_MENU_START+$58
+!ram_cm_botwoon_hidden = !WRAM_MENU_START+$5A
+!ram_cm_botwoon_spit = !WRAM_MENU_START+$5C
+!ram_cm_custom_preset_labels = !WRAM_MENU_START+$5E
+!ram_seed_X = !WRAM_MENU_START+$60
+!ram_seed_Y = !WRAM_MENU_START+$62
 
 ; ^ FREE SPACE ^ up to +$7E
 
@@ -242,6 +258,15 @@
 !ram_cm_spazer = !WRAM_MENU_START+$98
 !ram_cm_plasma = !WRAM_MENU_START+$9A
 
+!ram_cm_custompalette_blue = !WRAM_MENU_START+$80
+!ram_cm_custompalette_green = !WRAM_MENU_START+$82
+!ram_cm_custompalette_red = !WRAM_MENU_START+$84
+!ram_cm_custompalette_hi = !WRAM_MENU_START+$86
+!ram_cm_custompalette_lo = !WRAM_MENU_START+$88
+!ram_cm_dummy_on = !WRAM_MENU_START+$8A
+!ram_cm_dummy_off = !WRAM_MENU_START+$8C
+!ram_cm_dummy_num = !WRAM_MENU_START+$8E
+
 ; ^ FREE SPACE ^ up to +$CE
 
 ; Reserve 48 bytes for CGRAM cache
@@ -274,12 +299,15 @@
 !ACTION_NUMFIELD            = #$0008
 !ACTION_NUMFIELD_HEX        = #$000A
 !ACTION_NUMFIELD_WORD       = #$000C
-!ACTION_NUMFIELD_COLOR      = #$000E
-!ACTION_CHOICE              = #$0010
-!ACTION_CTRL_SHORTCUT       = #$0012
-!ACTION_CTRL_INPUT          = #$0014
-!ACTION_JSL                 = #$0016
-!ACTION_JSL_SUBMENU         = #$0018
+!ACTION_NUMFIELD_HEX_WORD   = #$000E
+!ACTION_NUMFIELD_COLOR      = #$0010
+!ACTION_NUMFIELD_SOUND      = #$0012
+!ACTION_CHOICE              = #$0014
+!ACTION_CTRL_SHORTCUT       = #$0016
+!ACTION_CTRL_INPUT          = #$0018
+!ACTION_JSL                 = #$001A
+!ACTION_JSL_SUBMENU         = #$001C
+!ACTION_CUSTOM_PRESET       = #$001E
 
 
 ; ---------
@@ -295,6 +323,7 @@
 !IH_CONTROLLER_SEC_PREV = $99
 
 !MENU_BLANK = #$281F
+!MENU_SLASH = #$287F
 !IH_BLANK = #$2C0F
 !IH_PERCENT = #$0C0A
 !IH_DECIMAL = #$0CCB
@@ -463,7 +492,7 @@
 ; SRAM
 ; -----
 
-!SRAM_VERSION = $0011
+!SRAM_VERSION = $0012
 
 !SRAM_START = $702000
 
@@ -511,11 +540,38 @@
 !sram_fast_doors = !SRAM_START+$4C
 !sram_suppress_flashing = !SRAM_START+$4E
 !sram_fast_elevators = !SRAM_START+$50
+
 !sram_custom_damage = !SRAM_START+$52
 !sram_custom_charge_damage = !SRAM_START+$54
 !sram_custom_uncharge_damage = !SRAM_START+$56
 !sram_water_physics = !SRAM_START+$58
 !sram_double_jump = !SRAM_START+$5A
+
+; do not change order without updating custom palette profiles in menu.asm
+!sram_palette_border = !SRAM_START+$5C
+!sram_palette_headeroutline = !SRAM_START+$5E
+!sram_palette_text = !SRAM_START+$60
+!sram_palette_numoutline = !SRAM_START+$62
+!sram_palette_numfill = !SRAM_START+$64
+!sram_palette_toggleon = !SRAM_START+$66
+!sram_palette_seltext = !SRAM_START+$68
+!sram_palette_seltextbg = !SRAM_START+$6A
+!sram_palette_background = !SRAM_START+$6C
+!sram_palette_numseloutline = !SRAM_START+$6E
+!sram_palette_numsel = !SRAM_START+$70
+
+!sram_custompalette_profile = !SRAM_START+$72
+!sram_menu_background = !SRAM_START+$74
+!sram_cm_scroll_delay = !SRAM_START+$76
+
+!sram_customsfx_move = !SRAM_START+$78
+!sram_customsfx_toggle = !SRAM_START+$7A
+!sram_customsfx_number = !SRAM_START+$7C
+!sram_customsfx_confirm = !SRAM_START+$7E
+!sram_customsfx_goback = !SRAM_START+$80
+
+!sram_seed_X = !SRAM_START+$82
+!sram_seed_Y = !SRAM_START+$84
 
 ; ^ FREE SPACE ^ up to +$EE, $100-FCE
 
@@ -561,6 +617,25 @@
 !PRESETS_PRESERVE_ENEMIES = #$0010
 !PRESETS_CLEAR_MAP_TILES = #$0020
 !PRESETS_AUTO_SEGMENT_OFF = #$0040
+
+if !FEATURE_TINYSTATES
+!PRESET_SLOTS_ROOM = $703000+$06
+!PRESET_SLOTS_ENERGY = $703000+$28
+!PRESET_SLOTS_MAXENERGY = $703000+$2A
+!PRESET_SLOTS_RESERVES = $703000+$3C
+!PRESET_SLOTS_MISSILES = $703000+$2C
+!PRESET_SLOTS_SUPERS = $703000+$30
+!PRESET_SLOTS_PBS = $703000+$34
+else
+!PRESET_SLOTS_AREA = $703000+$0C
+!PRESET_SLOTS_ROOM = $703000+$0A
+!PRESET_SLOTS_ENERGY = $703000+$2C
+!PRESET_SLOTS_MAXENERGY = $703000+$2E
+!PRESET_SLOTS_RESERVES = $703000+$40
+!PRESET_SLOTS_MISSILES = $703000+$30
+!PRESET_SLOTS_SUPERS = $703000+$34
+!PRESET_SLOTS_PBS = $703000+$38
+endif
 
 
 ; ----------

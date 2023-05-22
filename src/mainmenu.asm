@@ -1,221 +1,20 @@
-; --------
-; Helpers
-; --------
 
-macro cm_header(title)
-; outlined text to be drawn above the menu items
-    table ../resources/header.tbl
-    db #$28, "<title>", #$FF
-    table ../resources/normal.tbl
-endmacro
-
-macro cm_footer(title)
-; optional outlined text below the menu items
-    table ../resources/header.tbl
-    dw #$F007 : db #$28, "<title>", #$FF
-    table ../resources/normal.tbl
-endmacro
-
-macro cm_version_header(title, major, minor, build, rev_1, rev_2)
-; header text with automatic version number appended
-    table ../resources/header.tbl
-if !VERSION_REV_1
-    db #$28, "<title> <major>.<minor>.<build>.<rev_1><rev_2>", #$FF
-else
-if !VERSION_REV_2
-    db #$28, "<title> <major>.<minor>.<build>.<rev_2>", #$FF
-else
-    db #$28, "<title> <major>.<minor>.<build>", #$FF
-endif
-endif
-    table ../resources/normal.tbl
-endmacro
-
-macro cm_numfield(title, addr, start, end, increment, heldincrement, jsltarget)
-; Allows editing an 8-bit value at the specified address
-    dw !ACTION_NUMFIELD
-    dl <addr> ; 24bit RAM address to display/manipulate
-    db <start>, <end> ; minimum and maximum values allowed
-    db <increment> ; inc/dec amount when pressed
-    db <heldincrement> ; inc/dec amount when direction is held (scroll faster)
-    dw <jsltarget> ; 16bit address to code in the same bank as current menu/submenu
-    db #$28, "<title>", #$FF
-endmacro
-
-macro cm_numfield_word(title, addr, start, end, increment, heldincrement, jsltarget)
-; Allows editing a 16-bit value at the specified address
-    dw !ACTION_NUMFIELD_WORD
-    dl <addr> ; 24bit RAM address to display/manipulate
-    dw <start>, <end> ; minimum and maximum values allowed
-    dw <increment> ; inc/dec amount when pressed
-    dw <heldincrement> ; inc/dec amount when direction is held (scroll faster)
-    dw <jsltarget> ; 16bit address to code in the same bank as current menu/submenu
-    db #$28, "<title>", #$FF
-endmacro
-
-macro cm_numfield_hex(title, addr, start, end, increment, heldincrement, jsltarget)
-; Allows editing an 8-bit value displayed in hexadecimal
-    dw !ACTION_NUMFIELD_HEX
-    dl <addr> ; 24bit RAM address to display/manipulate
-    db <start>, <end> ; minimum and maximum values allowed
-    db <increment> ; inc/dec amount when pressed
-    db <heldincrement> ; inc/dec amount when direction is held (scroll faster)
-    dw <jsltarget> ; 16bit address to code in the same bank as current menu/submenu
-    db #$28, "<title>", #$FF
-endmacro
-
-macro cm_numfield_color(title, addr, jsltarget)
-; Allows editing an 8-bit value in increments consistent with SNES color values
-    dw !ACTION_NUMFIELD_COLOR
-    dl <addr> ; 24bit RAM address to display/manipulate
-    dw <jsltarget> ; 16bit address to code in the same bank as current menu/submenu
-    db #$28, "<title>", #$FF
-endmacro
-
-macro cm_toggle(title, addr, value, jsltarget)
-; toggle between zero (OFF) and value (ON)
-    dw !ACTION_TOGGLE
-    dl <addr> ; 24bit RAM address to display/manipulate
-    db <value> ; value to write when toggled on
-    dw <jsltarget> ; 16bit address to code in the same bank as current menu/submenu
-    db #$28, "<title>", #$FF
-endmacro
-
-macro cm_toggle_inverted(title, addr, value, jsltarget)
-; for toggles where zero = ON
-    dw !ACTION_TOGGLE_INVERTED
-    dl <addr> ; 24bit RAM address to display/manipulate
-    db <value> ; value to write when toggled off
-    dw <jsltarget> ; 16bit address to code in the same bank as current menu/submenu
-    db #$28, "<title>", #$FF
-endmacro
-
-macro cm_toggle_bit(title, addr, mask, jsltarget)
-; toggle specific bits, draw OFF if bits cleared
-    dw !ACTION_TOGGLE_BIT
-    dl <addr> ; 24bit RAM address to display/manipulate
-    dw <mask> ; which bits to flip
-    dw <jsltarget> ; 16bit address to code in the same bank as current menu/submenu
-    db #$28, "<title>", #$FF
-endmacro
-
-macro cm_toggle_bit_inverted(title, addr, mask, jsltarget)
-; toggle specific bits, draw ON if bits cleared
-    dw !ACTION_TOGGLE_BIT_INVERTED
-    dl <addr> ; 24bit RAM address to display/manipulate
-    dw <mask> ; which bits to flip
-    dw <jsltarget> ; 16bit address to code in the same bank as current menu/submenu
-    db #$28, "<title>", #$FF
-endmacro
-
-macro cm_jsl(title, routine, argument)
-; run code when menu item executed
-    dw !ACTION_JSL
-    dw <routine> ; 16bit address to code in the same bank as current menu/submenu
-    dw <argument> ; value passed to routine in Y
-    db #$28, "<title>", #$FF
-endmacro
-
-macro cm_jsl_submenu(title, routine, argument)
-; only used within submenu and mainmenu macros
-    dw !ACTION_JSL_SUBMENU
-    dw <routine> ; 16bit address to code in the same bank as current menu/submenu
-    dw <argument> ; value passed to routine in Y
-    db #$28, "<title>", #$FF
-endmacro
-
-macro cm_mainmenu(title, target)
-; runs action_mainmenu to set the bank of the next menu and continue into action_submenu
-; can only used for submenus listed on the mainmenu
-    %cm_jsl("<title>", #action_mainmenu, <target>)
-endmacro
-
-macro cm_submenu(title, target)
-; run action_submenu to load the next menu from the same bank
-    %cm_jsl_submenu("<title>", #action_submenu, <target>)
-endmacro
-
-macro cm_preset(title, target)
-; runs action_load_preset to set the bank of the preset menu that matches the current category
-    %cm_jsl_submenu("<title>", #action_load_preset, <target>)
-endmacro
-
-macro cm_ctrl_shortcut(title, addr)
-; configure controller shortcuts
-    dw !ACTION_CTRL_SHORTCUT
-    dl <addr> ; 24bit RAM address to display/manipulate
-    db #$28, "<title>", #$FF
-endmacro
-
-macro cm_ctrl_input(title, addr, routine, argument)
-; set a single controller binding
-    dw !ACTION_CTRL_INPUT
-    dl <addr> ; 24bit RAM address to display/manipulate
-    dw <routine> ; 16bit address to code in the same bank as current menu/submenu
-    dw <argument> ; value passed to routine in Y
-    db #$28, "<title>", #$FF
-endmacro
-
-macro cm_equipment_item(name, addr, bitmask, inverse)
-; Allows three-way toggling of items:  ON/OFF/UNOBTAINED
-    dw !ACTION_CHOICE
-    dl <addr>
-    dw #.routine
-    db #$28, "<name>", #$FF
-    db #$28, " UNOBTAINED", #$FF
-    db #$28, "         ON", #$FF
-    db #$28, "        OFF", #$FF
-    db #$FF
-  .routine
-    LDA.w #<addr> : STA !DP_Address
-    LDA.w #<addr>>>16 : STA !DP_Address+2
-    LDA <bitmask> : STA !DP_ToggleValue
-    LDA <inverse> : STA !DP_Increment
-    JMP equipment_toggle_items
-endmacro
-
-macro cm_equipment_beam(name, addr, bitmask, inverse, and)
-; Allows three-way toggling of beams:  ON/OFF/UNOBTAINED
-    dw !ACTION_CHOICE
-    dl <addr>
-    dw #.routine
-    db #$28, "<name>", #$FF
-    db #$28, " UNOBTAINED", #$FF
-    db #$28, "         ON", #$FF
-    db #$28, "        OFF", #$FF
-    db #$FF
-  .routine
-    LDA.w #<addr> : STA !DP_Address
-    LDA.w #<addr>>>16 : STA !DP_Address+2
-    LDA <bitmask> : STA !DP_ToggleValue
-    LDA <inverse> : STA !DP_Increment
-    LDA <and> : STA !DP_Temp
-    JMP equipment_toggle_beams
-endmacro
-
-macro setmenubank()
-; used to set the menu bank before a manual submenu jump
-; assumes 16bit A
-    PHK : PHK : PLA
-    STA !ram_cm_menu_bank
-endmacro
+; ------------
+; Menu Helpers
+; ------------
 
 action_mainmenu:
 {
-    PHB
     ; Set bank of new menu
     LDA !ram_cm_cursor_stack : TAX
     LDA.l MainMenuBanks,X : STA !ram_cm_menu_bank
     STA !DP_MenuIndices+2 : STA !DP_CurrentMenu+2
 
-    ; Skip stack operation in action_submenu
-    BRA action_submenu_skipStackOp
+    ; continue into action_submenu
 }
 
 action_submenu:
 {
-    PHB
-  .skipStackOp
     ; Increment stack pointer by 2, then store current menu
     LDA !ram_cm_stack_index : INC #2 : STA !ram_cm_stack_index : TAX
     TYA : STA !ram_cm_menu_stack,X
@@ -225,16 +24,16 @@ action_submenu:
 
 action_presets_submenu:
 {
-    PHB
-    PHK : PLB
 
     ; Increment stack pointer by 2
     LDA !ram_cm_stack_index : INC #2 : STA !ram_cm_stack_index : TAX
 
     ; Lookup preset menu pointer for current category
     LDA !sram_preset_category : ASL : TAY
+    PHB : PHK : PLB
     LDA.w preset_category_submenus,Y : STA !ram_cm_menu_stack,X
     LDA.w preset_category_banks,Y : STA !ram_cm_menu_bank
+    PLB
 
     ; continue into action_submenu_jump
 }
@@ -246,9 +45,8 @@ action_submenu_jump:
 
     %sfxmove()
     JSL cm_calculate_max
+    JSL cm_colors
     JSL cm_draw
-
-    PLB
     RTL
 }
 
@@ -319,6 +117,7 @@ if !FEATURE_SD2SNES
     dw #mm_goto_savestate
 endif
     dw #mm_goto_ctrlsmenu
+    dw #mm_goto_customize
     dw #$0000
     %cm_version_header("SM PRACTICE HACK", !VERSION_MAJOR, !VERSION_MINOR, !VERSION_BUILD, !VERSION_REV_1, !VERSION_REV_2)
 if defined("PRERELEASE")
@@ -341,6 +140,7 @@ if !FEATURE_SD2SNES
     dw #SavestateMenu>>16
 endif
     dw #CtrlMenu>>16
+    dw #CustomizeMenu>>16
 
 mm_goto_equipment:
     %cm_mainmenu("Equipment", #EquipmentMenu)
@@ -380,6 +180,9 @@ mm_goto_savestate:
 
 mm_goto_ctrlsmenu:
     %cm_mainmenu("Controller Shortcuts", #CtrlMenu)
+
+mm_goto_customize:
+    %cm_mainmenu("Menu Customization", #CustomizeMenu)
 
 
 ; -------------------
@@ -421,16 +224,74 @@ presets_goto_select_preset_category:
 
 presets_custom_preset_slot:
 if !FEATURE_TINYSTATES
-    %cm_numfield("Custom Preset Slot", !sram_custom_preset_slot, 0, 15, 1, 2, #0) ; update total slots in gamemode.asm
+    %cm_numfield("Custom Preset Slot", !sram_custom_preset_slot, 0, 15, 1, 2, #.routine) ; update total slots in gamemode.asm
 else
-    %cm_numfield("Custom Preset Slot", !sram_custom_preset_slot, 0, 39, 1, 2, #0) ; update total slots in gamemode.asm
+    %cm_numfield("Custom Preset Slot", !sram_custom_preset_slot, 0, 39, 1, 2, #.routine) ; update total slots in gamemode.asm
 endif
+  .routine
+    ; ignore if not A, X, or Y
+    LDA !IH_CONTROLLER_PRI_NEW : BIT #$40C0 : BNE .submenu
+    RTL
+  .submenu
+    ; undo increment from execute_numfield
+    LDA !sram_custom_preset_slot : BEQ .zero
+    DEC : BRA +
+  .zero
+if !FEATURE_TINYSTATES
+    LDA #$000F
+else
+    LDA #$0027
+endif
++   STA !sram_custom_preset_slot
+    ; determine which page to load
+    CMP #$0010 : BPL .page2
+    LDY.w #CustomPresetsMenu : BRA .done
+  .page2
+    CMP #$0020 : BPL .page3
+    LDY.w #CustomPresetsMenu2 : BRA .done
+  .page3
+    LDY.w #CustomPresetsMenu3
+  .done
+    ; set bank for manual submenu jump
+    PHK : PHK : PLA : STA !ram_cm_menu_bank
+    JML action_submenu
 
 presets_save_custom_preset:
-    %cm_jsl("Save Custom Preset", #action_save_custom_preset, #$0000)
+    %cm_jsl("Save Custom Preset", .routine, #$0000)
+  .routine
+    ; check gamestate first
+    LDA !GAMEMODE : CMP #$0008 : BEQ .safe
+    CMP #$000C : BMI .not_safe
+    CMP #$0013 : BPL .not_safe
+
+  .safe
+    JSL custom_preset_save
+    LDA #$0001 : STA !ram_cm_leave
+    %sfxconfirm()
+    RTL
+
+  .not_safe
+    %sfxfail()
+    RTL
 
 presets_load_custom_preset:
-    %cm_jsl("Load Custom Preset", #action_load_custom_preset, #$0000)
+    %cm_jsl("Load Custom Preset", .routine, #$0000)
+  .routine
+    ; check if slot is populated first
+    LDA !sram_custom_preset_slot
+if !FEATURE_TINYSTATES
+    XBA : TAX                    ; multiply by 100h (slot offset)
+else
+    ASL : XBA : TAX              ; multiply by 200h (slot offset)
+endif
+    LDA $703000,X : CMP #$5AFE : BEQ .safe
+    %sfxfail()
+    RTL
+
+  .safe
+    STA !ram_custom_preset
+    LDA #$0001 : STA !ram_cm_leave
+    RTL
 
 presets_reload_last:
     %cm_jsl("Reload Last Preset", .routine, #$0001)
@@ -578,43 +439,6 @@ action_select_preset_category:
     RTL
 }
 
-action_save_custom_preset:
-{
-    ; check gamestate first
-    LDA $0998 : CMP #$0008 : BEQ .safe
-    CMP #$000C : BMI .not_safe
-    CMP #$0013 : BPL .not_safe
-
-  .safe
-    JSL custom_preset_save
-    LDA #$0001 : STA !ram_cm_leave
-    %sfxconfirm()
-    RTL
-
-  .not_safe
-    %sfxfail()
-    RTL
-}
-
-action_load_custom_preset:
-{
-    ; check if slot is populated first
-    LDA !sram_custom_preset_slot
-if !FEATURE_TINYSTATES
-    XBA : TAX                    ; multiply by 100h (slot offset)
-else
-    ASL : XBA : TAX              ; multiply by 200h (slot offset)
-endif
-    LDA $703000,X : CMP #$5AFE : BEQ .safe
-    %sfxfail()
-    RTL
-
-  .safe
-    STA !ram_custom_preset
-    LDA #$0001 : STA !ram_cm_leave
-    RTL
-}
-
 LoadRandomPreset:
 {
     PHY : PHX
@@ -623,7 +447,7 @@ LoadRandomPreset:
     BRA .seedpicked
 
   .seedrandom
-    JSL $808111 : STA $12     ; random number
+    JSL MenuRNG : STA $12     ; random number
 
   .seedpicked
     PHK : PHK : PLA : STA $18 ; this routine lives in bank B8
@@ -687,6 +511,142 @@ action_load_preset:
     PLB
     RTL
 }
+
+
+; -------------------
+; Custom Preset Slots
+; -------------------
+
+CustomPresetsMenu:
+    dw #custompreset_00
+    dw #custompreset_01
+    dw #custompreset_02
+    dw #custompreset_03
+    dw #custompreset_04
+    dw #custompreset_05
+    dw #custompreset_06
+    dw #custompreset_07
+    dw #custompreset_08
+    dw #custompreset_09
+    dw #custompreset_10
+    dw #custompreset_11
+    dw #custompreset_12
+    dw #custompreset_13
+    dw #custompreset_14
+    dw #custompreset_15
+if !FEATURE_TINYSTATES
+; Tinystates only has slots $00-15
+else
+    dw #$FFFF
+    dw #custompreset_goto_page2
+    dw #custompreset_goto_page3
+endif
+    dw #$0000
+    %cm_header("## ENERGY    RES MMM SS PB")
+    %cm_footer("PRESS Y TO TOGGLE DISPLAY")
+
+CustomPresetsMenu2:
+    dw #custompreset_16
+    dw #custompreset_17
+    dw #custompreset_18
+    dw #custompreset_19
+    dw #custompreset_20
+    dw #custompreset_21
+    dw #custompreset_22
+    dw #custompreset_23
+    dw #custompreset_24
+    dw #custompreset_25
+    dw #custompreset_26
+    dw #custompreset_27
+    dw #custompreset_28
+    dw #custompreset_29
+    dw #custompreset_30
+    dw #custompreset_31
+    dw #$FFFF
+    dw #custompreset_goto_page1
+    dw #custompreset_goto_page3
+    dw #$0000
+    %cm_header("## ENERGY    RES MMM SS PB")
+    %cm_footer("PRESS Y TO TOGGLE DISPLAY")
+
+CustomPresetsMenu3:
+    dw #custompreset_32
+    dw #custompreset_33
+    dw #custompreset_34
+    dw #custompreset_35
+    dw #custompreset_36
+    dw #custompreset_37
+    dw #custompreset_38
+    dw #custompreset_39
+    dw #$FFFF
+    dw #$FFFF
+    dw #$FFFF
+    dw #$FFFF
+    dw #$FFFF
+    dw #$FFFF
+    dw #$FFFF
+    dw #$FFFF
+    dw #$FFFF
+    dw #custompreset_goto_page1
+    dw #custompreset_goto_page2
+    dw #$0000
+    %cm_header("## ENERGY    RES MMM SS PB")
+    %cm_footer("PRESS Y TO TOGGLE DISPLAY")
+
+    %cm_custompreset(00)
+    %cm_custompreset(01)
+    %cm_custompreset(02)
+    %cm_custompreset(03)
+    %cm_custompreset(04)
+    %cm_custompreset(05)
+    %cm_custompreset(06)
+    %cm_custompreset(07)
+    %cm_custompreset(08)
+    %cm_custompreset(09)
+    %cm_custompreset(10)
+    %cm_custompreset(11)
+    %cm_custompreset(12)
+    %cm_custompreset(13)
+    %cm_custompreset(14)
+    %cm_custompreset(15)
+    %cm_custompreset(16)
+    %cm_custompreset(17)
+    %cm_custompreset(18)
+    %cm_custompreset(19)
+    %cm_custompreset(20)
+    %cm_custompreset(21)
+    %cm_custompreset(22)
+    %cm_custompreset(23)
+    %cm_custompreset(24)
+    %cm_custompreset(25)
+    %cm_custompreset(26)
+    %cm_custompreset(27)
+    %cm_custompreset(28)
+    %cm_custompreset(29)
+    %cm_custompreset(30)
+    %cm_custompreset(31)
+    %cm_custompreset(32)
+    %cm_custompreset(33)
+    %cm_custompreset(34)
+    %cm_custompreset(35)
+    %cm_custompreset(36)
+    %cm_custompreset(37)
+    %cm_custompreset(38)
+    %cm_custompreset(39)
+
+custompreset_goto_page1:
+    %cm_jsl("GOTO PAGE ONE", .routine, #CustomPresetsMenu)
+  .routine
+    JSL cm_go_back
+    ; set bank for manual submenu jump
+    PHK : PHK : PLA : STA !ram_cm_menu_bank
+    JML action_submenu
+
+custompreset_goto_page2:
+    %cm_jsl("GOTO PAGE TWO", custompreset_goto_page1_routine, #CustomPresetsMenu2)
+
+custompreset_goto_page3:
+    %cm_jsl("GOTO PAGE THREE", custompreset_goto_page1_routine, #CustomPresetsMenu3)
 
 
 ; ----------------
@@ -1851,13 +1811,39 @@ EventsMenu:
     %cm_header("EVENTS")
 
 events_resetevents:
-    %cm_jsl("Reset All Events", action_reset_events, #$0000)
+    %cm_jsl("Reset All Events", .routine, #$0000)
+  .routine
+    LDA #$0000
+    STA $7ED820
+    STA $7ED822
+    %sfxreset()
+    RTL
 
 events_resetdoors:
-    %cm_jsl("Reset All Doors", action_reset_doors, #$0000)
+    %cm_jsl("Reset All Doors", .routine, #$0000)
+  .routine
+    PHP
+    %ai8()
+    LDX #$B0
+    LDA #$00
+-   STA $7ED800,X
+    INX : CPX #$D0 : BNE -
+    PLP
+    %sfxreset()
+    RTL
 
 events_resetitems:
-    %cm_jsl("Reset All Items", action_reset_items, #$0000)
+    %cm_jsl("Reset All Items", .routine, #$0000)
+  .routine
+    PHP
+    %ai8()
+    LDX #$70
+    LDA #$00
+-   STA $7ED800,X
+    INX : CPX #$90 : BNE -
+    PLP
+    %sfxreset()
+    RTL
 
 events_goto_bosses:
     %cm_submenu("Bosses", #BossesMenu)
@@ -1897,41 +1883,6 @@ events_zebesexploding:
 
 events_animals:
     %cm_toggle_bit("Animals Saved", $7ED820, #$8000, #0)
-
-action_reset_events:
-{
-    LDA #$0000
-    STA $7ED820
-    STA $7ED822
-    %sfxreset()
-    RTL
-}
-
-action_reset_doors:
-{
-    PHP
-    %ai8()
-    LDX #$B0
-    LDA #$00
--   STA $7ED800,X
-    INX : CPX #$D0 : BNE -
-    PLP
-    %sfxreset()
-    RTL
-}
-
-action_reset_items:
-{
-    PHP
-    %ai8()
-    LDX #$70
-    LDA #$00
--   STA $7ED800,X
-    INX : CPX #$90 : BNE -
-    PLP
-    %sfxreset()
-    RTL
-}
 
 
 ; ------------
@@ -2651,9 +2602,14 @@ action_assign_input:
 
     JSL check_duplicate_inputs
 
-    CMP #$FFFF : BEQ +                       ; skip sfx if detection failed
+    ; determine which sfx to play
+    CMP #$FFFF : BEQ .undetected
     %sfxconfirm()
-+   JSL cm_go_back
+    BRA .done
+  .undetected
+    %sfxgoback()
+  .done
+    JSL cm_go_back
     JSL cm_calculate_max
     RTL
 }
@@ -3261,6 +3217,7 @@ endif
     dw #ctrl_update_timers
     dw #$FFFF
     dw #ctrl_clear_shortcuts
+    dw #ctrl_reset_defaults
     dw #$0000
     %cm_header("CONTROLLER SHORTCUTS")
     %cm_footer("PRESS AND HOLD FOR 2 SEC")
@@ -3314,10 +3271,8 @@ ctrl_update_timers:
     %cm_ctrl_shortcut("Update Timers", !sram_ctrl_update_timers)
 
 ctrl_clear_shortcuts:
-    %cm_jsl("Clear Shortcuts", action_clear_shortcuts, #$0000)
-
-action_clear_shortcuts:
-{
+    %cm_jsl("Clear All Shortcuts", .routine, #$0000)
+  .routine
     TYA
     STA !ram_game_mode_extras
     STA !sram_ctrl_save_state
@@ -3339,7 +3294,12 @@ action_clear_shortcuts:
     LDA #$3000 : STA !sram_ctrl_menu
     %sfxconfirm()
     RTL
-}
+
+ctrl_reset_defaults:
+    %cm_jsl("Reset to Defaults", .routine, #$0000)
+  .routine
+    %sfxreset()
+    JML init_sram_upto9_controller_shortcuts
 
 GameModeExtras:
 {
@@ -3366,6 +3326,13 @@ init_wram_based_on_sram:
     JSL init_water_physics_ram
 
     ; Check if any less common controller shortcuts are configured
-    JSL GameModeExtras
-    RTL
+    JML GameModeExtras
 }
+
+
+; ------------------
+; Menu Customization
+; ------------------
+
+incsrc customizemenu.asm
+
