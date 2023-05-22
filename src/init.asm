@@ -93,7 +93,7 @@ init_sram:
     CMP #$000E : BEQ .sram_upgrade_EtoF
     CMP #$000F : BEQ .sram_upgrade_Fto10
     CMP #$0010 : BEQ .sram_upgrade_10to11
-    CMP #$0011 : BEQ .sram_upgrade_10to11
+    CMP #$0011 : BEQ .sram_upgrade_11to12
     JSL init_sram_upto9
 
   .sram_upgrade_9toA
