@@ -132,6 +132,7 @@ init_sram:
 
   .sram_upgrade_11to12
     JSL init_menu_customization
+    TDC : STA !sram_ctrl_auto_save_state
 
     LDA #!SRAM_VERSION : STA !sram_initialized
     RTS
@@ -159,7 +160,6 @@ init_sram_upto9:
     LDA #$3000 : STA !sram_ctrl_menu                  ; Start + Select
     LDA #$6010 : STA !sram_ctrl_save_state            ; Select + Y + R
     LDA #$6020 : STA !sram_ctrl_load_state            ; Select + Y + L
-    LDA #$0000 : STA !sram_ctrl_auto_save_state
     LDA #$5020 : STA !sram_ctrl_load_last_preset      ; Start + Y + L
     LDA #$0000 : STA !sram_ctrl_full_equipment
     LDA #$0000 : STA !sram_ctrl_kill_enemies
@@ -173,6 +173,7 @@ init_sram_upto9:
     ; duplicates for reset defaults routine
     LDA #$0000 : STA !sram_ctrl_toggle_tileviewer
     LDA #$0000 : STA !sram_ctrl_update_timers
+    LDA #$0000 : STA !sram_ctrl_auto_save_state
     RTL
 }
 
