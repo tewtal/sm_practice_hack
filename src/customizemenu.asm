@@ -133,7 +133,6 @@ PaletteRandoConfirm:
 paletterando_abort:
     %cm_jsl("ABORT", #.routine, #$0000)
   .routine
-    %sfxgoback()
     JSL cm_go_back
     JML cm_calculate_max
 
