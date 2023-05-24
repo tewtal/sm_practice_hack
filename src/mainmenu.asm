@@ -1984,6 +1984,7 @@ DisplayModeMenu:
     dw ihmode_iframecounter
     dw ihmode_spikesuit
     dw ihmode_lagcounter
+    dw ihmode_cpuusage
     dw ihmode_xpos
     dw ihmode_ypos
     dw ihmode_hspeed
@@ -2029,37 +2030,40 @@ ihmode_spikesuit:
     %cm_jsl("Spikesuit Trainer", #action_select_infohud_mode, #$0009)
 
 ihmode_lagcounter:
-    %cm_jsl("CPU Usage", #action_select_infohud_mode, #$000A)
+    %cm_jsl("Realtime Lag Counter", #action_select_infohud_mode, #$000A)
+
+ihmode_cpuusage:
+    %cm_jsl("CPU Usage", #action_select_infohud_mode, #$000B)
 
 ihmode_xpos:
-    %cm_jsl("X Position", #action_select_infohud_mode, #$000B)
+    %cm_jsl("X Position", #action_select_infohud_mode, #$000C)
 
 ihmode_ypos:
-    %cm_jsl("Y Position", #action_select_infohud_mode, #$000C)
+    %cm_jsl("Y Position", #action_select_infohud_mode, #$000D)
 
 ihmode_hspeed:
-    %cm_jsl("Horizontal Speed", #action_select_infohud_mode, #$000D)
+    %cm_jsl("Horizontal Speed", #action_select_infohud_mode, #$000E)
 
-!IH_MODE_VSPEED_INDEX = $000E
+!IH_MODE_VSPEED_INDEX = $000F
 ihmode_vspeed:
-    %cm_jsl("Vertical Speed", #action_select_infohud_mode, #$000E)
+    %cm_jsl("Vertical Speed", #action_select_infohud_mode, #$000F)
 
 ihmode_quickdrop:
-    %cm_jsl("Quickdrop Trainer", #action_select_infohud_mode, #$000F)
+    %cm_jsl("Quickdrop Trainer", #action_select_infohud_mode, #$0010)
 
 ihmode_walljump:
-    %cm_jsl("Walljump Trainer", #action_select_infohud_mode, #$0010)
+    %cm_jsl("Walljump Trainer", #action_select_infohud_mode, #$0011)
 
-!IH_MODE_ARMPUMP_INDEX = $0011
+!IH_MODE_ARMPUMP_INDEX = $0012
 ihmode_armpump:
-    %cm_jsl("Armpump Trainer", #action_select_infohud_mode, #$0011)
+    %cm_jsl("Armpump Trainer", #action_select_infohud_mode, #$0012)
 
 ihmode_shottimer:
-    %cm_jsl("Shot Timer", #action_select_infohud_mode, #$0012)
+    %cm_jsl("Shot Timer", #action_select_infohud_mode, #$0013)
 
-!IH_MODE_RAMWATCH_INDEX = $0013
+!IH_MODE_RAMWATCH_INDEX = $0014
 ihmode_ramwatch:
-    %cm_jsl("RAM Watch", #action_select_infohud_mode, #$0013)
+    %cm_jsl("RAM Watch", #action_select_infohud_mode, #$0014)
 
 action_select_infohud_mode:
 {
@@ -2084,6 +2088,7 @@ ih_display_mode:
     db #$28, " SHINE TUNE", #$FF
     db #$28, "   I FRAMES", #$FF
     db #$28, "  SPIKESUIT", #$FF
+    db #$28, "LAG COUNTER", #$FF
     db #$28, "  CPU USAGE", #$FF
     db #$28, " X POSITION", #$FF
     db #$28, " Y POSITION", #$FF

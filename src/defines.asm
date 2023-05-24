@@ -93,8 +93,9 @@
 !ram_fail_count                     = !WRAM_START+$80
 
 !ram_auto_save_state                = !WRAM_START+$82
+!ram_lag_counter                    = !WRAM_START+$84
 
-!WRAM_PERSIST_START = !ram_fail_count+$02
+!WRAM_PERSIST_START = !ram_lag_counter+$02
 ; ----------------------------------------------------------
 ; Variables below this point are PERSISTENT -- they maintain
 ; their value across savestates. Use this section for
@@ -389,6 +390,7 @@
 
 !OAM_STACK_POINTER = $0590
 !PB_EXPLOSION_STATUS = $0592
+!REALTIME_LAG_COUNTER = $05A0 ; Not used in vanilla
 !NMI_REQUEST_FLAG = $05B4
 !FRAME_COUNTER_8BIT = $05B5
 !FRAME_COUNTER = $05B6
