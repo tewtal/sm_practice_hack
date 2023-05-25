@@ -55,16 +55,32 @@ mc_paletteprofile:
     db #$FF
 
 mc_palette2custom:
+    %cm_submenu("Copy Palette to Custom", #Palette2CustomConfirm)
+
+Palette2CustomConfirm:
+    dw #palette2custom_abort
+    dw #$FFFF
+    dw #palette2custom_confirm
+    dw #$0000
+    %cm_header("OVERWRITE CUSTOM PALETTES")
+    %cm_footer("YOU WILL LOSE SAVED COLORS")
+
+palette2custom_abort:
+    %cm_jsl("ABORT", #.routine, #$0000)
+  .routine
+    JSL cm_go_back
+    JML cm_calculate_max
+
+palette2custom_confirm:
     %cm_jsl("Copy Palette to Custom", .routine, #$0000)
   .routine
     LDA !sram_custompalette_profile : BEQ .custom_selected
-    %i8()
-    PHB
+    PHB : %i8()
     LDX.b #PaletteProfileTables>>16 : PHX : PLB
     ASL : TAX
     LDA.l PaletteProfileTables,X : STA $16
 
-    ; copy table to SRAM, Y is already zero from JSL menu macro
+    ; copy table to SRAM
     LDY #$00 : LDA ($16),Y : STA !sram_palette_border
     LDY #$02 : LDA ($16),Y : STA !sram_palette_headeroutline
     LDY #$04 : LDA ($16),Y : STA !sram_palette_text
@@ -77,15 +93,23 @@ mc_palette2custom:
     LDY #$12 : LDA ($16),Y : STA !sram_palette_numseloutline
     LDY #$14 : LDA ($16),Y : STA !sram_palette_numsel
 
-    ; play a happy sound and refresh current profile
+    ; play sfx and refresh current profile
     JSL refresh_custom_palettes
     %sfxconfirm()
-    PLB
-    RTL
+    PLB : %i16()
+    BRA .go_back
 
   .custom_selected
-    ; make the animals cry because we couldn't do anything
-    LDA #$001D : JML !SFX_LIB2
+    %sfxfail()
+
+  .go_back
+    ; go back to CustomizeMenu manually to avoid %sfxgoback
+    LDX !ram_cm_stack_index
+    LDA #$0000 : STA !ram_cm_cursor_stack,X
+    LDA !ram_cm_stack_index : SEC : SBC #$0004 : STA !ram_cm_stack_index
+    JSL cm_calculate_max
+    LDY.w #CustomizeMenu
+    JML action_submenu
 
 mc_paletterando:
     %cm_submenu("Randomize Custom Palette", #PaletteRandoConfirm)
@@ -109,7 +133,6 @@ PaletteRandoConfirm:
 paletterando_abort:
     %cm_jsl("ABORT", #.routine, #$0000)
   .routine
-    %sfxgoback()
     JSL cm_go_back
     JML cm_calculate_max
 

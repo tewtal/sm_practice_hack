@@ -244,8 +244,7 @@ presets_custom_preset_slot:
   .page3
     LDY.w #CustomPresetsMenu3
   .done
-    ; set bank for manual submenu jump
-    PHK : PHK : PLA : STA !ram_cm_menu_bank
+    %setmenubank()
     JML action_submenu
 
 presets_save_custom_preset:
@@ -630,8 +629,7 @@ custompreset_goto_page1:
     %cm_jsl("GOTO PAGE ONE", .routine, #CustomPresetsMenu)
   .routine
     JSL cm_go_back
-    ; set bank for manual submenu jump
-    PHK : PHK : PLA : STA !ram_cm_menu_bank
+    %setmenubank()
     JML action_submenu
 
 custompreset_goto_page2:
@@ -1807,16 +1805,14 @@ events_resetevents:
     %cm_jsl("Reset All Events", .routine, #$0000)
   .routine
     LDA #$0000
-    STA $7ED820
-    STA $7ED822
+    STA $7ED820 : STA $7ED822
     %sfxreset()
     RTL
 
 events_resetdoors:
     %cm_jsl("Reset All Doors", .routine, #$0000)
   .routine
-    PHP
-    %ai8()
+    PHP : %ai8()
     LDX #$B0
     LDA #$00
 -   STA $7ED800,X
@@ -1828,8 +1824,7 @@ events_resetdoors:
 events_resetitems:
     %cm_jsl("Reset All Items", .routine, #$0000)
   .routine
-    PHP
-    %ai8()
+    PHP : %ai8()
     LDX #$70
     LDA #$00
 -   STA $7ED800,X

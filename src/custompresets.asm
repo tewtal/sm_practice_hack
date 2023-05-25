@@ -105,8 +105,7 @@ custom_preset_save:
     LDA $7ECD4C : STA $7030B8,X  ; Scrolls
     LDA $7ECD4E : STA $7030BA,X  ; Scrolls
     LDA $7ECD50 : STA $7030BC,X  ; Scrolls
-    LDA $079F : STA $7030BE,X    ; Region/Area
-    ; next available byte is $7030C0
+    ; next available byte is $7030BE
     RTL
 }
 
@@ -184,10 +183,9 @@ custom_preset_load:
     LDA $703086,X : STA $7ED908  ; Map Stations
     LDA $703088,X : STA $7ED90A  ; Map Stations
     LDA $70308A,X : STA $7ED90C  ; Map Stations
-    LDA $7030BE,X : STA $079F    ; Region/Area
     ; set flag to load scrolls later
     LDA #$5AFE : STA !ram_custom_preset
-    ; next available byte is $7030C0
+    ; next available byte is $7030BE
     RTL
 }
 else
