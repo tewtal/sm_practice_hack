@@ -3181,6 +3181,10 @@ SavestateMenu:
     dw #save_rerandomize
     dw #save_freeze
     dw #save_middoorsave
+if !FEATURE_DEV
+    dw #$FFFF
+    dw #save_delete
+endif
     dw #$0000
     %cm_header("SAVESTATE SETTINGS")
 
@@ -3192,6 +3196,12 @@ save_freeze:
 
 save_middoorsave:
     %cm_toggle("Auto-Save Mid-Door", !ram_auto_save_state, #$0001, #0)
+
+save_delete:
+    %cm_jsl("DEV Delete Savestate", .routine, #$DEAD)
+  .routine
+    TYA : STA !SRAM_SAVED_STATE
+    RTL
 
 
 ; ----------
