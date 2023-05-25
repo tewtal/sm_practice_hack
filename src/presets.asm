@@ -21,8 +21,10 @@ endif
 
     JSL preset_start_gameplay  ; Start gameplay
 
-    ; Fix Phantoon's room
-    LDA !ROOM_ID : CMP #$CD13 : BNE +
+    ; Fix Phantoon and Draygon rooms
+    LDA !ROOM_ID : CMP #$CD13 : BEQ .fixBG2
+    CMP #$D9AA : BNE +
+  .fixBG2
     JSL preset_clear_BG2_tilemap
  
 +   JSL $809A79  ; HUD routine when game is loading
