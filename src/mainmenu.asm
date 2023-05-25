@@ -865,7 +865,8 @@ action_category:
 
     JSL cm_set_etanks_and_reserve
     %sfxconfirm()
-    RTL
+    JML $90AC8D ; update beam gfx
+}
 
   .table
     ;  Items,  Beams,  Health, Miss,   Supers, PBs,    Reserv, Dummy
