@@ -270,12 +270,8 @@ endif
     SEC : RTS
 
   .next_preset_slot
-if !FEATURE_TINYSTATES
-    LDA !sram_custom_preset_slot : CMP #$000F ; total slots minus one
-else
-    LDA !sram_custom_preset_slot : CMP #$0027 ; total slots minus one
-endif
-    BNE + : LDA #$FFFF
+    LDA !sram_custom_preset_slot : CMP !TOTAL_PRESET_SLOTS : BNE +
+    LDA #$FFFF
 +   INC : STA !sram_custom_preset_slot
     ASL : TAX : LDA.l NumberGFXTable,X : STA !HUD_TILEMAP+$7C
     ; CLC to continue normal gameplay after incrementing preset slot
@@ -283,11 +279,7 @@ endif
 
   .prev_preset_slot
     LDA !sram_custom_preset_slot : BNE +
-if !FEATURE_TINYSTATES
-    LDA #$0010 ; total slots
-else
-    LDA #$0028 ; total slots
-endif
+    LDA !TOTAL_PRESET_SLOTS+1
 +   DEC : STA !sram_custom_preset_slot
     ASL : TAX : LDA.l NumberGFXTable,X : STA !HUD_TILEMAP+$7C
     ; CLC to continue normal gameplay after decrementing preset slot
