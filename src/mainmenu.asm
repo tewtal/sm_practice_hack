@@ -2431,6 +2431,7 @@ CutscenesMenu:
     dw #cutscenes_skip_intro
     dw #cutscenes_skip_ceres_arrival
     dw #cutscenes_skip_g4
+    dw #cutscenes_skip_game_over
     dw #$FFFF
     dw #cutscenes_fast_kraid
     dw #cutscenes_fast_phantoon
@@ -2456,6 +2457,9 @@ cutscenes_skip_ceres_arrival:
 
 cutscenes_skip_g4:
     %cm_toggle_bit("Skip G4", !sram_cutscenes, !CUTSCENE_SKIP_G4, #0)
+
+cutscenes_skip_game_over:
+    %cm_toggle_bit("Skip Game Over", !sram_cutscenes, !CUTSCENE_SKIP_GAMEOVER, #0)
 
 cutscenes_fast_kraid:
     %cm_toggle_bit("Skip Kraid Intro", !sram_cutscenes, !CUTSCENE_FAST_KRAID, #0)
