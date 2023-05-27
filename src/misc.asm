@@ -158,8 +158,8 @@ endif
     LDA $05F7 : BNE .endlag
     LDA !ram_minimap : BNE .endlag
 
-    ; Ignore artifical lag if OOB viewer is active
-    LDA !ram_sprite_features_active : BNE .endlag
+    ; Ignore artifical lag if sprite features are active
+    LDA !ram_sprite_feature_flags : BNE .endlag
 
     ; Artificial lag, multiplied by 16 to get loop count
     ; Each loop takes 5 clock cycles (assuming branch taken)

@@ -220,13 +220,13 @@ endif
     CLC : JMP skip_pause
 
   .toggle_tileviewer
-    LDA !ram_oob_watch_active : BEQ .turnOnTileViewer
-    LDA #$0000 : STA !ram_oob_watch_active : STA !ram_sprite_features_active
-    ; CLC to continue normal gameplay after disabling OOB Tile Viewer
+    LDA !ram_sprite_feature_flags : BIT !SPRITE_OOB_WATCH : BEQ .turnOnTileViewer
+    EOR !SPRITE_OOB_WATCH : STA !ram_sprite_feature_flags
+    ; CLC to continue normal gameplay after disabling OoB Tile Viewer
     CLC : JMP skip_pause
 
   .turnOnTileViewer
-    LDA #$0001 : STA !ram_oob_watch_active : STA !ram_sprite_features_active
+    ORA !SPRITE_OOB_WATCH : STA !ram_sprite_feature_flags
     JSL upload_sprite_oob_tiles
     ; CLC to continue normal gameplay after enabling OOB Tile Viewer
     CLC : JMP skip_pause

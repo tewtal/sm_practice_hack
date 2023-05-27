@@ -88,7 +88,7 @@ else
 endif
 
     ; Re-upload OOB viewer tiles if needed
-    LDA !ram_oob_watch_active : BEQ .done_upload_sprite_oob_tiles
+    LDA !ram_sprite_feature_flags : BIT !SPRITE_OOB_WATCH : BEQ .done_upload_sprite_oob_tiles
     JSL upload_sprite_oob_tiles
 
   .done_upload_sprite_oob_tiles
