@@ -677,12 +677,12 @@ update_enemyproj_sprite_hitbox:
     %a8()
     PLA ; left edge
     STA $0370,Y : STA $0378,Y
-    CLC : ADC #$17
+    CLC : ADC #$18
     STA $0374,Y : STA $037C,Y
 
     PLA : PLA ; top edge
     STA $0371,Y : STA $0375,Y
-    CLC : ADC #$17
+    CLC : ADC #$18
     STA $0379,Y : STA $037D,Y
     PLA
 
@@ -773,12 +773,12 @@ update_samusproj_sprite_hitbox:
     %a8()
     PLA ; left edge
     STA $0370,Y : STA $0378,Y
-    CLC : ADC #$17
+    CLC : ADC #$18
     STA $0374,Y : STA $037C,Y
 
     PLA : PLA ; top edge
     STA $0371,Y : STA $0375,Y
-    CLC : ADC #$17
+    CLC : ADC #$18
     STA $0379,Y : STA $037D,Y
     PLA
 
