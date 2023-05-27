@@ -92,7 +92,10 @@
 !ram_fail_sum                       = !WRAM_START+$7E
 !ram_fail_count                     = !WRAM_START+$80
 
-!WRAM_PERSIST_START = !ram_fail_count+$02
+!ram_auto_save_state                = !WRAM_START+$82
+!ram_lag_counter                    = !WRAM_START+$84
+
+!WRAM_PERSIST_START = !ram_lag_counter+$02
 ; ----------------------------------------------------------
 ; Variables below this point are PERSISTENT -- they maintain
 ; their value across savestates. Use this section for
@@ -149,6 +152,12 @@
 !ram_suits_heat_damage_value        = !WRAM_PERSIST_START+$52
 
 !ram_sprite_feature_flags           = !WRAM_PERSIST_START+$54
+!ram_kraid_wait_rng                 = !WRAM_PERSIST_START+$56
+!ram_botwoon_first                  = !WRAM_PERSIST_START+$58
+!ram_botwoon_second                 = !WRAM_PERSIST_START+$5A
+!ram_botwoon_hidden                 = !WRAM_PERSIST_START+$5C
+!ram_botwoon_spit                   = !WRAM_PERSIST_START+$5E
+!ram_phantoon_flame_direction       = !WRAM_PERSIST_START+$60
 
 ; ^ FREE SPACE ^ up to +$7A
 
@@ -184,11 +193,27 @@
 !ram_cm_ctrl_last_input = !WRAM_MENU_START+$38
 !ram_cm_ctrl_assign = !WRAM_MENU_START+$3A
 !ram_cm_ctrl_swap = !WRAM_MENU_START+$3C
-!ram_cm_botwoon_rng = !WRAM_MENU_START+$3E
-!ram_cm_botwoon_first = !WRAM_MENU_START+$40
-!ram_cm_botwoon_second = !WRAM_MENU_START+$42
-!ram_cm_botwoon_hidden = !WRAM_MENU_START+$44
-!ram_cm_botwoon_spit = !WRAM_MENU_START+$46
+
+!ram_cm_palette_border = !WRAM_MENU_START+$3E
+!ram_cm_palette_headeroutline = !WRAM_MENU_START+$40
+!ram_cm_palette_text = !WRAM_MENU_START+$42
+!ram_cm_palette_background = !WRAM_MENU_START+$44
+!ram_cm_palette_numoutline = !WRAM_MENU_START+$46
+!ram_cm_palette_numfill = !WRAM_MENU_START+$48
+!ram_cm_palette_toggleon = !WRAM_MENU_START+$4A
+!ram_cm_palette_seltext = !WRAM_MENU_START+$4C
+!ram_cm_palette_seltextbg = !WRAM_MENU_START+$4E
+!ram_cm_palette_numseloutline = !WRAM_MENU_START+$50
+!ram_cm_palette_numsel = !WRAM_MENU_START+$52
+
+!ram_cm_botwoon_rng = !WRAM_MENU_START+$54
+!ram_cm_botwoon_first = !WRAM_MENU_START+$56
+!ram_cm_botwoon_second = !WRAM_MENU_START+$58
+!ram_cm_botwoon_hidden = !WRAM_MENU_START+$5A
+!ram_cm_botwoon_spit = !WRAM_MENU_START+$5C
+!ram_cm_custom_preset_labels = !WRAM_MENU_START+$5E
+!ram_seed_X = !WRAM_MENU_START+$60
+!ram_seed_Y = !WRAM_MENU_START+$62
 
 ; ^ FREE SPACE ^ up to +$7E
 
@@ -235,6 +260,15 @@
 !ram_cm_spazer = !WRAM_MENU_START+$98
 !ram_cm_plasma = !WRAM_MENU_START+$9A
 
+!ram_cm_custompalette_blue = !WRAM_MENU_START+$80
+!ram_cm_custompalette_green = !WRAM_MENU_START+$82
+!ram_cm_custompalette_red = !WRAM_MENU_START+$84
+!ram_cm_custompalette_hi = !WRAM_MENU_START+$86
+!ram_cm_custompalette_lo = !WRAM_MENU_START+$88
+!ram_cm_dummy_on = !WRAM_MENU_START+$8A
+!ram_cm_dummy_off = !WRAM_MENU_START+$8C
+!ram_cm_dummy_num = !WRAM_MENU_START+$8E
+
 ; ^ FREE SPACE ^ up to +$CE
 
 ; Reserve 48 bytes for CGRAM cache
@@ -267,12 +301,15 @@
 !ACTION_NUMFIELD            = #$0008
 !ACTION_NUMFIELD_HEX        = #$000A
 !ACTION_NUMFIELD_WORD       = #$000C
-!ACTION_NUMFIELD_COLOR      = #$000E
-!ACTION_CHOICE              = #$0010
-!ACTION_CTRL_SHORTCUT       = #$0012
-!ACTION_CTRL_INPUT          = #$0014
-!ACTION_JSL                 = #$0016
-!ACTION_JSL_SUBMENU         = #$0018
+!ACTION_NUMFIELD_HEX_WORD   = #$000E
+!ACTION_NUMFIELD_COLOR      = #$0010
+!ACTION_NUMFIELD_SOUND      = #$0012
+!ACTION_CHOICE              = #$0014
+!ACTION_CTRL_SHORTCUT       = #$0016
+!ACTION_CTRL_INPUT          = #$0018
+!ACTION_JSL                 = #$001A
+!ACTION_JSL_SUBMENU         = #$001C
+!ACTION_CUSTOM_PRESET       = #$001E
 
 
 ; ---------
@@ -288,6 +325,7 @@
 !IH_CONTROLLER_SEC_PREV = $99
 
 !MENU_BLANK = #$281F
+!MENU_SLASH = #$287F
 !IH_BLANK = #$2C0F
 !IH_PERCENT = #$0C0A
 !IH_DECIMAL = #$0CCB
@@ -353,6 +391,7 @@
 
 !OAM_STACK_POINTER = $0590
 !PB_EXPLOSION_STATUS = $0592
+!REALTIME_LAG_COUNTER = $05A0 ; Not used in vanilla
 !NMI_REQUEST_FLAG = $05B4
 !FRAME_COUNTER_8BIT = $05B5
 !FRAME_COUNTER = $05B6
@@ -375,6 +414,7 @@
 !BG2_Y_SCROLL = $0923
 !CURRENT_SAVE_FILE = $0952
 !GAMEMODE = $0998
+!DOOR_FUNCTION_POINTER = $099C
 !SAMUS_ITEMS_EQUIPPED = $09A2
 !SAMUS_ITEMS_COLLECTED = $09A4
 !SAMUS_BEAMS_EQUIPPED = $09A6
@@ -456,7 +496,7 @@
 ; SRAM
 ; -----
 
-!SRAM_VERSION = $0011
+!SRAM_VERSION = $0012
 
 !SRAM_START = $702000
 
@@ -477,6 +517,7 @@
 !sram_ctrl_dec_custom_preset = !SRAM_START+$1A
 !sram_ctrl_toggle_tileviewer = !SRAM_START+$1C
 !sram_ctrl_update_timers = !SRAM_START+$1E
+!sram_ctrl_auto_save_state = !SRAM_START+$F0 ; note the change of order
 
 !sram_artificial_lag = !SRAM_START+$20
 !sram_rerandomize = !SRAM_START+$22
@@ -503,13 +544,40 @@
 !sram_fast_doors = !SRAM_START+$4C
 !sram_suppress_flashing = !SRAM_START+$4E
 !sram_fast_elevators = !SRAM_START+$50
+
 !sram_custom_damage = !SRAM_START+$52
 !sram_custom_charge_damage = !SRAM_START+$54
 !sram_custom_uncharge_damage = !SRAM_START+$56
 !sram_water_physics = !SRAM_START+$58
 !sram_double_jump = !SRAM_START+$5A
 
-; ^ FREE SPACE ^ up to +$0FCE
+; do not change order without updating custom palette profiles in menu.asm
+!sram_palette_border = !SRAM_START+$5C
+!sram_palette_headeroutline = !SRAM_START+$5E
+!sram_palette_text = !SRAM_START+$60
+!sram_palette_numoutline = !SRAM_START+$62
+!sram_palette_numfill = !SRAM_START+$64
+!sram_palette_toggleon = !SRAM_START+$66
+!sram_palette_seltext = !SRAM_START+$68
+!sram_palette_seltextbg = !SRAM_START+$6A
+!sram_palette_background = !SRAM_START+$6C
+!sram_palette_numseloutline = !SRAM_START+$6E
+!sram_palette_numsel = !SRAM_START+$70
+
+!sram_custompalette_profile = !SRAM_START+$72
+!sram_menu_background = !SRAM_START+$74
+!sram_cm_scroll_delay = !SRAM_START+$76
+
+!sram_customsfx_move = !SRAM_START+$78
+!sram_customsfx_toggle = !SRAM_START+$7A
+!sram_customsfx_number = !SRAM_START+$7C
+!sram_customsfx_confirm = !SRAM_START+$7E
+!sram_customsfx_goback = !SRAM_START+$80
+
+!sram_seed_X = !SRAM_START+$82
+!sram_seed_Y = !SRAM_START+$84
+
+; ^ FREE SPACE ^ up to +$EE, $100-FCE
 
 ; SM specific things
 !SRAM_MUSIC_DATA = !SRAM_START+$0FD0
@@ -537,6 +605,7 @@
 !CUTSCENE_FAST_PHANTOON = #$0200
 !CUTSCENE_FAST_KRAID = #$0400
 !CUTSCENE_SKIP_SPLASH = #$0800
+!CUTSCENE_SKIP_GAMEOVER = #$1000
 
 !SUPPRESS_CRATERIA_LIGHTNING = #$0001
 !SUPPRESS_ESCAPE_FLASHING = #$0002
@@ -553,6 +622,26 @@
 !PRESETS_PRESERVE_ENEMIES = #$0010
 !PRESETS_CLEAR_MAP_TILES = #$0020
 !PRESETS_AUTO_SEGMENT_OFF = #$0040
+
+if !FEATURE_TINYSTATES
+!TOTAL_PRESET_SLOTS = #$000F
+!PRESET_SLOTS_ROOM = $703000+$06
+!PRESET_SLOTS_ENERGY = $703000+$28
+!PRESET_SLOTS_MAXENERGY = $703000+$2A
+!PRESET_SLOTS_RESERVES = $703000+$3C
+!PRESET_SLOTS_MISSILES = $703000+$2C
+!PRESET_SLOTS_SUPERS = $703000+$30
+!PRESET_SLOTS_PBS = $703000+$34
+else
+!TOTAL_PRESET_SLOTS = #$0027
+!PRESET_SLOTS_ROOM = $703000+$0A
+!PRESET_SLOTS_ENERGY = $703000+$2C
+!PRESET_SLOTS_MAXENERGY = $703000+$2E
+!PRESET_SLOTS_RESERVES = $703000+$40
+!PRESET_SLOTS_MISSILES = $703000+$30
+!PRESET_SLOTS_SUPERS = $703000+$34
+!PRESET_SLOTS_PBS = $703000+$38
+endif
 
 !SPRITE_SAMUS_HITBOX = #$0001
 !SPRITE_ENEMY_HITBOX = #$0002

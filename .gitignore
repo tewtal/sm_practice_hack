@@ -12,3 +12,5 @@ tools/asar.exe
 tools/dll/*
 .vscode/launch.json
 .vscode/tasks.json
+/names/custom_names.txt
+/src/generated/*

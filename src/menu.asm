@@ -61,7 +61,7 @@ cm_start:
     STZ !SAMUS_HEALTH_WARNING
 
     JSL cm_transfer_original_tileset
-    JSR cm_transfer_original_cgram
+    JSL cm_transfer_original_cgram
 
     ; Update HUD (in case we added missiles etc.)
     LDA !ram_gametime_room : STA $C1
@@ -72,6 +72,8 @@ cm_start:
     JSL $809B44 ; Handle HUD tilemap
     JSL ih_update_hud_code
 
+    LDA !ram_seed_X : STA !sram_seed_X
+    LDA !ram_seed_Y : STA !sram_seed_Y
     JSL init_heat_damage_ram
     JSL init_water_physics_ram
     JSL GameLoopExtras ; check if game_loop_extras needs to be disabled
@@ -105,7 +107,7 @@ cm_init:
 
     JSL initialize_ppu_long   ; Initialise PPU for message boxes
     JSR cm_transfer_custom_tileset
-    JSR cm_transfer_custom_cgram
+    JSL cm_transfer_custom_cgram
 
     ; Set up menu state
     %a16()
@@ -261,8 +263,7 @@ cm_transfer_custom_cgram:
 ; $34 = Selected item  $761F
 ; $3A = Sel Num        $0000, $761F
 {
-    PHP
-    %a16()
+    PHP : %ai16()
     ; Backup gameplay palette
     LDA $7EC00A : STA !ram_cgram_cache
     LDA $7EC00E : STA !ram_cgram_cache+$02
@@ -277,18 +278,25 @@ cm_transfer_custom_cgram:
     LDA $7EC03A : STA !ram_cgram_cache+$14
     LDA $7EC03C : STA !ram_cgram_cache+$16
 
+    JSL PrepMenuPalette
+
     ; Set menu palette
-    LDA #$7277 : STA $7EC00A                ; light pink
-    LDA #$0000 : STA $7EC00E : STA $7EC016  ; black
-    STA $7EC01A : STA $7EC036 : STA $7EC03A
-    LDA #$48F3 : STA $7EC012                ; dark pink
-    LDA #$7FFF : STA $7EC014 : STA $7EC01C  ; white
-    LDA #$4376 : STA $7EC032                ; light green
-    LDA #$761F : STA $7EC034 : STA $7EC03C  ; pink
+    LDA #$0000 : STA $7EC000
+    LDA !ram_cm_palette_border : STA $7EC00A
+    LDA !ram_cm_palette_headeroutline : STA $7EC012
+    LDA !ram_cm_palette_text : STA $7EC014
+    LDA !ram_cm_palette_background : STA $7EC016 : STA $7EC00E
+    LDA !ram_cm_palette_numoutline : STA $7EC01A
+    LDA !ram_cm_palette_numfill : STA $7EC01C
+    LDA !ram_cm_palette_toggleon : STA $7EC032
+    LDA !ram_cm_palette_seltext : STA $7EC034
+    LDA !ram_cm_palette_seltextbg : STA $7EC036
+    LDA !ram_cm_palette_numseloutline : STA $7EC03A
+    LDA !ram_cm_palette_numsel : STA $7EC03C
 
     JSL transfer_cgram_long
     PLP
-    RTS
+    RTL
 }
 
 cm_transfer_original_cgram:
@@ -312,7 +320,7 @@ cm_transfer_original_cgram:
 
     JSL transfer_cgram_long
     PLP
-    RTS
+    RTL
 }
 
 cm_draw:
@@ -332,9 +340,9 @@ cm_tilemap_bg:
     LDA #$000E ; transparent tile
     LDX #$07FE ; size = $800 bytes
 
-  .clearBG3
+  .loopClearBG3
     STA !ram_tilemap_buffer,X
-    DEX #2 : BPL .clearBG3
+    DEX #2 : BPL .loopClearBG3
 
     ; Vertical edges
     LDX #$0000
@@ -356,13 +364,25 @@ cm_tilemap_bg:
     INX #2
     DEY : BPL .loopHorizontal
 
-    ; Interior
+    ; Interior, background is optional...
+    LDA !sram_menu_background : BNE .fillInterior
+    ; but sometimes forced for readability
+    ; Paused, game states $C-11
+    LDA !GAMEMODE : CMP #$000C : BMI .checkCeres : BEQ .fillInterior
+    CMP #$0012 : BMI .fillInterior
+    ; Game over, $1A
+    CMP #$001A : BEQ .fillInterior
+  .checkCeres
+    ; Ceres elevator room, $DF45
+    LDA !ROOM_ID : CMP #$DF45 : BNE .done
+
+  .fillInterior
     LDX #$0000
     LDY #$001B ; 28 columns
     LDA !MENU_BLANK ; blank background tile
 
   .loopBackground
-    STA !ram_tilemap_buffer+$004,X
+;    STA !ram_tilemap_buffer+$004,X
     STA !ram_tilemap_buffer+$084,X
     STA !ram_tilemap_buffer+$0C4,X
     STA !ram_tilemap_buffer+$104,X
@@ -391,6 +411,7 @@ cm_tilemap_bg:
     INX #2
     DEY : BPL .loopBackground
 
+  .done
     RTS
 }
 
@@ -484,7 +505,6 @@ cm_tilemap_transfer:
 }
 
 cm_draw_action_table:
-{
     dw draw_toggle
     dw draw_toggle_bit
     dw draw_toggle_inverted
@@ -492,12 +512,15 @@ cm_draw_action_table:
     dw draw_numfield
     dw draw_numfield_hex
     dw draw_numfield_word
+    dw draw_numfield_hex_word
     dw draw_numfield_color
+    dw draw_numfield_sound
     dw draw_choice
     dw draw_ctrl_shortcut
     dw draw_controller_input
     dw draw_jsl
     dw draw_submenu
+    dw draw_custom_preset
 
 draw_toggle:
 {
@@ -707,6 +730,7 @@ draw_numfield:
 }
 
 draw_numfield_hex:
+draw_numfield_sound:
 {
     ; grab the memory address (long)
     LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : INC !DP_CurrentMenu : STA !DP_Address
@@ -802,6 +826,52 @@ draw_numfield_word:
     RTS
 }
 
+draw_numfield_hex_word:
+{
+    ; grab the memory address (long)
+    LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : INC !DP_CurrentMenu : STA !DP_Address
+    LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : STA !DP_Address+2
+
+    ; Draw the text
+    %item_index_to_vram_index()
+    PHX : JSR cm_draw_text : PLX
+
+    ; set position for the number
+    TXA : CLC : ADC #$002C : TAX
+
+    ; load the value
+    LDA [!DP_Address] : STA !DP_DrawValue
+
+    ; Clear out the area
+    LDA !MENU_BLANK : STA !ram_tilemap_buffer+0,X
+                      STA !ram_tilemap_buffer+2,X
+                      STA !ram_tilemap_buffer+4,X
+                      STA !ram_tilemap_buffer+6,X
+
+    ; Draw numbers
+    ; (X000)
+    LDA !DP_DrawValue : AND #$F000 : XBA : LSR #3 : TAY
+    LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer,X
+    ; (0X00)
+    LDA !DP_DrawValue : AND #$0F00 : XBA : ASL : TAY
+    LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer+2,X
+    ; (00X0)
+    LDA !DP_DrawValue : AND #$00F0 : LSR #3 : TAY
+    LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer+4,X
+    ; (000X)
+    LDA !DP_DrawValue : AND #$000F : ASL : TAY
+    LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer+6,X
+
+    ; overwrite palette bytes
+    %a8()
+    LDA #$24 : ORA !DP_Palette
+    STA !ram_tilemap_buffer+1,X : STA !ram_tilemap_buffer+3,X
+    STA !ram_tilemap_buffer+5,X : STA !ram_tilemap_buffer+7,X
+    %a16()
+
+    RTS
+}
+
 draw_numfield_color:
 ; Color values are increments of 8
 {
@@ -841,7 +911,6 @@ draw_numfield_color:
     STA !ram_tilemap_buffer+1,X : STA !ram_tilemap_buffer+3,X
     %a16()
 
-  .done
     RTS
 }
 
@@ -933,14 +1002,14 @@ draw_controller_input:
 +   TYA : AND !CTRL_SELECT : BEQ .unbound : LDY #$000C
 
   .draw
-    LDA.w CtrlMenuGFXTable,Y : STA !ram_tilemap_buffer,X
+    LDA.w .CtrlMenuGFXTable,Y : STA !ram_tilemap_buffer,X
     RTS
 
   .unbound
     LDA !MENU_BLANK : STA !ram_tilemap_buffer,X
     RTS
 
-CtrlMenuGFXTable:
+  .CtrlMenuGFXTable
     ;    A      B      X      Y      L      R    Select
     ;  $0080  $8000  $0040  $4000  $0020  $0010  $2000
     dw $288F, $2887, $288E, $2886, $288D, $288C, $2885
@@ -959,6 +1028,161 @@ draw_submenu:
     %item_index_to_vram_index()
     JSR cm_draw_text
     RTS
+}
+
+draw_custom_preset:
+{
+    %a8()
+    ; store slot index in !DP_ToggleValue
+    LDA [!DP_CurrentMenu] : STA !DP_ToggleValue
+    %a16()
+    INC !DP_CurrentMenu
+
+    ; preserve !DP_Palette
+    LDA !DP_Palette : STA !DP_CtrlInput
+
+    ; draw slot number text
+    %item_index_to_vram_index()
+    STA !DP_JSLTarget ; save starting index for later
+    JSR cm_draw_text
+
+    ; get preset slot offset
+if !FEATURE_TINYSTATES
+    LDA !DP_ToggleValue : XBA : TAX ; multiply by 100h (slot offset)
+else
+    LDA !DP_ToggleValue : ASL : XBA : TAX ; multiply by 200h (slot offset)
+endif
+    ; store preset slot index in !DP_Address
+    STX !DP_Address
+
+    ; check if slot has valid data
+    LDA $703000,X : CMP #$5AFE : BEQ .validPreset
+    ; slot is EMPTY, fix bank and exit
+    LDA !DP_MenuIndices+2 : STA !DP_CurrentMenu+2
+    RTS
+
+  .validPreset
+    ; determine what to draw
+    LDA !ram_cm_custom_preset_labels : BNE .drawSamusData
+
+    ; draw ROOM NAME using ID as pointer
+    LDX !DP_Address : LDA !PRESET_SLOTS_ROOM,X : STA !DP_CurrentMenu
+    LDA.w #RoomNameTextTable>>16 : STA !DP_CurrentMenu+2
+    ; set tilemap position and draw area text
+    LDA !DP_JSLTarget : CLC : ADC #$0006 : TAX
+    JSR cm_draw_text
+    ; fix bank
+    LDA !DP_MenuIndices+2 : STA !DP_CurrentMenu+2
+    RTS
+
+  .drawSamusData
+    ; draw Samus CURRENT ENERGY
+    LDX !DP_Address : LDA !PRESET_SLOTS_ENERGY,X : STA !DP_DrawValue
+    JSR cm_hex2dec
+    ; set palette
+    LDA !DP_CtrlInput : STA !DP_Palette
+    %a8()
+    LDA #$2C : ORA !DP_Palette : STA !DP_Palette+1
+    LDA #$70 : STA !DP_Palette ; number tiles are 70-79
+    %a16()
+    ; set tilemap position
+    LDA !DP_JSLTarget : CLC : ADC #$0006 : TAX
+    ; ones
+    LDA !DP_ThirdDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+6,X
+    ; tens
+    LDA !DP_SecondDigit : ORA !DP_FirstDigit
+    ORA !DP_Temp : BEQ .drawSamusMaxEnergy
+    LDA !DP_SecondDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+4,X
+    ; hundreds
+    LDA !DP_FirstDigit : ORA !DP_Temp : BEQ .drawSamusMaxEnergy
+    LDA !DP_FirstDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+2,X
+    ; thousands
+    LDA !DP_Temp : BEQ .drawSamusMaxEnergy
+    CLC : ADC !DP_Palette : STA !ram_tilemap_buffer,X
+
+  .drawSamusMaxEnergy
+    ; set tilemap position and draw hyphen
+    LDA !DP_JSLTarget : CLC : ADC #$000E : TAX
+    LDA !MENU_SLASH : STA !ram_tilemap_buffer,X
+
+    ; get Samus max energy
+    LDX !DP_Address : LDA !PRESET_SLOTS_MAXENERGY,X : STA !DP_DrawValue
+    JSR cm_hex2dec
+    ; set tilemap position
+    LDA !DP_JSLTarget : CLC : ADC #$0010 : TAX
+    ; ones
+    LDA !DP_ThirdDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+6,X
+    ; tens
+    LDA !DP_SecondDigit : ORA !DP_FirstDigit
+    ORA !DP_Temp : BEQ .drawSamusReserves
+    LDA !DP_SecondDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+4,X
+    ; hundreds
+    LDA !DP_FirstDigit : ORA !DP_Temp : BEQ .drawSamusReserves
+    LDA !DP_FirstDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+2,X
+    ; thousands
+    LDA !DP_Temp : BEQ .drawSamusReserves
+    CLC : ADC !DP_Palette : STA !ram_tilemap_buffer,X
+
+  .drawSamusReserves
+    LDX !DP_Address : LDA !PRESET_SLOTS_RESERVES,X : STA !DP_DrawValue
+    JSR cm_hex2dec
+    ; set tilemap position
+    LDA !DP_JSLTarget : CLC : ADC #$001A : TAX
+    ; ones
+    LDA !DP_ThirdDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+4,X
+    ; tens
+    LDA !DP_SecondDigit : ORA !DP_FirstDigit
+    ORA !DP_Temp : BEQ .drawSamusMissiles
+    LDA !DP_SecondDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+2,X
+    ; hundreds
+    LDA !DP_FirstDigit : ORA !DP_Temp : BEQ .drawSamusMissiles
+    LDA !DP_FirstDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer,X
+
+  .drawSamusMissiles
+    LDX !DP_Address : LDA !PRESET_SLOTS_MISSILES,X : STA !DP_DrawValue
+    JSR cm_hex2dec
+    ; set tilemap position
+    LDA !DP_JSLTarget : CLC : ADC #$0022 : TAX
+    ; ones
+    LDA !DP_ThirdDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+4,X
+    ; tens
+    LDA !DP_SecondDigit : ORA !DP_FirstDigit
+    ORA !DP_Temp : BEQ .drawSamusSupers
+    LDA !DP_SecondDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+2,X
+    ; hundreds
+    LDA !DP_FirstDigit : ORA !DP_Temp : BEQ .drawSamusSupers
+    LDA !DP_FirstDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer,X
+
+  .drawSamusSupers
+    LDX !DP_Address : LDA !PRESET_SLOTS_SUPERS,X : STA !DP_DrawValue
+    JSR cm_hex2dec
+    ; set tilemap position
+    LDA !DP_JSLTarget : CLC : ADC #$002A : TAX
+    ; ones
+    LDA !DP_ThirdDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+2,X
+    ; tens
+    LDA !DP_SecondDigit : ORA !DP_FirstDigit
+    ORA !DP_Temp : BEQ .drawSamusPowerBombs
+    LDA !DP_SecondDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer,X
+
+  .drawSamusPowerBombs
+    LDX !DP_Address : LDA !PRESET_SLOTS_PBS,X : STA !DP_DrawValue
+    JSR cm_hex2dec
+    ; set tilemap position
+    LDA !DP_JSLTarget : CLC : ADC #$0030 : TAX
+    ; ones
+    LDA !DP_ThirdDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+2,X
+    ; tens
+    LDA !DP_SecondDigit : ORA !DP_FirstDigit
+    ORA !DP_Temp : BEQ .done
+    LDA !DP_SecondDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer,X
+
+  .done
+    RTS
+
+pushpc
+incsrc roomnames.asm
+pullpc
 }
 
 cm_draw_text:
@@ -1038,6 +1262,7 @@ cm_loop:
     JSL wait_for_lag_frame_long
     JSL $808F0C ; Music queue
     JSL $8289EF ; Sound fx queue
+    JSL MenuRNG
 
     LDA !ram_cm_leave : BEQ +
     RTS ; Exit menu loop
@@ -1052,7 +1277,7 @@ cm_loop:
     BIT #$0080 : BNE .pressedA
     BIT #$8000 : BNE .pressedB
     BIT #$0040 : BNE .pressedX
-    ; BIT #$4000 : BNE .pressedY
+    BIT #$4000 : BNE .pressedY
     BIT #$2000 : BNE .pressedSelect
     BIT #$1000 : BNE .pressedStart
     BIT #$0800 : BNE .pressedUp
@@ -1082,18 +1307,19 @@ cm_loop:
     ; jump to top menu item
     LDX !ram_cm_stack_index
     LDA #$0000 : STA !ram_cm_cursor_stack,X
-    LDA #$0037 : JSL !SFX_LIB1 ; louder click
+    %sfxmove()
     BRA .redraw
 
   .pressedR
     ; jump to bottom menu item
     LDX !ram_cm_stack_index
     LDA !ram_cm_cursor_max : DEC #2 : STA !ram_cm_cursor_stack,X
-    LDA #$0037 : JSL !SFX_LIB1 ; louder click
+    %sfxmove()
     BRA .redraw
 
   .pressedA
   .pressedX
+  .pressedY
   .pressedLeft
   .pressedRight
     JSR cm_execute
@@ -1162,21 +1388,20 @@ cm_go_back:
     LDA #$0000 : STA !ram_cm_cursor_stack,X
 
     ; make sure we dont set a negative number
-    LDA !ram_cm_stack_index : DEC #2 : BPL .done
+    DEX #2 : BPL .done
 
     ; leave menu 
     LDA #$0001 : STA !ram_cm_leave
 
-    LDA #$0000
+    LDX #$0000
   .done
-    STA !ram_cm_stack_index    
-    LDA !ram_cm_stack_index : BNE .end
+    STX !ram_cm_stack_index : BNE .end
 
     ; Reset submenu bank when back at main menu
     LDA.w #MainMenu>>16 : STA !ram_cm_menu_bank
 
   .end
-    %sfxmove()
+    %sfxgoback()
     RTL
 }
 
@@ -1222,8 +1447,10 @@ cm_get_inputs:
     ; Decrement delay timer and check if it's zero
     LDA !ram_cm_input_timer : DEC : STA !ram_cm_input_timer : BNE .noinput
 
-    ; Set new delay to two frames and return the input we're holding
-    LDA #$0002 : STA !ram_cm_input_timer
+    ; Set new delay, default is 2
+    LDA !sram_cm_scroll_delay : STA !ram_cm_input_timer
+
+    ; Return held input
     LDA !IH_CONTROLLER_PRI : AND #$0F00 : ORA !IH_INPUT_HELD
     RTS
 
@@ -1290,12 +1517,15 @@ cm_execute_action_table:
     dw execute_numfield
     dw execute_numfield_hex
     dw execute_numfield_word
+    dw execute_numfield_hex_word
     dw execute_numfield_color
+    dw execute_numfield_sound
     dw execute_choice
     dw execute_ctrl_shortcut
     dw execute_controller_input
     dw execute_jsl
     dw execute_submenu
+    dw execute_custom_preset
 
 execute_toggle:
 {
@@ -1333,7 +1563,7 @@ execute_toggle:
 
   .end
     %ai16()
-    %sfxmove()
+    %sfxtoggle()
     RTS
 }
 
@@ -1365,13 +1595,17 @@ execute_toggle_bit:
 
  .end
     %ai16()
-    %sfxmove()
+    %sfxtoggle()
     RTS
 }
 
 execute_numfield:
 execute_numfield_hex:
+execute_numfield_sound:
 {
+    ; preserve action index to check for sfx later
+    PHX
+
     ; grab the memory address (long)
     LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : INC !DP_CurrentMenu : STA !DP_Address
     LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : STA !DP_Address+2
@@ -1380,19 +1614,25 @@ execute_numfield_hex:
     LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : AND #$00FF : STA !DP_Minimum
     LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : AND #$00FF : INC : STA !DP_Maximum ; INC for convenience
 
+    ; check for Y pressed to skip inc/dec
+    LDA !ram_cm_controller : BIT !CTRL_Y : BNE .skip_inc
+
     ; check for held inputs
-    LDA !ram_cm_controller : BIT !IH_INPUT_HELD : BNE .input_held
+    BIT !IH_INPUT_HELD : BNE .input_held
     ; grab normal increment and skip past both
     LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : INC !DP_CurrentMenu : AND #$00FF : STA !DP_Increment
-    BRA .load_jsl_target
+    BRA .determine_direction
+
+  .skip_inc
+    ; skipping inc/dec and just playing sfx
+    INC !DP_CurrentMenu : INC !DP_CurrentMenu
+    BRA .jsl
 
   .input_held
     ; grab faster increment and skip past both
     INC !DP_CurrentMenu : LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : AND #$00FF : STA !DP_Increment
 
-  .load_jsl_target
-    LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : INC !DP_CurrentMenu : STA !DP_JSLTarget
-
+  .determine_direction
     ; determine dpad direction
     LDA !ram_cm_controller : BIT #$0200 : BNE .pressed_left
     ; pressed right, inc
@@ -1413,6 +1653,9 @@ execute_numfield_hex:
 
   .jsl
     %a16()
+    ; grab JSL pointer
+    LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : INC !DP_CurrentMenu : STA !DP_JSLTarget
+
     ; skip if JSL target is zero
     LDA !DP_JSLTarget : BEQ .end
 
@@ -1426,8 +1669,10 @@ execute_numfield_hex:
 
   .end
     %ai16()
-    %sfxmove()
-    RTS
+    ; pull action index and skip if sfx menu item
+    PLX : CPX !ACTION_NUMFIELD_SOUND : BEQ +
+    %sfxnumber()
++   RTS
 }
 
 execute_numfield_word:
@@ -1490,7 +1735,7 @@ execute_numfield_word:
 
   .end
     %ai16()
-    %sfxmove()
+    %sfxnumber()
     RTS
 }
 
@@ -1545,7 +1790,7 @@ execute_numfield_color:
 
   .end
     %ai16()
-    %sfxmove()
+    %sfxnumber()
     RTS
 }
 
@@ -1614,7 +1859,7 @@ execute_choice:
 
   .end
     %ai16()
-    %sfxmove()
+    %sfxtoggle()
     RTS
 }
 
@@ -1728,6 +1973,38 @@ execute_submenu:
     RTS
 }
 
+execute_custom_preset:
+{
+    ; check if Y newly pressed
+    LDA !IH_CONTROLLER_PRI_NEW : BIT !CTRL_Y : BEQ .checkLeftRight
+
+    ; swap between room name and Samus data
+    LDA !ram_cm_custom_preset_labels : BEQ .turnOn
+    LDA #$0000 : STA !ram_cm_custom_preset_labels
+    BRA .redrawScreen
+  .turnOn
+    LDA #$0001 : STA !ram_cm_custom_preset_labels
+
+  .redrawScreen
+    JSL cm_draw
+    %sfxmove()
+    RTS
+
+  .checkLeftRight
+    ; don't activate submenu on left/right
+    LDA !IH_CONTROLLER_PRI_NEW : BIT !IH_INPUT_LEFTRIGHT : BNE .done
+
+    ; set preset slot and return to the previous menu
+    %a8()
+    LDA [!DP_CurrentMenu] : STA !sram_custom_preset_slot
+    %a16()
+    %sfxconfirm()
+    JSL cm_go_back
+
+  .done
+    RTS
+}
+
 cm_hex2dec:
 {
     ; store 16-bit dividend
@@ -1778,6 +2055,40 @@ cm_divide_100:
     ; 16-bit result
     LDA $4214
     RTS
+}
+
+MenuRNG:
+; Generates new random number
+; 32-bit period (uses two 16-bit seeds)
+; Make sure ram_seed_X and ram_seed_Y is initialized to something other than zero
+{
+    LDA !ram_seed_X : ASL #5
+    EOR !ram_seed_X : STA $16
+
+    LDA !ram_seed_Y : STA !ram_seed_X
+
+    LDA $16 : LSR #3
+    EOR $16 : STA $16
+
+    LDA !ram_seed_Y : LSR
+    EOR !ram_seed_Y : EOR $16
+    STA !ram_seed_Y
+
+    ; return y (in a)
+    RTL    
+}
+
+MenuRNG2:
+; 16-bit period xorshift (uses only ram_seed_X)
+; Make sure ram_seed_X is not zero
+{
+    LDA !ram_seed_X
+    STA $16
+    ASL #2 : EOR $16 : STA $16
+    LSR #5 : EOR $16 : STA $16
+    ASL : EOR $16
+    STA !ram_seed_X
+    RTL
 }
 
 
