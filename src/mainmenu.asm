@@ -1741,11 +1741,11 @@ sprites_show_extended_spritemap_hitbox:
 sprites_show_custom_boss_hitbox:
     %cm_toggle_bit("Special Boss Hitboxes", !ram_sprite_feature_flags, !SPRITE_BOSS_HITBOX, #0)
 
-sprites_show_enemyproj_hitbox:
-    %cm_toggle_bit("Enemy Projectile Hitbox", !ram_sprite_feature_flags, !SPRITE_ENEMY_PROJ, #0)
-
 sprites_show_samusproj_hitbox:
     %cm_toggle_bit("Samus Projectile Hitbox", !ram_sprite_feature_flags, !SPRITE_SAMUS_PROJ, #0)
+
+sprites_show_enemyproj_hitbox:
+    %cm_toggle_bit("Enemy Projectile Hitbox", !ram_sprite_feature_flags, !SPRITE_ENEMY_PROJ, #0)
 
 sprites_show_proj_as_32x32:
     %cm_toggle_bit("32x32 Projectile Boxes", !ram_sprite_feature_flags, !SPRITE_32x32_PROJ, #0)

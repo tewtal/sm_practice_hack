@@ -125,10 +125,9 @@
 !ram_phantoon_rng_eyeclose          = !WRAM_PERSIST_START+$24
 !ram_phantoon_rng_flames            = !WRAM_PERSIST_START+$26
 !ram_phantoon_rng_next_flames       = !WRAM_PERSIST_START+$28
-!ram_draygon_rng_left               = !WRAM_PERSIST_START+$2A
-!ram_draygon_rng_right              = !WRAM_PERSIST_START+$2C
-
-; FREE SPACE @ +$2E
+!ram_phantoon_flame_direction       = !WRAM_PERSIST_START+$2A
+!ram_draygon_rng_left               = !WRAM_PERSIST_START+$2C
+!ram_draygon_rng_right              = !WRAM_PERSIST_START+$2E
 
 !ram_suits_enemy_damage_check       = !WRAM_PERSIST_START+$30
 !ram_suits_heat_damage_check        = !WRAM_PERSIST_START+$32
@@ -150,14 +149,7 @@
 !ram_game_loop_extras               = !WRAM_PERSIST_START+$4E
 !ram_game_mode_extras               = !WRAM_PERSIST_START+$50
 !ram_suits_heat_damage_value        = !WRAM_PERSIST_START+$52
-
 !ram_sprite_feature_flags           = !WRAM_PERSIST_START+$54
-!ram_kraid_wait_rng                 = !WRAM_PERSIST_START+$56
-!ram_botwoon_first                  = !WRAM_PERSIST_START+$58
-!ram_botwoon_second                 = !WRAM_PERSIST_START+$5A
-!ram_botwoon_hidden                 = !WRAM_PERSIST_START+$5C
-!ram_botwoon_spit                   = !WRAM_PERSIST_START+$5E
-!ram_phantoon_flame_direction       = !WRAM_PERSIST_START+$60
 
 ; ^ FREE SPACE ^ up to +$7A
 
@@ -551,7 +543,7 @@
 !sram_water_physics = !SRAM_START+$58
 !sram_double_jump = !SRAM_START+$5A
 
-; do not change order without updating custom palette profiles in menu.asm
+; do not change order without updating custom palette profiles in customizemenu.asm
 !sram_palette_border = !SRAM_START+$5C
 !sram_palette_headeroutline = !SRAM_START+$5E
 !sram_palette_text = !SRAM_START+$60
