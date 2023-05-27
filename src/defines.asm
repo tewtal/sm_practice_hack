@@ -92,7 +92,10 @@
 !ram_fail_sum                       = !WRAM_START+$7E
 !ram_fail_count                     = !WRAM_START+$80
 
-!WRAM_PERSIST_START = !ram_fail_count+$02
+!ram_auto_save_state                = !WRAM_START+$82
+!ram_lag_counter                    = !WRAM_START+$84
+
+!WRAM_PERSIST_START = !ram_lag_counter+$02
 ; ----------------------------------------------------------
 ; Variables below this point are PERSISTENT -- they maintain
 ; their value across savestates. Use this section for
@@ -154,6 +157,7 @@
 !ram_botwoon_second                 = !WRAM_PERSIST_START+$5C
 !ram_botwoon_hidden                 = !WRAM_PERSIST_START+$5E
 !ram_botwoon_spit                   = !WRAM_PERSIST_START+$60
+!ram_phantoon_flame_direction       = !WRAM_PERSIST_START+$62
 
 ; ^ FREE SPACE ^ up to +$7A
 
@@ -387,6 +391,7 @@
 
 !OAM_STACK_POINTER = $0590
 !PB_EXPLOSION_STATUS = $0592
+!REALTIME_LAG_COUNTER = $05A0 ; Not used in vanilla
 !NMI_REQUEST_FLAG = $05B4
 !FRAME_COUNTER_8BIT = $05B5
 !FRAME_COUNTER = $05B6
@@ -409,6 +414,7 @@
 !BG2_Y_SCROLL = $0923
 !CURRENT_SAVE_FILE = $0952
 !GAMEMODE = $0998
+!DOOR_FUNCTION_POINTER = $099C
 !SAMUS_ITEMS_EQUIPPED = $09A2
 !SAMUS_ITEMS_COLLECTED = $09A4
 !SAMUS_BEAMS_EQUIPPED = $09A6
@@ -510,6 +516,7 @@
 !sram_ctrl_dec_custom_preset = !SRAM_START+$1A
 !sram_ctrl_toggle_tileviewer = !SRAM_START+$1C
 !sram_ctrl_update_timers = !SRAM_START+$1E
+!sram_ctrl_auto_save_state = !SRAM_START+$F0 ; note the change of order
 
 !sram_artificial_lag = !SRAM_START+$20
 !sram_rerandomize = !SRAM_START+$22
@@ -569,7 +576,7 @@
 !sram_seed_X = !SRAM_START+$82
 !sram_seed_Y = !SRAM_START+$84
 
-; ^ FREE SPACE ^ up to +$0FCE
+; ^ FREE SPACE ^ up to +$EE, $100-FCE
 
 ; SM specific things
 !SRAM_MUSIC_DATA = !SRAM_START+$0FD0
@@ -597,6 +604,7 @@
 !CUTSCENE_FAST_PHANTOON = #$0200
 !CUTSCENE_FAST_KRAID = #$0400
 !CUTSCENE_SKIP_SPLASH = #$0800
+!CUTSCENE_SKIP_GAMEOVER = #$1000
 
 !SUPPRESS_CRATERIA_LIGHTNING = #$0001
 !SUPPRESS_ESCAPE_FLASHING = #$0002
@@ -615,6 +623,7 @@
 !PRESETS_AUTO_SEGMENT_OFF = #$0040
 
 if !FEATURE_TINYSTATES
+!TOTAL_PRESET_SLOTS = #$000F
 !PRESET_SLOTS_ROOM = $703000+$06
 !PRESET_SLOTS_ENERGY = $703000+$28
 !PRESET_SLOTS_MAXENERGY = $703000+$2A
@@ -623,6 +632,7 @@ if !FEATURE_TINYSTATES
 !PRESET_SLOTS_SUPERS = $703000+$30
 !PRESET_SLOTS_PBS = $703000+$34
 else
+!TOTAL_PRESET_SLOTS = #$0027
 !PRESET_SLOTS_ROOM = $703000+$0A
 !PRESET_SLOTS_ENERGY = $703000+$2C
 !PRESET_SLOTS_MAXENERGY = $703000+$2E

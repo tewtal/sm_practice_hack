@@ -46,6 +46,11 @@ org $A7CFD6
 endif
     JSL hook_phantoon_flame_pattern
 
+    ; Phantoon flame direction
+org $8699EB
+    JSL hook_phantoon_flame_direction
+    BRA $05
+
 if !FEATURE_PAL
 org $A7DDB3
 else
@@ -496,6 +501,29 @@ hook_phantoon_flame_pattern:
   .no_manip
     LDA !CACHED_RANDOM_NUMBER
     RTL
+}
+
+hook_phantoon_flame_direction:
+{
+    LDA !ram_phantoon_flame_direction : BEQ .no_manip
+    DEC : BEQ +
+if !FEATURE_PAL
+    LDA #$0099 : RTL ; right
++   LDA #$FF67 : RTL ; left
+else
+    LDA #$0080 : RTL ; right
++   LDA #$FF80 : RTL ; left
+endif
+
+  .no_manip
+    LDA $05B6 : BIT #$0001 : BNE +
+if !FEATURE_PAL
+    LDA #$0099 : RTL ; right
++   LDA #$FF67 : RTL ; left
+else
+    LDA #$0080 : RTL ; right
++   LDA #$FF80 : RTL ; left
+endif
 }
 
 

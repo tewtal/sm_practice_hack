@@ -89,6 +89,10 @@ org $82E42E
     JSL cutscenes_fast_decompress_if_fast_doors
 
 
+org $82DCF4
+    JSL cutscenes_game_over
+
+
 org $8BF800
 print pc, " cutscenes start"
 
@@ -216,6 +220,38 @@ else
     LDA #$B72F
 endif
     RTS
+}
+
+cutscenes_game_over:
+{
+    ; check for cutscene flag or whatever
+    LDA !sram_cutscenes : BIT !CUTSCENE_SKIP_GAMEOVER : BEQ .game_over
+if !FEATURE_SD2SNES
+    ; check if valid savestate
+    LDA !SRAM_SAVED_STATE : CMP #$5AFE : BNE .no_savestate
+    JML gamemode_shortcuts_load_state
+endif
+
+  .no_savestate
+    ; reload last preset if it exists
+    LDA !sram_last_preset : BEQ .save_file : STA !ram_load_preset
+    BRA .skip_gameplay
+
+  .save_file
+    ; load from SRAM, carry set if corrupt/empty
+    LDA !CURRENT_SAVE_FILE : JSL $818085 : BCS .game_over
+    JSL $82BE17 ; Cancel sound effects
+    LDA #$0006 : STA !GAMEMODE
+
+  .skip_gameplay
+    ; cleanup the stack and skip gameplay this frame
+    ; JSR (+2) to game state $14, PHP (+1), JSL (+3) to here
+    PLA : PLA : PLA
+    JML end_of_normal_gameplay
+
+  .game_over
+    ; overwritten code
+    JML $88829E
 }
 
 print pc, " cutscenes end"

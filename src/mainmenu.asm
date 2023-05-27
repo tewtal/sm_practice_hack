@@ -113,6 +113,9 @@ MainMenu:
     dw #mm_goto_layout
     dw #mm_goto_gamemenu
     dw #mm_goto_rngmenu
+if !FEATURE_SD2SNES
+    dw #mm_goto_savestate
+endif
     dw #mm_goto_ctrlsmenu
     dw #mm_goto_customize
     dw #$0000
@@ -133,6 +136,9 @@ MainMenuBanks:
     dw #LayoutMenu>>16
     dw #GameMenu>>16
     dw #RngMenu>>16
+if !FEATURE_SD2SNES
+    dw #SavestateMenu>>16
+endif
     dw #CtrlMenu>>16
     dw #CustomizeMenu>>16
 
@@ -164,10 +170,13 @@ mm_goto_layout:
     %cm_mainmenu("Room Layout", #LayoutMenu)
 
 mm_goto_gamemenu:
-    %cm_mainmenu("Game", #GameMenu)
+    %cm_mainmenu("Game Options", #GameMenu)
 
 mm_goto_rngmenu:
     %cm_mainmenu("RNG Control", #RngMenu)
+
+mm_goto_savestate:
+    %cm_mainmenu("Savestate Settings", #SavestateMenu)
 
 mm_goto_ctrlsmenu:
     %cm_mainmenu("Controller Shortcuts", #CtrlMenu)
@@ -214,11 +223,7 @@ presets_goto_select_preset_category:
     %cm_submenu("Select Preset Category", #SelectPresetCategoryMenu)
 
 presets_custom_preset_slot:
-if !FEATURE_TINYSTATES
-    %cm_numfield("Custom Preset Slot", !sram_custom_preset_slot, 0, 15, 1, 2, #.routine) ; update total slots in gamemode.asm
-else
-    %cm_numfield("Custom Preset Slot", !sram_custom_preset_slot, 0, 39, 1, 2, #.routine) ; update total slots in gamemode.asm
-endif
+    %cm_numfield("Custom Preset Slot", !sram_custom_preset_slot, 0, !TOTAL_PRESET_SLOTS, 1, 2, #.routine)
   .routine
     ; ignore if not A, X, or Y
     LDA !IH_CONTROLLER_PRI_NEW : BIT #$40C0 : BNE .submenu
@@ -228,11 +233,7 @@ endif
     LDA !sram_custom_preset_slot : BEQ .zero
     DEC : BRA +
   .zero
-if !FEATURE_TINYSTATES
-    LDA #$000F
-else
-    LDA #$0027
-endif
+    LDA !TOTAL_PRESET_SLOTS
 +   STA !sram_custom_preset_slot
     ; determine which page to load
     CMP #$0010 : BPL .page2
@@ -854,7 +855,8 @@ action_category:
 
     JSL cm_set_etanks_and_reserve
     %sfxconfirm()
-    RTL
+    JML $90AC8D ; update beam gfx
+}
 
   .table
     ;  Items,  Beams,  Health, Miss,   Supers, PBs,    Reserv, Dummy
@@ -1945,9 +1947,6 @@ InfoHudMenu:
     dw #ih_lag_counter
     dw #$FFFF
     dw #ih_reset_seg_later
-if !FEATURE_SD2SNES
-    dw #ih_freeze_on_load
-endif
     dw #ih_status_icons
 if !PRESERVE_WRAM_DURING_SPACETIME
     dw #ih_spacetime_infohud
@@ -1973,6 +1972,7 @@ DisplayModeMenu:
     dw ihmode_iframecounter
     dw ihmode_spikesuit
     dw ihmode_lagcounter
+    dw ihmode_cpuusage
     dw ihmode_xpos
     dw ihmode_ypos
     dw ihmode_hspeed
@@ -2018,37 +2018,40 @@ ihmode_spikesuit:
     %cm_jsl("Spikesuit Trainer", #action_select_infohud_mode, #$0009)
 
 ihmode_lagcounter:
-    %cm_jsl("CPU Usage", #action_select_infohud_mode, #$000A)
+    %cm_jsl("Realtime Lag Counter", #action_select_infohud_mode, #$000A)
+
+ihmode_cpuusage:
+    %cm_jsl("CPU Usage", #action_select_infohud_mode, #$000B)
 
 ihmode_xpos:
-    %cm_jsl("X Position", #action_select_infohud_mode, #$000B)
+    %cm_jsl("X Position", #action_select_infohud_mode, #$000C)
 
 ihmode_ypos:
-    %cm_jsl("Y Position", #action_select_infohud_mode, #$000C)
+    %cm_jsl("Y Position", #action_select_infohud_mode, #$000D)
 
 ihmode_hspeed:
-    %cm_jsl("Horizontal Speed", #action_select_infohud_mode, #$000D)
+    %cm_jsl("Horizontal Speed", #action_select_infohud_mode, #$000E)
 
-!IH_MODE_VSPEED_INDEX = $000E
+!IH_MODE_VSPEED_INDEX = $000F
 ihmode_vspeed:
-    %cm_jsl("Vertical Speed", #action_select_infohud_mode, #$000E)
+    %cm_jsl("Vertical Speed", #action_select_infohud_mode, #$000F)
 
 ihmode_quickdrop:
-    %cm_jsl("Quickdrop Trainer", #action_select_infohud_mode, #$000F)
+    %cm_jsl("Quickdrop Trainer", #action_select_infohud_mode, #$0010)
 
 ihmode_walljump:
-    %cm_jsl("Walljump Trainer", #action_select_infohud_mode, #$0010)
+    %cm_jsl("Walljump Trainer", #action_select_infohud_mode, #$0011)
 
-!IH_MODE_ARMPUMP_INDEX = $0011
+!IH_MODE_ARMPUMP_INDEX = $0012
 ihmode_armpump:
-    %cm_jsl("Armpump Trainer", #action_select_infohud_mode, #$0011)
+    %cm_jsl("Armpump Trainer", #action_select_infohud_mode, #$0012)
 
 ihmode_shottimer:
-    %cm_jsl("Shot Timer", #action_select_infohud_mode, #$0012)
+    %cm_jsl("Shot Timer", #action_select_infohud_mode, #$0013)
 
-!IH_MODE_RAMWATCH_INDEX = $0013
+!IH_MODE_RAMWATCH_INDEX = $0014
 ihmode_ramwatch:
-    %cm_jsl("RAM Watch", #action_select_infohud_mode, #$0013)
+    %cm_jsl("RAM Watch", #action_select_infohud_mode, #$0014)
 
 action_select_infohud_mode:
 {
@@ -2073,6 +2076,7 @@ ih_display_mode:
     db #$28, " SHINE TUNE", #$FF
     db #$28, "   I FRAMES", #$FF
     db #$28, "  SPIKESUIT", #$FF
+    db #$28, "LAG COUNTER", #$FF
     db #$28, "  CPU USAGE", #$FF
     db #$28, " X POSITION", #$FF
     db #$28, " Y POSITION", #$FF
@@ -2195,9 +2199,6 @@ ih_lag_counter:
     db #$28, "       DOOR", #$FF
     db #$28, "       FULL", #$FF
     db #$FF
-
-ih_freeze_on_load:
-    %cm_toggle("Freeze on Load State", !ram_freeze_on_load, #$0001, #0)
 
 ih_reset_seg_later:
     %cm_jsl("Reset Segment Next Room", #.routine, #$FFFF)
@@ -2418,6 +2419,7 @@ CutscenesMenu:
     dw #cutscenes_skip_intro
     dw #cutscenes_skip_ceres_arrival
     dw #cutscenes_skip_g4
+    dw #cutscenes_skip_game_over
     dw #$FFFF
     dw #cutscenes_fast_kraid
     dw #cutscenes_fast_phantoon
@@ -2443,6 +2445,9 @@ cutscenes_skip_ceres_arrival:
 
 cutscenes_skip_g4:
     %cm_toggle_bit("Skip G4", !sram_cutscenes, !CUTSCENE_SKIP_G4, #0)
+
+cutscenes_skip_game_over:
+    %cm_toggle_bit("Skip Game Over", !sram_cutscenes, !CUTSCENE_SKIP_GAMEOVER, #0)
 
 cutscenes_fast_kraid:
     %cm_toggle_bit("Skip Kraid Intro", !sram_cutscenes, !CUTSCENE_FAST_KRAID, #0)
@@ -2788,9 +2793,6 @@ pullpc
 ; ----------
 
 RngMenu:
-    if !FEATURE_SD2SNES
-        dw #rng_rerandomize
-    endif
     dw #rng_goto_phanmenu
     dw #$FFFF
     dw #rng_botwoon_first
@@ -2807,9 +2809,6 @@ RngMenu:
     dw #rng_kraid_wait_rng
     dw #$0000
     %cm_header("BOSS RNG CONTROL")
-
-rng_rerandomize:
-    %cm_toggle("Rerandomize", !sram_rerandomize, #$0001, #0)
 
 rng_goto_phanmenu:
     %cm_jsl("Phantoon", #ih_prepare_phantoon_menu, #PhantoonMenu)
@@ -2993,6 +2992,7 @@ PhantoonMenu:
     dw #phan_eyeclose
     dw #phan_flamepattern
     dw #phan_next_flamepattern
+    dw #phan_flame_direction
     dw #$0000
     %cm_header("PHANTOON CONTROL")
 
@@ -3168,6 +3168,47 @@ phan_next_flamepattern:
     db #$28, "    1424212", #$FF
     db #$FF
 
+phan_flame_direction:
+    dw !ACTION_CHOICE
+    dl #!ram_phantoon_flame_direction
+    dw #$0000
+    db #$28, "Flame Direction", #$FF
+    db #$28, "     RANDOM", #$FF
+    db #$28, "       LEFT", #$FF
+    db #$28, "      RIGHT", #$FF
+    db #$FF
+
+
+; --------------
+; Savestate Menu
+; --------------
+
+SavestateMenu:
+    dw #save_rerandomize
+    dw #save_freeze
+    dw #save_middoorsave
+if !FEATURE_DEV
+    dw #$FFFF
+    dw #save_delete
+endif
+    dw #$0000
+    %cm_header("SAVESTATE SETTINGS")
+
+save_rerandomize:
+    %cm_toggle("Rerandomize", !sram_rerandomize, #$0001, #0)
+
+save_freeze:
+    %cm_toggle("Freeze on Load State", !ram_freeze_on_load, #$0001, #0)
+
+save_middoorsave:
+    %cm_toggle("Auto-Save Mid-Door", !ram_auto_save_state, #$0001, #0)
+
+save_delete:
+    %cm_jsl("DEV Delete Savestate", .routine, #$DEAD)
+  .routine
+    TYA : STA !SRAM_SAVED_STATE
+    RTL
+
 
 ; ----------
 ; Ctrl Menu
@@ -3175,10 +3216,11 @@ phan_next_flamepattern:
 
 CtrlMenu:
     dw #ctrl_menu
-    if !FEATURE_SD2SNES
-        dw #ctrl_save_state
-        dw #ctrl_load_state
-    endif
+if !FEATURE_SD2SNES
+    dw #ctrl_save_state
+    dw #ctrl_load_state
+    dw #ctrl_auto_save_state
+endif
     dw #ctrl_load_last_preset
     dw #ctrl_random_preset
     dw #ctrl_save_custom_preset
@@ -3209,6 +3251,9 @@ ctrl_save_state:
 
 ctrl_load_state:
     %cm_ctrl_shortcut("Load State", !sram_ctrl_load_state)
+
+ctrl_auto_save_state:
+    %cm_ctrl_shortcut("Auto Save State", !sram_ctrl_auto_save_state)
 
 ctrl_reset_segment_timer:
     %cm_ctrl_shortcut("Reset Seg Timer", !sram_ctrl_reset_segment_timer)
@@ -3250,6 +3295,7 @@ ctrl_clear_shortcuts:
     STA !ram_game_mode_extras
     STA !sram_ctrl_save_state
     STA !sram_ctrl_load_state
+    STA !sram_ctrl_auto_save_state
     STA !sram_ctrl_load_last_preset
     STA !sram_ctrl_full_equipment
     STA !sram_ctrl_kill_enemies
