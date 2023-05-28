@@ -1,6 +1,7 @@
 #!/usr/bin/env python
-import sys
+import io
 import os
+import sys
 
 if len(sys.argv) < 3 or len(sys.argv) > 4:
 	print("create_names.py <output> <default names> <optional custom names>")
@@ -12,7 +13,7 @@ custom_txt = ""
 if len(sys.argv) > 3:
 	custom_txt = sys.argv[3]
 
-f_default = open(os.path.join(os.path.dirname(os.path.realpath(__file__)), default_txt), "r")
+f_default = io.open(os.path.join(os.path.dirname(os.path.realpath(__file__)), default_txt), "r")
 default_lines = f_default.readlines()
 f_default.close()
 
@@ -20,7 +21,7 @@ custom_lines = []
 if custom_txt != "":
    custom_filepath = os.path.join(os.path.dirname(os.path.realpath(__file__)), custom_txt)
    if os.path.isfile(custom_filepath):
-      f_custom = open(custom_filepath, "r")
+      f_custom = io.open(custom_filepath, "r")
       custom_lines = f_custom.readlines()
       f_custom.close()
 
@@ -40,7 +41,7 @@ for line in custom_lines:
       if room_id in names:
          names[room_id] = parts[1].strip()
 
-f_output = open(os.path.join(os.path.dirname(os.path.realpath(__file__)), output_asm), "w")
+f_output = io.open(os.path.join(os.path.dirname(os.path.realpath(__file__)), output_asm), "w", newline='\n')
 f_output.write("org $E78000\n")
 f_output.write("print pc, \" roomnames start\"\n")
 f_output.write("RoomNameTextTable:\n\n")

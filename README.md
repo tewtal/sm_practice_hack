@@ -9,6 +9,8 @@ This page hosts the source material for the Super Metroid Practice Hack. It is i
 3. Run build.bat to create IPS patch files.
 4. Locate the patch files in \build\.
 
+Alternatively if you can use docker, then running the build_docker script will build the IPS patch files and copy them to \build\. Running it again will rebuild changes in the names, resources, or src directories.
+
 ## Which rom should I use?
 
 The build script will create three IPS patch files for the practice hack. The patch that features "sd2snes" in the filename will have the built-in savestate feature enabled. This is only intended for use with the SD2SNES/FXPAK cartridge and will likely cause crashes if used with Everdrives and most emulators (including Virtual Console). The Super NT is compatible, although it may require a firmware update. The patch that features "tinystates" in the filename has a modified version of the savestate feature with wider compatibility with emulators and Everdrives. Virtual Console players (including SNES Classic) will need to use the third option without built-in savestates.
