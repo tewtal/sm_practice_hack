@@ -51,6 +51,9 @@ org $84889F      ; hijack, runs every time an item is picked up
 org $8095FC      ; hijack, end of NMI routine to update realtime frames
     JML ih_nmi_end
 
+org $809609      ; inc counter if NMI lag branch
+    INC !REALTIME_LAG_COUNTER
+
 if !FEATURE_PAL
 org $91DA3D      ; hijack, runs after a shinespark has been charged
 else
@@ -311,7 +314,9 @@ ih_after_room_transition:
     LDA !ram_transition_counter : STA !ram_last_door_lag_frames
     LDA !ram_realtime_room : STA !ram_last_realtime_door
 
-    LDA #$0000 : STA !ram_transition_flag
+    ; clear transition variables
+    LDA #$0000 : STA !ram_transition_flag : STA !ram_lag_counter
+    STA !REALTIME_LAG_COUNTER
 
     ; Check if MBHP needs to be disabled
     LDA !sram_display_mode : CMP #!IH_MODE_ROOMSTRAT_INDEX : BNE .check_reset_segment_timer

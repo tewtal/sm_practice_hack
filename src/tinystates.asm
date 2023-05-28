@@ -162,7 +162,7 @@ post_load_state:
 
   .music_done
     ; Reload OOB tile viewer if enabled
-    LDA !ram_oob_watch_active : BEQ .tileviewer_done
+    LDA !ram_sprite_feature_flags : BIT !SPRITE_OOB_WATCH : BEQ .tileviewer_done
     JSL upload_sprite_oob_tiles
   .tileviewer_done
     ; Reload BG3 GFX if minimap setting changed

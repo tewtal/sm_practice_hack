@@ -680,6 +680,7 @@ preset_prkd_wrecked_ship_shaft_up:
     dw $09CA, $0008  ; Supers
     dw $09CC, $000A  ; Max supers
     dw $09CE, $0004  ; Pbs
+    dw $09D2, $0000  ; Currently selected item
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $00C7  ; Samus X
@@ -696,6 +697,7 @@ preset_prkd_wrecked_ship_attic:
     dw $0911, $0400  ; Screen X position in pixels
     dw $0913, $CC00  ; Screen subpixel Y position
     dw $0917, $0300  ; Layer 2 X position
+    dw $09D2, $0003  ; Currently selected item
     dw $0AF6, $0445  ; Samus X
     dw $0AFA, $006B  ; Samus Y
     dw #$FFFF

@@ -67,20 +67,32 @@ skip_pause:
 
 gamemode_shortcuts:
 {
-    LDA !IH_CONTROLLER_PRI_NEW : BNE +
+if !FEATURE_SD2SNES
+    ; Check for auto-save mid-transition
+    LDA !ram_auto_save_state : BEQ +
+    LDA !DOOR_FUNCTION_POINTER : CMP #$E4A9 : BNE +
+    LDA #$0000 : STA !ram_auto_save_state
+    JMP .save_state
+endif
+
+  + LDA !IH_CONTROLLER_PRI_NEW : BNE +
 
     ; No shortcuts configured, CLC so we won't skip normal gameplay
     CLC : RTS
 
-    if !FEATURE_SD2SNES
+if !FEATURE_SD2SNES
   + LDA !IH_CONTROLLER_PRI : CMP !sram_ctrl_save_state : BNE +
     AND !IH_CONTROLLER_PRI_NEW : BEQ +
-        JMP .save_state
+    JMP .save_state
 
   + LDA !IH_CONTROLLER_PRI : CMP !sram_ctrl_load_state : BNE +
     AND !IH_CONTROLLER_PRI_NEW : BEQ +
-        JMP .load_state
-    endif
+    JMP .load_state
+
+  + LDA !IH_CONTROLLER_PRI : CMP !sram_ctrl_auto_save_state : BNE +
+    AND !IH_CONTROLLER_PRI_NEW : BEQ +
+    JMP .auto_save_state
+endif
 
   + LDA !IH_CONTROLLER_PRI : AND !sram_ctrl_load_last_preset : CMP !sram_ctrl_load_last_preset : BNE +
     AND !IH_CONTROLLER_PRI_NEW : BEQ +
@@ -169,6 +181,11 @@ endif
   .fail
     ; CLC to continue normal gameplay
     CLC : JMP skip_pause
+
+  .auto_save_state
+    LDA #$0001 : STA !ram_auto_save_state
+    ; CLC to continue normal gameplay after setting savestate flag
+    CLC : RTS
 endif
 
   .kill_enemies
@@ -203,13 +220,13 @@ endif
     CLC : JMP skip_pause
 
   .toggle_tileviewer
-    LDA !ram_oob_watch_active : BEQ .turnOnTileViewer
-    LDA #$0000 : STA !ram_oob_watch_active : STA !ram_sprite_features_active
-    ; CLC to continue normal gameplay after disabling OOB Tile Viewer
+    LDA !ram_sprite_feature_flags : BIT !SPRITE_OOB_WATCH : BEQ .turnOnTileViewer
+    EOR !SPRITE_OOB_WATCH : STA !ram_sprite_feature_flags
+    ; CLC to continue normal gameplay after disabling OoB Tile Viewer
     CLC : JMP skip_pause
 
   .turnOnTileViewer
-    LDA #$0001 : STA !ram_oob_watch_active : STA !ram_sprite_features_active
+    ORA !SPRITE_OOB_WATCH : STA !ram_sprite_feature_flags
     JSL upload_sprite_oob_tiles
     ; CLC to continue normal gameplay after enabling OOB Tile Viewer
     CLC : JMP skip_pause
@@ -253,12 +270,8 @@ endif
     SEC : RTS
 
   .next_preset_slot
-if !FEATURE_TINYSTATES
-    LDA !sram_custom_preset_slot : CMP #$000F ; total slots minus one
-else
-    LDA !sram_custom_preset_slot : CMP #$0027 ; total slots minus one
-endif
-    BNE + : LDA #$FFFF
+    LDA !sram_custom_preset_slot : CMP !TOTAL_PRESET_SLOTS : BNE +
+    LDA #$FFFF
 +   INC : STA !sram_custom_preset_slot
     ASL : TAX : LDA.l NumberGFXTable,X : STA !HUD_TILEMAP+$7C
     ; CLC to continue normal gameplay after incrementing preset slot
@@ -266,11 +279,7 @@ endif
 
   .prev_preset_slot
     LDA !sram_custom_preset_slot : BNE +
-if !FEATURE_TINYSTATES
-    LDA #$0010 ; total slots
-else
-    LDA #$0028 ; total slots
-endif
+    LDA !TOTAL_PRESET_SLOTS+1
 +   DEC : STA !sram_custom_preset_slot
     ASL : TAX : LDA.l NumberGFXTable,X : STA !HUD_TILEMAP+$7C
     ; CLC to continue normal gameplay after decrementing preset slot

@@ -1,6 +1,7 @@
 @echo off
 
 echo Building SM NTSC Dev Practice Hack
+python names\create_names.py ..\src\roomnames.asm default_names.txt custom_names.txt
 cd resources
 python create_dummies.py 00.sfc ff.sfc
 
