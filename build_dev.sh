@@ -3,6 +3,7 @@
 echo "Building SM NTSC Dev Practice Hack"
 python3 names/create_names.py ../src/roomnames.asm default_names.txt custom_names.txt
 cd resources
+python3 create_ram_symbols.py ../src/defines.asm symbols.asm
 python3 create_dummies.py 00.sfc ff.sfc
 
 echo "Building SD2SNES Dev version"
