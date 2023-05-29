@@ -7483,31 +7483,31 @@ F0:E07C upload_sprite_oob_tiles
 AE:FD8C wardrinkerProfileTable
 
 [source files]
-0000 0abc7ae9 ../src/main.asm
-0001 c1b591ae ../src/save.asm
-0002 5c3b2a0a ../src/macros.asm
-0003 63d9b453 ../src/gamemode.asm
-0004 4f87b06a ../src/minimap.asm
-0005 e8038514 ../src/menu.asm
-0006 62e2b83c ../src/mainmenu.asm
-0007 ec1e9475 ../src/ramwatchmenu.asm
-0008 6b96aaa9 ../src/customizemenu.asm
-0009 b44a053b ../src/crash.asm
-000a 9feeb71c ../src/infohud.asm
-000b 8ed5d70d ../src/infohudmodes.asm
-000c 253c714b ../src/rng.asm
-000d 0e992b43 ../src/custompresets.asm
-000e 5046ba0d ../src/presets.asm
-000f baca45c1 ../src/damage.asm
-0010 f48c651e ../src/physics.asm
-0011 79f2ba86 ../src/misc.asm
-0012 7869cf71 ../src/layout.asm
-0013 5b1f19a5 ../src/cutscenes.asm
-0014 e2f7ab17 ../src/init.asm
-0015 fbe50c6d ../src/fanfare.asm
-0016 7e772dbe ../src/spriteprio.asm
-0017 18b29f8e ../src/spritefeat.asm
-0018 eb2d8ea1 ../src/tilegraphics.asm
+0000 78d174f1 ../src/main.asm
+0001 eec06ea0 ../src/save.asm
+0002 641ebdfe ../src/macros.asm
+0003 1e832ab7 ../src/gamemode.asm
+0004 99d6af34 ../src/minimap.asm
+0005 08a3db71 ../src/menu.asm
+0006 1f4bdd36 ../src/mainmenu.asm
+0007 b963372c ../src/ramwatchmenu.asm
+0008 966a6e8b ../src/customizemenu.asm
+0009 c0c9698a ../src/crash.asm
+000a c3e7aa70 ../src/infohud.asm
+000b e07f3406 ../src/infohudmodes.asm
+000c 05fde5dc ../src/rng.asm
+000d 839df635 ../src/custompresets.asm
+000e c5d24910 ../src/presets.asm
+000f a18f473d ../src/damage.asm
+0010 9f828e7b ../src/physics.asm
+0011 8d620b26 ../src/misc.asm
+0012 5f1bcdaf ../src/layout.asm
+0013 ecd85ad5 ../src/cutscenes.asm
+0014 b19c87ad ../src/init.asm
+0015 eb1a2e0f ../src/fanfare.asm
+0016 7f5c89a2 ../src/spriteprio.asm
+0017 e6c3e4a9 ../src/spritefeat.asm
+0018 64ea67ae ../src/tilegraphics.asm
 
 [rom checksum]
 d9139e31
