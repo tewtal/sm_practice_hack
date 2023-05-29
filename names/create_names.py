@@ -4,14 +4,14 @@ import os
 import sys
 
 if len(sys.argv) < 3 or len(sys.argv) > 4:
-	print("create_names.py <output> <default names> <optional custom names>")
-	sys.exit()
+   print("create_names.py <output> <default names> <optional custom names>")
+   sys.exit()
 
 output_asm = sys.argv[1]
 default_txt = sys.argv[2]
 custom_txt = ""
 if len(sys.argv) > 3:
-	custom_txt = sys.argv[3]
+   custom_txt = sys.argv[3]
 
 f_default = io.open(os.path.join(os.path.dirname(os.path.realpath(__file__)), default_txt), "r")
 default_lines = f_default.readlines()

@@ -2,8 +2,8 @@
 import sys
 
 if len(sys.argv) != 2:
-	print("dos_to_unix.py <filename>")
-	sys.exit()
+   print("dos_to_unix.py <filename>")
+   sys.exit()
 
 file_path = sys.argv[1]
 

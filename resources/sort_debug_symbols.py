@@ -3,15 +3,15 @@ import io
 import os
 import sys
 
-if sys.argv[1] == "":
-	print("sort_debug_symbols.py <original_file> <new_file>")
-	sys.exit()
+if len(sys.argv) != 3:
+   print("sort_debug_symbols.py <original_file> <new_file>")
+   sys.exit()
 else:
-	original_name = sys.argv[1]
-	new_name = sys.argv[2]
+   original_name = sys.argv[1]
+   new_name = sys.argv[2]
 
-original_file = io.open(os.path.dirname(os.path.realpath(__file__)) + "/" + original_name, "r")
-new_file = io.open(os.path.dirname(os.path.realpath(__file__)) + "/" + new_name, "w", newline='\n')
+original_file = io.open(os.path.join(os.path.dirname(os.path.realpath(__file__)), original_name), "r")
+new_file = io.open(os.path.join(os.path.dirname(os.path.realpath(__file__)), new_name), "w", newline='\n')
 
 rows = original_file.readlines()
 rows_to_sort = []
@@ -50,6 +50,6 @@ original_file.close()
 new_file.close()
 
 #if unnamed_symbol_found:
-#	print("sort_debug_symbols.py WARNING unnamed debug symbols detected")
-#	sys.exit()
+#   print("sort_debug_symbols.py WARNING unnamed debug symbols detected")
+#   sys.exit()
 
