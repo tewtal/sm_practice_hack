@@ -270,11 +270,7 @@ presets_load_custom_preset:
   .routine
     ; check if slot is populated first
     LDA !sram_custom_preset_slot
-if !FEATURE_TINYSTATES
-    XBA : TAX                    ; multiply by 100h (slot offset)
-else
-    ASL : XBA : TAX              ; multiply by 200h (slot offset)
-endif
+    %presetslotsize()
     LDA $703000,X : CMP #$5AFE : BEQ .safe
     %sfxfail()
     RTL
@@ -670,11 +666,11 @@ EquipmentMenu:
 eq_refill:
     %cm_jsl("Refill", .refill, #$0000)
   .refill
-    LDA $7E09C4 : STA $7E09C2 ; health
-    LDA $7E09C8 : STA $7E09C6 ; missiles
-    LDA $7E09CC : STA $7E09CA ; supers
-    LDA $7E09D0 : STA $7E09CE ; pbs
-    LDA $7E09D4 : STA $7E09D6 ; reserves
+    LDA !SAMUS_HP_MAX : STA !SAMUS_HP
+    LDA !SAMUS_MISSILES_MAX : STA !SAMUS_MISSILES
+    LDA !SAMUS_SUPERS_MAX : STA !SAMUS_SUPERS
+    LDA !SAMUS_PBS_MAX : STA !SAMUS_PBS
+    LDA !SAMUS_RESERVE_MAX : STA !SAMUS_RESERVE_ENERGY
     LDA #$0002 : JSL !SFX_LIB2 ; big energy pickup
     RTL
 

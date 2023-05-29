@@ -211,11 +211,11 @@ endif
     CLC : JMP skip_pause
 
   .full_equipment
-    LDA $7E09C4 : STA $7E09C2 ; health
-    LDA $7E09C8 : STA $7E09C6 ; missiles
-    LDA $7E09CC : STA $7E09CA ; supers
-    LDA $7E09D0 : STA $7E09CE ; pbs
-    LDA $7E09D4 : STA $7E09D6 ; reserves
+    LDA !SAMUS_HP_MAX : STA !SAMUS_HP
+    LDA !SAMUS_MISSILES_MAX : STA !SAMUS_MISSILES
+    LDA !SAMUS_SUPERS_MAX : STA !SAMUS_SUPERS
+    LDA !SAMUS_PBS_MAX : STA !SAMUS_PBS
+    LDA !SAMUS_RESERVE_MAX : STA !SAMUS_RESERVE_ENERGY
     ; CLC to continue normal gameplay after equipment refill
     CLC : JMP skip_pause
 
