@@ -73,6 +73,7 @@ init_nonzero_wram:
     ; RAM $7E0000 fluctuates so it is not a good default value
     LDA #!ENEMY_HP : STA !ram_watch_left
     LDA #!SAMUS_HP : STA !ram_watch_right
+    LDA !WRAM_BANK : STA !ram_watch_bank
 
     LDA !sram_seed_X : STA !ram_seed_X
     LDA !sram_seed_Y : STA !ram_seed_Y

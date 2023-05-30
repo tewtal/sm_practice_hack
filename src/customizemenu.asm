@@ -68,8 +68,7 @@ Palette2CustomConfirm:
 palette2custom_abort:
     %cm_jsl("ABORT", #.routine, #$0000)
   .routine
-    JSL cm_go_back
-    JML cm_calculate_max
+    JML cm_previous_menu
 
 palette2custom_confirm:
     %cm_jsl("Copy Palette to Custom", .routine, #$0000)
@@ -133,8 +132,7 @@ PaletteRandoConfirm:
 paletterando_abort:
     %cm_jsl("ABORT", #.routine, #$0000)
   .routine
-    JSL cm_go_back
-    JML cm_calculate_max
+    JML cm_previous_menu
 
 paletterando_confirm:
     %cm_jsl("RANDOMIZE!", #.routine, #$0000)
@@ -265,37 +263,37 @@ CustomPalettesDisplayMenu:
     %cm_footer("SCREENSHOT TO SHARE COLORS")
 
 custompalettes_text_display:
-    %cm_numfield_hex_word("Text", !sram_palette_text)
+    %cm_numfield_hex_word("Text", !sram_palette_text, #$7FFF, #0)
 
 custompalettes_seltext_display:
-    %cm_numfield_hex_word("Selected Text", !sram_palette_seltext)
+    %cm_numfield_hex_word("Selected Text", !sram_palette_seltext, #$7FFF, #0)
 
 custompalettes_seltextbg_display:
-    %cm_numfield_hex_word("Selected Text BG", !sram_palette_seltextbg)
+    %cm_numfield_hex_word("Selected Text BG", !sram_palette_seltextbg, #$7FFF, #0)
 
 custompalettes_border_display:
-    %cm_numfield_hex_word("Toggle OFF + Border", !sram_palette_border)
+    %cm_numfield_hex_word("Toggle OFF + Border", !sram_palette_border, #$7FFF, #0)
 
 custompalettes_headeroutline_display:
-    %cm_numfield_hex_word("Header Text Outline", !sram_palette_headeroutline)
+    %cm_numfield_hex_word("Header Text Outline", !sram_palette_headeroutline, #$7FFF, #0)
 
 custompalettes_numfill_display:
-    %cm_numfield_hex_word("NumField Text", !sram_palette_numfill)
+    %cm_numfield_hex_word("NumField Text", !sram_palette_numfill, #$7FFF, #0)
 
 custompalettes_numoutline_display:
-    %cm_numfield_hex_word("NumField Outline", !sram_palette_numoutline)
+    %cm_numfield_hex_word("NumField Outline", !sram_palette_numoutline, #$7FFF, #0)
 
 custompalettes_numsel_display:
-    %cm_numfield_hex_word("Selected NumField", !sram_palette_numsel)
+    %cm_numfield_hex_word("Selected NumField", !sram_palette_numsel, #$7FFF, #0)
 
 custompalettes_numseloutline_display:
-    %cm_numfield_hex_word("Selected NumField OL", !sram_palette_numseloutline)
+    %cm_numfield_hex_word("Selected NumField OL", !sram_palette_numseloutline, #$7FFF, #0)
 
 custompalettes_toggleon_display:
-    %cm_numfield_hex_word("Toggle ON", !sram_palette_toggleon)
+    %cm_numfield_hex_word("Toggle ON", !sram_palette_toggleon, #$7FFF, #0)
 
 custompalettes_background_display:
-    %cm_numfield_hex_word("Background", !sram_palette_background)
+    %cm_numfield_hex_word("Background", !sram_palette_background, #$7FFF, #0)
 
 
 ; ---------------
@@ -509,10 +507,8 @@ MixRGB:
     LDA !ram_cm_custompalette_red : ORA $16
     STA [$12]
 
-    ; split BGR value into high and low bytes
-    %a8()
-    STA !ram_cm_custompalette_lo : XBA : STA !ram_cm_custompalette_hi
-    %a16()
+    ; store BGR value
+    STA !ram_cm_custompalette
 
     JSL refresh_custom_palettes
     RTL
@@ -554,10 +550,8 @@ cm_colors:
     LDA [$C1] : AND #$03E0 : LSR #5 : STA !ram_cm_custompalette_green
     LDA [$C1] : AND #$001F : STA !ram_cm_custompalette_red
 
-    ; split BGR value into high and low bytes
-    LDA [$C1] : AND #$7FFF
-    %a8()
-    STA !ram_cm_custompalette_lo : XBA : STA !ram_cm_custompalette_hi
+    ; store BGR value
+    LDA [$C1] : AND #$7FFF : STA !ram_cm_custompalette
 
   .done
     PLB : PLP

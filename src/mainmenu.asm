@@ -425,9 +425,7 @@ action_select_preset_category:
 {
     TYA : STA !sram_preset_category
     LDA #$0000 : STA !sram_last_preset
-    JSL cm_go_back
-    JSL cm_calculate_max
-    RTL
+    JML cm_previous_menu
 }
 
 LoadRandomPreset:
@@ -628,7 +626,7 @@ CustomPresetsMenu3:
 custompreset_goto_page1:
     %cm_jsl("GOTO PAGE ONE", .routine, #CustomPresetsMenu)
   .routine
-    JSL cm_go_back
+    JSL cm_previous_menu
     %setmenubank()
     JML action_submenu
 
@@ -2038,9 +2036,7 @@ ihmode_ramwatch:
 action_select_infohud_mode:
 {
     TYA : STA !sram_display_mode
-    JSL cm_go_back
-    JSL cm_calculate_max
-    RTL
+    JML cm_previous_menu
 }
 
 ih_display_mode:
@@ -2128,9 +2124,7 @@ action_select_room_strat:
 {
     TYA : STA !sram_room_strat
     LDA #!IH_MODE_ROOMSTRAT_INDEX : STA !sram_display_mode
-    JSL cm_go_back
-    JSL cm_calculate_max
-    RTL
+    JML cm_previous_menu
 }
 
 ih_room_strat:
@@ -2588,9 +2582,7 @@ action_assign_input:
   .undetected
     %sfxgoback()
   .done
-    JSL cm_go_back
-    JSL cm_calculate_max
-    RTL
+    JML cm_previous_menu
 }
 
 check_duplicate_inputs:
@@ -2644,8 +2636,7 @@ check_duplicate_inputs:
   .not_detected
     %sfxfail()
     LDA #$FFFF
-    JSL cm_go_back
-    JML cm_calculate_max
+    JML cm_previous_menu
 
   .shot
     LDA !ram_cm_ctrl_swap : AND #$0030 : BEQ +  ; check if old input is L or R
@@ -2753,9 +2744,7 @@ action_set_common_controls:
     LDA.l ControllerLayoutTable+10,X : STA !IH_INPUT_ANGLE_UP
     LDA.l ControllerLayoutTable+12,X : STA !IH_INPUT_ANGLE_DOWN
     %sfxconfirm()
-    JSL cm_go_back
-    JSL cm_calculate_max
-    RTL
+    JML cm_previous_menu
 
 ControllerLayoutTable:
     ;  shot     jump     dash     cancel        select        up       down
