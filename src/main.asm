@@ -56,6 +56,10 @@ if !RAW_TILE_GRAPHICS
     incsrc tilegraphics.asm
 endif
 
+if !FEATURE_DEV
+    incsrc symbols.asm
+endif
+
 ; Make sure the ROM expands to 4MB
 org $FFFFFF : db $FF
 
