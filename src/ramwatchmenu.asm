@@ -42,6 +42,8 @@ RAMWatchMenu:
     dw ramwatch_right_value
     dw ramwatch_execute_right
     dw ramwatch_lock_right
+    dw #$FFFF
+    dw ramwatch_display
     dw #$0000
     %cm_header("READ AND WRITE TO MEMORY")
 
@@ -483,4 +485,10 @@ action_HUD_ramwatch:
     LDA #!IH_MODE_RAMWATCH_INDEX : STA !sram_display_mode
     RTL
 }
+
+ramwatch_display:
+    dw !ACTION_RAM_WATCH ; menu action index
+table ../resources/header.tbl
+    db #$28, "      LEFT      RIGHT", #$FF
+table ../resources/normal.tbl
 

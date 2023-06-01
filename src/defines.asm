@@ -294,6 +294,7 @@
 !ACTION_JSL                 = #$001A
 !ACTION_JSL_SUBMENU         = #$001C
 !ACTION_CUSTOM_PRESET       = #$001E
+!ACTION_RAM_WATCH           = #$0020
 
 
 ; ---------

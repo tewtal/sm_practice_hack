@@ -522,6 +522,7 @@ cm_draw_action_table:
     dw draw_jsl
     dw draw_submenu
     dw draw_custom_preset
+    dw draw_ram_watch
 
 draw_toggle:
 {
@@ -1188,8 +1189,172 @@ incsrc roomnames.asm
 pullpc
 }
 
+draw_ram_watch:
+{
+    PHB : PHK : PLB
+
+    ; Draw the text
+    %item_index_to_vram_index()
+    JSR cm_draw_text
+
+    LDX #$2C4E
+    LDA !ram_watch_write_mode : BNE .both_8bit
+    TXA : STA !ram_tilemap_buffer+$5D0 : STA !ram_tilemap_buffer+$5E6
+    BRA +
+  .both_8bit
+    TXA : STA !ram_tilemap_buffer+$5D4 : STA !ram_tilemap_buffer+$5EA
+
+    ; Draw hexidecimal numbers
++   LDX #$05D2 ; position for left hex
+    LDA !ram_watch_left : CLC : ADC !ram_watch_left_index : STA !DP_Address
+    LDA !ram_watch_bank : STA !DP_Address+2
+    LDA [!DP_Address] : STA !DP_DrawValue
+
+    ; check if 8-bit mode
+    LDA !ram_watch_write_mode : BEQ +
+    LDA !DP_DrawValue : AND #$00FF : STA !DP_DrawValue
+    BRA .left_8bit
+
+    ; (X000)
++   LDA !DP_DrawValue : AND #$F000 : XBA : LSR #3 : TAY
+    LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer,X
+    ; (0X00)
+    LDA !DP_DrawValue : AND #$0F00 : XBA : ASL : TAY
+    LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer+2,X
+  .left_8bit
+    ; (00X0)
+    LDA !DP_DrawValue : AND #$00F0 : LSR #3 : TAY
+    LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer+4,X
+    ; (000X)
+    LDA !DP_DrawValue : AND #$000F : ASL : TAY
+    LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer+6,X
+
+    ; Draw left decimal number
+    LDX #$0610 ; position for left decimal
+    JSR cm_hex2dec_draw5
+
+    LDX #$05E8 ; position for right hex
+    LDA !ram_watch_right : CLC : ADC !ram_watch_right_index : STA !DP_Address
+    LDA [!DP_Address] : STA !DP_DrawValue
+
+    ; check if 8-bit mode
+    LDA !ram_watch_write_mode : BEQ +
+    LDA !DP_DrawValue : AND #$00FF : STA !DP_DrawValue
+    BRA .right_8bit
+
+    ; (X000)
++   LDA !DP_DrawValue : AND #$F000 : XBA : LSR #3 : TAY
+    LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer,X
+    ; (0X00)
+    LDA !DP_DrawValue : AND #$0F00 : XBA : ASL : TAY
+    LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer+2,X
+  .right_8bit
+    ; (00X0)
+    LDA !DP_DrawValue : AND #$00F0 : LSR #3 : TAY
+    LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer+4,X
+    ; (000X)
+    LDA !DP_DrawValue : AND #$000F : ASL : TAY
+    LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer+6,X
+
+    ; Draw right decimal number
+    LDX #$0626 ; position for right decimal
+    JSR cm_hex2dec_draw5
+
+    ; adjust max cursor position to prevent selecting display item
+    LDA !DP_MenuIndices : PHA
+    JSL cm_calculate_max
+    PLA : STA !DP_MenuIndices
+    LDA !ram_cm_cursor_max : SEC : SBC #$0004 : STA !ram_cm_cursor_max
+
+    PLB
+    RTS
+}
+
+cm_hex2dec_draw5:
+; Converts a hex number into a five digit decimal number
+; expects value to be drawn in !DP_DrawValue
+; expects tilemap pointer in X
+{
+    PHB
+    LDA !DP_DrawValue : STA $4204
+    %a8()
+    LDA #$0A : STA $4206   ; divide by 10
+    %a16()
+    PEA $0000 : PLA ; REP + PEA + 16bit PLA + 16bit LDA = 18 cycles wasted
+    LDA $4214 : STA !DP_Temp
+
+    ; Set palette
+    LDA #$2C70 : STA !DP_Palette ; number tiles are 70-79
+
+    ; Ones digit
+    LDA $4216 : ORA !DP_Palette : STA !ram_tilemap_buffer+8,X
+
+    LDA !DP_Temp : BEQ .blanktens
+    STA $4204
+    %a8()
+    LDA #$0A : STA $4206   ; divide by 10
+    %a16()
+    PEA $0000 : PLA ; waiting for math registers
+    LDA $4214 : STA !DP_ThirdDigit
+
+    ; Tens digit
+    LDA $4216 : ORA !DP_Palette : STA !ram_tilemap_buffer+6,X
+
+    LDA !DP_ThirdDigit : BEQ .blankhundreds
+    STA $4204
+    %a8()
+    LDA #$0A : STA $4206   ; divide by 10
+    %a16()
+    PEA $0000 : PLA ; waiting for math registers
+    LDA $4214 : STA !DP_SecondDigit
+
+    ; Hundreds digit
+    LDA $4216 : ORA !DP_Palette : STA !ram_tilemap_buffer+4,X
+
+    LDA !DP_SecondDigit : BEQ .blankthousands
+    STA $4204
+    %a8()
+    LDA #$0A : STA $4206   ; divide by 10
+    %a16()
+    PEA $0000 : PLA ; waiting for math registers
+    LDA $4214 : STA !DP_FirstDigit
+
+    ; Thousands digit
+    LDA $4216 : ORA !DP_Palette : STA !ram_tilemap_buffer+2,X
+
+    ; Ten thousands digit
+    LDA !DP_FirstDigit : BEQ .blanktenthousands
+    ORA !DP_Palette : STA !ram_tilemap_buffer,X
+
+  .done
+    PLB
+    INX #10
+    RTS
+
+  .blanktens
+    LDA !MENU_BLANK
+    STA !ram_tilemap_buffer,X : STA !ram_tilemap_buffer+2,X
+    STA !ram_tilemap_buffer+4,X : STA !ram_tilemap_buffer+6,X
+    BRA .done
+
+  .blankhundreds
+    LDA !MENU_BLANK
+    STA !ram_tilemap_buffer,X : STA !ram_tilemap_buffer+2,X : STA !ram_tilemap_buffer+4,X
+    BRA .done
+
+  .blankthousands
+    LDA !MENU_BLANK
+    STA !ram_tilemap_buffer,X : STA !ram_tilemap_buffer+2,X
+    BRA .done
+
+  .blanktenthousands
+    LDA !MENU_BLANK : STA !ram_tilemap_buffer,X
+    BRA .done
+}
+
 cm_draw_text:
 ; X = pointer to tilemap area (STA !ram_tilemap_buffer,X)
+{
     %a8()
     LDY #$0000
     ; terminator
@@ -1206,6 +1371,7 @@ cm_draw_text:
   .end
     %a16()
     RTS
+}
 
 ; --------------
 ; Input Display
@@ -1796,6 +1962,7 @@ cm_execute_action_table:
     dw execute_jsl
     dw execute_submenu
     dw execute_custom_preset
+    dw execute_ram_watch
 
 execute_toggle:
 {
@@ -2256,6 +2423,12 @@ execute_custom_preset:
     JSL cm_previous_menu
 
   .done
+    RTS
+}
+
+execute_ram_watch:
+{
+    ; do nothing
     RTS
 }
 
