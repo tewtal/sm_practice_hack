@@ -25,8 +25,14 @@ for row in rows:
    if len(row) <= 2:
       if 0 != len(rows_to_sort):
          sorted_rows = sorted(rows_to_sort)
+         last_addr = None
          for sorted_row in sorted_rows:
             new_file.write(sorted_row)
+            if in_addr_to_line:
+               addr = sorted_row.split(' ')[0]
+               if last_addr and last_addr == addr:
+                  print("sort_debug_symbols.py WARNING duplicate addr-to-line mapping %s" % addr)
+               last_addr = addr
       in_addr_to_line = False
       in_source_files = False
       in_labels = False
@@ -66,8 +72,14 @@ for row in rows:
 
 if 0 != len(rows_to_sort):
    sorted_rows = sorted(rows_to_sort)
+   last_addr = None
    for sorted_row in sorted_rows:
       new_file.write(sorted_row)
+      if in_addr_to_line:
+         addr = sorted_row.split(' ')[0]
+         if last_addr and last_addr == addr:
+            print("sort_debug_symbols.py WARNING duplicate addr-to-line mapping %s" % addr)
+         last_addr = addr
 
 original_file.close()
 new_file.close()
