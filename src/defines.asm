@@ -251,7 +251,7 @@
 ; ^ FREE SPACE ^ up to +$CE
 
 ; Reserve 48 bytes for CGRAM cache
-; Currently first 22 bytes and last 2 bytes are used
+; Currently first 28 bytes plus last 2 bytes are used
 !ram_cgram_cache = !WRAM_MENU_START+$D0
 
 !CRASHDUMP = $7EFF00
