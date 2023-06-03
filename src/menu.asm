@@ -1201,6 +1201,7 @@ draw_ram_watch:
     %item_index_to_vram_index()
     JSR cm_draw_text
 
+    ; Draw $ signs in the appropriate places
     LDX #$2C4E
     LDA !ram_watch_write_mode : BNE .both_8bit
     TXA : STA !ram_tilemap_buffer+$5D0 : STA !ram_tilemap_buffer+$5E6
@@ -1565,12 +1566,13 @@ cm_edit_digits:
     ; hex or decimal
     LDA !ram_cm_ctrl_mode : CMP #$8001 : BEQ .decimal_mode
 
-    JSR cm_get_inputs : BEQ .redraw
+    ; check for A, B, and D-pad
+    JSR cm_get_inputs : AND #$8F80 : BEQ .redraw
     BIT !IH_INPUT_LEFTRIGHT : BNE .selecting
     BIT !IH_INPUT_UPDOWN : BNE .editing
     BIT #$8080 : BEQ .redraw
 
-    ; exit ctrl mode
+    ; exit if A or B pressed
     ; skip if JSL target is zero
     LDA !DP_JSLTarget : BEQ .end
     ; Set return address for indirect JSL
@@ -1582,7 +1584,6 @@ cm_edit_digits:
 
   .end
     %ai16()
-    %sfxnumber()
     LDA #$0000 : STA !ram_cm_ctrl_mode
     %sfxconfirm()
     JSL cm_draw
@@ -1596,9 +1597,11 @@ cm_edit_digits:
     BIT !IH_INPUT_LEFT : BNE .left
     ; inc/dec horizontal cursor index
     LDA !ram_cm_horizontal_cursor : DEC : AND #$0003 : STA !ram_cm_horizontal_cursor
-    BRA .redraw
+    BRA .move_sfx
   .left
     LDA !ram_cm_horizontal_cursor : INC : AND #$0003 : STA !ram_cm_horizontal_cursor
+  .move_sfx
+    %sfxmove()
   .redraw
     ; redraw numbers so selected digit is highlighted
     LDX !ram_cm_stack_index : LDA !ram_cm_cursor_stack,X : TAY
@@ -1619,6 +1622,7 @@ cm_edit_digits:
     ; returns full value with selected digit cleared
     ; combine with modified digit and cap with bitmask in !DP_DigitMaximum
     ORA !DP_DigitValue : AND !DP_DigitMaximum : STA [!DP_DigitAddress]
+    %sfxnumber()
 
     ; redraw numbers
     LDX !ram_cm_stack_index : LDA !ram_cm_cursor_stack,X : TAY
@@ -1693,46 +1697,35 @@ cm_SingleDigitEdit:
 
 cm_edit_decimal_digits:
 {
-    JSR cm_get_inputs : BEQ .redraw
+    ; check for A, B, and D-pad
+    JSR cm_get_inputs : AND #$8F80 : BEQ .redraw
     BIT !IH_INPUT_LEFTRIGHT : BNE .selecting
     BIT !IH_INPUT_UPDOWN : BNE .editing
     BIT #$8080 : BEQ .redraw
 
-    ; exit ctrl mode
-    ; skip if JSL target is zero
-    LDA !DP_JSLTarget : BEQ .end
-    ; Set return address for indirect JSL
-    LDA !ram_cm_menu_bank : STA !DP_JSLTarget+2
-    PHK : PEA .end-1
-    ; addr in A
-    LDA [!DP_DigitAddress]
-    JML.w [!DP_JSLTarget]
-
-  .end
-    %ai16()
-    %sfxconfirm()
-    LDA #$0000 : STA !ram_cm_ctrl_mode
-    JSL cm_draw
-    RTS
+    ; exit if A or B pressed
+    BRL .exit
 
   .selecting
     ; determine which direction was pressed
     BIT !IH_INPUT_LEFT : BNE .left
     ; inc/dec horizontal cursor index
     LDA !ram_cm_horizontal_cursor : DEC : AND #$0003 : STA !ram_cm_horizontal_cursor
-    CMP #$0003 : BNE .redraw
+    CMP #$0003 : BNE .move_sfx
     ; is editing thousands digit allowed?
-    LDA !DP_DigitMaximum : CMP #1000 : BPL .redraw
+    LDA !DP_DigitMaximum : CMP #1000 : BPL .move_sfx
     ; limit cursor to 3 positions (0-2)
     LDA #$0002 : STA !ram_cm_horizontal_cursor
-    BRA .redraw
+    BRA .move_sfx
   .left
     LDA !ram_cm_horizontal_cursor : INC : AND #$0003 : STA !ram_cm_horizontal_cursor
-    CMP #$0003 : BNE .redraw
+    CMP #$0003 : BNE .move_sfx
     ; is editing thousands digit allowed?
-    LDA !DP_DigitMaximum : CMP #1000 : BPL .redraw
+    LDA !DP_DigitMaximum : CMP #1000 : BPL .move_sfx
     ; limit cursor to 3 positions (0-2)
     LDA #$0000 : STA !ram_cm_horizontal_cursor
+  .move_sfx
+    %sfxmove()
 
   .redraw
     BRL .draw
@@ -1744,15 +1737,18 @@ cm_edit_decimal_digits:
     DEC : BEQ .hundreds
 
     %SDE_dec(thousands, #1000)
-    BRA .draw
+    BRA .number_sfx
   .hundreds
     %SDE_dec(hundreds, #100)
-    BRA .draw
+    BRA .number_sfx
   .tens
     %SDE_dec(tens, #10)
-    BRA .draw
+    BRA .number_sfx
   .ones
     %SDE_dec(ones, #1)
+
+  .number_sfx
+    %sfxnumber()
 
   .draw
     ; convert value to decimal
@@ -1812,6 +1808,23 @@ cm_edit_decimal_digits:
   .done
     %a16()
     JSR cm_tilemap_transfer
+    RTS
+
+  .exit
+    ; skip if JSL target is zero
+    LDA !DP_JSLTarget : BEQ .end
+    ; Set return address for indirect JSL
+    LDA !ram_cm_menu_bank : STA !DP_JSLTarget+2
+    PHK : PEA .end-1
+    ; addr in A
+    LDA [!DP_DigitAddress]
+    JML.w [!DP_JSLTarget]
+
+  .end
+    %ai16()
+    %sfxconfirm()
+    LDA #$0000 : STA !ram_cm_ctrl_mode
+    JSL cm_draw
     RTS
 }
 
@@ -2118,14 +2131,11 @@ execute_numfield:
 
 execute_numfield_word:
 {
-    ; check for A, B, Y, Left, or Right
-    LDA !IH_CONTROLLER_PRI_NEW : BIT #$43C0 : BEQ .done
-
     ; grab the memory address (long)
     LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : INC !DP_CurrentMenu : STA !DP_DigitAddress
     LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : STA !DP_DigitAddress+2
 
-    ; grab minimum (!DP_Minimum) and maximum (!DP_Maximum) values
+    ; grab minimum (!DP_DigitMinimum) and maximum (!DP_DigitMaximum) values
     LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : INC !DP_CurrentMenu : STA !DP_DigitMinimum
     LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : INC !DP_CurrentMenu : INC : STA !DP_DigitMaximum ; INC for convenience
 
@@ -2139,7 +2149,6 @@ execute_numfield_word:
     LDA #$8001 : STA !ram_cm_ctrl_mode
     %sfxnumber()
 
-  .done
     RTS
 }
 
@@ -2148,9 +2157,6 @@ execute_numfield_hex_word:
     ; disallow editing if "Screenshot To Share Colors" menu
     LDA !ram_cm_stack_index : TAX
     LDA !ram_cm_menu_stack,X : CMP #CustomPalettesDisplayMenu : BEQ .done
-
-    ; check for A, B, Y, Left, or Right
-    LDA !IH_CONTROLLER_PRI_NEW : BIT #$43C0 : BEQ .done
 
     ; grab the memory address (long)
     LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : INC !DP_CurrentMenu : STA !DP_DigitAddress

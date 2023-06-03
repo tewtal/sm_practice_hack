@@ -125,7 +125,7 @@ macro cm_numfield(title, addr, start, end, increment, heldincrement, jsltarget)
     db #$28, "<title>", #$FF
 endmacro
 
-macro cm_numfield_word(title, addr, start, end, increment, heldincrement, jsltarget)
+macro cm_numfield_word(title, addr, start, end, jsltarget)
 ; Allows editing a 16-bit value at the specified address
     dw !ACTION_NUMFIELD_WORD
     dl <addr> ; 24bit RAM address to display/manipulate
@@ -346,37 +346,42 @@ endmacro
 
 macro SDE_add(label, value, mask, inverse)
 cm_SDE_add_<label>:
+; subroutine to add to a specific hex digit, used in cm_edit_digits
     AND <mask> : CMP <mask> : BEQ .inc2zero
     CLC : ADC <value> : BRA .store
   .inc2zero
     LDA #$0000
   .store
     STA !DP_DigitValue
+    ; return original value with edited digit masked away
     LDA [!DP_DigitAddress] : AND <inverse>
     RTS
 endmacro
 
 macro SDE_sub(label, value, mask, inverse)
 cm_SDE_sub_<label>:
+; subroutine to subtract from a specific hex digit, used in cm_edit_digits
     AND <mask> : BEQ .set2max
     SEC : SBC <value> : BRA .store
   .set2max
-    LDA <mask> : STA !DP_DigitValue
+    LDA <mask>
   .store
     STA !DP_DigitValue
+    ; return original value with edited digit masked away
     LDA [!DP_DigitAddress] : AND <inverse>
     RTS
 endmacro
 
 macro SDE_dec(label, value)
+; subroutine to add or subtract 1/10/100/1000 decimal from a value, used in cm_edit_decimal_digits
     LDA !IH_CONTROLLER_PRI : BIT !IH_INPUT_UP : BNE .<label>_inc
+    ; subtract
     LDA [!DP_DigitAddress] : SEC : SBC.w <value> : BPL +
     LDA #$0000 : BRA +
   .<label>_inc
     LDA [!DP_DigitAddress] : CLC : ADC.w <value>
     CMP !DP_DigitMaximum : BMI +
-    LDA !DP_DigitMaximum : DEC
-
+    LDA !DP_DigitMaximum : DEC ; was max+1 for convenience
 +   STA [!DP_DigitAddress]
 endmacro
 
