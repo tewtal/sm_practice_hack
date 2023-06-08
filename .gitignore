@@ -3,6 +3,7 @@
 *.s[mf]c
 *.sw[op]
 build/*
+!build/Debugging_Combined.sym
 !build/Debugging_Sorted.sym
 !build/Debugging_Symbols.sym
 tools/*.smv

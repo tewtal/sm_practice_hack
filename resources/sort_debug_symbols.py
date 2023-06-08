@@ -4,18 +4,21 @@ import os
 import re
 import sys
 
-if len(sys.argv) != 3:
-   print("sort_debug_symbols.py <original_file> <new_file>")
+if len(sys.argv) != 4:
+   print("sort_debug_symbols.py <original_file> <new_file> <combined_file>")
    sys.exit()
-else:
-   original_name = sys.argv[1]
-   new_name = sys.argv[2]
+
+original_name = sys.argv[1]
+new_name = sys.argv[2]
+combined_name = sys.argv[3]
 
 original_file = io.open(os.path.join(os.path.dirname(os.path.realpath(__file__)), original_name), "r")
 new_file = io.open(os.path.join(os.path.dirname(os.path.realpath(__file__)), new_name), "w", newline='\n')
+combined_file = io.open(os.path.join(os.path.dirname(os.path.realpath(__file__)), combined_name), "w", newline='\n')
 
 rows = original_file.readlines()
 rows_to_sort = []
+combined_rows_to_sort = []
 sources_dict = {}
 in_addr_to_line = False
 in_labels = False
@@ -42,14 +45,17 @@ for row in rows:
       parts = re.split(" |:|\n", row)
       if len(parts) != 5:
          rows_to_sort.append(row.upper())
+         combined_rows_to_sort.append(row.upper())
       else:
          named_source = parts[2]
          if named_source in sources_dict:
             named_source = sources_dict[named_source]
          named_line = "%s:%s %s:%d\n" % (parts[0].upper(), parts[1].upper(), named_source, int(parts[3], 16))
          rows_to_sort.append(named_line)
+         combined_rows_to_sort.append(named_line)
    elif in_labels:
       rows_to_sort.append(row)
+      combined_rows_to_sort.append(row)
       if " :" in row:
          unnamed_symbol_found = True
    elif in_source_files:
@@ -81,8 +87,13 @@ if 0 != len(rows_to_sort):
             print("sort_debug_symbols.py WARNING duplicate addr-to-line mapping %s" % addr)
          last_addr = addr
 
+sorted_rows = sorted(combined_rows_to_sort)
+for sorted_row in sorted_rows:
+   combined_file.write(sorted_row)
+
 original_file.close()
 new_file.close()
+combined_file.close()
 
 #if unnamed_symbol_found:
 #   print("sort_debug_symbols.py WARNING unnamed debug symbols detected")
