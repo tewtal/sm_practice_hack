@@ -1567,7 +1567,8 @@ cm_edit_digits:
     LDA !ram_cm_ctrl_mode : CMP #$8001 : BEQ .decimal_mode
 
     ; check for A, B, and D-pad
-    JSR cm_get_inputs : AND #$8F80 : BEQ .redraw
+    JSR cm_get_inputs : STA !ram_cm_controller
+    AND #$8F80 : BEQ .redraw
     BIT !IH_INPUT_LEFTRIGHT : BNE .selecting
     BIT !IH_INPUT_UPDOWN : BNE .editing
     BIT #$8080 : BEQ .redraw
@@ -1593,15 +1594,14 @@ cm_edit_digits:
     JMP cm_edit_decimal_digits
 
   .selecting
+    %sfxmove()
     ; determine which direction was pressed
-    BIT !IH_INPUT_LEFT : BNE .left
+    LDA !ram_cm_controller : BIT !IH_INPUT_LEFT : BNE .left
     ; inc/dec horizontal cursor index
     LDA !ram_cm_horizontal_cursor : DEC : AND #$0003 : STA !ram_cm_horizontal_cursor
-    BRA .move_sfx
+    BRA .redraw
   .left
     LDA !ram_cm_horizontal_cursor : INC : AND #$0003 : STA !ram_cm_horizontal_cursor
-  .move_sfx
-    %sfxmove()
   .redraw
     ; redraw numbers so selected digit is highlighted
     LDX !ram_cm_stack_index : LDA !ram_cm_cursor_stack,X : TAY
@@ -1698,7 +1698,8 @@ cm_SingleDigitEdit:
 cm_edit_decimal_digits:
 {
     ; check for A, B, and D-pad
-    JSR cm_get_inputs : AND #$8F80 : BEQ .redraw
+    JSR cm_get_inputs : STA !ram_cm_controller
+    AND #$8F80 : BEQ .redraw
     BIT !IH_INPUT_LEFTRIGHT : BNE .selecting
     BIT !IH_INPUT_UPDOWN : BNE .editing
     BIT #$8080 : BEQ .redraw
@@ -1707,52 +1708,55 @@ cm_edit_decimal_digits:
     BRL .exit
 
   .selecting
+    %sfxmove()
     ; determine which direction was pressed
-    BIT !IH_INPUT_LEFT : BNE .left
+    LDA !ram_cm_controller : BIT !IH_INPUT_LEFT : BNE .left
     ; inc/dec horizontal cursor index
     LDA !ram_cm_horizontal_cursor : DEC : AND #$0003 : STA !ram_cm_horizontal_cursor
-    CMP #$0003 : BNE .move_sfx
+    CMP #$0003 : BNE .redraw
     ; is editing thousands digit allowed?
-    LDA !DP_DigitMaximum : CMP #1000 : BPL .move_sfx
+    LDA !DP_DigitMaximum : CMP #1000 : BPL .redraw
     ; limit cursor to 3 positions (0-2)
     LDA #$0002 : STA !ram_cm_horizontal_cursor
-    BRA .move_sfx
+    BRL .draw
   .left
     LDA !ram_cm_horizontal_cursor : INC : AND #$0003 : STA !ram_cm_horizontal_cursor
-    CMP #$0003 : BNE .move_sfx
+    CMP #$0003 : BNE .redraw
     ; is editing thousands digit allowed?
-    LDA !DP_DigitMaximum : CMP #1000 : BPL .move_sfx
+    LDA !DP_DigitMaximum : CMP #1000 : BPL .redraw
     ; limit cursor to 3 positions (0-2)
     LDA #$0000 : STA !ram_cm_horizontal_cursor
-  .move_sfx
-    %sfxmove()
 
   .redraw
     BRL .draw
 
   .editing
+    ; convert value to decimal
+    LDA !DP_DigitValue : JSR cm_hex2dec
+
     ; determine which digit to edit
     LDA !ram_cm_horizontal_cursor : BEQ .ones
     DEC : BEQ .tens
     DEC : BEQ .hundreds
 
-    %SDE_dec(thousands, #1000)
-    BRA .number_sfx
+    %SDE_dec(thousands, !DP_Temp)
+    BRA .dec2hex
   .hundreds
-    %SDE_dec(hundreds, #100)
-    BRA .number_sfx
+    %SDE_dec(hundreds, !DP_FirstDigit)
+    BRA .dec2hex
   .tens
-    %SDE_dec(tens, #10)
-    BRA .number_sfx
+    %SDE_dec(tens, !DP_SecondDigit)
+    BRA .dec2hex
   .ones
-    %SDE_dec(ones, #1)
+    %SDE_dec(ones, !DP_ThirdDigit)
 
-  .number_sfx
+  .dec2hex
     %sfxnumber()
+    JSR cm_reverse_hex2dec
 
   .draw
     ; convert value to decimal
-    LDA [!DP_DigitAddress] : JSR cm_hex2dec
+    LDA !DP_DigitValue : JSR cm_hex2dec
 
     ; get tilemap address
     LDX !ram_cm_stack_index : LDA !ram_cm_cursor_stack,X : TAY
@@ -1811,6 +1815,14 @@ cm_edit_decimal_digits:
     RTS
 
   .exit
+    ; check if value is inbounds
+    LDA !DP_DigitValue : CMP !DP_DigitMaximum : BMI .check_minimum
+    LDA !DP_DigitMaximum : DEC : BRA + ; was max+1 for convenience
+  .check_minimum
+    CMP !DP_DigitMinimum : BPL +
+    LDA !DP_DigitMinimum
++   STA [!DP_DigitAddress]
+
     ; skip if JSL target is zero
     LDA !DP_JSLTarget : BEQ .end
     ; Set return address for indirect JSL
@@ -2144,8 +2156,10 @@ execute_numfield_word:
     LDA !ram_cm_horizontal_cursor : CMP #$0003 : BNE +
     LDA #$0002 : STA !ram_cm_horizontal_cursor
 
+    ; grab JSL address
 +   LDA [!DP_CurrentMenu] : STA !DP_JSLTarget
 
+    LDA [!DP_DigitAddress] : STA !DP_DigitValue
     LDA #$8001 : STA !ram_cm_ctrl_mode
     %sfxnumber()
 
@@ -2464,8 +2478,8 @@ cm_hex2dec:
     PEA $0000 : PLA ; wait for math
 
     ; store result and remainder, divide the rest
-    LDA $4214 : STA !DP_SecondDigit
-    LDA $4216 : STA !DP_ThirdDigit
+    LDA $4214 : STA !DP_SecondDigit ; tens
+    LDA $4216 : STA !DP_ThirdDigit ; ones
     LDA !DP_Temp : STA $4204
 
     ; divide by 10
@@ -2475,9 +2489,31 @@ cm_hex2dec:
     PEA $0000 : PLA ; wait for math
 
     ; store result and remainder
-    LDA $4214 : STA !DP_Temp
-    LDA $4216 : STA !DP_FirstDigit
+    LDA $4214 : STA !DP_Temp ; thousands
+    LDA $4216 : STA !DP_FirstDigit ; hundreds
 
+    RTS
+}
+
+cm_reverse_hex2dec:
+{
+; Reconstructs a 16bit decimal number from individual digit values
+    LDA !DP_Temp
+    %ai8()
+    STA $211B : XBA : STA $211B ; Thousands
+    LDY #$0A : STY $211C ; multiply by 10
+    %a16()
+    LDA $2134 : CLC : ADC !DP_FirstDigit ; add Hundreds
+    %a8()
+    STA $211B : XBA : STA $211B
+    STY $211C ; multiply by 10
+    %a16()
+    LDA $2134 : CLC : ADC !DP_SecondDigit ; add Tens
+    %a8()
+    STA $211B : XBA : STA $211B 
+    STY $211C ; multiply by 10
+    %ai16()
+    LDA $2134 : CLC : ADC !DP_ThirdDigit : STA !DP_DigitValue ; add Ones
     RTS
 }
 
@@ -2500,15 +2536,15 @@ MenuRNG:
 ; Make sure ram_seed_X and ram_seed_Y is initialized to something other than zero
 {
     LDA !ram_seed_X : ASL #5
-    EOR !ram_seed_X : STA $16
+    EOR !ram_seed_X : STA $C1
 
     LDA !ram_seed_Y : STA !ram_seed_X
 
-    LDA $16 : LSR #3
-    EOR $16 : STA $16
+    LDA $C1 : LSR #3
+    EOR $C1 : STA $C1
 
     LDA !ram_seed_Y : LSR
-    EOR !ram_seed_Y : EOR $16
+    EOR !ram_seed_Y : EOR $C1
     STA !ram_seed_Y
 
     ; return y (in a)
@@ -2520,10 +2556,10 @@ MenuRNG2:
 ; Make sure ram_seed_X is not zero
 {
     LDA !ram_seed_X
-    STA $16
-    ASL #2 : EOR $16 : STA $16
-    LSR #5 : EOR $16 : STA $16
-    ASL : EOR $16
+    STA $C1
+    ASL #2 : EOR $C1 : STA $C1
+    LSR #5 : EOR $C1 : STA $C1
+    ASL : EOR $C1
     STA !ram_seed_X
     RTL
 }

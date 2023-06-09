@@ -314,11 +314,11 @@ macro examplemenu()
     dw #mc_dummy_num
 endmacro
 
-macro palettemenu(title, pointer, addr)
-; menu pointers for customizing menu color palettes
-    %cm_submenu("<title>", <pointer>)
+macro palettemenu(title, label, addr)
+; menu tables for customizing menu color palettes
+    %cm_submenu("<title>", <label>)
 
-<pointer>:
+<label>:
     dw #custompalettes_hex_red
     dw #custompalettes_hex_green
     dw #custompalettes_hex_blue
@@ -327,7 +327,7 @@ macro palettemenu(title, pointer, addr)
     dw #custompalettes_dec_green
     dw #custompalettes_dec_blue
     dw #$FFFF
-    dw <pointer>_hex_word
+    dw <label>_hex_word
     dw #$FFFF
     dw #$FFFF
     %examplemenu()
@@ -335,7 +335,7 @@ macro palettemenu(title, pointer, addr)
     %cm_header("<title>")
     %cm_footer("THREE WAYS TO EDIT COLORS")
 
-<pointer>_hex_word:
+<label>_hex_word:
     %cm_numfield_hex_word("SNES 15-bit BGR", !ram_cm_custompalette, #$7FFF, .routine)
   .routine
     STA <addr>
@@ -372,16 +372,17 @@ cm_SDE_sub_<label>:
     RTS
 endmacro
 
-macro SDE_dec(label, value)
-; subroutine to add or subtract 1/10/100/1000 decimal from a value, used in cm_edit_decimal_digits
+macro SDE_dec(label, address)
+; increments or decrements an address based on controller input, used in cm_edit_decimal_digits
     LDA !IH_CONTROLLER_PRI : BIT !IH_INPUT_UP : BNE .<label>_inc
-    ; subtract
-    LDA [!DP_DigitAddress] : SEC : SBC.w <value> : BPL +
-    LDA #$0000 : BRA +
+    ; dec
+    LDA <address> : DEC : BPL .store_<label>
+    LDA #$0009 : BRA .store_<label>
   .<label>_inc
-    LDA [!DP_DigitAddress] : CLC : ADC.w <value>
-    CMP !DP_DigitMaximum : BMI +
-    LDA !DP_DigitMaximum : DEC ; was max+1 for convenience
-+   STA [!DP_DigitAddress]
+    LDA <address> : INC
+    CMP #$000A : BMI .store_<label>
+    LDA #$0000
+  .store_<label>
+    STA <address>
 endmacro
 
