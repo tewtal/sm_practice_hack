@@ -548,9 +548,11 @@ ih_update_hud_code:
   .minimap_roomtimer
     STZ $4205
     LDA !sram_frame_counter_mode : BNE .minimap_ingame_roomtimer
+    LDA !IH_DECIMAL : STA !HUD_TILEMAP+$B4
     LDA !ram_last_realtime_room
     BRA .minimap_calculate_roomtimer
   .minimap_ingame_roomtimer
+    LDA !IH_HYPHEN : STA !HUD_TILEMAP+$B4
     LDA !ram_last_gametime_room
   .minimap_calculate_roomtimer
     ; Divide time by 60 or 50 and draw seconds and frames
@@ -566,7 +568,6 @@ endif
     PEA $0000 : PLA ; wait for CPU math
     LDA $4216 : STA $C1
     LDA $4214 : LDX #$00B0 : JSR Draw2
-    LDA !IH_DECIMAL : STA !HUD_TILEMAP+$B4
     LDA $C1 : ASL : TAX
     LDA HexToNumberGFX1,X : STA !HUD_TILEMAP+$B6
     LDA HexToNumberGFX2,X : STA !HUD_TILEMAP+$B8
@@ -592,9 +593,11 @@ endif
   .pick_roomtimer
     STZ $4205
     LDA !sram_frame_counter_mode : BNE .ingame_roomtimer
+    LDA !IH_DECIMAL : STA !HUD_TILEMAP+$42
     LDA !ram_last_realtime_room
     BRA .calculate_roomtimer
   .ingame_roomtimer
+    LDA !IH_HYPHEN : STA !HUD_TILEMAP+$42
     LDA !ram_last_gametime_room
   .calculate_roomtimer
     ; Divide time by 60 or 50 and draw seconds and frames
@@ -610,7 +613,6 @@ endif
     PEA $0000 : PLA ; wait for CPU math
     LDA $4216 : STA $C1
     LDA $4214 : JSR Draw3 : TXY
-    LDA !IH_DECIMAL : STA !HUD_TILEMAP+$00,X
     LDA $C1 : ASL : TAX
     LDA HexToNumberGFX1,X : PHX : TYX : STA !HUD_TILEMAP+$02,X
     PLX : LDA HexToNumberGFX2,X : TYX : STA !HUD_TILEMAP+$04,X
