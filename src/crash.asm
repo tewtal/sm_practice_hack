@@ -139,11 +139,12 @@ CrashHandler:
     TXA : STA !ram_crash_stack_size
 
     ; restore last two stack bytes if underflow
-    LDA !ram_crash_type : AND #$4000 : BEQ +
+    LDA !ram_crash_type : AND #$4000 : BEQ .launchViewer
     LDA !ram_crash_temp : STA !ram_crash_stack+$3E
 
+  .launchViewer
     ; launch CrashViewer to display dump
-+   JML CrashViewer
+    JML CrashViewer
 }
 
 BRKHandler:
@@ -279,7 +280,8 @@ CrashLoop:
     %ai16()
     ; Clear the screen
     LDA #$000E : LDX #$07FE
--   STA !CRASHDUMP_TILEMAP_BUFFER,X : DEX #2 : BPL -
+  .clearLoop
+    STA !CRASHDUMP_TILEMAP_BUFFER,X : DEX #2 : BPL .clearLoop
 
     ; Determine which page to draw
     LDA !ram_crash_page : ASL : TAX
@@ -295,53 +297,59 @@ CrashLoop:
     LDA !ram_crash_input_new : TAX : BEQ CrashLoop
 
     ; check for soft reset shortcut (Select+Start+L+R)
-    LDA !ram_crash_input : AND #$3030 : CMP #$3030 : BNE +
-    AND !ram_crash_input_new : BEQ +
+    LDA !ram_crash_input : AND #$3030 : CMP #$3030 : BNE .skipSoftReset
+    AND !ram_crash_input_new : BEQ .skipSoftReset
     STZ $05F5   ; Enable sounds
     JML $808462 ; Soft Reset
+  .skipSoftReset
 
 if !FEATURE_SD2SNES
     ; check for load state shortcut
-+   LDA !ram_crash_input : CMP !sram_ctrl_load_state : BNE +
-    AND !ram_crash_input_new : BEQ +
+    LDA !ram_crash_input : CMP !sram_ctrl_load_state : BNE .skipLoadState
+    AND !ram_crash_input_new : BEQ .skipLoadState
     ; check if valid savestate
-    LDA !SRAM_SAVED_STATE : CMP #$5AFE : BNE +
+    LDA !SRAM_SAVED_STATE : CMP #$5AFE : BNE .skipLoadState
     ; prepare to jump to load_state
     %a8()
     LDA.b #gamemode_start>>16 : PHA : PLB
     %a16()
     PEA.w gamemode_start_return-1
     JML gamemode_shortcuts_load_state
+  .skipLoadState
 endif
 
-+   TXA : AND #$0010 : BNE .incPalette ; R
+    TXA : AND #$0010 : BNE .incPalette ; R
     TXA : AND #$0020 : BNE .decPalette ; L
     TXA : AND #$1080 : BNE .next       ; A or Start
     TXA : AND #$A000 : BNE .previous   ; B or Select
     JMP CrashLoop
 
   .previous
-    LDA !ram_crash_page : BNE +
+    LDA !ram_crash_page : BNE .pageDecrement
     LDA #$0003
-+   DEC : STA !ram_crash_page
+  .pageDecrement
+    DEC : STA !ram_crash_page
     JMP CrashLoop
 
   .next
-    LDA !ram_crash_page : CMP #$0002 : BMI +
+    LDA !ram_crash_page : CMP #$0002 : BMI .pageIncrement
     LDA #$FFFF
-+   INC : STA !ram_crash_page
+  .pageIncrement
+    INC : STA !ram_crash_page
     JMP CrashLoop
 
   .decPalette
-    LDA !ram_crash_palette : BNE +
+    LDA !ram_crash_palette : BNE .paletteDecrement
     LDA #$0008
-+   DEC : STA !ram_crash_palette
+  .paletteDecrement
+    DEC : STA !ram_crash_palette
     BRA .updateCGRAM
 
   .incPalette
-    LDA !ram_crash_palette : CMP #$0007 : BMI +
+    LDA !ram_crash_palette : CMP #$0007 : BMI .paletteIncrement
     LDA #$FFFF
-+   INC : STA !ram_crash_palette
+  .paletteIncrement
+    INC : STA !ram_crash_palette
 
   .updateCGRAM
     JSL crash_cgram_transfer
@@ -419,7 +427,8 @@ CrashDump:
     LDA !ram_crash_type : AND #$C000 : BNE .corruptP
     LDA !ram_crash_dbp : XBA : STA !ram_crash_draw_value
     LDX #$0166 : JSR crash_draw4  ; DB+P
-    BRA +
+    BRA .doneP
+
   .corruptP
     LDA !ram_crash_dbp : XBA : STA !ram_crash_draw_value
     LDX #$0166 : JSR crash_draw2  ; DB
@@ -427,7 +436,8 @@ CrashDump:
     STA !CRASHDUMP_TILEMAP_BUFFER+$16A
     STA !CRASHDUMP_TILEMAP_BUFFER+$16C
 
-+   LDA !ram_crash_sp : STA !ram_crash_draw_value
+  .doneP
+    LDA !ram_crash_sp : STA !ram_crash_draw_value
     LDX #$0170 : JSR crash_draw4  ; SP
 
     ; -- Draw starting position of stack dump --
@@ -448,9 +458,10 @@ CrashDump:
   .drawStackBytesWritten
     ; -- Draw stack bytes written --
     LDA !ram_crash_stack_size : STA !ram_crash_draw_value
-    BPL +
+    BPL .setStackBytesToWrite
     LDA #$0030
-+   STA !ram_crash_bytes_to_write
+  .setStackBytesToWrite
+    STA !ram_crash_bytes_to_write
     LDX #$01DE : JSR crash_draw4
 
     ; -- Detect and Draw COP/BRK --
@@ -519,12 +530,14 @@ CrashDump:
 
     ; determine starting offset
     LDA !ram_crash_bytes_to_write
--   PHA : AND #$0007 : BEQ +
+  .startingOffsetLoop
+    PHA : AND #$0007 : BEQ .startingOffsetFound
     TXA : CLC : ADC #$0006 : TAX
     LDA !ram_crash_stack_line_position : INC : STA !ram_crash_stack_line_position
-    PLA : INC : BRA -
+    PLA : INC : BRA .startingOffsetLoop
 
-+   PLA : %a8()
+  .startingOffsetFound
+    PLA : %a8()
     LDA #$00 : STA !ram_crash_loop_counter
 
   .drawStackLoop
@@ -537,7 +550,7 @@ CrashDump:
 
     ; inc tilemap position
     INX #6 : LDA !ram_crash_stack_line_position : INC
-    STA !ram_crash_stack_line_position : AND #$08 : BEQ +
+    STA !ram_crash_stack_line_position : AND #$08 : BEQ .drawStackIncrement
 
     ; start a new line
     LDA #$00 : STA !ram_crash_stack_line_position
@@ -546,8 +559,9 @@ CrashDump:
     CPX #$05F4 : BPL .done
     %a8()
 
+  .drawStackIncrement
     ; inc bytes drawn
-+   LDA !ram_crash_loop_counter : INC : STA !ram_crash_loop_counter
+    LDA !ram_crash_loop_counter : INC : STA !ram_crash_loop_counter
     CMP !ram_crash_bytes_to_write : BNE .drawStackLoop
 
   .done
@@ -559,13 +573,15 @@ CrashMemViewer:
     ; -- Handle Dpad Inputs --
     %ai16()
     LDA !ram_crash_input_new : TAX : BNE .new_inputs
-    LDA !ram_crash_input : BNE +
--   JMP .drawMemViewer
+    LDA !ram_crash_input : BNE .check_inputs_held
+  .draw_mem_viewer
+    JMP .drawMemViewer
 
+  .check_inputs_held
     ; check if any input held more than 24 frames
-+   LDA !ram_crash_input_timer : CMP #$0018 : BMI -
+    LDA !ram_crash_input_timer : CMP #$0018 : BMI .draw_mem_viewer
     ; pass held input every other frame (slow down)
-    AND #$0001 : BEQ -
+    AND #$0001 : BEQ .draw_mem_viewer
     ; treat held (left/right) inputs as new
     LDA !ram_crash_input : AND #$0300 : TAX
 
@@ -577,15 +593,17 @@ CrashMemViewer:
     JMP .drawMemViewer
 
   .pressedUp
-    LDA !ram_crash_cursor : BNE +
+    LDA !ram_crash_cursor : BNE .upDecrement
     LDA #$0003
-+   DEC : STA !ram_crash_cursor
+  .upDecrement
+    DEC : STA !ram_crash_cursor
     JMP .drawMemViewer
 
   .pressedDown
-    LDA !ram_crash_cursor : CMP #$0002 : BMI +
+    LDA !ram_crash_cursor : CMP #$0002 : BMI .downIncrement
     LDA #$FFFF
-+   INC : STA !ram_crash_cursor
+  .downIncrement
+    INC : STA !ram_crash_cursor
     JMP .drawMemViewer
 
   .decLowFast
@@ -723,7 +741,7 @@ CrashMemViewer:
 
     ; inc tilemap position
     INX #6 : LDA !ram_crash_stack_line_position : INC
-    STA !ram_crash_stack_line_position : AND #$08 : BEQ +
+    STA !ram_crash_stack_line_position : AND #$08 : BEQ .drawLowerHalfInc
 
     ; start a new line
     LDA #$00 : STA !ram_crash_stack_line_position
@@ -732,8 +750,9 @@ CrashMemViewer:
     CPX #$05BA : BPL .doneLowerHalf
     %a8()
 
+  .drawLowerHalfInc
     ; inc bytes drawn
-+   LDA !ram_crash_loop_counter : INC : STA !ram_crash_loop_counter
+    LDA !ram_crash_loop_counter : INC : STA !ram_crash_loop_counter
     CMP #$10 : BNE .drawLowerHalfNearby
     %a16()
 
@@ -762,7 +781,7 @@ CrashMemViewer:
 
     ; inc tilemap position
     INX #6 : LDA !ram_crash_stack_line_position : INC
-    STA !ram_crash_stack_line_position : AND #$08 : BEQ +
+    STA !ram_crash_stack_line_position : AND #$08 : BEQ .drawUpperHalfInc
 
     ; start a new line
     LDA #$00 : STA !ram_crash_stack_line_position
@@ -771,8 +790,9 @@ CrashMemViewer:
     CPX #$05BA : BPL .doneUpperHalf
     %a8()
 
+  .drawUpperHalfInc
     ; inc bytes drawn
-+   LDA !ram_crash_loop_counter : INC : STA !ram_crash_loop_counter
+    LDA !ram_crash_loop_counter : INC : STA !ram_crash_loop_counter
     CMP #$10 : BNE .drawUpperHalfNearby
     %a16()
 
@@ -990,7 +1010,8 @@ crash_next_frame:
 {
     PHP : %a8()
     LDA $05B8 : PHA
--   CMP $05B8 : BEQ -
+  .loop
+    CMP $05B8 : BEQ .loop
     PLA : STA $05B8
     PLP
     RTL
@@ -999,7 +1020,8 @@ crash_next_frame:
 crash_read_inputs:
 {
     PHP : %a8()
--   LDA $4212 : AND #$01 : BNE -
+  .loop
+    LDA $4212 : AND #$01 : BNE .loop
 
     %a16()
     LDA $4218 : STA !ram_crash_input

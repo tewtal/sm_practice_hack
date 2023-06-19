@@ -2,17 +2,17 @@
 ;Patches to support the minimap
 ;=======================================================
 
-org $809B51
-    JMP $9BFB    ; skip drawing auto reserve icon and normal energy numbers and tanks during HUD routine
+org $809AF3
+    JSL mm_initialize_minimap
 
-org $82AED9      ; routine to draw auto reserve icon on HUD from equip screen
-    JSR mm_refresh_reserves
+org $809B51
+    JMP $9BFB
 
 org $82AEAF      ; routine to remove auto reserve icon on HUD from equip screen
     JSR mm_refresh_reserves
 
-org $809AF3
-    JSL mm_initialize_minimap
+org $82AED9      ; routine to draw auto reserve icon on HUD from equip screen
+    JSR mm_refresh_reserves
 
 org $90A91B
     LDA !ram_minimap : BNE .update_minimap
@@ -64,17 +64,21 @@ print pc, " minimap bankDF end"
 
 
 ; The default HUD minimap should be cleared
-org $8098FF    ; row 1
+org $8098FF
+mm_default_HUD_row_1:
     dw #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F
 
-org $80993F    ; row 2
+org $80993F
+mm_default_HUD_row_2:
     dw #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F
 
-org $80997F    ; row 3
+org $80997F
+mm_default_HUD_row_3:
     dw #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F
 
 ; The default energy 0 text should be cleared
 org $80994D
+mm_default_HUD_energy:
     dw #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F
 
 

@@ -1,18 +1,21 @@
 ; Patch out copy protection
-org $008000
+org $808000
+hook_copy_protection:
     db $FF
 
 ; Set SRAM size
-org $00FFD8
-IF !FEATURE_TINYSTATES
+org $80FFD8
+hook_sram_size:
+if !FEATURE_TINYSTATES
     db $07 ; 128kb
 else
-    if !FEATURE_SD2SNES
-        db $08 ; 256kb
-    else
-        db $05 ; 64kb
-    endif
+if !FEATURE_SD2SNES
+    db $08 ; 256kb
+else
+    db $05 ; 64kb
 endif
+endif
+
 
 ; Enable version display
 org $8B8697
@@ -23,6 +26,7 @@ org $8BF6DC
 else
 org $8BF754
 endif
+hook_version_data:
     db #$20, #($30+!VERSION_MAJOR)
     db #$2E, #($30+!VERSION_MINOR)
     db #$2E, #($30+!VERSION_BUILD)
@@ -42,6 +46,7 @@ endif
 
 ; Fix Zebes planet tiling error
 org $8C9607
+zebes_planet_tile_data:
     dw #$0E2F
 
 
@@ -87,6 +92,7 @@ org $828ADD       ; Resume original logic
 
 
 org $CF8BBF       ; Set map scroll beep to high priority
+hook_spc_engine_map_scroll_beep_priority:
     dw $2A97
 
 
@@ -94,7 +100,7 @@ org $CF8BBF       ; Set map scroll beep to high priority
 ; $80:8F27 8D 40 21    STA $2140  [$7E:2140]  ; APU IO 0 = [music track]
 org $808F24
     JSL hook_set_music_track
-    NOP #2
+    NOP : NOP
 
 ; $80:8F65 8D F3 07    STA $07F3  [$7E:07F3]  ;} Music data = [music entry] & FFh
 ; $80:8F68 AA          TAX                    ; X = [music data]
@@ -147,7 +153,7 @@ hook_set_music_data:
 
 gamemode_end:
 {
-   ; overwritten logic
+    ; overwritten logic
 if !FEATURE_PAL
     JSL $A09179
 else
@@ -341,6 +347,7 @@ print pc, " misc bank90 end"
 
 org $8BFA00
 print pc, " misc bank8B start"
+
 ; Decompression optimization adapted from Kejardon
 ; Compression format: One byte (XXX YYYYY) or two byte (111 XXX YY-YYYYYYYY) headers
 ; XXX = instruction, YYYYYYYYYY = counter
@@ -506,5 +513,6 @@ decompression_increment_bank:
     PLA
     RTS
 }
+
 print pc, " misc bank8B end"
 

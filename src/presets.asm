@@ -23,11 +23,12 @@ endif
 
     ; Fix Phantoon and Draygon rooms
     LDA !ROOM_ID : CMP #$CD13 : BEQ .fixBG2
-    CMP #$D9AA : BNE +
+    CMP #$D9AA : BNE .doneBG2
   .fixBG2
     JSL preset_clear_BG2_tilemap
- 
-+   JSL $809A79  ; HUD routine when game is loading
+
+  .doneBG2
+    JSL $809A79  ; HUD routine when game is loading
     JSL $90AD22  ; Reset projectile data
 
     PHP : %ai16()
@@ -228,11 +229,12 @@ preset_load_preset:
     LDA #$5AFE : STA !LAYER2_X ; Load garbage into Layer 2 X position
 
     ; check if segment timer should be reset now or after a door
-    LDA !sram_preset_options : BIT !PRESETS_AUTO_SEGMENT_OFF : BNE +
+    LDA !sram_preset_options : BIT !PRESETS_AUTO_SEGMENT_OFF : BNE .check_load
     LDA #$FFFF : STA !ram_reset_segment_later
 
+  .check_load
     ; check if custom preset is being loaded
-+   LDA !ram_custom_preset : BEQ .category_preset
+    LDA !ram_custom_preset : BEQ .category_preset
     JSL custom_preset_load
     BRA .done
 
@@ -349,7 +351,8 @@ category_preset_data_table:
     dl preset_allbossprkd_crateria_ceres_elevator
 
 print pc, " presets bank82 end"
-warnpc $82FE00
+warnpc $82FE00 ; tinystates.asm
+
 
 org $82E8D9
     JSL preset_room_setup_asm_fixes
@@ -553,8 +556,9 @@ preset_clear_BG2_tilemap:
 
     ; Clear BG2 Tilemap
     LDA #$0338 : LDX #$07FE
--   STA $7E4000,X : STA $7E4800,X
-    DEX #2 : BPL -
+  .loop
+    STA $7E4000,X : STA $7E4800,X
+    DEX #2 : BPL .loop
 
     ; Upload BG2 Tilemap
     %a8()
@@ -729,25 +733,25 @@ add_grapple_and_xray_to_hud:
     JSL $809A3E            ; Add x-ray to HUD tilemap
     LDA $09A2 : BIT #$4000 : BEQ $04
     JSL $809A2E            ; Add grapple to HUD tilemap
-    JMP .resume_infohud_icon_initialization
+    JMP resume_infohud_icon_initialization
 }
 
 print pc, " presets bank80 end"
-warnpc $80F600 ; save.asm
+warnpc $80F600 ; save.asm or tinystates.asm
 
 
 ; $80:9AB1: Add x-ray and grapple HUD items if necessary
 org $809AB1
     ; Skip x-ray and grapple if max HP is a multiple of 4,
     ; which is only possible if GT code was used
-    LDA $09C4 : AND #$0003 : BEQ .resume_infohud_icon_initialization
+    LDA $09C4 : AND #$0003 : BEQ resume_infohud_icon_initialization
     JMP add_grapple_and_xray_to_hud
 
 warnpc $809AC9
 
 ; $80:9AC9: Resume original logic
 org $809AC9
-  .resume_infohud_icon_initialization
+resume_infohud_icon_initialization:
 
 
 

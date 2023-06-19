@@ -21,6 +21,7 @@ org $858412
     LDA SpecialButtonTilemapOffsets,X
 
 org $858749
+original_button_tilemap_offset_table:
     ; Expand message definitions
     dw #$8436, #$8289, EnemiesKilledText
     dw #$8436, #$8289, BrainBusterText
@@ -33,6 +34,7 @@ org $858749
     dw #$8436, #$8289, EndFanfareText
     dw #$8436, #$8289, EndFanfareText
     dw #$8436, #$8289, EndFanfareText
+
 
 org $859643
 print pc, " fanfare message start"

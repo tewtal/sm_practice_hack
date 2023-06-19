@@ -13,21 +13,22 @@ org $80AE29      ; fix for scroll offset misalignment
     JSR ih_fix_scroll_offsets
 
 org $828B4B      ; disable debug functions
-    JML ih_debug_patch
+    JML ih_debug_routine
 
 org $82EE92      ; runs on START GAME
     JSL startgame_seg_timer
 
 org $828B34      ; reset room timers for first room of Ceres
-    JML ceres_start_timers : NOP #2 : ceres_start_timers_return:
+    JML ceres_start_timers : NOP : NOP
+ceres_start_timers_return:
         
 org $90E6AA      ; hijack, runs on gamestate = 08 (main gameplay), handles most updating HUD information
     JSL ih_gamemode_frame : NOP : NOP
 
-org $9493FB      ; hijack, runs when Samus hits a door BTS
+org $9493B8      ; hijack, runs when Samus hits a door BTS
     JSL ih_before_room_transition
 
-org $9493B8      ; hijack, runs when Samus hits a door BTS
+org $9493FB      ; hijack, runs when Samus hits a door BTS
     JSL ih_before_room_transition
 
 org $82E764      ; hijack, runs when Samus is coming out of a room transition
@@ -203,11 +204,13 @@ ih_get_item_code:
     RTL
 }
 
-ih_debug_patch:
+ih_debug_routine:
 {
-    LDA !DEBUG_MODE : BNE +
+    LDA !DEBUG_MODE : BNE .run
     JML $828B54 ; return past debug handler
-+   JSL $B49809 ; run debug handler
+
+  .run
+    JSL $B49809 ; run debug handler
     JML $828B4F ; return
 }
 
@@ -218,13 +221,14 @@ ih_nmi_end:
     LDA !ram_realtime_room : INC : STA !ram_realtime_room
 
     ; Segment real timer
-    LDA !ram_seg_rt_frames : INC : STA !ram_seg_rt_frames : CMP.w #60 : BNE +
+    LDA !ram_seg_rt_frames : INC : STA !ram_seg_rt_frames : CMP.w #60 : BNE .done_timer
     LDA #$0000 : STA !ram_seg_rt_frames
-    LDA !ram_seg_rt_seconds : INC : STA !ram_seg_rt_seconds : CMP.w #60 : BNE +
+    LDA !ram_seg_rt_seconds : INC : STA !ram_seg_rt_seconds : CMP.w #60 : BNE .done_timer
     LDA #$0000 : STA !ram_seg_rt_seconds
     LDA !ram_seg_rt_minutes : INC : STA !ram_seg_rt_minutes
 
-+   LDA !ram_slowdown_mode : BNE .controller2_slowdown
+  .done_timer
+    LDA !ram_slowdown_mode : BNE .controller2_slowdown
     JMP .done
 
   .controller2_slowdown
@@ -255,21 +259,23 @@ ih_nmi_end:
     JMP .done
 
   .pause
-    LDA !ram_slowdown_frames : BNE +
+    LDA !ram_slowdown_frames : BNE .check_frame_advance
 
     INC : STA !ram_slowdown_frames
     LDA !IH_CONTROLLER_PRI : EOR !IH_CONTROLLER_PRI_NEW : STA !ram_slowdown_controller_1
     LDA !IH_CONTROLLER_SEC : EOR !IH_CONTROLLER_SEC_NEW : STA !ram_slowdown_controller_2
 
     ; Check controller 2 inputs
-+   LDA !IH_CONTROLLER_SEC_NEW : CMP !IH_PAUSE : BEQ .frameAdvance
-    CMP !IH_RESET : BNE +
+  .check_frame_advance
+    LDA !IH_CONTROLLER_SEC_NEW : CMP !IH_PAUSE : BEQ .frame_advance
+    CMP !IH_RESET : BNE .check_freeze_on_load
     ; Resume normal gameplay
     LDA #$0000 : STA !ram_slowdown_mode : STA !ram_slowdown_frames
     JMP .done
 
     ; Pause after load_state until new inputs
-+   LDA !ram_freeze_on_load : BEQ .wait_for_next_nmi
+  .check_freeze_on_load
+    LDA !ram_freeze_on_load : BEQ .wait_for_next_nmi
     LDA !IH_CONTROLLER_PRI_NEW : BEQ .wait_for_next_nmi
     ; Reset timers and unpause
     LDA #$0000 : STA !ram_reset_segment_later
@@ -281,7 +287,7 @@ ih_nmi_end:
     %a8() : LDA #$01 : STA !NMI_REQUEST_FLAG : %a16()
     JMP .done
 
-  .frameAdvance
+  .frame_advance
     LDA #$0000 : STA !ram_slowdown_frames
     LDA !ram_slowdown_controller_1 : STA !IH_CONTROLLER_PRI_PREV
     LDA !ram_slowdown_controller_2 : STA !IH_CONTROLLER_SEC_PREV
@@ -1252,10 +1258,11 @@ ih_game_loop_code:
 
     LDA !ram_game_loop_extras : BEQ .handleinputs
 
-    LDA !ram_metronome : BEQ +
+    LDA !ram_metronome : BEQ .metronome_done
     JSR metronome
+  .metronome_done
 
-+   LDA !ram_magic_pants_enabled : XBA : ORA !ram_space_pants_enabled
+    LDA !ram_magic_pants_enabled : XBA : ORA !ram_space_pants_enabled
     BEQ .handleinputs
 
     BIT #$00FF : BEQ .magicpants    ; if spacepants are disabled, handle magicpants
@@ -1296,9 +1303,10 @@ ih_game_loop_code:
     JMP .done
 
   .toggle_speedup
-    LDA !ram_slowdown_mode : BEQ +
+    LDA !ram_slowdown_mode : BEQ .skip_speedup
     DEC : STA !ram_slowdown_mode
-+   JMP .done
+  .skip_speedup
+    JMP .done
 
   .reset_slowdown
     TDC
@@ -1308,15 +1316,17 @@ ih_game_loop_code:
 
   .inc_statusdisplay
     LDA !sram_display_mode : INC
-    CMP #$0014 : BNE +
+    CMP #$0014 : BNE .set_displaymode
     TDC : STA !sram_display_mode
     BRA .update_status
 
   .dec_statusdisplay
     LDA !sram_display_mode : DEC
-    CMP #$FFFF : BNE +
+    CMP #$FFFF : BNE .set_displaymode
     LDA #$0013
-+   STA !sram_display_mode
+
+  .set_displaymode
+    STA !sram_display_mode
 
   .update_status
     TDC
@@ -1369,14 +1379,15 @@ MetronomeSFX:
 magic_pants:
 {
     LDA !SAMUS_ANIMATION_FRAME : CMP #$0009 : BEQ .check
-    LDA !ram_magic_pants_state : BEQ +
+    LDA !ram_magic_pants_state : BEQ .skip_magic_pants
     TDC : STA !ram_magic_pants_state
 
-    LDA !ram_magic_pants_enabled : AND #$0001 : BEQ +
+    LDA !ram_magic_pants_enabled : AND #$0001 : BEQ .skip_magic_pants
     LDA !ram_magic_pants_pal1 : STA $7EC194
     LDA !ram_magic_pants_pal2 : STA $7EC196
     LDA !ram_magic_pants_pal3 : STA $7EC19E
-+   RTS
+  .skip_magic_pants
+    RTS
 
   .check
     ; Enable magic pants in the following states:
@@ -1393,15 +1404,16 @@ magic_pants:
     LDA !SAMUS_POSE : CMP #$0009 : BCC .done
     CMP #$0013 : BCS .done
 
-    LDA !ram_magic_pants_state : BNE +
+    LDA !ram_magic_pants_state : BNE .check_flash_pants
 
     ; if loudpants are enabled, click
-    LDA !ram_magic_pants_enabled : AND #$0002 : BEQ +
+    LDA !ram_magic_pants_enabled : AND #$0002 : BEQ .check_flash_pants
     LDA !sram_metronome_sfx : ASL : TAX
     LDA.l MetronomeSFX,X : JSL !SFX_LIB1
 
+  .check_flash_pants
     ; if flashpants are enabled, flash
-+   LDA !ram_magic_pants_enabled : AND #$0001 : BEQ .done
+    LDA !ram_magic_pants_enabled : AND #$0001 : BEQ .done
     LDA !ram_magic_pants_state : BNE .flash
     ; backup palettes
     LDA $7EC194 : STA !ram_magic_pants_pal1
@@ -1454,12 +1466,13 @@ space_pants:
     LDA !ram_magic_pants_state : BNE .done
 
     ; if loudpants are enabled, click
-    LDA !ram_space_pants_enabled : AND #$0002 : BEQ +
+    LDA !ram_space_pants_enabled : AND #$0002 : BEQ .check_flash_pants
     LDA !sram_metronome_sfx : ASL : TAX
     LDA.l MetronomeSFX,X : JSL !SFX_LIB1
 
+  .check_flash_pants
     ; if flashpants are enabled, flash
-+   LDA !ram_space_pants_enabled : AND #$0001 : BEQ +
+    LDA !ram_space_pants_enabled : AND #$0001 : BEQ .end
     ; preserve palettes first
     LDA $7EC194 : STA !ram_magic_pants_pal1
     LDA $7EC196 : STA !ram_magic_pants_pal2
@@ -1468,7 +1481,8 @@ space_pants:
     LDA #$FFFF
     STA $7EC194 : STA $7EC196 : STA $7EC198
 
-+   LDA #$FFFF : STA !ram_magic_pants_state
+  .end
+    LDA #$FFFF : STA !ram_magic_pants_state
     RTS
 }
 

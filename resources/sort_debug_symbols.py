@@ -106,7 +106,7 @@ for sorted_row in sorted_rows:
 
 combined_file.close()
 
-#if unnamed_symbol_found:
-#   print("sort_debug_symbols.py WARNING unnamed debug symbols detected")
-#   sys.exit()
+if unnamed_symbol_found:
+   print("sort_debug_symbols.py WARNING unnamed debug symbols detected")
+   sys.exit()
 

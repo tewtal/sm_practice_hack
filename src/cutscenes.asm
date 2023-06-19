@@ -1,8 +1,4 @@
 
-org $82EEE0
-    dw cutscenes_load_intro
-
-
 if !FEATURE_PAL
 org $8BB124
 else
@@ -24,6 +20,7 @@ org $80AE5C
 
 org $80FF80
 print pc, " cutscenes bank80 start"
+
 cutscenes_door_transition:
 {
     LDA !sram_fast_doors : BEQ .slow
@@ -36,6 +33,7 @@ cutscenes_door_transition:
   .slow
     JMP ($AE76,x)
 }
+
 warnpc $80FFB0  ; header
 print pc, " cutscenes bank80 end"
 
@@ -91,6 +89,9 @@ org $82E42E
 
 org $82DCF4
     JSL cutscenes_game_over
+
+org $82EEDF
+    LDA #cutscenes_load_intro
 
 
 org $8BF800
@@ -367,9 +368,11 @@ crateria_4_palette_loop:
 warnpc $8DC2E9
 
 org $8DF767
+hook_crateria_1_palette_fx_object:
     dw #crateria_1_palette
 
 org $8DFFCF
+hook_tourian_crateria_palette_fx_objects:
     dw #tourian_10_palette
     dw $C685, #tourian_20_palette
     dw $C685, #tourian_40_palette
@@ -770,10 +773,13 @@ rising_earthquake_start:
 
 print pc, " cutscenes bank88 end"
 
+
 org $888AD1
+hook_power_bomb_instruction_list:
     dw #power_bomb_crystal_flash_set_data_bank
 
 org $88A2C0
+hook_crystal_flash_instruction_list:
     dw #power_bomb_crystal_flash_set_data_bank
 
 org $88B36A
@@ -809,25 +815,25 @@ warnpc $A98814
 endif
 
 if !FEATURE_PAL
-org $A9882E
+org $A9882D
 else
-org $A9881E
+org $A9881D
 endif
-    dw cutscenes_mb_fake_death_pause
+    LDA #cutscenes_mb_fake_death_pause
 
 if !FEATURE_PAL
-org $A98852
+org $A98851
 else
-org $A98842
+org $A98841
 endif
-    dw cutscenes_mb_fake_death_lock
+    LDA #cutscenes_mb_fake_death_lock
 
 if !FEATURE_PAL
-org $A98889
+org $A98888
 else
-org $A98879
+org $A98878
 endif
-    dw cutscenes_mb_fake_death_unlock
+    LDA #cutscenes_mb_fake_death_unlock
 
 if !FEATURE_PAL
 org $A98899
@@ -837,53 +843,53 @@ endif
     JSR cutscenes_mb_fake_death_begin_screen_flashing
 
 if !FEATURE_PAL
-org $A98987
+org $A98986
 else
-org $A98977
+org $A98976
 endif
-    dw cutscenes_mb_clear_bottom_left_tube
+    LDA #cutscenes_mb_clear_bottom_left_tube
 
 if !FEATURE_PAL
-org $A989B9
+org $A989B8
 else
-org $A989A9
+org $A989A8
 endif
-    dw cutscenes_mb_clear_ceiling_column_9
+    LDA #cutscenes_mb_clear_ceiling_column_9
 
 if !FEATURE_PAL
-org $A989EB
+org $A989EA
 else
-org $A989DB
+org $A989DA
 endif
-    dw cutscenes_mb_clear_ceiling_column_6
+    LDA #cutscenes_mb_clear_ceiling_column_6
 
 if !FEATURE_PAL
-org $A98A13
+org $A98A12
 else
-org $A98A03
+org $A98A02
 endif
-    dw cutscenes_mb_clear_bottom_right_tube
+    LDA #cutscenes_mb_clear_bottom_right_tube
 
 if !FEATURE_PAL
-org $A98A3B
+org $A98A3A
 else
-org $A98A2B
+org $A98A2A
 endif
-    dw cutscenes_mb_clear_bottom_middle_left_tube
+    LDA #cutscenes_mb_clear_bottom_middle_left_tube
 
 if !FEATURE_PAL
-org $A98A6D
+org $A98A6C
 else
-org $A98A5D
+org $A98A5C
 endif
-    dw cutscenes_mb_clear_ceiling_column_7
+    LDA #cutscenes_mb_clear_ceiling_column_7
 
 if !FEATURE_PAL
-org $A98A9F
+org $A98A9E
 else
-org $A98A8F
+org $A98A8E
 endif
-    dw cutscenes_mb_clear_ceiling_column_8
+    LDA #cutscenes_mb_clear_ceiling_column_8
 
 if !FEATURE_PAL
 org $A98C15
@@ -895,34 +901,34 @@ endif
 cutscenes_mb_fake_death_earthquake_end:
 
 if !FEATURE_PAL
-org $A98D78
+org $A98D77
 else
-org $A98D68
+org $A98D67
 endif
     ; Do not initialize health here, wait until later
-    dw cutscenes_mb_fake_death_setup_mb_fight_or_escape
+    LDA #cutscenes_mb_fake_death_setup_mb_fight_or_escape
     BRA $04
 
 if !FEATURE_PAL
-org $A98D90
+org $A98D8F
 else
-org $A98D80
+org $A98D7F
 endif
-    dw cutscenes_mb_fake_death_pause_phase_2
+    LDA #cutscenes_mb_fake_death_pause_phase_2
 
 if !FEATURE_PAL
-org $A98DCE
+org $A98DCD
 else
-org $A98DBE
+org $A98DBD
 endif
-    dw cutscenes_mb_fake_death_load_tiles_phase_2
+    LDA #cutscenes_mb_fake_death_load_tiles_phase_2
 
 if !FEATURE_PAL
-org $A98E57
+org $A98E56
 else
-org $A98E47
+org $A98E46
 endif
-    dw cutscenes_mb_fake_death_raise_mb
+    LDA #cutscenes_mb_fake_death_raise_mb
 
 if !FEATURE_PAL
 org $A98EDC
@@ -932,39 +938,39 @@ endif
     JMP cutscenes_mb_choose_phase_2_or_3
 
 if !FEATURE_PAL
-org $A98EF9
+org $A98EF8
 else
-org $A98EE9
+org $A98EE8
 endif
-    dw cutscenes_mb_shaking_head
+    LDA #cutscenes_mb_shaking_head
 
 if !FEATURE_PAL
-org $A98F12
+org $A98F11
 else
-org $A98F02
+org $A98F01
 endif
-    dw cutscenes_mb_bring_head_back_up
+    LDA #cutscenes_mb_bring_head_back_up
 
 if !FEATURE_PAL
-org $A9AF17
+org $A9AF16
 else
-org $A9AF07
+org $A9AF06
 endif
-    dw cutscenes_mb_death_move_to_back_of_room
+    LDA #cutscenes_mb_death_move_to_back_of_room
 
 if !FEATURE_PAL
-org $A9AF58
+org $A9AF57
 else
-org $A9AF48
+org $A9AF47
 endif
-    dw cutscenes_mb_death_first_stumble
+    LDA #cutscenes_mb_death_first_stumble
 
 if !FEATURE_PAL
-org $A9B017
+org $A9B016
 else
-org $A9B007
+org $A9B006
 endif
-    dw cutscenes_mb_death_final_explosions
+    LDA #cutscenes_mb_death_final_explosions
 
 if !FEATURE_PAL
 org $A9B137
@@ -983,18 +989,18 @@ endif
 cutscenes_mb_death_earthquake_end:
 
 if !FEATURE_PAL
-org $A9B177
+org $A9B176
 else
-org $A9B167
+org $A9B166
 endif
-    dw cutscenes_mb_death_load_corpse
+    LDA #cutscenes_mb_death_load_corpse
 
 if !FEATURE_PAL
-org $A9B1BC
+org $A9B1BB
 else
-org $A9B1AC
+org $A9B1AB
 endif
-    dw cutscenes_mb_death_corpse_tips_over
+    LDA #cutscenes_mb_death_corpse_tips_over
 
 if !FEATURE_PAL
 org $A9B1FB

@@ -684,18 +684,22 @@ endif
     JMP ceres_ridley_draw_metroid
 
 if !FEATURE_PAL
-org $A6A371
+org $A6A370
 else
-org $A6A361
+org $A6A360
 endif
-    dw ridley_init_hook
+    LDA #ridley_init_hook
 
 ; Fix ceres ridley door instruction list to keep door visible when skipping ridley fight
 if !FEATURE_PAL
 org $A6F533
-    dw $F64F, ridley_ceres_door_original_instructions
 else
 org $A6F55C
+endif
+hook_ceres_ridley_door_instructions:
+if !FEATURE_PAL
+    dw $F64F, ridley_ceres_door_original_instructions
+else
     dw $F678, ridley_ceres_door_original_instructions
 endif
     dw $80ED, ridley_ceres_door_escape_instructions
