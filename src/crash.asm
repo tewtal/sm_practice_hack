@@ -44,22 +44,31 @@ org $808573
     JML CrashHandler
 
 ; Hijack native COP vector
-org $00FFE4
-    dw COPHandler
-
-; Hijack emulation COP vector
-org $00FFF4
+org $80FFE4
+NativeCOPHandlerHook:
     dw COPHandler
 
 ; Hijack native BRK vector
-org $00FFE6
+org $80FFE6
+NativeBRKHandlerHook:
     dw BRKHandler
 
+; Hijack emulation COP vector
+org $80FFF4
+EmulationCOPHandlerHook:
+    dw COPHandler
+
 ; Hijack emulation IRQ/BRK vector
-; Don't do this. A bug in vanilla code causes this to make Mini-Kraid cry
+; Due to a bug in vanilla code, MSB needs to be unchanged (0x85)
 ; https://patrickjohnston.org/bank/A6?just=9BB2
-;org $00FFFE
-;    dw BRKHandler
+org $80FFFE
+EmulationBRKHandlerHook:
+    dw BRKHandlerHook
+
+org $808577
+BRKHandlerHook:
+    JML BRKHandler_setBank
+
 
 org $80E000
 print pc, " crash handler bank80 start"
