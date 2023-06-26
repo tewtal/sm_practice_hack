@@ -713,8 +713,15 @@ endif
     ; Minutes
     LDA [$00] : LDX #$00AE : JSR Draw3
 
-    ; Draw decimal seperators
+    ; Draw decimal/hyphen seperators
+    LDA !sram_frame_counter_mode : BNE .ingame_separators
     LDA !IH_DECIMAL : STA !HUD_TILEMAP+$B4 : STA !HUD_TILEMAP+$BA
+    BRA .blank_end
+
+  .ingame_separators
+    LDA !IH_HYPHEN : STA !HUD_TILEMAP+$B4 : STA !HUD_TILEMAP+$BA
+
+  .blank_end
     LDA !IH_BLANK : STA !HUD_TILEMAP+$C0
     BRL .end
 }
