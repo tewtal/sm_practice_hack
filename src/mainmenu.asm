@@ -3165,6 +3165,7 @@ SavestateMenu:
     dw #save_rerandomize
     dw #save_freeze
     dw #save_middoorsave
+    dw #save_alwayssave
 if !FEATURE_DEV
     dw #$FFFF
     dw #save_delete
@@ -3180,6 +3181,9 @@ save_freeze:
 
 save_middoorsave:
     %cm_toggle("Auto-Save Mid-Door", !ram_auto_save_state, #$0001, #0)
+
+save_alwayssave:
+    %cm_toggle("Auto-Save Every Door", !ram_auto_save_state+1, #$80, #0)
 
 save_delete:
     %cm_jsl("DEV Delete Savestate", .routine, #$DEAD)
