@@ -493,7 +493,7 @@
 ; SRAM
 ; -----
 
-!SRAM_VERSION = $0012
+!SRAM_VERSION = $0013
 
 !SRAM_START = $702000
 
@@ -575,6 +575,8 @@
 !sram_seed_Y = !SRAM_START+$84
 
 ; ^ FREE SPACE ^ up to +$EE, $100-BBE
+
+!sram_custom_header = !SRAM_START+$BD8 ; $18 bytes
 
 if !FEATURE_TINYSTATES
 !sram_custom_preset_safewords = !SRAM_START+$E30 ; $20 bytes

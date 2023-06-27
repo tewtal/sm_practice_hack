@@ -466,12 +466,28 @@ cm_tilemap_menu:
 
   .header
     STZ !DP_Palette
+    ; check if attribute byte of string is set
+    LDA !sram_custom_header : AND #$00FF : CMP #$0028 : BNE .normal_header
+    ; only draw custom header on MainMenu
+    LDA !DP_MenuIndices : CMP.w #MainMenu : BNE .normal_header
+    ; set pointer to text in SRAM
+    LDA.w #!sram_custom_header : STA !DP_CurrentMenu
+    LDA.w #!sram_custom_header>>16 : STA !DP_CurrentMenu+2
+    ; draw header
+    LDX #$00C6
+    JSR cm_draw_text
+    ; fix !DP_CurrentMenu in case of footer
+    TYA : CLC : ADC !DP_MenuIndices : INC #2 : STA !DP_CurrentMenu
+    LDA !DP_MenuIndices+2 : STA !DP_CurrentMenu+2
+    BRA .footer
+
+  .normal_header
     ; menu pointer + index + 2 = header
     TYA : CLC : ADC !DP_MenuIndices : INC #2 : STA !DP_CurrentMenu
-    ; draw menu header
-    LDX #$00C6 ; tilemap position
+    LDX #$00C6
     JSR cm_draw_text
 
+  .footer
     ; menu pointer + header pointer + 1 = footer
     TYA : CLC : ADC !DP_CurrentMenu : INC : STA !DP_CurrentMenu
     ; optional footer

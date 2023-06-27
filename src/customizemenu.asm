@@ -17,6 +17,8 @@ CustomizeMenu:
     dw #mc_customsfx
     dw #$FFFF
     dw #mc_scroll_delay
+    dw #$FFFF
+    dw #mc_customheader
     dw #$0000
     %cm_header("CUSTOMIZE PRACTICE MENU")
 
@@ -160,6 +162,32 @@ mc_customsfx:
 
 mc_scroll_delay:
     %cm_numfield("Menu Scroll Delay", !sram_cm_scroll_delay, 1, 10, 1, 2, #0)
+
+mc_customheader:
+    %cm_jsl("Customize Menu Header", #.routine, #$0000)
+  .routine
+    ; enter keyboard editing mode
+    LDA.w #!sram_custom_header : STA !DP_Address
+    LDA.w #!sram_custom_header>>16 : STA !DP_Address+2
+    ; check if custom header exists
+    LDA !sram_custom_header : AND #$00FF : CMP #$0028 : BNE .keyboardMode
+    ; store SAFE word to indicate a name already exists
+    LDA #$5AFE : STA !DP_KB_Control
+    ; load existing name
+    LDX #$0016 : TXY
+-   LDA [!DP_Address],Y : STA !ram_cm_keyboard_buffer,X
+    DEX #2
+    DEY #2 : BPL -
+  .keyboardMode
+    JSL kb_ctrl_mode : BCC .done
+    ; check if "nothing" was saved
+    LDA !sram_custom_header : CMP #$FF28 : BEQ .blank
+    JML ConvertNormal2Header
+  .blank
+    ; restore default header
+    LDA #$0000 : STA !sram_custom_header
+  .done
+    RTL
 
 CustomPalettesMenu:
     dw #custompalettes_text
@@ -605,6 +633,128 @@ ColorMenuTable_border:
 
 ColorMenuTable_background:
     %setupRGB(!sram_palette_background)
+
+ConvertNormal2Header:
+{
+    PHB : PHK : PLB
+    %ai8()
+    ; X = text, Y = table
+    LDX #$01 : LDY #$00
+
+  .next_char
+    ; safety net in case no terminator
+    CPX #$18 : BPL .done
+    ; grab next byte of user text, exit if term ($FF)
+    LDA !sram_custom_header,X : CMP #$FF : BEQ .done
+  .loop_compare
+    ; compare to first column of table
+    CMP.w .Table,Y : BEQ .found
+    INY #2 : CPY #$9A : BCS .not_found
+    BRA .loop_compare
+
+  .found
+    ; replace with byte from second column of table
+    INY : LDA.w .Table,Y : STA !sram_custom_header,X
+    INX : LDY #$00 : BRA .next_char
+
+  .skip_char
+    ; may have already been converted to header font
+    INX
+    BRA .next_char
+
+  .not_found
+    ; searched whole table
+    LDY #$00
+    INX
+    BRA .next_char
+
+  .done
+    %ai16()
+    PLB
+    RTL
+
+  .Table
+; normal, header
+; db $00, $50
+; db $01, $51
+    %norm2head("A")
+    %norm2head("B")
+    %norm2head("C")
+    %norm2head("D")
+    %norm2head("E")
+    %norm2head("F")
+    %norm2head("G")
+    %norm2head("H")
+    %norm2head("I")
+    %norm2head("J")
+    %norm2head("K")
+    %norm2head("L")
+    %norm2head("M")
+    %norm2head("N")
+    %norm2head("O")
+    %norm2head("P")
+    %norm2head("Q")
+    %norm2head("R")
+    %norm2head("S")
+    %norm2head("T")
+    %norm2head("U")
+    %norm2head("V")
+    %norm2head("W")
+    %norm2head("X")
+    %norm2head("Y")
+    %norm2head("Z")
+    %norm2head("a")
+    %norm2head("b")
+    %norm2head("c")
+    %norm2head("d")
+    %norm2head("e")
+    %norm2head("f")
+    %norm2head("g")
+    %norm2head("h")
+    %norm2head("i")
+    %norm2head("j")
+    %norm2head("k")
+    %norm2head("l")
+    %norm2head("m")
+    %norm2head("n")
+    %norm2head("o")
+    %norm2head("p")
+    %norm2head("q")
+    %norm2head("r")
+    %norm2head("s")
+    %norm2head("t")
+    %norm2head("u")
+    %norm2head("v")
+    %norm2head("w")
+    %norm2head("x")
+    %norm2head("y")
+    %norm2head("z")
+    %norm2head("0")
+    %norm2head("1")
+    %norm2head("2")
+    %norm2head("3")
+    %norm2head("4")
+    %norm2head("5")
+    %norm2head("6")
+    %norm2head("7")
+    %norm2head("8")
+    %norm2head("9")
+    %norm2head(" ")
+    %norm2head(".")
+    %norm2head(",")
+    %norm2head("!")
+    %norm2head("?")
+    %norm2head("-")
+    %norm2head("#")
+    %norm2head("(")
+    %norm2head(")")
+    %norm2head("'")
+    %norm2head(":")
+    %norm2head("/")
+    %norm2head("$")
+    %norm2head("+")
+    %norm2head("%")
+}
 
 print pc, " menu customization bankAF end"
 pullpc
