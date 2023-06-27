@@ -65,7 +65,7 @@ endif
     CMP !ROOM_ID
     BEQ .skip_load_level
 if !RAW_TILE_GRAPHICS
-    JSL preset_load_level_tile_tables_scrolls_plms_and_execute_asm
+    JSL preset_load_level
 else
     JSL $82E7D3  ; Load level data, CRE, tile table, scroll data, create PLMs and execute door ASM and room setup ASM
 endif
