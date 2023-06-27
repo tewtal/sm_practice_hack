@@ -1634,7 +1634,7 @@ init_heat_damage_ram:
 misc_water_physics:
     dw !ACTION_CHOICE
     dl #!sram_water_physics
-    dw init_water_physics_ram
+    dw init_physics_ram
     db #$28, "Water Physics", #$FF
     db #$28, "    VANILLA", #$FF
     db #$28, "PRESS VALVE", #$FF
@@ -1645,32 +1645,32 @@ misc_water_physics:
     db #$FF
 
 misc_double_jump:
-    %cm_toggle_bit("Double Jump", !sram_double_jump, #$0200, init_water_physics_ram)
+    %cm_toggle_bit("Double Jump", !sram_double_jump, #$0200, init_physics_ram)
 
-init_water_physics_ram:
+init_physics_ram:
 {
-    LDA !sram_water_physics : BNE init_water_physics_ram_non_vanilla
-    ; Fallthrough to init_water_physics_vanilla
+    LDA !sram_water_physics : BNE init_physics_non_vanilla
+    ; Fallthrough to init_physics_vanilla
 }
 
-init_water_physics_vanilla:
+init_physics_vanilla:
 {
     LDA !SAMUS_ITEMS_EQUIPPED : ORA.l !sram_double_jump : STA !SAMUS_WATER_PHYSICS
     RTL
 }
 
-init_water_physics_after_room_transition:
+init_physics_after_transition:
 {
-    LDA !sram_water_physics : BEQ init_water_physics_vanilla
+    LDA !sram_water_physics : BEQ init_physics_vanilla
 
     ; Check if we need to toggle on-to-off or off-to-on states
-    CMP #$0004 : BMI init_water_physics_ram_non_vanilla
+    CMP #$0004 : BMI init_physics_non_vanilla
     EOR #$0001 : STA !sram_water_physics
 }
 
-init_water_physics_ram_non_vanilla:
+init_physics_non_vanilla:
 {
-    CMP #$0001 : BEQ .pressure_valve
+    CMP #$0001 : BEQ .pv
     BIT #$0001 : BNE .on
 
   .off
@@ -1683,23 +1683,23 @@ init_water_physics_ram_non_vanilla:
     ORA.l !sram_double_jump : STA !SAMUS_WATER_PHYSICS
     RTL
 
-  .pressure_valve
-    LDA !ROOM_ID : CMP #$C98D : BMI .pressure_valve_more_checks
-    CMP #$D4EE : BMI .off : CMP #$D8C6 : BPL .pressure_valve_on
+  .pv
+    LDA !ROOM_ID : CMP #$C98D : BMI .pv_more
+    CMP #$D4EE : BMI .off : CMP #$D8C6 : BPL .pv_on
     CMP #$D5EC : BEQ .off : CMP #$D646 : BEQ .off
     CMP #$D69A : BEQ .off : CMP #$D6D0 : BEQ .off
     CMP #$D86E : BEQ .off : CMP #$D8C5 : BEQ .off
 
-  .pressure_valve_on
+  .pv_on
     LDA !SAMUS_ITEMS_EQUIPPED : AND #$0220
     ORA.l !sram_double_jump : STA !SAMUS_WATER_PHYSICS
     RTL
 
-  .pressure_valve_more_checks
+  .pv_more
     CMP #$AC00 : BEQ .off : CMP #$AB64 : BEQ .off
-    CMP #$A5EF : BPL .pressure_valve_on
-    CMP #$99FA : BPL .off : CMP #$965A : BPL .pressure_valve_on
-    CMP #$93AB : BMI .pressure_valve_on
+    CMP #$A5EF : BPL .pv_on
+    CMP #$99FA : BPL .off : CMP #$965A : BPL .pv_on
+    CMP #$93AB : BMI .pv_on
     BRA .off
 }
 
@@ -3360,7 +3360,7 @@ GameModeExtras:
 init_wram_based_on_sram:
 {
     JSL init_suit_properties_ram
-    JSL init_water_physics_ram
+    JSL init_physics_ram
 
     ; Check if any less common controller shortcuts are configured
     JML GameModeExtras

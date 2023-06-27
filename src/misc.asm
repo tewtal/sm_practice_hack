@@ -235,11 +235,11 @@ original_load_projectile_palette:
     LDY #$0000
     LDX #$0000
 
-  .original_load_palette_loop
+  .loop
     LDA [$00],Y
     STA $7EC1C0,X
     INX : INX : INY : INY
-    CPY #$0020 : BMI .original_load_palette_loop
+    CPY #$0020 : BMI .loop
     RTS
 }
 

@@ -75,7 +75,7 @@ cm_start:
     LDA !ram_seed_X : STA !sram_seed_X
     LDA !ram_seed_Y : STA !sram_seed_Y
     JSL init_heat_damage_ram
-    JSL init_water_physics_ram
+    JSL init_physics_ram
     JSL GameLoopExtras ; check if game_loop_extras needs to be disabled
     JSL restore_ppu_long ; Restore PPU registers and tilemaps
 

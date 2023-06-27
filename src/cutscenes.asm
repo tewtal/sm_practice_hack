@@ -386,7 +386,7 @@ hook_tourian_crateria_palette_fx_objects:
 org $88F000
 print pc, " cutscenes bank88 start"
 
-power_bomb_soft_explosion_colors:
+pb_soft_explosion_colors:
     db $01, $01, $00
     db $02, $02, $00
     db $03, $03, $00
@@ -404,7 +404,7 @@ power_bomb_soft_explosion_colors:
     db $03, $03, $00
     db $02, $02, $00
     db $01, $01, $00
-power_bomb_transparent_explosion_colors:
+pb_transparent_explosion_colors:
     db $00, $00, $00
     db $00, $00, $00
     db $00, $00, $00
@@ -422,7 +422,7 @@ power_bomb_transparent_explosion_colors:
     db $00, $00, $00
     db $00, $00, $00
 
-power_bomb_stage_1_explosion:
+pb_stage_1_explosion:
 {
     ; Copy of $8890DF routine, except uses above power bomb transparent colors
     LDA $0592 : BMI .continue
@@ -462,11 +462,11 @@ power_bomb_stage_1_explosion:
     LDA $0CED : LSR : LSR : LSR
     AND #$0F : STA $12
     ASL : CLC : ADC $12 : TAX
-    LDA.l power_bomb_transparent_explosion_colors,X
+    LDA.l pb_transparent_explosion_colors,X
     ORA #$20 : STA $0074
-    LDA.l power_bomb_transparent_explosion_colors+1,X
+    LDA.l pb_transparent_explosion_colors+1,X
     ORA #$40 : STA $0075
-    LDA.l power_bomb_transparent_explosion_colors+2,X
+    LDA.l pb_transparent_explosion_colors+2,X
     ORA #$80 : STA $0076
     %ai16() : PLY : PLX
     LDA $0CEC : CLC : ADC $0CF0 : STA $0CEC
@@ -481,7 +481,7 @@ power_bomb_stage_1_explosion:
     PLB : PLP : RTL
 }
 
-power_bomb_stage_2_explosion:
+pb_stage_2_explosion:
 {
     ; Copy of $8891A8 routine, except uses above power bomb transparent colors
     LDA $0592 : BMI .continue
@@ -507,11 +507,11 @@ power_bomb_stage_2_explosion:
     LDA $0CED : LSR : LSR : LSR
     AND #$0F : STA $12
     ASL : CLC : ADC $12 : TAX
-    LDA.l power_bomb_transparent_explosion_colors,X
+    LDA.l pb_transparent_explosion_colors,X
     ORA #$20 : STA $0074
-    LDA.l power_bomb_transparent_explosion_colors+1,X
+    LDA.l pb_transparent_explosion_colors+1,X
     ORA #$40 : STA $0075
-    LDA.l power_bomb_transparent_explosion_colors+2,X
+    LDA.l pb_transparent_explosion_colors+2,X
     ORA #$80 : STA $0076
     %ai16() : PLY : PLX
     LDA $0CF2 : CLC : ADC #$00C0 : STA $0CF2
@@ -527,7 +527,7 @@ power_bomb_stage_2_explosion:
     PLB : PLP : RTL
 }
 
-power_bomb_stage_3_explosion:
+pb_stage_3_explosion:
 {
     ; Copy of $888DE9 routine, except uses above power bomb soft colors
     LDA $0592 : BMI .continue
@@ -567,11 +567,11 @@ power_bomb_stage_3_explosion:
     LDA $0CEB : LSR : LSR : LSR
     AND #$1F : STA $12
     ASL : CLC : ADC $12 : TAX
-    LDA.l power_bomb_soft_explosion_colors,X
+    LDA.l pb_soft_explosion_colors,X
     ORA #$20 : STA $0074
-    LDA.l power_bomb_soft_explosion_colors+1,X
+    LDA.l pb_soft_explosion_colors+1,X
     ORA #$40 : STA $0075
-    LDA.l power_bomb_soft_explosion_colors+2,X
+    LDA.l pb_soft_explosion_colors+2,X
     ORA #$80 : STA $0076
     %ai16() : PLY : PLX
     LDA $0CEA : CLC : ADC $0CF0 : STA $0CEA
@@ -586,7 +586,7 @@ power_bomb_stage_3_explosion:
     PLB : PLP : RTL
 }
 
-power_bomb_stage_4_explosion:
+pb_stage_4_explosion:
 {
     ; Copy of $888EB2 routine, except uses above power bomb soft colors
     LDA $0592 : BMI .continue
@@ -612,11 +612,11 @@ power_bomb_stage_4_explosion:
     LDA $0CEB : LSR : LSR : LSR
     AND #$1F : STA $12
     ASL : CLC : ADC $12 : TAX
-    LDA.l power_bomb_soft_explosion_colors,X
+    LDA.l pb_soft_explosion_colors,X
     ORA #$20 : STA $0074
-    LDA.l power_bomb_soft_explosion_colors+1,X
+    LDA.l pb_soft_explosion_colors+1,X
     ORA #$40 : STA $0075
-    LDA.l power_bomb_soft_explosion_colors+2,X
+    LDA.l pb_soft_explosion_colors+2,X
     ORA #$80 : STA $0076
     %ai16() : PLY : PLX
     LDA $0CF2 : CLC : ADC #$00C0 : STA $0CF2
@@ -633,7 +633,7 @@ power_bomb_stage_4_explosion:
     PLB : PLP : RTL
 }
 
-crystal_flash_stage_1_explosion:
+cf_stage_1_explosion:
 {
     ; Copy of $88A552 routine, except uses above power bomb soft colors
     LDA $0592 : BMI .continue
@@ -673,11 +673,11 @@ crystal_flash_stage_1_explosion:
     LDA $0CEB : LSR : LSR : LSR
     AND #$1F : STA $12
     ASL : CLC : ADC $12 : TAX
-    LDA.l power_bomb_soft_explosion_colors,X
+    LDA.l pb_soft_explosion_colors,X
     ORA #$20 : STA $0074
-    LDA.l power_bomb_soft_explosion_colors+1,X
+    LDA.l pb_soft_explosion_colors+1,X
     ORA #$40 : STA $0075
-    LDA.l power_bomb_soft_explosion_colors+2,X
+    LDA.l pb_soft_explosion_colors+2,X
     ORA #$80 : STA $0076
     %ai16() : PLY : PLX
     LDA $0CEA : CLC : ADC $0CF0 : STA $0CEA
@@ -692,27 +692,27 @@ crystal_flash_stage_1_explosion:
     PLB : PLP : RTL
 }
 
-power_bomb_instruction_list:
+pb_instruction_list:
     ; Copy of $888ACE instruction list, except uses above power bomb soft colors
     dw $85B4      ; Power bomb explosion - stage 1 setup
     dl $888B14
     dw $8570      ; Pre-instruction = power bomb explosion - stage 1
-    dl #power_bomb_stage_1_explosion
+    dl #pb_stage_1_explosion
     dw $8682      ; Sleep
     dw $85B4      ; Power bomb explosion - stage 2 setup
     dl $888B32
     dw $8570      ; Pre-instruction = power bomb explosion - stage 2
-    dl #power_bomb_stage_2_explosion
+    dl #pb_stage_2_explosion
     dw $8682      ; Sleep
     dw $85B4      ; Power bomb explosion - stage 3 setup
     dl $888B39
     dw $8570      ; Pre-instruction = power bomb explosion - stage 3
-    dl #power_bomb_stage_3_explosion
+    dl #pb_stage_3_explosion
     dw $8682      ; Sleep
     dw $85B4      ; Power bomb explosion - stage 4 setup
     dl $888B47
     dw $8570      ; Pre-instruction = power bomb explosion - stage 4
-    dl #power_bomb_stage_4_explosion
+    dl #pb_stage_4_explosion
     dw $8682      ; Sleep
     dw $8570      ; Pre-instruction = power bomb explosion - stage 5
     dl $888B98
@@ -722,14 +722,14 @@ power_bomb_instruction_list:
     dw $8682      ; Sleep
     dw $8569      ; Delete
 
-crystal_flash_instruction_list:
+cf_instruction_list:
     ; Copy of $88A2BD instruction list, except uses above power bomb soft colors
     dw $85B4      ; Crystal flash - setup - part 1
     dl $88A2E4
     dw $85B4      ; Crystal flash - setup - part 2
     dl $88A309
     dw $8570      ; Pre-instruction = crystal flash - stage 1 - explosion
-    dl #crystal_flash_stage_1_explosion
+    dl #cf_stage_1_explosion
     dw $8682      ; Sleep
     dw $8570      ; Pre-instruction = crystal flash - stage 2 - after-glow
     dl $88A35D
@@ -739,7 +739,7 @@ crystal_flash_instruction_list:
     dw $8682      ; Sleep
     dw $8569      ; Delete
 
-power_bomb_crystal_flash_set_data_bank:
+pb_cf_set_data_bank:
 {
     ; Start with copy of original instruction at $88866A
     PHX : LDA $18C0,X : AND #$00FF : TAX
@@ -748,12 +748,12 @@ power_bomb_crystal_flash_set_data_bank:
     INY : RTS
 
   .suppress
-    CPY #$A2C2 : BEQ .suppress_crystal_flash
-    LDY #power_bomb_instruction_list
+    CPY #$A2C2 : BEQ .suppress_cf
+    LDY #pb_instruction_list
     RTS
 
-  .suppress_crystal_flash
-    LDY #crystal_flash_instruction_list
+  .suppress_cf
+    LDY #cf_instruction_list
     RTS
 }
 
@@ -775,12 +775,12 @@ print pc, " cutscenes bank88 end"
 
 
 org $888AD1
-hook_power_bomb_instruction_list:
-    dw #power_bomb_crystal_flash_set_data_bank
+hook_pb_instruction_list:
+    dw #pb_cf_set_data_bank
 
 org $88A2C0
-hook_crystal_flash_instruction_list:
-    dw #power_bomb_crystal_flash_set_data_bank
+hook_cf_instruction_list:
+    dw #pb_cf_set_data_bank
 
 org $88B36A
     LDA !sram_suppress_flashing : BIT !SUPPRESS_EARTHQUAKE : BNE wait_to_rise_earthquake_end
@@ -798,15 +798,14 @@ org $A9880C
 else
 org $A987FC
 endif
-cutscenes_mb_fake_death_check:
 {
     BEQ .check_fast_mb
     CMP #$0001 : BNE $15
   .fast_mb
-    JMP cutscenes_mb_fake_death_fast_init
+    JMP cutscenes_mb_fast_init
   .check_fast_mb
     LDA !sram_cutscenes : BIT !CUTSCENE_FAST_MB : BNE .fast_mb
-    JMP cutscenes_mb_fake_death_normal_init
+    JMP cutscenes_mb_normal_init
 }
 if !FEATURE_PAL
 warnpc $A98824
@@ -840,65 +839,65 @@ org $A98899
 else
 org $A98889
 endif
-    JSR cutscenes_mb_fake_death_begin_screen_flashing
+    JSR cutscenes_mb_begin_screen_flashing
 
 if !FEATURE_PAL
 org $A98986
 else
 org $A98976
 endif
-    LDA #cutscenes_mb_clear_bottom_left_tube
+    LDA #cutscenes_mb_bottom_left_tube
 
 if !FEATURE_PAL
 org $A989B8
 else
 org $A989A8
 endif
-    LDA #cutscenes_mb_clear_ceiling_column_9
+    LDA #cutscenes_mb_ceiling_column_9
 
 if !FEATURE_PAL
 org $A989EA
 else
 org $A989DA
 endif
-    LDA #cutscenes_mb_clear_ceiling_column_6
+    LDA #cutscenes_mb_ceiling_column_6
 
 if !FEATURE_PAL
 org $A98A12
 else
 org $A98A02
 endif
-    LDA #cutscenes_mb_clear_bottom_right_tube
+    LDA #cutscenes_mb_bottom_right_tube
 
 if !FEATURE_PAL
 org $A98A3A
 else
 org $A98A2A
 endif
-    LDA #cutscenes_mb_clear_bottom_middle_left_tube
+    LDA #cutscenes_mb_bottom_middle_left_tube
 
 if !FEATURE_PAL
 org $A98A6C
 else
 org $A98A5C
 endif
-    LDA #cutscenes_mb_clear_ceiling_column_7
+    LDA #cutscenes_mb_ceiling_column_7
 
 if !FEATURE_PAL
 org $A98A9E
 else
 org $A98A8E
 endif
-    LDA #cutscenes_mb_clear_ceiling_column_8
+    LDA #cutscenes_mb_ceiling_column_8
 
 if !FEATURE_PAL
 org $A98C15
 else
 org $A98C05
 endif
-    JMP cutscenes_mb_fake_death_earthquake_start
+    JMP cutscenes_mb_first_earthquake_start
     NOP : NOP : NOP : NOP
-cutscenes_mb_fake_death_earthquake_end:
+cutscenes_mb_first_earthquake_end:
 
 if !FEATURE_PAL
 org $A98D77
@@ -906,7 +905,7 @@ else
 org $A98D67
 endif
     ; Do not initialize health here, wait until later
-    LDA #cutscenes_mb_fake_death_setup_mb_fight_or_escape
+    LDA #cutscenes_mb_setup_fight_or_escape
     BRA $04
 
 if !FEATURE_PAL
@@ -914,21 +913,21 @@ org $A98D8F
 else
 org $A98D7F
 endif
-    LDA #cutscenes_mb_fake_death_pause_phase_2
+    LDA #cutscenes_mb_pause_phase_2
 
 if !FEATURE_PAL
 org $A98DCD
 else
 org $A98DBD
 endif
-    LDA #cutscenes_mb_fake_death_load_tiles_phase_2
+    LDA #cutscenes_mb_load_tiles_phase_2
 
 if !FEATURE_PAL
 org $A98E56
 else
 org $A98E46
 endif
-    LDA #cutscenes_mb_fake_death_raise_mb
+    LDA #cutscenes_mb_raise_mb
 
 if !FEATURE_PAL
 org $A98EDC
@@ -1030,7 +1029,7 @@ endif
 org $A9FBC0
 print pc, " cutscenes MB start"
 
-cutscenes_mb_fake_death_fast_init:
+cutscenes_mb_fast_init:
 {
     ; Set health to non-zero value indicating we want fast logic
     ; If loading a preset, certain flags may already be set
@@ -1054,7 +1053,7 @@ else
 endif
 }
 
-cutscenes_mb_fake_death_normal_init:
+cutscenes_mb_normal_init:
 {
     ; Overwritten logic with the song
     LDA #$0001 : STA $7E783A : STA $7E7800
@@ -1144,7 +1143,7 @@ endif
     JMP ($0FA8)
 }
 
-cutscenes_mb_fake_death_begin_screen_flashing:
+cutscenes_mb_begin_screen_flashing:
 {
     LDA #$0001 : STA $7E781E
     LDA !sram_suppress_flashing : BIT !SUPPRESS_MB1_FLASHING : BNE .suppress
@@ -1161,7 +1160,7 @@ endif
     RTS
 }
 
-cutscenes_mb_clear_bottom_left_tube:
+cutscenes_mb_bottom_left_tube:
 {
     LDA $0FCC : BEQ .continue
     LDA #$0010 : STA $0FF2
@@ -1176,7 +1175,7 @@ endif
     JMP ($0FF0)
 }
 
-cutscenes_mb_clear_ceiling_column_9:
+cutscenes_mb_ceiling_column_9:
 {
     LDA $0FCC : BEQ .continue
     LDA #$0010 : STA $0FF2
@@ -1191,7 +1190,7 @@ endif
     JMP ($0FF0)
 }
 
-cutscenes_mb_clear_ceiling_column_6:
+cutscenes_mb_ceiling_column_6:
 {
     LDA $0FCC : BEQ .continue
     LDA #$0010 : STA $0FF2
@@ -1206,7 +1205,7 @@ endif
     JMP ($0FF0)
 }
 
-cutscenes_mb_clear_bottom_right_tube:
+cutscenes_mb_bottom_right_tube:
 {
     LDA $0FCC : BEQ .continue
     LDA #$0010 : STA $0FF2
@@ -1221,7 +1220,7 @@ endif
     JMP ($0FF0)
 }
 
-cutscenes_mb_clear_bottom_middle_left_tube:
+cutscenes_mb_bottom_middle_left_tube:
 {
     LDA $0FCC : BEQ .continue
     LDA #$0010 : STA $0FF2
@@ -1236,7 +1235,7 @@ endif
     JMP ($0FF0)
 }
 
-cutscenes_mb_clear_ceiling_column_7:
+cutscenes_mb_ceiling_column_7:
 {
     LDA $0FCC : BEQ .continue
     LDA #$0010 : STA $0FF2
@@ -1251,7 +1250,7 @@ endif
     JMP ($0FF0)
 }
 
-cutscenes_mb_clear_ceiling_column_8:
+cutscenes_mb_ceiling_column_8:
 {
     LDA $0FCC : BEQ .continue
     LDA #$0010 : STA $0FF2
@@ -1266,7 +1265,7 @@ endif
     JMP ($0FF0)
 }
 
-cutscenes_mb_fake_death_setup_mb_fight_or_escape:
+cutscenes_mb_setup_fight_or_escape:
 {
     LDA $7ED821 : BIT #$0040 : BEQ .mb
 
@@ -1297,7 +1296,7 @@ endif
     JMP ($0FA8)
 }
 
-cutscenes_mb_fake_death_pause_phase_2:
+cutscenes_mb_pause_phase_2:
 {
     LDA $0FCC : BNE .continue
     LDA #$0000 : STA $0FB2
@@ -1317,7 +1316,7 @@ endif
     JMP ($0FA8)
 }
 
-cutscenes_mb_fake_death_load_tiles_phase_2:
+cutscenes_mb_load_tiles_phase_2:
 {
     LDA $0FCC : BNE .continue
     LDA #$0000 : STA $0FB2
@@ -1332,7 +1331,7 @@ endif
     JMP ($0FA8)
 }
 
-cutscenes_mb_fake_death_raise_mb:
+cutscenes_mb_raise_mb:
 {
     LDA !sram_cutscenes : BIT !CUTSCENE_FAST_MB : BEQ .continue
     LDA !FRAME_COUNTER : AND #$0001 : BNE .done
@@ -1490,7 +1489,7 @@ cutscenes_mb_death_brain_falling_fast:
     ; Vanilla logic except add $40 instead of $20
     LDA $0FB2 : CLC : ADC #$0040 : STA $0FB2
     XBA : AND #$00FF : CLC : ADC $0FBE
-    CMP #$00C4 : BCC .still_falling
+    CMP #$00C4 : BCC .rts
 
 if !FEATURE_PAL
     JMP $B154
@@ -1498,7 +1497,7 @@ else
     JMP $B144
 endif
 
-  .still_falling
+  .rts
     STA $0FBE
     RTS
 }
@@ -1533,7 +1532,7 @@ endif
     JMP ($0FA8)
 }
 
-cutscenes_mb_fake_death_earthquake_start:
+cutscenes_mb_first_earthquake_start:
 {
     LDA !sram_suppress_flashing : BIT !SUPPRESS_EARTHQUAKE : BNE .suppress
     LDA #$0019 : STA $183E
@@ -1541,7 +1540,7 @@ cutscenes_mb_fake_death_earthquake_start:
 
   .suppress
     LDA #$0025 : JSL $8090CB
-    JMP cutscenes_mb_fake_death_earthquake_end
+    JMP cutscenes_mb_first_earthquake_end
 }
 
 cutscenes_mb_death_earthquake_start:

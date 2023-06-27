@@ -43,7 +43,7 @@ org $828EB8      ; write and clear tiles to VRAM
     RTL
 
 org $82E488      ; write tiles to VRAM
-    JMP mm_write_hud_tiles_during_door_transition
+    JMP mm_write_hud_tiles_during_transition
 
 
 org $9AB200      ; graphics for HUD
@@ -116,9 +116,9 @@ mm_write_and_clear_hud_tiles:
     RTS
 }
 
-mm_write_hud_tiles_during_door_transition:
+mm_write_hud_tiles_during_transition:
 {
-    LDA !ram_minimap : BNE .minimap_vram
+    LDA !ram_minimap : BNE .mm
 
     ; Load in normal vram
     JSR $E039
@@ -127,7 +127,7 @@ mm_write_hud_tiles_during_door_transition:
     dw $1000
     JMP $E492  ; resume logic
 
-  .minimap_vram
+  .mm
     JSR $E039
     dl mapgfx_bin
     dw $4000

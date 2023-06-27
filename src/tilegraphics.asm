@@ -250,7 +250,7 @@ load_raw_tile_graphics:
     JML $82E7BF
 }
 
-preset_load_level_tile_tables_scrolls_plms_and_execute_asm:
+preset_load_level:
 {
     ; Original logic from $82E7D3
     PHP : PHB
@@ -522,7 +522,7 @@ load_tile_table_28_draygon:
 }
 
 ; Load correct section of VRAM for scrolling sky rooms
-preset_load_library_transfer_to_vram:
+preset_transfer_to_vram:
 {
     PHX : LDA !ROOM_ID : CMP #$91F8 : BEQ .landing_site
     CMP #$93FE : BEQ .west_ocean : CMP #$94FD : BEQ .east_ocean
@@ -532,23 +532,23 @@ preset_load_library_transfer_to_vram:
 
   .landing_site
     LDA !SAMUS_Y : ASL : ASL : ASL : XBA : AND #$003C
-    BIT #$0020 : BNE .landing_site_floor
-    CLC : ADC #preset_load_library_landing_site_params : TAX
+    BIT #$0020 : BNE .landing_floor
+    CLC : ADC #preset_vram_landing_site_params : TAX
     BRA .transfer
 
   .west_ocean
     LDA !SAMUS_Y : ASL : ASL : ASL : XBA : AND #$003C
     ; The bottom of west ocean is the same as east ocean
     CMP #$0028 : BPL .east_ocean
-    CLC : ADC #preset_load_library_west_ocean_params : TAX
+    CLC : ADC #preset_vram_west_ocean_params : TAX
     BRA .transfer
 
   .east_ocean
-    LDX #preset_load_library_east_ocean_params
+    LDX #preset_vram_east_ocean_params
     BRA .transfer
 
-  .landing_site_floor
-    LDX #preset_load_library_landing_site_floor_params
+  .landing_floor
+    LDX #preset_vram_landing_site_floor_params
 
   .transfer
     LDA #$4800 : STA $2116
@@ -572,13 +572,13 @@ preset_load_library_transfer_to_vram:
 
   .done
     PLX : SEC
-    JML preset_load_library_end_transfer_to_vram
+    JML preset_end_transfer_to_vram
 }
 
 ; DMA transfer from $8Axx80 to VRAM $4800 of $xx00 bytes
 ; Optional second DMA transfer from $8Axx80 of $xx00 bytes
 ; Each xx is a byte in these tables
-preset_load_library_west_ocean_params:
+preset_vram_west_ocean_params:
     db $B1, $10, $00, $00    ; Y = 0.0-0.5
     db $B1, $10, $00, $00    ; Y = 0.5-1.0
     db $C1, $02, $B3, $0E    ; Y = 1.0-1.5
@@ -589,10 +589,10 @@ preset_load_library_west_ocean_params:
     db $D9, $06, $C7, $0A    ; Y = 3.5-4.0
     db $D9, $0A, $CB, $06    ; Y = 4.0-4.5
     db $D9, $0E, $CF, $02    ; Y = 4.5-5.0
-preset_load_library_east_ocean_params:
+preset_vram_east_ocean_params:
     db $D9, $10, $00, $00    ; Y = 5.0+
 
-preset_load_library_landing_site_params:
+preset_vram_landing_site_params:
     db $B1, $10, $00, $00    ; Y = 0.0-0.5
     db $B1, $10, $00, $00    ; Y = 0.5-1.0
     db $C1, $02, $B3, $0E    ; Y = 1.0-1.5
@@ -601,7 +601,7 @@ preset_load_library_landing_site_params:
     db $C1, $0E, $BF, $02    ; Y = 2.5-3.0
     db $D1, $02, $C3, $0E    ; Y = 3.0-3.5
     db $D1, $06, $C7, $0A    ; Y = 3.5-4.0
-preset_load_library_landing_site_floor_params:
+preset_vram_landing_site_floor_params:
     db $D1, $08, $C9, $08    ; Y = 4.0+
 
 print pc, " tilegraphics end"

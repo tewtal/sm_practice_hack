@@ -193,7 +193,7 @@ ih_get_item_code:
     ; Update HUD
     JSL ih_update_hud_code
     JSL init_heat_damage_ram
-    JSL init_water_physics_ram
+    JSL init_physics_ram
 
     ; restore temp variables
     PLA : STA $14
@@ -346,7 +346,7 @@ ih_after_room_transition:
     LDA #$0000 : STA !ram_realtime_room
 
     JSL init_heat_damage_ram
-    JSL init_water_physics_after_room_transition
+    JSL init_physics_after_transition
     PLY : PLX
 
     ; original hijacked code
@@ -381,7 +381,7 @@ ih_before_room_transition:
     LDA $14 : PHA
 
     ; Update HUD
-    JSL ih_update_hud_code_before_transition
+    JSL ih_update_hud_before_transition
 
     ; Restore temp variables
     PLA : STA $14
@@ -511,14 +511,14 @@ else
 endif
 }
 
-ih_update_hud_code_before_transition:
+ih_update_hud_before_transition:
 {
     PHX : PHY
     PHP : PHB
     ; Bank 80
     PEA $8080 : PLB : PLB
 
-    LDA !sram_display_mode : CMP #!IH_MODE_ARMPUMP_INDEX : BNE .update_hud_code
+    LDA !sram_display_mode : CMP #!IH_MODE_ARMPUMP_INDEX : BNE .start
 
     ; Report armpump room totals
     LDA !ram_momentum_sum : CLC : ADC !ram_momentum_count : LDX #$0088 : JSR Draw4
@@ -526,7 +526,7 @@ ih_update_hud_code_before_transition:
     LDA #$0000 : STA !ram_momentum_count : STA !ram_fail_count
     STA !ram_momentum_sum : STA !ram_fail_sum : STA !ram_roomstrat_counter
 
-  .update_hud_code
+  .start
     BRA ih_update_hud_code_start
 }
 
@@ -538,27 +538,27 @@ ih_update_hud_code:
     PEA $8080 : PLB : PLB
 
   .start
-    LDA !ram_minimap : BNE .minimap_hud
-    BRL .start_update
+    LDA !ram_minimap : BNE .mmHud
+    BRL .startUpdate
 
-  .minimap_vanilla_infohud
+  .mmVanilla
     BRL .end
 
-  .minimap_hud
+  .mmHud
     ; Map visible, so draw map counter over item%
-    LDA !sram_top_display_mode : CMP !TOP_DISPLAY_VANILLA : BEQ .minimap_vanilla_infohud
+    LDA !sram_top_display_mode : CMP !TOP_DISPLAY_VANILLA : BEQ .mmVanilla
     LDA !ram_map_counter : LDX #$0014 : JSR Draw3
-    LDA !sram_display_mode : CMP #!IH_MODE_SHINETUNE_INDEX : BNE .minimap_roomtimer
-    BRL .pick_minimap_transition_time
+    LDA !sram_display_mode : CMP #!IH_MODE_SHINETUNE_INDEX : BNE .mmRoomTimer
+    BRL .mmPickTransitionTime
 
-  .minimap_roomtimer
+  .mmRoomTimer
     STZ $4205
-    LDA !sram_frame_counter_mode : BNE .minimap_ingame_roomtimer
+    LDA !sram_frame_counter_mode : BNE .mmInGameTimer
     LDA !ram_last_realtime_room
-    BRA .minimap_calculate_roomtimer
-  .minimap_ingame_roomtimer
+    BRA .mmCalculateTimer
+  .mmInGameTimer
     LDA !ram_last_gametime_room
-  .minimap_calculate_roomtimer
+  .mmCalculateTimer
     ; Divide time by 60 or 50 and draw seconds and frames
     STA $4204
     %a8()
@@ -577,32 +577,32 @@ endif
     LDA HexToNumberGFX1,X : STA !HUD_TILEMAP+$B6
     LDA HexToNumberGFX2,X : STA !HUD_TILEMAP+$B8
 
-  .pick_minimap_transition_time
-    LDA !sram_lag_counter_mode : BNE .minimap_transition_time_full
+  .mmPickTransitionTime
+    LDA !sram_lag_counter_mode : BNE .mmFullTransitionTime
     LDA !ram_last_door_lag_frames
-    BRA .draw_minimap_transition_time
-  .minimap_transition_time_full
+    BRA .mmDrawTransitionTime
+  .mmFullTransitionTime
     LDA !ram_last_realtime_door
-  .draw_minimap_transition_time
+  .mmDrawTransitionTime
     LDX #$0054 : JSR Draw3
     BRL .end
 
-  .start_update
+  .startUpdate
     LDA #$FFFF : STA !ram_last_hp : STA !ram_enemy_hp
 
     ; Determine starting point of time display
     LDX #$003C
-    LDA !sram_top_display_mode : CMP !TOP_DISPLAY_VANILLA : BNE .pick_roomtimer
+    LDA !sram_top_display_mode : CMP !TOP_DISPLAY_VANILLA : BNE .pickRoomTimer
     LDX #$003A
 
-  .pick_roomtimer
+  .pickRoomTimer
     STZ $4205
-    LDA !sram_frame_counter_mode : BNE .ingame_roomtimer
+    LDA !sram_frame_counter_mode : BNE .inGameRoomTimer
     LDA !ram_last_realtime_room
-    BRA .calculate_roomtimer
-  .ingame_roomtimer
+    BRA .calculateRoomTimer
+  .inGameRoomTimer
     LDA !ram_last_gametime_room
-  .calculate_roomtimer
+  .calculateRoomTimer
     ; Divide time by 60 or 50 and draw seconds and frames
     STA $4204
     %a8()
@@ -646,64 +646,64 @@ endif
     LDA !IH_PERCENT : STA !HUD_TILEMAP+$18
 
   .skipToLag
-    LDA !sram_top_display_mode : CMP !TOP_DISPLAY_VANILLA : BEQ .vanilla_infohud_draw_lag_and_reserves
+    LDA !sram_top_display_mode : CMP !TOP_DISPLAY_VANILLA : BEQ .vanillaLagReserves
     LDA !ram_last_room_lag : LDX #$0080 : JSR Draw4
 
     ; Skip door lag and segment timer when shinetune enabled
     LDA !sram_display_mode : CMP #!IH_MODE_SHINETUNE_INDEX : BEQ .end
 
     ; Door lag / transition time
-    LDA !sram_lag_counter_mode : BNE .transition_time_full
+    LDA !sram_lag_counter_mode : BNE .fullTransitionTime
     LDA !ram_last_door_lag_frames
-    BRA .infohud_transition_time
-  .transition_time_full
+    BRA .drawTransitionTime
+  .fullTransitionTime
     LDA !ram_last_realtime_door
-  .infohud_transition_time
+  .drawTransitionTime
     LDX #$00C2 : JSR Draw3
-    BRA .pick_segment_timer
+    BRA .pickSegmentTimer
 
   .end
     PLB : PLP
     PLY : PLX
     RTL
 
-  .vanilla_infohud_draw_lag_and_reserves
-    LDA !SAMUS_RESERVE_MODE : CMP #$0001 : BNE .vanilla_infohud_draw_lag
+  .vanillaLagReserves
+    LDA !SAMUS_RESERVE_MODE : CMP #$0001 : BNE .vanillaDrawLag
 
     ; Draw reserve icon
-    LDY #$998B : LDA !SAMUS_RESERVE_ENERGY : BNE .vanilla_draw_reserve_icon
+    LDY #$998B : LDA !SAMUS_RESERVE_ENERGY : BNE .vanillaDrawReserve
     LDY #$9997
-  .vanilla_draw_reserve_icon
+  .vanillaDrawReserve
     LDA $0000,Y : STA !HUD_TILEMAP+$18 : LDA $0002,Y : STA !HUD_TILEMAP+$1A
     LDA $0004,Y : STA !HUD_TILEMAP+$58 : LDA $0006,Y : STA !HUD_TILEMAP+$5A
 
-  .vanilla_infohud_draw_lag
+  .vanillaDrawLag
     LDA !ram_last_room_lag : LDX #$007E : JSR Draw4
 
     ; Skip door lag and segment timer when shinetune enabled
     LDA !sram_display_mode : CMP #!IH_MODE_SHINETUNE_INDEX : BEQ .end
 
     ; Door lag / transition time
-    LDA !sram_lag_counter_mode : BNE .vanilla_infohud_transition_time_full
+    LDA !sram_lag_counter_mode : BNE .vanillaFullTransitionTime
     LDA !ram_last_door_lag_frames
-    BRA .draw_vanilla_infohud_transition_time
-  .vanilla_infohud_transition_time_full
+    BRA .vanillaDrawTransitiontime
+  .vanillaFullTransitionTime
     LDA !ram_last_realtime_door
-  .draw_vanilla_infohud_transition_time
+  .vanillaDrawTransitiontime
     LDX #$00C2 : JSR Draw2
 
-  .pick_segment_timer
-    LDA !sram_frame_counter_mode : BNE .ingame_segment_timer
+  .pickSegmentTimer
+    LDA !sram_frame_counter_mode : BNE .inGameSegmentTimer
     LDA.w #!ram_seg_rt_frames : STA $00
     LDA !WRAM_BANK : STA $02
-    BRA .draw_segment_timer
+    BRA .drawSegmentTimer
 
-  .ingame_segment_timer
+  .inGameSegmentTimer
     LDA #!IGT_FRAMES : STA $00
     LDA #$007E : STA $02
-    BRA .draw_segment_timer
+    BRA .drawSegmentTimer
 
-  .draw_segment_timer
+  .drawSegmentTimer
     ; Frames
     LDA [$00] : INC $00 : INC $00 : ASL : TAX
     LDA HexToNumberGFX1,X : STA !HUD_TILEMAP+$BC
@@ -1545,7 +1545,7 @@ ih_hud_code_paused:
 
   .end
     JSL init_heat_damage_ram
-    JSL init_water_physics_ram
+    JSL init_physics_ram
     LDA $7E09C0 ; overwritten code
     JMP $9B51
 }

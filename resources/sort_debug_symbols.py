@@ -16,6 +16,7 @@ original_file = io.open(os.path.join(os.path.dirname(os.path.realpath(__file__))
 new_file = io.open(os.path.join(os.path.dirname(os.path.realpath(__file__)), new_name), "w", newline='\n')
 combined_file = io.open(os.path.join(os.path.dirname(os.path.realpath(__file__)), combined_name), "w", newline='\n')
 
+longest_label = ""
 rows = original_file.readlines()
 rows_to_sort = []
 combined_rows_to_sort = []
@@ -60,6 +61,12 @@ for row in rows:
       combined_rows_to_sort.append(row)
       if " :" in row:
          unnamed_symbol_found = True
+      if len(row) > 8:
+         # for longest label, ignore presets and tile table names
+         if row[0] < 'E' or row[1] == '0' or row[1] == '4':
+            label = row[8:]
+            if len(label) > len(longest_label):
+               longest_label = label
    elif in_source_files:
       new_file.write(row)
       parts = re.split(" |\.|\/", row)
@@ -108,5 +115,11 @@ combined_file.close()
 
 if unnamed_symbol_found:
    print("sort_debug_symbols.py WARNING unnamed debug symbols detected")
+   sys.exit()
+
+recommended_max_label_length = 52
+if len(longest_label) > recommended_max_label_length:
+   print("sort_debug_symbols.py WARNING labels exceeding recommended length of %d detected" % recommended_max_label_length)
+   print("longest label (length %d) = %s" % (len(longest_label), longest_label))
    sys.exit()
 

@@ -160,7 +160,7 @@ preset_load_library_background:
 {
     PHP : PHB : %ai16()
     JSL $80A29C ; Clear FX tilemap
-    LDA $1964 : BEQ .done_fx_tilemap
+    LDA $1964 : BEQ .done_fx
 
     STA $4312 ; src addr
     LDA #$008A : STA $4314 ; src bank
@@ -172,28 +172,28 @@ preset_load_library_background:
     LDA #$02 : STA $420B ; initiate DMA channel 1
     %a16() : CLC
 
-  .done_fx_tilemap
+  .done_fx
     PEA $8F00 : PLB : PLB
     %a16()
     LDX $07BB
     LDY $0016,X : BPL .done
 
-  .load_library_loop
+  .load_loop
     LDX $0000,Y : INY : INY
-    JSR (preset_load_library_background_jump_table,X)
-    BCC .load_library_loop
+    JSR (preset_load_background_jump_table,X)
+    BCC .load_loop
 
   .done
     PLB : PLP : RTL
 }
 
-preset_load_library_background_jump_table:
-    dw $E9E5, $E9F9, $EA2D, $EA4E, $EA66, $EA56, $EA5E, preset_load_library_start_transfer_to_vram
+preset_load_background_jump_table:
+    dw $E9E5, $E9F9, $EA2D, $EA4E, $EA66, $EA56, $EA5E, preset_start_transfer_to_vram
 
-preset_load_library_start_transfer_to_vram:
-    JML preset_load_library_transfer_to_vram
+preset_start_transfer_to_vram:
+    JML preset_transfer_to_vram
 
-preset_load_library_end_transfer_to_vram:
+preset_end_transfer_to_vram:
     RTS
 endif
 
@@ -264,71 +264,72 @@ category_preset_load:
 
     ; If start of preset data is greater than preset address,
     ; then our preset address is in the next bank
-    CMP $C3 : BCC .build_list_loop : BEQ .build_list_loop
+    CMP $C3 : BCC .buildLoop : BEQ .buildLoop
     INC $C5
 
-  .build_list_loop
+  .buildLoop
     ; Build list of presets to traverse
-    LDA [$C3] : BEQ .prepare_traverse_list_loop
+    LDA [$C3] : BEQ .traversePrep
     INX : INX : STA $7F0002,X
-    CMP $C3 : STA $C3 : BCC .build_list_loop
+    CMP $C3 : STA $C3 : BCC .buildLoop
     ; We just crossed back into the starting bank
     DEC $C5
-    BRA .build_list_loop
+    BRA .buildLoop
 
-  .prepare_traverse_list_loop
+  .traversePrep
     ; Set bank to read data from
     STZ $00 : %a8() : LDA $C5 : PHA : PLB
     ; Set bank to store data to
     LDA #$7E : STA $C5 : %a16()
 
-  .traverse_list_loop_with_bank_check
+  .crossBankTraverseLoop
     ; Now traverse from the first preset until the last one
-    LDA $7F0002,X : TAY : CMP $C1 : BCC .increment_bank_before_inner_loop
+    LDA $7F0002,X : TAY : CMP $C1 : BCC .incBankInnerLoop
     INY : INY
-    BRA .inner_loop_with_bank_check_load_address
+    BRA .crossBankLoadAddr
 
     ; For each preset, load and store address and value pairs
-  .inner_loop_with_bank_check
+  .crossBankInnerLoop
     STA $C3 : INY : INY
-    CPY #$0000 : BEQ .increment_bank_before_load_value
+    CPY #$0000 : BEQ .incBankLoadValue
     LDA ($00),Y : STA [$C3] : INY : INY
-  .inner_loop_with_bank_check_load_address
-    CPY #$0000 : BEQ .increment_bank_before_load_address
-    LDA ($00),Y : CMP #$FFFF : BNE .inner_loop_with_bank_check
 
-    DEX : DEX : BPL .traverse_list_loop_with_bank_check
+  .crossBankLoadAddr
+    CPY #$0000 : BEQ .incBankLoadAddr
+    LDA ($00),Y : CMP #$FFFF : BNE .crossBankInnerLoop
+
+    DEX : DEX : BPL .crossBankTraverseLoop
     RTS
 
-  .increment_bank_before_inner_loop
+  .incBankInnerLoop
     %a8() : PHB : PLA : INC : PHA : PLB : %a16()
     INY : INY
-    BRA .inner_loop_load_address
+    BRA .simpleLoadAddr
 
-  .increment_bank_before_load_address
+  .incBankLoadAddr
     %a8() : PHB : PLA : INC : PHA : PLB : %a16()
     LDY #$8000
-    BRA .inner_loop_load_address
+    BRA .simpleLoadAddr
 
-  .increment_bank_before_load_value
+  .incBankLoadValue
     %a8() : PHB : PLA : INC : PHA : PLB : %a16()
     LDY #$8000
-    BRA .inner_loop_load_value
+    BRA .simpleLoadValue
 
-  .traverse_list_loop
+  .simpleTraverseLoop
     ; Continue traversing from the first preset until the last one
     LDA $7F0002,X : TAY : INY : INY
-    BRA .inner_loop_load_address
+    BRA .simpleLoadAddr
 
     ; For each preset, load and store address and value pairs
-  .inner_loop
+  .simpleInnerLoop
     STA $C3 : INY : INY
-  .inner_loop_load_value
+  .simpleLoadValue
     LDA ($00),Y : STA [$C3] : INY : INY
-  .inner_loop_load_address
-    LDA ($00),Y : CMP #$FFFF : BNE .inner_loop
+  .simpleLoadAddr
+    LDA ($00),Y : CMP #$FFFF : BNE .simpleInnerLoop
 
-    DEX : DEX : BPL .traverse_list_loop
+    DEX : DEX : BPL .simpleTraverseLoop
     RTS
 }
 
@@ -433,7 +434,7 @@ else
 endif
     JSL $80A23F  ; Clear BG2 tilemap
 if !RAW_TILE_GRAPHICS
-    JSL preset_load_level_tile_tables_scrolls_plms_and_execute_asm
+    JSL preset_load_level
 else
     JSL $82E7D3  ; Load level data, CRE, tile table, scroll data, create PLMs and execute door ASM and room setup ASM
 endif
@@ -534,7 +535,7 @@ endif
     STZ $0795 : STZ $0797  ; Clear door transition flags
     TDC : STA !ram_transition_flag
     JSL init_heat_damage_ram
-    JSL init_water_physics_ram
+    JSL init_physics_ram
 
     LDA #$E737 : STA $099C ; Pointer to next frame's room transition code = $82:E737
 

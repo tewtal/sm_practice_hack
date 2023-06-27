@@ -67,81 +67,81 @@ print pc, " layout bank82 end"
 warnpc $82FA00 ; presets.asm
 
 
-; East Ocean left door asm pointer
+; East Ocean right door
 org $838A88
-hook_layout_asm_eastocean_left_door:
+hook_layout_asm_fh_kago_room_door0:
     dw #layout_asm_eastocean
 
-; Green Pirates Shaft bottom-right door asm pointer
+; Statues Hallway left door
 org $838C5C
-hook_layout_asm_greenpirateshaft_bottom_right_door:
+hook_layout_asm_greenpirateshaft_door2:
     dw #layout_asm_cutscene_g4skip
 
-; Green Hill Zone top-left door asm pointer
+; Green Hill Zone top-left door
 org $838DF4
-hook_layout_asm_greenhillzone_top_left_door:
+hook_layout_asm_bigpink_door3:
     dw #layout_asm_greenhillzone
 
-; Green Hill Zone top-right door asm pointer
+; Green Hill Zone top-right door
 org $838EA8
-hook_layout_asm_greenhillzone_top_right_door:
+hook_layout_asm_morphballroom_door0:
     dw #layout_asm_greenhillzone
 
-; Construction Zone left door asm pointer
+; Construction Zone left door
 org $838EB4
-hook_layout_asm_constructionzone_left_door:
+hook_layout_asm_morphballroom_door1:
     dw #layout_asm_constructionzone
 
-; Green Hill Zone bottom-right door asm pointer
+; Green Hill Zone bottom-right door
 org $838F08
-hook_layout_asm_greenhillzone_bottom_right_door:
+hook_layout_asm_noobbridge_door0:
     dw #layout_asm_greenhillzone
 
-; Caterpillar middle-left door asm pointer
+; Caterpillar middle-left door
 org $839094
-hook_layout_asm_caterpillar_middle_left_door:
+hook_layout_asm_hellway_door1:
     ; Use same asm as elevator door, freeing up asm at $BE1A
     dw $BA21
 
-; Caterpillar top-left door asm pointer
+; Caterpillar top-left door
 org $8390E8
-hook_layout_asm_caterpillar_top_left_door:
+hook_layout_asm_betapbs_door0:
     dw #layout_asm_caterpillar_no_scrolls
 
-; East Tunnel bottom-right door asm pointer
+; East Tunnel bottom-right door
 org $839238
-hook_layout_asm_easttunnel_bottom_right_door:
+hook_layout_asm_warehouse_door0:
     ; Use same asm as bottom-left door
     dw $E345
 
-; Caterpillar near-right door asm pointer
+; Caterpillar near-right door
 org $839274
-hook_layout_asm_caterpillar_near_right_door:
+hook_layout_asm_redtowersave_door0:
     dw #layout_asm_caterpillar_no_scrolls
 
-; Single Chamber top-left door asm pointer
+; Single Chamber top-left door
 org $83958C
-hook_layout_asm_singlechamber_top_left_door:
+hook_layout_asm_bubblemountain_door4:
     dw #layout_asm_singlechamber
 
-; Single Chamber near-top-right door asm pointer
+; Single Chamber near-top-right door
 org $839610
-hook_layout_asm_singlechamber_near_top_right_door:
+hook_layout_asm_doublechamber_door0:
     dw #layout_asm_singlechamber
 
-; Single Chamber near-middle-right door asm pointer
+; Single Chamber near-middle-right door
 org $83961C
-hook_layout_asm_singlechamber_near_middle_right_door:
+hook_layout_asm_doublechamber_door1:
     dw #layout_asm_singlechamber
 
-; Single Chamber near-bottom-right door asm pointer
+; Single Chamber near-bottom-right door
 org $839640
-hook_layout_asm_singlechamber_near_bottom_right_door:
+hook_layout_asm_spikyplatformstunnel_door0:
     dw #layout_asm_singlechamber
 
-; Single Chamber far-top-right door asm pointer
+; Single Chamber far-top-right door
 org $839A54
-hook_layout_asm_singlechamber_far_top_right_door:
+hook_layout_asm_threemusketeers_door0:
     dw #layout_asm_singlechamber
 
 ; East Ocean right door asm pointer
@@ -149,9 +149,9 @@ org $83A26E
 hook_layout_asm_eastocean_right_door:
     dw #layout_asm_eastocean
 
-; Main Street bottom door asm pointer
+; Main Street bottom door
 org $83A33A
-hook_layout_asm_mainstreet_bottom_door:
+hook_layout_asm_glasstunnel_door1:
     dw #layout_asm_mainstreet
 
 ; Crab Tunnel left door asm pointer
@@ -515,33 +515,37 @@ warnpc $8FC183
 
 ; Tourian escape room 1 setup asm
 org $8FC926
-    LDA !sram_suppress_flashing : BIT !SUPPRESS_EARTHQUAKE : BNE .tourian_escape_room_1_rts
+hook_layout_asm_tourian_escape_room_1:
+    LDA !sram_suppress_flashing : BIT !SUPPRESS_EARTHQUAKE : BNE .rts
     JMP layout_asm_vanilla_tourian_escape_room_1
-  .tourian_escape_room_1_rts
+  .rts
     RTS
 warnpc $8FC933
 
 ; Tourian escape room 2 setup asm
 org $8FC933
-    LDA !sram_suppress_flashing : BIT !SUPPRESS_EARTHQUAKE : BNE .tourian_escape_room_2_rts
+hook_layout_asm_tourian_escape_room_2:
+    LDA !sram_suppress_flashing : BIT !SUPPRESS_EARTHQUAKE : BNE .rts
     JMP layout_asm_vanilla_tourian_escape_room_2
-  .tourian_escape_room_2_rts
+  .rts
     RTS
 warnpc $8FC946
 
 ; Tourian escape room 3 setup asm
 org $8FC946
-    LDA !sram_suppress_flashing : BIT !SUPPRESS_EARTHQUAKE : BNE .tourian_escape_room_3_rts
+hook_layout_asm_tourian_escape_room_3:
+    LDA !sram_suppress_flashing : BIT !SUPPRESS_EARTHQUAKE : BNE .rts
     JMP layout_asm_vanilla_tourian_escape_room_3
-  .tourian_escape_room_3_rts
+  .rts
     RTS
 warnpc $8FC953
 
 ; Tourian escape room 4 setup asm
 org $8FC95B
-    LDA !sram_suppress_flashing : BIT !SUPPRESS_EARTHQUAKE : BNE .tourian_escape_room_4_rts
+hook_layout_asm_tourian_escape_room_4:
+    LDA !sram_suppress_flashing : BIT !SUPPRESS_EARTHQUAKE : BNE .rts
     JMP layout_asm_vanilla_tourian_escape_room_4
-  .tourian_escape_room_4_rts
+  .rts
     RTS
 warnpc $8FC96E
 
@@ -562,8 +566,8 @@ hook_layout_asm_electric_death_state_check:
 
 ; Wrecked Ship Energy Tank state check asm
 org $8FCC37
-hook_layout_asm_wrecked_ship_energy_tank_state_check:
-    dw #layout_asm_wrecked_ship_energy_tank_state_check
+hook_layout_asm_ws_etank_state_check:
+    dw #layout_asm_ws_etank_state_check
 
 ; Wrecked Ship Save setup asm
 org $8FCEB4
@@ -1227,15 +1231,15 @@ layout_asm_electric_death_state_check:
     JMP $E5E6
 }
 
-layout_asm_wrecked_ship_energy_tank_varia_tweaks_header:
+layout_asm_ws_etank_varia_tweaks_header:
     dl $C4D883
     db $05, $00, $03
     dw $9C14, $C1E7, $8C27, $00C0, $0000, $0000, $0000, $C337, $0000, $C8C7
 
-layout_asm_wrecked_ship_energy_tank_state_check:
+layout_asm_ws_etank_state_check:
 {
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_DASH_RECALL_OR_VARIA_TWEAKS : BEQ .end_check
-    LDX #layout_asm_wrecked_ship_energy_tank_varia_tweaks_header
+    LDX #layout_asm_ws_etank_varia_tweaks_header
   .end_check
     JMP $E5E6
 }

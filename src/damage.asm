@@ -99,14 +99,17 @@ org $A0A473
 else
 org $A0A463
 endif
-    BIT #$0020 : BEQ .checksuit
+suit_enemy_damage:
+{
+    BIT #$0020 : BEQ .checkSuit
     LSR $12
-  .checksuit
+  .checkSuit
     AND !ram_suits_enemy_damage_check : BEQ .return
     LSR $12
   .return
     LDA $12
     RTL
+}
 
 
 ; Suit metroid damage
@@ -115,14 +118,17 @@ org $A3EEF4
 else
 org $A3EED8
 endif
+suit_metroid_damage:
+{
     LDA #$C000 : STA $12
-    LDA $09A2 : AND !ram_suits_enemy_damage_check : BEQ .metroidcheckgravity
+    LDA $09A2 : AND !ram_suits_enemy_damage_check : BEQ .checkGrav
     LSR $12
-  .metroidcheckgravity
-    LDA $09A2 : BIT #$0020 : BEQ .metroidnogravity
+  .checkGrav
+    LDA $09A2 : BIT #$0020 : BEQ .noGrav
     LSR $12
-  .metroidnogravity
+  .noGrav
     ; Continue vanilla routine
+}
 
 
 org $90FE00
