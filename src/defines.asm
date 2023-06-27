@@ -248,6 +248,8 @@
 !ram_cm_dummy_off = !WRAM_MENU_START+$8C
 !ram_cm_dummy_num = !WRAM_MENU_START+$8E
 
+!ram_cm_keyboard_buffer = !WRAM_MENU_START+$80 ; $18 bytes
+
 ; ^ FREE SPACE ^ up to +$CE
 
 ; Reserve 48 bytes for CGRAM cache
@@ -272,6 +274,10 @@
 !DP_FirstDigit = $1A
 !DP_SecondDigit = $1C
 !DP_ThirdDigit = $1E
+!DP_KB_Index = $18
+!DP_KB_Row = $1A
+!DP_KB_Control = $1C
+!DP_KB_Shift = $1E
 ; v single digit editing v
 !DP_DigitAddress = $20 ; 0x4
 !DP_DigitValue = $24
@@ -309,6 +315,11 @@
 !IH_CONTROLLER_SEC_NEW = $91
 !IH_CONTROLLER_SEC_PREV = $99
 
+!KB_SHIFT1 = $9A
+!KB_SHIFT2 = $9B
+!KB_DEL1 = $9C
+!KB_DEL2 = $9D
+!MENU_CLEAR = #$000E
 !MENU_BLANK = #$281F
 !MENU_SLASH = #$287F
 !IH_BLANK = #$2C0F
@@ -563,7 +574,15 @@
 !sram_seed_X = !SRAM_START+$82
 !sram_seed_Y = !SRAM_START+$84
 
-; ^ FREE SPACE ^ up to +$EE, $100-FCE
+; ^ FREE SPACE ^ up to +$EE, $100-BBE
+
+if !FEATURE_TINYSTATES
+!sram_custom_preset_safewords = !SRAM_START+$E30 ; $20 bytes
+!sram_custom_preset_names = !SRAM_START+$E50 ; $180 bytes
+else
+!sram_custom_preset_safewords = !SRAM_START+$BC0 ; $50 bytes
+!sram_custom_preset_names = !SRAM_START+$C10 ; $3C0 bytes
+endif
 
 ; SM specific things
 !SRAM_MUSIC_DATA = !SRAM_START+$0FD0
