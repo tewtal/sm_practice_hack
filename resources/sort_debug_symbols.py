@@ -13,8 +13,14 @@ new_name = sys.argv[2]
 combined_name = sys.argv[3]
 
 original_file = io.open(os.path.join(os.path.dirname(os.path.realpath(__file__)), original_name), "r")
-new_file = io.open(os.path.join(os.path.dirname(os.path.realpath(__file__)), new_name), "w", newline='\n')
-combined_file = io.open(os.path.join(os.path.dirname(os.path.realpath(__file__)), combined_name), "w", newline='\n')
+new_file = None
+combined_file = None
+
+if len(new_name) > 1:
+   new_file = io.open(os.path.join(os.path.dirname(os.path.realpath(__file__)), new_name), "w", newline='\n')
+
+if len(combined_name) > 1:
+   combined_file = io.open(os.path.join(os.path.dirname(os.path.realpath(__file__)), combined_name), "w", newline='\n')
 
 longest_label = ""
 rows = original_file.readlines()
@@ -31,7 +37,8 @@ for row in rows:
          sorted_rows = sorted(rows_to_sort)
          last_addr = None
          for sorted_row in sorted_rows:
-            new_file.write(sorted_row)
+            if new_file:
+               new_file.write(sorted_row)
             if in_addr_to_line:
                addr = sorted_row.split(' ')[0]
                if last_addr and last_addr == addr:
@@ -42,7 +49,8 @@ for row in rows:
       in_source_files = False
       in_labels = False
       rows_to_sort = []
-      new_file.write(row)
+      if new_file:
+         new_file.write(row)
    elif in_addr_to_line:
       parts = re.split(" |:|\n", row)
       if len(parts) != 5:
@@ -68,7 +76,8 @@ for row in rows:
             if len(label) > len(longest_label):
                longest_label = label
    elif in_source_files:
-      new_file.write(row)
+      if new_file:
+         new_file.write(row)
       parts = re.split(" |\.|\/", row)
       if len(parts) > 3:
          named_source = parts[len(parts) - 2]
@@ -77,7 +86,8 @@ for row in rows:
             sys.exit()
          sources_dict[parts[0]] = named_source
    else:
-      new_file.write(row)
+      if new_file:
+         new_file.write(row)
       if "[addr-to-line mapping]" in row:
          in_addr_to_line = True
       elif "[labels]" in row:
@@ -89,7 +99,8 @@ if 0 != len(rows_to_sort):
    sorted_rows = sorted(rows_to_sort)
    last_addr = None
    for sorted_row in sorted_rows:
-      new_file.write(sorted_row)
+      if new_file:
+         new_file.write(sorted_row)
       if in_addr_to_line:
          addr = sorted_row.split(' ')[0]
          if last_addr and last_addr == addr:
@@ -98,20 +109,22 @@ if 0 != len(rows_to_sort):
          last_addr = addr
 
 original_file.close()
-new_file.close()
 
-sorted_rows = sorted(combined_rows_to_sort)
-for sorted_row in sorted_rows:
-   if len(sorted_row) > 8:
-      bank = int(sorted_row[:2], 16)
-      addr = int(sorted_row[3:7], 16)
-      pc_addr = (bank - 129) * 32768 + addr
-      pc_rom_addr = "        " if pc_addr < 0 else f'{pc_addr:08x}'
-      combined_file.write("%s  %s  %s" % (pc_rom_addr, sorted_row[:7], sorted_row[8:]))
-   else:
-      combined_file.write(sorted_row)
+if new_file:
+   new_file.close()
 
-combined_file.close()
+if combined_file:
+   sorted_rows = sorted(combined_rows_to_sort)
+   for sorted_row in sorted_rows:
+      if len(sorted_row) > 8:
+         bank = int(sorted_row[:2], 16)
+         addr = int(sorted_row[3:7], 16)
+         pc_addr = (bank - 129) * 32768 + addr
+         pc_rom_addr = "        " if pc_addr < 0 else f'{pc_addr:08x}'
+         combined_file.write("%s  %s  %s" % (pc_rom_addr, sorted_row[:7], sorted_row[8:]))
+      else:
+         combined_file.write(sorted_row)
+   combined_file.close()
 
 if unnamed_symbol_found:
    print("sort_debug_symbols.py WARNING unnamed debug symbols detected")
