@@ -701,7 +701,6 @@ endif
   .inGameSegmentTimer
     LDA #!IGT_FRAMES : STA $00
     LDA #$007E : STA $02
-    BRA .drawSegmentTimer
 
   .drawSegmentTimer
     ; Frames

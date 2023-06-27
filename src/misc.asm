@@ -348,7 +348,7 @@ print pc, " misc bank90 end"
 org $8BFA00
 print pc, " misc bank8B start"
 
-; Decompression optimization adapted from Kejardon
+; Decompression optimization adapted from Kejardon, with fixes by PJBoy and Maddo
 ; Compression format: One byte (XXX YYYYY) or two byte (111 XXX YY-YYYYYYYY) headers
 ; XXX = instruction, YYYYYYYYYY = counter
 optimized_decompression_end:
@@ -396,16 +396,7 @@ optimized_decompression:
     BMI .option4567 : BEQ .option0
     CMP #$20 : BEQ .option1
     CMP #$40 : BEQ .option2
-
-    ; Option X = 3: Incrementing fill Y bytes starting with next byte
-    LDA ($47)
-    INC $47 : BNE .option3_read_skip_inc
-    INC $48 : BNE .option3_read_skip_inc
-    JSR decompression_increment_bank
-  .option3_read_skip_inc
-    STA [$4C],Y
-    INC : INY : DEX : BNE .option3_read_skip_inc
-    BRL .next_byte
+    BRL .option3
 
   .option0:
     ; Option X = 0: Directly copy Y bytes
@@ -431,6 +422,8 @@ optimized_decompression:
 
   .option2:
     ; Option X = 2: Copy the next two bytes, one at a time, for the next Y bytes
+    ; Apply PJ's fix to divide X by 2 and set carry if X was odd
+    REP #$20 : TXA : LSR : TAX : SEP #$20
     LDA ($47)
     INC $47 : BNE .option2_lsb_read_skip_inc
     INC $48 : BNE .option2_lsb_read_skip_inc
@@ -441,13 +434,19 @@ optimized_decompression:
     INC $48 : BNE .option2_msb_read_skip_inc
     JSR decompression_increment_bank
   .option2_msb_read_skip_inc
-    XBA : REP #$20
+    XBA
+    ; Apply Maddo's fix accounting for single copy (X = 1 before divide by 2)
+    INX : DEX : BEQ .option2_single_copy
+    REP #$20
   .option2_loop
     STA [$4C],Y
-    INY : DEX : BEQ .option2_end
-    INY : DEX : BNE .option2_loop
-  .option2_end
+    INY : INY : DEX : BNE .option2_loop
+    ; PJ's fix to account for case where X was odd
     SEP #$20
+  .option2_single_copy
+    BCC .option2_end
+    STA [$4C],Y : INY
+  .option2_end
     BRL .next_byte
 
   .option4567:
@@ -501,6 +500,17 @@ optimized_decompression:
     REP #$20
     STA $44 : LDA $4C
     BRA .option_dictionary
+
+  .option3
+    ; Option X = 3: Incrementing fill Y bytes starting with next byte
+    LDA ($47)
+    INC $47 : BNE .option3_read_skip_inc
+    INC $48 : BNE .option3_read_skip_inc
+    JSR decompression_increment_bank
+  .option3_read_skip_inc
+    STA [$4C],Y
+    INC : INY : DEX : BNE .option3_read_skip_inc
+    BRL .next_byte
 }
 
 decompression_increment_bank:
