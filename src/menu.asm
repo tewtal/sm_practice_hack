@@ -1445,7 +1445,7 @@ cm_loop:
     JSL $8289EF ; Sound fx queue
     JSL MenuRNG
 
-    LDA !ram_cm_leave : BEQ .checkCtrlMode
+    LDA !ram_cm_leave : BEQ .check_ctrl_mode
     RTS ; Exit menu loop
 
   .check_ctrl_mode
