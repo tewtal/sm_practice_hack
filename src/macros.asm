@@ -125,13 +125,11 @@ macro cm_numfield(title, addr, start, end, increment, heldincrement, jsltarget)
     db #$28, "<title>", #$FF
 endmacro
 
-macro cm_numfield_word(title, addr, start, end, increment, heldincrement, jsltarget)
+macro cm_numfield_word(title, addr, start, end, jsltarget)
 ; Allows editing a 16-bit value at the specified address
     dw !ACTION_NUMFIELD_WORD
     dl <addr> ; 24bit RAM address to display/manipulate
     dw <start>, <end> ; minimum and maximum values allowed
-    dw <increment> ; inc/dec amount when pressed
-    dw <heldincrement> ; inc/dec amount when direction is held (scroll faster)
     dw <jsltarget> ; 16bit address to code in the same bank as current menu/submenu
     db #$28, "<title>", #$FF
 endmacro
@@ -147,10 +145,12 @@ macro cm_numfield_hex(title, addr, start, end, increment, heldincrement, jsltarg
     db #$28, "<title>", #$FF
 endmacro
 
-macro cm_numfield_hex_word(title, addr)
+macro cm_numfield_hex_word(title, addr, bitmask, jsltarget)
 ; Displays a 16-bit value in hexadecimal
     dw !ACTION_NUMFIELD_HEX_WORD
     dl <addr> ; 24bit RAM address to display/manipulate
+    dw <bitmask> ; 16bit mask to cap value (for colors)
+    dw <jsltarget> ; 16bit address to code in the same bank as current menu/submenu
     db #$28, "<title>", #$FF
 endmacro
 
@@ -314,11 +314,11 @@ macro examplemenu()
     dw #mc_dummy_num
 endmacro
 
-macro palettemenu(title, pointer, addr)
-; menu pointers for customizing menu color palettes
-    %cm_submenu("<title>", <pointer>)
+macro palettemenu(title, label, addr)
+; menu tables for customizing menu color palettes
+    %cm_submenu("<title>", <label>)
 
-<pointer>:
+<label>:
     dw #custompalettes_hex_red
     dw #custompalettes_hex_green
     dw #custompalettes_hex_blue
@@ -327,32 +327,62 @@ macro palettemenu(title, pointer, addr)
     dw #custompalettes_dec_green
     dw #custompalettes_dec_blue
     dw #$FFFF
-    dw <pointer>_hex_hi
-    dw <pointer>_hex_lo
+    dw <label>_hex_word
+    dw #$FFFF
     dw #$FFFF
     %examplemenu()
     dw #$0000
     %cm_header("<title>")
     %cm_footer("THREE WAYS TO EDIT COLORS")
 
-<pointer>_hex_hi:
-    %cm_numfield_hex("SNES BGR - HI BYTE", !ram_cm_custompalette_hi, 0, 255, 1, 8, .routine_hi)
-  .routine_hi
-    %a8() ; sram_custompalette_hi already in A
-    XBA : LDA !ram_cm_custompalette_lo
-    %a16()
-    STA <addr>
-    JSL cm_colors
-    JML MixRGB
-
-<pointer>_hex_lo:
-    %cm_numfield_hex("SNES BGR - LO BYTE", !ram_cm_custompalette_lo, 0, 255, 1, 8, .routine_lo)
-  .routine_lo
-    %a8() ; sram_custompalette_lo already in A
-    XBA : LDA !ram_cm_custompalette_hi : XBA
-    %a16()
+<label>_hex_word:
+    %cm_numfield_hex_word("SNES 15-bit BGR", !ram_cm_custompalette, #$7FFF, .routine)
+  .routine
     STA <addr>
     JSL cm_colors
     JML MixRGB
 }
 endmacro
+
+macro SDE_add(label, value, mask, inverse)
+cm_SDE_add_<label>:
+; subroutine to add to a specific hex digit, used in cm_edit_digits
+    AND <mask> : CMP <mask> : BEQ .inc2zero
+    CLC : ADC <value> : BRA .store
+  .inc2zero
+    LDA #$0000
+  .store
+    STA !DP_DigitValue
+    ; return original value with edited digit masked away
+    LDA [!DP_DigitAddress] : AND <inverse>
+    RTS
+endmacro
+
+macro SDE_sub(label, value, mask, inverse)
+cm_SDE_sub_<label>:
+; subroutine to subtract from a specific hex digit, used in cm_edit_digits
+    AND <mask> : BEQ .set2max
+    SEC : SBC <value> : BRA .store
+  .set2max
+    LDA <mask>
+  .store
+    STA !DP_DigitValue
+    ; return original value with edited digit masked away
+    LDA [!DP_DigitAddress] : AND <inverse>
+    RTS
+endmacro
+
+macro SDE_dec(label, address)
+; increments or decrements an address based on controller input, used in cm_edit_decimal_digits
+    LDA !IH_CONTROLLER_PRI : BIT !IH_INPUT_UP : BNE .<label>_inc
+    ; dec
+    LDA <address> : DEC : BPL .store_<label>
+    LDA #$0009 : BRA .store_<label>
+  .<label>_inc
+    LDA <address> : INC
+    CMP #$000A : BMI .store_<label>
+    LDA #$0000
+  .store_<label>
+    STA <address>
+endmacro
+
