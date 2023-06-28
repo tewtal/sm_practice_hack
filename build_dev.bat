@@ -17,3 +17,4 @@ python create_ips.py ..\build\00.sfc ..\build\ff.sfc ..\build\smhack20_sd2snes_d
 
 del 00.sfc ff.sfc ..\build\00.sfc ..\build\ff.sfc
 cd ..
+PAUSE

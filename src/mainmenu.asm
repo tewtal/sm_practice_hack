@@ -426,9 +426,7 @@ action_select_preset_category:
 {
     TYA : STA !sram_preset_category
     LDA #$0000 : STA !sram_last_preset
-    JSL cm_go_back
-    JSL cm_calculate_max
-    RTL
+    JML cm_previous_menu
 }
 
 LoadRandomPreset:
@@ -629,7 +627,7 @@ CustomPresetsMenu3:
 custompreset_goto_page1:
     %cm_jsl("GOTO PAGE ONE", .routine, #CustomPresetsMenu)
   .routine
-    JSL cm_go_back
+    JSL cm_previous_menu
     %setmenubank()
     JML action_submenu
 
@@ -689,7 +687,7 @@ eq_goto_togglebeams:
     %cm_jsl("Toggle Beams", #eq_prepare_beams_menu, #ToggleBeamsMenu)
 
 eq_currentenergy:
-    %cm_numfield_word("Current Energy", $7E09C2, 0, 2100, 1, 20, #0)
+    %cm_numfield_word("Current Energy", $7E0000+!SAMUS_HP, 0, 2100, #0)
 
 eq_setetanks:
     %cm_numfield("Energy Tanks", !ram_cm_etanks, 0, 21, 1, 1, .routine)
@@ -709,7 +707,7 @@ eq_setetanks:
     RTL
 
 eq_currentreserves:
-    %cm_numfield_word("Current Reserves", $7E09D6, 0, 700, 1, 20, #0)
+    %cm_numfield_word("Current Reserves", $7E0000+!SAMUS_RESERVE_ENERGY, 0, 700, #0)
 
 eq_setreserves:
     %cm_numfield("Reserve Tanks", !ram_cm_reserve, 0, 7, 1, 1, .routine)
@@ -743,28 +741,28 @@ eq_reservemode:
     RTL
 
 eq_currentmissiles:
-    %cm_numfield_word("Current Missiles", $7E09C6, 0, 325, 1, 20, #0)
+    %cm_numfield_word("Current Missiles", $7E0000+!SAMUS_MISSILES, 0, 325, #0)
 
 eq_setmissiles:
-    %cm_numfield_word("Missiles", $7E09C8, 0, 325, 5, 20, .routine)
+    %cm_numfield_word("Missiles", $7E0000+!SAMUS_MISSILES_MAX, 0, 325, .routine)
     .routine
         LDA !SAMUS_MISSILES_MAX : STA !SAMUS_MISSILES ; missiles
         RTL
 
 eq_currentsupers:
-    %cm_numfield("Current Super Missiles", $7E09CA, 0, 65, 1, 5, #0)
+    %cm_numfield("Current Super Missiles", $7E0000+!SAMUS_SUPERS, 0, 65, 1, 5, #0)
 
 eq_setsupers:
-    %cm_numfield("Super Missiles", $7E09CC, 0, 65, 5, 5, .routine)
+    %cm_numfield("Super Missiles", $7E0000+!SAMUS_SUPERS_MAX, 0, 65, 5, 5, .routine)
     .routine
         LDA !SAMUS_SUPERS_MAX : STA !SAMUS_SUPERS ; supers
         RTL
 
 eq_currentpbs:
-    %cm_numfield("Current Power Bombs", $7E09CE, 0, 70, 1, 5, #0)
+    %cm_numfield("Current Power Bombs", $7E0000+!SAMUS_PBS, 0, 70, 1, 5, #0)
 
 eq_setpbs:
-    %cm_numfield("Power Bombs", $7E09D0, 0, 70, 5, 5, .routine)
+    %cm_numfield("Power Bombs", $7E0000+!SAMUS_PBS_MAX, 0, 70, 5, 5, .routine)
     .routine
         LDA !SAMUS_PBS_MAX : STA !SAMUS_PBS ; pbs
         RTL
@@ -1226,10 +1224,10 @@ tb_init_custom_damage:
 }
 
 tb_customchargedamage:
-    %cm_numfield_word("Custom Charge Damage", !sram_custom_charge_damage, 0, 1000, 10, 50, #0)
+    %cm_numfield_word("Custom Charge Damage", !sram_custom_charge_damage, 0, 1000, #0)
 
 tb_customunchargedamage:
-    %cm_numfield_word("Custom Normal Damage", !sram_custom_uncharge_damage, 0, 1000, 10, 50, #0)
+    %cm_numfield_word("Custom Normal Damage", !sram_custom_uncharge_damage, 0, 1000, #0)
 
 equipment_toggle_beams:
 {
@@ -2058,9 +2056,7 @@ ihmode_ramwatch:
 action_select_infohud_mode:
 {
     TYA : STA !sram_display_mode
-    JSL cm_go_back
-    JSL cm_calculate_max
-    RTL
+    JML cm_previous_menu
 }
 
 ih_display_mode:
@@ -2148,9 +2144,7 @@ action_select_room_strat:
 {
     TYA : STA !sram_room_strat
     LDA #!IH_MODE_ROOMSTRAT_INDEX : STA !sram_display_mode
-    JSL cm_go_back
-    JSL cm_calculate_max
-    RTL
+    JML cm_previous_menu
 }
 
 ih_room_strat:
@@ -2608,9 +2602,7 @@ action_assign_input:
   .undetected
     %sfxgoback()
   .done
-    JSL cm_go_back
-    JSL cm_calculate_max
-    RTL
+    JML cm_previous_menu
 }
 
 check_duplicate_inputs:
@@ -2671,8 +2663,7 @@ check_duplicate_inputs:
   .not_detected
     %sfxfail()
     LDA #$FFFF
-    JSL cm_go_back
-    JML cm_calculate_max
+    JML cm_previous_menu
 
   .shot
     LDA !ram_cm_ctrl_swap : AND #$0030 : BEQ .shot_safe  ; check if old input is L or R
@@ -2787,9 +2778,7 @@ action_set_common_controls:
     LDA.l ControllerLayoutTable+10,X : STA !IH_INPUT_ANGLE_UP
     LDA.l ControllerLayoutTable+12,X : STA !IH_INPUT_ANGLE_DOWN
     %sfxconfirm()
-    JSL cm_go_back
-    JSL cm_calculate_max
-    RTL
+    JML cm_previous_menu
 
 ControllerLayoutTable:
     ;  shot     jump     dash     cancel        select        up       down
