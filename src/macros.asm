@@ -80,6 +80,14 @@ macro sfxreset()
     LDA #$001E : JSL !SFX_LIB3 ; quake
 endmacro
 
+macro sfxbeep()
+   LDA #$0036 : JSL !SFX_LIB1 ; beep
+endmacro
+
+macro sfxclick()
+    LDA #$0037 : JSL !SFX_LIB1 ; click
+endmacro
+
 
 ; ---------
 ; Menu Data

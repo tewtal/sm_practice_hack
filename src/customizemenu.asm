@@ -175,9 +175,10 @@ mc_customheader:
     LDA #$5AFE : STA !DP_KB_Control
     ; load existing name
     LDX #$0016 : TXY
--   LDA [!DP_Address],Y : STA !ram_cm_keyboard_buffer,X
+  .loopExistingName
+    LDA [!DP_Address],Y : STA !ram_cm_keyboard_buffer,X
     DEX #2
-    DEY #2 : BPL -
+    DEY #2 : BPL .loopExistingName
   .keyboardMode
     JSL kb_ctrl_mode : BCC .done
     ; check if "nothing" was saved
@@ -656,11 +657,6 @@ ConvertNormal2Header:
     ; replace with byte from second column of table
     INY : LDA.w .Table,Y : STA !sram_custom_header,X
     INX : LDY #$00 : BRA .next_char
-
-  .skip_char
-    ; may have already been converted to header font
-    INX
-    BRA .next_char
 
   .not_found
     ; searched whole table

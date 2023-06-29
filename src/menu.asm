@@ -1098,7 +1098,7 @@ endif
     ASL : ADC !DP_Temp
     CLC : ADC.w #!sram_custom_preset_names : STA !DP_CurrentMenu
     LDA.w #!sram_custom_preset_names>>16 : STA !DP_CurrentMenu+2
-    ; set tilemap position and draw area text
+    ; set tilemap position and draw user generated text
     LDA !DP_JSLTarget : CLC : ADC #$0006 : TAX
     JSR cm_draw_text
 
@@ -1880,8 +1880,7 @@ kb_ctrl_mode:
     LDA #$0000
     STA !DP_KB_Row : STA !ram_cm_horizontal_cursor
     STA !DP_DigitValue : STA !DP_KB_Shift
-    LDA #$0001
-    STA !DP_KB_Index : STA !ram_cm_ctrl_mode
+    LDA #$0001 : STA !ram_cm_ctrl_mode
 
     LDA !DP_KB_Control : CMP #$5AFE : BEQ .countChars
     ; write attribute and terminator bytes
@@ -1922,6 +1921,7 @@ kb_main_loop:
     %sfxconfirm()
     SEC ; return carry set if input saved
   .cancel
+    LDA #$0000 : STA !ram_cm_horizontal_cursor
     RTL
 
   .new_input
@@ -1932,8 +1932,10 @@ kb_main_loop:
 
     ; redraw if inputs pressed
     LDA !ram_cm_controller : BEQ kb_main_loop
+    ; check if select was pressed
+    LDA !DP_KB_Control : CLC : BMI .cancel
     ; check if new char should be written
-    LDA !DP_KB_Control : BMI .cancel : BEQ .redraw
+    BEQ .redraw
     JSR kb_new_char
     STZ !DP_KB_Control
   .redraw
@@ -1952,7 +1954,7 @@ kb_new_char:
     LDA !DP_KB_Index : INC : CMP #$0017 : BMI .done
   .fail
     ; buffer already full
-    LDA #$0036 : JSL !SFX_LIB1 ; beep
+    %sfxbeep()
     LDA #$0017
   .done
     STA !DP_KB_Index
@@ -1990,6 +1992,7 @@ kb_handle_inputs:
     DEC !DP_KB_Control
 
   .input_confirm
+    ; clear to exit kb_ctrl_mode
     LDA #$0000 : STA !ram_cm_ctrl_mode
 
   .return
@@ -2056,10 +2059,10 @@ kb_handle_inputs:
 
     ; load selected character
     LDA !ram_cm_horizontal_cursor : TAY
-    ; need checks here for special chars
+    ; check for special buttons
     LDA (!DP_JSLTarget),Y : AND #$00FF : CMP #$00FF : BEQ .special
     STA !DP_DigitValue
-    LDA #$0037 : JSL !SFX_LIB1 ; click
+    %sfxclick()
     INC !DP_KB_Control
     RTS
 
