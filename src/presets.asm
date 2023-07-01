@@ -585,48 +585,48 @@ preset_open_all_blue_doors:
 
     ; First resolve all door PLMs where the door has previously been opened
     LDX #$004E
-  .plm_search_loop
-    LDA $1C37,X : BEQ .plm_search_done
-    LDY $1D27,X : LDA $0000,Y : CMP #$8A72 : BEQ .plm_door_found
-  .plm_search_resume
-    DEX : DEX : BRA .plm_search_loop
+  .plmSearchLoop
+    LDA $1C37,X : BEQ .plmSearchDone
+    LDY $1D27,X : LDA $0000,Y : CMP #$8A72 : BEQ .plmDoorFound
+  .plmSearchResume
+    DEX : DEX : BRA .plmSearchLoop
 
-  .plm_door_found
-    LDA $1DC7,X : BMI .plm_search_resume
+  .plmDoorFound
+    LDA $1DC7,X : BMI .plmSearchResume
     PHX : JSL $80818E : LDA $7ED8B0,X : PLX
-    AND $05E7 : BEQ .plm_search_resume
+    AND $05E7 : BEQ .plmSearchResume
 
     ; Door has been previously opened
     ; Execute the next PLM instruction to set the BTS as a blue door
     LDA $0002,Y : TAY
-    LDA $0000,Y : CMP #$86BC : BEQ .plm_delete
+    LDA $0000,Y : CMP #$86BC : BEQ .plmDelete
     INY : INY
     JSL preset_execute_plm_instruction
 
-  .plm_delete
+  .plmDelete
     STZ $1C37,X
-    BRA .plm_search_resume
+    BRA .plmSearchResume
 
-  .plm_search_done
+  .plmSearchDone
     ; Now search all of the room BTS for doors
     LDA !ROOM_WIDTH_SCROLLS : STA $C7
     LDA !ROOM_WIDTH_BLOCKS : STA $C1 : ASL : STA $C3
     LDA $7F0000 : LSR : TAY
     STZ $C5 : TDC : %a8() : LDA #$7F : PHA : PLB
 
-  .bts_search_loop
-    LDA $6401,Y : AND #$FC : CMP #$40 : BEQ .bts_found
-  .bts_continue
-    DEY : BNE .bts_search_loop
+  .btsSearchLoop
+    LDA $6401,Y : AND #$FC : CMP #$40 : BEQ .btsFound
+  .btsContinue
+    DEY : BNE .btsSearchLoop
 
     ; All blue doors opened
     PLY : PLX : PLB : PLP : RTS
 
-  .bts_found
+  .btsFound
     ; Convert BTS index to tile index
     ; Also verify this is a door and not a slope or half-tile
     %a16() : TYA : ASL : TAX : %a8()
-    LDA $0001,X : BIT #$30 : BNE .bts_continue
+    LDA $0001,X : BIT #$30 : BNE .btsContinue
 
     ; If this door has a red scroll, then leave it closed
     ; Most of the work is to determine the scroll index
@@ -640,14 +640,14 @@ preset_open_all_blue_doors:
     PHA : PLA : TDC
     LDA $004216 : CLC : ADC $C8
     PHX : TAX : LDA $7ECD20,X : PLX
-    CMP #$00 : BEQ .bts_continue
+    CMP #$00 : BEQ .btsContinue
 
     ; Check what type of door we need to open
-    LDA $6401,Y : BIT #$02 : BNE .bts_check_up_or_down
-    BIT #$01 : BEQ .bts_facing_left_right
+    LDA $6401,Y : BIT #$02 : BNE .btsCheckUpDown
+    BIT #$01 : BEQ .btsFacingLeftRight
     LDA #$04 : STA $C6
 
-  .bts_facing_left_right
+  .btsFacingLeftRight
     %a16() : LDA #$0082 : ORA $C5 : STA $0000,X
     TXA : CLC : ADC $C3 : TAX : LDA #$00A2 : ORA $C5 : STA $0000,X
     TXA : CLC : ADC $C3 : TAX : LDA #$08A2 : ORA $C5 : STA $0000,X
@@ -656,18 +656,18 @@ preset_open_all_blue_doors:
     %a16() : TYA : CLC : ADC $C1 : TAX : TDC : %a8() : STA $6401,X
     %a16() : TXA : CLC : ADC $C1 : TAX : TDC : %a8() : STA $6401,X
     %a16() : TXA : CLC : ADC $C1 : TAX : TDC : %a8() : STA $6401,X
-    BRL .bts_continue
+    BRL .btsContinue
 
-  .bts_check_up_or_down
-    BIT #$01 : BEQ .bts_facing_up_down
+  .btsCheckUpDown
+    BIT #$01 : BEQ .btsFacingUpDown
     LDA #$08 : STA $C6
 
-  .bts_facing_up_down
+  .btsFacingUpDown
     %a16() : LDA #$0084 : ORA $C5 : STA $0006,X
     DEC : STA $0004,X : ORA #$0400 : STA $0002,X : INC : STA $0000,X
     TDC : %a8() : STA $C6 : STA $6401,Y
     STA $6402,Y : STA $6403,Y : STA $6404,Y
-    BRL .bts_continue
+    BRL .btsContinue
 }
 
 preset_execute_plm_instruction:

@@ -144,9 +144,9 @@ org $839A54
 hook_layout_asm_threemusketeers_door0:
     dw #layout_asm_singlechamber
 
-; East Ocean right door asm pointer
+; East Ocean left door
 org $83A26E
-hook_layout_asm_eastocean_right_door:
+hook_layout_asm_electricdeath_door0:
     dw #layout_asm_eastocean
 
 ; Main Street bottom door
@@ -154,92 +154,92 @@ org $83A33A
 hook_layout_asm_glasstunnel_door1:
     dw #layout_asm_mainstreet
 
-; Crab Tunnel left door asm pointer
+; Crab Tunnel left door
 org $83A3B2
-hook_layout_asm_crabtunnel_left_door:
+hook_layout_asm_mainstreet_door1:
     dw #layout_asm_crabtunnel
 
-; Main Street middle-right door asm pointer
+; Main Street middle-right door
 org $83A3E2
-hook_layout_asm_mainstreet_middle_right_door:
+hook_layout_asm_fishtank_door0:
     dw #layout_asm_mainstreet
 
-; Main Street bottom-right door asm pointer
+; Main Street bottom-right door
 org $83A41E
-hook_layout_asm_mainstreet_bottom_right_door:
+hook_layout_asm_crabtunnel_door0:
     dw #layout_asm_mainstreet
 
-; Main Street top-right door asm pointer
+; Main Street top-right door
 org $83A442
-hook_layout_asm_mainstreet_top_right_door:
+hook_layout_asm_mteverest_door1:
     dw #layout_asm_mainstreet
 
-; Main Street hidden door asm pointer
+; Main Street hidden door
 org $83A45A
-hook_layout_asm_mainstreet_hidden_door:
+hook_layout_asm_mteverest_door3:
     dw #layout_asm_mainstreet
 
-; Crab Shaft left door asm pointer
+; Crab Shaft left door
 org $83A472
-hook_layout_asm_crabshaft_left_door:
+hook_layout_asm_mteverest_door5:
     dw #layout_asm_crabshaft_no_scrolls
 
-; Crab Shaft top door asm pointer
+; Crab Shaft top door
 org $83A4EA
-hook_layout_asm_crabshaft_top_door:
+hook_layout_asm_fakeplasmaspark_door1:
     dw #layout_asm_crabshaft_no_scrolls
 
-; Crab Tunnel right door asm pointer
+; Crab Tunnel right door
 org $83A502
-hook_layout_asm_crabtunnel_right_door:
+hook_layout_asm_crabhole_door0:
     dw #layout_asm_crabtunnel
 
-; East Tunnel top-right door asm pointer
+; East Tunnel left door
 org $83A51A
-hook_layout_asm_easttunnel_top_right_door:
+hook_layout_asm_crabhole_door2:
     dw #layout_asm_easttunnel_no_scrolls
 
-; West Sand Hall left door asm pointer
+; West Sand Hall left door
 org $83A53E
-hook_layout_asm_westsandhall_left_door:
+hook_layout_asm_westsandhalltunnel_door1:
     dw #layout_asm_westsandhall
 
 ; West Sand Hall unused door definition
 org $83A654
-hook_layout_asm_westsandhall_unused_door:
+hook_layout_asm_westsandhall_door2:
     dw #$D6FD
     db #$00, #$05, #$3E, #$06, #$03, #$00
     dw #$8000
     dw #$0000
 
-; West Sand Hall right door asm pointer
+; West Sand Hall right door
 org $83A66A
-hook_layout_asm_westsandhall_right_door:
+hook_layout_asm_oasis_door0:
     dw #layout_asm_westsandhall
 
-; West Sand Hall top sand door asm pointer
+; West Sand Hall top sand door
 org $83A6BE
-hook_layout_asm_westsandhall_top_sand_door:
+hook_layout_asm_westsandhole_door1:
     dw #layout_asm_westsandhall
 
-; Mother Brain right door asm pointer
+; Mother Brain right door
 org $83AAD2
-hook_layout_asm_mbhp_right_door:
+hook_layout_asm_rinkashaft_door2:
     dw #layout_asm_mbhp
 
-; Mother Brain left door asm pointer
+; Mother Brain left door
 org $83AAEA
-hook_layout_asm_mbhp_left_door:
+hook_layout_asm_tourianescape1_door0:
     dw #layout_asm_mbhp
 
-; Magnet Stairs left door asm pointer
+; Magnet Stairs left door
 org $83AB6E
-hook_layout_asm_magnetstairs_left_door:
+hook_layout_asm_fallingtile_door1:
     dw #layout_asm_magnetstairs
 
-; Magnet Stairs right door asm pointer
+; Magnet Stairs right door
 org $83AB92
-hook_layout_asm_magnetstairs_right_door:
+hook_layout_asm_deadscientist_door0:
     dw #layout_asm_magnetstairs
 
 
@@ -281,7 +281,7 @@ layout_bomb_set_room_argument:
 warnpc $84BAF4
 
 org $84D33B
-layout_bomb_torizo_crumbling_chozo_preinstruction:
+layout_bomb_torizo_crumbling_preinstruction:
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_VARIA_TWEAKS : BNE layout_bomb_torizo_end_preinstruction
     LDA !SAMUS_ITEMS_COLLECTED : AND #$1000 : BEQ layout_bomb_torizo_end_preinstruction
 
@@ -344,9 +344,9 @@ hook_layout_spazer_block_plm_entry:
 ; Parlor escape setup asm
 org $8F919C
 layout_parlor_escape_setup_asm:
-    LDA !sram_suppress_flashing : BIT !SUPPRESS_EARTHQUAKE : BNE .parlor_escape_rts
+    LDA !sram_suppress_flashing : BIT !SUPPRESS_EARTHQUAKE : BNE .rts
     JMP layout_asm_vanilla_parlor_escape
-  .parlor_escape_rts
+  .rts
     RTS
 warnpc $8F91A9
 
@@ -626,13 +626,13 @@ hook_layout_main_asm_tourian_escape_room_4:
 
 ; Ceres Ridley modified state check to support presets
 org $8FE0C0
-hook_layout_asm_ceres_ridley_room_state_check:
-    dw layout_asm_ceres_ridley_room_state_check
+hook_layout_asm_ceres_ridley_state_check:
+    dw layout_asm_ceres_ridley_state_check
 
 ; Ceres Ridley room setup asm when timer is not running
 org $8FE0DF
-hook_layout_asm_ceres_ridley_room_no_timer:
-    dw layout_asm_ceres_ridley_room_no_timer
+hook_layout_asm_ceres_ridley_no_timer:
+    dw layout_asm_ceres_ridley_no_timer
 
 ; East Tunnel bottom-left and bottom-right door asm
 org $8FE34E
@@ -789,18 +789,18 @@ layout_asm_mbhp:
     RTS
 }
 
-layout_asm_ceres_ridley_room_state_check:
+layout_asm_ceres_ridley_state_check:
 {
-    LDA $0943 : BEQ .no_timer
+    LDA $0943 : BEQ .noTimer
     LDA $0001,X : TAX
     JMP $E5E6
-  .no_timer
+  .noTimer
     STZ $093F
     INX : INX : INX
     RTS
 }
 
-layout_asm_ceres_ridley_room_no_timer:
+layout_asm_ceres_ridley_no_timer:
 {
     ; Same as original setup asm, except force blue background
     PHP

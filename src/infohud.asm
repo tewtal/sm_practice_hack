@@ -325,18 +325,18 @@ ih_after_room_transition:
     STA !REALTIME_LAG_COUNTER
 
     ; Check if MBHP needs to be disabled
-    LDA !sram_display_mode : CMP #!IH_MODE_ROOMSTRAT_INDEX : BNE .check_reset_segment_timer
-    LDA !sram_room_strat : CMP #!IH_STRAT_MBHP_INDEX : BNE .check_reset_segment_timer
-    LDA !ROOM_ID : CMP #$DD58 : BEQ .check_reset_segment_timer
+    LDA !sram_display_mode : CMP #!IH_MODE_ROOMSTRAT_INDEX : BNE .segmentTimer
+    LDA !sram_room_strat : CMP #!IH_STRAT_MBHP_INDEX : BNE .segmentTimer
+    LDA !ROOM_ID : CMP #$DD58 : BEQ .segmentTimer
     LDA #$0000 : STA !sram_display_mode
 
-  .check_reset_segment_timer
-    LDA !ram_reset_segment_later : BEQ .update_hud
+  .segmentTimer
+    LDA !ram_reset_segment_later : BEQ .updateHud
     LDA #$0000 : STA !ram_reset_segment_later
     STA !ram_seg_rt_frames : STA !ram_seg_rt_seconds
     STA !ram_seg_rt_minutes
 
-  .update_hud
+  .updateHud
     JSL ih_update_hud_code
 
     ; Reset gametime/transition timer
@@ -755,44 +755,45 @@ ih_hud_vanilla_health:
     LDY #$0000 : LDA $4214
     INC : STA $16
 
-  .vanilla_loop_tanks
-    DEC $16 : BEQ .vanilla_draw_empty_tanks
+  .loopTanks
+    DEC $16 : BEQ .drawEmptyTanks
     LDX #$3430
-    LDA $14 : BEQ .vanilla_draw_tank_health
+    LDA $14 : BEQ .drawTankHealth
     DEC $14 : LDX #$2831
-  .vanilla_draw_tank_health
+  .drawTankHealth
     TXA : LDX $9CCE,Y : STA !HUD_TILEMAP+$08,X
-    INY : INY : CPY #$001C : BMI .vanilla_loop_tanks
-    BRA .vanilla_subtank_health
+    INY : INY : CPY #$001C : BMI .loopTanks
+    BRA .subtankHealth
 
-  .vanilla_draw_empty_tanks
+  .drawEmptyTanks
      LDA !IH_BLANK
-  .vanilla_loop_empty_tanks
+  .loopEmptyTanks
      LDX $9CCE,Y : STA !HUD_TILEMAP+$08,X
-     INY : INY : CPY #$001C : BMI .vanilla_loop_empty_tanks
+     INY : INY : CPY #$001C : BMI .loopEmptyTanks
 
-  .vanilla_subtank_health
+  .subtankHealth
     LDA $12 : LDX #$0094 : JSR Draw2
-    LDA $16 : BNE .vanilla_subtank_whitespace
+    LDA $16 : BNE .subtankWhitespace
     ; Draw the leading zero
     LDA.w NumberGFXTable : STA !HUD_TILEMAP+$94
 
-  .vanilla_subtank_whitespace
+  .subtankWhitespace
     LDA !IH_BLANK : STA !HUD_TILEMAP+$92 : STA !HUD_TILEMAP+$98 : STA !HUD_TILEMAP+$9A
     STA !HUD_TILEMAP+$08 : STA !HUD_TILEMAP+$48 : STA !HUD_TILEMAP+$88
 
-    LDA !SAMUS_RESERVE_MODE : CMP #$0001 : BNE .vanilla_no_reserves
+    LDA !SAMUS_RESERVE_MODE : CMP #$0001 : BNE .noReserves
 
     ; Draw reserve icon
-    LDY #$998B : LDA !SAMUS_RESERVE_ENERGY : BNE .vanilla_draw_reserve_icon
+    LDY #$998B : LDA !SAMUS_RESERVE_ENERGY : BNE .drawReserveIcon
     LDY #$9997
-  .vanilla_draw_reserve_icon
+  .drawReserveIcon
     LDA $0000,Y : STA !HUD_TILEMAP+$18 : LDA $0002,Y : STA !HUD_TILEMAP+$1A
     LDA $0004,Y : STA !HUD_TILEMAP+$58 : LDA $0006,Y : STA !HUD_TILEMAP+$5A
     RTS
 
-  .vanilla_no_reserves
-    LDA !IH_BLANK : STA !HUD_TILEMAP+$18 : STA !HUD_TILEMAP+$1A : STA !HUD_TILEMAP+$58 : STA !HUD_TILEMAP+$5A
+  .noReserves
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$18 : STA !HUD_TILEMAP+$1A
+    STA !HUD_TILEMAP+$58 : STA !HUD_TILEMAP+$5A
     RTS
 }
 

@@ -130,7 +130,7 @@ if unnamed_symbol_found:
    print("sort_debug_symbols.py WARNING unnamed debug symbols detected")
    sys.exit()
 
-recommended_max_label_length = 52
+recommended_max_label_length = 48
 if len(longest_label) > recommended_max_label_length:
    print("sort_debug_symbols.py WARNING labels exceeding recommended length of %d detected" % recommended_max_label_length)
    print("longest label (length %d) = %s" % (len(longest_label), longest_label))

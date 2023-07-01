@@ -273,7 +273,7 @@ crateria_1_palette_fx_preinstruction:
     RTS
 }
 
-crateria_1_set_palette_fx_preinstruction:
+crateria_1_set_fx_preinstruction:
 {
     LDA !sram_suppress_flashing : BIT !SUPPRESS_CRATERIA_LIGHTNING : BNE .suppress
 
@@ -288,7 +288,7 @@ crateria_1_set_palette_fx_preinstruction:
 }
 
 crateria_1_palette:
-    dw #crateria_1_set_palette_fx_preinstruction
+    dw #crateria_1_set_fx_preinstruction
     dw $C655, $00A8
 crateria_1_palette_loop:
     dw $00F0, $2D6C, $294B, $252A, $2109, $1CE8, $18C7, $14A6, $1085, $C595
@@ -955,7 +955,7 @@ org $A9AF16
 else
 org $A9AF06
 endif
-    LDA #cutscenes_mb_death_move_to_back_of_room
+    LDA #cutscenes_mb_death_move_to_back_wall
 
 if !FEATURE_PAL
 org $A9AF57
@@ -1422,7 +1422,7 @@ endif
     JMP ($0FA8)
 }
 
-cutscenes_mb_death_move_to_back_of_room:
+cutscenes_mb_death_move_to_back_wall:
 {
     LDA !sram_cutscenes : BIT !CUTSCENE_FAST_MB : BEQ .continue
     LDA #$000A : STA $0FB2

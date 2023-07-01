@@ -1212,23 +1212,25 @@ draw_ram_watch:
     LDX #$2C4E
     LDA !ram_watch_write_mode : BNE .both_8bit
     TXA : STA !ram_tilemap_buffer+$5D0 : STA !ram_tilemap_buffer+$5E6
-    BRA +
+    BRA .draw_hex
   .both_8bit
     TXA : STA !ram_tilemap_buffer+$5D4 : STA !ram_tilemap_buffer+$5EA
 
     ; Draw hexidecimal numbers
-+   LDX #$05D2 ; position for left hex
+  .draw_hex
+    LDX #$05D2 ; position for left hex
     LDA !ram_watch_left : CLC : ADC !ram_watch_left_index : STA !DP_Address
     LDA !ram_watch_bank : STA !DP_Address+2
     LDA [!DP_Address] : STA !DP_DrawValue
 
     ; check if 8-bit mode
-    LDA !ram_watch_write_mode : BEQ +
+    LDA !ram_watch_write_mode : BEQ .draw_left
     LDA !DP_DrawValue : AND #$00FF : STA !DP_DrawValue
     BRA .left_8bit
 
+  .draw_left
     ; (X000)
-+   LDA !DP_DrawValue : AND #$F000 : XBA : LSR #3 : TAY
+    LDA !DP_DrawValue : AND #$F000 : XBA : LSR #3 : TAY
     LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer,X
     ; (0X00)
     LDA !DP_DrawValue : AND #$0F00 : XBA : ASL : TAY
@@ -1250,12 +1252,13 @@ draw_ram_watch:
     LDA [!DP_Address] : STA !DP_DrawValue
 
     ; check if 8-bit mode
-    LDA !ram_watch_write_mode : BEQ +
+    LDA !ram_watch_write_mode : BEQ .draw_right
     LDA !DP_DrawValue : AND #$00FF : STA !DP_DrawValue
     BRA .right_8bit
 
+  .draw_right
     ; (X000)
-+   LDA !DP_DrawValue : AND #$F000 : XBA : LSR #3 : TAY
+    LDA !DP_DrawValue : AND #$F000 : XBA : LSR #3 : TAY
     LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer,X
     ; (0X00)
     LDA !DP_DrawValue : AND #$0F00 : XBA : ASL : TAY
@@ -1621,11 +1624,12 @@ cm_edit_digits:
     ; use horizontal cursor index to ADC/SBC
     LDA !ram_cm_horizontal_cursor : ASL : TAX
     ; determine which direction was pressed
-    LDA !IH_CONTROLLER_PRI : BIT !IH_INPUT_UP : BNE +
+    LDA !IH_CONTROLLER_PRI : BIT !IH_INPUT_UP : BNE .incDecDigit
     TXA : CLC : ADC #$0008 : TAX
 
+  .incDecDigit
     ; subroutine to inc/dec digit
-+   LDA [!DP_DigitAddress] : JSR (cm_SingleDigitEdit,X)
+    LDA [!DP_DigitAddress] : JSR (cm_SingleDigitEdit,X)
     ; returns full value with selected digit cleared
     ; combine with modified digit and cap with bitmask in !DP_DigitMaximum
     ORA !DP_DigitValue : AND !DP_DigitMaximum : STA [!DP_DigitAddress]
@@ -1772,11 +1776,12 @@ cm_edit_decimal_digits:
 
     ; is editing thousands digit allowed?
     LDA #$2C70
-    LDY !DP_DigitMaximum : CPY #1000 : BMI +
+    LDY !DP_DigitMaximum : CPY #1000 : BMI .drawThreeDigits
 
     ; start with zero tiles
     STA !ram_tilemap_buffer+0,X
-+   STA !ram_tilemap_buffer+2,X
+  .drawThreeDigits
+    STA !ram_tilemap_buffer+2,X
     STA !ram_tilemap_buffer+4,X
     STA !ram_tilemap_buffer+6,X
 
@@ -1824,11 +1829,12 @@ cm_edit_decimal_digits:
   .exit
     ; check if value is inbounds
     LDA !DP_DigitValue : CMP !DP_DigitMaximum : BMI .check_minimum
-    LDA !DP_DigitMaximum : DEC : BRA + ; was max+1 for convenience
+    LDA !DP_DigitMaximum : DEC : BRA .store_value ; was max+1 for convenience
   .check_minimum
-    CMP !DP_DigitMinimum : BPL +
+    CMP !DP_DigitMinimum : BPL .store_value
     LDA !DP_DigitMinimum
-+   STA [!DP_DigitAddress]
+  .store_value
+    STA [!DP_DigitAddress]
 
     ; skip if JSL target is zero
     LDA !DP_JSLTarget : BEQ .end

@@ -1185,41 +1185,41 @@ tb_customdamage:
 tb_init_custom_damage:
 {
     LDA !sram_custom_damage : BEQ .vanilla
-    DEC : DEC : BEQ .dash_charge_0
-    DEC : BEQ .dash_charge_1
-    DEC : BEQ .dash_charge_2
-    DEC : BEQ .dash_charge_3
-    DEC : BEQ .dash_charge_4
+    DEC : DEC : BEQ .dashCharge0
+    DEC : BEQ .dashCharge1
+    DEC : BEQ .dashCharge2
+    DEC : BEQ .dashCharge3
+    DEC : BEQ .dashCharge4
     RTL
 
   .vanilla
-    JSL compute_vanilla_charged_beam_damage : STA !sram_custom_charge_damage
-    JSL compute_vanilla_uncharged_beam_damage : STA !sram_custom_uncharge_damage
+    JSL compute_vanilla_charged_damage : STA !sram_custom_charge_damage
+    JSL compute_vanilla_uncharged_damage : STA !sram_custom_uncharge_damage
     RTL
 
-  .dash_charge_0
-    JSL compute_dash_charge_0_beam_damage : STA !sram_custom_charge_damage
-    JSL compute_dash_charge_0_beam_damage : STA !sram_custom_uncharge_damage
+  .dashCharge0
+    JSL compute_dash_charge_0_damage : STA !sram_custom_charge_damage
+    JSL compute_dash_charge_0_damage : STA !sram_custom_uncharge_damage
     RTL
 
-  .dash_charge_1
-    JSL compute_dash_charge_1_beam_damage : STA !sram_custom_charge_damage
-    JSL compute_dash_charge_0_beam_damage : STA !sram_custom_uncharge_damage
+  .dashCharge1
+    JSL compute_dash_charge_1_damage : STA !sram_custom_charge_damage
+    JSL compute_dash_charge_0_damage : STA !sram_custom_uncharge_damage
     RTL
 
-  .dash_charge_2
-    JSL compute_dash_charge_2_beam_damage : STA !sram_custom_charge_damage
-    JSL compute_dash_charge_0_beam_damage : STA !sram_custom_uncharge_damage
+  .dashCharge2
+    JSL compute_dash_charge_2_damage : STA !sram_custom_charge_damage
+    JSL compute_dash_charge_0_damage : STA !sram_custom_uncharge_damage
     RTL
 
-  .dash_charge_3
-    JSL compute_dash_charge_3_beam_damage : STA !sram_custom_charge_damage
-    JSL compute_dash_charge_0_beam_damage : STA !sram_custom_uncharge_damage
+  .dashCharge3
+    JSL compute_dash_charge_3_damage : STA !sram_custom_charge_damage
+    JSL compute_dash_charge_0_damage : STA !sram_custom_uncharge_damage
     RTL
 
-  .dash_charge_4
-    JSL compute_dash_charge_4_beam_damage : STA !sram_custom_charge_damage
-    JSL compute_dash_charge_0_beam_damage : STA !sram_custom_uncharge_damage
+  .dashCharge4
+    JSL compute_dash_charge_4_damage : STA !sram_custom_charge_damage
+    JSL compute_dash_charge_0_damage : STA !sram_custom_uncharge_damage
     RTL
 }
 

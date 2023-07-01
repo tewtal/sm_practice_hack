@@ -169,6 +169,7 @@ ram_cm_menu_stack = !ram_cm_menu_stack ; !WRAM_MENU_START+$00         ; 16 bytes
 ram_cm_cursor_stack = !ram_cm_cursor_stack ; !WRAM_MENU_START+$10       ; 16 bytes
 
 ram_cm_cursor_max = !ram_cm_cursor_max ; !WRAM_MENU_START+$20
+ram_cm_horizontal_cursor = !ram_cm_horizontal_cursor ; !WRAM_MENU_START+$22
 ram_cm_input_timer = !ram_cm_input_timer ; !WRAM_MENU_START+$24
 ram_cm_controller = !ram_cm_controller ; !WRAM_MENU_START+$26
 ram_cm_menu_bank = !ram_cm_menu_bank ; !WRAM_MENU_START+$28
@@ -215,23 +216,10 @@ ram_seed_Y = !ram_seed_Y ; !WRAM_MENU_START+$62
 ; The following RAM may be used multiple times,
 ; as long as it isn't used multiple times on the same menu page
 
-ram_cm_watch_left_hi = !ram_cm_watch_left_hi ; !WRAM_MENU_START+$80
-ram_cm_watch_left_lo = !ram_cm_watch_left_lo ; !WRAM_MENU_START+$82
-ram_cm_watch_right_hi = !ram_cm_watch_right_hi ; !WRAM_MENU_START+$84
-ram_cm_watch_right_lo = !ram_cm_watch_right_lo ; !WRAM_MENU_START+$86
-ram_cm_watch_left_index_lo = !ram_cm_watch_left_index_lo ; !WRAM_MENU_START+$88
-ram_cm_watch_left_index_hi = !ram_cm_watch_left_index_hi ; !WRAM_MENU_START+$8A
-ram_cm_watch_right_index_lo = !ram_cm_watch_right_index_lo ; !WRAM_MENU_START+$8C
-ram_cm_watch_right_index_hi = !ram_cm_watch_right_index_hi ; !WRAM_MENU_START+$8E
-ram_cm_watch_edit_left_hi = !ram_cm_watch_edit_left_hi ; !WRAM_MENU_START+$90
-ram_cm_watch_edit_left_lo = !ram_cm_watch_edit_left_lo ; !WRAM_MENU_START+$92
-ram_cm_watch_edit_right_hi = !ram_cm_watch_edit_right_hi ; !WRAM_MENU_START+$94
-ram_cm_watch_edit_right_lo = !ram_cm_watch_edit_right_lo ; !WRAM_MENU_START+$96
-ram_cm_watch_enemy_property = !ram_cm_watch_enemy_property ; !WRAM_MENU_START+$98
-ram_cm_watch_enemy_index = !ram_cm_watch_enemy_index ; !WRAM_MENU_START+$9A
-ram_cm_watch_enemy_side = !ram_cm_watch_enemy_side ; !WRAM_MENU_START+$9C
-ram_cm_watch_bank = !ram_cm_watch_bank ; !WRAM_MENU_START+$9E
-ram_cm_watch_common_address = !ram_cm_watch_common_address ; !WRAM_MENU_START+$A0
+ram_cm_watch_enemy_property = !ram_cm_watch_enemy_property ; !WRAM_MENU_START+$80
+ram_cm_watch_enemy_index = !ram_cm_watch_enemy_index ; !WRAM_MENU_START+$82
+ram_cm_watch_enemy_side = !ram_cm_watch_enemy_side ; !WRAM_MENU_START+$84
+ram_cm_watch_common_address = !ram_cm_watch_common_address ; !WRAM_MENU_START+$86
 
 ram_cm_phan_first_phase = !ram_cm_phan_first_phase ; !WRAM_MENU_START+$80
 ram_cm_phan_second_phase = !ram_cm_phan_second_phase ; !WRAM_MENU_START+$82
@@ -254,8 +242,7 @@ ram_cm_plasma = !ram_cm_plasma ; !WRAM_MENU_START+$9A
 ram_cm_custompalette_blue = !ram_cm_custompalette_blue ; !WRAM_MENU_START+$80
 ram_cm_custompalette_green = !ram_cm_custompalette_green ; !WRAM_MENU_START+$82
 ram_cm_custompalette_red = !ram_cm_custompalette_red ; !WRAM_MENU_START+$84
-ram_cm_custompalette_hi = !ram_cm_custompalette_hi ; !WRAM_MENU_START+$86
-ram_cm_custompalette_lo = !ram_cm_custompalette_lo ; !WRAM_MENU_START+$88
+ram_cm_custompalette = !ram_cm_custompalette ; !WRAM_MENU_START+$86
 ram_cm_dummy_on = !ram_cm_dummy_on ; !WRAM_MENU_START+$8A
 ram_cm_dummy_off = !ram_cm_dummy_off ; !WRAM_MENU_START+$8C
 ram_cm_dummy_num = !ram_cm_dummy_num ; !WRAM_MENU_START+$8E
@@ -263,7 +250,7 @@ ram_cm_dummy_num = !ram_cm_dummy_num ; !WRAM_MENU_START+$8E
 ; ^ FREE SPACE ^ up to +$CE
 
 ; Reserve 48 bytes for CGRAM cache
-; Currently first 22 bytes and last 2 bytes are used
+; Currently first 28 bytes plus last 2 bytes are used
 ram_cgram_cache = !ram_cgram_cache ; !WRAM_MENU_START+$D0
 
 ; -----

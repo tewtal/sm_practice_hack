@@ -336,8 +336,8 @@ macro palettemenu(title, label, addr)
     %cm_footer("THREE WAYS TO EDIT COLORS")
 
 <label>_hex_word:
-    %cm_numfield_hex_word("SNES 15-bit BGR", !ram_cm_custompalette, #$7FFF, .routine)
-  .routine
+    %cm_numfield_hex_word("SNES 15-bit BGR", !ram_cm_custompalette, #$7FFF, .set)
+  .set
     STA <addr>
     JSL cm_colors
     JML MixRGB
