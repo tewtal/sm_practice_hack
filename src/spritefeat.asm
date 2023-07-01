@@ -666,9 +666,6 @@ update_enemyproj_sprite_hitbox:
   .fullStack
     RTS
 
-  .skipProjectile32x32
-    JMP .skipProjectile
-
   .check32x32
     LDA !ENEMY_PROJ_PROPERTIES,X : AND #$A000 : CMP #$8000 : BNE .skipProjectile32x32
     LDA !ENEMY_PROJ_X,X : CMP !LAYER1_X : BMI .skipProjectile32x32
@@ -678,6 +675,8 @@ update_enemyproj_sprite_hitbox:
 
     LDA !ENEMY_PROJ_Y,X : AND #$FFE0 : CMP $14 : BNE .storeYandDraw32x32
     LDA !ENEMY_PROJ_X,X : AND #$FFE0 : CMP $12 : BNE .storeXandDraw32x32
+
+  .skipProjectile32x32
     JMP .skipProjectile
 
   .storeXandDraw32x32
