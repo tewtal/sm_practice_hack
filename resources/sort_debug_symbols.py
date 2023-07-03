@@ -12,15 +12,29 @@ original_name = sys.argv[1]
 new_name = sys.argv[2]
 combined_name = sys.argv[3]
 
-original_file = io.open(os.path.join(os.path.dirname(os.path.realpath(__file__)), original_name), "r")
+original_file = None
 new_file = None
 combined_file = None
 
+try:
+   original_file = io.open(os.path.join(os.path.dirname(os.path.realpath(__file__)), original_name), "r")
+except OSError as e:
+   print(f"Unable to open {original_name}: {e}", file=sys.stderr)
+   sys.exit()
+
 if len(new_name) > 1:
-   new_file = io.open(os.path.join(os.path.dirname(os.path.realpath(__file__)), new_name), "w", newline='\n')
+   try:
+      new_file = io.open(os.path.join(os.path.dirname(os.path.realpath(__file__)), new_name), "w", newline='\n')
+   except OSError as e:
+      print(f"Unable to open {new_name}: {e}", file=sys.stderr)
+      sys.exit()
 
 if len(combined_name) > 1:
-   combined_file = io.open(os.path.join(os.path.dirname(os.path.realpath(__file__)), combined_name), "w", newline='\n')
+   try:
+      combined_file = io.open(os.path.join(os.path.dirname(os.path.realpath(__file__)), combined_name), "w", newline='\n')
+   except OSError as e:
+      print(f"Unable to open {combined_name}: {e}", file=sys.stderr)
+      sys.exit()
 
 longest_label = ""
 rows = original_file.readlines()
