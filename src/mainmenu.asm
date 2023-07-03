@@ -2419,6 +2419,7 @@ CutscenesMenu:
     dw #$FFFF
     dw #cutscenes_fast_kraid
     dw #cutscenes_fast_phantoon
+    dw #cutscenes_fast_bowling
     dw #cutscenes_fast_mb
     dw #$FFFF
     dw #cutscenes_suppress_crateria_lightning
@@ -2450,6 +2451,9 @@ cutscenes_fast_kraid:
 
 cutscenes_fast_phantoon:
     %cm_toggle_bit("Skip Phantoon Intro", !sram_cutscenes, !CUTSCENE_FAST_PHANTOON, #0)
+
+cutscenes_fast_bowling:
+    %cm_toggle_bit("Fast Bowling", !sram_cutscenes, !CUTSCENE_FAST_BOWLING, #0)
 
 cutscenes_fast_mb:
     %cm_toggle_bit("Fast Mother Brain", !sram_cutscenes, !CUTSCENE_FAST_MB, #0)
