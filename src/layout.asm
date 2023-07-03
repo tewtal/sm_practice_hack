@@ -844,8 +844,11 @@ layout_asm_greenhillzone:
     LDA #$00FF : STA $7F37C8 : STA $7F37CA : STA $7F37CC
     STA $7F38CA : STA $7F39CA : STA $7F3ACA : STA $7F3BCA
 
-    ; Clear gate PLMs and projectiles
-    LDA #$0000 : STA $1C83 : STA $1C85 : STA $19B9
+    ; Clear gate projectile
+    TDC : STA $19B9
+
+    ; Delete gate PLMs
+    LDA #!PLM_DELETE : STA $1D73 : STA $1D75
 
     ; Add platform for ease of access to top-right door
     %a8()
@@ -995,8 +998,11 @@ layout_asm_crabtunnel:
     ; Remove remaining gate tiles
     LDA #$00FF : STA $7F041E : STA $7F049E : STA $7F051E : STA $7F059E
 
-    ; Clear gate PLMs and projectiles
-    TDC : STA $1C83 : STA $1C85 : STA $19B9
+    ; Clear gate projectile
+    TDC : STA $19B9
+
+    ; Delete gate PLMs
+    LDA #!PLM_DELETE : STA $1D73 : STA $1D75
 
     ; Slope BTS for top of the gate tiles
     %a8()
