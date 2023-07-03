@@ -224,6 +224,8 @@ Provides feedback on attempts to flush the two robots in the Bowling Alley:
 
 Thus 1122 indicates both robots were successfully flushed.
 
+Specifically, the first number for each robot is tied to a an AI Variable that seems to be something like the "aggro level". It goes up when you shoot the robot, and decays downwards over time. If the robot is hit but fails to fall in, the value will eventually decay low enough that the first number will disappear. Then the second number is just tied to the Y position, to tell if it's in the pit.
+
 ## Shine to PB
 Similar to shinespark, except Samus HP is overwritten to display information for the power bomb. Counts down the frames from the time you charge a shinespark until the time the charge runs out. If you activate the shinespark in time, it will display the number of frames to spare. If you lay a power bomb, it will display the number of frames to spare.
 
