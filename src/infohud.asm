@@ -34,8 +34,8 @@ org $9493FB      ; hijack, runs when Samus hits a door BTS
 org $82E764      ; hijack, runs when Samus is coming out of a room transition
     JSL ih_after_room_transition : RTS
 
-org $809B4C      ; hijack, HUD routine (game timer by Quote58)
-    JSL ih_hud_code : NOP
+org $809B48      ; hijack, HUD routine (game timer by Quote58)
+    JSL ih_hud_code
 
 org $8290F6      ; hijack, HUD routine while paused
     JSL ih_hud_code_paused
@@ -554,9 +554,11 @@ ih_update_hud_code:
   .mmRoomTimer
     STZ $4205
     LDA !sram_frame_counter_mode : BNE .mmInGameTimer
+    LDA !IH_DECIMAL : STA !HUD_TILEMAP+$B4
     LDA !ram_last_realtime_room
     BRA .mmCalculateTimer
   .mmInGameTimer
+    LDA !IH_HYPHEN : STA !HUD_TILEMAP+$B4
     LDA !ram_last_gametime_room
   .mmCalculateTimer
     ; Divide time by 60 or 50 and draw seconds and frames
@@ -572,7 +574,6 @@ endif
     PEA $0000 : PLA ; wait for CPU math
     LDA $4216 : STA $C1
     LDA $4214 : LDX #$00B0 : JSR Draw2
-    LDA !IH_DECIMAL : STA !HUD_TILEMAP+$B4
     LDA $C1 : ASL : TAX
     LDA HexToNumberGFX1,X : STA !HUD_TILEMAP+$B6
     LDA HexToNumberGFX2,X : STA !HUD_TILEMAP+$B8
@@ -598,9 +599,11 @@ endif
   .pickRoomTimer
     STZ $4205
     LDA !sram_frame_counter_mode : BNE .inGameRoomTimer
+    LDA !IH_DECIMAL : STA !HUD_TILEMAP+$42
     LDA !ram_last_realtime_room
     BRA .calculateRoomTimer
   .inGameRoomTimer
+    LDA !IH_HYPHEN : STA !HUD_TILEMAP+$42
     LDA !ram_last_gametime_room
   .calculateRoomTimer
     ; Divide time by 60 or 50 and draw seconds and frames
@@ -616,7 +619,6 @@ endif
     PEA $0000 : PLA ; wait for CPU math
     LDA $4216 : STA $C1
     LDA $4214 : JSR Draw3 : TXY
-    LDA !IH_DECIMAL : STA !HUD_TILEMAP+$00,X
     LDA $C1 : ASL : TAX
     LDA HexToNumberGFX1,X : PHX : TYX : STA !HUD_TILEMAP+$02,X
     PLX : LDA HexToNumberGFX2,X : TYX : STA !HUD_TILEMAP+$04,X
@@ -716,8 +718,15 @@ endif
     ; Minutes
     LDA [$00] : LDX #$00AE : JSR Draw3
 
-    ; Draw decimal seperators
+    ; Draw decimal/hyphen seperators
+    LDA !sram_frame_counter_mode : BNE .ingameSeparators
     LDA !IH_DECIMAL : STA !HUD_TILEMAP+$B4 : STA !HUD_TILEMAP+$BA
+    BRA .blankEnd
+
+  .ingameSeparators
+    LDA !IH_HYPHEN : STA !HUD_TILEMAP+$B4 : STA !HUD_TILEMAP+$BA
+
+  .blankEnd
     LDA !IH_BLANK : STA !HUD_TILEMAP+$C0
     BRL .end
 }
@@ -965,8 +974,8 @@ endif
   .end
     PLB
     ; overwritten code
-    REP #$30
-    LDA $7E09C0
+    %a8()
+    STZ $02
     RTL
 }
 

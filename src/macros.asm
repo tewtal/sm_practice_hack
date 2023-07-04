@@ -33,6 +33,14 @@ macro item_index_to_vram_index()
     CLC : ADC #$0146 : TAX
 endmacro
 
+macro presetslotsize()
+if !FEATURE_TINYSTATES
+    XBA : TAX       ; multiply by $100
+else
+    ASL : XBA : TAX ; multiply by $200
+endif
+endmacro
+
 macro setmenubank()
 ; used to set the menu bank before a manual submenu jump
 ; assumes 16bit A

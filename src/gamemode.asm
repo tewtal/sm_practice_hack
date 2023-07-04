@@ -73,7 +73,9 @@ if !FEATURE_SD2SNES
     ; Check for auto-save mid-transition
     LDA !ram_auto_save_state : BEQ .check_inputs
     LDA !DOOR_FUNCTION_POINTER : CMP #$E4A9 : BNE .check_inputs
+    LDA !ram_auto_save_state : BMI .auto_save
     LDA #$0000 : STA !ram_auto_save_state
+  .auto_save
     JMP .save_state
   .check_inputs
 endif
@@ -188,8 +190,13 @@ if !FEATURE_TINYSTATES
   .save
 endif
     JSL save_state
+    %ai16()
+    LDA !ram_auto_save_state : BMI .clc
     ; SEC to skip normal gameplay for one frame after saving state
     SEC : RTS
+  .clc
+    ; CLC to continue normal gameplay after auto-saving in a door transition
+    CLC : RTS
 
   .load_state
     ; check if a saved state exists
@@ -231,11 +238,11 @@ endif
     CLC : JMP skip_pause
 
   .full_equipment
-    LDA $7E09C4 : STA $7E09C2 ; health
-    LDA $7E09C8 : STA $7E09C6 ; missiles
-    LDA $7E09CC : STA $7E09CA ; supers
-    LDA $7E09D0 : STA $7E09CE ; pbs
-    LDA $7E09D4 : STA $7E09D6 ; reserves
+    LDA !SAMUS_HP_MAX : STA !SAMUS_HP
+    LDA !SAMUS_MISSILES_MAX : STA !SAMUS_MISSILES
+    LDA !SAMUS_SUPERS_MAX : STA !SAMUS_SUPERS
+    LDA !SAMUS_PBS_MAX : STA !SAMUS_PBS
+    LDA !SAMUS_RESERVE_MAX : STA !SAMUS_RESERVE_ENERGY
     ; CLC to continue normal gameplay after equipment refill
     CLC : JMP skip_pause
 

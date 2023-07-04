@@ -777,6 +777,9 @@ draw_samusproj_hitbox:
     JMP .skipProjectile
 
   .check32x32
+    ; skip bombs ($0500), bomb explosions ($0501) and power bombs ($0300)
+    LDA !SAMUS_PROJ_PROPERTIES,X : BIT #$0701 : BNE .skip32x32
+
     LDA !SAMUS_PROJ_X,X : CMP !LAYER1_X : BMI .skip32x32
     LDA !LAYER1_X : CLC : ADC #$0100 : CMP !SAMUS_PROJ_X,X : BMI .skip32x32
     LDA !SAMUS_PROJ_Y,X : CMP !LAYER1_Y : BMI .skip32x32

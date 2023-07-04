@@ -1062,11 +1062,7 @@ draw_custom_preset:
     JSR cm_draw_text
 
     ; get preset slot offset
-if !FEATURE_TINYSTATES
-    LDA !DP_ToggleValue : XBA : TAX ; multiply by 100h (slot offset)
-else
-    LDA !DP_ToggleValue : ASL : XBA : TAX ; multiply by 200h (slot offset)
-endif
+    LDA !DP_ToggleValue : %presetslotsize()
     ; store preset slot index in !DP_Address
     STX !DP_Address
 
