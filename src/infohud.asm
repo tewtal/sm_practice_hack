@@ -179,8 +179,8 @@ print pc, " infohud start"
 ih_get_item_code:
 {
     PHA
-    LDA !ram_timers_autoupdate : BNE +
-    
+    LDA !ram_timers_autoupdate : BNE .done
+
     ; calculate lag frames
     LDA !ram_realtime_room : SEC : SBC !ram_transition_counter : STA !ram_last_room_lag
 
@@ -200,7 +200,8 @@ ih_get_item_code:
     PLA : STA $14
     PLA : STA $12
 
-+   PLA
+  .done
+    PLA
     JSL $80818E
     RTL
 }
