@@ -151,7 +151,7 @@
 !ram_suits_heat_damage_value        = !WRAM_PERSIST_START+$52
 !ram_sprite_feature_flags           = !WRAM_PERSIST_START+$54
 
-; ^ FREE SPACE ^ up to +$7A
+; ^ FREE SPACE ^ up to +$76 (!WRAM_START+$FC - !WRAM_PERSIST_START)
 
 ; -----------------------
 ; RAM (Bank 7E required)
@@ -208,6 +208,8 @@
 !ram_seed_X = !WRAM_MENU_START+$60
 !ram_seed_Y = !WRAM_MENU_START+$62
 
+!ram_timers_autoupdate = !WRAM_MENU_START+$64
+
 ; ^ FREE SPACE ^ up to +$7E
 
 ; ------------------
@@ -248,6 +250,8 @@
 !ram_cm_dummy_off = !WRAM_MENU_START+$8C
 !ram_cm_dummy_num = !WRAM_MENU_START+$8E
 
+!ram_cm_keyboard_buffer = !WRAM_MENU_START+$80 ; $18 bytes
+
 ; ^ FREE SPACE ^ up to +$CE
 
 ; Reserve 48 bytes for CGRAM cache
@@ -256,50 +260,113 @@
 
 !CRASHDUMP = $7EFF00
 
-!DP_MenuIndices = $00 ; 0x4
-!DP_CurrentMenu = $04 ; 0x4
-!DP_Address = $08 ; 0x4
-!DP_JSLTarget = $0C ; 0x4
-!DP_CtrlInput = $10 ; 0x4
-!DP_Palette = $14
-!DP_Temp = $16
-; v these repeat v
-!DP_ToggleValue = $18
-!DP_Increment = $1A
-!DP_Minimum = $1C
-!DP_Maximum = $1E
-!DP_DrawValue = $18
-!DP_FirstDigit = $1A
-!DP_SecondDigit = $1C
-!DP_ThirdDigit = $1E
-; v single digit editing v
-!DP_DigitAddress = $20 ; 0x4
-!DP_DigitValue = $24
-!DP_DigitMinimum = $26
-!DP_DigitMaximum = $28
 
-!ACTION_TOGGLE              = #$0000
-!ACTION_TOGGLE_BIT          = #$0002
-!ACTION_TOGGLE_INVERTED     = #$0004
-!ACTION_TOGGLE_BIT_INVERTED = #$0006
-!ACTION_NUMFIELD            = #$0008
-!ACTION_NUMFIELD_HEX        = #$000A
-!ACTION_NUMFIELD_WORD       = #$000C
-!ACTION_NUMFIELD_HEX_WORD   = #$000E
-!ACTION_NUMFIELD_COLOR      = #$0010
-!ACTION_NUMFIELD_SOUND      = #$0012
-!ACTION_CHOICE              = #$0014
-!ACTION_CTRL_SHORTCUT       = #$0016
-!ACTION_CTRL_INPUT          = #$0018
-!ACTION_JSL                 = #$001A
-!ACTION_JSL_SUBMENU         = #$001C
-!ACTION_CUSTOM_PRESET       = #$001E
-!ACTION_RAM_WATCH           = #$0020
+; -----
+; SRAM
+; -----
+
+!SRAM_VERSION = $0013
+
+!SRAM_START = $702000
+
+!sram_initialized = !SRAM_START+$00
+
+!sram_ctrl_menu = !SRAM_START+$02
+!sram_ctrl_kill_enemies = !SRAM_START+$04
+!sram_ctrl_full_equipment = !SRAM_START+$06
+!sram_ctrl_reset_segment_timer = !SRAM_START+$08
+!sram_ctrl_reset_segment_later = !SRAM_START+$0A
+!sram_ctrl_load_state = !SRAM_START+$0C
+!sram_ctrl_save_state = !SRAM_START+$0E
+!sram_ctrl_load_last_preset = !SRAM_START+$10
+!sram_ctrl_random_preset = !SRAM_START+$12
+!sram_ctrl_save_custom_preset = !SRAM_START+$14
+!sram_ctrl_load_custom_preset = !SRAM_START+$16
+!sram_ctrl_inc_custom_preset = !SRAM_START+$18
+!sram_ctrl_dec_custom_preset = !SRAM_START+$1A
+!sram_ctrl_toggle_tileviewer = !SRAM_START+$1C
+!sram_ctrl_update_timers = !SRAM_START+$1E
+!sram_ctrl_auto_save_state = !SRAM_START+$F0 ; note the change of order
+
+!sram_artificial_lag = !SRAM_START+$20
+!sram_rerandomize = !SRAM_START+$22
+!sram_fanfare_toggle = !SRAM_START+$24
+!sram_frame_counter_mode = !SRAM_START+$26
+!sram_display_mode = !SRAM_START+$28
+!sram_music_toggle = !SRAM_START+$2A
+!sram_last_preset = !SRAM_START+$2C
+!sram_save_has_set_rng = !SRAM_START+$2E
+!sram_preset_category = !SRAM_START+$30
+!sram_custom_preset_slot = !SRAM_START+$32
+!sram_room_strat = !SRAM_START+$34
+!sram_sprite_prio_flag = !SRAM_START+$36
+!sram_metronome_tickrate = !SRAM_START+$38
+!sram_metronome_sfx = !SRAM_START+$3A
+!sram_status_icons = !SRAM_START+$3C
+!sram_suit_properties = !SRAM_START+$3E
+!sram_top_display_mode = !SRAM_START+$40
+!sram_healthalarm = !SRAM_START+$42
+!sram_room_layout = !SRAM_START+$44
+!sram_cutscenes = !SRAM_START+$46
+!sram_preset_options = !SRAM_START+$48
+!sram_lag_counter_mode = !SRAM_START+$4A
+!sram_fast_doors = !SRAM_START+$4C
+!sram_suppress_flashing = !SRAM_START+$4E
+!sram_fast_elevators = !SRAM_START+$50
+
+!sram_custom_damage = !SRAM_START+$52
+!sram_custom_charge_damage = !SRAM_START+$54
+!sram_custom_uncharge_damage = !SRAM_START+$56
+!sram_water_physics = !SRAM_START+$58
+!sram_double_jump = !SRAM_START+$5A
+
+; do not change order without updating custom palette profiles in customizemenu.asm
+!sram_palette_border = !SRAM_START+$5C
+!sram_palette_headeroutline = !SRAM_START+$5E
+!sram_palette_text = !SRAM_START+$60
+!sram_palette_numoutline = !SRAM_START+$62
+!sram_palette_numfill = !SRAM_START+$64
+!sram_palette_toggleon = !SRAM_START+$66
+!sram_palette_seltext = !SRAM_START+$68
+!sram_palette_seltextbg = !SRAM_START+$6A
+!sram_palette_background = !SRAM_START+$6C
+!sram_palette_numseloutline = !SRAM_START+$6E
+!sram_palette_numsel = !SRAM_START+$70
+
+!sram_custompalette_profile = !SRAM_START+$72
+!sram_menu_background = !SRAM_START+$74
+!sram_cm_scroll_delay = !SRAM_START+$76
+
+!sram_customsfx_move = !SRAM_START+$78
+!sram_customsfx_toggle = !SRAM_START+$7A
+!sram_customsfx_number = !SRAM_START+$7C
+!sram_customsfx_confirm = !SRAM_START+$7E
+!sram_customsfx_goback = !SRAM_START+$80
+
+!sram_seed_X = !SRAM_START+$82
+!sram_seed_Y = !SRAM_START+$84
+
+; ^ FREE SPACE ^ up to +$EE, $100-BA6
+
+!sram_custom_header_normal = !SRAM_START+$BA8 ; $18 bytes
+!sram_custom_preset_safewords_normal = !SRAM_START+$BC0 ; $50 bytes
+!sram_custom_preset_names_normal = !SRAM_START+$C10 ; $3C0 bytes
+
+!sram_custom_header_tinystates = !SRAM_START+$E18 ; $18 bytes
+!sram_custom_preset_safewords_tinystates = !SRAM_START+$E30 ; $20 bytes
+!sram_custom_preset_names_tinystates = !SRAM_START+$E50 ; $180 bytes
+
+; SM specific things
+!SRAM_MUSIC_DATA = !SRAM_START+$0FD0
+!SRAM_MUSIC_TRACK = !SRAM_START+$0FD2
+!SRAM_SOUND_TIMER = !SRAM_START+$0FD4
+
+; ^ FREE SPACE ^ up to +$0FFE
 
 
-; ---------
-; Pointers
-; ---------
+; --------------
+; Vanilla Labels
+; --------------
 
 !IH_CONTROLLER_PRI = $8B
 !IH_CONTROLLER_PRI_NEW = $8F
@@ -309,6 +376,11 @@
 !IH_CONTROLLER_SEC_NEW = $91
 !IH_CONTROLLER_SEC_PREV = $99
 
+!KB_SHIFT1 = $9A
+!KB_SHIFT2 = $9B
+!KB_DEL1 = $9C
+!KB_DEL2 = $9D
+!MENU_CLEAR = #$000E
 !MENU_BLANK = #$281F
 !MENU_SLASH = #$287F
 !IH_BLANK = #$2C0F
@@ -364,11 +436,6 @@
 !IH_INPUT_ITEM_SELECT = $7E09BA
 !IH_INPUT_ANGLE_DOWN = $7E09BC
 !IH_INPUT_ANGLE_UP = $7E09BE
-
-
-; --------------
-; Vanilla Labels
-; --------------
 
 !MUSIC_ROUTINE = $808FC1
 !SFX_LIB1 = $80903F
@@ -455,6 +522,7 @@
 !SAMUS_PROJ_Y = $0B78
 !SAMUS_PROJ_RADIUS_X = $0BB4
 !SAMUS_PROJ_RADIUS_Y = $0BC8
+!SAMUS_PROJ_PROPERTIES = $0C18
 !SAMUS_COOLDOWN = $0CCC
 !SAMUS_CHARGE_TIMER = $0CD0
 !ENEMY_INDEX = $0E54
@@ -475,102 +543,68 @@
 !ENEMY_PROJ_RADIUS = $1BB3
 !ENEMY_PROJ_PROPERTIES = $1BD7
 
+!PLM_DELETE = $AAE3
+
 !HUD_TILEMAP = $7EC600
 
 
-; -----
-; SRAM
-; -----
+; --------------------
+; Aliases and Bitmasks
+; --------------------
 
-!SRAM_VERSION = $0012
+if !FEATURE_TINYSTATES
+!sram_custom_header = !sram_custom_header_tinystates
+!sram_custom_preset_safewords = !sram_custom_preset_safewords_tinystates
+!sram_custom_preset_names = !sram_custom_preset_names_tinystates
+else
+!sram_custom_header = !sram_custom_header_normal
+!sram_custom_preset_safewords = !sram_custom_preset_safewords_normal
+!sram_custom_preset_names = !sram_custom_preset_names_normal
+endif
 
-!SRAM_START = $702000
+!DP_MenuIndices = $00 ; 0x4
+!DP_CurrentMenu = $04 ; 0x4
+!DP_Address = $08 ; 0x4
+!DP_JSLTarget = $0C ; 0x4
+!DP_CtrlInput = $10 ; 0x4
+!DP_Palette = $14
+!DP_Temp = $16
+; v these repeat v
+!DP_ToggleValue = $18
+!DP_Increment = $1A
+!DP_Minimum = $1C
+!DP_Maximum = $1E
+!DP_DrawValue = $18
+!DP_FirstDigit = $1A
+!DP_SecondDigit = $1C
+!DP_ThirdDigit = $1E
+!DP_KB_Index = $18
+!DP_KB_Row = $1A
+!DP_KB_Control = $1C
+!DP_KB_Shift = $1E
+; v single digit editing v
+!DP_DigitAddress = $20 ; 0x4
+!DP_DigitValue = $24
+!DP_DigitMinimum = $26
+!DP_DigitMaximum = $28
 
-!sram_initialized = !SRAM_START+$00
-
-!sram_ctrl_menu = !SRAM_START+$02
-!sram_ctrl_kill_enemies = !SRAM_START+$04
-!sram_ctrl_full_equipment = !SRAM_START+$06
-!sram_ctrl_reset_segment_timer = !SRAM_START+$08
-!sram_ctrl_reset_segment_later = !SRAM_START+$0A
-!sram_ctrl_load_state = !SRAM_START+$0C
-!sram_ctrl_save_state = !SRAM_START+$0E
-!sram_ctrl_load_last_preset = !SRAM_START+$10
-!sram_ctrl_random_preset = !SRAM_START+$12
-!sram_ctrl_save_custom_preset = !SRAM_START+$14
-!sram_ctrl_load_custom_preset = !SRAM_START+$16
-!sram_ctrl_inc_custom_preset = !SRAM_START+$18
-!sram_ctrl_dec_custom_preset = !SRAM_START+$1A
-!sram_ctrl_toggle_tileviewer = !SRAM_START+$1C
-!sram_ctrl_update_timers = !SRAM_START+$1E
-!sram_ctrl_auto_save_state = !SRAM_START+$F0 ; note the change of order
-
-!sram_artificial_lag = !SRAM_START+$20
-!sram_rerandomize = !SRAM_START+$22
-!sram_fanfare_toggle = !SRAM_START+$24
-!sram_frame_counter_mode = !SRAM_START+$26
-!sram_display_mode = !SRAM_START+$28
-!sram_music_toggle = !SRAM_START+$2A
-!sram_last_preset = !SRAM_START+$2C
-!sram_save_has_set_rng = !SRAM_START+$2E
-!sram_preset_category = !SRAM_START+$30
-!sram_custom_preset_slot = !SRAM_START+$32
-!sram_room_strat = !SRAM_START+$34
-!sram_sprite_prio_flag = !SRAM_START+$36
-!sram_metronome_tickrate = !SRAM_START+$38
-!sram_metronome_sfx = !SRAM_START+$3A
-!sram_status_icons = !SRAM_START+$3C
-!sram_suit_properties = !SRAM_START+$3E
-!sram_top_display_mode = !SRAM_START+$40
-!sram_healthalarm = !SRAM_START+$42
-!sram_room_layout = !SRAM_START+$44
-!sram_cutscenes = !SRAM_START+$46
-!sram_preset_options = !SRAM_START+$48
-!sram_lag_counter_mode = !SRAM_START+$4A
-!sram_fast_doors = !SRAM_START+$4C
-!sram_suppress_flashing = !SRAM_START+$4E
-!sram_fast_elevators = !SRAM_START+$50
-
-!sram_custom_damage = !SRAM_START+$52
-!sram_custom_charge_damage = !SRAM_START+$54
-!sram_custom_uncharge_damage = !SRAM_START+$56
-!sram_water_physics = !SRAM_START+$58
-!sram_double_jump = !SRAM_START+$5A
-
-; do not change order without updating custom palette profiles in customizemenu.asm
-!sram_palette_border = !SRAM_START+$5C
-!sram_palette_headeroutline = !SRAM_START+$5E
-!sram_palette_text = !SRAM_START+$60
-!sram_palette_numoutline = !SRAM_START+$62
-!sram_palette_numfill = !SRAM_START+$64
-!sram_palette_toggleon = !SRAM_START+$66
-!sram_palette_seltext = !SRAM_START+$68
-!sram_palette_seltextbg = !SRAM_START+$6A
-!sram_palette_background = !SRAM_START+$6C
-!sram_palette_numseloutline = !SRAM_START+$6E
-!sram_palette_numsel = !SRAM_START+$70
-
-!sram_custompalette_profile = !SRAM_START+$72
-!sram_menu_background = !SRAM_START+$74
-!sram_cm_scroll_delay = !SRAM_START+$76
-
-!sram_customsfx_move = !SRAM_START+$78
-!sram_customsfx_toggle = !SRAM_START+$7A
-!sram_customsfx_number = !SRAM_START+$7C
-!sram_customsfx_confirm = !SRAM_START+$7E
-!sram_customsfx_goback = !SRAM_START+$80
-
-!sram_seed_X = !SRAM_START+$82
-!sram_seed_Y = !SRAM_START+$84
-
-; ^ FREE SPACE ^ up to +$EE, $100-FCE
-
-; SM specific things
-!SRAM_MUSIC_DATA = !SRAM_START+$0FD0
-!SRAM_MUSIC_TRACK = !SRAM_START+$0FD2
-!SRAM_SOUND_TIMER = !SRAM_START+$0FD4
-
-; ^ FREE SPACE ^ up to +$0FFE
+!ACTION_TOGGLE              = #$0000
+!ACTION_TOGGLE_BIT          = #$0002
+!ACTION_TOGGLE_INVERTED     = #$0004
+!ACTION_TOGGLE_BIT_INVERTED = #$0006
+!ACTION_NUMFIELD            = #$0008
+!ACTION_NUMFIELD_HEX        = #$000A
+!ACTION_NUMFIELD_WORD       = #$000C
+!ACTION_NUMFIELD_HEX_WORD   = #$000E
+!ACTION_NUMFIELD_COLOR      = #$0010
+!ACTION_NUMFIELD_SOUND      = #$0012
+!ACTION_CHOICE              = #$0014
+!ACTION_CTRL_SHORTCUT       = #$0016
+!ACTION_CTRL_INPUT          = #$0018
+!ACTION_JSL                 = #$001A
+!ACTION_JSL_SUBMENU         = #$001C
+!ACTION_CUSTOM_PRESET       = #$001E
+!ACTION_RAM_WATCH           = #$0020
 
 !TOP_DISPLAY_VANILLA = #$0002
 
@@ -592,6 +626,7 @@
 !CUTSCENE_FAST_KRAID = #$0400
 !CUTSCENE_SKIP_SPLASH = #$0800
 !CUTSCENE_SKIP_GAMEOVER = #$1000
+!CUTSCENE_FAST_BOWLING = #$2000
 
 !SUPPRESS_CRATERIA_LIGHTNING = #$0001
 !SUPPRESS_ESCAPE_FLASHING = #$0002

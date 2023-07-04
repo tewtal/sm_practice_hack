@@ -2,17 +2,17 @@
 import sys
 import os
 
-if sys.argv[1] == "":
-	print("ips.py <00_file> <ff_file> <output>")
-	sys.exit()
+if len(sys.argv) != 4:
+   print("ips.py <00_file> <ff_file> <output>")
+   sys.exit()
 else:
-	zero_name = sys.argv[1]
-	ff_name = sys.argv[2]
-	output_name = sys.argv[3]
+   zero_name = sys.argv[1]
+   ff_name = sys.argv[2]
+   output_name = sys.argv[3]
 
-f_zero = open(os.path.dirname(os.path.realpath(__file__)) + "/" + zero_name, "rb")
-f_ff = open(os.path.dirname(os.path.realpath(__file__)) + "/" + ff_name, "rb")
-fo = open(os.path.dirname(os.path.realpath(__file__)) + "/" + output_name, "wb")
+f_zero = open(os.path.join(os.path.dirname(os.path.realpath(__file__)), zero_name), "rb")
+f_ff = open(os.path.join(os.path.dirname(os.path.realpath(__file__)), ff_name), "rb")
+fo = open(os.path.join(os.path.dirname(os.path.realpath(__file__)), output_name), "wb")
 
 d_zero = f_zero.read()
 d_ff = f_ff.read()

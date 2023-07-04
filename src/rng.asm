@@ -218,7 +218,7 @@ else
 org $A2B588
 endif
     JSL hook_lavarocks_set_rng
-    NOP #2
+    NOP : NOP
 
     ; $A8:B798 A9 17 00    LDA #$0017
     ; $A8:B79B 8D E5 05    STA $05E5  [$7E:05E5]
@@ -228,7 +228,7 @@ else
 org $A8B798
 endif
     JSL hook_beetom_set_rng
-    NOP #2
+    NOP : NOP
 }
 
 
@@ -273,7 +273,7 @@ hook_phantoon_init:
     DEC $0FB0,X
     RTL
 
-.skip_cutscene:
+  .skip_cutscene
     ; get rid of the return address
     PLA     ; pop 2 bytes
     PHP     ; push 1
@@ -317,7 +317,7 @@ hook_phantoon_1st_rng:
     CMP #$003F
     BNE choose_phantoon_pattern
 
-.no_manip:
+  .no_manip
     LDA !FRAME_COUNTER
     LSR A
     AND #$0003
@@ -352,7 +352,7 @@ hook_phantoon_2nd_rng:
     CMP #$003F
     BNE choose_phantoon_pattern
 
-.no_manip:
+  .no_manip
     JSL $808111
     AND #$0007
     ASL A
@@ -404,10 +404,10 @@ choose_phantoon_pattern:
     ; X = number of enabled patterns to find before stopping
     ; Y = index in phan_pattern_table of pattern currently being checked
     ; A = bitmask of enabled patterns
-.reload:
+  .reload
     LDA $01,S   ; reload pattern mask
     LDY #$0006  ; number of patterns (decremented immediately to index of last pattern)
-.loop:
+  .loop
     DEY
     LSR
     BCC .skip
@@ -417,13 +417,12 @@ choose_phantoon_pattern:
     BMI .done
     BRA .loop   ; no, keep looping
 
-.skip:
+  .skip
     ; Pattern Y is not enabled, try the next pattern
     BEQ .reload ; if we've tried all the patterns, start over
     BRA .loop
 
-.done:
-
+  .done
     ; We've found the pattern to use.
     PLA ; we don't need the pattern mask anymore
     TYA : ASL : TAX
@@ -450,18 +449,18 @@ endif
     LDY #$00D0
     BRA .round2done
 
-.round2left
+  .round2left
     LDA #$018F
     LDY #$0030
 
-.round2done
+  .round2done
     STA $0FA8  ; Index into figure-8 movement table
     STY $0F7A  ; X position
     LDA #$0060
     STA $0F7E  ; Y position
     BRA hook_phantoon_invert
 
-.round1
+  .round1
     ; Save the pattern timer and check the direction
     LSR
     STA $0FE8
@@ -471,7 +470,7 @@ endif
     SEP #$02
     RTL
 
-.round1left:
+  .round1left:
     REP #$02
     RTL
 }
@@ -506,26 +505,27 @@ hook_phantoon_flame_pattern:
 hook_phantoon_flame_direction:
 {
     LDA !ram_phantoon_flame_direction : BEQ .no_manip
-    DEC : BEQ +
+    DEC : BEQ .left
+
+  .right
 if !FEATURE_PAL
-    LDA #$0099 : RTL ; right
-+   LDA #$FF67 : RTL ; left
+    LDA #$0099
 else
-    LDA #$0080 : RTL ; right
-+   LDA #$FF80 : RTL ; left
+    LDA #$0080
 endif
+    RTL
 
   .no_manip
-    LDA $05B6 : BIT #$0001 : BNE +
-if !FEATURE_PAL
-    LDA #$0099 : RTL ; right
-+   LDA #$FF67 : RTL ; left
-else
-    LDA #$0080 : RTL ; right
-+   LDA #$FF80 : RTL ; left
-endif
-}
+    LDA $05B6 : BIT #$0001 : BEQ .right
 
+  .left
+if !FEATURE_PAL
+    LDA #$FF67
+else
+    LDA #$FF80
+endif
+    RTL
+}
 
 hook_botwoon_move:
 {
@@ -684,18 +684,22 @@ endif
     JMP ceres_ridley_draw_metroid
 
 if !FEATURE_PAL
-org $A6A371
+org $A6A370
 else
-org $A6A361
+org $A6A360
 endif
-    dw ridley_init_hook
+    LDA #ridley_init_hook
 
 ; Fix ceres ridley door instruction list to keep door visible when skipping ridley fight
 if !FEATURE_PAL
 org $A6F533
-    dw $F64F, ridley_ceres_door_original_instructions
 else
 org $A6F55C
+endif
+hook_ceres_ridley_door_instructions:
+if !FEATURE_PAL
+    dw $F64F, ridley_ceres_door_original_instructions
+else
     dw $F678, ridley_ceres_door_original_instructions
 endif
     dw $80ED, ridley_ceres_door_escape_instructions

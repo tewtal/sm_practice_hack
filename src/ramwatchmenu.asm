@@ -54,6 +54,8 @@ RAMWatchCommonMenu:
     dw ramwatch_common_enemy
     dw ramwatch_common_samus1
     dw ramwatch_common_samus2
+    dw ramwatch_common_plm
+    dw ramwatch_common_proj
     dw ramwatch_common_misc
     dw #$0000
     %cm_header("CHOOSE RAM CATEGORY")
@@ -66,6 +68,12 @@ ramwatch_common_samus1:
 
 ramwatch_common_samus2:
     %cm_submenu("Samus Addresses 2", #RAMWatchCommonSamusMenu2)
+
+ramwatch_common_plm:
+    %cm_submenu("PLM Addresses", #RAMWatchCommonPlmMenu)
+
+ramwatch_common_proj:
+    %cm_submenu("Projectile Addresses", #RAMWatchCommonProjMenu)
 
 ramwatch_common_misc:
     %cm_submenu("Misc Addresses", #RAMWatchCommonMiscMenu)
@@ -203,7 +211,6 @@ RAMWatchCommonSamusMenu2:
     dw ramwatch_common_samus_0CCC
     dw #$0000
     %cm_header("SELECT FROM SAMUS RAM")
-    %cm_header("ALSO SEE INFOHUD MODES")
 
 ramwatch_common_samus_09C2:
     %cm_jsl("Samus Energy", action_select_common_address, #$09C2)
@@ -318,6 +325,142 @@ ramwatch_common_samus_0B48:
 
 ramwatch_common_samus_0CCC:
     %cm_jsl("Cooldown Timer", action_select_common_address, #$0CCC)
+
+RAMWatchCommonPlmMenu:
+    dw ramwatch_common_plm_1C23
+    dw ramwatch_common_plm_1C27
+    dw ramwatch_common_plm_1C29
+    dw ramwatch_common_plm_1C2B
+    dw ramwatch_common_plm_1C85
+    dw ramwatch_common_plm_1CD5
+    dw ramwatch_common_plm_1D25
+    dw ramwatch_common_plm_1D75
+    dw ramwatch_common_plm_1DC5
+    dw ramwatch_common_plm_1E15
+    dw ramwatch_common_plm_1E65
+    dw #$0000
+    %cm_header("SELECT FROM PLM RAM")
+
+ramwatch_common_plm_1C23:
+    %cm_jsl("PLM Flag", action_select_common_address, #$1C23)
+
+ramwatch_common_plm_1C27:
+    %cm_jsl("Current ID", action_select_common_address, #$1C27)
+
+ramwatch_common_plm_1C29:
+    %cm_jsl("Current X", action_select_common_address, #$1C29)
+
+ramwatch_common_plm_1C2B:
+    %cm_jsl("Current Y", action_select_common_address, #$1C2B)
+
+ramwatch_common_plm_1C85:
+    %cm_jsl("Last ID", action_select_common_address, #$1C85)
+
+ramwatch_common_plm_1CD5:
+    %cm_jsl("Last Block", action_select_common_address, #$1CD5)
+
+ramwatch_common_plm_1D25:
+    %cm_jsl("Last Preinstruction", action_select_common_address, #$1D25)
+
+ramwatch_common_plm_1D75:
+    %cm_jsl("Last Instruction", action_select_common_address, #$1D75)
+
+ramwatch_common_plm_1DC5:
+    %cm_jsl("Last Timer", action_select_common_address, #$1DC5)
+
+ramwatch_common_plm_1E15:
+    %cm_jsl("Last Room Argument", action_select_common_address, #$1E15)
+
+ramwatch_common_plm_1E65:
+    %cm_jsl("Last Variable", action_select_common_address, #$1E65)
+
+RAMWatchCommonProjMenu:
+    dw ramwatch_common_proj_198D
+    dw ramwatch_common_proj_1991
+    dw ramwatch_common_proj_1993
+    dw ramwatch_common_proj_19B9
+    dw ramwatch_common_proj_19DD
+    dw ramwatch_common_proj_1A01
+    dw ramwatch_common_proj_1A25
+    dw ramwatch_common_proj_1A49
+    dw ramwatch_common_proj_1A6D
+    dw ramwatch_common_proj_1A91
+    dw ramwatch_common_proj_1AB5
+    dw ramwatch_common_proj_1AD9
+    dw ramwatch_common_proj_1AFD
+    dw ramwatch_common_proj_1B21
+    dw ramwatch_common_proj_1B45
+    dw ramwatch_common_proj_1B69
+    dw ramwatch_common_proj_1B8D
+    dw ramwatch_common_proj_1BB1
+    dw ramwatch_common_proj_1BD5
+    dw ramwatch_common_proj_1BF9
+    dw ramwatch_common_proj_1C1D
+    dw #$0000
+    %cm_header("SELECT FROM PROJECTILE RAM")
+
+ramwatch_common_proj_198D:
+    %cm_jsl("Projectiles Flag", action_select_common_address, #$198D)
+
+ramwatch_common_proj_1991:
+    %cm_jsl("Current Index", action_select_common_address, #$1991)
+
+ramwatch_common_proj_1993:
+    %cm_jsl("Current Init Parameter", action_select_common_address, #$1993)
+
+ramwatch_common_proj_19B9:
+    %cm_jsl("Last ID", action_select_common_address, #$19B9)
+
+ramwatch_common_proj_19DD:
+    %cm_jsl("Last Graphics Index", action_select_common_address, #$19DD)
+
+ramwatch_common_proj_1A01:
+    %cm_jsl("Last Timer", action_select_common_address, #$1A01)
+
+ramwatch_common_proj_1A25:
+    %cm_jsl("Last Preinstruction", action_select_common_address, #$1A25)
+
+ramwatch_common_proj_1A49:
+    %cm_jsl("Last Sub X", action_select_common_address, #$1A49)
+
+ramwatch_common_proj_1A6D:
+    %cm_jsl("Last X", action_select_common_address, #$1A6D)
+
+ramwatch_common_proj_1A91:
+    %cm_jsl("Last Sub Y", action_select_common_address, #$1A91)
+
+ramwatch_common_proj_1AB5:
+    %cm_jsl("Last Y", action_select_common_address, #$1AB5)
+
+ramwatch_common_proj_1AD9:
+    %cm_jsl("Last X Velocity", action_select_common_address, #$1AD9)
+
+ramwatch_common_proj_1AFD:
+    %cm_jsl("Last Y Velocity", action_select_common_address, #$1AFD)
+
+ramwatch_common_proj_1B21:
+    %cm_jsl("Last Variable 1", action_select_common_address, #$1B21)
+
+ramwatch_common_proj_1B45:
+    %cm_jsl("Last Variable 2", action_select_common_address, #$1B45)
+
+ramwatch_common_proj_1B69:
+    %cm_jsl("Last Instruction", action_select_common_address, #$1B69)
+
+ramwatch_common_proj_1B8D:
+    %cm_jsl("Last Spritemap", action_select_common_address, #$1B8D)
+
+ramwatch_common_proj_1BB1:
+    %cm_jsl("Last Instruction Timer", action_select_common_address, #$1BB1)
+
+ramwatch_common_proj_1BD5:
+    %cm_jsl("Last Radius", action_select_common_address, #$1BD5)
+
+ramwatch_common_proj_1BF9:
+    %cm_jsl("Last Properties", action_select_common_address, #$1BF9)
+
+ramwatch_common_proj_1C1D:
+    %cm_jsl("Last Type", action_select_common_address, #$1C1D)
 
 RAMWatchCommonMiscMenu:
     dw ramwatch_common_misc_05E5
@@ -453,9 +596,10 @@ ramwatch_execute_left:
   .routine
     LDA !ram_watch_left : CLC : ADC !ram_watch_left_index : STA $C1
     LDA !ram_watch_bank : STA $C3
-    LDA !ram_watch_write_mode : BEQ +
+    LDA !ram_watch_write_mode : BEQ .setValue
     %a8()
-+   LDA !ram_watch_edit_left : STA [$C1]
+  .setValue
+    LDA !ram_watch_edit_left : STA [$C1]
     %a16()
     LDA #!IH_MODE_RAMWATCH_INDEX : STA !sram_display_mode
     %sfxconfirm()
@@ -466,9 +610,10 @@ ramwatch_execute_right:
   .routine
     LDA !ram_watch_right : CLC : ADC !ram_watch_right_index : STA $C1
     LDA !ram_watch_bank : STA $C3
-    LDA !ram_watch_write_mode : BEQ +
+    LDA !ram_watch_write_mode : BEQ .setValue
     %a8()
-+   LDA !ram_watch_edit_right : STA [$C1]
+  .setValue
+    LDA !ram_watch_edit_right : STA [$C1]
     %a16()
     LDA #!IH_MODE_RAMWATCH_INDEX : STA !sram_display_mode
     %sfxconfirm()

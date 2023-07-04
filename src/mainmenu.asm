@@ -231,10 +231,11 @@ presets_custom_preset_slot:
   .submenu
     ; undo increment from execute_numfield
     LDA !sram_custom_preset_slot : BEQ .zero
-    DEC : BRA +
+    DEC : BRA .skipzero
   .zero
     LDA !TOTAL_PRESET_SLOTS
-+   STA !sram_custom_preset_slot
+  .skipzero
+    STA !sram_custom_preset_slot
     ; determine which page to load
     CMP #$0010 : BPL .page2
     LDY.w #CustomPresetsMenu : BRA .done
@@ -270,11 +271,7 @@ presets_load_custom_preset:
   .routine
     ; check if slot is populated first
     LDA !sram_custom_preset_slot
-if !FEATURE_TINYSTATES
-    XBA : TAX                    ; multiply by 100h (slot offset)
-else
-    ASL : XBA : TAX              ; multiply by 200h (slot offset)
-endif
+    %presetslotsize()
     LDA $703000,X : CMP #$5AFE : BEQ .safe
     %sfxfail()
     RTL
@@ -531,7 +528,7 @@ else
     dw #custompreset_goto_page3
 endif
     dw #$0000
-    %cm_header("## ENERGY    RES MMM SS PB")
+    %cm_header("PRESS X TO NAME PRESETS")
     %cm_footer("PRESS Y TO TOGGLE DISPLAY")
 
 CustomPresetsMenu2:
@@ -555,7 +552,7 @@ CustomPresetsMenu2:
     dw #custompreset_goto_page1
     dw #custompreset_goto_page3
     dw #$0000
-    %cm_header("## ENERGY    RES MMM SS PB")
+    %cm_header("PRESS X TO NAME PRESETS")
     %cm_footer("PRESS Y TO TOGGLE DISPLAY")
 
 CustomPresetsMenu3:
@@ -579,7 +576,7 @@ CustomPresetsMenu3:
     dw #custompreset_goto_page1
     dw #custompreset_goto_page2
     dw #$0000
-    %cm_header("## ENERGY    RES MMM SS PB")
+    %cm_header("PRESS X TO NAME PRESETS")
     %cm_footer("PRESS Y TO TOGGLE DISPLAY")
 
     %cm_custompreset(00)
@@ -668,11 +665,11 @@ EquipmentMenu:
 eq_refill:
     %cm_jsl("Refill", .refill, #$0000)
   .refill
-    LDA $7E09C4 : STA $7E09C2 ; health
-    LDA $7E09C8 : STA $7E09C6 ; missiles
-    LDA $7E09CC : STA $7E09CA ; supers
-    LDA $7E09D0 : STA $7E09CE ; pbs
-    LDA $7E09D4 : STA $7E09D6 ; reserves
+    LDA !SAMUS_HP_MAX : STA !SAMUS_HP
+    LDA !SAMUS_MISSILES_MAX : STA !SAMUS_MISSILES
+    LDA !SAMUS_SUPERS_MAX : STA !SAMUS_SUPERS
+    LDA !SAMUS_PBS_MAX : STA !SAMUS_PBS
+    LDA !SAMUS_RESERVE_MAX : STA !SAMUS_RESERVE_ENERGY
     LDA #$0002 : JSL !SFX_LIB2 ; big energy pickup
     RTL
 
@@ -686,7 +683,7 @@ eq_goto_togglebeams:
     %cm_jsl("Toggle Beams", #eq_prepare_beams_menu, #ToggleBeamsMenu)
 
 eq_currentenergy:
-    %cm_numfield_word("Current Energy", $7E0000+!SAMUS_HP, 0, 2100, #0)
+    %cm_numfield_word("Current Energy", !SAMUS_HP, 0, 2100, #0)
 
 eq_setetanks:
     %cm_numfield("Energy Tanks", !ram_cm_etanks, 0, 21, 1, 1, .routine)
@@ -706,7 +703,7 @@ eq_setetanks:
     RTL
 
 eq_currentreserves:
-    %cm_numfield_word("Current Reserves", $7E0000+!SAMUS_RESERVE_ENERGY, 0, 700, #0)
+    %cm_numfield_word("Current Reserves", !SAMUS_RESERVE_ENERGY, 0, 700, #0)
 
 eq_setreserves:
     %cm_numfield("Reserve Tanks", !ram_cm_reserve, 0, 7, 1, 1, .routine)
@@ -725,7 +722,7 @@ eq_setreserves:
 
 eq_reservemode:
     dw !ACTION_CHOICE
-    dl #$7E0000+!SAMUS_RESERVE_MODE
+    dl #!SAMUS_RESERVE_MODE
     dw #.routine
     db #$28, "Reserve Mode", #$FF
     db #$28, " UNOBTAINED", #$FF
@@ -733,34 +730,35 @@ eq_reservemode:
     db #$28, "     MANUAL", #$FF
     db #$FF
   .routine
-    LDA !SAMUS_RESERVE_MAX : BNE +
+    LDA !SAMUS_RESERVE_MAX : BNE .end
     STA !SAMUS_RESERVE_MODE
     %sfxfail()
-+   RTL
+  .end
+    RTL
 
 eq_currentmissiles:
-    %cm_numfield_word("Current Missiles", $7E0000+!SAMUS_MISSILES, 0, 325, #0)
+    %cm_numfield_word("Current Missiles", !SAMUS_MISSILES, 0, 325, #0)
 
 eq_setmissiles:
-    %cm_numfield_word("Missiles", $7E0000+!SAMUS_MISSILES_MAX, 0, 325, .routine)
+    %cm_numfield_word("Missiles", !SAMUS_MISSILES_MAX, 0, 325, .routine)
     .routine
         LDA !SAMUS_MISSILES_MAX : STA !SAMUS_MISSILES ; missiles
         RTL
 
 eq_currentsupers:
-    %cm_numfield("Current Super Missiles", $7E0000+!SAMUS_SUPERS, 0, 65, 1, 5, #0)
+    %cm_numfield("Current Super Missiles", !SAMUS_SUPERS, 0, 65, 1, 5, #0)
 
 eq_setsupers:
-    %cm_numfield("Super Missiles", $7E0000+!SAMUS_SUPERS_MAX, 0, 65, 5, 5, .routine)
+    %cm_numfield("Super Missiles", !SAMUS_SUPERS_MAX, 0, 65, 5, 5, .routine)
     .routine
         LDA !SAMUS_SUPERS_MAX : STA !SAMUS_SUPERS ; supers
         RTL
 
 eq_currentpbs:
-    %cm_numfield("Current Power Bombs", $7E0000+!SAMUS_PBS, 0, 70, 1, 5, #0)
+    %cm_numfield("Current Power Bombs", !SAMUS_PBS, 0, 70, 1, 5, #0)
 
 eq_setpbs:
-    %cm_numfield("Power Bombs", $7E0000+!SAMUS_PBS_MAX, 0, 70, 5, 5, .routine)
+    %cm_numfield("Power Bombs", !SAMUS_PBS_MAX, 0, 70, 5, 5, .routine)
     .routine
         LDA !SAMUS_PBS_MAX : STA !SAMUS_PBS ; pbs
         RTL
@@ -840,12 +838,13 @@ action_category:
 
     LDA.l .table,X : STA !SAMUS_BEAMS_COLLECTED : TAY
     AND #$000C : CMP #$000C : BEQ .murderBeam
-    TYA : STA !SAMUS_BEAMS_EQUIPPED : INX #2 : BRA +
+    TYA : STA !SAMUS_BEAMS_EQUIPPED : INX #2 : BRA .doneMurderBeam
 
   .murderBeam
     TYA : AND #$100B : STA !SAMUS_BEAMS_EQUIPPED : INX #2
 
-+   LDA.l .table,X : STA !SAMUS_HP : STA !SAMUS_HP_MAX : INX #2
+  .doneMurderBeam
+    LDA.l .table,X : STA !SAMUS_HP : STA !SAMUS_HP_MAX : INX #2
     LDA.l .table,X : STA !SAMUS_MISSILES : STA !SAMUS_MISSILES_MAX : INX #2
     LDA.l .table,X : STA !SAMUS_SUPERS : STA !SAMUS_SUPERS_MAX : INX #2
     LDA.l .table,X : STA !SAMUS_PBS : STA !SAMUS_PBS_MAX : INX #2
@@ -888,85 +887,94 @@ eq_prepare_items_menu:
     LDA !SAMUS_ITEMS_COLLECTED : BIT #$0001 : BEQ .noVaria
     LDA !SAMUS_ITEMS_EQUIPPED : BIT #$0001 : BNE .equipVaria
     ; unequip
-    LDA #$0002 : STA !ram_cm_varia : BRA +
+    LDA #$0002 : STA !ram_cm_varia : BRA .doneVaria
   .equipVaria
-    LDA #$0001 : STA !ram_cm_varia : BRA +
+    LDA #$0001 : STA !ram_cm_varia : BRA .doneVaria
   .noVaria
     LDA #$0000 : STA !ram_cm_varia
+  .doneVaria
 
-+   LDA !SAMUS_ITEMS_COLLECTED : BIT #$0020 : BEQ .noGravity
+    LDA !SAMUS_ITEMS_COLLECTED : BIT #$0020 : BEQ .noGravity
     LDA !SAMUS_ITEMS_EQUIPPED : BIT #$0020 : BNE .equipGravity
     ; unequip
-    LDA #$0002 : STA !ram_cm_gravity : BRA +
+    LDA #$0002 : STA !ram_cm_gravity : BRA .doneGravity
   .equipGravity
-    LDA #$0001 : STA !ram_cm_gravity : BRA +
+    LDA #$0001 : STA !ram_cm_gravity : BRA .doneGravity
   .noGravity
     LDA #$0000 : STA !ram_cm_gravity
+  .doneGravity
 
-+   LDA !SAMUS_ITEMS_COLLECTED : BIT #$0004 : BEQ .noMorph
+    LDA !SAMUS_ITEMS_COLLECTED : BIT #$0004 : BEQ .noMorph
     LDA !SAMUS_ITEMS_EQUIPPED : BIT #$0004 : BNE .equipMorph
     ; unequip
-    LDA #$0002 : STA !ram_cm_morph : BRA +
+    LDA #$0002 : STA !ram_cm_morph : BRA .doneMorph
   .equipMorph
-    LDA #$0001 : STA !ram_cm_morph : BRA +
+    LDA #$0001 : STA !ram_cm_morph : BRA .doneMorph
   .noMorph
     LDA #$0000 : STA !ram_cm_morph
+  .doneMorph
 
-+   LDA !SAMUS_ITEMS_COLLECTED : BIT #$1000 : BEQ .noBombs
+    LDA !SAMUS_ITEMS_COLLECTED : BIT #$1000 : BEQ .noBombs
     LDA !SAMUS_ITEMS_EQUIPPED : BIT #$1000 : BNE .equipBombs
     ; unequip
-    LDA #$0002 : STA !ram_cm_bombs : BRA +
+    LDA #$0002 : STA !ram_cm_bombs : BRA .doneBombs
   .equipBombs
-    LDA #$0001 : STA !ram_cm_bombs : BRA +
+    LDA #$0001 : STA !ram_cm_bombs : BRA .doneBombs
   .noBombs
     LDA #$0000 : STA !ram_cm_bombs
+  .doneBombs
 
-+   LDA !SAMUS_ITEMS_COLLECTED : BIT #$0002 : BEQ .noSpring
+    LDA !SAMUS_ITEMS_COLLECTED : BIT #$0002 : BEQ .noSpring
     LDA !SAMUS_ITEMS_EQUIPPED : BIT #$0002 : BNE .equipSpring
     ; unequip
-    LDA #$0002 : STA !ram_cm_spring : BRA +
+    LDA #$0002 : STA !ram_cm_spring : BRA .doneSpring
   .equipSpring
-    LDA #$0001 : STA !ram_cm_spring : BRA +
+    LDA #$0001 : STA !ram_cm_spring : BRA .doneSpring
   .noSpring
     LDA #$0000 : STA !ram_cm_spring
+  .doneSpring
 
-+   LDA !SAMUS_ITEMS_COLLECTED : BIT #$0008 : BEQ .noScrew
+    LDA !SAMUS_ITEMS_COLLECTED : BIT #$0008 : BEQ .noScrew
     LDA !SAMUS_ITEMS_EQUIPPED : BIT #$0008 : BNE .equipScrew
     ; unequip
-    LDA #$0002 : STA !ram_cm_screw : BRA +
+    LDA #$0002 : STA !ram_cm_screw : BRA .doneScrew
   .equipScrew
-    LDA #$0001 : STA !ram_cm_screw : BRA +
+    LDA #$0001 : STA !ram_cm_screw : BRA .doneScrew
   .noScrew
     LDA #$0000 : STA !ram_cm_screw
+  .doneScrew
 
-+   LDA !SAMUS_ITEMS_COLLECTED : BIT #$0100 : BEQ .noHiJump
+    LDA !SAMUS_ITEMS_COLLECTED : BIT #$0100 : BEQ .noHiJump
     LDA !SAMUS_ITEMS_EQUIPPED : BIT #$0100 : BNE .equipHiJump
     ; unequip
-    LDA #$0002 : STA !ram_cm_hijump : BRA +
+    LDA #$0002 : STA !ram_cm_hijump : BRA .doneHiJump
   .equipHiJump
-    LDA #$0001 : STA !ram_cm_hijump : BRA +
+    LDA #$0001 : STA !ram_cm_hijump : BRA .doneHiJump
   .noHiJump
     LDA #$0000 : STA !ram_cm_hijump
+  .doneHiJump
 
-+   LDA !SAMUS_ITEMS_COLLECTED : BIT #$0200 : BEQ .noSpace
+    LDA !SAMUS_ITEMS_COLLECTED : BIT #$0200 : BEQ .noSpace
     LDA !SAMUS_ITEMS_EQUIPPED : BIT #$0200 : BNE .equipSpace
     ; unequip
-    LDA #$0002 : STA !ram_cm_space : BRA +
+    LDA #$0002 : STA !ram_cm_space : BRA .doneSpace
   .equipSpace
-    LDA #$0001 : STA !ram_cm_space : BRA +
+    LDA #$0001 : STA !ram_cm_space : BRA .doneSpace
   .noSpace
     LDA #$0000 : STA !ram_cm_space
+  .doneSpace
 
-+   LDA !SAMUS_ITEMS_COLLECTED : BIT #$2000 : BEQ .noSpeed
+    LDA !SAMUS_ITEMS_COLLECTED : BIT #$2000 : BEQ .noSpeed
     LDA !SAMUS_ITEMS_EQUIPPED : BIT #$2000 : BNE .equipSpeed
     ; unequip
-    LDA #$0002 : STA !ram_cm_speed : BRA +
+    LDA #$0002 : STA !ram_cm_speed : BRA .doneSpeed
   .equipSpeed
-    LDA #$0001 : STA !ram_cm_speed : BRA +
+    LDA #$0001 : STA !ram_cm_speed : BRA .doneSpeed
   .noSpeed
     LDA #$0000 : STA !ram_cm_speed
+  .doneSpeed
 
-+   %setmenubank()
+    %setmenubank()
     JML action_submenu
 }
 
@@ -1020,13 +1028,13 @@ ti_speedbooster:
     %cm_equipment_item("Speed Booster", !ram_cm_speed, #$2000, #$DFFF)
 
 ti_grapple:
-    %cm_toggle_bit("Grapple", $7E0000+!SAMUS_ITEMS_COLLECTED, #$4000, .routine)
+    %cm_toggle_bit("Grapple", !SAMUS_ITEMS_COLLECTED, #$4000, .routine)
   .routine
     LDA !SAMUS_ITEMS_EQUIPPED : EOR #$4000 : STA !SAMUS_ITEMS_EQUIPPED
     RTL
 
 ti_xray:
-    %cm_toggle_bit("X-Ray", $7E0000+!SAMUS_ITEMS_COLLECTED, #$8000, .routine)
+    %cm_toggle_bit("X-Ray", !SAMUS_ITEMS_COLLECTED, #$8000, .routine)
   .routine
     LDA !SAMUS_ITEMS_EQUIPPED : EOR #$8000 : STA !SAMUS_ITEMS_EQUIPPED
     RTL
@@ -1071,49 +1079,54 @@ setup_beams_ram:
     LDA !SAMUS_BEAMS_COLLECTED : BIT #$1000 : BEQ .noCharge
     LDA !SAMUS_BEAMS_EQUIPPED : BIT #$1000 : BNE .equipCharge
     ; unequip Charge
-    LDA #$0002 : STA !ram_cm_charge : BRA +
+    LDA #$0002 : STA !ram_cm_charge : BRA .doneCharge
   .equipCharge
-    LDA #$0001 : STA !ram_cm_charge : BRA +
+    LDA #$0001 : STA !ram_cm_charge : BRA .doneCharge
   .noCharge
     LDA #$0000 : STA !ram_cm_charge
+  .doneCharge
 
-+   LDA !SAMUS_BEAMS_COLLECTED : BIT #$0002 : BEQ .noIce
+    LDA !SAMUS_BEAMS_COLLECTED : BIT #$0002 : BEQ .noIce
     LDA !SAMUS_BEAMS_EQUIPPED : BIT #$0002 : BNE .equipIce
     ; unequip Ice
-    LDA #$0002 : STA !ram_cm_ice : BRA +
+    LDA #$0002 : STA !ram_cm_ice : BRA .doneIce
   .equipIce
-    LDA #$0001 : STA !ram_cm_ice : BRA +
+    LDA #$0001 : STA !ram_cm_ice : BRA .doneIce
   .noIce
     LDA #$0000 : STA !ram_cm_ice
+  .doneIce
 
-+   LDA !SAMUS_BEAMS_COLLECTED : BIT #$0001 : BEQ .noWave
+    LDA !SAMUS_BEAMS_COLLECTED : BIT #$0001 : BEQ .noWave
     LDA !SAMUS_BEAMS_EQUIPPED : BIT #$0001 : BNE .equipWave
     ; unequip Wave
-    LDA #$0002 : STA !ram_cm_wave : BRA +
+    LDA #$0002 : STA !ram_cm_wave : BRA .doneWave
   .equipWave
-    LDA #$0001 : STA !ram_cm_wave : BRA +
+    LDA #$0001 : STA !ram_cm_wave : BRA .doneWave
   .noWave
     LDA #$0000 : STA !ram_cm_wave
+  .doneWave
 
-+   LDA !SAMUS_BEAMS_COLLECTED : BIT #$0004 : BEQ .noSpazer
+    LDA !SAMUS_BEAMS_COLLECTED : BIT #$0004 : BEQ .noSpazer
     LDA !SAMUS_BEAMS_EQUIPPED : BIT #$0004 : BNE .equipSpazer
     ; unequip Spazer
-    LDA #$0002 : STA !ram_cm_spazer : BRA +
+    LDA #$0002 : STA !ram_cm_spazer : BRA .doneSpazer
   .equipSpazer
-    LDA #$0001 : STA !ram_cm_spazer : BRA +
+    LDA #$0001 : STA !ram_cm_spazer : BRA .doneSpazer
   .noSpazer
     LDA #$0000 : STA !ram_cm_spazer
+  .doneSpazer
 
-+   LDA !SAMUS_BEAMS_COLLECTED : BIT #$0008 : BEQ .noPlasma
+    LDA !SAMUS_BEAMS_COLLECTED : BIT #$0008 : BEQ .noPlasma
     LDA !SAMUS_BEAMS_EQUIPPED : BIT #$0008 : BNE .equipPlasma
     ; unequip Plasma
-    LDA #$0002 : STA !ram_cm_plasma : BRA +
+    LDA #$0002 : STA !ram_cm_plasma : BRA .donePlasma
   .equipPlasma
-    LDA #$0001 : STA !ram_cm_plasma : BRA +
+    LDA #$0001 : STA !ram_cm_plasma : BRA .donePlasma
   .noPlasma
     LDA #$0000 : STA !ram_cm_plasma
+  .donePlasma
 
-+   RTL
+    RTL
 }
 
 ToggleBeamsMenu:
@@ -1168,41 +1181,41 @@ tb_customdamage:
 tb_init_custom_damage:
 {
     LDA !sram_custom_damage : BEQ .vanilla
-    DEC : DEC : BEQ .dash_charge_0
-    DEC : BEQ .dash_charge_1
-    DEC : BEQ .dash_charge_2
-    DEC : BEQ .dash_charge_3
-    DEC : BEQ .dash_charge_4
+    DEC : DEC : BEQ .dashCharge0
+    DEC : BEQ .dashCharge1
+    DEC : BEQ .dashCharge2
+    DEC : BEQ .dashCharge3
+    DEC : BEQ .dashCharge4
     RTL
 
   .vanilla
-    JSL compute_vanilla_charged_beam_damage : STA !sram_custom_charge_damage
-    JSL compute_vanilla_uncharged_beam_damage : STA !sram_custom_uncharge_damage
+    JSL compute_vanilla_charged_damage : STA !sram_custom_charge_damage
+    JSL compute_vanilla_uncharged_damage : STA !sram_custom_uncharge_damage
     RTL
 
-  .dash_charge_0
-    JSL compute_dash_charge_0_beam_damage : STA !sram_custom_charge_damage
-    JSL compute_dash_charge_0_beam_damage : STA !sram_custom_uncharge_damage
+  .dashCharge0
+    JSL compute_dash_charge_0_damage : STA !sram_custom_charge_damage
+    JSL compute_dash_charge_0_damage : STA !sram_custom_uncharge_damage
     RTL
 
-  .dash_charge_1
-    JSL compute_dash_charge_1_beam_damage : STA !sram_custom_charge_damage
-    JSL compute_dash_charge_0_beam_damage : STA !sram_custom_uncharge_damage
+  .dashCharge1
+    JSL compute_dash_charge_1_damage : STA !sram_custom_charge_damage
+    JSL compute_dash_charge_0_damage : STA !sram_custom_uncharge_damage
     RTL
 
-  .dash_charge_2
-    JSL compute_dash_charge_2_beam_damage : STA !sram_custom_charge_damage
-    JSL compute_dash_charge_0_beam_damage : STA !sram_custom_uncharge_damage
+  .dashCharge2
+    JSL compute_dash_charge_2_damage : STA !sram_custom_charge_damage
+    JSL compute_dash_charge_0_damage : STA !sram_custom_uncharge_damage
     RTL
 
-  .dash_charge_3
-    JSL compute_dash_charge_3_beam_damage : STA !sram_custom_charge_damage
-    JSL compute_dash_charge_0_beam_damage : STA !sram_custom_uncharge_damage
+  .dashCharge3
+    JSL compute_dash_charge_3_damage : STA !sram_custom_charge_damage
+    JSL compute_dash_charge_0_damage : STA !sram_custom_uncharge_damage
     RTL
 
-  .dash_charge_4
-    JSL compute_dash_charge_4_beam_damage : STA !sram_custom_charge_damage
-    JSL compute_dash_charge_0_beam_damage : STA !sram_custom_uncharge_damage
+  .dashCharge4
+    JSL compute_dash_charge_4_damage : STA !sram_custom_charge_damage
+    JSL compute_dash_charge_0_damage : STA !sram_custom_uncharge_damage
     RTL
 }
 
@@ -1440,10 +1453,10 @@ MiscMenu:
     %cm_header("MISC")
 
 misc_bluesuit:
-    %cm_toggle("Blue Suit", $7E0B3F, #$0004, #0)
+    %cm_toggle("Blue Suit", !SAMUS_DASH_COUNTER, #$0004, #0)
 
 misc_flashsuit:
-    %cm_toggle("Flash Suit", $7E0A68, #$0001, #0)
+    %cm_toggle("Flash Suit", !SAMUS_SHINE_TIMER, #$0001, #0)
 
 misc_hyperbeam:
     %cm_toggle_bit("Hyper Beam", $7E0A76, #$8000, #.routine)
@@ -1615,7 +1628,7 @@ init_heat_damage_ram:
 misc_water_physics:
     dw !ACTION_CHOICE
     dl #!sram_water_physics
-    dw init_water_physics_ram
+    dw init_physics_ram
     db #$28, "Water Physics", #$FF
     db #$28, "    VANILLA", #$FF
     db #$28, "PRESS VALVE", #$FF
@@ -1626,32 +1639,32 @@ misc_water_physics:
     db #$FF
 
 misc_double_jump:
-    %cm_toggle_bit("Double Jump", !sram_double_jump, #$0200, init_water_physics_ram)
+    %cm_toggle_bit("Double Jump", !sram_double_jump, #$0200, init_physics_ram)
 
-init_water_physics_ram:
+init_physics_ram:
 {
-    LDA !sram_water_physics : BNE init_water_physics_ram_non_vanilla
-    ; Fallthrough to init_water_physics_vanilla
+    LDA !sram_water_physics : BNE init_physics_non_vanilla
+    ; Fallthrough to init_physics_vanilla
 }
 
-init_water_physics_vanilla:
+init_physics_vanilla:
 {
     LDA !SAMUS_ITEMS_EQUIPPED : ORA.l !sram_double_jump : STA !SAMUS_WATER_PHYSICS
     RTL
 }
 
-init_water_physics_after_room_transition:
+init_physics_after_transition:
 {
-    LDA !sram_water_physics : BEQ init_water_physics_vanilla
+    LDA !sram_water_physics : BEQ init_physics_vanilla
 
     ; Check if we need to toggle on-to-off or off-to-on states
-    CMP #$0004 : BMI init_water_physics_ram_non_vanilla
+    CMP #$0004 : BMI init_physics_non_vanilla
     EOR #$0001 : STA !sram_water_physics
 }
 
-init_water_physics_ram_non_vanilla:
+init_physics_non_vanilla:
 {
-    CMP #$0001 : BEQ .pressure_valve
+    CMP #$0001 : BEQ .pv
     BIT #$0001 : BNE .on
 
   .off
@@ -1664,23 +1677,23 @@ init_water_physics_ram_non_vanilla:
     ORA.l !sram_double_jump : STA !SAMUS_WATER_PHYSICS
     RTL
 
-  .pressure_valve
-    LDA !ROOM_ID : CMP #$C98D : BMI .pressure_valve_more_checks
-    CMP #$D4EE : BMI .off : CMP #$D8C6 : BPL .pressure_valve_on
+  .pv
+    LDA !ROOM_ID : CMP #$C98D : BMI .pv_more
+    CMP #$D4EE : BMI .off : CMP #$D8C6 : BPL .pv_on
     CMP #$D5EC : BEQ .off : CMP #$D646 : BEQ .off
     CMP #$D69A : BEQ .off : CMP #$D6D0 : BEQ .off
     CMP #$D86E : BEQ .off : CMP #$D8C5 : BEQ .off
 
-  .pressure_valve_on
+  .pv_on
     LDA !SAMUS_ITEMS_EQUIPPED : AND #$0220
     ORA.l !sram_double_jump : STA !SAMUS_WATER_PHYSICS
     RTL
 
-  .pressure_valve_more_checks
+  .pv_more
     CMP #$AC00 : BEQ .off : CMP #$AB64 : BEQ .off
-    CMP #$A5EF : BPL .pressure_valve_on
-    CMP #$99FA : BPL .off : CMP #$965A : BPL .pressure_valve_on
-    CMP #$93AB : BMI .pressure_valve_on
+    CMP #$A5EF : BPL .pv_on
+    CMP #$99FA : BPL .off : CMP #$965A : BPL .pv_on
+    CMP #$93AB : BMI .pv_on
     BRA .off
 }
 
@@ -1751,9 +1764,10 @@ sprites_show_proj_as_32x32:
 sprites_oob_viewer:
     %cm_toggle_bit("OoB Tile Viewer", !ram_sprite_feature_flags, !SPRITE_OOB_WATCH, .routine)
   .routine
-    LDA !ram_sprite_feature_flags : BIT !SPRITE_OOB_WATCH : BEQ +
+    LDA !ram_sprite_feature_flags : BIT !SPRITE_OOB_WATCH : BEQ .skip_oob
     JML upload_sprite_oob_tiles
-+   RTL
+  .skip_oob
+    RTL
 
 
 ; -----------
@@ -1795,8 +1809,9 @@ events_resetdoors:
     PHP : %ai8()
     LDX #$B0
     LDA #$00
--   STA $7ED800,X
-    INX : CPX #$D0 : BNE -
+  .loop
+    STA $7ED800,X
+    INX : CPX #$D0 : BNE .loop
     PLP
     %sfxreset()
     RTL
@@ -1807,8 +1822,9 @@ events_resetitems:
     PHP : %ai8()
     LDX #$70
     LDA #$00
--   STA $7ED800,X
-    INX : CPX #$90 : BNE -
+  .loop
+    STA $7ED800,X
+    INX : CPX #$90 : BNE .loop
     PLP
     %sfxreset()
     RTL
@@ -1934,6 +1950,8 @@ endif
     dw #ih_lag
     dw #$FFFF
     dw #ih_ram_watch
+    dw #$FFFF
+    dw #ih_auto_update_timers
     dw #$0000
     %cm_header("INFOHUD")
 
@@ -2032,6 +2050,8 @@ ihmode_shottimer:
 !IH_MODE_RAMWATCH_INDEX = $0014
 ihmode_ramwatch:
     %cm_jsl("RAM Watch", #action_select_infohud_mode, #$0014)
+
+
 
 action_select_infohud_mode:
 {
@@ -2203,6 +2223,9 @@ ih_lag:
 
 ih_ram_watch:
     %cm_jsl("Customize RAM Watch", #ih_prepare_ram_watch_menu, #RAMWatchMenu)
+
+ih_auto_update_timers:
+    %cm_toggle_inverted("Auto update timers", !ram_timers_autoupdate, #$0001, #0)
 
 incsrc ramwatchmenu.asm
 
@@ -2399,6 +2422,7 @@ CutscenesMenu:
     dw #$FFFF
     dw #cutscenes_fast_kraid
     dw #cutscenes_fast_phantoon
+    dw #cutscenes_fast_bowling
     dw #cutscenes_fast_mb
     dw #$FFFF
     dw #cutscenes_suppress_crateria_lightning
@@ -2430,6 +2454,9 @@ cutscenes_fast_kraid:
 
 cutscenes_fast_phantoon:
     %cm_toggle_bit("Skip Phantoon Intro", !sram_cutscenes, !CUTSCENE_FAST_PHANTOON, #0)
+
+cutscenes_fast_bowling:
+    %cm_toggle_bit("Fast Bowling", !sram_cutscenes, !CUTSCENE_FAST_BOWLING, #0)
 
 cutscenes_fast_mb:
     %cm_toggle_bit("Fast Mother Brain", !sram_cutscenes, !CUTSCENE_FAST_MB, #0)
@@ -2593,45 +2620,52 @@ check_duplicate_inputs:
     ; Y / $C4 = new input bitmask
 
     LDA #$09B2 : CMP $C2 : BEQ .check_jump      ; check if we just assigned shot
-    LDA $09B2 : BEQ +                           ; check if shot is unassigned
+    LDA $09B2 : BEQ .swap_shot                  ; check if shot is unassigned
     CMP $C4 : BNE .check_jump                   ; skip to check_jump if not a duplicate assignment
-+   JMP .shot                                   ; swap with shot
+  .swap_shot
+    JMP .shot                                   ; swap with shot
 
   .check_jump
     LDA #$09B4 : CMP $C2 : BEQ .check_dash
-    LDA $09B4 : BEQ +
+    LDA $09B4 : BEQ .swap_jump
     CMP $C4 : BNE .check_dash
-+   JMP .jump
+  .swap_jump
+    JMP .jump
 
   .check_dash
     LDA #$09B6 : CMP $C2 : BEQ .check_cancel
-    LDA $09B6 : BEQ +
+    LDA $09B6 : BEQ .swap_dash
     CMP $C4 : BNE .check_cancel
-+   JMP .dash
+  .swap_dash
+    JMP .dash
 
   .check_cancel
     LDA #$09B8 : CMP $C2 : BEQ .check_select
-    LDA $09B8 : BEQ +
+    LDA $09B8 : BEQ .swap_cancel
     CMP $C4 : BNE .check_select
-+   JMP .cancel
+  .swap_cancel
+    JMP .cancel
 
   .check_select
     LDA #$09BA : CMP $C2 : BEQ .check_up
-    LDA $09BA : BEQ +
+    LDA $09BA : BEQ .swap_select
     CMP $C4 : BNE .check_up
-+   JMP .select
+  .swap_select
+    JMP .select
 
   .check_up
     LDA #$09BE : CMP $C2 : BEQ .check_down
-    LDA $09BE : BEQ +
+    LDA $09BE : BEQ .swap_up
     CMP $C4 : BNE .check_down
-+   JMP .up
+  .swap_up
+    JMP .up
 
   .check_down
     LDA #$09BC : CMP $C2 : BEQ .not_detected
-    LDA $09BC : BEQ +
+    LDA $09BC : BEQ .swap_down
     CMP $C4 : BNE .not_detected
-+   JMP .down
+  .swap_down
+    JMP .down
 
   .not_detected
     %sfxfail()
@@ -2639,72 +2673,79 @@ check_duplicate_inputs:
     JML cm_previous_menu
 
   .shot
-    LDA !ram_cm_ctrl_swap : AND #$0030 : BEQ +  ; check if old input is L or R
-    LDA #$0000 : STA $09B2                      ; unassign input
+    LDA !ram_cm_ctrl_swap : AND #$0030 : BEQ .shot_safe  ; check if old input is L or R
+    LDA #$0000 : STA $09B2                               ; unassign input
     RTL
-+   LDA !ram_cm_ctrl_swap : STA $09B2           ; input is safe to be assigned
+  .shot_safe
+    LDA !ram_cm_ctrl_swap : STA $09B2                    ; input is safe to be assigned
     RTL
 
   .jump
-    LDA !ram_cm_ctrl_swap : AND #$0030 : BEQ +
+    LDA !ram_cm_ctrl_swap : AND #$0030 : BEQ .jump_safe
     LDA #$0000 : STA $09B4
     RTL
-+   LDA !ram_cm_ctrl_swap : STA $09B4
+  .jump_safe
+    LDA !ram_cm_ctrl_swap : STA $09B4
     RTL
 
   .dash
-    LDA !ram_cm_ctrl_swap : AND #$0030 : BEQ +
+    LDA !ram_cm_ctrl_swap : AND #$0030 : BEQ .dash_safe
     LDA #$0000 : STA $09B6
     RTL
-+   LDA !ram_cm_ctrl_swap : STA $09B6
+  .dash_safe
+    LDA !ram_cm_ctrl_swap : STA $09B6
     RTL
 
   .cancel
-    LDA !ram_cm_ctrl_swap : AND #$0030 : BEQ +
+    LDA !ram_cm_ctrl_swap : AND #$0030 : BEQ .cancel_safe
     LDA #$0000 : STA $09B8
     RTL
-+   LDA !ram_cm_ctrl_swap : STA $09B8
+  .cancel_safe
+    LDA !ram_cm_ctrl_swap : STA $09B8
     RTL
 
   .select
-    LDA !ram_cm_ctrl_swap : AND #$0030 : BEQ +
+    LDA !ram_cm_ctrl_swap : AND #$0030 : BEQ .select_safe
     LDA #$0000 : STA $09BA
     RTL
-+   LDA !ram_cm_ctrl_swap : STA $09BA
+  .select_safe
+    LDA !ram_cm_ctrl_swap : STA $09BA
     RTL
 
   .up
     LDA !ram_cm_ctrl_swap : AND #$0030 : BEQ .unbind_up  ; check if input is L or R, unbind if not
     LDA !ram_cm_ctrl_swap : STA $09BE                    ; safe to assign input
-    CMP $09BC : BEQ .swap_down                           ; check if input matches angle down
+    CMP $09BC : BEQ .swap_angle_down                     ; check if input matches angle down
     RTL
 
   .unbind_up
     STA $09BE               ; unassign up
     RTL
 
-  .swap_down
-    CMP #$0020 : BNE +      ; check if angle up is assigned to L
+  .swap_angle_down
+    CMP #$0020 : BNE .angle_down_l  ; check if angle up is assigned to L
     LDA #$0010 : STA $09BC  ; assign R to angle down
     RTL
-+   LDA #$0020 : STA $09BC  ; assign L to angle down
+  .angle_down_l
+    LDA #$0020 : STA $09BC  ; assign L to angle down
     RTL
 
   .down
     LDA !ram_cm_ctrl_swap : AND #$0030 : BEQ .unbind_down
     LDA !ram_cm_ctrl_swap : STA $09BC
-    CMP $09BE : BEQ .swap_up
+    CMP $09BE : BEQ .swap_angle_up
     RTL
 
   .unbind_down
     STA $09BC               ; unassign down
     RTL
 
-  .swap_up
-    CMP #$0020 : BNE +
+  .swap_angle_up
+    CMP #$0020 : BNE .angle_up_l
     LDA #$0010 : STA $09BE
     RTL
-+   LDA #$0020 : STA $09BE
+  .angle_up_l
+    LDA #$0020 : STA $09BE
     RTL
 }
 
@@ -2805,9 +2846,10 @@ rng_botwoon_first:
   .random
     STA !ram_botwoon_first
     ; set _rng flag if any other patterns are set
-    LDA !ram_botwoon_second : BNE +
+    LDA !ram_botwoon_second : BNE .set_rng
     LDA !ram_botwoon_hidden
-+   STA !ram_botwoon_rng
+  .set_rng
+    STA !ram_botwoon_rng
     RTL
 
 rng_botwoon_hidden:
@@ -2830,9 +2872,10 @@ rng_botwoon_hidden:
   .random
     STA !ram_botwoon_hidden
     ; set _rng flag if any other patterns are set
-    LDA !ram_botwoon_first : BNE +
+    LDA !ram_botwoon_first : BNE .set_rng
     LDA !ram_botwoon_second
-+   STA !ram_botwoon_rng
+  .set_rng
+    STA !ram_botwoon_rng
     RTL
 
 rng_botwoon_second:
@@ -2856,9 +2899,10 @@ rng_botwoon_second:
   .random
     STA !ram_botwoon_second
     ; set _rng flag if any other patterns are set
-    LDA !ram_botwoon_first : BNE +
+    LDA !ram_botwoon_first : BNE .set_rng
     LDA !ram_botwoon_hidden
-+   STA !ram_botwoon_rng
+  .set_rng
+    STA !ram_botwoon_rng
     RTL
 
 rng_botwoon_spit:
@@ -3158,6 +3202,7 @@ SavestateMenu:
     dw #save_rerandomize
     dw #save_freeze
     dw #save_middoorsave
+    dw #save_alwayssave
 if !FEATURE_DEV
     dw #$FFFF
     dw #save_delete
@@ -3173,6 +3218,9 @@ save_freeze:
 
 save_middoorsave:
     %cm_toggle("Auto-Save Mid-Door", !ram_auto_save_state, #$0001, #0)
+
+save_alwayssave:
+    %cm_toggle("Auto-Save Every Door", !ram_auto_save_state+1, #$80, #0)
 
 save_delete:
     %cm_jsl("DEV Delete Savestate", .routine, #$DEAD)
@@ -3312,7 +3360,7 @@ GameModeExtras:
 init_wram_based_on_sram:
 {
     JSL init_suit_properties_ram
-    JSL init_water_physics_ram
+    JSL init_physics_ram
 
     ; Check if any less common controller shortcuts are configured
     JML GameModeExtras

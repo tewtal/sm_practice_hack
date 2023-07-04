@@ -1381,21 +1381,23 @@ status_ramwatch:
     ; Write 8 or 16 bit values
     LDA !ram_watch_write_mode : BEQ .edit16bit
     %a8()
-    LDA !ram_watch_edit_lock_left : BEQ +
+    LDA !ram_watch_edit_lock_left : BEQ .e8LeftDone
     LDA !ram_watch_edit_left : STA [$C1]
-
-+   LDA !ram_watch_edit_lock_right : BEQ +
+  .e8LeftDone
+    LDA !ram_watch_edit_lock_right : BEQ .e8RightDone
     LDA !ram_watch_edit_right : STA [$C5]
-+   %a16()
+  .e8RightDone
+    %a16()
     RTS
 
   .edit16bit
-    LDA !ram_watch_edit_lock_left : BEQ +
+    LDA !ram_watch_edit_lock_left : BEQ .e16LeftDone
     LDA !ram_watch_edit_left : STA [$C1]
-
-+   LDA !ram_watch_edit_lock_right : BEQ +
+  .e16LeftDone
+    LDA !ram_watch_edit_lock_right : BEQ .e16RightDone
     LDA !ram_watch_edit_right : STA [$C5]
-+   RTS
+  .e16RightDone
+    RTS
 }
 
 status_doorskip:

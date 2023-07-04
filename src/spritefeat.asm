@@ -18,6 +18,7 @@ org $828B98
 ; Add hitbox graphic to free sprite VRAM slot
 ;
 org $9ADAE0
+hook_standard_sprite_tiles:
 db $FF, $FF, $80, $80, $80, $80, $80, $80, $80, $80, $80, $80, $80, $80, $80, $80
 db $FF, $FF, $80, $80, $80, $80, $80, $80, $80, $80, $80, $80, $80, $80, $80, $80
 
@@ -27,6 +28,7 @@ print pc, " spritefeat start"
 
 ; This runs every frame before any other sprites are drawn, this is needed so we can get priority over everything else
 update_sprite_features:
+{
     PHA
     LDA !ram_sprite_feature_flags : BNE .spriteFeatures
     PLA : BRA .done
@@ -35,34 +37,41 @@ update_sprite_features:
     PHX : PHY : PHP
 
     ; Draw OoB viewer if activated
-    LDA !ram_sprite_feature_flags : BIT !SPRITE_OOB_WATCH : BEQ +
-    JSR update_sprite_oob
+    LDA !ram_sprite_feature_flags : BIT !SPRITE_OOB_WATCH : BEQ .skip_oob
+    JSR draw_sprite_oob
+  .skip_oob
 
     ; Draw Samus hitbox if activated
-+   LDA !ram_sprite_feature_flags : BIT !SPRITE_SAMUS_HITBOX : BEQ +
-    JSR update_sprite_hitbox
+    LDA !ram_sprite_feature_flags : BIT !SPRITE_SAMUS_HITBOX : BEQ .skip_samus
+    JSR draw_samus_hitbox
+  .skip_samus
 
     ; Draw enemy hitboxes if activated
-+   LDA !ram_sprite_feature_flags : BIT !SPRITE_ENEMY_HITBOX : BEQ +
-    JSR update_enemy_sprite_hitbox
+    LDA !ram_sprite_feature_flags : BIT !SPRITE_ENEMY_HITBOX : BEQ .skip_enemy
+    JSR draw_enemy_hitbox
+  .skip_enemy
 
     ; Draw extended spritemap hitboxes if activated
-+   LDA !ram_sprite_feature_flags : BIT !SPRITE_EXTENDED_HITBOX : BEQ +
-    JSR update_extended_spritemap_hitbox
+    LDA !ram_sprite_feature_flags : BIT !SPRITE_EXTENDED_HITBOX : BEQ .skip_extended
+    JSR draw_ext_spritemap_hitbox
+  .skip_extended
 
     ; Draw custom boss hitboxes if activated
-+   LDA !ram_sprite_feature_flags : BIT !SPRITE_BOSS_HITBOX : BEQ +
-    JSR custom_sprite_hitbox
+    LDA !ram_sprite_feature_flags : BIT !SPRITE_BOSS_HITBOX : BEQ .skip_custom
+    JSR draw_custom_boss_hitbox
+  .skip_custom
 
     ; Draw enemy projectile hitboxes if activated
-+   LDA !ram_sprite_feature_flags : BIT !SPRITE_ENEMY_PROJ : BEQ +
-    JSR update_enemyproj_sprite_hitbox
+    LDA !ram_sprite_feature_flags : BIT !SPRITE_ENEMY_PROJ : BEQ .skip_enemyproj
+    JSR draw_enemyproj_hitbox
+  .skip_enemyproj
 
     ; Draw Samus projectile hitboxes if activated
-+   LDA !ram_sprite_feature_flags : BIT !SPRITE_SAMUS_PROJ : BEQ +
-    JSR update_samusproj_sprite_hitbox
+    LDA !ram_sprite_feature_flags : BIT !SPRITE_SAMUS_PROJ : BEQ .skip_samusproj
+    JSR draw_samusproj_hitbox
+  .skip_samusproj
 
-+   PLP : PLY : PLX : PLA
+    PLP : PLY : PLX : PLA
 
   .done
 if !FEATURE_PAL
@@ -71,15 +80,19 @@ else
     JSL $A0884D
 endif
     RTL
+}
 
 ; When loading into a game, do we need to update any sprite tiles?
 update_sprite_tiles_loading:
-    LDA !ram_sprite_feature_flags : BIT !SPRITE_OOB_WATCH : BEQ +
+    LDA !ram_sprite_feature_flags : BIT !SPRITE_OOB_WATCH : BEQ .skip
     JSL upload_sprite_oob_tiles
-+   JSL $80894D
+  .skip
+    JSL $80894D
     RTL
+}
 
 upload_sprite_oob_tiles:
+{
     LDX $330
     LDA #$0400
     STA $D0, X
@@ -91,8 +104,10 @@ upload_sprite_oob_tiles:
     STA $D5, X
     TXA : CLC : ADC #$0007 : STA $0330
     RTL
+}
 
-update_sprite_oob:
+draw_sprite_oob:
+{
     !oob_width = $000D
     !oob_height = $0009
     LDA $590 : STA $C8
@@ -107,7 +122,6 @@ update_sprite_oob:
     LSR #4
     STA $22 ; cameraX - (oob_width*8) / 16
 
-
     LDA $0AFA
     SEC : SBC #((!oob_height-2)*8)
     STA $14 ; cameraY - (oob_height*8)
@@ -117,7 +131,6 @@ update_sprite_oob:
     LDA $14
     LSR #4
     STA $24 ; cameraY - (oob_height*8) / 16
-
 
     LDA $07A5
     STA $16 ; width
@@ -175,14 +188,14 @@ update_sprite_oob:
 
             INX
             CPX #!oob_width
-            BEQ +
+            BEQ .end_x
             JMP .loop_x
-            +
+        .end_x
         INY
         CPY #!oob_height
-        BEQ +
+        BEQ .end_y
         JMP .loop_y
-        +
+    .end_y
 
     LDA $590
     BEQ .end
@@ -191,14 +204,15 @@ update_sprite_oob:
 
     SEP #$20
     LDX $C8
-    -
+    .copy_loop
         LDA #%10101010 : STA $570, X
-        INX : CPX $CA : BNE -
+        INX : CPX $CA : BNE .copy_loop
     REP #$30
 
 .end
-    JSR sprite_draw_oob_samus_hitbox
+    JSR draw_oob_samus_hitbox
     RTS
+}
 
 block_gfx:
     ; d0 = transparent
@@ -214,7 +228,8 @@ block_gfx:
     db $d0, $de,   $d0,              $dc,       $d0,      $d0,       $d0, $d0, $d6,   $d4,  $dc,   $dc,     $d2,  $d0,     $da,     $dc
 
 ; draw hitbox around samus for the oob viewer (static position on the screen)
-sprite_draw_oob_samus_hitbox:
+draw_oob_samus_hitbox:
+{
     ;LDA $0AFA : SEC : SBC $0915 : PHA ; top edge
     ;LDA $0B04 : PHA ; left edge
 
@@ -298,13 +313,15 @@ sprite_draw_oob_samus_hitbox:
     REP #$30
     TYA : CLC : ADC #$0010 : STA $0590
     RTS
+}
 
 spr_clr_flags:
     dw %1111111111111100, %1111111111110011, %1111111111001111, %1111111100111111
 
 
 ; draw hitbox around samus
-update_sprite_hitbox:
+draw_samus_hitbox:
+{
     LDA !SAMUS_Y : SEC : SBC !LAYER1_Y : PHA ; Y coord
     LDA !SAMUS_SPRITEMAP_X : PHA ; X coord
 
@@ -342,8 +359,8 @@ update_sprite_hitbox:
     RTS
 }
 
-update_enemy_sprite_hitbox:
 ; draw hitboxes around first 8 enemies
+draw_enemy_hitbox:
 {
     LDX #$0000 ; X = enemy index
     LDY !OAM_STACK_POINTER ; Y = OAM stack pointer
@@ -409,8 +426,8 @@ update_enemy_sprite_hitbox:
     RTS
 }
 
-update_extended_spritemap_hitbox:
 ; draw hitboxes around enemies that use extended spritemaps
+draw_ext_spritemap_hitbox:
 {
     ; Kraid has too many hitboxes and overflows the OAM stack
     LDA !ROOM_ID : CMP #$A59F : BEQ .end ; check for Kraid's room
@@ -542,8 +559,8 @@ update_extended_spritemap_hitbox:
     RTS
 }
 
-update_enemyproj_sprite_hitbox:
 ; draw hitboxes around enemy projectiles
+draw_enemyproj_hitbox:
 {
     !min_four_corners_radius = #$0007
     LDX #$FFFE : STX $12 : STX $14 ; X = projectile index
@@ -649,25 +666,23 @@ update_enemyproj_sprite_hitbox:
   .fullStack
     RTS
 
-  .skipProjectile32x32
-    JMP .skipProjectile
-
   .check32x32
-    LDA !ENEMY_PROJ_PROPERTIES,X : AND #$A000 : CMP #$8000 : BNE .skipProjectile32x32
-    LDA !ENEMY_PROJ_X,X : CMP !LAYER1_X : BMI .skipProjectile32x32
-    LDA !LAYER1_X : CLC : ADC #$0100 : CMP !ENEMY_PROJ_X,X : BMI .skipProjectile32x32
-    LDA !ENEMY_PROJ_Y,X : CMP !LAYER1_Y : BMI .skipProjectile32x32
-    LDA !LAYER1_Y : CLC : ADC #$0100 : CMP !ENEMY_PROJ_Y,X : BMI .skipProjectile32x32
+    LDA !ENEMY_PROJ_PROPERTIES,X : AND #$A000 : CMP #$8000 : BNE .skip32x32
+    LDA !ENEMY_PROJ_X,X : CMP !LAYER1_X : BMI .skip32x32
+    LDA !LAYER1_X : CLC : ADC #$0100 : CMP !ENEMY_PROJ_X,X : BMI .skip32x32
+    LDA !ENEMY_PROJ_Y,X : CMP !LAYER1_Y : BMI .skip32x32
+    LDA !LAYER1_Y : CLC : ADC #$0100 : CMP !ENEMY_PROJ_Y,X : BMI .skip32x32
 
-    LDA !ENEMY_PROJ_Y,X : AND #$FFE0 : CMP $14 : BNE .storeYandDraw32x32
-    LDA !ENEMY_PROJ_X,X : AND #$FFE0 : CMP $12 : BNE .storeXandDraw32x32
+    LDA !ENEMY_PROJ_Y,X : AND #$FFE0 : CMP $14 : BNE .storeY
+    LDA !ENEMY_PROJ_X,X : AND #$FFE0 : CMP $12 : BNE .storeX
+  .skip32x32
     JMP .skipProjectile
 
-  .storeXandDraw32x32
+  .storeX
     STA $12 : LDA $14 : SEC : SBC !LAYER1_Y : PHA ; top edge
     LDA $12 : BRA .draw32x32
 
-  .storeYandDraw32x32
+  .storeY
     STA $14 : SEC : SBC !LAYER1_Y : PHA ; top edge
     LDA !ENEMY_PROJ_X,X : AND #$FFE0 : STA $12
 
@@ -689,8 +704,8 @@ update_enemyproj_sprite_hitbox:
     JMP .setAttributes
 }
 
-update_samusproj_sprite_hitbox:
 ; draw hitboxes around Samus projectiles
+draw_samusproj_hitbox:
 {
     LDX #$FFFE ; X = projectile index
     LDY !OAM_STACK_POINTER ; Y = OAM stack pointer
@@ -758,14 +773,17 @@ update_samusproj_sprite_hitbox:
   .fullStack
     RTS
 
-  .skipProjectile32x32
+  .skip32x32
     JMP .skipProjectile
 
   .check32x32
-    LDA !SAMUS_PROJ_X,X : CMP !LAYER1_X : BMI .skipProjectile32x32
-    LDA !LAYER1_X : CLC : ADC #$0100 : CMP !SAMUS_PROJ_X,X : BMI .skipProjectile32x32
-    LDA !SAMUS_PROJ_Y,X : CMP !LAYER1_Y : BMI .skipProjectile32x32
-    LDA !LAYER1_Y : CLC : ADC #$0100 : CMP !SAMUS_PROJ_Y,X : BMI .skipProjectile32x32
+    ; skip bombs ($0500), bomb explosions ($0501) and power bombs ($0300)
+    LDA !SAMUS_PROJ_PROPERTIES,X : BIT #$0701 : BNE .skip32x32
+
+    LDA !SAMUS_PROJ_X,X : CMP !LAYER1_X : BMI .skip32x32
+    LDA !LAYER1_X : CLC : ADC #$0100 : CMP !SAMUS_PROJ_X,X : BMI .skip32x32
+    LDA !SAMUS_PROJ_Y,X : CMP !LAYER1_Y : BMI .skip32x32
+    LDA !LAYER1_Y : CLC : ADC #$0100 : CMP !SAMUS_PROJ_Y,X : BMI .skip32x32
 
     LDA !SAMUS_PROJ_Y,X : AND #$FFE0 : SEC : SBC !LAYER1_Y : PHA ; top edge
     LDA !SAMUS_PROJ_X,X : AND #$FFE0 : SEC : SBC !LAYER1_X : PHA ; left edge
@@ -785,7 +803,7 @@ update_samusproj_sprite_hitbox:
     JMP .setAttributes
 }
 
-custom_sprite_hitbox:
+draw_custom_boss_hitbox:
 {
     LDA !ROOM_ID : CMP #$DD58 : BEQ .mother_brain
     LDA !ROOM_ID : CMP #$B32E : BEQ .ridley_bridge
@@ -925,8 +943,7 @@ DrawMBHitbox:
     LDA !ENEMY_X,X : SEC : SBC !LAYER1_X : STA $1D ; left edge
 
     ; calculate sprite positions
-    %a8()
-;    LDA $1D ; X coord
+    %a8() ; X coord
     CLC : ADC $14
     STA $0370,Y : STA $0378,Y ; sprite X pos
     LDA $1D : CLC : ADC $18

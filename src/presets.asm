@@ -23,11 +23,12 @@ endif
 
     ; Fix Phantoon and Draygon rooms
     LDA !ROOM_ID : CMP #$CD13 : BEQ .fixBG2
-    CMP #$D9AA : BNE +
+    CMP #$D9AA : BNE .doneBG2
   .fixBG2
     JSL preset_clear_BG2_tilemap
- 
-+   JSL $809A79  ; HUD routine when game is loading
+
+  .doneBG2
+    JSL $809A79  ; HUD routine when game is loading
     JSL $90AD22  ; Reset projectile data
 
     PHP : %ai16()
@@ -159,7 +160,7 @@ preset_load_library_background:
 {
     PHP : PHB : %ai16()
     JSL $80A29C ; Clear FX tilemap
-    LDA $1964 : BEQ .done_fx_tilemap
+    LDA $1964 : BEQ .done_fx
 
     STA $4312 ; src addr
     LDA #$008A : STA $4314 ; src bank
@@ -171,28 +172,28 @@ preset_load_library_background:
     LDA #$02 : STA $420B ; initiate DMA channel 1
     %a16() : CLC
 
-  .done_fx_tilemap
+  .done_fx
     PEA $8F00 : PLB : PLB
     %a16()
     LDX $07BB
     LDY $0016,X : BPL .done
 
-  .load_library_loop
+  .load_loop
     LDX $0000,Y : INY : INY
-    JSR (preset_load_library_background_jump_table,X)
-    BCC .load_library_loop
+    JSR (preset_load_background_jump_table,X)
+    BCC .load_loop
 
   .done
     PLB : PLP : RTL
 }
 
-preset_load_library_background_jump_table:
-    dw $E9E5, $E9F9, $EA2D, $EA4E, $EA66, $EA56, $EA5E, preset_load_library_start_transfer_to_vram
+preset_load_background_jump_table:
+    dw $E9E5, $E9F9, $EA2D, $EA4E, $EA66, $EA56, $EA5E, preset_start_transfer_to_vram
 
-preset_load_library_start_transfer_to_vram:
-    JML preset_load_library_transfer_to_vram
+preset_start_transfer_to_vram:
+    JML preset_transfer_to_vram
 
-preset_load_library_end_transfer_to_vram:
+preset_end_transfer_to_vram:
     RTS
 endif
 
@@ -228,11 +229,12 @@ preset_load_preset:
     LDA #$5AFE : STA !LAYER2_X ; Load garbage into Layer 2 X position
 
     ; check if segment timer should be reset now or after a door
-    LDA !sram_preset_options : BIT !PRESETS_AUTO_SEGMENT_OFF : BNE +
+    LDA !sram_preset_options : BIT !PRESETS_AUTO_SEGMENT_OFF : BNE .check_load
     LDA #$FFFF : STA !ram_reset_segment_later
 
+  .check_load
     ; check if custom preset is being loaded
-+   LDA !ram_custom_preset : BEQ .category_preset
+    LDA !ram_custom_preset : BEQ .category_preset
     JSL custom_preset_load
     BRA .done
 
@@ -262,71 +264,72 @@ category_preset_load:
 
     ; If start of preset data is greater than preset address,
     ; then our preset address is in the next bank
-    CMP $C3 : BCC .build_list_loop : BEQ .build_list_loop
+    CMP $C3 : BCC .buildLoop : BEQ .buildLoop
     INC $C5
 
-  .build_list_loop
+  .buildLoop
     ; Build list of presets to traverse
-    LDA [$C3] : BEQ .prepare_traverse_list_loop
+    LDA [$C3] : BEQ .traversePrep
     INX : INX : STA $7F0002,X
-    CMP $C3 : STA $C3 : BCC .build_list_loop
+    CMP $C3 : STA $C3 : BCC .buildLoop
     ; We just crossed back into the starting bank
     DEC $C5
-    BRA .build_list_loop
+    BRA .buildLoop
 
-  .prepare_traverse_list_loop
+  .traversePrep
     ; Set bank to read data from
     STZ $00 : %a8() : LDA $C5 : PHA : PLB
     ; Set bank to store data to
     LDA #$7E : STA $C5 : %a16()
 
-  .traverse_list_loop_with_bank_check
+  .crossBankTraverseLoop
     ; Now traverse from the first preset until the last one
-    LDA $7F0002,X : TAY : CMP $C1 : BCC .increment_bank_before_inner_loop
+    LDA $7F0002,X : TAY : CMP $C1 : BCC .incBankInnerLoop
     INY : INY
-    BRA .inner_loop_with_bank_check_load_address
+    BRA .crossBankLoadAddr
 
     ; For each preset, load and store address and value pairs
-  .inner_loop_with_bank_check
+  .crossBankInnerLoop
     STA $C3 : INY : INY
-    CPY #$0000 : BEQ .increment_bank_before_load_value
+    CPY #$0000 : BEQ .incBankLoadValue
     LDA ($00),Y : STA [$C3] : INY : INY
-  .inner_loop_with_bank_check_load_address
-    CPY #$0000 : BEQ .increment_bank_before_load_address
-    LDA ($00),Y : CMP #$FFFF : BNE .inner_loop_with_bank_check
 
-    DEX : DEX : BPL .traverse_list_loop_with_bank_check
+  .crossBankLoadAddr
+    CPY #$0000 : BEQ .incBankLoadAddr
+    LDA ($00),Y : CMP #$FFFF : BNE .crossBankInnerLoop
+
+    DEX : DEX : BPL .crossBankTraverseLoop
     RTS
 
-  .increment_bank_before_inner_loop
+  .incBankInnerLoop
     %a8() : PHB : PLA : INC : PHA : PLB : %a16()
     INY : INY
-    BRA .inner_loop_load_address
+    BRA .simpleLoadAddr
 
-  .increment_bank_before_load_address
+  .incBankLoadAddr
     %a8() : PHB : PLA : INC : PHA : PLB : %a16()
     LDY #$8000
-    BRA .inner_loop_load_address
+    BRA .simpleLoadAddr
 
-  .increment_bank_before_load_value
+  .incBankLoadValue
     %a8() : PHB : PLA : INC : PHA : PLB : %a16()
     LDY #$8000
-    BRA .inner_loop_load_value
+    BRA .simpleLoadValue
 
-  .traverse_list_loop
+  .simpleTraverseLoop
     ; Continue traversing from the first preset until the last one
     LDA $7F0002,X : TAY : INY : INY
-    BRA .inner_loop_load_address
+    BRA .simpleLoadAddr
 
     ; For each preset, load and store address and value pairs
-  .inner_loop
+  .simpleInnerLoop
     STA $C3 : INY : INY
-  .inner_loop_load_value
+  .simpleLoadValue
     LDA ($00),Y : STA [$C3] : INY : INY
-  .inner_loop_load_address
-    LDA ($00),Y : CMP #$FFFF : BNE .inner_loop
+  .simpleLoadAddr
+    LDA ($00),Y : CMP #$FFFF : BNE .simpleInnerLoop
 
-    DEX : DEX : BPL .traverse_list_loop
+    DEX : DEX : BPL .simpleTraverseLoop
     RTS
 }
 
@@ -349,7 +352,8 @@ category_preset_data_table:
     dl preset_allbossprkd_crateria_ceres_elevator
 
 print pc, " presets bank82 end"
-warnpc $82FE00
+warnpc $82FE00 ; tinystates.asm
+
 
 org $82E8D9
     JSL preset_room_setup_asm_fixes
@@ -383,8 +387,11 @@ preset_start_gameplay:
     LDA !SAMUS_POSE_DIRECTION : STA !SAMUS_PREVIOUS_POSE_DIRECTION
     LDA !SAMUS_POSE : CMP #$00C0 : BMI .store_prev_pose
     CMP #$00C5 : BMI .store_prev_pose
-    ; Set timer type to shinespark, clear prev pose
+    ; Set timer type to shinespark
     LDA #$0006 : STA $0ACC
+    ; Set timer very high in case player holds inputs before spark moves
+    LDA #$7FFF : STA !SAMUS_SHINE_TIMER
+    ; Clear previous pose
     LDA #$0000
   .store_prev_pose
     STA !SAMUS_PREVIOUS_POSE
@@ -430,7 +437,7 @@ else
 endif
     JSL $80A23F  ; Clear BG2 tilemap
 if !RAW_TILE_GRAPHICS
-    JSL preset_load_level_tile_tables_scrolls_plms_and_execute_asm
+    JSL preset_load_level
 else
     JSL $82E7D3  ; Load level data, CRE, tile table, scroll data, create PLMs and execute door ASM and room setup ASM
 endif
@@ -531,7 +538,7 @@ endif
     STZ $0795 : STZ $0797  ; Clear door transition flags
     TDC : STA !ram_transition_flag
     JSL init_heat_damage_ram
-    JSL init_water_physics_ram
+    JSL init_physics_ram
 
     LDA #$E737 : STA $099C ; Pointer to next frame's room transition code = $82:E737
 
@@ -553,8 +560,9 @@ preset_clear_BG2_tilemap:
 
     ; Clear BG2 Tilemap
     LDA #$0338 : LDX #$07FE
--   STA $7E4000,X : STA $7E4800,X
-    DEX #2 : BPL -
+  .loop
+    STA $7E4000,X : STA $7E4800,X
+    DEX #2 : BPL .loop
 
     ; Upload BG2 Tilemap
     %a8()
@@ -580,48 +588,48 @@ preset_open_all_blue_doors:
 
     ; First resolve all door PLMs where the door has previously been opened
     LDX #$004E
-  .plm_search_loop
-    LDA $1C37,X : BEQ .plm_search_done
-    LDY $1D27,X : LDA $0000,Y : CMP #$8A72 : BEQ .plm_door_found
-  .plm_search_resume
-    DEX : DEX : BRA .plm_search_loop
+  .plmSearchLoop
+    LDA $1C37,X : BEQ .plmSearchDone
+    LDY $1D27,X : LDA $0000,Y : CMP #$8A72 : BEQ .plmDoorFound
+  .plmSearchResume
+    DEX : DEX : BRA .plmSearchLoop
 
-  .plm_door_found
-    LDA $1DC7,X : BMI .plm_search_resume
+  .plmDoorFound
+    LDA $1DC7,X : BMI .plmSearchResume
     PHX : JSL $80818E : LDA $7ED8B0,X : PLX
-    AND $05E7 : BEQ .plm_search_resume
+    AND $05E7 : BEQ .plmSearchResume
 
     ; Door has been previously opened
     ; Execute the next PLM instruction to set the BTS as a blue door
     LDA $0002,Y : TAY
-    LDA $0000,Y : CMP #$86BC : BEQ .plm_delete
+    LDA $0000,Y : CMP #$86BC : BEQ .plmDelete
     INY : INY
     JSL preset_execute_plm_instruction
 
-  .plm_delete
+  .plmDelete
     STZ $1C37,X
-    BRA .plm_search_resume
+    BRA .plmSearchResume
 
-  .plm_search_done
+  .plmSearchDone
     ; Now search all of the room BTS for doors
     LDA !ROOM_WIDTH_SCROLLS : STA $C7
     LDA !ROOM_WIDTH_BLOCKS : STA $C1 : ASL : STA $C3
     LDA $7F0000 : LSR : TAY
     STZ $C5 : TDC : %a8() : LDA #$7F : PHA : PLB
 
-  .bts_search_loop
-    LDA $6401,Y : AND #$FC : CMP #$40 : BEQ .bts_found
-  .bts_continue
-    DEY : BNE .bts_search_loop
+  .btsSearchLoop
+    LDA $6401,Y : AND #$FC : CMP #$40 : BEQ .btsFound
+  .btsContinue
+    DEY : BNE .btsSearchLoop
 
     ; All blue doors opened
     PLY : PLX : PLB : PLP : RTS
 
-  .bts_found
+  .btsFound
     ; Convert BTS index to tile index
     ; Also verify this is a door and not a slope or half-tile
     %a16() : TYA : ASL : TAX : %a8()
-    LDA $0001,X : BIT #$30 : BNE .bts_continue
+    LDA $0001,X : BIT #$30 : BNE .btsContinue
 
     ; If this door has a red scroll, then leave it closed
     ; Most of the work is to determine the scroll index
@@ -635,14 +643,14 @@ preset_open_all_blue_doors:
     PHA : PLA : TDC
     LDA $004216 : CLC : ADC $C8
     PHX : TAX : LDA $7ECD20,X : PLX
-    CMP #$00 : BEQ .bts_continue
+    CMP #$00 : BEQ .btsContinue
 
     ; Check what type of door we need to open
-    LDA $6401,Y : BIT #$02 : BNE .bts_check_up_or_down
-    BIT #$01 : BEQ .bts_facing_left_right
+    LDA $6401,Y : BIT #$02 : BNE .btsCheckUpDown
+    BIT #$01 : BEQ .btsFacingLeftRight
     LDA #$04 : STA $C6
 
-  .bts_facing_left_right
+  .btsFacingLeftRight
     %a16() : LDA #$0082 : ORA $C5 : STA $0000,X
     TXA : CLC : ADC $C3 : TAX : LDA #$00A2 : ORA $C5 : STA $0000,X
     TXA : CLC : ADC $C3 : TAX : LDA #$08A2 : ORA $C5 : STA $0000,X
@@ -651,18 +659,18 @@ preset_open_all_blue_doors:
     %a16() : TYA : CLC : ADC $C1 : TAX : TDC : %a8() : STA $6401,X
     %a16() : TXA : CLC : ADC $C1 : TAX : TDC : %a8() : STA $6401,X
     %a16() : TXA : CLC : ADC $C1 : TAX : TDC : %a8() : STA $6401,X
-    BRL .bts_continue
+    BRL .btsContinue
 
-  .bts_check_up_or_down
-    BIT #$01 : BEQ .bts_facing_up_down
+  .btsCheckUpDown
+    BIT #$01 : BEQ .btsFacingUpDown
     LDA #$08 : STA $C6
 
-  .bts_facing_up_down
+  .btsFacingUpDown
     %a16() : LDA #$0084 : ORA $C5 : STA $0006,X
     DEC : STA $0004,X : ORA #$0400 : STA $0002,X : INC : STA $0000,X
     TDC : %a8() : STA $C6 : STA $6401,Y
     STA $6402,Y : STA $6403,Y : STA $6404,Y
-    BRL .bts_continue
+    BRL .btsContinue
 }
 
 preset_execute_plm_instruction:
@@ -729,25 +737,25 @@ add_grapple_and_xray_to_hud:
     JSL $809A3E            ; Add x-ray to HUD tilemap
     LDA $09A2 : BIT #$4000 : BEQ $04
     JSL $809A2E            ; Add grapple to HUD tilemap
-    JMP .resume_infohud_icon_initialization
+    JMP resume_infohud_icon_initialization
 }
 
 print pc, " presets bank80 end"
-warnpc $80F600 ; save.asm
+warnpc $80F600 ; save.asm or tinystates.asm
 
 
 ; $80:9AB1: Add x-ray and grapple HUD items if necessary
 org $809AB1
     ; Skip x-ray and grapple if max HP is a multiple of 4,
     ; which is only possible if GT code was used
-    LDA $09C4 : AND #$0003 : BEQ .resume_infohud_icon_initialization
+    LDA $09C4 : AND #$0003 : BEQ resume_infohud_icon_initialization
     JMP add_grapple_and_xray_to_hud
 
 warnpc $809AC9
 
 ; $80:9AC9: Resume original logic
 org $809AC9
-  .resume_infohud_icon_initialization
+resume_infohud_icon_initialization:
 
 
 
