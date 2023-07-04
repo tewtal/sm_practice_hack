@@ -193,7 +193,7 @@ else
     JSR $EB02     ; Handle Samus movement
 endif
 
-    ; Bowling cutscene runs for 1938 frames on NTSC, which is divisible by 6
+    ; Bowling cutscene runs for 1938 frames, which is divisible by 6
     ; We can therefore run two extra passes per frame
     ; without having to check if the cutscene has ended
     ; (we could do five extra passes but the rendering is not good)
