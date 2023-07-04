@@ -1950,6 +1950,8 @@ endif
     dw #ih_lag
     dw #$FFFF
     dw #ih_ram_watch
+    dw #$FFFF
+    dw #ih_auto_update_timers
     dw #$0000
     %cm_header("INFOHUD")
 
@@ -2048,6 +2050,8 @@ ihmode_shottimer:
 !IH_MODE_RAMWATCH_INDEX = $0014
 ihmode_ramwatch:
     %cm_jsl("RAM Watch", #action_select_infohud_mode, #$0014)
+
+
 
 action_select_infohud_mode:
 {
@@ -2219,6 +2223,9 @@ ih_lag:
 
 ih_ram_watch:
     %cm_jsl("Customize RAM Watch", #ih_prepare_ram_watch_menu, #RAMWatchMenu)
+
+ih_auto_update_timers:
+    %cm_toggle_inverted("Auto update timers", !ram_timers_autoupdate, #$0001, #0)
 
 incsrc ramwatchmenu.asm
 
