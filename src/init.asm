@@ -95,6 +95,7 @@ init_sram:
     CMP #$000F : BEQ .sram_upgrade_Fto10
     CMP #$0010 : BEQ .sram_upgrade_10to11
     CMP #$0011 : BEQ .sram_upgrade_11to12
+    CMP #$0012 : BEQ .sram_upgrade_12to13
     JSL init_sram_upto9
 
   .sram_upgrade_9toA
@@ -134,6 +135,9 @@ init_sram:
   .sram_upgrade_11to12
     JSL init_menu_customization
     TDC : STA !sram_ctrl_auto_save_state
+
+  .sram_upgrade_12to13
+    TDC : STA !sram_custom_header
 
     LDA #!SRAM_VERSION : STA !sram_initialized
     RTS

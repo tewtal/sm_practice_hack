@@ -247,6 +247,8 @@ ram_cm_dummy_on = !ram_cm_dummy_on ; !WRAM_MENU_START+$8A
 ram_cm_dummy_off = !ram_cm_dummy_off ; !WRAM_MENU_START+$8C
 ram_cm_dummy_num = !ram_cm_dummy_num ; !WRAM_MENU_START+$8E
 
+ram_cm_keyboard_buffer = !ram_cm_keyboard_buffer ; !WRAM_MENU_START+$80 ; $18 bytes
+
 ; ^ FREE SPACE ^ up to +$CE
 
 ; Reserve 48 bytes for CGRAM cache
@@ -334,7 +336,15 @@ sram_customsfx_goback = !sram_customsfx_goback ; !SRAM_START+$80
 sram_seed_X = !sram_seed_X ; !SRAM_START+$82
 sram_seed_Y = !sram_seed_Y ; !SRAM_START+$84
 
-; ^ FREE SPACE ^ up to +$EE, $100-FCE
+; ^ FREE SPACE ^ up to +$EE, $100-BA6
+
+sram_custom_header_normal = !sram_custom_header_normal ; !SRAM_START+$BA8 ; $18 bytes
+sram_custom_preset_safewords_normal = !sram_custom_preset_safewords_normal ; !SRAM_START+$BC0 ; $50 bytes
+sram_custom_preset_names_normal = !sram_custom_preset_names_normal ; !SRAM_START+$C10 ; $3C0 bytes
+
+sram_custom_header_tinystates = !sram_custom_header_tinystates ; !SRAM_START+$E18 ; $18 bytes
+sram_custom_preset_safewords_tinystates = !sram_custom_preset_safewords_tinystates ; !SRAM_START+$E30 ; $20 bytes
+sram_custom_preset_names_tinystates = !sram_custom_preset_names_tinystates ; !SRAM_START+$E50 ; $180 bytes
 
 ; SM specific things
 

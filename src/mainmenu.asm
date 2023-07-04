@@ -528,7 +528,7 @@ else
     dw #custompreset_goto_page3
 endif
     dw #$0000
-    %cm_header("## ENERGY    RES MMM SS PB")
+    %cm_header("PRESS X TO NAME PRESETS")
     %cm_footer("PRESS Y TO TOGGLE DISPLAY")
 
 CustomPresetsMenu2:
@@ -552,7 +552,7 @@ CustomPresetsMenu2:
     dw #custompreset_goto_page1
     dw #custompreset_goto_page3
     dw #$0000
-    %cm_header("## ENERGY    RES MMM SS PB")
+    %cm_header("PRESS X TO NAME PRESETS")
     %cm_footer("PRESS Y TO TOGGLE DISPLAY")
 
 CustomPresetsMenu3:
@@ -576,7 +576,7 @@ CustomPresetsMenu3:
     dw #custompreset_goto_page1
     dw #custompreset_goto_page2
     dw #$0000
-    %cm_header("## ENERGY    RES MMM SS PB")
+    %cm_header("PRESS X TO NAME PRESETS")
     %cm_footer("PRESS Y TO TOGGLE DISPLAY")
 
     %cm_custompreset(00)
@@ -683,7 +683,7 @@ eq_goto_togglebeams:
     %cm_jsl("Toggle Beams", #eq_prepare_beams_menu, #ToggleBeamsMenu)
 
 eq_currentenergy:
-    %cm_numfield_word("Current Energy", $7E0000+!SAMUS_HP, 0, 2100, #0)
+    %cm_numfield_word("Current Energy", !SAMUS_HP, 0, 2100, #0)
 
 eq_setetanks:
     %cm_numfield("Energy Tanks", !ram_cm_etanks, 0, 21, 1, 1, .routine)
@@ -703,7 +703,7 @@ eq_setetanks:
     RTL
 
 eq_currentreserves:
-    %cm_numfield_word("Current Reserves", $7E0000+!SAMUS_RESERVE_ENERGY, 0, 700, #0)
+    %cm_numfield_word("Current Reserves", !SAMUS_RESERVE_ENERGY, 0, 700, #0)
 
 eq_setreserves:
     %cm_numfield("Reserve Tanks", !ram_cm_reserve, 0, 7, 1, 1, .routine)
@@ -722,7 +722,7 @@ eq_setreserves:
 
 eq_reservemode:
     dw !ACTION_CHOICE
-    dl #$7E0000+!SAMUS_RESERVE_MODE
+    dl #!SAMUS_RESERVE_MODE
     dw #.routine
     db #$28, "Reserve Mode", #$FF
     db #$28, " UNOBTAINED", #$FF
@@ -737,28 +737,28 @@ eq_reservemode:
     RTL
 
 eq_currentmissiles:
-    %cm_numfield_word("Current Missiles", $7E0000+!SAMUS_MISSILES, 0, 325, #0)
+    %cm_numfield_word("Current Missiles", !SAMUS_MISSILES, 0, 325, #0)
 
 eq_setmissiles:
-    %cm_numfield_word("Missiles", $7E0000+!SAMUS_MISSILES_MAX, 0, 325, .routine)
+    %cm_numfield_word("Missiles", !SAMUS_MISSILES_MAX, 0, 325, .routine)
     .routine
         LDA !SAMUS_MISSILES_MAX : STA !SAMUS_MISSILES ; missiles
         RTL
 
 eq_currentsupers:
-    %cm_numfield("Current Super Missiles", $7E0000+!SAMUS_SUPERS, 0, 65, 1, 5, #0)
+    %cm_numfield("Current Super Missiles", !SAMUS_SUPERS, 0, 65, 1, 5, #0)
 
 eq_setsupers:
-    %cm_numfield("Super Missiles", $7E0000+!SAMUS_SUPERS_MAX, 0, 65, 5, 5, .routine)
+    %cm_numfield("Super Missiles", !SAMUS_SUPERS_MAX, 0, 65, 5, 5, .routine)
     .routine
         LDA !SAMUS_SUPERS_MAX : STA !SAMUS_SUPERS ; supers
         RTL
 
 eq_currentpbs:
-    %cm_numfield("Current Power Bombs", $7E0000+!SAMUS_PBS, 0, 70, 1, 5, #0)
+    %cm_numfield("Current Power Bombs", !SAMUS_PBS, 0, 70, 1, 5, #0)
 
 eq_setpbs:
-    %cm_numfield("Power Bombs", $7E0000+!SAMUS_PBS_MAX, 0, 70, 5, 5, .routine)
+    %cm_numfield("Power Bombs", !SAMUS_PBS_MAX, 0, 70, 5, 5, .routine)
     .routine
         LDA !SAMUS_PBS_MAX : STA !SAMUS_PBS ; pbs
         RTL
@@ -1028,13 +1028,13 @@ ti_speedbooster:
     %cm_equipment_item("Speed Booster", !ram_cm_speed, #$2000, #$DFFF)
 
 ti_grapple:
-    %cm_toggle_bit("Grapple", $7E0000+!SAMUS_ITEMS_COLLECTED, #$4000, .routine)
+    %cm_toggle_bit("Grapple", !SAMUS_ITEMS_COLLECTED, #$4000, .routine)
   .routine
     LDA !SAMUS_ITEMS_EQUIPPED : EOR #$4000 : STA !SAMUS_ITEMS_EQUIPPED
     RTL
 
 ti_xray:
-    %cm_toggle_bit("X-Ray", $7E0000+!SAMUS_ITEMS_COLLECTED, #$8000, .routine)
+    %cm_toggle_bit("X-Ray", !SAMUS_ITEMS_COLLECTED, #$8000, .routine)
   .routine
     LDA !SAMUS_ITEMS_EQUIPPED : EOR #$8000 : STA !SAMUS_ITEMS_EQUIPPED
     RTL
@@ -1453,10 +1453,10 @@ MiscMenu:
     %cm_header("MISC")
 
 misc_bluesuit:
-    %cm_toggle("Blue Suit", $7E0B3F, #$0004, #0)
+    %cm_toggle("Blue Suit", !SAMUS_DASH_COUNTER, #$0004, #0)
 
 misc_flashsuit:
-    %cm_toggle("Flash Suit", $7E0A68, #$0001, #0)
+    %cm_toggle("Flash Suit", !SAMUS_SHINE_TIMER, #$0001, #0)
 
 misc_hyperbeam:
     %cm_toggle_bit("Hyper Beam", $7E0A76, #$8000, #.routine)

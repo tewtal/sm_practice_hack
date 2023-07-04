@@ -28,7 +28,7 @@ macro i16()
 endmacro
 
 macro item_index_to_vram_index()
-    ; Find screen position from Y (item number)
+; find screen position from Y (item number)
     TYA : ASL #5
     CLC : ADC #$0146 : TAX
 endmacro
@@ -88,10 +88,26 @@ macro sfxreset()
     LDA #$001E : JSL !SFX_LIB3 ; quake
 endmacro
 
+macro sfxbeep()
+   LDA #$0036 : JSL !SFX_LIB1 ; beep
+endmacro
+
+macro sfxclick()
+    LDA #$0037 : JSL !SFX_LIB1 ; click
+endmacro
+
 
 ; ---------
 ; Menu Data
 ; ---------
+
+macro norm2head(char)
+; used to build a conversion table for normal to header text
+    db "<char>"
+table ../resources/header.tbl
+    db "<char>"
+table ../resources/normal.tbl
+endmacro
 
 macro cm_header(title)
 ; outlined text to be drawn above the menu items
