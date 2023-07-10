@@ -150,6 +150,9 @@
 !ram_game_mode_extras               = !WRAM_PERSIST_START+$50
 !ram_suits_heat_damage_value        = !WRAM_PERSIST_START+$52
 !ram_sprite_feature_flags           = !WRAM_PERSIST_START+$54
+!ram_door_portal_flags              = !WRAM_PERSIST_START+$56
+!ram_door_source                    = !WRAM_PERSIST_START+$58
+!ram_door_destination               = !WRAM_PERSIST_START+$5A
 
 ; ^ FREE SPACE ^ up to +$76 (!WRAM_START+$FC - !WRAM_PERSIST_START)
 
@@ -223,6 +226,9 @@
 !ram_cm_watch_enemy_index = !WRAM_MENU_START+$82
 !ram_cm_watch_enemy_side = !WRAM_MENU_START+$84
 !ram_cm_watch_common_address = !WRAM_MENU_START+$86
+
+!ram_cm_door_menu_value = !WRAM_MENU_START+$80
+!ram_cm_door_menu_bank = !WRAM_MENU_START+$82
 
 !ram_cm_phan_first_phase = !WRAM_MENU_START+$80
 !ram_cm_phan_second_phase = !WRAM_MENU_START+$82
@@ -453,6 +459,8 @@
 !DISABLE_SOUNDS = $05F5
 !SOUND_TIMER = $0686
 !LOAD_STATION_INDEX = $078B
+!DOOR_ID = $078D
+!DOOR_DIRECTION = $0791
 !ROOM_ID = $079B
 !AREA_ID = $079F
 !ROOM_WIDTH_BLOCKS = $07A5
@@ -497,6 +505,10 @@
 !SAMUS_PREVIOUS_POSE = $0A20
 !SAMUS_PREVIOUS_POSE_DIRECTION = $0A22
 !SAMUS_PREVIOUS_MOVEMENT_TYPE = $0A23
+!SAMUS_LAST_DIFFERENT_POSE = $0A24
+!SAMUS_LAST_DIFFERENT_POSE_DIRECTION = $0A26
+!SAMUS_LAST_DIFFERENT_MOVEMENT_TYPE = $0A27
+!SAMUS_TRANSITION_VALUES = $0A2A
 !SAMUS_SHINE_TIMER = $0A68
 !SAMUS_HEALTH_WARNING = $0A6A
 !SAMUS_WATER_PHYSICS = $0A70  ; Not used in vanilla
@@ -525,6 +537,7 @@
 !SAMUS_PROJ_PROPERTIES = $0C18
 !SAMUS_COOLDOWN = $0CCC
 !SAMUS_CHARGE_TIMER = $0CD0
+!ENEMY_BG2_VRAM_TRANSFER_FLAG = $0E1E
 !ENEMY_INDEX = $0E54
 !ENEMY_ID = $0F78
 !ENEMY_X = $0F7A
@@ -599,12 +612,13 @@ endif
 !ACTION_NUMFIELD_COLOR      = #$0010
 !ACTION_NUMFIELD_SOUND      = #$0012
 !ACTION_CHOICE              = #$0014
-!ACTION_CTRL_SHORTCUT       = #$0016
-!ACTION_CTRL_INPUT          = #$0018
-!ACTION_JSL                 = #$001A
-!ACTION_JSL_SUBMENU         = #$001C
-!ACTION_CUSTOM_PRESET       = #$001E
-!ACTION_RAM_WATCH           = #$0020
+!ACTION_CHOICE_JSL_TEXT     = #$0016
+!ACTION_CTRL_SHORTCUT       = #$0018
+!ACTION_CTRL_INPUT          = #$001A
+!ACTION_JSL                 = #$001C
+!ACTION_JSL_SUBMENU         = #$001E
+!ACTION_CUSTOM_PRESET       = #$0020
+!ACTION_RAM_WATCH           = #$0022
 
 !TOP_DISPLAY_VANILLA = #$0002
 
@@ -672,6 +686,9 @@ endif
 !SPRITE_ENEMY_PROJ = #$0020
 !SPRITE_32x32_PROJ = #$0040
 !SPRITE_OOB_WATCH = #$0080
+
+!DOOR_PORTAL_ENABLED = #$0001
+!DOOR_PORTAL_JUMP = #$0002
 
 
 ; ----------
