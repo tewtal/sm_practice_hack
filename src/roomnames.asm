@@ -10,1046 +10,1051 @@ RoomNameTextTable:
 
 org $E791F8
 db $28, "Landing Site", $FF
-warnpc $E792B3
+warnpc $E79212
 
 org $E792B3
 db $28, "Gauntlet Entrance", $FF
-warnpc $E792FD
+warnpc $E792CD
 
 org $E792FD
 db $28, "Parlor and Alcatraz", $FF
-warnpc $E793AA
+warnpc $E79317
 
 org $E793AA
 db $28, "Crateria Power Bombs", $FF
-warnpc $E793D5
+warnpc $E793C4
 
 org $E793D5
 db $28, "Crateria Save Room", $FF
-warnpc $E793FE
+warnpc $E793EF
 
 org $E793FE
 db $28, "West Ocean", $FF
-warnpc $E79461
+warnpc $E79418
 
 org $E79461
 db $28, "Bowling Alley Path", $FF
-warnpc $E7948C
+warnpc $E7947B
 
 org $E7948C
 db $28, "Crateria Kihunter Room", $FF
-warnpc $E794CC
+warnpc $E794A6
 
 org $E794CC
 db $28, "Forgotten Highway Elev", $FF
-warnpc $E794FD
+warnpc $E794E6
 
 org $E794FD
 db $28, "East Ocean", $FF
-warnpc $E79552
+warnpc $E79517
 
 org $E79552
 db $28, "Forgotten Highway Kagos", $FF
-warnpc $E7957D
+warnpc $E7956C
 
 org $E7957D
 db $28, "Crab Maze", $FF
-warnpc $E795A8
+warnpc $E79597
 
 org $E795A8
 db $28, "Forgotten Highway Elbow", $FF
-warnpc $E795D4
+warnpc $E795C2
 
 org $E795D4
 db $28, "Crateria Tube", $FF
-warnpc $E795FF
+warnpc $E795EE
 
 org $E795FF
 db $28, "The Moat", $FF
-warnpc $E7962A
+warnpc $E79619
 
 org $E7962A
 db $28, "Red Brinstar Elev Room", $FF
-warnpc $E7965B
+warnpc $E79644
 
 org $E7965B
 db $28, "Gauntlet E-Tank Room", $FF
-warnpc $E7968F
+warnpc $E79675
 
 org $E7968F
 db $28, "Pre-Bowling", $FF
-warnpc $E796BA
+warnpc $E796A9
 
 org $E796BA
 db $28, "Climb", $FF
-warnpc $E7975C
+warnpc $E796D4
 
 org $E7975C
 db $28, "Pit Room", $FF
-warnpc $E797B5
+warnpc $E79776
 
 org $E797B5
 db $28, "Elev to Blue Brinstar", $FF
-warnpc $E79804
+warnpc $E797CF
 
 org $E79804
 db $28, "Bomb Torizo Room", $FF
-warnpc $E79879
+warnpc $E7981E
 
 org $E79879
 db $28, "Flyway", $FF
-warnpc $E798E2
+warnpc $E79893
 
 org $E798E2
 db $28, "Pre-Map Flyway", $FF
-warnpc $E7990D
+warnpc $E798FC
 
 org $E7990D
 db $28, "Terminator Room", $FF
-warnpc $E79938
+warnpc $E79927
 
 org $E79938
 db $28, "Green Brin Elev Room", $FF
-warnpc $E79969
+warnpc $E79952
 
 org $E79969
 db $28, "Lower Mushrooms", $FF
-warnpc $E79994
+warnpc $E79983
 
 org $E79994
 db $28, "Crateria Map Room", $FF
-warnpc $E799BD
+warnpc $E799AE
 
 org $E799BD
 db $28, "Green Pirates Shaft", $FF
-warnpc $E799F9
+warnpc $E799D7
 
 org $E799F9
 db $28, "Crateria Super Room", $FF
-warnpc $E79A44
+warnpc $E79A13
 
 org $E79A44
 db $28, "Final Missile Bombway", $FF
-warnpc $E79A90
+warnpc $E79A5E
 
 org $E79A90
 db $28, "The Final Missile", $FF
-warnpc $E79AD9
+warnpc $E79AAA
 
 org $E79AD9
 db $28, "Green Brin Main Shaft", $FF
-warnpc $E79B5B
+warnpc $E79AF3
 
 org $E79B5B
 db $28, "Spore Spawn Super Room", $FF
-warnpc $E79B9D
+warnpc $E79B75
 
 org $E79B9D
 db $28, "Brinstar Pre-Map Room", $FF
-warnpc $E79BC8
+warnpc $E79BB7
 
 org $E79BC8
 db $28, "Early Supers Room", $FF
-warnpc $E79C07
+warnpc $E79BE2
 
 org $E79C07
 db $28, "Brinstar Reserve Tank", $FF
-warnpc $E79C35
+warnpc $E79C21
 
 org $E79C35
 db $28, "Brinstar Map Room", $FF
-warnpc $E79C5E
+warnpc $E79C4F
 
 org $E79C5E
 db $28, "Green Brin Firefleas", $FF
-warnpc $E79C89
+warnpc $E79C78
 
 org $E79C89
 db $28, "Green Brin Missile Refi", $FF
-warnpc $E79CB3
+warnpc $E79CA3
 
 org $E79CB3
 db $28, "Dachora Room", $FF
-warnpc $E79D19
+warnpc $E79CCD
 
 org $E79D19
 db $28, "Big Pink", $FF
-warnpc $E79D9C
+warnpc $E79D33
 
 org $E79D9C
 db $28, "Spore Spawn Kihunters", $FF
-warnpc $E79DC7
+warnpc $E79DB6
 
 org $E79DC7
 db $28, "Spore Spawn Room", $FF
-warnpc $E79E11
+warnpc $E79DE1
 
 org $E79E11
 db $28, "Pink Brin Power Bombs", $FF
-warnpc $E79E52
+warnpc $E79E2B
 
 org $E79E52
 db $28, "Green Hill Zone", $FF
-warnpc $E79E9F
+warnpc $E79E6C
 
 org $E79E9F
 db $28, "Morph Ball Room", $FF
-warnpc $E79F11
+warnpc $E79EB9
 
 org $E79F11
 db $28, "Construction Zone", $FF
-warnpc $E79F64
+warnpc $E79F2B
 
 org $E79F64
 db $28, "Blue Brinstar E-Tank", $FF
-warnpc $E79FBA
+warnpc $E79F7E
 
 org $E79FBA
 db $28, "Noob Bridge", $FF
-warnpc $E79FE5
+warnpc $E79FD4
 
 org $E79FE5
 db $28, "Green Brinstar Beetoms", $FF
-warnpc $E7A011
+warnpc $E79FFF
 
 org $E7A011
 db $28, "Etecoon E-Tank Room", $FF
-warnpc $E7A051
+warnpc $E7A02B
 
 org $E7A051
 db $28, "Etecoon Super Room", $FF
-warnpc $E7A07B
+warnpc $E7A06B
 
 org $E7A07B
 db $28, "Dachora Energy Refill", $FF
-warnpc $E7A0A4
+warnpc $E7A095
 
 org $E7A0A4
 db $28, "Spore Spawn Farming", $FF
-warnpc $E7A0D2
+warnpc $E7A0BE
 
 org $E7A0D2
 db $28, "Waterway E-Tank Room", $FF
-warnpc $E7A107
+warnpc $E7A0EC
 
 org $E7A107
 db $28, "First Missile Room", $FF
-warnpc $E7A130
+warnpc $E7A121
 
 org $E7A130
 db $28, "Pink Brinstar Hoppers", $FF
-warnpc $E7A15B
+warnpc $E7A14A
 
 org $E7A15B
 db $28, "Hopper Energy Tank Room", $FF
-warnpc $E7A184
+warnpc $E7A175
 
 org $E7A184
 db $28, "Big Pink Save Room", $FF
-warnpc $E7A1AD
+warnpc $E7A19E
 
 org $E7A1AD
 db $28, "Blue Brinstar Boulders", $FF
-warnpc $E7A1D8
+warnpc $E7A1C7
 
 org $E7A1D8
 db $28, "Billy Mays Room", $FF
-warnpc $E7A201
+warnpc $E7A1F2
 
 org $E7A201
 db $28, "Green Brin Save Room", $FF
-warnpc $E7A22A
+warnpc $E7A21B
 
 org $E7A22A
 db $28, "Etecoon Save Room", $FF
-warnpc $E7A253
+warnpc $E7A244
 
 org $E7A253
 db $28, "Red Tower", $FF
-warnpc $E7A293
+warnpc $E7A26D
 
 org $E7A293
 db $28, "Red Brinstar Firefleas", $FF
-warnpc $E7A2CE
+warnpc $E7A2AD
 
 org $E7A2CE
 db $28, "X-Ray Scope Room", $FF
-warnpc $E7A2F7
+warnpc $E7A2E8
 
 org $E7A2F7
 db $28, "Hellway", $FF
-warnpc $E7A322
+warnpc $E7A311
 
 org $E7A322
 db $28, "Caterpillar Room", $FF
-warnpc $E7A37C
+warnpc $E7A33C
 
 org $E7A37C
 db $28, "Beta Power Bomb Room", $FF
-warnpc $E7A3AE
+warnpc $E7A396
 
 org $E7A3AE
 db $28, "Alpha Power Bomb Room", $FF
-warnpc $E7A3DD
+warnpc $E7A3C8
 
 org $E7A3DD
 db $28, "Bat Room", $FF
-warnpc $E7A408
+warnpc $E7A3F7
 
 org $E7A408
 db $28, "Below Spazer", $FF
-warnpc $E7A447
+warnpc $E7A422
 
 org $E7A447
 db $28, "Spazer Room", $FF
-warnpc $E7A471
+warnpc $E7A461
 
 org $E7A471
 db $28, "Warehouse Zeela Room", $FF
-warnpc $E7A4B1
+warnpc $E7A48B
 
 org $E7A4B1
 db $28, "Warehouse E-Tank Room", $FF
-warnpc $E7A4DA
+warnpc $E7A4CB
 
 org $E7A4DA
 db $28, "Warehouse Kihunter Room", $FF
-warnpc $E7A521
+warnpc $E7A4F4
 
 org $E7A521
 db $28, "Baby Kraid Room", $FF
-warnpc $E7A56B
+warnpc $E7A53B
 
 org $E7A56B
 db $28, "Kraid Eye Door Room", $FF
-warnpc $E7A59F
+warnpc $E7A585
 
 org $E7A59F
 db $28, "Kraid Room", $FF
-warnpc $E7A5ED
+warnpc $E7A5B9
 
 org $E7A5ED
 db $28, "Statues Hallway", $FF
-warnpc $E7A618
+warnpc $E7A607
 
 org $E7A618
 db $28, "Sloaters Refill", $FF
-warnpc $E7A641
+warnpc $E7A632
 
 org $E7A641
 db $28, "Kraid Refill Stations", $FF
-warnpc $E7A66A
+warnpc $E7A65B
 
 org $E7A66A
 db $28, "Statues Room", $FF
-warnpc $E7A6A1
+warnpc $E7A684
 
 org $E7A6A1
 db $28, "Warehouse Entrance", $FF
-warnpc $E7A6E2
+warnpc $E7A6BB
 
 org $E7A6E2
 db $28, "Varia Suit Room", $FF
-warnpc $E7A70B
+warnpc $E7A6FC
 
 org $E7A70B
 db $28, "Warehouse Save Room", $FF
-warnpc $E7A734
+warnpc $E7A725
 
 org $E7A734
 db $28, "Red Brinstar Save Room", $FF
-warnpc $E7A75D
+warnpc $E7A74E
 
 org $E7A75D
 db $28, "Ice Beam Acid Room", $FF
-warnpc $E7A788
+warnpc $E7A777
 
 org $E7A788
 db $28, "Cathedral", $FF
-warnpc $E7A7B3
+warnpc $E7A7A2
 
 org $E7A7B3
 db $28, "Cathedral Entrance", $FF
-warnpc $E7A7DE
+warnpc $E7A7CD
 
 org $E7A7DE
 db $28, "Business Center", $FF
-warnpc $E7A815
+warnpc $E7A7F8
 
 org $E7A815
 db $28, "Ice Beam Gate Room", $FF
-warnpc $E7A865
+warnpc $E7A82F
 
 org $E7A865
 db $28, "Ice Beam Tutorial Room", $FF
-warnpc $E7A890
+warnpc $E7A87F
 
 org $E7A890
 db $28, "Ice Beam Room", $FF
-warnpc $E7A8B9
+warnpc $E7A8AA
 
 org $E7A8B9
 db $28, "Ice Beam Snake Room", $FF
-warnpc $E7A8F8
+warnpc $E7A8D3
 
 org $E7A8F8
 db $28, "Crumble Shaft", $FF
-warnpc $E7A923
+warnpc $E7A912
 
 org $E7A923
 db $28, "Crocomire Speedway", $FF
-warnpc $E7A98D
+warnpc $E7A93D
 
 org $E7A98D
 db $28, "Crocomire's Room", $FF
-warnpc $E7A9E5
+warnpc $E7A9A7
 
 org $E7A9E5
 db $28, "Hi Jump Boots Room", $FF
-warnpc $E7AA0E
+warnpc $E7A9FF
 
 org $E7AA0E
 db $28, "Crocomire Escape", $FF
-warnpc $E7AA41
+warnpc $E7AA28
 
 org $E7AA41
 db $28, "Hi Jump E-Tank Room", $FF
-warnpc $E7AA82
+warnpc $E7AA5B
 
 org $E7AA82
 db $28, "Post Croc Farming Room", $FF
-warnpc $E7AAB5
+warnpc $E7AA9C
 
 org $E7AAB5
 db $28, "Post Croc Save Room", $FF
-warnpc $E7AADE
+warnpc $E7AACF
 
 org $E7AADE
 db $28, "Post Croc Power Bombs", $FF
-warnpc $E7AB07
+warnpc $E7AAF8
 
 org $E7AB07
 db $28, "Post Crocomire Shaft", $FF
-warnpc $E7AB3B
+warnpc $E7AB21
 
 org $E7AB3B
 db $28, "Post Croc Missile Room", $FF
-warnpc $E7AB64
+warnpc $E7AB55
 
 org $E7AB64
 db $28, "Grapple Tutorial Room 3", $FF
-warnpc $E7AB8F
+warnpc $E7AB7E
 
 org $E7AB8F
 db $28, "Post Croc Jump Room", $FF
-warnpc $E7ABD2
+warnpc $E7ABA9
 
 org $E7ABD2
 db $28, "Grapple Tutorial Room 2", $FF
-warnpc $E7AC00
+warnpc $E7ABEC
 
 org $E7AC00
 db $28, "Grapple Tutorial Room 1", $FF
-warnpc $E7AC2B
+warnpc $E7AC1A
 
 org $E7AC2B
 db $28, "Grapple Beam Room", $FF
-warnpc $E7AC5A
+warnpc $E7AC45
 
 org $E7AC5A
 db $28, "Norfair Reserve Tank", $FF
-warnpc $E7AC83
+warnpc $E7AC74
 
 org $E7AC83
 db $28, "Green Bubbles Missiles", $FF
-warnpc $E7ACB3
+warnpc $E7AC9D
 
 org $E7ACB3
 db $28, "Bubble Mountain", $FF
-warnpc $E7ACF0
+warnpc $E7ACCD
 
 org $E7ACF0
 db $28, "Speed Booster Hall", $FF
-warnpc $E7AD1B
+warnpc $E7AD0A
 
 org $E7AD1B
 db $28, "Speed Booster Room", $FF
-warnpc $E7AD5E
+warnpc $E7AD35
 
 org $E7AD5E
 db $28, "Single Chamber", $FF
-warnpc $E7ADAD
+warnpc $E7AD78
 
 org $E7ADAD
 db $28, "Double Chamber", $FF
-warnpc $E7ADDE
+warnpc $E7ADC7
 
 org $E7ADDE
 db $28, "Wave Beam Room", $FF
-warnpc $E7AE07
+warnpc $E7ADF8
 
 org $E7AE07
 db $28, "Spiky Platforms Tunnel", $FF
-warnpc $E7AE32
+warnpc $E7AE21
 
 org $E7AE32
 db $28, "Volcano Room", $FF
-warnpc $E7AE74
+warnpc $E7AE4C
 
 org $E7AE74
 db $28, "Kronic Boost Room", $FF
-warnpc $E7AEB4
+warnpc $E7AE8E
 
 org $E7AEB4
 db $28, "Magdollite Tunnel", $FF
-warnpc $E7AEDF
+warnpc $E7AECE
 
 org $E7AEDF
 db $28, "Purple Shaft", $FF
-warnpc $E7AF14
+warnpc $E7AEF9
 
 org $E7AF14
 db $28, "Lava Dive Room", $FF
-warnpc $E7AF3F
+warnpc $E7AF2E
 
 org $E7AF3F
 db $28, "Lower Norfair Elevator", $FF
-warnpc $E7AF72
+warnpc $E7AF59
 
 org $E7AF72
 db $28, "Upper Norf Farming Room", $FF
-warnpc $E7AFA3
+warnpc $E7AF8C
 
 org $E7AFA3
 db $28, "Rising Tide", $FF
-warnpc $E7AFCE
+warnpc $E7AFBD
 
 org $E7AFCE
 db $28, "Acid Snakes Tunnel", $FF
-warnpc $E7AFFB
+warnpc $E7AFE8
 
 org $E7AFFB
 db $28, "Spiky Acid Snakes Tunnel", $FF
-warnpc $E7B026
+warnpc $E7B015
 
 org $E7B026
 db $28, "Nutella Refill", $FF
-warnpc $E7B051
+warnpc $E7B040
 
 org $E7B051
 db $28, "Purple Farming Room", $FF
-warnpc $E7B07A
+warnpc $E7B06B
 
 org $E7B07A
 db $28, "Bat Cave", $FF
-warnpc $E7B0B4
+warnpc $E7B094
 
 org $E7B0B4
 db $28, "Norfair Map Room", $FF
-warnpc $E7B0DD
+warnpc $E7B0CE
 
 org $E7B0DD
 db $28, "Bubble Mountain Save", $FF
-warnpc $E7B106
+warnpc $E7B0F7
 
 org $E7B106
 db $28, "Frog Speedway", $FF
-warnpc $E7B139
+warnpc $E7B120
 
 org $E7B139
 db $28, "Red Pirate Shaft", $FF
-warnpc $E7B167
+warnpc $E7B153
 
 org $E7B167
 db $28, "Frog Savestation", $FF
-warnpc $E7B192
+warnpc $E7B181
 
 org $E7B192
 db $28, "Crocomire Save Room", $FF
-warnpc $E7B1BB
+warnpc $E7B1AC
 
 org $E7B1BB
 db $28, "LN Elevator Save Room", $FF
-warnpc $E7B1E5
+warnpc $E7B1D5
 
 org $E7B1E5
 db $28, "Acid Statue Room", $FF
-warnpc $E7B236
+warnpc $E7B1FF
 
 org $E7B236
 db $28, "Main Hall", $FF
-warnpc $E7B283
+warnpc $E7B250
 
 org $E7B283
 db $28, "Golden Torizo's Room", $FF
-warnpc $E7B2DA
+warnpc $E7B29D
 
 org $E7B2DA
 db $28, "Fast Ripper Room", $FF
-warnpc $E7B305
+warnpc $E7B2F4
 
 org $E7B305
 db $28, "GT Energy Recharge", $FF
-warnpc $E7B32E
+warnpc $E7B31F
 
 org $E7B32E
 db $28, "Ridley's Room", $FF
-warnpc $E7B37A
+warnpc $E7B348
 
 org $E7B37A
 db $28, "LN Farming Room", $FF
-warnpc $E7B3A5
+warnpc $E7B394
 
 org $E7B3A5
 db $28, "Fast Pillars Setup Room", $FF
-warnpc $E7B40A
+warnpc $E7B3BF
 
 org $E7B40A
 db $28, "Mickey Mouse Room", $FF
-warnpc $E7B457
+warnpc $E7B424
 
 org $E7B457
 db $28, "Pillar Room", $FF
-warnpc $E7B482
+warnpc $E7B471
 
 org $E7B482
 db $28, "Plowerhouse Room", $FF
-warnpc $E7B4AD
+warnpc $E7B49C
 
 org $E7B4AD
 db $28, "Worst Room In The Game", $FF
-warnpc $E7B4E5
+warnpc $E7B4C7
 
 org $E7B4E5
 db $28, "Amphitheatre", $FF
-warnpc $E7B510
+warnpc $E7B4FF
 
 org $E7B510
 db $28, "LN Spring Ball Maze", $FF
-warnpc $E7B55A
+warnpc $E7B52A
 
 org $E7B55A
 db $28, "LN Escape Power Bombs", $FF
-warnpc $E7B585
+warnpc $E7B574
 
 org $E7B585
 db $28, "Red Kihunter Shaft", $FF
-warnpc $E7B5D5
+warnpc $E7B59F
 
 org $E7B5D5
 db $28, "Wasteland", $FF
-warnpc $E7B62B
+warnpc $E7B5EF
 
 org $E7B62B
 db $28, "Metal Pirates Room", $FF
-warnpc $E7B656
+warnpc $E7B645
 
 org $E7B656
 db $28, "Three Musketeers' Room", $FF
-warnpc $E7B698
+warnpc $E7B670
 
 org $E7B698
 db $28, "Ridley Tank Room", $FF
-warnpc $E7B6C1
+warnpc $E7B6B2
 
 org $E7B6C1
 db $28, "Screw Attack Room", $FF
-warnpc $E7B6EE
+warnpc $E7B6DB
 
 org $E7B6EE
 db $28, "LN Fireflea Room", $FF
-warnpc $E7B741
+warnpc $E7B708
 
 org $E7B741
 db $28, "Lower Norfair Save Room", $FF
-warnpc $E7C98E
+warnpc $E7B75B
 
 org $E7C98E
 db $28, "Bowling Alley", $FF
-warnpc $E7CA08
+warnpc $E7C9A8
 
 org $E7CA08
 db $28, "Wrecked Ship Entrance", $FF
-warnpc $E7CA52
+warnpc $E7CA22
 
 org $E7CA52
 db $28, "Attic", $FF
-warnpc $E7CAAE
+warnpc $E7CA6C
 
 org $E7CAAE
 db $28, "Assembly Line", $FF
-warnpc $E7CAF6
+warnpc $E7CAC8
 
 org $E7CAF6
 db $28, "Wrecked Ship Main Shaft", $FF
-warnpc $E7CB8B
+warnpc $E7CB10
 
 org $E7CB8B
 db $28, "Spiky Death Room", $FF
-warnpc $E7CBD5
+warnpc $E7CBA5
 
 org $E7CBD5
 db $28, "Electric Death Room", $FF
-warnpc $E7CC27
+warnpc $E7CBEF
 
 org $E7CC27
 db $28, "Wrecked Ship E-Tank", $FF
-warnpc $E7CC6F
+warnpc $E7CC41
 
 org $E7CC6F
 db $28, "Basement", $FF
-warnpc $E7CCCB
+warnpc $E7CC89
 
 org $E7CCCB
 db $28, "Wrecked Ship Map Room", $FF
-warnpc $E7CD13
+warnpc $E7CCE5
 
 org $E7CD13
 db $28, "Phantoon's Room", $FF
-warnpc $E7CD5C
+warnpc $E7CD2D
 
 org $E7CD5C
 db $28, "Sponge Bath", $FF
-warnpc $E7CDA8
+warnpc $E7CD76
 
 org $E7CDA8
 db $28, "WS West Super Room", $FF
-warnpc $E7CDF1
+warnpc $E7CDC2
 
 org $E7CDF1
 db $28, "WS East Super Room", $FF
-warnpc $E7CE40
+warnpc $E7CE0B
 
 org $E7CE40
 db $28, "Gravity Suit Room", $FF
-warnpc $E7CE8A
+warnpc $E7CE5A
 
 org $E7CE8A
 db $28, "Wrecked Ship Save Room", $FF
-warnpc $E7CED2
+warnpc $E7CEA4
 
 org $E7CED2
 db $28, "Glass Tunnel Save Room", $FF
-warnpc $E7CEFB
+warnpc $E7CEEC
 
 org $E7CEFB
 db $28, "Glass Tunnel", $FF
-warnpc $E7CF54
+warnpc $E7CF15
 
 org $E7CF54
 db $28, "West Tunnel", $FF
-warnpc $E7CF80
+warnpc $E7CF6E
 
 org $E7CF80
 db $28, "East Tunnel", $FF
-warnpc $E7CFC9
+warnpc $E7CF9A
 
 org $E7CFC9
 db $28, "Main Street", $FF
-warnpc $E7D017
+warnpc $E7CFE3
 
 org $E7D017
 db $28, "Fish Tank", $FF
-warnpc $E7D055
+warnpc $E7D031
 
 org $E7D055
 db $28, "Mama Turtle Room", $FF
-warnpc $E7D08A
+warnpc $E7D06F
 
 org $E7D08A
 db $28, "Crab Tunnel", $FF
-warnpc $E7D0B9
+warnpc $E7D0A4
 
 org $E7D0B9
 db $28, "Mt. Everest", $FF
-warnpc $E7D104
+warnpc $E7D0D3
 
 org $E7D104
 db $28, "Red Fish Room", $FF
-warnpc $E7D13B
+warnpc $E7D11E
 
 org $E7D13B
 db $28, "Watering Hole", $FF
-warnpc $E7D16D
+warnpc $E7D155
 
 org $E7D16D
 db $28, "N.West Maridia Bug Room", $FF
-warnpc $E7D1A3
+warnpc $E7D187
 
 org $E7D1A3
 db $28, "Crab Shaft", $FF
-warnpc $E7D1DD
+warnpc $E7D1BD
 
 org $E7D1DD
 db $28, "Pseudo Plasma Spark", $FF
-warnpc $E7D21C
+warnpc $E7D1F7
 
 org $E7D21C
 db $28, "Crab Hole", $FF
-warnpc $E7D252
+warnpc $E7D236
 
 org $E7D252
 db $28, "West Sand Hall Tunnel", $FF
-warnpc $E7D27E
+warnpc $E7D26C
 
 org $E7D27E
 db $28, "Plasma Tutorial Room", $FF
-warnpc $E7D2AA
+warnpc $E7D298
 
 org $E7D2AA
 db $28, "Plasma Room", $FF
-warnpc $E7D2D9
+warnpc $E7D2C4
 
 org $E7D2D9
 db $28, "Thread The Needle Room", $FF
-warnpc $E7D30B
+warnpc $E7D2F3
 
 org $E7D30B
 db $28, "Maridia Elevator Room", $FF
-warnpc $E7D340
+warnpc $E7D325
 
 org $E7D340
 db $28, "Plasma Spark Room", $FF
-warnpc $E7D387
+warnpc $E7D35A
 
 org $E7D387
 db $28, "Kassiuz Room", $FF
-warnpc $E7D3B6
+warnpc $E7D3A1
 
 org $E7D3B6
 db $28, "Maridia Map Room", $FF
-warnpc $E7D3DF
+warnpc $E7D3D0
 
 org $E7D3DF
 db $28, "Forgotten Highway Save", $FF
-warnpc $E7D408
+warnpc $E7D3F9
 
 org $E7D408
 db $28, "Toilet", $FF
-warnpc $E7D433
+warnpc $E7D422
 
 org $E7D433
 db $28, "Bug Sand Hole", $FF
-warnpc $E7D461
+warnpc $E7D44D
 
 org $E7D461
 db $28, "West Sand Hall", $FF
-warnpc $E7D48E
+warnpc $E7D47B
 
 org $E7D48E
 db $28, "Oasis", $FF
-warnpc $E7D4C2
+warnpc $E7D4A8
 
 org $E7D4C2
 db $28, "East Sand Hall", $FF
-warnpc $E7D4EF
+warnpc $E7D4DC
 
 org $E7D4EF
 db $28, "West Sand Hole", $FF
-warnpc $E7D51E
+warnpc $E7D509
 
 org $E7D51E
 db $28, "East Sand Hole", $FF
-warnpc $E7D54D
+warnpc $E7D538
 
 org $E7D54D
 db $28, "West Aqueduct Quicksand", $FF
-warnpc $E7D57A
+warnpc $E7D567
 
 org $E7D57A
 db $28, "East Aqueduct Quicksand", $FF
-warnpc $E7D5A7
+warnpc $E7D594
 
 org $E7D5A7
 db $28, "Aqueduct", $FF
-warnpc $E7D5EC
+warnpc $E7D5C1
 
 org $E7D5EC
 db $28, "Butterfly Room", $FF
-warnpc $E7D617
+warnpc $E7D606
 
 org $E7D617
 db $28, "Botwoon Hallway", $FF
-warnpc $E7D646
+warnpc $E7D631
 
 org $E7D646
 db $28, "Pants Room", $FF
-warnpc $E7D69A
+warnpc $E7D660
 
 org $E7D69A
 db $28, "East Pants Room", $FF
-warnpc $E7D6D0
+warnpc $E7D6B4
 
 org $E7D6D0
 db $28, "Spring Ball Room", $FF
-warnpc $E7D6FD
+warnpc $E7D6EA
 
 org $E7D6FD
 db $28, "Below Botwoon E-Tank", $FF
-warnpc $E7D72A
+warnpc $E7D717
 
 org $E7D72A
 db $28, "Colosseum", $FF
-warnpc $E7D765
+warnpc $E7D744
 
 org $E7D765
 db $28, "Aqueduct Save Room", $FF
-warnpc $E7D78F
+warnpc $E7D77F
 
 org $E7D78F
 db $28, "The Precious Room", $FF
-warnpc $E7D7E4
+warnpc $E7D7A9
 
 org $E7D7E4
 db $28, "Botwoon E-Tank Room", $FF
-warnpc $E7D81A
+warnpc $E7D7FE
 
 org $E7D81A
 db $28, "Draygon Save Room", $FF
-warnpc $E7D845
+warnpc $E7D834
 
 org $E7D845
 db $28, "Maridia Missile Refill", $FF
-warnpc $E7D86E
+warnpc $E7D85F
 
 org $E7D86E
 db $28, "Plasma Beach Quicksand", $FF
-warnpc $E7D898
+warnpc $E7D888
 
 org $E7D898
 db $28, "Botwoon Quicksand Room", $FF
-warnpc $E7D8C5
+warnpc $E7D8B2
 
 org $E7D8C5
 db $28, "Shaktool Room", $FF
-warnpc $E7D913
+warnpc $E7D8DF
 
 org $E7D913
 db $28, "Halfie Climb Room", $FF
-warnpc $E7D95E
+warnpc $E7D92D
 
 org $E7D95E
 db $28, "Botwoon's Room", $FF
-warnpc $E7D9AA
+warnpc $E7D978
 
 org $E7D9AA
 db $28, "Space Jump Room", $FF
-warnpc $E7D9D4
+warnpc $E7D9C4
 
 org $E7D9D4
 db $28, "Maridia Energy Refill", $FF
-warnpc $E7D9FE
+warnpc $E7D9EE
 
 org $E7D9FE
 db $28, "West Cactus Alley Room", $FF
-warnpc $E7DA2B
+warnpc $E7DA18
 
 org $E7DA2B
 db $28, "East Cactus Alley Room", $FF
-warnpc $E7DA60
+warnpc $E7DA45
 
 org $E7DA60
 db $28, "Draygon's Room", $FF
-warnpc $E7DAAE
+warnpc $E7DA7A
 
 org $E7DAAE
 db $28, "Tourian First Room", $FF
-warnpc $E7DAE1
+warnpc $E7DAC8
 
 org $E7DAE1
 db $28, "Metroid Room 1", $FF
-warnpc $E7DB31
+warnpc $E7DAFB
 
 org $E7DB31
 db $28, "Metroid Room 2", $FF
-warnpc $E7DB7D
+warnpc $E7DB4B
 
 org $E7DB7D
 db $28, "Metroid Room 3", $FF
-warnpc $E7DBCD
+warnpc $E7DB97
 
 org $E7DBCD
 db $28, "Metroid Room 4", $FF
-warnpc $E7DC19
+warnpc $E7DBE7
 
 org $E7DC19
 db $28, "Blue Hopper Room", $FF
-warnpc $E7DC65
+warnpc $E7DC33
 
 org $E7DC65
 db $28, "Dust Torizo Room", $FF
-warnpc $E7DCB1
+warnpc $E7DC7F
 
 org $E7DCB1
 db $28, "Big Boy Room", $FF
-warnpc $E7DCFF
+warnpc $E7DCCB
 
 org $E7DCFF
 db $28, "Seaweed Room", $FF
-warnpc $E7DD2E
+warnpc $E7DD19
 
 org $E7DD2E
 db $28, "Tourian Recharge Room", $FF
-warnpc $E7DD58
+warnpc $E7DD48
 
 org $E7DD58
 db $28, "Mother Brain Room", $FF
-warnpc $E7DDC4
+warnpc $E7DD72
 
 org $E7DDC4
 db $28, "Tourian Eye Door Room", $FF
-warnpc $E7DDF3
+warnpc $E7DDDE
 
 org $E7DDF3
 db $28, "Rinka Shaft", $FF
-warnpc $E7DE23
+warnpc $E7DE0D
 
 org $E7DE23
 db $28, "Mother Brain Save Room", $FF
-warnpc $E7DE4D
+warnpc $E7DE3D
 
 org $E7DE4D
 db $28, "Tourian Escape Room 1", $FF
-warnpc $E7DE7A
+warnpc $E7DE67
 
 org $E7DE7A
 db $28, "Tourian Escape Room 2", $FF
-warnpc $E7DEA7
+warnpc $E7DE94
 
 org $E7DEA7
 db $28, "Tourian Escape Room 3", $FF
-warnpc $E7DEDE
+warnpc $E7DEC1
 
 org $E7DEDE
 db $28, "Tourian Escape Room 4", $FF
-warnpc $E7DF1B
+warnpc $E7DEF8
 
 org $E7DF1B
 db $28, "Upper Tourian Save Room", $FF
-warnpc $E7DF45
+warnpc $E7DF35
 
 org $E7DF45
 db $28, "Ceres Elevator Room", $FF
-warnpc $E7DF8D
+warnpc $E7DF5F
 
 org $E7DF8D
 db $28, "Falling Tile Room", $FF
-warnpc $E7DFD7
+warnpc $E7DFA7
 
 org $E7DFD7
 db $28, "Magnet Stairs Room", $FF
-warnpc $E7E021
+warnpc $E7DFF1
 
 org $E7E021
 db $28, "Dead Scientist Room", $FF
-warnpc $E7E06B
+warnpc $E7E03B
 
 org $E7E06B
 db $28, "58 Escape", $FF
-warnpc $E7E0B5
+warnpc $E7E085
 
 org $E7E0B5
 db $28, "Ceres Ridley's Room", $FF
+warnpc $E7E0CF
+
+org $E7E82C
+db $28, "Debug Room", $FF
+warnpc $E7E844
 
 print pc, " roomnames end"
 

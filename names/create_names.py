@@ -50,15 +50,23 @@ f_output.write("\n\norg $E78000\n")
 f_output.write("print pc, \" roomnames start\"\n")
 f_output.write("RoomNameTextTable:\n\n")
 
-first_room = True
+max_characters = 24
+max_roomname_space = max_characters + 2
+last_room_id = None
 for room_id in sorted(names):
-   if first_room:
-      first_room = False
-   else:
-      f_output.write("warnpc $E7" + room_id + "\n\n")
+   if last_room_id:
+      last_room_end = int(last_room_id, 16) + max_roomname_space
+      if last_room_end > int(room_id, 16):
+         last_room_end = room_id
+      f_output.write("warnpc $E7" + f'{last_room_end:04X}' + "\n\n")
    f_output.write("org $E7" + room_id + "\n")
    f_output.write("db $28, \"" + names[room_id] + "\", $FF\n")
+   last_room_id = room_id
 
-f_output.write("\nprint pc, \" roomnames end\"\n\n")
+if last_room_id:
+   last_room_end = int(last_room_id, 16) + max_characters
+   f_output.write("warnpc $E7" + f'{last_room_end:04X}' + "\n\n")
+
+f_output.write("print pc, \" roomnames end\"\n\n")
 f_output.close()
 

@@ -259,3 +259,4 @@ DFD7=Magnet Stairs Room
 E021=Dead Scientist Room
 E06B=58 Escape
 E0B5=Ceres Ridley's Room
+E82C=Debug Room

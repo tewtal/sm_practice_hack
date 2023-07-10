@@ -86,7 +86,7 @@ for row in rows:
       if len(row) > 8:
          # for longest label, ignore presets and tile table names
          if row[0] < 'E' or row[1] == '0' or row[1] == '4':
-            label = row[8:]
+            label = row[8:-1]
             if len(label) > len(longest_label):
                longest_label = label
    elif in_source_files:
@@ -145,8 +145,8 @@ if unnamed_symbol_found:
    sys.exit()
 
 recommended_max_label_length = 48
-if len(longest_label) > recommended_max_label_length:
-   print("sort_debug_symbols.py WARNING labels exceeding recommended length of %d detected" % recommended_max_label_length)
+if len(longest_label) >= recommended_max_label_length:
+   print("sort_debug_symbols.py WARNING labels at or exceeding recommended length of %d detected" % recommended_max_label_length)
    print("longest label (length %d) = %s" % (len(longest_label), longest_label))
    sys.exit()
 
