@@ -617,6 +617,9 @@ status_spikesuit:
     LDA !SAMUS_IFRAME_TIMER : SEC : SBC #$0033
     ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
 
+    ; If more than one frame early, keep checking for updates
+    CPY #$0002 : BNE .done
+
   .endstate
     LDA #$0006 : STA !ram_roomstrat_state
     RTS
