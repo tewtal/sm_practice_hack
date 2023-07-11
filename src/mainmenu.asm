@@ -2293,13 +2293,17 @@ layout_nextdoorjump:
   .done
     RTL
 
+layout_enable_door_portal:
+    LDA !ram_door_portal_flags : ORA !DOOR_PORTAL_ENABLED : STA !ram_door_portal_flags
+    RTL
+
 layout_selectsource:
     %cm_jsl("Select Portal Source", #LayoutSourceDoorMenu, #LayoutDoorMenu)
 
 layout_sourcedoor:
     dw !ACTION_CHOICE_JSL_TEXT
     dl #!ram_door_source
-    dw #$0000
+    dw #layout_enable_door_portal
     dw doormenu_A96C ; Bosses
     dw doormenu_A840
     dw doormenu_91CE
@@ -2348,7 +2352,7 @@ layout_selectdestination:
 layout_destinationdoor:
     dw !ACTION_CHOICE_JSL_TEXT
     dl #!ram_door_destination
-    dw #$0000
+    dw #layout_enable_door_portal
     dw doormenu_A96C ; Bosses
     dw doormenu_A840
     dw doormenu_91CE
@@ -2584,6 +2588,7 @@ doormenu_select:
     LDA !ram_cm_door_menu_value : STA $16
     LDA !ram_cm_door_menu_bank : STA $18
     TYA : STA [$16]
+    LDA !ram_door_portal_flags : ORA !DOOR_PORTAL_ENABLED : STA !ram_door_portal_flags
     JML cm_previous_menu
 }
 

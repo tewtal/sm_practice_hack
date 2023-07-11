@@ -19,9 +19,9 @@ org $82CA1B
 maridia_save_station_map_icon_10:
     db #$58, #$00, #$78, #$00
 
-; Hijack setting load door header function
-org $82E2F0
-    JMP hijack_load_door_header
+; Hijack loading destination room CRE
+org $82E1D9
+    JSR hijack_loading_room_CRE
 
 ; Hijack room transition between loading level data and setting up scrolling
 org $82E387
@@ -34,7 +34,7 @@ org $82E4C9
 org $82F800
 print pc, " layout bank82 start"
 
-hijack_load_door_header:
+hijack_loading_room_CRE:
 {
     LDA !ram_door_portal_flags : BEQ .done
     PHX : BIT !DOOR_PORTAL_JUMP : BNE .jump
@@ -47,13 +47,12 @@ hijack_load_door_header:
     PLX
 
   .done
-    ; Overridden behavior
-    LDA #$E2F7 : STA !DOOR_FUNCTION_POINTER
-    RTS
+    ; Overridden routine
+    JMP $DDF1
 
   .destToSrc
     LDA !ram_door_source : ASL : TAX
-    BRA .pickDoor
+    BRA .prepTransition
 
   .jump
     LDA !DOOR_PORTAL_ENABLED : STA !ram_door_portal_flags
@@ -61,12 +60,16 @@ hijack_load_door_header:
   .srcToDest
     LDA !ram_door_destination : ASL : TAX
 
-  .pickDoor
+  .prepTransition
     LDA #$0080 : STA !SAMUS_IFRAME_TIMER
-    ; TODO Croc, Draygon, Phantoon exit
-    ;STZ !ENEMY_BG2_VRAM_TRANSFER_FLAG
+    LDA !ROOM_ID : CMP #$A98D : BNE .pickDoor
+    ; Exiting Croc
+    STZ !ENEMY_BG2_VRAM_TRANSFER_FLAG
+
+  .pickDoor
+    PHX : LDA portals_custom_inverted_table,X : TAX
     LDA $830003,X : AND #$0003 : STA $12
-    PHX : LDX !DOOR_ID : LDA $830003,X : PLX
+    LDX !DOOR_ID : LDA $830003,X : PLX
     AND #$0003 : CMP $12 : BEQ .pickVanilla
     LDA portals_custom_inverted_table,X : STA !DOOR_ID
     BRA .donePLX
@@ -468,8 +471,8 @@ door_custom_93D2_crocomire_speedway_door4:
 
 door_custom_93EA_crocomire_door1:
     dw $A923   ; Crocomire Speedway
-    db $00, $07, $C6, $2D, $0C, $02, $01C0
-    dw $8000, #door_custom_asm
+    db $00, $07, $C6, $2D, $0C, $02
+    dw $01C0, #door_custom_asm
     dw $0C57, $02B8, $0000
 
 door_custom_95FA_single_chamber_door4:
@@ -1215,16 +1218,18 @@ layout_asm_greenhillzone:
     ; Delete gate PLMs
     LDA #!PLM_DELETE : STA $1D73 : STA $1D75
 
-    ; Add platform for ease of access to top-right door
-    %a8()
-    LDA #$6A : STA $7F0F24 : LDA #$6C : STA $7F0F26
-    LDA #$81 : STA $7F0F25 : STA $7F0F27
+    ; Remove ledge overhang for ease of access to top-right door
+    LDA #$00FF : STA $7F0A2A : STA $7F0B2A
 
     ; Move corner tiles next to gate up one
+    %a8()
     LDA #$78 : STA $7F36CA : LDA #$79 : STA $7F36CC
 
-    ; Normal BTS for gate tiles
-    LDA #$00 : STA $7F7FE5 : STA $7F7FE6
+    ; Adjust ledge overhang
+    LDA #$6A : STA $7F0A2C
+
+    ; Normal BTS for ledge overhang and gate tiles
+    LDA #$00 : STA $7F6996 : STA $7F7FE5 : STA $7F7FE6
     STA $7F8066 : STA $7F80E6 : STA $7F8166 : STA $7F81E6
 }
 
