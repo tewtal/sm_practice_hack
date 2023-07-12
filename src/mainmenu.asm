@@ -1889,6 +1889,11 @@ BossesMenu:
     dw #boss_gt
     dw #boss_ridley
     dw #boss_mb
+    dw #$FFFF
+    dw #boss_kraid_statue
+    dw #boss_phantoon_statue
+    dw #boss_draygon_statue
+    dw #boss_ridley_statue
     dw #$0000
     %cm_header("BOSSES")
 
@@ -1924,6 +1929,18 @@ boss_ridley:
 
 boss_mb:
     %cm_toggle_bit("Mother Brain", #$7ED82C, #$0200, #0)
+
+boss_kraid_statue:
+    %cm_toggle_bit("Kraid Statue", #$7ED820, #$0200, #0)
+
+boss_phantoon_statue:
+    %cm_toggle_bit("Phantoon Statue", #$7ED820, #$0040, #0)
+
+boss_draygon_statue:
+    %cm_toggle_bit("Draygon Statue", #$7ED820, #$0100, #0)
+
+boss_ridley_statue:
+    %cm_toggle_bit("Ridley Statue", #$7ED820, #$0080, #0)
 
 
 ; --------------

@@ -36,23 +36,21 @@ print pc, " layout bank82 start"
 
 hijack_loading_room_CRE:
 {
-    LDA !ram_door_portal_flags : BEQ .done
+    LDA !ram_door_portal_flags : BEQ .noChange
     PHX : BIT !DOOR_PORTAL_JUMP : BNE .jump
     LDA !ram_door_source : ASL : TAX
     LDA portals_vanilla_table,X : CMP !DOOR_ID : BEQ .srcToDest
     LDA !ram_door_destination : ASL : TAX
     LDA portals_vanilla_table,X : CMP !DOOR_ID : BEQ .destToSrc
-
-  .donePLX
     PLX
 
-  .done
+  .noChange
     ; Overridden routine
     JMP $DDF1
 
   .destToSrc
     LDA !ram_door_source : ASL : TAX
-    BRA .prepTransition
+    BRA .pickDoor
 
   .jump
     LDA !DOOR_PORTAL_ENABLED : STA !ram_door_portal_flags
@@ -60,23 +58,41 @@ hijack_loading_room_CRE:
   .srcToDest
     LDA !ram_door_destination : ASL : TAX
 
-  .prepTransition
-    LDA #$0080 : STA !SAMUS_IFRAME_TIMER
-    LDA !ROOM_ID : CMP #$A98D : BNE .pickDoor
-    ; Exiting Croc
-    STZ !ENEMY_BG2_VRAM_TRANSFER_FLAG
-
   .pickDoor
+    ; Even if we pick vanilla, still give the i-frames
+    LDA #$0080 : STA !SAMUS_IFRAME_TIMER
     PHX : LDA portals_custom_inverted_table,X : TAX
     LDA $830003,X : AND #$0003 : STA $12
     LDX !DOOR_ID : LDA $830003,X : PLX
     AND #$0003 : CMP $12 : BEQ .pickVanilla
     LDA portals_custom_inverted_table,X : STA !DOOR_ID
-    BRA .donePLX
+    BRA .loadBitset
 
   .pickVanilla
     LDA portals_vanilla_inverted_table,X : STA !DOOR_ID    
-    BRA .donePLX
+
+  .loadBitset
+    ; Implement the DDF1 routine here to load CRE bitset
+    ; Note we already have pushed X to the stack,
+    ; and A conveniently contains the DOOR_ID
+    TAX : PHB
+    PEA $8F00 : PLB : PLB
+
+    LDA $830000,X : TAX
+    LDA !CRE_BITSET : STA !PREVIOUS_CRE_BITSET
+    LDA $0008,X : AND #$00FF
+
+    ; Ensure either BIT #$0004 or #$0002 are set
+    ; so that the CRE is loaded or reloaded
+    BIT #$0004 : BNE .storeBitset
+    ORA #$0002
+
+  .storeBitset
+    STA !CRE_BITSET
+
+    ; Remember we pushed X and bank in opposite order
+    PLB : PLX
+    RTS
 }
 
 hijack_after_load_level_data:
@@ -116,6 +132,11 @@ print pc, " layout bank82 end"
 warnpc $82FA00 ; presets.asm
 
 
+; Crateria Kihunter bottom door
+org $838B00
+hook_layout_asm_redtowerelevator_door0:
+    dw #layout_asm_crateriakihunter_bottomdoor
+
 ; Statues Hallway left door
 org $838C5C
 hook_layout_asm_greenpirateshaft_door2:
@@ -147,6 +168,16 @@ hook_layout_asm_warehouse_door0:
 org $839274
 hook_layout_asm_redtowersave_door0:
     dw #layout_asm_caterpillar_no_scrolls
+
+; Crocomire Speedway bottom door
+org $8393F4
+hook_layout_asm_croc_door1:
+    dw #layout_asm_clear_bg2_vram_flag
+
+; Main Street bottom door
+org $83A33A
+hook_layout_asm_glasstunnel_door0:
+    dw #layout_asm_clear_bg2_vram_flag
 
 ; Crab Shaft left door
 org $83A472
@@ -314,8 +345,8 @@ portals_custom_inverted_table:
     dw door_custom_8E86_green_hill_zone_door1
     dw door_custom_89CA_west_ocean_door0
     dw door_custom_93D2_crocomire_speedway_door4      ; Croc
-    dw door_custom_8AAE_crab_maze_door1               ; East Maridia
-    dw door_custom_A4C8_crab_shaft_door2
+    dw door_custom_A4C8_crab_shaft_door2              ; East Maridia
+    dw door_custom_8AAE_crab_maze_door1
     dw door_custom_8C52_green_pirates_shaft_door2     ; G4
     dw door_custom_8C22_lower_mushrooms_door1         ; Green Brinstar
     dw door_custom_8E9E_morph_ball_door0
@@ -800,6 +831,11 @@ hook_layout_asm_belowspazer:
 org $8FA4FF
 hook_layout_asm_warehousekihunters:
     dw #layout_asm_warehousekihunters
+
+; Statues state check asm
+org $8FA675
+hook_layout_asm_statues_state_check:
+    dw #layout_asm_statues_state_check
 
 ; Cathedral Entrance setup asm
 org $8FA7D8
@@ -1609,9 +1645,9 @@ layout_asm_electric_death_varia_tweaks_header:
 
 layout_asm_electric_death_state_check:
 {
-    LDA !sram_room_layout : BIT !ROOM_LAYOUT_DASH_RECALL_OR_VARIA_TWEAKS : BEQ .end_check
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_DASH_RECALL_OR_VARIA_TWEAKS : BEQ .end
     LDX #layout_asm_electric_death_varia_tweaks_header
-  .end_check
+  .end
     JMP $E5E6
 }
 
@@ -1622,9 +1658,9 @@ layout_asm_ws_etank_varia_tweaks_header:
 
 layout_asm_ws_etank_state_check:
 {
-    LDA !sram_room_layout : BIT !ROOM_LAYOUT_DASH_RECALL_OR_VARIA_TWEAKS : BEQ .end_check
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_DASH_RECALL_OR_VARIA_TWEAKS : BEQ .end
     LDX #layout_asm_ws_etank_varia_tweaks_header
-  .end_check
+  .end
     JMP $E5E6
 }
 
@@ -1646,14 +1682,14 @@ layout_asm_wreckedshipsave_done:
 layout_asm_plasma_dash_header:
     dl $CB8BD4
     db $0B, $00, $00
-    dw $9D94, layout_asm_plasma_dash_enemies, layout_asm_plasma_dash_enemy_set
-    dw $00C0, $D2D3, $0000, $0000, $C553, $0000, layout_asm_plasma
+    dw $9D94, #layout_asm_plasma_dash_enemies, #layout_asm_plasma_dash_enemy_set
+    dw $00C0, $D2D3, $0000, $0000, $C553, $0000, #layout_asm_plasma
 
 layout_asm_plasma_state_check:
 {
-    LDA !sram_room_layout : BIT !ROOM_LAYOUT_DASH_RECALL : BEQ .end_check
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_DASH_RECALL : BEQ .end
     LDX #layout_asm_plasma_dash_header
-  .end_check
+  .end
     JMP $E5E6
 }
 
@@ -2193,13 +2229,32 @@ layout_asm_warehousekihunters:
 
 layout_asm_warehousekihunters_done:
     PLP
+
+layout_asm_statues_oob_viewer_done:
     RTS
+
+layout_asm_statues_oob_viewer_header:
+    dl $CE9BE9
+    db $15, $09, $06
+    dw $840A, #layout_asm_statues_oob_viewer_enemies, #layout_asm_statues_oob_viewer_enemy_set
+    dw $0181, $A697, $0000, $0000, #layout_asm_statues_plm, $BB60, #layout_asm_statues_oob_viewer_done
+
+layout_asm_statues_plm:
+    dw $0000
+
+layout_asm_statues_state_check:
+{
+    LDA !ram_sprite_feature_flags : BIT !SPRITE_OOB_WATCH : BEQ .end
+    LDX #layout_asm_statues_oob_viewer_header
+  .end
+    JMP $E5E6
+}
 
 layout_asm_cathedralentrance:
 {
     PHP
     %a16()
-    LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANTISOFTLOCK_OR_DASH_RECALL : BEQ layout_asm_warehousekihunters_done
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANTISOFTLOCK_OR_DASH_RECALL : BEQ layout_asm_cathedralentrance_done
 
     ; Remove protruding ledge
     LDA #$8106 : STA $7F040C
@@ -2304,6 +2359,7 @@ door_custom_asm:
     STZ !SAMUS_Y_SUBSPEED : STZ !SAMUS_Y_SPEED
     STZ !SAMUS_X_RUNSPEED : STZ !SAMUS_X_SUBRUNSPEED
     STZ !SAMUS_X_MOMENTUM : STZ !SAMUS_X_SUBMOMENTUM
+    STZ !SAMUS_DOOR_SUBSPEED : STZ !SAMUS_DOOR_SPEED
 
     ; Force Samus to elevator pose
     STZ !SAMUS_POSE : STZ !SAMUS_POSE_DIRECTION
@@ -2321,11 +2377,32 @@ door_custom_asm:
     LDA $83000C,X : STA !SAMUS_X
     LDA $83000E,X : STA !SAMUS_Y
 
+    ; Clear BG2 VRAM flag in case we are exiting croc
+    STZ !ENEMY_BG2_VRAM_TRANSFER_FLAG
+
     ; Execute another door asm if necessary
     LDA $830010,X : BEQ .done
     STA $12 : JMP ($0012)
 
   .done
+    RTS
+}
+
+layout_asm_crateriakihunter_bottomdoor:
+{
+    ; Perform same scroll asm as vanilla
+    PHP
+    %a8()
+    LDA #$02 :  STA $7ECD21 : STA $7ECD24
+    PLP
+
+    ; Fall through to next method to clear BG2 VRAM flag
+}
+
+layout_asm_clear_bg2_vram_flag:
+{
+    ; Clear BG2 VRAM flag in case we are exiting croc
+    STZ !ENEMY_BG2_VRAM_TRANSFER_FLAG
     RTS
 }
 
@@ -2344,6 +2421,10 @@ layout_asm_plasma_dash_enemies:
     dw $F693, #$0078, #$0280, #$0000, #$2000, #$0004, #$8001, #$0080
     db #$FF, #$FF, #$06
 
+layout_asm_statues_oob_viewer_enemies:
+    dw $D73F, #$0080, #$01B0, #$0000, #$2C00, #$0000, #$0000, #$0240
+    db #$FF, #$FF, #$00
+
 print pc, " layout bankA1 end"
 
 
@@ -2352,6 +2433,9 @@ print pc, " layout bankB4 start"
 
 layout_asm_plasma_dash_enemy_set:
     dw $F693, #$0001, $F393, #$0002
+    db #$FF, #$FF, #$00
+
+layout_asm_statues_oob_viewer_enemy_set:
     db #$FF, #$FF, #$00
 
 print pc, " layout bankB4 end"
