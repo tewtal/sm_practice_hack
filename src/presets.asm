@@ -527,8 +527,8 @@ endif
     JSL $80982A  ; Enable horizontal and vertical timer interrupts
 
     LDA $7ED914 : CMP #$0022 : BEQ .done_unlock_samus
-    LDA #$E695 : STA $0A42 ; Unlock Samus
-    LDA #$E725 : STA $0A44 ; Unlock Samus
+    LDA #$E695 : STA !SAMUS_LOCKED_HANDLER   ; Unlock Samus
+    LDA #$E725 : STA !SAMUS_MOVEMENT_HANDLER ; Unlock Samus
   .done_unlock_samus
     LDA #$9F55 : STA $0A6C ; Set X speed table pointer
 

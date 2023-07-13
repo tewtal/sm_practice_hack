@@ -2373,6 +2373,19 @@ door_custom_asm:
     ; Reset animation timer
     STZ !SAMUS_ANIMATION_FRAME
 
+    ; Check if Samus is riding an elevator
+    LDA !SAMUS_MOVEMENT_HANDLER
+if !FEATURE_PAL
+    CMP #$E8E9 : BNE .setPos
+else
+    CMP #$E8EC : BNE .setPos
+endif
+
+    ; Clear elevator status
+    LDA #$E695 : STA !SAMUS_LOCKED_HANDLER
+    LDA #$E725 : STA !SAMUS_MOVEMENT_HANDLER
+
+  .setPos
     ; Set Samus position
     LDA $83000C,X : STA !SAMUS_X
     LDA $83000E,X : STA !SAMUS_Y
