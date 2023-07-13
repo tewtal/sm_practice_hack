@@ -76,7 +76,7 @@ endif
 ; if fast doors are enabled.
 ; This is because the room state can be affected by the timing of the
 ; decompression; for example, the Rinkas in Mother Brain's room will spawn
-; differently deoending on how far the door has scrolled when decompression finishes.
+; differently depending on how far the door has scrolled when decompression finishes.
 
 org $82E41D
     LDA #$7E70
