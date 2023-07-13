@@ -1969,10 +1969,9 @@ if !PRESERVE_WRAM_DURING_SPACETIME
     dw #ih_spacetime_infohud
 endif
     dw #ih_lag
+    dw #ih_auto_update_timers
     dw #$FFFF
     dw #ih_ram_watch
-    dw #$FFFF
-    dw #ih_auto_update_timers
     dw #$0000
     %cm_header("INFOHUD")
 
@@ -2246,7 +2245,7 @@ ih_ram_watch:
     %cm_jsl("Customize RAM Watch", #ih_prepare_ram_watch_menu, #RAMWatchMenu)
 
 ih_auto_update_timers:
-    %cm_toggle_inverted("Auto update timers", !ram_timers_autoupdate, #$0001, #0)
+    %cm_toggle_inverted("Auto-Update Timers", !ram_timers_autoupdate, #$0001, #0)
 
 incsrc ramwatchmenu.asm
 

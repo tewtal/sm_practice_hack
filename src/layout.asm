@@ -2373,15 +2373,11 @@ door_custom_asm:
     ; Reset animation timer
     STZ !SAMUS_ANIMATION_FRAME
 
-    ; Check if Samus is riding an elevator
-    LDA !SAMUS_MOVEMENT_HANDLER
-if !FEATURE_PAL
-    CMP #$E8E9 : BNE .setPos
-else
-    CMP #$E8EC : BNE .setPos
-endif
+    ; Reset elevator flags
+    STZ !ELEVATOR_PROPERTIES
+    STZ !ELEVATOR_STATUS
 
-    ; Clear elevator status
+    ; Unlock Samus
     LDA #$E695 : STA !SAMUS_LOCKED_HANDLER
     LDA #$E725 : STA !SAMUS_MOVEMENT_HANDLER
 
@@ -2406,7 +2402,7 @@ layout_asm_crateriakihunter_bottomdoor:
     ; Perform same scroll asm as vanilla
     PHP
     %a8()
-    LDA #$02 :  STA $7ECD21 : STA $7ECD24
+    LDA #$02 : STA $7ECD21 : STA $7ECD24
     PLP
 
     ; Fall through to next method to clear BG2 VRAM flag
