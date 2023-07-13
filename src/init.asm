@@ -73,6 +73,7 @@ init_nonzero_wram:
     ; RAM $7E0000 fluctuates so it is not a good default value
     LDA #!ENEMY_HP : STA !ram_watch_left
     LDA #!SAMUS_HP : STA !ram_watch_right
+    LDA #$007E : STA !ram_watch_bank
 
     LDA !sram_seed_X : STA !ram_seed_X
     LDA !sram_seed_Y : STA !ram_seed_Y
@@ -94,6 +95,7 @@ init_sram:
     CMP #$000F : BEQ .sram_upgrade_Fto10
     CMP #$0010 : BEQ .sram_upgrade_10to11
     CMP #$0011 : BEQ .sram_upgrade_11to12
+    CMP #$0012 : BEQ .sram_upgrade_12to13
     JSL init_sram_upto9
 
   .sram_upgrade_9toA
@@ -133,6 +135,9 @@ init_sram:
   .sram_upgrade_11to12
     JSL init_menu_customization
     TDC : STA !sram_ctrl_auto_save_state
+
+  .sram_upgrade_12to13
+    TDC : STA !sram_custom_header
 
     LDA #!SRAM_VERSION : STA !sram_initialized
     RTS

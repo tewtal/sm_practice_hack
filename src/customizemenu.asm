@@ -17,6 +17,8 @@ CustomizeMenu:
     dw #mc_customsfx
     dw #$FFFF
     dw #mc_scroll_delay
+    dw #$FFFF
+    dw #mc_customheader
     dw #$0000
     %cm_header("CUSTOMIZE PRACTICE MENU")
 
@@ -68,8 +70,7 @@ Palette2CustomConfirm:
 palette2custom_abort:
     %cm_jsl("ABORT", #.routine, #$0000)
   .routine
-    JSL cm_go_back
-    JML cm_calculate_max
+    JML cm_previous_menu
 
 palette2custom_confirm:
     %cm_jsl("Copy Palette to Custom", .routine, #$0000)
@@ -133,8 +134,7 @@ PaletteRandoConfirm:
 paletterando_abort:
     %cm_jsl("ABORT", #.routine, #$0000)
   .routine
-    JSL cm_go_back
-    JML cm_calculate_max
+    JML cm_previous_menu
 
 paletterando_confirm:
     %cm_jsl("RANDOMIZE!", #.routine, #$0000)
@@ -163,6 +163,33 @@ mc_customsfx:
 mc_scroll_delay:
     %cm_numfield("Menu Scroll Delay", !sram_cm_scroll_delay, 1, 10, 1, 2, #0)
 
+mc_customheader:
+    %cm_jsl("Customize Menu Header", #.routine, #$0000)
+  .routine
+    ; enter keyboard editing mode
+    LDA.w #!sram_custom_header : STA !DP_Address
+    LDA.w #!sram_custom_header>>16 : STA !DP_Address+2
+    ; check if custom header exists
+    LDA !sram_custom_header : AND #$00FF : CMP #$0028 : BNE .keyboardMode
+    ; store SAFE word to indicate a name already exists
+    LDA #$5AFE : STA !DP_KB_Control
+    ; load existing name
+    LDX #$0016 : TXY
+  .loopExistingName
+    LDA [!DP_Address],Y : STA !ram_cm_keyboard_buffer,X
+    DEX #2
+    DEY #2 : BPL .loopExistingName
+  .keyboardMode
+    JSL kb_ctrl_mode : BCC .done
+    ; check if "nothing" was saved
+    LDA !sram_custom_header : CMP #$FF28 : BEQ .blank
+    JML ConvertNormal2Header
+  .blank
+    ; restore default header
+    LDA #$0000 : STA !sram_custom_header
+  .done
+    RTL
+
 CustomPalettesMenu:
     dw #custompalettes_text
     dw #custompalettes_seltext
@@ -181,37 +208,37 @@ CustomPalettesMenu:
     %cm_header("CUSTOMIZE MENU PALETTE")
 
 custompalettes_text:
-    %palettemenu("Text", CustomPalettesMenu_menutext, !sram_palette_text)
+    %palettemenu("Text", CustomPalettesMenu_text, !sram_palette_text)
 
 custompalettes_seltext:
-    %palettemenu("Selected Text", CustomPalettesMenu_menuseltext, !sram_palette_seltext)
+    %palettemenu("Selected Text", CustomPalettesMenu_seltext, !sram_palette_seltext)
 
 custompalettes_seltextbg:
-    %palettemenu("Selected Text Background", CustomPalettesMenu_menuseltextbg, !sram_palette_seltextbg)
+    %palettemenu("Selected Text Background", CustomPalettesMenu_seltextbg, !sram_palette_seltextbg)
 
 custompalettes_headeroutline:
-    %palettemenu("Header Outline", CustomPalettesMenu_menuheaderoutline, !sram_palette_headeroutline)
+    %palettemenu("Header Outline", CustomPalettesMenu_headeroutline, !sram_palette_headeroutline)
 
 custompalettes_numfill:
-    %palettemenu("Number Field Text", CustomPalettesMenu_menunumfill, !sram_palette_numfill)
+    %palettemenu("Number Field Text", CustomPalettesMenu_numfill, !sram_palette_numfill)
 
 custompalettes_numoutline:
-    %palettemenu("Number Field Outline", CustomPalettesMenu_menunumoutline, !sram_palette_numoutline)
+    %palettemenu("Number Field Outline", CustomPalettesMenu_numoutline, !sram_palette_numoutline)
 
 custompalettes_numsel:
-    %palettemenu("Selected Num-Field Text", CustomPalettesMenu_menunumsel, !sram_palette_numsel)
+    %palettemenu("Selected Num-Field Text", CustomPalettesMenu_numsel, !sram_palette_numsel)
 
 custompalettes_numseloutline:
-    %palettemenu("Selected Num-Field Outline", CustomPalettesMenu_menunumseloutline, !sram_palette_numseloutline)
+    %palettemenu("Selected Num-Field Outline", CustomPalettesMenu_numseloutline, !sram_palette_numseloutline)
 
 custompalettes_toggleon:
-    %palettemenu("Toggle ON", CustomPalettesMenu_menutoggleon, !sram_palette_toggleon)
+    %palettemenu("Toggle ON", CustomPalettesMenu_toggleon, !sram_palette_toggleon)
 
 custompalettes_border:
-    %palettemenu("Toggle OFF + Border", CustomPalettesMenu_menuborder, !sram_palette_border)
+    %palettemenu("Toggle OFF + Border", CustomPalettesMenu_border, !sram_palette_border)
 
 custompalettes_background:
-    %palettemenu("Background", CustomPalettesMenu_menubackground, !sram_palette_background)
+    %palettemenu("Background", CustomPalettesMenu_background, !sram_palette_background)
 
 custompalettes_hex_red:
     %cm_numfield_color("Hexadecimal Red", !ram_cm_custompalette_red, #MixRGB)
@@ -265,37 +292,37 @@ CustomPalettesDisplayMenu:
     %cm_footer("SCREENSHOT TO SHARE COLORS")
 
 custompalettes_text_display:
-    %cm_numfield_hex_word("Text", !sram_palette_text)
+    %cm_numfield_hex_word("Text", !sram_palette_text, #$7FFF, #0)
 
 custompalettes_seltext_display:
-    %cm_numfield_hex_word("Selected Text", !sram_palette_seltext)
+    %cm_numfield_hex_word("Selected Text", !sram_palette_seltext, #$7FFF, #0)
 
 custompalettes_seltextbg_display:
-    %cm_numfield_hex_word("Selected Text BG", !sram_palette_seltextbg)
+    %cm_numfield_hex_word("Selected Text BG", !sram_palette_seltextbg, #$7FFF, #0)
 
 custompalettes_border_display:
-    %cm_numfield_hex_word("Toggle OFF + Border", !sram_palette_border)
+    %cm_numfield_hex_word("Toggle OFF + Border", !sram_palette_border, #$7FFF, #0)
 
 custompalettes_headeroutline_display:
-    %cm_numfield_hex_word("Header Text Outline", !sram_palette_headeroutline)
+    %cm_numfield_hex_word("Header Text Outline", !sram_palette_headeroutline, #$7FFF, #0)
 
 custompalettes_numfill_display:
-    %cm_numfield_hex_word("NumField Text", !sram_palette_numfill)
+    %cm_numfield_hex_word("NumField Text", !sram_palette_numfill, #$7FFF, #0)
 
 custompalettes_numoutline_display:
-    %cm_numfield_hex_word("NumField Outline", !sram_palette_numoutline)
+    %cm_numfield_hex_word("NumField Outline", !sram_palette_numoutline, #$7FFF, #0)
 
 custompalettes_numsel_display:
-    %cm_numfield_hex_word("Selected NumField", !sram_palette_numsel)
+    %cm_numfield_hex_word("Selected NumField", !sram_palette_numsel, #$7FFF, #0)
 
 custompalettes_numseloutline_display:
-    %cm_numfield_hex_word("Selected NumField OL", !sram_palette_numseloutline)
+    %cm_numfield_hex_word("Selected NumField OL", !sram_palette_numseloutline, #$7FFF, #0)
 
 custompalettes_toggleon_display:
-    %cm_numfield_hex_word("Toggle ON", !sram_palette_toggleon)
+    %cm_numfield_hex_word("Toggle ON", !sram_palette_toggleon, #$7FFF, #0)
 
 custompalettes_background_display:
-    %cm_numfield_hex_word("Background", !sram_palette_background)
+    %cm_numfield_hex_word("Background", !sram_palette_background, #$7FFF, #0)
 
 
 ; ---------------
@@ -427,7 +454,7 @@ wardrinkerProfileTable:
     dw $7277, $7FFF, $7A02, $0000, $0000, $9200, $7277, $7F29, $0000, $0000, $7F29
 
 mm2ProfileTable:
-    dw $5C12, $7F44, $7C80, $0000, $5442, $7FFF, $03E0, $7F44, $0000, $5442, $7F44
+    dw $0539, $7F44, $7C80, $0000, $5442, $7F44, $03E0, $0B7E, $0000, $0539, $0F7E
 
 ptoilProfileTable:
     dw $5CAA, $14A5, $01EF, $0000, $0000, $5294, $4376, $03FF, $0000, $0000, $7FFF
@@ -509,10 +536,8 @@ MixRGB:
     LDA !ram_cm_custompalette_red : ORA $16
     STA [$12]
 
-    ; split BGR value into high and low bytes
-    %a8()
-    STA !ram_cm_custompalette_lo : XBA : STA !ram_cm_custompalette_hi
-    %a16()
+    ; store BGR value
+    STA !ram_cm_custompalette
 
     JSL refresh_custom_palettes
     RTL
@@ -554,10 +579,8 @@ cm_colors:
     LDA [$C1] : AND #$03E0 : LSR #5 : STA !ram_cm_custompalette_green
     LDA [$C1] : AND #$001F : STA !ram_cm_custompalette_red
 
-    ; split BGR value into high and low bytes
-    LDA [$C1] : AND #$7FFF
-    %a8()
-    STA !ram_cm_custompalette_lo : XBA : STA !ram_cm_custompalette_hi
+    ; store BGR value
+    LDA [$C1] : AND #$7FFF : STA !ram_cm_custompalette
 
   .done
     PLB : PLP
@@ -611,6 +634,123 @@ ColorMenuTable_border:
 
 ColorMenuTable_background:
     %setupRGB(!sram_palette_background)
+
+ConvertNormal2Header:
+{
+    PHB : PHK : PLB
+    %ai8()
+    ; X = text, Y = table
+    LDX #$01 : LDY #$00
+
+  .next_char
+    ; safety net in case no terminator
+    CPX #$18 : BPL .done
+    ; grab next byte of user text, exit if term ($FF)
+    LDA !sram_custom_header,X : CMP #$FF : BEQ .done
+  .loop_compare
+    ; compare to first column of table
+    CMP.w .Table,Y : BEQ .found
+    INY #2 : CPY #$9A : BCS .not_found
+    BRA .loop_compare
+
+  .found
+    ; replace with byte from second column of table
+    INY : LDA.w .Table,Y : STA !sram_custom_header,X
+    INX : LDY #$00 : BRA .next_char
+
+  .not_found
+    ; searched whole table
+    LDY #$00
+    INX
+    BRA .next_char
+
+  .done
+    %ai16()
+    PLB
+    RTL
+
+  .Table
+; normal, header
+; db $00, $50
+; db $01, $51
+    %norm2head("A")
+    %norm2head("B")
+    %norm2head("C")
+    %norm2head("D")
+    %norm2head("E")
+    %norm2head("F")
+    %norm2head("G")
+    %norm2head("H")
+    %norm2head("I")
+    %norm2head("J")
+    %norm2head("K")
+    %norm2head("L")
+    %norm2head("M")
+    %norm2head("N")
+    %norm2head("O")
+    %norm2head("P")
+    %norm2head("Q")
+    %norm2head("R")
+    %norm2head("S")
+    %norm2head("T")
+    %norm2head("U")
+    %norm2head("V")
+    %norm2head("W")
+    %norm2head("X")
+    %norm2head("Y")
+    %norm2head("Z")
+    %norm2head("a")
+    %norm2head("b")
+    %norm2head("c")
+    %norm2head("d")
+    %norm2head("e")
+    %norm2head("f")
+    %norm2head("g")
+    %norm2head("h")
+    %norm2head("i")
+    %norm2head("j")
+    %norm2head("k")
+    %norm2head("l")
+    %norm2head("m")
+    %norm2head("n")
+    %norm2head("o")
+    %norm2head("p")
+    %norm2head("q")
+    %norm2head("r")
+    %norm2head("s")
+    %norm2head("t")
+    %norm2head("u")
+    %norm2head("v")
+    %norm2head("w")
+    %norm2head("x")
+    %norm2head("y")
+    %norm2head("z")
+    %norm2head("0")
+    %norm2head("1")
+    %norm2head("2")
+    %norm2head("3")
+    %norm2head("4")
+    %norm2head("5")
+    %norm2head("6")
+    %norm2head("7")
+    %norm2head("8")
+    %norm2head("9")
+    %norm2head(" ")
+    %norm2head(".")
+    %norm2head(",")
+    %norm2head("!")
+    %norm2head("?")
+    %norm2head("-")
+    %norm2head("#")
+    %norm2head("(")
+    %norm2head(")")
+    %norm2head("'")
+    %norm2head(":")
+    %norm2head("/")
+    %norm2head("$")
+    %norm2head("+")
+    %norm2head("%")
+}
 
 print pc, " menu customization bankAF end"
 pullpc

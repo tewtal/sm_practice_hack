@@ -1533,6 +1533,8 @@ preset_gtclassic_maridia_mt_everest:
     dw $0915, $031F  ; Screen Y position in pixels
     dw $0917, $00C0  ; Layer 2 X position
     dw $0919, $0257  ; Layer 2 Y position
+    dw $0A1C, $009B  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
     dw $0AF6, $0181  ; Samus X
     dw $0AFA, $03BB  ; Samus Y
     dw #$FFFF
@@ -1546,6 +1548,8 @@ preset_gtclassic_maridia_crab_shaft:
     dw $0917, $03C0  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
     dw $09C2, $01EF  ; Health
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
     dw $0AF6, $05C7  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF

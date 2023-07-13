@@ -9,7 +9,7 @@ if !FEATURE_TINYSTATES
 custom_preset_save:
 {
     LDA !sram_custom_preset_slot
-    XBA : TAX                    ; multiply by 100h (slot offset)
+    %presetslotsize()            ; multiply by 100h (slot offset)
     LDA #$5AFE : STA $703000,X   ; mark this slot as "SAFE" to load
     LDA #$00BE : STA $703002,X   ; record slot size for future compatibility
     LDA $078D : STA $703004,X    ; DDB
@@ -112,7 +112,7 @@ custom_preset_save:
 custom_preset_load:
 {
     LDA !sram_custom_preset_slot
-    XBA : TAX                    ; multiply by 100h (slot offset)
+    %presetslotsize()            ; multiply by 100h (slot offset)
                                  ; skip past "5AFE" word
                                  ; skip past size for now
     LDA $703004,X : STA $078D    ; DDB
@@ -192,7 +192,7 @@ else
 custom_preset_save:
 {
     LDA !sram_custom_preset_slot
-    ASL : XBA : TAX              ; multiply by 200h (slot offset)
+    %presetslotsize()            ; multiply by 200h (slot offset)
     LDA #$5AFE : STA $703000,X   ; mark this slot as "SAFE" to load
     LDA #$01EE : STA $703002,X   ; record slot size for future compatibility
     LDA $078B : STA $703004,X    ; Elevator Index
@@ -270,7 +270,7 @@ custom_preset_save:
 custom_preset_load:
 {
     LDA !sram_custom_preset_slot
-    ASL : XBA : TAX              ; multiply by 200h
+    %presetslotsize()            ; multiply by 200h
                                  ; skip past "5AFE" word
                                  ; skip past size for now
     LDA $703004,X : STA $078B    ; Elevator Index
@@ -719,5 +719,5 @@ endif
 }
 
 print pc, " custompresets end"
-warnpc $B3C000 ; mainmenu.asm
+warnpc $83C000 ; layout.asm
 

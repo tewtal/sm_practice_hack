@@ -1,23 +1,31 @@
 
 ; Crab Shaft save station load point
 org $80C995
+maridia_save_station_9:
     db #$A3, #$D1, #$68, #$A4, #$00, #$00, #$00, #$00, #$00, #$02, #$78, #$00, #$60, #$00
 
 ; Main Street save station load point
 org $80C9A3
+maridia_save_station_10:
     db #$C9, #$CF, #$D8, #$A3, #$00, #$00, #$00, #$01, #$00, #$05, #$78, #$00, #$10, #$00
 
 ; Crab Shaft save station map icon location
 org $82CA17
+maridia_save_station_map_icon_9:
     db #$90, #$00, #$50, #$00
 
 ; Main Street save station map icon location
 org $82CA1B
+maridia_save_station_map_icon_10:
     db #$58, #$00, #$78, #$00
 
+; Hijack loading destination room CRE
+org $82E1D9
+    JSR hijack_loading_room_CRE
+
 ; Hijack room transition between loading level data and setting up scrolling
-org $82E388
-    dw hijack_after_load_level_data
+org $82E387
+    LDA #hijack_after_load_level_data
 
 ; Hijack call to create door closing PLM
 org $82E4C9
@@ -25,6 +33,67 @@ org $82E4C9
 
 org $82F800
 print pc, " layout bank82 start"
+
+hijack_loading_room_CRE:
+{
+    LDA !ram_door_portal_flags : BEQ .noChange
+    PHX : BIT !DOOR_PORTAL_JUMP : BNE .jump
+    LDA !ram_door_source : ASL : TAX
+    LDA portals_vanilla_table,X : CMP !DOOR_ID : BEQ .srcToDest
+    LDA !ram_door_destination : ASL : TAX
+    LDA portals_vanilla_table,X : CMP !DOOR_ID : BEQ .destToSrc
+    PLX
+
+  .noChange
+    ; Overridden routine
+    JMP $DDF1
+
+  .destToSrc
+    LDA !ram_door_source : ASL : TAX
+    BRA .pickDoor
+
+  .jump
+    LDA !DOOR_PORTAL_ENABLED : STA !ram_door_portal_flags
+
+  .srcToDest
+    LDA !ram_door_destination : ASL : TAX
+
+  .pickDoor
+    ; Even if we pick vanilla, still give the i-frames
+    LDA #$0080 : STA !SAMUS_IFRAME_TIMER
+    PHX : LDA portals_custom_inverted_table,X : TAX
+    LDA $830003,X : AND #$0003 : STA $12
+    LDX !DOOR_ID : LDA $830003,X : PLX
+    AND #$0003 : CMP $12 : BEQ .pickVanilla
+    LDA portals_custom_inverted_table,X : STA !DOOR_ID
+    BRA .loadBitset
+
+  .pickVanilla
+    LDA portals_vanilla_inverted_table,X : STA !DOOR_ID    
+
+  .loadBitset
+    ; Implement the DDF1 routine here to load CRE bitset
+    ; Note we already have pushed X to the stack,
+    ; and A conveniently contains the DOOR_ID
+    TAX : PHB
+    PEA $8F00 : PLB : PLB
+
+    LDA $830000,X : TAX
+    LDA !CRE_BITSET : STA !PREVIOUS_CRE_BITSET
+    LDA $0008,X : AND #$00FF
+
+    ; Ensure either BIT #$0004 or #$0002 are set
+    ; so that the CRE is loaded or reloaded
+    BIT #$0004 : BNE .storeBitset
+    ORA #$0002
+
+  .storeBitset
+    STA !CRE_BITSET
+
+    ; Remember we pushed X and bank in opposite order
+    PLB : PLX
+    RTS
+}
 
 hijack_after_load_level_data:
 {
@@ -63,146 +132,489 @@ print pc, " layout bank82 end"
 warnpc $82FA00 ; presets.asm
 
 
-; East Ocean left door asm pointer
-org $838A88
-    dw #layout_asm_eastocean
+; Crateria Kihunter bottom door
+org $838B00
+hook_layout_asm_redtowerelevator_door0:
+    dw #layout_asm_crateriakihunter_bottomdoor
 
-; Green Pirates Shaft bottom-right door asm pointer
+; Statues Hallway left door
 org $838C5C
+hook_layout_asm_greenpirateshaft_door2:
     dw #layout_asm_cutscene_g4skip
 
-; Green Hill Zone top-left door asm pointer
-org $838DF4
-    dw #layout_asm_greenhillzone
-
-; Green Hill Zone top-right door asm pointer
-org $838EA8
-    dw #layout_asm_greenhillzone
-
-; Construction Zone left door asm pointer
+; Construction Zone left door
 org $838EB4
+hook_layout_asm_morphballroom_door1:
     dw #layout_asm_constructionzone
 
-; Green Hill Zone bottom-right door asm pointer
-org $838F08
-    dw #layout_asm_greenhillzone
-
-; Caterpillar middle-left door asm pointer
+; Caterpillar middle-left door
 org $839094
+hook_layout_asm_hellway_door1:
     ; Use same asm as elevator door, freeing up asm at $BE1A
     dw $BA21
 
-; Caterpillar top-left door asm pointer
+; Caterpillar top-left door
 org $8390E8
+hook_layout_asm_betapbs_door0:
     dw #layout_asm_caterpillar_no_scrolls
 
-; East Tunnel bottom-right door asm pointer
+; East Tunnel bottom-right door
 org $839238
+hook_layout_asm_warehouse_door0:
     ; Use same asm as bottom-left door
     dw $E345
 
-; Caterpillar near-right door asm pointer
+; Caterpillar near-right door
 org $839274
+hook_layout_asm_redtowersave_door0:
     dw #layout_asm_caterpillar_no_scrolls
 
-; Single Chamber top-left door asm pointer
-org $83958C
-    dw #layout_asm_singlechamber
+; Crocomire Speedway bottom door
+org $8393F4
+hook_layout_asm_croc_door1:
+    dw #layout_asm_clear_bg2_vram_flag
 
-; Single Chamber near-top-right door asm pointer
-org $839610
-    dw #layout_asm_singlechamber
-
-; Single Chamber near-middle-right door asm pointer
-org $83961C
-    dw #layout_asm_singlechamber
-
-; Single Chamber near-bottom-right door asm pointer
-org $839640
-    dw #layout_asm_singlechamber
-
-; Single Chamber far-top-right door asm pointer
-org $839A54
-    dw #layout_asm_singlechamber
-
-; East Ocean right door asm pointer
-org $83A26E
-    dw #layout_asm_eastocean
-
-; Main Street bottom door asm pointer
+; Main Street bottom door
 org $83A33A
-    dw #layout_asm_mainstreet
+hook_layout_asm_glasstunnel_door0:
+    dw #layout_asm_clear_bg2_vram_flag
 
-; Crab Tunnel left door asm pointer
-org $83A3B2
-    dw #layout_asm_crabtunnel
-
-; Main Street middle-right door asm pointer
-org $83A3E2
-    dw #layout_asm_mainstreet
-
-; Main Street bottom-right door asm pointer
-org $83A41E
-    dw #layout_asm_mainstreet
-
-; Main Street top-right door asm pointer
-org $83A442
-    dw #layout_asm_mainstreet
-
-; Main Street hidden door asm pointer
-org $83A45A
-    dw #layout_asm_mainstreet
-
-; Crab Shaft left door asm pointer
+; Crab Shaft left door
 org $83A472
+hook_layout_asm_mteverest_door5:
     dw #layout_asm_crabshaft_no_scrolls
 
-; Crab Shaft top door asm pointer
+; Crab Shaft top door
 org $83A4EA
+hook_layout_asm_fakeplasmaspark_door1:
     dw #layout_asm_crabshaft_no_scrolls
 
-; Crab Tunnel right door asm pointer
-org $83A502
-    dw #layout_asm_crabtunnel
-
-; East Tunnel top-right door asm pointer
+; East Tunnel top-right door
 org $83A51A
+hook_layout_asm_crabhole_door2:
     dw #layout_asm_easttunnel_no_scrolls
 
-; West Sand Hall left door asm pointer
+; West Sand Hall left door
 org $83A53E
+hook_layout_asm_westsandhalltunnel_door1:
     dw #layout_asm_westsandhall
 
 ; West Sand Hall unused door definition
 org $83A654
+hook_layout_asm_westsandhall_door2:
     dw #$D6FD
     db #$00, #$05, #$3E, #$06, #$03, #$00
     dw #$8000
     dw #$0000
 
-; West Sand Hall right door asm pointer
+; West Sand Hall right door
 org $83A66A
+hook_layout_asm_oasis_door0:
     dw #layout_asm_westsandhall
 
-; West Sand Hall top sand door asm pointer
+; West Sand Hall top sand door
 org $83A6BE
+hook_layout_asm_westsandhole_door1:
     dw #layout_asm_westsandhall
 
-; Mother Brain right door asm pointer
+; Mother Brain right door
 org $83AAD2
+hook_layout_asm_rinkashaft_door2:
     dw #layout_asm_mbhp
 
-; Mother Brain left door asm pointer
+; Mother Brain left door
 org $83AAEA
+hook_layout_asm_tourianescape1_door0:
     dw #layout_asm_mbhp
 
-; Magnet Stairs left door asm pointer
+; Magnet Stairs left door
 org $83AB6E
+hook_layout_asm_fallingtile_door1:
     dw #layout_asm_magnetstairs
 
-; Magnet Stairs right door asm pointer
+; Magnet Stairs right door
 org $83AB92
+hook_layout_asm_deadscientist_door0:
     dw #layout_asm_magnetstairs
+
+
+org $83C000
+print pc, " layout bank83 start"
+
+; List of vanilla portal doors
+; NOTE: Table order must match mainmenu.asm
+portals_vanilla_table:
+    dw $A96C   ; Draygon Room door 0 --> Precious Room
+    dw $A840   ; Precious Room door 1 --> Draygon Room
+    dw $91CE   ; Kraid Room door 0 --> Kraid Eye Door Room
+    dw $91B6   ; Kraid Eye Door Room door 1 --> Kraid Room
+    dw $98CA   ; Lower Norfair Farming door 0 --> Ridley Room
+    dw $A2C4   ; Phantoon Room door 0 --> Basement
+    dw $98BE   ; Ridley Room door 1 --> Lower Norfair Farming
+    dw $A2AC   ; Basement door 2 --> Phantoon Room
+    dw $8A42   ; Crateria Kihunter door 2 --> Red Brinstar Elevator
+    dw $8C52   ; Green Pirates Shaft door 2 --> Statues Hallway
+    dw $8C22   ; Lower Mushrooms door 1 --> Green Brinstar Elevator
+    dw $8E9E   ; Morph Ball Room door 0 --> Green Hill Zone
+    dw $8AEA   ; Moat door 1 --> West Ocean
+    dw $93EA   ; Crocomire Room door 1 --> Crocomire Speedway
+    dw $A708   ; Aqueduct door 0 --> Crab Shaft
+    dw $8AA2   ; Forgotten Highway Elbow door 0 --> Crab Maze
+    dw $91E6   ; Statues Hallway door 0 --> Green Pirates Shaft
+    dw $8BFE   ; Green Brinstar Elevator door 0 --> Lower Mushrooms
+    dw $8E86   ; Green Hill Zone door 1 --> Morph Ball Room
+    dw $8F0A   ; Noob Bridge door 1 --> Red Tower
+    dw $913E   ; Warehouse Zeela door 0 --> Warehouse Entrance
+    dw $96D2   ; Lava Dive door 0 --> Kronic Boost
+    dw $9A4A   ; Three Musketeers door 0 --> Single Chamber
+    dw $90C6   ; Caterpillar door 4 --> Red Fish Room
+    dw $A384   ; East Tunnel door 1 --> Warehouse Entrance
+    dw $A390   ; East Tunnel door 2 --> Crab Hole
+    dw $A330   ; Glass Tunnel door 0 --> Main Street
+    dw $8AF6   ; Red Brinstar Elevator door 0 --> Crateria Kihunter
+    dw $902A   ; Red Tower door 1 --> Noob Bridge
+    dw $93D2   ; Crocomire Speedway door 4 --> Crocomire Room
+    dw $967E   ; Kronic Boost door 2 --> Lava Dive
+    dw $95FA   ; Single Chamber door 4 --> Three Musketeers
+    dw $922E   ; Warehouse Entrance door 0 --> East Tunnel
+    dw $923A   ; Warehouse Entrance door 1 --> Warehouse Zeela
+    dw $A510   ; Crab Hole door 2 --> East Tunnel
+    dw $A4C8   ; Crab Shaft door 2 --> Aqueduct
+    dw $A39C   ; Main Street door 0 --> Glass Tunnel
+    dw $A480   ; Red Fish Room door 1 --> Caterpillar
+    dw $8AAE   ; Crab Maze door 1 --> Forgotten Highway Elbow
+    dw $89CA   ; West Ocean door 0 --> Moat
+
+; NOTE: Table order must match above table with portals inverted
+portals_vanilla_inverted_table:
+    dw $A840   ; Precious Room door 1 --> Draygon Room
+    dw $A96C   ; Draygon Room door 0 --> Precious Room
+    dw $91B6   ; Kraid Eye Door Room door 1 --> Kraid Room
+    dw $91CE   ; Kraid Room door 0 --> Kraid Eye Door Room
+    dw $98BE   ; Ridley Room door 1 --> Lower Norfair Farming
+    dw $A2AC   ; Basement door 2 --> Phantoon Room
+    dw $98CA   ; Lower Norfair Farming door 0 --> Ridley Room
+    dw $A2C4   ; Phantoon Room door 0 --> Basement
+    dw $8AF6   ; Red Brinstar Elevator door 0 --> Crateria Kihunter
+    dw $91E6   ; Statues Hallway door 0 --> Green Pirates Shaft
+    dw $8BFE   ; Green Brinstar Elevator door 0 --> Lower Mushrooms
+    dw $8E86   ; Green Hill Zone door 1 --> Morph Ball Room
+    dw $89CA   ; West Ocean door 0 --> Moat
+    dw $93D2   ; Crocomire Speedway door 4 --> Crocomire Room
+    dw $A4C8   ; Crab Shaft door 2 --> Aqueduct
+    dw $8AAE   ; Crab Maze door 1 --> Forgotten Highway Elbow
+    dw $8C52   ; Green Pirates Shaft door 2 --> Statues Hallway
+    dw $8C22   ; Lower Mushrooms door 1 --> Green Brinstar Elevator
+    dw $8E9E   ; Morph Ball Room door 0 --> Green Hill Zone
+    dw $902A   ; Red Tower door 1 --> Noob Bridge
+    dw $923A   ; Warehouse Entrance door 1 --> Warehouse Zeela
+    dw $967E   ; Kronic Boost door 2 --> Lava Dive
+    dw $95FA   ; Single Chamber door 4 --> Three Musketeers
+    dw $A480   ; Red Fish Room door 1 --> Caterpillar
+    dw $922E   ; Warehouse Entrance door 0 --> East Tunnel
+    dw $A510   ; Crab Hole door 2 --> East Tunnel
+    dw $A39C   ; Main Street door 0 --> Glass Tunnel
+    dw $8A42   ; Crateria Kihunter door 2 --> Red Brinstar Elevator
+    dw $8F0A   ; Noob Bridge door 1 --> Red Tower
+    dw $93EA   ; Crocomire Room door 1 --> Crocomire Speedway
+    dw $96D2   ; Lava Dive door 0 --> Kronic Boost
+    dw $9A4A   ; Three Musketeers door 0 --> Single Chamber
+    dw $A384   ; East Tunnel door 1 --> Warehouse Entrance
+    dw $913E   ; Warehouse Zeela door 0 --> Warehouse Entrance
+    dw $A390   ; East Tunnel door 2 --> Crab Hole
+    dw $A708   ; Aqueduct door 0 --> Crab Shaft
+    dw $A330   ; Glass Tunnel door 0 --> Main Street
+    dw $90C6   ; Caterpillar door 4 --> Red Fish Room
+    dw $8AA2   ; Forgotten Highway Elbow door 0 --> Crab Maze
+    dw $8AEA   ; Moat door 1 --> West Ocean
+
+; List of custom portal doors
+; NOTE: Table order must match above table
+portals_custom_inverted_table:
+    dw door_custom_A840_precious_door1                ; Bosses
+    dw door_custom_A96C_draygon_door0
+    dw door_custom_91B6_kraid_eye_door_door1
+    dw door_custom_91CE_kraid_door0
+    dw door_custom_98BE_ridley_door1
+    dw door_custom_A2AC_basement_door2
+    dw door_custom_98CA_lower_norfair_farming_door0
+    dw door_custom_A2C4_phantoon_door0
+    dw door_custom_8AF6_red_brinstar_elevator_door0   ; Crateria
+    dw door_custom_91E6_statues_hallway_door0
+    dw door_custom_8BFE_green_brinstar_elevator_door0
+    dw door_custom_8E86_green_hill_zone_door1
+    dw door_custom_89CA_west_ocean_door0
+    dw door_custom_93D2_crocomire_speedway_door4      ; Croc
+    dw door_custom_A4C8_crab_shaft_door2              ; East Maridia
+    dw door_custom_8AAE_crab_maze_door1
+    dw door_custom_8C52_green_pirates_shaft_door2     ; G4
+    dw door_custom_8C22_lower_mushrooms_door1         ; Green Brinstar
+    dw door_custom_8E9E_morph_ball_door0
+    dw door_custom_902A_red_tower_door1
+    dw door_custom_923A_warehouse_entrance_door1      ; Kraid's Lair
+    dw door_custom_967E_kronic_boost_door2            ; Lower Norfair
+    dw door_custom_95FA_single_chamber_door4
+    dw door_custom_A480_red_fish_door1                ; Red Brinstar
+    dw door_custom_922E_warehouse_entrance_door0
+    dw door_custom_A510_crab_hole_door2
+    dw door_custom_A39C_main_street_door0
+    dw door_custom_8A42_crateria_kihunter_door2
+    dw door_custom_8F0A_noob_bridge_door1
+    dw door_custom_93EA_crocomire_door1               ; Upper Norfair
+    dw door_custom_96D2_lava_dive_door0
+    dw door_custom_9A4A_three_musketeers_door0
+    dw door_custom_A384_east_tunnel_door1
+    dw door_custom_913E_warehouse_zeela_door0
+    dw door_custom_A390_east_tunnel_door2             ; West Maridia
+    dw door_custom_A708_aqueduct_door0
+    dw door_custom_A330_glass_tunnel_door0
+    dw door_custom_90C6_caterpillar_door4
+    dw door_custom_8AA2_forgotten_highway_elbow_door0 ; Wrecked Ship
+    dw door_custom_8AEA_moat_door1
+
+; Custom door definitions
+; Includes Samus X and Y and an asm pointer
+door_custom_89CA_west_ocean_door0:
+    dw $95FF   ; Moat
+    db $00, $05, $1E, $06, $01, $00
+    dw $8000, #door_custom_asm
+    dw $01CF, $0088, $0000
+
+door_custom_8A42_crateria_kihunter_door2:
+    dw $962A   ; Red Brinstar Elevator
+    db $00, $06, $06, $02, $00, $00
+    dw $8000, #door_custom_asm
+    dw $0080, $0058, $0000
+
+door_custom_8AA2_forgotten_highway_elbow_door0:
+    dw $957D   ; Crab Maze
+    db $00, $04, $01, $16, $00, $01
+    dw $8000, #door_custom_asm
+    dw $0034, $0188, $0000
+
+door_custom_8AAE_crab_maze_door1:
+    dw $95A8   ; Forgotten Highway Elbow
+    db $00, $05, $0E, $06, $00, $00
+    dw $8000, #door_custom_asm
+    dw $00D1, $0088, $0000
+
+door_custom_8AEA_moat_door1:
+    dw $93FE   ; West Ocean
+    db $00, $04, $01, $46, $00, $04
+    dw $8000, #door_custom_asm
+    dw $0034, $0488, $0000
+
+door_custom_8AF6_red_brinstar_elevator_door0:
+    dw $948C   ; Crateria Kihunter
+    db $00, $07, $16, $2D, $01, $02
+    dw $01C0, #door_custom_asm
+    dw $014C, $02B8, $B9F1
+
+door_custom_8BFE_green_brinstar_elevator_door0:
+    dw $9969   ; Lower Mushrooms
+    db $00, $04, $01, $06, $00, $00
+    dw $8000, #door_custom_asm
+    dw $0036, $0088, $0000
+
+door_custom_8C22_lower_mushrooms_door1:
+    dw $9938   ; Green Brinstar Elevator
+    db $00, $05, $0E, $06, $00, $00
+    dw $8000, #door_custom_asm
+    dw $00CC, $0088, $0000
+
+door_custom_8C52_green_pirates_shaft_door2:
+    dw $A5ED   ; Statues Hallway
+    db $00, $04, $01, $06, $00, $00
+    dw $8000, #door_custom_asm
+    dw $0034, $0088, #layout_asm_cutscene_g4skip
+
+door_custom_8E86_green_hill_zone_door1:
+    dw $9E9F   ; Morph Ball Room
+    db $00, $04, $01, $26, $00, $02
+    dw $8000, #door_custom_asm
+    dw $0034, $0288, $0000
+
+door_custom_8E9E_morph_ball_door0:
+    dw $9E52   ; Green Hill Zone
+    db $00, $05, $1E, $06, $01, $00
+    dw $8000, #door_custom_asm
+    dw $01C7, $0088, $0000
+
+door_custom_8F0A_noob_bridge_door1:
+    dw $A253   ; Red Tower
+    db $00, $04, $01, $46, $00, $04
+    dw $8000, #door_custom_asm
+    dw $002F, $0488, $0000
+
+door_custom_902A_red_tower_door1:
+    dw $9FBA   ; Noob Bridge
+    db $00, $05, $5E, $06, $05, $00
+    dw $8000, #door_custom_asm
+    dw $05CE, $0088, $0000
+
+door_custom_90C6_caterpillar_door4:
+    dw $D104   ; Red Fish Room
+    db $40, $04, $01, $06, $00, $00
+    dw $8000, #door_custom_asm
+    dw $0034, $0088, $BDAF
+
+door_custom_913E_warehouse_zeela_door0:
+    dw $A6A1   ; Warehouse Entrance
+    db $00, $05, $2E, $06, $02, $00
+    dw $8000, #door_custom_asm
+    dw $02C7, $0098, $BD3F
+
+door_custom_91B6_kraid_eye_door_door1:
+    dw $A59F   ; Kraid Room
+    db $00, $04, $01, $16, $00, $01
+    dw $8000, #door_custom_asm
+    dw $0034, $0188, $0000
+
+door_custom_91CE_kraid_door0:
+    dw $A56B   ; Kraid Eye Door Room
+    db $00, $05, $1E, $16, $01, $01
+    dw $8000, #door_custom_asm
+    dw $01CD, $0188, $0000
+
+door_custom_91E6_statues_hallway_door0:
+    dw $99BD   ; Green Pirates Shaft
+    db $00, $05, $0E, $66, $00, $06
+    dw $8000, #door_custom_asm
+    dw $00CC, $0688, $0000
+
+door_custom_922E_warehouse_entrance_door0:
+    dw $CF80   ; East Tunnel
+    db $40, $05, $0E, $16, $00, $01
+    dw $8000, #door_custom_asm
+    dw $00CE, $0188, $E345
+
+door_custom_923A_warehouse_entrance_door1:
+    dw $A471   ; Warehouse Zeela
+    db $00, $04, $01, $06, $00, $00
+    dw $8000, #door_custom_asm
+    dw $0034, $0088, $0000
+
+door_custom_93D2_crocomire_speedway_door4:
+    dw $A98D   ; Crocomire's Room
+    db $00, $06, $36, $02, $03, $00
+    dw $8000, #door_custom_asm
+    dw $0383, $0098, $0000
+
+door_custom_93EA_crocomire_door1:
+    dw $A923   ; Crocomire Speedway
+    db $00, $07, $C6, $2D, $0C, $02
+    dw $01C0, #door_custom_asm
+    dw $0C57, $02B8, $0000
+
+door_custom_95FA_single_chamber_door4:
+    dw $B656   ; Three Musketeers
+    db $00, $04, $11, $06, $01, $00
+    dw $8000, #door_custom_asm
+    dw $0134, $0088, $0000
+
+door_custom_967E_kronic_boost_door2:
+    dw $AF14   ; Lava Dive
+    db $00, $05, $3E, $06, $03, $00
+    dw $8000, #door_custom_asm
+    dw $03D0, $0088, $0000
+
+door_custom_96D2_lava_dive_door0:
+    dw $AE74   ; Kronic Boost
+    db $00, $04, $11, $26, $01, $02
+    dw $8000, #door_custom_asm
+    dw $0134, $0288, $0000
+
+door_custom_98BE_ridley_door1:
+    dw $B37A   ; Lower Norfair Farming
+    db $00, $04, $01, $06, $00, $00
+    dw $8000, #door_custom_asm
+    dw $002E, $0098, $0000
+
+door_custom_98CA_lower_norfair_farming_door0:
+    dw $B32E   ; Ridley Room
+    db $00, $05, $0E, $06, $00, $01
+    dw $8000, #door_custom_asm
+    dw $00BF, $0198, $0000
+
+door_custom_9A4A_three_musketeers_door0:
+    dw $AD5E   ; Single Chamber
+    db $00, $05, $5E, $06, $05, $00
+    dw $8000, #door_custom_asm
+    dw $05CF, $0088, $0000
+
+door_custom_A2AC_basement_door2:
+    dw $CD13   ; Phantoon Room
+    db $00, $04, $01, $06, $00, $00
+    dw $8000, #door_custom_asm
+    dw $002E, $00B8, $0000
+
+door_custom_A2C4_phantoon_door0:
+    dw $CC6F   ; Basement
+    db $00, $05, $4E, $06, $04, $00
+    dw $8000, #door_custom_asm
+    dw $049F, $00B8, $E1FE
+
+door_custom_A330_glass_tunnel_door0:
+    dw $CFC9   ; Main Street
+    db $00, $07, $16, $7D, $01, $07
+    dw $0200, #door_custom_asm
+    dw $014A, $07A8, $0000
+
+door_custom_A384_east_tunnel_door1:
+    dw $A6A1   ; Warehouse Entrance
+    db $40, $04, $01, $06, $00, $00
+    dw $8000, #door_custom_asm
+    dw $0034, $0088, $0000
+
+door_custom_A390_east_tunnel_door2:
+    dw $D21C   ; Crab Hole
+    db $00, $04, $01, $16, $00, $01
+    dw $8000, #door_custom_asm
+    dw $0028, $0188, $E356
+
+door_custom_A39C_main_street_door0:
+    dw $CEFB   ; Glass Tunnel
+    db $00, $06, $06, $02, $00, $00
+    dw $0170, #door_custom_asm
+    dw $0081, $0078, $0000
+
+door_custom_A480_red_fish_door1:
+    dw $A322   ; Caterpillar
+    db $40, $05, $2E, $36, $02, $03
+    dw $8000, #door_custom_asm
+    dw $02CD, $0388, $E367
+
+door_custom_A4C8_crab_shaft_door2:
+    dw $D5A7   ; Aqueduct
+    db $00, $04, $01, $16, $00, $01
+    dw $8000, #door_custom_asm
+    dw $0034, $0188, $0000
+
+door_custom_A510_crab_hole_door2:
+    dw $CF80   ; East Tunnel
+    db $00, $05, $3E, $06, $03, $00
+    dw $8000, #door_custom_asm
+    dw $03C6, $0088, #layout_asm_easttunnel_no_scrolls
+
+door_custom_A708_aqueduct_door0:
+    dw $D1A3   ; Crab Shaft
+    db $00, $05, $1E, $36, $01, $03
+    dw $8000, #door_custom_asm
+    dw $01CA, $0388, $E398
+
+door_custom_A840_precious_door1:
+    dw $DA60   ; Draygon Room
+    db $00, $05, $1E, $06, $01, $00
+    dw $8000, #door_custom_asm
+    dw $01C8, $0088, $0000
+
+door_custom_A96C_draygon_door0:
+    dw $D78F   ; Precious Room
+    db $00, $04, $01, $26, $00, $02
+    dw $8000, #door_custom_asm
+    dw $0034, $0288, $E3D9
+
+print pc, " layout bank83 end"
 
 
 ; Allow debug save stations to be used
@@ -218,6 +630,7 @@ layout_bomb_torizo_finish_crumbling:
 warnpc $848270
 
 org $84BA50
+hook_layout_bomb_grey_door_instruction:
     dw layout_bomb_grey_door_new_instruction
 
 org $84BA6F
@@ -242,7 +655,7 @@ layout_bomb_set_room_argument:
 warnpc $84BAF4
 
 org $84D33B
-layout_bomb_torizo_crumbling_chozo_preinstruction:
+layout_bomb_torizo_crumbling_preinstruction:
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_VARIA_TWEAKS : BNE layout_bomb_torizo_end_preinstruction
     LDA !SAMUS_ITEMS_COLLECTED : AND #$1000 : BEQ layout_bomb_torizo_end_preinstruction
 
@@ -254,7 +667,8 @@ layout_bomb_torizo_end_preinstruction:
 warnpc $84D356
 
 org $84E53D
-    dw layout_bomb_set_room_argument
+hook_layout_bomb_set_room_argument:
+    dw #layout_bomb_set_room_argument
 
 ; Ignore picky chozo in DASH or VARIA tweaks
 org $84D18F
@@ -279,7 +693,7 @@ layout_picky_chozo_end:
 ; Allow spazer blocks to be shot
 org $84D014
 layout_spazer_block_plm_entry:
-    dw layout_spazer_block_plm, $CBB7
+    dw #layout_spazer_block_plm, $CBB7
 
 org $84D476
 layout_spazer_block_plm:
@@ -293,22 +707,26 @@ layout_spazer_block_plm:
 warnpc $84D490
 
 org $94937D
+layout_samus_bombable_block_collision_table:
     dw $D040
 
 org $94A024
-    dw layout_spazer_block_plm_entry
+hook_layout_spazer_block_plm_entry:
+    dw #layout_spazer_block_plm_entry
 
 
 ; Parlor escape setup asm
 org $8F919C
-    LDA !sram_suppress_flashing : BIT !SUPPRESS_EARTHQUAKE : BNE .parlor_escape_rts
+layout_parlor_escape_setup_asm:
+    LDA !sram_suppress_flashing : BIT !SUPPRESS_EARTHQUAKE : BNE .rts
     JMP layout_asm_vanilla_parlor_escape
-  .parlor_escape_rts
+  .rts
     RTS
 warnpc $8F91A9
 
 ; Landing site setup asm
 org $8F91BD
+layout_landing_site_setup_asm:
     LDA !sram_suppress_flashing : BIT !SUPPRESS_EARTHQUAKE : BNE .scrolling_sky
     JSR layout_asm_vanilla_landing_site_escape
   .scrolling_sky
@@ -316,98 +734,142 @@ warnpc $8F91C9
 
 ; Crateria Kihunters setup asm
 org $8F94B1
-    dw layout_asm_crateria_kihunters
+hook_layout_asm_crateria_kihunters:
+    dw #layout_asm_crateria_kihunters
+
+; East Ocean setup asm
+org $8F9522
+hook_layout_asm_eastocean:
+    dw #layout_asm_eastocean
 
 ; Forgotten Highway Elbow setup asm
 org $8F95CD
-    dw layout_asm_forgotten_highway_elbow
+hook_layout_asm_forgotten_highway_elbow:
+    dw #layout_asm_forgotten_highway_elbow
+
+; Green Hill Zone setup asm
+org $8F9E77
+hook_layout_asm_greenhillzone:
+    dw #layout_asm_greenhillzone
 
 ; Moat setup asm
 org $8F9624
+hook_layout_asm_moat:
     dw #layout_asm_moat
 
 ; Red Tower Elevator setup asm
 org $8F964F
+hook_layout_asm_redtowerelevator:
     dw #layout_asm_redtowerelevator
 
 ; Pit Room state check
 org $8F9767
+hook_layout_asm_pitroom_state_check:
     dw #layout_asm_morph_missiles_state_check
 
 ; Pit Room Elevator state check
 org $8F97C0
+hook_layout_asm_pitroom_elevator_state_check:
     dw #layout_asm_morph_missiles_state_check
 
 ; Green Pirates Shaft setup asm
 org $8F99E2
+hook_layout_asm_green_pirates_shaft:
     dw #layout_asm_green_pirates_shaft
 
 ; Brinstar Pre-Map Room setup asm
 org $8F9BC2
+hook_layout_asm_brinstarpremaproom:
     dw #layout_asm_brinstarpremaproom
 
 ; Early Supers setup asm
 org $8F9BED
+hook_layout_asm_earlysupers:
     dw #layout_asm_earlysupers
 
 ; Dachora setup asm
 org $8F9CD8
+hook_layout_asm_dachora:
     dw #layout_asm_dachora
 
 ; Big Pink setup asm
 org $8F9D3E
+hook_layout_asm_bigpink:
     dw #layout_asm_bigpink
 
 ; Mission Impossible setup asm
 org $8F9E36
+hook_layout_asm_missionimpossible:
     dw #layout_asm_missionimpossible
 
 ; Morph Ball Room setup asm
 org $8F9EE3
+hook_layout_asm_morphballroom:
     dw #layout_asm_morphballroom
 
 ; Noob bridge setup asm
 org $8F9FDF
+hook_layout_asm_noobbridge:
     dw #layout_asm_noobbridge
 
 ; Waterway setup asm
 org $8FA0F7
+hook_layout_asm_waterway:
     dw #layout_asm_waterway
 
 ; Red Tower setup asm
 org $8FA278
+hook_layout_asm_redtower:
     dw #layout_asm_redtower
 
 ; Below Spazer setup asm
 org $8FA42D
+hook_layout_asm_belowspazer:
     dw #layout_asm_belowspazer
 
 ; Warehouse Kihunters setup asm
 org $8FA4FF
+hook_layout_asm_warehousekihunters:
     dw #layout_asm_warehousekihunters
+
+; Statues state check asm
+org $8FA675
+hook_layout_asm_statues_state_check:
+    dw #layout_asm_statues_state_check
 
 ; Cathedral Entrance setup asm
 org $8FA7D8
+hook_layout_asm_cathedralentrance:
     dw #layout_asm_cathedralentrance
 
-; Crocomire Speedway asm pointer
+; Crocomire Speedway setup asm
 org $8FA948
+hook_layout_asm_crocspeedway:
     dw #layout_asm_crocspeedway
 
-; Crocomire asm pointer
+; Crocomire setup asm
 org $8FA9B7
+hook_layout_asm_croc:
     dw #layout_asm_croc
 
 ; Hi-Jump Boots E-Tank setup asm
 org $8FAA66
+hook_layout_asm_hjbetank:
     dw #layout_asm_hjbetank
 
-; Kronic Boost asm pointer
+; Single Chamber setup asm
+org $8FAD83
+hook_layout_asm_singlechamber:
+    dw #layout_asm_singlechamber
+
+; Kronic Boost setup asm
 org $8FAE99
+hook_layout_asm_kronicboost:
     dw #layout_asm_kronicboost
 
 ; Acid Statue setup asm
 org $8FB20A
+hook_layout_asm_acidstatue:
     dw #layout_asm_acidstatue
 
 ; Caterpillar elevator and middle-left door asm
@@ -447,103 +909,134 @@ warnpc $8FC183
 
 ; Tourian escape room 1 setup asm
 org $8FC926
-    LDA !sram_suppress_flashing : BIT !SUPPRESS_EARTHQUAKE : BNE .tourian_escape_room_1_rts
+hook_layout_asm_tourian_escape_room_1:
+    LDA !sram_suppress_flashing : BIT !SUPPRESS_EARTHQUAKE : BNE .rts
     JMP layout_asm_vanilla_tourian_escape_room_1
-  .tourian_escape_room_1_rts
+  .rts
     RTS
 warnpc $8FC933
 
 ; Tourian escape room 2 setup asm
 org $8FC933
-    LDA !sram_suppress_flashing : BIT !SUPPRESS_EARTHQUAKE : BNE .tourian_escape_room_2_rts
+hook_layout_asm_tourian_escape_room_2:
+    LDA !sram_suppress_flashing : BIT !SUPPRESS_EARTHQUAKE : BNE .rts
     JMP layout_asm_vanilla_tourian_escape_room_2
-  .tourian_escape_room_2_rts
+  .rts
     RTS
 warnpc $8FC946
 
 ; Tourian escape room 3 setup asm
 org $8FC946
-    LDA !sram_suppress_flashing : BIT !SUPPRESS_EARTHQUAKE : BNE .tourian_escape_room_3_rts
+hook_layout_asm_tourian_escape_room_3:
+    LDA !sram_suppress_flashing : BIT !SUPPRESS_EARTHQUAKE : BNE .rts
     JMP layout_asm_vanilla_tourian_escape_room_3
-  .tourian_escape_room_3_rts
+  .rts
     RTS
 warnpc $8FC953
 
 ; Tourian escape room 4 setup asm
 org $8FC95B
-    LDA !sram_suppress_flashing : BIT !SUPPRESS_EARTHQUAKE : BNE .tourian_escape_room_4_rts
+hook_layout_asm_tourian_escape_room_4:
+    LDA !sram_suppress_flashing : BIT !SUPPRESS_EARTHQUAKE : BNE .rts
     JMP layout_asm_vanilla_tourian_escape_room_4
-  .tourian_escape_room_4_rts
+  .rts
     RTS
 warnpc $8FC96E
 
 ; Bowling setup asm
 org $8FC9D2
+hook_layout_asm_bowling:
     dw #layout_asm_bowling
 
 ; Wrecked Ship Main setup asm
 org $8FCB20
+hook_layout_asm_wreckedshipmain:
     dw #layout_asm_wreckedshipmain
 
 ; Electric Death state check asm
 org $8FCBE5
+hook_layout_asm_electric_death_state_check:
     dw #layout_asm_electric_death_state_check
 
 ; Wrecked Ship Energy Tank state check asm
 org $8FCC37
-    dw #layout_asm_wrecked_ship_energy_tank_state_check
+hook_layout_asm_ws_etank_state_check:
+    dw #layout_asm_ws_etank_state_check
 
 ; Wrecked Ship Save setup asm
 org $8FCEB4
+hook_layout_asm_wreckedshipsave:
     dw layout_asm_wreckedshipsave
+
+; Main Street setup asm
+org $8FCFEE
+hook_layout_asm_mainstreet:
+    dw #layout_asm_mainstreet
+
+; Crab Tunnel setup asm
+org $8FD0AF
+hook_layout_asm_crabtunnel:
+    dw #layout_asm_crabtunnel
 
 ; Plasma state check asm
 org $8FD2B5
+hook_layout_asm_plasma_state_check:
     dw #layout_asm_plasma_state_check
 
 ; Plasma spark setup asm
 org $8FD365
+hook_layout_asm_plasma_spark:
     dw #layout_asm_plasma_spark
 
 ; Aqueduct setup asm
 org $8FD5CC
+hook_layout_asm_aqueduct:
     dw #layout_asm_aqueduct
 
 ; Butterfly setup asm
 org $8FD611
+hook_layout_asm_butterfly:
     dw #layout_asm_butterfly
 
 ; Botwoon hallway setup asm
 org $8FD63C
+hook_layout_asm_botwoon_hallway:
     dw #layout_asm_botwoon_hallway
 
 ; Aqueduct Farm Sand Pit header
 org $8FD706
+hook_layout_door_list_aqueductfarmsandpit:
     dw layout_asm_aqueductfarmsandpit_door_list
 
 ; Shaktool room setup asm
 org $8FD8EF
+hook_layout_asm_shaktool_room:
     dw #layout_asm_shaktool_room
 
 ; Halfie Climb setup asm
 org $8FD938
+hook_layout_asm_halfie_climb:
     dw #layout_asm_halfie_climb
 
 ; Tourian escape room 2 main asm
 org $8FDE99
+hook_layout_main_asm_tourian_escape_room_2:
     dw #layout_asm_tourian_escape_room_2
 
 ; Tourian escape room 4 main asm
 org $8FDEFD
+hook_layout_main_asm_tourian_escape_room_4:
     dw #layout_asm_tourian_escape_room_4
 
 ; Ceres Ridley modified state check to support presets
 org $8FE0C0
-    dw layout_asm_ceres_ridley_room_state_check
+hook_layout_asm_ceres_ridley_state_check:
+    dw layout_asm_ceres_ridley_state_check
 
 ; Ceres Ridley room setup asm when timer is not running
 org $8FE0DF
-    dw layout_asm_ceres_ridley_room_no_timer
+hook_layout_asm_ceres_ridley_no_timer:
+    dw layout_asm_ceres_ridley_no_timer
 
 ; East Tunnel bottom-left and bottom-right door asm
 org $8FE34E
@@ -700,18 +1193,18 @@ layout_asm_mbhp:
     RTS
 }
 
-layout_asm_ceres_ridley_room_state_check:
+layout_asm_ceres_ridley_state_check:
 {
-    LDA $0943 : BEQ .no_timer
+    LDA $0943 : BEQ .noTimer
     LDA $0001,X : TAX
     JMP $E5E6
-  .no_timer
+  .noTimer
     STZ $093F
     INX : INX : INX
     RTS
 }
 
-layout_asm_ceres_ridley_room_no_timer:
+layout_asm_ceres_ridley_no_timer:
 {
     ; Same as original setup asm, except force blue background
     PHP
@@ -755,19 +1248,24 @@ layout_asm_greenhillzone:
     LDA #$00FF : STA $7F37C8 : STA $7F37CA : STA $7F37CC
     STA $7F38CA : STA $7F39CA : STA $7F3ACA : STA $7F3BCA
 
-    ; Clear gate PLMs and projectiles
-    LDA #$0000 : STA $1C83 : STA $1C85 : STA $19B9
+    ; Clear gate projectile
+    TDC : STA $19B9
 
-    ; Add platform for ease of access to top-right door
-    %a8()
-    LDA #$6A : STA $7F0F24 : LDA #$6C : STA $7F0F26
-    LDA #$81 : STA $7F0F25 : STA $7F0F27
+    ; Delete gate PLMs
+    LDA #!PLM_DELETE : STA $1D73 : STA $1D75
+
+    ; Remove ledge overhang for ease of access to top-right door
+    LDA #$00FF : STA $7F0A2A : STA $7F0B2A
 
     ; Move corner tiles next to gate up one
+    %a8()
     LDA #$78 : STA $7F36CA : LDA #$79 : STA $7F36CC
 
-    ; Normal BTS for gate tiles
-    LDA #$00 : STA $7F7FE5 : STA $7F7FE6
+    ; Adjust ledge overhang
+    LDA #$6A : STA $7F0A2C
+
+    ; Normal BTS for ledge overhang and gate tiles
+    LDA #$00 : STA $7F6996 : STA $7F7FE5 : STA $7F7FE6
     STA $7F8066 : STA $7F80E6 : STA $7F8166 : STA $7F81E6
 }
 
@@ -843,8 +1341,11 @@ layout_asm_caterpillar_after_scrolls:
     STA $7F142C : STA $7F142E : STA $7F1430
     STA $7F148E : STA $7F14EE : STA $7F154E : STA $7F15AE
 
-    ; Clear gate PLMs and projectiles
-    LDA #$0000 : STA $1C7B : STA $1C7D : STA $19B9
+    ; Clear gate projectile
+    TDC : STA $19B9
+
+    ; Delete gate PLMs
+    LDA #!PLM_DELETE : STA $1D6B : STA $1D6D
 
     ; Normal BTS for gate tiles
     %a8()
@@ -906,8 +1407,11 @@ layout_asm_crabtunnel:
     ; Remove remaining gate tiles
     LDA #$00FF : STA $7F041E : STA $7F049E : STA $7F051E : STA $7F059E
 
-    ; Clear gate PLMs and projectiles
-    TDC : STA $1C83 : STA $1C85 : STA $19B9
+    ; Clear gate projectile
+    TDC : STA $19B9
+
+    ; Delete gate PLMs
+    LDA #!PLM_DELETE : STA $1D73 : STA $1D75
 
     ; Slope BTS for top of the gate tiles
     %a8()
@@ -942,8 +1446,11 @@ layout_asm_easttunnel_after_scrolls:
     %a16()
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ layout_asm_crabtunnel_done
 
-    ; Clear gate PLMs and projectiles
-    LDA #$0000 : STA $1C7B : STA $1C7D : STA $19B9
+    ; Clear gate projectile
+    TDC : STA $19B9
+
+    ; Delete gate PLMs
+    LDA #!PLM_DELETE : STA $1D6B : STA $1D6D
 
     ; Remove gate tiles
     LDA #$00FF : STA $7F02AE : STA $7F02B0
@@ -979,7 +1486,7 @@ layout_asm_eastocean:
 {
     PHP
     %a16()
-    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ layout_asm_easttunnel_done
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ .done
 
     ; Add platforms for ease of access to right door
     LDA #$8100 : STA $7F4506 : STA $7F4876
@@ -997,11 +1504,13 @@ layout_asm_eastocean:
     INC : STA $7F86F5 : STA $7F88AD
     LDA #$D5 : STA $7F86F6 : STA $7F88AE
     DEC : STA $7F86F7 : STA $7F88AF
-}
 
-layout_asm_eastocean_done:
+  .done
     PLP
+    ; Overwritten logic
+    JSL $88A800
     RTS
+}
 
 layout_asm_crabshaft_no_scrolls:
     PHP
@@ -1013,7 +1522,7 @@ layout_asm_crabshaft_update_scrolls:
 layout_asm_crabshaft_after_scrolls:
 {
     %a16()
-    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ layout_asm_eastocean_done
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ layout_asm_crabshaft_done
 
     ; Set green door as already opened
     LDA $7ED8C0 : ORA #$8000 : STA $7ED8C0
@@ -1136,22 +1645,22 @@ layout_asm_electric_death_varia_tweaks_header:
 
 layout_asm_electric_death_state_check:
 {
-    LDA !sram_room_layout : BIT !ROOM_LAYOUT_DASH_RECALL_OR_VARIA_TWEAKS : BEQ .end_check
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_DASH_RECALL_OR_VARIA_TWEAKS : BEQ .end
     LDX #layout_asm_electric_death_varia_tweaks_header
-  .end_check
+  .end
     JMP $E5E6
 }
 
-layout_asm_wrecked_ship_energy_tank_varia_tweaks_header:
+layout_asm_ws_etank_varia_tweaks_header:
     dl $C4D883
     db $05, $00, $03
     dw $9C14, $C1E7, $8C27, $00C0, $0000, $0000, $0000, $C337, $0000, $C8C7
 
-layout_asm_wrecked_ship_energy_tank_state_check:
+layout_asm_ws_etank_state_check:
 {
-    LDA !sram_room_layout : BIT !ROOM_LAYOUT_DASH_RECALL_OR_VARIA_TWEAKS : BEQ .end_check
-    LDX #layout_asm_wrecked_ship_energy_tank_varia_tweaks_header
-  .end_check
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_DASH_RECALL_OR_VARIA_TWEAKS : BEQ .end
+    LDX #layout_asm_ws_etank_varia_tweaks_header
+  .end
     JMP $E5E6
 }
 
@@ -1173,14 +1682,14 @@ layout_asm_wreckedshipsave_done:
 layout_asm_plasma_dash_header:
     dl $CB8BD4
     db $0B, $00, $00
-    dw $9D94, layout_asm_plasma_dash_enemies, layout_asm_plasma_dash_enemy_set
-    dw $00C0, $D2D3, $0000, $0000, $C553, $0000, layout_asm_plasma
+    dw $9D94, #layout_asm_plasma_dash_enemies, #layout_asm_plasma_dash_enemy_set
+    dw $00C0, $D2D3, $0000, $0000, $C553, $0000, #layout_asm_plasma
 
 layout_asm_plasma_state_check:
 {
-    LDA !sram_room_layout : BIT !ROOM_LAYOUT_DASH_RECALL : BEQ .end_check
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_DASH_RECALL : BEQ .end
     LDX #layout_asm_plasma_dash_header
-  .end_check
+  .end
     JMP $E5E6
 }
 
@@ -1720,13 +2229,32 @@ layout_asm_warehousekihunters:
 
 layout_asm_warehousekihunters_done:
     PLP
+
+layout_asm_statues_oob_viewer_done:
     RTS
+
+layout_asm_statues_oob_viewer_header:
+    dl $CE9BE9
+    db $15, $09, $06
+    dw $840A, #layout_asm_statues_oob_viewer_enemies, #layout_asm_statues_oob_viewer_enemy_set
+    dw $0181, $A697, $0000, $0000, #layout_asm_statues_plm, $BB60, #layout_asm_statues_oob_viewer_done
+
+layout_asm_statues_plm:
+    dw $0000
+
+layout_asm_statues_state_check:
+{
+    LDA !ram_sprite_feature_flags : BIT !SPRITE_OOB_WATCH : BEQ .end
+    LDX #layout_asm_statues_oob_viewer_header
+  .end
+    JMP $E5E6
+}
 
 layout_asm_cathedralentrance:
 {
     PHP
     %a16()
-    LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANTISOFTLOCK_OR_DASH_RECALL : BEQ layout_asm_warehousekihunters_done
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANTISOFTLOCK_OR_DASH_RECALL : BEQ layout_asm_cathedralentrance_done
 
     ; Remove protruding ledge
     LDA #$8106 : STA $7F040C
@@ -1825,6 +2353,68 @@ layout_asm_earlysupers_done:
     PLP
     RTS
 
+door_custom_asm:
+{
+    ; Cancel movement
+    STZ !SAMUS_Y_SUBSPEED : STZ !SAMUS_Y_SPEED
+    STZ !SAMUS_X_RUNSPEED : STZ !SAMUS_X_SUBRUNSPEED
+    STZ !SAMUS_X_MOMENTUM : STZ !SAMUS_X_SUBMOMENTUM
+    STZ !SAMUS_DOOR_SUBSPEED : STZ !SAMUS_DOOR_SPEED
+
+    ; Force Samus to elevator pose
+    STZ !SAMUS_POSE : STZ !SAMUS_POSE_DIRECTION
+    STZ !SAMUS_PREVIOUS_POSE : STZ !SAMUS_PREVIOUS_POSE_DIRECTION
+    STZ !SAMUS_LAST_DIFFERENT_POSE : STZ !SAMUS_LAST_DIFFERENT_POSE_DIRECTION
+
+    ; Set pose transition values to FFFF
+    LDA #$FFFF : STA !SAMUS_TRANSITION_VALUES
+    STA !SAMUS_TRANSITION_VALUES+2 : STA !SAMUS_TRANSITION_VALUES+4
+
+    ; Reset animation timer
+    STZ !SAMUS_ANIMATION_FRAME
+
+    ; Reset elevator flags
+    STZ !ELEVATOR_PROPERTIES
+    STZ !ELEVATOR_STATUS
+
+    ; Unlock Samus
+    LDA #$E695 : STA !SAMUS_LOCKED_HANDLER
+    LDA #$E725 : STA !SAMUS_MOVEMENT_HANDLER
+
+  .setPos
+    ; Set Samus position
+    LDA $83000C,X : STA !SAMUS_X
+    LDA $83000E,X : STA !SAMUS_Y
+
+    ; Clear BG2 VRAM flag in case we are exiting croc
+    STZ !ENEMY_BG2_VRAM_TRANSFER_FLAG
+
+    ; Execute another door asm if necessary
+    LDA $830010,X : BEQ .done
+    STA $12 : JMP ($0012)
+
+  .done
+    RTS
+}
+
+layout_asm_crateriakihunter_bottomdoor:
+{
+    ; Perform same scroll asm as vanilla
+    PHP
+    %a8()
+    LDA #$02 : STA $7ECD21 : STA $7ECD24
+    PLP
+
+    ; Fall through to next method to clear BG2 VRAM flag
+}
+
+layout_asm_clear_bg2_vram_flag:
+{
+    ; Clear BG2 VRAM flag in case we are exiting croc
+    STZ !ENEMY_BG2_VRAM_TRANSFER_FLAG
+    RTS
+}
+
 print pc, " layout end"
 
 
@@ -1840,6 +2430,10 @@ layout_asm_plasma_dash_enemies:
     dw $F693, #$0078, #$0280, #$0000, #$2000, #$0004, #$8001, #$0080
     db #$FF, #$FF, #$06
 
+layout_asm_statues_oob_viewer_enemies:
+    dw $D73F, #$0080, #$01B0, #$0000, #$2C00, #$0000, #$0000, #$0240
+    db #$FF, #$FF, #$00
+
 print pc, " layout bankA1 end"
 
 
@@ -1848,6 +2442,9 @@ print pc, " layout bankB4 start"
 
 layout_asm_plasma_dash_enemy_set:
     dw $F693, #$0001, $F393, #$0002
+    db #$FF, #$FF, #$00
+
+layout_asm_statues_oob_viewer_enemy_set:
     db #$FF, #$FF, #$00
 
 print pc, " layout bankB4 end"

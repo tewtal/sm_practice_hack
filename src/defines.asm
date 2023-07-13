@@ -150,8 +150,11 @@
 !ram_game_mode_extras               = !WRAM_PERSIST_START+$50
 !ram_suits_heat_damage_value        = !WRAM_PERSIST_START+$52
 !ram_sprite_feature_flags           = !WRAM_PERSIST_START+$54
+!ram_door_portal_flags              = !WRAM_PERSIST_START+$56
+!ram_door_source                    = !WRAM_PERSIST_START+$58
+!ram_door_destination               = !WRAM_PERSIST_START+$5A
 
-; ^ FREE SPACE ^ up to +$7A
+; ^ FREE SPACE ^ up to +$76 (!WRAM_START+$FC - !WRAM_PERSIST_START)
 
 ; -----------------------
 ; RAM (Bank 7E required)
@@ -170,6 +173,7 @@
 !ram_cm_cursor_stack = !WRAM_MENU_START+$10       ; 16 bytes
 
 !ram_cm_cursor_max = !WRAM_MENU_START+$20
+!ram_cm_horizontal_cursor = !WRAM_MENU_START+$22
 !ram_cm_input_timer = !WRAM_MENU_START+$24
 !ram_cm_controller = !WRAM_MENU_START+$26
 !ram_cm_menu_bank = !WRAM_MENU_START+$28
@@ -207,6 +211,8 @@
 !ram_seed_X = !WRAM_MENU_START+$60
 !ram_seed_Y = !WRAM_MENU_START+$62
 
+!ram_timers_autoupdate = !WRAM_MENU_START+$64
+
 ; ^ FREE SPACE ^ up to +$7E
 
 ; ------------------
@@ -216,23 +222,13 @@
 ; The following RAM may be used multiple times,
 ; as long as it isn't used multiple times on the same menu page
 
-!ram_cm_watch_left_hi = !WRAM_MENU_START+$80
-!ram_cm_watch_left_lo = !WRAM_MENU_START+$82
-!ram_cm_watch_right_hi = !WRAM_MENU_START+$84
-!ram_cm_watch_right_lo = !WRAM_MENU_START+$86
-!ram_cm_watch_left_index_lo = !WRAM_MENU_START+$88
-!ram_cm_watch_left_index_hi = !WRAM_MENU_START+$8A
-!ram_cm_watch_right_index_lo = !WRAM_MENU_START+$8C
-!ram_cm_watch_right_index_hi = !WRAM_MENU_START+$8E
-!ram_cm_watch_edit_left_hi = !WRAM_MENU_START+$90
-!ram_cm_watch_edit_left_lo = !WRAM_MENU_START+$92
-!ram_cm_watch_edit_right_hi = !WRAM_MENU_START+$94
-!ram_cm_watch_edit_right_lo = !WRAM_MENU_START+$96
-!ram_cm_watch_enemy_property = !WRAM_MENU_START+$98
-!ram_cm_watch_enemy_index = !WRAM_MENU_START+$9A
-!ram_cm_watch_enemy_side = !WRAM_MENU_START+$9C
-!ram_cm_watch_bank = !WRAM_MENU_START+$9E
-!ram_cm_watch_common_address = !WRAM_MENU_START+$A0
+!ram_cm_watch_enemy_property = !WRAM_MENU_START+$80
+!ram_cm_watch_enemy_index = !WRAM_MENU_START+$82
+!ram_cm_watch_enemy_side = !WRAM_MENU_START+$84
+!ram_cm_watch_common_address = !WRAM_MENU_START+$86
+
+!ram_cm_door_menu_value = !WRAM_MENU_START+$80
+!ram_cm_door_menu_bank = !WRAM_MENU_START+$82
 
 !ram_cm_phan_first_phase = !WRAM_MENU_START+$80
 !ram_cm_phan_second_phase = !WRAM_MENU_START+$82
@@ -255,240 +251,27 @@
 !ram_cm_custompalette_blue = !WRAM_MENU_START+$80
 !ram_cm_custompalette_green = !WRAM_MENU_START+$82
 !ram_cm_custompalette_red = !WRAM_MENU_START+$84
-!ram_cm_custompalette_hi = !WRAM_MENU_START+$86
-!ram_cm_custompalette_lo = !WRAM_MENU_START+$88
+!ram_cm_custompalette = !WRAM_MENU_START+$86
 !ram_cm_dummy_on = !WRAM_MENU_START+$8A
 !ram_cm_dummy_off = !WRAM_MENU_START+$8C
 !ram_cm_dummy_num = !WRAM_MENU_START+$8E
 
+!ram_cm_keyboard_buffer = !WRAM_MENU_START+$80 ; $18 bytes
+
 ; ^ FREE SPACE ^ up to +$CE
 
 ; Reserve 48 bytes for CGRAM cache
-; Currently first 22 bytes and last 2 bytes are used
+; Currently first 28 bytes plus last 2 bytes are used
 !ram_cgram_cache = !WRAM_MENU_START+$D0
 
 !CRASHDUMP = $7EFF00
-
-!DP_MenuIndices = $00 ; 0x4
-!DP_CurrentMenu = $04 ; 0x4
-!DP_Address = $08 ; 0x4
-!DP_JSLTarget = $0C ; 0x4
-!DP_CtrlInput = $10 ; 0x4
-!DP_Palette = $14
-!DP_Temp = $16
-; v these repeat v
-!DP_ToggleValue = $18
-!DP_Increment = $1A
-!DP_Minimum = $1C
-!DP_Maximum = $1E
-!DP_DrawValue = $18
-!DP_FirstDigit = $1A
-!DP_SecondDigit = $1C
-!DP_ThirdDigit = $1E
-
-!ACTION_TOGGLE              = #$0000
-!ACTION_TOGGLE_BIT          = #$0002
-!ACTION_TOGGLE_INVERTED     = #$0004
-!ACTION_TOGGLE_BIT_INVERTED = #$0006
-!ACTION_NUMFIELD            = #$0008
-!ACTION_NUMFIELD_HEX        = #$000A
-!ACTION_NUMFIELD_WORD       = #$000C
-!ACTION_NUMFIELD_HEX_WORD   = #$000E
-!ACTION_NUMFIELD_COLOR      = #$0010
-!ACTION_NUMFIELD_SOUND      = #$0012
-!ACTION_CHOICE              = #$0014
-!ACTION_CTRL_SHORTCUT       = #$0016
-!ACTION_CTRL_INPUT          = #$0018
-!ACTION_JSL                 = #$001A
-!ACTION_JSL_SUBMENU         = #$001C
-!ACTION_CUSTOM_PRESET       = #$001E
-
-
-; ---------
-; Pointers
-; ---------
-
-!IH_CONTROLLER_PRI = $8B
-!IH_CONTROLLER_PRI_NEW = $8F
-!IH_CONTROLLER_PRI_PREV = $97
-
-!IH_CONTROLLER_SEC = $8D
-!IH_CONTROLLER_SEC_NEW = $91
-!IH_CONTROLLER_SEC_PREV = $99
-
-!MENU_BLANK = #$281F
-!MENU_SLASH = #$287F
-!IH_BLANK = #$2C0F
-!IH_PERCENT = #$0C0A
-!IH_DECIMAL = #$0CCB
-!IH_HYPHEN = #$0C55
-!IH_RESERVE_AUTO = #$0C0C
-!IH_RESERVE_EMPTY = #$0C0D
-!IH_HEALTHBOMB = #$085A
-!IH_LETTER_A = #$0C64
-!IH_LETTER_B = #$0C65
-!IH_LETTER_C = #$0C58
-!IH_LETTER_D = #$0C59
-!IH_LETTER_E = #$0C5A
-!IH_LETTER_F = #$0C5B
-!IH_LETTER_H = #$0C6C
-!IH_LETTER_L = #$0C68
-!IH_LETTER_N = #$0C56
-!IH_LETTER_R = #$0C69
-!IH_LETTER_X = #$0C66
-!IH_LETTER_Y = #$0C67
-!IH_ELEVATOR = #$1C0B
-!IH_SHINETIMER = #$0032
-
-!IH_PAUSE = #$0100 ; right
-!IH_SLOWDOWN = #$0400 ; down
-!IH_SPEEDUP = #$0800 ; up
-!IH_RESET = #$0200 ; left
-!IH_STATUS_R = #$0010 ; r
-!IH_STATUS_L = #$0020 ; l
-
-!IH_INPUT_START = #$1000
-!IH_INPUT_UP = #$0800
-!IH_INPUT_DOWN = #$0400
-!IH_INPUT_LEFTRIGHT = #$0300
-!IH_INPUT_LEFT = #$0200
-!IH_INPUT_RIGHT = #$0100
-!IH_INPUT_HELD = #$0001 ; used by menu
-
-!CTRL_B = #$8000
-!CTRL_Y = #$4000
-!CTRL_SELECT = #$2000
-!CTRL_A = #$0080
-!CTRL_X = #$0040
-!CTRL_L = #$0020
-!CTRL_R = #$0010
-
-!IH_INPUT_SHOOT = $7E09B2
-!IH_INPUT_JUMP = $7E09B4
-!IH_INPUT_RUN = $7E09B6
-!IH_INPUT_ITEM_CANCEL = $7E09B8
-!IH_INPUT_ITEM_SELECT = $7E09BA
-!IH_INPUT_ANGLE_DOWN = $7E09BC
-!IH_INPUT_ANGLE_UP = $7E09BE
-
-
-; --------------
-; Vanilla Labels
-; --------------
-
-!MUSIC_ROUTINE = $808FC1
-!SFX_LIB1 = $80903F
-!SFX_LIB2 = $8090C1
-!SFX_LIB3 = $809143
-
-!OAM_STACK_POINTER = $0590
-!PB_EXPLOSION_STATUS = $0592
-!REALTIME_LAG_COUNTER = $05A0 ; Not used in vanilla
-!NMI_REQUEST_FLAG = $05B4
-!FRAME_COUNTER_8BIT = $05B5
-!FRAME_COUNTER = $05B6
-!DEBUG_MODE = $05D1
-!CACHED_RANDOM_NUMBER = $05E5
-!DISABLE_SOUNDS = $05F5
-!SOUND_TIMER = $0686
-!LOAD_STATION_INDEX = $078B
-!ROOM_ID = $079B
-!AREA_ID = $079F
-!ROOM_WIDTH_BLOCKS = $07A5
-!ROOM_WIDTH_SCROLLS = $07A9
-!MUSIC_DATA = $07F3
-!MUSIC_TRACK = $07F5
-!LAYER1_X = $0911
-!LAYER1_Y = $0915
-!LAYER2_X = $0917
-!LAYER2_Y = $0919
-!BG2_X_SCROLL = $0921
-!BG2_Y_SCROLL = $0923
-!CURRENT_SAVE_FILE = $0952
-!GAMEMODE = $0998
-!DOOR_FUNCTION_POINTER = $099C
-!SAMUS_ITEMS_EQUIPPED = $09A2
-!SAMUS_ITEMS_COLLECTED = $09A4
-!SAMUS_BEAMS_EQUIPPED = $09A6
-!SAMUS_BEAMS_COLLECTED = $09A8
-!SAMUS_RESERVE_MODE = $09C0
-!SAMUS_HP = $09C2
-!SAMUS_HP_MAX = $09C4
-!SAMUS_MISSILES = $09C6
-!SAMUS_MISSILES_MAX = $09C8
-!SAMUS_SUPERS = $09CA
-!SAMUS_SUPERS_MAX = $09CC
-!SAMUS_PBS = $09CE
-!SAMUS_PBS_MAX = $09D0
-!SAMUS_ITEM_SELECTED = $09D2
-!SAMUS_RESERVE_MAX = $09D4
-!SAMUS_RESERVE_ENERGY = $09D6
-!IGT_FRAMES = $09DA
-!IGT_SECONDS = $09DC
-!IGT_MINUTES = $09DE
-!IGT_HOURS = $09E0
-!SAMUS_AUTO_CANCEL = $0A04
-!SAMUS_LAST_HP = $0A06
-!SAMUS_DOUBLE_JUMP = $0A14  ; Only used during demos in vanilla
-!SAMUS_POSE = $0A1C
-!SAMUS_POSE_DIRECTION = $0A1E
-!SAMUS_MOVEMENT_TYPE = $0A1F
-!SAMUS_PREVIOUS_POSE = $0A20
-!SAMUS_PREVIOUS_POSE_DIRECTION = $0A22
-!SAMUS_PREVIOUS_MOVEMENT_TYPE = $0A23
-!SAMUS_SHINE_TIMER = $0A68
-!SAMUS_HEALTH_WARNING = $0A6A
-!SAMUS_WATER_PHYSICS = $0A70  ; Not used in vanilla
-!SAMUS_ANIMATION_FRAME = $0A96
-!SAMUS_X = $0AF6
-!SAMUS_X_SUBPX = $0AF8
-!SAMUS_Y = $0AFA
-!SAMUS_Y_SUBPX = $0AFC
-!SAMUS_X_RADIUS = $0AFE
-!SAMUS_Y_RADIUS = $0B00
-!SAMUS_COLLISION_DIRECTION = $0B02
-!SAMUS_SPRITEMAP_X = $0B04
-!SAMUS_Y_SUBSPEED = $0B2C
-!SAMUS_Y_SPEEDCOMBINED = $0B2D
-!SAMUS_Y_SPEED = $0B2E
-!SAMUS_Y_DIRECTION = $0B36
-!SAMUS_DASH_COUNTER = $0B3F
-!SAMUS_X_RUNSPEED = $0B42
-!SAMUS_X_SUBRUNSPEED = $0B44
-!SAMUS_X_MOMENTUM = $0B46
-!SAMUS_X_SUBMOMENTUM = $0B48
-!SAMUS_PROJ_X = $0B64
-!SAMUS_PROJ_Y = $0B78
-!SAMUS_PROJ_RADIUS_X = $0BB4
-!SAMUS_PROJ_RADIUS_Y = $0BC8
-!SAMUS_COOLDOWN = $0CCC
-!SAMUS_CHARGE_TIMER = $0CD0
-!ENEMY_INDEX = $0E54
-!ENEMY_ID = $0F78
-!ENEMY_X = $0F7A
-!ENEMY_Y = $0F7E
-!ENEMY_X_RADIUS = $0F82
-!ENEMY_Y_RADIUS = $0F84
-!ENEMY_PROPERTIES = $0F86
-!ENEMY_PROPERTIES_2 = $0F88
-!ENEMY_HP = $0F8C
-!ENEMY_SPRITEMAP = $0F8E
-!ENEMY_BANK = $0FA6
-!SAMUS_IFRAME_TIMER = $18A8
-!ENEMY_PROJ_ID = $1997
-!ENEMY_PROJ_X = $1A4B
-!ENEMY_PROJ_Y = $1A93
-!ENEMY_PROJ_RADIUS = $1BB3
-!ENEMY_PROJ_PROPERTIES = $1BD7
-
-!HUD_TILEMAP = $7EC600
 
 
 ; -----
 ; SRAM
 ; -----
 
-!SRAM_VERSION = $0012
+!SRAM_VERSION = $0013
 
 !SRAM_START = $702000
 
@@ -569,7 +352,15 @@
 !sram_seed_X = !SRAM_START+$82
 !sram_seed_Y = !SRAM_START+$84
 
-; ^ FREE SPACE ^ up to +$EE, $100-FCE
+; ^ FREE SPACE ^ up to +$EE, $100-BA6
+
+!sram_custom_header_normal = !SRAM_START+$BA8 ; $18 bytes
+!sram_custom_preset_safewords_normal = !SRAM_START+$BC0 ; $50 bytes
+!sram_custom_preset_names_normal = !SRAM_START+$C10 ; $3C0 bytes
+
+!sram_custom_header_tinystates = !SRAM_START+$E18 ; $18 bytes
+!sram_custom_preset_safewords_tinystates = !SRAM_START+$E30 ; $20 bytes
+!sram_custom_preset_names_tinystates = !SRAM_START+$E50 ; $180 bytes
 
 ; SM specific things
 !SRAM_MUSIC_DATA = !SRAM_START+$0FD0
@@ -577,6 +368,267 @@
 !SRAM_SOUND_TIMER = !SRAM_START+$0FD4
 
 ; ^ FREE SPACE ^ up to +$0FFE
+
+
+; --------------
+; Vanilla Labels
+; --------------
+
+!IH_CONTROLLER_PRI = $8B
+!IH_CONTROLLER_PRI_NEW = $8F
+!IH_CONTROLLER_PRI_PREV = $97
+
+!IH_CONTROLLER_SEC = $8D
+!IH_CONTROLLER_SEC_NEW = $91
+!IH_CONTROLLER_SEC_PREV = $99
+
+!KB_SHIFT1 = $9A
+!KB_SHIFT2 = $9B
+!KB_DEL1 = $9C
+!KB_DEL2 = $9D
+!MENU_CLEAR = #$000E
+!MENU_BLANK = #$281F
+!MENU_SLASH = #$287F
+!IH_BLANK = #$2C0F
+!IH_PERCENT = #$0C0A
+!IH_DECIMAL = #$0CCB
+!IH_HYPHEN = #$0C55
+!IH_RESERVE_AUTO = #$0C0C
+!IH_RESERVE_EMPTY = #$0C0D
+!IH_HEALTHBOMB = #$085A
+!IH_LETTER_A = #$0C64
+!IH_LETTER_B = #$0C65
+!IH_LETTER_C = #$0C58
+!IH_LETTER_D = #$0C59
+!IH_LETTER_E = #$0C5A
+!IH_LETTER_F = #$0C5B
+!IH_LETTER_H = #$0C6C
+!IH_LETTER_L = #$0C68
+!IH_LETTER_N = #$0C56
+!IH_LETTER_R = #$0C69
+!IH_LETTER_X = #$0C66
+!IH_LETTER_Y = #$0C67
+!IH_ELEVATOR = #$1C0B
+!IH_SHINETIMER = #$0032
+
+!IH_PAUSE = #$0100 ; right
+!IH_SLOWDOWN = #$0400 ; down
+!IH_SPEEDUP = #$0800 ; up
+!IH_RESET = #$0200 ; left
+!IH_STATUS_R = #$0010 ; r
+!IH_STATUS_L = #$0020 ; l
+
+!IH_INPUT_START = #$1000
+!IH_INPUT_UPDOWN = #$0C00
+!IH_INPUT_UP = #$0800
+!IH_INPUT_DOWN = #$0400
+!IH_INPUT_LEFTRIGHT = #$0300
+!IH_INPUT_LEFT = #$0200
+!IH_INPUT_RIGHT = #$0100
+!IH_INPUT_HELD = #$0001 ; used by menu
+
+!CTRL_B = #$8000
+!CTRL_Y = #$4000
+!CTRL_SELECT = #$2000
+!CTRL_A = #$0080
+!CTRL_X = #$0040
+!CTRL_L = #$0020
+!CTRL_R = #$0010
+
+!IH_INPUT_SHOOT = $7E09B2
+!IH_INPUT_JUMP = $7E09B4
+!IH_INPUT_RUN = $7E09B6
+!IH_INPUT_ITEM_CANCEL = $7E09B8
+!IH_INPUT_ITEM_SELECT = $7E09BA
+!IH_INPUT_ANGLE_DOWN = $7E09BC
+!IH_INPUT_ANGLE_UP = $7E09BE
+
+!MUSIC_ROUTINE = $808FC1
+!SFX_LIB1 = $80903F
+!SFX_LIB2 = $8090C1
+!SFX_LIB3 = $809143
+
+!OAM_STACK_POINTER = $0590
+!PB_EXPLOSION_STATUS = $0592
+!REALTIME_LAG_COUNTER = $05A0 ; Not used in vanilla
+!NMI_REQUEST_FLAG = $05B4
+!FRAME_COUNTER_8BIT = $05B5
+!FRAME_COUNTER = $05B6
+!DEBUG_MODE = $05D1
+!CACHED_RANDOM_NUMBER = $05E5
+!DISABLE_SOUNDS = $05F5
+!SOUND_TIMER = $0686
+!LOAD_STATION_INDEX = $078B
+!DOOR_ID = $078D
+!DOOR_DIRECTION = $0791
+!ROOM_ID = $079B
+!AREA_ID = $079F
+!ROOM_WIDTH_BLOCKS = $07A5
+!ROOM_WIDTH_SCROLLS = $07A9
+!PREVIOUS_CRE_BITSET = $07B1
+!CRE_BITSET = $07B3
+!MUSIC_DATA = $07F3
+!MUSIC_TRACK = $07F5
+!LAYER1_X = $0911
+!LAYER1_Y = $0915
+!LAYER2_X = $0917
+!LAYER2_Y = $0919
+!BG2_X_SCROLL = $0921
+!BG2_Y_SCROLL = $0923
+!SAMUS_DOOR_SUBSPEED = $092B
+!SAMUS_DOOR_SPEED = $092D
+!CURRENT_SAVE_FILE = $0952
+!GAMEMODE = $0998
+!DOOR_FUNCTION_POINTER = $099C
+!SAMUS_ITEMS_EQUIPPED = $09A2
+!SAMUS_ITEMS_COLLECTED = $09A4
+!SAMUS_BEAMS_EQUIPPED = $09A6
+!SAMUS_BEAMS_COLLECTED = $09A8
+!SAMUS_RESERVE_MODE = $09C0
+!SAMUS_HP = $09C2
+!SAMUS_HP_MAX = $09C4
+!SAMUS_MISSILES = $09C6
+!SAMUS_MISSILES_MAX = $09C8
+!SAMUS_SUPERS = $09CA
+!SAMUS_SUPERS_MAX = $09CC
+!SAMUS_PBS = $09CE
+!SAMUS_PBS_MAX = $09D0
+!SAMUS_ITEM_SELECTED = $09D2
+!SAMUS_RESERVE_MAX = $09D4
+!SAMUS_RESERVE_ENERGY = $09D6
+!IGT_FRAMES = $09DA
+!IGT_SECONDS = $09DC
+!IGT_MINUTES = $09DE
+!IGT_HOURS = $09E0
+!SAMUS_AUTO_CANCEL = $0A04
+!SAMUS_LAST_HP = $0A06
+!SAMUS_DOUBLE_JUMP = $0A14  ; Only used during demos in vanilla
+!SAMUS_POSE = $0A1C
+!SAMUS_POSE_DIRECTION = $0A1E
+!SAMUS_MOVEMENT_TYPE = $0A1F
+!SAMUS_PREVIOUS_POSE = $0A20
+!SAMUS_PREVIOUS_POSE_DIRECTION = $0A22
+!SAMUS_PREVIOUS_MOVEMENT_TYPE = $0A23
+!SAMUS_LAST_DIFFERENT_POSE = $0A24
+!SAMUS_LAST_DIFFERENT_POSE_DIRECTION = $0A26
+!SAMUS_LAST_DIFFERENT_MOVEMENT_TYPE = $0A27
+!SAMUS_TRANSITION_VALUES = $0A2A
+!SAMUS_LOCKED_HANDLER = $0A42
+!SAMUS_MOVEMENT_HANDLER = $0A44
+!SAMUS_SHINE_TIMER = $0A68
+!SAMUS_HEALTH_WARNING = $0A6A
+!SAMUS_WATER_PHYSICS = $0A70  ; Not used in vanilla
+!SAMUS_ANIMATION_FRAME = $0A96
+!SAMUS_X = $0AF6
+!SAMUS_X_SUBPX = $0AF8
+!SAMUS_Y = $0AFA
+!SAMUS_Y_SUBPX = $0AFC
+!SAMUS_X_RADIUS = $0AFE
+!SAMUS_Y_RADIUS = $0B00
+!SAMUS_COLLISION_DIRECTION = $0B02
+!SAMUS_SPRITEMAP_X = $0B04
+!SAMUS_Y_SUBSPEED = $0B2C
+!SAMUS_Y_SPEEDCOMBINED = $0B2D
+!SAMUS_Y_SPEED = $0B2E
+!SAMUS_Y_DIRECTION = $0B36
+!SAMUS_DASH_COUNTER = $0B3F
+!SAMUS_X_RUNSPEED = $0B42
+!SAMUS_X_SUBRUNSPEED = $0B44
+!SAMUS_X_MOMENTUM = $0B46
+!SAMUS_X_SUBMOMENTUM = $0B48
+!SAMUS_PROJ_X = $0B64
+!SAMUS_PROJ_Y = $0B78
+!SAMUS_PROJ_RADIUS_X = $0BB4
+!SAMUS_PROJ_RADIUS_Y = $0BC8
+!SAMUS_PROJ_PROPERTIES = $0C18
+!SAMUS_COOLDOWN = $0CCC
+!SAMUS_CHARGE_TIMER = $0CD0
+!ELEVATOR_PROPERTIES = $0E16
+!ELEVATOR_STATUS = $0E18
+!HEALTH_BOMB_FLAG = $0E1A
+!ENEMY_BG2_VRAM_TRANSFER_FLAG = $0E1E
+!ENEMY_INDEX = $0E54
+!ENEMY_ID = $0F78
+!ENEMY_X = $0F7A
+!ENEMY_Y = $0F7E
+!ENEMY_X_RADIUS = $0F82
+!ENEMY_Y_RADIUS = $0F84
+!ENEMY_PROPERTIES = $0F86
+!ENEMY_PROPERTIES_2 = $0F88
+!ENEMY_HP = $0F8C
+!ENEMY_SPRITEMAP = $0F8E
+!ENEMY_BANK = $0FA6
+!SAMUS_IFRAME_TIMER = $18A8
+!ENEMY_PROJ_ID = $1997
+!ENEMY_PROJ_X = $1A4B
+!ENEMY_PROJ_Y = $1A93
+!ENEMY_PROJ_RADIUS = $1BB3
+!ENEMY_PROJ_PROPERTIES = $1BD7
+!MESSAGE_BOX_INDEX = $1C1F
+
+!PLM_DELETE = $AAE3
+
+!HUD_TILEMAP = $7EC600
+
+
+; --------------------
+; Aliases and Bitmasks
+; --------------------
+
+if !FEATURE_TINYSTATES
+!sram_custom_header = !sram_custom_header_tinystates
+!sram_custom_preset_safewords = !sram_custom_preset_safewords_tinystates
+!sram_custom_preset_names = !sram_custom_preset_names_tinystates
+else
+!sram_custom_header = !sram_custom_header_normal
+!sram_custom_preset_safewords = !sram_custom_preset_safewords_normal
+!sram_custom_preset_names = !sram_custom_preset_names_normal
+endif
+
+!DP_MenuIndices = $00 ; 0x4
+!DP_CurrentMenu = $04 ; 0x4
+!DP_Address = $08 ; 0x4
+!DP_JSLTarget = $0C ; 0x4
+!DP_CtrlInput = $10 ; 0x4
+!DP_Palette = $14
+!DP_Temp = $16
+; v these repeat v
+!DP_ToggleValue = $18
+!DP_Increment = $1A
+!DP_Minimum = $1C
+!DP_Maximum = $1E
+!DP_DrawValue = $18
+!DP_FirstDigit = $1A
+!DP_SecondDigit = $1C
+!DP_ThirdDigit = $1E
+!DP_KB_Index = $18
+!DP_KB_Row = $1A
+!DP_KB_Control = $1C
+!DP_KB_Shift = $1E
+; v single digit editing v
+!DP_DigitAddress = $20 ; 0x4
+!DP_DigitValue = $24
+!DP_DigitMinimum = $26
+!DP_DigitMaximum = $28
+
+!ACTION_TOGGLE              = #$0000
+!ACTION_TOGGLE_BIT          = #$0002
+!ACTION_TOGGLE_INVERTED     = #$0004
+!ACTION_TOGGLE_BIT_INVERTED = #$0006
+!ACTION_NUMFIELD            = #$0008
+!ACTION_NUMFIELD_HEX        = #$000A
+!ACTION_NUMFIELD_WORD       = #$000C
+!ACTION_NUMFIELD_HEX_WORD   = #$000E
+!ACTION_NUMFIELD_COLOR      = #$0010
+!ACTION_NUMFIELD_SOUND      = #$0012
+!ACTION_CHOICE              = #$0014
+!ACTION_CHOICE_JSL_TEXT     = #$0016
+!ACTION_CTRL_SHORTCUT       = #$0018
+!ACTION_CTRL_INPUT          = #$001A
+!ACTION_JSL                 = #$001C
+!ACTION_JSL_SUBMENU         = #$001E
+!ACTION_CUSTOM_PRESET       = #$0020
+!ACTION_RAM_WATCH           = #$0022
 
 !TOP_DISPLAY_VANILLA = #$0002
 
@@ -598,6 +650,7 @@
 !CUTSCENE_FAST_KRAID = #$0400
 !CUTSCENE_SKIP_SPLASH = #$0800
 !CUTSCENE_SKIP_GAMEOVER = #$1000
+!CUTSCENE_FAST_BOWLING = #$2000
 
 !SUPPRESS_CRATERIA_LIGHTNING = #$0001
 !SUPPRESS_ESCAPE_FLASHING = #$0002
@@ -643,6 +696,9 @@ endif
 !SPRITE_ENEMY_PROJ = #$0020
 !SPRITE_32x32_PROJ = #$0040
 !SPRITE_OOB_WATCH = #$0080
+
+!DOOR_PORTAL_ENABLED = #$0001
+!DOOR_PORTAL_JUMP = #$0002
 
 
 ; ----------

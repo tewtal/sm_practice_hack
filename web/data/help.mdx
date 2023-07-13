@@ -62,7 +62,9 @@ If you experience crashes or severe glitches when using savestates, your platfor
 | - Select Preset Category      | Select the desired category to be used with Category Presets
 | - Reload Last Preset          | Reload the last selected category preset
 | - Load Random Preset          | Randomly chooses a preset from your selected preset category
-| - Custom Preset Slot          | Select one of 40 slots in memory to save or load custom presets. Press A to open a submenu with a list of preset slots. Press Y in the submenu to toggle the display between room names and Samus data.
+| - Custom Preset Slot          | Select one of 40 slots in memory to save or load custom presets. Press A to open a submenu with a list of preset slots.
+|                               | Press Y in the submenu to toggle the display between room names and Samus data.
+|                               | Press X in the submenu to provide a custom preset name.
 | - Save Custom Preset          | Save a custom preset to the current slot in SRAM.
 |                               | A grapple sound effect will play if a preset cannot be saved (for example during room transition).
 | - Load Custom Preset          | Load the custom preset in the current slot in SRAM.
@@ -124,8 +126,10 @@ If you experience crashes or severe glitches when using savestates, your platfor
 | - Reset Segment in Next Room  | Sets the segment timer to reset automatically when exiting the next door transition.
 |                               | It also resets the segment timer. Beware that since it leverages the existing frame advance feature, toggling this on changes the way frame advance works.
 | - Status Icons                | Toggle icons to appear when standing on an elevator or when the shine timer is active (e.g. while carrying a spikesuit).
+| - Spacetime HUD               | Option to preserve the InfoHUD when using spacetime beam
 | - Artificial Lag              | Select a value to adjust how much lag occurs during normal gameplay. 
 |                               | This is to compensate for the lack of a minimap on the HUD which would normally consume CPU cycles.
+| - Auto-Update Timers          | Option to turn off room timer updates when riding elevators or grabbign items
 | - Customize RAM Watch         | Setup addresses to be monitored by the RAM Watch HUD mode. Address 1 will appear in the bottom-left corner of the HUD, while Address 2 appears just to the right of Address 1. Memory at these locations can be edited by configuring a Value and selecting 'Write to Address'. Toggle 'Lock Value' to automatically write the value once every frame. RAM Watch must must be the selected HUD mode to continue writing to the address. Only one byte of hex can be configured at a time in the menu. 'Hi' refers to the first byte, while 'Lo' refers to the second. Set the Hi Address to 0D and the Lo Address to EC to monitor the memory address $0DEC, which stores the counter for Samus direction changes while held by Draygon (among other uses). You can find lists of known RAM addresses by selecting 'Select Common Addresses'.
 |&nbsp;|
 | **Sprite Features**           | Features that draw sprites over normal gameplay. Beware of CPU performance impact
@@ -146,6 +150,10 @@ If you experience crashes or severe glitches when using savestates, your platfor
 | - Anti-softlock Patches       | Room modifications as you would see in a typical VARIA randomizer
 | - VARIA Tweaks                | Room modifications as you would see with VARIA tweaks enabled
 | - DASH Recall Patches         | Room modifications as you would see in a DASH Recall randomizer
+| - Custom Door Portal          | Sets one pair of doors connected to each other as you might see in an area or boss randomizer
+| - Next Door Jump To Dest      | Temporarily sets the destination of the next door or elevator that you enter
+| - Select Portal Source        | Choose one of of the two portal connections (8 boss portals and 32 area portals supported)
+| - Select Portal Destination   | Choose the other portal connection, also the one used for Next Door Jump To Dest
 |&nbsp;|
 | **Game**                      | Toggle game options
 | - Japanese/French Text        | Standard game option to toggle between English and Japanese text (NTSC) or between German and French text (PAL).
@@ -194,6 +202,7 @@ If you experience crashes or severe glitches when using savestates, your platfor
 | - Rerandomize                 | Toggles rerandomizing of RNG values upon loading a savestate. Automatically disabled in rooms with "seeded" RNG, but some of these situations may not be accounted for yet.
 | - Freeze on Load State        | Experimental feature that causes the game to be frozen until a new controller 1 input is made.
 | - Auto-Save Mid Door          | Creates a savestate in the middle of the next door transition.
+| - Auto-Save Every Door        | Creates a savestate in the middle of every door transition.
 |&nbsp;|
 | **Controller Shortcuts**      | Set or change button combinations for activating features. Press X to unbind a shortcut. Press A to edit the shortcut and then hold the desired button combination until it turns pink.
 | - Main Menu                   | Open the InfoHUD menu
@@ -222,6 +231,7 @@ If you experience crashes or severe glitches when using savestates, your platfor
 | - Randomize Custom Palette    | Use RNG values to randomize the color palettes. A confirmation submenu will warn you that this will overwrite your existing CUSTOM profile.
 | - Customize Menu Sounds       | Select which sound effect will play for each menu action. Press Y to play the selected sound effect. Due to limitations with the audio engine, only sounds from "Library 1" are allowed.
 | - Menu Scroll Delay           | Set the number of frames before scrolling to the next menu item when Up or Down are held.
+| - Customize Menu Header       | Type a customized header for the main menu, up to 23 characters. Set it blank to restore the default header.
 
 
 # Lag Frames

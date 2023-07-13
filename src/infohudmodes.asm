@@ -617,6 +617,9 @@ status_spikesuit:
     LDA !SAMUS_IFRAME_TIMER : SEC : SBC #$0033
     ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
 
+    ; If more than one frame early, keep checking for updates
+    CPY #$0002 : BNE .done
+
   .endstate
     LDA #$0006 : STA !ram_roomstrat_state
     RTS
@@ -1353,19 +1356,8 @@ status_ramwatch:
     ; Store Samus HP so it doesn't overwrite our HUD
     LDA !SAMUS_HP : STA !ram_last_hp
 
-    ; Determine bank (0=7E, 1=7F, else SRAM)
-    LDA !ram_watch_bank : TAY : BEQ .bank7E
-    CPY #$0001 : BEQ .bank7F
-    LDA #$0070 : BRA .storeBank
-
-  .bank7E
-    LDA #$007E : BRA .storeBank
-
-  .bank7F
-    LDA #$007F
-
-  .storeBank
-    STA $C3 : STA $C7
+    ; Store bank bytes
+    LDA !ram_watch_bank : STA $C3 : STA $C7
 
     ; Calculate addresses
     LDA !ram_watch_left : CLC : ADC !ram_watch_left_index : STA $C1
@@ -1392,21 +1384,23 @@ status_ramwatch:
     ; Write 8 or 16 bit values
     LDA !ram_watch_write_mode : BEQ .edit16bit
     %a8()
-    LDA !ram_watch_edit_lock_left : BEQ +
+    LDA !ram_watch_edit_lock_left : BEQ .e8LeftDone
     LDA !ram_watch_edit_left : STA [$C1]
-
-+   LDA !ram_watch_edit_lock_right : BEQ +
+  .e8LeftDone
+    LDA !ram_watch_edit_lock_right : BEQ .e8RightDone
     LDA !ram_watch_edit_right : STA [$C5]
-+   %a16()
+  .e8RightDone
+    %a16()
     RTS
 
   .edit16bit
-    LDA !ram_watch_edit_lock_left : BEQ +
+    LDA !ram_watch_edit_lock_left : BEQ .e16LeftDone
     LDA !ram_watch_edit_left : STA [$C1]
-
-+   LDA !ram_watch_edit_lock_right : BEQ +
+  .e16LeftDone
+    LDA !ram_watch_edit_lock_right : BEQ .e16RightDone
     LDA !ram_watch_edit_right : STA [$C5]
-+   RTS
+  .e16RightDone
+    RTS
 }
 
 status_doorskip:

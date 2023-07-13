@@ -1,18 +1,21 @@
 ; Patch out copy protection
-org $008000
+org $808000
+hook_copy_protection:
     db $FF
 
 ; Set SRAM size
-org $00FFD8
-IF !FEATURE_TINYSTATES
+org $80FFD8
+hook_sram_size:
+if !FEATURE_TINYSTATES
     db $07 ; 128kb
 else
-    if !FEATURE_SD2SNES
-        db $08 ; 256kb
-    else
-        db $05 ; 64kb
-    endif
+if !FEATURE_SD2SNES
+    db $08 ; 256kb
+else
+    db $05 ; 64kb
 endif
+endif
+
 
 ; Enable version display
 org $8B8697
@@ -23,6 +26,7 @@ org $8BF6DC
 else
 org $8BF754
 endif
+hook_version_data:
     db #$20, #($30+!VERSION_MAJOR)
     db #$2E, #($30+!VERSION_MINOR)
     db #$2E, #($30+!VERSION_BUILD)
@@ -42,6 +46,7 @@ endif
 
 ; Fix Zebes planet tiling error
 org $8C9607
+zebes_planet_tile_data:
     dw #$0E2F
 
 
@@ -87,6 +92,7 @@ org $828ADD       ; Resume original logic
 
 
 org $CF8BBF       ; Set map scroll beep to high priority
+hook_spc_engine_map_scroll_beep_priority:
     dw $2A97
 
 
@@ -94,7 +100,7 @@ org $CF8BBF       ; Set map scroll beep to high priority
 ; $80:8F27 8D 40 21    STA $2140  [$7E:2140]  ; APU IO 0 = [music track]
 org $808F24
     JSL hook_set_music_track
-    NOP #2
+    NOP : NOP
 
 ; $80:8F65 8D F3 07    STA $07F3  [$7E:07F3]  ;} Music data = [music entry] & FFh
 ; $80:8F68 AA          TAX                    ; X = [music data]
@@ -117,6 +123,14 @@ else
 org $A2ABFD
 endif
     JML clear_escape_timer
+
+
+if !FEATURE_PAL
+org $84D671
+else
+org $84D66B
+endif
+    JSL lock_samus_bowling
 
 
 org $90F800
@@ -145,9 +159,77 @@ hook_set_music_data:
     JML $808F89
 }
 
+lock_samus_bowling:
+{
+    LDA !sram_cutscenes : BIT !CUTSCENE_FAST_BOWLING : BNE .speedup
+    TDC
+if !FEATURE_PAL
+    JMP $F081
+else
+    JMP $F084
+endif
+
+  .speedup
+    TDC
+if !FEATURE_PAL
+    JSL $90F081
+else
+    JSL $90F084
+endif
+    LDA #locked_samus_speedup_movement_handler
+    STA $0A42
+    RTL
+}
+
+locked_samus_speedup_movement_handler:
+{
+    ; Original logic
+    PHP : PHB : PHK : PLB
+    %ai16()
+    JSR $AECE     ; Handle projectiles
+if !FEATURE_PAL
+    JSR $EAFF     ; Handle Samus movement
+else
+    JSR $EB02     ; Handle Samus movement
+endif
+
+    ; Bowling cutscene runs for 1938 frames, which is divisible by 6
+    ; We can therefore run two extra passes per frame
+    ; without having to check if the cutscene has ended
+    ; (we could do five extra passes but the rendering is not good)
+
+    ; Execute first extra pass
+    JSL $868104   ; Enemy projectile handler
+    JSL $8485B4   ; PLM handler
+if !FEATURE_PAL
+    JSL $A08FE4   ; Main enemy routine
+    JSR $AECE     ; Handle projectiles
+    JSR $EAFF     ; Handle Samus movement
+else
+    JSL $A08FD4   ; Main enemy routine
+    JSR $AECE     ; Handle projectiles
+    JSR $EB02     ; Handle Samus movement
+endif
+
+    ; Execute second extra pass
+    JSL $868104   ; Enemy projectile handler
+    JSL $8485B4   ; PLM handler
+if !FEATURE_PAL
+    JSL $A08FE4   ; Main enemy routine
+    JSR $AECE     ; Handle projectiles
+    JSR $EAFF     ; Handle Samus movement
+else
+    JSL $A08FD4   ; Main enemy routine
+    JSR $AECE     ; Handle projectiles
+    JSR $EB02     ; Handle Samus movement
+endif
+
+    PLB : PLP : RTL
+}
+
 gamemode_end:
 {
-   ; overwritten logic
+    ; overwritten logic
 if !FEATURE_PAL
     JSL $A09179
 else
@@ -229,11 +311,11 @@ original_load_projectile_palette:
     LDY #$0000
     LDX #$0000
 
-  .original_load_palette_loop
+  .loop
     LDA [$00],Y
     STA $7EC1C0,X
     INX : INX : INY : INY
-    CPY #$0020 : BMI .original_load_palette_loop
+    CPY #$0020 : BMI .loop
     RTS
 }
 
@@ -341,7 +423,8 @@ print pc, " misc bank90 end"
 
 org $8BFA00
 print pc, " misc bank8B start"
-; Decompression optimization adapted from Kejardon
+
+; Decompression optimization adapted from Kejardon, with fixes by PJBoy and Maddo
 ; Compression format: One byte (XXX YYYYY) or two byte (111 XXX YY-YYYYYYYY) headers
 ; XXX = instruction, YYYYYYYYYY = counter
 optimized_decompression_end:
@@ -358,90 +441,88 @@ optimized_decompression:
 
     STZ $50 : LDY #$0000
 
-  .next_byte
+  .nextByte
     LDA ($47)
-    INC $47 : BNE .read_command_skip_inc
-    INC $48 : BNE .read_command_skip_inc
+    INC $47 : BNE .readCommand
+    INC $48 : BNE .readCommand
     JSR decompression_increment_bank
-  .read_command_skip_inc
+  .readCommand
     STA $4A
     CMP #$FF : BEQ optimized_decompression_end
-    CMP #$E0 : BCC .one_byte_size
+    CMP #$E0 : BCC .oneByteCommand
 
-    ; Two byte size
+    ; Two byte command
     ASL : ASL : ASL
     AND #$E0 : PHA
     LDA $4A : AND #$03 : XBA
 
     LDA ($47)
-    INC $47 : BNE .read_extended_size_skip_inc
-    INC $48 : BNE .read_extended_size_skip_inc
+    INC $47 : BNE .readData
+    INC $48 : BNE .readData
     JSR decompression_increment_bank
-  .read_extended_size_skip_inc
-    BRA .data_read
+    BRA .readData
 
-  .one_byte_size
+  .oneByteCommand
     AND #$E0 : PHA
     TDC : LDA $4A : AND #$1F
 
-  .data_read
+  .readData
     TAX : INX : PLA
     BMI .option4567 : BEQ .option0
     CMP #$20 : BEQ .option1
     CMP #$40 : BEQ .option2
-
-    ; Option X = 3: Incrementing fill Y bytes starting with next byte
-    LDA ($47)
-    INC $47 : BNE .option3_read_skip_inc
-    INC $48 : BNE .option3_read_skip_inc
-    JSR decompression_increment_bank
-  .option3_read_skip_inc
-    STA [$4C],Y
-    INC : INY : DEX : BNE .option3_read_skip_inc
-    BRL .next_byte
+    BRL .option3
 
   .option0:
     ; Option X = 0: Directly copy Y bytes
     LDA ($47)
-    INC $47 : BNE .option0_read_skip_inc
-    INC $48 : BNE .option0_read_skip_inc
+    INC $47 : BNE .option0_copy
+    INC $48 : BNE .option0_copy
     JSR decompression_increment_bank
-  .option0_read_skip_inc
+  .option0_copy
     STA [$4C],Y
     INY : DEX : BNE .option0
-    BRL .next_byte
+    BRL .nextByte
 
   .option1:
     ; Option X = 1: Copy the next byte Y times
     LDA ($47)
-    INC $47 : BNE .option1_read_skip_inc
-    INC $48 : BNE .option1_read_skip_inc
+    INC $47 : BNE .option1_copy
+    INC $48 : BNE .option1_copy
     JSR decompression_increment_bank
-  .option1_read_skip_inc
+  .option1_copy
     STA [$4C],Y
-    INY : DEX : BNE .option1_read_skip_inc
-    BRL .next_byte
+    INY : DEX : BNE .option1_copy
+    BRL .nextByte
 
   .option2:
     ; Option X = 2: Copy the next two bytes, one at a time, for the next Y bytes
+    ; Apply PJ's fix to divide X by 2 and set carry if X was odd
+    REP #$20 : TXA : LSR : TAX : SEP #$20
     LDA ($47)
-    INC $47 : BNE .option2_lsb_read_skip_inc
-    INC $48 : BNE .option2_lsb_read_skip_inc
+    INC $47 : BNE .option2_readMSB
+    INC $48 : BNE .option2_readMSB
     JSR decompression_increment_bank
-  .option2_lsb_read_skip_inc
+  .option2_readMSB
     XBA : LDA ($47)
-    INC $47 : BNE .option2_msb_read_skip_inc
-    INC $48 : BNE .option2_msb_read_skip_inc
+    INC $47 : BNE .option2_prepCopy
+    INC $48 : BNE .option2_prepCopy
     JSR decompression_increment_bank
-  .option2_msb_read_skip_inc
-    XBA : REP #$20
+  .option2_prepCopy
+    XBA
+    ; Apply Maddo's fix accounting for single copy (X = 1 before divide by 2)
+    INX : DEX : BEQ .option2_singleCopy
+    REP #$20
   .option2_loop
     STA [$4C],Y
-    INY : DEX : BEQ .option2_end
-    INY : DEX : BNE .option2_loop
-  .option2_end
+    INY : INY : DEX : BNE .option2_loop
+    ; PJ's fix to account for case where X was odd
     SEP #$20
-    BRL .next_byte
+  .option2_singleCopy
+    BCC .option2_end
+    STA [$4C],Y : INY
+  .option2_end
+    BRL .nextByte
 
   .option4567:
     CMP #$C0 : AND #$20 : STA $4F : BCS .option67
@@ -449,51 +530,62 @@ optimized_decompression:
     ; Option X = 4: Copy Y bytes starting from a given address in the decompressed data
     ; Option X = 5: Copy and invert (EOR #$FF) Y bytes starting from a given address in the decompressed data
     LDA ($47)
-    INC $47 : BNE .option45_lsb_read_skip_inc
-    INC $48 : BNE .option45_lsb_read_skip_inc
+    INC $47 : BNE .option45_readMSB
+    INC $48 : BNE .option45_readMSB
     JSR decompression_increment_bank
-  .option45_lsb_read_skip_inc
+  .option45_readMSB
     XBA : LDA ($47)
-    INC $47 : BNE .option45_msb_read_skip_inc
-    INC $48 : BNE .option45_msb_read_skip_inc
+    INC $47 : BNE .option45_prepDictionary
+    INC $48 : BNE .option45_prepDictionary
     JSR decompression_increment_bank
-  .option45_msb_read_skip_inc
+  .option45_prepDictionary
     XBA : REP #$21
     ADC $4C : STY $44 : SEC
 
   .option_dictionary
     SBC $44 : STA $44
     SEP #$20
-    LDA $4E : BCS .skip_carry_subtraction
+    LDA $4E : BCS .skip_carrySubtraction
     DEC
-  .skip_carry_subtraction
+  .skip_carrySubtraction
     STA $46
-    LDA $4F : BNE .option5_loop
+    LDA $4F : BNE .option57_loop
 
-  .option4_loop
+  .option46_loop
     LDA [$44],Y
     STA [$4C],Y
-    INY : DEX : BNE .option4_loop
-    BRL .next_byte
+    INY : DEX : BNE .option46_loop
+    BRL .nextByte
 
-  .option5_loop
+  .option57_loop
     LDA [$44],Y
     EOR #$FF
     STA [$4C],Y
-    INY : DEX : BNE .option5_loop
-    BRL .next_byte
+    INY : DEX : BNE .option57_loop
+    BRL .nextByte
 
   .option67
     ; Option X = 6: Copy Y bytes starting from a given number of bytes ago in the decompressed data
     ; Option X = 7: Copy and invert (EOR #$FF) Y bytes starting from a given number of bytes ago in the decompressed data
     TDC : LDA ($47)
-    INC $47 : BNE .option67_read_skip_inc
-    INC $48 : BNE .option67_read_skip_inc
+    INC $47 : BNE .option67_prepDictionary
+    INC $48 : BNE .option67_prepDictionary
     JSR decompression_increment_bank
-  .option67_read_skip_inc
+  .option67_prepDictionary
     REP #$20
     STA $44 : LDA $4C
     BRA .option_dictionary
+
+  .option3
+    ; Option X = 3: Incrementing fill Y bytes starting with next byte
+    LDA ($47)
+    INC $47 : BNE .option3_loop
+    INC $48 : BNE .option3_loop
+    JSR decompression_increment_bank
+  .option3_loop
+    STA [$4C],Y
+    INC : INY : DEX : BNE .option3_loop
+    BRL .nextByte
 }
 
 decompression_increment_bank:
@@ -506,5 +598,6 @@ decompression_increment_bank:
     PLA
     RTS
 }
+
 print pc, " misc bank8B end"
 

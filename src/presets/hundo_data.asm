@@ -2107,7 +2107,7 @@ preset_hundo_golden_torizo_kraid_entrance_revisit:
     dw $07F3, $0012  ; Music Bank
     dw $090F, $F000  ; Screen subpixel X position
     dw $0913, $CC00  ; Screen subpixel Y position
-    dw $0915, $00D5  ; Screen Y position in pixels
+    dw $0915, $0100  ; Screen Y position in pixels
     dw $09CA, $0012  ; Supers
     dw $0A1C, $00A4  ; Samus position/state
     dw $0A1E, $0008  ; More position/state

@@ -3,18 +3,7 @@
 ; ---------------
 
 ih_prepare_ram_watch_menu:
-    LDA !ram_watch_left : XBA : AND #$00FF : STA !ram_cm_watch_left_hi
-    LDA !ram_watch_left : AND #$00FF : STA !ram_cm_watch_left_lo
-    LDA !ram_watch_right : XBA : AND #$00FF : STA !ram_cm_watch_right_hi
-    LDA !ram_watch_right : AND #$00FF : STA !ram_cm_watch_right_lo
-    LDA !ram_watch_edit_left : XBA : AND #$00FF : STA !ram_cm_watch_edit_left_hi
-    LDA !ram_watch_edit_left : AND #$00FF : STA !ram_cm_watch_edit_left_lo
-    LDA !ram_watch_edit_right : XBA : AND #$00FF : STA !ram_cm_watch_edit_right_hi
-    LDA !ram_watch_edit_right : AND #$00FF : STA !ram_cm_watch_edit_right_lo
-    LDA !ram_watch_left_index : XBA : AND #$00FF : STA !ram_cm_watch_left_index_hi
-    LDA !ram_watch_left_index : AND #$00FF : STA !ram_cm_watch_left_index_lo
-    LDA !ram_watch_right_index : XBA : AND #$00FF : STA !ram_cm_watch_right_index_hi
-    LDA !ram_watch_right_index : AND #$00FF : STA !ram_cm_watch_right_index_lo
+{
     LDA #$0000 : STA !ram_cm_watch_enemy_property : STA !ram_cm_watch_enemy_index
     STA !ram_cm_watch_enemy_side
 
@@ -34,6 +23,7 @@ ih_prepare_ram_watch_menu:
   .submenu
     %setmenubank()
     JML action_submenu
+}
 
 RAMWatchMenu:
     dw ramwatch_enable
@@ -41,23 +31,19 @@ RAMWatchMenu:
     dw ramwatch_write_mode
     dw ramwatch_goto_common
     dw #$FFFF
-    dw ramwatch_left_hi
-    dw ramwatch_left_lo
-    dw ramwatch_left_index_hi
-    dw ramwatch_left_index_lo
-    dw ramwatch_left_edit_hi
-    dw ramwatch_left_edit_lo
+    dw ramwatch_left_address
+    dw ramwatch_left_index
+    dw ramwatch_left_value
     dw ramwatch_execute_left
     dw ramwatch_lock_left
     dw #$FFFF
-    dw ramwatch_right_hi
-    dw ramwatch_right_lo
-    dw ramwatch_right_index_hi
-    dw ramwatch_right_index_lo
-    dw ramwatch_right_edit_hi
-    dw ramwatch_right_edit_lo
+    dw ramwatch_right_address
+    dw ramwatch_right_index
+    dw ramwatch_right_value
     dw ramwatch_execute_right
     dw ramwatch_lock_right
+    dw #$FFFF
+    dw ramwatch_display
     dw #$0000
     %cm_header("READ AND WRITE TO MEMORY")
 
@@ -68,6 +54,8 @@ RAMWatchCommonMenu:
     dw ramwatch_common_enemy
     dw ramwatch_common_samus1
     dw ramwatch_common_samus2
+    dw ramwatch_common_plm
+    dw ramwatch_common_proj
     dw ramwatch_common_misc
     dw #$0000
     %cm_header("CHOOSE RAM CATEGORY")
@@ -80,6 +68,12 @@ ramwatch_common_samus1:
 
 ramwatch_common_samus2:
     %cm_submenu("Samus Addresses 2", #RAMWatchCommonSamusMenu2)
+
+ramwatch_common_plm:
+    %cm_submenu("PLM Addresses", #RAMWatchCommonPlmMenu)
+
+ramwatch_common_proj:
+    %cm_submenu("Projectile Addresses", #RAMWatchCommonProjMenu)
 
 ramwatch_common_misc:
     %cm_submenu("Misc Addresses", #RAMWatchCommonMiscMenu)
@@ -98,8 +92,8 @@ ramwatch_common_enemy_side:
     dl #!ram_cm_watch_enemy_side
     dw #$0000
     db #$28, "RAM Watch Slot", #$FF
-    db #$28, "  ADDRESS 1", #$FF
-    db #$28, "  ADDRESS 2", #$FF
+    db #$28, "  LEFT ADDR", #$FF
+    db #$28, " RIGHT ADDR", #$FF
     db #$FF
 
 ramwatch_common_enemy_apply:
@@ -121,12 +115,11 @@ ramwatch_common_enemy_apply:
     CLC : ADC #$0F78 : STA !ram_watch_left
 
   .done
-    LDA #$0000 : STA !ram_watch_bank
+    LDA #$007E : STA !ram_watch_bank
     LDY #RAMWatchMenu
     LDA !ram_cm_stack_index : DEC #4
     STA !ram_cm_stack_index
-    JSL cm_go_back
-    JSL cm_calculate_max
+    JSL cm_previous_menu
     JSL ih_prepare_ram_watch_menu
     %sfxconfirm()
     RTL
@@ -218,7 +211,6 @@ RAMWatchCommonSamusMenu2:
     dw ramwatch_common_samus_0CCC
     dw #$0000
     %cm_header("SELECT FROM SAMUS RAM")
-    %cm_header("ALSO SEE INFOHUD MODES")
 
 ramwatch_common_samus_09C2:
     %cm_jsl("Samus Energy", action_select_common_address, #$09C2)
@@ -334,6 +326,142 @@ ramwatch_common_samus_0B48:
 ramwatch_common_samus_0CCC:
     %cm_jsl("Cooldown Timer", action_select_common_address, #$0CCC)
 
+RAMWatchCommonPlmMenu:
+    dw ramwatch_common_plm_1C23
+    dw ramwatch_common_plm_1C27
+    dw ramwatch_common_plm_1C29
+    dw ramwatch_common_plm_1C2B
+    dw ramwatch_common_plm_1C85
+    dw ramwatch_common_plm_1CD5
+    dw ramwatch_common_plm_1D25
+    dw ramwatch_common_plm_1D75
+    dw ramwatch_common_plm_1DC5
+    dw ramwatch_common_plm_1E15
+    dw ramwatch_common_plm_1E65
+    dw #$0000
+    %cm_header("SELECT FROM PLM RAM")
+
+ramwatch_common_plm_1C23:
+    %cm_jsl("PLM Flag", action_select_common_address, #$1C23)
+
+ramwatch_common_plm_1C27:
+    %cm_jsl("Current ID", action_select_common_address, #$1C27)
+
+ramwatch_common_plm_1C29:
+    %cm_jsl("Current X", action_select_common_address, #$1C29)
+
+ramwatch_common_plm_1C2B:
+    %cm_jsl("Current Y", action_select_common_address, #$1C2B)
+
+ramwatch_common_plm_1C85:
+    %cm_jsl("Last ID", action_select_common_address, #$1C85)
+
+ramwatch_common_plm_1CD5:
+    %cm_jsl("Last Block", action_select_common_address, #$1CD5)
+
+ramwatch_common_plm_1D25:
+    %cm_jsl("Last Preinstruction", action_select_common_address, #$1D25)
+
+ramwatch_common_plm_1D75:
+    %cm_jsl("Last Instruction", action_select_common_address, #$1D75)
+
+ramwatch_common_plm_1DC5:
+    %cm_jsl("Last Timer", action_select_common_address, #$1DC5)
+
+ramwatch_common_plm_1E15:
+    %cm_jsl("Last Room Argument", action_select_common_address, #$1E15)
+
+ramwatch_common_plm_1E65:
+    %cm_jsl("Last Variable", action_select_common_address, #$1E65)
+
+RAMWatchCommonProjMenu:
+    dw ramwatch_common_proj_198D
+    dw ramwatch_common_proj_1991
+    dw ramwatch_common_proj_1993
+    dw ramwatch_common_proj_19B9
+    dw ramwatch_common_proj_19DD
+    dw ramwatch_common_proj_1A01
+    dw ramwatch_common_proj_1A25
+    dw ramwatch_common_proj_1A49
+    dw ramwatch_common_proj_1A6D
+    dw ramwatch_common_proj_1A91
+    dw ramwatch_common_proj_1AB5
+    dw ramwatch_common_proj_1AD9
+    dw ramwatch_common_proj_1AFD
+    dw ramwatch_common_proj_1B21
+    dw ramwatch_common_proj_1B45
+    dw ramwatch_common_proj_1B69
+    dw ramwatch_common_proj_1B8D
+    dw ramwatch_common_proj_1BB1
+    dw ramwatch_common_proj_1BD5
+    dw ramwatch_common_proj_1BF9
+    dw ramwatch_common_proj_1C1D
+    dw #$0000
+    %cm_header("SELECT FROM PROJECTILE RAM")
+
+ramwatch_common_proj_198D:
+    %cm_jsl("Projectiles Flag", action_select_common_address, #$198D)
+
+ramwatch_common_proj_1991:
+    %cm_jsl("Current Index", action_select_common_address, #$1991)
+
+ramwatch_common_proj_1993:
+    %cm_jsl("Current Init Parameter", action_select_common_address, #$1993)
+
+ramwatch_common_proj_19B9:
+    %cm_jsl("Last ID", action_select_common_address, #$19B9)
+
+ramwatch_common_proj_19DD:
+    %cm_jsl("Last Graphics Index", action_select_common_address, #$19DD)
+
+ramwatch_common_proj_1A01:
+    %cm_jsl("Last Timer", action_select_common_address, #$1A01)
+
+ramwatch_common_proj_1A25:
+    %cm_jsl("Last Preinstruction", action_select_common_address, #$1A25)
+
+ramwatch_common_proj_1A49:
+    %cm_jsl("Last Sub X", action_select_common_address, #$1A49)
+
+ramwatch_common_proj_1A6D:
+    %cm_jsl("Last X", action_select_common_address, #$1A6D)
+
+ramwatch_common_proj_1A91:
+    %cm_jsl("Last Sub Y", action_select_common_address, #$1A91)
+
+ramwatch_common_proj_1AB5:
+    %cm_jsl("Last Y", action_select_common_address, #$1AB5)
+
+ramwatch_common_proj_1AD9:
+    %cm_jsl("Last X Velocity", action_select_common_address, #$1AD9)
+
+ramwatch_common_proj_1AFD:
+    %cm_jsl("Last Y Velocity", action_select_common_address, #$1AFD)
+
+ramwatch_common_proj_1B21:
+    %cm_jsl("Last Variable 1", action_select_common_address, #$1B21)
+
+ramwatch_common_proj_1B45:
+    %cm_jsl("Last Variable 2", action_select_common_address, #$1B45)
+
+ramwatch_common_proj_1B69:
+    %cm_jsl("Last Instruction", action_select_common_address, #$1B69)
+
+ramwatch_common_proj_1B8D:
+    %cm_jsl("Last Spritemap", action_select_common_address, #$1B8D)
+
+ramwatch_common_proj_1BB1:
+    %cm_jsl("Last Instruction Timer", action_select_common_address, #$1BB1)
+
+ramwatch_common_proj_1BD5:
+    %cm_jsl("Last Radius", action_select_common_address, #$1BD5)
+
+ramwatch_common_proj_1BF9:
+    %cm_jsl("Last Properties", action_select_common_address, #$1BF9)
+
+ramwatch_common_proj_1C1D:
+    %cm_jsl("Last Type", action_select_common_address, #$1C1D)
+
 RAMWatchCommonMiscMenu:
     dw ramwatch_common_misc_05E5
     dw ramwatch_common_misc_079B
@@ -413,10 +541,8 @@ ramwatch_common_addr2:
 
 ramwatch_common_addr_done:
     LDY #RAMWatchMenu
-    LDA !ram_cm_stack_index : DEC #6
-    STA !ram_cm_stack_index
-    JSL cm_go_back
-    JSL cm_calculate_max
+    LDA !ram_cm_stack_index : SEC : SBC #$0006 : STA !ram_cm_stack_index
+    JSL cm_previous_menu
     JSL ih_prepare_ram_watch_menu
     %sfxconfirm()
     RTL
@@ -424,10 +550,8 @@ ramwatch_common_addr_done:
 ramwatch_common_back:
     %cm_jsl("Go Back", .routine, #0)
   .routine
-    LDA !ram_cm_stack_index : DEC #4
-    STA !ram_cm_stack_index
-    JSL cm_go_back
-    JSL cm_calculate_max
+    LDA !ram_cm_stack_index : SEC : SBC #$0004 : STA !ram_cm_stack_index
+    JSL cm_previous_menu
     RTL
 
 ramwatch_enable:
@@ -438,14 +562,7 @@ ramwatch_enable:
     RTL
 
 ramwatch_bank:
-    dw !ACTION_CHOICE
-    dl #!ram_watch_bank
-    dw #$0000
-    db #$28, "Select Bank", #$FF
-    db #$28, "        $7E", #$FF
-    db #$28, "        $7F", #$FF
-    db #$28, "       SRAM", #$FF
-    db #$FF
+    %cm_numfield_hex("Select Bank", !ram_watch_bank, 0, 255, 1, 4, #0)
 
 ramwatch_write_mode:
     dw !ACTION_CHOICE
@@ -456,145 +573,67 @@ ramwatch_write_mode:
     db #$28, "    8BIT LO", #$FF
     db #$FF
 
-ramwatch_left_hi:
-    %cm_numfield_hex("Address 1 High", !ram_cm_watch_left_hi, 0, 255, 1, 8, #.routine)
-  .routine
-    XBA : ORA !ram_cm_watch_left_lo
-    STA !ram_watch_left
-    RTL
+ramwatch_left_address:
+    %cm_numfield_hex_word("Left Address", !ram_watch_left, #$FFFF, #0)
 
-ramwatch_left_lo:
-    %cm_numfield_hex("Address 1 Low", !ram_cm_watch_left_lo, 0, 255, 1, 8, #.routine)
-  .routine
-    XBA : ORA !ram_cm_watch_left_hi
-    XBA : STA !ram_watch_left
-    RTL
+ramwatch_left_index:
+    %cm_numfield_hex_word("Left Offset", !ram_watch_left_index, #$FFFF, #0)
 
-ramwatch_left_index_hi:
-    %cm_numfield_hex("Offset 1 High", !ram_cm_watch_left_index_hi, 0, 255, 1, 8, #.routine)
-  .routine
-    XBA : ORA !ram_cm_watch_left_index_lo
-    STA !ram_watch_left_index
-    RTL
+ramwatch_left_value:
+    %cm_numfield_hex_word("Left Value", !ram_watch_edit_left, #$FFFF, #0)
 
-ramwatch_left_index_lo:
-    %cm_numfield_hex("Offset 1 Low", !ram_cm_watch_left_index_lo, 0, 255, 1, 8, #.routine)
-  .routine
-    XBA : ORA !ram_cm_watch_left_index_hi
-    XBA : STA !ram_watch_left_index
-    RTL
+ramwatch_right_address:
+    %cm_numfield_hex_word("Right Address", !ram_watch_right, #$FFFF, #0)
 
-ramwatch_left_edit_hi:
-    %cm_numfield_hex("Value 1 High", !ram_cm_watch_edit_left_hi, 0, 255, 1, 8, #.routine)
-  .routine
-    XBA : ORA !ram_cm_watch_edit_left_lo
-    STA !ram_watch_edit_left
-    RTL
+ramwatch_right_index:
+    %cm_numfield_hex_word("Right Offset", !ram_watch_right_index, #$FFFF, #0)
 
-ramwatch_left_edit_lo:
-    %cm_numfield_hex("Value 1 Low", !ram_cm_watch_edit_left_lo, 0, 255, 1, 8, #.routine)
-  .routine
-    XBA : ORA !ram_cm_watch_edit_left_hi
-    XBA : STA !ram_watch_edit_left
-    RTL
-
-ramwatch_right_hi:
-    %cm_numfield_hex("Address 2 High", !ram_cm_watch_right_hi, 0, 255, 1, 8, #.routine)
-  .routine
-    XBA : ORA !ram_cm_watch_right_lo
-    STA !ram_watch_right
-    RTL
-
-ramwatch_right_lo:
-    %cm_numfield_hex("Address 2 Low", !ram_cm_watch_right_lo, 0, 255, 1, 8, #.routine)
-  .routine
-    XBA : ORA !ram_cm_watch_right_hi
-    XBA : STA !ram_watch_right
-    RTL
-
-ramwatch_right_index_hi:
-    %cm_numfield_hex("Offset 2 High", !ram_cm_watch_right_index_hi, 0, 255, 1, 8, #.routine)
-  .routine
-    XBA : ORA !ram_cm_watch_right_index_lo
-    STA !ram_watch_right_index
-    RTL
-
-ramwatch_right_index_lo:
-    %cm_numfield_hex("Offset 2 Low", !ram_cm_watch_right_index_lo, 0, 255, 1, 8, #.routine)
-  .routine
-    XBA : ORA !ram_cm_watch_right_index_hi
-    XBA : STA !ram_watch_right_index
-    RTL
-
-ramwatch_right_edit_hi:
-    %cm_numfield_hex("Value 2 High", !ram_cm_watch_edit_right_hi, 0, 255, 1, 8, #.routine)
-  .routine
-    XBA : ORA !ram_cm_watch_edit_right_lo
-    STA !ram_watch_edit_right
-    RTL
-
-ramwatch_right_edit_lo:
-    %cm_numfield_hex("Value 2 Low", !ram_cm_watch_edit_right_lo, 0, 255, 1, 8, #.routine)
-  .routine
-    XBA : ORA !ram_cm_watch_edit_right_hi
-    XBA : STA !ram_watch_edit_right
-    RTL
+ramwatch_right_value:
+    %cm_numfield_hex_word("Right Value", !ram_watch_edit_right, #$FFFF, #0)
 
 ramwatch_execute_left:
-    %cm_jsl("Write to Address 1", #action_ramwatch_edit_left, #$0000)
+    %cm_jsl("Write to Left Address", #.routine, #$0000)
+  .routine
+    LDA !ram_watch_left : CLC : ADC !ram_watch_left_index : STA $C1
+    LDA !ram_watch_bank : STA $C3
+    LDA !ram_watch_write_mode : BEQ .setValue
+    %a8()
+  .setValue
+    LDA !ram_watch_edit_left : STA [$C1]
+    %a16()
+    LDA #!IH_MODE_RAMWATCH_INDEX : STA !sram_display_mode
+    %sfxconfirm()
+    RTL
 
 ramwatch_execute_right:
-    %cm_jsl("Write to Address 2", #action_ramwatch_edit_right, #$0000)
+    %cm_jsl("Write to Right Address", #.routine, #$0000)
+  .routine
+    LDA !ram_watch_right : CLC : ADC !ram_watch_right_index : STA $C1
+    LDA !ram_watch_bank : STA $C3
+    LDA !ram_watch_write_mode : BEQ .setValue
+    %a8()
+  .setValue
+    LDA !ram_watch_edit_right : STA [$C1]
+    %a16()
+    LDA #!IH_MODE_RAMWATCH_INDEX : STA !sram_display_mode
+    %sfxconfirm()
+    RTL
 
 ramwatch_lock_left:
-    %cm_toggle("Lock Value 1", !ram_watch_edit_lock_left, #$0001, #action_HUD_ramwatch)
+    %cm_toggle("Lock Left Value", !ram_watch_edit_lock_left, #$0001, #action_HUD_ramwatch)
 
 ramwatch_lock_right:
-    %cm_toggle("Lock Value 2", !ram_watch_edit_lock_right, #$0001, #action_HUD_ramwatch)
-
-action_ramwatch_edit_left:
-{
-    LDA !ram_watch_left : CLC : ADC !ram_watch_left_index : STA $C1
-    LDA !ram_watch_bank : BEQ .bank7E
-    CMP #$0001 : BEQ .bank7F
-    LDA #$0070 : BRA +
-  .bank7E
-    LDA #$007E : BRA +
-  .bank7F
-    LDA #$007F
-+   STA $C3
-    LDA !ram_watch_write_mode : BEQ +
-    %a8()
-+   LDA !ram_watch_edit_left : STA [$C1]
-    %a16()
-    LDA #!IH_MODE_RAMWATCH_INDEX : STA !sram_display_mode
-    %sfxconfirm()
-    RTL
-}
-
-action_ramwatch_edit_right:
-{
-    LDA !ram_watch_right : CLC : ADC !ram_watch_right_index : STA $C1
-    LDA !ram_watch_bank : BEQ .bank7E
-    CMP #$0001 : BEQ .bank7F
-    LDA #$0070 : BRA +
-  .bank7E
-    LDA #$007E : BRA +
-  .bank7F
-    LDA #$007F
-+   STA $C3
-    LDA !ram_watch_write_mode : BEQ +
-    %a8()
-+   LDA !ram_watch_edit_right : STA [$C1]
-    %a16()
-    LDA #!IH_MODE_RAMWATCH_INDEX : STA !sram_display_mode
-    %sfxconfirm()
-    RTL
-}
+    %cm_toggle("Lock Right Value", !ram_watch_edit_lock_right, #$0001, #action_HUD_ramwatch)
 
 action_HUD_ramwatch:
 {
     LDA #!IH_MODE_RAMWATCH_INDEX : STA !sram_display_mode
     RTL
 }
+
+ramwatch_display:
+    dw !ACTION_RAM_WATCH ; menu action index
+table ../resources/header.tbl
+    db #$28, "      LEFT      RIGHT", #$FF
+table ../resources/normal.tbl
 
