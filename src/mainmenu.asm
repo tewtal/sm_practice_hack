@@ -22,6 +22,14 @@ action_submenu:
     BRA action_submenu_jump
 }
 
+action_adjacent_submenu:
+{
+    JSL cm_previous_menu
+    %setmenubank()
+
+    BRA action_submenu
+}
+
 action_presets_submenu:
 {
 
@@ -621,17 +629,13 @@ CustomPresetsMenu3:
     %cm_custompreset(39)
 
 custompreset_goto_page1:
-    %cm_jsl("GOTO PAGE ONE", .routine, #CustomPresetsMenu)
-  .routine
-    JSL cm_previous_menu
-    %setmenubank()
-    JML action_submenu
+    %cm_adjacent_submenu("GOTO PAGE ONE", #CustomPresetsMenu)
 
 custompreset_goto_page2:
-    %cm_jsl("GOTO PAGE TWO", custompreset_goto_page1_routine, #CustomPresetsMenu2)
+    %cm_adjacent_submenu("GOTO PAGE TWO", #CustomPresetsMenu2)
 
 custompreset_goto_page3:
-    %cm_jsl("GOTO PAGE THREE", custompreset_goto_page1_routine, #CustomPresetsMenu3)
+    %cm_adjacent_submenu("GOTO PAGE THREE", #CustomPresetsMenu3)
 
 
 ; ----------------
@@ -1885,6 +1889,11 @@ BossesMenu:
     dw #boss_gt
     dw #boss_ridley
     dw #boss_mb
+    dw #$FFFF
+    dw #boss_kraid_statue
+    dw #boss_phantoon_statue
+    dw #boss_draygon_statue
+    dw #boss_ridley_statue
     dw #$0000
     %cm_header("BOSSES")
 
@@ -1921,6 +1930,18 @@ boss_ridley:
 boss_mb:
     %cm_toggle_bit("Mother Brain", #$7ED82C, #$0200, #0)
 
+boss_kraid_statue:
+    %cm_toggle_bit("Kraid Statue", #$7ED820, #$0200, #0)
+
+boss_phantoon_statue:
+    %cm_toggle_bit("Phantoon Statue", #$7ED820, #$0040, #0)
+
+boss_draygon_statue:
+    %cm_toggle_bit("Draygon Statue", #$7ED820, #$0100, #0)
+
+boss_ridley_statue:
+    %cm_toggle_bit("Ridley Statue", #$7ED820, #$0080, #0)
+
 
 ; --------------
 ; Infohud menu
@@ -1948,10 +1969,9 @@ if !PRESERVE_WRAM_DURING_SPACETIME
     dw #ih_spacetime_infohud
 endif
     dw #ih_lag
+    dw #ih_auto_update_timers
     dw #$FFFF
     dw #ih_ram_watch
-    dw #$FFFF
-    dw #ih_auto_update_timers
     dw #$0000
     %cm_header("INFOHUD")
 
@@ -2225,7 +2245,7 @@ ih_ram_watch:
     %cm_jsl("Customize RAM Watch", #ih_prepare_ram_watch_menu, #RAMWatchMenu)
 
 ih_auto_update_timers:
-    %cm_toggle_inverted("Auto update timers", !ram_timers_autoupdate, #$0001, #0)
+    %cm_toggle_inverted("Auto-Update Timers", !ram_timers_autoupdate, #$0001, #0)
 
 incsrc ramwatchmenu.asm
 
@@ -2245,6 +2265,15 @@ LayoutMenu:
     dw #layout_antisoftlock
     dw #layout_variatweaks
     dw #layout_dashrecall
+    dw #$FFFF
+    dw #layout_doorportal
+    dw #layout_nextdoorjump
+    dw #$FFFF
+    dw #layout_selectsource
+    dw #layout_sourcedoor
+    dw #$FFFF
+    dw #layout_selectdestination
+    dw #layout_destinationdoor
     dw #$0000
     %cm_header("ROOM LAYOUT")
     %cm_footer("APPLIED WHEN ROOM RELOADED")
@@ -2263,6 +2292,321 @@ layout_variatweaks:
 
 layout_dashrecall:
     %cm_toggle_bit("DASH Recall Patches", !sram_room_layout, !ROOM_LAYOUT_DASH_RECALL, #0)
+
+layout_doorportal:
+    %cm_toggle_bit("Custom Door Portal", !ram_door_portal_flags, !DOOR_PORTAL_ENABLED, .routine)
+  .routine
+    LDA !ram_door_portal_flags : BIT !DOOR_PORTAL_ENABLED : BNE .done
+    TDC : STA !ram_door_portal_flags
+  .done
+    RTL
+
+layout_nextdoorjump:
+    %cm_toggle_bit("Next Door Jump To Dest", !ram_door_portal_flags, !DOOR_PORTAL_JUMP, .routine)
+  .routine
+    LDA !ram_door_portal_flags : BIT !DOOR_PORTAL_JUMP : BEQ .done
+    ORA !DOOR_PORTAL_ENABLED : STA !ram_door_portal_flags
+  .done
+    RTL
+
+layout_enable_door_portal:
+    LDA !ram_door_portal_flags : ORA !DOOR_PORTAL_ENABLED : STA !ram_door_portal_flags
+    RTL
+
+layout_selectsource:
+    %cm_jsl("Select Portal Source", #LayoutSourceDoorMenu, #LayoutDoorMenu)
+
+layout_sourcedoor:
+    dw !ACTION_CHOICE_JSL_TEXT
+    dl #!ram_door_source
+    dw #layout_enable_door_portal
+    dw doormenu_A96C ; Bosses
+    dw doormenu_A840
+    dw doormenu_91CE
+    dw doormenu_91B6
+    dw doormenu_98CA
+    dw doormenu_A2C4
+    dw doormenu_98BE
+    dw doormenu_A2AC
+    dw doormenu_8A42 ; Crateria
+    dw doormenu_8C52
+    dw doormenu_8C22
+    dw doormenu_8E9E
+    dw doormenu_8AEA
+    dw doormenu_93EA ; Croc
+    dw doormenu_A708 ; East Maridia
+    dw doormenu_8AA2
+    dw doormenu_91E6 ; G4
+    dw doormenu_8BFE ; Green Brinstar
+    dw doormenu_8E86
+    dw doormenu_8F0A
+    dw doormenu_913E ; Kraid's Lair
+    dw doormenu_96D2 ; Lower Norfair
+    dw doormenu_9A4A
+    dw doormenu_90C6 ; Red Brinstar
+    dw doormenu_A384
+    dw doormenu_A390
+    dw doormenu_A330
+    dw doormenu_8AF6
+    dw doormenu_902A
+    dw doormenu_93D2 ; Upper Norfair
+    dw doormenu_967E
+    dw doormenu_95FA
+    dw doormenu_922E
+    dw doormenu_923A
+    dw doormenu_A510 ; West Maridia
+    dw doormenu_A4C8
+    dw doormenu_A39C
+    dw doormenu_A480
+    dw doormenu_8AAE ; Wrecked Ship
+    dw doormenu_89CA
+    dw #$0000
+
+layout_selectdestination:
+    %cm_jsl("Select Portal Destination", #LayoutDestinationDoorMenu, #LayoutDoorMenu)
+
+layout_destinationdoor:
+    dw !ACTION_CHOICE_JSL_TEXT
+    dl #!ram_door_destination
+    dw #layout_enable_door_portal
+    dw doormenu_A96C ; Bosses
+    dw doormenu_A840
+    dw doormenu_91CE
+    dw doormenu_91B6
+    dw doormenu_98CA
+    dw doormenu_A2C4
+    dw doormenu_98BE
+    dw doormenu_A2AC
+    dw doormenu_8A42 ; Crateria
+    dw doormenu_8C52
+    dw doormenu_8C22
+    dw doormenu_8E9E
+    dw doormenu_8AEA
+    dw doormenu_93EA ; Croc
+    dw doormenu_A708 ; East Maridia
+    dw doormenu_8AA2
+    dw doormenu_91E6 ; G4
+    dw doormenu_8BFE ; Green Brinstar
+    dw doormenu_8E86
+    dw doormenu_8F0A
+    dw doormenu_913E ; Kraid's Lair
+    dw doormenu_96D2 ; Lower Norfair
+    dw doormenu_9A4A
+    dw doormenu_90C6 ; Red Brinstar
+    dw doormenu_A384
+    dw doormenu_A390
+    dw doormenu_A330
+    dw doormenu_8AF6
+    dw doormenu_902A
+    dw doormenu_93D2 ; Upper Norfair
+    dw doormenu_967E
+    dw doormenu_95FA
+    dw doormenu_922E
+    dw doormenu_923A
+    dw doormenu_A510 ; West Maridia
+    dw doormenu_A4C8
+    dw doormenu_A39C
+    dw doormenu_A480
+    dw doormenu_8AAE ; Wrecked Ship
+    dw doormenu_89CA
+    dw #$0000
+
+LayoutSourceDoorMenu:
+    LDA #!ram_door_source : STA !ram_cm_door_menu_value
+    LDA #!ram_door_source>>16 : STA !ram_cm_door_menu_bank
+    %setmenubank()
+    JML action_submenu
+
+LayoutDestinationDoorMenu:
+    LDA #!ram_door_destination : STA !ram_cm_door_menu_value
+    LDA #!ram_door_destination>>16 : STA !ram_cm_door_menu_bank
+    %setmenubank()
+    JML action_submenu
+
+LayoutDoorMenu:
+    dw doormenu_A96C ; Bosses
+    dw doormenu_A840
+    dw doormenu_91CE
+    dw doormenu_91B6
+    dw doormenu_98CA
+    dw doormenu_A2C4
+    dw doormenu_98BE
+    dw doormenu_A2AC
+    dw doormenu_8A42 ; Crateria
+    dw doormenu_8C52
+    dw doormenu_8C22
+    dw doormenu_8E9E
+    dw doormenu_8AEA
+    dw doormenu_93EA ; Croc
+    dw doormenu_A708 ; East Maridia
+    dw doormenu_8AA2
+    dw doormenu_91E6 ; G4
+    dw doormenu_8BFE ; Green Brinstar
+    dw doormenu_8E86
+    dw doormenu_8F0A
+    dw doormenu_goto_page2
+    dw #$0000
+    %cm_header("SELECT DOOR")
+
+LayoutDoorMenu2:
+    dw doormenu_913E ; Kraid's Lair
+    dw doormenu_96D2 ; Lower Norfair
+    dw doormenu_9A4A
+    dw doormenu_90C6 ; Red Brinstar
+    dw doormenu_A384
+    dw doormenu_A390
+    dw doormenu_A330
+    dw doormenu_8AF6
+    dw doormenu_902A
+    dw doormenu_93D2 ; Upper Norfair
+    dw doormenu_967E
+    dw doormenu_95FA
+    dw doormenu_922E
+    dw doormenu_923A
+    dw doormenu_A510 ; West Maridia
+    dw doormenu_A4C8
+    dw doormenu_A39C
+    dw doormenu_A480
+    dw doormenu_8AAE ; Wrecked Ship
+    dw doormenu_89CA
+    dw doormenu_goto_page1
+    dw #$0000
+    %cm_header("SELECT DOOR")
+
+doormenu_A96C:
+    %cm_jsl("BOSS Draygon", #doormenu_select, #$0000)
+
+doormenu_A840:
+    %cm_jsl("BOSS East Maridia", #doormenu_select, #$0001)
+
+doormenu_91CE:
+    %cm_jsl("BOSS Kraid", #doormenu_select, #$0002)
+
+doormenu_91B6:
+    %cm_jsl("BOSS Kraid Lair", #doormenu_select, #$0003)
+
+doormenu_98CA:
+    %cm_jsl("BOSS Lower Norfair", #doormenu_select, #$0004)
+
+doormenu_A2C4:
+    %cm_jsl("BOSS Phantoon", #doormenu_select, #$0005)
+
+doormenu_98BE:
+    %cm_jsl("BOSS Ridley", #doormenu_select, #$0006)
+
+doormenu_A2AC:
+    %cm_jsl("BOSS Wrecked Ship", #doormenu_select, #$0007)
+
+doormenu_8A42:
+    %cm_jsl("CRAT Crateria Kihunter", #doormenu_select, #$0008)
+
+doormenu_8C52:
+    %cm_jsl("CRAT Green Pirates Shaft", #doormenu_select, #$0009)
+
+doormenu_8C22:
+    %cm_jsl("CRAT Lower Mushrooms", #doormenu_select, #$000A)
+
+doormenu_8E9E:
+    %cm_jsl("CRAT Meme Route", #doormenu_select, #$000B)
+
+doormenu_8AEA:
+    %cm_jsl("CRAT Moat", #doormenu_select, #$000C)
+
+doormenu_93EA:
+    %cm_jsl("CROC Crocomire", #doormenu_select, #$000D)
+
+doormenu_A708:
+    %cm_jsl("EM Aqueduct", #doormenu_select, #$000E)
+
+doormenu_8AA2:
+    %cm_jsl("EM Forgotten Highway", #doormenu_select, #$000F)
+
+doormenu_91E6:
+    %cm_jsl("G4 Statues Hallway", #doormenu_select, #$0010)
+
+doormenu_8BFE:
+    %cm_jsl("GB Green Brin Elevator", #doormenu_select, #$0011)
+
+doormenu_8E86:
+    %cm_jsl("GB Green Hill Zone", #doormenu_select, #$0012)
+
+doormenu_8F0A:
+    %cm_jsl("GB Noob Bridge", #doormenu_select, #$0013)
+
+doormenu_913E:
+    %cm_jsl("KL Warehouse", #doormenu_select, #$0014)
+
+doormenu_96D2:
+    %cm_jsl("LN Lava Dive", #doormenu_select, #$0015)
+
+doormenu_9A4A:
+    %cm_jsl("LN Three Musketeers", #doormenu_select, #$0016)
+
+doormenu_90C6:
+    %cm_jsl("RB Caterpillar", #doormenu_select, #$0017)
+
+doormenu_A384:
+    %cm_jsl("RB East Tunnel (Lower)", #doormenu_select, #$0018)
+
+doormenu_A390:
+    %cm_jsl("RB East Tunnel (Upper)", #doormenu_select, #$0019)
+
+doormenu_A330:
+    %cm_jsl("RB Glass Tunnel", #doormenu_select, #$001A)
+
+doormenu_8AF6:
+    %cm_jsl("RB Red Brin Elevator", #doormenu_select, #$001B)
+
+doormenu_902A:
+    %cm_jsl("RB Red Tower", #doormenu_select, #$001C)
+
+doormenu_93D2:
+    %cm_jsl("UN Crocomire Speedway", #doormenu_select, #$001D)
+
+doormenu_967E:
+    %cm_jsl("UN Kronic Boost", #doormenu_select, #$001E)
+
+doormenu_95FA:
+    %cm_jsl("UN Single Chamber", #doormenu_select, #$001F)
+
+doormenu_922E:
+    %cm_jsl("UN Business Center (Left)", #doormenu_select, #$0020)
+
+doormenu_923A:
+    %cm_jsl("UN Business Center (Right)", #doormenu_select, #$0021)
+
+doormenu_A510:
+    %cm_jsl("WM Crab Hole", #doormenu_select, #$0022)
+
+doormenu_A4C8:
+    %cm_jsl("WM Crab Shaft", #doormenu_select, #$0023)
+
+doormenu_A39C:
+    %cm_jsl("WM Main Street", #doormenu_select, #$0024)
+
+doormenu_A480:
+    %cm_jsl("WM Red Fish", #doormenu_select, #$0025)
+
+doormenu_8AAE:
+    %cm_jsl("WS Crab Maze", #doormenu_select, #$0026)
+
+doormenu_89CA:
+    %cm_jsl("WS West Ocean", #doormenu_select, #$0027)
+
+doormenu_goto_page1:
+    %cm_adjacent_submenu("GOTO PAGE ONE", #LayoutDoorMenu)
+
+doormenu_goto_page2:
+    %cm_adjacent_submenu("GOTO PAGE TWO", #LayoutDoorMenu2)
+
+doormenu_select:
+{
+    LDA !ram_cm_door_menu_value : STA $16
+    LDA !ram_cm_door_menu_bank : STA $18
+    TYA : STA [$16]
+    LDA !ram_door_portal_flags : ORA !DOOR_PORTAL_ENABLED : STA !ram_door_portal_flags
+    JML cm_previous_menu
+}
 
 
 ; ----------

@@ -260,6 +260,12 @@ macro cm_submenu(title, target)
     %cm_jsl_submenu("<title>", #action_submenu, <target>)
 endmacro
 
+macro cm_adjacent_submenu(title, target)
+; runs action_adjacent_submenu to return to previous menu, set the bank of the next menu and continue into action_submenu
+; can only used for submenus and when already on a submenu
+    %cm_jsl("<title>", #action_adjacent_submenu, <target>)
+endmacro
+
 macro cm_preset(title, target)
 ; runs action_load_preset to set the bank of the preset menu that matches the current category
     %cm_jsl_submenu("<title>", #action_load_preset, <target>)

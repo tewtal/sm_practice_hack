@@ -527,14 +527,15 @@ endif
     JSL $80982A  ; Enable horizontal and vertical timer interrupts
 
     LDA $7ED914 : CMP #$0022 : BEQ .done_unlock_samus
-    LDA #$E695 : STA $0A42 ; Unlock Samus
-    LDA #$E725 : STA $0A44 ; Unlock Samus
+    LDA #$E695 : STA !SAMUS_LOCKED_HANDLER   ; Unlock Samus
+    LDA #$E725 : STA !SAMUS_MOVEMENT_HANDLER ; Unlock Samus
   .done_unlock_samus
     LDA #$9F55 : STA $0A6C ; Set X speed table pointer
 
-    STZ $0E18              ; Set elevator to inactive
-    STZ $1C1F              ; Clear message box index
-    STZ $0E1A              ; Clear health bomb flag
+    STZ !ELEVATOR_PROPERTIES
+    STZ !ELEVATOR_STATUS
+    STZ !HEALTH_BOMB_FLAG
+    STZ !MESSAGE_BOX_INDEX
     STZ $0795 : STZ $0797  ; Clear door transition flags
     TDC : STA !ram_transition_flag
     JSL init_heat_damage_ram

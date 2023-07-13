@@ -538,6 +538,7 @@ cm_draw_action_table:
     dw draw_numfield_color
     dw draw_numfield_sound
     dw draw_choice
+    dw draw_choice_jsl_text
     dw draw_ctrl_shortcut
     dw draw_controller_input
     dw draw_jsl
@@ -972,6 +973,36 @@ draw_choice:
 
   .found
     %a16()
+    JSR cm_draw_text
+    RTS
+}
+
+draw_choice_jsl_text:
+{
+    ; grab the memory address (long)
+    LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : INC !DP_CurrentMenu : STA !DP_Address
+    LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : STA !DP_Address+2
+
+    ; skip the JSL target
+    INC !DP_CurrentMenu : INC !DP_CurrentMenu
+
+    ; set position for choice
+    %item_index_to_vram_index()
+
+    ; grab the value at that memory address
+    LDA [!DP_Address] : TAY
+
+    ; find the correct text that should be drawn (the selected choice)
+    BEQ .found
+
+  .loop_jsl_text
+    INC !DP_CurrentMenu : INC !DP_CurrentMenu
+    DEY : BNE .loop_jsl_text
+
+  .found
+    ; go to jsl text
+    %a16()
+    LDA [!DP_CurrentMenu] : INC #6 : STA !DP_CurrentMenu
     JSR cm_draw_text
     RTS
 }
@@ -2445,6 +2476,7 @@ cm_execute_action_table:
     dw execute_numfield_color
     dw execute_numfield_sound
     dw execute_choice
+    dw execute_choice_jsl_text
     dw execute_ctrl_shortcut
     dw execute_controller_input
     dw execute_jsl
@@ -2732,8 +2764,72 @@ execute_choice:
   .loop_done
     ; Y = maximum + 2
     ; for convenience so we can use BCS. We do one more DEC in `.set_to_max`
-    ; below, so we get the actual max.
+    ; in order to get the actual max.
     DEY
+
+    %a16()
+    ; X = new value (might be out of bounds)
+    TXA : BMI .set_to_max
+    TYA : STA !DP_Maximum
+    TXA : CMP !DP_Maximum : BCS .set_to_zero
+
+    BRA .store
+
+  .set_to_zero
+    LDA #$0000 : BRA .store
+
+  .set_to_max
+    TYA : DEC
+
+  .store
+    STA [!DP_Address]
+
+    ; skip if JSL target is zero
+    LDA !DP_JSLTarget : BEQ .end
+
+    ; Set return address for indirect JSL
+    LDA !ram_cm_menu_bank : STA !DP_JSLTarget+2
+    PHK : PEA .end-1
+
+    ; addr in A
+    LDA [!DP_Address] : LDX #$0000
+    JML.w [!DP_JSLTarget]
+
+  .end
+    %ai16()
+    %sfxtoggle()
+    RTS
+}
+
+execute_choice_jsl_text:
+{
+    ; grab the memory address (long)
+    LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : INC !DP_CurrentMenu : STA !DP_Address
+    LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : STA !DP_Address+2
+
+    LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : INC !DP_CurrentMenu : STA !DP_JSLTarget
+
+    ; we either increment or decrement
+    LDA !ram_cm_controller : BIT #$0200 : BNE .pressed_left
+    ; pressed right
+    LDA [!DP_Address] : INC : BRA .bounds_check
+
+  .pressed_left
+    LDA [!DP_Address] : DEC
+
+  .bounds_check
+    TAX         ; X = new value
+    LDY #$0000  ; Y will be set to max
+
+  .loop_jsl_text
+    INY : INC !DP_CurrentMenu : INC !DP_CurrentMenu
+    LDA [!DP_CurrentMenu] : BNE .loop_jsl_text
+
+  .loop_done
+    ; Y = maximum + 1
+    ; for convenience so we can use BCS. We do one more DEC in `.set_to_max`
+    ; in order to get the actual max.
+    INY : DEY
 
     %a16()
     ; X = new value (might be out of bounds)

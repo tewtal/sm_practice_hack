@@ -151,6 +151,9 @@ ram_game_loop_extras = !ram_game_loop_extras ; !WRAM_PERSIST_START+$4E
 ram_game_mode_extras = !ram_game_mode_extras ; !WRAM_PERSIST_START+$50
 ram_suits_heat_damage_value = !ram_suits_heat_damage_value ; !WRAM_PERSIST_START+$52
 ram_sprite_feature_flags = !ram_sprite_feature_flags ; !WRAM_PERSIST_START+$54
+ram_door_portal_flags = !ram_door_portal_flags ; !WRAM_PERSIST_START+$56
+ram_door_source = !ram_door_source ; !WRAM_PERSIST_START+$58
+ram_door_destination = !ram_door_destination ; !WRAM_PERSIST_START+$5A
 
 ; ^ FREE SPACE ^ up to +$76 (!WRAM_START+$FC - !WRAM_PERSIST_START)
 
@@ -222,6 +225,9 @@ ram_cm_watch_enemy_property = !ram_cm_watch_enemy_property ; !WRAM_MENU_START+$8
 ram_cm_watch_enemy_index = !ram_cm_watch_enemy_index ; !WRAM_MENU_START+$82
 ram_cm_watch_enemy_side = !ram_cm_watch_enemy_side ; !WRAM_MENU_START+$84
 ram_cm_watch_common_address = !ram_cm_watch_common_address ; !WRAM_MENU_START+$86
+
+ram_cm_door_menu_value = !ram_cm_door_menu_value ; !WRAM_MENU_START+$80
+ram_cm_door_menu_bank = !ram_cm_door_menu_bank ; !WRAM_MENU_START+$82
 
 ram_cm_phan_first_phase = !ram_cm_phan_first_phase ; !WRAM_MENU_START+$80
 ram_cm_phan_second_phase = !ram_cm_phan_second_phase ; !WRAM_MENU_START+$82

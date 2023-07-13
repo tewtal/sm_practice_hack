@@ -9,6 +9,9 @@ org $8094DF
     PLP          ; patch out resetting of controller 2 buttons and enable debug mode
     RTL
 
+org $80ADB5      ; fix for scroll offset misalignment when going down through door
+    JSR ih_fix_scroll_down_offsets
+
 org $80AE29      ; fix for scroll offset misalignment
     JSR ih_fix_scroll_offsets
 
@@ -1523,7 +1526,14 @@ ih_set_picky_chozo_event_and_enemy_speed:
 
 ih_fix_scroll_offsets:
 {
+    ; Custom doors are defined for incompatible door alignment,
+    ; which sometimes breakings the scroll offsets
+    ; Per layout.asm, these door definitions begin at 83:C000,
+    ; so BIT #$4000 can be used to detect them
+    LDA !DOOR_ID : BIT #$4000 : BNE .fix
     LDA !ram_fix_scroll_offsets : BEQ .nofix
+
+  .fix
     LDA $B3 : AND #$FF00 : STA $B3
     LDA $B1 : AND #$FF00
     SEC
@@ -1532,6 +1542,24 @@ ih_fix_scroll_offsets:
   .nofix
     LDA $B1 : SEC
     RTS
+}
+
+ih_fix_scroll_down_offsets:
+{
+    ; Same fix as above, except $B3 must end in #$20
+    LDA !DOOR_ID : BIT #$4000 : BNE .fix
+    LDA !ram_fix_scroll_offsets : BEQ .nofix
+
+  .fix
+    LDA $B3 : AND #$FF00 : ORA #$0020 : STA $B3
+    LDA $B1 : AND #$FF00
+    SEC
+    ; From here, we need to jump into the AE29 method
+    JMP $AE2C
+
+  .nofix
+    LDA $B1 : SEC
+    JMP $AE2C
 }
 
 ih_hud_code_paused:

@@ -719,5 +719,5 @@ endif
 }
 
 print pc, " custompresets end"
-warnpc $B3C000 ; mainmenu.asm
+warnpc $83C000 ; layout.asm
 
