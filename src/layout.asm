@@ -532,7 +532,7 @@ door_custom_98BE_ridley_door1:
 
 door_custom_98CA_lower_norfair_farming_door0:
     dw $B32E   ; Ridley Room
-    db $00, $05, $0E, $06, $00, $00
+    db $00, $05, $0E, $06, $00, $01
     dw $8000, #door_custom_asm
     dw $00BF, $0198, $0000
 
