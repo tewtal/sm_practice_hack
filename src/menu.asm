@@ -545,6 +545,7 @@ cm_draw_action_table:
     dw draw_submenu
     dw draw_custom_preset
     dw draw_ram_watch
+    dw draw_dynamic
 
 draw_toggle:
 {
@@ -1346,6 +1347,39 @@ draw_ram_watch:
     RTS
 }
 
+draw_dynamic:
+{
+    ; grab the memory address (long)
+    LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : INC !DP_CurrentMenu : STA !DP_Address
+    LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : STA !DP_Address+2
+
+    ; grab the value at that memory address
+    LDA [!DP_Address] : TAX
+
+    ; find the correct item that should be drawn (the selected choice)
+    BEQ .found
+
+  .loop
+    INC !DP_CurrentMenu : INC !DP_CurrentMenu
+    DEX : BNE .loop
+
+  .found
+    LDA [!DP_CurrentMenu] : BEQ .skip
+    STA !DP_CurrentMenu
+
+    ; X = action index (action type)
+    LDA [!DP_CurrentMenu] : TAX
+
+    ; !DP_CurrentMenu points to data after the action type index
+    INC !DP_CurrentMenu : INC !DP_CurrentMenu
+
+    ; draw menu item
+    JMP (cm_draw_action_table,X)
+
+  .skip
+    RTS
+}
+
 cm_hex2dec_draw5:
 ; Converts a hex number into a five digit decimal number
 ; expects value to be drawn in !DP_DrawValue
@@ -1448,6 +1482,7 @@ cm_draw_text:
     %a16()
     RTS
 }
+
 
 ; --------------
 ; Input Display
@@ -2453,8 +2488,11 @@ cm_execute:
     ; Safety net incase blank line selected
     CMP #$FFFF : BEQ .end
 
-    ; Increment past the action index
-    LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : INC !DP_CurrentMenu : TAX
+    ; X = action index (action type)
+    LDA [!DP_CurrentMenu] : TAX
+
+    ; !DP_CurrentMenu points to data after the action type index
+    INC !DP_CurrentMenu : INC !DP_CurrentMenu
 
     ; Execute action
     JSR (cm_execute_action_table,X)
@@ -2464,7 +2502,6 @@ cm_execute:
 }
 
 cm_execute_action_table:
-{
     dw execute_toggle
     dw execute_toggle_bit
     dw execute_toggle ; inverted
@@ -2483,6 +2520,7 @@ cm_execute_action_table:
     dw execute_submenu
     dw execute_custom_preset
     dw execute_ram_watch
+    dw execute_dynamic
 
 execute_toggle:
 {
@@ -3040,6 +3078,40 @@ execute_ram_watch:
     ; do nothing
     RTS
 }
+
+execute_dynamic:
+{
+    ; grab the memory address (long)
+    LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : INC !DP_CurrentMenu : STA !DP_Address
+    LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : STA !DP_Address+2
+
+    ; grab the value at that memory address
+    LDA [!DP_Address] : TAX
+
+    ; find the correct item that should be executed (the selected choice)
+    BEQ .found
+
+  .loop
+    INC !DP_CurrentMenu : INC !DP_CurrentMenu
+    DEX : BNE .loop
+
+  .found
+    LDA [!DP_CurrentMenu] : BEQ .skip
+    STA !DP_CurrentMenu
+
+    ; X = action index (action type)
+    LDA [!DP_CurrentMenu] : TAX
+
+    ; !DP_CurrentMenu points to data after the action type index
+    INC !DP_CurrentMenu : INC !DP_CurrentMenu
+
+    ; draw menu item
+    JMP (cm_execute_action_table,X)
+
+  .skip
+    RTS
+}
+
 
 cm_hex2dec:
 {

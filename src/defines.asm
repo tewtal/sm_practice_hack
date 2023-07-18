@@ -629,6 +629,7 @@ endif
 !ACTION_JSL_SUBMENU         = #$001E
 !ACTION_CUSTOM_PRESET       = #$0020
 !ACTION_RAM_WATCH           = #$0022
+!ACTION_DYNAMIC             = #$0024
 
 !TOP_DISPLAY_VANILLA = #$0002
 
