@@ -357,22 +357,22 @@ presets_current:
     dl #!sram_preset_category
     dw #.routine
     db #$28, "CURRENT PRESET", #$FF
-        db #$28, "       PRKD", #$FF
-        db #$28, "       KPDR", #$FF
-        db #$28, "  100% LATE", #$FF
-        db #$28, " 100% EARLY", #$FF
-        db #$28, "        RBO", #$FF
-        db #$28, "       PKRD", #$FF
-        db #$28, "     KPDR25", #$FF
-        db #$28, " GT CLASSIC", #$FF
-        db #$28, "    GT MAX%", #$FF
-        db #$28, "    14% ICE", #$FF
-        db #$28, "  14% SPEED", #$FF
-        db #$28, "   100% MAP", #$FF
-        db #$28, "  NIN POWER", #$FF
-        db #$28, "   ALL KPDR", #$FF
-        db #$28, "   ALL PKDR", #$FF
-        db #$28, "   ALL PRKD", #$FF
+    db #$28, "       PRKD", #$FF
+    db #$28, "       KPDR", #$FF
+    db #$28, "  100% LATE", #$FF
+    db #$28, " 100% EARLY", #$FF
+    db #$28, "        RBO", #$FF
+    db #$28, "       PKRD", #$FF
+    db #$28, "     KPDR25", #$FF
+    db #$28, " GT CLASSIC", #$FF
+    db #$28, "    GT MAX%", #$FF
+    db #$28, "    14% ICE", #$FF
+    db #$28, "  14% SPEED", #$FF
+    db #$28, "   100% MAP", #$FF
+    db #$28, "  NIN POWER", #$FF
+    db #$28, "   ALL KPDR", #$FF
+    db #$28, "   ALL PKDR", #$FF
+    db #$28, "   ALL PRKD", #$FF
     db #$FF
   .routine
     LDA #$0000 : STA !sram_last_preset
