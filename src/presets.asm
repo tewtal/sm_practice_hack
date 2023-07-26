@@ -536,6 +536,7 @@ endif
     STZ !ELEVATOR_STATUS
     STZ !HEALTH_BOMB_FLAG
     STZ !MESSAGE_BOX_INDEX
+    STZ $1E75 ; Save Station Lockout flag
     STZ $0795 : STZ $0797  ; Clear door transition flags
     TDC : STA !ram_transition_flag
     JSL init_heat_damage_ram
