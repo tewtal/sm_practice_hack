@@ -2122,6 +2122,7 @@ RoomStratMenu:
     dw ihstrat_snailclip
     dw ihstrat_mbhp
     dw ihstrat_ridleyai
+    dw ihstrat_downbackzeb
     dw #$0000
     %cm_header("INFOHUD ROOM STRAT")
     %cm_footer("ROOM STRAT MUST BE ACTIVE")
@@ -2160,6 +2161,9 @@ ihstrat_mbhp:
 ihstrat_ridleyai:
     %cm_jsl("Ridley AI", #action_select_room_strat, #$000A)
 
+ihstrat_downbackzeb:
+    %cm_jsl("Downback Zeb Skip", #action_select_room_strat, #$000B)
+
 action_select_room_strat:
 {
     TYA : STA !sram_room_strat
@@ -2183,6 +2187,7 @@ ih_room_strat:
     db #$28, " SNAIL CLIP", #$FF
     db #$28, "      MB HP", #$FF
     db #$28, "  RIDLEY AI", #$FF
+    db #$28, "  DBACK ZEB", #$FF
     db #$FF
     .routine
         LDA #$0001 : STA !sram_display_mode
