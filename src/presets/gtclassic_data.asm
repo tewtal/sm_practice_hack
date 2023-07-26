@@ -388,6 +388,7 @@ preset_gtclassic_brinstar_dachora_room:
     dw $09C2, $00BD  ; Health
     dw $09CA, $0005  ; Supers
     dw $09CC, $0005  ; Max supers
+    dw $09D2, $0002  ; Currently selected item
     dw $0A1C, $0019  ; Samus position/state
     dw $0A1E, $0308  ; More position/state
     dw $0AF6, $0052  ; Samus X
@@ -408,6 +409,7 @@ preset_gtclassic_brinstar_big_pink:
     dw $09C2, $00B3  ; Health
     dw $09C6, $0002  ; Missiles
     dw $09CA, $0004  ; Supers
+    dw $09D2, $0000  ; Currently selected item
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $0692  ; Samus X
@@ -901,7 +903,7 @@ preset_gtclassic_bootless_upper_norfair_green_gate_glitch:
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0180  ; Layer 2 Y position
     dw $09CE, $0004  ; Pbs
-    dw $09D2, $0000  ; Currently selected item
+    dw $09D2, $0002  ; Currently selected item
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $006E  ; Samus X
@@ -920,6 +922,7 @@ preset_gtclassic_bootless_upper_norfair_gt_code:
     dw $0919, $0178  ; Layer 2 Y position
     dw $09C2, $001A  ; Health
     dw $09CA, $0000  ; Supers
+    dw $09D2, $0000  ; Currently selected item
     dw $0AF6, $0024  ; Samus X
     dw $0AFA, $028B  ; Samus Y
     dw #$FFFF
@@ -1141,7 +1144,7 @@ preset_gtclassic_hi_jump_upper_norfair_green_gate_glitch:
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $4000  ; Screen subpixel Y position
     dw $09CE, $0004  ; Pbs
-    dw $09D2, $0000  ; Currently selected item
+    dw $09D2, $0002  ; Currently selected item
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0180  ; Layer 2 Y position
     dw $0A1C, $0002  ; Samus position/state
@@ -1162,6 +1165,7 @@ preset_gtclassic_hi_jump_upper_norfair_gt_code:
     dw $0919, $017A  ; Layer 2 Y position
     dw $09C2, $0097  ; Health
     dw $09CA, $0003  ; Supers
+    dw $09D2, $0000  ; Currently selected item
     dw $0AF6, $0024  ; Samus X
     dw $0AFA, $028B  ; Samus Y
     dw #$FFFF
@@ -1827,6 +1831,7 @@ preset_gtclassic_wrecked_ship_basement:
     dw $0917, $0300  ; Layer 2 X position
     dw $0919, $0557  ; Layer 2 Y position
     dw $09CA, $000F  ; Supers
+    dw $09D2, $0002  ; Currently selected item
     dw $0AF6, $045F  ; Samus X
     dw $0AFA, $07BB  ; Samus Y
     dw $D8C0, $8010  ; Doors
@@ -1842,6 +1847,7 @@ preset_gtclassic_wrecked_ship_phantoon:
     dw $0919, $0000  ; Layer 2 Y position
     dw $09CA, $000E  ; Supers
     dw $09CE, $000C  ; Pbs
+    dw $09D2, $0000  ; Currently selected item
     dw $0AF6, $04CE  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw $D8C0, $8030  ; Doors
@@ -2112,6 +2118,7 @@ preset_gtclassic_tourian_zeb_skip:
     dw $0915, $021D  ; Screen Y position in pixels
     dw $0919, $0195  ; Layer 2 Y position
     dw $09CA, $000E  ; Supers
+    dw $09D2, $0002  ; Currently selected item
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $0047  ; Samus X
@@ -2130,6 +2137,7 @@ preset_gtclassic_tourian_mother_brain_2:
     dw $0919, $0000  ; Layer 2 Y position
     dw $09C6, $005B  ; Missiles
     dw $09CA, $0001  ; Supers
+    dw $09D2, $0000  ; Currently selected item
     dw $0AF6, $00CF  ; Samus X
     dw $0AFA, $009B  ; Samus Y
     dw $D820, $0FC5  ; Events
