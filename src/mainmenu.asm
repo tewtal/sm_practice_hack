@@ -235,6 +235,9 @@ presets_custom_preset_slot:
   .routine
     ; ignore if not A, X, or Y
     LDA !IH_CONTROLLER_PRI_NEW : BIT #$40C0 : BNE .submenu
+    LDA !sram_last_preset : BMI .exit
+    LDA #$0000 : STA !sram_last_preset
+  .exit
     RTL
   .submenu
     ; undo increment from execute_numfield

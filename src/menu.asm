@@ -3066,6 +3066,10 @@ execute_custom_preset:
     %a8()
     LDA [!DP_CurrentMenu] : STA !sram_custom_preset_slot
     %a16()
+    LDA !sram_last_preset : BMI .sfx
+    LDA #$0000 : STA !sram_last_preset
+
+  .sfx
     %sfxconfirm()
     JSL cm_previous_menu
 
