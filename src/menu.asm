@@ -3059,21 +3059,41 @@ execute_custom_preset:
     RTS
 
   .checkLeftRight
-    ; don't activate submenu on left/right
-    LDA !IH_CONTROLLER_PRI_NEW : BIT !IH_INPUT_LEFTRIGHT : BNE .done
+    ; change pages if left/right
+    LDA !IH_CONTROLLER_PRI : BIT !IH_INPUT_LEFTRIGHT : BNE .flipPage
 
     ; set preset slot and return to the previous menu
-    %a8()
-    LDA [!DP_CurrentMenu] : STA !sram_custom_preset_slot
-    %a16()
+    LDA [!DP_CurrentMenu] : AND #$00FF : STA !sram_custom_preset_slot
     LDA !sram_last_preset : BMI .sfx
     LDA #$0000 : STA !sram_last_preset
-
   .sfx
     %sfxconfirm()
     JSL cm_previous_menu
+    RTS
+
+  .flipPage
+if !FEATURE_TINYSTATES
+    ; TinyStates only has one page
+    RTS
+endif
+    ; flip to the next/prev page
+    BIT !IH_INPUT_LEFT : BNE .decPage
+    LDA [!DP_CurrentMenu] : AND #$00FF : CMP #$0010 : BMI .loadPage2
+    CMP #$0020 : BPL .loadPage1
+  .loadPage3
+    LDY.w #CustomPresetsMenu3 : BRA .done
+  .loadPage2
+    LDY.w #CustomPresetsMenu2 : BRA .done
+  .check2
+    CMP #$0020 : BPL .loadPage2
+  .loadPage1
+    LDY.w #CustomPresetsMenu : BRA .done
+  .decPage
+    LDA [!DP_CurrentMenu] : AND #$00FF : CMP #$0010 : BPL .check2
+    BRA .loadPage3
 
   .done
+    JSL action_adjacent_submenu
     RTS
 }
 
