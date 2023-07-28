@@ -360,26 +360,6 @@ endif
     JMP CrashLoop
 }
 
-crash_toggle_bg:
-{
-    %a8()
-    LDA #$80 : STA $2100 ; enable forced blanking
-    LDA !ram_crash_bg : BEQ .enableBG
-    ; disable BG1/2 on main screen
-    LDA #$14 : STA $212C
-    BRA .done
-
-  .enableBG
-    ; disable BG1/2 on main screen
-    LDA #$17 : STA $212C
-
-  .done
-    LDA #$0F : STA $2100 ; disable forced blanking
-    LDA !ram_crash_bg : EOR #$01 : STA !ram_crash_bg
-    %a16()
-    RTS
-}
-
 CrashPageTable:
     dw CrashDump
     dw CrashMemViewer
@@ -1012,6 +992,26 @@ crash_cgram_transfer:
     PLP
     PHK : PLB
     RTL
+}
+
+crash_toggle_bg:
+{
+    %a8()
+    LDA #$80 : STA $2100 ; enable forced blanking
+    LDA !ram_crash_bg : BEQ .enableBG
+    ; disable BG1/2 and sprites on main/sub screen
+    LDA #$04 : STA $212C : STA $212D
+    BRA .done
+
+  .enableBG
+    ; enable BG1/2 and sprites on main/sub screen
+    LDA #$17 : STA $212C : STA $212D
+
+  .done
+    LDA #$0F : STA $2100 ; disable forced blanking
+    LDA !ram_crash_bg : EOR #$01 : STA !ram_crash_bg
+    %a16()
+    RTS
 }
 
 crash_tilemap_transfer:
