@@ -2122,6 +2122,7 @@ RoomStratMenu:
     dw ihstrat_snailclip
     dw ihstrat_mbhp
     dw ihstrat_ridleyai
+    dw ihstrat_draygonai
     dw ihstrat_downbackzeb
     dw #$0000
     %cm_header("INFOHUD ROOM STRAT")
@@ -2161,8 +2162,11 @@ ihstrat_mbhp:
 ihstrat_ridleyai:
     %cm_jsl("Ridley AI", #action_select_room_strat, #$000A)
 
+ihstrat_draygonai:
+    %cm_jsl("Draygon's AI Tracker", #action_select_room_strat, #$000B)
+
 ihstrat_downbackzeb:
-    %cm_jsl("Downback Zeb Skip", #action_select_room_strat, #$000B)
+    %cm_jsl("Downback Zeb Skip", #action_select_room_strat, #$000C)
 
 action_select_room_strat:
 {
@@ -2187,6 +2191,7 @@ ih_room_strat:
     db #$28, " SNAIL CLIP", #$FF
     db #$28, "      MB HP", #$FF
     db #$28, "  RIDLEY AI", #$FF
+    db #$28, " DRAYGON AI", #$FF
     db #$28, "  DBACK ZEB", #$FF
     db #$FF
     .routine
