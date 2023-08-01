@@ -280,3 +280,9 @@ Displays the HP of the second enemy. Most useful for the Mother Brain fight sinc
 Prints the name of Ridley's current AI routine on the bottom-right of the HUD to assist with finding manipulation strategies. Ridley's HP is displayed on the left until it reaches zero, at which point it will start counting Ridley's "death grab" attempts until Ridley explodes.
 <br />
 
+## Downback Zeb Skip
+Provides feedback on downback zeb skip attempts:
+&nbsp;  
+- First character = Feedback on your horizontal subpixel normalization. An X indicates your horizontal subpixel was correctly normalized, while an N indicates it was not. (This may not necessarily support all normalized setups; if it incorrectly reports an N for your favorite setup, let us know!).
+- Second character = Feedback on your vertical subpixel normalization. A Y indicates your vertical subpixel was correctly normalized; an N indicates it was not. (If you're getting an N here, the most likely cause is that you're holding forward during knockback from the Rinka and getting a downwards damage boost, which you do not want.)
+- Third character = number of frames between knockback ending and the start of your downback. Values of 1-4, 6-10, or 13-14 are "good frames" that result in a successful clip, while 0, 5, 11-12, and 15+ are "bad frames" that will result in a failed attempt.

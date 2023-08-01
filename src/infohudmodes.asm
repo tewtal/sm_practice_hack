@@ -54,6 +54,7 @@ status_roomstrat:
     dw status_snailclip
     dw status_mbhp
     dw status_ridleyai
+    dw status_downbackzeb
 }
 
 status_chargetimer:
@@ -2597,5 +2598,74 @@ RidleyAIText:
   .C588 : db "EXPLODE"      : db $FF
   .DEAD : db "END"          : db $FF
     table ../resources/normal.tbl
+}
+
+status_downbackzeb:
+{
+    LDA !SAMUS_KNOCKBACK_TIMER
+    BEQ .zero_knockback
+    CMP #$0005
+    BEQ .start
+
+.done
+    RTS
+
+.start:
+    ; Samus took damage, check horizontal position
+    LDX !SAMUS_X : CPX #837 : BNE .done
+
+    ; Start the vertical subpixel checks once knockback runs out
+    STA !ram_roomstrat_state
+    LDA #$0000 : STA !ram_roomstrat_counter
+    
+    ; check horizontal position
+    LDA !IH_LETTER_X
+    LDX !SAMUS_X_SUBPX : BEQ .good_subx : CPX #$8000 : BEQ .good_subx
+    LDA !IH_LETTER_N
+.good_subx:
+    STA !HUD_TILEMAP+$8C
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$8E : STA !HUD_TILEMAP+$90
+
+    RTS
+
+.zero_knockback:
+    LDA !ram_roomstrat_state : BEQ .done
+
+    LDA !ram_roomstrat_counter : TAX
+    BNE .check_downback
+
+    ; Check vertical position
+    LDA !IH_LETTER_Y
+    LDY !SAMUS_Y : CPY #$0055 : BNE .bad_y
+    LDY !SAMUS_Y_SUBPX : CPY #$A800 : BEQ .good_y
+.bad_y:
+    LDA !IH_LETTER_N
+.good_y:
+    STA !HUD_TILEMAP+$8E
+
+.check_downback:
+
+    ; Is the player downbacking?
+    LDA !IH_CONTROLLER_PRI : AND #$0500 : CMP #$0500 : BEQ .downback
+
+    ; Nope
+    INX
+    CPX #$0010  ; timeout after 16 frames
+    BEQ .reset
+    TXA : STA !ram_roomstrat_counter
+    RTS
+
+.downback:
+    ; knockback hits zero 2 frames before input matters
+    TXA : ASL : SBC #$0003 : BPL .positive
+    LDA #$0000
+.positive:
+    TAX : LDA NumberGFXTable, x : STA !HUD_TILEMAP+$90
+
+.reset:
+    LDA #$0000
+    STA !ram_roomstrat_counter
+    STA !ram_roomstrat_state
+    RTS
 }
 
