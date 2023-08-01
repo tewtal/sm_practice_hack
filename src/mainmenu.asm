@@ -239,6 +239,9 @@ presets_custom_preset_slot:
   .routine
     ; ignore if not A, X, or Y
     LDA !IH_CONTROLLER_PRI_NEW : BIT #$40C0 : BNE .submenu
+    LDA !sram_last_preset : BMI .exit
+    LDA #$0000 : STA !sram_last_preset
+  .exit
     RTL
   .submenu
     ; undo increment from execute_numfield
@@ -361,22 +364,22 @@ presets_current:
     dl #!sram_preset_category
     dw #.routine
     db #$28, "CURRENT PRESET", #$FF
-        db #$28, "       PRKD", #$FF
-        db #$28, "       KPDR", #$FF
-        db #$28, "  100% LATE", #$FF
-        db #$28, " 100% EARLY", #$FF
-        db #$28, "        RBO", #$FF
-        db #$28, "       PKRD", #$FF
-        db #$28, "     KPDR25", #$FF
-        db #$28, " GT CLASSIC", #$FF
-        db #$28, "    GT MAX%", #$FF
-        db #$28, "    14% ICE", #$FF
-        db #$28, "  14% SPEED", #$FF
-        db #$28, "   100% MAP", #$FF
-        db #$28, "  NIN POWER", #$FF
-        db #$28, "   ALL KPDR", #$FF
-        db #$28, "   ALL PKDR", #$FF
-        db #$28, "   ALL PRKD", #$FF
+    db #$28, "       PRKD", #$FF
+    db #$28, "       KPDR", #$FF
+    db #$28, "  100% LATE", #$FF
+    db #$28, " 100% EARLY", #$FF
+    db #$28, "        RBO", #$FF
+    db #$28, "       PKRD", #$FF
+    db #$28, "     KPDR25", #$FF
+    db #$28, " GT CLASSIC", #$FF
+    db #$28, "    GT MAX%", #$FF
+    db #$28, "    14% ICE", #$FF
+    db #$28, "  14% SPEED", #$FF
+    db #$28, "   100% MAP", #$FF
+    db #$28, "  NIN POWER", #$FF
+    db #$28, "   ALL KPDR", #$FF
+    db #$28, "   ALL PKDR", #$FF
+    db #$28, "   ALL PRKD", #$FF
     db #$FF
   .routine
     LDA #$0000 : STA !sram_last_preset
@@ -3366,7 +3369,7 @@ PhantoonMenu:
 
 
 phan_phase_1_table:
-    dw #$003F, #$0020, #$0008, #$0002, #$0010, #$0004, #$0001
+    dw #$003F, #$0020, #$0004, #$0002, #$0010, #$0008, #$0001
     dw #$0030, #$000C, #$0003, #$002A, #$0015, #$003C, #$0000
 
 phan_phase_2_table:
@@ -3427,7 +3430,7 @@ phan_fast_left_1:
     %cm_toggle_bit("#1 Fast Left", !ram_phantoon_rng_round_1, #$0020, phan_set_phan_first_phase)
 
 phan_mid_left_1:
-    %cm_toggle_bit("#1 Mid  Left", !ram_phantoon_rng_round_1, #$0008, phan_set_phan_first_phase)
+    %cm_toggle_bit("#1 Mid  Left", !ram_phantoon_rng_round_1, #$0004, phan_set_phan_first_phase)
 
 phan_slow_left_1:
     %cm_toggle_bit("#1 Slow Left", !ram_phantoon_rng_round_1, #$0002, phan_set_phan_first_phase)
@@ -3436,7 +3439,7 @@ phan_fast_right_1:
     %cm_toggle_bit("#1 Fast Right", !ram_phantoon_rng_round_1, #$0010, phan_set_phan_first_phase)
 
 phan_mid_right_1:
-    %cm_toggle_bit("#1 Mid  Right", !ram_phantoon_rng_round_1, #$0004, phan_set_phan_first_phase)
+    %cm_toggle_bit("#1 Mid  Right", !ram_phantoon_rng_round_1, #$0008, phan_set_phan_first_phase)
 
 phan_slow_right_1:
     %cm_toggle_bit("#1 Slow Right", !ram_phantoon_rng_round_1, #$0001, phan_set_phan_first_phase)

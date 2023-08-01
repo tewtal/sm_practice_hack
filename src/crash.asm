@@ -31,6 +31,7 @@
 !ram_crash_mem_viewer = !CRASHDUMP+$52
 !ram_crash_mem_viewer_bank = !CRASHDUMP+$54
 !ram_crash_temp = !CRASHDUMP+$56
+!ram_crash_bg = !CRASHDUMP+$58
 
 !ram_crash_input = !CRASHDUMP+$60
 !ram_crash_input_new = !CRASHDUMP+$62
@@ -268,6 +269,7 @@ CrashViewer:
 
     LDA #$0000 : STA !ram_crash_page : STA !ram_crash_palette : STA !ram_crash_cursor
     STA !ram_crash_input : STA !ram_crash_input_new
+    LDA #$0001 : STA !ram_crash_bg
     LDA !IH_CONTROLLER_PRI_NEW : STA !ram_crash_input_prev
     LDA #$0A44 : STA !ram_crash_mem_viewer
     LDA #$007E : STA !ram_crash_mem_viewer_bank
@@ -340,6 +342,7 @@ endif
 
   .decPalette
     LDA !ram_crash_palette : BNE .paletteDecrement
+    JSR crash_toggle_bg
     LDA #$0008
   .paletteDecrement
     DEC : STA !ram_crash_palette
@@ -347,6 +350,7 @@ endif
 
   .incPalette
     LDA !ram_crash_palette : CMP #$0007 : BMI .paletteIncrement
+    JSR crash_toggle_bg
     LDA #$FFFF
   .paletteIncrement
     INC : STA !ram_crash_palette
@@ -988,6 +992,26 @@ crash_cgram_transfer:
     PLP
     PHK : PLB
     RTL
+}
+
+crash_toggle_bg:
+{
+    %a8()
+    LDA #$80 : STA $2100 ; enable forced blanking
+    LDA !ram_crash_bg : BEQ .enableBG
+    ; disable BG1/2 and sprites on main/sub screen
+    LDA #$04 : STA $212C : STA $212D
+    BRA .done
+
+  .enableBG
+    ; enable BG1/2 and sprites on main/sub screen
+    LDA #$17 : STA $212C : STA $212D
+
+  .done
+    LDA #$0F : STA $2100 ; disable forced blanking
+    LDA !ram_crash_bg : EOR #$01 : STA !ram_crash_bg
+    %a16()
+    RTS
 }
 
 crash_tilemap_transfer:

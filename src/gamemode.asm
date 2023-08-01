@@ -302,6 +302,8 @@ endif
   .increment_slot
     INC : STA !sram_custom_preset_slot
     ASL : TAX : LDA.l NumberGFXTable,X : STA !HUD_TILEMAP+$7C
+    LDA !sram_last_preset : BMI .done_preset_slot
+    LDA #$0000 : STA !sram_last_preset
     ; CLC to continue normal gameplay after incrementing preset slot
     CLC : JMP skip_pause
 
@@ -311,6 +313,9 @@ endif
   .decrement_slot
     DEC : STA !sram_custom_preset_slot
     ASL : TAX : LDA.l NumberGFXTable,X : STA !HUD_TILEMAP+$7C
+    LDA !sram_last_preset : BMI .done_preset_slot
+    LDA #$0000 : STA !sram_last_preset
+  .done_preset_slot
     ; CLC to continue normal gameplay after decrementing preset slot
     CLC : JMP skip_pause
 

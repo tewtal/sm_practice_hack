@@ -235,10 +235,15 @@ preset_load_preset:
   .check_load
     ; check if custom preset is being loaded
     LDA !ram_custom_preset : BEQ .category_preset
+
+  .custom_preset
     JSL custom_preset_load
+    LDA #$5AFE : STA !sram_last_preset
+    LDA #$0000 : STA !ram_load_preset
     BRA .done
 
   .category_preset
+    LDA !ram_load_preset : CMP #$5AFE : BEQ .custom_preset
     JSR category_preset_load
 
   .done
@@ -536,6 +541,7 @@ endif
     STZ !ELEVATOR_STATUS
     STZ !HEALTH_BOMB_FLAG
     STZ !MESSAGE_BOX_INDEX
+    STZ $1E75 ; Save Station Lockout flag
     STZ $0795 : STZ $0797  ; Clear door transition flags
     TDC : STA !ram_transition_flag
     JSL init_heat_damage_ram

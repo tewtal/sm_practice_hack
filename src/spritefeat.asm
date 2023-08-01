@@ -816,15 +816,17 @@ draw_custom_boss_hitbox:
     RTS
 
   .mother_brain
+    ; check which phase MB is in, 2 = 2nd phase
     LDA $7E7800 : CMP #$0002 : BMI .end
 
+    ; load hitbox enable bitflags
     LDA $7E7808 : BEQ .end : STA $C1
     LDX #$0000 : LDY !OAM_STACK_POINTER ; X = enemy index
     LDA #$00A9 : STA $12 ; MB bank
 
     ; draw body hitboxes
     LSR $C1 : BCC .head
-    LDA #$B429 : STA $10
+    LDA #$B429 : STA $10 ; hitbox definition pointer, bank $A9
 
     ; first body hitbox
     LDA #$FFE0 : STA $14 ; left offset
@@ -843,7 +845,7 @@ draw_custom_boss_hitbox:
   .head
     ; draw head hitboxes
     LSR $C1 : BCC .neck
-    LDA #$B43B : STA $10
+    LDA #$B43B : STA $10 ; hitbox definition pointer, bank $A9
     LDX #$0040
 
     ; first head hitbox
