@@ -2672,18 +2672,18 @@ DraygonAI_pointers:
     dw $8C33, $8C8E, $8CD4               ; [$1A+6] 8C
     dw $8D30, $8DB2                      ; [$20+4] 8D
     dw $8E19                             ; [$24+2] 8E
-    dw $8F10, $8F1D, $8FD6               ; [$26+6] 8F
-    dw $90D4                             ; [$2C+2] 90
-    dw $9105, $9124, $9128, $9154, $9185 ; [$2E+A] 91
-    dw $9294, $92AB                      ; [$38+4] 92
+    dw $8F10, $8F1D, $8F1E, $8FD6        ; [$26+8] 8F
+    dw $90D4                             ; [$2E+2] 90
+    dw $9105, $9124, $9128, $9154, $9185 ; [$30+A] 91
+    dw $9294, $92AB                      ; [$3A+4] 92
                                          ; 93  ->  END
-    dw $94A9                             ; [$3C+2] 94
+    dw $94A9                             ; [$3E+2] 94
 
 DraygonAI_prefix_table:
 ; Table to skip ahead to the correct entries based on the high byte
 ; Unused entries are filled with $40 (the last element in the table) to finish the search faster
     ;   87   88   89   8A   8B   8C   8D   8E   8F   90   91   92        94
-    db $00, $06, $08, $0E, $14, $1A, $20, $24, $26, $2C, $2E, $38, $40, $3C
+    db $00, $06, $08, $0E, $14, $1A, $20, $24, $26, $2E, $30, $3A, $40, $3E
     db $40, $40, $40, $40, $40, $40, $40, $40, $40, $40, $40, $40, $40, $40 ; up to A1
 
 DraygonAI_text_table:
