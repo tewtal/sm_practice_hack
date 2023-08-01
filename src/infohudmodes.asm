@@ -53,8 +53,9 @@ status_roomstrat:
     dw status_botwooncf
     dw status_snailclip
     dw status_mbhp
-    dw status_ridleyai
     dw status_downbackzeb
+    dw status_draygonai
+    dw status_ridleyai
 }
 
 status_chargetimer:
@@ -2568,7 +2569,7 @@ RidleyAI_text_table:
     dw #RidleyAIText_C588 ; explode
 
 RidleyAIText:
-    table ../resources/HUDfont.tbl
+table ../resources/HUDfont.tbl
   .WAIT : db "STALLING"     : db $FF
   .B2F3 : db "LIFTOFF"      : db $FF
   .B321 : db "CHOOSE AI"    : db $FF
@@ -2597,7 +2598,164 @@ RidleyAIText:
   .C538 : db "DEAD MOVE"    : db $FF
   .C588 : db "EXPLODE"      : db $FF
   .DEAD : db "END"          : db $FF
-    table ../resources/normal.tbl
+table ../resources/normal.tbl
+}
+
+status_draygonai:
+{
+    ; check if Draygon's room
+    LDA !ROOM_ID : CMP #$DA60 : BNE .enemyhp
+
+    ; load AI pointer and check if it matches the HUD
+    LDA $0FA8 : CMP !ram_HUD_check : BNE .update_HUD
+
+  .enemyhp
+    ; update enemy HP on idle frames
+    JMP status_enemyhp
+
+  .update_HUD
+    STA !ram_HUD_check
+
+    %ai8()
+    ; use high byte of pointer to index prefix table
+    XBA : SEC : SBC #$87 : BCC .unknown
+    TAX : LDA.l DraygonAI_prefix_table,X : TAX
+    %a16()
+
+    LDA $0FA8 ; reload AI pointer
+  .loop_pointers
+    ; search table starting from prefix offset
+    CMP.l DraygonAI_pointers,X : BEQ .found
+    INX #2
+    CPX #$40 : BCC .loop_pointers
+
+  .unknown
+    ; unknown text pointer
+    %ai16()
+    LDA.w #DraygonAIText_UNKN
+    BRA .draw_branch
+
+  .found
+    LDA.l DraygonAI_text_table,X
+
+  .draw_branch
+    STA $C1 ; data address
+    %ai8()
+    LDA.b #DraygonAIText>>16 : STA $C3 ; data bank
+    LDY #$00 : TYX
+  .loop_text
+    LDA [$C1],Y : CMP #$FF : BEQ .blank_tiles
+    STA !HUD_TILEMAP+$B0,X ; tile ID
+    LDA #$0C : STA !HUD_TILEMAP+$B1,X ; palette
+    INY : INX #2
+    BRA .loop_text
+
+  .blank_tiles
+    ; clear out any remaining tiles
+    CPX #$1A : BPL .left_HUD
+    %a16()
+  .loop_blank
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$B0,X
+    INX #2 : CPX #$1A : BMI .loop_blank
+
+  .left_HUD
+    %ai16()
+    JMP status_enemyhp
+
+; this data could live anywhere in the ROM
+DraygonAI_pointers:
+    dw $871B, $878B, $87F4               ; [$00+6] 87
+    dw $88B1                             ; [$06+2] 88
+    dw $8922, $8951, $89B3               ; [$08+6] 89
+    dw $8A00, $8A50, $8A90               ; [$0E+6] 8A
+    dw $8B0A, $8B52, $8BAE               ; [$14+6] 8B
+    dw $8C33, $8C8E, $8CD4               ; [$1A+6] 8C
+    dw $8D30, $8DB2                      ; [$20+4] 8D
+    dw $8E19                             ; [$24+2] 8E
+    dw $8F10, $8F1D, $8FD6               ; [$26+6] 8F
+    dw $90D4                             ; [$2C+2] 90
+    dw $9105, $9124, $9128, $9154, $9185 ; [$2E+A] 91
+    dw $9294, $92AB                      ; [$38+4] 92
+                                         ; 93  ->  END
+    dw $94A9                             ; [$3C+2] 94
+
+DraygonAI_prefix_table:
+; Table to skip ahead to the correct entries based on the high byte
+; Unused entries are filled with $40 (the last element in the table) to finish the search faster
+    ;   87   88   89   8A   8B   8C   8D   8E   8F   90   91   92        94
+    db $00, $06, $08, $0E, $14, $1A, $20, $24, $26, $2C, $2E, $38, $40, $3C
+    db $40, $40, $40, $40, $40, $40, $40, $40, $40, $40, $40, $40, $40, $40 ; up to A1
+
+DraygonAI_text_table:
+    dw #DraygonAIText_871B ; INIT EVIRS
+    dw #DraygonAIText_878B ; IDLE
+    dw #DraygonAIText_87F4 ; SET SWOOP R
+    dw #DraygonAIText_88B1 ; SWOOP RIGHTv
+    dw #DraygonAIText_8922 ; SWOOP RIGHT>
+    dw #DraygonAIText_8951 ; SWOOP RIGHT^
+    dw #DraygonAIText_89B3 ; SET SWOOP L
+    dw #DraygonAIText_8A00 ; SWOOP LEFT v
+    dw #DraygonAIText_8A50 ; SWOOP LEFT <
+    dw #DraygonAIText_8A90 ; SWOOP LEFT ^
+    dw #DraygonAIText_8B0A ; SET GOOP R
+    dw #DraygonAIText_8B52 ; GOOP R SEEK
+    dw #DraygonAIText_8BAE ; GOOP R SPIT
+    dw #DraygonAIText_8C33 ; GOOP R DONE
+    dw #DraygonAIText_8C8E ; SET GOOP L
+    dw #DraygonAIText_8CD4 ; GOOP L SEEK
+    dw #DraygonAIText_8D30 ; GOOP L SPIT
+    dw #DraygonAIText_8DB2 ; GOOP L DONE
+    dw #DraygonAIText_8E19 ; CHASE SAMUS
+    dw #DraygonAIText_9128 ; DROP SAMUS (duplicate)
+    dw #DraygonAIText_8F1D ; NOTHING
+    dw #DraygonAIText_8F1E ; GRAB START
+    dw #DraygonAIText_8FD6 ; GRABBED
+    dw #DraygonAIText_90D4 ; SPANK
+    dw #DraygonAIText_9105 ; FINAL SPANK
+    dw #DraygonAIText_94A9 ; HOLD SAMUS (duplicate)
+    dw #DraygonAIText_9128 ; DROP SAMUS
+    dw #DraygonAIText_9154 ; FLOAT AWAY
+    dw #DraygonAIText_9185 ; WASTING TIME
+    dw #DraygonAIText_9294 ; WAIT EVIRS
+    dw #DraygonAIText_92AB ; SINK N FLOOR
+    dw #DraygonAIText_94A9 ; HOLD SAMUS
+
+DraygonAIText:
+table ../resources/HUDfont.tbl
+  .871B : db "INIT EVIRS"   : db $FF
+  .878B : db "IDLE"         : db $FF
+  .87F4 : db "SET SWOOP R"  : db $FF
+  .88B1 : db "SWOOP RIGHTv" : db $FF
+  .8922 : db "SWOOP RIGHT>" : db $FF
+  .8951 : db "SWOOP RIGHT^" : db $FF
+  .89B3 : db "SET SWOOP L"  : db $FF
+  .8A00 : db "SWOOP LEFT v" : db $FF
+  .8A50 : db "SWOOP LEFT <" : db $FF
+  .8A90 : db "SWOOP LEFT ^" : db $FF
+  .8B0A : db "SET GOOP R"   : db $FF
+  .8B52 : db "GOOP R SEEK"  : db $FF
+  .8BAE : db "GOOP R SPIT"  : db $FF
+  .8C33 : db "GOOP R DONE"  : db $FF
+  .8C8E : db "SET GOOP L"   : db $FF
+  .8CD4 : db "GOOP L SEEK"  : db $FF
+  .8D30 : db "GOOP L SPIT"  : db $FF
+  .8DB2 : db "GOOP L DONE"  : db $FF
+  .8E19 : db "CHASE SAMUS"  : db $FF
+;  .8F10 : db "DROP SAMUS"   : db $FF
+  .8F1D : db "NOTHING"      : db $FF
+  .8F1E : db "GRAB START"   : db $FF
+  .8FD6 : db "GRABBED"      : db $FF
+  .90D4 : db "SPANK"        : db $FF
+  .9105 : db "FINAL SPANK"  : db $FF
+;  .9124 : db "HOLD SAMUS"   : db $FF
+  .9128 : db "DROP SAMUS"   : db $FF
+  .9154 : db "FLOAT AWAY"   : db $FF
+  .9185 : db "WASTING TIME" : db $FF
+  .9294 : db "WAIT EVIRS"   : db $FF
+  .92AB : db "SINK N FLOOR" : db $FF
+  .94A9 : db "HOLD SAMUS"   : db $FF
+  .UNKN : db "UNKNOWN"      : db $FF
+table ../resources/normal.tbl
 }
 
 status_downbackzeb:
