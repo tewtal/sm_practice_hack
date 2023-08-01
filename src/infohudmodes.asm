@@ -53,9 +53,9 @@ status_roomstrat:
     dw status_botwooncf
     dw status_snailclip
     dw status_mbhp
-    dw status_ridleyai
     dw status_downbackzeb
     dw status_draygonai
+    dw status_ridleyai
 }
 
 status_chargetimer:
