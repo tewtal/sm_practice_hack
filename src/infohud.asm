@@ -24,9 +24,9 @@ org $82EE92      ; runs on START GAME
 org $828B34      ; reset room timers for first room of Ceres
     JML ceres_start_timers : NOP : NOP
 ceres_start_timers_return:
-        
-org $90E6AA      ; hijack, runs on gamestate = 08 (main gameplay), handles most updating HUD information
-    JSL ih_gamemode_frame : NOP : NOP
+
+org $90E6BC      ; hijack, runs on gamestate = 08 (main gameplay), handles most updating HUD information
+    JSL ih_gamemode_frame
 
 org $9493B8      ; hijack, runs when Samus hits a door BTS
     JSL ih_before_room_transition
@@ -221,8 +221,7 @@ ih_debug_routine:
 
 ih_nmi_end:
 {
-    %ai16()
-
+    ; Room timer
     LDA !ram_realtime_room : INC : STA !ram_realtime_room
 
     ; Segment real timer
@@ -309,13 +308,10 @@ ih_nmi_end:
 
 ih_gamemode_frame:
 {
-    PHA
     LDA !ram_gametime_room : INC : STA !ram_gametime_room
-    PLA
 
-    ; overwritten code
-    STZ $0A30 : STZ $0A32
-    RTL
+    ; overwritten code + return
+    JML $949B60
 }
 
 ih_after_room_transition:
@@ -814,13 +810,9 @@ ih_hud_vanilla_health:
 
 ih_hud_code:
 {
+    ; overwritten code
+    STZ $02
     %ai16()
-
-    ; fix data bank register
-    PHB
-    PEA $8080
-    PLB
-    PLB
 
     LDA !sram_top_display_mode : CMP !TOP_DISPLAY_VANILLA : BEQ .vanilla_infohud
 
@@ -897,7 +889,7 @@ endif
     LDA !HUD_TILEMAP+$8A : STA !HUD_TILEMAP+$8C
     LDA !HUD_TILEMAP+$88 : STA !HUD_TILEMAP+$8A
     LDA !IH_BLANK : STA !HUD_TILEMAP+$88
-    BRL .end
+    RTL
 
     ; Reserve energy counter
   .reserves
@@ -925,7 +917,7 @@ endif
     ; Status Icons
   .statusIcons
     LDA !sram_status_icons : BNE .check_healthbomb
-    JMP .end
+    RTL
 
   .check_healthbomb
     ; health bomb
@@ -967,21 +959,17 @@ endif
     LDA !SAMUS_RESERVE_MAX : BEQ .clearReserve
 
     LDA !IH_RESERVE_AUTO : STA !HUD_TILEMAP+$1A
-    BRA .end
+    RTL
 
   .empty
     LDA !SAMUS_RESERVE_MAX : BEQ .clearReserve
     LDA !IH_RESERVE_EMPTY : STA !HUD_TILEMAP+$1A
-    BRA .end
+    RTL
 
   .clearReserve
     LDA !IH_BLANK : STA !HUD_TILEMAP+$1A
 
   .end
-    PLB
-    ; overwritten code
-    %a8()
-    STZ $02
     RTL
 }
 
