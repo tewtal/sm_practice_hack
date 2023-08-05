@@ -33,27 +33,28 @@ mc_paletteprofile:
     dl #!sram_custompalette_profile
     dw refresh_cgram_long
     db #$28, "Menu Palette", #$FF
-        db #$28, "     CUSTOM", #$FF ; CUSTOM should always be first
-        db #$28, "     TWITCH", #$FF
-        db #$28, "    DEFAULT", #$FF
-        db #$28, "    FIREBAT", #$FF
-        db #$28, " WARDRINKER", #$FF
-        db #$28, "        MM2", #$FF
-        db #$28, "      PTOIL", #$FF
-        db #$28, "     ZOHDIN", #$FF
-        db #$28, "    DARKXOA", #$FF
-        db #$28, "    MELONAX", #$FF
-        db #$28, " TOPSYTURVE", #$FF
-        db #$28, "        OST", #$FF
-        db #$28, "        JRP", #$FF
-        db #$28, "     LAYRUS", #$FF
-        db #$28, "      DAYNE", #$FF
-        db #$28, "DREAMCOWBOY", #$FF
-        db #$28, "       ZENI", #$FF
-        db #$28, "       GREY", #$FF
-        db #$28, "        RED", #$FF
-        db #$28, "     PURPLE", #$FF
-        db #$28, "        HUD", #$FF
+    db #$28, "     CUSTOM", #$FF ; CUSTOM should always be first
+    db #$28, "     TWITCH", #$FF
+    db #$28, "    DEFAULT", #$FF
+    db #$28, "    FIREBAT", #$FF
+    db #$28, " WARDRINKER", #$FF
+    db #$28, "        MM2", #$FF
+    db #$28, "      PTOIL", #$FF
+    db #$28, "     ZOHDIN", #$FF
+    db #$28, "    DARKXOA", #$FF
+    db #$28, "    MELONAX", #$FF
+    db #$28, " TOPSYTURVE", #$FF
+    db #$28, "        OST", #$FF
+    db #$28, "        JRP", #$FF
+    db #$28, "     LAYRUS", #$FF
+    db #$28, "      DAYNE", #$FF
+    db #$28, "DREAMCOWBOY", #$FF
+    db #$28, "       ZENI", #$FF
+    db #$28, "       DYCE", #$FF
+    db #$28, "       GREY", #$FF
+    db #$28, "        RED", #$FF
+    db #$28, "     PURPLE", #$FF
+    db #$28, "        HUD", #$FF
     db #$FF
 
 mc_palette2custom:
@@ -435,6 +436,7 @@ PaletteProfileTables:
     dw #DayneProfileTable
     dw #DreamCowboyProfileTable
     dw #ZeniProfileTable
+    dw #DyceProfileTable
     dw #GreyProfileTable
     dw #RedProfileTable
     dw #PurpleProfileTable
@@ -488,6 +490,9 @@ DreamCowboyProfileTable:
 
 ZeniProfileTable:
     dw $7D40, $3900, $7F00, $0000, $0000, $7FE0, $7EA0, $7FE0, $0000, $0000, $7E00
+
+DyceProfileTable:
+    dw $5DC0, $5DC0, $77BD, $2060, $0000, $7FFF, $7FFF, $7FFF, $5DC0, $5DC0, $7FFF
 
 GreyProfileTable:
     dw $0012, $1CE7, $3DEF, $0C63, $1CE7, $3DEF, $0EE3, $0012, $0C63, $1CE7, $3DEF

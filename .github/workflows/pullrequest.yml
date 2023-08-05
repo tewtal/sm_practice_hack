@@ -36,7 +36,7 @@ jobs:
         chmod +x ./build_dev.sh
         chmod +x ./build.sh
         chmod +x ./build_PAL.sh
-        ./build_dev.sh -DPRERELEASE=$(git rev-parse --short HEAD)
+        ./build_dev.sh
         ./build.sh -DPRERELEASE=$(git rev-parse --short HEAD)
         ./build_PAL.sh -DPRERELEASE=$(git rev-parse --short HEAD)
         mkdir ./web/public/patches
