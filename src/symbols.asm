@@ -226,8 +226,10 @@ ram_cm_watch_enemy_index = !ram_cm_watch_enemy_index ; !WRAM_MENU_START+$82
 ram_cm_watch_enemy_side = !ram_cm_watch_enemy_side ; !WRAM_MENU_START+$84
 ram_cm_watch_common_address = !ram_cm_watch_common_address ; !WRAM_MENU_START+$86
 
-ram_cm_door_menu_value = !ram_cm_door_menu_value ; !WRAM_MENU_START+$80
-ram_cm_door_menu_bank = !ram_cm_door_menu_bank ; !WRAM_MENU_START+$82
+ram_cm_door_dynamic = !ram_cm_door_dynamic ; !WRAM_MENU_START+$80
+ram_cm_door_menu_value = !ram_cm_door_menu_value ; !WRAM_MENU_START+$82
+ram_cm_door_menu_bank = !ram_cm_door_menu_bank ; !WRAM_MENU_START+$84
+ram_cm_door_direction_index = !ram_cm_door_direction_index ; !WRAM_MENU_START+$86
 
 ram_cm_phan_first_phase = !ram_cm_phan_first_phase ; !WRAM_MENU_START+$80
 ram_cm_phan_second_phase = !ram_cm_phan_second_phase ; !WRAM_MENU_START+$82

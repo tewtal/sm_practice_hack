@@ -37,41 +37,78 @@ print pc, " layout bank82 start"
 hijack_loading_room_CRE:
 {
     LDA !ram_door_portal_flags : BEQ .noChange
-    PHX : BIT !DOOR_PORTAL_JUMP : BNE .jump
+    PHX : BIT !DOOR_PORTAL_JUMP_BIT : BNE .jump
+    AND !DOOR_PORTAL_MODE_MASK : CMP #$0002 : BEQ .leftRight : BPL .upDown
     LDA !ram_door_source : ASL : TAX
-    LDA portals_vanilla_table,X : CMP !DOOR_ID : BEQ .srcToDest
+    LDA portals_areaboss_vanilla_table,X : CMP !DOOR_ID : BEQ .srcToDest
     LDA !ram_door_destination : ASL : TAX
-    LDA portals_vanilla_table,X : CMP !DOOR_ID : BEQ .destToSrc
+    LDA portals_areaboss_vanilla_table,X : CMP !DOOR_ID : BEQ .destToSrc
+
+  .noChangePLX
     PLX
 
   .noChange
     ; Overridden routine
     JMP $DDF1
 
+  .leftRight
+    LDA !ram_door_source : ASL : TAX
+    LDA portals_left_vanilla_table,X : CMP !DOOR_ID : BEQ .leftToRight
+    LDA !ram_door_destination : ASL : TAX
+    LDA portals_right_vanilla_table,X : CMP !DOOR_ID : BEQ .rightToLeft
+    BRA .noChangePLX
+
+  .upDown
+    LDA !ram_door_source : ASL : TAX
+    LDA portals_up_vanilla_table,X : CMP !DOOR_ID : BEQ .upToDown
+    LDA !ram_door_destination : ASL : TAX
+    LDA portals_down_vanilla_table,X : CMP !DOOR_ID : BEQ .downToUp
+    BRA .noChangePLX
+
   .destToSrc
     LDA !ram_door_source : ASL : TAX
-    BRA .pickDoor
+    BRA .pickAreaBossDoor
 
   .jump
-    LDA !DOOR_PORTAL_ENABLED : STA !ram_door_portal_flags
+    AND !DOOR_PORTAL_EXCLUDE_JUMP_MASK : STA !ram_door_portal_flags
 
   .srcToDest
     LDA !ram_door_destination : ASL : TAX
 
-  .pickDoor
-    ; Even if we pick vanilla, still give the i-frames
-    LDA #$0080 : STA !SAMUS_IFRAME_TIMER
-    PHX : LDA portals_custom_inverted_table,X : TAX
+  .pickAreaBossDoor
+    PHX : LDA portals_areaboss_custom_inverted_table,X : TAX
     LDA $830003,X : AND #$0003 : STA $12
     LDX !DOOR_ID : LDA $830003,X : PLX
-    AND #$0003 : CMP $12 : BEQ .pickVanilla
-    LDA portals_custom_inverted_table,X : STA !DOOR_ID
+    AND #$0003 : CMP $12 : BEQ .pickAreaBossVanilla
+    LDA portals_areaboss_custom_inverted_table,X
     BRA .loadBitset
 
-  .pickVanilla
-    LDA portals_vanilla_inverted_table,X : STA !DOOR_ID    
+  .rightToLeft
+    LDA !ram_door_source : ASL : TAX
+    LDA portals_left_vanilla_inverted_table,X : BNE .loadBitset
+    BRL .noChangePLX
+
+  .leftToRight
+    LDA !ram_door_destination : ASL : TAX
+    LDA portals_right_vanilla_inverted_table,X : BNE .loadBitset
+    BRL .noChangePLX
+
+  .downToUp
+    LDA !ram_door_source : ASL : TAX
+    LDA portals_up_vanilla_inverted_table,X : BNE .loadBitset
+    BRL .noChangePLX
+
+  .upToDown
+    LDA !ram_door_destination : ASL : TAX
+    LDA portals_down_vanilla_inverted_table,X : BNE .loadBitset
+    BRL .noChangePLX
+
+  .pickAreaBossVanilla
+    LDA portals_areaboss_vanilla_inverted_table,X
 
   .loadBitset
+    STA !DOOR_ID
+
     ; Implement the DDF1 routine here to load CRE bitset
     ; Note we already have pushed X to the stack,
     ; and A conveniently contains the DOOR_ID
@@ -89,7 +126,10 @@ hijack_loading_room_CRE:
 
   .storeBitset
     STA !CRE_BITSET
+    LDA !ram_door_portal_flags : BIT !DOOR_PORTAL_JUMP_BIT : BEQ .changedDoorDone
+    LDA #$0080 : STA !SAMUS_IFRAME_TIMER
 
+  .changedDoorDone
     ; Remember we pushed X and bank in opposite order
     PLB : PLX
     RTS
@@ -132,10 +172,10 @@ print pc, " layout bank82 end"
 warnpc $82FA00 ; presets.asm
 
 
-; Crateria Kihunter bottom door
+; Crateria Kihunters bottom door
 org $838B00
 hook_layout_asm_redtowerelevator_door0:
-    dw #layout_asm_crateriakihunter_bottomdoor
+    dw #layout_asm_crateriakihunters_bottomdoor
 
 ; Statues Hallway left door
 org $838C5C
@@ -217,6 +257,22 @@ org $83A6BE
 hook_layout_asm_westsandhole_door1:
     dw #layout_asm_westsandhall
 
+; Overwrite unused door with Shaktool to Pants
+org $83A804
+hook_layout_asm_shaktool_to_pants:
+    dw #$D646
+    db #$00, #$05, #$0E, #$16, #$01, #$02
+    dw #$8000
+    dw #$E3C8
+
+; Overwrite unused door with Pants to Pants
+org $83A810
+hook_layout_asm_pants_to_pants:
+    dw #$D646
+    db #$00, #$04, #$01, #$26, #$01, #$03
+    dw #$8000
+    dw #$0000
+
 ; Mother Brain right door
 org $83AAD2
 hook_layout_asm_rinkashaft_door2:
@@ -241,9 +297,9 @@ hook_layout_asm_deadscientist_door0:
 org $83C000
 print pc, " layout bank83 start"
 
-; List of vanilla portal doors
-; NOTE: Table order must match mainmenu.asm
-portals_vanilla_table:
+; List of vanilla area/boss doors
+; NOTE: Table order must match layoutmenu.asm
+portals_areaboss_vanilla_table:
     dw $A96C   ; Draygon Room door 0 --> Precious Room
     dw $A840   ; Precious Room door 1 --> Draygon Room
     dw $91CE   ; Kraid Room door 0 --> Kraid Eye Door Room
@@ -252,17 +308,17 @@ portals_vanilla_table:
     dw $A2C4   ; Phantoon Room door 0 --> Basement
     dw $98BE   ; Ridley Room door 1 --> Lower Norfair Farming
     dw $A2AC   ; Basement door 2 --> Phantoon Room
-    dw $8A42   ; Crateria Kihunter door 2 --> Red Brinstar Elevator
+    dw $8A42   ; Crateria Kihunters door 2 --> Red Brinstar Elevator
     dw $8C52   ; Green Pirates Shaft door 2 --> Statues Hallway
     dw $8C22   ; Lower Mushrooms door 1 --> Green Brinstar Elevator
-    dw $8E9E   ; Morph Ball Room door 0 --> Green Hill Zone
+    dw $8E9E   ; Morph Ball door 0 --> Green Hill Zone
     dw $8AEA   ; Moat door 1 --> West Ocean
     dw $93EA   ; Crocomire Room door 1 --> Crocomire Speedway
     dw $A708   ; Aqueduct door 0 --> Crab Shaft
     dw $8AA2   ; Forgotten Highway Elbow door 0 --> Crab Maze
     dw $91E6   ; Statues Hallway door 0 --> Green Pirates Shaft
     dw $8BFE   ; Green Brinstar Elevator door 0 --> Lower Mushrooms
-    dw $8E86   ; Green Hill Zone door 1 --> Morph Ball Room
+    dw $8E86   ; Green Hill Zone door 1 --> Morph Ball
     dw $8F0A   ; Noob Bridge door 1 --> Red Tower
     dw $913E   ; Warehouse Zeela door 0 --> Warehouse Entrance
     dw $96D2   ; Lava Dive door 0 --> Kronic Boost
@@ -271,13 +327,13 @@ portals_vanilla_table:
     dw $A384   ; East Tunnel door 1 --> Warehouse Entrance
     dw $A390   ; East Tunnel door 2 --> Crab Hole
     dw $A330   ; Glass Tunnel door 0 --> Main Street
-    dw $8AF6   ; Red Brinstar Elevator door 0 --> Crateria Kihunter
+    dw $8AF6   ; Red Brinstar Elevator door 0 --> Crateria Kihunters
     dw $902A   ; Red Tower door 1 --> Noob Bridge
+    dw $922E   ; Warehouse Entrance door 0 --> East Tunnel
+    dw $923A   ; Warehouse Entrance door 1 --> Warehouse Zeela
     dw $93D2   ; Crocomire Speedway door 4 --> Crocomire Room
     dw $967E   ; Kronic Boost door 2 --> Lava Dive
     dw $95FA   ; Single Chamber door 4 --> Three Musketeers
-    dw $922E   ; Warehouse Entrance door 0 --> East Tunnel
-    dw $923A   ; Warehouse Entrance door 1 --> Warehouse Zeela
     dw $A510   ; Crab Hole door 2 --> East Tunnel
     dw $A4C8   ; Crab Shaft door 2 --> Aqueduct
     dw $A39C   ; Main Street door 0 --> Glass Tunnel
@@ -286,7 +342,7 @@ portals_vanilla_table:
     dw $89CA   ; West Ocean door 0 --> Moat
 
 ; NOTE: Table order must match above table with portals inverted
-portals_vanilla_inverted_table:
+portals_areaboss_vanilla_inverted_table:
     dw $A840   ; Precious Room door 1 --> Draygon Room
     dw $A96C   ; Draygon Room door 0 --> Precious Room
     dw $91B6   ; Kraid Eye Door Room door 1 --> Kraid Room
@@ -295,17 +351,17 @@ portals_vanilla_inverted_table:
     dw $A2AC   ; Basement door 2 --> Phantoon Room
     dw $98CA   ; Lower Norfair Farming door 0 --> Ridley Room
     dw $A2C4   ; Phantoon Room door 0 --> Basement
-    dw $8AF6   ; Red Brinstar Elevator door 0 --> Crateria Kihunter
+    dw $8AF6   ; Red Brinstar Elevator door 0 --> Crateria Kihunters
     dw $91E6   ; Statues Hallway door 0 --> Green Pirates Shaft
     dw $8BFE   ; Green Brinstar Elevator door 0 --> Lower Mushrooms
-    dw $8E86   ; Green Hill Zone door 1 --> Morph Ball Room
+    dw $8E86   ; Green Hill Zone door 1 --> Morph Ball
     dw $89CA   ; West Ocean door 0 --> Moat
     dw $93D2   ; Crocomire Speedway door 4 --> Crocomire Room
     dw $A4C8   ; Crab Shaft door 2 --> Aqueduct
     dw $8AAE   ; Crab Maze door 1 --> Forgotten Highway Elbow
     dw $8C52   ; Green Pirates Shaft door 2 --> Statues Hallway
     dw $8C22   ; Lower Mushrooms door 1 --> Green Brinstar Elevator
-    dw $8E9E   ; Morph Ball Room door 0 --> Green Hill Zone
+    dw $8E9E   ; Morph Ball door 0 --> Green Hill Zone
     dw $902A   ; Red Tower door 1 --> Noob Bridge
     dw $923A   ; Warehouse Entrance door 1 --> Warehouse Zeela
     dw $967E   ; Kronic Boost door 2 --> Lava Dive
@@ -314,13 +370,13 @@ portals_vanilla_inverted_table:
     dw $922E   ; Warehouse Entrance door 0 --> East Tunnel
     dw $A510   ; Crab Hole door 2 --> East Tunnel
     dw $A39C   ; Main Street door 0 --> Glass Tunnel
-    dw $8A42   ; Crateria Kihunter door 2 --> Red Brinstar Elevator
+    dw $8A42   ; Crateria Kihunters door 2 --> Red Brinstar Elevator
     dw $8F0A   ; Noob Bridge door 1 --> Red Tower
+    dw $A384   ; East Tunnel door 1 --> Warehouse Entrance
+    dw $913E   ; Warehouse Zeela door 0 --> Warehouse Entrance
     dw $93EA   ; Crocomire Room door 1 --> Crocomire Speedway
     dw $96D2   ; Lava Dive door 0 --> Kronic Boost
     dw $9A4A   ; Three Musketeers door 0 --> Single Chamber
-    dw $A384   ; East Tunnel door 1 --> Warehouse Entrance
-    dw $913E   ; Warehouse Zeela door 0 --> Warehouse Entrance
     dw $A390   ; East Tunnel door 2 --> Crab Hole
     dw $A708   ; Aqueduct door 0 --> Crab Shaft
     dw $A330   ; Glass Tunnel door 0 --> Main Street
@@ -330,47 +386,47 @@ portals_vanilla_inverted_table:
 
 ; List of custom portal doors
 ; NOTE: Table order must match above table
-portals_custom_inverted_table:
-    dw door_custom_A840_precious_door1                ; Bosses
-    dw door_custom_A96C_draygon_door0
-    dw door_custom_91B6_kraid_eye_door_door1
-    dw door_custom_91CE_kraid_door0
-    dw door_custom_98BE_ridley_door1
-    dw door_custom_A2AC_basement_door2
-    dw door_custom_98CA_lower_norfair_farming_door0
-    dw door_custom_A2C4_phantoon_door0
-    dw door_custom_8AF6_red_brinstar_elevator_door0   ; Crateria
-    dw door_custom_91E6_statues_hallway_door0
-    dw door_custom_8BFE_green_brinstar_elevator_door0
-    dw door_custom_8E86_green_hill_zone_door1
-    dw door_custom_89CA_west_ocean_door0
-    dw door_custom_93D2_crocomire_speedway_door4      ; Croc
-    dw door_custom_A4C8_crab_shaft_door2              ; East Maridia
-    dw door_custom_8AAE_crab_maze_door1
-    dw door_custom_8C52_green_pirates_shaft_door2     ; G4
-    dw door_custom_8C22_lower_mushrooms_door1         ; Green Brinstar
-    dw door_custom_8E9E_morph_ball_door0
-    dw door_custom_902A_red_tower_door1
-    dw door_custom_923A_warehouse_entrance_door1      ; Kraid's Lair
-    dw door_custom_967E_kronic_boost_door2            ; Lower Norfair
-    dw door_custom_95FA_single_chamber_door4
-    dw door_custom_A480_red_fish_door1                ; Red Brinstar
-    dw door_custom_922E_warehouse_entrance_door0
-    dw door_custom_A510_crab_hole_door2
-    dw door_custom_A39C_main_street_door0
-    dw door_custom_8A42_crateria_kihunter_door2
-    dw door_custom_8F0A_noob_bridge_door1
-    dw door_custom_93EA_crocomire_door1               ; Upper Norfair
-    dw door_custom_96D2_lava_dive_door0
-    dw door_custom_9A4A_three_musketeers_door0
-    dw door_custom_A384_east_tunnel_door1
-    dw door_custom_913E_warehouse_zeela_door0
-    dw door_custom_A390_east_tunnel_door2             ; West Maridia
-    dw door_custom_A708_aqueduct_door0
-    dw door_custom_A330_glass_tunnel_door0
-    dw door_custom_90C6_caterpillar_door4
-    dw door_custom_8AA2_forgotten_highway_elbow_door0 ; Wrecked Ship
-    dw door_custom_8AEA_moat_door1
+portals_areaboss_custom_inverted_table:
+    dw #door_custom_A840_precious_door1                  ; Bosses
+    dw #door_custom_A96C_draygon_door0
+    dw #door_custom_91B6_kraid_eye_door_door1
+    dw #door_custom_91CE_kraid_door0
+    dw #door_custom_98BE_ridley_door1
+    dw #door_custom_A2AC_basement_door2
+    dw #door_custom_98CA_lower_norfair_farming_door0
+    dw #door_custom_A2C4_phantoon_door0
+    dw #door_custom_8AF6_red_brinstar_elevator_door0     ; Crateria
+    dw #door_custom_91E6_statues_hallway_door0
+    dw #door_custom_8BFE_green_brinstar_elevator_door0
+    dw #door_custom_8E86_green_hill_zone_door1
+    dw #door_custom_89CA_west_ocean_door0
+    dw #door_custom_93D2_crocomire_speedway_door4        ; Croc
+    dw #door_custom_A4C8_crab_shaft_door2                ; East Maridia
+    dw #door_custom_8AAE_crab_maze_door1
+    dw #door_custom_8C52_green_pirates_shaft_door2       ; G4
+    dw #door_custom_8C22_lower_mushrooms_door1           ; Green Brinstar
+    dw #door_custom_8E9E_morph_ball_door0
+    dw #door_custom_902A_red_tower_door1
+    dw #door_custom_923A_warehouse_entrance_door1        ; Kraid's Lair
+    dw #door_custom_967E_kronic_boost_door2              ; Lower Norfair
+    dw #door_custom_95FA_single_chamber_door4
+    dw #door_custom_A480_red_fish_door1                  ; Red Brinstar
+    dw #door_custom_922E_warehouse_entrance_door0
+    dw #door_custom_A510_crab_hole_door2
+    dw #door_custom_A39C_main_street_door0
+    dw #door_custom_8A42_crateria_kihunters_door2
+    dw #door_custom_8F0A_noob_bridge_door1
+    dw #door_custom_A384_east_tunnel_door1               ; Upper Norfair
+    dw #door_custom_913E_warehouse_zeela_door0
+    dw #door_custom_93EA_crocomire_door1
+    dw #door_custom_96D2_lava_dive_door0
+    dw #door_custom_9A4A_three_musketeers_door0
+    dw #door_custom_A390_east_tunnel_door2               ; West Maridia
+    dw #door_custom_A708_aqueduct_door0
+    dw #door_custom_A330_glass_tunnel_door0
+    dw #door_custom_90C6_caterpillar_door4
+    dw #door_custom_8AA2_forgotten_highway_elbow_door0   ; Wrecked Ship
+    dw #door_custom_8AEA_moat_door1
 
 ; Custom door definitions
 ; Includes Samus X and Y and an asm pointer
@@ -380,7 +436,7 @@ door_custom_89CA_west_ocean_door0:
     dw $8000, #door_custom_asm
     dw $01CF, $0088, $0000
 
-door_custom_8A42_crateria_kihunter_door2:
+door_custom_8A42_crateria_kihunters_door2:
     dw $962A   ; Red Brinstar Elevator
     db $00, $06, $06, $02, $00, $00
     dw $8000, #door_custom_asm
@@ -405,7 +461,7 @@ door_custom_8AEA_moat_door1:
     dw $0034, $0488, $0000
 
 door_custom_8AF6_red_brinstar_elevator_door0:
-    dw $948C   ; Crateria Kihunter
+    dw $948C   ; Crateria Kihunters
     db $00, $07, $16, $2D, $01, $02
     dw $01C0, #door_custom_asm
     dw $014C, $02B8, $B9F1
@@ -429,7 +485,7 @@ door_custom_8C52_green_pirates_shaft_door2:
     dw $0034, $0088, #layout_asm_cutscene_g4skip
 
 door_custom_8E86_green_hill_zone_door1:
-    dw $9E9F   ; Morph Ball Room
+    dw $9E9F   ; Morph Ball
     db $00, $04, $01, $26, $00, $02
     dw $8000, #door_custom_asm
     dw $0034, $0288, $0000
@@ -613,6 +669,422 @@ door_custom_A96C_draygon_door0:
     db $00, $04, $01, $26, $00, $02
     dw $8000, #door_custom_asm
     dw $0034, $0288, $E3D9
+
+; List of vanilla left doors
+; NOTE: Table order must match layoutmenu.asm
+portals_left_vanilla_table:
+    dw $8FEE   ; Boulder door 1 --> Billy Mays
+    dw $8EDA   ; Construction Zone door 2 --> Alpha Missiles
+    dw $8EC2   ; Construction Zone door 0 --> Morph Ball
+    dw $8EE6   ; Blue Brinstar Energy Tank door 0 --> Construction Zone
+    dw $8EF2   ; Blue Brinstar Energy Tank door 1 --> Boulder
+    dw $8E9E   ; Morph Ball door 0 --> Green Hill Zone
+    dw $ABA0   ; 58 Escape door 0 --> Dead Scientist
+    dw $ABB8   ; Ceres Ridley door 0 --> 58 Escape
+    dw $AB88   ; Dead Scientist door 0 --> Magnet Stairs
+    dw $AB58   ; Falling Tile door 0 --> Ceres Elevator
+    dw $AB70   ; Magnet Stairs door 0 --> Falling Tile
+    dw $94AA   ; Cosine Missiles door 0 --> Post Crocomire Shaft
+    dw $93DE   ; Crocomire door 0 --> Post Crocomire Farming
+    dw $94FE   ; Grapple Tutorial 1 door 0 --> Grapple Beam
+    dw $94E6   ; Grapple Tutorial 2 door 0 --> Grapple Tutorial 1
+    dw $94B6   ; Grapple Tutorial 3 door 0 --> Grapple Tutorial 2
+    dw $943E   ; Post Crocomire Farming door 1 --> Post Crocomire Power Bombs
+    dw $94DA   ; Post Crocomire Jump door 1 --> Grapple Beam
+    dw $9462   ; Post Crocomire Save door 0 --> Post Crocomire Farming
+    dw $9486   ; Post Crocomire Shaft door 1 --> Grapple Tutorial 3
+    dw $8C82   ; 230 Bombway door 0 --> 230 Missiles
+    dw $8BAA   ; Bomb Torizo door 0 --> Flyway
+    dw $8A12   ; Bowling Alley Path door 0 --> West Ocean
+    dw $8B6E   ; Climb door 4 --> Tourian Escape 4
+    dw $8C76   ; Climb Supers door 1 --> Climb
+    dw $8C6A   ; Climb Supers door 0 --> Climb
+    dw $8AAE   ; Crab Maze door 1 --> Forgotten Highway Elbow
+    dw $8A2A   ; Crateria Kihunters door 0 --> Crateria Tube
+    dw $8C2E   ; Crateria Map Station door 0 --> Pre-Map Flyway
+    dw $89B2   ; Crateria Power Bombs door 0 --> Landing Site
+    dw $8AC6   ; Crateria Tube door 0 --> Landing Site
+    dw $8A66   ; East Ocean door 0 --> Electric Death
+    dw $8BB6   ; Flyway door 0 --> Parlor
+    dw $8A7E   ; Forgotten Highway Kago door 0 --> East Ocean
+    dw $8B1A   ; Gauntlet Energy Tank door 1 --> Green Pirates Shaft
+    dw $8952   ; Gauntlet Entrance door 1 --> Gauntlet Energy Tank
+    dw $8C46   ; Green Pirates Shaft door 1 --> Lower Mushrooms
+    dw $8916   ; Landing Site door 0 --> Parlor
+    dw $892E   ; Landing Site door 2 --> Gauntlet Entrance
+    dw $8C22   ; Lower Mushrooms door 1 --> Green Brinstar Elevator
+    dw $8ADE   ; Moat door 0 --> Crateria Kihunters
+    dw $8B92   ; Morph Elevator door 0 --> Pit
+    dw $89A6   ; Parlor door 6 --> 230 Bombway
+    dw $899A   ; Parlor door 5 --> Crateria Save
+    dw $895E   ; Parlor door 0 --> Terminator
+    dw $8B7A   ; Pit door 0 --> Climb
+    dw $8BCE   ; Pre-Map Flyway door door 0 --> Parlor
+    dw $9216   ; Statues door 0 --> Statues Hallway
+    dw $91E6   ; Statues Hallway door 0 --> Green Pirates Shaft
+    dw $8BE6   ; Terminator door 0 --> Green Pirates Shaft
+    dw $8B26   ; West Ocean Geemer door 0 --> Bowling Alley Path
+    dw $89CA   ; West Ocean door 0 --> Moat
+    dw $8F22   ; Green Brinstar Beetoms door 1 --> Etecoon Energy Tank
+    dw $8D7E   ; Green Brinstar Firefleas door 0 --> Brinstar Missile Refill
+    dw $8D36   ; Brinstar Pre-Map door 0 --> Brinstar Map
+    dw $8D66   ; Brinstar Reserve Tank door 0 --> Early Supers
+    dw $8D4E   ; Early Supers door 0 --> Green Brinstar Main Shaft
+    dw $8F52   ; Etecoon Energy Tank door 3 --> Etecoon Save
+    dw $8F3A   ; Etecoon Energy Tank door 1 --> Etecoon Supers
+    dw $8E7A   ; Green Hill Zone door 0 --> Big Pink
+    dw $8CFA   ; Green Brinstar Main Shaft door 7 --> Etecoon Energy Tank
+    dw $8CBE   ; Green Brinstar Main Shaft door 2 --> Green Brinstar Beetoms
+    dw $8CCA   ; Green Brinstar Main Shaft door 3 --> Green Brinstar Firefleas
+    dw $8D12   ; Green Brinstar Main Shaft door A --> Green Brinstar Main Shaft Save
+    dw $8D06   ; Green Brinstar Main Shaft door 8 --> Green Brinstar Main Shaft
+    dw $8CB2   ; Green Brinstar Main Shaft door 1 --> Brinstar Pre-Map
+    dw $8EFE   ; Noob Bridge door 0 --> Green Hill Zone
+    dw $8E32   ; Spore Spawn Kihunters door 0 --> Big Pink
+    dw $A684   ; East Sand Hall door 0 --> Oasis
+    dw $A660   ; Oasis door 0 --> West Sand Hall
+    dw $A780   ; Pants door 0 --> East Sand Hall
+    dw $A7B0   ; East Pants door 0 --> Pants
+    dw $A7A4   ; Pants door 3 --> Pants
+    dw $A8C4   ; Shaktool door 0 --> East Pants
+    dw $A7C8   ; Spring Ball door 0 --> Shaktool
+    dw $A63C   ; West Sand Hall door 0 --> West Sand Hall Tunnel
+    dw $A528   ; West Sand Hall Tunnel door 0 --> Crab Hole
+    dw $9192   ; Baby Kraid door 0 --> Warehouse Kihunters
+    dw $91CE   ; Kraid door 0 --> Kraid Eye Door
+    dw $91AA   ; Kraid Eye Door door 0 --> Baby Kraid
+    dw $920A   ; Kraid Refill door 0 --> Kraid Eye Door
+    dw $9252   ; Varia Suit door 0 --> Kraid
+    dw $922E   ; Warehouse Entrance door 0 --> East Tunnel
+    dw $925E   ; Warehouse Save door 0 --> Warehouse Kihunters
+    dw $914A   ; Warehouse Zeela door 1 --> Warehouse Energy Tank
+    dw $913E   ; Warehouse Zeela door 0 --> Warehouse Entrance
+
+; NOTE: Table order must match above table with portals inverted
+portals_left_vanilla_inverted_table:
+    dw $8FFA   ; Billy Mays door 0 --> Boulder
+    dw $8FA6   ; Alpha Missiles door 0 --> Construction Zone
+    dw $8EAA   ; Morph Ball door 1 --> Construction Zone
+    dw $8ECE   ; Construction Zone door 1 --> Blue Brinstar Energy Tank
+    dw $8FE2   ; Boulder door 0 --> Blue Brinstar Energy Tank
+    dw $8E86   ; Green Hill Zone door 1 --> Morph Ball
+    dw $AB94   ; Dead Scientist door 1 --> 58 Escape
+    dw $ABAC   ; 58 Escape door 1 --> Ceres Ridley
+    dw $AB7C   ; Magnet Stairs door 1 --> Dead Scientist
+    dw $AB4C   ; Ceres Elevator door 0 --> Falling Tile
+    dw $AB64   ; Falling Tile door 1 --> Magnet Stairs
+    dw $9492   ; Post Crocomire Shaft door 2 --> Cosine Missiles
+    dw $9432   ; Post Crocomire Farming door 0 --> Crocomire
+    dw $9522   ; Grapple Beam door 1 --> Grapple Tutorial 1
+    dw $950A   ; Grapple Tutorial 1 door 1 --> Grapple Tutorial 2
+    dw $94F2   ; Grapple Tutorial 2 door 1 --> Grapple Tutorial 3
+    dw $946E   ; Post Crocomire Power Bombs door 0 --> Post Crocomire Farming
+    dw $9516   ; Grapple Beam door 0 --> Post Crocomire Jump
+    dw $9456   ; Post Crocomire Farming door 3 --> Post Crocomire Save
+    dw $94C2   ; Grapple Tutorial 3 door 1 --> Post Crocomire Shaft
+    dw $8C9A   ; 230 Missiles door 0 --> 230 Bombway
+    dw $8BC2   ; Flyway door 1 --> Bomb Torizo
+    dw $89E2   ; West Ocean door 2 --> Bowling Alley Path
+    dw $AB34   ; Tourian Escape 4 door 1 --> Climb
+    dw $8B56   ; Climb door 2 --> Climb Supers
+    dw $8B4A   ; Climb door 1 --> Climb Supers
+    dw $8AA2   ; Forgotten Highway Elbow door 0 --> Crab Maze
+    dw $8AD2   ; Crateria Tube door 1 --> Crateria Kihunters
+    dw $8BDA   ; Pre-Map Flyway door 1 --> Crateria Map Station
+    dw $893A   ; Landing Site door 3 --> Crateria Power Bombs
+    dw $8922   ; Landing Site door 1 --> Crateria Tube
+    dw $A264   ; Electric Death door 0 --> East Ocean
+    dw $8982   ; Parlor door 3 --> Flyway
+    dw $8A72   ; East Ocean door 1 --> Forgotten Highway Kago
+    dw $8C5E   ; Green Pirates Shaft door 3 --> Gauntlet Energy Tank
+    dw $8B0E   ; Gauntlet Energy Tank door 0 --> Gauntlet Entrance
+    dw $8C16   ; Lower Mushrooms door 0 --> Green Pirates Shaft
+    dw $896A   ; Parlor door 1 --> Landing Site
+    dw $8946   ; Gauntlet Entrance door 0 --> Landing Site
+    dw $8BFE   ; Green Brinstar Elevator door 0 --> Lower Mushrooms
+    dw $8A36   ; Crateria Kihunters door 1 --> Moat
+    dw $8B86   ; Pit door 1 --> Morph Elevator
+    dw $8C8E   ; 230 Bombway door 1 --> Parlor
+    dw $89BE   ; Crateria Save door 0 --> Parlor
+    dw $8BF2   ; Terminator door 1 --> Parlor
+    dw $8B62   ; Climb door 3 --> Pit
+    dw $8976   ; Parlor door 2 --> Pre-Map Flyway
+    dw $91F2   ; Statues Hallway door 1 --> Statues
+    dw $8C52   ; Green Pirates Shaft door 2 --> Statues Hallway
+    dw $8C3A   ; Green Pirates Shaft door 0 --> Terminator
+    dw $8A1E   ; Bowling Alley Path door 1 --> West Ocean Geemer
+    dw $8AEA   ; Moat door 1 --> West Ocean
+    dw $8F2E   ; Etecoon Energy Tank door 0 --> Green Brinstar Beetoms
+    dw $8D96   ; Brinstar Missile Refill door 0 --> Green Brinstar Firefleas
+    dw $8D72   ; Brinstar Map door 0 --> Brinstar Pre-Map
+    dw $8D5A   ; Early Supers door 1 --> Brinstar Reserve Tank
+    dw $8CD6   ; Green Brinstar Main Shaft door 4 --> Early Supers
+    dw $9012   ; Etecoon Save door 0 --> Etecoon Energy Tank
+    dw $8F5E   ; Etecoon Supers door 0 --> Etecoon Energy Tank
+    dw $8DEA   ; Big Pink door 3 --> Green Hill Zone
+    dw $8F46   ; Etecoon Energy Tank door 2 --> Green Brinstar Main Shaft
+    dw $8F16   ; Green Brinstar Beetoms door 0 --> Green Brinstar Main Shaft
+    dw $8D8A   ; Green Brinstar Firefleas door 1 --> Green Brinstar Main Shaft
+    dw $9006   ; Green Brinstar Main Shaft Save door 0 --> Green Brinstar Main Shaft
+    dw $8CEE   ; Green Brinstar Main Shaft door 6 --> Green Brinstar Main Shaft
+    dw $8D42   ; Brinstar Pre-Map door 1 --> Green Brinstar Main Shaft
+    dw $8E92   ; Green Hill Zone door 2 --> Noob Bridge
+    dw $8DC6   ; Big Pink door 0 --> Green Hill Zone
+    dw $A66C   ; Oasis door 1 --> East Sand Hall
+    dw $A648   ; West Sand Hall door 1 --> Oasis
+    dw $A690   ; East Sand Hall door 1 --> Pants
+    dw $A78C   ; Pants door 1 --> East Pants
+    dw $A810   ; (Pants door 1 --> Pants)
+    dw $A798   ; Pants door 2 --> Shaktool
+    dw $A8D0   ; Shaktool door 1 --> Spring Ball
+    dw $A534   ; West Sand Hall Tunnel door 1 --> West Sand Hall
+    dw $A504   ; Crab Hole door 1 --> West Sand Hall Tunnel
+    dw $917A   ; Warehouse Kihunters door 1 --> Baby Kraid
+    dw $91B6   ; Kraid Eye Door door 1 --> Kraid
+    dw $919E   ; Baby Kraid door 1 --> Kraid Eye Door
+    dw $91C2   ; Kraid Eye Door door 2 --> Kraid Refill
+    dw $91DA   ; Kraid door 1 --> Varia Suit
+    dw $A384   ; East Tunnel door 1 --> Warehouse Entrance
+    dw $9186   ; Warehouse Kihunters door 2 --> Warehouse Save
+    dw $9162   ; Warehouse Energy Tank door 0 --> Warehouse Zeela
+    dw $923A   ; Warehouse Entrance door 1 --> Warehouse Zeela
+
+; List of vanilla right doors
+; NOTE: Table order must match layoutmenu.asm
+portals_right_vanilla_table:
+    dw $8FA6   ; Alpha Missiles door 0 --> Construction Zone
+    dw $8FFA   ; Billy Mays door 0 --> Boulder
+    dw $8FE2   ; Boulder door 0 --> Blue Brinstar Energy Tank
+    dw $8ECE   ; Construction Zone door 1 --> Blue Brinstar Energy Tank
+    dw $8EAA   ; Morph Ball door 1 --> Construction Zone
+    dw $ABAC   ; 58 Escape door 1 --> Ceres Ridley
+    dw $AB4C   ; Ceres Elevator door 0 --> Falling Tile
+    dw $AB94   ; Dead Scientist door 1 --> 58 Escape
+    dw $AB64   ; Falling Tile door 1 --> Magnet Stairs
+    dw $AB7C   ; Magnet Stairs door 1 --> Dead Scientist
+    dw $9516   ; Grapple Beam door 0 --> Post Crocomire Jump
+    dw $9522   ; Grapple Beam door 1 --> Grapple Tutorial 1
+    dw $950A   ; Grapple Tutorial 1 door 1 --> Grapple Tutorial 2
+    dw $94F2   ; Grapple Tutorial 2 door 1 --> Grapple Tutorial 3
+    dw $94C2   ; Grapple Tutorial 3 door 1 --> Post Crocomire Shaft
+    dw $9432   ; Post Crocomire Farming door 0 --> Crocomire
+    dw $9456   ; Post Crocomire Farming door 3 --> Post Crocomire Save
+    dw $946E   ; Post Crocomire Power Bombs door 0 --> Post Crocomire Farming
+    dw $9492   ; Post Crocomire Shaft door 2 --> Cosine Missiles
+    dw $8C8E   ; 230 Bombway door 1 --> Parlor
+    dw $8C9A   ; 230 Missiles door 0 --> 230 Bombway
+    dw $8A1E   ; Bowling Alley Path door 1 --> West Ocean Geemer
+    dw $8B62   ; Climb door 3 --> Pit
+    dw $8B56   ; Climb door 2 --> Climb Supers
+    dw $8B4A   ; Climb door 1 --> Climb Supers
+    dw $8A36   ; Crateria Kihunters door 1 --> Moat
+    dw $89BE   ; Crateria Save door 0 --> Parlor
+    dw $8AD2   ; Crateria Tube door 1 --> Crateria Kihunters
+    dw $8A72   ; East Ocean door 1 --> Forgotten Highway Kago
+    dw $8BC2   ; Flyway door 1 --> Bomb Torizo
+    dw $8AA2   ; Forgotten Highway Elbow door 0 --> Crab Maze
+    dw $8B0E   ; Gauntlet Energy Tank door 0 --> Gauntlet Entrance
+    dw $8946   ; Gauntlet Entrance door 0 --> Landing Site
+    dw $8BFE   ; Green Brinstar Elevator door 0 --> Lower Mushrooms
+    dw $8C52   ; Green Pirates Shaft door 2 --> Statues Hallway
+    dw $8C3A   ; Green Pirates Shaft door 0 --> Terminator
+    dw $8C5E   ; Green Pirates Shaft door 3 --> Gauntlet Energy Tank
+    dw $8922   ; Landing Site door 1 --> Crateria Tube
+    dw $893A   ; Landing Site door 3 --> Crateria Power Bombs
+    dw $8C16   ; Lower Mushrooms door 0 --> Green Pirates Shaft
+    dw $8AEA   ; Moat door 1 --> West Ocean
+    dw $8976   ; Parlor door 2 --> Pre-Map Flyway
+    dw $8982   ; Parlor door 3 --> Flyway
+    dw $896A   ; Parlor door 1 --> Landing Site
+    dw $8B86   ; Pit door 1 --> Morph Elevator
+    dw $8BDA   ; Pre-Map Flyway door 1 --> Crateria Map Station
+    dw $91F2   ; Statues Hallway door 1 --> Statues
+    dw $8BF2   ; Terminator door 1 --> Parlor
+    dw $89E2   ; West Ocean door 2 --> Bowling Alley Path
+    dw $8B32   ; West Ocean Geemer door 1 --> Bowling Alley
+    dw $89D6   ; West Ocean door 1 --> Wrecked Ship Entrance
+    dw $8A06   ; West Ocean door 5 --> Gravity Suit
+    dw $89FA   ; West Ocean door 4 --> Bowling Alley
+    dw $89EE   ; West Ocean door 3 --> Attic
+    dw $8F16   ; Green Brinstar Beetoms door 0 --> Green Brinstar Main Shaft
+    dw $8D8A   ; Green Brinstar Firefleas door 1 --> Green Brinstar Main Shaft
+    dw $8D72   ; Brinstar Map door 0 --> Brinstar Pre-Map
+    dw $8D96   ; Brinstar Missile Refill door 0 --> Green Brinstar Firefleas
+    dw $8D42   ; Brinstar Pre-Map door 1 --> Green Brinstar Main Shaft
+    dw $8D5A   ; Early Supers door 1 --> Brinstar Reserve Tank
+    dw $8F46   ; Etecoon Energy Tank door 2 --> Green Brinstar Main Shaft
+    dw $8F2E   ; Etecoon Energy Tank door 0 --> Green Brinstar Beetoms
+    dw $9012   ; Etecoon Save door 0 --> Etecoon Energy Tank
+    dw $8F5E   ; Etecoon Supers door 0 --> Etecoon Energy Tank
+    dw $8E92   ; Green Hill Zone door 2 --> Noob Bridge
+    dw $8E86   ; Green Hill Zone door 1 --> Morph Ball
+    dw $8CE2   ; Green Brinstar Main Shaft door 5 --> Dachora
+    dw $8CEE   ; Green Brinstar Main Shaft door 6 --> Green Brinstar Main Shaft
+    dw $8CD6   ; Green Brinstar Main Shaft door 4 --> Early Supers
+    dw $9006   ; Green Brinstar Main Shaft Save door 0 --> Green Brinstar Main Shaft
+    dw $8F0A   ; Noob Bridge door 1 --> Red Tower
+    dw $8E4A   ; Spore Spawn door 0 --> Spore Spawn Supers
+    dw $A690   ; East Sand Hall door 1 --> Pants
+    dw $A66C   ; Oasis door 1 --> East Sand Hall
+    dw $A798   ; Pants door 2 --> Shaktool
+    dw $A7BC   ; East Pants door 1 --> Shaktool
+    dw $A78C   ; Pants door 1 --> East Pants
+    dw $A8D0   ; Shaktool door 1 --> Spring Ball
+    dw $A648   ; West Sand Hall door 1 --> Oasis
+    dw $A534   ; West Sand Hall Tunnel door 1 --> West Sand Hall
+    dw $919E   ; Baby Kraid door 1 --> Kraid Eye Door
+    dw $917A   ; Warehouse Kihunters door 1 --> Baby Kraid
+    dw $9186   ; Warehouse Kihunters door 2 --> Warehouse Save
+    dw $91DA   ; Kraid door 1 --> Varia Suit
+    dw $91B6   ; Kraid Eye Door door 1 --> Kraid
+    dw $91C2   ; Kraid Eye Door door 2 --> Kraid Refill
+    dw $9162   ; Warehouse Energy Tank door 0 --> Warehouse Zeela
+    dw $923A   ; Warehouse Entrance door 1 --> Warehouse Zeela
+
+; NOTE: Table order must match above table with portals inverted
+portals_right_vanilla_inverted_table:
+    dw $8EDA   ; Construction Zone door 2 --> Alpha Missiles
+    dw $8FEE   ; Boulder door 1 --> Billy Mays
+    dw $8EF2   ; Blue Brinstar Energy Tank door 1 --> Boulder
+    dw $8EE6   ; Blue Brinstar Energy Tank door 0 --> Construction Zone
+    dw $8EC2   ; Construction Zone door 0 --> Morph Ball
+    dw $ABB8   ; Ceres Ridley door 0 --> 58 Escape
+    dw $AB58   ; Falling Tile door 0 --> Ceres Elevator
+    dw $ABA0   ; 58 Escape door 0 --> Dead Scientist
+    dw $AB70   ; Magnet Stairs door 0 --> Falling Tile
+    dw $AB88   ; Dead Scientist door 0 --> Magnet Stairs
+    dw $94DA   ; Post Crocomire Jump door 1 --> Grapple Beam
+    dw $94FE   ; Grapple Tutorial 1 door 0 --> Grapple Beam
+    dw $94E6   ; Grapple Tutorial 2 door 0 --> Grapple Tutorial 1
+    dw $94B6   ; Grapple Tutorial 3 door 0 --> Grapple Tutorial 2
+    dw $9486   ; Post Crocomire Shaft door 1 --> Grapple Tutorial 3
+    dw $9462   ; Post Crocomire Save door 0 --> Post Crocomire Farming
+    dw $93DE   ; Crocomire door 0 --> Post Crocomire Farming
+    dw $943E   ; Post Crocomire Farming door 1 --> Post Crocomire Power Bombs
+    dw $94AA   ; Cosine Missiles door 0 --> Post Crocomire Shaft
+    dw $89A6   ; Parlor door 6 --> 230 Bombway
+    dw $8C82   ; 230 Bombway door 0 --> 230 Missiles
+    dw $8B26   ; West Ocean Geemer door 0 --> Bowling Alley Path
+    dw $8B7A   ; Pit door 0 --> Climb
+    dw $8C76   ; Climb Supers door 1 --> Climb
+    dw $8C6A   ; Climb Supers door 0 --> Climb
+    dw $8ADE   ; Moat door 0 --> Crateria Kihunters
+    dw $899A   ; Parlor door 5 --> Crateria Save
+    dw $8A2A   ; Crateria Kihunters door 0 --> Crateria Tube
+    dw $8A7E   ; Forgotten Highway Kago door 0 --> East Ocean
+    dw $8BAA   ; Bomb Torizo door 0 --> Flyway
+    dw $8AAE   ; Crab Maze door 1 --> Forgotten Highway Elbow
+    dw $8952   ; Gauntlet Entrance door 1 --> Gauntlet Energy Tank
+    dw $892E   ; Landing Site door 2 --> Gauntlet Entrance
+    dw $8C22   ; Lower Mushrooms door 1 --> Green Brinstar Elevator
+    dw $91E6   ; Statues Hallway door 0 --> Green Pirates Shaft
+    dw $8BE6   ; Terminator door 0 --> Green Pirates Shaft
+    dw $8B1A   ; Gauntlet Energy Tank door 1 --> Green Pirates Shaft
+    dw $8AC6   ; Crateria Tube door 0 --> Landing Site
+    dw $89B2   ; Crateria Power Bombs door 0 --> Landing Site
+    dw $8C46   ; Green Pirates Shaft door 1 --> Lower Mushrooms
+    dw $89CA   ; West Ocean door 0 --> Moat
+    dw $8BCE   ; Pre-Map Flyway door door 0 --> Parlor
+    dw $8BB6   ; Flyway door 0 --> Parlor
+    dw $8916   ; Landing Site door 0 --> Parlor
+    dw $8B92   ; Morph Elevator door 0 --> Pit
+    dw $8C2E   ; Crateria Map Station door 0 --> Pre-Map Flyway
+    dw $9216   ; Statues door 0 --> Statues Hallway
+    dw $895E   ; Parlor door 0 --> Terminator
+    dw $8A12   ; Bowling Alley Path door 0 --> West Ocean
+    dw $A198   ; Bowling Alley door 1 --> West Ocean Geemer
+    dw $A1B0   ; Wrecked Ship Entrance door 0 --> West Ocean
+    dw $A300   ; Gravity Suit door 0 --> West Ocean
+    dw $A18C   ; Bowling Alley door 0 --> West Ocean
+    dw $A1E0   ; Attic door 2 --> West Ocean
+    dw $8CBE   ; Green Brinstar Main Shaft door 2 --> Green Brinstar Beetoms
+    dw $8CCA   ; Green Brinstar Main Shaft door 3 --> Green Brinstar Firefleas
+    dw $8D36   ; Brinstar Pre-Map door 0 --> Brinstar Map
+    dw $8D7E   ; Green Brinstar Firefleas door 0 --> Brinstar Missile Refill
+    dw $8CB2   ; Green Brinstar Main Shaft door 1 --> Brinstar Pre-Map
+    dw $8D66   ; Brinstar Reserve Tank door 0 --> Early Supers
+    dw $8CFA   ; Green Brinstar Main Shaft door 7 --> Etecoon Energy Tank
+    dw $8F22   ; Green Brinstar Beetoms door 1 --> Etecoon Energy Tank
+    dw $8F52   ; Etecoon Energy Tank door 3 --> Etecoon Save
+    dw $8F3A   ; Etecoon Energy Tank door 1 --> Etecoon Supers
+    dw $8EFE   ; Noob Bridge door 0 --> Green Hill Zone
+    dw $8E9E   ; Morph Ball door 0 --> Green Hill Zone
+    dw $8DA2   ; Dachora door 0 --> Green Brinstar Main Shaft
+    dw $8D06   ; Green Brinstar Main Shaft door 8 --> Green Brinstar Main Shaft
+    dw $8D4E   ; Early Supers door 0 --> Green Brinstar Main Shaft
+    dw $8D12   ; Green Brinstar Main Shaft door A --> Green Brinstar Main Shaft Save
+    dw $902A   ; Red Tower door 1 --> Noob Bridge
+    dw $8D2A   ; Spore Spawn Supers door 1 --> Spore Spawn
+    dw $A780   ; Pants door 0 --> East Sand Hall
+    dw $A684   ; East Sand Hall door 0 --> Oasis
+    dw $A804   ; (Shaktool door 0 --> Pants)
+    dw $A8C4   ; Shaktool door 0 --> East Pants
+    dw $A7B0   ; East Pants door 0 --> Pants
+    dw $A7C8   ; Spring Ball door 0 --> Shaktool
+    dw $A660   ; Oasis door 0 --> West Sand Hall
+    dw $A63C   ; West Sand Hall door 0 --> West Sand Hall Tunnel
+    dw $91AA   ; Kraid Eye Door door 0 --> Baby Kraid
+    dw $9192   ; Baby Kraid door 0 --> Warehouse Kihunters
+    dw $925E   ; Warehouse Save door 0 --> Warehouse Kihunters
+    dw $9252   ; Varia Suit door 0 --> Kraid
+    dw $91CE   ; Kraid door 0 --> Kraid Eye Door
+    dw $920A   ; Kraid Refill door 0 --> Kraid Eye Door
+    dw $914A   ; Warehouse Zeela door 1 --> Warehouse Energy Tank
+    dw $913E   ; Warehouse Zeela door 0 --> Warehouse Entrance
+
+; List of vanilla up doors
+; NOTE: Table order must match layoutmenu.asm
+portals_up_vanilla_table:
+    dw $93EA   ; Crocomire door 1 --> Crocomire Speedway
+    dw $94CE   ; Post Crocomire Jump door 0 --> Post Crocomire Shaft
+    dw $947A   ; Post Crocomire Shaft door 0 --> Post Crocomire Farming
+    dw $8B3E   ; Climb door 0 --> Parlor
+    dw $8A96   ; Crab Maze door 0 --> Forgotten Highway Kago
+    dw $8A4E   ; Forgotten Highway Elevator door 0 --> Forgotten Highway Elbow
+    dw $8AF6   ; Red Brinstar Elevator door 0 --> Crateria Kihunters
+    dw $8E3E   ; Spore Spawn Kihunters door 1 --> Spore Spawn
+    dw $0008   ; (East Sand Hall --> East Sand Hole)
+    dw $A678   ; Oasis door 2 --> Aqueduct Tube
+    dw $000A   ; (West Sand Hall --> West Sand Hole)
+    dw $9156   ; Warehouse Zeela door 2 --> Warehouse Kihunters
+
+; NOTE: Table order must match above table with portals inverted
+portals_up_vanilla_inverted_table:
+    dw $93D2   ; Crocomire Speedway door 4 --> Crocomire Room
+    dw $949E   ; Post Crocomire Shaft door 3 --> Post Crocomire Jump
+    dw $944A   ; Post Crocomire Farming door 2 --> Post Crocomire Shaft
+    dw $898E   ; Parlor door 4 --> Climb
+    dw $8A7E   ; Forgotten Highway Kago door 0 --> Crab Maze
+    dw $8ABA   ; Forgotten Highway Elbow door 1 --> Forgotten Highway Elevator
+    dw $8A42   ; Crateria Kihunters door 2 --> Red Brinstar Elevator
+    dw $8E56   ; Spore Spawn door 1 --> Spore Spawn Kihunters
+    dw $A6CC   ; East Sand Hole door 1 --> East Sand Hall
+    dw $A600   ; Aqueduct Tube door 0 --> Oasis
+    dw $A6B4   ; West Sand Hole door 1 --> West Sand Hall
+    dw $916E   ; Warehouse Kihunters door 0 --> Warehouse Zeela
+
+; List of vanilla down doors
+; NOTE: Table order must match layoutmenu.asm
+portals_down_vanilla_table:
+    dw $944A   ; Post Crocomire Farming door 2 --> Post Crocomire Shaft
+    dw $949E   ; Post Crocomire Shaft door 3 --> Post Crocomire Jump
+    dw $8A42   ; Crateria Kihunters door 2 --> Red Brinstar Elevator
+    dw $8ABA   ; Forgotten Highway Elbow door 1 --> Forgotten Highway Elevator
+    dw $8A7E   ; Forgotten Highway Kago door 0 --> Crab Maze
+    dw $898E   ; Parlor door 4 --> Climb
+    dw $8E56   ; Spore Spawn door 1 --> Spore Spawn Kihunters
+    dw $916E   ; Warehouse Kihunters door 0 --> Warehouse Zeela
+
+; NOTE: Table order must match above table with portals inverted
+portals_down_vanilla_inverted_table:
+    dw $947A   ; Post Crocomire Shaft door 0 --> Post Crocomire Farming
+    dw $94CE   ; Post Crocomire Jump door 0 --> Post Crocomire Shaft
+    dw $8AF6   ; Red Brinstar Elevator door 0 --> Crateria Kihunters
+    dw $8A4E   ; Forgotten Highway Elevator door 0 --> Forgotten Highway Elbow
+    dw $8A96   ; Crab Maze door 0 --> Forgotten Highway Kago
+    dw $8B3E   ; Climb door 0 --> Parlor
+    dw $8E3E   ; Spore Spawn Kihunters door 1 --> Spore Spawn
+    dw $9156   ; Warehouse Zeela door 2 --> Warehouse Kihunters
 
 print pc, " layout bank83 end"
 
@@ -2397,7 +2869,7 @@ door_custom_asm:
     RTS
 }
 
-layout_asm_crateriakihunter_bottomdoor:
+layout_asm_crateriakihunters_bottomdoor:
 {
     ; Perform same scroll asm as vanilla
     PHP

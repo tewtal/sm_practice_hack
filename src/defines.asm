@@ -227,8 +227,10 @@
 !ram_cm_watch_enemy_side = !WRAM_MENU_START+$84
 !ram_cm_watch_common_address = !WRAM_MENU_START+$86
 
-!ram_cm_door_menu_value = !WRAM_MENU_START+$80
-!ram_cm_door_menu_bank = !WRAM_MENU_START+$82
+!ram_cm_door_dynamic = !WRAM_MENU_START+$80
+!ram_cm_door_menu_value = !WRAM_MENU_START+$82
+!ram_cm_door_menu_bank = !WRAM_MENU_START+$84
+!ram_cm_door_direction_index = !WRAM_MENU_START+$86
 
 !ram_cm_phan_first_phase = !WRAM_MENU_START+$80
 !ram_cm_phan_second_phase = !WRAM_MENU_START+$82
@@ -699,8 +701,16 @@ endif
 !SPRITE_32x32_PROJ = #$0040
 !SPRITE_OOB_WATCH = #$0080
 
-!DOOR_PORTAL_ENABLED = #$0001
-!DOOR_PORTAL_JUMP = #$0002
+!DOOR_PORTAL_DISABLED = #$0000
+!DOOR_PORTAL_AREA_BOSS = #$0001
+!DOOR_PORTAL_RIGHT_LEFT = #$0002
+!DOOR_PORTAL_DOWN_UP = #$0003
+!DOOR_PORTAL_MODE_MASK = #$0003
+!DOOR_PORTAL_IFRAMES_BIT = #$0004
+!DOOR_PORTAL_JUMP_BIT = #$0008
+!DOOR_PORTAL_EXCLUDE_JUMP_MASK = #$FFF7
+!DOOR_PORTAL_EXCLUDE_MODE_IFRAMES_MASK = #$FFF8
+!DOOR_PORTAL_EXCLUDE_MODE_MASK = #$FFFC
 
 
 ; ----------
