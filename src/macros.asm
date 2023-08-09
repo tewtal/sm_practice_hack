@@ -279,6 +279,17 @@ custompreset_<slot>:
     db #$28, "<slot>", #$FF ; slot ID text
 endmacro
 
+macro cm_managepreset(slot)
+; Allows reorganizing custom preset slots
+managepreset_<slot>:
+  .dm_actionIndex
+    dw !ACTION_MANAGE_PRESETS
+  .dm_slot
+    db <slot>
+  .dm_text
+    db #$28, "<slot>", #$FF
+endmacro
+
 macro cm_ctrl_shortcut(title, addr)
 ; configure controller shortcuts
     dw !ACTION_CTRL_SHORTCUT

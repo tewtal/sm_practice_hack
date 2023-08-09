@@ -539,6 +539,7 @@ if !FEATURE_TINYSTATES
 ; Tinystates only has slots $00-15
 else
     dw #$FFFF
+    dw #custompreset_manage
     dw #custompreset_goto_page2
     dw #custompreset_goto_page3
 endif
@@ -564,6 +565,7 @@ CustomPresetsMenu2:
     dw #custompreset_30
     dw #custompreset_31
     dw #$FFFF
+    dw #custompreset_manage
     dw #custompreset_goto_page1
     dw #custompreset_goto_page3
     dw #$0000
@@ -588,6 +590,7 @@ CustomPresetsMenu3:
     dw #$FFFF
     dw #$FFFF
     dw #$FFFF
+    dw #custompreset_manage
     dw #custompreset_goto_page1
     dw #custompreset_goto_page2
     dw #$0000
@@ -635,6 +638,147 @@ CustomPresetsMenu3:
     %cm_custompreset(38)
     %cm_custompreset(39)
 
+custompreset_manage:
+    %cm_jsl("Manage Preset Slots", .routine, #$0000)
+  .routine
+    LDA #$0000 : STA !ram_cm_manage_slots
+if !FEATURE_TINYSTATES
+    LDY.w #ManagePresetsMenu
+else
+    ; determine which page is currently loaded
+    LDA !ram_cm_stack_index : DEC #2 : TAX
+    ; exit if not in a color menu
+    LDA !ram_cm_menu_stack,X : CMP.w #CustomPresetsMenu : BPL .page2
+    LDY.w #ManagePresetsMenu : BRA .done
+  .page2
+    CMP.w #CustomPresetsMenu2 : BPL .page3
+    LDY.w #ManagePresetsMenu2 : BRA .done
+  .page3
+    LDY.w #ManagePresetsMenu3
+  .done
+endif
+    JML action_adjacent_submenu
+
+ManagePresetsMenu:
+    dw #managepreset_00
+    dw #managepreset_01
+    dw #managepreset_02
+    dw #managepreset_03
+    dw #managepreset_04
+    dw #managepreset_05
+    dw #managepreset_06
+    dw #managepreset_07
+    dw #managepreset_08
+    dw #managepreset_09
+    dw #managepreset_10
+    dw #managepreset_11
+    dw #managepreset_12
+    dw #managepreset_13
+    dw #managepreset_14
+    dw #managepreset_15
+if !FEATURE_TINYSTATES
+; Tinystates only has slots $00-15
+else
+    dw #$FFFF
+    dw #$FFFF
+    dw #managepreset_goto_page2
+    dw #managepreset_goto_page3
+endif
+    dw #$0000
+    %cm_header("PRESS A TO SWAP PRESETS")
+    %cm_footer("PRESS X TO DELETE PRESET")
+
+ManagePresetsMenu2:
+    dw #managepreset_16
+    dw #managepreset_17
+    dw #managepreset_18
+    dw #managepreset_19
+    dw #managepreset_20
+    dw #managepreset_21
+    dw #managepreset_22
+    dw #managepreset_23
+    dw #managepreset_24
+    dw #managepreset_25
+    dw #managepreset_26
+    dw #managepreset_27
+    dw #managepreset_28
+    dw #managepreset_29
+    dw #managepreset_30
+    dw #managepreset_31
+    dw #$FFFF
+    dw #$FFFF
+    dw #managepreset_goto_page1
+    dw #managepreset_goto_page3
+    dw #$0000
+    %cm_header("PRESS A TO SWAP PRESETS")
+    %cm_footer("PRESS X TO DELETE PRESET")
+
+ManagePresetsMenu3:
+    dw #managepreset_32
+    dw #managepreset_33
+    dw #managepreset_34
+    dw #managepreset_35
+    dw #managepreset_36
+    dw #managepreset_37
+    dw #managepreset_38
+    dw #managepreset_39
+    dw #$FFFF
+    dw #$FFFF
+    dw #$FFFF
+    dw #$FFFF
+    dw #$FFFF
+    dw #$FFFF
+    dw #$FFFF
+    dw #$FFFF
+    dw #$FFFF
+    dw #$FFFF
+    dw #managepreset_goto_page1
+    dw #managepreset_goto_page2
+    dw #$0000
+    %cm_header("PRESS A TO SWAP PRESETS")
+    %cm_footer("PRESS X TO DELETE PRESET")
+
+    %cm_managepreset(00)
+    %cm_managepreset(01)
+    %cm_managepreset(02)
+    %cm_managepreset(03)
+    %cm_managepreset(04)
+    %cm_managepreset(05)
+    %cm_managepreset(06)
+    %cm_managepreset(07)
+    %cm_managepreset(08)
+    %cm_managepreset(09)
+    %cm_managepreset(10)
+    %cm_managepreset(11)
+    %cm_managepreset(12)
+    %cm_managepreset(13)
+    %cm_managepreset(14)
+    %cm_managepreset(15)
+    %cm_managepreset(16)
+    %cm_managepreset(17)
+    %cm_managepreset(18)
+    %cm_managepreset(19)
+    %cm_managepreset(20)
+    %cm_managepreset(21)
+    %cm_managepreset(22)
+    %cm_managepreset(23)
+    %cm_managepreset(24)
+    %cm_managepreset(25)
+    %cm_managepreset(26)
+    %cm_managepreset(27)
+    %cm_managepreset(28)
+    %cm_managepreset(29)
+    %cm_managepreset(30)
+    %cm_managepreset(31)
+    %cm_managepreset(32)
+    %cm_managepreset(33)
+    %cm_managepreset(34)
+    %cm_managepreset(35)
+    %cm_managepreset(36)
+    %cm_managepreset(37)
+    %cm_managepreset(38)
+    %cm_managepreset(39)
+
 custompreset_goto_page1:
     %cm_adjacent_submenu("GOTO PAGE ONE", #CustomPresetsMenu)
 
@@ -643,6 +787,38 @@ custompreset_goto_page2:
 
 custompreset_goto_page3:
     %cm_adjacent_submenu("GOTO PAGE THREE", #CustomPresetsMenu3)
+
+managepreset_goto_page1:
+    %cm_jsl("GOTO PAGE ONE", .routine, #ManagePresetsMenu)
+  .routine
+    JML action_adjacent_submenu
+
+managepreset_goto_page2:
+    %cm_jsl("GOTO PAGE TWO", managepreset_goto_page1_routine, #ManagePresetsMenu2)
+
+managepreset_goto_page3:
+    %cm_jsl("GOTO PAGE THREE", managepreset_goto_page1_routine, #ManagePresetsMenu3)
+
+ManagePresetsConfirm:
+    dw #managepreset_abort
+    dw #$FFFF
+    dw #managepreset_confirm
+    dw #$0000
+    %cm_header("DELETE SELECTED PRESET?")
+
+managepreset_abort:
+    %cm_jsl("ABORT", .routine, #$0000)
+  .routine
+    JML cm_previous_menu
+
+managepreset_confirm:
+    %cm_jsl("Confirm Delete Preset", .routine, #$0000)
+  .routine
+    LDA !ram_cm_selected_slot : %presetslotsize()
+    LDA #$DEAD : STA $703000,X
+    LDA !ram_cm_selected_slot : ASL : TAX
+    LDA #$DEAD : STA !sram_custom_preset_safewords,X
+    JML cm_previous_menu
 
 
 ; ----------------

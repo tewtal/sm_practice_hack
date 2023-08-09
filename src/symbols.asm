@@ -257,6 +257,9 @@ ram_cm_dummy_num = !ram_cm_dummy_num ; !WRAM_MENU_START+$8E
 
 ram_cm_keyboard_buffer = !ram_cm_keyboard_buffer ; !WRAM_MENU_START+$80 ; $18 bytes
 
+ram_cm_manage_slots = !ram_cm_manage_slots ; !WRAM_MENU_START+$80
+ram_cm_selected_slot = !ram_cm_selected_slot ; !WRAM_MENU_START+$82
+
 ; ^ FREE SPACE ^ up to +$CE
 
 ; Reserve 48 bytes for CGRAM cache
