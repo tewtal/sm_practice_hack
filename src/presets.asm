@@ -23,7 +23,7 @@ endif
 
     ; Fix Phantoon and Draygon rooms
     LDA !ROOM_ID : CMP #$CD13 : BEQ .fixBG2
-    CMP #$D9AA : BNE .doneBG2
+    CMP #$DA60 : BNE .doneBG2
   .fixBG2
     JSL preset_clear_BG2_tilemap
 
