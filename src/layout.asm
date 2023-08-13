@@ -126,7 +126,7 @@ hijack_loading_room_CRE:
 
   .storeBitset
     STA !CRE_BITSET
-    LDA !ram_door_portal_flags : BIT !DOOR_PORTAL_JUMP_BIT : BEQ .changedDoorDone
+    LDA !ram_door_portal_flags : BIT !DOOR_PORTAL_IFRAMES_BIT : BEQ .changedDoorDone
     LDA #$0080 : STA !SAMUS_IFRAME_TIMER
 
   .changedDoorDone
@@ -252,6 +252,14 @@ org $83A66A
 hook_layout_asm_oasis_door0:
     dw #layout_asm_westsandhall
 
+; East Sand Hall unused door definition
+org $83A69C
+hook_layout_asm_aqueductfarmsandpit_door1:
+    dw #$D461
+    db #$00, #$04, #$01, #$06, #$00, #$00
+    dw #$8000
+    dw #layout_asm_westsandhall
+
 ; West Sand Hall top sand door
 org $83A6BE
 hook_layout_asm_westsandhole_door1:
@@ -263,7 +271,7 @@ hook_layout_asm_shaktool_to_pants:
     dw #$D646
     db #$00, #$05, #$0E, #$16, #$01, #$02
     dw #$8000
-    dw #$E3C8
+    dw #layout_asm_shaktool_to_pants_scrolls
 
 ; Overwrite unused door with Pants to Pants
 org $83A810
@@ -271,7 +279,7 @@ hook_layout_asm_pants_to_pants:
     dw #$D646
     db #$00, #$04, #$01, #$26, #$01, #$03
     dw #$8000
-    dw #$0000
+    dw #layout_asm_pants_to_pants_scrolls
 
 ; Mother Brain right door
 org $83AAD2
@@ -761,6 +769,57 @@ portals_left_vanilla_table:
     dw $91C2   ; Kraid Eye Door door 2 --> Kraid Refill
     dw $9162   ; Warehouse Energy Tank door 0 --> Warehouse Zeela
     dw $923A   ; Warehouse Entrance door 1 --> Warehouse Zeela
+    dw $983A   ; Acid Statue door 0 --> Golden Torizo
+    dw $9846   ; Acid Statue door 1 --> Main Hall
+    dw $99A2   ; Amphitheatre door 1 --> Red Kihunter Shaft
+    dw $989A   ; Fast Rippers door 1 --> Fast Pillars Setup
+    dw $9A9E   ; Lower Norfair Firefleas door 1 --> Jail Power Bombs
+    dw $9882   ; Golden Torizo door 1 --> Screw Attack
+    dw $9A0E   ; Red Kihunter Shaft door 3 --> Red Kihunter Save
+    dw $9A02   ; Red Kihunter Shaft door 2 --> Lower Norfair Firefleas
+    dw $985E   ; Main Hall door 1 --> Fast Pillars Setup
+    dw $9A3E   ; Metal Pirates door 1 --> Wasteland
+    dw $9936   ; Mickey Mouse door 1 --> Worst Room In The Game
+    dw $994E   ; Pillars door 1 --> Worst Room In The Game
+    dw $9912   ; Fast Pillars Setup door 4 --> Pillars
+    dw $98EE   ; Fast Pillars Setup door 1 --> Mickey Mouse
+    dw $9966   ; Plowerhouse door 1 --> Metal Pirates
+    dw $98BE   ; Ridley door 1 --> Lower Norfair Farming
+    dw $98D6   ; Lower Norfair Farming door 1 --> Plowerhouse
+    dw $9A62   ; Ridley Tank door 0 --> Ridley
+    dw $9A7A   ; Screw Attack door 1 --> Golden Torizo Recharge
+    dw $9A6E   ; Screw Attack door 0 --> Fast Rippers
+    dw $99BA   ; Spring Ball Maze door 1 --> Lower Norfair Firefleas
+    dw $9A56   ; Three Musketeers door 1 --> Spring Ball Maze
+    dw $997E   ; Worst Room In The Game door 1 --> Amphitheatre
+    dw $8DEA   ; Big Pink door 3 --> Green Hill Zone
+    dw $8E26   ; Big Pink door 8 --> Spore Spawn Farming
+    dw $8E1A   ; Big Pink door 7 --> Pink Brinstar Hoppers
+    dw $8DC6   ; Big Pink door 0 --> Spore Spawn Kihunters
+    dw $8FD6   ; Big Pink Save door 0 --> Big Pink
+    dw $8DAE   ; Dachora door 1 --> Big Pink
+    dw $8F6A   ; Dachora Recharge door 0 --> Dachora
+    dw $8FBE   ; Pink Brinstar Hoppers door 1 --> Hoppers Energy Tank
+    dw $8E6E   ; Pink Brinstar Power Bombs door 1 --> Big Pink
+    dw $8E62   ; Pink Brinstar Power Bombs door 0 --> Big Pink
+    dw $8F76   ; Spore Spawn Farming door 0 --> Spore Spawn Supers
+    dw $8F8E   ; Waterway Energy Tank door 0 --> Big Pink
+    dw $A738   ; Aqueduct door 4 --> Below Botwoon Energy Tank
+    dw $A768   ; Aqueduct Save door 0 --> Aqueduct
+    dw $A69C   ; Below Botwoon Energy Tank door 1 --> West Sand Hall
+    dw $A918   ; Botwoon door 1 --> Botwoon Energy Tank
+    dw $A774   ; Botwoon Hallway door 1 --> Botwoon
+    dw $A870   ; Botwoon Energy Tank door 3 --> Halfie Climb
+    dw $A7F8   ; Colosseum door 2 --> Precious
+    dw $A7EC   ; Colosseum door 1 --> Draygon Save
+    dw $A4C8   ; Crab Shaft door 2 --> Aqueduct
+    dw $A960   ; East Cactus Alley door 1 --> Halfie Climb
+    dw $A96C   ; Draygon door 0 --> Precious
+    dw $A87C   ; Draygon Save door 0 --> Maridia Health Refill
+    dw $A8F4   ; Halfie Climb door 2 --> Maridia Missile Refill
+    dw $A8E8   ; Halfie Climb door 1 --> Colosseum
+    dw $A924   ; Space Jump door 0 --> Draygon
+    dw $A948   ; West Cactus Alley door 1 --> East Cactus Alley
 
 ; NOTE: Table order must match above table with portals inverted
 portals_left_vanilla_inverted_table:
@@ -852,6 +911,57 @@ portals_left_vanilla_inverted_table:
     dw $920A   ; Kraid Refill door 0 --> Kraid Eye Door
     dw $914A   ; Warehouse Zeela door 1 --> Warehouse Energy Tank
     dw $913E   ; Warehouse Zeela door 0 --> Warehouse Entrance
+    dw $9876   ; Golden Torizo door 0 --> Acid Statue
+    dw $9852   ; Main Hall door 0 --> Acid Statue
+    dw $99F6   ; Red Kihunter Shaft door 1 --> Amphitheatre
+    dw $9906   ; Fast Pillars Setup door 3 --> Fast Rippers
+    dw $99D2   ; Jail Power Bombs door 0 --> Lower Norfair Firefleas
+    dw $9A86   ; Screw Attack door 2 --> Golden Torizo
+    dw $9AB6   ; Red Kihunter Save door 0 --> Red Kihunter Shaft
+    dw $9AAA   ; Lower Norfair Firefleas door 2 --> Red Kihunter Shaft
+    dw $98E2   ; Fast Pillars Setup door 0 --> Main Hall
+    dw $9A1A   ; Wasteland door 0 --> Metal Pirates
+    dw $9972   ; Worst Room In The Game door 0 --> Mickey Mouse
+    dw $998A   ; Worst Room In The Game door 2 --> Pillars
+    dw $9942   ; Pillars door 0 --> Fast Pillars Setup
+    dw $992A   ; Mickey Mouse door 0 --> Fast Pillars Setup
+    dw $9A32   ; Metal Pirates door 0 --> Plowerhouse
+    dw $98CA   ; Lower Norfair Farming door 0 --> Ridley
+    dw $995A   ; Plowerhouse door 0 --> Lower Norfair Farming
+    dw $98B2   ; Ridley door 0 --> Ridley Tank
+    dw $98A6   ; Golden Torizo Recharge door 0 --> Screw Attack
+    dw $988E   ; Fast Rippers door 0 --> Screw Attack
+    dw $9A92   ; Lower Norfair Firefleas door 0 --> Spring Ball Maze
+    dw $99AE   ; Spring Ball Maze door 0 --> Three Musketeers
+    dw $9996   ; Amphitheatre door 0 --> Worst Room In The Game
+    dw $8E7A   ; Green Hill Zone door 0 --> Big Pink
+    dw $8F82   ; Spore Spawn Farming door 1 --> Big Pink
+    dw $8FB2   ; Pink Brinstar Hoppers door 0 --> Big Pink
+    dw $8E32   ; Spore Spawn Kihunters door 0 --> Big Pink
+    dw $8DF6   ; Big Pink door 4 --> Big Pink Save
+    dw $8DD2   ; Big Pink door 1 --> Dachora
+    dw $8DBA   ; Dachora door 2 --> Dachora Recharge
+    dw $8FCA   ; Hoppers Energy Tank door 0 --> Pink Brinstar Hoppers
+    dw $8DDE   ; Big Pink door 2 --> Pink Brinstar Power Bombs
+    dw $8E02   ; Big Pink door 5 --> Pink Brinstar Power Bombs
+    dw $8D1E   ; Spore Spawn Supers door 0 --> Spore Spawn Farming
+    dw $8E0E   ; Big Pink door 6 --> Waterway Energy Tank
+    dw $A7D4   ; Below Botwoon Energy Tank door 0 --> Aqueduct
+    dw $A744   ; Aqueduct door 5 --> Aqueduct Save
+    dw $A654   ; West Sand Hall door 2 --> Below Botwoon Energy Tank
+    dw $A84C   ; Botwoon Energy Tank door 0 --> Botwoon
+    dw $A90C   ; Botwoon door 0 --> Botwoon Hallway
+    dw $A8DC   ; Halfie Climb door 0 --> Botwoon Energy Tank
+    dw $A834   ; Precious door 0 --> Colosseum
+    dw $A888   ; Draygon Save door 1 --> Colosseum
+    dw $A708   ; Aqueduct door 0 --> Crab Shaft
+    dw $A840   ; Precious door 1 --> Draygon
+    dw $A930   ; Maridia Health Refill door 0 --> Draygon Save
+    dw $A900   ; Halfie Climb door 3 --> East Cactus Alley
+    dw $A894   ; Maridia Missile Refill door 0 --> Halfie Climb
+    dw $A7E0   ; Colosseum door 0 --> Halfie Climb
+    dw $A978   ; Draygon door 1 --> Space Jump
+    dw $A954   ; East Cactus Alley door 0 --> West Cactus Alley
 
 ; List of vanilla right doors
 ; NOTE: Table order must match layoutmenu.asm
@@ -932,6 +1042,7 @@ portals_right_vanilla_table:
     dw $A8C4   ; Shaktool door 0 --> East Pants
     dw $A7C8   ; Spring Ball door 0 --> Shaktool
     dw $A63C   ; West Sand Hall door 0 --> West Sand Hall Tunnel
+    dw $A654   ; West Sand Hall door 2 --> Below Botwoon Energy Tank
     dw $A528   ; West Sand Hall Tunnel door 0 --> Crab Hole
     dw $9192   ; Baby Kraid door 0 --> Warehouse Kihunters
     dw $91CE   ; Kraid door 0 --> Kraid Eye Door
@@ -942,6 +1053,59 @@ portals_right_vanilla_table:
     dw $925E   ; Warehouse Save door 0 --> Warehouse Kihunters
     dw $914A   ; Warehouse Zeela door 1 --> Warehouse Energy Tank
     dw $913E   ; Warehouse Zeela door 0 --> Warehouse Entrance
+    dw $9996   ; Amphitheatre door 0 --> Worst Room In The Game
+    dw $988E   ; Fast Rippers door 0 --> Screw Attack
+    dw $9AAA   ; Lower Norfair Firefleas door 2 --> Red Kihunter Shaft
+    dw $9A92   ; Lower Norfair Firefleas door 0 --> Spring Ball Maze
+    dw $9876   ; Golden Torizo door 0 --> Acid Statue
+    dw $98A6   ; Golden Torizo Recharge door 0 --> Screw Attack
+    dw $99D2   ; Jail Power Bombs door 0 --> Lower Norfair Firefleas
+    dw $9AB6   ; Red Kihunter Save door 0 --> Red Kihunter Shaft
+    dw $99F6   ; Red Kihunter Shaft door 1 --> Amphitheatre
+    dw $9852   ; Main Hall door 0 --> Acid Statue
+    dw $9A32   ; Metal Pirates door 0 --> Plowerhouse
+    dw $992A   ; Mickey Mouse door 0 --> Fast Pillars Setup
+    dw $9942   ; Pillars door 0 --> Fast Pillars Setup
+    dw $9906   ; Fast Pillars Setup door 3 --> Fast Rippers
+    dw $98E2   ; Fast Pillars Setup door 0 --> Main Hall
+    dw $995A   ; Plowerhouse door 0 --> Lower Norfair Farming
+    dw $98B2   ; Ridley door 0 --> Ridley Tank
+    dw $98CA   ; Lower Norfair Farming door 0 --> Ridley
+    dw $9A86   ; Screw Attack door 2 --> Golden Torizo
+    dw $99AE   ; Spring Ball Maze door 0 --> Three Musketeers
+    dw $9A4A   ; Three Musketeers door 0 --> Single Chamber
+    dw $9A1A   ; Wasteland door 0 --> Metal Pirates
+    dw $998A   ; Worst Room In The Game door 2 --> Pillars
+    dw $9972   ; Worst Room In The Game door 0 --> Mickey Mouse
+    dw $8E0E   ; Big Pink door 6 --> Waterway Energy Tank
+    dw $8DDE   ; Big Pink door 2 --> Pink Brinstar Power Bombs
+    dw $8E02   ; Big Pink door 5 --> Pink Brinstar Power Bombs
+    dw $8DD2   ; Big Pink door 1 --> Dachora
+    dw $8DF6   ; Big Pink door 4 --> Big Pink Save
+    dw $8DBA   ; Dachora door 2 --> Dachora Recharge
+    dw $8DA2   ; Dachora door 0 --> Green Brinstar Main Shaft
+    dw $8FB2   ; Pink Brinstar Hoppers door 0 --> Big Pink
+    dw $8FCA   ; Hoppers Energy Tank door 0 --> Pink Brinstar Hoppers
+    dw $8F82   ; Spore Spawn Farming door 1 --> Big Pink
+    dw $8D1E   ; Spore Spawn Supers door 0 --> Spore Spawn Farming
+    dw $8D2A   ; Spore Spawn Supers door 1 --> Spore Spawn
+    dw $A744   ; Aqueduct door 5 --> Aqueduct Save
+    dw $A708   ; Aqueduct door 0 --> Crab Shaft
+    dw $A7D4   ; Below Botwoon Energy Tank door 0 --> Aqueduct
+    dw $A90C   ; Botwoon door 0 --> Botwoon Hallway
+    dw $A84C   ; Botwoon Energy Tank door 0 --> Botwoon
+    dw $A7E0   ; Colosseum door 0 --> Halfie Climb
+    dw $A4B0   ; Crab Shaft door 0 --> Mount Everest
+    dw $A978   ; Draygon door 1 --> Space Jump
+    dw $A888   ; Draygon Save door 1 --> Colosseum
+    dw $A954   ; East Cactus Alley door 0 --> West Cactus Alley
+    dw $A8DC   ; Halfie Climb door 0 --> Botwoon Energy Tank
+    dw $A900   ; Halfie Climb door 3 --> East Cactus Alley
+    dw $A930   ; Maridia Health Refill door 0 --> Draygon Save
+    dw $A894   ; Maridia Missile Refill door 0 --> Halfie Climb
+    dw $A840   ; Precious door 1 --> Draygon
+    dw $A834   ; Precious door 0 --> Colosseum
+    dw $A93C   ; West Cactus Alley door 0 --> Butterfly
 
 ; NOTE: Table order must match above table with portals inverted
 portals_right_vanilla_inverted_table:
@@ -1021,6 +1185,7 @@ portals_right_vanilla_inverted_table:
     dw $A798   ; Pants door 2 --> Shaktool
     dw $A8D0   ; Shaktool door 1 --> Spring Ball
     dw $A534   ; West Sand Hall Tunnel door 1 --> West Sand Hall
+    dw $A69C   ; Below Botwoon Energy Tank door 1 --> West Sand Hall
     dw $A504   ; Crab Hole door 1 --> West Sand Hall Tunnel
     dw $917A   ; Warehouse Kihunters door 1 --> Baby Kraid
     dw $91B6   ; Kraid Eye Door door 1 --> Kraid
@@ -1031,6 +1196,59 @@ portals_right_vanilla_inverted_table:
     dw $9186   ; Warehouse Kihunters door 2 --> Warehouse Save
     dw $9162   ; Warehouse Energy Tank door 0 --> Warehouse Zeela
     dw $923A   ; Warehouse Entrance door 1 --> Warehouse Zeela
+    dw $997E   ; Worst Room In The Game door 1 --> Amphitheatre
+    dw $9A6E   ; Screw Attack door 0 --> Fast Rippers
+    dw $9A02   ; Red Kihunter Shaft door 2 --> Lower Norfair Firefleas
+    dw $99BA   ; Spring Ball Maze door 1 --> Lower Norfair Firefleas
+    dw $983A   ; Acid Statue door 0 --> Golden Torizo
+    dw $9A7A   ; Screw Attack door 1 --> Golden Torizo Recharge
+    dw $9A9E   ; Lower Norfair Firefleas door 1 --> Jail Power Bombs
+    dw $9A0E   ; Red Kihunter Shaft door 3 --> Red Kihunter Save
+    dw $99A2   ; Amphitheatre door 1 --> Red Kihunter Shaft
+    dw $9846   ; Acid Statue door 1 --> Main Hall
+    dw $9966   ; Plowerhouse door 1 --> Metal Pirates
+    dw $98EE   ; Fast Pillars Setup door 1 --> Mickey Mouse
+    dw $9912   ; Fast Pillars Setup door 4 --> Pillars
+    dw $989A   ; Fast Rippers door 1 --> Fast Pillars Setup
+    dw $985E   ; Main Hall door 1 --> Fast Pillars Setup
+    dw $98D6   ; Lower Norfair Farming door 1 --> Plowerhouse
+    dw $9A62   ; Ridley Tank door 0 --> Ridley
+    dw $98BE   ; Ridley door 1 --> Lower Norfair Farming
+    dw $9882   ; Golden Torizo door 1 --> Screw Attack
+    dw $9A56   ; Three Musketeers door 1 --> Spring Ball Maze
+    dw $95FA   ; Single Chamber door 4 --> Three Musketeers
+    dw $9A3E   ; Metal Pirates door 1 --> Wasteland
+    dw $994E   ; Pillars door 1 --> Worst Room In The Game
+    dw $9936   ; Mickey Mouse door 1 --> Worst Room In The Game
+    dw $8F8E   ; Waterway Energy Tank door 0 --> Big Pink
+    dw $8E6E   ; Pink Brinstar Power Bombs door 1 --> Big Pink
+    dw $8E62   ; Pink Brinstar Power Bombs door 0 --> Big Pink
+    dw $8DAE   ; Dachora door 1 --> Big Pink
+    dw $8FD6   ; Big Pink Save door 0 --> Big Pink
+    dw $8F6A   ; Dachora Recharge door 0 --> Dachora
+    dw $8CE2   ; Green Brinstar Main Shaft door 5 --> Dachora
+    dw $8E1A   ; Big Pink door 7 --> Pink Brinstar Hoppers
+    dw $8FBE   ; Pink Brinstar Hoppers door 1 --> Hoppers Energy Tank
+    dw $8E26   ; Big Pink door 8 --> Spore Spawn Farming
+    dw $8F76   ; Spore Spawn Farming door 0 --> Spore Spawn Supers
+    dw $8E4A   ; Spore Spawn door 0 --> Spore Spawn Supers
+    dw $A768   ; Aqueduct Save door 0 --> Aqueduct
+    dw $A4C8   ; Crab Shaft door 2 --> Aqueduct
+    dw $A738   ; Aqueduct door 4 --> Below Botwoon Energy Tank
+    dw $A774   ; Botwoon Hallway door 1 --> Botwoon
+    dw $A918   ; Botwoon door 1 --> Botwoon Energy Tank
+    dw $A8E8   ; Halfie Climb door 1 --> Colosseum
+    dw $A468   ; Mount Everest door 5 --> Crab Shaft
+    dw $A924   ; Space Jump door 0 --> Draygon
+    dw $A7EC   ; Colosseum door 1 --> Draygon Save
+    dw $A948   ; West Cactus Alley door 1 --> East Cactus Alley
+    dw $A870   ; Botwoon Energy Tank door 3 --> Halfie Climb
+    dw $A960   ; East Cactus Alley door 1 --> Halfie Climb
+    dw $A87C   ; Draygon Save door 0 --> Maridia Health Refill
+    dw $A8F4   ; Halfie Climb door 2 --> Maridia Missile Refill
+    dw $A96C   ; Draygon door 0 --> Precious
+    dw $A7F8   ; Colosseum door 2 --> Precious
+    dw $A75C   ; Butterfly door 1 --> West Cactus Alley
 
 ; List of vanilla up doors
 ; NOTE: Table order must match layoutmenu.asm
@@ -1039,10 +1257,24 @@ portals_up_vanilla_table:
     dw $949E   ; Post Crocomire Shaft door 3 --> Post Crocomire Jump
     dw $8A42   ; Crateria Kihunters door 2 --> Red Brinstar Elevator
     dw $8ABA   ; Forgotten Highway Elbow door 1 --> Forgotten Highway Elevator
-    dw $8A7E   ; Forgotten Highway Kago door 0 --> Crab Maze
+    dw $8A8A   ; Forgotten Highway Kago door 1 --> Crab Maze
     dw $898E   ; Parlor door 4 --> Climb
     dw $8E56   ; Spore Spawn door 1 --> Spore Spawn Kihunters
     dw $916E   ; Warehouse Kihunters door 0 --> Warehouse Zeela
+    dw $99EA   ; Red Kihunter Shaft door 0 --> Wasteland
+    dw $99C6   ; Spring Ball Maze door 2 --> Jail Power Bombs
+    dw $A714   ; Aqueduct door 1 --> West Aqueduct Quicksand
+    dw $A720   ; Aqueduct door 2 --> East Aqueduct Quicksand
+    dw $A600   ; Aqueduct Tube door 0 --> Oasis
+    dw $A768   ; Botwoon Hallway door 0 --> Aqueduct
+    dw $A8AC   ; Botwoon Quicksand door 0 --> Below Botwoon Energy Tank
+    dw $A8B8   ; Botwoon Quicksand door 1 --> Below Botwoon Energy Tank
+    dw $A864   ; Botwoon Energy Tank door 2 --> Botwoon Quicksand
+    dw $A858   ; Botwoon Energy Tank door 1 --> Botwoon Quicksand
+    dw $A6FC   ; East Aqueduct Quicksand door 1 --> East Sand Hole
+    dw $A6CC   ; East Sand Hole door 1 --> East Sand Hall
+    dw $A6E4   ; West Aqueduct Quicksand door 1 --> West Sand Hole
+    dw $A6B4   ; West Sand Hole door 1 --> West Sand Hall
 
 ; NOTE: Table order must match above table with portals inverted
 portals_up_vanilla_inverted_table:
@@ -1054,6 +1286,20 @@ portals_up_vanilla_inverted_table:
     dw $8B3E   ; Climb door 0 --> Parlor
     dw $8E3E   ; Spore Spawn Kihunters door 1 --> Spore Spawn
     dw $9156   ; Warehouse Zeela door 2 --> Warehouse Kihunters
+    dw $9A26   ; Wasteland door 1 --> Red Kihunter Shaft
+    dw $99DE   ; Jail Power Bombs door 1 --> Spring Ball Maze
+    dw $A6D8   ; West Aqueduct Quicksand door 0 --> Aqueduct
+    dw $A6F0   ; East Aqueduct Quicksand door 0 --> Aqueduct
+    dw $A678   ; Oasis door 2 --> Aqueduct Tube
+    dw $A72C   ; Aqueduct door 3 --> Botwoon Hallway
+    dw $0000   ; (Below Botwoon Energy Tank --> Botwoon Quicksand)
+    dw $0000   ; (Below Botwoon Energy Tank --> Botwoon Quicksand)
+    dw $0000   ; (Botwoon Quicksand --> Botwoon Energy Tank)
+    dw $0000   ; (Botwoon Quicksand --> Botwoon Energy Tank)
+    dw $A6C0   ; East Sand Hole door 0 --> East Aqueduct Quicksand
+    dw $0000   ; (East Sand Hall --> East Sand Hole)
+    dw $A6A8   ; West Sand Hole door 0 --> West Aqueduct Quicksand
+    dw $0000   ; (West Sand Hall --> West Sand Hole)
 
 ; List of vanilla down doors
 ; NOTE: Table order must match layoutmenu.asm
@@ -1070,14 +1316,27 @@ portals_down_vanilla_table:
     dw $A678   ; Oasis door 2 --> Aqueduct Tube
     dw $000A   ; (West Sand Hall --> West Sand Hole)
     dw $9156   ; Warehouse Zeela door 2 --> Warehouse Kihunters
+    dw $99DE   ; Jail Power Bombs door 1 --> Spring Ball Maze
+    dw $9A26   ; Wasteland door 1 --> Red Kihunter Shaft
+    dw $A72C   ; Aqueduct door 3 --> Botwoon Hallway
+    dw $A60C   ; Aqueduct Tube door 1 --> Plasma Spark
+    dw $0010   ; (Below Botwoon Energy Tank --> Botwoon Quicksand)
+    dw $0011   ; (Below Botwoon Energy Tank --> Botwoon Quicksand)
+    dw $0012   ; (Botwoon Quicksand --> Botwoon Energy Tank)
+    dw $0013   ; (Botwoon Quicksand --> Botwoon Energy Tank)
+    dw $A4BC   ; Crab Shaft door 1 --> Pseudo Plasma Spark
+    dw $A6F0   ; East Aqueduct Quicksand door 0 --> Aqueduct
+    dw $A6C0   ; East Sand Hole door 0 --> East Aqueduct Quicksand
+    dw $A6D8   ; West Aqueduct Quicksand door 0 --> Aqueduct
+    dw $A6A8   ; West Sand Hole door 0 --> West Aqueduct Quicksand
 
 ; NOTE: Table order must match above table with portals inverted
 portals_down_vanilla_inverted_table:
-    dw $93D2   ; Crocomire Speedway door 4 --> Crocomire Room
+    dw $93D2   ; Crocomire Speedway door 4 --> Crocomire
     dw $949E   ; Post Crocomire Shaft door 3 --> Post Crocomire Jump
     dw $944A   ; Post Crocomire Farming door 2 --> Post Crocomire Shaft
     dw $898E   ; Parlor door 4 --> Climb
-    dw $8A7E   ; Forgotten Highway Kago door 0 --> Crab Maze
+    dw $8A8A   ; Forgotten Highway Kago door 1 --> Crab Maze
     dw $8ABA   ; Forgotten Highway Elbow door 1 --> Forgotten Highway Elevator
     dw $8A42   ; Crateria Kihunters door 2 --> Red Brinstar Elevator
     dw $8E56   ; Spore Spawn door 1 --> Spore Spawn Kihunters
@@ -1085,6 +1344,19 @@ portals_down_vanilla_inverted_table:
     dw $A600   ; Aqueduct Tube door 0 --> Oasis
     dw $A6B4   ; West Sand Hole door 1 --> West Sand Hall
     dw $916E   ; Warehouse Kihunters door 0 --> Warehouse Zeela
+    dw $99C6   ; Spring Ball Maze door 2 --> Jail Power Bombs
+    dw $99EA   ; Red Kihunter Shaft door 0 --> Wasteland
+    dw $A768   ; Botwoon Hallway door 0 --> Aqueduct
+    dw $A5AC   ; Plasma Spark door 1 --> Aqueduct Tube
+    dw $A8AC   ; Botwoon Quicksand door 0 --> Below Botwoon Energy Tank
+    dw $A8B8   ; Botwoon Quicksand door 1 --> Below Botwoon Energy Tank
+    dw $A864   ; Botwoon Energy Tank door 2 --> Botwoon Quicksand
+    dw $A858   ; Botwoon Energy Tank door 1 --> Botwoon Quicksand
+    dw $A4E0   ; Pseudo Plasma Spark door 1 --> Crab Shaft
+    dw $A720   ; Aqueduct door 2 --> East Aqueduct Quicksand
+    dw $A6FC   ; East Aqueduct Quicksand door 1 --> East Sand Hole
+    dw $A714   ; Aqueduct door 1 --> West Aqueduct Quicksand
+    dw $A6E4   ; West Aqueduct Quicksand door 1 --> West Sand Hole
 
 print pc, " layout bank83 end"
 
@@ -2397,7 +2669,7 @@ layout_asm_halfie_climb_done:
     RTS
 
 layout_asm_aqueductfarmsandpit_door_list:
-    dw #$A7D4, #$A534
+    dw #$A7D4, #hook_layout_asm_aqueductfarmsandpit_door1
 
 layout_asm_aqueductfarmsandpit_external:
 {
@@ -2885,6 +3157,29 @@ layout_asm_clear_bg2_vram_flag:
     ; Clear BG2 VRAM flag in case we are exiting croc
     STZ !ENEMY_BG2_VRAM_TRANSFER_FLAG
     RTS
+}
+
+layout_asm_shaktool_to_pants_scrolls:
+{
+    PHP
+    %a8()
+}
+
+layout_asm_to_pants_scrolls:
+{
+    TDC : STA $7ECD20 : STA $7ECD21
+    STA $7ECD22 : STA $7ECD24 : STA $7ECD26
+    PLP
+    RTS
+}
+
+layout_asm_pants_to_pants_scrolls:
+{
+    PHP
+    %a8()
+    TDC : STA $7ECD27
+    INC : STA $7ECD25
+    BRA layout_asm_to_pants_scrolls
 }
 
 print pc, " layout end"

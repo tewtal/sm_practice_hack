@@ -58,10 +58,10 @@ layout_doorportal:
     CMP #$0001 : BEQ .areaboss
     LDA !ram_door_portal_flags : AND !DOOR_PORTAL_EXCLUDE_MODE_IFRAMES_MASK
     TDC : ORA !ram_cm_door_dynamic : STA !ram_door_portal_flags
-    LDA !ram_door_source : CMP #$000C : BMI .checkDown
+    LDA !ram_door_source : CMP #$0016 : BMI .checkDown
     TDC : STA !ram_door_source
   .checkDown
-    LDA !ram_door_destination : CMP #$0008 : BMI .done
+    LDA !ram_door_destination : CMP #$0019 : BMI .done
     TDC : STA !ram_door_destination
   .done
     RTL
@@ -510,7 +510,7 @@ doormenu_region_pb:
     %cm_jsl("PB Pink Brinstar", #doormenu_selectsubmenu, #LayoutPinkBrinstarDoorMenu)
 
 doormenu_region_pm:
-    %cm_jsl("PB Pink Maridia", #doormenu_selectsubmenu, #LayoutPinkMaridiaDoorMenu)
+    %cm_jsl("PM Pink Maridia", #doormenu_selectsubmenu, #LayoutPinkMaridiaDoorMenu)
 
 doormenu_region_rb:
     %cm_jsl("RB Red Brinstar", #doormenu_selectsubmenu, #LayoutRedBrinstarDoorMenu)
@@ -594,22 +594,22 @@ LayoutKraidLairDoorMenu:
     dw #LayoutKraidLairDownDoorMenu
 
 LayoutLowerNorfairDoorMenu:
-    dw #$0000
-    dw #$0000
-    dw #$0000
-    dw #$0000
+    dw #LayoutLowerNorfairLeftDoorMenu
+    dw #LayoutLowerNorfairRightDoorMenu
+    dw #LayoutLowerNorfairUpDoorMenu
+    dw #LayoutLowerNorfairDownDoorMenu
 
 LayoutPinkBrinstarDoorMenu:
-    dw #$0000
-    dw #$0000
+    dw #LayoutPinkBrinstarLeftDoorMenu
+    dw #LayoutPinkBrinstarRightDoorMenu
     dw #$0000
     dw #$0000
 
 LayoutPinkMaridiaDoorMenu:
-    dw #$0000
-    dw #$0000
-    dw #$0000
-    dw #$0000
+    dw #LayoutPinkMaridiaLeftDoorMenu
+    dw #LayoutPinkMaridiaRightDoorMenu
+    dw #LayoutPinkMaridiaUpDoorMenu
+    dw #LayoutPinkMaridiaDownDoorMenu
 
 LayoutRedBrinstarDoorMenu:
     dw #$0000
@@ -1043,26 +1043,233 @@ doormenu_left_9162:
 doormenu_left_923A:
     %cm_jsl("KL Warehouse Entrance", #doorsubmenu_select, #$0057)
 
+LayoutLowerNorfairLeftDoorMenu:
+    dw #doormenu_left_983A
+    dw #doormenu_left_9846
+    dw #doormenu_left_99A2
+    dw #doormenu_left_989A
+    dw #doormenu_left_9A9E
+    dw #doormenu_left_9882
+    dw #doormenu_left_9A0E
+    dw #doormenu_left_9A02
+    dw #doormenu_left_985E
+    dw #doormenu_left_9A3E
+    dw #doormenu_left_9936
+    dw #doormenu_lower_norfair_left_goto_page2
+    dw #$0000
+    %cm_header("SELECT LEFT DOOR")
+
+LayoutLowerNorfairLeftDoorMenu2:
+    dw #doormenu_left_994E
+    dw #doormenu_left_9912
+    dw #doormenu_left_98EE
+    dw #doormenu_left_9966
+    dw #doormenu_left_98BE
+    dw #doormenu_left_98D6
+    dw #doormenu_left_9A62
+    dw #doormenu_left_9A7A
+    dw #doormenu_left_9A6E
+    dw #doormenu_left_99BA
+    dw #doormenu_left_9A56
+    dw #doormenu_left_997E
+    dw #doormenu_lower_norfair_left_goto_page1
+    dw #$0000
+    %cm_header("SELECT LEFT DOOR")
+
+doormenu_lower_norfair_left_goto_page1:
+    %cm_adjacent_submenu("GOTO PAGE ONE", #LayoutLowerNorfairLeftDoorMenu)
+
+doormenu_lower_norfair_left_goto_page2:
+    %cm_adjacent_submenu("GOTO PAGE TWO", #LayoutLowerNorfairLeftDoorMenu2)
+
+doormenu_left_983A:
+    %cm_jsl("LN Acid Statue (Lower)", #doorsubmenu_select, #$0058)
+
+doormenu_left_9846:
+    %cm_jsl("LN Acid Statue (Upper)", #doorsubmenu_select, #$0059)
+
+doormenu_left_99A2:
+    %cm_jsl("LN Amphitheatre", #doorsubmenu_select, #$005A)
+
+doormenu_left_989A:
+    %cm_jsl("LN Fast Rippers", #doorsubmenu_select, #$005B)
+
+doormenu_left_9A9E:
+    %cm_jsl("LN Firefleas", #doorsubmenu_select, #$005C)
+
+doormenu_left_9882:
+    %cm_jsl("LN Golden Torizo", #doorsubmenu_select, #$005D)
+
+doormenu_left_9A0E:
+    %cm_jsl("LN Kihunter Shaft (Lower)", #doorsubmenu_select, #$005E)
+
+doormenu_left_9A02:
+    %cm_jsl("LN Kihunter Shaft (Upper)", #doorsubmenu_select, #$005F)
+
+doormenu_left_985E:
+    %cm_jsl("LN Main Hall", #doorsubmenu_select, #$0060)
+
+doormenu_left_9A3E:
+    %cm_jsl("LN Metal Pirates", #doorsubmenu_select, #$0061)
+
+doormenu_left_9936:
+    %cm_jsl("LN Mickey Mouse", #doorsubmenu_select, #$0062)
+
+doormenu_left_994E:
+    %cm_jsl("LN Pillars", #doorsubmenu_select, #$0063)
+
+doormenu_left_9912:
+    %cm_jsl("LN Pillars Setup (Lower)", #doorsubmenu_select, #$0064)
+
+doormenu_left_98EE:
+    %cm_jsl("LN Pillars Setup (Upper)", #doorsubmenu_select, #$0065)
+
+doormenu_left_9966:
+    %cm_jsl("LN Plowerhouse", #doorsubmenu_select, #$0066)
+
 doormenu_left_98BE:
-    %cm_jsl("LN Ridley", #doorsubmenu_select, #$0000)
+    %cm_jsl("LN Ridley", #doorsubmenu_select, #$0067)
+
+doormenu_left_98D6:
+    %cm_jsl("LN Ridley Farming", #doorsubmenu_select, #$0068)
+
+doormenu_left_9A62:
+    %cm_jsl("LN Ridley Tank", #doorsubmenu_select, #$0069)
+
+doormenu_left_9A7A:
+    %cm_jsl("LN Screw Attack (Lower)", #doorsubmenu_select, #$006A)
+
+doormenu_left_9A6E:
+    %cm_jsl("LN Screw Attack (Upper)", #doorsubmenu_select, #$006B)
+
+doormenu_left_99BA:
+    %cm_jsl("LN Spring Ball Maze", #doorsubmenu_select, #$006C)
+
+doormenu_left_9A56:
+    %cm_jsl("LN Three Musketeers", #doorsubmenu_select, #$006D)
+
+doormenu_left_997E:
+    %cm_jsl("LN Worst Room", #doorsubmenu_select, #$006E)
+
+LayoutPinkBrinstarLeftDoorMenu:
+    dw #doormenu_left_8DEA
+    dw #doormenu_left_8E26
+    dw #doormenu_left_8E1A
+    dw #doormenu_left_8DC6
+    dw #doormenu_left_8FD6
+    dw #doormenu_left_8DAE
+    dw #doormenu_left_8F6A
+    dw #doormenu_left_8FBE
+    dw #doormenu_left_8E6E
+    dw #doormenu_left_8E62
+    dw #doormenu_left_8F76
+    dw #doormenu_left_8F8E
+    dw #$0000
+    %cm_header("SELECT LEFT DOOR")
 
 doormenu_left_8DEA:
-    %cm_jsl("PB Big Pink (Lower)", #doorsubmenu_select, #$0000)
+    %cm_jsl("PB Big Pink (Lower)", #doorsubmenu_select, #$006F)
 
 doormenu_left_8E26:
-    %cm_jsl("PB Big Pink (Mid-Lower)", #doorsubmenu_select, #$0000)
+    %cm_jsl("PB Big Pink (Mid-Lower)", #doorsubmenu_select, #$0070)
 
 doormenu_left_8E1A:
-    %cm_jsl("PB Big Pink (Mid-Upper)", #doorsubmenu_select, #$0000)
+    %cm_jsl("PB Big Pink (Mid-Upper)", #doorsubmenu_select, #$0071)
 
 doormenu_left_8DC6:
-    %cm_jsl("PB Big Pink (Upper)", #doorsubmenu_select, #$0000)
+    %cm_jsl("PB Big Pink (Upper)", #doorsubmenu_select, #$0072)
+
+doormenu_left_8FD6:
+    %cm_jsl("PB Big Pink Save", #doorsubmenu_select, #$0073)
 
 doormenu_left_8DAE:
-    %cm_jsl("PB Dachora", #doorsubmenu_select, #$0000)
+    %cm_jsl("PB Dachora", #doorsubmenu_select, #$0074)
+
+doormenu_left_8F6A:
+    %cm_jsl("PB Dachora Recharge", #doorsubmenu_select, #$0075)
+
+doormenu_left_8FBE:
+    %cm_jsl("PB Hoppers", #doorsubmenu_select, #$0076)
+
+doormenu_left_8E6E:
+    %cm_jsl("PB Power Bombs (Lower)", #doorsubmenu_select, #$0077)
+
+doormenu_left_8E62:
+    %cm_jsl("PB Power Bombs (Upper)", #doorsubmenu_select, #$0078)
+
+doormenu_left_8F76:
+    %cm_jsl("PB Spore Spawn Farming", #doorsubmenu_select, #$0079)
+
+doormenu_left_8F8E:
+    %cm_jsl("PB Waterway Energy Tank", #doorsubmenu_select, #$007A)
+
+LayoutPinkMaridiaLeftDoorMenu:
+    dw #doormenu_left_A738
+    dw #doormenu_left_A768
+    dw #doormenu_left_A69C
+    dw #doormenu_left_A918
+    dw #doormenu_left_A774
+    dw #doormenu_left_A870
+    dw #doormenu_left_A7F8
+    dw #doormenu_left_A7EC
+    dw #doormenu_left_A4C8
+    dw #doormenu_left_A960
+    dw #doormenu_left_A96C
+    dw #doormenu_left_A87C
+    dw #doormenu_left_A8F4
+    dw #doormenu_left_A8E8
+    dw #doormenu_left_A924
+    dw #doormenu_left_A948
+    dw #$0000
+    %cm_header("SELECT LEFT DOOR")
+
+doormenu_left_A738:
+    %cm_jsl("PM Aqueduct", #doorsubmenu_select, #$007B)
+
+doormenu_left_A768:
+    %cm_jsl("PM Aqueduct Save", #doorsubmenu_select, #$007C)
+
+doormenu_left_A69C:
+    %cm_jsl("PM Below Botwoon (Area)", #doorsubmenu_select, #$007D)
+
+doormenu_left_A918:
+    %cm_jsl("PM Botwoon", #doorsubmenu_select, #$007E)
+
+doormenu_left_A774:
+    %cm_jsl("PM Botwoon Hallway", #doorsubmenu_select, #$007F)
+
+doormenu_left_A870:
+    %cm_jsl("PM Botwoon Tank", #doorsubmenu_select, #$0080)
+
+doormenu_left_A7F8:
+    %cm_jsl("PM Colosseum (Lower)", #doorsubmenu_select, #$0081)
+
+doormenu_left_A7EC:
+    %cm_jsl("PM Colosseum (Upper)", #doorsubmenu_select, #$0082)
+
+doormenu_left_A4C8:
+    %cm_jsl("PM Crab Shaft", #doorsubmenu_select, #$0083)
 
 doormenu_left_A96C:
-    %cm_jsl("PM Draygon", #doorsubmenu_select, #$0000)
+    %cm_jsl("PM Draygon", #doorsubmenu_select, #$0084)
+
+doormenu_left_A87C:
+    %cm_jsl("PM Draygon Save", #doorsubmenu_select, #$0085)
+
+doormenu_left_A960:
+    %cm_jsl("PM East Cactus Alley", #doorsubmenu_select, #$0086)
+
+doormenu_left_A8F4:
+    %cm_jsl("PM Halfie Climb (Lower)", #doorsubmenu_select, #$0087)
+
+doormenu_left_A8E8:
+    %cm_jsl("PM Halfie Climb (Upper)", #doorsubmenu_select, #$0088)
+
+doormenu_left_A924:
+    %cm_jsl("PM Space Jump", #doorsubmenu_select, #$0089)
+
+doormenu_left_A948:
+    %cm_jsl("PM West Cactus Alley", #doorsubmenu_select, #$008A)
 
 doormenu_left_90C6:
     %cm_jsl("RB Caterpillar", #doorsubmenu_select, #$0000)
@@ -1078,9 +1285,6 @@ doormenu_left_A51C:
 
 doormenu_left_A504:
     %cm_jsl("WM Crab Hole (Upper)", #doorsubmenu_select, #$0000)
-
-doormenu_left_A4C8:
-    %cm_jsl("WM Crab Shaft", #doorsubmenu_select, #$0000)
 
 doormenu_left_A384:
     %cm_jsl("WM East Tunnel (Lower)", #doorsubmenu_select, #$0000)
@@ -1109,6 +1313,9 @@ doormenu_left_A3CC:
 doormenu_left_A3C0:
     %cm_jsl("WM Main Street (Upper)", #doorsubmenu_select, #$0000)
 
+doormenu_left_A468:
+    %cm_jsl("WM Mount Everest", #doorsubmenu_select, #$0000)
+
 doormenu_left_A360:
     %cm_jsl("WM West Tunnel", #doorsubmenu_select, #$0000)
 
@@ -1118,9 +1325,12 @@ doormenu_left_A2AC:
 doormenu_left_A264:
     %cm_jsl("WS Electric Death", #doorsubmenu_select, #$0000)
 
+doormenu_left_A75C:
+    %cm_jsl("YM Butterfly", #doorsubmenu_select, #$0000)
+
 layout_leftright_leftdoor:
     dw !ACTION_CHOICE_JSL_TEXT
-    dl #!ram_door_destination
+    dl #!ram_door_source
     dw #$0000
     dw #doormenu_left_8FA6    ; Blue Brinstar
     dw #doormenu_left_8FFA
@@ -1210,6 +1420,57 @@ layout_leftright_leftdoor:
     dw #doormenu_left_91C2
     dw #doormenu_left_9162
     dw #doormenu_left_923A
+    dw #doormenu_left_983A    ; Lower Norfair
+    dw #doormenu_left_9846
+    dw #doormenu_left_99A2
+    dw #doormenu_left_989A
+    dw #doormenu_left_9A9E
+    dw #doormenu_left_9882
+    dw #doormenu_left_9A0E
+    dw #doormenu_left_9A02
+    dw #doormenu_left_985E
+    dw #doormenu_left_9A3E
+    dw #doormenu_left_9936
+    dw #doormenu_left_994E
+    dw #doormenu_left_9912
+    dw #doormenu_left_98EE
+    dw #doormenu_left_9966
+    dw #doormenu_left_98BE
+    dw #doormenu_left_98D6
+    dw #doormenu_left_9A62
+    dw #doormenu_left_9A7A
+    dw #doormenu_left_9A6E
+    dw #doormenu_left_99BA
+    dw #doormenu_left_9A56
+    dw #doormenu_left_997E
+    dw #doormenu_left_8DEA    ; Pink Brinstar
+    dw #doormenu_left_8E26
+    dw #doormenu_left_8E1A
+    dw #doormenu_left_8DC6
+    dw #doormenu_left_8FD6
+    dw #doormenu_left_8DAE
+    dw #doormenu_left_8F6A
+    dw #doormenu_left_8FBE
+    dw #doormenu_left_8E6E
+    dw #doormenu_left_8E62
+    dw #doormenu_left_8F76
+    dw #doormenu_left_8F8E
+    dw #doormenu_left_A738    ; Pink Maridia
+    dw #doormenu_left_A768
+    dw #doormenu_left_A69C
+    dw #doormenu_left_A918
+    dw #doormenu_left_A774
+    dw #doormenu_left_A870
+    dw #doormenu_left_A7F8
+    dw #doormenu_left_A7EC
+    dw #doormenu_left_A4C8
+    dw #doormenu_left_A960
+    dw #doormenu_left_A96C
+    dw #doormenu_left_A87C
+    dw #doormenu_left_A8F4
+    dw #doormenu_left_A8E8
+    dw #doormenu_left_A924
+    dw #doormenu_left_A948
     dw #$0000
 
 
@@ -1529,6 +1790,7 @@ LayoutGreenMaridiaRightDoorMenu:
     dw #doormenu_right_A8C4
     dw #doormenu_right_A7C8
     dw #doormenu_right_A63C
+    dw #doormenu_right_A654
     dw #doormenu_right_A528
     dw #$0000
     %cm_header("SELECT RIGHT DOOR")
@@ -1557,8 +1819,11 @@ doormenu_right_A7C8:
 doormenu_right_A63C:
     %cm_jsl("GM West Sand Hall", #doorsubmenu_select, #$004B)
 
+doormenu_right_A654:
+    %cm_jsl("GM West Sand Hall (Area)", #doorsubmenu_select, #$004C)
+
 doormenu_right_A528:
-    %cm_jsl("GM West Sand Hall Tunnel", #doorsubmenu_select, #$004C)
+    %cm_jsl("GM West Sand Hall Tunnel", #doorsubmenu_select, #$004D)
 
 LayoutKraidLairRightDoorMenu:
     dw #doormenu_right_9192
@@ -1574,55 +1839,267 @@ LayoutKraidLairRightDoorMenu:
     %cm_header("SELECT RIGHT DOOR")
 
 doormenu_right_9192:
-    %cm_jsl("KL Baby Kraid", #doorsubmenu_select, #$004D)
+    %cm_jsl("KL Baby Kraid", #doorsubmenu_select, #$004E)
 
 doormenu_right_91CE:
-    %cm_jsl("KL Kraid", #doorsubmenu_select, #$004E)
+    %cm_jsl("KL Kraid", #doorsubmenu_select, #$004F)
 
 doormenu_right_91AA:
-    %cm_jsl("KL Kraid Eye Door", #doorsubmenu_select, #$004F)
+    %cm_jsl("KL Kraid Eye Door", #doorsubmenu_select, #$0050)
 
 doormenu_right_920A:
-    %cm_jsl("KL Kraid Refill", #doorsubmenu_select, #$0050)
+    %cm_jsl("KL Kraid Refill", #doorsubmenu_select, #$0051)
 
 doormenu_right_9252:
-    %cm_jsl("KL Varia Suit", #doorsubmenu_select, #$0051)
+    %cm_jsl("KL Varia Suit", #doorsubmenu_select, #$0052)
 
 doormenu_right_922E:
-    %cm_jsl("KL Warehouse Entrance", #doorsubmenu_select, #$0052)
+    %cm_jsl("KL Warehouse Entrance", #doorsubmenu_select, #$0053)
 
 doormenu_right_925E:
-    %cm_jsl("KL Warehouse Save", #doorsubmenu_select, #$0053)
+    %cm_jsl("KL Warehouse Save", #doorsubmenu_select, #$0054)
 
 doormenu_right_914A:
-    %cm_jsl("KL Warehouse Zeela (Lower)", #doorsubmenu_select, #$0054)
+    %cm_jsl("KL Warehouse Zeela (Lower)", #doorsubmenu_select, #$0055)
 
 doormenu_right_913E:
-    %cm_jsl("KL Warehouse Zeela (Upper)", #doorsubmenu_select, #$0055)
+    %cm_jsl("KL Warehouse Zeela (Upper)", #doorsubmenu_select, #$0056)
+
+LayoutLowerNorfairRightDoorMenu:
+    dw #doormenu_right_9996
+    dw #doormenu_right_988E
+    dw #doormenu_right_9AAA
+    dw #doormenu_right_9A92
+    dw #doormenu_right_9876
+    dw #doormenu_right_98A6
+    dw #doormenu_right_99D2
+    dw #doormenu_right_9AB6
+    dw #doormenu_right_99F6
+    dw #doormenu_right_9852
+    dw #doormenu_right_9A32
+    dw #doormenu_right_992A
+    dw #doormenu_lower_norfair_right_goto_page2
+    dw #$0000
+    %cm_header("SELECT RIGHT DOOR")
+
+LayoutLowerNorfairRightDoorMenu2:
+    dw #doormenu_right_9942
+    dw #doormenu_right_9906
+    dw #doormenu_right_98E2
+    dw #doormenu_right_995A
+    dw #doormenu_right_98B2
+    dw #doormenu_right_98CA
+    dw #doormenu_right_9A86
+    dw #doormenu_right_99AE
+    dw #doormenu_right_9A4A
+    dw #doormenu_right_9A1A
+    dw #doormenu_right_998A
+    dw #doormenu_right_9972
+    dw #doormenu_lower_norfair_right_goto_page1
+    dw #$0000
+    %cm_header("SELECT RIGHT DOOR")
+
+doormenu_lower_norfair_right_goto_page1:
+    %cm_adjacent_submenu("GOTO PAGE ONE", #LayoutLowerNorfairRightDoorMenu)
+
+doormenu_lower_norfair_right_goto_page2:
+    %cm_adjacent_submenu("GOTO PAGE TWO", #LayoutLowerNorfairRightDoorMenu2)
+
+doormenu_right_9996:
+    %cm_jsl("LN Amphitheatre", #doorsubmenu_select, #$0057)
+
+doormenu_right_988E:
+    %cm_jsl("LN Fast Rippers", #doorsubmenu_select, #$0058)
+
+doormenu_right_9AAA:
+    %cm_jsl("LN Firefleas (Lower)", #doorsubmenu_select, #$0059)
+
+doormenu_right_9A92:
+    %cm_jsl("LN Firefleas (Upper)", #doorsubmenu_select, #$005A)
+
+doormenu_right_9876:
+    %cm_jsl("LN Golden Torizo", #doorsubmenu_select, #$005B)
+
+doormenu_right_98A6:
+    %cm_jsl("LN Golden Torizo Recharge", #doorsubmenu_select, #$005C)
+
+doormenu_right_99D2:
+    %cm_jsl("LN Jail Power Bombs", #doorsubmenu_select, #$005D)
+
+doormenu_right_9AB6:
+    %cm_jsl("LN Kihunter Save", #doorsubmenu_select, #$005E)
+
+doormenu_right_99F6:
+    %cm_jsl("LN Kihunter Shaft", #doorsubmenu_select, #$005F)
+
+doormenu_right_9852:
+    %cm_jsl("LN Main Hall", #doorsubmenu_select, #$0060)
+
+doormenu_right_9A32:
+    %cm_jsl("LN Metal Pirates", #doorsubmenu_select, #$0061)
+
+doormenu_right_992A:
+    %cm_jsl("LN Mickey Mouse", #doorsubmenu_select, #$0062)
+
+doormenu_right_9942:
+    %cm_jsl("LN Pillars", #doorsubmenu_select, #$0063)
+
+doormenu_right_9906:
+    %cm_jsl("LN Pillars Setup (Lower)", #doorsubmenu_select, #$0064)
+
+doormenu_right_98E2:
+    %cm_jsl("LN Pillars Setup (Upper)", #doorsubmenu_select, #$0065)
+
+doormenu_right_995A:
+    %cm_jsl("LN Plowerhouse", #doorsubmenu_select, #$0066)
+
+doormenu_right_98B2:
+    %cm_jsl("LN Ridley", #doorsubmenu_select, #$0067)
 
 doormenu_right_98CA:
-    %cm_jsl("LN Ridley Farming", #doorsubmenu_select, #$0000)
+    %cm_jsl("LN Ridley Farming", #doorsubmenu_select, #$0068)
+
+doormenu_right_9A86:
+    %cm_jsl("LN Screw Attack", #doorsubmenu_select, #$0069)
+
+doormenu_right_99AE:
+    %cm_jsl("LN Spring Ball Maze", #doorsubmenu_select, #$006A)
 
 doormenu_right_9A4A:
-    %cm_jsl("LN Three Musketeers", #doorsubmenu_select, #$0000)
+    %cm_jsl("LN Three Musketeers", #doorsubmenu_select, #$006B)
+
+doormenu_right_9A1A:
+    %cm_jsl("LN Wasteland", #doorsubmenu_select, #$006C)
+
+doormenu_right_998A:
+    %cm_jsl("LN Worst Room (Lower)", #doorsubmenu_select, #$006D)
+
+doormenu_right_9972:
+    %cm_jsl("LN Worst Room (Upper)", #doorsubmenu_select, #$006E)
+
+LayoutPinkBrinstarRightDoorMenu:
+    dw #doormenu_right_8E0E
+    dw #doormenu_right_8DDE
+    dw #doormenu_right_8E02
+    dw #doormenu_right_8DD2
+    dw #doormenu_right_8DF6
+    dw #doormenu_right_8DBA
+    dw #doormenu_right_8DA2
+    dw #doormenu_right_8FB2
+    dw #doormenu_right_8FCA
+    dw #doormenu_right_8F82
+    dw #doormenu_right_8D2A
+    dw #doormenu_right_8D1E
+    dw #$0000
+    %cm_header("SELECT RIGHT DOOR")
+
+doormenu_right_8E0E:
+    %cm_jsl("PB Big Pink (Lower)", #doorsubmenu_select, #$006F)
+
+doormenu_right_8DDE:
+    %cm_jsl("PB Big Pink (Mid-Lower)", #doorsubmenu_select, #$0070)
+
+doormenu_right_8E02:
+    %cm_jsl("PB Big Pink (Middle)", #doorsubmenu_select, #$0071)
+
+doormenu_right_8DD2:
+    %cm_jsl("PB Big Pink (Mid-Upper)", #doorsubmenu_select, #$0072)
+
+doormenu_right_8DF6:
+    %cm_jsl("PB Big Pink (Upper)", #doorsubmenu_select, #$0073)
 
 doormenu_right_8DBA:
-    %cm_jsl("PB Dachora (Lower)", #doorsubmenu_select, #$0000)
+    %cm_jsl("PB Dachora (Lower)", #doorsubmenu_select, #$0074)
 
 doormenu_right_8DA2:
-    %cm_jsl("PB Dachora (Upper)", #doorsubmenu_select, #$0000)
+    %cm_jsl("PB Dachora (Upper)", #doorsubmenu_select, #$0075)
+
+doormenu_right_8FB2:
+    %cm_jsl("PB Hoppers", #doorsubmenu_select, #$0076)
+
+doormenu_right_8FCA:
+    %cm_jsl("PB Hoppers Energy Tank", #doorsubmenu_select, #$0077)
+
+doormenu_right_8F82:
+    %cm_jsl("PB Spore Spawn Farming", #doorsubmenu_select, #$0078)
 
 doormenu_right_8D1E:
-    %cm_jsl("PB Spo-Spo Supers (Lower)", #doorsubmenu_select, #$0000)
+    %cm_jsl("PB Spo-Spo Supers (Lower)", #doorsubmenu_select, #$0079)
 
 doormenu_right_8D2A:
-    %cm_jsl("PB Spo-Spo Supers (Upper)", #doorsubmenu_select, #$0000)
+    %cm_jsl("PB Spo-Spo Supers (Upper)", #doorsubmenu_select, #$007A)
+
+LayoutPinkMaridiaRightDoorMenu:
+    dw #doormenu_right_A744
+    dw #doormenu_right_A708
+    dw #doormenu_right_A7D4
+    dw #doormenu_right_A90C
+    dw #doormenu_right_A84C
+    dw #doormenu_right_A7E0
+    dw #doormenu_right_A4B0
+    dw #doormenu_right_A978
+    dw #doormenu_right_A888
+    dw #doormenu_right_A954
+    dw #doormenu_right_A8DC
+    dw #doormenu_right_A900
+    dw #doormenu_right_A930
+    dw #doormenu_right_A894
+    dw #doormenu_right_A840
+    dw #doormenu_right_A834
+    dw #doormenu_right_A93C
+    dw #$0000
+    %cm_header("SELECT RIGHT DOOR")
+
+doormenu_right_A744:
+    %cm_jsl("PM Aqueduct (Lower)", #doorsubmenu_select, #$007B)
 
 doormenu_right_A708:
-    %cm_jsl("PM Aqueduct", #doorsubmenu_select, #$0000)
+    %cm_jsl("PM Aqueduct (Upper)", #doorsubmenu_select, #$007C)
+
+doormenu_right_A7D4:
+    %cm_jsl("PM Below Botwoon", #doorsubmenu_select, #$007D)
+
+doormenu_right_A90C:
+    %cm_jsl("PM Botwoon", #doorsubmenu_select, #$007E)
+
+doormenu_right_A84C:
+    %cm_jsl("PM Botwoon Tank", #doorsubmenu_select, #$007F)
+
+doormenu_right_A7E0:
+    %cm_jsl("PM Colosseum", #doorsubmenu_select, #$0080)
+
+doormenu_right_A4B0:
+    %cm_jsl("PM Crab Shaft", #doorsubmenu_select, #$0081)
+
+doormenu_right_A978:
+    %cm_jsl("PM Draygon", #doorsubmenu_select, #$0082)
+
+doormenu_right_A888:
+    %cm_jsl("PM Draygon Save", #doorsubmenu_select, #$0083)
+
+doormenu_right_A954:
+    %cm_jsl("PM East Cactus Alley", #doorsubmenu_select, #$0084)
+
+doormenu_right_A8DC:
+    %cm_jsl("PM Halfie Climb (Lower)", #doorsubmenu_select, #$0085)
+
+doormenu_right_A900:
+    %cm_jsl("PM Halfie Climb (Upper)", #doorsubmenu_select, #$0086)
+
+doormenu_right_A930:
+    %cm_jsl("PM Maridia Health Refill", #doorsubmenu_select, #$0087)
+
+doormenu_right_A894:
+    %cm_jsl("PM Maridia Missile Refill", #doorsubmenu_select, #$0088)
 
 doormenu_right_A840:
-    %cm_jsl("PM Precious (Lower)", #doorsubmenu_select, #$0000)
+    %cm_jsl("PM Precious (Lower)", #doorsubmenu_select, #$0089)
+
+doormenu_right_A834:
+    %cm_jsl("PM Precious (Upper)", #doorsubmenu_select, #$008A)
+
+doormenu_right_A93C:
+    %cm_jsl("PM West Cactus Alley", #doorsubmenu_select, #$008B)
 
 doormenu_right_902A:
     %cm_jsl("RB Red Tower", #doorsubmenu_select, #$0000)
@@ -1675,9 +2152,15 @@ doormenu_right_A300:
 doormenu_right_A2C4:
     %cm_jsl("WS Phantoon", #doorsubmenu_select, #$0000)
 
+doormenu_right_A750:
+    %cm_jsl("YM Butterfly", #doorsubmenu_select, #$0000)
+
+doormenu_right_A4D4:
+    %cm_jsl("YM Pseudo Plasma Spark", #doorsubmenu_select, #$0000)
+
 layout_leftright_rightdoor:
     dw !ACTION_CHOICE_JSL_TEXT
-    dl #!ram_door_source
+    dl #!ram_door_destination
     dw #$0000
     dw #doormenu_right_8FEE   ; Blue Brinstar
     dw #doormenu_right_8EDA
@@ -1755,6 +2238,7 @@ layout_leftright_rightdoor:
     dw #doormenu_right_A8C4
     dw #doormenu_right_A7C8
     dw #doormenu_right_A63C
+    dw #doormenu_right_A654
     dw #doormenu_right_A528
     dw #doormenu_right_9192   ; Kraid's Lair
     dw #doormenu_right_91CE
@@ -1765,6 +2249,59 @@ layout_leftright_rightdoor:
     dw #doormenu_right_925E
     dw #doormenu_right_914A
     dw #doormenu_right_913E
+    dw #doormenu_right_9996   ; Lower Norfair
+    dw #doormenu_right_988E
+    dw #doormenu_right_9AAA
+    dw #doormenu_right_9A92
+    dw #doormenu_right_9876
+    dw #doormenu_right_98A6
+    dw #doormenu_right_99D2
+    dw #doormenu_right_9AB6
+    dw #doormenu_right_99F6
+    dw #doormenu_right_9852
+    dw #doormenu_right_9A32
+    dw #doormenu_right_992A
+    dw #doormenu_right_9942
+    dw #doormenu_right_9906
+    dw #doormenu_right_98E2
+    dw #doormenu_right_995A
+    dw #doormenu_right_98B2
+    dw #doormenu_right_98CA
+    dw #doormenu_right_9A86
+    dw #doormenu_right_99AE
+    dw #doormenu_right_9A4A
+    dw #doormenu_right_9A1A
+    dw #doormenu_right_998A
+    dw #doormenu_right_9972
+    dw #doormenu_right_8E0E   ; Pink Brinstar
+    dw #doormenu_right_8DDE
+    dw #doormenu_right_8E02
+    dw #doormenu_right_8DD2
+    dw #doormenu_right_8DF6
+    dw #doormenu_right_8DBA
+    dw #doormenu_right_8DA2
+    dw #doormenu_right_8FB2
+    dw #doormenu_right_8FCA
+    dw #doormenu_right_8F82
+    dw #doormenu_right_8D2A
+    dw #doormenu_right_8D1E
+    dw #doormenu_right_A744   ; Pink Maridia
+    dw #doormenu_right_A708
+    dw #doormenu_right_A7D4
+    dw #doormenu_right_A90C    
+    dw #doormenu_right_A84C
+    dw #doormenu_right_A7E0
+    dw #doormenu_right_A4B0
+    dw #doormenu_right_A978
+    dw #doormenu_right_A888
+    dw #doormenu_right_A954
+    dw #doormenu_right_A8DC
+    dw #doormenu_right_A900
+    dw #doormenu_right_A930
+    dw #doormenu_right_A894
+    dw #doormenu_right_A840
+    dw #doormenu_right_A834
+    dw #doormenu_right_A93C
     dw #$0000
 
 
@@ -1786,7 +2323,7 @@ doormenu_up_949E:
 LayoutCrateriaUpDoorMenu:
     dw #doormenu_up_8A42
     dw #doormenu_up_8ABA
-    dw #doormenu_up_8A7E
+    dw #doormenu_up_8A8A
     dw #doormenu_up_898E
     dw #$0000
     %cm_header("SELECT UP DOOR")
@@ -1797,7 +2334,7 @@ doormenu_up_8A42:
 doormenu_up_8ABA:
     %cm_jsl("CR Forgotten Highway Elbow", #doorsubmenu_select, #$0003)
 
-doormenu_up_8A7E:
+doormenu_up_8A8A:
     %cm_jsl("CR Forgotten Highway Kago", #doorsubmenu_select, #$0004)
 
 doormenu_up_898E:
@@ -1819,14 +2356,69 @@ LayoutKraidLairUpDoorMenu:
 doormenu_up_916E:
     %cm_jsl("KL Kihunters", #doorsubmenu_select, #$0007)
 
-doormenu_up_A6CC:
-    %cm_jsl("PM East Sand Hole", #doorsubmenu_select, #$0000)
+LayoutLowerNorfairUpDoorMenu:
+    dw #doormenu_up_99EA
+    dw #doormenu_up_99C6
+    dw #$0000
+    %cm_header("SELECT UP DOOR")
+
+doormenu_up_99EA:
+    %cm_jsl("LN Kihunter Shaft", #doorsubmenu_select, #$0008)
+
+doormenu_up_99C6:
+    %cm_jsl("LN Spring Ball Maze", #doorsubmenu_select, #$0009)
+
+LayoutPinkMaridiaUpDoorMenu:
+    dw #doormenu_up_A714
+    dw #doormenu_up_A720
+    dw #doormenu_up_A600
+    dw #doormenu_up_A768
+    dw #doormenu_up_A8AC
+    dw #doormenu_up_A8B8
+    dw #doormenu_up_A864
+    dw #doormenu_up_A858
+    dw #doormenu_up_A6FC
+    dw #doormenu_up_A6CC
+    dw #doormenu_up_A6E4
+    dw #doormenu_up_A6B4
+    dw #$0000
+    %cm_header("SELECT UP DOOR")
+
+doormenu_up_A714:
+    %cm_jsl("PM Aqueduct (Left)", #doorsubmenu_select, #$000A)
+
+doormenu_up_A720:
+    %cm_jsl("PM Aqueduct (Right)", #doorsubmenu_select, #$000B)
 
 doormenu_up_A600:
-    %cm_jsl("PM Aqueduct Tube", #doorsubmenu_select, #$0000)
+    %cm_jsl("PM Aqueduct Tube", #doorsubmenu_select, #$000C)
+
+doormenu_up_A768:
+    %cm_jsl("PM Botwoon Hallway", #doorsubmenu_select, #$000D)
+
+doormenu_up_A8AC:
+    %cm_jsl("PM Botwoon Sand (Left)", #doorsubmenu_select, #$000E)
+
+doormenu_up_A8B8:
+    %cm_jsl("PM Botwoon Sand (Right)", #doorsubmenu_select, #$000F)
+
+doormenu_up_A864:
+    %cm_jsl("PM Botwoon Tank (Left)", #doorsubmenu_select, #$0010)
+
+doormenu_up_A858:
+    %cm_jsl("PM Botwoon Tank (Right)", #doorsubmenu_select, #$0011)
+
+doormenu_up_A6FC:
+    %cm_jsl("PM East Aqueduct Quicksand", #doorsubmenu_select, #$0012)
+
+doormenu_up_A6CC:
+    %cm_jsl("PM East Sand Hole", #doorsubmenu_select, #$0013)
+
+doormenu_up_A6E4:
+    %cm_jsl("PM West Aqueduct Quicksand", #doorsubmenu_select, #$0014)
 
 doormenu_up_A6B4:
-    %cm_jsl("PM West Sand Hole", #doorsubmenu_select, #$0000)
+    %cm_jsl("PM West Sand Hole", #doorsubmenu_select, #$0015)
 
 doormenu_up_93D2:
     %cm_jsl("UN Crocomire Speedway", #doorsubmenu_select, #$0000)
@@ -1834,18 +2426,38 @@ doormenu_up_93D2:
 doormenu_up_A39C:
     %cm_jsl("WM Main Street", #doorsubmenu_select, #$0000)
 
+doormenu_up_A5AC:
+    %cm_jsl("YM Plasma Spark", #doorsubmenu_select, #$0000)
+
+doormenu_up_A4E0:
+    %cm_jsl("YM Pseudo Plasma Spark", #doorsubmenu_select, #$0000)
+
 layout_updown_updoor:
     dw !ACTION_CHOICE_JSL_TEXT
-    dl #!ram_door_destination
+    dl #!ram_door_source
     dw #$0000
     dw #doormenu_up_944A      ; Croc's Lair
     dw #doormenu_up_949E
     dw #doormenu_up_8A42      ; Crateria
     dw #doormenu_up_8ABA
-    dw #doormenu_up_8A7E
+    dw #doormenu_up_8A8A
     dw #doormenu_up_898E
     dw #doormenu_up_8E56      ; Green Brinstar
     dw #doormenu_up_916E      ; Kraid's Lair
+    dw #doormenu_up_99EA      ; Lower Norfair
+    dw #doormenu_up_99C6
+    dw #doormenu_up_A714      ; Pink Maridia
+    dw #doormenu_up_A720
+    dw #doormenu_up_A600
+    dw #doormenu_up_A768
+    dw #doormenu_up_A8AC
+    dw #doormenu_up_A8B8
+    dw #doormenu_up_A864
+    dw #doormenu_up_A858
+    dw #doormenu_up_A6FC
+    dw #doormenu_up_A6CC
+    dw #doormenu_up_A6E4
+    dw #doormenu_up_A6B4
     dw #$0000
 
 
@@ -1920,6 +2532,66 @@ LayoutKraidLairDownDoorMenu:
 doormenu_down_9156:
     %cm_jsl("KL Warehouse Zeela", #doorsubmenu_select, #$000B)
 
+LayoutLowerNorfairDownDoorMenu:
+    dw #doormenu_down_99DE
+    dw #doormenu_down_9A26
+    dw #$0000
+    %cm_header("SELECT DOWN DOOR")
+
+doormenu_down_99DE:
+    %cm_jsl("LN Jail Power Bombs", #doorsubmenu_select, #$000C)
+
+doormenu_down_9A26:
+    %cm_jsl("LN Wasteland", #doorsubmenu_select, #$000D)
+
+LayoutPinkMaridiaDownDoorMenu:
+    dw #doormenu_down_A72C
+    dw #doormenu_down_A60C
+    dw #doormenu_down_0010
+    dw #doormenu_down_0011
+    dw #doormenu_down_0012
+    dw #doormenu_down_0013
+    dw #doormenu_down_A4BC
+    dw #doormenu_down_A6F0
+    dw #doormenu_down_A6C0
+    dw #doormenu_down_A6D8
+    dw #doormenu_down_A6A8
+    dw #$0000
+    %cm_header("SELECT DOWN DOOR")
+
+doormenu_down_A72C:
+    %cm_jsl("PM Aqueduct", #doorsubmenu_select, #$000E)
+
+doormenu_down_A60C:
+    %cm_jsl("PM Aqueduct Tube", #doorsubmenu_select, #$000F)
+
+doormenu_down_0010:
+    %cm_jsl("PM Below Botwoon (Left)", #doorsubmenu_select, #$0010)
+
+doormenu_down_0011:
+    %cm_jsl("PM Below Botwoon (Right)", #doorsubmenu_select, #$0011)
+
+doormenu_down_0012:
+    %cm_jsl("PM Botwoon Sand (Left)", #doorsubmenu_select, #$0012)
+
+doormenu_down_0013:
+    %cm_jsl("PM Botwoon Sand (Right)", #doorsubmenu_select, #$0013)
+
+doormenu_down_A4BC:
+    %cm_jsl("PM Crab Shaft", #doorsubmenu_select, #$0014)
+
+doormenu_down_A6F0:
+    %cm_jsl("PM East Aqueduct Quicksand", #doorsubmenu_select, #$0015)
+
+doormenu_down_A6C0:
+    %cm_jsl("PM East Sand Hole", #doorsubmenu_select, #$0016)
+
+doormenu_down_A6D8:
+    %cm_jsl("PM West Aqueduct Quicksand", #doorsubmenu_select, #$0017)
+
+doormenu_down_A6A8:
+    %cm_jsl("PM West Sand Hole", #doorsubmenu_select, #$0018)
+
 doormenu_down_A3F0:
     %cm_jsl("WM Fish Tank (Left)", #doorsubmenu_select, #$0000)
 
@@ -1931,7 +2603,7 @@ doormenu_down_A330:
 
 layout_updown_downdoor:
     dw !ACTION_CHOICE_JSL_TEXT
-    dl #!ram_door_source
+    dl #!ram_door_destination
     dw #$0000
     dw #doormenu_down_93EA    ; Croc's Lair
     dw #doormenu_down_94CE
@@ -1945,6 +2617,19 @@ layout_updown_downdoor:
     dw #doormenu_down_A678
     dw #doormenu_down_000A
     dw #doormenu_down_9156    ; Kraid's Lair
+    dw #doormenu_down_99DE    ; Lower Norfair
+    dw #doormenu_down_9A26
+    dw #doormenu_down_A72C    ; Pink Maridia
+    dw #doormenu_down_A60C
+    dw #doormenu_down_0010
+    dw #doormenu_down_0011
+    dw #doormenu_down_0012
+    dw #doormenu_down_0013
+    dw #doormenu_down_A4BC
+    dw #doormenu_down_A6F0
+    dw #doormenu_down_A6C0
+    dw #doormenu_down_A6D8
+    dw #doormenu_down_A6A8
     dw #$0000
 
 
