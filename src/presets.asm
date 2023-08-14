@@ -391,7 +391,7 @@ preset_start_gameplay:
     ; Set Samus last pose same as current pose if not shinesparking
     LDA !SAMUS_POSE_DIRECTION : STA !SAMUS_PREVIOUS_POSE_DIRECTION
     LDA !SAMUS_POSE : CMP #$00C0 : BMI .store_prev_pose
-    CMP #$00C5 : BMI .store_prev_pose
+    CMP #$00C5 : BPL .store_prev_pose
     ; Set timer type to shinespark
     LDA #$0006 : STA $0ACC
     ; Set timer very high in case player holds inputs before spark moves
