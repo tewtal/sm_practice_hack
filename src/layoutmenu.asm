@@ -408,7 +408,7 @@ doormenu_area_9A4A:
     %cm_jsl("LN Three Musketeers", #doormenu_select, #$0016)
 
 doormenu_area_90C6:
-    %cm_jsl("RB Caterpillar", #doormenu_select, #$0017)
+    %cm_jsl("RB Caterpillars", #doormenu_select, #$0017)
 
 doormenu_area_A384:
     %cm_jsl("RB East Tunnel (Lower)", #doormenu_select, #$0018)
@@ -612,16 +612,16 @@ LayoutPinkMaridiaDoorMenu:
     dw #LayoutPinkMaridiaDownDoorMenu
 
 LayoutRedBrinstarDoorMenu:
-    dw #$0000
-    dw #$0000
+    dw #LayoutRedBrinstarLeftDoorMenu
+    dw #LayoutRedBrinstarRightDoorMenu
     dw #$0000
     dw #$0000
 
 LayoutTourianDoorMenu:
-    dw #$0000
-    dw #$0000
-    dw #$0000
-    dw #$0000
+    dw #LayoutTourianLeftDoorMenu
+    dw #LayoutTourianRightDoorMenu
+    dw #LayoutTourianUpDoorMenu
+    dw #LayoutTourianDownDoorMenu
 
 LayoutUpperNorfairDoorMenu:
     dw #$0000
@@ -767,8 +767,8 @@ LayoutCrateriaLeftDoorMenu2:
     dw #doormenu_left_893A
     dw #doormenu_left_8C16
     dw #doormenu_left_8AEA
-    dw #doormenu_left_8976
     dw #doormenu_left_8982
+    dw #doormenu_left_8976
     dw #doormenu_left_896A
     dw #doormenu_left_8B86
     dw #doormenu_left_8BDA
@@ -856,14 +856,14 @@ doormenu_left_8C16:
 doormenu_left_8AEA:
     %cm_jsl("CR Moat", #doorsubmenu_select, #$0028)
 
-doormenu_left_8976:
-    %cm_jsl("CR Parlor (Lower)", #doorsubmenu_select, #$0029)
-
 doormenu_left_8982:
-    %cm_jsl("CR Parlor (Middle)", #doorsubmenu_select, #$002A)
+    %cm_jsl("CR Parlor (To Bombs)", #doorsubmenu_select, #$002A)
+
+doormenu_left_8976:
+    %cm_jsl("CR Parlor (To Map)", #doorsubmenu_select, #$0029)
 
 doormenu_left_896A:
-    %cm_jsl("CR Parlor (Upper)", #doorsubmenu_select, #$002B)
+    %cm_jsl("CR Parlor (To Ship)", #doorsubmenu_select, #$002B)
 
 doormenu_left_8B86:
     %cm_jsl("CR Pit", #doorsubmenu_select, #$002C)
@@ -1205,7 +1205,7 @@ doormenu_left_8F8E:
 
 LayoutPinkMaridiaLeftDoorMenu:
     dw #doormenu_left_A738
-    dw #doormenu_left_A768
+    dw #doormenu_left_A828
     dw #doormenu_left_A69C
     dw #doormenu_left_A918
     dw #doormenu_left_A774
@@ -1213,9 +1213,9 @@ LayoutPinkMaridiaLeftDoorMenu:
     dw #doormenu_left_A7F8
     dw #doormenu_left_A7EC
     dw #doormenu_left_A4C8
-    dw #doormenu_left_A960
     dw #doormenu_left_A96C
     dw #doormenu_left_A87C
+    dw #doormenu_left_A960
     dw #doormenu_left_A8F4
     dw #doormenu_left_A8E8
     dw #doormenu_left_A924
@@ -1226,7 +1226,7 @@ LayoutPinkMaridiaLeftDoorMenu:
 doormenu_left_A738:
     %cm_jsl("PM Aqueduct", #doorsubmenu_select, #$007B)
 
-doormenu_left_A768:
+doormenu_left_A828:
     %cm_jsl("PM Aqueduct Save", #doorsubmenu_select, #$007C)
 
 doormenu_left_A69C:
@@ -1271,8 +1271,65 @@ doormenu_left_A924:
 doormenu_left_A948:
     %cm_jsl("PM West Cactus Alley", #doorsubmenu_select, #$008A)
 
+LayoutRedBrinstarLeftDoorMenu:
+    dw #doormenu_left_90EA
+    dw #doormenu_left_9102
+    dw #doormenu_left_911A
+    dw #doormenu_left_9126
+    dw #doormenu_left_90DE
+    dw #doormenu_left_90D2
+    dw #doormenu_left_90C6
+    dw #doormenu_left_908A
+    dw #doormenu_left_9066
+    dw #doormenu_left_9042
+    dw #doormenu_left_901E
+    dw #doormenu_left_91FE
+    dw #doormenu_left_9072
+    dw #$0000
+    %cm_header("SELECT LEFT DOOR")
+
+doormenu_left_90EA:
+    %cm_jsl("RB Alpha Power Bombs", #doorsubmenu_select, #$008B)
+
+doormenu_left_9102:
+    %cm_jsl("RB Bat", #doorsubmenu_select, #$008C)
+
+doormenu_left_911A:
+    %cm_jsl("RB Below Spazer (Lower)", #doorsubmenu_select, #$008D)
+
+doormenu_left_9126:
+    %cm_jsl("RB Below Spazer (Upper)", #doorsubmenu_select, #$008E)
+
+doormenu_left_90DE:
+    %cm_jsl("RB Beta Power Bombs", #doorsubmenu_select, #$008F)
+
+doormenu_left_90D2:
+    %cm_jsl("RB Caterpillars (Lower)", #doorsubmenu_select, #$0090)
+
 doormenu_left_90C6:
-    %cm_jsl("RB Caterpillar", #doorsubmenu_select, #$0000)
+    %cm_jsl("RB Caterpillars (Upper)", #doorsubmenu_select, #$0091)
+
+doormenu_left_908A:
+    %cm_jsl("RB Hellway", #doorsubmenu_select, #$0092)
+
+doormenu_left_9066:
+    %cm_jsl("RB Red Brinstar Firefleas", #doorsubmenu_select, #$0093)
+
+doormenu_left_9042:
+    %cm_jsl("RB Red Tower (Lower)", #doorsubmenu_select, #$0094)
+
+doormenu_left_901E:
+    %cm_jsl("RB Red Tower (Upper)", #doorsubmenu_select, #$0095)
+
+doormenu_left_91FE:
+    %cm_jsl("RB Sloaters Refill", #doorsubmenu_select, #$0096)
+
+doormenu_left_9072:
+    %cm_jsl("RB X-Ray Scope", #doorsubmenu_select, #$0097)
+
+LayoutTourianLeftDoorMenu:
+    dw #$0000
+    %cm_header("SELECT LEFT DOOR")
 
 doormenu_left_96D2:
     %cm_jsl("UN Lava Dive", #doorsubmenu_select, #$0000)
@@ -1373,8 +1430,8 @@ layout_leftright_leftdoor:
     dw #doormenu_left_893A
     dw #doormenu_left_8C16
     dw #doormenu_left_8AEA
-    dw #doormenu_left_8976
     dw #doormenu_left_8982
+    dw #doormenu_left_8976
     dw #doormenu_left_896A
     dw #doormenu_left_8B86
     dw #doormenu_left_8BDA
@@ -1456,7 +1513,7 @@ layout_leftright_leftdoor:
     dw #doormenu_left_8F76
     dw #doormenu_left_8F8E
     dw #doormenu_left_A738    ; Pink Maridia
-    dw #doormenu_left_A768
+    dw #doormenu_left_A828
     dw #doormenu_left_A69C
     dw #doormenu_left_A918
     dw #doormenu_left_A774
@@ -1464,13 +1521,26 @@ layout_leftright_leftdoor:
     dw #doormenu_left_A7F8
     dw #doormenu_left_A7EC
     dw #doormenu_left_A4C8
-    dw #doormenu_left_A960
     dw #doormenu_left_A96C
     dw #doormenu_left_A87C
+    dw #doormenu_left_A960
     dw #doormenu_left_A8F4
     dw #doormenu_left_A8E8
     dw #doormenu_left_A924
     dw #doormenu_left_A948
+    dw #doormenu_left_90EA    ; Red Brinstar
+    dw #doormenu_left_9102
+    dw #doormenu_left_911A
+    dw #doormenu_left_9126
+    dw #doormenu_left_90DE
+    dw #doormenu_left_90D2
+    dw #doormenu_left_90C6
+    dw #doormenu_left_908A
+    dw #doormenu_left_9066
+    dw #doormenu_left_9042
+    dw #doormenu_left_901E
+    dw #doormenu_left_91FE
+    dw #doormenu_left_9072
     dw #$0000
 
 
@@ -1758,7 +1828,7 @@ doormenu_right_8E7A:
     %cm_jsl("GB Green Hill Zone", #doorsubmenu_select, #$003B)
 
 doormenu_right_8CFA:
-    %cm_jsl("GB Main Shaft (Lower)", #doorsubmenu_select, #$003C)
+    %cm_jsl("GB Main Shaft (Etecoons)", #doorsubmenu_select, #$003C)
 
 doormenu_right_8CBE:
     %cm_jsl("GB Main Shaft (Mid-Lower)", #doorsubmenu_select, #$003D)
@@ -1988,8 +2058,8 @@ LayoutPinkBrinstarRightDoorMenu:
     dw #doormenu_right_8FB2
     dw #doormenu_right_8FCA
     dw #doormenu_right_8F82
-    dw #doormenu_right_8D2A
     dw #doormenu_right_8D1E
+    dw #doormenu_right_8D2A
     dw #$0000
     %cm_header("SELECT RIGHT DOOR")
 
@@ -2101,8 +2171,61 @@ doormenu_right_A834:
 doormenu_right_A93C:
     %cm_jsl("PM West Cactus Alley", #doorsubmenu_select, #$008B)
 
+LayoutRedBrinstarRightDoorMenu:
+    dw #doormenu_right_90F6
+    dw #doormenu_right_910E
+    dw #doormenu_right_9096
+    dw #doormenu_right_90AE
+    dw #doormenu_right_90A2
+    dw #doormenu_right_907E
+    dw #doormenu_right_905A
+    dw #doormenu_right_926A
+    dw #doormenu_right_904E
+    dw #doormenu_right_9036
+    dw #doormenu_right_902A
+    dw #doormenu_right_9132
+    dw #$0000
+    %cm_header("SELECT RIGHT DOOR")
+
+doormenu_right_90F6:
+    %cm_jsl("RB Bat", #doorsubmenu_select, #$008C)
+
+doormenu_right_910E:
+    %cm_jsl("RB Below Spazer", #doorsubmenu_select, #$008D)
+
+doormenu_right_9096:
+    %cm_jsl("RB Caterpillars (Lower)", #doorsubmenu_select, #$008E)
+
+doormenu_right_90AE:
+    %cm_jsl("RB Caterpillars (Middle)", #doorsubmenu_select, #$008F)
+
+doormenu_right_90A2:
+    %cm_jsl("RB Caterpillars (Upper)", #doorsubmenu_select, #$0090)
+
+doormenu_right_907E:
+    %cm_jsl("RB Hellway", #doorsubmenu_select, #$0091)
+
+doormenu_right_905A:
+    %cm_jsl("RB Red Brinstar Firefleas", #doorsubmenu_select, #$0092)
+
+doormenu_right_926A:
+    %cm_jsl("RB Red Brinstar Save", #doorsubmenu_select, #$0093)
+
+doormenu_right_904E:
+    %cm_jsl("RB Red Tower (Lower)", #doorsubmenu_select, #$0094)
+
+doormenu_right_9036:
+    %cm_jsl("RB Red Tower (Middle)", #doorsubmenu_select, #$0095)
+
 doormenu_right_902A:
-    %cm_jsl("RB Red Tower", #doorsubmenu_select, #$0000)
+    %cm_jsl("RB Red Tower (Upper)", #doorsubmenu_select, #$0096)
+
+doormenu_right_9132:
+    %cm_jsl("RB Spazer", #doorsubmenu_select, #$0097)
+
+LayoutTourianRightDoorMenu:
+    dw #$0000
+    %cm_header("SELECT RIGHT DOOR")
 
 doormenu_right_967E:
     %cm_jsl("UN Kronic Boost", #doorsubmenu_select, #$0000)
@@ -2283,8 +2406,8 @@ layout_leftright_rightdoor:
     dw #doormenu_right_8FB2
     dw #doormenu_right_8FCA
     dw #doormenu_right_8F82
-    dw #doormenu_right_8D2A
     dw #doormenu_right_8D1E
+    dw #doormenu_right_8D2A
     dw #doormenu_right_A744   ; Pink Maridia
     dw #doormenu_right_A708
     dw #doormenu_right_A7D4
@@ -2302,6 +2425,18 @@ layout_leftright_rightdoor:
     dw #doormenu_right_A840
     dw #doormenu_right_A834
     dw #doormenu_right_A93C
+    dw #doormenu_right_90F6   ; Red Brinstar
+    dw #doormenu_right_910E
+    dw #doormenu_right_9096
+    dw #doormenu_right_90AE
+    dw #doormenu_right_90A2
+    dw #doormenu_right_907E
+    dw #doormenu_right_905A
+    dw #doormenu_right_926A
+    dw #doormenu_right_904E
+    dw #doormenu_right_9036
+    dw #doormenu_right_902A
+    dw #doormenu_right_9132
     dw #$0000
 
 
@@ -2419,6 +2554,10 @@ doormenu_up_A6E4:
 
 doormenu_up_A6B4:
     %cm_jsl("PM West Sand Hole", #doorsubmenu_select, #$0015)
+
+LayoutTourianUpDoorMenu:
+    dw #$0000
+    %cm_header("SELECT UP DOOR")
 
 doormenu_up_93D2:
     %cm_jsl("UN Crocomire Speedway", #doorsubmenu_select, #$0000)
@@ -2591,6 +2730,10 @@ doormenu_down_A6D8:
 
 doormenu_down_A6A8:
     %cm_jsl("PM West Sand Hole", #doorsubmenu_select, #$0018)
+
+LayoutTourianDownDoorMenu:
+    dw #$0000
+    %cm_header("SELECT DOWN DOOR")
 
 doormenu_down_A3F0:
     %cm_jsl("WM Fish Tank (Left)", #doorsubmenu_select, #$0000)

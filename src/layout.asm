@@ -81,39 +81,40 @@ hijack_loading_room_CRE:
     LDX !DOOR_ID : LDA $830003,X : PLX
     AND #$0003 : CMP $12 : BEQ .pickAreaBossVanilla
     LDA portals_areaboss_custom_inverted_table,X
-    BRA .loadBitset
+    BRA .saveDoor
 
   .rightToLeft
     LDA !ram_door_source : ASL : TAX
-    LDA portals_left_vanilla_inverted_table,X : BNE .loadBitset
+    LDA portals_left_vanilla_inverted_table,X : BNE .saveDoor
     BRL .noChangePLX
 
   .leftToRight
     LDA !ram_door_destination : ASL : TAX
-    LDA portals_right_vanilla_inverted_table,X : BNE .loadBitset
+    LDA portals_right_vanilla_inverted_table,X : BNE .saveDoor
     BRL .noChangePLX
 
   .downToUp
     LDA !ram_door_source : ASL : TAX
-    LDA portals_up_vanilla_inverted_table,X : BNE .loadBitset
+    LDA portals_up_vanilla_inverted_table,X : BNE .saveDoorUpDown
     BRL .noChangePLX
 
   .upToDown
     LDA !ram_door_destination : ASL : TAX
-    LDA portals_down_vanilla_inverted_table,X : BNE .loadBitset
+    LDA portals_down_vanilla_inverted_table,X : BNE .saveDoorUpDown
     BRL .noChangePLX
 
   .pickAreaBossVanilla
     LDA portals_areaboss_vanilla_inverted_table,X
 
-  .loadBitset
+  .saveDoor
     STA !DOOR_ID
 
     ; Implement the DDF1 routine here to load CRE bitset
     ; Note we already have pushed X to the stack,
     ; and A conveniently contains the DOOR_ID
-    TAX : PHB
-    PEA $8F00 : PLB : PLB
+    TAX
+  .loadBitset
+    PHB : PEA $8F00 : PLB : PLB
 
     LDA $830000,X : TAX
     LDA !CRE_BITSET : STA !PREVIOUS_CRE_BITSET
@@ -133,6 +134,19 @@ hijack_loading_room_CRE:
     ; Remember we pushed X and bank in opposite order
     PLB : PLX
     RTS
+
+  .saveDoorUpDown
+    STA !DOOR_ID : TAX
+
+    ; Unlock Samus if leaving Aqueduct Tube
+    LDA !ROOM_ID : CMP #$D408 : BNE .loadBitset
+    LDA #$0001
+if !FEATURE_PAL
+    JSL $90F081
+else
+    JSL $90F084
+endif
+    BRA .loadBitset
 }
 
 hijack_after_load_level_data:
@@ -331,7 +345,7 @@ portals_areaboss_vanilla_table:
     dw $913E   ; Warehouse Zeela door 0 --> Warehouse Entrance
     dw $96D2   ; Lava Dive door 0 --> Kronic Boost
     dw $9A4A   ; Three Musketeers door 0 --> Single Chamber
-    dw $90C6   ; Caterpillar door 4 --> Red Fish Room
+    dw $90C6   ; Caterpillars door 4 --> Red Fish Room
     dw $A384   ; East Tunnel door 1 --> Warehouse Entrance
     dw $A390   ; East Tunnel door 2 --> Crab Hole
     dw $A330   ; Glass Tunnel door 0 --> Main Street
@@ -345,7 +359,7 @@ portals_areaboss_vanilla_table:
     dw $A510   ; Crab Hole door 2 --> East Tunnel
     dw $A4C8   ; Crab Shaft door 2 --> Aqueduct
     dw $A39C   ; Main Street door 0 --> Glass Tunnel
-    dw $A480   ; Red Fish Room door 1 --> Caterpillar
+    dw $A480   ; Red Fish Room door 1 --> Caterpillars
     dw $8AAE   ; Crab Maze door 1 --> Forgotten Highway Elbow
     dw $89CA   ; West Ocean door 0 --> Moat
 
@@ -374,7 +388,7 @@ portals_areaboss_vanilla_inverted_table:
     dw $923A   ; Warehouse Entrance door 1 --> Warehouse Zeela
     dw $967E   ; Kronic Boost door 2 --> Lava Dive
     dw $95FA   ; Single Chamber door 4 --> Three Musketeers
-    dw $A480   ; Red Fish Room door 1 --> Caterpillar
+    dw $A480   ; Red Fish Room door 1 --> Caterpillars
     dw $922E   ; Warehouse Entrance door 0 --> East Tunnel
     dw $A510   ; Crab Hole door 2 --> East Tunnel
     dw $A39C   ; Main Street door 0 --> Glass Tunnel
@@ -388,7 +402,7 @@ portals_areaboss_vanilla_inverted_table:
     dw $A390   ; East Tunnel door 2 --> Crab Hole
     dw $A708   ; Aqueduct door 0 --> Crab Shaft
     dw $A330   ; Glass Tunnel door 0 --> Main Street
-    dw $90C6   ; Caterpillar door 4 --> Red Fish Room
+    dw $90C6   ; Caterpillars door 4 --> Red Fish Room
     dw $8AA2   ; Forgotten Highway Elbow door 0 --> Crab Maze
     dw $8AEA   ; Moat door 1 --> West Ocean
 
@@ -643,7 +657,7 @@ door_custom_A39C_main_street_door0:
     dw $0081, $0078, $0000
 
 door_custom_A480_red_fish_door1:
-    dw $A322   ; Caterpillar
+    dw $A322   ; Caterpillars
     db $40, $05, $2E, $36, $02, $03
     dw $8000, #door_custom_asm
     dw $02CD, $0388, $E367
@@ -696,8 +710,8 @@ portals_left_vanilla_table:
     dw $950A   ; Grapple Tutorial 1 door 1 --> Grapple Tutorial 2
     dw $94F2   ; Grapple Tutorial 2 door 1 --> Grapple Tutorial 3
     dw $94C2   ; Grapple Tutorial 3 door 1 --> Post Crocomire Shaft
-    dw $9432   ; Post Crocomire Farming door 0 --> Crocomire
     dw $9456   ; Post Crocomire Farming door 3 --> Post Crocomire Save
+    dw $9432   ; Post Crocomire Farming door 0 --> Crocomire
     dw $946E   ; Post Crocomire Power Bombs door 0 --> Post Crocomire Farming
     dw $9492   ; Post Crocomire Shaft door 2 --> Cosine Missiles
     dw $8C8E   ; 230 Bombway door 1 --> Parlor
@@ -722,8 +736,8 @@ portals_left_vanilla_table:
     dw $893A   ; Landing Site door 3 --> Crateria Power Bombs
     dw $8C16   ; Lower Mushrooms door 0 --> Green Pirates Shaft
     dw $8AEA   ; Moat door 1 --> West Ocean
-    dw $8976   ; Parlor door 2 --> Pre-Map Flyway
     dw $8982   ; Parlor door 3 --> Flyway
+    dw $8976   ; Parlor door 2 --> Pre-Map Flyway
     dw $896A   ; Parlor door 1 --> Landing Site
     dw $8B86   ; Pit door 1 --> Morph Elevator
     dw $8BDA   ; Pre-Map Flyway door 1 --> Crateria Map Station
@@ -805,7 +819,7 @@ portals_left_vanilla_table:
     dw $8F76   ; Spore Spawn Farming door 0 --> Spore Spawn Supers
     dw $8F8E   ; Waterway Energy Tank door 0 --> Big Pink
     dw $A738   ; Aqueduct door 4 --> Below Botwoon Energy Tank
-    dw $A768   ; Aqueduct Save door 0 --> Aqueduct
+    dw $A828   ; Aqueduct Save door 0 --> Aqueduct
     dw $A69C   ; Below Botwoon Energy Tank door 1 --> West Sand Hall
     dw $A918   ; Botwoon door 1 --> Botwoon Energy Tank
     dw $A774   ; Botwoon Hallway door 1 --> Botwoon
@@ -813,13 +827,26 @@ portals_left_vanilla_table:
     dw $A7F8   ; Colosseum door 2 --> Precious
     dw $A7EC   ; Colosseum door 1 --> Draygon Save
     dw $A4C8   ; Crab Shaft door 2 --> Aqueduct
-    dw $A960   ; East Cactus Alley door 1 --> Halfie Climb
     dw $A96C   ; Draygon door 0 --> Precious
     dw $A87C   ; Draygon Save door 0 --> Maridia Health Refill
+    dw $A960   ; East Cactus Alley door 1 --> Halfie Climb
     dw $A8F4   ; Halfie Climb door 2 --> Maridia Missile Refill
     dw $A8E8   ; Halfie Climb door 1 --> Colosseum
     dw $A924   ; Space Jump door 0 --> Draygon
     dw $A948   ; West Cactus Alley door 1 --> East Cactus Alley
+    dw $90EA   ; Alpha Power Bombs door 0 --> Caterpillars
+    dw $9102   ; Bat door 1 --> Below Spazer
+    dw $911A   ; Below Spazer door 1 --> West Tunnel
+    dw $9126   ; Below Spazer door 2 --> Spazer
+    dw $90DE   ; Beta Power Bombs door 0 --> Caterpillars
+    dw $90D2   ; Caterpillars door 6 --> Red Brinstar Save
+    dw $90C6   ; Caterpillars door 4 --> Red Fish
+    dw $908A   ; Hellway door 1 --> Caterpillars
+    dw $9066   ; Red Brinstar Firefleas door 1 --> Red Tower
+    dw $9042   ; Red Tower door 3 --> Bat
+    dw $901E   ; Red Tower door 0 --> Hellway
+    dw $91FE   ; Sloaters Refill door 0 --> Red Tower
+    dw $9072   ; X-Ray Scope door 0 --> Red Brinstar Firefleas
 
 ; NOTE: Table order must match above table with portals inverted
 portals_left_vanilla_inverted_table:
@@ -864,8 +891,8 @@ portals_left_vanilla_inverted_table:
     dw $89B2   ; Crateria Power Bombs door 0 --> Landing Site
     dw $8C46   ; Green Pirates Shaft door 1 --> Lower Mushrooms
     dw $89CA   ; West Ocean door 0 --> Moat
-    dw $8BCE   ; Pre-Map Flyway door door 0 --> Parlor
     dw $8BB6   ; Flyway door 0 --> Parlor
+    dw $8BCE   ; Pre-Map Flyway door door 0 --> Parlor
     dw $8916   ; Landing Site door 0 --> Parlor
     dw $8B92   ; Morph Elevator door 0 --> Pit
     dw $8C2E   ; Crateria Map Station door 0 --> Pre-Map Flyway
@@ -962,6 +989,19 @@ portals_left_vanilla_inverted_table:
     dw $A7E0   ; Colosseum door 0 --> Halfie Climb
     dw $A978   ; Draygon door 1 --> Space Jump
     dw $A954   ; East Cactus Alley door 0 --> West Cactus Alley
+    dw $9096   ; Caterpillars door 0 --> Alpha Power Bombs
+    dw $910E   ; Below Spazer door 0 --> Bat
+    dw $A36C   ; West Tunnel door 1 --> Below Spazer
+    dw $9132   ; Spazer door 0 --> Below Spazer
+    dw $90A2   ; Caterpillars door 1 --> Beta Power Bombs
+    dw $926A   ; Red Brinstar Save door 0 --> Caterpillars
+    dw $A480   ; Red Fish door 1 --> Caterpillars
+    dw $90AE   ; Caterpillars door 2 --> Hellway
+    dw $9036   ; Red Tower door 2 --> Red Brinstar Firefleas
+    dw $90F6   ; Bat door 0 --> Red Tower
+    dw $907E   ; Hellway door 0 --> Red Tower
+    dw $904E   ; Red Tower door 4 --> Sloaters Refill
+    dw $905A   ; Red Brinstar Firefleas door 0 --> X-Ray Scope
 
 ; List of vanilla right doors
 ; NOTE: Table order must match layoutmenu.asm
@@ -1106,6 +1146,18 @@ portals_right_vanilla_table:
     dw $A840   ; Precious door 1 --> Draygon
     dw $A834   ; Precious door 0 --> Colosseum
     dw $A93C   ; West Cactus Alley door 0 --> Butterfly
+    dw $90F6   ; Bat door 0 --> Red Tower
+    dw $910E   ; Below Spazer door 0 --> Bat
+    dw $9096   ; Caterpillars door 0 --> Alpha Power Bombs
+    dw $90AE   ; Caterpillars door 2 --> Hellway
+    dw $90A2   ; Caterpillars door 1 --> Beta Power Bombs
+    dw $907E   ; Hellway door 0 --> Red Tower
+    dw $905A   ; Red Brinstar Firefleas door 0 --> X-Ray Scope
+    dw $926A   ; Red Brinstar Save door 0 --> Caterpillars
+    dw $904E   ; Red Tower door 4 --> Sloaters Refill
+    dw $9036   ; Red Tower door 2 --> Red Brinstar Firefleas
+    dw $902A   ; Red Tower door 1 --> Noob Bridge
+    dw $9132   ; Spazer door 0 --> Below Spazer
 
 ; NOTE: Table order must match above table with portals inverted
 portals_right_vanilla_inverted_table:
@@ -1232,7 +1284,7 @@ portals_right_vanilla_inverted_table:
     dw $8E26   ; Big Pink door 8 --> Spore Spawn Farming
     dw $8F76   ; Spore Spawn Farming door 0 --> Spore Spawn Supers
     dw $8E4A   ; Spore Spawn door 0 --> Spore Spawn Supers
-    dw $A768   ; Aqueduct Save door 0 --> Aqueduct
+    dw $A828   ; Aqueduct Save door 0 --> Aqueduct
     dw $A4C8   ; Crab Shaft door 2 --> Aqueduct
     dw $A738   ; Aqueduct door 4 --> Below Botwoon Energy Tank
     dw $A774   ; Botwoon Hallway door 1 --> Botwoon
@@ -1249,6 +1301,18 @@ portals_right_vanilla_inverted_table:
     dw $A96C   ; Draygon door 0 --> Precious
     dw $A7F8   ; Colosseum door 2 --> Precious
     dw $A75C   ; Butterfly door 1 --> West Cactus Alley
+    dw $9042   ; Red Tower door 3 --> Bat
+    dw $9102   ; Bat door 1 --> Below Spazer
+    dw $90EA   ; Alpha Power Bombs door 0 --> Caterpillars
+    dw $908A   ; Hellway door 1 --> Caterpillars
+    dw $90DE   ; Beta Power Bombs door 0 --> Caterpillars
+    dw $901E   ; Red Tower door 0 --> Hellway
+    dw $9072   ; X-Ray Scope door 0 --> Red Brinstar Firefleas
+    dw $90D2   ; Caterpillars door 6 --> Red Brinstar Save
+    dw $91FE   ; Sloaters Refill door 0 --> Red Tower
+    dw $9066   ; Red Brinstar Firefleas door 1 --> Red Tower
+    dw $8F0A   ; Noob Bridge door 1 --> Red Tower
+    dw $9126   ; Below Spazer door 2 --> Spazer
 
 ; List of vanilla up doors
 ; NOTE: Table order must match layoutmenu.asm
@@ -3177,8 +3241,8 @@ layout_asm_pants_to_pants_scrolls:
 {
     PHP
     %a8()
-    TDC : STA $7ECD27
-    INC : STA $7ECD25
+    TDC : STA $7ECD25
+    INC : STA $7ECD27
     BRA layout_asm_to_pants_scrolls
 }
 
