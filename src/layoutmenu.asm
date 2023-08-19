@@ -125,52 +125,6 @@ layout_dynamic_sourcedoor:
     dw #layout_leftright_leftdoor
     dw #layout_updown_updoor
 
-layout_areaboss_sourcedoor:
-    dw !ACTION_CHOICE_JSL_TEXT
-    dl #!ram_door_source
-    dw #$0000
-    dw #doormenu_boss_A96C    ; Bosses
-    dw #doormenu_boss_A840
-    dw #doormenu_boss_91CE
-    dw #doormenu_boss_91B6
-    dw #doormenu_boss_98CA
-    dw #doormenu_boss_A2C4
-    dw #doormenu_boss_98BE
-    dw #doormenu_boss_A2AC
-    dw #doormenu_area_8A42    ; Crateria
-    dw #doormenu_area_8C52
-    dw #doormenu_area_8C22
-    dw #doormenu_area_8E9E
-    dw #doormenu_area_8AEA
-    dw #doormenu_area_93EA    ; Croc
-    dw #doormenu_area_A708    ; East Maridia
-    dw #doormenu_area_8AA2
-    dw #doormenu_area_91E6    ; G4
-    dw #doormenu_area_8BFE    ; Green Brinstar
-    dw #doormenu_area_8E86
-    dw #doormenu_area_8F0A
-    dw #doormenu_area_913E    ; Kraid's Lair
-    dw #doormenu_area_96D2    ; Lower Norfair
-    dw #doormenu_area_9A4A
-    dw #doormenu_area_90C6    ; Red Brinstar
-    dw #doormenu_area_A384
-    dw #doormenu_area_A390
-    dw #doormenu_area_A330
-    dw #doormenu_area_8AF6
-    dw #doormenu_area_902A
-    dw #doormenu_area_922E    ; Upper Norfair
-    dw #doormenu_area_923A
-    dw #doormenu_area_93D2
-    dw #doormenu_area_967E
-    dw #doormenu_area_95FA
-    dw #doormenu_area_A510    ; West Maridia
-    dw #doormenu_area_A4C8
-    dw #doormenu_area_A39C
-    dw #doormenu_area_A480
-    dw #doormenu_area_8AAE    ; Wrecked Ship
-    dw #doormenu_area_89CA
-    dw #$0000
-
 layout_dynamic_selectdestination:
     dw !ACTION_DYNAMIC
     dl #!ram_cm_door_dynamic
@@ -196,52 +150,6 @@ layout_dynamic_destinationdoor:
     dw #layout_leftright_rightdoor
     dw #layout_updown_downdoor
 
-layout_areaboss_destinationdoor:
-    dw !ACTION_CHOICE_JSL_TEXT
-    dl #!ram_door_destination
-    dw #$0000
-    dw #doormenu_boss_A96C    ; Bosses
-    dw #doormenu_boss_A840
-    dw #doormenu_boss_91CE
-    dw #doormenu_boss_91B6
-    dw #doormenu_boss_98CA
-    dw #doormenu_boss_A2C4
-    dw #doormenu_boss_98BE
-    dw #doormenu_boss_A2AC
-    dw #doormenu_area_8A42    ; Crateria
-    dw #doormenu_area_8C52
-    dw #doormenu_area_8C22
-    dw #doormenu_area_8E9E
-    dw #doormenu_area_8AEA
-    dw #doormenu_area_93EA    ; Croc
-    dw #doormenu_area_A708    ; East Maridia
-    dw #doormenu_area_8AA2
-    dw #doormenu_area_91E6    ; G4
-    dw #doormenu_area_8BFE    ; Green Brinstar
-    dw #doormenu_area_8E86
-    dw #doormenu_area_8F0A
-    dw #doormenu_area_913E    ; Kraid's Lair
-    dw #doormenu_area_96D2    ; Lower Norfair
-    dw #doormenu_area_9A4A
-    dw #doormenu_area_90C6    ; Red Brinstar
-    dw #doormenu_area_A384
-    dw #doormenu_area_A390
-    dw #doormenu_area_A330
-    dw #doormenu_area_8AF6
-    dw #doormenu_area_902A
-    dw #doormenu_area_922E    ; Upper Norfair
-    dw #doormenu_area_923A
-    dw #doormenu_area_93D2
-    dw #doormenu_area_967E
-    dw #doormenu_area_95FA
-    dw #doormenu_area_A510    ; West Maridia
-    dw #doormenu_area_A4C8
-    dw #doormenu_area_A39C
-    dw #doormenu_area_A480
-    dw #doormenu_area_8AAE    ; Wrecked Ship
-    dw #doormenu_area_89CA
-    dw #$0000
-
 LayoutLeftDoorMenu:
     LDA #$0000 : STA !ram_cm_door_direction_index
     BRA LayoutAreaBossSourceDoorMenu
@@ -266,62 +174,6 @@ LayoutAreaBossDestinationDoorMenu:
     LDA #!ram_door_destination>>16 : STA !ram_cm_door_menu_bank
     JML action_submenu
 
-LayoutAreaBossDoorMenu:
-    dw #doormenu_boss_A96C    ; Bosses
-    dw #doormenu_boss_A840
-    dw #doormenu_boss_91CE
-    dw #doormenu_boss_91B6
-    dw #doormenu_boss_98CA
-    dw #doormenu_boss_A2C4
-    dw #doormenu_boss_98BE
-    dw #doormenu_boss_A2AC
-    dw #doormenu_area_8A42    ; Crateria
-    dw #doormenu_area_8C52
-    dw #doormenu_area_8C22
-    dw #doormenu_area_8E9E
-    dw #doormenu_area_8AEA
-    dw #doormenu_area_93EA    ; Croc
-    dw #doormenu_area_A708    ; East Maridia
-    dw #doormenu_area_8AA2
-    dw #doormenu_area_91E6    ; G4
-    dw #doormenu_area_8BFE    ; Green Brinstar
-    dw #doormenu_area_8E86
-    dw #doormenu_area_8F0A
-    dw #doormenu_areaboss_goto_page2
-    dw #$0000
-    %cm_header("SELECT DOOR")
-
-LayoutAreaBossDoorMenu2:
-    dw #doormenu_area_913E    ; Kraid's Lair
-    dw #doormenu_area_96D2    ; Lower Norfair
-    dw #doormenu_area_9A4A
-    dw #doormenu_area_90C6    ; Red Brinstar
-    dw #doormenu_area_A384
-    dw #doormenu_area_A390
-    dw #doormenu_area_A330
-    dw #doormenu_area_8AF6
-    dw #doormenu_area_902A
-    dw #doormenu_area_922E    ; Upper Norfair
-    dw #doormenu_area_923A
-    dw #doormenu_area_93D2
-    dw #doormenu_area_967E
-    dw #doormenu_area_95FA
-    dw #doormenu_area_A510    ; West Maridia
-    dw #doormenu_area_A4C8
-    dw #doormenu_area_A39C
-    dw #doormenu_area_A480
-    dw #doormenu_area_8AAE    ; Wrecked Ship
-    dw #doormenu_area_89CA
-    dw #doormenu_areaboss_goto_page1
-    dw #$0000
-    %cm_header("SELECT DOOR")
-
-doormenu_areaboss_goto_page1:
-    %cm_adjacent_submenu("GOTO PAGE ONE", #LayoutAreaBossDoorMenu)
-
-doormenu_areaboss_goto_page2:
-    %cm_adjacent_submenu("GOTO PAGE TWO", #LayoutAreaBossDoorMenu2)
-
 doormenu_select:
 {
     LDA !ram_cm_door_menu_value : STA $16
@@ -332,131 +184,275 @@ doormenu_select:
 
 
 ; -----------------
-; Boss Doors
+; Area/Boss Doors
 ; -----------------
-doormenu_boss_A96C:
+LayoutAreaBossDoorMenu:
+    dw #doormenu_areaboss_A96C  ; Bosses
+    dw #doormenu_areaboss_A840
+    dw #doormenu_areaboss_91CE
+    dw #doormenu_areaboss_91B6
+    dw #doormenu_areaboss_98CA
+    dw #doormenu_areaboss_A2C4
+    dw #doormenu_areaboss_98BE
+    dw #doormenu_areaboss_A2AC
+    dw #doormenu_areaboss_8A42  ; Crateria
+    dw #doormenu_areaboss_8C52
+    dw #doormenu_areaboss_8C22
+    dw #doormenu_areaboss_8E9E
+    dw #doormenu_areaboss_8AEA
+    dw #doormenu_areaboss_93EA  ; Croc
+    dw #doormenu_areaboss_A708  ; East Maridia
+    dw #doormenu_areaboss_8AA2
+    dw #doormenu_areaboss_91E6  ; G4
+    dw #doormenu_areaboss_8BFE  ; Green Brinstar
+    dw #doormenu_areaboss_8E86
+    dw #doormenu_areaboss_8F0A
+    dw #doormenu_areaboss_goto_page2
+    dw #$0000
+    %cm_header("SELECT DOOR")
+
+LayoutAreaBossDoorMenu2:
+    dw #doormenu_areaboss_913E  ; Kraid's Lair
+    dw #doormenu_areaboss_96D2  ; Lower Norfair
+    dw #doormenu_areaboss_9A4A
+    dw #doormenu_areaboss_90C6  ; Red Brinstar
+    dw #doormenu_areaboss_A384
+    dw #doormenu_areaboss_A390
+    dw #doormenu_areaboss_A330
+    dw #doormenu_areaboss_8AF6
+    dw #doormenu_areaboss_902A
+    dw #doormenu_areaboss_922E  ; Upper Norfair
+    dw #doormenu_areaboss_923A
+    dw #doormenu_areaboss_93D2
+    dw #doormenu_areaboss_967E
+    dw #doormenu_areaboss_95FA
+    dw #doormenu_areaboss_A510  ; West Maridia
+    dw #doormenu_areaboss_A4C8
+    dw #doormenu_areaboss_A39C
+    dw #doormenu_areaboss_A480
+    dw #doormenu_areaboss_8AAE  ; Wrecked Ship
+    dw #doormenu_areaboss_89CA
+    dw #doormenu_areaboss_goto_page1
+    dw #$0000
+    %cm_header("SELECT DOOR")
+
+doormenu_areaboss_goto_page1:
+    %cm_adjacent_submenu("GOTO PAGE ONE", #LayoutAreaBossDoorMenu)
+
+doormenu_areaboss_goto_page2:
+    %cm_adjacent_submenu("GOTO PAGE TWO", #LayoutAreaBossDoorMenu2)
+
+doormenu_areaboss_A96C:
     %cm_jsl("BOSS Draygon", #doormenu_select, #$0000)
 
-doormenu_boss_A840:
+doormenu_areaboss_A840:
     %cm_jsl("BOSS East Maridia", #doormenu_select, #$0001)
 
-doormenu_boss_91CE:
+doormenu_areaboss_91CE:
     %cm_jsl("BOSS Kraid", #doormenu_select, #$0002)
 
-doormenu_boss_91B6:
+doormenu_areaboss_91B6:
     %cm_jsl("BOSS Kraid Lair", #doormenu_select, #$0003)
 
-doormenu_boss_98CA:
+doormenu_areaboss_98CA:
     %cm_jsl("BOSS Lower Norfair", #doormenu_select, #$0004)
 
-doormenu_boss_A2C4:
+doormenu_areaboss_A2C4:
     %cm_jsl("BOSS Phantoon", #doormenu_select, #$0005)
 
-doormenu_boss_98BE:
+doormenu_areaboss_98BE:
     %cm_jsl("BOSS Ridley", #doormenu_select, #$0006)
 
-doormenu_boss_A2AC:
+doormenu_areaboss_A2AC:
     %cm_jsl("BOSS Wrecked Ship", #doormenu_select, #$0007)
 
-
-; -----------------
-; Area Doors
-; -----------------
-doormenu_area_8A42:
+doormenu_areaboss_8A42:
     %cm_jsl("CRAT Crateria Kihunters", #doormenu_select, #$0008)
 
-doormenu_area_8C52:
+doormenu_areaboss_8C52:
     %cm_jsl("CRAT Green Pirates Shaft", #doormenu_select, #$0009)
 
-doormenu_area_8C22:
+doormenu_areaboss_8C22:
     %cm_jsl("CRAT Lower Mushrooms", #doormenu_select, #$000A)
 
-doormenu_area_8E9E:
+doormenu_areaboss_8E9E:
     %cm_jsl("CRAT Meme Route", #doormenu_select, #$000B)
 
-doormenu_area_8AEA:
+doormenu_areaboss_8AEA:
     %cm_jsl("CRAT Moat", #doormenu_select, #$000C)
 
-doormenu_area_93EA:
+doormenu_areaboss_93EA:
     %cm_jsl("CROC Crocomire", #doormenu_select, #$000D)
 
-doormenu_area_A708:
+doormenu_areaboss_A708:
     %cm_jsl("EM Aqueduct", #doormenu_select, #$000E)
 
-doormenu_area_8AA2:
+doormenu_areaboss_8AA2:
     %cm_jsl("EM Forgotten Highway", #doormenu_select, #$000F)
 
-doormenu_area_91E6:
+doormenu_areaboss_91E6:
     %cm_jsl("G4 Statues Hallway", #doormenu_select, #$0010)
 
-doormenu_area_8BFE:
+doormenu_areaboss_8BFE:
     %cm_jsl("GB Green Brin Elevator", #doormenu_select, #$0011)
 
-doormenu_area_8E86:
+doormenu_areaboss_8E86:
     %cm_jsl("GB Green Hill Zone", #doormenu_select, #$0012)
 
-doormenu_area_8F0A:
+doormenu_areaboss_8F0A:
     %cm_jsl("GB Noob Bridge", #doormenu_select, #$0013)
 
-doormenu_area_913E:
+doormenu_areaboss_913E:
     %cm_jsl("KL Warehouse", #doormenu_select, #$0014)
 
-doormenu_area_96D2:
+doormenu_areaboss_96D2:
     %cm_jsl("LN Lava Dive", #doormenu_select, #$0015)
 
-doormenu_area_9A4A:
+doormenu_areaboss_9A4A:
     %cm_jsl("LN Three Musketeers", #doormenu_select, #$0016)
 
-doormenu_area_90C6:
+doormenu_areaboss_90C6:
     %cm_jsl("RB Caterpillars", #doormenu_select, #$0017)
 
-doormenu_area_A384:
+doormenu_areaboss_A384:
     %cm_jsl("RB East Tunnel (Lower)", #doormenu_select, #$0018)
 
-doormenu_area_A390:
+doormenu_areaboss_A390:
     %cm_jsl("RB East Tunnel (Upper)", #doormenu_select, #$0019)
 
-doormenu_area_A330:
+doormenu_areaboss_A330:
     %cm_jsl("RB Glass Tunnel", #doormenu_select, #$001A)
 
-doormenu_area_8AF6:
+doormenu_areaboss_8AF6:
     %cm_jsl("RB Red Brin Elevator", #doormenu_select, #$001B)
 
-doormenu_area_902A:
+doormenu_areaboss_902A:
     %cm_jsl("RB Red Tower", #doormenu_select, #$001C)
 
-doormenu_area_922E:
+doormenu_areaboss_922E:
     %cm_jsl("UN Business Center (Left)", #doormenu_select, #$001D)
 
-doormenu_area_923A:
+doormenu_areaboss_923A:
     %cm_jsl("UN Business Center (Right)", #doormenu_select, #$001E)
 
-doormenu_area_93D2:
+doormenu_areaboss_93D2:
     %cm_jsl("UN Crocomire Speedway", #doormenu_select, #$001F)
 
-doormenu_area_967E:
+doormenu_areaboss_967E:
     %cm_jsl("UN Kronic Boost", #doormenu_select, #$0020)
 
-doormenu_area_95FA:
+doormenu_areaboss_95FA:
     %cm_jsl("UN Single Chamber", #doormenu_select, #$0021)
 
-doormenu_area_A510:
+doormenu_areaboss_A510:
     %cm_jsl("WM Crab Hole", #doormenu_select, #$0022)
 
-doormenu_area_A4C8:
+doormenu_areaboss_A4C8:
     %cm_jsl("WM Crab Shaft", #doormenu_select, #$0023)
 
-doormenu_area_A39C:
+doormenu_areaboss_A39C:
     %cm_jsl("WM Main Street", #doormenu_select, #$0024)
 
-doormenu_area_A480:
+doormenu_areaboss_A480:
     %cm_jsl("WM Red Fish", #doormenu_select, #$0025)
 
-doormenu_area_8AAE:
+doormenu_areaboss_8AAE:
     %cm_jsl("WS Crab Maze", #doormenu_select, #$0026)
 
-doormenu_area_89CA:
+doormenu_areaboss_89CA:
     %cm_jsl("WS West Ocean", #doormenu_select, #$0027)
+
+layout_areaboss_sourcedoor:
+    dw !ACTION_CHOICE_JSL_TEXT
+    dl #!ram_door_source
+    dw #$0000
+    dw #doormenu_areaboss_A96C  ; Bosses
+    dw #doormenu_areaboss_A840
+    dw #doormenu_areaboss_91CE
+    dw #doormenu_areaboss_91B6
+    dw #doormenu_areaboss_98CA
+    dw #doormenu_areaboss_A2C4
+    dw #doormenu_areaboss_98BE
+    dw #doormenu_areaboss_A2AC
+    dw #doormenu_areaboss_8A42  ; Crateria
+    dw #doormenu_areaboss_8C52
+    dw #doormenu_areaboss_8C22
+    dw #doormenu_areaboss_8E9E
+    dw #doormenu_areaboss_8AEA
+    dw #doormenu_areaboss_93EA  ; Croc
+    dw #doormenu_areaboss_A708  ; East Maridia
+    dw #doormenu_areaboss_8AA2
+    dw #doormenu_areaboss_91E6  ; G4
+    dw #doormenu_areaboss_8BFE  ; Green Brinstar
+    dw #doormenu_areaboss_8E86
+    dw #doormenu_areaboss_8F0A
+    dw #doormenu_areaboss_913E  ; Kraid's Lair
+    dw #doormenu_areaboss_96D2  ; Lower Norfair
+    dw #doormenu_areaboss_9A4A
+    dw #doormenu_areaboss_90C6  ; Red Brinstar
+    dw #doormenu_areaboss_A384
+    dw #doormenu_areaboss_A390
+    dw #doormenu_areaboss_A330
+    dw #doormenu_areaboss_8AF6
+    dw #doormenu_areaboss_902A
+    dw #doormenu_areaboss_922E  ; Upper Norfair
+    dw #doormenu_areaboss_923A
+    dw #doormenu_areaboss_93D2
+    dw #doormenu_areaboss_967E
+    dw #doormenu_areaboss_95FA
+    dw #doormenu_areaboss_A510  ; West Maridia
+    dw #doormenu_areaboss_A4C8
+    dw #doormenu_areaboss_A39C
+    dw #doormenu_areaboss_A480
+    dw #doormenu_areaboss_8AAE  ; Wrecked Ship
+    dw #doormenu_areaboss_89CA
+    dw #$0000
+
+layout_areaboss_destinationdoor:
+    dw !ACTION_CHOICE_JSL_TEXT
+    dl #!ram_door_destination
+    dw #$0000
+    dw #doormenu_areaboss_A96C  ; Bosses
+    dw #doormenu_areaboss_A840
+    dw #doormenu_areaboss_91CE
+    dw #doormenu_areaboss_91B6
+    dw #doormenu_areaboss_98CA
+    dw #doormenu_areaboss_A2C4
+    dw #doormenu_areaboss_98BE
+    dw #doormenu_areaboss_A2AC
+    dw #doormenu_areaboss_8A42  ; Crateria
+    dw #doormenu_areaboss_8C52
+    dw #doormenu_areaboss_8C22
+    dw #doormenu_areaboss_8E9E
+    dw #doormenu_areaboss_8AEA
+    dw #doormenu_areaboss_93EA  ; Croc
+    dw #doormenu_areaboss_A708  ; East Maridia
+    dw #doormenu_areaboss_8AA2
+    dw #doormenu_areaboss_91E6  ; G4
+    dw #doormenu_areaboss_8BFE  ; Green Brinstar
+    dw #doormenu_areaboss_8E86
+    dw #doormenu_areaboss_8F0A
+    dw #doormenu_areaboss_913E  ; Kraid's Lair
+    dw #doormenu_areaboss_96D2  ; Lower Norfair
+    dw #doormenu_areaboss_9A4A
+    dw #doormenu_areaboss_90C6  ; Red Brinstar
+    dw #doormenu_areaboss_A384
+    dw #doormenu_areaboss_A390
+    dw #doormenu_areaboss_A330
+    dw #doormenu_areaboss_8AF6
+    dw #doormenu_areaboss_902A
+    dw #doormenu_areaboss_922E  ; Upper Norfair
+    dw #doormenu_areaboss_923A
+    dw #doormenu_areaboss_93D2
+    dw #doormenu_areaboss_967E
+    dw #doormenu_areaboss_95FA
+    dw #doormenu_areaboss_A510  ; West Maridia
+    dw #doormenu_areaboss_A4C8
+    dw #doormenu_areaboss_A39C
+    dw #doormenu_areaboss_A480
+    dw #doormenu_areaboss_8AAE  ; Wrecked Ship
+    dw #doormenu_areaboss_89CA
+    dw #$0000
 
 
 ; -----------------
@@ -1389,17 +1385,17 @@ layout_leftright_leftdoor:
     dw !ACTION_CHOICE_JSL_TEXT
     dl #!ram_door_source
     dw #$0000
-    dw #doormenu_left_8FA6    ; Blue Brinstar
+    dw #doormenu_left_8FA6      ; Blue Brinstar
     dw #doormenu_left_8FFA
     dw #doormenu_left_8FE2
     dw #doormenu_left_8ECE
     dw #doormenu_left_8EAA
-    dw #doormenu_left_ABAC    ; Ceres
+    dw #doormenu_left_ABAC      ; Ceres
     dw #doormenu_left_AB4C
     dw #doormenu_left_AB94
     dw #doormenu_left_AB64
     dw #doormenu_left_AB7C
-    dw #doormenu_left_9516    ; Croc's Lair
+    dw #doormenu_left_9516      ; Croc's Lair
     dw #doormenu_left_9522
     dw #doormenu_left_950A
     dw #doormenu_left_94F2
@@ -1408,7 +1404,7 @@ layout_leftright_leftdoor:
     dw #doormenu_left_9432
     dw #doormenu_left_946E
     dw #doormenu_left_9492
-    dw #doormenu_left_8C8E    ; Crateria
+    dw #doormenu_left_8C8E      ; Crateria
     dw #doormenu_left_8C9A
     dw #doormenu_left_8A1E
     dw #doormenu_left_8B62
@@ -1443,7 +1439,7 @@ layout_leftright_leftdoor:
     dw #doormenu_left_8A06
     dw #doormenu_left_89FA
     dw #doormenu_left_89EE
-    dw #doormenu_left_8F16    ; Green Brinstar
+    dw #doormenu_left_8F16      ; Green Brinstar
     dw #doormenu_left_8D8A
     dw #doormenu_left_8D72
     dw #doormenu_left_8D96
@@ -1461,7 +1457,7 @@ layout_leftright_leftdoor:
     dw #doormenu_left_9006
     dw #doormenu_left_8F0A
     dw #doormenu_left_8E4A
-    dw #doormenu_left_A690    ; Green Maridia
+    dw #doormenu_left_A690      ; Green Maridia
     dw #doormenu_left_A66C
     dw #doormenu_left_A798
     dw #doormenu_left_A7BC
@@ -1469,7 +1465,7 @@ layout_leftright_leftdoor:
     dw #doormenu_left_A8D0
     dw #doormenu_left_A648
     dw #doormenu_left_A534
-    dw #doormenu_left_919E    ; Kraid's Lair
+    dw #doormenu_left_919E      ; Kraid's Lair
     dw #doormenu_left_917A
     dw #doormenu_left_9186
     dw #doormenu_left_91DA
@@ -1477,7 +1473,7 @@ layout_leftright_leftdoor:
     dw #doormenu_left_91C2
     dw #doormenu_left_9162
     dw #doormenu_left_923A
-    dw #doormenu_left_983A    ; Lower Norfair
+    dw #doormenu_left_983A      ; Lower Norfair
     dw #doormenu_left_9846
     dw #doormenu_left_99A2
     dw #doormenu_left_989A
@@ -1500,7 +1496,7 @@ layout_leftright_leftdoor:
     dw #doormenu_left_99BA
     dw #doormenu_left_9A56
     dw #doormenu_left_997E
-    dw #doormenu_left_8DEA    ; Pink Brinstar
+    dw #doormenu_left_8DEA      ; Pink Brinstar
     dw #doormenu_left_8E26
     dw #doormenu_left_8E1A
     dw #doormenu_left_8DC6
@@ -1512,7 +1508,7 @@ layout_leftright_leftdoor:
     dw #doormenu_left_8E62
     dw #doormenu_left_8F76
     dw #doormenu_left_8F8E
-    dw #doormenu_left_A738    ; Pink Maridia
+    dw #doormenu_left_A738      ; Pink Maridia
     dw #doormenu_left_A828
     dw #doormenu_left_A69C
     dw #doormenu_left_A918
@@ -1528,7 +1524,7 @@ layout_leftright_leftdoor:
     dw #doormenu_left_A8E8
     dw #doormenu_left_A924
     dw #doormenu_left_A948
-    dw #doormenu_left_90EA    ; Red Brinstar
+    dw #doormenu_left_90EA      ; Red Brinstar
     dw #doormenu_left_9102
     dw #doormenu_left_911A
     dw #doormenu_left_9126
@@ -2285,18 +2281,18 @@ layout_leftright_rightdoor:
     dw !ACTION_CHOICE_JSL_TEXT
     dl #!ram_door_destination
     dw #$0000
-    dw #doormenu_right_8FEE   ; Blue Brinstar
+    dw #doormenu_right_8FEE     ; Blue Brinstar
     dw #doormenu_right_8EDA
     dw #doormenu_right_8EC2
     dw #doormenu_right_8EE6
     dw #doormenu_right_8EF2
     dw #doormenu_right_8E9E
-    dw #doormenu_right_ABA0   ; Ceres
+    dw #doormenu_right_ABA0     ; Ceres
     dw #doormenu_right_ABB8
     dw #doormenu_right_AB88
     dw #doormenu_right_AB58
     dw #doormenu_right_AB70
-    dw #doormenu_right_94AA   ; Croc's Lair
+    dw #doormenu_right_94AA     ; Croc's Lair
     dw #doormenu_right_93DE
     dw #doormenu_right_94FE
     dw #doormenu_right_94E6
@@ -2305,7 +2301,7 @@ layout_leftright_rightdoor:
     dw #doormenu_right_94DA
     dw #doormenu_right_9462
     dw #doormenu_right_9486
-    dw #doormenu_right_8C82   ; Crateria
+    dw #doormenu_right_8C82     ; Crateria
     dw #doormenu_right_8BAA
     dw #doormenu_right_8A12
     dw #doormenu_right_8B6E
@@ -2337,7 +2333,7 @@ layout_leftright_rightdoor:
     dw #doormenu_right_8BE6
     dw #doormenu_right_8B26
     dw #doormenu_right_89CA
-    dw #doormenu_right_8F22   ; Green Brinstar
+    dw #doormenu_right_8F22     ; Green Brinstar
     dw #doormenu_right_8D7E
     dw #doormenu_right_8D36
     dw #doormenu_right_8D66
@@ -2353,7 +2349,7 @@ layout_leftright_rightdoor:
     dw #doormenu_right_8CB2
     dw #doormenu_right_8EFE
     dw #doormenu_right_8E32
-    dw #doormenu_right_A684   ; Green Maridia
+    dw #doormenu_right_A684     ; Green Maridia
     dw #doormenu_right_A660
     dw #doormenu_right_A780
     dw #doormenu_right_A7B0
@@ -2363,7 +2359,7 @@ layout_leftright_rightdoor:
     dw #doormenu_right_A63C
     dw #doormenu_right_A654
     dw #doormenu_right_A528
-    dw #doormenu_right_9192   ; Kraid's Lair
+    dw #doormenu_right_9192     ; Kraid's Lair
     dw #doormenu_right_91CE
     dw #doormenu_right_91AA
     dw #doormenu_right_920A
@@ -2372,7 +2368,7 @@ layout_leftright_rightdoor:
     dw #doormenu_right_925E
     dw #doormenu_right_914A
     dw #doormenu_right_913E
-    dw #doormenu_right_9996   ; Lower Norfair
+    dw #doormenu_right_9996     ; Lower Norfair
     dw #doormenu_right_988E
     dw #doormenu_right_9AAA
     dw #doormenu_right_9A92
@@ -2396,7 +2392,7 @@ layout_leftright_rightdoor:
     dw #doormenu_right_9A1A
     dw #doormenu_right_998A
     dw #doormenu_right_9972
-    dw #doormenu_right_8E0E   ; Pink Brinstar
+    dw #doormenu_right_8E0E     ; Pink Brinstar
     dw #doormenu_right_8DDE
     dw #doormenu_right_8E02
     dw #doormenu_right_8DD2
@@ -2408,7 +2404,7 @@ layout_leftright_rightdoor:
     dw #doormenu_right_8F82
     dw #doormenu_right_8D1E
     dw #doormenu_right_8D2A
-    dw #doormenu_right_A744   ; Pink Maridia
+    dw #doormenu_right_A744     ; Pink Maridia
     dw #doormenu_right_A708
     dw #doormenu_right_A7D4
     dw #doormenu_right_A90C    
@@ -2425,7 +2421,7 @@ layout_leftright_rightdoor:
     dw #doormenu_right_A840
     dw #doormenu_right_A834
     dw #doormenu_right_A93C
-    dw #doormenu_right_90F6   ; Red Brinstar
+    dw #doormenu_right_90F6     ; Red Brinstar
     dw #doormenu_right_910E
     dw #doormenu_right_9096
     dw #doormenu_right_90AE
@@ -2575,17 +2571,17 @@ layout_updown_updoor:
     dw !ACTION_CHOICE_JSL_TEXT
     dl #!ram_door_source
     dw #$0000
-    dw #doormenu_up_944A      ; Croc's Lair
+    dw #doormenu_up_944A        ; Croc's Lair
     dw #doormenu_up_949E
-    dw #doormenu_up_8A42      ; Crateria
+    dw #doormenu_up_8A42        ; Crateria
     dw #doormenu_up_8ABA
     dw #doormenu_up_8A8A
     dw #doormenu_up_898E
-    dw #doormenu_up_8E56      ; Green Brinstar
-    dw #doormenu_up_916E      ; Kraid's Lair
-    dw #doormenu_up_99EA      ; Lower Norfair
+    dw #doormenu_up_8E56        ; Green Brinstar
+    dw #doormenu_up_916E        ; Kraid's Lair
+    dw #doormenu_up_99EA        ; Lower Norfair
     dw #doormenu_up_99C6
-    dw #doormenu_up_A714      ; Pink Maridia
+    dw #doormenu_up_A714        ; Pink Maridia
     dw #doormenu_up_A720
     dw #doormenu_up_A600
     dw #doormenu_up_A768
@@ -2748,21 +2744,21 @@ layout_updown_downdoor:
     dw !ACTION_CHOICE_JSL_TEXT
     dl #!ram_door_destination
     dw #$0000
-    dw #doormenu_down_93EA    ; Croc's Lair
+    dw #doormenu_down_93EA      ; Croc's Lair
     dw #doormenu_down_94CE
     dw #doormenu_down_947A
-    dw #doormenu_down_8B3E    ; Crateria
+    dw #doormenu_down_8B3E      ; Crateria
     dw #doormenu_down_8A96
     dw #doormenu_down_8A4E
     dw #doormenu_down_8AF6
-    dw #doormenu_down_8E3E    ; Green Brinstar
-    dw #doormenu_down_0008    ; Green Maridia
+    dw #doormenu_down_8E3E      ; Green Brinstar
+    dw #doormenu_down_0008      ; Green Maridia
     dw #doormenu_down_A678
     dw #doormenu_down_000A
-    dw #doormenu_down_9156    ; Kraid's Lair
-    dw #doormenu_down_99DE    ; Lower Norfair
+    dw #doormenu_down_9156      ; Kraid's Lair
+    dw #doormenu_down_99DE      ; Lower Norfair
     dw #doormenu_down_9A26
-    dw #doormenu_down_A72C    ; Pink Maridia
+    dw #doormenu_down_A72C      ; Pink Maridia
     dw #doormenu_down_A60C
     dw #doormenu_down_0010
     dw #doormenu_down_0011

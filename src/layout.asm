@@ -399,7 +399,7 @@ door_custom_902A_red_tower_door1:
     dw $8000, #door_custom_asm
     dw $05CE, $0088, $0000
 
-door_custom_90C6_caterpillar_door4:
+door_custom_90C6_caterpillars_door4:
     dw $D104   ; Red Fish Room
     db $40, $04, $01, $06, $00, $00
     dw $8000, #door_custom_asm
