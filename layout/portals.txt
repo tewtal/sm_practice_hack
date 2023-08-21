@@ -1,0 +1,544 @@
+
+portals_area_boss_vanilla_table:
+LayoutAreaBossDoorMenu:
+    ; Bosses
+    A96C,   A840,   BOSS Draygon,               Draygon door 0 --> Precious
+    A840,   A96C,   BOSS East Maridia,          Precious door 1 --> Draygon
+    91CE,   91B6,   BOSS Kraid,                 Kraid door 0 --> Kraid Eye Door
+    91B6,   91CE,   BOSS Kraid Lair,            Kraid Eye Door door 1 --> Kraid
+    98CA,   98BE,   BOSS Lower Norfair,         Lower Norfair Farming door 0 --> Ridley
+    A2C4,   A2AC,   BOSS Phantoon,              Phantoon door 0 --> Basement
+    98BE,   98CA,   BOSS Ridley,                Ridley door 1 --> Lower Norfair Farming
+    A2AC,   A2C4,   BOSS Wrecked Ship,          Basement door 2 --> Phantoon
+    ; Crateria
+    8A42,   8AF6,   CRAT Crateria Kihunters,    Crateria Kihunters door 2 --> Red Brinstar Elevator
+    8C52,   91E6,   CRAT Green Pirates Shaft,   Green Pirates Shaft door 2 --> Statues Hallway
+    8C22,   8BFE,   CRAT Lower Mushrooms,       Lower Mushrooms door 1 --> Green Brinstar Elevator
+    8E9E,   8E86,   CRAT Meme Route,            Morph Ball door 0 --> Green Hill Zone
+    8AEA,   89CA,   CRAT Moat,                  Moat door 1 --> West Ocean
+    ; Croc
+    93EA,   93D2,   CROC Crocomire,             Crocomire door 1 --> Crocomire Speedway
+    ; East Maridia
+    A708,   A4C8,   EM Aqueduct,                Aqueduct door 0 --> Crab Shaft
+    8AA2,   8AAE,   EM Forgotten Highway,       Forgotten Highway Elbow door 0 --> Crab Maze
+    ; G4
+    91E6,   8C52,   G4 Statues Hallway,         Statues Hallway door 0 --> Green Pirates Shaft
+    ; Green Brinstar
+    8BFE,   8C22,   GB Green Brin Elevator,     Green Brinstar Elevator door 0 --> Lower Mushrooms
+    8E86,   8E9E,   GB Green Hill Zone,         Green Hill Zone door 1 --> Morph Ball
+    8F0A,   902A,   GB Noob Bridge,             Noob Bridge door 1 --> Red Tower
+LayoutAreaBossDoorMenu2:
+    ; Kraid's Lair
+    913E,   923A,   KL Warehouse,               Warehouse Zeela door 0 --> Warehouse Entrance
+    ; Lower Norfair
+    96D2,   967E,   LN Lava Dive,               Lava Dive door 0 --> Kronic Boost
+    9A4A,   95FA,   LN Three Musketeers,        Three Musketeers door 0 --> Single Chamber
+    ; Red Brinstar
+    90C6,   A480,   RB Caterpillars,            Caterpillars door 4 --> Red Fish
+    A384,   922E,   RB East Tunnel (Lower),     East Tunnel door 1 --> Warehouse Entrance
+    A390,   A510,   RB East Tunnel (Upper),     East Tunnel door 2 --> Crab Hole
+    A330,   A39C,   RB Glass Tunnel,            Glass Tunnel door 0 --> Main Street
+    8AF6,   8A42,   RB Red Brin Elevator,       Red Brinstar Elevator door 0 --> Crateria Kihunters
+    902A,   8F0A,   RB Red Tower,               Red Tower door 1 --> Noob Bridge
+    ; Upper Norfair
+    922E,   A384,   UN Business Center (Left),  Warehouse Entrance door 0 --> East Tunnel
+    923A,   913E,   UN Business Center (Right), Warehouse Entrance door 1 --> Warehouse Zeela
+    93D2,   93EA,   UN Crocomire Speedway,      Crocomire Speedway door 4 --> Crocomire
+    967E,   96D2,   UN Kronic Boost,            Kronic Boost door 2 --> Lava Dive
+    95FA,   9A4A,   UN Single Chamber,          Single Chamber door 4 --> Three Musketeers
+    ; West Maridia
+    A510,   A390,   WM Crab Hole,               Crab Hole door 2 --> East Tunnel
+    A4C8,   A708,   WM Crab Shaft,              Crab Shaft door 2 --> Aqueduct
+    A39C,   A330,   WM Main Street,             Main Street door 0 --> Glass Tunnel
+    A480,   90C6,   WM Red Fish,                Red Fish door 1 --> Caterpillars
+    ; Wrecked Ship
+    8AAE,   8AA2,   WS Crab Maze,               Crab Maze door 1 --> Forgotten Highway Elbow
+    89CA,   8AEA,   WS West Ocean,              West Ocean door 0 --> Moat
+
+portals_left_vanilla_table:
+LayoutBlueBrinstarLeftDoorMenu:
+    ; Blue Brinstar
+    8FA6,   8EDA,   BB Alpha Missiles,          Alpha Missiles door 0 --> Construction Zone
+    8FFA,   8FEE,   BB Billy Mays,              Billy Mays door 0 --> Boulder
+    8FE2,   8EF2,   BB Boulder,                 Boulder door 0 --> Blue Brinstar Energy Tank
+    8ECE,   8EE6,   BB Construction Zone,       Construction Zone door 1 --> Blue Brinstar Energy Tank
+    8EAA,   8EC2,   BB Morph Ball,              Morph Ball door 1 --> Construction Zone
+LayoutCeresLeftDoorMenu:
+    ; Ceres
+    ABAC,   ABB8,   CE 58 Escape,               58 Escape door 1 --> Ceres Ridley
+    AB4C,   AB58,   CE Ceres Elevator,          Ceres Elevator door 0 --> Falling Tile
+    AB94,   ABA0,   CE Dead Scientist,          Dead Scientist door 1 --> 58 Escape
+    AB64,   AB70,   CE Falling Tile,            Falling Tile door 1 --> Magnet Stairs
+    AB7C,   AB88,   CE Magnet Stairs,           Magnet Stairs door 1 --> Dead Scientist
+LayoutCrocLairLeftDoorMenu:
+    ; Croc's Lair
+    9516,   94DA,   CL Grapple Beam (Lower),    Grapple Beam door 0 --> Post Crocomire Jump
+    9522,   94FE,   CL Grapple Beam (Upper),    Grapple Beam door 1 --> Grapple Tutorial 1
+    950A,   94E6,   CL Grapple Tutorial 1,      Grapple Tutorial 1 door 1 --> Grapple Tutorial 2
+    94F2,   94B6,   CL Grapple Tutorial 2,      Grapple Tutorial 2 door 1 --> Grapple Tutorial 3
+    94C2,   9486,   CL Grapple Tutorial 3,      Grapple Tutorial 3 door 1 --> Post Crocomire Shaft
+    9456,   9462,   CL Post Croc Farm (Lower),  Post Crocomire Farming door 3 --> Post Crocomire Save
+    9432,   93DE,   CL Post Croc Farm (Upper),  Post Crocomire Farming door 0 --> Crocomire
+    946E,   943E,   CL Post Croc Power Bombs,   Post Crocomire Power Bombs door 0 --> Post Crocomire Farming
+    9492,   94AA,   CL Post Croc Shaft,         Post Crocomire Shaft door 2 --> Cosine Missiles
+LayoutCrateriaLeftDoorMenu:
+    ; Crateria
+    8C8E,   89A6,   CR 230 Bombway,             230 Bombway door 1 --> Parlor
+    8C9A,   8C82,   CR 230 Missiles,            230 Missiles door 0 --> 230 Bombway
+    8A1E,   8B26,   CR Bowling Alley Path,      Bowling Alley Path door 1 --> West Ocean Geemer
+    8B62,   8B7A,   CR Climb (Lower),           Climb door 3 --> Pit
+    8B56,   8C76,   CR Climb (Middle),          Climb door 2 --> Climb Supers
+    8B4A,   8C6A,   CR Climb (Upper),           Climb door 1 --> Climb Supers
+    8A36,   8ADE,   CR Crateria Kihunters,      Crateria Kihunters door 1 --> Moat
+    89BE,   899A,   CR Crateria Save,           Crateria Save door 0 --> Parlor
+    8AD2,   8A2A,   CR Crateria Tube,           Crateria Tube door 1 --> Crateria Kihunters
+    8A72,   8A7E,   CR East Ocean,              East Ocean door 1 --> Forgotten Highway Kago
+    8BC2,   8BAA,   CR Flyway,                  Flyway door 1 --> Bomb Torizo
+    8AA2,   8AAE,   CR Forgotten Highway Elbow, Forgotten Highway Elbow door 0 --> Crab Maze
+    8B0E,   8952,   CR Gauntlet Energy Tank,    Gauntlet Energy Tank door 0 --> Gauntlet Entrance
+    8946,   892E,   CR Gauntlet Entrance,       Gauntlet Entrance door 0 --> Landing Site
+    8BFE,   8C22,   CR Green Brin Elevator,     Green Brinstar Elevator door 0 --> Lower Mushrooms
+    8C52,   91E6,   CR Green Pirates (Lower),   Green Pirates Shaft door 2 --> Statues Hallway
+    8C3A,   8BE6,   CR Green Pirates (Middle),  Green Pirates Shaft door 0 --> Terminator
+    8C5E,   8B1A,   CR Green Pirates (Upper),   Green Pirates Shaft door 3 --> Gauntlet Energy Tank
+LayoutCrateriaLeftDoorMenu2:
+    8922,   8AC6,   CR Landing Site (Lower),    Landing Site door 1 --> Crateria Tube
+    893A,   89B2,   CR Landing Site (Upper),    Landing Site door 3 --> Crateria Power Bombs
+    8C16,   8C46,   CR Lower Mushrooms,         Lower Mushrooms door 0 --> Green Pirates Shaft
+    8AEA,   89CA,   CR Moat,                    Moat door 1 --> West Ocean
+    8982,   8BB6,   CR Parlor (To Bombs),       Parlor door 3 --> Flyway
+    8976,   8BCE,   CR Parlor (To Map),         Parlor door 2 --> Pre-Map Flyway
+    896A,   8916,   CR Parlor (To Ship),        Parlor door 1 --> Landing Site
+    8B86,   8B92,   CR Pit,                     Pit door 1 --> Morph Elevator
+    8BDA,   8C2E,   CR Pre-Map Flyway,          Pre-Map Flyway door 1 --> Crateria Map Station
+    91F2,   9216,   CR Statues Hallway,         Statues Hallway door 1 --> Statues
+    8BF2,   895E,   CR Terminator,              Terminator door 1 --> Parlor
+    89E2,   8A12,   CR West Ocean (Cave),       West Ocean door 2 --> Bowling Alley Path
+    8B32,   A198,   CR West Ocean (Geemer),     West Ocean Geemer door 1 --> Bowling Alley
+    89D6,   A1B0,   CR West Ocean (Lower),      West Ocean door 1 --> Wrecked Ship Entrance
+    8A06,   A300,   CR West Ocean (Mid-Lower),  West Ocean door 5 --> Gravity Suit
+    89FA,   A18C,   CR West Ocean (Mid-Upper),  West Ocean door 4 --> Bowling Alley
+    89EE,   A1E0,   CR West Ocean (Upper),      West Ocean door 3 --> Attic
+LayoutGreenBrinstarLeftDoorMenu:
+    ; Green Brinstar
+    8F16,   8CBE,   GB Brinstar Beetoms,        Green Brinstar Beetoms door 0 --> Green Brinstar Main Shaft
+    8D8A,   8CCA,   GB Brinstar Firefleas,      Green Brinstar Firefleas door 1 --> Green Brinstar Main Shaft
+    8D72,   8D36,   GB Brinstar Map,            Brinstar Map door 0 --> Brinstar Pre-Map
+    8D96,   8D7E,   GB Brinstar Missile Refill, Brinstar Missile Refill door 0 --> Green Brinstar Firefleas
+    8D42,   8CB2,   GB Brinstar Pre-Map,        Brinstar Pre-Map door 1 --> Green Brinstar Main Shaft
+    8D5A,   8D66,   GB Early Supers,            Early Supers door 1 --> Brinstar Reserve Tank
+    8F46,   8CFA,   GB Etecoons E-Tank (Lower), Etecoons Energy Tank door 2 --> Green Brinstar Main Shaft
+    8F2E,   8F22,   GB Etecoons E-Tank (Upper), Etecoons Energy Tank door 0 --> Green Brinstar Beetoms
+    9012,   8F52,   GB Etecoons Save,           Etecoons Save door 0 --> Etecoons Energy Tank
+    8F5E,   8F3A,   GB Etecoons Supers,         Etecoons Supers door 0 --> Etecoons Energy Tank
+    8E92,   8EFE,   GB Green Hill Zone (Lower), Green Hill Zone door 2 --> Noob Bridge
+    8E86,   8E9E,   GB Green Hill Zone (Upper), Green Hill Zone door 1 --> Morph Ball
+    8CE2,   8DA2,   GB Main Shaft (Middle),     Green Brinstar Main Shaft door 5 --> Dachora
+    8CEE,   8D06,   GB Main Shaft (Self),       Green Brinstar Main Shaft door 6 --> Green Brinstar Main Shaft
+    8CD6,   8D4E,   GB Main Shaft (Upper),      Green Brinstar Main Shaft door 4 --> Early Supers
+    9006,   8D12,   GB Main Shaft Save,         Green Brinstar Main Shaft Save door 0 --> Green Brinstar Main Shaft
+    8F0A,   902A,   GB Noob Bridge,             Noob Bridge door 1 --> Red Tower
+    8E4A,   8D2A,   GB Spore Spawn,             Spore Spawn door 0 --> Spore Spawn Supers
+LayoutGreenMaridiaLeftDoorMenu:
+    ; Green Maridia
+    A690,   A780,   GM East Sand Hall,          East Sand Hall door 1 --> Pants
+    A66C,   A684,   GM Oasis,                   Oasis door 1 --> East Sand Hall
+    A798,   A804,   GM Pants,                   Pants door 2 --> Shaktool
+    A7BC,   A8C4,   GM Pants (East),            East Pants door 1 --> Shaktool
+    A78C,   A7B0,   GM Pants (Self),            Pants door 1 --> East Pants
+    A8D0,   A7C8,   GM Shaktool,                Shaktool door 1 --> Spring Ball
+    A648,   A660,   GM West Sand Hall,          West Sand Hall door 1 --> Oasis
+    A534,   A63C,   GM West Sand Hall Tunnel,   West Sand Hall Tunnel door 1 --> West Sand Hall
+LayoutKraidLairLeftDoorMenu:
+    ; Kraid's Lair
+    919E,   91AA,   KL Baby Kraid,              Baby Kraid door 1 --> Kraid Eye Door
+    917A,   9192,   KL Kihunters (Lower),       Warehouse Kihunters door 1 --> Baby Kraid
+    9186,   925E,   KL Kihunters (Upper),       Warehouse Kihunters door 2 --> Warehouse Save
+    91DA,   9252,   KL Kraid,                   Kraid door 1 --> Varia Suit
+    91B6,   91CE,   KL Kraid Eye Door (Lower),  Kraid Eye Door door 1 --> Kraid
+    91C2,   920A,   KL Kraid Eye Door (Upper),  Kraid Eye Door door 2 --> Kraid Refill
+    9162,   914A,   KL Warehouse Energy Tank,   Warehouse Energy Tank door 0 --> Warehouse Zeela
+    923A,   913E,   KL Warehouse Entrance,      Warehouse Entrance door 1 --> Warehouse Zeela
+LayoutLowerNorfairLeftDoorMenu:
+    ; Lower Norfair
+    983A,   9876,   LN Acid Statue (Lower),     Acid Statue door 0 --> Golden Torizo
+    9846,   9852,   LN Acid Statue (Upper),     Acid Statue door 1 --> Main Hall
+    99A2,   99F6,   LN Amphitheatre,            Amphitheatre door 1 --> Red Kihunter Shaft
+    989A,   9906,   LN Fast Rippers,            Fast Rippers door 1 --> Fast Pillars Setup
+    9A9E,   99D2,   LN Firefleas,               Lower Norfair Firefleas door 1 --> Jail Power Bombs
+    9882,   9A86,   LN Golden Torizo,           Golden Torizo door 1 --> Screw Attack
+    9A0E,   9AB6,   LN Kihunter Shaft (Lower),  Red Kihunter Shaft door 3 --> Red Kihunter Save
+    9A02,   9AAA,   LN Kihunter Shaft (Upper),  Red Kihunter Shaft door 2 --> Lower Norfair Firefleas
+    985E,   98E2,   LN Main Hall,               Main Hall door 1 --> Fast Pillars Setup
+    9A3E,   9A1A,   LN Metal Pirates,           Metal Pirates door 1 --> Wasteland
+    9936,   9972,   LN Mickey Mouse,            Mickey Mouse door 1 --> Worst Room In The Game
+LayoutLowerNorfairLeftDoorMenu2:
+    994E,   998A,   LN Pillars,                 Pillars door 1 --> Worst Room In The Game
+    9912,   9942,   LN Pillars Setup (Lower),   Fast Pillars Setup door 4 --> Pillars
+    98EE,   992A,   LN Pillars Setup (Upper),   Fast Pillars Setup door 1 --> Mickey Mouse
+    9966,   9A32,   LN Plowerhouse,             Plowerhouse door 1 --> Metal Pirates
+    98BE,   98CA,   LN Ridley,                  Ridley door 1 --> Lower Norfair Farming
+    98D6,   995A,   LN Ridley Farming,          Lower Norfair Farming door 1 --> Plowerhouse
+    9A62,   98B2,   LN Ridley Tank,             Ridley Tank door 0 --> Ridley
+    9A7A,   98A6,   LN Screw Attack (Lower),    Screw Attack door 1 --> Golden Torizo Recharge
+    9A6E,   988E,   LN Screw Attack (Upper),    Screw Attack door 0 --> Fast Rippers
+    99BA,   9A92,   LN Spring Ball Maze,        Spring Ball Maze door 1 --> Lower Norfair Firefleas
+    9A56,   99AE,   LN Three Musketeers,        Three Musketeers door 1 --> Spring Ball Maze
+    997E,   9996,   LN Worst Room,              Worst Room In The Game door 1 --> Amphitheatre
+LayoutPinkBrinstarLeftDoorMenu:
+    ; Pink Brinstar
+    8DEA,   8E7A,   PB Big Pink (Lower),        Big Pink door 3 --> Green Hill Zone
+    8E26,   8F82,   PB Big Pink (Mid-Lower),    Big Pink door 8 --> Spore Spawn Farming
+    8E1A,   8FB2,   PB Big Pink (Mid-Upper),    Big Pink door 7 --> Pink Brinstar Hoppers
+    8DC6,   8E32,   PB Big Pink (Upper),        Big Pink door 0 --> Spore Spawn Kihunters
+    8FD6,   8DF6,   PB Big Pink Save,           Big Pink Save door 0 --> Big Pink
+    8DAE,   8DD2,   PB Dachora,                 Dachora door 1 --> Big Pink
+    8F6A,   8DBA,   PB Dachora Recharge,        Dachora Recharge door 0 --> Dachora
+    8FBE,   8FCA,   PB Hoppers,                 Pink Brinstar Hoppers door 1 --> Hoppers Energy Tank
+    8E6E,   8DDE,   PB Power Bombs (Lower),     Pink Brinstar Power Bombs door 1 --> Big Pink
+    8E62,   8E02,   PB Power Bombs (Upper),     Pink Brinstar Power Bombs door 0 --> Big Pink
+    8F76,   8D1E,   PB Spore Spawn Farming,     Spore Spawn Farming door 0 --> Spore Spawn Supers
+    8F8E,   8E0E,   PB Waterway Energy Tank,    Waterway Energy Tank door 0 --> Big Pink
+LayoutPinkMaridiaLeftDoorMenu:
+    ; Pink Maridia
+    A738,   A7D4,   PM Aqueduct,                Aqueduct door 4 --> Below Botwoon Energy Tank
+    A828,   A744,   PM Aqueduct Save,           Aqueduct Save door 0 --> Aqueduct
+    A69C,   A654,   PM Below Botwoon (Area),    Below Botwoon Energy Tank door 1 --> West Sand Hall
+    A918,   A84C,   PM Botwoon,                 Botwoon door 1 --> Botwoon Energy Tank
+    A774,   A90C,   PM Botwoon Hallway,         Botwoon Hallway door 1 --> Botwoon
+    A870,   A8DC,   PM Botwoon Tank,            Botwoon Energy Tank door 3 --> Halfie Climb
+    A7F8,   A834,   PM Colosseum (Lower),       Colosseum door 2 --> Precious
+    A7EC,   A888,   PM Colosseum (Upper),       Colosseum door 1 --> Draygon Save
+    A4C8,   A708,   PM Crab Shaft,              Crab Shaft door 2 --> Aqueduct
+    A96C,   A840,   PM Draygon,                 Draygon door 0 --> Precious
+    A87C,   A930,   PM Draygon Save,            Draygon Save door 0 --> Maridia Health Refill
+    A960,   A900,   PM East Cactus Alley,       East Cactus Alley door 1 --> Halfie Climb
+    A8F4,   A894,   PM Halfie Climb (Lower),    Halfie Climb door 2 --> Maridia Missile Refill
+    A8E8,   A7E0,   PM Halfie Climb (Upper),    Halfie Climb door 1 --> Colosseum
+    A924,   A978,   PM Space Jump,              Space Jump door 0 --> Draygon
+    A948,   A954,   PM West Cactus Alley,       West Cactus Alley door 1 --> East Cactus Alley
+LayoutRedBrinstarLeftDoorMenu:
+    ; Red Brinstar
+    90EA,   9096,   RB Alpha Power Bombs,       Alpha Power Bombs door 0 --> Caterpillars
+    9102,   910E,   RB Bat,                     Bat door 1 --> Below Spazer
+    911A,   A36C,   RB Below Spazer (Lower),    Below Spazer door 1 --> West Tunnel
+    9126,   9132,   RB Below Spazer (Upper),    Below Spazer door 2 --> Spazer
+    90DE,   90A2,   RB Beta Power Bombs,        Beta Power Bombs door 0 --> Caterpillars
+    90D2,   926A,   RB Caterpillars (Lower),    Caterpillars door 6 --> Red Brinstar Save
+    90C6,   A480,   RB Caterpillars (Upper),    Caterpillars door 4 --> Red Fish
+    908A,   90AE,   RB Hellway,                 Hellway door 1 --> Caterpillars
+    9066,   9036,   RB Red Brinstar Firefleas,  Red Brinstar Firefleas door 1 --> Red Tower
+    9042,   90F6,   RB Red Tower (Lower),       Red Tower door 3 --> Bat
+    901E,   907E,   RB Red Tower (Upper),       Red Tower door 0 --> Hellway
+    91FE,   904E,   RB Sloaters Refill,         Sloaters Refill door 0 --> Red Tower
+    9072,   905A,   RB X-Ray Scope,             X-Ray Scope door 0 --> Red Brinstar Firefleas
+
+    ; Shadow Left Doors
+    A810,   A7A4,   GM Pants (Self to Self),    (Pants door 1 --> Pants)
+    AB34,   8B6E,   TR Tourian Escape 4,        Tourian Escape 4 door 1 --> Climb
+    96D2,   967E,   UN Lava Dive,               Lava Dive door 0 --> Kronic Boost
+    95FA,   9A4A,   UN Single Chamber,          Single Chamber door 4 --> Three Musketeers
+    A51C,       ,   WM Crab Hole (Lower),
+    A504,   A528,   WM Crab Hole (Upper),       Crab Hole door 1 --> West Sand Hall Tunnel
+    A384,   922E,   WM East Tunnel (Lower),     East Tunnel door 1 --> Warehouse Entrance
+    A390,   A510,   WM East Tunnel (Upper),     East Tunnel door 2 --> Crab Hole
+    A3E4,       ,   WM Fish Tank,
+    A354,       ,   WM Glass Tunnel (Lower),
+    A348,       ,   WM Glass Tunnel (Upper),
+    A3A8,       ,   WM Main Street (Lower),
+    A3B4,       ,   WM Main Street (Middle),
+    A3CC,       ,   WM Main Street (Tunnel),
+    A3C0,       ,   WM Main Street (Upper),
+    A468,   A4B0,   WM Mount Everest,           Mount Everest door 5 --> Crab Shaft
+    A360,       ,   WM West Tunnel,
+    A2AC,   A2C4,   WS Basement,                Basement door 2 --> Phantoon Room
+    A264,   8A66,   WS Electric Death,          Electric Death door 0 --> East Ocean
+    A75C,   A93C,   YM Butterfly,               Butterfly door 1 --> West Cactus Alley
+
+portals_right_vanilla_table:
+LayoutBlueBrinstarRightDoorMenu:
+    ; Blue Brinstar
+    8FEE,   8FFA,   BB Boulder,                 Boulder door 1 --> Billy Mays
+    8EDA,   8FA6,   BB Construction (Lower),    Construction Zone door 2 --> Alpha Missiles
+    8EC2,   8EAA,   BB Construction (Upper),    Construction Zone door 0 --> Morph Ball
+    8EE6,   8ECE,   BB Energy Tank (Lower),     Blue Brinstar Energy Tank door 0 --> Construction Zone
+    8EF2,   8FE2,   BB Energy Tank (Upper),     Blue Brinstar Energy Tank door 1 --> Boulder
+    8E9E,   8E86,   BB Morph Ball,              Morph Ball door 0 --> Green Hill Zone
+LayoutCeresRightDoorMenu:
+    ; Ceres
+    ABA0,   AB94,   CE 58 Escape,               58 Escape door 0 --> Dead Scientist
+    ABB8,   ABAC,   CE Ceres Ridley,            Ceres Ridley door 0 --> 58 Escape
+    AB88,   AB7C,   CE Dead Scientist,          Dead Scientist door 0 --> Magnet Stairs
+    AB58,   AB4C,   CE Falling Tile,            Falling Tile door 0 --> Ceres Elevator
+    AB70,   AB64,   CE Magnet Stairs,           Magnet Stairs door 0 --> Falling Tile
+LayoutCrocLairRightDoorMenu:
+    ; Croc's Lair
+    94AA,   9492,   CL Cosine Missiles,         Cosine Missiles door 0 --> Post Crocomire Shaft
+    93DE,   9432,   CL Crocomire,               Crocomire door 0 --> Post Crocomire Farming
+    94FE,   9522,   CL Grapple Tutorial 1,      Grapple Tutorial 1 door 0 --> Grapple Beam
+    94E6,   950A,   CL Grapple Tutorial 2,      Grapple Tutorial 2 door 0 --> Grapple Tutorial 1
+    94B6,   94F2,   CL Grapple Tutorial 3,      Grapple Tutorial 3 door 0 --> Grapple Tutorial 2
+    943E,   946E,   CL Post Croc Farm,          Post Crocomire Farming door 1 --> Post Crocomire Power Bombs
+    94DA,   9516,   CL Post Croc Jump,          Post Crocomire Jump door 1 --> Grapple Beam
+    9462,   9456,   CL Post Croc Save,          Post Crocomire Save door 0 --> Post Crocomire Farming
+    9486,   94C2,   CL Post Croc Shaft,         Post Crocomire Shaft door 1 --> Grapple Tutorial 3
+LayoutCrateriaRightDoorMenu:
+    ; Crateria
+    8C82,   8C9A,   CR 230 Bombway,             230 Bombway door 0 --> 230 Missiles
+    8BAA,   8BC2,   CR Bomb Torizo,             Bomb Torizo door 0 --> Flyway
+    8A12,   89E2,   CR Bowling Alley Path,      Bowling Alley Path door 0 --> West Ocean
+    8B6E,   AB34,   CR Climb,                   Climb door 4 --> Tourian Escape 4
+    8C76,   8B56,   CR Climb Supers (Lower),    Climb Supers door 1 --> Climb
+    8C6A,   8B4A,   CR Climb Supers (Upper),    Climb Supers door 0 --> Climb
+    8AAE,   8AA2,   CR Crab Maze,               Crab Maze door 1 --> Forgotten Highway Elbow
+    8A2A,   8AD2,   CR Crateria Kihunters,      Crateria Kihunters door 0 --> Crateria Tube
+    8C2E,   8BDA,   CR Crateria Map Station,    Crateria Map Station door 0 --> Pre-Map Flyway
+    89B2,   893A,   CR Crateria Power Bombs,    Crateria Power Bombs door 0 --> Landing Site
+    8AC6,   8922,   CR Crateria Tube,           Crateria Tube door 0 --> Landing Site
+    8A66,   A264,   CR East Ocean,              East Ocean door 0 --> Electric Death
+    8BB6,   8982,   CR Flyway,                  Flyway door 0 --> Parlor
+    8A7E,   8A72,   CR Forgotten Highway Kago,  Forgotten Highway Kago door 0 --> East Ocean
+    8B1A,   8C5E,   CR Gauntlet Energy Tank,    Gauntlet Energy Tank door 1 --> Green Pirates Shaft
+    8952,   8B0E,   CR Gauntlet Entrance,       Gauntlet Entrance door 1 --> Gauntlet Energy Tank
+    8C46,   8C16,   CR Green Pirates Shaft,     Green Pirates Shaft door 1 --> Lower Mushrooms
+LayoutCrateriaRightDoorMenu2:
+    8916,   896A,   CR Landing Site (Lower),    Landing Site door 0 --> Parlor
+    892E,   8946,   CR Landing Site (Upper),    Landing Site door 2 --> Gauntlet Entrance
+    8C22,   8BFE,   CR Lower Mushrooms,         Lower Mushrooms door 1 --> Green Brinstar Elevator
+    8ADE,   8A36,   CR Moat,                    Moat door 0 --> Crateria Kihunters
+    8B92,   8B86,   CR Morph Elevator,          Morph Elevator door 0 --> Pit
+    89A6,   8C8E,   CR Parlor (Lower),          Parlor door 6 --> 230 Bombway
+    899A,   89BE,   CR Parlor (Middle),         Parlor door 5 --> Crateria Save
+    895E,   8BF2,   CR Parlor (Upper),          Parlor door 0 --> Terminator
+    8B7A,   8B62,   CR Pit,                     Pit door 0 --> Climb
+    8BCE,   8976,   CR Pre-Map Flyway,          Pre-Map Flyway door door 0 --> Parlor
+    9216,   91F2,   CR Statues,                 Statues door 0 --> Statues Hallway
+    91E6,   8C52,   CR Statues Hallway,         Statues Hallway door 0 --> Green Pirates Shaft
+    8BE6,   8C3A,   CR Terminator,              Terminator door 0 --> Green Pirates Shaft
+    8B26,   8A1E,   CR West Ocean (Geemer),     West Ocean Geemer door 0 --> Bowling Alley Path
+    89CA,   8AEA,   CR West Ocean (Lower),      West Ocean door 0 --> Moat
+LayoutGreenBrinstarRightDoorMenu:
+    ; Green Brinstar
+    8F22,   8F2E,   GB Brinstar Beetoms,        Green Brinstar Beetoms door 1 --> Etecoons Energy Tank
+    8D7E,   8D96,   GB Brinstar Firefleas,      Green Brinstar Firefleas door 0 --> Brinstar Missile Refill
+    8D36,   8D72,   GB Brinstar Pre-Map,        Brinstar Pre-Map door 0 --> Brinstar Map
+    8D66,   8D5A,   GB Brinstar Reserve Tank,   Brinstar Reserve Tank door 0 --> Early Supers
+    8D4E,   8CD6,   GB Early Supers,            Early Supers door 0 --> Green Brinstar Main Shaft
+    8F52,   9012,   GB Etecoons E-Tank (Lower), Etecoons Energy Tank door 3 --> Etecoons Save
+    8F3A,   8F5E,   GB Etecoons E-Tank (Upper), Etecoons Energy Tank door 1 --> Etecoons Supers
+    8E7A,   8DEA,   GB Green Hill Zone,         Green Hill Zone door 0 --> Big Pink
+    8CFA,   8F46,   GB Main Shaft (Etecoons),   Green Brinstar Main Shaft door 7 --> Etecoons Energy Tank
+    8CBE,   8F16,   GB Main Shaft (Mid-Lower),  Green Brinstar Main Shaft door 2 --> Green Brinstar Beetoms
+    8CCA,   8D8A,   GB Main Shaft (Middle),     Green Brinstar Main Shaft door 3 --> Green Brinstar Firefleas
+    8D12,   9006,   GB Main Shaft (Mid-Upper),  Green Brinstar Main Shaft door A --> Green Brinstar Main Shaft Save
+    8D06,   8CEE,   GB Main Shaft (Self),       Green Brinstar Main Shaft door 8 --> Green Brinstar Main Shaft
+    8CB2,   8D42,   GB Main Shaft (Upper),      Green Brinstar Main Shaft door 1 --> Brinstar Pre-Map
+    8EFE,   8E92,   GB Noob Bridge,             Noob Bridge door 0 --> Green Hill Zone
+    8E32,   8DC6,   GB Spore Spawn Kihunters,   Spore Spawn Kihunters door 0 --> Big Pink
+LayoutGreenMaridiaRightDoorMenu:
+    ; Green Maridia
+    A684,   A66C,   GM East Sand Hall,          East Sand Hall door 0 --> Oasis
+    A660,   A648,   GM Oasis,                   Oasis door 0 --> West Sand Hall
+    A780,   A690,   GM Pants,                   Pants door 0 --> East Sand Hall
+    A7B0,   A78C,   GM Pants (East),            East Pants door 0 --> Pants
+    A7A4,   A810,   GM Pants (Self),            Pants door 3 --> Pants
+    A8C4,   A7BC,   GM Shaktool,                Shaktool door 0 --> East Pants
+    A7C8,   A8D0,   GM Spring Ball,             Spring Ball door 0 --> Shaktool
+    A63C,   A534,   GM West Sand Hall,          West Sand Hall door 0 --> West Sand Hall Tunnel
+    A654,   A69C,   GM West Sand Hall (Area),   West Sand Hall door 2 --> Below Botwoon Energy Tank
+    A528,   A504,   GM West Sand Hall Tunnel,   West Sand Hall Tunnel door 0 --> Crab Hole
+LayoutKraidLairRightDoorMenu:
+    ; Kraid's Lair
+    9192,   917A,   KL Baby Kraid,              Baby Kraid door 0 --> Warehouse Kihunters
+    91CE,   91B6,   KL Kraid,                   Kraid door 0 --> Kraid Eye Door
+    91AA,   919E,   KL Kraid Eye Door,          Kraid Eye Door door 0 --> Baby Kraid
+    920A,   91C2,   KL Kraid Refill,            Kraid Refill door 0 --> Kraid Eye Door
+    9252,   91DA,   KL Varia Suit,              Varia Suit door 0 --> Kraid
+    922E,   A384,   KL Warehouse Entrance,      Warehouse Entrance door 0 --> East Tunnel
+    925E,   9186,   KL Warehouse Save,          Warehouse Save door 0 --> Warehouse Kihunters
+    914A,   9162,   KL Warehouse Zeela (Lower), Warehouse Zeela door 1 --> Warehouse Energy Tank
+    913E,   923A,   KL Warehouse Zeela (Upper), Warehouse Zeela door 0 --> Warehouse Entrance
+LayoutLowerNorfairRightDoorMenu:
+    ; Lower Norfair
+    9996,   997E,   LN Amphitheatre,            Amphitheatre door 0 --> Worst Room In The Game
+    988E,   9A6E,   LN Fast Rippers,            Fast Rippers door 0 --> Screw Attack
+    9AAA,   9A02,   LN Firefleas (Lower),       Lower Norfair Firefleas door 2 --> Red Kihunter Shaft
+    9A92,   99BA,   LN Firefleas (Upper),       Lower Norfair Firefleas door 0 --> Spring Ball Maze
+    9876,   983A,   LN Golden Torizo,           Golden Torizo door 0 --> Acid Statue
+    98A6,   9A7A,   LN Golden Torizo Recharge,  Golden Torizo Recharge door 0 --> Screw Attack
+    99D2,   9A9E,   LN Jail Power Bombs,        Jail Power Bombs door 0 --> Lower Norfair Firefleas
+    9AB6,   9A0E,   LN Kihunter Save,           Red Kihunter Save door 0 --> Red Kihunter Shaft
+    99F6,   99A2,   LN Kihunter Shaft,          Red Kihunter Shaft door 1 --> Amphitheatre
+    9852,   9846,   LN Main Hall,               Main Hall door 0 --> Acid Statue
+    9A32,   9966,   LN Metal Pirates,           Metal Pirates door 0 --> Plowerhouse
+    992A,   98EE,   LN Mickey Mouse,            Mickey Mouse door 0 --> Fast Pillars Setup
+LayoutLowerNorfairRightDoorMenu2:
+    9942,   9912,   LN Pillars,                 Pillars door 0 --> Fast Pillars Setup
+    9906,   989A,   LN Pillars Setup (Lower),   Fast Pillars Setup door 3 --> Fast Rippers
+    98E2,   985E,   LN Pillars Setup (Upper),   Fast Pillars Setup door 0 --> Main Hall
+    995A,   98D6,   LN Plowerhouse,             Plowerhouse door 0 --> Lower Norfair Farming
+    98B2,   9A62,   LN Ridley,                  Ridley door 0 --> Ridley Tank
+    98CA,   98BE,   LN Ridley Farming,          Lower Norfair Farming door 0 --> Ridley
+    9A86,   9882,   LN Screw Attack,            Screw Attack door 2 --> Golden Torizo
+    99AE,   9A56,   LN Spring Ball Maze,        Spring Ball Maze door 0 --> Three Musketeers
+    9A4A,   95FA,   LN Three Musketeers,        Three Musketeers door 0 --> Single Chamber
+    9A1A,   9A3E,   LN Wasteland,               Wasteland door 0 --> Metal Pirates
+    998A,   994E,   LN Worst Room (Lower),      Worst Room In The Game door 2 --> Pillars
+    9972,   9936,   LN Worst Room (Upper),      Worst Room In The Game door 0 --> Mickey Mouse
+LayoutPinkBrinstarRightDoorMenu:
+    ; Pink Brinstar
+    8E0E,   8F8E,   PB Big Pink (Lower),        Big Pink door 6 --> Waterway Energy Tank
+    8DDE,   8E6E,   PB Big Pink (Mid-Lower),    Big Pink door 2 --> Pink Brinstar Power Bombs
+    8E02,   8E62,   PB Big Pink (Middle),       Big Pink door 5 --> Pink Brinstar Power Bombs
+    8DD2,   8DAE,   PB Big Pink (Mid-Upper),    Big Pink door 1 --> Dachora
+    8DF6,   8FD6,   PB Big Pink (Upper),        Big Pink door 4 --> Big Pink Save
+    8DBA,   8F6A,   PB Dachora (Lower),         Dachora door 2 --> Dachora Recharge
+    8DA2,   8CE2,   PB Dachora (Upper),         Dachora door 0 --> Green Brinstar Main Shaft
+    8FB2,   8E1A,   PB Hoppers,                 Pink Brinstar Hoppers door 0 --> Big Pink
+    8FCA,   8FBE,   PB Hoppers Energy Tank,     Hoppers Energy Tank door 0 --> Pink Brinstar Hoppers
+    8F82,   8E26,   PB Spore Spawn Farming,     Spore Spawn Farming door 1 --> Big Pink
+    8D1E,   8F76,   PB Spo-Spo Supers (Lower),  Spore Spawn Supers door 0 --> Spore Spawn Farming
+    8D2A,   8E4A,   PB Spo-Spo Supers (Upper),  Spore Spawn Supers door 1 --> Spore Spawn
+LayoutPinkMaridiaRightDoorMenu:
+    ; Pink Maridia
+    A744,   A828,   PM Aqueduct (Lower),        Aqueduct door 5 --> Aqueduct Save
+    A708,   A4C8,   PM Aqueduct (Upper),        Aqueduct door 0 --> Crab Shaft
+    A7D4,   A738,   PM Below Botwoon,           Below Botwoon Energy Tank door 0 --> Aqueduct
+    A90C,   A774,   PM Botwoon,                 Botwoon door 0 --> Botwoon Hallway
+    A84C,   A918,   PM Botwoon Tank,            Botwoon Energy Tank door 0 --> Botwoon
+    A7E0,   A8E8,   PM Colosseum,               Colosseum door 0 --> Halfie Climb
+    A4B0,   A468,   PM Crab Shaft,              Crab Shaft door 0 --> Mount Everest
+    A978,   A924,   PM Draygon,                 Draygon door 1 --> Space Jump
+    A888,   A7EC,   PM Draygon Save,            Draygon Save door 1 --> Colosseum
+    A954,   A948,   PM East Cactus Alley,       East Cactus Alley door 0 --> West Cactus Alley
+    A8DC,   A870,   PM Halfie Climb (Lower),    Halfie Climb door 0 --> Botwoon Energy Tank
+    A900,   A960,   PM Halfie Climb (Upper),    Halfie Climb door 3 --> East Cactus Alley
+    A930,   A87C,   PM Maridia Health Refill,   Maridia Health Refill door 0 --> Draygon Save
+    A894,   A8F4,   PM Maridia Missile Refill,  Maridia Missile Refill door 0 --> Halfie Climb
+    A840,   A96C,   PM Precious (Lower),        Precious door 1 --> Draygon
+    A834,   A7F8,   PM Precious (Upper),        Precious door 0 --> Colosseum
+    A93C,   A75C,   PM West Cactus Alley,       West Cactus Alley door 0 --> Butterfly
+LayoutRedBrinstarRightDoorMenu:
+    ; Red Brinstar
+    90F6,   9042,   RB Bat,                     Bat door 0 --> Red Tower
+    910E,   9102,   RB Below Spazer,            Below Spazer door 0 --> Bat
+    9096,   90EA,   RB Caterpillars (Lower),    Caterpillars door 0 --> Alpha Power Bombs
+    90AE,   908A,   RB Caterpillars (Middle),   Caterpillars door 2 --> Hellway
+    90A2,   90DE,   RB Caterpillars (Upper),    Caterpillars door 1 --> Beta Power Bombs
+    907E,   901E,   RB Hellway,                 Hellway door 0 --> Red Tower
+    905A,   9072,   RB Red Brinstar Firefleas,  Red Brinstar Firefleas door 0 --> X-Ray Scope
+    926A,   90D2,   RB Red Brinstar Save,       Red Brinstar Save door 0 --> Caterpillars
+    904E,   91FE,   RB Red Tower (Lower),       Red Tower door 4 --> Sloaters Refill
+    9036,   9066,   RB Red Tower (Middle),      Red Tower door 2 --> Red Brinstar Firefleas
+    902A,   8F0A,   RB Red Tower (Upper),       Red Tower door 1 --> Noob Bridge
+    9132,   9126,   RB Spazer,                  Spazer door 0 --> Below Spazer
+
+    ; Shadow Right Doors
+    A804,   A798,   GM Shaktool (Pants),        (Shaktool door 0 --> Pants)
+    967E,   96D2,   UN Kronic Boost,            Kronic Boost door 2 --> Lava Dive
+    A510,   A390,   WM Crab Hole (Lower),       Crab Hole door 2 --> East Tunnel
+    A4F8,       ,   WM Crab Hole (Upper),
+    A378,       ,   WM East Tunnel,
+    A3D8,       ,   WM Fish Tank,
+    A33C,       ,   WM Glass Tunnel,
+    A324,       ,   WM Glass Tunnel Save,
+    A480,   90C6,   WM Red Fish,                Red Fish door 1 --> Caterpillars
+    A36C,   911A,   WM West Tunnel,             West Tunnel door 1 --> Below Spazer
+    A1E0,   89EE,   WS Attic,                   Attic door 2 --> West Ocean
+    A1A4,       ,   WS Bowling Alley (Lower),
+    A198,   8B32,   WS Bowling Alley (Middle),  Bowling Alley door 1 --> West Ocean Geemer
+    A18C,   89FA,   WS Bowling Alley (Upper),   Bowling Alley door 0 --> West Ocean
+    A1B0,   89D6,   WS Entrance,                Wrecked Ship Entrance door 0 --> West Ocean
+    A300,   8A06,   WS Gravity Suit,            Gravity Suit door 0 --> West Ocean
+    A2C4,   A2AC,   WS Phantoon,                Phantoon Room door 0 --> Basement
+    A750,       ,   YM Butterfly,
+    A4D4,       ,   YM Pseudo Plasma Spark,
+
+portals_up_vanilla_table:
+LayoutCrocLairUpDoorMenu:
+    ; Croc's Lair
+    944A,   947A,   CL Post Croc Farm,          Post Crocomire Farming door 2 --> Post Crocomire Shaft
+    949E,   94CE,   CL Post Croc Shaft,         Post Crocomire Shaft door 3 --> Post Crocomire Jump
+LayoutCrateriaUpDoorMenu:
+    ; Crateria
+    8A42,   8AF6,   CR Crateria Kihunters,      Crateria Kihunters door 2 --> Red Brinstar Elevator
+    8ABA,   8A4E,   CR Forgotten Highway Elbow, Forgotten Highway Elbow door 1 --> Forgotten Highway Elevator
+    8A8A,   8A96,   CR Forgotten Highway Kago,  Forgotten Highway Kago door 1 --> Crab Maze
+    898E,   8B3E,   CR Parlor,                  Parlor door 4 --> Climb
+LayoutGreenBrinstarUpDoorMenu:
+    ; Green Brinstar
+    8E56,   8E3E,   GB Spore Spawn,             Spore Spawn door 1 --> Spore Spawn Kihunters
+LayoutKraidLairUpDoorMenu:
+    ; Kraid's Lair
+    916E,   9156,   KL Kihunters,               Warehouse Kihunters door 0 --> Warehouse Zeela
+LayoutLowerNorfairUpDoorMenu:
+    ; Lower Norfair
+    99EA,   9A26,   LN Kihunter Shaft,          Red Kihunter Shaft door 0 --> Wasteland
+    99C6,   99DE,   LN Spring Ball Maze,        Spring Ball Maze door 2 --> Jail Power Bombs
+LayoutPinkMaridiaUpDoorMenu:
+    ; Pink Maridia
+    A714,   A6D8,   PM Aqueduct (Left),         Aqueduct door 1 --> West Aqueduct Quicksand
+    A720,   A6F0,   PM Aqueduct (Right),        Aqueduct door 2 --> East Aqueduct Quicksand
+    A600,   A678,   PM Aqueduct Tube,           Aqueduct Tube door 0 --> Oasis
+    A768,   A72C,   PM Botwoon Hallway,         Botwoon Hallway door 0 --> Aqueduct
+    A8AC,   0010,   PM Botwoon Sand (Left),     Botwoon Quicksand door 0 --> Below Botwoon Energy Tank
+    A8B8,   0011,   PM Botwoon Sand (Right),    Botwoon Quicksand door 1 --> Below Botwoon Energy Tank
+    A864,   0012,   PM Botwoon Tank (Left),     Botwoon Energy Tank door 2 --> Botwoon Quicksand
+    A858,   0013,   PM Botwoon Tank (Right),    Botwoon Energy Tank door 1 --> Botwoon Quicksand
+    A6FC,   A6C0,   PM East Aqueduct Quicksand, East Aqueduct Quicksand door 1 --> East Sand Hole
+    A6CC,   0008,   PM East Sand Hole,          East Sand Hole door 1 --> East Sand Hall
+    A6E4,   A6A8,   PM West Aqueduct Quicksand, West Aqueduct Quicksand door 1 --> West Sand Hole
+    A6B4,   000A,   PM West Sand Hole,          West Sand Hole door 1 --> West Sand Hall
+
+    ; Shadow Up Doors
+    93D2,   93EA,   UN Crocomire Speedway,      Crocomire Speedway door 4 --> Crocomire
+    A39C,   A330,   WM Main Street,             Main Street door 0 --> Glass Tunnel
+    A5AC,   A60C,   YM Plasma Spark,            Plasma Spark door 1 --> Aqueduct Tube
+    A4E0,   A4BC,   YM Pseudo Plasma Spark,     Pseudo Plasma Spark door 1 --> Crab Shaft
+
+portals_down_vanilla_table:
+LayoutCrocLairDownDoorMenu:
+    ; Croc's Lair
+    93EA,   93D2,   CL Crocomire,               Crocomire door 1 --> Crocomire Speedway
+    94CE,   949E,   CL Post Croc Jump,          Post Crocomire Jump door 0 --> Post Crocomire Shaft
+    947A,   944A,   CL Post Croc Shaft,         Post Crocomire Shaft door 0 --> Post Crocomire Farming
+LayoutCrateriaDownDoorMenu:
+    ; Crateria
+    8B3E,   898E,   CR Climb,                   Climb door 0 --> Parlor
+    8A96,   8A8A,   CR Crab Maze,               Crab Maze door 0 --> Forgotten Highway Kago
+    8A4E,   8ABA,   CR Forgotten Elevator,      Forgotten Highway Elevator door 0 --> Forgotten Highway Elbow
+    8AF6,   8A42,   CR Red Brin Elevator,       Red Brinstar Elevator door 0 --> Crateria Kihunters
+LayoutGreenBrinstarDownDoorMenu:
+    ; Green Brinstar
+    8E3E,   8E56,   GB Spore Spawn Kihunters,   Spore Spawn Kihunters door 1 --> Spore Spawn
+LayoutGreenMaridiaDownDoorMenu:
+    ; Green Maridia
+    0008,   A6CC,   GM East Sand Hall,          (East Sand Hall --> East Sand Hole)
+    A678,   A600,   GM Oasis,                   Oasis door 2 --> Aqueduct Tube
+    000A,   A6B4,   GM West Sand Hall,          (West Sand Hall --> West Sand Hole)
+LayoutKraidLairDownDoorMenu:
+    ; Kraid's Lair
+    9156,   916E,   KL Warehouse Zeela,         Warehouse Zeela door 2 --> Warehouse Kihunters
+LayoutLowerNorfairDownDoorMenu:
+    ; Lower Norfair
+    99DE,   99C6,   LN Jail Power Bombs,        Jail Power Bombs door 1 --> Spring Ball Maze
+    9A26,   99EA,   LN Wasteland,               Wasteland door 1 --> Red Kihunter Shaft
+LayoutPinkMaridiaDownDoorMenu:
+    ; Pink Maridia
+    A72C,   A768,   PM Aqueduct,                Aqueduct door 3 --> Botwoon Hallway
+    A60C,   A5AC,   PM Aqueduct Tube,           Aqueduct Tube door 1 --> Plasma Spark
+    0010,   A8AC,   PM Below Botwoon (Left),    (Below Botwoon Energy Tank --> Botwoon Quicksand)
+    0011,   A8B8,   PM Below Botwoon (Right),   (Below Botwoon Energy Tank --> Botwoon Quicksand)
+    0012,   A864,   PM Botwoon Sand (Left),     (Botwoon Quicksand --> Botwoon Energy Tank)
+    0013,   A858,   PM Botwoon Sand (Right),    (Botwoon Quicksand --> Botwoon Energy Tank)
+    A4BC,   A4E0,   PM Crab Shaft,              Crab Shaft door 1 --> Pseudo Plasma Spark
+    A6F0,   A720,   PM East Aqueduct Quicksand, East Aqueduct Quicksand door 0 --> Aqueduct
+    A6C0,   A6FC,   PM East Sand Hole,          East Sand Hole door 0 --> East Aqueduct Quicksand
+    A6D8,   A714,   PM West Aqueduct Quicksand, West Aqueduct Quicksand door 0 --> Aqueduct
+    A6A8,   A6E4,   PM West Sand Hole,          West Sand Hole door 0 --> West Aqueduct Quicksand
+
+    ; Shadow Down Doors
+    A3F0,       ,   WM Fish Tank (Left),
+    A3FC,       ,   WM Fish Tank (Right),
+    A330,   A39C,   WM Glass Tunnel,            Glass Tunnel door 0 --> Main Street
+

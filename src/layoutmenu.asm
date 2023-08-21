@@ -3,9 +3,10 @@ pushpc
 org $E68000
 print pc, " layoutmenu start"
 
-; -----------------
+; -------------------------
 ; Room Layout menu
-; -----------------
+; (generated from template)
+; -------------------------
 
 LayoutMenu:
     dw #layout_magnetstairs
@@ -853,10 +854,10 @@ doormenu_left_8AEA:
     %cm_jsl("CR Moat", #doorsubmenu_select, #$0028)
 
 doormenu_left_8982:
-    %cm_jsl("CR Parlor (To Bombs)", #doorsubmenu_select, #$002A)
+    %cm_jsl("CR Parlor (To Bombs)", #doorsubmenu_select, #$0029)
 
 doormenu_left_8976:
-    %cm_jsl("CR Parlor (To Map)", #doorsubmenu_select, #$0029)
+    %cm_jsl("CR Parlor (To Map)", #doorsubmenu_select, #$002A)
 
 doormenu_left_896A:
     %cm_jsl("CR Parlor (To Ship)", #doorsubmenu_select, #$002B)
@@ -932,16 +933,16 @@ doormenu_left_8D5A:
     %cm_jsl("GB Early Supers", #doorsubmenu_select, #$003B)
 
 doormenu_left_8F46:
-    %cm_jsl("GB Etecoon E-Tank (Lower)", #doorsubmenu_select, #$003C)
+    %cm_jsl("GB Etecoons E-Tank (Lower)", #doorsubmenu_select, #$003C)
 
 doormenu_left_8F2E:
-    %cm_jsl("GB Etecoon E-Tank (Upper)", #doorsubmenu_select, #$003D)
+    %cm_jsl("GB Etecoons E-Tank (Upper)", #doorsubmenu_select, #$003D)
 
 doormenu_left_9012:
-    %cm_jsl("GB Etecoon Save", #doorsubmenu_select, #$003E)
+    %cm_jsl("GB Etecoons Save", #doorsubmenu_select, #$003E)
 
 doormenu_left_8F5E:
-    %cm_jsl("GB Etecoon Supers", #doorsubmenu_select, #$003F)
+    %cm_jsl("GB Etecoons Supers", #doorsubmenu_select, #$003F)
 
 doormenu_left_8E92:
     %cm_jsl("GB Green Hill Zone (Lower)", #doorsubmenu_select, #$0040)
@@ -1326,60 +1327,6 @@ doormenu_left_9072:
 LayoutTourianLeftDoorMenu:
     dw #$0000
     %cm_header("SELECT LEFT DOOR")
-
-doormenu_left_96D2:
-    %cm_jsl("UN Lava Dive", #doorsubmenu_select, #$0000)
-
-doormenu_left_95FA:
-    %cm_jsl("UN Single Chamber", #doorsubmenu_select, #$0000)
-
-doormenu_left_A51C:
-    %cm_jsl("WM Crab Hole (Lower)", #doorsubmenu_select, #$0000)
-
-doormenu_left_A504:
-    %cm_jsl("WM Crab Hole (Upper)", #doorsubmenu_select, #$0000)
-
-doormenu_left_A384:
-    %cm_jsl("WM East Tunnel (Lower)", #doorsubmenu_select, #$0000)
-
-doormenu_left_A390:
-    %cm_jsl("WM East Tunnel (Upper)", #doorsubmenu_select, #$0000)
-
-doormenu_left_A3E4:
-    %cm_jsl("WM Fish Tank", #doorsubmenu_select, #$0000)
-
-doormenu_left_A354:
-    %cm_jsl("WM Glass Tunnel (Lower)", #doorsubmenu_select, #$0000)
-
-doormenu_left_A348:
-    %cm_jsl("WM Glass Tunnel (Upper)", #doorsubmenu_select, #$0000)
-
-doormenu_left_A3A8:
-    %cm_jsl("WM Main Street (Lower)", #doorsubmenu_select, #$0000)
-
-doormenu_left_A3B4:
-    %cm_jsl("WM Main Street (Middle)", #doorsubmenu_select, #$0000)
-
-doormenu_left_A3CC:
-    %cm_jsl("WM Main Street (Tunnel)", #doorsubmenu_select, #$0000)
-
-doormenu_left_A3C0:
-    %cm_jsl("WM Main Street (Upper)", #doorsubmenu_select, #$0000)
-
-doormenu_left_A468:
-    %cm_jsl("WM Mount Everest", #doorsubmenu_select, #$0000)
-
-doormenu_left_A360:
-    %cm_jsl("WM West Tunnel", #doorsubmenu_select, #$0000)
-
-doormenu_left_A2AC:
-    %cm_jsl("WS Basement", #doorsubmenu_select, #$0000)
-
-doormenu_left_A264:
-    %cm_jsl("WS Electric Death", #doorsubmenu_select, #$0000)
-
-doormenu_left_A75C:
-    %cm_jsl("YM Butterfly", #doorsubmenu_select, #$0000)
 
 layout_leftright_leftdoor:
     dw !ACTION_CHOICE_JSL_TEXT
@@ -1815,10 +1762,10 @@ doormenu_right_8D4E:
     %cm_jsl("GB Early Supers", #doorsubmenu_select, #$0038)
 
 doormenu_right_8F52:
-    %cm_jsl("GB Etecoon E-Tank (Lower)", #doorsubmenu_select, #$0039)
+    %cm_jsl("GB Etecoons E-Tank (Lower)", #doorsubmenu_select, #$0039)
 
 doormenu_right_8F3A:
-    %cm_jsl("GB Etecoon E-Tank (Upper)", #doorsubmenu_select, #$003A)
+    %cm_jsl("GB Etecoons E-Tank (Upper)", #doorsubmenu_select, #$003A)
 
 doormenu_right_8E7A:
     %cm_jsl("GB Green Hill Zone", #doorsubmenu_select, #$003B)
@@ -2223,60 +2170,6 @@ LayoutTourianRightDoorMenu:
     dw #$0000
     %cm_header("SELECT RIGHT DOOR")
 
-doormenu_right_967E:
-    %cm_jsl("UN Kronic Boost", #doorsubmenu_select, #$0000)
-
-doormenu_right_A510:
-    %cm_jsl("WM Crab Hole (Lower)", #doorsubmenu_select, #$0000)
-
-doormenu_right_A4F8:
-    %cm_jsl("WM Crab Hole (Upper)", #doorsubmenu_select, #$0000)
-
-doormenu_right_A378:
-    %cm_jsl("WM East Tunnel", #doorsubmenu_select, #$0000)
-
-doormenu_right_A3D8:
-    %cm_jsl("WM Fish Tank", #doorsubmenu_select, #$0000)
-
-doormenu_right_A33C:
-    %cm_jsl("WM Glass Tunnel", #doorsubmenu_select, #$0000)
-
-doormenu_right_A324:
-    %cm_jsl("WM Glass Tunnel Save", #doorsubmenu_select, #$0000)
-
-doormenu_right_A480:
-    %cm_jsl("WM Red Fish", #doorsubmenu_select, #$0000)
-
-doormenu_right_A36C:
-    %cm_jsl("WM West Tunnel", #doorsubmenu_select, #$0000)
-
-doormenu_right_A1E0:
-    %cm_jsl("WS Attic", #doorsubmenu_select, #$0000)
-
-doormenu_right_A1A4:
-    %cm_jsl("WS Bowling Alley (Lower)", #doorsubmenu_select, #$0000)
-
-doormenu_right_A198:
-    %cm_jsl("WS Bowling Alley (Middle)", #doorsubmenu_select, #$0000)
-
-doormenu_right_A18C:
-    %cm_jsl("WS Bowling Alley (Upper)", #doorsubmenu_select, #$0000)
-
-doormenu_right_A1B0:
-    %cm_jsl("WS Entrance", #doorsubmenu_select, #$0000)
-
-doormenu_right_A300:
-    %cm_jsl("WS Gravity Suit", #doorsubmenu_select, #$0000)
-
-doormenu_right_A2C4:
-    %cm_jsl("WS Phantoon", #doorsubmenu_select, #$0000)
-
-doormenu_right_A750:
-    %cm_jsl("YM Butterfly", #doorsubmenu_select, #$0000)
-
-doormenu_right_A4D4:
-    %cm_jsl("YM Pseudo Plasma Spark", #doorsubmenu_select, #$0000)
-
 layout_leftright_rightdoor:
     dw !ACTION_CHOICE_JSL_TEXT
     dl #!ram_door_destination
@@ -2407,7 +2300,7 @@ layout_leftright_rightdoor:
     dw #doormenu_right_A744     ; Pink Maridia
     dw #doormenu_right_A708
     dw #doormenu_right_A7D4
-    dw #doormenu_right_A90C    
+    dw #doormenu_right_A90C
     dw #doormenu_right_A84C
     dw #doormenu_right_A7E0
     dw #doormenu_right_A4B0
@@ -2554,18 +2447,6 @@ doormenu_up_A6B4:
 LayoutTourianUpDoorMenu:
     dw #$0000
     %cm_header("SELECT UP DOOR")
-
-doormenu_up_93D2:
-    %cm_jsl("UN Crocomire Speedway", #doorsubmenu_select, #$0000)
-
-doormenu_up_A39C:
-    %cm_jsl("WM Main Street", #doorsubmenu_select, #$0000)
-
-doormenu_up_A5AC:
-    %cm_jsl("YM Plasma Spark", #doorsubmenu_select, #$0000)
-
-doormenu_up_A4E0:
-    %cm_jsl("YM Pseudo Plasma Spark", #doorsubmenu_select, #$0000)
 
 layout_updown_updoor:
     dw !ACTION_CHOICE_JSL_TEXT
@@ -2730,15 +2611,6 @@ doormenu_down_A6A8:
 LayoutTourianDownDoorMenu:
     dw #$0000
     %cm_header("SELECT DOWN DOOR")
-
-doormenu_down_A3F0:
-    %cm_jsl("WM Fish Tank (Left)", #doorsubmenu_select, #$0000)
-
-doormenu_down_A3FC:
-    %cm_jsl("WM Fish Tank (Right)", #doorsubmenu_select, #$0000)
-
-doormenu_down_A330:
-    %cm_jsl("WM Glass Tunnel", #doorsubmenu_select, #$0000)
 
 layout_updown_downdoor:
     dw !ACTION_CHOICE_JSL_TEXT

@@ -85,22 +85,22 @@ hijack_loading_room_CRE:
 
   .rightToLeft
     LDA !ram_door_source : ASL : TAX
-    LDA portals_left_vanilla_inverted_table,X : BNE .saveDoor
+    LDA portals_left_vanilla_inverted_table,X : BMI .saveDoor
     BRL .noChangePLX
 
   .leftToRight
     LDA !ram_door_destination : ASL : TAX
-    LDA portals_right_vanilla_inverted_table,X : BNE .saveDoor
+    LDA portals_right_vanilla_inverted_table,X : BMI .saveDoor
     BRL .noChangePLX
 
   .downToUp
     LDA !ram_door_source : ASL : TAX
-    LDA portals_up_vanilla_inverted_table,X : BNE .saveDoorUpDown
+    LDA portals_up_vanilla_inverted_table,X : BMI .saveDoorUpDown
     BRL .noChangePLX
 
   .upToDown
     LDA !ram_door_destination : ASL : TAX
-    LDA portals_down_vanilla_inverted_table,X : BNE .saveDoorUpDown
+    LDA portals_down_vanilla_inverted_table,X : BMI .saveDoorUpDown
     BRL .noChangePLX
 
   .pickAreaBossVanilla
