@@ -2958,6 +2958,7 @@ CutscenesMenu:
     dw #cutscenes_skip_game_over
     dw #$FFFF
     dw #cutscenes_fast_kraid
+    dw #cutscenes_kraid_death_camera
     dw #cutscenes_fast_phantoon
     dw #cutscenes_fast_bowling
     dw #cutscenes_fast_mb
@@ -2991,6 +2992,9 @@ cutscenes_fast_kraid:
 
 cutscenes_fast_phantoon:
     %cm_toggle_bit("Skip Phantoon Intro", !sram_cutscenes, !CUTSCENE_FAST_PHANTOON, #0)
+
+cutscenes_kraid_death_camera:
+    %cm_toggle("Unlock Kraid Death Camera", !sram_cutscenes, !CUTSCENE_KRAID_DEATH_CAMERA, #0)
 
 cutscenes_fast_bowling:
     %cm_toggle_bit("Fast Bowling", !sram_cutscenes, !CUTSCENE_FAST_BOWLING, #0)
