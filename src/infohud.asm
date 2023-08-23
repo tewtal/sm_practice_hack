@@ -360,7 +360,7 @@ ih_before_room_transition:
     PHA : PHX : PHY
 
     ; Save and reset timers
-    LDA !ram_transition_flag : CMP #$0001 : BEQ .done
+    LDA !ram_transition_flag : CMP #$0001 : BEQ .branch_done
     LDA #$0001 : STA !ram_transition_flag
     LDA #$0000 : STA !ram_room_has_set_rng
 
@@ -383,6 +383,25 @@ ih_before_room_transition:
 
     ; Update HUD
     JSL ih_update_hud_before_transition
+
+    ; Calculate door alignment time
+    LDX !DOOR_ID
+    AND #$00FF : %a8() ; Draw3 returns a16
+    LDA $830003,X : BIT #$02 : BNE .verticalDoor
+    LDA !LAYER1_Y : BRA .checkAlignment
+
+  .branch_done
+    BRA .done
+
+  .verticalDoor
+    LDA !LAYER1_X
+  .checkAlignment
+    BPL .drawDoorLag
+    EOR #$FF : INC
+  .drawDoorLag
+    PHB : PHD : PLB : PLB
+    LDX #$00C2 : JSR Draw3
+    PLB
 
     ; Restore temp variables
     PLA : STA $14
