@@ -56,26 +56,33 @@ layout_doorportal:
     db #$FF
   .routine
     LDA !ram_cm_door_dynamic : BEQ .off
-    CMP #$0001 : BEQ .areaboss
-    LDA !ram_door_portal_flags : AND !DOOR_PORTAL_EXCLUDE_MODE_IFRAMES_MASK
+    CMP #$0002 : BEQ .leftright : CMP #$0001 : BEQ .areaboss
     TDC : ORA !ram_cm_door_dynamic : STA !ram_door_portal_flags
-    LDA !ram_door_source : CMP #$0016 : BMI .checkDown
+    LDA !ram_door_source : CMP !layout_up_door_count : BMI .checkDown
     TDC : STA !ram_door_source
   .checkDown
-    LDA !ram_door_destination : CMP #$0019 : BMI .done
+    LDA !ram_door_destination : CMP !layout_down_door_count : BMI .done
     TDC : STA !ram_door_destination
   .done
     RTL
   .off
     STA !ram_door_portal_flags
     RTL
+  .leftright
+    TDC : ORA !ram_cm_door_dynamic : STA !ram_door_portal_flags
+    LDA !ram_door_source : CMP !layout_left_door_count : BMI .checkRight
+    TDC : STA !ram_door_source
+  .checkRight
+    LDA !ram_door_destination : CMP !layout_right_door_count : BMI .done
+    TDC : STA !ram_door_destination
+    RTL
   .areaboss
     LDA !ram_door_portal_flags : AND !DOOR_PORTAL_EXCLUDE_MODE_MASK
     ORA !ram_cm_door_dynamic : ORA !DOOR_PORTAL_IFRAMES_BIT : STA !ram_door_portal_flags
-    LDA !ram_door_source : CMP #$0028 : BMI .checkDest
+    LDA !ram_door_source : CMP !layout_areaboss_door_count : BMI .checkDest
     TDC : STA !ram_door_source
   .checkDest
-    LDA !ram_door_destination : CMP #$0028 : BMI .done
+    LDA !ram_door_destination : CMP !layout_areaboss_door_count : BMI .done
     TDC : STA !ram_door_destination
     RTL
 
@@ -361,10 +368,10 @@ LayoutRedBrinstarDoorMenu:
     dw #$0000
 
 LayoutTourianDoorMenu:
-    dw #LayoutTourianLeftDoorMenu
-    dw #LayoutTourianRightDoorMenu
-    dw #LayoutTourianUpDoorMenu
-    dw #LayoutTourianDownDoorMenu
+    dw #$0000
+    dw #$0000
+    dw #$0000
+    dw #$0000
 
 LayoutUpperNorfairDoorMenu:
     dw #$0000
@@ -373,10 +380,10 @@ LayoutUpperNorfairDoorMenu:
     dw #$0000
 
 LayoutWestMaridiaDoorMenu:
-    dw #$0000
-    dw #$0000
-    dw #$0000
-    dw #$0000
+    dw #LayoutWestMaridiaLeftDoorMenu
+    dw #LayoutWestMaridiaRightDoorMenu
+    dw #LayoutWestMaridiaUpDoorMenu
+    dw #LayoutWestMaridiaDownDoorMenu
 
 LayoutWreckedShipDoorMenu:
     dw #$0000
@@ -385,10 +392,10 @@ LayoutWreckedShipDoorMenu:
     dw #$0000
 
 LayoutYellowMaridiaDoorMenu:
-    dw #$0000
-    dw #$0000
-    dw #$0000
-    dw #$0000
+    dw #LayoutYellowMaridiaLeftDoorMenu
+    dw #LayoutYellowMaridiaRightDoorMenu
+    dw #LayoutYellowMaridiaUpDoorMenu
+    dw #LayoutYellowMaridiaDownDoorMenu
 
 
 ; -----------------
@@ -417,8 +424,14 @@ LayoutPinkMaridiaLeftDoorMenu:
 LayoutRedBrinstarLeftDoorMenu:
 
 LayoutTourianLeftDoorMenu:
-    dw #$0000
-    %cm_header("SELECT LEFT DOOR")
+
+LayoutUpperNorfairLeftDoorMenu:
+
+LayoutWestMaridiaLeftDoorMenu:
+
+LayoutWreckedShipLeftDoorMenu:
+
+LayoutYellowMaridiaLeftDoorMenu:
 
 layout_leftright_leftdoor:
     dw !ACTION_CHOICE_JSL_TEXT
@@ -453,8 +466,14 @@ LayoutPinkMaridiaRightDoorMenu:
 LayoutRedBrinstarRightDoorMenu:
 
 LayoutTourianRightDoorMenu:
-    dw #$0000
-    %cm_header("SELECT RIGHT DOOR")
+
+LayoutUpperNorfairRightDoorMenu:
+
+LayoutWestMaridiaRightDoorMenu:
+
+LayoutWreckedShipRightDoorMenu:
+
+LayoutYellowMaridiaRightDoorMenu:
 
 layout_leftright_rightdoor:
     dw !ACTION_CHOICE_JSL_TEXT
@@ -479,8 +498,14 @@ LayoutLowerNorfairUpDoorMenu:
 LayoutPinkMaridiaUpDoorMenu:
 
 LayoutTourianUpDoorMenu:
-    dw #$0000
-    %cm_header("SELECT UP DOOR")
+
+LayoutUpperNorfairUpDoorMenu:
+
+LayoutWestMaridiaUpDoorMenu:
+
+LayoutWreckedShipUpDoorMenu:
+
+LayoutYellowMaridiaUpDoorMenu:
 
 layout_updown_updoor:
     dw !ACTION_CHOICE_JSL_TEXT
@@ -507,8 +532,14 @@ LayoutLowerNorfairDownDoorMenu:
 LayoutPinkMaridiaDownDoorMenu:
 
 LayoutTourianDownDoorMenu:
-    dw #$0000
-    %cm_header("SELECT DOWN DOOR")
+
+LayoutUpperNorfairDownDoorMenu:
+
+LayoutWestMaridiaDownDoorMenu:
+
+LayoutWreckedShipDownDoorMenu:
+
+LayoutYellowMaridiaDownDoorMenu:
 
 layout_updown_downdoor:
     dw !ACTION_CHOICE_JSL_TEXT

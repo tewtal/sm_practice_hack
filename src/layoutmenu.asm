@@ -8,6 +8,12 @@ print pc, " layoutmenu start"
 ; (generated from template)
 ; -------------------------
 
+!layout_areaboss_door_count = #$0028
+!layout_left_door_count = #$00B1
+!layout_right_door_count = #$00AF
+!layout_up_door_count = #$001E
+!layout_down_door_count = #$001F
+
 LayoutMenu:
     dw #layout_magnetstairs
     dw #$FFFF
@@ -56,26 +62,33 @@ layout_doorportal:
     db #$FF
   .routine
     LDA !ram_cm_door_dynamic : BEQ .off
-    CMP #$0001 : BEQ .areaboss
-    LDA !ram_door_portal_flags : AND !DOOR_PORTAL_EXCLUDE_MODE_IFRAMES_MASK
+    CMP #$0002 : BEQ .leftright : CMP #$0001 : BEQ .areaboss
     TDC : ORA !ram_cm_door_dynamic : STA !ram_door_portal_flags
-    LDA !ram_door_source : CMP #$0016 : BMI .checkDown
+    LDA !ram_door_source : CMP !layout_up_door_count : BMI .checkDown
     TDC : STA !ram_door_source
   .checkDown
-    LDA !ram_door_destination : CMP #$0019 : BMI .done
+    LDA !ram_door_destination : CMP !layout_down_door_count : BMI .done
     TDC : STA !ram_door_destination
   .done
     RTL
   .off
     STA !ram_door_portal_flags
     RTL
+  .leftright
+    TDC : ORA !ram_cm_door_dynamic : STA !ram_door_portal_flags
+    LDA !ram_door_source : CMP !layout_left_door_count : BMI .checkRight
+    TDC : STA !ram_door_source
+  .checkRight
+    LDA !ram_door_destination : CMP !layout_right_door_count : BMI .done
+    TDC : STA !ram_door_destination
+    RTL
   .areaboss
     LDA !ram_door_portal_flags : AND !DOOR_PORTAL_EXCLUDE_MODE_MASK
     ORA !ram_cm_door_dynamic : ORA !DOOR_PORTAL_IFRAMES_BIT : STA !ram_door_portal_flags
-    LDA !ram_door_source : CMP #$0028 : BMI .checkDest
+    LDA !ram_door_source : CMP !layout_areaboss_door_count : BMI .checkDest
     TDC : STA !ram_door_source
   .checkDest
-    LDA !ram_door_destination : CMP #$0028 : BMI .done
+    LDA !ram_door_destination : CMP !layout_areaboss_door_count : BMI .done
     TDC : STA !ram_door_destination
     RTL
 
@@ -615,10 +628,10 @@ LayoutRedBrinstarDoorMenu:
     dw #$0000
 
 LayoutTourianDoorMenu:
-    dw #LayoutTourianLeftDoorMenu
-    dw #LayoutTourianRightDoorMenu
-    dw #LayoutTourianUpDoorMenu
-    dw #LayoutTourianDownDoorMenu
+    dw #$0000
+    dw #$0000
+    dw #$0000
+    dw #$0000
 
 LayoutUpperNorfairDoorMenu:
     dw #$0000
@@ -627,10 +640,10 @@ LayoutUpperNorfairDoorMenu:
     dw #$0000
 
 LayoutWestMaridiaDoorMenu:
-    dw #$0000
-    dw #$0000
-    dw #$0000
-    dw #$0000
+    dw #LayoutWestMaridiaLeftDoorMenu
+    dw #LayoutWestMaridiaRightDoorMenu
+    dw #LayoutWestMaridiaUpDoorMenu
+    dw #LayoutWestMaridiaDownDoorMenu
 
 LayoutWreckedShipDoorMenu:
     dw #$0000
@@ -639,10 +652,10 @@ LayoutWreckedShipDoorMenu:
     dw #$0000
 
 LayoutYellowMaridiaDoorMenu:
-    dw #$0000
-    dw #$0000
-    dw #$0000
-    dw #$0000
+    dw #LayoutYellowMaridiaLeftDoorMenu
+    dw #LayoutYellowMaridiaRightDoorMenu
+    dw #LayoutYellowMaridiaUpDoorMenu
+    dw #LayoutYellowMaridiaDownDoorMenu
 
 
 ; -----------------
@@ -1325,8 +1338,118 @@ doormenu_left_9072:
     %cm_jsl("RB X-Ray Scope", #doorsubmenu_select, #$0097)
 
 LayoutTourianLeftDoorMenu:
+
+LayoutUpperNorfairLeftDoorMenu:
+
+LayoutWestMaridiaLeftDoorMenu:
+    dw #doormenu_left_A51C
+    dw #doormenu_left_A504
+    dw #doormenu_left_A420
+    dw #doormenu_left_A384
+    dw #doormenu_left_A390
+    dw #doormenu_left_A3E4
+    dw #doormenu_left_A354
+    dw #doormenu_left_A348
+    dw #doormenu_left_A3A8
+    dw #doormenu_left_A3B4
+    dw #doormenu_left_A3CC
+    dw #doormenu_left_A3C0
+    dw #doormenu_left_A468
+    dw #doormenu_left_A360
     dw #$0000
     %cm_header("SELECT LEFT DOOR")
+
+doormenu_left_A51C:
+    %cm_jsl("WM Crab Hole (Lower)", #doorsubmenu_select, #$0098)
+
+doormenu_left_A504:
+    %cm_jsl("WM Crab Hole (Upper)", #doorsubmenu_select, #$0099)
+
+doormenu_left_A420:
+    %cm_jsl("WM Crab Tunnel", #doorsubmenu_select, #$009A)
+
+doormenu_left_A384:
+    %cm_jsl("WM East Tunnel (Lower)", #doorsubmenu_select, #$009B)
+
+doormenu_left_A390:
+    %cm_jsl("WM East Tunnel (Upper)", #doorsubmenu_select, #$009C)
+
+doormenu_left_A3E4:
+    %cm_jsl("WM Fish Tank", #doorsubmenu_select, #$009D)
+
+doormenu_left_A354:
+    %cm_jsl("WM Glass Tunnel (Lower)", #doorsubmenu_select, #$009E)
+
+doormenu_left_A348:
+    %cm_jsl("WM Glass Tunnel (Upper)", #doorsubmenu_select, #$009F)
+
+doormenu_left_A3A8:
+    %cm_jsl("WM Main Street (Lower)", #doorsubmenu_select, #$00A0)
+
+doormenu_left_A3B4:
+    %cm_jsl("WM Main Street (Middle)", #doorsubmenu_select, #$00A1)
+
+doormenu_left_A3CC:
+    %cm_jsl("WM Main Street (Tunnel)", #doorsubmenu_select, #$00A2)
+
+doormenu_left_A3C0:
+    %cm_jsl("WM Main Street (Upper)", #doorsubmenu_select, #$00A3)
+
+doormenu_left_A468:
+    %cm_jsl("WM Mount Everest", #doorsubmenu_select, #$00A4)
+
+doormenu_left_A360:
+    %cm_jsl("WM West Tunnel", #doorsubmenu_select, #$00A5)
+
+LayoutWreckedShipLeftDoorMenu:
+
+LayoutYellowMaridiaLeftDoorMenu:
+    dw #doormenu_left_A618
+    dw #doormenu_left_A75C
+    dw #doormenu_left_A5DC
+    dw #doormenu_left_A588
+    dw #doormenu_left_A4A4
+    dw #doormenu_left_A5B8
+    dw #doormenu_left_A5C4
+    dw #doormenu_left_A5A0
+    dw #doormenu_left_A54C
+    dw #doormenu_left_A570
+    dw #doormenu_left_A48C
+    dw #$0000
+    %cm_header("SELECT LEFT DOOR")
+
+doormenu_left_A618:
+    %cm_jsl("YM Bug Sand Hole", #doorsubmenu_select, #$00A6)
+
+doormenu_left_A75C:
+    %cm_jsl("YM Butterfly", #doorsubmenu_select, #$00A7)
+
+doormenu_left_A5DC:
+    %cm_jsl("YM Kassiuz", #doorsubmenu_select, #$00A8)
+
+doormenu_left_A588:
+    %cm_jsl("YM Maridia Elevator", #doorsubmenu_select, #$00A9)
+
+doormenu_left_A4A4:
+    %cm_jsl("YM Northwest Maridia Bugs", #doorsubmenu_select, #$00AA)
+
+doormenu_left_A5B8:
+    %cm_jsl("YM Plasma Spark (Lower)", #doorsubmenu_select, #$00AB)
+
+doormenu_left_A5C4:
+    %cm_jsl("YM Plasma Spark (Middle)", #doorsubmenu_select, #$00AC)
+
+doormenu_left_A5A0:
+    %cm_jsl("YM Plasma Spark (Upper)", #doorsubmenu_select, #$00AD)
+
+doormenu_left_A54C:
+    %cm_jsl("YM Plasma Tutorial", #doorsubmenu_select, #$00AE)
+
+doormenu_left_A570:
+    %cm_jsl("YM Thread The Needle", #doorsubmenu_select, #$00AF)
+
+doormenu_left_A48C:
+    %cm_jsl("YM Watering Hole", #doorsubmenu_select, #$00B0)
 
 layout_leftright_leftdoor:
     dw !ACTION_CHOICE_JSL_TEXT
@@ -1484,6 +1607,31 @@ layout_leftright_leftdoor:
     dw #doormenu_left_901E
     dw #doormenu_left_91FE
     dw #doormenu_left_9072
+    dw #doormenu_left_A51C      ; West Maridia
+    dw #doormenu_left_A504
+    dw #doormenu_left_A420
+    dw #doormenu_left_A384
+    dw #doormenu_left_A390
+    dw #doormenu_left_A3E4
+    dw #doormenu_left_A354
+    dw #doormenu_left_A348
+    dw #doormenu_left_A3A8
+    dw #doormenu_left_A3B4
+    dw #doormenu_left_A3CC
+    dw #doormenu_left_A3C0
+    dw #doormenu_left_A468
+    dw #doormenu_left_A360
+    dw #doormenu_left_A618      ; Yellow Maridia
+    dw #doormenu_left_A75C
+    dw #doormenu_left_A5DC
+    dw #doormenu_left_A588
+    dw #doormenu_left_A4A4
+    dw #doormenu_left_A5B8
+    dw #doormenu_left_A5C4
+    dw #doormenu_left_A5A0
+    dw #doormenu_left_A54C
+    dw #doormenu_left_A570
+    dw #doormenu_left_A48C
     dw #$0000
 
 
@@ -2167,8 +2315,110 @@ doormenu_right_9132:
     %cm_jsl("RB Spazer", #doorsubmenu_select, #$0097)
 
 LayoutTourianRightDoorMenu:
+
+LayoutUpperNorfairRightDoorMenu:
+
+LayoutWestMaridiaRightDoorMenu:
+    dw #doormenu_right_A510
+    dw #doormenu_right_A4F8
+    dw #doormenu_right_A414
+    dw #doormenu_right_A378
+    dw #doormenu_right_A3D8
+    dw #doormenu_right_A33C
+    dw #doormenu_right_A324
+    dw #doormenu_right_A408
+    dw #doormenu_right_A5E8
+    dw #doormenu_right_A45C
+    dw #doormenu_right_A438
+    dw #doormenu_right_A480
+    dw #doormenu_right_A36C
     dw #$0000
     %cm_header("SELECT RIGHT DOOR")
+
+doormenu_right_A510:
+    %cm_jsl("WM Crab Hole (Lower)", #doorsubmenu_select, #$0098)
+
+doormenu_right_A4F8:
+    %cm_jsl("WM Crab Hole (Upper)", #doorsubmenu_select, #$0099)
+
+doormenu_right_A414:
+    %cm_jsl("WM Crab Tunnel", #doorsubmenu_select, #$009A)
+
+doormenu_right_A378:
+    %cm_jsl("WM East Tunnel", #doorsubmenu_select, #$009B)
+
+doormenu_right_A3D8:
+    %cm_jsl("WM Fish Tank", #doorsubmenu_select, #$009C)
+
+doormenu_right_A33C:
+    %cm_jsl("WM Glass Tunnel", #doorsubmenu_select, #$009D)
+
+doormenu_right_A324:
+    %cm_jsl("WM Glass Tunnel Save", #doorsubmenu_select, #$009E)
+
+doormenu_right_A408:
+    %cm_jsl("WM Mama Turtle", #doorsubmenu_select, #$009F)
+
+doormenu_right_A5E8:
+    %cm_jsl("WM Maridia Map", #doorsubmenu_select, #$00A0)
+
+doormenu_right_A45C:
+    %cm_jsl("WM Mount Everest (Tunnel)", #doorsubmenu_select, #$00A1)
+
+doormenu_right_A438:
+    %cm_jsl("WM Mount Everest (Upper)", #doorsubmenu_select, #$00A2)
+
+doormenu_right_A480:
+    %cm_jsl("WM Red Fish", #doorsubmenu_select, #$00A3)
+
+doormenu_right_A36C:
+    %cm_jsl("WM West Tunnel", #doorsubmenu_select, #$00A4)
+
+LayoutWreckedShipRightDoorMenu:
+
+LayoutYellowMaridiaRightDoorMenu:
+    dw #doormenu_right_A630
+    dw #doormenu_right_A750
+    dw #doormenu_right_A5F4
+    dw #doormenu_right_A5D0
+    dw #doormenu_right_A57C
+    dw #doormenu_right_A498
+    dw #doormenu_right_A558
+    dw #doormenu_right_A540
+    dw #doormenu_right_A4D4
+    dw #doormenu_right_A564
+    dw #$0000
+    %cm_header("SELECT RIGHT DOOR")
+
+doormenu_right_A630:
+    %cm_jsl("YM Bug Sand Hole", #doorsubmenu_select, #$00A5)
+
+doormenu_right_A750:
+    %cm_jsl("YM Butterfly", #doorsubmenu_select, #$00A6)
+
+doormenu_right_A5F4:
+    %cm_jsl("YM Forgotten Highway Save", #doorsubmenu_select, #$00A7)
+
+doormenu_right_A5D0:
+    %cm_jsl("YM Kassiuz", #doorsubmenu_select, #$00A8)
+
+doormenu_right_A57C:
+    %cm_jsl("YM Maridia Elevator", #doorsubmenu_select, #$00A9)
+
+doormenu_right_A498:
+    %cm_jsl("YM Northwest Maridia Bugs", #doorsubmenu_select, #$00AA)
+
+doormenu_right_A558:
+    %cm_jsl("YM Plasma", #doorsubmenu_select, #$00AB)
+
+doormenu_right_A540:
+    %cm_jsl("YM Plasma Tutorial", #doorsubmenu_select, #$00AC)
+
+doormenu_right_A4D4:
+    %cm_jsl("YM Pseudo Plasma Spark", #doorsubmenu_select, #$00AD)
+
+doormenu_right_A564:
+    %cm_jsl("YM Thread The Needle", #doorsubmenu_select, #$00AE)
 
 layout_leftright_rightdoor:
     dw !ACTION_CHOICE_JSL_TEXT
@@ -2326,6 +2576,29 @@ layout_leftright_rightdoor:
     dw #doormenu_right_9036
     dw #doormenu_right_902A
     dw #doormenu_right_9132
+    dw #doormenu_right_A510     ; West Maridia
+    dw #doormenu_right_A4F8
+    dw #doormenu_right_A414
+    dw #doormenu_right_A378
+    dw #doormenu_right_A3D8
+    dw #doormenu_right_A33C
+    dw #doormenu_right_A324
+    dw #doormenu_right_A408
+    dw #doormenu_right_A5E8
+    dw #doormenu_right_A45C
+    dw #doormenu_right_A438
+    dw #doormenu_right_A480
+    dw #doormenu_right_A36C
+    dw #doormenu_right_A630     ; Yellow Maridia
+    dw #doormenu_right_A750
+    dw #doormenu_right_A5F4
+    dw #doormenu_right_A5D0
+    dw #doormenu_right_A57C
+    dw #doormenu_right_A498
+    dw #doormenu_right_A558
+    dw #doormenu_right_A540
+    dw #doormenu_right_A4D4
+    dw #doormenu_right_A564
     dw #$0000
 
 
@@ -2445,8 +2718,50 @@ doormenu_up_A6B4:
     %cm_jsl("PM West Sand Hole", #doorsubmenu_select, #$0015)
 
 LayoutTourianUpDoorMenu:
+
+LayoutUpperNorfairUpDoorMenu:
+
+LayoutWestMaridiaUpDoorMenu:
+    dw #doormenu_up_A39C
+    dw #doormenu_up_A444
+    dw #doormenu_up_A450
+    dw #doormenu_up_A474
     dw #$0000
     %cm_header("SELECT UP DOOR")
+
+doormenu_up_A39C:
+    %cm_jsl("WM Main Street", #doorsubmenu_select, #$0016)
+
+doormenu_up_A444:
+    %cm_jsl("WM Mount Everest (Left)", #doorsubmenu_select, #$0017)
+
+doormenu_up_A450:
+    %cm_jsl("WM Mount Everest (Right)", #doorsubmenu_select, #$0018)
+
+doormenu_up_A474:
+    %cm_jsl("WM Red Fish", #doorsubmenu_select, #$0019)
+
+LayoutWreckedShipUpDoorMenu:
+
+LayoutYellowMaridiaUpDoorMenu:
+    dw #doormenu_up_A624
+    dw #doormenu_up_A8A0
+    dw #doormenu_up_A5AC
+    dw #doormenu_up_A4E0
+    dw #$0000
+    %cm_header("SELECT UP DOOR")
+
+doormenu_up_A624:
+    %cm_jsl("YM Bug Sand Hole", #doorsubmenu_select, #$001A)
+
+doormenu_up_A8A0:
+    %cm_jsl("YM Plasma Beach Quicksand", #doorsubmenu_select, #$001B)
+
+doormenu_up_A5AC:
+    %cm_jsl("YM Plasma Spark", #doorsubmenu_select, #$001C)
+
+doormenu_up_A4E0:
+    %cm_jsl("YM Pseudo Plasma Spark", #doorsubmenu_select, #$001D)
 
 layout_updown_updoor:
     dw !ACTION_CHOICE_JSL_TEXT
@@ -2474,6 +2789,14 @@ layout_updown_updoor:
     dw #doormenu_up_A6CC
     dw #doormenu_up_A6E4
     dw #doormenu_up_A6B4
+    dw #doormenu_up_A39C        ; West Maridia
+    dw #doormenu_up_A444
+    dw #doormenu_up_A450
+    dw #doormenu_up_A474
+    dw #doormenu_up_A624        ; Yellow Maridia
+    dw #doormenu_up_A8A0
+    dw #doormenu_up_A5AC
+    dw #doormenu_up_A4E0
     dw #$0000
 
 
@@ -2609,8 +2932,42 @@ doormenu_down_A6A8:
     %cm_jsl("PM West Sand Hole", #doorsubmenu_select, #$0018)
 
 LayoutTourianDownDoorMenu:
+
+LayoutUpperNorfairDownDoorMenu:
+
+LayoutWestMaridiaDownDoorMenu:
+    dw #doormenu_down_A3F0
+    dw #doormenu_down_A3FC
+    dw #doormenu_down_A330
+    dw #doormenu_down_A42C
     dw #$0000
     %cm_header("SELECT DOWN DOOR")
+
+doormenu_down_A3F0:
+    %cm_jsl("WM Fish Tank (Left)", #doorsubmenu_select, #$0019)
+
+doormenu_down_A3FC:
+    %cm_jsl("WM Fish Tank (Right)", #doorsubmenu_select, #$001A)
+
+doormenu_down_A330:
+    %cm_jsl("WM Glass Tunnel", #doorsubmenu_select, #$001B)
+
+doormenu_down_A42C:
+    %cm_jsl("WM Mount Everest", #doorsubmenu_select, #$001C)
+
+LayoutWreckedShipDownDoorMenu:
+
+LayoutYellowMaridiaDownDoorMenu:
+    dw #doormenu_down_001D
+    dw #doormenu_down_001E
+    dw #$0000
+    %cm_header("SELECT DOWN DOOR")
+
+doormenu_down_001D:
+    %cm_jsl("YM Butterfly", #doorsubmenu_select, #$001D)
+
+doormenu_down_001E:
+    %cm_jsl("YM Plasma Beach Quicksand", #doorsubmenu_select, #$001E)
 
 layout_updown_downdoor:
     dw !ACTION_CHOICE_JSL_TEXT
@@ -2641,6 +2998,12 @@ layout_updown_downdoor:
     dw #doormenu_down_A6C0
     dw #doormenu_down_A6D8
     dw #doormenu_down_A6A8
+    dw #doormenu_down_A3F0      ; West Maridia
+    dw #doormenu_down_A3FC
+    dw #doormenu_down_A330
+    dw #doormenu_down_A42C
+    dw #doormenu_down_001D      ; Yellow Maridia
+    dw #doormenu_down_001E
     dw #$0000
 
 

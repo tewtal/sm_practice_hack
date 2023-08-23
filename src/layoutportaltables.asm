@@ -287,6 +287,31 @@ portals_left_vanilla_table:
     dw $901E    ; Red Tower door 0 --> Hellway
     dw $91FE    ; Sloaters Refill door 0 --> Red Tower
     dw $9072    ; X-Ray Scope door 0 --> Red Brinstar Firefleas
+    dw $A51C    ; Crab Hole door 3 --> Maridia Map
+    dw $A504    ; Crab Hole door 1 --> West Sand Hall Tunnel
+    dw $A420    ; Crab Tunnel door 1 --> Crab Hole
+    dw $A384    ; East Tunnel door 1 --> Warehouse Entrance
+    dw $A390    ; East Tunnel door 2 --> Crab Hole
+    dw $A3E4    ; Fish Tank door 1 --> Mama Turtle
+    dw $A354    ; Glass Tunnel door 3 --> Glass Tunnel Save
+    dw $A348    ; Glass Tunnel door 2 --> East Tunnel
+    dw $A3A8    ; Main Street door 1 --> Crab Tunnel
+    dw $A3B4    ; Main Street door 2 --> Fish Tank
+    dw $A3CC    ; Main Street door 4 --> Mount Everest
+    dw $A3C0    ; Main Street door 3 --> Mount Everest
+    dw $A468    ; Mount Everest door 5 --> Crab Shaft
+    dw $A360    ; West Tunnel door 0 --> Glass Tunnel
+    dw $A618    ; Bug Sand Hole door 0 --> Thread The Needle
+    dw $A75C    ; Butterfly door 1 --> West Cactus Alley
+    dw $A5DC    ; Kassiuz door 1 --> Plasma Tutorial
+    dw $A588    ; Maridia Elevator door 1 --> Forgotten Highway Save
+    dw $A4A4    ; Northwest Maridia Bugs door 1 --> Pseudo Plasma Spark
+    dw $A5B8    ; Plasma Spark door 2 --> Kassiuz
+    dw $A5C4    ; Plasma Spark door 3 --> Bug Sand Hole
+    dw $A5A0    ; Plasma Spark door 0 --> Butterfly
+    dw $A54C    ; Plasma Tutorial door 1 --> Plasma
+    dw $A570    ; Thread The Needle door 1 --> Maridia Elevator
+    dw $A48C    ; Watering Hole door 0 --> Northwest Maridia Bugs
 
 ; Above table with portals inverted
 portals_left_vanilla_inverted_table:
@@ -442,6 +467,31 @@ portals_left_vanilla_inverted_table:
     dw $907E    ; Hellway door 0 --> Red Tower
     dw $904E    ; Red Tower door 4 --> Sloaters Refill
     dw $905A    ; Red Brinstar Firefleas door 0 --> X-Ray Scope
+    dw $A5E8    ; Maridia Map door 0 --> Crab Hole
+    dw $A528    ; West Sand Hall Tunnel door 0 --> Crab Hole
+    dw $A4F8    ; Crab Hole door 0 --> Crab Tunnel
+    dw $922E    ; Warehouse Entrance door 0 --> East Tunnel
+    dw $A510    ; Crab Hole door 2 --> East Tunnel
+    dw $A408    ; Mama Turtle door 1 --> Fish Tank
+    dw $A324    ; Glass Tunnel Save door 0 --> Glass Tunnel
+    dw $A378    ; East Tunnel door 0 --> Glass Tunnel
+    dw $A414    ; Crab Tunnel door 0 --> Main Street
+    dw $A3D8    ; Fish Tank door 0 --> Main Street
+    dw $A45C    ; Mount Everest door 4 --> Main Street
+    dw $A438    ; Mount Everest door 1 --> Main Street
+    dw $A4B0    ; Crab Shaft door 0 --> Mount Everest
+    dw $A33C    ; Glass Tunnel door 1 --> West Tunnel
+    dw $A564    ; Thread The Needle door 0 --> Bug Sand Hole
+    dw $A93C    ; West Cactus Alley door 0 --> Butterfly
+    dw $A540    ; Plasma Tutorial door 0 --> Kassiuz
+    dw $A5F4    ; Forgotten Highway Save door 0 --> Maridia Elevator
+    dw $A4D4    ; Pseudo Plasma Spark door 0 --> Northwest Maridia Bugs
+    dw $A5D0    ; Kassiuz door 0 --> Plasma Spark
+    dw $A630    ; Bug Sand Hole door 2 --> Plasma Spark
+    dw $A750    ; Butterfly door 0 --> Plasma Spark
+    dw $A558    ; Plasma door 0 --> Plasma Tutorial
+    dw $A57C    ; Maridia Elevator door 0 --> Thread The Needle
+    dw $A498    ; Northwest Maridia Bugs door 0 --> Watering Hole
 
 ; List of vanilla right doors
 portals_right_vanilla_table:
@@ -597,6 +647,29 @@ portals_right_vanilla_table:
     dw $9036    ; Red Tower door 2 --> Red Brinstar Firefleas
     dw $902A    ; Red Tower door 1 --> Noob Bridge
     dw $9132    ; Spazer door 0 --> Below Spazer
+    dw $A510    ; Crab Hole door 2 --> East Tunnel
+    dw $A4F8    ; Crab Hole door 0 --> Crab Tunnel
+    dw $A414    ; Crab Tunnel door 0 --> Main Street
+    dw $A378    ; East Tunnel door 0 --> Glass Tunnel
+    dw $A3D8    ; Fish Tank door 0 --> Main Street
+    dw $A33C    ; Glass Tunnel door 1 --> West Tunnel
+    dw $A324    ; Glass Tunnel Save door 0 --> Glass Tunnel
+    dw $A408    ; Mama Turtle door 1 --> Fish Tank
+    dw $A5E8    ; Maridia Map door 0 --> Crab Hole
+    dw $A45C    ; Mount Everest door 4 --> Main Street
+    dw $A438    ; Mount Everest door 1 --> Main Street
+    dw $A480    ; Red Fish door 1 --> Caterpillars
+    dw $A36C    ; West Tunnel door 1 --> Below Spazer
+    dw $A630    ; Bug Sand Hole door 2 --> Plasma Spark
+    dw $A750    ; Butterfly door 0 --> Plasma Spark
+    dw $A5F4    ; Forgotten Highway Save door 0 --> Maridia Elevator
+    dw $A5D0    ; Kassiuz door 0 --> Plasma Spark
+    dw $A57C    ; Maridia Elevator door 0 --> Thread The Needle
+    dw $A498    ; Northwest Maridia Bugs door 0 --> Watering Hole
+    dw $A558    ; Plasma door 0 --> Plasma Tutorial
+    dw $A540    ; Plasma Tutorial door 0 --> Kassiuz
+    dw $A4D4    ; Pseudo Plasma Spark door 0 --> Northwest Maridia Bugs
+    dw $A564    ; Thread The Needle door 0 --> Bug Sand Hole
 
 ; Above table with portals inverted
 portals_right_vanilla_inverted_table:
@@ -752,6 +825,29 @@ portals_right_vanilla_inverted_table:
     dw $9066    ; Red Brinstar Firefleas door 1 --> Red Tower
     dw $8F0A    ; Noob Bridge door 1 --> Red Tower
     dw $9126    ; Below Spazer door 2 --> Spazer
+    dw $A390    ; East Tunnel door 2 --> Crab Hole
+    dw $A420    ; Crab Tunnel door 1 --> Crab Hole
+    dw $A3A8    ; Main Street door 1 --> Crab Tunnel
+    dw $A348    ; Glass Tunnel door 2 --> East Tunnel
+    dw $A3B4    ; Main Street door 2 --> Fish Tank
+    dw $A360    ; West Tunnel door 0 --> Glass Tunnel
+    dw $A354    ; Glass Tunnel door 3 --> Glass Tunnel Save
+    dw $A3E4    ; Fish Tank door 1 --> Mama Turtle
+    dw $A51C    ; Crab Hole door 3 --> Maridia Map
+    dw $A3CC    ; Main Street door 4 --> Mount Everest
+    dw $A3C0    ; Main Street door 3 --> Mount Everest
+    dw $90C6    ; Caterpillars door 4 --> Red Fish
+    dw $911A    ; Below Spazer door 1 --> West Tunnel
+    dw $A5C4    ; Plasma Spark door 3 --> Bug Sand Hole
+    dw $A5A0    ; Plasma Spark door 0 --> Butterfly
+    dw $A588    ; Maridia Elevator door 1 --> Forgotten Highway Save
+    dw $A5B8    ; Plasma Spark door 2 --> Kassiuz
+    dw $A570    ; Thread The Needle door 1 --> Maridia Elevator
+    dw $A48C    ; Watering Hole door 0 --> Northwest Maridia Bugs
+    dw $A54C    ; Plasma Tutorial door 1 --> Plasma
+    dw $A5DC    ; Kassiuz door 1 --> Plasma Tutorial
+    dw $A4A4    ; Northwest Maridia Bugs door 1 --> Pseudo Plasma Spark
+    dw $A618    ; Bug Sand Hole door 0 --> Thread The Needle
 
 ; List of vanilla up doors
 portals_up_vanilla_table:
@@ -777,6 +873,14 @@ portals_up_vanilla_table:
     dw $A6CC    ; East Sand Hole door 1 --> East Sand Hall
     dw $A6E4    ; West Aqueduct Quicksand door 1 --> West Sand Hole
     dw $A6B4    ; West Sand Hole door 1 --> West Sand Hall
+    dw $A39C    ; Main Street door 0 --> Glass Tunnel
+    dw $A444    ; Mount Everest door 2 --> Fish Tank
+    dw $A450    ; Mount Everest door 3 --> Fish Tank
+    dw $A474    ; Red Fish door 0 --> Mount Everest
+    dw $A624    ; Bug Sand Hole door 1 --> Plasma Beach Quicksand
+    dw $A8A0    ; Plasma Beach Quicksand door 0 --> Butterfly
+    dw $A5AC    ; Plasma Spark door 1 --> Aqueduct Tube
+    dw $A4E0    ; Pseudo Plasma Spark door 1 --> Crab Shaft
 
 ; Above table with portals inverted
 portals_up_vanilla_inverted_table:
@@ -802,6 +906,14 @@ portals_up_vanilla_inverted_table:
     dw $0008    ; (East Sand Hall --> East Sand Hole)
     dw $A6A8    ; West Sand Hole door 0 --> West Aqueduct Quicksand
     dw $000A    ; (West Sand Hall --> West Sand Hole)
+    dw $A330    ; Glass Tunnel door 0 --> Main Street
+    dw $A3F0    ; Fish Tank door 2 --> Mount Everest
+    dw $A3FC    ; Fish Tank door 3 --> Mount Everest
+    dw $A42C    ; Mount Everest door 0 --> Red Fish
+    dw $001E    ; (Plasma Beach Quicksand --> Bug Sand Hole)
+    dw $001D    ; (Butterfly --> Plasma Beach Quicksand)
+    dw $A60C    ; Aqueduct Tube door 1 --> Plasma Spark
+    dw $A4BC    ; Crab Shaft door 1 --> Pseudo Plasma Spark
 
 ; List of vanilla down doors
 portals_down_vanilla_table:
@@ -830,6 +942,12 @@ portals_down_vanilla_table:
     dw $A6C0    ; East Sand Hole door 0 --> East Aqueduct Quicksand
     dw $A6D8    ; West Aqueduct Quicksand door 0 --> Aqueduct
     dw $A6A8    ; West Sand Hole door 0 --> West Aqueduct Quicksand
+    dw $A3F0    ; Fish Tank door 2 --> Mount Everest
+    dw $A3FC    ; Fish Tank door 3 --> Mount Everest
+    dw $A330    ; Glass Tunnel door 0 --> Main Street
+    dw $A42C    ; Mount Everest door 0 --> Red Fish
+    dw $001D    ; (Butterfly --> Plasma Beach Quicksand)
+    dw $001E    ; (Plasma Beach Quicksand --> Bug Sand Hole)
 
 ; Above table with portals inverted
 portals_down_vanilla_inverted_table:
@@ -858,4 +976,10 @@ portals_down_vanilla_inverted_table:
     dw $A6FC    ; East Aqueduct Quicksand door 1 --> East Sand Hole
     dw $A714    ; Aqueduct door 1 --> West Aqueduct Quicksand
     dw $A6E4    ; West Aqueduct Quicksand door 1 --> West Sand Hole
+    dw $A444    ; Mount Everest door 2 --> Fish Tank
+    dw $A450    ; Mount Everest door 3 --> Fish Tank
+    dw $A39C    ; Main Street door 0 --> Glass Tunnel
+    dw $A474    ; Red Fish door 0 --> Mount Everest
+    dw $A8A0    ; Plasma Beach Quicksand door 0 --> Butterfly
+    dw $A624    ; Bug Sand Hole door 1 --> Plasma Beach Quicksand
 

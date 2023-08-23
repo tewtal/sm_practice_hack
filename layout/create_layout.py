@@ -100,6 +100,18 @@ door_count = 0
 for line in template_lines:
    if len(line) < 3:
       f_menu_output.write(line)
+   elif line == "LayoutMenu:\n":
+      areaboss_door_count = len(portal_tables["area_boss"])
+      left_door_count = len(portal_tables["left"])
+      right_door_count = len(portal_tables["right"])
+      up_door_count = len(portal_tables["up"])
+      down_door_count = len(portal_tables["down"])
+      f_menu_output.write("!layout_areaboss_door_count = #$%s\n" % f'{areaboss_door_count:04X}')
+      f_menu_output.write("!layout_left_door_count = #$%s\n" % f'{left_door_count:04X}')
+      f_menu_output.write("!layout_right_door_count = #$%s\n" % f'{right_door_count:04X}')
+      f_menu_output.write("!layout_up_door_count = #$%s\n" % f'{up_door_count:04X}')
+      f_menu_output.write("!layout_down_door_count = #$%s\n\n" % f'{down_door_count:04X}')
+      f_menu_output.write(line)
    elif line.startswith("portals_") and line.endswith("_vanilla_table:\n"):
       key = line[8:-16]
       if key not in portal_keys:
@@ -250,15 +262,40 @@ for key, table in portal_tables.items():
    for addr, data in table.items():
       inverted_addr = data[0]
       if inverted_addr in inverted_table:
+         inconsistencies = ""
          if inverted_table[inverted_addr][0] != addr:
-            f_table_output.write("\n    dw $%s (%s?)    ; %s" % (inverted_addr, inverted_table[inverted_addr][0], inverted_table[inverted_addr][1]))
+            inconsistencies += "(%s?) " % inverted_table[inverted_addr][0]
+         desc = table[addr][1]
+         inverted_desc = inverted_table[inverted_addr][1]
+         if " --> " not in desc or " --> " not in inverted_desc:
+            inconsistencies += "(-->?)"
          else:
-            f_table_output.write("\n    dw $%s    ; %s" % (inverted_addr, inverted_table[inverted_addr][1]))
+            j = desc.index(" --> ")
+            if " door " in desc:
+               i = desc.index(" door ")
+            else:
+               i = j
+            j += 5
+            src_desc = desc[:i].strip('(')
+            dest_desc = desc[j:].strip(')')
+            j = inverted_desc.index(" --> ")
+            if " door " in inverted_desc:
+               i = inverted_desc.index(" door ")
+            else:
+               i = j
+            j += 5
+            inverted_src_desc = inverted_desc[:i].strip('(')
+            inverted_dest_desc = inverted_desc[j:].strip(')')
+            if inverted_src_desc != dest_desc:
+               inconsistencies += "(%s door?) " % dest_desc
+            if inverted_dest_desc != src_desc:
+               inconsistencies += "(--> %s?) " % src_desc
+         f_table_output.write("\n    dw $%s %s   ; %s" % (inverted_addr, inconsistencies, inverted_table[inverted_addr][1]))
       elif inverted_addr in extra_table:
+         inconsistencies = ""
          if extra_table[inverted_addr][0] != addr:
-            f_table_output.write("\n    dw $%s (%s?)    ; %s" % (inverted_addr, extra_table[inverted_addr][0], extra_table[inverted_addr][1]))
-         else:
-            f_table_output.write("\n    dw $%s    ; %s" % (inverted_addr, extra_table[inverted_addr][1]))
+            inconsistencies += "(%s?) " % extra_table[inverted_addr][0]
+         f_table_output.write("\n    dw $%s %s   ; %s" % (inverted_addr, inconsistencies, extra_table[inverted_addr][1]))
       else:
          f_table_output.write("\n    dw $%s" % inverted_addr)
    if key == "area_boss":

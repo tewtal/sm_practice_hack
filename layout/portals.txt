@@ -232,28 +232,43 @@ LayoutRedBrinstarLeftDoorMenu:
     901E,   907E,   RB Red Tower (Upper),       Red Tower door 0 --> Hellway
     91FE,   904E,   RB Sloaters Refill,         Sloaters Refill door 0 --> Red Tower
     9072,   905A,   RB X-Ray Scope,             X-Ray Scope door 0 --> Red Brinstar Firefleas
+LayoutWestMaridiaLeftDoorMenu:
+    ; West Maridia
+    A51C,   A5E8,   WM Crab Hole (Lower),       Crab Hole door 3 --> Maridia Map
+    A504,   A528,   WM Crab Hole (Upper),       Crab Hole door 1 --> West Sand Hall Tunnel
+    A420,   A4F8,   WM Crab Tunnel,             Crab Tunnel door 1 --> Crab Hole
+    A384,   922E,   WM East Tunnel (Lower),     East Tunnel door 1 --> Warehouse Entrance
+    A390,   A510,   WM East Tunnel (Upper),     East Tunnel door 2 --> Crab Hole
+    A3E4,   A408,   WM Fish Tank,               Fish Tank door 1 --> Mama Turtle
+    A354,   A324,   WM Glass Tunnel (Lower),    Glass Tunnel door 3 --> Glass Tunnel Save
+    A348,   A378,   WM Glass Tunnel (Upper),    Glass Tunnel door 2 --> East Tunnel
+    A3A8,   A414,   WM Main Street (Lower),     Main Street door 1 --> Crab Tunnel
+    A3B4,   A3D8,   WM Main Street (Middle),    Main Street door 2 --> Fish Tank
+    A3CC,   A45C,   WM Main Street (Tunnel),    Main Street door 4 --> Mount Everest
+    A3C0,   A438,   WM Main Street (Upper),     Main Street door 3 --> Mount Everest
+    A468,   A4B0,   WM Mount Everest,           Mount Everest door 5 --> Crab Shaft
+    A360,   A33C,   WM West Tunnel,             West Tunnel door 0 --> Glass Tunnel
+LayoutYellowMaridiaLeftDoorMenu:
+    ; Yellow Maridia
+    A618,   A564,   YM Bug Sand Hole,           Bug Sand Hole door 0 --> Thread The Needle
+    A75C,   A93C,   YM Butterfly,               Butterfly door 1 --> West Cactus Alley
+    A5DC,   A540,   YM Kassiuz,                 Kassiuz door 1 --> Plasma Tutorial
+    A588,   A5F4,   YM Maridia Elevator,        Maridia Elevator door 1 --> Forgotten Highway Save
+    A4A4,   A4D4,   YM Northwest Maridia Bugs,  Northwest Maridia Bugs door 1 --> Pseudo Plasma Spark
+    A5B8,   A5D0,   YM Plasma Spark (Lower),    Plasma Spark door 2 --> Kassiuz
+    A5C4,   A630,   YM Plasma Spark (Middle),   Plasma Spark door 3 --> Bug Sand Hole
+    A5A0,   A750,   YM Plasma Spark (Upper),    Plasma Spark door 0 --> Butterfly
+    A54C,   A558,   YM Plasma Tutorial,         Plasma Tutorial door 1 --> Plasma
+    A570,   A57C,   YM Thread The Needle,       Thread The Needle door 1 --> Maridia Elevator
+    A48C,   A498,   YM Watering Hole,           Watering Hole door 0 --> Northwest Maridia Bugs
 
     ; Shadow Left Doors
     A810,   A7A4,   GM Pants (Self to Self),    (Pants door 1 --> Pants)
     AB34,   8B6E,   TR Tourian Escape 4,        Tourian Escape 4 door 1 --> Climb
     96D2,   967E,   UN Lava Dive,               Lava Dive door 0 --> Kronic Boost
     95FA,   9A4A,   UN Single Chamber,          Single Chamber door 4 --> Three Musketeers
-    A51C,       ,   WM Crab Hole (Lower),
-    A504,   A528,   WM Crab Hole (Upper),       Crab Hole door 1 --> West Sand Hall Tunnel
-    A384,   922E,   WM East Tunnel (Lower),     East Tunnel door 1 --> Warehouse Entrance
-    A390,   A510,   WM East Tunnel (Upper),     East Tunnel door 2 --> Crab Hole
-    A3E4,       ,   WM Fish Tank,
-    A354,       ,   WM Glass Tunnel (Lower),
-    A348,       ,   WM Glass Tunnel (Upper),
-    A3A8,       ,   WM Main Street (Lower),
-    A3B4,       ,   WM Main Street (Middle),
-    A3CC,       ,   WM Main Street (Tunnel),
-    A3C0,       ,   WM Main Street (Upper),
-    A468,   A4B0,   WM Mount Everest,           Mount Everest door 5 --> Crab Shaft
-    A360,       ,   WM West Tunnel,
     A2AC,   A2C4,   WS Basement,                Basement door 2 --> Phantoon Room
     A264,   8A66,   WS Electric Death,          Electric Death door 0 --> East Ocean
-    A75C,   A93C,   YM Butterfly,               Butterfly door 1 --> West Cactus Alley
 
 portals_right_vanilla_table:
 LayoutBlueBrinstarRightDoorMenu:
@@ -432,18 +447,37 @@ LayoutRedBrinstarRightDoorMenu:
     9036,   9066,   RB Red Tower (Middle),      Red Tower door 2 --> Red Brinstar Firefleas
     902A,   8F0A,   RB Red Tower (Upper),       Red Tower door 1 --> Noob Bridge
     9132,   9126,   RB Spazer,                  Spazer door 0 --> Below Spazer
+LayoutWestMaridiaRightDoorMenu:
+    ; West Maridia
+    A510,   A390,   WM Crab Hole (Lower),       Crab Hole door 2 --> East Tunnel
+    A4F8,   A420,   WM Crab Hole (Upper),       Crab Hole door 0 --> Crab Tunnel
+    A414,   A3A8,   WM Crab Tunnel,             Crab Tunnel door 0 --> Main Street
+    A378,   A348,   WM East Tunnel,             East Tunnel door 0 --> Glass Tunnel
+    A3D8,   A3B4,   WM Fish Tank,               Fish Tank door 0 --> Main Street
+    A33C,   A360,   WM Glass Tunnel,            Glass Tunnel door 1 --> West Tunnel
+    A324,   A354,   WM Glass Tunnel Save,       Glass Tunnel Save door 0 --> Glass Tunnel
+    A408,   A3E4,   WM Mama Turtle,             Mama Turtle door 1 --> Fish Tank
+    A5E8,   A51C,   WM Maridia Map,             Maridia Map door 0 --> Crab Hole
+    A45C,   A3CC,   WM Mount Everest (Tunnel),  Mount Everest door 4 --> Main Street
+    A438,   A3C0,   WM Mount Everest (Upper),   Mount Everest door 1 --> Main Street
+    A480,   90C6,   WM Red Fish,                Red Fish door 1 --> Caterpillars
+    A36C,   911A,   WM West Tunnel,             West Tunnel door 1 --> Below Spazer
+LayoutYellowMaridiaRightDoorMenu:
+    ; Yellow Maridia
+    A630,   A5C4,   YM Bug Sand Hole,           Bug Sand Hole door 2 --> Plasma Spark
+    A750,   A5A0,   YM Butterfly,               Butterfly door 0 --> Plasma Spark
+    A5F4,   A588,   YM Forgotten Highway Save,  Forgotten Highway Save door 0 --> Maridia Elevator
+    A5D0,   A5B8,   YM Kassiuz,                 Kassiuz door 0 --> Plasma Spark
+    A57C,   A570,   YM Maridia Elevator,        Maridia Elevator door 0 --> Thread The Needle
+    A498,   A48C,   YM Northwest Maridia Bugs,  Northwest Maridia Bugs door 0 --> Watering Hole
+    A558,   A54C,   YM Plasma,                  Plasma door 0 --> Plasma Tutorial
+    A540,   A5DC,   YM Plasma Tutorial,         Plasma Tutorial door 0 --> Kassiuz
+    A4D4,   A4A4,   YM Pseudo Plasma Spark,     Pseudo Plasma Spark door 0 --> Northwest Maridia Bugs
+    A564,   A618,   YM Thread The Needle,       Thread The Needle door 0 --> Bug Sand Hole
 
     ; Shadow Right Doors
     A804,   A798,   GM Shaktool (Pants),        (Shaktool door 0 --> Pants)
     967E,   96D2,   UN Kronic Boost,            Kronic Boost door 2 --> Lava Dive
-    A510,   A390,   WM Crab Hole (Lower),       Crab Hole door 2 --> East Tunnel
-    A4F8,       ,   WM Crab Hole (Upper),
-    A378,       ,   WM East Tunnel,
-    A3D8,       ,   WM Fish Tank,
-    A33C,       ,   WM Glass Tunnel,
-    A324,       ,   WM Glass Tunnel Save,
-    A480,   90C6,   WM Red Fish,                Red Fish door 1 --> Caterpillars
-    A36C,   911A,   WM West Tunnel,             West Tunnel door 1 --> Below Spazer
     A1E0,   89EE,   WS Attic,                   Attic door 2 --> West Ocean
     A1A4,       ,   WS Bowling Alley (Lower),
     A198,   8B32,   WS Bowling Alley (Middle),  Bowling Alley door 1 --> West Ocean Geemer
@@ -451,8 +485,6 @@ LayoutRedBrinstarRightDoorMenu:
     A1B0,   89D6,   WS Entrance,                Wrecked Ship Entrance door 0 --> West Ocean
     A300,   8A06,   WS Gravity Suit,            Gravity Suit door 0 --> West Ocean
     A2C4,   A2AC,   WS Phantoon,                Phantoon Room door 0 --> Basement
-    A750,       ,   YM Butterfly,
-    A4D4,       ,   YM Pseudo Plasma Spark,
 
 portals_up_vanilla_table:
 LayoutCrocLairUpDoorMenu:
@@ -489,12 +521,21 @@ LayoutPinkMaridiaUpDoorMenu:
     A6CC,   0008,   PM East Sand Hole,          East Sand Hole door 1 --> East Sand Hall
     A6E4,   A6A8,   PM West Aqueduct Quicksand, West Aqueduct Quicksand door 1 --> West Sand Hole
     A6B4,   000A,   PM West Sand Hole,          West Sand Hole door 1 --> West Sand Hall
+LayoutWestMaridiaUpDoorMenu:
+    ; West Maridia
+    A39C,   A330,   WM Main Street,             Main Street door 0 --> Glass Tunnel
+    A444,   A3F0,   WM Mount Everest (Left),    Mount Everest door 2 --> Fish Tank
+    A450,   A3FC,   WM Mount Everest (Right),   Mount Everest door 3 --> Fish Tank
+    A474,   A42C,   WM Red Fish,                Red Fish door 0 --> Mount Everest
+LayoutYellowMaridiaUpDoorMenu:
+    ; Yellow Maridia
+    A624,   001E,   YM Bug Sand Hole,           Bug Sand Hole door 1 --> Plasma Beach Quicksand
+    A8A0,   001D,   YM Plasma Beach Quicksand,  Plasma Beach Quicksand door 0 --> Butterfly
+    A5AC,   A60C,   YM Plasma Spark,            Plasma Spark door 1 --> Aqueduct Tube
+    A4E0,   A4BC,   YM Pseudo Plasma Spark,     Pseudo Plasma Spark door 1 --> Crab Shaft
 
     ; Shadow Up Doors
     93D2,   93EA,   UN Crocomire Speedway,      Crocomire Speedway door 4 --> Crocomire
-    A39C,   A330,   WM Main Street,             Main Street door 0 --> Glass Tunnel
-    A5AC,   A60C,   YM Plasma Spark,            Plasma Spark door 1 --> Aqueduct Tube
-    A4E0,   A4BC,   YM Pseudo Plasma Spark,     Pseudo Plasma Spark door 1 --> Crab Shaft
 
 portals_down_vanilla_table:
 LayoutCrocLairDownDoorMenu:
@@ -536,9 +577,14 @@ LayoutPinkMaridiaDownDoorMenu:
     A6C0,   A6FC,   PM East Sand Hole,          East Sand Hole door 0 --> East Aqueduct Quicksand
     A6D8,   A714,   PM West Aqueduct Quicksand, West Aqueduct Quicksand door 0 --> Aqueduct
     A6A8,   A6E4,   PM West Sand Hole,          West Sand Hole door 0 --> West Aqueduct Quicksand
-
-    ; Shadow Down Doors
-    A3F0,       ,   WM Fish Tank (Left),
-    A3FC,       ,   WM Fish Tank (Right),
+LayoutWestMaridiaDownDoorMenu:
+    ; West Maridia
+    A3F0,   A444,   WM Fish Tank (Left),        Fish Tank door 2 --> Mount Everest
+    A3FC,   A450,   WM Fish Tank (Right),       Fish Tank door 3 --> Mount Everest
     A330,   A39C,   WM Glass Tunnel,            Glass Tunnel door 0 --> Main Street
+    A42C,   A474,   WM Mount Everest,           Mount Everest door 0 --> Red Fish
+LayoutYellowMaridiaDownDoorMenu:
+    ; Yellow Maridia
+    001D,   A8A0,   YM Butterfly,               (Butterfly --> Plasma Beach Quicksand)
+    001E,   A624,   YM Plasma Beach Quicksand,  (Plasma Beach Quicksand --> Bug Sand Hole)
 
