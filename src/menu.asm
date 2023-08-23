@@ -805,7 +805,8 @@ draw_numfield_word:
     LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : INC !DP_CurrentMenu : STA !DP_Address
     LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : STA !DP_Address+2
 
-    ; skip min/max values
+    ; skip min/max and increment values
+    INC !DP_CurrentMenu : INC !DP_CurrentMenu : INC !DP_CurrentMenu : INC !DP_CurrentMenu
     INC !DP_CurrentMenu : INC !DP_CurrentMenu : INC !DP_CurrentMenu : INC !DP_CurrentMenu
 
     ; increment past JSL
@@ -2706,18 +2707,67 @@ execute_numfield_word:
     LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : INC !DP_CurrentMenu : STA !DP_DigitMinimum
     LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : INC !DP_CurrentMenu : INC : STA !DP_DigitMaximum ; INC for convenience
 
-    ; check if maximum requires 3 digits or 4
-    CMP #1000 : BPL .load_jsl_target
-    LDA !ram_cm_horizontal_cursor : CMP #$0003 : BNE .load_jsl_target
-    LDA #$0002 : STA !ram_cm_horizontal_cursor
+    ; grab normal increment
+    LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : INC !DP_CurrentMenu : STA !DP_Increment
 
-  .load_jsl_target
+    ; check for held inputs
+    LDA !ram_cm_controller : BIT !IH_INPUT_HELD : BEQ .incPastFastValue
+    ; input held, grab faster increment
+    LDA [!DP_CurrentMenu] : AND #$00FF : STA !DP_Increment
+    ; keep normal increment and skip past fast value
+  .incPastFastValue
+    INC !DP_CurrentMenu : INC !DP_CurrentMenu
+
+    ; grab JSL address
     LDA [!DP_CurrentMenu] : STA !DP_JSLTarget
 
+    ; left/right = increment, A/X/Y = SDE mode
+    LDA !ram_cm_controller : BIT !IH_INPUT_LEFTRIGHT : BEQ .singleDigitEditing
+
+    ; check direction held
+    BIT #$0200 : BNE .pressed_left
+    ; pressed right, inc
+    LDA [!DP_DigitAddress] : CLC : ADC !DP_Increment
+    CMP !DP_DigitMaximum : BCS .set_to_min
+    STA [!DP_DigitAddress] : BRA .jsl
+
+  .pressed_left ; dec
+    LDA [!DP_DigitAddress] : SEC : SBC !DP_Increment
+    CMP !DP_DigitMinimum : BMI .set_to_max
+    CMP !DP_DigitMaximum : BCS .set_to_max
+    STA [!DP_DigitAddress] : BRA .jsl
+
+  .set_to_min
+    LDA !DP_DigitMinimum : STA [!DP_DigitAddress] : BRA .jsl
+
+  .set_to_max
+    LDA !DP_DigitMaximum : DEC : STA [!DP_DigitAddress]
+
+  .jsl
+    ; skip if JSL target is zero
+    LDA !DP_JSLTarget : BEQ .end
+
+    ; Set return address for indirect JSL
+    LDA !ram_cm_menu_bank : STA !DP_JSLTarget+2
+    PHK : PEA .end-1
+
+    ; addr in A
+    LDA [!DP_Address] : LDX #$0000
+    JML.w [!DP_JSLTarget]
+
+  .singleDigitEditing
+    ; check if maximum requires 3 digits or 4
+    LDA !DP_DigitMinimum : CMP #1000 : BPL .set_ctrl_mode
+    LDA !ram_cm_horizontal_cursor : CMP #$0003 : BNE .set_ctrl_mode
+    LDA #$0002 : STA !ram_cm_horizontal_cursor
+
+  .set_ctrl_mode
     LDA [!DP_DigitAddress] : STA !DP_DigitValue
     LDA #$8001 : STA !ram_cm_ctrl_mode
-    %sfxnumber()
 
+  .end
+    %ai16()
+    %sfxnumber()
     RTS
 }
 

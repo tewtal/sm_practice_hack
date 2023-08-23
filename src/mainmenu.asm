@@ -870,7 +870,7 @@ eq_goto_togglebeams:
     %cm_jsl("Toggle Beams", #eq_prepare_beams_menu, #ToggleBeamsMenu)
 
 eq_currentenergy:
-    %cm_numfield_word("Current Energy", !SAMUS_HP, 0, 2100, #0)
+    %cm_numfield_word("Current Energy", !SAMUS_HP, 0, 2100, 1, 20, #0)
 
 eq_setetanks:
     %cm_numfield("Energy Tanks", !ram_cm_etanks, 0, 21, 1, 1, .routine)
@@ -890,7 +890,7 @@ eq_setetanks:
     RTL
 
 eq_currentreserves:
-    %cm_numfield_word("Current Reserves", !SAMUS_RESERVE_ENERGY, 0, 700, #0)
+    %cm_numfield_word("Current Reserves", !SAMUS_RESERVE_ENERGY, 0, 700, 1, 20, #0)
 
 eq_setreserves:
     %cm_numfield("Reserve Tanks", !ram_cm_reserve, 0, 7, 1, 1, .routine)
@@ -924,31 +924,31 @@ eq_reservemode:
     RTL
 
 eq_currentmissiles:
-    %cm_numfield_word("Current Missiles", !SAMUS_MISSILES, 0, 325, #0)
+    %cm_numfield_word("Current Missiles", !SAMUS_MISSILES, 0, 325, 1, 20, #0)
 
 eq_setmissiles:
-    %cm_numfield_word("Missiles", !SAMUS_MISSILES_MAX, 0, 325, .routine)
-    .routine
-        LDA !SAMUS_MISSILES_MAX : STA !SAMUS_MISSILES ; missiles
-        RTL
+    %cm_numfield_word("Missiles", !SAMUS_MISSILES_MAX, 0, 325, 5, 20, .routine)
+  .routine
+    LDA !SAMUS_MISSILES_MAX : STA !SAMUS_MISSILES
+    RTL
 
 eq_currentsupers:
     %cm_numfield("Current Super Missiles", !SAMUS_SUPERS, 0, 65, 1, 5, #0)
 
 eq_setsupers:
     %cm_numfield("Super Missiles", !SAMUS_SUPERS_MAX, 0, 65, 5, 5, .routine)
-    .routine
-        LDA !SAMUS_SUPERS_MAX : STA !SAMUS_SUPERS ; supers
-        RTL
+  .routine
+    LDA !SAMUS_SUPERS_MAX : STA !SAMUS_SUPERS
+    RTL
 
 eq_currentpbs:
     %cm_numfield("Current Power Bombs", !SAMUS_PBS, 0, 70, 1, 5, #0)
 
 eq_setpbs:
     %cm_numfield("Power Bombs", !SAMUS_PBS_MAX, 0, 70, 5, 5, .routine)
-    .routine
-        LDA !SAMUS_PBS_MAX : STA !SAMUS_PBS ; pbs
-        RTL
+  .routine
+    LDA !SAMUS_PBS_MAX : STA !SAMUS_PBS
+    RTL
 
 ; ---------------------
 ; Toggle Category menu
@@ -1407,10 +1407,10 @@ tb_init_custom_damage:
 }
 
 tb_customchargedamage:
-    %cm_numfield_word("Custom Charge Damage", !sram_custom_charge_damage, 0, 1000, #0)
+    %cm_numfield_word("Custom Charge Damage", !sram_custom_charge_damage, 0, 1000, 10, 50, #0)
 
 tb_customunchargedamage:
-    %cm_numfield_word("Custom Normal Damage", !sram_custom_uncharge_damage, 0, 1000, #0)
+    %cm_numfield_word("Custom Normal Damage", !sram_custom_uncharge_damage, 0, 1000, 10, 50, #0)
 
 equipment_toggle_beams:
 {
@@ -2958,7 +2958,7 @@ CutscenesMenu:
     dw #cutscenes_skip_game_over
     dw #$FFFF
     dw #cutscenes_fast_kraid
-    dw #cutscenes_kraid_death_camera
+    dw #cutscenes_kraid_camera
     dw #cutscenes_fast_phantoon
     dw #cutscenes_fast_bowling
     dw #cutscenes_fast_mb
@@ -2993,8 +2993,8 @@ cutscenes_fast_kraid:
 cutscenes_fast_phantoon:
     %cm_toggle_bit("Skip Phantoon Intro", !sram_cutscenes, !CUTSCENE_FAST_PHANTOON, #0)
 
-cutscenes_kraid_death_camera:
-    %cm_toggle("Unlock Kraid Death Camera", !sram_cutscenes, !CUTSCENE_KRAID_DEATH_CAMERA, #0)
+cutscenes_kraid_camera:
+    %cm_toggle_bit("Unlock Kraid Death Cam", !sram_cutscenes, !CUTSCENE_KRAID_DEATH_CAMERA, #0)
 
 cutscenes_fast_bowling:
     %cm_toggle_bit("Fast Bowling", !sram_cutscenes, !CUTSCENE_FAST_BOWLING, #0)
