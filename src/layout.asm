@@ -31,8 +31,104 @@ org $82E387
 org $82E4C9
     JSR hijack_door_closing_plm
 
-org $82F800
+; Check if we need to replace item pickup PLMs
+; Move vanilla logic down and elevator check to bank 8F to compensate
+org $82E8C4
+layout_create_plms_execute_asm_fixes:
+{
+    LDA !ram_itempickups_all : BEQ .vanilla
+    JSR layout_create_plms_itempickups
+  .vanilla
+    ; Vanilla logic
+    LDA $0000,X : BEQ .endPLMs
+    JSL $84846A
+    TXA : CLC : ADC #$0006 : TAX
+    BRA .vanilla
+  .endPLMs
+    JSL $8FE8A3
+    JSL preset_room_setup_asm_fixes
+    PLB : PLP : RTL
+}
+warnpc $82E8EB
+
+; Same as above except without the preset fixes
+org $82EB7A
+layout_create_plms_execute_asm:
+{
+    LDA !ram_itempickups_all : BEQ .vanilla
+    JSR layout_create_plms_itempickups
+  .vanilla
+    ; Vanilla logic
+    LDA $0000,X : BEQ .endPLMs
+    JSL $84846A
+    TXA : CLC : ADC #$0006 : TAX
+    BRA .vanilla
+  .endPLMs
+    JSL $8FE8A3
+    JSL layout_execute_setup_asm
+    RTL
+}
+warnpc $82EB9F
+
+
+org $82F7A0
 print pc, " layout bank82 start"
+
+layout_create_plms_itempickups_end:
+    RTS
+
+layout_create_one_vanilla_room_plm:
+    JSL $84846A
+
+layout_create_plms_next_plm:
+    TXA : CLC : ADC #$0006 : TAX
+
+layout_create_plms_itempickups:
+{
+  .loop
+    LDA $0000,X : BEQ layout_create_plms_itempickups_end
+    CMP #$EED7 : BMI layout_create_one_vanilla_room_plm
+    CMP #$EF2B : BMI .visible
+    CMP #$EF7F : BMI .chozo
+    LDA !ram_itempickups_hidden : BEQ layout_create_one_vanilla_room_plm
+    BRA .custom
+  .visible
+    LDA !ram_itempickups_visible : BEQ layout_create_one_vanilla_room_plm
+    BRA .custom
+  .chozo
+    LDA !ram_itempickups_chozo : BEQ layout_create_one_vanilla_room_plm
+  .custom
+    ; Spawn room PLM (similar to $84846A) but with our PLM ID (value of A)
+    PHY : PHA
+    LDY #$004E
+  .customLoop
+    LDA $1C37,Y : BEQ .plm
+    DEY : DEY : BPL .customLoop
+    PLA : PLY
+    BRA layout_create_plms_next_plm
+  .plm
+    %a8()
+    LDA $0003,X : STA $4202
+    LDA !ROOM_WIDTH_BLOCKS : STA $4203
+    LDA $0002,X
+    %a16()
+    AND #$00FF : CLC : ADC $4216
+    ASL : STA $1C87,Y
+    LDA $0004,X : STA $1DC7,Y
+    ; Now use our stored A value instead of $0000,X
+    PLA : STA $1C37,Y
+    ; Now prepare to jump to bank 84
+    ; We need to preserve our current Y but also pull and repush the original Y
+    TYA : PLY
+    ; Push a JSL
+    PEA $828F : PLB : PEA layout_create_plms_next_plm-1
+    ; Now follow the start of the $84846A method
+    PHP : PHB : PHY : PHX
+    PEA $8484 : PLB : PLB
+    ; Restore A and jump
+    TAX : LDA $1C37,X
+    JML $8484B1
+}
 
 hijack_loading_room_CRE:
 {
@@ -655,6 +751,67 @@ layout_spazer_block_plm:
 }
 warnpc $84D490
 
+; Fix Morph Ball Hidden/Chozo PLM's
+org $84E8CE
+layout_morph_ball_chozo_plm_equipment:
+    dw $0004
+
+org $84EE02
+layout_morph_ball_hidden_plm_equipment:
+    dw $0004
+
+
+; Sanity check Varia/Gravity pickups
+if !FEATURE_PAL
+org $91D43D
+else
+org $91D4E5
+endif
+    %ai16() : LDA !ROOM_ID : CMP #$A6E2 : BNE layout_skip_varia_animation
+    JMP layout_prepare_varia_animation
+layout_skip_varia_animation:
+    PLP : RTL
+layout_varia_animation:
+
+if !FEATURE_PAL
+org $91D513
+else
+org $91D5BB
+endif
+    %ai16() : LDA !ROOM_ID : CMP #$CE40 : BNE layout_skip_gravity_animation
+    JMP layout_prepare_gravity_animation
+layout_skip_gravity_animation:
+    PLP : RTL
+layout_gravity_animation:
+
+
+; Overwrite unused method
+if !FEATURE_PAL
+org $91EC02
+else
+org $91EC9D
+endif
+layout_prepare_varia_animation:
+    PHB : PHK : PLB
+    %ai8()
+    LDA #$30 : STA $0DF0
+    LDA #$50 : STA $0DF1
+    JMP layout_varia_animation
+
+layout_prepare_gravity_animation:
+    PHB : PHK : PLB
+    %ai8()
+    LDA #$30 : STA $0DF0
+    LDA #$49 : STA $0DF1
+    JMP layout_gravity_animation
+
+if !FEATURE_PAL
+warnpc $91EC35
+else
+warnpc $91ECD0
+endif
+
+
 org $94937D
 layout_samus_bombable_block_collision_table:
     dw $D040
@@ -1038,6 +1195,24 @@ layout_asm_varia_morph_missiles_state_check:
     BRA layout_asm_vanilla_morph_missiles_not_found
 }
 warnpc $8FE68A
+
+; Move execute setup ASM method up 14 bytes so it can also do the elevator check
+; (elevator check moved from bank 82)
+org $8FE881
+layout_execute_setup_asm:
+    PHP : PHB
+    %ai16()
+    LDX !STATE_POINTER
+    LDA $0018,X : BEQ layout_execute_setup_asm_elevator_check
+layout_execute_setup_asm_execute:
+    PHK : PLB
+    JSR ($0018,X)
+layout_execute_setup_asm_elevator_check:
+    LDA !ELEVATOR_PROPERTIES : BEQ layout_execute_setup_asm_end
+    LDA #$0002 : STA !ELEVATOR_STATUS
+layout_execute_setup_asm_end:
+    PLB : PLP : RTL
+warnpc $8FE8EB
 
 
 org $8FEA00

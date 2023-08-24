@@ -9,8 +9,9 @@ print pc, " layoutmenu start"
 ; -------------------------
 
 LayoutMenu:
-    dw #layout_magnetstairs
+    dw #layout_itempickups
     dw #$FFFF
+    dw #layout_magnetstairs
     dw #layout_arearando
     dw #layout_antisoftlock
     dw #layout_variatweaks
@@ -28,6 +29,281 @@ LayoutMenu:
     dw #$0000
     %cm_header("ROOM LAYOUT")
     %cm_footer("APPLIED WHEN ROOM RELOADED")
+
+layout_itempickups:
+    %cm_jsl("Item Pickups", #layout_prepare_itempickups_menu, #LayoutItemPickupsMenu)
+
+layout_prepare_itempickups_menu:
+{
+    TDC : STA !ram_cm_itempickups_visible
+    STA !ram_cm_itempickups_chozo
+    STA !ram_cm_itempickups_hidden
+
+    LDX #$002A
+  .loop
+    LDA.l LayoutIPVisiblePLMTable,X
+    CMP !ram_itempickups_visible : BNE .endVisible
+    TXA : LSR : STA !ram_cm_itempickups_visible
+  .endVisible
+    LDA.l LayoutIPChozoPLMTable,X
+    CMP !ram_itempickups_chozo : BNE .endChozo
+    TXA : LSR : STA !ram_cm_itempickups_chozo
+  .endChozo
+    LDA.l LayoutIPHiddenPLMTable,X
+    CMP !ram_itempickups_hidden : BNE .endHidden
+    TXA : LSR : STA !ram_cm_itempickups_hidden
+  .endHidden
+    DEX : DEX : BNE .loop
+
+    JSL layout_ip_init_all
+    %setmenubank()
+    JML action_submenu
+}
+
+layout_ip_init_all:
+{
+    LDA !ram_cm_itempickups_visible
+    CMP !ram_cm_itempickups_chozo : BNE .custom
+    CMP !ram_cm_itempickups_hidden : BEQ .set
+  .custom
+    LDA #$0016
+  .set
+    STA !ram_itempickups_all
+    RTL
+}
+
+LayoutIPVisiblePLMTable:
+    dw $0000   ; Vanilla
+    dw $EED7   ; E-Tank
+    dw $EF27   ; R-Tank
+    dw $EEDB   ; Missile
+    dw $EEDF   ; Super
+    dw $EEE3   ; Power Bomb
+    dw $EF07   ; Varia
+    dw $EF0B   ; Gravity
+    dw $EF23   ; Morph
+    dw $EEE7   ; Bombs
+    dw $EF03   ; Springball
+    dw $EF1F   ; Screw
+    dw $EEF3   ; Hi-Jump
+    dw $EF1B   ; Space Jump
+    dw $EEF7   ; Speed
+    dw $EF17   ; Grapple
+    dw $EF0F   ; X-Ray
+    dw $EEEB   ; Charge
+    dw $EEEF   ; Ice
+    dw $EEFB   ; Wave
+    dw $EEFF   ; Spazer
+    dw $EF13   ; Plasma
+
+LayoutIPChozoPLMTable:
+    dw $0000   ; Vanilla
+    dw $EF2B   ; E-Tank
+    dw $EF7B   ; R-Tank
+    dw $EF2F   ; Missile
+    dw $EF33   ; Super
+    dw $EF37   ; Power Bomb
+    dw $EF5B   ; Varia
+    dw $EF5F   ; Gravity
+    dw $EF77   ; Morph
+    dw $EF3B   ; Bombs
+    dw $EF57   ; Springball
+    dw $EF73   ; Screw
+    dw $EF47   ; Hi-Jump
+    dw $EF6F   ; Space Jump
+    dw $EF4B   ; Speed
+    dw $EF6B   ; Grapple
+    dw $EF63   ; X-Ray
+    dw $EF3F   ; Charge
+    dw $EF43   ; Ice
+    dw $EF4F   ; Wave
+    dw $EF53   ; Spazer
+    dw $EF67   ; Plasma
+
+LayoutIPHiddenPLMTable:
+    dw $0000   ; Vanilla
+    dw $EF7F   ; E-Tank
+    dw $EFCF   ; R-Tank
+    dw $EF83   ; Missile
+    dw $EF87   ; Super
+    dw $EF8B   ; Power Bomb
+    dw $EFAF   ; Varia
+    dw $EFB3   ; Gravity
+    dw $EFCB   ; Morph
+    dw $EF8F   ; Bombs
+    dw $EFAB   ; Springball
+    dw $EFC7   ; Screw
+    dw $EF9B   ; Hi-Jump
+    dw $EFC3   ; Space Jump
+    dw $EF9F   ; Speed
+    dw $EFBF   ; Grapple
+    dw $EFB7   ; X-Ray
+    dw $EF93   ; Charge
+    dw $EF97   ; Ice
+    dw $EFA3   ; Wave
+    dw $EFA7   ; Spazer
+    dw $EFBB   ; Plasma
+
+LayoutItemPickupsMenu:
+    dw #layout_ip_all
+    dw #$FFFF
+    dw #layout_ip_visible
+    dw #layout_ip_chozo
+    dw #layout_ip_hidden
+    dw #$0000
+    %cm_header("ITEM PICKUPS")
+
+layout_ip_all:
+    dw !ACTION_CHOICE
+    dl #!ram_itempickups_all
+    dw #layout_ip_set_all
+    db #$28, "All Items", #$FF
+    db #$28, "    VANILLA", #$FF
+    db #$28, "     E-TANK", #$FF
+    db #$28, "     R-TANK", #$FF
+    db #$28, "    MISSILE", #$FF
+    db #$28, "      SUPER", #$FF
+    db #$28, " POWER BOMB", #$FF
+    db #$28, "      VARIA", #$FF
+    db #$28, "    GRAVITY", #$FF
+    db #$28, "      MORPH", #$FF
+    db #$28, "      BOMBS", #$FF
+    db #$28, " SPRINGBALL", #$FF
+    db #$28, "      SCREW", #$FF
+    db #$28, "    HI-JUMP", #$FF
+    db #$28, " SPACE JUMP", #$FF
+    db #$28, "      SPEED", #$FF
+    db #$28, "    GRAPPLE", #$FF
+    db #$28, "       XRAY", #$FF
+    db #$28, "     CHARGE", #$FF
+    db #$28, "        ICE", #$FF
+    db #$28, "       WAVE", #$FF
+    db #$28, "     SPAZER", #$FF
+    db #$28, "     PLASMA", #$FF
+    db #$28, "     CUSTOM", #$FF
+    db #$FF
+
+layout_ip_set_all:
+{
+    LDA !ram_itempickups_all : CMP #$0016 : BPL .end
+    STA !ram_cm_itempickups_visible
+    STA !ram_cm_itempickups_chozo
+    STA !ram_cm_itempickups_hidden
+    ASL : TAX
+    LDA.l LayoutIPVisiblePLMTable,X : STA !ram_itempickups_visible
+    LDA.l LayoutIPChozoPLMTable,X : STA !ram_itempickups_chozo
+    LDA.l LayoutIPHiddenPLMTable,X : STA !ram_itempickups_hidden
+  .end
+    RTL
+}
+
+layout_ip_visible:
+    dw !ACTION_CHOICE
+    dl #!ram_cm_itempickups_visible
+    dw #layout_ip_set_visible
+    db #$28, "Visible Items", #$FF
+    db #$28, "    VANILLA", #$FF
+    db #$28, "     E-TANK", #$FF
+    db #$28, "     R-TANK", #$FF
+    db #$28, "    MISSILE", #$FF
+    db #$28, "      SUPER", #$FF
+    db #$28, " POWER BOMB", #$FF
+    db #$28, "      VARIA", #$FF
+    db #$28, "    GRAVITY", #$FF
+    db #$28, "      MORPH", #$FF
+    db #$28, "      BOMBS", #$FF
+    db #$28, " SPRINGBALL", #$FF
+    db #$28, "      SCREW", #$FF
+    db #$28, "    HI-JUMP", #$FF
+    db #$28, " SPACE JUMP", #$FF
+    db #$28, "      SPEED", #$FF
+    db #$28, "    GRAPPLE", #$FF
+    db #$28, "       XRAY", #$FF
+    db #$28, "     CHARGE", #$FF
+    db #$28, "        ICE", #$FF
+    db #$28, "       WAVE", #$FF
+    db #$28, "     SPAZER", #$FF
+    db #$28, "     PLASMA", #$FF
+    db #$FF
+
+layout_ip_set_visible:
+{
+    LDA !ram_cm_itempickups_visible : ASL : TAX
+    LDA.l LayoutIPVisiblePLMTable,X : STA !ram_itempickups_visible
+    JML layout_ip_init_all
+}
+
+layout_ip_chozo:
+    dw !ACTION_CHOICE
+    dl #!ram_cm_itempickups_chozo
+    dw #layout_ip_set_chozo
+    db #$28, "Chozo Orb Items", #$FF
+    db #$28, "    VANILLA", #$FF
+    db #$28, "     E-TANK", #$FF
+    db #$28, "     R-TANK", #$FF
+    db #$28, "    MISSILE", #$FF
+    db #$28, "      SUPER", #$FF
+    db #$28, " POWER BOMB", #$FF
+    db #$28, "      VARIA", #$FF
+    db #$28, "    GRAVITY", #$FF
+    db #$28, "      MORPH", #$FF
+    db #$28, "      BOMBS", #$FF
+    db #$28, " SPRINGBALL", #$FF
+    db #$28, "      SCREW", #$FF
+    db #$28, "    HI-JUMP", #$FF
+    db #$28, " SPACE JUMP", #$FF
+    db #$28, "      SPEED", #$FF
+    db #$28, "    GRAPPLE", #$FF
+    db #$28, "       XRAY", #$FF
+    db #$28, "     CHARGE", #$FF
+    db #$28, "        ICE", #$FF
+    db #$28, "       WAVE", #$FF
+    db #$28, "     SPAZER", #$FF
+    db #$28, "     PLASMA", #$FF
+    db #$FF
+
+layout_ip_set_chozo:
+{
+    LDA !ram_cm_itempickups_chozo : ASL : TAX
+    LDA.l LayoutIPChozoPLMTable,X : STA !ram_itempickups_chozo
+    JML layout_ip_init_all
+}
+
+layout_ip_hidden:
+    dw !ACTION_CHOICE
+    dl #!ram_cm_itempickups_hidden
+    dw #layout_ip_set_hidden
+    db #$28, "Hidden Items", #$FF
+    db #$28, "    VANILLA", #$FF
+    db #$28, "     E-TANK", #$FF
+    db #$28, "     R-TANK", #$FF
+    db #$28, "    MISSILE", #$FF
+    db #$28, "      SUPER", #$FF
+    db #$28, " POWER BOMB", #$FF
+    db #$28, "      VARIA", #$FF
+    db #$28, "    GRAVITY", #$FF
+    db #$28, "      MORPH", #$FF
+    db #$28, "      BOMBS", #$FF
+    db #$28, " SPRINGBALL", #$FF
+    db #$28, "      SCREW", #$FF
+    db #$28, "    HI-JUMP", #$FF
+    db #$28, " SPACE JUMP", #$FF
+    db #$28, "      SPEED", #$FF
+    db #$28, "    GRAPPLE", #$FF
+    db #$28, "       XRAY", #$FF
+    db #$28, "     CHARGE", #$FF
+    db #$28, "        ICE", #$FF
+    db #$28, "       WAVE", #$FF
+    db #$28, "     SPAZER", #$FF
+    db #$28, "     PLASMA", #$FF
+    db #$FF
+
+layout_ip_set_hidden:
+{
+    LDA !ram_cm_itempickups_hidden : ASL : TAX
+    LDA.l LayoutIPHiddenPLMTable,X : STA !ram_itempickups_hidden
+    JML layout_ip_init_all
+}
 
 layout_magnetstairs:
     %cm_toggle_bit("Remove Magnet Stairs", !sram_room_layout, !ROOM_LAYOUT_MAGNET_STAIRS, #0)
