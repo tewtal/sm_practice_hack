@@ -2131,6 +2131,7 @@ RoomStratMenu:
     dw ihstrat_downbackzeb
     dw ihstrat_draygonai
     dw ihstrat_ridleyai
+    dw ihstrat_twocries
     dw #$0000
     %cm_header("INFOHUD ROOM STRAT")
     %cm_footer("ROOM STRAT MUST BE ACTIVE")
@@ -2170,10 +2171,13 @@ ihstrat_downbackzeb:
     %cm_jsl("Downback Zeb Skip", #action_select_room_strat, #$000A)
 
 ihstrat_draygonai:
-    %cm_jsl("Draygon's AI Tracker", #action_select_room_strat, #$000B)
+    %cm_jsl("Draygon AI Tracker", #action_select_room_strat, #$000B)
 
 ihstrat_ridleyai:
     %cm_jsl("Ridley AI", #action_select_room_strat, #$000C)
+
+ihstrat_twocries:
+    %cm_jsl("Two Cries Standup", #action_select_room_strat, #$000D)
 
 action_select_room_strat:
 {
@@ -2200,6 +2204,7 @@ ih_room_strat:
     db #$28, "  DBACK ZEB", #$FF
     db #$28, " DRAYGON AI", #$FF
     db #$28, "  RIDLEY AI", #$FF
+    db #$28, "  TWO CRIES", #$FF
     db #$FF
     .routine
         LDA #$0001 : STA !sram_display_mode
