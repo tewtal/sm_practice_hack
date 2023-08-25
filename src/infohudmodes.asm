@@ -2869,28 +2869,21 @@ status_twocries:
     LDA !ram_roomstrat_state : CMP #$0002 : BEQ .wait : BPL .done
     LDA !SAMUS_Y_DIRECTION : CMP #$0001 : BNE .done
     LDA !ram_roomstrat_counter : CMP #$0057 : BMI .ignore
-    CMP #$00C1 : BPL .ignore : CMP #$0082 : BMI .e
-    LDX #$0088 : JSR Draw4
-    LDA #$0003 : STA !ram_roomstrat_state
-    RTS
-
-    CMP #$008E : BPL .late : CMP #$008A : BMI .early
-    SEC : SBC #$0089 : ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A
+    CMP #$00C1 : BPL .ignore : CMP #$0094 : BPL .late : CMP #$008E : BMI .early
+    SEC : SBC #$008D : ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A
     LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$88
     LDA #$0003 : STA !ram_roomstrat_state
     RTS
 
   .late
-    SEC : SBC #$008D : ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A
+    SEC : SBC #$0093 : ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A
     LDA !IH_LETTER_L : STA !HUD_TILEMAP+$88
     LDA #$0003 : STA !ram_roomstrat_state
     RTS
 
   .early
-    LDA #$008A : SEC : SBC !ram_roomstrat_counter
+    LDA #$008E : SEC : SBC !ram_roomstrat_counter
     ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A
-
-  .e
     LDA !IH_LETTER_E : STA !HUD_TILEMAP+$88
     LDA #$0003 : STA !ram_roomstrat_state
     RTS
