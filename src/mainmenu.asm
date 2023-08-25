@@ -1623,6 +1623,7 @@ MiscMenu:
     dw #$FFFF
     dw #misc_invincibility
     dw #misc_gooslowdown
+    dw #misc_healthbomb
     dw #misc_suit_properties
     dw #misc_water_physics
     dw #misc_double_jump
@@ -1684,6 +1685,9 @@ endif
 
 misc_gooslowdown:
     %cm_numfield("Goo Slowdown", $7E0A66, 0, 4, 1, 1, #0)
+
+misc_healthbomb:
+    %cm_toggle("Health Bomb Flag", !SAMUS_HEALTH_WARNING, #$0001, #0)
 
 misc_magicpants:
     dw !ACTION_CHOICE
