@@ -301,14 +301,27 @@ portals_left_vanilla_table:
     dw $A3C0    ; Main Street door 3 --> Mount Everest
     dw $A468    ; Mount Everest door 5 --> Crab Shaft
     dw $A360    ; West Tunnel door 0 --> Glass Tunnel
+    dw $A1D4    ; Attic door 1 --> Assembly Line
+    dw $A2AC    ; Basement door 2 --> Phantoon Room
+    dw $A264    ; Electric Death door 0 --> East Ocean
+    dw $A288    ; Wrecked Ship Energy Tank door 0 --> Electric Death
+    dw $A1BC    ; Wrecked Ship Entrance door 1 --> Wrecked Ship Main Shaft
+    dw $A30C    ; Gravity Suit door 1 --> Bowling Alley
+    dw $A234    ; Wrecked Ship Main Shaft door 5 --> Wrecked Ship East Supers
+    dw $A204    ; Wrecked Ship Main Shaft door 1 --> Sponge Bath
+    dw $A240    ; Wrecked Ship Main Shaft door 6 --> Wrecked Ship Save
+    dw $A258    ; Spiky Death door 1 --> Electric Death
+    dw $A2DC    ; Sponge Bath door 1 --> Spiky Death
+    dw $A2E8    ; Wrecked Ship West Supers door 0 --> Wrecked Ship Main Shaft
+    dw $A2B8    ; Wrecked Ship Map door 0 --> Basement
     dw $A618    ; Bug Sand Hole door 0 --> Thread The Needle
     dw $A75C    ; Butterfly door 1 --> West Cactus Alley
     dw $A5DC    ; Kassiuz door 1 --> Plasma Tutorial
     dw $A588    ; Maridia Elevator door 1 --> Forgotten Highway Save
     dw $A4A4    ; Northwest Maridia Bugs door 1 --> Pseudo Plasma Spark
-    dw $A5B8    ; Plasma Spark door 2 --> Kassiuz
-    dw $A5C4    ; Plasma Spark door 3 --> Bug Sand Hole
     dw $A5A0    ; Plasma Spark door 0 --> Butterfly
+    dw $A5C4    ; Plasma Spark door 3 --> Bug Sand Hole
+    dw $A5B8    ; Plasma Spark door 2 --> Kassiuz
     dw $A54C    ; Plasma Tutorial door 1 --> Plasma
     dw $A570    ; Thread The Needle door 1 --> Maridia Elevator
     dw $A48C    ; Watering Hole door 0 --> Northwest Maridia Bugs
@@ -389,7 +402,7 @@ portals_left_vanilla_inverted_table:
     dw $8D2A    ; Spore Spawn Supers door 1 --> Spore Spawn
     dw $A780    ; Pants door 0 --> East Sand Hall
     dw $A684    ; East Sand Hall door 0 --> Oasis
-    dw $A804    ; (Shaktool door 0 --> Pants)
+    dw $A804    ; (Shaktool door X --> Pants)
     dw $A8C4    ; Shaktool door 0 --> East Pants
     dw $A7B0    ; East Pants door 0 --> Pants
     dw $A7C8    ; Spring Ball door 0 --> Shaktool
@@ -481,14 +494,27 @@ portals_left_vanilla_inverted_table:
     dw $A438    ; Mount Everest door 1 --> Main Street
     dw $A4B0    ; Crab Shaft door 0 --> Mount Everest
     dw $A33C    ; Glass Tunnel door 1 --> West Tunnel
+    dw $A1EC    ; Assembly Line door 0 --> Attic
+    dw $A2C4    ; Phantoon Room door 0 --> Basement
+    dw $8A66    ; East Ocean door 0 --> Electric Death
+    dw $A27C    ; Electric Death door 2 --> Wrecked Ship Energy Tank
+    dw $A1F8    ; Wrecked Ship Main Shaft door 0 --> Wrecked Ship Entrance
+    dw $A1A4    ; Bowling Alley door 2 --> Gravity Suit
+    dw $A2F4    ; Wrecked Ship East Supers door 0 --> Wrecked Ship Main Shaft
+    dw $A2D0    ; Sponge Bath door 0 --> Wrecked Ship Main Shaft
+    dw $A318    ; Wrecked Ship Save door 0 --> Wrecked Ship Main Shaft
+    dw $A270    ; Electric Death door 1 --> Spiky Death
+    dw $A24C    ; Spiky Death door 0 --> Sponge Bath
+    dw $A210    ; Wrecked Ship Main Shaft door 2 --> Wrecked Ship West Supers
+    dw $A2A0    ; Basement door 1 --> Wrecked Ship Map
     dw $A564    ; Thread The Needle door 0 --> Bug Sand Hole
     dw $A93C    ; West Cactus Alley door 0 --> Butterfly
     dw $A540    ; Plasma Tutorial door 0 --> Kassiuz
     dw $A5F4    ; Forgotten Highway Save door 0 --> Maridia Elevator
     dw $A4D4    ; Pseudo Plasma Spark door 0 --> Northwest Maridia Bugs
-    dw $A5D0    ; Kassiuz door 0 --> Plasma Spark
-    dw $A630    ; Bug Sand Hole door 2 --> Plasma Spark
     dw $A750    ; Butterfly door 0 --> Plasma Spark
+    dw $A630    ; Bug Sand Hole door 2 --> Plasma Spark
+    dw $A5D0    ; Kassiuz door 0 --> Plasma Spark
     dw $A558    ; Plasma door 0 --> Plasma Tutorial
     dw $A57C    ; Maridia Elevator door 0 --> Thread The Needle
     dw $A498    ; Northwest Maridia Bugs door 0 --> Watering Hole
@@ -660,6 +686,23 @@ portals_right_vanilla_table:
     dw $A438    ; Mount Everest door 1 --> Main Street
     dw $A480    ; Red Fish door 1 --> Caterpillars
     dw $A36C    ; West Tunnel door 1 --> Below Spazer
+    dw $A1EC    ; Assembly Line door 0 --> Attic
+    dw $A1E0    ; Attic door 2 --> West Ocean
+    dw $A2A0    ; Basement door 1 --> Wrecked Ship Map
+    dw $A1A4    ; Bowling Alley door 2 --> Gravity Suit
+    dw $A198    ; Bowling Alley door 1 --> West Ocean Geemer
+    dw $A18C    ; Bowling Alley door 0 --> West Ocean
+    dw $A2F4    ; Wrecked Ship East Supers door 0 --> Wrecked Ship Main Shaft
+    dw $A270    ; Electric Death door 1 --> Spiky Death
+    dw $A27C    ; Electric Death door 2 --> Wrecked Ship Energy Tank
+    dw $A1B0    ; Wrecked Ship Entrance door 0 --> West Ocean
+    dw $A300    ; Gravity Suit door 0 --> West Ocean
+    dw $A210    ; Wrecked Ship Main Shaft door 2 --> Wrecked Ship West Supers
+    dw $A1F8    ; Wrecked Ship Main Shaft door 0 --> Wrecked Ship Entrance
+    dw $A2C4    ; Phantoon Room door 0 --> Basement
+    dw $A24C    ; Spiky Death door 0 --> Sponge Bath
+    dw $A2D0    ; Sponge Bath door 0 --> Wrecked Ship Main Shaft
+    dw $A318    ; Wrecked Ship Save door 0 --> Wrecked Ship Main Shaft
     dw $A630    ; Bug Sand Hole door 2 --> Plasma Spark
     dw $A750    ; Butterfly door 0 --> Plasma Spark
     dw $A5F4    ; Forgotten Highway Save door 0 --> Maridia Elevator
@@ -745,7 +788,7 @@ portals_right_vanilla_inverted_table:
     dw $A648    ; West Sand Hall door 1 --> Oasis
     dw $A690    ; East Sand Hall door 1 --> Pants
     dw $A78C    ; Pants door 1 --> East Pants
-    dw $A810    ; (Pants door 1 --> Pants)
+    dw $A810    ; (Pants door X --> Pants)
     dw $A7BC    ; East Pants door 1 --> Shaktool
     dw $A8D0    ; Shaktool door 1 --> Spring Ball
     dw $A534    ; West Sand Hall Tunnel door 1 --> West Sand Hall
@@ -838,6 +881,23 @@ portals_right_vanilla_inverted_table:
     dw $A3C0    ; Main Street door 3 --> Mount Everest
     dw $90C6    ; Caterpillars door 4 --> Red Fish
     dw $911A    ; Below Spazer door 1 --> West Tunnel
+    dw $A1D4    ; Attic door 1 --> Assembly Line
+    dw $89EE    ; West Ocean door 3 --> Attic
+    dw $A2B8    ; Wrecked Ship Map door 0 --> Basement
+    dw $A30C    ; Gravity Suit door 1 --> Bowling Alley
+    dw $8B32    ; West Ocean Geemer door 1 --> Bowling Alley
+    dw $89FA    ; West Ocean door 4 --> Bowling Alley
+    dw $A234    ; Wrecked Ship Main Shaft door 5 --> Wrecked Ship East Supers
+    dw $A258    ; Spiky Death door 1 --> Electric Death
+    dw $A288    ; Wrecked Ship Energy Tank door 0 --> Electric Death
+    dw $89D6    ; West Ocean door 1 --> Wrecked Ship Entrance
+    dw $8A06    ; West Ocean door 5 --> Gravity Suit
+    dw $A2E8    ; Wrecked Ship West Supers door 0 --> Wrecked Ship Main Shaft
+    dw $A1BC    ; Wrecked Ship Entrance door 1 --> Wrecked Ship Main Shaft
+    dw $A2AC    ; Basement door 2 --> Phantoon Room
+    dw $A2DC    ; Sponge Bath door 1 --> Spiky Death
+    dw $A204    ; Wrecked Ship Main Shaft door 1 --> Sponge Bath
+    dw $A240    ; Wrecked Ship Main Shaft door 6 --> Wrecked Ship Save
     dw $A5C4    ; Plasma Spark door 3 --> Bug Sand Hole
     dw $A5A0    ; Plasma Spark door 0 --> Butterfly
     dw $A588    ; Maridia Elevator door 1 --> Forgotten Highway Save
@@ -877,6 +937,8 @@ portals_up_vanilla_table:
     dw $A444    ; Mount Everest door 2 --> Fish Tank
     dw $A450    ; Mount Everest door 3 --> Fish Tank
     dw $A474    ; Red Fish door 0 --> Mount Everest
+    dw $A1C8    ; Attic door 0 --> Wrecked Ship Main Shaft
+    dw $A21C    ; Wrecked Ship Main Shaft door 3 --> Basement
     dw $A624    ; Bug Sand Hole door 1 --> Plasma Beach Quicksand
     dw $A8A0    ; Plasma Beach Quicksand door 0 --> Butterfly
     dw $A5AC    ; Plasma Spark door 1 --> Aqueduct Tube
@@ -898,20 +960,22 @@ portals_up_vanilla_inverted_table:
     dw $A6F0    ; East Aqueduct Quicksand door 0 --> Aqueduct
     dw $A678    ; Oasis door 2 --> Aqueduct Tube
     dw $A72C    ; Aqueduct door 3 --> Botwoon Hallway
-    dw $0010    ; (Below Botwoon Energy Tank --> Botwoon Quicksand)
-    dw $0011    ; (Below Botwoon Energy Tank --> Botwoon Quicksand)
-    dw $0012    ; (Botwoon Quicksand --> Botwoon Energy Tank)
-    dw $0013    ; (Botwoon Quicksand --> Botwoon Energy Tank)
+    dw $0010    ; (Below Botwoon Energy Tank door L --> Botwoon Quicksand)
+    dw $0011    ; (Below Botwoon Energy Tank door R --> Botwoon Quicksand)
+    dw $0012    ; (Botwoon Quicksand door L --> Botwoon Energy Tank)
+    dw $0013    ; (Botwoon Quicksand door R --> Botwoon Energy Tank)
     dw $A6C0    ; East Sand Hole door 0 --> East Aqueduct Quicksand
-    dw $0008    ; (East Sand Hall --> East Sand Hole)
+    dw $0008    ; (East Sand Hall door X --> East Sand Hole)
     dw $A6A8    ; West Sand Hole door 0 --> West Aqueduct Quicksand
-    dw $000A    ; (West Sand Hall --> West Sand Hole)
+    dw $000A    ; (West Sand Hall door X --> West Sand Hole)
     dw $A330    ; Glass Tunnel door 0 --> Main Street
     dw $A3F0    ; Fish Tank door 2 --> Mount Everest
     dw $A3FC    ; Fish Tank door 3 --> Mount Everest
     dw $A42C    ; Mount Everest door 0 --> Red Fish
-    dw $001E    ; (Plasma Beach Quicksand --> Bug Sand Hole)
-    dw $001D    ; (Butterfly --> Plasma Beach Quicksand)
+    dw $A228    ; Wrecked Ship Main Shaft door 4 --> Attic
+    dw $A294    ; Basement door 0 --> Wrecked Ship Main Shaft
+    dw $0020    ; (Plasma Beach Quicksand door X --> Bug Sand Hole)
+    dw $001F    ; (Butterfly door X --> Plasma Beach Quicksand)
     dw $A60C    ; Aqueduct Tube door 1 --> Plasma Spark
     dw $A4BC    ; Crab Shaft door 1 --> Pseudo Plasma Spark
 
@@ -925,18 +989,18 @@ portals_down_vanilla_table:
     dw $8A4E    ; Forgotten Highway Elevator door 0 --> Forgotten Highway Elbow
     dw $8AF6    ; Red Brinstar Elevator door 0 --> Crateria Kihunters
     dw $8E3E    ; Spore Spawn Kihunters door 1 --> Spore Spawn
-    dw $0008    ; (East Sand Hall --> East Sand Hole)
+    dw $0008    ; (East Sand Hall door X --> East Sand Hole)
     dw $A678    ; Oasis door 2 --> Aqueduct Tube
-    dw $000A    ; (West Sand Hall --> West Sand Hole)
+    dw $000A    ; (West Sand Hall door X --> West Sand Hole)
     dw $9156    ; Warehouse Zeela door 2 --> Warehouse Kihunters
     dw $99DE    ; Jail Power Bombs door 1 --> Spring Ball Maze
     dw $9A26    ; Wasteland door 1 --> Red Kihunter Shaft
     dw $A72C    ; Aqueduct door 3 --> Botwoon Hallway
     dw $A60C    ; Aqueduct Tube door 1 --> Plasma Spark
-    dw $0010    ; (Below Botwoon Energy Tank --> Botwoon Quicksand)
-    dw $0011    ; (Below Botwoon Energy Tank --> Botwoon Quicksand)
-    dw $0012    ; (Botwoon Quicksand --> Botwoon Energy Tank)
-    dw $0013    ; (Botwoon Quicksand --> Botwoon Energy Tank)
+    dw $0010    ; (Below Botwoon Energy Tank door L --> Botwoon Quicksand)
+    dw $0011    ; (Below Botwoon Energy Tank door R --> Botwoon Quicksand)
+    dw $0012    ; (Botwoon Quicksand door L --> Botwoon Energy Tank)
+    dw $0013    ; (Botwoon Quicksand door R --> Botwoon Energy Tank)
     dw $A4BC    ; Crab Shaft door 1 --> Pseudo Plasma Spark
     dw $A6F0    ; East Aqueduct Quicksand door 0 --> Aqueduct
     dw $A6C0    ; East Sand Hole door 0 --> East Aqueduct Quicksand
@@ -946,8 +1010,10 @@ portals_down_vanilla_table:
     dw $A3FC    ; Fish Tank door 3 --> Mount Everest
     dw $A330    ; Glass Tunnel door 0 --> Main Street
     dw $A42C    ; Mount Everest door 0 --> Red Fish
-    dw $001D    ; (Butterfly --> Plasma Beach Quicksand)
-    dw $001E    ; (Plasma Beach Quicksand --> Bug Sand Hole)
+    dw $A294    ; Basement door 0 --> Wrecked Ship Main Shaft
+    dw $A228    ; Wrecked Ship Main Shaft door 4 --> Attic
+    dw $001F    ; (Butterfly door X --> Plasma Beach Quicksand)
+    dw $0020    ; (Plasma Beach Quicksand door X --> Bug Sand Hole)
 
 ; Above table with portals inverted
 portals_down_vanilla_inverted_table:
@@ -980,6 +1046,8 @@ portals_down_vanilla_inverted_table:
     dw $A450    ; Mount Everest door 3 --> Fish Tank
     dw $A39C    ; Main Street door 0 --> Glass Tunnel
     dw $A474    ; Red Fish door 0 --> Mount Everest
+    dw $A21C    ; Wrecked Ship Main Shaft door 3 --> Basement
+    dw $A1C8    ; Attic door 0 --> Wrecked Ship Main Shaft
     dw $A8A0    ; Plasma Beach Quicksand door 0 --> Butterfly
     dw $A624    ; Bug Sand Hole door 1 --> Plasma Beach Quicksand
 

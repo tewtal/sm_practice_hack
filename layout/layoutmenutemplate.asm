@@ -580,14 +580,14 @@ doorsubmenu_select:
 LayoutBlueBrinstarDoorMenu:
     dw #LayoutBlueBrinstarLeftDoorMenu
     dw #LayoutBlueBrinstarRightDoorMenu
-    dw #$0000
-    dw #$0000
+    dw #LayoutBlueBrinstarUpDoorMenu
+    dw #LayoutBlueBrinstarDownDoorMenu
 
 LayoutCeresDoorMenu:
     dw #LayoutCeresLeftDoorMenu
     dw #LayoutCeresRightDoorMenu
-    dw #$0000
-    dw #$0000
+    dw #LayoutCeresUpDoorMenu
+    dw #LayoutCeresDownDoorMenu
 
 LayoutCrocLairDoorMenu:
     dw #LayoutCrocLairLeftDoorMenu
@@ -610,7 +610,7 @@ LayoutGreenBrinstarDoorMenu:
 LayoutGreenMaridiaDoorMenu:
     dw #LayoutGreenMaridiaLeftDoorMenu
     dw #LayoutGreenMaridiaRightDoorMenu
-    dw #$0000
+    dw #LayoutGreenMaridiaUpDoorMenu
     dw #LayoutGreenMaridiaDownDoorMenu
 
 LayoutKraidLairDoorMenu:
@@ -628,8 +628,8 @@ LayoutLowerNorfairDoorMenu:
 LayoutPinkBrinstarDoorMenu:
     dw #LayoutPinkBrinstarLeftDoorMenu
     dw #LayoutPinkBrinstarRightDoorMenu
-    dw #$0000
-    dw #$0000
+    dw #LayoutPinkBrinstarUpDoorMenu
+    dw #LayoutPinkBrinstarDownDoorMenu
 
 LayoutPinkMaridiaDoorMenu:
     dw #LayoutPinkMaridiaLeftDoorMenu
@@ -640,20 +640,20 @@ LayoutPinkMaridiaDoorMenu:
 LayoutRedBrinstarDoorMenu:
     dw #LayoutRedBrinstarLeftDoorMenu
     dw #LayoutRedBrinstarRightDoorMenu
-    dw #$0000
-    dw #$0000
+    dw #LayoutRedBrinstarUpDoorMenu
+    dw #LayoutRedBrinstarDownDoorMenu
 
 LayoutTourianDoorMenu:
-    dw #$0000
-    dw #$0000
-    dw #$0000
-    dw #$0000
+    dw #LayoutTourianLeftDoorMenu
+    dw #LayoutTourianRightDoorMenu
+    dw #LayoutTourianUpDoorMenu
+    dw #LayoutTourianDownDoorMenu
 
 LayoutUpperNorfairDoorMenu:
-    dw #$0000
-    dw #$0000
-    dw #$0000
-    dw #$0000
+    dw #LayoutUpperNorfairLeftDoorMenu
+    dw #LayoutUpperNorfairRightDoorMenu
+    dw #LayoutUpperNorfairUpDoorMenu
+    dw #LayoutUpperNorfairDownDoorMenu
 
 LayoutWestMaridiaDoorMenu:
     dw #LayoutWestMaridiaLeftDoorMenu
@@ -662,10 +662,10 @@ LayoutWestMaridiaDoorMenu:
     dw #LayoutWestMaridiaDownDoorMenu
 
 LayoutWreckedShipDoorMenu:
-    dw #$0000
-    dw #$0000
-    dw #$0000
-    dw #$0000
+    dw #LayoutWreckedShipLeftDoorMenu
+    dw #LayoutWreckedShipRightDoorMenu
+    dw #LayoutWreckedShipUpDoorMenu
+    dw #LayoutWreckedShipDownDoorMenu
 
 LayoutYellowMaridiaDoorMenu:
     dw #LayoutYellowMaridiaLeftDoorMenu
@@ -761,17 +761,27 @@ portals_right_vanilla_table:
 ; -----------------
 ; Up Doors
 ; -----------------
+LayoutBlueBrinstarUpDoorMenu:
+
+LayoutCeresUpDoorMenu:
+
 LayoutCrocLairUpDoorMenu:
 
 LayoutCrateriaUpDoorMenu:
 
 LayoutGreenBrinstarUpDoorMenu:
 
+LayoutGreenMaridiaUpDoorMenu:
+
 LayoutKraidLairUpDoorMenu:
 
 LayoutLowerNorfairUpDoorMenu:
 
+LayoutPinkBrinstarUpDoorMenu:
+
 LayoutPinkMaridiaUpDoorMenu:
+
+LayoutRedBrinstarUpDoorMenu:
 
 LayoutTourianUpDoorMenu:
 
@@ -793,6 +803,10 @@ portals_up_vanilla_table:
 ; -----------------
 ; Down Doors
 ; -----------------
+LayoutBlueBrinstarDownDoorMenu:
+
+LayoutCeresDownDoorMenu:
+
 LayoutCrocLairDownDoorMenu:
 
 LayoutCrateriaDownDoorMenu:
@@ -805,7 +819,11 @@ LayoutKraidLairDownDoorMenu:
 
 LayoutLowerNorfairDownDoorMenu:
 
+LayoutPinkBrinstarDownDoorMenu:
+
 LayoutPinkMaridiaDownDoorMenu:
+
+LayoutRedBrinstarDownDoorMenu:
 
 LayoutTourianDownDoorMenu:
 

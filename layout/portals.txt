@@ -232,6 +232,10 @@ LayoutRedBrinstarLeftDoorMenu:
     901E,   907E,   RB Red Tower (Upper),       Red Tower door 0 --> Hellway
     91FE,   904E,   RB Sloaters Refill,         Sloaters Refill door 0 --> Red Tower
     9072,   905A,   RB X-Ray Scope,             X-Ray Scope door 0 --> Red Brinstar Firefleas
+LayoutTourianLeftDoorMenu:
+    ; Tourian
+LayoutUpperNorfairLeftDoorMenu:
+    ; Upper Norfair
 LayoutWestMaridiaLeftDoorMenu:
     ; West Maridia
     A51C,   A5E8,   WM Crab Hole (Lower),       Crab Hole door 3 --> Maridia Map
@@ -248,6 +252,21 @@ LayoutWestMaridiaLeftDoorMenu:
     A3C0,   A438,   WM Main Street (Upper),     Main Street door 3 --> Mount Everest
     A468,   A4B0,   WM Mount Everest,           Mount Everest door 5 --> Crab Shaft
     A360,   A33C,   WM West Tunnel,             West Tunnel door 0 --> Glass Tunnel
+LayoutWreckedShipLeftDoorMenu:
+    ; Wrecked Ship
+    A1D4,   A1EC,   WS Attic,                   Attic door 1 --> Assembly Line
+    A2AC,   A2C4,   WS Basement,                Basement door 2 --> Phantoon Room
+    A264,   8A66,   WS Electric Death,          Electric Death door 0 --> East Ocean
+    A288,   A27C,   WS Energy Tank,             Wrecked Ship Energy Tank door 0 --> Electric Death
+    A1BC,   A1F8,   WS Entrance,                Wrecked Ship Entrance door 1 --> Wrecked Ship Main Shaft
+    A30C,   A1A4,   WS Gravity Suit,            Gravity Suit door 1 --> Bowling Alley
+    A234,   A2F4,   WS Main Shaft (Lower),      Wrecked Ship Main Shaft door 5 --> Wrecked Ship East Supers
+    A204,   A2D0,   WS Main Shaft (Middle),     Wrecked Ship Main Shaft door 1 --> Sponge Bath
+    A240,   A318,   WS Main Shaft (Upper),      Wrecked Ship Main Shaft door 6 --> Wrecked Ship Save
+    A258,   A270,   WS Spiky Death,             Spiky Death door 1 --> Electric Death
+    A2DC,   A24C,   WS Sponge Bath,             Sponge Bath door 1 --> Spiky Death
+    A2E8,   A210,   WS West Supers,             Wrecked Ship West Supers door 0 --> Wrecked Ship Main Shaft
+    A2B8,   A2A0,   WS Wrecked Ship Map,        Wrecked Ship Map door 0 --> Basement
 LayoutYellowMaridiaLeftDoorMenu:
     ; Yellow Maridia
     A618,   A564,   YM Bug Sand Hole,           Bug Sand Hole door 0 --> Thread The Needle
@@ -255,20 +274,18 @@ LayoutYellowMaridiaLeftDoorMenu:
     A5DC,   A540,   YM Kassiuz,                 Kassiuz door 1 --> Plasma Tutorial
     A588,   A5F4,   YM Maridia Elevator,        Maridia Elevator door 1 --> Forgotten Highway Save
     A4A4,   A4D4,   YM Northwest Maridia Bugs,  Northwest Maridia Bugs door 1 --> Pseudo Plasma Spark
-    A5B8,   A5D0,   YM Plasma Spark (Lower),    Plasma Spark door 2 --> Kassiuz
+    A5A0,   A750,   YM Plasma Spark (Lower),    Plasma Spark door 0 --> Butterfly
     A5C4,   A630,   YM Plasma Spark (Middle),   Plasma Spark door 3 --> Bug Sand Hole
-    A5A0,   A750,   YM Plasma Spark (Upper),    Plasma Spark door 0 --> Butterfly
+    A5B8,   A5D0,   YM Plasma Spark (Upper),    Plasma Spark door 2 --> Kassiuz
     A54C,   A558,   YM Plasma Tutorial,         Plasma Tutorial door 1 --> Plasma
     A570,   A57C,   YM Thread The Needle,       Thread The Needle door 1 --> Maridia Elevator
     A48C,   A498,   YM Watering Hole,           Watering Hole door 0 --> Northwest Maridia Bugs
 
     ; Shadow Left Doors
-    A810,   A7A4,   GM Pants (Self to Self),    (Pants door 1 --> Pants)
+    A810,   A7A4,   GM Pants (Self to Self),    (Pants door X --> Pants)
     AB34,   8B6E,   TR Tourian Escape 4,        Tourian Escape 4 door 1 --> Climb
     96D2,   967E,   UN Lava Dive,               Lava Dive door 0 --> Kronic Boost
     95FA,   9A4A,   UN Single Chamber,          Single Chamber door 4 --> Three Musketeers
-    A2AC,   A2C4,   WS Basement,                Basement door 2 --> Phantoon Room
-    A264,   8A66,   WS Electric Death,          Electric Death door 0 --> East Ocean
 
 portals_right_vanilla_table:
 LayoutBlueBrinstarRightDoorMenu:
@@ -447,6 +464,10 @@ LayoutRedBrinstarRightDoorMenu:
     9036,   9066,   RB Red Tower (Middle),      Red Tower door 2 --> Red Brinstar Firefleas
     902A,   8F0A,   RB Red Tower (Upper),       Red Tower door 1 --> Noob Bridge
     9132,   9126,   RB Spazer,                  Spazer door 0 --> Below Spazer
+LayoutTourianRightDoorMenu:
+    ; Tourian
+LayoutUpperNorfairRightDoorMenu:
+    ; Upper Norfair
 LayoutWestMaridiaRightDoorMenu:
     ; West Maridia
     A510,   A390,   WM Crab Hole (Lower),       Crab Hole door 2 --> East Tunnel
@@ -462,6 +483,25 @@ LayoutWestMaridiaRightDoorMenu:
     A438,   A3C0,   WM Mount Everest (Upper),   Mount Everest door 1 --> Main Street
     A480,   90C6,   WM Red Fish,                Red Fish door 1 --> Caterpillars
     A36C,   911A,   WM West Tunnel,             West Tunnel door 1 --> Below Spazer
+LayoutWreckedShipRightDoorMenu:
+    ; Wrecked Ship
+    A1EC,   A1D4,   WS Assembly Line,           Assembly Line door 0 --> Attic
+    A1E0,   89EE,   WS Attic,                   Attic door 2 --> West Ocean
+    A2A0,   A2B8,   WS Basement,                Basement door 1 --> Wrecked Ship Map
+    A1A4,   A30C,   WS Bowling Alley (Lower),   Bowling Alley door 2 --> Gravity Suit
+    A198,   8B32,   WS Bowling Alley (Middle),  Bowling Alley door 1 --> West Ocean Geemer
+    A18C,   89FA,   WS Bowling Alley (Upper),   Bowling Alley door 0 --> West Ocean
+    A2F4,   A234,   WS East Supers,             Wrecked Ship East Supers door 0 --> Wrecked Ship Main Shaft
+    A270,   A258,   WS Electric Death (Lower),  Electric Death door 1 --> Spiky Death
+    A27C,   A288,   WS Electric Death (Upper),  Electric Death door 2 --> Wrecked Ship Energy Tank
+    A1B0,   89D6,   WS Entrance,                Wrecked Ship Entrance door 0 --> West Ocean
+    A300,   8A06,   WS Gravity Suit,            Gravity Suit door 0 --> West Ocean
+    A210,   A2E8,   WS Main Shaft (Lower),      Wrecked Ship Main Shaft door 2 --> Wrecked Ship West Supers
+    A1F8,   A1BC,   WS Main Shaft (Upper),      Wrecked Ship Main Shaft door 0 --> Wrecked Ship Entrance
+    A2C4,   A2AC,   WS Phantoon,                Phantoon Room door 0 --> Basement
+    A24C,   A2DC,   WS Spiky Death,             Spiky Death door 0 --> Sponge Bath
+    A2D0,   A204,   WS Sponge Bath,             Sponge Bath door 0 --> Wrecked Ship Main Shaft
+    A318,   A240,   WS Wrecked Ship Save,       Wrecked Ship Save door 0 --> Wrecked Ship Main Shaft
 LayoutYellowMaridiaRightDoorMenu:
     ; Yellow Maridia
     A630,   A5C4,   YM Bug Sand Hole,           Bug Sand Hole door 2 --> Plasma Spark
@@ -476,17 +516,14 @@ LayoutYellowMaridiaRightDoorMenu:
     A564,   A618,   YM Thread The Needle,       Thread The Needle door 0 --> Bug Sand Hole
 
     ; Shadow Right Doors
-    A804,   A798,   GM Shaktool (Pants),        (Shaktool door 0 --> Pants)
+    A804,   A798,   GM Shaktool (Pants),        (Shaktool door X --> Pants)
     967E,   96D2,   UN Kronic Boost,            Kronic Boost door 2 --> Lava Dive
-    A1E0,   89EE,   WS Attic,                   Attic door 2 --> West Ocean
-    A1A4,       ,   WS Bowling Alley (Lower),
-    A198,   8B32,   WS Bowling Alley (Middle),  Bowling Alley door 1 --> West Ocean Geemer
-    A18C,   89FA,   WS Bowling Alley (Upper),   Bowling Alley door 0 --> West Ocean
-    A1B0,   89D6,   WS Entrance,                Wrecked Ship Entrance door 0 --> West Ocean
-    A300,   8A06,   WS Gravity Suit,            Gravity Suit door 0 --> West Ocean
-    A2C4,   A2AC,   WS Phantoon,                Phantoon Room door 0 --> Basement
 
 portals_up_vanilla_table:
+LayoutBlueBrinstarUpDoorMenu:
+    ; Blue Brinstar
+LayoutCeresUpDoorMenu:
+    ; Ceres
 LayoutCrocLairUpDoorMenu:
     ; Croc's Lair
     944A,   947A,   CL Post Croc Farm,          Post Crocomire Farming door 2 --> Post Crocomire Shaft
@@ -500,6 +537,8 @@ LayoutCrateriaUpDoorMenu:
 LayoutGreenBrinstarUpDoorMenu:
     ; Green Brinstar
     8E56,   8E3E,   GB Spore Spawn,             Spore Spawn door 1 --> Spore Spawn Kihunters
+LayoutGreenMaridiaUpDoorMenu:
+    ; Green Maridia
 LayoutKraidLairUpDoorMenu:
     ; Kraid's Lair
     916E,   9156,   KL Kihunters,               Warehouse Kihunters door 0 --> Warehouse Zeela
@@ -507,6 +546,8 @@ LayoutLowerNorfairUpDoorMenu:
     ; Lower Norfair
     99EA,   9A26,   LN Kihunter Shaft,          Red Kihunter Shaft door 0 --> Wasteland
     99C6,   99DE,   LN Spring Ball Maze,        Spring Ball Maze door 2 --> Jail Power Bombs
+LayoutPinkBrinstarUpDoorMenu:
+    ; Pink Brinstar
 LayoutPinkMaridiaUpDoorMenu:
     ; Pink Maridia
     A714,   A6D8,   PM Aqueduct (Left),         Aqueduct door 1 --> West Aqueduct Quicksand
@@ -521,16 +562,26 @@ LayoutPinkMaridiaUpDoorMenu:
     A6CC,   0008,   PM East Sand Hole,          East Sand Hole door 1 --> East Sand Hall
     A6E4,   A6A8,   PM West Aqueduct Quicksand, West Aqueduct Quicksand door 1 --> West Sand Hole
     A6B4,   000A,   PM West Sand Hole,          West Sand Hole door 1 --> West Sand Hall
+LayoutRedBrinstarUpDoorMenu:
+    ; Red Brinstar
+LayoutTourianUpDoorMenu:
+    ; Tourian
+LayoutUpperNorfairUpDoorMenu:
+    ; Upper Norfair
 LayoutWestMaridiaUpDoorMenu:
     ; West Maridia
     A39C,   A330,   WM Main Street,             Main Street door 0 --> Glass Tunnel
     A444,   A3F0,   WM Mount Everest (Left),    Mount Everest door 2 --> Fish Tank
     A450,   A3FC,   WM Mount Everest (Right),   Mount Everest door 3 --> Fish Tank
     A474,   A42C,   WM Red Fish,                Red Fish door 0 --> Mount Everest
+LayoutWreckedShipUpDoorMenu:
+    ; Wrecked Ship
+    A1C8,   A228,   WS Attic,                   Attic door 0 --> Wrecked Ship Main Shaft
+    A21C,   A294,   WS Main Shaft,              Wrecked Ship Main Shaft door 3 --> Basement
 LayoutYellowMaridiaUpDoorMenu:
     ; Yellow Maridia
-    A624,   001E,   YM Bug Sand Hole,           Bug Sand Hole door 1 --> Plasma Beach Quicksand
-    A8A0,   001D,   YM Plasma Beach Quicksand,  Plasma Beach Quicksand door 0 --> Butterfly
+    A624,   0020,   YM Bug Sand Hole,           Bug Sand Hole door 1 --> Plasma Beach Quicksand
+    A8A0,   001F,   YM Plasma Beach Quicksand,  Plasma Beach Quicksand door 0 --> Butterfly
     A5AC,   A60C,   YM Plasma Spark,            Plasma Spark door 1 --> Aqueduct Tube
     A4E0,   A4BC,   YM Pseudo Plasma Spark,     Pseudo Plasma Spark door 1 --> Crab Shaft
 
@@ -538,6 +589,10 @@ LayoutYellowMaridiaUpDoorMenu:
     93D2,   93EA,   UN Crocomire Speedway,      Crocomire Speedway door 4 --> Crocomire
 
 portals_down_vanilla_table:
+LayoutBlueBrinstarDownDoorMenu:
+    ; Blue Brinstar
+LayoutCeresDownDoorMenu:
+    ; Ceres
 LayoutCrocLairDownDoorMenu:
     ; Croc's Lair
     93EA,   93D2,   CL Crocomire,               Crocomire door 1 --> Crocomire Speedway
@@ -554,9 +609,9 @@ LayoutGreenBrinstarDownDoorMenu:
     8E3E,   8E56,   GB Spore Spawn Kihunters,   Spore Spawn Kihunters door 1 --> Spore Spawn
 LayoutGreenMaridiaDownDoorMenu:
     ; Green Maridia
-    0008,   A6CC,   GM East Sand Hall,          (East Sand Hall --> East Sand Hole)
+    0008,   A6CC,   GM East Sand Hall,          (East Sand Hall door X --> East Sand Hole)
     A678,   A600,   GM Oasis,                   Oasis door 2 --> Aqueduct Tube
-    000A,   A6B4,   GM West Sand Hall,          (West Sand Hall --> West Sand Hole)
+    000A,   A6B4,   GM West Sand Hall,          (West Sand Hall door X --> West Sand Hole)
 LayoutKraidLairDownDoorMenu:
     ; Kraid's Lair
     9156,   916E,   KL Warehouse Zeela,         Warehouse Zeela door 2 --> Warehouse Kihunters
@@ -564,27 +619,39 @@ LayoutLowerNorfairDownDoorMenu:
     ; Lower Norfair
     99DE,   99C6,   LN Jail Power Bombs,        Jail Power Bombs door 1 --> Spring Ball Maze
     9A26,   99EA,   LN Wasteland,               Wasteland door 1 --> Red Kihunter Shaft
+LayoutPinkBrinstarDownDoorMenu:
+    ; Pink Brinstar
 LayoutPinkMaridiaDownDoorMenu:
     ; Pink Maridia
     A72C,   A768,   PM Aqueduct,                Aqueduct door 3 --> Botwoon Hallway
     A60C,   A5AC,   PM Aqueduct Tube,           Aqueduct Tube door 1 --> Plasma Spark
-    0010,   A8AC,   PM Below Botwoon (Left),    (Below Botwoon Energy Tank --> Botwoon Quicksand)
-    0011,   A8B8,   PM Below Botwoon (Right),   (Below Botwoon Energy Tank --> Botwoon Quicksand)
-    0012,   A864,   PM Botwoon Sand (Left),     (Botwoon Quicksand --> Botwoon Energy Tank)
-    0013,   A858,   PM Botwoon Sand (Right),    (Botwoon Quicksand --> Botwoon Energy Tank)
+    0010,   A8AC,   PM Below Botwoon (Left),    (Below Botwoon Energy Tank door L --> Botwoon Quicksand)
+    0011,   A8B8,   PM Below Botwoon (Right),   (Below Botwoon Energy Tank door R --> Botwoon Quicksand)
+    0012,   A864,   PM Botwoon Sand (Left),     (Botwoon Quicksand door L --> Botwoon Energy Tank)
+    0013,   A858,   PM Botwoon Sand (Right),    (Botwoon Quicksand door R --> Botwoon Energy Tank)
     A4BC,   A4E0,   PM Crab Shaft,              Crab Shaft door 1 --> Pseudo Plasma Spark
     A6F0,   A720,   PM East Aqueduct Quicksand, East Aqueduct Quicksand door 0 --> Aqueduct
     A6C0,   A6FC,   PM East Sand Hole,          East Sand Hole door 0 --> East Aqueduct Quicksand
     A6D8,   A714,   PM West Aqueduct Quicksand, West Aqueduct Quicksand door 0 --> Aqueduct
     A6A8,   A6E4,   PM West Sand Hole,          West Sand Hole door 0 --> West Aqueduct Quicksand
+LayoutRedBrinstarDownDoorMenu:
+    ; Red Brinstar
+LayoutTourianDownDoorMenu:
+    ; Tourian
+LayoutUpperNorfairDownDoorMenu:
+    ; Upper Norfair
 LayoutWestMaridiaDownDoorMenu:
     ; West Maridia
     A3F0,   A444,   WM Fish Tank (Left),        Fish Tank door 2 --> Mount Everest
     A3FC,   A450,   WM Fish Tank (Right),       Fish Tank door 3 --> Mount Everest
     A330,   A39C,   WM Glass Tunnel,            Glass Tunnel door 0 --> Main Street
     A42C,   A474,   WM Mount Everest,           Mount Everest door 0 --> Red Fish
+LayoutWreckedShipDownDoorMenu:
+    ; Wrecked Ship
+    A294,   A21C,   WS Basement,                Basement door 0 --> Wrecked Ship Main Shaft
+    A228,   A1C8,   WS Main Shaft,              Wrecked Ship Main Shaft door 4 --> Attic
 LayoutYellowMaridiaDownDoorMenu:
     ; Yellow Maridia
-    001D,   A8A0,   YM Butterfly,               (Butterfly --> Plasma Beach Quicksand)
-    001E,   A624,   YM Plasma Beach Quicksand,  (Plasma Beach Quicksand --> Bug Sand Hole)
+    001F,   A8A0,   YM Butterfly,               (Butterfly door X --> Plasma Beach Quicksand)
+    0020,   A624,   YM Plasma Beach Quicksand,  (Plasma Beach Quicksand door X --> Bug Sand Hole)
 

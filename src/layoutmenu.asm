@@ -9,10 +9,10 @@ print pc, " layoutmenu start"
 ; -------------------------
 
 !layout_areaboss_door_count = #$0028
-!layout_left_door_count = #$00B1
-!layout_right_door_count = #$00AF
-!layout_up_door_count = #$001E
-!layout_down_door_count = #$001F
+!layout_left_door_count = #$00BE
+!layout_right_door_count = #$00C0
+!layout_up_door_count = #$0020
+!layout_down_door_count = #$0021
 
 LayoutMenu:
     dw #layout_itempickups
@@ -840,14 +840,14 @@ doorsubmenu_select:
 LayoutBlueBrinstarDoorMenu:
     dw #LayoutBlueBrinstarLeftDoorMenu
     dw #LayoutBlueBrinstarRightDoorMenu
-    dw #$0000
-    dw #$0000
+    dw #LayoutBlueBrinstarUpDoorMenu
+    dw #LayoutBlueBrinstarDownDoorMenu
 
 LayoutCeresDoorMenu:
     dw #LayoutCeresLeftDoorMenu
     dw #LayoutCeresRightDoorMenu
-    dw #$0000
-    dw #$0000
+    dw #LayoutCeresUpDoorMenu
+    dw #LayoutCeresDownDoorMenu
 
 LayoutCrocLairDoorMenu:
     dw #LayoutCrocLairLeftDoorMenu
@@ -870,7 +870,7 @@ LayoutGreenBrinstarDoorMenu:
 LayoutGreenMaridiaDoorMenu:
     dw #LayoutGreenMaridiaLeftDoorMenu
     dw #LayoutGreenMaridiaRightDoorMenu
-    dw #$0000
+    dw #LayoutGreenMaridiaUpDoorMenu
     dw #LayoutGreenMaridiaDownDoorMenu
 
 LayoutKraidLairDoorMenu:
@@ -888,8 +888,8 @@ LayoutLowerNorfairDoorMenu:
 LayoutPinkBrinstarDoorMenu:
     dw #LayoutPinkBrinstarLeftDoorMenu
     dw #LayoutPinkBrinstarRightDoorMenu
-    dw #$0000
-    dw #$0000
+    dw #LayoutPinkBrinstarUpDoorMenu
+    dw #LayoutPinkBrinstarDownDoorMenu
 
 LayoutPinkMaridiaDoorMenu:
     dw #LayoutPinkMaridiaLeftDoorMenu
@@ -900,20 +900,20 @@ LayoutPinkMaridiaDoorMenu:
 LayoutRedBrinstarDoorMenu:
     dw #LayoutRedBrinstarLeftDoorMenu
     dw #LayoutRedBrinstarRightDoorMenu
-    dw #$0000
-    dw #$0000
+    dw #LayoutRedBrinstarUpDoorMenu
+    dw #LayoutRedBrinstarDownDoorMenu
 
 LayoutTourianDoorMenu:
-    dw #$0000
-    dw #$0000
-    dw #$0000
-    dw #$0000
+    dw #LayoutTourianLeftDoorMenu
+    dw #LayoutTourianRightDoorMenu
+    dw #LayoutTourianUpDoorMenu
+    dw #LayoutTourianDownDoorMenu
 
 LayoutUpperNorfairDoorMenu:
-    dw #$0000
-    dw #$0000
-    dw #$0000
-    dw #$0000
+    dw #LayoutUpperNorfairLeftDoorMenu
+    dw #LayoutUpperNorfairRightDoorMenu
+    dw #LayoutUpperNorfairUpDoorMenu
+    dw #LayoutUpperNorfairDownDoorMenu
 
 LayoutWestMaridiaDoorMenu:
     dw #LayoutWestMaridiaLeftDoorMenu
@@ -922,10 +922,10 @@ LayoutWestMaridiaDoorMenu:
     dw #LayoutWestMaridiaDownDoorMenu
 
 LayoutWreckedShipDoorMenu:
-    dw #$0000
-    dw #$0000
-    dw #$0000
-    dw #$0000
+    dw #LayoutWreckedShipLeftDoorMenu
+    dw #LayoutWreckedShipRightDoorMenu
+    dw #LayoutWreckedShipUpDoorMenu
+    dw #LayoutWreckedShipDownDoorMenu
 
 LayoutYellowMaridiaDoorMenu:
     dw #LayoutYellowMaridiaLeftDoorMenu
@@ -1614,8 +1614,12 @@ doormenu_left_9072:
     %cm_jsl("RB X-Ray Scope", #doorsubmenu_select, #$0097)
 
 LayoutTourianLeftDoorMenu:
+    dw #$0000
+    %cm_header("SELECT LEFT DOOR")
 
 LayoutUpperNorfairLeftDoorMenu:
+    dw #$0000
+    %cm_header("SELECT LEFT DOOR")
 
 LayoutWestMaridiaLeftDoorMenu:
     dw #doormenu_left_A51C
@@ -1678,6 +1682,60 @@ doormenu_left_A360:
     %cm_jsl("WM West Tunnel", #doorsubmenu_select, #$00A5)
 
 LayoutWreckedShipLeftDoorMenu:
+    dw #doormenu_left_A1D4
+    dw #doormenu_left_A2AC
+    dw #doormenu_left_A264
+    dw #doormenu_left_A288
+    dw #doormenu_left_A1BC
+    dw #doormenu_left_A30C
+    dw #doormenu_left_A234
+    dw #doormenu_left_A204
+    dw #doormenu_left_A240
+    dw #doormenu_left_A258
+    dw #doormenu_left_A2DC
+    dw #doormenu_left_A2E8
+    dw #doormenu_left_A2B8
+    dw #$0000
+    %cm_header("SELECT LEFT DOOR")
+
+doormenu_left_A1D4:
+    %cm_jsl("WS Attic", #doorsubmenu_select, #$00A6)
+
+doormenu_left_A2AC:
+    %cm_jsl("WS Basement", #doorsubmenu_select, #$00A7)
+
+doormenu_left_A264:
+    %cm_jsl("WS Electric Death", #doorsubmenu_select, #$00A8)
+
+doormenu_left_A288:
+    %cm_jsl("WS Energy Tank", #doorsubmenu_select, #$00A9)
+
+doormenu_left_A1BC:
+    %cm_jsl("WS Entrance", #doorsubmenu_select, #$00AA)
+
+doormenu_left_A30C:
+    %cm_jsl("WS Gravity Suit", #doorsubmenu_select, #$00AB)
+
+doormenu_left_A234:
+    %cm_jsl("WS Main Shaft (Lower)", #doorsubmenu_select, #$00AC)
+
+doormenu_left_A204:
+    %cm_jsl("WS Main Shaft (Middle)", #doorsubmenu_select, #$00AD)
+
+doormenu_left_A240:
+    %cm_jsl("WS Main Shaft (Upper)", #doorsubmenu_select, #$00AE)
+
+doormenu_left_A258:
+    %cm_jsl("WS Spiky Death", #doorsubmenu_select, #$00AF)
+
+doormenu_left_A2DC:
+    %cm_jsl("WS Sponge Bath", #doorsubmenu_select, #$00B0)
+
+doormenu_left_A2E8:
+    %cm_jsl("WS West Supers", #doorsubmenu_select, #$00B1)
+
+doormenu_left_A2B8:
+    %cm_jsl("WS Wrecked Ship Map", #doorsubmenu_select, #$00B2)
 
 LayoutYellowMaridiaLeftDoorMenu:
     dw #doormenu_left_A618
@@ -1685,9 +1743,9 @@ LayoutYellowMaridiaLeftDoorMenu:
     dw #doormenu_left_A5DC
     dw #doormenu_left_A588
     dw #doormenu_left_A4A4
-    dw #doormenu_left_A5B8
-    dw #doormenu_left_A5C4
     dw #doormenu_left_A5A0
+    dw #doormenu_left_A5C4
+    dw #doormenu_left_A5B8
     dw #doormenu_left_A54C
     dw #doormenu_left_A570
     dw #doormenu_left_A48C
@@ -1695,37 +1753,37 @@ LayoutYellowMaridiaLeftDoorMenu:
     %cm_header("SELECT LEFT DOOR")
 
 doormenu_left_A618:
-    %cm_jsl("YM Bug Sand Hole", #doorsubmenu_select, #$00A6)
+    %cm_jsl("YM Bug Sand Hole", #doorsubmenu_select, #$00B3)
 
 doormenu_left_A75C:
-    %cm_jsl("YM Butterfly", #doorsubmenu_select, #$00A7)
+    %cm_jsl("YM Butterfly", #doorsubmenu_select, #$00B4)
 
 doormenu_left_A5DC:
-    %cm_jsl("YM Kassiuz", #doorsubmenu_select, #$00A8)
+    %cm_jsl("YM Kassiuz", #doorsubmenu_select, #$00B5)
 
 doormenu_left_A588:
-    %cm_jsl("YM Maridia Elevator", #doorsubmenu_select, #$00A9)
+    %cm_jsl("YM Maridia Elevator", #doorsubmenu_select, #$00B6)
 
 doormenu_left_A4A4:
-    %cm_jsl("YM Northwest Maridia Bugs", #doorsubmenu_select, #$00AA)
-
-doormenu_left_A5B8:
-    %cm_jsl("YM Plasma Spark (Lower)", #doorsubmenu_select, #$00AB)
-
-doormenu_left_A5C4:
-    %cm_jsl("YM Plasma Spark (Middle)", #doorsubmenu_select, #$00AC)
+    %cm_jsl("YM Northwest Maridia Bugs", #doorsubmenu_select, #$00B7)
 
 doormenu_left_A5A0:
-    %cm_jsl("YM Plasma Spark (Upper)", #doorsubmenu_select, #$00AD)
+    %cm_jsl("YM Plasma Spark (Lower)", #doorsubmenu_select, #$00B8)
+
+doormenu_left_A5C4:
+    %cm_jsl("YM Plasma Spark (Middle)", #doorsubmenu_select, #$00B9)
+
+doormenu_left_A5B8:
+    %cm_jsl("YM Plasma Spark (Upper)", #doorsubmenu_select, #$00BA)
 
 doormenu_left_A54C:
-    %cm_jsl("YM Plasma Tutorial", #doorsubmenu_select, #$00AE)
+    %cm_jsl("YM Plasma Tutorial", #doorsubmenu_select, #$00BB)
 
 doormenu_left_A570:
-    %cm_jsl("YM Thread The Needle", #doorsubmenu_select, #$00AF)
+    %cm_jsl("YM Thread The Needle", #doorsubmenu_select, #$00BC)
 
 doormenu_left_A48C:
-    %cm_jsl("YM Watering Hole", #doorsubmenu_select, #$00B0)
+    %cm_jsl("YM Watering Hole", #doorsubmenu_select, #$00BD)
 
 layout_leftright_leftdoor:
     dw !ACTION_CHOICE_JSL_TEXT
@@ -1897,14 +1955,27 @@ layout_leftright_leftdoor:
     dw #doormenu_left_A3C0
     dw #doormenu_left_A468
     dw #doormenu_left_A360
+    dw #doormenu_left_A1D4      ; Wrecked Ship
+    dw #doormenu_left_A2AC
+    dw #doormenu_left_A264
+    dw #doormenu_left_A288
+    dw #doormenu_left_A1BC
+    dw #doormenu_left_A30C
+    dw #doormenu_left_A234
+    dw #doormenu_left_A204
+    dw #doormenu_left_A240
+    dw #doormenu_left_A258
+    dw #doormenu_left_A2DC
+    dw #doormenu_left_A2E8
+    dw #doormenu_left_A2B8
     dw #doormenu_left_A618      ; Yellow Maridia
     dw #doormenu_left_A75C
     dw #doormenu_left_A5DC
     dw #doormenu_left_A588
     dw #doormenu_left_A4A4
-    dw #doormenu_left_A5B8
-    dw #doormenu_left_A5C4
     dw #doormenu_left_A5A0
+    dw #doormenu_left_A5C4
+    dw #doormenu_left_A5B8
     dw #doormenu_left_A54C
     dw #doormenu_left_A570
     dw #doormenu_left_A48C
@@ -2591,8 +2662,12 @@ doormenu_right_9132:
     %cm_jsl("RB Spazer", #doorsubmenu_select, #$0097)
 
 LayoutTourianRightDoorMenu:
+    dw #$0000
+    %cm_header("SELECT RIGHT DOOR")
 
 LayoutUpperNorfairRightDoorMenu:
+    dw #$0000
+    %cm_header("SELECT RIGHT DOOR")
 
 LayoutWestMaridiaRightDoorMenu:
     dw #doormenu_right_A510
@@ -2651,6 +2726,76 @@ doormenu_right_A36C:
     %cm_jsl("WM West Tunnel", #doorsubmenu_select, #$00A4)
 
 LayoutWreckedShipRightDoorMenu:
+    dw #doormenu_right_A1EC
+    dw #doormenu_right_A1E0
+    dw #doormenu_right_A2A0
+    dw #doormenu_right_A1A4
+    dw #doormenu_right_A198
+    dw #doormenu_right_A18C
+    dw #doormenu_right_A2F4
+    dw #doormenu_right_A270
+    dw #doormenu_right_A27C
+    dw #doormenu_right_A1B0
+    dw #doormenu_right_A300
+    dw #doormenu_right_A210
+    dw #doormenu_right_A1F8
+    dw #doormenu_right_A2C4
+    dw #doormenu_right_A24C
+    dw #doormenu_right_A2D0
+    dw #doormenu_right_A318
+    dw #$0000
+    %cm_header("SELECT RIGHT DOOR")
+
+doormenu_right_A1EC:
+    %cm_jsl("WS Assembly Line", #doorsubmenu_select, #$00A5)
+
+doormenu_right_A1E0:
+    %cm_jsl("WS Attic", #doorsubmenu_select, #$00A6)
+
+doormenu_right_A2A0:
+    %cm_jsl("WS Basement", #doorsubmenu_select, #$00A7)
+
+doormenu_right_A1A4:
+    %cm_jsl("WS Bowling Alley (Lower)", #doorsubmenu_select, #$00A8)
+
+doormenu_right_A198:
+    %cm_jsl("WS Bowling Alley (Middle)", #doorsubmenu_select, #$00A9)
+
+doormenu_right_A18C:
+    %cm_jsl("WS Bowling Alley (Upper)", #doorsubmenu_select, #$00AA)
+
+doormenu_right_A2F4:
+    %cm_jsl("WS East Supers", #doorsubmenu_select, #$00AB)
+
+doormenu_right_A270:
+    %cm_jsl("WS Electric Death (Lower)", #doorsubmenu_select, #$00AC)
+
+doormenu_right_A27C:
+    %cm_jsl("WS Electric Death (Upper)", #doorsubmenu_select, #$00AD)
+
+doormenu_right_A1B0:
+    %cm_jsl("WS Entrance", #doorsubmenu_select, #$00AE)
+
+doormenu_right_A300:
+    %cm_jsl("WS Gravity Suit", #doorsubmenu_select, #$00AF)
+
+doormenu_right_A210:
+    %cm_jsl("WS Main Shaft (Lower)", #doorsubmenu_select, #$00B0)
+
+doormenu_right_A1F8:
+    %cm_jsl("WS Main Shaft (Upper)", #doorsubmenu_select, #$00B1)
+
+doormenu_right_A2C4:
+    %cm_jsl("WS Phantoon", #doorsubmenu_select, #$00B2)
+
+doormenu_right_A24C:
+    %cm_jsl("WS Spiky Death", #doorsubmenu_select, #$00B3)
+
+doormenu_right_A2D0:
+    %cm_jsl("WS Sponge Bath", #doorsubmenu_select, #$00B4)
+
+doormenu_right_A318:
+    %cm_jsl("WS Wrecked Ship Save", #doorsubmenu_select, #$00B5)
 
 LayoutYellowMaridiaRightDoorMenu:
     dw #doormenu_right_A630
@@ -2667,34 +2812,34 @@ LayoutYellowMaridiaRightDoorMenu:
     %cm_header("SELECT RIGHT DOOR")
 
 doormenu_right_A630:
-    %cm_jsl("YM Bug Sand Hole", #doorsubmenu_select, #$00A5)
+    %cm_jsl("YM Bug Sand Hole", #doorsubmenu_select, #$00B6)
 
 doormenu_right_A750:
-    %cm_jsl("YM Butterfly", #doorsubmenu_select, #$00A6)
+    %cm_jsl("YM Butterfly", #doorsubmenu_select, #$00B7)
 
 doormenu_right_A5F4:
-    %cm_jsl("YM Forgotten Highway Save", #doorsubmenu_select, #$00A7)
+    %cm_jsl("YM Forgotten Highway Save", #doorsubmenu_select, #$00B8)
 
 doormenu_right_A5D0:
-    %cm_jsl("YM Kassiuz", #doorsubmenu_select, #$00A8)
+    %cm_jsl("YM Kassiuz", #doorsubmenu_select, #$00B9)
 
 doormenu_right_A57C:
-    %cm_jsl("YM Maridia Elevator", #doorsubmenu_select, #$00A9)
+    %cm_jsl("YM Maridia Elevator", #doorsubmenu_select, #$00BA)
 
 doormenu_right_A498:
-    %cm_jsl("YM Northwest Maridia Bugs", #doorsubmenu_select, #$00AA)
+    %cm_jsl("YM Northwest Maridia Bugs", #doorsubmenu_select, #$00BB)
 
 doormenu_right_A558:
-    %cm_jsl("YM Plasma", #doorsubmenu_select, #$00AB)
+    %cm_jsl("YM Plasma", #doorsubmenu_select, #$00BC)
 
 doormenu_right_A540:
-    %cm_jsl("YM Plasma Tutorial", #doorsubmenu_select, #$00AC)
+    %cm_jsl("YM Plasma Tutorial", #doorsubmenu_select, #$00BD)
 
 doormenu_right_A4D4:
-    %cm_jsl("YM Pseudo Plasma Spark", #doorsubmenu_select, #$00AD)
+    %cm_jsl("YM Pseudo Plasma Spark", #doorsubmenu_select, #$00BE)
 
 doormenu_right_A564:
-    %cm_jsl("YM Thread The Needle", #doorsubmenu_select, #$00AE)
+    %cm_jsl("YM Thread The Needle", #doorsubmenu_select, #$00BF)
 
 layout_leftright_rightdoor:
     dw !ACTION_CHOICE_JSL_TEXT
@@ -2865,6 +3010,23 @@ layout_leftright_rightdoor:
     dw #doormenu_right_A438
     dw #doormenu_right_A480
     dw #doormenu_right_A36C
+    dw #doormenu_right_A1EC     ; Wrecked Ship
+    dw #doormenu_right_A1E0
+    dw #doormenu_right_A2A0
+    dw #doormenu_right_A1A4
+    dw #doormenu_right_A198
+    dw #doormenu_right_A18C
+    dw #doormenu_right_A2F4
+    dw #doormenu_right_A270
+    dw #doormenu_right_A27C
+    dw #doormenu_right_A1B0
+    dw #doormenu_right_A300
+    dw #doormenu_right_A210
+    dw #doormenu_right_A1F8
+    dw #doormenu_right_A2C4
+    dw #doormenu_right_A24C
+    dw #doormenu_right_A2D0
+    dw #doormenu_right_A318
     dw #doormenu_right_A630     ; Yellow Maridia
     dw #doormenu_right_A750
     dw #doormenu_right_A5F4
@@ -2881,6 +3043,14 @@ layout_leftright_rightdoor:
 ; -----------------
 ; Up Doors
 ; -----------------
+LayoutBlueBrinstarUpDoorMenu:
+    dw #$0000
+    %cm_header("SELECT UP DOOR")
+
+LayoutCeresUpDoorMenu:
+    dw #$0000
+    %cm_header("SELECT UP DOOR")
+
 LayoutCrocLairUpDoorMenu:
     dw #doormenu_up_944A
     dw #doormenu_up_949E
@@ -2921,6 +3091,10 @@ LayoutGreenBrinstarUpDoorMenu:
 doormenu_up_8E56:
     %cm_jsl("GB Spore Spawn", #doorsubmenu_select, #$0006)
 
+LayoutGreenMaridiaUpDoorMenu:
+    dw #$0000
+    %cm_header("SELECT UP DOOR")
+
 LayoutKraidLairUpDoorMenu:
     dw #doormenu_up_916E
     dw #$0000
@@ -2940,6 +3114,10 @@ doormenu_up_99EA:
 
 doormenu_up_99C6:
     %cm_jsl("LN Spring Ball Maze", #doorsubmenu_select, #$0009)
+
+LayoutPinkBrinstarUpDoorMenu:
+    dw #$0000
+    %cm_header("SELECT UP DOOR")
 
 LayoutPinkMaridiaUpDoorMenu:
     dw #doormenu_up_A714
@@ -2993,9 +3171,17 @@ doormenu_up_A6E4:
 doormenu_up_A6B4:
     %cm_jsl("PM West Sand Hole", #doorsubmenu_select, #$0015)
 
+LayoutRedBrinstarUpDoorMenu:
+    dw #$0000
+    %cm_header("SELECT UP DOOR")
+
 LayoutTourianUpDoorMenu:
+    dw #$0000
+    %cm_header("SELECT UP DOOR")
 
 LayoutUpperNorfairUpDoorMenu:
+    dw #$0000
+    %cm_header("SELECT UP DOOR")
 
 LayoutWestMaridiaUpDoorMenu:
     dw #doormenu_up_A39C
@@ -3018,6 +3204,16 @@ doormenu_up_A474:
     %cm_jsl("WM Red Fish", #doorsubmenu_select, #$0019)
 
 LayoutWreckedShipUpDoorMenu:
+    dw #doormenu_up_A1C8
+    dw #doormenu_up_A21C
+    dw #$0000
+    %cm_header("SELECT UP DOOR")
+
+doormenu_up_A1C8:
+    %cm_jsl("WS Attic", #doorsubmenu_select, #$001A)
+
+doormenu_up_A21C:
+    %cm_jsl("WS Main Shaft", #doorsubmenu_select, #$001B)
 
 LayoutYellowMaridiaUpDoorMenu:
     dw #doormenu_up_A624
@@ -3028,16 +3224,16 @@ LayoutYellowMaridiaUpDoorMenu:
     %cm_header("SELECT UP DOOR")
 
 doormenu_up_A624:
-    %cm_jsl("YM Bug Sand Hole", #doorsubmenu_select, #$001A)
+    %cm_jsl("YM Bug Sand Hole", #doorsubmenu_select, #$001C)
 
 doormenu_up_A8A0:
-    %cm_jsl("YM Plasma Beach Quicksand", #doorsubmenu_select, #$001B)
+    %cm_jsl("YM Plasma Beach Quicksand", #doorsubmenu_select, #$001D)
 
 doormenu_up_A5AC:
-    %cm_jsl("YM Plasma Spark", #doorsubmenu_select, #$001C)
+    %cm_jsl("YM Plasma Spark", #doorsubmenu_select, #$001E)
 
 doormenu_up_A4E0:
-    %cm_jsl("YM Pseudo Plasma Spark", #doorsubmenu_select, #$001D)
+    %cm_jsl("YM Pseudo Plasma Spark", #doorsubmenu_select, #$001F)
 
 layout_updown_updoor:
     dw !ACTION_CHOICE_JSL_TEXT
@@ -3069,6 +3265,8 @@ layout_updown_updoor:
     dw #doormenu_up_A444
     dw #doormenu_up_A450
     dw #doormenu_up_A474
+    dw #doormenu_up_A1C8        ; Wrecked Ship
+    dw #doormenu_up_A21C
     dw #doormenu_up_A624        ; Yellow Maridia
     dw #doormenu_up_A8A0
     dw #doormenu_up_A5AC
@@ -3079,6 +3277,14 @@ layout_updown_updoor:
 ; -----------------
 ; Down Doors
 ; -----------------
+LayoutBlueBrinstarDownDoorMenu:
+    dw #$0000
+    %cm_header("SELECT DOWN DOOR")
+
+LayoutCeresDownDoorMenu:
+    dw #$0000
+    %cm_header("SELECT DOWN DOOR")
+
 LayoutCrocLairDownDoorMenu:
     dw #doormenu_down_93EA
     dw #doormenu_down_94CE
@@ -3159,6 +3365,10 @@ doormenu_down_99DE:
 doormenu_down_9A26:
     %cm_jsl("LN Wasteland", #doorsubmenu_select, #$000D)
 
+LayoutPinkBrinstarDownDoorMenu:
+    dw #$0000
+    %cm_header("SELECT DOWN DOOR")
+
 LayoutPinkMaridiaDownDoorMenu:
     dw #doormenu_down_A72C
     dw #doormenu_down_A60C
@@ -3207,9 +3417,17 @@ doormenu_down_A6D8:
 doormenu_down_A6A8:
     %cm_jsl("PM West Sand Hole", #doorsubmenu_select, #$0018)
 
+LayoutRedBrinstarDownDoorMenu:
+    dw #$0000
+    %cm_header("SELECT DOWN DOOR")
+
 LayoutTourianDownDoorMenu:
+    dw #$0000
+    %cm_header("SELECT DOWN DOOR")
 
 LayoutUpperNorfairDownDoorMenu:
+    dw #$0000
+    %cm_header("SELECT DOWN DOOR")
 
 LayoutWestMaridiaDownDoorMenu:
     dw #doormenu_down_A3F0
@@ -3232,18 +3450,28 @@ doormenu_down_A42C:
     %cm_jsl("WM Mount Everest", #doorsubmenu_select, #$001C)
 
 LayoutWreckedShipDownDoorMenu:
-
-LayoutYellowMaridiaDownDoorMenu:
-    dw #doormenu_down_001D
-    dw #doormenu_down_001E
+    dw #doormenu_down_A294
+    dw #doormenu_down_A228
     dw #$0000
     %cm_header("SELECT DOWN DOOR")
 
-doormenu_down_001D:
-    %cm_jsl("YM Butterfly", #doorsubmenu_select, #$001D)
+doormenu_down_A294:
+    %cm_jsl("WS Basement", #doorsubmenu_select, #$001D)
 
-doormenu_down_001E:
-    %cm_jsl("YM Plasma Beach Quicksand", #doorsubmenu_select, #$001E)
+doormenu_down_A228:
+    %cm_jsl("WS Main Shaft", #doorsubmenu_select, #$001E)
+
+LayoutYellowMaridiaDownDoorMenu:
+    dw #doormenu_down_001F
+    dw #doormenu_down_0020
+    dw #$0000
+    %cm_header("SELECT DOWN DOOR")
+
+doormenu_down_001F:
+    %cm_jsl("YM Butterfly", #doorsubmenu_select, #$001F)
+
+doormenu_down_0020:
+    %cm_jsl("YM Plasma Beach Quicksand", #doorsubmenu_select, #$0020)
 
 layout_updown_downdoor:
     dw !ACTION_CHOICE_JSL_TEXT
@@ -3278,8 +3506,10 @@ layout_updown_downdoor:
     dw #doormenu_down_A3FC
     dw #doormenu_down_A330
     dw #doormenu_down_A42C
-    dw #doormenu_down_001D      ; Yellow Maridia
-    dw #doormenu_down_001E
+    dw #doormenu_down_A294      ; Wrecked Ship
+    dw #doormenu_down_A228
+    dw #doormenu_down_001F      ; Yellow Maridia
+    dw #doormenu_down_0020
     dw #$0000
 
 
