@@ -234,8 +234,74 @@ LayoutRedBrinstarLeftDoorMenu:
     9072,   905A,   RB X-Ray Scope,             X-Ray Scope door 0 --> Red Brinstar Firefleas
 LayoutTourianLeftDoorMenu:
     ; Tourian
+    AA38,   AA2C,   TR Big Boy,                 Big Boy door 0 --> Dust Torizo
+    AA20,   AA14,   TR Dust Torizo,             Dust Torizo door 0 --> Blue Hoppers
+    AAD4,   AABC,   TR Lower Tourian Save,      Lower Tourian Save door 0 --> Rinka Shaft
+    A9A8,   A984,   TR Metroids 1,              Metroids 1 door 0 --> Tourian First
+    A9CC,   A9D8,   TR Metroids 2 (Lower),      Metroids 2 door 1 --> Metroids 3
+    A9C0,   A9B4,   TR Metroids 2 (Upper),      Metroids 2 door 0 --> Metroids 1
+    A9E4,   A9F0,   TR Metroids 3,              Metroids 3 door 1 --> Metroids 4
+    AA80,   AAC8,   TR Mother Brain,            Mother Brain door 0 --> Rinka Shaft
+    AA5C,   AA98,   TR Seaweed (Lower),         Seaweed door 1 --> Tourian Eye Door
+    AA50,   AA44,   TR Seaweed (Upper),         Seaweed door 0 --> Big Boy
+    AAE0,   AA8C,   TR Tourian Escape 1,        Tourian Escape 1 door 0 --> Mother Brain
+    AB04,   AB10,   TR Tourian Escape 2,        Tourian Escape 2 door 1 --> Tourian Escape 3
+    AB1C,   AB28,   TR Tourian Escape 3,        Tourian Escape 3 door 1 --> Tourian Escape 4
+    AB34,   8B6E,   TR Tourian Escape 4,        Tourian Escape 4 door 1 --> Climb
+    AAA4,   AAB0,   TR Tourian Eye Door,        Tourian Eye Door door 1 --> Rinka Shaft
+    A99C,   AB40,   TR Tourian First,           Tourian First door 3 --> Upper Tourian Save
+    AA74,   AA68,   TR Tourian Recharge,        Tourian Recharge door 0 --> Seaweed
 LayoutUpperNorfairLeftDoorMenu:
     ; Upper Norfair
+    9756,   9786,   UN Acid Snakes Tunnel,      Acid Snakes Tunnel door 1 --> Nutella Refill
+    97B6,   95A6,   UN Bat Cave,                Bat Cave door 1 --> Speed Booster Hall
+    9582,   95CA,   UN Bubble Mtn (Lower),      Bubble Mountain door 4 --> Single Chamber
+    958E,   97AA,   UN Bubble Mtn (Upper),      Bubble Mountain door 5 --> Bat Cave
+    97CE,   959A,   UN Bubble Mtn Save,         Bubble Mountain Save door 0 --> Bubble Mountain
+    92E2,   9402,   UN Business Center (Lower), Business Center door 3 --> Crocomire Escape
+    92FA,   9816,   UN Business Center (Mid),   Business Center door 6 --> Frog Savestation
+    92CA,   92A6,   UN Business Center (Upper), Business Center door 1 --> Cathedral Entrance
+    929A,   9732,   UN Cathedral,               Cathedral door 1 --> Rising Tide
+    92B2,   928E,   UN Cathedral Entrance,      Cathedral Entrance door 1 --> Cathedral
+    940E,   93AE,   UN Crocomire Escape,        Crocomire Escape door 1 --> Crocomire Speedway
+    93C6,   974A,   UN Croc Speedway (Lower),   Crocomire Speedway door 3 --> Acid Snakes Tunnel
+    93BA,   9822,   UN Croc Speedway (Upper),   Crocomire Speedway door 2 --> Crocomire Save
+    9396,   93A2,   UN Crumble Shaft (Lower),   Crumble Shaft door 1 --> Crocomire Speedway
+    938A,   9336,   UN Crumble Shaft (Upper),   Crumble Shaft door 0 --> Ice Beam Gate
+    961E,   962A,   UN Double Chamber,          Double Chamber door 2 --> Wave Beam
+LayoutUpperNorfairLeftDoorMenu2:
+    971A,   956A,   UN Farming,                 Upper Norfair Farming door 1 --> Bubble Mountain
+    980A,   97DA,   UN Frog Savestation,        Frog Savestation door 0 --> Frog Speedway
+    97E6,   970E,   UN Frog Speedway,           Frog Speedway door 1 --> Upper Norfair Farming
+    953A,   9552,   UN Green Bubbles Missiles,  Green Bubbles Missiles door 0 --> Bubble Mountain
+    93F6,   9426,   UN Hi Jump Boots,           Hi Jump Boots door 0 --> Hi Jump Energy Tank
+    941A,   92D6,   UN Hi Jump Energy Tank,     Hi Jump Energy Tank door 0 --> Business Center
+    9276,   931E,   UN Ice Beam Acid,           Ice Beam Acid door 0 --> Ice Beam Gate
+    932A,   92BE,   UN Ice Beam Gate,           Ice Beam Gate door 2 --> Business Center
+    9366,   9282,   UN Ice Beam Snake (Lower),  Ice Beam Snake door 0 --> Ice Beam Acid
+    937E,   935A,   UN Ice Beam Snake (Middle), Ice Beam Snake door 2 --> Ice Beam
+    9372,   9342,   UN Ice Beam Snake (Upper),  Ice Beam Snake door 1 --> Ice Beam Tutorial
+    934E,   9312,   UN Ice Beam Tutorial,       Ice Beam Tutorial door 1 --> Ice Beam Gate
+    9672,   965A,   UN Kronic Boost,            Kronic Boost door 1 --> Volcano
+    96D2,   967E,   UN Lava Dive,               Lava Dive door 0 --> Kronic Boost
+    982E,   9702,   UN Lower Elevator Save,     Lower Norfair Elevator Save door 0 --> Lower Norfair Elevator
+    96EA,   96DE,   UN Lower Norfair Elevator,  Lower Norfair Elevator door 0 --> Lava Dive
+LayoutUpperNorfairLeftDoorMenu3:
+    96A2,   9666,   UN Magdollite Tunnel,       Magdollite Tunnel door 1 --> Kronic Boost
+    97C2,   9306,   UN Norfair Map,             Norfair Map door 0 --> Business Center
+    952E,   9546,   UN Norfair Reserve Tank,    Norfair Reserve Tank door 0 --> Green Bubbles Missiles
+    9792,   976E,   UN Nutella Refill,          Nutella Refill door 1 --> Spiky Acid Snakes Tunnel
+    973E,   955E,   UN Rising Tide,             Rising Tide door 1 --> Bubble Mountain
+    96BA,   9696,   UN Purple Shaft (Lower),    Purple Shaft door 1 --> Magdollite Tunnel
+    96C6,   979E,   UN Purple Shaft (Upper),    Purple Shaft door 2 --> Purple Farming
+    97F2,   9726,   UN Red Pirates Shaft,       Red Pirates Shaft door 0 --> Upper Norfair Farming
+    95FA,   9A4A,   UN Single Chamber (Hidden), Single Chamber door 4 --> Three Musketeers
+    95EE,   9636,   UN Single Chamber (Lower),  Single Chamber door 3 --> Spiky Platforms Tunnel
+    95E2,   9612,   UN Single Chamber (Middle), Single Chamber door 2 --> Double Chamber
+    95D6,   9606,   UN Single Chamber (Upper),  Single Chamber door 1 --> Double Chamber
+    95B2,   95BE,   UN Speed Booster Hall,      Speed Booster Hall door 1 --> Speed Booster
+    977A,   968A,   UN Spiky Acid Snake Tunnel, Spiky Acid Snakes Tunnel door 1 --> Kronic Boost
+    9642,   964E,   UN Spiky Platforms Tunnel,  Spiky Platforms Tunnel door 1 --> Volcano
 LayoutWestMaridiaLeftDoorMenu:
     ; West Maridia
     A51C,   A5E8,   WM Crab Hole (Lower),       Crab Hole door 3 --> Maridia Map
@@ -283,9 +349,6 @@ LayoutYellowMaridiaLeftDoorMenu:
 
     ; Shadow Left Doors
     A810,   A7A4,   GM Pants (Self to Self),    (Pants door X --> Pants)
-    AB34,   8B6E,   TR Tourian Escape 4,        Tourian Escape 4 door 1 --> Climb
-    96D2,   967E,   UN Lava Dive,               Lava Dive door 0 --> Kronic Boost
-    95FA,   9A4A,   UN Single Chamber,          Single Chamber door 4 --> Three Musketeers
 
 portals_right_vanilla_table:
 LayoutBlueBrinstarRightDoorMenu:
@@ -466,8 +529,72 @@ LayoutRedBrinstarRightDoorMenu:
     9132,   9126,   RB Spazer,                  Spazer door 0 --> Below Spazer
 LayoutTourianRightDoorMenu:
     ; Tourian
+    AA44,   AA50,   TR Big Boy,                 Big Boy door 1 --> Seaweed
+    AA14,   AA20,   TR Blue Hoppers,            Blue Hoppers door 1 --> Dust Torizo
+    AA2C,   AA38,   TR Dust Torizo,             Dust Torizo door 1 --> Big Boy
+    A9B4,   A9C0,   TR Metroids 1,              Metroids 1 door 1 --> Metroids 2
+    A9D8,   A9CC,   TR Metroids 3,              Metroids 3 door 0 --> Metroids 2
+    A9F0,   A9E4,   TR Metroids 4,              Metroids 4 door 0 --> Metroids 3
+    AA8C,   AAE0,   TR Mother Brain,            Mother Brain door 1 --> Tourian Escape 1
+    AAC8,   AA80,   TR Rinka Shaft (Lower),     Rinka Shaft door 2 --> Mother Brain
+    AABC,   AAD4,   TR Rinka Shaft (Middle),    Rinka Shaft door 1 --> Lower Tourian Save
+    AAB0,   AAA4,   TR Rinka Shaft (Upper),     Rinka Shaft door 0 --> Tourian Eye Door
+    AA68,   AA74,   TR Seaweed,                 Seaweed door 2 --> Tourian Recharge
+    AB10,   AB04,   TR Tourian Escape 3,        Tourian Escape 3 door 0 --> Tourian Escape 2
+    AB28,   AB1C,   TR Tourian Escape 4,        Tourian Escape 4 door 0 --> Tourian Escape 3
+    AA98,   AA5C,   TR Tourian Eye Door,        Tourian Eye Door door 0 --> Seaweed
+    A984,   A9A8,   TR Tourian First,           Tourian First door 0 --> Metroids 1
+    AB40,   A99C,   TR Upper Tourian Save,      Upper Tourian Save door 0 --> Tourian First
 LayoutUpperNorfairRightDoorMenu:
     ; Upper Norfair
+    974A,   93C6,   UN Acid Snakes Tunnel,      Acid Snakes Tunnel door 0 --> Crocomire Speedway
+    97AA,   958E,   UN Bat Cave,                Bat Cave door 0 --> Bubble Mountain
+    956A,   971A,   UN Bubble Mtn (Lower),      Bubble Mountain door 2 --> Upper Norfair Farming
+    955E,   973E,   UN Bubble Mtn (Mid-Lower),  Bubble Mountain door 1 --> Rising Tide
+    959A,   97CE,   UN Bubble Mtn (Mid-Upper),  Bubble Mountain door 6 --> Bubble Mountain Save
+    9552,   953A,   UN Bubble Mtn (Upper),      Bubble Mountain door 0 --> Green Bubbles Missiles
+    92D6,   941A,   UN Business Center (Lower), Business Center door 2 --> Hi Jump Energy Tank
+    9306,   97C2,   UN Business Center (Mid),   Business Center door 7 --> Norfair Map
+    92BE,   932A,   UN Business Center (Upper), Business Center door 0 --> Ice Beam Gate
+    928E,   92B2,   UN Cathedral,               Cathedral door 0 --> Cathedral Entrance
+    92A6,   92CA,   UN Cathedral Entrance,      Cathedral Entrance door 0 --> Business Center
+    9402,   92E2,   UN Crocomire Escape,        Crocomire Escape door 0 --> Business Center
+    9822,   93BA,   UN Crocomire Save,          Crocomire Save door 0 --> Crocomire Speedway
+    93A2,   9396,   UN Croc Speedway (Lower),   Crocomire Speedway door 0 --> Crumble Shaft
+    93AE,   940E,   UN Croc Speedway (Upper),   Crocomire Speedway door 1 --> Crocomire Escape
+    9612,   95E2,   UN Double Chamber (Lower),  Double Chamber door 1 --> Single Chamber
+    9606,   95D6,   UN Double Chamber (Upper),  Double Chamber door 0 --> Single Chamber
+LayoutUpperNorfairRightDoorMenu2:
+    9726,   97F2,   UN Farming (Lower),         Upper Norfair Farming door 2 --> Red Pirates Shaft
+    970E,   97E6,   UN Farming (Upper),         Upper Norfair Farming door 0 --> Frog Speedway
+    9816,   92FA,   UN Frog Savestation,        Frog Savestation door 1 --> Business Center
+    97DA,   980A,   UN Frog Speedway,           Frog Speedway door 0 --> Frog Savestation
+    9546,   952E,   UN Green Bubbles Missiles,  Green Bubbles Missiles door 1 --> Norfair Reserve Tank
+    9426,   93F6,   UN Hi Jump Energy Tank,     Hi Jump Energy Tank door 1 --> Hi Jump Boots
+    935A,   937E,   UN Ice Beam,                Ice Beam door 0 --> Ice Beam Snake
+    9282,   9366,   UN Ice Beam Acid,           Ice Beam Acid door 1 --> Ice Beam Snake
+    9336,   938A,   UN Ice Beam Gate (Lower),   Ice Beam Gate door 3 --> Crumble Shaft
+    931E,   9276,   UN Ice Beam Gate (Middle),  Ice Beam Gate door 1 --> Ice Beam Acid
+    9312,   934E,   UN Ice Beam Gate (Upper),   Ice Beam Gate door 0 --> Ice Beam Tutorial
+    9342,   9372,   UN Ice Beam Tutorial,       Ice Beam Tutorial door 0 --> Ice Beam Snake
+    967E,   96D2,   UN Kronic Boost (Lower),    Kronic Boost door 2 --> Lava Dive
+    968A,   977A,   UN Kronic Boost (Middle),   Kronic Boost door 3 --> Spiky Acid Snakes Tunnel
+    9666,   96A2,   UN Kronic Boost (Upper),    Kronic Boost door 0 --> Magdollite Tunnel
+    96DE,   96EA,   UN Lava Dive,               Lava Dive door 1 --> Lower Norfair Elevator
+    9702,   982E,   UN Lower Norfair Elevator,  Lower Norfair Elevator door 3 --> Lower Norfair Elevator Save
+LayoutUpperNorfairRightDoorMenu3:
+    9696,   96BA,   UN Magdollite Tunnel,       Magdollite Tunnel door 0 --> Purple Shaft
+    9786,   9756,   UN Nutella Refill,          Nutella Refill door 0 --> Acid Snakes Tunnel
+    979E,   96C6,   UN Purple Farming,          Purple Farming door 0 --> Purple Shaft
+    9732,   929A,   UN Rising Tide,             Rising Tide door 0 --> Cathedral
+    95CA,   9582,   UN Single Chamber,          Single Chamber door 0 --> Bubble Mountain
+    95BE,   95B2,   UN Speed Booster,           Speed Booster door 0 --> Speed Booster Hall
+    95A6,   97B6,   UN Speed Booster Hall,      Speed Booster Hall door 0 --> Bat Cave
+    976E,   9792,   UN Spiky Acid Snake Tunnel, Spiky Acid Snakes Tunnel door 0 --> Nutella Refill
+    9636,   95EE,   UN Spiky Platforms Tunnel,  Spiky Platforms Tunnel door 0 --> Single Chamber
+    965A,   9672,   UN Volcano (Lower),         Volcano door 1 --> Kronic Boost
+    964E,   9642,   UN Volcano (Upper),         Volcano door 0 --> Spiky Platforms Tunnel
+    962A,   961E,   UN Wave Beam,               Wave Beam door 0 --> Double Chamber
 LayoutWestMaridiaRightDoorMenu:
     ; West Maridia
     A510,   A390,   WM Crab Hole (Lower),       Crab Hole door 2 --> East Tunnel
@@ -517,7 +644,6 @@ LayoutYellowMaridiaRightDoorMenu:
 
     ; Shadow Right Doors
     A804,   A798,   GM Shaktool (Pants),        (Shaktool door X --> Pants)
-    967E,   96D2,   UN Kronic Boost,            Kronic Boost door 2 --> Lava Dive
 
 portals_up_vanilla_table:
 LayoutBlueBrinstarUpDoorMenu:
@@ -566,8 +692,13 @@ LayoutRedBrinstarUpDoorMenu:
     ; Red Brinstar
 LayoutTourianUpDoorMenu:
     ; Tourian
+    AAEC,   AAF8,   TR Tourian Escape 1,        Tourian Escape 1 door 1 --> Tourian Escape 2
+    A9FC,   AA08,   TR Metroids 4,              Metroids 4 door 1 --> Blue Hoppers
 LayoutUpperNorfairUpDoorMenu:
     ; Upper Norfair
+    9576,   96AE,   UN Bubble Mtn,              Bubble Mountain door 3 --> Purple Shaft
+    93D2,   93EA,   UN Croc Speedway,           Crocomire Speedway door 4 --> Crocomire
+    97FE,   9762,   UN Red Pirates Shaft,       Red Pirates Shaft door 1 --> Acid Snakes Tunnel
 LayoutWestMaridiaUpDoorMenu:
     ; West Maridia
     A39C,   A330,   WM Main Street,             Main Street door 0 --> Glass Tunnel
@@ -580,13 +711,10 @@ LayoutWreckedShipUpDoorMenu:
     A21C,   A294,   WS Main Shaft,              Wrecked Ship Main Shaft door 3 --> Basement
 LayoutYellowMaridiaUpDoorMenu:
     ; Yellow Maridia
-    A624,   0020,   YM Bug Sand Hole,           Bug Sand Hole door 1 --> Plasma Beach Quicksand
-    A8A0,   001F,   YM Plasma Beach Quicksand,  Plasma Beach Quicksand door 0 --> Butterfly
+    A624,   0024,   YM Bug Sand Hole,           Bug Sand Hole door 1 --> Plasma Beach Quicksand
+    A8A0,   0023,   YM Plasma Beach Quicksand,  Plasma Beach Quicksand door 0 --> Butterfly
     A5AC,   A60C,   YM Plasma Spark,            Plasma Spark door 1 --> Aqueduct Tube
     A4E0,   A4BC,   YM Pseudo Plasma Spark,     Pseudo Plasma Spark door 1 --> Crab Shaft
-
-    ; Shadow Up Doors
-    93D2,   93EA,   UN Crocomire Speedway,      Crocomire Speedway door 4 --> Crocomire
 
 portals_down_vanilla_table:
 LayoutBlueBrinstarDownDoorMenu:
@@ -638,8 +766,12 @@ LayoutRedBrinstarDownDoorMenu:
     ; Red Brinstar
 LayoutTourianDownDoorMenu:
     ; Tourian
+    AA08,   A9FC,   TR Blue Hoppers,            Blue Hoppers door 0 --> Metroids 4
+    AAF8,   AAEC,   TR Tourian Escape 2,        Tourian Escape 2 door 0 --> Tourian Escape 1
 LayoutUpperNorfairDownDoorMenu:
     ; Upper Norfair
+    9762,   97FE,   UN Acid Snakes Tunnel,      Acid Snakes Tunnel door 2 --> Red Pirates Shaft
+    96AE,   9576,   UN Purple Shaft,            Purple Shaft door 0 --> Bubble Mountain
 LayoutWestMaridiaDownDoorMenu:
     ; West Maridia
     A3F0,   A444,   WM Fish Tank (Left),        Fish Tank door 2 --> Mount Everest
@@ -652,6 +784,6 @@ LayoutWreckedShipDownDoorMenu:
     A228,   A1C8,   WS Main Shaft,              Wrecked Ship Main Shaft door 4 --> Attic
 LayoutYellowMaridiaDownDoorMenu:
     ; Yellow Maridia
-    001F,   A8A0,   YM Butterfly,               (Butterfly door X --> Plasma Beach Quicksand)
-    0020,   A624,   YM Plasma Beach Quicksand,  (Plasma Beach Quicksand door X --> Bug Sand Hole)
+    0023,   A8A0,   YM Butterfly,               (Butterfly door X --> Plasma Beach Quicksand)
+    0024,   A624,   YM Plasma Beach Quicksand,  (Plasma Beach Quicksand door X --> Bug Sand Hole)
 

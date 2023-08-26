@@ -287,6 +287,70 @@ portals_left_vanilla_table:
     dw $901E    ; Red Tower door 0 --> Hellway
     dw $91FE    ; Sloaters Refill door 0 --> Red Tower
     dw $9072    ; X-Ray Scope door 0 --> Red Brinstar Firefleas
+    dw $AA38    ; Big Boy door 0 --> Dust Torizo
+    dw $AA20    ; Dust Torizo door 0 --> Blue Hoppers
+    dw $AAD4    ; Lower Tourian Save door 0 --> Rinka Shaft
+    dw $A9A8    ; Metroids 1 door 0 --> Tourian First
+    dw $A9CC    ; Metroids 2 door 1 --> Metroids 3
+    dw $A9C0    ; Metroids 2 door 0 --> Metroids 1
+    dw $A9E4    ; Metroids 3 door 1 --> Metroids 4
+    dw $AA80    ; Mother Brain door 0 --> Rinka Shaft
+    dw $AA5C    ; Seaweed door 1 --> Tourian Eye Door
+    dw $AA50    ; Seaweed door 0 --> Big Boy
+    dw $AAE0    ; Tourian Escape 1 door 0 --> Mother Brain
+    dw $AB04    ; Tourian Escape 2 door 1 --> Tourian Escape 3
+    dw $AB1C    ; Tourian Escape 3 door 1 --> Tourian Escape 4
+    dw $AB34    ; Tourian Escape 4 door 1 --> Climb
+    dw $AAA4    ; Tourian Eye Door door 1 --> Rinka Shaft
+    dw $A99C    ; Tourian First door 3 --> Upper Tourian Save
+    dw $AA74    ; Tourian Recharge door 0 --> Seaweed
+    dw $9756    ; Acid Snakes Tunnel door 1 --> Nutella Refill
+    dw $97B6    ; Bat Cave door 1 --> Speed Booster Hall
+    dw $9582    ; Bubble Mountain door 4 --> Single Chamber
+    dw $958E    ; Bubble Mountain door 5 --> Bat Cave
+    dw $97CE    ; Bubble Mountain Save door 0 --> Bubble Mountain
+    dw $92E2    ; Business Center door 3 --> Crocomire Escape
+    dw $92FA    ; Business Center door 6 --> Frog Savestation
+    dw $92CA    ; Business Center door 1 --> Cathedral Entrance
+    dw $929A    ; Cathedral door 1 --> Rising Tide
+    dw $92B2    ; Cathedral Entrance door 1 --> Cathedral
+    dw $940E    ; Crocomire Escape door 1 --> Crocomire Speedway
+    dw $93C6    ; Crocomire Speedway door 3 --> Acid Snakes Tunnel
+    dw $93BA    ; Crocomire Speedway door 2 --> Crocomire Save
+    dw $9396    ; Crumble Shaft door 1 --> Crocomire Speedway
+    dw $938A    ; Crumble Shaft door 0 --> Ice Beam Gate
+    dw $961E    ; Double Chamber door 2 --> Wave Beam
+    dw $971A    ; Upper Norfair Farming door 1 --> Bubble Mountain
+    dw $980A    ; Frog Savestation door 0 --> Frog Speedway
+    dw $97E6    ; Frog Speedway door 1 --> Upper Norfair Farming
+    dw $953A    ; Green Bubbles Missiles door 0 --> Bubble Mountain
+    dw $93F6    ; Hi Jump Boots door 0 --> Hi Jump Energy Tank
+    dw $941A    ; Hi Jump Energy Tank door 0 --> Business Center
+    dw $9276    ; Ice Beam Acid door 0 --> Ice Beam Gate
+    dw $932A    ; Ice Beam Gate door 2 --> Business Center
+    dw $9366    ; Ice Beam Snake door 0 --> Ice Beam Acid
+    dw $937E    ; Ice Beam Snake door 2 --> Ice Beam
+    dw $9372    ; Ice Beam Snake door 1 --> Ice Beam Tutorial
+    dw $934E    ; Ice Beam Tutorial door 1 --> Ice Beam Gate
+    dw $9672    ; Kronic Boost door 1 --> Volcano
+    dw $96D2    ; Lava Dive door 0 --> Kronic Boost
+    dw $982E    ; Lower Norfair Elevator Save door 0 --> Lower Norfair Elevator
+    dw $96EA    ; Lower Norfair Elevator door 0 --> Lava Dive
+    dw $96A2    ; Magdollite Tunnel door 1 --> Kronic Boost
+    dw $97C2    ; Norfair Map door 0 --> Business Center
+    dw $952E    ; Norfair Reserve Tank door 0 --> Green Bubbles Missiles
+    dw $9792    ; Nutella Refill door 1 --> Spiky Acid Snakes Tunnel
+    dw $973E    ; Rising Tide door 1 --> Bubble Mountain
+    dw $96BA    ; Purple Shaft door 1 --> Magdollite Tunnel
+    dw $96C6    ; Purple Shaft door 2 --> Purple Farming
+    dw $97F2    ; Red Pirates Shaft door 0 --> Upper Norfair Farming
+    dw $95FA    ; Single Chamber door 4 --> Three Musketeers
+    dw $95EE    ; Single Chamber door 3 --> Spiky Platforms Tunnel
+    dw $95E2    ; Single Chamber door 2 --> Double Chamber
+    dw $95D6    ; Single Chamber door 1 --> Double Chamber
+    dw $95B2    ; Speed Booster Hall door 1 --> Speed Booster
+    dw $977A    ; Spiky Acid Snakes Tunnel door 1 --> Kronic Boost
+    dw $9642    ; Spiky Platforms Tunnel door 1 --> Volcano
     dw $A51C    ; Crab Hole door 3 --> Maridia Map
     dw $A504    ; Crab Hole door 1 --> West Sand Hall Tunnel
     dw $A420    ; Crab Tunnel door 1 --> Crab Hole
@@ -480,6 +544,70 @@ portals_left_vanilla_inverted_table:
     dw $907E    ; Hellway door 0 --> Red Tower
     dw $904E    ; Red Tower door 4 --> Sloaters Refill
     dw $905A    ; Red Brinstar Firefleas door 0 --> X-Ray Scope
+    dw $AA2C    ; Dust Torizo door 1 --> Big Boy
+    dw $AA14    ; Blue Hoppers door 1 --> Dust Torizo
+    dw $AABC    ; Rinka Shaft door 1 --> Lower Tourian Save
+    dw $A984    ; Tourian First door 0 --> Metroids 1
+    dw $A9D8    ; Metroids 3 door 0 --> Metroids 2
+    dw $A9B4    ; Metroids 1 door 1 --> Metroids 2
+    dw $A9F0    ; Metroids 4 door 0 --> Metroids 3
+    dw $AAC8    ; Rinka Shaft door 2 --> Mother Brain
+    dw $AA98    ; Tourian Eye Door door 0 --> Seaweed
+    dw $AA44    ; Big Boy door 1 --> Seaweed
+    dw $AA8C    ; Mother Brain door 1 --> Tourian Escape 1
+    dw $AB10    ; Tourian Escape 3 door 0 --> Tourian Escape 2
+    dw $AB28    ; Tourian Escape 4 door 0 --> Tourian Escape 3
+    dw $8B6E    ; Climb door 4 --> Tourian Escape 4
+    dw $AAB0    ; Rinka Shaft door 0 --> Tourian Eye Door
+    dw $AB40    ; Upper Tourian Save door 0 --> Tourian First
+    dw $AA68    ; Seaweed door 2 --> Tourian Recharge
+    dw $9786    ; Nutella Refill door 0 --> Acid Snakes Tunnel
+    dw $95A6    ; Speed Booster Hall door 0 --> Bat Cave
+    dw $95CA    ; Single Chamber door 0 --> Bubble Mountain
+    dw $97AA    ; Bat Cave door 0 --> Bubble Mountain
+    dw $959A    ; Bubble Mountain door 6 --> Bubble Mountain Save
+    dw $9402    ; Crocomire Escape door 0 --> Business Center
+    dw $9816    ; Frog Savestation door 1 --> Business Center
+    dw $92A6    ; Cathedral Entrance door 0 --> Business Center
+    dw $9732    ; Rising Tide door 0 --> Cathedral
+    dw $928E    ; Cathedral door 0 --> Cathedral Entrance
+    dw $93AE    ; Crocomire Speedway door 1 --> Crocomire Escape
+    dw $974A    ; Acid Snakes Tunnel door 0 --> Crocomire Speedway
+    dw $9822    ; Crocomire Save door 0 --> Crocomire Speedway
+    dw $93A2    ; Crocomire Speedway door 0 --> Crumble Shaft
+    dw $9336    ; Ice Beam Gate door 3 --> Crumble Shaft
+    dw $962A    ; Wave Beam door 0 --> Double Chamber
+    dw $956A    ; Bubble Mountain door 2 --> Upper Norfair Farming
+    dw $97DA    ; Frog Speedway door 0 --> Frog Savestation
+    dw $970E    ; Upper Norfair Farming door 0 --> Frog Speedway
+    dw $9552    ; Bubble Mountain door 0 --> Green Bubbles Missiles
+    dw $9426    ; Hi Jump Energy Tank door 1 --> Hi Jump Boots
+    dw $92D6    ; Business Center door 2 --> Hi Jump Energy Tank
+    dw $931E    ; Ice Beam Gate door 1 --> Ice Beam Acid
+    dw $92BE    ; Business Center door 0 --> Ice Beam Gate
+    dw $9282    ; Ice Beam Acid door 1 --> Ice Beam Snake
+    dw $935A    ; Ice Beam door 0 --> Ice Beam Snake
+    dw $9342    ; Ice Beam Tutorial door 0 --> Ice Beam Snake
+    dw $9312    ; Ice Beam Gate door 0 --> Ice Beam Tutorial
+    dw $965A    ; Volcano door 1 --> Kronic Boost
+    dw $967E    ; Kronic Boost door 2 --> Lava Dive
+    dw $9702    ; Lower Norfair Elevator door 3 --> Lower Norfair Elevator Save
+    dw $96DE    ; Lava Dive door 1 --> Lower Norfair Elevator
+    dw $9666    ; Kronic Boost door 0 --> Magdollite Tunnel
+    dw $9306    ; Business Center door 7 --> Norfair Map
+    dw $9546    ; Green Bubbles Missiles door 1 --> Norfair Reserve Tank
+    dw $976E    ; Spiky Acid Snakes Tunnel door 0 --> Nutella Refill
+    dw $955E    ; Bubble Mountain door 1 --> Rising Tide
+    dw $9696    ; Magdollite Tunnel door 0 --> Purple Shaft
+    dw $979E    ; Purple Farming door 0 --> Purple Shaft
+    dw $9726    ; Upper Norfair Farming door 2 --> Red Pirates Shaft
+    dw $9A4A    ; Three Musketeers door 0 --> Single Chamber
+    dw $9636    ; Spiky Platforms Tunnel door 0 --> Single Chamber
+    dw $9612    ; Double Chamber door 1 --> Single Chamber
+    dw $9606    ; Double Chamber door 0 --> Single Chamber
+    dw $95BE    ; Speed Booster door 0 --> Speed Booster Hall
+    dw $968A    ; Kronic Boost door 3 --> Spiky Acid Snakes Tunnel
+    dw $964E    ; Volcano door 0 --> Spiky Platforms Tunnel
     dw $A5E8    ; Maridia Map door 0 --> Crab Hole
     dw $A528    ; West Sand Hall Tunnel door 0 --> Crab Hole
     dw $A4F8    ; Crab Hole door 0 --> Crab Tunnel
@@ -673,6 +801,68 @@ portals_right_vanilla_table:
     dw $9036    ; Red Tower door 2 --> Red Brinstar Firefleas
     dw $902A    ; Red Tower door 1 --> Noob Bridge
     dw $9132    ; Spazer door 0 --> Below Spazer
+    dw $AA44    ; Big Boy door 1 --> Seaweed
+    dw $AA14    ; Blue Hoppers door 1 --> Dust Torizo
+    dw $AA2C    ; Dust Torizo door 1 --> Big Boy
+    dw $A9B4    ; Metroids 1 door 1 --> Metroids 2
+    dw $A9D8    ; Metroids 3 door 0 --> Metroids 2
+    dw $A9F0    ; Metroids 4 door 0 --> Metroids 3
+    dw $AA8C    ; Mother Brain door 1 --> Tourian Escape 1
+    dw $AAC8    ; Rinka Shaft door 2 --> Mother Brain
+    dw $AABC    ; Rinka Shaft door 1 --> Lower Tourian Save
+    dw $AAB0    ; Rinka Shaft door 0 --> Tourian Eye Door
+    dw $AA68    ; Seaweed door 2 --> Tourian Recharge
+    dw $AB10    ; Tourian Escape 3 door 0 --> Tourian Escape 2
+    dw $AB28    ; Tourian Escape 4 door 0 --> Tourian Escape 3
+    dw $AA98    ; Tourian Eye Door door 0 --> Seaweed
+    dw $A984    ; Tourian First door 0 --> Metroids 1
+    dw $AB40    ; Upper Tourian Save door 0 --> Tourian First
+    dw $974A    ; Acid Snakes Tunnel door 0 --> Crocomire Speedway
+    dw $97AA    ; Bat Cave door 0 --> Bubble Mountain
+    dw $956A    ; Bubble Mountain door 2 --> Upper Norfair Farming
+    dw $955E    ; Bubble Mountain door 1 --> Rising Tide
+    dw $959A    ; Bubble Mountain door 6 --> Bubble Mountain Save
+    dw $9552    ; Bubble Mountain door 0 --> Green Bubbles Missiles
+    dw $92D6    ; Business Center door 2 --> Hi Jump Energy Tank
+    dw $9306    ; Business Center door 7 --> Norfair Map
+    dw $92BE    ; Business Center door 0 --> Ice Beam Gate
+    dw $928E    ; Cathedral door 0 --> Cathedral Entrance
+    dw $92A6    ; Cathedral Entrance door 0 --> Business Center
+    dw $9402    ; Crocomire Escape door 0 --> Business Center
+    dw $9822    ; Crocomire Save door 0 --> Crocomire Speedway
+    dw $93A2    ; Crocomire Speedway door 0 --> Crumble Shaft
+    dw $93AE    ; Crocomire Speedway door 1 --> Crocomire Escape
+    dw $9612    ; Double Chamber door 1 --> Single Chamber
+    dw $9606    ; Double Chamber door 0 --> Single Chamber
+    dw $9726    ; Upper Norfair Farming door 2 --> Red Pirates Shaft
+    dw $970E    ; Upper Norfair Farming door 0 --> Frog Speedway
+    dw $9816    ; Frog Savestation door 1 --> Business Center
+    dw $97DA    ; Frog Speedway door 0 --> Frog Savestation
+    dw $9546    ; Green Bubbles Missiles door 1 --> Norfair Reserve Tank
+    dw $9426    ; Hi Jump Energy Tank door 1 --> Hi Jump Boots
+    dw $935A    ; Ice Beam door 0 --> Ice Beam Snake
+    dw $9282    ; Ice Beam Acid door 1 --> Ice Beam Snake
+    dw $9336    ; Ice Beam Gate door 3 --> Crumble Shaft
+    dw $931E    ; Ice Beam Gate door 1 --> Ice Beam Acid
+    dw $9312    ; Ice Beam Gate door 0 --> Ice Beam Tutorial
+    dw $9342    ; Ice Beam Tutorial door 0 --> Ice Beam Snake
+    dw $967E    ; Kronic Boost door 2 --> Lava Dive
+    dw $968A    ; Kronic Boost door 3 --> Spiky Acid Snakes Tunnel
+    dw $9666    ; Kronic Boost door 0 --> Magdollite Tunnel
+    dw $96DE    ; Lava Dive door 1 --> Lower Norfair Elevator
+    dw $9702    ; Lower Norfair Elevator door 3 --> Lower Norfair Elevator Save
+    dw $9696    ; Magdollite Tunnel door 0 --> Purple Shaft
+    dw $9786    ; Nutella Refill door 0 --> Acid Snakes Tunnel
+    dw $979E    ; Purple Farming door 0 --> Purple Shaft
+    dw $9732    ; Rising Tide door 0 --> Cathedral
+    dw $95CA    ; Single Chamber door 0 --> Bubble Mountain
+    dw $95BE    ; Speed Booster door 0 --> Speed Booster Hall
+    dw $95A6    ; Speed Booster Hall door 0 --> Bat Cave
+    dw $976E    ; Spiky Acid Snakes Tunnel door 0 --> Nutella Refill
+    dw $9636    ; Spiky Platforms Tunnel door 0 --> Single Chamber
+    dw $965A    ; Volcano door 1 --> Kronic Boost
+    dw $964E    ; Volcano door 0 --> Spiky Platforms Tunnel
+    dw $962A    ; Wave Beam door 0 --> Double Chamber
     dw $A510    ; Crab Hole door 2 --> East Tunnel
     dw $A4F8    ; Crab Hole door 0 --> Crab Tunnel
     dw $A414    ; Crab Tunnel door 0 --> Main Street
@@ -868,6 +1058,68 @@ portals_right_vanilla_inverted_table:
     dw $9066    ; Red Brinstar Firefleas door 1 --> Red Tower
     dw $8F0A    ; Noob Bridge door 1 --> Red Tower
     dw $9126    ; Below Spazer door 2 --> Spazer
+    dw $AA50    ; Seaweed door 0 --> Big Boy
+    dw $AA20    ; Dust Torizo door 0 --> Blue Hoppers
+    dw $AA38    ; Big Boy door 0 --> Dust Torizo
+    dw $A9C0    ; Metroids 2 door 0 --> Metroids 1
+    dw $A9CC    ; Metroids 2 door 1 --> Metroids 3
+    dw $A9E4    ; Metroids 3 door 1 --> Metroids 4
+    dw $AAE0    ; Tourian Escape 1 door 0 --> Mother Brain
+    dw $AA80    ; Mother Brain door 0 --> Rinka Shaft
+    dw $AAD4    ; Lower Tourian Save door 0 --> Rinka Shaft
+    dw $AAA4    ; Tourian Eye Door door 1 --> Rinka Shaft
+    dw $AA74    ; Tourian Recharge door 0 --> Seaweed
+    dw $AB04    ; Tourian Escape 2 door 1 --> Tourian Escape 3
+    dw $AB1C    ; Tourian Escape 3 door 1 --> Tourian Escape 4
+    dw $AA5C    ; Seaweed door 1 --> Tourian Eye Door
+    dw $A9A8    ; Metroids 1 door 0 --> Tourian First
+    dw $A99C    ; Tourian First door 3 --> Upper Tourian Save
+    dw $93C6    ; Crocomire Speedway door 3 --> Acid Snakes Tunnel
+    dw $958E    ; Bubble Mountain door 5 --> Bat Cave
+    dw $971A    ; Upper Norfair Farming door 1 --> Bubble Mountain
+    dw $973E    ; Rising Tide door 1 --> Bubble Mountain
+    dw $97CE    ; Bubble Mountain Save door 0 --> Bubble Mountain
+    dw $953A    ; Green Bubbles Missiles door 0 --> Bubble Mountain
+    dw $941A    ; Hi Jump Energy Tank door 0 --> Business Center
+    dw $97C2    ; Norfair Map door 0 --> Business Center
+    dw $932A    ; Ice Beam Gate door 2 --> Business Center
+    dw $92B2    ; Cathedral Entrance door 1 --> Cathedral
+    dw $92CA    ; Business Center door 1 --> Cathedral Entrance
+    dw $92E2    ; Business Center door 3 --> Crocomire Escape
+    dw $93BA    ; Crocomire Speedway door 2 --> Crocomire Save
+    dw $9396    ; Crumble Shaft door 1 --> Crocomire Speedway
+    dw $940E    ; Crocomire Escape door 1 --> Crocomire Speedway
+    dw $95E2    ; Single Chamber door 2 --> Double Chamber
+    dw $95D6    ; Single Chamber door 1 --> Double Chamber
+    dw $97F2    ; Red Pirates Shaft door 0 --> Upper Norfair Farming
+    dw $97E6    ; Frog Speedway door 1 --> Upper Norfair Farming
+    dw $92FA    ; Business Center door 6 --> Frog Savestation
+    dw $980A    ; Frog Savestation door 0 --> Frog Speedway
+    dw $952E    ; Norfair Reserve Tank door 0 --> Green Bubbles Missiles
+    dw $93F6    ; Hi Jump Boots door 0 --> Hi Jump Energy Tank
+    dw $937E    ; Ice Beam Snake door 2 --> Ice Beam
+    dw $9366    ; Ice Beam Snake door 0 --> Ice Beam Acid
+    dw $938A    ; Crumble Shaft door 0 --> Ice Beam Gate
+    dw $9276    ; Ice Beam Acid door 0 --> Ice Beam Gate
+    dw $934E    ; Ice Beam Tutorial door 1 --> Ice Beam Gate
+    dw $9372    ; Ice Beam Snake door 1 --> Ice Beam Tutorial
+    dw $96D2    ; Lava Dive door 0 --> Kronic Boost
+    dw $977A    ; Spiky Acid Snakes Tunnel door 1 --> Kronic Boost
+    dw $96A2    ; Magdollite Tunnel door 1 --> Kronic Boost
+    dw $96EA    ; Lower Norfair Elevator door 0 --> Lava Dive
+    dw $982E    ; Lower Norfair Elevator Save door 0 --> Lower Norfair Elevator
+    dw $96BA    ; Purple Shaft door 1 --> Magdollite Tunnel
+    dw $9756    ; Acid Snakes Tunnel door 1 --> Nutella Refill
+    dw $96C6    ; Purple Shaft door 2 --> Purple Farming
+    dw $929A    ; Cathedral door 1 --> Rising Tide
+    dw $9582    ; Bubble Mountain door 4 --> Single Chamber
+    dw $95B2    ; Speed Booster Hall door 1 --> Speed Booster
+    dw $97B6    ; Bat Cave door 1 --> Speed Booster Hall
+    dw $9792    ; Nutella Refill door 1 --> Spiky Acid Snakes Tunnel
+    dw $95EE    ; Single Chamber door 3 --> Spiky Platforms Tunnel
+    dw $9672    ; Kronic Boost door 1 --> Volcano
+    dw $9642    ; Spiky Platforms Tunnel door 1 --> Volcano
+    dw $961E    ; Double Chamber door 2 --> Wave Beam
     dw $A390    ; East Tunnel door 2 --> Crab Hole
     dw $A420    ; Crab Tunnel door 1 --> Crab Hole
     dw $A3A8    ; Main Street door 1 --> Crab Tunnel
@@ -933,6 +1185,11 @@ portals_up_vanilla_table:
     dw $A6CC    ; East Sand Hole door 1 --> East Sand Hall
     dw $A6E4    ; West Aqueduct Quicksand door 1 --> West Sand Hole
     dw $A6B4    ; West Sand Hole door 1 --> West Sand Hall
+    dw $AAEC    ; Tourian Escape 1 door 1 --> Tourian Escape 2
+    dw $A9FC    ; Metroids 4 door 1 --> Blue Hoppers
+    dw $9576    ; Bubble Mountain door 3 --> Purple Shaft
+    dw $93D2    ; Crocomire Speedway door 4 --> Crocomire
+    dw $97FE    ; Red Pirates Shaft door 1 --> Acid Snakes Tunnel
     dw $A39C    ; Main Street door 0 --> Glass Tunnel
     dw $A444    ; Mount Everest door 2 --> Fish Tank
     dw $A450    ; Mount Everest door 3 --> Fish Tank
@@ -968,14 +1225,19 @@ portals_up_vanilla_inverted_table:
     dw $0008    ; (East Sand Hall door X --> East Sand Hole)
     dw $A6A8    ; West Sand Hole door 0 --> West Aqueduct Quicksand
     dw $000A    ; (West Sand Hall door X --> West Sand Hole)
+    dw $AAF8    ; Tourian Escape 2 door 0 --> Tourian Escape 1
+    dw $AA08    ; Blue Hoppers door 0 --> Metroids 4
+    dw $96AE    ; Purple Shaft door 0 --> Bubble Mountain
+    dw $93EA    ; Crocomire door 1 --> Crocomire Speedway
+    dw $9762    ; Acid Snakes Tunnel door 2 --> Red Pirates Shaft
     dw $A330    ; Glass Tunnel door 0 --> Main Street
     dw $A3F0    ; Fish Tank door 2 --> Mount Everest
     dw $A3FC    ; Fish Tank door 3 --> Mount Everest
     dw $A42C    ; Mount Everest door 0 --> Red Fish
     dw $A228    ; Wrecked Ship Main Shaft door 4 --> Attic
     dw $A294    ; Basement door 0 --> Wrecked Ship Main Shaft
-    dw $0020    ; (Plasma Beach Quicksand door X --> Bug Sand Hole)
-    dw $001F    ; (Butterfly door X --> Plasma Beach Quicksand)
+    dw $0024    ; (Plasma Beach Quicksand door X --> Bug Sand Hole)
+    dw $0023    ; (Butterfly door X --> Plasma Beach Quicksand)
     dw $A60C    ; Aqueduct Tube door 1 --> Plasma Spark
     dw $A4BC    ; Crab Shaft door 1 --> Pseudo Plasma Spark
 
@@ -1006,14 +1268,18 @@ portals_down_vanilla_table:
     dw $A6C0    ; East Sand Hole door 0 --> East Aqueduct Quicksand
     dw $A6D8    ; West Aqueduct Quicksand door 0 --> Aqueduct
     dw $A6A8    ; West Sand Hole door 0 --> West Aqueduct Quicksand
+    dw $AA08    ; Blue Hoppers door 0 --> Metroids 4
+    dw $AAF8    ; Tourian Escape 2 door 0 --> Tourian Escape 1
+    dw $9762    ; Acid Snakes Tunnel door 2 --> Red Pirates Shaft
+    dw $96AE    ; Purple Shaft door 0 --> Bubble Mountain
     dw $A3F0    ; Fish Tank door 2 --> Mount Everest
     dw $A3FC    ; Fish Tank door 3 --> Mount Everest
     dw $A330    ; Glass Tunnel door 0 --> Main Street
     dw $A42C    ; Mount Everest door 0 --> Red Fish
     dw $A294    ; Basement door 0 --> Wrecked Ship Main Shaft
     dw $A228    ; Wrecked Ship Main Shaft door 4 --> Attic
-    dw $001F    ; (Butterfly door X --> Plasma Beach Quicksand)
-    dw $0020    ; (Plasma Beach Quicksand door X --> Bug Sand Hole)
+    dw $0023    ; (Butterfly door X --> Plasma Beach Quicksand)
+    dw $0024    ; (Plasma Beach Quicksand door X --> Bug Sand Hole)
 
 ; Above table with portals inverted
 portals_down_vanilla_inverted_table:
@@ -1042,6 +1308,10 @@ portals_down_vanilla_inverted_table:
     dw $A6FC    ; East Aqueduct Quicksand door 1 --> East Sand Hole
     dw $A714    ; Aqueduct door 1 --> West Aqueduct Quicksand
     dw $A6E4    ; West Aqueduct Quicksand door 1 --> West Sand Hole
+    dw $A9FC    ; Metroids 4 door 1 --> Blue Hoppers
+    dw $AAEC    ; Tourian Escape 1 door 1 --> Tourian Escape 2
+    dw $97FE    ; Red Pirates Shaft door 1 --> Acid Snakes Tunnel
+    dw $9576    ; Bubble Mountain door 3 --> Purple Shaft
     dw $A444    ; Mount Everest door 2 --> Fish Tank
     dw $A450    ; Mount Everest door 3 --> Fish Tank
     dw $A39C    ; Main Street door 0 --> Glass Tunnel
