@@ -2200,7 +2200,6 @@ layout_asm_moat:
     PHP
     %a16()
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANTISOFTLOCK_OR_DASH_RECALL : BEQ layout_asm_dachora_done
-    BIT !ROOM_LAYOUT_DASH_RECALL : BNE layout_asm_moat_dash
 
     ; Use shootable blocks on the moat pillar
     %a8()
@@ -2211,13 +2210,7 @@ layout_asm_moat:
     ; Set BTS so the top block is 1x2
     LDA #$02 : STA $7F66D0
     LDA #$FF : STA $7F66F0
-    PLP
-    RTS
 }
-
-layout_asm_moat_dash:
-    ; Use a single shootable block on the moat pillar
-    LDA #$F05F : STA $7F061E
 
 layout_asm_moat_done:
     PLP

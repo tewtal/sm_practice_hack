@@ -2914,14 +2914,15 @@ status_twocries:
     BRA .yesdonechecking
 
   .oneframeearlycheck
+    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_UP : BEQ .seconddone
     LDA !ram_roomstrat_counter : CMP #$0057 : BMI .seconddone
     CMP #$00D5 : BPL .seconddone : CMP #$0099 : BPL .secondlate
     CMP #$0093 : BMI .secondearly : CMP #$0096 : BMI .scammed
     BRA .noscam
 
   .secondcheck
-    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_UP : BEQ .seconddone
     CMP #$0007 : BEQ .oneframeearlycheck
+    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_UP : BEQ .seconddone
     LDA !ram_roomstrat_counter : CMP #$0057 : BMI .seconddone
     CMP #$00D5 : BPL .seconddone : CMP #$0099 : BPL .secondlate
     CMP #$0093 : BMI .secondearly : CMP #$0096 : BPL .checkscam
