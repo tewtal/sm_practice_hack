@@ -56,6 +56,7 @@ status_roomstrat:
     dw status_downbackzeb
     dw status_draygonai
     dw status_ridleyai
+    dw status_twocries
 }
 
 status_chargetimer:
@@ -2825,5 +2826,141 @@ status_downbackzeb:
     STA !ram_roomstrat_counter
     STA !ram_roomstrat_state
     RTS
+}
+
+status_twocries:
+{
+    LDA !ram_roomstrat_state : BEQ .start
+    LDA $0FA8 : CMP #$BE96 : BMI .reset
+    CMP #$BF95 : BPL .reset
+    LDA $7E784C : CMP #$0005 : BMI .reset
+    CMP #$0009 : BMI .check
+
+  .reset
+    TDC : STA !ram_roomstrat_state
+    RTS
+
+  .start
+    LDA $0FA8 : CMP #$BE96 : BNE .done
+    LDA $7E784C : CMP #$0005 : BNE .done
+    TDC : STA !ram_roomstrat_counter
+    LDA #$0008 : STA !ram_roomstrat_state
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$88
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$8A : STA !HUD_TILEMAP+$8C
+    STA !HUD_TILEMAP+$8E : STA !HUD_TILEMAP+$90
+    RTS
+
+  .wait
+    LDA !SAMUS_Y_DIRECTION : BNE .done
+    LDA #$0008 : STA !ram_roomstrat_state
+
+  .done
+    RTS
+
+  .ignore
+    LDA #$0009 : STA !ram_roomstrat_state
+    RTS
+
+  .check
+    LDA !ram_roomstrat_counter : INC : STA !ram_roomstrat_counter
+    LDA !ram_roomstrat_state : CMP #$0008 : BEQ .firstcheck
+    CMP #$0009 : BEQ .wait : BPL .done
+    BRL .secondcheck
+
+  .firstcheck
+    LDA !SAMUS_Y_DIRECTION : CMP #$0001 : BNE .done
+    LDA !ram_roomstrat_counter : CMP #$0052 : BMI .ignore
+    CMP #$00D0 : BPL .ignore : CMP #$0094 : BPL .firstlate
+    CMP #$008D : BMI .firstearly : BEQ .oneframeearly
+    SEC : SBC #$008D : STA !ram_roomstrat_state
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$88
+    TDC : STA !ram_roomstrat_counter
+    RTS
+
+  .firstlate
+    SEC : SBC #$0093 : ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A
+    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$88
+    BRL .donechecking
+
+  .firstearly
+    LDA #$008E : SEC : SBC !ram_roomstrat_counter
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A
+    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$88
+    BRL .donechecking
+
+  .oneframeearly
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$88
+    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$8A
+    LDA #$0007 : STA !ram_roomstrat_state
+    TDC : STA !ram_roomstrat_counter
+
+  .seconddone
+    RTS
+
+  .secondlate
+    BNE .actuallylate
+    LDA !ram_roomstrat_state : CMP #$0003 : BMI .notlate
+    CMP #$0005 : BPL .notlate
+    LDA !ram_roomstrat_counter
+
+  .actuallylate
+    SEC : SBC #$0098 : ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
+    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$8C
+    BRL .donechecking
+
+  .notlate
+    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$8E
+    BRA .yesdonechecking
+
+  .oneframeearlycheck
+    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_UP : BEQ .seconddone
+    LDA !ram_roomstrat_counter : CMP #$0057 : BMI .seconddone
+    CMP #$00D5 : BPL .seconddone : CMP #$0099 : BPL .secondlate
+    CMP #$0093 : BMI .secondearly : CMP #$0096 : BMI .scammed
+    BRA .noscam
+
+  .secondcheck
+    CMP #$0007 : BEQ .oneframeearlycheck
+    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_UP : BEQ .seconddone
+    LDA !ram_roomstrat_counter : CMP #$0057 : BMI .seconddone
+    CMP #$00D5 : BPL .seconddone : CMP #$0099 : BPL .secondlate
+    CMP #$0093 : BMI .secondearly : CMP #$0096 : BPL .checkscam
+
+  .noscam
+    SEC : SBC #$0092 : ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
+
+  .yesdonechecking
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$8C
+
+  .donechecking
+    LDA #$000A : STA !ram_roomstrat_state
+    RTS
+
+  .scammed
+    LDA !ram_roomstrat_counter : SEC : SBC #$0092
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
+    LDA !IH_LETTER_X : STA !HUD_TILEMAP+$8C
+    BRA .donechecking
+
+  .checkscam
+    LDA !ram_roomstrat_state : CMP #$0002 : BEQ .scammed
+    LDA !ram_roomstrat_counter
+    BRA .noscam
+
+  .secondearly
+    CMP #$0091 : BMI .actuallyearly
+    LDA !ram_roomstrat_state : CMP #$0002 : BEQ .notearly
+    CMP #$0006 : BPL .notearly
+
+  .actuallyearly
+    LDA #$0093 : SEC : SBC !ram_roomstrat_counter
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
+    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$8C
+    BRA .donechecking
+
+  .notearly
+    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$8E
+    BRA .yesdonechecking
 }
 
