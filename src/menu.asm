@@ -546,6 +546,7 @@ cm_draw_action_table:
     dw draw_custom_preset
     dw draw_ram_watch
     dw draw_dynamic
+    dw draw_manage_presets
 
 draw_toggle:
 {
@@ -804,7 +805,8 @@ draw_numfield_word:
     LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : INC !DP_CurrentMenu : STA !DP_Address
     LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : STA !DP_Address+2
 
-    ; skip min/max values
+    ; skip min/max and increment values
+    INC !DP_CurrentMenu : INC !DP_CurrentMenu : INC !DP_CurrentMenu : INC !DP_CurrentMenu
     INC !DP_CurrentMenu : INC !DP_CurrentMenu : INC !DP_CurrentMenu : INC !DP_CurrentMenu
 
     ; increment past JSL
@@ -1260,6 +1262,28 @@ draw_custom_preset:
 pushpc
 incsrc roomnames.asm
 pullpc
+}
+
+draw_manage_presets:
+{
+    LDA [!DP_CurrentMenu] : AND #$00FF : PHA
+    ; draw it normally first
+    JSR draw_custom_preset
+    ; this puts current slot into !DP_ToggleValue
+    PLY
+
+    ; check if we've already selected a slot
+    LDA !ram_cm_manage_slots : BEQ .done
+
+    ; does it match this slot?
+    TYA : CMP !ram_cm_selected_slot : BNE .done
+
+    ; add the indicator on the left side
+    LDX !DP_JSLTarget : DEX #2
+    LDA !MENU_ARROW_RIGHT : STA !ram_tilemap_buffer,X
+
+  .done
+    RTS
 }
 
 draw_ram_watch:
@@ -2545,6 +2569,7 @@ cm_execute_action_table:
     dw execute_custom_preset
     dw execute_ram_watch
     dw execute_dynamic
+    dw execute_manage_presets
 
 execute_toggle:
 {
@@ -2706,18 +2731,67 @@ execute_numfield_word:
     LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : INC !DP_CurrentMenu : STA !DP_DigitMinimum
     LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : INC !DP_CurrentMenu : INC : STA !DP_DigitMaximum ; INC for convenience
 
-    ; check if maximum requires 3 digits or 4
-    CMP #1000 : BPL .load_jsl_target
-    LDA !ram_cm_horizontal_cursor : CMP #$0003 : BNE .load_jsl_target
-    LDA #$0002 : STA !ram_cm_horizontal_cursor
+    ; grab normal increment
+    LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : INC !DP_CurrentMenu : STA !DP_Increment
 
-  .load_jsl_target
+    ; check for held inputs
+    LDA !ram_cm_controller : BIT !IH_INPUT_HELD : BEQ .incPastFastValue
+    ; input held, grab faster increment
+    LDA [!DP_CurrentMenu] : AND #$00FF : STA !DP_Increment
+    ; keep normal increment and skip past fast value
+  .incPastFastValue
+    INC !DP_CurrentMenu : INC !DP_CurrentMenu
+
+    ; grab JSL address
     LDA [!DP_CurrentMenu] : STA !DP_JSLTarget
 
+    ; left/right = increment, A/X/Y = SDE mode
+    LDA !ram_cm_controller : BIT !IH_INPUT_LEFTRIGHT : BEQ .singleDigitEditing
+
+    ; check direction held
+    BIT #$0200 : BNE .pressed_left
+    ; pressed right, inc
+    LDA [!DP_DigitAddress] : CLC : ADC !DP_Increment
+    CMP !DP_DigitMaximum : BCS .set_to_min
+    STA [!DP_DigitAddress] : BRA .jsl
+
+  .pressed_left ; dec
+    LDA [!DP_DigitAddress] : SEC : SBC !DP_Increment
+    CMP !DP_DigitMinimum : BMI .set_to_max
+    CMP !DP_DigitMaximum : BCS .set_to_max
+    STA [!DP_DigitAddress] : BRA .jsl
+
+  .set_to_min
+    LDA !DP_DigitMinimum : STA [!DP_DigitAddress] : BRA .jsl
+
+  .set_to_max
+    LDA !DP_DigitMaximum : DEC : STA [!DP_DigitAddress]
+
+  .jsl
+    ; skip if JSL target is zero
+    LDA !DP_JSLTarget : BEQ .end
+
+    ; Set return address for indirect JSL
+    LDA !ram_cm_menu_bank : STA !DP_JSLTarget+2
+    PHK : PEA .end-1
+
+    ; addr in A
+    LDA [!DP_Address] : LDX #$0000
+    JML.w [!DP_JSLTarget]
+
+  .singleDigitEditing
+    ; check if maximum requires 3 digits or 4
+    LDA !DP_DigitMinimum : CMP #1000 : BPL .set_ctrl_mode
+    LDA !ram_cm_horizontal_cursor : CMP #$0003 : BNE .set_ctrl_mode
+    LDA #$0002 : STA !ram_cm_horizontal_cursor
+
+  .set_ctrl_mode
     LDA [!DP_DigitAddress] : STA !DP_DigitValue
     LDA #$8001 : STA !ram_cm_ctrl_mode
-    %sfxnumber()
 
+  .end
+    %ai16()
+    %sfxnumber()
     RTS
 }
 
@@ -3119,6 +3193,126 @@ endif
   .done
     JSL cm_previous_menu
     JSL action_submenu
+    RTS
+}
+
+execute_manage_presets:
+{
+    LDA !IH_CONTROLLER_PRI : BIT !IH_INPUT_LEFTRIGHT : BEQ .manageSlots
+if !FEATURE_TINYSTATES
+    ; TinyStates only has one page
+    RTS
+endif
+    ; flip to the next/prev page
+    BIT !IH_INPUT_LEFT : BNE .decPage
+    LDA [!DP_CurrentMenu] : AND #$00FF : CMP #$0010 : BMI .loadPage2
+    CMP #$0020 : BPL .loadPage1
+  .loadPage3
+    LDY.w #ManagePresetsMenu3 : BRA .adjacentMenu
+  .loadPage2
+    LDY.w #ManagePresetsMenu2 : BRA .adjacentMenu
+  .check2
+    CMP #$0020 : BPL .loadPage2
+  .loadPage1
+    LDY.w #ManagePresetsMenu : BRA .adjacentMenu
+  .decPage
+    LDA [!DP_CurrentMenu] : AND #$00FF : CMP #$0010 : BPL .check2
+    BRA .loadPage3
+  .adjacentMenu
+    JSL action_adjacent_submenu
+    RTS
+
+  .manageSlots
+    ; are we deleting (X) or swapping?
+    LDA !IH_CONTROLLER_PRI_NEW : BIT !CTRL_X : BEQ .swapMode
+    ; check if preset exists
+    LDA [!DP_CurrentMenu] : AND #$00FF : STA !ram_cm_selected_slot
+    %presetslotsize()
+    LDA $703000,X : CMP #$5AFE : BNE .failSFX
+    ; open confirmation screen before deleting preset
+    LDY.w #ManagePresetsConfirm
+    ; set bank for manual submenu jump
+    LDA !DP_MenuIndices+2 : STA !ram_cm_menu_bank
+    JSL action_submenu
+    RTS
+
+  .failSFX
+    %sfxfail()
+    RTS
+
+  .swapMode
+    ; swap mode, check if a slot has already been selected
+    LDA !ram_cm_manage_slots : BNE .swapSlots
+
+    ; put preset slot in ram and set swap mode
+    LDA [!DP_CurrentMenu] : AND #$00FF : STA !ram_cm_selected_slot
+    LDA #$0001 : STA !ram_cm_manage_slots
+    RTS
+
+  .swapSlots
+    PHB
+    ; put source address for slot 1 in !DP_Address
+    LDA !ram_cm_selected_slot : %presetslotsize()
+    CLC : ADC.w #$3000 : STA !DP_Address
+
+    ; get preset slot #
+    LDA [!DP_CurrentMenu] : AND #$00FF : %presetslotsize()
+
+    ; put source address for slot 2 in !DP_JSLTarget
+    CLC : ADC.w #$3000 : STA !DP_JSLTarget
+
+    ; slot 1 to buffer
+    LDX !DP_Address
+    LDA.w #!ram_tilemap_buffer : TAY
+    LDA !PRESET_SLOT_SIZE-1
+    MVN $707E ; src, dest
+    ; slot 2 to slot 1
+    LDX !DP_JSLTarget
+    LDY !DP_Address
+    LDA !PRESET_SLOT_SIZE-1
+    MVN $7070
+    ; buffer (slot 1) to slot 2
+    LDA.w #!ram_tilemap_buffer : TAX
+    LDY !DP_JSLTarget
+    LDA !PRESET_SLOT_SIZE-1
+    MVN $7E70
+
+    ; pointer to name 1
+    LDA !ram_cm_selected_slot : ASL #3 : STA !DP_Temp
+    ASL : ADC !DP_Temp
+    ADC.w #!sram_custom_preset_names : STA !DP_Address
+    ; pointer to name 2
+    LDA [!DP_CurrentMenu] : AND #$00FF : ASL #3 : STA !DP_Temp
+    ASL : ADC !DP_Temp
+    ADC.w #!sram_custom_preset_names : STA !DP_JSLTarget
+
+    ; name 1 to buffer
+    LDX !DP_Address
+    LDA.w #!ram_tilemap_buffer : TAY
+    LDA #$0018-1
+    MVN $707E
+    ; name 2 to name 1
+    LDX !DP_JSLTarget
+    LDY !DP_Address
+    LDA #$0018-1
+    MVN $7070
+    ; buffer (name 1) to name 2
+    LDA.w #!ram_tilemap_buffer : TAX
+    LDY !DP_JSLTarget
+    LDA #$0018-1
+    MVN $7E70
+    ; swap safewords
+    LDA !ram_cm_selected_slot : ASL : TAX
+    LDA !sram_custom_preset_safewords,X : STA !DP_Address : TXY
+    LDA [!DP_CurrentMenu] : AND #$00FF : ASL : STA !DP_Temp : TAX
+    LDA !sram_custom_preset_safewords,X : TYX : STA !sram_custom_preset_safewords,X
+    LDX !DP_Temp : LDA !DP_Address : STA !sram_custom_preset_safewords,X
+
+    LDA #$0000 : STA !ram_cm_manage_slots
+    LDA !sram_last_preset : BMI .done
+    LDA #$0000 : STA !sram_last_preset
+  .done
+    PLB
     RTS
 }
 
