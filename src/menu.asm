@@ -3219,7 +3219,9 @@ endif
     LDA [!DP_CurrentMenu] : AND #$00FF : CMP #$0010 : BPL .check2
     BRA .loadPage3
   .adjacentMenu
-    JSL action_adjacent_submenu
+    JSL cm_previous_menu
+    %setmenubank()
+    JSL action_submenu
     RTS
 
   .manageSlots

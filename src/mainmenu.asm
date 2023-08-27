@@ -657,7 +657,9 @@ else
     LDY.w #ManagePresetsMenu3
   .done
 endif
-    JML action_adjacent_submenu
+    JSL cm_previous_menu
+    %setmenubank()
+    JML action_submenu
 
 ManagePresetsMenu:
     dw #managepreset_00
@@ -791,7 +793,9 @@ custompreset_goto_page3:
 managepreset_goto_page1:
     %cm_jsl("GOTO PAGE ONE", .routine, #ManagePresetsMenu)
   .routine
-    JML action_adjacent_submenu
+    JSL cm_previous_menu
+    %setmenubank()
+    JML action_submenu
 
 managepreset_goto_page2:
     %cm_jsl("GOTO PAGE TWO", managepreset_goto_page1_routine, #ManagePresetsMenu2)
