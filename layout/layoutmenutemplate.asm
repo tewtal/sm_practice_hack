@@ -72,77 +72,83 @@ layout_ip_init_all:
     RTL
 }
 
+if !FEATURE_PAL
+!layout_plm_offset = 6
+else
+!layout_plm_offset = 0
+endif
+
 LayoutIPVisiblePLMTable:
-    dw $0000   ; Vanilla
-    dw $EED7   ; E-Tank
-    dw $EF27   ; R-Tank
-    dw $EEDB   ; Missile
-    dw $EEDF   ; Super
-    dw $EEE3   ; Power Bomb
-    dw $EF07   ; Varia
-    dw $EF0B   ; Gravity
-    dw $EF23   ; Morph
-    dw $EEE7   ; Bombs
-    dw $EF03   ; Springball
-    dw $EF1F   ; Screw
-    dw $EEF3   ; Hi-Jump
-    dw $EF1B   ; Space Jump
-    dw $EEF7   ; Speed
-    dw $EF17   ; Grapple
-    dw $EF0F   ; X-Ray
-    dw $EEEB   ; Charge
-    dw $EEEF   ; Ice
-    dw $EEFB   ; Wave
-    dw $EEFF   ; Spazer
-    dw $EF13   ; Plasma
+    dw $0000                        ; Vanilla
+    dw $EED7+!layout_plm_offset     ; E-Tank
+    dw $EF27+!layout_plm_offset     ; R-Tank
+    dw $EEDB+!layout_plm_offset     ; Missile
+    dw $EEDF+!layout_plm_offset     ; Super
+    dw $EEE3+!layout_plm_offset     ; Power Bomb
+    dw $EF07+!layout_plm_offset     ; Varia
+    dw $EF0B+!layout_plm_offset     ; Gravity
+    dw $EF23+!layout_plm_offset     ; Morph
+    dw $EEE7+!layout_plm_offset     ; Bombs
+    dw $EF03+!layout_plm_offset     ; Springball
+    dw $EF1F+!layout_plm_offset     ; Screw
+    dw $EEF3+!layout_plm_offset     ; Hi-Jump
+    dw $EF1B+!layout_plm_offset     ; Space Jump
+    dw $EEF7+!layout_plm_offset     ; Speed
+    dw $EF17+!layout_plm_offset     ; Grapple
+    dw $EF0F+!layout_plm_offset     ; X-Ray
+    dw $EEEB+!layout_plm_offset     ; Charge
+    dw $EEEF+!layout_plm_offset     ; Ice
+    dw $EEFB+!layout_plm_offset     ; Wave
+    dw $EEFF+!layout_plm_offset     ; Spazer
+    dw $EF13+!layout_plm_offset     ; Plasma
 
 LayoutIPChozoPLMTable:
-    dw $0000   ; Vanilla
-    dw $EF2B   ; E-Tank
-    dw $EF7B   ; R-Tank
-    dw $EF2F   ; Missile
-    dw $EF33   ; Super
-    dw $EF37   ; Power Bomb
-    dw $EF5B   ; Varia
-    dw $EF5F   ; Gravity
-    dw $EF77   ; Morph
-    dw $EF3B   ; Bombs
-    dw $EF57   ; Springball
-    dw $EF73   ; Screw
-    dw $EF47   ; Hi-Jump
-    dw $EF6F   ; Space Jump
-    dw $EF4B   ; Speed
-    dw $EF6B   ; Grapple
-    dw $EF63   ; X-Ray
-    dw $EF3F   ; Charge
-    dw $EF43   ; Ice
-    dw $EF4F   ; Wave
-    dw $EF53   ; Spazer
-    dw $EF67   ; Plasma
+    dw $0000                        ; Vanilla
+    dw $EF2B+!layout_plm_offset     ; E-Tank
+    dw $EF7B+!layout_plm_offset     ; R-Tank
+    dw $EF2F+!layout_plm_offset     ; Missile
+    dw $EF33+!layout_plm_offset     ; Super
+    dw $EF37+!layout_plm_offset     ; Power Bomb
+    dw $EF5B+!layout_plm_offset     ; Varia
+    dw $EF5F+!layout_plm_offset     ; Gravity
+    dw $EF77+!layout_plm_offset     ; Morph
+    dw $EF3B+!layout_plm_offset     ; Bombs
+    dw $EF57+!layout_plm_offset     ; Springball
+    dw $EF73+!layout_plm_offset     ; Screw
+    dw $EF47+!layout_plm_offset     ; Hi-Jump
+    dw $EF6F+!layout_plm_offset     ; Space Jump
+    dw $EF4B+!layout_plm_offset     ; Speed
+    dw $EF6B+!layout_plm_offset     ; Grapple
+    dw $EF63+!layout_plm_offset     ; X-Ray
+    dw $EF3F+!layout_plm_offset     ; Charge
+    dw $EF43+!layout_plm_offset     ; Ice
+    dw $EF4F+!layout_plm_offset     ; Wave
+    dw $EF53+!layout_plm_offset     ; Spazer
+    dw $EF67+!layout_plm_offset     ; Plasma
 
 LayoutIPHiddenPLMTable:
-    dw $0000   ; Vanilla
-    dw $EF7F   ; E-Tank
-    dw $EFCF   ; R-Tank
-    dw $EF83   ; Missile
-    dw $EF87   ; Super
-    dw $EF8B   ; Power Bomb
-    dw $EFAF   ; Varia
-    dw $EFB3   ; Gravity
-    dw $EFCB   ; Morph
-    dw $EF8F   ; Bombs
-    dw $EFAB   ; Springball
-    dw $EFC7   ; Screw
-    dw $EF9B   ; Hi-Jump
-    dw $EFC3   ; Space Jump
-    dw $EF9F   ; Speed
-    dw $EFBF   ; Grapple
-    dw $EFB7   ; X-Ray
-    dw $EF93   ; Charge
-    dw $EF97   ; Ice
-    dw $EFA3   ; Wave
-    dw $EFA7   ; Spazer
-    dw $EFBB   ; Plasma
+    dw $0000                        ; Vanilla
+    dw $EF7F+!layout_plm_offset     ; E-Tank
+    dw $EFCF+!layout_plm_offset     ; R-Tank
+    dw $EF83+!layout_plm_offset     ; Missile
+    dw $EF87+!layout_plm_offset     ; Super
+    dw $EF8B+!layout_plm_offset     ; Power Bomb
+    dw $EFAF+!layout_plm_offset     ; Varia
+    dw $EFB3+!layout_plm_offset     ; Gravity
+    dw $EFCB+!layout_plm_offset     ; Morph
+    dw $EF8F+!layout_plm_offset     ; Bombs
+    dw $EFAB+!layout_plm_offset     ; Springball
+    dw $EFC7+!layout_plm_offset     ; Screw
+    dw $EF9B+!layout_plm_offset     ; Hi-Jump
+    dw $EFC3+!layout_plm_offset     ; Space Jump
+    dw $EF9F+!layout_plm_offset     ; Speed
+    dw $EFBF+!layout_plm_offset     ; Grapple
+    dw $EFB7+!layout_plm_offset     ; X-Ray
+    dw $EF93+!layout_plm_offset     ; Charge
+    dw $EF97+!layout_plm_offset     ; Ice
+    dw $EFA3+!layout_plm_offset     ; Wave
+    dw $EFA7+!layout_plm_offset     ; Spazer
+    dw $EFBB+!layout_plm_offset     ; Plasma
 
 LayoutItemPickupsMenu:
     dw #layout_ip_all

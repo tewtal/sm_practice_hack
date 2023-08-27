@@ -87,9 +87,15 @@ layout_create_plms_itempickups:
 {
   .loop
     LDA $0000,X : BEQ layout_create_plms_itempickups_end
+if !FEATURE_PAL
+    CMP #$EEDD : BMI layout_create_one_vanilla_room_plm
+    CMP #$EF31 : BMI .visible
+    CMP #$EF85 : BMI .chozo
+else
     CMP #$EED7 : BMI layout_create_one_vanilla_room_plm
     CMP #$EF2B : BMI .visible
     CMP #$EF7F : BMI .chozo
+endif
     LDA !ram_itempickups_hidden : BEQ layout_create_one_vanilla_room_plm
     BRA .custom
   .visible
@@ -711,7 +717,11 @@ layout_bomb_torizo_start_crumbling:
 layout_bomb_torizo_end_preinstruction:
 warnpc $84D356
 
+if !FEATURE_PAL
+org $84E543
+else
 org $84E53D
+endif
 hook_layout_bomb_set_room_argument:
     dw #layout_bomb_set_room_argument
 
@@ -752,11 +762,19 @@ layout_spazer_block_plm:
 warnpc $84D490
 
 ; Fix Morph Ball Hidden/Chozo PLM's
+if !FEATURE_PAL
+org $84E8D4
+else
 org $84E8CE
+endif
 layout_morph_ball_chozo_plm_equipment:
     dw $0004
 
+if !FEATURE_PAL
+org $84EE08
+else
 org $84EE02
+endif
 layout_morph_ball_hidden_plm_equipment:
     dw $0004
 
