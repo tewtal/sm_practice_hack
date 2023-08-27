@@ -288,4 +288,24 @@ Provides feedback on downback zeb skip attempts:
 - First character = Feedback on your horizontal subpixel normalization. An X indicates your horizontal subpixel was correctly normalized, while an N indicates it was not. (This may not necessarily support all normalized setups; if it incorrectly reports an N for your favorite setup, let us know!).
 - Second character = Feedback on your vertical subpixel normalization. A Y indicates your vertical subpixel was correctly normalized; an N indicates it was not. (If you're getting an N here, the most likely cause is that you're holding forward during knockback from the Rinka and getting a downwards damage boost, which you do not want.)
 - Third character = number of frames between knockback ending and the start of your downback. Values of 1-4, 6-10, or 13-14 are "good frames" that result in a successful clip, while 0, 5, 11-12, and 15+ are "bad frames" that will result in a failed attempt.
+
+## Two Cries (currently only supported on NTSC)
+Provides feedback on attempts to manipulate Mother Brain into a fast sitdown animation (baby detaches after just two cries) while performing the standup glitch.
+This assumes you are using the method starting from angle-crouch jump, aim down while below Mother Brain's head (stay in this pose the entire time you are at or above head level), morph into an automatic springball jump, and unmorph while falling.
+&nbsp;  
+First Y = The room strat recognizes Mother Brain is in rainbow beam phase near the time where you can perform the Two Cries manip.
+&nbsp;  
+First two characters = Feedback on the first jump (this will overwrite the first Y):
+- E# indicates you jumped early where the number tells you how many frames you were early.
+- YE indicates you jumped one frame early. The manip is still possible but more difficult.
+- Y# indicates you jumped on one of the six good frames (although Y2 is not ideal).
+- L# indicates you jumped late where the number tells you how many frames you were late.
+
+Last two characters = Feedback on the unmorph (only given if first jump was YE or Y#):
+- E# indicates you unmorphed early where the number tells you how many frames you were early.
+- YE indicates you unmorphed one or two frames early, but because the first jump happened on a specific frame, the manip should work.
+- X# indicates you unmorphed on one of the six good frames, but because your first jump happened on YE or Y2, the manip will not work.
+- Y# indicates you unmorphed on one of the six good frames and were not scammed by YE or Y2.
+- YL indicates you unmorphed one frame late, but because the first jump happened on a specific frame, the manip should work.
+- L# indicates you unmorphed late where the number tells you how many frames you were late.
 <br />

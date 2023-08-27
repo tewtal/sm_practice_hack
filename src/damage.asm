@@ -147,20 +147,21 @@ else
 endif
     dw periodic_damage_balanced
     dw periodic_damage_progressive
-    dw periodic_damage_progressive
+    dw periodic_damage_dash_recall
     dw periodic_damage_heat_shield
 
-; Make our minor adjustments and jump back to the vanilla routine
 periodic_damage_balanced:
 {
     PHP : REP #$30
     LDA $0A78 : BEQ $03
+    ; Nothing to do, jump back to vanilla routine
 if !FEATURE_PAL
     JMP $EA32
 else
     JMP $EA35
 endif
     LDA $09A2 : BIT #$0001 : BNE $03
+    ; Either jump to gravity (75% reduction) or power suit (no reduction)
 if !FEATURE_PAL
     JMP $EA0E   ; Varia not equipped
     JMP $E9F9   ; Varia equipped
@@ -195,6 +196,41 @@ endif
     PLA : XBA : AND #$00FF : STA $0A50
 
   .novaria
+    ; Jump back into the vanilla routine
+if !FEATURE_PAL
+    JMP $EA0E
+else
+    JMP $EA11
+endif
+}
+
+periodic_damage_dash_recall:
+{
+    PHP : REP #$30
+    LDA $0A78 : BEQ $03
+    ; Nothing to do, jump back to vanilla routine
+if !FEATURE_PAL
+    JMP $EA32
+else
+    JMP $EA35
+endif
+
+    LDA $09A2 : BIT #$0001 : BEQ .novaria
+    ; Jump back to gravity vanilla routine for 75% reduction
+if !FEATURE_PAL
+    JMP $E9F9
+else
+    JMP $E9FC
+endif
+
+  .novaria
+    LDA $09A2 : BIT #$0020 : BEQ .nogravity
+    ; Gravity equipped, so halve damage
+    LDA $0A4F : LSR
+    PHA : XBA : AND #$FF00 : STA $0A4E
+    PLA : XBA : AND #$00FF : STA $0A50
+
+  .nogravity
     ; Jump back into the vanilla routine
 if !FEATURE_PAL
     JMP $EA0E

@@ -263,9 +263,12 @@ macro cm_submenu(title, target)
 endmacro
 
 macro cm_adjacent_submenu(title, target)
-; runs action_adjacent_submenu to return to previous menu, set the bank of the next menu and continue into action_submenu
+; return to previous menu and then runs action_submenu
 ; can only used for submenus and when already on a submenu
-    %cm_jsl("<title>", #action_adjacent_submenu, <target>)
+    %cm_jsl("<title>", #.routine, <target>)
+  .routine
+    JSL cm_previous_menu
+    JML action_submenu
 endmacro
 
 macro cm_preset(title, target)

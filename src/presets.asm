@@ -175,7 +175,7 @@ preset_load_library_background:
   .done_fx
     PEA $8F00 : PLB : PLB
     %a16()
-    LDX $07BB
+    LDX !STATE_POINTER
     LDY $0016,X : BPL .done
 
   .load_loop
@@ -358,10 +358,6 @@ category_preset_data_table:
 
 print pc, " presets bank82 end"
 warnpc $82FE00 ; tinystates.asm
-
-
-org $82E8D9
-    JSL preset_room_setup_asm_fixes
 
 
 org $80F000
@@ -550,7 +546,7 @@ endif
     LDA #$E737 : STA $099C ; Pointer to next frame's room transition code = $82:E737
 
 if !RAW_TILE_GRAPHICS
-    LDX $07BB : LDA $8F0018,X
+    LDX !STATE_POINTER : LDA $8F0018,X
     CMP #$91C9 : BEQ .post_preset_scrolling_sky
     CMP #$91CE : BEQ .post_preset_scrolling_sky
     PLB : PLP : RTL
@@ -696,7 +692,7 @@ preset_room_setup_asm_fixes:
     ; Start with original logic
     PHP : PHB
     %ai16()
-    LDX $07BB
+    LDX !STATE_POINTER
     LDA $0018,X : BEQ .end
 
     ; Check if this is scrolling sky
@@ -705,7 +701,7 @@ preset_room_setup_asm_fixes:
 
   .execute_setup_asm
     ; Resume execution
-    JML $8FE89B
+    JML layout_execute_setup_asm_execute
 
   .scrolling_sky
     ; If we got here through normal gameplay, allow scrolling sky

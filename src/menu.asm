@@ -2486,10 +2486,34 @@ cm_move:
     STA !ram_cm_cursor_stack,X : TAY
 
     ; check for blank menu line ($FFFF)
-    LDA [!DP_MenuIndices],Y : CMP #$FFFF : BNE .end
+    LDA [!DP_MenuIndices],Y : CMP #$FFFF : BNE .checkDynamic
 
+  .repeat
     ; repeat move to skip blank line
     LDA !DP_Temp : BRA cm_move
+
+  .checkDynamic
+    STA !DP_CurrentMenu : LDA [!DP_CurrentMenu]
+    CMP !ACTION_DYNAMIC : BNE .end
+
+    ; grab the memory address (long)
+    INC !DP_CurrentMenu : INC !DP_CurrentMenu
+    LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : INC !DP_CurrentMenu : STA !DP_Address
+    LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : STA !DP_Address+2
+
+    ; grab the value at that memory address
+    LDA [!DP_Address] : TAX
+
+    ; find the correct item
+    BEQ .dynamicFound
+
+  .dynamicLoop
+    INC !DP_CurrentMenu : INC !DP_CurrentMenu
+    DEX : BNE .dynamicLoop
+
+  .dynamicFound
+    ; check if the item should be skipped
+    LDA [!DP_CurrentMenu] : BEQ .repeat
 
   .end
     %sfxmove()
@@ -3167,7 +3191,8 @@ endif
     BRA .loadPage3
 
   .done
-    JSL action_adjacent_submenu
+    JSL cm_previous_menu
+    JSL action_submenu
     RTS
 }
 
@@ -3194,7 +3219,9 @@ endif
     LDA [!DP_CurrentMenu] : AND #$00FF : CMP #$0010 : BPL .check2
     BRA .loadPage3
   .adjacentMenu
-    JSL action_adjacent_submenu
+    JSL cm_previous_menu
+    %setmenubank()
+    JSL action_submenu
     RTS
 
   .manageSlots
@@ -3323,7 +3350,7 @@ execute_dynamic:
     ; !DP_CurrentMenu points to data after the action type index
     INC !DP_CurrentMenu : INC !DP_CurrentMenu
 
-    ; draw menu item
+    ; Execute action
     JMP (cm_execute_action_table,X)
 
   .skip

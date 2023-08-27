@@ -5,6 +5,7 @@ success=0
 trap success=1 ERR
 
 echo "Building SM NTSC Dev Practice Hack"
+python3 layout/create_layout.py portals.txt layoutmenutemplate.asm ../src/layoutmenu.asm ../src/layoutportaltables.asm
 python3 names/create_names.py ../src/roomnames.asm default_names.txt custom_names.txt
 cd resources
 python3 create_ram_symbols.py ../src/defines.asm ../src/symbols.asm

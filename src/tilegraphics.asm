@@ -292,7 +292,7 @@ preset_load_level:
     LDA !sram_preset_options : BIT !PRESETS_COMPRESSED_GRAPHICS : BNE .tile_table_decompression
 
     ; Jump to routine based on graphics set
-    LDX $07BB : LDA $0003,X : AND #$00FF
+    LDX !STATE_POINTER : LDA $0003,X : AND #$00FF
     ASL : TAX : PHB
     JSR (load_tile_tables_jump_table,X)
 
