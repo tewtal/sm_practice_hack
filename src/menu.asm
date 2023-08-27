@@ -3318,6 +3318,126 @@ endif
     RTS
 }
 
+execute_manage_presets:
+{
+    LDA !IH_CONTROLLER_PRI : BIT !IH_INPUT_LEFTRIGHT : BEQ .manageSlots
+if !FEATURE_TINYSTATES
+    ; TinyStates only has one page
+    RTS
+endif
+    ; flip to the next/prev page
+    BIT !IH_INPUT_LEFT : BNE .decPage
+    LDA [!DP_CurrentMenu] : AND #$00FF : CMP #$0010 : BMI .loadPage2
+    CMP #$0020 : BPL .loadPage1
+  .loadPage3
+    LDY.w #ManagePresetsMenu3 : BRA .adjacentMenu
+  .loadPage2
+    LDY.w #ManagePresetsMenu2 : BRA .adjacentMenu
+  .check2
+    CMP #$0020 : BPL .loadPage2
+  .loadPage1
+    LDY.w #ManagePresetsMenu : BRA .adjacentMenu
+  .decPage
+    LDA [!DP_CurrentMenu] : AND #$00FF : CMP #$0010 : BPL .check2
+    BRA .loadPage3
+  .adjacentMenu
+    JSL action_adjacent_submenu
+    RTS
+
+  .manageSlots
+    ; are we deleting (X) or swapping?
+    LDA !IH_CONTROLLER_PRI_NEW : BIT !CTRL_X : BEQ .swapMode
+    ; check if preset exists
+    LDA [!DP_CurrentMenu] : AND #$00FF : STA !ram_cm_selected_slot
+    %presetslotsize()
+    LDA $703000,X : CMP #$5AFE : BNE .failSFX
+    ; open confirmation screen before deleting preset
+    LDY.w #ManagePresetsConfirm
+    ; set bank for manual submenu jump
+    LDA !DP_MenuIndices+2 : STA !ram_cm_menu_bank
+    JSL action_submenu
+    RTS
+
+  .failSFX
+    %sfxfail()
+    RTS
+
+  .swapMode
+    ; swap mode, check if a slot has already been selected
+    LDA !ram_cm_manage_slots : BNE .swapSlots
+
+    ; put preset slot in ram and set swap mode
+    LDA [!DP_CurrentMenu] : AND #$00FF : STA !ram_cm_selected_slot
+    LDA #$0001 : STA !ram_cm_manage_slots
+    RTS
+
+  .swapSlots
+    PHB
+    ; put source address for slot 1 in !DP_Address
+    LDA !ram_cm_selected_slot : %presetslotsize()
+    CLC : ADC.w #$3000 : STA !DP_Address
+
+    ; get preset slot #
+    LDA [!DP_CurrentMenu] : AND #$00FF : %presetslotsize()
+
+    ; put source address for slot 2 in !DP_JSLTarget
+    CLC : ADC.w #$3000 : STA !DP_JSLTarget
+
+    ; slot 1 to buffer
+    LDX !DP_Address
+    LDA.w #!ram_tilemap_buffer : TAY
+    LDA !PRESET_SLOT_SIZE-1
+    MVN $707E ; src, dest
+    ; slot 2 to slot 1
+    LDX !DP_JSLTarget
+    LDY !DP_Address
+    LDA !PRESET_SLOT_SIZE-1
+    MVN $7070
+    ; buffer (slot 1) to slot 2
+    LDA.w #!ram_tilemap_buffer : TAX
+    LDY !DP_JSLTarget
+    LDA !PRESET_SLOT_SIZE-1
+    MVN $7E70
+
+    ; pointer to name 1
+    LDA !ram_cm_selected_slot : ASL #3 : STA !DP_Temp
+    ASL : ADC !DP_Temp
+    ADC.w #!sram_custom_preset_names : STA !DP_Address
+    ; pointer to name 2
+    LDA [!DP_CurrentMenu] : AND #$00FF : ASL #3 : STA !DP_Temp
+    ASL : ADC !DP_Temp
+    ADC.w #!sram_custom_preset_names : STA !DP_JSLTarget
+
+    ; name 1 to buffer
+    LDX !DP_Address
+    LDA.w #!ram_tilemap_buffer : TAY
+    LDA #$0018-1
+    MVN $707E
+    ; name 2 to name 1
+    LDX !DP_JSLTarget
+    LDY !DP_Address
+    LDA #$0018-1
+    MVN $7070
+    ; buffer (name 1) to name 2
+    LDA.w #!ram_tilemap_buffer : TAX
+    LDY !DP_JSLTarget
+    LDA #$0018-1
+    MVN $7E70
+    ; swap safewords
+    LDA !ram_cm_selected_slot : ASL : TAX
+    LDA !sram_custom_preset_safewords,X : STA !DP_Address : TXY
+    LDA [!DP_CurrentMenu] : AND #$00FF : ASL : STA !DP_Temp : TAX
+    LDA !sram_custom_preset_safewords,X : TYX : STA !sram_custom_preset_safewords,X
+    LDX !DP_Temp : LDA !DP_Address : STA !sram_custom_preset_safewords,X
+
+    LDA #$0000 : STA !ram_cm_manage_slots
+    LDA !sram_last_preset : BMI .done
+    LDA #$0000 : STA !sram_last_preset
+  .done
+    PLB
+    RTS
+}
+
 execute_ram_watch:
 {
     ; do nothing
