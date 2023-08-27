@@ -2258,8 +2258,6 @@ ihmode_shottimer:
 ihmode_ramwatch:
     %cm_jsl("RAM Watch", #action_select_infohud_mode, #$0014)
 
-
-
 action_select_infohud_mode:
 {
     TYA : STA !sram_display_mode
