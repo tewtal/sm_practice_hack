@@ -551,7 +551,7 @@ if !RAW_TILE_GRAPHICS
     CMP #$91CE : BEQ .post_preset_scrolling_sky
     PLB : PLP : RTL
   .post_preset_scrolling_sky
-    JML $8FE89B
+    JML layout_execute_setup_asm_execute
 else
     PLB : PLP : RTL
 endif
