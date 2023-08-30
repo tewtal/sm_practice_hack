@@ -395,8 +395,12 @@ ih_before_room_transition:
     BPL .drawDoorLag
     EOR #$FF : INC
   .drawDoorLag
-    PHB : PHD : PLB : PLB
-    LDX #$00C2 : JSR Draw3
+    PHB : PHD : PLB : PLB : PHA
+    LDX #$00C2
+    LDA !ram_minimap : BEQ .draw3
+    LDX #$0054
+  .draw3
+    PLA : JSR Draw3
     PLB
 
   .done

@@ -674,7 +674,11 @@ status_lagcounter:
     LDA !REALTIME_LAG_COUNTER : BEQ .done
     CLC : ADC !ram_lag_counter : STA !ram_lag_counter : STZ !REALTIME_LAG_COUNTER
     CMP !ram_HUD_check : BEQ .done : STA !ram_HUD_check
-    LDX #$0082 : JSR Draw3
+    LDX #$0082
+    PHA : LDA !ram_minimap : BEQ .draw3
+    LDX #$0014
+  .draw3
+    PLA : JSR Draw3
 
   .done
     RTS
