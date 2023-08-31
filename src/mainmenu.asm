@@ -2332,7 +2332,8 @@ InfoHudMenu:
     dw #ih_room_counter
     dw #ih_lag_counter
     dw #$FFFF
-    dw #ih_reset_seg_later
+    dw #ih_reset_seg_after_door
+    dw #ih_reset_seg_item_touch
     dw #ih_status_icons
 if !PRESERVE_WRAM_DURING_SPACETIME
     dw #ih_spacetime_infohud
@@ -2598,12 +2599,15 @@ ih_lag_counter:
     db #$28, "       FULL", #$FF
     db #$FF
 
-ih_reset_seg_later:
-    %cm_jsl("Reset Segment Next Room", #.routine, #$FFFF)
+ih_reset_seg_after_door:
+    %cm_jsl("Reset Segment in Next Room", #.routine, #$0001)
   .routine
     TYA : STA !ram_reset_segment_later
     %sfxconfirm()
     RTL
+
+ih_reset_seg_item_touch:
+    %cm_jsl("Reset Segment on Item Touch", #ih_reset_seg_after_door_routine, #$8000)
 
 ih_status_icons:
     %cm_toggle("Status Icons", !sram_status_icons, #1, #.routine)

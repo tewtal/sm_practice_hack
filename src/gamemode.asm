@@ -233,7 +233,7 @@ endif
     CLC : JMP skip_pause
 
   .reset_segment_later
-    LDA #$7FFF : STA !ram_reset_segment_later
+    LDA #$FFFF : STA !ram_reset_segment_later
     ; CLC to continue normal gameplay after setting segement timer reset
     CLC : JMP skip_pause
 
