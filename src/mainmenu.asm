@@ -1803,7 +1803,6 @@ MiscMenu:
     dw #misc_flashsuit
     dw #misc_hyperbeam
     dw #$FFFF
-    dw #misc_invincibility
     dw #misc_gooslowdown
     dw #misc_healthbomb
     dw #misc_suit_properties
@@ -2070,10 +2069,6 @@ init_physics_non_vanilla:
     BRA .off
 }
 
-
-misc_invincibility:
-    %cm_toggle_bit("Invincibility", $7E0DE0, #$0007, #0)
-
 misc_killenemies:
     %cm_jsl("Kill Enemies", .kill_loop, #0)
   .kill_loop
@@ -2327,19 +2322,18 @@ InfoHudMenu:
     dw #ih_goto_room_strat
     dw #ih_room_strat
     dw #$FFFF
-    dw #ih_top_HUD_mode
-    dw #$FFFF
     dw #ih_room_counter
     dw #ih_lag_counter
-    dw #$FFFF
+    dw #ih_auto_update_timers
     dw #ih_reset_seg_after_door
     dw #ih_reset_seg_item_touch
+    dw #$FFFF
+    dw #ih_top_HUD_mode
     dw #ih_status_icons
 if !PRESERVE_WRAM_DURING_SPACETIME
     dw #ih_spacetime_infohud
 endif
     dw #ih_lag
-    dw #ih_auto_update_timers
     dw #$FFFF
     dw #ih_ram_watch
     dw #$0000
@@ -2664,15 +2658,7 @@ GameMenu:
     dw #game_music_toggle
     dw #game_healthalarm
     dw #$FFFF
-    dw #game_debugmode
-    dw #game_debugbrightness
-if !FEATURE_PAL
-    dw #game_paldebug
-endif
-    dw #game_pacifist
-    dw #game_debugplms
-    dw #game_debugprojectiles
-    dw #game_debugfixscrolloffsets
+    dw #game_goto_debug
     dw #$FFFF
     dw #game_minimap
     dw #game_clear_minimap
@@ -2741,29 +2727,6 @@ game_healthalarm:
     db #$28, "m  IMPROVED", #$FF
     db #$FF
 
-game_debugmode:
-    %cm_toggle("Debug Mode", $7E05D1, #$0001, #0)
-
-game_debugbrightness:
-    %cm_toggle("Debug CPU Brightness", $7E0DF4, #$0001, #0)
-
-if !FEATURE_PAL
-game_paldebug:
-    %cm_toggle_inverted("PAL Debug Movement", $7E09E6, #$0001, #0)
-endif
-
-game_pacifist:
-    %cm_toggle("Pacifist Mode", !ram_pacifist, #$0001, #0)
-
-game_debugplms:
-    %cm_toggle_bit_inverted("Pseudo G-Mode", $7E1C23, #$8000, #0)
-
-game_debugprojectiles:
-    %cm_toggle_bit("Enable Projectiles", $7E198D, #$8000, #0)
-
-game_debugfixscrolloffsets:
-    %cm_toggle_bit("Fix Scroll Offsets", !ram_fix_scroll_offsets, #$0001, #0)
-
 game_minimap:
     %cm_toggle("Minimap", !ram_minimap, #$0001, #0)
 
@@ -2785,6 +2748,54 @@ game_clear_minimap:
     DEX : DEX : BPL .clear_minimap_loop
     %sfxreset()
     RTL
+
+game_goto_debug:
+    %cm_submenu("Debug Settings", #DebugMenu)
+
+
+; ----------
+; Debug Menu
+; ----------
+
+DebugMenu:
+    dw #game_debugmode
+if !FEATURE_PAL
+    dw #game_paldebug
+endif
+    dw #game_debugbrightness
+    dw #game_invincibility
+    dw #game_pacifist
+    dw #game_debugplms
+    dw #game_debugprojectiles
+    dw #game_debugfixscrolloffsets
+    dw #$0000
+    %cm_header("DEBUG SETTINGS")
+
+game_debugmode:
+    %cm_toggle("Debug Mode", $7E05D1, #$0001, #0)
+
+if !FEATURE_PAL
+game_paldebug:
+    %cm_toggle_inverted("PAL Debug Movement", $7E09E6, #$0001, #0)
+endif
+
+game_debugbrightness:
+    %cm_toggle("Debug CPU Brightness", $7E0DF4, #$0001, #0)
+
+game_invincibility:
+    %cm_toggle_bit("Invincibility", $7E0DE0, #$0007, #0)
+
+game_pacifist:
+    %cm_toggle("Pacifist Mode", !ram_pacifist, #$0001, #0)
+
+game_debugplms:
+    %cm_toggle_bit_inverted("Pseudo G-Mode", $7E1C23, #$8000, #0)
+
+game_debugprojectiles:
+    %cm_toggle_bit("Enable Projectiles", $7E198D, #$8000, #0)
+
+game_debugfixscrolloffsets:
+    %cm_toggle_bit("Fix Scroll Offsets", !ram_fix_scroll_offsets, #$0001, #0)
 
 
 ; ---------------
