@@ -367,7 +367,7 @@ draw_enemy_hitbox:
 
   .loopEnemies
     ; skip enemy if extended spritemap or deleted enemy
-    LDA !ENEMY_PROPERTIES_2,X : AND #$0004 : BNE .skipEnemy
+    LDA !ENEMY_EXTRA_PROPERTIES,X : AND #$0004 : BNE .skipEnemy
     LDA !ENEMY_PROPERTIES,X : AND #$0200 : BNE .skipEnemy
 
     ; skip enemy if off-screen
@@ -437,7 +437,7 @@ draw_ext_spritemap_hitbox:
 
   .loopEnemies
     ; check if extended spritemap
-    LDA !ENEMY_PROPERTIES_2,X : AND #$0004 : BNE .extended
+    LDA !ENEMY_EXTRA_PROPERTIES,X : AND #$0004 : BNE .extended
 
   .nextEnemy
     TXA : CLC : ADC #$0040 : CMP #$0340 : BEQ .end
