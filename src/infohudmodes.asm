@@ -2916,7 +2916,7 @@ status_twocries:
   .oneframeearlycheck
     LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_UP : BEQ .seconddone
     LDA !ram_roomstrat_counter : CMP #$0057 : BMI .seconddone
-    CMP #$00D5 : BPL .seconddone : CMP #$0099 : BPL .secondlate
+    CMP #$00D5 : BPL .seconddone : CMP #$0099 : BPL .actuallylate
     CMP #$0093 : BMI .secondearly : CMP #$0096 : BMI .scammed
     BRA .noscam
 
@@ -2951,7 +2951,7 @@ status_twocries:
   .secondearly
     CMP #$0091 : BMI .actuallyearly
     LDA !ram_roomstrat_state : CMP #$0002 : BEQ .notearly
-    CMP #$0006 : BPL .notearly
+    CMP #$0006 : BEQ .notearly
 
   .actuallyearly
     LDA #$0093 : SEC : SBC !ram_roomstrat_counter
