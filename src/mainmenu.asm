@@ -2327,13 +2327,9 @@ InfoHudMenu:
     dw #ih_goto_room_strat
     dw #ih_room_strat
     dw #$FFFF
+    dw #ih_goto_timers
+    dw #$FFFF
     dw #ih_top_HUD_mode
-    dw #$FFFF
-    dw #ih_room_counter
-    dw #ih_lag_counter
-    dw #$FFFF
-    dw #ih_reset_seg_after_door
-    dw #ih_reset_seg_item_touch
     dw #ih_status_icons
 if !PRESERVE_WRAM_DURING_SPACETIME
     dw #ih_spacetime_infohud
@@ -2581,6 +2577,20 @@ ih_top_HUD_mode:
     db #$28, "y   VANILLA", #$FF
     db #$FF
 
+
+ih_goto_timers:
+    %cm_submenu("Timer Settings", #IHTimerMenu)
+
+IHTimerMenu:
+    dw #ih_room_counter
+    dw #ih_lag_counter
+    dw #ih_auto_update_timers
+    dw #$FFFF
+    dw #ih_reset_seg_after_door
+    dw #ih_reset_seg_item_touch
+    dw #$0000
+    %cm_header("TIMER SETTINGS")
+
 ih_room_counter:
     dw !ACTION_CHOICE
     dl #!sram_frame_counter_mode
@@ -2609,6 +2619,9 @@ ih_reset_seg_after_door:
 ih_reset_seg_item_touch:
     %cm_jsl("Reset Segment on Item Touch", #ih_reset_seg_after_door_routine, #$8000)
 
+ih_auto_update_timers:
+    %cm_toggle_inverted("Auto-Update Timers", !ram_timers_autoupdate, #$0001, #0)
+
 ih_status_icons:
     %cm_toggle("Status Icons", !sram_status_icons, #1, #.routine)
   .routine
@@ -2629,9 +2642,6 @@ ih_lag:
 
 ih_ram_watch:
     %cm_jsl("Customize RAM Watch", #ih_prepare_ram_watch_menu, #RAMWatchMenu)
-
-ih_auto_update_timers:
-    %cm_toggle_inverted("Auto-Update Timers", !ram_timers_autoupdate, #$0001, #0)
 
 incsrc ramwatchmenu.asm
 
