@@ -103,7 +103,7 @@ status_xfactor:
 
 status_cooldowncounter:
 {
-    LDA !SAMUS_COOLDOWN : CMP !ram_HUD_check : BEQ .done : STA !ram_HUD_check
+    LDA !SAMUS_COOLDOWN_TIMER : CMP !ram_HUD_check : BEQ .done : STA !ram_HUD_check
     LDX #$0088 : JSR Draw4
 
   .done
@@ -807,7 +807,7 @@ endif
     LDA !SAMUS_Y_DIRECTION : CMP #$0002 : BNE .prepareresetcounters
 
     ; Check if we are falling and have enough vertical speed for space jump
-    LDA $0B2D : CMP #!first_spacejump_subspeed : BNE .incstate
+    LDA !SAMUS_Y_SPEEDCOMBINED : CMP #!first_spacejump_subspeed : BNE .incstate
 
     ; We are, so initialize state
     ; Note this sets the state one larger than it should be
@@ -907,7 +907,7 @@ endif
     LDA !sram_top_display_mode : BNE .skipprint
     LDA $0B1A : BNE .skipprint
     LDA !HUD_TILEMAP+$12 : STA $14
-    LDA $0B2D : AND #$0FFF
+    LDA !SAMUS_Y_SPEEDCOMBINED : AND #$0FFF
     LDX #$0012 : JSR Draw4Hex
     INC $0B1A
     LDA $14 : STA !HUD_TILEMAP+$12
@@ -1026,8 +1026,8 @@ status_walljump:
 
   .incspeed
     ; Nothing to do if speed is zero or negative
-    LDA $0B2D : AND #$8000 : BNE .checkleftright
-    LDA $0B2D : BEQ .checkleftright
+    LDA !SAMUS_Y_SPEEDCOMBINED : AND #$8000 : BNE .checkleftright
+    LDA !SAMUS_Y_SPEEDCOMBINED : BEQ .checkleftright
 
     ; Speed x256 is just a little too high
     ; Make it x128 and store it for later use
@@ -1428,11 +1428,11 @@ endif
     ; Check if we are initial state, which means no vertical speed
     ; and no animation delay in normal gamestate holding jump and not holding start
   .startpos
-    LDA $0B2D : BNE .notinit
+    LDA !SAMUS_Y_SPEEDCOMBINED : BNE .notinit
 if !FEATURE_PAL
-    LDA $0A60 : CMP #$E910 : BNE .notinit
+    LDA !SAMUS_CONTROLLER_HANDLER : CMP #$E910 : BNE .notinit
 else
-    LDA $0A60 : CMP #$E913 : BNE .notinit
+    LDA !SAMUS_CONTROLLER_HANDLER : CMP #$E913 : BNE .notinit
 endif
     LDA !GAMEMODE : CMP #$0008 : BNE .notinit
     LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_JUMP : BEQ .notinit
@@ -1556,9 +1556,9 @@ endif
     LDA !SAMUS_Y_DIRECTION : CMP #$0000 : BNE .donestart
     LDA !SAMUS_POSE_DIRECTION : AND #$0004 : CMP #$0004 : BNE .donestart
 if !FEATURE_PAL
-    LDA $0A60 : CMP #$E910 : BNE .donestart
+    LDA !SAMUS_CONTROLLER_HANDLER : CMP #$E910 : BNE .donestart
 else
-    LDA $0A60 : CMP #$E913 : BNE .donestart
+    LDA !SAMUS_CONTROLLER_HANDLER : CMP #$E913 : BNE .donestart
 endif
     LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_LEFT : BNE .donestart
 

@@ -210,7 +210,6 @@ hijack_loading_room_CRE:
 
   .pickAreaBossLeftRight
     LDA !ram_door_portal_flags : BIT !DOOR_PORTAL_HORIZONTAL_MIRRORING_BIT : BEQ .pickAreaBossCustom
-    JSL layout_swap_left_right
 
   .pickAreaBossVanilla
     LDA portals_areaboss_vanilla_inverted_table,X
@@ -260,7 +259,21 @@ endif
 
 hijack_after_load_level_data:
 {
-    LDA !ROOM_ID : CMP #$D646 : BEQ .pants_room : CMP #$D6FD : BNE .done
+    LDA !ram_door_portal_flags : BIT !DOOR_PORTAL_HORIZONTAL_MIRRORING_BIT : BEQ .checkRoom
+    LDA !DOOR_DIRECTION : AND #$0003 : BEQ .checkSwapToRight
+    CMP #$0001 : BNE .checkRoom
+
+    ; Swap to left side of room if necessary
+    LDA !SAMUS_X : BIT #$0080 : BEQ .checkRoom
+    JSL layout_swap_left_right
+    BRA .checkRoom
+
+  .checkSwapToRight
+    LDA !SAMUS_X : BIT #$0080 : BNE .checkRoom
+    JSL layout_swap_left_right
+
+  .checkRoom
+    LDA !ROOM_ID : CMP #$D646 : BEQ .pantsRoom : CMP #$D6FD : BNE .done
 
     ; Aqueduct Farm Sand Pit needs to be handled before the door scroll
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ .done
@@ -269,7 +282,7 @@ hijack_after_load_level_data:
   .done
     JMP $E38E
 
-  .pants_room
+  .pantsRoom
     ; Pants Room needs to be handled before the door scroll
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_DASH_RECALL : BEQ .done
     JSL layout_asm_pants_room_external
@@ -929,56 +942,76 @@ layout_swap_pose_table:
     db $FB  ; Facing left  - standing transition - aiming down-left
     db $FD  ; Unused
     db $FE  ; Unused
-    db $FF  ; Unused
+    db $FF  ; If FFFF indicates pose variable is invalid
 }
+
+macro layout_swap_pose_direction_table_entry(offset)
+    db <offset>+$00  ; Facing forward
+    db <offset>+$01  ; Facing forward (unused)
+    db <offset>+$02  ; Facing forward (unused)
+    db <offset>+$03  ; Facing forward (unused)
+    db <offset>+$08  ; Facing left
+    db <offset>+$09  ; Facing left (unused)
+    db <offset>+$0A  ; Facing left (unused)
+    db <offset>+$0B  ; Facing left (unused)
+    db <offset>+$04  ; Facing right
+    db <offset>+$05  ; Facing right (unused)
+    db <offset>+$06  ; Facing right (unused)
+    db <offset>+$07  ; Facing right (unused)
+    db <offset>+$0C  ; Unused
+    db <offset>+$0D  ; Unused
+    db <offset>+$0E  ; Unused
+    db <offset>+$0F  ; Unused
+endmacro
 
 layout_swap_pose_direction_table:
 {
-    db $00  ; Facing forward
-    db $01  ; Facing forward (unused)
-    db $02  ; Facing forward (unused)
-    db $03  ; Facing forward (unused)
-    db $08  ; Facing left
-    db $09  ; Facing left (unused)
-    db $0A  ; Facing left (unused)
-    db $0B  ; Facing left (unused)
-    db $04  ; Facing right
-    db $05  ; Facing right (unused)
-    db $06  ; Facing right (unused)
-    db $07  ; Facing right (unused)
-    db $0C  ; Unused
-    db $0D  ; Unused
-    db $0E  ; Unused
-    db $0F  ; Unused
+    %layout_swap_pose_direction_table_entry($00)
+    %layout_swap_pose_direction_table_entry($10)
+    %layout_swap_pose_direction_table_entry($20)
+    %layout_swap_pose_direction_table_entry($30)
+    %layout_swap_pose_direction_table_entry($40)
+    %layout_swap_pose_direction_table_entry($50)
+    %layout_swap_pose_direction_table_entry($60)
+    %layout_swap_pose_direction_table_entry($70)
+    %layout_swap_pose_direction_table_entry($80)
+    %layout_swap_pose_direction_table_entry($90)
+    %layout_swap_pose_direction_table_entry($A0)
+    %layout_swap_pose_direction_table_entry($B0)
+    %layout_swap_pose_direction_table_entry($C0)
+    %layout_swap_pose_direction_table_entry($D0)
+    %layout_swap_pose_direction_table_entry($E0)
+    %layout_swap_pose_direction_table_entry($F0)
 }
+
+macro layout_swap_pose(address)
+    LDA <address> : TAX
+    LDA.l layout_swap_pose_table,X : STA <address>
+endmacro
+
+macro layout_swap_pose_direction(address)
+    LDA <address> : TAX
+    LDA.l layout_swap_pose_direction_table,X : STA <address>
+endmacro
 
 layout_swap_left_right:
 {
-    PHX
+    PHX : PHP
     LDA !SAMUS_X : EOR #$00FF : INC : STA !SAMUS_X
     LDA !SAMUS_X_SUBPX : EOR #$FFFF : STA !SAMUS_X_SUBPX
 
-    LDA !SAMUS_POSE : AND #$00FF : TAX
-    LDA.l layout_swap_pose_table,X : AND #$00FF : STA !SAMUS_POSE
-    LDA !SAMUS_PREVIOUS_POSE : AND #$00FF : TAX
-    LDA.l layout_swap_pose_table,X : AND #$00FF : STA !SAMUS_PREVIOUS_POSE
-    LDA !SAMUS_LAST_DIFFERENT_POSE : AND #$00FF : TAX
-    LDA.l layout_swap_pose_table,X : AND #$00FF : STA !SAMUS_LAST_DIFFERENT_POSE
+    TDC : %ai8()
+    %layout_swap_pose(!SAMUS_POSE)
+    %layout_swap_pose_direction(!SAMUS_POSE_DIRECTION)
+    %layout_swap_pose(!SAMUS_PREVIOUS_POSE)
+    %layout_swap_pose_direction(!SAMUS_PREVIOUS_POSE_DIRECTION)
+    %layout_swap_pose(!SAMUS_LAST_DIFFERENT_POSE)
+    %layout_swap_pose_direction(!SAMUS_LAST_DIFFERENT_POSE_DIRECTION)
+    %layout_swap_pose(!SAMUS_POTENTIAL_POSE_VALUES)
+    %layout_swap_pose(!SAMUS_POTENTIAL_POSE_VALUES+2)
+    %layout_swap_pose(!SAMUS_POTENTIAL_POSE_VALUES+4)
 
-    LDA !SAMUS_POSE_DIRECTION : AND #$FFF0 : STA $12
-    LDA !SAMUS_POSE_DIRECTION : AND #$000F : TAX
-    LDA.l layout_swap_pose_direction_table,X : AND #$000F
-    ORA $12 : STA !SAMUS_POSE_DIRECTION
-    LDA !SAMUS_PREVIOUS_POSE_DIRECTION : AND #$FFF0 : STA $12
-    LDA !SAMUS_PREVIOUS_POSE_DIRECTION : AND #$000F : TAX
-    LDA.l layout_swap_pose_direction_table,X : AND #$000F
-    ORA $12 : STA !SAMUS_PREVIOUS_POSE_DIRECTION
-    LDA !SAMUS_LAST_DIFFERENT_POSE_DIRECTION : AND #$FFF0 : STA $12
-    LDA !SAMUS_LAST_DIFFERENT_POSE_DIRECTION : AND #$000F : TAX
-    LDA.l layout_swap_pose_direction_table,X : AND #$000F
-    ORA $12 : STA !SAMUS_LAST_DIFFERENT_POSE_DIRECTION
-
-    PLX
+    PLP : PLX
     RTL
 }
 
@@ -2809,21 +2842,38 @@ door_custom_asm:
 {
     ; Cancel movement
     STZ !SAMUS_Y_SUBSPEED : STZ !SAMUS_Y_SPEED
+    STZ !SAMUS_Y_SUBACCELERATION : STZ !SAMUS_Y_ACCELERATION
+    STZ !SAMUS_Y_DIRECTION
     STZ !SAMUS_X_RUNSPEED : STZ !SAMUS_X_SUBRUNSPEED
     STZ !SAMUS_X_MOMENTUM : STZ !SAMUS_X_SUBMOMENTUM
     STZ !SAMUS_DOOR_SUBSPEED : STZ !SAMUS_DOOR_SPEED
 
+    LDA !SAMUS_POSE : CMP #$00C7 : BMI .resetPose
+    CMP #$00CF : BPL .resetPose
+
+    ; Clear shine timer and type if previously in shinespark or windup
+    STZ !SAMUS_DASH_COUNTER
+    STZ !SAMUS_SHINE_TIMER
+    STZ !SAMUS_SHINE_TIMER_TYPE
+
+  .resetPose
     ; Force Samus to elevator pose
     STZ !SAMUS_POSE : STZ !SAMUS_POSE_DIRECTION
     STZ !SAMUS_PREVIOUS_POSE : STZ !SAMUS_PREVIOUS_POSE_DIRECTION
     STZ !SAMUS_LAST_DIFFERENT_POSE : STZ !SAMUS_LAST_DIFFERENT_POSE_DIRECTION
 
-    ; Set pose transition values to FFFF
-    LDA #$FFFF : STA !SAMUS_TRANSITION_VALUES
-    STA !SAMUS_TRANSITION_VALUES+2 : STA !SAMUS_TRANSITION_VALUES+4
+    ; Set potential pose values to FFFF
+    LDA #$FFFF : STA !SAMUS_POTENTIAL_POSE_VALUES
+    STA !SAMUS_POTENTIAL_POSE_VALUES+2 : STA !SAMUS_POTENTIAL_POSE_VALUES+4
 
-    ; Reset animation timer
+    ; Clear potential pose flags
+    STZ !SAMUS_POTENTIAL_POSE_FLAGS
+    STZ !SAMUS_POTENTIAL_POSE_FLAGS+2
+    STZ !SAMUS_POTENTIAL_POSE_FLAGS+4
+
+    ; Reset animation timer and contact damage index
     STZ !SAMUS_ANIMATION_FRAME
+    STZ !SAMUS_CONTACT_DAMAGE_INDEX
 
     ; Reset elevator flags
     STZ !ELEVATOR_PROPERTIES
@@ -2832,6 +2882,16 @@ door_custom_asm:
     ; Unlock Samus
     LDA #$E695 : STA !SAMUS_LOCKED_HANDLER
     LDA #$E725 : STA !SAMUS_MOVEMENT_HANDLER
+    LDA #$A337 : STA !SAMUS_NORMAL_MOVEMENT_HANDLER
+if !FEATURE_PAL
+    LDA #$E910 : STA !SAMUS_CONTROLLER_HANDLER
+else
+    LDA #$E913 : STA !SAMUS_CONTROLLER_HANDLER
+endif
+
+    ; Restore I-Frames after pose change
+    LDA !ram_door_portal_flags : BIT !DOOR_PORTAL_IFRAMES_BIT : BEQ .setPos
+    LDA #$0080 : STA !SAMUS_IFRAME_TIMER
 
   .setPos
     ; Set Samus position
