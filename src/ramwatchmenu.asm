@@ -199,6 +199,7 @@ RAMWatchCommonSamusMenu2:
     dw ramwatch_common_samus_0AFE
     dw ramwatch_common_samus_0B00
     dw ramwatch_common_samus_0B2C
+    dw ramwatch_common_samus_0B2D
     dw ramwatch_common_samus_0B2E
     dw ramwatch_common_samus_0B32
     dw ramwatch_common_samus_0B34
@@ -208,6 +209,8 @@ RAMWatchCommonSamusMenu2:
     dw ramwatch_common_samus_0B44
     dw ramwatch_common_samus_0B46
     dw ramwatch_common_samus_0B48
+    dw ramwatch_common_samus_0A68
+    dw ramwatch_common_samus_0ACC
     dw ramwatch_common_samus_0CCC
     dw #$0000
     %cm_header("SELECT FROM SAMUS RAM")
@@ -296,6 +299,9 @@ ramwatch_common_samus_0B00:
 ramwatch_common_samus_0B2C:
     %cm_jsl("Y Subspeed", action_select_common_address, #$0B2C)
 
+ramwatch_common_samus_0B2D:
+    %cm_jsl("Y Speed Combined", action_select_common_address, #$0B2D)
+
 ramwatch_common_samus_0B2E:
     %cm_jsl("Y Speed", action_select_common_address, #$0B2E)
 
@@ -322,6 +328,12 @@ ramwatch_common_samus_0B46:
 
 ramwatch_common_samus_0B48:
     %cm_jsl("X Base Subspeed", action_select_common_address, #$0B48)
+
+ramwatch_common_samus_0A68:
+    %cm_jsl("Shine Timer", action_select_common_address, #$0A68)
+
+ramwatch_common_samus_0ACC:
+    %cm_jsl("Shine Timer Type", action_select_common_address, #$0ACC)
 
 ramwatch_common_samus_0CCC:
     %cm_jsl("Cooldown Timer", action_select_common_address, #$0CCC)
