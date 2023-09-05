@@ -182,17 +182,25 @@ hijack_loading_room_CRE:
     LDA $830003,X : AND #$0003 : STA $12
     LDX !DOOR_ID : LDA $830003,X : PLX
     AND #$0003 : CMP $12 : BEQ .pickAreaBossVanilla
+    ORA $12 : BIT #$0002 : BEQ .pickAreaBossLeftRight
+
+  .pickAreaBossCustom
     LDA portals_areaboss_custom_inverted_table,X
     BRA .saveDoor
+
+  .leftToRight
+    LDA !ram_door_destination : ASL : TAX
+    LDA portals_right_vanilla_inverted_table,X : BMI .saveDoor
+    BRL .noChangePLX
 
   .rightToLeft
     LDA !ram_door_source : ASL : TAX
     LDA portals_left_vanilla_inverted_table,X : BMI .saveDoor
     BRL .noChangePLX
 
-  .leftToRight
+  .upToDown
     LDA !ram_door_destination : ASL : TAX
-    LDA portals_right_vanilla_inverted_table,X : BMI .saveDoor
+    LDA portals_down_vanilla_inverted_table,X : BMI .saveDoorUpDown
     BRL .noChangePLX
 
   .downToUp
@@ -200,10 +208,8 @@ hijack_loading_room_CRE:
     LDA portals_up_vanilla_inverted_table,X : BMI .saveDoorUpDown
     BRL .noChangePLX
 
-  .upToDown
-    LDA !ram_door_destination : ASL : TAX
-    LDA portals_down_vanilla_inverted_table,X : BMI .saveDoorUpDown
-    BRL .noChangePLX
+  .pickAreaBossLeftRight
+    LDA !ram_door_portal_flags : BIT !DOOR_PORTAL_HORIZONTAL_MIRRORING_BIT : BEQ .pickAreaBossCustom
 
   .pickAreaBossVanilla
     LDA portals_areaboss_vanilla_inverted_table,X
@@ -253,7 +259,21 @@ endif
 
 hijack_after_load_level_data:
 {
-    LDA $079B : CMP #$D646 : BEQ .pants_room : CMP #$D6FD : BNE .done
+    LDA !ram_door_portal_flags : BIT !DOOR_PORTAL_HORIZONTAL_MIRRORING_BIT : BEQ .checkRoom
+    LDA !DOOR_DIRECTION : AND #$0003 : BEQ .checkSwapToRight
+    CMP #$0001 : BNE .checkRoom
+
+    ; Swap to left side of room if necessary
+    LDA !SAMUS_X : BIT #$0080 : BEQ .checkRoom
+    JSL layout_swap_left_right
+    BRA .checkRoom
+
+  .checkSwapToRight
+    LDA !SAMUS_X : BIT #$0080 : BNE .checkRoom
+    JSL layout_swap_left_right
+
+  .checkRoom
+    LDA !ROOM_ID : CMP #$D646 : BEQ .pantsRoom : CMP #$D6FD : BNE .done
 
     ; Aqueduct Farm Sand Pit needs to be handled before the door scroll
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ .done
@@ -262,7 +282,7 @@ hijack_after_load_level_data:
   .done
     JMP $E38E
 
-  .pants_room
+  .pantsRoom
     ; Pants Room needs to be handled before the door scroll
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_DASH_RECALL : BEQ .done
     JSL layout_asm_pants_room_external
@@ -664,6 +684,336 @@ door_custom_A96C_draygon_door0:
     dw $0034, $0288, $E3D9
 
 incsrc layoutportaltables.asm
+
+layout_swap_pose_table:
+{
+    db $00  ; Facing forward - power suit
+    db $02  ; Facing right - normal
+    db $01  ; Facing left  - normal
+    db $04  ; Facing right - aiming up
+    db $03  ; Facing left  - aiming up
+    db $06  ; Facing right - aiming up-right
+    db $05  ; Facing left  - aiming up-left
+    db $08  ; Facing right - aiming down-right
+    db $07  ; Facing left  - aiming down-left
+    db $0A  ; Moving right - not aiming
+    db $09  ; Moving left  - not aiming
+    db $0C  ; Moving right - gun extended
+    db $0B  ; Moving left  - gun extended
+    db $0E  ; Moving right - aiming up (unused)
+    db $0D  ; Moving left  - aiming up (unused)
+    db $10  ; Moving right - aiming up-right
+    db $0F  ; Moving left  - aiming up-left
+    db $12  ; Moving right - aiming down-right
+    db $11  ; Moving left  - aiming down-left
+    db $14  ; Facing right - normal jump - not aiming - not moving - gun extended
+    db $13  ; Facing left  - normal jump - not aiming - not moving - gun extended
+    db $16  ; Facing right - normal jump - aiming up
+    db $15  ; Facing left  - normal jump - aiming up
+    db $18  ; Facing right - normal jump - aiming down
+    db $17  ; Facing left  - normal jump - aiming down
+    db $1A  ; Facing right - spin jump
+    db $19  ; Facing left  - spin jump
+    db $1C  ; Facing right - space jump
+    db $1B  ; Facing left  - space jump
+    db $41  ; Facing right - morph ball - no springball - on ground
+    db $1F  ; Moving right - morph ball - no springball - on ground
+    db $1E  ; Moving left  - morph ball - no springball - on ground
+    db $20  ; Unused
+    db $21  ; Unused
+    db $22  ; Unused
+    db $23  ; Unused
+    db $24  ; Unused
+    db $26  ; Facing right - turning - standing
+    db $25  ; Facing left  - turning - standing
+    db $28  ; Facing right - crouching
+    db $27  ; Facing left  - crouching
+    db $2A  ; Facing right - falling
+    db $29  ; Facing left  - falling
+    db $2C  ; Facing right - falling - aiming up
+    db $2B  ; Facing left  - falling - aiming up
+    db $2E  ; Facing right - falling - aiming down
+    db $2D  ; Facing left  - falling - aiming down
+    db $30  ; Facing right - turning - jumping
+    db $2F  ; Facing left  - turning - jumping
+    db $32  ; Facing right - morph ball - no springball - in air
+    db $31  ; Facing left  - morph ball - no springball - in air
+    db $33  ; Unused
+    db $34  ; Unused
+    db $36  ; Facing right - crouching transition
+    db $35  ; Facing left  - crouching transition
+    db $38  ; Facing right - morphing transition
+    db $37  ; Facing left  - morphing transition
+    db $39  ; Unused
+    db $3A  ; Unused
+    db $3C  ; Facing right - standing transition
+    db $3B  ; Facing left  - standing transition
+    db $3E  ; Facing right - unmorphing transition
+    db $3D  ; Facing left  - unmorphing transition
+    db $3F  ; Unused
+    db $40  ; Unused
+    db $1D  ; Facing left  - morph ball - no springball - on ground
+    db $42  ; Unused
+    db $44  ; Facing right - turning - crouching
+    db $43  ; Facing left  - turning - crouching
+    db $45  ; Unused
+    db $46  ; Unused
+    db $47  ; Unused
+    db $48  ; Unused
+    db $4A  ; Facing left  - moonwalk
+    db $49  ; Facing right - moonwalk
+    db $4C  ; Facing right - normal jump transition
+    db $4B  ; Facing left  - normal jump transition
+    db $4E  ; Facing right - normal jump - not aiming - not moving - gun not extended
+    db $4D  ; Facing left  - normal jump - not aiming - not moving - gun not extended
+    db $50  ; Facing left  - damage boost
+    db $4F  ; Facing right - damage boost
+    db $52  ; Facing right - normal jump - not aiming - moving forward
+    db $51  ; Facing left  - normal jump - not aiming - moving forward
+    db $54  ; Facing right - knockback
+    db $53  ; Facing left  - knockback
+    db $56  ; Facing right - normal jump transition - aiming up
+    db $55  ; Facing left  - normal jump transition - aiming up
+    db $58  ; Facing right - normal jump transition - aiming up-right
+    db $57  ; Facing left  - normal jump transition - aiming up-left
+    db $5A  ; Facing right - normal jump transition - aiming down-right
+    db $59  ; Facing left  - normal jump transition - aiming down-left
+    db $5B  ; Unused
+    db $5C  ; Unused
+    db $5D  ; Unused
+    db $5E  ; Unused
+    db $5F  ; Unused
+    db $60  ; Unused
+    db $61  ; Unused
+    db $62  ; Unused
+    db $63  ; Unused. Related to movement type Dh
+    db $64  ; Unused. Related to movement type Dh
+    db $65  ; Unused. Related to movement type Dh
+    db $66  ; Unused. Related to movement type Dh
+    db $68  ; Facing right - falling - gun extended
+    db $67  ; Facing left  - falling - gun extended
+    db $6A  ; Facing right - normal jump - aiming up-right
+    db $69  ; Facing left  - normal jump - aiming up-left
+    db $6C  ; Facing right - normal jump - aiming down-right
+    db $6B  ; Facing left  - normal jump - aiming down-left
+    db $6E  ; Facing right - falling - aiming up-right
+    db $6D  ; Facing left  - falling - aiming up-left
+    db $70  ; Facing right - falling - aiming down-right
+    db $6F  ; Facing left  - falling - aiming down-left
+    db $72  ; Facing right - crouching - aiming up-right
+    db $71  ; Facing left  - crouching - aiming up-left
+    db $74  ; Facing right - crouching - aiming down-right
+    db $73  ; Facing left  - crouching - aiming down-left
+    db $76  ; Facing left  - moonwalk - aiming up-left
+    db $75  ; Facing right - moonwalk - aiming up-right
+    db $78  ; Facing left  - moonwalk - aiming down-left
+    db $77  ; Facing right - moonwalk - aiming down-right
+    db $7A  ; Facing right - morph ball - spring ball - on ground
+    db $79  ; Facing left  - morph ball - spring ball - on ground
+    db $7C  ; Moving right - morph ball - spring ball - on ground
+    db $7B  ; Moving left  - morph ball - spring ball - on ground
+    db $7E  ; Facing right - morph ball - spring ball - falling
+    db $7D  ; Facing left  - morph ball - spring ball - falling
+    db $80  ; Facing right - morph ball - spring ball - in air
+    db $7F  ; Facing left  - morph ball - spring ball - in air
+    db $82  ; Facing right - screw attack
+    db $81  ; Facing left  - screw attack
+    db $84  ; Facing right - wall jump
+    db $83  ; Facing left  - wall jump
+    db $86  ; Facing right - crouching - aiming up
+    db $85  ; Facing left  - crouching - aiming up
+    db $88  ; Facing right - turning - falling
+    db $87  ; Facing left  - turning - falling
+    db $8A  ; Facing right - ran into a wall
+    db $89  ; Facing left  - ran into a wall
+    db $8C  ; Facing right - turning - standing - aiming up
+    db $8B  ; Facing left  - turning - standing - aiming up
+    db $8E  ; Facing right - turning - standing - aiming down-right
+    db $8D  ; Facing left  - turning - standing - aiming down-left
+    db $90  ; Facing right - turning - in air - aiming up
+    db $8F  ; Facing left  - turning - in air - aiming up
+    db $92  ; Facing right - turning - in air - aiming down/down-right
+    db $91  ; Facing left  - turning - in air - aiming down/down-left
+    db $94  ; Facing right - turning - falling - aiming up
+    db $93  ; Facing left  - turning - falling - aiming up
+    db $96  ; Facing right - turning - falling - aiming down/down-right
+    db $95  ; Facing left  - turning - falling - aiming down/down-left
+    db $98  ; Facing right - turning - crouching - aiming up
+    db $97  ; Facing left  - turning - crouching - aiming up
+    db $9A  ; Facing right - turning - crouching - aiming down/down-right
+    db $99  ; Facing left  - turning - crouching - aiming down/down-left
+    db $9B  ; Facing forward - varia/gravity suit
+    db $9D  ; Facing right - turning - standing - aiming up-right
+    db $9C  ; Facing left  - turning - standing - aiming up-left
+    db $9F  ; Facing right - turning - in air - aiming up-right
+    db $9E  ; Facing left  - turning - in air - aiming up-left
+    db $A1  ; Facing right - turning - falling - aiming up-right
+    db $A0  ; Facing left  - turning - falling - aiming up-left
+    db $A3  ; Facing right - turning - crouching - aiming up-right
+    db $A2  ; Facing left  - turning - crouching - aiming up-left
+    db $A5  ; Facing right - landing from normal jump
+    db $A4  ; Facing left  - landing from normal jump
+    db $A7  ; Facing right - landing from spin jump
+    db $A6  ; Facing left  - landing from spin jump
+    db $A9  ; Facing right - grappling
+    db $A8  ; Facing left  - grappling
+    db $AB  ; Facing right - grappling - aiming down-right
+    db $AA  ; Facing left  - grappling - aiming down-left
+    db $AD  ; Unused. Facing right - grappling - in air
+    db $AC  ; Unused. Facing left  - grappling - in air
+    db $AF  ; Unused. Facing right - grappling - in air - aiming down
+    db $AE  ; Unused. Facing left  - grappling - in air - aiming down
+    db $B1  ; Unused. Facing right - grappling - in air - aiming down-right
+    db $B0  ; Unused. Facing left  - grappling - in air - aiming down-left
+    db $B3  ; Facing clockwise     - grapple - in air
+    db $B2  ; Facing anticlockwise - grapple - in air
+    db $B5  ; Facing right - grappling - crouching
+    db $B4  ; Facing left  - grappling - crouching
+    db $B7  ; Facing right - grappling - crouching - aiming down-right
+    db $B6  ; Facing left  - grappling - crouching - aiming down-left
+    db $B9  ; Facing left  - grapple wall jump pose
+    db $B8  ; Facing right - grapple wall jump pose
+    db $EC  ; Facing left  - grabbed by Draygon - not moving - not aiming
+    db $ED  ; Facing left  - grabbed by Draygon - not moving - aiming up-left
+    db $EE  ; Facing left  - grabbed by Draygon - firing
+    db $EF  ; Facing left  - grabbed by Draygon - not moving - aiming down-left
+    db $F0  ; Facing left  - grabbed by Draygon - moving
+    db $C0  ; Facing right - moonwalking - turn/jump left
+    db $BF  ; Facing left  - moonwalking - turn/jump right
+    db $C2  ; Facing right - moonwalking - turn/jump left  - aiming up-right
+    db $C1  ; Facing left  - moonwalking - turn/jump right - aiming up-left
+    db $C4  ; Facing right - moonwalking - turn/jump left  - aiming down-right
+    db $C3  ; Facing left  - moonwalking - turn/jump right - aiming down-left
+    db $C5  ; Unused
+    db $C6  ; Unused
+    db $C8  ; Facing right - vertical shinespark windup
+    db $C7  ; Facing left  - vertical shinespark windup
+    db $CA  ; Facing right - shinespark - horizontal
+    db $C9  ; Facing left  - shinespark - horizontal
+    db $CC  ; Facing right - shinespark - vertical
+    db $CB  ; Facing left  - shinespark - vertical
+    db $CE  ; Facing right - shinespark - diagonal
+    db $CD  ; Facing left  - shinespark - diagonal
+    db $D0  ; Facing right - ran into a wall - aiming up-right
+    db $CF  ; Facing left  - ran into a wall - aiming up-left
+    db $D2  ; Facing right - ran into a wall - aiming down-right
+    db $D1  ; Facing left  - ran into a wall - aiming down-left
+    db $D4  ; Facing right - crystal flash
+    db $D3  ; Facing left  - crystal flash
+    db $D6  ; Facing right - x-ray - standing
+    db $D5  ; Facing left  - x-ray - standing
+    db $D8  ; Facing right - crystal flash ending
+    db $D7  ; Facing left  - crystal flash ending
+    db $DA  ; Facing right - x-ray - crouching
+    db $D9  ; Facing left  - x-ray - crouching
+    db $DB  ; Unused
+    db $DC  ; Unused
+    db $DD  ; Unused
+    db $DE  ; Unused
+    db $DF  ; Unused. Related to Draygon
+    db $E1  ; Facing right - landing from normal jump - aiming up
+    db $E0  ; Facing left  - landing from normal jump - aiming up
+    db $E3  ; Facing right - landing from normal jump - aiming up-right
+    db $E2  ; Facing left  - landing from normal jump - aiming up-left
+    db $E5  ; Facing right - landing from normal jump - aiming down-right
+    db $E4  ; Facing left  - landing from normal jump - aiming down-left
+    db $E7  ; Facing right - landing from normal jump - firing
+    db $E6  ; Facing left  - landing from normal jump - firing
+    db $E9  ; Facing right - Samus drained - crouching/falling
+    db $E8  ; Facing left  - Samus drained - crouching/falling
+    db $EB  ; Facing right - Samus drained - standing
+    db $EA  ; Facing left  - Samus drained - standing
+    db $BA  ; Facing right - grabbed by Draygon - not moving - not aiming
+    db $BB  ; Facing right - grabbed by Draygon - not moving - aiming up-right
+    db $BC  ; Facing right - grabbed by Draygon - firing
+    db $BD  ; Facing right - grabbed by Draygon - not moving - aiming down-right
+    db $BE  ; Facing right - grabbed by Draygon - moving
+    db $F2  ; Facing right - crouching transition - aiming up
+    db $F1  ; Facing left  - crouching transition - aiming up
+    db $F4  ; Facing right - crouching transition - aiming up-right
+    db $F3  ; Facing left  - crouching transition - aiming up-left
+    db $F6  ; Facing right - crouching transition - aiming down-right
+    db $F5  ; Facing left  - crouching transition - aiming down-left
+    db $F8  ; Facing right - standing transition - aiming up
+    db $F7  ; Facing left  - standing transition - aiming up
+    db $FA  ; Facing right - standing transition - aiming up-right
+    db $F9  ; Facing left  - standing transition - aiming up-left
+    db $FC  ; Facing right - standing transition - aiming down-right
+    db $FB  ; Facing left  - standing transition - aiming down-left
+    db $FD  ; Unused
+    db $FE  ; Unused
+    db $FF  ; If FFFF indicates pose variable is invalid
+}
+
+macro layout_swap_pose_direction_table_entry(offset)
+    db <offset>+$00  ; Facing forward
+    db <offset>+$01  ; Facing forward (unused)
+    db <offset>+$02  ; Facing forward (unused)
+    db <offset>+$03  ; Facing forward (unused)
+    db <offset>+$08  ; Facing left
+    db <offset>+$09  ; Facing left (unused)
+    db <offset>+$0A  ; Facing left (unused)
+    db <offset>+$0B  ; Facing left (unused)
+    db <offset>+$04  ; Facing right
+    db <offset>+$05  ; Facing right (unused)
+    db <offset>+$06  ; Facing right (unused)
+    db <offset>+$07  ; Facing right (unused)
+    db <offset>+$0C  ; Unused
+    db <offset>+$0D  ; Unused
+    db <offset>+$0E  ; Unused
+    db <offset>+$0F  ; Unused
+endmacro
+
+layout_swap_pose_direction_table:
+{
+    %layout_swap_pose_direction_table_entry($00)
+    %layout_swap_pose_direction_table_entry($10)
+    %layout_swap_pose_direction_table_entry($20)
+    %layout_swap_pose_direction_table_entry($30)
+    %layout_swap_pose_direction_table_entry($40)
+    %layout_swap_pose_direction_table_entry($50)
+    %layout_swap_pose_direction_table_entry($60)
+    %layout_swap_pose_direction_table_entry($70)
+    %layout_swap_pose_direction_table_entry($80)
+    %layout_swap_pose_direction_table_entry($90)
+    %layout_swap_pose_direction_table_entry($A0)
+    %layout_swap_pose_direction_table_entry($B0)
+    %layout_swap_pose_direction_table_entry($C0)
+    %layout_swap_pose_direction_table_entry($D0)
+    %layout_swap_pose_direction_table_entry($E0)
+    %layout_swap_pose_direction_table_entry($F0)
+}
+
+macro layout_swap_pose(address)
+    LDA <address> : TAX
+    LDA.l layout_swap_pose_table,X : STA <address>
+endmacro
+
+macro layout_swap_pose_direction(address)
+    LDA <address> : TAX
+    LDA.l layout_swap_pose_direction_table,X : STA <address>
+endmacro
+
+layout_swap_left_right:
+{
+    PHX : PHP
+    LDA !SAMUS_X : EOR #$00FF : INC : STA !SAMUS_X
+    LDA !SAMUS_X_SUBPX : EOR #$FFFF : STA !SAMUS_X_SUBPX
+
+    TDC : %ai8()
+    %layout_swap_pose(!SAMUS_POSE)
+    %layout_swap_pose_direction(!SAMUS_POSE_DIRECTION)
+    %layout_swap_pose(!SAMUS_PREVIOUS_POSE)
+    %layout_swap_pose_direction(!SAMUS_PREVIOUS_POSE_DIRECTION)
+    %layout_swap_pose(!SAMUS_LAST_DIFFERENT_POSE)
+    %layout_swap_pose_direction(!SAMUS_LAST_DIFFERENT_POSE_DIRECTION)
+    %layout_swap_pose(!SAMUS_POTENTIAL_POSE_VALUES)
+    %layout_swap_pose(!SAMUS_POTENTIAL_POSE_VALUES+2)
+    %layout_swap_pose(!SAMUS_POTENTIAL_POSE_VALUES+4)
+
+    PLP : PLX
+    RTL
+}
 
 print pc, " layout bank83 end"
 
@@ -2492,21 +2842,38 @@ door_custom_asm:
 {
     ; Cancel movement
     STZ !SAMUS_Y_SUBSPEED : STZ !SAMUS_Y_SPEED
+    STZ !SAMUS_Y_SUBACCELERATION : STZ !SAMUS_Y_ACCELERATION
+    STZ !SAMUS_Y_DIRECTION
     STZ !SAMUS_X_RUNSPEED : STZ !SAMUS_X_SUBRUNSPEED
     STZ !SAMUS_X_MOMENTUM : STZ !SAMUS_X_SUBMOMENTUM
     STZ !SAMUS_DOOR_SUBSPEED : STZ !SAMUS_DOOR_SPEED
 
+    LDA !SAMUS_POSE : CMP #$00C7 : BMI .resetPose
+    CMP #$00CF : BPL .resetPose
+
+    ; Clear shine timer and type if previously in shinespark or windup
+    STZ !SAMUS_DASH_COUNTER
+    STZ !SAMUS_SHINE_TIMER
+    STZ !SAMUS_SHINE_TIMER_TYPE
+
+  .resetPose
     ; Force Samus to elevator pose
     STZ !SAMUS_POSE : STZ !SAMUS_POSE_DIRECTION
     STZ !SAMUS_PREVIOUS_POSE : STZ !SAMUS_PREVIOUS_POSE_DIRECTION
     STZ !SAMUS_LAST_DIFFERENT_POSE : STZ !SAMUS_LAST_DIFFERENT_POSE_DIRECTION
 
-    ; Set pose transition values to FFFF
-    LDA #$FFFF : STA !SAMUS_TRANSITION_VALUES
-    STA !SAMUS_TRANSITION_VALUES+2 : STA !SAMUS_TRANSITION_VALUES+4
+    ; Set potential pose values to FFFF
+    LDA #$FFFF : STA !SAMUS_POTENTIAL_POSE_VALUES
+    STA !SAMUS_POTENTIAL_POSE_VALUES+2 : STA !SAMUS_POTENTIAL_POSE_VALUES+4
 
-    ; Reset animation timer
+    ; Clear potential pose flags
+    STZ !SAMUS_POTENTIAL_POSE_FLAGS
+    STZ !SAMUS_POTENTIAL_POSE_FLAGS+2
+    STZ !SAMUS_POTENTIAL_POSE_FLAGS+4
+
+    ; Reset animation timer and contact damage index
     STZ !SAMUS_ANIMATION_FRAME
+    STZ !SAMUS_CONTACT_DAMAGE_INDEX
 
     ; Reset elevator flags
     STZ !ELEVATOR_PROPERTIES
@@ -2515,6 +2882,16 @@ door_custom_asm:
     ; Unlock Samus
     LDA #$E695 : STA !SAMUS_LOCKED_HANDLER
     LDA #$E725 : STA !SAMUS_MOVEMENT_HANDLER
+    LDA #$A337 : STA !SAMUS_NORMAL_MOVEMENT_HANDLER
+if !FEATURE_PAL
+    LDA #$E910 : STA !SAMUS_CONTROLLER_HANDLER
+else
+    LDA #$E913 : STA !SAMUS_CONTROLLER_HANDLER
+endif
+
+    ; Restore I-Frames after pose change
+    LDA !ram_door_portal_flags : BIT !DOOR_PORTAL_IFRAMES_BIT : BEQ .setPos
+    LDA #$0080 : STA !SAMUS_IFRAME_TIMER
 
   .setPos
     ; Set Samus position
