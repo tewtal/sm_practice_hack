@@ -80,7 +80,7 @@ If you experience crashes or severe glitches when using savestates, your platfor
 |                               | Only enable this if you are applying custom room palettes.
 | - Compressed Tables           | Use built-in compressed tile tables when loading presets.
 |&nbsp;|
-| **Teleport**                  | Warp to any save station
+| **Teleport**                  | Warp to any save station or hidden debug load station
 |&nbsp;|
 | **Events**                    | Toggle event flags for doors, bosses, items, and other events
 | - Reset All Events            | Clear all event flags
@@ -92,7 +92,6 @@ If you experience crashes or severe glitches when using savestates, your platfor
 | - Blue Suit                   | Give Samus the Blue Suit
 | - Flash Suit                  | Give Samus the Flash Suit (aka Spike Suit)
 | - Hyper Beam                  | Toggle Hyper Beam
-| - Invincibility               | Prevents Samus from taking damage or knockback
 | - Goo Slowdown                | Toggle ultra slow horizontal movement, as if grabbed by the Baby Metroid (2) or Draygon's goo (1-4)
 | - Suit Properties             | Modify the suit properties similar to some randomizers
 |                               | Vanilla = No change, Varia has full heat protection and 50% enemy/environmental damage reduction, Gravity (with or without Varia) has full heat protection and 75% enemy/environment damage reduction)
@@ -122,16 +121,17 @@ If you experience crashes or severe glitches when using savestates, your platfor
 |                               | This only works if "Room Strat" is selected as the above Infohud Mode.
 | - Top-Left Display            | Choose item collection percentage, reserve energy, or vanilla health to be displayed at the top-left of the HUD.
 |                               | The vanilla option also compresses the viewable area so it is more suitable for practice on an curved CRT monitor or TV.
-| - Frame Counters              | Toggle the room timer in the top-right of the HUD between realtime and gametime.
-| - Transition Lag              | Toggle the door time to include the full length of the room transition.
-| - Reset Segment in Next Room  | Sets the segment timer to reset automatically when exiting the next door transition.
-|                               | It also resets the segment timer. Beware that since it leverages the existing frame advance feature, toggling this on changes the way frame advance works.
 | - Status Icons                | Toggle icons to appear when standing on an elevator or when the shine timer is active (e.g. while carrying a spikesuit).
 | - Spacetime HUD               | Option to preserve the InfoHUD when using spacetime beam
 | - Artificial Lag              | Select a value to adjust how much lag occurs during normal gameplay. 
 |                               | This is to compensate for the lack of a minimap on the HUD which would normally consume CPU cycles.
-| - Auto-Update Timers          | Option to turn off room timer updates when riding elevators or grabbign items
 | - Customize RAM Watch         | Setup addresses to be monitored by the RAM Watch HUD mode. Address 1 will appear in the bottom-left corner of the HUD, while Address 2 appears just to the right of Address 1. Memory at these locations can be edited by configuring a Value and selecting 'Write to Address'. Toggle 'Lock Value' to automatically write the value once every frame. RAM Watch must must be the selected HUD mode to continue writing to the address. Only one byte of hex can be configured at a time in the menu. 'Hi' refers to the first byte, while 'Lo' refers to the second. Set the Hi Address to 0D and the Lo Address to EC to monitor the memory address $0DEC, which stores the counter for Samus direction changes while held by Draygon (among other uses). You can find lists of known RAM addresses by selecting 'Select Common Addresses'.
+| **Timer Settings**            | Located within the Infohud menu
+| - Frame Counters              | Toggle the room timer in the top-right of the HUD between realtime and gametime.
+| - Transition Lag              | Toggle the door time to include the full length of the room transition.
+| - Auto-Update Timers          | Option to turn off room timer updates when riding elevators or grabbign items
+| - Reset Segment in Next Room  | Sets the segment timer to reset automatically when exiting the next door transition.
+| - Reset Segment on Item Touch | Sets the segment timer to reset automatically the next time an item is touched.
 |&nbsp;|
 | **Sprite Features**           | Features that draw sprites over normal gameplay. Beware of CPU performance impact
 | - Samus on Top                | Draw Samus on top of foreground objects/tiles
@@ -174,15 +174,17 @@ If you experience crashes or severe glitches when using savestates, your platfor
 |                               | Vanilla = No change (triggers on when <=30 health, off when >30 health, ignoring reserves, breaks if power bomb explosion is active)
 |                               | PB Fix = Defers trigger during power bomb explosions, which fixes issue where the alarm may not turn on or turn off
 |                               | Improved = PB Fix + only triggers on with health+reserves is less than 30 (same requirements as initiating health bomb)
+| - Minimap                     | Restores the game minimap, which also allows the pause menu map to be updated. When enabled, a map tile counter will also be displayed.
+| - Clear Minimap               | Clears the map tile counter and all minimap data.
+| **Debug Settings**            | Located within the Game menu
 | - Debug Mode                  | Toggles the debug mode. Note that debug mode shortcuts and features may not be well supported in the practice rom.
 | - Debug CPU Brightness        | Toggles a built-in debug feature to darken the screen after the game is done processing the next frame. Useful for estimating CPU usage.
+| - Invincibility               | Prevents Samus from taking damage or knockback
 | - PAL Debug Movement          | PAL-only feature that gives Samus extra movement correlated to the dpad input.
 | - Pacifist Mode               | Reduces Samus' attack damage to zero, allowing for never-ending boss battles.
 | - Pseudo G-Mode               | Disables PLMs to imitate the primary effect of G-Mode.
 | - Enable Projectiles          | Toggles a built-in debug feature to disable enemy projectiles.
 | - Fix Scroll Offsets          | Fixes the glitchy state where the camera and scroll offsets are out of sync, typically occurring when using major glitches
-| - Minimap                     | Restores the game minimap, which also allows the pause menu map to be updated. When enabled, a map tile counter will also be displayed.
-| - Clear Minimap               | Clears the map tile counter and all minimap data.
 |&nbsp;|
 | **RNG Control**               | Pre-determine boss patterns
 | - Rerandomize                 | Toggles rerandomizing of RNG values upon loading a savestate. Automatically disabled in rooms with "seeded" RNG, but some of these situations may not be accounted for yet. Not available on some platforms.
@@ -205,6 +207,7 @@ If you experience crashes or severe glitches when using savestates, your platfor
 | **Savestate Settings**        | Features relating to the practice hack's built-in savestates. Not available on some platforms.
 | - Rerandomize                 | Toggles rerandomizing of RNG values upon loading a savestate. Automatically disabled in rooms with "seeded" RNG, but some of these situations may not be accounted for yet.
 | - Freeze on Load State        | Experimental feature that causes the game to be frozen until a new controller 1 input is made.
+|                               | It also resets the segment timer. Beware that since it leverages the existing frame advance feature, toggling this on changes the way frame advance works.
 | - Auto-Save Mid Door          | Creates a savestate in the middle of the next door transition.
 | - Auto-Save Every Door        | Creates a savestate in the middle of every door transition.
 |&nbsp;|
@@ -220,7 +223,7 @@ If you experience crashes or severe glitches when using savestates, your platfor
 | - Next Preset Slot            | Increments the custom preset slot.
 | - Prev Preset Slot            | Decrements the custom preset slot.
 | - Reset Seg Timer             | Reset the segment timer. Takes effect immediately but only updates the display on certain events/actions.
-| - Reset Seg Later             | Reset the segment timer. Takes effect when exiting the next door transition.
+| - Reset Seg Later             | Reset the segment timer. Takes effect when exiting the next door transition or when touching an item, whichever comes first.
 | - Full Equipment              | Refills your energy and ammo to their current max capacities.
 | - Kill Enemies                | Instantly deletes all enemies in the current room.
 | - Toggle OOB Tiles            | Toggles the OOB Tile Viewer.
