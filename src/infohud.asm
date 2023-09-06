@@ -194,7 +194,12 @@ ih_get_item_code:
     LDA $12 : PHA
     LDA $14 : PHA
 
-    ; Update HUD
+    ; check if segment timer should be reset
+    LDA !ram_reset_segment_later : BPL .update_HUD
+    LDA #$0000 : STA !ram_reset_segment_later : STA !ram_lag_counter
+    STA !ram_seg_rt_frames : STA !ram_seg_rt_seconds : STA !ram_seg_rt_minutes
+
+  .update_HUD
     JSL ih_update_hud_code
     JSL init_heat_damage_ram
     JSL init_physics_ram
@@ -331,7 +336,7 @@ ih_after_room_transition:
     LDA #$0000 : STA !sram_display_mode
 
   .segmentTimer
-    LDA !ram_reset_segment_later : BEQ .updateHud
+    LDA !ram_reset_segment_later : AND #$0001 : BEQ .updateHud
     LDA #$0000 : STA !ram_reset_segment_later
     STA !ram_seg_rt_frames : STA !ram_seg_rt_seconds
     STA !ram_seg_rt_minutes
@@ -395,8 +400,12 @@ ih_before_room_transition:
     BPL .drawDoorLag
     EOR #$FF : INC
   .drawDoorLag
-    PHB : PHD : PLB : PLB
-    LDX #$00C2 : JSR Draw3
+    PHB : PHD : PLB : PLB : PHA
+    LDX #$00C2
+    LDA !ram_minimap : BEQ .draw3
+    LDX #$0054
+  .draw3
+    PLA : JSR Draw3
     PLB
 
   .done
@@ -797,8 +806,8 @@ ih_hud_vanilla_health:
     LDA.w NumberGFXTable : STA !HUD_TILEMAP+$94
 
   .subtankWhitespace
-    LDA !IH_BLANK : STA !HUD_TILEMAP+$92 : STA !HUD_TILEMAP+$98 : STA !HUD_TILEMAP+$9A
-    STA !HUD_TILEMAP+$08 : STA !HUD_TILEMAP+$48 : STA !HUD_TILEMAP+$88
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$92 : STA !HUD_TILEMAP+$98
+    STA !HUD_TILEMAP+$9A : STA !HUD_TILEMAP+$08 : STA !HUD_TILEMAP+$48
 
     LDA !SAMUS_RESERVE_MODE : CMP #$0001 : BNE .noReserves
 
