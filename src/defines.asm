@@ -157,6 +157,7 @@
 !ram_itempickups_visible            = !WRAM_PERSIST_START+$5E
 !ram_itempickups_chozo              = !WRAM_PERSIST_START+$60
 !ram_itempickups_hidden             = !WRAM_PERSIST_START+$62
+!ram_frames_held                    = !WRAM_PERSIST_START+$64
 
 ; ^ FREE SPACE ^ up to +$76 (!WRAM_START+$FC - !WRAM_PERSIST_START)
 
@@ -271,6 +272,7 @@
 !ram_cm_selected_slot = !WRAM_MENU_START+$82
 
 ; ^ FREE SPACE ^ up to +$CE
+; Note: +$B8 to +$CE range also used as frames held counters
 
 ; Reserve 48 bytes for CGRAM cache
 ; Currently first 28 bytes plus last 2 bytes are used
