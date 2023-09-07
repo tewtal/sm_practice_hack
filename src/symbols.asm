@@ -300,7 +300,7 @@ sram_ctrl_auto_save_state = !sram_ctrl_auto_save_state ; !SRAM_START+$F0 ; note 
 
 sram_artificial_lag = !sram_artificial_lag ; !SRAM_START+$20
 sram_rerandomize = !sram_rerandomize ; !SRAM_START+$22
-sram_fanfare_toggle = !sram_fanfare_toggle ; !SRAM_START+$24
+sram_fanfare = !sram_fanfare ; !SRAM_START+$24
 sram_frame_counter_mode = !sram_frame_counter_mode ; !SRAM_START+$26
 sram_display_mode = !sram_display_mode ; !SRAM_START+$28
 sram_music_toggle = !sram_music_toggle ; !SRAM_START+$2A

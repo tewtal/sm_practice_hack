@@ -147,7 +147,7 @@ init_sram_upto9:
 {
     LDA #$0015 : STA !sram_artificial_lag
     LDA #$0001 : STA !sram_rerandomize
-    LDA #$0000 : STA !sram_fanfare_toggle
+    LDA #$0000 : STA !sram_fanfare
     LDA #$0001 : STA !sram_music_toggle
     LDA #$0000 : STA !sram_frame_counter_mode
     LDA #$0000 : STA !sram_display_mode

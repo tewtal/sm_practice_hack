@@ -2577,6 +2577,7 @@ ih_goto_timers:
 
 IHTimerMenu:
     dw #ih_room_counter
+    dw #ih_fanfare_timer_adjust
     dw #ih_lag_counter
     dw #ih_auto_update_timers
     dw #$FFFF
@@ -2593,6 +2594,9 @@ ih_room_counter:
     db #$28, "   REALTIME", #$FF
     db #$28, "     INGAME", #$FF
     db #$FF
+
+ih_fanfare_timer_adjust:
+    %cm_toggle_bit("Adjust Fanfare Timers", !sram_fanfare, !FANFARE_ADJUST_REALTIME, #0)
 
 ih_lag_counter:
     dw !ACTION_CHOICE
@@ -2695,7 +2699,7 @@ game_cutscenes:
     %cm_submenu("Cutscenes and Effects", #CutscenesMenu)
 
 game_fanfare_toggle:
-    %cm_toggle("Fanfare", !sram_fanfare_toggle, #$0001, #0)
+    %cm_toggle_bit("Fanfare", !sram_fanfare, !FANFARE_TOGGLE, #0)
 
 game_fast_doors_toggle:
     %cm_toggle("Fast Doors", !sram_fast_doors, #$0001, #0)

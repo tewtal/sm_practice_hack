@@ -78,17 +78,18 @@ org $828BB3
 ; Replace unnecessary logic checking controller input to toggle debug CPU brightness
 ; with logic to collect the v-counter data
 org $828AB1
+misc_debug_brightness:
     %a8() : LDA $4201 : ORA #$80 : STA $4201 : %ai16()
     LDA $2137 : LDA $213D : STA !ram_vcounter_data
 
     ; For efficiency, re-implement the debug brightness logic here
-    LDA $0DF4 : BEQ .skip_debug_brightness
+    LDA $0DF4 : BEQ .skipDebugBrightness
     %a8() : LDA $51 : AND #$F0 : ORA #$05 : STA $2100 : %a16()
-    BRA .skip_debug_brightness
+    BRA .skipDebugBrightness
 
 warnpc $828ADD
 org $828ADD       ; Resume original logic
-    .skip_debug_brightness
+    .skipDebugBrightness
 
 
 org $CF8BBF       ; Set map scroll beep to high priority
