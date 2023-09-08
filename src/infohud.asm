@@ -835,13 +835,17 @@ ih_hud_code:
 
     ; -- input display --
     ; -- check if we want to update --
+    LDA !ram_frames_held : BNE .frames_help_update
     LDA !IH_CONTROLLER_PRI : CMP !ram_ih_controller : BNE .controller_update
     BRL .status_display
 
+  .frames_help_update
+    BRL .framesHeld
+
   .controller_update
     ; -- read input
-    TAY : LDX #$0000
-  .controller_row_1_loop
+    TAY : LDX #$000C
+  .controller_row_loop
     TYA : AND ControllerTable1,X
     BEQ .controller_row_1_blank
     LDA ControllerGfx1,X
@@ -849,11 +853,7 @@ ih_hud_code:
   .controller_row_1_blank
     LDA !IH_BLANK
   .controller_row_1_draw
-    STA !HUD_TILEMAP+$08,X
-    INX : INX : CPX #$000C : BNE .controller_row_1_loop
-
-    LDX #$0000
-  .controller_row_2_loop
+    STA !HUD_TILEMAP+$06,X
     TYA : AND ControllerTable2,X
     BEQ .controller_row_2_blank
     LDA ControllerGfx2,X
@@ -861,8 +861,8 @@ ih_hud_code:
   .controller_row_2_blank
     LDA !IH_BLANK
   .controller_row_2_draw
-    STA !HUD_TILEMAP+$48,X
-    INX : INX : CPX #$000C : BNE .controller_row_2_loop
+    STA !HUD_TILEMAP+$46,X
+    DEX : DEX : BNE .controller_row_loop
 
     TYA : STA !ram_ih_controller
     BRA .status_display
@@ -988,6 +988,74 @@ endif
 
   .end
     RTL
+
+  .framesHeld
+    LDA !IH_CONTROLLER_PRI_NEW : TAY : LDX #$000C
+  .clearCountersLoop
+    TYA : AND ControllerTable1,X : BEQ .clearCountersRow2
+    PHX : LDA FramesHeldTable1,X : TAX
+    TDC : STA !WRAM_MENU_START,X : PLX
+  .clearCountersRow2
+    TYA : AND ControllerTable2,X : BEQ .clearCountersNext
+    PHX : LDA FramesHeldTable2,X : TAX
+    TDC : STA !WRAM_MENU_START,X : PLX
+  .clearCountersNext
+    DEX : DEX : BNE .clearCountersLoop
+
+    LDA !IH_CONTROLLER_PRI : TAY : LDX #$000C
+  .drawFramesHeldLoop
+    LDA !ram_frames_held : AND ControllerTable1,X : BNE .useFramesHeldRow1
+    TYA : AND ControllerTable1,X : BEQ .blankFramesHeldRow1
+  .nonBlankFramesHeldRow1
+    LDA ControllerGfx1,X
+    BRA .drawFramesHeldRow1
+  .blankFramesHeldRow1
+    LDA !IH_BLANK
+  .drawFramesHeldRow1
+    STA !HUD_TILEMAP+$06,X
+    LDA !ram_frames_held : AND ControllerTable2,X : BNE .useFramesHeldRow2
+    TYA : AND ControllerTable2,X : BEQ .blankFramesHeldRow2
+  .nonBlankFramesHeldRow2
+    LDA ControllerGfx2,X
+    BRA .drawFramesHeldRow2
+  .blankFramesHeldRow2
+    LDA !IH_BLANK
+  .drawFramesHeldRow2
+    STA !HUD_TILEMAP+$46,X
+    DEX : DEX : BNE .drawFramesHeldLoop
+    BRL .status_display
+
+  .useFramesHeldRow1
+    PHX : TYA : AND ControllerTable1,X : BNE .incFramesHeldRow1
+    LDA FramesHeldTable1,X : TAX
+    LDA !WRAM_MENU_START,X : BEQ .plxBlankFramesHeldRow1
+    CMP #$0042 : BCC .loadFramesHeldRow1
+  .plxBlankFramesHeldRow1
+    PLX : BRA .blankFramesHeldRow1
+  .incFramesHeldRow1
+    LDA FramesHeldTable1,X : TAX
+    LDA !WRAM_MENU_START,X : INC : STA !WRAM_MENU_START,X
+    CMP #$0042 : BCC .loadFramesHeldRow1
+    PLX : BRA .nonBlankFramesHeldRow1
+  .loadFramesHeldRow1
+    ASL : TAX : LDA NumberGFXTable,X : PLX
+    BRA .drawFramesHeldRow1
+
+  .useFramesHeldRow2
+    PHX : TYA : AND ControllerTable2,X : BNE .incFramesHeldRow2
+    LDA FramesHeldTable2,X : TAX
+    LDA !WRAM_MENU_START,X : BEQ .plxBlankFramesHeldRow2
+    CMP #$0042 : BCC .loadFramesHeldRow2
+  .plxBlankFramesHeldRow2
+    PLX : BRA .blankFramesHeldRow2
+  .incFramesHeldRow2
+    LDA FramesHeldTable2,X : TAX
+    LDA !WRAM_MENU_START,X : INC : STA !WRAM_MENU_START,X
+    CMP #$0042 : BCC .loadFramesHeldRow2
+    PLX : BRA .nonBlankFramesHeldRow2
+  .loadFramesHeldRow2
+    ASL : TAX : LDA NumberGFXTable,X : PLX
+    BRA .drawFramesHeldRow2
 }
 
 incsrc infohudmodes.asm
@@ -1615,13 +1683,17 @@ HexGFXTable:
     dw #$0C64, #$0C65, #$0C58, #$0C59, #$0C5A, #$0C5B
 
 ControllerTable1:
-    dw #$0020, #$0800, #$0010, #$4000, #$0040, #$2000
+    dw #$0000, #$0020, #$0800, #$0010, #$4000, #$0040, #$2000
 ControllerTable2:
-    dw #$0200, #$0400, #$0100, #$8000, #$0080, #$1000
+    dw #$0000, #$0200, #$0400, #$0100, #$8000, #$0080, #$1000
 ControllerGfx1:
-    dw #$0C68, #$0C61, #$0C69, #$0C67, #$0C66, #$0C6A
+    dw #$0000, #$0C68, #$0C61, #$0C69, #$0C67, #$0C66, #$0C6A
 ControllerGfx2:
-    dw #$0C60, #$0C63, #$0C62, #$0C65, #$0C64, #$0C6B
+    dw #$0000, #$0C60, #$0C63, #$0C62, #$0C65, #$0C64, #$0C6B
+FramesHeldTable1:
+    dw #$0000, #$00BA, #$00C6, #$00B8, #$00CC, #$00BC, #$00CA
+FramesHeldTable2:
+    dw #$0000, #$00C2, #$00C4, #$00C0, #$00CE, #$00BE, #$00C8
 
 HexToNumberGFX1:
     dw #$0C09, #$0C09, #$0C09, #$0C09, #$0C09, #$0C09, #$0C09, #$0C09, #$0C09, #$0C09

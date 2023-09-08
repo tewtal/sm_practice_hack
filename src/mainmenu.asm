@@ -3,6 +3,13 @@
 ; Menu Helpers
 ; ------------
 
+action_infohud_mainmenu:
+{
+    LDA !sram_top_display_mode : CMP #$0003 : BCC action_mainmenu
+    TDC : STA !sram_top_display_mode
+    BRA action_mainmenu
+}
+
 action_layout_mainmenu:
 {
     ; Prepare dynamic menu
@@ -173,7 +180,7 @@ mm_goto_misc:
     %cm_mainmenu("Misc", #MiscMenu)
 
 mm_goto_infohud:
-    %cm_mainmenu("Infohud", #InfoHudMenu)
+    %cm_jsl("Infohud", #action_infohud_mainmenu, #InfoHudMenu)
 
 mm_goto_sprites:
     %cm_mainmenu("Sprite Features", #SpritesMenu)
@@ -2325,6 +2332,7 @@ InfoHudMenu:
     dw #ih_goto_timers
     dw #$FFFF
     dw #ih_top_HUD_mode
+    dw #ih_dynamic_frames_held
     dw #ih_status_icons
 if !PRESERVE_WRAM_DURING_SPACETIME
     dw #ih_spacetime_infohud
@@ -2561,22 +2569,12 @@ ih_room_strat:
         LDA #$0001 : STA !sram_display_mode
         RTL
 
-ih_top_HUD_mode:
-    dw !ACTION_CHOICE
-    dl #!sram_top_display_mode
-    dw #$0000
-    db #$28, "Top-Left Displa", #$FF
-    db #$28, "y    ITEM %", #$FF
-    db #$28, "y  RESERVES", #$FF
-    db #$28, "y   VANILLA", #$FF
-    db #$FF
-
-
 ih_goto_timers:
     %cm_submenu("Timer Settings", #IHTimerMenu)
 
 IHTimerMenu:
     dw #ih_room_counter
+    dw #ih_fanfare_timer_adjust
     dw #ih_lag_counter
     dw #ih_auto_update_timers
     dw #$FFFF
@@ -2594,6 +2592,9 @@ ih_room_counter:
     db #$28, "     INGAME", #$FF
     db #$FF
 
+ih_fanfare_timer_adjust:
+    %cm_toggle_bit("Adjust Fanfare Timers", !sram_fanfare, !FANFARE_ADJUST_REALTIME, #0)
+
 ih_lag_counter:
     dw !ACTION_CHOICE
     dl #!sram_lag_counter_mode
@@ -2602,6 +2603,9 @@ ih_lag_counter:
     db #$28, "       DOOR", #$FF
     db #$28, "       FULL", #$FF
     db #$FF
+
+ih_auto_update_timers:
+    %cm_toggle_inverted("Auto-Update Timers", !ram_timers_autoupdate, #$0001, #0)
 
 ih_reset_seg_after_door:
     %cm_jsl("Reset Segment in Next Room", #.routine, #$0001)
@@ -2613,8 +2617,78 @@ ih_reset_seg_after_door:
 ih_reset_seg_item_touch:
     %cm_jsl("Reset Segment on Item Touch", #ih_reset_seg_after_door_routine, #$8000)
 
-ih_auto_update_timers:
-    %cm_toggle_inverted("Auto-Update Timers", !ram_timers_autoupdate, #$0001, #0)
+ih_top_HUD_mode:
+    dw !ACTION_CHOICE
+    dl #!sram_top_display_mode
+    dw #$0000
+    db #$28, "Top-Left Displa", #$FF
+    db #$28, "y    ITEM %", #$FF
+    db #$28, "y  RESERVES", #$FF
+    db #$28, "y   VANILLA", #$FF
+    db #$FF
+
+ih_dynamic_frames_held:
+    dw !ACTION_DYNAMIC
+    dl #!sram_top_display_mode
+    dw #ih_goto_frames_held
+    dw #ih_goto_frames_held
+    dw #$0000
+    dw #$0000
+
+ih_goto_frames_held:
+    %cm_submenu("Frames Held Mode", #IHFramesHeldMenu)
+
+IHFramesHeldMenu:
+    dw #ih_frames_held_a
+    dw #ih_frames_held_b
+    dw #ih_frames_held_x
+    dw #ih_frames_held_y
+    dw #ih_frames_held_l
+    dw #ih_frames_held_r
+    dw #ih_frames_held_select
+    dw #ih_frames_held_start
+    dw #ih_frames_held_left
+    dw #ih_frames_held_right
+    dw #ih_frames_held_up
+    dw #ih_frames_held_down
+    dw #$0000
+    %cm_header("FRAMES HELD MODE")
+
+ih_frames_held_a:
+    %cm_toggle_bit("A", !ram_frames_held, !CTRL_A, #0)
+
+ih_frames_held_b:
+    %cm_toggle_bit("B", !ram_frames_held, !CTRL_B, #0)
+
+ih_frames_held_x:
+    %cm_toggle_bit("X", !ram_frames_held, !CTRL_X, #0)
+
+ih_frames_held_y:
+    %cm_toggle_bit("Y", !ram_frames_held, !CTRL_Y, #0)
+
+ih_frames_held_l:
+    %cm_toggle_bit("L", !ram_frames_held, !CTRL_L, #0)
+
+ih_frames_held_r:
+    %cm_toggle_bit("R", !ram_frames_held, !CTRL_R, #0)
+
+ih_frames_held_select:
+    %cm_toggle_bit("Select", !ram_frames_held, !CTRL_SELECT, #0)
+
+ih_frames_held_start:
+    %cm_toggle_bit("Start", !ram_frames_held, !IH_INPUT_START, #0)
+
+ih_frames_held_left:
+    %cm_toggle_bit("Left", !ram_frames_held, !IH_INPUT_LEFT, #0)
+
+ih_frames_held_right:
+    %cm_toggle_bit("Right", !ram_frames_held, !IH_INPUT_RIGHT, #0)
+
+ih_frames_held_up:
+    %cm_toggle_bit("Up", !ram_frames_held, !IH_INPUT_UP, #0)
+
+ih_frames_held_down:
+    %cm_toggle_bit("Down", !ram_frames_held, !IH_INPUT_DOWN, #0)
 
 ih_status_icons:
     %cm_toggle("Status Icons", !sram_status_icons, #1, #.routine)
@@ -2695,7 +2769,7 @@ game_cutscenes:
     %cm_submenu("Cutscenes and Effects", #CutscenesMenu)
 
 game_fanfare_toggle:
-    %cm_toggle("Fanfare", !sram_fanfare_toggle, #$0001, #0)
+    %cm_toggle_bit("Fanfare", !sram_fanfare, !FANFARE_TOGGLE, #0)
 
 game_fast_doors_toggle:
     %cm_toggle("Fast Doors", !sram_fast_doors, #$0001, #0)

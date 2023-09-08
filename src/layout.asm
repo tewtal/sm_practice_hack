@@ -259,7 +259,7 @@ endif
 
 hijack_after_load_level_data:
 {
-    LDA !ram_door_portal_flags : BIT !DOOR_PORTAL_HORIZONTAL_MIRRORING_BIT : BEQ .checkRoom
+    LDA !ram_door_portal_flags : BEQ .checkRoom
     LDA !DOOR_DIRECTION : AND #$0003 : BEQ .checkSwapToRight
     CMP #$0001 : BNE .checkRoom
 

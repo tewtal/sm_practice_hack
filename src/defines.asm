@@ -157,6 +157,7 @@
 !ram_itempickups_visible            = !WRAM_PERSIST_START+$5E
 !ram_itempickups_chozo              = !WRAM_PERSIST_START+$60
 !ram_itempickups_hidden             = !WRAM_PERSIST_START+$62
+!ram_frames_held                    = !WRAM_PERSIST_START+$64
 
 ; ^ FREE SPACE ^ up to +$76 (!WRAM_START+$FC - !WRAM_PERSIST_START)
 
@@ -271,6 +272,8 @@
 !ram_cm_selected_slot = !WRAM_MENU_START+$82
 
 ; ^ FREE SPACE ^ up to +$CE
+; Note: +$B8 to +$CE range also used as frames held counters
+;       and is reset to zero when loading a savestate
 
 ; Reserve 48 bytes for CGRAM cache
 ; Currently first 28 bytes plus last 2 bytes are used
@@ -308,7 +311,7 @@
 
 !sram_artificial_lag = !SRAM_START+$20
 !sram_rerandomize = !SRAM_START+$22
-!sram_fanfare_toggle = !SRAM_START+$24
+!sram_fanfare = !SRAM_START+$24
 !sram_frame_counter_mode = !SRAM_START+$26
 !sram_display_mode = !SRAM_START+$28
 !sram_music_toggle = !SRAM_START+$2A
@@ -742,6 +745,11 @@ endif
 !DOOR_PORTAL_JUMP_BIT = #$0008
 !DOOR_PORTAL_HORIZONTAL_MIRRORING_BIT = #$0010
 !DOOR_PORTAL_EXCLUDE_JUMP_MASK = #$FFF7
+
+!FANFARE_TOGGLE = #$0001
+!FANFARE_TOGGLE_8BIT = #$01
+!FANFARE_ADJUST_REALTIME = #$0002
+!FANFARE_ADJUST_REALTIME_8BIT = #$02
 
 
 ; ----------
