@@ -273,6 +273,7 @@
 
 ; ^ FREE SPACE ^ up to +$CE
 ; Note: +$B8 to +$CE range also used as frames held counters
+;       and is reset to zero when loading a savestate
 
 ; Reserve 48 bytes for CGRAM cache
 ; Currently first 28 bytes plus last 2 bytes are used

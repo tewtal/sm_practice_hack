@@ -1028,8 +1028,9 @@ endif
   .useFramesHeldRow1
     PHX : TYA : AND ControllerTable1,X : BNE .incFramesHeldRow1
     LDA FramesHeldTable1,X : TAX
-    LDA !WRAM_MENU_START,X
+    LDA !WRAM_MENU_START,X : BEQ .plxBlankFramesHeldRow1
     CMP #$0042 : BCC .loadFramesHeldRow1
+  .plxBlankFramesHeldRow1
     PLX : BRA .blankFramesHeldRow1
   .incFramesHeldRow1
     LDA FramesHeldTable1,X : TAX
@@ -1043,8 +1044,9 @@ endif
   .useFramesHeldRow2
     PHX : TYA : AND ControllerTable2,X : BNE .incFramesHeldRow2
     LDA FramesHeldTable2,X : TAX
-    LDA !WRAM_MENU_START,X
+    LDA !WRAM_MENU_START,X : BEQ .plxBlankFramesHeldRow2
     CMP #$0042 : BCC .loadFramesHeldRow2
+  .plxBlankFramesHeldRow2
     PLX : BRA .blankFramesHeldRow2
   .incFramesHeldRow2
     LDA FramesHeldTable2,X : TAX

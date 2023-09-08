@@ -399,7 +399,7 @@ layout_dynamic_nextdoorjump:
     dw #$0000
 
 layout_nextdoorjump:
-   %cm_toggle_bit("Next Door Jump To Dest", !ram_door_portal_flags, !DOOR_PORTAL_JUMP_BIT, #$0000)
+    %cm_toggle_bit("Next Door Jump To Dest", !ram_door_portal_flags, !DOOR_PORTAL_JUMP_BIT, #$0000)
 
 layout_dynamic_selectsource:
     dw !ACTION_DYNAMIC
