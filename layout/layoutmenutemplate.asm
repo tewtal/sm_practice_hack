@@ -19,6 +19,7 @@ LayoutMenu:
     dw #$FFFF
     dw #layout_doorportal
     dw #layout_dynamic_dooriframes
+    dw #layout_dynamic_horizontalmirroring
     dw #layout_dynamic_nextdoorjump
     dw #$FFFF
     dw #layout_dynamic_selectsource
@@ -359,8 +360,7 @@ layout_doorportal:
     TDC : STA !ram_door_destination
     RTL
   .areaboss
-    LDA !ram_door_portal_flags : AND !DOOR_PORTAL_EXCLUDE_MODE_MASK
-    ORA !ram_cm_door_dynamic : ORA !DOOR_PORTAL_IFRAMES_BIT : STA !ram_door_portal_flags
+    TDC : ORA !ram_cm_door_dynamic : ORA !DOOR_PORTAL_IFRAMES_BIT : STA !ram_door_portal_flags
     LDA !ram_door_source : CMP !layout_areaboss_door_count : BMI .checkDest
     TDC : STA !ram_door_source
   .checkDest
@@ -378,6 +378,17 @@ layout_dynamic_dooriframes:
 
 layout_dooriframes:
     %cm_toggle_bit("Door Portal I-Frames", !ram_door_portal_flags, !DOOR_PORTAL_IFRAMES_BIT, #$0000)
+
+layout_dynamic_horizontalmirroring:
+    dw !ACTION_DYNAMIC
+    dl #!ram_cm_door_dynamic
+    dw #$0000
+    dw #layout_horizontalmirroring
+    dw #$0000
+    dw #$0000
+
+layout_horizontalmirroring:
+    %cm_toggle_bit("Horizontal Mirroring", !ram_door_portal_flags, !DOOR_PORTAL_HORIZONTAL_MIRRORING_BIT, #$0000)
 
 layout_dynamic_nextdoorjump:
     dw !ACTION_DYNAMIC

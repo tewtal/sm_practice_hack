@@ -103,7 +103,7 @@ status_xfactor:
 
 status_cooldowncounter:
 {
-    LDA !SAMUS_COOLDOWN : CMP !ram_HUD_check : BEQ .done : STA !ram_HUD_check
+    LDA !SAMUS_COOLDOWN_TIMER : CMP !ram_HUD_check : BEQ .done : STA !ram_HUD_check
     LDX #$0088 : JSR Draw4
 
   .done
@@ -674,7 +674,11 @@ status_lagcounter:
     LDA !REALTIME_LAG_COUNTER : BEQ .done
     CLC : ADC !ram_lag_counter : STA !ram_lag_counter : STZ !REALTIME_LAG_COUNTER
     CMP !ram_HUD_check : BEQ .done : STA !ram_HUD_check
-    LDX #$0082 : JSR Draw3
+    LDX #$0082
+    PHA : LDA !ram_minimap : BEQ .draw3
+    LDX #$0014
+  .draw3
+    PLA : JSR Draw3
 
   .done
     RTS
@@ -803,7 +807,7 @@ endif
     LDA !SAMUS_Y_DIRECTION : CMP #$0002 : BNE .prepareresetcounters
 
     ; Check if we are falling and have enough vertical speed for space jump
-    LDA $0B2D : CMP #!first_spacejump_subspeed : BNE .incstate
+    LDA !SAMUS_Y_SPEEDCOMBINED : CMP #!first_spacejump_subspeed : BNE .incstate
 
     ; We are, so initialize state
     ; Note this sets the state one larger than it should be
@@ -903,7 +907,7 @@ endif
     LDA !sram_top_display_mode : BNE .skipprint
     LDA $0B1A : BNE .skipprint
     LDA !HUD_TILEMAP+$12 : STA $14
-    LDA $0B2D : AND #$0FFF
+    LDA !SAMUS_Y_SPEEDCOMBINED : AND #$0FFF
     LDX #$0012 : JSR Draw4Hex
     INC $0B1A
     LDA $14 : STA !HUD_TILEMAP+$12
@@ -1022,8 +1026,8 @@ status_walljump:
 
   .incspeed
     ; Nothing to do if speed is zero or negative
-    LDA $0B2D : AND #$8000 : BNE .checkleftright
-    LDA $0B2D : BEQ .checkleftright
+    LDA !SAMUS_Y_SPEEDCOMBINED : AND #$8000 : BNE .checkleftright
+    LDA !SAMUS_Y_SPEEDCOMBINED : BEQ .checkleftright
 
     ; Speed x256 is just a little too high
     ; Make it x128 and store it for later use
@@ -1424,11 +1428,11 @@ endif
     ; Check if we are initial state, which means no vertical speed
     ; and no animation delay in normal gamestate holding jump and not holding start
   .startpos
-    LDA $0B2D : BNE .notinit
+    LDA !SAMUS_Y_SPEEDCOMBINED : BNE .notinit
 if !FEATURE_PAL
-    LDA $0A60 : CMP #$E910 : BNE .notinit
+    LDA !SAMUS_CONTROLLER_HANDLER : CMP #$E910 : BNE .notinit
 else
-    LDA $0A60 : CMP #$E913 : BNE .notinit
+    LDA !SAMUS_CONTROLLER_HANDLER : CMP #$E913 : BNE .notinit
 endif
     LDA !GAMEMODE : CMP #$0008 : BNE .notinit
     LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_JUMP : BEQ .notinit
@@ -1552,9 +1556,9 @@ endif
     LDA !SAMUS_Y_DIRECTION : CMP #$0000 : BNE .donestart
     LDA !SAMUS_POSE_DIRECTION : AND #$0004 : CMP #$0004 : BNE .donestart
 if !FEATURE_PAL
-    LDA $0A60 : CMP #$E910 : BNE .donestart
+    LDA !SAMUS_CONTROLLER_HANDLER : CMP #$E910 : BNE .donestart
 else
-    LDA $0A60 : CMP #$E913 : BNE .donestart
+    LDA !SAMUS_CONTROLLER_HANDLER : CMP #$E913 : BNE .donestart
 endif
     LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_LEFT : BNE .donestart
 
@@ -2863,6 +2867,10 @@ status_twocries:
 
   .check
     LDA !ram_roomstrat_counter : INC : STA !ram_roomstrat_counter
+    LDA !SAMUS_ITEMS_EQUIPPED : AND #$0002 : BNE .havespringball
+    BRL status_twocries_nosb
+
+  .havespringball
     LDA !ram_roomstrat_state : CMP #$0008 : BEQ .firstcheck
     CMP #$0009 : BEQ .wait : BPL .done
     BRL .secondcheck
@@ -2916,7 +2924,7 @@ status_twocries:
   .oneframeearlycheck
     LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_UP : BEQ .seconddone
     LDA !ram_roomstrat_counter : CMP #$0057 : BMI .seconddone
-    CMP #$00D5 : BPL .seconddone : CMP #$0099 : BPL .secondlate
+    CMP #$00D5 : BPL .seconddone : CMP #$0099 : BPL .actuallylate
     CMP #$0093 : BMI .secondearly : CMP #$0096 : BMI .scammed
     BRA .noscam
 
@@ -2951,7 +2959,7 @@ status_twocries:
   .secondearly
     CMP #$0091 : BMI .actuallyearly
     LDA !ram_roomstrat_state : CMP #$0002 : BEQ .notearly
-    CMP #$0006 : BPL .notearly
+    CMP #$0006 : BEQ .notearly
 
   .actuallyearly
     LDA #$0093 : SEC : SBC !ram_roomstrat_counter
@@ -2962,5 +2970,109 @@ status_twocries:
   .notearly
     LDA !IH_LETTER_E : STA !HUD_TILEMAP+$8E
     BRA .yesdonechecking
+}
+
+status_twocries_nosb:
+{
+    LDA !ram_roomstrat_state : CMP #$0008 : BEQ .firstcheck
+    CMP #$0009 : BEQ .wait : BPL .done
+    BRL .secondcheck
+
+  .firstscam
+    SEC : SBC #$008D : STA !ram_roomstrat_state
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A
+    LDA !IH_LETTER_X : STA !HUD_TILEMAP+$88
+    TDC : STA !ram_roomstrat_counter
+    RTS
+
+  .firstcheck
+    LDA !SAMUS_Y_DIRECTION : CMP #$0001 : BNE .done
+    LDA !ram_roomstrat_counter : CMP #$0052 : BMI .ignore
+    CMP #$00D0 : BPL .ignore : CMP #$0094 : BPL .firstlate
+    CMP #$008E : BMI .firstearly
+    CMP #$0090 : BEQ .firstscam : CMP #$0091 : BEQ .firstscam
+    SEC : SBC #$008D : STA !ram_roomstrat_state
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$88
+    TDC : STA !ram_roomstrat_counter
+    RTS
+
+  .wait
+    LDA !SAMUS_Y_DIRECTION : BNE .done
+    LDA #$0008 : STA !ram_roomstrat_state
+
+  .done
+    RTS
+
+  .ignore
+    LDA #$0009 : STA !ram_roomstrat_state
+    RTS
+
+  .firstlate
+    SEC : SBC #$0093 : ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A
+    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$88
+    BRL .donechecking
+
+  .firstearly
+    LDA #$008E : SEC : SBC !ram_roomstrat_counter
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A
+    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$88
+    BRA .donechecking
+
+  .secondlate
+    SEC : SBC #$0098 : ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
+    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$8C
+    BRA .donechecking
+
+  .secondcheck
+    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_UP : BEQ .seconddone
+    LDA !ram_roomstrat_counter : CMP #$0057 : BMI .seconddone
+    CMP #$00D5 : BPL .seconddone : CMP #$0098 : BEQ .checkscam : BPL .secondlate
+    CMP #$0093 : BMI .secondearly : CMP #$0095 : BMI .checkscam
+
+  .noscam
+    SEC : SBC #$0092 : ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
+
+  .yesdonechecking
+    LDA !ram_roomstrat_state : CMP #$0003 : BEQ .scamdonechecking
+    CMP #$0004 : BEQ .scamdonechecking
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$8C
+
+  .donechecking
+    LDA #$000A : STA !ram_roomstrat_state
+
+  .seconddone
+    RTS
+
+  .scammed
+    LDA !ram_roomstrat_counter : SEC : SBC #$0092
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
+
+  .scamdonechecking
+    LDA !IH_LETTER_X : STA !HUD_TILEMAP+$8C
+    BRA .donechecking
+
+  .checkscam
+    LDA !ram_roomstrat_state : CMP #$0002 : BEQ .noscamprep
+    CMP #$0006 : BNE .scammed
+
+  .noscamprep
+    LDA !ram_roomstrat_counter
+    BRA .noscam
+
+  .notearly
+    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$8E
+    BRA .yesdonechecking
+
+  .secondearly
+    CMP #$0092 : BMI .actuallyearly
+    LDA !ram_roomstrat_state : CMP #$0002 : BEQ .notearly
+    CMP #$0006 : BEQ .notearly
+
+  .actuallyearly
+    LDA #$0093 : SEC : SBC !ram_roomstrat_counter
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
+    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$8C
+    BRA .donechecking
 }
 

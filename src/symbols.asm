@@ -158,6 +158,7 @@ ram_itempickups_all = !ram_itempickups_all ; !WRAM_PERSIST_START+$5C
 ram_itempickups_visible = !ram_itempickups_visible ; !WRAM_PERSIST_START+$5E
 ram_itempickups_chozo = !ram_itempickups_chozo ; !WRAM_PERSIST_START+$60
 ram_itempickups_hidden = !ram_itempickups_hidden ; !WRAM_PERSIST_START+$62
+ram_frames_held = !ram_frames_held ; !WRAM_PERSIST_START+$64
 
 ; ^ FREE SPACE ^ up to +$76 (!WRAM_START+$FC - !WRAM_PERSIST_START)
 
@@ -270,6 +271,8 @@ ram_cm_manage_slots = !ram_cm_manage_slots ; !WRAM_MENU_START+$80
 ram_cm_selected_slot = !ram_cm_selected_slot ; !WRAM_MENU_START+$82
 
 ; ^ FREE SPACE ^ up to +$CE
+; Note: +$B8 to +$CE range also used as frames held counters
+;       and is reset to zero when loading a savestate
 
 ; Reserve 48 bytes for CGRAM cache
 ; Currently first 28 bytes plus last 2 bytes are used
@@ -300,7 +303,7 @@ sram_ctrl_auto_save_state = !sram_ctrl_auto_save_state ; !SRAM_START+$F0 ; note 
 
 sram_artificial_lag = !sram_artificial_lag ; !SRAM_START+$20
 sram_rerandomize = !sram_rerandomize ; !SRAM_START+$22
-sram_fanfare_toggle = !sram_fanfare_toggle ; !SRAM_START+$24
+sram_fanfare = !sram_fanfare ; !SRAM_START+$24
 sram_frame_counter_mode = !sram_frame_counter_mode ; !SRAM_START+$26
 sram_display_mode = !sram_display_mode ; !SRAM_START+$28
 sram_music_toggle = !sram_music_toggle ; !SRAM_START+$2A

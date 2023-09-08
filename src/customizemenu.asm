@@ -51,6 +51,7 @@ mc_paletteprofile:
     db #$28, "DREAMCOWBOY", #$FF
     db #$28, "       ZENI", #$FF
     db #$28, "       DYCE", #$FF
+    db #$28, "    FOREVER", #$FF
     db #$28, "       GREY", #$FF
     db #$28, "        RED", #$FF
     db #$28, "     PURPLE", #$FF
@@ -437,6 +438,7 @@ PaletteProfileTables:
     dw #DreamCowboyProfileTable
     dw #ZeniProfileTable
     dw #DyceProfileTable
+    dw #ForeverProfileTable
     dw #GreyProfileTable
     dw #RedProfileTable
     dw #PurpleProfileTable
@@ -493,6 +495,9 @@ ZeniProfileTable:
 
 DyceProfileTable:
     dw $5DC0, $5DC0, $77BD, $2060, $0000, $7FFF, $7FFF, $7FFF, $5DC0, $5DC0, $7FFF
+
+ForeverProfileTable:
+    dw $650D, $0000, $01F9, $0000, $0000, $22DC, $79EA, $650D, $0000, $650D, $7FFF
 
 GreyProfileTable:
     dw $0012, $1CE7, $3DEF, $0C63, $1CE7, $3DEF, $0EE3, $0012, $0C63, $1CE7, $3DEF

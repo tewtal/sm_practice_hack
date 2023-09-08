@@ -1824,8 +1824,8 @@ preset_100early_maridia_predraygon_mt_everest:
     dw $09C2, $03E5  ; Health
     dw $09CA, $0014  ; Supers
     dw $09CC, $001E  ; Max supers
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
+    dw $0A1C, $009B  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
     dw $0AF6, $0178  ; Samus X
     dw $0AFA, $03BB  ; Samus Y
     dw $D880, $0FFF  ; Items
@@ -1842,6 +1842,8 @@ preset_100early_maridia_predraygon_beach_missiles:
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
     dw $09C2, $03A9  ; Health
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
     dw $0AF6, $0078  ; Samus X
     dw $0AFA, $005B  ; Samus Y
     dw #$FFFF

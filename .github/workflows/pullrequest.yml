@@ -50,8 +50,8 @@ jobs:
     - name: Upload artifacts
       uses: actions/upload-artifact@v3
       with:
-        name: Patches
-        path: ./web/public/patches
+        name: Patches & Debug Symbols
+        path: ./build
     
     - name: Set up node
       uses: actions/setup-node@v3

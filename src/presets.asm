@@ -386,16 +386,26 @@ preset_start_gameplay:
 
     ; Set Samus last pose same as current pose if not shinesparking
     LDA !SAMUS_POSE_DIRECTION : STA !SAMUS_PREVIOUS_POSE_DIRECTION
-    LDA !SAMUS_POSE : CMP #$00C0 : BMI .store_prev_pose
-    CMP #$00C5 : BPL .store_prev_pose
+    STA !SAMUS_LAST_DIFFERENT_POSE_DIRECTION
+    LDA !SAMUS_POSE : CMP #$00C9 : BMI .store_prev_pose
+    CMP #$00CF : BPL .store_prev_pose
     ; Set timer type to shinespark
-    LDA #$0006 : STA $0ACC
+    LDA #$0006 : STA !SAMUS_SHINE_TIMER_TYPE
     ; Set timer very high in case player holds inputs before spark moves
     LDA #$7FFF : STA !SAMUS_SHINE_TIMER
     ; Clear previous pose
     LDA #$0000
   .store_prev_pose
-    STA !SAMUS_PREVIOUS_POSE
+    STA !SAMUS_PREVIOUS_POSE : STA !SAMUS_LAST_DIFFERENT_POSE
+
+    ; Clear potential pose flags
+    STA !SAMUS_POTENTIAL_POSE_FLAGS
+    STA !SAMUS_POTENTIAL_POSE_FLAGS+2
+    STA !SAMUS_POTENTIAL_POSE_FLAGS+4
+
+    ; Set potential pose values to FFFF
+    LDA #$FFFF : STA !SAMUS_POTENTIAL_POSE_VALUES
+    STA !SAMUS_POTENTIAL_POSE_VALUES+2 : STA !SAMUS_POTENTIAL_POSE_VALUES+4
 
     ; Set Samus last position same as current position
     LDA !SAMUS_X : STA $0B10 : LDA !SAMUS_X_SUBPX : STA $0B12
@@ -413,11 +423,11 @@ preset_start_gameplay:
     ; If default pose at landing site then assume we are arriving on Zebes
     LDA #$0022 : STA $7ED914
 if !FEATURE_PAL
-    LDA #$E8CA : STA $0A42 ; Lock Samus
-    LDA #$E867 : STA $0A44 ; Lock Samus
+    LDA #$E8CA : STA !SAMUS_LOCKED_HANDLER   ; Lock Samus
+    LDA #$E867 : STA !SAMUS_MOVEMENT_HANDLER ; Lock Samus
 else
-    LDA #$E8CD : STA $0A42 ; Lock Samus
-    LDA #$E8DC : STA $0A44 ; Lock Samus
+    LDA #$E8CD : STA !SAMUS_LOCKED_HANDLER   ; Lock Samus
+    LDA #$E8DC : STA !SAMUS_MOVEMENT_HANDLER ; Lock Samus
 endif
   .end_load_game_state
 
@@ -473,10 +483,24 @@ endif
   .layer_2_loaded
     JSR $A37B    ; Calculate BG positions
 
+    ; Fix rooms that need to be handled before door scroll
     ; Fix BG2 Y offsets for rooms with scrolling sky
-    LDA !ROOM_ID : CMP #$91F8 : BEQ .bg_offsets_scrolling_sky
+    ; Also fix rooms that need to be handled before door scroll
+    LDA !ROOM_ID : CMP #$D646 : BEQ .pantsRoom
+    CMP #$D6FD : BEQ .aqueductFarmsAndPitRoom
+    CMP #$91F8 : BEQ .bg_offsets_scrolling_sky
     CMP #$93FE : BEQ .bg_offsets_scrolling_sky
     CMP #$94FD : BEQ .bg_offsets_scrolling_sky
+    BRA .bg_offsets_calculated
+
+  .pantsRoom
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_DASH_RECALL : BEQ .bg_offsets_calculated
+    JSL layout_asm_pants_room_external
+    BRA .bg_offsets_calculated
+
+  .aqueductFarmsAndPitRoom
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ .bg_offsets_calculated
+    JSL layout_asm_aqueductfarmsandpit_external
     BRA .bg_offsets_calculated
 
   .bg_offsets_scrolling_sky
