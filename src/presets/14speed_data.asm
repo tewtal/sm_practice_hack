@@ -972,6 +972,7 @@ preset_14speed_lower_norfair_ridley_farming_room:
     dw $09C2, $00F4  ; Health
     dw $09C6, $000A  ; Missiles
     dw $09CA, $000A  ; Supers
+    dw $09CE, $0005  ; Pbs
     dw $0AF6, $004D  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw $D8BC, $0001  ; Doors

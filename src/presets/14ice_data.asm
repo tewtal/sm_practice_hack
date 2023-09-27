@@ -977,7 +977,7 @@ preset_14ice_lower_norfair_ridley:
     dw $09C2, $012B  ; Health
     dw $09C6, $000A  ; Missiles
     dw $09CA, $000A  ; Supers
-    dw $09CE, $0003  ; Pbs
+    dw $09CE, $0005  ; Pbs
     dw $0AF6, $0039  ; Samus X
     dw $0AFA, $009B  ; Samus Y
     dw $D8BA, $D100  ; Doors
