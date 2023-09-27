@@ -91,29 +91,26 @@ CrashHandler:
     BMI .overflow
     CMP #$2000 : BPL .underflow
 
-    ; store crash type, 0 = handler, 8000 = overflow, 4000 = underflow
+    INC : TAY                             ; top byte of stack
     LDA #$0000 : STA !ram_crash_type      ; xxx0 = generic
-    PHK : PLB
-    LDA !ram_crash_sp : INC : TAY
-    LDX #$0000
-    BRA .loopStack
+    BRA .loopPrep
 
   .overflow
     LDA #$8000 : STA !ram_crash_type      ; 8xxx = stack overflow
-    LDA #$1FFF : TCS                      ; repair stack
-    PHB : PHB : PLA : STA !ram_crash_dbp  ; salvage crash DB
-    PHK : PLB                             ; set new DB
     LDY #$0000                            ; dump $0000-$002F
-    LDX #$0000
-    BRA .loopStack
+    BRA .fixStack
 
   .underflow
     LDA #$4000 : STA !ram_crash_type      ; 4xxx = stack underflow
-    LDA #$1FFF : TCS                      ; repair stack
     LDA $001FFE : STA !ram_crash_temp     ; preserve stack bytes
-    PHB : PHB : PLA : STA !ram_crash_dbp  ; salvage crash DB
-    PHK : PLB                             ; set new DB
     LDY #$1FD0                            ; dump $1FD0-$1FFF
+
+  .fixStack
+    LDA #$1FFF : TCS                      ; repair stack
+    PHB : PHB : PLA : STA !ram_crash_dbp  ; salvage crash DB
+
+  .loopPrep
+    PHK : PLB
     LDX #$0000
 
   .loopStack
@@ -130,7 +127,8 @@ CrashHandler:
 
   .countStackRemaining
     ; inc until we know the total number of bytes on the stack
-    INY : INX : CPY #$2000 : BMI .maxStack
+    INX
+    INY : CPY #$2000 : BMI .maxStack
 
   .stackSize
     ; check if we copied an extra byte
@@ -166,31 +164,20 @@ BRKHandler:
     BMI .overflow
     CMP #$2000 : BPL .underflow
 
-    ; store crash type
+    INC : TAY                             ; top byte of stack
     LDA #$0001 : STA !ram_crash_type      ; xxx1 = BRK
-    PHK : PLB
-    LDA !ram_crash_sp : INC : TAY
-    LDX #$0000
-    JMP CrashHandler_loopStack
+    JMP CrashHandler_loopPrep
 
   .overflow
     LDA #$8001 : STA !ram_crash_type      ; 8xxx = stack overflow
-    LDA #$1FFF : TCS                      ; repair stack
-    PHB : PHB : PLA : STA !ram_crash_dbp  ; salvage crash DB
-    PHK : PLB                             ; set new DB
     LDY #$0000                            ; dump $0000-$002F
-    LDX #$0000
-    JMP CrashHandler_loopStack
+    JMP CrashHandler_fixStack
 
   .underflow
     LDA #$4001 : STA !ram_crash_type      ; 4xxx = stack underflow
-    LDA #$1FFF : TCS                      ; repair stack
     LDA $001FFE : STA !ram_crash_temp     ; preserve stack bytes
-    PHB : PHB : PLA : STA !ram_crash_dbp  ; salvage crash DB
-    PHK : PLB                             ; set new DB
     LDY #$1FD0                            ; dump $1FD0-$1FFF
-    LDX #$0000
-    JMP CrashHandler_loopStack
+    JMP CrashHandler_fixStack
 }
 
 COPHandler:
@@ -211,31 +198,20 @@ COPHandler:
     BMI .overflow
     CMP #$2000 : BPL .underflow
 
-    ; store crash type
+    INC : TAY                             ; top byte of stack
     LDA #$0002 : STA !ram_crash_type      ; xxx2 = COP
-    PHK : PLB
-    LDA !ram_crash_sp : INC : TAY
-    LDX #$0000
-    JMP CrashHandler_loopStack
+    JMP CrashHandler_loopPrep
 
   .overflow
     LDA #$8002 : STA !ram_crash_type      ; 8xxx = stack overflow
-    LDA #$1FFF : TCS                      ; repair stack
-    PHB : PHB : PLA : STA !ram_crash_dbp  ; salvage crash DB
-    PHK : PLB                             ; set new DB
     LDY #$0000                            ; dump $0000-$002F
-    LDX #$0000
-    JMP CrashHandler_loopStack
+    JMP CrashHandler_fixStack
 
   .underflow
     LDA #$4002 : STA !ram_crash_type      ; 4xxx = stack underflow
-    LDA #$1FFF : TCS                      ; repair stack
     LDA $001FFE : STA !ram_crash_temp     ; preserve stack bytes
-    PHB : PHB : PLA : STA !ram_crash_dbp  ; salvage crash DB
-    PHK : PLB                             ; set new DB
     LDY #$1FD0                            ; dump $1FD0-$1FFF
-    LDX #$0000
-    JMP CrashHandler_loopStack
+    JMP CrashHandler_fixStack
 }
 
 print pc, " crash handler bank80 end"
