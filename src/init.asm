@@ -188,12 +188,12 @@ init_menu_customization:
     LDA #$7277 : STA !sram_palette_border
     LDA #$48F3 : STA !sram_palette_headeroutline
     LDA #$7FFF : STA !sram_palette_text
+    LDA #$0000 : STA !sram_palette_background
     LDA #$0000 : STA !sram_palette_numoutline
     LDA #$7FFF : STA !sram_palette_numfill
     LDA #$4376 : STA !sram_palette_toggleon
     LDA #$761F : STA !sram_palette_seltext
     LDA #$0000 : STA !sram_palette_seltextbg
-    LDA #$0000 : STA !sram_palette_background
     LDA #$0000 : STA !sram_palette_numseloutline
     LDA #$761F : STA !sram_palette_numsel
 
