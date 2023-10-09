@@ -73,6 +73,20 @@ endif
     JSL ih_elevator_activation
 
 if !FEATURE_PAL
+org $A490BD
+else             ; hijack, runs on music changes during Crocomire fight
+org $A490AD
+endif
+    JSL ih_croc_segments
+
+if !FEATURE_PAL
+org $A497F0
+else             ; hijack, runs on music changes during Crocomire fight
+org $A497E0
+endif
+    JSL ih_croc_segments
+
+if !FEATURE_PAL
 org $A9F053
 else             ; hijack, runs when the screen locks to start the hopper/baby cutscene
 org $A9F006
@@ -465,6 +479,13 @@ ih_elevator_activation:
     STZ $0A56
     SEC
     RTL
+}
+
+ih_croc_segments:
+{
+    ; runs on two music changes post-fight
+    JSL !MUSIC_ROUTINE ; overwritten code
+    JML ih_update_hud_early
 }
 
 ih_babyskip_segment:
