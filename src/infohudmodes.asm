@@ -112,10 +112,12 @@ status_cooldowncounter:
 
 status_shinetimer:
 {
-    LDA !ram_armed_shine_duration : CMP !ram_shine_counter : BEQ .done
-    STA !ram_shine_counter : BNE .charge : LDA #$00B4
+    LDA !ram_armed_shine_duration : CMP !ram_HUD_bottom : BEQ .done
+    TAX : BNE .draw ; TAX refreshes flags
+    LDA #$00B4 ; draw 180 if zero
 
-  .charge
+  .draw
+    STA !ram_HUD_bottom
     LDX #$0088 : JSR Draw4
 
   .done
@@ -2142,9 +2144,11 @@ status_shinetopb:
     LDA !SAMUS_HP : STA !ram_last_hp
 
     LDA !ram_armed_shine_duration : CMP !ram_shine_counter : BEQ .clearcounter
-    STA !ram_shine_counter : BNE .charge : LDA #$00B4
+    TAX : BNE .draw ; TAX refreshes flags
+    LDA #$00B4 ; draw 180 if zero
 
-  .charge
+  .draw
+    STA !ram_HUD_bottom
     LDX #$0088 : JSR Draw4
 
     ; If we just charged the spark, time to start checking for the power bomb
