@@ -96,6 +96,7 @@ init_sram:
     CMP #$0010 : BEQ .sram_upgrade_10to11
     CMP #$0011 : BEQ .sram_upgrade_11to12
     CMP #$0012 : BEQ .sram_upgrade_12to13
+    CMP #$0013 : BEQ .sram_upgrade_13to14
     JSL init_sram_upto9
 
   .sram_upgrade_9toA
@@ -138,6 +139,14 @@ init_sram:
 
   .sram_upgrade_12to13
     TDC : STA !sram_custom_header
+
+  .sram_upgrade_13to14
+    ; "skip fanfares, but adjust timer" option has been replaced with "speedrun" timer mode
+    LDA !sram_fanfare : BIT #$0002 : BEQ .timer_adjust_done
+    LDA !sram_fanfare : AND #$0001 : STA !sram_fanfare
+    LDA !sram_frame_counter_mode : BNE .timer_adjust_done
+    LDA !FRAME_COUNTER_ADJUST_REALTIME : STA !sram_frame_counter_mode
+  .timer_adjust_done
 
     LDA #!SRAM_VERSION : STA !sram_initialized
     RTS

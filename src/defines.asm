@@ -95,7 +95,9 @@
 !ram_auto_save_state                = !WRAM_START+$82
 !ram_lag_counter                    = !WRAM_START+$84
 
-!WRAM_PERSIST_START = !ram_lag_counter+$02
+!ram_kraid_adjust_timer             = !WRAM_START+$86
+
+!WRAM_PERSIST_START = !ram_kraid_adjust_timer+$02
 ; ----------------------------------------------------------
 ; Variables below this point are PERSISTENT -- they maintain
 ; their value across savestates. Use this section for
@@ -286,7 +288,7 @@
 ; SRAM
 ; -----
 
-!SRAM_VERSION = $0013
+!SRAM_VERSION = $0014
 
 !SRAM_START = $702000
 
@@ -623,6 +625,14 @@ else
 !sram_custom_preset_names = !sram_custom_preset_names_normal
 endif
 
+if !FEATURE_PAL
+!FPS = #$0032
+!FPS_8BIT = #$32
+else
+!FPS = #$003C
+!FPS_8BIT = #$3C
+endif
+
 !DP_MenuIndices = $00 ; 0x4
 !DP_CurrentMenu = $04 ; 0x4
 !DP_Address = $08 ; 0x4
@@ -752,9 +762,8 @@ endif
 
 !FANFARE_TOGGLE = #$0001
 !FANFARE_TOGGLE_8BIT = #$01
-!FANFARE_ADJUST_REALTIME = #$0002
-!FANFARE_ADJUST_REALTIME_8BIT = #$02
-
+!FRAME_COUNTER_ADJUST_REALTIME = #$0002
+!FRAME_COUNTER_ADJUST_REALTIME_8BIT = #$02
 
 ; ----------
 ; Save/Load

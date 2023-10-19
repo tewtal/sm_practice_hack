@@ -153,8 +153,7 @@ org $A7AA7F
 else
 org $A7AA69
 endif
-    JMP kraid_intro_skip
-kraid_intro_skip_return:
+    JSR kraid_intro_skip
 
 if !FEATURE_PAL
 org $A7AE23
@@ -311,6 +310,16 @@ phan_pattern_table:
 ; $A7:D5B9 89 01 00    BIT #$0001               ; Sets Z for left pattern, !Z for right
 hook_phantoon_1st_rng:
 {
+    ; If fast Phantoon is on, adjust the timer by the cutscene time
+    ; (we can't do that while we skip the cutscene since that code
+    ;  happens during the door transition)
+    LDA !sram_cutscenes
+    AND !CUTSCENE_FAST_PHANTOON
+    BEQ .rng
+    LDY #599
+    JSL ih_adjust_realtime
+
+  .rng:
     LDA !ram_phantoon_rng_round_1
     ; If set to all-on or all-off, don't mess with RNG.
     BEQ .no_manip
@@ -857,8 +866,11 @@ hook_kraid_claw_rng:
 kraid_intro_skip:
 {
     LDA !sram_cutscenes : AND !CUTSCENE_FAST_KRAID : BEQ .noSkip
-    TDC : INC
-    JMP kraid_intro_skip_return
+    ; We can't adjust the timer here, because we're in a door transition and it will be 
+    ; considered part of the previous room. Instead, set a flag to adjust the timer at 
+    ; the end of the door transition.
+    TDC : INC : STA !ram_kraid_adjust_timer
+    RTS
 
   .noSkip
 if !FEATURE_PAL
@@ -866,7 +878,7 @@ if !FEATURE_PAL
 else
     LDA #$012C
 endif
-    JMP kraid_intro_skip_return
+    RTS
 }
 
 print pc, " kraid rng end"

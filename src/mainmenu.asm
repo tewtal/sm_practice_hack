@@ -2579,7 +2579,6 @@ ih_goto_timers:
 
 IHTimerMenu:
     dw #ih_room_counter
-    dw #ih_fanfare_timer_adjust
     dw #ih_lag_counter
     dw #ih_auto_update_timers
     dw #$FFFF
@@ -2595,10 +2594,8 @@ ih_room_counter:
     db #$28, "Frame Counters", #$FF
     db #$28, "   REALTIME", #$FF
     db #$28, "     INGAME", #$FF
+    db #$28, "   SPEEDRUN", #$FF
     db #$FF
-
-ih_fanfare_timer_adjust:
-    %cm_toggle_bit("Adjust Fanfare Timers", !sram_fanfare, !FANFARE_ADJUST_REALTIME, #0)
 
 ih_lag_counter:
     dw !ACTION_CHOICE
