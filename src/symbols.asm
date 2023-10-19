@@ -97,6 +97,8 @@ ram_fail_count = !ram_fail_count ; !WRAM_START+$80
 ram_auto_save_state = !ram_auto_save_state ; !WRAM_START+$82
 ram_lag_counter = !ram_lag_counter ; !WRAM_START+$84
 
+ram_kraid_adjust_timer = !ram_kraid_adjust_timer ; !WRAM_START+$86
+
 ; ----------------------------------------------------------
 ; Variables below this point are PERSISTENT -- they maintain
 ; their value across savestates. Use this section for

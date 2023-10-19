@@ -28,8 +28,11 @@ cutscenes_door_transition:
     PHX
     JSR ($AE76,x)
     PLX
-    BCC .slow
+    BCC .again
     RTS             ; If the door transition is done, don't run it again.
+  .again
+    LDY #$0001
+    JSL ih_adjust_realtime
   .slow
     JMP ($AE76,x)
 }
@@ -119,12 +122,14 @@ cutscenes_nintendo_splash:
 
 cutscenes_add_elevator_speed:
 {
-    CLC
     LDA !sram_fast_elevators : BEQ .slow
+    LDY #$0002 : JSL ih_adjust_realtime
+    CLC
     LDA $0F80,x : ADC #$8000 : STA $0F80,x
     LDA $0F7E,x : ADC #$0004 : STA $0F7E,x
     RTL
   .slow
+    CLC
     LDA $0F80,x : ADC #$8000 : STA $0F80,x
     LDA $0F7E,x : ADC #$0001 : STA $0F7E,x
     RTL
@@ -132,12 +137,14 @@ cutscenes_add_elevator_speed:
 
 cutscenes_sub_elevator_speed:
 {
-    SEC
     LDA !sram_fast_elevators : BEQ .slow
+    LDY #$0002 : JSL ih_adjust_realtime
+    SEC
     LDA $0F80,x : SBC #$8000 : STA $0F80,x
     LDA $0F7E,x : SBC #$0004 : STA $0F7E,x
     RTL
   .slow
+    SEC
     LDA $0F80,x : SBC #$8000 : STA $0F80,x
     LDA $0F7E,x : SBC #$0001 : STA $0F7E,x
     RTL
