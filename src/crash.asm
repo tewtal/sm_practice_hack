@@ -346,17 +346,17 @@ CrashDump:
     %ai16()
 
     ; -- Draw header --
-    LDA.l #CrashTextHeader : STA !ram_crash_text
-    LDA.l #CrashTextHeader>>16 : STA !ram_crash_text_bank
+    LDA.w #CrashTextHeader : STA !ram_crash_text
+    LDA.w #CrashTextHeader>>16 : STA !ram_crash_text_bank
     LDX #$008C : JSR crash_draw_text
 
     ; -- Draw footer message --
-    LDA.l #CrashTextFooter1 : STA !ram_crash_text
-    LDA.l #CrashTextFooter1>>16 : STA !ram_crash_text_bank
+    LDA.w #CrashTextFooter1 : STA !ram_crash_text
+    LDA.w #CrashTextFooter1>>16 : STA !ram_crash_text_bank
     LDX #$0646 : JSR crash_draw_text
 
-    LDA.l #CrashTextFooter2 : STA !ram_crash_text
-    LDA.l #CrashTextFooter2>>16 : STA !ram_crash_text_bank
+    LDA.w #CrashTextFooter2 : STA !ram_crash_text
+    LDA.w #CrashTextFooter2>>16 : STA !ram_crash_text_bank
     LDX #$0686 : JSR crash_draw_text
 
     ; -- Draw register labels --
@@ -371,27 +371,27 @@ CrashDump:
     LDA #$2800|'P' : STA !CRASHDUMP_TILEMAP_BUFFER+$134
 
     ; -- Draw stack label --
-    LDA.l #CrashTextStack1 : STA !ram_crash_text
-    LDA.l #CrashTextStack1>>16 : STA !ram_crash_text_bank
+    LDA.w #CrashTextStack1 : STA !ram_crash_text
+    LDA.w #CrashTextStack1>>16 : STA !ram_crash_text_bank
     LDX #$01CE : JSR crash_draw_text
 
     ; -- Draw stack text --
-    LDA.l #CrashTextStack2 : STA !ram_crash_text
-    LDA.l #CrashTextStack2>>16 : STA !ram_crash_text_bank
+    LDA.w #CrashTextStack2 : STA !ram_crash_text
+    LDA.w #CrashTextStack2>>16 : STA !ram_crash_text_bank
     LDX #$020C : JSR crash_draw_text
 
     ; -- Draw overflow/underflow warning text --
     LDA !ram_crash_type : AND #$C000 : BEQ .drawRegisters
     BMI .overflow
 
-    LDA.l #CrashTextStack3 : STA !ram_crash_text
-    LDA.l #CrashTextStack3>>16 : STA !ram_crash_text_bank
+    LDA.w #CrashTextStack3 : STA !ram_crash_text
+    LDA.w #CrashTextStack3>>16 : STA !ram_crash_text_bank
     LDX #$024E : JSR crash_draw_text
     BRA .drawRegisters
 
   .overflow
-    LDA.l #CrashTextStack4 : STA !ram_crash_text
-    LDA.l #CrashTextStack4>>16 : STA !ram_crash_text_bank
+    LDA.w #CrashTextStack4 : STA !ram_crash_text
+    LDA.w #CrashTextStack4>>16 : STA !ram_crash_text_bank
     LDX #$024E : JSR crash_draw_text
 
   .drawRegisters
@@ -546,7 +546,7 @@ CrashMemViewer:
 {
     ; -- Handle Dpad Inputs --
     %ai16()
-    LDA !ram_crash_input_new : TAX : BNE .new_inputs
+    LDA !ram_crash_input_new : BNE .new_inputs
     LDA !ram_crash_input : BNE .check_inputs_held
   .draw_mem_viewer
     JMP .drawMemViewer
@@ -557,13 +557,13 @@ CrashMemViewer:
     ; pass held input every other frame (slow down)
     AND #$0001 : BEQ .draw_mem_viewer
     ; treat held (left/right) inputs as new
-    LDA !ram_crash_input : AND #$0300 : TAX
+    LDA !ram_crash_input : AND #$0300
 
   .new_inputs
-    AND #$0800 : BNE .pressedUp
-    TXA : AND #$0400 : BNE .pressedDown
-    TXA : AND #$0200 : BNE .pressedLeft
-    TXA : AND #$0100 : BNE .pressedRight
+    BIT #$0800 : BNE .pressedUp
+    BIT #$0400 : BNE .pressedDown
+    BIT #$0200 : BNE .pressedLeft
+    BIT #$0100 : BNE .pressedRight
     JMP .drawMemViewer
 
   .pressedUp
@@ -640,42 +640,42 @@ CrashMemViewer:
     LDA #$2C81 : STA !CRASHDUMP_TILEMAP_BUFFER+$32,X
 
     ; draw header text
-    LDA.l #CrashTextHeader2 : STA !ram_crash_text
-    LDA.l #CrashTextHeader2>>16 : STA !ram_crash_text_bank
+    LDA.w #CrashTextHeader2 : STA !ram_crash_text
+    LDA.w #CrashTextHeader2>>16 : STA !ram_crash_text_bank
     LDX #$008C : JSR crash_draw_text
 
     ; draw footer text
-    LDA.l #CrashTextFooter1 : STA !ram_crash_text
-    LDA.l #CrashTextFooter1>>16 : STA !ram_crash_text_bank
+    LDA.w #CrashTextFooter1 : STA !ram_crash_text
+    LDA.w #CrashTextFooter1>>16 : STA !ram_crash_text_bank
     LDX #$0646 : JSR crash_draw_text
 
-    LDA.l #CrashTextFooter2 : STA !ram_crash_text
-    LDA.l #CrashTextFooter2>>16 : STA !ram_crash_text_bank
+    LDA.w #CrashTextFooter2 : STA !ram_crash_text
+    LDA.w #CrashTextFooter2>>16 : STA !ram_crash_text_bank
     LDX #$0686 : JSR crash_draw_text
 
     ; draw address text
-    LDA.l #CrashTextMemAddress : STA !ram_crash_text
-    LDA.l #CrashTextMemAddress>>16 : STA !ram_crash_text_bank
+    LDA.w #CrashTextMemAddress : STA !ram_crash_text
+    LDA.w #CrashTextMemAddress>>16 : STA !ram_crash_text_bank
     LDX #$014E : JSR crash_draw_text
 
     ; draw value text
-    LDA.l #CrashTextMemValue : STA !ram_crash_text
-    LDA.l #CrashTextMemValue>>16 : STA !ram_crash_text_bank
+    LDA.w #CrashTextMemValue : STA !ram_crash_text
+    LDA.w #CrashTextMemValue>>16 : STA !ram_crash_text_bank
     LDX #$01D2 : JSR crash_draw_text
 
     ; draw select bank
-    LDA.l #CrashTextMemSelectBank : STA !ram_crash_text
-    LDA.l #CrashTextMemSelectBank>>16 : STA !ram_crash_text_bank
+    LDA.w #CrashTextMemSelectBank : STA !ram_crash_text
+    LDA.w #CrashTextMemSelectBank>>16 : STA !ram_crash_text_bank
     LDX #$0288 : JSR crash_draw_text
 
     ; draw select high
-    LDA.l #CrashTextMemSelectHigh : STA !ram_crash_text
-    LDA.l #CrashTextMemSelectHigh>>16 : STA !ram_crash_text_bank
+    LDA.w #CrashTextMemSelectHigh : STA !ram_crash_text
+    LDA.w #CrashTextMemSelectHigh>>16 : STA !ram_crash_text_bank
     LDX #$0308 : JSR crash_draw_text
 
     ; draw select low
-    LDA.l #CrashTextMemSelectLow : STA !ram_crash_text
-    LDA.l #CrashTextMemSelectLow>>16 : STA !ram_crash_text_bank
+    LDA.w #CrashTextMemSelectLow : STA !ram_crash_text
+    LDA.w #CrashTextMemSelectLow>>16 : STA !ram_crash_text_bank
     LDX #$0388 : JSR crash_draw_text
 
     ; draw the address
@@ -803,64 +803,64 @@ CrashInfo:
     %ai16()
 
     ; draw header text
-    LDA.l #CrashTextHeader3 : STA !ram_crash_text
-    LDA.l #CrashTextHeader3>>16 : STA !ram_crash_text_bank
+    LDA.w #CrashTextHeader3 : STA !ram_crash_text
+    LDA.w #CrashTextHeader3>>16 : STA !ram_crash_text_bank
     LDX #$0086 : JSR crash_draw_text
 
     ; draw a bunch of text
-    LDA.l #CrashTextInfo1 : STA !ram_crash_text
-    LDA.l #CrashTextInfo1>>16 : STA !ram_crash_text_bank
+    LDA.w #CrashTextInfo1 : STA !ram_crash_text
+    LDA.w #CrashTextInfo1>>16 : STA !ram_crash_text_bank
     LDX #$0106 : JSR crash_draw_text
 
-    LDA.l #CrashTextInfo2 : STA !ram_crash_text
-    LDA.l #CrashTextInfo2>>16 : STA !ram_crash_text_bank
+    LDA.w #CrashTextInfo2 : STA !ram_crash_text
+    LDA.w #CrashTextInfo2>>16 : STA !ram_crash_text_bank
     LDX #$01C6 : JSR crash_draw_text
 
-    LDA.l #CrashTextInfo3 : STA !ram_crash_text
-    LDA.l #CrashTextInfo3>>16 : STA !ram_crash_text_bank
+    LDA.w #CrashTextInfo3 : STA !ram_crash_text
+    LDA.w #CrashTextInfo3>>16 : STA !ram_crash_text_bank
     LDX #$0206 : JSR crash_draw_text
 
-    LDA.l #CrashTextInfo4 : STA !ram_crash_text
-    LDA.l #CrashTextInfo4>>16 : STA !ram_crash_text_bank
+    LDA.w #CrashTextInfo4 : STA !ram_crash_text
+    LDA.w #CrashTextInfo4>>16 : STA !ram_crash_text_bank
     LDX #$024A : JSR crash_draw_text
 
-    LDA.l #CrashTextInfo5 : STA !ram_crash_text
-    LDA.l #CrashTextInfo5>>16 : STA !ram_crash_text_bank
+    LDA.w #CrashTextInfo5 : STA !ram_crash_text
+    LDA.w #CrashTextInfo5>>16 : STA !ram_crash_text_bank
     LDX #$02C6 : JSR crash_draw_text
 
-    LDA.l #CrashTextInfo6 : STA !ram_crash_text
-    LDA.l #CrashTextInfo6>>16 : STA !ram_crash_text_bank
+    LDA.w #CrashTextInfo6 : STA !ram_crash_text
+    LDA.w #CrashTextInfo6>>16 : STA !ram_crash_text_bank
     LDX #$030A : JSR crash_draw_text
 
-    LDA.l #CrashTextInfo7 : STA !ram_crash_text
-    LDA.l #CrashTextInfo7>>16 : STA !ram_crash_text_bank
+    LDA.w #CrashTextInfo7 : STA !ram_crash_text
+    LDA.w #CrashTextInfo7>>16 : STA !ram_crash_text_bank
     LDX #$034E : JSR crash_draw_text
 
-    LDA.l #CrashTextInfo8 : STA !ram_crash_text
-    LDA.l #CrashTextInfo8>>16 : STA !ram_crash_text_bank
+    LDA.w #CrashTextInfo8 : STA !ram_crash_text
+    LDA.w #CrashTextInfo8>>16 : STA !ram_crash_text_bank
     LDX #$040A : JSR crash_draw_text
 
-    LDA.l #CrashTextInfo9 : STA !ram_crash_text
-    LDA.l #CrashTextInfo9>>16 : STA !ram_crash_text_bank
+    LDA.w #CrashTextInfo9 : STA !ram_crash_text
+    LDA.w #CrashTextInfo9>>16 : STA !ram_crash_text_bank
     LDX #$048A : JSR crash_draw_text
 
 if !FEATURE_SD2SNES
-    LDA.l #CrashTextInfo10 : STA !ram_crash_text
-    LDA.l #CrashTextInfo10>>16 : STA !ram_crash_text_bank
+    LDA.w #CrashTextInfo10 : STA !ram_crash_text
+    LDA.w #CrashTextInfo10>>16 : STA !ram_crash_text_bank
     LDX #$0546 : JSR crash_draw_text
 endif
 
-    LDA.l #CrashTextInfo11 : STA !ram_crash_text
-    LDA.l #CrashTextInfo11>>16 : STA !ram_crash_text_bank
+    LDA.w #CrashTextInfo11 : STA !ram_crash_text
+    LDA.w #CrashTextInfo11>>16 : STA !ram_crash_text_bank
     LDX #$0588 : JSR crash_draw_text
 
     ; draw footer text
-    LDA.l #CrashTextFooter1 : STA !ram_crash_text
-    LDA.l #CrashTextFooter1>>16 : STA !ram_crash_text_bank
+    LDA.w #CrashTextFooter1 : STA !ram_crash_text
+    LDA.w #CrashTextFooter1>>16 : STA !ram_crash_text_bank
     LDX #$0646 : JSR crash_draw_text
 
-    LDA.l #CrashTextFooter2 : STA !ram_crash_text
-    LDA.l #CrashTextFooter2>>16 : STA !ram_crash_text_bank
+    LDA.w #CrashTextFooter2 : STA !ram_crash_text
+    LDA.w #CrashTextFooter2>>16 : STA !ram_crash_text_bank
     LDX #$0686 : JSR crash_draw_text
 
     RTS
