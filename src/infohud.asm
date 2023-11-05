@@ -414,15 +414,15 @@ ih_before_room_transition:
     BPL .drawDoorLag
     EOR #$FF : INC
   .drawDoorLag
-    PHB : PHD : PLB : PLB : PHA
+    PHB : PHD : PLB : PLB
+    TAY
     LDX #$00C2
     LDA !ram_minimap : BEQ .draw3
     LDX #$0054
   .draw3
-    PLA : JSR Draw3
+    TYA : JSR Draw3
     PLB
 
-  .done
     CLC ; overwritten code
     RTL
 }
