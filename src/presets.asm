@@ -566,6 +566,7 @@ endif
     TDC : STA !ram_transition_flag
     JSL init_heat_damage_ram
     JSL init_physics_ram
+    JSL init_controller_bindings
 
     LDA #$E737 : STA $099C ; Pointer to next frame's room transition code = $82:E737
 

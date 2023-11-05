@@ -215,5 +215,31 @@ init_menu_customization:
     RTL
 }
 
+init_controller_bindings:
+{
+    ; check if any non-dpad bindings are set
+    LDX #$000A
+    LDA.w !IH_INPUT_SHOT+$0C
+  .loopBindings
+    ORA.w !IH_INPUT_SHOT,X
+    DEX #2 : BPL .loopBindings
+    AND #$FFF0 : BNE .done
+
+    ; load default dpad bindings
+    LDA #$0800 : STA.w !INPUT_BIND_UP
+    LSR : STA.w !INPUT_BIND_DOWN
+    LSR : STA.w !INPUT_BIND_LEFT
+    LSR : STA.w !INPUT_BIND_RIGHT
+
+    ; load default non-dpad bindings
+    LDX #$000C
+  .loopTable
+    LDA.l ControllerLayoutTable,X : STA.w !IH_INPUT_SHOT,X
+    DEX #2 : BPL .loopTable
+
+  .done
+    RTL
+}
+
 print pc, " init end"
 warnpc $81FF00 ; Special thanks

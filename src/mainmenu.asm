@@ -1792,6 +1792,11 @@ action_teleport:
     STZ $0E18 ; Set elevator to inactive
     STZ $1C1F ; Clear message box index
 
+    JSL init_controller_bindings
+    LDA !SAMUS_HP_MAX : BNE .branch
+    LDA #$001F : STA !SAMUS_HP
+
+  .branch
     JSL reset_all_counters
     JSL stop_all_sounds
 
@@ -3254,23 +3259,23 @@ controls_common_d5:
 action_set_common_controls:
 {
     TYX
-    LDA.l ControllerLayoutTable,X : STA !IH_INPUT_SHOOT
-    LDA.l ControllerLayoutTable+2,X : STA !IH_INPUT_JUMP
-    LDA.l ControllerLayoutTable+4,X : STA !IH_INPUT_RUN
-    LDA.l ControllerLayoutTable+6,X : STA !IH_INPUT_ITEM_CANCEL
-    LDA.l ControllerLayoutTable+8,X : STA !IH_INPUT_ITEM_SELECT
-    LDA.l ControllerLayoutTable+10,X : STA !IH_INPUT_ANGLE_UP
-    LDA.l ControllerLayoutTable+12,X : STA !IH_INPUT_ANGLE_DOWN
+    LDA.l ControllerLayoutTable,X : STA.w !IH_INPUT_SHOOT
+    LDA.l ControllerLayoutTable+2,X : STA.w !IH_INPUT_JUMP
+    LDA.l ControllerLayoutTable+4,X : STA.w !IH_INPUT_RUN
+    LDA.l ControllerLayoutTable+6,X : STA.w !IH_INPUT_ITEM_CANCEL
+    LDA.l ControllerLayoutTable+8,X : STA.w !IH_INPUT_ITEM_SELECT
+    LDA.l ControllerLayoutTable+10,X : STA.w !IH_INPUT_ANGLE_DOWN
+    LDA.l ControllerLayoutTable+12,X : STA.w !IH_INPUT_ANGLE_UP
     %sfxconfirm()
     JML cm_previous_menu
 
 ControllerLayoutTable:
-    ;  shot     jump     dash     cancel        select        up       down
-    dw !CTRL_X, !CTRL_A, !CTRL_B, !CTRL_Y,      !CTRL_SELECT, !CTRL_R, !CTRL_L ; Default (D1)
-    dw !CTRL_X, !CTRL_A, !CTRL_B, !CTRL_SELECT, !CTRL_Y,      !CTRL_R, !CTRL_L ; Select+Cancel Swap (D2)
-    dw !CTRL_Y, !CTRL_A, !CTRL_B, !CTRL_SELECT, !CTRL_X,      !CTRL_R, !CTRL_L ; D2 + Shot+Select Swap (D3)
-    dw !CTRL_Y, !CTRL_B, !CTRL_A, !CTRL_SELECT, !CTRL_X,      !CTRL_R, !CTRL_L ; MMX Style (D4)
-    dw !CTRL_X, !CTRL_B, !CTRL_Y, !CTRL_SELECT, !CTRL_A,      !CTRL_R, !CTRL_L ; SMW Style (D5)
+    ;  shot     jump     dash     cancel        select        down     up
+    dw !CTRL_X, !CTRL_A, !CTRL_B, !CTRL_Y,      !CTRL_SELECT, !CTRL_L, !CTRL_R ; Default (D1)
+    dw !CTRL_X, !CTRL_A, !CTRL_B, !CTRL_SELECT, !CTRL_Y,      !CTRL_L, !CTRL_R ; Select+Cancel Swap (D2)
+    dw !CTRL_Y, !CTRL_A, !CTRL_B, !CTRL_SELECT, !CTRL_X,      !CTRL_L, !CTRL_R ; D2 + Shot+Select Swap (D3)
+    dw !CTRL_Y, !CTRL_B, !CTRL_A, !CTRL_SELECT, !CTRL_X,      !CTRL_L, !CTRL_R ; MMX Style (D4)
+    dw !CTRL_X, !CTRL_B, !CTRL_Y, !CTRL_SELECT, !CTRL_A,      !CTRL_L, !CTRL_R ; SMW Style (D5)
 }
 
 print pc, " mainmenu GameMenu end"
