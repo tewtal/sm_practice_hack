@@ -2999,7 +2999,7 @@ controls_common_layouts:
     %cm_submenu("Common Controller Layouts", #ControllerCommonMenu)
 
 controls_shot:
-    %cm_ctrl_input("        SHOT", !IH_INPUT_SHOOT, action_submenu, #AssignControlsMenu)
+    %cm_ctrl_input("        SHOT", !IH_INPUT_SHOT, action_submenu, #AssignControlsMenu)
 
 controls_jump:
     %cm_ctrl_input("        JUMP", !IH_INPUT_JUMP, action_submenu, #AssignControlsMenu)
@@ -3041,7 +3041,7 @@ controls_save_to_file:
     LDX #$0CD8
 
   .save
-    LDA.w !IH_INPUT_SHOOT : STA $700000,X : INX #2
+    LDA.w !IH_INPUT_SHOT : STA $700000,X : INX #2
     LDA.w !IH_INPUT_JUMP : STA $700000,X : INX #2
     LDA.w !IH_INPUT_RUN : STA $700000,X : INX #2
     LDA.w !IH_INPUT_ITEM_CANCEL : STA $700000,X : INX #2
@@ -3274,7 +3274,7 @@ controls_common_d5:
 action_set_common_controls:
 {
     TYX
-    LDA.l ControllerLayoutTable,X : STA.w !IH_INPUT_SHOOT
+    LDA.l ControllerLayoutTable,X : STA.w !IH_INPUT_SHOT
     LDA.l ControllerLayoutTable+2,X : STA.w !IH_INPUT_JUMP
     LDA.l ControllerLayoutTable+4,X : STA.w !IH_INPUT_RUN
     LDA.l ControllerLayoutTable+6,X : STA.w !IH_INPUT_ITEM_CANCEL
