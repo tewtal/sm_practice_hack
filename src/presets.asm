@@ -49,11 +49,12 @@ endif
     STA $0725    ; Screen fade counter = 1
 
     JSL $80834B  ; Enable NMI with $84 options
-    JSL $868000  ; Enable enemy projectiles
-    JSL $8483AD  ; Enable PLMs
-    JSL $8DC4C2  ; Enable palette FX objects
-    JSL $888288  ; Enable HDMA objects
-    JSL $878000  ; Enable animated tile objects
+    LDA #$8000
+    TSB $198D    ; Enable enemy projectiles
+    TSB $1C23    ; Enable PLMs
+    TSB $1E79    ; Enable palette FX objects
+    TSB $18B0    ; Enable HDMA objects
+    TSB $1EF1    ; Enable animated tile objects
     JSL $908E0F  ; Set liquid physics type
 
     LDA #$0006 : STA $0DA0
@@ -483,7 +484,6 @@ endif
   .layer_2_loaded
     JSR $A37B    ; Calculate BG positions
 
-    ; Fix rooms that need to be handled before door scroll
     ; Fix BG2 Y offsets for rooms with scrolling sky
     ; Also fix rooms that need to be handled before door scroll
     LDA !ROOM_ID : CMP #$D646 : BEQ .pantsRoom
