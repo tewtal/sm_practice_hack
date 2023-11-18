@@ -210,6 +210,11 @@ ih_get_item_code:
 
     ; check if segment timer should be reset
     LDA !ram_reset_segment_later : BPL .update_HUD
+    LDA !sram_frame_counter_mode : BEQ .reset_RTA
+    STZ !IGT_FRAMES : STZ !IGT_SECONDS
+    STZ !IGT_MINUTES : STZ !IGT_HOURS
+
+  .reset_RTA
     LDA #$0000 : STA !ram_reset_segment_later : STA !ram_lag_counter
     STA !ram_seg_rt_frames : STA !ram_seg_rt_seconds : STA !ram_seg_rt_minutes
 
