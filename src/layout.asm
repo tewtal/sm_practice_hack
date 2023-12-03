@@ -2109,8 +2109,8 @@ layout_asm_morphball:
 
   .add_morph_ball
     ; Add back morph ball item
-    JSL $8483D7
-    dw $2945, $EF23
+    PHX : LDX #$86DE
+    JSL $84846A : PLX
 }
 
 layout_asm_morphball_done:
