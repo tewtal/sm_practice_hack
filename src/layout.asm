@@ -285,7 +285,7 @@ hijack_after_load_level_data:
   .pantsRoom
     ; Pants Room needs to be handled before the door scroll
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_DASH_RECALL : BEQ .done
-    JSL layout_asm_pants_room_external
+    JSL layout_asm_pants_external
     JMP $E38E
 }
 
@@ -334,12 +334,6 @@ org $8390E8
 hook_layout_asm_betapbs_door0:
     dw #layout_asm_caterpillar_no_scrolls
 
-; East Tunnel bottom-right door
-org $839238
-hook_layout_asm_warehouse_door0:
-    ; Use same asm as bottom-left door
-    dw $E345
-
 ; Caterpillar near-right door
 org $839274
 hook_layout_asm_redtowersave_door0:
@@ -364,11 +358,6 @@ hook_layout_asm_mteverest_door5:
 org $83A4EA
 hook_layout_asm_fakeplasmaspark_door1:
     dw #layout_asm_crabshaft_no_scrolls
-
-; East Tunnel top-right door
-org $83A51A
-hook_layout_asm_crabhole_door2:
-    dw #layout_asm_easttunnel_no_scrolls
 
 ; West Sand Hall left door
 org $83A53E
@@ -555,7 +544,7 @@ door_custom_922E_warehouse_entrance_door0:
     dw $CF80   ; East Tunnel
     db $40, $05, $0E, $16, $00, $01
     dw $8000, #door_custom_asm
-    dw $00CE, $0188, $E345
+    dw $00CE, $0188, $BDD1
 
 door_custom_923A_warehouse_entrance_door1:
     dw $A471   ; Warehouse Zeela
@@ -663,7 +652,7 @@ door_custom_A510_crab_hole_door2:
     dw $CF80   ; East Tunnel
     db $00, $05, $3E, $06, $03, $00
     dw $8000, #door_custom_asm
-    dw $03C6, $0088, #layout_asm_easttunnel_no_scrolls
+    dw $03C6, $0088, $0000
 
 door_custom_A708_aqueduct_door0:
     dw $D1A3   ; Crab Shaft
@@ -1015,12 +1004,245 @@ layout_swap_left_right:
     RTL
 }
 
+; Migrate longer ASM methods or methods that require external bank access to bank 83
+layout_asm_plasma_external:
+{
+    ; Add platform and surrounding decoration
+    LDA #$00FF : STA $7F04AE : STA $7F04B4
+    STA $7F04EC : STA $7F04EE : STA $7F04F4
+    STA $7F051E : STA $7F0520 : STA $7F0522
+    STA $7F0530 : STA $7F0532 : STA $7F0534
+    STA $7F055E : STA $7F0560 : STA $7F0562
+    STA $7F0570 : STA $7F0572 : STA $7F0574
+    STA $7F05B0 : STA $7F05B2 : STA $7F05B4
+    STA $7F05F0 : STA $7F05F2 : STA $7F05F4
+    STA $7F062C : STA $7F062E : STA $7F0630 : STA $7F0632 : STA $7F0634
+    STA $7F066C : STA $7F066E : STA $7F0670 : STA $7F0672 : STA $7F0674
+    STA $7F06AE : STA $7F06B0 : STA $7F06B2 : STA $7F06B4
+    STA $7F06EE : STA $7F06F0 : STA $7F06F2 : STA $7F06F4
+    STA $7F072E : STA $7F0730 : STA $7F0732 : STA $7F0734
+    STA $7F076E : STA $7F0770 : STA $7F0772 : STA $7F0774
+    STA $7F07AE : STA $7F07B0 : STA $7F07B2 : STA $7F07B4
+    LDA #$0202 : STA $7F0524
+    LDA #$0382 : STA $7F0430 : STA $7F0432
+    INC : STA $7F03F0 : STA $7F03F2
+    LDA #$0386 : STA $7F0434
+    INC : STA $7F03F4
+    INC : STA $7F046E : STA $7F04F0
+    INC : STA $7F03EE : STA $7F0470
+    INC : STA $7F0472
+    INC : STA $7F0474 : STA $7F04DE : STA $7F04F2
+    INC : STA $7F042E : STA $7F04B0
+    INC : STA $7F03B4 : STA $7F04B2
+    INC : INC : STA $7F04AC : STA $7F059C
+    LDA #$0398 : STA $7F042C : STA $7F051C
+    INC : STA $7F046C : STA $7F055C
+    LDA #$039C : STA $7F03EC : STA $7F04DC
+    LDA #$0602 : STA $7F052E
+    LDA #$1212 : STA $7F05A4
+    INC : INC : STA $7F0564
+    LDA #$1612 : STA $7F05AE
+    INC : INC : STA $7F056E
+    LDA #$8200 : STA $7F0528 : STA $7F052A
+    STA $7F07EE : STA $7F07F0 : STA $7F07F2 : STA $7F07F4
+    INC : STA $7F0526
+    LDA #$8210 : STA $7F0568 : STA $7F056A
+    STA $7F05A6 : STA $7F05A8 : STA $7F05AA : STA $7F05AC
+    LDA #$8215 : STA $7F0566
+    LDA #$8601 : STA $7F052C
+    LDA #$8615 : STA $7F056C
+    LDA #$8A07 : STA $7F05E6 : STA $7F05E8
+    STA $7F05EA : STA $7F05EC
+    LDA #$8A0B : STA $7F05E4
+    LDA #$8E0B : STA $7F05EE
+
+    ; Add slope BTS to new platform
+    %a8()
+    LDA #$1B : STA $7F66B3 : INC : STA $7F66D3
+    LDA #$5B : STA $7F66B8 : INC : STA $7F66D8
+    RTL
+}
+
+layout_asm_pants_external:
+{
+    ; Open grapple blocks to shaktool
+    LDA #$00FF : STA $7F0CCC : STA $7F0CCE : STA $7F0CD0
+    STA $7F0CD2 : STA $7F0CD4 : STA $7F0CD6
+    STA $7F0D0E : STA $7F0D14 : STA $7F0D16
+
+    ; Replace BTS
+    TDC : STA $7F6A69
+    RTL
+}
+
+layout_asm_shaktool_external:
+{
+    ; Clear shaktool sand
+    LDA #$00FF : STA $7F02A2 : STA $7F02A4 : STA $7F02A6 : STA $7F02A8
+    STA $7F02AA : STA $7F02AC : STA $7F02AE : STA $7F02B0
+    STA $7F02B2 : STA $7F02B4 : STA $7F02B6 : STA $7F02B8
+    STA $7F02BA : STA $7F02BC : STA $7F02BE : STA $7F02C0
+    STA $7F02C2 : STA $7F02C4 : STA $7F02C6 : STA $7F02C8
+    STA $7F02CA : STA $7F02CC : STA $7F02CE : STA $7F02D0
+    STA $7F02D2 : STA $7F02D4 : STA $7F02D6 : STA $7F02D8
+    STA $7F02DA : STA $7F02DC : STA $7F02DE : STA $7F02E0
+    STA $7F02E2 : STA $7F02E4 : STA $7F02E6 : STA $7F02E8
+    STA $7F0322 : STA $7F0324 : STA $7F0326 : STA $7F0328
+    STA $7F032A : STA $7F032C : STA $7F032E : STA $7F0330
+    STA $7F0332 : STA $7F0334 : STA $7F0336 : STA $7F0338
+    STA $7F033A : STA $7F033C : STA $7F033E : STA $7F0340
+    STA $7F0342 : STA $7F0344 : STA $7F0346 : STA $7F0348
+    STA $7F034A : STA $7F034C : STA $7F034E : STA $7F0350
+    STA $7F0352 : STA $7F0354 : STA $7F0356 : STA $7F0358
+    STA $7F035A : STA $7F035C : STA $7F035E : STA $7F0360
+    STA $7F0362 : STA $7F0364 : STA $7F0366 : STA $7F0368
+    STA $7F03A2 : STA $7F03A4 : STA $7F03A6 : STA $7F03A8
+    STA $7F03AA : STA $7F03AC : STA $7F03AE : STA $7F03B0
+    STA $7F03B2 : STA $7F03B4 : STA $7F03B6 : STA $7F03B8
+    STA $7F03BA : STA $7F03BC : STA $7F03BE : STA $7F03C0
+    STA $7F03C2 : STA $7F03C4 : STA $7F03C6 : STA $7F03C8
+    STA $7F03CA : STA $7F03CC : STA $7F03CE : STA $7F03D0
+    STA $7F03D2 : STA $7F03D4 : STA $7F03D6 : STA $7F03D8
+    STA $7F03DA : STA $7F03DC : STA $7F03DE : STA $7F03E0
+    STA $7F03E2 : STA $7F03E4 : STA $7F03E6 : STA $7F03E8
+    STA $7F0422 : STA $7F0424 : STA $7F0426 : STA $7F0428
+    STA $7F042A : STA $7F042C : STA $7F042E : STA $7F0430
+    STA $7F0432 : STA $7F0434 : STA $7F0436 : STA $7F0438
+    STA $7F043A : STA $7F043C : STA $7F043E : STA $7F0440
+    STA $7F0442 : STA $7F0444 : STA $7F0446 : STA $7F0448
+    STA $7F044A : STA $7F044C : STA $7F044E : STA $7F0450
+    STA $7F0452 : STA $7F0454 : STA $7F0456 : STA $7F0458
+    STA $7F045A : STA $7F045C : STA $7F045E : STA $7F0460
+    STA $7F0462 : STA $7F0464 : STA $7F0466 : STA $7F0468
+    STA $7F04A2 : STA $7F04A4 : STA $7F04A6 : STA $7F04A8
+    STA $7F04AA : STA $7F04AC : STA $7F04AE : STA $7F04B0
+    STA $7F04B2 : STA $7F04B4 : STA $7F04B6 : STA $7F04B8
+    STA $7F04BA : STA $7F04BC : STA $7F04BE : STA $7F04C0
+    STA $7F04C2 : STA $7F04C4 : STA $7F04C6 : STA $7F04C8
+    STA $7F04CA : STA $7F04CC : STA $7F04CE : STA $7F04D0
+    STA $7F04D2 : STA $7F04D4 : STA $7F04D6 : STA $7F04D8
+    STA $7F04DA : STA $7F04DC : STA $7F04DE : STA $7F04E0
+    STA $7F04E2 : STA $7F04E4 : STA $7F04E6 : STA $7F04E8
+    STA $7F0522 : STA $7F0524 : STA $7F0526 : STA $7F0528
+    STA $7F052A : STA $7F052C : STA $7F052E : STA $7F0530
+    STA $7F0532 : STA $7F0534 : STA $7F0536 : STA $7F0538
+    STA $7F053A : STA $7F053C : STA $7F053E : STA $7F0540
+    STA $7F0542 : STA $7F0544 : STA $7F0546 : STA $7F0548
+    STA $7F054A : STA $7F054C : STA $7F054E : STA $7F0550
+    STA $7F0552 : STA $7F0554 : STA $7F0556 : STA $7F0558
+    STA $7F055A : STA $7F055C : STA $7F055E : STA $7F0560
+    STA $7F0562 : STA $7F0564 : STA $7F0566 : STA $7F0568
+    RTL
+}
+
+layout_asm_aqueductfarmsandpit_external:
+{
+    ; Place door BTS
+    %a8()
+    LDA #$40 : STA $7F65C0 : LDA #$FF : STA $7F6600
+    DEC : STA $7F6640 : DEC : STA $7F6680 : LDA #$01
+    STA $7F65C1 : STA $7F6601 : STA $7F6641 : STA $7F6681
+
+    ; Move right wall one to the left
+    %a16()
+    LDA #$8A09 : STA $7F01FE : LDA #$820E : STA $7F067E
+    LDA #$820A : STA $7F027E : STA $7F05FE
+    LDA #$8A0B : STA $7F02FE : LDA #$8A07 : STA $7F0300
+    LDA #$820B : STA $7F057E : LDA #$8207 : STA $7F0580
+
+    ; Fill in area behind the wall
+    LDA #$8210 : STA $7F0200 : STA $7F0280 : STA $7F0600 : STA $7F0680
+
+    ; Place the door
+    LDA #$C00C : STA $7F037E : LDA #$9040 : STA $7F0380
+    LDA #$D02C : STA $7F03FE : LDA #$9060 : STA $7F0400
+    LDA #$D82C : STA $7F047E : LDA #$9860 : STA $7F0480
+    LDA #$D80C : STA $7F04FE : LDA #$9840 : STA $7F0500
+    RTL
+}
+
+layout_asm_bigpink_external:
+{
+    ; Clear out path to save room
+    LDA #$00FF : STA $7F03F2 : STA $7F03F8 : STA $7F03FA
+    STA $7F03FC : STA $7F03FE : STA $7F0400 : STA $7F0402
+    STA $7F0404 : STA $7F0406 : STA $7F0408 : STA $7F0492
+    STA $7F0496 : STA $7F0498 : STA $7F049A : STA $7F049C
+    STA $7F049E : STA $7F04A0 : STA $7F04A2 : STA $7F04A4
+    STA $7F04A6 : STA $7F04A8 : STA $7F0542
+
+    ; A small part of the path is decorated
+    LDA #$0B24 : STA $7F03F4
+    LDA #$0B02 : STA $7F03F6
+    LDA #$0B05 : STA $7F0494
+
+    ; Decorate wall above path
+    LDA #$8B08 : STA $7F0354 : STA $7F0356 : STA $7F0358
+    STA $7F035A : STA $7F035C : STA $7F035E : STA $7F0360
+    STA $7F0362 : STA $7F0364 : STA $7F0366
+
+    ; Fade in wall above path
+    LDA #$8B28 : STA $7F02B4 : STA $7F02B6 : STA $7F02B8
+    STA $7F02BA : STA $7F02BC : STA $7F02BE : STA $7F02C0
+    STA $7F02C2 : STA $7F02C4
+
+    ; Decorate the corner
+    LDA #$8B17 : STA $7F0368
+    LDA #$8B29 : STA $7F02C6
+
+    ; Normal BTS for path replacing scrolls
+    %a8()
+    LDA #$00 : STA $7F66A1 : STA $7F66A2 : STA $7F66A3
+
+    ; Allow screen scrolling along the path
+    LDA #$02 : STA $7ECD21
+    RTL
+}
+
+layout_asm_waterway_external:
+{
+    ; Convert speed blocks to bomb blocks
+    LDA #$F306 : STA $7F0802 : STA $7F08E2 : STA $7F09C2
+    LDA #$F34E : STA $7F0818 : STA $7F0836 : STA $7F083A
+    STA $7F083C : STA $7F08F6 : STA $7F08FA : STA $7F0916
+    STA $7F0918 : STA $7F091A : STA $7F09D6 : STA $7F09D8
+    STA $7F09F6 : STA $7F09F8 : STA $7F09FC : STA $7F09FE : STA $7F0A00
+    LDA #$F350 : STA $7F0804 : STA $7F081C : STA $7F0844
+    STA $7F08E4 : STA $7F08FC : STA $7F0924
+    STA $7F09C4 : STA $7F09DC : STA $7F0A04
+    LDA #$F74E : STA $7F081A : STA $7F0838 : STA $7F0914
+    STA $7F091C : STA $7F091E : STA $7F0922 : STA $7F09DA
+    LDA #$F750 : STA $7F0814 : STA $7F0832 : STA $7F08F4
+    STA $7F0912 : STA $7F09D4 : STA $7F09F2
+    LDA #$FB4E : STA $7F0816 : STA $7F0840 : STA $7F0842
+    STA $7F0920 : STA $7F09F4 : STA $7F09FA : STA $7F0A02
+    LDA #$FF4E : STA $7F0834 : STA $7F083E : STA $7F08F8
+
+    ; Use spazer block BTS
+    LDA #$0909 : STA $7F6802 : STA $7F680B : STA $7F680C : STA $7F680E
+    STA $7F681A : STA $7F681C : STA $7F681E : STA $7F6820 : STA $7F6822
+    STA $7F6872 : STA $7F687B : STA $7F687C : STA $7F687E
+    STA $7F688A : STA $7F688C : STA $7F688E : STA $7F6890 : STA $7F6892
+    STA $7F68E2 : STA $7F68EB : STA $7F68EC : STA $7F68EE
+    STA $7F68FA : STA $7F68FC : STA $7F68FE : STA $7F6900 : STA $7F6902
+    RTL
+}
+
 print pc, " layout bank83 end"
 
 
 ; Allow debug save stations to be used
 org $848D0C
     AND #$000F
+
+; Relocate grey door preinstruction table and add new type that has no prerequisite to begin flashing
+org $848C22
+layout_grey_door_preinstruction_table:
+    dw $BDD4, $BDE3, $BDF2, $BE01, $BE1C, $BE1F, $BE30, $BDB2
+warnpc $848C3D
+
+org $84BE43
+    LDA layout_grey_door_preinstruction_table,Y
 
 ; Ignore bombs for bomb torizo with VARIA tweaks
 org $848258
@@ -1206,6 +1428,11 @@ layout_landing_site_setup_asm:
   .scrolling_sky
 warnpc $8F91C9
 
+; West Ocean setup asm
+org $8F9423
+hook_layout_asm_westocean:
+    dw #layout_asm_westocean
+
 ; Crateria Kihunters setup asm
 org $8F94B1
 hook_layout_asm_crateria_kihunters:
@@ -1216,10 +1443,15 @@ org $8F9522
 hook_layout_asm_eastocean:
     dw #layout_asm_eastocean
 
+; Crab Maze setup asm
+org $8F95A2
+hook_layout_asm_crabmaze:
+    dw #layout_asm_crabmaze
+
 ; Forgotten Highway Elbow setup asm
 org $8F95CD
-hook_layout_asm_forgotten_highway_elbow:
-    dw #layout_asm_forgotten_highway_elbow
+hook_layout_asm_forgottenhighwayelbow:
+    dw #layout_asm_forgottenhighwayelbow
 
 ; Green Hill Zone setup asm
 org $8F9E77
@@ -1246,15 +1478,25 @@ org $8F97C0
 hook_layout_asm_pitroom_elevator_state_check:
     dw #layout_asm_morph_missiles_state_check
 
+; Green Brinstar Elevator setup asm
+org $8F995D
+hook_layout_asm_greenbrinelevator:
+    dw #layout_asm_greenbrinelevator
+
+; Lower Mushrooms setup asm
+org $8F998E
+hook_layout_asm_lowermushrooms:
+    dw #layout_asm_lowermushrooms
+
 ; Green Pirates Shaft setup asm
 org $8F99E2
 hook_layout_asm_green_pirates_shaft:
     dw #layout_asm_green_pirates_shaft
 
-; Brinstar Pre-Map Room setup asm
+; Brinstar Pre-Map setup asm
 org $8F9BC2
-hook_layout_asm_brinstarpremaproom:
-    dw #layout_asm_brinstarpremaproom
+hook_layout_asm_brinstarpremap:
+    dw #layout_asm_brinstarpremap
 
 ; Early Supers setup asm
 org $8F9BED
@@ -1276,10 +1518,10 @@ org $8F9E36
 hook_layout_asm_missionimpossible:
     dw #layout_asm_missionimpossible
 
-; Morph Ball Room setup asm
+; Morph Ball setup asm
 org $8F9EE3
-hook_layout_asm_morphballroom:
-    dw #layout_asm_morphballroom
+hook_layout_asm_morphball:
+    dw #layout_asm_morphball
 
 ; Noob bridge setup asm
 org $8F9FDF
@@ -1301,15 +1543,30 @@ org $8FA42D
 hook_layout_asm_belowspazer:
     dw #layout_asm_belowspazer
 
+; Warehouse Zeela setup asm
+org $8FA496
+hook_layout_asm_warehousezeela:
+    dw #layout_asm_warehousezeela
+
 ; Warehouse Kihunters setup asm
 org $8FA4FF
 hook_layout_asm_warehousekihunters:
     dw #layout_asm_warehousekihunters
 
+; Statues Hallway setup asm
+org $8FA612
+hook_layout_asm_statues_hallway:
+    dw #layout_asm_statues_hallway
+
 ; Statues state check asm
 org $8FA675
 hook_layout_asm_statues_state_check:
     dw #layout_asm_statues_state_check
+
+; Warehouse Entrance setup asm
+org $8FA6C6
+hook_layout_asm_warehouseentrance:
+    dw #layout_asm_warehouseentrance
 
 ; Cathedral Entrance setup asm
 org $8FA7D8
@@ -1341,10 +1598,19 @@ org $8FAE99
 hook_layout_asm_kronicboost:
     dw #layout_asm_kronicboost
 
+; Lava Dive setup asm
+org $8FAF39
+hook_layout_asm_lavadive:
+    dw #layout_asm_lavadive
+
 ; Acid Statue setup asm
 org $8FB20A
 hook_layout_asm_acidstatue:
     dw #layout_asm_acidstatue
+
+org $8FB67B
+hook_layout_asm_threemusketeers:
+    dw #layout_asm_threemusketeers
 
 ; Caterpillar elevator and middle-left door asm
 org $8FBA26
@@ -1359,6 +1625,7 @@ org $8FBE18
 
 ; Escape screen shake and explosion main asm
 org $8FC124
+hook_layout_asm_escape_explosion:
     ; Start with copy of $8FC131 routine (replacing JSR with inlined version)
     LDA $0A78 : BNE .end_explosion
     LDA $05B6 : AND #$0001 : BNE .end_explosion
@@ -1381,38 +1648,38 @@ org $8FC124
     JMP layout_asm_escape_screen_shake
 warnpc $8FC183
 
-; Tourian escape room 1 setup asm
+; Tourian escape 1 setup asm
 org $8FC926
-hook_layout_asm_tourian_escape_room_1:
+hook_layout_asm_tourian_escape_1:
     LDA !sram_suppress_flashing : BIT !SUPPRESS_EARTHQUAKE : BNE .rts
-    JMP layout_asm_vanilla_tourian_escape_room_1
+    JMP layout_asm_vanilla_tourian_escape_1
   .rts
     RTS
 warnpc $8FC933
 
-; Tourian escape room 2 setup asm
+; Tourian escape 2 setup asm
 org $8FC933
-hook_layout_asm_tourian_escape_room_2:
+hook_layout_asm_tourian_escape_2:
     LDA !sram_suppress_flashing : BIT !SUPPRESS_EARTHQUAKE : BNE .rts
-    JMP layout_asm_vanilla_tourian_escape_room_2
+    JMP layout_asm_vanilla_tourian_escape_2
   .rts
     RTS
 warnpc $8FC946
 
-; Tourian escape room 3 setup asm
+; Tourian escape 3 setup asm
 org $8FC946
-hook_layout_asm_tourian_escape_room_3:
+hook_layout_asm_tourian_escape_3:
     LDA !sram_suppress_flashing : BIT !SUPPRESS_EARTHQUAKE : BNE .rts
-    JMP layout_asm_vanilla_tourian_escape_room_3
+    JMP layout_asm_vanilla_tourian_escape_3
   .rts
     RTS
 warnpc $8FC953
 
-; Tourian escape room 4 setup asm
+; Tourian escape 4 setup asm
 org $8FC95B
-hook_layout_asm_tourian_escape_room_4:
+hook_layout_asm_tourian_escape_4:
     LDA !sram_suppress_flashing : BIT !SUPPRESS_EARTHQUAKE : BNE .rts
-    JMP layout_asm_vanilla_tourian_escape_room_4
+    JMP layout_asm_vanilla_tourian_escape_4
   .rts
     RTS
 warnpc $8FC96E
@@ -1440,7 +1707,21 @@ hook_layout_asm_ws_etank_state_check:
 ; Wrecked Ship Save setup asm
 org $8FCEB4
 hook_layout_asm_wreckedshipsave:
-    dw layout_asm_wreckedshipsave
+    dw #layout_asm_wreckedshipsave
+
+; Glass Tunnel setup asm
+org $8FCF25
+hook_layout_asm_glasstunnel_unbroken:
+    dw #layout_asm_glasstunnel
+
+org $8FCF3F
+hook_layout_asm_glasstunnel_broken:
+    dw #layout_asm_glasstunnel
+
+; East Tunnel setup asm
+org $8FCFA5
+hook_layout_asm_easttunnel:
+    dw #layout_asm_easttunnel
 
 ; Main Street setup asm
 org $8FCFEE
@@ -1451,6 +1732,16 @@ hook_layout_asm_mainstreet:
 org $8FD0AF
 hook_layout_asm_crabtunnel:
     dw #layout_asm_crabtunnel
+
+; Red Fish setup asm
+org $8FD129
+hook_layout_asm_redfish:
+    dw #layout_asm_redfish
+
+; Crab Hole setup asm
+org $8FD241
+hook_layout_asm_crabhole:
+    dw #layout_asm_crabhole
 
 ; Plasma state check asm
 org $8FD2B5
@@ -1480,44 +1771,37 @@ hook_layout_asm_botwoon_hallway:
 ; Aqueduct Farm Sand Pit header
 org $8FD706
 hook_layout_door_list_aqueductfarmsandpit:
-    dw layout_asm_aqueductfarmsandpit_door_list
+    dw #layout_asm_aqueductfarmsandpit_door_list
 
-; Shaktool room setup asm
+; Shaktool setup asm
 org $8FD8EF
-hook_layout_asm_shaktool_room:
-    dw #layout_asm_shaktool_room
+hook_layout_asm_shaktool:
+    dw #layout_asm_shaktool
 
 ; Halfie Climb setup asm
 org $8FD938
 hook_layout_asm_halfie_climb:
     dw #layout_asm_halfie_climb
 
-; Tourian escape room 2 main asm
+; Tourian escape 2 main asm
 org $8FDE99
-hook_layout_main_asm_tourian_escape_room_2:
-    dw #layout_asm_tourian_escape_room_2
+hook_layout_main_asm_tourian_escape_2:
+    dw #layout_asm_tourian_escape_2
 
-; Tourian escape room 4 main asm
+; Tourian escape 4 main asm
 org $8FDEFD
-hook_layout_main_asm_tourian_escape_room_4:
-    dw #layout_asm_tourian_escape_room_4
+hook_layout_main_asm_tourian_escape_4:
+    dw #layout_asm_tourian_escape_4
 
 ; Ceres Ridley modified state check to support presets
 org $8FE0C0
 hook_layout_asm_ceres_ridley_state_check:
-    dw layout_asm_ceres_ridley_state_check
+    dw #layout_asm_ceres_ridley_state_check
 
-; Ceres Ridley room setup asm when timer is not running
+; Ceres Ridley setup asm when timer is not running
 org $8FE0DF
 hook_layout_asm_ceres_ridley_no_timer:
-    dw layout_asm_ceres_ridley_no_timer
-
-; East Tunnel bottom-left and bottom-right door asm
-org $8FE34E
-    ; Optimize existing logic by one byte
-    INC : STA $7ECD24
-    ; Overwrite extra byte : PLP : RTS with jump
-    JMP layout_asm_easttunnel_after_scrolls
+    dw #layout_asm_ceres_ridley_no_timer
 
 ; Caterpillar far-right door asm
 org $8FE370
@@ -1611,14 +1895,14 @@ layout_asm_escape_screen_shake:
     RTS
 }
 
-layout_asm_vanilla_tourian_escape_room_1:
+layout_asm_vanilla_tourian_escape_1:
 {
     LDA #$0012 : STA $183E
     LDA #$FFFF : STA $1840
     RTS
 }
 
-layout_asm_vanilla_tourian_escape_room_2:
+layout_asm_vanilla_tourian_escape_2:
 {
     LDA #$0012 : STA $183E
     STA $07E3 : STZ $07E1
@@ -1626,14 +1910,14 @@ layout_asm_vanilla_tourian_escape_room_2:
     RTS
 }
 
-layout_asm_vanilla_tourian_escape_room_3:
+layout_asm_vanilla_tourian_escape_3:
 {
     LDA #$0015 : STA $183E
     LDA #$FFFF : STA $1840
     RTS
 }
 
-layout_asm_vanilla_tourian_escape_room_4:
+layout_asm_vanilla_tourian_escape_4:
 {
     LDA #$0015 : STA $183E
     STA $07E3 : STZ $07E1
@@ -1641,7 +1925,7 @@ layout_asm_vanilla_tourian_escape_room_4:
     RTS
 }
 
-layout_asm_tourian_escape_room_2:
+layout_asm_tourian_escape_2:
 {
     LDA !sram_suppress_flashing : BIT !SUPPRESS_EARTHQUAKE : BNE .suppress
     JMP $E57C
@@ -1650,7 +1934,7 @@ layout_asm_tourian_escape_room_2:
     RTS
 }
 
-layout_asm_tourian_escape_room_4:
+layout_asm_tourian_escape_4:
 {
     LDA !sram_suppress_flashing : BIT !SUPPRESS_EARTHQUAKE : BNE .suppress
     JMP $E5A4
@@ -1711,7 +1995,7 @@ layout_asm_ceres_ridley_no_timer:
 layout_asm_magnetstairs:
 {
     PHP
-    %a16()
+    %ai16()
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_MAGNET_STAIRS : BEQ layout_asm_magnetstairs_done
 
     ; Modify graphics to indicate magnet stairs removed
@@ -1730,11 +2014,14 @@ layout_asm_magnetstairs_done:
 layout_asm_greenhillzone:
 {
     PHP
-    %a16()
+    %ai16()
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ layout_asm_magnetstairs_done
 
-    ; Set yellow door as already opened
-    LDA $7ED8B6 : ORA #$0001 : STA $7ED8B6
+    ; Replace yellow door PLM with flashing door PLM
+    LDA #$C842 : STA $1C81
+    LDA #$BE70 : STA $1D71
+    LDA $1E11 : ORA #$8000 : STA $1E11
+    LDA #$000E : STA $1E61
 
     ; Remove gate and corner tile next to gate
     LDA #$00FF : STA $7F37C8 : STA $7F37CA : STA $7F37CC
@@ -1765,16 +2052,17 @@ layout_asm_greenhillzone_done:
     PLP
     RTS
 
-layout_asm_morphballroom:
+layout_asm_morphball:
 {
     PHP
-    %a16()
+    %ai16()
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANY_RANDO : BEQ layout_asm_greenhillzone_done
     BIT !ROOM_LAYOUT_DASH_RECALL : BNE layout_asm_greenhillzone_done
     BIT !ROOM_LAYOUT_AREA_RANDO : BEQ .add_morph_ball
 
-    ; Set grey door as already opened
-    LDA $7ED8B6 : ORA #$0002 : STA $7ED8B6
+    ; Convert grey door PLM to flashing door PLM
+    LDA $1E0B : ORA #$8000 : STA $1E0B
+    LDA #$000E : STA $1E5B
 
   .add_morph_ball
     ; Add back morph ball item
@@ -1782,15 +2070,15 @@ layout_asm_morphballroom:
     dw $2945, $EF23
 }
 
-layout_asm_morphballroom_done:
+layout_asm_morphball_done:
     PLP
     RTS
 
 layout_asm_constructionzone:
 {
     PHP
-    %a16()
-    LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANY_RANDO : BEQ layout_asm_morphballroom_done
+    %ai16()
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANY_RANDO : BEQ layout_asm_morphball_done
     BIT !ROOM_LAYOUT_DASH_RECALL : BEQ .set_zebes_awake
 
     ; DASH requires first item to be collected before waking the planet
@@ -1817,8 +2105,12 @@ layout_asm_caterpillar_update_scrolls:
 
 layout_asm_caterpillar_after_scrolls:
 {
-    %a16()
+    %ai16()
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ layout_asm_constructionzone_done
+
+    ; Add flashing door PLM
+    PHX : LDX #layout_asm_caterpillar_door_plm_data
+    JSL $84846A : PLX
 
     ; Decorate gap with blocks
     LDA #$8562 : STA $7F145E : STA $7F1460 : STA $7F151E : STA $7F1520
@@ -1849,11 +2141,18 @@ layout_asm_caterpillar_done:
     PLP
     RTS
 
+layout_asm_caterpillar_door_plm_data:
+    db #$42, #$C8, #$2E, #$36, #$AF, #$9C
+
 layout_asm_singlechamber:
 {
     PHP
-    %a16()
+    %ai16()
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ layout_asm_caterpillar_done
+
+    ; Add flashing door PLM
+    PHX : LDX #layout_asm_singlechamber_door_plm_data
+    JSL $84846A : PLX
 
     ; Move right wall back one to create a ledge
     LDA #$810C : STA $7F06E0 : STA $7F0A9E
@@ -1883,10 +2182,13 @@ layout_asm_singlechamber_done:
     PLP
     RTS
 
+layout_asm_singlechamber_door_plm_data:
+    db #$42, #$C8, #$5E, #$06, #$AF, #$9C
+
 layout_asm_crabtunnel:
 {
     PHP
-    %a16()
+    %ai16()
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO_OR_DASH_RECALL : BEQ layout_asm_singlechamber_done
     BIT !ROOM_LAYOUT_DASH_RECALL : BNE layout_asm_crabtunnel_dash
 
@@ -1916,6 +2218,7 @@ layout_asm_crabtunnel:
 }
 
 layout_asm_crabtunnel_dash:
+{
     ; Remove remaining gate tiles
     LDA #$00FF : STA $7F041E : STA $7F049E : STA $7F051E : STA $7F059E
 
@@ -1925,18 +2228,22 @@ layout_asm_crabtunnel_dash:
 
     ; Clear gate projectile
     TDC : STA $19B9
+}
 
 layout_asm_crabtunnel_done:
     PLP
     RTS
 
-layout_asm_easttunnel_no_scrolls:
-    PHP
-
-layout_asm_easttunnel_after_scrolls:
+layout_asm_easttunnel:
 {
-    %a16()
+    PHP
+    %ai16()
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ layout_asm_crabtunnel_done
+
+    ; Add flashing door PLMs
+    PHX : LDX #layout_asm_easttunnel_lower_door_plm_data
+    JSL $84846A : LDX #layout_asm_easttunnel_upper_door_plm_data
+    JSL $84846A : PLX
 
     ; Clear gate projectile
     TDC : STA $19B9
@@ -1974,10 +2281,36 @@ layout_asm_easttunnel_done:
     PLP
     RTS
 
+layout_asm_easttunnel_lower_door_plm_data:
+    db #$42, #$C8, #$0E, #$16, #$AF, #$9C
+
+layout_asm_easttunnel_upper_door_plm_data:
+    db #$42, #$C8, #$3E, #$06, #$AF, #$9C
+
+layout_asm_westocean:
+{
+    PHP
+    %ai16()
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ .done
+
+    ; Add flashing door PLM
+    PHX : LDX #layout_asm_westocean_door_plm_data
+    JSL $84846A : PLX
+
+  .done
+    PLP
+    ; Overwritten logic
+    JSL $88A800
+    RTS
+}
+
+layout_asm_westocean_door_plm_data:
+    db #$48, #$C8, #$01, #$46, #$AF, #$9C
+
 layout_asm_eastocean:
 {
     PHP
-    %a16()
+    %ai16()
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ .done
 
     ; Add platforms for ease of access to right door
@@ -2004,6 +2337,42 @@ layout_asm_eastocean:
     RTS
 }
 
+layout_asm_crabmaze:
+{
+    PHP
+    %ai16()
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ layout_asm_crabmaze_done
+
+    ; Add flashing door PLM
+    PHX : LDX #layout_asm_crabmaze_door_plm_data
+    JSL $84846A : PLX
+}
+
+layout_asm_crabmaze_done:
+    PLP
+    RTS
+
+layout_asm_crabmaze_door_plm_data:
+    db #$48, #$C8, #$01, #$16, #$AF, #$9C
+
+layout_asm_glasstunnel:
+{
+    PHP
+    %ai16()
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ layout_asm_glasstunnel_done
+
+    ; Add flashing door PLM
+    PHX : LDX #layout_asm_glasstunnel_door_plm_data
+    JSL $84846A : PLX
+}
+
+layout_asm_glasstunnel_done:
+    PLP
+    RTS
+
+layout_asm_glasstunnel_door_plm_data:
+    db #$54, #$C8, #$06, #$02, #$AF, #$9C
+
 layout_asm_crabshaft_no_scrolls:
     PHP
     BRA layout_asm_crabshaft_after_scrolls
@@ -2013,18 +2382,20 @@ layout_asm_crabshaft_update_scrolls:
 
 layout_asm_crabshaft_after_scrolls:
 {
-    %a16()
+    %ai16()
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ layout_asm_crabshaft_done
 
-    ; Set green door as already opened
-    LDA $7ED8C0 : ORA #$8000 : STA $7ED8C0
+    ; Replace green door PLM with flashing door PLM
+    LDA #$C842 : STA $1C83
+    LDA #$BE70 : STA $1D73
+    LDA $1E13 : ORA #$8000 : STA $1E13
+    LDA #$000E : STA $1E63
 
     ; Clear space above save station
     LDA #$00FF : STA $7F095C : STA $7F095E
 
     ; Add save station PLM
-    %ai16()
-    PHX : LDX #layout_asm_crabshaft_plm_data
+    PHX : LDX #layout_asm_crabshaft_savestation_plm_data
     JSL $84846A : PLX
 }
 
@@ -2032,18 +2403,18 @@ layout_asm_crabshaft_done:
     PLP
     RTS
 
-layout_asm_crabshaft_plm_data:
+layout_asm_crabshaft_savestation_plm_data:
     db #$6F, #$B7, #$0D, #$29, #$09, #$00
 
 layout_asm_mainstreet:
 {
     PHP
-    %a16()
+    %ai16()
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ layout_asm_crabshaft_done
 
-    ; Add save station PLM
-    %ai16()
-    PHX : LDX #layout_asm_mainstreet_plm_data
+    ; Add save station and flashing door PLMs
+    PHX : LDX #layout_asm_mainstreet_savestation_plm_data
+    JSL $84846A : LDX #layout_asm_mainstreet_door_plm_data
     JSL $84846A : PLX
 }
 
@@ -2051,45 +2422,97 @@ layout_asm_mainstreet_done:
     PLP
     RTS
 
-layout_asm_mainstreet_plm_data:
+layout_asm_mainstreet_savestation_plm_data:
     db #$6F, #$B7, #$18, #$59, #$0A, #$00
+
+layout_asm_mainstreet_door_plm_data:
+    db #$4E, #$C8, #$16, #$7D, #$AF, #$9C
 
 layout_asm_crateria_kihunters:
 {
     PHP
-    %a16()
+    %ai16()
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ layout_asm_mainstreet_done
 
-    ; Set yellow door as already opened
-    LDA $7ED8B0 : ORA #$4000 : STA $7ED8B0
+    ; Replace yellow door PLM with flashing door PLM
+    LDA #$C84E : STA $1C7F
+    LDA #$BF42 : STA $1D6F
+    LDA $1E0F : ORA #$8000 : STA $1E0F
+    LDA #$000E : STA $1E5F
 }
 
 layout_asm_crateria_kihunters_done:
     PLP
     RTS
 
-layout_asm_forgotten_highway_elbow:
+layout_asm_forgottenhighwayelbow:
 {
     PHP
-    %a16()
+    %ai16()
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO_OR_DASH_RECALL : BEQ layout_asm_crateria_kihunters_done
+
+    ; Add flashing door PLM
+    PHX : LDX #layout_asm_forgottenhighwayelbow_door_plm_data
+    JSL $84846A : PLX
 
     ; Set yellow door as already opened
     LDA $7ED8B0 : ORA #$8000 : STA $7ED8B0
 }
 
-layout_asm_forgotten_highway_elbow_done:
+layout_asm_forgottenhighwayelbow_done:
     PLP
     RTS
+
+layout_asm_forgottenhighwayelbow_door_plm_data:
+    db #$42, #$C8, #$0E, #$06, #$AF, #$9C
+
+layout_asm_greenbrinelevator:
+{
+    PHP
+    %ai16()
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ layout_asm_forgottenhighwayelbow_done
+
+    ; Add flashing door PLM
+    PHX : LDX #layout_asm_greenbrinelevator_door_plm_data
+    JSL $84846A : PLX
+}
+
+layout_asm_greenbrinelevator_done:
+    PLP
+    RTS
+
+layout_asm_greenbrinelevator_door_plm_data:
+    db #$42, #$C8, #$0E, #$06, #$AF, #$9C
+
+layout_asm_lowermushrooms:
+{
+    PHP
+    %ai16()
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ layout_asm_greenbrinelevator_done
+
+    ; Add flashing door PLM
+    PHX : LDX #layout_asm_lowermushrooms_door_plm_data
+    JSL $84846A : PLX
+}
+
+layout_asm_lowermushrooms_done:
+    PLP
+    RTS
+
+layout_asm_lowermushrooms_door_plm_data:
+    db #$48, #$C8, #$01, #$06, #$AF, #$9C
 
 layout_asm_green_pirates_shaft:
 {
     PHP
-    %a16()
-    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ layout_asm_forgotten_highway_elbow_done
+    %ai16()
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ layout_asm_lowermushrooms_done
 
-    ; Set red door as already opened
-    LDA $7ED8B2 : ORA #$4000 : STA $7ED8B2
+    ; Replace red door PLM with flashing door PLM
+    LDA #$C842 : STA $1C7D
+    LDA #$BE70 : STA $1D6D
+    LDA $1E0D : ORA #$8000 : STA $1E0D
+    LDA #$000E : STA $1E5D
 }
 
 layout_asm_green_pirates_shaft_done:
@@ -2099,7 +2522,7 @@ layout_asm_green_pirates_shaft_done:
 layout_asm_bowling:
 {
     PHP
-    %a16()
+    %ai16()
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_DASH_RECALL : BEQ layout_asm_green_pirates_shaft_done
 
     ; Clear speed blocks in front of Wrecked Ship reserve item
@@ -2119,7 +2542,7 @@ layout_asm_bowling_done:
 layout_asm_wreckedshipmain:
 {
     PHP
-    %a16()
+    %ai16()
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ layout_asm_bowling_done
 
     ; Set grey door as already opened
@@ -2159,7 +2582,7 @@ layout_asm_ws_etank_state_check:
 layout_asm_wreckedshipsave:
 {
     PHP
-    %a16()
+    %ai16()
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO_OR_DASH_RECALL : BEQ layout_asm_wreckedshipmain_done
 
     ; Activate save station
@@ -2170,6 +2593,42 @@ layout_asm_wreckedshipsave:
 layout_asm_wreckedshipsave_done:
     PLP
     RTS
+
+layout_asm_redfish:
+{
+    PHP
+    %ai16()
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ layout_asm_wreckedshipsave_done
+
+    ; Add flashing door PLM
+    PHX : LDX #layout_asm_redfish_door_plm_data
+    JSL $84846A : PLX
+}
+
+layout_asm_redfish_done:
+    PLP
+    RTS
+
+layout_asm_redfish_door_plm_data:
+    db #$48, #$C8, #$01, #$06, #$AF, #$9C
+
+layout_asm_crabhole:
+{
+    PHP
+    %ai16()
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ layout_asm_redfish_done
+
+    ; Add flashing door PLM
+    PHX : LDX #layout_asm_crabhole_door_plm_data
+    JSL $84846A : PLX
+}
+
+layout_asm_crabhole_done:
+    PLP
+    RTS
+
+layout_asm_crabhole_door_plm_data:
+    db #$48, #$C8, #$01, #$16, #$AF, #$9C
 
 layout_asm_plasma_dash_header:
     dl $CB8BD4
@@ -2188,61 +2647,9 @@ layout_asm_plasma_state_check:
 layout_asm_plasma:
 {
     PHP
-    %a16()
+    %ai16()
 
-    ; Add platform and surrounding decoration
-    LDA #$00FF : STA $7F04AE : STA $7F04B4
-    STA $7F04EC : STA $7F04EE : STA $7F04F4
-    STA $7F051E : STA $7F0520 : STA $7F0522
-    STA $7F0530 : STA $7F0532 : STA $7F0534
-    STA $7F055E : STA $7F0560 : STA $7F0562
-    STA $7F0570 : STA $7F0572 : STA $7F0574
-    STA $7F05B0 : STA $7F05B2 : STA $7F05B4
-    STA $7F05F0 : STA $7F05F2 : STA $7F05F4
-    STA $7F062C : STA $7F062E : STA $7F0630 : STA $7F0632 : STA $7F0634
-    STA $7F066C : STA $7F066E : STA $7F0670 : STA $7F0672 : STA $7F0674
-    STA $7F06AE : STA $7F06B0 : STA $7F06B2 : STA $7F06B4
-    STA $7F06EE : STA $7F06F0 : STA $7F06F2 : STA $7F06F4
-    STA $7F072E : STA $7F0730 : STA $7F0732 : STA $7F0734
-    STA $7F076E : STA $7F0770 : STA $7F0772 : STA $7F0774
-    STA $7F07AE : STA $7F07B0 : STA $7F07B2 : STA $7F07B4
-    LDA #$0202 : STA $7F0524
-    LDA #$0382 : STA $7F0430 : STA $7F0432
-    INC : STA $7F03F0 : STA $7F03F2
-    LDA #$0386 : STA $7F0434
-    INC : STA $7F03F4
-    INC : STA $7F046E : STA $7F04F0
-    INC : STA $7F03EE : STA $7F0470
-    INC : STA $7F0472
-    INC : STA $7F0474 : STA $7F04DE : STA $7F04F2
-    INC : STA $7F042E : STA $7F04B0
-    INC : STA $7F03B4 : STA $7F04B2
-    INC : INC : STA $7F04AC : STA $7F059C
-    LDA #$0398 : STA $7F042C : STA $7F051C
-    INC : STA $7F046C : STA $7F055C
-    LDA #$039C : STA $7F03EC : STA $7F04DC
-    LDA #$0602 : STA $7F052E
-    LDA #$1212 : STA $7F05A4
-    INC : INC : STA $7F0564
-    LDA #$1612 : STA $7F05AE
-    INC : INC : STA $7F056E
-    LDA #$8200 : STA $7F0528 : STA $7F052A
-    STA $7F07EE : STA $7F07F0 : STA $7F07F2 : STA $7F07F4
-    INC : STA $7F0526
-    LDA #$8210 : STA $7F0568 : STA $7F056A
-    STA $7F05A6 : STA $7F05A8 : STA $7F05AA : STA $7F05AC
-    LDA #$8215 : STA $7F0566
-    LDA #$8601 : STA $7F052C
-    LDA #$8615 : STA $7F056C
-    LDA #$8A07 : STA $7F05E6 : STA $7F05E8
-    STA $7F05EA : STA $7F05EC
-    LDA #$8A0B : STA $7F05E4
-    LDA #$8E0B : STA $7F05EE
-
-    ; Add slope BTS to new platform
-    %a8()
-    LDA #$1B : STA $7F66B3 : INC : STA $7F66D3
-    LDA #$5B : STA $7F66B8 : INC : STA $7F66D8
+    JSL layout_asm_plasma_external
 }
 
 layout_asm_plasma_done:
@@ -2252,7 +2659,7 @@ layout_asm_plasma_done:
 layout_asm_plasma_spark:
 {
     PHP
-    %a16()
+    %ai16()
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_DASH_RECALL : BEQ layout_asm_plasma_done
 
     ; Set grey door as already opened
@@ -2266,8 +2673,12 @@ layout_asm_plasma_spark_done:
 layout_asm_aqueduct:
 {
     PHP
-    %a16()
+    %ai16()
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ layout_asm_plasma_spark_done
+
+    ; Add flashing door PLM
+    PHX : LDX #layout_asm_aqueduct_door_plm_data
+    JSL $84846A : PLX
 
     ; Replace power bomb blocks with bomb blocks
     LDA #$F09D : STA $7F1690 : STA $7F18D0
@@ -2283,10 +2694,13 @@ layout_asm_aqueduct_done:
     PLP
     RTS
 
+layout_asm_aqueduct_door_plm_data:
+    db #$48, #$C8, #$01, #$16, #$AF, #$9C
+
 layout_asm_butterfly:
 {
     PHP
-    %a16()
+    %ai16()
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_DASH_RECALL : BEQ layout_asm_aqueduct_done
 
     ; Set grey door as already opened
@@ -2300,7 +2714,7 @@ layout_asm_butterfly_done:
 layout_asm_botwoon_hallway:
 {
     PHP
-    %a16()
+    %ai16()
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_DASH_RECALL : BEQ layout_asm_botwoon_hallway_done
 
     ; Convert speed blocks to bomb blocks
@@ -2320,93 +2734,28 @@ layout_asm_botwoon_hallway_done:
     PLP
     RTS
 
-layout_asm_pants_room_external:
-{
-    ; Open grapple blocks to shaktool
-    LDA #$00FF : STA $7F0CCC : STA $7F0CCE : STA $7F0CD0
-    STA $7F0CD2 : STA $7F0CD4 : STA $7F0CD6
-    STA $7F0D0E : STA $7F0D14 : STA $7F0D16
-
-    ; Replace BTS
-    TDC : STA $7F6A69
-    RTL
-
-layout_asm_shaktool_room:
+layout_asm_shaktool:
 {
     ; Restore shaktool PLM linked to PB explosion
     JSL $8483D7
     dw $0000, $B8EB
 
     PHP
-    %a16()
+    %ai16()
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_DASH_RECALL : BEQ layout_asm_botwoon_hallway_done
 
-    ; Clear shaktool sand
-    LDA #$00FF : STA $7F02A2 : STA $7F02A4 : STA $7F02A6 : STA $7F02A8
-    STA $7F02AA : STA $7F02AC : STA $7F02AE : STA $7F02B0
-    STA $7F02B2 : STA $7F02B4 : STA $7F02B6 : STA $7F02B8
-    STA $7F02BA : STA $7F02BC : STA $7F02BE : STA $7F02C0
-    STA $7F02C2 : STA $7F02C4 : STA $7F02C6 : STA $7F02C8
-    STA $7F02CA : STA $7F02CC : STA $7F02CE : STA $7F02D0
-    STA $7F02D2 : STA $7F02D4 : STA $7F02D6 : STA $7F02D8
-    STA $7F02DA : STA $7F02DC : STA $7F02DE : STA $7F02E0
-    STA $7F02E2 : STA $7F02E4 : STA $7F02E6 : STA $7F02E8
-    STA $7F0322 : STA $7F0324 : STA $7F0326 : STA $7F0328
-    STA $7F032A : STA $7F032C : STA $7F032E : STA $7F0330
-    STA $7F0332 : STA $7F0334 : STA $7F0336 : STA $7F0338
-    STA $7F033A : STA $7F033C : STA $7F033E : STA $7F0340
-    STA $7F0342 : STA $7F0344 : STA $7F0346 : STA $7F0348
-    STA $7F034A : STA $7F034C : STA $7F034E : STA $7F0350
-    STA $7F0352 : STA $7F0354 : STA $7F0356 : STA $7F0358
-    STA $7F035A : STA $7F035C : STA $7F035E : STA $7F0360
-    STA $7F0362 : STA $7F0364 : STA $7F0366 : STA $7F0368
-    STA $7F03A2 : STA $7F03A4 : STA $7F03A6 : STA $7F03A8
-    STA $7F03AA : STA $7F03AC : STA $7F03AE : STA $7F03B0
-    STA $7F03B2 : STA $7F03B4 : STA $7F03B6 : STA $7F03B8
-    STA $7F03BA : STA $7F03BC : STA $7F03BE : STA $7F03C0
-    STA $7F03C2 : STA $7F03C4 : STA $7F03C6 : STA $7F03C8
-    STA $7F03CA : STA $7F03CC : STA $7F03CE : STA $7F03D0
-    STA $7F03D2 : STA $7F03D4 : STA $7F03D6 : STA $7F03D8
-    STA $7F03DA : STA $7F03DC : STA $7F03DE : STA $7F03E0
-    STA $7F03E2 : STA $7F03E4 : STA $7F03E6 : STA $7F03E8
-    STA $7F0422 : STA $7F0424 : STA $7F0426 : STA $7F0428
-    STA $7F042A : STA $7F042C : STA $7F042E : STA $7F0430
-    STA $7F0432 : STA $7F0434 : STA $7F0436 : STA $7F0438
-    STA $7F043A : STA $7F043C : STA $7F043E : STA $7F0440
-    STA $7F0442 : STA $7F0444 : STA $7F0446 : STA $7F0448
-    STA $7F044A : STA $7F044C : STA $7F044E : STA $7F0450
-    STA $7F0452 : STA $7F0454 : STA $7F0456 : STA $7F0458
-    STA $7F045A : STA $7F045C : STA $7F045E : STA $7F0460
-    STA $7F0462 : STA $7F0464 : STA $7F0466 : STA $7F0468
-    STA $7F04A2 : STA $7F04A4 : STA $7F04A6 : STA $7F04A8
-    STA $7F04AA : STA $7F04AC : STA $7F04AE : STA $7F04B0
-    STA $7F04B2 : STA $7F04B4 : STA $7F04B6 : STA $7F04B8
-    STA $7F04BA : STA $7F04BC : STA $7F04BE : STA $7F04C0
-    STA $7F04C2 : STA $7F04C4 : STA $7F04C6 : STA $7F04C8
-    STA $7F04CA : STA $7F04CC : STA $7F04CE : STA $7F04D0
-    STA $7F04D2 : STA $7F04D4 : STA $7F04D6 : STA $7F04D8
-    STA $7F04DA : STA $7F04DC : STA $7F04DE : STA $7F04E0
-    STA $7F04E2 : STA $7F04E4 : STA $7F04E6 : STA $7F04E8
-    STA $7F0522 : STA $7F0524 : STA $7F0526 : STA $7F0528
-    STA $7F052A : STA $7F052C : STA $7F052E : STA $7F0530
-    STA $7F0532 : STA $7F0534 : STA $7F0536 : STA $7F0538
-    STA $7F053A : STA $7F053C : STA $7F053E : STA $7F0540
-    STA $7F0542 : STA $7F0544 : STA $7F0546 : STA $7F0548
-    STA $7F054A : STA $7F054C : STA $7F054E : STA $7F0550
-    STA $7F0552 : STA $7F0554 : STA $7F0556 : STA $7F0558
-    STA $7F055A : STA $7F055C : STA $7F055E : STA $7F0560
-    STA $7F0562 : STA $7F0564 : STA $7F0566 : STA $7F0568
+    JSL layout_asm_shaktool_external
 }
 
-layout_asm_shaktool_room_done:
+layout_asm_shaktool_done:
     PLP
     RTS
 
 layout_asm_halfie_climb:
 {
     PHP
-    %a16()
-    LDA !sram_room_layout : BIT !ROOM_LAYOUT_DASH_RECALL : BEQ layout_asm_shaktool_room_done
+    %ai16()
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_DASH_RECALL : BEQ layout_asm_shaktool_done
 
     ; Set grey door as already opened
     LDA $7ED8C2 : ORA #$1000 : STA $7ED8C2
@@ -2419,36 +2768,10 @@ layout_asm_halfie_climb_done:
 layout_asm_aqueductfarmsandpit_door_list:
     dw #$A7D4, #hook_layout_asm_aqueductfarmsandpit_door1
 
-layout_asm_aqueductfarmsandpit_external:
-{
-    ; Place door BTS
-    %a8()
-    LDA #$40 : STA $7F65C0 : LDA #$FF : STA $7F6600
-    DEC : STA $7F6640 : DEC : STA $7F6680 : LDA #$01
-    STA $7F65C1 : STA $7F6601 : STA $7F6641 : STA $7F6681
-
-    ; Move right wall one to the left
-    %a16()
-    LDA #$8A09 : STA $7F01FE : LDA #$820E : STA $7F067E
-    LDA #$820A : STA $7F027E : STA $7F05FE
-    LDA #$8A0B : STA $7F02FE : LDA #$8A07 : STA $7F0300
-    LDA #$820B : STA $7F057E : LDA #$8207 : STA $7F0580
-
-    ; Fill in area behind the wall
-    LDA #$8210 : STA $7F0200 : STA $7F0280 : STA $7F0600 : STA $7F0680
-
-    ; Place the door
-    LDA #$C00C : STA $7F037E : LDA #$9040 : STA $7F0380
-    LDA #$D02C : STA $7F03FE : LDA #$9060 : STA $7F0400
-    LDA #$D82C : STA $7F047E : LDA #$9860 : STA $7F0480
-    LDA #$D80C : STA $7F04FE : LDA #$9840 : STA $7F0500
-    RTL
-}
-
 layout_asm_westsandhall:
 {
     PHP
-    %a16()
+    %ai16()
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ layout_asm_westsandhall_done
 
     ; Change left door BTS to previously unused door
@@ -2463,11 +2786,14 @@ layout_asm_westsandhall_done:
 layout_asm_crocspeedway:
 {
     PHP
-    %a16()
+    %ai16()
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO_OR_DASH_RECALL : BEQ layout_asm_westsandhall_done
 
-    ; Set green door as already opened
-    LDA $7ED8B8 : ORA #$4000 : STA $7ED8B8
+    ; Replace green door PLM with flashing door PLM
+    LDA #$C84E : STA $1C7F
+    LDA #$BF42 : STA $1D6F
+    LDA $1E0F : ORA #$8000 : STA $1E0F
+    LDA #$000E : STA $1E5F
 }
 
 layout_asm_crocspeedway_done:
@@ -2477,11 +2803,12 @@ layout_asm_crocspeedway_done:
 layout_asm_croc:
 {
     PHP
-    %a16()
+    %ai16()
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO_OR_DASH_RECALL : BEQ layout_asm_crocspeedway_done
 
-    ; Set grey door as already opened
-    LDA $7ED8B8 : ORA #$8000 : STA $7ED8B8
+    ; Convert grey door PLM into flashing door PLM
+    LDA $1E15 : ORA #$8000 : STA $1E15
+    LDA #$000E : STA $1E65
 }
 
 layout_asm_croc_done:
@@ -2491,56 +2818,63 @@ layout_asm_croc_done:
 layout_asm_kronicboost:
 {
     PHP
-    %a16()
+    %ai16()
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ layout_asm_croc_done
 
-    ; Set yellow door as already opened
-    LDA $7ED8BA : ORA #$0100 : STA $7ED8BA
+    ; Replace yellow door PLM with flashing door PLM
+    LDA #$C848 : STA $1C7B
+    LDA #$BED9 : STA $1D6B
+    LDA $1E0B : ORA #$8000 : STA $1E0B
+    LDA #$000E : STA $1E5B
 }
 
 layout_asm_kronicboost_done:
     PLP
     RTS
 
+layout_asm_lavadive:
+{
+    PHP
+    %ai16()
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ layout_asm_kronicboost_done
+
+    ; Add flashing door PLM
+    PHX : LDX #layout_asm_lavadive_door_plm_data
+    JSL $84846A : PLX
+}
+
+layout_asm_lavadive_done:
+    PLP
+    RTS
+
+layout_asm_lavadive_door_plm_data:
+    db #$42, #$C8, #$3E, #$06, #$AF, #$9C
+
+layout_asm_threemusketeers:
+{
+    PHP
+    %ai16()
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ layout_asm_lavadive_done
+
+    ; Add flashing door PLM
+    PHX : LDX #layout_asm_threemusketeers_door_plm_data
+    JSL $84846A : PLX
+}
+
+layout_asm_threemusketeers_done:
+    PLP
+    RTS
+
+layout_asm_threemusketeers_door_plm_data:
+    db #$48, #$C8, #$11, #$06, #$AF, #$9C
+
 layout_asm_bigpink:
 {
     PHP
-    %a16()
-    LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANTISOFTLOCK : BEQ layout_asm_kronicboost_done
+    %ai16()
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANTISOFTLOCK : BEQ layout_asm_threemusketeers_done
 
-    ; Clear out path to save room
-    LDA #$00FF : STA $7F03F2 : STA $7F03F8 : STA $7F03FA
-    STA $7F03FC : STA $7F03FE : STA $7F0400 : STA $7F0402
-    STA $7F0404 : STA $7F0406 : STA $7F0408 : STA $7F0492
-    STA $7F0496 : STA $7F0498 : STA $7F049A : STA $7F049C
-    STA $7F049E : STA $7F04A0 : STA $7F04A2 : STA $7F04A4
-    STA $7F04A6 : STA $7F04A8 : STA $7F0542
-
-    ; A small part of the path is decorated
-    LDA #$0B24 : STA $7F03F4
-    LDA #$0B02 : STA $7F03F6
-    LDA #$0B05 : STA $7F0494
-
-    ; Decorate wall above path
-    LDA #$8B08 : STA $7F0354 : STA $7F0356 : STA $7F0358
-    STA $7F035A : STA $7F035C : STA $7F035E : STA $7F0360
-    STA $7F0362 : STA $7F0364 : STA $7F0366
-
-    ; Fade in wall above path
-    LDA #$8B28 : STA $7F02B4 : STA $7F02B6 : STA $7F02B8
-    STA $7F02BA : STA $7F02BC : STA $7F02BE : STA $7F02C0
-    STA $7F02C2 : STA $7F02C4
-
-    ; Decorate the corner
-    LDA #$8B17 : STA $7F0368
-    LDA #$8B29 : STA $7F02C6
-
-    ; Normal BTS for path replacing scrolls
-    %a8()
-    LDA #$00 : STA $7F66A1 : STA $7F66A2 : STA $7F66A3
-
-    ; Allow screen scrolling along the path
-    LDA #$02 : STA $7ECD21
+    JSL layout_asm_bigpink_external
 }
 
 layout_asm_bigpink_done:
@@ -2550,7 +2884,7 @@ layout_asm_bigpink_done:
 layout_asm_dachora:
 {
     PHP
-    %a16()
+    %ai16()
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANTISOFTLOCK_OR_DASH_RECALL : BEQ layout_asm_bigpink_done
 
     ; Use non-respawning speed booster block BTS for dachora pitfall
@@ -2566,9 +2900,17 @@ layout_asm_dachora_done:
 layout_asm_moat:
 {
     PHP
-    %a16()
+    %ai16()
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_ANTISOFTLOCK_OR_DASH_RECALL : BEQ layout_asm_dachora_done
+    BIT !ROOM_LAYOUT_AREA_RANDO : BEQ .antisoftlock
+
+    ; Add flashing door PLM
+    PHX : LDX #layout_asm_moat_door_plm_data
+    JSL $84846A : PLX
+
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANTISOFTLOCK_OR_DASH_RECALL : BEQ layout_asm_dachora_done
 
+  .antisoftlock
     ; Use shootable blocks on the moat pillar
     %a8()
     LDA #$C0 : STA $7F059F : STA $7F061F
@@ -2584,14 +2926,20 @@ layout_asm_moat_done:
     PLP
     RTS
 
+layout_asm_moat_door_plm_data:
+    db #$42, #$C8, #$1E, #$06, #$AF, #$9C
+
 layout_asm_redtowerelevator:
 {
     PHP
-    %a16()
+    %ai16()
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANY_RANDO : BEQ layout_asm_moat_done
 
-    ; Set red door as already opened
-    LDA $7ED8B2 : ORA #$0001 : STA $7ED8B2
+    ; Replace yellow door PLM with flashing door PLM
+    LDA #$C854 : STA $1C83
+    LDA #$BFAB : STA $1D73
+    LDA $1E13 : ORA #$8000 : STA $1E13
+    LDA #$000E : STA $1E63
 }
 
 layout_asm_redtowerelevator_done:
@@ -2601,7 +2949,7 @@ layout_asm_redtowerelevator_done:
 layout_asm_missionimpossible:
 {
     PHP
-    %a16()
+    %ai16()
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANTISOFTLOCK : BEQ layout_asm_redtowerelevator_done
 
     ; Use shootable block
@@ -2616,11 +2964,14 @@ layout_asm_missionimpossible_done:
 layout_asm_noobbridge:
 {
     PHP
-    %a16()
+    %ai16()
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ layout_asm_missionimpossible_done
 
-    ; Set green door as already opened
-    LDA $7ED8B6 : ORA #$0008 : STA $7ED8B6
+    ; Replace green door PLM with flashing door PLM
+    LDA #$C842 : STA $1C85
+    LDA #$BE70 : STA $1D75
+    LDA $1E15 : ORA #$8000 : STA $1E15
+    LDA #$000E : STA $1E65
 }
 
 layout_asm_noobbridge_done:
@@ -2630,33 +2981,10 @@ layout_asm_noobbridge_done:
 layout_asm_waterway:
 {
     PHP
-    %a16()
+    %ai16()
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_DASH_RECALL : BEQ layout_asm_noobbridge_done
 
-    ; Convert speed blocks to bomb blocks
-    LDA #$F306 : STA $7F0802 : STA $7F08E2 : STA $7F09C2
-    LDA #$F34E : STA $7F0818 : STA $7F0836 : STA $7F083A
-    STA $7F083C : STA $7F08F6 : STA $7F08FA : STA $7F0916
-    STA $7F0918 : STA $7F091A : STA $7F09D6 : STA $7F09D8
-    STA $7F09F6 : STA $7F09F8 : STA $7F09FC : STA $7F09FE : STA $7F0A00
-    LDA #$F350 : STA $7F0804 : STA $7F081C : STA $7F0844
-    STA $7F08E4 : STA $7F08FC : STA $7F0924
-    STA $7F09C4 : STA $7F09DC : STA $7F0A04
-    LDA #$F74E : STA $7F081A : STA $7F0838 : STA $7F0914
-    STA $7F091C : STA $7F091E : STA $7F0922 : STA $7F09DA
-    LDA #$F750 : STA $7F0814 : STA $7F0832 : STA $7F08F4
-    STA $7F0912 : STA $7F09D4 : STA $7F09F2
-    LDA #$FB4E : STA $7F0816 : STA $7F0840 : STA $7F0842
-    STA $7F0920 : STA $7F09F4 : STA $7F09FA : STA $7F0A02
-    LDA #$FF4E : STA $7F0834 : STA $7F083E : STA $7F08F8
-
-    ; Use spazer block BTS
-    LDA #$0909 : STA $7F6802 : STA $7F680B : STA $7F680C : STA $7F680E
-    STA $7F681A : STA $7F681C : STA $7F681E : STA $7F6820 : STA $7F6822
-    STA $7F6872 : STA $7F687B : STA $7F687C : STA $7F687E
-    STA $7F688A : STA $7F688C : STA $7F688E : STA $7F6890 : STA $7F6892
-    STA $7F68E2 : STA $7F68EB : STA $7F68EC : STA $7F68EE
-    STA $7F68FA : STA $7F68FC : STA $7F68FE : STA $7F6900 : STA $7F6902
+    JSL layout_asm_waterway_external
 }
 
 layout_asm_waterway_done:
@@ -2666,9 +2994,17 @@ layout_asm_waterway_done:
 layout_asm_redtower:
 {
     PHP
-    %a16()
+    %ai16()
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_ANTISOFTLOCK_OR_DASH_RECALL : BEQ layout_asm_waterway_done
+    BIT !ROOM_LAYOUT_AREA_RANDO : BEQ .antisoftlock
+
+    ; Add flashing door PLM
+    PHX : LDX #layout_asm_redtower_door_plm_data
+    JSL $84846A : PLX
+
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANTISOFTLOCK_OR_DASH_RECALL : BEQ layout_asm_waterway_done
 
+  .antisoftlock
     ; Create opening along bottom left of red tower
     LDA #$00FF : STA $7F0E66 : STA $7F0E88 : STA $7F0EA6 : STA $7F0EA8
     STA $7F0EC6 : STA $7F0EC8 : STA $7F0ECA : STA $7F0EE8
@@ -2687,10 +3023,13 @@ layout_asm_redtower_done:
     PLP
     RTS
 
+layout_asm_redtower_door_plm_data:
+    db #$48, #$C8, #$01, #$46, #$AF, #$9C
+
 layout_asm_belowspazer:
 {
     PHP
-    %a16()
+    %ai16()
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANTISOFTLOCK_OR_DASH_RECALL : BEQ layout_asm_redtower_done
 
     ; Use shootable block
@@ -2701,11 +3040,29 @@ layout_asm_belowspazer_done:
     PLP
     RTS
 
+layout_asm_warehousezeela:
+{
+    PHP
+    %ai16()
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ layout_asm_belowspazer_done
+
+    ; Add flashing door PLM
+    PHX : LDX #layout_asm_warehousezeela_door_plm_data
+    JSL $84846A : PLX
+}
+
+layout_asm_warehousezeela_done:
+    PLP
+    RTS
+
+layout_asm_warehousezeela_door_plm_data:
+    db #$48, #$C8, #$01, #$06, #$AF, #$9C
+
 layout_asm_warehousekihunters:
 {
     PHP
-    %a16()
-    LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANTISOFTLOCK : BEQ layout_asm_belowspazer_done
+    %ai16()
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANTISOFTLOCK : BEQ layout_asm_warehousezeela_done
 
     ; Use shootable block
     %a8()
@@ -2714,6 +3071,25 @@ layout_asm_warehousekihunters:
 
 layout_asm_warehousekihunters_done:
     PLP
+    RTS
+
+layout_asm_statues_hallway:
+{
+    PHP
+    %ai16()
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ layout_asm_warehousekihunters_done
+
+    ; Add flashing door PLM
+    PHX : LDX #layout_asm_statues_hallway_door_plm_data
+    JSL $84846A : PLX
+}
+
+layout_asm_statues_hallway_done:
+    PLP
+    RTS
+
+layout_asm_statues_hallway_door_plm_data:
+    db #$48, #$C8, #$01, #$06, #$AF, #$9C
 
 layout_asm_statues_oob_viewer_done:
     RTS
@@ -2735,11 +3111,33 @@ layout_asm_statues_state_check:
     JMP $E5E6
 }
 
+layout_asm_warehouseentrance:
+{
+    PHP
+    %ai16()
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ layout_asm_warehouseentrance_done
+
+    ; Add flashing door PLMs
+    PHX : LDX #layout_asm_warehouse_left_door_plm_data
+    JSL $84846A : LDX #layout_asm_warehouse_right_door_plm_data
+    JSL $84846A : PLX
+}
+
+layout_asm_warehouseentrance_done:
+    PLP
+    RTS
+
+layout_asm_warehouse_left_door_plm_data:
+    db #$48, #$C8, #$01, #$06, #$AF, #$9C
+
+layout_asm_warehouse_right_door_plm_data:
+    db #$42, #$C8, #$2E, #$06, #$AF, #$9C
+
 layout_asm_cathedralentrance:
 {
     PHP
-    %a16()
-    LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANTISOFTLOCK_OR_DASH_RECALL : BEQ layout_asm_cathedralentrance_done
+    %ai16()
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANTISOFTLOCK_OR_DASH_RECALL : BEQ layout_asm_warehouseentrance_done
 
     ; Remove protruding ledge
     LDA #$8106 : STA $7F040C
@@ -2757,7 +3155,7 @@ layout_asm_cathedralentrance_done:
 layout_asm_hjbetank:
 {
     PHP
-    %a16()
+    %ai16()
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANTISOFTLOCK_OR_DASH_RECALL : BEQ layout_asm_cathedralentrance_done
     BIT !ROOM_LAYOUT_DASH_RECALL : BNE layout_asm_hjbetank_dash
 
@@ -2781,7 +3179,7 @@ layout_asm_hjbetank_done:
 layout_asm_acidstatue:
 {
     PHP
-    %a16()
+    %ai16()
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_VARIA_TWEAKS : BEQ layout_asm_hjbetank_done
 
     ; Add platform
@@ -2793,25 +3191,25 @@ layout_asm_acidstatue_done:
     PLP
     RTS
 
-layout_asm_brinstarpremaproom:
+layout_asm_brinstarpremap:
 {
     PHP
-    %a16()
+    %ai16()
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANTISOFTLOCK : BEQ layout_asm_acidstatue_done
 
     ; Set grey door as already opened
     LDA $7ED8B4 : ORA #$0020 : STA $7ED8B4
 }
 
-layout_asm_brinstarpremaproom_done:
+layout_asm_brinstarpremap_done:
     PLP
     RTS
 
 layout_asm_earlysupers:
 {
     PHP
-    %a16()
-    LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANTISOFTLOCK_OR_DASH_RECALL : BEQ layout_asm_brinstarpremaproom_done
+    %ai16()
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANTISOFTLOCK_OR_DASH_RECALL : BEQ layout_asm_brinstarpremap_done
     BIT !ROOM_LAYOUT_DASH_RECALL : BNE layout_asm_earlysupers_dash
 
     ; Use shootable block on the bridge
@@ -2928,10 +3326,8 @@ layout_asm_clear_bg2_vram_flag:
 }
 
 layout_asm_shaktool_to_pants_scrolls:
-{
     PHP
     %a8()
-}
 
 layout_asm_to_pants_scrolls:
 {

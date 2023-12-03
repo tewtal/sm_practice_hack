@@ -495,7 +495,7 @@ endif
 
   .pantsRoom
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_DASH_RECALL : BEQ .bg_offsets_calculated
-    JSL layout_asm_pants_room_external
+    JSL layout_asm_pants_external
     BRA .bg_offsets_calculated
 
   .aqueductFarmsAndPitRoom

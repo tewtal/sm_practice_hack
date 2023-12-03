@@ -406,7 +406,7 @@ LayoutCrateriaRightDoorMenu2:
     899A,   89BE,   CR Parlor (Middle),         Parlor door 5 --> Crateria Save
     895E,   8BF2,   CR Parlor (Upper),          Parlor door 0 --> Terminator
     8B7A,   8B62,   CR Pit,                     Pit door 0 --> Climb
-    8BCE,   8976,   CR Pre-Map Flyway,          Pre-Map Flyway door door 0 --> Parlor
+    8BCE,   8976,   CR Pre-Map Flyway,          Pre-Map Flyway door 0 --> Parlor
     9216,   91F2,   CR Statues,                 Statues door 0 --> Statues Hallway
     91E6,   8C52,   CR Statues Hallway,         Statues Hallway door 0 --> Green Pirates Shaft
     8BE6,   8C3A,   CR Terminator,              Terminator door 0 --> Green Pirates Shaft

@@ -434,7 +434,7 @@ portals_left_vanilla_inverted_table:
     dw $8C46    ; Green Pirates Shaft door 1 --> Lower Mushrooms
     dw $89CA    ; West Ocean door 0 --> Moat
     dw $8BB6    ; Flyway door 0 --> Parlor
-    dw $8BCE    ; Pre-Map Flyway door door 0 --> Parlor
+    dw $8BCE    ; Pre-Map Flyway door 0 --> Parlor
     dw $8916    ; Landing Site door 0 --> Parlor
     dw $8B92    ; Morph Elevator door 0 --> Pit
     dw $8C2E    ; Crateria Map Station door 0 --> Pre-Map Flyway
@@ -695,7 +695,7 @@ portals_right_vanilla_table:
     dw $899A    ; Parlor door 5 --> Crateria Save
     dw $895E    ; Parlor door 0 --> Terminator
     dw $8B7A    ; Pit door 0 --> Climb
-    dw $8BCE    ; Pre-Map Flyway door door 0 --> Parlor
+    dw $8BCE    ; Pre-Map Flyway door 0 --> Parlor
     dw $9216    ; Statues door 0 --> Statues Hallway
     dw $91E6    ; Statues Hallway door 0 --> Green Pirates Shaft
     dw $8BE6    ; Terminator door 0 --> Green Pirates Shaft
