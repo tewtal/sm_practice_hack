@@ -1465,9 +1465,10 @@ org $8F94B1
 hook_layout_asm_crateria_kihunters:
     dw #layout_asm_crateria_kihunters
 
-; East Ocean setup asm
-org $8F9522
+; East Ocean background library table and setup asm
+org $8F9520
 hook_layout_asm_eastocean:
+    dw #layout_east_ocean_library_background_table
     dw #layout_asm_eastocean
 
 ; Crab Maze setup asm
@@ -1638,6 +1639,13 @@ hook_layout_asm_acidstatue:
 org $8FB67B
 hook_layout_asm_threemusketeers:
     dw #layout_asm_threemusketeers
+
+; West Ocean library background table
+org $8FB7F0
+hook_layout_west_ocean_library_background_table:
+    dw $000E, #door_custom_8AEA_moat_door1
+    dl $8AD980
+    dw $4800, $0800, $0000
 
 ; Caterpillar elevator and middle-left door asm
 org $8FBA26
@@ -1896,6 +1904,14 @@ warnpc $8FE8EB
 
 org $8FEA00
 print pc, " layout start"
+
+; East Ocean library background table (migrated to make more room for West Ocean)
+layout_east_ocean_library_background_table:
+    dw $000E, $8A7E
+    dl $8AD980
+    dw $4800, $0800, $000E, $A264
+    dl $8AD980
+    dw $4800, $0800, $0000
 
 layout_asm_vanilla_parlor_escape:
 {

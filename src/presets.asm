@@ -579,6 +579,9 @@ if !RAW_TILE_GRAPHICS
     LDX !STATE_POINTER : LDA $8F0018,X
     CMP #$91C9 : BEQ .post_preset_scrolling_sky
     CMP #$91CE : BEQ .post_preset_scrolling_sky
+    CMP #layout_landing_site_setup_asm : BEQ .post_preset_scrolling_sky
+    CMP #layout_asm_westocean : BEQ .post_preset_scrolling_sky
+    CMP #layout_asm_eastocean : BEQ .post_preset_scrolling_sky
     PLB : PLP : RTL
   .post_preset_scrolling_sky
     JML layout_execute_setup_asm_execute
@@ -728,6 +731,9 @@ preset_room_setup_asm_fixes:
     ; Check if this is scrolling sky
     CMP #$91C9 : BEQ .scrolling_sky
     CMP #$91CE : BEQ .scrolling_sky
+    CMP #layout_landing_site_setup_asm : BEQ .scrolling_sky
+    CMP #layout_asm_westocean : BEQ .scrolling_sky
+    CMP #layout_asm_eastocean : BEQ .scrolling_sky
 
   .execute_setup_asm
     ; Resume execution
