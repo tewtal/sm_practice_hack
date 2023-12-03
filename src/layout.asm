@@ -273,17 +273,22 @@ hijack_after_load_level_data:
     JSL layout_swap_left_right
 
   .checkRoom
-    LDA !ROOM_ID : CMP #$D646 : BEQ .pantsRoom : CMP #$D6FD : BNE .done
+    ; Several rooms need to be handled before the door scroll
+    LDA !ROOM_ID : CMP #$CF80 : BEQ .eastTunnel
+    CMP #$D646 : BEQ .pantsRoom : CMP #$D6FD : BNE .done
 
-    ; Aqueduct Farm Sand Pit needs to be handled before the door scroll
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ .done
     JSL layout_asm_aqueductfarmsandpit_external
 
   .done
     JMP $E38E
 
+  .eastTunnel
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ .done
+    JSL layout_asm_easttunnel_external
+    JMP $E38E
+
   .pantsRoom
-    ; Pants Room needs to be handled before the door scroll
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_DASH_RECALL : BEQ .done
     JSL layout_asm_pants_external
     JMP $E38E
@@ -305,7 +310,7 @@ hijack_door_closing_plm:
 }
 
 print pc, " layout bank82 end"
-warnpc $82FA00 ; presets.asm
+warnpc $82FA80 ; presets.asm
 
 
 ; Crateria Kihunters bottom door
@@ -1005,6 +1010,28 @@ layout_swap_left_right:
 }
 
 ; Migrate longer ASM methods or methods that require external bank access to bank 83
+layout_asm_easttunnel_external:
+{
+    ; Decorate vertical shaft
+    %a8()
+    LDA #$22 : STA $7F070A : STA $7F070E
+    STA $7F078A : STA $7F078E : STA $7F080A : STA $7F080E
+    STA $7F088A : STA $7F088E : STA $7F090A : STA $7F090E
+    STA $7F098A : STA $7F098E : STA $7F0A0A : STA $7F0A0E
+    LDA #$85 : STA $7F078B : STA $7F080B : STA $7F088B
+    STA $7F090B : STA $7F098B : STA $7F0A0B
+    STA $7F0A8A : STA $7F0A8E
+    LDA #$8D : STA $7F0A8B
+
+    ; Remove blocks from vertical shaft
+    %a16()
+    LDA #$00FF : STA $7F078C : STA $7F088C : STA $7F090C
+    STA $7F098C : STA $7F0A0C : STA $7F0A8C
+    ; Careful with the block that is also a scroll block
+    LDA #$30FF : STA $7F080C
+    RTL
+}
+
 layout_asm_plasma_external:
 {
     ; Add platform and surrounding decoration
@@ -2255,26 +2282,10 @@ layout_asm_easttunnel:
     LDA #$00FF : STA $7F02AE : STA $7F02B0
     STA $7F032E : STA $7F03AE : STA $7F042E : STA $7F04AE
 
-    ; Remove blocks from vertical shaft
-    STA $7F078C : STA $7F088C : STA $7F090C
-    STA $7F098C : STA $7F0A0C : STA $7F0A8C
-    ; Careful with the block that is also a scroll block
-    LDA #$30FF : STA $7F080C
-
     ; Normal BTS for gate tiles
     %a8()
     LDA #$00 : STA $7F6558 : STA $7F6559
     STA $7F6598 : STA $7F65D8 : STA $7F6618 : STA $7F6658
-
-    ; Decorate vertical shaft
-    LDA #$22 : STA $7F070A : STA $7F070E
-    STA $7F078A : STA $7F078E : STA $7F080A : STA $7F080E
-    STA $7F088A : STA $7F088E : STA $7F090A : STA $7F090E
-    STA $7F098A : STA $7F098E : STA $7F0A0A : STA $7F0A0E
-    LDA #$85 : STA $7F078B : STA $7F080B : STA $7F088B
-    STA $7F090B : STA $7F098B : STA $7F0A0B
-    STA $7F0A8A : STA $7F0A8E
-    LDA #$8D : STA $7F0A8B
 }
 
 layout_asm_easttunnel_done:

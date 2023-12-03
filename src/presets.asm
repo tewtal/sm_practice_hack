@@ -1,4 +1,4 @@
-org $82FA00
+org $82FA80
 print pc, " presets bank82 start"
 
 preset_load:
@@ -486,11 +486,16 @@ endif
 
     ; Fix BG2 Y offsets for rooms with scrolling sky
     ; Also fix rooms that need to be handled before door scroll
-    LDA !ROOM_ID : CMP #$D646 : BEQ .pantsRoom
-    CMP #$D6FD : BEQ .aqueductFarmsAndPitRoom
+    LDA !ROOM_ID : CMP #$CF80 : BEQ .eastTunnel
+    CMP #$D646 : BEQ .pantsRoom : CMP #$D6FD : BEQ .aqueductFarmsAndPitRoom
     CMP #$91F8 : BEQ .bg_offsets_scrolling_sky
     CMP #$93FE : BEQ .bg_offsets_scrolling_sky
     CMP #$94FD : BEQ .bg_offsets_scrolling_sky
+    BRA .bg_offsets_calculated
+
+  .eastTunnel
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ .bg_offsets_calculated
+    JSL layout_asm_easttunnel_external
     BRA .bg_offsets_calculated
 
   .pantsRoom
