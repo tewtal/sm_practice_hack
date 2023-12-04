@@ -42,6 +42,7 @@ pushpc
 
 ; Hijack generic crash handler
 org $808573
+hook_crash_handler:
     JML CrashHandler
 
 ; Hijack native COP vector
@@ -719,8 +720,8 @@ CrashMemViewer:
     ; highlight selected byte
     %a16()
     LDA $C1 : CMP !ram_crash_temp : BNE .incLower
-    LDA !ram_tilemap_buffer,X : ORA #$1000 : STA !ram_tilemap_buffer,X
-    LDA !ram_tilemap_buffer+2,X : ORA #$1000 : STA !ram_tilemap_buffer+2,X
+    LDA !CRASHDUMP_TILEMAP_BUFFER,X : ORA #$1000 : STA !CRASHDUMP_TILEMAP_BUFFER,X
+    LDA !CRASHDUMP_TILEMAP_BUFFER+2,X : ORA #$1000 : STA !CRASHDUMP_TILEMAP_BUFFER+2,X
 
   .incLower
     ; inc address and tilemap position
@@ -767,8 +768,8 @@ CrashMemViewer:
     ; highlight selected byte
     %a16()
     LDA $41 : CMP !ram_crash_temp : BNE .incUpper
-    LDA !ram_tilemap_buffer,X : ORA #$1000 : STA !ram_tilemap_buffer,X
-    LDA !ram_tilemap_buffer+2,X : ORA #$1000 : STA !ram_tilemap_buffer+2,X
+    LDA !CRASHDUMP_TILEMAP_BUFFER,X : ORA #$1000 : STA !CRASHDUMP_TILEMAP_BUFFER,X
+    LDA !CRASHDUMP_TILEMAP_BUFFER+2,X : ORA #$1000 : STA !CRASHDUMP_TILEMAP_BUFFER+2,X
 
   .incUpper
     ; inc address and tilemap position
@@ -844,11 +845,9 @@ CrashInfo:
     LDA.w #CrashTextInfo9>>16 : STA !ram_crash_text_bank
     LDX #$048A : JSR crash_draw_text
 
-if !FEATURE_SD2SNES
     LDA.w #CrashTextInfo10 : STA !ram_crash_text
     LDA.w #CrashTextInfo10>>16 : STA !ram_crash_text_bank
     LDX #$0546 : JSR crash_draw_text
-endif
 
     LDA.w #CrashTextInfo11 : STA !ram_crash_text
     LDA.w #CrashTextInfo11>>16 : STA !ram_crash_text_bank
@@ -1072,16 +1071,44 @@ crash_read_inputs:
 ; ------------
 
 CrashTextHeader:
+    ; Build the header using build version
+    ; Assumes numbers are kept in the $70-$79 range of the table
     table ../resources/header.tbl
-if !VERSION_REV_1
-    db "CRASH HANDLER ", "!VERSION_MAJOR", ".", "!VERSION_MINOR", ".", "!VERSION_BUILD", ".", "!VERSION_REV_1", "!VERSION_REV_2", #$FF
+if !VERSION_MAJOR > 9
+    error Major version 10 or greater not supported
 else
-if !VERSION_REV_2
-    db "CRASH HANDLER ", "!VERSION_MAJOR", ".", "!VERSION_MINOR", ".", "!VERSION_BUILD", ".", "!VERSION_REV_2", #$FF
+    db "CRASH HANDLER ", #($70+!VERSION_MAJOR)
+endif
+if !VERSION_MINOR > 19
+    error Minor version 20 or greater not supported, consider incrementing major version
 else
-    db "CRASH HANDLER ", "!VERSION_MAJOR", ".", "!VERSION_MINOR", ".", "!VERSION_BUILD", #$FF
+if !VERSION_MINOR > 9
+    db ".1", #($66+!VERSION_MINOR)
+else
+    db ".", #($70+!VERSION_MINOR)
 endif
 endif
+if !VERSION_BUILD > 19
+    error Build 20 or greater not supported, consider incrementing minor version
+else
+if !VERSION_BUILD > 9
+    db ".1", #($66+!VERSION_BUILD)
+else
+    db ".", #($70+!VERSION_BUILD)
+endif
+endif
+if !VERSION_REV > 19
+    error Revision 20 or greater not supported, consider incrementing build and/or minor version
+else
+if !VERSION_REV > 9
+    db ".1", #($66+!VERSION_REV)
+else
+if !VERSION_REV
+    db ".", #($70+!VERSION_REV)
+endif
+endif
+endif
+    db #$FF
     table ../resources/normal.tbl
 
 CrashTextFooter1:
@@ -1156,9 +1183,11 @@ CrashTextInfo8:
 CrashTextInfo9:
     db "wiki.supermetroid.run", #$FF
 
-if !FEATURE_SD2SNES
 CrashTextInfo10:
+if !FEATURE_SD2SNES
     db "FXPAK users can load state", #$FF
+else
+    db #$FF
 endif
 
 CrashTextInfo11:

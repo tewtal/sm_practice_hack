@@ -27,21 +27,41 @@ else
 org $8BF754
 endif
 hook_version_data:
+if !VERSION_MAJOR > 9
+    error Major version 10 or greater not supported
+else
     db #$20, #($30+!VERSION_MAJOR)
+endif
+if !VERSION_MINOR > 19
+    error Minor version 20 or greater not supported, consider incrementing major version
+else
+if !VERSION_MINOR > 9
+    db #$2E, #$31, #($26+!VERSION_MINOR)
+else
     db #$2E, #($30+!VERSION_MINOR)
+endif
+endif
+if !VERSION_BUILD > 19
+    error Build 20 or greater not supported, consider incrementing minor version
+else
+if !VERSION_BUILD > 9
+    db #$2E, #$31, #($26+!VERSION_BUILD)
+else
     db #$2E, #($30+!VERSION_BUILD)
-if !VERSION_REV_1
-    db #$2E, #($30+!VERSION_REV_1)
-    db #($30+!VERSION_REV_2)
-    db #$20, #$20
-else
-if !VERSION_REV_2
-    db #$2E, #($30+!VERSION_REV_2)
-    db #$20, #$20, #$20
-else
-    db #$20, #$20, #$20, #$20, #$20
 endif
 endif
+if !VERSION_REV > 19
+    error Revision 20 or greater not supported, consider incrementing build and/or minor version
+else
+if !VERSION_REV > 9
+    db #$2E, #$31, #($26+!VERSION_REV)
+else
+if !VERSION_REV
+    db #$2E, #($30+!VERSION_REV)
+endif
+endif
+endif
+    db #$00
 
 
 ; Fix Zebes planet tiling error
