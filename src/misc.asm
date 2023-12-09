@@ -406,6 +406,11 @@ spacetime_routine:
     INX : INX : INY : INY
     CPX #($7EEF78-$7EC1C0) : BMI .loop_before_sprite_object_ram
 
+    ; Check if we are copying from unmapped memory ($004500-$007FFF range)
+    ; If not then overwrite sprite object ram
+    TYA : ADC $00 : CMP #$4500 : BCC .overwrite_sprite_object_ram
+    CMP #$7C01 : BCS .overwrite_sprite_object_ram
+
     ; Skip over sprite object ram
     ; Instead of load and store, load and load
   .loop_skip_sprite_object_ram
@@ -435,6 +440,11 @@ spacetime_routine:
     ; Check if we finished spacetime while skipping over WRAM
     CPY #$0020 : BMI .normal_load_loop
     RTS
+
+  .overwrite_sprite_object_ram
+    ; Check if Y will cause us to reach WRAM
+    TYA : CLC : ADC #(!WRAM_START-$7EEF98) : CMP #$0000 : BPL .normal_load_loop
+    BRA .loop_before_wram
 }
 endif
 
