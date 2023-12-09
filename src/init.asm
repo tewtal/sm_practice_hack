@@ -5,7 +5,6 @@ org $808455
 
 
 ; hijack when clearing bank 7E
-if !PRESERVE_WRAM_DURING_SPACETIME
 org $808490
     PHA
     LDX #$3FFE
@@ -24,7 +23,6 @@ warnpc $8084AF
 
 org $8084AF
   .end_clear_bank
-endif
 
 
 org $81F000
@@ -43,19 +41,6 @@ init_code:
     JSR init_sram
 
   .sram_initialized
-if !PRESERVE_WRAM_DURING_SPACETIME
-    ; WRAM located in bank 7E, clear it later
-else
-    ; Clear WRAM
-    LDA #$0000
-    LDX !WRAM_SIZE-2
-  .wram_loop
-    STA !WRAM_START,X
-    DEX : DEX : BPL .wram_loop
-
-    JSL init_nonzero_wram
-endif
-
     PLA
     ; Execute overwritten logic and return
 if !FEATURE_PAL

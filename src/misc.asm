@@ -72,7 +72,7 @@ zebes_planet_tile_data:
 
 if !PRESERVE_WRAM_DURING_SPACETIME
 org $90ACF6
-    JSR original_load_projectile_palette
+    JSR original_load_beam_palette
 
 org $90AD18
     JMP spacetime_routine
@@ -331,7 +331,7 @@ stop_all_sounds:
 
 
 if !PRESERVE_WRAM_DURING_SPACETIME
-original_load_projectile_palette:
+original_load_beam_palette:
 {
     AND #$0FFF : ASL : TAY
     LDA #$0090 : XBA : STA $01
@@ -356,30 +356,35 @@ spacetime_routine:
     ; Sanity check that X is 0 (if not then do the original routine)
     CPX #$0000 : BNE .normal_load_palette
 
-    ; Spacetime
-    LDA $00 : STA !ram_spacetime_read_address
-    LDA $02 : STA !ram_spacetime_read_bank
-    TYA : DEC : DEC : STA !ram_spacetime_y
-
     ; Check if Y will cause us to reach infohud
-    CLC : ADC #($7EC608-$7EC1E0) : CMP #$0000 : BPL .normal_load_palette
+    TYA : CLC : ADC #($7EC608-$7EC1E2) : CMP #$0000 : BPL .normal_load_palette
 
-    ; It will, so run our own loop
+    ; We will reach infohud, so run our own loop
     INX : INX
   .loop_before_infohud
     LDA [$00],Y
     STA $7EC1C0,X
     INX : INX : INY : INY
     CPX #($7EC608-$7EC1C0) : BMI .loop_before_infohud
- 
-    ; Check if we should skip over infohud
-    LDA !ram_spacetime_infohud : BEQ .check_wram_overwrite_infohud
 
-    ; Skip over infohud and check for wram
-    TXA : CLC : ADC #($7EC6C8-$7EC608) : TAX
-    TYA : CLC : ADC #($7EC6C8-$7EC608) : TAY
-    CPY #$0020 : BMI .check_wram
+    ; Check if we should skip over infohud
+    LDA !ram_spacetime_infohud : BEQ .overwrite_infohud
+
+    ; Skip over infohud
+    ; Instead of load and store, load and load
+  .loop_skip_infohud
+    LDA $7EC1C0,X
+    LDA [$00],Y
+    INX : INX : INY : INY
+    CPX #($7EC6C8-$7EC1C0) : BMI .loop_skip_infohud
+
+    ; Check if we finished spacetime while skipping over infohud
+    CPY #$0020 : BMI .check_sprite_object_ram
     RTS
+
+  .overwrite_infohud
+    ; Check if Y will cause us to reach sprite object ram
+    TYA : CLC : ADC #($7EEF78-$7EC628) : CMP #$0000 : BMI .loop_before_sprite_object_ram
 
   .normal_load_loop
     LDA [$00],Y
@@ -390,14 +395,27 @@ spacetime_routine:
     CPY #$0020 : BMI .normal_load_loop
     RTS
 
-  .check_wram_overwrite_infohud
-    ; Check if Y will cause us to reach WRAM
-    TYA : CLC : ADC #(!WRAM_START-$7EC62A) : CMP #$0000 : BPL .normal_load_palette
-    BRA .loop_before_wram
+  .check_sprite_object_ram
+    ; Check if Y will cause us to reach sprite object ram
+    TYA : CLC : ADC #($7EEF78-$7EC6E8) : CMP #$0000 : BPL .normal_load_loop
 
-  .check_wram
+    ; We will reach sprite object ram, so run our own loop
+  .loop_before_sprite_object_ram
+    LDA [$00],Y
+    STA $7EC1C0,X
+    INX : INX : INY : INY
+    CPX #($7EEF78-$7EC1C0) : BMI .loop_before_sprite_object_ram
+
+    ; Skip over sprite object ram
+    ; Instead of load and store, load and load
+  .loop_skip_sprite_object_ram
+    LDA $7EC1C0,X
+    LDA [$00],Y
+    INX : INX : INY : INY
+    CPX #($7EF378-$7EC1C0) : BMI .loop_skip_sprite_object_ram
+
     ; Check if Y will cause us to reach WRAM
-    TYA : CLC : ADC #(!WRAM_START-$7EC6EA) : CMP #$0000 : BPL .normal_load_palette
+    TYA : CLC : ADC #(!WRAM_START-$7EF398) : CMP #$0000 : BPL .normal_load_loop
 
     ; It will, so run our own loop
   .loop_before_wram
@@ -406,9 +424,15 @@ spacetime_routine:
     INX : INX : INY : INY
     CPX #(!WRAM_START-$7EC1C0) : BMI .loop_before_wram
 
-    ; Skip over WRAM and resume normal loop
-    TXA : CLC : ADC !WRAM_SIZE : TAX
-    TYA : CLC : ADC !WRAM_SIZE : TAY
+    ; Skip over WRAM
+    ; Instead of load and store, load and load
+  .loop_skip_wram
+    LDA $7EC1C0,X
+    LDA [$00],Y
+    INX : INX : INY : INY
+    CPX #(!WRAM_END-$7EC1C0) : BMI .loop_skip_wram
+
+    ; Check if we finished spacetime while skipping over WRAM
     CPY #$0020 : BMI .normal_load_loop
     RTS
 }

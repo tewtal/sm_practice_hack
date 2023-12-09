@@ -9,6 +9,7 @@
 !WRAM_BANK = #$007E
 !WRAM_SIZE = #$0200
 !WRAM_START = $7EFD00
+!WRAM_END = $7EFF00
 
 ; These variables are NOT PERSISTENT across savestates --
 ; they're saved and reloaded along with the game state.
@@ -58,44 +59,39 @@
 
 !ram_room_has_set_rng               = !WRAM_START+$42
 
-!ram_spacetime_read_address         = !WRAM_START+$44
-!ram_spacetime_read_bank            = !WRAM_START+$46
-!ram_spacetime_y                    = !WRAM_START+$48
+!ram_watch_left_hud                 = !WRAM_START+$44
+!ram_watch_right_hud                = !WRAM_START+$46
 
-!ram_watch_left_hud                 = !WRAM_START+$4A
-!ram_watch_right_hud                = !WRAM_START+$4C
+!ram_HUD_check                      = !WRAM_START+$48
+!ram_roomstrat_counter              = !WRAM_START+$4A
+!ram_roomstrat_state                = !WRAM_START+$4C
+!ram_enemy_hp                       = !WRAM_START+$4E
+!ram_mb_hp                          = !WRAM_START+$50
+!ram_shot_timer                     = !WRAM_START+$52
+!ram_shine_counter                  = !WRAM_START+$54
+!ram_dash_counter                   = !WRAM_START+$56
+!ram_shinetune_early_1              = !WRAM_START+$58
+!ram_shinetune_late_1               = !WRAM_START+$5A
+!ram_shinetune_early_2              = !WRAM_START+$5C
+!ram_shinetune_late_2               = !WRAM_START+$5E
+!ram_shinetune_early_3              = !WRAM_START+$60
+!ram_shinetune_late_3               = !WRAM_START+$62
+!ram_shinetune_early_4              = !WRAM_START+$64
+!ram_shinetune_late_4               = !WRAM_START+$66
+!ram_shine_dash_held_late           = !WRAM_START+$68
+!ram_xpos                           = !WRAM_START+$6A
+!ram_ypos                           = !WRAM_START+$6C
+!ram_subpixel_pos                   = !WRAM_START+$6E
+!ram_horizontal_speed               = !WRAM_START+$70
+!ram_vertical_speed                 = !WRAM_START+$72
+!ram_quickdrop_counter              = !WRAM_START+$74
+!ram_walljump_counter               = !WRAM_START+$76
+!ram_fail_sum                       = !WRAM_START+$78
+!ram_fail_count                     = !WRAM_START+$7A
 
-!ram_HUD_check                      = !WRAM_START+$4E
-!ram_roomstrat_counter              = !WRAM_START+$50
-!ram_roomstrat_state                = !WRAM_START+$52
-!ram_enemy_hp                       = !WRAM_START+$54
-!ram_mb_hp                          = !WRAM_START+$56
-!ram_shot_timer                     = !WRAM_START+$58
-!ram_shine_counter                  = !WRAM_START+$5A
-!ram_dash_counter                   = !WRAM_START+$5C
-!ram_shinetune_early_1              = !WRAM_START+$5E
-!ram_shinetune_late_1               = !WRAM_START+$60
-!ram_shinetune_early_2              = !WRAM_START+$62
-!ram_shinetune_late_2               = !WRAM_START+$64
-!ram_shinetune_early_3              = !WRAM_START+$66
-!ram_shinetune_late_3               = !WRAM_START+$68
-!ram_shinetune_early_4              = !WRAM_START+$6A
-!ram_shinetune_late_4               = !WRAM_START+$6C
-!ram_shine_dash_held_late           = !WRAM_START+$6E
-!ram_xpos                           = !WRAM_START+$70
-!ram_ypos                           = !WRAM_START+$72
-!ram_subpixel_pos                   = !WRAM_START+$74
-!ram_horizontal_speed               = !WRAM_START+$76
-!ram_vertical_speed                 = !WRAM_START+$78
-!ram_quickdrop_counter              = !WRAM_START+$7A
-!ram_walljump_counter               = !WRAM_START+$7C
-!ram_fail_sum                       = !WRAM_START+$7E
-!ram_fail_count                     = !WRAM_START+$80
-
-!ram_auto_save_state                = !WRAM_START+$82
-!ram_lag_counter                    = !WRAM_START+$84
-
-!ram_kraid_adjust_timer             = !WRAM_START+$86
+!ram_auto_save_state                = !WRAM_START+$7C
+!ram_lag_counter                    = !WRAM_START+$7E
+!ram_kraid_adjust_timer             = !WRAM_START+$80
 
 !WRAM_PERSIST_START = !ram_kraid_adjust_timer+$02
 ; ----------------------------------------------------------
@@ -161,7 +157,7 @@
 !ram_itempickups_hidden             = !WRAM_PERSIST_START+$62
 !ram_frames_held                    = !WRAM_PERSIST_START+$64
 
-; ^ FREE SPACE ^ up to +$76 (!WRAM_START+$FC - !WRAM_PERSIST_START)
+; ^ FREE SPACE ^ up to +$7A (!WRAM_START+$FC - !WRAM_PERSIST_START)
 
 ; -----------------------
 ; RAM (Bank 7E required)
