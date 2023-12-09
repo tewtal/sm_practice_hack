@@ -45,7 +45,7 @@ layout_create_plms_execute_asm_fixes:
     TXA : CLC : ADC #$0006 : TAX
     BRA .vanilla
   .endPLMs
-    JSL $8FE8A3
+    JSL layout_skip_custom_door_asm
     JSL preset_room_setup_asm_fixes
     PLB : PLP : RTL
 }
@@ -1899,7 +1899,7 @@ layout_execute_setup_asm_elevator_check:
     LDA #$0002 : STA !ELEVATOR_STATUS
 layout_execute_setup_asm_end:
     PLB : PLP : RTL
-warnpc $8FE8EB
+warnpc $8FE8A3
 
 
 org $8FEA00
@@ -1912,6 +1912,25 @@ layout_east_ocean_library_background_table:
     dw $4800, $0800, $000E, $A264
     dl $8AD980
     dw $4800, $0800, $0000
+
+; Vanilla logic except skip over the custom door asm
+layout_skip_custom_door_asm:
+{
+    PHP : PHB
+    %ai16()
+    LDA !DOOR_ID : BIT #$4000 : BNE .custom
+    TAX : LDA $83000A,X : BEQ .done
+
+  .execute
+    JMP $E8B0
+
+  .custom
+    ; Execute another door asm if necessary
+    TAX : LDA $830010,X : BNE .execute
+
+  .done
+    PLB : PLP : RTL
+}
 
 layout_asm_vanilla_parlor_escape:
 {
@@ -3320,8 +3339,10 @@ endif
 
   .setPos
     ; Set Samus position
-    LDA $83000C,X : STA !SAMUS_X
-    LDA $83000E,X : STA !SAMUS_Y
+    LDA $83000C,X : STA !SAMUS_X : STA !SAMUS_PREVIOUS_X
+    LDA $83000E,X : STA !SAMUS_Y : STA !SAMUS_PREVIOUS_Y
+    LDA !SAMUS_X_SUBPX : STA !SAMUS_PREVIOUS_X_SUBPX
+    LDA !SAMUS_Y_SUBPX : STA !SAMUS_PREVIOUS_Y_SUBPX
 
     ; Clear BG2 VRAM flag in case we are exiting croc
     STZ !ENEMY_BG2_VRAM_TRANSFER_FLAG

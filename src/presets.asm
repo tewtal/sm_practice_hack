@@ -409,8 +409,10 @@ preset_start_gameplay:
     STA !SAMUS_POTENTIAL_POSE_VALUES+2 : STA !SAMUS_POTENTIAL_POSE_VALUES+4
 
     ; Set Samus last position same as current position
-    LDA !SAMUS_X : STA $0B10 : LDA !SAMUS_X_SUBPX : STA $0B12
-    LDA !SAMUS_Y : STA $0B14 : LDA !SAMUS_Y_SUBPX : STA $0B16
+    LDA !SAMUS_X : STA !SAMUS_PREVIOUS_X
+    LDA !SAMUS_X_SUBPX : STA !SAMUS_PREVIOUS_X_SUBPX
+    LDA !SAMUS_Y : STA !SAMUS_PREVIOUS_Y
+    LDA !SAMUS_Y_SUBPX : STA !SAMUS_PREVIOUS_Y_SUBPX
 
     ; Set loading game state for Ceres
     LDA #$001F : STA $7ED914
