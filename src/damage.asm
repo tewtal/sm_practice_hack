@@ -8,6 +8,28 @@ org $8DE37C
 warnpc $8DE394
 
 
+; Lava suit check
+org $9081DB
+    ; The AND/CMP replaces a BIT operation
+    ; Everything else is vanilla but needs to be shifted down three bytes
+    AND !SAMUS_LAVA_DAMAGE_SUITS
+    CMP !SAMUS_LAVA_DAMAGE_SUITS : BEQ $2C
+    LDA $09DA : BIT #$0007 : BNE $0F
+    LDA $09C2 : CMP #$0047 : BMI $07
+    LDA #$002D : JSL $809139
+    LDA $0A4E : CLC : ADC $9E8B : STA $0A4E
+    LDA $0A50 : ADC $9E8D
+    ; Originally STA $0A50 and BRA $40 to $90824C
+    ; Conveniently the command at $908249 is STA $0A50 so we can save three bytes
+    BRA $3D
+warnpc $90820C
+
+org $90B8E8
+    JSL damage_init_beam
+
+org $90B9E2
+    JSL damage_init_beam
+
 ; We now have three separate periodic damage routines,
 ; so we need to load an index to jump to the correct routine
 org $90E72B
@@ -147,6 +169,7 @@ else
 endif
     dw periodic_damage_balanced
     dw periodic_damage_progressive
+    dw periodic_damage_complementary
     dw periodic_damage_dash_recall
     dw periodic_damage_heat_shield
 
@@ -184,6 +207,41 @@ endif
 
     LDA $09A2 : BIT #$0020 : BEQ .nogravity
     ; Gravity equipped, so halve damage
+    LDA $0A4F : LSR
+    PHA : XBA : AND #$FF00 : STA $0A4E
+    PLA : XBA : AND #$00FF : STA $0A50
+
+  .nogravity
+    LDA $09A2 : BIT #$0001 : BEQ .novaria
+    ; Varia equipped, so halve damage
+    LDA $0A4F : LSR
+    PHA : XBA : AND #$FF00 : STA $0A4E
+    PLA : XBA : AND #$00FF : STA $0A50
+
+  .novaria
+    ; Jump back into the vanilla routine
+if !FEATURE_PAL
+    JMP $EA0E
+else
+    JMP $EA11
+endif
+}
+
+periodic_damage_complementary:
+{
+    PHP : REP #$30
+    LDA $0A78 : BEQ $03
+    ; Nothing to do, jump back to vanilla routine
+if !FEATURE_PAL
+    JMP $EA32
+else
+    JMP $EA35
+endif
+
+    LDA $09A2 : BIT #$0020 : BEQ .nogravity
+    ; Gravity equipped, so halve damage
+    ; unless this is just heat damage
+    LDA $0A4E : CMP #$4000 : BEQ .nogravity
     LDA $0A4F : LSR
     PHA : XBA : AND #$FF00 : STA $0A4E
     PLA : XBA : AND #$00FF : STA $0A50
@@ -320,13 +378,6 @@ endif
     PLB : PLP : RTL
 
 print pc, " damage bank90 end"
-
-
-org $90B8E8
-    JSL damage_init_beam
-
-org $90B9E2
-    JSL damage_init_beam
 
 
 org $93F61D

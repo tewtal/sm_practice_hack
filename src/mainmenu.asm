@@ -1981,6 +1981,7 @@ misc_suit_properties:
     db #$28, "    VANILLA", #$FF
     db #$28, "   BALANCED", #$FF
     db #$28, "   PROGRESS", #$FF
+    db #$28, " COMPLEMENT", #$FF
     db #$28, " DASHRECALL", #$FF
     db #$28, " HEATSHIELD", #$FF
     db #$FF
@@ -1993,7 +1994,8 @@ init_suit_properties_ram:
 
     LDA !sram_suit_properties : CMP #$0002 : BMI .init_heat_damage
 
-    ; Progressive and DASH give less enemy damage protection to gravity
+    ; Progressive, Complementary, and DASH Recall/Heat Shield
+    ; give less enemy damage protection to gravity
     LDA #$0001 : STA !ram_suits_enemy_damage_check
 
   .init_heat_damage
@@ -2008,13 +2010,20 @@ init_suit_properties_ram:
 
 init_heat_damage_ram:
 {
+    ; Default to gravity provides lava protection
+    LDA #$0020 : STA !SAMUS_LAVA_DAMAGE_SUITS
+
     ; Default to 0.25 damage per frame
     LDA #$4000 : STA !ram_suits_heat_damage_value
-    LDA !sram_suit_properties : CMP #$0003 : BPL .dash_recall
+
+    LDA !sram_suit_properties : CMP #$0004 : BPL .dash_recall
+    CMP #$0003 : BEQ .complementary
     RTL
 
-    ; Check if heat shield is actually equipped
-    LDA $09A2 : BIT #$0001 : BNE .heat_shield
+  .complementary
+    ; Both varia and gravity required for lava protection
+    LDA #$0021 : STA !SAMUS_LAVA_DAMAGE_SUITS
+    RTL
 
   .dash_recall
     BNE .heat_shield
@@ -2022,9 +2031,11 @@ init_heat_damage_ram:
     ; If no gravity than nothing to do
     LDA $09A2 : BIT #$0020 : BEQ .end
 
-    ; Without heat shield but with gravity we want damage to be 75%
+    ; Without heat shield but with gravity we want heat damage to be 75%
     ; Since damage is halved by gravity we'll set it to 150%
     LDA #$6000 : STA !ram_suits_heat_damage_value
+
+  .end
     RTL
 
   .heat_shield
@@ -2040,8 +2051,6 @@ init_heat_damage_ram:
 
   .no_damage
     TDC : STA !ram_suits_heat_damage_value
-
-  .end
     RTL
 }
 
