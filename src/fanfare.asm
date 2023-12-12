@@ -180,11 +180,6 @@ hook_message_box_wait:
     DEX
     BNE .nofanfareloop
 
-    %a16()
-    LDY #328
-    JSL ih_adjust_realtime
-    %a8()
-
     RTS
 
   .fanfareloop       ; original logic

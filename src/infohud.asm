@@ -209,7 +209,7 @@ ih_get_item_code:
     LDA $14 : PHA
 
     ; check if segment timer should be reset
-    LDA !ram_reset_segment_later : BPL .update_HUD
+    LDA !ram_reset_segment_later : BPL .fanfare_timing
     LDA !sram_frame_counter_mode : BEQ .reset_RTA
     STZ !IGT_FRAMES : STZ !IGT_SECONDS
     STZ !IGT_MINUTES : STZ !IGT_HOURS
@@ -218,7 +218,11 @@ ih_get_item_code:
     LDA #$0000 : STA !ram_reset_segment_later : STA !ram_lag_counter
     STA !ram_seg_rt_frames : STA !ram_seg_rt_seconds : STA !ram_seg_rt_minutes
 
-  .update_HUD
+  .fanfare_timing
+    PHY
+    LDY #328 : JSL ih_adjust_realtime
+    PLY
+
     JSL ih_update_hud_code
     JSL init_heat_damage_ram
     JSL init_physics_ram
