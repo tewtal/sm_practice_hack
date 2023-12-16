@@ -61,8 +61,8 @@ status_roomstrat:
 
 status_chargetimer:
 {
-    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_SHOOT : BNE .pressedShot
-    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_SHOOT : BNE .charging
+    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_SHOT : BNE .pressedShot
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_SHOT : BNE .charging
 
     ; count up to 36 frames of shot released
     LDA !ram_shot_timer : CMP #$0024 : BPL .reset
@@ -112,10 +112,12 @@ status_cooldowncounter:
 
 status_shinetimer:
 {
-    LDA !ram_armed_shine_duration : CMP !ram_shine_counter : BEQ .done
-    STA !ram_shine_counter : BNE .charge : LDA #$00B4
+    LDA !ram_armed_shine_duration : CMP !ram_HUD_check : BEQ .done
+    TAX : BNE .draw ; TAX refreshes flags
+    LDA #$00B4 ; draw 180 if zero
 
-  .charge
+  .draw
+    STA !ram_HUD_check
     LDX #$0088 : JSR Draw4
 
   .done
@@ -1349,7 +1351,7 @@ status_armpump:
 
 status_shottimer:
 {
-    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_SHOOT : BEQ .inc
+    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_SHOT : BEQ .inc
     LDA !ram_shot_timer : LDX #$0088 : JSR Draw4
     LDA #$0000 : STA !ram_shot_timer
 
@@ -1869,7 +1871,7 @@ endif
 status_gateglitch:
 {
     ; Arbitrarily expecting shot and gate events to be within 20 frames of each other
-    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_SHOOT : BEQ .incshot
+    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_SHOT : BEQ .incshot
 
     ; Clear shot counter when shot fired
     LDA #$0000 : STA !ram_shot_timer
@@ -2141,10 +2143,12 @@ status_shinetopb:
     ; Suppress Samus HP display
     LDA !SAMUS_HP : STA !ram_last_hp
 
-    LDA !ram_armed_shine_duration : CMP !ram_shine_counter : BEQ .clearcounter
-    STA !ram_shine_counter : BNE .charge : LDA #$00B4
+    LDA !ram_armed_shine_duration : CMP !ram_HUD_check : BEQ .clearcounter
+    TAX : BNE .draw ; TAX refreshes flags
+    LDA #$00B4 ; draw 180 if zero
 
-  .charge
+  .draw
+    STA !ram_HUD_check
     LDX #$0088 : JSR Draw4
 
     ; If we just charged the spark, time to start checking for the power bomb

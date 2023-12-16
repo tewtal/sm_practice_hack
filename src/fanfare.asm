@@ -180,28 +180,6 @@ hook_message_box_wait:
     DEX
     BNE .nofanfareloop
 
-    LDA !sram_fanfare : BIT !FANFARE_ADJUST_REALTIME_8BIT : BEQ .done
-    %a16()
-    LDA !ram_realtime_room : CLC : ADC #$0148 : STA !ram_realtime_room
-
-    ; adding 5:28 to seg timer
-    STZ $12
-    LDA !ram_seg_rt_frames : CLC : ADC #$001C : STA !ram_seg_rt_frames
-    CMP #$003C : BMI .add_seconds
-    SEC : SBC #$003C : STA !ram_seg_rt_frames : INC $12
-
-  .add_seconds
-    LDA !ram_seg_rt_seconds : CLC : ADC #$0005 : ADC $12 : STA !ram_seg_rt_seconds
-    STZ $12
-    CMP #$003C : BMI .add_minutes
-    SEC : SBC #$003C : STA !ram_seg_rt_seconds : INC $12
-
-  .add_minutes
-    LDA $12 : BEQ .done
-    CLC : ADC !ram_seg_rt_minutes : STA !ram_seg_rt_minutes
-
-  .done
-    %a8()
     RTS
 
   .fanfareloop       ; original logic

@@ -4,7 +4,7 @@ import os
 import sys
 
 if len(sys.argv) != 5:
-   print("create_portals.py <input> <menu_template> <menu_output> <table_output>")
+   print("create_layout.py <input> <menu_template> <menu_output> <table_output>")
    sys.exit()
 
 input_txt = sys.argv[1]

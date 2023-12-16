@@ -227,6 +227,11 @@ endif
     SEC : RTS
 
   .reset_segment_timer
+    LDA !sram_frame_counter_mode : BEQ .reset_segment_timer_rta
+    STZ !IGT_FRAMES : STZ !IGT_SECONDS
+    STZ !IGT_MINUTES : STZ !IGT_HOURS
+
+  .reset_segment_timer_rta
     LDA #$0000 : STA !ram_seg_rt_frames
     STA !ram_seg_rt_seconds : STA !ram_seg_rt_minutes
     ; CLC to continue normal gameplay after resetting segment timer

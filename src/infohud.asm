@@ -73,6 +73,20 @@ endif
     JSL ih_elevator_activation
 
 if !FEATURE_PAL
+org $A490BD
+else             ; hijack, runs on music changes during Crocomire fight
+org $A490AD
+endif
+    JSL ih_croc_segments
+
+if !FEATURE_PAL
+org $A497F0
+else             ; hijack, runs on music changes during Crocomire fight
+org $A497E0
+endif
+    JSL ih_croc_segments
+
+if !FEATURE_PAL
 org $A9F053
 else             ; hijack, runs when the screen locks to start the hopper/baby cutscene
 org $A9F006
@@ -195,11 +209,20 @@ ih_get_item_code:
     LDA $14 : PHA
 
     ; check if segment timer should be reset
-    LDA !ram_reset_segment_later : BPL .update_HUD
+    LDA !ram_reset_segment_later : BPL .fanfare_timing
+    LDA !sram_frame_counter_mode : BEQ .reset_RTA
+    STZ !IGT_FRAMES : STZ !IGT_SECONDS
+    STZ !IGT_MINUTES : STZ !IGT_HOURS
+
+  .reset_RTA
     LDA #$0000 : STA !ram_reset_segment_later : STA !ram_lag_counter
     STA !ram_seg_rt_frames : STA !ram_seg_rt_seconds : STA !ram_seg_rt_minutes
 
-  .update_HUD
+  .fanfare_timing
+    PHY
+    LDY #328 : JSL ih_adjust_realtime
+    PLY
+
     JSL ih_update_hud_code
     JSL init_heat_damage_ram
     JSL init_physics_ram
@@ -347,6 +370,16 @@ ih_after_room_transition:
     ; Reset realtime and gametime/transition timers
     LDA #$0000 : STA !ram_realtime_room : STA !ram_transition_counter
 
+    LDA !ram_kraid_adjust_timer : BEQ .skipKraidTimer
+if !FEATURE_PAL
+    LDY #$00F9
+else
+    LDY #$012B
+endif
+    JSL ih_adjust_realtime
+    LDA #$0000 : STA !ram_kraid_adjust_timer
+
+  .skipKraidTimer
     JSL init_heat_damage_ram
     JSL init_physics_after_transition
 
@@ -400,15 +433,15 @@ ih_before_room_transition:
     BPL .drawDoorLag
     EOR #$FF : INC
   .drawDoorLag
-    PHB : PHD : PLB : PLB : PHA
+    PHB : PHD : PLB : PLB
+    TAY
     LDX #$00C2
     LDA !ram_minimap : BEQ .draw3
     LDX #$0054
   .draw3
-    PLA : JSR Draw3
+    TYA : JSR Draw3
     PLB
 
-  .done
     CLC ; overwritten code
     RTL
 }
@@ -465,6 +498,13 @@ ih_elevator_activation:
     STZ $0A56
     SEC
     RTL
+}
+
+ih_croc_segments:
+{
+    ; runs on two music changes post-fight
+    JSL !MUSIC_ROUTINE ; overwritten code
+    JML ih_update_hud_early
 }
 
 ih_babyskip_segment:
@@ -572,7 +612,7 @@ ih_update_hud_code:
 
   .mmRoomTimer
     STZ $4205
-    LDA !sram_frame_counter_mode : BNE .mmInGameTimer
+    LDA !sram_frame_counter_mode : BIT #$0001 : BNE .mmInGameTimer
     LDA !IH_DECIMAL : STA !HUD_TILEMAP+$B4
     LDA !ram_last_realtime_room
     BRA .mmCalculateTimer
@@ -617,7 +657,7 @@ endif
 
   .pickRoomTimer
     STZ $4205
-    LDA !sram_frame_counter_mode : BNE .inGameRoomTimer
+    LDA !sram_frame_counter_mode : BIT #$0001 : BNE .inGameRoomTimer
     LDA !IH_DECIMAL : STA !HUD_TILEMAP+$42
     LDA !ram_last_realtime_room
     BRA .calculateRoomTimer
@@ -714,7 +754,7 @@ endif
     LDX #$00C2 : JSR Draw2
 
   .pickSegmentTimer
-    LDA !sram_frame_counter_mode : BNE .inGameSegmentTimer
+    LDA !sram_frame_counter_mode : BIT #$0001 : BNE .inGameSegmentTimer
     LDA.w #!ram_seg_rt_frames : STA $00
     LDA !WRAM_BANK : STA $02
     BRA .drawSegmentTimer
@@ -738,7 +778,7 @@ endif
     LDA [$00] : LDX #$00AE : JSR Draw3
 
     ; Draw decimal/hyphen seperators
-    LDA !sram_frame_counter_mode : BNE .ingameSeparators
+    LDA !sram_frame_counter_mode : BIT #$0001 : BNE .ingameSeparators
     LDA !IH_DECIMAL : STA !HUD_TILEMAP+$B4 : STA !HUD_TILEMAP+$BA
     BRA .blankEnd
 
@@ -1585,6 +1625,30 @@ ih_shinespark_code:
     DEC
     STA !ram_armed_shine_duration
     STA !SAMUS_SHINE_TIMER
+    RTL
+}
+
+; If the frame counter is set to "SPEEDRUN" mode, adds the number of frames in Y to the room and segment timers.
+ih_adjust_realtime:
+{
+    LDA !sram_frame_counter_mode : BIT !FRAME_COUNTER_ADJUST_REALTIME : BEQ .done
+
+    TYA
+    ; add time to segment timer frames, and divide by 60
+    CLC : ADC !ram_seg_rt_frames : STA $4204
+    TYA : %i8() : LDY !FPS_8BIT : STY $4206
+
+    PHA : CLC : ADC !ram_realtime_room : STA !ram_realtime_room
+    LDA $4216 : STA !ram_seg_rt_frames
+    LDA $4214 : CLC : ADC !ram_seg_rt_seconds : STA $4204 : STY $4206
+    PLA : CLC : ADC !ram_transition_counter : STA !ram_transition_counter
+
+    CLC : LDA !ram_seg_rt_minutes
+    ADC $4214 : STA !ram_seg_rt_minutes
+    LDA $4216 : STA !ram_seg_rt_seconds
+
+    %i16()
+  .done
     RTL
 }
 

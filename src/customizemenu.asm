@@ -56,6 +56,8 @@ mc_paletteprofile:
     db #$28, "        RED", #$FF
     db #$28, "     PURPLE", #$FF
     db #$28, "        HUD", #$FF
+    db #$28, "      MEMES", #$FF
+    db #$28, "GRAPEDRINKZ", #$FF
     db #$FF
 
 mc_palette2custom:
@@ -443,6 +445,8 @@ PaletteProfileTables:
     dw #RedProfileTable
     dw #PurpleProfileTable
     dw #HUDProfileTable
+    dw #MemesProfileTable
+    dw #GrapedrinkzProfileTable
 
 ; border, headeroutline, text, background, numoutline, numfill, toggleon, seltext, seltextbg, numseloutline, numsel
 TwitchProfileTable:
@@ -510,6 +514,12 @@ PurpleProfileTable:
 
 HUDProfileTable:
     dw $3D46, $48FB, $7FFF, $0000, $44E5, $7FFF, $4A52, $318C, $0000, $02DF, $001F
+
+MemesProfileTable:
+    dw $0014, $7FFF, $281E, $0000, $5000, $7BC0, $03C0, $37C0, $0000, $2940, $37C0
+
+GrapedrinkzProfileTable:
+    dw $56B5, $4010, $56B5, $1400, $0000, $56B5, $02E0, $02E0, $4010, $4010, $02E0
 }
 print pc, " menu PaletteProfileTables end"
 pullpc

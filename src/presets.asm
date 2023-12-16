@@ -1,4 +1,4 @@
-org $82FA00
+org $82FA80
 print pc, " presets bank82 start"
 
 preset_load:
@@ -49,11 +49,12 @@ endif
     STA $0725    ; Screen fade counter = 1
 
     JSL $80834B  ; Enable NMI with $84 options
-    JSL $868000  ; Enable enemy projectiles
-    JSL $8483AD  ; Enable PLMs
-    JSL $8DC4C2  ; Enable palette FX objects
-    JSL $888288  ; Enable HDMA objects
-    JSL $878000  ; Enable animated tile objects
+    LDA #$8000
+    TSB $198D    ; Enable enemy projectiles
+    TSB $1C23    ; Enable PLMs
+    TSB $1E79    ; Enable palette FX objects
+    TSB $18B0    ; Enable HDMA objects
+    TSB $1EF1    ; Enable animated tile objects
     JSL $908E0F  ; Set liquid physics type
 
     LDA #$0006 : STA $0DA0
@@ -408,8 +409,10 @@ preset_start_gameplay:
     STA !SAMUS_POTENTIAL_POSE_VALUES+2 : STA !SAMUS_POTENTIAL_POSE_VALUES+4
 
     ; Set Samus last position same as current position
-    LDA !SAMUS_X : STA $0B10 : LDA !SAMUS_X_SUBPX : STA $0B12
-    LDA !SAMUS_Y : STA $0B14 : LDA !SAMUS_Y_SUBPX : STA $0B16
+    LDA !SAMUS_X : STA !SAMUS_PREVIOUS_X
+    LDA !SAMUS_X_SUBPX : STA !SAMUS_PREVIOUS_X_SUBPX
+    LDA !SAMUS_Y : STA !SAMUS_PREVIOUS_Y
+    LDA !SAMUS_Y_SUBPX : STA !SAMUS_PREVIOUS_Y_SUBPX
 
     ; Set loading game state for Ceres
     LDA #$001F : STA $7ED914
@@ -483,19 +486,23 @@ endif
   .layer_2_loaded
     JSR $A37B    ; Calculate BG positions
 
-    ; Fix rooms that need to be handled before door scroll
     ; Fix BG2 Y offsets for rooms with scrolling sky
     ; Also fix rooms that need to be handled before door scroll
-    LDA !ROOM_ID : CMP #$D646 : BEQ .pantsRoom
-    CMP #$D6FD : BEQ .aqueductFarmsAndPitRoom
+    LDA !ROOM_ID : CMP #$CF80 : BEQ .eastTunnel
+    CMP #$D646 : BEQ .pantsRoom : CMP #$D6FD : BEQ .aqueductFarmsAndPitRoom
     CMP #$91F8 : BEQ .bg_offsets_scrolling_sky
     CMP #$93FE : BEQ .bg_offsets_scrolling_sky
     CMP #$94FD : BEQ .bg_offsets_scrolling_sky
     BRA .bg_offsets_calculated
 
+  .eastTunnel
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ .bg_offsets_calculated
+    JSL layout_asm_easttunnel_external
+    BRA .bg_offsets_calculated
+
   .pantsRoom
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_DASH_RECALL : BEQ .bg_offsets_calculated
-    JSL layout_asm_pants_room_external
+    JSL layout_asm_pants_external
     BRA .bg_offsets_calculated
 
   .aqueductFarmsAndPitRoom
@@ -566,6 +573,7 @@ endif
     TDC : STA !ram_transition_flag
     JSL init_heat_damage_ram
     JSL init_physics_ram
+    JSL init_controller_bindings
 
     LDA #$E737 : STA $099C ; Pointer to next frame's room transition code = $82:E737
 
@@ -573,6 +581,9 @@ if !RAW_TILE_GRAPHICS
     LDX !STATE_POINTER : LDA $8F0018,X
     CMP #$91C9 : BEQ .post_preset_scrolling_sky
     CMP #$91CE : BEQ .post_preset_scrolling_sky
+    CMP #layout_landing_site_setup_asm : BEQ .post_preset_scrolling_sky
+    CMP #layout_asm_westocean : BEQ .post_preset_scrolling_sky
+    CMP #layout_asm_eastocean : BEQ .post_preset_scrolling_sky
     PLB : PLP : RTL
   .post_preset_scrolling_sky
     JML layout_execute_setup_asm_execute
@@ -722,6 +733,9 @@ preset_room_setup_asm_fixes:
     ; Check if this is scrolling sky
     CMP #$91C9 : BEQ .scrolling_sky
     CMP #$91CE : BEQ .scrolling_sky
+    CMP #layout_landing_site_setup_asm : BEQ .scrolling_sky
+    CMP #layout_asm_westocean : BEQ .scrolling_sky
+    CMP #layout_asm_eastocean : BEQ .scrolling_sky
 
   .execute_setup_asm
     ; Resume execution

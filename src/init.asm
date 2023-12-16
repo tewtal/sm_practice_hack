@@ -5,7 +5,6 @@ org $808455
 
 
 ; hijack when clearing bank 7E
-if !PRESERVE_WRAM_DURING_SPACETIME
 org $808490
     PHA
     LDX #$3FFE
@@ -24,7 +23,6 @@ warnpc $8084AF
 
 org $8084AF
   .end_clear_bank
-endif
 
 
 org $81F000
@@ -43,19 +41,6 @@ init_code:
     JSR init_sram
 
   .sram_initialized
-if !PRESERVE_WRAM_DURING_SPACETIME
-    ; WRAM located in bank 7E, clear it later
-else
-    ; Clear WRAM
-    LDA #$0000
-    LDX !WRAM_SIZE-2
-  .wram_loop
-    STA !WRAM_START,X
-    DEX : DEX : BPL .wram_loop
-
-    JSL init_nonzero_wram
-endif
-
     PLA
     ; Execute overwritten logic and return
 if !FEATURE_PAL
@@ -96,6 +81,7 @@ init_sram:
     CMP #$0010 : BEQ .sram_upgrade_10to11
     CMP #$0011 : BEQ .sram_upgrade_11to12
     CMP #$0012 : BEQ .sram_upgrade_12to13
+    CMP #$0013 : BEQ .sram_upgrade_13to14
     JSL init_sram_upto9
 
   .sram_upgrade_9toA
@@ -138,6 +124,14 @@ init_sram:
 
   .sram_upgrade_12to13
     TDC : STA !sram_custom_header
+
+  .sram_upgrade_13to14
+    ; "skip fanfares, but adjust timer" option has been replaced with "speedrun" timer mode
+    LDA !sram_fanfare : BIT #$0002 : BEQ .timer_adjust_done
+    LDA !sram_fanfare : AND #$0001 : STA !sram_fanfare
+    LDA !sram_frame_counter_mode : BNE .timer_adjust_done
+    LDA !FRAME_COUNTER_ADJUST_REALTIME : STA !sram_frame_counter_mode
+  .timer_adjust_done
 
     LDA #!SRAM_VERSION : STA !sram_initialized
     RTS
@@ -188,12 +182,12 @@ init_menu_customization:
     LDA #$7277 : STA !sram_palette_border
     LDA #$48F3 : STA !sram_palette_headeroutline
     LDA #$7FFF : STA !sram_palette_text
+    LDA #$0000 : STA !sram_palette_background
     LDA #$0000 : STA !sram_palette_numoutline
     LDA #$7FFF : STA !sram_palette_numfill
     LDA #$4376 : STA !sram_palette_toggleon
     LDA #$761F : STA !sram_palette_seltext
     LDA #$0000 : STA !sram_palette_seltextbg
-    LDA #$0000 : STA !sram_palette_background
     LDA #$0000 : STA !sram_palette_numseloutline
     LDA #$761F : STA !sram_palette_numsel
 
@@ -212,6 +206,32 @@ init_menu_customization:
     LDA #$0028 : STA !sram_customsfx_confirm
     LDA #$0007 : STA !sram_customsfx_goback
 
+    RTL
+}
+
+init_controller_bindings:
+{
+    ; check if any non-dpad bindings are set
+    LDX #$000A
+    LDA.w !IH_INPUT_SHOT+$0C
+  .loopBindings
+    ORA.w !IH_INPUT_SHOT,X
+    DEX #2 : BPL .loopBindings
+    AND #$FFF0 : BNE .done
+
+    ; load default dpad bindings
+    LDA #$0800 : STA.w !INPUT_BIND_UP
+    LSR : STA.w !INPUT_BIND_DOWN
+    LSR : STA.w !INPUT_BIND_LEFT
+    LSR : STA.w !INPUT_BIND_RIGHT
+
+    ; load default non-dpad bindings
+    LDX #$000C
+  .loopTable
+    LDA.l ControllerLayoutTable,X : STA.w !IH_INPUT_SHOT,X
+    DEX #2 : BPL .loopTable
+
+  .done
     RTL
 }
 

@@ -123,21 +123,6 @@ macro cm_footer(title)
     table ../resources/normal.tbl
 endmacro
 
-macro cm_version_header(title, major, minor, build, rev_1, rev_2)
-; header text with automatic version number appended
-    table ../resources/header.tbl
-if !VERSION_REV_1
-    db #$28, "<title> <major>.<minor>.<build>.<rev_1><rev_2>", #$FF
-else
-if !VERSION_REV_2
-    db #$28, "<title> <major>.<minor>.<build>.<rev_2>", #$FF
-else
-    db #$28, "<title> <major>.<minor>.<build>", #$FF
-endif
-endif
-    table ../resources/normal.tbl
-endmacro
-
 macro cm_numfield(title, addr, start, end, increment, heldincrement, jsltarget)
 ; Allows editing an 8-bit value at the specified address
     dw !ACTION_NUMFIELD
