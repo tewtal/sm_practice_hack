@@ -2023,6 +2023,13 @@ init_heat_damage_ram:
   .complementary
     ; Both varia and gravity required for lava protection
     LDA #$0021 : STA !SAMUS_LAVA_DAMAGE_SUITS
+
+    ; If no gravity than nothing to do
+    LDA $09A2 : BIT #$0020 : BEQ .end
+
+    ; Without heat shield but with gravity we want heat damage to be 100%
+    ; Since damage is halved by gravity we'll set it to 200%
+    LDA #$8000 : STA !ram_suits_heat_damage_value
     RTL
 
   .dash_recall
@@ -2680,7 +2687,6 @@ ih_dynamic_frames_held:
     dl #!sram_top_display_mode
     dw #ih_goto_frames_held
     dw #ih_goto_frames_held
-    dw #$0000
     dw #$0000
 
 ih_goto_frames_held:

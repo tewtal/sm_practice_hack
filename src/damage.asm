@@ -169,7 +169,7 @@ else
 endif
     dw periodic_damage_balanced
     dw periodic_damage_progressive
-    dw periodic_damage_complementary
+    dw periodic_damage_progressive
     dw periodic_damage_dash_recall
     dw periodic_damage_heat_shield
 
@@ -207,41 +207,6 @@ endif
 
     LDA $09A2 : BIT #$0020 : BEQ .nogravity
     ; Gravity equipped, so halve damage
-    LDA $0A4F : LSR
-    PHA : XBA : AND #$FF00 : STA $0A4E
-    PLA : XBA : AND #$00FF : STA $0A50
-
-  .nogravity
-    LDA $09A2 : BIT #$0001 : BEQ .novaria
-    ; Varia equipped, so halve damage
-    LDA $0A4F : LSR
-    PHA : XBA : AND #$FF00 : STA $0A4E
-    PLA : XBA : AND #$00FF : STA $0A50
-
-  .novaria
-    ; Jump back into the vanilla routine
-if !FEATURE_PAL
-    JMP $EA0E
-else
-    JMP $EA11
-endif
-}
-
-periodic_damage_complementary:
-{
-    PHP : REP #$30
-    LDA $0A78 : BEQ $03
-    ; Nothing to do, jump back to vanilla routine
-if !FEATURE_PAL
-    JMP $EA32
-else
-    JMP $EA35
-endif
-
-    LDA $09A2 : BIT #$0020 : BEQ .nogravity
-    ; Gravity equipped, so halve damage
-    ; unless this is just heat damage
-    LDA $0A4E : CMP #$4000 : BEQ .nogravity
     LDA $0A4F : LSR
     PHA : XBA : AND #$FF00 : STA $0A4E
     PLA : XBA : AND #$00FF : STA $0A50
