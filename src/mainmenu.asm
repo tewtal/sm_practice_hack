@@ -173,11 +173,13 @@ endif
 endif
     db #$FF
 if !FEATURE_DEV && defined("PRERELEASE")
-    %cm_footer("DEVELOPEMENT BUILD !PRERELEASE")
+    %cm_footer("DEVELOPMENT BUILD !PRERELEASE")
 elseif !FEATURE_DEV
-    %cm_footer("DEVELOPEMENT BUILD")
+    %cm_footer("DEVELOPMENT BUILD")
 elseif defined("PRERELEASE")
     %cm_footer("PRERELEASE BUILD !PRERELEASE")
+else
+    table ../resources/normal.tbl
 endif
 
 MainMenuBanks:
