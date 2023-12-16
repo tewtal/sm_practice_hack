@@ -1071,45 +1071,13 @@ crash_read_inputs:
 ; ------------
 
 CrashTextHeader:
-    ; Build the header using build version
-    ; Assumes numbers are kept in the $70-$79 range of the table
-    table ../resources/header.tbl
-if !VERSION_MAJOR > 9
-    error Major version 10 or greater not supported
-else
-    db "CRASH HANDLER ", #($70+!VERSION_MAJOR)
-endif
-if !VERSION_MINOR > 19
-    error Minor version 20 or greater not supported, consider incrementing major version
-else
-if !VERSION_MINOR > 9
-    db ".1", #($66+!VERSION_MINOR)
-else
-    db ".", #($70+!VERSION_MINOR)
-endif
-endif
-if !VERSION_BUILD > 19
-    error Build 20 or greater not supported, consider incrementing minor version
-else
-if !VERSION_BUILD > 9
-    db ".1", #($66+!VERSION_BUILD)
-else
-    db ".", #($70+!VERSION_BUILD)
-endif
-endif
-if !VERSION_REV > 19
-    error Revision 20 or greater not supported, consider incrementing build and/or minor version
-else
-if !VERSION_REV > 9
-    db ".1", #($66+!VERSION_REV)
-else
+table ../resources/header.tbl
 if !VERSION_REV
-    db ".", #($70+!VERSION_REV)
+    db "CRASH HANDLER !VERSION_MAJOR.!VERSION_MINOR.!VERSION_BUILD.!VERSION_REV", $FF
+else
+    db "CRASH HANDLER !VERSION_MAJOR.!VERSION_MINOR.!VERSION_BUILD", $FF
 endif
-endif
-endif
-    db #$FF
-    table ../resources/normal.tbl
+table ../resources/normal.tbl
 
 CrashTextFooter1:
 ; Navigate pages with A or B
@@ -1132,9 +1100,9 @@ CrashTextStack4:
     db "Stack OVERFLOW!!!", #$FF
 
 CrashTextHeader2:
-    table ../resources/header.tbl
+table ../resources/header.tbl
     db "CRASH MEMORY VIEWER", #$FF
-    table ../resources/normal.tbl
+table ../resources/normal.tbl
 
 CrashTextMemAddress:
     db "ADDRESS:  $", #$FF
@@ -1152,9 +1120,9 @@ CrashTextMemSelectLow:
     db "Select Address Low   $", #$FF
 
 CrashTextHeader3:
-    table ../resources/header.tbl
+table ../resources/header.tbl
     db "BUT WHAT DOES IT ALL MEAN?", #$FF
-    table ../resources/normal.tbl
+table ../resources/normal.tbl
 
 CrashTextInfo1:
     db "Super Metroid has crashed!", #$FF

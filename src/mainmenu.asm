@@ -134,44 +134,7 @@ endif
     dw #mm_goto_ctrlsmenu
     dw #mm_goto_customize
     dw #$0000
-    ; Build the header using build version
-    ; Assumes numbers are kept in the $70-$79 range of the table
-    table ../resources/header.tbl
-if !VERSION_MAJOR > 9
-    error Major version 10 or greater not supported
-else
-    db #$28, "SM PRACTICE HACK ", #($70+!VERSION_MAJOR)
-endif
-if !VERSION_MINOR > 19
-    error Minor version 20 or greater not supported, consider incrementing major version
-else
-if !VERSION_MINOR > 9
-    db ".1", #($66+!VERSION_MINOR)
-else
-    db ".", #($70+!VERSION_MINOR)
-endif
-endif
-if !VERSION_BUILD > 19
-    error Build 20 or greater not supported, consider incrementing minor version
-else
-if !VERSION_BUILD > 9
-    db ".1", #($66+!VERSION_BUILD)
-else
-    db ".", #($70+!VERSION_BUILD)
-endif
-endif
-if !VERSION_REV > 19
-    error Revision 20 or greater not supported, consider incrementing build and/or minor version
-else
-if !VERSION_REV > 9
-    db ".1", #($66+!VERSION_REV)
-else
-if !VERSION_REV
-    db ".", #($70+!VERSION_REV)
-endif
-endif
-endif
-    db #$FF
+    %cm_version_header("SM PRACTICE HACK")
 if !FEATURE_DEV && defined("PRERELEASE")
     %cm_footer("DEVELOPMENT BUILD !PRERELEASE")
 elseif !FEATURE_DEV
