@@ -1,23 +1,43 @@
 
+; Red Tower save station load point
+org $80C615
+brinstar_save_station_5:
+    dw #$A253, #$90F6, #$0000, #$0000, #$0700, #$0058, #$0050
+
+; Crab Shaft save station load point
+org $80C94F
+maridia_save_station_4:
+    dw #$D1A3, #$A468, #$0000, #$0000, #$0200, #$0078, #$0060
+
+; Crab Tunnel save station load point
+org $80C95D
+maridia_save_station_5:
+    dw #$D08A, #$A3A8, #$0000, #$0000, #$0000, #$00B8, #$0000
+
+; Red Fish save station load point
+org $80C96B
+maridia_save_station_6:
+    dw #$D104, #$A42C, #$0000, #$0200, #$0000, #$0078, #$0050
+
 ; Crab Shaft save station load point
 org $80C995
 maridia_save_station_9:
-    db #$A3, #$D1, #$68, #$A4, #$00, #$00, #$00, #$00, #$00, #$02, #$78, #$00, #$60, #$00
+    dw #$D1A3, #$A468, #$0000, #$0000, #$0200, #$0078, #$0060
 
 ; Main Street save station load point
 org $80C9A3
 maridia_save_station_10:
-    db #$C9, #$CF, #$D8, #$A3, #$00, #$00, #$00, #$01, #$00, #$05, #$78, #$00, #$10, #$00
+    dw #$CFC9, #$A3D8, #$0000, #$0100, #$0500, #$0078, #$0010
 
 ; Crab Shaft save station map icon location
 org $82CA17
 maridia_save_station_map_icon_9:
-    db #$90, #$00, #$50, #$00
+    dw #$0090, #$0050
 
 ; Main Street save station map icon location
 org $82CA1B
 maridia_save_station_map_icon_10:
-    db #$58, #$00, #$78, #$00
+    dw #$0058, #$0078
 
 ; Hijack loading destination room CRE
 org $82E1D9
@@ -1279,6 +1299,10 @@ layout_bomb_torizo_finish_crumbling:
     RTS
 warnpc $848270
 
+org $84AADF
+layout_save_station_mini_entry:
+    dw $B5EE, #layout_save_station_mini_instructions
+
 org $84BA50
 hook_layout_bomb_grey_door_instruction:
     dw layout_bomb_grey_door_new_instruction
@@ -1376,6 +1400,43 @@ org $84EE02
 endif
 layout_morph_ball_hidden_plm_equipment:
     dw $0004
+
+
+
+org $84F000
+print pc, " layout bank84 start"
+
+layout_save_station_mini_instructions:
+{
+    dw $0001, .drawOne
+    dw $86B4
+    dw $8CF1, .used
+    dw $B00E
+    dw $8C07 : db $2E
+    dw $874E : db $15
+  .timer
+    dw $0004, .drawThree
+    dw $0004, .drawTwo
+    dw $873F, .timer
+    dw $B024
+  .used
+    dw $B030
+    dw $8724, #layout_save_station_mini_instructions
+
+  .drawOne
+    dw $0002, $B859, $8C59
+    dw $0000
+
+  .drawTwo
+    dw $0002, $8859, $8C59
+    dw $0000
+
+  .drawThree
+    dw $0002, $885A, $8C5A
+    dw $0000
+}
+
+print pc, " layout bank84 end"
 
 
 ; Sanity check Varia/Gravity pickups
@@ -2290,11 +2351,20 @@ layout_asm_crabtunnel_dash:
 
     ; Clear gate projectile
     TDC : STA $19B9
+
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ layout_asm_crabtunnel_done
+
+    ; Add save station PLM
+    PHX : LDX #layout_asm_crabtunnel_savestation_plm_data
+    JSL $84846A : PLX
 }
 
 layout_asm_crabtunnel_done:
     PLP
     RTS
+
+layout_asm_crabtunnel_savestation_plm_data:
+    db #$DF, #$AA, #$07, #$0D, #$05, #$00
 
 layout_asm_easttunnel:
 {
@@ -2459,8 +2529,13 @@ layout_asm_mainstreet:
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ layout_asm_crabshaft_done
 
     ; Add save station and flashing door PLMs
+    PHX : LDX #layout_asm_mainstreet_door_plm_data
+    JSL $84846A : PLX
+
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_DASH_RECALL : BNE layout_asm_mainstreet_done
+
+    ; Add save station PLM
     PHX : LDX #layout_asm_mainstreet_savestation_plm_data
-    JSL $84846A : LDX #layout_asm_mainstreet_door_plm_data
     JSL $84846A : PLX
 }
 
@@ -2649,11 +2724,20 @@ layout_asm_redfish:
     ; Add flashing door PLM
     PHX : LDX #layout_asm_redfish_door_plm_data
     JSL $84846A : PLX
+
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_DASH_RECALL : BEQ layout_asm_redfish_done
+
+    ; Add save station PLM
+    PHX : LDX #layout_asm_redfish_savestation_plm_data
+    JSL $84846A : PLX
 }
 
 layout_asm_redfish_done:
     PLP
     RTS
+
+layout_asm_redfish_savestation_plm_data:
+    db #$DF, #$AA, #$8C, #$07, #$06, #$00
 
 layout_asm_redfish_door_plm_data:
     db #$48, #$C8, #$01, #$06, #$AF, #$9C
@@ -3049,6 +3133,11 @@ layout_asm_redtower:
     JSL $84846A : PLX
 
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANTISOFTLOCK_OR_DASH_RECALL : BEQ layout_asm_waterway_done
+    BIT !ROOM_LAYOUT_DASH_RECALL : BEQ .antisoftlock
+
+    ; Add save station PLM
+    PHX : LDX #layout_asm_redtower_savestation_plm_data
+    JSL $84846A : PLX
 
   .antisoftlock
     ; Create opening along bottom left of red tower
@@ -3068,6 +3157,9 @@ layout_asm_redtower:
 layout_asm_redtower_done:
     PLP
     RTS
+
+layout_asm_redtower_savestation_plm_data:
+    db #$DF, #$AA, #$0C, #$77, #$05, #$00
 
 layout_asm_redtower_door_plm_data:
     db #$48, #$C8, #$01, #$46, #$AF, #$9C
