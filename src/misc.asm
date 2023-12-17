@@ -27,41 +27,31 @@ else
 org $8BF754
 endif
 hook_version_data:
+cleartable ; ASCII
 if !VERSION_MAJOR > 9
-    error Major version 10 or greater not supported
+    db ' ', $30+(!VERSION_MAJOR/10), $30+(!VERSION_MAJOR%10)
 else
-    db #$20, #($30+!VERSION_MAJOR)
+    db ' ', $30+!VERSION_MAJOR
 endif
-if !VERSION_MINOR > 19
-    error Minor version 20 or greater not supported, consider incrementing major version
-else
 if !VERSION_MINOR > 9
-    db #$2E, #$31, #($26+!VERSION_MINOR)
+    db '.', $30+(!VERSION_MINOR/10), $30+(!VERSION_MINOR%10)
 else
-    db #$2E, #($30+!VERSION_MINOR)
+    db '.', $30+!VERSION_MINOR
 endif
-endif
-if !VERSION_BUILD > 19
-    error Build 20 or greater not supported, consider incrementing minor version
-else
 if !VERSION_BUILD > 9
-    db #$2E, #$31, #($26+!VERSION_BUILD)
+    db '.', $30+(!VERSION_BUILD/10), $30+(!VERSION_BUILD%10)
 else
-    db #$2E, #($30+!VERSION_BUILD)
+    db '.', $30+!VERSION_BUILD
 endif
-endif
-if !VERSION_REV > 19
-    error Revision 20 or greater not supported, consider incrementing build and/or minor version
-else
 if !VERSION_REV > 9
-    db #$2E, #$31, #($26+!VERSION_REV)
+    db '.', $30+(!VERSION_REV/10), $30+(!VERSION_REV%10)
 else
 if !VERSION_REV
-    db #$2E, #($30+!VERSION_REV)
+    db '.', $30+!VERSION_REV
 endif
 endif
-endif
-    db #$00
+    db $00
+table ../resources/normal.tbl
 
 
 ; Fix Zebes planet tiling error
