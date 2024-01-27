@@ -268,13 +268,9 @@ endif
     ASL
     ASL
     ASL
-if !FEATURE_SD2SNES
-    ; skip 6 cycles for auto-savestate in doors check
-else
     NOP  ; Add 2 more clock cycles
     NOP  ; Add 2 more clock cycles
     NOP  ; Add 2 more clock cycles
-endif
     NOP  ; Add 2 more clock cycles
     CLC : ADC #$000B ; Add 60 cycles including CLC+ADC
     TAX
@@ -293,10 +289,7 @@ endif
     INC  ; Add 4 loops (22 clock cycles including the INC)
     ASL
     ASL
-if !FEATURE_SD2SNES
-else
     INC  ; Add 1 loop (7 clock cycles including the INC)
-endif
     NOP  ; Add 2 more clock cycles
     NOP  ; Add 2 more clock cycles
     CLC : ADC #$000B ; Add 60 cycles including CLC+ADC
