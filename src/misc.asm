@@ -109,6 +109,18 @@ org $828ADD       ; Resume original logic
     .skipDebugBrightness
 
 
+org $82E725
+    JSL set_fade_in_door_function
+    RTS
+optimized_fade_in:
+    JSL fade_in_skip_draw
+    BRA resume_original_fade_in
+warnpc $82E737
+
+org $82E74B
+resume_original_fade_in:
+
+
 org $CF8BBF       ; Set map scroll beep to high priority
 hook_spc_engine_map_scroll_beep_priority:
     dw $2A97
@@ -469,12 +481,66 @@ endif
     RTL
 }
 
+set_fade_in_door_function:
+{
+    ; Fade in has considerable lag (multiple lag frames per game frame)
+    ; which exacerbates the CPU load that the practice hack adds each frame (including lag frames)
+    ; To offset this, we can optimize away a couple of draw routines for most rooms
+    ; The optimizations adversely affect yapping maw and metroid enemies,
+    ; so avoid using the optimizations in those rooms.
+
+    ; If the first enemy is a yapping maw, use original routine
+    LDA !ENEMY_ID : CMP #$E7BF : BEQ .original
+    ; If this is Red Brinstar Firefleas, use original routine
+    LDA !ROOM_ID : CMP #$962A : BEQ .original
+    ; If this room is not one of the metroid rooms, use optimized routine
+    CMP #$DAE0 : BCC .optimized : CMP #$DBCE : BCS .optimized
+  .original
+    LDA #$E737
+    BRA .set
+  .optimized
+    LDA #optimized_fade_in
+  .set
+    STA $099C
+
+    ; Overwritten logic
+    LDA $51 : ORA #$001F : STA $51
+    JML $908E0F
+}
+
 print pc, " misc bank90 end"
 warnpc $90FE00 ; damage.asm
 
 
 org $8BFA00
 print pc, " misc bank8B start"
+
+fade_in_skip_draw:
+{
+    ; Copy start of $82E737
+    JSL $878064   ; Animated tiles objects handler
+if !FEATURE_PAL
+    JSL $A08EC6   ; Determine which enemies to process
+    JSL $A08FE4   ; Main enemy routine
+else
+    JSL $A08EB6   ; Determine which enemies to process
+    JSL $A08FD4   ; Main enemy routine
+endif
+    JSL $868104   ; Enemy projectile handler
+
+    ; Copy start of $A0884D
+    PHB
+    PEA $A000 : PLB : PLB
+    %ai16()
+    ; Skip draw sprite objects
+    ; Skip drawing bombs and projectile explosions
+    ; The rest will be the same as the original routine
+if !FEATURE_PAL
+    JML $A0886D
+else
+    JML $A0885D
+endif
+}
 
 ; Decompression optimization adapted from Kejardon, with fixes by PJBoy and Maddo
 ; Compression format: One byte (XXX YYYYY) or two byte (111 XXX YY-YYYYYYYY) headers
