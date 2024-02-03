@@ -64,7 +64,6 @@ init_nonzero_wram:
     LDA !sram_seed_Y : STA !ram_seed_Y
 
     LDA #$0001 : STA !ram_cm_dummy_on
-
     RTL
 }
 
@@ -205,7 +204,6 @@ init_menu_customization:
     LDA #$0038 : STA !sram_customsfx_number
     LDA #$0028 : STA !sram_customsfx_confirm
     LDA #$0007 : STA !sram_customsfx_goback
-
     RTL
 }
 

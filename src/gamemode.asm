@@ -296,11 +296,7 @@ endif
   .load_custom_preset
     ; check if slot is populated first
     LDA !sram_custom_preset_slot
-if !FEATURE_TINYSTATES
-    XBA : TAX                    ; multiply by 100h (slot offset)
-else
-    ASL : XBA : TAX              ; multiply by 200h (slot offset)
-endif
+    %presetslotsize()
     LDA $703000,X : CMP #$5AFE : BEQ .load_safe
 
   .not_safe

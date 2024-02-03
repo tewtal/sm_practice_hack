@@ -180,6 +180,15 @@ table ../resources/normal.tbl
     db #$28, "<title>", #$FF
 endmacro
 
+macro cm_numfield_readonly(title, addr)
+; Allows editing a 16-bit value at the specified address
+    dw !ACTION_NUMFIELD_READONLY
+    dl <addr> ; 24bit RAM address to display/manipulate
+    dw #$0000, #$0000, #$0000, #$0000, #$0000
+table ../resources/normal.tbl
+    db #$28, "<title>", #$FF
+endmacro
+
 macro cm_numfield_color(title, addr, jsltarget)
 ; Allows editing an 8-bit value in increments consistent with SNES color values
     dw !ACTION_NUMFIELD_COLOR

@@ -12,7 +12,7 @@ else
 if !FEATURE_SD2SNES
     db $08 ; 256kb
 else
-    db $05 ; 64kb
+    db $05 ; 32kb
 endif
 endif
 
@@ -20,6 +20,12 @@ endif
 ; Enable version display
 org $8B8697
     NOP
+
+org $8B871D
+    LDA #$0590
+
+org $8B8731
+    LDA #$0590
 
 if !FEATURE_PAL
 org $8BF6DC
@@ -52,6 +58,7 @@ endif
 endif
     db $00
 table ../resources/normal.tbl
+warnpc $8BF760
 
 
 ; Fix Zebes planet tiling error
@@ -462,8 +469,8 @@ endif
     RTL
 }
 
-warnpc $90FE00 ; damage.asm
 print pc, " misc bank90 end"
+warnpc $90FE00 ; damage.asm
 
 
 org $8BFA00
