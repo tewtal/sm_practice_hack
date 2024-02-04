@@ -1303,20 +1303,26 @@ org $84AADF
 layout_save_station_mini_entry:
     dw $B5EE, #layout_save_station_mini_instructions
 
+org $84BA4C
+layout_bomb_grey_door_original_instructions:
+
 org $84BA50
-hook_layout_bomb_grey_door_instruction:
-    dw layout_bomb_grey_door_new_instruction
+hook_layout_bomb_grey_door_check:
+    dw layout_bomb_grey_door_new_check
+
+org $84BA54
+layout_bomb_grey_door_original_delay:
 
 org $84BA6F
-layout_bomb_grey_door_original_instruction:
+layout_bomb_grey_door_original_check:
 
 org $84BA7A
 layout_bomb_grey_door_original_skip:
 
 org $84BAD1
-layout_bomb_grey_door_new_instruction:
+layout_bomb_grey_door_new_check:
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_VARIA_TWEAKS : BNE layout_bomb_grey_door_original_skip
-    BRA layout_bomb_grey_door_original_instruction
+    BRA layout_bomb_grey_door_original_check
 
 layout_bomb_set_room_argument:
 {
@@ -1327,6 +1333,9 @@ layout_bomb_set_room_argument:
     JMP $8899
 }
 warnpc $84BAF4
+
+org $84BAF8
+    dw layout_bomb_grey_door_new_instructions
 
 org $84D33B
 layout_bomb_torizo_crumbling_preinstruction:
@@ -1434,6 +1443,31 @@ layout_save_station_mini_instructions:
   .drawThree
     dw $0002, $885A, $8C5A
     dw $0000
+}
+
+layout_bomb_grey_door_new_instructions:
+    dw layout_bomb_grey_door_check_vanilla
+    dw #$0001, $A683
+    dw layout_bomb_grey_door_new_check
+    dw layout_bomb_grey_door_new_instructions
+    dw layout_bomb_grey_door_check_fast
+    dw #$0001, $A683
+    dw $8724, layout_bomb_grey_door_original_delay
+
+layout_bomb_grey_door_check_vanilla:
+{
+    LDA !sram_bomb_torizo_door : BNE .done
+    LDY #layout_bomb_grey_door_original_instructions
+  .done
+    RTS
+}
+
+layout_bomb_grey_door_check_fast:
+{
+    LDA !sram_bomb_torizo_door : DEC : BNE .done
+    LDY #layout_bomb_grey_door_original_delay
+  .done
+    RTS
 }
 
 print pc, " layout bank84 end"

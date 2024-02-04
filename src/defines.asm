@@ -284,7 +284,7 @@
 ; SRAM
 ; -----
 
-!SRAM_VERSION = $0014
+!SRAM_VERSION = $0015
 
 !SRAM_START = $702000
 
@@ -364,6 +364,7 @@
 
 !sram_seed_X = !SRAM_START+$82
 !sram_seed_Y = !SRAM_START+$84
+!sram_bomb_torizo_door = !SRAM_START+$86
 
 ; ^ FREE SPACE ^ up to +$EE, $100-BA6
 
