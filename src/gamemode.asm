@@ -33,12 +33,13 @@ gamemode_start:
   .return
     %ai16()
     PHP
+    BCC .skip_load
 
     ; don't load presets if we're in credits
-    LDA !GAMEMODE : CMP #$0027 : BEQ .skip_load
+    LDA !GAMEMODE : CMP #$0027 : BEQ .dec_rta
 
     LDA !ram_custom_preset : BNE .preset_load
-    LDA !ram_load_preset : BEQ .skip_load
+    LDA !ram_load_preset : BEQ .dec_rta
 
   .preset_load
     JSL preset_load
@@ -49,6 +50,27 @@ gamemode_start:
     PLP
     PLB
     RTL
+
+  .dec_rta
+    LDA !ram_realtime_room : DEC : STA !ram_realtime_room
+    LDA !ram_transition_counter : DEC : STA !ram_transition_counter
+
+    ; Segment real timer
+    LDA !ram_seg_rt_frames : BEQ .dec_seconds
+    DEC : STA !ram_seg_rt_frames
+    BRA .skip_load
+
+  .dec_seconds
+    LDA !ram_seg_rt_seconds : BEQ .dec_minutes
+    DEC : STA !ram_seg_rt_seconds
+    LDA.w #59 : STA !ram_seg_rt_frames
+    BRA .skip_load
+
+  .dec_minutes
+    LDA !ram_seg_rt_minutes : BEQ .skip_load
+    DEC : STA !ram_seg_rt_minutes
+    LDA.w #59 : STA !ram_seg_rt_seconds : STA !ram_seg_rt_frames
+    BRA .skip_load
 }
 
 ; If the current game mode is $C (fading out to pause), set it to $8 (normal), so that
