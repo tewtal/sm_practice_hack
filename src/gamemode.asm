@@ -35,8 +35,8 @@ gamemode_start:
     PHP
     BCC .skip_load
 
-    ; don't load presets if we're in credits
-    LDA !GAMEMODE : CMP #$0027 : BEQ .dec_rta
+    ; Don't load presets or decrement counters if we're in credits
+    LDA !GAMEMODE : CMP #$0027 : BEQ .skip_load
 
     LDA !ram_custom_preset : BNE .preset_load
     LDA !ram_load_preset : BEQ .dec_rta
@@ -52,6 +52,9 @@ gamemode_start:
     RTL
 
   .dec_rta
+    ; If we are skipping gameplay this frame and not loading a preset,
+    ; it's not fair to still increment timers at the end of the frame,
+    ; so decrement timers here to compensate
     LDA !ram_realtime_room : DEC : STA !ram_realtime_room
     LDA !ram_transition_counter : DEC : STA !ram_transition_counter
 
