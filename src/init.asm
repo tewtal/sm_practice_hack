@@ -64,24 +64,22 @@ init_nonzero_wram:
     LDA !sram_seed_Y : STA !ram_seed_Y
 
     LDA #$0001 : STA !ram_cm_dummy_on
-
     RTL
 }
 
 init_sram:
 {
     ; check SRAM version from !sram_initialized
+    CMP #$000F : BEQ .sram_upgrade_Fto10
+    BPL .sram_upgrade_1xto1x
     CMP #$0009 : BEQ .sram_upgrade_9toA
     CMP #$000A : BEQ .sram_upgrade_AtoB
     CMP #$000B : BEQ .sram_upgrade_BtoC
     CMP #$000C : BEQ .sram_upgrade_CtoD
     CMP #$000D : BEQ .sram_upgrade_DtoE
     CMP #$000E : BEQ .sram_upgrade_EtoF
-    CMP #$000F : BEQ .sram_upgrade_Fto10
-    CMP #$0010 : BEQ .sram_upgrade_10to11
-    CMP #$0011 : BEQ .sram_upgrade_11to12
-    CMP #$0012 : BEQ .sram_upgrade_12to13
-    CMP #$0013 : BEQ .sram_upgrade_13to14
+
+  .sram_upgrade_upto9
     JSL init_sram_upto9
 
   .sram_upgrade_9toA
@@ -110,6 +108,15 @@ init_sram:
 
   .sram_upgrade_Fto10
     TDC : STA !sram_fast_elevators
+    BRA .sram_upgrade_10to11
+
+  .sram_upgrade_1xto1x
+    CMP #$0010 : BEQ .sram_upgrade_10to11
+    CMP #$0011 : BEQ .sram_upgrade_11to12
+    CMP #$0012 : BEQ .sram_upgrade_12to13
+    CMP #$0013 : BEQ .sram_upgrade_13to14
+    CMP #$0014 : BEQ .sram_upgrade_14to15
+    BRA .sram_upgrade_upto9
 
   .sram_upgrade_10to11
     TDC : STA !sram_custom_damage
@@ -127,11 +134,13 @@ init_sram:
 
   .sram_upgrade_13to14
     ; "skip fanfares, but adjust timer" option has been replaced with "speedrun" timer mode
-    LDA !sram_fanfare : BIT #$0002 : BEQ .timer_adjust_done
+    LDA !sram_fanfare : BIT #$0002 : BEQ .sram_upgrade_14to15
     LDA !sram_fanfare : AND #$0001 : STA !sram_fanfare
-    LDA !sram_frame_counter_mode : BNE .timer_adjust_done
+    LDA !sram_frame_counter_mode : BNE .sram_upgrade_14to15
     LDA !FRAME_COUNTER_ADJUST_REALTIME : STA !sram_frame_counter_mode
-  .timer_adjust_done
+
+  .sram_upgrade_14to15
+    TDC : STA !sram_bomb_torizo_door
 
     LDA #!SRAM_VERSION : STA !sram_initialized
     RTS
@@ -205,7 +214,6 @@ init_menu_customization:
     LDA #$0038 : STA !sram_customsfx_number
     LDA #$0028 : STA !sram_customsfx_confirm
     LDA #$0007 : STA !sram_customsfx_goback
-
     RTL
 }
 

@@ -11,27 +11,29 @@ lorom
 
 !VERSION_MAJOR = 2
 !VERSION_MINOR = 5
-!VERSION_BUILD = 10
-!VERSION_REV   = 1
+!VERSION_BUILD = 11
+!VERSION_REV   = 0
 
 table ../resources/normal.tbl
-
-incsrc macros.asm
-incsrc defines.asm
-
 print ""
 
 if !FEATURE_SD2SNES
     print "SD2SNES ENABLED"
-    incsrc save.asm
     !FEATURE_TINYSTATES = 0
+    incsrc macros.asm
+    incsrc defines.asm
+    incsrc save.asm
 else
 if !FEATURE_TINYSTATES
     print "TINYSTATES ENABLED"
-    incsrc tinystates.asm
     !FEATURE_SD2SNES = 1       ; Set this to enable savestate features
+    incsrc macros.asm
+    incsrc defines.asm
+    incsrc tinystates.asm
 else
     print "SD2SNES AND TINYSTATES DISABLED"
+    incsrc macros.asm
+    incsrc defines.asm
 endif
 endif
 

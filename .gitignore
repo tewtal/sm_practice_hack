@@ -3,12 +3,7 @@
 *.s[mf]c
 *.sw[op]
 build/
-tools/*.smv
-tools/*.asm
-tools/*.log
-tools/asar
-tools/asar.exe
-tools/dll/*
+tools/*.exe
 .vscode/launch.json
 .vscode/tasks.json
 /names/custom_names.txt

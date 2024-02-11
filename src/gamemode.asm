@@ -9,6 +9,13 @@ org $82896E
 end_of_normal_gameplay:
 
 if !FEATURE_SD2SNES
+org $828B18
+hook_door_transition_load_sprites:
+    JML gamemode_door_transtion_load_sprites
+
+org $82E4A2
+    LDA #hook_door_transition_load_sprites
+
 org $82E526
     JSL gamemode_door_transition : NOP
 endif
@@ -26,62 +33,90 @@ gamemode_start:
   .return
     %ai16()
     PHP
+    BCC .skip_load
 
-    ; don't load presets if we're in credits
+    ; Don't load presets or decrement counters if we're in credits
     LDA !GAMEMODE : CMP #$0027 : BEQ .skip_load
 
     LDA !ram_custom_preset : BNE .preset_load
-    LDA !ram_load_preset : BEQ .skip_load
+    LDA !ram_load_preset : BEQ .dec_rta
 
   .preset_load
     JSL preset_load
 
   .skip_load
+    ; Overwritten logic
     LDA !GAMEMODE : AND #$00FF
     PLP
     PLB
     RTL
+
+  .dec_rta
+    ; If we are skipping gameplay this frame and not loading a preset,
+    ; it's not fair to still increment timers at the end of the frame,
+    ; so decrement timers here to compensate
+    LDA !ram_realtime_room : DEC : STA !ram_realtime_room
+    LDA !ram_transition_counter : DEC : STA !ram_transition_counter
+
+    ; Segment real timer
+    LDA !ram_seg_rt_frames : BEQ .dec_seconds
+    DEC : STA !ram_seg_rt_frames
+    BRA .skip_load
+
+  .dec_seconds
+    LDA !ram_seg_rt_seconds : BEQ .dec_minutes
+    DEC : STA !ram_seg_rt_seconds
+    LDA.w #59 : STA !ram_seg_rt_frames
+    BRA .skip_load
+
+  .dec_minutes
+    LDA !ram_seg_rt_minutes : BEQ .skip_load
+    DEC : STA !ram_seg_rt_minutes
+    LDA.w #59 : STA !ram_seg_rt_seconds : STA !ram_seg_rt_frames
+    BRA .skip_load
 }
 
-; If the current game mode is $C (fading out to pause), set it to $8 (normal), so that
-;  shortcuts involving the start button don't trigger accidental pauses.
-; Called after handling most controller shortcuts, except save/load state (because the 
-;  user might want to practice gravity jumps or something) and load preset (because
-;  presets reset the game mode anyway).
+; If the current shortcut (register A) contains start,
+; and the current game mode is $C (fading out to pause), set it to $8 (normal),
+; so that shortcuts involving the start button don't trigger accidental pauses.
+; Called after handling most controller shortcuts, except save/load state
+; (because the user might want to practice gravity jumps or something)
+; and load preset (because presets reset the game mode anyway).
 skip_pause:
 {
     PHP ; preserve carry
-    LDA !GAMEMODE
-    CMP #$000C
-    BNE .done
-    LDA #$0008
-    STA !GAMEMODE
-    LDA #$0001
+    BIT !IH_INPUT_START : BEQ .done
+    LDA !GAMEMODE : CMP #$000C : BNE .done
+    LDA #$0008 : STA !GAMEMODE
     STZ $0723   ; Screen fade delay = 0
     STZ $0725   ; Screen fade counter = 0
-    LDA $0051
-    ORA #$000F
+    LDA $0051 : ORA #$000F
     STA $0051   ; Brightness = $F (max)
   .done:
     PLP
     RTS
 }
 
-gamemode_shortcuts:
-{
 if !FEATURE_SD2SNES
+gamemode_door_transtion_load_sprites:
+{
     ; Check for auto-save mid-transition
-    LDA !ram_auto_save_state : BEQ .check_inputs
-    LDA !DOOR_FUNCTION_POINTER : CMP #$E4A9 : BNE .check_inputs
-    LDA !ram_auto_save_state : BMI .auto_save
-    LDA #$0000 : STA !ram_auto_save_state
+    LDA !ram_auto_save_state : BEQ .done : BMI .auto_save
+    TDC : STA !ram_auto_save_state
   .auto_save
-    JMP .save_state
-  .check_inputs
+    PHP : PHB
+    PHK : PLB
+    JSL save_state
+    PLB : PLP
+  .done
+    JML $82E4A9
+}
 endif
 
+gamemode_shortcuts:
+{
     LDA !IH_CONTROLLER_PRI_NEW : BNE .check_shortcuts
-    ; No shortcuts configured, CLC so we won't skip normal gameplay
+    ; CLC so we won't skip normal gameplay
     CLC : RTS
   .check_shortcuts
 
@@ -184,8 +219,13 @@ if !FEATURE_TINYSTATES
     ; Disallow tiny states outside of gameplay
     ; Most other gamemodes will crash on load
     LDA !GAMEMODE : CMP #$0020 : BEQ .save ; end of Ceres allowed
-    CMP #$0007 : BMI .fail
-    CMP #$001C : BPL .fail
+    CMP #$0007 : BMI .save_state_fail
+    CMP #$001C : BMI .save
+
+  .save_state_fail
+    ; CLC to continue normal gameplay
+    LDA !sram_ctrl_save_state
+    CLC : JMP skip_pause
 
   .save
 endif
@@ -200,31 +240,28 @@ endif
 
   .load_state
     ; check if a saved state exists
-    LDA !SRAM_SAVED_STATE : CMP #$5AFE : BNE .fail
+    LDA !SRAM_SAVED_STATE : CMP #$5AFE : BNE .load_state_fail
     JSL load_state
     ; SEC to skip normal gameplay for one frame after loading state
     SEC : RTS
 
-  .fail
+  .load_state_fail
     ; CLC to continue normal gameplay
+    LDA !sram_ctrl_load_state
     CLC : JMP skip_pause
 
   .auto_save_state
     LDA #$0001 : STA !ram_auto_save_state
     ; CLC to continue normal gameplay after setting savestate flag
-    CLC : RTS
+    LDA !sram_ctrl_auto_save_state
+    CLC : JMP skip_pause
 endif
 
   .kill_enemies
     JSL kill_enemies
     ; CLC to continue normal gameplay after killing enemies
+    LDA !sram_ctrl_kill_enemies
     CLC : JMP skip_pause
-
-  .load_last_preset
-    ; Choose a random preset if zero
-    LDA !sram_last_preset : BEQ .random_preset : STA !ram_load_preset
-    ; SEC to skip normal gameplay for one frame after loading preset
-    SEC : RTS
 
   .reset_segment_timer
     LDA !sram_frame_counter_mode : BEQ .reset_segment_timer_rta
@@ -235,11 +272,13 @@ endif
     LDA #$0000 : STA !ram_seg_rt_frames
     STA !ram_seg_rt_seconds : STA !ram_seg_rt_minutes
     ; CLC to continue normal gameplay after resetting segment timer
+    LDA !sram_ctrl_reset_segment_timer
     CLC : JMP skip_pause
 
   .reset_segment_later
     LDA #$FFFF : STA !ram_reset_segment_later
     ; CLC to continue normal gameplay after setting segement timer reset
+    LDA !sram_ctrl_reset_segment_later
     CLC : JMP skip_pause
 
   .full_equipment
@@ -249,19 +288,28 @@ endif
     LDA !SAMUS_PBS_MAX : STA !SAMUS_PBS
     LDA !SAMUS_RESERVE_MAX : STA !SAMUS_RESERVE_ENERGY
     ; CLC to continue normal gameplay after equipment refill
+    LDA !sram_ctrl_full_equipment
     CLC : JMP skip_pause
 
   .toggle_tileviewer
     LDA !ram_sprite_feature_flags : BIT !SPRITE_OOB_WATCH : BEQ .turnOnTileViewer
     EOR !SPRITE_OOB_WATCH : STA !ram_sprite_feature_flags
     ; CLC to continue normal gameplay after disabling OoB Tile Viewer
+    LDA !sram_ctrl_toggle_tileviewer
     CLC : JMP skip_pause
 
   .turnOnTileViewer
     ORA !SPRITE_OOB_WATCH : STA !ram_sprite_feature_flags
     JSL upload_sprite_oob_tiles
     ; CLC to continue normal gameplay after enabling OOB Tile Viewer
+    LDA !sram_ctrl_toggle_tileviewer
     CLC : JMP skip_pause
+
+  .load_last_preset
+    ; Choose a random preset if zero
+    LDA !sram_last_preset : BEQ .random_preset : STA !ram_load_preset
+    ; SEC to skip normal gameplay for one frame after loading preset
+    SEC : RTS
 
   .random_preset
     JSL LoadRandomPreset
@@ -270,29 +318,32 @@ endif
 
   .save_custom_preset
     ; check gamestate first
-    LDA $0998 : CMP #$0008 : BEQ .save_safe
-    CMP #$000C : BMI .not_safe
-    CMP #$0013 : BPL .not_safe
+    LDA $0998 : CMP #$0008 : BEQ .save_custom_safe
+    CMP #$000C : BMI .save_custom_not_safe
+    CMP #$0013 : BPL .save_custom_not_safe
 
-  .save_safe
+  .save_custom_safe
     JSL custom_preset_save
     ; CLC to continue normal gameplay after saving preset
     %sfxconfirm()
+    LDA !sram_ctrl_save_custom_preset
     CLC : JMP skip_pause
 
   .load_custom_preset
     ; check if slot is populated first
     LDA !sram_custom_preset_slot
-if !FEATURE_TINYSTATES
-    XBA : TAX                    ; multiply by 100h (slot offset)
-else
-    ASL : XBA : TAX              ; multiply by 200h (slot offset)
-endif
+    %presetslotsize()
     LDA $703000,X : CMP #$5AFE : BEQ .load_safe
 
-  .not_safe
     %sfxfail()
-    ; CLC to continue normal gameplay after failing to save or load preset
+    ; CLC to continue normal gameplay after failing to load preset
+    LDA !sram_ctrl_load_custom_preset
+    CLC : JMP skip_pause
+
+  .save_custom_not_safe
+    %sfxfail()
+    ; CLC to continue normal gameplay after failing to save preset
+    LDA !sram_ctrl_save_custom_preset
     CLC : JMP skip_pause
 
   .load_safe
@@ -310,6 +361,7 @@ endif
     LDA !sram_last_preset : BMI .done_preset_slot
     LDA #$0000 : STA !sram_last_preset
     ; CLC to continue normal gameplay after incrementing preset slot
+    LDA !sram_ctrl_inc_custom_preset
     CLC : JMP skip_pause
 
   .prev_preset_slot
@@ -322,11 +374,13 @@ endif
     LDA #$0000 : STA !sram_last_preset
   .done_preset_slot
     ; CLC to continue normal gameplay after decrementing preset slot
+    LDA !sram_ctrl_dec_custom_preset
     CLC : JMP skip_pause
 
   .update_timers
     JSL ih_update_hud_early
     ; CLC to continue normal gameplay after updating HUD timers
+    LDA !sram_ctrl_update_timers
     CLC : JMP skip_pause
 
   .menu
@@ -334,6 +388,7 @@ endif
     LDA $AB : PHA
     LDA #$0004 : STA $AB
 
+    LDA !sram_ctrl_menu
     JSR skip_pause
 
     ; Enter MainMenu

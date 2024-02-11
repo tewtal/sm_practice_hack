@@ -151,6 +151,7 @@ If you experience crashes or severe glitches when using savestates, your platfor
 |&nbsp;|
 | **Room Layout**               | Modify the room layout, usually to help practice rando scenarios.
 | - Item Pickups                | Option to replace all items with a specific item.  Can also be done by icon type (visible, chozo orb, hidden).
+| - Bomb Torizo Door            | Control Bomb Torizo Door oscillator, whether door waits 40 (fast) or 41 (slow) frames before closing after collecting bombs.
 | - Remove Magnet Stairs        | Adds slope tiles to prevent the magnet stairs effect.
 | - Area Rando Patches          | Room modifications as you would see in a VARIA area randomizer.
 | - Anti-softlock Patches       | Room modifications as you would see in a typical VARIA randomizer.
@@ -196,6 +197,7 @@ If you experience crashes or severe glitches when using savestates, your platfor
 | - Rerandomize                 | Toggles rerandomizing of RNG values upon loading a savestate. Automatically disabled in rooms with "seeded" RNG, but some of these situations may not be accounted for yet. Not available on some platforms.
 | - Phantoon                    | Configure possible Phantoon patterns. You can enable or disable individual patterns per-round, allowing you to practice only a subset of possible patterns. The round-1 toggles apply only to the first round, whereas the round-2 toggles apply to all subsequent rounds, including rounds where Phantoon is invisible.
 |                               | If all patterns are enabled (or disabled) for a round, vanilla RNG is used with all its quirks and biases. However, if you customize the patterns for a round, that round will use a customized RNG that chooses patterns with mostly-balanced probabilities (though slower patterns may still tend to be slightly more common).
+|                               | Note that for round 2+ patterns, the "No Fast/Mid/Slow" and "Left/Right" options will also remove the rare patterns (Right Fast and Left Mid) in order to make those options more useful.
 |                               | - Phan Eye Close: Choose how long Phantoon's eye will remain open after a ring of flames
 |                               | - Phan Flame Pattern: Choose one of four patterns for Phantoon's flames
 |                               | - Next Flame Pattern: Swaps with Phan Flame Pattern each time Phantoon chooses a pattern

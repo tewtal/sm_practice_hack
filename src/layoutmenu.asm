@@ -17,6 +17,7 @@ print pc, " layoutmenu start"
 LayoutMenu:
     dw #layout_itempickups
     dw #$FFFF
+    dw #layout_bombtorizodoor
     dw #layout_magnetstairs
     dw #layout_arearando
     dw #layout_antisoftlock
@@ -317,6 +318,15 @@ layout_ip_set_hidden:
     LDA.l LayoutIPHiddenPLMTable,X : STA !ram_itempickups_hidden
     JML layout_ip_init_all
 }
+
+layout_bombtorizodoor:
+    dw !ACTION_CHOICE
+    dl #!sram_bomb_torizo_door
+    dw #$0000
+    db #$28, "Bomb Torizo Doo", #$FF
+    db #$28, "r   VANILLA", #$FF
+    db #$28, "r      FAST", #$FF
+    db #$28, "r      SLOW", #$FF
 
 layout_magnetstairs:
     %cm_toggle_bit("Remove Magnet Stairs", !sram_room_layout, !ROOM_LAYOUT_MAGNET_STAIRS, #0)
