@@ -46,9 +46,6 @@ org $8290F6      ; hijack, HUD routine while paused
 org $80A16B      ; hijack, adjust room times and update HUD when unpausing
     JSL ih_unpause
 
-org $82894F      ; hijack, main game loop: runs EVERY frame (used for room transition timer)
-    JSL ih_game_loop_code
-
 org $84889F      ; hijack, runs every time an item is picked up
     JSL ih_get_item_code
 
