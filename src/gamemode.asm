@@ -63,6 +63,7 @@ gamemode_start:
     ; If we are skipping gameplay this frame and not loading a preset,
     ; it's not fair to still increment timers at the end of the frame,
     ; so decrement timers here to compensate
+    DEC !FRAME_COUNTER
     LDA !ram_realtime_room : DEC : STA !ram_realtime_room
 
     ; Segment real timer
