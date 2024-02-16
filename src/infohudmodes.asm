@@ -51,11 +51,12 @@ status_roomstrat:
     dw status_shinetopb
     dw status_elevatorcf
     dw status_botwooncf
-    dw status_snailclip
-    dw status_mbhp
-    dw status_downbackzeb
     dw status_draygonai
+    dw status_snailclip
+    dw status_wasteland
     dw status_ridleyai
+    dw status_downbackzeb
+    dw status_mbhp
     dw status_twocries
 }
 
@@ -2437,6 +2438,165 @@ endif
     ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
     LDA !IH_LETTER_L : STA !HUD_TILEMAP+$8C
     RTS
+}
+
+status_wasteland:
+{
+    ; Suppress Samus HP display
+    LDA !SAMUS_HP : STA !ram_last_hp
+
+    LDA !ram_realtime_room : CMP #$0001 : BEQ .start
+    LDA !ram_roomstrat_state : BEQ .done
+    LDA !ram_roomstrat_counter : INC : STA !ram_roomstrat_counter
+    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_SHOT : BNE .pressedshot
+    RTS
+
+  .badstart
+    TDC : STA !ram_roomstrat_state
+    LDA !IH_LETTER_X
+
+  .clearhud
+    STA !HUD_TILEMAP+$88 : STA !HUD_TILEMAP+$92
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$8A
+    STA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$8E
+    STA !HUD_TILEMAP+$90 : STA !HUD_TILEMAP+$94
+    STA !HUD_TILEMAP+$96 : STA !HUD_TILEMAP+$98
+    RTS
+
+  .reset
+    TDC : STA !ram_roomstrat_state
+
+  .done
+    RTS
+
+  .start
+    LDA !ROOM_ID : CMP #$B5D5 : BNE .reset
+    LDA !SAMUS_X : CMP #$0564 : BNE .badstart
+    LDA !SAMUS_Y : CMP #$0065 : BNE .badstart
+    LDA !SAMUS_POSE : CMP #$0032 : BEQ .init
+    CMP #$007E : BEQ .init : CMP #$0080 : BNE .badstart
+
+  .init
+    TDC : STA !ram_roomstrat_counter
+    INC : STA !ram_roomstrat_state
+    LDA !IH_LETTER_Y
+    BRA .clearhud
+
+  .incstate
+    LDA !ram_roomstrat_state : INC : STA !ram_roomstrat_state
+    RTS
+
+  .pressedshot
+    LDA !ram_roomstrat_state : CMP #$0002 : BEQ .secondbomb
+    LDA !ram_roomstrat_counter : CMP #$0084 : BPL .secondbomb
+    CMP #$0048 : BPL .firstlate : CMP #$003E : BEQ .boost : BMI .firstearly
+    SEC : SBC #$003E : ASL : TAY
+    LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$94
+    CPY #$000F : BPL .firsthigh
+    STA !HUD_TILEMAP+$8A
+    LDA !IH_LETTER_Y
+    BRA .setfirstletters
+
+  .firstlate
+    SEC : SBC #$0047 : ASL : TAY
+    LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$94
+    INY : INY : INY : INY
+    LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A
+    LDA !IH_LETTER_L
+
+  .setfirstletters
+    STA !HUD_TILEMAP+$88 : STA !HUD_TILEMAP+$92
+    BRA .incstate
+
+  .boost
+    BRA .firstboost
+
+  .firstearly
+    LDA #$003F : SEC : SBC !ram_roomstrat_counter : ASL : TAY
+    LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A : STA !HUD_TILEMAP+$94
+    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$88 : STA !HUD_TILEMAP+$92
+
+  .ignore
+    RTS
+
+  .secondbomb
+    LDA !ram_roomstrat_counter
+    CMP #$009C : BMI .ignore : CMP #$011A : BPL .ignore
+    CMP #$00DF : BPL .secondlate : CMP #$00D6 : BMI .secondearly
+    CMP #$00DD : BPL .secondhigh : CMP #$00DA : BMI .secondlow
+    BRA .secondgood
+
+  .firsthigh
+    LDA !ram_roomstrat_counter
+    SEC : SBC #$0045 : ASL : TAY
+    LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A
+    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$88
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$92
+    BRL .incstate
+
+  .firstboost
+    LDY #$0002 : LDA.w NumberGFXTable,Y
+    STA !HUD_TILEMAP+$8A : STA !HUD_TILEMAP+$94
+    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$88
+    LDA !IH_LETTER_B : STA !HUD_TILEMAP+$92
+
+    ; Getting the boost shifts the RNG
+    LDA !ram_roomstrat_counter : INC : STA !ram_roomstrat_counter
+    BRL .incstate
+
+  .secondlate
+    SEC : SBC #$00DE : ASL : TAY
+    LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$98
+    INY : INY : INY : INY
+    LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
+    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$96
+    BRL .reset
+
+  .secondearly
+    BRA .secondearlydraw
+
+  .secondhigh
+    BRA .secondhighdraw
+
+  .secondlow
+    BRA .secondlowdraw
+
+  .secondgood
+    BRL .secondgooddraw
+
+  .secondearlydraw
+    LDA #$00D6 : SEC : SBC !ram_roomstrat_counter : ASL : TAY
+    LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
+    INY : INY : INY : INY : INY : INY : INY : INY
+    LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$98
+    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$96
+    RTS
+
+  .secondhighdraw
+    SEC : SBC #$00DC : ASL : TAY
+    LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
+    INY : INY : INY : INY : INY : INY
+    LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$98
+    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$8C
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$96
+    BRL .reset
+
+  .secondlowdraw
+    SEC : SBC #$00D5 : ASL : TAY
+    LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
+    LDA #$00DA : SEC : SBC !ram_roomstrat_counter : ASL : TAY
+    LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$98
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$8C
+    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$96
+    BRL .reset
+
+  .secondgooddraw
+    SEC : SBC #$00D9 : ASL : TAY
+    LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$98
+    INY : INY : INY : INY : INY : INY : INY : INY
+    LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$96
+    BRL .reset
 }
 
 status_mbhp:

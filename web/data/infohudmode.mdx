@@ -260,6 +260,9 @@ Last two characters = Feedback on your timing in returning to the correct positi
 
 Note: If using the bombs method, there is a two-frame window where Samus will reach the correct position with 0 speed for two frames. In this case, you will get your best case feedback. For example, instead of seeing YYL2 followed by YYL3, you will just see YYL2.
 
+## Draygon AI
+Prints the name of Draygon's current AI routine on the bottom-right of the HUD. Draygon's HP is displayed on the left.
+
 ## Aqueduct Snail Clip
 Provides feedback on attempts to stop a particular snail in a position where you can jump up and clip through pipes to reach the two Aqueduct items:  
 &nbsp;  
@@ -273,11 +276,21 @@ Last two characters = Feedback on your timing in returning to the correct positi
 
 Note: Snail clip works with three pixels on NTSC and five pixels on PAL. However because the snail moves 1.25 pixels per frame on NTSC and roughly 1.5 pixels per frame on PAL, it works out to only 3 frames on NTSC and 3 or 4 frames on PAL.  Without Hi-Jump Boots equipped, it's only a 2-frame window on both NTSC and PAL.
 
-## Mother Brain HP
-Displays the HP of the second enemy. Most useful for the Mother Brain fight since Mother Brain uses the second enemy slot.
+## Wasteland (currently only supported on NTSC)
+Provides feedback on the timing of bombs during wasteland entry from kihunter shaft. This assumes a normalized entry (roll off ledge in prior room, press against left side of door, continue holding left). If you do this, then you should see a pair of Y's after entry (although it may be possible to fool this check to give Y's even if the setup is off, for example not pressing against the left side of the door).
+&nbsp;
+The first block of four characters (two characters for each bomb) is for a simple roll into the room, requiring a high hop from the third hopper (second one on the ground):
+- E# indicates you bombed early where the number tells you how many frames you were early.
+- Y# indicates you bombed on time where the number tells you which of the seven frames it was.
+- L# indicates you bombed late where the number tells you how many frames you were late.
+&nbsp;
+The second block of four characters (two characters for each bomb) is for standing up and running under the first hopper, requiring a high hop from the first hopper:
+- E# indicates you bombed early where the number tells you how many frames you were early.
+- B1 indicates you got the bomb boost, which slightly affects the timing of the second bomb but still has a five frame window.
+- Y# indicates you bombed on time where the number tells you which of the nine frames (first bomb) or five frames (second bomb) it was.
+- L# indicates you bombed late where the number tells you how many frames you were late.
 
-## Draygon AI
-Prints the name of Draygon's current AI routine on the bottom-right of the HUD. Draygon's HP is displayed on the left.
+Note: The trainer doesn't verify that the bombs break open the tunnel. For example, Y7Y1 will fail because the first bomb was laid late, leaving little time for the second bomb, whereas Y7Y7 can work. The sooner the first bomb is laid, the more time is available for the second bomb.
 
 ## Ridley AI
 Prints the name of Ridley's current AI routine on the bottom-right of the HUD to assist with finding manipulation strategies. Ridley's HP is displayed on the left until it reaches zero, at which point it will start counting Ridley's "death grab" attempts until Ridley explodes.
@@ -288,6 +301,9 @@ Provides feedback on downback zeb skip attempts:
 - First character = Feedback on your horizontal subpixel normalization. An X indicates your horizontal subpixel was correctly normalized, while an N indicates it was not. (This may not necessarily support all normalized setups; if it incorrectly reports an N for your favorite setup, let us know!).
 - Second character = Feedback on your vertical subpixel normalization. A Y indicates your vertical subpixel was correctly normalized; an N indicates it was not. (If you're getting an N here, the most likely cause is that you're holding forward during knockback from the Rinka and getting a downwards damage boost, which you do not want.)
 - Third character = number of frames between knockback ending and the start of your downback. Values of 1-4, 6-10, or 13-14 are "good frames" that result in a successful clip, while 0, 5, 11-12, and 15+ are "bad frames" that will result in a failed attempt.
+
+## Mother Brain HP
+Displays the HP of the second enemy. Most useful for the Mother Brain fight since Mother Brain uses the second enemy slot.
 
 ## Two Cries (currently only supported on NTSC)
 Provides feedback on attempts to manipulate Mother Brain into a fast sitdown animation (baby detaches after just two cries) while performing the standup glitch.
