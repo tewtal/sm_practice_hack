@@ -433,14 +433,22 @@ ih_before_room_transition:
     PHB : PHD : PLB : PLB
     TAY
     LDX #$00C2
+    LDA !sram_top_display_mode : CMP !TOP_DISPLAY_VANILLA_8BIT : BEQ .vanillaDoorLag
     LDA !ram_minimap : BEQ .draw3
     LDX #$0054
   .draw3
     TYA : JSR Draw3
+  .doneDoorLag
+    %a16()
     PLB
 
     CLC ; overwritten code
     RTL
+
+  .vanillaDoorLag
+    LDA !ram_minimap : BNE .doneDoorLag
+    TYA : JSR Draw2
+    BRA .doneDoorLag
 }
 
 ceres_start_timers:

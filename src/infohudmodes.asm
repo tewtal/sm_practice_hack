@@ -45,6 +45,7 @@ status_roomstrat:
   .status_room_table
     dw status_doorskip
     dw status_tacotank
+    dw status_moondance
     dw status_gateglitch
     dw status_moatcwj
     dw status_robotflush
@@ -1869,6 +1870,296 @@ endif
     BRL .incstate
 }
 
+status_moondance:
+{
+    ; Suppress Samus HP display
+    LDA !SAMUS_HP : STA !ram_last_hp
+
+    LDA !SAMUS_Y_SPEEDCOMBINED : BNE .checkstate
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_SHOT : BNE .checkstate
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_RIGHT : BNE .checkstate
+    LDA !SAMUS_POSE : CMP #$0006 : BEQ .gotocheckstart
+    CMP #$0008 : BNE .checkstate
+
+  .gotocheckstart
+    BRL .checkstart
+
+  .checkL2Rshoot
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_SHOT : BNE .L2Rshoot
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_RIGHT : BNE .L2Rturnearly
+    BRL .inccounter
+
+  .checkstate
+    LDA !ram_roomstrat_state : DEC : BEQ .checkL2Rshoot
+    DEC : BEQ .checkL2Rturn : DEC : BEQ .checkL2Rrelease
+    BRL .morestate
+
+  .L2Rshoot
+    LDA !ram_roomstrat_counter : CMP #$0042 : BPL .L2Rshootdrawn
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$92
+
+  .L2Rshootdrawn
+    TDC : STA !ram_roomstrat_counter
+    LDA !ram_roomstrat_state : INC : STA !ram_roomstrat_state
+
+  .checkL2Rturn
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_SHOT : BEQ .L2Rreleaseearly
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_RIGHT : BNE .L2Rturn
+    BRL .inccounter
+
+  .L2Rturnearly
+    LDA !IH_LETTER_F : STA !HUD_TILEMAP+$92
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$94
+    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$96
+    LDA !IH_LETTER_R : STA !HUD_TILEMAP+$98
+    BRL .gotoL2Rsimpleturn
+
+  .L2Rturn
+    LDA !ram_roomstrat_counter : CMP #$0042 : BPL .L2Rturndrawn
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$94
+
+  .L2Rturndrawn
+    TDC : STA !ram_roomstrat_counter
+    LDA !ram_roomstrat_state : INC : STA !ram_roomstrat_state
+
+  .checkL2Rrelease
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_SHOT : BEQ .L2Rrelease
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_RIGHT : BEQ .L2Rdoneearly
+    BRL .inccounter
+
+  .L2Rreleaseearly
+    LDA !IH_LETTER_F : STA !HUD_TILEMAP+$92
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$94
+    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$96
+    LDA !IH_LETTER_R : STA !HUD_TILEMAP+$98
+    BRL .gotoL2Rsimpleturn
+
+  .L2Rrelease
+    LDA !ram_roomstrat_counter : CMP #$0042 : BPL .L2Rreleasedrawn
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$96
+
+  .L2Rreleasedrawn
+    TDC : STA !ram_roomstrat_counter
+    LDA !ram_roomstrat_state : INC : STA !ram_roomstrat_state
+
+  .checkL2Rpose
+    LDA !SAMUS_POSE : CMP #$0001 : BEQ .L2Rpose
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_RIGHT : BEQ .L2Rdoneearly
+    BRL .inccounter
+
+  .L2Rdoneearly
+    LDA !SAMUS_Y : CMP #$00B0 : BNE .L2Rdoneearlydraw
+    BRL .alldone
+
+  .L2Rdoneearlydraw
+    LDA !IH_LETTER_F : STA !HUD_TILEMAP+$92
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$94
+    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$96
+    LDA !IH_LETTER_N : STA !HUD_TILEMAP+$98
+    BRL .gotoL2Rsimpleturn
+
+  .L2Rpose
+    TDC : STA !ram_roomstrat_counter
+    LDA !ram_roomstrat_state : INC : STA !ram_roomstrat_state
+
+  .checkL2Rdone
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_RIGHT : BEQ .L2Rdone
+    BRL .inccounter
+
+  .L2Rdone
+    LDA !ram_roomstrat_counter : CMP #$0042 : BPL .L2Rdonedrawn
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$98
+    BRA .L2Rdonedrawn
+
+  .morestate
+    DEC : BEQ .checkL2Rpose : DEC : BEQ .checkL2Rdone
+    DEC : BEQ .checkR2Lsimpleturn : DEC : BEQ .checkR2Lsimpledone
+    DEC : BEQ .checkR2Lshoot
+    BRL .evenmorestate
+
+  .L2Rdonedrawn
+    TDC : STA !ram_roomstrat_counter
+    LDA !ram_roomstrat_state : INC : STA !ram_roomstrat_state
+    LDA !ram_quickdrop_counter : INC : STA !ram_quickdrop_counter
+    PHA : LDX #$008A : JSR Draw3 : PLA
+
+  .L2RprepR2L
+    CMP #$001D : BPL .R2Lprep
+
+  .checkR2Lsimpleturn
+    LDA !SAMUS_POSE : CMP #$008D : BEQ .R2Lsimpleturn
+    CMP #$009C : BEQ .R2Lsimpleturn : CMP #$0025 : BEQ .R2Lsimpleturn
+    CMP #$0006 : BEQ .R2Lsimpleturn : CMP #$0008 : BEQ .R2Lsimpleturn
+
+  .inccounter
+    LDA !ram_roomstrat_counter : INC : STA !ram_roomstrat_counter
+    RTS
+
+  .R2Lsimpleturn
+    LDA !ram_roomstrat_state : INC : STA !ram_roomstrat_state
+
+  .checkR2Lsimpledone
+    LDA !SAMUS_POSE : CMP #$008D : BEQ .R2Lsimpleturning
+    CMP #$009C : BEQ .R2Lsimpleturning : CMP #$0025 : BEQ .R2Lsimpleturning
+    TDC : INC : STA !ram_roomstrat_state
+
+  .R2Lsimpleturning
+    RTS
+
+  .R2Lprep
+    LDA !ram_roomstrat_state : INC : INC : STA !ram_roomstrat_state
+
+  .checkR2Lshoot
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_SHOT : BNE .R2Lshoot
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_LEFT : BNE .R2Lturnearly
+    BRL .inccounter
+
+  .R2Lshoot
+    LDA !ram_roomstrat_counter : CMP #$0042 : BPL .R2Lshootdrawn
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$92
+
+  .R2Lshootdrawn
+    TDC : STA !ram_roomstrat_counter
+    LDA !ram_roomstrat_state : INC : STA !ram_roomstrat_state
+    BRA .checkR2Lturn
+
+  .R2Lturnearly
+    LDA !IH_LETTER_F : STA !HUD_TILEMAP+$92
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$94
+    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$96
+    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$98
+    BRL .gotoR2Lsimpleturn
+
+  .checkR2Lturn
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_SHOT : BEQ .R2Lreleaseearly
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_LEFT : BNE .R2Lturn
+    BRL .inccounter
+
+  .R2Lturn
+    LDA !ram_roomstrat_counter : CMP #$0042 : BPL .R2Lturndrawn
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$94
+
+  .R2Lturndrawn
+    TDC : STA !ram_roomstrat_counter
+    LDA !ram_roomstrat_state : INC : STA !ram_roomstrat_state
+
+  .checkR2Lrelease
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_SHOT : BEQ .R2Lrelease
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_LEFT : BEQ .R2Ldoneearly
+    BRL .inccounter
+
+  .R2Lreleaseearly
+    LDA !IH_LETTER_F : STA !HUD_TILEMAP+$92
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$94
+    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$96 : STA !HUD_TILEMAP+$98
+    BRL .gotoR2Lsimpleturn
+
+  .evenmorestate
+    DEC : BEQ .checkR2Lturn : DEC : BEQ .checkR2Lrelease
+    DEC : BEQ .checkR2Lpose : DEC : BEQ .checkR2Ldone
+    BRL .failstate
+
+  .R2Lrelease
+    LDA !ram_roomstrat_counter : CMP #$0042 : BPL .R2Lreleasedrawn
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$96
+
+  .R2Lreleasedrawn
+    TDC : STA !ram_roomstrat_counter
+    LDA !ram_roomstrat_state : INC : STA !ram_roomstrat_state
+
+  .checkR2Lpose
+    LDA !SAMUS_POSE : CMP #$0002 : BEQ .R2Lpose
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_LEFT : BEQ .R2Ldoneearly
+    BRL .inccounter
+
+  .checkR2Ldone
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_LEFT : BEQ .R2Ldone
+    BRL .inccounter
+
+  .R2Ldoneearly
+    LDA !SAMUS_Y : CMP #$00B0 : BNE .R2Ldoneearlydraw
+    BRL .alldone
+
+  .R2Ldoneearlydraw
+    LDA !IH_LETTER_F : STA !HUD_TILEMAP+$92
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$94
+    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$96
+    LDA !IH_LETTER_N : STA !HUD_TILEMAP+$98
+    BRL .gotoR2Lsimpleturn
+
+  .R2Lpose
+    TDC : STA !ram_roomstrat_counter
+    LDA !ram_roomstrat_state : INC : STA !ram_roomstrat_state
+    BRA .checkR2Ldone
+
+  .R2Ldone
+    LDA !ram_roomstrat_counter : CMP #$0042 : BPL .R2Ldonedrawn
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$98
+
+  .R2Ldonedrawn
+    TDC : STA !ram_roomstrat_counter
+    INC : STA !ram_roomstrat_state
+    LDA !ram_quickdrop_counter : INC : STA !ram_quickdrop_counter
+    LDX #$008A : JSR Draw3
+    BRL .checkL2Rshoot
+
+  .failstate
+    DEC : BEQ .checkL2Rsimpleturn : DEC : BEQ .checkL2Rsimpledone
+
+  .L2Rsimpleturning
+    RTS
+
+  .gotoR2Lsimpleturn
+    TDC : STA !ram_roomstrat_counter
+    LDA #$0006 : STA !ram_roomstrat_state
+    BRL .checkR2Lsimpleturn
+
+  .gotoL2Rsimpleturn
+    TDC : STA !ram_roomstrat_counter
+    LDA #$000D : STA !ram_roomstrat_state
+
+  .checkL2Rsimpleturn
+    LDA !SAMUS_POSE : CMP #$008E : BEQ .L2Rsimpleturn
+    CMP #$009D : BEQ .L2Rsimpleturn : CMP #$0026 : BEQ .L2Rsimpleturn
+    CMP #$0005 : BEQ .L2Rsimpleturn : CMP #$0007 : BEQ .L2Rsimpleturn
+    BRL .inccounter
+
+  .L2Rsimpleturn
+    LDA !ram_roomstrat_state : INC : STA !ram_roomstrat_state
+
+  .checkL2Rsimpledone
+    LDA !SAMUS_POSE : CMP #$008E : BEQ .L2Rsimpleturning
+    CMP #$009D : BEQ .L2Rsimpleturning : CMP #$0026 : BEQ .L2Rsimpleturning
+    LDA #$0006 : STA !ram_roomstrat_state
+    LDA !ram_quickdrop_counter
+    BRL .L2RprepR2L
+
+  .checkstart
+    LDA !SAMUS_X : CMP #$03F5 : BNE .done
+    LDA !SAMUS_Y : CMP #$009B : BNE .done
+    LDA !SAMUS_X_SUBPX : BNE .done
+    LDA !SAMUS_Y_SUBPX : INC : BNE .done
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$88
+    LDA.w NumberGFXTable : STA !HUD_TILEMAP+$8E
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$8A
+    STA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$90
+    STA !HUD_TILEMAP+$92 : STA !HUD_TILEMAP+$94
+    STA !HUD_TILEMAP+$96 : STA !HUD_TILEMAP+$98
+    TDC : STA !ram_roomstrat_counter : STA !ram_quickdrop_counter
+    INC : STA !ram_roomstrat_state
+
+  .done
+    RTS
+
+  .alldone
+    TDC : STA !ram_roomstrat_counter : STA !ram_roomstrat_state
+    LDA !ram_quickdrop_counter : INC : STA !ram_quickdrop_counter
+    LDX #$008A : JSR Draw3
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$92 : STA !HUD_TILEMAP+$94
+    STA !HUD_TILEMAP+$96 : STA !HUD_TILEMAP+$98
+    RTS
+}
+
 status_gateglitch:
 {
     ; Arbitrarily expecting shot and gate events to be within 20 frames of each other
@@ -2567,7 +2858,7 @@ status_wasteland:
   .secondearlydraw
     LDA #$00D6 : SEC : SBC !ram_roomstrat_counter : ASL : TAY
     LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
-    INY : INY : INY : INY : INY : INY : INY : INY
+    TYA : CLC : ADC #$0008 : TAY
     LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$98
     LDA !IH_LETTER_E : STA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$96
     RTS
@@ -2575,7 +2866,7 @@ status_wasteland:
   .secondhighdraw
     SEC : SBC #$00DC : ASL : TAY
     LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
-    INY : INY : INY : INY : INY : INY
+    TYA : CLC : ADC #$0006 : TAY
     LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$98
     LDA !IH_LETTER_L : STA !HUD_TILEMAP+$8C
     LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$96
@@ -2593,7 +2884,7 @@ status_wasteland:
   .secondgooddraw
     SEC : SBC #$00D9 : ASL : TAY
     LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$98
-    INY : INY : INY : INY : INY : INY : INY : INY
+    TYA : CLC : ADC #$0008 : TAY
     LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
     LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$96
     BRL .reset
