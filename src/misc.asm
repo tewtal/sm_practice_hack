@@ -489,6 +489,8 @@ set_fade_in_door_function:
     ; The optimizations adversely affect yapping maw and metroid enemies,
     ; so avoid using the optimizations in those rooms.
 
+    ; If we are in Ceres, use original routine
+    LDA !AREA_ID : CMP #$0006 : BEQ .original
     ; If the first enemy is a yapping maw, use original routine
     LDA !ENEMY_ID : CMP #$E7BF : BEQ .original
     ; If this is Red Brinstar Firefleas, use original routine
@@ -534,7 +536,9 @@ endif
     %ai16()
     ; Skip draw sprite objects
     ; Skip drawing bombs and projectile explosions
-    ; The rest will be the same as the original routine
+    ; The rest will be the same as the original routine,
+    ; other than adding a touch of artificial lag
+    PHA : PLA : PHA : PLA
 if !FEATURE_PAL
     JML $A0886D
 else
