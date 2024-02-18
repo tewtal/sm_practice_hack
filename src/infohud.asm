@@ -433,7 +433,7 @@ ih_before_room_transition:
     PHB : PHD : PLB : PLB
     TAY
     LDX #$00C2
-    LDA !sram_top_display_mode : CMP !TOP_DISPLAY_VANILLA_8BIT : BEQ .vanillaDoorLag
+    LDA !sram_top_display_mode : CMP.b !TOP_DISPLAY_VANILLA : BEQ .vanillaDoorLag
     LDA !ram_minimap : BEQ .draw3
     LDX #$0054
   .draw3
@@ -1641,7 +1641,7 @@ ih_adjust_realtime:
     TYA
     ; add time to segment timer frames, and divide by 60
     CLC : ADC !ram_seg_rt_frames : STA $4204
-    TYA : %i8() : LDY !FPS_8BIT : STY $4206
+    TYA : %i8() : LDY.b !FPS : STY $4206
 
     PHA : CLC : ADC !ram_realtime_room : STA !ram_realtime_room
     LDA $4216 : STA !ram_seg_rt_frames
