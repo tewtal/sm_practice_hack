@@ -1879,7 +1879,7 @@ status_moondance:
     LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_SHOT : BNE .checkstate
     LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_RIGHT : BNE .checkstate
     LDA !SAMUS_POSE : CMP #$0006 : BEQ .gotocheckstart
-    CMP #$0008 : BNE .checkstate
+    CMP #$0008 : BEQ .gotocheckstart : CMP #$008A : BNE .checkstate
 
   .gotocheckstart
     BRL .checkstart
