@@ -236,7 +236,7 @@ load_raw_tile_graphics:
     LDA #$01 : STA $420B            ; initiate DMA (channel 1)
 
   .tileset_palette
-    LDA !sram_preset_options : BIT !PRESETS_COMPRESSED_PALETTES_8BIT : BNE .palette_decompression
+    LDA !sram_preset_options : BIT.b !PRESETS_COMPRESSED_PALETTES : BNE .palette_decompression
 
     ; Copy tileset palette to $7EC200
     PLX : LDY #$C200 : TDC : DEC

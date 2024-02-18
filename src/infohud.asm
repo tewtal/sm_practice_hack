@@ -46,9 +46,6 @@ org $8290F6      ; hijack, HUD routine while paused
 org $80A16B      ; hijack, adjust room times and update HUD when unpausing
     JSL ih_unpause
 
-org $82894F      ; hijack, main game loop: runs EVERY frame (used for room transition timer)
-    JSL ih_game_loop_code
-
 org $84889F      ; hijack, runs every time an item is picked up
     JSL ih_get_item_code
 
@@ -436,14 +433,22 @@ ih_before_room_transition:
     PHB : PHD : PLB : PLB
     TAY
     LDX #$00C2
+    LDA !sram_top_display_mode : CMP.b !TOP_DISPLAY_VANILLA : BEQ .vanillaDoorLag
     LDA !ram_minimap : BEQ .draw3
     LDX #$0054
   .draw3
     TYA : JSR Draw3
+  .doneDoorLag
+    %a16()
     PLB
 
     CLC ; overwritten code
     RTL
+
+  .vanillaDoorLag
+    LDA !ram_minimap : BNE .doneDoorLag
+    TYA : JSR Draw2
+    BRA .doneDoorLag
 }
 
 ceres_start_timers:
@@ -1636,7 +1641,7 @@ ih_adjust_realtime:
     TYA
     ; add time to segment timer frames, and divide by 60
     CLC : ADC !ram_seg_rt_frames : STA $4204
-    TYA : %i8() : LDY !FPS_8BIT : STY $4206
+    TYA : %i8() : LDY.b !FPS : STY $4206
 
     PHA : CLC : ADC !ram_realtime_room : STA !ram_realtime_room
     LDA $4216 : STA !ram_seg_rt_frames

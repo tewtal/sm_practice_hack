@@ -172,7 +172,7 @@ endif
 
 hook_message_box_wait:
 {
-    LDA !sram_fanfare : BIT !FANFARE_TOGGLE_8BIT : BNE .fanfareloop
+    LDA !sram_fanfare : BIT.b !FANFARE_TOGGLE : BNE .fanfareloop
     LDX #$0020       ; shorten message box length
 
   .nofanfareloop     ; skipping fanfare, so no need to mess with sound

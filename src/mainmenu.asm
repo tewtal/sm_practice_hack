@@ -2525,17 +2525,19 @@ ih_goto_room_strat:
 RoomStratMenu:
     dw ihstrat_doorskip
     dw ihstrat_tacotank
+    dw ihstrat_moondance
     dw ihstrat_gateglitch
     dw ihstrat_moatcwj
     dw ihstrat_robotflush
     dw ihstrat_shinetopb
     dw ihstrat_elevatorcf
     dw ihstrat_botwooncf
-    dw ihstrat_snailclip
-    dw ihstrat_mbhp
-    dw ihstrat_downbackzeb
     dw ihstrat_draygonai
+    dw ihstrat_snailclip
+    dw ihstrat_wasteland
     dw ihstrat_ridleyai
+    dw ihstrat_downbackzeb
+    dw ihstrat_mbhp
     dw ihstrat_twocries
     dw #$0000
     %cm_header("INFOHUD ROOM STRAT")
@@ -2547,42 +2549,48 @@ ihstrat_doorskip:
 ihstrat_tacotank:
     %cm_jsl("Taco Tank", #action_select_room_strat, #$0001)
 
+ihstrat_moondance:
+    %cm_jsl("Moondance", #action_select_room_strat, #$0002)
+
 ihstrat_gateglitch:
-    %cm_jsl("Gate Glitch", #action_select_room_strat, #$0002)
+    %cm_jsl("Gate Glitch", #action_select_room_strat, #$0003)
 
 ihstrat_moatcwj:
-    %cm_jsl("Moat CWJ", #action_select_room_strat, #$0003)
+    %cm_jsl("Moat CWJ", #action_select_room_strat, #$0004)
 
 ihstrat_robotflush:
-    %cm_jsl("Robot Flush", #action_select_room_strat, #$0004)
+    %cm_jsl("Robot Flush", #action_select_room_strat, #$0005)
 
 ihstrat_shinetopb:
-    %cm_jsl("Shine to PB", #action_select_room_strat, #$0005)
+    %cm_jsl("Shine to PB", #action_select_room_strat, #$0006)
 
 ihstrat_elevatorcf:
-    %cm_jsl("Elevator Crystal Flash", #action_select_room_strat, #$0006)
+    %cm_jsl("Elevator Crystal Flash", #action_select_room_strat, #$0007)
 
 ihstrat_botwooncf:
-    %cm_jsl("Botwoon Crystal Flash", #action_select_room_strat, #$0007)
-
-ihstrat_snailclip:
-    %cm_jsl("Aqueduct Snail Clip", #action_select_room_strat, #$0008)
-
-!IH_STRAT_MBHP_INDEX = $0009
-ihstrat_mbhp:
-    %cm_jsl("Mother Brain HP", #action_select_room_strat, #$0009)
-
-ihstrat_downbackzeb:
-    %cm_jsl("Downback Zeb Skip", #action_select_room_strat, #$000A)
+    %cm_jsl("Botwoon Crystal Flash", #action_select_room_strat, #$0008)
 
 ihstrat_draygonai:
-    %cm_jsl("Draygon AI Tracker", #action_select_room_strat, #$000B)
+    %cm_jsl("Draygon AI", #action_select_room_strat, #$0009)
+
+ihstrat_snailclip:
+    %cm_jsl("Aqueduct Snail Clip", #action_select_room_strat, #$000A)
+
+ihstrat_wasteland:
+    %cm_jsl("Wasteland Entry", #action_select_room_strat, #$000B)
 
 ihstrat_ridleyai:
     %cm_jsl("Ridley AI", #action_select_room_strat, #$000C)
 
+ihstrat_downbackzeb:
+    %cm_jsl("Downback Zeb Skip", #action_select_room_strat, #$000D)
+
+!IH_STRAT_MBHP_INDEX = $000E
+ihstrat_mbhp:
+    %cm_jsl("Mother Brain HP", #action_select_room_strat, #$000E)
+
 ihstrat_twocries:
-    %cm_jsl("Two Cries Standup", #action_select_room_strat, #$000D)
+    %cm_jsl("Two Cries Standup", #action_select_room_strat, #$000F)
 
 action_select_room_strat:
 {
@@ -2598,22 +2606,24 @@ ih_room_strat:
     db #$28, "Current Strat", #$FF
     db #$28, "  DOOR SKIP", #$FF
     db #$28, "  TACO TANK", #$FF
+    db #$28, "  MOONDANCE", #$FF
     db #$28, "GATE GLITCH", #$FF
     db #$28, "   MOAT CWJ", #$FF
     db #$28, "ROBOT FLUSH", #$FF
     db #$28, "SHINE TO PB", #$FF
     db #$28, "ELEVATOR CF", #$FF
     db #$28, " BOTWOON CF", #$FF
-    db #$28, " SNAIL CLIP", #$FF
-    db #$28, "      MB HP", #$FF
-    db #$28, "  DBACK ZEB", #$FF
     db #$28, " DRAYGON AI", #$FF
+    db #$28, " SNAIL CLIP", #$FF
+    db #$28, "  WASTELAND", #$FF
     db #$28, "  RIDLEY AI", #$FF
+    db #$28, "  DBACK ZEB", #$FF
+    db #$28, "      MB HP", #$FF
     db #$28, "  TWO CRIES", #$FF
     db #$FF
-    .routine
-        LDA #$0001 : STA !sram_display_mode
-        RTL
+  .routine
+    LDA #$0001 : STA !sram_display_mode
+    RTL
 
 ih_goto_timers:
     %cm_submenu("Timer Settings", #IHTimerMenu)
