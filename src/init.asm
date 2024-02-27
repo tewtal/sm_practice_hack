@@ -220,34 +220,22 @@ init_menu_customization:
     RTL
 }
 
-init_controller_bindings:
-{
-    ; check if any non-dpad bindings are set
-    LDX #$000A
-    LDA.w !IH_INPUT_SHOT+$0C
-  .loopBindings
-    ORA.w !IH_INPUT_SHOT,X
-    DEX #2 : BPL .loopBindings
-    AND #$FFF0 : BNE .done
-
-    ; load default dpad bindings
-    LDA #$0800 : STA.w !INPUT_BIND_UP
-    LSR : STA.w !INPUT_BIND_DOWN
-    LSR : STA.w !INPUT_BIND_LEFT
-    LSR : STA.w !INPUT_BIND_RIGHT
-
-    ; load default non-dpad bindings
-    LDX #$000C
-  .loopTable
-    LDA.l ControllerLayoutTable,X : STA.w !IH_INPUT_SHOT,X
-    DEX #2 : BPL .loopTable
-
-  .done
-    RTL
-}
-
 init_post_boot:
 {
+    ; Load the last selected file slot (so that the user's controller
+    ; bindings will apply if they load a preset without loading a save file)
+    LDA $701FEC     ; Selected save slot
+    STA !CURRENT_SAVE_FILE
+    CMP #$0003 : BCC .valid_index
+    LDA #$0000
+  .valid_index
+    JSL $818085     ; Load save file
+    BCC .check_quickboot
+
+    ; No valid save; load a new file (for default controller bindings)
+    JSR $B2CB
+
+  .check_quickboot
     ; Is quickboot enabled?
     LDA !sram_cutscenes : AND !CUTSCENE_QUICKBOOT : BEQ .done
 

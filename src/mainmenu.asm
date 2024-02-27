@@ -1817,7 +1817,6 @@ action_teleport:
     STZ $0E18 ; Set elevator to inactive
     STZ $1C1F ; Clear message box index
 
-    JSL init_controller_bindings
     LDA !SAMUS_HP_MAX : BNE .branch
     LDA #$001F : STA !SAMUS_HP
 
