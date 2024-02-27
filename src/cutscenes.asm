@@ -7,6 +7,14 @@ endif
     JSR cutscenes_load_ceres_arrival
 
 if !FEATURE_PAL
+org $8B9287
+else
+org $8B92DE
+endif
+    JSR cutscenes_quickboot_hijack
+    NOP
+
+if !FEATURE_PAL
 org $8B92B5
 else
 org $8B930C
@@ -107,6 +115,22 @@ endif
 
 org $8BF800
 print pc, " cutscenes start"
+
+cutscenes_quickboot_hijack:
+{
+    JSL $80834B     ; hijacked code
+
+    LDA !sram_cutscenes : AND !CUTSCENE_QUICKBOOT : BNE .quickboot
+    RTS
+
+.quickboot
+    PLA ; pop return address
+    PLB
+    PLA ; saved processor status and 1 byte of next return address
+    PLA ; remainder of next return address
+
+    JML $808482  ; finish boot code; another hijack will launch the menu
+}
 
 cutscenes_nintendo_splash:
 {

@@ -24,6 +24,9 @@ warnpc $8084AF
 org $8084AF
   .end_clear_bank
 
+org $80856E
+    JML init_post_boot
+
 
 org $81F000
 print pc, " init start"
@@ -241,6 +244,18 @@ init_controller_bindings:
 
   .done
     RTL
+}
+
+init_post_boot:
+{
+    ; Is quickboot enabled?
+    LDA !sram_cutscenes : AND !CUTSCENE_QUICKBOOT : BEQ .done
+
+    ; Boot to the infohud menu
+    JML cm_boot
+
+  .done
+    JML $82893D     ; hijacked code: start main game loop
 }
 
 print pc, " init end"
