@@ -2934,6 +2934,7 @@ game_debugfixscrolloffsets:
 ; ---------------
 
 CutscenesMenu:
+    dw #cutscenes_quickboot
     dw #cutscenes_skip_splash
     dw #cutscenes_skip_intro
     dw #cutscenes_skip_ceres_arrival
@@ -2955,8 +2956,11 @@ CutscenesMenu:
     dw #$0000
     %cm_header("CUTSCENES AND EFFECTS")
 
+cutscenes_quickboot:
+    %cm_toggle_bit("Boot to Menu", !sram_cutscenes, !CUTSCENE_QUICKBOOT, #0)
+
 cutscenes_skip_splash:
-    %cm_toggle_bit("Fast Nintendo splash", !sram_cutscenes, !CUTSCENE_SKIP_SPLASH, #0)
+    %cm_toggle_bit("Fast Nintendo Splash", !sram_cutscenes, !CUTSCENE_SKIP_SPLASH, #0)
 
 cutscenes_skip_intro:
     %cm_toggle_bit("Skip Intro", !sram_cutscenes, !CUTSCENE_SKIP_INTRO, #0)

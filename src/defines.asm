@@ -93,7 +93,9 @@
 !ram_lag_counter                    = !WRAM_START+$7E
 !ram_kraid_adjust_timer             = !WRAM_START+$80
 
-!WRAM_PERSIST_START = !ram_kraid_adjust_timer+$02
+!ram_quickboot_spc_state            = !WRAM_START+$82
+
+!WRAM_PERSIST_START = !ram_quickboot_spc_state+$02
 ; ----------------------------------------------------------
 ; Variables below this point are PERSISTENT -- they maintain
 ; their value across savestates. Use this section for
@@ -705,6 +707,7 @@ endif
 !CUTSCENE_SKIP_GAMEOVER = #$1000
 !CUTSCENE_FAST_BOWLING = #$2000
 !CUTSCENE_KRAID_DEATH_CAMERA = #$4000
+!CUTSCENE_QUICKBOOT = #$8000
 
 !SUPPRESS_CRATERIA_LIGHTNING = #$0001
 !SUPPRESS_ESCAPE_FLASHING = #$0002
