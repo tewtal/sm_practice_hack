@@ -3234,17 +3234,16 @@ org $A7B6A2  <--  org $A7B67A
     LDA $A932     ;
 org $A7B6AB  <--  org $A7B67A
 
-org $A7B6C7  <--  org $A7B692
+org $A7B6C7  <--  org $A7B696
     BNE $13       ; previously BNE $10
 
-;======== Insert 9 bytes ========
+;======== Insert 3 bytes ========
 ; Kraid X position
 org $A7B6CC  <--  org $A7B69B
     LDA $A938     ; previously STZ $12
     STA $12       ; previously LDA $A922
-    LDA $A936     ; previously STA $14
-    STA $14
-org $A7B6D6  <--  org $A7B6A2
+    LDA $A936     ;
+org $A7B6D4  <--  org $A7B6A0
 
 ; Kraid projectile velocities
 org $A7BC99  <--  org $A7BC65

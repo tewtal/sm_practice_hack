@@ -163,6 +163,53 @@ endif
     JSL lock_samus_bowling
 
 
+org $869D59
+    JSR move_kraid_rocks_horizontally
+
+
+org $86F500
+print pc, " misc bank86 start"
+
+; Copied from $8688B6 but optimized for Kraid rocks using a hard-coded radius
+; This is intended to offset extra practice rom lag in Kraid's room
+move_kraid_rocks_horizontally:
+{
+    PHX
+    STZ $12 : STZ $14
+    LDA !ENEMY_PROJ_X_VELOCITY,X : BPL .storeVelocity
+    DEC $14
+  .storeVelocity
+    STA $13
+    LDA #$0004 : STA $1C
+    LDA !ENEMY_PROJ_Y,X : SEC : SBC #$0004
+    AND #$FFF0 : STA $1A
+    LDA !ENEMY_PROJ_Y,X : CLC : ADC #$0003
+    SEC : SBC $1A
+    LSR : LSR : LSR : LSR
+    STA $1A : STA $20
+    LDA !ENEMY_PROJ_Y,X : SEC : SBC #$0004
+    LSR : LSR : LSR : LSR
+    %a8() : STA $4202
+    LDA !ROOM_WIDTH_BLOCKS : STA $4203
+    %a16() : LDA !ENEMY_PROJ_X_SUBPX,X
+    CLC : ADC $12 : STA $16
+    LDA !ENEMY_PROJ_X,X : ADC $14 : STA $18
+    BIT $14 : BMI .subtract
+    CLC : ADC #$0003
+    BRA .store
+  .subtract
+    SEC : SBC #$0004
+  .store
+    STA $22
+    LSR : LSR : LSR : LSR
+    CLC : ADC $4216
+    ASL : TAX
+    JMP $8930
+}
+
+print pc, " misc bank86 end"
+
+
 org $90F800
 print pc, " misc bank90 start"
 
