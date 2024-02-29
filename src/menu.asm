@@ -97,6 +97,9 @@ cm_boot:
     PHK : PLB
     LDA #cm_spc_init : STA !ram_quickboot_spc_state
 
+    ; Disable sounds until we boot the SPC
+    LDA #$0001 : STA !DISABLE_SOUNDS
+
     %a8()
     LDA #$5A : STA $2109 ; BG3 tilemap base address
     LDA #$04 : STA $212C ; Enable BG3; disable all else
@@ -3586,8 +3589,8 @@ cm_spc_next_block_wait: {
     RTS
 
   .eof
-    LDA #$0000
-    STA !ram_quickboot_spc_state
+    LDA #$0000 : STA !ram_quickboot_spc_state
+    STZ !DISABLE_SOUNDS
 
   .return
     RTS
