@@ -97,7 +97,12 @@ init_sram:
     TDC : STA !sram_top_display_mode
     STA !sram_room_layout
     INC : STA !sram_healthalarm
-    LDA #$0003 : STA !sram_cutscenes
+
+if !FEATURE_DEV
+    LDA !CUTSCENE_QUICKBOOT : STA !sram_cutscenes
+else
+    LDA !CUTSCENE_QUICKBOOT|$0003 : STA !sram_cutscenes
+endif
 
   .sram_upgrade_CtoD
     TDC : STA !sram_preset_options
