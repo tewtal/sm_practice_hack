@@ -14,14 +14,6 @@ endif
     JSR cutscenes_quickboot_hijack
     NOP
 
-if !FEATURE_PAL
-org $8B92B5
-else
-org $8B930C
-endif
-    JSL cutscenes_nintendo_splash
-    NOP : NOP
-
 
 org $80AE5C
     JSR cutscenes_door_transition
@@ -130,18 +122,6 @@ cutscenes_quickboot_hijack:
     PLA ; remainder of next return address
 
     JML $808482  ; finish boot code; another hijack will launch the menu
-}
-
-cutscenes_nintendo_splash:
-{
-    LDX #$0078
-    LDA !sram_cutscenes
-    AND !CUTSCENE_SKIP_SPLASH
-    BEQ .done
-    LDX #$0001
-  .done
-    STX $0DE2
-    RTL
 }
 
 cutscenes_add_elevator_speed:
