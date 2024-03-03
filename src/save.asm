@@ -234,17 +234,17 @@ save_write_table:
     dw $1000|$420B, $02    ; Trigger DMA on channel 1
     ; Address pair, B bus -> A bus.  B address = VRAM read ($2139).
     dw $0000|$4310, $3981  ; direction = B->A, word reg, B addr = $2139
-    dw $1000|$2115, $0000  ; VRAM address increment mode.
+    dw $1000|$2115, $0080  ; VRAM address increment mode.
     ; Copy VRAM 0000-7FFF to SRAM 750000-757FFF.
     dw $0000|$2116, $0000  ; VRAM address >> 1.
-    dw $9000|$2139, $0000  ; VRAM dummy read.
+    dw $9000|$213A, $0000  ; VRAM dummy read.
     dw $0000|$4312, $0000  ; A addr = $xx0000
     dw $0000|$4314, $0075  ; A addr = $75xxxx, size = $xx00
     dw $0000|$4316, $0080  ; size = $80xx ($0000), unused bank reg = $00.
     dw $1000|$420B, $02    ; Trigger DMA on channel 1
     ; Copy VRAM 8000-7FFF to SRAM 760000-767FFF.
     dw $0000|$2116, $4000  ; VRAM address >> 1.
-    dw $9000|$2139, $0000  ; VRAM dummy read.
+    dw $9000|$213A, $0000  ; VRAM dummy read.
     dw $0000|$4312, $0000  ; A addr = $xx0000
     dw $0000|$4314, $0076  ; A addr = $76xxxx, size = $xx00
     dw $0000|$4316, $0080  ; size = $80xx ($0000), unused bank reg = $00.
@@ -326,7 +326,7 @@ load_write_table:
     dw $1000|$420B, $02    ; Trigger DMA on channel 1
     ; Address pair, A bus -> B bus.  B address = VRAM write ($2118).
     dw $0000|$4310, $1801  ; direction = A->B, B addr = $2118
-    dw $1000|$2115, $0000  ; VRAM address increment mode.
+    dw $1000|$2115, $0080  ; VRAM address increment mode.
     ; Copy SRAM 750000-757FFF to VRAM 0000-7FFF.
     dw $0000|$2116, $0000  ; VRAM address >> 1.
     dw $0000|$4312, $0000  ; A addr = $xx0000
