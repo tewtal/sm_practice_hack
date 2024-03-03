@@ -264,7 +264,7 @@ endmacro
 
 macro vram_to_sram(vram_addr, size, sram_addr)
     dw $0000|$2116, <vram_addr>&$FFFF                            ; VRAM address >> 1.
-    dw $9000|$2139, $0000                                        ; VRAM dummy read.
+    dw $9000|$213A, $0000                                        ; VRAM dummy read.
     dw $0000|$4312, <sram_addr>&$FFFF                            ; A addr = $xx0000
     dw $0000|$4314, ((<sram_addr>>>16)&$FF)|((<size>&$FF)<<8)    ; A addr = $75xxxx, size = $xx00
     dw $0000|$4316, (<size>>>8)&$FF                              ; size = $80xx ($0000), unused bank reg = $00.
@@ -292,7 +292,7 @@ save_write_table:
     
     ; Address pair, B bus -> A bus.  B address = VRAM read ($2139).
     dw $0000|$4310, $3981  ; direction = B->A, word reg, B addr = $2139
-    dw $1000|$2115, $0000  ; VRAM address increment mode.
+    dw $1000|$2115, $0080  ; VRAM address increment mode.
 
     ; Copy VRAM segments
     %vram_to_sram($3E00, $400,  $726C00)
@@ -380,7 +380,7 @@ load_write_table:
 
     ; Address pair, A bus -> B bus.  B address = VRAM write ($2118).
     dw $0000|$4310, $1801  ; direction = A->B, B addr = $2118
-    dw $1000|$2115, $0000  ; VRAM address increment mode.
+    dw $1000|$2115, $0080  ; VRAM address increment mode.
 
     ; Copy VRAM segments, uses $724C00-$735000
     %sram_to_vram($3E00, $400,  $726C00)
