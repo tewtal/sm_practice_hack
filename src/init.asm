@@ -99,9 +99,9 @@ init_sram:
     INC : STA !sram_healthalarm
 
 if !FEATURE_DEV
-    LDA !CUTSCENE_QUICKBOOT : STA !sram_cutscenes
-else
     LDA !CUTSCENE_QUICKBOOT|$0003 : STA !sram_cutscenes
+else
+    LDA #$0003 : STA !sram_cutscenes
 endif
 
   .sram_upgrade_CtoD
