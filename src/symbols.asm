@@ -94,8 +94,6 @@ ram_auto_save_state = !ram_auto_save_state ; !WRAM_START+$7C
 ram_lag_counter = !ram_lag_counter ; !WRAM_START+$7E
 ram_kraid_adjust_timer = !ram_kraid_adjust_timer ; !WRAM_START+$80
 
-ram_quickboot_spc_state = !ram_quickboot_spc_state ; !WRAM_START+$82
-
 ; ----------------------------------------------------------
 ; Variables below this point are PERSISTENT -- they maintain
 ; their value across savestates. Use this section for
@@ -158,6 +156,8 @@ ram_itempickups_visible = !ram_itempickups_visible ; !WRAM_PERSIST_START+$5E
 ram_itempickups_chozo = !ram_itempickups_chozo ; !WRAM_PERSIST_START+$60
 ram_itempickups_hidden = !ram_itempickups_hidden ; !WRAM_PERSIST_START+$62
 ram_frames_held = !ram_frames_held ; !WRAM_PERSIST_START+$64
+
+ram_quickboot_spc_state = !ram_quickboot_spc_state ; !WRAM_PERSIST_START+$66
 
 ; ^ FREE SPACE ^ up to +$7A (!WRAM_START+$FC - !WRAM_PERSIST_START)
 

@@ -6,7 +6,8 @@ org $808455
 
 ; hijack when clearing bank 7E
 org $808490
-    PHA
+    ; Save quickboot state since it needs to distinguish between a soft and hard reset
+    LDY.w !ram_quickboot_spc_state
     LDX #$3FFE
   .clear_bank_loop
     STZ $0000,X
@@ -16,8 +17,10 @@ org $808490
     DEX : DEX
     BPL .clear_bank_loop
     JSL init_nonzero_wram
-    PLA
+
+    STY.w !ram_quickboot_spc_state
     BRA .end_clear_bank
+
 
 warnpc $8084AF
 
