@@ -93,9 +93,7 @@
 !ram_lag_counter                    = !WRAM_START+$7E
 !ram_kraid_adjust_timer             = !WRAM_START+$80
 
-!ram_quickboot_spc_state            = !WRAM_START+$82
-
-!WRAM_PERSIST_START = !ram_quickboot_spc_state+$02
+!WRAM_PERSIST_START = !ram_kraid_adjust_timer+$02
 ; ----------------------------------------------------------
 ; Variables below this point are PERSISTENT -- they maintain
 ; their value across savestates. Use this section for
@@ -158,6 +156,11 @@
 !ram_itempickups_chozo              = !WRAM_PERSIST_START+$60
 !ram_itempickups_hidden             = !WRAM_PERSIST_START+$62
 !ram_frames_held                    = !WRAM_PERSIST_START+$64
+
+!ram_quickboot_spc_state            = !WRAM_PERSIST_START+$66
+    ; 0: SPC load completed/not requested
+    ; 1: SPC load requested
+    ; ROM address: routine to perform next initialization step
 
 ; ^ FREE SPACE ^ up to +$7A (!WRAM_START+$FC - !WRAM_PERSIST_START)
 

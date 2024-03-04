@@ -95,10 +95,12 @@ cm_start:
 cm_boot:
 {
     PHK : PLB
+    LDA !ram_quickboot_spc_state : BEQ .skip_spc
     LDA #cm_spc_init : STA !ram_quickboot_spc_state
 
     ; Disable sounds until we boot the SPC
     LDA #$0001 : STA !DISABLE_SOUNDS
+.skip_spc
 
     %a8()
     LDA #$5A : STA $2109 ; BG3 tilemap base address
@@ -110,7 +112,7 @@ cm_boot:
 
   .spc_loop
     JSR cm_wait_for_lag_frame
-    LDA !ram_quickboot_spc_state : BNE .spc_loop
+    LDA !ram_quickboot_spc_state : BMI .spc_loop
 
   .done
     LDA !ram_custom_preset : BNE .preset_load
@@ -176,7 +178,7 @@ cm_wait_for_lag_frame:
     CMP $05B8
     BNE .done
 
-    CPX #$0000 : BEQ .loop
+    CPX #$0000 : BPL .loop
     PHA : PHP : PHB : JSR cm_jump_x : PLB : PLP
     LDA !ram_quickboot_spc_state : TAX : PLA
     BRA .loop
@@ -3523,6 +3525,8 @@ cm_spc_init: {
     ; wait for SPC to be ready
     LDA #$BBAA : CMP $2140 : BNE .return
 
+    LDA #$FFFF : STA $0617   ; disable soft rest
+
     %a8()
     LDA #$CC
     STA !cm_spc_index
@@ -3591,6 +3595,7 @@ cm_spc_next_block_wait: {
   .eof
     LDA #$0000 : STA !ram_quickboot_spc_state
     STZ !DISABLE_SOUNDS
+    STZ $0617
 
   .return
     RTS
