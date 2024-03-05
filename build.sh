@@ -7,6 +7,7 @@ trap success=1 ERR
 mkdir -p build
 
 echo "Building SM NTSC Practice Hack"
+python3 enemies/create_clear_enemies_data.py ../src/clearenemies.asm clear_enemies.txt
 python3 layout/create_layout.py portals.txt layoutmenutemplate.asm ../src/layoutmenu.asm ../src/layoutportaltables.asm
 python3 names/create_names.py ../src/roomnames.asm default_names.txt custom_names.txt
 cd resources

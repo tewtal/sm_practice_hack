@@ -41,6 +41,8 @@ endif
 incsrc gamemode.asm
 incsrc minimap.asm
 incsrc menu.asm
+incsrc roomnames.asm
+incsrc clearenemies.asm
 incsrc infohud.asm
 incsrc rng.asm
 incsrc custompresets.asm

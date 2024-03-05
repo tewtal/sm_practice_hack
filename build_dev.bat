@@ -4,6 +4,7 @@ cls
 if not exist build mkdir build
 
 echo Building SM NTSC Dev Practice Hack
+python enemies\create_clear_enemies_data.py ..\src\clearenemies.asm clear_enemies.txt
 python layout\create_layout.py portals.txt layoutmenutemplate.asm ..\src\layoutmenu.asm ..\src\layoutportaltables.asm
 python names\create_names.py ..\src\roomnames.asm default_names.txt custom_names.txt
 cd resources
