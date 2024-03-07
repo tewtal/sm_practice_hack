@@ -3497,4 +3497,5 @@ print pc, " mainmenu end"
 incsrc customizemenu.asm
 incsrc layoutmenu.asm
 incsrc roomnames.asm
+incsrc demos.asm
 

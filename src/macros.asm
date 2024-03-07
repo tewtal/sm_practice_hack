@@ -55,6 +55,14 @@ macro setupRGB(addr)
     RTS
 endmacro
 
+macro warnpc(NTSC, PAL)
+if !FEATURE_PAL
+warnpc <PAL>
+else
+warnpc <NTSC>
+endif
+endmacro
+
 
 ; -------------
 ; Sound Effects

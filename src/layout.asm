@@ -1517,11 +1517,7 @@ layout_prepare_gravity_animation:
     LDA #$49 : STA $0DF1
     JMP layout_gravity_animation
 
-if !FEATURE_PAL
-warnpc $91EC35
-else
-warnpc $91ECD0
-endif
+%warnpc($91ECD0, $91EC35)
 
 
 org $94937D
