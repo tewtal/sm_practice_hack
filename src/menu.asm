@@ -3521,7 +3521,8 @@ MenuRNG2:
 !cm_spc_index   = $33
 !cm_spc_len     = $34
 
-cm_spc_init: {
+cm_spc_init:
+{
     ; wait for SPC to be ready
     LDA #$BBAA : CMP $2140 : BNE .return
 
@@ -3541,10 +3542,11 @@ cm_spc_init: {
     STA !ram_quickboot_spc_state
 
 .return
-RTS
+    RTS
 }
 
-cm_spc_next_block: {
+cm_spc_next_block:
+{
     %a8()
     PHB : LDA !cm_spc_db : PHA : PLB
     LDY !cm_spc_data
@@ -3554,15 +3556,23 @@ cm_spc_next_block: {
     LDX $0000, y
     BNE .not_last : LDA #$00
   .not_last
-    INY : BNE + : JSR cm_spc_inc_bank
-  + INY : BNE + : JSR cm_spc_inc_bank
-  + STX !cm_spc_len
+    INY : BNE .done_inc_bank_1
+    JSR cm_spc_inc_bank
+  .done_inc_bank_1
+    INY : BNE .done_inc_bank_2
+    JSR cm_spc_inc_bank
+  .done_inc_bank_2
+    STX !cm_spc_len
 
     ; Get block address
     LDX $0000, y
-    INY : BNE + : JSR cm_spc_inc_bank
-  + INY : BNE + : JSR cm_spc_inc_bank
-  + PLB : STX $2142
+    INY : BNE .done_inc_bank_3
+    JSR cm_spc_inc_bank
+  .done_inc_bank_3
+    INY : BNE .done_inc_bank_4
+    JSR cm_spc_inc_bank
+  .done_inc_bank_4
+    PLB : STX $2142
 
     STA $2141
 
@@ -3573,14 +3583,16 @@ cm_spc_next_block: {
     RTS
 }
 
-cm_spc_inc_bank: {
+cm_spc_inc_bank:
+{
     PHA : LDA !cm_spc_db : INC A : STA !cm_spc_db
     PHA : PLB : PLA
     LDY #$8000
     RTS
 }
 
-cm_spc_next_block_wait: {
+cm_spc_next_block_wait:
+{
     %a8()
     LDA !cm_spc_index : STA $2140 : CMP $2140 : BNE .return
 
@@ -3601,7 +3613,8 @@ cm_spc_next_block_wait: {
     RTS
 }
 
-cm_spc_transfer: {
+cm_spc_transfer:
+{
     ; Determine how many bytes to transfer
     LDA !cm_spc_len : TAX
     SBC #$0040 : BCC .last
@@ -3627,8 +3640,9 @@ cm_spc_transfer: {
     CMP $002140 : BNE .wait_loop
 
     INC A
-    INY : BNE + : JSR cm_spc_inc_bank
-  +
+    INY : BNE .done_inc_bank
+    JSR cm_spc_inc_bank
+  .done_inc_bank
     DEX : BNE .transfer_loop
 
     LDX !cm_spc_len : BNE .timeout
