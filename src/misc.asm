@@ -22,10 +22,22 @@ org $8B8697
     NOP
 
 org $8B871D
-    LDA #$0590
+if !FEATURE_PAL
+    LDA #$39DF  ; P
+else
+    LDA #$39DD  ; N
+endif
 
 org $8B8731
-    LDA #$0590
+if !FEATURE_SD2SNES
+if !FEATURE_TINYSTATES
+    LDA #$39E3 ; T
+else
+    LDA #$39E2 ; S
+endif
+else
+    LDA #$0000 ; blank
+endif
 
 if !FEATURE_PAL
 org $8BF6DC
