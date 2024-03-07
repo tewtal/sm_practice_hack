@@ -43,6 +43,7 @@ incsrc minimap.asm
 incsrc menu.asm
 incsrc roomnames.asm
 incsrc clearenemies.asm
+incsrc demos.asm
 incsrc infohud.asm
 incsrc rng.asm
 incsrc custompresets.asm
