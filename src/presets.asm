@@ -122,13 +122,15 @@ endif
 
 clear_all_enemies:
 {
-    ; Clear enemies (8000 = solid to Samus, 0400 = Ignore Samus projectiles, 0100 = Invisible)
+    LDA.w #ClearEnemiesTable>>16 : STA $C3
     TDC
   .loop
-    TAX : LDA $0F86,X : BIT #$8500 : BNE .done_clearing
-    ORA #$0200 : STA $0F86,X
+    TAX : LDA !ENEMY_ID,X
+    SEC : ROR : ROR : STA $C1
+    LDA [$C1] : BEQ .done_clearing
+    LDA !ENEMY_PROPERTIES : ORA #$0200 : STA !ENEMY_PROPERTIES,X
   .done_clearing
-    TXA : CLC : ADC #$0040 : CMP #$0400 : BNE .loop
+    TXA : CLC : ADC #$0040 : CMP #$0800 : BNE .loop
     STZ $0E52 ; unlock grey doors that require killing enemies
     RTS
 }
@@ -569,7 +571,6 @@ endif
     TDC : STA !ram_transition_flag
     JSL init_heat_damage_ram
     JSL init_physics_ram
-    JSL init_controller_bindings
 
     LDA #$E737 : STA $099C ; Pointer to next frame's room transition code = $82:E737
 

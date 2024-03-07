@@ -157,6 +157,8 @@ ram_itempickups_chozo = !ram_itempickups_chozo ; !WRAM_PERSIST_START+$60
 ram_itempickups_hidden = !ram_itempickups_hidden ; !WRAM_PERSIST_START+$62
 ram_frames_held = !ram_frames_held ; !WRAM_PERSIST_START+$64
 
+ram_quickboot_spc_state = !ram_quickboot_spc_state ; !WRAM_PERSIST_START+$66
+
 ; ^ FREE SPACE ^ up to +$7A (!WRAM_START+$FC - !WRAM_PERSIST_START)
 
 ; -----------------------

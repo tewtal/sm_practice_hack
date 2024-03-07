@@ -146,10 +146,10 @@ prepare_fanfare_from_non_plm:
 
 kill_enemies:
 {
-    LDA #$0000
+    TDC
   .kill_loop
-    TAX : LDA $0F86,X : ORA #$0200 : STA $0F86,X
-    TXA : CLC : ADC #$0040 : CMP #$0400 : BNE .kill_loop
+    TAX : LDA !ENEMY_PROPERTIES,X : ORA #$0200 : STA !ENEMY_PROPERTIES,X
+    TXA : CLC : ADC #$0040 : CMP #$0800 : BNE .kill_loop
 
 if !ORIGINAL_MESSAGE_TEXT
     RTL

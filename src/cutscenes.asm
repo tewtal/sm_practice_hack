@@ -7,12 +7,12 @@ endif
     JSR cutscenes_load_ceres_arrival
 
 if !FEATURE_PAL
-org $8B92B5
+org $8B9287
 else
-org $8B930C
+org $8B92DE
 endif
-    JSL cutscenes_nintendo_splash
-    NOP : NOP
+    JSR cutscenes_nintendo_logo_hijack
+    NOP
 
 
 org $80AE5C
@@ -108,16 +108,23 @@ endif
 org $8BF800
 print pc, " cutscenes start"
 
-cutscenes_nintendo_splash:
+cutscenes_nintendo_logo_hijack:
 {
-    LDX #$0078
-    LDA !sram_cutscenes
-    AND !CUTSCENE_SKIP_SPLASH
-    BEQ .done
-    LDX #$0001
-  .done
-    STX $0DE2
-    RTL
+    JSL $80834B     ; hijacked code
+
+    LDA !sram_cutscenes : AND !CUTSCENE_QUICKBOOT : BNE .quickboot
+    STA !ram_quickboot_spc_state    ; A is 0
+    RTS
+
+.quickboot
+    PLA ; pop return address
+    PLB
+    PLA ; saved processor status and 1 byte of next return address
+    PLA ; remainder of next return address
+
+    LDA #$0001 : STA !ram_quickboot_spc_state
+
+    JML $808482  ; finish boot code; another hijack will launch the menu
 }
 
 cutscenes_add_elevator_speed:
@@ -833,11 +840,7 @@ endif
     LDA !sram_cutscenes : BIT !CUTSCENE_FAST_MB : BNE .fast_mb
     JMP cutscenes_mb_normal_init
 }
-if !FEATURE_PAL
-warnpc $A98824
-else
-warnpc $A98814
-endif
+%warnpc($A98814, $A98824)
 
 if !FEATURE_PAL
 org $A9882D

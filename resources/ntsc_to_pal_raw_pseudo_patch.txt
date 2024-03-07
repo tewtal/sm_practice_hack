@@ -17362,8 +17362,8 @@ A7B695,replace,2,2ca9   ; bank A0, originally 1ca9
 A7B69F,replace,1,34
 A7B6A2,insert,9,6d7c0f8d7c0fad32a9
 A7B6C8,replace,1,13
-A7B6CC,replace,7,ad38a98512ad36
-A7B6D3,insert,3,a98514
+A7B6CC,replace,5,ad38a98512
+A7B6D1,insert,3,ad36a9
 A7B6D7,replace,2,bbc6   ; bank A0, originally abc6
 A7B6F4,replace,2,faae   ; bank A7, originally e4ae
 A7B6FA,replace,2,0bb7   ; bank A7, originally d7b6

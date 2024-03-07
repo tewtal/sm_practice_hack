@@ -6,7 +6,8 @@ org $808455
 
 ; hijack when clearing bank 7E
 org $808490
-    PHA
+    ; Save quickboot state since it needs to distinguish between a soft and hard reset
+    LDY.w !ram_quickboot_spc_state
     LDX #$3FFE
   .clear_bank_loop
     STZ $0000,X
@@ -16,13 +17,18 @@ org $808490
     DEX : DEX
     BPL .clear_bank_loop
     JSL init_nonzero_wram
-    PLA
+
+    STY.w !ram_quickboot_spc_state
     BRA .end_clear_bank
+
 
 warnpc $8084AF
 
 org $8084AF
   .end_clear_bank
+
+org $80856E
+    JML init_post_boot
 
 
 org $81F000
@@ -94,7 +100,12 @@ init_sram:
     TDC : STA !sram_top_display_mode
     STA !sram_room_layout
     INC : STA !sram_healthalarm
+
+if !FEATURE_DEV
+    LDA !CUTSCENE_QUICKBOOT|$0003 : STA !sram_cutscenes
+else
     LDA #$0003 : STA !sram_cutscenes
+endif
 
   .sram_upgrade_CtoD
     TDC : STA !sram_preset_options
@@ -217,30 +228,30 @@ init_menu_customization:
     RTL
 }
 
-init_controller_bindings:
+init_post_boot:
 {
-    ; check if any non-dpad bindings are set
-    LDX #$000A
-    LDA.w !IH_INPUT_SHOT+$0C
-  .loopBindings
-    ORA.w !IH_INPUT_SHOT,X
-    DEX #2 : BPL .loopBindings
-    AND #$FFF0 : BNE .done
+    ; Load the last selected file slot (so that the user's controller
+    ; bindings will apply if they load a preset without loading a save file)
+    LDA $701FEC     ; Selected save slot
+    STA !CURRENT_SAVE_FILE
+    CMP #$0003 : BCC .valid_index
+    LDA #$0000
+  .valid_index
+    JSL $818085     ; Load save file
+    BCC .check_quickboot
 
-    ; load default dpad bindings
-    LDA #$0800 : STA.w !INPUT_BIND_UP
-    LSR : STA.w !INPUT_BIND_DOWN
-    LSR : STA.w !INPUT_BIND_LEFT
-    LSR : STA.w !INPUT_BIND_RIGHT
+    ; No valid save; load a new file (for default controller bindings)
+    JSR $B2CB
 
-    ; load default non-dpad bindings
-    LDX #$000C
-  .loopTable
-    LDA.l ControllerLayoutTable,X : STA.w !IH_INPUT_SHOT,X
-    DEX #2 : BPL .loopTable
+  .check_quickboot
+    ; Is quickboot enabled?
+    LDA !sram_cutscenes : AND !CUTSCENE_QUICKBOOT : BEQ .done
+
+    ; Boot to the infohud menu
+    JML cm_boot
 
   .done
-    RTL
+    JML $82893D     ; hijacked code: start main game loop
 }
 
 print pc, " init end"

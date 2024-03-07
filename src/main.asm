@@ -1,3 +1,4 @@
+asar 1.81
 lorom
 
 !FEATURE_SD2SNES ?= 1
@@ -10,9 +11,9 @@ lorom
 !RAW_TILE_GRAPHICS ?= 1
 
 !VERSION_MAJOR = 2
-!VERSION_MINOR = 5
-!VERSION_BUILD = 12
-!VERSION_REV   = 1
+!VERSION_MINOR = 6
+!VERSION_BUILD = 0
+!VERSION_REV   = 0
 
 table ../resources/normal.tbl
 print ""
@@ -40,6 +41,9 @@ endif
 incsrc gamemode.asm
 incsrc minimap.asm
 incsrc menu.asm
+incsrc roomnames.asm
+incsrc clearenemies.asm
+incsrc demos.asm
 incsrc infohud.asm
 incsrc rng.asm
 incsrc custompresets.asm

@@ -157,6 +157,11 @@
 !ram_itempickups_hidden             = !WRAM_PERSIST_START+$62
 !ram_frames_held                    = !WRAM_PERSIST_START+$64
 
+!ram_quickboot_spc_state            = !WRAM_PERSIST_START+$66
+    ; 0: SPC load completed/not requested
+    ; 1: SPC load requested
+    ; ROM address: routine to perform next initialization step
+
 ; ^ FREE SPACE ^ up to +$7A (!WRAM_START+$FC - !WRAM_PERSIST_START)
 
 ; -----------------------
@@ -603,8 +608,12 @@
 !SAMUS_IFRAME_TIMER = $18A8
 !SAMUS_KNOCKBACK_TIMER = $18AA
 !ENEMY_PROJ_ID = $1997
+!ENEMY_PROJ_X_SUBPX = $1A27
 !ENEMY_PROJ_X = $1A4B
+!ENEMY_PROJ_Y_SUBPX = $1A6F
 !ENEMY_PROJ_Y = $1A93
+!ENEMY_PROJ_X_VELOCITY = $1AB7
+!ENEMY_PROJ_Y_VELOCITY = $1ADB
 !ENEMY_PROJ_RADIUS = $1BB3
 !ENEMY_PROJ_PROPERTIES = $1BD7
 !MESSAGE_BOX_INDEX = $1C1F
@@ -702,6 +711,7 @@ endif
 !CUTSCENE_FAST_PHANTOON = #$0200
 !CUTSCENE_FAST_KRAID = #$0400
 !CUTSCENE_SKIP_SPLASH = #$0800
+!CUTSCENE_QUICKBOOT = #$0800
 !CUTSCENE_SKIP_GAMEOVER = #$1000
 !CUTSCENE_FAST_BOWLING = #$2000
 !CUTSCENE_KRAID_DEATH_CAMERA = #$4000
