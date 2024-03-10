@@ -16,7 +16,7 @@ copy *.sfc ..\build
 ..\tools\asar --no-title-check --symbols=wla --symbols-path=..\build\symbols.sym -DFEATURE_SD2SNES=0 -DFEATURE_PAL=1 -DFEATURE_TINYSTATES=0 ..\src\main.asm ..\build\00.sfc
 if ERRORLEVEL 1 goto end_build_saveless
 ..\tools\asar --no-title-check --symbols=wla --symbols-path=..\build\symbols.sym -DFEATURE_SD2SNES=0 -DFEATURE_PAL=1 -DFEATURE_TINYSTATES=0 ..\src\main.asm ..\build\ff.sfc
-python sort_debug_symbols.py ..\build\symbols.sym x x
+python sort_debug_symbols.py ..\build\symbols.sym x ..\build\smpalhack20.sym
 python create_ips.py ..\build\00.sfc ..\build\ff.sfc ..\build\smpalhack20.ips
 :end_build_saveless
 
@@ -26,7 +26,7 @@ copy *.sfc ..\build
 ..\tools\asar --no-title-check --symbols=wla --symbols-path=..\build\symbols.sym -DFEATURE_SD2SNES=1 -DFEATURE_PAL=1 -DFEATURE_TINYSTATES=0 ..\src\main.asm ..\build\00.sfc
 if ERRORLEVEL 1 goto end_build_sd2snes
 ..\tools\asar --no-title-check --symbols=wla --symbols-path=..\build\symbols.sym -DFEATURE_SD2SNES=1 -DFEATURE_PAL=1 -DFEATURE_TINYSTATES=0 ..\src\main.asm ..\build\ff.sfc
-python sort_debug_symbols.py ..\build\symbols.sym x x
+python sort_debug_symbols.py ..\build\symbols.sym x ..\build\smpalhack20_sd2snes.sym
 python create_ips.py ..\build\00.sfc ..\build\ff.sfc ..\build\smpalhack20_sd2snes.ips
 :end_build_sd2snes
 
@@ -36,7 +36,7 @@ copy *.sfc ..\build
 ..\tools\asar --no-title-check --symbols=wla --symbols-path=..\build\symbols.sym -DFEATURE_SD2SNES=0 -DFEATURE_PAL=1 -DFEATURE_TINYSTATES=1 ..\src\main.asm ..\build\00.sfc
 if ERRORLEVEL 1 goto end_build_tinystates
 ..\tools\asar --no-title-check --symbols=wla --symbols-path=..\build\symbols.sym -DFEATURE_SD2SNES=0 -DFEATURE_PAL=1 -DFEATURE_TINYSTATES=1 ..\src\main.asm ..\build\ff.sfc
-python sort_debug_symbols.py ..\build\symbols.sym x x
+python sort_debug_symbols.py ..\build\symbols.sym x ..\build\smpalhack20_tinystates.sym
 python create_ips.py ..\build\00.sfc ..\build\ff.sfc ..\build\smpalhack20_tinystates.ips
 :end_build_tinystates
 
