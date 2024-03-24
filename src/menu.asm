@@ -157,6 +157,8 @@ cm_init:
 
     JSL cm_calculate_max
     JSL cm_set_etanks_and_reserve
+    LDA !sram_suit_properties : AND !SUIT_PROPERTIES_MASK
+    STA !ram_cm_suit_properties
     RTS
 }
 

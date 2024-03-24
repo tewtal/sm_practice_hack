@@ -215,6 +215,7 @@ ram_seed_X = !ram_seed_X ; !WRAM_MENU_START+$60
 ram_seed_Y = !ram_seed_Y ; !WRAM_MENU_START+$62
 
 ram_timers_autoupdate = !ram_timers_autoupdate ; !WRAM_MENU_START+$64
+ram_cm_suit_properties = !ram_cm_suit_properties ; !WRAM_MENU_START+$66
 
 ; ^ FREE SPACE ^ up to +$7E
 

@@ -221,6 +221,7 @@
 !ram_seed_Y = !WRAM_MENU_START+$62
 
 !ram_timers_autoupdate = !WRAM_MENU_START+$64
+!ram_cm_suit_properties = !WRAM_MENU_START+$66
 
 ; ^ FREE SPACE ^ up to +$7E
 
@@ -526,6 +527,7 @@
 !IGT_SECONDS = $09DC
 !IGT_MINUTES = $09DE
 !IGT_HOURS = $09E0
+!PAL_DEBUG_MOVEMENT = $09E6
 !SAMUS_AUTO_CANCEL = $0A04
 !SAMUS_LAST_HP = $0A06
 !SAMUS_DOUBLE_JUMP = $0A14  ; Only used during demos in vanilla
@@ -691,6 +693,9 @@ endif
 !ACTION_RAM_WATCH           = #$0024
 !ACTION_DYNAMIC             = #$0026
 !ACTION_MANAGE_PRESETS      = #$0028
+
+!SUIT_PROPERTIES_MASK = #$0007
+!SUIT_PROPRETIES_PAL_DEBUG_FLAG = #$0008
 
 !TOP_DISPLAY_VANILLA = #$0002
 

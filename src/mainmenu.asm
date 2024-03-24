@@ -1959,8 +1959,8 @@ misc_metronome_sfx:
 
 misc_suit_properties:
     dw !ACTION_CHOICE
-    dl #!sram_suit_properties
-    dw init_suit_properties_ram
+    dl #!ram_cm_suit_properties
+    dw .routine
     db #$28, "Suit Properties", #$FF
     db #$28, "    VANILLA", #$FF
     db #$28, "   BALANCED", #$FF
@@ -1969,21 +1969,36 @@ misc_suit_properties:
     db #$28, " DASHRECALL", #$FF
     db #$28, " HEATSHIELD", #$FF
     db #$FF
+  .routine
+    LDA !ram_cm_suit_properties : STA !sram_suit_properties
+    LDA !PAL_DEBUG_MOVEMENT : BNE init_suit_properties_ram
+    LDA !sram_suit_properties : ORA !SUIT_PROPRETIES_PAL_DEBUG_FLAG
+    STA !sram_suit_properties
+    ; Fallthrough to init_suit_properties_ram
 
 init_suit_properties_ram:
 {
+    LDA !sram_suit_properties : BIT !SUIT_PROPRETIES_PAL_DEBUG_FLAG : BNE .palDebug
+    TDC : INC : STA !PAL_DEBUG_MOVEMENT
+    BRA .initProperties
+
+  .palDebug
+    STZ !PAL_DEBUG_MOVEMENT
+
+  .initProperties
     ; Default to both suits getting 50% damage reduction (gravity gets extra 50%)
     ; and both suits getting full heat protection
     LDA #$0021 : STA !ram_suits_enemy_damage_check : STA !ram_suits_heat_damage_check
 
-    LDA !sram_suit_properties : CMP #$0002 : BMI .init_heat_damage
+    LDA !sram_suit_properties : AND !SUIT_PROPERTIES_MASK
+    CMP #$0002 : BMI .initHeatDamage
 
     ; Progressive, Complementary, and DASH Recall/Heat Shield
     ; give less enemy damage protection to gravity
     LDA #$0001 : STA !ram_suits_enemy_damage_check
 
-  .init_heat_damage
-    LDA !sram_suit_properties : BEQ .end
+  .initHeatDamage
+    LDA !sram_suit_properties : AND !SUIT_PROPERTIES_MASK : BEQ .end
 
     ; Not vanilla, so only varia gets full heat protection
     LDA #$0001 : STA !ram_suits_heat_damage_check
@@ -2000,7 +2015,8 @@ init_heat_damage_ram:
     ; Default to 0.25 damage per frame
     LDA #$4000 : STA !ram_suits_heat_damage_value
 
-    LDA !sram_suit_properties : CMP #$0004 : BPL .dash_recall
+    LDA !sram_suit_properties : AND !SUIT_PROPERTIES_MASK
+    CMP #$0004 : BPL .dashRecall
     CMP #$0003 : BEQ .complementary
     RTL
 
@@ -2016,8 +2032,8 @@ init_heat_damage_ram:
     LDA #$8000 : STA !ram_suits_heat_damage_value
     RTL
 
-  .dash_recall
-    BNE .heat_shield
+  .dashRecall
+    BNE .heatShield
 
     ; If no gravity than nothing to do
     LDA $09A2 : BIT #$0020 : BEQ .end
@@ -2029,18 +2045,18 @@ init_heat_damage_ram:
   .end
     RTL
 
-  .heat_shield
-    LDA !ROOM_ID : CMP #$B742 : BPL .no_damage : CMP #$AF13 : BMI .no_damage
-    CMP #$B1BA : BPL .heat_shield_damage : CMP #$AF40 : BPL .no_damage
+  .heatShield
+    LDA !ROOM_ID : CMP #$B742 : BPL .noDamage : CMP #$AF13 : BMI .noDamage
+    CMP #$B1BA : BPL .heatShieldDamage : CMP #$AF40 : BPL .noDamage
 
-  .heat_shield_damage
+  .heatShieldDamage
     ; We want Lower Norfair heat damage to be 50%
     ; However if gravity is equipped then the damage is already halved
     LDA $09A2 : BIT #$0020 : BNE .end
     LDA #$2000 : STA !ram_suits_heat_damage_value
     RTL
 
-  .no_damage
+  .noDamage
     TDC : STA !ram_suits_heat_damage_value
     RTL
 }
@@ -2886,9 +2902,7 @@ game_goto_debug:
 
 DebugMenu:
     dw #game_debugmode
-if !FEATURE_PAL
     dw #game_paldebug
-endif
     dw #game_debugbrightness
     dw #game_invincibility
     dw #game_pacifist
@@ -2901,10 +2915,17 @@ endif
 game_debugmode:
     %cm_toggle("Debug Mode", $7E05D1, #$0001, #0)
 
-if !FEATURE_PAL
 game_paldebug:
-    %cm_toggle_inverted("PAL Debug Movement", $7E09E6, #$0001, #0)
-endif
+    %cm_toggle_inverted("PAL Debug Movement", $7E09E6, #$0001, .routine)
+  .routine
+    LDA !PAL_DEBUG_MOVEMENT : BNE .clearFlag
+    LDA !sram_suit_properties : ORA !SUIT_PROPRETIES_PAL_DEBUG_FLAG
+    BRA .set
+  .clearFlag
+    LDA !sram_suit_properties : AND !SUIT_PROPERTIES_MASK
+  .set
+    STA !sram_suit_properties
+    RTL
 
 game_debugbrightness:
     %cm_toggle("Debug CPU Brightness", $7E0DF4, #$0001, #0)
