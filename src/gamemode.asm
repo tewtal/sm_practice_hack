@@ -98,9 +98,9 @@ skip_pause:
     LDA #$0008 : STA !GAMEMODE
     STZ $0723   ; Screen fade delay = 0
     STZ $0725   ; Screen fade counter = 0
-    LDA $0051 : ORA #$000F
-    STA $0051   ; Brightness = $F (max)
-  .done:
+    LDA $51 : ORA #$000F
+    STA $51   ; Brightness = $F (max)
+  .done
     PLP
     RTS
 }
@@ -341,7 +341,7 @@ endif
     ; check if slot is populated first
     LDA !sram_custom_preset_slot
     %presetslotsize()
-    LDA $703000,X : CMP #$5AFE : BEQ .load_safe
+    LDA !PRESET_SLOTS,X : CMP #$5AFE : BEQ .load_safe
 
     %sfxfail()
     ; CLC to continue normal gameplay after failing to load preset

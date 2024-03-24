@@ -3100,7 +3100,7 @@ execute_controller_input:
 
     ; Use bank of action_submenu
     ; instead of new menu's bank
-    LDA.l #action_submenu>>16 : STA !DP_JSLTarget+2
+    LDA.w #action_submenu>>16 : STA !DP_JSLTarget+2
 
     ; Set return address for indirect JSL
     PHK : PEA .end-1

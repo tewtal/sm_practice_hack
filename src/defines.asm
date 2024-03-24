@@ -5,8 +5,9 @@
 
 !ram_tilemap_buffer = $7E5800
 !CRASHDUMP_TILEMAP_BUFFER = !ram_tilemap_buffer
+!CRASHDUMP = $7EFF00
 
-!WRAM_BANK = #$007E
+!WRAM_BANK = !WRAM_START>>16
 !WRAM_SIZE = #$0200
 !WRAM_START = $7EFD00
 !WRAM_END = $7EFF00
@@ -282,8 +283,6 @@
 ; Currently first 28 bytes plus last 2 bytes are used
 !ram_cgram_cache = !WRAM_MENU_START+$D0
 
-!CRASHDUMP = $7EFF00
-
 
 ; -----
 ; SRAM
@@ -292,6 +291,7 @@
 !SRAM_VERSION = $0015
 
 !SRAM_START = $702000
+!PRESET_SLOTS = $703000
 
 !sram_initialized = !SRAM_START+$00
 
@@ -428,6 +428,7 @@
 !IH_LETTER_R = #$0C69
 !IH_LETTER_X = #$0C66
 !IH_LETTER_Y = #$0C67
+!IH_NUMBER_ZERO = #$0C09
 !IH_ELEVATOR = #$1C0B
 !IH_SHINETIMER = #$0032
 

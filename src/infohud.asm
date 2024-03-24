@@ -56,16 +56,16 @@ org $809609      ; inc counter if NMI lag branch
     INC !REALTIME_LAG_COUNTER
 
 if !FEATURE_PAL
-org $91DA3D      ; hijack, runs after a shinespark has been charged
-else
-org $91DAD8      ; hijack, runs after a shinespark has been charged
+org $91DA3D
+else             ; hijack, runs after a shinespark has been charged
+org $91DAD8
 endif
     JSL ih_shinespark_code
 
 if !FEATURE_PAL
-org $90F1E1      ; hijack, runs when an elevator is activated
-else
-org $90F1E4      ; hijack, runs when an elevator is activated
+org $90F1E1
+else             ; hijack, runs when an elevator is activated
+org $90F1E4
 endif
     JSL ih_elevator_activation
 
@@ -91,86 +91,86 @@ endif
     JSL ih_babyskip_segment
 
 if !FEATURE_PAL
-org $A98884      ; update timers after MB1 fight
-else
-org $A98874      ; update timers after MB1 fight
+org $A98884
+else             ; update timers after MB1 fight
+org $A98874
 endif
     JSL ih_mb1_segment
 
 if !FEATURE_PAL
-org $A9BE70      ; update timers when baby spawns (off-screen) in MB2 fight
-else
-org $A9BE23      ; update timers when baby spawns (off-screen) in MB2 fight
+org $A9BE70
+else             ; update timers when baby spawns (off-screen) in MB2 fight
+org $A9BE23
 endif
     JSL ih_mb2_segment
 
 if !FEATURE_PAL
-org $A0B937      ; update timers when Ridley drops spawn
-else
-org $A0B9D4      ; update timers when Ridley drops spawn
+org $A0B937
+else             ; update timers when Ridley drops spawn
+org $A0B9D4
 endif
     JML ih_drops_segment
 
 if !FEATURE_PAL
-org $A0BA17      ; update timers when Crocomire drops spawn
-else
-org $A0BA07      ; update timers when Crocomire drops spawn
+org $A0BA17
+else             ; update timers when Crocomire drops spawn
+org $A0BA07
 endif
     JML ih_drops_segment
 
 if !FEATURE_PAL
-org $A0BA4A      ; update timers when Phantoon drops spawn
-else
-org $A0BA3A      ; update timers when Phantoon drops spawn
+org $A0BA4A
+else             ; update timers when Phantoon drops spawn
+org $A0BA3A
 endif
     JML ih_drops_segment
 
 if !FEATURE_PAL
-org $A0BA7D      ; update timers when Botwoon drops spawn
-else
-org $A0BA6D      ; update timers when Botwoon drops spawn
+org $A0BA7D
+else             ; update timers when Botwoon drops spawn
+org $A0BA6D
 endif
     JML ih_drops_segment
 
 if !FEATURE_PAL
-org $A0BAB0      ; update timers when Kraid drops spawn
-else
-org $A0BAA0      ; update timers when Kraid drops spawn
+org $A0BAB0
+else             ; update timers when Kraid drops spawn
+org $A0BAA0
 endif
     JML ih_drops_segment
 
 if !FEATURE_PAL
-org $A0BAE3      ; update timers when Bomb Torizo drops spawn
-else
-org $A0BAD3      ; update timers when Bomb Torizo drops spawn
+org $A0BAE3
+else             ; update timers when Bomb Torizo drops spawn
+org $A0BAD3
 endif
     JML ih_drops_segment
 
 if !FEATURE_PAL
-org $A0BB16      ; update timers when Golden Torizo drops spawn
-else
-org $A0BB06      ; update timers when Golden Torizo drops spawn
+org $A0BB16
+else             ; update timers when Golden Torizo drops spawn
+org $A0BB06
 endif
     JML ih_drops_segment
 
 if !FEATURE_PAL
-org $A0BB49      ; update timers when Spore Spawn drops spawn
-else
-org $A0BB39      ; update timers when Spore Spawn drops spawn
+org $A0BB49
+else             ; update timers when Spore Spawn drops spawn
+org $A0BB39
 endif
     JML ih_drops_segment
 
 if !FEATURE_PAL
-org $A0BB7C      ; update timers when Draygon drops spawn
-else
-org $A0BB6C      ; update timers when Draygon drops spawn
+org $A0BB7C
+else             ; update timers when Draygon drops spawn
+org $A0BB6C
 endif
     JML ih_drops_segment
 
 if !FEATURE_PAL
-org $AAE592      ; update timers when statue grabs Samus
-else
-org $AAE582      ; update timers when statue grabs Samus
+org $AAE592
+else             ; update timers when statue grabs Samus
+org $AAE582
 endif
     JSL ih_chozo_segment
 
@@ -179,8 +179,8 @@ org $89AD0A      ; update timers when Samus escapes Ceres
 
 if !FEATURE_PAL
 org $A2AA38
-else
-org $A2AA20      ; update timers when Samus enters ship
+else             ; update timers when Samus enters ship
+org $A2AA20
 endif
     JSL ih_ship_elevator_segment
 
@@ -524,9 +524,9 @@ ih_mb1_segment:
 {
     ; runs during MB1 cutscene when you regain control of Samus, just before music change
 if !FEATURE_PAL
-    JSL $90F081 ; overwritten code
-else
-    JSL $90F084 ; overwritten code
+    JSL $90F081
+else            ; overwritten code
+    JSL $90F084
 endif
 
     JML ih_update_hud_early
@@ -558,9 +558,9 @@ ih_chozo_segment:
 ih_ceres_elevator_segment:
 {
 if !FEATURE_PAL
-    JSL $90F081 ; overwritten code
-else
-    JSL $90F084 ; overwritten code
+    JSL $90F081
+else            ; overwritten code
+    JSL $90F084
 endif
     JML ih_update_hud_early
 }
@@ -569,9 +569,9 @@ ih_ship_elevator_segment:
 {
     JSL ih_update_hud_early
 if !FEATURE_PAL
-    JML $91E35B ; overwritten code
-else
-    JML $91E3F6 ; overwritten code
+    JML $91E35B
+else            ; overwritten code
+    JML $91E3F6
 endif
 }
 
@@ -628,11 +628,7 @@ ih_update_hud_code:
     ; Divide time by 60 or 50 and draw seconds and frames
     STA $4204
     %a8()
-if !FEATURE_PAL
-    LDA #$32
-else
-    LDA #$3C
-endif
+    LDA.b !FPS
     STA $4206
     %a16()
     PEA $0000 : PLA ; wait for CPU math
@@ -673,11 +669,7 @@ endif
     ; Divide time by 60 or 50 and draw seconds and frames
     STA $4204
     %a8()
-if !FEATURE_PAL
-    LDA #$32
-else
-    LDA #$3C
-endif
+    LDA.b !FPS
     STA $4206
     %a16()
     PEA $0000 : PLA ; wait for CPU math
@@ -761,12 +753,12 @@ endif
   .pickSegmentTimer
     LDA !sram_frame_counter_mode : BIT #$0001 : BNE .inGameSegmentTimer
     LDA.w #!ram_seg_rt_frames : STA $00
-    LDA !WRAM_BANK : STA $02
+    LDA.w #!WRAM_BANK : STA $02
     BRA .drawSegmentTimer
 
   .inGameSegmentTimer
-    LDA #!IGT_FRAMES : STA $00
-    LDA #$007E : STA $02
+    LDA.w #!IGT_FRAMES : STA $00
+    LDA.w #!WRAM_BANK : STA $02
 
   .drawSegmentTimer
     ; Frames
@@ -981,8 +973,8 @@ endif
     LDA !sram_status_icons : BNE .check_healthbomb
     RTL
 
-  .check_healthbomb
     ; health bomb
+  .check_healthbomb
     LDA $0E1A : BEQ .clear_healthbomb
     LDA !SAMUS_HP : CMP #$0032 : BMI .pink
     LDA !IH_LETTER_E : STA !HUD_TILEMAP+$54
@@ -995,8 +987,8 @@ endif
   .clear_healthbomb
     LDA !IH_BLANK : STA !HUD_TILEMAP+$54
 
-  .check_elevator
     ; Elevator
+  .check_elevator
     LDA $0E16 : BEQ .clear_elevator
     LDA !IH_ELEVATOR : STA !HUD_TILEMAP+$56
     BRA .check_shinetimer
@@ -1316,11 +1308,12 @@ Draw4Hundredths:
     RTS
 
   .zerotens
-    LDA #$0C09 : STA !HUD_TILEMAP+$00,X : STA !HUD_TILEMAP+$04,X : STA !HUD_TILEMAP+$06,X
+    LDA !IH_NUMBER_ZERO : STA !HUD_TILEMAP+$00,X
+    STA !HUD_TILEMAP+$04,X : STA !HUD_TILEMAP+$06,X
     BRA .done
 
   .zerohundreds
-    LDA #$0C09 : STA !HUD_TILEMAP+$00,X : STA !HUD_TILEMAP+$04,X
+    LDA !IH_NUMBER_ZERO : STA !HUD_TILEMAP+$00,X : STA !HUD_TILEMAP+$04,X
     BRA .done
 }
 
@@ -1425,7 +1418,8 @@ ih_game_loop_code:
     CMP !IH_STATUS_R : BEQ .inc_statusdisplay
     CMP !IH_STATUS_L : BEQ .dec_statusdisplay
 
-    JML $808111 ; overwritten code
+  .done
+    JML $808111 ; overwritten code + return
 
   .toggle_pause
     TDC : STA !ram_slowdown_frames
@@ -1438,9 +1432,8 @@ ih_game_loop_code:
     BRA .done
 
   .toggle_speedup
-    LDA !ram_slowdown_mode : BEQ .skip_speedup
+    LDA !ram_slowdown_mode : BEQ .done
     DEC : STA !ram_slowdown_mode
-  .skip_speedup
     BRA .done
 
   .reset_slowdown
@@ -1454,10 +1447,6 @@ ih_game_loop_code:
     CMP #$0014 : BNE .set_displaymode
     TDC : STA !sram_display_mode
     BRA .update_status
-
-  .done
-    ; overwritten code + return
-    JML $808111
 
   .dec_statusdisplay
     LDA !sram_display_mode : DEC
@@ -1487,7 +1476,8 @@ ih_game_loop_code:
     STA !ram_mb_hp
     STA !ram_enemy_hp
     STA !ram_shine_counter
-    BRA .done
+
+    JML $808111 ; overwritten code + return
 }
 
 metronome:
@@ -1714,9 +1704,7 @@ ih_hud_code_paused:
 {
     ; overwritten code
     PHP
-    PHB
-    PHK
-    PLB
+    PHB : PHK : PLB
     %a8()
     STZ $02
     %ai16()

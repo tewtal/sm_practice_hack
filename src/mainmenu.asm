@@ -1084,11 +1084,7 @@ action_category:
     dw #$1025, #$1002, #$018F, #$000A, #$000A, #$0005, #$0000, #$0000        ; 14% ice
     dw #$3025, #$1000, #$018F, #$000A, #$000A, #$0005, #$0000, #$0000        ; 14% speed
     dw #$F33F, #$100F, #$02BC, #$0064, #$0014, #$0014, #$012C, #$0000        ; gt code
-if !FEATURE_PAL
-    dw #$F33F, #$100F, #$0834, #$0145, #$0041, #$0046, #$02BC, #$0000        ; 136%
-else
     dw #$F33F, #$100F, #$0834, #$0145, #$0041, #$0041, #$02BC, #$0000        ; 135%
-endif
     dw #$710C, #$1001, #$031F, #$001E, #$0019, #$0014, #$0064, #$0000        ; rbo
     dw #$9004, #$0000, #$00C7, #$0005, #$0005, #$0005, #$0000, #$0000        ; any% glitched
     dw #$F32F, #$100F, #$0031, #$01A4, #$005A, #$0063, #$0000, #$0000        ; crystal flash
@@ -1814,6 +1810,7 @@ action_teleport:
     %a16()
 
     STZ $0727 ; Pause menu index
+    STZ $0795 ; Clear door transition flag
     STZ $0E18 ; Set elevator to inactive
     STZ $1C1F ; Clear message box index
 
@@ -1869,9 +1866,9 @@ misc_hyperbeam:
     AND #$8000 : BEQ .off
     LDA #$0003
 if !FEATURE_PAL
-    JSL $91E412 ; setup Samus for Hyper Beam
-else
-    JSL $91E4AD ; setup Samus for Hyper Beam
+    JSL $91E412
+else            ; setup Samus for Hyper Beam
+    JSL $91E4AD
 endif
     RTL
 
@@ -2128,7 +2125,7 @@ misc_killenemies:
     TAX : LDA $0F86,X : BIT #$8500 : BNE .next_enemy
     ORA #$0200 : STA $0F86,X
   .next_enemy
-    TXA : CLC : ADC #$0040 : CMP #$0400 : BNE .kill_loop
+    TXA : CLC : ADC #$0040 : CMP #$0800 : BNE .kill_loop
     LDA #$0009 : JSL !SFX_LIB2 ; enemy killed
     RTL
 
