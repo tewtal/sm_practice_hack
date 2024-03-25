@@ -42,6 +42,13 @@ org $90E817
 endif
 warnpc $90E81A
 
+
+; unlock the fourth demo set
+; normally requires watching credits
+org $808262
+    LDA #$0004
+
+
 if !FEATURE_PAL
 org $919DAA
 else

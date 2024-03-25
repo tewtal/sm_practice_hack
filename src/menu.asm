@@ -1714,6 +1714,16 @@ cm_ctrl_mode:
     LDA !ram_cm_ctrl_timer : INC : STA !ram_cm_ctrl_timer
     CMP.w #0060 : BNE .next_frame
 
+    ; disallow inputs that match the menu shortcut
+    LDA !DP_CtrlInput : CMP.w #!sram_ctrl_menu : BEQ .store
+    LDA !IH_CONTROLLER_PRI : CMP !sram_ctrl_menu : BNE .store
+    %sfxfail()
+    ; set cursor position to 0 (menu shortcut)
+    LDX !ram_cm_stack_index
+    LDA #$0000 : STA !ram_cm_cursor_stack,X
+    BRA .exit
+
+  .store
     ; Store controller input to SRAM
     LDA !IH_CONTROLLER_PRI : STA [!DP_CtrlInput]
     JSL GameModeExtras
