@@ -612,7 +612,12 @@ ih_update_hud_code:
     ; Map visible, so draw map counter over item%
     LDA !sram_top_display_mode : CMP !TOP_DISPLAY_VANILLA : BEQ .mmVanilla
     LDA !ram_map_counter : LDX #$0014 : JSR Draw3
-    LDA !sram_display_mode : CMP #!IH_MODE_SHINETUNE_INDEX : BNE .mmRoomTimer
+
+    ; Skip room timer when shinetune or walljump enabled
+    LDA !sram_display_mode : CMP #!IH_MODE_SHINETUNE_INDEX : BEQ .mmSkipRoomTimer
+    CMP #!IH_MODE_WALLJUMP_INDEX : BNE .mmRoomTimer
+
+  .mmSkipRoomTimer
     BRL .mmPickTransitionTime
 
   .mmRoomTimer
@@ -707,8 +712,9 @@ ih_update_hud_code:
     LDA !sram_top_display_mode : CMP !TOP_DISPLAY_VANILLA : BEQ .vanillaLagReserves
     LDA !ram_last_room_lag : LDX #$0080 : JSR Draw4
 
-    ; Skip door lag and segment timer when shinetune enabled
+    ; Skip door lag and segment timer when shinetune or walljump enabled
     LDA !sram_display_mode : CMP #!IH_MODE_SHINETUNE_INDEX : BEQ .end
+    CMP #!IH_MODE_WALLJUMP_INDEX : BEQ .end
 
     ; Door lag / transition time
     LDA !sram_lag_counter_mode : BNE .fullTransitionTime
@@ -738,8 +744,9 @@ ih_update_hud_code:
   .vanillaDrawLag
     LDA !ram_last_room_lag : LDX #$007E : JSR Draw4
 
-    ; Skip door lag and segment timer when shinetune enabled
+    ; Skip door lag and segment timer when shinetune or walljump enabled
     LDA !sram_display_mode : CMP #!IH_MODE_SHINETUNE_INDEX : BEQ .end
+    CMP #!IH_MODE_WALLJUMP_INDEX : BEQ .end
 
     ; Door lag / transition time
     LDA !sram_lag_counter_mode : BNE .vanillaFullTransitionTime

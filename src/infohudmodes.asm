@@ -1021,17 +1021,17 @@ status_walljump:
 
   .clearaverage
     TDC : STA !ram_roomstrat_counter
-    BRA .checkleftright
+    BRA .checkjump
 
   .incframecount
     ; Arbitrary wait of 120 frames before we stop tracking the average
-    LDA !ram_roomstrat_counter : BEQ .checkleftright : CMP #$0078 : BPL .clearaverage
+    LDA !ram_roomstrat_counter : BEQ .checkjump : CMP #$0078 : BPL .clearaverage
     INC : STA !ram_roomstrat_counter
 
   .incspeed
     ; Nothing to do if speed is zero or negative
-    LDA !SAMUS_Y_SPEEDCOMBINED : AND #$8000 : BNE .checkleftright
-    LDA !SAMUS_Y_SPEEDCOMBINED : BEQ .checkleftright
+    LDA !SAMUS_Y_SPEEDCOMBINED : AND #$8000 : BNE .checkjump
+    LDA !SAMUS_Y_SPEEDCOMBINED : BEQ .checkjump
 
     ; Speed x256 is just a little too high
     ; Make it x128 and store it for later use
@@ -1039,17 +1039,47 @@ status_walljump:
 
     ; Check if we are rising or falling
     LDA !SAMUS_Y_DIRECTION : CMP #$0001 : BEQ .addspeed : CMP #$0002 : BEQ .subtractspeed
-    BRA .checkleftright
+    BRA .checkjump
 
   .addspeed
     ; If total speed overflows, stop tracking the average
     LDA !ram_vertical_speed : CLC : CLV : ADC $12 : BVS .clearaverage
     STA !ram_vertical_speed
-    BRA .checkleftright
+    BRA .checkjump
 
   .subtractspeed
     LDA !ram_vertical_speed : CMP $12 : BMI .zerospeed
     SEC : SBC $12 : STA !ram_vertical_speed
+    BRA .checkjump
+
+  .resetreleasejump
+    LDA !ram_roomstrat_state : DEC : AND #$0003
+    ASL : ASL : TAX : LDA !IH_BLANK : STA !HUD_TILEMAP+$B0,X
+    BRA .blanksides
+
+  .zerospeed
+    TDC : STA !ram_vertical_speed
+
+  .checkjump
+    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_JUMP : BNE .pressedjump
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_JUMP : BNE .checkleftright
+
+    ; count up to 36 frames of jump released
+    LDA !ram_shot_timer : CMP #$0024 : BPL .resetreleasejump
+    INC : STA !ram_shot_timer
+    ASL : TAX
+    LDA NumberGFXTable,X : PHA
+    LDA !ram_roomstrat_state : DEC : AND #$0003
+    ASL : ASL : TAX : PLA : STA !HUD_TILEMAP+$B0,X
+    LDA !IH_BLANK
+
+  .blanksides
+    STA !HUD_TILEMAP+$AE,X : STA !HUD_TILEMAP+$B2,X
+    BRA .checkleftright
+
+  .pressedjump
+    TDC : STA !ram_shot_timer
+    LDA !ram_roomstrat_state : INC : STA !ram_roomstrat_state
     BRA .checkleftright
 
   .writg
@@ -1060,12 +1090,13 @@ status_walljump:
     LDA #$0117 : STA !ram_ypos
     BRL .heightcheck
 
-  .jump
-    LDA !ROOM_ID : CMP #$B4AD : BEQ .writg : CMP #$ACB3 : BEQ .bubble
-    BRL .clear
+  .lavadive
+    BRL .lavadivecheck
 
-  .zerospeed
-    TDC : STA !ram_vertical_speed
+  .walljump
+    LDA !ROOM_ID : CMP #$B4AD : BEQ .writg
+    CMP #$AF14 : BEQ .lavadive : CMP #$ACB3 : BEQ .bubble
+    BRL .clear
 
   .checkleftright
     LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_LEFT : BNE .leftright
@@ -1073,7 +1104,7 @@ status_walljump:
 
     ; Arbitrary wait of 20 frames before resetting
     LDA !ram_walljump_counter : BEQ .done : CMP #$0014 : BPL .reset
-    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_JUMP : BNE .jump
+    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_JUMP : BNE .walljump
     LDA !ram_walljump_counter : INC : STA !ram_walljump_counter
     RTS
 
@@ -1288,6 +1319,33 @@ endif
   .printbonk
     TXY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A
     LDA !IH_LETTER_B : STA !HUD_TILEMAP+$88
+    BRL .drawjumpcounter
+
+  .lavadiveclear
+    BRL .clear
+
+  .lavadivecheck
+    LDA !SAMUS_X : CMP #$0248 : BMI .lavadiveclear
+    CMP #$0288 : BPL .lavadiveclear
+    LDA !SAMUS_Y : CMP #$020A : BMI .lavadiveclear
+    CMP #$024A : BPL .lavadiveclear
+    CMP #$0228 : BMI .lavadivehigh : CMP #$022C : BPL .lavadivelow
+
+    ; Preferred height
+    LDA #$022C : SEC : SBC !SAMUS_Y
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$88
+    BRL .drawjumpcounter
+
+  .lavadivehigh
+    LDA #$0228 : SEC : SBC !SAMUS_Y
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A
+    LDA !IH_LETTER_H : STA !HUD_TILEMAP+$88
+    BRL .drawjumpcounter
+
+  .lavadivelow
+    SEC : SBC #$022B : ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A
+    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$88
     BRL .drawjumpcounter
 }
 

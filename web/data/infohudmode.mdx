@@ -113,12 +113,12 @@ First two characters = Feedback on mid-air morph while beam is charged:
 ## Wall Jump
 Displays the number of frames between pressing a left or right input and pressing the jump button, if the number of frames is between 1 and 20.
 To walljump this number should be between 2 and 9 inclusive, although on PAL 8 does not work due to Samus' animation running out and being in the incorrect pose on that particular frame.
-Also, if the number of frames is 7-9 (a delayed walljump) and the walljump is taking place in WRITG or bubble mountain, then additional information may be presented if you appear to be making hi-jump-less walljump attempts (also known as the hypo jump):
+Also, if the number of frames is 7-9 (a delayed walljump) and the walljump is taking place in WRITG or Bubble Mountain, then additional information may be presented if you appear to be making hi-jump-less walljump attempts (also known as the hypo jump):
 &nbsp;  
 First two characters = Feedback on the delayed walljump:
-- H# indicates you jumped high where the number tells you how many pixels you were high (can be zero in bubble mountain; H0 does not work and will bonk).
+- H# indicates you jumped high where the number tells you how many pixels you were high (can be zero in Bubble Mountain; H0 does not work and will bonk).
 - B# indicates you jumped high and will bonk, but could save it with a quick mid-air wiggle (turn and turn back). This wiggle shrinks Samus' hitbox.
-It only works in WRITG. The number is the most amount of frames you can take to wiggle, with larger numbers indicating your jump was closer to the optimal YH position.
+It only works in WRITG and not Bubble Mountain. The number is the most amount of frames you can take to wiggle, with larger numbers indicating your jump was closer to the optimal YH position.
 - YH indicates you jumped at the optimum height with an 8 or 9 frame walljump.
 - YY indicates you jumped just below the optimum height with a 9 frame walljump (PAL only since PAL physics allow for a larger range of heights to work, although it must be a max-delayed 9 frame walljump since 8 frames won't work).
 - YL indicates you jumped below optimum height with an 8 or 9 frame walljump. Generally a YL height is still enough height to get the second walljump without too much trouble.
@@ -126,6 +126,15 @@ It only works in WRITG. The number is the most amount of frames you can take to 
 - L# indicates you jumped low where the number tells you how many pixels you were low.
 
 Additionally Samus HP will be overwritten with the average climb speed in approximate pixels per frame (inflated by 2.4%). It averages vertical speed between jump presses, assuming the presses are within 2 seconds of each other and assuming the total speed does not overflow (if either of these happen then average will be blank). If total speed drops below zero then the average will be recorded as zero.
+
+Finally if the walljump is taking place near a specific namihe in Lava Dive, then feedback will be given on the height of the walljump for the purposes of a zero-tank lava dive where the first walljump is made off of the namihe:
+&nbsp;  
+First two characters = Feedback on the walljump:
+- H# indicates you jumped high where the number tells you how many pixels you were high. Note that some values still work (especially with delayed namihe jumps); you may find an H1 setup that works just as well as a Y# setup. With the H# setups, it is possible for the second walljump to be so high that it will always bonk.
+- Y# indicates you jumped at one of the four pixels that can work with a quick or delayed walljump off of the namihe and do not risk going too high to always bonk on the second walljump. Y1 may barely reach the second walljump, but as a result of being so low on the wall, it may allow a two-frame window for the second walljump (if the second walljump is higher then it must be a maximum-delayed walljump).
+- L# indicates you jumped low where the number tells you how many pixels you were low. These values will never work as you cannot reach the second walljump.
+
+Note that the namihe does not pull Samus in like a wall does (subpixels are not reset), so while a delayed walljump is preferred (it matters if you jump from a higher position), walljumps off of the namihe do not provide the traditional 2-9 frame window for walljumps.
 
 ## Arm Pump
 Displays the number of armpumps (pose changes) per second, and the number of wasted angle down and/or angle up inputs per second.
