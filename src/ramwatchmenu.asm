@@ -571,7 +571,7 @@ ramwatch_enable:
   .routine
     TYA : STA !sram_display_mode
     %sfxconfirm()
-    RTL
+    JML init_print_segment_timer
 
 ramwatch_bank:
     %cm_numfield_hex("Select Bank", !ram_watch_bank, 0, 255, 1, 4, #0)
@@ -615,7 +615,7 @@ ramwatch_execute_left:
     %a16()
     LDA #!IH_MODE_RAMWATCH_INDEX : STA !sram_display_mode
     %sfxconfirm()
-    RTL
+    JML init_print_segment_timer
 
 ramwatch_execute_right:
     %cm_jsl("Write to Right Address", #.routine, #$0000)
@@ -629,7 +629,7 @@ ramwatch_execute_right:
     %a16()
     LDA #!IH_MODE_RAMWATCH_INDEX : STA !sram_display_mode
     %sfxconfirm()
-    RTL
+    JML init_print_segment_timer
 
 ramwatch_lock_left:
     %cm_toggle("Lock Left Value", !ram_watch_edit_lock_left, #$0001, #action_HUD_ramwatch)
@@ -640,7 +640,7 @@ ramwatch_lock_right:
 action_HUD_ramwatch:
 {
     LDA #!IH_MODE_RAMWATCH_INDEX : STA !sram_display_mode
-    RTL
+    JML init_print_segment_timer
 }
 
 ramwatch_display:

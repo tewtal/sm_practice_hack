@@ -71,30 +71,41 @@
 !ram_shot_timer                     = !WRAM_START+$52
 !ram_shine_counter                  = !WRAM_START+$54
 !ram_dash_counter                   = !WRAM_START+$56
-!ram_shinetune_early_1              = !WRAM_START+$58
-!ram_shinetune_late_1               = !WRAM_START+$5A
-!ram_shinetune_early_2              = !WRAM_START+$5C
-!ram_shinetune_late_2               = !WRAM_START+$5E
-!ram_shinetune_early_3              = !WRAM_START+$60
-!ram_shinetune_late_3               = !WRAM_START+$62
-!ram_shinetune_early_4              = !WRAM_START+$64
-!ram_shinetune_late_4               = !WRAM_START+$66
-!ram_shine_dash_held_late           = !WRAM_START+$68
-!ram_xpos                           = !WRAM_START+$6A
-!ram_ypos                           = !WRAM_START+$6C
-!ram_subpixel_pos                   = !WRAM_START+$6E
-!ram_horizontal_speed               = !WRAM_START+$70
-!ram_vertical_speed                 = !WRAM_START+$72
-!ram_quickdrop_counter              = !WRAM_START+$74
-!ram_walljump_counter               = !WRAM_START+$76
-!ram_fail_sum                       = !WRAM_START+$78
-!ram_fail_count                     = !WRAM_START+$7A
 
-!ram_auto_save_state                = !WRAM_START+$7C
-!ram_lag_counter                    = !WRAM_START+$7E
-!ram_kraid_adjust_timer             = !WRAM_START+$80
+!ram_auto_save_state                = !WRAM_START+$58
+!ram_lag_counter                    = !WRAM_START+$5A
+!ram_kraid_adjust_timer             = !WRAM_START+$5C
+!ram_print_segment_timer            = !WRAM_START+$5E
 
-!WRAM_PERSIST_START = !ram_kraid_adjust_timer+$02
+; ^ FREE SPACE ^ up to +$6C
+
+; ----------------------------------------------------------
+; Shinetune uses several variables not used by other modes,
+; but also shinetune does not use many other variables,
+; so the following variables share the same WRAM
+
+!ram_xpos                           = !WRAM_START+$6E
+!ram_ypos                           = !WRAM_START+$70
+!ram_subpixel_pos                   = !WRAM_START+$72
+!ram_horizontal_speed               = !WRAM_START+$74
+!ram_vertical_speed                 = !WRAM_START+$76
+!ram_quickdrop_counter              = !WRAM_START+$78
+!ram_walljump_counter               = !WRAM_START+$7A
+!ram_fail_sum                       = !WRAM_START+$7C
+!ram_fail_count                     = !WRAM_START+$7E
+
+!ram_shine_dash_held_late           = !WRAM_START+$6E
+!ram_shinetune_early_1              = !WRAM_START+$70
+!ram_shinetune_late_1               = !WRAM_START+$72
+!ram_shinetune_early_2              = !WRAM_START+$74
+!ram_shinetune_late_2               = !WRAM_START+$76
+!ram_shinetune_early_3              = !WRAM_START+$78
+!ram_shinetune_late_3               = !WRAM_START+$7A
+!ram_shinetune_early_4              = !WRAM_START+$7C
+!ram_shinetune_late_4               = !WRAM_START+$7E
+
+
+!WRAM_PERSIST_START = !WRAM_START+$80
 ; ----------------------------------------------------------
 ; Variables below this point are PERSISTENT -- they maintain
 ; their value across savestates. Use this section for
@@ -163,7 +174,7 @@
     ; 1: SPC load requested
     ; ROM address: routine to perform next initialization step
 
-; ^ FREE SPACE ^ up to +$7A (!WRAM_START+$FC - !WRAM_PERSIST_START)
+; ^ FREE SPACE ^ up to +$7C (!WRAM_START+$FC - !WRAM_PERSIST_START)
 
 ; -----------------------
 ; RAM (Bank 7E required)

@@ -126,6 +126,7 @@ It only works in WRITG and not Bubble Mountain. The number is the most amount of
 - L# indicates you jumped low where the number tells you how many pixels you were low.
 
 Additionally Samus HP will be overwritten with the average climb speed in approximate pixels per frame (inflated by 2.4%). It averages vertical speed between jump presses, assuming the presses are within 2 seconds of each other and assuming the total speed does not overflow (if either of these happen then average will be blank). If total speed drops below zero then the average will be recorded as zero.
+Also the segment timer is overwritten by a set of four numbers representing the number of frames jump was released the last four times that the jump button was released. Since Samus' upward momentum usually stops immediately upon releasing jump, reducing the number of frames where jump is released is the simplest way to improve climb speed.
 
 Finally if the walljump is taking place near a specific namihe in Lava Dive, then feedback will be given on the height of the walljump for the purposes of a zero-tank lava dive where the first walljump is made off of the namihe:
 &nbsp;  
