@@ -98,9 +98,9 @@ skip_pause:
     LDA #$0008 : STA !GAMEMODE
     STZ $0723   ; Screen fade delay = 0
     STZ $0725   ; Screen fade counter = 0
-    LDA $0051 : ORA #$000F
-    STA $0051   ; Brightness = $F (max)
-  .done:
+    LDA $51 : ORA #$000F
+    STA $51   ; Brightness = $F (max)
+  .done
     PLP
     RTS
 }
@@ -127,6 +127,11 @@ gamemode_shortcuts:
     ; CLC so we won't skip normal gameplay
     CLC : RTS
   .check_shortcuts
+
+    LDA !IH_CONTROLLER_PRI : AND !sram_ctrl_menu : CMP !sram_ctrl_menu : BNE .skip_menu
+    AND !IH_CONTROLLER_PRI_NEW : BEQ .skip_menu
+    JMP .menu
+  .skip_menu
 
 if !FEATURE_SD2SNES
     LDA !IH_CONTROLLER_PRI : CMP !sram_ctrl_save_state : BNE .skip_save_state
@@ -167,7 +172,7 @@ endif
 
     ; Check if any less common shortcuts are configured
     LDA !ram_game_mode_extras : BNE .check_less_common_shortcuts
-    JMP .check_menu
+    JMP .no_shortcuts
   .check_less_common_shortcuts
 
     LDA !IH_CONTROLLER_PRI : AND !sram_ctrl_inc_custom_preset : CMP !sram_ctrl_inc_custom_preset : BNE .skip_next_preset_slot
@@ -210,12 +215,7 @@ endif
     JMP .update_timers
   .skip_update_timers
 
-  .check_menu
-    LDA !IH_CONTROLLER_PRI : AND !sram_ctrl_menu : CMP !sram_ctrl_menu : BNE .skip_check_menu
-    AND !IH_CONTROLLER_PRI_NEW : BEQ .skip_check_menu
-    JMP .menu
-  .skip_check_menu
-
+  .no_shortcuts
     ; No shortcuts matched, CLC so we won't skip normal gameplay
     CLC : RTS
 
@@ -341,7 +341,7 @@ endif
     ; check if slot is populated first
     LDA !sram_custom_preset_slot
     %presetslotsize()
-    LDA $703000,X : CMP #$5AFE : BEQ .load_safe
+    LDA !PRESET_SLOTS,X : CMP #$5AFE : BEQ .load_safe
 
     %sfxfail()
     ; CLC to continue normal gameplay after failing to load preset

@@ -1586,7 +1586,6 @@ doormenu_left_A948:
 
 LayoutRedBrinstarLeftDoorMenu:
     dw #doormenu_left_90EA
-    dw #doormenu_left_9102
     dw #doormenu_left_911A
     dw #doormenu_left_9126
     dw #doormenu_left_90DE
@@ -1596,6 +1595,7 @@ LayoutRedBrinstarLeftDoorMenu:
     dw #doormenu_left_9066
     dw #doormenu_left_9042
     dw #doormenu_left_901E
+    dw #doormenu_left_9102
     dw #doormenu_left_91FE
     dw #doormenu_left_9072
     dw #$0000
@@ -1604,35 +1604,35 @@ LayoutRedBrinstarLeftDoorMenu:
 doormenu_left_90EA:
     %cm_jsl("RB Alpha Power Bombs", #doorsubmenu_select, #$008B)
 
-doormenu_left_9102:
-    %cm_jsl("RB Bat", #doorsubmenu_select, #$008C)
-
 doormenu_left_911A:
-    %cm_jsl("RB Below Spazer (Lower)", #doorsubmenu_select, #$008D)
+    %cm_jsl("RB Below Spazer (Lower)", #doorsubmenu_select, #$008C)
 
 doormenu_left_9126:
-    %cm_jsl("RB Below Spazer (Upper)", #doorsubmenu_select, #$008E)
+    %cm_jsl("RB Below Spazer (Upper)", #doorsubmenu_select, #$008D)
 
 doormenu_left_90DE:
-    %cm_jsl("RB Beta Power Bombs", #doorsubmenu_select, #$008F)
+    %cm_jsl("RB Beta Power Bombs", #doorsubmenu_select, #$008E)
 
 doormenu_left_90D2:
-    %cm_jsl("RB Caterpillars (Lower)", #doorsubmenu_select, #$0090)
+    %cm_jsl("RB Caterpillars (Lower)", #doorsubmenu_select, #$008F)
 
 doormenu_left_90C6:
-    %cm_jsl("RB Caterpillars (Upper)", #doorsubmenu_select, #$0091)
+    %cm_jsl("RB Caterpillars (Upper)", #doorsubmenu_select, #$0090)
 
 doormenu_left_908A:
-    %cm_jsl("RB Hellway", #doorsubmenu_select, #$0092)
+    %cm_jsl("RB Hellway", #doorsubmenu_select, #$0091)
 
 doormenu_left_9066:
-    %cm_jsl("RB Red Brinstar Firefleas", #doorsubmenu_select, #$0093)
+    %cm_jsl("RB Red Brinstar Firefleas", #doorsubmenu_select, #$0092)
 
 doormenu_left_9042:
-    %cm_jsl("RB Red Tower (Lower)", #doorsubmenu_select, #$0094)
+    %cm_jsl("RB Red Tower (Lower)", #doorsubmenu_select, #$0093)
 
 doormenu_left_901E:
-    %cm_jsl("RB Red Tower (Upper)", #doorsubmenu_select, #$0095)
+    %cm_jsl("RB Red Tower (Upper)", #doorsubmenu_select, #$0094)
+
+doormenu_left_9102:
+    %cm_jsl("RB Skree Boost", #doorsubmenu_select, #$0095)
 
 doormenu_left_91FE:
     %cm_jsl("RB Sloaters Refill", #doorsubmenu_select, #$0096)
@@ -2235,7 +2235,6 @@ layout_leftright_leftdoor:
     dw #doormenu_left_A924
     dw #doormenu_left_A948
     dw #doormenu_left_90EA      ; Red Brinstar
-    dw #doormenu_left_9102
     dw #doormenu_left_911A
     dw #doormenu_left_9126
     dw #doormenu_left_90DE
@@ -2245,6 +2244,7 @@ layout_leftright_leftdoor:
     dw #doormenu_left_9066
     dw #doormenu_left_9042
     dw #doormenu_left_901E
+    dw #doormenu_left_9102
     dw #doormenu_left_91FE
     dw #doormenu_left_9072
     dw #doormenu_left_AA38      ; Tourian
@@ -2980,7 +2980,6 @@ doormenu_right_A93C:
     %cm_jsl("PM West Cactus Alley", #doorsubmenu_select, #$008B)
 
 LayoutRedBrinstarRightDoorMenu:
-    dw #doormenu_right_90F6
     dw #doormenu_right_910E
     dw #doormenu_right_9096
     dw #doormenu_right_90AE
@@ -2991,42 +2990,43 @@ LayoutRedBrinstarRightDoorMenu:
     dw #doormenu_right_904E
     dw #doormenu_right_9036
     dw #doormenu_right_902A
+    dw #doormenu_right_90F6
     dw #doormenu_right_9132
     dw #$0000
     %cm_header("SELECT RIGHT DOOR")
 
-doormenu_right_90F6:
-    %cm_jsl("RB Bat", #doorsubmenu_select, #$008C)
-
 doormenu_right_910E:
-    %cm_jsl("RB Below Spazer", #doorsubmenu_select, #$008D)
+    %cm_jsl("RB Below Spazer", #doorsubmenu_select, #$008C)
 
 doormenu_right_9096:
-    %cm_jsl("RB Caterpillars (Lower)", #doorsubmenu_select, #$008E)
+    %cm_jsl("RB Caterpillars (Lower)", #doorsubmenu_select, #$008D)
 
 doormenu_right_90AE:
-    %cm_jsl("RB Caterpillars (Middle)", #doorsubmenu_select, #$008F)
+    %cm_jsl("RB Caterpillars (Middle)", #doorsubmenu_select, #$008E)
 
 doormenu_right_90A2:
-    %cm_jsl("RB Caterpillars (Upper)", #doorsubmenu_select, #$0090)
+    %cm_jsl("RB Caterpillars (Upper)", #doorsubmenu_select, #$008F)
 
 doormenu_right_907E:
-    %cm_jsl("RB Hellway", #doorsubmenu_select, #$0091)
+    %cm_jsl("RB Hellway", #doorsubmenu_select, #$0090)
 
 doormenu_right_905A:
-    %cm_jsl("RB Red Brinstar Firefleas", #doorsubmenu_select, #$0092)
+    %cm_jsl("RB Red Brinstar Firefleas", #doorsubmenu_select, #$0091)
 
 doormenu_right_926A:
-    %cm_jsl("RB Red Brinstar Save", #doorsubmenu_select, #$0093)
+    %cm_jsl("RB Red Brinstar Save", #doorsubmenu_select, #$0092)
 
 doormenu_right_904E:
-    %cm_jsl("RB Red Tower (Lower)", #doorsubmenu_select, #$0094)
+    %cm_jsl("RB Red Tower (Lower)", #doorsubmenu_select, #$0093)
 
 doormenu_right_9036:
-    %cm_jsl("RB Red Tower (Middle)", #doorsubmenu_select, #$0095)
+    %cm_jsl("RB Red Tower (Middle)", #doorsubmenu_select, #$0094)
 
 doormenu_right_902A:
-    %cm_jsl("RB Red Tower (Upper)", #doorsubmenu_select, #$0096)
+    %cm_jsl("RB Red Tower (Upper)", #doorsubmenu_select, #$0095)
+
+doormenu_right_90F6:
+    %cm_jsl("RB Skree Boost", #doorsubmenu_select, #$0096)
 
 doormenu_right_9132:
     %cm_jsl("RB Spazer", #doorsubmenu_select, #$0097)
@@ -3626,8 +3626,7 @@ layout_leftright_rightdoor:
     dw #doormenu_right_A840
     dw #doormenu_right_A834
     dw #doormenu_right_A93C
-    dw #doormenu_right_90F6     ; Red Brinstar
-    dw #doormenu_right_910E
+    dw #doormenu_right_910E     ; Red Brinstar
     dw #doormenu_right_9096
     dw #doormenu_right_90AE
     dw #doormenu_right_90A2
@@ -3637,6 +3636,7 @@ layout_leftright_rightdoor:
     dw #doormenu_right_904E
     dw #doormenu_right_9036
     dw #doormenu_right_902A
+    dw #doormenu_right_90F6
     dw #doormenu_right_9132
     dw #doormenu_right_AA44     ; Tourian
     dw #doormenu_right_AA14

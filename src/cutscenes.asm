@@ -1592,7 +1592,8 @@ cutscenes_mb_escape_earthquake_start:
 
 cutscenes_mb_custom_damage:
 {
-    LDA !sram_suit_properties : CMP #$0004 : BPL .dash_custom_damage
+    LDA !sram_suit_properties : AND !SUIT_PROPERTIES_MASK
+    CMP #$0004 : BPL .dash_custom_damage
     JML $A6D453
 
   .dash_custom_damage

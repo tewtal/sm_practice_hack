@@ -12,9 +12,9 @@ preset_load:
     JSR $82E2    ; Load standard BG3 tiles and sprite tiles, clear tilemaps
     JSR $82C5    ; Load initial palette
 if !FEATURE_PAL
-    JSL $91DF72  ; Initialize Samus
-else
-    JSL $91E00D  ; Initialize Samus
+    JSL $91DF72
+else             ; Initialize Samus
+    JSL $91E00D
 endif
 
     JSL preset_load_preset
@@ -58,9 +58,9 @@ endif
     LDA #$0006 : STA $0DA0
   .loopSomething
 if !FEATURE_PAL
-    JSL $A08CE7  ; Transfer enemy tiles to VRAM and initialize enemies
-else
-    JSL $A08CD7  ; Transfer enemy tiles to VRAM and initialize enemies
+    JSL $A08CE7
+else             ; Transfer enemy tiles to VRAM and initialize enemies
+    JSL $A08CD7
 endif
     JSL $808338  ; Wait for NMI
     DEC $0DA0    ; Decrement $0DA0
@@ -78,10 +78,9 @@ endif
     INX : INX
     DEY : DEY : BNE .secondPaletteLoop
 
-    ; Fix Samus' palette
 if !FEATURE_PAL
     JSL $91DE1F
-else
+else             ; Fix Samus' palette
     JSL $91DEBA
 endif
 
@@ -424,11 +423,11 @@ preset_start_gameplay:
     ; If default pose at landing site then assume we are arriving on Zebes
     LDA #$0022 : STA $7ED914
 if !FEATURE_PAL
-    LDA #$E8CA : STA !SAMUS_LOCKED_HANDLER   ; Lock Samus
-    LDA #$E867 : STA !SAMUS_MOVEMENT_HANDLER ; Lock Samus
-else
-    LDA #$E8CD : STA !SAMUS_LOCKED_HANDLER   ; Lock Samus
-    LDA #$E8DC : STA !SAMUS_MOVEMENT_HANDLER ; Lock Samus
+    LDA #$E8CA : STA !SAMUS_LOCKED_HANDLER
+    LDA #$E867 : STA !SAMUS_MOVEMENT_HANDLER
+else             ; Lock Samus
+    LDA #$E8CD : STA !SAMUS_LOCKED_HANDLER
+    LDA #$E8DC : STA !SAMUS_MOVEMENT_HANDLER
 endif
   .end_load_game_state
 
@@ -443,9 +442,9 @@ endif
     JSL $90AC8D  ; Update beam graphics
     JSL $82E139  ; Load target colours for common sprites, beams and slashing enemies / pickups
 if !FEATURE_PAL
-    JSL $A08A2E  ; Load enemies
-else
-    JSL $A08A1E  ; Load enemies
+    JSL $A08A2E
+else             ; Load enemies
+    JSL $A08A1E
 endif
     JSL $80A23F  ; Clear BG2 tilemap
 if !RAW_TILE_GRAPHICS
@@ -786,9 +785,8 @@ warnpc $80F600 ; save.asm or tinystates.asm
 org $809AB1
     ; Skip x-ray and grapple if max HP is a multiple of 4,
     ; which is only possible if GT code was used
-    LDA $09C4 : AND #$0003 : BEQ resume_infohud_icon_initialization
+    LDA !SAMUS_HP_MAX : AND #$0003 : BEQ resume_infohud_icon_initialization
     JMP add_grapple_and_xray_to_hud
-
 warnpc $809AC9
 
 ; $80:9AC9: Resume original logic

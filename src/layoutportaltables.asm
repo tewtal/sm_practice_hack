@@ -275,7 +275,6 @@ portals_left_vanilla_table:
     dw $A924    ; Space Jump door 0 --> Draygon
     dw $A948    ; West Cactus Alley door 1 --> East Cactus Alley
     dw $90EA    ; Alpha Power Bombs door 0 --> Caterpillars
-    dw $9102    ; Bat door 1 --> Below Spazer
     dw $911A    ; Below Spazer door 1 --> West Tunnel
     dw $9126    ; Below Spazer door 2 --> Spazer
     dw $90DE    ; Beta Power Bombs door 0 --> Caterpillars
@@ -283,8 +282,9 @@ portals_left_vanilla_table:
     dw $90C6    ; Caterpillars door 4 --> Red Fish
     dw $908A    ; Hellway door 1 --> Caterpillars
     dw $9066    ; Red Brinstar Firefleas door 1 --> Red Tower
-    dw $9042    ; Red Tower door 3 --> Bat
+    dw $9042    ; Red Tower door 3 --> Skree Boost
     dw $901E    ; Red Tower door 0 --> Hellway
+    dw $9102    ; Skree Boost door 1 --> Below Spazer
     dw $91FE    ; Sloaters Refill door 0 --> Red Tower
     dw $9072    ; X-Ray Scope door 0 --> Red Brinstar Firefleas
     dw $AA38    ; Big Boy door 0 --> Dust Torizo
@@ -532,7 +532,6 @@ portals_left_vanilla_inverted_table:
     dw $A978    ; Draygon door 1 --> Space Jump
     dw $A954    ; East Cactus Alley door 0 --> West Cactus Alley
     dw $9096    ; Caterpillars door 0 --> Alpha Power Bombs
-    dw $910E    ; Below Spazer door 0 --> Bat
     dw $A36C    ; West Tunnel door 1 --> Below Spazer
     dw $9132    ; Spazer door 0 --> Below Spazer
     dw $90A2    ; Caterpillars door 1 --> Beta Power Bombs
@@ -540,8 +539,9 @@ portals_left_vanilla_inverted_table:
     dw $A480    ; Red Fish door 1 --> Caterpillars
     dw $90AE    ; Caterpillars door 2 --> Hellway
     dw $9036    ; Red Tower door 2 --> Red Brinstar Firefleas
-    dw $90F6    ; Bat door 0 --> Red Tower
+    dw $90F6    ; Skree Boost door 0 --> Red Tower
     dw $907E    ; Hellway door 0 --> Red Tower
+    dw $910E    ; Below Spazer door 0 --> Skree Boost
     dw $904E    ; Red Tower door 4 --> Sloaters Refill
     dw $905A    ; Red Brinstar Firefleas door 0 --> X-Ray Scope
     dw $AA2C    ; Dust Torizo door 1 --> Big Boy
@@ -789,8 +789,7 @@ portals_right_vanilla_table:
     dw $A840    ; Precious door 1 --> Draygon
     dw $A834    ; Precious door 0 --> Colosseum
     dw $A93C    ; West Cactus Alley door 0 --> Butterfly
-    dw $90F6    ; Bat door 0 --> Red Tower
-    dw $910E    ; Below Spazer door 0 --> Bat
+    dw $910E    ; Below Spazer door 0 --> Skree Boost
     dw $9096    ; Caterpillars door 0 --> Alpha Power Bombs
     dw $90AE    ; Caterpillars door 2 --> Hellway
     dw $90A2    ; Caterpillars door 1 --> Beta Power Bombs
@@ -800,6 +799,7 @@ portals_right_vanilla_table:
     dw $904E    ; Red Tower door 4 --> Sloaters Refill
     dw $9036    ; Red Tower door 2 --> Red Brinstar Firefleas
     dw $902A    ; Red Tower door 1 --> Noob Bridge
+    dw $90F6    ; Skree Boost door 0 --> Red Tower
     dw $9132    ; Spazer door 0 --> Below Spazer
     dw $AA44    ; Big Boy door 1 --> Seaweed
     dw $AA14    ; Blue Hoppers door 1 --> Dust Torizo
@@ -1046,8 +1046,7 @@ portals_right_vanilla_inverted_table:
     dw $A96C    ; Draygon door 0 --> Precious
     dw $A7F8    ; Colosseum door 2 --> Precious
     dw $A75C    ; Butterfly door 1 --> West Cactus Alley
-    dw $9042    ; Red Tower door 3 --> Bat
-    dw $9102    ; Bat door 1 --> Below Spazer
+    dw $9102    ; Skree Boost door 1 --> Below Spazer
     dw $90EA    ; Alpha Power Bombs door 0 --> Caterpillars
     dw $908A    ; Hellway door 1 --> Caterpillars
     dw $90DE    ; Beta Power Bombs door 0 --> Caterpillars
@@ -1057,6 +1056,7 @@ portals_right_vanilla_inverted_table:
     dw $91FE    ; Sloaters Refill door 0 --> Red Tower
     dw $9066    ; Red Brinstar Firefleas door 1 --> Red Tower
     dw $8F0A    ; Noob Bridge door 1 --> Red Tower
+    dw $9042    ; Red Tower door 3 --> Skree Boost
     dw $9126    ; Below Spazer door 2 --> Spazer
     dw $AA50    ; Seaweed door 0 --> Big Boy
     dw $AA20    ; Dust Torizo door 0 --> Blue Hoppers

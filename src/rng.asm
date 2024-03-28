@@ -144,8 +144,8 @@ org $A786B7
 else
 org $A786A7
 endif
-    ; Overwrite unused palette
 KraidWaitTable:
+    ; Overwrite unused palette
     dw #$0080, #$0040, #$0080, #$00C0, #$0100, #$0140, #$0180, #$01C0
 
 if !FEATURE_PAL
@@ -261,9 +261,7 @@ hook_beetom_set_rng:
 ; $A7:D4AE 10 3D       BPL $3D    [$D4ED]       ; else, return
 hook_phantoon_init:
 {
-    LDA !sram_cutscenes
-    AND !CUTSCENE_FAST_PHANTOON
-    BNE .skip_cutscene
+    LDA !sram_cutscenes : AND !CUTSCENE_FAST_PHANTOON : BNE .skip_cutscene
 
     DEC $0FB0,X
     RTL
@@ -309,25 +307,17 @@ hook_phantoon_1st_rng:
     ; If fast Phantoon is on, adjust the timer by the cutscene time
     ; (we can't do that while we skip the cutscene since that code
     ;  happens during the door transition)
-    LDA !sram_cutscenes
-    AND !CUTSCENE_FAST_PHANTOON
-    BEQ .rng
-    LDY #599
-    JSL ih_adjust_realtime
+    LDA !sram_cutscenes : AND !CUTSCENE_FAST_PHANTOON : BEQ .rng
+    LDY #$0257 : JSL ih_adjust_realtime
 
   .rng:
-    LDA !ram_phantoon_rng_round_1
     ; If set to all-on or all-off, don't mess with RNG.
-    BEQ .no_manip
-    CMP #$003F
-    BNE choose_phantoon_pattern
+    LDA !ram_phantoon_rng_round_1 : BEQ .no_manip
+    CMP #$003F : BNE choose_phantoon_pattern
 
   .no_manip
     LDA !FRAME_COUNTER
-    LSR A
-    AND #$0003
-    ASL A
-    TAY
+    LSR : AND #$0003 : ASL : TAY
 if !FEATURE_PAL
     LDA $CD87,Y
 else
@@ -351,17 +341,13 @@ endif
 ; $A7:D08E 89 01 00    BIT #$0001
 hook_phantoon_2nd_rng:
 {
-    LDA !ram_phantoon_rng_round_2
     ; If set to all-on or all-off, don't mess with RNG.
-    BEQ .no_manip
-    CMP #$003F
-    BNE choose_phantoon_pattern
+    LDA !ram_phantoon_rng_round_2 : BEQ .no_manip
+    CMP #$003F : BNE choose_phantoon_pattern
 
   .no_manip
     JSL $808111
-    AND #$0007
-    ASL A
-    TAY
+    AND #$0007 : ASL : TAY
 if !FEATURE_PAL
     LDA $CD87,Y
 else
@@ -402,8 +388,7 @@ choose_phantoon_pattern:
 
     ; get random number in range 0-7
     JSL $808111
-    AND #$0007
-    TAX
+    AND #$0007 : TAX
 
     ; play a game of eeny-meeny-miny-moe with the enabled patterns
     ; X = number of enabled patterns to find before stopping

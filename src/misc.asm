@@ -36,7 +36,7 @@ else
     LDA #$39E2 ; S
 endif
 else
-    LDA #$0000 ; blank
+    LDA #$04F0 ; blank
 endif
 
 if !FEATURE_PAL
@@ -519,8 +519,8 @@ preserve_escape_timer:
   .done
 if !FEATURE_PAL
     JMP $EA7C
-else
-    JMP $EA7F ; overwritten code
+else          ; overwritten code
+    JMP $EA7F
 endif
 }
 

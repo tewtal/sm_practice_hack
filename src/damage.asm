@@ -163,15 +163,47 @@ damage_overwritten_movement_routine:
 
 periodic_damage_table:
 if !FEATURE_PAL
-    dw $E9CB   ; vanilla routine
-else
-    dw $E9CE   ; vanilla routine
+    dw $E9CB
+else           ; vanilla routine
+    dw $E9CE
 endif
     dw periodic_damage_balanced
     dw periodic_damage_progressive
     dw periodic_damage_progressive
     dw periodic_damage_dash_recall
     dw periodic_damage_heat_shield
+if !FEATURE_PAL
+    dw $E9CB
+    dw $E9CB
+else           ; vanilla routine
+    dw $E9CE
+    dw $E9CE
+endif
+    dw periodic_damage_pal_debug
+    dw periodic_damage_pal_debug
+    dw periodic_damage_pal_debug
+    dw periodic_damage_pal_debug
+    dw periodic_damage_pal_debug
+    dw periodic_damage_pal_debug
+    dw periodic_damage_pal_debug
+    dw periodic_damage_pal_debug
+
+periodic_damage_pal_debug:
+{
+    ; If we are here then the PAL debug flag was set
+    ; First execute the correct periodic damage routine
+    LDA !sram_suit_properties : AND !SUIT_PROPERTIES_MASK
+    ASL : TAX : JSR (periodic_damage_table,X)
+
+    ; Now jump to demo recorder routine, but first fix the stack
+    ; Skip over an RTS and pull X from stack
+    PLA : PLX
+if !FEATURE_PAL
+    JMP $E75B
+else
+    JMP $E75E
+endif
+}
 
 periodic_damage_balanced:
 {

@@ -220,7 +220,6 @@ LayoutPinkMaridiaLeftDoorMenu:
 LayoutRedBrinstarLeftDoorMenu:
     ; Red Brinstar
     90EA,   9096,   RB Alpha Power Bombs,       Alpha Power Bombs door 0 --> Caterpillars
-    9102,   910E,   RB Bat,                     Bat door 1 --> Below Spazer
     911A,   A36C,   RB Below Spazer (Lower),    Below Spazer door 1 --> West Tunnel
     9126,   9132,   RB Below Spazer (Upper),    Below Spazer door 2 --> Spazer
     90DE,   90A2,   RB Beta Power Bombs,        Beta Power Bombs door 0 --> Caterpillars
@@ -228,8 +227,9 @@ LayoutRedBrinstarLeftDoorMenu:
     90C6,   A480,   RB Caterpillars (Upper),    Caterpillars door 4 --> Red Fish
     908A,   90AE,   RB Hellway,                 Hellway door 1 --> Caterpillars
     9066,   9036,   RB Red Brinstar Firefleas,  Red Brinstar Firefleas door 1 --> Red Tower
-    9042,   90F6,   RB Red Tower (Lower),       Red Tower door 3 --> Bat
+    9042,   90F6,   RB Red Tower (Lower),       Red Tower door 3 --> Skree Boost
     901E,   907E,   RB Red Tower (Upper),       Red Tower door 0 --> Hellway
+    9102,   910E,   RB Skree Boost,             Skree Boost door 1 --> Below Spazer
     91FE,   904E,   RB Sloaters Refill,         Sloaters Refill door 0 --> Red Tower
     9072,   905A,   RB X-Ray Scope,             X-Ray Scope door 0 --> Red Brinstar Firefleas
 LayoutTourianLeftDoorMenu:
@@ -515,8 +515,7 @@ LayoutPinkMaridiaRightDoorMenu:
     A93C,   A75C,   PM West Cactus Alley,       West Cactus Alley door 0 --> Butterfly
 LayoutRedBrinstarRightDoorMenu:
     ; Red Brinstar
-    90F6,   9042,   RB Bat,                     Bat door 0 --> Red Tower
-    910E,   9102,   RB Below Spazer,            Below Spazer door 0 --> Bat
+    910E,   9102,   RB Below Spazer,            Below Spazer door 0 --> Skree Boost
     9096,   90EA,   RB Caterpillars (Lower),    Caterpillars door 0 --> Alpha Power Bombs
     90AE,   908A,   RB Caterpillars (Middle),   Caterpillars door 2 --> Hellway
     90A2,   90DE,   RB Caterpillars (Upper),    Caterpillars door 1 --> Beta Power Bombs
@@ -526,6 +525,7 @@ LayoutRedBrinstarRightDoorMenu:
     904E,   91FE,   RB Red Tower (Lower),       Red Tower door 4 --> Sloaters Refill
     9036,   9066,   RB Red Tower (Middle),      Red Tower door 2 --> Red Brinstar Firefleas
     902A,   8F0A,   RB Red Tower (Upper),       Red Tower door 1 --> Noob Bridge
+    90F6,   9042,   RB Skree Boost,             Skree Boost door 0 --> Red Tower
     9132,   9126,   RB Spazer,                  Spazer door 0 --> Below Spazer
 LayoutTourianRightDoorMenu:
     ; Tourian
