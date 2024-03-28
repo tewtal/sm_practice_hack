@@ -69,23 +69,27 @@ status_chargetimer:
     ; count up to 36 frames of shot released
     LDA !ram_shot_timer : CMP #$0024 : BPL .reset
     INC : STA !ram_shot_timer
-    ASL : TAX
-    LDA NumberGFXTable,X : STA !HUD_TILEMAP+$88
+    ASL : TAX : LDA NumberGFXTable,X : STA !HUD_TILEMAP+$88
     RTS
 
   .reset
     LDA !IH_BLANK : STA !HUD_TILEMAP+$88
-    LDA NumberGFXTable+12 : STA !HUD_TILEMAP+$8C
-    LDA NumberGFXTable+2 : STA !HUD_TILEMAP+$8E
+    LDA #$003C : STA !ram_HUD_check
     RTS
 
   .pressedShot
     LDA #$0000 : STA !ram_shot_timer
 
   .charging
-    LDA #$003D : SEC : SBC !SAMUS_CHARGE_TIMER : CMP !ram_HUD_check : BEQ .done : STA !ram_HUD_check
-    CMP #$0000 : BPL .drawCharge
-    LDA #$0000
+    LDA #$003C : SEC : SBC !SAMUS_CHARGE_TIMER
+    CMP !ram_HUD_check : BEQ .done : STA !ram_HUD_check
+    CMP #$0001 : BPL .drawCharge
+
+    ; Beam charged
+    LDA !IH_SHINETIMER : STA !HUD_TILEMAP+$8C
+    LDA !SAMUS_CHARGE_TIMER : SEC : SBC #$003C
+    ASL : TAX : LDA NumberGFXTable,X : STA !HUD_TILEMAP+$8E
+    RTS
 
   .drawCharge
     LDX #$008A : JSR Draw3
