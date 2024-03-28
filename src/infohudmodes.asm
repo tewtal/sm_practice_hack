@@ -118,13 +118,36 @@ status_cooldowncounter:
 
 status_shinetimer:
 {
-    LDA !ram_armed_shine_duration : CMP !ram_HUD_check : BEQ .done
-    TAX : BNE .draw ; TAX refreshes flags
-    LDA #$00B4 ; draw 180 if zero
+    ; arbitrary value indicating normal jumping pose already observed
+    !already_late = $1818
+
+    LDA !ram_armed_shine_duration : BNE .nonZero
+
+    ; count up to 36 frames of shinespark being late
+    LDA !ram_shot_timer : CMP #!already_late : BEQ .done
+    CMP #$0024 : BPL .reset
+    INC : STA !ram_shot_timer
+    ASL : TAX : LDA NumberGFXTable,X : STA !HUD_TILEMAP+$88
+
+    LDA !SAMUS_MOVEMENT_TYPE : AND #$00FF : CMP #$0002 : BEQ .late
+    BRA .draw
+
+  .reset
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$88
+    BRA .draw
+
+  .late
+    LDA #!already_late : STA !ram_shot_timer
+    BRA .draw
+
+  .nonZero
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$88
+    TDC : STA !ram_shot_timer
 
   .draw
+    LDA !ram_armed_shine_duration : CMP !ram_HUD_check : BEQ .done
     STA !ram_HUD_check
-    LDX #$0088 : JSR Draw4
+    LDX #$008A : JSR Draw3
 
   .done
     RTS
