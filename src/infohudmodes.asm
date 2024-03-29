@@ -237,23 +237,21 @@ endif
 
     ; Samus has reached fourth gear and is ready to charge the shinespark by pressing down
     ; When this happens, the gear resets to zero, so check for that
-    LDA !SAMUS_DASH_COUNTER : AND #$00FF : CMP !ram_dash_counter : BEQ .chargespark : STA !ram_dash_counter
+    LDA !SAMUS_DASH_COUNTER : AND #$00FF : CMP !ram_dash_counter : BEQ .chargespark
 
+  .draw_end
     ; Skip drawing if minimap on
     LDA !ram_minimap : BNE .reset
     LDA !ram_shinetune_late_4 : LDX #$00C0 : JSR Draw3
 
   .reset
-    TDC : STA !ram_shine_counter : STA !ram_shine_dash_held_late
+    TDC : STA !ram_dash_counter : STA !ram_shine_counter
     STA !ram_shinetune_early_1 : STA !ram_shinetune_late_1
     STA !ram_shinetune_early_2 : STA !ram_shinetune_late_2
     STA !ram_shinetune_early_3 : STA !ram_shinetune_late_3
     STA !ram_shinetune_early_4 : STA !ram_shinetune_late_4
-    STA !ram_momentum_sum : STA !ram_momentum_count : STA !ram_momentum_direction
-    RTS
-
-  .chargespark
-    LDA !ram_shinetune_late_4 : INC : STA !ram_shinetune_late_4
+    STA !ram_shine_dash_held_late : STA !ram_momentum_sum
+    STA !ram_momentum_count : STA !ram_momentum_direction
     RTS
 
   .checkgearshiftinvalid
@@ -279,6 +277,14 @@ endif
 
     ; On gear shift, we have some numbers to draw
     BRL .draw1234
+
+  .chargespark
+    LDA !SAMUS_Y_DIRECTION : BNE .cancelspark
+    LDA !ram_shinetune_late_4 : INC : STA !ram_shinetune_late_4
+    RTS
+
+  .cancelspark
+    BRL .draw_end
 
   .check0123
     CMP #$0000 : BNE .check123
