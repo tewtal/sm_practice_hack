@@ -195,9 +195,9 @@ Last two characters = Feedback on the time when you expanded your hitbox to grab
 Unfortunately even if you are coming in with a Y3 73 jump, you only get one chance to grab the tank. It does not matter if you choose Y1, Y2, or Y3 to attempt the grab, as it will come down to the collision oscillator. When Samus expands her hitbox, she will contact both the tank and the ceiling, but the game will only check one of the tiles. If it checks the ceiling tile, it will push Samus down and out of the ceiling and she will not be able to grab the tank on the next frame.
 
 ## Moondance (currently only supported on NTSC)
-Provides feedback on moondance:  
+Provides feedback on moondance (Dachora room) or tasdance (Green Brinstar Main Shaft room):  
 
-First character = Y when appropriate moondance position reached, followed by the number of successfully executed moonfalls.  
+For moondance, first character = Y when appropriate moondance position reached, followed by the number of successfully executed moonfalls.  
 
 Last four characters = Extra frames spent on each step of the moonfall, or an error code if a mistake was made. Note that some mistakes can be recovered where the moonfall actually succeeds, but in these cases the moonfall still won't be counted by the trainer.
 - 1st number = Extra frames spent prior to pressing shot, including extra frames before executing a normal turnaround.
@@ -211,6 +211,17 @@ Last four characters = Extra frames spent on each step of the moonfall, or an er
 Note it is not possible to achieve all zeros just due to the way the trainer is implemented, and probably not a good idea to try anyway as going a frame early could either break the moondance immediately or disrupt your rhythm and lead to a failure.
 Also note that the amount of frames direction needs to be held varies due to Samus gaining downward speed over time.
 The first moonfall requires 21 frames, second moonfall 13 frames, third and fourth 11 frames, 5-9 ten frames, 10-29 nine frames, 30-176 eight frames.
+
+For tasdance, first character = Y when standing on the elevator facing left, followed by number of right turns (not counting the initial moonfall). This number must be between 35 and 40 when moving right off of the elevator.
+
+Last four characters = The time between presses and releases during the turns, and also feedback on the final two frame-perfect inputs (turning left and releasing down).
+- 1st number = Frames between pressing right and pressing left
+- 2nd number = Frames between releasing right and releasing left
+- 3rd number = Frames between pressing left and pressing right
+- 4th number = Frames between releasing left and releasing right
+- E# indicates you were early where the number tells you how many frames you were early.
+- YY indicates you hit one of the frame perfect inputs.
+- L# indicates you were late where the number tells you how many frames you were late.
 
 ## Gate Glitch
 Provides feedback on attempts to open a left-facing gate from the right side:  
