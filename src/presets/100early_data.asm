@@ -14,8 +14,8 @@ preset_100early_crateria_ceres_elevator:
     dw $093F, $0000  ; Ceres escape flag
     dw $09A2, $0000  ; Equipped Items
     dw $09A4, $0000  ; Collected Items
-    dw $09A6, $0000  ; Beams
-    dw $09A8, $0000  ; Beams
+    dw $09A6, $0000  ; Equipped Beams
+    dw $09A8, $0000  ; Collected Beams
     dw $09C0, $0000  ; Manual/Auto reserve tank
     dw $09C2, $0063  ; Health
     dw $09C4, $0063  ; Max health
@@ -108,6 +108,7 @@ preset_100early_crateria_ship:
     dw $0911, $0400  ; Screen X position in pixels
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $0400  ; Screen Y position in pixels
+    dw $0917, $0200  ; Layer 2 X position
     dw $093F, $0000  ; Ceres escape flag
     dw $09C2, $0063  ; Health
     dw $0A1C, $0000  ; Samus position/state
@@ -116,7 +117,6 @@ preset_100early_crateria_ship:
     dw $0AF8, $0000  ; Samus subpixel X
     dw $0AFA, $0471  ; Samus Y
     dw $0AFC, $8000  ; Samus subpixel Y
-    dw $0917, $0200  ; Layer 2 X position
     dw #$FFFF
 
 preset_100early_crateria_parlor:
@@ -124,7 +124,6 @@ preset_100early_crateria_parlor:
     dw $090F, $0000  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $1400  ; Screen subpixel Y position
-    dw $0915, $0400  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
@@ -442,8 +441,8 @@ preset_100early_brinstar_green_hill_zone:
     dw $0915, $0617  ; Screen Y position in pixels
     dw $0917, $0240  ; Layer 2 X position
     dw $0919, $0491  ; Layer 2 Y position
-    dw $09A6, $1000  ; Beams
-    dw $09A8, $1000  ; Beams
+    dw $09A6, $1000  ; Equipped Beams
+    dw $09A8, $1000  ; Collected Beams
     dw $09CA, $0002  ; Supers
     dw $0AF6, $0382  ; Samus X
     dw $0AFA, $068B  ; Samus Y
@@ -490,8 +489,8 @@ preset_100early_brinstar_kraid_entry:
     dw $0913, $B000  ; Screen subpixel Y position
     dw $0915, $0100  ; Screen Y position in pixels
     dw $0919, $0100  ; Layer 2 Y position
-    dw $09A6, $1004  ; Beams
-    dw $09A8, $1004  ; Beams
+    dw $09A6, $1004  ; Equipped Beams
+    dw $09A8, $1004  ; Collected Beams
     dw $09C2, $008C  ; Health
     dw $0AF6, $0050  ; Samus X
     dw $0AFA, $018B  ; Samus Y
@@ -522,7 +521,6 @@ preset_100early_brinstar_kraid:
     dw $07F3, $0027  ; Music Bank
     dw $07F5, $0006  ; Music Track
     dw $090F, $8000  ; Screen subpixel X position
-    dw $0911, $0100  ; Screen X position in pixels
     dw $0913, $3800  ; Screen subpixel Y position
     dw $0917, $0100  ; Layer 2 X position
     dw $09C2, $0062  ; Health
@@ -795,8 +793,8 @@ preset_100early_grapple_double_chamber_revisited:
     dw $0913, $0400  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0919, $0000  ; Layer 2 Y position
-    dw $09A6, $1005  ; Beams
-    dw $09A8, $1005  ; Beams
+    dw $09A6, $1005  ; Equipped Beams
+    dw $09A8, $1005  ; Collected Beams
     dw $09C6, $0024  ; Missiles
     dw $09C8, $0028  ; Max missiles
     dw $09CA, $0002  ; Supers
@@ -866,7 +864,6 @@ preset_100early_grapple_postcrocomire:
     dw $09C2, $01F3  ; Health
     dw $09C4, $01F3  ; Max health
     dw $09C6, $0028  ; Missiles
-    dw $09CA, $0002  ; Supers
     dw $09D6, $0064  ; Reserves
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
@@ -1177,7 +1174,7 @@ preset_100early_wrecked_ship_enter_wrecked_ship:
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $CC00  ; Screen subpixel Y position
     dw $0917, $0000  ; Layer 2 X position
-    dw $09A6, $1001  ; Beams
+    dw $09A6, $1001  ; Equipped Beams
     dw $09C2, $00F7  ; Health
     dw $09CA, $0004  ; Supers
     dw $0AF6, $002B  ; Samus X
@@ -1340,7 +1337,6 @@ preset_100early_wrecked_ship_attic_missiles:
     dw $0917, $0480  ; Layer 2 X position
     dw $0919, $001E  ; Layer 2 Y position
     dw $09C2, $022E  ; Health
-    dw $09C6, $0045  ; Missiles
     dw $09CA, $000B  ; Supers
     dw $09D2, $0001  ; Currently selected item
     dw $0A1C, $0001  ; Samus position/state
@@ -2184,8 +2180,8 @@ preset_100early_maridia_postdraygon_leaving_plasma:
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $001D  ; Screen Y position in pixels
     dw $0919, $001D  ; Layer 2 Y position
-    dw $09A6, $1009  ; Beams
-    dw $09A8, $100D  ; Beams
+    dw $09A6, $1009  ; Equipped Beams
+    dw $09A8, $100D  ; Collected Beams
     dw $09C2, $01DB  ; Health
     dw $09CE, $0011  ; Pbs
     dw $0A1C, $0002  ; Samus position/state
@@ -2378,8 +2374,8 @@ preset_100early_kraidicekronic_snake_room_revisit:
     dw $090F, $E000  ; Screen subpixel X position
     dw $0913, $4000  ; Screen subpixel Y position
     dw $0917, $0001  ; Layer 2 X position
-    dw $09A6, $100B  ; Beams
-    dw $09A8, $100F  ; Beams
+    dw $09A6, $100B  ; Equipped Beams
+    dw $09A8, $100F  ; Collected Beams
     dw $09C2, $0478  ; Health
     dw $09CA, $0019  ; Supers
     dw $0AF6, $00BA  ; Samus X
@@ -2766,7 +2762,6 @@ preset_100early_lower_norfair_norfair_reserve:
     dw $079B, $ACB3  ; MDB
     dw $090F, $1000  ; Screen subpixel X position
     dw $0913, $5400  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
     dw $0919, $0000  ; Layer 2 Y position
     dw $09C2, $056F  ; Health
     dw $09C6, $00AE  ; Missiles
@@ -3187,7 +3182,6 @@ preset_100early_tourian_after_baby_skip:
     dw $0919, $0006  ; Layer 2 Y position
     dw $0AF6, $00AC  ; Samus X
     dw $0AFA, $008B  ; Samus Y
-    dw $D822, $002F  ; Events
     dw $D8C4, $002F  ; Doors
     dw #$FFFF
 
@@ -3196,7 +3190,6 @@ preset_100early_tourian_zeb_skip:
     dw $078D, $AAA4  ; DDB
     dw $079B, $DDF3  ; MDB
     dw $090F, $F000  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $021D  ; Screen Y position in pixels
     dw $0919, $0195  ; Layer 2 Y position
@@ -3225,7 +3218,7 @@ preset_100early_tourian_mother_brain_2:
 
 preset_100early_tourian_zebes_escape:
     dw #preset_100early_tourian_mother_brain_2 ; Tourian: Mother Brain 2
-    dw $09A6, $1009  ; Beams
+    dw $09A6, $1009  ; Equipped Beams
     dw $09C2, $05DB  ; Health
     dw $09C6, $007F  ; Missiles
     dw $09CA, $0000  ; Supers

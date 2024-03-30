@@ -14,8 +14,8 @@ preset_prkd_crateria_ceres_elevator:
     dw $093F, $0000  ; Ceres escape flag
     dw $09A2, $0000  ; Equipped Items
     dw $09A4, $0000  ; Collected Items
-    dw $09A6, $0000  ; Beams
-    dw $09A8, $0000  ; Beams
+    dw $09A6, $0000  ; Equipped Beams
+    dw $09A8, $0000  ; Collected Beams
     dw $09C0, $0000  ; Manual/Auto reserve tank
     dw $09C2, $0063  ; Health
     dw $09C4, $0063  ; Max health
@@ -124,7 +124,6 @@ preset_prkd_crateria_parlor:
     dw $090F, $0000  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $1400  ; Screen subpixel Y position
-    dw $0915, $0400  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
@@ -152,7 +151,6 @@ preset_prkd_crateria_climb_down:
     dw $090F, $0000  ; Screen subpixel X position
     dw $0913, $7BFF  ; Screen subpixel Y position
     dw $0915, $03F2  ; Screen Y position in pixels
-    dw $0917, $00C0  ; Layer 2 X position
     dw $0919, $02F5  ; Layer 2 Y position
     dw $0A1C, $0018  ; Samus position/state
     dw $0A1E, $0204  ; More position/state
@@ -426,8 +424,8 @@ preset_prkd_brinstar_green_hill_zone:
     dw $0915, $0611  ; Screen Y position in pixels
     dw $0917, $0240  ; Layer 2 X position
     dw $0919, $048C  ; Layer 2 Y position
-    dw $09A6, $1000  ; Beams
-    dw $09A8, $1000  ; Beams
+    dw $09A6, $1000  ; Equipped Beams
+    dw $09A8, $1000  ; Collected Beams
     dw $09C6, $0007  ; Missiles
     dw $09C8, $000A  ; Max missiles
     dw $09CA, $0003  ; Supers
@@ -890,8 +888,8 @@ preset_prkd_red_brinstar_revisit_leaving_spazer:
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $0C00  ; Screen subpixel Y position
     dw $0917, $0000  ; Layer 2 X position
-    dw $09A6, $1004  ; Beams
-    dw $09A8, $1004  ; Beams
+    dw $09A6, $1004  ; Equipped Beams
+    dw $09A8, $1004  ; Collected Beams
     dw $09CA, $0007  ; Supers
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
@@ -942,7 +940,6 @@ preset_prkd_upper_norfair_business_center_postelev:
     dw $07F3, $0015  ; Music Bank
     dw $07F5, $0005  ; Music Track
     dw $090F, $8000  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $0238  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
@@ -955,12 +952,7 @@ preset_prkd_upper_norfair_business_center_postelev:
 
 preset_prkd_upper_norfair_hi_jump_etank:
     dw #preset_prkd_upper_norfair_business_center_postelev ; Upper Norfair: Business Center
-    dw $078D, $9246  ; DDB
-    dw $079B, $A7DE  ; MDB
-    dw $07F3, $0015  ; Music Bank
-    dw $07F5, $0005  ; Music Track
     dw $090F, $FFFF  ; Screen subpixel X position
-    dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $051B  ; Screen Y position in pixels
     dw $0919, $03D4  ; Layer 2 Y position
     dw $09CA, $0007  ; Supers
@@ -1048,8 +1040,8 @@ preset_prkd_upper_norfair_ice_maze_down:
     dw $090F, $7000  ; Screen subpixel X position
     dw $0913, $7C00  ; Screen subpixel Y position
     dw $0917, $0001  ; Layer 2 X position
-    dw $09A6, $1006  ; Beams
-    dw $09A8, $1006  ; Beams
+    dw $09A6, $1006  ; Equipped Beams
+    dw $09A8, $1006  ; Collected Beams
     dw $0AF6, $00BB  ; Samus X
     dw $D876, $0124  ; Items
     dw #$FFFF
@@ -1210,8 +1202,8 @@ preset_prkd_upper_norfair_double_chamber_revisited:
     dw $0913, $3800  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0919, $0000  ; Layer 2 Y position
-    dw $09A6, $1007  ; Beams
-    dw $09A8, $1007  ; Beams
+    dw $09A6, $1007  ; Equipped Beams
+    dw $09A8, $1007  ; Collected Beams
     dw $09C6, $0014  ; Missiles
     dw $09C8, $0014  ; Max missiles
     dw $09CA, $0008  ; Supers
@@ -1298,7 +1290,7 @@ preset_prkd_lower_norfair_ln_main_hall:
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0917, $0300  ; Layer 2 X position
     dw $0919, $0301  ; Layer 2 Y position
-    dw $09A6, $1001  ; Beams
+    dw $09A6, $1001  ; Equipped Beams
     dw $09C2, $00B4  ; Health
     dw $09D2, $0003  ; Currently selected item
     dw $0A1C, $009B  ; Samus position/state
@@ -1611,7 +1603,6 @@ preset_prkd_lower_norfair_leaving_ridley:
     dw $0915, $011F  ; Screen Y position in pixels
     dw $0917, $0001  ; Layer 2 X position
     dw $0919, $00D7  ; Layer 2 Y position
-    dw $09A6, $1001  ; Beams
     dw $09C6, $0004  ; Missiles
     dw $09CA, $0003  ; Supers
     dw $09CE, $0005  ; Pbs
@@ -1932,10 +1923,10 @@ preset_prkd_maridia_fish_tank:
     dw $0915, $05ED  ; Screen Y position in pixels
     dw $0917, $00B7  ; Layer 2 X position
     dw $0919, $0471  ; Layer 2 Y position
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
     dw $09CA, $0009  ; Supers
     dw $09D2, $0000  ; Currently selected item
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
     dw $0AF6, $0162  ; Samus X
     dw $0AFA, $068B  ; Samus Y
     dw #$FFFF
@@ -1977,9 +1968,9 @@ preset_prkd_maridia_aqueduct:
     dw $0911, $0006  ; Screen X position in pixels
     dw $0913, $F001  ; Screen subpixel Y position
     dw $0915, $0300  ; Screen Y position in pixels
-    dw $09D2, $0002  ; Currently selected item
     dw $0917, $0006  ; Layer 2 X position
     dw $0919, $0240  ; Layer 2 Y position
+    dw $09D2, $0002  ; Currently selected item
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $0078  ; Samus X
@@ -2112,7 +2103,6 @@ preset_prkd_maridia_reverse_halfie_climb:
     dw $090F, $8000  ; Screen subpixel X position
     dw $0913, $0000  ; Screen subpixel Y position
     dw $09C2, $0066  ; Health
-    dw $0A68, $0000  ; Flash suit
     dw $0AF6, $0042  ; Samus X
     dw #$FFFF
 
@@ -2197,9 +2187,9 @@ preset_prkd_backtracking_crateria_kihunters_final:
     dw $0913, $4000  ; Screen subpixel Y position
     dw $0917, $0000  ; Layer 2 X position
     dw $09CA, $0005  ; Supers
+    dw $09D2, $0000  ; Currently selected item
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
-    dw $09D2, $0000  ; Currently selected item
     dw $0AF6, $0061  ; Samus X
     dw $0AFA, $005B  ; Samus Y
     dw #$FFFF
@@ -2297,7 +2287,7 @@ preset_prkd_tourian_tourian_elevator_room:
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $0238  ; Screen Y position in pixels
     dw $0919, $01AA  ; Layer 2 Y position
-    dw $09A6, $1007  ; Beams
+    dw $09A6, $1007  ; Equipped Beams
     dw $0A1C, $009B  ; Samus position/state
     dw $0A1E, $0000  ; More position/state
     dw $0AF6, $0080  ; Samus X
@@ -2483,7 +2473,7 @@ preset_prkd_tourian_mother_brain_2:
 
 preset_prkd_tourian_mother_brain_3:
     dw #preset_prkd_tourian_mother_brain_2 ; Tourian: Mother Brain 2
-    dw $09A6, $1009  ; Beams
+    dw $09A6, $1009  ; Equipped Beams
     dw $09C2, $018F  ; Health
     dw $09C6, $0000  ; Missiles
     dw $09CE, $0000  ; Pbs
@@ -2493,7 +2483,6 @@ preset_prkd_tourian_mother_brain_3:
 
 preset_prkd_tourian_zebes_escape:
     dw #preset_prkd_tourian_mother_brain_3 ; Tourian: Mother Brain 3
-    dw $09A6, $1009  ; Beams
     dw $0A1C, $009B  ; Samus position/state
     dw $0A1E, $0000  ; More position/state
     dw $0AF6, $0025  ; Samus X

@@ -14,8 +14,8 @@ preset_hundo_bombs_ceres_elevator:
     dw $093F, $0000  ; Ceres escape flag
     dw $09A2, $0000  ; Equipped Items
     dw $09A4, $0000  ; Collected Items
-    dw $09A6, $0000  ; Beams
-    dw $09A8, $0000  ; Beams
+    dw $09A6, $0000  ; Equipped Beams
+    dw $09A8, $0000  ; Collected Beams
     dw $09C0, $0000  ; Manual/Auto reserve tank
     dw $09C2, $0063  ; Health
     dw $09C4, $0063  ; Max health
@@ -124,7 +124,6 @@ preset_hundo_bombs_parlor:
     dw $090F, $0000  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $1400  ; Screen subpixel Y position
-    dw $0915, $0400  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
@@ -442,11 +441,9 @@ preset_hundo_kraid_green_hill_zone:
     dw $0911, $0300  ; Screen X position in pixels
     dw $0913, $77FF  ; Screen subpixel Y position
     dw $0915, $0618  ; Screen Y position in pixels
-    dw $09A6, $1000  ; Beams
-    dw $09A8, $1000  ; Beams
+    dw $09A6, $1000  ; Equipped Beams
+    dw $09A8, $1000  ; Collected Beams
     dw $09CA, $0002  ; Supers
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
     dw $0AF6, $0365  ; Samus X
     dw $0AFA, $068B  ; Samus Y
     dw $D872, $048F  ; Items
@@ -462,7 +459,6 @@ preset_hundo_kraid_red_tower:
     dw $0913, $7000  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $03C0  ; Layer 2 X position
-    dw $0919, $0000  ; Layer 2 Y position
     dw $09C2, $00B8  ; Health
     dw $09C6, $000E  ; Missiles
     dw $09CA, $0003  ; Supers
@@ -494,8 +490,8 @@ preset_hundo_kraid_kraid_entry:
     dw $0913, $B000  ; Screen subpixel Y position
     dw $0915, $0100  ; Screen Y position in pixels
     dw $0919, $0100  ; Layer 2 Y position
-    dw $09A6, $1004  ; Beams
-    dw $09A8, $1004  ; Beams
+    dw $09A6, $1004  ; Equipped Beams
+    dw $09A8, $1004  ; Collected Beams
     dw $09C2, $00AF  ; Health
     dw $09C6, $0010  ; Missiles
     dw $0AF6, $0050  ; Samus X
@@ -527,7 +523,6 @@ preset_hundo_kraid_kraid:
     dw $07F3, $0027  ; Music Bank
     dw $07F5, $0006  ; Music Track
     dw $090F, $8000  ; Screen subpixel X position
-    dw $0911, $0100  ; Screen X position in pixels
     dw $0913, $3800  ; Screen subpixel Y position
     dw $0917, $0100  ; Layer 2 X position
     dw $09C2, $0099  ; Health
@@ -807,8 +802,8 @@ preset_hundo_ice_beam_double_chamber_revisited:
     dw $0913, $0400  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0919, $0000  ; Layer 2 Y position
-    dw $09A6, $1005  ; Beams
-    dw $09A8, $1005  ; Beams
+    dw $09A6, $1005  ; Equipped Beams
+    dw $09A8, $1005  ; Collected Beams
     dw $09C6, $0025  ; Missiles
     dw $09C8, $0028  ; Max missiles
     dw $09CA, $0003  ; Supers
@@ -879,8 +874,8 @@ preset_hundo_ice_beam_ice_beam_snake_room_revisit:
     dw $07F5, $0003  ; Music Track
     dw $090F, $6000  ; Screen subpixel X position
     dw $0913, $0400  ; Screen subpixel Y position
-    dw $09A6, $1007  ; Beams
-    dw $09A8, $1007  ; Beams
+    dw $09A6, $1007  ; Equipped Beams
+    dw $09A8, $1007  ; Collected Beams
     dw $09C2, $0185  ; Health
     dw $0AF6, $00BA  ; Samus X
     dw $D876, $01A7  ; Items
@@ -1307,7 +1302,7 @@ preset_hundo_brinstar_cleanup_gauntlet_etank:
     dw $090F, $E800  ; Screen subpixel X position
     dw $0911, $0002  ; Screen X position in pixels
     dw $0913, $BC00  ; Screen subpixel Y position
-    dw $09A6, $1001  ; Beams
+    dw $09A6, $1001  ; Equipped Beams
     dw $09C2, $001D  ; Health
     dw $09D6, $0035  ; Reserves
     dw $0A1C, $000A  ; Samus position/state
@@ -1603,8 +1598,6 @@ preset_hundo_mama_turtle_etank_mama_turtle_etank_2:
     dw #preset_hundo_mama_turtle_etank_fish_tank ; Mama Turtle E-Tank: Fish Tank
     dw $078D, $A3B4  ; DDB
     dw $079B, $D017  ; MDB
-    dw $090F, $6000  ; Screen subpixel X position
-    dw $0911, $0100  ; Screen X position in pixels
     dw $0913, $2C00  ; Screen subpixel Y position
     dw $0915, $01FD  ; Screen Y position in pixels
     dw $0A1C, $0009  ; Samus position/state
@@ -1837,7 +1830,6 @@ preset_hundo_draygon_draygon_escape:
     dw $07F3, $0024  ; Music Bank
     dw $07F5, $0003  ; Music Track
     dw $090F, $5000  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $7800  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
@@ -1867,7 +1859,7 @@ preset_hundo_maridia_cleanup_2_aqueduct_revisit_1:
     dw $0913, $6000  ; Screen subpixel Y position
     dw $0917, $01E6  ; Layer 2 X position
     dw $09A2, $3324  ; Equipped Items
-    dw $09A6, $1007  ; Beams
+    dw $09A6, $1007  ; Equipped Beams
     dw $09C2, $044B  ; Health
     dw $09C4, $044B  ; Max health
     dw $0A1C, $001F  ; Samus position/state
@@ -2002,8 +1994,8 @@ preset_hundo_maridia_cleanup_2_kassiuz_room_revisit:
     dw $090F, $0000  ; Screen subpixel X position
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $001D  ; Screen Y position in pixels
-    dw $09A6, $100B  ; Beams
-    dw $09A8, $100F  ; Beams
+    dw $09A6, $100B  ; Equipped Beams
+    dw $09A8, $100F  ; Collected Beams
     dw $09C2, $0324  ; Health
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
@@ -2018,7 +2010,6 @@ preset_hundo_maridia_cleanup_2_plasma_spark_room_down:
     dw $078D, $A540  ; DDB
     dw $079B, $D387  ; MDB
     dw $090F, $D000  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
     dw $0915, $031B  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0254  ; Layer 2 Y position
@@ -2121,7 +2112,6 @@ preset_hundo_golden_torizo_kraid_missiles:
     dw $090F, $0000  ; Screen subpixel X position
     dw $0911, $0100  ; Screen X position in pixels
     dw $0913, $4FFF  ; Screen subpixel Y position
-    dw $0915, $0100  ; Screen Y position in pixels
     dw $09CA, $0011  ; Supers
     dw $0A1C, $003D  ; Samus position/state
     dw $0A1E, $0F08  ; More position/state
@@ -2412,11 +2402,9 @@ preset_hundo_ridley_wasteland_up:
     dw $0913, $4000  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0180  ; Layer 2 X position
-    dw $0919, $0000  ; Layer 2 Y position
     dw $09C2, $048E  ; Health
     dw $09C4, $04AF  ; Max health
     dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
     dw $0AF6, $02D4  ; Samus X
     dw $0AFA, $00AB  ; Samus Y
     dw $0B3F, $0003  ; Blue suit
@@ -2461,7 +2449,6 @@ preset_hundo_ridley_hotarubi_special:
     dw $090F, $0000  ; Screen subpixel X position
     dw $0911, $0100  ; Screen X position in pixels
     dw $0913, $0000  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
     dw $09C2, $0512  ; Health
     dw $09C4, $0513  ; Max health
     dw $09CA, $000E  ; Supers
@@ -2903,7 +2890,6 @@ preset_hundo_tourian_metroids_1:
     dw $079B, $DAAE  ; MDB
     dw $07F3, $001E  ; Music Bank
     dw $090F, $C001  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $4FFF  ; Screen subpixel Y position
     dw $0915, $0300  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
@@ -3014,7 +3000,6 @@ preset_hundo_tourian_after_baby_skip:
     dw $0919, $0006  ; Layer 2 Y position
     dw $0AF6, $00AC  ; Samus X
     dw $0AFA, $008B  ; Samus Y
-    dw $D822, $002F  ; Events
     dw $D8C4, $002F  ; Doors
     dw #$FFFF
 
@@ -3023,7 +3008,6 @@ preset_hundo_tourian_zeb_skip:
     dw $078D, $AAA4  ; DDB
     dw $079B, $DDF3  ; MDB
     dw $090F, $F000  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $021D  ; Screen Y position in pixels
     dw $0919, $0195  ; Layer 2 Y position
@@ -3052,7 +3036,7 @@ preset_hundo_tourian_mother_brain_2:
 
 preset_hundo_tourian_zebes_escape:
     dw #preset_hundo_tourian_mother_brain_2 ; Tourian: Mother Brain 2
-    dw $09A6, $1009  ; Beams
+    dw $09A6, $1009  ; Equipped Beams
     dw $09C2, $05DB  ; Health
     dw $09C6, $007F  ; Missiles
     dw $09CA, $0000  ; Supers

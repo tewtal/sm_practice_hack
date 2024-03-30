@@ -14,8 +14,8 @@ preset_gtclassic_crateria_ceres_elevator:
     dw $093F, $0000  ; Ceres escape flag
     dw $09A2, $0000  ; Equipped Items
     dw $09A4, $0000  ; Collected Items
-    dw $09A6, $0000  ; Beams
-    dw $09A8, $0000  ; Beams
+    dw $09A6, $0000  ; Equipped Beams
+    dw $09A8, $0000  ; Collected Beams
     dw $09C0, $0000  ; Manual/Auto reserve tank
     dw $09C2, $0063  ; Health
     dw $09C4, $0063  ; Max health
@@ -124,7 +124,6 @@ preset_gtclassic_crateria_parlor:
     dw $090F, $0000  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $1400  ; Screen subpixel Y position
-    dw $0915, $0400  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
@@ -745,7 +744,6 @@ preset_gtclassic_kraid_leaving_kraids_lair:
     dw $09C2, $012B  ; Health
     dw $09C4, $012B  ; Max health
     dw $09C6, $0004  ; Missiles
-    dw $09CE, $0005  ; Pbs
     dw $0AF6, $0025  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw $D874, $0904  ; Items
@@ -932,8 +930,6 @@ preset_gtclassic_hi_jump_upper_norfair_business_center:
     dw $078D, $9246  ; DDB
     dw $079B, $A7DE  ; MDB
     dw $07F3, $0015  ; Music Bank
-    dw $07F5, $0005  ; Music Track
-    dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $0238  ; Screen Y position in pixels
     dw $0919, $01AA  ; Layer 2 Y position
@@ -1143,10 +1139,10 @@ preset_gtclassic_hi_jump_upper_norfair_green_gate_glitch:
     dw $090F, $3FFF  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $4000  ; Screen subpixel Y position
-    dw $09CE, $0004  ; Pbs
-    dw $09D2, $0002  ; Currently selected item
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0180  ; Layer 2 Y position
+    dw $09CE, $0004  ; Pbs
+    dw $09D2, $0002  ; Currently selected item
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $0074  ; Samus X
@@ -1182,8 +1178,8 @@ preset_gtclassic_lower_norfair_leaving_golden_torizo:
     dw $0919, $0100  ; Layer 2 Y position
     dw $09A2, $F337  ; Equipped Items
     dw $09A4, $F337  ; Collected Items
-    dw $09A6, $100B  ; Beams
-    dw $09A8, $100F  ; Beams
+    dw $09A6, $100B  ; Equipped Beams
+    dw $09A8, $100F  ; Collected Beams
     dw $09C2, $02BC  ; Health
     dw $09C4, $02BC  ; Max health
     dw $09C6, $0064  ; Missiles
@@ -1566,9 +1562,9 @@ preset_gtclassic_maridia_aqueduct:
     dw $0911, $0008  ; Screen X position in pixels
     dw $0913, $5400  ; Screen subpixel Y position
     dw $0915, $0300  ; Screen Y position in pixels
-    dw $09D2, $0002  ; Currently selected item
     dw $0917, $0008  ; Layer 2 X position
     dw $0919, $0240  ; Layer 2 Y position
+    dw $09D2, $0002  ; Currently selected item
     dw $0AF6, $007C  ; Samus X
     dw $0AFA, $03AB  ; Samus Y
     dw #$FFFF
@@ -1675,7 +1671,6 @@ preset_gtclassic_maridia_reverse_halfie_climb:
     dw $090F, $4000  ; Screen subpixel X position
     dw $0913, $6000  ; Screen subpixel Y position
     dw $09C2, $015E  ; Health
-    dw $0A68, $0000  ; Flash suit
     dw $0AF6, $0037  ; Samus X
     dw #$FFFF
 
@@ -2145,7 +2140,7 @@ preset_gtclassic_tourian_mother_brain_2:
 
 preset_gtclassic_tourian_zebes_escape:
     dw #preset_gtclassic_tourian_mother_brain_2 ; Tourian: Mother Brain 2
-    dw $09A6, $1009  ; Beams
+    dw $09A6, $1009  ; Equipped Beams
     dw $09C6, $0000  ; Missiles
     dw $09CA, $0000  ; Supers
     dw $09CE, $0000  ; Pbs
