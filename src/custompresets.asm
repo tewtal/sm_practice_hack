@@ -238,21 +238,21 @@ custom_preset_save:
     TXA : CLC : ADC #$005F : TAX
   .save_sram_loop
     DEX : PHX : TXA : AND #$01FF : TAX
-    LDA $7ED7C0,X : PLX : STA $703050,X
+    LDA $7ED7C0,X : PLX : STA !PRESET_SLOTS+$50,X
     DEX : TXA : BIT #$0100 : BEQ .save_sram_loop
 
     ; Copy Events, Items, Doors
     CLC : ADC #$0100 : TAX
   .save_events_items_doors_loop
     DEX : PHX : TXA : AND #$01FF : TAX
-    LDA $7ED820,X : PLX : STA $7030B0,X
+    LDA $7ED820,X : PLX : STA !PRESET_SLOTS+$B0,X
     DEX : TXA : BIT #$0100 : BEQ .save_events_items_doors_loop
 
-    INX                          ; Restore X for sanity
-    LDA $0917 : STA $7031B0,X    ; Layer 2 X position
-    LDA $0919 : STA $7031B2,X    ; Layer 2 Y position
-    LDA $0921 : STA $7031B4,X    ; BG2 X offset
-    LDA $0923 : STA $7031B6,X    ; BG2 Y offset
+    INX                                     ; Restore X for sanity
+    LDA $0917 : STA !PRESET_SLOTS+$1B0,X    ; Layer 2 X position
+    LDA $0919 : STA !PRESET_SLOTS+$1B2,X    ; Layer 2 Y position
+    LDA $0921 : STA !PRESET_SLOTS+$1B4,X    ; BG2 X offset
+    LDA $0923 : STA !PRESET_SLOTS+$1B6,X    ; BG2 Y offset
 
     PHX : PHB
     TXA : CLC : ADC #$31B8 : TAY ; Y = Destination
@@ -273,49 +273,49 @@ custom_preset_load:
     %presetslotsize()            ; multiply by 200h
                                  ; skip past "5AFE" word
                                  ; skip past size for now
-    LDA $703004,X : STA $078B    ; Elevator Index
-    LDA $703006,X : STA $078D    ; DDB
-    LDA $703008,X : STA $078F    ; DoorOut Index
-    LDA $70300A,X : STA $079B    ; MDB
-    LDA $70300C,X : STA $079F    ; Region
-    LDA $70300E,X : STA $07C3    ; GFX Pointers
-    LDA $703010,X : STA $07C5    ; GFX Pointers
-    LDA $703012,X : STA $07C7    ; GFX Pointers
-    LDA $703014,X : STA $07F3    ; Music Bank
-    LDA $703016,X : STA $07F5    ; Music Track
-    LDA $703018,X : STA $090F    ; Screen subpixel X position
-    LDA $70301A,X : STA $0911    ; Screen X position in pixels
-    LDA $70301C,X : STA $0913    ; Screen subpixel Y position
-    LDA $70301E,X : STA $0915    ; Screen Y position in pixels
-    LDA $703020,X : STA $093F    ; Ceres escape flag
-    LDA $703022,X : STA $09A2    ; Equipped Items
-    LDA $703024,X : STA $09A4    ; Collected Items
-    LDA $703026,X : STA $09A6    ; Beams
-    LDA $703028,X : STA $09A8    ; Beams
-    LDA $70302A,X : STA $09C0    ; Manual/Auto reserve tank
-    LDA $70302C,X : STA $09C2    ; Health
-    LDA $70302E,X : STA $09C4    ; Max health
-    LDA $703030,X : STA $09C6    ; Missiles
-    LDA $703032,X : STA $09C8    ; Max missiles
-    LDA $703034,X : STA $09CA    ; Supers
-    LDA $703036,X : STA $09CC    ; Max supers
-    LDA $703038,X : STA $09CE    ; Pbs
-    LDA $70303A,X : STA $09D0    ; Max pbs
-    LDA $70303C,X : STA $09D2    ; Currently selected item
-    LDA $70303E,X : STA $09D4    ; Max reserves
-    LDA $703040,X : STA $09D6    ; Reserves
-    LDA $703042,X : STA $0A1C    ; Samus position/state
-    LDA $703044,X : STA $0A1E    ; More position/state
-    LDA $703046,X : STA $0A68    ; Flash suit
-    LDA $703048,X : STA $0A76    ; Hyper beam
-    LDA $70304A,X : STA $0AF6    ; Samus X
-    LDA $70304C,X : STA $0AFA    ; Samus Y
-    LDA $70304E,X : STA $0B3F    ; Blue suit
+    LDA !PRESET_SLOTS+$04,X : STA $078B    ; Elevator Index
+    LDA !PRESET_SLOTS+$06,X : STA $078D    ; DDB
+    LDA !PRESET_SLOTS+$08,X : STA $078F    ; DoorOut Index
+    LDA !PRESET_SLOTS+$0A,X : STA $079B    ; MDB
+    LDA !PRESET_SLOTS+$0C,X : STA $079F    ; Region
+    LDA !PRESET_SLOTS+$0E,X : STA $07C3    ; GFX Pointers
+    LDA !PRESET_SLOTS+$10,X : STA $07C5    ; GFX Pointers
+    LDA !PRESET_SLOTS+$12,X : STA $07C7    ; GFX Pointers
+    LDA !PRESET_SLOTS+$14,X : STA $07F3    ; Music Bank
+    LDA !PRESET_SLOTS+$16,X : STA $07F5    ; Music Track
+    LDA !PRESET_SLOTS+$18,X : STA $090F    ; Screen subpixel X position
+    LDA !PRESET_SLOTS+$1A,X : STA $0911    ; Screen X position in pixels
+    LDA !PRESET_SLOTS+$1C,X : STA $0913    ; Screen subpixel Y position
+    LDA !PRESET_SLOTS+$1E,X : STA $0915    ; Screen Y position in pixels
+    LDA !PRESET_SLOTS+$20,X : STA $093F    ; Ceres escape flag
+    LDA !PRESET_SLOTS+$22,X : STA $09A2    ; Equipped Items
+    LDA !PRESET_SLOTS+$24,X : STA $09A4    ; Collected Items
+    LDA !PRESET_SLOTS+$26,X : STA $09A6    ; Beams
+    LDA !PRESET_SLOTS+$28,X : STA $09A8    ; Beams
+    LDA !PRESET_SLOTS+$2A,X : STA $09C0    ; Manual/Auto reserve tank
+    LDA !PRESET_SLOTS+$2C,X : STA $09C2    ; Health
+    LDA !PRESET_SLOTS+$2E,X : STA $09C4    ; Max health
+    LDA !PRESET_SLOTS+$30,X : STA $09C6    ; Missiles
+    LDA !PRESET_SLOTS+$32,X : STA $09C8    ; Max missiles
+    LDA !PRESET_SLOTS+$34,X : STA $09CA    ; Supers
+    LDA !PRESET_SLOTS+$36,X : STA $09CC    ; Max supers
+    LDA !PRESET_SLOTS+$38,X : STA $09CE    ; Pbs
+    LDA !PRESET_SLOTS+$3A,X : STA $09D0    ; Max pbs
+    LDA !PRESET_SLOTS+$3C,X : STA $09D2    ; Currently selected item
+    LDA !PRESET_SLOTS+$3E,X : STA $09D4    ; Max reserves
+    LDA !PRESET_SLOTS+$40,X : STA $09D6    ; Reserves
+    LDA !PRESET_SLOTS+$42,X : STA $0A1C    ; Samus position/state
+    LDA !PRESET_SLOTS+$44,X : STA $0A1E    ; More position/state
+    LDA !PRESET_SLOTS+$46,X : STA $0A68    ; Flash suit
+    LDA !PRESET_SLOTS+$48,X : STA $0A76    ; Hyper beam
+    LDA !PRESET_SLOTS+$4A,X : STA $0AF6    ; Samus X
+    LDA !PRESET_SLOTS+$4C,X : STA $0AFA    ; Samus Y
+    LDA !PRESET_SLOTS+$4E,X : STA $0B3F    ; Blue suit
 
     ; Copy SRAM
     TXA : CLC : ADC #$005F : TAX
   .load_sram_loop
-    DEX : LDA $703050,X : PHX : PHA
+    DEX : LDA !PRESET_SLOTS+$50,X : PHX : PHA
     TXA : AND #$01FF : TAX : PLA
     STA $7ED7C0,X : PLX
     DEX : TXA : BIT #$0100 : BEQ .load_sram_loop
@@ -323,20 +323,20 @@ custom_preset_load:
     ; Copy Events, Items, Doors
     CLC : ADC #$0100 : TAX
   .load_events_items_doors_loop
-    DEX : LDA $7030B0,X : PHX : PHA
+    DEX : LDA !PRESET_SLOTS+$B0,X : PHX : PHA
     TXA : AND #$01FF : TAX : PLA
     STA $7ED820,X : PLX
     DEX : TXA : BIT #$0100 : BEQ .load_events_items_doors_loop
 
     ; Restore X for sanity, then check if we have layer 2 values
-    INX : LDA $703002,X : CMP #$01B0 : BEQ .done_no_scrolls
+    INX : LDA !PRESET_SLOTS+$02,X : CMP #$01B0 : BEQ .done_no_scrolls
 
-    LDA $7031B0,X : STA $0917    ; Layer 2 X position
-    LDA $7031B2,X : STA $0919    ; Layer 2 Y position
-    LDA $7031B4,X : STA $0921    ; BG2 X offset
-    LDA $7031B6,X : STA $0923    ; BG2 Y offset
+    LDA !PRESET_SLOTS+$1B0,X : STA $0917    ; Layer 2 X position
+    LDA !PRESET_SLOTS+$1B2,X : STA $0919    ; Layer 2 Y position
+    LDA !PRESET_SLOTS+$1B4,X : STA $0921    ; BG2 X offset
+    LDA !PRESET_SLOTS+$1B6,X : STA $0923    ; BG2 Y offset
 
-    LDA $703002,X : CMP #$01BA : BMI .done_no_scrolls
+    LDA !PRESET_SLOTS+$02,X : CMP #$01BA : BMI .done_no_scrolls
     LDA #$5AFE : STA !ram_custom_preset
 
     LDA $703002,X : CMP #$01EC : BMI .done_with_scrolls

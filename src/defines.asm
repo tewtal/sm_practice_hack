@@ -5,8 +5,9 @@
 
 !ram_tilemap_buffer = $7E5800
 !CRASHDUMP_TILEMAP_BUFFER = !ram_tilemap_buffer
+!CRASHDUMP = $7EFF00
 
-!WRAM_BANK = #$007E
+!WRAM_BANK = !WRAM_START>>16
 !WRAM_SIZE = #$0200
 !WRAM_START = $7EFD00
 !WRAM_END = $7EFF00
@@ -70,30 +71,41 @@
 !ram_shot_timer                     = !WRAM_START+$52
 !ram_shine_counter                  = !WRAM_START+$54
 !ram_dash_counter                   = !WRAM_START+$56
-!ram_shinetune_early_1              = !WRAM_START+$58
-!ram_shinetune_late_1               = !WRAM_START+$5A
-!ram_shinetune_early_2              = !WRAM_START+$5C
-!ram_shinetune_late_2               = !WRAM_START+$5E
-!ram_shinetune_early_3              = !WRAM_START+$60
-!ram_shinetune_late_3               = !WRAM_START+$62
-!ram_shinetune_early_4              = !WRAM_START+$64
-!ram_shinetune_late_4               = !WRAM_START+$66
-!ram_shine_dash_held_late           = !WRAM_START+$68
-!ram_xpos                           = !WRAM_START+$6A
-!ram_ypos                           = !WRAM_START+$6C
-!ram_subpixel_pos                   = !WRAM_START+$6E
-!ram_horizontal_speed               = !WRAM_START+$70
-!ram_vertical_speed                 = !WRAM_START+$72
-!ram_quickdrop_counter              = !WRAM_START+$74
-!ram_walljump_counter               = !WRAM_START+$76
-!ram_fail_sum                       = !WRAM_START+$78
-!ram_fail_count                     = !WRAM_START+$7A
 
-!ram_auto_save_state                = !WRAM_START+$7C
-!ram_lag_counter                    = !WRAM_START+$7E
-!ram_kraid_adjust_timer             = !WRAM_START+$80
+!ram_auto_save_state                = !WRAM_START+$58
+!ram_lag_counter                    = !WRAM_START+$5A
+!ram_kraid_adjust_timer             = !WRAM_START+$5C
+!ram_print_segment_timer            = !WRAM_START+$5E
 
-!WRAM_PERSIST_START = !ram_kraid_adjust_timer+$02
+; ^ FREE SPACE ^ up to +$6C
+
+; ----------------------------------------------------------
+; Shinetune uses several variables not used by other modes,
+; but also shinetune does not use many other variables,
+; so the following variables share the same WRAM
+
+!ram_xpos                           = !WRAM_START+$6E
+!ram_ypos                           = !WRAM_START+$70
+!ram_subpixel_pos                   = !WRAM_START+$72
+!ram_horizontal_speed               = !WRAM_START+$74
+!ram_vertical_speed                 = !WRAM_START+$76
+!ram_quickdrop_counter              = !WRAM_START+$78
+!ram_walljump_counter               = !WRAM_START+$7A
+!ram_fail_sum                       = !WRAM_START+$7C
+!ram_fail_count                     = !WRAM_START+$7E
+
+!ram_shine_dash_held_late           = !WRAM_START+$6E
+!ram_shinetune_early_1              = !WRAM_START+$70
+!ram_shinetune_late_1               = !WRAM_START+$72
+!ram_shinetune_early_2              = !WRAM_START+$74
+!ram_shinetune_late_2               = !WRAM_START+$76
+!ram_shinetune_early_3              = !WRAM_START+$78
+!ram_shinetune_late_3               = !WRAM_START+$7A
+!ram_shinetune_early_4              = !WRAM_START+$7C
+!ram_shinetune_late_4               = !WRAM_START+$7E
+
+
+!WRAM_PERSIST_START = !WRAM_START+$80
 ; ----------------------------------------------------------
 ; Variables below this point are PERSISTENT -- they maintain
 ; their value across savestates. Use this section for
@@ -162,7 +174,7 @@
     ; 1: SPC load requested
     ; ROM address: routine to perform next initialization step
 
-; ^ FREE SPACE ^ up to +$7A (!WRAM_START+$FC - !WRAM_PERSIST_START)
+; ^ FREE SPACE ^ up to +$7C (!WRAM_START+$FC - !WRAM_PERSIST_START)
 
 ; -----------------------
 ; RAM (Bank 7E required)
@@ -220,6 +232,7 @@
 !ram_seed_Y = !WRAM_MENU_START+$62
 
 !ram_timers_autoupdate = !WRAM_MENU_START+$64
+!ram_cm_suit_properties = !WRAM_MENU_START+$66
 
 ; ^ FREE SPACE ^ up to +$7E
 
@@ -282,8 +295,6 @@
 ; Currently first 28 bytes plus last 2 bytes are used
 !ram_cgram_cache = !WRAM_MENU_START+$D0
 
-!CRASHDUMP = $7EFF00
-
 
 ; -----
 ; SRAM
@@ -292,6 +303,7 @@
 !SRAM_VERSION = $0015
 
 !SRAM_START = $702000
+!PRESET_SLOTS = $703000
 
 !sram_initialized = !SRAM_START+$00
 
@@ -428,6 +440,7 @@
 !IH_LETTER_R = #$0C69
 !IH_LETTER_X = #$0C66
 !IH_LETTER_Y = #$0C67
+!IH_NUMBER_ZERO = #$0C09
 !IH_ELEVATOR = #$1C0B
 !IH_SHINETIMER = #$0032
 
@@ -525,6 +538,7 @@
 !IGT_SECONDS = $09DC
 !IGT_MINUTES = $09DE
 !IGT_HOURS = $09E0
+!PAL_DEBUG_MOVEMENT = $09E6
 !SAMUS_AUTO_CANCEL = $0A04
 !SAMUS_LAST_HP = $0A06
 !SAMUS_DOUBLE_JUMP = $0A14  ; Only used during demos in vanilla
@@ -690,6 +704,9 @@ endif
 !ACTION_RAM_WATCH           = #$0024
 !ACTION_DYNAMIC             = #$0026
 !ACTION_MANAGE_PRESETS      = #$0028
+
+!SUIT_PROPERTIES_MASK = #$0007
+!SUIT_PROPRETIES_PAL_DEBUG_FLAG = #$0008
 
 !TOP_DISPLAY_VANILLA = #$0002
 

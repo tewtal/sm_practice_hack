@@ -293,7 +293,7 @@ db $28, "Alpha Power Bomb Room", $FF
 warnpc $E7A3C8
 
 org $E7A3DD
-db $28, "Bat Room", $FF
+db $28, "Skree Boost Room", $FF
 warnpc $E7A3F7
 
 org $E7A408

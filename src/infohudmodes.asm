@@ -69,23 +69,27 @@ status_chargetimer:
     ; count up to 36 frames of shot released
     LDA !ram_shot_timer : CMP #$0024 : BPL .reset
     INC : STA !ram_shot_timer
-    ASL : TAX
-    LDA NumberGFXTable,X : STA !HUD_TILEMAP+$88
+    ASL : TAX : LDA NumberGFXTable,X : STA !HUD_TILEMAP+$88
     RTS
 
   .reset
     LDA !IH_BLANK : STA !HUD_TILEMAP+$88
-    LDA NumberGFXTable+12 : STA !HUD_TILEMAP+$8C
-    LDA NumberGFXTable+2 : STA !HUD_TILEMAP+$8E
+    LDA #$003C : STA !ram_HUD_check
     RTS
 
   .pressedShot
     LDA #$0000 : STA !ram_shot_timer
 
   .charging
-    LDA #$003D : SEC : SBC !SAMUS_CHARGE_TIMER : CMP !ram_HUD_check : BEQ .done : STA !ram_HUD_check
-    CMP #$0000 : BPL .drawCharge
-    LDA #$0000
+    LDA #$003C : SEC : SBC !SAMUS_CHARGE_TIMER
+    CMP !ram_HUD_check : BEQ .done : STA !ram_HUD_check
+    CMP #$0001 : BPL .drawCharge
+
+    ; Beam charged
+    LDA !IH_SHINETIMER : STA !HUD_TILEMAP+$8C
+    LDA !SAMUS_CHARGE_TIMER : SEC : SBC #$003C
+    ASL : TAX : LDA NumberGFXTable,X : STA !HUD_TILEMAP+$8E
+    RTS
 
   .drawCharge
     LDX #$008A : JSR Draw3
@@ -114,13 +118,36 @@ status_cooldowncounter:
 
 status_shinetimer:
 {
-    LDA !ram_armed_shine_duration : CMP !ram_HUD_check : BEQ .done
-    TAX : BNE .draw ; TAX refreshes flags
-    LDA #$00B4 ; draw 180 if zero
+    ; arbitrary value indicating normal jumping pose already observed
+    !already_late = $1818
+
+    LDA !ram_armed_shine_duration : BNE .nonZero
+
+    ; count up to 36 frames of shinespark being late
+    LDA !ram_shot_timer : CMP #!already_late : BEQ .done
+    CMP #$0024 : BPL .reset
+    INC : STA !ram_shot_timer
+    ASL : TAX : LDA NumberGFXTable,X : STA !HUD_TILEMAP+$88
+
+    LDA !SAMUS_MOVEMENT_TYPE : AND #$00FF : CMP #$0002 : BEQ .late
+    BRA .draw
+
+  .reset
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$88
+    BRA .draw
+
+  .late
+    LDA #!already_late : STA !ram_shot_timer
+    BRA .draw
+
+  .nonZero
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$88
+    TDC : STA !ram_shot_timer
 
   .draw
+    LDA !ram_armed_shine_duration : CMP !ram_HUD_check : BEQ .done
     STA !ram_HUD_check
-    LDX #$0088 : JSR Draw4
+    LDX #$008A : JSR Draw3
 
   .done
     RTS
@@ -210,23 +237,21 @@ endif
 
     ; Samus has reached fourth gear and is ready to charge the shinespark by pressing down
     ; When this happens, the gear resets to zero, so check for that
-    LDA !SAMUS_DASH_COUNTER : AND #$00FF : CMP !ram_dash_counter : BEQ .chargespark : STA !ram_dash_counter
+    LDA !SAMUS_DASH_COUNTER : AND #$00FF : CMP !ram_dash_counter : BEQ .chargespark
 
+  .draw_end
     ; Skip drawing if minimap on
     LDA !ram_minimap : BNE .reset
     LDA !ram_shinetune_late_4 : LDX #$00C0 : JSR Draw3
 
   .reset
-    TDC : STA !ram_shine_counter : STA !ram_shine_dash_held_late
+    TDC : STA !ram_dash_counter : STA !ram_shine_counter
     STA !ram_shinetune_early_1 : STA !ram_shinetune_late_1
     STA !ram_shinetune_early_2 : STA !ram_shinetune_late_2
     STA !ram_shinetune_early_3 : STA !ram_shinetune_late_3
     STA !ram_shinetune_early_4 : STA !ram_shinetune_late_4
-    STA !ram_momentum_sum : STA !ram_momentum_count : STA !ram_momentum_direction
-    RTS
-
-  .chargespark
-    LDA !ram_shinetune_late_4 : INC : STA !ram_shinetune_late_4
+    STA !ram_shine_dash_held_late : STA !ram_momentum_sum
+    STA !ram_momentum_count : STA !ram_momentum_direction
     RTS
 
   .checkgearshiftinvalid
@@ -252,6 +277,14 @@ endif
 
     ; On gear shift, we have some numbers to draw
     BRL .draw1234
+
+  .chargespark
+    LDA !SAMUS_Y_DIRECTION : BNE .cancelspark
+    LDA !ram_shinetune_late_4 : INC : STA !ram_shinetune_late_4
+    RTS
+
+  .cancelspark
+    BRL .draw_end
 
   .check0123
     CMP #$0000 : BNE .check123
@@ -1021,17 +1054,17 @@ status_walljump:
 
   .clearaverage
     TDC : STA !ram_roomstrat_counter
-    BRA .checkleftright
+    BRA .checkjump
 
   .incframecount
     ; Arbitrary wait of 120 frames before we stop tracking the average
-    LDA !ram_roomstrat_counter : BEQ .checkleftright : CMP #$0078 : BPL .clearaverage
+    LDA !ram_roomstrat_counter : BEQ .checkjump : CMP #$0078 : BPL .clearaverage
     INC : STA !ram_roomstrat_counter
 
   .incspeed
     ; Nothing to do if speed is zero or negative
-    LDA !SAMUS_Y_SPEEDCOMBINED : AND #$8000 : BNE .checkleftright
-    LDA !SAMUS_Y_SPEEDCOMBINED : BEQ .checkleftright
+    LDA !SAMUS_Y_SPEEDCOMBINED : AND #$8000 : BNE .checkjump
+    LDA !SAMUS_Y_SPEEDCOMBINED : BEQ .checkjump
 
     ; Speed x256 is just a little too high
     ; Make it x128 and store it for later use
@@ -1039,17 +1072,47 @@ status_walljump:
 
     ; Check if we are rising or falling
     LDA !SAMUS_Y_DIRECTION : CMP #$0001 : BEQ .addspeed : CMP #$0002 : BEQ .subtractspeed
-    BRA .checkleftright
+    BRA .checkjump
 
   .addspeed
     ; If total speed overflows, stop tracking the average
     LDA !ram_vertical_speed : CLC : CLV : ADC $12 : BVS .clearaverage
     STA !ram_vertical_speed
-    BRA .checkleftright
+    BRA .checkjump
 
   .subtractspeed
     LDA !ram_vertical_speed : CMP $12 : BMI .zerospeed
     SEC : SBC $12 : STA !ram_vertical_speed
+    BRA .checkjump
+
+  .resetreleasejump
+    LDA !ram_roomstrat_state : DEC : AND #$0003
+    ASL : ASL : TAX : LDA !IH_BLANK : STA !HUD_TILEMAP+$B0,X
+    BRA .blanksides
+
+  .zerospeed
+    TDC : STA !ram_vertical_speed
+
+  .checkjump
+    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_JUMP : BNE .pressedjump
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_JUMP : BNE .checkleftright
+
+    ; count up to 36 frames of jump released
+    LDA !ram_shot_timer : CMP #$0024 : BPL .resetreleasejump
+    INC : STA !ram_shot_timer
+    ASL : TAX
+    LDA NumberGFXTable,X : PHA
+    LDA !ram_roomstrat_state : DEC : AND #$0003
+    ASL : ASL : TAX : PLA : STA !HUD_TILEMAP+$B0,X
+    LDA !IH_BLANK
+
+  .blanksides
+    STA !HUD_TILEMAP+$AE,X : STA !HUD_TILEMAP+$B2,X
+    BRA .checkleftright
+
+  .pressedjump
+    TDC : STA !ram_shot_timer
+    LDA !ram_roomstrat_state : INC : STA !ram_roomstrat_state
     BRA .checkleftright
 
   .writg
@@ -1060,12 +1123,13 @@ status_walljump:
     LDA #$0117 : STA !ram_ypos
     BRL .heightcheck
 
-  .jump
-    LDA !ROOM_ID : CMP #$B4AD : BEQ .writg : CMP #$ACB3 : BEQ .bubble
-    BRL .clear
+  .lavadive
+    BRL .lavadivecheck
 
-  .zerospeed
-    TDC : STA !ram_vertical_speed
+  .walljump
+    LDA !ROOM_ID : CMP #$B4AD : BEQ .writg
+    CMP #$AF14 : BEQ .lavadive : CMP #$ACB3 : BEQ .bubble
+    BRL .clear
 
   .checkleftright
     LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_LEFT : BNE .leftright
@@ -1073,7 +1137,7 @@ status_walljump:
 
     ; Arbitrary wait of 20 frames before resetting
     LDA !ram_walljump_counter : BEQ .done : CMP #$0014 : BPL .reset
-    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_JUMP : BNE .jump
+    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_JUMP : BNE .walljump
     LDA !ram_walljump_counter : INC : STA !ram_walljump_counter
     RTS
 
@@ -1288,6 +1352,33 @@ endif
   .printbonk
     TXY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A
     LDA !IH_LETTER_B : STA !HUD_TILEMAP+$88
+    BRL .drawjumpcounter
+
+  .lavadiveclear
+    BRL .clear
+
+  .lavadivecheck
+    LDA !SAMUS_X : CMP #$0248 : BMI .lavadiveclear
+    CMP #$0288 : BPL .lavadiveclear
+    LDA !SAMUS_Y : CMP #$020A : BMI .lavadiveclear
+    CMP #$024A : BPL .lavadiveclear
+    CMP #$0228 : BMI .lavadivehigh : CMP #$022C : BPL .lavadivelow
+
+    ; Preferred height
+    LDA #$022C : SEC : SBC !SAMUS_Y
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$88
+    BRL .drawjumpcounter
+
+  .lavadivehigh
+    LDA #$0228 : SEC : SBC !SAMUS_Y
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A
+    LDA !IH_LETTER_H : STA !HUD_TILEMAP+$88
+    BRL .drawjumpcounter
+
+  .lavadivelow
+    SEC : SBC #$022B : ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A
+    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$88
     BRL .drawjumpcounter
 }
 
@@ -1872,6 +1963,14 @@ endif
 
 status_moondance:
 {
+    LDA !ROOM_ID : CMP #$9CB3 : BEQ .moondance
+    CMP #$9AD9 : BEQ .tasdance
+    RTS
+
+  .tasdance
+    BRL status_moondance_tas
+
+  .moondance
     ; Suppress Samus HP display
     LDA !SAMUS_HP : STA !ram_last_hp
 
@@ -2158,6 +2257,270 @@ status_moondance:
     LDA !IH_BLANK : STA !HUD_TILEMAP+$92 : STA !HUD_TILEMAP+$94
     STA !HUD_TILEMAP+$96 : STA !HUD_TILEMAP+$98
     RTS
+}
+
+status_moondance_tas:
+{
+    ; Suppress Samus HP display
+    LDA !SAMUS_HP : STA !ram_last_hp
+
+    LDA !SAMUS_Y_SPEEDCOMBINED : BNE .checkstate
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_SHOT : BNE .checkstate
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_RIGHT : BNE .checkstate
+    LDA !SAMUS_POSE : CMP #$0006 : BEQ .gotocheckstart
+    CMP #$0008 : BEQ .gotocheckstart : BNE .checkstate
+
+  .gotocheckstart
+    BRL .checkstart
+
+  .checkL2Rshoot
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_JUMP : BNE .L2Rturnearly
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_SHOT : BNE .L2Rshoot
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_RIGHT : BNE .L2Rturnearly
+    BRL .inccounter
+
+  .checkstate
+    LDA !ram_roomstrat_state : DEC : BEQ .checkL2Rshoot
+    DEC : BEQ .checkL2Rturn : DEC : BEQ .checkL2Rjump
+    BRL .morestate
+
+  .L2Rshoot
+    TDC : STA !ram_roomstrat_counter
+    LDA !ram_roomstrat_state : INC : STA !ram_roomstrat_state
+
+  .checkL2Rturn
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_JUMP : BNE .L2Rjumpearly
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_SHOT : BEQ .L2Rjumpearly
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_RIGHT : BNE .L2Rturn
+    BRL .inccounter
+
+  .L2Rturnearly
+    LDA !IH_LETTER_F : STA !HUD_TILEMAP+$92
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$94
+    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$96
+    LDA !IH_LETTER_R : STA !HUD_TILEMAP+$98
+    BRL .alldone
+
+  .L2Rturn
+    TDC : STA !ram_roomstrat_counter
+    LDA !ram_roomstrat_state : INC : STA !ram_roomstrat_state
+
+  .checkL2Rjump
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_JUMP : BNE .L2Rjump
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_SHOT : BEQ .L2Rdoneearly
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_RIGHT : BEQ .L2Rdoneearly
+    BRL .inccounter
+
+  .L2Rjumpearly
+    LDA !IH_LETTER_F : STA !HUD_TILEMAP+$92
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$94
+    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$96
+    LDA !IH_LETTER_R : STA !HUD_TILEMAP+$98
+    BRL .alldone
+
+  .L2Rjump
+    TDC : STA !ram_shot_timer : STA !ram_roomstrat_counter
+    LDA !ram_roomstrat_state : INC : STA !ram_roomstrat_state
+
+  .checkL2Rrelease
+    LDA !SAMUS_Y : CMP #$02B0 : BPL .maybeginfall
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_RIGHT : BEQ .L2Rrelease
+    BRL .inccounters
+
+  .L2Rdoneearly
+    LDA !IH_LETTER_F : STA !HUD_TILEMAP+$92
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$94
+    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$96
+    LDA !IH_LETTER_N : STA !HUD_TILEMAP+$98
+    BRL .alldone
+
+  .L2Rrelease
+    LDA !ram_roomstrat_counter : CMP #$0042 : BPL .L2Rreleasedrawn
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$98
+
+  .L2Rreleasedrawn
+    TDC : STA !ram_roomstrat_counter
+    LDA !ram_roomstrat_state : INC : STA !ram_roomstrat_state
+
+  .checkR2Lpress
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_LEFT : BNE .R2Lpress
+    BRA .inccounters
+
+  .morestate
+    DEC : BEQ .checkL2Rrelease : DEC : BEQ .checkR2Lpress
+    DEC : BEQ .checkR2Lrelease : DEC : BEQ .checkL2Rpress
+    BRL .evenmorestate
+
+  .maybeginfall
+    LDA !SAMUS_Y_SPEEDCOMBINED : CMP #$F000 : BCC .notfalling
+    LDA !ram_quickdrop_counter : CMP #$0023 : BMI .notfalling
+    LDA #$0008 : STA !ram_roomstrat_state
+    BRL .beginfall
+
+  .R2Lpress
+    LDA !ram_shot_timer : CMP #$0042 : BPL .R2Lpressdrawn
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$92
+
+  .R2Lpressdrawn
+    TDC : STA !ram_shot_timer
+    LDA !ram_roomstrat_state : INC : STA !ram_roomstrat_state
+
+  .checkR2Lrelease
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_LEFT : BEQ .R2Lrelease
+    BRA .inccounters
+
+  .R2Lrelease
+    LDA !ram_roomstrat_counter : CMP #$0042 : BPL .R2Lreleasedrawn
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$94
+
+  .R2Lreleasedrawn
+    TDC : STA !ram_roomstrat_counter
+    LDA !ram_roomstrat_state : INC : STA !ram_roomstrat_state
+
+  .checkL2Rpress
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_RIGHT : BNE .L2Rpress
+
+  .inccounters
+    LDA !ram_shot_timer : INC : STA !ram_shot_timer
+
+  .inccounter
+    LDA !ram_roomstrat_counter : INC : STA !ram_roomstrat_counter
+    RTS
+
+  .notfalling
+    LDA !IH_LETTER_X : STA !HUD_TILEMAP+$88
+    BRA .alldone
+
+  .L2Rpress
+    LDA !ram_shot_timer : CMP #$0042 : BPL .L2Rpressdrawn
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$96
+
+  .L2Rpressdrawn
+    TDC : STA !ram_shot_timer
+    LDA #$0004 : STA !ram_roomstrat_state
+    LDA !SAMUS_Y_SPEEDCOMBINED : BEQ .lostfallspeed
+    LDA !ram_quickdrop_counter : CMP #$0028 : BPL .lostfallspeed
+    INC : STA !ram_quickdrop_counter
+    LDX #$008A : JSR Draw3
+    BRL .checkL2Rrelease
+
+  .lostfallspeed
+    LDA !IH_LETTER_X : STA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$8E
+    BRL .checkL2Rrelease
+
+  .alldone
+    TDC : STA !ram_roomstrat_counter : STA !ram_roomstrat_state
+    RTS
+
+  .checkstart
+    LDA !SAMUS_Y : CMP #$02AB : BNE .done
+    LDA !SAMUS_Y_SUBPX : INC : BNE .done
+    LDA !SAMUS_Y_DIRECTION : BNE .done
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$88
+    LDA.w NumberGFXTable : STA !HUD_TILEMAP+$8E
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$8A
+    STA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$90
+    STA !HUD_TILEMAP+$92 : STA !HUD_TILEMAP+$94
+    STA !HUD_TILEMAP+$96 : STA !HUD_TILEMAP+$98
+    TDC : STA !ram_roomstrat_counter : STA !ram_quickdrop_counter
+    INC : STA !ram_roomstrat_state
+
+  .done
+    RTS
+
+  .beginfall
+    LDA !SAMUS_Y : CMP #$0512 : BMI .done
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_LEFT : BNE .beginfallearly
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$92 : STA !HUD_TILEMAP+$94
+    STA !HUD_TILEMAP+$96 : STA !HUD_TILEMAP+$98
+    TDC : STA !ram_roomstrat_counter
+    LDA !ram_roomstrat_state : INC : STA !ram_roomstrat_state
+    RTS
+
+  .beginfallearly
+    LDA !IH_LETTER_E
+
+  .beginfallearlylate
+    STA !HUD_TILEMAP+$92 : LDA !IH_LETTER_X : STA !HUD_TILEMAP+$94
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$96 : STA !HUD_TILEMAP+$98
+    BRL .alldone
+
+  .beginfalllate
+    LDA !IH_LETTER_L
+    BRA .beginfallearlylate
+
+  .checkfallleft
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_LEFT : BNE .fallleft
+    LDA !ram_roomstrat_counter : CMP #$0024 : BPL .beginfalllate
+    INC : STA !ram_roomstrat_counter
+    RTS
+
+  .evenmorestate
+    DEC : BEQ .beginfall : DEC : BEQ .checkfallleft
+    DEC : BEQ .checkfalldown : DEC : BEQ .checkfallrelease
+
+  .evenmoredone
+    RTS
+
+  .checkfallrelease
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_DOWN : BEQ .falldownrelease
+    LDA !ram_roomstrat_counter : CMP #$0016 : BPL .fallreleaselate
+    INC : STA !ram_roomstrat_counter
+    RTS
+
+  .checkfalldown
+    LDA !ram_roomstrat_counter : CMP #$0016 : BPL .fallreleaselate
+    INC : STA !ram_roomstrat_counter
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_DOWN : BEQ .evenmoredone
+    LDA !ram_roomstrat_state : INC : STA !ram_roomstrat_state
+    RTS
+
+  .fallleft
+    LDA !ram_roomstrat_counter : CMP #$0012
+    BMI .fallleftearly : BEQ .fallleftperfect
+    SEC : SBC #$0012 : ASL : TAY
+    LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$94
+    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$92
+    BRL .alldone
+
+  .fallreleaselate
+    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$96
+    LDA !IH_LETTER_X : STA !HUD_TILEMAP+$98
+    BRL .alldone
+
+  .falldownrelease
+    LDA !ram_roomstrat_counter : CMP #$000A
+    BMI .fallreleaseearly : BEQ .fallreleaseperfect
+    SEC : SBC #$000A : ASL : TAY
+    LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$98
+    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$96
+    TDC : STA !ram_roomstrat_counter
+    LDA !ram_roomstrat_state : INC : STA !ram_roomstrat_state
+    RTS
+
+  .fallleftearly
+    LDA #$0012 : SEC : SBC !ram_roomstrat_counter
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$94
+    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$92
+    TDC : STA !ram_roomstrat_counter
+    LDA !ram_roomstrat_state : INC : STA !ram_roomstrat_state
+    RTS
+
+  .fallleftperfect
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$92 : STA !HUD_TILEMAP+$94
+    TDC : STA !ram_roomstrat_counter
+    LDA !ram_roomstrat_state : INC : STA !ram_roomstrat_state
+    RTS
+
+  .fallreleaseearly
+    LDA #$000A : SEC : SBC !ram_roomstrat_counter
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$98
+    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$96
+    BRL .alldone
+
+  .fallreleaseperfect
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$96 : STA !HUD_TILEMAP+$98
+    BRL .alldone
 }
 
 status_gateglitch:

@@ -25,7 +25,7 @@ Displays the HP of the first enemy. Most useful for boss fights, although Mother
 Allows you to select a Room Strat instead of an Infohud Mode. See below section for the various Room Strats.
 
 ## Charge
-Counts down the frames from the time you press shot until the time the beam would be charged. The timer resets if you let go of the shot button, and begins counting up the frames shot was released to the left of the charge timer.
+Counts down the frames from the time you press shot until the time the beam would be charged, after which it will count up the number of extra frames applied towards charging the beam. The timer resets if you let go of the shot button, and begins counting up the frames shot was released to the left of the charge timer.
 
 ## X Factor
 Counts down the frames from the time you press shoot until the time the SBA (Special Beam Attack) would activate. The timer resets if you let go of the shoot button or if the SBA activates.
@@ -34,7 +34,7 @@ Counts down the frames from the time you press shoot until the time the SBA (Spe
 Counts down the frames from time you activate a weapon or lay a bomb until the time you can fire again.
 
 ## Shinespark
-Counts down the frames from the time you charge a shinespark until the time the charge runs out. If you activate the shinespark in time, it will display the number of frames to spare.
+Counts down the frames from the time you charge a shinespark until the time the charge runs out, after which it will count up the number of frames you were late to the left of the shinespark timer. If you activate the shinespark in time, it will display the number of frames that were remaining, with 1 indicating there were no frames to spare.
 
 ## Dash
 Displays the speed boost counter. This number can be between 0 and 4. When building a shinespark charge, each successful tap (or held dash button) will increment the dash counter.
@@ -113,12 +113,12 @@ First two characters = Feedback on mid-air morph while beam is charged:
 ## Wall Jump
 Displays the number of frames between pressing a left or right input and pressing the jump button, if the number of frames is between 1 and 20.
 To walljump this number should be between 2 and 9 inclusive, although on PAL 8 does not work due to Samus' animation running out and being in the incorrect pose on that particular frame.
-Also, if the number of frames is 7-9 (a delayed walljump) and the walljump is taking place in WRITG or bubble mountain, then additional information may be presented if you appear to be making hi-jump-less walljump attempts (also known as the hypo jump):
+Also, if the number of frames is 7-9 (a delayed walljump) and the walljump is taking place in WRITG or Bubble Mountain, then additional information may be presented if you appear to be making hi-jump-less walljump attempts (also known as the hypo jump):
 &nbsp;  
 First two characters = Feedback on the delayed walljump:
-- H# indicates you jumped high where the number tells you how many pixels you were high (can be zero in bubble mountain; H0 does not work and will bonk).
+- H# indicates you jumped high where the number tells you how many pixels you were high (can be zero in Bubble Mountain; H0 does not work and will bonk).
 - B# indicates you jumped high and will bonk, but could save it with a quick mid-air wiggle (turn and turn back). This wiggle shrinks Samus' hitbox.
-It only works in WRITG. The number is the most amount of frames you can take to wiggle, with larger numbers indicating your jump was closer to the optimal YH position.
+It only works in WRITG and not Bubble Mountain. The number is the most amount of frames you can take to wiggle, with larger numbers indicating your jump was closer to the optimal YH position.
 - YH indicates you jumped at the optimum height with an 8 or 9 frame walljump.
 - YY indicates you jumped just below the optimum height with a 9 frame walljump (PAL only since PAL physics allow for a larger range of heights to work, although it must be a max-delayed 9 frame walljump since 8 frames won't work).
 - YL indicates you jumped below optimum height with an 8 or 9 frame walljump. Generally a YL height is still enough height to get the second walljump without too much trouble.
@@ -126,6 +126,16 @@ It only works in WRITG. The number is the most amount of frames you can take to 
 - L# indicates you jumped low where the number tells you how many pixels you were low.
 
 Additionally Samus HP will be overwritten with the average climb speed in approximate pixels per frame (inflated by 2.4%). It averages vertical speed between jump presses, assuming the presses are within 2 seconds of each other and assuming the total speed does not overflow (if either of these happen then average will be blank). If total speed drops below zero then the average will be recorded as zero.
+Also the segment timer is overwritten by a set of four numbers representing the number of frames jump was released the last four times that the jump button was released. Since Samus' upward momentum usually stops immediately upon releasing jump, reducing the number of frames where jump is released is the simplest way to improve climb speed.
+
+Finally if the walljump is taking place near a specific namihe in Lava Dive, then feedback will be given on the height of the walljump for the purposes of a zero-tank lava dive where the first walljump is made off of the namihe:
+&nbsp;  
+First two characters = Feedback on the walljump:
+- H# indicates you jumped high where the number tells you how many pixels you were high. Note that some values still work (especially with delayed namihe jumps); you may find an H1 setup that works just as well as a Y# setup. With the H# setups, it is possible for the second walljump to be so high that it will always bonk.
+- Y# indicates you jumped at one of the four pixels that can work with a quick or delayed walljump off of the namihe and do not risk going too high to always bonk on the second walljump. Y1 may barely reach the second walljump, but as a result of being so low on the wall, it may allow a two-frame window for the second walljump (if the second walljump is higher then it must be a maximum-delayed walljump).
+- L# indicates you jumped low where the number tells you how many pixels you were low. These values will never work as you cannot reach the second walljump.
+
+Note that the namihe does not pull Samus in like a wall does (subpixels are not reset), so while a delayed walljump is preferred (it matters if you jump from a higher position), walljumps off of the namihe do not provide the traditional 2-9 frame window for walljumps.
 
 ## Arm Pump
 Displays the number of armpumps (pose changes) per second, and the number of wasted angle down and/or angle up inputs per second.
@@ -185,9 +195,9 @@ Last two characters = Feedback on the time when you expanded your hitbox to grab
 Unfortunately even if you are coming in with a Y3 73 jump, you only get one chance to grab the tank. It does not matter if you choose Y1, Y2, or Y3 to attempt the grab, as it will come down to the collision oscillator. When Samus expands her hitbox, she will contact both the tank and the ceiling, but the game will only check one of the tiles. If it checks the ceiling tile, it will push Samus down and out of the ceiling and she will not be able to grab the tank on the next frame.
 
 ## Moondance (currently only supported on NTSC)
-Provides feedback on moondance:  
+Provides feedback on moondance (Dachora room) or tasdance (Green Brinstar Main Shaft room):  
 
-First character = Y when appropriate moondance position reached, followed by the number of successfully executed moonfalls.  
+For moondance, first character = Y when appropriate moondance position reached, followed by the number of successfully executed moonfalls.  
 
 Last four characters = Extra frames spent on each step of the moonfall, or an error code if a mistake was made. Note that some mistakes can be recovered where the moonfall actually succeeds, but in these cases the moonfall still won't be counted by the trainer.
 - 1st number = Extra frames spent prior to pressing shot, including extra frames before executing a normal turnaround.
@@ -201,6 +211,17 @@ Last four characters = Extra frames spent on each step of the moonfall, or an er
 Note it is not possible to achieve all zeros just due to the way the trainer is implemented, and probably not a good idea to try anyway as going a frame early could either break the moondance immediately or disrupt your rhythm and lead to a failure.
 Also note that the amount of frames direction needs to be held varies due to Samus gaining downward speed over time.
 The first moonfall requires 21 frames, second moonfall 13 frames, third and fourth 11 frames, 5-9 ten frames, 10-29 nine frames, 30-176 eight frames.
+
+For tasdance, first character = Y when standing on the elevator facing left (becomes an X if you fall off the elevator without sufficient fall speed), followed by number of right turns (not counting the initial moonfall). This number must be between 35 and 40 when moving right off of the elevator.
+
+Last four characters = The time between presses and releases during the turns (each turn takes seven frames so these numbers should average out to seven), and also feedback on the final two frame-perfect inputs (turning left and releasing down) which are always eleven frames apart.
+- 1st number = Frames between pressing right and pressing left
+- 2nd number = Frames between releasing right and releasing left
+- 3rd number = Frames between pressing left and pressing right
+- 4th number = Frames between releasing left and releasing right
+- E# indicates you were early where the number tells you how many frames you were early.
+- YY indicates you hit one of the frame perfect inputs.
+- L# indicates you were late where the number tells you how many frames you were late.
 
 ## Gate Glitch
 Provides feedback on attempts to open a left-facing gate from the right side:  

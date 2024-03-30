@@ -1084,11 +1084,7 @@ action_category:
     dw #$1025, #$1002, #$018F, #$000A, #$000A, #$0005, #$0000, #$0000        ; 14% ice
     dw #$3025, #$1000, #$018F, #$000A, #$000A, #$0005, #$0000, #$0000        ; 14% speed
     dw #$F33F, #$100F, #$02BC, #$0064, #$0014, #$0014, #$012C, #$0000        ; gt code
-if !FEATURE_PAL
-    dw #$F33F, #$100F, #$0834, #$0145, #$0041, #$0046, #$02BC, #$0000        ; 136%
-else
     dw #$F33F, #$100F, #$0834, #$0145, #$0041, #$0041, #$02BC, #$0000        ; 135%
-endif
     dw #$710C, #$1001, #$031F, #$001E, #$0019, #$0014, #$0064, #$0000        ; rbo
     dw #$9004, #$0000, #$00C7, #$0005, #$0005, #$0005, #$0000, #$0000        ; any% glitched
     dw #$F32F, #$100F, #$0031, #$01A4, #$005A, #$0063, #$0000, #$0000        ; crystal flash
@@ -1814,6 +1810,7 @@ action_teleport:
     %a16()
 
     STZ $0727 ; Pause menu index
+    STZ $0795 ; Clear door transition flag
     STZ $0E18 ; Set elevator to inactive
     STZ $1C1F ; Clear message box index
 
@@ -1869,9 +1866,9 @@ misc_hyperbeam:
     AND #$8000 : BEQ .off
     LDA #$0003
 if !FEATURE_PAL
-    JSL $91E412 ; setup Samus for Hyper Beam
-else
-    JSL $91E4AD ; setup Samus for Hyper Beam
+    JSL $91E412
+else            ; setup Samus for Hyper Beam
+    JSL $91E4AD
 endif
     RTL
 
@@ -1962,8 +1959,8 @@ misc_metronome_sfx:
 
 misc_suit_properties:
     dw !ACTION_CHOICE
-    dl #!sram_suit_properties
-    dw init_suit_properties_ram
+    dl #!ram_cm_suit_properties
+    dw .routine
     db #$28, "Suit Properties", #$FF
     db #$28, "    VANILLA", #$FF
     db #$28, "   BALANCED", #$FF
@@ -1972,21 +1969,36 @@ misc_suit_properties:
     db #$28, " DASHRECALL", #$FF
     db #$28, " HEATSHIELD", #$FF
     db #$FF
+  .routine
+    LDA !ram_cm_suit_properties : STA !sram_suit_properties
+    LDA !PAL_DEBUG_MOVEMENT : BNE init_suit_properties_ram
+    LDA !sram_suit_properties : ORA !SUIT_PROPRETIES_PAL_DEBUG_FLAG
+    STA !sram_suit_properties
+    ; Fallthrough to init_suit_properties_ram
 
 init_suit_properties_ram:
 {
+    LDA !sram_suit_properties : BIT !SUIT_PROPRETIES_PAL_DEBUG_FLAG : BNE .palDebug
+    TDC : INC : STA !PAL_DEBUG_MOVEMENT
+    BRA .initProperties
+
+  .palDebug
+    STZ !PAL_DEBUG_MOVEMENT
+
+  .initProperties
     ; Default to both suits getting 50% damage reduction (gravity gets extra 50%)
     ; and both suits getting full heat protection
     LDA #$0021 : STA !ram_suits_enemy_damage_check : STA !ram_suits_heat_damage_check
 
-    LDA !sram_suit_properties : CMP #$0002 : BMI .init_heat_damage
+    LDA !sram_suit_properties : AND !SUIT_PROPERTIES_MASK
+    CMP #$0002 : BMI .initHeatDamage
 
     ; Progressive, Complementary, and DASH Recall/Heat Shield
     ; give less enemy damage protection to gravity
     LDA #$0001 : STA !ram_suits_enemy_damage_check
 
-  .init_heat_damage
-    LDA !sram_suit_properties : BEQ .end
+  .initHeatDamage
+    LDA !sram_suit_properties : AND !SUIT_PROPERTIES_MASK : BEQ .end
 
     ; Not vanilla, so only varia gets full heat protection
     LDA #$0001 : STA !ram_suits_heat_damage_check
@@ -2003,7 +2015,8 @@ init_heat_damage_ram:
     ; Default to 0.25 damage per frame
     LDA #$4000 : STA !ram_suits_heat_damage_value
 
-    LDA !sram_suit_properties : CMP #$0004 : BPL .dash_recall
+    LDA !sram_suit_properties : AND !SUIT_PROPERTIES_MASK
+    CMP #$0004 : BPL .dashRecall
     CMP #$0003 : BEQ .complementary
     RTL
 
@@ -2019,8 +2032,8 @@ init_heat_damage_ram:
     LDA #$8000 : STA !ram_suits_heat_damage_value
     RTL
 
-  .dash_recall
-    BNE .heat_shield
+  .dashRecall
+    BNE .heatShield
 
     ; If no gravity than nothing to do
     LDA $09A2 : BIT #$0020 : BEQ .end
@@ -2032,18 +2045,18 @@ init_heat_damage_ram:
   .end
     RTL
 
-  .heat_shield
-    LDA !ROOM_ID : CMP #$B742 : BPL .no_damage : CMP #$AF13 : BMI .no_damage
-    CMP #$B1BA : BPL .heat_shield_damage : CMP #$AF40 : BPL .no_damage
+  .heatShield
+    LDA !ROOM_ID : CMP #$B742 : BPL .noDamage : CMP #$AF13 : BMI .noDamage
+    CMP #$B1BA : BPL .heatShieldDamage : CMP #$AF40 : BPL .noDamage
 
-  .heat_shield_damage
+  .heatShieldDamage
     ; We want Lower Norfair heat damage to be 50%
     ; However if gravity is equipped then the damage is already halved
     LDA $09A2 : BIT #$0020 : BNE .end
     LDA #$2000 : STA !ram_suits_heat_damage_value
     RTL
 
-  .no_damage
+  .noDamage
     TDC : STA !ram_suits_heat_damage_value
     RTL
 }
@@ -2128,7 +2141,7 @@ misc_killenemies:
     TAX : LDA $0F86,X : BIT #$8500 : BNE .next_enemy
     ORA #$0200 : STA $0F86,X
   .next_enemy
-    TXA : CLC : ADC #$0040 : CMP #$0400 : BNE .kill_loop
+    TXA : CLC : ADC #$0040 : CMP #$0800 : BNE .kill_loop
     LDA #$0009 : JSL !SFX_LIB2 ; enemy killed
     RTL
 
@@ -2470,6 +2483,7 @@ ihmode_vspeed:
 ihmode_quickdrop:
     %cm_jsl("Quickdrop Trainer", #action_select_infohud_mode, #$0010)
 
+!IH_MODE_WALLJUMP_INDEX = $0011
 ihmode_walljump:
     %cm_jsl("Walljump Trainer", #action_select_infohud_mode, #$0011)
 
@@ -2487,13 +2501,14 @@ ihmode_ramwatch:
 action_select_infohud_mode:
 {
     TYA : STA !sram_display_mode
+    JSL init_print_segment_timer
     JML cm_previous_menu
 }
 
 ih_display_mode:
     dw !ACTION_CHOICE
     dl #!sram_display_mode
-    dw #$0000
+    dw #.routine
     db #$28, "Current Mode", #$FF
     db #$28, "   ENEMY HP", #$FF
     db #$28, " ROOM STRAT", #$FF
@@ -2517,6 +2532,8 @@ ih_display_mode:
     db #$28, " SHOT TIMER", #$FF
     db #$28, "  RAM WATCH", #$FF
     db #$FF
+  .routine
+    JML init_print_segment_timer
 
 ih_goto_room_strat:
     %cm_submenu("Select Room Strat", #RoomStratMenu)
@@ -2595,6 +2612,7 @@ action_select_room_strat:
 {
     TYA : STA !sram_room_strat
     LDA #!IH_MODE_ROOMSTRAT_INDEX : STA !sram_display_mode
+    JSL init_print_segment_timer
     JML cm_previous_menu
 }
 
@@ -2621,8 +2639,8 @@ ih_room_strat:
     db #$28, "  TWO CRIES", #$FF
     db #$FF
   .routine
-    LDA #$0001 : STA !sram_display_mode
-    RTL
+    LDA #!IH_MODE_ROOMSTRAT_INDEX : STA !sram_display_mode
+    JML init_print_segment_timer
 
 ih_goto_timers:
     %cm_submenu("Timer Settings", #IHTimerMenu)
@@ -2889,9 +2907,7 @@ game_goto_debug:
 
 DebugMenu:
     dw #game_debugmode
-if !FEATURE_PAL
     dw #game_paldebug
-endif
     dw #game_debugbrightness
     dw #game_invincibility
     dw #game_pacifist
@@ -2904,10 +2920,17 @@ endif
 game_debugmode:
     %cm_toggle("Debug Mode", $7E05D1, #$0001, #0)
 
-if !FEATURE_PAL
 game_paldebug:
-    %cm_toggle_inverted("PAL Debug Movement", $7E09E6, #$0001, #0)
-endif
+    %cm_toggle_inverted("PAL Debug Movement", $7E09E6, #$0001, .routine)
+  .routine
+    LDA !PAL_DEBUG_MOVEMENT : BNE .clearFlag
+    LDA !sram_suit_properties : ORA !SUIT_PROPRETIES_PAL_DEBUG_FLAG
+    BRA .set
+  .clearFlag
+    LDA !sram_suit_properties : AND !SUIT_PROPERTIES_MASK
+  .set
+    STA !sram_suit_properties
+    RTL
 
 game_debugbrightness:
     %cm_toggle("Debug CPU Brightness", $7E0DF4, #$0001, #0)
@@ -3908,8 +3931,27 @@ init_wram_based_on_sram:
 {
     JSL init_suit_properties_ram
     JSL init_physics_ram
+    JSL init_print_segment_timer
 
     ; Check if any less common controller shortcuts are configured
     JML GameModeExtras
+}
+
+init_print_segment_timer:
+{
+if !INFOHUD_ALWAYS_SHOW_X_Y
+    TDC
+else
+    ; Skip printing segment timer when shinetune or walljump enabled
+    LDA !sram_display_mode : CMP #!IH_MODE_SHINETUNE_INDEX : BEQ .skipSegmentTimer
+    CMP #!IH_MODE_WALLJUMP_INDEX : BEQ .skipSegmentTimer
+    TDC : INC
+    BRA .setSegmentTimer
+  .skipSegmentTimer
+    TDC
+  .setSegmentTimer
+endif
+    STA !ram_print_segment_timer
+    RTL
 }
 
