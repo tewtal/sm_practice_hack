@@ -31,8 +31,8 @@ endif
     JSL $809A79  ; HUD routine when game is loading
     JSL $90AD22  ; Reset projectile data
 
-    TDC : TAX
-    LDY #$0020
+    TDC : STA !ram_load_preset
+    TAX : LDY #$0020
   .paletteLoop
     ; Target Samus' palette = [Samus' palette]
     LDA $7EC180,X : STA $7EC380,X
@@ -237,7 +237,6 @@ preset_load_preset:
   .custom_preset
     JSL custom_preset_load
     LDA #$5AFE : STA !sram_last_preset
-    LDA #$0000 : STA !ram_load_preset
     BRA .done
 
   .category_preset
@@ -260,7 +259,6 @@ category_preset_load:
 
     ; Get preset address to load into $C3
     LDA !ram_load_preset : STA !sram_last_preset : STA $C3 : STA $7F0002
-    LDA #$0000 : STA !ram_load_preset
 
     ; Get start of preset data into $C1
     LDA.l category_preset_data_table,X : LDX #$0000 : STA $C1
@@ -477,10 +475,11 @@ endif
     PLA ; Pull other layer 2 value but do not use it
     JSR $A2F9 ; Calculate layer 2 X position
     JSR $A33A ; Calculate layer 2 Y position
-    LDA !LAYER2_X : STA !BG2_X_SCROLL ; BG2 X scroll = layer 2 X scroll position
-    LDA !LAYER2_Y : STA !BG2_Y_SCROLL ; BG2 Y scroll = layer 2 Y scroll position
+    LDA !LAYER2_X : STA !BG2_X_OFFSET ; BG2 X scroll = layer 2 X scroll position
+    LDA !LAYER2_Y : STA !BG2_Y_OFFSET ; BG2 Y scroll = layer 2 Y scroll position
 
   .layer_2_loaded
+    TDC : STA !BG1_X_OFFSET : STA !BG1_Y_OFFSET
     JSR $A37B    ; Calculate BG positions
 
     ; Fix BG2 Y offsets for rooms with scrolling sky
@@ -509,7 +508,7 @@ endif
 
   .bgOffsetsScrollingSky
     LDA !LAYER1_Y : STA !LAYER2_Y : STA $B7
-    STZ !BG2_Y_SCROLL
+    STZ !BG2_Y_OFFSET
 
   .bgOffsetsCalculated
     JSL $80A176  ; Display the viewable part of the room
