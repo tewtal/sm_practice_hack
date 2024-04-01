@@ -641,23 +641,29 @@ preset_prkd_wrecked_ship_phantoon:
 
 preset_prkd_wrecked_ship_leaving_phantoon:
     dw #preset_prkd_wrecked_ship_phantoon ; Wrecked Ship: Phantoon
-    dw $078D, $A2C4  ; DDB
-    dw $07F5, $0006  ; Music Track
-    dw $090F, $1000  ; Screen subpixel X position
-    dw $0913, $E800  ; Screen subpixel Y position
+    dw $078D, $A2AC  ; DDB
+    dw $079B, $CD13  ; MDB
+    dw $07F5, $0003  ; Music Track
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $0800  ; Screen subpixel Y position
+    dw $0917, $0001  ; Layer 2 X position
     dw $09C2, $00C7  ; Health
     dw $09C6, $000F  ; Missiles
     dw $09CA, $0003  ; Supers
     dw $09CE, $0005  ; Pbs
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $04DB  ; Samus X
+    dw $0AF6, $006D  ; Samus X
+    dw $0AFA, $00BB  ; Samus Y
     dw $D82A, $0100  ; Bosses
     dw $D8C0, $0070  ; Doors
     dw #$FFFF
 
 preset_prkd_wrecked_ship_shaft_to_supers:
     dw #preset_prkd_wrecked_ship_leaving_phantoon ; Wrecked Ship: Leaving Phantoon
+    dw $078D, $A2C4  ; DDB
+    dw $079B, $CC6F  ; MDB
+    dw $07F5, $0006  ; Music Track
     dw $090F, $0000  ; Screen subpixel X position
     dw $0911, $0226  ; Screen X position in pixels
     dw $0913, $FC00  ; Screen subpixel Y position
@@ -1899,16 +1905,15 @@ preset_prkd_kraid_leaving_kraids_lair:
 
 preset_prkd_maridia_maridia_tube_revisit:
     dw #preset_prkd_kraid_leaving_kraids_lair ; Kraid: Leaving Kraids Lair
-    dw $078D, $913E  ; DDB
-    dw $079B, $A6A1  ; MDB
-    dw $07F5, $0003  ; Music Track
-    dw $090F, $C000  ; Screen subpixel X position
-    dw $0911, $0200  ; Screen X position in pixels
-    dw $0913, $2400  ; Screen subpixel Y position
-    dw $0915, $001D  ; Screen Y position in pixels
-    dw $09D2, $0002  ; Currently selected item
-    dw $0AF6, $02D9  ; Samus X
-    dw $0AFA, $009B  ; Samus Y
+    dw $078D, $922E  ; DDB
+    dw $079B, $CF80  ; MDB
+    dw $090F, $D000  ; Screen subpixel X position
+    dw $0913, $6400  ; Screen subpixel Y position
+    dw $0915, $0100  ; Screen Y position in pixels
+    dw $0919, $0100  ; Layer 2 Y position
+    dw $09CA, $0009  ; Supers
+    dw $0AF6, $00B3  ; Samus X
+    dw $0AFA, $018B  ; Samus Y
     dw #$FFFF
 
 preset_prkd_maridia_fish_tank:
@@ -1923,8 +1928,6 @@ preset_prkd_maridia_fish_tank:
     dw $0915, $05ED  ; Screen Y position in pixels
     dw $0917, $00B7  ; Layer 2 X position
     dw $0919, $0471  ; Layer 2 Y position
-    dw $09CA, $0009  ; Supers
-    dw $09D2, $0000  ; Currently selected item
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $0162  ; Samus X
@@ -2079,8 +2082,10 @@ preset_prkd_maridia_draygon:
 preset_prkd_maridia_spikesuit_reverse_halfie:
     dw #preset_prkd_maridia_draygon ; Maridia: Draygon
     dw $078D, $A96C  ; DDB
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $0915, $0000  ; Screen Y position in pixels
+    dw $090F, $1000  ; Screen subpixel X position
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $0003  ; Screen Y position in pixels
+    dw $0919, $0002  ; Layer 2 Y position
     dw $09C2, $00D8  ; Health
     dw $09C6, $000F  ; Missiles
     dw $09CA, $0003  ; Supers
@@ -2101,7 +2106,9 @@ preset_prkd_maridia_reverse_halfie_climb:
     dw $078D, $A834  ; DDB
     dw $079B, $D72A  ; MDB
     dw $090F, $8000  ; Screen subpixel X position
-    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0913, $F001  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0919, $0000  ; Layer 2 Y position
     dw $09C2, $0066  ; Health
     dw $0AF6, $0042  ; Samus X
     dw #$FFFF

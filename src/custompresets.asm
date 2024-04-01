@@ -385,6 +385,10 @@ preset_scroll_fixes:
     INC : STA $CD26 : STA $CD28
     BRL .specialized_parlor
 
+  .climb
+    STA $CD39
+    BRA .topdone
+
   .dachora
     LDY !SAMUS_X : CPY #$0405    ; no fix if Xpos < 1029
     BMI .topdone
@@ -407,6 +411,12 @@ preset_scroll_fixes:
     STA $CD27
     BRA .topdone
 
+  .caterpillar
+    LDY !SAMUS_Y : CPY #$05DC    ; no fix if Ypos < 1500
+    BMI .topdone
+    INC : STA $CD2F : STA $CD32
+    BRA .topdone
+
   .alpha_pbs
     LDY !SAMUS_X : CPY #$0100    ; no fix if Xpos > 255
     BPL .topdone
@@ -425,11 +435,13 @@ preset_scroll_fixes:
   .tophalf
     CPX #$A75D : BPL .norfair
     CPX #$92FD : BEQ .parlor
+    CPX #$96BA : BEQ .climb
     CPX #$9CB3 : BEQ .dachora
     CPX #$9D19 : BEQ .big_pink
     CPX #$9F64 : BEQ .taco_tank_room
     CPX #$A011 : BEQ .etecoons_etank
     CPX #$A253 : BEQ .red_tower
+    CPX #$A322 : BEQ .caterpillar
     CPX #$A3AE : BEQ .alpha_pbs
     CPX #$A408 : BEQ .below_spazer
     CPX #$A6A1 : BEQ .warehouse_entrance
@@ -462,7 +474,7 @@ preset_scroll_fixes:
     BRA .norfairdone
 
   .volcano_room
-    STA $CD26
+    STA $CD26 : STA $CD27
     BRA .norfairdone
 
   .bat_cave
@@ -480,6 +492,7 @@ preset_scroll_fixes:
     CPX #$B3A5 : BEQ .fast_pillars_setup
     CPX #$B4AD : BEQ .worst_room
     CPX #$B585 : BEQ .kihunter_stairs
+    CPX #$B5D5 : BEQ .wasteland
   .norfairdone
     PLB
     PLP
@@ -515,12 +528,19 @@ preset_scroll_fixes:
     BRA .norfairdone
 
   .kihunter_stairs
-    LDY !SAMUS_Y : CPY #$008C    ; no fix if Ypos > 140
-    BPL .kihunter_stairs_done
     INC : STA $CD20
-    STZ $CD23
+    LDY !SAMUS_Y : CPY #$008C    ; fix varies depending on Y position
+    BPL .kihunter_stairs_done
+    TDC
   .kihunter_stairs_done
+    STA $CD23
     BRL .specialized_kihunter_stairs
+
+  .wasteland
+    LDY !SAMUS_Y : CPY #$00D0    ; no fix if Ypos < 208
+    BMI .norfairdone
+    INC : STA $CD21 : STA $CD27
+    BRA .norfairdone
 
     ; --------------------------------------------
     ; Wrecked Ship Scroll Fixes (Category Presets)
@@ -545,19 +565,21 @@ preset_scroll_fixes:
     BRA .halfwaydone
 
   .basement
-    STA $CD24
+    STA $CD23 : STA $CD24
     BRA .halfwaydone
 
   .halfway
-    CPX #$DF45 : BPL .ceres
     CPX #$C98E : BEQ .bowling
     CPX #$CAF6 : BEQ .wrecked_ship_shaft
     CPX #$CBD5 : BEQ .electric_death
     CPX #$CC6F : BEQ .basement
+    CPX #$DF45 : BPL .ceres
+    CPX #$D104 : BEQ .red_fish
     CPX #$D1A3 : BEQ .crab_shaft
     CPX #$D21C : BEQ .crab_hole
     CPX #$D48E : BEQ .oasis
     CPX #$D69A : BEQ .pants_room
+    CPX #$D78F : BEQ .precious
   .halfwaydone
     PLB
     PLP
@@ -566,6 +588,12 @@ preset_scroll_fixes:
     ; -----------------------------------------------
     ; Maridia/Tourian Scroll Fixes (Category Presets)
     ; -----------------------------------------------
+  .red_fish
+    LDY !SAMUS_Y : CPY #$0208    ; no fix if Ypos > 519
+    BPL .halfwaydone
+    STA $CD21
+    BRA .halfwaydone
+
   .crab_shaft
     STA $CD26 : INC : STA $CD24
     BRA .halfwaydone
@@ -585,6 +613,12 @@ preset_scroll_fixes:
 
   .pants_room
     STA $CD21 : STZ $CD22
+    BRA .halfwaydone
+
+  .precious
+    LDY !SAMUS_Y : CPY #$00D0    ; no fix if Ypos < 208
+    BMI .halfwaydone
+    INC : STA $CD20 : STA $CD22
     BRA .halfwaydone
 
     ; -----------------------------------------
