@@ -14,8 +14,8 @@ preset_100map_bombs_ceres_elevator:
     dw $093F, $0000  ; Ceres escape flag
     dw $09A2, $0000  ; Equipped Items
     dw $09A4, $0000  ; Collected Items
-    dw $09A6, $0000  ; Beams
-    dw $09A8, $0000  ; Beams
+    dw $09A6, $0000  ; Equipped Beams
+    dw $09A8, $0000  ; Collected Beams
     dw $09C0, $0000  ; Manual/Auto reserve tank
     dw $09C2, $0063  ; Health
     dw $09C4, $0063  ; Max health
@@ -124,7 +124,6 @@ preset_100map_bombs_parlor:
     dw $090F, $0000  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $1400  ; Screen subpixel Y position
-    dw $0915, $0400  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
@@ -376,8 +375,8 @@ preset_100map_varia_green_hill_zone:
     dw $0915, $061D  ; Screen Y position in pixels
     dw $0917, $0240  ; Layer 2 X position
     dw $0919, $0495  ; Layer 2 Y position
-    dw $09A6, $1000  ; Beams
-    dw $09A8, $1000  ; Beams
+    dw $09A6, $1000  ; Equipped Beams
+    dw $09A8, $1000  ; Collected Beams
     dw $09C6, $0005  ; Missiles
     dw $09C8, $000A  ; Max missiles
     dw $09CA, $0002  ; Supers
@@ -425,7 +424,6 @@ preset_100map_varia_kraid_entrance:
     dw #preset_100map_varia_skree_boost ; Varia: Skree Boost
     dw $078D, $A348  ; DDB
     dw $079B, $CF80  ; MDB
-    dw $07F3, $0012  ; Music Bank
     dw $090F, $9000  ; Screen subpixel X position
     dw $0913, $B000  ; Screen subpixel Y position
     dw $0915, $0100  ; Screen Y position in pixels
@@ -717,8 +715,8 @@ preset_100map_grapple_double_chamber_out:
     dw $0913, $CC00  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0919, $0000  ; Layer 2 Y position
-    dw $09A6, $1001  ; Beams
-    dw $09A8, $1001  ; Beams
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09A8, $1001  ; Collected Beams
     dw $09C6, $000D  ; Missiles
     dw $09C8, $0014  ; Max missiles
     dw $09CA, $0004  ; Supers
@@ -1844,7 +1842,6 @@ preset_100map_space_jump_prebotwoon:
     dw $090F, $2000  ; Screen subpixel X position
     dw $0913, $6400  ; Screen subpixel Y position
     dw $09D2, $0003  ; Currently selected item
-    dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $008D  ; Samus X
     dw $0AFA, $006B  ; Samus Y
@@ -2115,8 +2112,8 @@ preset_100map_maridia_cleanup_kassiuz_room_down:
     dw $078D, $A558  ; DDB
     dw $090F, $1000  ; Screen subpixel X position
     dw $0913, $0800  ; Screen subpixel Y position
-    dw $09A6, $1009  ; Beams
-    dw $09A8, $1009  ; Beams
+    dw $09A6, $1009  ; Equipped Beams
+    dw $09A8, $1009  ; Collected Beams
     dw $09C2, $01B7  ; Health
     dw $09C6, $000E  ; Missiles
     dw $09CA, $000A  ; Supers
@@ -2305,8 +2302,8 @@ preset_100map_screw_attack_ice_beam_foosball:
     dw $090F, $9000  ; Screen subpixel X position
     dw $0913, $C800  ; Screen subpixel Y position
     dw $0917, $0001  ; Layer 2 X position
-    dw $09A6, $100B  ; Beams
-    dw $09A8, $100B  ; Beams
+    dw $09A6, $100B  ; Equipped Beams
+    dw $09A8, $100B  ; Collected Beams
     dw $09C2, $018D  ; Health
     dw $09D2, $0004  ; Currently selected item
     dw $0AF6, $00B9  ; Samus X
@@ -2321,9 +2318,9 @@ preset_100map_screw_attack_ice_beam_boyon_room:
     dw $090F, $6001  ; Screen subpixel X position
     dw $0913, $EC00  ; Screen subpixel Y position
     dw $0915, $0019  ; Screen Y position in pixels
-    dw $09D2, $0000  ; Currently selected item
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0012  ; Layer 2 Y position
+    dw $09D2, $0000  ; Currently selected item
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $00DD  ; Samus X
@@ -2363,9 +2360,9 @@ preset_100map_screw_attack_kronic_boost_room:
     dw $0911, $0300  ; Screen X position in pixels
     dw $0913, $C000  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
-    dw $09D2, $0003  ; Currently selected item
     dw $0917, $0240  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
+    dw $09D2, $0003  ; Currently selected item
     dw $0AF6, $03AD  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
@@ -2543,9 +2540,9 @@ preset_100map_lower_norfair_kihunter_stairs_down:
     dw $090F, $8780  ; Screen subpixel X position
     dw $0911, $0280  ; Screen X position in pixels
     dw $0915, $0043  ; Screen Y position in pixels
-    dw $09D2, $0003  ; Currently selected item
     dw $0917, $01E0  ; Layer 2 X position
     dw $0919, $0032  ; Layer 2 Y position
+    dw $09D2, $0003  ; Currently selected item
     dw $0AF6, $02ED  ; Samus X
     dw $0AFA, $00B3  ; Samus Y
     dw #$FFFF
@@ -2700,11 +2697,9 @@ preset_100map_lower_norfair_hotarubi_missile_room:
     dw #preset_100map_lower_norfair_fireflea_room ; Lower Norfair: Fireflea Room
     dw $078D, $9A02  ; DDB
     dw $079B, $B6EE  ; MDB
-    dw $090F, $0000  ; Screen subpixel X position
     dw $090F, $5000  ; Screen subpixel X position
     dw $0911, $0100  ; Screen X position in pixels
     dw $0913, $0000  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
     dw $0915, $001D  ; Screen Y position in pixels
     dw $0917, $0100  ; Layer 2 X position
     dw $0919, $001D  ; Layer 2 Y position
@@ -3084,9 +3079,9 @@ preset_100map_greenpink_brin_cleanup_dachora_moonfall:
     dw $0911, $0100  ; Screen X position in pixels
     dw $0913, $0400  ; Screen subpixel Y position
     dw $0915, $0700  ; Screen Y position in pixels
-    dw $09D2, $0003  ; Currently selected item
     dw $0917, $0100  ; Layer 2 X position
     dw $0919, $0540  ; Layer 2 Y position
+    dw $09D2, $0003  ; Currently selected item
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $0137  ; Samus X
@@ -3248,9 +3243,9 @@ preset_100map_blue_brinstar_cleanup_blue_brinstar_hoppers:
     dw $0911, $00FA  ; Screen X position in pixels
     dw $0913, $4C00  ; Screen subpixel Y position
     dw $0915, $001C  ; Screen Y position in pixels
-    dw $09D2, $0003  ; Currently selected item
     dw $0917, $00BB  ; Layer 2 X position
     dw $0919, $0015  ; Layer 2 Y position
+    dw $09D2, $0003  ; Currently selected item
     dw $0AF6, $015A  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
@@ -3388,9 +3383,9 @@ preset_100map_blue_brinstar_cleanup_crateria_map_exit:
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $4C00  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
-    dw $09D2, $0003  ; Currently selected item
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
+    dw $09D2, $0003  ; Currently selected item
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $002B  ; Samus X
@@ -3405,9 +3400,9 @@ preset_100map_blue_brinstar_cleanup_230_missiles:
     dw $0911, $0100  ; Screen X position in pixels
     dw $0913, $8800  ; Screen subpixel Y position
     dw $0915, $031F  ; Screen Y position in pixels
-    dw $09D2, $0000  ; Currently selected item
     dw $0917, $00C0  ; Layer 2 X position
     dw $0919, $0257  ; Layer 2 Y position
+    dw $09D2, $0000  ; Currently selected item
     dw $0AF6, $015D  ; Samus X
     dw $0AFA, $039B  ; Samus Y
     dw #$FFFF
@@ -3616,7 +3611,7 @@ preset_100map_tourian_mother_brain_2:
 
 preset_100map_tourian_zebes_escape:
     dw #preset_100map_tourian_mother_brain_2 ; Tourian: Mother Brain 2
-    dw $09A6, $1009  ; Beams
+    dw $09A6, $1009  ; Equipped Beams
     dw $09C2, $0383  ; Health
     dw $09C6, $0000  ; Missiles
     dw $09CA, $0000  ; Supers
@@ -3664,7 +3659,6 @@ preset_100map_tourian_escape_climb:
     dw #preset_100map_tourian_escape_room_4 ; Tourian: Escape Room 4
     dw $078D, $AB1C  ; DDB
     dw $079B, $DEDE  ; MDB
-    dw $090F, $0000  ; Screen subpixel X position
     dw $0911, $00F1  ; Screen X position in pixels
     dw $0913, $A400  ; Screen subpixel Y position
     dw $0915, $00FB  ; Screen Y position in pixels

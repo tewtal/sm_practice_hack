@@ -100,7 +100,7 @@ cm_boot:
 
     ; Disable sounds until we boot the SPC
     LDA #$0001 : STA !DISABLE_SOUNDS
-.skip_spc
+  .skip_spc
 
     %a8()
     LDA #$5A : STA $2109 ; BG3 tilemap base address

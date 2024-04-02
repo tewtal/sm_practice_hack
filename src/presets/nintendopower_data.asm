@@ -14,8 +14,8 @@ preset_nintendopower_crateria_ceres_elevator:
     dw $093F, $0000  ; Ceres escape flag
     dw $09A2, $0000  ; Equipped Items
     dw $09A4, $0000  ; Collected Items
-    dw $09A6, $0000  ; Beams
-    dw $09A8, $0000  ; Beams
+    dw $09A6, $0000  ; Equipped Beams
+    dw $09A8, $0000  ; Collected Beams
     dw $09C0, $0000  ; Manual/Auto reserve tank
     dw $09C2, $0063  ; Health
     dw $09C4, $0063  ; Max health
@@ -108,6 +108,7 @@ preset_nintendopower_crateria_ship:
     dw $0911, $0400  ; Screen X position in pixels
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $0400  ; Screen Y position in pixels
+    dw $0917, $0200  ; Layer 2 X position
     dw $093F, $0000  ; Ceres escape flag
     dw $09C2, $0063  ; Health
     dw $0A1C, $0000  ; Samus position/state
@@ -116,7 +117,6 @@ preset_nintendopower_crateria_ship:
     dw $0AF8, $0000  ; Samus subpixel X
     dw $0AFA, $0471  ; Samus Y
     dw $0AFC, $8000  ; Samus subpixel Y
-    dw $0917, $0200  ; Layer 2 X position
     dw #$FFFF
 
 preset_nintendopower_crateria_parlor:
@@ -124,7 +124,6 @@ preset_nintendopower_crateria_parlor:
     dw $090F, $0000  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $1400  ; Screen subpixel Y position
-    dw $0915, $0400  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
@@ -351,11 +350,9 @@ preset_nintendopower_brinstar_green_brinstar_elevator:
     dw $078D, $8C22  ; DDB
     dw $079B, $9938  ; MDB
     dw $07F5, $0003  ; Music Track
-    dw $090F, $8000  ; Screen subpixel X position
     dw $0913, $9800  ; Screen subpixel Y position
     dw $0919, $0000  ; Layer 2 Y position
     dw $0AF6, $0080  ; Samus X
-    dw $D870, $0180  ; Items
     dw #$FFFF
 
 preset_nintendopower_brinstar_big_pink:
@@ -382,8 +379,8 @@ preset_nintendopower_brinstar_spore_spawn:
     dw $090F, $A000  ; Screen subpixel X position
     dw $0911, $02F0  ; Screen X position in pixels
     dw $0913, $0C00  ; Screen subpixel Y position
-    dw $09A6, $1000  ; Beams
-    dw $09A8, $1000  ; Beams
+    dw $09A6, $1000  ; Equipped Beams
+    dw $09A8, $1000  ; Collected Beams
     dw $09C6, $0007  ; Missiles
     dw $09C8, $000F  ; Max missiles
     dw $0AF6, $037E  ; Samus X
@@ -438,8 +435,8 @@ preset_nintendopower_norfair_business_center:
     dw $090F, $9000  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $7C00  ; Screen subpixel Y position
-    dw $09A6, $1004  ; Beams
-    dw $09A8, $1004  ; Beams
+    dw $09A6, $1004  ; Equipped Beams
+    dw $09A8, $1004  ; Collected Beams
     dw $0A1C, $0005  ; Samus position/state
     dw $0AF6, $0081  ; Samus X
     dw $D874, $0404  ; Items
@@ -555,8 +552,8 @@ preset_nintendopower_norfair_ice_escape:
     dw $090F, $E001  ; Screen subpixel X position
     dw $0913, $7800  ; Screen subpixel Y position
     dw $0915, $0200  ; Screen Y position in pixels
-    dw $09A6, $1006  ; Beams
-    dw $09A8, $1006  ; Beams
+    dw $09A6, $1006  ; Equipped Beams
+    dw $09A8, $1006  ; Collected Beams
     dw $09C2, $00FE  ; Health
     dw $09CA, $0002  ; Supers
     dw $0A1C, $0001  ; Samus position/state
@@ -725,8 +722,8 @@ preset_nintendopower_norfair_shinespark_2:
     dw $090F, $B000  ; Screen subpixel X position
     dw $0913, $8000  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
-    dw $09A6, $1007  ; Beams
-    dw $09A8, $1007  ; Beams
+    dw $09A6, $1007  ; Equipped Beams
+    dw $09A8, $1007  ; Collected Beams
     dw $09C2, $01DF  ; Health
     dw $09C6, $0041  ; Missiles
     dw $09C8, $0041  ; Max missiles
@@ -937,7 +934,7 @@ preset_nintendopower_maridia_mainstreet:
     dw $0911, $0100  ; Screen X position in pixels
     dw $0913, $5800  ; Screen subpixel Y position
     dw $0915, $071C  ; Screen Y position in pixels
-    dw $09A6, $1001  ; Beams
+    dw $09A6, $1001  ; Equipped Beams
     dw $09C2, $01F3  ; Health
     dw $09CA, $0009  ; Supers
     dw $0A1C, $0001  ; Samus position/state
@@ -1171,8 +1168,8 @@ preset_nintendopower_maridia_long_tube:
     dw $0911, $001A  ; Screen X position in pixels
     dw $0913, $2000  ; Screen subpixel Y position
     dw $0915, $021F  ; Screen Y position in pixels
-    dw $09A6, $1009  ; Beams
-    dw $09A8, $100F  ; Beams
+    dw $09A6, $1009  ; Equipped Beams
+    dw $09A8, $100F  ; Collected Beams
     dw $09C2, $0298  ; Health
     dw $09C6, $0055  ; Missiles
     dw $09CA, $0013  ; Supers
@@ -1221,7 +1218,7 @@ preset_nintendopower_norfair_2_golden_torizo:
     dw $0911, $0200  ; Screen X position in pixels
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $0200  ; Screen Y position in pixels
-    dw $09A6, $100B  ; Beams
+    dw $09A6, $100B  ; Equipped Beams
     dw $09C2, $01D7  ; Health
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
@@ -1457,8 +1454,6 @@ preset_nintendopower_tourian_mother_brain_2:
     dw $07F3, $0021  ; Music Bank
     dw $07F5, $0000  ; Music Track
     dw $090F, $79FF  ; Screen subpixel X position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0919, $0000  ; Layer 2 Y position
     dw $09C2, $02C2  ; Health
     dw $09C6, $0051  ; Missiles
     dw $09CA, $000D  ; Supers
@@ -1470,7 +1465,7 @@ preset_nintendopower_tourian_mother_brain_2:
 
 preset_nintendopower_tourian_zebes_escape:
     dw #preset_nintendopower_tourian_mother_brain_2 ; Tourian: Mother Brain 2
-    dw $09A6, $1009  ; Beams
+    dw $09A6, $1009  ; Equipped Beams
     dw $09C2, $031F  ; Health
     dw $09C6, $0000  ; Missiles
     dw $09CA, $0000  ; Supers

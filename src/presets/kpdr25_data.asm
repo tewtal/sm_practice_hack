@@ -14,8 +14,8 @@ preset_kpdr25_bombs_ceres_elevator:
     dw $093F, $0000  ; Ceres escape flag
     dw $09A2, $0000  ; Equipped Items
     dw $09A4, $0000  ; Collected Items
-    dw $09A6, $0000  ; Beams
-    dw $09A8, $0000  ; Beams
+    dw $09A6, $0000  ; Equipped Beams
+    dw $09A8, $0000  ; Collected Beams
     dw $09C0, $0000  ; Manual/Auto reserve tank
     dw $09C2, $0063  ; Health
     dw $09C4, $0063  ; Max health
@@ -123,7 +123,6 @@ preset_kpdr25_bombs_climb_down:
     dw #preset_kpdr25_bombs_ship ; Bombs: Ship
     dw $078D, $8916  ; DDB
     dw $079B, $92FD  ; MDB
-    dw $090F, $8000  ; Screen subpixel X position
     dw $0911, $0100  ; Screen X position in pixels
     dw $0915, $02ED  ; Screen Y position in pixels
     dw $0917, $00C0  ; Layer 2 X position
@@ -339,8 +338,8 @@ preset_kpdr25_kraid_green_hills:
     dw $0915, $060F  ; Screen Y position in pixels
     dw $0917, $0240  ; Layer 2 X position
     dw $0919, $048B  ; Layer 2 Y position
-    dw $09A6, $1000  ; Beams
-    dw $09A8, $1000  ; Beams
+    dw $09A6, $1000  ; Equipped Beams
+    dw $09A8, $1000  ; Collected Beams
     dw $09C6, $0005  ; Missiles
     dw $09C8, $000A  ; Max missiles
     dw $09CA, $0003  ; Supers
@@ -409,8 +408,8 @@ preset_kpdr25_kraid_warehouse_entrance:
     dw $0915, $0100  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0100  ; Layer 2 Y position
-    dw $09A6, $1004  ; Beams
-    dw $09A8, $1004  ; Beams
+    dw $09A6, $1004  ; Equipped Beams
+    dw $09A8, $1004  ; Collected Beams
     dw $09CA, $0004  ; Supers
     dw $0A1C, $000B  ; Samus position/state
     dw $0AF6, $0048  ; Samus X
@@ -677,8 +676,8 @@ preset_kpdr25_upper_norfair_leaving_wave:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $09A6, $1005  ; Beams
-    dw $09A8, $1005  ; Beams
+    dw $09A6, $1005  ; Equipped Beams
+    dw $09A8, $1005  ; Collected Beams
     dw $09C6, $0012  ; Missiles
     dw $09C8, $0014  ; Max missiles
     dw $09CA, $0002  ; Supers
@@ -745,8 +744,8 @@ preset_kpdr25_upper_norfair_ice_escape:
     dw $0913, $7000  ; Screen subpixel Y position
     dw $0915, $0200  ; Screen Y position in pixels
     dw $0919, $0180  ; Layer 2 Y position
-    dw $09A6, $1007  ; Beams
-    dw $09A8, $1007  ; Beams
+    dw $09A6, $1007  ; Equipped Beams
+    dw $09A8, $1007  ; Collected Beams
     dw $0A1C, $0009  ; Samus position/state
     dw $0A1E, $0108  ; More position/state
     dw $0AF6, $00C7  ; Samus X
@@ -1290,8 +1289,8 @@ preset_kpdr25_maridia_plasma_spark_revisit:
     dw $0915, $031C  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0255  ; Layer 2 Y position
-    dw $09A6, $100B  ; Beams
-    dw $09A8, $100F  ; Beams
+    dw $09A6, $100B  ; Equipped Beams
+    dw $09A8, $100F  ; Collected Beams
     dw $09C2, $01BB  ; Health
     dw $09C6, $0009  ; Missiles
     dw $0A1C, $000A  ; Samus position/state
@@ -1784,7 +1783,7 @@ preset_kpdr25_tourian_mother_brain_2:
 
 preset_kpdr25_tourian_mother_brain_3:
     dw #preset_kpdr25_tourian_mother_brain_2 ; Tourian: Mother Brain 2
-    dw $09A6, $1009  ; Beams
+    dw $09A6, $1009  ; Equipped Beams
     dw $09C2, $018F  ; Health
     dw $09C6, $0000  ; Missiles
     dw $09CE, $0000  ; Pbs
@@ -1794,7 +1793,6 @@ preset_kpdr25_tourian_mother_brain_3:
 
 preset_kpdr25_tourian_zebes_escape:
     dw #preset_kpdr25_tourian_mother_brain_3 ; Tourian: Mother Brain 3
-    dw $09A6, $1009  ; Beams
     dw $0A1C, $009B  ; Samus position/state
     dw $0A1E, $0000  ; More position/state
     dw $0AF6, $0025  ; Samus X
