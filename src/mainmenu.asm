@@ -2387,6 +2387,8 @@ InfoHudMenu:
     dw #ih_goto_room_strat
     dw #ih_room_strat
     dw #$FFFF
+    dw #ih_door_display_mode
+    dw #$FFFF
     dw #ih_goto_timers
     dw #$FFFF
     dw #ih_top_HUD_mode
@@ -2641,6 +2643,21 @@ ih_room_strat:
   .routine
     LDA #!IH_MODE_ROOMSTRAT_INDEX : STA !sram_display_mode
     JML init_print_segment_timer
+
+ih_door_display_mode:
+    dw !ACTION_CHOICE
+    dl #!sram_door_display_mode
+    dw #$0000
+    db #$28, "Door HUD Mode", #$FF
+    db #$28, "        OFF", #$FF
+    db #$28, "HORIZ SPEED", #$FF
+    db #$28, " VERT SPEED", #$FF
+    db #$28, "     CHARGE", #$FF
+    db #$28, "SHINE TIMER", #$FF
+    db #$28, "DASHCOUNTER", #$FF
+    db #$28, " X POSITION", #$FF
+    db #$28, " Y POSITION", #$FF
+    db #$FF
 
 ih_goto_timers:
     %cm_submenu("Timer Settings", #IHTimerMenu)

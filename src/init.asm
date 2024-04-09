@@ -127,6 +127,7 @@ endif
     CMP #$0012 : BEQ .sram_upgrade_12to13
     CMP #$0013 : BEQ .sram_upgrade_13to14
     CMP #$0014 : BEQ .sram_upgrade_14to15
+    CMP #$0015 : BEQ .sram_upgrade_15to16
     BRA .sram_upgrade_upto9
 
   .sram_upgrade_10to11
@@ -152,6 +153,9 @@ endif
 
   .sram_upgrade_14to15
     TDC : STA !sram_bomb_torizo_door
+
+  .sram_upgrade_15to16
+    TDC : STA !sram_door_display_mode
 
     LDA #!SRAM_VERSION : STA !sram_initialized
     RTS

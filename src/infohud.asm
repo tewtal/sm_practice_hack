@@ -430,25 +430,44 @@ ih_before_room_transition:
     BPL .drawDoorLag
     EOR #$FF : INC
   .drawDoorLag
-    PHB : PHD : PLB : PLB
-    TAY
+    TAY ; preserve A
+    PHB : LDA #$00 : PHA : PLB
     LDX #$00C2
     LDA !sram_top_display_mode : CMP.b !TOP_DISPLAY_VANILLA : BEQ .vanillaDoorLag
     LDA !ram_minimap : BEQ .draw3
     LDX #$0054
   .draw3
     TYA : JSR Draw3
-  .doneDoorLag
-    %a16()
-    PLB
 
+    ; Door HUD mode can only overwrite Enemy HP
+    LDA !sram_display_mode : BNE .done
+    LDA !sram_door_display_mode : BEQ .done
+
+    ASL : TAX
+    JSR (.status_door_display_table,X)
+
+    ; Suppress Enemy HP display
+    LDA !ENEMY_HP : STA !ram_enemy_hp
+
+  .done
+    PLB
     CLC ; overwritten code
     RTL
 
   .vanillaDoorLag
-    LDA !ram_minimap : BNE .doneDoorLag
+    LDA !ram_minimap : BNE .done
     TYA : JSR Draw2
-    BRA .doneDoorLag
+    BRA .done
+
+  .status_door_display_table
+    dw #$0000 ; off/dummy
+    dw status_door_hspeed
+    dw status_door_vspeed
+    dw status_chargetimer
+    dw status_shinetimer
+    dw status_dashcounter
+    dw status_door_xpos
+    dw status_door_ypos
 }
 
 ceres_start_timers:

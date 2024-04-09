@@ -968,6 +968,95 @@ endif
     RTS
 }
 
+status_door_hspeed:
+{
+    ; subspeed + submomentum into low byte of Hspeed
+    LDA !SAMUS_X_SUBRUNSPEED : CLC : ADC !SAMUS_X_SUBMOMENTUM
+    AND #$FF00 : XBA : STA !ram_horizontal_speed
+
+    ; speed + momentum + carry into high byte of Hspeed
+    LDA !SAMUS_X_RUNSPEED : ADC !SAMUS_X_MOMENTUM
+    AND #$00FF : XBA : ORA !ram_horizontal_speed
+
+    ; draw whole number in decimal
+    AND #$FF00 : XBA
+    STA $4204
+    %a8()
+    ; divide by 10
+    LDA #$0A : STA $4206
+    %a16()
+    PEA $0000 : PLA ; wait for CPU math
+
+    ; draw integer speed value
+    LDA $4214 : BEQ .blanktens
+    ; tens digit
+    ASL : TAX
+    LDA.l NumberGFXTable,X : STA !HUD_TILEMAP+$88
+    ; ones digit
+    LDA $4216 : ASL : TAX
+    LDA.l NumberGFXTable,X : STA !HUD_TILEMAP+$8A
+    BRA .subspeed
+
+  .blanktens
+    ; ones digit
+    LDA $4216 : ASL : TAX
+    LDA.l NumberGFXTable,X : STA !HUD_TILEMAP+$8A
+    ; tens digit
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$88
+
+  .subspeed
+    LDA !IH_DECIMAL : STA !HUD_TILEMAP+$8C
+
+    ; draw fraction in hex
+    LDA !ram_horizontal_speed : AND #$00F0 : LSR #3 : TAX
+    LDA.l HexGFXTable,X : STA !HUD_TILEMAP+$8E
+
+  .done
+    RTS
+}
+
+status_door_vspeed:
+{
+    ; draw two digits of speed in decimal form
+    LDA !SAMUS_Y_SPEED : STA $4204
+    %a8()
+    ; divide by 10
+    LDA #$0A : STA $4206
+    %a16()
+    PEA $0000 : PLA ; wait for CPU math
+    LDA $4214 : BEQ .blanktens
+    ASL : TAX
+    LDA.l NumberGFXTable,X : STA !HUD_TILEMAP+$88
+
+    ; Ones digit
+    LDA $4216 : ASL : TAY
+    LDA.l NumberGFXTable,X : STA !HUD_TILEMAP+$8A
+    BRA .subspeed
+
+  .blanktens
+    LDA $4216 : ASL : TAX
+    LDA.l NumberGFXTable,X : STA !HUD_TILEMAP+$88
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$8A
+
+  .subspeed
+    LDA !IH_DECIMAL : STA !HUD_TILEMAP+$8A
+
+    LDA !SAMUS_Y_SUBSPEED : XBA : AND #$00F0 : LSR #3 : TAY
+    LDA.l HexGFXTable,X : STA !HUD_TILEMAP+$8C
+
+    RTS
+}
+
+status_door_xpos:
+{
+    LDA !SAMUS_X : LDX #$0088 : JMP Draw4
+}
+
+status_door_ypos:
+{
+    LDA !SAMUS_Y : LDX #$0088 : JMP Draw4
+}
+
 status_quickdrop:
 {
     LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_LEFT : BNE .leftright
