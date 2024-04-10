@@ -369,6 +369,7 @@ sram_customsfx_goback = !sram_customsfx_goback ; !SRAM_START+$80
 sram_seed_X = !sram_seed_X ; !SRAM_START+$82
 sram_seed_Y = !sram_seed_Y ; !SRAM_START+$84
 sram_bomb_torizo_door = !sram_bomb_torizo_door ; !SRAM_START+$86
+sram_door_display_mode = !sram_door_display_mode ; !SRAM_START+$88
 
 ; ^ FREE SPACE ^ up to +$EE, $100-BA6
 
