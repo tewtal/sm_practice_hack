@@ -439,6 +439,7 @@ ih_before_room_transition:
   .draw3
     TYA : JSR Draw3
 
+  .doorDisplay
     ; Door HUD mode can only overwrite Enemy HP
     LDA !sram_display_mode : BNE .done
     LDA !sram_door_display_mode : BEQ .done
@@ -455,9 +456,9 @@ ih_before_room_transition:
     RTL
 
   .vanillaDoorLag
-    LDA !ram_minimap : BNE .done
+    LDA !ram_minimap : BNE .doorDisplay
     TYA : JSR Draw2
-    BRA .done
+    BRA .doorDisplay
 
   .status_door_display_table
     dw #$0000 ; off/dummy
