@@ -25,8 +25,8 @@ org $828B34      ; reset room timers for first room of Ceres
     JML ceres_start_timers : NOP : NOP
 ceres_start_timers_return:
 
-org $90E6BC      ; hijack, runs on gamestate = 08 (main gameplay), handles most updating HUD information
-    JSL ih_gamemode_frame
+org $82DBB2      ; hijack, runs when in-game time is ticked
+    JML ih_gamemode_frame
 
 org $9493B8      ; hijack, runs when Samus hits a door BTS
     JSL ih_before_room_transition
@@ -336,7 +336,8 @@ ih_gamemode_frame:
     LDA !ram_gametime_room : INC : STA !ram_gametime_room
 
     ; overwritten code + return
-    JML $949B60
+    LDA !IGT_FRAMES : CLC
+    JML $82DBB6
 }
 
 ih_after_room_transition:
