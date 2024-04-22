@@ -1556,7 +1556,7 @@ magic_pants:
 
     LDA !ram_magic_pants_state : BNE .check_flash_pants
 
-    ; if loudpants are enabled, click
+    ; if loudpants are enabled, play sfx
     LDA !ram_magic_pants_enabled : AND #$0002 : BEQ .check_flash_pants
     LDA !sram_metronome_sfx : ASL : TAX
     LDA.l MetronomeSFX,X : JSL !SFX_LIB1

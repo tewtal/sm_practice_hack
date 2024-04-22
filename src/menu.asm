@@ -2748,19 +2748,21 @@ execute_numfield:
     ; determine dpad direction
     LDA !ram_cm_controller : BIT #$0200 : BNE .pressed_left
     ; pressed right, inc
-    %a8() : LDA [!DP_Address] : CLC : ADC !DP_Increment
+    LDA [!DP_Address] : CLC : ADC !DP_Increment
     CMP !DP_Maximum : BCS .set_to_min
     STA [!DP_Address] : BRA .jsl
 
   .pressed_left ; dec
-    %a8() : LDA [!DP_Address] : SEC : SBC !DP_Increment : BMI .set_to_max
+    LDA [!DP_Address] : SEC : SBC !DP_Increment : BMI .set_to_max
     CMP !DP_Minimum : BCC .set_to_max
     STA [!DP_Address] : BRA .jsl
 
   .set_to_min
+    %a8()
     LDA !DP_Minimum : STA [!DP_Address] : BRA .jsl
 
   .set_to_max
+    %a8()
     LDA !DP_Maximum : DEC : STA [!DP_Address]
 
   .jsl
