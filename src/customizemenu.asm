@@ -16,7 +16,10 @@ CustomizeMenu:
     dw #$FFFF
     dw #mc_customsfx
     dw #$FFFF
-    dw #mc_scroll_delay
+    dw #mc_customfont
+    dw #$FFFF
+    dw #mc_menuscroll_button
+    dw #mc_menuscroll_delay
     dw #$FFFF
     dw #mc_customheader
     dw #$0000
@@ -85,20 +88,20 @@ palette2custom_confirm:
     PHB : %i8()
     LDX.b #PaletteProfileTables>>16 : PHX : PLB
     ASL : TAX
-    LDA.l PaletteProfileTables,X : STA $16
+    LDA.l PaletteProfileTables,X : STA $C1
 
     ; copy table to SRAM
-    LDY #$00 : LDA ($16),Y : STA !sram_palette_border
-    LDY #$02 : LDA ($16),Y : STA !sram_palette_headeroutline
-    LDY #$04 : LDA ($16),Y : STA !sram_palette_text
-    LDY #$06 : LDA ($16),Y : STA !sram_palette_background
-    LDY #$08 : LDA ($16),Y : STA !sram_palette_numoutline
-    LDY #$0A : LDA ($16),Y : STA !sram_palette_numfill
-    LDY #$0C : LDA ($16),Y : STA !sram_palette_toggleon
-    LDY #$0E : LDA ($16),Y : STA !sram_palette_seltext
-    LDY #$10 : LDA ($16),Y : STA !sram_palette_seltextbg
-    LDY #$12 : LDA ($16),Y : STA !sram_palette_numseloutline
-    LDY #$14 : LDA ($16),Y : STA !sram_palette_numsel
+    LDY #$00 : LDA ($C1),Y : STA !sram_palette_border
+    LDY #$02 : LDA ($C1),Y : STA !sram_palette_headeroutline
+    LDY #$04 : LDA ($C1),Y : STA !sram_palette_text
+    LDY #$06 : LDA ($C1),Y : STA !sram_palette_background
+    LDY #$08 : LDA ($C1),Y : STA !sram_palette_numoutline
+    LDY #$0A : LDA ($C1),Y : STA !sram_palette_numfill
+    LDY #$0C : LDA ($C1),Y : STA !sram_palette_toggleon
+    LDY #$0E : LDA ($C1),Y : STA !sram_palette_seltext
+    LDY #$10 : LDA ($C1),Y : STA !sram_palette_seltextbg
+    LDY #$12 : LDA ($C1),Y : STA !sram_palette_numseloutline
+    LDY #$14 : LDA ($C1),Y : STA !sram_palette_numsel
 
     ; play sfx and refresh current profile
     JSL refresh_custom_palettes
@@ -140,6 +143,7 @@ PaletteRandoConfirm:
 paletterando_abort:
     %cm_jsl("ABORT", #.routine, #$0000)
   .routine
+    %sfxgoback()
     JML cm_previous_menu
 
 paletterando_confirm:
@@ -166,8 +170,10 @@ paletterando_confirm:
 mc_customsfx:
     %cm_submenu("Customize Menu Sounds", #CustomMenuSFXMenu)
 
-mc_scroll_delay:
-    %cm_numfield("Menu Scroll Delay", !sram_cm_scroll_delay, 1, 10, 1, 2, #0)
+mc_customfont:
+    %cm_numfield("Select Font", !sram_cm_font, 0, 1, 1, 1, .routine)
+  .routine
+    JML cm_transfer_custom_tileset
 
 mc_customheader:
     %cm_jsl("Customize Menu Header", #.routine, #$0000)
@@ -336,33 +342,33 @@ custompalettes_background_display:
 ; ---------------
 
 CustomMenuSFXMenu:
-    dw #sfx_move
-    dw #sfx_toggle
-    dw #sfx_number
-    dw #sfx_confirm
-    dw #sfx_goback
+    dw #mc_sfx_move
+    dw #mc_sfx_toggle
+    dw #mc_sfx_number
+    dw #mc_sfx_confirm
+    dw #mc_sfx_goback
     dw #$FFFF
-    dw #sfx_reset
+    dw #mc_sfx_reset
     dw #$0000
     %cm_header("CUSTOMIZE MENU SOUND FX")
     %cm_footer("PRESS Y TO PLAY SOUNDS")
 
-sfx_move:
+mc_sfx_move:
     %cm_numfield_sound("Move Cursor", !sram_customsfx_move, 1, 63, 1, 3, #action_test_sfx)
 
-sfx_toggle:
+mc_sfx_toggle:
     %cm_numfield_sound("Toggle", !sram_customsfx_toggle, 1, 63, 1, 3, #action_test_sfx)
 
-sfx_number:
+mc_sfx_number:
     %cm_numfield_sound("Number Select", !sram_customsfx_number, 1, 63, 1, 3, #action_test_sfx)
 
-sfx_goback:
+mc_sfx_goback:
     %cm_numfield_sound("Go Back", !sram_customsfx_goback, 1, 63, 1, 3, #action_test_sfx)
 
-sfx_confirm:
+mc_sfx_confirm:
     %cm_numfield_sound("Confirm Selection", !sram_customsfx_confirm, 1, 63, 1, 3, #action_test_sfx)
 
-sfx_reset:
+mc_sfx_reset:
     %cm_jsl("Reset to Defaults", .routine, #$0000)
   .routine
     %sfxreset()
@@ -374,6 +380,35 @@ action_test_sfx:
 }
 
 
+; -----------
+; Menu Config
+; -----------
+
+mc_menuscroll_button:
+    dw !ACTION_CHOICE
+    dl #!ram_cm_fast_scroll_menu_selection
+    dw .routine
+    db #$28, "Fast-Scroll But", #$FF
+    db #$28, "ton       X", #$FF
+    db #$28, "ton       Y", #$FF
+    db #$28, "ton    NONE", #$FF
+    db #$FF
+  .routine
+    LDA !ram_cm_fast_scroll_menu_selection : BEQ .selectX
+    CMP #$0001 : BEQ .selectY
+    TDC : STA !sram_cm_fast_scroll_button
+    RTL
+  .selectX
+    LDA !CTRL_X : STA !sram_cm_fast_scroll_button
+    RTL
+  .selectY
+    LDA !CTRL_Y : STA !sram_cm_fast_scroll_button
+    RTL
+
+mc_menuscroll_delay:
+    %cm_numfield("Menu Scroll Delay", !sram_cm_scroll_delay, 1, 10, 1, 2, #0)
+
+
 ; ---------
 ; Menu Code
 ; ---------
@@ -383,22 +418,22 @@ PrepMenuPalette:
     LDA !sram_custompalette_profile : BEQ .customPalette
 
     ; load palettes from profile table
-    PHP : %i8()
-    PHB
-    LDX.b #PaletteProfileTables>>16 : PHX : PLB
+    PHP : PHB
+    %i8()
+    LDY.b #PaletteProfileTables>>16 : PHY : PLB ; set bank of tables
     ASL : TAX
-    LDA.l PaletteProfileTables,X : STA $14
-    LDY #$00 : LDA ($14),Y : STA !ram_cm_palette_border
-    LDY #$02 : LDA ($14),Y : STA !ram_cm_palette_headeroutline
-    LDY #$04 : LDA ($14),Y : STA !ram_cm_palette_text
-    LDY #$06 : LDA ($14),Y : STA !ram_cm_palette_background
-    LDY #$08 : LDA ($14),Y : STA !ram_cm_palette_numoutline
-    LDY #$0A : LDA ($14),Y : STA !ram_cm_palette_numfill
-    LDY #$0C : LDA ($14),Y : STA !ram_cm_palette_toggleon
-    LDY #$0E : LDA ($14),Y : STA !ram_cm_palette_seltext
-    LDY #$10 : LDA ($14),Y : STA !ram_cm_palette_seltextbg
-    LDY #$12 : LDA ($14),Y : STA !ram_cm_palette_numseloutline
-    LDY #$14 : LDA ($14),Y : STA !ram_cm_palette_numsel
+    LDA.w PaletteProfileTables,X : STA $C1
+    LDY #$00 : LDA ($C1),Y : STA !ram_cm_palette_border
+    LDY #$02 : LDA ($C1),Y : STA !ram_cm_palette_headeroutline
+    LDY #$04 : LDA ($C1),Y : STA !ram_cm_palette_text
+    LDY #$06 : LDA ($C1),Y : STA !ram_cm_palette_background
+    LDY #$08 : LDA ($C1),Y : STA !ram_cm_palette_numoutline
+    LDY #$0A : LDA ($C1),Y : STA !ram_cm_palette_numfill
+    LDY #$0C : LDA ($C1),Y : STA !ram_cm_palette_toggleon
+    LDY #$0E : LDA ($C1),Y : STA !ram_cm_palette_seltext
+    LDY #$10 : LDA ($C1),Y : STA !ram_cm_palette_seltextbg
+    LDY #$12 : LDA ($C1),Y : STA !ram_cm_palette_numseloutline
+    LDY #$14 : LDA ($C1),Y : STA !ram_cm_palette_numsel
     PLB : PLP
     RTL
 
@@ -441,14 +476,14 @@ MixRGB:
     LDA !ram_cm_cursor_stack,X : TAX
 
     ; store indirect address
-    LDA.l .MenuPaletteTable,X : STA $12
-    LDA.w #!sram_palette_text>>16 : STA $14
+    LDA.l .MenuPaletteTable,X : STA $C1
+    LDA.w #!sram_palette_text>>16 : STA $C3
 
     ; mix 5-bit RGB values into 15-bit BGR format
-    LDA !ram_cm_custompalette_blue : XBA : ASL #2 : STA $16
-    LDA !ram_cm_custompalette_green : ASL #5 : ORA $16 : STA $16
-    LDA !ram_cm_custompalette_red : ORA $16
-    STA [$12]
+    LDA !ram_cm_custompalette_blue : XBA : ASL #2 : STA $C5
+    LDA !ram_cm_custompalette_green : ASL #5 : ORA $C5 : STA $C5
+    LDA !ram_cm_custompalette_red : ORA $C5
+    STA [$C1]
 
     ; store BGR value
     STA !ram_cm_custompalette

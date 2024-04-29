@@ -5,6 +5,7 @@
 
 action_infohud_mainmenu:
 {
+    ; Validate top display mode in range
     LDA !sram_top_display_mode : CMP #$0003 : BCC action_mainmenu
     TDC : STA !sram_top_display_mode
     BRA action_mainmenu
@@ -14,6 +15,26 @@ action_layout_mainmenu:
 {
     ; Prepare dynamic menu
     LDA !ram_door_portal_flags : AND !DOOR_PORTAL_MODE_MASK : STA !ram_cm_door_dynamic
+    BRA action_mainmenu
+}
+
+action_customize_mainmenu:
+{
+    ; Set fast button selection
+    LDA !sram_cm_fast_scroll_button : CMP !CTRL_X : BEQ .xSelected
+    CMP !CTRL_Y : BEQ .ySelected
+
+    ; None selected
+    TDC : STA !sram_cm_fast_scroll_button
+    LDA #$0002 : STA !ram_cm_fast_scroll_menu_selection
+    BRA action_mainmenu
+
+  .xSelected
+    TDC : STA !ram_cm_fast_scroll_menu_selection
+    BRA action_mainmenu
+
+  .ySelected
+    LDA #$0001 : STA !ram_cm_fast_scroll_menu_selection
 
     ; continue into action_mainmenu
 }
@@ -205,7 +226,7 @@ mm_goto_ctrlsmenu:
     %cm_mainmenu("Controller Shortcuts", #CtrlMenu)
 
 mm_goto_customize:
-    %cm_mainmenu("Menu Customization", #CustomizeMenu)
+    %cm_jsl("Menu Customization", #action_customize_mainmenu, #CustomizeMenu)
 
 
 ; -------------------

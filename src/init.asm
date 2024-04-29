@@ -156,6 +156,8 @@ endif
 
   .sram_upgrade_15to16
     TDC : STA !sram_door_display_mode
+    STA !sram_cm_font
+    LDA !CTRL_Y : STA !sram_cm_fast_scroll_button
 
     LDA #!SRAM_VERSION : STA !sram_initialized
     RTS

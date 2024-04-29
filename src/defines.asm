@@ -107,10 +107,10 @@
 
 !WRAM_PERSIST_START = !WRAM_START+$80
 ; ----------------------------------------------------------
-; Variables below this point are PERSISTENT -- they maintain
-; their value across savestates. Use this section for
-; variables such as user settings that do not depend on the
-; current game state.
+; WRAM variables below this point are PERSISTENT.
+; They maintain their value across savestates.
+; Use this section for variables such as user settings
+; that do not depend on the current game state.
 
 !ram_metronome                      = !WRAM_PERSIST_START+$00
 !ram_minimap                        = !WRAM_PERSIST_START+$02
@@ -278,6 +278,7 @@
 !ram_cm_custompalette_green = !WRAM_MENU_START+$82
 !ram_cm_custompalette_red = !WRAM_MENU_START+$84
 !ram_cm_custompalette = !WRAM_MENU_START+$86
+!ram_cm_fast_scroll_menu_selection = !WRAM_MENU_START+$88
 !ram_cm_dummy_on = !WRAM_MENU_START+$8A
 !ram_cm_dummy_off = !WRAM_MENU_START+$8C
 !ram_cm_dummy_num = !WRAM_MENU_START+$8E
@@ -383,6 +384,8 @@
 !sram_seed_Y = !SRAM_START+$84
 !sram_bomb_torizo_door = !SRAM_START+$86
 !sram_door_display_mode = !SRAM_START+$88
+!sram_cm_fast_scroll_button = !SRAM_START+$8A
+!sram_cm_font = !SRAM_START+$8C
 
 ; ^ FREE SPACE ^ up to +$EE, $100-BA6
 

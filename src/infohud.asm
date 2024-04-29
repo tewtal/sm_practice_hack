@@ -391,11 +391,11 @@ ih_before_room_transition:
     STA !GAMEMODE ; overwritten code
 
     ; Check if we've already run on this frame
-    LDA !ram_transition_flag : BEQ .first_run
+    LDA !ram_transition_flag : BEQ .firstRun
     CLC ; overwritten code
     RTL
 
-  .first_run
+  .firstRun
     ; Lag
     LDA !ram_realtime_room : SEC : SBC !ram_transition_counter : STA !ram_last_room_lag
 
@@ -446,7 +446,7 @@ ih_before_room_transition:
     LDA !sram_door_display_mode : BEQ .done
 
     ASL : TAX
-    JSR (.status_door_display_table,X)
+    JSR (.doorDisplayTable,X)
 
     ; Suppress Enemy HP display
     LDA !ENEMY_HP : STA !ram_enemy_hp
@@ -461,7 +461,7 @@ ih_before_room_transition:
     TYA : JSR Draw2
     BRA .doorDisplay
 
-  .status_door_display_table
+  .doorDisplayTable
     dw #$0000 ; off/dummy
     dw status_door_hspeed
     dw status_door_vspeed
