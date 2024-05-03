@@ -46,6 +46,24 @@ org $90E817
 endif
 
 
+; Reduce time to start demos
+if !FEATURE_PAL
+org $8B9B2B
+    LDA #$00F0
+else
+org $8B9B5B
+    LDA #$012C
+endif
+
+if !FEATURE_PAL
+org $8B9EEA
+    LDA #$00F0
+else
+org $8B9F1A
+    LDA #$012C
+endif
+
+
 ; unlock the fourth demo set
 ; normally requires watching credits
 org $808262
