@@ -77,7 +77,7 @@ DemoInstruction_ModifyWRAM:
 warnpc $918739
 
 
-; adds lava damage to demos, replaces dead debug code
+; Adds lava damage to demos, replaces dead debug code
 if !FEATURE_PAL
 org $90E814
     JSR $E9CB ; Handle periodic damage to Samus
@@ -85,6 +85,24 @@ else
 org $90E817
     JSR $E9CE ; Handle periodic damage to Samus
 endif
+
+    ; Executes PAL debug routine (if PAL_DEBUG_MOVEMENT is zero)
+    LDA !PAL_DEBUG_MOVEMENT : BNE EndOfIntroDemo
+if !FEATURE_PAL
+    JSR $ECD2
+else
+    JSR $ECD5
+endif
+    BRA EndOfIntroDemo
+%warnpc($90E833, $90E830)
+
+
+if !FEATURE_PAL
+org $90E84E
+else
+org $90E851
+endif
+EndOfIntroDemo:
 
 
 ; Reduce time to start demos
