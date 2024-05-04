@@ -24,9 +24,15 @@ current_input = 0
 previous_line = None
 previous_count = 0
 for line in input_lines:
-   if len(line) > 16 and '|' == line[0] and '|' == line[3] and '|' == line[16]:
+   if len(line) < 17 or '|' != line[0] or '|' != line[3] or '|' != line[16]:
+      if previous_count > 0:
+         demo_file.write(f'    dw ${previous_count:04X}, ${current_input:04X}     ; {previous_line[4:16]}\n')
+         previous_line = None
+         previous_count = 0
+      demo_file.write(line)
+   else:
       if previous_count > 0 and previous_line != line:
-         demo_file.write(f'    dw ${previous_count:04X}, ${current_input:04X}, $0000    ; {previous_line[4:16]}\n')
+         demo_file.write(f'    dw ${previous_count:04X}, ${current_input:04X}     ; {previous_line[4:16]}\n')
          previous_line = None
          previous_count = 0
       if previous_line is None:
@@ -49,16 +55,16 @@ for line in input_lines:
          if 'B' == line[11]:
             current_input += 0x8000
          if 'X' == line[12]:
-            current_input += 0x0040
+            current_input += 0x40
          if 'A' == line[13]:
-            current_input += 0x0080
+            current_input += 0x80
          if 'l' == line[14]:
-            current_input += 0x0020
+            current_input += 0x20
          if 'r' == line[15]:
-            current_input += 0x0010
+            current_input += 0x10
       previous_count = previous_count + 1
 if previous_count > 0:
-   demo_file.write(f'    dw ${previous_count:04X}, ${current_input:04X}, $0000    ; {previous_line[4:16]}\n\n')
+   demo_file.write(f'    dw ${previous_count:04X}, ${current_input:04X}     ; {previous_line[4:16]}\n\n')
 
 demo_file.close()
 
