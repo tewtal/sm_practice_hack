@@ -12,7 +12,7 @@ DemoInputObjectHandler:
     ; check if instruction pointer = 0
     LDA !DEMO_INSTRUCTION_POINTER : BEQ .return
 
-    JSR $83F2 ; Process Demo Input Object
+    JSR ProcessDemoInputObject
 
     ; update previous demo inputs
     LDA !DEMO_PREVIOUS_CONTROLLER_PRI : STA !PREVIOUS_CONTROLLER_PRI
@@ -20,20 +20,57 @@ DemoInputObjectHandler:
 
     ; update current demo inputs
     LDA !DEMO_CONTROLLER_PRI : STA !IH_CONTROLLER_PRI : STA !DEMO_PREVIOUS_CONTROLLER_PRI
-    LDA !DEMO_CONTROLLER_PRI_NEW : STA !IH_CONTROLLER_PRI_NEW : STA !DEMO_PREVIOUS_CONTROLLER_PRI_NEW
+    EOR !PREVIOUS_CONTROLLER_PRI : AND !IH_CONTROLLER_PRI
+    STA !IH_CONTROLLER_PRI_NEW : STA !DEMO_PREVIOUS_CONTROLLER_PRI_NEW
 
   .return
     PLB
     RTL
 }
 
+ProcessDemoInputObject:
+{
+    LDX #$0000
+    JSR (!DEMO_PREINSTRUCTION_POINTER,X)
+    DEC !DEMO_INSTRUCTION_TIMER
+    BNE .return
+
+    LDY !DEMO_INSTRUCTION_POINTER
+  .instructionLoop
+    LDA $0000,Y
+    BPL .frameCount
+    STA $12 : INY : INY
+    PEA .instructionLoop-1
+    JMP ($0012)
+
+  .frameCount
+    STA !DEMO_INSTRUCTION_TIMER
+    LDA $0002,Y : STA !DEMO_CONTROLLER_PRI
+    TYA : CLC : ADC #$0006
+    STA !DEMO_INSTRUCTION_POINTER
+
+  .return
+}
 NoCodeRTS:
     RTS
-warnpc $9183F2
+warnpc $918427
 
 
 org $918427
 DemoInstruction_Delete:
+
+
+org $9186FE
+; Next 16-bits are WRAM address, following 16-bits are new value
+DemoInstruction_ModifyWRAM:
+{
+    LDA $0000,Y : INY : INY
+    STA $C1 : LDA #$7E7E : STA $C3
+    LDA $0000,Y : INY : INY
+    STA [$C1]
+    RTS
+}
+warnpc $918739
 
 
 ; adds lava damage to demos, replaces dead debug code
@@ -152,6 +189,7 @@ else
     dw $1005, $000A, $0005, $0000, $012B, $0005, $0005, DemoObject_frogspeedway
     dw $7114, $000F, $0002, $0002, $018F, $0000, $0000, DemoObject_grapplejump
     dw $1004, $000A, $000B, $000C, $0063, $0000, $0000, DemoObject_crystalflash
+    dw $1004, $0005, $0004, $0000, $00C7, $0000, $0000, DemoObject_tasdance
 endif
 }
 
@@ -248,6 +286,8 @@ else
     dw NoCodeRTS, EndDemo, DemoInput_everest
   .alphapb
     dw NoCodeRTS, EndDemo, DemoInput_alphapb
+  .tasdance
+    dw NoCodeRTS, EndDemo, DemoInput_tasdance
 endif
 }
 
@@ -310,6 +350,7 @@ else
     dw DSS_FacingLeft ; frogspeedway
     dw DSS_FacingLeft ; grapplejump
     dw DSS_LowEnergyFacingLeft ; crystalflash
+    dw DSS_FacingLeft ; tasdance
 endif
 
 DSS_LandingSite:
@@ -581,6 +622,7 @@ else
     dw $B106, $970E, $0700, $0000, $008B, $0051, $0312, DRC_RTS ; frogspeedway
     dw $D5A7, $A828, $0000, $0200, $008B, $FFA7, $0485, DRC_RTS ; grapplejump
     dw $9D19, $8F8E, $0200, $0600, $008B, $001C, $040A, DRC_BigPink ; crystalflash
+    dw $9AD9, $8D4E, $0000, $0200, $00AB, $0021, $029F, DRC_RTS ; tasdance
 endif
     dw $FFFF
 }
@@ -3576,5 +3618,169 @@ DemoInput_alphapb:
     dw $0003, $8100, $0000
     dw DemoInstruction_Delete
 } ; alphapb
+
+DemoInput_tasdance:
+{
+    dw DemoInstruction_ModifyWRAM, !SAMUS_MOONWALK, $0001
+    dw $001C, $8020, $0000    ; .......B..l.
+    dw $0001, $8060, $0000    ; .......BX.l.
+    dw $0001, $8160, $0000    ; ...R...BX.l.
+    dw $0002, $81E0, $0000    ; ...R...BXAl.
+    dw $0002, $81A0, $0000    ; ...R...B.Al.
+    dw $0002, $8120, $0000    ; ...R...B..l.
+    dw $0001, $8020, $0000    ; .......B..l.
+    dw $0006, $8220, $0000    ; ..L....B..l.
+    dw $0001, $8020, $0000    ; .......B..l.
+    dw $0006, $8120, $0000    ; ...R...B..l.
+    dw $0001, $8020, $0000    ; .......B..l.
+    dw $0003, $8220, $0000    ; ..L....B..l.
+    dw $0002, $8020, $0000    ; .......B..l.
+    dw $000A, $8120, $0000    ; ...R...B..l.
+    dw $0004, $8220, $0000    ; ..L....B..l.
+    dw $0003, $8020, $0000    ; .......B..l.
+    dw $0005, $8120, $0000    ; ...R...B..l.
+    dw $0002, $8020, $0000    ; .......B..l.
+    dw $0001, $8220, $0000    ; ..L....B..l.
+    dw $0006, $8020, $0000    ; .......B..l.
+    dw $0001, $8120, $0000    ; ...R...B..l.
+    dw $000D, $8220, $0000    ; ..L....B..l.
+    dw $0002, $8120, $0000    ; ...R...B..l.
+    dw $0004, $8020, $0000    ; .......B..l.
+    dw $0004, $8220, $0000    ; ..L....B..l.
+    dw $0003, $8020, $0000    ; .......B..l.
+    dw $0005, $8120, $0000    ; ...R...B..l.
+    dw $0002, $8020, $0000    ; .......B..l.
+    dw $0005, $8220, $0000    ; ..L....B..l.
+    dw $0002, $8020, $0000    ; .......B..l.
+    dw $0005, $8120, $0000    ; ...R...B..l.
+    dw $0002, $8020, $0000    ; .......B..l.
+    dw $0005, $8220, $0000    ; ..L....B..l.
+    dw $0002, $8020, $0000    ; .......B..l.
+    dw $0005, $8120, $0000    ; ...R...B..l.
+    dw $0002, $8020, $0000    ; .......B..l.
+    dw $0005, $8220, $0000    ; ..L....B..l.
+    dw $0002, $8020, $0000    ; .......B..l.
+    dw $0005, $8120, $0000    ; ...R...B..l.
+    dw $0002, $8020, $0000    ; .......B..l.
+    dw $0005, $8220, $0000    ; ..L....B..l.
+    dw $0002, $8020, $0000    ; .......B..l.
+    dw $0005, $8120, $0000    ; ...R...B..l.
+    dw $0002, $8020, $0000    ; .......B..l.
+    dw $0005, $8220, $0000    ; ..L....B..l.
+    dw $0002, $8020, $0000    ; .......B..l.
+    dw $0005, $8120, $0000    ; ...R...B..l.
+    dw $0002, $8020, $0000    ; .......B..l.
+    dw $0005, $8220, $0000    ; ..L....B..l.
+    dw $0002, $8020, $0000    ; .......B..l.
+    dw $0005, $8120, $0000    ; ...R...B..l.
+    dw $0002, $8020, $0000    ; .......B..l.
+    dw $0005, $8220, $0000    ; ..L....B..l.
+    dw $0002, $8020, $0000    ; .......B..l.
+    dw $0005, $8120, $0000    ; ...R...B..l.
+    dw $0002, $8020, $0000    ; .......B..l.
+    dw $0005, $8220, $0000    ; ..L....B..l.
+    dw $0002, $8020, $0000    ; .......B..l.
+    dw $0005, $8120, $0000    ; ...R...B..l.
+    dw $0002, $8020, $0000    ; .......B..l.
+    dw $0005, $8220, $0000    ; ..L....B..l.
+    dw $0002, $8020, $0000    ; .......B..l.
+    dw $0005, $8120, $0000    ; ...R...B..l.
+    dw $0002, $8020, $0000    ; .......B..l.
+    dw $0005, $8220, $0000    ; ..L....B..l.
+    dw $0002, $8020, $0000    ; .......B..l.
+    dw $0005, $8120, $0000    ; ...R...B..l.
+    dw $0002, $8020, $0000    ; .......B..l.
+    dw $0005, $8220, $0000    ; ..L....B..l.
+    dw $0002, $8020, $0000    ; .......B..l.
+    dw $0005, $8120, $0000    ; ...R...B..l.
+    dw $0002, $8020, $0000    ; .......B..l.
+    dw $0005, $8220, $0000    ; ..L....B..l.
+    dw $0002, $8020, $0000    ; .......B..l.
+    dw $0005, $8120, $0000    ; ...R...B..l.
+    dw $0002, $8020, $0000    ; .......B..l.
+    dw $0005, $8220, $0000    ; ..L....B..l.
+    dw $0002, $8020, $0000    ; .......B..l.
+    dw $0005, $8120, $0000    ; ...R...B..l.
+    dw $0002, $8020, $0000    ; .......B..l.
+    dw $0005, $8220, $0000    ; ..L....B..l.
+    dw $0002, $8020, $0000    ; .......B..l.
+    dw $0005, $8120, $0000    ; ...R...B..l.
+    dw $0002, $8020, $0000    ; .......B..l.
+    dw $0005, $8220, $0000    ; ..L....B..l.
+    dw $0002, $8020, $0000    ; .......B..l.
+    dw $0005, $8120, $0000    ; ...R...B..l.
+    dw $0002, $8020, $0000    ; .......B..l.
+    dw $0005, $8220, $0000    ; ..L....B..l.
+    dw $0002, $8020, $0000    ; .......B..l.
+    dw $0005, $8120, $0000    ; ...R...B..l.
+    dw $0002, $8020, $0000    ; .......B..l.
+    dw $0005, $8220, $0000    ; ..L....B..l.
+    dw $0002, $8020, $0000    ; .......B..l.
+    dw $0005, $8120, $0000    ; ...R...B..l.
+    dw $0002, $8020, $0000    ; .......B..l.
+    dw $0005, $8220, $0000    ; ..L....B..l.
+    dw $0002, $8020, $0000    ; .......B..l.
+    dw $0005, $8120, $0000    ; ...R...B..l.
+    dw $0002, $8020, $0000    ; .......B..l.
+    dw $0005, $8220, $0000    ; ..L....B..l.
+    dw $0002, $8020, $0000    ; .......B..l.
+    dw $0005, $8120, $0000    ; ...R...B..l.
+    dw $0002, $8020, $0000    ; .......B..l.
+    dw $0005, $8220, $0000    ; ..L....B..l.
+    dw $0002, $8020, $0000    ; .......B..l.
+    dw $0005, $8120, $0000    ; ...R...B..l.
+    dw $0002, $8020, $0000    ; .......B..l.
+    dw $0005, $8220, $0000    ; ..L....B..l.
+    dw $0002, $8020, $0000    ; .......B..l.
+    dw $0005, $8120, $0000    ; ...R...B..l.
+    dw $0002, $8020, $0000    ; .......B..l.
+    dw $0005, $8220, $0000    ; ..L....B..l.
+    dw $0002, $8020, $0000    ; .......B..l.
+    dw $0005, $8120, $0000    ; ...R...B..l.
+    dw $0002, $8020, $0000    ; .......B..l.
+    dw $0005, $8220, $0000    ; ..L....B..l.
+    dw $0002, $8020, $0000    ; .......B..l.
+    dw $0005, $8120, $0000    ; ...R...B..l.
+    dw $0002, $8020, $0000    ; .......B..l.
+    dw $0005, $8220, $0000    ; ..L....B..l.
+    dw $0002, $8020, $0000    ; .......B..l.
+    dw $0005, $8120, $0000    ; ...R...B..l.
+    dw $0002, $8020, $0000    ; .......B..l.
+    dw $0005, $8220, $0000    ; ..L....B..l.
+    dw $0002, $8020, $0000    ; .......B..l.
+    dw $0005, $8120, $0000    ; ...R...B..l.
+    dw $0002, $8020, $0000    ; .......B..l.
+    dw $0005, $8220, $0000    ; ..L....B..l.
+    dw $0002, $8020, $0000    ; .......B..l.
+    dw $0005, $8120, $0000    ; ...R...B..l.
+    dw $0002, $8020, $0000    ; .......B..l.
+    dw $0005, $8220, $0000    ; ..L....B..l.
+    dw $0002, $8020, $0000    ; .......B..l.
+    dw $0005, $8120, $0000    ; ...R...B..l.
+    dw $0002, $8020, $0000    ; .......B..l.
+    dw $0005, $8220, $0000    ; ..L....B..l.
+    dw $0002, $8020, $0000    ; .......B..l.
+    dw $0005, $8120, $0000    ; ...R...B..l.
+    dw $0002, $8020, $0000    ; .......B..l.
+    dw $0005, $8220, $0000    ; ..L....B..l.
+    dw $0002, $8020, $0000    ; .......B..l.
+    dw $000C, $8120, $0000    ; ...R...B..l.
+    dw $0003, $A020, $0000    ; ....s..B..l.
+    dw $0004, $8220, $0000    ; ..L....B..l.
+    dw $000B, $8200, $0000    ; ..L....B....
+    dw $0001, $8400, $0000    ; .D.....B....
+    dw $0007, $8240, $0000    ; ..L....BX...
+    dw $0007, $8040, $0000    ; .......BX...
+    dw $0008, $8140, $0000    ; ...R...BX...
+    dw $0011, $8040, $0000    ; .......BX...
+    dw $000E, $8140, $0000    ; ...R...BX...
+    dw $000B, $8040, $0000    ; .......BX...
+    dw $0001, $8240, $0000    ; ..L....BX...
+    dw $0004, $8040, $0000    ; .......BX...
+    dw $0001, $8240, $0000    ; ..L....BX...
+    dw $0005, $8440, $0000    ; .D.....BX...
+    dw $004E, $8040, $0000    ; .......BX...
+    dw DemoInstruction_Delete
+} ; tasdance
 endif
 print pc, " demos end"
