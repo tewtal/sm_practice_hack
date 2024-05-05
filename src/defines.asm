@@ -387,7 +387,17 @@
 !sram_cm_fast_scroll_button = !SRAM_START+$8A
 !sram_cm_font = !SRAM_START+$8C
 
-; ^ FREE SPACE ^ up to +$EE, $100-BA6
+; ^ FREE SPACE ^ up to +$EE
+
+!sram_presetequiprando = !SRAM_START+$100
+!sram_presetequiprando_beampref = !SRAM_START+$102
+!sram_presetequiprando_max_etanks = !SRAM_START+$104
+!sram_presetequiprando_max_reserves = !SRAM_START+$106
+!sram_presetequiprando_max_missiles = !SRAM_START+$108
+!sram_presetequiprando_max_supers = !SRAM_START+$10A
+!sram_presetequiprando_max_pbs = !SRAM_START+$10C
+
+; ^ FREE SPACE ^ up to +$BA6
 
 !sram_custom_header_normal = !SRAM_START+$BA8 ; $18 bytes
 !sram_custom_preset_safewords_normal = !SRAM_START+$BC0 ; $50 bytes
@@ -751,6 +761,11 @@ endif
 !PRESETS_PRESERVE_ENEMIES = #$0010
 !PRESETS_CLEAR_MAP_TILES = #$0020
 !PRESETS_AUTO_SEGMENT_OFF = #$0040
+
+!PRESET_EQUIP_RANDO_ENABLE = #$0001
+!PRESET_EQUIP_RANDO_FORCE_MORPH = #$0002
+!PRESET_EQUIP_RANDO_FORCE_CHARGE = #$0004
+!PRESET_EQUIP_RANDO_INIT = #$0006
 
 if !FEATURE_TINYSTATES
 !TOTAL_PRESET_SLOTS = #$000F

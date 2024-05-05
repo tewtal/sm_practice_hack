@@ -5,6 +5,8 @@
 org $83B400
 print pc, " custompresets start"
 
+; Backward compatibility was promised. Just because it's unused, doesn't mean you can use it.
+
 if !FEATURE_TINYSTATES
 custom_preset_save:
 {
@@ -394,6 +396,13 @@ preset_scroll_fixes:
   .big_pink
     BRL .specialized_big_pink
 
+  .big_pink_pbs
+    ; no fix if Ypos > 310
+    LDY !SAMUS_Y : CPY #$0136 : BMI .topdone
+    STZ $CD21
+    STA $CD22 : STA $CD23
+    BRA .topdone
+
   .taco_tank_room
     BRL .specialized_taco_tank_room
 
@@ -427,6 +436,7 @@ preset_scroll_fixes:
     CPX #$92FD : BEQ .parlor
     CPX #$9CB3 : BEQ .dachora
     CPX #$9D19 : BEQ .big_pink
+    CPX #$9E11 : BEQ .big_pink_pbs
     CPX #$9F64 : BEQ .taco_tank_room
     CPX #$A011 : BEQ .etecoons_etank
     CPX #$A253 : BEQ .red_tower
@@ -445,6 +455,12 @@ preset_scroll_fixes:
     ; ---------------------------------------------
     ; Upper Norfair Scroll Fixes (Category Presets)
     ; ---------------------------------------------
+  .ice_beam_gates
+    ; skip if Ypos < 720
+    LDY !SAMUS_Y : CPY #$02D0 : BMI .norfairdone
+    STA $CD38
+    BRA .norfairdone
+
   .ice_snake_room
     LDY !SAMUS_X : CPY #$0100    ; fix varies depending on X position
     BPL .ice_snake_room_hidden
@@ -470,6 +486,7 @@ preset_scroll_fixes:
     BRA .norfairdone
 
   .norfair
+    CPX #$A815 : BEQ .ice_beam_gates
     CPX #$A8B9 : BEQ .ice_snake_room
     CPX #$A9E5 : BEQ .hjb_room
     CPX #$AC83 : BEQ .green_bubble_missiles
@@ -526,6 +543,7 @@ preset_scroll_fixes:
     ; Wrecked Ship Scroll Fixes (Category Presets)
     ; --------------------------------------------
   .bowling
+    STA $CD2D : STA $CD2E : STA $CD2F
     STZ $CD26 : STZ $CD27
     STZ $CD28 : STZ $CD29
     STZ $CD2A : STZ $CD2B
@@ -554,6 +572,7 @@ preset_scroll_fixes:
     CPX #$CAF6 : BEQ .wrecked_ship_shaft
     CPX #$CBD5 : BEQ .electric_death
     CPX #$CC6F : BEQ .basement
+    CPX #$CEFB : BEQ .main_street
     CPX #$D1A3 : BEQ .crab_shaft
     CPX #$D21C : BEQ .crab_hole
     CPX #$D48E : BEQ .oasis
@@ -566,6 +585,10 @@ preset_scroll_fixes:
     ; -----------------------------------------------
     ; Maridia/Tourian Scroll Fixes (Category Presets)
     ; -----------------------------------------------
+  .main_street
+    INC : STA $CD20
+    BRA .halfwaydone
+
   .crab_shaft
     STA $CD26 : INC : STA $CD24
     BRA .halfwaydone
@@ -718,6 +741,203 @@ endif
     STA $7F03D4 : STA $7F0610 : STA $7F0612
     BRA .specialdone
 }
+
+LoadRandomPreset:
+{
+    PHY : PHX : PHB
+    PHK : PLB
+    LDA !ram_random_preset_rng : BEQ .seedrandom
+    LDA !ram_random_preset_value : STA $12
+    BRA .seedpicked
+
+  .seedrandom
+    JSL MenuRNG : STA $12                      ; random number
+
+  .seedpicked
+    LDA.w #preset_category_banks>>16 : STA $18 ; bank of category list in $18
+    LDA !sram_preset_category : ASL : TAY      ; selected category index in Y
+    LDA.w #preset_category_submenus : STA $16  ; pointer to category list in $16
+    LDA [$16],Y : TAX                          ; pointer to submenu table in X
+    LDA.w #preset_category_banks : STA $16     ; bank of submenu table in $16
+    LDA [$16],Y : STA $18                      ; pointer to category grouping table in $18
+
+    STX $16 : LDY #$0000                       ; pointer to submenu table in $16, reset Y
+  .toploop                                     ; count number of preset groups in Y
+    INY #2
+    LDA [$16],Y : BNE .toploop
+    TYA : LSR : TAY                            ; Y = size of preset category submenu table
+
+    LDA $12 : XBA : AND #$00FF : STA $4204
+    %a8()
+    STY $4206                                  ; divide top half of random number by Y
+    %a16()
+    PEA $0000 : PLA : PEA $0000 : PLA
+    LDA $4216 : ASL : TAY                      ; randomly selected subcategory in Y
+    LDA [$16],Y : STA $16                      ; subcategory pointer in $16
+    LDY #$0004 : LDA [$16],Y : STA $16         ; increment four bytes to get the subcategory table
+
+    LDY #$0000
+  .subloop                                     ; count number of presets in the subcategory in Y
+    INY #2
+    LDA [$16],Y : BNE .subloop
+    TYA : LSR : TAY                            ; Y = size of subcategory table
+
+    LDA $12 : AND #$00FF : STA $4204
+    %a8()
+    STY $14 : STY $4206                        ; divide bottom half of random number by Y
+    %a16()
+    PEA $0000 : PLA : PEA $0000 : PLA
+    LDA $4216 : STA $12                        ; randomly selected preset
+
+    ASL : TAY
+    LDA [$16],Y : STA $16                      ; random preset macro pointer in $16
+    LDY #$0004 : LDA [$16],Y                   ; finally reached the pointer to the preset
+    STA !ram_load_preset
+
+    LDA !ram_random_preset_rng : BEQ .done
+    LDA !ram_random_preset_value : INC : STA !ram_random_preset_value
+    LDA $12 : INC : CMP $14 : BMI .done
+    LDA !ram_random_preset_value : XBA : INC : XBA
+    AND #$FF00 : STA !ram_random_preset_value
+
+  .done
+    PLB : PLX : PLY
+    RTL
+}
+
+Randomize_Preset_Equipment:
+{
+    LDA !sram_presetequiprando : BIT !PRESET_EQUIP_RANDO_ENABLE : BNE .randomize
+    RTL
+
+  .randomize
+    PHX
+    ; equipment
+    LDA !ram_seed_Y : AND #$F32F
+    STA !SAMUS_ITEMS_EQUIPPED : STA !SAMUS_ITEMS_COLLECTED
+
+    ; check if morph forced
+    LDA !sram_presetequiprando : BIT !PRESET_EQUIP_RANDO_FORCE_MORPH : BEQ .doneMorph
+    ; turn on morph
+    LDA !SAMUS_ITEMS_EQUIPPED : ORA #$0004 : STA !SAMUS_ITEMS_EQUIPPED : STA !SAMUS_ITEMS_COLLECTED
+
+  .doneMorph
+    ; beams
+    JSL MenuRNG
+    AND #$100F : STA !SAMUS_BEAMS_COLLECTED
+    ; check for Spazer+Plasma
+    AND #$000C : CMP #$000C : BNE .setBeams
+    ; check beam preference, 0 = random
+    LDA !sram_presetequiprando_beampref : BEQ .randomPref
+    ; after decrement, 0 = spazer, 1 = plasma
+    DEC : BEQ .spazer
+
+  .plasma
+    LDA !SAMUS_BEAMS_COLLECTED : AND #$100B : STA !SAMUS_BEAMS_EQUIPPED
+    BRA .doneBeams
+  .spazer
+    LDA !SAMUS_BEAMS_COLLECTED : AND #$1007 : STA !SAMUS_BEAMS_EQUIPPED
+    BRA .doneBeams
+  .randomPref
+    LDA !ram_seed_X : AND #$0001 : BEQ .spazer
+    BRA .plasma
+  .setBeams
+    LDA !SAMUS_BEAMS_COLLECTED : STA !SAMUS_BEAMS_EQUIPPED
+
+  .doneBeams
+    ; check if charge forced
+    LDA !sram_presetequiprando : BIT !PRESET_EQUIP_RANDO_FORCE_CHARGE : BEQ .doneCharge
+    ; equip charge beam
+    LDA !SAMUS_BEAMS_COLLECTED : ORA #$1000 : STA !SAMUS_BEAMS_COLLECTED
+    LDA !SAMUS_BEAMS_EQUIPPED : ORA #$1000 : STA !SAMUS_BEAMS_EQUIPPED
+
+  .doneCharge
+    ; reserves
+    LDA !sram_presetequiprando_max_reserves : BEQ .setReserves  ; check if max = 0
+    LDA !ram_seed_Y : AND #$F000 : LSR #4 : XBA                 ; reuse random number
+  .checkReservesCap
+    CMP !sram_presetequiprando_max_reserves : BMI .setReserves  ; check if capped
+    BEQ .setReserves                                            ; check for 0 condition (value is equal to max)
+    SEC : SBC !sram_presetequiprando_max_reserves               ; subtract max from random number
+    BRA .checkReservesCap                                       ; check if capped again (loop)
+
+  .setReserves
+    ASL : TAX : LDA.l PresetEquipRandoReserveTable,X            ; load value from table
+    STA !SAMUS_RESERVE_MAX : STA !SAMUS_RESERVE_ENERGY          ; store random reserves
+    CMP #$0000 : BEQ .setReserveMode
+    LDA #$0001
+  .setReserveMode
+    STA !SAMUS_RESERVE_MODE
+
+    ; missiles
+    LDA !sram_presetequiprando_max_missiles : BEQ .setMissiles  ; check if max = 0
+    LDA !ram_seed_X : AND #$0FF0 : LSR #4                       ; reuse random number
+  .checkMissilesCap
+    CMP !sram_presetequiprando_max_missiles : BMI .setMissiles  ; check if capped
+    BEQ .setMissiles                                            ; check for 0 condition (value is equal to max)
+    SEC : SBC !sram_presetequiprando_max_missiles               ; subtract max from random number
+    BRA .checkMissilesCap                                       ; check if capped again (loop)
+
+  .setMissiles
+    ASL : TAX : LDA.l PresetEquipRandoAmmoTable,X               ; load value from table
+    STA !SAMUS_MISSILES : STA !SAMUS_MISSILES_MAX               ; store random missiles
+
+    ; supers
+    LDA !sram_presetequiprando_max_supers : BEQ .setSupers      ; check if max = 0
+    JSL MenuRNG : AND #$00FF                                    ; get new random number
+  .checkSupersCap
+    CMP !sram_presetequiprando_max_supers : BMI .setSupers      ; check if capped
+    BEQ .setSupers                                              ; check for 0 condition (value is equal to max)
+    SEC : SBC !sram_presetequiprando_max_supers                 ; subtract max from random number
+    BRA .checkSupersCap                                         ; check if capped again (loop)
+
+  .setSupers
+    ASL : TAX : LDA.l PresetEquipRandoAmmoTable,X               ; load value from table
+    STA !SAMUS_SUPERS : STA !SAMUS_SUPERS_MAX                   ; store random supers
+
+    ; pbs
+    LDA !sram_presetequiprando_max_pbs : BEQ .setPbs            ; check if max = 0
+    LDA !ram_seed_Y : XBA : AND #$00FF                          ; get new random number
+  .checkPbsCap
+    CMP !sram_presetequiprando_max_pbs : BMI .setPbs            ; check if capped
+    BEQ .setPbs                                                 ; check for 0 condition (value is equal to max)
+    SEC : SBC !sram_presetequiprando_max_pbs                    ; subtract max from random number
+    BRA .checkPbsCap                                            ; check if capped again (loop)
+
+  .setPbs
+    ASL : TAX : LDA.l PresetEquipRandoAmmoTable,X               ; load value from table
+    STA !SAMUS_PBS : STA !SAMUS_PBS_MAX                         ; store random pbs
+
+    ; etanks
+    LDA !sram_presetequiprando_max_etanks : BEQ .setEtanks      ; check if max = 0
+    JSL MenuRNG2 : AND #$000F                                   ; get new random number
+  .checkEtanksCap
+    CMP !sram_presetequiprando_max_etanks : BMI .setEtanks      ; check if capped
+    BEQ .setEtanks                                              ; check for 0 condition (value is equal to max)
+    SEC : SBC !sram_presetequiprando_max_etanks                 ; subtract max from random number
+    BRA .checkEtanksCap                                         ; check if capped again (loop)
+
+  .setEtanks
+    ASL : TAX : LDA.l PresetEquipRandoETankTable,X              ; load value from table
+    STA !SAMUS_HP : STA !SAMUS_HP_MAX                           ; store random energy
+
+    PLX
+    RTL
+}
+
+; Pickups range 0-46
+PresetEquipRandoAmmoTable:
+    dw #$0000, #$0005, #$000A, #$000F, #$0014, #$0019, #$001E, #$0023, #$0028, #$002D, #$0032, #$0037, #$003C, #$0041, #$0046, #$004B
+    dw #$0050, #$0055, #$005A, #$005F, #$0064, #$0069, #$006E, #$0073, #$0078, #$007D, #$0082, #$0087, #$008C, #$0091, #$0096, #$009B
+    dw #$00A0, #$00A5, #$00AA, #$00AF, #$00B4, #$00B9, #$00BE, #$00C3, #$00C8, #$00CD, #$00D2, #$00D7, #$00DC, #$00E1, #$00E6
+
+; Reserve Tanks range 0-4
+PresetEquipRandoReserveTable:
+    dw #$0000, #$0064, #$00C8, #$012C, #$0190
+
+; Energy Tanks range 0-14
+PresetEquipRandoETankTable:
+    dw #$0063, #$00C7, #$012B, #$018F, #$01F3, #$0257, #$02BB, #$031F, #$0383, #$03E7, #$044B, #$04AF, #$0513, #$0517, #$05DB
 
 print pc, " custompresets end"
 warnpc $83C000 ; layout.asm

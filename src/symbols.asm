@@ -374,7 +374,17 @@ sram_door_display_mode = !sram_door_display_mode ; !SRAM_START+$88
 sram_cm_fast_scroll_button = !sram_cm_fast_scroll_button ; !SRAM_START+$8A
 sram_cm_font = !sram_cm_font ; !SRAM_START+$8C
 
-; ^ FREE SPACE ^ up to +$EE, $100-BA6
+; ^ FREE SPACE ^ up to +$EE
+
+sram_presetequiprando = !sram_presetequiprando ; !SRAM_START+$100
+sram_presetequiprando_beampref = !sram_presetequiprando_beampref ; !SRAM_START+$102
+sram_presetequiprando_max_etanks = !sram_presetequiprando_max_etanks ; !SRAM_START+$104
+sram_presetequiprando_max_reserves = !sram_presetequiprando_max_reserves ; !SRAM_START+$106
+sram_presetequiprando_max_missiles = !sram_presetequiprando_max_missiles ; !SRAM_START+$108
+sram_presetequiprando_max_supers = !sram_presetequiprando_max_supers ; !SRAM_START+$10A
+sram_presetequiprando_max_pbs = !sram_presetequiprando_max_pbs ; !SRAM_START+$10C
+
+; ^ FREE SPACE ^ up to +$BA6
 
 sram_custom_header_normal = !sram_custom_header_normal ; !SRAM_START+$BA8 ; $18 bytes
 sram_custom_preset_safewords_normal = !sram_custom_preset_safewords_normal ; !SRAM_START+$BC0 ; $50 bytes

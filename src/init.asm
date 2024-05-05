@@ -156,8 +156,14 @@ endif
 
   .sram_upgrade_15to16
     TDC : STA !sram_door_display_mode
-    STA !sram_cm_font
+    STA !sram_cm_font : STA !sram_presetequiprando_beampref
     LDA !CTRL_Y : STA !sram_cm_fast_scroll_button
+    LDA !PRESET_EQUIP_RANDO_INIT : STA !sram_presetequiprando
+    LDA #$000E : STA !sram_presetequiprando_max_etanks
+    LDA #$0004 : STA !sram_presetequiprando_max_reserves
+    LDA #$002E : STA !sram_presetequiprando_max_missiles
+    LDA #$000A : STA !sram_presetequiprando_max_supers
+    LDA #$000A : STA !sram_presetequiprando_max_pbs
 
     LDA #!SRAM_VERSION : STA !sram_initialized
     RTS

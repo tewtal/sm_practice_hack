@@ -243,10 +243,12 @@ PresetsMenu:
     dw #$FFFF
     dw #presets_reload_last
     dw #presets_load_random
+    dw #presets_goto_preset_equip_rando_menu
 if !FEATURE_DEV
     dw #presets_random_preset_rng
-endif
+else
     dw #$FFFF
+endif
     dw #presets_open_blue_doors
     dw #presets_load_with_enemies
     dw #presets_clear_map_tiles
@@ -350,6 +352,9 @@ if !FEATURE_DEV
 presets_random_preset_rng:
     %cm_toggle_inverted("Random Preset RNG", !ram_random_preset_rng, #$0001, #0)
 endif
+
+presets_goto_preset_equip_rando_menu:
+    %cm_submenu("Randomize Equipment", #PresetEquipRandoMenu)
 
 presets_open_blue_doors:
     %cm_toggle_bit_inverted("Open Blue Doors", !sram_preset_options, !PRESETS_CLOSE_BLUE_DOORS, #0)
@@ -475,67 +480,6 @@ action_select_preset_category:
     TYA : STA !sram_preset_category
     LDA #$0000 : STA !sram_last_preset
     JML cm_previous_menu
-}
-
-LoadRandomPreset:
-{
-    PHY : PHX
-    LDA !ram_random_preset_rng : BEQ .seedrandom
-    LDA !ram_random_preset_value : STA $12
-    BRA .seedpicked
-
-  .seedrandom
-    JSL MenuRNG : STA $12     ; random number
-
-  .seedpicked
-    PHK : PHK : PLA : STA $18 ; this routine lives in bank B8
-    LDA !sram_preset_category : ASL : TAY
-    LDA #preset_category_submenus : STA $16
-    LDA [$16],Y : TAX         ; preset category submenu table
-    LDA #preset_category_banks : STA $16
-    LDA [$16],Y : STA $18     ; preset category menu bank
-
-    STX $16 : LDY #$0000
-  .toploop
-    INY #2
-    LDA [$16],Y : BNE .toploop
-    TYA : LSR : TAY           ; Y = size of preset category submenu table
-
-    LDA $12 : XBA : AND #$00FF : STA $4204
-    %a8()
-    STY $4206                 ; divide top half of random number by Y
-    %a16()
-    PEA $0000 : PLA : PEA $0000 : PLA
-    LDA $4216 : ASL : TAY     ; randomly selected subcategory
-    LDA [$16],Y : STA $16     ; increment four bytes to get the subcategory table
-    LDY #$0004 : LDA [$16],Y : STA $16
-
-    LDY #$0000
-  .subloop
-    INY #2
-    LDA [$16],Y : BNE .subloop
-    TYA : LSR : TAY           ; Y = size of subcategory table
-
-    LDA $12 : AND #$00FF : STA $4204
-    %a8()
-    STY $14 : STY $4206       ; divide bottom half of random number by Y
-    %a16()
-    PEA $0000 : PLA : PEA $0000 : PLA
-    LDA $4216 : STA $12       ; randomly selected preset
-
-    ASL : TAY
-    LDA [$16],Y : STA $16     ; increment four bytes to get the data
-    LDY #$0004 : LDA [$16],Y
-    STA !ram_load_preset
-    LDA !ram_random_preset_rng : BEQ .done
-    LDA !ram_random_preset_value : INC : STA !ram_random_preset_value
-    LDA $12 : INC : CMP $14 : BMI .done
-    LDA !ram_random_preset_value : XBA : INC : XBA
-    AND #$FF00 : STA !ram_random_preset_value
-
-  .done
-    PLX : PLY
-    RTL
 }
 
 action_load_preset:
@@ -873,6 +817,60 @@ managepreset_confirm:
     LDA !ram_cm_selected_slot : ASL : TAX
     LDA #$DEAD : STA !sram_custom_preset_safewords,X
     JML cm_previous_menu
+
+
+; ----------------------
+; Preset Equipment Rando
+; ----------------------
+
+PresetEquipRandoMenu:
+    dw #presetequiprando_enable
+    dw #$FFFF
+    dw #presetequiprando_morph
+    dw #presetequiprando_charge
+    dw #presetequiprando_beampref
+    dw #$FFFF
+    dw #presetequiprando_etanks
+    dw #presetequiprando_reserves
+    dw #presetequiprando_missiles
+    dw #presetequiprando_supers
+    dw #presetequiprando_pbs
+    dw #$0000
+    %cm_header("RANDOMIZE PRESET EQUIPMENT")
+
+presetequiprando_enable:
+    %cm_toggle_bit("Equipment Rando", !sram_presetequiprando, !PRESET_EQUIP_RANDO_ENABLE, #0)
+
+presetequiprando_morph:
+    %cm_toggle_bit("Force Morph Ball", !sram_presetequiprando, !PRESET_EQUIP_RANDO_FORCE_MORPH, #0)
+
+presetequiprando_charge:
+    %cm_toggle_bit("Force Charge Beam", !sram_presetequiprando, !PRESET_EQUIP_RANDO_FORCE_CHARGE, #0)
+
+presetequiprando_beampref:
+    dw !ACTION_CHOICE
+    dl #!sram_presetequiprando_beampref
+    dw #$0000
+    db #$28, "Beam Preference", #$FF
+    db #$28, "     RANDOM", #$FF
+    db #$28, "     SPAZER", #$FF
+    db #$28, "     PLASMA", #$FF
+    db #$FF
+
+presetequiprando_etanks:
+    %cm_numfield("Max Energy Tanks", !sram_presetequiprando_max_etanks, 0, 14, 1, 2, #0)
+
+presetequiprando_reserves:
+    %cm_numfield("Max Reserve Tanks", !sram_presetequiprando_max_reserves, 0, 4, 1, 1, #0)
+
+presetequiprando_missiles:
+    %cm_numfield("Max Missile Pickups", !sram_presetequiprando_max_missiles, 0, 46, 1, 5, #0)
+
+presetequiprando_supers:
+    %cm_numfield("Max Super Pickups", !sram_presetequiprando_max_supers, 0, 10, 1, 5, #0)
+
+presetequiprando_pbs:
+    %cm_numfield("Max Power Bomb Pickups", !sram_presetequiprando_max_pbs, 0, 10, 1, 5, #0)
 
 
 ; ----------------
