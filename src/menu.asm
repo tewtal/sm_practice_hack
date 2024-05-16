@@ -59,6 +59,7 @@ cm_start:
     STZ !SAMUS_HEALTH_WARNING
 
     JSL cm_transfer_original_tileset
+    JSL overwrite_HUD_numbers
     JSL cm_transfer_original_cgram
 
     ; Update HUD (in case we added missiles etc.)
