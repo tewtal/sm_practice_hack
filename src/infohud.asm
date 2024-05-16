@@ -1668,6 +1668,10 @@ ih_adjust_realtime:
     RTL
 }
 
+; Placeholder for future support
+overwrite_HUD_numbers:
+    RTL
+
 print pc, " infohud end"
 warnpc $F0E000 ; spritefeat.asm
 
