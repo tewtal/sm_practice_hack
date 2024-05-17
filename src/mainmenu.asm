@@ -2180,7 +2180,7 @@ SpritesMenu:
     dw #sprites_samus_prio
     dw #sprites_show_samus_hitbox
     dw #sprites_show_enemy_hitbox
-    dw #sprites_show_extended_spritemap_hitbox
+    dw #sprites_show_extend_spritemap_hitbox
     dw #sprites_show_custom_boss_hitbox
     dw #sprites_show_samusproj_hitbox
     dw #sprites_show_enemyproj_hitbox
@@ -2198,7 +2198,7 @@ sprites_show_samus_hitbox:
 sprites_show_enemy_hitbox:
     %cm_toggle_bit("Normal Enemy Hitboxes", !ram_sprite_feature_flags, !SPRITE_ENEMY_HITBOX, #0)
 
-sprites_show_extended_spritemap_hitbox:
+sprites_show_extend_spritemap_hitbox:
     %cm_toggle_bit("Large Enemy Hitboxes", !ram_sprite_feature_flags, !SPRITE_EXTENDED_HITBOX, #0)
 
 sprites_show_custom_boss_hitbox:
@@ -2402,6 +2402,7 @@ print pc, " mainmenu InfoHUD start"
 InfoHudMenu:
     dw #ih_goto_display_mode
     dw #ih_display_mode
+    dw #ih_display_mode_reward
     dw #$FFFF
     dw #ih_goto_room_strat
     dw #ih_room_strat
@@ -2555,6 +2556,9 @@ ih_display_mode:
     db #$FF
   .routine
     JML init_print_segment_timer
+
+ih_display_mode_reward:
+    %cm_toggle("Strat Reward SFX", !sram_display_mode_reward, #$0001, #0)
 
 ih_goto_room_strat:
     %cm_submenu("Select Room Strat", #RoomStratMenu)
@@ -3004,10 +3008,10 @@ CutscenesMenu:
     dw #cutscenes_fast_bowling
     dw #cutscenes_fast_mb
     dw #$FFFF
-    dw #cutscenes_suppress_crateria_lightning
-    dw #cutscenes_suppress_escape_flashing
+    dw #cutscenes_suppress_crateria_flash
+    dw #cutscenes_suppress_escape_flash
     dw #cutscenes_suppress_power_bomb_flash
-    dw #cutscenes_suppress_mb1_flashing
+    dw #cutscenes_suppress_mb1_flash
     dw #cutscenes_suppress_boss_damage_flash
     dw #cutscenes_suppress_earthquake
     dw #$0000
@@ -3058,16 +3062,16 @@ cutscenes_fast_bowling:
 cutscenes_fast_mb:
     %cm_toggle_bit("Fast Mother Brain", !sram_cutscenes, !CUTSCENE_FAST_MB, #0)
 
-cutscenes_suppress_crateria_lightning:
+cutscenes_suppress_crateria_flash:
     %cm_toggle_bit_inverted("Crateria Lightning", !sram_suppress_flashing, !SUPPRESS_CRATERIA_LIGHTNING, #0)
 
-cutscenes_suppress_escape_flashing:
+cutscenes_suppress_escape_flash:
     %cm_toggle_bit_inverted("Escape Flashing", !sram_suppress_flashing, !SUPPRESS_ESCAPE_FLASHING, #0)
 
 cutscenes_suppress_power_bomb_flash:
     %cm_toggle_bit_inverted("Power Bomb Flash", !sram_suppress_flashing, !SUPPRESS_POWER_BOMB_FLASH, #0)
 
-cutscenes_suppress_mb1_flashing:
+cutscenes_suppress_mb1_flash:
     %cm_toggle_bit_inverted("MB1 Flashing", !sram_suppress_flashing, !SUPPRESS_MB1_FLASHING, #0)
 
 cutscenes_suppress_boss_damage_flash:

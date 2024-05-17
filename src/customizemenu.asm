@@ -135,6 +135,10 @@ PaletteRandoConfirm:
     dw #$FFFF
     dw #$FFFF
     dw #$FFFF
+    dw #$FFFF
+    dw #$FFFF
+    dw #$FFFF
+    dw #$FFFF
     %examplemenu() ; inserts dummy menu items for display purposes
     dw #$0000
     %cm_header("CONFIRM PALETTE RANDO")
@@ -214,43 +218,47 @@ CustomPalettesMenu:
     dw #custompalettes_toggleon
     dw #custompalettes_border
     dw #custompalettes_background
+    dw #$FFFF
+    dw #$FFFF
+    dw #$FFFF
+    dw #$FFFF
     %examplemenu() ; inserts dummy menu items for display purposes
     dw #mc_custompalettes_display_menu
     dw #$0000
     %cm_header("CUSTOMIZE MENU PALETTE")
 
 custompalettes_text:
-    %palettemenu("Text", CustomPalettesMenu_text, !sram_palette_text)
+    %palettemenu("Text", PalettesMenu_text, !sram_palette_text)
 
 custompalettes_seltext:
-    %palettemenu("Selected Text", CustomPalettesMenu_seltext, !sram_palette_seltext)
+    %palettemenu("Selected Text", PalettesMenu_seltext, !sram_palette_seltext)
 
 custompalettes_seltextbg:
-    %palettemenu("Selected Text Background", CustomPalettesMenu_seltextbg, !sram_palette_seltextbg)
+    %palettemenu("Selected Text Background", PalettesMenu_seltextbg, !sram_palette_seltextbg)
 
 custompalettes_headeroutline:
-    %palettemenu("Header Outline", CustomPalettesMenu_headeroutline, !sram_palette_headeroutline)
+    %palettemenu("Header Outline", PalettesMenu_headeroutline, !sram_palette_headeroutline)
 
 custompalettes_numfill:
-    %palettemenu("Number Field Text", CustomPalettesMenu_numfill, !sram_palette_numfill)
+    %palettemenu("Number Field Text", PalettesMenu_numfill, !sram_palette_numfill)
 
 custompalettes_numoutline:
-    %palettemenu("Number Field Outline", CustomPalettesMenu_numoutline, !sram_palette_numoutline)
+    %palettemenu("Number Field Outline", PalettesMenu_numoutline, !sram_palette_numoutline)
 
 custompalettes_numsel:
-    %palettemenu("Selected Num-Field Text", CustomPalettesMenu_numsel, !sram_palette_numsel)
+    %palettemenu("Selected Num-Field Text", PalettesMenu_numsel, !sram_palette_numsel)
 
 custompalettes_numseloutline:
-    %palettemenu("Selected Num-Field Outline", CustomPalettesMenu_numseloutline, !sram_palette_numseloutline)
+    %palettemenu("Selected Num-Field Outline", PalettesMenu_numseloutline, !sram_palette_numseloutline)
 
 custompalettes_toggleon:
-    %palettemenu("Toggle ON", CustomPalettesMenu_toggleon, !sram_palette_toggleon)
+    %palettemenu("Toggle ON", PalettesMenu_toggleon, !sram_palette_toggleon)
 
 custompalettes_border:
-    %palettemenu("Toggle OFF + Border", CustomPalettesMenu_border, !sram_palette_border)
+    %palettemenu("Toggle OFF + Border", PalettesMenu_border, !sram_palette_border)
 
 custompalettes_background:
-    %palettemenu("Background", CustomPalettesMenu_background, !sram_palette_background)
+    %palettemenu("Background", PalettesMenu_background, !sram_palette_background)
 
 custompalettes_hex_red:
     %cm_numfield_color("Hexadecimal Red", !ram_cm_custompalette_red, #MixRGB)
@@ -298,6 +306,10 @@ CustomPalettesDisplayMenu:
     dw #custompalettes_seltextbg_display
     dw #custompalettes_numseloutline_display
     dw #custompalettes_numsel_display
+    dw #$FFFF
+    dw #$FFFF
+    dw #$FFFF
+    dw #$FFFF
     %examplemenu() ; inserts dummy menu items for display purposes
     dw #$0000
     %cm_header("SHARE YOUR COLORS")

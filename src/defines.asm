@@ -396,6 +396,7 @@
 !sram_presetequiprando_max_missiles = !SRAM_START+$108
 !sram_presetequiprando_max_supers = !SRAM_START+$10A
 !sram_presetequiprando_max_pbs = !SRAM_START+$10C
+!sram_display_mode_reward = !SRAM_START+$10E
 
 ; ^ FREE SPACE ^ up to +$BA6
 

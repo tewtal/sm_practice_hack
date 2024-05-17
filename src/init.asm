@@ -157,6 +157,7 @@ endif
   .sram_upgrade_15to16
     TDC : STA !sram_door_display_mode
     STA !sram_cm_font : STA !sram_presetequiprando_beampref
+    STA !sram_display_mode_reward
     LDA !CTRL_Y : STA !sram_cm_fast_scroll_button
     LDA !PRESET_EQUIP_RANDO_INIT : STA !sram_presetequiprando
     LDA #$000E : STA !sram_presetequiprando_max_etanks

@@ -383,6 +383,7 @@ sram_presetequiprando_max_reserves = !sram_presetequiprando_max_reserves ; !SRAM
 sram_presetequiprando_max_missiles = !sram_presetequiprando_max_missiles ; !SRAM_START+$108
 sram_presetequiprando_max_supers = !sram_presetequiprando_max_supers ; !SRAM_START+$10A
 sram_presetequiprando_max_pbs = !sram_presetequiprando_max_pbs ; !SRAM_START+$10C
+sram_display_mode_reward = !sram_display_mode_reward ; !SRAM_START+$10E
 
 ; ^ FREE SPACE ^ up to +$BA6
 
