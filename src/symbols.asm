@@ -227,6 +227,10 @@ ram_seed_Y = !ram_seed_Y ; !WRAM_MENU_START+$62
 ram_timers_autoupdate = !ram_timers_autoupdate ; !WRAM_MENU_START+$64
 ram_cm_suit_properties = !ram_cm_suit_properties ; !WRAM_MENU_START+$66
 
+ram_cm_sfxlib1 = !ram_cm_sfxlib1 ; !WRAM_MENU_START+$68
+ram_cm_sfxlib2 = !ram_cm_sfxlib2 ; !WRAM_MENU_START+$6A
+ram_cm_sfxlib3 = !ram_cm_sfxlib3 ; !WRAM_MENU_START+$6C
+
 ; ^ FREE SPACE ^ up to +$7E
 
 ; ------------------
