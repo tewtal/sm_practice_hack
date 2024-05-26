@@ -227,6 +227,10 @@ ram_seed_Y = !ram_seed_Y ; !WRAM_MENU_START+$62
 ram_timers_autoupdate = !ram_timers_autoupdate ; !WRAM_MENU_START+$64
 ram_cm_suit_properties = !ram_cm_suit_properties ; !WRAM_MENU_START+$66
 
+ram_cm_sfxlib1 = !ram_cm_sfxlib1 ; !WRAM_MENU_START+$68
+ram_cm_sfxlib2 = !ram_cm_sfxlib2 ; !WRAM_MENU_START+$6A
+ram_cm_sfxlib3 = !ram_cm_sfxlib3 ; !WRAM_MENU_START+$6C
+
 ; ^ FREE SPACE ^ up to +$7E
 
 ; ------------------
@@ -369,6 +373,7 @@ sram_customsfx_goback = !sram_customsfx_goback ; !SRAM_START+$80
 sram_seed_X = !sram_seed_X ; !SRAM_START+$82
 sram_seed_Y = !sram_seed_Y ; !SRAM_START+$84
 sram_bomb_torizo_door = !sram_bomb_torizo_door ; !SRAM_START+$86
+sram_door_display_mode = !sram_door_display_mode ; !SRAM_START+$88
 
 ; ^ FREE SPACE ^ up to +$EE, $100-BA6
 

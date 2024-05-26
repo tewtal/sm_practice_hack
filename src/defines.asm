@@ -234,6 +234,10 @@
 !ram_timers_autoupdate = !WRAM_MENU_START+$64
 !ram_cm_suit_properties = !WRAM_MENU_START+$66
 
+!ram_cm_sfxlib1 = !WRAM_MENU_START+$68
+!ram_cm_sfxlib2 = !WRAM_MENU_START+$6A
+!ram_cm_sfxlib3 = !WRAM_MENU_START+$6C
+
 ; ^ FREE SPACE ^ up to +$7E
 
 ; ------------------
@@ -300,7 +304,7 @@
 ; SRAM
 ; -----
 
-!SRAM_VERSION = $0015
+!SRAM_VERSION = $0016
 
 !SRAM_START = $702000
 !PRESET_SLOTS = $703000
@@ -382,6 +386,7 @@
 !sram_seed_X = !SRAM_START+$82
 !sram_seed_Y = !SRAM_START+$84
 !sram_bomb_torizo_door = !SRAM_START+$86
+!sram_door_display_mode = !SRAM_START+$88
 
 ; ^ FREE SPACE ^ up to +$EE, $100-BA6
 
@@ -505,6 +510,7 @@
 !PREVIOUS_CRE_BITSET = $07B1
 !CRE_BITSET = $07B3
 !STATE_POINTER = $07BB
+!ROOM_MUSIC_DATA_INDEX = $07CB
 !MUSIC_DATA = $07F3
 !MUSIC_TRACK = $07F5
 !LAYER1_X = $0911

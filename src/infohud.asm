@@ -25,8 +25,8 @@ org $828B34      ; reset room timers for first room of Ceres
     JML ceres_start_timers : NOP : NOP
 ceres_start_timers_return:
 
-org $90E6BC      ; hijack, runs on gamestate = 08 (main gameplay), handles most updating HUD information
-    JSL ih_gamemode_frame
+org $82DBB2      ; hijack, runs when in-game time is ticked
+    JML ih_gamemode_frame
 
 org $9493B8      ; hijack, runs when Samus hits a door BTS
     JSL ih_before_room_transition
@@ -336,7 +336,8 @@ ih_gamemode_frame:
     LDA !ram_gametime_room : INC : STA !ram_gametime_room
 
     ; overwritten code + return
-    JML $949B60
+    LDA !IGT_FRAMES : CLC
+    JML $82DBB6
 }
 
 ih_after_room_transition:
@@ -430,25 +431,45 @@ ih_before_room_transition:
     BPL .drawDoorLag
     EOR #$FF : INC
   .drawDoorLag
-    PHB : PHD : PLB : PLB
-    TAY
+    TAY ; preserve A
+    PHB : LDA #$00 : PHA : PLB
     LDX #$00C2
     LDA !sram_top_display_mode : CMP.b !TOP_DISPLAY_VANILLA : BEQ .vanillaDoorLag
     LDA !ram_minimap : BEQ .draw3
     LDX #$0054
   .draw3
     TYA : JSR Draw3
-  .doneDoorLag
-    %a16()
-    PLB
 
+  .doorDisplay
+    ; Door HUD mode can only overwrite Enemy HP
+    LDA !sram_display_mode : BNE .done
+    LDA !sram_door_display_mode : BEQ .done
+
+    ASL : TAX
+    JSR (.status_door_display_table,X)
+
+    ; Suppress Enemy HP display
+    LDA !ENEMY_HP : STA !ram_enemy_hp
+
+  .done
+    PLB
     CLC ; overwritten code
     RTL
 
   .vanillaDoorLag
-    LDA !ram_minimap : BNE .doneDoorLag
+    LDA !ram_minimap : BNE .doorDisplay
     TYA : JSR Draw2
-    BRA .doneDoorLag
+    BRA .doorDisplay
+
+  .status_door_display_table
+    dw #$0000 ; off/dummy
+    dw status_door_hspeed
+    dw status_door_vspeed
+    dw status_chargetimer
+    dw status_shinetimer
+    dw status_dashcounter
+    dw status_door_xpos
+    dw status_door_ypos
 }
 
 ceres_start_timers:
@@ -1535,7 +1556,7 @@ magic_pants:
 
     LDA !ram_magic_pants_state : BNE .check_flash_pants
 
-    ; if loudpants are enabled, click
+    ; if loudpants are enabled, play sfx
     LDA !ram_magic_pants_enabled : AND #$0002 : BEQ .check_flash_pants
     LDA !sram_metronome_sfx : ASL : TAX
     LDA.l MetronomeSFX,X : JSL !SFX_LIB1
