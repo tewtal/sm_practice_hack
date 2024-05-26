@@ -60,8 +60,6 @@ If you experience crashes or severe glitches when using savestates, your platfor
 |&nbsp;|
 | **Preset Options**            | Select a category, toggle doors, or save/load custom presets. Compressed OFF allows presets to load faster (see Sprite Patches below)
 | - Select Preset Category      | Select the desired category to be used with Category Presets
-| - Reload Last Preset          | Reload the last used category or custom preset
-| - Load Random Preset          | Randomly chooses a preset from your selected preset category
 | - Custom Preset Slot          | Select one of 40 slots in memory to save or load custom presets. Press A to open a submenu with a list of preset slots.
 |                               | Press Y in the submenu to toggle the display between room names and Samus data.
 |                               | Press X in the submenu to provide a custom preset name.
@@ -70,6 +68,9 @@ If you experience crashes or severe glitches when using savestates, your platfor
 |                               | A grapple sound effect will play if a preset cannot be saved (for example during room transition).
 | - Load Custom Preset          | Load the custom preset in the current slot in SRAM.
 |                               | A grapple sound effect will play if a preset cannot be loaded from the current slot.
+| - Reload Last Preset          | Reload the last used category or custom preset
+| - Load Random Preset          | Randomly chooses a preset from your selected preset category
+| - Randomize Equipment         | Toggle equipment randomization when loading a preset. Set maximum values and available equipment.
 | - Auto-Open Blue Doors        | Open all blue doors, except when Samus is in default pose or when door is in a hidden area.
 | - Load with Enemies           | Skips clearing enemies when loading presets. NOTE: Enemy data is not saved with presets. Therefore, enemies will always be loaded in their starting positions for the room
 | - Clear Map Tiles             | Clears all explored map tiles when loading a preset
@@ -118,8 +119,11 @@ If you experience crashes or severe glitches when using savestates, your platfor
 | **Infohud**                   | Configure the HUD
 | - Infohud Mode                | Select the value from RAM to be displayed in the bottom-left of the HUD.
 |                               | [Click the link for more details.](/infohudmode)
+| - Strat Reward SFX            | Toggle a sound effect that plays when achieving certain HUD mode and room strats.
 | - Room Strat                  | Select which Room Strat to be displayed in the bottom-left of the HUD.
 |                               | This only works if "Room Strat" is selected as the above Infohud Mode.
+| - Door HUD Mode               | Configure the HUD mode that runs when touching a door transition.
+|                               | Only works when the normal HUD mode is set to Enemy HP.
 | - Top-Left Display            | Choose item collection percentage, reserve energy, or vanilla health to be displayed at the top-left of the HUD.
 |                               | The vanilla option also compresses the viewable area so it is more suitable for practice on an curved CRT monitor or TV.
 | - Frames Held Mode            | Replaces the controller input display with numbers representing the frames held.
@@ -172,15 +176,8 @@ If you experience crashes or severe glitches when using savestates, your platfor
 | - Icon Cancel                 | Standard game option for Icon Cancel.
 | - Cutscenes and Effects       | Turn off specific cutscenes, or make specific game sequences faster.
 |                               | Also includes karafruit's options to disable or reduce flashing effects.
-| - Fanfare                     | Toggle the fanfare for collecting items
 | - Fast Doors                  | Toggle for fast doors similar to some randomizers.
 | - Fast Elevators              | Toggle for fast elevators similar to some randomizers.
-| - Music                       | Toggle the music off, on, or fast off which eliminates lag caused by loading music data.
-| - Low Health Alarm            | Modify the behavior of the low-health alarm
-|                               | Never = Self-explanatory
-|                               | Vanilla = No change (triggers on when <=30 health, off when >30 health, ignoring reserves, breaks if power bomb explosion is active)
-|                               | PB Fix = Defers trigger during power bomb explosions, which fixes issue where the alarm may not turn on or turn off
-|                               | Improved = PB Fix + only triggers on with health+reserves is less than 30 (same requirements as initiating health bomb)
 | - Minimap                     | Restores the game minimap, which also allows the pause menu map to be updated. When enabled, a map tile counter will also be displayed.
 | - Clear Minimap               | Clears the map tile counter and all minimap data.
 | **Debug Settings**            | Located within the Game menu
@@ -238,6 +235,19 @@ If you experience crashes or severe glitches when using savestates, your platfor
 | - Update Timers               | Updates the HUD timers immediately.
 | - Clear Shortcuts             | Resets Main Menu shortcut to default and removes button combos for all others.
 |&nbsp;|
+| **Audio Menu**                | Audio related settings and sound test menu
+| - Music                       | Toggle the music off, on, or fast off which eliminates lag caused by loading music data.
+| - Fanfare                     | Toggle the fanfare for collecting items
+| - Low Health Alarm            | Modify the behavior of the low-health alarm
+|                               | Never = Self-explanatory
+|                               | Vanilla = No change (triggers on when <=30 health, off when >30 health, ignoring reserves, breaks if power bomb explosion is active)
+|                               | PB Fix = Defers trigger during power bomb explosions, which fixes issue where the alarm may not turn on or turn off
+|                               | Improved = PB Fix + only triggers on with health+reserves is less than 30 (same requirements as initiating health bomb)
+| - Music Selection             | Play any music track from a list
+| - Library # Sound             | Choose a sound effect to play from one of the three collections. Sounds from Libraries two and three usually depend on a partiular music track.
+|                               | Press Y to play the selected sound effect
+| - Silence Sound FX            | Stops all sound effects. This is useful for certain sound effects that loop, such as Mother Brain's rainbow beam.
+|&nbsp;|
 | **Customize Menu**            | Change color palettes and sound effects used by the practice hack menus
 | - Menu Background             | Toggle the background of the menu on or off. The background will always be drawn in the pause menu and Ceres Elevator Room.
 | - Customize Menu Palette      | Customize the color palettes of each element of the menu. There are three sets of options for editing colors. The Hexadecimal set is an approximation of traditional 24bit RGB values. The Decimal set is a simplified version with a scale of 0-31 for each color. The SNES BGR set is the 15bit color value used internally, which is also how it's displayed in the "Screenshot To Share Colors" submenu. Example menu items are provided to show your changes in real time.
@@ -245,6 +255,8 @@ If you experience crashes or severe glitches when using savestates, your platfor
 | - Copy Palette to Custom      | Copy the selected Menu Palette to the CUSTOM profile to use as a base. A confirmation submenu will remind you that this will overwrite your existing CUSTOM profile.
 | - Randomize Custom Palette    | Use RNG values to randomize the color palettes. A confirmation submenu will warn you that this will overwrite your existing CUSTOM profile.
 | - Customize Menu Sounds       | Select which sound effect will play for each menu action. Press Y to play the selected sound effect. Due to limitations with the audio engine, only sounds from "Library 1" are allowed.
+| - Alternate Menu Font         | Toggle between two available menu fonts.
+| - Fast-Scroll Button          | Choose between holding X or Y to make numbers scroll at 4x speed, or disable this feature and scroll at pre-defined increments.
 | - Menu Scroll Delay           | Set the number of frames before scrolling to the next menu item when Up or Down are held.
 | - Customize Menu Header       | Type a customized header for the main menu, up to 23 characters. Set it blank to restore the default header.
 
