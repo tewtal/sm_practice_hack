@@ -5,6 +5,7 @@
 
 action_infohud_mainmenu:
 {
+    ; Validate top display mode in range
     LDA !sram_top_display_mode : CMP #$0003 : BCC action_mainmenu
     TDC : STA !sram_top_display_mode
     BRA action_mainmenu
@@ -14,6 +15,26 @@ action_layout_mainmenu:
 {
     ; Prepare dynamic menu
     LDA !ram_door_portal_flags : AND !DOOR_PORTAL_MODE_MASK : STA !ram_cm_door_dynamic
+    BRA action_mainmenu
+}
+
+action_customize_mainmenu:
+{
+    ; Set fast button selection
+    LDA !sram_cm_fast_scroll_button : CMP !CTRL_X : BEQ .xSelected
+    CMP !CTRL_Y : BEQ .ySelected
+
+    ; None selected
+    TDC : STA !sram_cm_fast_scroll_button
+    LDA #$0002 : STA !ram_cm_fast_scroll_menu_selection
+    BRA action_mainmenu
+
+  .xSelected
+    TDC : STA !ram_cm_fast_scroll_menu_selection
+    BRA action_mainmenu
+
+  .ySelected
+    LDA #$0001 : STA !ram_cm_fast_scroll_menu_selection
 
     ; continue into action_mainmenu
 }
@@ -210,7 +231,7 @@ mm_goto_audiomenu:
     %cm_mainmenu("Audio Menu", #AudioMenu)
 
 mm_goto_customize:
-    %cm_mainmenu("Menu Customization", #CustomizeMenu)
+    %cm_jsl("Menu Customization", #action_customize_mainmenu, #CustomizeMenu)
 
 
 ; -------------------
@@ -227,10 +248,12 @@ PresetsMenu:
     dw #$FFFF
     dw #presets_reload_last
     dw #presets_load_random
+    dw #presets_goto_preset_equip_rando_menu
 if !FEATURE_DEV
     dw #presets_random_preset_rng
-endif
+else
     dw #$FFFF
+endif
     dw #presets_open_blue_doors
     dw #presets_load_with_enemies
     dw #presets_clear_map_tiles
@@ -334,6 +357,9 @@ if !FEATURE_DEV
 presets_random_preset_rng:
     %cm_toggle_inverted("Random Preset RNG", !ram_random_preset_rng, #$0001, #0)
 endif
+
+presets_goto_preset_equip_rando_menu:
+    %cm_submenu("Randomize Equipment", #PresetEquipRandoMenu)
 
 presets_open_blue_doors:
     %cm_toggle_bit_inverted("Open Blue Doors", !sram_preset_options, !PRESETS_CLOSE_BLUE_DOORS, #0)
@@ -459,67 +485,6 @@ action_select_preset_category:
     TYA : STA !sram_preset_category
     LDA #$0000 : STA !sram_last_preset
     JML cm_previous_menu
-}
-
-LoadRandomPreset:
-{
-    PHY : PHX
-    LDA !ram_random_preset_rng : BEQ .seedrandom
-    LDA !ram_random_preset_value : STA $12
-    BRA .seedpicked
-
-  .seedrandom
-    JSL MenuRNG : STA $12     ; random number
-
-  .seedpicked
-    PHK : PHK : PLA : STA $18 ; this routine lives in bank B8
-    LDA !sram_preset_category : ASL : TAY
-    LDA #preset_category_submenus : STA $16
-    LDA [$16],Y : TAX         ; preset category submenu table
-    LDA #preset_category_banks : STA $16
-    LDA [$16],Y : STA $18     ; preset category menu bank
-
-    STX $16 : LDY #$0000
-  .toploop
-    INY #2
-    LDA [$16],Y : BNE .toploop
-    TYA : LSR : TAY           ; Y = size of preset category submenu table
-
-    LDA $12 : XBA : AND #$00FF : STA $4204
-    %a8()
-    STY $4206                 ; divide top half of random number by Y
-    %a16()
-    PEA $0000 : PLA : PEA $0000 : PLA
-    LDA $4216 : ASL : TAY     ; randomly selected subcategory
-    LDA [$16],Y : STA $16     ; increment four bytes to get the subcategory table
-    LDY #$0004 : LDA [$16],Y : STA $16
-
-    LDY #$0000
-  .subloop
-    INY #2
-    LDA [$16],Y : BNE .subloop
-    TYA : LSR : TAY           ; Y = size of subcategory table
-
-    LDA $12 : AND #$00FF : STA $4204
-    %a8()
-    STY $14 : STY $4206       ; divide bottom half of random number by Y
-    %a16()
-    PEA $0000 : PLA : PEA $0000 : PLA
-    LDA $4216 : STA $12       ; randomly selected preset
-
-    ASL : TAY
-    LDA [$16],Y : STA $16     ; increment four bytes to get the data
-    LDY #$0004 : LDA [$16],Y
-    STA !ram_load_preset
-    LDA !ram_random_preset_rng : BEQ .done
-    LDA !ram_random_preset_value : INC : STA !ram_random_preset_value
-    LDA $12 : INC : CMP $14 : BMI .done
-    LDA !ram_random_preset_value : XBA : INC : XBA
-    AND #$FF00 : STA !ram_random_preset_value
-
-  .done
-    PLX : PLY
-    RTL
 }
 
 action_load_preset:
@@ -857,6 +822,60 @@ managepreset_confirm:
     LDA !ram_cm_selected_slot : ASL : TAX
     LDA #$DEAD : STA !sram_custom_preset_safewords,X
     JML cm_previous_menu
+
+
+; ----------------------
+; Preset Equipment Rando
+; ----------------------
+
+PresetEquipRandoMenu:
+    dw #presetequiprando_enable
+    dw #$FFFF
+    dw #presetequiprando_morph
+    dw #presetequiprando_charge
+    dw #presetequiprando_beampref
+    dw #$FFFF
+    dw #presetequiprando_etanks
+    dw #presetequiprando_reserves
+    dw #presetequiprando_missiles
+    dw #presetequiprando_supers
+    dw #presetequiprando_pbs
+    dw #$0000
+    %cm_header("RANDOMIZE PRESET EQUIPMENT")
+
+presetequiprando_enable:
+    %cm_toggle_bit("Equipment Rando", !sram_presetequiprando, !PRESET_EQUIP_RANDO_ENABLE, #0)
+
+presetequiprando_morph:
+    %cm_toggle_bit("Force Morph Ball", !sram_presetequiprando, !PRESET_EQUIP_RANDO_FORCE_MORPH, #0)
+
+presetequiprando_charge:
+    %cm_toggle_bit("Force Charge Beam", !sram_presetequiprando, !PRESET_EQUIP_RANDO_FORCE_CHARGE, #0)
+
+presetequiprando_beampref:
+    dw !ACTION_CHOICE
+    dl #!sram_presetequiprando_beampref
+    dw #$0000
+    db #$28, "Beam Preference", #$FF
+    db #$28, "     RANDOM", #$FF
+    db #$28, "     SPAZER", #$FF
+    db #$28, "     PLASMA", #$FF
+    db #$FF
+
+presetequiprando_etanks:
+    %cm_numfield("Max Energy Tanks", !sram_presetequiprando_max_etanks, 0, 14, 1, 2, #0)
+
+presetequiprando_reserves:
+    %cm_numfield("Max Reserve Tanks", !sram_presetequiprando_max_reserves, 0, 4, 1, 1, #0)
+
+presetequiprando_missiles:
+    %cm_numfield("Max Missile Pickups", !sram_presetequiprando_max_missiles, 0, 46, 1, 5, #0)
+
+presetequiprando_supers:
+    %cm_numfield("Max Super Pickups", !sram_presetequiprando_max_supers, 0, 10, 1, 5, #0)
+
+presetequiprando_pbs:
+    %cm_numfield("Max Power Bomb Pickups", !sram_presetequiprando_max_pbs, 0, 10, 1, 5, #0)
 
 
 ; ----------------
@@ -2166,7 +2185,7 @@ SpritesMenu:
     dw #sprites_samus_prio
     dw #sprites_show_samus_hitbox
     dw #sprites_show_enemy_hitbox
-    dw #sprites_show_extended_spritemap_hitbox
+    dw #sprites_show_extend_spritemap_hitbox
     dw #sprites_show_custom_boss_hitbox
     dw #sprites_show_samusproj_hitbox
     dw #sprites_show_enemyproj_hitbox
@@ -2184,7 +2203,7 @@ sprites_show_samus_hitbox:
 sprites_show_enemy_hitbox:
     %cm_toggle_bit("Normal Enemy Hitboxes", !ram_sprite_feature_flags, !SPRITE_ENEMY_HITBOX, #0)
 
-sprites_show_extended_spritemap_hitbox:
+sprites_show_extend_spritemap_hitbox:
     %cm_toggle_bit("Large Enemy Hitboxes", !ram_sprite_feature_flags, !SPRITE_EXTENDED_HITBOX, #0)
 
 sprites_show_custom_boss_hitbox:
@@ -2388,6 +2407,7 @@ print pc, " mainmenu InfoHUD start"
 InfoHudMenu:
     dw #ih_goto_display_mode
     dw #ih_display_mode
+    dw #ih_display_mode_reward
     dw #$FFFF
     dw #ih_goto_room_strat
     dw #ih_room_strat
@@ -2541,6 +2561,9 @@ ih_display_mode:
     db #$FF
   .routine
     JML init_print_segment_timer
+
+ih_display_mode_reward:
+    %cm_toggle("Strat Reward SFX", !sram_display_mode_reward, #$0001, #0)
 
 ih_goto_room_strat:
     %cm_submenu("Select Room Strat", #RoomStratMenu)
@@ -2950,10 +2973,10 @@ CutscenesMenu:
     dw #cutscenes_fast_bowling
     dw #cutscenes_fast_mb
     dw #$FFFF
-    dw #cutscenes_suppress_crateria_lightning
-    dw #cutscenes_suppress_escape_flashing
+    dw #cutscenes_suppress_crateria_flash
+    dw #cutscenes_suppress_escape_flash
     dw #cutscenes_suppress_power_bomb_flash
-    dw #cutscenes_suppress_mb1_flashing
+    dw #cutscenes_suppress_mb1_flash
     dw #cutscenes_suppress_boss_damage_flash
     dw #cutscenes_suppress_earthquake
     dw #$0000
@@ -3004,16 +3027,16 @@ cutscenes_fast_bowling:
 cutscenes_fast_mb:
     %cm_toggle_bit("Fast Mother Brain", !sram_cutscenes, !CUTSCENE_FAST_MB, #0)
 
-cutscenes_suppress_crateria_lightning:
+cutscenes_suppress_crateria_flash:
     %cm_toggle_bit_inverted("Crateria Lightning", !sram_suppress_flashing, !SUPPRESS_CRATERIA_LIGHTNING, #0)
 
-cutscenes_suppress_escape_flashing:
+cutscenes_suppress_escape_flash:
     %cm_toggle_bit_inverted("Escape Flashing", !sram_suppress_flashing, !SUPPRESS_ESCAPE_FLASHING, #0)
 
 cutscenes_suppress_power_bomb_flash:
     %cm_toggle_bit_inverted("Power Bomb Flash", !sram_suppress_flashing, !SUPPRESS_POWER_BOMB_FLASH, #0)
 
-cutscenes_suppress_mb1_flashing:
+cutscenes_suppress_mb1_flash:
     %cm_toggle_bit_inverted("MB1 Flashing", !sram_suppress_flashing, !SUPPRESS_MB1_FLASHING, #0)
 
 cutscenes_suppress_boss_damage_flash:

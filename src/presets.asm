@@ -439,6 +439,7 @@ endif
     JSL $8483C3  ; Clear PLMs
     JSL $868016  ; Clear enemy projectiles
     JSL $8DC4D8  ; Clear palette FX objects
+    JSL Randomize_Preset_Equipment
     JSL $90AC8D  ; Update beam graphics
     JSL $82E139  ; Load target colours for common sprites, beams and slashing enemies / pickups
 if !FEATURE_PAL
