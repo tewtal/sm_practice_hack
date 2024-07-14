@@ -789,11 +789,11 @@ status_hspeed:
 
     ; draw whole number in decimal
     AND #$FF00 : XBA : LDX #$0088 : JSR Draw2
-    LDA !IH_DECIMAL : STA $7EC68C
+    LDA !IH_DECIMAL : STA !HUD_TILEMAP+$8C
 
     ; draw fraction in hex
     LDA !ram_horizontal_speed : AND #$00F0 : LSR #3 : TAY
-    LDA.w HexGFXTable,Y : STA $7EC68E
+    LDA.w HexGFXTable,Y : STA !HUD_TILEMAP+$8E
 
   .done
     RTS

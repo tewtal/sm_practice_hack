@@ -70,6 +70,7 @@ init_nonzero_wram:
     LDA !sram_seed_Y : STA !ram_seed_Y
 
     LDA #$0001 : STA !ram_cm_dummy_on
+    STA !ram_cm_sfxlib1 : STA !ram_cm_sfxlib2 : STA !ram_cm_sfxlib3
     RTL
 }
 
