@@ -250,7 +250,8 @@ init_post_boot:
     CMP #$0003 : BCC .valid_index
     LDA #$0000
   .valid_index
-    JSL $818085     ; Load save file
+    JSL $818085     ; Load save file, then reload suit properties
+    JSL init_suit_properties_ram
     BCC .check_quickboot
 
     ; No valid save; load a new file (for default controller bindings)
