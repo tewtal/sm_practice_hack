@@ -5,6 +5,7 @@
 
 action_infohud_mainmenu:
 {
+    ; Validate top display mode in range
     LDA !sram_top_display_mode : CMP #$0003 : BCC action_mainmenu
     TDC : STA !sram_top_display_mode
     BRA action_mainmenu
@@ -14,6 +15,26 @@ action_layout_mainmenu:
 {
     ; Prepare dynamic menu
     LDA !ram_door_portal_flags : AND !DOOR_PORTAL_MODE_MASK : STA !ram_cm_door_dynamic
+    BRA action_mainmenu
+}
+
+action_customize_mainmenu:
+{
+    ; Set fast button selection
+    LDA !sram_cm_fast_scroll_button : CMP !CTRL_X : BEQ .xSelected
+    CMP !CTRL_Y : BEQ .ySelected
+
+    ; None selected
+    TDC : STA !sram_cm_fast_scroll_button
+    LDA #$0002 : STA !ram_cm_fast_scroll_menu_selection
+    BRA action_mainmenu
+
+  .xSelected
+    TDC : STA !ram_cm_fast_scroll_menu_selection
+    BRA action_mainmenu
+
+  .ySelected
+    LDA #$0001 : STA !ram_cm_fast_scroll_menu_selection
 
     ; continue into action_mainmenu
 }
@@ -132,6 +153,7 @@ if !FEATURE_SD2SNES
     dw #mm_goto_savestate
 endif
     dw #mm_goto_ctrlsmenu
+    dw #mm_goto_audiomenu
     dw #mm_goto_customize
     dw #$0000
     %cm_version_header("SM PRACTICE HACK")
@@ -161,6 +183,7 @@ if !FEATURE_SD2SNES
     dw #SavestateMenu>>16
 endif
     dw #CtrlMenu>>16
+    dw #AudioMenu>>16
     dw #CustomizeMenu>>16
 
 mm_goto_equipment:
@@ -204,8 +227,11 @@ endif
 mm_goto_ctrlsmenu:
     %cm_mainmenu("Controller Shortcuts", #CtrlMenu)
 
+mm_goto_audiomenu:
+    %cm_mainmenu("Audio Menu", #AudioMenu)
+
 mm_goto_customize:
-    %cm_mainmenu("Menu Customization", #CustomizeMenu)
+    %cm_jsl("Menu Customization", #action_customize_mainmenu, #CustomizeMenu)
 
 
 ; -------------------
@@ -222,10 +248,12 @@ PresetsMenu:
     dw #$FFFF
     dw #presets_reload_last
     dw #presets_load_random
+    dw #presets_goto_preset_equip_rando_menu
 if !FEATURE_DEV
     dw #presets_random_preset_rng
-endif
+else
     dw #$FFFF
+endif
     dw #presets_open_blue_doors
     dw #presets_load_with_enemies
     dw #presets_clear_map_tiles
@@ -329,6 +357,9 @@ if !FEATURE_DEV
 presets_random_preset_rng:
     %cm_toggle_inverted("Random Preset RNG", !ram_random_preset_rng, #$0001, #0)
 endif
+
+presets_goto_preset_equip_rando_menu:
+    %cm_submenu("Randomize Equipment", #PresetEquipRandoMenu)
 
 presets_open_blue_doors:
     %cm_toggle_bit_inverted("Open Blue Doors", !sram_preset_options, !PRESETS_CLOSE_BLUE_DOORS, #0)
@@ -454,67 +485,6 @@ action_select_preset_category:
     TYA : STA !sram_preset_category
     LDA #$0000 : STA !sram_last_preset
     JML cm_previous_menu
-}
-
-LoadRandomPreset:
-{
-    PHY : PHX
-    LDA !ram_random_preset_rng : BEQ .seedrandom
-    LDA !ram_random_preset_value : STA $12
-    BRA .seedpicked
-
-  .seedrandom
-    JSL MenuRNG : STA $12     ; random number
-
-  .seedpicked
-    PHK : PHK : PLA : STA $18 ; this routine lives in bank B8
-    LDA !sram_preset_category : ASL : TAY
-    LDA #preset_category_submenus : STA $16
-    LDA [$16],Y : TAX         ; preset category submenu table
-    LDA #preset_category_banks : STA $16
-    LDA [$16],Y : STA $18     ; preset category menu bank
-
-    STX $16 : LDY #$0000
-  .toploop
-    INY #2
-    LDA [$16],Y : BNE .toploop
-    TYA : LSR : TAY           ; Y = size of preset category submenu table
-
-    LDA $12 : XBA : AND #$00FF : STA $4204
-    %a8()
-    STY $4206                 ; divide top half of random number by Y
-    %a16()
-    PEA $0000 : PLA : PEA $0000 : PLA
-    LDA $4216 : ASL : TAY     ; randomly selected subcategory
-    LDA [$16],Y : STA $16     ; increment four bytes to get the subcategory table
-    LDY #$0004 : LDA [$16],Y : STA $16
-
-    LDY #$0000
-  .subloop
-    INY #2
-    LDA [$16],Y : BNE .subloop
-    TYA : LSR : TAY           ; Y = size of subcategory table
-
-    LDA $12 : AND #$00FF : STA $4204
-    %a8()
-    STY $14 : STY $4206       ; divide bottom half of random number by Y
-    %a16()
-    PEA $0000 : PLA : PEA $0000 : PLA
-    LDA $4216 : STA $12       ; randomly selected preset
-
-    ASL : TAY
-    LDA [$16],Y : STA $16     ; increment four bytes to get the data
-    LDY #$0004 : LDA [$16],Y
-    STA !ram_load_preset
-    LDA !ram_random_preset_rng : BEQ .done
-    LDA !ram_random_preset_value : INC : STA !ram_random_preset_value
-    LDA $12 : INC : CMP $14 : BMI .done
-    LDA !ram_random_preset_value : XBA : INC : XBA
-    AND #$FF00 : STA !ram_random_preset_value
-
-  .done
-    PLX : PLY
-    RTL
 }
 
 action_load_preset:
@@ -852,6 +822,60 @@ managepreset_confirm:
     LDA !ram_cm_selected_slot : ASL : TAX
     LDA #$DEAD : STA !sram_custom_preset_safewords,X
     JML cm_previous_menu
+
+
+; ----------------------
+; Preset Equipment Rando
+; ----------------------
+
+PresetEquipRandoMenu:
+    dw #presetequiprando_enable
+    dw #$FFFF
+    dw #presetequiprando_morph
+    dw #presetequiprando_charge
+    dw #presetequiprando_beampref
+    dw #$FFFF
+    dw #presetequiprando_etanks
+    dw #presetequiprando_reserves
+    dw #presetequiprando_missiles
+    dw #presetequiprando_supers
+    dw #presetequiprando_pbs
+    dw #$0000
+    %cm_header("RANDOMIZE PRESET EQUIPMENT")
+
+presetequiprando_enable:
+    %cm_toggle_bit("Equipment Rando", !sram_presetequiprando, !PRESET_EQUIP_RANDO_ENABLE, #0)
+
+presetequiprando_morph:
+    %cm_toggle_bit("Force Morph Ball", !sram_presetequiprando, !PRESET_EQUIP_RANDO_FORCE_MORPH, #0)
+
+presetequiprando_charge:
+    %cm_toggle_bit("Force Charge Beam", !sram_presetequiprando, !PRESET_EQUIP_RANDO_FORCE_CHARGE, #0)
+
+presetequiprando_beampref:
+    dw !ACTION_CHOICE
+    dl #!sram_presetequiprando_beampref
+    dw #$0000
+    db #$28, "Beam Preference", #$FF
+    db #$28, "     RANDOM", #$FF
+    db #$28, "     SPAZER", #$FF
+    db #$28, "     PLASMA", #$FF
+    db #$FF
+
+presetequiprando_etanks:
+    %cm_numfield("Max Energy Tanks", !sram_presetequiprando_max_etanks, 0, 14, 1, 2, #0)
+
+presetequiprando_reserves:
+    %cm_numfield("Max Reserve Tanks", !sram_presetequiprando_max_reserves, 0, 4, 1, 1, #0)
+
+presetequiprando_missiles:
+    %cm_numfield("Max Missile Pickups", !sram_presetequiprando_max_missiles, 0, 46, 1, 5, #0)
+
+presetequiprando_supers:
+    %cm_numfield("Max Super Pickups", !sram_presetequiprando_max_supers, 0, 10, 1, 5, #0)
+
+presetequiprando_pbs:
+    %cm_numfield("Max Power Bomb Pickups", !sram_presetequiprando_max_pbs, 0, 10, 1, 5, #0)
 
 
 ; ----------------
@@ -2161,7 +2185,7 @@ SpritesMenu:
     dw #sprites_samus_prio
     dw #sprites_show_samus_hitbox
     dw #sprites_show_enemy_hitbox
-    dw #sprites_show_extended_spritemap_hitbox
+    dw #sprites_show_extend_spritemap_hitbox
     dw #sprites_show_custom_boss_hitbox
     dw #sprites_show_samusproj_hitbox
     dw #sprites_show_enemyproj_hitbox
@@ -2179,7 +2203,7 @@ sprites_show_samus_hitbox:
 sprites_show_enemy_hitbox:
     %cm_toggle_bit("Normal Enemy Hitboxes", !ram_sprite_feature_flags, !SPRITE_ENEMY_HITBOX, #0)
 
-sprites_show_extended_spritemap_hitbox:
+sprites_show_extend_spritemap_hitbox:
     %cm_toggle_bit("Large Enemy Hitboxes", !ram_sprite_feature_flags, !SPRITE_EXTENDED_HITBOX, #0)
 
 sprites_show_custom_boss_hitbox:
@@ -2383,9 +2407,12 @@ print pc, " mainmenu InfoHUD start"
 InfoHudMenu:
     dw #ih_goto_display_mode
     dw #ih_display_mode
+    dw #ih_display_mode_reward
     dw #$FFFF
     dw #ih_goto_room_strat
     dw #ih_room_strat
+    dw #$FFFF
+    dw #ih_door_display_mode
     dw #$FFFF
     dw #ih_goto_timers
     dw #$FFFF
@@ -2535,6 +2562,9 @@ ih_display_mode:
   .routine
     JML init_print_segment_timer
 
+ih_display_mode_reward:
+    %cm_toggle("Strat Reward SFX", !sram_display_mode_reward, #$0001, #0)
+
 ih_goto_room_strat:
     %cm_submenu("Select Room Strat", #RoomStratMenu)
 
@@ -2641,6 +2671,21 @@ ih_room_strat:
   .routine
     LDA #!IH_MODE_ROOMSTRAT_INDEX : STA !sram_display_mode
     JML init_print_segment_timer
+
+ih_door_display_mode:
+    dw !ACTION_CHOICE
+    dl #!sram_door_display_mode
+    dw #$0000
+    db #$28, "Door HUD Mode", #$FF
+    db #$28, "        OFF", #$FF
+    db #$28, "HORIZ SPEED", #$FF
+    db #$28, " VERT SPEED", #$FF
+    db #$28, "     CHARGE", #$FF
+    db #$28, "SHINE TIMER", #$FF
+    db #$28, "DASHCOUNTER", #$FF
+    db #$28, " X POSITION", #$FF
+    db #$28, " Y POSITION", #$FF
+    db #$FF
 
 ih_goto_timers:
     %cm_submenu("Timer Settings", #IHTimerMenu)
@@ -2800,11 +2845,8 @@ GameMenu:
     dw #game_goto_controls
     dw #$FFFF
     dw #game_cutscenes
-    dw #game_fanfare_toggle
     dw #game_fast_doors_toggle
     dw #game_fast_elevators
-    dw #game_music_toggle
-    dw #game_healthalarm
     dw #$FFFF
     dw #game_goto_debug
     dw #$FFFF
@@ -2832,48 +2874,11 @@ game_goto_controls:
 game_cutscenes:
     %cm_submenu("Cutscenes and Effects", #CutscenesMenu)
 
-game_fanfare_toggle:
-    %cm_toggle_bit("Fanfare", !sram_fanfare, !FANFARE_TOGGLE, #0)
-
 game_fast_doors_toggle:
     %cm_toggle("Fast Doors", !sram_fast_doors, #$0001, #0)
 
 game_fast_elevators:
     %cm_toggle("Fast Elevators", !sram_fast_elevators, #$0001, #0)
-
-game_music_toggle:
-    dw !ACTION_CHOICE
-    dl #!sram_music_toggle
-    dw .routine
-    db #$28, "Music", #$FF
-    db #$28, "        OFF", #$FF
-    db #$28, "         ON", #$FF
-    db #$28, "   FAST OFF", #$FF
-    db #$28, " PRESET OFF", #$FF
-    db #$FF
-  .routine
-    ; Clear music queue
-    STZ $0629 : STZ $062B : STZ $062D : STZ $062F
-    STZ $0631 : STZ $0633 : STZ $0635 : STZ $0637
-    STZ $0639 : STZ $063B : STZ $063D : STZ $063F
-    CMP #$0001 : BEQ .resume_music
-    STZ $2140
-    RTL
-  .resume_music
-    LDA !MUSIC_DATA : CLC : ADC #$FF00 : PHA : STZ !MUSIC_DATA : PLA : JSL !MUSIC_ROUTINE
-    LDA !MUSIC_TRACK : PHA : STZ !MUSIC_TRACK : PLA : JSL !MUSIC_ROUTINE
-    RTL
-
-game_healthalarm:
-    dw !ACTION_CHOICE
-    dl #!sram_healthalarm
-    dw #$0000
-    db #$28, "Low Health Alar", #$FF
-    db #$28, "m     NEVER", #$FF
-    db #$28, "m   VANILLA", #$FF
-    db #$28, "m    PB FIX", #$FF
-    db #$28, "m  IMPROVED", #$FF
-    db #$FF
 
 game_minimap:
     %cm_toggle("Minimap", !ram_minimap, #$0001, #0)
@@ -2968,10 +2973,10 @@ CutscenesMenu:
     dw #cutscenes_fast_bowling
     dw #cutscenes_fast_mb
     dw #$FFFF
-    dw #cutscenes_suppress_crateria_lightning
-    dw #cutscenes_suppress_escape_flashing
+    dw #cutscenes_suppress_crateria_flash
+    dw #cutscenes_suppress_escape_flash
     dw #cutscenes_suppress_power_bomb_flash
-    dw #cutscenes_suppress_mb1_flashing
+    dw #cutscenes_suppress_mb1_flash
     dw #cutscenes_suppress_boss_damage_flash
     dw #cutscenes_suppress_earthquake
     dw #$0000
@@ -3022,16 +3027,16 @@ cutscenes_fast_bowling:
 cutscenes_fast_mb:
     %cm_toggle_bit("Fast Mother Brain", !sram_cutscenes, !CUTSCENE_FAST_MB, #0)
 
-cutscenes_suppress_crateria_lightning:
+cutscenes_suppress_crateria_flash:
     %cm_toggle_bit_inverted("Crateria Lightning", !sram_suppress_flashing, !SUPPRESS_CRATERIA_LIGHTNING, #0)
 
-cutscenes_suppress_escape_flashing:
+cutscenes_suppress_escape_flash:
     %cm_toggle_bit_inverted("Escape Flashing", !sram_suppress_flashing, !SUPPRESS_ESCAPE_FLASHING, #0)
 
 cutscenes_suppress_power_bomb_flash:
     %cm_toggle_bit_inverted("Power Bomb Flash", !sram_suppress_flashing, !SUPPRESS_POWER_BOMB_FLASH, #0)
 
-cutscenes_suppress_mb1_flashing:
+cutscenes_suppress_mb1_flash:
     %cm_toggle_bit_inverted("MB1 Flashing", !sram_suppress_flashing, !SUPPRESS_MB1_FLASHING, #0)
 
 cutscenes_suppress_boss_damage_flash:
@@ -3907,6 +3912,261 @@ ctrl_reset_defaults:
   .routine
     %sfxreset()
     JML init_sram_upto9_controller_shortcuts
+
+; ----------
+; Audio Menu
+; ----------
+
+AudioMenu:
+    dw #audio_music_toggle
+    dw #audio_fanfare_toggle
+    dw #audio_health_alarm
+    dw #$FFFF
+    dw #audio_goto_music
+    dw #$FFFF
+    dw #audio_sfx_lib1
+    dw #audio_sfx_lib2
+    dw #audio_sfx_lib3
+    dw #audio_sfx_silence
+    dw #$0000
+    %cm_header("AUDIO MENU")
+    %cm_footer("PRESS Y TO PLAY SOUNDS")
+
+audio_music_toggle:
+    dw !ACTION_CHOICE
+    dl #!sram_music_toggle
+    dw .routine
+    db #$28, "Music", #$FF
+    db #$28, "        OFF", #$FF
+    db #$28, "         ON", #$FF
+    db #$28, "   FAST OFF", #$FF
+    db #$28, " PRESET OFF", #$FF
+    db #$FF
+  .routine
+    ; Clear music queue
+    STZ $0629 : STZ $062B : STZ $062D : STZ $062F
+    STZ $0631 : STZ $0633 : STZ $0635 : STZ $0637
+    STZ $0639 : STZ $063B : STZ $063D : STZ $063F
+    CMP #$0001 : BEQ .resume_music
+    STZ $2140
+    RTL
+  .resume_music
+    LDA !MUSIC_DATA : CLC : ADC #$FF00 : PHA : STZ !MUSIC_DATA : PLA : JSL !MUSIC_ROUTINE
+    LDA !MUSIC_TRACK : PHA : STZ !MUSIC_TRACK : PLA : JSL !MUSIC_ROUTINE
+    RTL
+
+audio_fanfare_toggle:
+    %cm_toggle_bit("Fanfare", !sram_fanfare, !FANFARE_TOGGLE, #0)
+
+audio_health_alarm:
+    dw !ACTION_CHOICE
+    dl #!sram_healthalarm
+    dw #$0000
+    db #$28, "Low Health Alar", #$FF
+    db #$28, "m     NEVER", #$FF
+    db #$28, "m   VANILLA", #$FF
+    db #$28, "m    PB FIX", #$FF
+    db #$28, "m  IMPROVED", #$FF
+    db #$FF
+
+audio_goto_music:
+    %cm_submenu("Music Selection", #MusicSelectMenu1)
+
+audio_sfx_lib1:
+    %cm_numfield_sound("Library One Sound", !ram_cm_sfxlib1, 1, 66, 1, 4, .routine)
+  .routine
+    LDA !IH_CONTROLLER_PRI_NEW : BIT !CTRL_Y : BEQ .done
+    LDA !ram_cm_sfxlib1 : JML !SFX_LIB1
+  .done
+    RTL
+
+audio_sfx_lib2:
+    %cm_numfield_sound("Library Two Sound", !ram_cm_sfxlib2, 1, 127, 1, 4, .routine)
+  .routine
+    LDA !IH_CONTROLLER_PRI_NEW : BIT !CTRL_Y : BEQ audio_sfx_lib1_done
+    LDA !ram_cm_sfxlib2 : JML !SFX_LIB2
+
+audio_sfx_lib3:
+    %cm_numfield_sound("Library Three Sound", !ram_cm_sfxlib3, 1, 47, 1, 4, .routine)
+  .routine
+    LDA !IH_CONTROLLER_PRI_NEW : BIT !CTRL_Y : BEQ audio_sfx_lib1_done
+    LDA !ram_cm_sfxlib3 : JML !SFX_LIB3
+
+audio_sfx_silence:
+    %cm_jsl("Silence Sound FX", .routine, #0)
+  .routine
+    JML stop_all_sounds
+
+MusicSelectMenu1:
+    dw #audio_music_title1
+    dw #audio_music_title2
+    dw #audio_music_intro
+    dw #audio_music_ceres
+    dw #audio_music_escape
+    dw #audio_music_rainstorm
+    dw #audio_music_spacepirate
+    dw #audio_music_samustheme
+    dw #audio_music_greenbrinstar
+    dw #audio_music_redbrinstar
+    dw #audio_music_uppernorfair
+    dw #audio_music_lowernorfair
+    dw #audio_music_easternmaridia
+    dw #audio_music_westernmaridia
+    dw #audio_music_wreckedshipoff
+    dw #audio_music_wreckedshipon
+    dw #audio_music_hallway
+    dw #audio_music_goldenstatue
+    dw #audio_music_tourian
+    dw #$FFFF
+    dw #audio_music_goto_2
+    dw #$0000
+    %cm_header("PLAY MUSIC - PAGE ONE")
+
+audio_music_title1:
+    %cm_jsl("Title Theme Part 1", #audio_playmusic, #$0305)
+
+audio_music_title2:
+    %cm_jsl("Title Theme Part 2", #audio_playmusic, #$0306)
+
+audio_music_intro:
+    %cm_jsl("Intro", #audio_playmusic, #$3605)
+
+audio_music_ceres:
+    %cm_jsl("Ceres Station", #audio_playmusic, #$2D06)
+
+audio_music_escape:
+    %cm_jsl("Escape Sequence", #audio_playmusic, #$2407)
+
+audio_music_rainstorm:
+    %cm_jsl("Zebes Rainstorm", #audio_playmusic, #$0605)
+
+audio_music_spacepirate:
+    %cm_jsl("Space Pirate Theme", #audio_playmusic, #$0905)
+
+audio_music_samustheme:
+    %cm_jsl("Samus Theme", #audio_playmusic, #$0C05)
+
+audio_music_greenbrinstar:
+    %cm_jsl("Green Brinstar", #audio_playmusic, #$0F05)
+
+audio_music_redbrinstar:
+    %cm_jsl("Red Brinstar", #audio_playmusic, #$1205)
+
+audio_music_uppernorfair:
+    %cm_jsl("Upper Norfair", #audio_playmusic, #$1505)
+
+audio_music_lowernorfair:
+    %cm_jsl("Lower Norfair", #audio_playmusic, #$1805)
+
+audio_music_easternmaridia:
+    %cm_jsl("Eastern Maridia", #audio_playmusic, #$1B05)
+
+audio_music_westernmaridia:
+    %cm_jsl("Western Maridia", #audio_playmusic, #$1B06)
+
+audio_music_wreckedshipoff:
+    %cm_jsl("Wrecked Ship Unpowered", #audio_playmusic, #$3005)
+
+audio_music_wreckedshipon:
+    %cm_jsl("Wrecked Ship", #audio_playmusic, #$3006)
+
+audio_music_hallway:
+    %cm_jsl("Hallway to Statue", #audio_playmusic, #$0004)
+
+audio_music_goldenstatue:
+    %cm_jsl("Golden Statue", #audio_playmusic, #$0906)
+
+audio_music_tourian:
+    %cm_jsl("Tourian", #audio_playmusic, #$1E05)
+
+audio_music_goto_2:
+    %cm_adjacent_submenu("GOTO PAGE TWO", #MusicSelectMenu2)
+
+MusicSelectMenu2:
+    dw #audio_music_preboss1
+    dw #audio_music_preboss2
+    dw #audio_music_miniboss
+    dw #audio_music_smallboss
+    dw #audio_music_bigboss
+    dw #audio_music_motherbrain
+    dw #audio_music_credits
+    dw #audio_music_itemroom
+    dw #audio_music_itemfanfare
+    dw #audio_music_spacecolony
+    dw #audio_music_zebesexplodes
+    dw #audio_music_loadsave
+    dw #audio_music_death
+    dw #audio_music_lastmetroid
+    dw #audio_music_galaxypeace
+    dw #$FFFF
+    dw #audio_music_goto_1
+    dw #$0000
+    %cm_header("PLAY MUSIC - PAGE TWO")
+
+audio_music_preboss1:
+    %cm_jsl("Chozo Statue Awakens", #audio_playmusic, #$2406)
+
+audio_music_preboss2:
+    %cm_jsl("Approaching Confrontation", #audio_playmusic, #$2706)
+
+audio_music_miniboss:
+    %cm_jsl("Miniboss Fight", #audio_playmusic, #$2A05)
+
+audio_music_smallboss:
+    %cm_jsl("Small Boss Confrontation", #audio_playmusic, #$2705)
+
+audio_music_bigboss:
+    %cm_jsl("Big Boss Confrontation", #audio_playmusic, #$2405)
+
+audio_music_motherbrain:
+    %cm_jsl("Mother Brain Fight", #audio_playmusic, #$2105)
+
+audio_music_credits:
+    %cm_jsl("Credits", #audio_playmusic, #$3C05)
+
+audio_music_itemroom:
+    %cm_jsl("Item - Elevator Room", #audio_playmusic, #$0003)
+
+audio_music_itemfanfare:
+    %cm_jsl("Item Fanfare", #audio_playmusic, #$0002)
+
+audio_music_spacecolony:
+    %cm_jsl("Arrival at Space Colony", #audio_playmusic, #$2D05)
+
+audio_music_zebesexplodes:
+    %cm_jsl("Zebes Explodes", #audio_playmusic, #$3305)
+
+audio_music_loadsave:
+    %cm_jsl("Samus Appears", #audio_playmusic, #$0001)
+
+audio_music_death:
+    %cm_jsl("Death", #audio_playmusic, #$3905)
+
+audio_music_lastmetroid:
+    %cm_jsl("Last Metroid in Captivity", #audio_playmusic, #$3F05)
+
+audio_music_galaxypeace:
+    %cm_jsl("The Galaxy is at Peace", #audio_playmusic, #$4205)
+
+audio_music_goto_1:
+    %cm_adjacent_submenu("GOTO PAGE TWO", #MusicSelectMenu1)
+
+audio_playmusic:
+{
+    PHY
+    ; always load silence first
+    LDA #$0000 : JSL !MUSIC_ROUTINE
+    PLY : TYA
+    STZ $C1 : %a8() : STA $C1
+    XBA : %a16()
+    STA !ROOM_MUSIC_DATA_INDEX
+    ; play from negative data index
+    ORA #$FF00 : JSL !MUSIC_ROUTINE
+    ; play from track index
+    LDA $C1 : JSL !MUSIC_ROUTINE
+    RTL
+}
+
 
 GameModeExtras:
 {

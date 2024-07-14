@@ -70,6 +70,7 @@ init_nonzero_wram:
     LDA !sram_seed_Y : STA !ram_seed_Y
 
     LDA #$0001 : STA !ram_cm_dummy_on
+    STA !ram_cm_sfxlib1 : STA !ram_cm_sfxlib2 : STA !ram_cm_sfxlib3
     RTL
 }
 
@@ -127,6 +128,7 @@ endif
     CMP #$0012 : BEQ .sram_upgrade_12to13
     CMP #$0013 : BEQ .sram_upgrade_13to14
     CMP #$0014 : BEQ .sram_upgrade_14to15
+    CMP #$0015 : BEQ .sram_upgrade_15to16
     BRA .sram_upgrade_upto9
 
   .sram_upgrade_10to11
@@ -152,6 +154,18 @@ endif
 
   .sram_upgrade_14to15
     TDC : STA !sram_bomb_torizo_door
+
+  .sram_upgrade_15to16
+    TDC : STA !sram_door_display_mode
+    STA !sram_cm_font : STA !sram_presetequiprando_beampref
+    STA !sram_display_mode_reward
+    LDA !CTRL_Y : STA !sram_cm_fast_scroll_button
+    LDA !PRESET_EQUIP_RANDO_INIT : STA !sram_presetequiprando
+    LDA #$000E : STA !sram_presetequiprando_max_etanks
+    LDA #$0004 : STA !sram_presetequiprando_max_reserves
+    LDA #$002E : STA !sram_presetequiprando_max_missiles
+    LDA #$000A : STA !sram_presetequiprando_max_supers
+    LDA #$000A : STA !sram_presetequiprando_max_pbs
 
     LDA #!SRAM_VERSION : STA !sram_initialized
     RTS
@@ -237,7 +251,8 @@ init_post_boot:
     CMP #$0003 : BCC .valid_index
     LDA #$0000
   .valid_index
-    JSL $818085     ; Load save file
+    JSL $818085     ; Load save file, then reload suit properties
+    JSL init_suit_properties_ram
     BCC .check_quickboot
 
     ; No valid save; load a new file (for default controller bindings)
