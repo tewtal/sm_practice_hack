@@ -107,10 +107,10 @@
 
 !WRAM_PERSIST_START = !WRAM_START+$80
 ; ----------------------------------------------------------
-; Variables below this point are PERSISTENT -- they maintain
-; their value across savestates. Use this section for
-; variables such as user settings that do not depend on the
-; current game state.
+; WRAM variables below this point are PERSISTENT.
+; They maintain their value across savestates.
+; Use this section for variables such as user settings
+; that do not depend on the current game state.
 
 !ram_metronome                      = !WRAM_PERSIST_START+$00
 !ram_minimap                        = !WRAM_PERSIST_START+$02
@@ -234,6 +234,10 @@
 !ram_timers_autoupdate = !WRAM_MENU_START+$64
 !ram_cm_suit_properties = !WRAM_MENU_START+$66
 
+!ram_cm_sfxlib1 = !WRAM_MENU_START+$68
+!ram_cm_sfxlib2 = !WRAM_MENU_START+$6A
+!ram_cm_sfxlib3 = !WRAM_MENU_START+$6C
+
 ; ^ FREE SPACE ^ up to +$7E
 
 ; ------------------
@@ -278,6 +282,7 @@
 !ram_cm_custompalette_green = !WRAM_MENU_START+$82
 !ram_cm_custompalette_red = !WRAM_MENU_START+$84
 !ram_cm_custompalette = !WRAM_MENU_START+$86
+!ram_cm_fast_scroll_menu_selection = !WRAM_MENU_START+$88
 !ram_cm_dummy_on = !WRAM_MENU_START+$8A
 !ram_cm_dummy_off = !WRAM_MENU_START+$8C
 !ram_cm_dummy_num = !WRAM_MENU_START+$8E
@@ -300,7 +305,7 @@
 ; SRAM
 ; -----
 
-!SRAM_VERSION = $0015
+!SRAM_VERSION = $0016
 
 !SRAM_START = $702000
 !PRESET_SLOTS = $703000
@@ -382,8 +387,22 @@
 !sram_seed_X = !SRAM_START+$82
 !sram_seed_Y = !SRAM_START+$84
 !sram_bomb_torizo_door = !SRAM_START+$86
+!sram_door_display_mode = !SRAM_START+$88
+!sram_cm_fast_scroll_button = !SRAM_START+$8A
+!sram_cm_font = !SRAM_START+$8C
 
-; ^ FREE SPACE ^ up to +$EE, $100-BA6
+; ^ FREE SPACE ^ up to +$EE
+
+!sram_presetequiprando = !SRAM_START+$100
+!sram_presetequiprando_beampref = !SRAM_START+$102
+!sram_presetequiprando_max_etanks = !SRAM_START+$104
+!sram_presetequiprando_max_reserves = !SRAM_START+$106
+!sram_presetequiprando_max_missiles = !SRAM_START+$108
+!sram_presetequiprando_max_supers = !SRAM_START+$10A
+!sram_presetequiprando_max_pbs = !SRAM_START+$10C
+!sram_display_mode_reward = !SRAM_START+$10E
+
+; ^ FREE SPACE ^ up to +$BA6
 
 !sram_custom_header_normal = !SRAM_START+$BA8 ; $18 bytes
 !sram_custom_preset_safewords_normal = !SRAM_START+$BC0 ; $50 bytes
@@ -485,6 +504,7 @@
 !SFX_LIB2 = $8090C1
 !SFX_LIB3 = $809143
 
+!VRAM_WRITE_STACK_POINTER = $0330
 !OAM_STACK_POINTER = $0590
 !PB_EXPLOSION_STATUS = $0592
 !REALTIME_LAG_COUNTER = $05A0 ; Not used in vanilla
@@ -505,6 +525,7 @@
 !PREVIOUS_CRE_BITSET = $07B1
 !CRE_BITSET = $07B3
 !STATE_POINTER = $07BB
+!ROOM_MUSIC_DATA_INDEX = $07CB
 !MUSIC_DATA = $07F3
 !MUSIC_TRACK = $07F5
 !LAYER1_X = $0911
@@ -748,6 +769,11 @@ endif
 !PRESETS_CLEAR_MAP_TILES = #$0020
 !PRESETS_AUTO_SEGMENT_OFF = #$0040
 
+!PRESET_EQUIP_RANDO_ENABLE = #$0001
+!PRESET_EQUIP_RANDO_FORCE_MORPH = #$0002
+!PRESET_EQUIP_RANDO_FORCE_CHARGE = #$0004
+!PRESET_EQUIP_RANDO_INIT = #$0006
+
 if !FEATURE_TINYSTATES
 !TOTAL_PRESET_SLOTS = #$000F
 !PRESET_SLOT_SIZE = #$0100
@@ -797,18 +823,19 @@ endif
 ; ----------
 
 if !FEATURE_SD2SNES
-; Savestate code variables
-!SS_INPUT_CUR = $8B
-!SS_INPUT_NEW = $8F
-!SS_INPUT_PREV = $97
-
 if !FEATURE_TINYSTATES
 !SRAM_DMA_BANK = $737000
 !SRAM_SAVED_SP = $737F00
 !SRAM_SAVED_STATE = $737F02
 !SRAM_SAVED_RNG = $737F80
 !SRAM_SAVED_FRAME_COUNTER = $737F82
-!SRAM_SAVED_MINIMAP = $737F84
+!SRAM_TINYSTATE_ROOM = $737F84
+!SRAM_TINYSTATE_FAST = $737F86
+!SRAM_SEG_TIMER_F = $737F88
+!SRAM_SEG_TIMER_S = $737F8A
+!SRAM_SEG_TIMER_M = $737F8C
+!SRAM_SAVED_MINIMAP = $737F8E
+!SRAM_SLOWDOWN_MODE = $737F90
 else
 !SRAM_DMA_BANK = $770000
 !SRAM_SAVED_RNG = $770080
@@ -816,6 +843,10 @@ else
 !SRAM_SAVED_SP = $774004
 !SRAM_SAVED_STATE = $774006
 !SRAM_SAVED_MINIMAP = $774008
+!SRAM_SEG_TIMER_F = $77400A
+!SRAM_SEG_TIMER_S = $77400C
+!SRAM_SEG_TIMER_M = $77400E
+!SRAM_SLOWDOWN_MODE = $774010
 endif
 endif
 

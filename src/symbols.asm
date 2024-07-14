@@ -105,10 +105,10 @@ ram_shinetune_early_4 = !ram_shinetune_early_4 ; !WRAM_START+$7C
 ram_shinetune_late_4 = !ram_shinetune_late_4 ; !WRAM_START+$7E
 
 ; ----------------------------------------------------------
-; Variables below this point are PERSISTENT -- they maintain
-; their value across savestates. Use this section for
-; variables such as user settings that do not depend on the
-; current game state.
+; WRAM variables below this point are PERSISTENT.
+; They maintain their value across savestates.
+; Use this section for variables such as user settings
+; that do not depend on the current game state.
 
 ram_metronome = !ram_metronome ; !WRAM_PERSIST_START+$00
 ram_minimap = !ram_minimap ; !WRAM_PERSIST_START+$02
@@ -227,6 +227,10 @@ ram_seed_Y = !ram_seed_Y ; !WRAM_MENU_START+$62
 ram_timers_autoupdate = !ram_timers_autoupdate ; !WRAM_MENU_START+$64
 ram_cm_suit_properties = !ram_cm_suit_properties ; !WRAM_MENU_START+$66
 
+ram_cm_sfxlib1 = !ram_cm_sfxlib1 ; !WRAM_MENU_START+$68
+ram_cm_sfxlib2 = !ram_cm_sfxlib2 ; !WRAM_MENU_START+$6A
+ram_cm_sfxlib3 = !ram_cm_sfxlib3 ; !WRAM_MENU_START+$6C
+
 ; ^ FREE SPACE ^ up to +$7E
 
 ; ------------------
@@ -271,6 +275,7 @@ ram_cm_custompalette_blue = !ram_cm_custompalette_blue ; !WRAM_MENU_START+$80
 ram_cm_custompalette_green = !ram_cm_custompalette_green ; !WRAM_MENU_START+$82
 ram_cm_custompalette_red = !ram_cm_custompalette_red ; !WRAM_MENU_START+$84
 ram_cm_custompalette = !ram_cm_custompalette ; !WRAM_MENU_START+$86
+ram_cm_fast_scroll_menu_selection = !ram_cm_fast_scroll_menu_selection ; !WRAM_MENU_START+$88
 ram_cm_dummy_on = !ram_cm_dummy_on ; !WRAM_MENU_START+$8A
 ram_cm_dummy_off = !ram_cm_dummy_off ; !WRAM_MENU_START+$8C
 ram_cm_dummy_num = !ram_cm_dummy_num ; !WRAM_MENU_START+$8E
@@ -369,8 +374,22 @@ sram_customsfx_goback = !sram_customsfx_goback ; !SRAM_START+$80
 sram_seed_X = !sram_seed_X ; !SRAM_START+$82
 sram_seed_Y = !sram_seed_Y ; !SRAM_START+$84
 sram_bomb_torizo_door = !sram_bomb_torizo_door ; !SRAM_START+$86
+sram_door_display_mode = !sram_door_display_mode ; !SRAM_START+$88
+sram_cm_fast_scroll_button = !sram_cm_fast_scroll_button ; !SRAM_START+$8A
+sram_cm_font = !sram_cm_font ; !SRAM_START+$8C
 
-; ^ FREE SPACE ^ up to +$EE, $100-BA6
+; ^ FREE SPACE ^ up to +$EE
+
+sram_presetequiprando = !sram_presetequiprando ; !SRAM_START+$100
+sram_presetequiprando_beampref = !sram_presetequiprando_beampref ; !SRAM_START+$102
+sram_presetequiprando_max_etanks = !sram_presetequiprando_max_etanks ; !SRAM_START+$104
+sram_presetequiprando_max_reserves = !sram_presetequiprando_max_reserves ; !SRAM_START+$106
+sram_presetequiprando_max_missiles = !sram_presetequiprando_max_missiles ; !SRAM_START+$108
+sram_presetequiprando_max_supers = !sram_presetequiprando_max_supers ; !SRAM_START+$10A
+sram_presetequiprando_max_pbs = !sram_presetequiprando_max_pbs ; !SRAM_START+$10C
+sram_display_mode_reward = !sram_display_mode_reward ; !SRAM_START+$10E
+
+; ^ FREE SPACE ^ up to +$BA6
 
 sram_custom_header_normal = !sram_custom_header_normal ; !SRAM_START+$BA8 ; $18 bytes
 sram_custom_preset_safewords_normal = !sram_custom_preset_safewords_normal ; !SRAM_START+$BC0 ; $50 bytes
