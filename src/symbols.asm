@@ -231,6 +231,8 @@ ram_cm_sfxlib1 = !ram_cm_sfxlib1 ; !WRAM_MENU_START+$68
 ram_cm_sfxlib2 = !ram_cm_sfxlib2 ; !WRAM_MENU_START+$6A
 ram_cm_sfxlib3 = !ram_cm_sfxlib3 ; !WRAM_MENU_START+$6C
 
+ram_cm_fast_scroll_menu_selection = !ram_cm_fast_scroll_menu_selection ; !WRAM_MENU_START+$6E
+
 ; ^ FREE SPACE ^ up to +$7E
 
 ; ------------------
@@ -275,7 +277,6 @@ ram_cm_custompalette_blue = !ram_cm_custompalette_blue ; !WRAM_MENU_START+$80
 ram_cm_custompalette_green = !ram_cm_custompalette_green ; !WRAM_MENU_START+$82
 ram_cm_custompalette_red = !ram_cm_custompalette_red ; !WRAM_MENU_START+$84
 ram_cm_custompalette = !ram_cm_custompalette ; !WRAM_MENU_START+$86
-ram_cm_fast_scroll_menu_selection = !ram_cm_fast_scroll_menu_selection ; !WRAM_MENU_START+$88
 ram_cm_dummy_on = !ram_cm_dummy_on ; !WRAM_MENU_START+$8A
 ram_cm_dummy_off = !ram_cm_dummy_off ; !WRAM_MENU_START+$8C
 ram_cm_dummy_num = !ram_cm_dummy_num ; !WRAM_MENU_START+$8E
