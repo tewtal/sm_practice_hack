@@ -213,7 +213,7 @@ cm_transfer_custom_tileset:
     LDA.w #cm_hud_table2>>16 : STA $C3
 
   .room_check
-    LDA !ROOM_ID : CMP #$A59F : BEQ .kraid_vram
+    LDA !ROOM_ID : CMP #ROOM_KraidRoom : BEQ .kraid_vram
 
     ; Load custom vram to normal BG3 location
     %a8()
@@ -253,7 +253,7 @@ cm_transfer_original_tileset:
 {
     PHP
     %a16()
-    LDA !ROOM_ID : CMP #$A59F : BEQ .kraid_vram
+    LDA !ROOM_ID : CMP #ROOM_KraidRoom : BEQ .kraid_vram
 
     %a8()
     LDA !ram_minimap : CMP #$00 : BEQ .normal_vram
@@ -449,8 +449,7 @@ cm_tilemap_bg:
     ; Game over, $1A
     CMP #$001A : BEQ .fillInterior
   .checkCeres
-    ; Ceres elevator room, $DF45
-    LDA !ROOM_ID : CMP #$DF45 : BNE .done
+    LDA !ROOM_ID : CMP #ROOM_CeresElevatorRoom : BNE .done
 
   .fillInterior
     LDX #$0000

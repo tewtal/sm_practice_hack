@@ -709,7 +709,7 @@ print pc, " ridley rng start"
 
 ridley_init_hook:
 {
-    LDA $079B : CMP #$E0B5 : BNE .continue
+    LDA $079B : CMP #ROOM_CeresRidleyRoom : BNE .continue
     LDA $7ED82E : BIT #$0001 : BEQ .continue
 
     ; Ceres Ridley is already dead, so skip to the escape

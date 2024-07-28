@@ -353,7 +353,7 @@ ih_after_room_transition:
     ; Check if MBHP needs to be disabled
     LDA !sram_display_mode : CMP #!IH_MODE_ROOMSTRAT_INDEX : BNE .segmentTimer
     LDA !sram_room_strat : CMP #!IH_STRAT_MBHP_INDEX : BNE .segmentTimer
-    LDA !ROOM_ID : CMP #$DD58 : BEQ .segmentTimer
+    LDA !ROOM_ID : CMP #ROOM_MotherBrainRoom : BEQ .segmentTimer
     LDA #$0000 : STA !sram_display_mode
 
   .segmentTimer

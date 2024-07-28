@@ -2070,8 +2070,10 @@ init_heat_damage_ram:
     RTL
 
   .heatShield
-    LDA !ROOM_ID : CMP #$B742 : BPL .noDamage : CMP #$AF13 : BMI .noDamage
-    CMP #$B1BA : BPL .heatShieldDamage : CMP #$AF40 : BPL .noDamage
+    LDA !ROOM_ID : CMP #ROOM_BowlingAlley : BPL .noDamage
+    CMP #ROOM_LavaDiveRoom : BMI .noDamage
+    CMP #ROOM_LNElevatorSaveRoom : BPL .heatShieldDamage
+    CMP #ROOM_UpperNorfFarmingRoom : BPL .noDamage
 
   .heatShieldDamage
     ; We want Lower Norfair heat damage to be 50%
@@ -2139,11 +2141,15 @@ init_physics_non_vanilla:
     RTL
 
   .pv
-    LDA !ROOM_ID : CMP #$C98D : BMI .pv_more
-    CMP #$D4EE : BMI .off : CMP #$D8C6 : BPL .pv_on
-    CMP #$D5EC : BEQ .off : CMP #$D646 : BEQ .off
-    CMP #$D69A : BEQ .off : CMP #$D6D0 : BEQ .off
-    CMP #$D86E : BEQ .off : CMP #$D8C5 : BEQ .off
+    LDA !ROOM_ID : CMP #ROOM_BowlingAlley : BMI .pv_more
+    CMP #ROOM_WestSandHole : BMI .off
+    CMP #ROOM_HalfieClimbRoom : BPL .pv_on
+    CMP #ROOM_ButterflyRoom : BEQ .off
+    CMP #ROOM_PantsRoom : BEQ .off
+    CMP #ROOM_EastPantsRoom : BEQ .off
+    CMP #ROOM_SpringBallRoom : BEQ .off
+    CMP #ROOM_PlasmaBeachQuicksand : BEQ .off
+    CMP #ROOM_ShaktoolRoom : BEQ .off
 
   .pv_on
     LDA !SAMUS_ITEMS_EQUIPPED : AND #$0220
@@ -2151,10 +2157,12 @@ init_physics_non_vanilla:
     RTL
 
   .pv_more
-    CMP #$AC00 : BEQ .off : CMP #$AB64 : BEQ .off
-    CMP #$A5EF : BPL .pv_on
-    CMP #$99FA : BPL .off : CMP #$965A : BPL .pv_on
-    CMP #$93AB : BMI .pv_on
+    CMP #ROOM_GrappleTutorialRoom1 : BEQ .off
+    CMP #ROOM_GrappleTutorialRoom3 : BEQ .off
+    CMP #ROOM_SloatersRefill : BPL .pv_on
+    CMP #ROOM_FinalMissileBombway : BPL .off
+    CMP #ROOM_GauntletETankRoom : BPL .pv_on
+    CMP #ROOM_CrateriaSaveRoom : BMI .pv_on
     BRA .off
 }
 
@@ -2995,7 +3003,7 @@ cutscenes_skip_g4:
     %cm_toggle_bit("Skip G4", !sram_cutscenes, !CUTSCENE_SKIP_G4, #.routine)
   .routine
     BIT !CUTSCENE_SKIP_G4 : BEQ .off
-    LDA !ROOM_ID : CMP #$A5ED : BNE .done
+    LDA !ROOM_ID : CMP #ROOM_StatuesHallway : BNE .done
     ; Verify all four G4 bosses killed
     LDA $7ED828 : BIT #$0100 : BEQ .done
     LDA $7ED82C : BIT #$0001 : BEQ .done
@@ -3004,7 +3012,7 @@ cutscenes_skip_g4:
     LDA $7ED820 : ORA #$0400 : STA $7ED820
     BRA .done
   .off
-    LDA !ROOM_ID : CMP #$A5ED : BNE .done
+    LDA !ROOM_ID : CMP #ROOM_StatuesHallway : BNE .done
     LDA $7ED820 : AND #$FBFF : STA $7ED820
   .done
     RTL

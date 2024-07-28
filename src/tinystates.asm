@@ -91,10 +91,10 @@ endif
     PLA : CMP !ROOM_ID : BEQ .skip_load_level
 
     ; These rooms are very large and need to have BG2 reloaded from compressed data
-    LDA !ROOM_ID : CMP #$A322 : BEQ .slow ; caterpillers room (red brin elev)
-    CMP #$C98E : BEQ .slow ; bowling alley
-    CMP #$CFC9 : BEQ .slow ; main street maridia
-    CMP #$D0B9 : BEQ .slow ; mt everest
+    LDA !ROOM_ID : CMP #ROOM_CaterpillarRoom : BEQ .slow ; (red brin elev)
+    CMP #ROOM_BowlingAlley : BEQ .slow
+    CMP #ROOM_MainStreet : BEQ .slow
+    CMP #ROOM_MtEverest : BEQ .slow
 
 if !RAW_TILE_GRAPHICS
     JSL preset_load_level

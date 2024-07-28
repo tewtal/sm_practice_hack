@@ -553,9 +553,9 @@ set_fade_in_door_function:
     ; If the first enemy is a yapping maw, use original routine
     LDA !ENEMY_ID : CMP #$E7BF : BEQ .original
     ; If this is Red Brinstar Firefleas, use original routine
-    LDA !ROOM_ID : CMP #$962A : BEQ .original
+    LDA !ROOM_ID : CMP #ROOM_RedBrinstarElevRoom : BEQ .original
     ; If this room is not one of the metroid rooms, use optimized routine
-    CMP #$DAE0 : BCC .optimized : CMP #$DBCE : BCS .optimized
+    CMP #ROOM_MetroidRoom1 : BCC .optimized : CMP #ROOM_BlueHopperRoom : BCS .optimized
   .original
     LDA #$E737
     BRA .set

@@ -436,19 +436,19 @@ preset_scroll_fixes:
     RTL
 
   .tophalf
-    CPX #$92FD : BEQ .parlor
-    CPX #$A75D : BPL .norfair
-    CPX #$96BA : BEQ .climb
-    CPX #$9CB3 : BEQ .dachora
-    CPX #$9D19 : BEQ .big_pink
-    CPX #$9E11 : BEQ .big_pink_pbs
-    CPX #$9F64 : BEQ .taco_tank_room
-    CPX #$A011 : BEQ .etecoons_etank
-    CPX #$A253 : BEQ .red_tower
-    CPX #$A322 : BEQ .caterpillar
-    CPX #$A3AE : BEQ .alpha_pbs
-    CPX #$A408 : BEQ .below_spazer
-    CPX #$A6A1 : BEQ .warehouse_entrance
+    CPX #ROOM_ParlorAndAlcatraz : BEQ .parlor
+    CPX #ROOM_IceBeamAcidRoom : BPL .norfair
+    CPX #ROOM_Climb : BEQ .climb
+    CPX #ROOM_DachoraRoom : BEQ .dachora
+    CPX #ROOM_BigPink : BEQ .big_pink
+    CPX #ROOM_PinkBrinPowerBombs : BEQ .big_pink_pbs
+    CPX #ROOM_BlueBrinstarETank : BEQ .taco_tank_room
+    CPX #ROOM_EtecoonETankRoom : BEQ .etecoons_etank
+    CPX #ROOM_RedTower : BEQ .red_tower
+    CPX #ROOM_CaterpillarRoom : BEQ .caterpillar
+    CPX #ROOM_AlphaPowerBombRoom : BEQ .alpha_pbs
+    CPX #ROOM_BelowSpazer : BEQ .below_spazer
+    CPX #ROOM_WarehouseEntrance : BEQ .warehouse_entrance
     BRA .topdone
 
     ; ------------------------------------------------
@@ -486,18 +486,18 @@ preset_scroll_fixes:
     BRL .specialized_hjb_room
 
   .norfair
-    CPX #$A815 : BEQ .ice_beam_gates
-    CPX #$A8B9 : BEQ .ice_snake_room
-    CPX #$A9E5 : BEQ .hjb_room
-    CPX #$AC83 : BEQ .green_bubble_missiles
-    CPX #$AE32 : BEQ .volcano_room
-    CPX #$B07A : BEQ .bat_cave
-    CPX #$B1E5 : BEQ .acid_chozo_room
-    CPX #$B283 : BEQ .golden_torizo
-    CPX #$B3A5 : BEQ .fast_pillars_setup
-    CPX #$B4AD : BEQ .worst_room
-    CPX #$B585 : BEQ .kihunter_stairs
-    CPX #$B5D5 : BEQ .wasteland
+    CPX #ROOM_IceBeamGateRoom : BEQ .ice_beam_gates
+    CPX #ROOM_IceBeamSnakeRoom : BEQ .ice_snake_room
+    CPX #ROOM_HiJumpBootsRoom : BEQ .hjb_room
+    CPX #ROOM_GreenBubblesMissiles : BEQ .green_bubble_missiles
+    CPX #ROOM_VolcanoRoom : BEQ .volcano_room
+    CPX #ROOM_BatCave : BEQ .bat_cave
+    CPX #ROOM_AcidStatueRoom : BEQ .acid_chozo_room
+    CPX #ROOM_GoldenTorizoRoom : BEQ .golden_torizo
+    CPX #ROOM_FastPillarsSetupRoom : BEQ .fast_pillars_setup
+    CPX #ROOM_WorstRoomInTheGame : BEQ .worst_room
+    CPX #ROOM_RedKihunterShaft : BEQ .kihunter_stairs
+    CPX #ROOM_Wasteland : BEQ .wasteland
     BRA .norfairdone
 
     ; --------------------------------------------------
@@ -590,18 +590,18 @@ preset_scroll_fixes:
     BRA .halfwaydone
 
   .halfway
-    CPX #$DF45 : BPL .ceres
-    CPX #$C98E : BEQ .bowling
-    CPX #$CAF6 : BEQ .wrecked_ship_shaft
-    CPX #$CBD5 : BEQ .electric_death
-    CPX #$CC6F : BEQ .basement
-    CPX #$CEFB : BEQ .main_street
-    CPX #$D104 : BEQ .red_fish
-    CPX #$D1A3 : BEQ .crab_shaft
-    CPX #$D21C : BEQ .crab_hole
-    CPX #$D48E : BEQ .oasis
-    CPX #$D69A : BEQ .pants_room
-    CPX #$D78F : BEQ .precious
+    CPX #ROOM_CeresElevatorRoom : BPL .ceres
+    CPX #ROOM_BowlingAlley : BEQ .bowling
+    CPX #ROOM_WreckedShipMainShaft : BEQ .wrecked_ship_shaft
+    CPX #ROOM_ElectricDeathRoom : BEQ .electric_death
+    CPX #ROOM_Basement : BEQ .basement
+    CPX #ROOM_GlassTunnel : BEQ .main_street
+    CPX #ROOM_RedFishRoom : BEQ .red_fish
+    CPX #ROOM_CrabShaft : BEQ .crab_shaft
+    CPX #ROOM_CrabHole : BEQ .crab_hole
+    CPX #ROOM_Oasis : BEQ .oasis
+    CPX #ROOM_EastPantsRoom : BEQ .pants_room
+    CPX #ROOM_ThePreciousRoom : BEQ .precious
   .halfwaydone
     PLB
     PLP
@@ -659,17 +659,17 @@ preset_scroll_fixes:
 
   .ceresbegin
     STZ $5F                      ; Initialize mode 7
-    CPX #$DF45 : BEQ .ceres_elevator
+    CPX #ROOM_CeresElevatorRoom : BEQ .ceres_elevator
     %a16() : STZ $78             ; Ceres Elevator room already does this
     STZ $7A : STZ $7C            ; Other Ceres rooms should zero out the values
     STZ $7E : STZ $80 : STZ $82
     LDA #$0009 : STA $07EB : %a8()
     LDA #$09 : STA $56
-    CPX #$DF8D : BEQ .ceres_falling_tiles
-    CPX #$DFD7 : BEQ .ceres_magnet_stairs
-    CPX #$E021 : BEQ .ceres_dead_scientists
-    CPX #$E06B : BEQ .ceres_58_escape
-    CPX #$E0B5 : BEQ .ceres_ridley
+    CPX #ROOM_FallingTileRoom : BEQ .ceres_falling_tiles
+    CPX #ROOM_MagnetStairsRoom : BEQ .ceres_magnet_stairs
+    CPX #ROOM_DeadScientistRoom : BEQ .ceres_dead_scientists
+    CPX #ROOM_58Escape : BEQ .ceres_58_escape
+    CPX #ROOM_CeresRidleyRoom : BEQ .ceres_ridley
   .ceresdone
     PLB
     PLP
@@ -714,7 +714,7 @@ endif
     TDC : STA !ram_custom_preset
 
     %a8() : LDX !ROOM_ID         ; X = room ID
-    CPX #$DF45 : BMI .specialized_fixes
+    CPX #ROOM_CeresElevatorRoom : BMI .specialized_fixes
     BRL .ceres                   ; For ceres, use same fixes as category presets
 
     ; -----------------------------------------------
@@ -744,11 +744,11 @@ endif
     BRA .specialdone
 
   .specialized_fixes
-    CPX #$92FD : BEQ .specialized_parlor
-    CPX #$9D19 : BEQ .specialized_big_pink
-    CPX #$9F64 : BEQ .specialized_taco_tank_room
-    CPX #$A9E5 : BEQ .specialized_hjb_room
-    CPX #$B585 : BEQ .specialized_kihunter_stairs
+    CPX #ROOM_ParlorAndAlcatraz : BEQ .specialized_parlor
+    CPX #ROOM_BigPink : BEQ .specialized_big_pink
+    CPX #ROOM_BlueBrinstarETank : BEQ .specialized_taco_tank_room
+    CPX #ROOM_HiJumpBootsRoom : BEQ .specialized_hjb_room
+    CPX #ROOM_RedKihunterShaft : BEQ .specialized_kihunter_stairs
   .specialdone
     PLB
     PLP

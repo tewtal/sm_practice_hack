@@ -22,8 +22,8 @@ endif
     JSL preset_start_gameplay  ; Start gameplay
 
     ; Fix Phantoon and Draygon rooms
-    LDA !ROOM_ID : CMP #$CD13 : BEQ .fixBG2
-    CMP #$DA60 : BNE .doneBG2
+    LDA !ROOM_ID : CMP #ROOM_PhantoonRoom : BEQ .fixBG2
+    CMP #ROOM_DraygonRoom : BNE .doneBG2
   .fixBG2
     JSL preset_clear_BG2_tilemap
 
@@ -98,8 +98,8 @@ endif
 
   .clear_enemies
     ; Clear enemies if not in BT or MB rooms
-    LDA !ROOM_ID : CMP #$9804 : BEQ .done_clearing_enemies
-    CMP #$DD58 : BEQ .set_mb_state
+    LDA !ROOM_ID : CMP #ROOM_BombTorizoRoom : BEQ .done_clearing_enemies
+    CMP #ROOM_MotherBrainRoom : BEQ .set_mb_state
     LDA !sram_preset_options : BIT !PRESETS_PRESERVE_ENEMIES : BNE .done_clearing_enemies
     JSR clear_all_enemies
 
@@ -417,7 +417,7 @@ preset_start_gameplay:
     ; Set loading game state for Zebes
     LDA #$0005 : STA $7ED914
     LDA !SAMUS_POSE : BNE .end_load_game_state
-    LDA !ROOM_ID : CMP #$91F8 : BNE .end_load_game_state
+    LDA !ROOM_ID : CMP #ROOM_LandingSite : BNE .end_load_game_state
     ; If default pose at landing site then assume we are arriving on Zebes
     LDA #$0022 : STA $7ED914
 if !FEATURE_PAL
@@ -485,11 +485,12 @@ endif
 
     ; Fix BG2 Y offsets for rooms with scrolling sky
     ; Also fix rooms that need to be handled before door scroll
-    LDA !ROOM_ID : CMP #$CF80 : BEQ .eastTunnel
-    CMP #$D646 : BEQ .pantsRoom : CMP #$D6FD : BEQ .aqueductFarmsAndPitRoom
-    CMP #$91F8 : BEQ .bgOffsetsScrollingSky
-    CMP #$93FE : BEQ .bgOffsetsScrollingSky
-    CMP #$94FD : BEQ .bgOffsetsScrollingSky
+    LDA !ROOM_ID : CMP #ROOM_EastTunnel : BEQ .eastTunnel
+    CMP #ROOM_PantsRoom : BEQ .pantsRoom
+    CMP #ROOM_BelowBotwoonETank : BEQ .aqueductFarmsAndPitRoom
+    CMP #ROOM_LandingSite : BEQ .bgOffsetsScrollingSky
+    CMP #ROOM_WestOcean : BEQ .bgOffsetsScrollingSky
+    CMP #ROOM_EastOcean : BEQ .bgOffsetsScrollingSky
     BRA .bgOffsetsCalculated
 
   .eastTunnel
