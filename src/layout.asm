@@ -91,7 +91,7 @@ layout_create_plms_execute_asm:
 warnpc $82EB9F
 
 
-org $82F7A0
+org $82F800
 print pc, " layout bank82 start"
 
 layout_create_plms_itempickups_end:
