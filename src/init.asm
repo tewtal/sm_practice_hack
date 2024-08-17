@@ -252,13 +252,13 @@ init_post_boot:
     LDA #$0000
   .valid_index
     JSL $818085     ; Load save file, then reload suit properties
-    JSL init_suit_properties_ram
     BCC .check_quickboot
 
     ; No valid save; load a new file (for default controller bindings)
     JSR $B2CB
 
   .check_quickboot
+    JSL init_suit_properties_ram
     ; Is quickboot enabled?
     LDA !sram_cutscenes : AND !CUTSCENE_QUICKBOOT : BEQ .done
 
