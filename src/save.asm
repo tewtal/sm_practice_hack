@@ -2,31 +2,125 @@
 ; by acmlm, total, Myria
 ;
 
-org $80F600
+macro wram_to_sram(wram_addr, size, sram_addr)
+    dw $0000|$4312, <sram_addr>&$FFFF                            ; VRAM address >> 1.
+    dw $0000|$4314, ((<sram_addr>>>16)&$FF)|((<size>&$FF)<<8)    ; A addr = $70xxxx, size = $xx00
+    dw $0000|$4316, (<size>>>8)&$FF                              ; size = $80xx ($8000), unused bank reg = $00.
+    dw $0000|$2181, <wram_addr>&$FFFF                            ; WRAM addr = $xx0000
+    dw $1000|$2183, ((<wram_addr>>>16)&$FF)-$7E                  ; WRAM addr = $7Exxxx  (bank is relative to $7E)
+    dw $1000|$420B, $02                                          ; Trigger DMA on channel 1
+endmacro
+
+macro vram_to_sram(vram_addr, size, sram_addr)
+    dw $0000|$2116, <vram_addr>>>1                               ; VRAM address >> 1.
+    dw $9000|$213A, $0000                                        ; VRAM dummy read.
+    dw $0000|$4312, <sram_addr>&$FFFF                            ; A addr = $xx0000
+    dw $0000|$4314, ((<sram_addr>>>16)&$FF)|((<size>&$FF)<<8)    ; A addr = $70xxxx, size = $xx00
+    dw $0000|$4316, (<size>>>8)&$FF                              ; size = $80xx ($0000), unused bank reg = $00.
+    dw $1000|$420B, $02                                          ; Trigger DMA on channel 1
+endmacro
+
+macro sram_to_wram(wram_addr, size, sram_addr)
+    dw $0000|$4312, <sram_addr>&$FFFF                            ; A addr = $xx0000
+    dw $0000|$4314, ((<sram_addr>>>16)&$FF)|((<size>&$FF)<<8)    ; A addr = $70xxxx, size = $xx00
+    dw $0000|$4316, (<size>>>8)&$FF                              ; size = $80xx ($8000), unused bank reg = $00.
+    dw $0000|$2181, <wram_addr>&$FFFF                            ; WRAM addr = $xx0000
+    dw $1000|$2183, ((<wram_addr>>>16)&$FF)-$7E                  ; WRAM addr = $7Exxxx  (bank is relative to $7E)
+    dw $1000|$420B, $02                                          ; Trigger DMA on channel 1
+endmacro
+
+macro sram_to_vram(vram_addr, size, sram_addr)
+    dw $0000|$2116, <vram_addr>>>1                               ; VRAM address >> 1.
+    dw $0000|$4312, <sram_addr>&$FFFF                            ; A addr = $xx0000
+    dw $0000|$4314, ((<sram_addr>>>16)&$FF)|((<size>&$FF)<<8)    ; A addr = $70xxxx, size = $xx00
+    dw $0000|$4316, (<size>>>8)&$FF                              ; size = $80xx ($0000), unused bank reg = $00.
+    dw $1000|$420B, $02                                          ; Trigger DMA on channel 1
+endmacro
+
+
+org $80F500
 print pc, " save start"
 
 ; These can be modified to do game-specific things before and after saving and loading
 ; Both A and X/Y are 16-bit here
 pre_load_state:
 {
-    LDA !MUSIC_DATA
-    STA !SRAM_MUSIC_DATA
-    LDA !MUSIC_TRACK
-    STA !SRAM_MUSIC_TRACK
-    LDA !SOUND_TIMER
-    STA !SRAM_SOUND_TIMER
+    LDA !MUSIC_DATA : STA !SRAM_MUSIC_DATA
+    LDA !MUSIC_TRACK : STA !SRAM_MUSIC_TRACK
+    LDA !SOUND_TIMER : STA !SRAM_SOUND_TIMER
+
+    LDA !ram_slowdown_mode : STA !SRAM_SLOWDOWN_MODE
 
     ; Rerandomize
     LDA !sram_save_has_set_rng : BNE .done
     LDA !sram_rerandomize : AND #$00FF : BEQ .done
     LDA !CACHED_RANDOM_NUMBER : STA !SRAM_SAVED_RNG
     LDA !FRAME_COUNTER : STA !SRAM_SAVED_FRAME_COUNTER
+    LDA !ram_seed_X : STA !sram_seed_X
+    LDA !ram_seed_Y : STA !sram_seed_Y
 
   .done
     RTS
 }
 
 post_load_state:
+{
+    JSR post_load_music
+
+    ; Reload OOB tile viewer if enabled
+    LDA !ram_sprite_feature_flags : BIT !SPRITE_OOB_WATCH : BEQ .tileviewerDone
+    JSL upload_sprite_oob_tiles
+  .tileviewerDone
+
+    ; Reload BG3 GFX if minimap setting changed
+    LDA !ram_minimap : CMP !SRAM_SAVED_MINIMAP : BEQ .minimapDone
+    JSL cm_transfer_original_tileset
+    LDA !ram_minimap : BEQ .disableMinimap
+    ; Enabled minimap, clear stale tiles
+    LDA !IH_BLANK
+    STA !HUD_TILEMAP+$3A : STA !HUD_TILEMAP+$7A : STA !HUD_TILEMAP+$BA
+    LDA #$2C1E ; minimap border
+    STA !HUD_TILEMAP+$46 : STA !HUD_TILEMAP+$86 : STA !HUD_TILEMAP+$C6
+    BRA .minimapDone
+  .disableMinimap
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$7C : STA !HUD_TILEMAP+$7E
+  .minimapDone
+
+    ; Reload custom HUD number GFX
+    JSL overwrite_HUD_numbers
+
+    LDA !SRAM_SLOWDOWN_MODE : CMP #$FFFF : BEQ .rng
+    AND #$00FF : STA !ram_slowdown_mode
+
+  .rng
+    ; Rerandomize
+    LDA !sram_save_has_set_rng : BNE .done
+    LDA !sram_rerandomize : AND #$00FF : BEQ .done
+    LDA !SRAM_SAVED_RNG : STA !CACHED_RANDOM_NUMBER
+    LDA !SRAM_SAVED_FRAME_COUNTER : STA !FRAME_COUNTER
+    LDA !sram_seed_X : STA !ram_seed_X
+    LDA !sram_seed_Y : STA !ram_seed_Y
+    JSL MenuRNG ; rerandomize hack RNG
+
+  .done
+    JSL init_wram_based_on_sram
+
+    ; Freeze inputs if necessary
+    LDA !ram_freeze_on_load : BEQ .return
+    LDA !ram_slowdown_mode : BNE .return
+    LDA #$FFFF : STA !ram_slowdown_mode
+    INC : STA !ram_slowdown_controller_1 : STA !ram_slowdown_controller_2
+    INC : STA !ram_slowdown_frames
+    ; Preserve segment timer during freeze
+    LDA !ram_seg_rt_frames : STA !SRAM_SEG_TIMER_F
+    LDA !ram_seg_rt_seconds : STA !SRAM_SEG_TIMER_S
+    LDA !ram_seg_rt_minutes : STA !SRAM_SEG_TIMER_M
+
+  .return
+    RTS
+}
+
+post_load_music:
 {
     JSL stop_all_sounds
 
@@ -43,7 +137,7 @@ post_load_state:
     TXA : CMP $063B : BNE .music_queue_data_search
 
   .no_music_data
-    LDA !sram_music_toggle : CMP #$0002 : BPL .music_fast_off_preset_off
+    LDA !sram_music_toggle : CMP #$0002 : BPL .fast_off_preset_off
 
     ; No data found in queue, check if we need to insert it
     LDA !SRAM_MUSIC_DATA : CMP !MUSIC_DATA : BEQ .music_queue_increase_timer
@@ -58,31 +152,31 @@ post_load_state:
 
     ; There is music data in the queue, assume it was loaded
     LDA $0619,X : STA !MUSIC_DATA
-    BRA .music_fast_off_preset_off
+    BRA .fast_off_preset_off
 
   .music_queue_empty
-    LDA !sram_music_toggle : CMP #$0002 : BPL .music_fast_off_preset_off
-    LDA !SRAM_MUSIC_DATA : CMP !MUSIC_DATA : BNE .music_clear_track_load_data
-    BRL .music_check_track
+    LDA !sram_music_toggle : CMP #$0002 : BPL .fast_off_preset_off
+    LDA !SRAM_MUSIC_DATA : CMP !MUSIC_DATA : BNE .clear_track_load_data
+    BRL .check_track
 
-  .music_clear_track_load_data
+  .clear_track_load_data
     LDA #$0000 : JSL !MUSIC_ROUTINE
     LDA #$FF00 : CLC : ADC !MUSIC_DATA : JSL !MUSIC_ROUTINE
-    BRA .music_load_track
+    BRA .load_track
 
-  .music_fast_off_preset_off
+  .fast_off_preset_off
     ; Treat music as already loaded
     STZ $0629 : STZ $062B : STZ $062D : STZ $062F
     STZ $0631 : STZ $0633 : STZ $0635 : STZ $0637
     STZ $0639 : STZ $063B : STZ $063D : STZ $063F
     STZ $0686 : STY !MUSIC_TRACK
-    BRA .music_done
+    BRA .done
 
   .music_queue_increase_timer
     ; Data is correct, but we may need to increase our sound timer
-    LDA !SRAM_SOUND_TIMER : CMP $063F : BMI .music_done
+    LDA !SRAM_SOUND_TIMER : CMP $063F : BMI .done
     STA $063F : STA $0686
-    BRA .music_done
+    BRA .done
 
   .queued_music_data_clear_track
     ; Insert clear track before queued music data and start queue there
@@ -103,49 +197,15 @@ post_load_state:
 
   .queued_music_set_timer
     STA $0629,X : STA $0686 : STA $063F
-    BRA .music_done
+    BRA .done
 
-  .music_check_track
-    LDA !SRAM_MUSIC_TRACK : CMP !MUSIC_TRACK : BEQ .music_done
+  .check_track
+    LDA !SRAM_MUSIC_TRACK : CMP !MUSIC_TRACK : BEQ .done
 
-  .music_load_track
+  .load_track
     LDA !MUSIC_TRACK : JSL !MUSIC_ROUTINE
 
-  .music_done
-    ; Reload OOB tile viewer if enabled
-    LDA !ram_sprite_feature_flags : BIT !SPRITE_OOB_WATCH : BEQ .tileviewer_done
-    JSL upload_sprite_oob_tiles
-  .tileviewer_done
-    ; Reload BG3 GFX if minimap setting changed
-    LDA !ram_minimap : CMP !SRAM_SAVED_MINIMAP : BEQ .rng
-    JSL cm_transfer_original_tileset
-    LDA !ram_minimap : BEQ .disableMinimap
-    ; Enabled minimap, clear stale tiles
-    LDA #$2C0F ; blank
-    STA !HUD_TILEMAP+$3A : STA !HUD_TILEMAP+$7A : STA !HUD_TILEMAP+$BA
-    LDA #$2C1E ; minimap border
-    STA !HUD_TILEMAP+$46 : STA !HUD_TILEMAP+$86 : STA !HUD_TILEMAP+$C6
-    BRA .rng
-  .disableMinimap
-    LDA #$2C0F : STA !HUD_TILEMAP+$7C : STA !HUD_TILEMAP+$7E
-
-  .rng
-    ; Rerandomize
-    LDA !sram_save_has_set_rng : BNE .done
-    LDA !sram_rerandomize : AND #$00FF : BEQ .done
-    LDA !SRAM_SAVED_RNG : STA !CACHED_RANDOM_NUMBER
-    LDA !SRAM_SAVED_FRAME_COUNTER : STA !FRAME_COUNTER
-
   .done
-    JSL init_wram_based_on_sram
-
-    ; Freeze inputs if necessary
-    LDA !ram_freeze_on_load : BEQ .return
-    LDA #$FFFF : STA !ram_slowdown_mode
-    INC : STA !ram_slowdown_controller_1 : STA !ram_slowdown_controller_2
-    INC : STA !ram_slowdown_frames
-
-  .return
     RTS
 }
 
@@ -153,47 +213,36 @@ post_load_state:
 register_restore_return:
 {
     %a8()
-    LDA $84
-    STA $4200
-    LDA #$0F
-    STA $13
-    STA $2100
+    LDA $84 : STA $4200
+    LDA #$0F : STA $13 : STA $2100
     RTL
 }
 
 save_state:
 {
-    PEA $0000
-    PLB
-    PLB
+    %a8()
+    TDC : PHA : PLB
 
     ; Store DMA registers to SRAM
-    %a8()
-    LDY #$0000
-    TYX
+    LDY #$0000 : TYX
 
   .save_dma_regs
-    LDA $4300,X
-    STA !SRAM_DMA_BANK,X
+    LDA $4300,X : STA !SRAM_DMA_BANK,X
     INX
-    INY
-    CPY #$000B
-    BNE .save_dma_regs
-    CPX #$007B
-    BEQ .save_dma_regs_done
-    INX #5
-    LDY #$0000
+    INY : CPY #$000B : BNE .save_dma_regs
+    CPX #$007B : BEQ .done
+    INX #5 : LDY #$0000
     BRA .save_dma_regs
 
-  .save_dma_regs_done
+  .done
     %ai16()
     LDX #save_write_table
+    ; fallthrough
 }
 
 run_vm:
 {
-    PHK
-    PLB
+    PHK : PLB
     JMP vm
 }
 
@@ -203,87 +252,51 @@ save_write_table:
     dw $1000|$4200, $00
     ; Single address, B bus -> A bus.  B address = reflector to WRAM ($2180).
     dw $0000|$4310, $8080  ; direction = B->A, byte reg, B addr = $2180
-    ; Copy WRAM 7E0000-7E7FFF to SRAM 710000-717FFF.
-    dw $0000|$4312, $0000  ; A addr = $xx0000
-    dw $0000|$4314, $0071  ; A addr = $71xxxx, size = $xx00
-    dw $0000|$4316, $0080  ; size = $80xx ($8000), unused bank reg = $00.
-    dw $0000|$2181, $0000  ; WRAM addr = $xx0000
-    dw $1000|$2183, $00    ; WRAM addr = $7Exxxx  (bank is relative to $7E)
-    dw $1000|$420B, $02    ; Trigger DMA on channel 1
-    ; Copy WRAM 7E8000-7EFD7F to SRAM 720000-727D7F.
-    dw $0000|$4312, $0000  ; A addr = $xx0000
-    dw $0000|$4314, $0072  ; A addr = $72xxxx, size = $xx00
-    dw $0000|$4314, ((!WRAM_PERSIST_START-$7E8000<<8)&$FF00)|$0072  ; A addr = $72xxxx, size = $xx1C
-    dw $0000|$4316, (!WRAM_PERSIST_START-$7E8000)>>8                ; size = $7Dxx ($7D1C), unused bank reg = $00.
-    dw $0000|$2181, $8000  ; WRAM addr = $xx8000
-    dw $1000|$2183, $00    ; WRAM addr = $7Exxxx  (bank is relative to $7E)
-    dw $1000|$420B, $02    ; Trigger DMA on channel 1
-    ; Copy WRAM 7F0000-7F7FFF to SRAM 730000-737FFF.
-    dw $0000|$4312, $0000  ; A addr = $xx0000
-    dw $0000|$4314, $0073  ; A addr = $73xxxx, size = $xx00
-    dw $0000|$4316, $0080  ; size = $80xx ($8000), unused bank reg = $00.
-    dw $0000|$2181, $0000  ; WRAM addr = $xx0000
-    dw $1000|$2183, $01    ; WRAM addr = $7Fxxxx  (bank is relative to $7E)
-    dw $1000|$420B, $02    ; Trigger DMA on channel 1
-    ; Copy WRAM 7F8000-7FFFFF to SRAM 740000-747FFF.
-    dw $0000|$4312, $0000  ; A addr = $xx0000
-    dw $0000|$4314, $0074  ; A addr = $74xxxx, size = $xx00
-    dw $0000|$4316, $0080  ; size = $80xx ($8000), unused bank reg = $00.
-    dw $0000|$2181, $8000  ; WRAM addr = $xx8000
-    dw $1000|$2183, $01    ; WRAM addr = $7Fxxxx  (bank is relative to $7E)
-    dw $1000|$420B, $02    ; Trigger DMA on channel 1
+
+    ; Copy WRAM segments, uses $710000-$747FFF
+    %wram_to_sram($7E0000, $8000, $710000)
+    %wram_to_sram($7E8000, $8000, $720000)
+    %wram_to_sram($7F0000, $8000, $730000)
+    %wram_to_sram($7F8000, $8000, $740000)
+
     ; Address pair, B bus -> A bus.  B address = VRAM read ($2139).
     dw $0000|$4310, $3981  ; direction = B->A, word reg, B addr = $2139
     dw $1000|$2115, $0080  ; VRAM address increment mode.
-    ; Copy VRAM 0000-7FFF to SRAM 750000-757FFF.
-    dw $0000|$2116, $0000  ; VRAM address >> 1.
-    dw $9000|$213A, $0000  ; VRAM dummy read.
-    dw $0000|$4312, $0000  ; A addr = $xx0000
-    dw $0000|$4314, $0075  ; A addr = $75xxxx, size = $xx00
-    dw $0000|$4316, $0080  ; size = $80xx ($0000), unused bank reg = $00.
-    dw $1000|$420B, $02    ; Trigger DMA on channel 1
-    ; Copy VRAM 8000-7FFF to SRAM 760000-767FFF.
-    dw $0000|$2116, $4000  ; VRAM address >> 1.
-    dw $9000|$213A, $0000  ; VRAM dummy read.
-    dw $0000|$4312, $0000  ; A addr = $xx0000
-    dw $0000|$4314, $0076  ; A addr = $76xxxx, size = $xx00
-    dw $0000|$4316, $0080  ; size = $80xx ($0000), unused bank reg = $00.
-    dw $1000|$420B, $02    ; Trigger DMA on channel 1
-    ; Copy CGRAM 000-1FF to SRAM 772000-7721FF.
+
+    ; Copy VRAM segments, uses $750000-$767FFF
+    %vram_to_sram($0000, $8000, $750000)
+    %vram_to_sram($8000, $8000, $760000)
+
+    ; Copy CGRAM, uses SRAM $772000-$7721FF
     dw $1000|$2121, $00    ; CGRAM address
     dw $0000|$4310, $3B80  ; direction = B->A, byte reg, B addr = $213B
     dw $0000|$4312, $2000  ; A addr = $xx2000
     dw $0000|$4314, $0077  ; A addr = $77xxxx, size = $xx00
     dw $0000|$4316, $0002  ; size = $02xx ($0200), unused bank reg = $00.
     dw $1000|$420B, $02    ; Trigger DMA on channel 1
+
     ; Done
     dw $0000, save_return
 
 save_return:
 {
-    PEA $0000
-    PLB
-    PLB
+    PEA $0000 : PLB : PLB
 
     %ai16()
     LDA !ram_room_has_set_rng : STA !sram_save_has_set_rng
     LDA !ram_minimap : STA !SRAM_SAVED_MINIMAP
-
     LDA #$5AFE : STA !SRAM_SAVED_STATE
 
-    TSC
-    STA !SRAM_SAVED_SP
+    TSC : STA !SRAM_SAVED_SP
     JMP register_restore_return
 }
 
 load_state:
 {
     JSR pre_load_state
-    PEA $0000
-    PLB
-    PLB
 
     %a8()
+    TDC : PHA : PLB
     LDX #load_write_table
     JMP run_vm
 }
@@ -296,76 +309,40 @@ load_write_table:
     dw $1000|$4200, $00
     ; Single address, A bus -> B bus.  B address = reflector to WRAM ($2180).
     dw $0000|$4310, $8000  ; direction = A->B, B addr = $2180
-    ; Copy SRAM 710000-717FFF to WRAM 7E0000-7E7FFF.
-    dw $0000|$4312, $0000  ; A addr = $xx0000
-    dw $0000|$4314, $0071  ; A addr = $71xxxx, size = $xx00
-    dw $0000|$4316, $0080  ; size = $80xx ($8000), unused bank reg = $00.
-    dw $0000|$2181, $0000  ; WRAM addr = $xx0000
-    dw $1000|$2183, $00    ; WRAM addr = $7Exxxx  (bank is relative to $7E)
-    dw $1000|$420B, $02    ; Trigger DMA on channel 1
-    ; Copy SRAM 720000-727D7F to WRAM 7E8000-7EFD7F.
-    dw $0000|$4312, $0000  ; A addr = $xx0000
-    dw $0000|$4314, ((!WRAM_PERSIST_START-$7E8000<<8)&$FF00)|$0072  ; A addr = $72xxxx, size = $xx1C
-    dw $0000|$4316, (!WRAM_PERSIST_START-$7E8000)>>8                ; size = $7Dxx ($7D1C), unused bank reg = $00.
-    dw $0000|$2181, $8000  ; WRAM addr = $xx8000
-    dw $1000|$2183, $00    ; WRAM addr = $7Exxxx  (bank is relative to $7E)
-    dw $1000|$420B, $02    ; Trigger DMA on channel 1
-    ; Copy SRAM 730000-737FFF to WRAM 7F0000-7F7FFF.
-    dw $0000|$4312, $0000  ; A addr = $xx0000
-    dw $0000|$4314, $0073  ; A addr = $73xxxx, size = $xx00
-    dw $0000|$4316, $0080  ; size = $80xx ($8000), unused bank reg = $00.
-    dw $0000|$2181, $0000  ; WRAM addr = $xx0000
-    dw $1000|$2183, $01    ; WRAM addr = $7Fxxxx  (bank is relative to $7E)
-    dw $1000|$420B, $02    ; Trigger DMA on channel 1
-    ; Copy SRAM 740000-747FFF to WRAM 7F8000-7FFFFF.
-    dw $0000|$4312, $0000  ; A addr = $xx0000
-    dw $0000|$4314, $0074  ; A addr = $74xxxx, size = $xx00
-    dw $0000|$4316, $0080  ; size = $80xx ($8000), unused bank reg = $00.
-    dw $0000|$2181, $8000  ; WRAM addr = $xx8000
-    dw $1000|$2183, $01    ; WRAM addr = $7Fxxxx  (bank is relative to $7E)
-    dw $1000|$420B, $02    ; Trigger DMA on channel 1
+
+    ; Copy WRAM segments, uses $710000-$747FFF
+    %sram_to_wram($7E0000, $8000, $710000)
+    %sram_to_wram($7E8000, $8000, $720000)
+    %sram_to_wram($7F0000, $8000, $730000)
+    %sram_to_wram($7F8000, $8000, $740000)
+
     ; Address pair, A bus -> B bus.  B address = VRAM write ($2118).
     dw $0000|$4310, $1801  ; direction = A->B, B addr = $2118
     dw $1000|$2115, $0080  ; VRAM address increment mode.
-    ; Copy SRAM 750000-757FFF to VRAM 0000-7FFF.
-    dw $0000|$2116, $0000  ; VRAM address >> 1.
-    dw $0000|$4312, $0000  ; A addr = $xx0000
-    dw $0000|$4314, $0075  ; A addr = $75xxxx, size = $xx00
-    dw $0000|$4316, $0080  ; size = $80xx ($0000), unused bank reg = $00.
-    dw $1000|$420B, $02    ; Trigger DMA on channel 1
-    ; Copy SRAM 760000-767FFF to VRAM 8000-7FFF.
-    dw $0000|$2116, $4000  ; VRAM address >> 1.
-    dw $0000|$4312, $0000  ; A addr = $xx0000
-    dw $0000|$4314, $0076  ; A addr = $76xxxx, size = $xx00
-    dw $0000|$4316, $0080  ; size = $80xx ($0000), unused bank reg = $00.
-    dw $1000|$420B, $02    ; Trigger DMA on channel 1
-    ; Copy SRAM 772000-7721FF to CGRAM 000-1FF.
+
+    ; Copy VRAM segments, uses $750000-$767FFF
+    %sram_to_vram($0000, $8000, $750000)
+    %sram_to_vram($8000, $8000, $760000)
+
+    ; Copy CGRAM, uses SRAM $772000-$7721FF
     dw $1000|$2121, $00    ; CGRAM address
     dw $0000|$4310, $2200  ; direction = A->B, byte reg, B addr = $2122
     dw $0000|$4312, $2000  ; A addr = $xx2000
     dw $0000|$4314, $0077  ; A addr = $77xxxx, size = $xx00
     dw $0000|$4316, $0002  ; size = $02xx ($0200), unused bank reg = $00.
     dw $1000|$420B, $02    ; Trigger DMA on channel 1
+
     ; Done
     dw $0000, load_return
 
 load_return:
 {
     %ai16()
-    LDA !SRAM_SAVED_SP
-    TCS
-
-    PEA $0000
-    PLB
-    PLB
+    LDA !SRAM_SAVED_SP : TCS
 
     ; rewrite inputs so that holding load won't keep loading, as well as rewriting saving input to loading input
-    LDA !SS_INPUT_CUR
-    EOR !sram_ctrl_save_state
-    ORA !sram_ctrl_load_state
-    STA !SS_INPUT_CUR
-    STA !SS_INPUT_NEW
-    STA !SS_INPUT_PREV
+    LDA !IH_CONTROLLER_PRI : EOR !sram_ctrl_save_state : ORA !sram_ctrl_load_state
+    STA !IH_CONTROLLER_PRI : STA !IH_CONTROLLER_PRI_NEW : STA !IH_CONTROLLER_PRI_PREV
 
     ; clear frame held counters
     TDC
@@ -377,20 +354,15 @@ load_return:
     STA !WRAM_MENU_START+$CC : STA !WRAM_MENU_START+$CE
 
     %a8()
-    LDX #$0000
-    TXY
+    TDC : PHA : PLB
+    LDX #$0000 : TXY
 
   .load_dma_regs
-    LDA !SRAM_DMA_BANK,X
-    STA $4300,X
-    INX
-    INY
-    CPY #$000B
-    BNE .load_dma_regs
-    CPX #$007B
-    BEQ .load_dma_regs_done
-    INX #5
-    LDY #$0000
+    LDA !SRAM_DMA_BANK,X : STA $4300,X
+    INX : INY
+    CPY #$000B : BNE .load_dma_regs
+    CPX #$007B : BEQ .load_dma_regs_done
+    INX #5 : LDY #$0000
     BRA .load_dma_regs
 
   .load_dma_regs_done
@@ -409,32 +381,26 @@ vm:
     ; If xxxx has bit 12 set ($1000), byte instead of word.
     ; If yyyy has $DD in the low half, it means that this operation is a byte
     ; write instead of a word write.  If xxxx is $0000, end the VM.
-    REP #$30
+    %ai16()
     ; Read address to write to
-    LDA.w $0000,X
-    BEQ .vm_done
+    LDA.w $0000,X : BEQ .vm_done
     TAY
-    INX
-    INX
+    INX : INX
     ; Check for byte mode
-    BIT.w #$1000
-    BEQ .vm_word_mode
-    AND.w #$EFFF
-    TAY
-    SEP #$20
+    BIT.w #$1000 : BEQ .vm_word_mode
+    AND.w #$EFFF : TAY
+    %a8()
   .vm_word_mode
     ; Read value
     LDA.w $0000,X
-    INX
-    INX
+    INX : INX
   .vm_write
     ; Check for read mode (high bit of address)
-    CPY.w #$8000
-    BCS .vm_read
+    CPY.w #$8000 : BCS .vm_read
     STA $0000,Y
     BRA vm
   .vm_read
-    ; "Subtract" $8000 from y by taking advantage of bank wrapping.
+    ; "Subtract" $8000 from Y by taking advantage of bank wrapping.
     LDA $8000,Y
     BRA vm
   .vm_done
