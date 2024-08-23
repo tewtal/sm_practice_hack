@@ -88,15 +88,20 @@ double_jump_check:
     JMP $98BC
 
   .no_space_jump
-    LDA !SAMUS_DOUBLE_JUMP : BNE .end
-
-    ; Jump allowed
-    ; Increment counter unless in a walljump pose
-    LDA !SAMUS_ANIMATION_FRAME : AND #$000F : CMP #$000B : BEQ .jump_allowed
+    ; Increment double jump counter
     INC !SAMUS_DOUBLE_JUMP
+
+    ; This might end up being a walljump,
+    ; in which case it shouldn't count as a double jump
+    ; Increment a counter for that case as well
+    INC !SAMUS_SUBTRACT_WALL_JUMP
+
+    ; Allow double jump if counter is one
+    LDA !SAMUS_DOUBLE_JUMP : CMP #$0001 : BNE .end
     JMP $98BC
 
   .end
+    TDC
     RTL
 }
 warnpc $909348
@@ -116,6 +121,37 @@ org $91F0A1
 endif
     ; Replace a JSR to next routine with a STZ followed by the next routine
     STZ !SAMUS_DOUBLE_JUMP : NOP
+
+if !FEATURE_PAL
+org $91F3AB
+else
+org $91F446
+endif
+    JSR double_jump_walljump_check
+
+if !FEATURE_PAL
+org $91FBA7
+else
+org $91FC42
+endif
+double_jump_walljump_check:
+{
+    ; If transitioning to walljump
+    AND #$FF00 : CMP #$1400 : BNE .done
+    ; If flag to give back double jump set
+    LDA !SAMUS_SUBTRACT_WALL_JUMP : BEQ .done
+    DEC !SAMUS_DOUBLE_JUMP
+
+  .done
+    STZ !SAMUS_SUBTRACT_WALL_JUMP
+
+if !FEATURE_PAL
+    JMP $F3CD
+else
+    JMP $F468
+endif
+}
+%warnpc($91FC66, $91FBCB)
 
 ; The following three fix double jump when landing on spikes
 org $948EA9

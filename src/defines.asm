@@ -568,6 +568,7 @@
 !SAMUS_AUTO_CANCEL = $0A04
 !SAMUS_LAST_HP = $0A06
 !SAMUS_DOUBLE_JUMP = $0A14  ; Only used during demos in vanilla
+!SAMUS_SUBTRACT_WALL_JUMP = $0A16  ; Only used during demos in vanilla
 !SAMUS_POSE = $0A1C
 !SAMUS_POSE_DIRECTION = $0A1E
 !SAMUS_MOVEMENT_TYPE = $0A1F
