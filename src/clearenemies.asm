@@ -510,7 +510,7 @@ org $E7F827
 else
 org $E7F81F
 endif
-dw $0001  ; HIBASHI    (fire geyser)
+dw $0000  ; HIBASHI    (fire geyser)
 
 if !FEATURE_PAL
 org $E7F837

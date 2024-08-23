@@ -991,7 +991,7 @@ preset_prkd_upper_norfair_leaving_hi_jump:
     dw $D876, $0120  ; Items
     dw #$FFFF
 
-preset_prkd_upper_norfair_business_center_2:
+preset_prkd_upper_norfair_business_center_revisit:
     dw #preset_prkd_upper_norfair_leaving_hi_jump ; Upper Norfair: Leaving Hi Jump
     dw $078D, $93F6  ; DDB
     dw $079B, $AA41  ; MDB
@@ -1009,7 +1009,7 @@ preset_prkd_upper_norfair_business_center_2:
     dw #$FFFF
 
 preset_prkd_upper_norfair_ice_beam_gates:
-    dw #preset_prkd_upper_norfair_business_center_2 ; Upper Norfair: Business Center 2
+    dw #preset_prkd_upper_norfair_business_center_revisit ; Upper Norfair: Business Center Revisit
     dw $078D, $941A  ; DDB
     dw $079B, $A7DE  ; MDB
     dw $090F, $5000  ; Screen subpixel X position

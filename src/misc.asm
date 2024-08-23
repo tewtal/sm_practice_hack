@@ -222,7 +222,7 @@ move_kraid_rocks_horizontally:
 print pc, " misc bank86 end"
 
 
-org $90F800
+org $90FA00
 print pc, " misc bank90 start"
 
 hook_set_music_track:

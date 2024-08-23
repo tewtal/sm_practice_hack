@@ -430,20 +430,14 @@ preset_scroll_fixes:
     LDY !SAMUS_X : CPY #$0100    ; no fix if Xpos > 255
     BPL .topdone
     STA $CD20
-    BRA .topdone
-
-  .below_spazer
-    LDY !SAMUS_Y : CPY #$00B0    ; no fix if Ypos > 176
-    BPL .topdone
-    INC : STA $CD20 : STA $CD21
   .topdone
     PLB
     PLP
     RTL
 
   .tophalf
-    CPX #$A75D : BPL .norfair
     CPX #$92FD : BEQ .parlor
+    CPX #$A75D : BPL .norfair
     CPX #$96BA : BEQ .climb
     CPX #$9CB3 : BEQ .dachora
     CPX #$9D19 : BEQ .big_pink
@@ -457,16 +451,22 @@ preset_scroll_fixes:
     CPX #$A6A1 : BEQ .warehouse_entrance
     BRA .topdone
 
-    ; -----------------------------------------
-    ; Warehouse Scroll Fixes (Category Presets)
-    ; -----------------------------------------
+    ; ------------------------------------------------
+    ; Spazer/Warehouse Scroll Fixes (Category Presets)
+    ; ------------------------------------------------
+  .below_spazer
+    LDY !SAMUS_Y : CPY #$00B0    ; no fix if Ypos > 176
+    BPL .topdone
+    INC : STA $CD20 : STA $CD21
+    BRA .topdone
+
   .warehouse_entrance
     STA $CD20
     BRA .topdone
 
-    ; ---------------------------------------------
-    ; Upper Norfair Scroll Fixes (Category Presets)
-    ; ---------------------------------------------
+    ; --------------------------------------------------
+    ; West Upper Norfair Scroll Fixes (Category Presets)
+    ; --------------------------------------------------
   .ice_beam_gates
     ; skip if Ypos < 720
     LDY !SAMUS_Y : CPY #$02D0 : BMI .norfairdone
@@ -485,18 +485,6 @@ preset_scroll_fixes:
   .hjb_room
     BRL .specialized_hjb_room
 
-  .green_bubble_missiles
-    STA $CD20
-    BRA .norfairdone
-
-  .volcano_room
-    STA $CD26 : STA $CD27
-    BRA .norfairdone
-
-  .bat_cave
-    INC : STA $CD20
-    BRA .norfairdone
-
   .norfair
     CPX #$A815 : BEQ .ice_beam_gates
     CPX #$A8B9 : BEQ .ice_snake_room
@@ -510,10 +498,25 @@ preset_scroll_fixes:
     CPX #$B4AD : BEQ .worst_room
     CPX #$B585 : BEQ .kihunter_stairs
     CPX #$B5D5 : BEQ .wasteland
+    BRA .norfairdone
+
+    ; --------------------------------------------------
+    ; East Upper Norfair Scroll Fixes (Category Presets)
+    ; --------------------------------------------------
+  .green_bubble_missiles
+    STA $CD20
   .norfairdone
     PLB
     PLP
     RTL
+
+  .volcano_room
+    STA $CD26 : STA $CD27
+    BRA .norfairdone
+
+  .bat_cave
+    INC : STA $CD20
+    BRA .norfairdone
 
     ; ---------------------------------------------
     ; Lower Norfair Scroll Fixes (Category Presets)
@@ -604,6 +607,9 @@ preset_scroll_fixes:
     PLP
     RTL
 
+  .ceres
+    BRA .ceresbegin
+
     ; -----------------------------------------------
     ; Maridia/Tourian Scroll Fixes (Category Presets)
     ; -----------------------------------------------
@@ -651,7 +657,7 @@ preset_scroll_fixes:
     STZ $091E : STZ $0920
     BRA .ceresdone
 
-  .ceres
+  .ceresbegin
     STZ $5F                      ; Initialize mode 7
     CPX #$DF45 : BEQ .ceres_elevator
     %a16() : STZ $78             ; Ceres Elevator room already does this
