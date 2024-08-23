@@ -27,6 +27,7 @@ if custom_txt != "":
       f_custom.close()
 
 names = {}
+labels = {}
 
 for line in default_lines:
    parts = line.split('=')
@@ -34,6 +35,7 @@ for line in default_lines:
       room_id = parts[0].strip()
       if len(room_id) == 4:
          names[room_id] = parts[1].strip()
+         labels[room_id] = ''.join(s[:1].upper() + s[1:] for s in re.split(r"[ '-\.]", names[room_id].replace("'s", "")))
 
 for line in custom_lines:
    parts = line.split('=')
@@ -62,8 +64,7 @@ for room_id in sorted(names):
          last_room_end = room_id
       f_output.write("warnpc $E7" + f'{last_room_end:04X}' + "\n\n")
    f_output.write("org $E7" + room_id + "\n")
-   name_label = ''.join(s[:1].upper() + s[1:] for s in re.split(r"[ '-\.]", names[room_id].replace("'s", "")))
-   f_output.write("  ." + name_label + "\n")
+   f_output.write("  ." + labels[room_id] + "\n")
    f_output.write("    db $28, \"" + names[room_id] + "\", $FF\n")
    last_room_id = room_id
 
