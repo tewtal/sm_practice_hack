@@ -1429,6 +1429,8 @@ preset_kpdr21_maridia_halfie_setup:
     dw $0919, $001F  ; Layer 2 Y position
     dw $09C2, $018F  ; Health
     dw $09C4, $018F  ; Max health
+    dw $0A1C, $0000  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
     dw $0AF6, $008D  ; Samus X
     dw $0AFA, $009B  ; Samus Y
     dw $D882, $0100  ; Items

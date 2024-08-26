@@ -2,7 +2,7 @@
 ; Custom Presets
 ; --------------
 
-org $83B400
+org $83B000
 print pc, " custompresets start"
 
 ; Backward compatibility was promised. Just because it's unused, doesn't mean you can use it.
@@ -372,7 +372,7 @@ preset_scroll_fixes:
     PEA $7E7E : PLB : PLB
     %a8()
     LDA #$01 : LDX !ROOM_ID      ; X = room ID
-    CPX #$C000 : BMI .tophalf    ; organized by room ID for efficiency
+    CPX #ROOM_BowlingAlley : BMI .tophalf
     BRL .halfway
 
     ; -------------------------------------------------
@@ -386,6 +386,12 @@ preset_scroll_fixes:
   .parlor_lower
     INC : STA $CD26 : STA $CD28
     BRL .specialized_parlor
+
+  .crateria_kihunters
+    LDY !SAMUS_Y : CPY #$00D0    ; no fix if Ypos > 208
+    BPL .topdone
+    STA $CD21 : DEC : STA $CD24
+    BRA .topdone
 
   .climb
     STA $CD39
@@ -410,10 +416,36 @@ preset_scroll_fixes:
   .taco_tank_room
     BRL .specialized_taco_tank_room
 
+  .tophalf
+    CPX #ROOM_IceBeamAcidRoom : BMI .topquarter
+    BRL .norfair
+
   .etecoons_etank
     STA $CD25 : STA $CD26
+  .topdone
+    PLB
+    PLP
+    RTL
+
+  .topquarter
+    CPX #ROOM_ParlorAndAlcatraz : BEQ .parlor
+    CPX #ROOM_CrateriaKihunterRoom : BEQ .crateria_kihunters
+    CPX #ROOM_Climb : BEQ .climb
+    CPX #ROOM_DachoraRoom : BEQ .dachora
+    CPX #ROOM_BigPink : BEQ .big_pink
+    CPX #ROOM_PinkBrinPowerBombs : BEQ .big_pink_pbs
+    CPX #ROOM_BlueBrinstarETank : BEQ .taco_tank_room
+    CPX #ROOM_EtecoonETankRoom : BEQ .etecoons_etank
+    CPX #ROOM_RedTower : BEQ .red_tower
+    CPX #ROOM_CaterpillarRoom : BEQ .caterpillar
+    CPX #ROOM_AlphaPowerBombRoom : BEQ .alpha_pbs
+    CPX #ROOM_BelowSpazer : BEQ .below_spazer
+    CPX #ROOM_WarehouseEntrance : BEQ .warehouse_entrance
     BRA .topdone
 
+    ; --------------------------------------------------------
+    ; Red Brinstar / Warehouse Scroll Fixes (Category Presets)
+    ; --------------------------------------------------------
   .red_tower
     LDY !SAMUS_Y : CPY #$06A0    ; no fix if Ypos < 1696
     BMI .topdone
@@ -430,39 +462,17 @@ preset_scroll_fixes:
     LDY !SAMUS_X : CPY #$0100    ; no fix if Xpos > 255
     BPL .topdone
     STA $CD20
-  .topdone
-    PLB
-    PLP
-    RTL
-
-  .tophalf
-    CPX #ROOM_ParlorAndAlcatraz : BEQ .parlor
-    CPX #ROOM_IceBeamAcidRoom : BPL .norfair
-    CPX #ROOM_Climb : BEQ .climb
-    CPX #ROOM_DachoraRoom : BEQ .dachora
-    CPX #ROOM_BigPink : BEQ .big_pink
-    CPX #ROOM_PinkBrinPowerBombs : BEQ .big_pink_pbs
-    CPX #ROOM_BlueBrinstarETank : BEQ .taco_tank_room
-    CPX #ROOM_EtecoonETankRoom : BEQ .etecoons_etank
-    CPX #ROOM_RedTower : BEQ .red_tower
-    CPX #ROOM_CaterpillarRoom : BEQ .caterpillar
-    CPX #ROOM_AlphaPowerBombRoom : BEQ .alpha_pbs
-    CPX #ROOM_BelowSpazer : BEQ .below_spazer
-    CPX #ROOM_WarehouseEntrance : BEQ .warehouse_entrance
     BRA .topdone
 
-    ; ------------------------------------------------
-    ; Spazer/Warehouse Scroll Fixes (Category Presets)
-    ; ------------------------------------------------
   .below_spazer
     LDY !SAMUS_Y : CPY #$00B0    ; no fix if Ypos > 176
     BPL .topdone
     INC : STA $CD20 : STA $CD21
-    BRA .topdone
+    BRL .topdone
 
   .warehouse_entrance
     STA $CD20
-    BRA .topdone
+    BRL .topdone
 
     ; --------------------------------------------------
     ; West Upper Norfair Scroll Fixes (Category Presets)
@@ -491,6 +501,7 @@ preset_scroll_fixes:
     CPX #ROOM_HiJumpBootsRoom : BEQ .hjb_room
     CPX #ROOM_GreenBubblesMissiles : BEQ .green_bubble_missiles
     CPX #ROOM_VolcanoRoom : BEQ .volcano_room
+    CPX #ROOM_PurpleShaft : BEQ .purple_shaft
     CPX #ROOM_BatCave : BEQ .bat_cave
     CPX #ROOM_AcidStatueRoom : BEQ .acid_chozo_room
     CPX #ROOM_GoldenTorizoRoom : BEQ .golden_torizo
@@ -512,6 +523,10 @@ preset_scroll_fixes:
 
   .volcano_room
     STA $CD26 : STA $CD27
+    BRA .norfairdone
+
+  .purple_shaft
+    INC : STA $CD20 : STA $CD21
     BRA .norfairdone
 
   .bat_cave
@@ -560,7 +575,7 @@ preset_scroll_fixes:
     LDY !SAMUS_Y : CPY #$00D0    ; no fix if Ypos < 208
     BMI .norfairdone
     INC : STA $CD21 : STA $CD27
-    BRA .norfairdone
+    BRL .norfairdone
 
     ; --------------------------------------------
     ; Wrecked Ship Scroll Fixes (Category Presets)

@@ -2170,8 +2170,8 @@ misc_killenemies:
     %cm_jsl("Kill Enemies", .kill_loop, #0)
   .kill_loop
     ; 8000 = solid to Samus, 0400 = Ignore Samus projectiles, 0100 = Invisible
-    TAX : LDA $0F86,X : BIT #$8500 : BNE .next_enemy
-    ORA #$0200 : STA $0F86,X
+    TAX : LDA !ENEMY_PROPERTIES,X : BIT #$8500 : BNE .next_enemy
+    ORA #$0200 : STA !ENEMY_PROPERTIES,X
   .next_enemy
     TXA : CLC : ADC #$0040 : CMP #$0800 : BNE .kill_loop
     LDA #$0009 : JSL !SFX_LIB2 ; enemy killed

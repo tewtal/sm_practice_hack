@@ -231,7 +231,7 @@ endif
 ; Hooks
 ; -----
 
-org $83B000
+org $83AE00
 print pc, " rng start"
 
 hook_hopper_set_rng:
@@ -568,7 +568,7 @@ hook_botwoon_spit:
 }
 
 print pc, " rng end"
-warnpc $83B400 ; custompresets.asm
+warnpc $83B000 ; custompresets.asm
 
 
 org $A4F700
