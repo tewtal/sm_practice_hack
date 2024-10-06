@@ -8,43 +8,76 @@ org $809AF3
 org $809B51
     JMP $9BFB    ; skip drawing auto reserve icon and normal energy numbers and tanks during HUD routine
 
-org $82AEAF      ; routine to remove auto reserve icon on HUD from equip screen
-    JSR mm_refresh_reserves
-
-org $82AED9      ; routine to draw auto reserve icon on HUD from equip screen
-    JSR mm_refresh_reserves
-
-org $90A91B
-    LDA !ram_minimap : BNE .update_minimap
-    RTL
-  .update_minimap
-    JMP mm_update_minimap
-
-org $90A97E
-    JMP mm_inc_tile_count
-
-org $90A7EE      ; only clear minimap if it is visible
-    LDA !ram_minimap : BEQ .skip_minimap
-    JMP mm_clear_boss_room_tiles
-
-org $90A80A      ; normally runs after minimap grid has been drawn
-    .skip_minimap
-
 org $8282E5      ; write and clear tiles to VRAM
     JSR mm_write_and_clear_hud_tiles
     JSL overwrite_HUD_numbers
-    BRA .write_next_tiles
+    BRA mm_write_next_tiles
 
 org $828305
-    .write_next_tiles
+mm_write_next_tiles:
 
 org $828EB8      ; write and clear tiles to VRAM
     JSR mm_write_and_clear_hud_tiles
     PLP
     RTL
 
+org $82AEAF      ; routine to remove auto reserve icon on HUD from equip screen
+    JSR mm_refresh_reserves
+
+org $82AED9      ; routine to draw auto reserve icon on HUD from equip screen
+    JSR mm_refresh_reserves
+
 org $82E488      ; write tiles to VRAM
     JMP mm_write_hud_tiles_during_door
+
+org $90A7E8      ; optimize following code by exactly six bytes
+    TDC : TAX : INC
+    STA !DISABLE_MINIMAP
+    ; only clear minimap if it is visible (this check requires six bytes)
+    LDA !ram_minimap : BEQ mm_skip_clear_minimap
+    LDA #$2C1F
+warnpc $90A7F7
+
+org $90A80A      ; normally runs after minimap grid has been drawn
+mm_skip_clear_minimap:
+
+org $90A91B      ; optimize for performance and to make room for extra minimap enabled check
+mm_update_minimap:
+{
+    LDA !ram_minimap : BNE .start
+  .skip
+    RTL
+  .start         ; we can check for disable minimap before PHP (saves one byte)
+    LDA !DISABLE_MINIMAP : BNE .skip
+    PHP : %ai16()
+
+    ; based on $90A925, sanity check X and Y position
+    LDA !SAMUS_X
+    LSR : LSR : LSR : LSR
+    CMP !ROOM_WIDTH_BLOCKS : BCC .checkY
+  .checkFailed
+    PLP : RTL
+  .checkY
+    LDA !SAMUS_Y
+    LSR : LSR : LSR : LSR
+    CMP !ROOM_HEIGHT_BLOCKS : BCS .checkFailed
+
+    ; based on $90A941, initialize local variables
+    STZ $2E
+    LDA !SAMUS_X+1 : AND #$00FF
+    CLC : ADC !ROOM_MAP_X_COORDINATE
+    PHA : AND #$0020 : STA $22
+    PLA : AND #$001F : STA $12
+    AND #$0007 : TAY
+    LDA $12 : LSR : LSR : LSR : STA $14
+    LDA !SAMUS_Y+1 : AND #$00FF
+    SEC : ADC !ROOM_MAP_Y_COORDINATE
+}
+warnpc $90A971   ; return to original code here
+
+org $90A97E
+    JMP mm_inc_tile_count
+
 
 
 org $9AB200      ; graphics for HUD
@@ -182,20 +215,12 @@ mm_initialize_minimap:
     RTL
 }
 
-mm_update_minimap:
-{
-    PHP
-    %ai16()
-    LDA $05F7 : BNE .skip_minimap
-    JMP $A925  ; minimap is enabled
-
-  .skip_minimap
-    PLP
-    RTL
-}
-
 mm_inc_tile_count:
 {
+    ; Overwritten logic
+    STY $20
+    STX $18
+
     ; Check if tile is already set
     LDA $07F7,X
     ORA $AC04,Y
@@ -203,24 +228,12 @@ mm_inc_tile_count:
 
     ; Set tile and increment counter
     STA $07F7,X
-    %a16()
+    %ai16()
     LDA !ram_map_counter : INC : STA !ram_map_counter
-    %a8()
+    JMP $A98D  ; resume original logic skipping past %ai16()
 
   .done
-    JMP $A987  ; resume original logic
-}
-
-mm_clear_boss_room_tiles:
-{
-    LDA #$2C1F
-    LDX #$0000
-  .loop
-    STA !HUD_TILEMAP+$3C,X
-    STA !HUD_TILEMAP+$7C,X
-    STA !HUD_TILEMAP+$BC,X
-    INX : INX : CPX #$000A : BMI .loop
-    JMP $A80A
+    JMP $A98B  ; resume original logic including %ai16()
 }
 
 print pc, " minimap bank90 end"
