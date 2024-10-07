@@ -529,6 +529,22 @@ custom_preset_load:
 endif
 endif
 
+preset_clear_map_data:
+{
+    PHX : LDX #$00FE : TDC
+  .clearMapDataLoop
+    STA $07F7,X
+    STA $7ECD52,X
+    STA $7ECE52,X
+    STA $7ECF52,X
+    STA $7ED052,X
+    STA $7ED152,X
+    STA $7ED252,X
+    DEX : DEX
+    BPL .clearMapDataLoop
+    PLX : RTL
+}
+
 preset_scroll_fixes:
 {
     ; Fixes bad scrolling caused by loading into a position that

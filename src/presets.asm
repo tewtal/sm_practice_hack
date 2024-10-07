@@ -29,6 +29,8 @@ endif
 
   .doneBG2
     JSL $809A79  ; HUD routine when game is loading
+    JSL $809B44  ; Handle HUD tilemap
+    JSL ih_update_hud_code
     JSL $90AD22  ; Reset projectile data
 
     TDC : STA !ram_load_preset
@@ -277,7 +279,16 @@ category_preset_load:
     DEC $C5
     BRA .buildLoop
 
+  .check100mapBank
+    LDA $C5 : AND #$00FF : CMP.w #preset_100map_bombs_ceres_elevator>>16 : BNE .setBanks
+    JSL preset_clear_map_data
+    BRA .setBanks
+
   .traversePrep
+    ; If this is a map category, then clear map data
+    LDA $C1 : CMP.w #preset_100map_bombs_ceres_elevator : BEQ .check100mapBank
+
+  .setBanks
     ; Set bank to read data from
     STZ $00 : %a8() : LDA $C5 : PHA : PLB
     ; Set bank to store data to
@@ -779,7 +790,7 @@ add_grapple_and_xray_to_hud:
 }
 
 print pc, " presets bank80 end"
-warnpc $80F600 ; save.asm or tinystates.asm
+warnpc $80F500 ; save.asm or tinystates.asm
 
 
 ; $80:9AB1: Add x-ray and grapple HUD items if necessary
