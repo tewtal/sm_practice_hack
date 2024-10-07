@@ -353,7 +353,7 @@ ih_after_room_transition:
     ; Check if MBHP needs to be disabled
     LDA !sram_display_mode : CMP #!IH_MODE_ROOMSTRAT_INDEX : BNE .segmentTimer
     LDA !sram_room_strat : CMP #!IH_STRAT_MBHP_INDEX : BNE .segmentTimer
-    LDA !ROOM_ID : CMP #$DD58 : BEQ .segmentTimer
+    LDA !ROOM_ID : CMP #ROOM_MotherBrainRoom : BEQ .segmentTimer
     LDA #$0000 : STA !sram_display_mode
 
   .segmentTimer
@@ -632,7 +632,7 @@ ih_update_hud_code:
   .mmHud
     ; Map visible, so draw map counter over item%
     LDA !sram_top_display_mode : CMP !TOP_DISPLAY_VANILLA : BEQ .mmVanilla
-    LDA !ram_map_counter : LDX #$0014 : JSR Draw3
+    LDA !MAP_COUNTER : LDX #$0014 : JSR Draw3
 
     LDA !ram_print_segment_timer : BNE .mmRoomTimer
     BRL .mmPickTransitionTime

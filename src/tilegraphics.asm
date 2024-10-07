@@ -524,8 +524,9 @@ load_tile_table_28_draygon:
 ; Load correct section of VRAM for scrolling sky rooms
 preset_transfer_to_vram:
 {
-    PHX : LDA !ROOM_ID : CMP #$91F8 : BEQ .landing_site
-    CMP #$93FE : BEQ .west_ocean : CMP #$94FD : BEQ .east_ocean
+    PHX : LDA !ROOM_ID : CMP #ROOM_LandingSite : BEQ .landing_site
+    CMP #ROOM_WestOcean : BEQ .west_ocean
+    CMP #ROOM_EastOcean : BEQ .east_ocean
 
     ; Normal room, return to vanilla method
     PLX : JML $82E9E7

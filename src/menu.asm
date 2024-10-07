@@ -101,7 +101,7 @@ cm_boot:
 
     ; Disable sounds until we boot the SPC
     LDA #$0001 : STA !DISABLE_SOUNDS
-.skip_spc
+  .skip_spc
 
     %a8()
     LDA #$5A : STA $2109 ; BG3 tilemap base address
@@ -213,7 +213,7 @@ cm_transfer_custom_tileset:
     LDA.w #cm_hud_table2>>16 : STA $C3
 
   .room_check
-    LDA !ROOM_ID : CMP #$A59F : BEQ .kraid_vram
+    LDA !ROOM_ID : CMP #ROOM_KraidRoom : BEQ .kraid_vram
 
     ; Load custom vram to normal BG3 location
     %a8()
@@ -253,7 +253,7 @@ cm_transfer_original_tileset:
 {
     PHP
     %a16()
-    LDA !ROOM_ID : CMP #$A59F : BEQ .kraid_vram
+    LDA !ROOM_ID : CMP #ROOM_KraidRoom : BEQ .kraid_vram
 
     %a8()
     LDA !ram_minimap : CMP #$00 : BEQ .normal_vram
@@ -449,8 +449,7 @@ cm_tilemap_bg:
     ; Game over, $1A
     CMP #$001A : BEQ .fillInterior
   .checkCeres
-    ; Ceres elevator room, $DF45
-    LDA !ROOM_ID : CMP #$DF45 : BNE .done
+    LDA !ROOM_ID : CMP #ROOM_CeresElevatorRoom : BNE .done
 
   .fillInterior
     LDX #$0000
@@ -3291,6 +3290,9 @@ execute_custom_preset:
     RTS
 
   .flipPage
+if !FEATURE_MAPSTATES
+    ; Mapstates only has one page
+else
 if !FEATURE_TINYSTATES
     ; TinyStates only has one page
 else
@@ -3314,12 +3316,16 @@ else
     JSL cm_previous_menu
     JSL action_submenu
 endif
+endif
     RTS
 }
 
 execute_manage_presets:
 {
     LDA !IH_CONTROLLER_PRI : BIT !IH_INPUT_LEFTRIGHT : BEQ .manageSlots
+if !FEATURE_MAPSTATES
+    ; Mapstates only has one page
+else
 if !FEATURE_TINYSTATES
     ; TinyStates only has one page
 else
@@ -3341,6 +3347,7 @@ else
   .adjacentMenu
     JSL cm_previous_menu
     JSL action_submenu
+endif
 endif
     RTS
 

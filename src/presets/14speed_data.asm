@@ -14,8 +14,8 @@ preset_14speed_crateria_ceres_elevator:
     dw $093F, $0000  ; Ceres escape flag
     dw $09A2, $0000  ; Equipped Items
     dw $09A4, $0000  ; Collected Items
-    dw $09A6, $0000  ; Beams
-    dw $09A8, $0000  ; Beams
+    dw $09A6, $0000  ; Equipped Beams
+    dw $09A8, $0000  ; Collected Beams
     dw $09C0, $0000  ; Manual/Auto reserve tank
     dw $09C2, $0063  ; Health
     dw $09C4, $0063  ; Max health
@@ -124,7 +124,6 @@ preset_14speed_crateria_parlor:
     dw $090F, $0000  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $1400  ; Screen subpixel Y position
-    dw $0915, $0400  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
@@ -347,17 +346,11 @@ preset_14speed_brinstar_green_brinstar_elevator:
     dw $079B, $9938  ; MDB
     dw $07F5, $0003  ; Music Track
     dw $090F, $4000  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $A800  ; Screen subpixel Y position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $09C2, $00C7  ; Health
-    dw $09C4, $00C7  ; Max health
     dw $09C6, $0002  ; Missiles
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
     dw $0AF6, $0082  ; Samus X
     dw $0AFA, $008B  ; Samus Y
-    dw $D870, $0180  ; Items
     dw #$FFFF
 
 preset_14speed_brinstar_big_pink:
@@ -388,8 +381,8 @@ preset_14speed_brinstar_red_tower:
     dw $0911, $0500  ; Screen X position in pixels
     dw $0913, $E800  ; Screen subpixel Y position
     dw $0917, $03C0  ; Layer 2 X position
-    dw $09A6, $1000  ; Beams
-    dw $09A8, $1000  ; Beams
+    dw $09A6, $1000  ; Equipped Beams
+    dw $09A8, $1000  ; Collected Beams
     dw $0AF6, $05C1  ; Samus X
     dw $D872, $0481  ; Items
     dw $D8B4, $0206  ; Doors
@@ -985,7 +978,6 @@ preset_14speed_lower_norfair_ridley:
     dw $090F, $8000  ; Screen subpixel X position
     dw $0913, $7400  ; Screen subpixel Y position
     dw $09C2, $012B  ; Health
-    dw $09CE, $0005  ; Pbs
     dw $0AF6, $003F  ; Samus X
     dw $0AFA, $009B  ; Samus Y
     dw $D8BA, $D130  ; Doors
@@ -1477,7 +1469,7 @@ preset_14speed_tourian_mother_brain_2:
 preset_14speed_tourian_mother_brain_3:
     dw #preset_14speed_tourian_mother_brain_2 ; Tourian: Mother Brain 2
     dw $07F3, $0048  ; Music Bank
-    dw $09A6, $1009  ; Beams
+    dw $09A6, $1009  ; Equipped Beams
     dw $09C2, $018F  ; Health
     dw $09C6, $0000  ; Missiles
     dw $09CE, $0000  ; Pbs
@@ -1487,7 +1479,6 @@ preset_14speed_tourian_mother_brain_3:
 
 preset_14speed_tourian_zebes_escape:
     dw #preset_14speed_tourian_mother_brain_3 ; Tourian: Mother Brain 3
-    dw $09A6, $1009  ; Beams
     dw $0A1C, $009B  ; Samus position/state
     dw $0A1E, $0000  ; More position/state
     dw $0AF6, $0025  ; Samus X
@@ -1505,17 +1496,10 @@ preset_14speed_tourian_escape_room_3:
     dw $0913, $7000  ; Screen subpixel Y position
     dw $0915, $0100  ; Screen Y position in pixels
     dw $0919, $00C0  ; Layer 2 Y position
-    dw $09A6, $1009  ; Beams
-    dw $09C6, $0000  ; Missiles
-    dw $09CA, $0000  ; Supers
-    dw $09CE, $0000  ; Pbs
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
-    dw $0A76, $8000  ; Hyper beam
     dw $0AF6, $00DF  ; Samus X
     dw $0AFA, $018B  ; Samus Y
-    dw $D820, $4FC5  ; Events
-    dw $D82C, $0203  ; Bosses
     dw #$FFFF
 
 preset_14speed_tourian_escape_room_4:

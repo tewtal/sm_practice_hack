@@ -28,10 +28,15 @@ macro ai16() ; A + X/Y = 16-bit
 endmacro
 
 macro presetslotsize()
+if !FEATURE_MAPSTATES
+    ASL : ASL : ASL ; multiply by $800
+    XBA : TAX
+else
 if !FEATURE_TINYSTATES
     XBA : TAX       ; multiply by $100
 else
     ASL : XBA : TAX ; multiply by $200
+endif
 endif
 endmacro
 

@@ -158,8 +158,9 @@ else
     LDA #$0168 : JSL $82E118
 
     ; Open message box
-    LDA !ROOM_ID : CMP #$DD58 : BEQ .kill_mb
-    CMP #$CD13 : BEQ .kill_phantoon : CMP #$91F8 : BEQ .kill_ship
+    LDA !ROOM_ID : CMP #ROOM_MotherBrainRoom : BEQ .kill_mb
+    CMP #ROOM_PhantoonRoom : BEQ .kill_phantoon
+    CMP #ROOM_LandingSite : BEQ .kill_ship
     LDA #$001E : JML $858080
   .kill_mb
     LDA #$001F : JML $858080

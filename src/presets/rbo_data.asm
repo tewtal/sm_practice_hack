@@ -14,8 +14,8 @@ preset_rbo_bombs_ceres_elevator:
     dw $093F, $0000  ; Ceres escape flag
     dw $09A2, $0000  ; Equipped Items
     dw $09A4, $0000  ; Collected Items
-    dw $09A6, $0000  ; Beams
-    dw $09A8, $0000  ; Beams
+    dw $09A6, $0000  ; Equipped Beams
+    dw $09A8, $0000  ; Collected Beams
     dw $09C0, $0000  ; Manual/Auto reserve tank
     dw $09C2, $0063  ; Health
     dw $09C4, $0063  ; Max health
@@ -124,7 +124,6 @@ preset_rbo_bombs_parlor_down:
     dw $090F, $F000  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $1400  ; Screen subpixel Y position
-    dw $0915, $0400  ; Screen Y position in pixels
     dw $0A1C, $000C  ; Samus position/state
     dw $0A1E, $0104  ; More position/state
     dw $0AF6, $0033  ; Samus X
@@ -353,8 +352,8 @@ preset_rbo_brinstar_green_hill_zone:
     dw $0911, $0300  ; Screen X position in pixels
     dw $0913, $F7FF  ; Screen subpixel Y position
     dw $0915, $0619  ; Screen Y position in pixels
-    dw $09A6, $1000  ; Beams
-    dw $09A8, $1000  ; Beams
+    dw $09A6, $1000  ; Equipped Beams
+    dw $09A8, $1000  ; Collected Beams
     dw $09CA, $0003  ; Supers
     dw $0AF6, $0387  ; Samus X
     dw $0AFA, $068B  ; Samus Y
@@ -457,8 +456,8 @@ preset_rbo_norfair_first_visit_norfair_elevator:
     dw $090F, $8000  ; Screen subpixel X position
     dw $0913, $B000  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
-    dw $09A6, $1004  ; Beams
-    dw $09A8, $1004  ; Beams
+    dw $09A6, $1004  ; Equipped Beams
+    dw $09A8, $1004  ; Collected Beams
     dw $0A1C, $000F  ; Samus position/state
     dw $0A1E, $0108  ; More position/state
     dw $0AF6, $0049  ; Samus X
@@ -579,8 +578,8 @@ preset_rbo_norfair_first_visit_wave_escape:
     dw $079B, $ADDE  ; MDB
     dw $090F, $7000  ; Screen subpixel X position
     dw $0913, $C400  ; Screen subpixel Y position
-    dw $09A6, $1005  ; Beams
-    dw $09A8, $1005  ; Beams
+    dw $09A6, $1005  ; Equipped Beams
+    dw $09A8, $1005  ; Collected Beams
     dw $09C2, $00CC  ; Health
     dw $09C6, $000D  ; Missiles
     dw $09C8, $000F  ; Max missiles
@@ -902,8 +901,8 @@ preset_rbo_norfair_second_visit_ice_escape:
     dw $090F, $8000  ; Screen subpixel X position
     dw $0913, $AC00  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
-    dw $09A6, $1007  ; Beams
-    dw $09A8, $1007  ; Beams
+    dw $09A6, $1007  ; Equipped Beams
+    dw $09A8, $1007  ; Collected Beams
     dw $09C2, $00AF  ; Health
     dw $09CE, $0009  ; Pbs
     dw $0A1C, $0008  ; Samus position/state
@@ -1136,7 +1135,7 @@ preset_rbo_lower_norfair_energy_refill_escape:
     dw $090F, $1001  ; Screen subpixel X position
     dw $0913, $B400  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
-    dw $09A6, $1001  ; Beams
+    dw $09A6, $1001  ; Equipped Beams
     dw $09C2, $02BB  ; Health
     dw $09C6, $000D  ; Missiles
     dw $09CA, $000D  ; Supers
@@ -1287,7 +1286,7 @@ preset_rbo_norfair_escape_ridley_etank:
     dw $07F5, $0003  ; Music Track
     dw $090F, $5FFF  ; Screen subpixel X position
     dw $0913, $8000  ; Screen subpixel Y position
-    dw $09A6, $1007  ; Beams
+    dw $09A6, $1007  ; Equipped Beams
     dw $09C2, $0381  ; Health
     dw $09C4, $0383  ; Max health
     dw $09C6, $000E  ; Missiles
@@ -1345,7 +1344,6 @@ preset_rbo_norfair_escape_firefleas_exit_spikesuit:
     dw $090F, $0000  ; Screen subpixel X position
     dw $0911, $0100  ; Screen X position in pixels
     dw $0913, $0000  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
     dw $09C2, $0383  ; Health
     dw $09C6, $0005  ; Missiles
     dw $09CA, $0000  ; Supers
@@ -1660,8 +1658,8 @@ preset_rbo_maridia_leaving_maridia:
     dw $0911, $0300  ; Screen X position in pixels
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $031C  ; Screen Y position in pixels
-    dw $09A6, $100B  ; Beams
-    dw $09A8, $100F  ; Beams
+    dw $09A6, $100B  ; Equipped Beams
+    dw $09A8, $100F  ; Collected Beams
     dw $09C2, $01A6  ; Health
     dw $09C6, $000F  ; Missiles
     dw $09CA, $000F  ; Supers
@@ -2089,7 +2087,6 @@ preset_rbo_tourian_mother_brain_2:
     dw $07F5, $0000  ; Music Track
     dw $090F, $79FF  ; Screen subpixel X position
     dw $0915, $0000  ; Screen Y position in pixels
-    dw $0919, $0000  ; Layer 2 Y position
     dw $09C2, $0302  ; Health
     dw $09C6, $0006  ; Missiles
     dw $09CA, $0007  ; Supers
@@ -2100,7 +2097,7 @@ preset_rbo_tourian_mother_brain_2:
 
 preset_rbo_tourian_zebes_escape:
     dw #preset_rbo_tourian_mother_brain_2 ; Tourian: Mother Brain 2
-    dw $09A6, $1009  ; Beams
+    dw $09A6, $1009  ; Equipped Beams
     dw $09C2, $0293  ; Health
     dw $09C6, $007F  ; Missiles
     dw $09CA, $0000  ; Supers

@@ -579,72 +579,72 @@ DemoRoomData:
 ;       |      |      |      |      |      |      |      |
   .set1
 if !FEATURE_PAL
-    dw $91F8, $896A, $0400, $0400, $0040, $0000, $01E3, DRC_LandingSite ; PAL landingsite
-    dw $9BC8, $8CD6, $0000, $0100, $005B, $FFCC, $00C4, DRC_RTS ; PAL mockball
-    dw $A253, $8F0A, $0000, $0400, $008B, $FFAD, $023A, DRC_RTS ; PAL redtower
-    dw $AF14, $967E, $0300, $0000, $008B, $0052, $02FA, DRC_RTS ; PAL lavadive
-    dw $B2DA, $9906, $0300, $0000, $008B, $0051, $0100, DRC_RTS ; PAL ggg
-    dw $DCB1, $AA2C, $0300, $0000, $00BB, $003B, $0615, DRC_RTS ; PAL babyskip
+    dw ROOM_LandingSite, $896A, $0400, $0400, $0040, $0000, $01E3, DRC_LandingSite ; PAL landingsite
+    dw ROOM_EarlySupersRoom, $8CD6, $0000, $0100, $005B, $FFCC, $00C4, DRC_RTS ; PAL mockball
+    dw ROOM_RedTower, $8F0A, $0000, $0400, $008B, $FFAD, $023A, DRC_RTS ; PAL redtower
+    dw ROOM_LavaDiveRoom, $967E, $0300, $0000, $008B, $0052, $02FA, DRC_RTS ; PAL lavadive
+    dw ROOM_FastRipperRoom, $9906, $0300, $0000, $008B, $0051, $0100, DRC_RTS ; PAL ggg
+    dw ROOM_BigBoyRoom, $AA2C, $0300, $0000, $00BB, $003B, $0615, DRC_RTS ; PAL babyskip
 else
-    dw $91F8, $896A, $0400, $0400, $0040, $0001, $02C3, DRC_LandingSite ; landingsite
-    dw $9BC8, $8CD6, $0000, $0100, $005B, $FFCC, $00F6, DRC_RTS ; mockball
-    dw $A253, $8F0A, $0000, $0400, $008B, $FFA5, $027F, DRC_RTS ; redtower
-    dw $AF14, $967E, $0300, $0000, $008B, $005B, $03BC, DRC_RTS ; lavadive
-    dw $B2DA, $9906, $0300, $0000, $008B, $0051, $0100, DRC_RTS ; ggg
-    dw $DCB1, $AA2C, $0300, $0000, $00BB, $003B, $0659, DRC_RTS ; babyskip
+    dw ROOM_LandingSite, $896A, $0400, $0400, $0040, $0001, $02C3, DRC_LandingSite ; landingsite
+    dw ROOM_EarlySupersRoom, $8CD6, $0000, $0100, $005B, $FFCC, $00F6, DRC_RTS ; mockball
+    dw ROOM_RedTower, $8F0A, $0000, $0400, $008B, $FFA5, $027F, DRC_RTS ; redtower
+    dw ROOM_LavaDiveRoom, $967E, $0300, $0000, $008B, $005B, $03BC, DRC_RTS ; lavadive
+    dw ROOM_FastRipperRoom, $9906, $0300, $0000, $008B, $0051, $0100, DRC_RTS ; ggg
+    dw ROOM_BigBoyRoom, $AA2C, $0300, $0000, $00BB, $003B, $0659, DRC_RTS ; babyskip
 endif
     dw $FFFF
 
   .set2
 if !FEATURE_PAL
-    dw $A408, $A36C, $0100, $0100, $008B, $0056, $01FD, DRC_RTS ; Ice Beam
-    dw $9C5E, $8CCA, $0200, $0000, $008B, $0049, $019A, DRC_RTS ; FireFlea Room
-    dw $9E52, $8DEA, $0500, $0300, $00AB, $FFE2, $0117, DRC_RTS ; Brinstar Diagonal Room
-    dw $AF14, $967E, $0300, $0000, $008B, $004B, $03CA, DRC_RTS ; Lower Norfair Entrance
-    dw $9879, $8982, $0000, $0000, $00BB, $FFF1, $00D5, DRC_RTS ; Screw Attack
-    dw $9CB3, $8DD2, $0400, $0200, $0080, $0005, $0317, DRC_RTS ; Dachora
+    dw ROOM_BelowSpazer, $A36C, $0100, $0100, $008B, $0056, $01FD, DRC_RTS ; Ice Beam
+    dw ROOM_GreenBrinFirefleas, $8CCA, $0200, $0000, $008B, $0049, $019A, DRC_RTS ; FireFlea Room
+    dw ROOM_GreenHillZone, $8DEA, $0500, $0300, $00AB, $FFE2, $0117, DRC_RTS ; Brinstar Diagonal Room
+    dw ROOM_LavaDiveRoom, $967E, $0300, $0000, $008B, $004B, $03CA, DRC_RTS ; Lower Norfair Entrance
+    dw ROOM_Flyway, $8982, $0000, $0000, $00BB, $FFF1, $00D5, DRC_RTS ; Screw Attack
+    dw ROOM_DachoraRoom, $8DD2, $0400, $0200, $0080, $0005, $0317, DRC_RTS ; Dachora
 else
-    dw $95FF, $8A36, $0000, $0000, $008B, $FFAA, $0199, DRC_RTS ; moat
-    dw $92FD, $8BB6, $0300, $0200, $008B, $0055, $0144, DRC_RTS ; alcatraz
-    dw $D0B9, $A3F0, $0100, $0300, $00BB, $FFE5, $01DA, DRC_RTS ; pseudo
-    dw $A59F, $91B6, $0000, $0100, $008B, $FFCB, $02B4, DRC_Kraid ; kqk
-    dw $CC6F, $A21C, $0200, $0000, $005B, $FFFB, $01D7, DRC_RTS ; speedball
-    dw $91F8, $89B2, $0800, $0100, $008B, $0055, $02F8, DRC_RTS ; wraparound
+    dw ROOM_TheMoat, $8A36, $0000, $0000, $008B, $FFAA, $0199, DRC_RTS ; moat
+    dw ROOM_ParlorAndAlcatraz, $8BB6, $0300, $0200, $008B, $0055, $0144, DRC_RTS ; alcatraz
+    dw ROOM_MtEverest, $A3F0, $0100, $0300, $00BB, $FFE5, $01DA, DRC_RTS ; pseudo
+    dw ROOM_KraidRoom, $91B6, $0000, $0100, $008B, $FFCB, $02B4, DRC_Kraid ; kqk
+    dw ROOM_Basement, $A21C, $0200, $0000, $005B, $FFFB, $01D7, DRC_RTS ; speedball
+    dw ROOM_LandingSite, $89B2, $0800, $0100, $008B, $0055, $02F8, DRC_RTS ; wraparound
 endif
     dw $FFFF
 
   .set3
 if !FEATURE_PAL
-    dw $CC6F, $A21C, $0200, $0000, $0060, $0004, $02EF, DRC_RTS ; Pre Phantoon Hall
-    dw $91F8, $896A, $0300, $0400, $00B0, $0000, $00C7, DRC_LandingSite ; Shinespark
-    dw $A56B, $919E, $0000, $0100, $008B, $FFD2, $02D3, DRC_RTS ; Eye Door
-    dw $A322, $90EA, $0000, $0700, $008B, $FFAA, $0149, DRC_RTS ; Red Brinstar Elevator
-    dw $A59F, $91B6, $0000, $0100, $008B, $FFBF, $013F, DRC_Kraid ; Kraid
-    dw $A66A, $91F2, $0000, $0000, $008B, $FFB1, $0197, DRC_G4 ; Tourian Entrance
+    dw ROOM_Basement, $A21C, $0200, $0000, $0060, $0004, $02EF, DRC_RTS ; Pre Phantoon Hall
+    dw ROOM_LandingSite, $896A, $0300, $0400, $00B0, $0000, $00C7, DRC_LandingSite ; Shinespark
+    dw ROOM_KraidEyeDoorRoom, $919E, $0000, $0100, $008B, $FFD2, $02D3, DRC_RTS ; Eye Door
+    dw ROOM_CaterpillarRoom, $90EA, $0000, $0700, $008B, $FFAA, $0149, DRC_RTS ; Red Brinstar Elevator
+    dw ROOM_KraidRoom, $91B6, $0000, $0100, $008B, $FFBF, $013F, DRC_Kraid ; Kraid
+    dw ROOM_StatuesRoom, $91F2, $0000, $0000, $008B, $FFB1, $0197, DRC_G4 ; Tourian Entrance
 else
-    dw $D0B9, $A3F0, $0100, $0300, $00BB, $FFE5, $015C, DRC_RTS ; everest
-    dw $A3AE, $9096, $0200, $0000, $008B, $0053, $015F, DRC_RTS ; alphapb
-    dw $91F8, $896A, $0600, $0200, $007B, $0026, $032C, DRC_RTS ; bombjump
-    dw $A322, $A480, $0200, $0300, $008B, $0035, $0127, DRC_RTS ; tunneljump
-    dw $96BA, $8B7A, $0100, $0800, $008B, $0052, $0311, DRC_RTS ; climb
-    dw $93FE, $A1B0, $0700, $0400, $008B, $0054, $019B, DRC_LandingSite ; ocean
+    dw ROOM_MtEverest, $A3F0, $0100, $0300, $00BB, $FFE5, $015C, DRC_RTS ; everest
+    dw ROOM_AlphaPowerBombRoom, $9096, $0200, $0000, $008B, $0053, $015F, DRC_RTS ; alphapb
+    dw ROOM_LandingSite, $896A, $0600, $0200, $007B, $0026, $032C, DRC_RTS ; bombjump
+    dw ROOM_CaterpillarRoom, $A480, $0200, $0300, $008B, $0035, $0127, DRC_RTS ; tunneljump
+    dw ROOM_Climb, $8B7A, $0100, $0800, $008B, $0052, $0311, DRC_RTS ; climb
+    dw ROOM_WestOcean, $A1B0, $0700, $0400, $008B, $0054, $019B, DRC_LandingSite ; ocean
 endif
     dw $FFFF
 
   .set4
 if !FEATURE_PAL
-    dw $91F8, $890A, $0600, $0200, $0080, $0030, $0100, DRC_LandingSite ; Gauntlet Entrance
-    dw $D0B9, $A474, $0200, $0000, $00AB, $0000, $0332, DRC_RTS ; Advanced Grapple Beam
-    dw $91F8, $890A, $0600, $0200, $007B, $0020, $0185, DRC_LandingSite ; IBJ
-    dw $9AD9, $8D42, $0000, $0400, $008B, $FFB7, $018A, DRC_RTS ; SBA
-    dw $91F8, $890A, $0600, $0200, $008B, $0004, $0200, DRC_LandingSite ; Crystal Flash
+    dw ROOM_LandingSite, $890A, $0600, $0200, $0080, $0030, $0100, DRC_LandingSite ; Gauntlet Entrance
+    dw ROOM_MtEverest, $A474, $0200, $0000, $00AB, $0000, $0332, DRC_RTS ; Advanced Grapple Beam
+    dw ROOM_LandingSite, $890A, $0600, $0200, $007B, $0020, $0185, DRC_LandingSite ; IBJ
+    dw ROOM_GreenBrinMainShaft, $8D42, $0000, $0400, $008B, $FFB7, $018A, DRC_RTS ; SBA
+    dw ROOM_LandingSite, $890A, $0600, $0200, $008B, $0004, $0200, DRC_LandingSite ; Crystal Flash
 else
-    dw $DB7D, $A9CC, $0000, $0000, $008B, $FFAC, $0188, DRC_RTS ; metroid3
-    dw $9879, $8982, $0000, $0000, $008B, $FFAE, $011B, DRC_RTS ; flyway
-    dw $B106, $970E, $0700, $0000, $008B, $0051, $0312, DRC_RTS ; frogspeedway
-    dw $D5A7, $A828, $0000, $0200, $008B, $FFA7, $0485, DRC_RTS ; grapplejump
-    dw $9D19, $8F8E, $0200, $0600, $008B, $001C, $040A, DRC_BigPink ; crystalflash
-    dw $9AD9, $8D4E, $0000, $0200, $00AB, $0021, $029F, DRC_RTS ; tasdance
+    dw ROOM_MetroidRoom3, $A9CC, $0000, $0000, $008B, $FFAC, $0188, DRC_RTS ; metroid3
+    dw ROOM_Flyway, $8982, $0000, $0000, $008B, $FFAE, $011B, DRC_RTS ; flyway
+    dw ROOM_FrogSpeedway, $970E, $0700, $0000, $008B, $0051, $0312, DRC_RTS ; frogspeedway
+    dw ROOM_Aqueduct, $A828, $0000, $0200, $008B, $FFA7, $0485, DRC_RTS ; grapplejump
+    dw ROOM_BigPink, $8F8E, $0200, $0600, $008B, $001C, $040A, DRC_BigPink ; crystalflash
+    dw ROOM_GreenBrinMainShaft, $8D4E, $0000, $0200, $00AB, $0021, $029F, DRC_RTS ; tasdance
 endif
     dw $FFFF
 }

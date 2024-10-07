@@ -14,8 +14,8 @@ preset_allbossprkd_crateria_ceres_elevator:
     dw $093F, $0000  ; Ceres escape flag
     dw $09A2, $0000  ; Equipped Items
     dw $09A4, $0000  ; Collected Items
-    dw $09A6, $0000  ; Beams
-    dw $09A8, $0000  ; Beams
+    dw $09A6, $0000  ; Equipped Beams
+    dw $09A8, $0000  ; Collected Beams
     dw $09C0, $0000  ; Manual/Auto reserve tank
     dw $09C2, $0063  ; Health
     dw $09C4, $0063  ; Max health
@@ -349,8 +349,8 @@ preset_allbossprkd_brinstar_red_tower:
     dw $090F, $F000  ; Screen subpixel X position
     dw $0911, $0500  ; Screen X position in pixels
     dw $0913, $2800  ; Screen subpixel Y position
-    dw $09A6, $1000  ; Beams
-    dw $09A8, $1000  ; Beams
+    dw $09A6, $1000  ; Equipped Beams
+    dw $09A8, $1000  ; Collected Beams
     dw $09C2, $00B3  ; Health
     dw $09C6, $000A  ; Missiles
     dw $09C8, $000A  ; Max missiles
@@ -572,8 +572,8 @@ preset_allbossprkd_wrecked_ship_breaking_tube:
     dw $090F, $4000  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $D000  ; Screen subpixel Y position
-    dw $09A6, $1004  ; Beams
-    dw $09A8, $1004  ; Beams
+    dw $09A6, $1004  ; Equipped Beams
+    dw $09A8, $1004  ; Collected Beams
     dw $09D2, $0003  ; Currently selected item
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
@@ -668,8 +668,8 @@ preset_allbossprkd_upper_norfair_ice_escape:
     dw $090F, $3000  ; Screen subpixel X position
     dw $0913, $3000  ; Screen subpixel Y position
     dw $0915, $0200  ; Screen Y position in pixels
-    dw $09A6, $1006  ; Beams
-    dw $09A8, $1006  ; Beams
+    dw $09A6, $1006  ; Equipped Beams
+    dw $09A8, $1006  ; Collected Beams
     dw $09C2, $0121  ; Health
     dw $09CA, $000D  ; Supers
     dw $0A1C, $0001  ; Samus position/state
@@ -734,8 +734,8 @@ preset_allbossprkd_upper_norfair_double_chamber_revisit:
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $9C00  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
-    dw $09A6, $1007  ; Beams
-    dw $09A8, $1007  ; Beams
+    dw $09A6, $1007  ; Equipped Beams
+    dw $09A8, $1007  ; Collected Beams
     dw $09C6, $000D  ; Missiles
     dw $09C8, $0014  ; Max missiles
     dw $09CA, $000E  ; Supers
@@ -786,7 +786,7 @@ preset_allbossprkd_lower_norfair_ln_main_hall:
     dw $090F, $6000  ; Screen subpixel X position
     dw $0911, $0400  ; Screen X position in pixels
     dw $0913, $0000  ; Screen subpixel Y position
-    dw $09A6, $1001  ; Beams
+    dw $09A6, $1001  ; Equipped Beams
     dw $09C2, $00C6  ; Health
     dw $09D2, $0003  ; Currently selected item
     dw $0A1C, $009B  ; Samus position/state
@@ -1392,7 +1392,7 @@ preset_allbossprkd_tourian_metroids_1:
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $C800  ; Screen subpixel Y position
     dw $0915, $0300  ; Screen Y position in pixels
-    dw $09A6, $1007  ; Beams
+    dw $09A6, $1007  ; Equipped Beams
     dw $09C6, $0010  ; Missiles
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
@@ -1512,7 +1512,7 @@ preset_allbossprkd_tourian_escape_room_3:
     dw $090F, $1000  ; Screen subpixel X position
     dw $0913, $7000  ; Screen subpixel Y position
     dw $0915, $0100  ; Screen Y position in pixels
-    dw $09A6, $1009  ; Beams
+    dw $09A6, $1009  ; Equipped Beams
     dw $09C6, $0000  ; Missiles
     dw $09CA, $0000  ; Supers
     dw $09CE, $0000  ; Pbs
