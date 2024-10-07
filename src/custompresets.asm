@@ -7,13 +7,13 @@ print pc, " custompresets start"
 
 ; Backward compatibility was promised. Just because it's unused, doesn't mean you can use it.
 
-if !FEATURE_TINYSTATES
+if !FEATURE_MAPSTATES
 custom_preset_save:
 {
     LDA !sram_custom_preset_slot
-    %presetslotsize()            ; multiply by 100h (slot offset)
+    %presetslotsize()            ; multiply by 800h (slot offset)
     LDA #$5AFE : STA !PRESET_SLOTS+$00,X   ; mark this slot as "SAFE" to load
-    LDA #$00BE : STA !PRESET_SLOTS+$02,X   ; record slot size for future compatibility
+    LDA #$00BE : STA !PRESET_SLOTS+$02,X   ; record slot size (first 100h) for future compatibility
     LDA $078D : STA !PRESET_SLOTS+$04,X    ; DDB
     LDA $079B : STA !PRESET_SLOTS+$06,X    ; MDB
     LDA $07F3 : STA !PRESET_SLOTS+$08,X    ; Music Bank
@@ -29,8 +29,8 @@ custom_preset_save:
     LDA $093F : STA !PRESET_SLOTS+$1C,X    ; Ceres escape flag
     LDA $09A2 : STA !PRESET_SLOTS+$1E,X    ; Equipped Items
     LDA $09A4 : STA !PRESET_SLOTS+$20,X    ; Collected Items
-    LDA $09A6 : STA !PRESET_SLOTS+$22,X    ; Beams
-    LDA $09A8 : STA !PRESET_SLOTS+$24,X    ; Beams
+    LDA $09A6 : STA !PRESET_SLOTS+$22,X    ; Equipped Beams
+    LDA $09A8 : STA !PRESET_SLOTS+$24,X    ; Collected Beams
     LDA $09C0 : STA !PRESET_SLOTS+$26,X    ; Manual/Auto reserve tank
     LDA $09C2 : STA !PRESET_SLOTS+$28,X    ; Health
     LDA $09C4 : STA !PRESET_SLOTS+$2A,X    ; Max health
@@ -82,33 +82,207 @@ custom_preset_save:
     LDA $7ED908 : STA !PRESET_SLOTS+$86,X  ; Map Stations
     LDA $7ED90A : STA !PRESET_SLOTS+$88,X  ; Map Stations
     LDA $7ED90C : STA !PRESET_SLOTS+$8A,X  ; Map Stations
-    LDA $7ECD20 : STA !PRESET_SLOTS+$8C,X  ; Scrolls
-    LDA $7ECD22 : STA !PRESET_SLOTS+$8E,X  ; Scrolls
-    LDA $7ECD24 : STA !PRESET_SLOTS+$90,X  ; Scrolls
-    LDA $7ECD26 : STA !PRESET_SLOTS+$92,X  ; Scrolls
-    LDA $7ECD28 : STA !PRESET_SLOTS+$94,X  ; Scrolls
-    LDA $7ECD2A : STA !PRESET_SLOTS+$96,X  ; Scrolls
-    LDA $7ECD2C : STA !PRESET_SLOTS+$98,X  ; Scrolls
-    LDA $7ECD2E : STA !PRESET_SLOTS+$9A,X  ; Scrolls
-    LDA $7ECD30 : STA !PRESET_SLOTS+$9C,X  ; Scrolls
-    LDA $7ECD32 : STA !PRESET_SLOTS+$9E,X  ; Scrolls
-    LDA $7ECD34 : STA !PRESET_SLOTS+$A0,X  ; Scrolls
-    LDA $7ECD36 : STA !PRESET_SLOTS+$A2,X  ; Scrolls
-    LDA $7ECD38 : STA !PRESET_SLOTS+$A4,X  ; Scrolls
-    LDA $7ECD3A : STA !PRESET_SLOTS+$A6,X  ; Scrolls
-    LDA $7ECD3C : STA !PRESET_SLOTS+$A8,X  ; Scrolls
-    LDA $7ECD3E : STA !PRESET_SLOTS+$AA,X  ; Scrolls
-    LDA $7ECD40 : STA !PRESET_SLOTS+$AC,X  ; Scrolls
-    LDA $7ECD42 : STA !PRESET_SLOTS+$AE,X  ; Scrolls
-    LDA $7ECD44 : STA !PRESET_SLOTS+$B0,X  ; Scrolls
-    LDA $7ECD46 : STA !PRESET_SLOTS+$B2,X  ; Scrolls
-    LDA $7ECD48 : STA !PRESET_SLOTS+$B4,X  ; Scrolls
-    LDA $7ECD4A : STA !PRESET_SLOTS+$B6,X  ; Scrolls
-    LDA $7ECD4C : STA !PRESET_SLOTS+$B8,X  ; Scrolls
-    LDA $7ECD4E : STA !PRESET_SLOTS+$BA,X  ; Scrolls
-    LDA $7ECD50 : STA !PRESET_SLOTS+$BC,X  ; Scrolls
     ; next available byte is !PRESET_SLOTS+$BE
-    RTL
+    ; last two bytes of the first 100h are the map counter
+    LDA !MAP_COUNTER : STA !PRESET_SLOTS+$FE,X
+
+    ; save scrolls
+    PHB : TXA : PHA : CLC
+    ADC #(!PRESET_SLOTS+$BD) : TAY   ; Y = Destination
+    LDX #$CD20 : LDA #$0031          ; X = Source, A = Size
+    MVN $7E70                        ; srcBank, destBank
+
+    ; save explored map tiles
+    PLA : PHA : CLC
+    ADC #(!PRESET_SLOTS+$1FF) : TAY  ; Y = Destination
+    LDX #$08F6 : LDA #$00FF          ; X = Source, A = Size-1
+    MVP $7E70                        ; srcBank, destBank
+
+    ; load explored map tiles by area (first six areas)
+    PLA : CLC
+    ADC #(!PRESET_SLOTS+$7FF) : TAY  ; Y = Destination
+    LDX #$D351 : LDA #$05FF          ; X = Source, A = Size-1
+    MVP $7E70                        ; srcBank, destBank
+    PLB : RTL
+}
+
+custom_preset_load:
+{
+    LDA !sram_custom_preset_slot
+    %presetslotsize()            ; multiply by 800h (slot offset)
+                                 ; skip past "5AFE" word
+                                 ; skip past size for now
+    LDA !PRESET_SLOTS+$04,X : STA $078D    ; DDB
+    LDA !PRESET_SLOTS+$06,X : STA $079B    ; MDB
+    LDA !PRESET_SLOTS+$08,X : STA $07F3    ; Music Bank
+    LDA !PRESET_SLOTS+$0A,X : STA $07F5    ; Music Track
+    LDA !PRESET_SLOTS+$0C,X : STA $090F    ; Screen subpixel X position
+    LDA !PRESET_SLOTS+$0E,X : STA $0911    ; Screen X position in pixels
+    LDA !PRESET_SLOTS+$10,X : STA $0913    ; Screen subpixel Y position
+    LDA !PRESET_SLOTS+$12,X : STA $0915    ; Screen Y position in pixels
+    LDA !PRESET_SLOTS+$14,X : STA $0917    ; Layer 2 X position
+    LDA !PRESET_SLOTS+$16,X : STA $0919    ; Layer 2 Y position
+    LDA !PRESET_SLOTS+$18,X : STA $0921    ; BG2 X offset
+    LDA !PRESET_SLOTS+$1A,X : STA $0923    ; BG2 Y offset
+    LDA !PRESET_SLOTS+$1C,X : STA $093F    ; Ceres escape flag
+    LDA !PRESET_SLOTS+$1E,X : STA $09A2    ; Equipped Items
+    LDA !PRESET_SLOTS+$20,X : STA $09A4    ; Collected Items
+    LDA !PRESET_SLOTS+$22,X : STA $09A6    ; Equipped Beams
+    LDA !PRESET_SLOTS+$24,X : STA $09A8    ; Collected Beams
+    LDA !PRESET_SLOTS+$26,X : STA $09C0    ; Manual/Auto reserve tank
+    LDA !PRESET_SLOTS+$28,X : STA $09C2    ; Health
+    LDA !PRESET_SLOTS+$2A,X : STA $09C4    ; Max health
+    LDA !PRESET_SLOTS+$2C,X : STA $09C6    ; Missiles
+    LDA !PRESET_SLOTS+$2E,X : STA $09C8    ; Max missiles
+    LDA !PRESET_SLOTS+$30,X : STA $09CA    ; Supers
+    LDA !PRESET_SLOTS+$32,X : STA $09CC    ; Max supers
+    LDA !PRESET_SLOTS+$34,X : STA $09CE    ; Pbs
+    LDA !PRESET_SLOTS+$36,X : STA $09D0    ; Max pbs
+    LDA !PRESET_SLOTS+$38,X : STA $09D2    ; Currently selected item
+    LDA !PRESET_SLOTS+$3A,X : STA $09D4    ; Max reserves
+    LDA !PRESET_SLOTS+$3C,X : STA $09D6    ; Reserves
+    LDA !PRESET_SLOTS+$3E,X : STA $0A1C    ; Samus position/state
+    LDA !PRESET_SLOTS+$40,X : STA $0A1E    ; More position/state
+    LDA !PRESET_SLOTS+$42,X : STA $0A68    ; Flash suit
+    LDA !PRESET_SLOTS+$44,X : STA $0A76    ; Hyper beam
+    LDA !PRESET_SLOTS+$46,X : STA $0AF6    ; Samus X
+    LDA !PRESET_SLOTS+$48,X : STA $0AF8    ; Samus subpixel X
+    LDA !PRESET_SLOTS+$4A,X : STA $0AFA    ; Samus Y
+    LDA !PRESET_SLOTS+$4C,X : STA $0AFC    ; Samus subpixel Y
+    LDA !PRESET_SLOTS+$4E,X : STA $0B3F    ; Blue suit
+    LDA !PRESET_SLOTS+$50,X : STA $7ED820  ; Events
+    LDA !PRESET_SLOTS+$52,X : STA $7ED822  ; Events
+    LDA !PRESET_SLOTS+$54,X : STA $7ED828  ; Bosses
+    LDA !PRESET_SLOTS+$56,X : STA $7ED82A  ; Bosses
+    LDA !PRESET_SLOTS+$58,X : STA $7ED82C  ; Bosses
+    LDA !PRESET_SLOTS+$5A,X : STA $7ED82E  ; Bosses
+    LDA !PRESET_SLOTS+$5C,X : STA $7ED870  ; Items
+    LDA !PRESET_SLOTS+$5E,X : STA $7ED872  ; Items
+    LDA !PRESET_SLOTS+$60,X : STA $7ED874  ; Items
+    LDA !PRESET_SLOTS+$62,X : STA $7ED876  ; Items
+    LDA !PRESET_SLOTS+$64,X : STA $7ED878  ; Items
+    LDA !PRESET_SLOTS+$66,X : STA $7ED87A  ; Items
+    LDA !PRESET_SLOTS+$68,X : STA $7ED87C  ; Items
+    LDA !PRESET_SLOTS+$6A,X : STA $7ED87E  ; Items
+    LDA !PRESET_SLOTS+$6C,X : STA $7ED880  ; Items
+    LDA !PRESET_SLOTS+$6E,X : STA $7ED882  ; Items
+    LDA !PRESET_SLOTS+$70,X : STA $7ED8B0  ; Doors
+    LDA !PRESET_SLOTS+$72,X : STA $7ED8B2  ; Doors
+    LDA !PRESET_SLOTS+$74,X : STA $7ED8B4  ; Doors
+    LDA !PRESET_SLOTS+$76,X : STA $7ED8B6  ; Doors
+    LDA !PRESET_SLOTS+$78,X : STA $7ED8B8  ; Doors
+    LDA !PRESET_SLOTS+$7A,X : STA $7ED8BA  ; Doors
+    LDA !PRESET_SLOTS+$7C,X : STA $7ED8BC  ; Doors
+    LDA !PRESET_SLOTS+$7E,X : STA $7ED8BE  ; Doors
+    LDA !PRESET_SLOTS+$80,X : STA $7ED8C0  ; Doors
+    LDA !PRESET_SLOTS+$82,X : STA $7ED8C2  ; Doors
+    LDA !PRESET_SLOTS+$84,X : STA $7ED8C4  ; Doors
+    LDA !PRESET_SLOTS+$86,X : STA $7ED908  ; Map Stations
+    LDA !PRESET_SLOTS+$88,X : STA $7ED90A  ; Map Stations
+    LDA !PRESET_SLOTS+$8A,X : STA $7ED90C  ; Map Stations
+    ; set flag to load scrolls later
+    LDA #$5AFE : STA !ram_custom_preset
+    ; next available byte is !PRESET_SLOTS+$BE
+    ; last two bytes of the first 100h are the map counter
+    LDA !PRESET_SLOTS+$FE,X : STA !MAP_COUNTER
+
+    ; load explored map tiles
+    PHB : TXA : PHA : CLC
+    ADC #(!PRESET_SLOTS+$1FF) : TAX  ; X = Source
+    LDY #$08F6 : LDA #$00FF          ; Y = Destination, A = Size-1
+    MVP $707E                        ; srcBank, destBank
+
+    ; load explored map tiles by area (first six areas)
+    PLA : CLC
+    ADC #(!PRESET_SLOTS+$7FF) : TAX  ; X = Source
+    LDY #$D351 : LDA #$05FF          ; Y = Destination, A = Size-1
+    MVP $707E                        ; srcBank, destBank
+    PLB : RTL
+}
+else
+if !FEATURE_TINYSTATES
+custom_preset_save:
+{
+    LDA !sram_custom_preset_slot
+    %presetslotsize()            ; multiply by 100h (slot offset)
+    LDA #$5AFE : STA !PRESET_SLOTS+$00,X   ; mark this slot as "SAFE" to load
+    LDA #$00BE : STA !PRESET_SLOTS+$02,X   ; record slot size for future compatibility
+    LDA $078D : STA !PRESET_SLOTS+$04,X    ; DDB
+    LDA $079B : STA !PRESET_SLOTS+$06,X    ; MDB
+    LDA $07F3 : STA !PRESET_SLOTS+$08,X    ; Music Bank
+    LDA $07F5 : STA !PRESET_SLOTS+$0A,X    ; Music Track
+    LDA $090F : STA !PRESET_SLOTS+$0C,X    ; Screen subpixel X position
+    LDA $0911 : STA !PRESET_SLOTS+$0E,X    ; Screen X position in pixels
+    LDA $0913 : STA !PRESET_SLOTS+$10,X    ; Screen subpixel Y position
+    LDA $0915 : STA !PRESET_SLOTS+$12,X    ; Screen Y position in pixels
+    LDA $0917 : STA !PRESET_SLOTS+$14,X    ; Layer 2 X position
+    LDA $0919 : STA !PRESET_SLOTS+$16,X    ; Layer 2 Y position
+    LDA $0921 : STA !PRESET_SLOTS+$18,X    ; BG2 X offset
+    LDA $0923 : STA !PRESET_SLOTS+$1A,X    ; BG2 Y offset
+    LDA $093F : STA !PRESET_SLOTS+$1C,X    ; Ceres escape flag
+    LDA $09A2 : STA !PRESET_SLOTS+$1E,X    ; Equipped Items
+    LDA $09A4 : STA !PRESET_SLOTS+$20,X    ; Collected Items
+    LDA $09A6 : STA !PRESET_SLOTS+$22,X    ; Equipped Beams
+    LDA $09A8 : STA !PRESET_SLOTS+$24,X    ; Collected Beams
+    LDA $09C0 : STA !PRESET_SLOTS+$26,X    ; Manual/Auto reserve tank
+    LDA $09C2 : STA !PRESET_SLOTS+$28,X    ; Health
+    LDA $09C4 : STA !PRESET_SLOTS+$2A,X    ; Max health
+    LDA $09C6 : STA !PRESET_SLOTS+$2C,X    ; Missiles
+    LDA $09C8 : STA !PRESET_SLOTS+$2E,X    ; Max missiles
+    LDA $09CA : STA !PRESET_SLOTS+$30,X    ; Supers
+    LDA $09CC : STA !PRESET_SLOTS+$32,X    ; Max supers
+    LDA $09CE : STA !PRESET_SLOTS+$34,X    ; Pbs
+    LDA $09D0 : STA !PRESET_SLOTS+$36,X    ; Max pbs
+    LDA $09D2 : STA !PRESET_SLOTS+$38,X    ; Currently selected item
+    LDA $09D4 : STA !PRESET_SLOTS+$3A,X    ; Max reserves
+    LDA $09D6 : STA !PRESET_SLOTS+$3C,X    ; Reserves
+    LDA $0A1C : STA !PRESET_SLOTS+$3E,X    ; Samus position/state
+    LDA $0A1E : STA !PRESET_SLOTS+$40,X    ; More position/state
+    LDA $0A68 : STA !PRESET_SLOTS+$42,X    ; Flash suit
+    LDA $0A76 : STA !PRESET_SLOTS+$44,X    ; Hyper beam
+    LDA $0AF6 : STA !PRESET_SLOTS+$46,X    ; Samus X
+    LDA $0AF8 : STA !PRESET_SLOTS+$48,X    ; Samus subpixel X
+    LDA $0AFA : STA !PRESET_SLOTS+$4A,X    ; Samus Y
+    LDA $0AFC : STA !PRESET_SLOTS+$4C,X    ; Samus subpixel Y
+    LDA $0B3F : STA !PRESET_SLOTS+$4E,X    ; Blue suit
+    LDA $7ED820 : STA !PRESET_SLOTS+$50,X  ; Events
+    LDA $7ED822 : STA !PRESET_SLOTS+$52,X  ; Events
+    LDA $7ED828 : STA !PRESET_SLOTS+$54,X  ; Bosses
+    LDA $7ED82A : STA !PRESET_SLOTS+$56,X  ; Bosses
+    LDA $7ED82C : STA !PRESET_SLOTS+$58,X  ; Bosses
+    LDA $7ED82E : STA !PRESET_SLOTS+$5A,X  ; Bosses
+    LDA $7ED870 : STA !PRESET_SLOTS+$5C,X  ; Items
+    LDA $7ED872 : STA !PRESET_SLOTS+$5E,X  ; Items
+    LDA $7ED874 : STA !PRESET_SLOTS+$60,X  ; Items
+    LDA $7ED876 : STA !PRESET_SLOTS+$62,X  ; Items
+    LDA $7ED878 : STA !PRESET_SLOTS+$64,X  ; Items
+    LDA $7ED87A : STA !PRESET_SLOTS+$66,X  ; Items
+    LDA $7ED87C : STA !PRESET_SLOTS+$68,X  ; Items
+    LDA $7ED87E : STA !PRESET_SLOTS+$6A,X  ; Items
+    LDA $7ED880 : STA !PRESET_SLOTS+$6C,X  ; Items
+    LDA $7ED882 : STA !PRESET_SLOTS+$6E,X  ; Items
+    LDA $7ED8B0 : STA !PRESET_SLOTS+$70,X  ; Doors
+    LDA $7ED8B2 : STA !PRESET_SLOTS+$72,X  ; Doors
+    LDA $7ED8B4 : STA !PRESET_SLOTS+$74,X  ; Doors
+    LDA $7ED8B6 : STA !PRESET_SLOTS+$76,X  ; Doors
+    LDA $7ED8B8 : STA !PRESET_SLOTS+$78,X  ; Doors
+    LDA $7ED8BA : STA !PRESET_SLOTS+$7A,X  ; Doors
+    LDA $7ED8BC : STA !PRESET_SLOTS+$7C,X  ; Doors
+    LDA $7ED8BE : STA !PRESET_SLOTS+$7E,X  ; Doors
+    LDA $7ED8C0 : STA !PRESET_SLOTS+$80,X  ; Doors
+    LDA $7ED8C2 : STA !PRESET_SLOTS+$82,X  ; Doors
+    LDA $7ED8C4 : STA !PRESET_SLOTS+$84,X  ; Doors
+    LDA $7ED908 : STA !PRESET_SLOTS+$86,X  ; Map Stations
+    LDA $7ED90A : STA !PRESET_SLOTS+$88,X  ; Map Stations
+    LDA $7ED90C : STA !PRESET_SLOTS+$8A,X  ; Map Stations
+    ; next available byte is !PRESET_SLOTS+$BE
+
+    ; save scrolls
+    PHB : TXA : CLC
+    ADC #(!PRESET_SLOTS+$BD) : TAY   ; Y = Destination
+    LDX #$CD20 : LDA #$0031          ; X = Source, A = Size
+    MVN $7E70                        ; srcBank, destBank
+    PLB : RTL
 }
 
 custom_preset_load:
@@ -132,8 +306,8 @@ custom_preset_load:
     LDA !PRESET_SLOTS+$1C,X : STA $093F    ; Ceres escape flag
     LDA !PRESET_SLOTS+$1E,X : STA $09A2    ; Equipped Items
     LDA !PRESET_SLOTS+$20,X : STA $09A4    ; Collected Items
-    LDA !PRESET_SLOTS+$22,X : STA $09A6    ; Beams
-    LDA !PRESET_SLOTS+$24,X : STA $09A8    ; Beams
+    LDA !PRESET_SLOTS+$22,X : STA $09A6    ; Equipped Beams
+    LDA !PRESET_SLOTS+$24,X : STA $09A8    ; Collected Beams
     LDA !PRESET_SLOTS+$26,X : STA $09C0    ; Manual/Auto reserve tank
     LDA !PRESET_SLOTS+$28,X : STA $09C2    ; Health
     LDA !PRESET_SLOTS+$2A,X : STA $09C4    ; Max health
@@ -214,8 +388,8 @@ custom_preset_save:
     LDA $093F : STA !PRESET_SLOTS+$20,X    ; Ceres escape flag
     LDA $09A2 : STA !PRESET_SLOTS+$22,X    ; Equipped Items
     LDA $09A4 : STA !PRESET_SLOTS+$24,X    ; Collected Items
-    LDA $09A6 : STA !PRESET_SLOTS+$26,X    ; Beams
-    LDA $09A8 : STA !PRESET_SLOTS+$28,X    ; Beams
+    LDA $09A6 : STA !PRESET_SLOTS+$26,X    ; Equipped Beams
+    LDA $09A8 : STA !PRESET_SLOTS+$28,X    ; Collected Beams
     LDA $09C0 : STA !PRESET_SLOTS+$2A,X    ; Manual/Auto reserve tank
     LDA $09C2 : STA !PRESET_SLOTS+$2C,X    ; Health
     LDA $09C4 : STA !PRESET_SLOTS+$2E,X    ; Max health
@@ -255,18 +429,16 @@ custom_preset_save:
     LDA $0919 : STA !PRESET_SLOTS+$1B2,X    ; Layer 2 Y position
     LDA $0921 : STA !PRESET_SLOTS+$1B4,X    ; BG2 X offset
     LDA $0923 : STA !PRESET_SLOTS+$1B6,X    ; BG2 Y offset
-
-    PHX : PHB
-    TXA : CLC : ADC #$31B8 : TAY ; Y = Destination
-    LDX #$CD20 : LDA #$0031      ; X = Source, A = Size
-    MVN $7E70                    ; srcBank, destBank
-    PLB : PLX
-
     LDA $0AF8 : STA !PRESET_SLOTS+$1EA,X    ; Samus subpixel X
     LDA $0AFC : STA !PRESET_SLOTS+$1EC,X    ; Samus subpixel Y
     ; next available byte is !PRESET_SLOTS+$1EE
 
-    RTL
+    ; save scrolls
+    PHB : TXA : CLC
+    ADC #(!PRESET_SLOTS+$1B8) : TAY  ; Y = Destination
+    LDX #$CD20 : LDA #$0031          ; X = Source, A = Size
+    MVN $7E70                        ; srcBank, destBank
+    PLB : RTL
 }
 
 custom_preset_load:
@@ -292,8 +464,8 @@ custom_preset_load:
     LDA !PRESET_SLOTS+$20,X : STA $093F    ; Ceres escape flag
     LDA !PRESET_SLOTS+$22,X : STA $09A2    ; Equipped Items
     LDA !PRESET_SLOTS+$24,X : STA $09A4    ; Collected Items
-    LDA !PRESET_SLOTS+$26,X : STA $09A6    ; Beams
-    LDA !PRESET_SLOTS+$28,X : STA $09A8    ; Beams
+    LDA !PRESET_SLOTS+$26,X : STA $09A6    ; Equipped Beams
+    LDA !PRESET_SLOTS+$28,X : STA $09A8    ; Collected Beams
     LDA !PRESET_SLOTS+$2A,X : STA $09C0    ; Manual/Auto reserve tank
     LDA !PRESET_SLOTS+$2C,X : STA $09C2    ; Health
     LDA !PRESET_SLOTS+$2E,X : STA $09C4    ; Max health
@@ -354,6 +526,7 @@ custom_preset_load:
     LDA #$0000 : STA !ram_custom_preset
     RTL
 }
+endif
 endif
 
 preset_scroll_fixes:
@@ -756,12 +929,17 @@ preset_scroll_fixes:
 
   .custom_presets
     LDA !sram_custom_preset_slot
-if !FEATURE_TINYSTATES
-    XBA                          ; multiply by 100h (slot offset)
-    CLC : ADC #$30BD : TAX       ; X = Source
+if !FEATURE_MAPSTATES
+    ASL : ASL : ASL : XBA : CLC      ; multiply by 800h (slot offset)
+    ADC #(!PRESET_SLOTS+$BD) : TAX   ; X = Source
 else
-    ASL : XBA                    ; multiply by 200h (slot offset)
-    CLC : ADC #$31E9 : TAX       ; X = Source
+if !FEATURE_TINYSTATES
+    XBA : CLC                        ; multiply by 100h (slot offset)
+    ADC #(!PRESET_SLOTS+$BD) : TAX   ; X = Source
+else
+    ASL : XBA : CLC                  ; multiply by 200h (slot offset)
+    ADC #(!PRESET_SLOTS+$1E9) : TAX  ; X = Source
+endif
 endif
     LDY #$CD51 : LDA #$0031      ; Y = Destination, A = Size-1
     MVP $707E                    ; srcBank, destBank

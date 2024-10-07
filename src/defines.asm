@@ -49,7 +49,7 @@
 
 !ram_metronome_counter              = !WRAM_START+$30
 !ram_armed_shine_duration           = !WRAM_START+$32
-!ram_map_counter                    = !WRAM_START+$34
+!ram_auto_save_state                = !WRAM_START+$34
 !ram_vcounter_data                  = !WRAM_START+$36
 !ram_custom_preset                  = !WRAM_START+$38
 
@@ -72,10 +72,9 @@
 !ram_shine_counter                  = !WRAM_START+$54
 !ram_dash_counter                   = !WRAM_START+$56
 
-!ram_auto_save_state                = !WRAM_START+$58
-!ram_lag_counter                    = !WRAM_START+$5A
-!ram_kraid_adjust_timer             = !WRAM_START+$5C
-!ram_print_segment_timer            = !WRAM_START+$5E
+!ram_lag_counter                    = !WRAM_START+$58
+!ram_kraid_adjust_timer             = !WRAM_START+$5A
+!ram_print_segment_timer            = !WRAM_START+$5C
 
 ; ^ FREE SPACE ^ up to +$6C
 
@@ -679,6 +678,8 @@
 
 !HUD_TILEMAP = $7EC600
 
+!MAP_COUNTER = $7ECAE8 ; Not used in vanilla
+
 
 ; --------------------
 ; Aliases and Bitmasks
@@ -796,6 +797,21 @@ endif
 !PRESET_EQUIP_RANDO_FORCE_CHARGE = #$0004
 !PRESET_EQUIP_RANDO_INIT = #$0006
 
+if !FEATURE_MAPSTATES
+if !FEATURE_TINYSTATES
+!TOTAL_PRESET_SLOTS = #$0001
+else
+!TOTAL_PRESET_SLOTS = #$0009
+endif
+!PRESET_SLOT_SIZE = #$0800
+!PRESET_SLOTS_ROOM = $703000+$06
+!PRESET_SLOTS_ENERGY = $703000+$28
+!PRESET_SLOTS_MAXENERGY = $703000+$2A
+!PRESET_SLOTS_RESERVES = $703000+$3C
+!PRESET_SLOTS_MISSILES = $703000+$2C
+!PRESET_SLOTS_SUPERS = $703000+$30
+!PRESET_SLOTS_PBS = $703000+$34
+else
 if !FEATURE_TINYSTATES
 !TOTAL_PRESET_SLOTS = #$000F
 !PRESET_SLOT_SIZE = #$0100
@@ -816,6 +832,7 @@ else
 !PRESET_SLOTS_MISSILES = $703000+$30
 !PRESET_SLOTS_SUPERS = $703000+$34
 !PRESET_SLOTS_PBS = $703000+$38
+endif
 endif
 
 !SPRITE_SAMUS_HITBOX = #$0001

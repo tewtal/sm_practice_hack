@@ -3290,6 +3290,9 @@ execute_custom_preset:
     RTS
 
   .flipPage
+if !FEATURE_MAPSTATES
+    ; Mapstates only has one page
+else
 if !FEATURE_TINYSTATES
     ; TinyStates only has one page
 else
@@ -3313,12 +3316,16 @@ else
     JSL cm_previous_menu
     JSL action_submenu
 endif
+endif
     RTS
 }
 
 execute_manage_presets:
 {
     LDA !IH_CONTROLLER_PRI : BIT !IH_INPUT_LEFTRIGHT : BEQ .manageSlots
+if !FEATURE_MAPSTATES
+    ; Mapstates only has one page
+else
 if !FEATURE_TINYSTATES
     ; TinyStates only has one page
 else
@@ -3340,6 +3347,7 @@ else
   .adjacentMenu
     JSL cm_previous_menu
     JSL action_submenu
+endif
 endif
     RTS
 

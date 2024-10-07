@@ -49,7 +49,7 @@ ram_reserves_last = !ram_reserves_last ; !WRAM_START+$2E
 
 ram_metronome_counter = !ram_metronome_counter ; !WRAM_START+$30
 ram_armed_shine_duration = !ram_armed_shine_duration ; !WRAM_START+$32
-ram_map_counter = !ram_map_counter ; !WRAM_START+$34
+ram_auto_save_state = !ram_auto_save_state ; !WRAM_START+$34
 ram_vcounter_data = !ram_vcounter_data ; !WRAM_START+$36
 ram_custom_preset = !ram_custom_preset ; !WRAM_START+$38
 
@@ -72,10 +72,9 @@ ram_shot_timer = !ram_shot_timer ; !WRAM_START+$52
 ram_shine_counter = !ram_shine_counter ; !WRAM_START+$54
 ram_dash_counter = !ram_dash_counter ; !WRAM_START+$56
 
-ram_auto_save_state = !ram_auto_save_state ; !WRAM_START+$58
-ram_lag_counter = !ram_lag_counter ; !WRAM_START+$5A
-ram_kraid_adjust_timer = !ram_kraid_adjust_timer ; !WRAM_START+$5C
-ram_print_segment_timer = !ram_print_segment_timer ; !WRAM_START+$5E
+ram_lag_counter = !ram_lag_counter ; !WRAM_START+$58
+ram_kraid_adjust_timer = !ram_kraid_adjust_timer ; !WRAM_START+$5A
+ram_print_segment_timer = !ram_print_segment_timer ; !WRAM_START+$5C
 
 ; ^ FREE SPACE ^ up to +$6C
 

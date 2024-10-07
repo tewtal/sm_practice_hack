@@ -632,7 +632,7 @@ ih_update_hud_code:
   .mmHud
     ; Map visible, so draw map counter over item%
     LDA !sram_top_display_mode : CMP !TOP_DISPLAY_VANILLA : BEQ .mmVanilla
-    LDA !ram_map_counter : LDX #$0014 : JSR Draw3
+    LDA !MAP_COUNTER : LDX #$0014 : JSR Draw3
 
     LDA !ram_print_segment_timer : BNE .mmRoomTimer
     BRL .mmPickTransitionTime

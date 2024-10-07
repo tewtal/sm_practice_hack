@@ -229,7 +229,7 @@ mm_inc_tile_count:
     ; Set tile and increment counter
     STA $07F7,X
     %ai16()
-    LDA !ram_map_counter : INC : STA !ram_map_counter
+    LDA !MAP_COUNTER : INC : STA !MAP_COUNTER
     JMP $A98D  ; resume original logic skipping past %ai16()
 
   .done
