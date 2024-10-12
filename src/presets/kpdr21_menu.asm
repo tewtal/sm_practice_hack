@@ -180,9 +180,11 @@ presets_submenu_kpdr21_upper_norfair_revisit:
     dw #presets_kpdr21_upper_norfair_revisit_ice_maze_up
     dw #presets_kpdr21_upper_norfair_revisit_ice_maze_down
     dw #presets_kpdr21_upper_norfair_revisit_ice_escape
+    dw #$FFFF
     dw #presets_kpdr21_upper_norfair_revisit_purple_shaft_upper
     dw #presets_kpdr21_upper_norfair_revisit_magdollite_tunnel_upper
     dw #presets_kpdr21_upper_norfair_revisit_kronic_boost_upper
+    dw #$FFFF
     dw #presets_kpdr21_upper_norfair_revisit_croc_speedway_lower
     dw #presets_kpdr21_upper_norfair_revisit_spiky_acid_snakes_lower
     dw #presets_kpdr21_upper_norfair_revisit_kronic_boost_lower

@@ -672,7 +672,7 @@ preset_scroll_fixes:
     ; --------------------------------------------------------
   .red_tower
     LDY !SAMUS_Y : CPY #$06A0    ; no fix if Ypos < 1696
-    BMI .red_tower
+    BMI .red_tower_done
     STA $CD27
   .red_tower_done
     BRL .topdone

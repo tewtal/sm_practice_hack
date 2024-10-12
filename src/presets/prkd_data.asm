@@ -2054,7 +2054,7 @@ preset_prkd_maridia_halfie_setup:
     dw $09C2, $018F  ; Health
     dw $09C4, $018F  ; Max health
     dw $09C6, $0010  ; Missiles
-    dw $0A1C, $0000  ; Samus position/state
+    dw $0A1C, $009B  ; Samus position/state
     dw $0A1E, $0000  ; More position/state
     dw $0AF6, $0099  ; Samus X
     dw $0AFA, $009B  ; Samus Y
