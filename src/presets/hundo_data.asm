@@ -1586,6 +1586,8 @@ preset_hundo_mama_turtle_etank_blockbuster:
     dw $09C6, $0045  ; Missiles
     dw $09C8, $0069  ; Max missiles
     dw $09CE, $0010  ; Pbs
+    dw $0A1C, $009B  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
     dw $0AF6, $0081  ; Samus X
     dw $0AFA, $00AB  ; Samus Y
     dw $D872, $C7EF  ; Items
@@ -1607,8 +1609,6 @@ preset_hundo_mama_turtle_etank_breaking_the_tube:
     dw $09CA, $0009  ; Supers
     dw $09CE, $000F  ; Pbs
     dw $09D2, $0003  ; Currently selected item
-    dw $0A1C, $009B  ; Samus position/state
-    dw $0A1E, $0000  ; More position/state
     dw $0AF6, $003A  ; Samus X
     dw $0AFA, $018B  ; Samus Y
     dw #$FFFF

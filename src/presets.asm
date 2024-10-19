@@ -844,11 +844,11 @@ print pc, " preset menu bankF1 start"
   incsrc presets/allbosspkdr_menu.asm
   incsrc presets/allbossprkd_menu.asm
   incsrc presets/gtclassic_menu.asm
+  incsrc presets/gtmax_menu.asm
 print pc, " preset menu bankF1 end"
 
 org $F28000
 print pc, " preset menu bankF2 start"
-  incsrc presets/gtmax_menu.asm
   incsrc presets/hundo_menu.asm
   incsrc presets/kpdr21_menu.asm
   incsrc presets/kpdr25_menu.asm
