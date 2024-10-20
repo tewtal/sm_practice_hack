@@ -219,7 +219,7 @@ mm_inc_tile_count:
 {
     ; Overwritten logic
     STY $20
-    STX $18
+    STX $1E
 
     ; Check if tile is already set
     LDA $07F7,X
