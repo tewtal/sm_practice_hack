@@ -88,7 +88,7 @@ custom_preset_save:
 
     ; save scrolls
     PHB : TXA : PHA : CLC
-    ADC #(!PRESET_SLOTS+$BD) : TAY   ; Y = Destination
+    ADC #(!PRESET_SLOTS+$8C) : TAY   ; Y = Destination
     LDX #$CD20 : LDA #$0031          ; X = Source, A = Size
     MVN $7E70                        ; srcBank, destBank
 
@@ -279,7 +279,7 @@ custom_preset_save:
 
     ; save scrolls
     PHB : TXA : CLC
-    ADC #(!PRESET_SLOTS+$BD) : TAY   ; Y = Destination
+    ADC #(!PRESET_SLOTS+$8C) : TAY   ; Y = Destination
     LDX #$CD20 : LDA #$0031          ; X = Source, A = Size
     MVN $7E70                        ; srcBank, destBank
     PLB : RTL
