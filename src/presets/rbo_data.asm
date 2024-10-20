@@ -2207,6 +2207,8 @@ preset_rbo_lower_norfair_segment_ln_25_9_1:
 
 preset_rbo_lower_norfair_segment_ln_25_9_2:
     dw #preset_rbo_lower_norfair_segment_ln_25_9_1 ; Lower Norfair Segment: LN (25 Supers 9+1 Ridley)
+    dw $09C6, $0029  ; Missiles
+    dw $09C8, $0032  ; Max missiles
     dw $09D4, $00C8  ; Max reserves
     dw $09D6, $00C8  ; Reserves
     dw #$FFFF
@@ -2290,6 +2292,8 @@ preset_rbo_lower_norfair_segment_ln_35_11_1:
 
 preset_rbo_lower_norfair_segment_ln_35_11_2:
     dw #preset_rbo_lower_norfair_segment_ln_35_11_1 ; Lower Norfair Segment: LN (35 Supers 11+1 Ridley)
+    dw $09C6, $0029  ; Missiles
+    dw $09C8, $0032  ; Max missiles
     dw $09D4, $00C8  ; Max reserves
     dw $09D6, $00C8  ; Reserves
     dw #$FFFF
@@ -2789,6 +2793,8 @@ preset_rbo_ridley_ridley_25_9_1:
 
 preset_rbo_ridley_ridley_25_9_2:
     dw #preset_rbo_ridley_ridley_25_9_1 ; Ridley: Ridley (25 Supers 9+1)
+    dw $09C6, $0025  ; Missiles
+    dw $09C8, $0032  ; Max missiles
     dw $09D4, $00C8  ; Max reserves
     dw $09D6, $00C8  ; Reserves
     dw #$FFFF
@@ -2872,6 +2878,8 @@ preset_rbo_ridley_ridley_35_11_1:
 
 preset_rbo_ridley_ridley_35_11_2:
     dw #preset_rbo_ridley_ridley_35_11_1 ; Ridley: Ridley (35 Supers 11+1)
+    dw $09C6, $0025  ; Missiles
+    dw $09C8, $0032  ; Max missiles
     dw $09D4, $00C8  ; Max reserves
     dw $09D6, $00C8  ; Reserves
     dw #$FFFF
