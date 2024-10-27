@@ -116,7 +116,7 @@ presets_submenu_pkrd_kraid:
     dw #presets_pkrd_kraid_entering_kraids_lair
     dw #presets_pkrd_kraid_kraid_kihunters
     dw #presets_pkrd_kraid_mini_kraid
-    dw #presets_pkrd_kraid_kraid_2
+    dw #presets_pkrd_kraid_kraid
     dw #presets_pkrd_kraid_leaving_varia
     dw #presets_pkrd_kraid_mini_kraid_revisit
     dw #presets_pkrd_kraid_kraid_kihunters_revisit
@@ -180,6 +180,7 @@ presets_submenu_pkrd_maridia:
     dw #presets_pkrd_maridia_fish_tank
     dw #presets_pkrd_maridia_mt_everest
     dw #presets_pkrd_maridia_crab_shaft
+    dw #presets_pkrd_maridia_aqueduct
     dw #presets_pkrd_maridia_botwoon_hallway
     dw #presets_pkrd_maridia_botwoon
     dw #presets_pkrd_maridia_botwoon_etank
@@ -407,8 +408,8 @@ presets_pkrd_kraid_kraid_kihunters:
 presets_pkrd_kraid_mini_kraid:
     %cm_preset("Mini Kraid", #preset_pkrd_kraid_mini_kraid)
 
-presets_pkrd_kraid_kraid_2:
-    %cm_preset("Kraid", #preset_pkrd_kraid_kraid_2)
+presets_pkrd_kraid_kraid:
+    %cm_preset("Kraid", #preset_pkrd_kraid_kraid)
 
 presets_pkrd_kraid_leaving_varia:
     %cm_preset("Leaving Varia", #preset_pkrd_kraid_leaving_varia)
@@ -568,6 +569,9 @@ presets_pkrd_maridia_mt_everest:
 
 presets_pkrd_maridia_crab_shaft:
     %cm_preset("Crab Shaft", #preset_pkrd_maridia_crab_shaft)
+
+presets_pkrd_maridia_aqueduct:
+    %cm_preset("Aqueduct", #preset_pkrd_maridia_aqueduct)
 
 presets_pkrd_maridia_botwoon_hallway:
     %cm_preset("Botwoon Hallway", #preset_pkrd_maridia_botwoon_hallway)

@@ -1424,6 +1424,7 @@ preset_prkd_lower_norfair_ridley_farming_room:
     dw $090F, $9000  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $8C00  ; Screen subpixel Y position
+    dw $0917, $0000  ; Layer 2 X position
     dw $09C2, $00CD  ; Health
     dw $0AF6, $0047  ; Samus X
     dw $0AFA, $008B  ; Samus Y
@@ -1806,7 +1807,7 @@ preset_prkd_kraid_mini_kraid:
     dw $0919, $00FA  ; Layer 2 Y position
     dw #$FFFF
 
-preset_prkd_kraid_kraid_2:
+preset_prkd_kraid_kraid:
     dw #preset_prkd_kraid_mini_kraid ; Kraid: Mini Kraid
     dw $078D, $919E  ; DDB
     dw $079B, $A56B  ; MDB
@@ -1825,7 +1826,7 @@ preset_prkd_kraid_kraid_2:
     dw #$FFFF
 
 preset_prkd_kraid_leaving_varia:
-    dw #preset_prkd_kraid_kraid_2 ; Kraid: Kraid
+    dw #preset_prkd_kraid_kraid ; Kraid: Kraid
     dw $078D, $91DA  ; DDB
     dw $079B, $A6E2  ; MDB
     dw $07F5, $0003  ; Music Track

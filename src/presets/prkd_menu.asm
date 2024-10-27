@@ -196,7 +196,7 @@ presets_submenu_prkd_kraid:
     dw #presets_prkd_kraid_entering_kraids_lair
     dw #presets_prkd_kraid_kraid_kihunters
     dw #presets_prkd_kraid_mini_kraid
-    dw #presets_prkd_kraid_kraid_2
+    dw #presets_prkd_kraid_kraid
     dw #presets_prkd_kraid_leaving_varia
     dw #presets_prkd_kraid_mini_kraid_revisit
     dw #presets_prkd_kraid_kraid_kihunters_revisit
@@ -600,8 +600,8 @@ presets_prkd_kraid_kraid_kihunters:
 presets_prkd_kraid_mini_kraid:
     %cm_preset("Mini Kraid", #preset_prkd_kraid_mini_kraid)
 
-presets_prkd_kraid_kraid_2:
-    %cm_preset("Kraid", #preset_prkd_kraid_kraid_2)
+presets_prkd_kraid_kraid:
+    %cm_preset("Kraid", #preset_prkd_kraid_kraid)
 
 presets_prkd_kraid_leaving_varia:
     %cm_preset("Leaving Varia", #preset_prkd_kraid_leaving_varia)
