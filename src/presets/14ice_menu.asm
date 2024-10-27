@@ -40,6 +40,7 @@ presets_submenu_14ice_crateria:
     dw #presets_14ice_crateria_ceres_last_3_rooms
     dw #presets_14ice_crateria_ship
     dw #presets_14ice_crateria_parlor
+    dw #presets_14ice_crateria_parlor_downback
     dw #presets_14ice_crateria_climb_down
     dw #presets_14ice_crateria_pit_room
     dw #presets_14ice_crateria_morph
@@ -172,6 +173,9 @@ presets_14ice_crateria_ship:
 
 presets_14ice_crateria_parlor:
     %cm_preset("Parlor", #preset_14ice_crateria_parlor)
+
+presets_14ice_crateria_parlor_downback:
+    %cm_preset("Parlor Downback", #preset_14ice_crateria_parlor_downback)
 
 presets_14ice_crateria_climb_down:
     %cm_preset("Climb Down", #preset_14ice_crateria_climb_down)

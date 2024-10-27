@@ -36,6 +36,7 @@ presets_submenu_nintendopower_crateria:
     dw #presets_nintendopower_crateria_ceres_last_3_rooms
     dw #presets_nintendopower_crateria_ship
     dw #presets_nintendopower_crateria_parlor
+    dw #presets_nintendopower_crateria_parlor_downback
     dw #presets_nintendopower_crateria_climb_down
     dw #presets_nintendopower_crateria_pit_room
     dw #presets_nintendopower_crateria_morph
@@ -160,6 +161,9 @@ presets_nintendopower_crateria_ship:
 
 presets_nintendopower_crateria_parlor:
     %cm_preset("Parlor", #preset_nintendopower_crateria_parlor)
+
+presets_nintendopower_crateria_parlor_downback:
+    %cm_preset("Parlor Downback", #preset_nintendopower_crateria_parlor_downback)
 
 presets_nintendopower_crateria_climb_down:
     %cm_preset("Climb Down", #preset_nintendopower_crateria_climb_down)

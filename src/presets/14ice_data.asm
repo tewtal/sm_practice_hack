@@ -132,14 +132,25 @@ preset_14ice_crateria_parlor:
     dw $0AFC, $FFFF  ; Samus subpixel Y
     dw #$FFFF
 
-preset_14ice_crateria_climb_down:
+preset_14ice_crateria_parlor_downback:
     dw #preset_14ice_crateria_parlor ; Crateria: Parlor
     dw $078D, $8916  ; DDB
     dw $079B, $92FD  ; MDB
+    dw $090F, $F000  ; Screen subpixel X position
     dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $9C00  ; Screen subpixel Y position
+    dw $0915, $032A  ; Screen Y position in pixels
+    dw $0917, $00C0  ; Layer 2 X position
+    dw $0919, $025F  ; Layer 2 Y position
+    dw $0AF6, $01B5  ; Samus X
+    dw $0AFA, $039B  ; Samus Y
+    dw #$FFFF
+
+preset_14ice_crateria_climb_down:
+    dw #preset_14ice_crateria_parlor_downback ; Crateria: Parlor Downback
+    dw $090F, $0000  ; Screen subpixel X position
     dw $0913, $7BFF  ; Screen subpixel Y position
     dw $0915, $03F2  ; Screen Y position in pixels
-    dw $0917, $00C0  ; Layer 2 X position
     dw $0919, $02F5  ; Layer 2 Y position
     dw $0A1C, $0018  ; Samus position/state
     dw $0A1E, $0204  ; More position/state
@@ -345,11 +356,12 @@ preset_14ice_brinstar_green_brinstar_elevator:
     dw $078D, $8C22  ; DDB
     dw $079B, $9938  ; MDB
     dw $07F5, $0003  ; Music Track
-    dw $090F, $4000  ; Screen subpixel X position
-    dw $0913, $A800  ; Screen subpixel Y position
+    dw $090F, $1C80  ; Screen subpixel X position
+    dw $0913, $C400  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
     dw $0919, $0000  ; Layer 2 Y position
     dw $09C6, $0002  ; Missiles
-    dw $0AF6, $0082  ; Samus X
+    dw $0AF6, $007C  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 
@@ -359,16 +371,18 @@ preset_14ice_brinstar_big_pink:
     dw $079B, $9CB3  ; MDB
     dw $07F3, $000F  ; Music Bank
     dw $07F5, $0005  ; Music Track
-    dw $090F, $6000  ; Screen subpixel X position
+    dw $090F, $7000  ; Screen subpixel X position
     dw $0911, $0600  ; Screen X position in pixels
-    dw $0913, $C000  ; Screen subpixel Y position
+    dw $0913, $9400  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0480  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
     dw $09C6, $0000  ; Missiles
     dw $09CA, $0004  ; Supers
     dw $09CC, $0005  ; Max supers
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $06AD  ; Samus X
+    dw $0AF6, $0699  ; Samus X
     dw $D872, $0401  ; Items
     dw $D8B4, $0006  ; Doors
     dw #$FFFF
