@@ -2316,6 +2316,9 @@ EventsMenu:
     dw #events_resetdoors
     dw #events_resetitems
     dw #$FFFF
+    dw #events_setdoors
+    dw #events_setitems
+    dw #$FFFF
     dw #events_goto_bosses
     dw #$FFFF
     dw #events_zebesawake
@@ -2360,6 +2363,32 @@ events_resetitems:
     PHP : %ai8()
     LDX #$70
     LDA #$00
+  .loop
+    STA $7ED800,X
+    INX : CPX #$90 : BNE .loop
+    PLP
+    %sfxreset()
+    RTL
+
+events_setdoors:
+    %cm_jsl("Set All Doors", .routine, #$0000)
+  .routine
+    PHP : %ai8()
+    LDX #$B0
+    LDA #$FF
+  .loop
+    STA $7ED800,X
+    INX : CPX #$D0 : BNE .loop
+    PLP
+    %sfxreset()
+    RTL
+
+events_setitems:
+    %cm_jsl("Set All Items", .routine, #$0000)
+  .routine
+    PHP : %ai8()
+    LDX #$70
+    LDA #$FF
   .loop
     STA $7ED800,X
     INX : CPX #$90 : BNE .loop
