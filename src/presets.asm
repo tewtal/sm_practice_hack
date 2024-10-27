@@ -147,6 +147,11 @@ preset_load_destination_state_and_tiles:
     JSR $DE12  ; Load door header
     JSR $DE6F  ; Load room header
     JSR $DEF2  ; Load state header
+
+    ; Initialize area map collected
+    LDX !AREA_ID : LDA $7ED908,X
+    AND #$00FF : STA !AREA_MAP_COLLECTED
+
 if !RAW_TILE_GRAPHICS
     JML load_raw_tile_graphics
 else
@@ -279,14 +284,8 @@ category_preset_load:
     DEC $C5
     BRA .buildLoop
 
-  .check100mapBank
-    LDA $C5 : AND #$00FF : CMP.w #preset_100map_bombs_ceres_elevator>>16 : BNE .setBanks
-    JSL preset_clear_map_data
-    BRA .setBanks
-
   .traversePrep
-    ; If this is a map category, then clear map data
-    LDA $C1 : CMP.w #preset_100map_bombs_ceres_elevator : BEQ .check100mapBank
+    JSL preset_clear_map_data_if_necessary
 
   .setBanks
     ; Set bank to read data from
