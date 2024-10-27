@@ -2,32 +2,32 @@
 ; Red Tower save station load point
 org $80C615
 brinstar_save_station_5:
-    dw #$A253, #$90F6, #$0000, #$0000, #$0700, #$0058, #$0050
+    dw #ROOM_RedTower, #$90F6, #$0000, #$0000, #$0700, #$0058, #$0050
 
 ; Crab Shaft save station load point
 org $80C94F
 maridia_save_station_4:
-    dw #$D1A3, #$A468, #$0000, #$0000, #$0200, #$0078, #$0060
+    dw #ROOM_CrabShaft, #$A468, #$0000, #$0000, #$0200, #$0078, #$0060
 
 ; Crab Tunnel save station load point
 org $80C95D
 maridia_save_station_5:
-    dw #$D08A, #$A3A8, #$0000, #$0000, #$0000, #$00B8, #$0000
+    dw #ROOM_CrabTunnel, #$A3A8, #$0000, #$0000, #$0000, #$00B8, #$0000
 
 ; Red Fish save station load point
 org $80C96B
 maridia_save_station_6:
-    dw #$D104, #$A42C, #$0000, #$0200, #$0000, #$0078, #$0050
+    dw #ROOM_RedFishRoom, #$A42C, #$0000, #$0200, #$0000, #$0078, #$0050
 
 ; Crab Shaft save station load point
 org $80C995
 maridia_save_station_9:
-    dw #$D1A3, #$A468, #$0000, #$0000, #$0200, #$0078, #$0060
+    dw #ROOM_CrabShaft, #$A468, #$0000, #$0000, #$0200, #$0078, #$0060
 
 ; Main Street save station load point
 org $80C9A3
 maridia_save_station_10:
-    dw #$CFC9, #$A3D8, #$0000, #$0100, #$0500, #$0078, #$0010
+    dw #ROOM_MainStreet, #$A3D8, #$0000, #$0100, #$0500, #$0078, #$0010
 
 ; Crab Shaft save station map icon location
 org $82CA17
@@ -267,7 +267,7 @@ hijack_loading_room_CRE:
     STA !DOOR_ID : TAX
 
     ; Unlock Samus if leaving Aqueduct Tube
-    LDA !ROOM_ID : CMP #$D408 : BNE .loadBitset
+    LDA !ROOM_ID : CMP #ROOM_Toilet : BNE .loadBitset
     LDA #$0001
 if !FEATURE_PAL
     JSL $90F081
@@ -294,8 +294,9 @@ hijack_after_load_level_data:
 
   .checkRoom
     ; Several rooms need to be handled before the door scroll
-    LDA !ROOM_ID : CMP #$CF80 : BEQ .eastTunnel
-    CMP #$D646 : BEQ .pantsRoom : CMP #$D6FD : BNE .done
+    LDA !ROOM_ID : CMP #ROOM_EastTunnel : BEQ .eastTunnel
+    CMP #ROOM_PantsRoom : BEQ .pantsRoom
+    CMP #ROOM_BelowBotwoonETank : BNE .done
 
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ .done
     JSL layout_asm_aqueductfarmsandpit_external
@@ -392,7 +393,7 @@ hook_layout_asm_westsandhalltunnel_door1:
 ; West Sand Hall unused door definition
 org $83A654
 hook_layout_asm_westsandhall_door2:
-    dw #$D6FD
+    dw #ROOM_BelowBotwoonETank
     db #$00, #$05, #$3E, #$06, #$03, #$00
     dw #$8000
     dw #$0000
@@ -405,7 +406,7 @@ hook_layout_asm_oasis_door0:
 ; East Sand Hall unused door definition
 org $83A69C
 hook_layout_asm_aqueductfarmsandpit_door1:
-    dw #$D461
+    dw #ROOM_WestSandHall
     db #$00, #$04, #$01, #$06, #$00, #$00
     dw #$8000
     dw #layout_asm_westsandhall
@@ -418,7 +419,7 @@ hook_layout_asm_westsandhole_door1:
 ; Overwrite unused door with Shaktool to Pants
 org $83A804
 hook_layout_asm_shaktool_to_pants:
-    dw #$D646
+    dw #ROOM_PantsRoom
     db #$00, #$05, #$0E, #$16, #$01, #$02
     dw #$8000
     dw #layout_asm_shaktool_to_pants_scrolls
@@ -426,7 +427,7 @@ hook_layout_asm_shaktool_to_pants:
 ; Overwrite unused door with Pants to Pants
 org $83A810
 hook_layout_asm_pants_to_pants:
-    dw #$D646
+    dw #ROOM_PantsRoom
     db #$00, #$04, #$01, #$26, #$01, #$03
     dw #$8000
     dw #layout_asm_pants_to_pants_scrolls
@@ -458,241 +459,241 @@ print pc, " layout bank83 start"
 ; Custom door definitions
 ; Includes Samus X and Y and an asm pointer
 door_custom_89CA_west_ocean_door0:
-    dw $95FF   ; Moat
+    dw ROOM_TheMoat
     db $00, $05, $1E, $06, $01, $00
     dw $8000, #door_custom_asm
     dw $01CF, $0088, $0000
 
 door_custom_8A42_crateria_kihunters_door2:
-    dw $962A   ; Red Brinstar Elevator
+    dw ROOM_RedBrinstarElevRoom
     db $00, $06, $06, $02, $00, $00
     dw $8000, #door_custom_asm
     dw $0080, $0058, $0000
 
 door_custom_8AA2_forgotten_highway_elbow_door0:
-    dw $957D   ; Crab Maze
+    dw ROOM_CrabMaze
     db $00, $04, $01, $16, $00, $01
     dw $8000, #door_custom_asm
     dw $0034, $0188, $0000
 
 door_custom_8AAE_crab_maze_door1:
-    dw $95A8   ; Forgotten Highway Elbow
+    dw ROOM_ForgottenHighwayElbow
     db $00, $05, $0E, $06, $00, $00
     dw $8000, #door_custom_asm
     dw $00D1, $0088, $0000
 
 door_custom_8AEA_moat_door1:
-    dw $93FE   ; West Ocean
+    dw ROOM_WestOcean
     db $00, $04, $01, $46, $00, $04
     dw $8000, #door_custom_asm
     dw $0034, $0488, $0000
 
 door_custom_8AF6_red_brinstar_elevator_door0:
-    dw $948C   ; Crateria Kihunters
+    dw ROOM_CrateriaKihunterRoom
     db $00, $07, $16, $2D, $01, $02
     dw $01C0, #door_custom_asm
     dw $014C, $02B8, $B9F1
 
 door_custom_8BFE_green_brinstar_elevator_door0:
-    dw $9969   ; Lower Mushrooms
+    dw ROOM_LowerMushrooms
     db $00, $04, $01, $06, $00, $00
     dw $8000, #door_custom_asm
     dw $0036, $0088, $0000
 
 door_custom_8C22_lower_mushrooms_door1:
-    dw $9938   ; Green Brinstar Elevator
+    dw ROOM_GreenBrinElevRoom
     db $00, $05, $0E, $06, $00, $00
     dw $8000, #door_custom_asm
     dw $00CC, $0088, $0000
 
 door_custom_8C52_green_pirates_shaft_door2:
-    dw $A5ED   ; Statues Hallway
+    dw ROOM_StatuesHallway
     db $00, $04, $01, $06, $00, $00
     dw $8000, #door_custom_asm
     dw $0034, $0088, #layout_asm_cutscene_g4skip
 
 door_custom_8E86_green_hill_zone_door1:
-    dw $9E9F   ; Morph Ball
+    dw ROOM_MorphBallRoom
     db $00, $04, $01, $26, $00, $02
     dw $8000, #door_custom_asm
     dw $0034, $0288, $0000
 
 door_custom_8E9E_morph_ball_door0:
-    dw $9E52   ; Green Hill Zone
+    dw ROOM_GreenHillZone
     db $00, $05, $1E, $06, $01, $00
     dw $8000, #door_custom_asm
     dw $01C7, $0088, $0000
 
 door_custom_8F0A_noob_bridge_door1:
-    dw $A253   ; Red Tower
+    dw ROOM_RedTower
     db $00, $04, $01, $46, $00, $04
     dw $8000, #door_custom_asm
     dw $002F, $0488, $0000
 
 door_custom_902A_red_tower_door1:
-    dw $9FBA   ; Noob Bridge
+    dw ROOM_NoobBridge
     db $00, $05, $5E, $06, $05, $00
     dw $8000, #door_custom_asm
     dw $05CE, $0088, $0000
 
 door_custom_90C6_caterpillars_door4:
-    dw $D104   ; Red Fish Room
+    dw ROOM_RedFishRoom
     db $40, $04, $01, $06, $00, $00
     dw $8000, #door_custom_asm
     dw $0034, $0088, $BDAF
 
 door_custom_913E_warehouse_zeela_door0:
-    dw $A6A1   ; Warehouse Entrance
+    dw ROOM_WarehouseEntrance
     db $00, $05, $2E, $06, $02, $00
     dw $8000, #door_custom_asm
     dw $02C7, $0098, $BD3F
 
 door_custom_91B6_kraid_eye_door_door1:
-    dw $A59F   ; Kraid Room
+    dw ROOM_KraidRoom
     db $00, $04, $01, $16, $00, $01
     dw $8000, #door_custom_asm
     dw $0034, $0188, $0000
 
 door_custom_91CE_kraid_door0:
-    dw $A56B   ; Kraid Eye Door Room
+    dw ROOM_KraidEyeDoorRoom
     db $00, $05, $1E, $16, $01, $01
     dw $8000, #door_custom_asm
     dw $01CD, $0188, $0000
 
 door_custom_91E6_statues_hallway_door0:
-    dw $99BD   ; Green Pirates Shaft
+    dw ROOM_GreenPiratesShaft
     db $00, $05, $0E, $66, $00, $06
     dw $8000, #door_custom_asm
     dw $00CC, $0688, $0000
 
 door_custom_922E_warehouse_entrance_door0:
-    dw $CF80   ; East Tunnel
+    dw ROOM_EastTunnel
     db $40, $05, $0E, $16, $00, $01
     dw $8000, #door_custom_asm
     dw $00CE, $0188, $BDD1
 
 door_custom_923A_warehouse_entrance_door1:
-    dw $A471   ; Warehouse Zeela
+    dw ROOM_WarehouseZeelaRoom
     db $00, $04, $01, $06, $00, $00
     dw $8000, #door_custom_asm
     dw $0034, $0088, $0000
 
 door_custom_93D2_crocomire_speedway_door4:
-    dw $A98D   ; Crocomire's Room
+    dw ROOM_CrocomireRoom
     db $00, $06, $36, $02, $03, $00
     dw $8000, #door_custom_asm
     dw $0383, $0098, $0000
 
 door_custom_93EA_crocomire_door1:
-    dw $A923   ; Crocomire Speedway
+    dw ROOM_CrocomireSpeedway
     db $00, $07, $C6, $2D, $0C, $02
     dw $01C0, #door_custom_asm
     dw $0C57, $02B8, $0000
 
 door_custom_95FA_single_chamber_door4:
-    dw $B656   ; Three Musketeers
+    dw ROOM_ThreeMusketeersRoom
     db $00, $04, $11, $06, $01, $00
     dw $8000, #door_custom_asm
     dw $0134, $0088, $0000
 
 door_custom_967E_kronic_boost_door2:
-    dw $AF14   ; Lava Dive
+    dw ROOM_LavaDiveRoom
     db $00, $05, $3E, $06, $03, $00
     dw $8000, #door_custom_asm
     dw $03D0, $0088, $0000
 
 door_custom_96D2_lava_dive_door0:
-    dw $AE74   ; Kronic Boost
+    dw ROOM_KronicBoostRoom
     db $00, $04, $11, $26, $01, $02
     dw $8000, #door_custom_asm
     dw $0134, $0288, $0000
 
 door_custom_98BE_ridley_door1:
-    dw $B37A   ; Lower Norfair Farming
+    dw ROOM_LNFarmingRoom
     db $00, $04, $01, $06, $00, $00
     dw $8000, #door_custom_asm
     dw $002E, $0098, $0000
 
 door_custom_98CA_lower_norfair_farming_door0:
-    dw $B32E   ; Ridley Room
+    dw ROOM_RidleyRoom
     db $00, $05, $0E, $06, $00, $01
     dw $8000, #door_custom_asm
     dw $00BF, $0198, $0000
 
 door_custom_9A4A_three_musketeers_door0:
-    dw $AD5E   ; Single Chamber
+    dw ROOM_SingleChamber
     db $00, $05, $5E, $06, $05, $00
     dw $8000, #door_custom_asm
     dw $05CF, $0088, $0000
 
 door_custom_A2AC_basement_door2:
-    dw $CD13   ; Phantoon Room
+    dw ROOM_PhantoonRoom
     db $00, $04, $01, $06, $00, $00
     dw $8000, #door_custom_asm
     dw $002E, $00B8, $0000
 
 door_custom_A2C4_phantoon_door0:
-    dw $CC6F   ; Basement
+    dw ROOM_Basement
     db $00, $05, $4E, $06, $04, $00
     dw $8000, #door_custom_asm
     dw $049F, $00B8, $E1FE
 
 door_custom_A330_glass_tunnel_door0:
-    dw $CFC9   ; Main Street
+    dw ROOM_MainStreet
     db $00, $07, $16, $7D, $01, $07
     dw $0200, #door_custom_asm
     dw $014A, $07A8, $0000
 
 door_custom_A384_east_tunnel_door1:
-    dw $A6A1   ; Warehouse Entrance
+    dw ROOM_WarehouseEntrance
     db $40, $04, $01, $06, $00, $00
     dw $8000, #door_custom_asm
     dw $0034, $0088, $0000
 
 door_custom_A390_east_tunnel_door2:
-    dw $D21C   ; Crab Hole
+    dw ROOM_CrabHole
     db $00, $04, $01, $16, $00, $01
     dw $8000, #door_custom_asm
     dw $0028, $0188, $E356
 
 door_custom_A39C_main_street_door0:
-    dw $CEFB   ; Glass Tunnel
+    dw ROOM_GlassTunnel
     db $00, $06, $06, $02, $00, $00
     dw $0170, #door_custom_asm
     dw $0081, $0078, $0000
 
 door_custom_A480_red_fish_door1:
-    dw $A322   ; Caterpillars
+    dw ROOM_CaterpillarRoom
     db $40, $05, $2E, $36, $02, $03
     dw $8000, #door_custom_asm
     dw $02CD, $0388, $E367
 
 door_custom_A4C8_crab_shaft_door2:
-    dw $D5A7   ; Aqueduct
+    dw ROOM_Aqueduct
     db $00, $04, $01, $16, $00, $01
     dw $8000, #door_custom_asm
     dw $0034, $0188, $0000
 
 door_custom_A510_crab_hole_door2:
-    dw $CF80   ; East Tunnel
+    dw ROOM_EastTunnel
     db $00, $05, $3E, $06, $03, $00
     dw $8000, #door_custom_asm
     dw $03C6, $0088, $0000
 
 door_custom_A708_aqueduct_door0:
-    dw $D1A3   ; Crab Shaft
+    dw ROOM_CrabShaft
     db $00, $05, $1E, $36, $01, $03
     dw $8000, #door_custom_asm
     dw $01CA, $0388, $E398
 
 door_custom_A840_precious_door1:
-    dw $DA60   ; Draygon Room
+    dw ROOM_DraygonRoom
     db $00, $05, $1E, $06, $01, $00
     dw $8000, #door_custom_asm
     dw $01C8, $0088, $0000
 
 door_custom_A96C_draygon_door0:
-    dw $D78F   ; Precious Room
+    dw ROOM_ThePreciousRoom
     db $00, $04, $01, $26, $00, $02
     dw $8000, #door_custom_asm
     dw $0034, $0288, $E3D9
@@ -1479,7 +1480,7 @@ org $91D43D
 else
 org $91D4E5
 endif
-    %ai16() : LDA !ROOM_ID : CMP #$A6E2 : BNE layout_skip_varia_animation
+    %ai16() : LDA !ROOM_ID : CMP #ROOM_VariaSuitRoom : BNE layout_skip_varia_animation
     JMP layout_prepare_varia_animation
 layout_skip_varia_animation:
     PLP : RTL
@@ -1490,7 +1491,7 @@ org $91D513
 else
 org $91D5BB
 endif
-    %ai16() : LDA !ROOM_ID : CMP #$CE40 : BNE layout_skip_gravity_animation
+    %ai16() : LDA !ROOM_ID : CMP #ROOM_GravitySuitRoom : BNE layout_skip_gravity_animation
     JMP layout_prepare_gravity_animation
 layout_skip_gravity_animation:
     PLP : RTL

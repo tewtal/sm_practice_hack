@@ -421,7 +421,7 @@ draw_enemy_hitbox:
 draw_ext_spritemap_hitbox:
 {
     ; Kraid has too many hitboxes and overflows the OAM stack
-    LDA !ROOM_ID : CMP #$A59F : BEQ .end ; check for Kraid's room
+    LDA !ROOM_ID : CMP #ROOM_KraidRoom : BEQ .end ; check for Kraid's room
 
     LDX #$0000 ; X = enemy index
     LDY !OAM_STACK_POINTER ; Y = OAM stack pointer
@@ -797,9 +797,9 @@ draw_samusproj_hitbox:
 
 draw_custom_boss_hitbox:
 {
-    LDA !ROOM_ID : CMP #$DD58 : BEQ .mother_brain
-    LDA !ROOM_ID : CMP #$B32E : BEQ .ridley_bridge
-    LDA !ROOM_ID : CMP #$E0B5 : BNE .end
+    LDA !ROOM_ID : CMP #ROOM_MotherBrainRoom : BEQ .mother_brain
+    CMP #ROOM_RidleyRoom : BEQ .ridley_bridge
+    CMP #ROOM_CeresRidleyRoom : BNE .end
 
   .ridley_bridge
     JMP .ridley

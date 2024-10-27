@@ -22,17 +22,19 @@ endif
     JSL preset_start_gameplay  ; Start gameplay
 
     ; Fix Phantoon and Draygon rooms
-    LDA !ROOM_ID : CMP #$CD13 : BEQ .fixBG2
-    CMP #$DA60 : BNE .doneBG2
+    LDA !ROOM_ID : CMP #ROOM_PhantoonRoom : BEQ .fixBG2
+    CMP #ROOM_DraygonRoom : BNE .doneBG2
   .fixBG2
     JSL preset_clear_BG2_tilemap
 
   .doneBG2
     JSL $809A79  ; HUD routine when game is loading
+    JSL $809B44  ; Handle HUD tilemap
+    JSL ih_update_hud_code
     JSL $90AD22  ; Reset projectile data
 
-    TDC : TAX
-    LDY #$0020
+    TDC : STA !ram_load_preset
+    TAX : LDY #$0020
   .paletteLoop
     ; Target Samus' palette = [Samus' palette]
     LDA $7EC180,X : STA $7EC380,X
@@ -98,8 +100,8 @@ endif
 
   .clear_enemies
     ; Clear enemies if not in BT or MB rooms
-    LDA !ROOM_ID : CMP #$9804 : BEQ .done_clearing_enemies
-    CMP #$DD58 : BEQ .set_mb_state
+    LDA !ROOM_ID : CMP #ROOM_BombTorizoRoom : BEQ .done_clearing_enemies
+    CMP #ROOM_MotherBrainRoom : BEQ .set_mb_state
     LDA !sram_preset_options : BIT !PRESETS_PRESERVE_ENEMIES : BNE .done_clearing_enemies
     JSR clear_all_enemies
 
@@ -145,6 +147,11 @@ preset_load_destination_state_and_tiles:
     JSR $DE12  ; Load door header
     JSR $DE6F  ; Load room header
     JSR $DEF2  ; Load state header
+
+    ; Initialize area map collected
+    LDX !AREA_ID : LDA $7ED908,X
+    AND #$00FF : STA !AREA_MAP_COLLECTED
+
 if !RAW_TILE_GRAPHICS
     JML load_raw_tile_graphics
 else
@@ -237,7 +244,6 @@ preset_load_preset:
   .custom_preset
     JSL custom_preset_load
     LDA #$5AFE : STA !sram_last_preset
-    LDA #$0000 : STA !ram_load_preset
     BRA .done
 
   .category_preset
@@ -260,7 +266,6 @@ category_preset_load:
 
     ; Get preset address to load into $C3
     LDA !ram_load_preset : STA !sram_last_preset : STA $C3 : STA $7F0002
-    LDA #$0000 : STA !ram_load_preset
 
     ; Get start of preset data into $C1
     LDA.l category_preset_data_table,X : LDX #$0000 : STA $C1
@@ -280,6 +285,9 @@ category_preset_load:
     BRA .buildLoop
 
   .traversePrep
+    JSL preset_clear_map_data_if_necessary
+
+  .setBanks
     ; Set bank to read data from
     STZ $00 : %a8() : LDA $C5 : PHA : PLB
     ; Set bank to store data to
@@ -419,7 +427,7 @@ preset_start_gameplay:
     ; Set loading game state for Zebes
     LDA #$0005 : STA $7ED914
     LDA !SAMUS_POSE : BNE .end_load_game_state
-    LDA !ROOM_ID : CMP #$91F8 : BNE .end_load_game_state
+    LDA !ROOM_ID : CMP #ROOM_LandingSite : BNE .end_load_game_state
     ; If default pose at landing site then assume we are arriving on Zebes
     LDA #$0022 : STA $7ED914
 if !FEATURE_PAL
@@ -478,19 +486,24 @@ endif
     PLA ; Pull other layer 2 value but do not use it
     JSR $A2F9 ; Calculate layer 2 X position
     JSR $A33A ; Calculate layer 2 Y position
-    LDA !LAYER2_X : STA !BG2_X_SCROLL ; BG2 X scroll = layer 2 X scroll position
-    LDA !LAYER2_Y : STA !BG2_Y_SCROLL ; BG2 Y scroll = layer 2 Y scroll position
+    LDA !LAYER2_X : STA !BG2_X_OFFSET ; BG2 X scroll = layer 2 X scroll position
+    LDA !LAYER2_Y : STA !BG2_Y_OFFSET ; BG2 Y scroll = layer 2 Y scroll position
 
   .layer_2_loaded
+    LDA !ROOM_ID : CMP #ROOM_CeresElevatorRoom : BPL .bg1_offsets_set
+    TDC : STA !BG1_X_OFFSET : STA !BG1_Y_OFFSET
+
+  .bg1_offsets_set
     JSR $A37B    ; Calculate BG positions
 
     ; Fix BG2 Y offsets for rooms with scrolling sky
     ; Also fix rooms that need to be handled before door scroll
-    LDA !ROOM_ID : CMP #$CF80 : BEQ .eastTunnel
-    CMP #$D646 : BEQ .pantsRoom : CMP #$D6FD : BEQ .aqueductFarmsAndPitRoom
-    CMP #$91F8 : BEQ .bgOffsetsScrollingSky
-    CMP #$93FE : BEQ .bgOffsetsScrollingSky
-    CMP #$94FD : BEQ .bgOffsetsScrollingSky
+    LDA !ROOM_ID : CMP #ROOM_EastTunnel : BEQ .eastTunnel
+    CMP #ROOM_PantsRoom : BEQ .pantsRoom
+    CMP #ROOM_BelowBotwoonETank : BEQ .aqueductFarmsAndPitRoom
+    CMP #ROOM_LandingSite : BEQ .bgOffsetsScrollingSky
+    CMP #ROOM_WestOcean : BEQ .bgOffsetsScrollingSky
+    CMP #ROOM_EastOcean : BEQ .bgOffsetsScrollingSky
     BRA .bgOffsetsCalculated
 
   .eastTunnel
@@ -510,7 +523,7 @@ endif
 
   .bgOffsetsScrollingSky
     LDA !LAYER1_Y : STA !LAYER2_Y : STA $B7
-    STZ !BG2_Y_SCROLL
+    STZ !BG2_Y_OFFSET
 
   .bgOffsetsCalculated
     JSL $80A176  ; Display the viewable part of the room
@@ -779,7 +792,7 @@ add_grapple_and_xray_to_hud:
 }
 
 print pc, " presets bank80 end"
-warnpc $80F600 ; save.asm or tinystates.asm
+warnpc $80F500 ; save.asm or tinystates.asm
 
 
 ; $80:9AB1: Add x-ray and grapple HUD items if necessary
@@ -833,11 +846,11 @@ print pc, " preset menu bankF1 start"
   incsrc presets/allbosspkdr_menu.asm
   incsrc presets/allbossprkd_menu.asm
   incsrc presets/gtclassic_menu.asm
+  incsrc presets/gtmax_menu.asm
 print pc, " preset menu bankF1 end"
 
 org $F28000
 print pc, " preset menu bankF2 start"
-  incsrc presets/gtmax_menu.asm
   incsrc presets/hundo_menu.asm
   incsrc presets/kpdr21_menu.asm
   incsrc presets/kpdr25_menu.asm

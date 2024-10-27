@@ -291,8 +291,12 @@ presets_custom_preset_slot:
   .skipzero
     STA !sram_custom_preset_slot
     ; determine which page to load
+if !FEATURE_MAPSTATES
+    ; Mapstates only has slots 00-01 or 00-09
+    LDY.w #CustomPresetsMenu
+else
 if !FEATURE_TINYSTATES
-    ; Tinystates only has slots $00-15
+    ; Tinystates only has slots 00-15
     LDY.w #CustomPresetsMenu
 else
     CMP #$0010 : BPL .page2
@@ -303,6 +307,7 @@ else
   .page3
     LDY.w #CustomPresetsMenu3
   .done
+endif
 endif
     %setmenubank()
     JML action_submenu
@@ -507,6 +512,22 @@ action_load_preset:
 CustomPresetsMenu:
     dw #custompreset_00
     dw #custompreset_01
+if !FEATURE_MAPSTATES
+    ; Mapstates only has slots 00-01 or 00-09
+if !FEATURE_TINYSTATES
+else
+    dw #custompreset_02
+    dw #custompreset_03
+    dw #custompreset_04
+    dw #custompreset_05
+    dw #custompreset_06
+    dw #custompreset_07
+    dw #custompreset_08
+    dw #custompreset_09
+endif
+    dw #$FFFF
+    dw #custompreset_manage
+else
     dw #custompreset_02
     dw #custompreset_03
     dw #custompreset_04
@@ -521,13 +542,14 @@ CustomPresetsMenu:
     dw #custompreset_13
     dw #custompreset_14
     dw #custompreset_15
-if !FEATURE_TINYSTATES
-; Tinystates only has slots $00-15
-else
     dw #$FFFF
     dw #custompreset_manage
+if !FEATURE_TINYSTATES
+    ; Tinystates only has slots 00-15
+else
     dw #custompreset_goto_page2
     dw #custompreset_goto_page3
+endif
 endif
     dw #$0000
     %cm_header("PRESS X TO NAME PRESETS")
@@ -535,6 +557,20 @@ endif
 
     %cm_custompreset(00)
     %cm_custompreset(01)
+if !FEATURE_MAPSTATES
+    ; Mapstates only has slots 00-01 or 00-09
+if !FEATURE_TINYSTATES
+else
+    %cm_custompreset(02)
+    %cm_custompreset(03)
+    %cm_custompreset(04)
+    %cm_custompreset(05)
+    %cm_custompreset(06)
+    %cm_custompreset(07)
+    %cm_custompreset(08)
+    %cm_custompreset(09)
+endif
+else
     %cm_custompreset(02)
     %cm_custompreset(03)
     %cm_custompreset(04)
@@ -551,7 +587,7 @@ endif
     %cm_custompreset(15)
 
 if !FEATURE_TINYSTATES
-; Tinystates only has slots $00-15
+    ; Tinystates only has slots 00-15
 else
 CustomPresetsMenu2:
     dw #custompreset_16
@@ -629,12 +665,18 @@ CustomPresetsMenu3:
     %cm_custompreset(38)
     %cm_custompreset(39)
 endif
+endif
 
 custompreset_manage:
     %cm_jsl("Manage Preset Slots", .routine, #$0000)
   .routine
     LDA #$0000 : STA !ram_cm_manage_slots
+if !FEATURE_MAPSTATES
+    ; Mapstates only has slots 00-01 or 00-09
+    LDY.w #ManagePresetsMenu
+else
 if !FEATURE_TINYSTATES
+    ; Tinystates only has slots 00-15
     LDY.w #ManagePresetsMenu
 else
     ; determine which page is currently loaded
@@ -649,6 +691,7 @@ else
     LDY.w #ManagePresetsMenu3
   .done
 endif
+endif
     JSL cm_previous_menu
     %setmenubank()
     JML action_submenu
@@ -656,6 +699,20 @@ endif
 ManagePresetsMenu:
     dw #managepreset_00
     dw #managepreset_01
+if !FEATURE_MAPSTATES
+    ; Mapstates only has slots 00-01 or 00-09
+if !FEATURE_TINYSTATES
+else
+    dw #managepreset_02
+    dw #managepreset_03
+    dw #managepreset_04
+    dw #managepreset_05
+    dw #managepreset_06
+    dw #managepreset_07
+    dw #managepreset_08
+    dw #managepreset_09
+endif
+else
     dw #managepreset_02
     dw #managepreset_03
     dw #managepreset_04
@@ -671,12 +728,13 @@ ManagePresetsMenu:
     dw #managepreset_14
     dw #managepreset_15
 if !FEATURE_TINYSTATES
-; Tinystates only has slots $00-15
+    ; Tinystates only has slots 00-15
 else
     dw #$FFFF
     dw #$FFFF
     dw #managepreset_goto_page2
     dw #managepreset_goto_page3
+endif
 endif
     dw #$0000
     %cm_header("PRESS A TO SWAP PRESETS")
@@ -684,6 +742,20 @@ endif
 
     %cm_managepreset(00)
     %cm_managepreset(01)
+if !FEATURE_MAPSTATES
+    ; Mapstates only has slots 00-01 or 00-09
+if !FEATURE_TINYSTATES
+else
+    %cm_managepreset(02)
+    %cm_managepreset(03)
+    %cm_managepreset(04)
+    %cm_managepreset(05)
+    %cm_managepreset(06)
+    %cm_managepreset(07)
+    %cm_managepreset(08)
+    %cm_managepreset(09)
+endif
+else
     %cm_managepreset(02)
     %cm_managepreset(03)
     %cm_managepreset(04)
@@ -700,7 +772,7 @@ endif
     %cm_managepreset(15)
 
 if !FEATURE_TINYSTATES
-; Tinystates only has slots $00-15
+    ; Tinystates only has slots 00-15
 else
 ManagePresetsMenu2:
     dw #managepreset_16
@@ -799,6 +871,7 @@ managepreset_goto_page2:
 
 managepreset_goto_page3:
     %cm_jsl("GOTO PAGE THREE", managepreset_goto_page1_routine, #ManagePresetsMenu3)
+endif
 endif
 
 ManagePresetsConfirm:
@@ -2070,8 +2143,10 @@ init_heat_damage_ram:
     RTL
 
   .heatShield
-    LDA !ROOM_ID : CMP #$B742 : BPL .noDamage : CMP #$AF13 : BMI .noDamage
-    CMP #$B1BA : BPL .heatShieldDamage : CMP #$AF40 : BPL .noDamage
+    LDA !ROOM_ID : CMP #ROOM_BowlingAlley : BPL .noDamage
+    CMP #ROOM_LavaDiveRoom : BMI .noDamage
+    CMP #ROOM_LNElevatorSaveRoom : BPL .heatShieldDamage
+    CMP #ROOM_UpperNorfFarmingRoom : BPL .noDamage
 
   .heatShieldDamage
     ; We want Lower Norfair heat damage to be 50%
@@ -2139,11 +2214,15 @@ init_physics_non_vanilla:
     RTL
 
   .pv
-    LDA !ROOM_ID : CMP #$C98D : BMI .pv_more
-    CMP #$D4EE : BMI .off : CMP #$D8C6 : BPL .pv_on
-    CMP #$D5EC : BEQ .off : CMP #$D646 : BEQ .off
-    CMP #$D69A : BEQ .off : CMP #$D6D0 : BEQ .off
-    CMP #$D86E : BEQ .off : CMP #$D8C5 : BEQ .off
+    LDA !ROOM_ID : CMP #ROOM_BowlingAlley : BMI .pv_more
+    CMP #ROOM_WestSandHole : BMI .off
+    CMP #ROOM_HalfieClimbRoom : BPL .pv_on
+    CMP #ROOM_ButterflyRoom : BEQ .off
+    CMP #ROOM_PantsRoom : BEQ .off
+    CMP #ROOM_EastPantsRoom : BEQ .off
+    CMP #ROOM_SpringBallRoom : BEQ .off
+    CMP #ROOM_PlasmaBeachQuicksand : BEQ .off
+    CMP #ROOM_ShaktoolRoom : BEQ .off
 
   .pv_on
     LDA !SAMUS_ITEMS_EQUIPPED : AND #$0220
@@ -2151,10 +2230,12 @@ init_physics_non_vanilla:
     RTL
 
   .pv_more
-    CMP #$AC00 : BEQ .off : CMP #$AB64 : BEQ .off
-    CMP #$A5EF : BPL .pv_on
-    CMP #$99FA : BPL .off : CMP #$965A : BPL .pv_on
-    CMP #$93AB : BMI .pv_on
+    CMP #ROOM_GrappleTutorialRoom1 : BEQ .off
+    CMP #ROOM_GrappleTutorialRoom3 : BEQ .off
+    CMP #ROOM_SloatersRefill : BPL .pv_on
+    CMP #ROOM_FinalMissileBombway : BPL .off
+    CMP #ROOM_GauntletETankRoom : BPL .pv_on
+    CMP #ROOM_CrateriaSaveRoom : BMI .pv_on
     BRA .off
 }
 
@@ -2162,8 +2243,8 @@ misc_killenemies:
     %cm_jsl("Kill Enemies", .kill_loop, #0)
   .kill_loop
     ; 8000 = solid to Samus, 0400 = Ignore Samus projectiles, 0100 = Invisible
-    TAX : LDA $0F86,X : BIT #$8500 : BNE .next_enemy
-    ORA #$0200 : STA $0F86,X
+    TAX : LDA !ENEMY_PROPERTIES,X : BIT #$8500 : BNE .next_enemy
+    ORA #$0200 : STA !ENEMY_PROPERTIES,X
   .next_enemy
     TXA : CLC : ADC #$0040 : CMP #$0800 : BNE .kill_loop
     LDA #$0009 : JSL !SFX_LIB2 ; enemy killed
@@ -2235,6 +2316,9 @@ EventsMenu:
     dw #events_resetdoors
     dw #events_resetitems
     dw #$FFFF
+    dw #events_setdoors
+    dw #events_setitems
+    dw #$FFFF
     dw #events_goto_bosses
     dw #$FFFF
     dw #events_zebesawake
@@ -2279,6 +2363,32 @@ events_resetitems:
     PHP : %ai8()
     LDX #$70
     LDA #$00
+  .loop
+    STA $7ED800,X
+    INX : CPX #$90 : BNE .loop
+    PLP
+    %sfxreset()
+    RTL
+
+events_setdoors:
+    %cm_jsl("Set All Doors", .routine, #$0000)
+  .routine
+    PHP : %ai8()
+    LDX #$B0
+    LDA #$FF
+  .loop
+    STA $7ED800,X
+    INX : CPX #$D0 : BNE .loop
+    PLP
+    %sfxreset()
+    RTL
+
+events_setitems:
+    %cm_jsl("Set All Items", .routine, #$0000)
+  .routine
+    PHP : %ai8()
+    LDX #$70
+    LDA #$FF
   .loop
     STA $7ED800,X
     INX : CPX #$90 : BNE .loop
@@ -2887,7 +2997,7 @@ game_clear_minimap:
     %cm_jsl("Clear Minimap", .clear_minimap, #$0000)
 
   .clear_minimap
-    LDA #$0000 : STA !ram_map_counter : STA $7E0789
+    LDA #$0000 : STA !MAP_COUNTER : STA $7E0789
     STA $7ED908 : STA $7ED90A : STA $7ED90C : STA $7ED90E
     LDX #$00FE
   .clear_minimap_loop
@@ -2995,7 +3105,7 @@ cutscenes_skip_g4:
     %cm_toggle_bit("Skip G4", !sram_cutscenes, !CUTSCENE_SKIP_G4, #.routine)
   .routine
     BIT !CUTSCENE_SKIP_G4 : BEQ .off
-    LDA !ROOM_ID : CMP #$A5ED : BNE .done
+    LDA !ROOM_ID : CMP #ROOM_StatuesHallway : BNE .done
     ; Verify all four G4 bosses killed
     LDA $7ED828 : BIT #$0100 : BEQ .done
     LDA $7ED82C : BIT #$0001 : BEQ .done
@@ -3004,7 +3114,7 @@ cutscenes_skip_g4:
     LDA $7ED820 : ORA #$0400 : STA $7ED820
     BRA .done
   .off
-    LDA !ROOM_ID : CMP #$A5ED : BNE .done
+    LDA !ROOM_ID : CMP #ROOM_StatuesHallway : BNE .done
     LDA $7ED820 : AND #$FBFF : STA $7ED820
   .done
     RTL

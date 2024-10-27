@@ -49,7 +49,7 @@
 
 !ram_metronome_counter              = !WRAM_START+$30
 !ram_armed_shine_duration           = !WRAM_START+$32
-!ram_map_counter                    = !WRAM_START+$34
+!ram_auto_save_state                = !WRAM_START+$34
 !ram_vcounter_data                  = !WRAM_START+$36
 !ram_custom_preset                  = !WRAM_START+$38
 
@@ -72,10 +72,9 @@
 !ram_shine_counter                  = !WRAM_START+$54
 !ram_dash_counter                   = !WRAM_START+$56
 
-!ram_auto_save_state                = !WRAM_START+$58
-!ram_lag_counter                    = !WRAM_START+$5A
-!ram_kraid_adjust_timer             = !WRAM_START+$5C
-!ram_print_segment_timer            = !WRAM_START+$5E
+!ram_lag_counter                    = !WRAM_START+$58
+!ram_kraid_adjust_timer             = !WRAM_START+$5A
+!ram_print_segment_timer            = !WRAM_START+$5C
 
 ; ^ FREE SPACE ^ up to +$6C
 
@@ -517,12 +516,16 @@
 !DISABLE_SOUNDS = $05F5
 !DISABLE_MINIMAP = $05F7
 !SOUND_TIMER = $0686
+!AREA_MAP_COLLECTED = $0789
 !LOAD_STATION_INDEX = $078B
 !DOOR_ID = $078D
 !DOOR_DIRECTION = $0791
 !ROOM_ID = $079B
 !AREA_ID = $079F
+!ROOM_MAP_X_COORDINATE = $07A1
+!ROOM_MAP_Y_COORDINATE = $07A3
 !ROOM_WIDTH_BLOCKS = $07A5
+!ROOM_HEIGHT_BLOCKS = $07A7
 !ROOM_WIDTH_SCROLLS = $07A9
 !PREVIOUS_CRE_BITSET = $07B1
 !CRE_BITSET = $07B3
@@ -536,8 +539,8 @@
 !LAYER2_Y = $0919
 !BG1_X_OFFSET = $091D
 !BG1_Y_OFFSET = $091F
-!BG2_X_SCROLL = $0921
-!BG2_Y_SCROLL = $0923
+!BG2_X_OFFSET = $0921
+!BG2_Y_OFFSET = $0923
 !SAMUS_DOOR_SUBSPEED = $092B
 !SAMUS_DOOR_SPEED = $092D
 !CURRENT_SAVE_FILE = $0952
@@ -568,6 +571,7 @@
 !SAMUS_AUTO_CANCEL = $0A04
 !SAMUS_LAST_HP = $0A06
 !SAMUS_DOUBLE_JUMP = $0A14  ; Only used during demos in vanilla
+!SAMUS_SUBTRACT_WALL_JUMP = $0A16  ; Only used during demos in vanilla
 !SAMUS_POSE = $0A1C
 !SAMUS_POSE_DIRECTION = $0A1E
 !SAMUS_MOVEMENT_TYPE = $0A1F
@@ -674,6 +678,8 @@
 !PLM_DELETE = $AAE3
 
 !HUD_TILEMAP = $7EC600
+
+!MAP_COUNTER = $7ECAE8 ; Not used in vanilla
 
 
 ; --------------------
@@ -792,6 +798,21 @@ endif
 !PRESET_EQUIP_RANDO_FORCE_CHARGE = #$0004
 !PRESET_EQUIP_RANDO_INIT = #$0006
 
+if !FEATURE_MAPSTATES
+if !FEATURE_TINYSTATES
+!TOTAL_PRESET_SLOTS = #$0001
+else
+!TOTAL_PRESET_SLOTS = #$0009
+endif
+!PRESET_SLOT_SIZE = #$0800
+!PRESET_SLOTS_ROOM = $703000+$06
+!PRESET_SLOTS_ENERGY = $703000+$28
+!PRESET_SLOTS_MAXENERGY = $703000+$2A
+!PRESET_SLOTS_RESERVES = $703000+$3C
+!PRESET_SLOTS_MISSILES = $703000+$2C
+!PRESET_SLOTS_SUPERS = $703000+$30
+!PRESET_SLOTS_PBS = $703000+$34
+else
 if !FEATURE_TINYSTATES
 !TOTAL_PRESET_SLOTS = #$000F
 !PRESET_SLOT_SIZE = #$0100
@@ -812,6 +833,7 @@ else
 !PRESET_SLOTS_MISSILES = $703000+$30
 !PRESET_SLOTS_SUPERS = $703000+$34
 !PRESET_SLOTS_PBS = $703000+$38
+endif
 endif
 
 !SPRITE_SAMUS_HITBOX = #$0001
@@ -848,7 +870,6 @@ if !FEATURE_TINYSTATES
 !SRAM_SAVED_RNG = $737F80
 !SRAM_SAVED_FRAME_COUNTER = $737F82
 !SRAM_TINYSTATE_ROOM = $737F84
-!SRAM_TINYSTATE_FAST = $737F86
 !SRAM_SEG_TIMER_F = $737F88
 !SRAM_SEG_TIMER_S = $737F8A
 !SRAM_SEG_TIMER_M = $737F8C

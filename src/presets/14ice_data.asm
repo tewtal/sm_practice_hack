@@ -14,8 +14,8 @@ preset_14ice_crateria_ceres_elevator:
     dw $093F, $0000  ; Ceres escape flag
     dw $09A2, $0000  ; Equipped Items
     dw $09A4, $0000  ; Collected Items
-    dw $09A6, $0000  ; Beams
-    dw $09A8, $0000  ; Beams
+    dw $09A6, $0000  ; Equipped Beams
+    dw $09A8, $0000  ; Collected Beams
     dw $09C0, $0000  ; Manual/Auto reserve tank
     dw $09C2, $0063  ; Health
     dw $09C4, $0063  ; Max health
@@ -124,7 +124,6 @@ preset_14ice_crateria_parlor:
     dw $090F, $0000  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $1400  ; Screen subpixel Y position
-    dw $0915, $0400  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
@@ -133,14 +132,25 @@ preset_14ice_crateria_parlor:
     dw $0AFC, $FFFF  ; Samus subpixel Y
     dw #$FFFF
 
-preset_14ice_crateria_climb_down:
+preset_14ice_crateria_parlor_downback:
     dw #preset_14ice_crateria_parlor ; Crateria: Parlor
     dw $078D, $8916  ; DDB
     dw $079B, $92FD  ; MDB
+    dw $090F, $F000  ; Screen subpixel X position
     dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $9C00  ; Screen subpixel Y position
+    dw $0915, $032A  ; Screen Y position in pixels
+    dw $0917, $00C0  ; Layer 2 X position
+    dw $0919, $025F  ; Layer 2 Y position
+    dw $0AF6, $01B5  ; Samus X
+    dw $0AFA, $039B  ; Samus Y
+    dw #$FFFF
+
+preset_14ice_crateria_climb_down:
+    dw #preset_14ice_crateria_parlor_downback ; Crateria: Parlor Downback
+    dw $090F, $0000  ; Screen subpixel X position
     dw $0913, $7BFF  ; Screen subpixel Y position
     dw $0915, $03F2  ; Screen Y position in pixels
-    dw $0917, $00C0  ; Layer 2 X position
     dw $0919, $02F5  ; Layer 2 Y position
     dw $0A1C, $0018  ; Samus position/state
     dw $0A1E, $0204  ; More position/state
@@ -346,18 +356,13 @@ preset_14ice_brinstar_green_brinstar_elevator:
     dw $078D, $8C22  ; DDB
     dw $079B, $9938  ; MDB
     dw $07F5, $0003  ; Music Track
-    dw $090F, $4000  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $A800  ; Screen subpixel Y position
+    dw $090F, $1C80  ; Screen subpixel X position
+    dw $0913, $C400  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
     dw $0919, $0000  ; Layer 2 Y position
-    dw $09C2, $00C7  ; Health
-    dw $09C4, $00C7  ; Max health
     dw $09C6, $0002  ; Missiles
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $0082  ; Samus X
+    dw $0AF6, $007C  ; Samus X
     dw $0AFA, $008B  ; Samus Y
-    dw $D870, $0180  ; Items
     dw #$FFFF
 
 preset_14ice_brinstar_big_pink:
@@ -366,16 +371,18 @@ preset_14ice_brinstar_big_pink:
     dw $079B, $9CB3  ; MDB
     dw $07F3, $000F  ; Music Bank
     dw $07F5, $0005  ; Music Track
-    dw $090F, $6000  ; Screen subpixel X position
+    dw $090F, $7000  ; Screen subpixel X position
     dw $0911, $0600  ; Screen X position in pixels
-    dw $0913, $C000  ; Screen subpixel Y position
+    dw $0913, $9400  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0480  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
     dw $09C6, $0000  ; Missiles
     dw $09CA, $0004  ; Supers
     dw $09CC, $0005  ; Max supers
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $06AD  ; Samus X
+    dw $0AF6, $0699  ; Samus X
     dw $D872, $0401  ; Items
     dw $D8B4, $0006  ; Doors
     dw #$FFFF
@@ -388,8 +395,8 @@ preset_14ice_brinstar_red_tower:
     dw $0911, $0500  ; Screen X position in pixels
     dw $0913, $E800  ; Screen subpixel Y position
     dw $0917, $03C0  ; Layer 2 X position
-    dw $09A6, $1000  ; Beams
-    dw $09A8, $1000  ; Beams
+    dw $09A6, $1000  ; Equipped Beams
+    dw $09A8, $1000  ; Collected Beams
     dw $0AF6, $05C1  ; Samus X
     dw $D872, $0481  ; Items
     dw $D8B4, $0206  ; Doors
@@ -437,8 +444,8 @@ preset_14ice_brinstar_leaving_power_bombs:
     dw $09C2, $00AD  ; Health
     dw $09CA, $0003  ; Supers
     dw $09CE, $0005  ; Pbs
-    dw $09D2, $0003  ; Currently selected item
     dw $09D0, $0005  ; Max pbs
+    dw $09D2, $0003  ; Currently selected item
     dw $0AF6, $0157  ; Samus X
     dw $0AFA, $00AB  ; Samus Y
     dw $D874, $0104  ; Items
@@ -552,7 +559,6 @@ preset_14ice_wrecked_ship_shaft_revisit:
     dw $0917, $0000  ; Layer 2 X position
     dw $09CA, $000A  ; Supers
     dw $09CC, $000A  ; Max supers
-    dw $09CE, $0002  ; Pbs
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $00C4  ; Samus X
@@ -583,8 +589,8 @@ preset_14ice_wrecked_ship_bowling_alley_path:
     dw $0911, $0200  ; Screen X position in pixels
     dw $0913, $1800  ; Screen subpixel Y position
     dw $0915, $0202  ; Screen Y position in pixels
-    dw $09C6, $0003  ; Missiles
     dw $0917, $0100  ; Layer 2 X position
+    dw $09C6, $0003  ; Missiles
     dw $09CA, $0009  ; Supers
     dw $09CE, $0001  ; Pbs
     dw $0AF6, $02C6  ; Samus X
@@ -769,8 +775,8 @@ preset_14ice_upper_norfair_ice_escape:
     dw $0913, $9000  ; Screen subpixel Y position
     dw $0915, $0200  ; Screen Y position in pixels
     dw $0919, $0180  ; Layer 2 Y position
-    dw $09A6, $1002  ; Beams
-    dw $09A8, $1002  ; Beams
+    dw $09A6, $1002  ; Equipped Beams
+    dw $09A8, $1002  ; Collected Beams
     dw $09C2, $0126  ; Health
     dw $09CA, $0008  ; Supers
     dw $0A1C, $0001  ; Samus position/state
@@ -1022,7 +1028,6 @@ preset_14ice_lower_norfair_wasteland_revisit:
     dw $0919, $0000  ; Layer 2 Y position
     dw $09C2, $0152  ; Health
     dw $09CA, $0004  ; Supers
-    dw $09CE, $0005  ; Pbs
     dw $0AF6, $02CB  ; Samus X
     dw $0AFA, $00AB  ; Samus Y
     dw $D8BA, $DD00  ; Doors
@@ -1426,13 +1431,9 @@ preset_14ice_tourian_after_baby:
     dw #preset_14ice_tourian_baby ; Tourian: Baby
     dw $078D, $AA44  ; DDB
     dw $079B, $DCFF  ; MDB
-    dw $07F3, $001E  ; Music Bank
-    dw $07F5, $0005  ; Music Track
     dw $090F, $3FFF  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $0800  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
-    dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0006  ; Layer 2 Y position
     dw $09C2, $0001  ; Health
     dw $0A1C, $0002  ; Samus position/state
@@ -1477,7 +1478,7 @@ preset_14ice_tourian_mother_brain_2:
 
 preset_14ice_tourian_mother_brain_3:
     dw #preset_14ice_tourian_mother_brain_2 ; Tourian: Mother Brain 2
-    dw $09A6, $1009  ; Beams
+    dw $09A6, $1009  ; Equipped Beams
     dw $09C2, $018F  ; Health
     dw $09C6, $0000  ; Missiles
     dw $09CE, $0000  ; Pbs
@@ -1487,7 +1488,6 @@ preset_14ice_tourian_mother_brain_3:
 
 preset_14ice_tourian_zebes_escape:
     dw #preset_14ice_tourian_mother_brain_3 ; Tourian: Mother Brain 3
-    dw $09A6, $1009  ; Beams
     dw $0A1C, $009B  ; Samus position/state
     dw $0A1E, $0000  ; More position/state
     dw $0AF6, $0025  ; Samus X
@@ -1507,7 +1507,6 @@ preset_14ice_tourian_escape_room_3:
     dw $0919, $00C0  ; Layer 2 Y position
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
-    dw $0A76, $8000  ; Hyper beam
     dw $0AF6, $00DF  ; Samus X
     dw $0AFA, $018B  ; Samus Y
     dw #$FFFF

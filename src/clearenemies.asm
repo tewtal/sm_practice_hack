@@ -496,21 +496,21 @@ org $E7F807
 else
 org $E7F7FF
 endif
-dw $0001  ; KZAN       (spikey platform top)
+dw $0000  ; KZAN       (spikey platform top)
 
 if !FEATURE_PAL
 org $E7F817
 else
 org $E7F80F
 endif
-dw $0001  ;            (spikey platform bottom)
+dw $0000  ;            (spikey platform bottom)
 
 if !FEATURE_PAL
 org $E7F827
 else
 org $E7F81F
 endif
-dw $0001  ; HIBASHI    (fire geyser)
+dw $0000  ; HIBASHI    (fire geyser)
 
 if !FEATURE_PAL
 org $E7F837
@@ -748,7 +748,7 @@ org $E7FA47
 else
 org $E7FA3F
 endif
-dw $0001  ; ROBO       (Wrecked Ship robot)
+dw $0000  ; ROBO       (Wrecked Ship robot)
 
 if !FEATURE_PAL
 org $E7FA57

@@ -14,8 +14,8 @@ preset_hundo_bombs_ceres_elevator:
     dw $093F, $0000  ; Ceres escape flag
     dw $09A2, $0000  ; Equipped Items
     dw $09A4, $0000  ; Collected Items
-    dw $09A6, $0000  ; Beams
-    dw $09A8, $0000  ; Beams
+    dw $09A6, $0000  ; Equipped Beams
+    dw $09A8, $0000  ; Collected Beams
     dw $09C0, $0000  ; Manual/Auto reserve tank
     dw $09C2, $0063  ; Health
     dw $09C4, $0063  ; Max health
@@ -124,7 +124,6 @@ preset_hundo_bombs_parlor:
     dw $090F, $0000  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $1400  ; Screen subpixel Y position
-    dw $0915, $0400  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
@@ -442,11 +441,9 @@ preset_hundo_kraid_green_hill_zone:
     dw $0911, $0300  ; Screen X position in pixels
     dw $0913, $77FF  ; Screen subpixel Y position
     dw $0915, $0618  ; Screen Y position in pixels
-    dw $09A6, $1000  ; Beams
-    dw $09A8, $1000  ; Beams
+    dw $09A6, $1000  ; Equipped Beams
+    dw $09A8, $1000  ; Collected Beams
     dw $09CA, $0002  ; Supers
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
     dw $0AF6, $0365  ; Samus X
     dw $0AFA, $068B  ; Samus Y
     dw $D872, $048F  ; Items
@@ -462,7 +459,6 @@ preset_hundo_kraid_red_tower:
     dw $0913, $7000  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $03C0  ; Layer 2 X position
-    dw $0919, $0000  ; Layer 2 Y position
     dw $09C2, $00B8  ; Health
     dw $09C6, $000E  ; Missiles
     dw $09CA, $0003  ; Supers
@@ -494,8 +490,8 @@ preset_hundo_kraid_kraid_entry:
     dw $0913, $B000  ; Screen subpixel Y position
     dw $0915, $0100  ; Screen Y position in pixels
     dw $0919, $0100  ; Layer 2 Y position
-    dw $09A6, $1004  ; Beams
-    dw $09A8, $1004  ; Beams
+    dw $09A6, $1004  ; Equipped Beams
+    dw $09A8, $1004  ; Collected Beams
     dw $09C2, $00AF  ; Health
     dw $09C6, $0010  ; Missiles
     dw $0AF6, $0050  ; Samus X
@@ -527,7 +523,6 @@ preset_hundo_kraid_kraid:
     dw $07F3, $0027  ; Music Bank
     dw $07F5, $0006  ; Music Track
     dw $090F, $8000  ; Screen subpixel X position
-    dw $0911, $0100  ; Screen X position in pixels
     dw $0913, $3800  ; Screen subpixel Y position
     dw $0917, $0100  ; Layer 2 X position
     dw $09C2, $0099  ; Health
@@ -610,7 +605,7 @@ preset_hundo_speed_booster_business_center:
     dw $09C6, $0011  ; Missiles
     dw $09CA, $0004  ; Supers
     dw $09D6, $0018  ; Reserves
-    dw $0A1C, $0000  ; Samus position/state
+    dw $0A1C, $009B  ; Samus position/state
     dw $0A1E, $0000  ; More position/state
     dw $0AF6, $0080  ; Samus X
     dw $0AFA, $02A8  ; Samus Y
@@ -807,8 +802,8 @@ preset_hundo_ice_beam_double_chamber_revisited:
     dw $0913, $0400  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0919, $0000  ; Layer 2 Y position
-    dw $09A6, $1005  ; Beams
-    dw $09A8, $1005  ; Beams
+    dw $09A6, $1005  ; Equipped Beams
+    dw $09A8, $1005  ; Collected Beams
     dw $09C6, $0025  ; Missiles
     dw $09C8, $0028  ; Max missiles
     dw $09CA, $0003  ; Supers
@@ -879,8 +874,8 @@ preset_hundo_ice_beam_ice_beam_snake_room_revisit:
     dw $07F5, $0003  ; Music Track
     dw $090F, $6000  ; Screen subpixel X position
     dw $0913, $0400  ; Screen subpixel Y position
-    dw $09A6, $1007  ; Beams
-    dw $09A8, $1007  ; Beams
+    dw $09A6, $1007  ; Equipped Beams
+    dw $09A8, $1007  ; Collected Beams
     dw $09C2, $0185  ; Health
     dw $0AF6, $00BA  ; Samus X
     dw $D876, $01A7  ; Items
@@ -1021,24 +1016,25 @@ preset_hundo_phantoon_ocean_fly:
     dw $D8B0, $2000  ; Doors
     dw #$FFFF
 
-preset_hundo_phantoon_phantoon_2:
+preset_hundo_phantoon_phantoon:
     dw #preset_hundo_phantoon_ocean_fly ; Phantoon: Ocean Fly
     dw $078D, $A21C  ; DDB
     dw $079B, $CC6F  ; MDB
     dw $07F3, $0030  ; Music Bank
     dw $090F, $2000  ; Screen subpixel X position
-    dw $0911, $01D0  ; Screen X position in pixels
-    dw $0913, $E800  ; Screen subpixel Y position
-    dw $0917, $015C  ; Layer 2 X position
+    dw $0911, $0200  ; Screen X position in pixels
+    dw $0913, $4800  ; Screen subpixel Y position
+    dw $0917, $0180  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
     dw $09C2, $008F  ; Health
     dw $09C6, $0032  ; Missiles
     dw $09C8, $0037  ; Max missiles
     dw $09CA, $0003  ; Supers
     dw $09CE, $0006  ; Pbs
-    dw $0A1C, $000A  ; Samus position/state
-    dw $0A1E, $0104  ; More position/state
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
     dw $0A68, $0000  ; Flash suit
-    dw $0AF6, $0271  ; Samus X
+    dw $0AF6, $026B  ; Samus X
     dw $0AFA, $005B  ; Samus Y
     dw $D870, $8190  ; Items
     dw $D880, $0001  ; Items
@@ -1046,73 +1042,92 @@ preset_hundo_phantoon_phantoon_2:
     dw $D8C0, $0010  ; Doors
     dw #$FFFF
 
-preset_hundo_gravity_ws_shaft_up_1:
-    dw #preset_hundo_phantoon_phantoon_2 ; Phantoon: Phantoon
+preset_hundo_gravity_ws_shaft_up_to_supers:
+    dw #preset_hundo_phantoon_phantoon ; Phantoon: Phantoon
     dw $078D, $A2C4  ; DDB
     dw $07F5, $0006  ; Music Track
     dw $090F, $0000  ; Screen subpixel X position
-    dw $0911, $01E9  ; Screen X position in pixels
-    dw $0913, $2400  ; Screen subpixel Y position
+    dw $0911, $0205  ; Screen X position in pixels
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0917, $0183  ; Layer 2 X position
     dw $09C2, $012F  ; Health
     dw $09C6, $0035  ; Missiles
     dw $09CA, $0005  ; Supers
     dw $09CE, $0007  ; Pbs
-    dw $0A1C, $001A  ; Samus position/state
-    dw $0A1E, $0304  ; More position/state
-    dw $0AF6, $0289  ; Samus X
-    dw $0AFA, $003A  ; Samus Y
+    dw $0AF6, $02A5  ; Samus X
+    dw $0AFA, $0061  ; Samus Y
     dw $D82A, $0100  ; Bosses
     dw $D8C0, $0070  ; Doors
     dw #$FFFF
 
 preset_hundo_gravity_ws_right_supers:
-    dw #preset_hundo_gravity_ws_shaft_up_1 ; Gravity: WS Shaft Up 1
+    dw #preset_hundo_gravity_ws_shaft_up_to_supers ; Gravity: WS Shaft Up To Supers
     dw $078D, $A294  ; DDB
     dw $079B, $CAF6  ; MDB
-    dw $090F, $5000  ; Screen subpixel X position
-    dw $0911, $04D7  ; Screen X position in pixels
-    dw $0913, $53FF  ; Screen subpixel Y position
+    dw $090F, $B000  ; Screen subpixel X position
+    dw $0911, $04E5  ; Screen X position in pixels
+    dw $0913, $1000  ; Screen subpixel Y position
     dw $0915, $0600  ; Screen Y position in pixels
+    dw $0917, $03AB  ; Layer 2 X position
+    dw $0919, $0480  ; Layer 2 Y position
     dw $09CE, $0006  ; Pbs
     dw $0A1C, $0027  ; Samus position/state
     dw $0A1E, $0508  ; More position/state
-    dw $0AF6, $05BC  ; Samus X
+    dw $0AF6, $05B7  ; Samus X
     dw $0AFA, $0690  ; Samus Y
     dw $D8C0, $0074  ; Doors
     dw #$FFFF
 
-preset_hundo_gravity_spiky_room_of_death:
+preset_hundo_gravity_leaving_ws_left_supers:
     dw #preset_hundo_gravity_ws_right_supers ; Gravity: WS Right Supers
-    dw $078D, $A2E8  ; DDB
-    dw $090F, $D801  ; Screen subpixel X position
-    dw $0911, $0400  ; Screen X position in pixels
-    dw $0913, $D000  ; Screen subpixel Y position
-    dw $0915, $0471  ; Screen Y position in pixels
+    dw $078D, $A210  ; DDB
+    dw $079B, $CDA8  ; MDB
+    dw $090F, $AC00  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
     dw $09C2, $011B  ; Health
     dw $09C6, $0034  ; Missiles
     dw $09CA, $000F  ; Supers
     dw $09CC, $000F  ; Max supers
     dw $09CE, $0005  ; Pbs
-    dw $0A1C, $000F  ; Samus position/state
-    dw $0A1E, $0108  ; More position/state
-    dw $0AF6, $0455  ; Samus X
-    dw $0AFA, $04E6  ; Samus Y
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $00E9  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
     dw $D880, $0061  ; Items
+    dw #$FFFF
+
+preset_hundo_gravity_spiky_room_of_death:
+    dw #preset_hundo_gravity_leaving_ws_left_supers ; Gravity: Leaving WS Left Supers
+    dw $078D, $A2E8  ; DDB
+    dw $079B, $CAF6  ; MDB
+    dw $090F, $4C00  ; Screen subpixel X position
+    dw $0911, $0400  ; Screen X position in pixels
+    dw $0915, $0474  ; Screen Y position in pixels
+    dw $0917, $0300  ; Layer 2 X position
+    dw $0919, $0357  ; Layer 2 Y position
+    dw $0AF6, $0457  ; Samus X
+    dw $0AFA, $04E4  ; Samus Y
     dw #$FFFF
 
 preset_hundo_gravity_ws_etank:
     dw #preset_hundo_gravity_spiky_room_of_death ; Gravity: Spiky Room of Death
     dw $078D, $A258  ; DDB
     dw $079B, $CBD5  ; MDB
-    dw $090F, $5000  ; Screen subpixel X position
+    dw $090F, $0000  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $2400  ; Screen subpixel Y position
+    dw $0913, $DC00  ; Screen subpixel Y position
     dw $0915, $0100  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $00C0  ; Layer 2 Y position
     dw $09C2, $00B7  ; Health
     dw $09C6, $0033  ; Missiles
-    dw $0A1C, $000A  ; Samus position/state
-    dw $0A1E, $0104  ; More position/state
-    dw $0AF6, $0078  ; Samus X
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $007D  ; Samus X
     dw $0AFA, $016B  ; Samus Y
     dw $D8C0, $007C  ; Doors
     dw #$FFFF
@@ -1122,30 +1137,32 @@ preset_hundo_gravity_spiky_room_of_death_revisit:
     dw $078D, $A27C  ; DDB
     dw $079B, $CC27  ; MDB
     dw $07F5, $0003  ; Music Track
-    dw $090F, $D400  ; Screen subpixel X position
-    dw $0911, $0200  ; Screen X position in pixels
-    dw $0913, $1800  ; Screen subpixel Y position
-    dw $0915, $0005  ; Screen Y position in pixels
+    dw $090F, $C000  ; Screen subpixel X position
+    dw $0911, $01FD  ; Screen X position in pixels
+    dw $0913, $8C00  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $017D  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
     dw $09C2, $01F3  ; Health
     dw $09C4, $01F3  ; Max health
     dw $09CA, $000E  ; Supers
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $029E  ; Samus X
-    dw $0AFA, $008D  ; Samus Y
+    dw $0AF6, $029D  ; Samus X
+    dw $0AFA, $008E  ; Samus Y
     dw $D880, $0071  ; Items
     dw $D8C0, $087C  ; Doors
     dw #$FFFF
 
-preset_hundo_gravity_ws_shaft_up_2:
+preset_hundo_gravity_ws_shaft_up_to_attic:
     dw #preset_hundo_gravity_spiky_room_of_death_revisit ; Gravity: Spiky Room of Death Revisit
     dw $078D, $A24C  ; DDB
     dw $079B, $CD5C  ; MDB
     dw $07F5, $0006  ; Music Track
-    dw $090F, $F300  ; Screen subpixel X position
+    dw $090F, $3700  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $FC00  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0913, $8800  ; Screen subpixel Y position
+    dw $0917, $0000  ; Layer 2 X position
     dw $09C2, $01DF  ; Health
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
@@ -1154,12 +1171,13 @@ preset_hundo_gravity_ws_shaft_up_2:
     dw #$FFFF
 
 preset_hundo_gravity_attic:
-    dw #preset_hundo_gravity_ws_shaft_up_2 ; Gravity: WS Shaft Up 2
+    dw #preset_hundo_gravity_ws_shaft_up_to_attic ; Gravity: WS Shaft Up To Attic
     dw $078D, $A2D0  ; DDB
     dw $079B, $CAF6  ; MDB
     dw $090F, $0800  ; Screen subpixel X position
     dw $0911, $0400  ; Screen X position in pixels
     dw $0913, $5C00  ; Screen subpixel Y position
+    dw $0917, $0300  ; Layer 2 X position
     dw $09C6, $0035  ; Missiles
     dw $09CA, $000D  ; Supers
     dw $0A1C, $0001  ; Samus position/state
@@ -1176,14 +1194,13 @@ preset_hundo_gravity_ws_robot_missiles:
     dw $0911, $0600  ; Screen X position in pixels
     dw $0913, $63FF  ; Screen subpixel Y position
     dw $0915, $001F  ; Screen Y position in pixels
+    dw $0917, $0480  ; Layer 2 X position
+    dw $0919, $001E  ; Layer 2 Y position
     dw $09C2, $01EB  ; Health
     dw $09C6, $002D  ; Missiles
     dw $09CA, $0008  ; Supers
-    dw $0A1C, $001E  ; Samus position/state
-    dw $0A1E, $0408  ; More position/state
     dw $0AF6, $06CD  ; Samus X
     dw $0AFA, $0099  ; Samus Y
-    dw $0B3F, $0104  ; Blue suit
     dw $D8C0, $0B7C  ; Doors
     dw #$FFFF
 
@@ -1195,14 +1212,15 @@ preset_hundo_gravity_attic_revisit:
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $A400  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
     dw $09C2, $01AD  ; Health
     dw $09C6, $0026  ; Missiles
     dw $09C8, $003C  ; Max missiles
-    dw $0A1C, $000A  ; Samus position/state
-    dw $0A1E, $0104  ; More position/state
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
     dw $0AF6, $0046  ; Samus X
     dw $0AFA, $008B  ; Samus Y
-    dw $0B3F, $0000  ; Blue suit
     dw $D880, $0079  ; Items
     dw #$FFFF
 
@@ -1213,6 +1231,7 @@ preset_hundo_gravity_sky_missiles:
     dw $090F, $5000  ; Screen subpixel X position
     dw $0913, $97FE  ; Screen subpixel Y position
     dw $0915, $001F  ; Screen Y position in pixels
+    dw $0919, $001E  ; Layer 2 Y position
     dw $09C2, $01A3  ; Health
     dw $09C6, $0025  ; Missiles
     dw $09CA, $0007  ; Supers
@@ -1229,13 +1248,15 @@ preset_hundo_gravity_bowling:
     dw $0911, $0100  ; Screen X position in pixels
     dw $0913, $C800  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $00C0  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
     dw $09C2, $019E  ; Health
     dw $09C6, $002E  ; Missiles
     dw $09C8, $0046  ; Max missiles
     dw $09CA, $0006  ; Supers
     dw $09CE, $0006  ; Pbs
-    dw $0A1C, $0009  ; Samus position/state
-    dw $0A1E, $0108  ; More position/state
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
     dw $0AF6, $0194  ; Samus X
     dw $0B3F, $0001  ; Blue suit
     dw $D870, $819C  ; Items
@@ -1247,9 +1268,10 @@ preset_hundo_gravity_leaving_gravity:
     dw $079B, $CE40  ; MDB
     dw $07F3, $0030  ; Music Bank
     dw $07F5, $0003  ; Music Track
-    dw $090F, $5000  ; Screen subpixel X position
+    dw $090F, $F000  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $4000  ; Screen subpixel Y position
+    dw $0913, $7400  ; Screen subpixel Y position
+    dw $0917, $0001  ; Layer 2 X position
     dw $09A2, $3125  ; Equipped Items
     dw $09A4, $3125  ; Collected Items
     dw $09C2, $011C  ; Health
@@ -1257,9 +1279,9 @@ preset_hundo_gravity_leaving_gravity:
     dw $09C8, $004B  ; Max missiles
     dw $09CE, $0004  ; Pbs
     dw $09D4, $00C8  ; Max reserves
-    dw $0A1C, $000A  ; Samus position/state
-    dw $0A1E, $0104  ; More position/state
-    dw $0AF6, $006D  ; Samus X
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $006B  ; Samus X
     dw $0B3F, $0000  ; Blue suit
     dw $D880, $00FF  ; Items
     dw #$FFFF
@@ -1272,12 +1294,11 @@ preset_hundo_brinstar_cleanup_crateria_pbs:
     dw $07F5, $0005  ; Music Track
     dw $090F, $9C00  ; Screen subpixel X position
     dw $0913, $03FF  ; Screen subpixel Y position
+    dw $0917, $0000  ; Layer 2 X position
     dw $09C6, $0038  ; Missiles
     dw $09C8, $0050  ; Max missiles
-    dw $0A1C, $0010  ; Samus position/state
     dw $0AF6, $008C  ; Samus X
     dw $0AFA, $00A8  ; Samus Y
-    dw $0B3F, $0003  ; Blue suit
     dw $D870, $819E  ; Items
     dw #$FFFF
 
@@ -1291,10 +1312,8 @@ preset_hundo_brinstar_cleanup_ship_room:
     dw $09C6, $0034  ; Missiles
     dw $09CE, $000A  ; Pbs
     dw $09D0, $000F  ; Max pbs
-    dw $0A1C, $000C  ; Samus position/state
     dw $0AF6, $0042  ; Samus X
     dw $0AFA, $008B  ; Samus Y
-    dw $0B3F, $0000  ; Blue suit
     dw $D870, $819F  ; Items
     dw $D8B0, $3002  ; Doors
     dw #$FFFF
@@ -1304,14 +1323,15 @@ preset_hundo_brinstar_cleanup_gauntlet_etank:
     dw $078D, $892E  ; DDB
     dw $079B, $92B3  ; MDB
     dw $07F3, $0009  ; Music Bank
-    dw $090F, $E800  ; Screen subpixel X position
-    dw $0911, $0002  ; Screen X position in pixels
-    dw $0913, $BC00  ; Screen subpixel Y position
-    dw $09A6, $1001  ; Beams
+    dw $090F, $9000  ; Screen subpixel X position
+    dw $0911, $0004  ; Screen X position in pixels
+    dw $0913, $FC00  ; Screen subpixel Y position
+    dw $0917, $0003  ; Layer 2 X position
+    dw $09A6, $1001  ; Equipped Beams
     dw $09C2, $001D  ; Health
+    dw $09D2, $0003  ; Currently selected item
     dw $09D6, $0035  ; Reserves
-    dw $0A1C, $000A  ; Samus position/state
-    dw $0AF6, $0074  ; Samus X
+    dw $0AF6, $0084  ; Samus X
     dw #$FFFF
 
 preset_hundo_brinstar_cleanup_green_pirates_shaft:
@@ -1321,9 +1341,11 @@ preset_hundo_brinstar_cleanup_green_pirates_shaft:
     dw $090F, $E000  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $7400  ; Screen subpixel Y position
+    dw $0917, $0000  ; Layer 2 X position
     dw $09C2, $01F8  ; Health
     dw $09C4, $0257  ; Max health
     dw $09CE, $0009  ; Pbs
+    dw $09D2, $0000  ; Currently selected item
     dw $0AF6, $002B  ; Samus X
     dw $D870, $81BF  ; Items
     dw #$FFFF
@@ -1337,8 +1359,6 @@ preset_hundo_brinstar_cleanup_green_shaft_revisit:
     dw $0913, $0C00  ; Screen subpixel Y position
     dw $09C6, $0039  ; Missiles
     dw $09C8, $005A  ; Max missiles
-    dw $0A1C, $0008  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
     dw $0AF6, $0088  ; Samus X
     dw $D870, $87BF  ; Items
     dw #$FFFF
@@ -1349,13 +1369,13 @@ preset_hundo_brinstar_cleanup_green_brinstar_beetoms:
     dw $079B, $9AD9  ; MDB
     dw $07F3, $000F  ; Music Bank
     dw $07F5, $0005  ; Music Track
-    dw $090F, $1000  ; Screen subpixel X position
+    dw $090F, $C000  ; Screen subpixel X position
     dw $0913, $0000  ; Screen subpixel Y position
-    dw $0915, $0A1D  ; Screen Y position in pixels
+    dw $0915, $0A1B  ; Screen Y position in pixels
+    dw $0919, $0794  ; Layer 2 Y position
     dw $09C2, $01FD  ; Health
     dw $09CE, $0008  ; Pbs
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0AF6, $0032  ; Samus X
+    dw $0AF6, $0036  ; Samus X
     dw $0AFA, $0A8B  ; Samus Y
     dw #$FFFF
 
@@ -1366,6 +1386,7 @@ preset_hundo_brinstar_cleanup_etecoon_energy_tank_room:
     dw $090F, $B000  ; Screen subpixel X position
     dw $0913, $B400  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
+    dw $0919, $0000  ; Layer 2 Y position
     dw $09C2, $01F5  ; Health
     dw $09C6, $0038  ; Missiles
     dw $09CA, $000A  ; Supers
@@ -1383,13 +1404,15 @@ preset_hundo_brinstar_cleanup_etecoon_room:
     dw #preset_hundo_brinstar_cleanup_etecoon_energy_tank_room ; Brinstar Cleanup: Etecoon Energy Tank Room
     dw $078D, $8F5E  ; DDB
     dw $079B, $A011  ; MDB
-    dw $090F, $F000  ; Screen subpixel X position
+    dw $090F, $9000  ; Screen subpixel X position
     dw $0911, $0400  ; Screen X position in pixels
     dw $0913, $0400  ; Screen subpixel Y position
     dw $0915, $0100  ; Screen Y position in pixels
+    dw $0917, $0300  ; Layer 2 X position
+    dw $0919, $00C0  ; Layer 2 Y position
     dw $09C2, $029B  ; Health
     dw $09C4, $02BB  ; Max health
-    dw $0AF6, $04D8  ; Samus X
+    dw $0AF6, $04CE  ; Samus X
     dw $0AFA, $018B  ; Samus Y
     dw $D872, $C48F  ; Items
     dw #$FFFF
@@ -1422,8 +1445,8 @@ preset_hundo_brinstar_cleanup_big_pink_revisit:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $03F7  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0A1C, $000B  ; Samus position/state
-    dw $0A1E, $0108  ; More position/state
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
     dw $0AF6, $05AA  ; Samus X
     dw $0AFA, $00AB  ; Samus Y
     dw #$FFFF
@@ -1432,17 +1455,19 @@ preset_hundo_brinstar_cleanup_mission_impossible_pbs:
     dw #preset_hundo_brinstar_cleanup_big_pink_revisit ; Brinstar Cleanup: Big Pink Revisit
     dw $078D, $8DAE  ; DDB
     dw $079B, $9D19  ; MDB
-    dw $090F, $4000  ; Screen subpixel X position
+    dw $090F, $E000  ; Screen subpixel X position
     dw $0911, $0200  ; Screen X position in pixels
     dw $0913, $0000  ; Screen subpixel Y position
-    dw $0915, $031A  ; Screen Y position in pixels
+    dw $0915, $031D  ; Screen Y position in pixels
+    dw $0917, $0180  ; Layer 2 X position
+    dw $0919, $0255  ; Layer 2 Y position
     dw $09C2, $0277  ; Health
     dw $09C6, $003D  ; Missiles
     dw $09C8, $005F  ; Max missiles
     dw $09CE, $000E  ; Pbs
     dw $09D2, $0003  ; Currently selected item
-    dw $0A1C, $000A  ; Samus position/state
-    dw $0A1E, $0104  ; More position/state
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
     dw $0AF6, $0264  ; Samus X
     dw $0AFA, $038B  ; Samus Y
     dw $D872, $C4AF  ; Items
@@ -1452,18 +1477,20 @@ preset_hundo_brinstar_cleanup_mission_impossible_pbs:
 preset_hundo_brinstar_cleanup_pink_brinstar_etank:
     dw #preset_hundo_brinstar_cleanup_mission_impossible_pbs ; Brinstar Cleanup: Mission Impossible PBs
     dw $078D, $8E62  ; DDB
-    dw $090F, $E000  ; Screen subpixel X position
-    dw $0911, $0296  ; Screen X position in pixels
-    dw $0915, $042A  ; Screen Y position in pixels
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $0299  ; Screen X position in pixels
+    dw $0915, $042D  ; Screen Y position in pixels
+    dw $0917, $01F2  ; Layer 2 X position
+    dw $0919, $0321  ; Layer 2 Y position
     dw $09C2, $0268  ; Health
     dw $09C6, $003A  ; Missiles
     dw $09CA, $0007  ; Supers
     dw $09CE, $0013  ; Pbs
     dw $09D0, $0019  ; Max pbs
     dw $09D2, $0000  ; Currently selected item
-    dw $0A1C, $000B  ; Samus position/state
-    dw $0A1E, $0108  ; More position/state
-    dw $0AF6, $02F6  ; Samus X
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $02F9  ; Samus X
     dw $0AFA, $049B  ; Samus Y
     dw $0B3F, $0001  ; Blue suit
     dw $D872, $C5AF  ; Items
@@ -1473,17 +1500,17 @@ preset_hundo_brinstar_cleanup_pink_brinstar_etank:
 preset_hundo_brinstar_cleanup_spore_spawn_supers:
     dw #preset_hundo_brinstar_cleanup_pink_brinstar_etank ; Brinstar Cleanup: Pink Brinstar E-Tank
     dw $078D, $8FB2  ; DDB
-    dw $090F, $3000  ; Screen subpixel X position
+    dw $090F, $2000  ; Screen subpixel X position
     dw $0911, $02F3  ; Screen X position in pixels
-    dw $0913, $E000  ; Screen subpixel Y position
-    dw $0915, $053F  ; Screen Y position in pixels
+    dw $0913, $0800  ; Screen subpixel Y position
+    dw $0915, $053A  ; Screen Y position in pixels
+    dw $0917, $0236  ; Layer 2 X position
+    dw $0919, $03EB  ; Layer 2 Y position
     dw $09C2, $0308  ; Health
     dw $09C4, $031F  ; Max health
     dw $09CA, $0006  ; Supers
     dw $09CE, $0012  ; Pbs
     dw $09D2, $0003  ; Currently selected item
-    dw $0A1C, $0007  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
     dw $0AF6, $0389  ; Samus X
     dw $0AFA, $05AB  ; Samus Y
     dw $0B3F, $0000  ; Blue suit
@@ -1494,19 +1521,21 @@ preset_hundo_brinstar_cleanup_spore_spawn_supers:
 preset_hundo_brinstar_cleanup_waterway_etank:
     dw #preset_hundo_brinstar_cleanup_spore_spawn_supers ; Brinstar Cleanup: Spore Spawn Supers
     dw $078D, $8F82  ; DDB
-    dw $090F, $0000  ; Screen subpixel X position
+    dw $090F, $E000  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $7400  ; Screen subpixel Y position
-    dw $0915, $090A  ; Screen Y position in pixels
+    dw $0913, $7800  ; Screen subpixel Y position
+    dw $0915, $0900  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $06C0  ; Layer 2 Y position
     dw $09C6, $003F  ; Missiles
     dw $09C8, $0064  ; Max missiles
     dw $09CA, $0007  ; Supers
     dw $09CC, $0019  ; Max supers
     dw $09CE, $000F  ; Pbs
     dw $09D2, $0000  ; Currently selected item
-    dw $0A1C, $000A  ; Samus position/state
-    dw $0A1E, $0104  ; More position/state
-    dw $0AF6, $0051  ; Samus X
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $004F  ; Samus X
     dw $0AFA, $098B  ; Samus Y
     dw $D870, $E7BF  ; Items
     dw $D872, $C5EF  ; Items
@@ -1517,16 +1546,15 @@ preset_hundo_brinstar_cleanup_waterway_etank:
 preset_hundo_mama_turtle_etank_big_pink_charge_escape:
     dw #preset_hundo_brinstar_cleanup_waterway_etank ; Brinstar Cleanup: Waterway E-Tank
     dw $078D, $8F8E  ; DDB
-    dw $090F, $8000  ; Screen subpixel X position
-    dw $0913, $C800  ; Screen subpixel Y position
-    dw $0915, $0900  ; Screen Y position in pixels
+    dw $090F, $B000  ; Screen subpixel X position
+    dw $0913, $B3FF  ; Screen subpixel Y position
     dw $09C2, $0383  ; Health
     dw $09C4, $0383  ; Max health
     dw $09C6, $0041  ; Missiles
     dw $09CE, $0012  ; Pbs
     dw $09D6, $005D  ; Reserves
-    dw $0A1C, $0019  ; Samus position/state
-    dw $0A1E, $0308  ; More position/state
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
     dw $0AF6, $0048  ; Samus X
     dw $D874, $0F8E  ; Items
     dw #$FFFF
@@ -1534,13 +1562,13 @@ preset_hundo_mama_turtle_etank_big_pink_charge_escape:
 preset_hundo_mama_turtle_etank_green_hills_revisit:
     dw #preset_hundo_mama_turtle_etank_big_pink_charge_escape ; Mama Turtle E-Tank: Big Pink Charge Escape
     dw $090F, $0000  ; Screen subpixel X position
-    dw $0911, $02F2  ; Screen X position in pixels
+    dw $0911, $02D1  ; Screen X position in pixels
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $061D  ; Screen Y position in pixels
+    dw $0917, $021C  ; Layer 2 X position
+    dw $0919, $0495  ; Layer 2 Y position
     dw $09CE, $0011  ; Pbs
-    dw $0A1C, $0009  ; Samus position/state
-    dw $0A1E, $0108  ; More position/state
-    dw $0AF6, $0352  ; Samus X
+    dw $0AF6, $0331  ; Samus X
     dw $0AFA, $068B  ; Samus Y
     dw #$FFFF
 
@@ -1548,113 +1576,143 @@ preset_hundo_mama_turtle_etank_blockbuster:
     dw #preset_hundo_mama_turtle_etank_green_hills_revisit ; Mama Turtle E-Tank: Green Hills Revisit
     dw $078D, $8E92  ; DDB
     dw $079B, $9FBA  ; MDB
-    dw $0911, $0021  ; Screen X position in pixels
-    dw $0913, $D400  ; Screen subpixel Y position
+    dw $090F, $9000  ; Screen subpixel X position
+    dw $0911, $001E  ; Screen X position in pixels
+    dw $0913, $CC00  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $0016  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
     dw $09C2, $037E  ; Health
     dw $09C6, $0045  ; Missiles
     dw $09C8, $0069  ; Max missiles
     dw $09CE, $0010  ; Pbs
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
+    dw $0A1C, $009B  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
     dw $0AF6, $0081  ; Samus X
-    dw $0AFA, $00AB  ; Samus Y
+    dw $0AFA, $00A8  ; Samus Y
     dw $D872, $C7EF  ; Items
     dw $D8B6, $E8F9  ; Doors
     dw #$FFFF
 
-preset_hundo_mama_turtle_etank_main_street:
+preset_hundo_mama_turtle_etank_breaking_the_tube:
     dw #preset_hundo_mama_turtle_etank_blockbuster ; Mama Turtle E-Tank: Blockbuster
+    dw $078D, $A360  ; DDB
+    dw $079B, $CEFB  ; MDB
+    dw $07F3, $0012  ; Music Bank
+    dw $090F, $7000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $6401  ; Screen subpixel Y position
+    dw $0915, $0100  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $00C0  ; Layer 2 Y position
+    dw $09C2, $037C  ; Health
+    dw $09CA, $0009  ; Supers
+    dw $09CE, $000F  ; Pbs
+    dw $09D2, $0003  ; Currently selected item
+    dw $0AF6, $003A  ; Samus X
+    dw $0AFA, $0188  ; Samus Y
+    dw #$FFFF
+
+preset_hundo_mama_turtle_etank_main_street:
+    dw #preset_hundo_mama_turtle_etank_breaking_the_tube ; Mama Turtle E-Tank: Breaking The Tube
     dw $078D, $A330  ; DDB
     dw $079B, $CFC9  ; MDB
     dw $07F3, $001B  ; Music Bank
     dw $07F5, $0006  ; Music Track
-    dw $090F, $2000  ; Screen subpixel X position
-    dw $0911, $0100  ; Screen X position in pixels
-    dw $0913, $F000  ; Screen subpixel Y position
+    dw $090F, $9000  ; Screen subpixel X position
+    dw $0911, $00FC  ; Screen X position in pixels
+    dw $0913, $1C00  ; Screen subpixel Y position
     dw $0915, $071F  ; Screen Y position in pixels
-    dw $09C2, $037C  ; Health
-    dw $09CA, $0009  ; Supers
-    dw $09CE, $000F  ; Pbs
-    dw $0A1C, $0016  ; Samus position/state
-    dw $0A1E, $0204  ; More position/state
-    dw $0AF6, $019A  ; Samus X
-    dw $0AFA, $07A8  ; Samus Y
+    dw $0917, $00BD  ; Layer 2 X position
+    dw $0919, $0557  ; Layer 2 Y position
+    dw $09D2, $0000  ; Currently selected item
+    dw $0AF6, $0198  ; Samus X
+    dw $0AFA, $07B8  ; Samus Y
     dw $D820, $0801  ; Events
     dw #$FFFF
 
 preset_hundo_mama_turtle_etank_fish_tank:
     dw #preset_hundo_mama_turtle_etank_main_street ; Mama Turtle E-Tank: Main Street
-    dw $090F, $6000  ; Screen subpixel X position
-    dw $0913, $0000  ; Screen subpixel Y position
-    dw $0915, $0618  ; Screen Y position in pixels
+    dw $090F, $D000  ; Screen subpixel X position
+    dw $0911, $00D2  ; Screen X position in pixels
+    dw $0913, $C400  ; Screen subpixel Y position
+    dw $0915, $0603  ; Screen Y position in pixels
+    dw $0917, $009D  ; Layer 2 X position
+    dw $0919, $0482  ; Layer 2 Y position
     dw $09C2, $0330  ; Health
     dw $09C6, $0044  ; Missiles
     dw $09C8, $006E  ; Max missiles
     dw $09CE, $0010  ; Pbs
-    dw $0A1C, $0007  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $0160  ; Samus X
-    dw $0AFA, $068B  ; Samus Y
+    dw $0AF6, $0165  ; Samus X
+    dw $0AFA, $0688  ; Samus Y
     dw $D880, $01FF  ; Items
     dw #$FFFF
 
-preset_hundo_mama_turtle_etank_mama_turtle_etank_2:
+preset_hundo_mama_turtle_etank_mama_turtle_etank:
     dw #preset_hundo_mama_turtle_etank_fish_tank ; Mama Turtle E-Tank: Fish Tank
     dw $078D, $A3B4  ; DDB
     dw $079B, $D017  ; MDB
-    dw $090F, $6000  ; Screen subpixel X position
+    dw $090F, $7000  ; Screen subpixel X position
     dw $0911, $0100  ; Screen X position in pixels
-    dw $0913, $2C00  ; Screen subpixel Y position
-    dw $0915, $01FD  ; Screen Y position in pixels
-    dw $0A1C, $0009  ; Samus position/state
-    dw $0A1E, $0108  ; More position/state
-    dw $0AF6, $01E1  ; Samus X
+    dw $0913, $2000  ; Screen subpixel Y position
+    dw $0915, $0211  ; Screen Y position in pixels
+    dw $0917, $00C0  ; Layer 2 X position
+    dw $0919, $018C  ; Layer 2 Y position
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $01E2  ; Samus X
     dw $0AFA, $028B  ; Samus Y
     dw $0B3F, $0001  ; Blue suit
     dw #$FFFF
 
-preset_hundo_maridia_cleanup_fish_tank_revisit:
-    dw #preset_hundo_mama_turtle_etank_mama_turtle_etank_2 ; Mama Turtle E-Tank: Mama Turtle E-Tank
+preset_hundo_mama_turtle_etank_fish_tank_revisit:
+    dw #preset_hundo_mama_turtle_etank_mama_turtle_etank ; Mama Turtle E-Tank: Mama Turtle E-Tank
     dw $078D, $A3E4  ; DDB
     dw $079B, $D055  ; MDB
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $0911, $008E  ; Screen X position in pixels
-    dw $0913, $1400  ; Screen subpixel Y position
-    dw $0915, $0301  ; Screen Y position in pixels
+    dw $0911, $00C8  ; Screen X position in pixels
+    dw $0913, $4C00  ; Screen subpixel Y position
+    dw $0915, $030C  ; Screen Y position in pixels
+    dw $0917, $00C8  ; Layer 2 X position
+    dw $0919, $0249  ; Layer 2 Y position
     dw $09C2, $03E7  ; Health
     dw $09C4, $03E7  ; Max health
     dw $09C6, $0049  ; Missiles
     dw $09C8, $0073  ; Max missiles
     dw $09CA, $0008  ; Supers
-    dw $0A1C, $000C  ; Samus position/state
-    dw $0A1E, $0104  ; More position/state
-    dw $0AF6, $012E  ; Samus X
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $012D  ; Samus X
     dw $0AFA, $037B  ; Samus Y
     dw $0B3F, $0000  ; Blue suit
     dw $D880, $0DFF  ; Items
     dw $D8C0, $4B7C  ; Doors
     dw #$FFFF
 
-preset_hundo_maridia_cleanup_crab_supers:
-    dw #preset_hundo_maridia_cleanup_fish_tank_revisit ; Maridia Cleanup: Fish Tank Revisit
+preset_hundo_maridia_beach_crab_supers:
+    dw #preset_hundo_mama_turtle_etank_fish_tank_revisit ; Maridia Turtle E-Tank: Fish Tank Revisit
     dw $078D, $A3F0  ; DDB
     dw $079B, $D0B9  ; MDB
+    dw $090F, $2C00  ; Screen subpixel X position
     dw $0911, $0100  ; Screen X position in pixels
-    dw $0913, $6C00  ; Screen subpixel Y position
     dw $0915, $031F  ; Screen Y position in pixels
-    dw $0A1C, $000A  ; Samus position/state
-    dw $0AF6, $0180  ; Samus X
-    dw $0AFA, $03BB  ; Samus Y
+    dw $0917, $00C0  ; Layer 2 X position
+    dw $0919, $0257  ; Layer 2 Y position
+    dw $0A1C, $009B  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
+    dw $0AF6, $0185  ; Samus X
+    dw $0AFA, $03B8  ; Samus Y
     dw #$FFFF
 
-preset_hundo_maridia_cleanup_mt_everest:
-    dw #preset_hundo_maridia_cleanup_crab_supers ; Maridia Cleanup: Crab Supers
+preset_hundo_maridia_beach_mt_everest:
+    dw #preset_hundo_maridia_beach_crab_supers ; Maridia Beach: Crab Supers
     dw $078D, $A45C  ; DDB
     dw $079B, $CFC9  ; MDB
+    dw $090F, $7000  ; Screen subpixel X position
     dw $0911, $0200  ; Screen X position in pixels
     dw $0913, $1BFD  ; Screen subpixel Y position
     dw $0915, $0200  ; Screen Y position in pixels
+    dw $0917, $0180  ; Layer 2 X position
+    dw $0919, $0180  ; Layer 2 Y position
     dw $09C2, $03AB  ; Health
     dw $09CA, $000D  ; Supers
     dw $09CC, $001E  ; Max supers
@@ -1665,96 +1723,104 @@ preset_hundo_maridia_cleanup_mt_everest:
     dw $D880, $0FFF  ; Items
     dw #$FFFF
 
-preset_hundo_maridia_cleanup_beach_missiles:
-    dw #preset_hundo_maridia_cleanup_mt_everest ; Maridia Cleanup: Mt Everest
+preset_hundo_maridia_beach_beach_missiles:
+    dw #preset_hundo_maridia_beach_mt_everest ; Maridia Beach: Mt Everest
     dw $078D, $A468  ; DDB
     dw $079B, $D1A3  ; MDB
-    dw $090F, $C000  ; Screen subpixel X position
+    dw $090F, $F000  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $3C00  ; Screen subpixel Y position
+    dw $0913, $A800  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
     dw $09C2, $036E  ; Health
-    dw $0A1C, $0009  ; Samus position/state
-    dw $0A1E, $0108  ; More position/state
-    dw $0AF6, $0079  ; Samus X
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $007A  ; Samus X
     dw $0AFA, $005B  ; Samus Y
     dw #$FFFF
 
-preset_hundo_maridia_cleanup_maridia_bug_room:
-    dw #preset_hundo_maridia_cleanup_beach_missiles ; Maridia Cleanup: Beach Missiles
+preset_hundo_maridia_beach_maridia_bug_room:
+    dw #preset_hundo_maridia_beach_beach_missiles ; Maridia Beach: Beach Missiles
     dw $078D, $A4BC  ; DDB
     dw $079B, $D1DD  ; MDB
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $0913, $1C00  ; Screen subpixel Y position
-    dw $0915, $00F4  ; Screen Y position in pixels
+    dw $090F, $4000  ; Screen subpixel X position
+    dw $0913, $C000  ; Screen subpixel Y position
+    dw $0915, $010B  ; Screen Y position in pixels
+    dw $0919, $010B  ; Layer 2 Y position
     dw $09C2, $035A  ; Health
     dw $09C6, $004E  ; Missiles
     dw $09C8, $0078  ; Max missiles
-    dw $0A1C, $000A  ; Samus position/state
-    dw $0A1E, $0104  ; More position/state
-    dw $0AF6, $0060  ; Samus X
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $005B  ; Samus X
     dw $0AFA, $018B  ; Samus Y
     dw $D880, $4FFF  ; Items
     dw #$FFFF
 
-preset_hundo_maridia_cleanup_watering_hole:
-    dw #preset_hundo_maridia_cleanup_maridia_bug_room ; Maridia Cleanup: Maridia Bug Room
+preset_hundo_maridia_beach_watering_hole:
+    dw #preset_hundo_maridia_beach_maridia_bug_room ; Maridia Beach: Maridia Bug Room
     dw $078D, $A4D4  ; DDB
     dw $079B, $D16D  ; MDB
-    dw $090F, $4000  ; Screen subpixel X position
-    dw $0913, $A400  ; Screen subpixel Y position
-    dw $0915, $0019  ; Screen Y position in pixels
-    dw $0AF6, $005F  ; Samus X
+    dw $090F, $5000  ; Screen subpixel X position
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $001C  ; Screen Y position in pixels
+    dw $0919, $001C  ; Layer 2 Y position
+    dw $0AF6, $005C  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 
-preset_hundo_maridia_cleanup_maridia_bug_room_revisit:
-    dw #preset_hundo_maridia_cleanup_watering_hole ; Maridia Cleanup: Watering Hole
+preset_hundo_maridia_beach_maridia_bug_room_revisit:
+    dw #preset_hundo_maridia_beach_watering_hole ; Maridia Beach: Watering Hole
     dw $078D, $A498  ; DDB
     dw $079B, $D13B  ; MDB
-    dw $090F, $8000  ; Screen subpixel X position
-    dw $0911, $00C5  ; Screen X position in pixels
-    dw $0913, $E000  ; Screen subpixel Y position
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $00CB  ; Screen X position in pixels
+    dw $0913, $EC00  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $0098  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
     dw $09C2, $036E  ; Health
     dw $09C6, $0052  ; Missiles
     dw $09C8, $007D  ; Max missiles
     dw $09CA, $0012  ; Supers
     dw $09CC, $0023  ; Max supers
-    dw $0A1C, $0009  ; Samus position/state
-    dw $0A1E, $0108  ; More position/state
-    dw $0AF6, $012C  ; Samus X
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $012B  ; Samus X
     dw $D880, $7FFF  ; Items
     dw #$FFFF
 
-preset_hundo_maridia_cleanup_beach_revisit:
-    dw #preset_hundo_maridia_cleanup_maridia_bug_room_revisit ; Maridia Cleanup: Maridia Bug Room Revisit
+preset_hundo_maridia_beach_beach_revisit:
+    dw #preset_hundo_maridia_beach_maridia_bug_room_revisit ; Maridia Beach: Maridia Bug Room Revisit
     dw $078D, $A48C  ; DDB
     dw $079B, $D16D  ; MDB
     dw $090F, $4000  ; Screen subpixel X position
     dw $0911, $0300  ; Screen X position in pixels
-    dw $0913, $C800  ; Screen subpixel Y position
+    dw $0913, $5800  ; Screen subpixel Y position
     dw $0915, $0100  ; Screen Y position in pixels
+    dw $0917, $0240  ; Layer 2 X position
+    dw $0919, $0100  ; Layer 2 Y position
     dw $09C2, $0355  ; Health
-    dw $0A1C, $0051  ; Samus position/state
-    dw $0A1E, $0208  ; More position/state
     dw $0AF6, $03A2  ; Samus X
-    dw $0AFA, $0183  ; Samus Y
+    dw $0AFA, $018B  ; Samus Y
     dw #$FFFF
 
 preset_hundo_draygon_aqueduct:
-    dw #preset_hundo_maridia_cleanup_beach_revisit ; Maridia Cleanup: Beach Revisit
+    dw #preset_hundo_maridia_beach_beach_revisit ; Maridia Beach: Beach Revisit
     dw $078D, $A4E0  ; DDB
     dw $079B, $D1A3  ; MDB
     dw $0911, $0100  ; Screen X position in pixels
-    dw $0913, $1BFF  ; Screen subpixel Y position
+    dw $0913, $5BFF  ; Screen subpixel Y position
     dw $0915, $0300  ; Screen Y position in pixels
+    dw $0917, $0100  ; Layer 2 X position
+    dw $0919, $0240  ; Layer 2 Y position
     dw $09CA, $0011  ; Supers
     dw $09D2, $0003  ; Currently selected item
-    dw $0A1C, $0027  ; Samus position/state
-    dw $0A1E, $0508  ; More position/state
+    dw $0A1C, $001D  ; Samus position/state
+    dw $0A1E, $0408  ; More position/state
     dw $0AF6, $01B3  ; Samus X
-    dw $0AFA, $0390  ; Samus Y
+    dw $0AFA, $0399  ; Samus Y
     dw $D8C0, $CB7C  ; Doors
     dw #$FFFF
 
@@ -1763,16 +1829,17 @@ preset_hundo_draygon_botwoon:
     dw $078D, $A72C  ; DDB
     dw $079B, $D617  ; MDB
     dw $07F5, $0005  ; Music Track
-    dw $090F, $6000  ; Screen subpixel X position
+    dw $090F, $7FFF  ; Screen subpixel X position
     dw $0911, $0300  ; Screen X position in pixels
-    dw $0913, $1400  ; Screen subpixel Y position
-    dw $0915, $000D  ; Screen Y position in pixels
+    dw $0913, $DFFF  ; Screen subpixel Y position
+    dw $0915, $0014  ; Screen Y position in pixels
+    dw $0917, $0240  ; Layer 2 X position
+    dw $0919, $0014  ; Layer 2 Y position
     dw $09CE, $000F  ; Pbs
-    dw $09D2, $0000  ; Currently selected item
-    dw $0A1C, $0051  ; Samus position/state
-    dw $0A1E, $0208  ; More position/state
-    dw $0AF6, $03DA  ; Samus X
-    dw $0AFA, $0085  ; Samus Y
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $03A1  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 
 preset_hundo_draygon_full_halfie:
@@ -1781,16 +1848,19 @@ preset_hundo_draygon_full_halfie:
     dw $079B, $D7E4  ; MDB
     dw $090F, $F000  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $6C00  ; Screen subpixel Y position
-    dw $0915, $0006  ; Screen Y position in pixels
+    dw $0913, $1400  ; Screen subpixel Y position
+    dw $0915, $001E  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $001E  ; Layer 2 Y position
     dw $09C2, $03AF  ; Health
     dw $09C6, $0054  ; Missiles
     dw $09CA, $000E  ; Supers
     dw $09CE, $0011  ; Pbs
-    dw $0A1C, $0067  ; Samus position/state
-    dw $0A1E, $0608  ; More position/state
+    dw $09D2, $0000  ; Currently selected item
+    dw $0A1C, $009B  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
     dw $0AF6, $004B  ; Samus X
-    dw $0AFA, $0091  ; Samus Y
+    dw $0AFA, $0098  ; Samus Y
     dw $D82C, $0002  ; Bosses
     dw #$FFFF
 
@@ -1802,6 +1872,8 @@ preset_hundo_draygon_draygon_missiles:
     dw $0911, $0600  ; Screen X position in pixels
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $00FD  ; Screen Y position in pixels
+    dw $0917, $0600  ; Layer 2 X position
+    dw $0919, $0100  ; Layer 2 Y position
     dw $09C2, $0330  ; Health
     dw $09CA, $000D  ; Supers
     dw $0A1C, $0001  ; Samus position/state
@@ -1811,7 +1883,7 @@ preset_hundo_draygon_draygon_missiles:
     dw $D8C2, $0400  ; Doors
     dw #$FFFF
 
-preset_hundo_draygon_draygon_2:
+preset_hundo_draygon_draygon:
     dw #preset_hundo_draygon_draygon_missiles ; Draygon: Draygon Missiles
     dw $078D, $A7F8  ; DDB
     dw $079B, $D78F  ; MDB
@@ -1819,6 +1891,8 @@ preset_hundo_draygon_draygon_2:
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $6400  ; Screen subpixel Y position
     dw $0915, $0200  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $0180  ; Layer 2 Y position
     dw $09C6, $0059  ; Missiles
     dw $09C8, $0082  ; Max missiles
     dw $09CA, $000C  ; Supers
@@ -1831,22 +1905,21 @@ preset_hundo_draygon_draygon_2:
     dw #$FFFF
 
 preset_hundo_draygon_draygon_escape:
-    dw #preset_hundo_draygon_draygon_2 ; Draygon: Draygon
+    dw #preset_hundo_draygon_draygon ; Draygon: Draygon
     dw $078D, $A978  ; DDB
     dw $079B, $D9AA  ; MDB
     dw $07F3, $0024  ; Music Bank
     dw $07F5, $0003  ; Music Track
     dw $090F, $5000  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $7800  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
-    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
     dw $09A2, $3325  ; Equipped Items
     dw $09A4, $3325  ; Collected Items
     dw $09C2, $0291  ; Health
     dw $09C6, $0046  ; Missiles
     dw $09CE, $0010  ; Pbs
-    dw $0A1C, $0007  ; Samus position/state
+    dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0A68, $0001  ; Flash suit
     dw $0AF6, $00C0  ; Samus X
@@ -1856,7 +1929,7 @@ preset_hundo_draygon_draygon_escape:
     dw $D8C2, $8C00  ; Doors
     dw #$FFFF
 
-preset_hundo_maridia_cleanup_2_aqueduct_revisit_1:
+preset_hundo_maridia_cleanup_aqueduct_revisit:
     dw #preset_hundo_draygon_draygon_escape ; Draygon: Draygon Escape
     dw $078D, $A8DC  ; DDB
     dw $079B, $D7E4  ; MDB
@@ -1867,7 +1940,7 @@ preset_hundo_maridia_cleanup_2_aqueduct_revisit_1:
     dw $0913, $6000  ; Screen subpixel Y position
     dw $0917, $01E6  ; Layer 2 X position
     dw $09A2, $3324  ; Equipped Items
-    dw $09A6, $1007  ; Beams
+    dw $09A6, $1007  ; Equipped Beams
     dw $09C2, $044B  ; Health
     dw $09C4, $044B  ; Max health
     dw $0A1C, $001F  ; Samus position/state
@@ -1879,28 +1952,32 @@ preset_hundo_maridia_cleanup_2_aqueduct_revisit_1:
     dw $D8C2, $CC00  ; Doors
     dw #$FFFF
 
-preset_hundo_maridia_cleanup_2_right_sandpit:
-    dw #preset_hundo_maridia_cleanup_2_aqueduct_revisit_1 ; Maridia Cleanup 2: Aqueduct Revisit 1
+preset_hundo_maridia_cleanup_right_sandpit:
+    dw #preset_hundo_maridia_cleanup_aqueduct_revisit ; Maridia Cleanup: Aqueduct Revisit
     dw $078D, $A7D4  ; DDB
     dw $079B, $D5A7  ; MDB
     dw $090F, $D000  ; Screen subpixel X position
     dw $0911, $0500  ; Screen X position in pixels
     dw $0913, $1400  ; Screen subpixel Y position
     dw $0915, $021F  ; Screen Y position in pixels
+    dw $0917, $03C0  ; Layer 2 X position
+    dw $0919, $021F  ; Layer 2 Y position
     dw $09C2, $0446  ; Health
-    dw $0A1C, $000A  ; Samus position/state
-    dw $0A1E, $0104  ; More position/state
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
     dw $0AF6, $05B6  ; Samus X
     dw $0AFA, $02CB  ; Samus Y
     dw #$FFFF
 
-preset_hundo_maridia_cleanup_2_puyo_ice_clip_springball:
-    dw #preset_hundo_maridia_cleanup_2_right_sandpit ; Maridia Cleanup 2: Right Sandpit
+preset_hundo_maridia_cleanup_puyo_ice_clip_springball:
+    dw #preset_hundo_maridia_cleanup_right_sandpit ; Maridia Cleanup: Right Sandpit
     dw $078D, $A690  ; DDB
     dw $079B, $D646  ; MDB
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $D400  ; Screen subpixel Y position
     dw $0915, $0300  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $0240  ; Layer 2 Y position
     dw $09C2, $042D  ; Health
     dw $09C6, $004B  ; Missiles
     dw $09C8, $0087  ; Max missiles
@@ -1913,62 +1990,63 @@ preset_hundo_maridia_cleanup_2_puyo_ice_clip_springball:
     dw $D882, $058C  ; Items
     dw #$FFFF
 
-preset_hundo_maridia_cleanup_2_shaktool:
-    dw #preset_hundo_maridia_cleanup_2_puyo_ice_clip_springball ; Maridia Cleanup 2: Puyo Ice Clip (Springball)
+preset_hundo_maridia_cleanup_shaktool:
+    dw #preset_hundo_maridia_cleanup_puyo_ice_clip_springball ; Maridia Cleanup: Puyo Ice Clip (Springball)
     dw $078D, $A78C  ; DDB
     dw $079B, $D69A  ; MDB
     dw $090F, $4000  ; Screen subpixel X position
     dw $0913, $6800  ; Screen subpixel Y position
     dw $0915, $011C  ; Screen Y position in pixels
+    dw $0919, $00D5  ; Layer 2 Y position
     dw $09C2, $041E  ; Health
-    dw $0A1C, $0009  ; Samus position/state
-    dw $0A1E, $0108  ; More position/state
     dw $0AF6, $00D0  ; Samus X
     dw $0AFA, $018B  ; Samus Y
     dw #$FFFF
 
-preset_hundo_maridia_cleanup_2_shaktool_revisit:
-    dw #preset_hundo_maridia_cleanup_2_shaktool ; Maridia Cleanup 2: Shaktool
+preset_hundo_maridia_cleanup_shaktool_revisit:
+    dw #preset_hundo_maridia_cleanup_shaktool ; Maridia Cleanup: Shaktool
     dw $078D, $A8D0  ; DDB
     dw $079B, $D6D0  ; MDB
     dw $090F, $C001  ; Screen subpixel X position
     dw $0913, $83FF  ; Screen subpixel Y position
     dw $0915, $0005  ; Screen Y position in pixels
+    dw $0919, $0000  ; Layer 2 Y position
     dw $09A2, $3326  ; Equipped Items
     dw $09A4, $3327  ; Collected Items
     dw $09C2, $036A  ; Health
     dw $09CE, $0014  ; Pbs
-    dw $0A1C, $0028  ; Samus position/state
-    dw $0A1E, $0504  ; More position/state
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
     dw $0AF6, $0072  ; Samus X
     dw $0AFA, $0090  ; Samus Y
     dw $D820, $2801  ; Events
     dw $D882, $05CC  ; Items
     dw #$FFFF
 
-preset_hundo_maridia_cleanup_2_east_sand_hall:
-    dw #preset_hundo_maridia_cleanup_2_shaktool_revisit ; Maridia Cleanup 2: Shaktool Revisit
+preset_hundo_maridia_cleanup_east_sand_hall:
+    dw #preset_hundo_maridia_cleanup_shaktool_revisit ; Maridia Cleanup: Shaktool Revisit
     dw $078D, $A7B0  ; DDB
     dw $079B, $D646  ; MDB
     dw $090F, $E000  ; Screen subpixel X position
     dw $0913, $CC00  ; Screen subpixel Y position
     dw $0915, $0300  ; Screen Y position in pixels
+    dw $0919, $0240  ; Layer 2 Y position
     dw $09C2, $035B  ; Health
     dw $09C6, $004A  ; Missiles
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
     dw $0AF6, $003D  ; Samus X
     dw $0AFA, $038B  ; Samus Y
     dw #$FFFF
 
-preset_hundo_maridia_cleanup_2_kassiuz_room:
-    dw #preset_hundo_maridia_cleanup_2_east_sand_hall ; Maridia Cleanup 2: East Sand Hall
+preset_hundo_maridia_cleanup_kassiuz_room:
+    dw #preset_hundo_maridia_cleanup_east_sand_hall ; Maridia Cleanup: East Sand Hall
     dw $078D, $A60C  ; DDB
     dw $079B, $D340  ; MDB
     dw $090F, $2000  ; Screen subpixel X position
     dw $0911, $0200  ; Screen X position in pixels
     dw $0913, $6800  ; Screen subpixel Y position
     dw $0915, $011D  ; Screen Y position in pixels
+    dw $0917, $01C0  ; Layer 2 X position
+    dw $0919, $0122  ; Layer 2 Y position
     dw $09C6, $0048  ; Missiles
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
@@ -1977,33 +2055,34 @@ preset_hundo_maridia_cleanup_2_kassiuz_room:
     dw $D8C2, $CC28  ; Doors
     dw #$FFFF
 
-preset_hundo_maridia_cleanup_2_plasma:
-    dw #preset_hundo_maridia_cleanup_2_kassiuz_room ; Maridia Cleanup 2: Kassiuz Room
+preset_hundo_maridia_cleanup_plasma:
+    dw #preset_hundo_maridia_cleanup_kassiuz_room ; Maridia Cleanup: Kassiuz Room
     dw $078D, $A5DC  ; DDB
     dw $079B, $D27E  ; MDB
     dw $090F, $4000  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $0C00  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
     dw $09C2, $034C  ; Health
     dw $09C6, $0046  ; Missiles
     dw $09CA, $000D  ; Supers
-    dw $0A1C, $0009  ; Samus position/state
-    dw $0A1E, $0108  ; More position/state
     dw $0AF6, $00AA  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw $0B3F, $0001  ; Blue suit
     dw #$FFFF
 
-preset_hundo_maridia_cleanup_2_kassiuz_room_revisit:
-    dw #preset_hundo_maridia_cleanup_2_plasma ; Maridia Cleanup 2: Plasma
+preset_hundo_maridia_cleanup_kassiuz_room_revisit:
+    dw #preset_hundo_maridia_cleanup_plasma ; Maridia Cleanup: Plasma
     dw $078D, $A54C  ; DDB
     dw $079B, $D2AA  ; MDB
     dw $090F, $0000  ; Screen subpixel X position
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $001D  ; Screen Y position in pixels
-    dw $09A6, $100B  ; Beams
-    dw $09A8, $100F  ; Beams
+    dw $0919, $001D  ; Layer 2 Y position
+    dw $09A6, $100B  ; Equipped Beams
+    dw $09A8, $100F  ; Collected Beams
     dw $09C2, $0324  ; Health
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
@@ -2013,14 +2092,12 @@ preset_hundo_maridia_cleanup_2_kassiuz_room_revisit:
     dw $D8C2, $CC2A  ; Doors
     dw #$FFFF
 
-preset_hundo_maridia_cleanup_2_plasma_spark_room_down:
-    dw #preset_hundo_maridia_cleanup_2_kassiuz_room_revisit ; Maridia Cleanup 2: Kassiuz Room Revisit
+preset_hundo_maridia_cleanup_plasma_spark_room_down:
+    dw #preset_hundo_maridia_cleanup_kassiuz_room_revisit ; Maridia Cleanup: Kassiuz Room Revisit
     dw $078D, $A540  ; DDB
     dw $079B, $D387  ; MDB
     dw $090F, $D000  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
     dw $0915, $031B  ; Screen Y position in pixels
-    dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0254  ; Layer 2 Y position
     dw $09C2, $0310  ; Health
     dw $0A1C, $000A  ; Samus position/state
@@ -2029,67 +2106,83 @@ preset_hundo_maridia_cleanup_2_plasma_spark_room_down:
     dw $0AFA, $038B  ; Samus Y
     dw #$FFFF
 
-preset_hundo_maridia_cleanup_2_cac_alley:
-    dw #preset_hundo_maridia_cleanup_2_plasma_spark_room_down ; Maridia Cleanup 2: Plasma Spark Room Down
+preset_hundo_maridia_cleanup_cac_alley:
+    dw #preset_hundo_maridia_cleanup_plasma_spark_room_down ; Maridia Cleanup: Plasma Spark Room Down
     dw $078D, $A5D0  ; DDB
     dw $079B, $D340  ; MDB
     dw $090F, $0000  ; Screen subpixel X position
-    dw $0911, $015B  ; Screen X position in pixels
-    dw $0913, $F000  ; Screen subpixel Y position
+    dw $0911, $0120  ; Screen X position in pixels
+    dw $0913, $F400  ; Screen subpixel Y position
     dw $0915, $0500  ; Screen Y position in pixels
-    dw $0917, $012F  ; Layer 2 X position
+    dw $0917, $00FC  ; Layer 2 X position
     dw $0919, $0500  ; Layer 2 Y position
-    dw $0A1C, $0067  ; Samus position/state
-    dw $0A1E, $0608  ; More position/state
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
     dw $0AF6, $01BB  ; Samus X
-    dw $0AFA, $05B7  ; Samus Y
+    dw $0AFA, $05BB  ; Samus Y
     dw #$FFFF
 
-preset_hundo_maridia_cleanup_2_aqueduct_revisit_2:
-    dw #preset_hundo_maridia_cleanup_2_cac_alley ; Maridia Cleanup 2: Cac Alley
+preset_hundo_maridia_cleanup_aqueduct_final_visit:
+    dw #preset_hundo_maridia_cleanup_cac_alley ; Maridia Cleanup: Cac Alley
     dw $078D, $A960  ; DDB
     dw $079B, $D913  ; MDB
     dw $090F, $A000  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $2000  ; Screen subpixel Y position
     dw $0915, $0200  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $0200  ; Layer 2 Y position
     dw $09C2, $0301  ; Health
     dw $09C6, $0044  ; Missiles
     dw $09CA, $000E  ; Supers
-    dw $0A1C, $00A5  ; Samus position/state
+    dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $00A5  ; Samus X
     dw $0AFA, $028B  ; Samus Y
     dw $D8C2, $CCAA  ; Doors
     dw #$FFFF
 
-preset_hundo_maridia_cleanup_2_left_sandpit:
-    dw #preset_hundo_maridia_cleanup_2_aqueduct_revisit_2 ; Maridia Cleanup 2: Aqueduct Revisit 2
+preset_hundo_maridia_cleanup_left_sandpit:
+    dw #preset_hundo_maridia_cleanup_aqueduct_revisit ; Maridia Cleanup: Aqueduct Final Visit
     dw $078D, $A7D4  ; DDB
     dw $079B, $D5A7  ; MDB
     dw $090F, $9000  ; Screen subpixel X position
     dw $0911, $0500  ; Screen X position in pixels
     dw $0913, $FC00  ; Screen subpixel Y position
     dw $0915, $021F  ; Screen Y position in pixels
+    dw $0917, $03C0  ; Layer 2 X position
+    dw $0919, $021F  ; Layer 2 Y position
+    dw $09A2, $3326  ; Equipped Items
+    dw $09A4, $3327  ; Collected Items
+    dw $09A6, $100B  ; Equipped Beams
+    dw $09A8, $100F  ; Collected Beams
     dw $09C2, $02FC  ; Health
     dw $09C6, $0049  ; Missiles
     dw $09C8, $008C  ; Max missiles
     dw $09CA, $0013  ; Supers
     dw $09CC, $0028  ; Max supers
+    dw $09CE, $0014  ; Pbs
+    dw $09D0, $001E  ; Max pbs
     dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
     dw $0AF6, $05B9  ; Samus X
     dw $0AFA, $02CB  ; Samus Y
+    dw $D820, $2801  ; Events
+    dw $D880, $FFFF  ; Items
     dw $D882, $05FC  ; Items
+    dw $D8C2, $CCAA  ; Doors
     dw #$FFFF
 
-preset_hundo_maridia_cleanup_2_thread_the_needle_room:
-    dw #preset_hundo_maridia_cleanup_2_left_sandpit ; Maridia Cleanup 2: Left Sandpit
+preset_hundo_maridia_cleanup_leaving_maridia:
+    dw #preset_hundo_maridia_cleanup_left_sandpit ; Maridia Cleanup: Left Sandpit
     dw $078D, $A528  ; DDB
     dw $079B, $D21C  ; MDB
     dw $090F, $B000  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $AC00  ; Screen subpixel Y position
     dw $0915, $00F2  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $00FD  ; Layer 2 Y position
     dw $09C2, $02A0  ; Health
     dw $09C6, $004E  ; Missiles
     dw $09C8, $0091  ; Max missiles
@@ -2101,15 +2194,16 @@ preset_hundo_maridia_cleanup_2_thread_the_needle_room:
     dw #$FFFF
 
 preset_hundo_golden_torizo_kraid_entrance_revisit:
-    dw #preset_hundo_maridia_cleanup_2_thread_the_needle_room ; Maridia Cleanup 2: Thread the Needle Room
+    dw #preset_hundo_maridia_cleanup_leaving_maridia ; Maridia Cleanup: Leaving Maridia
     dw $078D, $A510  ; DDB
     dw $079B, $CF80  ; MDB
     dw $07F3, $0012  ; Music Bank
     dw $090F, $F000  ; Screen subpixel X position
     dw $0913, $CC00  ; Screen subpixel Y position
     dw $0915, $0100  ; Screen Y position in pixels
+    dw $0919, $0100  ; Layer 2 Y position
     dw $09CA, $0012  ; Supers
-    dw $0A1C, $00A4  ; Samus position/state
+    dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $005B  ; Samus X
     dw #$FFFF
@@ -2121,7 +2215,7 @@ preset_hundo_golden_torizo_kraid_missiles:
     dw $090F, $0000  ; Screen subpixel X position
     dw $0911, $0100  ; Screen X position in pixels
     dw $0913, $4FFF  ; Screen subpixel Y position
-    dw $0915, $0100  ; Screen Y position in pixels
+    dw $0917, $00C0  ; Layer 2 X position
     dw $09CA, $0011  ; Supers
     dw $0A1C, $003D  ; Samus position/state
     dw $0A1E, $0F08  ; More position/state
@@ -2134,15 +2228,17 @@ preset_hundo_golden_torizo_kraid_missiles_escape:
     dw $078D, $9156  ; DDB
     dw $079B, $A4DA  ; MDB
     dw $0911, $01AC  ; Screen X position in pixels
-    dw $0913, $1000  ; Screen subpixel Y position
+    dw $0913, $4400  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $0141  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
     dw $09C6, $0050  ; Missiles
     dw $09C8, $0096  ; Max missiles
     dw $09CE, $0014  ; Pbs
-    dw $0A1C, $002A  ; Samus position/state
-    dw $0A1E, $0604  ; More position/state
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
     dw $0AF6, $024C  ; Samus X
-    dw $0AFA, $00AD  ; Samus Y
+    dw $0AFA, $00AB  ; Samus Y
     dw $D874, $1F8E  ; Items
     dw #$FFFF
 
@@ -2151,15 +2247,15 @@ preset_hundo_golden_torizo_ice_missiles:
     dw $078D, $9246  ; DDB
     dw $079B, $A7DE  ; MDB
     dw $07F3, $0015  ; Music Bank
-    dw $090F, $C000  ; Screen subpixel X position
+    dw $090F, $7680  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $0323  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $025A  ; Layer 2 Y position
     dw $09C6, $0054  ; Missiles
     dw $09CA, $0010  ; Supers
     dw $09CE, $0013  ; Pbs
-    dw $0A1C, $00A5  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
     dw $0AF6, $002E  ; Samus X
     dw $0AFA, $0393  ; Samus Y
     dw #$FFFF
@@ -2171,12 +2267,13 @@ preset_hundo_golden_torizo_croc_speedway:
     dw $090F, $4000  ; Screen subpixel X position
     dw $0913, $2800  ; Screen subpixel Y position
     dw $0915, $0300  ; Screen Y position in pixels
+    dw $0919, $0240  ; Layer 2 Y position
     dw $09C2, $029B  ; Health
     dw $09C6, $0059  ; Missiles
     dw $09C8, $009B  ; Max missiles
     dw $09CE, $0012  ; Pbs
-    dw $0A1C, $0009  ; Samus position/state
-    dw $0A1E, $0108  ; More position/state
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
     dw $0AF6, $00E2  ; Samus X
     dw $0AFA, $038B  ; Samus Y
     dw $D876, $01AF  ; Items
@@ -2190,7 +2287,8 @@ preset_hundo_golden_torizo_kronic_boost:
     dw $0911, $0300  ; Screen X position in pixels
     dw $0913, $4400  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
-    dw $0A1C, $000F  ; Samus position/state
+    dw $0917, $0240  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
     dw $0AF6, $03C6  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
@@ -2200,20 +2298,21 @@ preset_hundo_golden_torizo_blue_fireball:
     dw $078D, $96F6  ; DDB
     dw $079B, $B236  ; MDB
     dw $07F3, $0018  ; Music Bank
-    dw $090F, $A000  ; Screen subpixel X position
     dw $0911, $0400  ; Screen X position in pixels
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $0200  ; Screen Y position in pixels
+    dw $0917, $0300  ; Layer 2 X position
+    dw $0919, $0301  ; Layer 2 Y position
     dw $09C2, $0298  ; Health
     dw $09CE, $0011  ; Pbs
     dw $0A1C, $009B  ; Samus position/state
     dw $0A1E, $0000  ; More position/state
     dw $0AF6, $0480  ; Samus X
-    dw $0AFA, $0285  ; Samus Y
+    dw $0AFA, $0288  ; Samus Y
     dw $D8BA, $01F1  ; Doors
     dw #$FFFF
 
-preset_hundo_golden_torizo_golden_torizo_2:
+preset_hundo_golden_torizo_golden_torizo:
     dw #preset_hundo_golden_torizo_blue_fireball ; Golden Torizo: Blue Fireball
     dw $078D, $983A  ; DDB
     dw $079B, $B283  ; MDB
@@ -2222,22 +2321,26 @@ preset_hundo_golden_torizo_golden_torizo_2:
     dw $090F, $C000  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
     dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
     dw $09C2, $0273  ; Health
     dw $09CE, $000F  ; Pbs
-    dw $0A1C, $0009  ; Samus position/state
-    dw $0A1E, $0108  ; More position/state
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
     dw $0AF6, $0027  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw $D820, $3801  ; Events
     dw #$FFFF
 
 preset_hundo_ridley_fast_ripper_room:
-    dw #preset_hundo_golden_torizo_golden_torizo_2 ; Golden Torizo: Golden Torizo
+    dw #preset_hundo_golden_torizo_golden_torizo ; Golden Torizo: Golden Torizo
     dw $078D, $9882  ; DDB
     dw $079B, $B6C1  ; MDB
     dw $090F, $6000  ; Screen subpixel X position
     dw $0913, $A000  ; Screen subpixel Y position
     dw $0915, $001B  ; Screen Y position in pixels
+    dw $0917, $0001  ; Layer 2 X position
+    dw $0919, $0014  ; Layer 2 Y position
     dw $09A2, $332E  ; Equipped Items
     dw $09A4, $332F  ; Collected Items
     dw $09C2, $024B  ; Health
@@ -2246,8 +2349,6 @@ preset_hundo_ridley_fast_ripper_room:
     dw $09CA, $0015  ; Supers
     dw $09CC, $002D  ; Max supers
     dw $09CE, $000E  ; Pbs
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
     dw $0AF6, $006E  ; Samus X
     dw $D82A, $0104  ; Bosses
     dw $D878, $80DE  ; Items
@@ -2264,9 +2365,10 @@ preset_hundo_ridley_writg:
     dw $0911, $0300  ; Screen X position in pixels
     dw $0913, $7C00  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $0240  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
     dw $09C2, $01FC  ; Health
     dw $09CA, $0014  ; Supers
-    dw $0A1C, $00A4  ; Samus position/state
     dw $0AF6, $03DB  ; Samus X
     dw #$FFFF
 
@@ -2278,7 +2380,8 @@ preset_hundo_ridley_mickey_mouse_missiles:
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $010D  ; Screen Y position in pixels
-    dw $0A1C, $0001  ; Samus position/state
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $00C9  ; Layer 2 Y position
     dw $0AF6, $0071  ; Samus X
     dw $0AFA, $017B  ; Samus Y
     dw #$FFFF
@@ -2286,14 +2389,13 @@ preset_hundo_ridley_mickey_mouse_missiles:
 preset_hundo_ridley_amphitheatre:
     dw #preset_hundo_ridley_mickey_mouse_missiles ; Ridley: Mickey Mouse Missiles
     dw $078D, $9936  ; DDB
-    dw $090F, $B001  ; Screen subpixel X position
-    dw $0913, $B400  ; Screen subpixel Y position
-    dw $0915, $0109  ; Screen Y position in pixels
+    dw $090F, $5000  ; Screen subpixel X position
+    dw $0915, $011D  ; Screen Y position in pixels
+    dw $0919, $00D5  ; Layer 2 Y position
     dw $09C2, $01CA  ; Health
     dw $09C6, $0063  ; Missiles
     dw $09C8, $00A5  ; Max missiles
     dw $09CA, $0015  ; Supers
-    dw $0A1C, $00A4  ; Samus position/state
     dw $0AF6, $00BD  ; Samus X
     dw $0AFA, $018B  ; Samus Y
     dw $D878, $82DE  ; Items
@@ -2303,14 +2405,13 @@ preset_hundo_ridley_kihunter_shaft_down:
     dw #preset_hundo_ridley_amphitheatre ; Ridley: Amphitheatre
     dw $078D, $997E  ; DDB
     dw $079B, $B4E5  ; MDB
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $0911, $027E  ; Screen X position in pixels
-    dw $0913, $7400  ; Screen subpixel Y position
-    dw $0915, $0032  ; Screen Y position in pixels
-    dw $0A1C, $0009  ; Samus position/state
-    dw $0A1E, $0108  ; More position/state
-    dw $0AF6, $02DE  ; Samus X
-    dw $0AFA, $00B4  ; Samus Y
+    dw $090F, $A080  ; Screen subpixel X position
+    dw $0911, $0241  ; Screen X position in pixels
+    dw $0915, $004D  ; Screen Y position in pixels
+    dw $0917, $01B0  ; Layer 2 X position
+    dw $0919, $0039  ; Layer 2 Y position
+    dw $0AF6, $02D5  ; Samus X
+    dw $0AFA, $00B9  ; Samus Y
     dw #$FFFF
 
 preset_hundo_ridley_wasteland_down:
@@ -2321,6 +2422,8 @@ preset_hundo_ridley_wasteland_down:
     dw $0911, $01F2  ; Screen X position in pixels
     dw $0913, $E400  ; Screen subpixel Y position
     dw $0915, $041F  ; Screen Y position in pixels
+    dw $0917, $0180  ; Layer 2 X position
+    dw $0919, $0312  ; Layer 2 Y position
     dw $09CE, $000C  ; Pbs
     dw $0A1C, $0079  ; Samus position/state
     dw $0A1E, $1108  ; More position/state
@@ -2368,35 +2471,36 @@ preset_hundo_ridley_plowerhouse_room:
     dw $D8BC, $0001  ; Doors
     dw #$FFFF
 
-preset_hundo_ridley_ridley_2:
+preset_hundo_ridley_ridley:
     dw #preset_hundo_ridley_plowerhouse_room ; Ridley: Plowerhouse Room
     dw $078D, $995A  ; DDB
     dw $079B, $B37A  ; MDB
     dw $090F, $E000  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $D800  ; Screen subpixel Y position
+    dw $0913, $B800  ; Screen subpixel Y position
+    dw $0917, $0000  ; Layer 2 X position
     dw $09C2, $0210  ; Health
     dw $09CA, $0017  ; Supers
-    dw $0A1C, $0082  ; Samus position/state
-    dw $0A1E, $0304  ; More position/state
-    dw $0AF6, $002C  ; Samus X
-    dw $0AFA, $0095  ; Samus Y
+    dw $0AF6, $002F  ; Samus X
+    dw $0AFA, $009B  ; Samus Y
     dw $D8BA, $D3F1  ; Doors
     dw #$FFFF
 
 preset_hundo_ridley_ridley_escape:
-    dw #preset_hundo_ridley_ridley_2 ; Ridley: Ridley
+    dw #preset_hundo_ridley_ridley ; Ridley: Ridley
     dw $078D, $98CA  ; DDB
     dw $079B, $B32E  ; MDB
     dw $07F3, $0024  ; Music Bank
     dw $07F5, $0003  ; Music Track
-    dw $0915, $011F  ; Screen Y position in pixels
+    dw $090F, $D000  ; Screen subpixel X position
+    dw $0913, $AC00  ; Screen subpixel Y position
+    dw $0915, $0102  ; Screen Y position in pixels
+    dw $0917, $0001  ; Layer 2 X position
+    dw $0919, $00C1  ; Layer 2 Y position
     dw $09C6, $0067  ; Missiles
     dw $09CA, $000F  ; Supers
     dw $09CE, $0012  ; Pbs
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $00C9  ; Samus X
+    dw $0AF6, $00CA  ; Samus X
     dw $0AFA, $019B  ; Samus Y
     dw $D82A, $0105  ; Bosses
     dw #$FFFF
@@ -2433,8 +2537,8 @@ preset_hundo_ridley_kihunter_shaft_up:
     dw $0917, $03C0  ; Layer 2 X position
     dw $09C2, $03F3  ; Health
     dw $09CE, $0011  ; Pbs
-    dw $0A1C, $000A  ; Samus position/state
-    dw $0A1E, $0104  ; More position/state
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
     dw $0AF6, $057F  ; Samus X
     dw $0AFA, $005B  ; Samus Y
     dw $0B3F, $0000  ; Blue suit
@@ -2447,6 +2551,7 @@ preset_hundo_ridley_firefleas_room:
     dw $090F, $FE7F  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $D000  ; Screen subpixel Y position
+    dw $0917, $0000  ; Layer 2 X position
     dw $09CE, $0010  ; Pbs
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
@@ -2461,7 +2566,7 @@ preset_hundo_ridley_hotarubi_special:
     dw $090F, $0000  ; Screen subpixel X position
     dw $0911, $0100  ; Screen X position in pixels
     dw $0913, $0000  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $0100  ; Layer 2 X position
     dw $09C2, $0512  ; Health
     dw $09C4, $0513  ; Max health
     dw $09CA, $000E  ; Supers
@@ -2475,14 +2580,16 @@ preset_hundo_ridley_3_muskateers:
     dw #preset_hundo_ridley_hotarubi_special ; Ridley: Hotarubi Special
     dw $078D, $9A92  ; DDB
     dw $079B, $B510  ; MDB
-    dw $090F, $2000  ; Screen subpixel X position
+    dw $090F, $C000  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
-    dw $0915, $001C  ; Screen Y position in pixels
+    dw $0915, $001D  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $0015  ; Layer 2 Y position
     dw $09C6, $006C  ; Missiles
     dw $09C8, $00AA  ; Max missiles
     dw $09CE, $0015  ; Pbs
     dw $09D0, $0028  ; Max pbs
-    dw $0AF6, $0071  ; Samus X
+    dw $0AF6, $006E  ; Samus X
     dw $D878, $DEDE  ; Items
     dw #$FFFF
 
@@ -2494,6 +2601,7 @@ preset_hundo_crocomire_bubble_mountain_revisit:
     dw $090F, $0000  ; Screen subpixel X position
     dw $0913, $2C00  ; Screen subpixel Y position
     dw $0915, $000B  ; Screen Y position in pixels
+    dw $0919, $0000  ; Layer 2 Y position
     dw $09C6, $006F  ; Missiles
     dw $09C8, $00AF  ; Max missiles
     dw $0A1C, $0012  ; Samus position/state
@@ -2554,7 +2662,7 @@ preset_hundo_crocomire_red_pirate_shaft:
     dw $D878, $FEDF  ; Items
     dw #$FFFF
 
-preset_hundo_crocomire_crocomire_2:
+preset_hundo_crocomire_crocomire:
     dw #preset_hundo_crocomire_red_pirate_shaft ; Crocomire: Red Pirate Shaft
     dw $078D, $974A  ; DDB
     dw $079B, $A923  ; MDB
@@ -2572,7 +2680,7 @@ preset_hundo_crocomire_crocomire_2:
     dw #$FFFF
 
 preset_hundo_crocomire_grapple_shaft_down:
-    dw #preset_hundo_crocomire_crocomire_2 ; Crocomire: Crocomire
+    dw #preset_hundo_crocomire_crocomire ; Crocomire: Crocomire
     dw $078D, $944A  ; DDB
     dw $079B, $AB07  ; MDB
     dw $090F, $4000  ; Screen subpixel X position
@@ -2599,16 +2707,20 @@ preset_hundo_crocomire_grapple_shaft_up:
     dw #preset_hundo_crocomire_grapple_shaft_down ; Crocomire: Grapple Shaft Down
     dw $078D, $9516  ; DDB
     dw $079B, $AB8F  ; MDB
-    dw $090F, $F000  ; Screen subpixel X position
-    dw $0911, $05B0  ; Screen X position in pixels
-    dw $0913, $B400  ; Screen subpixel Y position
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $05B1  ; Screen X position in pixels
+    dw $0913, $9000  ; Screen subpixel Y position
     dw $0915, $0200  ; Screen Y position in pixels
+    dw $0917, $0444  ; Layer 2 X position
+    dw $0919, $0200  ; Layer 2 Y position
     dw $09A2, $732E  ; Equipped Items
     dw $09A4, $732F  ; Collected Items
     dw $09C6, $008A  ; Missiles
     dw $09C8, $00C3  ; Max missiles
     dw $09CE, $0018  ; Pbs
-    dw $0AF6, $0610  ; Samus X
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $0611  ; Samus X
     dw $0AFA, $028B  ; Samus Y
     dw $D876, $FBBF  ; Items
     dw #$FFFF
@@ -2617,15 +2729,18 @@ preset_hundo_crocomire_crocomire_room_revisit:
     dw #preset_hundo_crocomire_grapple_shaft_up ; Crocomire: Grapple Shaft Up
     dw $078D, $947A  ; DDB
     dw $079B, $AA82  ; MDB
-    dw $090F, $0000  ; Screen subpixel X position
     dw $0911, $0100  ; Screen X position in pixels
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $0002  ; Screen Y position in pixels
+    dw $0917, $0100  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
     dw $09C2, $053F  ; Health
     dw $09C6, $0093  ; Missiles
     dw $09C8, $00C8  ; Max missiles
     dw $09CA, $000D  ; Supers
     dw $09CE, $0019  ; Pbs
+    dw $0A1C, $0009  ; Samus position/state
+    dw $0A1E, $0108  ; More position/state
     dw $0AF6, $01CD  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw $D876, $FFBF  ; Items
@@ -2640,6 +2755,7 @@ preset_hundo_crocomire_croc_escape:
     dw $0911, $0C00  ; Screen X position in pixels
     dw $0913, $4800  ; Screen subpixel Y position
     dw $0915, $0015  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
     dw $09C2, $053E  ; Health
     dw $09CA, $000F  ; Supers
     dw $0A1C, $000A  ; Samus position/state
@@ -2667,7 +2783,7 @@ preset_hundo_crocomire_business_center_climb_final:
     dw $D876, $FFFF  ; Items
     dw #$FFFF
 
-preset_hundo_brinstar_cleanup_2_below_spazer:
+preset_hundo_final_cleanup_below_spazer:
     dw #preset_hundo_crocomire_business_center_climb_final ; Crocomire: Business Center Climb Final
     dw $078D, $A33C  ; DDB
     dw $079B, $CF54  ; MDB
@@ -2679,8 +2795,8 @@ preset_hundo_brinstar_cleanup_2_below_spazer:
     dw $0AF6, $00C7  ; Samus X
     dw #$FFFF
 
-preset_hundo_brinstar_cleanup_2_red_tower_xray:
-    dw #preset_hundo_brinstar_cleanup_2_below_spazer ; Brinstar Cleanup: Below Spazer
+preset_hundo_final_cleanup_red_tower_xray:
+    dw #preset_hundo_final_cleanup_below_spazer ; Final Cleanup: Below Spazer
     dw $078D, $910E  ; DDB
     dw $079B, $A3DD  ; MDB
     dw $090F, $E000  ; Screen subpixel X position
@@ -2691,23 +2807,24 @@ preset_hundo_brinstar_cleanup_2_red_tower_xray:
     dw $0AFA, $0098  ; Samus Y
     dw #$FFFF
 
-preset_hundo_brinstar_cleanup_2_red_brinstar_firefleas:
-    dw #preset_hundo_brinstar_cleanup_2_red_tower_xray ; Brinstar Cleanup: Red Tower X-Ray
+preset_hundo_final_cleanup_red_brinstar_firefleas:
+    dw #preset_hundo_final_cleanup_red_tower_xray ; Final Cleanup: Red Tower X-Ray
     dw $078D, $90F6  ; DDB
     dw $079B, $A253  ; MDB
     dw $090F, $5000  ; Screen subpixel X position
-    dw $0913, $FBFF  ; Screen subpixel Y position
-    dw $0915, $061A  ; Screen Y position in pixels
+    dw $0913, $F000  ; Screen subpixel Y position
+    dw $0915, $061B  ; Screen Y position in pixels
+    dw $0919, $0494  ; Layer 2 Y position
     dw $09CE, $0018  ; Pbs
-    dw $0A1C, $00A7  ; Samus position/state
+    dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $0039  ; Samus X
     dw $0AFA, $068B  ; Samus Y
     dw $D8B6, $EAF9  ; Doors
     dw #$FFFF
 
-preset_hundo_brinstar_cleanup_2_red_brinstar_firefleas_2:
-    dw #preset_hundo_brinstar_cleanup_2_red_brinstar_firefleas ; Brinstar Cleanup: Red Brinstar Firefleas
+preset_hundo_final_cleanup_leaving_xray:
+    dw #preset_hundo_final_cleanup_red_brinstar_firefleas ; Final Cleanup: Red Brinstar Firefleas
     dw $078D, $905A  ; DDB
     dw $079B, $A2CE  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -2715,6 +2832,7 @@ preset_hundo_brinstar_cleanup_2_red_brinstar_firefleas_2:
     dw $0911, $0100  ; Screen X position in pixels
     dw $0913, $8400  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
+    dw $0919, $0000  ; Layer 2 Y position
     dw $09A2, $F32E  ; Equipped Items
     dw $09A4, $F32F  ; Collected Items
     dw $09C2, $04A9  ; Health
@@ -2728,8 +2846,8 @@ preset_hundo_brinstar_cleanup_2_red_brinstar_firefleas_2:
     dw $D8B6, $EEF9  ; Doors
     dw #$FFFF
 
-preset_hundo_brinstar_cleanup_2_reverse_slinky:
-    dw #preset_hundo_brinstar_cleanup_2_red_brinstar_firefleas_2 ; Brinstar Cleanup: Red Brinstar Firefleas 2
+preset_hundo_final_cleanup_reverse_slinky:
+    dw #preset_hundo_final_cleanup_leaving_xray ; Final Cleanup: Leaving X-Ray
     dw $078D, $902A  ; DDB
     dw $079B, $9FBA  ; MDB
     dw $07F3, $000F  ; Music Bank
@@ -2745,8 +2863,8 @@ preset_hundo_brinstar_cleanup_2_reverse_slinky:
     dw $0AFA, $004B  ; Samus Y
     dw #$FFFF
 
-preset_hundo_brinstar_cleanup_2_retro_brinstar_hoppers:
-    dw #preset_hundo_brinstar_cleanup_2_reverse_slinky ; Brinstar Cleanup: Reverse Slinky
+preset_hundo_final_cleanup_retro_brinstar_hoppers:
+    dw #preset_hundo_final_cleanup_reverse_slinky ; Final Cleanup: Reverse Slinky
     dw $078D, $8EFE  ; DDB
     dw $079B, $9E52  ; MDB
     dw $090F, $5FFF  ; Screen subpixel X position
@@ -2759,8 +2877,8 @@ preset_hundo_brinstar_cleanup_2_retro_brinstar_hoppers:
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 
-preset_hundo_brinstar_cleanup_2_retro_brinstar_etank:
-    dw #preset_hundo_brinstar_cleanup_2_retro_brinstar_hoppers ; Brinstar Cleanup: Retro Brinstar Hoppers
+preset_hundo_final_cleanup_retro_brinstar_etank:
+    dw #preset_hundo_final_cleanup_retro_brinstar_hoppers ; Final Cleanup: Retro Brinstar Hoppers
     dw $078D, $8E86  ; DDB
     dw $079B, $9E9F  ; MDB
     dw $07F3, $0009  ; Music Bank
@@ -2777,8 +2895,8 @@ preset_hundo_brinstar_cleanup_2_retro_brinstar_etank:
     dw $D872, $CFEF  ; Items
     dw #$FFFF
 
-preset_hundo_brinstar_cleanup_2_billy_mays:
-    dw #preset_hundo_brinstar_cleanup_2_retro_brinstar_etank ; Brinstar Cleanup: Retro Brinstar E-Tank
+preset_hundo_final_cleanup_billy_mays:
+    dw #preset_hundo_final_cleanup_retro_brinstar_etank ; Final Cleanup: Retro Brinstar E-Tank
     dw $078D, $8ECE  ; DDB
     dw $079B, $9F64  ; MDB
     dw $090F, $A001  ; Screen subpixel X position
@@ -2797,8 +2915,8 @@ preset_hundo_brinstar_cleanup_2_billy_mays:
     dw $D8B6, $EEFD  ; Doors
     dw #$FFFF
 
-preset_hundo_brinstar_cleanup_2_billy_mays_escape:
-    dw #preset_hundo_brinstar_cleanup_2_billy_mays ; Brinstar Cleanup: Billy Mays
+preset_hundo_final_cleanup_billy_mays_escape:
+    dw #preset_hundo_final_cleanup_billy_mays ; Final Cleanup: Billy Mays
     dw $078D, $8FEE  ; DDB
     dw $079B, $A1D8  ; MDB
     dw $090F, $4000  ; Screen subpixel X position
@@ -2813,8 +2931,8 @@ preset_hundo_brinstar_cleanup_2_billy_mays_escape:
     dw $D874, $1FFE  ; Items
     dw #$FFFF
 
-preset_hundo_brinstar_cleanup_2_retro_brinstar_escape:
-    dw #preset_hundo_brinstar_cleanup_2_billy_mays_escape ; Brinstar Cleanup: Billy Mays Escape
+preset_hundo_final_cleanup_retro_brinstar_escape:
+    dw #preset_hundo_final_cleanup_billy_mays_escape ; Final Cleanup: Billy Mays Escape
     dw $078D, $8FE2  ; DDB
     dw $079B, $9F64  ; MDB
     dw $090F, $6000  ; Screen subpixel X position
@@ -2832,8 +2950,8 @@ preset_hundo_brinstar_cleanup_2_retro_brinstar_escape:
     dw $D872, $FFEF  ; Items
     dw #$FFFF
 
-preset_hundo_brinstar_cleanup_2_pit_room_2:
-    dw #preset_hundo_brinstar_cleanup_2_retro_brinstar_escape ; Brinstar Cleanup: Retro Brinstar Escape
+preset_hundo_final_cleanup_pit_room_missiles:
+    dw #preset_hundo_final_cleanup_retro_brinstar_escape ; Final Cleanup: Retro Brinstar Escape
     dw $078D, $8EB6  ; DDB
     dw $079B, $97B5  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -2846,8 +2964,8 @@ preset_hundo_brinstar_cleanup_2_pit_room_2:
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 
-preset_hundo_brinstar_cleanup_2_climb_supers:
-    dw #preset_hundo_brinstar_cleanup_2_pit_room_2 ; Brinstar Cleanup: Pit Room
+preset_hundo_final_cleanup_climb_supers:
+    dw #preset_hundo_final_cleanup_pit_room_missiles ; Final Cleanup: Pit Room Missiles
     dw $078D, $8B92  ; DDB
     dw $079B, $975C  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -2859,8 +2977,8 @@ preset_hundo_brinstar_cleanup_2_climb_supers:
     dw $D870, $E7FF  ; Items
     dw #$FFFF
 
-preset_hundo_brinstar_cleanup_2_the_last_missiles:
-    dw #preset_hundo_brinstar_cleanup_2_climb_supers ; Brinstar Cleanup: Climb Supers
+preset_hundo_final_cleanup_the_last_missiles:
+    dw #preset_hundo_final_cleanup_climb_supers ; Final Cleanup: Climb Supers
     dw $078D, $8B3E  ; DDB
     dw $079B, $92FD  ; MDB
     dw $090F, $8000  ; Screen subpixel X position
@@ -2879,8 +2997,8 @@ preset_hundo_brinstar_cleanup_2_the_last_missiles:
     dw $D8B2, $2C09  ; Doors
     dw #$FFFF
 
-preset_hundo_brinstar_cleanup_2_the_last_missiles_escape:
-    dw #preset_hundo_brinstar_cleanup_2_the_last_missiles ; Brinstar Cleanup: The Last Missiles
+preset_hundo_final_cleanup_the_last_missiles_escape:
+    dw #preset_hundo_final_cleanup_the_last_missiles ; Final Cleanup: The Last Missiles
     dw $078D, $8C82  ; DDB
     dw $079B, $9A90  ; MDB
     dw $090F, $F000  ; Screen subpixel X position
@@ -2898,15 +3016,13 @@ preset_hundo_brinstar_cleanup_2_the_last_missiles_escape:
     dw #$FFFF
 
 preset_hundo_tourian_metroids_1:
-    dw #preset_hundo_brinstar_cleanup_2_the_last_missiles_escape ; Brinstar Cleanup: The Last Missiles Escape
+    dw #preset_hundo_final_cleanup_the_last_missiles_escape ; Final Cleanup: The Last Missiles Escape
     dw $078D, $9222  ; DDB
     dw $079B, $DAAE  ; MDB
     dw $07F3, $001E  ; Music Bank
     dw $090F, $C001  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $4FFF  ; Screen subpixel Y position
     dw $0915, $0300  ; Screen Y position in pixels
-    dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0240  ; Layer 2 Y position
     dw $09C2, $054B  ; Health
     dw $09C6, $00B5  ; Missiles
@@ -3014,7 +3130,6 @@ preset_hundo_tourian_after_baby_skip:
     dw $0919, $0006  ; Layer 2 Y position
     dw $0AF6, $00AC  ; Samus X
     dw $0AFA, $008B  ; Samus Y
-    dw $D822, $002F  ; Events
     dw $D8C4, $002F  ; Doors
     dw #$FFFF
 
@@ -3023,7 +3138,6 @@ preset_hundo_tourian_zeb_skip:
     dw $078D, $AAA4  ; DDB
     dw $079B, $DDF3  ; MDB
     dw $090F, $F000  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $021D  ; Screen Y position in pixels
     dw $0919, $0195  ; Layer 2 Y position
@@ -3052,7 +3166,7 @@ preset_hundo_tourian_mother_brain_2:
 
 preset_hundo_tourian_zebes_escape:
     dw #preset_hundo_tourian_mother_brain_2 ; Tourian: Mother Brain 2
-    dw $09A6, $1009  ; Beams
+    dw $09A6, $1009  ; Equipped Beams
     dw $09C2, $05DB  ; Health
     dw $09C6, $007F  ; Missiles
     dw $09CA, $0000  ; Supers

@@ -231,7 +231,7 @@ endif
 ; Hooks
 ; -----
 
-org $83B000
+org $83AE00
 print pc, " rng start"
 
 hook_hopper_set_rng:
@@ -568,7 +568,7 @@ hook_botwoon_spit:
 }
 
 print pc, " rng end"
-warnpc $83B400 ; custompresets.asm
+warnpc $83B000 ; custompresets.asm
 
 
 org $A4F700
@@ -709,7 +709,7 @@ print pc, " ridley rng start"
 
 ridley_init_hook:
 {
-    LDA $079B : CMP #$E0B5 : BNE .continue
+    LDA $079B : CMP #ROOM_CeresRidleyRoom : BNE .continue
     LDA $7ED82E : BIT #$0001 : BEQ .continue
 
     ; Ceres Ridley is already dead, so skip to the escape

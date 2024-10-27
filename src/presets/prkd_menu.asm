@@ -121,7 +121,7 @@ presets_submenu_prkd_upper_norfair:
     dw #presets_prkd_upper_norfair_business_center_postelev
     dw #presets_prkd_upper_norfair_hi_jump_etank
     dw #presets_prkd_upper_norfair_leaving_hi_jump
-    dw #presets_prkd_upper_norfair_business_center_2
+    dw #presets_prkd_upper_norfair_business_center_revisit
     dw #presets_prkd_upper_norfair_ice_beam_gates
     dw #presets_prkd_upper_norfair_ice_maze_up
     dw #presets_prkd_upper_norfair_ice_maze_down
@@ -196,7 +196,7 @@ presets_submenu_prkd_kraid:
     dw #presets_prkd_kraid_entering_kraids_lair
     dw #presets_prkd_kraid_kraid_kihunters
     dw #presets_prkd_kraid_mini_kraid
-    dw #presets_prkd_kraid_kraid_2
+    dw #presets_prkd_kraid_kraid
     dw #presets_prkd_kraid_leaving_varia
     dw #presets_prkd_kraid_mini_kraid_revisit
     dw #presets_prkd_kraid_kraid_kihunters_revisit
@@ -440,8 +440,8 @@ presets_prkd_upper_norfair_hi_jump_etank:
 presets_prkd_upper_norfair_leaving_hi_jump:
     %cm_preset("Leaving Hi Jump", #preset_prkd_upper_norfair_leaving_hi_jump)
 
-presets_prkd_upper_norfair_business_center_2:
-    %cm_preset("Business Center 2", #preset_prkd_upper_norfair_business_center_2)
+presets_prkd_upper_norfair_business_center_revisit:
+    %cm_preset("Business Center Revisit", #preset_prkd_upper_norfair_business_center_revisit)
 
 presets_prkd_upper_norfair_ice_beam_gates:
     %cm_preset("Ice Beam Gates", #preset_prkd_upper_norfair_ice_beam_gates)
@@ -600,8 +600,8 @@ presets_prkd_kraid_kraid_kihunters:
 presets_prkd_kraid_mini_kraid:
     %cm_preset("Mini Kraid", #preset_prkd_kraid_mini_kraid)
 
-presets_prkd_kraid_kraid_2:
-    %cm_preset("Kraid", #preset_prkd_kraid_kraid_2)
+presets_prkd_kraid_kraid:
+    %cm_preset("Kraid", #preset_prkd_kraid_kraid)
 
 presets_prkd_kraid_leaving_varia:
     %cm_preset("Leaving Varia", #preset_prkd_kraid_leaving_varia)
