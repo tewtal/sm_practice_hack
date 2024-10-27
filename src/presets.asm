@@ -490,7 +490,10 @@ endif
     LDA !LAYER2_Y : STA !BG2_Y_OFFSET ; BG2 Y scroll = layer 2 Y scroll position
 
   .layer_2_loaded
+    LDA !ROOM_ID : CMP #ROOM_CeresElevatorRoom : BPL .bg1_offsets_set
     TDC : STA !BG1_X_OFFSET : STA !BG1_Y_OFFSET
+
+  .bg1_offsets_set
     JSR $A37B    ; Calculate BG positions
 
     ; Fix BG2 Y offsets for rooms with scrolling sky
