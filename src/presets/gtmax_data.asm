@@ -1873,6 +1873,8 @@ preset_gtmax_maridia_predraygon_halfie_setup:
     dw $09CA, $0011  ; Supers
     dw $09CE, $0023  ; Pbs
     dw $09D6, $0190  ; Reserves
+    dw $0A1C, $009B  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
     dw $0AF6, $0079  ; Samus X
     dw $0AFA, $009B  ; Samus Y
     dw $D82C, $0002  ; Bosses

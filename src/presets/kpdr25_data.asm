@@ -1167,6 +1167,8 @@ preset_kpdr25_maridia_halfie:
     dw $09C4, $01F3  ; Max health
     dw $09C6, $0019  ; Missiles
     dw $09CA, $0002  ; Supers
+    dw $0A1C, $009B  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
     dw $0AF6, $00AD  ; Samus X
     dw $0AFA, $009B  ; Samus Y
     dw $D82C, $0002  ; Bosses

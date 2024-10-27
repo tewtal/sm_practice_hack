@@ -357,7 +357,7 @@ preset_gtclassic_brinstar_green_brinstar_elevator:
     dw $0A1C, $0000  ; Samus position/state
     dw $0A1E, $0000  ; More position/state
     dw $0AF6, $0080  ; Samus X
-    dw $0AFA, $008F  ; Samus Y
+    dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 
 preset_gtclassic_brinstar_early_supers:
@@ -1619,6 +1619,8 @@ preset_gtclassic_maridia_halfie_setup:
     dw $09C2, $0253  ; Health
     dw $09CA, $0014  ; Supers
     dw $09CE, $000F  ; Pbs
+    dw $0A1C, $009B  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
     dw $0AF6, $00A0  ; Samus X
     dw $0AFA, $009B  ; Samus Y
     dw $D82C, $0002  ; Bosses
