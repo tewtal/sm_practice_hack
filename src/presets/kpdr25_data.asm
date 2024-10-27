@@ -1170,7 +1170,7 @@ preset_kpdr25_maridia_halfie:
     dw $0A1C, $009B  ; Samus position/state
     dw $0A1E, $0000  ; More position/state
     dw $0AF6, $00AD  ; Samus X
-    dw $0AFA, $009B  ; Samus Y
+    dw $0AFA, $0098  ; Samus Y
     dw $D82C, $0002  ; Bosses
     dw $D882, $0100  ; Items
     dw #$FFFF

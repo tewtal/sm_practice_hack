@@ -1589,7 +1589,7 @@ preset_hundo_mama_turtle_etank_blockbuster:
     dw $0A1C, $009B  ; Samus position/state
     dw $0A1E, $0000  ; More position/state
     dw $0AF6, $0081  ; Samus X
-    dw $0AFA, $00AB  ; Samus Y
+    dw $0AFA, $00A8  ; Samus Y
     dw $D872, $C7EF  ; Items
     dw $D8B6, $E8F9  ; Doors
     dw #$FFFF
@@ -1610,7 +1610,7 @@ preset_hundo_mama_turtle_etank_breaking_the_tube:
     dw $09CE, $000F  ; Pbs
     dw $09D2, $0003  ; Currently selected item
     dw $0AF6, $003A  ; Samus X
-    dw $0AFA, $018B  ; Samus Y
+    dw $0AFA, $0188  ; Samus Y
     dw #$FFFF
 
 preset_hundo_mama_turtle_etank_main_street:
@@ -1627,7 +1627,7 @@ preset_hundo_mama_turtle_etank_main_street:
     dw $0919, $0557  ; Layer 2 Y position
     dw $09D2, $0000  ; Currently selected item
     dw $0AF6, $0198  ; Samus X
-    dw $0AFA, $07BB  ; Samus Y
+    dw $0AFA, $07B8  ; Samus Y
     dw $D820, $0801  ; Events
     dw #$FFFF
 
@@ -1644,7 +1644,7 @@ preset_hundo_mama_turtle_etank_fish_tank:
     dw $09C8, $006E  ; Max missiles
     dw $09CE, $0010  ; Pbs
     dw $0AF6, $0165  ; Samus X
-    dw $0AFA, $068B  ; Samus Y
+    dw $0AFA, $0688  ; Samus Y
     dw $D880, $01FF  ; Items
     dw #$FFFF
 
@@ -1700,7 +1700,7 @@ preset_hundo_maridia_beach_crab_supers:
     dw $0A1C, $009B  ; Samus position/state
     dw $0A1E, $0000  ; More position/state
     dw $0AF6, $0185  ; Samus X
-    dw $0AFA, $03BB  ; Samus Y
+    dw $0AFA, $03B8  ; Samus Y
     dw #$FFFF
 
 preset_hundo_maridia_beach_mt_everest:
@@ -1860,7 +1860,7 @@ preset_hundo_draygon_full_halfie:
     dw $0A1C, $009B  ; Samus position/state
     dw $0A1E, $0000  ; More position/state
     dw $0AF6, $004B  ; Samus X
-    dw $0AFA, $009B  ; Samus Y
+    dw $0AFA, $0098  ; Samus Y
     dw $D82C, $0002  ; Bosses
     dw #$FFFF
 

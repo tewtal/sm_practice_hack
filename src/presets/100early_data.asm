@@ -1823,7 +1823,7 @@ preset_100early_maridia_predraygon_mt_everest:
     dw $0A1C, $009B  ; Samus position/state
     dw $0A1E, $0000  ; More position/state
     dw $0AF6, $0178  ; Samus X
-    dw $0AFA, $03BB  ; Samus Y
+    dw $0AFA, $03B8  ; Samus Y
     dw $D880, $0FFF  ; Items
     dw #$FFFF
 

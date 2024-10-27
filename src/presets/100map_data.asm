@@ -2703,7 +2703,7 @@ preset_100map_space_jump_over_under_spark:
     dw $0A1C, $009B  ; Samus position/state
     dw $0A1E, $0000  ; More position/state
     dw $0AF6, $00CA  ; Samus X
-    dw $0AFA, $009B  ; Samus Y
+    dw $0AFA, $0098  ; Samus Y
     dw $CAE8, $027C  ; Map counter
     dw $D82C, $0002  ; Bosses
     dw #$FFFF

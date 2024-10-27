@@ -1,10 +1,10 @@
 PresetsMenuNintendopower:
     dw #presets_goto_nintendopower_crateria
-    dw #presets_goto_nintendopower_brinstar
-    dw #presets_goto_nintendopower_norfair
+    dw #presets_goto_nintendopower_spore_spawn
+    dw #presets_goto_nintendopower_shopping_with_power
     dw #presets_goto_nintendopower_wrecked_ship
     dw #presets_goto_nintendopower_maridia
-    dw #presets_goto_nintendopower_norfair_2
+    dw #presets_goto_nintendopower_norfair
     dw #presets_goto_nintendopower_tourian
     dw #$0000
     %cm_header("PRESETS FOR NINTENDO POWER")
@@ -12,11 +12,11 @@ PresetsMenuNintendopower:
 presets_goto_nintendopower_crateria:
     %cm_submenu("Crateria", #presets_submenu_nintendopower_crateria)
 
-presets_goto_nintendopower_brinstar:
-    %cm_submenu("Brinstar", #presets_submenu_nintendopower_brinstar)
+presets_goto_nintendopower_spore_spawn:
+    %cm_submenu("Spore Spawn", #presets_submenu_nintendopower_spore_spawn)
 
-presets_goto_nintendopower_norfair:
-    %cm_submenu("Norfair", #presets_submenu_nintendopower_norfair)
+presets_goto_nintendopower_shopping_with_power:
+    %cm_submenu("Shopping With Power", #presets_submenu_nintendopower_shopping_with_power)
 
 presets_goto_nintendopower_wrecked_ship:
     %cm_submenu("Wrecked Ship", #presets_submenu_nintendopower_wrecked_ship)
@@ -24,8 +24,8 @@ presets_goto_nintendopower_wrecked_ship:
 presets_goto_nintendopower_maridia:
     %cm_submenu("Maridia", #presets_submenu_nintendopower_maridia)
 
-presets_goto_nintendopower_norfair_2:
-    %cm_submenu("Norfair 2", #presets_submenu_nintendopower_norfair_2)
+presets_goto_nintendopower_norfair:
+    %cm_submenu("Norfair", #presets_submenu_nintendopower_norfair)
 
 presets_goto_nintendopower_tourian:
     %cm_submenu("Tourian", #presets_submenu_nintendopower_tourian)
@@ -53,38 +53,38 @@ presets_submenu_nintendopower_crateria:
     dw #$0000
     %cm_header("CRATERIA")
 
-presets_submenu_nintendopower_brinstar:
-    dw #presets_nintendopower_brinstar_green_brinstar_elevator
-    dw #presets_nintendopower_brinstar_big_pink
-    dw #presets_nintendopower_brinstar_spore_spawn
-    dw #presets_nintendopower_brinstar_spore_fall
-    dw #presets_nintendopower_brinstar_red_tower
+presets_submenu_nintendopower_spore_spawn:
+    dw #presets_nintendopower_spore_spawn_green_brinstar_elevator
+    dw #presets_nintendopower_spore_spawn_big_pink
+    dw #presets_nintendopower_spore_spawn_spore_spawn
+    dw #presets_nintendopower_spore_spawn_spore_fall
+    dw #presets_nintendopower_spore_spawn_red_tower
     dw #$0000
-    %cm_header("BRINSTAR")
+    %cm_header("SPORE SPAWN")
 
-presets_submenu_nintendopower_norfair:
-    dw #presets_nintendopower_norfair_business_center
-    dw #presets_nintendopower_norfair_kraid_warehouse
-    dw #presets_nintendopower_norfair_kraid_fight
-    dw #presets_nintendopower_norfair_rising_tide
-    dw #presets_nintendopower_norfair_reserve_tank
-    dw #presets_nintendopower_norfair_ice_beam
-    dw #presets_nintendopower_norfair_ice_escape
-    dw #presets_nintendopower_norfair_shinespark_to_power_bombs
-    dw #presets_nintendopower_norfair_business_center_2
-    dw #presets_nintendopower_norfair_crocomire
-    dw #presets_nintendopower_norfair_grapple_beam
-    dw #presets_nintendopower_norfair_exit_grapple_beam
-    dw #presets_nintendopower_norfair_power_bombs_post_croc
-    dw #presets_nintendopower_norfair_red_pirate_shaft
-    dw #presets_nintendopower_norfair_bubble_mountain
-    dw #presets_nintendopower_norfair_wave_beam
-    dw #presets_nintendopower_norfair_shinespark_2
-    dw #presets_nintendopower_norfair_xray_beam
-    dw #presets_nintendopower_norfair_xray_beam_2
-    dw #presets_nintendopower_norfair_xray_beam_3
+presets_submenu_nintendopower_shopping_with_power:
+    dw #presets_nintendopower_shopping_with_power_hi_jump_first
+    dw #presets_nintendopower_shopping_with_power_kraid_warehouse
+    dw #presets_nintendopower_shopping_with_power_kraid_fight
+    dw #presets_nintendopower_shopping_with_power_rising_tide
+    dw #presets_nintendopower_shopping_with_power_reserve_tank
+    dw #presets_nintendopower_shopping_with_power_ice_beam
+    dw #presets_nintendopower_shopping_with_power_ice_escape
+    dw #presets_nintendopower_shopping_with_power_shinespark_to_power_bombs
+    dw #presets_nintendopower_shopping_with_power_heading_to_croc
+    dw #presets_nintendopower_shopping_with_power_crocomire
+    dw #presets_nintendopower_shopping_with_power_grapple_beam
+    dw #presets_nintendopower_shopping_with_power_exit_grapple_beam
+    dw #presets_nintendopower_shopping_with_power_power_bombs_post_croc
+    dw #presets_nintendopower_shopping_with_power_red_pirate_shaft
+    dw #presets_nintendopower_shopping_with_power_bubble_mountain
+    dw #presets_nintendopower_shopping_with_power_wave_beam
+    dw #presets_nintendopower_shopping_with_power_heading_to_xray
+    dw #presets_nintendopower_shopping_with_power_xray_entry
+    dw #presets_nintendopower_shopping_with_power_xray_beam
+    dw #presets_nintendopower_shopping_with_power_xray_exit
     dw #$0000
-    %cm_header("NORFAIR")
+    %cm_header("SHOPPING WITH POWER")
 
 presets_submenu_nintendopower_wrecked_ship:
     dw #presets_nintendopower_wrecked_ship_red_brinstar_elevator
@@ -95,7 +95,7 @@ presets_submenu_nintendopower_wrecked_ship:
     dw #presets_nintendopower_wrecked_ship_attic
     dw #presets_nintendopower_wrecked_ship_bowling_alley
     dw #presets_nintendopower_wrecked_ship_gravity_suit_room
-    dw #presets_nintendopower_wrecked_ship_red_tower_3
+    dw #presets_nintendopower_wrecked_ship_heading_to_maridia
     dw #$0000
     %cm_header("WRECKED SHIP")
 
@@ -111,24 +111,24 @@ presets_submenu_nintendopower_maridia:
     dw #presets_nintendopower_maridia_botwoon
     dw #presets_nintendopower_maridia_full_halfie
     dw #presets_nintendopower_maridia_draygon
-    dw #presets_nintendopower_maridia_going_to_plasma_beam
+    dw #presets_nintendopower_maridia_heading_to_plasma
     dw #presets_nintendopower_maridia_plasma_beam
     dw #presets_nintendopower_maridia_long_tube
     dw #$0000
     %cm_header("MARIDIA")
 
-presets_submenu_nintendopower_norfair_2:
-    dw #presets_nintendopower_norfair_2_pre_gt_fight
-    dw #presets_nintendopower_norfair_2_elevator_menu
-    dw #presets_nintendopower_norfair_2_golden_torizo
-    dw #presets_nintendopower_norfair_2_on_route_to_ridley
-    dw #presets_nintendopower_norfair_2_worst_room_in_the_game
-    dw #presets_nintendopower_norfair_2_metal_ninja_pirates
-    dw #presets_nintendopower_norfair_2_ridley
-    dw #presets_nintendopower_norfair_2_escape_from_ridley
-    dw #presets_nintendopower_norfair_2_landing_site
+presets_submenu_nintendopower_norfair:
+    dw #presets_nintendopower_norfair_pre_gt_fight
+    dw #presets_nintendopower_norfair_elevator_menu
+    dw #presets_nintendopower_norfair_golden_torizo
+    dw #presets_nintendopower_norfair_on_route_to_ridley
+    dw #presets_nintendopower_norfair_worst_room_in_the_game
+    dw #presets_nintendopower_norfair_metal_ninja_pirates
+    dw #presets_nintendopower_norfair_ridley
+    dw #presets_nintendopower_norfair_escape_from_ridley
+    dw #presets_nintendopower_norfair_landing_site
     dw #$0000
-    %cm_header("NORFAIR 2")
+    %cm_header("NORFAIR")
 
 presets_submenu_nintendopower_tourian:
     dw #presets_nintendopower_tourian_metroids_1
@@ -205,83 +205,83 @@ presets_nintendopower_crateria_green_pirate_shaft:
     %cm_preset("Green Pirate Shaft", #preset_nintendopower_crateria_green_pirate_shaft)
 
 
-; Brinstar
-presets_nintendopower_brinstar_green_brinstar_elevator:
-    %cm_preset("Green Brinstar Elevator", #preset_nintendopower_brinstar_green_brinstar_elevator)
+; Spore Spawn
+presets_nintendopower_spore_spawn_green_brinstar_elevator:
+    %cm_preset("Green Brinstar Elevator", #preset_nintendopower_spore_spawn_green_brinstar_elevator)
 
-presets_nintendopower_brinstar_big_pink:
-    %cm_preset("Big Pink", #preset_nintendopower_brinstar_big_pink)
+presets_nintendopower_spore_spawn_big_pink:
+    %cm_preset("Big Pink", #preset_nintendopower_spore_spawn_big_pink)
 
-presets_nintendopower_brinstar_spore_spawn:
-    %cm_preset("Spore Spawn", #preset_nintendopower_brinstar_spore_spawn)
+presets_nintendopower_spore_spawn_spore_spawn:
+    %cm_preset("Spore Spawn", #preset_nintendopower_spore_spawn_spore_spawn)
 
-presets_nintendopower_brinstar_spore_fall:
-    %cm_preset("Spore Fall", #preset_nintendopower_brinstar_spore_fall)
+presets_nintendopower_spore_spawn_spore_fall:
+    %cm_preset("Spore Fall", #preset_nintendopower_spore_spawn_spore_fall)
 
-presets_nintendopower_brinstar_red_tower:
-    %cm_preset("Red Tower", #preset_nintendopower_brinstar_red_tower)
+presets_nintendopower_spore_spawn_red_tower:
+    %cm_preset("Red Tower", #preset_nintendopower_spore_spawn_red_tower)
 
 
 ; Norfair
-presets_nintendopower_norfair_business_center:
-    %cm_preset("Business Center", #preset_nintendopower_norfair_business_center)
+presets_nintendopower_shopping_with_power_hi_jump_first:
+    %cm_preset("Hi Jump First", #preset_nintendopower_shopping_with_power_hi_jump_first)
 
-presets_nintendopower_norfair_kraid_warehouse:
-    %cm_preset("Kraid Warehouse", #preset_nintendopower_norfair_kraid_warehouse)
+presets_nintendopower_shopping_with_power_kraid_warehouse:
+    %cm_preset("Kraid Warehouse", #preset_nintendopower_shopping_with_power_kraid_warehouse)
 
-presets_nintendopower_norfair_kraid_fight:
-    %cm_preset("Kraid Fight", #preset_nintendopower_norfair_kraid_fight)
+presets_nintendopower_shopping_with_power_kraid_fight:
+    %cm_preset("Kraid Fight", #preset_nintendopower_shopping_with_power_kraid_fight)
 
-presets_nintendopower_norfair_rising_tide:
-    %cm_preset("Rising Tide", #preset_nintendopower_norfair_rising_tide)
+presets_nintendopower_shopping_with_power_rising_tide:
+    %cm_preset("Rising Tide", #preset_nintendopower_shopping_with_power_rising_tide)
 
-presets_nintendopower_norfair_reserve_tank:
-    %cm_preset("Reserve Tank", #preset_nintendopower_norfair_reserve_tank)
+presets_nintendopower_shopping_with_power_reserve_tank:
+    %cm_preset("Reserve Tank", #preset_nintendopower_shopping_with_power_reserve_tank)
 
-presets_nintendopower_norfair_ice_beam:
-    %cm_preset("Ice Beam", #preset_nintendopower_norfair_ice_beam)
+presets_nintendopower_shopping_with_power_ice_beam:
+    %cm_preset("Ice Beam", #preset_nintendopower_shopping_with_power_ice_beam)
 
-presets_nintendopower_norfair_ice_escape:
-    %cm_preset("Ice Escape", #preset_nintendopower_norfair_ice_escape)
+presets_nintendopower_shopping_with_power_ice_escape:
+    %cm_preset("Ice Escape", #preset_nintendopower_shopping_with_power_ice_escape)
 
-presets_nintendopower_norfair_shinespark_to_power_bombs:
-    %cm_preset("Shinespark to Power Bombs", #preset_nintendopower_norfair_shinespark_to_power_bombs)
+presets_nintendopower_shopping_with_power_shinespark_to_power_bombs:
+    %cm_preset("Shinespark To Power Bombs", #preset_nintendopower_shopping_with_power_shinespark_to_power_bombs)
 
-presets_nintendopower_norfair_business_center_2:
-    %cm_preset("Business Center 2", #preset_nintendopower_norfair_business_center_2)
+presets_nintendopower_shopping_with_power_heading_to_croc:
+    %cm_preset("Heading To Croc", #preset_nintendopower_shopping_with_power_heading_to_croc)
 
-presets_nintendopower_norfair_crocomire:
-    %cm_preset("Crocomire", #preset_nintendopower_norfair_crocomire)
+presets_nintendopower_shopping_with_power_crocomire:
+    %cm_preset("Crocomire", #preset_nintendopower_shopping_with_power_crocomire)
 
-presets_nintendopower_norfair_grapple_beam:
-    %cm_preset("Grapple Beam", #preset_nintendopower_norfair_grapple_beam)
+presets_nintendopower_shopping_with_power_grapple_beam:
+    %cm_preset("Grapple Beam", #preset_nintendopower_shopping_with_power_grapple_beam)
 
-presets_nintendopower_norfair_exit_grapple_beam:
-    %cm_preset("Exit Grapple Beam", #preset_nintendopower_norfair_exit_grapple_beam)
+presets_nintendopower_shopping_with_power_exit_grapple_beam:
+    %cm_preset("Exit Grapple Beam", #preset_nintendopower_shopping_with_power_exit_grapple_beam)
 
-presets_nintendopower_norfair_power_bombs_post_croc:
-    %cm_preset("Power Bombs Post Croc", #preset_nintendopower_norfair_power_bombs_post_croc)
+presets_nintendopower_shopping_with_power_power_bombs_post_croc:
+    %cm_preset("Power Bombs Post Croc", #preset_nintendopower_shopping_with_power_power_bombs_post_croc)
 
-presets_nintendopower_norfair_red_pirate_shaft:
-    %cm_preset("Red Pirate Shaft", #preset_nintendopower_norfair_red_pirate_shaft)
+presets_nintendopower_shopping_with_power_red_pirate_shaft:
+    %cm_preset("Red Pirate Shaft", #preset_nintendopower_shopping_with_power_red_pirate_shaft)
 
-presets_nintendopower_norfair_bubble_mountain:
-    %cm_preset("Bubble Mountain", #preset_nintendopower_norfair_bubble_mountain)
+presets_nintendopower_shopping_with_power_bubble_mountain:
+    %cm_preset("Bubble Mountain", #preset_nintendopower_shopping_with_power_bubble_mountain)
 
-presets_nintendopower_norfair_wave_beam:
-    %cm_preset("Wave Beam", #preset_nintendopower_norfair_wave_beam)
+presets_nintendopower_shopping_with_power_wave_beam:
+    %cm_preset("Wave Beam", #preset_nintendopower_shopping_with_power_wave_beam)
 
-presets_nintendopower_norfair_shinespark_2:
-    %cm_preset("Shinespark 2", #preset_nintendopower_norfair_shinespark_2)
+presets_nintendopower_shopping_with_power_heading_to_xray:
+    %cm_preset("Heading To X-Ray", #preset_nintendopower_shopping_with_power_heading_to_xray)
 
-presets_nintendopower_norfair_xray_beam:
-    %cm_preset("X-Ray Beam", #preset_nintendopower_norfair_xray_beam)
+presets_nintendopower_shopping_with_power_xray_entry:
+    %cm_preset("X-Ray Entry", #preset_nintendopower_shopping_with_power_xray_entry)
 
-presets_nintendopower_norfair_xray_beam_2:
-    %cm_preset("X-Ray Beam 2", #preset_nintendopower_norfair_xray_beam_2)
+presets_nintendopower_shopping_with_power_xray_beam:
+    %cm_preset("X-Ray Beam", #preset_nintendopower_shopping_with_power_xray_beam)
 
-presets_nintendopower_norfair_xray_beam_3:
-    %cm_preset("X-Ray Beam 3", #preset_nintendopower_norfair_xray_beam_3)
+presets_nintendopower_shopping_with_power_xray_exit:
+    %cm_preset("X-Ray Exit", #preset_nintendopower_shopping_with_power_xray_exit)
 
 
 ; Wrecked Ship
@@ -292,13 +292,13 @@ presets_nintendopower_wrecked_ship_moat_missiles:
     %cm_preset("Moat Missiles", #preset_nintendopower_wrecked_ship_moat_missiles)
 
 presets_nintendopower_wrecked_ship_shinespark_to_phantoon:
-    %cm_preset("Shinespark to Phantoon", #preset_nintendopower_wrecked_ship_shinespark_to_phantoon)
+    %cm_preset("Shinespark To Phantoon", #preset_nintendopower_wrecked_ship_shinespark_to_phantoon)
 
 presets_nintendopower_wrecked_ship_phantoon:
     %cm_preset("Phantoon", #preset_nintendopower_wrecked_ship_phantoon)
 
 presets_nintendopower_wrecked_ship_movement_before_attic:
-    %cm_preset("Movement before Attic", #preset_nintendopower_wrecked_ship_movement_before_attic)
+    %cm_preset("Movement Before Attic", #preset_nintendopower_wrecked_ship_movement_before_attic)
 
 presets_nintendopower_wrecked_ship_attic:
     %cm_preset("Attic", #preset_nintendopower_wrecked_ship_attic)
@@ -309,8 +309,8 @@ presets_nintendopower_wrecked_ship_bowling_alley:
 presets_nintendopower_wrecked_ship_gravity_suit_room:
     %cm_preset("Gravity Suit Room", #preset_nintendopower_wrecked_ship_gravity_suit_room)
 
-presets_nintendopower_wrecked_ship_red_tower_3:
-    %cm_preset("Red Tower 3", #preset_nintendopower_wrecked_ship_red_tower_3)
+presets_nintendopower_wrecked_ship_heading_to_maridia:
+    %cm_preset("Heading To Maridia", #preset_nintendopower_wrecked_ship_heading_to_maridia)
 
 
 ; Maridia
@@ -347,8 +347,8 @@ presets_nintendopower_maridia_full_halfie:
 presets_nintendopower_maridia_draygon:
     %cm_preset("Draygon", #preset_nintendopower_maridia_draygon)
 
-presets_nintendopower_maridia_going_to_plasma_beam:
-    %cm_preset("Going to Plasma Beam", #preset_nintendopower_maridia_going_to_plasma_beam)
+presets_nintendopower_maridia_heading_to_plasma:
+    %cm_preset("Heading To Plasma", #preset_nintendopower_maridia_heading_to_plasma)
 
 presets_nintendopower_maridia_plasma_beam:
     %cm_preset("Plasma Beam", #preset_nintendopower_maridia_plasma_beam)
@@ -357,33 +357,33 @@ presets_nintendopower_maridia_long_tube:
     %cm_preset("Long Tube", #preset_nintendopower_maridia_long_tube)
 
 
-; Norfair 2
-presets_nintendopower_norfair_2_pre_gt_fight:
-    %cm_preset("Pre GT Fight", #preset_nintendopower_norfair_2_pre_gt_fight)
+; Norfair
+presets_nintendopower_norfair_pre_gt_fight:
+    %cm_preset("Pre GT Fight", #preset_nintendopower_norfair_pre_gt_fight)
 
-presets_nintendopower_norfair_2_elevator_menu:
-    %cm_preset("Elevator Menu", #preset_nintendopower_norfair_2_elevator_menu)
+presets_nintendopower_norfair_elevator_menu:
+    %cm_preset("Elevator Menu", #preset_nintendopower_norfair_elevator_menu)
 
-presets_nintendopower_norfair_2_golden_torizo:
-    %cm_preset("Golden Torizo", #preset_nintendopower_norfair_2_golden_torizo)
+presets_nintendopower_norfair_golden_torizo:
+    %cm_preset("Golden Torizo", #preset_nintendopower_norfair_golden_torizo)
 
-presets_nintendopower_norfair_2_on_route_to_ridley:
-    %cm_preset("On Route to Ridley", #preset_nintendopower_norfair_2_on_route_to_ridley)
+presets_nintendopower_norfair_on_route_to_ridley:
+    %cm_preset("On Route To Ridley", #preset_nintendopower_norfair_on_route_to_ridley)
 
-presets_nintendopower_norfair_2_worst_room_in_the_game:
-    %cm_preset("Worst Room in the Game", #preset_nintendopower_norfair_2_worst_room_in_the_game)
+presets_nintendopower_norfair_worst_room_in_the_game:
+    %cm_preset("Worst Room In The Game", #preset_nintendopower_norfair_worst_room_in_the_game)
 
-presets_nintendopower_norfair_2_metal_ninja_pirates:
-    %cm_preset("Metal Ninja Pirates", #preset_nintendopower_norfair_2_metal_ninja_pirates)
+presets_nintendopower_norfair_metal_ninja_pirates:
+    %cm_preset("Metal Ninja Pirates", #preset_nintendopower_norfair_metal_ninja_pirates)
 
-presets_nintendopower_norfair_2_ridley:
-    %cm_preset("Ridley", #preset_nintendopower_norfair_2_ridley)
+presets_nintendopower_norfair_ridley:
+    %cm_preset("Ridley", #preset_nintendopower_norfair_ridley)
 
-presets_nintendopower_norfair_2_escape_from_ridley:
-    %cm_preset("Escape from Ridley", #preset_nintendopower_norfair_2_escape_from_ridley)
+presets_nintendopower_norfair_escape_from_ridley:
+    %cm_preset("Escape From Ridley", #preset_nintendopower_norfair_escape_from_ridley)
 
-presets_nintendopower_norfair_2_landing_site:
-    %cm_preset("Landing Site", #preset_nintendopower_norfair_2_landing_site)
+presets_nintendopower_norfair_landing_site:
+    %cm_preset("Landing Site", #preset_nintendopower_norfair_landing_site)
 
 
 ; Tourian

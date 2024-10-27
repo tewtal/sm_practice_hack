@@ -1479,7 +1479,7 @@ preset_rbo_cleanup_blockbuster_2n1m:
     dw $0A1C, $0000  ; Samus position/state
     dw $0A1E, $0000  ; More position/state
     dw $0AF6, $009B  ; Samus X
-    dw $0AFA, $00AB  ; Samus Y
+    dw $0AFA, $00A8  ; Samus Y
     dw $D872, $FC83  ; Items
     dw $D8B6, $B0FE  ; Doors
     dw #$FFFF
@@ -1855,7 +1855,7 @@ preset_rbo_cleanup_blockbuster_2n2m:
     dw $0A1C, $0000  ; Samus position/state
     dw $0A1E, $0000  ; More position/state
     dw $0AF6, $009B  ; Samus X
-    dw $0AFA, $00AB  ; Samus Y
+    dw $0AFA, $00A8  ; Samus Y
     dw $D872, $FCC3  ; Items
     dw $D8B6, $F8FF  ; Doors
     dw #$FFFF
@@ -3987,7 +3987,7 @@ preset_rbo_tourian_zebes_escape:
     dw $09CA, $0000  ; Supers
     dw $09CE, $0000  ; Pbs
     dw $09D6, $0064  ; Reserves
-    dw $0A1C, $009B  ; Samus position/state
+    dw $0A1C, $0000  ; Samus position/state
     dw $0A1E, $0000  ; More position/state
     dw $0A76, $8000  ; Hyper beam
     dw $0AF6, $0025  ; Samus X

@@ -357,7 +357,7 @@ preset_gtclassic_brinstar_green_brinstar_elevator:
     dw $0A1C, $0000  ; Samus position/state
     dw $0A1E, $0000  ; More position/state
     dw $0AF6, $0080  ; Samus X
-    dw $0AFA, $008B  ; Samus Y
+    dw $0AFA, $0088  ; Samus Y
     dw #$FFFF
 
 preset_gtclassic_brinstar_early_supers:
@@ -1536,7 +1536,7 @@ preset_gtclassic_maridia_mt_everest:
     dw $0A1C, $009B  ; Samus position/state
     dw $0A1E, $0000  ; More position/state
     dw $0AF6, $0181  ; Samus X
-    dw $0AFA, $03BB  ; Samus Y
+    dw $0AFA, $03B8  ; Samus Y
     dw #$FFFF
 
 preset_gtclassic_maridia_crab_shaft:
@@ -1622,7 +1622,7 @@ preset_gtclassic_maridia_halfie_setup:
     dw $0A1C, $009B  ; Samus position/state
     dw $0A1E, $0000  ; More position/state
     dw $0AF6, $00A0  ; Samus X
-    dw $0AFA, $009B  ; Samus Y
+    dw $0AFA, $0098  ; Samus Y
     dw $D82C, $0002  ; Bosses
     dw #$FFFF
 
