@@ -387,6 +387,9 @@ stop_all_sounds:
 
     ; Makes the game check Samus' health again, to see if we need annoying sound
     STZ !SAMUS_HEALTH_WARNING
+    LDA !sram_healthalarm : CMP #$0004 : BNE .done_health_alarm
+    LDA #$0002 : JSL $80914D
+  .done_health_alarm
     RTL
 }
 

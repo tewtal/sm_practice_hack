@@ -57,6 +57,9 @@ cm_start:
     PLA : STA !DISABLE_SOUNDS
     ; Makes the game check Samus' health again, to see if we need annoying sound
     STZ !SAMUS_HEALTH_WARNING
+    LDA !sram_healthalarm : CMP #$0004 : BNE .done_health_alarm
+    LDA #$0002 : JSL $80914D
+  .done_health_alarm
 
     JSL cm_transfer_original_tileset
     JSL overwrite_HUD_numbers
@@ -1187,7 +1190,7 @@ draw_custom_preset:
     STX !DP_Address
 
     ; check if slot has valid data
-    LDA $703000,X : CMP #$5AFE : BEQ .validPreset
+    LDA !PRESET_SLOTS,X : CMP #$5AFE : BEQ .validPreset
     ; slot is EMPTY, fix bank and exit
     LDA !DP_MenuIndices+2 : STA !DP_CurrentMenu+2
     RTS
@@ -3357,7 +3360,7 @@ endif
     ; check if preset exists
     LDA [!DP_CurrentMenu] : AND #$00FF : STA !ram_cm_selected_slot
     %presetslotsize()
-    LDA $703000,X : CMP #$5AFE : BNE .failSFX
+    LDA !PRESET_SLOTS,X : CMP #$5AFE : BNE .failSFX
     ; open confirmation screen before deleting preset
     LDY.w #ManagePresetsConfirm
     ; set bank for manual submenu jump

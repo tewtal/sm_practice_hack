@@ -1277,6 +1277,7 @@ layout_asm_waterway_external:
 }
 
 print pc, " layout bank83 end"
+warnpc $83F000 ; presets
 
 
 ; Allow debug save stations to be used

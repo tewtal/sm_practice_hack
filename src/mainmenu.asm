@@ -336,7 +336,7 @@ presets_load_custom_preset:
     ; check if slot is populated first
     LDA !sram_custom_preset_slot
     %presetslotsize()
-    LDA $703000,X : CMP #$5AFE : BEQ .safe
+    LDA !PRESET_SLOTS,X : CMP #$5AFE : BEQ .safe
     %sfxfail()
     RTL
 
@@ -891,7 +891,7 @@ managepreset_confirm:
   .routine
     LDA !ram_cm_selected_slot
     %presetslotsize()
-    LDA #$DEAD : STA $703000,X
+    LDA #$DEAD : STA !PRESET_SLOTS,X
     LDA !ram_cm_selected_slot : ASL : TAX
     LDA #$DEAD : STA !sram_custom_preset_safewords,X
     JML cm_previous_menu
@@ -4077,6 +4077,7 @@ audio_health_alarm:
     db #$28, "m   VANILLA", #$FF
     db #$28, "m    PB FIX", #$FF
     db #$28, "m  IMPROVED", #$FF
+    db #$28, "m ALWAYS ON", #$FF
     db #$FF
 
 audio_goto_music:
@@ -4277,6 +4278,13 @@ audio_playmusic:
     RTL
 }
 
+init_wram_based_on_sram:
+{
+    JSL init_suit_properties_ram
+    JSL init_physics_ram
+    JSL init_print_segment_timer
+    ; Fallthrough to GameModeExtras
+}
 
 GameModeExtras:
 {
@@ -4295,16 +4303,6 @@ GameModeExtras:
   .enabled
     STA !ram_game_mode_extras
     RTL
-}
-
-init_wram_based_on_sram:
-{
-    JSL init_suit_properties_ram
-    JSL init_physics_ram
-    JSL init_print_segment_timer
-
-    ; Check if any less common controller shortcuts are configured
-    JML GameModeExtras
 }
 
 init_print_segment_timer:

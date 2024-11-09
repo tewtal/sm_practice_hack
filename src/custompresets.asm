@@ -529,35 +529,6 @@ custom_preset_load:
 endif
 endif
 
-preset_clear_map_data_if_necessary:
-{
-    ; Called from category_preset_load where $C1 is start of preset data
-    ; and $C5 is the starting bank of preset data
-
-    ; If this is a map category, then clear map data
-    LDA $C1 : CMP.w #preset_100map_bombs_ceres_elevator : BNE .done
-    LDA $C5 : AND #$00FF : CMP.w #preset_100map_bombs_ceres_elevator>>16 : BEQ preset_clear_map_data
-
-  .done
-    RTL
-}
-
-preset_clear_map_data:
-{
-    PHX : LDX #$00FE : TDC
-  .clearMapDataLoop
-    STA $07F7,X
-    STA $7ECD52,X
-    STA $7ECE52,X
-    STA $7ECF52,X
-    STA $7ED052,X
-    STA $7ED152,X
-    STA $7ED252,X
-    DEX : DEX
-    BPL .clearMapDataLoop
-    PLX : RTL
-}
-
 preset_scroll_fixes:
 {
     ; Fixes bad scrolling caused by loading into a position that

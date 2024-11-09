@@ -72,11 +72,10 @@ update_sprite_features:
 
   .done
 if !FEATURE_PAL
-    JSL $A0885D
+    JML $A0885D
 else
-    JSL $A0884D
+    JML $A0884D
 endif
-    RTL
 }
 
 ; When loading into a game, do we need to update any sprite tiles?
@@ -85,8 +84,7 @@ update_sprite_tiles_loading:
     LDA !ram_sprite_feature_flags : BIT !SPRITE_OOB_WATCH : BEQ .skip
     JSL upload_sprite_oob_tiles
   .skip
-    JSL $80894D
-    RTL
+    JML $80894D
 }
 
 upload_sprite_oob_tiles:

@@ -103,7 +103,7 @@ endif
     LDA !ROOM_ID : CMP #ROOM_BombTorizoRoom : BEQ .done_clearing_enemies
     CMP #ROOM_MotherBrainRoom : BEQ .set_mb_state
     LDA !sram_preset_options : BIT !PRESETS_PRESERVE_ENEMIES : BNE .done_clearing_enemies
-    JSR clear_all_enemies
+    JSL clear_all_enemies
 
   .done_clearing_enemies
     PLP
@@ -119,21 +119,6 @@ endif
     STA !ram_seg_rt_frames : STA !ram_seg_rt_seconds
     STA !ram_seg_rt_minutes
     BRA .done_clearing_enemies
-}
-
-clear_all_enemies:
-{
-    LDA.w #ClearEnemiesTable>>16 : STA $C3
-    TDC
-  .loop
-    TAX : LDA !ENEMY_ID,X
-    SEC : ROR : ROR : STA $C1
-    LDA [$C1] : BEQ .done_clearing
-    LDA !ENEMY_PROPERTIES : ORA #$0200 : STA !ENEMY_PROPERTIES,X
-  .done_clearing
-    TXA : CLC : ADC #$0040 : CMP #$0800 : BNE .loop
-    STZ $0E52 ; unlock grey doors that require killing enemies
-    RTS
 }
 
 preset_load_destination_state_and_tiles:
@@ -201,6 +186,28 @@ preset_start_transfer_to_vram:
 preset_end_transfer_to_vram:
     RTS
 endif
+
+print pc, " presets bank82 end"
+warnpc $82FE00 ; tinystates.asm
+
+
+org $83F000
+print pc, " presets bank83 start"
+
+clear_all_enemies:
+{
+    LDA.w #ClearEnemiesTable>>16 : STA $C3
+    TDC
+  .loop
+    TAX : LDA !ENEMY_ID,X
+    SEC : ROR : ROR : STA $C1
+    LDA [$C1] : BEQ .done_clearing
+    LDA !ENEMY_PROPERTIES : ORA #$0200 : STA !ENEMY_PROPERTIES,X
+  .done_clearing
+    TXA : CLC : ADC #$0040 : CMP #$0800 : BNE .loop
+    STZ $0E52 ; unlock grey doors that require killing enemies
+    RTL
+}
 
 reset_all_counters:
 {
@@ -285,7 +292,7 @@ category_preset_load:
     BRA .buildLoop
 
   .traversePrep
-    JSL preset_clear_map_data_if_necessary
+    JSR preset_clear_map_data_if_necessary
 
   .setBanks
     ; Set bank to read data from
@@ -344,6 +351,35 @@ category_preset_load:
     RTS
 }
 
+preset_clear_map_data_if_necessary:
+{
+    ; Called from category_preset_load where $C1 is start of preset data
+    ; and $C5 is the starting bank of preset data
+
+    ; If this is a map category, then clear map data
+    LDA $C1 : CMP.w #preset_100map_bombs_ceres_elevator : BNE .done
+    LDA $C5 : AND #$00FF : CMP.w #preset_100map_bombs_ceres_elevator>>16 : BEQ preset_clear_map_data
+
+  .done
+    RTS
+}
+
+preset_clear_map_data:
+{
+    PHX : LDX #$00FE : TDC
+  .clearMapDataLoop
+    STA $07F7,X
+    STA $7ECD52,X
+    STA $7ECE52,X
+    STA $7ECF52,X
+    STA $7ED052,X
+    STA $7ED152,X
+    STA $7ED252,X
+    DEX : DEX
+    BPL .clearMapDataLoop
+    PLX : RTS
+}
+
 category_preset_data_table:
     dl preset_prkd_crateria_ceres_elevator
     dl preset_kpdr21_crateria_ceres_elevator
@@ -361,13 +397,6 @@ category_preset_data_table:
     dl preset_allbosskpdr_crateria_ceres_elevator
     dl preset_allbosspkdr_crateria_ceres_elevator
     dl preset_allbossprkd_crateria_ceres_elevator
-
-print pc, " presets bank82 end"
-warnpc $82FE00 ; tinystates.asm
-
-
-org $80F000
-print pc, " presets bank80 start"
 
 ; This method is very similar to $80A07B (start gameplay)
 preset_start_gameplay:
@@ -477,55 +506,17 @@ else
 endif
 
     ; Pull layer 2 values, and use them if they are valid
-    PLA : CMP #$5AFE : BEQ .calculate_layer_2
+    PLA : CMP #$5AFE : BEQ .calculateLayer2
     STA !LAYER2_X
     PLA : STA !LAYER2_Y
-    BRA .layer_2_loaded
+    JSL preset_bg_offsets
+    BRA .doneLayerBGOffsets
 
-  .calculate_layer_2
+  .calculateLayer2
     PLA ; Pull other layer 2 value but do not use it
-    JSR $A2F9 ; Calculate layer 2 X position
-    JSR $A33A ; Calculate layer 2 Y position
-    LDA !LAYER2_X : STA !BG2_X_OFFSET ; BG2 X scroll = layer 2 X scroll position
-    LDA !LAYER2_Y : STA !BG2_Y_OFFSET ; BG2 Y scroll = layer 2 Y scroll position
+    JSL preset_layer_bg_offsets
 
-  .layer_2_loaded
-    LDA !ROOM_ID : CMP #ROOM_CeresElevatorRoom : BPL .bg1_offsets_set
-    TDC : STA !BG1_X_OFFSET : STA !BG1_Y_OFFSET
-
-  .bg1_offsets_set
-    JSR $A37B    ; Calculate BG positions
-
-    ; Fix BG2 Y offsets for rooms with scrolling sky
-    ; Also fix rooms that need to be handled before door scroll
-    LDA !ROOM_ID : CMP #ROOM_EastTunnel : BEQ .eastTunnel
-    CMP #ROOM_PantsRoom : BEQ .pantsRoom
-    CMP #ROOM_BelowBotwoonETank : BEQ .aqueductFarmsAndPitRoom
-    CMP #ROOM_LandingSite : BEQ .bgOffsetsScrollingSky
-    CMP #ROOM_WestOcean : BEQ .bgOffsetsScrollingSky
-    CMP #ROOM_EastOcean : BEQ .bgOffsetsScrollingSky
-    BRA .bgOffsetsCalculated
-
-  .eastTunnel
-    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ .bgOffsetsCalculated
-    JSL layout_asm_easttunnel_external
-    BRA .bgOffsetsCalculated
-
-  .pantsRoom
-    LDA !sram_room_layout : BIT !ROOM_LAYOUT_DASH_RECALL : BEQ .bgOffsetsCalculated
-    JSL layout_asm_pants_external
-    BRA .bgOffsetsCalculated
-
-  .aqueductFarmsAndPitRoom
-    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ .bgOffsetsCalculated
-    JSL layout_asm_aqueductfarmsandpit_external
-    BRA .bgOffsetsCalculated
-
-  .bgOffsetsScrollingSky
-    LDA !LAYER1_Y : STA !LAYER2_Y : STA $B7
-    STZ !BG2_Y_OFFSET
-
-  .bgOffsetsCalculated
+  .doneLayerBGOffsets
     JSL $80A176  ; Display the viewable part of the room
 
     ; Enable sounds
@@ -578,6 +569,9 @@ endif
     STZ !ELEVATOR_PROPERTIES
     STZ !ELEVATOR_STATUS
     STZ !HEALTH_BOMB_FLAG
+    LDA !sram_healthalarm : CMP #$0004 : BNE .done_health_alarm
+    LDA #$0002 : JSL $80914D
+  .done_health_alarm
     STZ !MESSAGE_BOX_INDEX
     STZ $1E75 ; Save Station Lockout flag
     STZ $0795 : STZ $0797  ; Clear door transition flags
@@ -768,6 +762,62 @@ endif
 
   .end
     PLB : PLP : RTL
+}
+
+print pc, " presets bank83 end"
+
+
+org $80F000
+print pc, " presets bank80 start"
+
+preset_layer_bg_offsets:
+{
+    JSR $A2F9 ; Calculate layer 2 X position
+    JSR $A33A ; Calculate layer 2 Y position
+    LDA !LAYER2_X : STA !BG2_X_OFFSET ; BG2 X scroll = layer 2 X scroll position
+    LDA !LAYER2_Y : STA !BG2_Y_OFFSET ; BG2 Y scroll = layer 2 Y scroll position
+    ; Fallthrough to bg offsets
+}
+
+preset_bg_offsets:
+{
+    LDA !ROOM_ID : CMP #ROOM_CeresElevatorRoom : BPL .bg1OffsetsSet
+    TDC : STA !BG1_X_OFFSET : STA !BG1_Y_OFFSET
+
+  .bg1OffsetsSet
+    JSR $A37B    ; Calculate BG positions
+
+    ; Fix BG2 Y offsets for rooms with scrolling sky
+    ; Also fix rooms that need to be handled before door scroll
+    LDA !ROOM_ID : CMP #ROOM_EastTunnel : BEQ .eastTunnel
+    CMP #ROOM_PantsRoom : BEQ .pantsRoom
+    CMP #ROOM_BelowBotwoonETank : BEQ .aqueductFarmsAndPitRoom
+    CMP #ROOM_LandingSite : BEQ .bgOffsetsScrollingSky
+    CMP #ROOM_WestOcean : BEQ .bgOffsetsScrollingSky
+    CMP #ROOM_EastOcean : BEQ .bgOffsetsScrollingSky
+    BRA .bgOffsetsCalculated
+
+  .eastTunnel
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ .bgOffsetsCalculated
+    JSL layout_asm_easttunnel_external
+    BRA .bgOffsetsCalculated
+
+  .pantsRoom
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_DASH_RECALL : BEQ .bgOffsetsCalculated
+    JSL layout_asm_pants_external
+    BRA .bgOffsetsCalculated
+
+  .aqueductFarmsAndPitRoom
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ .bgOffsetsCalculated
+    JSL layout_asm_aqueductfarmsandpit_external
+    BRA .bgOffsetsCalculated
+
+  .bgOffsetsScrollingSky
+    LDA !LAYER1_Y : STA !LAYER2_Y : STA $B7
+    STZ !BG2_Y_OFFSET
+
+  .bgOffsetsCalculated
+    RTL
 }
 
 transfer_cgram_long:

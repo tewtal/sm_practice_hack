@@ -1,16 +1,24 @@
-; $84:8BDD: Instruction - clear music queue and queue music track [[Y]] ;;;
-org $848BDD
-    JML play_or_skip_fanfare
-
-; $85:8493: Handle message box interaction
-org $858493
-    JSR hook_message_box_wait
-    BRA $0B
+; $82:9396: Queue Samus movement sound effects
+org $829396
+    JSL hook_unpause_play_sound
 
 ; $82:E126: Logic to queue room music after fanfare
 org $82E126
     JSL hook_resume_room_music
     BRA $08
+
+; $84:8BDD: Instruction - clear music queue and queue music track [[Y]] ;;;
+org $848BDD
+    JML play_or_skip_fanfare
+
+; $85:80BA: End message box routine
+org $8580BA
+    JML hook_end_fanfare
+
+; $85:8493: Handle message box interaction
+org $858493
+    JSR hook_message_box_wait
+    BRA $0B
 
 
 if !ORIGINAL_MESSAGE_TEXT
@@ -224,11 +232,29 @@ hook_resume_room_music:
     RTL
 
   .resume
-    LDA #$0000       ; original logic to queue room music after fanfare
+    TDC              ; original logic to queue room music after fanfare
     JSL $808FF7
     LDA $07F5
     JSL $808FC1
     RTL
+}
+
+hook_unpause_play_sound:
+{
+    JSL $82BE2F      ; original logic to queue Samus movement sound effects
+    LDA !sram_healthalarm : CMP #$0004 : BNE .done_health_alarm
+    LDA #$0002 : JSL $80914D
+  .done_health_alarm
+    RTL
+}
+
+hook_end_fanfare:
+{
+    LDA !sram_healthalarm : CMP #$0004 : BNE .done_health_alarm
+    LDA #$0002 : JSL $80914D
+  .done_health_alarm
+    PLY : PLX        ; original logic
+    PLB : PLP : RTL
 }
 
 print pc, " fanfare end"
