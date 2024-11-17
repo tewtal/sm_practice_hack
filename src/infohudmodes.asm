@@ -1571,7 +1571,8 @@ endif
   .phantoon
     LDA !ram_roomstrat_state : CMP #$02BC : BMI .phantoonCheckInit
     SEC : SBC !ENEMY_HP : CMP #$0258 : BPL .phantoonHit
-    LDA !ram_roomstrat_counter : INC : STA !ram_roomstrat_counter
+    LDA !ram_roomstrat_counter : CMP #$0058 : BPL .phantoonClear
+    INC : STA !ram_roomstrat_counter
     RTS
 
   .phantoonHit

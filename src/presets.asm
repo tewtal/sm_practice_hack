@@ -878,6 +878,8 @@ preset_layer_bg_offsets:
     ; Also offsets should be set as they would be at the start of the room
     LDA !ELEVATOR_STATUS : BEQ preset_bg_offsets
     STZ !BG2_Y_OFFSET
+    LDA !ROOM_ID : CMP #ROOM_MorphBallRoom : BNE preset_bg_offsets
+    %a8() : LDA #$02 : STA $7ECD2D : %a16()
 }
 
 preset_bg_offsets:
