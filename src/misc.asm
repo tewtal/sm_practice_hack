@@ -316,6 +316,29 @@ endif
     PLB : PLP : RTL
 }
 
+elevator_state_handler:
+{
+    ; Act like Samus locked ($90E8DC) until Samus moves far enough down,
+    ; then switch to riding elevator ($90E8EC)
+    PHP : PHB : PHK : PLB
+    %ai16()
+    LDA !SAMUS_Y : CMP #$0010 : BMI .stayLocked
+
+    ; Switch to riding elevator
+if !FEATURE_PAL
+    LDA #$E8E9 : STA !SAMUS_MOVEMENT_HANDLER
+    JMP $E8EF
+else
+    LDA #$E8EC : STA !SAMUS_MOVEMENT_HANDLER
+    JMP $E8F2
+endif
+
+  .stayLocked
+    STZ !SAMUS_CONTACT_DAMAGE_INDEX
+    JSL $90A91B
+    PLB : PLP : RTL
+}
+
 gamemode_end:
 {
     ; overwritten logic

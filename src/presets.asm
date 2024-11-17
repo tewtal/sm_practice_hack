@@ -58,17 +58,35 @@ endif
     JSL $908E0F  ; Set liquid physics type
 
     LDA #$0006 : STA $0DA0
-  .loopSomething
+  .loopInitEnemies
+    LDA !SAMUS_Y : PHA
 if !FEATURE_PAL
     JSL $A08CE7
 else             ; Transfer enemy tiles to VRAM and initialize enemies
     JSL $A08CD7
 endif
+    LDA !ELEVATOR_STATUS : BEQ .noElevator
+    TDC
+  .loopElevator
+    TAX : LDA !ENEMY_ID,X : CMP #$D73F : BEQ .loopElevatorFound
+    TXA : CLC : ADC #$0040 : CMP #$0800 : BNE .loopElevator
+  .noElevator
+    PLA
+    BRA .loopNext
+  .loopElevatorFound
+    PLA : STA !SAMUS_Y : CLC : ADC #$001A : STA !ENEMY_Y,X
+  .loopNext
     JSL $808338  ; Wait for NMI
     DEC $0DA0    ; Decrement $0DA0
-    BPL .loopSomething
+    BPL .loopInitEnemies
 
-    ; set gamemode and brightness
+    ; Create Ceres elevator projectiles if needed
+    LDA !GAMEMODE : CMP #$001F : BNE .doneCeresProjectiles
+    LDY #$A387 : JSL $868027
+    LDY #$A395 : JSL $868027
+  .doneCeresProjectiles
+
+    ; Set gamemode and brightness
     LDA #$0008 : STA !GAMEMODE
     %a8() : LDA #$0F : STA $51 : %a16()
 
@@ -92,7 +110,8 @@ endif
 
   .done_upload_sprite_oob_tiles
     JSL reset_all_counters
-    STZ $0795 : STZ $0797 ; clear door transition flags
+    STZ !DOOR_TRANSITION_FLAG_ELEVATOR
+    STZ !DOOR_TRANSITION_FLAG_ENEMIES
 
     ; Clear minimap tiles
     LDA !sram_preset_options : BIT !PRESETS_CLEAR_MAP_TILES : BEQ .clear_enemies
@@ -103,6 +122,7 @@ endif
     LDA !ROOM_ID : CMP #ROOM_BombTorizoRoom : BEQ .done_clearing_enemies
     CMP #ROOM_MotherBrainRoom : BEQ .set_mb_state
     LDA !sram_preset_options : BIT !PRESETS_PRESERVE_ENEMIES : BNE .done_clearing_enemies
+    LDA !ELEVATOR_STATUS : BNE .done_clearing_enemies
     JSL clear_all_enemies
 
   .done_clearing_enemies
@@ -128,6 +148,10 @@ preset_load_destination_state_and_tiles:
     %ai16()
     PEA $8F00
     PLB : PLB
+
+    STZ !ELEVATOR_PROPERTIES
+    STZ !ELEVATOR_STATUS
+
     JSR $DDF1  ; Load destination room CRE bitset
     JSR $DE12  ; Load door header
     JSR $DE6F  ; Load room header
@@ -137,6 +161,12 @@ preset_load_destination_state_and_tiles:
     LDX !AREA_ID : LDA $7ED908,X
     AND #$00FF : STA !AREA_MAP_COLLECTED
 
+    ; Clear elevator if turned off in preset options
+    LDA !sram_preset_options : BIT !PRESETS_ELEVATOR_OFF : BEQ .load
+    STZ !ELEVATOR_PROPERTIES
+    STZ !ELEVATOR_STATUS
+
+  .load
 if !RAW_TILE_GRAPHICS
     JML load_raw_tile_graphics
 else
@@ -442,31 +472,102 @@ preset_start_gameplay:
     LDA #$FFFF : STA !SAMUS_POTENTIAL_POSE_VALUES
     STA !SAMUS_POTENTIAL_POSE_VALUES+2 : STA !SAMUS_POTENTIAL_POSE_VALUES+4
 
+    ; Set loading game state for Ceres
+    TDC : STA !GAMEMODE
+    LDA #$001F : STA $7ED914
+    ; Set delay for first falling tile in Ceres
+    LDA #$0022 : STA $07E1
+    LDA !AREA_ID : CMP #$0006 : BEQ .ceresLoadGameState
+    ; Set loading game state for Zebes
+    LDA #$0005 : STA $7ED914
+    LDA !SAMUS_POSE : BNE .endLoadGameState
+    LDA !ROOM_ID : CMP #ROOM_LandingSite : BNE .endLoadGameState
+    ; If default pose at landing site then assume we are arriving on Zebes
+    LDA #$0022 : STA $7ED914
+    LDA #$0400 : STA !LAYER1_X : STA !LAYER1_Y
+    LDA #$0481 : STA !SAMUS_X : LDA #$0471 : STA !SAMUS_Y
+  .lockLoadGameState
+if !FEATURE_PAL
+    LDA #$E8CA : STA !SAMUS_LOCKED_HANDLER
+    LDA #$E8D9 : STA !SAMUS_MOVEMENT_HANDLER
+else             ; Lock Samus
+    LDA #$E8CD : STA !SAMUS_LOCKED_HANDLER
+    LDA #$E8DC : STA !SAMUS_MOVEMENT_HANDLER
+endif
+    BRA .endLoadGameState
+  .ceresLoadGameState
+    LDA !SAMUS_POSE : BNE .endLoadGameState
+    LDA !DOOR_ID : CMP #$AB58 : BNE .endLoadGameState
+    LDA #$0080 : STA !SAMUS_X
+    STZ !SAMUS_Y
+    STZ !SAMUS_X_SUBPX : STZ !SAMUS_Y_SUBPX
+    LDA #$001F : STA !GAMEMODE
+    BRA .lockLoadGameState
+  .endLoadGameState
+
+    ; If on elevator then place Samus on top of elevator
+    LDA !ELEVATOR_PROPERTIES : BEQ .doneElevator
+    LDA !SAMUS_POSE : BEQ .elevatorLoopPrep
+    CMP #$009B : BNE .clearElevatorStatus
+  .elevatorLoopPrep
+    LDX !ENEMY_POPULATION
+  .elevatorLoop
+    LDA.l $A10000,X : CMP #$FFFF : BEQ .clearElevatorStatus
+    CMP #$D73F : BEQ .elevatorLoopFound
+    TXA : CLC : ADC #$0010 : TAX
+    BRA .elevatorLoop
+
+  .elevatorLoopFound
+    LDA $A10002,X : STA !SAMUS_X
+    LDA $A1000E,X : SEC : SBC #$001A : STA !SAMUS_Y
+    STZ !SAMUS_X_SUBPX : STZ !SAMUS_Y_SUBPX
+    LDA !DOOR_DESTINATION_X : STA !LAYER1_X
+    LDA !DOOR_DIRECTION : AND #$0003 : CMP #$0003 : BEQ .elevatorMovingUp
+    STZ !ELEVATOR_DIRECTION
+    LDA #elevator_state_handler : STA !SAMUS_MOVEMENT_HANDLER
+    LDA !sram_preset_options : BIT !PRESETS_ELEVATOR_LONG : BNE .longElevator
+    LDA !DOOR_DESTINATION_Y : CLC : ADC #$01AA : STA !LAYER1_Y
+    LDA !SAMUS_Y : CLC : ADC #$021A : STA !SAMUS_Y
+    BRA .elevatorLockSamus
+
+  .clearElevatorStatus
+    STZ !ELEVATOR_PROPERTIES
+    STZ !ELEVATOR_STATUS
+  .doneElevator
+    LDA $7ED914 : CMP #$0022 : BEQ .doneLockUnlockSamus
+    LDA !GAMEMODE : CMP #$001F : BEQ .doneLockUnlockSamus
+    LDA #$E695 : STA !SAMUS_LOCKED_HANDLER   ; Unlock Samus
+    LDA #$E725 : STA !SAMUS_MOVEMENT_HANDLER ; Unlock Samus
+    BRA .doneLockUnlockSamus
+
+  .elevatorMovingUp
+    LDA !DOOR_DESTINATION_Y : CLC : ADC #$0020 : STA !LAYER1_Y
+    LDA #$8000 : STA !ELEVATOR_DIRECTION
+if !FEATURE_PAL
+    LDA #$E8D9 : STA !SAMUS_MOVEMENT_HANDLER
+else
+    LDA #$E8DC : STA !SAMUS_MOVEMENT_HANDLER
+endif
+    BRA .elevatorLockSamus
+
+  .longElevator
+    LDA !DOOR_DESTINATION_Y : STA !LAYER1_Y
+    LDA !SAMUS_Y : SEC : SBC #$0017 : STA !SAMUS_Y
+  .elevatorLockSamus
+    LDA #$0002 : STA !ELEVATOR_STATUS
+    LDA #$E713 : STA !SAMUS_LOCKED_HANDLER
+if !FEATURE_PAL
+    LDA #$EC11 : STA !SAMUS_DRAW_HANDLER
+else
+    LDA #$EC14 : STA !SAMUS_DRAW_HANDLER
+endif
+  .doneLockUnlockSamus
+
     ; Set Samus last position same as current position
     LDA !SAMUS_X : STA !SAMUS_PREVIOUS_X
     LDA !SAMUS_X_SUBPX : STA !SAMUS_PREVIOUS_X_SUBPX
     LDA !SAMUS_Y : STA !SAMUS_PREVIOUS_Y
     LDA !SAMUS_Y_SUBPX : STA !SAMUS_PREVIOUS_Y_SUBPX
-
-    ; Set loading game state for Ceres
-    LDA #$001F : STA $7ED914
-    ; Set delay for first falling tile in Ceres
-    LDA #$0022 : STA $07E1
-    LDA !AREA_ID : CMP #$0006 : BEQ .end_load_game_state
-    ; Set loading game state for Zebes
-    LDA #$0005 : STA $7ED914
-    LDA !SAMUS_POSE : BNE .end_load_game_state
-    LDA !ROOM_ID : CMP #ROOM_LandingSite : BNE .end_load_game_state
-    ; If default pose at landing site then assume we are arriving on Zebes
-    LDA #$0022 : STA $7ED914
-if !FEATURE_PAL
-    LDA #$E8CA : STA !SAMUS_LOCKED_HANDLER
-    LDA #$E867 : STA !SAMUS_MOVEMENT_HANDLER
-else             ; Lock Samus
-    LDA #$E8CD : STA !SAMUS_LOCKED_HANDLER
-    LDA #$E8DC : STA !SAMUS_MOVEMENT_HANDLER
-endif
-  .end_load_game_state
 
     ; Preserve layer 2 values we may have loaded from presets
     LDA !LAYER2_Y : PHA
@@ -508,6 +609,9 @@ endif
     ; Pull layer 2 values, and use them if they are valid
     PLA : CMP #$5AFE : BEQ .calculateLayer2
     STA !LAYER2_X
+    ; Calculator layer 2 if on elevator or landing on Zebes
+    LDA !ELEVATOR_STATUS : BNE .calculateLayer2
+    LDA $7ED914 : CMP #$0022 : BEQ .calculateLayer2
     PLA : STA !LAYER2_Y
     JSL preset_bg_offsets
     BRA .doneLayerBGOffsets
@@ -559,19 +663,12 @@ endif
     LDA #$0004 : STA $A7  ; Set optional next interrupt to Main gameplay
 
     JSL $80982A  ; Enable horizontal and vertical timer interrupts
-
-    LDA $7ED914 : CMP #$0022 : BEQ .done_unlock_samus
-    LDA #$E695 : STA !SAMUS_LOCKED_HANDLER   ; Unlock Samus
-    LDA #$E725 : STA !SAMUS_MOVEMENT_HANDLER ; Unlock Samus
-  .done_unlock_samus
     LDA #$9F55 : STA $0A6C ; Set X speed table pointer
 
-    STZ !ELEVATOR_PROPERTIES
-    STZ !ELEVATOR_STATUS
     STZ !HEALTH_BOMB_FLAG
-    LDA !sram_healthalarm : CMP #$0004 : BNE .done_health_alarm
+    LDA !sram_healthalarm : CMP #$0004 : BNE .doneHealthAlarm
     LDA #$0002 : JSL $80914D
-  .done_health_alarm
+  .doneHealthAlarm
     STZ !MESSAGE_BOX_INDEX
     STZ $1E75 ; Save Station Lockout flag
     STZ $0795 : STZ $0797  ; Clear door transition flags
@@ -583,13 +680,13 @@ endif
 
 if !RAW_TILE_GRAPHICS
     LDX !STATE_POINTER : LDA $8F0018,X
-    CMP #$91C9 : BEQ .post_preset_scrolling_sky
-    CMP #$91CE : BEQ .post_preset_scrolling_sky
-    CMP #layout_landing_site_setup_asm : BEQ .post_preset_scrolling_sky
-    CMP #layout_asm_westocean : BEQ .post_preset_scrolling_sky
-    CMP #layout_asm_eastocean : BEQ .post_preset_scrolling_sky
+    CMP #$91C9 : BEQ .postPresetScrollingSky
+    CMP #$91CE : BEQ .postPresetScrollingSky
+    CMP #layout_landing_site_setup_asm : BEQ .postPresetScrollingSky
+    CMP #layout_asm_westocean : BEQ .postPresetScrollingSky
+    CMP #layout_asm_eastocean : BEQ .postPresetScrollingSky
     PLB : PLP : RTL
-  .post_preset_scrolling_sky
+  .postPresetScrollingSky
     JML layout_execute_setup_asm_execute
 else
     PLB : PLP : RTL

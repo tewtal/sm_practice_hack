@@ -3,6 +3,13 @@
 ; Menu Helpers
 ; ------------
 
+action_preset_options_mainmenu:
+{
+    ; Prepare elevator option
+    LDA !sram_preset_options : AND !PRESETS_ELEVATOR_MASK : XBA : STA !ram_cm_preset_elevator
+    BRA action_mainmenu
+}
+
 action_infohud_mainmenu:
 {
     ; Validate top display mode in range
@@ -170,7 +177,7 @@ endif
 MainMenuBanks:
     dw #EquipmentMenu>>16
     dw #preset_category_banks>>16 ; dummy
-    dw #PresetsMenu>>16
+    dw #PresetOptionsMenu>>16
     dw #TeleportMenu>>16
     dw #EventsMenu>>16
     dw #MiscMenu>>16
@@ -193,7 +200,7 @@ mm_goto_presets:
     %cm_jsl("Category Presets", #action_presets_submenu, #$0000)
 
 mm_goto_presets_menu:
-    %cm_mainmenu("Preset Options", #PresetsMenu)
+    %cm_jsl("Preset Options", #action_preset_options_mainmenu, #PresetOptionsMenu)
 
 mm_goto_teleport:
     %cm_mainmenu("Teleport", #TeleportMenu)
@@ -238,22 +245,22 @@ mm_goto_customize:
 ; Preset Options menu
 ; -------------------
 
-PresetsMenu:
+PresetOptionsMenu:
     dw #presets_goto_select_preset_category
     dw #presets_current
     dw #$FFFF
     dw #presets_custom_preset_slot
     dw #presets_save_custom_preset
     dw #presets_load_custom_preset
-    dw #$FFFF
-    dw #presets_reload_last
-    dw #presets_load_random
-    dw #presets_goto_preset_equip_rando_menu
 if !FEATURE_DEV
     dw #presets_random_preset_rng
 else
     dw #$FFFF
 endif
+    dw #presets_reload_last
+    dw #presets_load_random
+    dw #presets_goto_preset_equip_rando_menu
+    dw #presets_elevator
     dw #presets_open_blue_doors
     dw #presets_load_with_enemies
     dw #presets_clear_map_tiles
@@ -365,6 +372,22 @@ endif
 
 presets_goto_preset_equip_rando_menu:
     %cm_submenu("Randomize Equipment", #PresetEquipRandoMenu)
+
+presets_elevator:
+    dw !ACTION_CHOICE
+    dl #!ram_cm_preset_elevator
+    dw #.routine
+    db #$28, "Elevator Entry", #$FF
+    db #$28, "      SHORT", #$FF
+    db #$28, "       LONG", #$FF
+    db #$28, "        OFF", #$FF
+    db #$FF
+  .routine
+    LDA !ram_cm_preset_elevator : TAY
+    LDA !sram_preset_options : XBA
+    %ai8() : TYA : %ai16()
+    XBA : STA !sram_preset_options
+    RTL
 
 presets_open_blue_doors:
     %cm_toggle_bit_inverted("Open Blue Doors", !sram_preset_options, !PRESETS_CLOSE_BLUE_DOORS, #0)
