@@ -871,9 +871,13 @@ preset_layer_bg_offsets:
 {
     JSR $A2F9 ; Calculate layer 2 X position
     JSR $A33A ; Calculate layer 2 Y position
-    LDA !LAYER2_X : STA !BG2_X_OFFSET ; BG2 X scroll = layer 2 X scroll position
-    LDA !LAYER2_Y : STA !BG2_Y_OFFSET ; BG2 Y scroll = layer 2 Y scroll position
+    LDA !LAYER2_X : STA !BG2_X_OFFSET
+    LDA !LAYER2_Y : STA !BG2_Y_OFFSET
+
     ; Fallthrough to bg offsets
+    ; Also offsets should be set as they would be at the start of the room
+    LDA !ELEVATOR_STATUS : BEQ preset_bg_offsets
+    STZ !BG2_Y_OFFSET
 }
 
 preset_bg_offsets:
