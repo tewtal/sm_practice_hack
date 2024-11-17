@@ -1534,13 +1534,72 @@ status_armpump:
 
 status_shottimer:
 {
-    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_SHOT : BEQ .inc
+    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_SHOT : BEQ .incShot
     LDA !ram_shot_timer : LDX #$0088 : JSR Draw4
     LDA #$0000 : STA !ram_shot_timer
 
-  .inc
+  .incShot
     LDA !ram_shot_timer : INC : STA !ram_shot_timer
+    LDA !ROOM_ID : CMP #ROOM_PhantoonRoom : BEQ .phantoon
     RTS
+
+  .phantoonCheckInit
+    LDA $0FB2
+if !FEATURE_PAL
+    CMP #$D641
+else
+    CMP #$D60D
+endif
+    BNE .done
+    LDA $0FB0 : CMP #$0010 : BEQ .phantoonInit
+    CMP #$000F : BNE .done
+
+    ; Phantoon must be doing a fast eye close
+    LDA !IH_LETTER_F : STA !ram_HUD_check
+    BRA .phantoonInitCounters
+
+  .phantoonInit
+    LDA !IH_BLANK : STA !ram_HUD_check
+
+  .phantoonInitCounters
+    TDC : STA !ram_roomstrat_counter
+    LDA !ENEMY_HP : STA !ram_roomstrat_state
+
+  .done
+    RTS
+
+  .phantoon
+    LDA !ram_roomstrat_state : CMP #$02BC : BMI .phantoonCheckInit
+    SEC : SBC !ENEMY_HP : CMP #$0258 : BPL .phantoonHit
+    LDA !ram_roomstrat_counter : INC : STA !ram_roomstrat_counter
+    RTS
+
+  .phantoonHit
+    LDA !ram_HUD_check : STA !HUD_TILEMAP+$88
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$8A
+    LDA !ram_roomstrat_counter : CMP #$0018 : BEQ .framePerfect : BMI .hitEarly
+
+    ; Hit late
+    SEC : SBC #$0018 : ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
+    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$8C
+    BRA .phantoonClear
+
+  .framePerfect
+    LDA !sram_display_mode_reward : BEQ .doneReward
+    %sfxreward()
+
+  .doneReward
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$8E
+
+  .phantoonClear
+    TDC : STA !ram_roomstrat_state : STA !ram_roomstrat_counter
+    RTS
+
+  .hitEarly
+    LDA #$0018 : SEC : SBC !ram_roomstrat_counter
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
+    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$8C
+    BRA .phantoonClear
 }
 
 status_ramwatch:
