@@ -145,6 +145,21 @@ Note that the specific pose is not actually checked, so other actions performed 
 
 ## Shot Timer
 Displays the number of frames between pressing the shoot button.
+&nbsp;  
+Additionally if fighting Phantoon, the number of frames can be replaced by feedback on hitting Phantoon with a super missile on the magic frame that does not enrage Phantoon.
+Feedback is only given if Phantoon is hit with a super missile relatively near the time of eye open and when the super missile does not kill Phantoon.
+- E# indicates you were early where the number tells you how many frames you were early.
+- YY indicates you hit Phantoon on the correct frame.
+- L# indicates you were late where the number tells you how many frames you were late.
+- Leading F indicates Phantoon went for a fast eye close (25% chance).
+Normally on slow and mid eye close and if you are reasonably prompt at hitting Phantoon with a missile,
+then Phantoon will reduce a timer to 16 frames, delay the timer for 8 frames, and then count it down.
+The frame where the timer expires is the magic frame. Thus you want the super missile to hit Phantoon 24 frames after the first missile.
+However a fast eye close causes the timer to be initialized to 15 frames, which effectively means the timer starts when Phantoon appears instead of when the first missile hits.
+There is no way to tell ahead of time and thus the magic super frame trick has only a 75% chance of success even with perfect execution.
+It is still possible to avoid an enrage though, if you cam stand close to Phantoon and are able to tank a hit.
+Phantoon's hitbox expands upon moving around, so standing close to Phantoon can cause Samus to take damage and knockback if Phantoon starts moving early due to the fast eye close,
+which can prevent the super missile from firing and hitting Phantoon.
 
 ## RAM Watch
 Displays the value of two configurable memory addresses in bank $7E, $7F, or the first bank of SRAM. Values can also be "locked" or rewritten each frame while the RAM Watch HUD mode is enabled. These addresses and values can be configured in the 'Customize RAM Watch' submenu.
@@ -357,7 +372,7 @@ First two characters = Feedback on the first jump (this will overwrite the first
 - X# indicates you jumped on one of the six good frames but without springball, so the manip will not work.
 - Y# indicates you jumped on one of the six good frames (although Y2 is not ideal with springball).
 - L# indicates you jumped late where the number tells you how many frames you were late.
-
+&nbsp;  
 Last two characters = Feedback on the unmorph (only given if first jump was YE or Y#):
 - E# indicates you unmorphed early where the number tells you how many frames you were early.
 - YE indicates you unmorphed one or two frames early, but because the first jump happened on a specific frame, the manip should work.
@@ -365,4 +380,10 @@ Last two characters = Feedback on the unmorph (only given if first jump was YE o
 - Y# indicates you unmorphed on one of the six good frames and were not scammed by YE or Y2 or lack of springball.
 - YL indicates you unmorphed one frame late, but because the first jump happened on a specific frame, the manip should work.
 - L# indicates you unmorphed late where the number tells you how many frames you were late.
+&nbsp; 
+Experimental: Without springball equipped, the last two characters can instead show hangtime or the number of frames Samus remains close to the ceiling (specifically Y position < 60) while the game counts her as moving upward.
+On an angle-crouch jump in the aim down pose then hangtime is four, and if not aiming down then Samus' hitbox is taller and hangtime is zero.
+However hangtime can be created and extended with an uninterruptible animation such as turning back and forth. It is possible to get up to 23 frames of hangtime (as defined by this strat).
+Increased hangtime has been shown to have some effect on Mother Brain, potentially allowing for simpler Two Cries setups.
+The possibilities are still being explored, so for now this hangtime number is just being provided in case it helps the investigation.
 <br />
