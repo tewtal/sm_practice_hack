@@ -917,9 +917,9 @@ preset_hundo_phantoon_alpha_spark:
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $8000  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
-    dw $0A1C, $000C  ; Samus position/state
-    dw $0A1E, $0104  ; More position/state
-    dw $0AF6, $0030  ; Samus X
+    dw $0A1C, $009B  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
+    dw $0AF6, $0080  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 
@@ -2955,13 +2955,15 @@ preset_hundo_final_cleanup_pit_room_missiles:
     dw $078D, $8EB6  ; DDB
     dw $079B, $97B5  ; MDB
     dw $07F5, $0003  ; Music Track
-    dw $090F, $1000  ; Screen subpixel X position
+    dw $090F, $0000  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $C000  ; Screen subpixel Y position
+    dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0AF6, $00EA  ; Samus X
-    dw $0AFA, $008B  ; Samus Y
+    dw $0A1C, $009B  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
+    dw $0A68, $0068  ; Flash suit
+    dw $0AF6, $0080  ; Samus X
+    dw $0AFA, $0088  ; Samus Y
     dw #$FFFF
 
 preset_hundo_final_cleanup_climb_supers:
@@ -2973,6 +2975,9 @@ preset_hundo_final_cleanup_climb_supers:
     dw $0913, $47FE  ; Screen subpixel Y position
     dw $09C6, $00AC  ; Missiles
     dw $09C8, $00E1  ; Max missiles
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0A68, $0000  ; Flash suit
     dw $0AF6, $0045  ; Samus X
     dw $D870, $E7FF  ; Items
     dw #$FFFF

@@ -1534,13 +1534,73 @@ status_armpump:
 
 status_shottimer:
 {
-    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_SHOT : BEQ .inc
+    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_SHOT : BEQ .incShot
     LDA !ram_shot_timer : LDX #$0088 : JSR Draw4
     LDA #$0000 : STA !ram_shot_timer
 
-  .inc
+  .incShot
     LDA !ram_shot_timer : INC : STA !ram_shot_timer
+    LDA !ROOM_ID : CMP #ROOM_PhantoonRoom : BEQ .phantoon
     RTS
+
+  .phantoonCheckInit
+    LDA $0FB2
+if !FEATURE_PAL
+    CMP #$D641
+else
+    CMP #$D60D
+endif
+    BNE .done
+    LDA $0FB0 : CMP #$0010 : BEQ .phantoonInit
+    CMP #$000F : BNE .done
+
+    ; Phantoon must be doing a fast eye close
+    LDA !IH_LETTER_F : STA !ram_HUD_check
+    BRA .phantoonInitCounters
+
+  .phantoonInit
+    LDA !IH_BLANK : STA !ram_HUD_check
+
+  .phantoonInitCounters
+    TDC : STA !ram_roomstrat_counter
+    LDA !ENEMY_HP : STA !ram_roomstrat_state
+
+  .done
+    RTS
+
+  .phantoon
+    LDA !ram_roomstrat_state : CMP #$02BC : BMI .phantoonCheckInit
+    SEC : SBC !ENEMY_HP : CMP #$0258 : BPL .phantoonHit
+    LDA !ram_roomstrat_counter : CMP #$0058 : BPL .phantoonClear
+    INC : STA !ram_roomstrat_counter
+    RTS
+
+  .phantoonHit
+    LDA !ram_HUD_check : STA !HUD_TILEMAP+$88
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$8A
+    LDA !ram_roomstrat_counter : CMP #$0018 : BEQ .framePerfect : BMI .hitEarly
+
+    ; Hit late
+    SEC : SBC #$0018 : ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
+    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$8C
+    BRA .phantoonClear
+
+  .framePerfect
+    LDA !sram_display_mode_reward : BEQ .doneReward
+    %sfxreward()
+
+  .doneReward
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$8E
+
+  .phantoonClear
+    TDC : STA !ram_roomstrat_state : STA !ram_roomstrat_counter
+    RTS
+
+  .hitEarly
+    LDA #$0018 : SEC : SBC !ram_roomstrat_counter
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
+    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$8C
+    BRA .phantoonClear
 }
 
 status_ramwatch:
@@ -3787,7 +3847,7 @@ status_twocries:
     CMP #$0009 : BMI .check
 
   .reset
-    TDC : STA !ram_roomstrat_state
+    TDC : STA !ram_roomstrat_state : STA !ram_quickdrop_counter
     RTS
 
   .start
@@ -3921,7 +3981,7 @@ status_twocries:
 status_twocries_nosb:
 {
     LDA !ram_roomstrat_state : CMP #$0008 : BEQ .firstcheck
-    CMP #$0009 : BEQ .wait : BPL .done
+    CMP #$0009 : BEQ .wait : BPL .hangtimeonly
     BRL .secondcheck
 
   .firstscam
@@ -3950,6 +4010,9 @@ status_twocries_nosb:
   .done
     RTS
 
+  .hangtimeonly
+    BRL .hangtime
+
   .ignore
     LDA #$0009 : STA !ram_roomstrat_state
     RTS
@@ -3963,7 +4026,7 @@ status_twocries_nosb:
     LDA #$008E : SEC : SBC !ram_roomstrat_counter
     ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A
     LDA !IH_LETTER_E : STA !HUD_TILEMAP+$88
-    BRA .donechecking
+    BRL .donechecking
 
   .secondlate
     SEC : SBC #$0098 : ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
@@ -3971,6 +4034,16 @@ status_twocries_nosb:
     BRA .donechecking
 
   .secondcheck
+    LDA !SAMUS_Y : CMP #$003C : BPL .secondcheckclearhangtime
+    LDA !SAMUS_Y_DIRECTION : CMP #$0001 : BNE .secondcheckclearhangtime
+    LDA !ram_quickdrop_counter : INC : STA !ram_quickdrop_counter
+    LDX #$008C : JSR Draw2
+    BRA .secondcheckunmorph
+
+  .secondcheckclearhangtime
+    TDC : STA !ram_quickdrop_counter
+
+  .secondcheckunmorph
     LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_UP : BEQ .seconddone
     LDA !ram_roomstrat_counter : CMP #$0057 : BMI .seconddone
     CMP #$00D5 : BPL .seconddone : CMP #$0098 : BEQ .checkscam : BPL .secondlate
@@ -4020,5 +4093,16 @@ status_twocries_nosb:
     ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
     LDA !IH_LETTER_E : STA !HUD_TILEMAP+$8C
     BRA .donechecking
+
+  .hangtime
+    LDA !SAMUS_Y : CMP #$003C : BPL .clearhangtime
+    LDA !SAMUS_Y_DIRECTION : CMP #$0001 : BNE .clearhangtime
+    LDA !ram_quickdrop_counter : INC : STA !ram_quickdrop_counter
+    LDX #$008C : JSR Draw2
+    RTS
+
+  .clearhangtime
+    TDC : STA !ram_quickdrop_counter
+    RTS
 }
 

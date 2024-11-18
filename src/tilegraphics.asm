@@ -130,9 +130,6 @@ raw_tile_graphics_table:
 
 load_raw_tile_graphics:
 {
-    ; Elevator properties
-    STZ $0E16
-
     ; Update graphics index for our 4-byte table
     TYA : ASL : PHX : TAX
 
@@ -301,7 +298,7 @@ preset_load_level:
     JML $82E870
 
   .tile_table_decompression
-    LDA $079F : CMP #$0006 : BEQ .ceres
+    LDA !AREA_ID : CMP #$0006 : BEQ .ceres
 
     ; Decompress CRE tile table to $7EA000
     LDA #$B9A0 : STA $48

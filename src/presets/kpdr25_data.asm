@@ -1,5 +1,5 @@
 
-preset_kpdr25_bombs_ceres_elevator:
+preset_kpdr25_crateria_ceres_elevator:
     dw #$0000
     dw $078D, $AB58  ; DDB
     dw $079B, $DF45  ; MDB
@@ -69,8 +69,8 @@ preset_kpdr25_bombs_ceres_elevator:
     dw $D90C, $0000  ; Map Stations
     dw #$FFFF
 
-preset_kpdr25_bombs_ceres_escape:
-    dw #preset_kpdr25_bombs_ceres_elevator ; Bombs: Ceres Elevator
+preset_kpdr25_crateria_ceres_escape:
+    dw #preset_kpdr25_crateria_ceres_elevator ; Crateria: Ceres Elevator
     dw $078D, $ABAC  ; DDB
     dw $079B, $E0B5  ; MDB
     dw $07F3, $0024  ; Music Bank
@@ -88,8 +88,8 @@ preset_kpdr25_bombs_ceres_escape:
     dw $D82E, $0001  ; Bosses
     dw #$FFFF
 
-preset_kpdr25_bombs_ceres_last_3_rooms:
-    dw #preset_kpdr25_bombs_ceres_escape ; Bombs: Ceres Escape
+preset_kpdr25_crateria_ceres_last_3_rooms:
+    dw #preset_kpdr25_crateria_ceres_escape ; Crateria: Ceres Escape
     dw $078D, $ABA0  ; DDB
     dw $079B, $E021  ; MDB
     dw $090F, $7400  ; Screen subpixel X position
@@ -98,8 +98,8 @@ preset_kpdr25_bombs_ceres_last_3_rooms:
     dw $0AFA, $00A2  ; Samus Y
     dw #$FFFF
 
-preset_kpdr25_bombs_ship:
-    dw #preset_kpdr25_bombs_ceres_last_3_rooms ; Bombs: Ceres Last 3 Rooms
+preset_kpdr25_crateria_ship:
+    dw #preset_kpdr25_crateria_ceres_last_3_rooms ; Crateria: Ceres Last 3 Rooms
     dw $078D, $88FE  ; DDB
     dw $079B, $91F8  ; MDB
     dw $07F3, $0006  ; Music Bank
@@ -119,271 +119,375 @@ preset_kpdr25_bombs_ship:
     dw $0AFC, $8000  ; Samus subpixel Y
     dw #$FFFF
 
-preset_kpdr25_bombs_climb_down:
-    dw #preset_kpdr25_bombs_ship ; Bombs: Ship
-    dw $078D, $8916  ; DDB
-    dw $079B, $92FD  ; MDB
-    dw $0911, $0100  ; Screen X position in pixels
-    dw $0915, $02ED  ; Screen Y position in pixels
-    dw $0917, $00C0  ; Layer 2 X position
-    dw $0919, $0231  ; Layer 2 Y position
-    dw $0A1C, $0009  ; Samus position/state
-    dw $0A1E, $0108  ; More position/state
-    dw $0AF6, $01AC  ; Samus X
-    dw $0AFA, $035B  ; Samus Y
+preset_kpdr25_crateria_parlor:
+    dw #preset_kpdr25_crateria_ship ; Crateria: Ship
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $1400  ; Screen subpixel Y position
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0079  ; Samus X
+    dw $0AFA, $049B  ; Samus Y
     dw $0AFC, $FFFF  ; Samus subpixel Y
     dw #$FFFF
 
-preset_kpdr25_bombs_morph:
-    dw #preset_kpdr25_bombs_climb_down ; Bombs: Climb Down
+preset_kpdr25_crateria_parlor_downback:
+    dw #preset_kpdr25_crateria_parlor ; Crateria: Parlor
+    dw $078D, $8916  ; DDB
+    dw $079B, $92FD  ; MDB
+    dw $090F, $F000  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $9C00  ; Screen subpixel Y position
+    dw $0915, $032A  ; Screen Y position in pixels
+    dw $0917, $00C0  ; Layer 2 X position
+    dw $0919, $025F  ; Layer 2 Y position
+    dw $0AF6, $01B5  ; Samus X
+    dw $0AFA, $039B  ; Samus Y
+    dw #$FFFF
+
+preset_kpdr25_crateria_climb_down:
+    dw #preset_kpdr25_crateria_parlor_downback ; Crateria: Parlor Downback
+    dw $090F, $3000  ; Screen subpixel X position
+    dw $0913, $4000  ; Screen subpixel Y position
+    dw $0915, $041F  ; Screen Y position in pixels
+    dw $0919, $0317  ; Layer 2 Y position
+    dw $0AF6, $01A8  ; Samus X
+    dw $0AFA, $04BB  ; Samus Y
+    dw #$FFFF
+
+preset_kpdr25_crateria_pit_room:
+    dw #preset_kpdr25_crateria_climb_down ; Crateria: Climb Down
+    dw $078D, $898E  ; DDB
+    dw $079B, $96BA  ; MDB
+    dw $090F, $6FFF  ; Screen subpixel X position
+    dw $0913, $3800  ; Screen subpixel Y position
+    dw $0915, $0800  ; Screen Y position in pixels
+    dw $0919, $0600  ; Layer 2 Y position
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $01DB  ; Samus X
+    dw $0AFA, $088B  ; Samus Y
+    dw #$FFFF
+
+preset_kpdr25_crateria_morph:
+    dw #preset_kpdr25_crateria_pit_room ; Crateria: Pit Room
     dw $078D, $8B9E  ; DDB
     dw $079B, $9E9F  ; MDB
     dw $07F5, $0007  ; Music Track
+    dw $090F, $6000  ; Screen subpixel X position
     dw $0911, $0500  ; Screen X position in pixels
+    dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $0200  ; Screen Y position in pixels
     dw $0917, $03C0  ; Layer 2 X position
     dw $0919, $0180  ; Layer 2 Y position
-    dw $0A1C, $0025  ; Samus position/state
-    dw $0A1E, $0E04  ; More position/state
+    dw $0A1C, $0000  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
     dw $0AF6, $0580  ; Samus X
     dw $0AFA, $02A8  ; Samus Y
     dw #$FFFF
 
-preset_kpdr25_bombs_first_missiles:
-    dw #preset_kpdr25_bombs_morph ; Bombs: Morph
-    dw $078D, $8EDA  ; DDB
-    dw $079B, $A107  ; MDB
-    dw $090F, $7001  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $E800  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0917, $0001  ; Layer 2 X position
-    dw $0919, $0000  ; Layer 2 Y position
+preset_kpdr25_crateria_construction_zone:
+    dw #preset_kpdr25_crateria_morph ; Crateria: Morph
+    dw $090F, $2000  ; Screen subpixel X position
+    dw $0911, $0700  ; Screen X position in pixels
+    dw $0913, $E400  ; Screen subpixel Y position
+    dw $0917, $0540  ; Layer 2 X position
     dw $09A2, $0004  ; Equipped Items
     dw $09A4, $0004  ; Collected Items
-    dw $0A1C, $000C  ; Samus position/state
-    dw $0A1E, $0104  ; More position/state
-    dw $0AF6, $00CB  ; Samus X
-    dw $0AFA, $008B  ; Samus Y
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $07AC  ; Samus X
+    dw $0AFA, $028B  ; Samus Y
     dw $D872, $0400  ; Items
     dw #$FFFF
 
-preset_kpdr25_bombs_reverse_pit:
-    dw #preset_kpdr25_bombs_first_missiles ; Bombs: First Missiles
-    dw $078D, $8EB6  ; DDB
-    dw $079B, $97B5  ; MDB
-    dw $07F5, $0003  ; Music Track
-    dw $090F, $8000  ; Screen subpixel X position
-    dw $0913, $C000  ; Screen subpixel Y position
-    dw $0917, $0000  ; Layer 2 X position
+preset_kpdr25_crateria_construction_zone_revisit:
+    dw #preset_kpdr25_crateria_construction_zone ; Crateria: Construction Zone
+    dw $078D, $8EDA  ; DDB
+    dw $079B, $A107  ; MDB
+    dw $090F, $D000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $6800  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $0001  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
     dw $09C6, $0005  ; Missiles
     dw $09C8, $0005  ; Max missiles
-    dw $0AF6, $007B  ; Samus X
+    dw $0AF6, $0055  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
     dw $D874, $0004  ; Items
     dw #$FFFF
 
-preset_kpdr25_bombs_climb:
-    dw #preset_kpdr25_bombs_reverse_pit ; Bombs: Reverse Pit
+preset_kpdr25_crateria_pit_room_revisit:
+    dw #preset_kpdr25_crateria_construction_zone_revisit ; Crateria: Construction Zone Revisit
+    dw $078D, $8EB6  ; DDB
+    dw $079B, $97B5  ; MDB
+    dw $07F5, $0003  ; Music Track
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0A1C, $0000  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
+    dw $0AF6, $0080  ; Samus X
+    dw $0AFA, $0088  ; Samus Y
+    dw #$FFFF
+
+preset_kpdr25_crateria_climb_up:
+    dw #preset_kpdr25_crateria_pit_room_revisit ; Crateria: Pit Room Revisit
     dw $078D, $8B92  ; DDB
     dw $079B, $975C  ; MDB
     dw $07F3, $0009  ; Music Bank
     dw $07F5, $0005  ; Music Track
-    dw $090F, $6000  ; Screen subpixel X position
-    dw $0913, $AC00  ; Screen subpixel Y position
-    dw $0A1C, $0008  ; Samus position/state
+    dw $090F, $4000  ; Screen subpixel X position
+    dw $0913, $CC00  ; Screen subpixel Y position
+    dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $003C  ; Samus X
+    dw $0AF6, $0083  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
     dw $D820, $0001  ; Events
     dw $D8B2, $0400  ; Doors
     dw #$FFFF
 
-preset_kpdr25_bombs_parlor:
-    dw #preset_kpdr25_bombs_climb ; Bombs: Climb
+preset_kpdr25_crateria_parlor_revisit:
+    dw #preset_kpdr25_crateria_climb_up ; Crateria: Climb Up
     dw $078D, $8B7A  ; DDB
     dw $079B, $96BA  ; MDB
+    dw $090F, $0000  ; Screen subpixel X position
     dw $0911, $0100  ; Screen X position in pixels
-    dw $0913, $2000  ; Screen subpixel Y position
+    dw $0913, $C000  ; Screen subpixel Y position
     dw $0917, $00C0  ; Layer 2 X position
-    dw $0A1C, $000F  ; Samus position/state
-    dw $0A1E, $0108  ; More position/state
-    dw $0AF6, $0166  ; Samus X
+    dw $0AF6, $01A0  ; Samus X
     dw $0AFA, $005B  ; Samus Y
     dw #$FFFF
 
-preset_kpdr25_bombs_bomb_torizo:
-    dw #preset_kpdr25_bombs_parlor ; Bombs: Parlor
+preset_kpdr25_crateria_flyway:
+    dw #preset_kpdr25_crateria_parlor_revisit ; Crateria: Parlor Revisit
+    dw $078D, $8B3E  ; DDB
+    dw $079B, $92FD  ; MDB
+    dw $090F, $C000  ; Screen subpixel X position
+    dw $0911, $0300  ; Screen X position in pixels
+    dw $0913, $2BFF  ; Screen subpixel Y position
+    dw $0915, $01E6  ; Screen Y position in pixels
+    dw $0917, $0240  ; Layer 2 X position
+    dw $0919, $016C  ; Layer 2 Y position
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $0369  ; Samus X
+    dw $0AFA, $026B  ; Samus Y
+    dw #$FFFF
+
+preset_kpdr25_crateria_bomb_torizo:
+    dw #preset_kpdr25_crateria_flyway ; Crateria: Flyway
     dw $078D, $8982  ; DDB
     dw $079B, $9879  ; MDB
+    dw $090F, $4000  ; Screen subpixel X position
     dw $0911, $0200  ; Screen X position in pixels
-    dw $0913, $A400  ; Screen subpixel Y position
+    dw $0913, $D000  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0180  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
     dw $09C6, $0000  ; Missiles
-    dw $0A1C, $000B  ; Samus position/state
-    dw $0AF6, $02C3  ; Samus X
+    dw $0AF6, $02BE  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw $D8B2, $2400  ; Doors
     dw #$FFFF
 
-preset_kpdr25_bombs_alcatraz:
-    dw #preset_kpdr25_bombs_bomb_torizo ; Bombs: Bomb Torizo
+preset_kpdr25_crateria_alcatraz:
+    dw #preset_kpdr25_crateria_bomb_torizo ; Crateria: Bomb Torizo
     dw $078D, $8BAA  ; DDB
-    dw $090F, $E000  ; Screen subpixel X position
+    dw $090F, $2001  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $7C00  ; Screen subpixel Y position
     dw $0917, $0000  ; Layer 2 X position
     dw $09A2, $1004  ; Equipped Items
     dw $09A4, $1004  ; Collected Items
     dw $09C6, $0005  ; Missiles
-    dw $0A1C, $0012  ; Samus position/state
-    dw $0A1E, $0104  ; More position/state
-    dw $0AF6, $002D  ; Samus X
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0040  ; Samus X
     dw $D828, $0004  ; Bosses
     dw $D870, $0080  ; Items
     dw $D8B2, $2C00  ; Doors
     dw #$FFFF
 
-preset_kpdr25_bombs_terminator:
-    dw #preset_kpdr25_bombs_alcatraz ; Bombs: Alcatraz
+preset_kpdr25_crateria_terminator:
+    dw #preset_kpdr25_crateria_alcatraz ; Crateria: Alcatraz
     dw $078D, $8BB6  ; DDB
     dw $079B, $92FD  ; MDB
-    dw $090F, $C000  ; Screen subpixel X position
+    dw $090F, $6000  ; Screen subpixel X position
     dw $0911, $0100  ; Screen X position in pixels
-    dw $0913, $4000  ; Screen subpixel Y position
+    dw $0913, $5800  ; Screen subpixel Y position
     dw $0917, $00C0  ; Layer 2 X position
-    dw $0A1C, $001F  ; Samus position/state
+    dw $0A1C, $0041  ; Samus position/state
     dw $0A1E, $0404  ; More position/state
-    dw $0AF6, $012F  ; Samus X
-    dw $0AFA, $00A9  ; Samus Y
+    dw $0AF6, $0115  ; Samus X
+    dw $0AFA, $0099  ; Samus Y
     dw #$FFFF
 
-preset_kpdr25_bombs_mushrooms:
-    dw #preset_kpdr25_bombs_terminator ; Bombs: Terminator
-    dw $078D, $8BE6  ; DDB
-    dw $079B, $99BD  ; MDB
-    dw $090F, $7000  ; Screen subpixel X position
+preset_kpdr25_crateria_green_pirate_shaft:
+    dw #preset_kpdr25_crateria_terminator ; Crateria: Terminator
+    dw $078D, $895E  ; DDB
+    dw $079B, $990D  ; MDB
+    dw $090F, $9F00  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $1800  ; Screen subpixel Y position
-    dw $0915, $0600  ; Screen Y position in pixels
-    dw $0917, $0001  ; Layer 2 X position
-    dw $0919, $0480  ; Layer 2 Y position
-    dw $09C2, $008B  ; Health
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $01FC  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $017D  ; Layer 2 Y position
+    dw $09C2, $00C7  ; Health
     dw $09C4, $00C7  ; Max health
-    dw $0A1C, $0012  ; Samus position/state
-    dw $0A1E, $0104  ; More position/state
-    dw $0AF6, $0037  ; Samus X
-    dw $0AFA, $068B  ; Samus Y
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0063  ; Samus X
+    dw $0AFA, $029B  ; Samus Y
     dw $D870, $0180  ; Items
     dw #$FFFF
 
-preset_kpdr25_kraid_green_brinstar_elevator:
-    dw #preset_kpdr25_bombs_mushrooms ; Bombs: Mushrooms
+preset_kpdr25_brinstar_green_brinstar_elevator:
+    dw #preset_kpdr25_crateria_green_pirate_shaft ; Crateria: Green Pirate Shaft
     dw $078D, $8C22  ; DDB
     dw $079B, $9938  ; MDB
     dw $07F5, $0003  ; Music Track
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $0913, $C000  ; Screen subpixel Y position
+    dw $090F, $8000  ; Screen subpixel X position
+    dw $0913, $C400  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
-    dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0A1C, $0000  ; Samus position/state
-    dw $0A1E, $0000  ; More position/state
-    dw $0AF6, $0080  ; Samus X
-    dw $0AFA, $0089  ; Samus Y
+    dw $09C2, $008B  ; Health
+    dw $0AF6, $007E  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 
-preset_kpdr25_kraid_dachora_room:
-    dw #preset_kpdr25_kraid_green_brinstar_elevator ; Kraid: Green Brinstar Elevator
-    dw $078D, $8D4E  ; DDB
+preset_kpdr25_brinstar_early_supers:
+    dw #preset_kpdr25_brinstar_green_brinstar_elevator ; Brinstar: Green Brinstar Elevator
+    dw $078D, $8C0A  ; DDB
     dw $079B, $9AD9  ; MDB
     dw $07F3, $000F  ; Music Bank
     dw $07F5, $0005  ; Music Track
-    dw $090F, $B000  ; Screen subpixel X position
+    dw $090F, $C000  ; Screen subpixel X position
     dw $0913, $0000  ; Screen subpixel Y position
-    dw $0915, $061A  ; Screen Y position in pixels
-    dw $0919, $0493  ; Layer 2 Y position
-    dw $09C2, $009A  ; Health
+    dw $0915, $041B  ; Screen Y position in pixels
+    dw $0919, $0314  ; Layer 2 Y position
     dw $09C6, $0000  ; Missiles
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $00A5  ; Samus X
+    dw $0AFA, $048B  ; Samus Y
+    dw $D8B4, $0002  ; Doors
+    dw #$FFFF
+
+preset_kpdr25_brinstar_dachora_room:
+    dw #preset_kpdr25_brinstar_early_supers ; Brinstar: Early Supers
+    dw $078D, $8D4E  ; DDB
+    dw $090F, $B000  ; Screen subpixel X position
+    dw $0915, $061B  ; Screen Y position in pixels
+    dw $0919, $0494  ; Layer 2 Y position
+    dw $09C2, $0081  ; Health
     dw $09CA, $0004  ; Supers
     dw $09CC, $0005  ; Max supers
-    dw $0A1C, $000B  ; Samus position/state
-    dw $0A1E, $0108  ; More position/state
-    dw $0AF6, $00AA  ; Samus X
+    dw $0AF6, $0057  ; Samus X
     dw $0AFA, $068B  ; Samus Y
     dw $D872, $0401  ; Items
     dw $D8B4, $0006  ; Doors
     dw #$FFFF
 
-preset_kpdr25_kraid_big_pink:
-    dw #preset_kpdr25_kraid_dachora_room ; Kraid: Dachora Room
+preset_kpdr25_brinstar_big_pink:
+    dw #preset_kpdr25_brinstar_dachora_room ; Brinstar: Dachora Room
     dw $078D, $8CE2  ; DDB
     dw $079B, $9CB3  ; MDB
-    dw $090F, $D000  ; Screen subpixel X position
+    dw $090F, $5000  ; Screen subpixel X position
     dw $0911, $0600  ; Screen X position in pixels
-    dw $0913, $2FFF  ; Screen subpixel Y position
+    dw $0913, $8000  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0480  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $09C2, $009F  ; Health
-    dw $0AF6, $06C0  ; Samus X
+    dw $09C6, $0002  ; Missiles
+    dw $0AF6, $069C  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 
-preset_kpdr25_kraid_green_hills:
-    dw #preset_kpdr25_kraid_big_pink ; Kraid: Big Pink
+preset_kpdr25_brinstar_green_hill_zone:
+    dw #preset_kpdr25_brinstar_big_pink ; Brinstar: Big Pink
     dw $078D, $8DAE  ; DDB
     dw $079B, $9D19  ; MDB
-    dw $090F, $C000  ; Screen subpixel X position
+    dw $090F, $8000  ; Screen subpixel X position
     dw $0911, $0300  ; Screen X position in pixels
-    dw $0913, $0800  ; Screen subpixel Y position
-    dw $0915, $060F  ; Screen Y position in pixels
+    dw $0913, $8C00  ; Screen subpixel Y position
+    dw $0915, $0611  ; Screen Y position in pixels
     dw $0917, $0240  ; Layer 2 X position
-    dw $0919, $048B  ; Layer 2 Y position
+    dw $0919, $048C  ; Layer 2 Y position
     dw $09A6, $1000  ; Equipped Beams
     dw $09A8, $1000  ; Collected Beams
-    dw $09C6, $0005  ; Missiles
+    dw $09C6, $0007  ; Missiles
     dw $09C8, $000A  ; Max missiles
     dw $09CA, $0003  ; Supers
-    dw $0AF6, $0380  ; Samus X
+    dw $0AF6, $0365  ; Samus X
     dw $0AFA, $068B  ; Samus Y
     dw $D872, $04C1  ; Items
     dw $D8B4, $0206  ; Doors
     dw #$FFFF
 
-preset_kpdr25_kraid_red_tower_descent:
-    dw #preset_kpdr25_kraid_green_hills ; Kraid: Green Hills
+preset_kpdr25_brinstar_noob_bridge:
+    dw #preset_kpdr25_brinstar_green_hill_zone ; Brinstar: Green Hill Zone
+    dw $078D, $8DEA  ; DDB
+    dw $079B, $9E52  ; MDB
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $0700  ; Screen X position in pixels
+    dw $0913, $4000  ; Screen subpixel Y position
+    dw $0915, $0300  ; Screen Y position in pixels
+    dw $0917, $0540  ; Layer 2 X position
+    dw $0919, $0240  ; Layer 2 Y position
+    dw $09C2, $0077  ; Health
+    dw $0AF6, $07B9  ; Samus X
+    dw $0AFA, $038B  ; Samus Y
+    dw #$FFFF
+
+preset_kpdr25_brinstar_red_tower:
+    dw #preset_kpdr25_brinstar_noob_bridge ; Brinstar: Noob Bridge
     dw $078D, $8E92  ; DDB
     dw $079B, $9FBA  ; MDB
-    dw $090F, $8000  ; Screen subpixel X position
-    dw $0911, $0500  ; Screen X position in pixels
+    dw $0911, $0482  ; Screen X position in pixels
     dw $0913, $E000  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
-    dw $0917, $03C0  ; Layer 2 X position
+    dw $0917, $0361  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $09C6, $0007  ; Missiles
     dw $09CA, $0004  ; Supers
-    dw $0A1C, $0009  ; Samus position/state
-    dw $0AF6, $0574  ; Samus X
+    dw $0AF6, $0522  ; Samus X
     dw $0AFA, $00AB  ; Samus Y
     dw $D8B6, $0008  ; Doors
     dw #$FFFF
 
-preset_kpdr25_kraid_bat_room:
-    dw #preset_kpdr25_kraid_red_tower_descent ; Kraid: Red Tower Descent
+preset_kpdr25_brinstar_skree_boost:
+    dw #preset_kpdr25_brinstar_red_tower ; Brinstar: Red Tower
     dw $078D, $8F0A  ; DDB
     dw $079B, $A253  ; MDB
     dw $07F3, $0012  ; Music Bank
-    dw $090F, $F000  ; Screen subpixel X position
+    dw $090F, $3001  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $091A  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $06D3  ; Layer 2 Y position
-    dw $0AF6, $005E  ; Samus X
+    dw $0AF6, $0056  ; Samus X
     dw $0AFA, $098B  ; Samus Y
     dw #$FFFF
 
-preset_kpdr25_kraid_spazer:
-    dw #preset_kpdr25_kraid_bat_room ; Kraid: Bat Room
+preset_kpdr25_brinstar_below_spazer:
+    dw #preset_kpdr25_brinstar_skree_boost ; Brinstar: Skree Boost
+    dw $078D, $9042  ; DDB
+    dw $079B, $A3DD  ; MDB
+    dw $090F, $2FFF  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $4400  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $00C0  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09C2, $006D  ; Health
+    dw $0AF6, $01DC  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw #$FFFF
+
+preset_kpdr25_brinstar_spazer:
+    dw #preset_kpdr25_brinstar_below_spazer ; Brinstar: Below Spazer
     dw $078D, $9102  ; DDB
     dw $079B, $A408  ; MDB
     dw $090F, $2000  ; Screen subpixel X position
@@ -398,140 +502,193 @@ preset_kpdr25_kraid_spazer:
     dw $D8B6, $8008  ; Doors
     dw #$FFFF
 
-preset_kpdr25_kraid_warehouse_entrance:
-    dw #preset_kpdr25_kraid_spazer ; Kraid: Spazer
+preset_kpdr25_brinstar_entering_kraids_lair:
+    dw #preset_kpdr25_brinstar_spazer ; Brinstar: Spazer
     dw $078D, $A348  ; DDB
     dw $079B, $CF80  ; MDB
-    dw $090F, $8000  ; Screen subpixel X position
+    dw $090F, $4000  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $7400  ; Screen subpixel Y position
+    dw $0913, $CC00  ; Screen subpixel Y position
     dw $0915, $0100  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0100  ; Layer 2 Y position
     dw $09A6, $1004  ; Equipped Beams
     dw $09A8, $1004  ; Collected Beams
+    dw $09C6, $0006  ; Missiles
     dw $09CA, $0004  ; Supers
-    dw $0A1C, $000B  ; Samus position/state
-    dw $0AF6, $0048  ; Samus X
+    dw $09D2, $0002  ; Currently selected item
+    dw $0AF6, $002E  ; Samus X
     dw $0AFA, $018B  ; Samus Y
     dw $D874, $0404  ; Items
     dw #$FFFF
 
-preset_kpdr25_kraid_baby_kraid:
-    dw #preset_kpdr25_kraid_warehouse_entrance ; Kraid: Warehouse Entrance
-    dw $078D, $9156  ; DDB
-    dw $079B, $A4DA  ; MDB
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $0911, $00F4  ; Screen X position in pixels
-    dw $0913, $9400  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0917, $00B7  ; Layer 2 X position
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $09C2, $008B  ; Health
-    dw $09C6, $0009  ; Missiles
+preset_kpdr25_brinstar_kraid_kihunters:
+    dw #preset_kpdr25_brinstar_entering_kraids_lair ; Brinstar: Entering Kraids Lair
+    dw $078D, $923A  ; DDB
+    dw $079B, $A471  ; MDB
+    dw $090F, $8000  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $8000  ; Screen subpixel Y position
+    dw $0917, $00C0  ; Layer 2 X position
     dw $09CA, $0003  ; Supers
-    dw $0A1C, $0011  ; Samus position/state
-    dw $0AF6, $0154  ; Samus X
-    dw $0AFA, $00AB  ; Samus Y
+    dw $09D2, $0000  ; Currently selected item
+    dw $0AF6, $0167  ; Samus X
     dw #$FFFF
 
-preset_kpdr25_kraid_kraid_2:
-    dw #preset_kpdr25_kraid_baby_kraid ; Kraid: Baby Kraid
+preset_kpdr25_brinstar_mini_kraid:
+    dw #preset_kpdr25_brinstar_kraid_kihunters ; Brinstar: Kraid Kihunters
+    dw $078D, $9156  ; DDB
+    dw $079B, $A4DA  ; MDB
+    dw $090F, $E000  ; Screen subpixel X position
+    dw $0913, $FC00  ; Screen subpixel Y position
+    dw $09C2, $0059  ; Health
+    dw $09D2, $0001  ; Currently selected item
+    dw $0AF6, $016B  ; Samus X
+    dw #$FFFF
+
+preset_kpdr25_brinstar_kraid:
+    dw #preset_kpdr25_brinstar_mini_kraid ; Brinstar: Mini Kraid
     dw $078D, $919E  ; DDB
     dw $079B, $A56B  ; MDB
     dw $07F3, $0027  ; Music Bank
     dw $07F5, $0006  ; Music Track
-    dw $090F, $5000  ; Screen subpixel X position
-    dw $0911, $0100  ; Screen X position in pixels
-    dw $0913, $3800  ; Screen subpixel Y position
-    dw $0915, $0100  ; Screen Y position in pixels
+    dw $090F, $7000  ; Screen subpixel X position
+    dw $0913, $0800  ; Screen subpixel Y position
     dw $0917, $0100  ; Layer 2 X position
-    dw $0919, $0100  ; Layer 2 Y position
-    dw $09C2, $0085  ; Health
-    dw $09C6, $0006  ; Missiles
+    dw $09C2, $0043  ; Health
+    dw $09C6, $0005  ; Missiles
     dw $09CA, $0004  ; Supers
-    dw $0A1C, $0089  ; Samus position/state
-    dw $0A1E, $1508  ; More position/state
-    dw $0AF6, $01DB  ; Samus X
-    dw $0AFA, $018B  ; Samus Y
+    dw $09D2, $0000  ; Currently selected item
+    dw $0AF6, $01C1  ; Samus X
     dw $D8B8, $0024  ; Doors
     dw #$FFFF
 
-preset_kpdr25_kraid_leaving_varia:
-    dw #preset_kpdr25_kraid_kraid_2 ; Kraid: Kraid
+preset_kpdr25_brinstar_leaving_varia:
+    dw #preset_kpdr25_brinstar_kraid ; Brinstar: Kraid
     dw $078D, $91DA  ; DDB
     dw $079B, $A6E2  ; MDB
     dw $07F5, $0003  ; Music Track
-    dw $090F, $A000  ; Screen subpixel X position
+    dw $090F, $1000  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $B000  ; Screen subpixel Y position
+    dw $0913, $5800  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
     dw $09A2, $1005  ; Equipped Items
     dw $09A4, $1005  ; Collected Items
-    dw $09C2, $009E  ; Health
+    dw $09C2, $0084  ; Health
     dw $09C6, $000A  ; Missiles
-    dw $09CA, $0002  ; Supers
-    dw $0A1C, $000A  ; Samus position/state
-    dw $0A1E, $0104  ; More position/state
-    dw $0AF6, $0031  ; Samus X
-    dw $0AFA, $008B  ; Samus Y
+    dw $0A1C, $009B  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
+    dw $0AF6, $0078  ; Samus X
+    dw $0AFA, $0088  ; Samus Y
     dw $D828, $0104  ; Bosses
     dw $D876, $0001  ; Items
     dw $D8B8, $0064  ; Doors
     dw #$FFFF
 
-preset_kpdr25_kraid_baby_kraid_exiting:
-    dw #preset_kpdr25_kraid_leaving_varia ; Kraid: Leaving Varia
+preset_kpdr25_brinstar_mini_kraid_revisit:
+    dw #preset_kpdr25_brinstar_leaving_varia ; Brinstar: Leaving Varia
     dw $078D, $91CE  ; DDB
     dw $079B, $A56B  ; MDB
-    dw $0913, $3BFF  ; Screen subpixel Y position
+    dw $090F, $3000  ; Screen subpixel X position
+    dw $0913, $7800  ; Screen subpixel Y position
     dw $0915, $0100  ; Screen Y position in pixels
     dw $0919, $0100  ; Layer 2 Y position
-    dw $09C2, $0096  ; Health
-    dw $0AF6, $0044  ; Samus X
+    dw $09C2, $007C  ; Health
+    dw $09D2, $0002  ; Currently selected item
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0058  ; Samus X
     dw $0AFA, $018B  ; Samus Y
     dw $D8B8, $00E4  ; Doors
     dw #$FFFF
 
-preset_kpdr25_kraid_kraid_etank:
-    dw #preset_kpdr25_kraid_baby_kraid_exiting ; Kraid: Baby Kraid (Exiting)
+preset_kpdr25_brinstar_kraid_kihunters_revisit:
+    dw #preset_kpdr25_brinstar_mini_kraid_revisit ; Brinstar: Mini Kraid Revisit
+    dw $078D, $91AA  ; DDB
+    dw $079B, $A521  ; MDB
+    dw $090F, $9000  ; Screen subpixel X position
+    dw $0913, $4000  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09C6, $0007  ; Missiles
+    dw $09CA, $0005  ; Supers
+    dw $09D2, $0000  ; Currently selected item
+    dw $0AF6, $009A  ; Samus X
+    dw $0AFA, $00AB  ; Samus Y
+    dw $D8B8, $00EC  ; Doors
+    dw #$FFFF
+
+preset_kpdr25_brinstar_kraid_etank:
+    dw #preset_kpdr25_brinstar_kraid_kihunters_revisit ; Brinstar: Kraid Kihunters Revisit
     dw $078D, $916E  ; DDB
     dw $079B, $A471  ; MDB
     dw $07F3, $0012  ; Music Bank
     dw $07F5, $0005  ; Music Track
-    dw $090F, $B000  ; Screen subpixel X position
-    dw $0913, $8000  ; Screen subpixel Y position
-    dw $0915, $00FF  ; Screen Y position in pixels
-    dw $0919, $00FF  ; Layer 2 Y position
-    dw $09C6, $0008  ; Missiles
-    dw $09CA, $0005  ; Supers
-    dw $0AF6, $0045  ; Samus X
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0913, $D400  ; Screen subpixel Y position
+    dw $0915, $0100  ; Screen Y position in pixels
+    dw $0919, $0100  ; Layer 2 Y position
+    dw $0AF6, $0051  ; Samus X
+    dw $0AFA, $018B  ; Samus Y
     dw $D8B8, $00ED  ; Doors
     dw #$FFFF
 
-preset_kpdr25_upper_norfair_business_center:
-    dw #preset_kpdr25_kraid_kraid_etank ; Kraid: Kraid E-tank
-    dw $078D, $9246  ; DDB
-    dw $079B, $A7DE  ; MDB
-    dw $07F3, $0015  ; Music Bank
-    dw $090F, $E000  ; Screen subpixel X position
-    dw $0913, $0000  ; Screen subpixel Y position
-    dw $0915, $023B  ; Screen Y position in pixels
-    dw $0919, $01AC  ; Layer 2 Y position
+preset_kpdr25_brinstar_leaving_kraids_lair:
+    dw #preset_kpdr25_brinstar_kraid_etank ; Brinstar: Kraid E-Tank
+    dw $078D, $914A  ; DDB
+    dw $079B, $A4B1  ; MDB
+    dw $090F, $6000  ; Screen subpixel X position
+    dw $0913, $1C00  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0919, $0000  ; Layer 2 Y position
     dw $09C2, $012B  ; Health
     dw $09C4, $012B  ; Max health
     dw $09C6, $0009  ; Missiles
-    dw $09CA, $0004  ; Supers
-    dw $0AF6, $007C  ; Samus X
-    dw $0AFA, $02AB  ; Samus Y
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $0085  ; Samus X
+    dw $0AFA, $009B  ; Samus Y
     dw $D874, $0C04  ; Items
     dw $D8B8, $00EF  ; Doors
     dw #$FFFF
 
+preset_kpdr25_brinstar_business_center_preelev:
+    dw #preset_kpdr25_brinstar_leaving_kraids_lair ; Brinstar: Leaving Kraids Lair
+    dw $078D, $913E  ; DDB
+    dw $079B, $A6A1  ; MDB
+    dw $07F5, $0003  ; Music Track
+    dw $090F, $3000  ; Screen subpixel X position
+    dw $0911, $0006  ; Screen X position in pixels
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0917, $0006  ; Layer 2 X position
+    dw $09CA, $0004  ; Supers
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0078  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw #$FFFF
+
+preset_kpdr25_upper_norfair_business_center_postelev:
+    dw #preset_kpdr25_brinstar_business_center_preelev ; Kraid: Business Center Pre-Elev
+    dw $078D, $9246  ; DDB
+    dw $079B, $A7DE  ; MDB
+    dw $07F3, $0015  ; Music Bank
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $8000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0915, $0238  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $01AA  ; Layer 2 Y position
+    dw $0A1C, $009B  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
+    dw $0AF6, $0080  ; Samus X
+    dw $0AFA, $02A8  ; Samus Y
+    dw #$FFFF
+
 preset_kpdr25_upper_norfair_leaving_hijump:
-    dw #preset_kpdr25_upper_norfair_business_center ; Upper Norfair: Business Center
+    dw #preset_kpdr25_upper_norfair_business_center_postelev ; Upper Norfair: Business Center Post-Elev
     dw $078D, $9426  ; DDB
     dw $079B, $A9E5  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -763,8 +920,8 @@ preset_kpdr25_wrecked_ship_alpha_spark:
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0919, $0000  ; Layer 2 Y position
-    dw $0A1C, $0025  ; Samus position/state
-    dw $0A1E, $0E04  ; More position/state
+    dw $0A1C, $009B  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
     dw $0AF6, $0080  ; Samus X
     dw $0AFA, $0087  ; Samus Y
     dw #$FFFF
@@ -841,14 +998,15 @@ preset_kpdr25_wrecked_ship_premoat:
     dw #preset_kpdr25_wrecked_ship_post_power_bombs ; Wrecked Ship: Post Power Bombs
     dw $078D, $90BA  ; DDB
     dw $079B, $962A  ; MDB
-    dw $090F, $3000  ; Screen subpixel X position
+    dw $090F, $0000  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $C000  ; Screen subpixel Y position
+    dw $0913, $0000  ; Screen subpixel Y position
     dw $0917, $0000  ; Layer 2 X position
     dw $09CA, $0004  ; Supers
     dw $09CE, $0004  ; Pbs
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
+    dw $09D2, $0003  ; Currently selected item
+    dw $0A1C, $009B  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
     dw $0AF6, $007D  ; Samus X
     dw $0AFA, $00AB  ; Samus Y
     dw $D8B6, $B008  ; Doors
@@ -867,6 +1025,7 @@ preset_kpdr25_wrecked_ship_ocean_spark:
     dw $09C6, $0018  ; Missiles
     dw $09C8, $0019  ; Max missiles
     dw $09CE, $0002  ; Pbs
+    dw $09D2, $0000  ; Currently selected item
     dw $0A1C, $006F  ; Samus position/state
     dw $0A1E, $0608  ; More position/state
     dw $0AF6, $01DB  ; Samus X
@@ -1054,7 +1213,7 @@ preset_kpdr25_maridia_hellway_return:
     dw $0AFA, $058B  ; Samus Y
     dw #$FFFF
 
-preset_kpdr25_maridia_bat_room_2:
+preset_kpdr25_maridia_bat_room:
     dw #preset_kpdr25_maridia_hellway_return ; Maridia: Hellway Return
     dw $078D, $907E  ; DDB
     dw $079B, $A253  ; MDB
@@ -1070,7 +1229,7 @@ preset_kpdr25_maridia_bat_room_2:
     dw #$FFFF
 
 preset_kpdr25_maridia_the_tube:
-    dw #preset_kpdr25_maridia_bat_room_2 ; Maridia: Bat Room
+    dw #preset_kpdr25_maridia_bat_room ; Maridia: Bat Room
     dw $078D, $9102  ; DDB
     dw $079B, $A408  ; MDB
     dw $090F, $D000  ; Screen subpixel X position
@@ -1474,7 +1633,7 @@ preset_kpdr25_lower_norfair_ridley_etank:
     dw #$FFFF
 
 preset_kpdr25_lower_norfair_wasteland_revisit:
-    dw #preset_kpdr25_lower_norfair_ridley_etank ; Lower Norfair: Ridley E-tank
+    dw #preset_kpdr25_lower_norfair_ridley_etank ; Lower Norfair: Ridley E-Tank
     dw $078D, $9966  ; DDB
     dw $079B, $B62B  ; MDB
     dw $07F3, $0018  ; Music Bank
@@ -1540,7 +1699,7 @@ preset_kpdr25_lower_norfair_three_musketeers:
     dw $0AF6, $006A  ; Samus X
     dw #$FFFF
 
-preset_kpdr25_golden_4_frog_speedway_2:
+preset_kpdr25_golden_4_frog_speedway:
     dw #preset_kpdr25_lower_norfair_three_musketeers ; Lower Norfair: Three Musketeers
     dw $078D, $956A  ; DDB
     dw $079B, $AF72  ; MDB
@@ -1558,7 +1717,7 @@ preset_kpdr25_golden_4_frog_speedway_2:
     dw #$FFFF
 
 preset_kpdr25_golden_4_maridia_tube_revisit:
-    dw #preset_kpdr25_golden_4_frog_speedway_2 ; Golden 4: Frog Speedway
+    dw #preset_kpdr25_golden_4_frog_speedway ; Golden 4: Frog Speedway
     dw $078D, $92EE  ; DDB
     dw $079B, $A6A1  ; MDB
     dw $07F3, $0012  ; Music Bank
@@ -1595,17 +1754,17 @@ preset_kpdr25_golden_4_premoat_revisit:
     dw $079B, $962A  ; MDB
     dw $07F3, $0012  ; Music Bank
     dw $07F5, $0003  ; Music Track
-    dw $090F, $9000  ; Screen subpixel X position
+    dw $090F, $0000  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
     dw $09CA, $0009  ; Supers
-    dw $0A1C, $0025  ; Samus position/state
-    dw $0A1E, $0E04  ; More position/state
+    dw $0A1C, $009B  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
     dw $0AF6, $0080  ; Samus X
-    dw $0AFA, $00A9  ; Samus Y
+    dw $0AFA, $00A8  ; Samus Y
     dw #$FFFF
 
 preset_kpdr25_golden_4_ship_revisit:
@@ -1614,7 +1773,6 @@ preset_kpdr25_golden_4_ship_revisit:
     dw $079B, $91F8  ; MDB
     dw $07F3, $000C  ; Music Bank
     dw $07F5, $0005  ; Music Track
-    dw $090F, $0000  ; Screen subpixel X position
     dw $0911, $0575  ; Screen X position in pixels
     dw $0913, $2800  ; Screen subpixel Y position
     dw $0915, $0400  ; Screen Y position in pixels
@@ -1624,36 +1782,95 @@ preset_kpdr25_golden_4_ship_revisit:
     dw $0A1E, $0104  ; More position/state
     dw $0AF6, $0615  ; Samus X
     dw $0AFA, $04BB  ; Samus Y
-    dw $0B3F, $0104  ; Blue suit
     dw #$FFFF
 
-preset_kpdr25_golden_4_g4_elevator:
+preset_kpdr25_golden_4_terminator_revisit:
     dw #preset_kpdr25_golden_4_ship_revisit ; Golden 4: Ship Revisit
-    dw $078D, $91F2  ; DDB
-    dw $079B, $A66A  ; MDB
+    dw $078D, $8916  ; DDB
+    dw $079B, $92FD  ; MDB
     dw $07F3, $0009  ; Music Bank
-    dw $07F5, $0006  ; Music Track
-    dw $090F, $1000  ; Screen subpixel X position
+    dw $090F, $6800  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $AC00  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $00C0  ; Layer 2 X position
+    dw $0A1C, $008A  ; Samus position/state
+    dw $0A1E, $1504  ; More position/state
+    dw $0AF6, $0115  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw #$FFFF
+
+preset_kpdr25_golden_4_green_pirate_shaft_revisit:
+    dw #preset_kpdr25_golden_4_terminator_revisit ; Golden 4: Terminator Revisit
+    dw $078D, $895E  ; DDB
+    dw $079B, $990D  ; MDB
+    dw $090F, $A680  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $1000  ; Screen subpixel Y position
-    dw $0915, $011F  ; Screen Y position in pixels
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $01FB  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $017C  ; Layer 2 Y position
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $005E  ; Samus X
+    dw $0AFA, $029B  ; Samus Y
+    dw #$FFFF
+
+preset_kpdr25_golden_4_g4_hallway:
+    dw #preset_kpdr25_golden_4_green_pirate_shaft_revisit ; Golden 4: Green Pirate Shaft Revisit
+    dw $078D, $8BE6  ; DDB
+    dw $079B, $99BD  ; MDB
+    dw $090F, $F000  ; Screen subpixel X position
+    dw $0913, $E400  ; Screen subpixel Y position
+    dw $0915, $0600  ; Screen Y position in pixels
+    dw $0917, $0001  ; Layer 2 X position
+    dw $0919, $0480  ; Layer 2 Y position
     dw $09CA, $0008  ; Supers
-    dw $0A1C, $0007  ; Samus position/state
+    dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $0077  ; Samus X
-    dw $0AFA, $019B  ; Samus Y
-    dw $0B3F, $0000  ; Blue suit
-    dw $D820, $0FC1  ; Events
+    dw $0AF6, $00BC  ; Samus X
+    dw $0AFA, $068B  ; Samus Y
     dw $D8B2, $6C01  ; Doors
     dw #$FFFF
 
-preset_kpdr25_tourian_metroids_1:
+preset_kpdr25_golden_4_g4_elevator:
+    dw #preset_kpdr25_golden_4_g4_hallway ; Golden 4: G4 Hallway
+    dw $078D, $91F2  ; DDB
+    dw $079B, $A66A  ; MDB
+    dw $07F5, $0006  ; Music Track
+    dw $090F, $7000  ; Screen subpixel X position
+    dw $0913, $7000  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0049  ; Samus X
+    dw $0AFA, $009B  ; Samus Y
+    dw $D820, $0BC1  ; Events
+    dw #$FFFF
+
+preset_kpdr25_tourian_tourian_elevator_room:
     dw #preset_kpdr25_golden_4_g4_elevator ; Golden 4: G4 Elevator
     dw $078D, $9222  ; DDB
     dw $079B, $DAAE  ; MDB
     dw $07F3, $001E  ; Music Bank
     dw $07F5, $0005  ; Music Track
+    dw $090F, $9FFF  ; Screen subpixel X position
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $0238  ; Screen Y position in pixels
+    dw $0919, $01AA  ; Layer 2 Y position
+    dw $09A6, $1007  ; Equipped Beams
+    dw $0A1C, $009B  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
+    dw $0AF6, $0080  ; Samus X
+    dw $0AFA, $02A8  ; Samus Y
+    dw $D820, $0FC1  ; Events
+    dw $D90C, $0100  ; Map Stations
+    dw #$FFFF
+
+preset_kpdr25_tourian_metroids_1:
+    dw #preset_kpdr25_tourian_tourian_elevator_room ; Tourian: Tourian Elevator Room
     dw $090F, $2000  ; Screen subpixel X position
     dw $0913, $FFFF  ; Screen subpixel Y position
     dw $0915, $0300  ; Screen Y position in pixels
@@ -1662,7 +1879,6 @@ preset_kpdr25_tourian_metroids_1:
     dw $0A1E, $0104  ; More position/state
     dw $0AF6, $0039  ; Samus X
     dw $0AFA, $038B  ; Samus Y
-    dw $D90C, $0100  ; Map Stations
     dw #$FFFF
 
 preset_kpdr25_tourian_metroids_2:

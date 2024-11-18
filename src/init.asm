@@ -17,11 +17,8 @@ org $808490
     DEX : DEX
     BPL .clear_bank_loop
     JSL init_nonzero_wram
-
     STY.w !ram_quickboot_spc_state
     BRA .end_clear_bank
-
-
 warnpc $8084AF
 
 org $8084AF
@@ -59,8 +56,6 @@ endif
 
 init_nonzero_wram:
 {
-    JSL init_wram_based_on_sram
-
     ; RAM $7E0000 fluctuates so it is not a good default value
     LDA #!ENEMY_HP : STA !ram_watch_left
     LDA #!SAMUS_HP : STA !ram_watch_right
@@ -71,7 +66,8 @@ init_nonzero_wram:
 
     LDA #$0001 : STA !ram_cm_dummy_on
     STA !ram_cm_sfxlib1 : STA !ram_cm_sfxlib2 : STA !ram_cm_sfxlib3
-    RTL
+
+    JML init_wram_based_on_sram
 }
 
 init_sram:

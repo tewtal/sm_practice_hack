@@ -107,6 +107,7 @@ presets_submenu_prkd_wrecked_ship:
 
 presets_submenu_prkd_red_brinstar_revisit:
     dw #presets_prkd_red_brinstar_revisit_red_brinstar_elevator
+    dw #presets_prkd_red_brinstar_revisit_caterpillars_revisit
     dw #presets_prkd_red_brinstar_revisit_hellway_revisit
     dw #presets_prkd_red_brinstar_revisit_red_tower_down
     dw #presets_prkd_red_brinstar_revisit_skree_boost
@@ -377,7 +378,7 @@ presets_prkd_wrecked_ship_leaving_phantoon:
     %cm_preset("Leaving Phantoon", #preset_prkd_wrecked_ship_leaving_phantoon)
 
 presets_prkd_wrecked_ship_shaft_to_supers:
-    %cm_preset("Shaft to Supers", #preset_prkd_wrecked_ship_shaft_to_supers)
+    %cm_preset("Shaft To Supers", #preset_prkd_wrecked_ship_shaft_to_supers)
 
 presets_prkd_wrecked_ship_shaft_up:
     %cm_preset("Shaft Up", #preset_prkd_wrecked_ship_shaft_up)
@@ -408,6 +409,9 @@ presets_prkd_wrecked_ship_crateria_kihunters_return:
 presets_prkd_red_brinstar_revisit_red_brinstar_elevator:
     %cm_preset("Red Brinstar Elevator", #preset_prkd_red_brinstar_revisit_red_brinstar_elevator)
 
+presets_prkd_red_brinstar_revisit_caterpillars_revisit:
+    %cm_preset("Caterpillars Revisit", #preset_prkd_red_brinstar_revisit_caterpillars_revisit)
+
 presets_prkd_red_brinstar_revisit_hellway_revisit:
     %cm_preset("Hellway Revisit", #preset_prkd_red_brinstar_revisit_hellway_revisit)
 
@@ -435,7 +439,7 @@ presets_prkd_upper_norfair_business_center_postelev:
     %cm_preset("Business Center Post-Elev", #preset_prkd_upper_norfair_business_center_postelev)
 
 presets_prkd_upper_norfair_hi_jump_etank:
-    %cm_preset("Hi Jump E-tank", #preset_prkd_upper_norfair_hi_jump_etank)
+    %cm_preset("Hi Jump E-Tank", #preset_prkd_upper_norfair_hi_jump_etank)
 
 presets_prkd_upper_norfair_leaving_hi_jump:
     %cm_preset("Leaving Hi Jump", #preset_prkd_upper_norfair_leaving_hi_jump)
@@ -639,7 +643,7 @@ presets_prkd_maridia_botwoon:
     %cm_preset("Botwoon", #preset_prkd_maridia_botwoon)
 
 presets_prkd_maridia_botwoon_etank:
-    %cm_preset("Botwoon E-tank", #preset_prkd_maridia_botwoon_etank)
+    %cm_preset("Botwoon E-Tank", #preset_prkd_maridia_botwoon_etank)
 
 presets_prkd_maridia_halfie_setup:
     %cm_preset("Halfie Setup", #preset_prkd_maridia_halfie_setup)
@@ -657,7 +661,7 @@ presets_prkd_maridia_reverse_halfie_climb:
     %cm_preset("Reverse Halfie Climb", #preset_prkd_maridia_reverse_halfie_climb)
 
 presets_prkd_maridia_reverse_botwoon_etank:
-    %cm_preset("Reverse Botwoon E-tank", #preset_prkd_maridia_reverse_botwoon_etank)
+    %cm_preset("Reverse Botwoon E-Tank", #preset_prkd_maridia_reverse_botwoon_etank)
 
 presets_prkd_maridia_reverse_botwoon_hallway:
     %cm_preset("Reverse Botwoon Hallway", #preset_prkd_maridia_reverse_botwoon_hallway)

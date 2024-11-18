@@ -9,15 +9,20 @@ org $809B51
     JMP $9BFB    ; skip drawing auto reserve icon and normal energy numbers and tanks during HUD routine
 
 org $8282E5      ; write and clear tiles to VRAM
-    JSR mm_write_and_clear_hud_tiles
+    JSL mm_write_and_clear_hud_tiles
     JSL overwrite_HUD_numbers
     BRA mm_write_next_tiles
+
+mm_refresh_reserves:
+    LDA #$FFFF : STA !ram_reserves_last
+    RTS
+warnpc $828305
 
 org $828305
 mm_write_next_tiles:
 
 org $828EB8      ; write and clear tiles to VRAM
-    JSR mm_write_and_clear_hud_tiles
+    JSL mm_write_and_clear_hud_tiles
     PLP
     RTL
 
@@ -120,36 +125,6 @@ mm_default_HUD_energy:
 org $82F70F
 print pc, " minimap bank82 start"
 
-mm_write_and_clear_hud_tiles:
-{
-    %i16()
-    LDA !ram_minimap : BNE .minimap_vram
-
-    ; Load in normal vram
-    LDA #$80 : STA $2115 ; word-access, incr by 1
-    LDX #$4000 : STX $2116 ; VRAM address (8000 in vram)
-    LDX.w #hudgfx_bin : STX $4302 ; Source offset
-    LDA.b #hudgfx_bin>>16 : STA $4304 ; Source bank
-    LDX #$2000 : STX $4305 ; Size (0x10 = 1 tile)
-    LDA #$01 : STA $4300 ; word, normal increment (DMA MODE)
-    LDA #$18 : STA $4301 ; destination (VRAM write)
-    LDA #$01 : STA $420B ; initiate DMA (channel 1)
-    %i8()
-    RTS
-
-  .minimap_vram
-    LDA #$80 : STA $2115 ; word-access, incr by 1
-    LDX #$4000 : STX $2116 ; VRAM address (8000 in vram)
-    LDX.w #mapgfx_bin : STX $4302 ; Source offset
-    LDA.b #mapgfx_bin>>16 : STA $4304 ; Source bank
-    LDX #$2000 : STX $4305 ; Size (0x10 = 1 tile)
-    LDA #$01 : STA $4300 ; word, normal increment (DMA MODE)
-    LDA #$18 : STA $4301 ; destination (VRAM write)
-    LDA #$01 : STA $420B ; initiate DMA (channel 1)
-    %i8()
-    RTS
-}
-
 mm_write_hud_tiles_during_door:
 {
     LDA !ram_minimap : BNE .minimap_vram
@@ -159,22 +134,17 @@ mm_write_hud_tiles_during_door:
     dl hudgfx_bin
     dw $4000
     dw $1000
-    JSL overwrite_HUD_numbers
-    JMP $E492  ; resume logic
+    BRA .resume
 
   .minimap_vram
     JSR $E039
     dl mapgfx_bin
     dw $4000
     dw $1000
+
+  .resume
     JSL overwrite_HUD_numbers
     JMP $E492  ; resume logic
-}
-
-mm_refresh_reserves:
-{
-    LDA #$FFFF : STA !ram_reserves_last
-    RTS
 }
 
 print pc, " minimap bank82 end"
@@ -234,6 +204,36 @@ mm_inc_tile_count:
 
   .done
     JMP $A98B  ; resume original logic including %ai16()
+}
+
+mm_write_and_clear_hud_tiles:
+{
+    %i16()
+    LDA !ram_minimap : BNE .minimap_vram
+
+    ; Load in normal vram
+    LDA #$80 : STA $2115 ; word-access, incr by 1
+    LDX #$4000 : STX $2116 ; VRAM address (8000 in vram)
+    LDX.w #hudgfx_bin : STX $4302 ; Source offset
+    LDA.b #hudgfx_bin>>16 : STA $4304 ; Source bank
+    LDX #$2000 : STX $4305 ; Size (0x10 = 1 tile)
+    LDA #$01 : STA $4300 ; word, normal increment (DMA MODE)
+    LDA #$18 : STA $4301 ; destination (VRAM write)
+    LDA #$01 : STA $420B ; initiate DMA (channel 1)
+    %i8()
+    RTL
+
+  .minimap_vram
+    LDA #$80 : STA $2115 ; word-access, incr by 1
+    LDX #$4000 : STX $2116 ; VRAM address (8000 in vram)
+    LDX.w #mapgfx_bin : STX $4302 ; Source offset
+    LDA.b #mapgfx_bin>>16 : STA $4304 ; Source bank
+    LDX #$2000 : STX $4305 ; Size (0x10 = 1 tile)
+    LDA #$01 : STA $4300 ; word, normal increment (DMA MODE)
+    LDA #$18 : STA $4301 ; destination (VRAM write)
+    LDA #$01 : STA $420B ; initiate DMA (channel 1)
+    %i8()
+    RTL
 }
 
 print pc, " minimap bank90 end"

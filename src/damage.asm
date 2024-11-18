@@ -326,11 +326,13 @@ healthalarm_turn_on_table:
     dw healthalarm_turn_on_vanilla
     dw healthalarm_turn_on_pb_fix
     dw healthalarm_turn_on_improved
+    dw healthalarm_turn_on_always_on
 
 healthalarm_turn_on_improved:
     ; Do not sound alarm until below 30 combined health
     LDA $09C2 : CLC : ADC $09D6 : CMP #$001E : BPL healthalarm_turn_on_done
 
+healthalarm_turn_on_always_on:
 healthalarm_turn_on_pb_fix:
     ; Do not sound alarm if it won't play due to power bomb explosion
     LDA $0592 : BMI healthalarm_turn_on_done
@@ -350,6 +352,7 @@ healthalarm_turn_off_table:
     dw healthalarm_turn_off_vanilla
     dw healthalarm_turn_off_pb_fix
     dw healthalarm_turn_off_improved
+    dw healthalarm_turn_off_always_on
 
 healthalarm_turn_off_improved:
 healthalarm_turn_off_pb_fix:
@@ -364,6 +367,12 @@ healthalarm_turn_off_never:
 
 healthalarm_turn_off_done:
     PLX : RTS
+
+healthalarm_turn_off_always_on:
+    ; Do not sound alarm if it won't play due to power bomb explosion
+    LDA $0592 : BMI healthalarm_turn_off_done
+    LDA #$0002 : JSL $80914D
+    BRA healthalarm_turn_off_never
 
 
 healthalarm_turn_on_remote:
