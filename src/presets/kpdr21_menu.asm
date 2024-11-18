@@ -4,7 +4,7 @@ PresetsMenuKpdr21:
     dw #presets_goto_kpdr21_upper_norfair
     dw #presets_goto_kpdr21_red_brinstar
     dw #presets_goto_kpdr21_wrecked_ship
-    dw #presets_goto_kpdr21_red_brinstar_final
+    dw #presets_goto_kpdr21_red_brinstar_revisit
     dw #presets_goto_kpdr21_maridia
     dw #presets_goto_kpdr21_upper_norfair_revisit
     dw #presets_goto_kpdr21_lower_norfair
@@ -28,8 +28,8 @@ presets_goto_kpdr21_red_brinstar:
 presets_goto_kpdr21_wrecked_ship:
     %cm_submenu("Wrecked Ship", #presets_submenu_kpdr21_wrecked_ship)
 
-presets_goto_kpdr21_red_brinstar_final:
-    %cm_submenu("Red Brinstar Final", #presets_submenu_kpdr21_red_brinstar_final)
+presets_goto_kpdr21_red_brinstar_revisit:
+    %cm_submenu("Red Brinstar Revisit", #presets_submenu_kpdr21_red_brinstar_revisit)
 
 presets_goto_kpdr21_maridia:
     %cm_submenu("Maridia", #presets_submenu_kpdr21_maridia)
@@ -87,14 +87,15 @@ presets_submenu_kpdr21_brinstar:
     dw #presets_kpdr21_brinstar_mini_kraid_revisit
     dw #presets_kpdr21_brinstar_kraid_kihunters_revisit
     dw #presets_kpdr21_brinstar_kraid_etank
+    dw #presets_kpdr21_brinstar_kraid_business_center_preelev
     dw #$0000
     %cm_header("BRINSTAR")
 
 presets_submenu_kpdr21_upper_norfair:
-    dw #presets_kpdr21_upper_norfair_business_center
+    dw #presets_kpdr21_upper_norfair_business_center_postelev
     dw #presets_kpdr21_upper_norfair_hi_jump_etank
     dw #presets_kpdr21_upper_norfair_leaving_hi_jump
-    dw #presets_kpdr21_upper_norfair_business_center_2
+    dw #presets_kpdr21_upper_norfair_business_center_revisit
     dw #presets_kpdr21_upper_norfair_precathedral
     dw #presets_kpdr21_upper_norfair_cathedral
     dw #presets_kpdr21_upper_norfair_rising_tide
@@ -106,7 +107,7 @@ presets_submenu_kpdr21_upper_norfair:
     dw #presets_kpdr21_upper_norfair_single_chamber_revisit
     dw #presets_kpdr21_upper_norfair_bubble_mountain_revisit
     dw #presets_kpdr21_upper_norfair_frog_speedway
-    dw #presets_kpdr21_upper_norfair_business_center_3
+    dw #presets_kpdr21_upper_norfair_heading_to_red_brinstar
     dw #$0000
     %cm_header("UPPER NORFAIR")
 
@@ -141,14 +142,15 @@ presets_submenu_kpdr21_wrecked_ship:
     dw #$0000
     %cm_header("WRECKED SHIP")
 
-presets_submenu_kpdr21_red_brinstar_final:
-    dw #presets_kpdr21_red_brinstar_final_red_tower_elevator
-    dw #presets_kpdr21_red_brinstar_final_hellway_revisit
-    dw #presets_kpdr21_red_brinstar_final_red_tower_down
-    dw #presets_kpdr21_red_brinstar_final_skree_boost_final
-    dw #presets_kpdr21_red_brinstar_final_below_spazer_final
+presets_submenu_kpdr21_red_brinstar_revisit:
+    dw #presets_kpdr21_red_brinstar_revisit_red_brinstar_elevator
+    dw #presets_kpdr21_red_brinstar_revisit_caterpillars_revisit
+    dw #presets_kpdr21_red_brinstar_revisit_hellway_revisit
+    dw #presets_kpdr21_red_brinstar_revisit_red_tower_down
+    dw #presets_kpdr21_red_brinstar_revisit_skree_boost_final
+    dw #presets_kpdr21_red_brinstar_revisit_below_spazer_final
     dw #$0000
-    %cm_header("RED BRINSTAR FINAL")
+    %cm_header("RED BRINSTAR REVISIT")
 
 presets_submenu_kpdr21_maridia:
     dw #presets_kpdr21_maridia_breaking_tube
@@ -223,10 +225,13 @@ presets_submenu_kpdr21_backtracking:
     dw #presets_kpdr21_backtracking_parlor_spacejump
     dw #presets_kpdr21_backtracking_terminator_revisit
     dw #presets_kpdr21_backtracking_green_pirate_shaft_revisit
+    dw #presets_kpdr21_backtracking_g4_hallway
+    dw #presets_kpdr21_backtracking_g4_elevator
     dw #$0000
     %cm_header("BACKTRACKING")
 
 presets_submenu_kpdr21_tourian:
+    dw #presets_kpdr21_tourian_tourian_elevator_room
     dw #presets_kpdr21_tourian_metroids_1
     dw #presets_kpdr21_tourian_metroids_2
     dw #presets_kpdr21_tourian_metroids_3
@@ -354,21 +359,24 @@ presets_kpdr21_brinstar_kraid_kihunters_revisit:
     %cm_preset("Kraid Kihunters Revisit", #preset_kpdr21_brinstar_kraid_kihunters_revisit)
 
 presets_kpdr21_brinstar_kraid_etank:
-    %cm_preset("Kraid E-tank", #preset_kpdr21_brinstar_kraid_etank)
+    %cm_preset("Kraid E-Tank", #preset_kpdr21_brinstar_kraid_etank)
+
+presets_kpdr21_brinstar_kraid_business_center_preelev:
+    %cm_preset("Business Center Pre-Elev", #preset_kpdr21_brinstar_kraid_business_center_preelev)
 
 
 ; Upper Norfair
-presets_kpdr21_upper_norfair_business_center:
-    %cm_preset("Business Center", #preset_kpdr21_upper_norfair_business_center)
+presets_kpdr21_upper_norfair_business_center_postelev:
+    %cm_preset("Business Center Post-Elev", #preset_kpdr21_upper_norfair_business_center_postelev)
 
 presets_kpdr21_upper_norfair_hi_jump_etank:
-    %cm_preset("Hi Jump E-tank", #preset_kpdr21_upper_norfair_hi_jump_etank)
+    %cm_preset("Hi Jump E-Tank", #preset_kpdr21_upper_norfair_hi_jump_etank)
 
 presets_kpdr21_upper_norfair_leaving_hi_jump:
     %cm_preset("Leaving Hi Jump", #preset_kpdr21_upper_norfair_leaving_hi_jump)
 
-presets_kpdr21_upper_norfair_business_center_2:
-    %cm_preset("Business Center 2", #preset_kpdr21_upper_norfair_business_center_2)
+presets_kpdr21_upper_norfair_business_center_revisit:
+    %cm_preset("Business Center Revisit", #preset_kpdr21_upper_norfair_business_center_revisit)
 
 presets_kpdr21_upper_norfair_precathedral:
     %cm_preset("Pre-Cathedral", #preset_kpdr21_upper_norfair_precathedral)
@@ -403,8 +411,8 @@ presets_kpdr21_upper_norfair_bubble_mountain_revisit:
 presets_kpdr21_upper_norfair_frog_speedway:
     %cm_preset("Frog Speedway", #preset_kpdr21_upper_norfair_frog_speedway)
 
-presets_kpdr21_upper_norfair_business_center_3:
-    %cm_preset("Business Center 3", #preset_kpdr21_upper_norfair_business_center_3)
+presets_kpdr21_upper_norfair_heading_to_red_brinstar:
+    %cm_preset("Heading To Red Brinstar", #preset_kpdr21_upper_norfair_heading_to_red_brinstar)
 
 
 ; Red Brinstar
@@ -453,7 +461,7 @@ presets_kpdr21_wrecked_ship_leaving_phantoon:
     %cm_preset("Leaving Phantoon", #preset_kpdr21_wrecked_ship_leaving_phantoon)
 
 presets_kpdr21_wrecked_ship_shaft_to_supers:
-    %cm_preset("Shaft to Supers", #preset_kpdr21_wrecked_ship_shaft_to_supers)
+    %cm_preset("Shaft To Supers", #preset_kpdr21_wrecked_ship_shaft_to_supers)
 
 presets_kpdr21_wrecked_ship_wrecked_ship_shaft:
     %cm_preset("Wrecked Ship Shaft", #preset_kpdr21_wrecked_ship_wrecked_ship_shaft)
@@ -480,21 +488,24 @@ presets_kpdr21_wrecked_ship_crateria_kihunters_return:
     %cm_preset("Crateria Kihunters Return", #preset_kpdr21_wrecked_ship_crateria_kihunters_return)
 
 
-; Red Brinstar Final
-presets_kpdr21_red_brinstar_final_red_tower_elevator:
-    %cm_preset("Red Tower Elevator", #preset_kpdr21_red_brinstar_final_red_tower_elevator)
+; Red Brinstar Revisit
+presets_kpdr21_red_brinstar_revisit_red_brinstar_elevator:
+    %cm_preset("Red Brinstar Elevator", #preset_kpdr21_red_brinstar_revisit_red_brinstar_elevator)
 
-presets_kpdr21_red_brinstar_final_hellway_revisit:
-    %cm_preset("Hellway Revisit", #preset_kpdr21_red_brinstar_final_hellway_revisit)
+presets_kpdr21_red_brinstar_revisit_caterpillars_revisit:
+    %cm_preset("Caterpillars Revisit", #preset_kpdr21_red_brinstar_revisit_caterpillars_revisit)
 
-presets_kpdr21_red_brinstar_final_red_tower_down:
-    %cm_preset("Red Tower Down", #preset_kpdr21_red_brinstar_final_red_tower_down)
+presets_kpdr21_red_brinstar_revisit_hellway_revisit:
+    %cm_preset("Hellway Revisit", #preset_kpdr21_red_brinstar_revisit_hellway_revisit)
 
-presets_kpdr21_red_brinstar_final_skree_boost_final:
-    %cm_preset("Skree Boost Final", #preset_kpdr21_red_brinstar_final_skree_boost_final)
+presets_kpdr21_red_brinstar_revisit_red_tower_down:
+    %cm_preset("Red Tower Down", #preset_kpdr21_red_brinstar_revisit_red_tower_down)
 
-presets_kpdr21_red_brinstar_final_below_spazer_final:
-    %cm_preset("Below Spazer Final", #preset_kpdr21_red_brinstar_final_below_spazer_final)
+presets_kpdr21_red_brinstar_revisit_skree_boost_final:
+    %cm_preset("Skree Boost Final", #preset_kpdr21_red_brinstar_revisit_skree_boost_final)
+
+presets_kpdr21_red_brinstar_revisit_below_spazer_final:
+    %cm_preset("Below Spazer Final", #preset_kpdr21_red_brinstar_revisit_below_spazer_final)
 
 
 ; Maridia
@@ -520,7 +531,7 @@ presets_kpdr21_maridia_botwoon:
     %cm_preset("Botwoon", #preset_kpdr21_maridia_botwoon)
 
 presets_kpdr21_maridia_botwoon_etank:
-    %cm_preset("Botwoon E-tank", #preset_kpdr21_maridia_botwoon_etank)
+    %cm_preset("Botwoon E-Tank", #preset_kpdr21_maridia_botwoon_etank)
 
 presets_kpdr21_maridia_halfie_setup:
     %cm_preset("Halfie Setup", #preset_kpdr21_maridia_halfie_setup)
@@ -678,8 +689,17 @@ presets_kpdr21_backtracking_terminator_revisit:
 presets_kpdr21_backtracking_green_pirate_shaft_revisit:
     %cm_preset("Green Pirate Shaft Revisit", #preset_kpdr21_backtracking_green_pirate_shaft_revisit)
 
+presets_kpdr21_backtracking_g4_hallway:
+    %cm_preset("G4 Hallway", #preset_kpdr21_backtracking_g4_hallway)
+
+presets_kpdr21_backtracking_g4_elevator:
+    %cm_preset("G4 Elevator", #preset_kpdr21_backtracking_g4_elevator)
+
 
 ; Tourian
+presets_kpdr21_tourian_tourian_elevator_room:
+    %cm_preset("Tourian Elevator Room", #preset_kpdr21_tourian_tourian_elevator_room)
+
 presets_kpdr21_tourian_metroids_1:
     %cm_preset("Metroids 1", #preset_kpdr21_tourian_metroids_1)
 

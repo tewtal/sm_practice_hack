@@ -103,6 +103,7 @@ presets_submenu_pkrd_wrecked_ship:
 
 presets_submenu_pkrd_red_brinstar_revisit:
     dw #presets_pkrd_red_brinstar_revisit_red_brinstar_elevator
+    dw #presets_pkrd_red_brinstar_revisit_caterpillars_revisit
     dw #presets_pkrd_red_brinstar_revisit_hellway_revisit
     dw #presets_pkrd_red_brinstar_revisit_red_tower_down
     dw #presets_pkrd_red_brinstar_revisit_skree_boost
@@ -122,14 +123,15 @@ presets_submenu_pkrd_kraid:
     dw #presets_pkrd_kraid_kraid_kihunters_revisit
     dw #presets_pkrd_kraid_kraid_etank
     dw #presets_pkrd_kraid_leaving_kraids_lair
+    dw #presets_pkrd_kraid_business_center_preelev
     dw #$0000
     %cm_header("KRAID")
 
 presets_submenu_pkrd_upper_norfair:
-    dw #presets_pkrd_upper_norfair_business_center
+    dw #presets_pkrd_upper_norfair_business_center_postelev
     dw #presets_pkrd_upper_norfair_hi_jump_etank
     dw #presets_pkrd_upper_norfair_leaving_hi_jump
-    dw #presets_pkrd_upper_norfair_business_center_2
+    dw #presets_pkrd_upper_norfair_business_center_revisit
     dw #presets_pkrd_upper_norfair_ice_beam_gates
     dw #presets_pkrd_upper_norfair_ice_maze_up
     dw #presets_pkrd_upper_norfair_ice_maze_down
@@ -348,7 +350,7 @@ presets_pkrd_wrecked_ship_leaving_phantoon:
     %cm_preset("Leaving Phantoon", #preset_pkrd_wrecked_ship_leaving_phantoon)
 
 presets_pkrd_wrecked_ship_shaft_to_supers:
-    %cm_preset("Shaft to Supers", #preset_pkrd_wrecked_ship_shaft_to_supers)
+    %cm_preset("Shaft To Supers", #preset_pkrd_wrecked_ship_shaft_to_supers)
 
 presets_pkrd_wrecked_ship_shaft_up:
     %cm_preset("Shaft Up", #preset_pkrd_wrecked_ship_shaft_up)
@@ -378,6 +380,9 @@ presets_pkrd_wrecked_ship_crateria_kihunters_return:
 ; Red Brinstar Revisit
 presets_pkrd_red_brinstar_revisit_red_brinstar_elevator:
     %cm_preset("Red Brinstar Elevator", #preset_pkrd_red_brinstar_revisit_red_brinstar_elevator)
+
+presets_pkrd_red_brinstar_revisit_caterpillars_revisit:
+    %cm_preset("Caterpillars Revisit", #preset_pkrd_red_brinstar_revisit_caterpillars_revisit)
 
 presets_pkrd_red_brinstar_revisit_hellway_revisit:
     %cm_preset("Hellway Revisit", #preset_pkrd_red_brinstar_revisit_hellway_revisit)
@@ -421,24 +426,27 @@ presets_pkrd_kraid_kraid_kihunters_revisit:
     %cm_preset("Kraid Kihunters Revisit", #preset_pkrd_kraid_kraid_kihunters_revisit)
 
 presets_pkrd_kraid_kraid_etank:
-    %cm_preset("Kraid E-tank", #preset_pkrd_kraid_kraid_etank)
+    %cm_preset("Kraid E-Tank", #preset_pkrd_kraid_kraid_etank)
 
 presets_pkrd_kraid_leaving_kraids_lair:
     %cm_preset("Leaving Kraids Lair", #preset_pkrd_kraid_leaving_kraids_lair)
 
+presets_pkrd_kraid_business_center_preelev:
+    %cm_preset("Business Center Pre-Elev", #preset_pkrd_kraid_business_center_preelev)
+
 
 ; Upper Norfair
-presets_pkrd_upper_norfair_business_center:
-    %cm_preset("Business Center", #preset_pkrd_upper_norfair_business_center)
+presets_pkrd_upper_norfair_business_center_postelev:
+    %cm_preset("Business Center Post-Elev", #preset_pkrd_upper_norfair_business_center_postelev)
 
 presets_pkrd_upper_norfair_hi_jump_etank:
-    %cm_preset("Hi Jump E-tank", #preset_pkrd_upper_norfair_hi_jump_etank)
+    %cm_preset("Hi Jump E-Tank", #preset_pkrd_upper_norfair_hi_jump_etank)
 
 presets_pkrd_upper_norfair_leaving_hi_jump:
     %cm_preset("Leaving Hi Jump", #preset_pkrd_upper_norfair_leaving_hi_jump)
 
-presets_pkrd_upper_norfair_business_center_2:
-    %cm_preset("Business Center 2", #preset_pkrd_upper_norfair_business_center_2)
+presets_pkrd_upper_norfair_business_center_revisit:
+    %cm_preset("Business Center Revisit", #preset_pkrd_upper_norfair_business_center_revisit)
 
 presets_pkrd_upper_norfair_ice_beam_gates:
     %cm_preset("Ice Beam Gates", #preset_pkrd_upper_norfair_ice_beam_gates)
@@ -580,7 +588,7 @@ presets_pkrd_maridia_botwoon:
     %cm_preset("Botwoon", #preset_pkrd_maridia_botwoon)
 
 presets_pkrd_maridia_botwoon_etank:
-    %cm_preset("Botwoon E-tank", #preset_pkrd_maridia_botwoon_etank)
+    %cm_preset("Botwoon E-Tank", #preset_pkrd_maridia_botwoon_etank)
 
 presets_pkrd_maridia_halfie_setup:
     %cm_preset("Halfie Setup", #preset_pkrd_maridia_halfie_setup)
@@ -598,7 +606,7 @@ presets_pkrd_maridia_reverse_halfie_climb:
     %cm_preset("Reverse Halfie Climb", #preset_pkrd_maridia_reverse_halfie_climb)
 
 presets_pkrd_maridia_reverse_botwoon_etank:
-    %cm_preset("Reverse Botwoon E-tank", #preset_pkrd_maridia_reverse_botwoon_etank)
+    %cm_preset("Reverse Botwoon E-Tank", #preset_pkrd_maridia_reverse_botwoon_etank)
 
 presets_pkrd_maridia_reverse_botwoon_hallway:
     %cm_preset("Reverse Botwoon Hallway", #preset_pkrd_maridia_reverse_botwoon_hallway)

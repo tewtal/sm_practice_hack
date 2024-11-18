@@ -417,7 +417,7 @@ category_preset_data_table:
     dl preset_100early_crateria_ceres_elevator
     dl preset_rbo_bombs_ceres_elevator
     dl preset_pkrd_crateria_ceres_elevator
-    dl preset_kpdr25_bombs_ceres_elevator
+    dl preset_kpdr25_crateria_ceres_elevator
     dl preset_gtclassic_crateria_ceres_elevator
     dl preset_gtmax_crateria_ceres_elevator
     dl preset_14ice_crateria_ceres_elevator
