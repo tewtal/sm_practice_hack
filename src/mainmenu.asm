@@ -1961,6 +1961,7 @@ MiscMenu:
     dw #misc_suit_properties
     dw #misc_water_physics
     dw #misc_double_jump
+    dw #misc_spin_lock
     dw #$FFFF
     dw #misc_magicpants
     dw #misc_spacepants
@@ -2145,7 +2146,7 @@ init_heat_damage_ram:
     LDA #$0021 : STA !SAMUS_LAVA_DAMAGE_SUITS
 
     ; If no gravity than nothing to do
-    LDA $09A2 : BIT #$0020 : BEQ .end
+    LDA !SAMUS_ITEMS_EQUIPPED : BIT #$0020 : BEQ .end
 
     ; Without heat shield but with gravity we want heat damage to be 100%
     ; Since damage is halved by gravity we'll set it to 200%
@@ -2156,7 +2157,7 @@ init_heat_damage_ram:
     BNE .heatShield
 
     ; If no gravity than nothing to do
-    LDA $09A2 : BIT #$0020 : BEQ .end
+    LDA !SAMUS_ITEMS_EQUIPPED : BIT #$0020 : BEQ .end
 
     ; Without heat shield but with gravity we want heat damage to be 75%
     ; Since damage is halved by gravity we'll set it to 150%
@@ -2174,7 +2175,7 @@ init_heat_damage_ram:
   .heatShieldDamage
     ; We want Lower Norfair heat damage to be 50%
     ; However if gravity is equipped then the damage is already halved
-    LDA $09A2 : BIT #$0020 : BNE .end
+    LDA !SAMUS_ITEMS_EQUIPPED : BIT #$0020 : BNE .end
     LDA #$2000 : STA !ram_suits_heat_damage_value
     RTL
 
@@ -2182,7 +2183,6 @@ init_heat_damage_ram:
     TDC : STA !ram_suits_heat_damage_value
     RTL
 }
-
 
 misc_water_physics:
     dw !ACTION_CHOICE
@@ -2199,6 +2199,9 @@ misc_water_physics:
 
 misc_double_jump:
     %cm_toggle_bit("Double Jump", !sram_double_jump, #$0200, init_physics_ram)
+
+misc_spin_lock:
+    %cm_toggle("Spin Lock", !sram_spin_lock, #$0001, #0)
 
 init_physics_ram:
 {
@@ -3958,7 +3961,7 @@ endif
     dw #ctrl_kill_enemies
     dw #ctrl_toggle_tileviewer
     dw #ctrl_update_timers
-    dw #$FFFF
+    dw #ctrl_toggle_spin_lock
     dw #ctrl_clear_shortcuts
     dw #ctrl_reset_defaults
     dw #$0000
@@ -4015,6 +4018,9 @@ ctrl_toggle_tileviewer:
 ctrl_update_timers:
     %cm_ctrl_shortcut("Update Timers", !sram_ctrl_update_timers)
 
+ctrl_toggle_spin_lock:
+    %cm_ctrl_shortcut("Toggle Spin Lock", !sram_ctrl_toggle_spin_lock)
+
 ctrl_clear_shortcuts:
     %cm_jsl("Clear All Shortcuts", .routine, #$0000)
   .routine
@@ -4035,6 +4041,7 @@ ctrl_clear_shortcuts:
     STA !sram_ctrl_reset_segment_later
     STA !sram_ctrl_toggle_tileviewer
     STA !sram_ctrl_update_timers
+    STA !sram_ctrl_toggle_spin_lock
     ; menu to default, Start + Select
     LDA #$3000 : STA !sram_ctrl_menu
     %sfxconfirm()
@@ -4322,6 +4329,7 @@ GameModeExtras:
     LDA !sram_ctrl_dec_custom_preset : BNE .enabled
     LDA !sram_ctrl_toggle_tileviewer : BNE .enabled
     LDA !sram_ctrl_update_timers : BNE .enabled
+    LDA !sram_ctrl_toggle_spin_lock : BNE .enabled
 
   .enabled
     STA !ram_game_mode_extras

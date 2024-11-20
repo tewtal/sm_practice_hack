@@ -307,7 +307,7 @@
 ; SRAM
 ; -----
 
-!SRAM_VERSION = $0016
+!SRAM_VERSION = $0017
 
 !SRAM_START = $702000
 !PRESET_SLOTS = $703000
@@ -330,6 +330,7 @@
 !sram_ctrl_toggle_tileviewer = !SRAM_START+$1C
 !sram_ctrl_update_timers = !SRAM_START+$1E
 !sram_ctrl_auto_save_state = !SRAM_START+$F0 ; note the change of order
+!sram_ctrl_toggle_spin_lock = !SRAM_START+$F2
 
 !sram_artificial_lag = !SRAM_START+$20
 !sram_rerandomize = !SRAM_START+$22
@@ -392,6 +393,7 @@
 !sram_door_display_mode = !SRAM_START+$88
 !sram_cm_fast_scroll_button = !SRAM_START+$8A
 !sram_cm_font = !SRAM_START+$8C
+!sram_spin_lock = !SRAM_START+$8E
 
 ; ^ FREE SPACE ^ up to +$EE
 
@@ -595,6 +597,7 @@
 !SAMUS_LOCKED_HANDLER = $0A42
 !SAMUS_MOVEMENT_HANDLER = $0A44
 !SAMUS_SUBUNIT_ENERGY = $0A4C
+!SAMUS_BOMB_JUMP_DIRECTION = $0A56
 !SAMUS_NORMAL_MOVEMENT_HANDLER = $0A58
 !SAMUS_DRAW_HANDLER = $0A5C
 !SAMUS_CONTROLLER_HANDLER = $0A60

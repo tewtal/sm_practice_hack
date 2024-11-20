@@ -317,6 +317,7 @@ sram_ctrl_dec_custom_preset = !sram_ctrl_dec_custom_preset ; !SRAM_START+$1A
 sram_ctrl_toggle_tileviewer = !sram_ctrl_toggle_tileviewer ; !SRAM_START+$1C
 sram_ctrl_update_timers = !sram_ctrl_update_timers ; !SRAM_START+$1E
 sram_ctrl_auto_save_state = !sram_ctrl_auto_save_state ; !SRAM_START+$F0 ; note the change of order
+sram_ctrl_toggle_spin_lock = !sram_ctrl_toggle_spin_lock ; !SRAM_START+$F2
 
 sram_artificial_lag = !sram_artificial_lag ; !SRAM_START+$20
 sram_rerandomize = !sram_rerandomize ; !SRAM_START+$22
@@ -379,6 +380,7 @@ sram_bomb_torizo_door = !sram_bomb_torizo_door ; !SRAM_START+$86
 sram_door_display_mode = !sram_door_display_mode ; !SRAM_START+$88
 sram_cm_fast_scroll_button = !sram_cm_fast_scroll_button ; !SRAM_START+$8A
 sram_cm_font = !sram_cm_font ; !SRAM_START+$8C
+sram_spin_lock = !sram_spin_lock ; !SRAM_START+$8E
 
 ; ^ FREE SPACE ^ up to +$EE
 

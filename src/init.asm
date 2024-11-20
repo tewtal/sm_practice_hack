@@ -125,7 +125,14 @@ endif
     CMP #$0013 : BEQ .sram_upgrade_13to14
     CMP #$0014 : BEQ .sram_upgrade_14to15
     CMP #$0015 : BEQ .sram_upgrade_15to16
+    CMP #$0016 : BEQ .sram_upgrade_16to17
     BRA .sram_upgrade_upto9
+
+  .sram_upgrade_16to17
+    LDA #$0000 : STA !sram_spin_lock : STA !sram_ctrl_toggle_spin_lock
+
+    LDA #!SRAM_VERSION : STA !sram_initialized
+    RTS
 
   .sram_upgrade_10to11
     TDC : STA !sram_custom_damage
@@ -162,9 +169,7 @@ endif
     LDA #$002E : STA !sram_presetequiprando_max_missiles
     LDA #$000A : STA !sram_presetequiprando_max_supers
     LDA #$000A : STA !sram_presetequiprando_max_pbs
-
-    LDA #!SRAM_VERSION : STA !sram_initialized
-    RTS
+    BRL .sram_upgrade_16to17
 }
 
 init_sram_upto9:
@@ -203,6 +208,7 @@ init_sram_upto9:
     LDA #$0000 : STA !sram_ctrl_toggle_tileviewer
     LDA #$0000 : STA !sram_ctrl_update_timers
     LDA #$0000 : STA !sram_ctrl_auto_save_state
+    LDA #$0000 : STA !sram_ctrl_toggle_spin_lock
     RTL
 }
 

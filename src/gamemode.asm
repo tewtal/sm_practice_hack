@@ -215,6 +215,11 @@ endif
     JMP .update_timers
   .skip_update_timers
 
+    LDA !IH_CONTROLLER_PRI : AND !sram_ctrl_toggle_spin_lock : CMP !sram_ctrl_toggle_spin_lock : BNE .skip_toggle_spin_lock
+    AND !IH_CONTROLLER_PRI_NEW : BEQ .skip_toggle_spin_lock
+    JMP .toggle_spin_lock
+  .skip_toggle_spin_lock
+
   .no_shortcuts
     ; No shortcuts matched, CLC so we won't skip normal gameplay
     CLC : RTS
@@ -389,6 +394,18 @@ endif
     JSL ih_update_hud_early
     ; CLC to continue normal gameplay after updating HUD timers
     LDA !sram_ctrl_update_timers
+    CLC : JMP skip_pause
+
+  .toggle_spin_lock
+    LDA !sram_spin_lock : BEQ .turn_on_spin_lock
+    TDC
+    BRA .set_spin_lock
+  .turn_on_spin_lock
+    TDC : INC
+  .set_spin_lock
+    STA !sram_spin_lock
+    ; CLC to continue normal gameplay after toggling spin lock
+    LDA !sram_ctrl_toggle_spin_lock
     CLC : JMP skip_pause
 
   .menu
