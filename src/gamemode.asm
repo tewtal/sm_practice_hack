@@ -16,7 +16,7 @@ hook_door_transition_load_sprites:
     JML gamemode_door_transtion_load_sprites
 
 org $82E4A2
-    LDA #hook_door_transition_load_sprites
+    LDA.w #hook_door_transition_load_sprites
 
 org $82E526
     JSL gamemode_door_transition : NOP
@@ -74,52 +74,15 @@ gamemode_start:
   .dec_seconds
     LDA !ram_seg_rt_seconds : BEQ .dec_minutes
     DEC : STA !ram_seg_rt_seconds
-    LDA.w #59 : STA !ram_seg_rt_frames
+    LDA #$003B : STA !ram_seg_rt_frames
     BRA .skip_load
 
   .dec_minutes
     LDA !ram_seg_rt_minutes : BEQ .skip_load
     DEC : STA !ram_seg_rt_minutes
-    LDA.w #59 : STA !ram_seg_rt_seconds : STA !ram_seg_rt_frames
+    LDA #$003B : STA !ram_seg_rt_seconds : STA !ram_seg_rt_frames
     BRA .skip_load
 }
-
-; If the current shortcut (register A) contains start,
-; and the current game mode is $C (fading out to pause), set it to $8 (normal),
-; so that shortcuts involving the start button don't trigger accidental pauses.
-; Called after handling most controller shortcuts, except save/load state
-; (because the user might want to practice gravity jumps or something)
-; and load preset (because presets reset the game mode anyway).
-skip_pause:
-{
-    PHP ; preserve carry
-    BIT !IH_INPUT_START : BEQ .done
-    LDA !GAMEMODE : CMP #$000C : BNE .done
-    LDA #$0008 : STA !GAMEMODE
-    STZ $0723   ; Screen fade delay = 0
-    STZ $0725   ; Screen fade counter = 0
-    LDA $51 : ORA #$000F
-    STA $51   ; Brightness = $F (max)
-  .done
-    PLP
-    RTS
-}
-
-if !FEATURE_SD2SNES
-gamemode_door_transtion_load_sprites:
-{
-    ; Check for auto-save mid-transition
-    LDA !ram_auto_save_state : BEQ .done : BMI .auto_save
-    TDC : STA !ram_auto_save_state
-  .auto_save
-    PHP : PHB
-    PHK : PLB
-    JSL save_state
-    PLB : PLP
-  .done
-    JML $82E4A9
-}
-endif
 
 gamemode_shortcuts:
 {
@@ -185,6 +148,11 @@ endif
     JMP .prev_preset_slot
   .skip_prev_preset_slot
 
+    LDA !IH_CONTROLLER_PRI : AND !sram_ctrl_full_equipment : CMP !sram_ctrl_full_equipment : BNE .skip_full_equipment
+    AND !IH_CONTROLLER_PRI_NEW : BEQ .skip_full_equipment
+    JMP .full_equipment
+  .skip_full_equipment
+
     LDA !IH_CONTROLLER_PRI : AND !sram_ctrl_kill_enemies : CMP !sram_ctrl_kill_enemies : BNE .skip_kill_enemies
     AND !IH_CONTROLLER_PRI_NEW : BEQ .skip_kill_enemies
     JMP .kill_enemies
@@ -199,11 +167,6 @@ endif
     AND !IH_CONTROLLER_PRI_NEW : BEQ .skip_reset_segment_later
     JMP .reset_segment_later
   .skip_reset_segment_later
-
-    LDA !IH_CONTROLLER_PRI : AND !sram_ctrl_full_equipment : CMP !sram_ctrl_full_equipment : BNE .skip_full_equipment
-    AND !IH_CONTROLLER_PRI_NEW : BEQ .skip_full_equipment
-    JMP .full_equipment
-  .skip_full_equipment
 
     LDA !IH_CONTROLLER_PRI : AND !sram_ctrl_toggle_tileviewer : CMP !sram_ctrl_toggle_tileviewer : BNE .skip_toggle_tileviewer
     AND !IH_CONTROLLER_PRI_NEW : BEQ .skip_toggle_tileviewer
@@ -253,7 +216,7 @@ endif
 
   .load_state
     ; check if a saved state exists
-    LDA !SRAM_SAVED_STATE : CMP #$5AFE : BNE .load_state_fail
+    LDA !SRAM_SAVED_STATE : CMP !SAFEWORD : BNE .load_state_fail
     JSL load_state
     ; SEC to skip normal gameplay for one frame after loading state
     SEC : RTS
@@ -280,17 +243,18 @@ endif
     LDA !sram_frame_counter_mode : BEQ .reset_segment_timer_rta
     STZ !IGT_FRAMES : STZ !IGT_SECONDS
     STZ !IGT_MINUTES : STZ !IGT_HOURS
-
   .reset_segment_timer_rta
-    LDA #$0000 : STA !ram_seg_rt_frames
+    TDC : STA !ram_seg_rt_frames
     STA !ram_seg_rt_seconds : STA !ram_seg_rt_minutes
+    %sfxconfirm()
     ; CLC to continue normal gameplay after resetting segment timer
     LDA !sram_ctrl_reset_segment_timer
     CLC : JMP skip_pause
 
   .reset_segment_later
     LDA #$FFFF : STA !ram_reset_segment_later
-    ; CLC to continue normal gameplay after setting segement timer reset
+    %sfxconfirm()
+    ; CLC to continue normal gameplay after setting reset flag
     LDA !sram_ctrl_reset_segment_later
     CLC : JMP skip_pause
 
@@ -300,6 +264,7 @@ endif
     LDA !SAMUS_SUPERS_MAX : STA !SAMUS_SUPERS
     LDA !SAMUS_PBS_MAX : STA !SAMUS_PBS
     LDA !SAMUS_RESERVE_MAX : STA !SAMUS_RESERVE_ENERGY
+    %sfxconfirm()
     ; CLC to continue normal gameplay after equipment refill
     LDA !sram_ctrl_full_equipment
     CLC : JMP skip_pause
@@ -314,7 +279,7 @@ endif
   .turnOnTileViewer
     ORA !SPRITE_OOB_WATCH : STA !ram_sprite_feature_flags
     JSL upload_sprite_oob_tiles
-    ; CLC to continue normal gameplay after enabling OOB Tile Viewer
+    ; CLC to continue normal gameplay after enabling OoB Tile Viewer
     LDA !sram_ctrl_toggle_tileviewer
     CLC : JMP skip_pause
 
@@ -331,7 +296,7 @@ endif
 
   .save_custom_preset
     ; check gamestate first
-    LDA $0998 : CMP #$0008 : BEQ .save_custom_safe
+    LDA !GAMEMODE : CMP #$0008 : BEQ .save_custom_safe
     CMP #$000C : BMI .save_custom_not_safe
     CMP #$0013 : BPL .save_custom_not_safe
 
@@ -346,7 +311,7 @@ endif
     ; check if slot is populated first
     LDA !sram_custom_preset_slot
     %presetslotsize()
-    LDA !PRESET_SLOTS,X : CMP #$5AFE : BEQ .load_safe
+    LDA !PRESET_SLOTS,X : CMP !SAFEWORD : BEQ .load_safe
 
     %sfxfail()
     ; CLC to continue normal gameplay after failing to load preset
@@ -370,9 +335,13 @@ endif
     LDA #$FFFF
   .increment_slot
     INC : STA !sram_custom_preset_slot
+if !FEATURE_VANILLAHUD
+else
     ASL : TAX : LDA.l NumberGFXTable,X : STA !HUD_TILEMAP+$7C
+endif
     LDA !sram_last_preset : BMI .done_preset_slot
-    LDA #$0000 : STA !sram_last_preset
+    TDC : STA !sram_last_preset
+    %sfxnumber()
     ; CLC to continue normal gameplay after incrementing preset slot
     LDA !sram_ctrl_inc_custom_preset
     CLC : JMP skip_pause
@@ -382,16 +351,23 @@ endif
     LDA !TOTAL_PRESET_SLOTS+1
   .decrement_slot
     DEC : STA !sram_custom_preset_slot
+if !FEATURE_VANILLAHUD
+else
     ASL : TAX : LDA.l NumberGFXTable,X : STA !HUD_TILEMAP+$7C
+endif
     LDA !sram_last_preset : BMI .done_preset_slot
-    LDA #$0000 : STA !sram_last_preset
+    TDC : STA !sram_last_preset
   .done_preset_slot
+    %sfxnumber()
     ; CLC to continue normal gameplay after decrementing preset slot
     LDA !sram_ctrl_dec_custom_preset
     CLC : JMP skip_pause
 
   .update_timers
+if !FEATURE_VANILLAHUD
+else
     JSL ih_update_hud_early
+endif
     ; CLC to continue normal gameplay after updating HUD timers
     LDA !sram_ctrl_update_timers
     CLC : JMP skip_pause
@@ -410,8 +386,8 @@ endif
 
   .menu
     ; Set IRQ vector
-    LDA $AB : PHA
-    LDA #$0004 : STA $AB
+    LDA !IRQ_CMD : PHA
+    LDA #$0004 : STA !IRQ_CMD
 
     LDA !sram_ctrl_menu
     JSR skip_pause
@@ -420,10 +396,34 @@ endif
     JSL cm_start
 
     ; Restore IRQ vector
-    PLA : STA $AB
+    PLA : STA !IRQ_CMD
 
     ; SEC to skip normal gameplay for one frame after handling the menu
     SEC : RTS
+}
+
+; If the current shortcut (register A) contains start,
+; and the current game mode is $C (fading out to pause), set it to $8 (normal),
+; so that shortcuts involving the start button don't trigger accidental pauses.
+; Called after handling most controller shortcuts, except save/load state
+; (because the user might want to practice gravity jumps or something)
+; and load preset (because presets reset the game mode anyway).
+skip_pause:
+{
+    PHP ; preserve carry
+    BIT !IH_INPUT_START : BEQ .done
+    LDA !GAMEMODE : CMP #$000C : BNE .done
+    LDA #$0008 : STA !GAMEMODE
+
+    ; clear screen fade delay/counter
+    STZ !SCREEN_FADE_DELAY : STZ !SCREEN_FADE_COUNTER
+
+    ; Brightness = $F (max)
+    LDA !REG_2100_BRIGHTNESS : ORA #$000F : STA !REG_2100_BRIGHTNESS
+
+  .done
+    PLP
+    RTS
 }
 
 if !FEATURE_SD2SNES
@@ -432,13 +432,30 @@ gamemode_door_transition:
   .checkloadstate
     LDA !IH_CONTROLLER_PRI : BEQ .checktransition
     CMP !sram_ctrl_load_state : BNE .checktransition
-    LDA !SRAM_SAVED_STATE : CMP #$5AFE : BNE .checktransition
+    ; check if a saved state exists
+    LDA !SRAM_SAVED_STATE : CMP !SAFEWORD : BNE .checktransition
     PHB : PHK : PLB
     JML load_state
 
   .checktransition
-    LDA $0931 : BPL .checkloadstate
+    ; check if door is done scrolling
+    LDA !DOOR_FINISHED_SCROLLING : BPL .checkloadstate
     RTL
+}
+
+gamemode_door_transtion_load_sprites:
+{
+    ; Check for auto-save mid-transition
+    LDA !ram_auto_save_state : BEQ .done
+    BMI .auto_save
+    TDC : STA !ram_auto_save_state
+  .auto_save
+    PHP : PHB
+    PHK : PLB
+    JSL save_state
+    PLB : PLP
+  .done
+    JML $82E4A9 ; return to hijacked code
 }
 endif
 

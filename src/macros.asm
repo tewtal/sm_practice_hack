@@ -104,7 +104,7 @@ endmacro
 
 macro cm_numfield(title, addr, start, end, increment, heldincrement, jsltarget)
 ; Allows editing an 8-bit value at the specified address
-  .dm_action
+  .dm_actionIndex
     dw !ACTION_NUMFIELD
   .dm_addr
     dl <addr> ; 24bit RAM address to display/manipulate
@@ -123,7 +123,7 @@ endmacro
 
 macro cm_numfield_word(title, addr, start, end, increment, heldincrement, jsltarget)
 ; Allows editing a 16-bit value at the specified address
-  .dm_action
+  .dm_actionIndex
     dw !ACTION_NUMFIELD_WORD
   .dm_addr
     dl <addr> ; 24bit RAM address to display/manipulate
@@ -142,7 +142,7 @@ endmacro
 
 macro cm_numfield_hex(title, addr, start, end, increment, heldincrement, jsltarget)
 ; Allows editing an 8-bit value displayed in hexadecimal
-  .dm_action
+  .dm_actionIndex
     dw !ACTION_NUMFIELD_HEX
   .dm_addr
     dl <addr> ; 24bit RAM address to display/manipulate
@@ -161,7 +161,7 @@ endmacro
 
 macro cm_numfield_hex_word(title, addr, bitmask, jsltarget)
 ; Displays a 16-bit value in hexadecimal
-  .dm_action
+  .dm_actionIndex
     dw !ACTION_NUMFIELD_HEX_WORD
   .dm_addr
     dl <addr> ; 24bit RAM address to display/manipulate
@@ -176,7 +176,7 @@ endmacro
 
 macro cm_numfield_readonly(title, addr)
 ; Allows editing a 16-bit value at the specified address
-  .dm_action
+  .dm_actionIndex
     dw !ACTION_NUMFIELD_READONLY
   .dm_addr
     dl <addr> ; 24bit RAM address to display/manipulate
@@ -195,7 +195,7 @@ endmacro
 
 macro cm_numfield_color(title, addr, jsltarget)
 ; Allows editing an 8-bit value in increments consistent with SNES color values
-  .dm_action
+  .dm_actionIndex
     dw !ACTION_NUMFIELD_COLOR
   .dm_addr
     dl <addr> ; 24bit RAM address to display/manipulate
@@ -208,7 +208,7 @@ endmacro
 
 macro cm_numfield_sound(title, addr, start, end, increment, heldincrement, jsltarget)
 ; Allows editing an 8-bit value and playing a sound when pressing Y
-  .dm_action
+  .dm_actionIndex
     dw !ACTION_NUMFIELD_SOUND
   .dm_addr
     dl <addr> ; 24bit RAM address to display/manipulate
@@ -227,7 +227,7 @@ endmacro
 
 macro cm_toggle(title, addr, value, jsltarget)
 ; toggle between zero (OFF) and value (ON)
-  .dm_action
+  .dm_actionIndex
     dw !ACTION_TOGGLE
   .dm_addr
     dl <addr> ; 24bit RAM address to display/manipulate
@@ -242,7 +242,7 @@ endmacro
 
 macro cm_toggle_inverted(title, addr, value, jsltarget)
 ; for toggles where zero = ON
-  .dm_action
+  .dm_actionIndex
     dw !ACTION_TOGGLE_INVERTED
   .dm_addr
     dl <addr> ; 24bit RAM address to display/manipulate
@@ -257,7 +257,7 @@ endmacro
 
 macro cm_toggle_bit(title, addr, mask, jsltarget)
 ; toggle specific bits, draw OFF if bits cleared
-  .dm_action
+  .dm_actionIndex
     dw !ACTION_TOGGLE_BIT
   .dm_addr
     dl <addr> ; 24bit RAM address to display/manipulate
@@ -272,7 +272,7 @@ endmacro
 
 macro cm_toggle_bit_inverted(title, addr, mask, jsltarget)
 ; toggle specific bits, draw ON if bits cleared
-  .dm_action
+  .dm_actionIndex
     dw !ACTION_TOGGLE_BIT_INVERTED
   .dm_addr
     dl <addr> ; 24bit RAM address to display/manipulate
@@ -287,7 +287,7 @@ endmacro
 
 macro cm_jsl(title, routine, argument)
 ; run code when menu item executed
-  .dm_action
+  .dm_actionIndex
     dw !ACTION_JSL
   .dm_jsl
     dw <routine> ; 16bit address to code in the same bank as current menu/submenu
@@ -300,7 +300,7 @@ endmacro
 
 macro cm_jsl_submenu(title, routine, argument)
 ; only used within submenu and mainmenu macros
-  .dm_action
+  .dm_actionIndex
     dw !ACTION_JSL_SUBMENU
   .dm_jsl
     dw <routine> ; 16bit address to code in the same bank as current menu/submenu
@@ -339,30 +339,30 @@ endmacro
 macro cm_custompreset(slot)
 ; Displays custom preset data and allows selecting active slot
 custompreset_<slot>:
-  .dm_action
+  .dm_actionIndex
     dw !ACTION_CUSTOM_PRESET
   .dm_slot
-    db <slot> ; 8bit slot ID
+    db <slot>
   .dm_text
 table ../resources/normal.tbl
-    db #$28, "<slot>", #$FF ; slot ID text
+    db #$28, "<slot>", #$FF
 endmacro
 
 macro cm_managepreset(slot)
 ; Allows reorganizing custom preset slots
 managepreset_<slot>:
-  .dm_action
+  .dm_actionIndex
     dw !ACTION_MANAGE_PRESETS
   .dm_slot
-    db <slot> ; 8bit slot ID
+    db <slot>
   .dm_text
 table ../resources/normal.tbl
-    db #$28, "<slot>", #$FF ; slot ID text
+    db #$28, "<slot>", #$FF
 endmacro
 
 macro cm_ctrl_shortcut(title, addr)
 ; configure controller shortcuts
-  .dm_action
+  .dm_actionIndex
     dw !ACTION_CTRL_SHORTCUT
   .dm_addr
     dl <addr> ; 24bit RAM address to display/manipulate
@@ -372,8 +372,8 @@ table ../resources/normal.tbl
 endmacro
 
 macro cm_ctrl_input(title, addr, routine, argument)
-; set a single controller binding
-  .dm_action
+; configure vanilla controller bindings
+  .dm_actionIndex
     dw !ACTION_CTRL_INPUT
   .dm_addr
     dl <addr> ; 24bit RAM address to display/manipulate
@@ -437,7 +437,7 @@ endmacro
 
 macro cm_equipment_item(name, addr, bitmask, inverse)
 ; Allows three-way toggling of items:  ON/OFF/UNOBTAINED
-  .dm_action
+  .dm_actionIndex
     dw !ACTION_CHOICE
   .dm_addr
     dl <addr>
@@ -461,7 +461,7 @@ endmacro
 
 macro cm_equipment_beam(name, addr, bitmask, inverse, and)
 ; Allows three-way toggling of beams:  ON/OFF/UNOBTAINED
-  .dm_action
+  .dm_actionIndex
     dw !ACTION_CHOICE
   .dm_addr
     dl <addr>

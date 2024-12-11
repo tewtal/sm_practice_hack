@@ -3,7 +3,7 @@
 ;
 
 macro wram_to_sram(wram_addr, size, sram_addr)
-    dw $0000|$4312, <sram_addr>&$FFFF                            ; VRAM address >> 1.
+    dw $0000|$4312, <sram_addr>&$FFFF                            ; A addr = $xx0000
     dw $0000|$4314, ((<sram_addr>>>16)&$FF)|((<size>&$FF)<<8)    ; A addr = $70xxxx, size = $xx00
     dw $0000|$4316, (<size>>>8)&$FF                              ; size = $80xx ($8000), unused bank reg = $00.
     dw $0000|$2181, <wram_addr>&$FFFF                            ; WRAM addr = $xx0000
@@ -75,7 +75,7 @@ pre_load_state:
     LDA #$4000 : STA $4312 ; src addr
     LDA #$0070 : STA $4314 ; src bank
     LDA #$001F : STA $4316 ; size
-    STZ $2181 : STZ $2183  ; clear HDMA
+    STZ $2181 : STZ $2183 ; clear HDMA
     LDA #$0002 : STA $420B ; initiate DMA
 
     ; Load graphics tiles and tile tables back into RAM/WRAM
@@ -169,16 +169,16 @@ post_load_music:
     JSL stop_all_sounds
 
     LDY !MUSIC_TRACK
-    LDA $0639 : CMP $063B : BEQ .music_queue_empty
+    LDA !MUSIC_QUEUE_NEXT : CMP !MUSIC_QUEUE_START : BEQ .music_queue_empty
 
-    DEC : DEC : AND #$000E : TAX
-    LDA $0619,X : BMI .queued_music_data
-    TXA : TAY : CMP $063B : BEQ .no_music_data
+    DEC #2 : AND #$000E : TAX
+    LDA !MUSIC_QUEUE_ENTRIES,X : BMI .queued_music_data
+    TXA : TAY : CMP !MUSIC_QUEUE_START : BEQ .no_music_data
 
   .music_queue_data_search
-    DEC : DEC : AND #$000E : TAX
-    LDA $0619,X : BMI .queued_music_data
-    TXA : CMP $063B : BNE .music_queue_data_search
+    DEC #2 : AND #$000E : TAX
+    LDA !MUSIC_QUEUE_ENTRIES,X : BMI .queued_music_data
+    TXA : CMP !MUSIC_QUEUE_START : BNE .music_queue_data_search
 
   .no_music_data
     LDA !sram_music_toggle : CMP #$0002 : BPL .fast_off_preset_off
@@ -187,21 +187,21 @@ post_load_music:
     LDA !SRAM_MUSIC_DATA : CMP !MUSIC_DATA : BEQ .music_queue_increase_timer
 
     ; Insert queued music data
-    DEX : DEX : TXA : AND #$000E : TAX
-    LDA #$FF00 : CLC : ADC !MUSIC_DATA : STA $0619,X
-    LDA #$0008 : STA $0629,X
+    DEX #2 : TXA : AND #$000E : TAX
+    LDA #$FF00 : CLC : ADC !MUSIC_DATA : STA !MUSIC_QUEUE_ENTRIES,X
+    LDA #$0008 : STA !MUSIC_QUEUE_TIMERS,X
 
   .queued_music_data
     LDA !sram_music_toggle : CMP #$0002 : BMI .queued_music_data_clear_track
 
     ; There is music data in the queue, assume it was loaded
-    LDA $0619,X : STA !MUSIC_DATA
+    LDA !MUSIC_QUEUE_ENTRIES,X : STA !MUSIC_DATA
     BRA .fast_off_preset_off
 
   .music_queue_empty
     LDA !sram_music_toggle : CMP #$0002 : BPL .fast_off_preset_off
     LDA !SRAM_MUSIC_DATA : CMP !MUSIC_DATA : BNE .clear_track_load_data
-    BRL .check_track
+    JMP .check_track
 
   .clear_track_load_data
     LDA #$0000 : JSL !MUSIC_ROUTINE
@@ -210,37 +210,40 @@ post_load_music:
 
   .fast_off_preset_off
     ; Treat music as already loaded
-    STZ $0629 : STZ $062B : STZ $062D : STZ $062F
-    STZ $0631 : STZ $0633 : STZ $0635 : STZ $0637
-    STZ $0639 : STZ $063B : STZ $063D : STZ $063F
-    STZ $0686 : STY !MUSIC_TRACK
+    STZ !MUSIC_QUEUE_TIMERS : STZ !MUSIC_QUEUE_TIMERS+$2
+    STZ !MUSIC_QUEUE_TIMERS+$4 : STZ !MUSIC_QUEUE_TIMERS+$6
+    STZ !MUSIC_QUEUE_TIMERS+$8 : STZ !MUSIC_QUEUE_TIMERS+$A
+    STZ !MUSIC_QUEUE_TIMERS+$C : STZ !MUSIC_QUEUE_TIMERS+$E
+    STZ !MUSIC_QUEUE_NEXT : STZ !MUSIC_QUEUE_START
+    STZ !MUSIC_ENTRY : STZ !MUSIC_TIMER
+    STZ !SOUND_TIMER : STY !MUSIC_TRACK
     BRA .done
 
   .music_queue_increase_timer
     ; Data is correct, but we may need to increase our sound timer
-    LDA !SRAM_SOUND_TIMER : CMP $063F : BMI .done
-    STA $063F : STA $0686
+    LDA !SRAM_SOUND_TIMER : CMP !MUSIC_TIMER : BMI .done
+    STA !MUSIC_TIMER : STA !SOUND_TIMER
     BRA .done
 
   .queued_music_data_clear_track
     ; Insert clear track before queued music data and start queue there
-    DEX : DEX : TXA : AND #$000E : STA $063B : TAX
-    STZ $0619,X : STZ $063D
+    DEX #2 : TXA : AND #$000E : STA !MUSIC_QUEUE_START : TAX
+    STZ !MUSIC_QUEUE_ENTRIES,X : STZ !MUSIC_ENTRY
 
     ; Clear all timers before this point
   .music_clear_timer_loop
-    TXA : DEC : DEC : AND #$000E : TAX
-    STZ $0629,X : CPX $0639 : BNE .music_clear_timer_loop
+    TXA : DEC #2 : AND #$000E : TAX
+    STZ !MUSIC_QUEUE_TIMERS,X : CPX !MUSIC_QUEUE_NEXT : BNE .music_clear_timer_loop
 
     ; Set timer on the clear track command
-    LDX $063B
+    LDX !MUSIC_QUEUE_START
 
   .queued_music_prepare_set_timer
     LDA !SRAM_SOUND_TIMER : BNE .queued_music_set_timer
     INC
 
   .queued_music_set_timer
-    STA $0629,X : STA $0686 : STA $063F
+    STA !MUSIC_QUEUE_TIMERS,X : STA !SOUND_TIMER : STA !MUSIC_TIMER
     BRA .done
 
   .check_track
@@ -257,31 +260,31 @@ post_load_music:
 register_restore_return:
 {
     %a8()
-    LDA $84 : STA $4200
-    LDA #$0F : STA $13 : STA $51 : STA $2100
+    LDA !REG_4200_NMI : STA $4200
+    LDA #$0F : STA $13 : STA !REG_2100_BRIGHTNESS : STA $2100
     RTL
 }
 
 save_state:
 {
-    %a8()
+    %ai8()
     TDC : PHA : PLB
 
-    ; Store DMA registers to SRAM
-    LDY #$0000 : TYX
-
+    TAX : TAY
   .save_dma_regs
+    ; Store DMA registers to SRAM
     LDA $4300,X : STA !SRAM_DMA_BANK,X
     INX
-    INY : CPY #$000B : BNE .save_dma_regs
-    CPX #$007B : BEQ .done
-    INX #5 : LDY #$0000
+    INY : CPY #$0B : BNE .save_dma_regs
+    CPX #$7B : BEQ .done
+    TXA : CLC : ADC #$05 : TAX
+    LDY #$00
     BRA .save_dma_regs
 
   .done
     %ai16()
     LDX #save_write_table
-    ; fallthrough
+    ; fallthrough to run_vm
 }
 
 run_vm:
@@ -336,7 +339,7 @@ save_return:
     %ai16()
     LDA !ram_room_has_set_rng : STA !sram_save_has_set_rng
     LDA !ram_minimap : STA !SRAM_SAVED_MINIMAP
-    LDA #$5AFE : STA !SRAM_SAVED_STATE
+    LDA !SAFEWORD : STA !SRAM_SAVED_STATE
 
     TSC : STA !SRAM_SAVED_SP
     JMP register_restore_return
@@ -421,19 +424,20 @@ load_return:
     JSL tinystates_load_paused
 
   .not_paused
-    %a8()
-    LDX #$0000 : TXY
-
+    %ai8()
+    LDX #$00 : TXY
   .load_dma_regs
+    ; Load DMA registers from SRAM
     LDA !SRAM_DMA_BANK,X : STA $4300,X
-    INX : INY
-    CPY #$000B : BNE .load_dma_regs
-    CPX #$007B : BEQ .load_dma_regs_done
-    INX #5 : LDY #$0000
+    INX
+    INY : CPY #$0B : BNE .load_dma_regs
+    CPX #$7B : BEQ .load_dma_regs_done
+    TXA : CLC : ADC #$05 : TAX
+    LDY #$00
     BRA .load_dma_regs
 
   .load_dma_regs_done
-    ; Restore registers and return.
+    ; Restore registers and return
     %ai16()
     JSR post_load_state
     JMP register_restore_return
@@ -452,7 +456,7 @@ vm:
     ; Read address to write to
     LDA.w $0000,X : BEQ .vm_done
     TAY
-    INX : INX
+    INX #2
     ; Check for byte mode
     BIT.w #$1000 : BEQ .vm_word_mode
     AND.w #$EFFF : TAY
@@ -460,7 +464,7 @@ vm:
   .vm_word_mode
     ; Read value
     LDA.w $0000,X
-    INX : INX
+    INX #2
   .vm_write
     ; Check for read mode (high bit of address)
     CPY.w #$8000 : BCS .vm_read
@@ -483,7 +487,7 @@ tinystates_load_paused:
     LDX #$0000 : LDY #$0100
   .restore_loop
     LDA $7E3300,X : STA $7EC000,X
-    INX : INX
+    INX #2
     DEY : BNE .restore_loop
 
     JSL $828E75 ; Load pause menu tiles and clear BG2 tilemap
@@ -494,14 +498,14 @@ tinystates_load_paused:
     LDX #$0000 : LDY #$0100
   .backup_loop
     LDA $7EC000,X : STA $7E3300,X
-    INX : INX
+    INX #2
     DEY : BNE .backup_loop
 
     ; load pause screen palettes
     LDX #$0000 : LDY #$0100
   .load_loop
     LDA $B6F000,X : STA $7EC000,X
-    INX : INX
+    INX #2
     DEY : BNE .load_loop
 
     JSL $82B62B ; Draw pause menu during fade in
@@ -551,7 +555,7 @@ endif
     LDX #$FFE
   .priority_loop
     LDA $2000,X : ORA #$2000 : STA $2000,X
-    DEX : DEX : BPL .priority_loop
+    DEX #2 : BPL .priority_loop
   .update_priority_done
     PLB
 
@@ -581,7 +585,7 @@ endif
     ;   instruction after an 8-byte instruction. Additionally, the first instruction in each list
     ;   is never executed, so we don't have to worry about reading out-of-bounds.
     PLA                                 ; restore VRAM address from stack
-    LDX $0FAA : BEQ .done
+    LDX !ENEMY_VAR_1 : BEQ .done
     STA $2116                           ; VRAM address = BG2
     ; tilemap = *((instruction_list - 8) + 2) = *(instruction_list - 6)
     LDA $A6FFFA,X : STA $4312           ; source address = tilemap

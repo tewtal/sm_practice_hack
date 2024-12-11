@@ -43,7 +43,6 @@ original_button_tilemap_offset_table:
     dw #$8436, #$8289, EndFanfareText
     dw #$8436, #$8289, EndFanfareText
 
-
 org $859643
 print pc, " fanfare message start"
 
@@ -131,7 +130,7 @@ print pc, " fanfare start"
 play_or_skip_fanfare:
 {
     PHA
-    LDA !sram_fanfare : BIT !FANFARE_TOGGLE : BNE .playfanfare
+    LDA !sram_fanfare : BNE .playfanfare
     PLA
     JML $848C05
 
@@ -163,12 +162,13 @@ if !ORIGINAL_MESSAGE_TEXT
     RTL
 else
     JSL prepare_fanfare_from_non_plm
+    ; Play room music track after 360 frames
     LDA #$0168 : JSL $82E118
 
     ; Open message box
-    LDA !ROOM_ID : CMP #ROOM_MotherBrainRoom : BEQ .kill_mb
-    CMP #ROOM_PhantoonRoom : BEQ .kill_phantoon
-    CMP #ROOM_LandingSite : BEQ .kill_ship
+    LDA !ROOM_ID : CMP.w #ROOM_MotherBrainRoom : BEQ .kill_mb
+    CMP.w #ROOM_PhantoonRoom : BEQ .kill_phantoon
+    CMP.w #ROOM_LandingSite : BEQ .kill_ship
     LDA #$001E : JML $858080
   .kill_mb
     LDA #$001F : JML $858080
@@ -181,24 +181,23 @@ endif
 
 hook_message_box_wait:
 {
-    LDA !sram_fanfare : BIT.b !FANFARE_TOGGLE : BNE .fanfareloop
-    LDX #$0020       ; shorten message box length
+    LDA !sram_fanfare : BNE .fanfareloop
+    ; shorten message box length
+    LDX #$0020
 
-  .nofanfareloop     ; skipping fanfare, so no need to mess with sound
+  .nofanfareloop
+    ; skipping fanfare, so no need to mess with sound
     JSR hook_msg_wait_for_lag_frame
-    DEX
-    BNE .nofanfareloop
-
+    DEX : BNE .nofanfareloop
     RTS
 
-  .fanfareloop       ; original logic
+  .fanfareloop
+    ; original logic
     JSR hook_msg_wait_for_lag_frame
     PHX
-    JSL $808F0C
-    JSL $8289EF
-    PLX
-    DEX
-    BNE .fanfareloop
+    JSL $808F0C ; Handle music queue
+    JSL $8289EF ; Handle sounds
+    PLX : DEX : BNE .fanfareloop
     RTS
 }
 
@@ -213,29 +212,29 @@ if !FEATURE_SD2SNES
     %a16()
     LDA $4218 : BEQ .done
     CMP !sram_ctrl_load_state : BNE .done
-    LDA !SRAM_SAVED_STATE : CMP #$5AFE : BNE .done
+    LDA !SRAM_SAVED_STATE : CMP !SAFEWORD : BNE .done
     PHB : PHK : PLB
     JML load_state
 
   .done
 endif
-    ; Jump to vanilla routine to wait for lag frame
+    ; Jump to vanilla routine
     JMP $8137
 }
 
 hook_resume_room_music:
 {
-    LDA !sram_fanfare : BIT !FANFARE_TOGGLE : BNE .resume
+    LDA !sram_fanfare : BNE .resume
 
     ; This method is also used when starting game at Ceres
     LDA !AREA_ID : CMP #$0006 : BEQ .resume
     RTL
 
   .resume
-    TDC              ; original logic to queue room music after fanfare
-    JSL $808FF7
-    LDA $07F5
-    JSL $808FC1
+    ; original logic to queue room music after fanfare
+    TDC : JSL $808FF7
+    LDA !MUSIC_TRACK
+    JSL !MUSIC_ROUTINE
     RTL
 }
 

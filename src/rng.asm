@@ -1,47 +1,42 @@
+
 ; ----------------
 ; Phantoon hijacks
 ; ----------------
-{
-    ; Intro
+
 if !FEATURE_PAL
 org $A7D4DD
-else
+else    ; Phantoon Intro
 org $A7D4A9
 endif
     JSL hook_phantoon_init
-    NOP
-    BNE $3D
+    BNE $3E : NOP
 
-    ; 1st pattern
 if !FEATURE_PAL
 org $A7D5DA
-else
+else    ; 1st pattern
 org $A7D5A6
 endif
     JSL hook_phantoon_1st_rng
     BRA $10
 
-    ; 2nd pattern
 if !FEATURE_PAL
 org $A7D0B0
-else
+else    ; 2nd pattern
 org $A7D07C
 endif
     JSL hook_phantoon_2nd_rng
     BRA $0F
 
-    ; Phantoon eye close timer
 if !FEATURE_PAL
 org $A7D098
-else
+else    ; Phantoon eye close timer
 org $A7D064
 endif
     JSL hook_phantoon_eyeclose
 
-    ; Phantoon flame pattern
 if !FEATURE_PAL
 org $A7D00A
-else
+else    ; Phantoon flame pattern
 org $A7CFD6
 endif
     JSL hook_phantoon_flame_pattern
@@ -57,13 +52,12 @@ else
 org $A7DD7F
 endif
     JMP phantoon_damage_palette
-}
 
 
 ; --------------
 ; Botwoon hijack
 ; --------------
-{
+
 if !FEATURE_PAL
 org $B39953
 else
@@ -78,13 +72,12 @@ else
 org $B398C1
 endif
     JSL hook_botwoon_spit
-}
 
 
 ; ---------------
 ; Draygon hijacks
 ; ---------------
-{
+
 if !FEATURE_PAL
 org $A58AEC
 else
@@ -112,13 +105,12 @@ else
 org $A595AA
 endif
     JSR hook_draygon_damage
-}
 
 
 ; ----------------
 ; Crocomire hijack
 ; ----------------
-{
+
 if !FEATURE_PAL
 org $A48763
 else
@@ -132,13 +124,12 @@ else
 org $A48CDD
 endif
     JMP hook_crocomire_damage
-}
 
 
 ; -------------
 ; Kraid hijacks
 ; -------------
-{
+
 if !FEATURE_PAL
 org $A786B7
 else
@@ -150,7 +141,7 @@ KraidWaitTable:
 
 if !FEATURE_PAL
 org $A7AA7F
-else
+else    ; Kraid intro
 org $A7AA69
 endif
     JSR kraid_intro_skip
@@ -184,17 +175,28 @@ endif
 
 if !FEATURE_PAL
 org $A7BDF3
-else
+else    ; Kraid rng
 org $A7BDBF
 endif
     JSR hook_kraid_claw_rng
-}
+
+
+; -----------
+; Baby hijack
+; -----------
+
+if !FEATURE_PAL
+org $A9F21B
+else    ; Baby skip rng
+org $A9F1CE
+endif
+    JMP hook_baby_skip_rng
 
 
 ; -----------------
 ; "Set rng" hijacks
 ; -----------------
-{
+
     ; $A3:AB0C A9 25 00    LDA #$0025
     ; $A3:AB0F 8D E5 05    STA $05E5  [$7E:05E5]
     ; $A3:AB12 22 11 81 80 JSL $808111[$80:8111]
@@ -213,7 +215,7 @@ else
 org $A2B588
 endif
     JSL hook_lavarocks_set_rng
-    NOP : NOP
+    NOP #2
 
     ; $A8:B798 A9 17 00    LDA #$0017
     ; $A8:B79B 8D E5 05    STA $05E5  [$7E:05E5]
@@ -223,8 +225,7 @@ else
 org $A8B798
 endif
     JSL hook_beetom_set_rng
-    NOP : NOP
-}
+    NOP #2
 
 
 ; -----
@@ -233,6 +234,40 @@ endif
 
 org $83AE00
 print pc, " rng start"
+
+MenuRNG:
+; Generates new random number
+; 32-bit period (uses two 16-bit seeds)
+; Make sure ram_seed_X and ram_seed_Y is initialized to something other than zero
+{
+    LDA !ram_seed_X : ASL #5
+    EOR !ram_seed_X : STA $C1
+
+    LDA !ram_seed_Y : STA !ram_seed_X
+
+    LDA $C1 : LSR #3
+    EOR $C1 : STA $C1
+
+    LDA !ram_seed_Y : LSR
+    EOR !ram_seed_Y : EOR $C1
+    STA !ram_seed_Y
+
+    ; return y (in a)
+    RTL	
+}
+
+MenuRNG2:
+; 16-bit period xorshift (uses only ram_seed_X)
+; Make sure ram_seed_X is not zero
+{
+    LDA !ram_seed_X
+    STA $C1
+    ASL #2 : EOR $C1 : STA $C1
+    LSR #5 : EOR $C1 : STA $C1
+    ASL : EOR $C1
+    STA !ram_seed_X
+    RTL
+}
 
 hook_hopper_set_rng:
 {
@@ -255,7 +290,7 @@ hook_beetom_set_rng:
 }
 
 ; Patch to the following code (which waits a few frames
-;  before spawning flames in a circle)
+; before spawning flames in a circle)
 ; $A7:D4A9 DE B0 0F    DEC $0FB0,x[$7E:0FB0]    ; decrement timer
 ; $A7:D4AC F0 02       BEQ $02    [$D4B0]       ; if zero, proceed
 ; $A7:D4AE 10 3D       BPL $3D    [$D4ED]       ; else, return
@@ -263,14 +298,14 @@ hook_phantoon_init:
 {
     LDA !sram_cutscenes : AND !CUTSCENE_FAST_PHANTOON : BNE .skip_cutscene
 
-    DEC $0FB0,X
+    DEC !ENEMY_VAR_4,X
     RTL
 
   .skip_cutscene
     ; get rid of the return address
-    PLA     ; pop 2 bytes
-    PHP     ; push 1
-    PLA     ; pop 2 (for a total of 3 bytes popped)
+    PLA ; pop 2 bytes
+    PHP ; push 1
+    PLA ; pop 2 (for a total of 3 bytes popped)
 
     ; start boss music & fade-in animation
 if !FEATURE_PAL
@@ -279,6 +314,7 @@ else
     JML $A7D50F
 endif
 }
+
 
 ; Table of Phantoon pattern durations & directions
 ; bit 0 is direction, remaining bits are duration
@@ -310,20 +346,20 @@ hook_phantoon_1st_rng:
     LDA !sram_cutscenes : AND !CUTSCENE_FAST_PHANTOON : BEQ .rng
     LDY #$0257 : JSL ih_adjust_realtime
 
-  .rng:
-    ; If set to all-on or all-off, don't mess with RNG.
+  .rng
+    ; If set to all-on or all-off, don't mess with RNG
     LDA !ram_phantoon_rng_round_1 : BEQ .no_manip
     CMP #$003F : BNE choose_phantoon_pattern
 
   .no_manip
-    LDA !FRAME_COUNTER
-    LSR : AND #$0003 : ASL : TAY
+    LDA !FRAME_COUNTER : LSR
+    AND #$0003 : ASL : TAY
 if !FEATURE_PAL
     LDA $CD87,Y
 else
     LDA $CD53,Y
 endif
-    STA $0FE8
+    STA !ENEMY_FUNCTION_POINTER+$40
     JSL $808111
     BIT #$0001
     RTL
@@ -341,7 +377,7 @@ endif
 ; $A7:D08E 89 01 00    BIT #$0001
 hook_phantoon_2nd_rng:
 {
-    ; If set to all-on or all-off, don't mess with RNG.
+    ; If set to all-on or all-off, don't mess with RNG
     LDA !ram_phantoon_rng_round_2 : BEQ .no_manip
     CMP #$003F : BNE choose_phantoon_pattern
 
@@ -353,8 +389,7 @@ if !FEATURE_PAL
 else
     LDA $CD53,Y
 endif
-    STA $0FE8
-    ; Intentional fallthrough to invert logic
+    STA !ENEMY_FUNCTION_POINTER+$40    ; Intentional fallthrough to invert logic
 }
 
 hook_phantoon_invert:
@@ -395,16 +430,15 @@ choose_phantoon_pattern:
     ; Y = index in phan_pattern_table of pattern currently being checked
     ; A = bitmask of enabled patterns
   .reload
-    LDA $01,S   ; reload pattern mask
+    LDA $01,S ; reload pattern mask
     LDY #$0006  ; number of patterns (decremented immediately to index of last pattern)
+
   .loop
     DEY
-    LSR
-    BCC .skip
+    LSR : BCC .skip
 
     ; Pattern index Y is enabled
-    DEX         ; is this the last one?
-    BMI .done
+    DEX : BMI .done ; is this the last one?
     BRA .loop   ; no, keep looping
 
   .skip
@@ -417,51 +451,44 @@ choose_phantoon_pattern:
     PLA ; we don't need the pattern mask anymore
     TYA : ASL : TAX
     LDA.l phan_pattern_table,X
-    PLX         ; pop enemy index
+    PLX ; pop enemy index
 
     ; Check if Phantoon is in the round 2 AI state
-    LDY $0FB2
+    LDY !ENEMY_VAR_5
 if !FEATURE_PAL
     CPY #$D716
 else
     CPY #$D6E2
 endif
     BNE .round1
-
     ; Save the pattern timer, check the direction,
     ; and set Phantoon's starting point and pattern index.
-    LSR
-    STA $0FE8
-    BCS .round2left
+    LSR : STA !ENEMY_FUNCTION_POINTER+$40 : BCS .round2left
 
     ; Right pattern
-    LDA #$0088
-    LDY #$00D0
+    LDA #$0088 : LDY #$00D0
     BRA .round2done
 
   .round2left
-    LDA #$018F
-    LDY #$0030
+    LDA #$018F : LDY #$0030
 
   .round2done
-    STA $0FA8  ; Index into figure-8 movement table
-    STY $0F7A  ; X position
-    LDA #$0060
-    STA $0F7E  ; Y position
+    STA !ENEMY_FUNCTION_POINTER  ; Index into figure-8 movement table
+    STY !ENEMY_X  ; X position
+    LDA #$0060 : STA !ENEMY_Y  ; Y position
     BRA hook_phantoon_invert
 
   .round1
     ; Save the pattern timer and check the direction
-    LSR
-    STA $0FE8
+    LSR : STA !ENEMY_FUNCTION_POINTER+$40
     BCS .round1left
 
     ; Round 1 right pattern
-    SEP #$02
+    SEP #$02 ; set zero flag
     RTL
 
-  .round1left:
-    REP #$02
+  .round1left
+    REP #$02 ; clear zero flag
     RTL
 }
 
@@ -472,7 +499,7 @@ hook_phantoon_eyeclose:
     RTL
 
   .no_manip
-    LDA !CACHED_RANDOM_NUMBER
+    LDA !CACHED_RANDOM_NUMBER ; return with random number
     AND #$0007 : ASL   ; overwritten code
     RTL
 }
@@ -488,25 +515,14 @@ hook_phantoon_flame_pattern:
     RTL
 
   .no_manip
-    LDA !CACHED_RANDOM_NUMBER
+    LDA !CACHED_RANDOM_NUMBER ; return with random number
     RTL
 }
 
 hook_phantoon_flame_direction:
 {
     LDA !ram_phantoon_flame_direction : BEQ .no_manip
-    DEC : BEQ .left
-
-  .right
-if !FEATURE_PAL
-    LDA #$0099
-else
-    LDA #$0080
-endif
-    RTL
-
-  .no_manip
-    LDA $05B6 : BIT #$0001 : BEQ .right
+    DEC : BNE .right
 
   .left
 if !FEATURE_PAL
@@ -515,7 +531,19 @@ else
     LDA #$FF80
 endif
     RTL
+
+  .no_manip
+    LDA !FRAME_COUNTER : BIT #$0001 : BNE .left
+
+  .right
+if !FEATURE_PAL
+    LDA #$0099
+else
+    LDA #$0080
+endif
+    RTL
 }
+
 
 hook_botwoon_move:
 {
@@ -586,7 +614,7 @@ hook_crocomire_rng:
     RTS
 
   .no_manip
-    LDA !CACHED_RANDOM_NUMBER
+    LDA !CACHED_RANDOM_NUMBER ; return with random number (overwritten code)
     RTS
 }
 
@@ -618,7 +646,7 @@ hook_draygon_rng_left:
     RTS
 
   .no_manip
-    LDA !CACHED_RANDOM_NUMBER
+    LDA !CACHED_RANDOM_NUMBER ; return with random number (overwritten code)
     RTS
 }
 
@@ -629,7 +657,7 @@ hook_draygon_rng_right:
     RTS
 
   .no_manip
-    LDA !CACHED_RANDOM_NUMBER
+    LDA !CACHED_RANDOM_NUMBER ; return with random number (overwritten code)
     RTS
 }
 
@@ -664,7 +692,7 @@ org $A6A0FC
 endif
     LSR : BCC $0F
     CPX #$0006 : BEQ $0A
-    LDA $0F86
+    LDA !ENEMY_PROPERTIES
 
 if !FEATURE_PAL
 org $A6A302
@@ -700,7 +728,7 @@ org $A6F641
 else
 org $A6F66A
 endif
-    LDA $0943 : BEQ $F6
+    LDA !TIMER_STATUS : BEQ $F6
     LDA $7ED82E
 
 
@@ -709,7 +737,7 @@ print pc, " ridley rng start"
 
 ridley_init_hook:
 {
-    LDA $079B : CMP #ROOM_CeresRidleyRoom : BNE .continue
+    LDA !ROOM_ID : CMP.w #ROOM_CeresRidleyRoom : BNE .continue
     LDA $7ED82E : BIT #$0001 : BEQ .continue
 
     ; Ceres Ridley is already dead, so skip to the escape
@@ -718,11 +746,11 @@ ridley_init_hook:
     AND #$FFFE : STA $7ED82E
 
     ; Clear out the room main asm so it doesn't also trigger the escape
-    STZ $07DF
+    STZ !ROOM_MAIN_ASM_POINTER
 
     ; Set up the escape timer routine
-    LDA #$0001 : STA $093F
-    LDA #$E0E6 : STA $0A5A
+    LDA #$0001 : STA !CERES_STATUS
+    LDA #$E0E6 : STA !SAMUS_TIMER_HACK_HANDLER
 
     ; Jump to the escape
 if !FEATURE_PAL
@@ -730,8 +758,8 @@ if !FEATURE_PAL
 else
     LDA #$AB37
 endif
-    STA $0FA8
-    JMP ($0FA8)
+    STA !ENEMY_FUNCTION_POINTER
+    JMP (!ENEMY_FUNCTION_POINTER)
 
   .continue
 if !FEATURE_PAL
@@ -739,14 +767,14 @@ if !FEATURE_PAL
 else
     LDA #$A377
 endif
-    STA $0FA8
-    JMP ($0FA8)
+    STA !ENEMY_FUNCTION_POINTER
+    JMP (!ENEMY_FUNCTION_POINTER)
 }
 
 ceres_ridley_draw_metroid:
 {
     LDA $7ED82E : BIT #$0001 : BNE .end
-    LDA $093F : BNE .end
+    LDA !CERES_STATUS : BNE .end
 if !FEATURE_PAL
     JSR $BF2A
 else
@@ -836,11 +864,11 @@ endif
 hook_kraid_claw_rng:
 {
     LDA !ram_kraid_claw_rng : BEQ .no_manip
-    DEC : DEC     ; return -1 (laggy) or 0 (laggier)
+    DEC #2 ; return -1 (laggy) or 0 (laggier)
     RTS
 
   .no_manip
-    LDA !CACHED_RANDOM_NUMBER
+    LDA !CACHED_RANDOM_NUMBER ; return with random number (overwritten code)
     RTS
 }
 
@@ -864,3 +892,31 @@ endif
 
 print pc, " kraid rng end"
 
+
+org $A9FFE0
+print pc, " baby rng start"
+
+hook_baby_skip_rng:
+{
+    LDA !ram_baby_rng : BEQ .no_manip
+    DEC : BEQ .rng_set
+    ; lunge
+    LDA #$0020 : STA $7E7802,X
+
+  .rng_set
+if !FEATURE_PAL
+    JMP $F22D
+else
+    JMP $F1E0
+endif
+
+  .no_manip
+    LDA !CACHED_RANDOM_NUMBER ; overwritten code
+if !FEATURE_PAL
+    JMP $F21E
+else
+    JMP $F1D1
+endif
+}
+
+print pc, " baby rng end"

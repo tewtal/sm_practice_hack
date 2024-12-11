@@ -126,7 +126,7 @@ draw_sprite_oob:
     %a8()
     LDA $16 : STA $4202
     TYA : CLC : ADC $24 : STA $4203
-    NOP : NOP ; wait for CPU math
+    NOP #2 ; wait for CPU math
     %ai16()
     ; room_width_blocks * (Y + [Samus Y - (oob_height*8)] / 16)
     LDA $4216 : STA $18
@@ -139,12 +139,14 @@ draw_sprite_oob:
     ; X + [Samus X - (oob_width*8)] / 16
     TXA : CLC : ADC $22 : AND #$0FFF
 
+    ; a = (width * bit.lrshift(bit.band(cameraY+y*16, 0xFFF), 4)) + bit.lrshift(bit.band(cameraX+x*16, 0xFFFF), 4)
+    CLC : ADC $18
+    ; a = a * 2
+    ASL : TAX
     ; Load clipdata of block
-    CLC : ADC $18 : ASL
-    TAX : LDA.l $7F0003,X : AND #$00FF : LSR #4
+    LDA !LEVEL_DATA+1,X : AND #$00FF : LSR #4 : TAX
     ; Get sprite ID for this BTS
-    TAX : LDA.l block_gfx,X : AND #$00FF
-    CMP #$00D0 : BEQ .next
+    LDA.l block_gfx,X : AND #$00FF : CMP #$00D0 : BEQ .next
 
     ; Set sprite ID
     %a8()
@@ -305,12 +307,11 @@ draw_oob_samus_hitbox:
 spr_clr_flags:
     dw %1111111111111100, %1111111111110011, %1111111111001111, %1111111100111111
 
-
 ; draw hitbox around samus
 draw_samus_hitbox:
 {
     LDA !SAMUS_Y : SEC : SBC !LAYER1_Y : PHA ; Y coord
-    LDA !SAMUS_SPRITEMAP_X : PHA ; X coord
+    LDA !SAMUS_X : SEC : SBC !LAYER1_X : PHA ; X coord
 
     LDA #$0000
     %a8()
@@ -419,7 +420,7 @@ draw_enemy_hitbox:
 draw_ext_spritemap_hitbox:
 {
     ; Kraid has too many hitboxes and overflows the OAM stack
-    LDA !ROOM_ID : CMP #ROOM_KraidRoom : BEQ .end ; check for Kraid's room
+    LDA !ROOM_ID : CMP.w #ROOM_KraidRoom : BEQ .end
 
     LDX #$0000 ; X = enemy index
     LDY !OAM_STACK_POINTER ; Y = OAM stack pointer
@@ -795,9 +796,9 @@ draw_samusproj_hitbox:
 
 draw_custom_boss_hitbox:
 {
-    LDA !ROOM_ID : CMP #ROOM_MotherBrainRoom : BEQ .mother_brain
-    CMP #ROOM_RidleyRoom : BEQ .ridley_bridge
-    CMP #ROOM_CeresRidleyRoom : BNE .end
+    LDA !ROOM_ID : CMP.w #ROOM_MotherBrainRoom : BEQ .mother_brain
+    CMP.w #ROOM_RidleyRoom : BEQ .ridley_bridge
+    CMP.w #ROOM_CeresRidleyRoom : BNE .end
 
   .ridley_bridge
     JMP .ridley

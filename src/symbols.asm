@@ -75,6 +75,7 @@ ram_dash_counter = !ram_dash_counter ; !WRAM_START+$56
 ram_lag_counter = !ram_lag_counter ; !WRAM_START+$58
 ram_kraid_adjust_timer = !ram_kraid_adjust_timer ; !WRAM_START+$5A
 ram_print_segment_timer = !ram_print_segment_timer ; !WRAM_START+$5C
+ram_activated_shine_duration = !ram_activated_shine_duration ; !WRAM_START+$5E
 
 ; ^ FREE SPACE ^ up to +$6C
 
@@ -165,8 +166,9 @@ ram_itempickups_visible = !ram_itempickups_visible ; !WRAM_PERSIST_START+$5E
 ram_itempickups_chozo = !ram_itempickups_chozo ; !WRAM_PERSIST_START+$60
 ram_itempickups_hidden = !ram_itempickups_hidden ; !WRAM_PERSIST_START+$62
 ram_frames_held = !ram_frames_held ; !WRAM_PERSIST_START+$64
+ram_baby_rng = !ram_baby_rng ; !WRAM_PERSIST_START+$66
 
-ram_quickboot_spc_state = !ram_quickboot_spc_state ; !WRAM_PERSIST_START+$66
+ram_quickboot_spc_state = !ram_quickboot_spc_state ; !WRAM_PERSIST_START+$68
 
 ; ^ FREE SPACE ^ up to +$7C (!WRAM_START+$FC - !WRAM_PERSIST_START)
 
@@ -180,15 +182,14 @@ ram_slowdown_mode = !ram_slowdown_mode ; $7EFDFE
 ; RAM Menu
 ; ---------
 
-ram_cm_stack_index = !ram_cm_stack_index ; $05D5
 ram_cm_menu_stack = !ram_cm_menu_stack ; !WRAM_MENU_START+$00         ; 16 bytes
 ram_cm_cursor_stack = !ram_cm_cursor_stack ; !WRAM_MENU_START+$10       ; 16 bytes
 
 ram_cm_cursor_max = !ram_cm_cursor_max ; !WRAM_MENU_START+$20
-ram_cm_horizontal_cursor = !ram_cm_horizontal_cursor ; !WRAM_MENU_START+$22
-ram_cm_input_timer = !ram_cm_input_timer ; !WRAM_MENU_START+$24
-ram_cm_controller = !ram_cm_controller ; !WRAM_MENU_START+$26
-ram_cm_menu_bank = !ram_cm_menu_bank ; !WRAM_MENU_START+$28
+ram_cm_input_timer = !ram_cm_input_timer ; !WRAM_MENU_START+$22
+ram_cm_controller = !ram_cm_controller ; !WRAM_MENU_START+$24
+ram_cm_menu_bank = !ram_cm_menu_bank ; !WRAM_MENU_START+$26
+ram_cm_horizontal_cursor = !ram_cm_horizontal_cursor ; !WRAM_MENU_START+$28
 
 ram_cm_etanks = !ram_cm_etanks ; !WRAM_MENU_START+$2A
 ram_cm_reserve = !ram_cm_reserve ; !WRAM_MENU_START+$2C
@@ -202,37 +203,42 @@ ram_cm_ctrl_last_input = !ram_cm_ctrl_last_input ; !WRAM_MENU_START+$38
 ram_cm_ctrl_assign = !ram_cm_ctrl_assign ; !WRAM_MENU_START+$3A
 ram_cm_ctrl_swap = !ram_cm_ctrl_swap ; !WRAM_MENU_START+$3C
 
-ram_cm_palette_border = !ram_cm_palette_border ; !WRAM_MENU_START+$3E
-ram_cm_palette_headeroutline = !ram_cm_palette_headeroutline ; !WRAM_MENU_START+$40
-ram_cm_palette_text = !ram_cm_palette_text ; !WRAM_MENU_START+$42
-ram_cm_palette_background = !ram_cm_palette_background ; !WRAM_MENU_START+$44
-ram_cm_palette_numoutline = !ram_cm_palette_numoutline ; !WRAM_MENU_START+$46
-ram_cm_palette_numfill = !ram_cm_palette_numfill ; !WRAM_MENU_START+$48
-ram_cm_palette_toggleon = !ram_cm_palette_toggleon ; !WRAM_MENU_START+$4A
-ram_cm_palette_seltext = !ram_cm_palette_seltext ; !WRAM_MENU_START+$4C
-ram_cm_palette_seltextbg = !ram_cm_palette_seltextbg ; !WRAM_MENU_START+$4E
-ram_cm_palette_numseloutline = !ram_cm_palette_numseloutline ; !WRAM_MENU_START+$50
-ram_cm_palette_numsel = !ram_cm_palette_numsel ; !WRAM_MENU_START+$52
+ram_cm_slowdown_mode = !ram_cm_slowdown_mode ; !WRAM_MENU_START+$3E
+ram_cm_slowdown_frames = !ram_cm_slowdown_frames ; !WRAM_MENU_START+$40
 
-ram_cm_botwoon_rng = !ram_cm_botwoon_rng ; !WRAM_MENU_START+$54
-ram_cm_botwoon_first = !ram_cm_botwoon_first ; !WRAM_MENU_START+$56
-ram_cm_botwoon_second = !ram_cm_botwoon_second ; !WRAM_MENU_START+$58
-ram_cm_botwoon_hidden = !ram_cm_botwoon_hidden ; !WRAM_MENU_START+$5A
-ram_cm_botwoon_spit = !ram_cm_botwoon_spit ; !WRAM_MENU_START+$5C
-ram_cm_custom_preset_labels = !ram_cm_custom_preset_labels ; !WRAM_MENU_START+$5E
-ram_seed_X = !ram_seed_X ; !WRAM_MENU_START+$60
-ram_seed_Y = !ram_seed_Y ; !WRAM_MENU_START+$62
+ram_cm_botwoon_rng = !ram_cm_botwoon_rng ; !WRAM_MENU_START+$42
+ram_cm_botwoon_first = !ram_cm_botwoon_first ; !WRAM_MENU_START+$44
+ram_cm_botwoon_hidden = !ram_cm_botwoon_hidden ; !WRAM_MENU_START+$46
+ram_cm_botwoon_second = !ram_cm_botwoon_second ; !WRAM_MENU_START+$48
+ram_cm_botwoon_spit = !ram_cm_botwoon_spit ; !WRAM_MENU_START+$4A
+ram_cm_custom_preset_labels = !ram_cm_custom_preset_labels ; !WRAM_MENU_START+$4C
 
-ram_timers_autoupdate = !ram_timers_autoupdate ; !WRAM_MENU_START+$64
-ram_cm_suit_properties = !ram_cm_suit_properties ; !WRAM_MENU_START+$66
+ram_seed_X = !ram_seed_X ; !WRAM_MENU_START+$4E
+ram_seed_Y = !ram_seed_Y ; !WRAM_MENU_START+$50
 
-ram_cm_sfxlib1 = !ram_cm_sfxlib1 ; !WRAM_MENU_START+$68
-ram_cm_sfxlib2 = !ram_cm_sfxlib2 ; !WRAM_MENU_START+$6A
-ram_cm_sfxlib3 = !ram_cm_sfxlib3 ; !WRAM_MENU_START+$6C
+ram_cm_sfxlib1 = !ram_cm_sfxlib1 ; !WRAM_MENU_START+$52
+ram_cm_sfxlib2 = !ram_cm_sfxlib2 ; !WRAM_MENU_START+$54
+ram_cm_sfxlib3 = !ram_cm_sfxlib3 ; !WRAM_MENU_START+$56
 
-ram_cm_fast_scroll_menu_selection = !ram_cm_fast_scroll_menu_selection ; !WRAM_MENU_START+$6E
+ram_cm_fast_scroll_menu_selection = !ram_cm_fast_scroll_menu_selection ; !WRAM_MENU_START+$58
+ram_timers_autoupdate = !ram_timers_autoupdate ; !WRAM_MENU_START+$5A
+ram_cm_suit_properties = !ram_cm_suit_properties ; !WRAM_MENU_START+$5C
 
-; ^ FREE SPACE ^ up to +$7E
+ram_cm_palette_border = !ram_cm_palette_border ; !WRAM_MENU_START+$5E
+ram_cm_palette_headeroutline = !ram_cm_palette_headeroutline ; !WRAM_MENU_START+$60
+ram_cm_palette_text = !ram_cm_palette_text ; !WRAM_MENU_START+$62
+ram_cm_palette_background = !ram_cm_palette_background ; !WRAM_MENU_START+$64
+ram_cm_palette_numoutline = !ram_cm_palette_numoutline ; !WRAM_MENU_START+$66
+ram_cm_palette_numfill = !ram_cm_palette_numfill ; !WRAM_MENU_START+$68
+ram_cm_palette_toggleon = !ram_cm_palette_toggleon ; !WRAM_MENU_START+$6A
+ram_cm_palette_seltext = !ram_cm_palette_seltext ; !WRAM_MENU_START+$6C
+ram_cm_palette_seltextbg = !ram_cm_palette_seltextbg ; !WRAM_MENU_START+$6E
+ram_cm_palette_numseloutline = !ram_cm_palette_numseloutline ; !WRAM_MENU_START+$70
+ram_cm_palette_numsel = !ram_cm_palette_numsel ; !WRAM_MENU_START+$72
+
+; ^ FREE SPACE ^ up to +$76
+
+ram_cm_preserved_timers = !ram_cm_preserved_timers ; !WRAM_MENU_START+$78 ; 8 bytes
 
 ; ------------------
 ; Reusable RAM Menu
@@ -293,7 +299,42 @@ ram_cm_selected_slot = !ram_cm_selected_slot ; !WRAM_MENU_START+$82
 
 ; Reserve 48 bytes for CGRAM cache
 ; Currently first 28 bytes plus last 2 bytes are used
-ram_cgram_cache = !ram_cgram_cache ; !WRAM_MENU_START+$D0
+ram_cgram_cache = !ram_cgram_cache ; !WRAM_MENU_START+$D0 ; $30 bytes
+
+; -----------------
+; Crash Handler RAM
+; -----------------
+
+ram_crash_a = !ram_crash_a ; !CRASHDUMP
+ram_crash_x = !ram_crash_x ; !CRASHDUMP+$02
+ram_crash_y = !ram_crash_y ; !CRASHDUMP+$04
+ram_crash_dbp = !ram_crash_dbp ; !CRASHDUMP+$06
+ram_crash_sp = !ram_crash_sp ; !CRASHDUMP+$08
+ram_crash_type = !ram_crash_type ; !CRASHDUMP+$0A
+ram_crash_draw_value = !ram_crash_draw_value ; !CRASHDUMP+$0C
+ram_crash_stack_size = !ram_crash_stack_size ; !CRASHDUMP+$0E
+
+; Reserve 48 bytes for stack
+ram_crash_stack = !ram_crash_stack ; !CRASHDUMP+$10
+
+ram_crash_page = !ram_crash_page ; !CRASHDUMP+$40
+ram_crash_palette = !ram_crash_palette ; !CRASHDUMP+$42
+ram_crash_bg = !ram_crash_bg ; !CRASHDUMP+$44
+ram_crash_cursor = !ram_crash_cursor ; !CRASHDUMP+$46
+ram_crash_loop_counter = !ram_crash_loop_counter ; !CRASHDUMP+$48
+ram_crash_bytes_to_write = !ram_crash_bytes_to_write ; !CRASHDUMP+$4A
+ram_crash_stack_line_position = !ram_crash_stack_line_position ; !CRASHDUMP+$4C
+ram_crash_text = !ram_crash_text ; !CRASHDUMP+$4E
+ram_crash_text_bank = !ram_crash_text_bank ; !CRASHDUMP+$50
+ram_crash_text_palette = !ram_crash_text_palette ; !CRASHDUMP+$52
+ram_crash_mem_viewer = !ram_crash_mem_viewer ; !CRASHDUMP+$54
+ram_crash_mem_viewer_bank = !ram_crash_mem_viewer_bank ; !CRASHDUMP+$56
+ram_crash_temp = !ram_crash_temp ; !CRASHDUMP+$58
+
+ram_crash_input = !ram_crash_input ; !CRASHDUMP+$60
+ram_crash_input_new = !ram_crash_input_new ; !CRASHDUMP+$62
+ram_crash_input_prev = !ram_crash_input_prev ; !CRASHDUMP+$64
+ram_crash_input_timer = !ram_crash_input_timer ; !CRASHDUMP+$66
 
 ; -----
 ; SRAM
@@ -341,10 +382,10 @@ sram_room_layout = !sram_room_layout ; !SRAM_START+$44
 sram_cutscenes = !sram_cutscenes ; !SRAM_START+$46
 sram_preset_options = !sram_preset_options ; !SRAM_START+$48
 sram_lag_counter_mode = !sram_lag_counter_mode ; !SRAM_START+$4A
+
 sram_fast_doors = !sram_fast_doors ; !SRAM_START+$4C
 sram_suppress_flashing = !sram_suppress_flashing ; !SRAM_START+$4E
 sram_fast_elevators = !sram_fast_elevators ; !SRAM_START+$50
-
 sram_custom_damage = !sram_custom_damage ; !SRAM_START+$52
 sram_custom_charge_damage = !sram_custom_charge_damage ; !SRAM_START+$54
 sram_custom_uncharge_damage = !sram_custom_uncharge_damage ; !SRAM_START+$56
@@ -363,11 +404,9 @@ sram_palette_seltextbg = !sram_palette_seltextbg ; !SRAM_START+$6A
 sram_palette_background = !sram_palette_background ; !SRAM_START+$6C
 sram_palette_numseloutline = !sram_palette_numseloutline ; !SRAM_START+$6E
 sram_palette_numsel = !sram_palette_numsel ; !SRAM_START+$70
-
 sram_custompalette_profile = !sram_custompalette_profile ; !SRAM_START+$72
 sram_menu_background = !sram_menu_background ; !SRAM_START+$74
 sram_cm_scroll_delay = !sram_cm_scroll_delay ; !SRAM_START+$76
-
 sram_customsfx_move = !sram_customsfx_move ; !SRAM_START+$78
 sram_customsfx_toggle = !sram_customsfx_toggle ; !SRAM_START+$7A
 sram_customsfx_number = !sram_customsfx_number ; !SRAM_START+$7C

@@ -33,13 +33,13 @@ f_output.write("\n; ---------------")
 last_enemy_id = None
 for enemy_id in sorted(enemies):
    if not last_enemy_id:
-      f_output.write("\n\norg $E7F000\n")
+      f_output.write("\n\norg $E5F000\n")
       f_output.write("print pc, \" clearenemies start\"\n")
       f_output.write("ClearEnemiesTable:\n\n")
    enemy_id_pal = enemy_id + 8
    f_output.write("")
-   f_output.write(f'if !FEATURE_PAL\norg $E7{enemy_id_pal:04X}\n')
-   f_output.write(f'else\norg $E7{enemy_id:04X}\nendif\n')
+   f_output.write(f'if !FEATURE_PAL\norg $E5{enemy_id_pal:04X}\n')
+   f_output.write(f'else\norg $E5{enemy_id:04X}\nendif\n')
    f_output.write("dw $000" + enemies[enemy_id] + "\n\n")
    last_enemy_id = enemy_id
 

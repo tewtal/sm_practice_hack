@@ -166,7 +166,7 @@ presets_14ice_crateria_ceres_escape:
     %cm_preset("Ceres Escape", #preset_14ice_crateria_ceres_escape)
 
 presets_14ice_crateria_ceres_last_3_rooms:
-    %cm_preset("Ceres Last 3 rooms", #preset_14ice_crateria_ceres_last_3_rooms)
+    %cm_preset("Ceres Last 3 Rooms", #preset_14ice_crateria_ceres_last_3_rooms)
 
 presets_14ice_crateria_ship:
     %cm_preset("Ship", #preset_14ice_crateria_ship)

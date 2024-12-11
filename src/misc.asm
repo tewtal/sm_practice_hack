@@ -16,6 +16,11 @@ else
 endif
 endif
 
+; Write offset to hack RAM for cout's timer tracking tool
+org $80FFF0
+hook_wram_start:
+    dl !WRAM_START
+
 
 ; Enable version display
 org $8B8697
@@ -94,14 +99,18 @@ org $90E874
 else
 org $90E877
 endif
-    LDA $07F5
+    LDA !MUSIC_TRACK
     JSL $808FC1 ; queue room music track
     BRA $18
 
 
 ; $82:8BB3 22 69 91 A0 JSL $A09169[$A0:9169]  ; Handles Samus getting hurt?
 org $828BB3
+if !FEATURE_VANILLAHUD
+    ; Vanilla HUD build doesn't need artificial lag
+else
     JSL gamemode_end
+endif
 
 
 ; Replace unnecessary logic checking controller input to toggle debug CPU brightness
@@ -113,12 +122,12 @@ misc_debug_brightness:
 
     ; For efficiency, re-implement the debug brightness logic here
     LDA $0DF4 : BEQ .skipDebugBrightness
-    %a8() : LDA $51 : AND #$F0 : ORA #$05 : STA $2100 : %a16()
+    %a8() : LDA !REG_2100_BRIGHTNESS : AND #$F0 : ORA #$05 : STA $2100 : %a16()
     BRA .skipDebugBrightness
 
 warnpc $828ADD
 org $828ADD       ; Resume original logic
-    .skipDebugBrightness
+  .skipDebugBrightness
 
 
 org $82E725
@@ -138,16 +147,24 @@ hook_spc_engine_map_scroll_beep_priority:
     dw $2A97
 
 
-; $80:8F24 9C F6 07    STZ $07F6  [$7E:07F6]  ;/
-; $80:8F27 8D 40 21    STA $2140  [$7E:2140]  ; APU IO 0 = [music track]
 org $808F24
     JSL hook_set_music_track
-    NOP : NOP
+    BRA $00
 
-; $80:8F65 8D F3 07    STA $07F3  [$7E:07F3]  ;} Music data = [music entry] & FFh
-; $80:8F68 AA          TAX                    ; X = [music data]
 org $808F65
     JML hook_set_music_data
+
+if !FEATURE_PAL
+org $82F067
+else
+org $82F071
+endif
+    JSL IconCancelMenu
+    NOP
+
+
+org $90D000       ; hijack, runs when a shinespark is activated
+    JMP misc_shinespark_activation
 
 
 ; Continue drawing escape timer after reaching ship
@@ -166,7 +183,7 @@ org $A2ABFD
 endif
     JML clear_escape_timer
 
-
+; Fast bowling chozo cutscene
 if !FEATURE_PAL
 org $84D671
 else
@@ -193,18 +210,16 @@ move_kraid_rocks_horizontally:
   .storeVelocity
     STA $13
     LDA #$0004 : STA $1C
-    LDA !ENEMY_PROJ_Y,X : SEC : SBC #$0004
-    AND #$FFF0 : STA $1A
-    LDA !ENEMY_PROJ_Y,X : CLC : ADC #$0003
-    SEC : SBC $1A
-    LSR : LSR : LSR : LSR
+    LDA !ENEMY_PROJ_Y,X : SEC : SBC #$0004 : AND #$FFF0 : STA $1A
+    LDA !ENEMY_PROJ_Y,X : CLC : ADC #$0003 : SEC : SBC $1A
+    LSR #4
     STA $1A : STA $20
-    LDA !ENEMY_PROJ_Y,X : SEC : SBC #$0004
-    LSR : LSR : LSR : LSR
-    %a8() : STA $4202
+    LDA !ENEMY_PROJ_Y,X : SEC : SBC #$0004 : LSR #4
+    %a8()
+    STA $4202
     LDA !ROOM_WIDTH_BLOCKS : STA $4203
-    %a16() : LDA !ENEMY_PROJ_X_SUBPX,X
-    CLC : ADC $12 : STA $16
+    %a16()
+    LDA !ENEMY_PROJ_X_SUBPX,X : CLC : ADC $12 : STA $16
     LDA !ENEMY_PROJ_X,X : ADC $14 : STA $18
     BIT $14 : BMI .subtract
     CLC : ADC #$0003
@@ -212,11 +227,20 @@ move_kraid_rocks_horizontally:
   .subtract
     SEC : SBC #$0004
   .store
-    STA $22
-    LSR : LSR : LSR : LSR
-    CLC : ADC $4216
-    ASL : TAX
+    STA $22 : LSR #4 : CLC : ADC $4216 : ASL : TAX
     JMP $8930
+}
+
+IconCancelMenu:
+{
+    ; Reset to default menu shortcut if L+R+Sl+X held
+    LDA !IH_CONTROLLER_PRI : CMP #$2060 : BNE .done
+    LDA #$3000 : STA !sram_ctrl_menu
+
+  .done
+    ; overwritten code
+    LDA !IH_CONTROLLER_PRI_NEW : BIT #$1380
+    RTL
 }
 
 print pc, " misc bank86 end"
@@ -227,11 +251,19 @@ print pc, " misc bank90 start"
 
 hook_set_music_track:
 {
-    STZ $07F6
+    STZ !MUSIC_TRACK+1
     PHA
-    LDA !sram_music_toggle : CMP #$01 : BNE .no_music
+    LDA !sram_music_toggle : CMP #$01 : BNE .music_off
+
+  .play_music
     PLA : STA $2140
     RTL
+
+  .music_off
+    ; option to force fanfare music
+    LDA !sram_fanfare : CMP.b !FANFARE_FORCE_MUSIC : BNE .no_music
+    LDA !MUSIC_TRACK : BEQ .play_music
+    CMP #$02 : BEQ .play_music
 
   .no_music
     PLA
@@ -240,7 +272,7 @@ hook_set_music_track:
 
 hook_set_music_data:
 {
-    STA $07F3 : TAX
+    STA !MUSIC_DATA : TAX ; overwritten code
     LDA !sram_music_toggle : CMP #$0002 : BEQ .fast_no_music
     JML $808F69
 
@@ -265,8 +297,7 @@ if !FEATURE_PAL
 else
     JSL $90F084
 endif
-    LDA #locked_samus_speedup_movement_handler
-    STA $0A42
+    LDA.w #locked_samus_speedup_movement_handler : STA !SAMUS_LOCKED_HANDLER
     RTL
 }
 
@@ -349,7 +380,7 @@ else
 endif
 
     ; If minimap is disabled or shown, we ignore artificial lag
-    LDA $05F7 : BNE .endlag
+    LDA !DISABLE_MINIMAP : BNE .endlag
     LDA !ram_minimap : BNE .endlag
 
     ; Ignore artifical lag if sprite features are active
@@ -360,19 +391,16 @@ endif
     ; For reference, 41 loops ~= 1 scanline
     LDA !sram_artificial_lag : BEQ .endlag
 
+if !FEATURE_VANILLAHUD
+else
     ; To account for various changes, we may need to tack on more clock cycles
     ; These can be removed as code is added to maintain CPU parity during normal gameplay
-    LDA !sram_top_display_mode : CMP !TOP_DISPLAY_VANILLA : BEQ .vanilla_display_lag_loop
+    LDA !sram_top_display_mode : CMP !TOP_HUD_VANILLA_INDEX : BEQ .vanilla_display_lag_loop
     LDA !ram_frames_held : BNE .vanilla_display_lag_loop
+endif
     LDA !sram_artificial_lag
-    ASL
-    ASL
-    ASL
-    ASL
-    NOP  ; Add 2 more clock cycles
-    NOP  ; Add 2 more clock cycles
-    NOP  ; Add 2 more clock cycles
-    NOP  ; Add 2 more clock cycles
+    ASL #4
+    NOP #4 ; Add 8 more clock cycles
     CLC : ADC #$000B ; Add 60 cycles including CLC+ADC
     TAX
   .lagloop
@@ -383,16 +411,13 @@ endif
   .vanilla_display_lag_loop
     ; Vanilla display logic uses more CPU so reduce artificial lag
     LDA !sram_artificial_lag
-    DEC : BEQ .endlag   ; Remove 76 clock cycles
-    DEC : BEQ .endlag   ; Remove 76 clock cycles
-    ASL
-    ASL
-    INC  ; Add 4 loops (22 clock cycles including the INC)
-    ASL
-    ASL
+    DEC : BEQ .endlag ; Remove 76 clock cycles
+    DEC : BEQ .endlag ; Remove 76 clock cycles
+    ASL #2
+    INC ; Add 4 loops (22 clock cycles including the INC)
+    ASL #2
     INC  ; Add 1 loop (7 clock cycles including the INC)
-    NOP  ; Add 2 more clock cycles
-    NOP  ; Add 2 more clock cycles
+    NOP #2 ; Add 4 more clock cycles
     CLC : ADC #$000B ; Add 60 cycles including CLC+ADC
     TAX
   .vanilla_lagloop
@@ -405,7 +430,7 @@ stop_all_sounds:
     ; If sounds are not enabled, the game won't clear the sounds
     LDA !DISABLE_SOUNDS : PHA
     STZ !DISABLE_SOUNDS
-    JSL $82BE17
+    JSL $82BE17 ; Cancel sound effects
     PLA : STA !DISABLE_SOUNDS
 
     ; Makes the game check Samus' health again, to see if we need annoying sound
@@ -415,7 +440,6 @@ stop_all_sounds:
   .done_health_alarm
     RTL
 }
-
 
 if !PRESERVE_WRAM_DURING_SPACETIME
 original_load_beam_palette:
@@ -427,10 +451,9 @@ original_load_beam_palette:
     LDX #$0000
 
   .loop
-    LDA [$00],Y
-    STA $7EC1C0,X
-    INX : INX : INY : INY
-    CPY #$0020 : BMI .loop
+    LDA [$00],Y : STA $7EC1C0,X
+    INX #2
+    INY #2 : CPY #$0020 : BMI .loop
     RTS
 }
 
@@ -438,7 +461,7 @@ spacetime_routine:
 {
     ; The normal routine shouldn't come here, but sanity check just in case
     ; Also skips out if spacetime but Y value is positive
-    INY : INY : CPY #$0000 : BPL .normal_load_palette
+    INY #2 : CPY #$0000 : BPL .normal_load_palette
 
     ; Sanity check that X is 0 (if not then do the original routine)
     CPX #$0000 : BNE .normal_load_palette
@@ -447,12 +470,11 @@ spacetime_routine:
     TYA : CLC : ADC #($7EC608-$7EC1E2) : CMP #$0000 : BPL .normal_load_palette
 
     ; We will reach infohud, so run our own loop
-    INX : INX
+    INX #2
   .loop_before_infohud
-    LDA [$00],Y
-    STA $7EC1C0,X
-    INX : INX : INY : INY
-    CPX #($7EC608-$7EC1C0) : BMI .loop_before_infohud
+    LDA [$00],Y : STA $7EC1C0,X
+    INY #2
+    INX #2 : CPX #($7EC608-$7EC1C0) : BMI .loop_before_infohud
 
     ; Check if we should skip over infohud
     LDA !ram_spacetime_infohud : BEQ .overwrite_infohud
@@ -462,8 +484,8 @@ spacetime_routine:
   .loop_skip_infohud
     LDA $7EC1C0,X
     LDA [$00],Y
-    INX : INX : INY : INY
-    CPX #($7EC6C8-$7EC1C0) : BMI .loop_skip_infohud
+    INY #2
+    INX #2 : CPX #($7EC6C8-$7EC1C0) : BMI .loop_skip_infohud
 
     ; Check if we finished spacetime while skipping over infohud
     CPY #$0020 : BMI .check_sprite_object_ram
@@ -474,12 +496,10 @@ spacetime_routine:
     TYA : CLC : ADC #($7EEF78-$7EC628) : CMP #$0000 : BMI .loop_before_sprite_object_ram
 
   .normal_load_loop
-    LDA [$00],Y
-    STA $7EC1C0,X
-    INY : INY
+    LDA [$00],Y : STA $7EC1C0,X
+    INY #2
   .normal_load_palette
-    INX : INX
-    CPY #$0020 : BMI .normal_load_loop
+    INX #2 : CPY #$0020 : BMI .normal_load_loop
     RTS
 
   .check_sprite_object_ram
@@ -488,10 +508,9 @@ spacetime_routine:
 
     ; We will reach sprite object ram, so run our own loop
   .loop_before_sprite_object_ram
-    LDA [$00],Y
-    STA $7EC1C0,X
-    INX : INX : INY : INY
-    CPX #($7EEF78-$7EC1C0) : BMI .loop_before_sprite_object_ram
+    LDA [$00],Y : STA $7EC1C0,X
+    INY #2
+    INX #2 : CPX #($7EEF78-$7EC1C0) : BMI .loop_before_sprite_object_ram
 
     ; Check if we are copying from unmapped memory ($004500-$007FFF range)
     ; If not then overwrite sprite object ram
@@ -503,26 +522,25 @@ spacetime_routine:
   .loop_skip_sprite_object_ram
     LDA $7EC1C0,X
     LDA [$00],Y
-    INX : INX : INY : INY
-    CPX #($7EF378-$7EC1C0) : BMI .loop_skip_sprite_object_ram
+    INY #2
+    INX #2 : CPX #($7EF378-$7EC1C0) : BMI .loop_skip_sprite_object_ram
 
     ; Check if Y will cause us to reach WRAM
     TYA : CLC : ADC #(!WRAM_START-$7EF398) : CMP #$0000 : BPL .normal_load_loop
 
     ; It will, so run our own loop
   .loop_before_wram
-    LDA [$00],Y
-    STA $7EC1C0,X
-    INX : INX : INY : INY
-    CPX #(!WRAM_START-$7EC1C0) : BMI .loop_before_wram
+    LDA [$00],Y : STA $7EC1C0,X
+    INY #2
+    INX #2 : CPX #(!WRAM_START-$7EC1C0) : BMI .loop_before_wram
 
     ; Skip over WRAM
     ; Instead of load and store, load and load
   .loop_skip_wram
     LDA $7EC1C0,X
     LDA [$00],Y
-    INX : INX : INY : INY
-    CPX #(!WRAM_END-$7EC1C0) : BMI .loop_skip_wram
+    INY #2
+    INX #2 : CPX #(!WRAM_END-$7EC1C0) : BMI .loop_skip_wram
 
     ; Check if we finished spacetime while skipping over WRAM
     CPY #$0020 : BMI .normal_load_loop
@@ -535,11 +553,19 @@ spacetime_routine:
 }
 endif
 
+misc_shinespark_activation:
+{
+    ; store timer when shinespark activated
+    LDA !SAMUS_SHINE_TIMER : STA !ram_activated_shine_duration
+
+    LDA #$D068 ; overwritten code
+    JMP $D003 ; return
+}
 
 preserve_escape_timer:
 {
     ; check if timer is active
-    LDA $0943 : AND #$0006 : BEQ .done
+    LDA !TIMER_STATUS : AND #$0007 : BEQ .done
     JSL $809F6C ; Draw timer
 
   .done
@@ -553,7 +579,7 @@ endif
 clear_escape_timer:
 {
     ; clear timer status
-    STZ $0943
+    STZ !TIMER_STATUS
 
     ; overwritten code
 if !FEATURE_PAL
@@ -561,7 +587,7 @@ if !FEATURE_PAL
 else
     LDA #$AC1B
 endif
-    STA $0FB2,X
+    STA !ENEMY_VAR_5,X
     STZ $0DEC
     RTL
 }
@@ -579,16 +605,16 @@ set_fade_in_door_function:
     ; If the first enemy is a yapping maw, use original routine
     LDA !ENEMY_ID : CMP #$E7BF : BEQ .original
     ; If this is Red Brinstar Firefleas, use original routine
-    LDA !ROOM_ID : CMP #ROOM_RedBrinstarElevRoom : BEQ .original
+    LDA !ROOM_ID : CMP.w #ROOM_RedBrinstarElevRoom : BEQ .original
     ; If this room is not one of the metroid rooms, use optimized routine
-    CMP #ROOM_MetroidRoom1 : BCC .optimized : CMP #ROOM_BlueHopperRoom : BCS .optimized
+    CMP.w #ROOM_MetroidRoom1 : BCC .optimized : CMP.w #ROOM_BlueHopperRoom : BCS .optimized
   .original
     LDA #$E737
     BRA .set
   .optimized
     LDA #optimized_fade_in
   .set
-    STA $099C
+    STA !DOOR_FUNCTION_POINTER
 
     ; Overwritten logic
     LDA $51 : ORA #$001F : STA $51
@@ -644,155 +670,162 @@ optimized_decompression:
 {
     PHP : %a8() : %i16()
     ; Set bank
-    PHB : LDA $49 : PHA : PLB
+    PHB : LDA !DECOMP_SRC+2 : PHA : PLB
 
-    STZ $50 : LDY #$0000
+    STZ !DECOMP_DICTCOPY_INV+1 : LDY #$0000
 
   .nextByte
-    LDA ($47)
-    INC $47 : BNE .readCommand
-    INC $48 : BNE .readCommand
+    LDA (!DECOMP_SRC)
+    INC !DECOMP_SRC : BNE .readCommand
+    INC !DECOMP_SRC+1 : BNE .readCommand
     JSR decompression_increment_bank
   .readCommand
-    STA $4A
+    STA !DECOMP_VAR
     CMP #$FF : BEQ optimized_decompression_end
     CMP #$E0 : BCC .oneByteCommand
 
     ; Two byte command
-    ASL : ASL : ASL
+    ASL #3
     AND #$E0 : PHA
-    LDA $4A : AND #$03 : XBA
+    LDA !DECOMP_VAR : AND #$03 : XBA
 
-    LDA ($47)
-    INC $47 : BNE .readData
-    INC $48 : BNE .readData
+    LDA (!DECOMP_SRC)
+    INC !DECOMP_SRC : BNE .readData
+    INC !DECOMP_SRC+1 : BNE .readData
     JSR decompression_increment_bank
     BRA .readData
 
   .oneByteCommand
     AND #$E0 : PHA
-    TDC : LDA $4A : AND #$1F
+    TDC ; clear high byte
+    LDA !DECOMP_VAR : AND #$1F
 
   .readData
     TAX : INX : PLA
     BMI .option4567 : BEQ .option0
     CMP #$20 : BEQ .option1
     CMP #$40 : BEQ .option2
-    BRL .option3
+    JMP .option3
 
   .option0:
     ; Option X = 0: Directly copy Y bytes
-    LDA ($47)
-    INC $47 : BNE .option0_copy
-    INC $48 : BNE .option0_copy
+    LDA (!DECOMP_SRC)
+    INC !DECOMP_SRC : BNE .option0_copy
+    INC !DECOMP_SRC+1 : BNE .option0_copy
     JSR decompression_increment_bank
   .option0_copy
-    STA [$4C],Y
-    INY : DEX : BNE .option0
-    BRL .nextByte
+    STA [!DECOMP_DEST],Y
+    INY
+    DEX : BNE .option0
+    JMP .nextByte
 
   .option1:
     ; Option X = 1: Copy the next byte Y times
-    LDA ($47)
-    INC $47 : BNE .option1_copy
-    INC $48 : BNE .option1_copy
+    LDA (!DECOMP_SRC)
+    INC !DECOMP_SRC : BNE .option1_copy
+    INC !DECOMP_SRC+1 : BNE .option1_copy
     JSR decompression_increment_bank
   .option1_copy
-    STA [$4C],Y
-    INY : DEX : BNE .option1_copy
-    BRL .nextByte
+    STA [!DECOMP_DEST],Y
+    INY
+    DEX : BNE .option1_copy
+    JMP .nextByte
 
   .option2:
     ; Option X = 2: Copy the next two bytes, one at a time, for the next Y bytes
     ; Apply PJ's fix to divide X by 2 and set carry if X was odd
-    REP #$20 : TXA : LSR : TAX : SEP #$20
-    LDA ($47)
-    INC $47 : BNE .option2_readMSB
-    INC $48 : BNE .option2_readMSB
+    %a16() : TXA : LSR : TAX : %a8()
+    LDA (!DECOMP_SRC)
+    INC !DECOMP_SRC : BNE .option2_readMSB
+    INC !DECOMP_SRC+1 : BNE .option2_readMSB
     JSR decompression_increment_bank
   .option2_readMSB
-    XBA : LDA ($47)
-    INC $47 : BNE .option2_prepCopy
-    INC $48 : BNE .option2_prepCopy
+    XBA : LDA (!DECOMP_SRC)
+    INC !DECOMP_SRC : BNE .option2_prepCopy
+    INC !DECOMP_SRC+1 : BNE .option2_prepCopy
     JSR decompression_increment_bank
   .option2_prepCopy
     XBA
     ; Apply Maddo's fix accounting for single copy (X = 1 before divide by 2)
-    INX : DEX : BEQ .option2_singleCopy
-    REP #$20
+    INX
+    DEX : BEQ .option2_singleCopy
+    %a16()
   .option2_loop
-    STA [$4C],Y
-    INY : INY : DEX : BNE .option2_loop
+    STA [!DECOMP_DEST],Y
+    INY #2
+    DEX : BNE .option2_loop
     ; PJ's fix to account for case where X was odd
-    SEP #$20
+    %a8()
   .option2_singleCopy
     BCC .option2_end
-    STA [$4C],Y : INY
+    STA [!DECOMP_DEST],Y : INY
   .option2_end
-    BRL .nextByte
+    JMP .nextByte
 
   .option4567:
-    CMP #$C0 : AND #$20 : STA $4F : BCS .option67
+    CMP #$C0 : AND #$20 : STA !DECOMP_DICTCOPY_INV : BCS .option67
 
     ; Option X = 4: Copy Y bytes starting from a given address in the decompressed data
     ; Option X = 5: Copy and invert (EOR #$FF) Y bytes starting from a given address in the decompressed data
-    LDA ($47)
-    INC $47 : BNE .option45_readMSB
-    INC $48 : BNE .option45_readMSB
+    LDA (!DECOMP_SRC)
+    INC !DECOMP_SRC : BNE .option45_readMSB
+    INC !DECOMP_SRC+1 : BNE .option45_readMSB
     JSR decompression_increment_bank
   .option45_readMSB
-    XBA : LDA ($47)
-    INC $47 : BNE .option45_prepDictionary
-    INC $48 : BNE .option45_prepDictionary
+    XBA : LDA (!DECOMP_SRC)
+    INC !DECOMP_SRC : BNE .option45_prepDictionary
+    INC !DECOMP_SRC+1 : BNE .option45_prepDictionary
     JSR decompression_increment_bank
   .option45_prepDictionary
-    XBA : REP #$21
-    ADC $4C : STY $44 : SEC
+    XBA : REP #$21 ; %a16 + set carry
+    ADC !DECOMP_DEST : STY !DECOMP_44 : SEC
 
   .option_dictionary
-    SBC $44 : STA $44
-    SEP #$20
-    LDA $4E : BCS .skip_carrySubtraction
+    SBC !DECOMP_44 : STA !DECOMP_44
+    %a8()
+    LDA !DECOMP_DEST+2 : BCS .skip_carrySubtraction
     DEC
   .skip_carrySubtraction
-    STA $46
-    LDA $4F : BNE .option57_loop
+    STA !DECOMP_44+2
+    LDA !DECOMP_DICTCOPY_INV : BNE .option57_loop
 
   .option46_loop
-    LDA [$44],Y
-    STA [$4C],Y
-    INY : DEX : BNE .option46_loop
-    BRL .nextByte
+    LDA [!DECOMP_44],Y : STA [!DECOMP_DEST],Y
+    INY
+    DEX : BNE .option46_loop
+    JMP .nextByte
 
   .option57_loop
-    LDA [$44],Y
-    EOR #$FF
-    STA [$4C],Y
-    INY : DEX : BNE .option57_loop
-    BRL .nextByte
+    LDA [!DECOMP_44],Y : EOR #$FF : STA [!DECOMP_DEST],Y
+    INY
+    DEX : BNE .option57_loop
+    JMP .nextByte
 
   .option67
     ; Option X = 6: Copy Y bytes starting from a given number of bytes ago in the decompressed data
     ; Option X = 7: Copy and invert (EOR #$FF) Y bytes starting from a given number of bytes ago in the decompressed data
-    TDC : LDA ($47)
-    INC $47 : BNE .option67_prepDictionary
-    INC $48 : BNE .option67_prepDictionary
+    TDC ; clear high byte
+    LDA (!DECOMP_SRC)
+    INC !DECOMP_SRC : BNE .option67_prepDictionary
+    INC !DECOMP_SRC+1 : BNE .option67_prepDictionary
     JSR decompression_increment_bank
   .option67_prepDictionary
-    REP #$20
-    STA $44 : LDA $4C
+    %a16()
+    STA !DECOMP_44
+    LDA !DECOMP_DEST
     BRA .option_dictionary
 
   .option3
     ; Option X = 3: Incrementing fill Y bytes starting with next byte
-    LDA ($47)
-    INC $47 : BNE .option3_loop
-    INC $48 : BNE .option3_loop
+    LDA (!DECOMP_SRC)
+    INC !DECOMP_SRC : BNE .option3_loop
+    INC !DECOMP_SRC+1 : BNE .option3_loop
     JSR decompression_increment_bank
   .option3_loop
-    STA [$4C],Y
-    INC : INY : DEX : BNE .option3_loop
-    BRL .nextByte
+    STA [!DECOMP_DEST],Y
+    INC : INY
+    DEX : BNE .option3_loop
+    JMP .nextByte
 }
 
 decompression_increment_bank:
@@ -801,10 +834,9 @@ decompression_increment_bank:
     PHB : PLA
     INC
     PHA : PLB
-    LDA #$80 : STA $48
+    LDA #$80 : STA !DECOMP_SRC+1
     PLA
     RTS
 }
 
 print pc, " misc bank8B end"
-

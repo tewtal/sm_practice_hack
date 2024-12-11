@@ -292,7 +292,7 @@ presets_gtmax_crateria_ceres_escape:
     %cm_preset("Ceres Escape", #preset_gtmax_crateria_ceres_escape)
 
 presets_gtmax_crateria_ceres_last_3_rooms:
-    %cm_preset("Ceres Last 3 rooms", #preset_gtmax_crateria_ceres_last_3_rooms)
+    %cm_preset("Ceres Last 3 Rooms", #preset_gtmax_crateria_ceres_last_3_rooms)
 
 presets_gtmax_crateria_ship:
     %cm_preset("Ship", #preset_gtmax_crateria_ship)

@@ -1,11 +1,11 @@
 
 pushpc
 org $AFEC00
-print pc, " menu customization start"
+print pc, " menu customization bankAF start"
 
-; ------------------
-; Menu Customization
-; ------------------
+; -----------------------
+; Customize Practice Menu
+; -----------------------
 
 CustomizeMenu:
     dw #mc_menubackground
@@ -63,6 +63,7 @@ mc_paletteprofile:
     db #$28, "GRAPEDRINKZ", #$FF
     db #$28, "  PAPASCHMO", #$FF
     db #$28, "    VESPHER", #$FF
+    db #$28, "      EXAKT", #$FF
     db #$FF
 
 mc_palette2custom:
@@ -114,9 +115,9 @@ palette2custom_confirm:
 
   .go_back
     ; go back to CustomizeMenu manually to avoid %sfxgoback
-    LDX !ram_cm_stack_index
-    LDA #$0000 : STA !ram_cm_cursor_stack,X
-    LDA !ram_cm_stack_index : SEC : SBC #$0004 : STA !ram_cm_stack_index
+    LDX !MENU_STACK_INDEX
+    TDC : STA !ram_cm_cursor_stack,X
+    LDA !MENU_STACK_INDEX : SEC : SBC #$0004 : STA !MENU_STACK_INDEX
     JSL cm_calculate_max
     LDY.w #CustomizeMenu
     JML action_submenu
@@ -165,6 +166,7 @@ paletterando_confirm:
     JSL MenuRNG2 : AND #$7FFF : STA !sram_palette_numseloutline
     JSL MenuRNG : AND #$7FFF : STA !sram_palette_numsel
 
+    ; play a happy sound and refresh current profile
     %ai16()
     JSL PrepMenuPalette_customPalette ; points to a branch within PrepMenuPalette
     JSL refresh_custom_palettes
@@ -188,7 +190,7 @@ mc_customheader:
     ; check if custom header exists
     LDA !sram_custom_header : AND #$00FF : CMP #$0028 : BNE .keyboardMode
     ; store SAFE word to indicate a name already exists
-    LDA #$5AFE : STA !DP_KB_Control
+    LDA !SAFEWORD : STA !DP_KB_Control
     ; load existing name
     LDX #$0016 : TXY
   .loopExistingName
@@ -202,7 +204,7 @@ mc_customheader:
     JML ConvertNormal2Header
   .blank
     ; restore default header
-    LDA #$0000 : STA !sram_custom_header
+    TDC : STA !sram_custom_header
   .done
     RTL
 
@@ -210,11 +212,11 @@ CustomPalettesMenu:
     dw #custompalettes_text
     dw #custompalettes_seltext
     dw #custompalettes_seltextbg
-    dw #custompalettes_headeroutline
+    dw #custompalettes_headerline
     dw #custompalettes_numfill
-    dw #custompalettes_numoutline
+    dw #custompalettes_numline
     dw #custompalettes_numsel
-    dw #custompalettes_numseloutline
+    dw #custompalettes_numselline
     dw #custompalettes_toggleon
     dw #custompalettes_border
     dw #custompalettes_background
@@ -223,7 +225,7 @@ CustomPalettesMenu:
     dw #$FFFF
     dw #$FFFF
     %examplemenu() ; inserts dummy menu items for display purposes
-    dw #mc_custompalettes_display_menu
+    dw #mc_custompalettes_test_menu
     dw #$0000
     %cm_header("CUSTOMIZE MENU PALETTE")
 
@@ -236,20 +238,20 @@ custompalettes_seltext:
 custompalettes_seltextbg:
     %palettemenu("Selected Text Background", PalettesMenu_seltextbg, !sram_palette_seltextbg)
 
-custompalettes_headeroutline:
-    %palettemenu("Header Outline", PalettesMenu_headeroutline, !sram_palette_headeroutline)
+custompalettes_headerline:
+    %palettemenu("Header Outline", PalettesMenu_headerline, !sram_palette_headeroutline)
 
 custompalettes_numfill:
     %palettemenu("Number Field Text", PalettesMenu_numfill, !sram_palette_numfill)
 
-custompalettes_numoutline:
-    %palettemenu("Number Field Outline", PalettesMenu_numoutline, !sram_palette_numoutline)
+custompalettes_numline:
+    %palettemenu("Number Field Outline", PalettesMenu_numline, !sram_palette_numoutline)
 
 custompalettes_numsel:
     %palettemenu("Selected Num-Field Text", PalettesMenu_numsel, !sram_palette_numsel)
 
-custompalettes_numseloutline:
-    %palettemenu("Selected Num-Field Outline", PalettesMenu_numseloutline, !sram_palette_numseloutline)
+custompalettes_numselline:
+    %palettemenu("Selected Num-Field Outline", PalettesMenu_numselline, !sram_palette_numseloutline)
 
 custompalettes_toggleon:
     %palettemenu("Toggle ON", PalettesMenu_toggleon, !sram_palette_toggleon)
@@ -291,21 +293,21 @@ mc_dummy_num:
     %cm_numfield("Example Number", !ram_cm_dummy_num, 0, 255, 1, 8, #0)
 
 
-mc_custompalettes_display_menu:
-    %cm_submenu("Screenshot To Share Colors", #CustomPalettesDisplayMenu)
+mc_custompalettes_test_menu:
+    %cm_submenu("Screenshot To Share Colors", #CustomPalettesTestMenu)
 
-CustomPalettesDisplayMenu:
-    dw #custompalettes_border_display
-    dw #custompalettes_headeroutline_display
-    dw #custompalettes_text_display
-    dw #custompalettes_background_display
-    dw #custompalettes_numoutline_display
-    dw #custompalettes_numfill_display
-    dw #custompalettes_toggleon_display
-    dw #custompalettes_seltext_display
-    dw #custompalettes_seltextbg_display
-    dw #custompalettes_numseloutline_display
-    dw #custompalettes_numsel_display
+CustomPalettesTestMenu:
+    dw #custompalettes_border_test
+    dw #custompalettes_headerline_test
+    dw #custompalettes_text_test
+    dw #custompalettes_background_test
+    dw #custompalettes_numline_test
+    dw #custompalettes_numfill_test
+    dw #custompalettes_toggleon_test
+    dw #custompalettes_seltext_test
+    dw #custompalettes_seltextbg_test
+    dw #custompalettes_numselline_test
+    dw #custompalettes_numsel_test
     dw #$FFFF
     dw #$FFFF
     dw #$FFFF
@@ -315,37 +317,37 @@ CustomPalettesDisplayMenu:
     %cm_header("SHARE YOUR COLORS")
     %cm_footer("SCREENSHOT TO SHARE COLORS")
 
-custompalettes_text_display:
+custompalettes_text_test:
     %cm_numfield_hex_word("Text", !sram_palette_text, #$7FFF, #0)
 
-custompalettes_seltext_display:
+custompalettes_seltext_test:
     %cm_numfield_hex_word("Selected Text", !sram_palette_seltext, #$7FFF, #0)
 
-custompalettes_seltextbg_display:
+custompalettes_seltextbg_test:
     %cm_numfield_hex_word("Selected Text BG", !sram_palette_seltextbg, #$7FFF, #0)
 
-custompalettes_border_display:
+custompalettes_border_test:
     %cm_numfield_hex_word("Toggle OFF + Border", !sram_palette_border, #$7FFF, #0)
 
-custompalettes_headeroutline_display:
+custompalettes_headerline_test:
     %cm_numfield_hex_word("Header Text Outline", !sram_palette_headeroutline, #$7FFF, #0)
 
-custompalettes_numfill_display:
+custompalettes_numfill_test:
     %cm_numfield_hex_word("NumField Text", !sram_palette_numfill, #$7FFF, #0)
 
-custompalettes_numoutline_display:
+custompalettes_numline_test:
     %cm_numfield_hex_word("NumField Outline", !sram_palette_numoutline, #$7FFF, #0)
 
-custompalettes_numsel_display:
+custompalettes_numsel_test:
     %cm_numfield_hex_word("Selected NumField", !sram_palette_numsel, #$7FFF, #0)
 
-custompalettes_numseloutline_display:
+custompalettes_numselline_test:
     %cm_numfield_hex_word("Selected NumField OL", !sram_palette_numseloutline, #$7FFF, #0)
 
-custompalettes_toggleon_display:
+custompalettes_toggleon_test:
     %cm_numfield_hex_word("Toggle ON", !sram_palette_toggleon, #$7FFF, #0)
 
-custompalettes_background_display:
+custompalettes_background_test:
     %cm_numfield_hex_word("Background", !sram_palette_background, #$7FFF, #0)
 
 
@@ -470,7 +472,7 @@ refresh_custom_palettes:
     PHP
     %ai16()
     JSL refresh_cgram_long
-    LDA #$0000 : STA !sram_custompalette_profile
+    TDC : STA !sram_custompalette_profile
     PLP
     RTL
 }
@@ -484,7 +486,7 @@ refresh_cgram_long:
 MixRGB:
 {
     ; determine which menu element is being edited
-    LDA !ram_cm_stack_index : DEC #2 : TAX
+    LDA !MENU_STACK_INDEX : DEC #2 : TAX
     LDA !ram_cm_cursor_stack,X : TAX
 
     ; store indirect address
@@ -523,7 +525,7 @@ cm_colors:
     PHP : PHB
     PHK : PLB
     ; determine which menu element is being edited
-    LDA !ram_cm_stack_index : DEC #2 : TAX
+    LDA !MENU_STACK_INDEX : DEC #2 : TAX
     ; exit if not in a color menu
     LDA !ram_cm_menu_stack,X : CMP #CustomPalettesMenu : BNE .done
     ; exit if beyond table boundaries
@@ -713,7 +715,7 @@ ConvertNormal2Header:
     %norm2head("%")
 }
 
-print pc, " menu customization end"
+print pc, " menu customization bankAF end"
 
 
 org $AEFD20
@@ -723,32 +725,34 @@ print pc, " menu PaletteProfileTables start"
 PaletteProfileTables:
 {
     dw #$0000 ; dummy for custom profiles
-    dw #TwitchProfileTable
-    dw #DefaultProfileTable
-    dw #FirebatProfileTable
-    dw #wardrinkerProfileTable
-    dw #mm2ProfileTable
-    dw #ptoilProfileTable
-    dw #ZohdinProfileTable
-    dw #DarkXoaProfileTable
-    dw #MelonaxProfileTable
-    dw #TopsyTurveProfileTable
-    dw #OSTProfileTable
-    dw #JRPProfileTable
-    dw #LayrusProfileTable
-    dw #DayneProfileTable
-    dw #DreamCowboyProfileTable
-    dw #ZeniProfileTable
-    dw #DyceProfileTable
-    dw #ForeverProfileTable
-    dw #GreyProfileTable
-    dw #RedProfileTable
-    dw #PurpleProfileTable
-    dw #HUDProfileTable
-    dw #MemesProfileTable
-    dw #GrapedrinkzProfileTable
-    dw #PapaSchmoProfileTable
-    dw #VespherProfileTable
+    dw #TwitchProfileTable        ; 1
+    dw #DefaultProfileTable       ; 2
+    dw #FirebatProfileTable       ; 3
+    dw #wardrinkerProfileTable    ; 4
+    dw #mm2ProfileTable           ; 5
+    dw #ptoilProfileTable         ; 6
+    dw #ZohdinProfileTable        ; 7
+    dw #DarkXoaProfileTable       ; 8
+    dw #MelonaxProfileTable       ; 9
+    dw #TopsyTurveProfileTable    ; A
+    dw #OSTProfileTable           ; B
+    dw #JRPProfileTable           ; C
+    dw #LayrusProfileTable        ; D
+    dw #DayneProfileTable         ; E
+    dw #DreamCowboyProfileTable   ; F
+    dw #ZeniProfileTable          ; 10
+    dw #DyceProfileTable          ; 11
+    dw #ForeverProfileTable       ; 12
+    dw #GreyProfileTable          ; 13
+    dw #RedProfileTable           ; 14
+    dw #PurpleProfileTable        ; 15
+    dw #HUDProfileTable           ; 16
+    dw #MemesProfileTable         ; 17
+    dw #GrapedrinkzProfileTable   ; 18
+    dw #PapaSchmoProfileTable     ; 19
+    dw #VespherProfileTable       ; 1A
+    dw #EXAKTProfileTable         ; 1B
+    dw #$0000
 
 ; border, headeroutline, text, background, numoutline, numfill, toggleon, seltext, seltextbg, numseloutline, numsel
 TwitchProfileTable:
@@ -828,6 +832,9 @@ PapaSchmoProfileTable:
 
 VespherProfileTable:
     dw $49FE, $4159, $7FFF, $0804, $0000, $7FFF, $5E80, $55FE, $0000, $0000, $761F
+
+EXAKTProfileTable:
+    dw $2DC6, $5F65, $3A42, $18A1, $2982, $4F0A, $6F08, $4EC9, $18A1, $2DE6, $63CC
 }
 
 print pc, " menu PaletteProfileTables end"

@@ -1,25 +1,73 @@
-x Music toggle
 
-x Controller shortcuts
-    x Load last preset
-    x Fill equipment
-    x Reset Segment
+================================================================
+Porting features from IFB CustomROMBase branch
+For other TODO items, recommend using the github issue system
+================================================================
 
-x Rerandomize: Disable on Hopper-rooms
+Last branch revision ported:
+30374fe1838d69f6b85f14489f48a18a84d524a6
+09/07/2024: Patches for v2.6.2.4
 
-x Sounds in menu
+================================================================
+Features that have not been ported yet
+================================================================
 
-x Fix/test Phantoon/Botwoon RNG
+- BRB menu
 
-x Hundo presets
+- Custom HUD modes (except Draygon AI already ported)
 
-x Dray RNG?
+- IFB hijacks
 
-- Infohud option to toggle speed ?
-    The menu doesn't like slowdown, but easily done with a cm_numfield macro on !ram_slowdown_mode
+- IFB menu
 
-- Save state during fanfare
+- Most features that use Custom Features WRAM
 
-x Fix endgame freeze
+- Overwrite HUD numbers
 
-- Add hours to timer?
+- Super HUD
+
+================================================================
+Features intentionally not ported
+This isn't a forever list, nor is it an indictment
+Most of these items are simply differences where both work
+and there isn't much benefit in porting or backporting them
+================================================================
+
+- Resources folder structure and unusued resources
+
+- Order of included sources
+
+- Structure of defines.asm and main.asm (and separating printdebug.asm from main.asm)
+
+- The SM Practice Hack title screen (the difference helps identify which practice hack is being used)
+
+- Various sound effect macros
+
+- Leading > or arrow on menu items, or menuing differences in general
+
+- AREA_ID stored in custom presets
+
+- Additional custom flags in the preset data
+
+- Differences in room names
+
+- Differences in preset file names or organization
+
+- More controller shortcuts (I think we already have too many)
+
+- The separate ih_update_timers routine (too much duplication with ih_update_hud_code)
+
+- Tiny states fast flag (that was removed from main branch)
+
+- Differences in how gamemode is implemented
+
+- Differences in magic/space/loud pants implementation
+
+- Differences in how scroll offsets are fixed
+
+- Differences in how WRAM and SRAM are initialized
+
+- Differences in PAL debug movement implementation
+
+- Replacing TDC with LDA #$0000
+

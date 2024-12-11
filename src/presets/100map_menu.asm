@@ -342,7 +342,7 @@ presets_100map_bombs_ceres_escape:
     %cm_preset("Ceres Escape", #preset_100map_bombs_ceres_escape)
 
 presets_100map_bombs_ceres_last_3_rooms:
-    %cm_preset("Ceres Last 3 rooms", #preset_100map_bombs_ceres_last_3_rooms)
+    %cm_preset("Ceres Last 3 Rooms", #preset_100map_bombs_ceres_last_3_rooms)
 
 presets_100map_bombs_ship:
     %cm_preset("Ship", #preset_100map_bombs_ship)
