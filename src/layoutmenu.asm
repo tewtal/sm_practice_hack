@@ -1,6 +1,6 @@
 
 pushpc
-org $E68000
+org $E48000
 print pc, " layoutmenu start"
 
 ; -------------------------
