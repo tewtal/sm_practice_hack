@@ -280,6 +280,12 @@ ram_cm_wave = !ram_cm_wave ; !WRAM_MENU_START+$96
 ram_cm_spazer = !ram_cm_spazer ; !WRAM_MENU_START+$98
 ram_cm_plasma = !ram_cm_plasma ; !WRAM_MENU_START+$9A
 
+ram_cm_zeb1 = !ram_cm_zeb1 ; !WRAM_MENU_START+$80
+ram_cm_zeb2 = !ram_cm_zeb2 ; !WRAM_MENU_START+$82
+ram_cm_zeb3 = !ram_cm_zeb3 ; !WRAM_MENU_START+$84
+ram_cm_zeb4 = !ram_cm_zeb4 ; !WRAM_MENU_START+$86
+ram_cm_zebmask = !ram_cm_zebmask ; !WRAM_MENU_START+$88
+
 ram_cm_custompalette_blue = !ram_cm_custompalette_blue ; !WRAM_MENU_START+$80
 ram_cm_custompalette_green = !ram_cm_custompalette_green ; !WRAM_MENU_START+$82
 ram_cm_custompalette_red = !ram_cm_custompalette_red ; !WRAM_MENU_START+$84

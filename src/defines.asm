@@ -285,6 +285,12 @@
 !ram_cm_spazer = !WRAM_MENU_START+$98
 !ram_cm_plasma = !WRAM_MENU_START+$9A
 
+!ram_cm_zeb1 = !WRAM_MENU_START+$80
+!ram_cm_zeb2 = !WRAM_MENU_START+$82
+!ram_cm_zeb3 = !WRAM_MENU_START+$84
+!ram_cm_zeb4 = !WRAM_MENU_START+$86
+!ram_cm_zebmask = !WRAM_MENU_START+$88
+
 !ram_cm_custompalette_blue = !WRAM_MENU_START+$80
 !ram_cm_custompalette_green = !WRAM_MENU_START+$82
 !ram_cm_custompalette_red = !WRAM_MENU_START+$84

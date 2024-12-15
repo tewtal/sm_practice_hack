@@ -195,7 +195,7 @@ MainMenuBanks:
     dw #preset_category_banks>>16 ; dummy
     dw #PresetOptionsMenu>>16
     dw #TeleportMenu>>16
-    dw #EventsMenu>>16
+    dw #EventFlagsMenu>>16
     dw #MiscMenu>>16
 if !FEATURE_VANILLAHUD
 else
@@ -226,7 +226,7 @@ mm_goto_teleport:
     %cm_mainmenu("Teleport", #TeleportMenu)
 
 mm_goto_events:
-    %cm_mainmenu("Events", #EventsMenu)
+    %cm_mainmenu("Event Flags", #EventFlagsMenu)
 
 mm_goto_misc:
     %cm_mainmenu("Misc", #MiscMenu)
@@ -1705,6 +1705,1066 @@ action_glitched_beam:
 }
 
 
+; -----------
+; Event Flags
+; -----------
+
+EventFlagsMenu:
+    dw #eventflags_goto_events
+    dw #eventflags_goto_bosses
+    dw #eventflags_goto_items
+    dw #eventflags_goto_doors
+    dw #eventflags_goto_mapstations
+    dw #$FFFF
+    dw #eventflags_resetevents
+    dw #eventflags_resetbosses
+    dw #eventflags_resetitems
+    dw #eventflags_resetdoors
+    dw #eventflags_resetmapstations
+    dw #$FFFF
+    dw #eventflags_setevents
+    dw #eventflags_setbosses
+    dw #eventflags_setitems
+    dw #eventflags_setdoors
+    dw #eventflags_setmapstations
+    dw #$0000
+    %cm_header("EVENT FLAGS")
+
+eventflags_goto_events:
+    %cm_jsl("Events", #eventflags_prepare_events_menu, #EventsMenu)
+
+eventflags_goto_bosses:
+    %cm_submenu("Bosses", #BossesMenu)
+
+eventflags_goto_items:
+    %cm_jsl("Items", #eventflags_prepare_items_menu, #ItemsMenu)
+
+eventflags_goto_doors:
+    %cm_submenu("Doors", #DoorsMenu)
+
+eventflags_goto_mapstations:
+    %cm_submenu("Map Stations", #MapStationsMenu)
+
+eventflags_resetevents:
+    %cm_jsl("Reset All Events", .routine, #$0000)
+  .routine
+    TDC
+    STA $7ED820 : STA $7ED822
+    %sfxreset()
+    RTL
+
+eventflags_resetbosses:
+    %cm_jsl("Reset All Bosses", .routine, #$0000)
+  .routine
+    TDC
+    STA $7ED828 : STA $7ED82A
+    STA $7ED82C : STA $7ED82E
+    %sfxreset()
+    RTL
+
+eventflags_resetitems:
+    %cm_jsl("Reset All Items", .routine, #$0000)
+  .routine
+    TDC : LDX #$0040
+  .loop
+    STA $7ED86E,X
+    DEX #2 : BNE .loop
+    %sfxreset()
+    RTL
+
+eventflags_resetdoors:
+    %cm_jsl("Reset All Doors", .routine, #$0000)
+  .routine
+    TDC : LDX #$0040
+  .loop
+    STA $7ED8AE,X
+    DEX #2 : BNE .loop
+    %sfxreset()
+    RTL
+
+eventflags_resetmapstations:
+    %cm_jsl("Reset All Map Stations", .routine, #$0000)
+  .routine
+    TDC
+    STA $7ED908 : STA $7ED90A
+    STA $7ED90C : STA $7ED90E
+    %sfxreset()
+    RTL
+
+eventflags_setevents:
+    %cm_jsl("Set All Events", .routine, #$0000)
+  .routine
+    TDC : DEC
+    STA $7ED820 : STA $7ED822
+    %sfxreset()
+    RTL
+
+eventflags_setbosses:
+    %cm_jsl("Set All Bosses", .routine, #$0000)
+  .routine
+    TDC : DEC
+    STA $7ED828 : STA $7ED82A
+    STA $7ED82C : STA $7ED82E
+    %sfxreset()
+    RTL
+
+eventflags_setdoors:
+    %cm_jsl("Set All Doors", .routine, #$0000)
+  .routine
+    TDC : DEC : LDX #$0040
+  .loop
+    STA $7ED8AE,X
+    DEX #2 : BNE .loop
+    %sfxreset()
+    RTL
+
+eventflags_setitems:
+    %cm_jsl("Set All Items", .routine, #$0000)
+  .routine
+    TDC : DEC : LDX #$0040
+  .loop
+    STA $7ED86E,X
+    DEX #2 : BNE .loop
+    %sfxreset()
+    RTL
+
+eventflags_setmapstations:
+    %cm_jsl("Set All Map Stations", .routine, #$0000)
+  .routine
+    LDA #$0101
+    STA $7ED908 : STA $7ED90A
+    STA $7ED90C : STA $7ED90E
+    %sfxreset()
+    RTL
+
+
+; -----------
+; Events menu
+; -----------
+
+eventflags_prepare_events_menu:
+{
+    LDA $7ED820 : AND #$0038 : STA !ram_cm_zebmask
+    JSL eventflags_setup_zeb_ram
+    %setmenubank()
+    JML action_submenu
+}
+
+eventflags_set_zeb_ram:
+{
+    LDA $7ED820 : AND #$FFC7
+    ORA !ram_cm_zebmask : STA $7ED820
+
+    ; Intentional fallthrough
+    LDA !ram_cm_zebmask
+}
+
+eventflags_setup_zeb_ram:
+{
+    CMP #$0020 : BPL .zeb4
+    CMP #$0018 : BPL .zeb3
+    CMP #$0010 : BPL .zeb2
+    CMP #$0008 : BPL .zeb1
+    STA !ram_cm_zeb1
+  .clear_zeb2
+    STA !ram_cm_zeb2
+  .clear_zeb3
+    STA !ram_cm_zeb3
+  .clear_zeb4
+    STA !ram_cm_zeb4
+    RTL
+
+  .zeb4
+    LDA #$0020 : STA !ram_cm_zeb4
+    LDA #$0018 : STA !ram_cm_zeb3
+    LDA #$0010 : STA !ram_cm_zeb2
+    LDA #$0008 : STA !ram_cm_zeb1
+    RTL
+
+  .zeb3
+    LDA #$0018 : STA !ram_cm_zeb3
+    LDA #$0010 : STA !ram_cm_zeb2
+    LDA #$0008 : STA !ram_cm_zeb1
+    TDC
+    BRA .clear_zeb4
+
+  .zeb2
+    LDA #$0010 : STA !ram_cm_zeb2
+    LDA #$0008 : STA !ram_cm_zeb1
+    TDC
+    BRA .clear_zeb3
+
+  .zeb1
+    LDA #$0008 : STA !ram_cm_zeb1
+    TDC
+    BRA .clear_zeb2
+}
+
+EventsMenu:
+    dw #events_zebesawake
+    dw #events_maridiatubebroken
+    dw #events_shaktool
+    dw #events_chozoacid
+    dw #events_metroid1
+    dw #events_metroid2
+    dw #events_metroid3
+    dw #events_metroid4
+    dw #events_zeb1
+    dw #events_zeb2
+    dw #events_zeb3
+    dw #events_zeb4
+    dw #events_mb1glass
+    dw #events_zebesexploding
+    dw #events_animals
+    dw #$FFFF
+    dw #events_kraid_statue
+    dw #events_phantoon_statue
+    dw #events_draygon_statue
+    dw #events_ridley_statue
+    dw #events_tourian
+    dw #$0000
+    %cm_header("EVENTS")
+
+events_zebesawake:
+    %cm_toggle_bit("Zebes Awake", $7ED820, #$0001, #0)
+
+events_maridiatubebroken:
+    %cm_toggle_bit("Maridia Tube Broken", $7ED820, #$0800, #0)
+
+events_shaktool:
+    %cm_toggle_bit("Shaktool Done Digging", $7ED820, #$2000, #0)
+
+events_chozoacid:
+    %cm_toggle_bit("Chozo Lowered Acid", $7ED821, #$0010, #0)
+
+events_metroid1:
+    %cm_toggle_bit("1st Metroids Cleared", $7ED822, #$0001, #0)
+
+events_metroid2:
+    %cm_toggle_bit("2nd Metroids Cleared", $7ED822, #$0002, #0)
+
+events_metroid3:
+    %cm_toggle_bit("3rd Metroids Cleared", $7ED822, #$0004, #0)
+
+events_metroid4:
+    %cm_toggle_bit("4th Metroids Cleared", $7ED822, #$0008, #0)
+
+events_zeb1:
+    %cm_toggle("1st Zebitite Cleared", !ram_cm_zeb1, #$0008, #.routine)
+  .routine
+    LDA !ram_cm_zeb1 : BNE .set
+    TDC
+  .set
+    STA !ram_cm_zebmask
+    JML eventflags_set_zeb_ram
+
+events_zeb2:
+    %cm_toggle("2nd Zebitite Cleared", !ram_cm_zeb2, #$0010, #.routine)
+  .routine
+    LDA !ram_cm_zeb2 : BNE .set
+    LDA #$0008
+  .set
+    STA !ram_cm_zebmask
+    JML eventflags_set_zeb_ram
+
+events_zeb3:
+    %cm_toggle("3rd Zebitite Cleared", !ram_cm_zeb3, #$0018, #.routine)
+  .routine
+    LDA !ram_cm_zeb3 : BNE .set
+    LDA #$0010
+  .set
+    STA !ram_cm_zebmask
+    JML eventflags_set_zeb_ram
+
+events_zeb4:
+    %cm_toggle("4th Zebitite Cleared", !ram_cm_zeb4, #$0020, #.routine)
+  .routine
+    LDA !ram_cm_zeb4 : BNE .set
+    LDA #$0018
+  .set
+    STA !ram_cm_zebmask
+    JML eventflags_set_zeb_ram
+
+events_mb1glass:
+    %cm_toggle_bit("MB1 Glass Broken", $7ED820, #$0004, #0)
+
+events_zebesexploding:
+    %cm_toggle_bit("Zebes Set Ablaze", $7ED820, #$4000, #0)
+
+events_animals:
+    %cm_toggle_bit("Animals Saved", $7ED820, #$8000, #0)
+
+events_kraid_statue:
+    %cm_toggle_bit("Kraid Statue", $7ED820, #$0200, #0)
+
+events_phantoon_statue:
+    %cm_toggle_bit("Phantoon Statue", $7ED820, #$0040, #0)
+
+events_draygon_statue:
+    %cm_toggle_bit("Draygon Statue", $7ED820, #$0100, #0)
+
+events_ridley_statue:
+    %cm_toggle_bit("Ridley Statue", $7ED820, #$0080, #0)
+
+events_tourian:
+    %cm_toggle_bit("Tourian Open", $7ED820, #$0400, #0)
+
+
+; ------------
+; Bosses menu
+; ------------
+
+BossesMenu:
+    dw #boss_ceresridley
+    dw #boss_bombtorizo
+    dw #boss_spospo
+    dw #boss_kraid
+    dw #boss_phantoon
+    dw #boss_botwoon
+    dw #boss_draygon
+    dw #boss_crocomire
+    dw #boss_gt
+    dw #boss_ridley
+    dw #boss_mb
+    dw #$FFFF
+    dw #events_kraid_statue
+    dw #events_phantoon_statue
+    dw #events_draygon_statue
+    dw #events_ridley_statue
+    dw #events_tourian
+    dw #$0000
+    %cm_header("BOSSES")
+
+boss_ceresridley:
+    %cm_toggle_bit("Ceres Ridley", #$7ED82E, #$0001, #0)
+
+boss_bombtorizo:
+    %cm_toggle_bit("Bomb Torizo", #$7ED828, #$0004, #0)
+
+boss_spospo:
+    %cm_toggle_bit("Spore Spawn", #$7ED828, #$0200, #0)
+
+boss_kraid:
+    %cm_toggle_bit("Kraid", #$7ED828, #$0100, #0)
+
+boss_phantoon:
+    %cm_toggle_bit("Phantoon", #$7ED82A, #$0100, #0)
+
+boss_botwoon:
+    %cm_toggle_bit("Botwoon", #$7ED82C, #$0002, #0)
+
+boss_draygon:
+    %cm_toggle_bit("Draygon", #$7ED82C, #$0001, #0)
+
+boss_crocomire:
+    %cm_toggle_bit("Crocomire", #$7ED82A, #$0002, #0)
+
+boss_gt:
+    %cm_toggle_bit("Golden Torizo", #$7ED82A, #$0004, #0)
+
+boss_ridley:
+    %cm_toggle_bit("Ridley", #$7ED82A, #$0001, #0)
+
+boss_mb:
+    %cm_toggle_bit("Mother Brain", #$7ED82C, #$0200, #0)
+
+
+; ----------
+; Items menu
+; ----------
+
+eventflags_prepare_items_menu:
+{
+    JSL setup_beams_ram
+    JML eq_prepare_items_menu
+}
+
+ItemsMenu:
+    dw #items_goto_crateria
+    dw #items_goto_greenbrinstar
+    dw #items_goto_pinkbrinstar
+    dw #items_goto_bluebrinstar
+    dw #items_goto_redbrinstar
+    dw #items_goto_kraid
+    dw #items_goto_uppernorfair
+    dw #items_goto_crocomire
+    dw #items_goto_lowernorfair
+    dw #items_goto_wreckedship
+    dw #items_goto_westmaridia
+    dw #items_goto_eastmaridia
+    dw #$0000
+    %cm_header("ITEMS")
+
+items_goto_crateria:
+    %cm_submenu("Crateria", #ItemsCrateriaMenu)
+
+items_goto_greenbrinstar:
+    %cm_submenu("Green Brinstar", #ItemsGreenBrinstarMenu)
+
+items_goto_pinkbrinstar:
+    %cm_submenu("Pink Brinstar", #ItemsPinkBrinstarMenu)
+
+items_goto_bluebrinstar:
+    %cm_submenu("Blue Brinstar", #ItemsBlueBrinstarMenu)
+
+items_goto_redbrinstar:
+    %cm_submenu("Red Brinstar", #ItemsRedBrinstarMenu)
+
+items_goto_kraid:
+    %cm_submenu("Kraid", #ItemsKraidMenu)
+
+items_goto_uppernorfair:
+    %cm_submenu("Upper Norfair", #ItemsUpperNorfairMenu)
+
+items_goto_crocomire:
+    %cm_submenu("Crocomire", #ItemsCrocomireMenu)
+
+items_goto_lowernorfair:
+    %cm_submenu("Lower Norfair", #ItemsLowerNorfairMenu)
+
+items_goto_wreckedship:
+    %cm_submenu("Wrecked Ship", #ItemsWreckedShipMenu)
+
+items_goto_westmaridia:
+    %cm_submenu("West Maridia", #ItemsWestMaridiaMenu)
+
+items_goto_eastmaridia:
+    %cm_submenu("East Maridia", #ItemsEastMaridiaMenu)
+
+ItemsCrateriaMenu:
+    dw #items_0000_crateria
+    dw #items_0001_crateria
+    dw #items_0002_crateria
+    dw #items_0003_crateria
+    dw #items_0004_crateria
+    dw #items_0005_crateria
+    dw #items_0006_crateria
+    dw #items_0007_crateria
+    dw #items_0008_crateria
+    dw #items_0009_crateria
+    dw #items_000A_crateria
+    dw #items_000B_crateria
+    dw #items_000C_crateria
+    dw #$FFFF
+    dw #ti_bomb
+    dw #$0000
+    %cm_header("CRATERIA ITEMS")
+
+items_0000_crateria:
+    %cm_toggle_bit("Crateria PBs", #$7ED870, #$0001, #0)
+
+items_0001_crateria:
+    %cm_toggle_bit("Underwater Missiles", #$7ED870, #$0002, #0)
+
+items_0002_crateria:
+    %cm_toggle_bit("Sky Missiles", #$7ED870, #$0004, #0)
+
+items_0003_crateria:
+    %cm_toggle_bit("Ocean Maze Missiles", #$7ED870, #$0008, #0)
+
+items_0004_crateria:
+    %cm_toggle_bit("Moat Missiles", #$7ED870, #$0010, #0)
+
+items_0005_crateria:
+    %cm_toggle_bit("Gauntlet E-Tank", #$7ED870, #$0020, #0)
+
+items_0006_crateria:
+    %cm_toggle_bit("Old MB Missiles", #$7ED870, #$0040, #0)
+
+items_0007_crateria:
+    %cm_toggle_bit("Bombs", #$7ED870, #$0080, #0)
+
+items_0008_crateria:
+    %cm_toggle_bit("Terminator E-Tank", #$7ED870, #$0100, #0)
+
+items_0009_crateria:
+    %cm_toggle_bit("Gauntlet Right Missile", #$7ED870, #$0200, #0)
+
+items_000A_crateria:
+    %cm_toggle_bit("Gauntlet Left Missile", #$7ED870, #$0400, #0)
+
+items_000B_crateria:
+    %cm_toggle_bit("Climb Supers", #$7ED870, #$0800, #0)
+
+items_000C_crateria:
+    %cm_toggle_bit("230 Missiles", #$7ED870, #$1000, #0)
+
+ItemsGreenBrinstarMenu:
+    dw #items_000D_greenbrinstar
+    dw #items_000F_greenbrinstar
+    dw #items_0010_greenbrinstar
+    dw #items_0011_greenbrinstar
+    dw #items_0012_greenbrinstar
+    dw #items_0013_greenbrinstar
+    dw #items_0019_greenbrinstar
+    dw #items_001E_greenbrinstar
+    dw #items_001F_greenbrinstar
+    dw #$0000
+    %cm_header("GREEN BRINSTAR ITEMS")
+
+items_000D_greenbrinstar:
+    %cm_toggle_bit("Etecoons PBs", #$7ED870, #$2000, #0)
+
+items_000F_greenbrinstar:
+    %cm_toggle_bit("Early Supers Missiles", #$7ED870, #$8000, #0)
+
+items_0010_greenbrinstar:
+    %cm_toggle_bit("Early Supers", #$7ED872, #$0001, #0)
+
+items_0011_greenbrinstar:
+    %cm_toggle_bit("Brinstar Reserve Tank", #$7ED872, #$0002, #0)
+
+items_0012_greenbrinstar:
+    %cm_toggle_bit("Reserve Hidden Missile", #$7ED872, #$0004, #0)
+
+items_0013_greenbrinstar:
+    %cm_toggle_bit("Reserve Shown Missile", #$7ED872, #$0008, #0)
+
+items_0019_greenbrinstar:
+    %cm_toggle_bit("Green Hills Missiles", #$7ED872, #$0200, #0)
+
+items_001E_greenbrinstar:
+    %cm_toggle_bit("Etecoons E-Tank", #$7ED872, #$4000, #0)
+
+items_001F_greenbrinstar:
+    %cm_toggle_bit("Etecoons Supers", #$7ED872, #$8000, #0)
+
+ItemsPinkBrinstarMenu:
+    dw #items_000E_pinkbrinstar
+    dw #items_0015_pinkbrinstar
+    dw #items_0016_pinkbrinstar
+    dw #items_0017_pinkbrinstar
+    dw #items_0018_pinkbrinstar
+    dw #items_0021_pinkbrinstar
+    dw #items_0023_pinkbrinstar
+    dw #$FFFF
+    dw #tb_chargebeam
+    dw #$0000
+    %cm_header("PINK BRINSTAR ITEMS")
+
+items_000E_pinkbrinstar:
+    %cm_toggle_bit("Spore Spawn Supers", #$7ED870, #$4000, #0)
+
+items_0015_pinkbrinstar:
+    %cm_toggle_bit("Impossible PB Missiles", #$7ED872, #$0020, #0)
+
+items_0016_pinkbrinstar:
+    %cm_toggle_bit("Charge Missiles", #$7ED872, #$0040, #0)
+
+items_0017_pinkbrinstar:
+    %cm_toggle_bit("Charge Beam", #$7ED872, #$0080, #0)
+
+items_0018_pinkbrinstar:
+    %cm_toggle_bit("Impossible PBs", #$7ED872, #$0100, #0)
+
+items_0021_pinkbrinstar:
+    %cm_toggle_bit("Waterway E-Tank", #$7ED874, #$0002, #0)
+
+items_0023_pinkbrinstar:
+    %cm_toggle_bit("Wave Gate E-Tank", #$7ED874, #$0008, #0)
+
+ItemsBlueBrinstarMenu:
+    dw #items_001A_bluebrinstar
+    dw #items_001B_bluebrinstar
+    dw #items_001C_bluebrinstar
+    dw #items_001D_bluebrinstar
+    dw #items_0022_bluebrinstar
+    dw #items_0024_bluebrinstar
+    dw #items_0025_bluebrinstar
+    dw #$FFFF
+    dw #ti_morphball
+    dw #$0000
+    %cm_header("BLUE BRINSTAR ITEMS")
+
+items_001A_bluebrinstar:
+    %cm_toggle_bit("Morph Ball", #$7ED872, #$0400, #0)
+
+items_001B_bluebrinstar:
+    %cm_toggle_bit("Retro PBs", #$7ED872, #$0800, #0)
+
+items_001C_bluebrinstar:
+    %cm_toggle_bit("Retro Missiles", #$7ED872, #$1000, #0)
+
+items_001D_bluebrinstar:
+    %cm_toggle_bit("Retro E-Tank", #$7ED872, #$2000, #0)
+
+items_0022_bluebrinstar:
+    %cm_toggle_bit("Alpha Missiles", #$7ED874, #$0004, #0)
+
+items_0024_bluebrinstar:
+    %cm_toggle_bit("Billy Shown Missiles", #$7ED874, #$0010, #0)
+
+items_0025_bluebrinstar:
+    %cm_toggle_bit("Billy Hidden Missiles", #$7ED874, #$0020, #0)
+
+ItemsRedBrinstarMenu:
+    dw #items_0026_redbrinstar
+    dw #items_0027_redbrinstar
+    dw #items_0028_redbrinstar
+    dw #items_0029_redbrinstar
+    dw #items_002A_redbrinstar
+    dw #$FFFF
+    dw #ti_xray
+    dw #tb_spazerbeam
+    dw #$0000
+    %cm_header("RED BRINSTAR ITEMS")
+
+items_0026_redbrinstar:
+    %cm_toggle_bit("X-Ray", #$7ED874, #$0040, #0)
+
+items_0027_redbrinstar:
+    %cm_toggle_bit("Beta Power Bombs", #$7ED874, #$0080, #0)
+
+items_0028_redbrinstar:
+    %cm_toggle_bit("Alpha Power Bombs", #$7ED874, #$0100, #0)
+
+items_0029_redbrinstar:
+    %cm_toggle_bit("Alpha PB Missiles", #$7ED874, #$0200, #0)
+
+items_002A_redbrinstar:
+    %cm_toggle_bit("Spazer", #$7ED874, #$0400, #0)
+
+ItemsKraidMenu:
+    dw #items_002B_kraid
+    dw #items_002C_kraid
+    dw #items_0030_kraid
+    dw #$FFFF
+    dw #ti_variasuit
+    dw #$0000
+    %cm_header("KRAID ITEMS")
+
+items_002B_kraid:
+    %cm_toggle_bit("Kraid E-Tank", #$7ED874, #$0800, #0)
+
+items_002C_kraid:
+    %cm_toggle_bit("Kraid Missiles", #$7ED874, #$1000, #0)
+
+items_0030_kraid:
+    %cm_toggle_bit("Varia Suit", #$7ED876, #$0001, #0)
+
+ItemsUpperNorfairMenu:
+    dw #items_0031_uppernorfair
+    dw #items_0032_uppernorfair
+    dw #items_0033_uppernorfair
+    dw #items_0035_uppernorfair
+    dw #items_0036_uppernorfair
+    dw #items_0037_uppernorfair
+    dw #items_0038_uppernorfair
+    dw #items_003D_uppernorfair
+    dw #items_003E_uppernorfair
+    dw #items_003F_uppernorfair
+    dw #items_0040_uppernorfair
+    dw #items_0041_uppernorfair
+    dw #items_0042_uppernorfair
+    dw #items_0043_uppernorfair
+    dw #items_0044_uppernorfair
+    dw #$FFFF
+    dw #tb_icebeam
+    dw #ti_hijumpboots
+    dw #ti_speedbooster
+    dw #tb_wavebeam
+    dw #$0000
+    %cm_header("UPPER NORFAIR ITEMS")
+
+items_0031_uppernorfair:
+    %cm_toggle_bit("Cathedral Missiles", #$7ED876, #$0002, #0)
+
+items_0032_uppernorfair:
+    %cm_toggle_bit("Ice Beam", #$7ED876, #$0004, #0)
+
+items_0033_uppernorfair:
+    %cm_toggle_bit("Crumble Missiles", #$7ED876, #$0008, #0)
+
+items_0035_uppernorfair:
+    %cm_toggle_bit("Hi Jump Boots", #$7ED876, #$0020, #0)
+
+items_0036_uppernorfair:
+    %cm_toggle_bit("Croc Escape Missiles", #$7ED876, #$0040, #0)
+
+items_0037_uppernorfair:
+    %cm_toggle_bit("Hi Jump Missiles", #$7ED876, #$0080, #0)
+
+items_0038_uppernorfair:
+    %cm_toggle_bit("Hi Jump E-Tank", #$7ED876, #$0100, #0)
+
+items_003D_uppernorfair:
+    %cm_toggle_bit("Norfair Reserve Tank", #$7ED876, #$2000, #0)
+
+items_003E_uppernorfair:
+    %cm_toggle_bit("Reserve Missiles", #$7ED876, #$4000, #0)
+
+items_003F_uppernorfair:
+    %cm_toggle_bit("Bubble Missiles", #$7ED876, #$8000, #0)
+
+items_0040_uppernorfair:
+    %cm_toggle_bit("Mountain Missiles", #$7ED878, #$0001, #0)
+
+items_0041_uppernorfair:
+    %cm_toggle_bit("Speed Missiles", #$7ED878, #$0002, #0)
+
+items_0042_uppernorfair:
+    %cm_toggle_bit("Speed Booster", #$7ED878, #$0004, #0)
+
+items_0043_uppernorfair:
+    %cm_toggle_bit("Wave Missiles", #$7ED878, #$0008, #0)
+
+items_0044_uppernorfair:
+    %cm_toggle_bit("Wave Beam", #$7ED878, #$0010, #0)
+
+ItemsCrocomireMenu:
+    dw #items_0034_crocomire
+    dw #items_0039_crocomire
+    dw #items_003A_crocomire
+    dw #items_003B_crocomire
+    dw #items_003C_crocomire
+    dw #$FFFF
+    dw #ti_grapple
+    dw #$0000
+    %cm_header("CROCOMIRE ITEMS")
+
+items_0034_crocomire:
+    %cm_toggle_bit("Croc E-Tank", #$7ED876, #$0010, #0)
+
+items_0039_crocomire:
+    %cm_toggle_bit("Post Croc PBs", #$7ED876, #$0200, #0)
+
+items_003A_crocomire:
+    %cm_toggle_bit("Cosine Missiles", #$7ED876, #$0400, #0)
+
+items_003B_crocomire:
+    %cm_toggle_bit("Indiana Jones Missiles", #$7ED876, #$0800, #0)
+
+items_003C_crocomire:
+    %cm_toggle_bit("Grapple", #$7ED876, #$1000, #0)
+
+ItemsLowerNorfairMenu:
+    dw #items_0046_lowernorfair
+    dw #items_0047_lowernorfair
+    dw #items_0049_lowernorfair
+    dw #items_004A_lowernorfair
+    dw #items_004B_lowernorfair
+    dw #items_004C_lowernorfair
+    dw #items_004D_lowernorfair
+    dw #items_004E_lowernorfair
+    dw #items_004F_lowernorfair
+    dw #items_0050_lowernorfair
+    dw #$FFFF
+    dw #ti_screwattack
+    dw #$0000
+    %cm_header("LOWER NORFAIR ITEMS")
+
+items_0046_lowernorfair:
+    %cm_toggle_bit("Golden Torizo Missiles", #$7ED878, #$0040, #0)
+
+items_0047_lowernorfair:
+    %cm_toggle_bit("Golden Torizo Supers", #$7ED878, #$0080, #0)
+
+items_0049_lowernorfair:
+    %cm_toggle_bit("Mickey Mouse Missiles", #$7ED878, #$0200, #0)
+
+items_004A_lowernorfair:
+    %cm_toggle_bit("Hotarubi Missiles", #$7ED878, #$0400, #0)
+
+items_004B_lowernorfair:
+    %cm_toggle_bit("Jail Power Bombs", #$7ED878, #$0800, #0)
+
+items_004C_lowernorfair:
+    %cm_toggle_bit("PBs of Shame", #$7ED878, #$1000, #0)
+
+items_004D_lowernorfair:
+    %cm_toggle_bit("Musketeer Missiles", #$7ED878, #$2000, #0)
+
+items_004E_lowernorfair:
+    %cm_toggle_bit("Ridley E-Tank", #$7ED878, #$4000, #0)
+
+items_004F_lowernorfair:
+    %cm_toggle_bit("Screw Attack", #$7ED878, #$8000, #0)
+
+items_0050_lowernorfair:
+    %cm_toggle_bit("Firefleas E-Tank", #$7ED87A, #$0001, #0)
+
+ItemsWreckedShipMenu:
+    dw #items_0080_wreckedship
+    dw #items_0081_wreckedship
+    dw #items_0082_wreckedship
+    dw #items_0083_wreckedship
+    dw #items_0084_wreckedship
+    dw #items_0085_wreckedship
+    dw #items_0086_wreckedship
+    dw #items_0087_wreckedship
+    dw #$FFFF
+    dw #ti_gravitysuit
+    dw #$0000
+    %cm_header("WRECKED SHIP ITEMS")
+
+items_0080_wreckedship:
+    %cm_toggle_bit("Spooky Missiles", #$7ED880, #$0001, #0)
+
+items_0081_wreckedship:
+    %cm_toggle_bit("WS Reserve Tank", #$7ED880, #$0002, #0)
+
+items_0082_wreckedship:
+    %cm_toggle_bit("Bowling Missiles", #$7ED880, #$0004, #0)
+
+items_0083_wreckedship:
+    %cm_toggle_bit("Robot Missiles", #$7ED880, #$0008, #0)
+
+items_0084_wreckedship:
+    %cm_toggle_bit("WS E-Tank", #$7ED880, #$0010, #0)
+
+items_0085_wreckedship:
+    %cm_toggle_bit("Left Side Supers", #$7ED880, #$0020, #0)
+
+items_0086_wreckedship:
+    %cm_toggle_bit("Right Side Supers", #$7ED880, #$0040, #0)
+
+items_0087_wreckedship:
+    %cm_toggle_bit("Gravity Suit", #$7ED880, #$0080, #0)
+
+ItemsWestMaridiaMenu:
+    dw #items_0088_westmaridia
+    dw #items_0089_westmaridia
+    dw #items_008A_westmaridia
+    dw #items_008B_westmaridia
+    dw #items_008C_westmaridia
+    dw #items_008D_westmaridia
+    dw #items_008E_westmaridia
+    dw #$0000
+    %cm_header("WEST MARIDIA ITEMS")
+
+items_0088_westmaridia:
+    %cm_toggle_bit("Main Street Missiles", #$7ED880, #$0100, #0)
+
+items_0089_westmaridia:
+    %cm_toggle_bit("Crab Supers", #$7ED880, #$0200, #0)
+
+items_008A_westmaridia:
+    %cm_toggle_bit("Mama Turtle E-Tank", #$7ED880, #$0400, #0)
+
+items_008B_westmaridia:
+    %cm_toggle_bit("Mama Turtle Missiles", #$7ED880, #$0800, #0)
+
+items_008C_westmaridia:
+    %cm_toggle_bit("Watering Hole Supers", #$7ED880, #$1000, #0)
+
+items_008D_westmaridia:
+    %cm_toggle_bit("Watering Hole Missiles", #$7ED880, #$2000, #0)
+
+items_008E_westmaridia:
+    %cm_toggle_bit("Beach Missiles", #$7ED880, #$4000, #0)
+
+ItemsEastMaridiaMenu:
+    dw #items_008F_eastmaridia
+    dw #items_0090_eastmaridia
+    dw #items_0091_eastmaridia
+    dw #items_0092_eastmaridia
+    dw #items_0093_eastmaridia
+    dw #items_0094_eastmaridia
+    dw #items_0095_eastmaridia
+    dw #items_0096_eastmaridia
+    dw #items_0097_eastmaridia
+    dw #items_0098_eastmaridia
+    dw #items_009A_eastmaridia
+    dw #$FFFF
+    dw #tb_plasmabeam
+    dw #ti_springball
+    dw #ti_spacejump
+    dw #$0000
+    %cm_header("EAST MARIDIA ITEMS")
+
+items_008F_eastmaridia:
+    %cm_toggle_bit("Plasma Beam", #$7ED880, #$8000, #0)
+
+items_0090_eastmaridia:
+    %cm_toggle_bit("Left Pit Missiles", #$7ED882, #$0001, #0)
+
+items_0091_eastmaridia:
+    %cm_toggle_bit("Maridia Reserve Tank", #$7ED882, #$0002, #0)
+
+items_0092_eastmaridia:
+    %cm_toggle_bit("Right Pit Missiles", #$7ED882, #$0004, #0)
+
+items_0093_eastmaridia:
+    %cm_toggle_bit("Maridia PBs", #$7ED882, #$0008, #0)
+
+items_0094_eastmaridia:
+    %cm_toggle_bit("Aqueduct Missiles", #$7ED882, #$0010, #0)
+
+items_0095_eastmaridia:
+    %cm_toggle_bit("Aqueduct Supers", #$7ED882, #$0020, #0)
+
+items_0096_eastmaridia:
+    %cm_toggle_bit("Springball", #$7ED882, #$0040, #0)
+
+items_0097_eastmaridia:
+    %cm_toggle_bit("Precious Missiles", #$7ED882, #$0080, #0)
+
+items_0098_eastmaridia:
+    %cm_toggle_bit("Botwoon E-Tank", #$7ED882, #$0100, #0)
+
+items_009A_eastmaridia:
+    %cm_toggle_bit("Space Jump", #$7ED882, #$0400, #0)
+
+
+; ----------
+; Doors menu
+; ----------
+
+DoorsMenu:
+    dw #doors_goto_crateria
+    dw #doors_goto_crateriaescape
+    dw #doors_goto_greenbrinstar
+    dw #doors_goto_pinkbrinstar
+    dw #doors_goto_bluebrinstar
+    dw #doors_goto_redbrinstar
+    dw #doors_goto_kraid
+    dw #doors_goto_uppernorfair
+    dw #doors_goto_lowernorfair
+    dw #doors_goto_wreckedship
+    dw #doors_goto_westmaridia
+    dw #doors_goto_eastmaridia
+    dw #doors_goto_tourian
+    dw #$0000
+    %cm_header("DOORS")
+
+doors_goto_crateria:
+    %cm_submenu("Crateria", #DoorsCrateriaMenu)
+
+doors_goto_crateriaescape:
+    %cm_submenu("Crateria Escape", #DoorsCrateriaEscapeMenu)
+
+doors_goto_greenbrinstar:
+    %cm_submenu("Green Brinstar", #DoorsGreenBrinstarMenu)
+
+doors_goto_pinkbrinstar:
+    %cm_submenu("Pink Brinstar", #DoorsPinkBrinstarMenu)
+
+doors_goto_bluebrinstar:
+    %cm_submenu("Blue Brinstar", #DoorsBlueBrinstarMenu)
+
+doors_goto_redbrinstar:
+    %cm_submenu("Red Brinstar", #DoorsRedBrinstarMenu)
+
+doors_goto_kraid:
+    %cm_submenu("Kraid", #DoorsKraidMenu)
+
+doors_goto_uppernorfair:
+    %cm_submenu("Upper Norfair", #DoorsUpperNorfairMenu)
+
+doors_goto_lowernorfair:
+    %cm_submenu("Lower Norfair", #DoorsLowerNorfairMenu)
+
+doors_goto_wreckedship:
+    %cm_submenu("Wrecked Ship", #DoorsWreckedShipMenu)
+
+doors_goto_westmaridia:
+    %cm_submenu("West Maridia", #DoorsWestMaridiaMenu)
+
+doors_goto_eastmaridia:
+    %cm_submenu("East Maridia", #DoorsEastMaridiaMenu)
+
+doors_goto_tourian:
+    %cm_submenu("Tourian", #DoorsTourianMenu)
+
+DoorsCrateriaMenu:
+    ; 0000-001E, 0048
+    dw #$0000
+    %cm_header("CRATERIA DOORS")
+
+DoorsCrateriaEscapeMenu:
+    ; 0000-001E, 0048
+    dw #$0000
+    %cm_header("CRATERIA ESCAPE DOORS")
+
+DoorsGreenBrinstarMenu:
+    ; 001F-0047
+    dw #$0000
+    %cm_header("GREEN BRINSTAR DOORS")
+
+DoorsPinkBrinstarMenu:
+    ; 001F-0047
+    dw #$0000
+    %cm_header("PINK BRINSTAR DOORS")
+
+DoorsBlueBrinstarMenu:
+    ; 001F-0047
+    dw #$0000
+    %cm_header("BLUE BRINSTAR DOORS")
+
+DoorsRedBrinstarMenu:
+    ; 001F-0047
+    dw #$0000
+    %cm_header("RED BRINSTAR DOORS")
+
+DoorsKraidMenu:
+    ; 001F-0047
+    dw #$0000
+    %cm_header("KRAID DOORS")
+
+DoorsUpperNorfairMenu:
+    ; 0049-0060
+    dw #$0000
+    %cm_header("UPPER NORFAIR DOORS")
+
+DoorsLowerNorfairMenu:
+    ; 0049-0060
+    dw #$0000
+    %cm_header("LOWER NORFAIR DOORS")
+
+DoorsWreckedShipMenu:
+    ; 0080-008B
+    dw #$0000
+    %cm_header("WRECKED SHIP DOORS")
+
+DoorsWestMaridiaMenu:
+    ; 008C-009F
+    dw #$0000
+    %cm_header("WEST MARIDIA DOORS")
+
+DoorsEastMaridiaMenu:
+    ; 008C-009F
+    dw #$0000
+    %cm_header("EAST MARIDIA DOORS")
+
+DoorsTourianMenu:
+    ; 00A0-00AC
+    dw #$0000
+    %cm_header("TOURIAN DOORS")
+
+
+; -----------------
+; Map Stations menu
+; -----------------
+
+MapStationsMenu:
+    dw #mapstations_crateria
+    dw #mapstations_brinstar
+    dw #mapstations_norfair
+    dw #mapstations_wreckedship
+    dw #mapstations_maridia
+    dw #mapstations_tourian
+    dw #$0000
+    %cm_header("MAP STATIONS")
+
+mapstations_crateria:
+    %cm_toggle_bit("Crateria", $7ED908, #$0001, #0)
+
+mapstations_brinstar:
+    %cm_toggle_bit("Brinstar", $7ED908, #$0100, #0)
+
+mapstations_norfair:
+    %cm_toggle_bit("Norfair", $7ED90A, #$0001, #0)
+
+mapstations_wreckedship:
+    %cm_toggle_bit("Wrecked Ship", $7ED90A, #$0100, #0)
+
+mapstations_maridia:
+    %cm_toggle_bit("Maridia", $7ED90C, #$0001, #0)
+
+mapstations_tourian:
+    %cm_toggle_bit("Tourian", $7ED90C, #$0100, #0)
+
+
 ; -------------
 ; Teleport menu
 ; -------------
@@ -2392,201 +3452,6 @@ sprites_oob_viewer:
     JML upload_sprite_oob_tiles
   .skip_oob
     RTL
-
-
-; -----------
-; Events menu
-; -----------
-
-EventsMenu:
-    dw #events_resetevents
-    dw #events_resetdoors
-    dw #events_resetitems
-    dw #$FFFF
-    dw #events_setdoors
-    dw #events_setitems
-    dw #$FFFF
-    dw #events_goto_bosses
-    dw #$FFFF
-    dw #events_zebesawake
-    dw #events_maridiatubebroken
-    dw #events_chozoacid
-    dw #events_shaktool
-    dw #events_tourian
-    dw #events_metroid1
-    dw #events_metroid2
-    dw #events_metroid3
-    dw #events_metroid4
-    dw #events_mb1glass
-    dw #events_zebesexploding
-    dw #events_animals
-    dw #$0000
-    %cm_header("EVENT FLAGS")
-
-events_resetevents:
-    %cm_jsl("Reset All Events", .routine, #$0000)
-  .routine
-    TDC
-    STA $7ED820 : STA $7ED822
-    %sfxreset()
-    RTL
-
-events_resetdoors:
-    %cm_jsl("Reset All Doors", .routine, #$0000)
-  .routine
-    %ai8()
-    TDC : LDX #$B0
-  .loop
-    STA $7ED800,X
-    INX : CPX #$D0 : BNE .loop
-    %ai16()
-    %sfxreset()
-    RTL
-
-events_resetitems:
-    %cm_jsl("Reset All Items", .routine, #$0000)
-  .routine
-    %ai8()
-    TDC : LDX #$70
-  .loop
-    STA $7ED800,X
-    INX : CPX #$90 : BNE .loop
-    %ai16()
-    %sfxreset()
-    RTL
-
-events_setdoors:
-    %cm_jsl("Set All Doors", .routine, #$0000)
-  .routine
-    %ai8()
-    LDA #$FF : LDX #$B0
-  .loop
-    STA $7ED800,X
-    INX : CPX #$D0 : BNE .loop
-    %ai16()
-    %sfxreset()
-    RTL
-
-events_setitems:
-    %cm_jsl("Set All Items", .routine, #$0000)
-  .routine
-    %ai8()
-    LDA #$FF : LDX #$70
-  .loop
-    STA $7ED800,X
-    INX : CPX #$90 : BNE .loop
-    %ai16()
-    %sfxreset()
-    RTL
-
-events_goto_bosses:
-    %cm_submenu("Bosses", #BossesMenu)
-
-events_zebesawake:
-    %cm_toggle_bit("Zebes Awake", $7ED820, #$0001, #0)
-
-events_maridiatubebroken:
-    %cm_toggle_bit("Maridia Tube Broken", $7ED820, #$0800, #0)
-
-events_shaktool:
-    %cm_toggle_bit("Shaktool Done Digging", $7ED820, #$2000, #0)
-
-events_chozoacid:
-    %cm_toggle_bit("Chozo Lowered Acid", $7ED821, #$0010, #0)
-
-events_tourian:
-    %cm_toggle_bit("Tourian Open", $7ED820, #$0400, #0)
-
-events_metroid1:
-    %cm_toggle_bit("1st Metroids Cleared", $7ED822, #$0001, #0)
-
-events_metroid2:
-    %cm_toggle_bit("2nd Metroids Cleared", $7ED822, #$0002, #0)
-
-events_metroid3:
-    %cm_toggle_bit("3rd Metroids Cleared", $7ED822, #$0004, #0)
-
-events_metroid4:
-    %cm_toggle_bit("4th Metroids Cleared", $7ED822, #$0008, #0)
-
-events_mb1glass:
-    %cm_toggle_bit("MB1 Glass Broken", $7ED820, #$0004, #0)
-
-events_zebesexploding:
-    %cm_toggle_bit("Zebes Set Ablaze", $7ED820, #$4000, #0)
-
-events_animals:
-    %cm_toggle_bit("Animals Saved", $7ED820, #$8000, #0)
-
-
-; ------------
-; Bosses menu
-; ------------
-
-BossesMenu:
-    dw #boss_ceresridley
-    dw #boss_bombtorizo
-    dw #boss_spospo
-    dw #boss_kraid
-    dw #boss_phantoon
-    dw #boss_botwoon
-    dw #boss_draygon
-    dw #boss_crocomire
-    dw #boss_gt
-    dw #boss_ridley
-    dw #boss_mb
-    dw #$FFFF
-    dw #boss_kraid_statue
-    dw #boss_phantoon_statue
-    dw #boss_draygon_statue
-    dw #boss_ridley_statue
-    dw #$0000
-    %cm_header("BOSSES")
-
-boss_ceresridley:
-    %cm_toggle_bit("Ceres Ridley", #$7ED82E, #$0001, #0)
-
-boss_bombtorizo:
-    %cm_toggle_bit("Bomb Torizo", #$7ED828, #$0004, #0)
-
-boss_spospo:
-    %cm_toggle_bit("Spore Spawn", #$7ED828, #$0200, #0)
-
-boss_kraid:
-    %cm_toggle_bit("Kraid", #$7ED828, #$0100, #0)
-
-boss_phantoon:
-    %cm_toggle_bit("Phantoon", #$7ED82A, #$0100, #0)
-
-boss_botwoon:
-    %cm_toggle_bit("Botwoon", #$7ED82C, #$0002, #0)
-
-boss_draygon:
-    %cm_toggle_bit("Draygon", #$7ED82C, #$0001, #0)
-
-boss_crocomire:
-    %cm_toggle_bit("Crocomire", #$7ED82A, #$0002, #0)
-
-boss_gt:
-    %cm_toggle_bit("Golden Torizo", #$7ED82A, #$0004, #0)
-
-boss_ridley:
-    %cm_toggle_bit("Ridley", #$7ED82A, #$0001, #0)
-
-boss_mb:
-    %cm_toggle_bit("Mother Brain", #$7ED82C, #$0200, #0)
-
-boss_kraid_statue:
-    %cm_toggle_bit("Kraid Statue", #$7ED820, #$0200, #0)
-
-boss_phantoon_statue:
-    %cm_toggle_bit("Phantoon Statue", #$7ED820, #$0040, #0)
-
-boss_draygon_statue:
-    %cm_toggle_bit("Draygon Statue", #$7ED820, #$0100, #0)
-
-boss_ridley_statue:
-    %cm_toggle_bit("Ridley Statue", #$7ED820, #$0080, #0)
 
 
 ; --------------
