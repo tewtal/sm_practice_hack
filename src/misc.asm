@@ -16,11 +16,6 @@ else
 endif
 endif
 
-; Write offset to hack RAM for cout's timer tracking tool
-org $80FFF0
-hook_wram_start:
-    dl !WRAM_START
-
 
 ; Enable version display
 org $8B8697
