@@ -483,7 +483,11 @@ cm_tilemap_bg:
 
     ; Vertical edges
     LDX #$0000
+if !FEATURE_TALLMENU
     LDY #$0019 ; 25 rows
+else
+    LDY #$0018 ; 24 rows
+endif
   .loopVertical
     LDA #$647A : STA !ram_tilemap_buffer+$082,X
     LDA #$247A : STA !ram_tilemap_buffer+$0BC,X
@@ -495,7 +499,12 @@ cm_tilemap_bg:
     LDY #$001B ; 28 columns
   .loopHorizontal
     LDA #$A47B : STA !ram_tilemap_buffer+$044,X
-    LDA #$247B : STA !ram_tilemap_buffer+$704,X
+    LDA #$247B
+if !FEATURE_TALLMENU
+    STA !ram_tilemap_buffer+$704,X
+else
+    STA !ram_tilemap_buffer+$6C4,X
+endif
     INX #2
     DEY : BPL .loopHorizontal
 
@@ -546,7 +555,9 @@ cm_tilemap_bg:
     STA !ram_tilemap_buffer+$604,X
     STA !ram_tilemap_buffer+$644,X
     STA !ram_tilemap_buffer+$684,X
+if !FEATURE_TALLMENU
     STA !ram_tilemap_buffer+$6C4,X
+endif
     INX #2
     DEY : BPL .loopBackground
 
@@ -628,7 +639,11 @@ cm_tilemap_menu:
     ; INC past #$F007
     INC !DP_CurrentMenu : INC !DP_CurrentMenu : STZ !DP_Palette
     ; Optional footer
+if !FEATURE_TALLMENU
     LDX #$0686
+else
+    LDX #$0646
+endif
     JSR cm_draw_text
     RTS
 
@@ -2171,7 +2186,6 @@ kb_new_char:
 }
 
 kb_handle_inputs:
-; input handling
 {
     JSR cm_get_inputs : STA !ram_cm_controller
     BIT !IH_INPUT_UPDOWN : BNE .input_vertical

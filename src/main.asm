@@ -6,6 +6,7 @@ lorom
 !FEATURE_MAPSTATES ?= 0
 !FEATURE_DEV ?= 0
 !FEATURE_PAL ?= 0
+!FEATURE_TALLMENU ?= 0
 !FEATURE_VANILLAHUD ?= 0
 !INFOHUD_ALWAYS_SHOW_X_Y ?= 0
 !ORIGINAL_MESSAGE_TEXT ?= 0
@@ -15,7 +16,7 @@ lorom
 !VERSION_MAJOR = 2
 !VERSION_MINOR = 6
 !VERSION_BUILD = 4
-!VERSION_REV   = 2
+!VERSION_REV   = 3
 
 table ../resources/normal.tbl
 print ""
@@ -24,6 +25,10 @@ if !FEATURE_PAL
     print "PAL REGION"
 else
     print "NTSC REGION"
+endif
+
+if !FEATURE_TALLMENU
+    print "TALL MENU"
 endif
 
 if !FEATURE_VANILLAHUD
