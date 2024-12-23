@@ -480,6 +480,7 @@ ih_before_room_transition:
     TYA : JSR Draw3
 
   .doorDisplay
+    %a16()
     ; Door HUD mode can only overwrite Enemy HP
     LDA !sram_display_mode : BNE .done
     LDA !sram_door_display_mode : BEQ .done
