@@ -1211,6 +1211,10 @@ status_walljump:
     LDA #$0117 : STA !ram_ypos
     JMP .heightcheck
 
+  .everest
+    LDA #$022F : STA !ram_ypos
+    JMP .heightcheck
+
   .lavadive
     JMP .lavadivecheck
 
@@ -1218,6 +1222,7 @@ status_walljump:
     LDA !ROOM_ID : CMP.w #ROOM_WorstRoomInTheGame : BEQ .writg
     CMP.w #ROOM_LavaDiveRoom : BEQ .lavadive
     CMP.w #ROOM_BubbleMountain : BEQ .bubble
+    CMP.w #ROOM_MtEverest : BEQ .everest
     JMP .clear
 
   .checkleftright
