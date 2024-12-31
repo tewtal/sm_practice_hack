@@ -168,7 +168,11 @@ org $948F1F
 org $9BC868
     JSL handle_transition_table_lookup_failure
 
-org $9180BE
+if !FEATURE_PAL
+org $91957A
+else
+org $9195BC
+endif
 handle_transition_table_lookup_failure:
 {
     PHP : PHB : PHK : PLB
@@ -178,7 +182,12 @@ handle_transition_table_lookup_failure:
     LDA !SAMUS_POSE : STA !SAMUS_POTENTIAL_POSE_VALUES
     BRA $15
     LDA !SAMUS_POSE : ASL : ASL : ASL : TAX
-    LDA.w $91B62B,X : AND #$00FF
+if !FEATURE_PAL
+    LDA.w $91B583,X
+else
+    LDA.w $91B62B,X
+endif
+    AND #$00FF
     CMP #$00FF : BEQ $E6
     STA !SAMUS_POTENTIAL_POSE_VALUES
     PLB : PLP : RTL
@@ -217,7 +226,7 @@ prospective_pose_change_table:
     db $02 ; 1Bh: Shinespark / crystal flash / drained by metroid / damaged by MB's attacks
     db $08 ; should not be used but keeping same as vanilla just in case
 }
-warnpc $91810A
+%warnpc($919658, $919616)
 
 ; Relocate most of $9181A9 routine to the end of $9181F4 routine,
 ; so instead of JSR $81F4 make it JMP $81F4
@@ -267,8 +276,12 @@ hook_spin_lock:
   .resume_vanilla:
     ; Finish $9181A9 routine starting from $9181B0
     LDA !SAMUS_POSE : ASL : TAX
-    LDA.w $919EE2,X : TAY
-    LDA $0000,Y : INC : BEQ $23
+if !FEATURE_PAL
+    LDA.w $919E3A,X
+else
+    LDA.w $919EE2,X
+endif
+    TAY : LDA $0000,Y : INC : BEQ $23
     DEC : BEQ $04
     AND $12 : BNE $09
     LDA $0002,Y : BEQ $19
