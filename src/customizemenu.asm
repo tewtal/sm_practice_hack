@@ -1,7 +1,276 @@
 
 pushpc
-org $AFEC00
-print pc, " menu customization bankAF start"
+org $E4E000
+print pc, " menu customization start"
+
+; ----------
+; Audio Menu
+; ----------
+
+AudioMenu:
+    dw #audio_music_toggle
+    dw #audio_fanfare_toggle
+    dw #audio_health_alarm
+    dw #$FFFF
+    dw #mc_customsfx
+    dw #$FFFF
+    dw #audio_goto_music
+    dw #$FFFF
+    dw #audio_sfx_lib1
+    dw #audio_sfx_lib2
+    dw #audio_sfx_lib3
+    dw #audio_sfx_silence
+    dw #$0000
+    %cm_header("AUDIO MENU")
+    %cm_footer("PRESS Y TO PLAY SOUNDS")
+
+audio_music_toggle:
+    dw !ACTION_CHOICE
+    dl #!sram_music_toggle
+    dw .routine
+    db #$28, "Music", #$FF
+    db #$28, "        OFF", #$FF
+    db #$28, "         ON", #$FF
+    db #$28, "   FAST OFF", #$FF
+    db #$28, " PRESET OFF", #$FF
+    db #$FF
+  .routine
+    ; Clear music queue
+    STZ !MUSIC_QUEUE_TIMERS : STZ !MUSIC_QUEUE_TIMERS+$2
+    STZ !MUSIC_QUEUE_TIMERS+$4 : STZ !MUSIC_QUEUE_TIMERS+$6
+    STZ !MUSIC_QUEUE_TIMERS+$8 : STZ !MUSIC_QUEUE_TIMERS+$A
+    STZ !MUSIC_QUEUE_TIMERS+$C : STZ !MUSIC_QUEUE_TIMERS+$E
+    STZ !MUSIC_QUEUE_NEXT : STZ !MUSIC_QUEUE_START
+    STZ !MUSIC_ENTRY : STZ !MUSIC_TIMER
+    CMP #$0001 : BEQ .resume_music
+    STZ $2140
+    RTL
+  .resume_music
+    LDA !MUSIC_DATA : CLC : ADC #$FF00 : PHA : STZ !MUSIC_DATA : PLA : JSL !MUSIC_ROUTINE
+    LDA !MUSIC_TRACK : PHA : STZ !MUSIC_TRACK : PLA : JSL !MUSIC_ROUTINE
+    RTL
+
+audio_fanfare_toggle:
+!FANFARE_FORCE_MUSIC = #$0002
+    dw !ACTION_CHOICE
+    dl #!sram_fanfare
+    dw #$0000
+    db #$28, "Fanfare", #$FF
+    db #$28, "        OFF", #$FF
+    db #$28, "         ON", #$FF
+    db #$28, "FORCE MUSIC", #$FF
+    db #$FF
+
+audio_health_alarm:
+    dw !ACTION_CHOICE
+    dl #!sram_healthalarm
+    dw #$0000
+    db #$28, "Low Health Alar", #$FF
+    db #$28, "m     NEVER", #$FF
+    db #$28, "m   VANILLA", #$FF
+    db #$28, "m    PB FIX", #$FF
+    db #$28, "m  IMPROVED", #$FF
+    db #$28, "m ALWAYS ON", #$FF
+    db #$FF
+
+audio_goto_music:
+    %cm_submenu("Music Selection", #MusicSelectMenu1)
+
+audio_sfx_lib1:
+    %cm_numfield_sound("Library One Sound", !ram_cm_sfxlib1, 1, 66, 1, 4, .routine)
+  .routine
+    LDA !IH_CONTROLLER_PRI_NEW : BIT !CTRL_Y : BEQ .done
+    LDA !ram_cm_sfxlib1 : JML !SFX_LIB1
+  .done
+    RTL
+
+audio_sfx_lib2:
+    %cm_numfield_sound("Library Two Sound", !ram_cm_sfxlib2, 1, 127, 1, 4, .routine)
+  .routine
+    LDA !IH_CONTROLLER_PRI_NEW : BIT !CTRL_Y : BEQ audio_sfx_lib1_done
+    LDA !ram_cm_sfxlib2 : JML !SFX_LIB2
+
+audio_sfx_lib3:
+    %cm_numfield_sound("Library Three Sound", !ram_cm_sfxlib3, 1, 47, 1, 4, .routine)
+  .routine
+    LDA !IH_CONTROLLER_PRI_NEW : BIT !CTRL_Y : BEQ audio_sfx_lib1_done
+    LDA !ram_cm_sfxlib3 : JML !SFX_LIB3
+
+audio_sfx_silence:
+    %cm_jsl("Silence Sound FX", .routine, #0)
+  .routine
+    JML stop_all_sounds
+
+MusicSelectMenu1:
+    dw #audio_music_title1
+    dw #audio_music_title2
+    dw #audio_music_intro
+    dw #audio_music_ceres
+    dw #audio_music_escape
+    dw #audio_music_rainstorm
+    dw #audio_music_spacepirate
+    dw #audio_music_samustheme
+    dw #audio_music_greenbrinstar
+    dw #audio_music_redbrinstar
+    dw #audio_music_uppernorfair
+    dw #audio_music_lowernorfair
+    dw #audio_music_easternmaridia
+    dw #audio_music_westernmaridia
+    dw #audio_music_wreckedshipoff
+    dw #audio_music_wreckedshipon
+    dw #audio_music_hallway
+    dw #audio_music_goldenstatue
+    dw #audio_music_tourian
+    dw #$FFFF
+    dw #audio_music_goto_2
+    dw #$0000
+    %cm_header("PLAY MUSIC - PAGE ONE")
+
+audio_music_title1:
+    %cm_jsl("Title Theme Part 1", #audio_playmusic, #$0305)
+
+audio_music_title2:
+    %cm_jsl("Title Theme Part 2", #audio_playmusic, #$0306)
+
+audio_music_intro:
+    %cm_jsl("Intro", #audio_playmusic, #$3605)
+
+audio_music_ceres:
+    %cm_jsl("Ceres Station", #audio_playmusic, #$2D06)
+
+audio_music_escape:
+    %cm_jsl("Escape Sequence", #audio_playmusic, #$2407)
+
+audio_music_rainstorm:
+    %cm_jsl("Zebes Rainstorm", #audio_playmusic, #$0605)
+
+audio_music_spacepirate:
+    %cm_jsl("Space Pirate Theme", #audio_playmusic, #$0905)
+
+audio_music_samustheme:
+    %cm_jsl("Samus Theme", #audio_playmusic, #$0C05)
+
+audio_music_greenbrinstar:
+    %cm_jsl("Green Brinstar", #audio_playmusic, #$0F05)
+
+audio_music_redbrinstar:
+    %cm_jsl("Red Brinstar", #audio_playmusic, #$1205)
+
+audio_music_uppernorfair:
+    %cm_jsl("Upper Norfair", #audio_playmusic, #$1505)
+
+audio_music_lowernorfair:
+    %cm_jsl("Lower Norfair", #audio_playmusic, #$1805)
+
+audio_music_easternmaridia:
+    %cm_jsl("Eastern Maridia", #audio_playmusic, #$1B05)
+
+audio_music_westernmaridia:
+    %cm_jsl("Western Maridia", #audio_playmusic, #$1B06)
+
+audio_music_wreckedshipoff:
+    %cm_jsl("Wrecked Ship Unpowered", #audio_playmusic, #$3005)
+
+audio_music_wreckedshipon:
+    %cm_jsl("Wrecked Ship", #audio_playmusic, #$3006)
+
+audio_music_hallway:
+    %cm_jsl("Hallway to Statue", #audio_playmusic, #$0004)
+
+audio_music_goldenstatue:
+    %cm_jsl("Golden Statue", #audio_playmusic, #$0906)
+
+audio_music_tourian:
+    %cm_jsl("Tourian", #audio_playmusic, #$1E05)
+
+audio_music_goto_2:
+    %cm_adjacent_submenu("GOTO PAGE TWO", #MusicSelectMenu2)
+
+MusicSelectMenu2:
+    dw #audio_music_preboss1
+    dw #audio_music_preboss2
+    dw #audio_music_miniboss
+    dw #audio_music_smallboss
+    dw #audio_music_bigboss
+    dw #audio_music_motherbrain
+    dw #audio_music_credits
+    dw #audio_music_itemroom
+    dw #audio_music_itemfanfare
+    dw #audio_music_spacecolony
+    dw #audio_music_zebesexplodes
+    dw #audio_music_loadsave
+    dw #audio_music_death
+    dw #audio_music_lastmetroid
+    dw #audio_music_galaxypeace
+    dw #$FFFF
+    dw #audio_music_goto_1
+    dw #$0000
+    %cm_header("PLAY MUSIC - PAGE TWO")
+
+audio_music_preboss1:
+    %cm_jsl("Chozo Statue Awakens", #audio_playmusic, #$2406)
+
+audio_music_preboss2:
+    %cm_jsl("Approaching Confrontation", #audio_playmusic, #$2706)
+
+audio_music_miniboss:
+    %cm_jsl("Miniboss Fight", #audio_playmusic, #$2A05)
+
+audio_music_smallboss:
+    %cm_jsl("Small Boss Confrontation", #audio_playmusic, #$2705)
+
+audio_music_bigboss:
+    %cm_jsl("Big Boss Confrontation", #audio_playmusic, #$2405)
+
+audio_music_motherbrain:
+    %cm_jsl("Mother Brain Fight", #audio_playmusic, #$2105)
+
+audio_music_credits:
+    %cm_jsl("Credits", #audio_playmusic, #$3C05)
+
+audio_music_itemroom:
+    %cm_jsl("Item - Elevator Room", #audio_playmusic, #$0003)
+
+audio_music_itemfanfare:
+    %cm_jsl("Item Fanfare", #audio_playmusic, #$0002)
+
+audio_music_spacecolony:
+    %cm_jsl("Arrival at Space Colony", #audio_playmusic, #$2D05)
+
+audio_music_zebesexplodes:
+    %cm_jsl("Zebes Explodes", #audio_playmusic, #$3305)
+
+audio_music_loadsave:
+    %cm_jsl("Samus Appears", #audio_playmusic, #$0001)
+
+audio_music_death:
+    %cm_jsl("Death", #audio_playmusic, #$3905)
+
+audio_music_lastmetroid:
+    %cm_jsl("Last Metroid in Captivity", #audio_playmusic, #$3F05)
+
+audio_music_galaxypeace:
+    %cm_jsl("The Galaxy is at Peace", #audio_playmusic, #$4205)
+
+audio_music_goto_1:
+    %cm_adjacent_submenu("GOTO PAGE TWO", #MusicSelectMenu1)
+
+audio_playmusic:
+{
+    PHY
+    ; always load silence first
+    TDC : JSL !MUSIC_ROUTINE
+    PLY : TYA
+    STZ $C1 : %a8() : STA $C1
+    XBA : %a16()
+    STA !ROOM_MUSIC_DATA_INDEX
+    ; play from negative data index
+    ORA #$FF00 : JSL !MUSIC_ROUTINE
+    ; play from track index
+    LDA $C1 : JSL !MUSIC_ROUTINE
+    RTL
+}
+
 
 ; -----------------------
 ; Customize Practice Menu
@@ -715,7 +984,7 @@ ConvertNormal2Header:
     %norm2head("%")
 }
 
-print pc, " menu customization bankAF end"
+print pc, " menu customization end"
 
 
 org $AEFD20

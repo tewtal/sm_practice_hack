@@ -870,4 +870,5 @@ portals_down_vanilla_table:
 
 
 print pc, " layoutmenu end"
+warnpc $E4E000 ; customizemenu.asm
 pullpc

@@ -4262,4 +4262,5 @@ layout_updown_downdoor:
 
 
 print pc, " layoutmenu end"
+warnpc $E4E000 ; customizemenu.asm
 pullpc

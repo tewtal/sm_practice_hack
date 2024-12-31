@@ -3772,14 +3772,9 @@ incsrc crash.asm
 ; Main menu
 ; -----------
 
-org $B88000
-print pc, " mainmenu start"
-
-incsrc mainmenu.asm
-
-print pc, " mainmenu end"
-
-
 incsrc customizemenu.asm
+incsrc flagmenu.asm
+incsrc gamemenu.asm
 incsrc layoutmenu.asm
+incsrc mainmenu.asm
 
