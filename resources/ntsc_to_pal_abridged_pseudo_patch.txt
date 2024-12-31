@@ -8,11 +8,20 @@
 ;
 ; Annotations may be inaccurate, especially when
 ; it references velocity or timing difference
+;
+; To avoid conflicts with SpriteSomething,
+; places where SpriteSomething makes modifications
+; are also called out in this file
 ;=======================================================
 
 ;=======================================================
 ; Bank 80
 ;=======================================================
+
+; Transfer Samus tiles to VRAM
+org $809376
+    ...           ; modified by SpriteSomething
+org $809416
 
 ; Escape timer X position math
 org $809E5B
@@ -45,7 +54,8 @@ org $80CD8E
 org $80FFC0
 
 ; Country code and checksum
-; NOTE: This section is also different on Virtual Console NTSC and JU
+; NOTE: This section is also different on Virtual Console NTSC and JU,
+;       and it may also be modified by SpriteSomething
 org $80FFD9
     db #$02,#$01,#$00,#$04,#$84,#$FB,#$7B
 
@@ -72,6 +82,10 @@ org $82DBBC
 ; Downwards elevator delay timer
 org $82E18E
     LDA #$0028    ; previously LDA #$0030
+
+; Samus visor palette
+org $82E52B
+    LDA #$3BE0    ; modified by SpriteSomething
 
 ; Swapping between languages, determines how many bytes are updated
 org $82EDF5
@@ -1763,6 +1777,11 @@ org $8CE4E9  <--  org $8CE135
 org $8CE59B  <--  org $8CE1E7
     dw #$204F     ; previously dw #$207F
 
+; Space/gunship/Ceres palettes
+org $8CE99D  <--  org $8CE5E9
+    dw ...        ; modified by SpriteSomething
+org $8CEB9D  <--  org $8CE7E9
+
 ; Freespace
 org $8CF79D  <--  org $8CF3E9
 
@@ -1777,8 +1796,23 @@ org $8D8E6B
 
 ; Gunship glow instruction list (timing differences)
 org $8DCA4E
-    dw ...
+    dw ...        ; also modified by SpriteSomething
 org $8DCAAA
+
+; Gunship emerging from Zebes
+org $8DD6BA
+    dw ...        ; modified by SpriteSomething
+org $8DD900
+
+; Samus loading
+org $8DDB62
+    dw ...        ; modified by SpriteSomething
+org $8DDF94
+
+; Samus in heat
+org $8DE45E
+    dw ...        ; modified by SpriteSomething
+org $8DEAE2
 
 ; Tourian red flashing
 ; NOTE: This section is the same on NTSC and PAL but different on Virtual Console NTSC and JU
@@ -1799,8 +1833,13 @@ org $8DFFF1
 ; Bank 8E
 ;=======================================================
 
+; Menu palettes
+org $8EE400
+    dw ...        ; modified by SpriteSomething
+org $8EE600
+
 ; Freespace
-org $8E6000
+org $8EE600
 
 ;=======================================================
 ; Bank 8F
@@ -1813,9 +1852,34 @@ org $8FE99B
 ; Bank 90
 ;=======================================================
 
+; Samus animation delay jump table
+org $908324
+    dw ...        ; modified by SpriteSomething
+org $908344
+
+; Samus animation delay, screw attack branch
+org $908477
+    ...           ; modified by SpriteSomething
+org $90848B
+
+; Draw Samus jump table
+org $90864E
+    ...           ; modified by SpriteSomething
+org $908686
+
+; Determine if Samus bottom half drawn
+org $908688
+    ...           ; modified by SpriteSomething
+org $90870C
+
 ; Vertical fall speed limit
 org $90910F
     CMP #$0006    ; previously CMP #$0005
+
+; Wall jump check
+org $909D35
+    ...           ; modified by SpriteSomething
+org $909E8B
 
 ; Lava subdamage per frame (damage per frame is 0)
 org $909E8B
@@ -1947,6 +2011,11 @@ org $90C487
     db ...
 org $90C4B5
 
+; Draw arm cannon
+org $90C663
+    ...           ; modified by SpriteSomething
+org $90CC21
+
 ; X-factor Y velocity
 org $90CD38
     LDA #$01E0    ; previously LDA #$0258
@@ -1969,6 +2038,21 @@ org $90F637  <--  org $90F63A
 ;=======================================================
 ; Bank 91
 ;=======================================================
+
+; Samus pose input handler jump table
+org $918014
+    dw ...        ; modified by SpriteSomething
+org $91804C
+
+; Unused method
+org $9180BE
+    ...           ; modified by SpriteSomething
+org $91810A
+
+; Samus pose input handlers
+org $91812D
+    ...           ; modified by SpriteSomething
+org $918167
 
 ; Demo instructions, Landing site
 org $918ACE
@@ -2094,9 +2178,14 @@ org $919D06  <--  org $919DAE
     dw ...
 org $919DA8  <--  org $919E50
 
+; Animation delay jump table
+org $91AF68  <--  org $91B010
+    dw ...        ; modified by SpriteSomething
+org $91B162  <--  org $91B20A
+
 ; Animation delay timing differences
 org $91B162  <--  org $91B20A
-    dw ...
+    dw ...        ; also modified by SpriteSomething
 org $91B581  <--  org $91B629
 
 ;======== Insert 5 bytes ========
@@ -2123,9 +2212,19 @@ org $91D8B1  <--  org $91D954
     RTS           ;
 org $91D8B9  <--  org $91D954
 
+; Handle screw attacking, spin jumping branch
+org $91D95C  <--  org $91D9F7
+    ...           ; modified by SpriteSomething
+org $91D970  <--  org $91DA0B
+
 ; Shinespark timing difference?
 org $91DA2F  <--  org $91DACA
     CMP #$0086    ; previously CMP #$00AA
+
+; Initialize Samus spin jumping pose
+org $91F589  <--  org $91F624
+    ...           ; modified by SpriteSomething
+org $91F6BD  <--  org $91F758
 
 ; Shinespark timing difference?
 org $91F720  <--  org $91F7BB
@@ -2137,6 +2236,10 @@ org $91FF53  <--  org $91FFEE
 ;=======================================================
 ; Bank 92
 ;=======================================================
+
+; Samus animations
+org $928000
+    ...           ; modified by SpriteSomething
 
 ; Freespace
 org $92EDF4
@@ -2220,12 +2323,37 @@ org $99ECA8  <--  org $99EE21
 ; Bank 9A
 ;=======================================================
 
+; Samus arm cannon tiles
+org $9A9A00
+    ...           ; modified by SpriteSomething
+org $9AB200
+
+; Standard sprite tiles
+org $9AD200
+    ...           ; modified by SpriteSomething
+org $9AF200
+
 ; Freespace
 org $9AFC20
 
 ;=======================================================
 ; Bank 9B
 ;=======================================================
+
+; Samus death sequence tiles
+org $9B8000
+    ...           ; modified by SpriteSomething
+org $9B9400
+
+; Samus palettes
+org $9B9400
+    ...           ; modified by SpriteSomething
+org $9BA3CC
+
+; Death sequence
+org $9BB3A7
+    ...           ; modified by SpriteSomething
+org $9BB861
 
 ; Grapple point animation timer
 org $9BBFC6
@@ -2249,35 +2377,51 @@ org $9BCBFB
 ; Samus tiles
 org $9BCBFB
 
-; Freespace
+; Freespace (used by SpriteSomething)
 org $9BFDA0
 
 ;=======================================================
 ; Bank 9C
 ;=======================================================
 
-; Freespace
+; Samus tiles
+org $9C8000
+    ...           ; modified by SpriteSomething
+
+; Freespace (used by SpriteSomething)
 org $9CFA80
 
 ;=======================================================
 ; Bank 9D
 ;=======================================================
 
-; Freespace
+; Samus tiles
+org $9D8000
+    ...           ; modified by SpriteSomething
+
+; Freespace (used by SpriteSomething)
 org $9DF780
 
 ;=======================================================
 ; Bank 9E
 ;=======================================================
 
-; Freespace
+; Samus tiles
+org $9E8000
+    ...           ; modified by SpriteSomething
+
+; Freespace (used by SpriteSomething)
 org $9EF6C0
 
 ;=======================================================
 ; Bank 9F
 ;=======================================================
 
-; Freespace
+; Samus tiles
+org $9F8000
+    ...           ; modified by SpriteSomething
+
+; Freespace (used by SpriteSomething)
 org $9FF740
 
 ;=======================================================
@@ -2378,6 +2522,11 @@ org $A29F42  <--  org $A29F2A
 org $A2A405  <--  org $A2A3ED
     dw ...
 org $A2A411  <--  org $A2A3F9
+
+; Gunship palette
+org $A2A5B6  <--  org $A2A59E
+    dw ...        ; modified by SpriteSomething
+org $A2A5D6  <--  org $A2A5BE
 
 ; Gunship AI instruction lists (timing differences)
 org $A2A5D6  <--  org $A2A5BE
@@ -4376,4 +4525,46 @@ org $DED18C  <--  org $DED1C0
 
 ; Freespace
 org $DFD4DF
+
+;=======================================================
+; Bank E0
+; Bank E1
+; Bank E2
+; Bank E3
+; Bank E4
+; Bank E5
+; Bank E6
+; Bank E7
+; Bank E8
+; Bank E9
+; Bank EA
+; Bank EB
+; Bank EC
+; Bank ED
+; Bank EE
+; Bank EF
+; Bank F0
+; Bank F1
+; Bank F2
+; Bank F3
+; Bank F4
+;=======================================================
+
+; Not present in vanilla
+
+;=======================================================
+; Bank F5
+; Bank F6
+; Bank F7
+; Bank F8
+; Bank F9
+; Bank FA
+; Bank FB
+; Bank FC
+; Bank FD
+; Bank FE
+; Bank FF
+;=======================================================
+
+; Not present in vanilla, modified by SpriteSomething
 
