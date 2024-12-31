@@ -822,6 +822,7 @@ preset_open_all_blue_doors:
 
     ; If this door has a red scroll, then leave it closed
     ; Most of the work is to determine the scroll index
+    %a16()
     TYA : DEC : LSR #4 : STA $004204
     %a8()
     LDA $C7 : STA $004206
