@@ -1944,11 +1944,11 @@ preset_pkrd_maridia_spikesuit_reverse_halfie:
     dw $0913, $DC00  ; Screen subpixel Y position
     dw $0915, $0003  ; Screen Y position in pixels
     dw $0919, $0002  ; Layer 2 Y position
-    dw $09C2, $00C1  ; Health
-    dw $09C6, $0008  ; Missiles
-    dw $09CA, $0001  ; Supers
+    dw $09C2, $00D8  ; Health
+    dw $09C6, $000F  ; Missiles
+    dw $09CA, $0003  ; Supers
     dw $0A68, $0001  ; Flash suit
-    dw $0AF6, $003C  ; Samus X
+    dw $0AF6, $003F  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw $D82C, $0003  ; Bosses
     dw $D8C2, $4C00  ; Doors
@@ -1963,25 +1963,23 @@ preset_pkrd_maridia_reverse_halfie_climb:
     dw #preset_pkrd_maridia_reverse_colosseum ; Maridia: Reverse Colosseum
     dw $078D, $A834  ; DDB
     dw $079B, $D72A  ; MDB
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $0913, $6000  ; Screen subpixel Y position
+    dw $090F, $8000  ; Screen subpixel X position
+    dw $0913, $F001  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0919, $0000  ; Layer 2 Y position
-    dw $09C2, $0051  ; Health
-    dw $0AF6, $0037  ; Samus X
+    dw $09C2, $0066  ; Health
+    dw $0AF6, $0042  ; Samus X
     dw #$FFFF
 
 preset_pkrd_maridia_reverse_botwoon_etank:
     dw #preset_pkrd_maridia_reverse_halfie_climb ; Maridia: Reverse Halfie Climb
     dw $078D, $A7E0  ; DDB
     dw $079B, $D913  ; MDB
-    dw $090F, $C000  ; Screen subpixel X position
-    dw $0913, $4000  ; Screen subpixel Y position
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0913, $2800  ; Screen subpixel Y position
     dw $0915, $0200  ; Screen Y position in pixels
     dw $0919, $0200  ; Layer 2 Y position
-    dw $09C6, $0007  ; Missiles
-    dw $09CA, $0002  ; Supers
-    dw $0AF6, $00A4  ; Samus X
+    dw $0AF6, $00AE  ; Samus X
     dw $0AFA, $028B  ; Samus Y
     dw #$FFFF
 
@@ -1990,7 +1988,8 @@ preset_pkrd_maridia_reverse_botwoon_hallway:
     dw $078D, $A84C  ; DDB
     dw $079B, $D95E  ; MDB
     dw $07F5, $0003  ; Music Track
-    dw $0913, $1000  ; Screen subpixel Y position
+    dw $090F, $1F80  ; Screen subpixel X position
+    dw $0913, $D800  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0919, $0000  ; Layer 2 Y position
     dw $0AF6, $0025  ; Samus X
@@ -2003,10 +2002,10 @@ preset_pkrd_maridia_reverse_crab_shaft:
     dw $079B, $D5A7  ; MDB
     dw $07F5, $0005  ; Music Track
     dw $090F, $8000  ; Screen subpixel X position
-    dw $0913, $E800  ; Screen subpixel Y position
-    dw $0915, $00FF  ; Screen Y position in pixels
-    dw $0919, $00FF  ; Layer 2 Y position
-    dw $0AF6, $0068  ; Samus X
+    dw $0913, $6800  ; Screen subpixel Y position
+    dw $0915, $00FE  ; Screen Y position in pixels
+    dw $0919, $00FE  ; Layer 2 Y position
+    dw $0AF6, $0069  ; Samus X
     dw $0AFA, $018B  ; Samus Y
     dw $D8C2, $6C00  ; Doors
     dw #$FFFF
@@ -2016,11 +2015,11 @@ preset_pkrd_maridia_mt_everest_revisit:
     dw $078D, $A708  ; DDB
     dw $079B, $D1A3  ; MDB
     dw $07F5, $0006  ; Music Track
-    dw $090F, $AFFF  ; Screen subpixel X position
-    dw $0913, $3400  ; Screen subpixel Y position
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0913, $A800  ; Screen subpixel Y position
     dw $0915, $0201  ; Screen Y position in pixels
     dw $0919, $0180  ; Layer 2 Y position
-    dw $0AF6, $0071  ; Samus X
+    dw $0AF6, $0073  ; Samus X
     dw $0AFA, $028B  ; Samus Y
     dw #$FFFF
 
@@ -2028,14 +2027,17 @@ preset_pkrd_backtracking_red_brinstar_green_gate:
     dw #preset_pkrd_maridia_mt_everest_revisit ; Maridia: Mt Everest Revisit
     dw $078D, $A42C  ; DDB
     dw $079B, $D104  ; MDB
-    dw $090F, $F000  ; Screen subpixel X position
-    dw $0913, $9800  ; Screen subpixel Y position
+    dw $090F, $C000  ; Screen subpixel X position
+    dw $0911, $001A  ; Screen X position in pixels
+    dw $0913, $8800  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $001A  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $09C2, $0079  ; Health
-    dw $09CA, $0003  ; Supers
+    dw $09C2, $008E  ; Health
+    dw $09C6, $0011  ; Missiles
+    dw $09CA, $0006  ; Supers
     dw $09D2, $0002  ; Currently selected item
-    dw $0AF6, $0078  ; Samus X
+    dw $0AF6, $007F  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 
@@ -2046,8 +2048,10 @@ preset_pkrd_backtracking_crateria_kihunters_final:
     dw $07F3, $0012  ; Music Bank
     dw $07F5, $0003  ; Music Track
     dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $0000  ; Screen subpixel Y position
-    dw $09CA, $0002  ; Supers
+    dw $0917, $0000  ; Layer 2 X position
+    dw $09CA, $0005  ; Supers
     dw $09D2, $0000  ; Currently selected item
     dw $0A1C, $009B  ; Samus position/state
     dw $0A1E, $0000  ; More position/state
@@ -2061,12 +2065,11 @@ preset_pkrd_backtracking_parlor_return:
     dw $079B, $91F8  ; MDB
     dw $07F3, $000C  ; Music Bank
     dw $07F5, $0005  ; Music Track
-    dw $090F, $E000  ; Screen subpixel X position
     dw $0911, $05E3  ; Screen X position in pixels
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $0400  ; Screen Y position in pixels
     dw $0917, $02F1  ; Layer 2 X position
-    dw $09C6, $0006  ; Missiles
+    dw $09C6, $0010  ; Missiles
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $0683  ; Samus X
@@ -2078,22 +2081,22 @@ preset_pkrd_backtracking_terminator_revisit:
     dw $078D, $8916  ; DDB
     dw $079B, $92FD  ; MDB
     dw $07F3, $0009  ; Music Bank
-    dw $090F, $6800  ; Screen subpixel X position
+    dw $090F, $C000  ; Screen subpixel X position
     dw $0911, $0100  ; Screen X position in pixels
-    dw $0913, $AC00  ; Screen subpixel Y position
+    dw $0913, $3C00  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $00C0  ; Layer 2 X position
-    dw $0A1C, $008A  ; Samus position/state
-    dw $0A1E, $1504  ; More position/state
-    dw $0AF6, $0115  ; Samus X
-    dw $0AFA, $008B  ; Samus Y
+    dw $0A1C, $0072  ; Samus position/state
+    dw $0A1E, $0504  ; More position/state
+    dw $0AF6, $010C  ; Samus X
+    dw $0AFA, $0090  ; Samus Y
     dw #$FFFF
 
 preset_pkrd_backtracking_green_pirate_shaft_revisit:
     dw #preset_pkrd_backtracking_terminator_revisit ; Backtracking: Terminator Revisit
     dw $078D, $895E  ; DDB
     dw $079B, $990D  ; MDB
-    dw $090F, $A680  ; Screen subpixel X position
+    dw $090F, $DE80  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $01FB  ; Screen Y position in pixels
@@ -2101,7 +2104,7 @@ preset_pkrd_backtracking_green_pirate_shaft_revisit:
     dw $0919, $017C  ; Layer 2 Y position
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $005E  ; Samus X
+    dw $0AF6, $0062  ; Samus X
     dw $0AFA, $029B  ; Samus Y
     dw #$FFFF
 
@@ -2109,16 +2112,15 @@ preset_pkrd_backtracking_g4_hallway:
     dw #preset_pkrd_backtracking_green_pirate_shaft_revisit ; Backtracking: Green Pirate Shaft Revisit
     dw $078D, $8BE6  ; DDB
     dw $079B, $99BD  ; MDB
-    dw $090F, $F000  ; Screen subpixel X position
+    dw $090F, $7FFF  ; Screen subpixel X position
     dw $0913, $E400  ; Screen subpixel Y position
     dw $0915, $0600  ; Screen Y position in pixels
     dw $0917, $0001  ; Layer 2 X position
     dw $0919, $0480  ; Layer 2 Y position
-    dw $09C6, $0005  ; Missiles
-    dw $09CA, $0001  ; Supers
+    dw $09CA, $0004  ; Supers
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $00BC  ; Samus X
+    dw $0AF6, $00C2  ; Samus X
     dw $0AFA, $068B  ; Samus Y
     dw $D8B2, $6C01  ; Doors
     dw #$FFFF
@@ -2161,13 +2163,13 @@ preset_pkrd_tourian_tourian_elevator_room:
 
 preset_pkrd_tourian_metroids_1:
     dw #preset_pkrd_tourian_tourian_elevator_room ; Tourian: Tourian Elevator Room
-    dw $090F, $4000  ; Screen subpixel X position
-    dw $0913, $F7FF  ; Screen subpixel Y position
+    dw $090F, $0001  ; Screen subpixel X position
+    dw $0913, $D3FF  ; Screen subpixel Y position
     dw $0915, $0300  ; Screen Y position in pixels
     dw $0919, $0240  ; Layer 2 Y position
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $0040  ; Samus X
+    dw $0AF6, $0041  ; Samus X
     dw $0AFA, $038B  ; Samus Y
     dw #$FFFF
 
@@ -2181,10 +2183,9 @@ preset_pkrd_tourian_metroids_2:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $00D2  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $09C2, $0085  ; Health
-    dw $09C6, $0011  ; Missiles
-    dw $09CA, $0003  ; Supers
-    dw $09CE, $0002  ; Pbs
+    dw $09C2, $006B  ; Health
+    dw $09C6, $0014  ; Missiles
+    dw $09CA, $0006  ; Supers
     dw $0AF6, $0197  ; Samus X
     dw $0AFA, $00AB  ; Samus Y
     dw $D822, $0021  ; Events
@@ -2200,10 +2201,8 @@ preset_pkrd_tourian_metroids_3:
     dw $0915, $0117  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $00D1  ; Layer 2 Y position
-    dw $09C2, $00DF  ; Health
-    dw $09C6, $0014  ; Missiles
-    dw $09CA, $0005  ; Supers
-    dw $09CE, $0003  ; Pbs
+    dw $09C2, $00D4  ; Health
+    dw $09CA, $0007  ; Supers
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $00C0  ; Samus X
@@ -2222,9 +2221,8 @@ preset_pkrd_tourian_metroids_4:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $03C0  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $09C2, $010E  ; Health
-    dw $09CA, $0009  ; Supers
-    dw $09CE, $0005  ; Pbs
+    dw $09C2, $011B  ; Health
+    dw $09CA, $0008  ; Supers
     dw $0AF6, $05AB  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw $D822, $0027  ; Events
@@ -2243,11 +2241,10 @@ preset_pkrd_tourian_giant_hoppers:
     dw $0919, $00D7  ; Layer 2 Y position
     dw $09C2, $01CC  ; Health
     dw $09CA, $000A  ; Supers
-    dw $0A1C, $0027  ; Samus position/state
-    dw $0A1E, $0508  ; More position/state
-    dw $0AF6, $0074  ; Samus X
-    dw $0AFA, $01D0  ; Samus Y
+    dw $0AF6, $005E  ; Samus X
+    dw $0AFA, $01CB  ; Samus Y
     dw $D822, $002F  ; Events
+    dw $D8C4, $000F  ; Doors
     dw #$FFFF
 
 preset_pkrd_tourian_baby_skip:
@@ -2256,18 +2253,17 @@ preset_pkrd_tourian_baby_skip:
     dw $079B, $DC65  ; MDB
     dw $07F3, $0045  ; Music Bank
     dw $07F5, $0006  ; Music Track
-    dw $090F, $0000  ; Screen subpixel X position
+    dw $090F, $D000  ; Screen subpixel X position
     dw $0911, $0100  ; Screen X position in pixels
-    dw $0913, $0800  ; Screen subpixel Y position
+    dw $0913, $8800  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $00C0  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
     dw $09C2, $01C2  ; Health
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $01D2  ; Samus X
+    dw $0AF6, $01DA  ; Samus X
     dw $0AFA, $00AB  ; Samus Y
-    dw $D8C4, $000F  ; Doors
     dw #$FFFF
 
 preset_pkrd_tourian_gadora_room:
@@ -2276,17 +2272,17 @@ preset_pkrd_tourian_gadora_room:
     dw $079B, $DCFF  ; MDB
     dw $07F3, $001E  ; Music Bank
     dw $07F5, $0005  ; Music Track
-    dw $090F, $CFFF  ; Screen subpixel X position
+    dw $090F, $7000  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $1000  ; Screen subpixel Y position
-    dw $0915, $011F  ; Screen Y position in pixels
+    dw $0913, $D000  ; Screen subpixel Y position
+    dw $0915, $0116  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $00D0  ; Layer 2 Y position
     dw $09CA, $0009  ; Supers
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $00BF  ; Samus X
-    dw $0AFA, $019B  ; Samus Y
+    dw $0AF6, $00DD  ; Samus X
+    dw $0AFA, $018B  ; Samus Y
     dw $D8C4, $00AF  ; Doors
     dw #$FFFF
 
@@ -2294,9 +2290,9 @@ preset_pkrd_tourian_rinka_shaft:
     dw #preset_pkrd_tourian_gadora_room ; Tourian: Gadora Room
     dw $078D, $AA5C  ; DDB
     dw $079B, $DDC4  ; MDB
-    dw $090F, $C000  ; Screen subpixel X position
+    dw $090F, $4000  ; Screen subpixel X position
     dw $0911, $0300  ; Screen X position in pixels
-    dw $0913, $8800  ; Screen subpixel Y position
+    dw $0913, $5400  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0240  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
@@ -2312,15 +2308,14 @@ preset_pkrd_tourian_zeb_skip:
     dw #preset_pkrd_tourian_rinka_shaft ; Tourian: Rinka Shaft
     dw $078D, $AAA4  ; DDB
     dw $079B, $DDF3  ; MDB
-    dw $090F, $3000  ; Screen subpixel X position
+    dw $090F, $6000  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $0000  ; Screen subpixel Y position
-    dw $0915, $021B  ; Screen Y position in pixels
+    dw $0915, $021A  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0193  ; Layer 2 Y position
     dw $09CA, $0007  ; Supers
-    dw $0A1C, $0006  ; Samus position/state
-    dw $0AF6, $0037  ; Samus X
+    dw $0AF6, $0040  ; Samus X
     dw $0AFA, $028B  ; Samus Y
     dw $D8C4, $03AF  ; Doors
     dw #$FFFF
