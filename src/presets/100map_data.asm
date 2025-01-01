@@ -834,7 +834,7 @@ preset_100map_varia_mouthball:
     dw $D8B8, $00FF  ; Doors
     dw #$FFFF
 
-preset_100map_shopping_hi_jump_boots:
+preset_100map_upper_norfair_hi_jump_boots:
     dw #preset_100map_varia_mouthball ; Varia: Mouthball
     dw $078D, $9246  ; DDB
     dw $079B, $A7DE  ; MDB
@@ -879,8 +879,8 @@ preset_100map_shopping_hi_jump_boots:
     dw $D8B8, $20FF  ; Doors
     dw #$FFFF
 
-preset_100map_shopping_precathedral:
-    dw #preset_100map_shopping_hi_jump_boots ; Shopping: Hi Jump Boots
+preset_100map_upper_norfair_precathedral:
+    dw #preset_100map_upper_norfair_hi_jump_boots ; Upper Norfair: Hi Jump Boots
     dw $078D, $941A  ; DDB
     dw $080F, $E000  ; Explored map tiles
     dw $0813, $8001  ; Explored map tiles
@@ -902,8 +902,8 @@ preset_100map_shopping_precathedral:
     dw $D8BA, $0001  ; Doors
     dw #$FFFF
 
-preset_100map_shopping_cathedral:
-    dw #preset_100map_shopping_precathedral ; Shopping: Pre-Cathedral
+preset_100map_upper_norfair_cathedral:
+    dw #preset_100map_upper_norfair_precathedral ; Upper Norfair: Pre-Cathedral
     dw $078D, $92CA  ; DDB
     dw $079B, $A7B3  ; MDB
     dw $0807, $3C00  ; Explored map tiles
@@ -921,8 +921,8 @@ preset_100map_shopping_cathedral:
     dw $D8B8, $24FF  ; Doors
     dw #$FFFF
 
-preset_100map_shopping_bubble_mountain:
-    dw #preset_100map_shopping_cathedral ; Shopping: Cathedral
+preset_100map_upper_norfair_bubble_mountain:
+    dw #preset_100map_upper_norfair_cathedral ; Upper Norfair: Cathedral
     dw $078D, $929A  ; DDB
     dw $079B, $AFA3  ; MDB
     dw $0807, $3F00  ; Explored map tiles
@@ -940,8 +940,8 @@ preset_100map_shopping_bubble_mountain:
     dw $D8B8, $26FF  ; Doors
     dw #$FFFF
 
-preset_100map_shopping_bubble_mountain_climb:
-    dw #preset_100map_shopping_bubble_mountain ; Shopping: Bubble Mountain
+preset_100map_upper_norfair_bubble_mountain_climb:
+    dw #preset_100map_upper_norfair_bubble_mountain ; Upper Norfair: Bubble Mountain
     dw $078D, $959A  ; DDB
     dw $079B, $B0DD  ; MDB
     dw $0809, $0086  ; Explored map tiles
@@ -954,8 +954,8 @@ preset_100map_shopping_bubble_mountain_climb:
     dw $CAE8, $00C4  ; Map counter
     dw #$FFFF
 
-preset_100map_shopping_bat_cave:
-    dw #preset_100map_shopping_bubble_mountain_climb ; Shopping: Bubble Mountain Climb
+preset_100map_upper_norfair_bat_cave:
+    dw #preset_100map_upper_norfair_bubble_mountain_climb ; Upper Norfair: Bubble Mountain Climb
     dw $078D, $97CE  ; DDB
     dw $079B, $ACB3  ; MDB
     dw $0805, $0003  ; Explored map tiles
@@ -970,8 +970,8 @@ preset_100map_shopping_bat_cave:
     dw $D8BA, $0011  ; Doors
     dw #$FFFF
 
-preset_100map_shopping_speed_hallway_in:
-    dw #preset_100map_shopping_bat_cave ; Shopping: Bat Cave
+preset_100map_upper_norfair_speed_hallway_in:
+    dw #preset_100map_upper_norfair_bat_cave ; Upper Norfair: Bat Cave
     dw $078D, $958E  ; DDB
     dw $079B, $B07A  ; MDB
     dw $0801, $8000  ; Explored map tiles
@@ -988,8 +988,8 @@ preset_100map_shopping_speed_hallway_in:
     dw $CAE8, $00C9  ; Map counter
     dw #$FFFF
 
-preset_100map_shopping_speed_booster:
-    dw #preset_100map_shopping_speed_hallway_in ; Shopping: Speed Hallway In
+preset_100map_upper_norfair_speed_booster:
+    dw #preset_100map_upper_norfair_speed_hallway_in ; Upper Norfair: Speed Hallway In
     dw $078D, $97B6  ; DDB
     dw $079B, $ACF0  ; MDB
     dw $0801, $FE00  ; Explored map tiles
@@ -1007,8 +1007,8 @@ preset_100map_shopping_speed_booster:
     dw $D8BA, $0031  ; Doors
     dw #$FFFF
 
-preset_100map_shopping_single_chamber:
-    dw #preset_100map_shopping_speed_booster ; Shopping: Speed Booster
+preset_100map_upper_norfair_single_chamber:
+    dw #preset_100map_upper_norfair_speed_booster ; Upper Norfair: Speed Booster
     dw $078D, $97AA  ; DDB
     dw $079B, $ACB3  ; MDB
     dw $0883, $00FC  ; Explored map tiles
@@ -1028,8 +1028,8 @@ preset_100map_shopping_single_chamber:
     dw $D878, $0004  ; Items
     dw #$FFFF
 
-preset_100map_shopping_double_chamber:
-    dw #preset_100map_shopping_single_chamber ; Shopping: Single Chamber
+preset_100map_upper_norfair_double_chamber:
+    dw #preset_100map_upper_norfair_single_chamber ; Upper Norfair: Single Chamber
     dw $078D, $9606  ; DDB
     dw $079B, $AD5E  ; MDB
     dw $0809, $8087  ; Explored map tiles
@@ -1046,8 +1046,8 @@ preset_100map_shopping_double_chamber:
     dw $D8BA, $0071  ; Doors
     dw #$FFFF
 
-preset_100map_shopping_double_chamber_out:
-    dw #preset_100map_shopping_double_chamber ; Shopping: Double Chamber
+preset_100map_upper_norfair_double_chamber_out:
+    dw #preset_100map_upper_norfair_double_chamber ; Upper Norfair: Double Chamber
     dw $078D, $961E  ; DDB
     dw $079B, $ADDE  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -1071,8 +1071,8 @@ preset_100map_shopping_double_chamber_out:
     dw $D8BA, $00F1  ; Doors
     dw #$FFFF
 
-preset_100map_shopping_river_styx:
-    dw #preset_100map_shopping_double_chamber_out ; Shopping: Double Chamber Out
+preset_100map_upper_norfair_river_styx:
+    dw #preset_100map_upper_norfair_double_chamber_out ; Upper Norfair: Double Chamber Out
     dw $078D, $9612  ; DDB
     dw $079B, $AD5E  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -1090,8 +1090,8 @@ preset_100map_shopping_river_styx:
     dw $CAE8, $00E6  ; Map counter
     dw #$FFFF
 
-preset_100map_shopping_volcano_room:
-    dw #preset_100map_shopping_river_styx ; Shopping: River Styx
+preset_100map_upper_norfair_volcano_room:
+    dw #preset_100map_upper_norfair_river_styx ; Upper Norfair: River Styx
     dw $078D, $95EE  ; DDB
     dw $079B, $AE07  ; MDB
     dw $0815, $F800  ; Explored map tiles
@@ -1107,8 +1107,8 @@ preset_100map_shopping_volcano_room:
     dw $CAE8, $00EA  ; Map counter
     dw #$FFFF
 
-preset_100map_shopping_reverse_magdollite_room:
-    dw #preset_100map_shopping_volcano_room ; Shopping: Volcano Room
+preset_100map_upper_norfair_reverse_magdollite_room:
+    dw #preset_100map_upper_norfair_volcano_room ; Upper Norfair: Volcano Room
     dw $078D, $965A  ; DDB
     dw $079B, $AE74  ; MDB
     dw $0815, $FC00  ; Explored map tiles
@@ -1127,8 +1127,8 @@ preset_100map_shopping_reverse_magdollite_room:
     dw $CAE8, $00F0  ; Map counter
     dw #$FFFF
 
-preset_100map_shopping_purple_shaft:
-    dw #preset_100map_shopping_reverse_magdollite_room ; Shopping: Reverse Magdollite Room
+preset_100map_upper_norfair_purple_shaft:
+    dw #preset_100map_upper_norfair_reverse_magdollite_room ; Upper Norfair: Reverse Magdollite Room
     dw $078D, $9666  ; DDB
     dw $079B, $AEB4  ; MDB
     dw $081D, $FC01  ; Explored map tiles
@@ -1143,8 +1143,8 @@ preset_100map_shopping_purple_shaft:
     dw $CAE8, $00F3  ; Map counter
     dw #$FFFF
 
-preset_100map_shopping_bubble_mountain_corner:
-    dw #preset_100map_shopping_purple_shaft ; Shopping: Purple Shaft
+preset_100map_upper_norfair_bubble_mountain_corner:
+    dw #preset_100map_upper_norfair_purple_shaft ; Upper Norfair: Purple Shaft
     dw $078D, $96C6  ; DDB
     dw $079B, $B051  ; MDB
     dw $0819, $0403  ; Explored map tiles
@@ -1159,7 +1159,7 @@ preset_100map_shopping_bubble_mountain_corner:
     dw #$FFFF
 
 preset_100map_grapple_crocomire:
-    dw #preset_100map_shopping_bubble_mountain_corner ; Shopping: Bubble Mountain Corner
+    dw #preset_100map_upper_norfair_bubble_mountain_corner ; Upper Norfair: Bubble Mountain Corner
     dw $078D, $974A  ; DDB
     dw $079B, $A923  ; MDB
     dw $0811, $F807  ; Explored map tiles

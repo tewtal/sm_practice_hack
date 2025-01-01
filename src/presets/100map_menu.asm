@@ -1,7 +1,7 @@
 PresetsMenu100map:
     dw #presets_goto_100map_bombs
     dw #presets_goto_100map_varia
-    dw #presets_goto_100map_shopping
+    dw #presets_goto_100map_upper_norfair
     dw #presets_goto_100map_grapple
     dw #presets_goto_100map_red_brinstar
     dw #presets_goto_100map_wrecked_ship
@@ -23,8 +23,8 @@ presets_goto_100map_bombs:
 presets_goto_100map_varia:
     %cm_submenu("Varia", #presets_submenu_100map_varia)
 
-presets_goto_100map_shopping:
-    %cm_submenu("Shopping", #presets_submenu_100map_shopping)
+presets_goto_100map_upper_norfair:
+    %cm_submenu("Upper Norfair", #presets_submenu_100map_upper_norfair)
 
 presets_goto_100map_grapple:
     %cm_submenu("Grapple", #presets_submenu_100map_grapple)
@@ -103,25 +103,25 @@ presets_submenu_100map_varia:
     dw #$0000
     %cm_header("VARIA")
 
-presets_submenu_100map_shopping:
-    dw #presets_100map_shopping_hi_jump_boots
-    dw #presets_100map_shopping_precathedral
-    dw #presets_100map_shopping_cathedral
-    dw #presets_100map_shopping_bubble_mountain
-    dw #presets_100map_shopping_bubble_mountain_climb
-    dw #presets_100map_shopping_bat_cave
-    dw #presets_100map_shopping_speed_hallway_in
-    dw #presets_100map_shopping_speed_booster
-    dw #presets_100map_shopping_single_chamber
-    dw #presets_100map_shopping_double_chamber
-    dw #presets_100map_shopping_double_chamber_out
-    dw #presets_100map_shopping_river_styx
-    dw #presets_100map_shopping_volcano_room
-    dw #presets_100map_shopping_reverse_magdollite_room
-    dw #presets_100map_shopping_purple_shaft
-    dw #presets_100map_shopping_bubble_mountain_corner
+presets_submenu_100map_upper_norfair:
+    dw #presets_100map_upper_norfair_hi_jump_boots
+    dw #presets_100map_upper_norfair_precathedral
+    dw #presets_100map_upper_norfair_cathedral
+    dw #presets_100map_upper_norfair_bubble_mountain
+    dw #presets_100map_upper_norfair_bubble_mountain_climb
+    dw #presets_100map_upper_norfair_bat_cave
+    dw #presets_100map_upper_norfair_speed_hallway_in
+    dw #presets_100map_upper_norfair_speed_booster
+    dw #presets_100map_upper_norfair_single_chamber
+    dw #presets_100map_upper_norfair_double_chamber
+    dw #presets_100map_upper_norfair_double_chamber_out
+    dw #presets_100map_upper_norfair_river_styx
+    dw #presets_100map_upper_norfair_volcano_room
+    dw #presets_100map_upper_norfair_reverse_magdollite_room
+    dw #presets_100map_upper_norfair_purple_shaft
+    dw #presets_100map_upper_norfair_bubble_mountain_corner
     dw #$0000
-    %cm_header("SHOPPING")
+    %cm_header("UPPER NORFAIR")
 
 presets_submenu_100map_grapple:
     dw #presets_100map_grapple_crocomire
@@ -437,54 +437,54 @@ presets_100map_varia_mouthball:
     %cm_preset("Mouthball", #preset_100map_varia_mouthball)
 
 
-; Shopping
-presets_100map_shopping_hi_jump_boots:
-    %cm_preset("Hi Jump Boots", #preset_100map_shopping_hi_jump_boots)
+; Upper Norfair
+presets_100map_upper_norfair_hi_jump_boots:
+    %cm_preset("Hi Jump Boots", #preset_100map_upper_norfair_hi_jump_boots)
 
-presets_100map_shopping_precathedral:
-    %cm_preset("Pre-Cathedral", #preset_100map_shopping_precathedral)
+presets_100map_upper_norfair_precathedral:
+    %cm_preset("Pre-Cathedral", #preset_100map_upper_norfair_precathedral)
 
-presets_100map_shopping_cathedral:
-    %cm_preset("Cathedral", #preset_100map_shopping_cathedral)
+presets_100map_upper_norfair_cathedral:
+    %cm_preset("Cathedral", #preset_100map_upper_norfair_cathedral)
 
-presets_100map_shopping_bubble_mountain:
-    %cm_preset("Bubble Mountain", #preset_100map_shopping_bubble_mountain)
+presets_100map_upper_norfair_bubble_mountain:
+    %cm_preset("Bubble Mountain", #preset_100map_upper_norfair_bubble_mountain)
 
-presets_100map_shopping_bubble_mountain_climb:
-    %cm_preset("Bubble Mountain Climb", #preset_100map_shopping_bubble_mountain_climb)
+presets_100map_upper_norfair_bubble_mountain_climb:
+    %cm_preset("Bubble Mountain Climb", #preset_100map_upper_norfair_bubble_mountain_climb)
 
-presets_100map_shopping_bat_cave:
-    %cm_preset("Bat Cave", #preset_100map_shopping_bat_cave)
+presets_100map_upper_norfair_bat_cave:
+    %cm_preset("Bat Cave", #preset_100map_upper_norfair_bat_cave)
 
-presets_100map_shopping_speed_hallway_in:
-    %cm_preset("Speed Hallway In", #preset_100map_shopping_speed_hallway_in)
+presets_100map_upper_norfair_speed_hallway_in:
+    %cm_preset("Speed Hallway In", #preset_100map_upper_norfair_speed_hallway_in)
 
-presets_100map_shopping_speed_booster:
-    %cm_preset("Speed Booster", #preset_100map_shopping_speed_booster)
+presets_100map_upper_norfair_speed_booster:
+    %cm_preset("Speed Booster", #preset_100map_upper_norfair_speed_booster)
 
-presets_100map_shopping_single_chamber:
-    %cm_preset("Single Chamber", #preset_100map_shopping_single_chamber)
+presets_100map_upper_norfair_single_chamber:
+    %cm_preset("Single Chamber", #preset_100map_upper_norfair_single_chamber)
 
-presets_100map_shopping_double_chamber:
-    %cm_preset("Double Chamber", #preset_100map_shopping_double_chamber)
+presets_100map_upper_norfair_double_chamber:
+    %cm_preset("Double Chamber", #preset_100map_upper_norfair_double_chamber)
 
-presets_100map_shopping_double_chamber_out:
-    %cm_preset("Double Chamber Out", #preset_100map_shopping_double_chamber_out)
+presets_100map_upper_norfair_double_chamber_out:
+    %cm_preset("Double Chamber Out", #preset_100map_upper_norfair_double_chamber_out)
 
-presets_100map_shopping_river_styx:
-    %cm_preset("River Styx", #preset_100map_shopping_river_styx)
+presets_100map_upper_norfair_river_styx:
+    %cm_preset("River Styx", #preset_100map_upper_norfair_river_styx)
 
-presets_100map_shopping_volcano_room:
-    %cm_preset("Volcano Room", #preset_100map_shopping_volcano_room)
+presets_100map_upper_norfair_volcano_room:
+    %cm_preset("Volcano Room", #preset_100map_upper_norfair_volcano_room)
 
-presets_100map_shopping_reverse_magdollite_room:
-    %cm_preset("Reverse Magdollite Room", #preset_100map_shopping_reverse_magdollite_room)
+presets_100map_upper_norfair_reverse_magdollite_room:
+    %cm_preset("Reverse Magdollite Room", #preset_100map_upper_norfair_reverse_magdollite_room)
 
-presets_100map_shopping_purple_shaft:
-    %cm_preset("Purple Shaft", #preset_100map_shopping_purple_shaft)
+presets_100map_upper_norfair_purple_shaft:
+    %cm_preset("Purple Shaft", #preset_100map_upper_norfair_purple_shaft)
 
-presets_100map_shopping_bubble_mountain_corner:
-    %cm_preset("Bubble Mountain Corner", #preset_100map_shopping_bubble_mountain_corner)
+presets_100map_upper_norfair_bubble_mountain_corner:
+    %cm_preset("Bubble Mountain Corner", #preset_100map_upper_norfair_bubble_mountain_corner)
 
 
 ; Grapple
