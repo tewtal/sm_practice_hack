@@ -4070,7 +4070,7 @@ preset_suitless_norfair_cleanup_business_center_final:
     dw $0AF8, $0000  ; Samus subpixel X
     dw #$FFFF
 
-preset_suitless_final_cleanup_norfair_elevator:
+preset_suitless_norfair_cleanup_norfair_elevator:
     dw #preset_suitless_norfair_cleanup_business_center_final ; Norfair Cleanup: Business Center Final
     dw $078D, $92EE  ; DDB
     dw $079B, $A6A1  ; MDB
@@ -4085,7 +4085,7 @@ preset_suitless_final_cleanup_norfair_elevator:
     dw #$FFFF
 
 preset_suitless_final_cleanup_below_spazer_final:
-    dw #preset_suitless_final_cleanup_norfair_elevator ; Final Cleanup: Norfair Elevator
+    dw #preset_suitless_norfair_cleanup_norfair_elevator ; Norfair Cleanup: Norfair Elevator
     dw $078D, $A33C  ; DDB
     dw $079B, $CF54  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -4333,29 +4333,14 @@ preset_suitless_final_cleanup_parlor_return:
     dw $D870, $E9DE  ; Items
     dw #$FFFF
 
-preset_suitless_final_cleanup_230_bombway:
-    dw #preset_suitless_final_cleanup_parlor_return ; Final Cleanup: Parlor Return
-    dw $078D, $8B3E  ; DDB
-    dw $079B, $92FD  ; MDB
-    dw $090F, $C000  ; Screen subpixel X position
-    dw $0913, $5400  ; Screen subpixel Y position
-    dw $0915, $02FF  ; Screen Y position in pixels
-    dw $0919, $023F  ; Layer 2 Y position
-    dw $0AF6, $015B  ; Samus X
-    dw $0AF8, $E000  ; Samus subpixel X
-    dw $0AFA, $039B  ; Samus Y
-    dw #$FFFF
-
 preset_suitless_final_cleanup_230_mockball:
-    dw #preset_suitless_final_cleanup_230_bombway ; Final Cleanup: 230 Bombway
+    dw #preset_suitless_final_cleanup_parlor_return ; Final Cleanup: Parlor Return
     dw $078D, $8C82  ; DDB
     dw $079B, $9A90  ; MDB
     dw $090F, $E000  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $B400  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
-    dw $0919, $0000  ; Layer 2 Y position
     dw $09C6, $005F  ; Missiles
     dw $09C8, $00DC  ; Max missiles
     dw $09CE, $0002  ; Pbs

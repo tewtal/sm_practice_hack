@@ -443,10 +443,8 @@ endif
 
 SelectPresetCategoryMenu:
     dw #presets_current
-    dw #precat_kpdr21
-    dw #precat_kpdr22
-    dw #precat_kpdr23
-    dw #precat_kpdr25
+    dw #$FFFF
+    dw #precat_kpdr
     dw #precat_prkd19
     dw #precat_prkd20
     dw #precat_pkrd
@@ -462,9 +460,7 @@ SelectPresetCategoryMenu:
     dw #precat_ngplasma
     dw #precat_nghyper
     dw #precat_nintendopower
-    dw #precat_allbosskpdr
-    dw #precat_allbosspkdr
-    dw #precat_allbossprkd
+    dw #precat_allboss
     dw #$0000
     %cm_header("SELECT PRESET CATEGORY")
 
@@ -499,6 +495,17 @@ presets_current:
   .routine
     TDC : STA !sram_last_preset
     RTL
+
+precat_kpdr:
+    %cm_submenu("KPDR", #SelectKpdrPresetCategoryMenu)
+
+SelectKpdrPresetCategoryMenu:
+    dw #precat_kpdr21
+    dw #precat_kpdr22
+    dw #precat_kpdr23
+    dw #precat_kpdr25
+    dw #$0000
+    %cm_header("SELECT KPDR CATEGORY")
 
 precat_kpdr21:
     %cm_jsl("21% KPDR 3 E-Tanks", #action_select_preset_category, #$0000)
@@ -556,6 +563,16 @@ precat_nghyper:
 
 precat_nintendopower:
     %cm_jsl("Nintendo Power%", #action_select_preset_category, #$0012)
+
+precat_allboss:
+    %cm_submenu("All Bosses", #SelectAllBossesPresetCategoryMenu)
+
+SelectAllBossesPresetCategoryMenu:
+    dw #precat_allbosskpdr
+    dw #precat_allbosspkdr
+    dw #precat_allbossprkd
+    dw #$0000
+    %cm_header("SELECT ALL BOSSES CATEGORY")
 
 precat_allbosskpdr:
     %cm_jsl("All Bosses KPDR", #action_select_preset_category, #$0013)

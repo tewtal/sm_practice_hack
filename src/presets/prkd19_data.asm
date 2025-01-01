@@ -1293,38 +1293,23 @@ preset_prkd19_upper_norfair_lava_spark:
     dw $D8BA, $01F1  ; Doors
     dw #$FFFF
 
-preset_prkd19_upper_norfair_ln_elevator:
-    dw #preset_prkd19_upper_norfair_lava_spark ; Upper Norfair: Lava Spark
-    dw $078D, $96DE  ; DDB
-    dw $079B, $AF3F  ; MDB
-    dw $090F, $F000  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $BC00  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0917, $0000  ; Layer 2 X position
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $09A6, $1001  ; Equipped Beams
-    dw $09C2, $00B4  ; Health
-    dw $09D2, $0003  ; Currently selected item
-    dw $0AF6, $0081  ; Samus X
-    dw $0AF8, $D000  ; Samus subpixel X
-    dw $0AFA, $008B  ; Samus Y
-    dw #$FFFF
-
 preset_prkd19_lower_norfair_ln_main_hall:
-    dw #preset_prkd19_upper_norfair_ln_elevator ; Upper Norfair: LN Elevator
+    dw #preset_prkd19_upper_norfair_lava_spark ; Upper Norfair: Lava Spark
     dw $078D, $96F6  ; DDB
     dw $079B, $B236  ; MDB
     dw $07F3, $0018  ; Music Bank
     dw $090F, $1000  ; Screen subpixel X position
     dw $0911, $0400  ; Screen X position in pixels
     dw $0913, $0000  ; Screen subpixel Y position
-    dw $0915, $0200  ; Screen Y position in pixels
     dw $0917, $0300  ; Layer 2 X position
     dw $0919, $0301  ; Layer 2 Y position
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09C2, $00B4  ; Health
+    dw $09D2, $0003  ; Currently selected item
     dw $0A1C, $009B  ; Samus position/state
     dw $0A1E, $0000  ; More position/state
     dw $0AF6, $0480  ; Samus X
+    dw $0AF8, $D000  ; Samus subpixel X
     dw $0AFA, $0288  ; Samus Y
     dw #$FFFF
 
@@ -2233,7 +2218,6 @@ preset_prkd19_backtracking_parlor_return:
     dw $07F3, $000C  ; Music Bank
     dw $07F5, $0005  ; Music Track
     dw $0911, $05E3  ; Screen X position in pixels
-    dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $0400  ; Screen Y position in pixels
     dw $0917, $02F1  ; Layer 2 X position
     dw $09C6, $0009  ; Missiles
@@ -2508,7 +2492,6 @@ preset_prkd19_tourian_mother_brain_3:
     dw #preset_prkd19_tourian_mother_brain_2 ; Tourian: Mother Brain 2
     dw $09A6, $1009  ; Equipped Beams
     dw $09C2, $018F  ; Health
-    dw $09C6, $0000  ; Missiles
     dw $09CE, $0000  ; Pbs
     dw $0A76, $8000  ; Hyper beam
     dw $D82C, $0203  ; Bosses

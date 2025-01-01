@@ -345,11 +345,11 @@ presets_submenu_suitless_norfair_cleanup:
     dw #presets_suitless_norfair_cleanup_bubble_mountain_final
     dw #presets_suitless_norfair_cleanup_frog_speedway
     dw #presets_suitless_norfair_cleanup_business_center_final
+    dw #presets_suitless_norfair_cleanup_norfair_elevator
     dw #$0000
     %cm_header("NORFAIR CLEANUP")
 
 presets_submenu_suitless_final_cleanup:
-    dw #presets_suitless_final_cleanup_norfair_elevator
     dw #presets_suitless_final_cleanup_below_spazer_final
     dw #presets_suitless_final_cleanup_red_tower_final
     dw #presets_suitless_final_cleanup_reverse_slinky
@@ -364,7 +364,6 @@ presets_submenu_suitless_final_cleanup:
     dw #presets_suitless_final_cleanup_pit_room_final
     dw #presets_suitless_final_cleanup_climb_supers
     dw #presets_suitless_final_cleanup_parlor_return
-    dw #presets_suitless_final_cleanup_230_bombway
     dw #presets_suitless_final_cleanup_230_mockball
     dw #presets_suitless_final_cleanup_parlor_revisit
     dw #presets_suitless_final_cleanup_landing_site_revisit
@@ -1100,11 +1099,11 @@ presets_suitless_norfair_cleanup_frog_speedway:
 presets_suitless_norfair_cleanup_business_center_final:
     %cm_preset("Business Center Final", #preset_suitless_norfair_cleanup_business_center_final)
 
+presets_suitless_norfair_cleanup_norfair_elevator:
+    %cm_preset("Norfair Elevator", #preset_suitless_norfair_cleanup_norfair_elevator)
+
 
 ; Final Cleanup
-presets_suitless_final_cleanup_norfair_elevator:
-    %cm_preset("Norfair Elevator", #preset_suitless_final_cleanup_norfair_elevator)
-
 presets_suitless_final_cleanup_below_spazer_final:
     %cm_preset("Below Spazer Final", #preset_suitless_final_cleanup_below_spazer_final)
 
@@ -1146,9 +1145,6 @@ presets_suitless_final_cleanup_climb_supers:
 
 presets_suitless_final_cleanup_parlor_return:
     %cm_preset("Parlor Return", #preset_suitless_final_cleanup_parlor_return)
-
-presets_suitless_final_cleanup_230_bombway:
-    %cm_preset("230 Bombway", #preset_suitless_final_cleanup_230_bombway)
 
 presets_suitless_final_cleanup_230_mockball:
     %cm_preset("230 Mockball", #preset_suitless_final_cleanup_230_mockball)
