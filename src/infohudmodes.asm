@@ -3476,17 +3476,17 @@ status_mbhp:
 status_ridleyai:
 {
     ; check if Ridley's room
-    LDA !ROOM_ID : CMP.w #ROOM_RidleyRoom : BNE .enemyhp
+    LDA !ROOM_ID : CMP.w #ROOM_RidleyRoom : BNE .done
 
     ; load AI pointer and check if it matches the HUD
     LDA !ENEMY_FUNCTION_POINTER : CMP !ram_HUD_check : BNE .update_HUD
 
     ; fallbacks for convenience
     LDA !ENEMY_HP : BEQ .ridleygrab
-  .enemyhp
     JMP status_enemyhp
-  .ridleygrab
-    JMP .status_ridleygrab
+
+  .done
+    RTS
 
   .update_HUD
     STA !ram_HUD_check
@@ -3513,6 +3513,14 @@ status_ridleyai:
     LDA.w #RidleyAIText_WAIT
     BRA .draw_branch
 
+  .ridleygrab
+    ; display number of grab attempts
+    LDA $7E800A : CMP !ram_roomstrat_counter : BEQ .done
+    STA !ram_roomstrat_counter
+    LDX #$008C : JSR Draw2
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$88 : STA !HUD_TILEMAP+$8A
+    RTS
+
   .found
     LDA.l RidleyAI_text_table,X
 
@@ -3538,17 +3546,8 @@ status_ridleyai:
 
   .left_HUD
     %ai16()
-    LDA !ENEMY_HP : BEQ .status_ridleygrab
+    LDA !ENEMY_HP : BEQ .ridleygrab
     JMP status_enemyhp
-
-  .status_ridleygrab
-    ; display number of grab attempts
-    LDA $7E800A : CMP !ram_roomstrat_counter : BEQ .done
-    STA !ram_roomstrat_counter
-    LDX #$008C : JSR Draw2
-    LDA !IH_BLANK : STA !HUD_TILEMAP+$88 : STA !HUD_TILEMAP+$8A
-  .done
-    RTS
 
 ; this data could live anywhere in the ROM
 RidleyAI_pointers:
@@ -3638,14 +3637,16 @@ table ../resources/normal.tbl
 status_draygonai:
 {
     ; check if Draygon's room
-    LDA !ROOM_ID : CMP.w #ROOM_DraygonRoom : BNE .enemyhp
+    LDA !ROOM_ID : CMP.w #ROOM_DraygonRoom : BNE .done
 
     ; load AI pointer and check if it matches the HUD
     LDA !ENEMY_FUNCTION_POINTER : CMP !ram_HUD_check : BNE .update_HUD
 
-  .enemyhp
     ; update enemy HP on idle frames
     JMP status_enemyhp
+
+  .done
+    RTS
 
   .update_HUD
     STA !ram_HUD_check
