@@ -438,6 +438,7 @@
 !sram_cm_fast_scroll_button = !SRAM_START+$8A
 !sram_cm_font = !SRAM_START+$8C
 !sram_spin_lock = !SRAM_START+$8E
+!sram_map_grid_alignment = !SRAM_START+$90
 
 ; ^ FREE SPACE ^ up to +$EE
 
@@ -567,6 +568,10 @@
 !OAM_STACK_POINTER = $0590
 !PB_EXPLOSION_STATUS = $0592
 !REALTIME_LAG_COUNTER = $05A0 ; Not used in vanilla
+!MAP_MIN_X_SCROLL = $05AC
+!MAP_MAX_X_SCROLL = $05AE
+!MAP_MIN_Y_SCROLL = $05B0
+!MAP_MAX_Y_SCROLL = $05B2
 !NMI_REQUEST_FLAG = $05B4
 !FRAME_COUNTER_8BIT = $05B5
 !FRAME_COUNTER = $05B6

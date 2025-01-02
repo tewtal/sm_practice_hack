@@ -426,6 +426,7 @@ sram_door_display_mode = !sram_door_display_mode ; !SRAM_START+$88
 sram_cm_fast_scroll_button = !sram_cm_fast_scroll_button ; !SRAM_START+$8A
 sram_cm_font = !sram_cm_font ; !SRAM_START+$8C
 sram_spin_lock = !sram_spin_lock ; !SRAM_START+$8E
+sram_map_grid_alignment = !sram_map_grid_alignment ; !SRAM_START+$90
 
 ; ^ FREE SPACE ^ up to +$EE
 

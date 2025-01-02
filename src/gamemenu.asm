@@ -23,6 +23,7 @@ else
     dw #game_minimap
 endif
     dw #game_clear_minimap
+    dw #game_map_grid_alignment
     dw #$0000
     %cm_header("GAME")
 
@@ -85,6 +86,9 @@ game_clear_minimap:
     DEX #2 : BPL .loop
     %sfxreset()
     RTL
+
+game_map_grid_alignment:
+    %cm_toggle_bit_inverted("Force Map Grid Aligned", !sram_map_grid_alignment, #$0007, #0)
 
 
 ; ----------

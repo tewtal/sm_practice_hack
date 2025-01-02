@@ -22,11 +22,31 @@ fill 4096
 print pc, " minimap bankDF end"
 
 
+; The default HUD minimap should be cleared
+org $8098FF
+mm_default_HUD_row_1:
+    dw #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F
+
+org $80993F
+mm_default_HUD_row_2:
+    dw #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F
+
+org $80997F
+mm_default_HUD_row_3:
+    dw #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F
+
+; The default energy 0 text should be cleared
+org $80994D
+mm_default_HUD_energy:
+    dw #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F
+
+
 org $809AF3
     JSL mm_initialize_minimap
 
 org $809B51
     JMP $9BFB ; skip drawing auto reserve icon and normal energy numbers and tanks during HUD routine
+
 
 org $8282E5 ; write and clear tiles to VRAM
     JSL mm_write_and_clear_hud_tiles
@@ -46,6 +66,42 @@ org $828EB8 ; write and clear tiles to VRAM
     PLP
     RTL
 
+
+org $829022
+    JSR mm_setup_map_scrolling
+
+; Move Ceres map data up four bytes
+; (overlaps with Tourian map data but both have zeros)
+org $829723
+mm_map_data_table_ceres_entry:
+    dw $9D23
+
+org $829D50
+mm_map_data_ceres_start_nonzero:
+    db $08
+
+org $829D64
+mm_map_data_ceres_end_nonzero:
+    db $0F,$00,$00,$00,$01,$F8,$00,$00,$00,$00
+
+; Move start of setup map scrolling routine up four bytes
+org $829E23
+mm_setup_map_scrolling:
+    ; Copy from $829E27 routine
+    %ai16()
+    STA $14
+    LDA !MAP_MAX_X_SCROLL : SEC : SBC !MAP_MIN_X_SCROLL
+    LSR : CLC : ADC !MAP_MIN_X_SCROLL
+    SEC : SBC #$0080
+
+    ; Insert new four-byte instruction
+    ; #$FFFF maintains vanilla behavior and #$FFF8 always aligns the grid
+    AND !sram_map_grid_alignment
+
+    ; Continue with vanilla routine
+warnpc $829E3B
+
+
 org $82AEAF ; routine to remove auto reserve icon on HUD from equip screen
     JSR mm_refresh_reserves
 
@@ -54,6 +110,32 @@ org $82AED9 ; routine to draw auto reserve icon on HUD from equip screen
 
 org $82E488 ; write tiles to VRAM
     JMP mm_write_hud_tiles_during_door
+
+
+; Placed in bank 82 so that the jumps work
+org $82F70F
+print pc, " minimap bank82 start"
+
+mm_write_hud_tiles_during_door:
+{
+    LDA !ram_minimap : BNE .minimap_vram
+
+    ; Load in normal vram
+    JSR $E039
+    dl hudgfx_bin : dw $4000, $1000
+    JSL overwrite_HUD_numbers
+    JMP $E492 ; resume logic
+
+  .minimap_vram
+    JSR $E039
+    dl mapgfx_bin : dw $4000, $1000
+    JSL overwrite_HUD_numbers
+    JMP $E492 ; resume logic
+}
+
+print pc, " minimap bank82 end"
+warnpc $82F800 ; layout.asm
+
 
 org $90A7E8      ; optimize following code by exactly six bytes
     TDC : TAX : INC
@@ -101,50 +183,6 @@ warnpc $90A971   ; return to original code here
 
 org $90A97E
     JMP mm_inc_tile_count
-
-
-; The default HUD minimap should be cleared
-org $8098FF
-mm_default_HUD_row_1:
-    dw #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F
-
-org $80993F
-mm_default_HUD_row_2:
-    dw #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F
-
-org $80997F
-mm_default_HUD_row_3:
-    dw #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F
-
-; The default energy 0 text should be cleared
-org $80994D
-mm_default_HUD_energy:
-    dw #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F
-
-
-; Placed in bank 82 so that the jumps work
-org $82F70F
-print pc, " minimap bank82 start"
-
-mm_write_hud_tiles_during_door:
-{
-    LDA !ram_minimap : BNE .minimap_vram
-
-    ; Load in normal vram
-    JSR $E039
-    dl hudgfx_bin : dw $4000, $1000
-    JSL overwrite_HUD_numbers
-    JMP $E492 ; resume logic
-
-  .minimap_vram
-    JSR $E039
-    dl mapgfx_bin : dw $4000, $1000
-    JSL overwrite_HUD_numbers
-    JMP $E492 ; resume logic
-}
-
-print pc, " minimap bank82 end"
-warnpc $82F800 ; layout.asm
 
 
 ; Placed in bank 90 so that the jumps work
