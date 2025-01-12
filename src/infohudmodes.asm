@@ -3525,9 +3525,9 @@ table ../resources/HUDfont.tbl
   .B554 : db "CLIMBING"     : db $FF
   .B594 : db "SWOOP END"    : db $FF
   .B5E5 : db "HOVER"        : db $FF
-  .B613 : db "HOVER 2"      : db $FF
+  .B613 : db "HOVER SPIN"   : db $FF
   .B6A7 : db "POGO START"   : db $FF
-  .B6DD : db "POGO START 2" : db $FF
+  .B6DD : db "POGO READY"   : db $FF
   .B70E : db "POGO DOWN"    : db $FF
   .B7B9 : db "POGO UP"      : db $FF
   .BAB7 : db "LUNGE"        : db $FF
