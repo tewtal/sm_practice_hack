@@ -1244,17 +1244,16 @@ status_walljump:
   .printlow0
 if !FEATURE_PAL
     LDA !SAMUS_Y_SUBPX : CMP #$7000 : BCS .printlow
-    LDA !ram_walljump_counter : CMP #$0007 : BNE .printlowy
-    JMP .bonkminus2
 else
     LDA !SAMUS_Y_SUBPX : CMP #$8400 : BCS .printlow
-    LDA !ram_walljump_counter : CMP #$0007 : BNE .printlowy
-    JMP .bonkminus1
 endif
+    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$8A
+    LDA !ram_walljump_counter : CMP #$0007 : BNE .printlowy
+    LDA !IH_LETTER_B : STA !HUD_TILEMAP+$88
+    JMP .drawjumpcounter
 
   .printlowy
     LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$88
-    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$8A
     JMP .drawjumpcounter
 
   .low
@@ -1279,17 +1278,6 @@ endif
     TDC : STA !ram_walljump_counter
     RTS
 
-if !FEATURE_PAL
-  .printy
-    CMP #$0007 : BEQ .printybonk
-    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$88 : STA !HUD_TILEMAP+$8A
-    JMP .drawjumpcounter
-
-  .printybonk
-    LDA !SAMUS_Y_SUBPX : CMP #$4C00 : BCC .printybonkminus4
-    JMP .bonkminus3
-endif
-
   .checklow0
 if !FEATURE_PAL
     CPY #$0002 : BEQ .printlow0
@@ -1306,6 +1294,18 @@ endif
     LDA !IH_LETTER_L : STA !HUD_TILEMAP+$88
     BRA .drawjumpcounter
 
+if !FEATURE_PAL
+  .printy
+    CMP #$0007 : BEQ .printb
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$88 : STA !HUD_TILEMAP+$8A
+    JMP .drawjumpcounter
+
+  .printb
+    LDA !IH_LETTER_B : STA !HUD_TILEMAP+$88
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$8A
+    JMP .drawjumpcounter
+endif
+
   .heightcheck
     LDA !SAMUS_Y : CMP !ram_ypos : BPL .low
 
@@ -1319,7 +1319,7 @@ endif
     CMP #$0042 : BPL .reset
 
     ASL : TAY : LDA !ram_walljump_counter
-    CMP #$0007 : BEQ .checkhigh0
+    CMP #$0007 : BEQ .checkhigh7
 if !FEATURE_PAL
     CMP #$0009 : BEQ .checkhigh0
     JMP .clear
@@ -1329,123 +1329,32 @@ else
 endif
 
   .checkhigh0
-    CPY #$0000 : BEQ .printhigh0 : LDA !SAMUS_Y_SUBPX
-    CPY #$0002 : BEQ .printhigh1 : CPY #$0004 : BEQ .printhigh2
-    CPY #$0006 : BEQ .printhigh3 : CPY #$0008 : BEQ .printhigh4
-if !FEATURE_PAL
-else
-    CPY #$000A : BEQ .printhigh5
-endif
-
-  .printhigh
-    LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A
-    LDA !IH_LETTER_H : STA !HUD_TILEMAP+$88
-    JMP .drawjumpcounter
-
-if !FEATURE_PAL
-  .printybonkminus4
-    BRA .bonkminus4
-endif
-
-  .printhigh0
-    CMP #$0007 : BEQ .printhigh0bonk
+    CPY #$0000 : BNE .printhigh
     LDA !SAMUS_Y_SUBPX
 if !FEATURE_PAL
-    CMP #$7000 : BCC .bonkminus5
-    CMP #$CC00 : BCC .bonkminus4
+    CMP #$CC00 : BCC .printhigh
 else
-    CMP #$2C00 : BCC .bonkminus3
+    CMP #$2C00 : BCC .printhigh
 endif
     LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$88
     LDA !IH_LETTER_H : STA !HUD_TILEMAP+$8A
     JMP .drawjumpcounter
 
-  .printhigh1
+  .checkhigh7
+    CPY #$0000 : BNE .printhigh
+    LDA !SAMUS_Y_SUBPX
 if !FEATURE_PAL
-    CMP #$6C00 : BCC .bonkminus6
-    BRA .bonkminus5
+    CMP #$CC00 : BCC .printhigh
 else
-    CMP #$9800 : BCC .bonkminus4
-    BRA .bonkminus3
+    CMP #$2C00 : BCC .printhigh
 endif
-
-  .printhigh2
-if !FEATURE_PAL
-    CMP #$4800 : BCC .bonkminus7
-    BRA .bonkminus6
-else
-    CMP #$CC00 : BCC .bonkminus5
-    BRA .bonkminus4
-endif
-
-  .printhigh3
-if !FEATURE_PAL
-    BRA .bonkminus7
-else
-    CMP #$E400 : BCC .bonkminus6
-    BRA .bonkminus5
-endif
-
-  .printhigh4
-if !FEATURE_PAL
-    CMP #$EC00 : BCC .printhigh
-    BRA .bonkminus7
-else
-    CMP #$E000 : BCC .bonkminus7
-    BRA .bonkminus6
-
-  .printhigh5
-    CMP #$C000 : BCC .printhigh
-    BRA .bonkminus7
-endif
-
-  .printhigh0bonk
-if !FEATURE_PAL
-    BRA .bonkminus4
-else
-    LDA !SAMUS_Y_SUBPX : CMP #$4800 : BCC .bonkminus3
-    CMP #$DC00 : BCC .bonkminus2
-endif
-
-  .bonkminus1
-    LDA !ram_walljump_counter : DEC
-    BRA .bonkcheck
-
-  .bonkminus2
-    LDA !ram_walljump_counter : DEC #2
-    BRA .bonkcheck
-
-  .bonkminus3
-    LDA !ram_walljump_counter : SEC : SBC #$0003
-    BRA .bonkcheck
-
-  .bonkminus4
-    LDA !ram_walljump_counter : SEC : SBC #$0004
-    BRA .bonkcheck
-
-  .bonkminus5
-    LDA !ram_walljump_counter : SEC : SBC #$0005
-    BRA .bonkcheck
-
-  .bonkminus6
-    LDA !ram_walljump_counter : SEC : SBC #$0006
-    BRA .bonkcheck
-
-  .bonkminus7
-    LDA !ram_walljump_counter : SEC : SBC #$0007
-
-  .bonkcheck
-    CMP #$0002 : BPL .bonkroomcheck
-    JMP .printhigh
-
-  .bonkroomcheck
-    ASL : TAX
-    LDA !ROOM_ID : CMP.w #ROOM_WorstRoomInTheGame : BEQ .printbonk
-    JMP .printhigh
-
-  .printbonk
-    TXY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A
     LDA !IH_LETTER_B : STA !HUD_TILEMAP+$88
+    LDA !IH_LETTER_H : STA !HUD_TILEMAP+$8A
+    JMP .drawjumpcounter
+
+  .printhigh
+    LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A
+    LDA !IH_LETTER_H : STA !HUD_TILEMAP+$88
     JMP .drawjumpcounter
 
   .lavadiveclear
