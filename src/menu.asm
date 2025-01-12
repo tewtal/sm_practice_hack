@@ -1,4 +1,19 @@
 
+; ---------
+; Main menu
+; ---------
+
+incsrc customizemenu.asm
+incsrc flagmenu.asm
+incsrc gamemenu.asm
+incsrc layoutmenu.asm
+incsrc mainmenu.asm
+
+
+; ----------
+; Menu logic
+; ----------
+
 org $85FD00
 print pc, " menu bank85 start"
 
@@ -89,6 +104,11 @@ cm_boot:
     LDA !ram_quickboot_spc_state : BMI .spc_loop
 
   .done
+    ; If Map Completion preset category selected then turn minimap on
+    LDA !sram_preset_category : CMP !PRESET_CATEGORY_100MAP_INDEX : BNE .check_preset
+    LDA #$0001 : STA !ram_minimap
+
+  .check_preset
     LDA !ram_custom_preset : BNE .preset_load
     LDA !ram_load_preset : BEQ .main_game_loop
 
@@ -305,6 +325,12 @@ cm_transfer_custom_tileset:
 cm_transfer_original_tileset:
 {
     PHP : %ai16()
+
+    ; If Map Completion preset category selected then turn minimap on
+    LDA !sram_preset_category : CMP !PRESET_CATEGORY_100MAP_INDEX : BNE .check_room
+    LDA #$0001 : STA !ram_minimap
+
+  .check_room
     LDA !ROOM_ID : CMP.w #ROOM_KraidRoom : BEQ .kraid_vram
 
     %a8()
@@ -3750,17 +3776,6 @@ HexMenuGFXTable:
 print pc, " menu end"
 
 
-pushpc
-org $B5F000
-print pc, " menu bankB5 start"
-
-cm_hud_table2:
-incbin ../resources/cm_gfx2.bin
-
-print pc, " menu bankB5 end"
-pullpc
-
-
 ; -------------
 ; Crash handler
 ; -------------
@@ -3768,13 +3783,11 @@ pullpc
 incsrc crash.asm
 
 
-; -----------
-; Main menu
-; -----------
+org $B5F000
+print pc, " menu bankB5 start"
 
-incsrc customizemenu.asm
-incsrc flagmenu.asm
-incsrc gamemenu.asm
-incsrc layoutmenu.asm
-incsrc mainmenu.asm
+cm_hud_table2:
+incbin ../resources/cm_gfx2.bin
+
+print pc, " menu bankB5 end"
 

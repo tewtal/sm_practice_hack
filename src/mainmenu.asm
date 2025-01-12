@@ -541,6 +541,7 @@ precat_hundo:
     %cm_jsl("100% Late Crocomire", #action_select_preset_category, #$000A)
 
 precat_100map:
+!PRESET_CATEGORY_100MAP_INDEX = #$000B
     %cm_jsl("100% Map Completion", #action_select_preset_category, #$000B)
 
 precat_14ice:
