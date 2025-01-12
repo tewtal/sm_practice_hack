@@ -113,15 +113,16 @@ First two characters = Feedback on mid-air morph while beam is charged:
 ## Wall Jump
 Displays the number of frames between pressing a left or right input and pressing the jump button, if the number of frames is between 1 and 20.
 To walljump this number should be between 2 and 9 inclusive, although on PAL 8 does not work due to Samus' animation running out and being in the incorrect pose on that particular frame.
-Also, if the number of frames is 7-9 (a delayed walljump) and the walljump is taking place in WRITG or Bubble Mountain, then additional information may be presented if you appear to be making hi-jump-less walljump attempts (also known as the hypo jump):
+Also, if the number of frames is 7-9 (a delayed walljump) and the walljump is taking place in WRITG or Bubble Mountain or Mt. Everest, then additional information may be presented if you appear to be making hi-jump-less walljump attempts (also known as the hypo jump):
 &nbsp;  
 First two characters = Feedback on the delayed walljump:
-- H# indicates you jumped high where the number tells you how many pixels you were high (can be zero in Bubble Mountain; H0 does not work and will bonk).
-- B# indicates you jumped high and will bonk, but could save it with a quick mid-air wiggle (turn and turn back). This wiggle shrinks Samus' hitbox.
-It only works in WRITG and not Bubble Mountain. The number is the most amount of frames you can take to wiggle, with larger numbers indicating your jump was closer to the optimal YH position.
+- H# indicates you jumped high where the number tells you how many pixels you were high (can be zero indicating your height subpixel was too high and you will bonk).
 - YH indicates you jumped at the optimum height with an 8 or 9 frame walljump.
+- BH indicates you jumped at the optimum height with a 7 frame walljump which will bonk.
 - YY indicates you jumped just below the optimum height with a 9 frame walljump (PAL only since PAL physics allow for a larger range of heights to work, although it must be a max-delayed 9 frame walljump since 8 frames won't work).
+- BY indicates you jumped just below the optimum height with a 7 frame walljump which will bonk (PAL only since PAL physics allow for a larger range of heights to work).
 - YL indicates you jumped below optimum height with an 8 or 9 frame walljump. Generally a YL height is still enough height to get the second walljump without too much trouble.
+- BL indicates you jumped below optimum height with a 7 frame walljump which will bonk.
 - L0 indicates you jumped below optimum height with a 7-9 frame walljump. L0 jumps still work but the second walljump can be very tight. L0 jumps are the only ones that work with a 7-frame delayed walljump, so for a more optimal setup you want an 8 or 9 frame walljump.
 - L# indicates you jumped low where the number tells you how many pixels you were low.
 

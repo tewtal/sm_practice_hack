@@ -50,10 +50,14 @@ If you experience crashes or severe glitches when using savestates, your platfor
 | - Current Energy              | Set your current energy with left/right or A to increment
 | - Energy Tanks                | Select your max E-tanks with left/right or A to increment
 | - Current Reserves            | Set your current reserves with left/right or A to increment
-| - Reserve Tanks               | Select your max Reserve Tanks with left/right or A to increment
-| - Missiles                    | Select your max Missiles with left/right or A to increment
-| - Super Missiles              | Select your max Super Missiles with left/right or A to increment
-| - Power Bombs                 | Select your max Power Bombs with left/right or A to increment
+| - Reserve Tanks               | Select your max reserve tanks with left/right or A to increment
+| - Reserve Mode                | Select if reserves are on auto or manual, or act as if reserve tanks have not been obtained.
+| - Current Missiles            | Set your current missiles with left/right or A to increment
+| - Missiles                    | Select your max missiles with left/right or A to increment
+| - Current Super Missiles      | Set your current super missiles with left/right or A to increment
+| - Super Missiles              | Select your max super missiles with left/right or A to increment
+| - Current Power Bombs         | Set your current power bombs with left/right or A to increment
+| - Power Bombs                 | Select your max power bombs with left/right or A to increment
 |&nbsp;|
 | **Category Presets**          | Presets are pre-configured savestates that are specific to a particular category.
 |                               | **Note**: Presets load a room but do not load any enemies for that room by default.
@@ -72,10 +76,10 @@ If you experience crashes or severe glitches when using savestates, your platfor
 | - Load Random Preset          | Randomly chooses a preset from your selected preset category
 | - Randomize Equipment         | Toggle equipment randomization when loading a preset. Set maximum values and available equipment.
 | - Elevator Entry              | When Samus is in default pose in a room with an elevator, option to have Samus riding the elevator. Enemies are loaded if Samus enters the room riding the elevator.
-| - Auto-Open Blue Doors        | Open all blue doors, except when Samus is in default pose or when door is in a hidden area.
+| - Open Blue Doors             | Open all blue doors, except when Samus is in default pose or when door is in a hidden area.
 | - Load with Enemies           | Skips clearing enemies when loading presets. NOTE: Enemy data is not saved with presets. Therefore, enemies will always be loaded in their starting positions for the room
 | - Clear Map Tiles             | Clears all explored map tiles when loading a preset
-| - Auto Segment Reset          | When enabled, the segment timer will not be reset until the next door transition
+| - Auto Reset Segment          | When enabled, the segment timer will not be reset until the next door transition
 | - Compressed Graphics         | Use built-in and slower compressed tile graphics when loading presets.
 |                               | Only enable this if you are applying patches that use banks F5-FE and loading prests crashes the game.
 | - Compressed Palettes         | Use built-in compressed palettes when loading presets.
@@ -84,17 +88,14 @@ If you experience crashes or severe glitches when using savestates, your platfor
 |&nbsp;|
 | **Teleport**                  | Warp to any save station or hidden debug load station
 |&nbsp;|
-| **Events**                    | Toggle event flags for doors, bosses, items, and other events
-| - Reset All Events            | Clear all event flags
-| - Reset All Doors             | Reset all door locks
-| - Reset All Items             | Replace all items that have already been collected
-| - Bosses                      | Toggle boss kills
+| **Events**                    | Toggle event flags for events, bosses, items, doors, and map stations
 |&nbsp;|
 | **Misc**                      | Toggle extra features
 | - Blue Suit                   | Give Samus the Blue Suit
 | - Flash Suit                  | Give Samus the Flash Suit (aka Spike Suit)
 | - Hyper Beam                  | Toggle Hyper Beam
 | - Goo Slowdown                | Toggle ultra slow horizontal movement, as if grabbed by the Baby Metroid (2) or Draygon's goo (1-4)
+| - Health Bomb Flag            | Toggle Health Bomb
 | - Suit Properties             | Modify the suit properties similar to some randomizers
 |                               | Vanilla = No change, Varia has full heat protection and 50% enemy/environmental damage reduction, Gravity (with or without Varia) has full lava protection, full heat protection and 75% enemy/environment damage reduction
 |                               | Balanced = Varia now has 75% environmental damage reduction, Gravity (without Varia) has full lava protection, no heat protection and no environment damage reduction
@@ -104,16 +105,14 @@ If you experience crashes or severe glitches when using savestates, your platfor
 |                               | Heat Shield = DASH Recall plus heat resistance applied as if the Heat Shield item were equipped
 | - Water Physics               | Control whether the current room's water physics are applied, including DASH Recall's Pressure Valve item.
 | - Double Jump                 | From DASH Recall, allows Samus to double jump as if she had space jump for one jump.
-| - Magic Pants                 | Toggle a flashing animation on Samus to show when dash should be held for short charging.
-| - Space Pants                 | Toggle a flashing animation on Samus during a space jump to show when you should jump.
+| - Spin Lock                   | From Map Rando, allows Samus to avoid breaking out of spin with up or down following a walljump.
+| - Magic Pants                 | Toggle a flashing animation on Samus or a sound (or both) to show when dash should be held for short charging.
+| - Space Pants                 | Toggle a flashing animation on Samus or a sound (or both) during a space jump to show when you should jump.
 |                               | **Note**: If you have both Magic Pants and Space Pants on, only one of them will be used. 
 |                               | If Space Jump is equipped then Space Pants will be used, otherwise Magic Pants will be used.
-| - Loud Pants                  | Toggle sound effects for Magic Pants and Space Pants. Uses the sound selected in Game->Metronome SFX.
-|                               | **Note**: If Magic and Space Pants are both turned off, this option has no effect.
 | - Metronome                   | Toggles a metronome feature that will play a sound at a periodic rate
 | - Metronome Tickrate          | The number of frames between metronome sounds
 | - Metronome SFX               | The sound to play (Beep, Power Beam, Spazer, Missile, Click)
-| - Ignore Water this Room      | Toggles the water physics for the current room.
 | - Kill Enemies                | Kills all non-solid enemies in the current room
 | - Force Samus to Stand Up     | Forces Samus into a standing pose
 |&nbsp;|
@@ -126,7 +125,8 @@ If you experience crashes or severe glitches when using savestates, your platfor
 | - Door HUD Mode               | Configure the HUD mode that runs when touching a door transition.
 |                               | Only works when the normal HUD mode is set to Enemy HP.
 | - Top-Left Display            | Choose item collection percentage, reserve energy, or vanilla health to be displayed at the top-left of the HUD.
-|                               | The vanilla option also compresses the viewable area so it is more suitable for practice on an curved CRT monitor or TV.
+|                               | The vanilla options also compresses the viewable area so it is more suitable for practice on an curved CRT monitor or TV.
+|                               | Vanilla+ allows infohud mode or roomstrat to overwrite the energy text while Vanilla simply shows the energy text.
 | - Frames Held Mode            | Replaces the controller input display with numbers representing the frames held.
 |                               | Any or all of the 12 controller inputs can be individually toggled into frames held mode.
 | - Status Icons                | Toggle icons to appear when standing on an elevator or when the shine timer is active (e.g. while carrying a spikesuit).
@@ -152,14 +152,13 @@ If you experience crashes or severe glitches when using savestates, your platfor
 | - Enemy Projectile Hitbox     | Toggles an overlay of enemy projectile hitboxes that are drawn on top of enemy projectile sprites.
 | - 32x32 Projectile Boxes      | Toggles an overlay of the 32x32 grid used for projectile vs projectile collisions. Requires either Samus or Enemy Projectile Hitboxes to be active.
 | - OOB Tile Viewer             | This enables an overlay that shows the tiles near Samus at all times, disconnected from the camera. This allows you to navigate OOB (Out of Bounds) areas where neither Samus nor the actual tiles are visible in-game. Samus hitbox is drawn at the center of the overlay to show the position relative to the tiles.
-| - Spacetime HUD               | Option to preserve the infohud when firing the spacetime beam.
 |&nbsp;|
 | **Room Layout**               | Modify the room layout, usually to help practice rando scenarios.
 | - Item Pickups                | Option to replace all items with a specific item.  Can also be done by icon type (visible, chozo orb, hidden).
 | - Bomb Torizo Door            | Control Bomb Torizo Door oscillator, whether door waits 40 (fast) or 41 (slow) frames before closing after collecting bombs.
 | - Remove Magnet Stairs        | Adds slope tiles to prevent the magnet stairs effect.
 | - Area Rando Patches          | Room modifications as you would see in a VARIA area randomizer.
-| - Anti-softlock Patches       | Room modifications as you would see in a typical VARIA randomizer.
+| - Anti-Softlock Patches       | Room modifications as you would see in a typical VARIA randomizer.
 | - VARIA Tweaks                | Room modifications as you would see with VARIA tweaks enabled.
 | - DASH Recall Patches         | Room modifications as you would see in a DASH Recall randomizer.
 | - Custom Door Portal          | Sets one pair of doors connected to each other as you might see in an area or boss randomizer or in a map randomizer.
@@ -175,24 +174,26 @@ If you experience crashes or severe glitches when using savestates, your platfor
 | - Japanese/French Text        | Standard game option to toggle between English and Japanese text (NTSC) or between German and French text (PAL).
 | - Moon Walk                   | Standard game option for Moon Walk.
 | - Icon Cancel                 | Standard game option for Icon Cancel.
+| - Controller Setting Mode     | Allows controller bindings to be updated.
 | - Cutscenes and Effects       | Turn off specific cutscenes, or make specific game sequences faster.
 |                               | Also includes karafruit's options to disable or reduce flashing effects.
 | - Fast Doors                  | Toggle for fast doors similar to some randomizers.
 | - Fast Elevators              | Toggle for fast elevators similar to some randomizers.
 | - Minimap                     | Restores the game minimap, which also allows the pause menu map to be updated. When enabled, a map tile counter will also be displayed.
 | - Clear Minimap               | Clears the map tile counter and all minimap data.
+| - Force Map Grid Aligned      | When set, prevents vanilla bug where pause menu map can become horizontally misaligned with the grid behind the map.
 | **Debug Settings**            | Located within the Game menu
 | - Debug Mode                  | Toggles the debug mode. Note that debug mode shortcuts and features may not be well supported in the practice rom.
 | - PAL Debug Movement          | Gives Samus extra movement correlated to the dpad input.
 | - Debug CPU Brightness        | Toggles a built-in debug feature to darken the screen after the game is done processing the next frame. Useful for estimating CPU usage.
 | - Invincibility               | Prevents Samus from taking damage or knockback.
-| - Pacifist Mode               | Reduces Samus' attack damage to zero, allowing for never-ending boss battles.
+| - Deal Zero Damage            | Reduces Samus' attack damage to zero, allowing for never-ending boss battles.
 | - Pseudo G-Mode               | Disables PLMs to imitate the primary effect of G-Mode.
 | - Enable Projectiles          | Toggles a built-in debug feature to disable enemy projectiles.
 | - Fix Scroll Offsets          | Fixes the glitchy state where the camera and scroll offsets are out of sync, typically occurring when using major glitches
+| - OOB Elevator Tile Fix       | Removes state that the game can put Samus in if she touches certain elevator-related tiles while out of bounds.
 |&nbsp;|
 | **RNG Control**               | Pre-determine boss patterns
-| - Rerandomize                 | Toggles rerandomizing of RNG values upon loading a savestate. Automatically disabled in rooms with "seeded" RNG, but some of these situations may not be accounted for yet. Not available on some platforms.
 | - Phantoon                    | Configure possible Phantoon patterns. You can enable or disable individual patterns per-round, allowing you to practice only a subset of possible patterns. The round-1 toggles apply only to the first round, whereas the round-2 toggles apply to all subsequent rounds, including rounds where Phantoon is invisible.
 |                               | If all patterns are enabled (or disabled) for a round, vanilla RNG is used with all its quirks and biases. However, if you customize the patterns for a round, that round will use a customized RNG that chooses patterns with mostly-balanced probabilities (though slower patterns may still tend to be slightly more common).
 |                               | Note that for round 2+ patterns, the "No Fast/Mid/Slow" and "Left/Right" options will also remove the rare patterns (Right Fast and Left Mid) in order to make those options more useful.
@@ -209,6 +210,7 @@ If you experience crashes or severe glitches when using savestates, your platfor
 | - Kraid Claw RNG              | Set Kraid's claws to spawn above or below. Kraid is laggier when coming out of the ground if both claws spawn below. 
 |                               | **Note**: It is not possible for both claws to spawn above Kraid, so there will always be some lag generated by a claw below.
 | - Kraid Wait RNG              | Set amount of frames Kraid waits before opening mouth at start of second phase, or between attacks during the first phase.
+| - Baby Skip RNG               | Set the baby into a lunge state or force it to not lunge.
 |&nbsp;|
 | **Savestate Settings**        | Features relating to the practice hack's built-in savestates. Not available on some platforms.
 | - Rerandomize                 | Toggles rerandomizing of RNG values upon loading a savestate. Automatically disabled in rooms with "seeded" RNG, but some of these situations may not be accounted for yet.
@@ -216,6 +218,8 @@ If you experience crashes or severe glitches when using savestates, your platfor
 |                               | It also resets the segment timer. Beware that since it leverages the existing frame advance feature, toggling this on changes the way frame advance works.
 | - Auto-Save Mid Door          | Creates a savestate in the middle of the next door transition.
 | - Auto-Save Every Door        | Creates a savestate in the middle of every door transition.
+|&nbsp;|
+| **Slowdown Mode**             | Set if practice hack is in slowdown mode and the number of lag frames it is set for.
 |&nbsp;|
 | **Controller Shortcuts**      | Set or change button combinations for activating features. Press X to unbind a shortcut. Press A to edit the shortcut and then hold the desired button combination until it turns pink.
 | - Main Menu                   | Open the InfoHUD menu
@@ -234,30 +238,33 @@ If you experience crashes or severe glitches when using savestates, your platfor
 | - Kill Enemies                | Instantly deletes all enemies in the current room.
 | - Toggle OOB Tiles            | Toggles the OOB Tile Viewer.
 | - Update Timers               | Updates the HUD timers immediately.
+| - Toggle Spin Lock            | Toggles Spin Lock.
 | - Clear Shortcuts             | Resets Main Menu shortcut to default and removes button combos for all others.
+| - Reset to Defaults           | Resets controller shortcuts to their original defaults.
 |&nbsp;|
-| **Audio Menu**                | Audio related settings and sound test menu
-| - Music                       | Toggle the music off, on, or fast off which eliminates lag caused by loading music data.
-| - Fanfare                     | Toggle the fanfare for collecting items
-| - Low Health Alarm            | Modify the behavior of the low-health alarm
-|                               | Never = Self-explanatory
-|                               | Vanilla = No change (triggers on when <=30 health, off when >30 health, ignoring reserves, breaks if power bomb explosion is active)
-|                               | PB Fix = Defers trigger during power bomb explosions, which fixes issue where the alarm may not turn on or turn off
-|                               | Improved = PB Fix + only triggers on with health+reserves is less than 30 (same requirements as initiating health bomb)
-|                               | Always On = Self-explanatory
-| - Music Selection             | Play any music track from a list
+| **Audio Menu**                | Audio related settings and sound test menu.
+| - Music                       | Toggle the music off, on, or fast off which eliminates lag caused by loading music data. Preset off uses fast off when loading presets but otherwise uses regular off.
+| - Fanfare                     | Toggle the fanfare for collecting items. Set to force music to force fanfare to play even if music is off.
+| - Low Health Alarm            | Modify the behavior of the low-health alarm.
+|                               | Never = Self-explanatory.
+|                               | Vanilla = No change (triggers on when <=30 health, off when >30 health, ignoring reserves, breaks if power bomb explosion is active).
+|                               | PB Fix = Defers trigger during power bomb explosions, which fixes issue where the alarm may not turn on or turn off.
+|                               | Improved = PB Fix + only triggers on with health+reserves is less than 30 (same requirements as initiating health bomb).
+|                               | Always On = Self-explanatory.
+| - Customize Menu Sound        | Customize sounds that the practice hack menu makes.
+| - Music Selection             | Play any music track from a list.
 | - Library One/Two/Three Sound | Choose a sound effect to play from one of the three collections. Sounds from Libraries two and three usually depend on a partiular music track.
-|                               | Press Y to play the selected sound effect
+|                               | Press Y to play the selected sound effect.
 | - Silence Sound FX            | Stops all sound effects. This is useful for certain sound effects that loop, such as Mother Brain's rainbow beam.
 |&nbsp;|
-| **Customize Menu**            | Change color palettes and sound effects used by the practice hack menus
+| **Customize Menu**            | Change color palettes and sound effects used by the practice hack menus.
 | - Menu Background             | Toggle the background of the menu on or off. The background will always be drawn in the pause menu and Ceres Elevator Room.
 | - Customize Menu Palette      | Customize the color palettes of each element of the menu. There are three sets of options for editing colors. The Hexadecimal set is an approximation of traditional 24bit RGB values. The Decimal set is a simplified version with a scale of 0-31 for each color. The SNES BGR set is the 15bit color value used internally, which is also how it's displayed in the "Screenshot To Share Colors" submenu. Example menu items are provided to show your changes in real time.
 | - Menu Palette                | Cycle through a list of pre-made palette profiles from the community. Select CUSTOM to edit your own palettes.
 | - Copy Palette to Custom      | Copy the selected Menu Palette to the CUSTOM profile to use as a base. A confirmation submenu will remind you that this will overwrite your existing CUSTOM profile.
 | - Randomize Custom Palette    | Use RNG values to randomize the color palettes. A confirmation submenu will warn you that this will overwrite your existing CUSTOM profile.
 | - Customize Menu Sounds       | Select which sound effect will play for each menu action. Press Y to play the selected sound effect. Due to limitations with the audio engine, only sounds from "Library 1" are allowed.
-| - Alternate Menu Font         | Toggle between two available menu fonts.
+| - Select Font                 | Toggle between two available menu fonts.
 | - Fast-Scroll Button          | Choose between holding X or Y to make numbers scroll at 4x speed, or disable this feature and scroll at pre-defined increments.
 | - Menu Scroll Delay           | Set the number of frames before scrolling to the next menu item when Up or Down are held.
 | - Customize Menu Header       | Type a customized header for the main menu, up to 23 characters. Set it blank to restore the default header.
