@@ -473,7 +473,7 @@ ih_before_room_transition:
     TAY ; preserve A
     PHB : LDA #$80 : PHA : PLB
     LDX #$00C2
-    LDA !sram_top_display_mode : CMP.b !TOP_HUD_VANILLA_INDEX : BEQ .vanillaDoorLag
+    LDA !sram_top_display_mode : BIT.b !TOP_HUD_VANILLA_BIT : BNE .vanillaDoorLag
     LDA !ram_minimap : BEQ .draw3
     LDX #$0054
   .draw3
@@ -616,7 +616,7 @@ ih_shinespark_segment:
     JSL $80914D ; overwritten code
 
     ; skip printing remaining spark frames if Vanilla HUD mode
-    LDA !sram_top_display_mode : CMP !TOP_HUD_VANILLA_INDEX : BEQ .done
+    LDA !sram_top_display_mode : BIT !TOP_HUD_VANILLA_BIT : BNE .done
 
     PHB
     ; set index to $7C and DB to $00
@@ -705,7 +705,7 @@ ih_update_hud_code:
 
   .mmHud
     ; Map visible, so draw map counter over item%
-    LDA !sram_top_display_mode : CMP !TOP_HUD_VANILLA_INDEX : BEQ .mmVanilla
+    LDA !sram_top_display_mode : BIT !TOP_HUD_VANILLA_BIT : BNE .mmVanilla
     LDA !MAP_COUNTER : LDX #$0014 : JSR Draw3
     LDA !ram_print_segment_timer : BEQ .mmRoomTimer
 
@@ -745,17 +745,17 @@ ih_update_hud_code:
 
     ; Determine starting point of time display
     LDX #$003C
-    LDA !sram_top_display_mode : CMP !TOP_HUD_VANILLA_INDEX : BNE .pickRoomTimer
+    LDA !sram_top_display_mode : BIT !TOP_HUD_VANILLA_BIT : BEQ .pickRoomTimer
     LDX #$003A
 
   .pickRoomTimer
     STZ $4205
     LDA !sram_frame_counter_mode : BIT #$0001 : BNE .inGameRoomTimer
-    LDA !IH_DECIMAL : STA !HUD_TILEMAP+$42
+    LDA !IH_DECIMAL : STA !HUD_TILEMAP+6,X
     LDA !ram_last_realtime_room
     BRA .calculateRoomTimer
   .inGameRoomTimer
-    LDA !IH_HYPHEN : STA !HUD_TILEMAP+$42
+    LDA !IH_HYPHEN : STA !HUD_TILEMAP+6,X
     LDA !ram_last_gametime_room
   .calculateRoomTimer
     ; Divide time by 60 or 50 and draw seconds and frames
@@ -795,7 +795,7 @@ ih_update_hud_code:
     LDA !IH_PERCENT : STA !HUD_TILEMAP+$18
 
   .skipToLag
-    LDA !sram_top_display_mode : CMP !TOP_HUD_VANILLA_INDEX : BEQ .vanillaLagReserves
+    LDA !sram_top_display_mode : BIT !TOP_HUD_VANILLA_BIT : BNE .vanillaLagReserves
     LDA !ram_last_room_lag : LDX #$0080 : JSR Draw4
     ; Skip door lag and segment timer when certain HUD modes enabled
     LDA !ram_print_segment_timer : BEQ .end
@@ -952,12 +952,26 @@ ih_hud_vanilla_health:
   .drawReserveIcon
     LDA $0000,Y : STA !HUD_TILEMAP+$18 : LDA $0002,Y : STA !HUD_TILEMAP+$1A
     LDA $0004,Y : STA !HUD_TILEMAP+$58 : LDA $0006,Y : STA !HUD_TILEMAP+$5A
-    RTS
+    LDA !sram_top_display_mode : CMP !TOP_HUD_VANILLA_BIT : BEQ .done
+    LDA $0008,Y : STA !HUD_TILEMAP+$98 : LDA $000A,Y : STA !HUD_TILEMAP+$9A
+
+  .drawEnergy
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$88
+    LDA #$2CFB : STA !HUD_TILEMAP+$8A
+    INC : STA !HUD_TILEMAP+$8C
+    INC : STA !HUD_TILEMAP+$8E
+    INC : INC : STA !HUD_TILEMAP+$90
+    ; Set carry flag indicating energy drawn
+    SEC : RTS
 
   .noReserves
     LDA !IH_BLANK : STA !HUD_TILEMAP+$18 : STA !HUD_TILEMAP+$1A
     STA !HUD_TILEMAP+$58 : STA !HUD_TILEMAP+$5A
-    RTS
+    LDA !sram_top_display_mode : CMP !TOP_HUD_VANILLA_BIT : BNE .drawEnergy
+
+  .done
+    ; Clear carry flag indicating infohud status contents can be shifted
+    CLC : RTS
 }
 
 ih_hud_code:
@@ -966,7 +980,7 @@ ih_hud_code:
     STZ $02
     %ai16()
 
-    LDA !sram_top_display_mode : CMP !TOP_HUD_VANILLA_INDEX : BEQ .vanilla_infohud
+    LDA !sram_top_display_mode : BIT !TOP_HUD_VANILLA_BIT : BNE .vanilla_infohud
 
     ; -- input display --
     ; -- check if we want to update --
@@ -1005,11 +1019,13 @@ ih_hud_code:
     LDA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$8A
     LDA !HUD_TILEMAP+$8E : STA !HUD_TILEMAP+$8C
     LDA !HUD_TILEMAP+$90 : STA !HUD_TILEMAP+$8E
+    LDA !sram_top_display_mode : CMP !TOP_HUD_VANILLA_BIT : BNE .status_display_done
 
   .status_display
     LDA !sram_display_mode : ASL : TAX
     JSR (.status_display_table,X)
 
+  .status_display_done
 if !INFOHUD_ALWAYS_SHOW_X_Y
     LDA !SAMUS_X : LDX #$0070 : JSR Draw4
     LDA !SAMUS_X_SUBPX : INX : INX : JSR Draw4Hex
@@ -1022,18 +1038,15 @@ endif
 
     ; Samus' HP
     LDA !SAMUS_HP : CMP !ram_last_hp : BEQ .reserves : STA !ram_last_hp
-    LDA !sram_top_display_mode : CMP !TOP_HUD_VANILLA_INDEX : BEQ .vanilla_draw_health
+    LDA !sram_top_display_mode : BIT !TOP_HUD_VANILLA_BIT : BNE .vanilla_draw_health
     LDA !SAMUS_HP : LDX #$0092 : JSR Draw4
     LDA !IH_BLANK : STA !HUD_TILEMAP+$90 : STA !HUD_TILEMAP+$9A
     BRA .reserves
 
   .vanilla_check_health
-    LDA !SAMUS_HP : CMP !SAMUS_LAST_HP : BEQ .vanilla_health_end
+    LDA !SAMUS_HP : CMP !SAMUS_LAST_HP : BNE .vanilla_draw_health
 
-  .vanilla_draw_health
-    JSR ih_hud_vanilla_health
-
-  .vanilla_health_end
+  .vanilla_shift_infohud
     ; Shift infohud status right by one
     LDA !HUD_TILEMAP+$8E : STA !HUD_TILEMAP+$90
     LDA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$8E
@@ -1042,10 +1055,14 @@ endif
     LDA !IH_BLANK : STA !HUD_TILEMAP+$88
     RTL
 
+  .vanilla_draw_health
+    JSR ih_hud_vanilla_health : BCC .vanilla_shift_infohud
+    RTL
+
     ; Reserve energy counter
   .reserves
     LDA !sram_top_display_mode : BEQ .statusIcons
-    CMP !TOP_HUD_VANILLA_INDEX : BEQ .vanilla_check_health
+    CMP !TOP_HUD_VANILLA_BIT : BNE .vanilla_check_health
 
     LDA !SAMUS_RESERVE_MAX : BEQ .noReserves
     LDA !SAMUS_RESERVE_ENERGY : CMP !ram_reserves_last : BEQ .checkAuto
@@ -1340,7 +1357,7 @@ Draw4:
 DrawHealthPaused:
 {
     LDA !sram_top_display_mode : BEQ .draw_health
-    CMP !TOP_HUD_VANILLA_INDEX : BEQ .vanilla_draw_health
+    BIT !TOP_HUD_VANILLA_BIT : BNE .vanilla_draw_health
 
     LDA !SAMUS_RESERVE_MAX : BEQ .noReserves
     LDA !SAMUS_RESERVE_ENERGY : STA !ram_reserves_last

@@ -390,7 +390,7 @@ if !FEATURE_VANILLAHUD
 else
     ; To account for various changes, we may need to tack on more clock cycles
     ; These can be removed as code is added to maintain CPU parity during normal gameplay
-    LDA !sram_top_display_mode : CMP !TOP_HUD_VANILLA_INDEX : BEQ .vanilla_display_lag_loop
+    LDA !sram_top_display_mode : BIT !TOP_HUD_VANILLA_BIT : BNE .vanilla_display_lag_loop
     LDA !ram_frames_held : BNE .vanilla_display_lag_loop
 endif
     LDA !sram_artificial_lag

@@ -16,7 +16,7 @@ action_preset_options_mainmenu:
 action_infohud_mainmenu:
 {
     ; Validate top display mode in range
-    LDA !sram_top_display_mode : CMP #$0003 : BCC action_mainmenu
+    LDA !sram_top_display_mode : CMP #$0004 : BCC action_mainmenu
     TDC : STA !sram_top_display_mode
     BRA action_mainmenu
 }
@@ -1736,13 +1736,14 @@ if !FEATURE_VANILLAHUD
 else
 ih_top_HUD_mode:
 !TOP_HUD_RESERVES_INDEX = #$0001
-!TOP_HUD_VANILLA_INDEX = #$0002
+!TOP_HUD_VANILLA_BIT = #$0002
     dw !ACTION_CHOICE
     dl #!sram_top_display_mode
     dw #$0000
     db #$28, "Top-Left Displa", #$FF
     db #$28, "y    ITEM %", #$FF
     db #$28, "y  RESERVES", #$FF
+    db #$28, "y  VANILLA+", #$FF
     db #$28, "y   VANILLA", #$FF
     db #$FF
 
@@ -1751,6 +1752,7 @@ ih_dynamic_frames_held:
     dl #!sram_top_display_mode
     dw #ih_goto_frames_held
     dw #ih_goto_frames_held
+    dw #$0000
     dw #$0000
 
 ih_goto_frames_held:
