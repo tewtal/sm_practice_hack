@@ -718,6 +718,7 @@ preset_scroll_fixes:
     CPX.w #ROOM_HiJumpBootsRoom : BEQ .hjb_room
     CPX.w #ROOM_GreenBubblesMissiles : BEQ .green_bubble_missiles
     CPX.w #ROOM_VolcanoRoom : BEQ .volcano_room
+    CPX.w #ROOM_KronicBoostRoom : BEQ .kronic_boost
     CPX.w #ROOM_PurpleShaft : BEQ .purple_shaft
     CPX.w #ROOM_BatCave : BEQ .bat_cave
     CPX.w #ROOM_AcidStatueRoom : BEQ .acid_chozo_room
@@ -741,6 +742,9 @@ preset_scroll_fixes:
   .volcano_room
     STA $CD26 : STA $CD27
     BRA .norfairdone
+
+  .kronic_boost
+    BRA .kronic_boost_check
 
   .purple_shaft
     INC : STA $CD20 : STA $CD21
@@ -792,6 +796,17 @@ preset_scroll_fixes:
     LDY !SAMUS_Y : CPY #$00D0    ; no fix if Ypos < 208
     BMI .norfairdone
     INC : STA $CD21 : STA $CD27
+    JMP .norfairdone
+
+  .kronic_boost_check
+    LDY !SAMUS_X : CPY #$0100    ; fix varies depending on X position
+    BMI .hidden_kronic_boost
+    INC : STA $CD23
+    TDC : STA $CD22
+    JMP .norfairdone
+  .hidden_kronic_boost
+    STA $CD22
+    TDC : STA $CD23
     JMP .norfairdone
 
     ; --------------------------------------------
