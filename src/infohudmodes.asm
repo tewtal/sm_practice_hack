@@ -3460,27 +3460,50 @@ status_ridleyai:
 
 ; this data could live anywhere in the ROM
 RidleyAI_pointers:
-    dw $B2F3                      ; [0+2] B2
-    dw $B321, $B3EC, $B3F8        ; [2+6] B3
-    dw $B441, $B455, $B493, $B4D1 ; [8+8] B4
-    dw $B516, $B554, $B594, $B5E5 ; [$10+8] B5
-    dw $B613, $B6A7, $B6DD        ; [$18+6] B6
-    dw $B70E, $B7B9               ; [$1E+4] B7
-                                  ; B8, B9 -> END
-    dw $BAB7                      ; [$22+2] BA
-    dw $BB8F, $BBC4, $BBF1        ; [$24+6] BB
-    dw $BC2E, $BC54               ; [$2A+4] BC
-    dw $BD4E                      ; [$2E+2] BD
-                                  ; BE, BF, C0, C1, C2, C3, C4 -> END
-    dw $C538, $C588               ; [$30+4] C5
+if !FEATURE_PAL
+                                         ; B2 -> END
+    dw $B303, $B331, $B3FC               ; [$00+6] B3
+    dw $B408, $B451, $B465, $B4A3, $B4E1 ; [$06+A] B4
+    dw $B526, $B564, $B5A4, $B5F5        ; [$10+8] B5
+    dw $B623, $B6B7, $B6ED               ; [$18+6] B6
+    dw $B71E, $B7C9                      ; [$1E+4] B7
+                                         ; B8, B9 -> END
+    dw $BAC7                             ; [$22+2] BA
+    dw $BB9F, $BBD4                      ; [$24+4] BB
+    dw $BC01, $BC3E, $BC64               ; [$28+6] BC
+    dw $BD5E                             ; [$2E+2] BD
+                                         ; BE, BF, C0, C1, C2, C3, C4 -> END
+    dw $C50F, $C55F                      ; [$30+4] C5
+else
+    dw $B2F3                             ; [$00+2] B2
+    dw $B321, $B3EC, $B3F8               ; [$02+6] B3
+    dw $B441, $B455, $B493, $B4D1        ; [$08+8] B4
+    dw $B516, $B554, $B594, $B5E5        ; [$10+8] B5
+    dw $B613, $B6A7, $B6DD               ; [$18+6] B6
+    dw $B70E, $B7B9                      ; [$1E+4] B7
+                                         ; B8, B9 -> END
+    dw $BAB7                             ; [$22+2] BA
+    dw $BB8F, $BBC4, $BBF1               ; [$24+6] BB
+    dw $BC2E, $BC54                      ; [$2A+4] BC
+    dw $BD4E                             ; [$2E+2] BD
+                                         ; BE, BF, C0, C1, C2, C3, C4 -> END
+    dw $C538, $C588                      ; [$30+4] C5
+endif
 
 RidleyAI_prefix_table:
 ; Table to skip ahead to the correct entries based on the high byte
 ; Unused entries are filled with $32 (the last element in the table) to finish the search faster
+if !FEATURE_PAL
     ;   B2   B3   B4   B5   B6   B7             BA   BB   BC   BD
-    db $00, $02, $08, $10, $18, $1E, $32, $32, $22, $24, $2A, $2E, $32, $32, $32, $32
+    db $34, $00, $06, $10, $18, $1E, $34, $34, $22, $24, $28, $2E, $34, $34, $34, $34
     ;                  C5
-    db $32, $32, $32, $30, $32, $32, $32, $32, $32, $32, $32, $32, $32, $32, $32, $32
+    db $34, $34, $34, $30, $34, $34, $34, $34, $34, $34, $34, $34, $34, $34, $34, $34
+else
+    ;   B2   B3   B4   B5   B6   B7             BA   BB   BC   BD
+    db $00, $02, $08, $10, $18, $1E, $34, $34, $22, $24, $2A, $2E, $34, $34, $34, $34
+    ;                  C5
+    db $34, $34, $34, $30, $34, $34, $34, $34, $34, $34, $34, $34, $34, $34, $34, $34
+endif
 
 RidleyAI_text_table:
     dw #RidleyAIText_B2F3 ; liftoff
@@ -3495,9 +3518,9 @@ RidleyAI_text_table:
     dw #RidleyAIText_B554 ; climbing
     dw #RidleyAIText_B594 ; swoop end
     dw #RidleyAIText_B5E5 ; hover
-    dw #RidleyAIText_B613 ; hover 2
+    dw #RidleyAIText_B613 ; hover spin
     dw #RidleyAIText_B6A7 ; pogo start
-    dw #RidleyAIText_B6DD ; pogo start 2
+    dw #RidleyAIText_B6DD ; pogo ready
     dw #RidleyAIText_B70E ; pogo down
     dw #RidleyAIText_B7B9 ; pogo up
     dw #RidleyAIText_BAB7 ; lunge
@@ -3509,6 +3532,7 @@ RidleyAI_text_table:
     dw #RidleyAIText_BD4E ; dodge power bomb
     dw #RidleyAIText_C538 ; dead move
     dw #RidleyAIText_C588 ; explode
+    dw #RidleyAIText_DEAD ; end
 
 RidleyAIText:
 table ../resources/HUDfont.tbl
@@ -3608,6 +3632,22 @@ status_draygonai:
 
 ; this data could live anywhere in the ROM
 DraygonAI_pointers:
+if !FEATURE_PAL
+    dw $872B, $879B                      ; [$00+6] 87
+    dw $8804, $88C1                      ; [$04+2] 88
+    dw $8932, $8961, $89C3               ; [$08+6] 89
+    dw $8A10, $8A60, $8AA0               ; [$0E+6] 8A
+    dw $8B1A, $8B62, $8BBE               ; [$14+6] 8B
+    dw $8C43, $8C9E, $8CE4               ; [$1A+6] 8C
+    dw $8D40, $8DC2                      ; [$20+4] 8D
+    dw $8E29                             ; [$24+2] 8E
+    dw $8F20, $8F2D, $8F2E, $8FE6        ; [$26+8] 8F
+    dw $90E4                             ; [$2E+2] 90
+    dw $9115, $9134, $9138, $9164, $9195 ; [$30+A] 91
+    dw $92A4, $92BB                      ; [$3A+4] 92
+                                         ; 93  ->  END
+    dw $94B9                             ; [$3E+2] 94
+else
     dw $871B, $878B, $87F4               ; [$00+6] 87
     dw $88B1                             ; [$06+2] 88
     dw $8922, $8951, $89B3               ; [$08+6] 89
@@ -3622,13 +3662,20 @@ DraygonAI_pointers:
     dw $9294, $92AB                      ; [$3A+4] 92
                                          ; 93  ->  END
     dw $94A9                             ; [$3E+2] 94
+endif
 
 DraygonAI_prefix_table:
 ; Table to skip ahead to the correct entries based on the high byte
 ; Unused entries are filled with $40 (the last element in the table) to finish the search faster
+if !FEATURE_PAL
+    ;   87   88   89   8A   8B   8C   8D   8E   8F   90   91   92        94
+    db $00, $04, $08, $0E, $14, $1A, $20, $24, $26, $2E, $30, $3A, $40, $3E
+    db $40, $40, $40, $40, $40, $40, $40, $40, $40, $40, $40, $40, $40, $40 ; up to A1
+else
     ;   87   88   89   8A   8B   8C   8D   8E   8F   90   91   92        94
     db $00, $06, $08, $0E, $14, $1A, $20, $24, $26, $2E, $30, $3A, $40, $3E
     db $40, $40, $40, $40, $40, $40, $40, $40, $40, $40, $40, $40, $40, $40 ; up to A1
+endif
 
 DraygonAI_text_table:
     dw #DraygonAIText_871B ; INIT EVIRS
@@ -3663,6 +3710,7 @@ DraygonAI_text_table:
     dw #DraygonAIText_9294 ; WAIT EVIRS
     dw #DraygonAIText_92AB ; SINK N FLOOR
     dw #DraygonAIText_94A9 ; HOLD SAMUS
+    dw #DraygonAIText_UNKN ; UNKNOWN
 
 DraygonAIText:
 table ../resources/HUDfont.tbl
