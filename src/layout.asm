@@ -1285,10 +1285,10 @@ org $848D0C
     AND #$000F
 
 ; Relocate grey door preinstruction table and add new type that has no prerequisite to begin flashing
-org $848C22
+org $848C4F
 layout_grey_door_preinstruction_table:
     dw $BDD4, $BDE3, $BDF2, $BE01, $BE1C, $BE1F, $BE30, $BDB2
-warnpc $848C3D
+warnpc $848C7C
 
 org $84BE43
     LDA layout_grey_door_preinstruction_table,Y
