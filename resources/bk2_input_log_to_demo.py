@@ -26,13 +26,13 @@ previous_count = 0
 for line in input_lines:
    if len(line) < 17 or '|' != line[0] or '|' != line[3] or '|' != line[16]:
       if previous_count > 0:
-         demo_file.write(f'    dw ${previous_count:04X}, ${current_input:04X}     ; {previous_line[4:16]}\n')
+         demo_file.write(f'    dw ${previous_count:04X}, ${current_input:04X} ; {previous_line[4:16]}\n')
          previous_line = None
          previous_count = 0
       demo_file.write(line)
    else:
       if previous_count > 0 and previous_line != line:
-         demo_file.write(f'    dw ${previous_count:04X}, ${current_input:04X}     ; {previous_line[4:16]}\n')
+         demo_file.write(f'    dw ${previous_count:04X}, ${current_input:04X} ; {previous_line[4:16]}\n')
          previous_line = None
          previous_count = 0
       if previous_line is None:
@@ -64,7 +64,7 @@ for line in input_lines:
             current_input += 0x10
       previous_count = previous_count + 1
 if previous_count > 0:
-   demo_file.write(f'    dw ${previous_count:04X}, ${current_input:04X}     ; {previous_line[4:16]}\n\n')
+   demo_file.write(f'    dw ${previous_count:04X}, ${current_input:04X} ; {previous_line[4:16]}\n\n')
 
 demo_file.close()
 

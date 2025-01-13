@@ -1,11 +1,13 @@
 asar 1.81
 lorom
 
-!FEATURE_SD2SNES ?= 1
+!FEATURE_SD2SNES ?= 0
 !FEATURE_TINYSTATES ?= 0
 !FEATURE_MAPSTATES ?= 0
 !FEATURE_DEV ?= 0
 !FEATURE_PAL ?= 0
+!FEATURE_TALLMENU ?= 0
+!FEATURE_VANILLAHUD ?= 0
 !INFOHUD_ALWAYS_SHOW_X_Y ?= 0
 !ORIGINAL_MESSAGE_TEXT ?= 0
 !PRESERVE_WRAM_DURING_SPACETIME ?= 1
@@ -13,11 +15,45 @@ lorom
 
 !VERSION_MAJOR = 2
 !VERSION_MINOR = 6
-!VERSION_BUILD = 4
+!VERSION_BUILD = 5
 !VERSION_REV   = 0
 
 table ../resources/normal.tbl
 print ""
+
+if !FEATURE_PAL
+    print "PAL REGION"
+else
+    print "NTSC REGION"
+endif
+
+if !FEATURE_TALLMENU
+    print "TALL MENU"
+endif
+
+if !FEATURE_VANILLAHUD
+    print "VANILLA HUD"
+if !INFOHUD_ALWAYS_SHOW_X_Y
+    print "ALWAYS SHOW X/Y IGNORED"
+endif
+else
+if !INFOHUD_ALWAYS_SHOW_X_Y
+    print "ALWAYS SHOW X/Y"
+endif
+endif
+
+if !ORIGINAL_MESSAGE_TEXT
+    print "PRESERVE FANFARE MESSAGES"
+endif
+
+if !RAW_TILE_GRAPHICS
+else
+    print "FAST PRESETS DISABLED"
+endif
+
+if !FEATURE_MAPSTATES
+    print "MAPSTATES ENABLED"
+endif
 
 if !FEATURE_SD2SNES
     print "SD2SNES ENABLED"
@@ -58,6 +94,7 @@ incsrc init.asm
 incsrc fanfare.asm
 incsrc spriteprio.asm
 incsrc spritefeat.asm
+
 if !RAW_TILE_GRAPHICS
     incsrc tilegraphics.asm
 endif
@@ -69,3 +106,4 @@ endif
 ; Make sure the ROM expands to 4MB
 org $FFFFFF : db $FF
 
+print "Assembly complete. Total bytes written: ", bytes

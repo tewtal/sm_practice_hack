@@ -4,18 +4,20 @@
 
 ih_prepare_ram_watch_menu:
 {
-    LDA #$0000 : STA !ram_cm_watch_enemy_property : STA !ram_cm_watch_enemy_index
+    TDC : STA !ram_cm_watch_enemy_property : STA !ram_cm_watch_enemy_index
     STA !ram_cm_watch_enemy_side
 
     ; See if we can better initialize enemy properties and indices
-    LDA !ram_watch_left : CMP #$0F78 : BCC .checkright : CMP #$1778 : BCS .checkright
+    LDA !ram_watch_left : CMP #!ENEMY_ID : BCC .checkright
+    CMP #(!ENEMY_ID+$800) : BCS .checkright
     BRA .found_enemy_ram
 
   .checkright
-    LDA !ram_watch_right : CMP #$0F78 : BCC .submenu : CMP #$1778 : BCS .submenu
+    LDA !ram_watch_right : CMP #!ENEMY_ID : BCC .submenu
+    CMP #(!ENEMY_ID+$800) : BCS .submenu
 
   .found_enemy_ram
-    SEC : SBC #$0F78 : STA !ram_cm_watch_enemy_index
+    SEC : SBC #!ENEMY_ID : STA !ram_cm_watch_enemy_index
     AND #$003E : LSR : STA !ram_cm_watch_enemy_property
     LDA !ram_cm_watch_enemy_index : AND #$07C0
     ASL #2 : XBA : STA !ram_cm_watch_enemy_index
@@ -106,19 +108,18 @@ ramwatch_common_enemy_apply:
 
     TXA : STA !ram_watch_right_index
     LDA !ram_cm_watch_enemy_property : ASL
-    CLC : ADC #$0F78 : STA !ram_watch_right
+    CLC : ADC #!ENEMY_ID : STA !ram_watch_right
     BRA .done
 
   .left
     TXA : STA !ram_watch_left_index
     LDA !ram_cm_watch_enemy_property : ASL
-    CLC : ADC #$0F78 : STA !ram_watch_left
+    CLC : ADC #!ENEMY_ID : STA !ram_watch_left
 
   .done
     LDA #$007E : STA !ram_watch_bank
     LDY #RAMWatchMenu
-    LDA !ram_cm_stack_index : DEC #4
-    STA !ram_cm_stack_index
+    LDA !MENU_STACK_INDEX : SEC : SBC #$0004 : STA !MENU_STACK_INDEX
     JSL cm_previous_menu
     JSL ih_prepare_ram_watch_menu
     %sfxconfirm()
@@ -216,127 +217,127 @@ RAMWatchCommonSamusMenu2:
     %cm_header("SELECT FROM SAMUS RAM")
 
 ramwatch_common_samus_09C2:
-    %cm_jsl("Samus Energy", action_select_common_address, #$09C2)
+    %cm_jsl("Samus Energy", action_select_common_address, #!SAMUS_HP)
 
 ramwatch_common_samus_09A2:
-    %cm_jsl("Equipped Items", action_select_common_address, #$09A2)
+    %cm_jsl("Equipped Items", action_select_common_address, #!SAMUS_ITEMS_EQUIPPED)
 
 ramwatch_common_samus_09A4:
-    %cm_jsl("Collected Items", action_select_common_address, #$09A4)
+    %cm_jsl("Collected Items", action_select_common_address, #!SAMUS_ITEMS_COLLECTED)
 
 ramwatch_common_samus_09A6:
-    %cm_jsl("Equipped Beams", action_select_common_address, #$09A6)
+    %cm_jsl("Equipped Beams", action_select_common_address, #!SAMUS_BEAMS_EQUIPPED)
 
 ramwatch_common_samus_09A8:
-    %cm_jsl("Collected Beams", action_select_common_address, #$09A8)
+    %cm_jsl("Collected Beams", action_select_common_address, #!SAMUS_BEAMS_COLLECTED)
 
 ramwatch_common_samus_0A1C:
-    %cm_jsl("Pose", action_select_common_address, #$0A1C)
+    %cm_jsl("Pose", action_select_common_address, #!SAMUS_POSE)
 
 ramwatch_common_samus_0A1E:
-    %cm_jsl("Pose X Direction", action_select_common_address, #$0A1E)
+    %cm_jsl("Pose X Direction", action_select_common_address, #!SAMUS_POSE_DIRECTION)
 
 ramwatch_common_samus_0A1F:
-    %cm_jsl("Movement Type", action_select_common_address, #$0A1F)
+    %cm_jsl("Movement Type", action_select_common_address, #!SAMUS_MOVEMENT_TYPE)
 
 ramwatch_common_samus_0A4C:
-    %cm_jsl("Subunit Energy", action_select_common_address, #$0A4C)
+    %cm_jsl("Subunit Energy", action_select_common_address, #!SAMUS_SUBUNIT_ENERGY)
 
 ramwatch_common_samus_0A94:
-    %cm_jsl("Animation Frame Timer", action_select_common_address, #$0A94)
+    %cm_jsl("Animation Frame Timer", action_select_common_address, #!SAMUS_ANIMATION_TIMER)
 
 ramwatch_common_samus_0A96:
-    %cm_jsl("Animation Frame", action_select_common_address, #$0A96)
+    %cm_jsl("Animation Frame", action_select_common_address, #!SAMUS_ANIMATION_FRAME)
 
 ramwatch_common_samus_0AA2:
-    %cm_jsl("Shinespark Delay Timer", action_select_common_address, #$0AA2)
+    %cm_jsl("Shinespark Delay Timer", action_select_common_address, #!SAMUS_SHINESPARK_DELAY_TIMER)
 
 ramwatch_common_samus_0CCE:
-    %cm_jsl("Projectile Counter", action_select_common_address, #$0CCE)
+    %cm_jsl("Projectile Counter", action_select_common_address, #!SAMUS_PROJECTILE_TIMER)
 
 ramwatch_common_samus_0CD2:
-    %cm_jsl("Bomb Counter", action_select_common_address, #$0CD2)
+    %cm_jsl("Bomb Counter", action_select_common_address, #!SAMUS_BOMB_COUNTER)
 
 ramwatch_common_samus_0CD4:
-    %cm_jsl("Bomb Spread Charge Timer", action_select_common_address, #$0CD4)
+    %cm_jsl("Bomb Spread Charge Timer", action_select_common_address, #!SAMUS_BOMB_SPREAD_CHARGE_TIMER)
 
 ramwatch_common_samus_0CE2:
-    %cm_jsl("Power Bomb X Position", action_select_common_address, #$0CE2)
+    %cm_jsl("Power Bomb X Position", action_select_common_address, #!SAMUS_POWER_BOMB_X)
 
 ramwatch_common_samus_0CE4:
-    %cm_jsl("Power Bomb Y Position", action_select_common_address, #$0CE4)
+    %cm_jsl("Power Bomb Y Position", action_select_common_address, #!SAMUS_POWER_BOMB_Y)
 
 ramwatch_common_samus_0DEC:
     %cm_jsl("CF + Draygon Grab Counter", action_select_common_address, #$0DEC)
 
 ramwatch_common_samus_18A8:
-    %cm_jsl("I-Frame Timer", action_select_common_address, #$18A8)
+    %cm_jsl("I-Frame Timer", action_select_common_address, #!SAMUS_IFRAME_TIMER)
 
 ramwatch_common_samus_18AA:
-    %cm_jsl("Knockback Timer", action_select_common_address, #$18AA)
+    %cm_jsl("Knockback Timer", action_select_common_address, #!SAMUS_KNOCKBACK_TIMER)
 
 ramwatch_common_samus_0AF4:
-    %cm_jsl("Auto-Jump Timer", action_select_common_address, #$0AF4)
+    %cm_jsl("Auto-Jump Timer", action_select_common_address, #!SAMUS_AUTO_JUMP_TIMER)
 
 ramwatch_common_samus_0AF6:
-    %cm_jsl("X Position", action_select_common_address, #$0AF6)
+    %cm_jsl("X Position", action_select_common_address, #!SAMUS_X)
 
 ramwatch_common_samus_0AF8:
-    %cm_jsl("X Subposition", action_select_common_address, #$0AF8)
+    %cm_jsl("X Subposition", action_select_common_address, #!SAMUS_X_SUBPX)
 
 ramwatch_common_samus_0AFA:
-    %cm_jsl("Y Position", action_select_common_address, #$0AFA)
+    %cm_jsl("Y Position", action_select_common_address, #!SAMUS_Y)
 
 ramwatch_common_samus_0AFC:
-    %cm_jsl("Y Subposition", action_select_common_address, #$0AFC)
+    %cm_jsl("Y Subposition", action_select_common_address, #!SAMUS_Y_SUBPX)
 
 ramwatch_common_samus_0AFE:
-    %cm_jsl("Hitbox X Radius", action_select_common_address, #$0AFE)
+    %cm_jsl("Hitbox X Radius", action_select_common_address, #!SAMUS_X_RADIUS)
 
 ramwatch_common_samus_0B00:
-    %cm_jsl("Hitbox Y Radius", action_select_common_address, #$0B00)
+    %cm_jsl("Hitbox Y Radius", action_select_common_address, #!SAMUS_Y_RADIUS)
 
 ramwatch_common_samus_0B2C:
-    %cm_jsl("Y Subspeed", action_select_common_address, #$0B2C)
+    %cm_jsl("Y Subspeed", action_select_common_address, #!SAMUS_Y_SUBSPEED)
 
 ramwatch_common_samus_0B2D:
-    %cm_jsl("Y Speed Combined", action_select_common_address, #$0B2D)
+    %cm_jsl("Y Speed Combined", action_select_common_address, #!SAMUS_Y_SPEEDCOMBINED)
 
 ramwatch_common_samus_0B2E:
-    %cm_jsl("Y Speed", action_select_common_address, #$0B2E)
+    %cm_jsl("Y Speed", action_select_common_address, #!SAMUS_Y_SPEED)
 
 ramwatch_common_samus_0B32:
-    %cm_jsl("Y Subacceleration", action_select_common_address, #$0B32)
+    %cm_jsl("Y Subacceleration", action_select_common_address, #!SAMUS_Y_SUBACCELERATION)
 
 ramwatch_common_samus_0B34:
-    %cm_jsl("Y Acceleration", action_select_common_address, #$0B34)
+    %cm_jsl("Y Acceleration", action_select_common_address, #!SAMUS_Y_ACCELERATION)
 
 ramwatch_common_samus_0B36:
-    %cm_jsl("Y Direction", action_select_common_address, #$0B36)
+    %cm_jsl("Y Direction", action_select_common_address, #!SAMUS_Y_DIRECTION)
 
 ramwatch_common_samus_0B3F:
-    %cm_jsl("Speed Boost (Dash) Counter", action_select_common_address, #$0B3F)
+    %cm_jsl("Speed Boost (Dash) Counter", action_select_common_address, #!SAMUS_DASH_COUNTER)
 
 ramwatch_common_samus_0B42:
-    %cm_jsl("X Extra Run Speed", action_select_common_address, #$0B42)
+    %cm_jsl("X Extra Run Speed", action_select_common_address, #!SAMUS_X_RUNSPEED)
 
 ramwatch_common_samus_0B44:
-    %cm_jsl("X Extra Run Subspeed", action_select_common_address, #$0B44)
+    %cm_jsl("X Extra Run Subspeed", action_select_common_address, #!SAMUS_X_SUBRUNSPEED)
 
 ramwatch_common_samus_0B46:
-    %cm_jsl("X Base Speed", action_select_common_address, #$0B46)
+    %cm_jsl("X Base Speed", action_select_common_address, #!SAMUS_X_MOMENTUM)
 
 ramwatch_common_samus_0B48:
-    %cm_jsl("X Base Subspeed", action_select_common_address, #$0B48)
+    %cm_jsl("X Base Subspeed", action_select_common_address, #!SAMUS_X_SUBMOMENTUM)
 
 ramwatch_common_samus_0A68:
-    %cm_jsl("Shine Timer", action_select_common_address, #$0A68)
+    %cm_jsl("Shine Timer", action_select_common_address, #!SAMUS_SHINE_TIMER)
 
 ramwatch_common_samus_0ACC:
-    %cm_jsl("Shine Timer Type", action_select_common_address, #$0ACC)
+    %cm_jsl("Shine Timer Type", action_select_common_address, #!SAMUS_SHINE_TIMER_TYPE)
 
 ramwatch_common_samus_0CCC:
-    %cm_jsl("Cooldown Timer", action_select_common_address, #$0CCC)
+    %cm_jsl("Cooldown Timer", action_select_common_address, #!SAMUS_COOLDOWN)
 
 RAMWatchCommonPlmMenu:
     dw ramwatch_common_plm_1C23
@@ -485,42 +486,38 @@ RAMWatchCommonMiscMenu:
     dw ramwatch_common_misc_0E50
     dw ramwatch_common_misc_0E52
     dw ramwatch_common_misc_1840
-    dw ramwatch_common_misc_1842
     dw #$0000
     %cm_header("SELECT FROM MISC RAM")
 
 ramwatch_common_misc_05E5:
-    %cm_jsl("RNG Seed Value", action_select_common_address, #$05E5)
+    %cm_jsl("RNG Seed Value", action_select_common_address, #!CACHED_RANDOM_NUMBER)
 
 ramwatch_common_misc_079B:
-    %cm_jsl("Room ID", action_select_common_address, #$079B)
+    %cm_jsl("Room ID", action_select_common_address, #!ROOM_ID)
 
 ramwatch_common_misc_0998:
-    %cm_jsl("Game State", action_select_common_address, #$0998)
+    %cm_jsl("Game State", action_select_common_address, #!GAMEMODE)
 
 ramwatch_common_misc_09DA:
-    %cm_jsl("Game Time, Frames", action_select_common_address, #$09DA)
+    %cm_jsl("Game Time, Frames", action_select_common_address, #!IGT_FRAMES)
 
 ramwatch_common_misc_09DC:
-    %cm_jsl("Game Time, Seconds", action_select_common_address, #$09DC)
+    %cm_jsl("Game Time, Seconds", action_select_common_address, #!IGT_SECONDS)
 
 ramwatch_common_misc_09DE:
-    %cm_jsl("Game Time, Minutes", action_select_common_address, #$09DE)
+    %cm_jsl("Game Time, Minutes", action_select_common_address, #!IGT_MINUTES)
 
 ramwatch_common_misc_09E0:
-    %cm_jsl("Game Time, Hours", action_select_common_address, #$09E0)
+    %cm_jsl("Game Time, Hours", action_select_common_address, #!IGT_HOURS)
 
 ramwatch_common_misc_0E50:
-    %cm_jsl("Room Enemies Killed", action_select_common_address, #$0E50)
+    %cm_jsl("Room Enemies Killed", action_select_common_address, #!ENEMY_KILLS_COUNTER)
 
 ramwatch_common_misc_0E52:
-    %cm_jsl("Enemy Kills to Unlock Door", action_select_common_address, #$0E50)
+    %cm_jsl("Enemy Kills to Unlock Door", action_select_common_address, #!ENEMY_KILLS_UNLOCK)
 
 ramwatch_common_misc_1840:
-    %cm_jsl("Earthquake Timer", action_select_common_address, #$1840)
-
-ramwatch_common_misc_1842:
-    %cm_jsl("Frame Counter", action_select_common_address, #$1842)
+    %cm_jsl("Earthquake Timer", action_select_common_address, #!EARTHQUAKE_TIMER)
 
 action_select_common_address:
 {
@@ -540,20 +537,18 @@ ramwatch_common_addr1:
     %cm_jsl("Address 1 (Left)", .routine, #$0000)
   .routine
     LDA !ram_cm_watch_common_address : STA !ram_watch_left
-    LDA #$0000
-    STA !ram_watch_left_index : STA !ram_watch_bank
+    TDC : STA !ram_watch_left_index : STA !ram_watch_bank
     BRA ramwatch_common_addr_done
 
 ramwatch_common_addr2:
     %cm_jsl("Address 2 (Right)", .routine, #$0000)
   .routine
     LDA !ram_cm_watch_common_address : STA !ram_watch_right
-    LDA #$0000
-    STA !ram_watch_right_index : STA !ram_watch_bank
+    TDC : STA !ram_watch_right_index : STA !ram_watch_bank
 
 ramwatch_common_addr_done:
     LDY #RAMWatchMenu
-    LDA !ram_cm_stack_index : SEC : SBC #$0006 : STA !ram_cm_stack_index
+    LDA !MENU_STACK_INDEX : SEC : SBC #$0006 : STA !MENU_STACK_INDEX
     JSL cm_previous_menu
     JSL ih_prepare_ram_watch_menu
     %sfxconfirm()
@@ -562,12 +557,12 @@ ramwatch_common_addr_done:
 ramwatch_common_back:
     %cm_jsl("Go Back", .routine, #0)
   .routine
-    LDA !ram_cm_stack_index : SEC : SBC #$0004 : STA !ram_cm_stack_index
+    LDA !MENU_STACK_INDEX : SEC : SBC #$0004 : STA !MENU_STACK_INDEX
     JSL cm_previous_menu
     RTL
 
 ramwatch_enable:
-    %cm_jsl("Turn On RAM Watch", .routine, #!IH_MODE_RAMWATCH_INDEX)
+    %cm_jsl("Turn On RAM Watch", .routine, !IH_MODE_RAMWATCH_INDEX)
   .routine
     TYA : STA !sram_display_mode
     %sfxconfirm()
@@ -613,7 +608,7 @@ ramwatch_execute_left:
   .setValue
     LDA !ram_watch_edit_left : STA [$C1]
     %a16()
-    LDA #!IH_MODE_RAMWATCH_INDEX : STA !sram_display_mode
+    LDA !IH_MODE_RAMWATCH_INDEX : STA !sram_display_mode
     %sfxconfirm()
     JML init_print_segment_timer
 
@@ -627,7 +622,7 @@ ramwatch_execute_right:
   .setValue
     LDA !ram_watch_edit_right : STA [$C1]
     %a16()
-    LDA #!IH_MODE_RAMWATCH_INDEX : STA !sram_display_mode
+    LDA !IH_MODE_RAMWATCH_INDEX : STA !sram_display_mode
     %sfxconfirm()
     JML init_print_segment_timer
 
@@ -639,7 +634,7 @@ ramwatch_lock_right:
 
 action_HUD_ramwatch:
 {
-    LDA #!IH_MODE_RAMWATCH_INDEX : STA !sram_display_mode
+    LDA !IH_MODE_RAMWATCH_INDEX : STA !sram_display_mode
     JML init_print_segment_timer
 }
 

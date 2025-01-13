@@ -211,22 +211,22 @@ hijack_loading_room_CRE:
   .leftToRight
     LDA !ram_door_destination : ASL : TAX
     LDA portals_right_vanilla_inverted_table,X : BMI .saveDoor
-    BRL .noChangePLX
+    JMP .noChangePLX
 
   .rightToLeft
     LDA !ram_door_source : ASL : TAX
     LDA portals_left_vanilla_inverted_table,X : BMI .saveDoor
-    BRL .noChangePLX
+    JMP .noChangePLX
 
   .upToDown
     LDA !ram_door_destination : ASL : TAX
     LDA portals_down_vanilla_inverted_table,X : BMI .saveDoorUpDown
-    BRL .noChangePLX
+    JMP .noChangePLX
 
   .downToUp
     LDA !ram_door_source : ASL : TAX
     LDA portals_up_vanilla_inverted_table,X : BMI .saveDoorUpDown
-    BRL .noChangePLX
+    JMP .noChangePLX
 
   .pickAreaBossLeftRight
     LDA !ram_door_portal_flags : BIT !DOOR_PORTAL_HORIZONTAL_MIRRORING_BIT : BEQ .pickAreaBossCustom
@@ -1285,10 +1285,10 @@ org $848D0C
     AND #$000F
 
 ; Relocate grey door preinstruction table and add new type that has no prerequisite to begin flashing
-org $848C22
+org $848C4F
 layout_grey_door_preinstruction_table:
     dw $BDD4, $BDE3, $BDF2, $BE01, $BE1C, $BE1F, $BE30, $BDB2
-warnpc $848C3D
+warnpc $848C7C
 
 org $84BE43
     LDA layout_grey_door_preinstruction_table,Y
@@ -1911,6 +1911,16 @@ org $8FD938
 hook_layout_asm_halfie_climb:
     dw #layout_asm_halfie_climb
 
+; Dust Torizo setup asm
+org $8FDC8F
+hook_layout_asm_dust_torizo:
+    dw #layout_asm_dust_torizo
+
+; Big Boy setup asm
+org $8FDCDB
+hook_layout_asm_big_boy:
+    dw #layout_asm_big_boy
+
 ; Tourian escape 2 main asm
 org $8FDE99
 hook_layout_main_asm_tourian_escape_2:
@@ -2116,22 +2126,26 @@ layout_asm_cutscene_g4skip:
 
 layout_asm_mbhp:
 {
+if !FEATURE_VANILLAHUD
+else
     LDA !sram_display_mode : BNE .done
-    LDA #!IH_MODE_ROOMSTRAT_INDEX : STA !sram_display_mode
-    LDA #!IH_STRAT_MBHP_INDEX : STA !sram_room_strat
+    LDA !IH_MODE_ROOMSTRAT_INDEX : STA !sram_display_mode
+    LDA !IH_STRAT_MBHP_INDEX : STA !sram_room_strat
 
   .done
+endif ; !FEATURE_VANILLAHUD
     RTS
 }
 
 layout_asm_ceres_ridley_state_check:
 {
-    LDA $0943 : BEQ .noTimer
+    LDA !TIMER_STATUS : BEQ .noTimer
     LDA $0001,X : TAX
     JMP $E5E6
+
   .noTimer
-    STZ $093F
-    INX : INX : INX
+    STZ !CERES_STATUS
+    INX #3
     RTS
 }
 
@@ -2139,11 +2153,11 @@ layout_asm_ceres_ridley_no_timer:
 {
     ; Same as original setup asm, except force blue background
     PHP
-    SEP #$20
+    %a8()
     LDA #$66 : STA $5D
     PLP
     JSL $88DDD0
-    LDA #$0009 : STA $07EB
+    LDA #$0009 : STA !CERES_HDMA_DATA
     RTS
 }
 
@@ -2926,6 +2940,18 @@ layout_asm_halfie_climb:
 layout_asm_halfie_climb_done:
     PLP
     RTS
+
+layout_asm_dust_torizo:
+{
+    TDC : INC : STA !ram_room_has_set_rng
+    RTS
+}
+
+layout_asm_big_boy:
+{
+    TDC : INC : STA !ram_room_has_set_rng
+    RTS
+}
 
 layout_asm_aqueductfarmsandpit_door_list:
     dw #$A7D4, #hook_layout_asm_aqueductfarmsandpit_door1

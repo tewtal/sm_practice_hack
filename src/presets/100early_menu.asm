@@ -302,7 +302,7 @@ presets_100early_crateria_ceres_escape:
     %cm_preset("Ceres Escape", #preset_100early_crateria_ceres_escape)
 
 presets_100early_crateria_ceres_last_3_rooms:
-    %cm_preset("Ceres Last 3 rooms", #preset_100early_crateria_ceres_last_3_rooms)
+    %cm_preset("Ceres Last 3 Rooms", #preset_100early_crateria_ceres_last_3_rooms)
 
 presets_100early_crateria_ship:
     %cm_preset("Ship", #preset_100early_crateria_ship)

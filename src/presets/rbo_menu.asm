@@ -416,7 +416,7 @@ presets_rbo_bombs_ceres_escape:
     %cm_preset("Ceres Escape", #preset_rbo_bombs_ceres_escape)
 
 presets_rbo_bombs_ceres_last_3_rooms:
-    %cm_preset("Ceres Last 3 rooms", #preset_rbo_bombs_ceres_last_3_rooms)
+    %cm_preset("Ceres Last 3 Rooms", #preset_rbo_bombs_ceres_last_3_rooms)
 
 presets_rbo_bombs_ship:
     %cm_preset("Ship", #preset_rbo_bombs_ship)

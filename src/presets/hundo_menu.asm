@@ -318,7 +318,7 @@ presets_hundo_bombs_ceres_escape:
     %cm_preset("Ceres Escape", #preset_hundo_bombs_ceres_escape)
 
 presets_hundo_bombs_ceres_last_3_rooms:
-    %cm_preset("Ceres Last 3 rooms", #preset_hundo_bombs_ceres_last_3_rooms)
+    %cm_preset("Ceres Last 3 Rooms", #preset_hundo_bombs_ceres_last_3_rooms)
 
 presets_hundo_bombs_ship:
     %cm_preset("Ship", #preset_hundo_bombs_ship)

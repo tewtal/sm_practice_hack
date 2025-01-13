@@ -7,37 +7,6 @@
 ; This resource adds a crash handler to dump data to SRAM
 ; whenever one of these "crash vectors" is triggered
 
-!ram_crash_a = !CRASHDUMP
-!ram_crash_x = !CRASHDUMP+$02
-!ram_crash_y = !CRASHDUMP+$04
-!ram_crash_dbp = !CRASHDUMP+$06
-!ram_crash_sp = !CRASHDUMP+$08
-!ram_crash_type = !CRASHDUMP+$0A
-!ram_crash_draw_value = !CRASHDUMP+$0C
-!ram_crash_stack_size = !CRASHDUMP+$0E
-
-; Reserve 48 bytes for stack
-!ram_crash_stack = !CRASHDUMP+$10
-
-!ram_crash_page = !CRASHDUMP+$40
-!ram_crash_palette = !CRASHDUMP+$42
-!ram_crash_cursor = !CRASHDUMP+$44
-!ram_crash_loop_counter = !CRASHDUMP+$46
-!ram_crash_bytes_to_write = !CRASHDUMP+$48
-!ram_crash_stack_line_position = !CRASHDUMP+$4A
-!ram_crash_text = !CRASHDUMP+$4C
-!ram_crash_text_bank = !CRASHDUMP+$4E
-!ram_crash_text_palette = !CRASHDUMP+$50
-!ram_crash_mem_viewer = !CRASHDUMP+$52
-!ram_crash_mem_viewer_bank = !CRASHDUMP+$54
-!ram_crash_temp = !CRASHDUMP+$56
-!ram_crash_bg = !CRASHDUMP+$58
-
-!ram_crash_input = !CRASHDUMP+$60
-!ram_crash_input_new = !CRASHDUMP+$62
-!ram_crash_input_prev = !CRASHDUMP+$64
-!ram_crash_input_timer = !CRASHDUMP+$66
-
 pushpc
 
 ; Hijack generic crash handler
@@ -140,7 +109,7 @@ CrashHandler:
 
     ; restore last two stack bytes if underflow
     LDA !ram_crash_type : AND #$4000 : BEQ .launchViewer
-    LDA !ram_crash_temp : STA !ram_crash_stack+$3E
+    LDA !ram_crash_temp : STA !ram_crash_stack+$2E
 
   .launchViewer
     ; launch CrashViewer to display dump
@@ -278,7 +247,7 @@ CrashLoop:
     ; check for soft reset shortcut (Select+Start+L+R)
     LDA !ram_crash_input : AND #$3030 : CMP #$3030 : BNE .skipSoftReset
     AND !ram_crash_input_new : BEQ .skipSoftReset
-    STZ $05F5   ; Enable sounds
+    STZ !DISABLE_SOUNDS ; Enable sounds
     JML $808462 ; Soft Reset
   .skipSoftReset
 
@@ -286,8 +255,7 @@ if !FEATURE_SD2SNES
     ; check for load state shortcut
     LDA !ram_crash_input : CMP !sram_ctrl_load_state : BNE .skipLoadState
     AND !ram_crash_input_new : BEQ .skipLoadState
-    ; check if valid savestate
-    LDA !SRAM_SAVED_STATE : CMP #$5AFE : BNE .skipLoadState
+    LDA !SRAM_SAVED_STATE : CMP !SAFEWORD : BNE .skipLoadState
     ; prepare to jump to load_state
     %a8()
     LDA.b #gamemode_start>>16 : PHA : PLB
@@ -297,9 +265,9 @@ if !FEATURE_SD2SNES
   .skipLoadState
 endif
 
-    TXA : AND #$0010 : BNE .incPalette ; R
-    TXA : AND #$0020 : BNE .decPalette ; L
-    TXA : AND #$1080 : BNE .next       ; A or Start
+    TXA : BIT #$0010 : BNE .incPalette ; R
+    BIT #$0020 : BNE .decPalette       ; L
+    AND #$1080 : BNE .next             ; A or Start
     TXA : AND #$A000 : BNE .previous   ; B or Select
     JMP CrashLoop
 
@@ -433,9 +401,7 @@ CrashDump:
 
   .drawStartingPosition
     LDX #$0228 : JSR crash_draw4
-    BRA .drawStackBytesWritten
 
-  .drawStackBytesWritten
     ; -- Draw stack bytes written --
     LDA !ram_crash_stack_size : STA !ram_crash_draw_value
     BPL .setStackBytesToWrite
@@ -1024,10 +990,10 @@ crash_tilemap_transfer:
 crash_next_frame:
 {
     PHP : %a8()
-    LDA $05B8 : PHA
+    LDA !NMI_COUNTER : PHA
   .loop
-    CMP $05B8 : BEQ .loop
-    PLA : STA $05B8
+    CMP !NMI_COUNTER : BEQ .loop
+    PLA : STA !NMI_COUNTER
     PLP
     RTL
 }
@@ -1073,9 +1039,9 @@ crash_read_inputs:
 CrashTextHeader:
 table ../resources/header.tbl
 if !VERSION_REV
-    db "CRASH HANDLER !VERSION_MAJOR.!VERSION_MINOR.!VERSION_BUILD.!VERSION_REV", $FF
+    db "CRASH HANDLER !VERSION_MAJOR.!VERSION_MINOR.!VERSION_BUILD.!VERSION_REV", #$FF
 else
-    db "CRASH HANDLER !VERSION_MAJOR.!VERSION_MINOR.!VERSION_BUILD", $FF
+    db "CRASH HANDLER !VERSION_MAJOR.!VERSION_MINOR.!VERSION_BUILD", #$FF
 endif
 table ../resources/normal.tbl
 

@@ -85,7 +85,7 @@ for row in rows:
          unnamed_symbol_found = True
       if len(row) > 8:
          # for longest label, ignore presets and tile table names
-         if row[0] < 'E' or row[1] == '0' or row[1] == '4':
+         if row[0] < 'E' or row[1] == '0':
             label = row[8:-1]
             if len(label) > len(longest_label):
                longest_label = label

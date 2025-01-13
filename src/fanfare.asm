@@ -43,40 +43,126 @@ original_button_tilemap_offset_table:
     dw #$8436, #$8289, EndFanfareText
     dw #$8436, #$8289, EndFanfareText
 
-
 org $859643
 print pc, " fanfare message start"
 
 ;;; Message text must be listed in order
+table ../resources/HUDfont.tbl
 EnemiesKilledText:
-    dw #$000E, #$000E, #$000E, #$000E, #$000E, #$000E, #$284E, #$284E
-    dw #$284E, #$28E4, #$28ED, #$28E4, #$28EC, #$28E8, #$28E4, #$28F2
-    dw #$284E, #$28EA, #$28E8, #$28EB, #$28EB, #$28E4, #$28E3, #$284E
-    dw #$284E, #$000E, #$000E, #$000E, #$000E, #$000E, #$000E, #$000E
+    dw #$000E, #$000E, #$000E, #$000E, #$000E, #$000E
+    dw #$2800|' '
+    dw #$2800|' '
+    dw #$2800|' '
+    dw #$2800|'E'
+    dw #$2800|'N'
+    dw #$2800|'E'
+    dw #$2800|'M'
+    dw #$2800|'I'
+    dw #$2800|'E'
+    dw #$2800|'S'
+    dw #$2800|' '
+    dw #$2800|'K'
+    dw #$2800|'I'
+    dw #$2800|'L'
+    dw #$2800|'L'
+    dw #$2800|'E'
+    dw #$2800|'D'
+    dw #$2800|' '
+    dw #$2800|' '
+    dw #$000E, #$000E, #$000E, #$000E, #$000E, #$000E, #$000E
 
 BrainBusterText:
-    dw #$000E, #$000E, #$000E, #$000E, #$000E, #$000E, #$284E, #$284E
-    dw #$284E, #$28E1, #$28F1, #$28E0, #$28E8, #$28ED, #$284E, #$28E1
-    dw #$28F4, #$28F2, #$28F3, #$28E4, #$28F1, #$284E, #$284E, #$284E
-    dw #$284E, #$000E, #$000E, #$000E, #$000E, #$000E, #$000E, #$000E
+    dw #$000E, #$000E, #$000E, #$000E, #$000E, #$000E
+    dw #$2800|' '
+    dw #$2800|' '
+    dw #$2800|' '
+    dw #$2800|'B'
+    dw #$2800|'R'
+    dw #$2800|'A'
+    dw #$2800|'I'
+    dw #$2800|'N'
+    dw #$2800|' '
+    dw #$2800|'B'
+    dw #$2800|'U'
+    dw #$2800|'S'
+    dw #$2800|'T'
+    dw #$2800|'E'
+    dw #$2800|'R'
+    dw #$2800|' '
+    dw #$2800|' '
+    dw #$2800|' '
+    dw #$2800|' '
+    dw #$000E, #$000E, #$000E, #$000E, #$000E, #$000E, #$000E
 
 GhostBusterText:
-    dw #$000E, #$000E, #$000E, #$000E, #$000E, #$000E, #$284E, #$28F6
-    dw #$28E7, #$28EE, #$284E, #$28F8, #$28E0, #$284E, #$28E6, #$28EE
-    dw #$28ED, #$28ED, #$28E0, #$284E, #$28E2, #$28E0, #$28EB, #$28EB
-    dw #$28FE, #$000E, #$000E, #$000E, #$000E, #$000E, #$000E, #$000E
+    dw #$000E, #$000E, #$000E, #$000E, #$000E, #$000E
+    dw #$2800|' '
+    dw #$2800|'W'
+    dw #$2800|'H'
+    dw #$2800|'O'
+    dw #$2800|' '
+    dw #$2800|'Y'
+    dw #$2800|'A'
+    dw #$2800|' '
+    dw #$2800|'G'
+    dw #$2800|'O'
+    dw #$2800|'N'
+    dw #$2800|'N'
+    dw #$2800|'A'
+    dw #$2800|' '
+    dw #$2800|'C'
+    dw #$2800|'A'
+    dw #$2800|'L'
+    dw #$2800|'L'
+    dw #$2800|'?'
+    dw #$000E, #$000E, #$000E, #$000E, #$000E, #$000E, #$000E
 
 ShipBusterText:
-    dw #$000E, #$000E, #$000E, #$000E, #$000E, #$000E, #$284E, #$284E
-    dw #$28F2, #$28E7, #$28E8, #$28EF, #$284E, #$28E2, #$28EB, #$28EE
-    dw #$28E0, #$28EA, #$28E8, #$28ED, #$28E6, #$284E, #$284E, #$284E
-    dw #$284E, #$000E, #$000E, #$000E, #$000E, #$000E, #$000E, #$000E
-    dw #$000E, #$000E, #$000E, #$000E, #$000E, #$000E, #$284E, #$284E
-    dw #$28E3, #$28E4, #$28F5, #$28E8, #$28E2, #$28E4, #$284E, #$28E4
-    dw #$28ED, #$28E6, #$28E0, #$28E6, #$28E4, #$28E3, #$284E, #$284E
-    dw #$284E, #$000E, #$000E, #$000E, #$000E, #$000E, #$000E, #$000E
+    dw #$000E, #$000E, #$000E, #$000E, #$000E, #$000E
+    dw #$2800|' '
+    dw #$2800|' '
+    dw #$2800|'S'
+    dw #$2800|'H'
+    dw #$2800|'I'
+    dw #$2800|'P'
+    dw #$2800|' '
+    dw #$2800|'C'
+    dw #$2800|'L'
+    dw #$2800|'O'
+    dw #$2800|'A'
+    dw #$2800|'K'
+    dw #$2800|'I'
+    dw #$2800|'N'
+    dw #$2800|'G'
+    dw #$2800|' '
+    dw #$2800|' '
+    dw #$2800|' '
+    dw #$2800|' '
+    dw #$000E, #$000E, #$000E, #$000E, #$000E, #$000E, #$000E
+    dw #$000E, #$000E, #$000E, #$000E, #$000E, #$000E
+    dw #$2800|' '
+    dw #$2800|' '
+    dw #$2800|'D'
+    dw #$2800|'E'
+    dw #$2800|'V'
+    dw #$2800|'I'
+    dw #$2800|'C'
+    dw #$2800|'E'
+    dw #$2800|' '
+    dw #$2800|'E'
+    dw #$2800|'N'
+    dw #$2800|'G'
+    dw #$2800|'A'
+    dw #$2800|'G'
+    dw #$2800|'E'
+    dw #$2800|'D'
+    dw #$2800|' '
+    dw #$2800|' '
+    dw #$2800|' '
+    dw #$000E, #$000E, #$000E, #$000E, #$000E, #$000E, #$000E
 
 EndFanfareText:
+table ../resources/normal.tbl
 
 ;;; Recreate $8749: Special button tilemap offsets ;;;
 SpecialButtonTilemapOffsets:
@@ -131,7 +217,7 @@ print pc, " fanfare start"
 play_or_skip_fanfare:
 {
     PHA
-    LDA !sram_fanfare : BIT !FANFARE_TOGGLE : BNE .playfanfare
+    LDA !sram_fanfare : BNE .playfanfare
     PLA
     JML $848C05
 
@@ -163,12 +249,13 @@ if !ORIGINAL_MESSAGE_TEXT
     RTL
 else
     JSL prepare_fanfare_from_non_plm
+    ; Play room music track after 360 frames
     LDA #$0168 : JSL $82E118
 
     ; Open message box
-    LDA !ROOM_ID : CMP #ROOM_MotherBrainRoom : BEQ .kill_mb
-    CMP #ROOM_PhantoonRoom : BEQ .kill_phantoon
-    CMP #ROOM_LandingSite : BEQ .kill_ship
+    LDA !ROOM_ID : CMP.w #ROOM_MotherBrainRoom : BEQ .kill_mb
+    CMP.w #ROOM_PhantoonRoom : BEQ .kill_phantoon
+    CMP.w #ROOM_LandingSite : BEQ .kill_ship
     LDA #$001E : JML $858080
   .kill_mb
     LDA #$001F : JML $858080
@@ -181,24 +268,23 @@ endif
 
 hook_message_box_wait:
 {
-    LDA !sram_fanfare : BIT.b !FANFARE_TOGGLE : BNE .fanfareloop
-    LDX #$0020       ; shorten message box length
+    LDA !sram_fanfare : BNE .fanfareloop
+    ; shorten message box length
+    LDX #$0020
 
-  .nofanfareloop     ; skipping fanfare, so no need to mess with sound
+  .nofanfareloop
+    ; skipping fanfare, so no need to mess with sound
     JSR hook_msg_wait_for_lag_frame
-    DEX
-    BNE .nofanfareloop
-
+    DEX : BNE .nofanfareloop
     RTS
 
-  .fanfareloop       ; original logic
+  .fanfareloop
+    ; original logic
     JSR hook_msg_wait_for_lag_frame
     PHX
-    JSL $808F0C
-    JSL $8289EF
-    PLX
-    DEX
-    BNE .fanfareloop
+    JSL $808F0C ; Handle music queue
+    JSL $8289EF ; Handle sounds
+    PLX : DEX : BNE .fanfareloop
     RTS
 }
 
@@ -213,29 +299,29 @@ if !FEATURE_SD2SNES
     %a16()
     LDA $4218 : BEQ .done
     CMP !sram_ctrl_load_state : BNE .done
-    LDA !SRAM_SAVED_STATE : CMP #$5AFE : BNE .done
+    LDA !SRAM_SAVED_STATE : CMP !SAFEWORD : BNE .done
     PHB : PHK : PLB
     JML load_state
 
   .done
 endif
-    ; Jump to vanilla routine to wait for lag frame
+    ; Jump to vanilla routine
     JMP $8137
 }
 
 hook_resume_room_music:
 {
-    LDA !sram_fanfare : BIT !FANFARE_TOGGLE : BNE .resume
+    LDA !sram_fanfare : BNE .resume
 
     ; This method is also used when starting game at Ceres
     LDA !AREA_ID : CMP #$0006 : BEQ .resume
     RTL
 
   .resume
-    TDC              ; original logic to queue room music after fanfare
-    JSL $808FF7
-    LDA $07F5
-    JSL $808FC1
+    ; original logic to queue room music after fanfare
+    TDC : JSL $808FF7
+    LDA !MUSIC_TRACK
+    JSL !MUSIC_ROUTINE
     RTL
 }
 

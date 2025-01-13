@@ -1,6 +1,6 @@
 
 pushpc
-org $E68000
+org $E48000
 print pc, " layoutmenu start"
 
 ; -------------------------
@@ -4262,4 +4262,5 @@ layout_updown_downdoor:
 
 
 print pc, " layoutmenu end"
+warnpc $E4E000 ; customizemenu.asm
 pullpc

@@ -218,7 +218,7 @@ presets_gtclassic_crateria_ceres_escape:
     %cm_preset("Ceres Escape", #preset_gtclassic_crateria_ceres_escape)
 
 presets_gtclassic_crateria_ceres_last_3_rooms:
-    %cm_preset("Ceres Last 3 rooms", #preset_gtclassic_crateria_ceres_last_3_rooms)
+    %cm_preset("Ceres Last 3 Rooms", #preset_gtclassic_crateria_ceres_last_3_rooms)
 
 presets_gtclassic_crateria_ship:
     %cm_preset("Ship", #preset_gtclassic_crateria_ship)

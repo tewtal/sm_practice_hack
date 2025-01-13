@@ -4,7 +4,8 @@
 *.sw[op]
 build/
 tools/*.exe
-tools/asar
+tools/asar*
+tools/dll/*
 .vscode/launch.json
 .vscode/tasks.json
 /names/custom_names.txt

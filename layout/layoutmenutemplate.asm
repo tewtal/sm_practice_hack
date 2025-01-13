@@ -1,6 +1,6 @@
 
 pushpc
-org $E68000
+org $E48000
 print pc, " layoutmenu start"
 
 ; -------------------------
@@ -870,4 +870,5 @@ portals_down_vanilla_table:
 
 
 print pc, " layoutmenu end"
+warnpc $E4E000 ; customizemenu.asm
 pullpc

@@ -1,4 +1,3 @@
-; hooks
 
 ; $90:861C 22 AE 89 81 JSL $8189AE[$81:89AE]  ; Add Samus spritemap to OAM
 org $90861C
@@ -20,19 +19,19 @@ print pc, " spriteprio start"
 ; It also turns out setting the bank is unnecessary so we can skip those instructions.
 oam_add_samus_sprite_with_prio:
 {
-    STY $12           ; $12 = [Y] (Y position of spritemap centre)
-    STX $14           ; $14 = [X] (X position of spritemap centre)
+    STY $12           ; $12 = [Y] (Y position of spritemap center)
+    STX $14           ; $14 = [X] (X position of spritemap center)
     ASL : TAX
     LDY $808D,X       ; Y = [$92:808D + [A] * 2] (address of spritemap)
 
     LDA !sram_sprite_prio_flag : BNE .modify
-    PHB : JMP $89BD   ; Jump back to vanilla routine, which does a PLB at the end
+    PHB : JMP $89BD ; Jump back to vanilla routine, which does a PLB at the end
 
   .modify
-    LDA $0000,Y : BEQ .end
-    STA $18           ; $18 = [[Y]] (size)
-    INY : INY
-    LDX !OAM_STACK_POINTER
+    LDA $0000,Y : BEQ .end ; terminator
+    STA $18 ; size
+    INY #2
+    LDX !OAM_STACK_POINTER ; OAM data index
     CLC
 
   .loop
@@ -75,7 +74,7 @@ oam_add_samus_sprite_with_prio:
 
     ; If not processed all sprite map entries: next!
     DEC $18 : BNE .loop
-    STX !OAM_STACK_POINTER
+    STX !OAM_STACK_POINTER ; OAM index
 
   .end
     RTL
@@ -83,4 +82,3 @@ oam_add_samus_sprite_with_prio:
 
 print pc, " spriteprio end"
 warnpc $81F000 ; init.asm
-

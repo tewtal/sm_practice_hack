@@ -1,6 +1,7 @@
 PresetsMenuKpdr21:
     dw #presets_goto_kpdr21_crateria
     dw #presets_goto_kpdr21_brinstar
+    dw #presets_goto_kpdr21_kraid
     dw #presets_goto_kpdr21_upper_norfair
     dw #presets_goto_kpdr21_red_brinstar
     dw #presets_goto_kpdr21_wrecked_ship
@@ -11,13 +12,16 @@ PresetsMenuKpdr21:
     dw #presets_goto_kpdr21_backtracking
     dw #presets_goto_kpdr21_tourian
     dw #$0000
-    %cm_header("PRESETS FOR ANY% KPDR")
+    %cm_header("PRESETS FOR 3 TANK KPDR")
 
 presets_goto_kpdr21_crateria:
     %cm_submenu("Crateria", #presets_submenu_kpdr21_crateria)
 
 presets_goto_kpdr21_brinstar:
     %cm_submenu("Brinstar", #presets_submenu_kpdr21_brinstar)
+
+presets_goto_kpdr21_kraid:
+    %cm_submenu("Kraid's Lair", #presets_submenu_kpdr21_kraid)
 
 presets_goto_kpdr21_upper_norfair:
     %cm_submenu("Upper Norfair", #presets_submenu_kpdr21_upper_norfair)
@@ -79,17 +83,25 @@ presets_submenu_kpdr21_brinstar:
     dw #presets_kpdr21_brinstar_red_tower
     dw #presets_kpdr21_brinstar_skree_boost
     dw #presets_kpdr21_brinstar_below_spazer
-    dw #presets_kpdr21_brinstar_entering_kraids_lair
-    dw #presets_kpdr21_brinstar_kraid_kihunters
-    dw #presets_kpdr21_brinstar_mini_kraid
-    dw #presets_kpdr21_brinstar_kraid
-    dw #presets_kpdr21_brinstar_leaving_varia
-    dw #presets_kpdr21_brinstar_mini_kraid_revisit
-    dw #presets_kpdr21_brinstar_kraid_kihunters_revisit
-    dw #presets_kpdr21_brinstar_kraid_etank
-    dw #presets_kpdr21_brinstar_kraid_business_center_preelev
+    dw #presets_kpdr21_brinstar_passing_through_maridia
     dw #$0000
     %cm_header("BRINSTAR")
+
+presets_submenu_kpdr21_kraid:
+    dw #presets_kpdr21_kraid_entering_kraids_lair
+    dw #presets_kpdr21_kraid_warehouse_zeelas
+    dw #presets_kpdr21_kraid_kraid_kihunters
+    dw #presets_kpdr21_kraid_mini_kraid
+    dw #presets_kpdr21_kraid_fallen_hero
+    dw #presets_kpdr21_kraid_kraid
+    dw #presets_kpdr21_kraid_leaving_varia
+    dw #presets_kpdr21_kraid_arthur_j_metroid
+    dw #presets_kpdr21_kraid_mini_kraid_revisit
+    dw #presets_kpdr21_kraid_kraid_kihunters_revisit
+    dw #presets_kpdr21_kraid_kraid_etank
+    dw #presets_kpdr21_kraid_business_center_preelev
+    dw #$0000
+    %cm_header("KRAID'S LAIR")
 
 presets_submenu_kpdr21_upper_norfair:
     dw #presets_kpdr21_upper_norfair_business_center_postelev
@@ -101,6 +113,8 @@ presets_submenu_kpdr21_upper_norfair:
     dw #presets_kpdr21_upper_norfair_rising_tide
     dw #presets_kpdr21_upper_norfair_bubble_mountain
     dw #presets_kpdr21_upper_norfair_bat_cave
+    dw #presets_kpdr21_upper_norfair_speed_hallway
+    dw #presets_kpdr21_upper_norfair_bat_cave_revisit
     dw #presets_kpdr21_upper_norfair_single_chamber
     dw #presets_kpdr21_upper_norfair_double_chamber
     dw #presets_kpdr21_upper_norfair_double_chamber_revisit
@@ -149,11 +163,11 @@ presets_submenu_kpdr21_red_brinstar_revisit:
     dw #presets_kpdr21_red_brinstar_revisit_red_tower_down
     dw #presets_kpdr21_red_brinstar_revisit_skree_boost_final
     dw #presets_kpdr21_red_brinstar_revisit_below_spazer_final
+    dw #presets_kpdr21_red_brinstar_revisit_breaking_tube
     dw #$0000
     %cm_header("RED BRINSTAR REVISIT")
 
 presets_submenu_kpdr21_maridia:
-    dw #presets_kpdr21_maridia_breaking_tube
     dw #presets_kpdr21_maridia_fish_tank
     dw #presets_kpdr21_maridia_mt_everest
     dw #presets_kpdr21_maridia_crab_shaft
@@ -164,7 +178,7 @@ presets_submenu_kpdr21_maridia:
     dw #presets_kpdr21_maridia_halfie_setup
     dw #presets_kpdr21_maridia_draygon
     dw #presets_kpdr21_maridia_reverse_halfie_spikesuit
-    dw #presets_kpdr21_maridia_womple_jump
+    dw #presets_kpdr21_maridia_whomple_jump
     dw #presets_kpdr21_maridia_cac_alley_east
     dw #presets_kpdr21_maridia_cac_alley_west
     dw #presets_kpdr21_maridia_plasma_spark
@@ -219,7 +233,7 @@ presets_submenu_kpdr21_lower_norfair:
 presets_submenu_kpdr21_backtracking:
     dw #presets_kpdr21_backtracking_maridia_tube_revisit
     dw #presets_kpdr21_backtracking_fish_tank_revisit
-    dw #presets_kpdr21_backtracking_mt_everest_revisit_revisit
+    dw #presets_kpdr21_backtracking_mt_everest_revisit
     dw #presets_kpdr21_backtracking_red_brinstar_green_gate
     dw #presets_kpdr21_backtracking_crateria_kihunters_final
     dw #presets_kpdr21_backtracking_parlor_spacejump
@@ -258,7 +272,7 @@ presets_kpdr21_crateria_ceres_escape:
     %cm_preset("Ceres Escape", #preset_kpdr21_crateria_ceres_escape)
 
 presets_kpdr21_crateria_ceres_last_3_rooms:
-    %cm_preset("Ceres Last 3 rooms", #preset_kpdr21_crateria_ceres_last_3_rooms)
+    %cm_preset("Ceres Last 3 Rooms", #preset_kpdr21_crateria_ceres_last_3_rooms)
 
 presets_kpdr21_crateria_ship:
     %cm_preset("Ship", #preset_kpdr21_crateria_ship)
@@ -337,32 +351,46 @@ presets_kpdr21_brinstar_skree_boost:
 presets_kpdr21_brinstar_below_spazer:
     %cm_preset("Below Spazer", #preset_kpdr21_brinstar_below_spazer)
 
-presets_kpdr21_brinstar_entering_kraids_lair:
-    %cm_preset("Entering Kraids Lair", #preset_kpdr21_brinstar_entering_kraids_lair)
+presets_kpdr21_brinstar_passing_through_maridia:
+    %cm_preset("Passing Through Maridia", #preset_kpdr21_brinstar_passing_through_maridia)
 
-presets_kpdr21_brinstar_kraid_kihunters:
-    %cm_preset("Kraid Kihunters", #preset_kpdr21_brinstar_kraid_kihunters)
 
-presets_kpdr21_brinstar_mini_kraid:
-    %cm_preset("Mini Kraid", #preset_kpdr21_brinstar_mini_kraid)
+; Kraid
+presets_kpdr21_kraid_entering_kraids_lair:
+    %cm_preset("Entering Kraid's Lair", #preset_kpdr21_kraid_entering_kraids_lair)
 
-presets_kpdr21_brinstar_kraid:
-    %cm_preset("Kraid", #preset_kpdr21_brinstar_kraid)
+presets_kpdr21_kraid_warehouse_zeelas:
+    %cm_preset("Warehouse Zeelas", #preset_kpdr21_kraid_warehouse_zeelas)
 
-presets_kpdr21_brinstar_leaving_varia:
-    %cm_preset("Leaving Varia", #preset_kpdr21_brinstar_leaving_varia)
+presets_kpdr21_kraid_kraid_kihunters:
+    %cm_preset("Kraid Kihunters", #preset_kpdr21_kraid_kraid_kihunters)
 
-presets_kpdr21_brinstar_mini_kraid_revisit:
-    %cm_preset("Mini Kraid Revisit", #preset_kpdr21_brinstar_mini_kraid_revisit)
+presets_kpdr21_kraid_mini_kraid:
+    %cm_preset("Mini Kraid", #preset_kpdr21_kraid_mini_kraid)
 
-presets_kpdr21_brinstar_kraid_kihunters_revisit:
-    %cm_preset("Kraid Kihunters Revisit", #preset_kpdr21_brinstar_kraid_kihunters_revisit)
+presets_kpdr21_kraid_fallen_hero:
+    %cm_preset("Fallen Hero", #preset_kpdr21_kraid_fallen_hero)
 
-presets_kpdr21_brinstar_kraid_etank:
-    %cm_preset("Kraid E-Tank", #preset_kpdr21_brinstar_kraid_etank)
+presets_kpdr21_kraid_kraid:
+    %cm_preset("Kraid", #preset_kpdr21_kraid_kraid)
 
-presets_kpdr21_brinstar_kraid_business_center_preelev:
-    %cm_preset("Business Center Pre-Elev", #preset_kpdr21_brinstar_kraid_business_center_preelev)
+presets_kpdr21_kraid_leaving_varia:
+    %cm_preset("Leaving Varia", #preset_kpdr21_kraid_leaving_varia)
+
+presets_kpdr21_kraid_arthur_j_metroid:
+    %cm_preset("Arthur J. Metroid", #preset_kpdr21_kraid_arthur_j_metroid)
+
+presets_kpdr21_kraid_mini_kraid_revisit:
+    %cm_preset("Mini Kraid Revisit", #preset_kpdr21_kraid_mini_kraid_revisit)
+
+presets_kpdr21_kraid_kraid_kihunters_revisit:
+    %cm_preset("Kraid Kihunters Revisit", #preset_kpdr21_kraid_kraid_kihunters_revisit)
+
+presets_kpdr21_kraid_kraid_etank:
+    %cm_preset("Kraid E-Tank", #preset_kpdr21_kraid_kraid_etank)
+
+presets_kpdr21_kraid_business_center_preelev:
+    %cm_preset("Business Center Pre-Elev", #preset_kpdr21_kraid_business_center_preelev)
 
 
 ; Upper Norfair
@@ -392,6 +420,12 @@ presets_kpdr21_upper_norfair_bubble_mountain:
 
 presets_kpdr21_upper_norfair_bat_cave:
     %cm_preset("Bat Cave", #preset_kpdr21_upper_norfair_bat_cave)
+
+presets_kpdr21_upper_norfair_speed_hallway:
+    %cm_preset("Speed Hallway", #preset_kpdr21_upper_norfair_speed_hallway)
+
+presets_kpdr21_upper_norfair_bat_cave_revisit:
+    %cm_preset("Bat Cave Revisit", #preset_kpdr21_upper_norfair_bat_cave_revisit)
 
 presets_kpdr21_upper_norfair_single_chamber:
     %cm_preset("Single Chamber", #preset_kpdr21_upper_norfair_single_chamber)
@@ -507,16 +541,16 @@ presets_kpdr21_red_brinstar_revisit_skree_boost_final:
 presets_kpdr21_red_brinstar_revisit_below_spazer_final:
     %cm_preset("Below Spazer Final", #preset_kpdr21_red_brinstar_revisit_below_spazer_final)
 
+presets_kpdr21_red_brinstar_revisit_breaking_tube:
+    %cm_preset("Breaking Tube", #preset_kpdr21_red_brinstar_revisit_breaking_tube)
+
 
 ; Maridia
-presets_kpdr21_maridia_breaking_tube:
-    %cm_preset("Breaking Tube", #preset_kpdr21_maridia_breaking_tube)
-
 presets_kpdr21_maridia_fish_tank:
     %cm_preset("Fish Tank", #preset_kpdr21_maridia_fish_tank)
 
 presets_kpdr21_maridia_mt_everest:
-    %cm_preset("Mt Everest", #preset_kpdr21_maridia_mt_everest)
+    %cm_preset("Mt. Everest", #preset_kpdr21_maridia_mt_everest)
 
 presets_kpdr21_maridia_crab_shaft:
     %cm_preset("Crab Shaft", #preset_kpdr21_maridia_crab_shaft)
@@ -542,8 +576,8 @@ presets_kpdr21_maridia_draygon:
 presets_kpdr21_maridia_reverse_halfie_spikesuit:
     %cm_preset("Reverse Halfie (Spikesuit)", #preset_kpdr21_maridia_reverse_halfie_spikesuit)
 
-presets_kpdr21_maridia_womple_jump:
-    %cm_preset("Womple Jump", #preset_kpdr21_maridia_womple_jump)
+presets_kpdr21_maridia_whomple_jump:
+    %cm_preset("Whomple Jump", #preset_kpdr21_maridia_whomple_jump)
 
 presets_kpdr21_maridia_cac_alley_east:
     %cm_preset("Cac Alley East", #preset_kpdr21_maridia_cac_alley_east)
@@ -671,8 +705,8 @@ presets_kpdr21_backtracking_maridia_tube_revisit:
 presets_kpdr21_backtracking_fish_tank_revisit:
     %cm_preset("Fish Tank Revisit", #preset_kpdr21_backtracking_fish_tank_revisit)
 
-presets_kpdr21_backtracking_mt_everest_revisit_revisit:
-    %cm_preset("Mt Everest Revisit Revisit", #preset_kpdr21_backtracking_mt_everest_revisit_revisit)
+presets_kpdr21_backtracking_mt_everest_revisit:
+    %cm_preset("Mt. Everest Revisit", #preset_kpdr21_backtracking_mt_everest_revisit)
 
 presets_kpdr21_backtracking_red_brinstar_green_gate:
     %cm_preset("Red Brinstar Green Gate", #preset_kpdr21_backtracking_red_brinstar_green_gate)
