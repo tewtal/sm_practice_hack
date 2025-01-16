@@ -588,3 +588,18 @@ endif
 
 print pc, " damage bankA0 end"
 
+; Adjust Phantoon to look at adjusted projectile damage instead of absolute difference in health
+if !FEATURE_PAL
+org $A7DE2F
+else
+org $A7DDFB
+endif
+    LDA $187A
+
+if !FEATURE_PAL
+org $A7DE2F
+else
+org $A7DE65
+endif
+    LDA $187A
+
