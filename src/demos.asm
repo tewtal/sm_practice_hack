@@ -722,8 +722,7 @@ endif
 warnpc $82893D
 
 
-org $87C964 ; $918ACE ; repoint to any bank with WRAM access
-print pc, " demos start"
+%startfree(87) ; repoint to any bank with WRAM access
 
 DemoInputInstructionLists:
 ; Order of demos does not matter
@@ -2940,5 +2939,5 @@ DemoInput_tasdance:
 } ; tasdance
 endif
 
-print pc, " demos end"
+%endfree(87)
 

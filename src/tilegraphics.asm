@@ -54,8 +54,7 @@ warnpc $E8E000 ; presets.asm
 check bankcross on
 
 
-org $F48000
-print pc, " tilegraphics start"
+%startfree(F4)
 
 ; 12K CRE tile graphics
 tiles_cre:
@@ -602,7 +601,7 @@ preset_vram_landing_site_params:
 preset_vram_landing_site_floor_params:
     db $D1, $08, $C9, $08    ; Y = 4.0+
 
-print pc, " tilegraphics end"
+%endfree(F4)
 warnpc $F4D800
 
 

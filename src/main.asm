@@ -60,6 +60,7 @@ if !FEATURE_SD2SNES
     !FEATURE_TINYSTATES = 0
     incsrc macros.asm
     incsrc defines.asm
+    incsrc freespace.asm
     incsrc save.asm
 else
 if !FEATURE_TINYSTATES
@@ -67,11 +68,13 @@ if !FEATURE_TINYSTATES
     !FEATURE_SD2SNES = 1       ; Set this to enable savestate features
     incsrc macros.asm
     incsrc defines.asm
+    incsrc freespace.asm
     incsrc tinystates.asm
 else
     print "SD2SNES AND TINYSTATES DISABLED"
     incsrc macros.asm
     incsrc defines.asm
+    incsrc freespace.asm
 endif
 endif
 
@@ -106,4 +109,6 @@ endif
 ; Make sure the ROM expands to 4MB
 org $FFFFFF : db $FF
 
+%printfreespace()
 print "Assembly complete. Total bytes written: ", bytes
+

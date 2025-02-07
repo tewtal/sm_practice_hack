@@ -38,8 +38,7 @@ macro sram_to_vram(vram_addr, size, sram_addr)
 endmacro
 
 
-org $80F600
-print pc, " tinysave start"
+%startfree(80)
 
 ; These can be modified to do game-specific things before and after saving and loading
 ; Both A and X/Y are 16-bit here
@@ -512,12 +511,10 @@ tinystates_load_paused:
     RTL
 }
 
-print pc, " tinysave end"
-warnpc $80FD00 ; infohud.asm
+%endfree(80)
 
 
-org $82FE00
-print pc, " tinysave bank82 start"
+%startfree(82)
 
 tinystates_preload_bg_data:
     JSR $82E2 ; Re-load BG3 tiles
@@ -616,4 +613,5 @@ else
 endif
 }
 
-print pc, " tinysave bank82 end"
+%endfree(82)
+

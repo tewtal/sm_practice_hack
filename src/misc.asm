@@ -191,8 +191,7 @@ org $869D59
     JSR move_kraid_rocks_horizontally
 
 
-org $86F500
-print pc, " misc bank86 start"
+%startfree(86)
 
 ; Copied from $8688B6 but optimized for Kraid rocks using a hard-coded radius
 ; This is intended to offset extra practice rom lag in Kraid's room
@@ -238,11 +237,10 @@ IconCancelMenu:
     RTL
 }
 
-print pc, " misc bank86 end"
+%endfree(86)
 
 
-org $90FA00
-print pc, " misc bank90 start"
+%startfree(90)
 
 hook_set_music_track:
 {
@@ -616,12 +614,10 @@ set_fade_in_door_function:
     JML $908E0F
 }
 
-print pc, " misc bank90 end"
-warnpc $90FE00 ; damage.asm
+%endfree(90)
 
 
-org $8BFA00
-print pc, " misc bank8B start"
+%startfree(8B)
 
 fade_in_skip_draw:
 {
@@ -834,4 +830,5 @@ decompression_increment_bank:
     RTS
 }
 
-print pc, " misc bank8B end"
+%endfree(8B)
+

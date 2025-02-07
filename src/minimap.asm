@@ -11,15 +11,14 @@ incbin ../resources/hudgfx.bin
 
 
 ; Place minimap graphics in bank DF
-org $DFD500
-print pc, " minimap bankDF start"
+%startfree(DF)
 mapgfx_bin:
 incbin ../resources/mapgfx.bin
 
 ; Next block needs to be all zeros to clear a tilemap
 fillbyte $00
 fill 4096
-print pc, " minimap bankDF end"
+%endfree(DF)
 
 
 ; The default HUD minimap should be cleared
@@ -113,8 +112,7 @@ org $82E488 ; write tiles to VRAM
 
 
 ; Placed in bank 82 so that the jumps work
-org $82F70F
-print pc, " minimap bank82 start"
+%startfree(82)
 
 mm_write_hud_tiles_during_door:
 {
@@ -133,8 +131,7 @@ mm_write_hud_tiles_during_door:
     JMP $E492 ; resume logic
 }
 
-print pc, " minimap bank82 end"
-warnpc $82F800 ; layout.asm
+%endfree(82)
 
 
 org $90A7E8      ; optimize following code by exactly six bytes
@@ -186,8 +183,7 @@ org $90A97E
 
 
 ; Placed in bank 90 so that the jumps work
-org $90F640
-print pc, " minimap bank90 start"
+%startfree(90)
 
 mm_initialize_minimap:
 {
@@ -267,7 +263,6 @@ mm_write_and_clear_hud_tiles:
     RTL
 }
 
-print pc, " minimap bank90 end"
-warnpc $90F980 ; PJBoy respin patch
+%endfree(90)
 endif ; !FEATURE_VANILLAHUD
 

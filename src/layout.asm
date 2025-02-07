@@ -91,8 +91,7 @@ layout_create_plms_execute_asm:
 warnpc $82EB9F
 
 
-org $82F800
-print pc, " layout bank82 start"
+%startfree(82)
 
 layout_create_plms_itempickups_end:
     RTS
@@ -330,8 +329,7 @@ hijack_door_closing_plm:
     JMP $E8EF
 }
 
-print pc, " layout bank82 end"
-warnpc $82FA80 ; presets.asm
+%endfree(82)
 
 
 ; Crateria Kihunters bottom door
@@ -453,8 +451,7 @@ hook_layout_asm_deadscientist_door0:
     dw #layout_asm_magnetstairs
 
 
-org $83C000
-print pc, " layout bank83 start"
+%startfree(83)
 
 ; Custom door definitions
 ; Includes Samus X and Y and an asm pointer
@@ -1276,8 +1273,7 @@ layout_asm_waterway_external:
     RTL
 }
 
-print pc, " layout bank83 end"
-warnpc $83F000 ; presets
+%endfree(83)
 
 
 ; Allow debug save stations to be used
@@ -1414,8 +1410,7 @@ layout_morph_ball_hidden_plm_equipment:
 
 
 
-org $84F000
-print pc, " layout bank84 start"
+%startfree(84)
 
 layout_save_station_mini_instructions:
 {
@@ -1472,7 +1467,7 @@ layout_bomb_grey_door_check_fast:
     RTS
 }
 
-print pc, " layout bank84 end"
+%endfree(84)
 
 
 ; Sanity check Varia/Gravity pickups
@@ -2005,8 +2000,7 @@ layout_execute_setup_asm_end:
 warnpc $8FE8A3
 
 
-org $8FEA00
-print pc, " layout start"
+%startfree(8F)
 
 ; East Ocean library background table (migrated to make more room for West Ocean)
 layout_east_ocean_library_background_table:
@@ -3544,11 +3538,10 @@ layout_asm_pants_to_pants_scrolls:
     BRA layout_asm_to_pants_scrolls
 }
 
-print pc, " layout end"
+%endfree(8F)
 
 
-org $A1EBD1
-print pc, " layout bankA1 start"
+%startfree(A1)
 
 layout_asm_plasma_dash_enemies:
     dw $F693, #$0100, #$0080, #$0000, #$2000, #$0004, #$8001, #$0020
@@ -3563,11 +3556,10 @@ layout_asm_statues_oob_viewer_enemies:
     dw $D73F, #$0080, #$01B0, #$0000, #$2C00, #$0000, #$0000, #$0240
     db #$FF, #$FF, #$00
 
-print pc, " layout bankA1 end"
+%endfree(A1)
 
 
-org $B4F4B8
-print pc, " layout bankB4 start"
+%startfree(B4)
 
 layout_asm_plasma_dash_enemy_set:
     dw $F693, #$0001, $F393, #$0002
@@ -3576,5 +3568,5 @@ layout_asm_plasma_dash_enemy_set:
 layout_asm_statues_oob_viewer_enemy_set:
     db #$FF, #$FF, #$00
 
-print pc, " layout bankB4 end"
+%endfree(B4)
 

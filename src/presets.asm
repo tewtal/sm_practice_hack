@@ -1,6 +1,5 @@
 
-org $82FA80
-print pc, " presets bank82 start"
+%startfree(82)
 
 preset_load:
 {
@@ -233,12 +232,10 @@ EnsureSamusIsDrawn_long:
     RTL
 }
 
-print pc, " presets bank82 end"
-warnpc $82FE00 ; tinystates.asm
+%endfree(82)
 
 
-org $83F000
-print pc, " presets bank83 start"
+%startfree(83)
 
 clear_all_enemies:
 {
@@ -923,11 +920,10 @@ endif
     RTL
 }
 
-print pc, " presets bank83 end"
+%endfree(83)
 
 
-org $80F000
-print pc, " presets bank80 start"
+%startfree(80)
 
 preset_layer_bg_offsets:
 {
@@ -1006,8 +1002,7 @@ add_grapple_and_xray_to_hud:
     JMP resume_infohud_icon_initialization
 }
 
-print pc, " presets bank80 end"
-warnpc $80F500 ; save.asm or tinystates.asm
+%endfree(80)
 
 
 ; $80:9AB1: Add x-ray and grapple HUD items if necessary
@@ -1054,11 +1049,10 @@ incsrc presets/nghyper_data.asm ; E88h bytes
 incsrc presets/ngplasma_data.asm ; EA4h bytes
 incsrc presets/suitless_data.asm ; 3DF0h bytes
 print pc, " preset data crossbank end"
-warnpc $F08000 ; infohud.asm
+warnpc $F08000
 check bankcross on
 
-org $F18000 ; 7703h bytes used / 8FDh bytes free
-print pc, " preset menu bankF1 start"
+%startfree(F1)
 incsrc presets/kpdr21_menu.asm ; 11A3h bytes
 incsrc presets/kpdr22_menu.asm ; 11C1h bytes
 incsrc presets/kpdr23_menu.asm ; 11E7h bytes
@@ -1066,10 +1060,9 @@ incsrc presets/kpdr25_menu.asm ; 10D8h bytes
 incsrc presets/prkd19_menu.asm ; 10B3h bytes
 incsrc presets/prkd20_menu.asm ; 10A9h bytes
 incsrc presets/pkrd_menu.asm ; F79h bytes
-print pc, " preset menu bankF1 end"
+%endfree(F1)
 
-org $F28000 ; 7356h bytes used / CAAh bytes free
-print pc, " preset menu bankF2 start"
+%startfree(F2)
 incsrc presets/14ice_menu.asm   ; 7C6h bytes
 incsrc presets/14speed_menu.asm   ; 7EBh bytes
 incsrc presets/hundo_menu.asm   ; 1220h bytes
@@ -1077,10 +1070,9 @@ incsrc presets/100early_menu.asm   ; 1320h bytes
 incsrc presets/100map_menu.asm   ; 1670h bytes
 incsrc presets/gtclassic_menu.asm   ; D7Ch bytes
 incsrc presets/gtmax_menu.asm   ; 1378h bytes
-print pc, " preset menu bankF2 end"
+%endfree(F2)
 
-org $F38000 ; 72B8h bytes used / D48h bytes free
-print pc, " preset menu bankF3 start"
+%startfree(F3)
 incsrc presets/rbo_menu.asm   ; D97h bytes
 incsrc presets/nintendopower_menu.asm   ; 70Ch bytes
 incsrc presets/allbosskpdr_menu.asm   ; 942h bytes
@@ -1089,5 +1081,5 @@ incsrc presets/allbossprkd_menu.asm   ; 9BEh bytes
 incsrc presets/ngplasma_menu.asm   ; 85Ch bytes
 incsrc presets/nghyper_menu.asm   ; 864h bytes
 incsrc presets/suitless_menu.asm   ; 1B43h bytes
-print pc, " preset menu bankF3 end"
+%endfree(F3)
 

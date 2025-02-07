@@ -206,8 +206,7 @@ endif ; !FEATURE_VANILLAHUD
 
 
 ; Main bank stuff
-org $F08000
-print pc, " infohud start"
+%startfree(F0)
 
 ; List this first since it affects bank $84 where we are trying to minimize change
 ih_get_item_code:
@@ -1819,13 +1818,11 @@ ih_adjust_realtime:
 overwrite_HUD_numbers:
     RTL
 
-print pc, " infohud end"
-warnpc $F0E000 ; spritefeat.asm
+%endfree(F0)
 
 
 ; Stuff that needs to be placed in bank 80
-org $80FD00
-print pc, " infohud bank80 start"
+%startfree(80)
 
 ; Used by room layout
 ih_set_picky_chozo_event_and_enemy_speed:
@@ -1943,6 +1940,5 @@ HexToNumberGFX2:
     dw #$0C09, #$0C00, #$0C01, #$0C02, #$0C03, #$0C04, #$0C05, #$0C06, #$0C07, #$0C08
     dw #$0C09, #$0C00, #$0C01, #$0C02, #$0C03, #$0C04, #$0C05, #$0C06, #$0C07, #$0C08
 
-print pc, " infohud bank80 end"
-warnpc $80FF80 ; cutscenes.asm door transition code
+%endfree(80)
 

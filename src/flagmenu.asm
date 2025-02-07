@@ -1,6 +1,5 @@
 
-org $85A000
-print pc, " flagmenu start"
+%startfree(85)
 
 ; --------------
 ; Equipment menu
@@ -2641,6 +2640,5 @@ GameLoopExtras:
     RTL
 }
 
-print pc, " flagmenu end"
-warnpc $85F800 ; gamemode.asm
+%endfree(85)
 

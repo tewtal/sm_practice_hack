@@ -1,6 +1,5 @@
 
-org $B88000
-print pc, " mainmenu start"
+%startfree(B8)
 
 ; ------------
 ; Menu Helpers
@@ -2514,5 +2513,5 @@ endif
     RTL
 }
 
-print pc, " mainmenu end"
+%endfree(B8)
 
