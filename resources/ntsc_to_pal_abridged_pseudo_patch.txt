@@ -54,7 +54,7 @@ org $80CD8E
 org $80FFC0
 
 ; Country code and checksum
-; NOTE: This section is also different on Virtual Console NTSC and JU,
+; NOTE: This section is also different on NSO and Virtual Console NTSC and JU,
 ;       and it may also be modified by SpriteSomething
 org $80FFD9
     db #$02,#$01,#$00,#$04,#$84,#$FB,#$7B
@@ -2123,13 +2123,13 @@ org $8DE45E
 org $8DEAE2
 
 ; Tourian red flashing
-; NOTE: This section is the same on NTSC and PAL but different on Virtual Console NTSC and JU
+; NOTE: This section is the same on NTSC and PAL but different on NSO and Virtual Console NTSC and JU
 org $8DF895
     dw ...
 org $8DF941
 
 ; Old Tourian escape shaft flashing
-; NOTE: This section is the same on NTSC and PAL but different on Virtual Console NTSC and JU
+; NOTE: This section is the same on NTSC and PAL but different on NSO and Virtual Console NTSC and JU
 org $8DFA6D
     dw ...
 org $8DFBC1
@@ -3330,7 +3330,7 @@ org $A49A79  <--  org $A49A60
     ADC #$0001    ; previously ADC #$0000
 
 ; Crocomire palette
-; NOTE: This section is the same on NTSC and PAL but different on Virtual Console NTSC and JU
+; NOTE: This section is the same on NTSC and PAL but different on NSO and Virtual Console NTSC and JU
 org $A4B936  <--  org $A4B91D
     dw ...
 org $A4B956  <--  org $A4B93D
@@ -3762,13 +3762,13 @@ org $A7AA7F  <--  org $A7AA69
     LDA #$00FA    ; previously LDA #$012C
 
 ; Kraid background palette
-; NOTE: This section is the same on NTSC and PAL and Virtual Console NTSC but different on JU
+; NOTE: This section is the same on NTSC and PAL and NSO and Virtual Console NTSC but different on JU
 org $A7B3E9  <--  org $A7B3D3
     dw ...
 org $A7B409  <--  org $A7B3F3
 
 ; Kraid sprite palette
-; NOTE: This section is the same on NTSC and PAL and Virtual Console NTSC but different on JU
+; NOTE: This section is the same on NTSC and PAL and NSO and Virtual Console NTSC but different on JU
 org $A7B529  <--  org $A7B513
     dw ...
 org $A7B549  <--  org $A7B533
@@ -4248,7 +4248,7 @@ org $A9BBC0  <--  org $A9BB73
     ADC #$01CC    ; previously ADC #$0180
 
 ; MB1 phase ended room palettes
-; NOTE: This section is the same on NTSC and PAL but different on Virtual Console NTSC and JU
+; NOTE: This section is the same on NTSC and PAL but different on NSO and Virtual Console NTSC and JU
 org $A9D0FF  <--  org $A9D0B2
     dw ...
 org $A9D18F  <--  org $A9D142
@@ -4881,7 +4881,7 @@ org $B88000
 ;=======================================================
 
 ; Tileset 9 Heated Norfair palette
-; NOTE: This section is the same on NTSC and PAL and Virtual Console NTSC but different on JU
+; NOTE: This section is the same on NTSC and PAL and NSO and Virtual Console NTSC but different on JU
 org $C2B5E4
     dw ...
 org $C2B6BB
@@ -4906,6 +4906,7 @@ org $CEB22D
 ; Bank DC
 ; Bank DD
 ; Bank DE
+; NOTE: These banks are unchanged on NSO but are different on Virtual Console NTSC and JU
 ;=======================================================
 
 ; SPC engine main data length
@@ -5068,6 +5069,7 @@ org $DED18C  <--  org $DED1C0
 
 ;=======================================================
 ; Bank DF
+; NOTE: This bank is unchanged on NSO but is different on Virtual Console NTSC and JU
 ;=======================================================
 
 ; Freespace
