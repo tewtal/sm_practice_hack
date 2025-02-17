@@ -1476,12 +1476,16 @@ print pc, " layout bank84 end"
 
 
 ; Sanity check Varia/Gravity pickups
+; Only use suit animations in vanilla rooms, or Landing Site for artificial Varia
+; Otherwise assume this is for randomizers where suit animations have been removed
 if !FEATURE_PAL
 org $91D43D
 else
 org $91D4E5
 endif
-    %ai16() : LDA !ROOM_ID : CMP #ROOM_VariaSuitRoom : BNE layout_skip_varia_animation
+    %ai16() : LDA !ROOM_ID : CMP #ROOM_VariaSuitRoom : BEQ layout_do_varia_animation
+    CMP #ROOM_LandingSite : BNE layout_skip_varia_animation
+layout_do_varia_animation:
     JMP layout_prepare_varia_animation
 layout_skip_varia_animation:
     PLP : RTL
@@ -1510,6 +1514,7 @@ layout_prepare_varia_animation:
     %ai8()
     LDA #$30 : STA $0DF0
     LDA #$50 : STA $0DF1
+    LDA #$80 : STA $0DF2
     JMP layout_varia_animation
 
 layout_prepare_gravity_animation:

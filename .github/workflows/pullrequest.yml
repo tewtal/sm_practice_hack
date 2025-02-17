@@ -14,7 +14,7 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
     
     - name: Install packages
       run: |
@@ -48,13 +48,13 @@ jobs:
         cp build/smpalhack20.ips ./web/public/patches/emulator-pal.ips
 
     - name: Upload artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: Patches & Debug Symbols
         path: ./build
     
     - name: Set up node
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
 
     - name: Build and export web application
       working-directory: ./web
