@@ -64,6 +64,22 @@ org $918448
 DemoInstruction_Goto:
 
 
+org $9185FC
+DemoInstruction_EndDemoGiveControl:
+
+
+org $91865D
+    LDA #IntroDemoInput_babymetroid_stopandlook
+
+
+org $918675
+    LDA #IntroDemoInput_babymetroid_end
+
+
+org $918682
+DemoInstruction_EndDemo:
+
+
 org $9186FE
 ; Next 16-bits are WRAM address, following 16-bits are new value
 DemoInstruction_ModifyWRAM:
@@ -75,6 +91,27 @@ DemoInstruction_ModifyWRAM:
     RTS
 }
 warnpc $918739
+
+
+org $918739
+DemoInstruction_EndDemoFacingLeft:
+
+
+org $91877C
+IntroDemoInputPointer_jumpleft:
+    dw #IntroDemoInput_jumpleft
+
+org $918782
+IntroDemoInputPointer_babymetroid:
+    dw #IntroDemoInput_babymetroid_runleft
+
+org $918788
+IntroDemoInputPointer_oldmbfight:
+    dw #IntroDemoInput_oldmbfight
+
+org $91878E
+IntroDemoInputPointer_oldmbfight_midpoint:
+    dw #IntroDemoInput_oldmbfight_midpoint
 
 
 ; Adds lava damage to demos, replaces dead debug code
@@ -737,6 +774,59 @@ DemoInputInstructionLists:
 ;         ____________ Instruction or number of frames
 ;        |       _____ Current input
 ;        |      |
+
+IntroDemoInput_jumpleft:
+{
+    dw $001E, $0000 ; ............
+    dw $001B, $0200 ; ..L.........
+    dw $0035, $0280 ; ..L......A..
+    dw $001E, $0200 ; ..L.........
+    dw $0049, $0000 ; ............
+    dw DemoInstruction_EndDemoGiveControl
+    dw DemoInstruction_Delete
+}
+
+IntroDemoInput_babymetroid_runleft:
+{
+    dw $005A, $0000 ; ............
+  .loop
+    dw $0001, $0200 ; ..L.........
+    dw DemoInstruction_Goto, IntroDemoInput_babymetroid_runleft_loop
+}
+
+IntroDemoInput_babymetroid_stopandlook:
+{
+    dw $012C, $0000 ; ............
+    dw $00AB, $0010 ; ...........r
+    dw $00F0, $0000 ; ............
+    dw DemoInstruction_Goto, IntroDemoInput_babymetroid_runleft_loop
+}
+
+IntroDemoInput_babymetroid_end:
+{
+    dw DemoInstruction_EndDemo
+    dw DemoInstruction_Delete
+}
+
+IntroDemoInput_oldmbfight:
+{
+    dw $005A, $0000 ; ............
+    dw $0028, $0040 ; ........X...
+    dw $0001, $0000 ; ............
+    dw $001D, $0040 ; ........X...
+    dw $0046, $0000 ; ............
+  .midpoint
+    dw $0014, $0000 ; ............
+    dw $0008, $0200 ; ..L.........
+    dw $0008, $0280 ; ..L......A..
+    dw $0004, $0200 ; ..L.........
+    dw $003C, $0000 ; ............
+    dw $0028, $0040 ; ........X...
+    dw $0001, $0000 ; ............
+    dw $0014, $0040 ; ........X...
+    dw DemoInstruction_EndDemoFacingLeft
+    dw DemoInstruction_Delete
+}
 
 if !FEATURE_PAL
 DemoInput_Dachora:
