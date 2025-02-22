@@ -16,7 +16,7 @@ lorom
 !VERSION_MAJOR = 2
 !VERSION_MINOR = 6
 !VERSION_BUILD = 5
-!VERSION_REV   = 2
+!VERSION_REV   = 3
 
 table ../resources/normal.tbl
 print ""
@@ -44,6 +44,11 @@ endif
 
 if !ORIGINAL_MESSAGE_TEXT
     print "PRESERVE FANFARE MESSAGES"
+endif
+
+if !PRESERVE_WRAM_DURING_SPACETIME
+else
+    print "WRAM NOT PRESERVED DURING SPACETIME"
 endif
 
 if !RAW_TILE_GRAPHICS
@@ -82,7 +87,7 @@ incsrc roomnames.asm
 incsrc clearenemies.asm
 incsrc demos.asm
 incsrc infohud.asm
-incsrc rng.asm
+incsrc enemy_rng.asm
 incsrc custompresets.asm
 incsrc presets.asm
 incsrc damage.asm
