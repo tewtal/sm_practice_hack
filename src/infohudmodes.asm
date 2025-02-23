@@ -49,6 +49,7 @@ status_roomstrat:
     dw status_tacotank
     dw status_pitdoor
     dw status_moondance
+    dw status_kraidradar
     dw status_gateglitch
     dw status_moatcwj
     dw status_robotflush
@@ -2671,6 +2672,178 @@ status_moondance_tas:
   .fallreleaseperfect
     LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$96 : STA !HUD_TILEMAP+$98
     JMP .alldone
+}
+
+status_kraidradar:
+{
+    LDA !ROOM_ID : CMP.w #ROOM_KraidRoom : BNE .skip
+    ; stop tracking when Kraid takes damage
+    LDA !ENEMY_HP : CMP #$03E8 : BEQ .setup
+
+  .skip
+    RTS
+
+  .setup
+    LDA !SAMUS_HP : STA !ram_last_hp ; suppress Samus HP
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$88 : STA !HUD_TILEMAP+$8A ; clear space on HUD
+    STA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$8E : STA !HUD_TILEMAP+$90
+    STA !HUD_TILEMAP+$92 : STA !HUD_TILEMAP+$94 : STA !HUD_TILEMAP+$96
+    STA !HUD_TILEMAP+$98
+
+    ; Detect and draw Samus first
+
+    ; check if sweet spot (2 missile KQK using bomb setup)
+    LDY !SAMUS_X : CPY #$004B : BEQ .greenSamus
+    LDA !IH_MORPH_BALL_YELLOW : BRA .checkSamusX
+
+  .greenSamus
+    LDA !IH_MORPH_BALL_GREEN
+
+  .checkSamusX
+    CPY #$0060 : BPL .samusXrightSide
+    CPY #$0030 : BMI .samusXpos1
+    CPY #$0040 : BMI .samusXpos2
+    CPY #$0050 : BMI .samusXpos3
+    STA !HUD_TILEMAP+$92 : BRA .checkEnemies
+  .samusXpos1
+    STA !HUD_TILEMAP+$8C : BRA .checkEnemies
+  .samusXpos2
+    STA !HUD_TILEMAP+$8E : BRA .checkEnemies
+  .samusXpos3
+    STA !HUD_TILEMAP+$90 : BRA .checkEnemies
+  .samusXrightSide
+    CPY #$0070 : BMI .samusXpos5
+    CPY #$0080 : BMI .samusXpos6
+    STA !HUD_TILEMAP+$98 : BRA .checkEnemies
+  .samusXpos5
+    STA !HUD_TILEMAP+$94 : BRA .checkEnemies
+  .samusXpos6
+    STA !HUD_TILEMAP+$96
+
+    ; Detect stuff
+  .checkEnemies
+    ; Enemy 6 (good fingernail)
+    LDX #$0180
+
+    ; Y position, check if Y < 624
+    LDA !ENEMY_Y,X : CMP #$0270 : BCC .enemy6X
+    LDA #$FFFF : STA !ram_radar6 : BRA .checkEnemy7
+
+  .enemy6X
+    ; check X position, set position bit on radar
+    LDY !ENEMY_X,X : TDC
+    CPY #$0020 : BMI .enemy6X_store : INC
+    CPY #$0030 : BMI .enemy6X_store : INC
+    CPY #$0040 : BMI .enemy6X_store : INC
+    CPY #$0050 : BMI .enemy6X_store : INC
+    CPY #$0060 : BMI .enemy6X_store : INC
+    CPY #$0070 : BMI .enemy6X_store : INC
+    CPY #$0080 : BMI .enemy6X_store : INC
+  .enemy6X_store
+    ASL : STA !ram_radar6
+
+    ; check if Y position is moving up or down
+    LDA !ENEMY_Y,X : CMP !ram_enemy6_last_ypos : BCC .enemy6Y_movingUp
+    STA !ram_enemy6_last_ypos
+    ; check if Y position is high or low, Y < 594
+    CMP #$0252 : BCC .enemy6YHigh_movingDown
+    LDA !ram_radar6 : ORA #$0800 : BRA .enemy6Y_store
+  .enemy6YHigh_movingDown
+    LDA !ram_radar6 : ORA #$0400 : BRA .enemy6Y_store
+
+  .enemy6Y_movingUp
+    STA !ram_enemy6_last_ypos
+    ; check if Y position is high or low, Y < 594
+    CMP #$0252 : BCC .enemy6YHigh_movingUp
+    LDA !ram_radar6 : AND #$00FF : ORA #$0200 : BRA .enemy6Y_store
+  .enemy6YHigh_movingUp
+    LDA !ram_radar6 : AND #$00FF : ORA #$0100
+  .enemy6Y_store
+    STA !ram_radar6
+
+  .checkEnemy7
+    ; Enemy 7 (bad fingernail)
+    LDX #$01C0
+
+    ; Y position, check if Y < 624
+    LDA !ENEMY_Y,X : CMP #$0270 : BCC .enemy7X
+    LDA #$FFFF : STA !ram_radar7 : BRA .drawEnemy6
+
+  .enemy7X
+    ; check X position, set position bit on radar
+    LDY !ENEMY_X,X : TDC
+    CPY #$0020 : BMI .enemy7X_store : INC
+    CPY #$0030 : BMI .enemy7X_store : INC
+    CPY #$0040 : BMI .enemy7X_store : INC
+    CPY #$0050 : BMI .enemy7X_store : INC
+    CPY #$0060 : BMI .enemy7X_store : INC
+    CPY #$0070 : BMI .enemy7X_store : INC
+    CPY #$0080 : BMI .enemy7X_store : INC
+  .enemy7X_store
+    ASL : STA !ram_radar7
+
+    ; check if Y position is moving up or down
+    LDA !ENEMY_Y,X : CMP !ram_enemy7_last_ypos : BCC .enemy7Y_movingUp
+    STA !ram_enemy7_last_ypos
+    ; check if Y position is high or low, Y < 594
+    CMP #$0252 : BCC .enemy7YHigh_movingDown
+    LDA !ram_radar7 : ORA #$0800 : BRA .enemy7Y_store
+  .enemy7YHigh_movingDown
+    LDA !ram_radar7 : ORA #$0400 : BRA .enemy7Y_store
+
+  .enemy7Y_movingUp
+    STA !ram_enemy7_last_ypos
+    ; check if Y position is high or low, Y < 594
+    CMP #$0252 : BCC .enemy7YHigh_movingUp
+    LDA !ram_radar7 : AND #$00FF : ORA #$0200 : BRA .enemy7Y_store
+  .enemy7YHigh_movingUp
+    LDA !ram_radar7 : AND #$00FF : ORA #$0100
+  .enemy7Y_store
+    STA !ram_radar7
+
+; Draw stuff
+; Don't draw the enemy if first nibble is non-zero
+; Second bit determines arrow direction and color:
+; 8 = far away moving down, 4 = close moving down
+; 2 = far away moving up, 1 = close moving up
+; Low byte contains the position offset
+; The bottom-left tile of the HUD is unused
+  .drawEnemy6
+    ; Enemy 6 (good fingernail)
+    LDA !ram_radar6 : BIT #$F000 : BNE .drawEnemy7
+    AND #$00FF : TAX
+    LDA !ram_radar6 : AND #$0F00
+    CMP #$0800 : BEQ .farDown6
+    CMP #$0400 : BEQ .closeDown6
+    CMP #$0200 : BEQ .farUp6
+
+    LDA !IH_ARROW_UP_PINK_OUTLINE : STA !HUD_TILEMAP+$8A,X : BRA .drawEnemy7
+  .farUp6
+    LDA !IH_ARROW_UP : STA !HUD_TILEMAP+$8A,X : BRA .drawEnemy7
+  .closeDown6
+    LDA !IH_ARROW_DOWN_PINK_OUTLINE : STA !HUD_TILEMAP+$8A,X : BRA .drawEnemy7
+  .farDown6
+    LDA !IH_ARROW_DOWN : STA !HUD_TILEMAP+$8A,X
+
+  .drawEnemy7
+    ; Enemy 7 (bad fingernail)
+    LDA !ram_radar7 : AND #$F000 : BNE .done
+    AND #$00FF : TAX
+    LDA !ram_radar7 : AND #$0F00
+    CMP #$0800 : BEQ .farDown7
+    CMP #$0400 : BEQ .closeDown7
+    CMP #$0200 : BEQ .farUp7
+
+    LDA !IH_ARROW_UP_RED : STA !HUD_TILEMAP+$8A,X : BRA .done
+  .farUp7
+    LDA !IH_ARROW_UP_GREY : STA !HUD_TILEMAP+$8A,X : BRA .done
+  .closeDown7
+    LDA !IH_ARROW_DOWN_RED : STA !HUD_TILEMAP+$8A,X : BRA .done
+  .farDown7
+    LDA !IH_ARROW_DOWN_GREY : STA !HUD_TILEMAP+$8A,X
+
+  .done
+    RTS
 }
 
 status_gateglitch:

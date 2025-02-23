@@ -80,7 +80,7 @@ ram_activated_shine_duration = !ram_activated_shine_duration ; !WRAM_START+$5E
 ; ^ FREE SPACE ^ up to +$6C
 
 ; ----------------------------------------------------------
-; Shinetune and kihunter manip use several variables
+; A few room strats like shinetune use several variables
 ; that are not used by other modes,
 ; but also they do not need many other variables,
 ; so the following variables share the same WRAM
@@ -95,6 +95,7 @@ ram_walljump_counter = !ram_walljump_counter ; !WRAM_START+$7A
 ram_fail_sum = !ram_fail_sum ; !WRAM_START+$7C
 ram_fail_count = !ram_fail_count ; !WRAM_START+$7E
 
+; Kihunter manip
 ram_enemy0_last_xpos = !ram_enemy0_last_xpos ; !WRAM_START+$6E
 ram_enemy0_last_ypos = !ram_enemy0_last_ypos ; !WRAM_START+$70
 ram_enemy4_last_xpos = !ram_enemy4_last_xpos ; !WRAM_START+$72
@@ -104,6 +105,13 @@ ram_enemy6_last_ypos = !ram_enemy6_last_ypos ; !WRAM_START+$78
 ram_enemy8_last_xpos = !ram_enemy8_last_xpos ; !WRAM_START+$7A
 ram_enemy8_last_ypos = !ram_enemy8_last_ypos ; !WRAM_START+$7C
 
+; Kraid radar (reuses above ram_enemy6 variables)
+ram_radar6 = !ram_radar6 ; !WRAM_START+$6E
+ram_radar7 = !ram_radar7 ; !WRAM_START+$70
+ram_enemy7_last_xpos = !ram_enemy7_last_xpos ; !WRAM_START+$7A
+ram_enemy7_last_ypos = !ram_enemy7_last_ypos ; !WRAM_START+$7C
+
+; Shinetune
 ram_shine_dash_held_late = !ram_shine_dash_held_late ; !WRAM_START+$6E
 ram_shinetune_early_1 = !ram_shinetune_early_1 ; !WRAM_START+$70
 ram_shinetune_late_1 = !ram_shinetune_late_1 ; !WRAM_START+$72

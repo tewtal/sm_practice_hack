@@ -82,7 +82,7 @@
 ; ^ FREE SPACE ^ up to +$6C
 
 ; ----------------------------------------------------------
-; Shinetune and kihunter manip use several variables
+; A few room strats like shinetune use several variables
 ; that are not used by other modes,
 ; but also they do not need many other variables,
 ; so the following variables share the same WRAM
@@ -97,6 +97,7 @@
 !ram_fail_sum                       = !WRAM_START+$7C
 !ram_fail_count                     = !WRAM_START+$7E
 
+; Kihunter manip
 !ram_enemy0_last_xpos               = !WRAM_START+$6E
 !ram_enemy0_last_ypos               = !WRAM_START+$70
 !ram_enemy4_last_xpos               = !WRAM_START+$72
@@ -106,6 +107,13 @@
 !ram_enemy8_last_xpos               = !WRAM_START+$7A
 !ram_enemy8_last_ypos               = !WRAM_START+$7C
 
+; Kraid radar (reuses above ram_enemy6 variables)
+!ram_radar6                         = !WRAM_START+$6E
+!ram_radar7                         = !WRAM_START+$70
+!ram_enemy7_last_xpos               = !WRAM_START+$7A
+!ram_enemy7_last_ypos               = !WRAM_START+$7C
+
+; Shinetune
 !ram_shine_dash_held_late           = !WRAM_START+$6E
 !ram_shinetune_early_1              = !WRAM_START+$70
 !ram_shinetune_late_1               = !WRAM_START+$72
@@ -515,9 +523,23 @@
 !IH_LETTER_Y = #$0C67
 !IH_NUMBER_ZERO = #$0C09
 !IH_ARROW_LEFT = #$0C60
+!IH_ARROW_LEFT_GREY = #$1460
+!IH_ARROW_LEFT_PINK_OUTLINE = #$0860
+!IH_ARROW_LEFT_RED = #$1C60
 !IH_ARROW_UP = #$0C61
+!IH_ARROW_UP_GREY = #$1461
+!IH_ARROW_UP_PINK_OUTLINE = #$0861
+!IH_ARROW_UP_RED = #$1C61
 !IH_ARROW_RIGHT = #$0C62
+!IH_ARROW_RIGHT_GREY = #$1462
+!IH_ARROW_RIGHT_PINK_OUTLINE = #$0862
+!IH_ARROW_RIGHT_RED = #$1C62
 !IH_ARROW_DOWN = #$0C63
+!IH_ARROW_DOWN_GREY = #$1463
+!IH_ARROW_DOWN_PINK_OUTLINE = #$0863
+!IH_ARROW_DOWN_RED = #$1C63
+!IH_MORPH_BALL_YELLOW = #$00C9
+!IH_MORPH_BALL_GREEN = #$10C9
 
 !IH_PAUSE = #$0100 ; right
 !IH_SLOWDOWN = #$0400 ; down
