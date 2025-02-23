@@ -59,6 +59,7 @@ status_roomstrat:
     dw status_snailclip
     dw status_wasteland
     dw status_ridleyai
+    dw status_kihuntermanip
     dw status_downbackzeb
     dw status_mbhp
     dw status_twocries
@@ -3269,6 +3270,201 @@ endif
   .lowzero
     ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
     LDA !IH_LETTER_L : STA !HUD_TILEMAP+$8C
+    RTS
+}
+
+status_kihuntermanip:
+{
+    LDA !ROOM_ID : CMP.w #ROOM_RedKihunterShaft : BEQ .roomStairs
+    CMP.w #ROOM_ThreeMusketeersRoom : BNE .done
+    JMP status_musketeermanip
+
+  .done
+    RTS
+
+  .roomStairs
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$90
+
+    ; start with top kihunter, enemy0
+    LDX #$0000
+
+    ; Y position, check if below (greater than) Y = 500
+    LDA !ENEMY_Y,X : CMP #$01F4 : BPL .topYSuccess
+    LDA !IH_LETTER_N : STA !HUD_TILEMAP+$88 : STA !HUD_TILEMAP+$8A
+    STA !HUD_TILEMAP+$8E : BRA .movementEnemy0
+
+  .topYSuccess
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$88
+
+    ; X position, check if left of (less than) X = 168
+    LDA !ENEMY_X,X : CMP #$00A8 : BMI .topXSuccess
+    LDA !IH_LETTER_N : STA !HUD_TILEMAP+$8A : BRA .movementEnemy0
+
+  .topXSuccess
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$8A
+
+  .movementEnemy0
+    ; check for change in enemy0 xpos
+    LDA !ENEMY_X,X : CMP !ram_enemy0_last_xpos
+    BEQ .finishX0 : BMI .leftX0
+    LDA !IH_ARROW_RIGHT : STA !HUD_TILEMAP+$16
+    BRA .finishX0
+  .leftX0
+    LDA !IH_ARROW_LEFT : STA !HUD_TILEMAP+$16
+  .finishX0
+    LDA !ENEMY_X,X : STA !ram_enemy0_last_xpos
+
+    ; check for change in enemy0 ypos
+    LDA !ENEMY_Y,X : CMP !ram_enemy0_last_ypos
+    BEQ .finishY0 : BMI .upY0
+    LDA !IH_ARROW_DOWN : STA !HUD_TILEMAP+$18
+    BRA .finishY0
+  .upY0
+    LDA !IH_ARROW_UP : STA !HUD_TILEMAP+$18
+  .finishY0
+    LDA !ENEMY_Y,X : STA !ram_enemy0_last_ypos
+
+    ; bottom kihunter, enemy4
+    LDX #$0100
+
+    ; Y position, check if below (greater than) Y = 790
+    LDA !ENEMY_Y,X : CMP #$0316 : BPL .bottomYSuccess
+    LDA !IH_LETTER_N : STA !HUD_TILEMAP+$8E : BRA .movementEnemy4
+
+  .bottomYSuccess
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$8E
+
+  .movementEnemy4
+    ; check for change in enemy4 xpos
+    LDA !ENEMY_X,X : CMP !ram_enemy4_last_xpos
+    BEQ .finishX4 : BMI .leftX4
+    LDA !IH_ARROW_RIGHT : STA !HUD_TILEMAP+$56
+    BRA .finishX4
+  .leftX4
+    LDA !IH_ARROW_LEFT : STA !HUD_TILEMAP+$56
+  .finishX4
+    LDA !ENEMY_X,X : STA !ram_enemy4_last_xpos
+
+    ; check for change in enemy4 ypos
+    LDA !ENEMY_Y,X : CMP !ram_enemy4_last_ypos
+    BEQ .finishY4 : BMI .upY4
+    LDA !IH_ARROW_DOWN : STA !HUD_TILEMAP+$58
+    BRA .finishY4
+  .upY4
+    LDA !IH_ARROW_UP : STA !HUD_TILEMAP+$58
+  .finishY4
+    LDA !ENEMY_Y,X : STA !ram_enemy4_last_ypos
+
+    RTS
+}
+
+status_musketeermanip:
+{
+    LDA !SAMUS_HP : STA !ram_last_hp
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$8E
+    STA !HUD_TILEMAP+$90 : STA !HUD_TILEMAP+$92 : STA !HUD_TILEMAP+$94
+    STA !HUD_TILEMAP+$96 : STA !HUD_TILEMAP+$98 : STA !HUD_TILEMAP+$14
+
+    ; top kihunter, enemy8
+    LDX #$0200
+
+    ; X position, check if right of (greater than) X = 396 or X = 343
+    LDA !ENEMY_X,X : CMP #$018C : BPL .successBothTop
+    CMP #$0157 : BPL .successSingleTop
+    LDA !IH_LETTER_N : STA !HUD_TILEMAP+$16 : STA !HUD_TILEMAP+$18
+    BRA .movementEnemy8
+
+  .successBothTop
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$16 : STA !HUD_TILEMAP+$18
+    BRA .movementEnemy8
+
+  .successSingleTop
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$16
+    LDA !IH_LETTER_N : STA !HUD_TILEMAP+$18
+
+  .movementEnemy8
+    ; check for change in enemy8 xpos
+    LDA !ENEMY_X,X : CMP !ram_enemy8_last_xpos
+    BEQ .x8Finish : BMI .x8Left
+    LDA !IH_ARROW_RIGHT : STA !HUD_TILEMAP+$56
+    BRA .x8Finish
+  .x8Left
+    LDA !IH_ARROW_LEFT : STA !HUD_TILEMAP+$56
+  .x8Finish
+    LDA !ENEMY_X,X : STA !ram_enemy8_last_xpos
+
+    ; check for change in enemy8 ypos
+    LDA !ENEMY_Y,X : CMP !ram_enemy8_last_ypos
+    BEQ .y8Finish : BMI .y8Up
+    LDA !IH_ARROW_DOWN : STA !HUD_TILEMAP+$58
+    BRA .y8Finish
+  .y8Up
+    LDA !IH_ARROW_UP : STA !HUD_TILEMAP+$58
+  .y8Finish
+    LDA !ENEMY_Y,X : STA !ram_enemy8_last_ypos
+
+    ; middle kihunter, enemy6
+    LDX #$0180
+
+    ; X position, check if left of (less than) X = 343
+    LDA !ENEMY_X,X : CMP #$0157 : BMI .successMiddle
+    LDA !IH_LETTER_N : STA !HUD_TILEMAP+$88 : BRA .movementEnemy6
+
+  .successMiddle
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$88
+
+  .movementEnemy6
+    ; check for change in enemy6 xpos
+    LDA !ENEMY_X,X : CMP !ram_enemy6_last_xpos
+    BEQ .x6Finish : BMI .x6Left
+    LDA !IH_ARROW_RIGHT : STA !HUD_TILEMAP+$8C
+    BRA .x6Finish
+  .x6Left
+    LDA !IH_ARROW_LEFT : STA !HUD_TILEMAP+$8C
+  .x6Finish
+    LDA !ENEMY_X,X : STA !ram_enemy6_last_xpos
+
+    ; check for change in enemy6 ypos
+    LDA !ENEMY_Y,X : CMP !ram_enemy6_last_ypos
+    BEQ .y6Finish : BMI .y6Up
+    LDA !IH_ARROW_DOWN : STA !HUD_TILEMAP+$8E
+    BRA .y6Finish
+  .y6Up
+    LDA !IH_ARROW_UP : STA !HUD_TILEMAP+$8E
+  .y6Finish
+    LDA !ENEMY_Y,X : STA !ram_enemy6_last_ypos
+
+    ; bottom kihunter, enemy4
+    LDX #$0100
+
+    ; X position, check if right of (greater than) X = 343
+    LDA !ENEMY_X,X : CMP #$0157 : BPL .successBottom
+    LDA !IH_LETTER_N : STA !HUD_TILEMAP+$92 : BRA .movementEnemy4
+
+  .successBottom
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$92
+
+  .movementEnemy4
+    ; check for change in enemy4 xpos
+    LDA !ENEMY_X,X : CMP !ram_enemy4_last_xpos
+    BEQ .x4Finish : BMI .x4Left
+    LDA !IH_ARROW_RIGHT : STA !HUD_TILEMAP+$96
+    BRA .x4Finish
+  .x4Left
+    LDA !IH_ARROW_LEFT : STA !HUD_TILEMAP+$96
+  .x4Finish
+    LDA !ENEMY_X,X : STA !ram_enemy4_last_xpos
+
+    ; check for change in enemy4 ypos
+    LDA !ENEMY_Y,X : CMP !ram_enemy4_last_ypos
+    BEQ .y4Finish : BMI .y4Up
+    LDA !IH_ARROW_DOWN : STA !HUD_TILEMAP+$98
+    BRA .y4Finish
+  .y4Up
+    LDA !IH_ARROW_UP : STA !HUD_TILEMAP+$98
+  .y4Finish
+    LDA !ENEMY_Y,X : STA !ram_enemy4_last_ypos
+
     RTS
 }
 

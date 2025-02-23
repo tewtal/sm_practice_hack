@@ -82,8 +82,9 @@
 ; ^ FREE SPACE ^ up to +$6C
 
 ; ----------------------------------------------------------
-; Shinetune uses several variables not used by other modes,
-; but also shinetune does not use many other variables,
+; Shinetune and kihunter manip use several variables
+; that are not used by other modes,
+; but also they do not need many other variables,
 ; so the following variables share the same WRAM
 
 !ram_xpos                           = !WRAM_START+$6E
@@ -95,6 +96,15 @@
 !ram_walljump_counter               = !WRAM_START+$7A
 !ram_fail_sum                       = !WRAM_START+$7C
 !ram_fail_count                     = !WRAM_START+$7E
+
+!ram_enemy0_last_xpos               = !WRAM_START+$6E
+!ram_enemy0_last_ypos               = !WRAM_START+$70
+!ram_enemy4_last_xpos               = !WRAM_START+$72
+!ram_enemy4_last_ypos               = !WRAM_START+$74
+!ram_enemy6_last_xpos               = !WRAM_START+$76
+!ram_enemy6_last_ypos               = !WRAM_START+$78
+!ram_enemy8_last_xpos               = !WRAM_START+$7A
+!ram_enemy8_last_ypos               = !WRAM_START+$7C
 
 !ram_shine_dash_held_late           = !WRAM_START+$6E
 !ram_shinetune_early_1              = !WRAM_START+$70
