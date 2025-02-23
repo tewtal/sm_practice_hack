@@ -327,6 +327,7 @@ layout_bombtorizodoor:
     db #$28, "r   VANILLA", #$FF
     db #$28, "r      FAST", #$FF
     db #$28, "r      SLOW", #$FF
+    db #$FF
 
 layout_magnetstairs:
     %cm_toggle_bit("Remove Magnet Stairs", !sram_room_layout, !ROOM_LAYOUT_MAGNET_STAIRS, #0)

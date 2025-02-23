@@ -1610,6 +1610,7 @@ RoomStratMenu2:
     dw ihstrat_ridleyai
     dw ihstrat_kihuntermanip
     dw ihstrat_downbackzeb
+    dw ihstrat_zebskip
     dw ihstrat_mbhp
     dw ihstrat_twocries
     dw #$FFFF
@@ -1672,12 +1673,15 @@ ihstrat_kihuntermanip:
 ihstrat_downbackzeb:
     %cm_jsl("Downback Zeb Skip", #action_select_room_strat, #$0011)
 
+ihstrat_zebskip:
+    %cm_jsl("Zeb Skip Indicator", #action_select_room_strat, #$0012)
+
 ihstrat_mbhp:
-!IH_STRAT_MBHP_INDEX = #$0012
-    %cm_jsl("Mother Brain HP", #action_select_room_strat, #$0012)
+!IH_STRAT_MBHP_INDEX = #$0013
+    %cm_jsl("Mother Brain HP", #action_select_room_strat, #$0013)
 
 ihstrat_twocries:
-    %cm_jsl("Two Cries Standup", #action_select_room_strat, #$0013)
+    %cm_jsl("Two Cries Standup", #action_select_room_strat, #$0014)
 
 action_select_room_strat:
 {
@@ -1717,6 +1721,7 @@ ih_room_strat:
     db #$28, "  RIDLEY AI", #$FF
     db #$28, "   KIHUNTER", #$FF
     db #$28, "  DBACK ZEB", #$FF
+    db #$28, "   ZEB SKIP", #$FF
     db #$28, "      MB HP", #$FF
     db #$28, "  TWO CRIES", #$FF
     db #$FF

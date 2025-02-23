@@ -62,6 +62,7 @@ status_roomstrat:
     dw status_ridleyai
     dw status_kihuntermanip
     dw status_downbackzeb
+    dw status_zebskip
     dw status_mbhp
     dw status_twocries
 }
@@ -3811,15 +3812,6 @@ status_wasteland:
     JMP .reset
 }
 
-status_mbhp:
-{
-    LDA !ENEMY_HP+$40 : CMP !ram_mb_hp : BEQ .done : STA !ram_mb_hp
-    LDX #$0088 : JSR Draw4
-
-  .done
-    RTS
-}
-
 status_ridleyai:
 {
     ; check if Ridley's room
@@ -4246,6 +4238,57 @@ status_downbackzeb:
 
   .reset
     TDC : STA !ram_roomstrat_counter : STA !ram_roomstrat_state
+    RTS
+}
+
+status_zebskip:
+{
+    LDA !ROOM_ID : CMP.w #ROOM_MotherBrainRoom : BNE .end
+
+    ; check if first zeb dead
+    LDA $7ED820 : AND #$0038 : BNE .secondZeb
+
+    ; check if X position is beyond first zeb
+    ; exit if first zeb alive and X beyond first zeb
+    LDA !SAMUS_X : CMP #$0334 : BPL .firstZeb
+
+  .end
+    RTS
+
+  .firstZeb
+    LDA !SAMUS_X : CMP #$0345 : BMI .stuck
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$8E
+    BRA .iFrames
+
+  .secondZeb
+    ; check if X is beyond 2nd zeb, exit if so
+    LDA !SAMUS_X : CMP #$0274 : BMI .end
+    CMP #$0285 : BMI .stuck
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$8E : STA !HUD_TILEMAP+$90
+    BRA .iFrames
+
+  .stuck
+    LDA !IH_STUCK_GREEN : STA !HUD_TILEMAP+$8E
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$90
+
+  .iFrames
+    LDA !SAMUS_IFRAME_TIMER : BEQ .noIframes
+    AND #$00FF ; don't draw out-of-range garbage
+    LDX #$0088 : JSR Draw2
+    RTS
+
+  .noIframes
+    LDA !IH_NUMBER_ZERO_YELLOW : STA !HUD_TILEMAP+$8A
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$88
+    RTS
+}
+
+status_mbhp:
+{
+    LDA !ENEMY_HP+$40 : CMP !ram_mb_hp : BEQ .done : STA !ram_mb_hp
+    LDX #$0088 : JSR Draw4
+
+  .done
     RTS
 }
 
