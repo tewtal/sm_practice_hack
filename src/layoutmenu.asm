@@ -1071,6 +1071,7 @@ LayoutCrateriaLeftDoorMenu:
     dw #doormenu_left_8C52
     dw #doormenu_left_8C3A
     dw #doormenu_left_8C5E
+    dw #$FFFF
     dw #doormenu_crateria_left_goto_page2
     dw #$0000
     %cm_header("SELECT LEFT DOOR")
@@ -1093,6 +1094,7 @@ LayoutCrateriaLeftDoorMenu2:
     dw #doormenu_left_8A06
     dw #doormenu_left_89FA
     dw #doormenu_left_89EE
+    dw #$FFFF
     dw #doormenu_crateria_left_goto_page1
     dw #$0000
     %cm_header("SELECT LEFT DOOR")
@@ -1368,6 +1370,7 @@ LayoutLowerNorfairLeftDoorMenu:
     dw #doormenu_left_985E
     dw #doormenu_left_9A3E
     dw #doormenu_left_9936
+    dw #$FFFF
     dw #doormenu_lower_norfair_left_goto_page2
     dw #$0000
     %cm_header("SELECT LEFT DOOR")
@@ -1385,6 +1388,7 @@ LayoutLowerNorfairLeftDoorMenu2:
     dw #doormenu_left_99BA
     dw #doormenu_left_9A56
     dw #doormenu_left_997E
+    dw #$FFFF
     dw #doormenu_lower_norfair_left_goto_page1
     dw #$0000
     %cm_header("SELECT LEFT DOOR")
@@ -1729,6 +1733,7 @@ LayoutUpperNorfairLeftDoorMenu:
     dw #doormenu_left_9396
     dw #doormenu_left_938A
     dw #doormenu_left_961E
+    dw #$FFFF
     dw #doormenu_upper_norfair_left_goto_page2
     dw #doormenu_upper_norfair_left_goto_page3
     dw #$0000
@@ -1751,6 +1756,7 @@ LayoutUpperNorfairLeftDoorMenu2:
     dw #doormenu_left_96D2
     dw #doormenu_left_982E
     dw #doormenu_left_96EA
+    dw #$FFFF
     dw #doormenu_upper_norfair_left_goto_page1
     dw #doormenu_upper_norfair_left_goto_page3
     dw #$0000
@@ -1772,6 +1778,7 @@ LayoutUpperNorfairLeftDoorMenu3:
     dw #doormenu_left_95B2
     dw #doormenu_left_977A
     dw #doormenu_left_9642
+    dw #$FFFF
     dw #doormenu_upper_norfair_left_goto_page1
     dw #doormenu_upper_norfair_left_goto_page2
     dw #$0000
@@ -2465,6 +2472,7 @@ LayoutCrateriaRightDoorMenu:
     dw #doormenu_right_8B1A
     dw #doormenu_right_8952
     dw #doormenu_right_8C46
+    dw #$FFFF
     dw #doormenu_crateria_right_goto_page2
     dw #$0000
     %cm_header("SELECT RIGHT DOOR")
@@ -2485,6 +2493,7 @@ LayoutCrateriaRightDoorMenu2:
     dw #doormenu_right_8BE6
     dw #doormenu_right_8B26
     dw #doormenu_right_89CA
+    dw #$FFFF
     dw #doormenu_crateria_right_goto_page1
     dw #$0000
     %cm_header("SELECT RIGHT DOOR")
@@ -2756,6 +2765,7 @@ LayoutLowerNorfairRightDoorMenu:
     dw #doormenu_right_9852
     dw #doormenu_right_9A32
     dw #doormenu_right_992A
+    dw #$FFFF
     dw #doormenu_lower_norfair_right_goto_page2
     dw #$0000
     %cm_header("SELECT RIGHT DOOR")
@@ -2773,6 +2783,7 @@ LayoutLowerNorfairRightDoorMenu2:
     dw #doormenu_right_9A1A
     dw #doormenu_right_998A
     dw #doormenu_right_9972
+    dw #$FFFF
     dw #doormenu_lower_norfair_right_goto_page1
     dw #$0000
     %cm_header("SELECT RIGHT DOOR")
@@ -3117,6 +3128,7 @@ LayoutUpperNorfairRightDoorMenu:
     dw #doormenu_right_93AE
     dw #doormenu_right_9612
     dw #doormenu_right_9606
+    dw #$FFFF
     dw #doormenu_upper_norfair_right_goto_page2
     dw #doormenu_upper_norfair_right_goto_page3
     dw #$0000
@@ -3140,6 +3152,7 @@ LayoutUpperNorfairRightDoorMenu2:
     dw #doormenu_right_9666
     dw #doormenu_right_96DE
     dw #doormenu_right_9702
+    dw #$FFFF
     dw #doormenu_upper_norfair_right_goto_page1
     dw #doormenu_upper_norfair_right_goto_page3
     dw #$0000
@@ -3158,6 +3171,7 @@ LayoutUpperNorfairRightDoorMenu3:
     dw #doormenu_right_965A
     dw #doormenu_right_964E
     dw #doormenu_right_962A
+    dw #$FFFF
     dw #doormenu_upper_norfair_right_goto_page1
     dw #doormenu_upper_norfair_right_goto_page2
     dw #$0000

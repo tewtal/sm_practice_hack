@@ -44,6 +44,7 @@ status_roomstrat:
     RTS
 
   .status_room_table
+    dw status_ceresridley
     dw status_doorskip
     dw status_tacotank
     dw status_moondance
@@ -1605,6 +1606,17 @@ status_ramwatch:
     LDA !ram_watch_edit_lock_right : BEQ .e16RightDone
     LDA !ram_watch_edit_right : STA [$C5]
   .e16RightDone
+    RTS
+}
+
+status_ceresridley:
+{
+    ; displays number of shots until Ridley "dies"
+    LDA $7E781A : CMP !ram_HUD_check : BEQ .done
+    STA !ram_HUD_check
+    LDX #$0088 : JSR Draw4
+
+  .done
     RTS
 }
 
