@@ -17,14 +17,14 @@
     dw status_spikesuit
     dw status_lagcounter
     dw status_cpuusage
-    dw status_xpos
-    dw status_ypos
     dw status_hspeed
     dw status_vspeed
     dw status_quickdrop
     dw status_walljump
     dw status_armpump
     dw status_pumpcounter
+    dw status_xpos
+    dw status_ypos
     dw status_shottimer
     dw status_ramwatch
 
@@ -47,6 +47,7 @@ status_roomstrat:
     dw status_ceresridley
     dw status_doorskip
     dw status_tacotank
+    dw status_pitdoor
     dw status_moondance
     dw status_gateglitch
     dw status_moatcwj
@@ -730,46 +731,6 @@ status_cpuusage:
     PHA : PLA : PHA : PLA : LDA $4214
     LDX #$0088 : JSR Draw3
     LDA !IH_PERCENT : STA !HUD_TILEMAP+$8E
-    RTS
-}
-
-status_xpos:
-{
-    ; Suppress Samus HP display
-    LDA !SAMUS_HP : STA !ram_last_hp
-
-    LDA !SAMUS_X : CMP !ram_xpos : BEQ .checksubpixel
-    STA !ram_xpos : LDX #$0088 : JSR Draw4
-    LDA !SAMUS_X_SUBPX : BRA .drawsubpixel
-
-  .checksubpixel
-    LDA !SAMUS_X_SUBPX : CMP !ram_subpixel_pos : BEQ .done
-
-  .drawsubpixel
-    STA !ram_subpixel_pos : LDX #$0092 : JSR Draw4Hex
-    LDA !IH_DECIMAL : STA !HUD_TILEMAP+$90
-
-  .done
-    RTS
-}
-
-status_ypos:
-{
-    ; Suppress Samus HP display
-    LDA !SAMUS_HP : STA !ram_last_hp
-
-    LDA !SAMUS_Y : CMP !ram_ypos : BEQ .checksubpixel
-    STA !ram_ypos : LDX #$0088 : JSR Draw4
-    LDA !SAMUS_Y_SUBPX : BRA .drawsubpixel
-
-  .checksubpixel
-    LDA !SAMUS_Y_SUBPX : CMP !ram_subpixel_pos : BEQ .done
-
-  .drawsubpixel
-    STA !ram_subpixel_pos : LDX #$0092 : JSR Draw4Hex
-    LDA !IH_DECIMAL : STA !HUD_TILEMAP+$90
-
-  .done
     RTS
 }
 
@@ -1486,6 +1447,46 @@ status_pumpcounter:
     RTS
 }
 
+status_xpos:
+{
+    ; Suppress Samus HP display
+    LDA !SAMUS_HP : STA !ram_last_hp
+
+    LDA !SAMUS_X : CMP !ram_xpos : BEQ .checksubpixel
+    STA !ram_xpos : LDX #$0088 : JSR Draw4
+    LDA !SAMUS_X_SUBPX : BRA .drawsubpixel
+
+  .checksubpixel
+    LDA !SAMUS_X_SUBPX : CMP !ram_subpixel_pos : BEQ .done
+
+  .drawsubpixel
+    STA !ram_subpixel_pos : LDX #$0092 : JSR Draw4Hex
+    LDA !IH_DECIMAL : STA !HUD_TILEMAP+$90
+
+  .done
+    RTS
+}
+
+status_ypos:
+{
+    ; Suppress Samus HP display
+    LDA !SAMUS_HP : STA !ram_last_hp
+
+    LDA !SAMUS_Y : CMP !ram_ypos : BEQ .checksubpixel
+    STA !ram_ypos : LDX #$0088 : JSR Draw4
+    LDA !SAMUS_Y_SUBPX : BRA .drawsubpixel
+
+  .checksubpixel
+    LDA !SAMUS_Y_SUBPX : CMP !ram_subpixel_pos : BEQ .done
+
+  .drawsubpixel
+    STA !ram_subpixel_pos : LDX #$0092 : JSR Draw4Hex
+    LDA !IH_DECIMAL : STA !HUD_TILEMAP+$90
+
+  .done
+    RTS
+}
+
 status_shottimer:
 {
     LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_SHOT : BEQ .incShot
@@ -2080,6 +2081,22 @@ endif
     LDA !ram_ypos : SEC : SBC !ram_xpos
     ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$94
     JMP .incstate
+}
+
+status_pitdoor:
+{
+    LDA !ROOM_ID : CMP.w #ROOM_PitRoom : BNE .done
+    LDA $7EDE64 : BNE .draw_N
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$8E
+    LDA !sram_display_mode_reward : BEQ .done
+    %sfxreward()
+    RTS
+
+  .draw_N
+    LDA !IH_LETTER_N : STA !HUD_TILEMAP+$8E
+
+  .done
+    RTS
 }
 
 status_moondance:

@@ -1440,8 +1440,6 @@ DisplayModeMenu:
     dw ihmode_spikesuit
     dw ihmode_lagcounter
     dw ihmode_cpuusage
-    dw ihmode_xpos
-    dw ihmode_ypos
     dw ihmode_hspeed
     dw ihmode_vspeed
     dw ihmode_quickdrop
@@ -1454,6 +1452,8 @@ DisplayModeMenu:
 DisplayModeMenu2:
     dw ihmode_armpump
     dw ihmode_pumpcounter
+    dw ihmode_xpos
+    dw ihmode_ypos
     dw ihmode_shottimer
     dw ihmode_ramwatch
     dw #$FFFF
@@ -1499,32 +1499,32 @@ ihmode_lagcounter:
 ihmode_cpuusage:
     %cm_jsl("CPU Usage", #action_select_infohud_mode, #$000B)
 
-ihmode_xpos:
-    %cm_jsl("X Position", #action_select_infohud_mode, #$000C)
-
-ihmode_ypos:
-    %cm_jsl("Y Position", #action_select_infohud_mode, #$000D)
-
 ihmode_hspeed:
-    %cm_jsl("Horizontal Speed", #action_select_infohud_mode, #$000E)
+    %cm_jsl("Horizontal Speed", #action_select_infohud_mode, #$000C)
 
 ihmode_vspeed:
 !IH_MODE_VSPEED_INDEX = #$000F
-    %cm_jsl("Vertical Speed", #action_select_infohud_mode, #$000F)
+    %cm_jsl("Vertical Speed", #action_select_infohud_mode, #$000D)
 
 ihmode_quickdrop:
-    %cm_jsl("Quickdrop Trainer", #action_select_infohud_mode, #$0010)
+    %cm_jsl("Quickdrop Trainer", #action_select_infohud_mode, #$000E)
 
 ihmode_walljump:
 !IH_MODE_WALLJUMP_INDEX = #$0011
-    %cm_jsl("Walljump Trainer", #action_select_infohud_mode, #$0011)
+    %cm_jsl("Walljump Trainer", #action_select_infohud_mode, #$000F)
 
 ihmode_armpump:
 !IH_MODE_ARMPUMP_INDEX = #$0012
-    %cm_jsl("Arm Pump Trainer", #action_select_infohud_mode, #$0012)
+    %cm_jsl("Arm Pump Trainer", #action_select_infohud_mode, #$0010)
 
 ihmode_pumpcounter:
-    %cm_jsl("Arm Pump Counter", #action_select_infohud_mode, #$0013)
+    %cm_jsl("Arm Pump Counter", #action_select_infohud_mode, #$0011)
+
+ihmode_xpos:
+    %cm_jsl("X Position", #action_select_infohud_mode, #$0012)
+
+ihmode_ypos:
+    %cm_jsl("Y Position", #action_select_infohud_mode, #$0013)
 
 ihmode_shottimer:
     %cm_jsl("Shot Timer", #action_select_infohud_mode, #$0014)
@@ -1564,14 +1564,14 @@ ih_display_mode:
     db #$28, "  SPIKESUIT", #$FF
     db #$28, "LAG COUNTER", #$FF
     db #$28, "  CPU USAGE", #$FF
-    db #$28, " X POSITION", #$FF
-    db #$28, " Y POSITION", #$FF
     db #$28, "HORIZ SPEED", #$FF
     db #$28, " VERT SPEED", #$FF
     db #$28, " QUICK DROP", #$FF
     db #$28, "  WALL JUMP", #$FF
     db #$28, "   ARM PUMP", #$FF
     db #$28, " PUMP COUNT", #$FF
+    db #$28, " X POSITION", #$FF
+    db #$28, " Y POSITION", #$FF
     db #$28, " SHOT TIMER", #$FF
     db #$28, "  RAM WATCH", #$FF
     db #$FF
@@ -1588,6 +1588,7 @@ RoomStratMenu:
     dw ihstrat_ceresridley
     dw ihstrat_doorskip
     dw ihstrat_tacotank
+    dw ihstrat_pitdoor
     dw ihstrat_moondance
     dw ihstrat_gateglitch
     dw ihstrat_moatcwj
@@ -1595,8 +1596,6 @@ RoomStratMenu:
     dw ihstrat_shinetopb
     dw ihstrat_elevatorcf
     dw ihstrat_botwooncf
-    dw ihstrat_draygonai
-    dw ihstrat_snailclip
     dw #$FFFF
     dw ihstrat_goto_page2
     dw #$0000
@@ -1604,6 +1603,8 @@ RoomStratMenu:
     %cm_footer("ROOM STRAT MUST BE ACTIVE")
 
 RoomStratMenu2:
+    dw ihstrat_draygonai
+    dw ihstrat_snailclip
     dw ihstrat_wasteland
     dw ihstrat_ridleyai
     dw ihstrat_downbackzeb
@@ -1624,48 +1625,51 @@ ihstrat_doorskip:
 ihstrat_tacotank:
     %cm_jsl("Taco Tank", #action_select_room_strat, #$0002)
 
+ihstrat_pitdoor:
+    %cm_jsl("Pit Room Right Door", #action_select_room_strat, #$0003)
+
 ihstrat_moondance:
-    %cm_jsl("Moondance", #action_select_room_strat, #$0003)
+    %cm_jsl("Moondance", #action_select_room_strat, #$0004)
 
 ihstrat_gateglitch:
-    %cm_jsl("Gate Glitch", #action_select_room_strat, #$0004)
+    %cm_jsl("Gate Glitch", #action_select_room_strat, #$0005)
 
 ihstrat_moatcwj:
-    %cm_jsl("Moat CWJ", #action_select_room_strat, #$0005)
+    %cm_jsl("Moat CWJ", #action_select_room_strat, #$0006)
 
 ihstrat_robotflush:
-    %cm_jsl("Robot Flush", #action_select_room_strat, #$0006)
+    %cm_jsl("Robot Flush", #action_select_room_strat, #$0007)
 
 ihstrat_shinetopb:
-    %cm_jsl("Shine to PB", #action_select_room_strat, #$0007)
+    %cm_jsl("Shine to PB", #action_select_room_strat, #$0008)
 
 ihstrat_elevatorcf:
-    %cm_jsl("Elevator Crystal Flash", #action_select_room_strat, #$0008)
+    %cm_jsl("Elevator Crystal Flash", #action_select_room_strat, #$0009)
 
 ihstrat_botwooncf:
-    %cm_jsl("Botwoon Crystal Flash", #action_select_room_strat, #$0009)
+    %cm_jsl("Botwoon Crystal Flash", #action_select_room_strat, #$000A)
 
 ihstrat_draygonai:
-    %cm_jsl("Draygon AI", #action_select_room_strat, #$000A)
+    %cm_jsl("Draygon AI", #action_select_room_strat, #$000B)
 
 ihstrat_snailclip:
-    %cm_jsl("Aqueduct Snail Clip", #action_select_room_strat, #$000B)
+    %cm_jsl("Aqueduct Snail Clip", #action_select_room_strat, #$000C)
 
 ihstrat_wasteland:
-    %cm_jsl("Wasteland Entry", #action_select_room_strat, #$000C)
+    %cm_jsl("Wasteland Entry", #action_select_room_strat, #$000D)
 
 ihstrat_ridleyai:
-    %cm_jsl("Ridley AI", #action_select_room_strat, #$000D)
+    %cm_jsl("Ridley AI", #action_select_room_strat, #$000E)
 
 ihstrat_downbackzeb:
-    %cm_jsl("Downback Zeb Skip", #action_select_room_strat, #$000E)
+    %cm_jsl("Downback Zeb Skip", #action_select_room_strat, #$000F)
 
 ihstrat_mbhp:
-!IH_STRAT_MBHP_INDEX = #$000F
-    %cm_jsl("Mother Brain HP", #action_select_room_strat, #$000F)
+!IH_STRAT_MBHP_INDEX = #$0010
+    %cm_jsl("Mother Brain HP", #action_select_room_strat, #$0010)
 
 ihstrat_twocries:
-    %cm_jsl("Two Cries Standup", #action_select_room_strat, #$0010)
+    %cm_jsl("Two Cries Standup", #action_select_room_strat, #$0011)
 
 action_select_room_strat:
 {
@@ -1690,6 +1694,7 @@ ih_room_strat:
     db #$28, " CERES HITS", #$FF
     db #$28, "  DOOR SKIP", #$FF
     db #$28, "  TACO TANK", #$FF
+    db #$28, "   PIT DOOR", #$FF
     db #$28, "  MOONDANCE", #$FF
     db #$28, "GATE GLITCH", #$FF
     db #$28, "   MOAT CWJ", #$FF
