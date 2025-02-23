@@ -1446,9 +1446,18 @@ DisplayModeMenu:
     dw ihmode_vspeed
     dw ihmode_quickdrop
     dw ihmode_walljump
+    dw #$FFFF
+    dw ihmode_goto_page2
+    dw #$0000
+    %cm_header("INFOHUD DISPLAY MODE")
+
+DisplayModeMenu2:
     dw ihmode_armpump
+    dw ihmode_pumpcounter
     dw ihmode_shottimer
     dw ihmode_ramwatch
+    dw #$FFFF
+    dw ihmode_goto_page1
     dw #$0000
     %cm_header("INFOHUD DISPLAY MODE")
 
@@ -1514,20 +1523,29 @@ ihmode_armpump:
 !IH_MODE_ARMPUMP_INDEX = #$0012
     %cm_jsl("Arm Pump Trainer", #action_select_infohud_mode, #$0012)
 
+ihmode_pumpcounter:
+    %cm_jsl("Arm Pump Counter", #action_select_infohud_mode, #$0013)
+
 ihmode_shottimer:
-    %cm_jsl("Shot Timer", #action_select_infohud_mode, #$0013)
+    %cm_jsl("Shot Timer", #action_select_infohud_mode, #$0014)
 
 ihmode_ramwatch:
-!IH_MODE_RAMWATCH_INDEX = #$0014
-    %cm_jsl("Custom RAM Watch", #action_select_infohud_mode, #$0014)
+!IH_MODE_RAMWATCH_INDEX = #$0015
+    %cm_jsl("Custom RAM Watch", #action_select_infohud_mode, #$0015)
 
-!IH_MODE_COUNT = #$0015
+!IH_MODE_COUNT = #$0016
 action_select_infohud_mode:
 {
     TYA : STA !sram_display_mode
     JSL init_print_segment_timer
     JML cm_previous_menu
 }
+
+ihmode_goto_page1:
+    %cm_adjacent_submenu("GOTO PAGE ONE", #DisplayModeMenu)
+
+ihmode_goto_page2:
+    %cm_adjacent_submenu("GOTO PAGE TWO", #DisplayModeMenu2)
 
 ih_display_mode:
     dw !ACTION_CHOICE
@@ -1553,6 +1571,7 @@ ih_display_mode:
     db #$28, " QUICK DROP", #$FF
     db #$28, "  WALL JUMP", #$FF
     db #$28, "   ARM PUMP", #$FF
+    db #$28, " PUMP COUNT", #$FF
     db #$28, " SHOT TIMER", #$FF
     db #$28, "  RAM WATCH", #$FF
     db #$FF

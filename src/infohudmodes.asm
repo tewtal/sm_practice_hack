@@ -24,6 +24,7 @@
     dw status_quickdrop
     dw status_walljump
     dw status_armpump
+    dw status_pumpcounter
     dw status_shottimer
     dw status_ramwatch
 
@@ -1440,6 +1441,45 @@ status_armpump:
     LDA !ram_momentum_sum : CLC : ADC !ram_momentum_count : STA !ram_momentum_sum
     LDA !ram_fail_sum : CLC : ADC !ram_fail_count : STA !ram_fail_sum
     TDC : STA !ram_momentum_count : STA !ram_fail_count : STA !ram_roomstrat_counter
+
+  .done
+    RTS
+}
+
+status_pumpcounter:
+{
+; this makes the assumption that the user only attempting to pump on one angle button
+; !ram_HUD_check = where to draw (index * 6 + $88)
+; !ram_roomstrat_counter = pumps counted
+; !ram_roomstrat_state = neutral/angle
+; !ram_fail_count = reset after fail, non-zero during counting
+    LDA !SAMUS_HP : STA !ram_last_hp
+
+    LDA !ram_roomstrat_state : BNE .angleLast
+    LDA !IH_CONTROLLER_PRI : AND #$0030 : BEQ .fail
+    LDA !ram_roomstrat_state : EOR #$0001 : STA !ram_roomstrat_state
+    LDA !ram_roomstrat_counter : INC : STA !ram_roomstrat_counter
+    RTS
+
+  .angleLast
+    LDA !IH_CONTROLLER_PRI : AND #$0030 : BNE .fail
+    LDA !ram_roomstrat_state : EOR #$0001 : STA !ram_roomstrat_state
+    LDA !ram_roomstrat_counter : INC : STA !ram_roomstrat_counter
+    STA !ram_fail_count
+    RTS
+
+  .fail
+    LDA !ram_fail_count : BEQ .done
+    LDA !ram_HUD_check : CMP #$0006 : BMI .draw
+    TDC : STA !ram_HUD_check
+
+  .draw
+    ASL : ADC !ram_HUD_check : ASL : ADC #$0088 : TAX
+    LDA !ram_roomstrat_counter
+    JSR Draw2
+    LDA !IH_BLANK : STA !HUD_TILEMAP,X
+    TDC : STA !ram_roomstrat_counter : STA !ram_roomstrat_state : STA !ram_fail_count
+    LDA !ram_HUD_check : INC : STA !ram_HUD_check
 
   .done
     RTS
