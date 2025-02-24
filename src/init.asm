@@ -200,6 +200,9 @@ endif
 
   .upgrade_17to18
     TDC : STA !sram_number_gfx_choice
+    STA !sram_superhud_bottom
+    STA !sram_superhud_middle
+    STA !sram_superhud_top
 
     LDA !SRAM_VERSION : STA !sram_initialized
     RTS

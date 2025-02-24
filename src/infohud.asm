@@ -1089,7 +1089,13 @@ endif
 
     ; Status Icons
   .statusIcons
-    LDA !sram_status_icons : BNE .checkHealthBomb
+    LDA !sram_status_icons : BNE .checkSuperHUD
+    RTL
+
+    ; Super HUD
+  .checkSuperHUD
+    LDA !sram_display_mode : CMP !IH_MODE_ROOMSTRAT_INDEX : BNE .checkHealthBomb
+    LDA !sram_room_strat : BNE .checkHealthBomb
     RTL
 
     ; health bomb
@@ -1629,7 +1635,8 @@ else
     STA !ram_enemy_hp : STA !ram_mb_hp
     STA !ram_dash_counter : STA !ram_shine_counter
     STA !ram_xpos : STA !ram_ypos : STA !ram_subpixel_pos
-    STA !ram_horizontal_speed : STA !ram_vertical_speed
+    LDA !ram_seed_X : LSR : STA !ram_HUD_top : STA !ram_HUD_middle
+    STA !ram_HUD_top_counter : STA !ram_HUD_middle_counter
 
     JML $808111 ; overwritten code + return
 endif ; !FEATURE_VANILLAHUD

@@ -61,10 +61,8 @@
 !ram_magic_pants_pal3               = !WRAM_START+$40
 
 !ram_room_has_set_rng               = !WRAM_START+$42
-
-!ram_watch_left_hud                 = !WRAM_START+$44
-!ram_watch_right_hud                = !WRAM_START+$46
-
+!ram_HUD_top                        = !WRAM_START+$44
+!ram_HUD_middle                     = !WRAM_START+$46
 !ram_HUD_check                      = !WRAM_START+$48
 !ram_roomstrat_counter              = !WRAM_START+$4A
 !ram_roomstrat_state                = !WRAM_START+$4C
@@ -78,6 +76,8 @@
 !ram_kraid_adjust_timer             = !WRAM_START+$5A
 !ram_print_segment_timer            = !WRAM_START+$5C
 !ram_activated_shine_duration       = !WRAM_START+$5E
+!ram_watch_left_hud                 = !WRAM_START+$60
+!ram_watch_right_hud                = !WRAM_START+$62
 
 ; ^ FREE SPACE ^ up to +$6C
 
@@ -90,8 +90,8 @@
 !ram_xpos                           = !WRAM_START+$6E
 !ram_ypos                           = !WRAM_START+$70
 !ram_subpixel_pos                   = !WRAM_START+$72
-!ram_horizontal_speed               = !WRAM_START+$74
-!ram_vertical_speed                 = !WRAM_START+$76
+!ram_HUD_top_counter                = !WRAM_START+$74
+!ram_HUD_middle_counter             = !WRAM_START+$76
 !ram_quickdrop_counter              = !WRAM_START+$78
 !ram_walljump_counter               = !WRAM_START+$7A
 !ram_fail_sum                       = !WRAM_START+$7C
@@ -457,6 +457,9 @@
 !sram_spin_lock = !SRAM_START+$8E
 !sram_map_grid_alignment = !SRAM_START+$90
 !sram_number_gfx_choice = !SRAM_START+$92
+!sram_superhud_bottom = !SRAM_START+$94
+!sram_superhud_middle = !SRAM_START+$96
+!sram_superhud_top = !SRAM_START+$98
 
 ; ^ FREE SPACE ^ up to +$EE
 
