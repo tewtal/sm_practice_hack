@@ -2481,7 +2481,7 @@ ctrl_reset_defaults:
     %cm_jsl("Reset to Defaults", .routine, #$0000)
   .routine
     %sfxreset()
-    JSL init_sram_upto9_controller_shortcuts
+    JSL init_sram_controller_shortcuts
 if !FEATURE_SD2SNES
     JML validate_sram_for_savestates
 else

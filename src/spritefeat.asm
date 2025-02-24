@@ -20,7 +20,7 @@ hook_standard_sprite_tiles:
     db $FF, $FF, $80, $80, $80, $80, $80, $80, $80, $80, $80, $80, $80, $80, $80, $80
 
 
-org $F0E000
+org $F0EC00
 print pc, " spritefeat start"
 
 ; This runs every frame before any other sprites are drawn, this is needed so we can get priority over everything else

@@ -1012,14 +1012,19 @@ status_door_vspeed:
     RTS
 }
 
+status_door_dashcounter:
+{
+    LDA !SAMUS_DASH_COUNTER : LDX #$0088 : JMP Draw4
+}
+
 status_door_xpos:
 {
-    LDA !SAMUS_X : LDX #$0088 : JMP Draw4
+    LDA !SAMUS_X : LDX #$0088 : JMP Draw4Hex
 }
 
 status_door_ypos:
 {
-    LDA !SAMUS_Y : LDX #$0088 : JMP Draw4
+    LDA !SAMUS_Y : LDX #$0088 : JMP Draw4Hex
 }
 
 status_quickdrop:
@@ -1456,7 +1461,7 @@ status_xpos:
     LDA !SAMUS_HP : STA !ram_last_hp
 
     LDA !SAMUS_X : CMP !ram_xpos : BEQ .checksubpixel
-    STA !ram_xpos : LDX #$0088 : JSR Draw4
+    STA !ram_xpos : LDX #$0088 : JSR Draw4Hex
     LDA !SAMUS_X_SUBPX : BRA .drawsubpixel
 
   .checksubpixel
@@ -1476,7 +1481,7 @@ status_ypos:
     LDA !SAMUS_HP : STA !ram_last_hp
 
     LDA !SAMUS_Y : CMP !ram_ypos : BEQ .checksubpixel
-    STA !ram_ypos : LDX #$0088 : JSR Draw4
+    STA !ram_ypos : LDX #$0088 : JSR Draw4Hex
     LDA !SAMUS_Y_SUBPX : BRA .drawsubpixel
 
   .checksubpixel

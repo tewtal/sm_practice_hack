@@ -371,7 +371,7 @@
 ; SRAM
 ; -----
 
-!SRAM_VERSION = #$0017
+!SRAM_VERSION = #$0018
 
 !SRAM_START = $702000
 !PRESET_SLOTS = $703000
@@ -393,8 +393,7 @@
 !sram_ctrl_dec_custom_preset = !SRAM_START+$1A
 !sram_ctrl_toggle_tileviewer = !SRAM_START+$1C
 !sram_ctrl_update_timers = !SRAM_START+$1E
-!sram_ctrl_auto_save_state = !SRAM_START+$F0 ; note the change of order
-!sram_ctrl_toggle_spin_lock = !SRAM_START+$F2
+; More ctrl shortcuts starting at $F0
 
 !sram_artificial_lag = !SRAM_START+$20
 !sram_rerandomize = !SRAM_START+$22
@@ -457,8 +456,14 @@
 !sram_cm_font = !SRAM_START+$8C
 !sram_spin_lock = !SRAM_START+$8E
 !sram_map_grid_alignment = !SRAM_START+$90
+!sram_number_gfx_choice = !SRAM_START+$92
 
 ; ^ FREE SPACE ^ up to +$EE
+
+!sram_ctrl_auto_save_state = !SRAM_START+$F0
+!sram_ctrl_toggle_spin_lock = !SRAM_START+$F2
+
+; ^ FREE SPACE ^ up to +$FE
 
 !sram_presetequiprando = !SRAM_START+$100
 !sram_presetequiprando_beampref = !SRAM_START+$102

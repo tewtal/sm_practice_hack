@@ -505,7 +505,7 @@ ih_before_room_transition:
     dw status_door_vspeed
     dw status_chargetimer
     dw status_shinetimer
-    dw status_dashcounter
+    dw status_door_dashcounter
     dw status_door_xpos
     dw status_door_ypos
 }
@@ -1815,12 +1815,66 @@ ih_adjust_realtime:
     RTL
 }
 
-; Placeholder for future support
+NumberGFXChoice:
+incbin ../resources/num_gfx_choice.bin
+
 overwrite_HUD_numbers:
+{
+    ; runs after cm_transfer_original_tileset
+    LDA !sram_number_gfx_choice : BNE .custom
     RTL
 
+  .custom
+    PHP : %ai16()
+    PHB : PEA $0000 : PLB : PLB
+    ; multiply by 100h and add to addr
+    LDA !sram_number_gfx_choice : XBA : CLC : ADC.w #NumberGFXChoice : TAY
+    %a8()
+
+    ; DMA tiles 1-9, 0
+    LDA #$80 : STA $2115 ; word access, inc by 1
+    LDX #$4000 : STX $2116 ; VRAM addr ($4000 x 2 = $8000)
+    STY $4302 ; src addr
+    LDA.b #NumberGFXChoice>>16 : STA $4304 ; src bank
+    LDX #$00A0 : STX $4305 ; size
+    LDA #$01 : STA $4300 ; word, normal increment (DMA MODE)
+    LDA #$18 : STA $4301 ; destination (VRAM write)
+    LDA #$01 : STA $420B ; initiate DMA (channel 1)
+
+    ; fix src addr in Y
+    %a16()
+    TYA : CLC : ADC #$00A0 : TAY
+    %a8()
+
+    ; DMA tiles A-B
+    LDX #$43B0 : STX $2116 ; VRAM addr ($43B0 x 2 = $8760)
+    STY $4302 ; src addr
+    LDA.b #NumberGFXChoice>>16 : STA $4304 ; src bank
+    LDX #$0020 : STX $4305 ; size
+    LDA #$01 : STA $4300 ; word, normal increment (DMA MODE)
+    LDA #$18 : STA $4301 ; destination (VRAM write)
+    LDA #$01 : STA $420B ; initiate DMA (channel 1)
+
+    ; fix src addr in Y again
+    %a16()
+    TYA : CLC : ADC #$0020 : TAY
+    %a8()
+
+    ; DMA tiles C-F
+    LDX #$42C0 : STX $2116 ; VRAM addr ($42C0 x 2 = $8580)
+    STY $4302 ; src addr
+    LDA.b #NumberGFXChoice>>16 : STA $4304 ; src bank
+    LDX #$0040 : STX $4305 ; size
+    LDA #$01 : STA $4300 ; word, normal increment (DMA MODE)
+    LDA #$18 : STA $4301 ; destination (VRAM write)
+    LDA #$01 : STA $420B ; initiate DMA (channel 1)
+
+    PLB : PLP
+    RTL
+}
+
 print pc, " infohud end"
-warnpc $F0E000 ; spritefeat.asm
+warnpc $F0EC00 ; spritefeat.asm
 
 
 ; Stuff that needs to be placed in bank 80
