@@ -23,8 +23,7 @@ org $82E526
 endif
 
 
-org $85F800
-print pc, " gamemode start"
+%startfree(85)
 
 gamemode_start:
 {
@@ -459,5 +458,5 @@ gamemode_door_transtion_load_sprites:
 }
 endif
 
-print pc, " gamemode end"
-warnpc $85FD00 ; menu.asm
+%endfree(85)
+

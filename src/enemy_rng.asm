@@ -232,8 +232,7 @@ endif
 ; Hooks
 ; -----
 
-org $83AE00
-print pc, " rng start"
+%startfree(83)
 
 MenuRNG:
 ; Generates new random number
@@ -595,12 +594,10 @@ hook_botwoon_spit:
     JML $808111
 }
 
-print pc, " rng end"
-warnpc $83B000 ; custompresets.asm
+%endfree(83)
 
 
-org $A4F700
-print pc, " crocomire rng start"
+%startfree(A4)
 
 hook_crocomire_rng:
 {
@@ -633,11 +630,10 @@ hook_crocomire_damage:
     RTS
 }
 
-print pc, " crocomire rng end"
+%endfree(A4)
 
 
-org $A5FA00
-print pc, " draygon rng start"
+%startfree(A5)
 
 hook_draygon_rng_left:
 {
@@ -680,7 +676,7 @@ endif
     RTS
 }
 
-print pc, " draygon rng end"
+%endfree(A5)
 
 
 ; This is actually for preset support instead of RNG
@@ -732,8 +728,7 @@ endif
     LDA $7ED82E
 
 
-org $A6FEC0
-print pc, " ridley rng start"
+%startfree(A6)
 
 ridley_init_hook:
 {
@@ -817,11 +812,10 @@ else
     dw $80ED, $F598
 endif
 
-print pc, " ridley rng end"
+%endfree(A6)
 
 
-org $A7FFB6
-print pc, " kraid rng start"
+%startfree(A7)
 
 phantoon_damage_palette:
 {
@@ -890,11 +884,10 @@ endif
     RTS
 }
 
-print pc, " kraid rng end"
+%endfree(A7)
 
 
-org $A9FFE0
-print pc, " baby rng start"
+%startfree(A9)
 
 hook_baby_skip_rng:
 {
@@ -919,4 +912,5 @@ else
 endif
 }
 
-print pc, " baby rng end"
+%endfree(A9)
+

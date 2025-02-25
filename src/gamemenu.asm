@@ -1,6 +1,5 @@
 
-org $B3F000
-print pc, " gamemenu start"
+%startfree(B3)
 
 ; ----------
 ; Game menu
@@ -551,5 +550,5 @@ ControllerLayoutTable:
     dw !CTRL_Y, !CTRL_B, !CTRL_A, !CTRL_SELECT, !CTRL_X,      !CTRL_L, !CTRL_R ; MMX Style (D4)
     dw !CTRL_X, !CTRL_B, !CTRL_Y, !CTRL_SELECT, !CTRL_A,      !CTRL_L, !CTRL_R ; SMW Style (D5)
 
-print pc, " gamemenu end"
+%endfree(B3)
 

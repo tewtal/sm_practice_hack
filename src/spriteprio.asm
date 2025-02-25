@@ -8,8 +8,7 @@ org $908643
     JSL oam_add_samus_sprite_with_prio
 
 
-org $81EF20
-print pc, " spriteprio start"
+%startfree(81)
 
 ; This is a copy of the code that adds samus spritemap to the OAM buffer
 ; ($8189AE) with a modification that it can adjust the sprite propery flags
@@ -80,5 +79,5 @@ oam_add_samus_sprite_with_prio:
     RTL
 }
 
-print pc, " spriteprio end"
-warnpc $81F000 ; init.asm
+%endfree(81)
+

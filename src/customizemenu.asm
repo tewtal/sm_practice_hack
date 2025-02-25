@@ -1,7 +1,6 @@
 
 pushpc
-org $E4E000
-print pc, " menu customization start"
+%startfree(E4)
 
 ; ----------
 ; Audio Menu
@@ -1079,11 +1078,10 @@ ConvertNormal2Header:
     %norm2head("%")
 }
 
-print pc, " menu customization end"
+%endfree(E4)
 
 
-org $AEFD20
-print pc, " menu PaletteProfileTables start"
+%startfree(AE)
 
 ; These tables can live anywhere
 PaletteProfileTables:
@@ -1201,5 +1199,5 @@ EXAKTProfileTable:
     dw $2DC6, $5F65, $3A42, $18A1, $2982, $4F0A, $6F08, $4EC9, $18A1, $2DE6, $63CC
 }
 
-print pc, " menu PaletteProfileTables end"
+%endfree(AE)
 pullpc

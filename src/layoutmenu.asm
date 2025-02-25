@@ -1,7 +1,6 @@
 
 pushpc
-org $E48000
-print pc, " layoutmenu start"
+%startfree(E4)
 
 ; -------------------------
 ; Room Layout menu
@@ -4276,6 +4275,5 @@ layout_updown_downdoor:
     dw #$0000
 
 
-print pc, " layoutmenu end"
-warnpc $E4E000 ; customizemenu.asm
+%endfree(E4)
 pullpc

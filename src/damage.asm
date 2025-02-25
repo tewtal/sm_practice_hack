@@ -153,8 +153,7 @@ suit_metroid_damage:
 }
 
 
-org $90FE00
-print pc, " damage bank90 start"
+%startfree(90)
 
 damage_overwritten_movement_routine:
     ; We overwrote an unnecessary JSR, a STZ command, and a jump to the movement routine
@@ -383,11 +382,10 @@ else
 endif
     PLB : PLP : RTL
 
-print pc, " damage bank90 end"
+%endfree(90)
 
 
-org $93F61D
-print pc, " damage bank93 start"
+%startfree(93)
 
 damage_init_beam:
 {
@@ -515,7 +513,7 @@ dash_charge_3_damage_table:
 dash_charge_4_damage_table:
     dw #$0064, #$00FA, #$0096, #$012C, #$00C8, #$01C2, #$00FA, #$01F4, #$01F4, #$01F4, #$01F4, #$01F4, #$0000, #$0000, #$0000, #$0000
 
-print pc, " damage bank93 end"
+%endfree(93)
 
 
 if !FEATURE_PAL
@@ -539,8 +537,8 @@ org $A0A62B
 endif
     JSR EnemyDamagePowerBomb
 
-org $A0FFD0
-print pc, " damage bankA0 start"
+
+%startfree(A0)
 
 EnemyDamage:
 {
@@ -586,5 +584,5 @@ else
     JMP $A63C
 endif
 
-print pc, " damage bankA0 end"
+%endfree(A0)
 

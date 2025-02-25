@@ -14,12 +14,11 @@ endif
     JSR cutscenes_nintendo_logo_hijack
     NOP
 
-
 org $80AE5C
     JSR cutscenes_door_transition
 
-org $80FF80
-print pc, " cutscenes bank80 start"
+
+%startfree(80)
 
 cutscenes_door_transition:
 {
@@ -37,8 +36,7 @@ cutscenes_door_transition:
     JMP ($AE76,x)
 }
 
-warnpc $80FFB0  ; header
-print pc, " cutscenes bank80 end"
+%endfree(80)
 
 
 if !FEATURE_PAL
@@ -105,8 +103,7 @@ endif
     JSL cutscenes_kraid_death_camera
 
 
-org $8BF800
-print pc, " cutscenes start"
+%startfree(8B)
 
 cutscenes_nintendo_logo_hijack:
 {
@@ -288,8 +285,7 @@ cutscenes_kraid_death_camera:
     RTL
 }
 
-print pc, " cutscenes end"
-warnpc $8BFA00 ; misc.asm
+%endfree(8B)
 
 
 ; Non-flashing palette instruction
@@ -416,8 +412,7 @@ hook_tourian_crateria_palette_fx_objects:
     dw $C685, #crateria_4_palette
 
 
-org $88F000
-print pc, " cutscenes bank88 start"
+%startfree(88)
 
 pb_soft_explosion_colors:
     db $01, $01, $00
@@ -804,7 +799,7 @@ rising_earthquake_start:
     JMP rising_earthquake_end
 }
 
-print pc, " cutscenes bank88 end"
+%endfree(88)
 
 
 org $888AD1
@@ -1061,8 +1056,7 @@ endif
     JSL cutscenes_mb_custom_damage
 
 
-org $A9FBC0
-print pc, " cutscenes MB start"
+%startfree(A9)
 
 cutscenes_mb_fast_init:
 {
@@ -1619,5 +1613,5 @@ cutscenes_mb_custom_damage:
     JML $91DF51
 }
 
-print pc, " cutscenes MB end"
-warnpc $A9FFE0 ; rng.asm
+%endfree(A9)
+
