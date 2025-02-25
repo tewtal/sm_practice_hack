@@ -5,6 +5,33 @@
 ; Menu Helpers
 ; ------------
 
+action_brb_menu:
+{
+    ; Since BRB ram is shared with other menu ram,
+    ; clear all of the values so they are initially sane
+    TDC : STA !ram_cm_brb
+    STA !ram_cm_brb_timer
+    STA !ram_cm_brb_frames
+    STA !ram_cm_brb_secs
+    STA !ram_cm_brb_mins
+    STA !ram_cm_brb_screen
+    STA !ram_cm_brb_timer_mode
+    STA !ram_cm_brb_scroll
+    STA !ram_cm_brb_scroll_X
+    STA !ram_cm_brb_scroll_Y
+    STA !ram_cm_brb_scroll_H
+    STA !ram_cm_brb_scroll_V
+    STA !ram_cm_brb_scroll_timer
+
+    ; Palette option is initialized to FFFF
+    DEC : STA !ram_cm_brb_palette
+
+    ; Set reasonable cycle time values
+    LDA #$000A : STA !ram_cm_brb_set_cycle
+    LDA #$0258 : STA !ram_cm_brb_cycle_time
+    BRA action_mainmenu
+}
+
 action_preset_options_mainmenu:
 {
     ; Prepare elevator option
@@ -179,6 +206,7 @@ endif
     dw #mm_goto_ctrlsmenu
     dw #mm_goto_audiomenu
     dw #mm_goto_customize
+    dw #mm_goto_brbmenu
     dw #$0000
     %cm_version_header("SM PRACTICE HACK")
 if !FEATURE_DEV && defined("PRERELEASE")
@@ -214,6 +242,7 @@ endif
     dw #CtrlMenu>>16
     dw #AudioMenu>>16
     dw #CustomizeMenu>>16
+    dw #BRBMenu>>16
 
 mm_goto_equipment:
     %cm_mainmenu("Equipment", #EquipmentMenu)
@@ -267,6 +296,9 @@ mm_goto_audiomenu:
 
 mm_goto_customize:
     %cm_jsl("Menu Customization", #action_customize_mainmenu, #CustomizeMenu)
+
+mm_goto_brbmenu:
+    %cm_jsl("Be Right Back Menu", #action_brb_menu, #BRBMenu)
 
 
 ; -------------------

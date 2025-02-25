@@ -794,6 +794,7 @@ PrepMenuPalette:
 {
     LDA !sram_custompalette_profile : BEQ .customPalette
 
+  .standard
     ; load palettes from profile table
     PHP : PHB
     %i8()

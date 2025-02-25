@@ -317,6 +317,23 @@
 !ram_cm_dummy_off = !WRAM_MENU_START+$8C
 !ram_cm_dummy_num = !WRAM_MENU_START+$8E
 
+!ram_cm_brb = !WRAM_MENU_START+$80
+!ram_cm_brb_timer = !WRAM_MENU_START+$82
+!ram_cm_brb_frames = !WRAM_MENU_START+$84
+!ram_cm_brb_secs = !WRAM_MENU_START+$86
+!ram_cm_brb_mins = !WRAM_MENU_START+$88
+!ram_cm_brb_screen = !WRAM_MENU_START+$8A
+!ram_cm_brb_timer_mode = !WRAM_MENU_START+$8C
+!ram_cm_brb_scroll = !WRAM_MENU_START+$8E
+!ram_cm_brb_scroll_X = !WRAM_MENU_START+$90
+!ram_cm_brb_scroll_Y = !WRAM_MENU_START+$92
+!ram_cm_brb_scroll_H = !WRAM_MENU_START+$94
+!ram_cm_brb_scroll_V = !WRAM_MENU_START+$96
+!ram_cm_brb_scroll_timer = !WRAM_MENU_START+$98
+!ram_cm_brb_palette = !WRAM_MENU_START+$9A
+!ram_cm_brb_set_cycle = !WRAM_MENU_START+$9C
+!ram_cm_brb_cycle_time = !WRAM_MENU_START+$9E
+
 !ram_cm_keyboard_buffer = !WRAM_MENU_START+$80 ; $18 bytes
 
 !ram_cm_manage_slots = !WRAM_MENU_START+$80
@@ -504,6 +521,8 @@
 !KB_DEL1 = $9C
 !KB_DEL2 = $9D
 
+!BRB_METROID = #$287F
+!BRB_HEART = #$2899
 !MENU_CLEAR = #$000E
 !MENU_BLANK = #$281F
 !MENU_SLASH = #$287F
@@ -603,6 +622,8 @@
 !REG_210E_BG1_Y = $B3
 !REG_210F_BG2_X = $B5
 !REG_2110_BG2_Y = $B7
+!REG_2111_BG3_X = $B9
+!REG_2112_BG3_Y = $BB
 
 !VRAM_WRITE_STACK_POINTER = $0330
 !OAM_LOW = $0370
@@ -1132,4 +1153,5 @@ endif
 !PROFILE_PapaSchmo    = #$0019
 !PROFILE_Vespher      = #$001A
 !PROFILE_EXAKT        = #$001B
+!PROFILE_COUNT        = #$001C
 

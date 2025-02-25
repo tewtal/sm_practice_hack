@@ -86,6 +86,7 @@ endif
 incsrc gamemode.asm
 incsrc minimap.asm
 incsrc menu.asm
+incsrc BRBmenu.asm
 incsrc roomnames.asm
 incsrc clearenemies.asm
 incsrc demos.asm
