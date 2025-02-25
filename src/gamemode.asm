@@ -445,7 +445,7 @@ gamemode_door_transition:
 gamemode_door_transtion_load_sprites:
 {
     ; Check for auto-save mid-transition
-    LDA !ram_auto_save_state : BEQ .done
+    LDA !ram_auto_save_state : BEQ .check
     BMI .auto_save
     TDC : STA !ram_auto_save_state
   .auto_save
@@ -455,6 +455,34 @@ gamemode_door_transtion_load_sprites:
     PLB : PLP
   .done
     JML $82E4A9 ; return to hijacked code
+  .check
+if !FEATURE_PAL
+    JML $82E4A9 ; return to hijacked code
+else
+    LDA !IH_CONTROLLER_PRI : CMP #$C0C0 : BNE .done
+    LDA !AREA_ID : BEQ .done : CMP #$0002 : BEQ .done
+    LDA !sram_ctrl_menu : CMP #$C0C0 : BEQ .done
+    LDA !sram_ctrl_save_state : CMP #$C0C0 : BEQ .done
+    LDA !sram_ctrl_load_state : CMP #$C0C0 : BEQ .done
+    LDA !sram_ctrl_load_last_preset : CMP #$C0C0 : BEQ .done
+    LDA !sram_ctrl_full_equipment : CMP #$C0C0 : BEQ .done
+    LDA !sram_ctrl_kill_enemies : CMP #$C0C0 : BEQ .done
+    LDA !sram_ctrl_reset_segment_timer : CMP #$C0C0 : BEQ .done
+    LDA !sram_ctrl_reset_segment_later : CMP #$C0C0 : BEQ .done
+    LDA !sram_ctrl_random_preset : CMP #$C0C0 : BEQ .done
+    LDA !sram_ctrl_save_custom_preset : CMP #$C0C0 : BEQ .end
+    LDA !sram_ctrl_load_custom_preset : CMP #$C0C0 : BEQ .end
+    LDA !sram_ctrl_inc_custom_preset : CMP #$C0C0 : BEQ .end
+    LDA !sram_ctrl_dec_custom_preset : CMP #$C0C0 : BEQ .end
+    LDA !sram_ctrl_toggle_tileviewer : CMP #$C0C0 : BEQ .end
+    LDA !sram_ctrl_update_timers : CMP #$C0C0 : BEQ .end
+    LDA !sram_ctrl_auto_save_state : CMP #$C0C0 : BEQ .end
+    LDA !sram_ctrl_toggle_spin_lock : CMP #$C0C0 : BEQ .end
+    LDA #custom_intro_init : STA !CINEMATIC_FUNCTION_POINTER
+    LDA #$001E : STA !GAMEMODE
+  .end
+    JML $82E4A9 ; return to hijacked code
+endif
 }
 endif
 
