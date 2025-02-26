@@ -101,11 +101,13 @@ endif
 ; ---------------
 
 if !FEATURE_PAL
-org $A58AEC
+org $A587C2
 else
-org $A58ADC
+org $A587B2
 endif
-    JSR hook_draygon_rng_left
+    LDA !ram_turret_rng : TAX
+    JSL $808111 : AND #$0003
+    JMP (hook_turret_rng_table,X)
 
 if !FEATURE_PAL
 org $A589AD
@@ -113,6 +115,13 @@ else
 org $A5899D
 endif
     JSR hook_draygon_rng_right
+
+if !FEATURE_PAL
+org $A58AEC
+else
+org $A58ADC
+endif
+    JSR hook_draygon_rng_left
 
 if !FEATURE_PAL
 org $A5956B
@@ -657,9 +666,229 @@ hook_crocomire_damage:
 
 %startfree(A5)
 
-hook_draygon_rng_left:
+turret_x_positions:
+    dw $0034, $01CC, $01CC, $01BC
+
+turret_y_positions:
+    dw $012F, $0101, $015E, $0188
+
+hook_turret_rng_table:
+    dw turret_rng_vanilla
+    dw turret_rng_aggressive
+    dw turret_rng_upper_left
+    dw turret_rng_lower_left
+    dw turret_rng_upper_right
+    dw turret_rng_lower_right
+    dw turret_rng_left
+    dw turret_rng_right
+    dw turret_rng_upper
+    dw turret_rng_lower
+    dw turret_rng_not_upper_left
+    dw turret_rng_not_lower_left
+    dw turret_rng_not_upper_right
+    dw turret_rng_not_lower_right
+
+turret_rng_upper:
 {
-    LDA !ram_draygon_rng_left : BEQ .no_manip
+    BIT #$0002 : BEQ turret_rng_upper_right
+    ; Fallthrough to turret_rng_upper_left
+}
+
+turret_rng_upper_left:
+{
+    LDX #$0006
+    BRA turret_rng_vanilla_check_alive
+}
+
+turret_rng_left:
+{
+    BIT #$0002 : BNE turret_rng_upper_left
+    ; Fallthrough to turret_rng_lower_left
+}
+
+turret_rng_lower_left:
+{
+    LDX #$0000
+    BRA turret_rng_vanilla_check_alive
+}
+
+turret_rng_right:
+{
+    BIT #$0002 : BNE turret_rng_lower_right
+    ; Fallthrough to turret_rng_upper_right
+}
+
+turret_rng_upper_right:
+{
+    LDX #$0002
+    BRA turret_rng_vanilla_check_alive
+}
+
+turret_rng_lower:
+{
+    BIT #$0002 : BEQ turret_rng_lower_left
+    ; Fallthrough to turret_rng_lower_right
+}
+
+turret_rng_lower_right:
+{
+    LDX #$0004
+    BRA turret_rng_vanilla_check_alive
+}
+
+turret_rng_vanilla:
+{
+    ASL : TAX
+  .check_alive
+    LDA $7E8804,X : BNE .done
+    LDA.w turret_x_positions,X : STA $12
+    LDA.w turret_y_positions,X : STA $14
+    LDY #$8E5E
+    LDA #$0003
+    JSL $868027
+  .done
+    RTS
+}
+
+turret_rng_not_upper_left:
+{
+    LDX #$0003 : STX $12
+    BRA turret_rng_not
+}
+
+turret_rng_not_lower_left:
+{
+    LDX #$0000 : STX $12
+    BRA turret_rng_not
+}
+
+turret_rng_not_upper_right:
+{
+    LDX #$0001 : STX $12
+    BRA turret_rng_not
+}
+
+turret_rng_not_lower_right:
+{
+    LDX #$0002 : STX $12
+    BRA turret_rng_not
+}
+
+turret_rng_not:
+{
+    CMP $12 : BNE turret_rng_vanilla
+    LDA !CACHED_RANDOM_NUMBER
+    LSR : LSR : STA $14 : AND #$0003
+    CMP $12 : BNE turret_rng_vanilla
+    LDA $14 : LSR : LSR : STA $14 : AND #$0003
+    CMP $12 : BNE turret_rng_vanilla
+    LDA $14 : LSR : LSR : STA $14 : AND #$0003
+    CMP $12 : BNE turret_rng_vanilla
+    LDA $14 : LSR : LSR : STA $14 : AND #$0003
+    CMP $12 : BNE turret_rng_vanilla
+    LDA $14 : LSR : LSR : STA $14 : AND #$0003
+    CMP $12 : BNE turret_rng_vanilla
+    JSL $808111 : AND #$0003
+    BRA turret_rng_not
+}
+
+turret_rng_aggressive:
+{
+    LDA $7E8804 : ASL
+    ORA $7E8806 : ASL
+    ORA $7E8808 : ASL
+    TAX : JMP (turret_rng_aggressive_table,X)
+}
+
+turret_rng_aggressive_table:
+    dw turret_rng_all_alive
+    dw turret_rng_lower_right_dead
+    dw turret_rng_upper_right_dead
+    dw turret_rng_lower_left_alive
+    dw turret_rng_lower_left_dead
+    dw turret_rng_upper_right_alive
+    dw turret_rng_lower_right_alive
+    dw turret_rng_vanilla_done ; all turrets dead
+
+turret_rng_all_alive:
+{
+    LDA !CACHED_RANDOM_NUMBER : AND #$0003
+  .loop
+    CMP #$0003 : BNE turret_rng_all_alive_option_picked
+    LDA !CACHED_RANDOM_NUMBER
+    LSR : LSR : STA $14 : AND #$0003
+    CMP #$0003 : BNE turret_rng_all_alive_option_picked
+    LDA $14 : LSR : LSR : STA $14 : AND #$0003
+    CMP #$0003 : BNE turret_rng_all_alive_option_picked
+    LDA $14 : LSR : LSR : STA $14 : AND #$0003
+    CMP #$0003 : BNE turret_rng_all_alive_option_picked
+    LDA $14 : LSR : LSR : STA $14 : AND #$0003
+    CMP #$0003 : BNE turret_rng_all_alive_option_picked
+    LDA $14 : LSR : LSR : STA $14 : AND #$0003
+    CMP #$0003 : BNE turret_rng_all_alive_option_picked
+    JSL $808111 : AND #$0003
+    BRA .loop
+}
+
+turret_rng_all_alive_option_picked:
+{
+    ASL : TAX
+    ; Fallthrough to next routine
+}
+
+turret_rng_skip_alive_check:
+{
+    LDA.w turret_x_positions,X : STA $12
+    LDA.w turret_y_positions,X : STA $14
+    LDY #$8E5E
+    LDA #$0003
+    JSL $868027
+  .done
+    RTS
+}
+
+turret_rng_lower_right_dead:
+{
+    LDA !CACHED_RANDOM_NUMBER
+    BIT #$0002 : BNE turret_rng_upper_right_alive
+    ; Fallthrough to turret_rng_lower_left_alive
+}
+
+turret_rng_lower_left_alive:
+{
+    LDX #$0000
+    BRA turret_rng_skip_alive_check
+}
+
+turret_rng_lower_left_dead:
+{
+    LDA !CACHED_RANDOM_NUMBER
+    BIT #$0002 : BNE turret_rng_lower_right_alive
+    ; Fallthrough to turret_rng_upper_right_alive
+}
+
+turret_rng_upper_right_alive:
+{
+    LDX #$0002
+    BRA turret_rng_skip_alive_check
+}
+
+turret_rng_upper_right_dead:
+{
+    LDA !CACHED_RANDOM_NUMBER
+    BIT #$0002 : BEQ turret_rng_lower_left_alive
+    ; Fallthrough to turret_rng_lower_right_alive
+}
+
+turret_rng_lower_right_alive:
+{
+    LDX #$0004
+    BRA turret_rng_skip_alive_check
+}
+
+hook_draygon_rng_right:
+{
+    LDA !ram_draygon_rng_right : BEQ .no_manip
     DEC    ; return with 1-swoop or 0-goop
     RTS
 
@@ -668,9 +897,9 @@ hook_draygon_rng_left:
     RTS
 }
 
-hook_draygon_rng_right:
+hook_draygon_rng_left:
 {
-    LDA !ram_draygon_rng_right : BEQ .no_manip
+    LDA !ram_draygon_rng_left : BEQ .no_manip
     DEC    ; return with 1-swoop or 0-goop
     RTS
 

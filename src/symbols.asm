@@ -185,8 +185,9 @@ ram_itempickups_chozo = !ram_itempickups_chozo ; !WRAM_PERSIST_START+$60
 ram_itempickups_hidden = !ram_itempickups_hidden ; !WRAM_PERSIST_START+$62
 ram_frames_held = !ram_frames_held ; !WRAM_PERSIST_START+$64
 ram_baby_rng = !ram_baby_rng ; !WRAM_PERSIST_START+$66
+ram_turret_rng = !ram_turret_rng ; !WRAM_PERSIST_START+$68
 
-ram_quickboot_spc_state = !ram_quickboot_spc_state ; !WRAM_PERSIST_START+$68
+ram_quickboot_spc_state = !ram_quickboot_spc_state ; !WRAM_PERSIST_START+$6A
 
 ; ^ FREE SPACE ^ up to +$7C (!WRAM_START+$FC - !WRAM_PERSIST_START)
 
@@ -284,6 +285,7 @@ ram_cm_itempickups_hidden = !ram_cm_itempickups_hidden ; !WRAM_MENU_START+$8C
 
 ram_cm_phan_first_phase = !ram_cm_phan_first_phase ; !WRAM_MENU_START+$80
 ram_cm_phan_second_phase = !ram_cm_phan_second_phase ; !WRAM_MENU_START+$82
+ram_cm_turret_rng = !ram_cm_turret_rng ; !WRAM_MENU_START+$84
 
 ram_cm_varia = !ram_cm_varia ; !WRAM_MENU_START+$80
 ram_cm_gravity = !ram_cm_gravity ; !WRAM_MENU_START+$82

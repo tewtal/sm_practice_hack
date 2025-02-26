@@ -54,6 +54,12 @@ action_layout_mainmenu:
     BRA action_mainmenu
 }
 
+action_rng_mainmenu:
+{
+    LDA !ram_turret_rng : LSR : STA !ram_cm_turret_rng
+    BRA action_mainmenu
+}
+
 action_customize_mainmenu:
 {
     ; Set fast button selection
@@ -278,7 +284,7 @@ mm_goto_gamemenu:
     %cm_mainmenu("Game Options", #GameMenu)
 
 mm_goto_rngmenu:
-    %cm_mainmenu("RNG Control", #RngMenu)
+    %cm_jsl("RNG Control", #action_rng_mainmenu, #RngMenu)
 
 if !FEATURE_SD2SNES
 mm_goto_savestate:
@@ -2367,6 +2373,7 @@ RngMenu:
     dw #$FFFF
     dw #rng_draygon_rng_right
     dw #rng_draygon_rng_left
+    dw #rng_turret_rng
     dw #$FFFF
     dw #rng_crocomire_rng
     dw #$FFFF
@@ -2490,6 +2497,30 @@ rng_draygon_rng_left:
     db #$28, "ft     GOOP", #$FF
     db #$28, "ft    SWOOP", #$FF
     db #$FF
+
+rng_turret_rng:
+    dw !ACTION_CHOICE
+    dl #!ram_cm_turret_rng
+    dw .routine
+    db #$28, "Draygon Turret ", #$FF
+    db #$28, "     RANDOM", #$FF
+    db #$28, " AGGRESSIVE", #$FF
+    db #$28, " UPPER LEFT", #$FF
+    db #$28, " LOWER LEFT", #$FF
+    db #$28, "UPPER RIGHT", #$FF
+    db #$28, "LOWER RIGHT", #$FF
+    db #$28, "       LEFT", #$FF
+    db #$28, "      RIGHT", #$FF
+    db #$28, "      UPPER", #$FF
+    db #$28, "      LOWER", #$FF
+    db #$28, "NOT UP LEFT", #$FF
+    db #$28, "NOT DN LEFT", #$FF
+    db #$28, "NOT UP RITE", #$FF
+    db #$28, "NOT DN RITE", #$FF
+    db #$FF
+  .routine
+    ASL : STA !ram_turret_rng
+    RTL
 
 rng_crocomire_rng:
     dw !ACTION_CHOICE

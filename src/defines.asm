@@ -187,8 +187,9 @@
 !ram_itempickups_hidden             = !WRAM_PERSIST_START+$62
 !ram_frames_held                    = !WRAM_PERSIST_START+$64
 !ram_baby_rng                       = !WRAM_PERSIST_START+$66
+!ram_turret_rng                     = !WRAM_PERSIST_START+$68
 
-!ram_quickboot_spc_state            = !WRAM_PERSIST_START+$68
+!ram_quickboot_spc_state            = !WRAM_PERSIST_START+$6A
     ; 0: SPC load completed/not requested
     ; 1: SPC load requested
     ; ROM address: routine to perform next initialization step
@@ -289,6 +290,7 @@
 
 !ram_cm_phan_first_phase = !WRAM_MENU_START+$80
 !ram_cm_phan_second_phase = !WRAM_MENU_START+$82
+!ram_cm_turret_rng = !WRAM_MENU_START+$84
 
 !ram_cm_varia = !WRAM_MENU_START+$80
 !ram_cm_gravity = !WRAM_MENU_START+$82
