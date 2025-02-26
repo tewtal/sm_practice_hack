@@ -674,6 +674,7 @@ turret_y_positions:
 
 hook_turret_rng_table:
     dw turret_rng_vanilla
+    dw turret_rng_reroll
     dw turret_rng_aggressive
     dw turret_rng_upper_left
     dw turret_rng_lower_left
@@ -884,6 +885,25 @@ turret_rng_lower_right_alive:
 {
     LDX #$0004
     BRA turret_rng_skip_alive_check
+}
+
+turret_rng_reroll:
+{
+    ASL : TAX
+    LDA $7E8804,X : BNE .reroll
+  .spawn
+    LDA.w turret_x_positions,X : STA $12
+    LDA.w turret_y_positions,X : STA $14
+    LDY #$8E5E
+    LDA #$0003
+    JSL $868027
+    RTS
+
+  .reroll
+    LDA !CACHED_RANDOM_NUMBER : LSR
+    AND #$0006 : TAX
+    LDA $7E8804,X : BEQ .spawn
+    RTS
 }
 
 hook_draygon_rng_right:

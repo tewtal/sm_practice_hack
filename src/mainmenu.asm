@@ -2504,6 +2504,7 @@ rng_turret_rng:
     dw .routine
     db #$28, "Draygon Turret ", #$FF
     db #$28, "     RANDOM", #$FF
+    db #$28, "     REROLL", #$FF
     db #$28, " AGGRESSIVE", #$FF
     db #$28, " UPPER LEFT", #$FF
     db #$28, " LOWER LEFT", #$FF
