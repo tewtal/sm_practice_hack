@@ -1444,6 +1444,7 @@ InfoHudMenu:
     dw #$FFFF
     dw #ih_goto_timer_settings
     dw #$FFFF
+    dw #ih_minimap
     dw #ih_top_HUD_mode
     dw #ih_dynamic_frames_held
     dw #ih_status_icons
@@ -2248,6 +2249,9 @@ ih_reset_seg_item_touch:
 
 if !FEATURE_VANILLAHUD
 else
+ih_minimap:
+    %cm_toggle("Minimap", !ram_minimap, #$0001, #0)
+
 ih_top_HUD_mode:
 !TOP_HUD_RESERVES_INDEX = #$0001
 !TOP_HUD_VANILLA_BIT = #$0002

@@ -19,6 +19,7 @@ GameMenu:
     dw #$FFFF
 if !FEATURE_VANILLAHUD
 else
+    dw #game_top_HUD_mode
     dw #game_minimap
 endif
     dw #game_clear_minimap
@@ -56,6 +57,17 @@ game_goto_debug:
 
 if !FEATURE_VANILLAHUD
 else
+game_top_HUD_mode:
+    dw !ACTION_CHOICE
+    dl #!sram_top_display_mode
+    dw #$0000
+    db #$28, "Top-Left Displa", #$FF
+    db #$28, "y    ITEM %", #$FF
+    db #$28, "y  RESERVES", #$FF
+    db #$28, "y  VANILLA+", #$FF
+    db #$28, "y   VANILLA", #$FF
+    db #$FF
+
 game_minimap:
     %cm_toggle("Minimap", !ram_minimap, #$0001, #0)
 endif
