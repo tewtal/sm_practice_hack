@@ -202,6 +202,7 @@ endif
     STA !sram_superhud_bottom
     STA !sram_superhud_middle
     STA !sram_superhud_top
+    STA !sram_infidoppler_enabled
 
     LDA !SRAM_VERSION : STA !sram_initialized
     RTS

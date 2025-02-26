@@ -2315,6 +2315,7 @@ MiscMenu:
     dw #misc_water_physics
     dw #misc_double_jump
     dw #misc_spin_lock
+    dw #misc_infidoppler
     dw #$FFFF
     dw #misc_magicpants
     dw #misc_spacepants
@@ -2545,6 +2546,9 @@ misc_double_jump:
 
 misc_spin_lock:
     %cm_toggle("Spin Lock", !sram_spin_lock, #$0001, #0)
+
+misc_infidoppler:
+    %cm_toggle("Phantoon Infi-Doppler", !sram_infidoppler_enabled, #$0001, #0)
 
 init_physics_ram:
 {

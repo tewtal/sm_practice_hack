@@ -259,6 +259,8 @@
 !ram_cm_palette_numseloutline = !WRAM_MENU_START+$70
 !ram_cm_palette_numsel = !WRAM_MENU_START+$72
 
+!ram_infidoppler_active = !WRAM_START+$74
+
 ; ^ FREE SPACE ^ up to +$76
 
 !ram_cm_preserved_timers = !WRAM_MENU_START+$78 ; 8 bytes
@@ -384,6 +386,45 @@
 !ram_crash_input_timer = !CRASHDUMP+$66
 
 
+; -----------
+; Bank 7F RAM
+; -----------
+
+; NOTE: Be careful with using Bank 7F RAM,
+;       since the game may not clean this RAM up
+;       and the out of bounds blocks depend on this RAM,
+;       so if we make a mess not cleaned up by the vanilla game
+;       then we won't be accurate to the vanilla game anymore
+
+!LEVEL_DATA_SIZE = $7F0000
+!LEVEL_DATA = $7F0002
+
+; Temporary stack written here since level data will be initialized afterwards
+!CATEGORY_PRESET_STACK = !LEVEL_DATA
+
+!END_OF_SINGLE_SCROLL_ROOM_LEVEL_DATA = $7F0202
+
+; Phantoon infidoppler can use the next $200 of RAM,
+; since the room outside phantoon's room is larger and will overwrite this data,
+; so the only way this could have some impact is you went OOB
+; either from Phantoon's room or after teleporting to another single scroll room,
+; and then fell a long ways out of bounds
+
+; An array of 5 words, one per projectile, representing
+; the distance Samus travelled horizontally before firing.
+; The low byte of each word is integer pixels,
+; and the high byte is fractional pixels.
+; Yes, that sounds weird, but the math is a little easier.
+!ram_infidoppler_offsets         = !END_OF_SINGLE_SCROLL_ROOM_LEVEL_DATA ; array of 5 words
+!ram_infidoppler_x               = !END_OF_SINGLE_SCROLL_ROOM_LEVEL_DATA+$10
+!ram_infidoppler_subx            = !END_OF_SINGLE_SCROLL_ROOM_LEVEL_DATA+$12
+!ram_infidoppler_y               = !END_OF_SINGLE_SCROLL_ROOM_LEVEL_DATA+$14
+!ram_infidoppler_suby            = !END_OF_SINGLE_SCROLL_ROOM_LEVEL_DATA+$16
+
+; Do not use RAM for variables at or beyond this point
+!LEVEL_BTS = $7F6402
+
+
 ; -----
 ; SRAM
 ; -----
@@ -477,6 +518,7 @@
 !sram_superhud_bottom = !SRAM_START+$94
 !sram_superhud_middle = !SRAM_START+$96
 !sram_superhud_top = !SRAM_START+$98
+!sram_infidoppler_enabled = !SRAM_START+$9A
 
 ; ^ FREE SPACE ^ up to +$EE
 
@@ -808,9 +850,12 @@
 !SAMUS_X_SUBMOMENTUM = $0B48
 !SAMUS_PROJ_X = $0B64
 !SAMUS_PROJ_Y = $0B78
+!SAMUS_PROJ_X_SUBPX = $0B8C
+!SAMUS_PROJ_Y_SUBPX = $0BA0
 !SAMUS_PROJ_RADIUS_X = $0BB4
 !SAMUS_PROJ_RADIUS_Y = $0BC8
 !SAMUS_PROJ_PROPERTIES = $0C18
+!SAMUS_PROJ_DAMAGE = $0C2C
 !SAMUS_COOLDOWN = $0CCC
 !SAMUS_PROJECTILE_TIMER = $0CCE
 !SAMUS_CHARGE_TIMER = $0CD0
@@ -897,11 +942,6 @@
 !MAP_DATA_EXPLORED_COMPRESSED = $7ED91C
 !MAP_STATION_FLAGS = $7ED908
 !LOADING_GAME_STATE = $7ED914
-
-!LEVEL_DATA_SIZE = $7F0000
-!LEVEL_DATA = $7F0002
-!LEVEL_BTS = $7F6402
-!CATEGORY_PRESET_STACK = !LEVEL_DATA ; Temporary stack written here since level data will be initialized afterwards
 
 !INPUT_BIND_UP = $7E09AA
 !INPUT_BIND_DOWN = $7E09AC

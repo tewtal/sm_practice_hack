@@ -3,6 +3,33 @@
 ; Phantoon hijacks
 ; ----------------
 
+org $8699EB
+    ; Phantoon flame direction
+    JSL hook_phantoon_flame_direction
+    BRA $05
+
+if !FEATURE_PAL
+org $A7D00A
+else    ; Phantoon flame pattern
+org $A7CFD6
+endif
+    JSL hook_phantoon_flame_pattern
+
+if !FEATURE_PAL
+org $A7D098
+else    ; Phantoon eye close timer
+org $A7D064
+endif
+    JSL hook_phantoon_eyeclose
+
+if !FEATURE_PAL
+org $A7D0B0
+else    ; 2nd pattern
+org $A7D07C
+endif
+    JSL hook_phantoon_2nd_rng
+    BRA $0F
+
 if !FEATURE_PAL
 org $A7D4DD
 else    ; Phantoon Intro
@@ -20,31 +47,11 @@ endif
     BRA $10
 
 if !FEATURE_PAL
-org $A7D0B0
-else    ; 2nd pattern
-org $A7D07C
+org $A7D6B9
+else
+org $A7D685
 endif
-    JSL hook_phantoon_2nd_rng
-    BRA $0F
-
-if !FEATURE_PAL
-org $A7D098
-else    ; Phantoon eye close timer
-org $A7D064
-endif
-    JSL hook_phantoon_eyeclose
-
-if !FEATURE_PAL
-org $A7D00A
-else    ; Phantoon flame pattern
-org $A7CFD6
-endif
-    JSL hook_phantoon_flame_pattern
-
-    ; Phantoon flame direction
-org $8699EB
-    JSL hook_phantoon_flame_direction
-    BRA $05
+    JML infidoppler_hook_phantoon_swoop_end
 
 if !FEATURE_PAL
 org $A7DDB3
@@ -52,6 +59,21 @@ else
 org $A7DD7F
 endif
     JMP phantoon_damage_palette
+
+; Adjust Phantoon to look at adjusted projectile damage instead of absolute difference in health
+if !FEATURE_PAL
+org $A7DE2F
+else
+org $A7DDFB
+endif
+    LDA $187A
+
+if !FEATURE_PAL
+org $A7DE99
+else
+org $A7DE65
+endif
+    LDA $187A
 
 
 ; --------------

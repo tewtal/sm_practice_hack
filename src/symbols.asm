@@ -254,6 +254,8 @@ ram_cm_palette_seltextbg = !ram_cm_palette_seltextbg ; !WRAM_MENU_START+$6E
 ram_cm_palette_numseloutline = !ram_cm_palette_numseloutline ; !WRAM_MENU_START+$70
 ram_cm_palette_numsel = !ram_cm_palette_numsel ; !WRAM_MENU_START+$72
 
+ram_infidoppler_active = !ram_infidoppler_active ; !WRAM_START+$74
+
 ; ^ FREE SPACE ^ up to +$76
 
 ram_cm_preserved_timers = !ram_cm_preserved_timers ; !WRAM_MENU_START+$78 ; 8 bytes
@@ -377,6 +379,37 @@ ram_crash_input_new = !ram_crash_input_new ; !CRASHDUMP+$62
 ram_crash_input_prev = !ram_crash_input_prev ; !CRASHDUMP+$64
 ram_crash_input_timer = !ram_crash_input_timer ; !CRASHDUMP+$66
 
+; -----------
+; Bank 7F RAM
+; -----------
+
+; NOTE: Be careful with using Bank 7F RAM,
+;       since the game may not clean this RAM up
+;       and the out of bounds blocks depend on this RAM,
+;       so if we make a mess not cleaned up by the vanilla game
+;       then we won't be accurate to the vanilla game anymore
+
+; Temporary stack written here since level data will be initialized afterwards
+
+; Phantoon infidoppler can use the next $200 of RAM,
+; since the room outside phantoon's room is larger and will overwrite this data,
+; so the only way this could have some impact is you went OOB
+; either from Phantoon's room or after teleporting to another single scroll room,
+; and then fell a long ways out of bounds
+
+; An array of 5 words, one per projectile, representing
+; the distance Samus travelled horizontally before firing.
+; The low byte of each word is integer pixels,
+; and the high byte is fractional pixels.
+; Yes, that sounds weird, but the math is a little easier.
+ram_infidoppler_offsets = !ram_infidoppler_offsets ; !END_OF_SINGLE_SCROLL_ROOM_LEVEL_DATA ; array of 5 words
+ram_infidoppler_x = !ram_infidoppler_x ; !END_OF_SINGLE_SCROLL_ROOM_LEVEL_DATA+$10
+ram_infidoppler_subx = !ram_infidoppler_subx ; !END_OF_SINGLE_SCROLL_ROOM_LEVEL_DATA+$12
+ram_infidoppler_y = !ram_infidoppler_y ; !END_OF_SINGLE_SCROLL_ROOM_LEVEL_DATA+$14
+ram_infidoppler_suby = !ram_infidoppler_suby ; !END_OF_SINGLE_SCROLL_ROOM_LEVEL_DATA+$16
+
+; Do not use RAM for variables at or beyond this point
+
 ; -----
 ; SRAM
 ; -----
@@ -465,6 +498,7 @@ sram_number_gfx_choice = !sram_number_gfx_choice ; !SRAM_START+$92
 sram_superhud_bottom = !sram_superhud_bottom ; !SRAM_START+$94
 sram_superhud_middle = !sram_superhud_middle ; !SRAM_START+$96
 sram_superhud_top = !sram_superhud_top ; !SRAM_START+$98
+sram_infidoppler_enabled = !sram_infidoppler_enabled ; !SRAM_START+$9A
 
 ; ^ FREE SPACE ^ up to +$EE
 
