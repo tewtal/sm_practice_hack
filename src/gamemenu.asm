@@ -212,7 +212,15 @@ cutscenes_fast_phantoon:
     %cm_toggle_bit("Skip Phantoon Intro", !sram_cutscenes, !CUTSCENE_FAST_PHANTOON, #0)
 
 cutscenes_kraid_camera:
-    %cm_toggle_bit("Unlock Kraid Death Cam", !sram_cutscenes, !CUTSCENE_KRAID_DEATH_CAMERA, #0)
+    %cm_toggle_bit("Unlock Kraid Death Cam", !sram_cutscenes, !CUTSCENE_KRAID_DEATH_CAMERA, #.routine)
+  .routine
+    LDA !ROOM_ID : CMP #ROOM_KraidRoom : BNE .done
+    LDA !ENEMY_HP : BNE .done
+    ; unlock camera now
+    LDA #$0202 : STA $7ECD20
+    LDA #$0101 : STA $7ECD22
+  .done
+    RTL
 
 cutscenes_fast_bowling:
     %cm_toggle_bit("Fast Bowling", !sram_cutscenes, !CUTSCENE_FAST_BOWLING, #0)

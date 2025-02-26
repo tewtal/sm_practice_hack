@@ -4,27 +4,31 @@ Porting features from IFB CustomROMBase branch
 For other TODO items, recommend using the github issue system
 ================================================================
 
-Last branch revision ported:
-30374fe1838d69f6b85f14489f48a18a84d524a6
-09/07/2024: Patches for v2.6.2.4
-
 ================================================================
 Features that have not been ported yet
 ================================================================
 
-- BRB menu
+- Capture Cropping
 
-- Custom HUD modes (except Draygon AI already ported)
+- Count Boss Damage
 
-- IFB hijacks
+- Demo Timer
 
-- IFB menu
+- Factory Reset option
 
-- Most features that use Custom Features WRAM
+- Force Stand shortcut
 
-- Overwrite HUD numbers
+- Infinite Ammo
 
-- Super HUD
+- No Steam Collision option
+
+- Phantoon always visible
+
+- Randomize on load
+
+- Randomize RNG shortcut
+
+- Reveal Boss Damage shortcut
 
 ================================================================
 Features intentionally not ported
@@ -43,6 +47,8 @@ and there isn't much benefit in porting or backporting them
 
 - Various sound effect macros
 
+- Walk Through Walls option
+
 - Leading > or arrow on menu items, or menuing differences in general
 
 - AREA_ID stored in custom presets
@@ -52,8 +58,6 @@ and there isn't much benefit in porting or backporting them
 - Differences in room names
 
 - Differences in preset file names or organization
-
-- More controller shortcuts (I think we already have too many)
 
 - The separate ih_update_timers routine (too much duplication with ih_update_hud_code)
 

@@ -17,7 +17,7 @@
             "id": "platform",
             "name": "Platform",
             "options": [
-                { "id": "sd2snes", "name": "SD2SNES, FXPAK, Snes9x 1.61+"},
+                { "id": "sd2snes", "name": "SD2SNES, FXPAK, SuperNT, Snes9x 1.61+"},
                 { "id": "tinystates", "name": "MiSTer, Everdrive, Modern Emulators" },
                 { "id": "emulator", "name": "SNES Classic, Virtual Console" }
             ]
