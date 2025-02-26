@@ -1,6 +1,5 @@
 
-org $85A000
-print pc, " flagmenu start"
+%startfree(85)
 
 ; --------------
 ; Equipment menu
@@ -34,9 +33,16 @@ eq_refill:
     %cm_jsl("Refill", .refill, #$0000)
   .refill
     LDA !SAMUS_HP_MAX : STA !SAMUS_HP
-    LDA !SAMUS_MISSILES_MAX : STA !SAMUS_MISSILES
-    LDA !SAMUS_SUPERS_MAX : STA !SAMUS_SUPERS
-    LDA !SAMUS_PBS_MAX : STA !SAMUS_PBS
+    ; don't fix underflow, make the player fix them with numfields
+    LDA !SAMUS_MISSILES_MAX : CMP !SAMUS_MISSILES : BCC .doneMissiles
+    STA !SAMUS_MISSILES
+  .doneMissiles
+    LDA !SAMUS_SUPERS_MAX : CMP !SAMUS_SUPERS : BCC .doneSupers
+    STA !SAMUS_SUPERS
+  .doneSupers
+    LDA !SAMUS_PBS_MAX : CMP !SAMUS_PBS : BCC .donePowerBombs
+    STA !SAMUS_PBS
+  .donePowerBombs
     LDA !SAMUS_RESERVE_MAX : STA !SAMUS_RESERVE_ENERGY
     %sfxconfirm()
     RTL
@@ -2316,6 +2322,7 @@ MiscMenu:
     dw #misc_water_physics
     dw #misc_double_jump
     dw #misc_spin_lock
+    dw #misc_infidoppler
     dw #$FFFF
     dw #misc_magicpants
     dw #misc_spacepants
@@ -2327,7 +2334,7 @@ MiscMenu:
     dw #misc_killenemies
     dw #misc_forcestand
     dw #$0000
-    %cm_header("MISC")
+    %cm_header("MISC OPTIONS")
 
 misc_bluesuit:
     %cm_toggle("Blue Suit", !SAMUS_DASH_COUNTER, #$0004, #0)
@@ -2547,6 +2554,9 @@ misc_double_jump:
 misc_spin_lock:
     %cm_toggle("Spin Lock", !sram_spin_lock, #$0001, #0)
 
+misc_infidoppler:
+    %cm_toggle("Phantoon Infi-Doppler", !sram_infidoppler_enabled, #$0001, #0)
+
 init_physics_ram:
 {
     LDA !sram_water_physics : BNE init_physics_non_vanilla
@@ -2641,6 +2651,5 @@ GameLoopExtras:
     RTL
 }
 
-print pc, " flagmenu end"
-warnpc $85F800 ; gamemode.asm
+%endfree(85)
 

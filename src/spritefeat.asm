@@ -20,8 +20,7 @@ hook_standard_sprite_tiles:
     db $FF, $FF, $80, $80, $80, $80, $80, $80, $80, $80, $80, $80, $80, $80, $80, $80
 
 
-org $F0E000
-print pc, " spritefeat start"
+%startfree(F0)
 
 ; This runs every frame before any other sprites are drawn, this is needed so we can get priority over everything else
 update_sprite_features:
@@ -965,4 +964,4 @@ DrawMBHitbox:
 sprite_tiles:
 incbin "../resources/spritegfx.bin":0-600
 
-print pc, " spritefeat end"
+%endfree(F0)

@@ -25,7 +25,7 @@ org $809416
 
 ; Escape timer X position math
 org $809E5B
-    LDA #$01C0    ; previously LDA #$00E0
+    LDA #$010C    ; previously LDA #$00E0
 
 ; Escape timer Y position math
 org $809E6E
@@ -45,7 +45,7 @@ org $809EEC
 ; Tilemap for failed SRAM mapping check
 org $80BC37
     dw ...
-org $80BC47
+org $80C437
 
 ; Freespace
 org $80CD8E
@@ -54,7 +54,7 @@ org $80CD8E
 org $80FFC0
 
 ; Country code and checksum
-; NOTE: This section is also different on Virtual Console NTSC and JU,
+; NOTE: This section is also different on NSO and Virtual Console NTSC and JU,
 ;       and it may also be modified by SpriteSomething
 org $80FFD9
     db #$02,#$01,#$00,#$04,#$84,#$FB,#$7B
@@ -110,7 +110,7 @@ org $82EF4B
     BNE $2F       ; previously BNE $34
 
 ;======== Remove 5 bytes ========
-; Check and branch if Japanese language
+; Check and branch if Japanese/French language
 org $82EF4D
                   ; previously LDA $09E2
                   ; previously BNE $11
@@ -120,7 +120,7 @@ org $82EF7A  <--  org $82EF7F
     BRA $3C       ; previously BRA $41
 
 ;======== Remove 5 bytes ========
-; Check and branch if Japanese language
+; Check and branch if Japanese/French language
 org $82EF7C  <--  org $82EF81
                   ; previously LDA $09E2
                   ; previously BNE $11
@@ -206,7 +206,7 @@ org $83A0BA
     db #$0A       ; previously db #$10
 
 ; Room FX, Mother Brain 2, Y velocity and timer
-org $83A0BA
+org $83A0CA
     dw #$0036     ; previously dw #$0030
     db #$0A       ; previously db #$10
 
@@ -286,10 +286,17 @@ org $84D4E8
     dw $98D1      ;
 org $84D4EE  <--  org $84D4E8
 
-; PLM, Maridia Tube break (timing differences)
-org $84D4F8  <--  org $84D4F2
-    dw ...
-org $84D527  <--  org $84D521
+; PLM, Maridia Tube break instruction list timing difference
+org $84D4FE  <--  org $84D4F8
+    dw #$0028     ; previously dw #$0030
+
+; PLM, Maridia Tube break instruction list sound routine
+org $84D50A  <--  org $84D504
+    dw $8C2B      ; previously dw $8C10
+
+; PLM, Maridia Tube break instruction list timing difference
+org $84D511  <--  org $84D50B
+    dw #$0050     ; previously dw #$0060
 
 ; Instruction, Speed booster chozo orb FX Y velocity
 org $84E641  <--  org $84E63B
@@ -561,7 +568,7 @@ org $86AEB3  <--  org $86AE77
 org $86AEB9  <--  org $86AE7D
     SBC #$0012    ; previously SBC #$0010
 
-; Golden torizo projectile initalization parameters
+; Golden torizo projectile velocities
 org $86B06B  <--  org $86B02F
     dw ...
 org $86B07F  <--  org $86B043
@@ -598,7 +605,7 @@ org $86B2CF  <--  org $86B293
 org $86B2FD  <--  org $86B2C1
     dw #$0028     ; previously dw #$0030
 
-; Golden torizo projectile initalization parameters
+; Golden torizo projectile velocities
 org $86B3B2  <--  org $86B376
     dw ...
 org $86B3C6  <--  org $86B38A
@@ -628,7 +635,7 @@ org $86C4CE  <--  org $86C492
 org $86C4EE  <--  org $86C4B2
     LDA #$0086    ; previously LDA #$0070
 
-; Mother brain projectile velocities
+; Mother brain projectile accelerations
 org $86C58C  <--  org $86C550
     dw ...
 org $86C5A0  <--  org $86C564
@@ -646,7 +653,7 @@ org $86C8C6  <--  org $86C88A
     LDA #$000E    ; previously LDA #$000C
 
 ; Mother brain projectile velocities
-org $86C9CE  <--  org $86C992
+org $86C9EE  <--  org $86C9B2
     dw ...
 org $86CA0E  <--  org $86C9D2
 
@@ -668,7 +675,7 @@ org $86D06A  <--  org $86D02E
     dw ...
 org $86D0BC  <--  org $86D080
 
-; Kago projectile velocity
+; Kago projectile acceleration
 org $86D0BE  <--  org $86D082
     dw #$010C     ; previously dw #$00E0
 
@@ -768,7 +775,7 @@ org $8AE980
 ;=======================================================
 
 ;======== Insert 52 bytes ========
-; Prepare transfer of data into VRAM? (PAL only)
+; Load intro text tiles (PAL implementation)
 org $8B8D23
     PHP           ;
     SEP #$30      ;
@@ -779,7 +786,7 @@ org $8B8D23
     PHY           ;
     LDY #$0000    ;
     LDX #$0000    ;
-    LDA $00,Y     ;
+    LDA [$00],Y   ;
     CMP #$002F    ;
     BEQ $09       ;
     ORA #$2000    ;
@@ -800,7 +807,7 @@ org $8B8D23
 org $8B8D57  <--  org $8B8D23
 
 ;======== Insert 52 bytes ========
-; Prepare transfer of data into VRAM? (PAL only)
+; Load intro text bottom half tiles (PAL implementation)
 org $8B8D57  <--  org $8B8D23
     PHP           ;
     SEP #$30      ;
@@ -811,7 +818,7 @@ org $8B8D57  <--  org $8B8D23
     PHY           ;
     LDY #$0000    ;
     LDX #$0000    ;
-    LDA $00,Y     ;
+    LDA [$00],Y   ;
     CMP #$002F    ;
     BEQ $09       ;
     ORA #$2000    ;
@@ -832,39 +839,121 @@ org $8B8D57  <--  org $8B8D23
 org $8B8D8B  <--  org $8B8D23
 
 ;======== Remove 195 bytes ========
-; Prepare transfer of data into VRAM? (NTSC only)
+; Load intro text tiles (NTSC implementation)
 org $8B8D8B  <--  org $8B8D23
-                  ; previously db ...
+                  ; previously PHP
+                  ; previously REP #$30
+                  ; previously PHX
+                  ; previously LDA $0000,Y
+                  ; previously TAX
+                  ; previously LDA $0002,Y
+                  ; previously STA $12
+                  ; previously LDA $0004,Y
+                  ; previously STA $16
+                  ; previously PHY
+                  ; previously LDA #$A000
+                  ; previously CLC
+                  ; previously ADC $16
+                  ; previously TAY
+                  ; previously PHB
+                  ; previously PEA $7F00
+                  ; previously PLB
+                  ; previously PLB
+                  ; previously LDA $0000,Y
+                  ; previously STA $7E4000,X
+                  ; previously LDA $0002,Y
+                  ; previously STA $7E4002,X
+                  ; previously LDA $0004,Y
+                  ; previously STA $7E4004,X
+                  ; previously LDA $0006,Y
+                  ; previously STA $7E4006,X
+                  ; previously LDA $0008,Y
+                  ; previously STA $7E4008,X
+                  ; previously LDA $000A,Y
+                  ; previously STA $7E400A,X
+                  ; previously LDA $000C,Y
+                  ; previously STA $7E400C,X
+                  ; previously LDA $000E,Y
+                  ; previously STA $7E400E,X
+                  ; previously PLB
+                  ; previously PLY
+                  ; previously LDA $0006,Y
+                  ; previously STA $16
+                  ; previously TXA
+                  ; previously CLC
+                  ; previously ADC #$0300
+                  ; previously TAX
+                  ; previously PHY
+                  ; previously LDA #$A000
+                  ; previously CLC
+                  ; previously ADC $16
+                  ; previously TAY
+                  ; previously PHB
+                  ; previously PEA $7F00
+                  ; previously PLB
+                  ; previously PLB
+                  ; previously LDA $0000,Y
+                  ; previously STA $7E4000,X
+                  ; previously LDA $0002,Y
+                  ; previously STA $7E4002,X
+                  ; previously LDA $0004,Y
+                  ; previously STA $7E4004,X
+                  ; previously LDA $0006,Y
+                  ; previously STA $7E4006,X
+                  ; previously LDA $0008,Y
+                  ; previously STA $7E4008,X
+                  ; previously LDA $000A,Y
+                  ; previously STA $7E400A,X
+                  ; previously LDA $000C,Y
+                  ; previously STA $7E400C,X
+                  ; previously LDA $000E,Y
+                  ; previously STA $7E400E,X
+                  ; previously PLB
+                  ; previously PLY
+                  ; previously TXA
+                  ; previously SEC
+                  ; previously SBC #$02F0
+                  ; previously TAX
+                  ; previously TYA
+                  ; previously CLC
+                  ; previously ADC #$0004
+                  ; previously TAY
+                  ; previously DEC $12
+                  ; previously BEQ $03
+                  ; previously JMP $8D30
+                  ; previously PLX
+                  ; previously PLP
+                  ; previously RTS
 org $8B8D8B  <--  org $8B8DE6
 
 ;======== Insert 3 bytes ========
-; Prepare transfer of data into VRAM?
+; Transfer text tiles to VRAM
 org $8B8D8B  <--  org $8B8DE6
     PHP           ;
     REP #$30      ;
 org $8B8D8E  <--  org $8B8DE6
 
-; Transfer alternate text tiles to VRAM (different number of tiles?)
+; Transfer text tiles to VRAM (different number of tiles)
 org $8B8D92  <--  org $8B8DEA
     LDA #$0100    ; previously LDA #$0600
 
-; Transfer alternate text tiles to VRAM (different VRAM destination?)
+; Transfer alternate text tiles to VRAM (different VRAM destination)
 org $8B8D99  <--  org $8B8DF1
     LDA #$3600    ; previously LDA #$4000
 
-; Transfer alternate text tiles to VRAM (different VRAM source?)
+; Transfer alternate text tiles to VRAM (different VRAM source)
 org $8B8DA9  <--  org $8B8E01
     LDA #$4F00    ; previously LDA #$4180
 
 ;======== Insert 1 byte ========
-; Prepare transfer of data into VRAM?
+; Transfer text tiles to VRAM
 org $8B8DB4  <--  org $8B8E0C
     PLP           ;
 org $8B8DB5  <--  org $8B8E0C
 
-;======== Insert 42 bytes ========
+;======== Insert 39 bytes ========
 ; Handle cinematic BG objects without Samus eyes
-org $8B95D8  <--  org $8B962F
+org $8B9602  <--  org $8B9659
     PHP           ;
     REP #$30      ;
     BIT $19F1     ;
@@ -881,19 +970,12 @@ org $8B95D8  <--  org $8B962F
     BIT $19F3     ;
     BPL $03       ;
     JSR $87A0     ;
-    JSR $87D3     ;
     PLP           ;
     RTS           ;
-org $8B9602  <--  org $8B962F
-
-;======== Remove 3 bytes ========
-; Handle cinematic BG objects without Samus eyes
-org $8B9627  <--  org $8B9654
-                  ; previously JSR $87D3
-org $8B9627  <--  org $8B9657
+org $8B9629  <--  org $8B9659
 
 ; Cinematic ending and credits velocity?
-org $8B99AA  <--  org $8B997A
+org $8B994A  <--  org $8B997A
     ADC #$9800    ; previously ADC #$8000
 
 ; Cinematic title scene timing?
@@ -917,9 +999,9 @@ org $8B9EEA  <--  org $8B9F1A
     LDA #$02D0    ; previously LDA #$0384
 
 ; Cinematic instruction lists (timing differences)
-org $8BA03D  <--  org $8BA00D
+org $8BA00D  <--  org $8BA03D
     dw ...
-org $8BA0F5  <--  org $8BA0C5
+org $8BA095  <--  org $8BA0C5
 
 ; Transfer font 1 tiles to VRAM (different number of tiles)
 org $8BA45F  <--  org $8BA48F
@@ -928,7 +1010,7 @@ org $8BA45F  <--  org $8BA48F
 ;======== Insert 22 bytes ========
 ; Cinematic function, intro, initialization
 org $8BA54D  <--  org $8BA57D
-    LDA $90E2     ;
+    LDA $09E2     ;
     BNE $11       ;
     LDX #$00FE    ;
     LDA $8CD8CF,X ;
@@ -955,7 +1037,7 @@ org $8BA5F9  <--  org $8BA618
 ;======== Insert 20 bytes ========
 ; Cinematic function, intro, queue music
 org $8BA619  <--  org $8BA638
-    LDA $90E2     ;
+    LDA $09E2     ;
     BNE $0F       ;
     LDX #$00FE    ;
     LDA $8CD9CF,X ;
@@ -971,7 +1053,7 @@ org $8BA632  <--  org $8BA63D
 ;======== Insert 41 bytes ========
 ; Cinematic function, intro, wait for music queue
 org $8BA640  <--  org $8BA64B
-    LDA $90E2     ;
+    LDA $09E2     ;
     BNE $24       ;
     LDX $0330     ;
     LDA #$0100    ;
@@ -1012,14 +1094,14 @@ org $8BA6AA  <--  org $8BA68C
 org $8BA6E4  <--  org $8BA6C6
                   ; previously LDX #$0600
                   ; previously LDY #$0000
-                  ; LDA $A72B,Y
-                  ; STA $7E3000,X
-                  ; INY
-                  ; INY
-                  ; INX
-                  ; INX
-                  ; CPX #$0700
-                  ; BMI $F0
+                  ; previously LDA $A72B,Y
+                  ; previously STA $7E3000,X
+                  ; previously INY
+                  ; previously INY
+                  ; previously INX
+                  ; previously INX
+                  ; previously CPX #$0700
+                  ; previously BMI $F0
 org $8BA6E4  <--  org $8BA6DC
 
 ;======== Insert 3 bytes ========
@@ -1038,7 +1120,7 @@ org $8BA736  <--  org $8BA82B
 ; Cinematic function, intro, blank out text tiles
 org $8BA779  <--  org $8BA86E
     LDX #$00FE    ; previously PHY
-    LDA $3C29     ; previously LDX #$0000
+    LDA #$3C29    ; previously LDX #$0000
     STA $7E3600,X ; previously LDA $7F8290
     DEX           ; previously STA $7E4000,X
     DEX           ; previously LDA $7F8292
@@ -1055,14 +1137,14 @@ org $8BA779  <--  org $8BA86E
                   ; previously STA $7E400C,X
                   ; previously LDA $7F829E
                   ; previously STA $7E400E,X
-                  ; TXA
-                  ; CLC
-                  ; ADC #$0010
-                  ; TAX
-                  ; CPX #$0600
-                  ; BMI $B5
-                  ; PLY
-org $8BA779  <--  org $8BA8BE
+                  ; previously TXA
+                  ; previously CLC
+                  ; previously ADC #$0010
+                  ; previously TAX
+                  ; previously CPX #$0600
+                  ; previously BMI $B5
+                  ; previously PLY
+org $8BA787  <--  org $8BA8BE
 
 ;======== Remove 5 bytes ========
 ; Cinematic function, intro, page 1 creating text
@@ -1075,7 +1157,7 @@ org $8BAD25  <--  org $8BAE61
     BEQ $16       ; previously BEQ $0F
 
 ;======== Insert 24 bytes ========
-; Cinematic function, intro, page 2 creating text
+; Cinematic function, intro, page 1 creating text
 org $8BAD3D  <--  org $8BAE79
     PHB           ;
     PEA $8B00     ;
@@ -1103,22 +1185,24 @@ org $8BAD58  <--  org $8BAE81
 org $8BAD6E  <--  org $8BAE97
     BEQ $16       ; previously BEQ $18
 
-;======== Remove 8 bytes ========
+;======== Move 10 bytes below ========
 ; Cinematic function, intro, page 2 blink and wait
 org $8BAD7E  <--  org $8BAEA7
                   ; previously PHY
                   ; previously LDY $D40D
                   ; previously JSR $94E4
                   ; previously PLY
-org $8BAD7E  <--  org $8BAEAF
-
-;======== Remove 1 byte ========
-; Cinematic function, intro, page 2 blink and wait
-org $8BAD7F  <--  org $8BAEB0
+                  ; previously PLB
                   ; previously RTS
+org $8BAD7E  <--  org $8BAEB1
+
+;======== Insert 1 byte ========
+; Cinematic function, intro, page 2 blink and wait
+org $8BAD7E  <--  org $8BAEB1
+    PLB           ;
 org $8BAD7F  <--  org $8BAEB1
 
-;======== Insert 24 bytes ========
+;======== Insert 14 bytes ========
 ; Cinematic function, intro, page 2 blink and wait
 org $8BAD86  <--  org $8BAEB8
     PHB           ;
@@ -1129,12 +1213,19 @@ org $8BAD86  <--  org $8BAEB8
     LDY $CDD8     ;
     JSR $9333     ;
     PLY           ;
+org $8BAD94  <--  org $8BAEB8
+
+;======== Start of 10 bytes from above ========
+; Cinematic function, intro, page 2 blink and wait
+org $8BAD94  <--  org $8BAEB8
+org $8BAD94  <--  org $8BAEB8 ($8BAEA7)
     PHY           ;
     LDY $D384     ;
     JSR $948D     ;
     PLY           ;
     PLB           ;
     RTS           ;
+org $8BAD9E  <--  org $8BAEB8 ($8BAEB1)
 org $8BAD9E  <--  org $8BAEB8
 
 ;======== Remove 5 bytes ========
@@ -1147,22 +1238,24 @@ org $8BAF5D  <--  org $8BB07C
 org $8BAF73  <--  org $8BB092
     BEQ $16       ; previously BEQ $18
 
-;======== Remove 8 bytes ========
+;======== Move 10 bytes below ========
 ; Cinematic function, intro, page 3 blink and wait
 org $8BAF83  <--  org $8BB0A2
                   ; previously PHY
                   ; previously LDY $D419
                   ; previously JSR $94E4
                   ; previously PLY
-org $8BAF83  <--  org $8BB0AA
-
-;======== Remove 1 byte ========
-; Cinematic function, intro, page 3 blink and wait
-org $8BAF84  <--  org $8BB0AB
+                  ; previously PLB
                   ; previously RTS
+org $8BAF83  <--  org $8BB0AC
+
+;======== Insert 1 byte ========
+; Cinematic function, intro, page 3 blink and wait
+org $8BAF83  <--  org $8BB0AC
+    PLB           ;
 org $8BAF84  <--  org $8BB0AC
 
-;======== Insert 24 bytes ========
+;======== Insert 14 bytes ========
 ; Cinematic function, intro, page 3 blink and wait
 org $8BAF8B  <--  org $8BB0B3
     PHB           ;
@@ -1173,12 +1266,19 @@ org $8BAF8B  <--  org $8BB0B3
     LDY $CDD8     ;
     JSR $9333     ;
     PLY           ;
+org $8BAF99  <--  org $8BB0B3
+
+;======== Start of 10 bytes from above ========
+; Cinematic function, intro, page 3 blink and wait
+org $8BAF99  <--  org $8BB0B3
+org $8BAF99  <--  org $8BB0B3 ($8BB0A2)
     PHY           ;
     LDY $D390     ;
     JSR $948D     ;
     PLY           ;
     PLB           ;
     RTS           ;
+org $8BAFA3  <--  org $8BB0B3 ($8BB0AC)
 org $8BAFA3  <--  org $8BB0B3
 
 ;======== Remove 5 bytes ========
@@ -1213,22 +1313,24 @@ org $8BB07D  <--  org $8BB1A3
 org $8BB093  <--  org $8BB1B9
     BEQ $16       ; previously BEQ $18
 
-;======== Remove 8 bytes ========
+;======== Move 10 bytes below ========
 ; Cinematic function, intro, page 5 blink and wait
 org $8BB0A3  <--  org $8BB1C9
                   ; previously PHY
                   ; previously LDY $D431
                   ; previously JSR $94E4
                   ; previously PLY
-org $8BB0A3  <--  org $8BB1D1
-
-;======== Remove 1 byte ========
-; Cinematic function, intro, page 5 blink and wait
-org $8BB0A4  <--  org $8BB1D2
+                  ; previously PLB
                   ; previously RTS
+org $8BB0A3  <--  org $8BB1D3
+
+;======== Insert 1 byte ========
+; Cinematic function, intro, page 5 blink and wait
+org $8BB0A3  <--  org $8BB1D3
+    PLB           ;
 org $8BB0A4  <--  org $8BB1D3
 
-;======== Insert 24 bytes ========
+;======== Insert 14 bytes ========
 ; Cinematic function, intro, page 5 blink and wait
 org $8BB0AB  <--  org $8BB1DA
     PHB           ;
@@ -1239,12 +1341,19 @@ org $8BB0AB  <--  org $8BB1DA
     LDY $CDD8     ;
     JSR $9333     ;
     PLY           ;
+org $8BB0B9  <--  org $8BB1DA
+
+;======== Start of 10 bytes from above ========
+; Cinematic function, intro, page 5 blink and wait
+org $8BB0B9  <--  org $8BB1DA
+org $8BB0B9  <--  org $8BB1DA ($8BB1C9)
     PHY           ;
     LDY $D3A8     ;
     JSR $948D     ;
     PLY           ;
     PLB           ;
     RTS           ;
+org $8BB0C3  <--  org $8BB1DA ($8BB1D3)
 org $8BB0C3  <--  org $8BB1DA
 
 ;======== Remove 5 bytes ========
@@ -1281,28 +1390,66 @@ org $8BB3CF  <--  org $8BB710
 org $8BB95F  <--  org $8BBCA0
 org $8BB95F  <--  org $8BBCA0 ($8BB4EB)
 
-;======== Remove 50 bytes ========
-; First two methods replaced with RTS
-org $8BB95F  <--  org $8BBCA0 ($8BB4EB)
+;======== Remove 46 bytes ========
+; Instruction, load non-existent Japanese intro text
+org $8BB3CF  <--  org $8BBCA0 ($8BB4EB)
+                  ; previously PHY
+                  ; previously JSL $8B95C3
+                  ; previously LDA $8CE40B
+                  ; previously STA $7EC022
+                  ; previously LDA $8CE40D
+                  ; previously STA $7EC024
+                  ; previously LDA $8CE40F
+                  ; previously STA $7EC026
+                  ; previously LDY #$D389
+                  ; previously JSR $8D23
+                  ; previously LDY #$D389
+                  ; previously JSR $8D23
+                  ; previously JSR $8DE6
+                  ; previously PLY
+                  ; previously RTS
+org $8BB3CF  <--  org $8BBCA0 ($8BB519)
+
+;======== Remove 4 bytes ========
+; Instruction, enable cinematic BG tilemap updates
 org $8BB95F  <--  org $8BBCA0 ($8BB519)
+                  ; previously JSL $8B95B8
 org $8BB95F  <--  org $8BBCA0 ($8BB51D)
 
-;======== Insert 14 bytes ========
-; Method implementation differences
-org $8BB960  <--  org $8BBCA0 ($8BB51E)
-    db ...
-org $8BB99F  <--  org $8BBCA0 ($8BB54F)
+;======== Remove 4 bytes ========
+; Instruction, disable cinematic BG tilemap updates
+org $8BB961  <--  org $8BBCA0 ($8BB51F)
+                  ; previously JSL $8B95C3
+org $8BB961  <--  org $8BBCA0 ($8BB523)
+
+;======== Insert 18 bytes ========
+; Instruction, load alternate intro text page 1 subpage 1
+org $8BB97C  <--  org $8BBCA0 ($8BB53E)
+    LDA $09E2     ; previously LDY #$CF75
+    BNE $0F       ; previously JSR $8D23
+    LDA #$A000    ; previously LDY #$CFBD
+    STA $00       ; previously JSR $8D23
+    LDA #$0100    ; previously JSR $8DE6
+    STA $12       ;
+    JSR $8D23     ;
+    BRA $0D       ;
+    LDA #$A800    ;
+    STA $00       ;
+    LDA #$0100    ;
+    STA $12       ;
+    JSR $8D23     ;
+org $8BB99D  <--  org $8BBCA0 ($8BB54D)
 
 ;======== Insert 45 bytes ========
-; Method added for PAL
+; Instruction, load intro text page 1 subpage 2
 org $8BB9A4  <--  org $8BBCA0 ($8BB554)
     LDA $8F       ;
     BEQ $28       ;
-    LDA $D300     ;
+    LDA #$D300    ;
     STA $19A1,X   ;
     LDA #$0001    ;
     STA $19A9,X   ;
-    LDA $9382     ;
+    LDA #$9382    ;
     STA $19A5,X   ;
     JSR $A775     ;
     LDA #$A100    ;
@@ -1316,65 +1463,216 @@ org $8BB9A4  <--  org $8BBCA0 ($8BB554)
 org $8BB9D1  <--  org $8BBCA0 ($8BB554)
 
 ;======== Insert 11 bytes ========
-; Method added for PAL
+; Instruction, enable cinematic BG tilemap updates and page 1 done input
 org $8BB9D1  <--  org $8BBCA0 ($8BB554)
     JSL $8B9561   ;
-    LDA $AD9E     ;
+    LDA #$AD9E    ;
     STA $1F51     ;
     RTS           ;
 org $8BB9DC  <--  org $8BBCA0 ($8BB554)
 
-;======== Insert 14 bytes ========
-; Method implementation differences
-org $8BB9DC  <--  org $8BBCA0 ($8BB554)
-    db ...
-org $8BBA1B  <--  org $8BBCA0 ($8BB585)
+;======== Remove 4 bytes ========
+; Instruction, disable cinematic BG tilemap updates
+org $8BB9DD  <--  org $8BBCA0 ($8BB555)
+                  ; previously JSL $8B95C3
+org $8BB9DD  <--  org $8BBCA0 ($8BB559)
 
-;======== Remove 6 bytes ========
-; Method implementation differences
-org $8BBA1B  <--  org $8BBCA0 ($8BB585)
-    db ...
-org $8BBA48  <--  org $8BBCA0 ($8BB5B8)
+;======== Insert 18 bytes ========
+; Instruction, load alternate intro text page 2 subpage 1
+org $8BB9F8  <--  org $8BBCA0 ($8BB574)
+    LDA $09E2     ; previously LDY #$CF75
+    BNE $0F       ; previously JSR $8D23
+    LDA #$A240    ; previously LDY #$CFBD
+    STA $00       ; previously JSR $8D23
+    LDA #$0100    ; previously JSR $8DE6
+    STA $12       ;
+    JSR $8D23     ;
+    BRA $0D       ;
+    LDA #$AA40    ;
+    STA $00       ;
+    LDA #$0100    ;
+    STA $12       ;
+    JSR $8D23     ;
+org $8BBA19  <--  org $8BBCA0 ($8BB583)
 
-;======== Insert 20 bytes ========
-; Method implementation differences
-org $8BBA53  <--  org $8BBCA0 ($8BB5C3)
-    db ...
-org $8BBA92  <--  org $8BBCA0 ($8BB5EE)
+org $8BBA1D  <--  org $8BBCA0 ($8BB587)
+    BEQ $28       ; previously BEQ $2E
 
-; Method implementation differences
-org $8BBA92  <--  org $8BBCA0 ($8BB5EE)
-    db ...
-org $8BBABF  <--  org $8BBCA0 ($8BB61B)
+;======== Remove 4 bytes ========
+; Instruction, disable cinematic BG tilemap updates
+org $8BBA31  <--  org $8BBCA0 ($8BB59B)
+                  ; previously JSL $8B95C3
+org $8BBA31  <--  org $8BBCA0 ($8BB59F)
 
-;======== Insert 14 bytes ========
-; Method implementation differences
-org $8BBACA  <--  org $8BBCA0 ($8BB626)
-    db ...
-org $8BBB09  <--  org $8BBCA0 ($8BB657)
+;======== Remove 2 bytes ========
+; Instruction, load alternate intro text page 2 subpage 2
+org $8BBA34  <--  org $8BBCA0 ($8BB5A2)
+    LDA #$A340    ; previously LDY #$D085
+    STA $00       ; previously JSR $8D23
+    LDA #$0100    ; previously LDY #$D0E1
+    STA $12       ; previously JSR $8D23
+    JSR $8D23     ; previously JSR $8DE6
+org $8BBA41  <--  org $8BBCA0 ($8BB5B1)
 
-;======== Insert 27 bytes ========
-; Method implementation differences
-org $8BBB09  <--  org $8BBCA0 ($8BB657)
-    db ...
-org $8BBB57  <--  org $8BBCA0 ($8BB68A)
+;======== Remove 4 bytes ========
+; Instruction, disable cinematic BG tilemap updates
+org $8BBA54  <--  org $8BBCA0 ($8BB5C4)
+                  ; previously JSL $8B95C3
+org $8BBA54  <--  org $8BBCA0 ($8BB5C8)
 
-;======== Insert 20 bytes ========
-; Method implementation differences
-org $8BBB62  <--  org $8BBCA0 ($8BB695)
-    db ...
-org $8BBBA1  <--  org $8BBCA0 ($8BB6C0)
+;======== Insert 24 bytes ========
+; Instruction, load alternate intro text page 3 subpage 1
+org $8BBA6F  <--  org $8BBCA0 ($8BB5E3)
+    LDA $09E2     ; previously LDY #$D0F9
+    BNE $0F       ; previously JSR $8D23
+    LDA #$A480    ; previously JSR $8DE6
+    STA $00       ;
+    LDA #$0100    ;
+    STA $12       ;
+    JSR $8D23     ;
+    BRA $0D       ;
+    LDA #$AC80    ;
+    STA $00       ;
+    LDA #$0100    ;
+    STA $12       ;
+    JSR $8D23     ;
+org $8BBA90  <--  org $8BBCA0 ($8BB5EC)
 
-; Method implementation differences
-org $8BBBA1  <--  org $8BBCA0 ($8BB6C0)
-    db ...
-org $8BBBCE  <--  org $8BBCA0 ($8BB6ED)
+;======== Remove 4 bytes ========
+; Instruction, disable cinematic BG tilemap updates
+org $8BBAA8  <--  org $8BBCA0 ($8BB604)
+                  ; previously JSL $8B95C3
+org $8BBAA8  <--  org $8BBCA0 ($8BB608)
 
-;======== Insert 20 bytes ========
-; Method implementation differences
-org $8BBBD9  <--  org $8BBCA0 ($8BB6F8)
-    db ...
-org $8BBC00  <--  org $8BBCA0 ($8BB70B)
+;======== Insert 4 bytes ========
+; Instruction, load alternate intro text page 3 subpage 2
+org $8BBAAB  <--  org $8BBCA0 ($8BB60B)
+    LDA #$A580    ; previously LDY #$D15D
+    STA $00       ; previously JSR $8D23
+    LDA #$0080    ; previously JSR $8DE6
+    STA $12       ;
+    JSR $8D23     ;
+org $8BBAB8  <--  org $8BBCA0 ($8BB614)
+
+;======== Remove 4 bytes ========
+; Instruction, disable cinematic BG tilemap updates
+org $8BBACB  <--  org $8BBCA0 ($8BB627)
+                  ; previously JSL $8B95C3
+org $8BBACB  <--  org $8BBCA0 ($8BB62B)
+
+;======== Insert 18 bytes ========
+; Instruction, load alternate intro text page 4 subpage 1
+org $8BBAE6  <--  org $8BBCA0 ($8BB646)
+    LDA $09E2     ; previously LDY #$D1B9
+    BNE $0F       ; previously JSR $8D23
+    LDA #$A680    ; previously LDY #$D215
+    STA $00       ; previously JSR $8D23
+    LDA #$0100    ; previously JSR $8DE6
+    STA $12       ;
+    JSR $8D23     ;
+    BRA $0D       ;
+    LDA #$AE80    ;
+    STA $00       ;
+    LDA #$0100    ;
+    STA $12       ;
+    JSR $8D23     ;
+org $8BBB07  <--  org $8BBCA0 ($8BB655)
+
+org $8BBB0B  <--  org $8BBCA0 ($8BB659)
+    BEQ $49       ; previously BEQ $2E
+
+;======== Remove 4 bytes ========
+; Instruction, disable cinematic BG tilemap updates
+org $8BBB1F  <--  org $8BBCA0 ($8BB66D)
+                  ; previously JSL $8B95C3
+org $8BBB1F  <--  org $8BBCA0 ($8BB671)
+
+;======== Insert 31 bytes ========
+; Instruction, load alternate intro text page 4 subpage 2
+org $8BBB22  <--  org $8BBCA0 ($8BB674)
+    LDA $09E2     ; previously LDY #$D259
+    BNE $0F       ; previously JSR $8D23
+    LDA #$A780    ; previously LDY #$D2A5
+    STA $00       ; previously JSR $8D23
+    LDA #$0080    ; previously JSR $8DE6
+    STA $12       ;
+    JSR $8D23     ;
+    BRA $1A       ;
+    LDA #$AF80    ;
+    STA $00       ;
+    LDA #$0080    ;
+    STA $12       ;
+    JSR $8D23     ;
+    LDA #$B800    ;
+    STA $00       ;
+    LDA #$0080    ;
+    STA $12       ;
+    JSR $8D23     ;
+org $8BBB50  <--  org $8BBCA0 ($8BB683)
+
+;======== Remove 4 bytes ========
+; Instruction, disable cinematic BG tilemap updates
+org $8BBB63  <--  org $8BBCA0 ($8BB696)
+                  ; previously JSL $8B95C3
+org $8BBB63  <--  org $8BBCA0 ($8BB69A)
+
+;======== Insert 24 bytes ========
+; Instruction, load alternate intro text page 5 subpage 1
+org $8BBB7E  <--  org $8BBCA0 ($8BB6B5)
+    LDA $09E2     ; previously LDY #$D2D5
+    BNE $0F       ; previously JSR $8D23
+    LDA #$B0C0    ; previously JSR $8DE6
+    STA $00       ;
+    LDA #$0100    ;
+    STA $12       ;
+    JSR $8D23     ;
+    BRA $0D       ;
+    LDA #$B8C0    ;
+    STA $00       ;
+    LDA #$0100    ;
+    STA $12       ;
+    JSR $8D23     ;
+org $8BBB9F  <--  org $8BBCA0 ($8BB6BE)
+
+;======== Remove 4 bytes ========
+; Instruction, disable cinematic BG tilemap updates
+org $8BBBB7  <--  org $8BBCA0 ($8BB6D6)
+                  ; previously JSL $8B95C3
+org $8BBBB7  <--  org $8BBCA0 ($8BB6DA)
+
+;======== Insert 4 bytes ========
+; Instruction, load alternate intro text page 5 subpage 2
+org $8BBBBA  <--  org $8BBCA0 ($8BB6DD)
+    LDA #$B1C0    ; previously LDY #$D30D
+    STA $00       ; previously JSR $8D23
+    LDA #$0100    ; previously JSR $8DE6
+    STA $12       ;
+    JSR $8D23     ;
+org $8BBBC7  <--  org $8BBCA0 ($8BB6E6)
+
+;======== Remove 4 bytes ========
+; Instruction, disable cinematic BG tilemap updates
+org $8BBBDA  <--  org $8BBCA0 ($8BB6F9)
+                  ; previously JSL $8B95C3
+org $8BBBDA  <--  org $8BBCA0 ($8BB6FD)
+
+;======== Insert 24 bytes ========
+; Instruction, load alternate intro text page 6
+org $8BBBDD  <--  org $8BBCA0 ($8BB700)
+    LDA $09E2     ; previously LDY #$D371
+    BNE $0F       ; previously JSR $8D23
+    LDA #$B300    ; previously JSR $8DE6
+    STA $00       ;
+    LDA #$0100    ;
+    STA $12       ;
+    JSR $8D23     ;
+    BRA $0D       ;
+    LDA #$BB00    ;
+    STA $00       ;
+    LDA #$0100    ;
+    STA $12       ;
+    JSR $8D23     ;
+org $8BBBFE  <--  org $8BBCA0 ($8BB709)
 
 ;======== End of 549 bytes from above ========
 org $8BBC05  <--  org $8BBCA0 ($8BB710)
@@ -1529,6 +1827,10 @@ org $8BD378  <--  org $8BD407
     dw $D2F8      ;
 org $8BD37E  <--  org $8BD407
 
+; Handle final screen cinematic objects (PAL uses routine without Samus eyes)
+org $8BD3F3  <--  org $8BD47C
+    JSR $9602     ; previously JSR $962F
+
 ; Cinematic velocity?
 org $8BD691  <--  org $8BD71A
     ADC #$0003    ; previously ADC #$0002
@@ -1590,7 +1892,7 @@ org $8BE247  <--  org $8BE2D0
 org $8BE376  <--  org $8BE3FF
     LDA #$0084    ; previously LDA #$00B4
 
-; Cinematic velocity?
+; Cinematic item percentage alternate text tiles size
 org $8BE3D1  <--  org $8BE45A
     SBC #$0800    ; previously SBC #$0400
 
@@ -1619,10 +1921,15 @@ org $8BE709  <--  org $8BE781
     LDX #$00FE    ; previously LDX #$007E
     LDA #$004F    ; previously LDA #$007F
 
-; Ending credits data and instruction lists (timing differences?)
-org $8BE92F  <--  org $8BE9A7
+; Cinematic ending cutscene instruction lists (timing differences)
+org $8BEA97  <--  org $8BEB0F
     dw ...
-org $8BEF21  <--  org $8BEF99
+org $8BEC01  <--  org $8BEC79
+
+; Ending credits cutscene instruction lists (timing differences)
+org $8BECB5  <--  org $8BED2D
+    dw ...
+org $8BEE23  <--  org $8BEE9B
 
 ; Cinematic timing difference?
 org $8BF426  <--  org $8BF49E
@@ -1705,7 +2012,7 @@ org $8CD6A9  <--  org $8CD66D
     db #$01       ;
     dw $D6CF      ;
     dw $C007      ;
-    dw $9698      ;
+    dw $9668      ;
 org $8CD6B9  <--  org $8CD66D
 
 ; Intro, "Space Colony" text positioning?
@@ -1735,25 +2042,26 @@ org $8CDACF  <--  org $8CD81B
     dw ...
 org $8CDBCF  <--  org $8CD91B
 
-; Ending sequence, instruction list timing difference?
+; Ending sequence, instruction list timing difference
 org $8CDBD1  <--  org $8CD91D
     dw #$0006     ; previously dw #$0008
 
+; Ending sequence, instruction list timing difference
 org $8CDF41  <--  org $8CDC8D
     dw #$0022     ; previously dw #$0023
 
-; Ending sequence data?
+; Tilemap, post credits, 1994 Nintendo
 org $8CE18F  <--  org $8CDEDB
     dw ...
 org $8CE20F  <--  org $8CDF5B
 
 ;======== Insert 256 bytes ========
-; Ending sequence data?
+; Tilemap, post credits, item percentage additional alternate text
 org $8CE20F  <--  org $8CDF5B
     dw ...
 org $8CE30F  <--  org $8CDF5B
 
-; Ending sequence data?
+; Tilemap, post credits, item percentage alternate text
 org $8CE30F  <--  org $8CDF5B
     dw ...
 org $8CE38F  <--  org $8CDFDB
@@ -1815,13 +2123,13 @@ org $8DE45E
 org $8DEAE2
 
 ; Tourian red flashing
-; NOTE: This section is the same on NTSC and PAL but different on Virtual Console NTSC and JU
+; NOTE: This section is the same on NTSC and PAL but different on NSO and Virtual Console NTSC and JU
 org $8DF895
     dw ...
 org $8DF941
 
 ; Old Tourian escape shaft flashing
-; NOTE: This section is the same on NTSC and PAL but different on Virtual Console NTSC and JU
+; NOTE: This section is the same on NTSC and PAL but different on NSO and Virtual Console NTSC and JU
 org $8DFA6D
     dw ...
 org $8DFBC1
@@ -2054,72 +2362,67 @@ org $91812D
     ...           ; modified by SpriteSomething
 org $918167
 
-; Demo instructions, Landing site
+; Demo instructions, Landing site (timing differences)
 org $918ACE
     dw ...
 org $918C3C
 
-; Demo instructions, Pseudo screw attack
+; Demo instructions, Pseudo screw attack (timing differences)
 org $918C3E
     dw ...
 org $918DEE
 
-; Demo instructions, Speed booster
+; Demo instructions, Speed booster (timing differences)
 org $918DF0
     dw ...
 org $918E62
 
-; Demo instructions, Dachora
+; Demo instructions, Dachora (timing differences)
 org $918E64
     dw ...
 org $918EB2
 
-; Demo instructions, Red Brinstar
+; Demo instructions, Red Brinstar (timing differences)
 org $918EB4
     dw ...
 org $918F38
 
-; Demo instructions, Wrecked Ship hall
+; Demo instructions, Wrecked Ship hall (timing differences)
 org $918F3A
     dw ...
 org $918FE2
 
 ;======== Remove 102 bytes ========
-; Demo instructions, Lower Norfair entrance
+; Demo instructions, Lower Norfair entrance (timing and movement differences)
 org $918FE4
     dw ...
 org $9190EC  <--  org $919152
 
 ; Demo instructions, Eye door
-org $9190EE  <--  org $919154
+org $9190EE  <--  org $919154 (timing differences)
     dw ...
 org $9192D4  <--  org $91933A
 
-; Demo instructions, Shinespark
+; Demo instructions, Shinespark (timing differences)
 org $9192D6  <--  org $91933C
     dw ...
 org $919364  <--  org $9193CA
 
 ; Demo instructions, Missile door
-org $919366  <--  org $9193CC
+org $919366  <--  org $9193CC (timing differences)
     dw ...
 org $9193FC  <--  org $919462
 
 ; Demo instructions, Kraid
-org $9193FE  <--  org $919464
+org $9193FE  <--  org $919464 (timing differences)
     dw ...
 org $919404  <--  org $91946A
 
 ;======== Insert 36 bytes ========
-; Demo instructions, Fireflea room
+; Demo instructions, Fireflea room (timing and movement differences)
 org $919406  <--  org $91946C
     dw ...
 org $9194C6  <--  org $919508
-
-; Demo instructions, Screw attack
-org $9194C8  <--  org $91950A
-    dw ...
-org $91951C  <--  org $91955E
 
 ; Demo instructions, Brinstar diagonal room
 org $91951E  <--  org $919560
@@ -2133,32 +2436,27 @@ org $919616  <--  org $919658
 
 ;======== Insert 6 bytes ========
 ; Demo instructions, Big Pink
-org $919618  <--  org $91965A
+org $919618  <--  org $91965A (timing differences)
     dw ...
 org $9196FC  <--  org $919738
 
 ; Demo instructions, Grapple beam
-org $9196FE  <--  org $91973A
+org $9196FE  <--  org $91973A (timing differences)
     dw ...
 org $919860  <--  org $91989C
 
-; Demo instructions, Ice beam
-org $919862  <--  org $91989E
-    dw ...
-org $919970  <--  org $9199AC
-
-; Demo instructions, Gauntlet entrance
+; Demo instructions, Gauntlet entrance (timing differences)
 org $919972  <--  org $9199AE
     dw ...
 org $91998A  <--  org $9199C6
 
 ;======== Remove 108 bytes ========
-; Demo instructions, Advanced grapple beam
+; Demo instructions, Advanced grapple beam (timing and movement differences)
 org $91998C  <--  org $9199C8
     dw ...
 org $919A46  <--  org $919AEE
 
-; Demo instructions, Infinite bomb jump
+; Demo instructions, Infinite bomb jump (timing differences)
 org $919A48  <--  org $919AF0
     dw ...
 org $919C2E  <--  org $919CD6
@@ -2168,12 +2466,12 @@ org $919C30  <--  org $919CD8
     dw ...
 org $919CFC  <--  org $919DA4
 
-; Demo instructions, Tourian entrance
+; Demo instructions, Tourian entrance (timing differences)
 org $919CFE  <--  org $919DA6
     dw ...
 org $919D04  <--  org $919DAC
 
-; Demo instructions, Crystal flash
+; Demo instructions, Crystal flash (timing differences)
 org $919D06  <--  org $919DAE
     dw ...
 org $919DA8  <--  org $919E50
@@ -2186,7 +2484,7 @@ org $91B162  <--  org $91B20A
 ; Animation delay timing differences
 org $91B162  <--  org $91B20A
     dw ...        ; also modified by SpriteSomething
-org $91B581  <--  org $91B629
+org $91B577  <--  org $91B61F
 
 ;======== Insert 5 bytes ========
 ; Special sound/palletes for Samus?
@@ -2450,10 +2748,17 @@ org $A0CBE7  <--  org $A0CBC7
     dw ...
 org $A0CEDF  <--  org $A0CEBF
 
-; Enemy header data
-org $A0CEDF  <--  org $A0CEBF
-    dw ...
-org $A0F7F3  <--  org $A0F7D3
+; Spore Spawn header cry
+org $A0DF6D  <--  org $A0DF4D
+    dw #$0000     ; previously dw #$002C
+
+; Spore Spawn header cry
+org $A0DF6D  <--  org $A0DF4D
+    dw #$0000     ; previously dw #$002C
+
+; Ceres steam palette (errantly pointing to bank A0 instead of bank A6)
+org $A0E221  <--  org $A0E201
+    dw $E25F      ; previously dw $E23F
 
 ; Freespace
 org $A0F7F3  <--  org $A0F7D3
@@ -2462,10 +2767,57 @@ org $A0F7F3  <--  org $A0F7D3
 ; Bank A1
 ;=======================================================
 
-; Enemy population
-org $A18000
-    db ...
-org $A1EBD1
+; Early Supers Room, first shutter speed
+org $A19A6C
+    dw #$00A4     ; previously dw #$0090
+
+; Ice Beam Gate Room, first shutter speed?
+org $A1A340
+    dw #$0010     ; previously dw #$000D
+
+; Ice Beam Gate Room, second shutter speed
+org $A1A34E
+    dw #$0070     ; previously dw #$0068
+
+; Hi Jump Energy Tank Room, sova speed
+org $A1B3D1
+    dw #$0005     ; previously dw #$0004
+
+; Ice Beam Tutorial Room, first boyon Y position
+org $A1B492
+    dw #$00D5     ; previously dw #$00D9
+
+; Ice Beam Tutorial Room, second boyon Y position
+org $A1B4A2
+    dw #$00D5     ; previously dw #$00D9
+
+; Ice Beam Tutorial Room, third boyon Y position
+org $A1B4B2
+    dw #$00D5     ; previously dw #$00D9
+
+; Ice Beam Snake Room, first sova speed
+org $A1B6B9
+    dw #$0002     ; previously dw #$0001
+
+; Ice Beam Snake Room, second sova speed
+org $A1B6C9
+    dw #$0002     ; previously dw #$0001
+
+; Ice Beam Snake Room, third sova speed
+org $A1B6D9
+    dw #$0002     ; previously dw #$0001
+
+; Single Chamber Room, first multiviola speed
+org $A1B828
+    dw #$00D8     ; previously dw #$00D0
+
+; Single Chamber Room, first multiviola speed
+org $A1B848
+    dw #$0098     ; previously dw #$0088
+
+; Crab Shaft Room, first sciser speed
+org $A1CFCF
+    dw #$0002     ; previously dw #$0003
 
 ; Freespace
 org $A1EBD1
@@ -2507,10 +2859,10 @@ org $A29C06  <--  org $A29BF5
 ;======== Insert 7 bytes ========
 ; Puyo AI, $12 later used by vertical movement routine
 org $A29C43  <--  org $A29C32
-    LDA $9A19,Y   ; previously STZ $12
+    LDA $9A19,Y   ;
     AND #$00FF    ;
     XBA           ;
-    STA $12       ;
+    STA $12       ; previously STZ $12
 org $A29C4C  <--  org $A29C34
 
 ; Cacatac AI instruction lists (timing differences)
@@ -2754,8 +3106,8 @@ org $A3A8ED  <--  org $A3A8DD
 ;======== Insert 3 bytes ========
 ; Mochtroid AI, $0FA8 and $0FAA later used by horizontal movement routine
 org $A3A8EF  <--  org $A3A8DF
-    LDA #$CCD0    ; previously STZ $0FA8,X
-    STA $0FA8,X   ;
+    LDA #$CCD0    ;
+    STA $0FA8,X   ; previously STZ $0FA8,X
     LDA #$FFFE    ; previously LDA #$FFFF
 org $A3A8F8  <--  org $A3A8E5
 
@@ -2765,8 +3117,8 @@ org $A3A8FB  <--  org $A3A8E8
 ;======== Insert 3 bytes ========
 ; Mochtroid AI, $0FA8 later used by horizontal movement routine
 org $A3A8FD  <--  org $A3A8EA
-    LDA #$3330    ; previously STZ $0FA8,X
-    STA $0FA8,X   ;
+    LDA #$3330    ;
+    STA $0FA8,X   ; previously STZ $0FA8,X
 org $A3A903  <--  org $A3A8ED
 
 org $A3A923  <--  org $A3A90D
@@ -2778,8 +3130,8 @@ org $A3A92B  <--  org $A3A915
 ;======== Insert 3 bytes ========
 ; Mochtroid AI, $0FAC and $0FAE later used by vertical movement routine
 org $A3A92D  <--  org $A3A917
-    LDA #$CCD0    ; previously STZ $0FAC,X
-    STA $0FAC,X   ;
+    LDA #$CCD0    ;
+    STA $0FAC,X   ; previously STZ $0FAC,X
     LDA #$FFFE    ; previously LDA #$FFFF
 org $A3A936  <--  org $A3A91D
 
@@ -2789,12 +3141,12 @@ org $A3A939  <--  org $A3A920
 ;======== Insert 3 bytes ========
 ; Mochtroid AI, $0FAC later used by vertical movement routine
 org $A3A93B  <--  org $A3A922
-    LDA #$3330    ; previously STZ $0FAC,X
-    STA $0FA8,X   ;
+    LDA #$3330    ;
+    STA $0FA8,X   ; previously STZ $0FAC,X
 org $A3A941  <--  org $A3A925
 
 ; Zoa AI velocities?
-org $A3B435  <--  org $A3B419
+org $A3B431  <--  org $A3B415
     db ...
 org $A3B445  <--  org $A3B429
 
@@ -2947,10 +3299,12 @@ org $A499FE  <--  org $A499EB
 org $A49A04  <--  org $A499F1
     ADC #$9999    ; previously ADC #$8000
 
-;======== Insert 6 bytes ========
-; Initialize an extra crocomire AI variable?
 org $A49A13  <--  org $A49A00
     BMI $09       ; previously BMI $03
+
+;======== Insert 6 bytes ========
+; Initialize an extra crocomire AI variable?
+org $A49A15  <--  org $A49A02
     LDA #$9999    ;
     STA $0FB0     ;
 org $A49A1B  <--  org $A49A02
@@ -2976,7 +3330,7 @@ org $A49A79  <--  org $A49A60
     ADC #$0001    ; previously ADC #$0000
 
 ; Crocomire palette
-; NOTE: This section is the same on NTSC and PAL but different on Virtual Console NTSC and JU
+; NOTE: This section is the same on NTSC and PAL but different on NSO and Virtual Console NTSC and JU
 org $A4B936  <--  org $A4B91D
     dw ...
 org $A4B956  <--  org $A4B93D
@@ -3066,27 +3420,30 @@ org $A5E6F7  <--  org $A5E6EF ($A5E6E7)
 org $A5E6FB  <--  org $A5E6EF ($A5E6EB)
 org $A5E6FB  <--  org $A5E6EF
 
-;======== Remove 40 bytes ========
-; Spore Spawn data
+;======== Remove 4 bytes ========
+; Spore Spawn death sequence instruction list (set up death)
 org $A5E789  <--  org $A5E77D
-    db ...
-org $A5E811  <--  org $A5E82D
+                  ; previously dw $E8BA
+                  ; previously dw $EB9B
+org $A5E789  <--  org $A5E781
 
-;======== Insert 28 bytes ========
-; Spore Spawn logic
-org $A5E811  <--  org $A5E82D
-    LDA #$0000,Y  ;
-    STA $7E7816   ;
-    LDA #$0002,Y  ;
-    STA $7E7818   ;
-    LDA #$0004,Y  ;
-    STA $7E7814   ;
-    TYA           ;
-    CLC           ;
-    ADC #$0006    ;
-    TAY           ;
-    RTL           ;
-org $A5E82D
+;======== Remove 4 bytes ========
+; Spore Spawn death sequence instruction list (dying)
+org $A5E78D  <--  org $A5E785
+                  ; previously dw $E8BA
+                  ; previously dw $EBEE
+org $A5E78D  <--  org $A5E789
+
+; Spore Spawn death sequence instruction list (timing)
+org $A5E791  <--  org $A5E78D
+    dw #$0008     ; previously #$0001
+
+;======== Remove 4 bytes ========
+; Spore Spawn death sequence instruction list (wait eight frames)
+org $A5E797  <--  org $A5E793
+                  ; previously dw $813A
+                  ; previously dw #$0008
+org $A5E797
 
 ;======== Insert 5 bytes ========
 ; Spore Spawn logic
@@ -3157,7 +3514,7 @@ org $A5EE35  <--  org $A5EDF9
 ; Spore Spawn logic
 org $A5EE85  <--  org $A5EE49
     JSR $EBD0     ;
-    LDA $EC23     ;
+    LDA #$EC23    ;
     STA $0FA8     ;
 org $A5EE8E  <--  org $A5EE49
 
@@ -3213,74 +3570,143 @@ org $A6B9E5  <--  org $A6B9D5
 org $A6C0D1  <--  org $A6C0C1
     BNE $26       ; previously BNE $31
 
-;======== Move 11 bytes below ========
-; Baby Metroid AI data
+;======== Remove 11 bytes ========
+; Baby Metroid AI data?
 org $A6C0F3  <--  org $A6C0E3
+                  ; previously LDA $09E2
+                  ; previously BNE $06
+                  ; previously INC $0FB2
+                  ; previously INC $0FB2
 org $A6C0F3  <--  org $A6C0EE
 
 org $A6C0FD  <--  org $A6C0F8
     BNE $15       ; previously BNE $0A
 
-;======== Start of 11 bytes from above ========
-; Baby Metroid AI data
+;======== Insert 11 bytes ========
+; Baby Metroid AI data?
 org $A6C105  <--  org $A6C100
-org $A6C105  <--  org $A6C100 ($A6C0E3)
-
-; Method implementation differences
-org $A6C10A  <--  org $A6C100 ($A6C0E8)
-    JSL $A6C3A2   ; previously INC $0FB2
-    BRA $04       ; previously INC $0FB2
-org $A6C110  <--  org $A6C100 ($A6C0EE)
-
-;======== End of 11 bytes from above ========
-org $A6C110  <--  org $A6C100 ($A6C0EE)
+    LDA $09E2     ;
+    BNE $06       ;
+    JSL $A6C3A2   ;
+    BRA $04       ;
 org $A6C110  <--  org $A6C100
 
-;======== Insert 23 bytes ========
+;======== Insert 20 bytes ========
 ; Escape timer initialization routine?
 org $A6C393  <--  org $A6C383
     LDA $09E2
     BNE $05
-    LDX $DEC3
+    LDX #$DE3C
     BRA $0D
-    LDX $DE5A
+    LDX #$DE5A
     BRA $08
-    LDX $DE00
+    LDX #$DE00
     BRA $03
 org $A6C3A7  <--  org $A6C383
 
+; Escape timer initialization routine? (relocated data from bank A6 to bank AD)
+org $A6C3A7  <--  org $A6C383
+    LDX #$DE1E    ; previously LDX #$C3B8
+
 ;======== Insert 3 bytes ========
 ; Escape timer initialization routine?
-org $A6C3A7  <--  org $A6C383
-    LDX $DE1E     ; previously LDX $C3B8
-    PHB           ; previously PHB
-    PEA $AD00     ; previously PHK
-    PLB
+org $A6C3AB  <--  org $A6C387
+    PEA $AD00
+    PLB           ; previously PHK
 org $A6C3AF  <--  org $A6C388
 
-;======== Remove 152 bytes ========
-; Escape timer tilemap data? (NTSC only)
+;======== Move 152 bytes to bank AD ========
+; Escape timer tilemaps and transfer entries
 org $A6C3DF  <--  org $A6C3B8
-                  ; previously db ...
+org $A6C3DF  <--  org $A6C3D6
+org $A6C3DF  <--  org $A6C3F4
 org $A6C3DF  <--  org $A6C450
 
 ;======== Insert 58 bytes ========
-; Escape timer tile transfer entries? (PAL only)
+; Zebes escape timer tile transfer entries
 org $A6C45A  <--  org $A6C4CB
-    db ...
+    dw $0200      ;
+    dl $B0C000    ;
+    dw $7E00      ;
+    dw $0120      ;
+    dl $B0C200    ;
+    dw $7F00      ;
+    dw $01C0      ;
+    dl $B7DA00    ;
+    dw $1820      ;
+    dw $0200      ;
+    dl $B7DBC0    ;
+    dw $1900      ;
+    dw $0200      ;
+    dl $B7DDC0    ;
+    dw $1A00      ;
+    dw $0200      ;
+    dl $B7DFC0    ;
+    dw $1B00      ;
+    dw $0100      ;
+    dl $B7E1C0    ;
+    dw $1C00      ;
+    dw $0100      ;
+    dl $B7E3C0    ;
+    dw $1D00      ;
+    dw $0000      ;
 org $A6C494  <--  org $A6C4CB
 
-;======== Insert 7 bytes ========
-; Escape timer tile transfer entries
-org $A6C494  <--  org $A6C4CB
-    db ...
-org $A6C4CE  <--  org $A6C4FE
+; Zebes escape timer first tile transfer size
+org $A6C4A2  <--  org $A6C4D9
+    dw $01C0      ; previously dw $0200
+
+; Zebes escape timer second tile transfer destination
+org $A6C4AE  <--  org $A6C4E5
+    dw $7900      ; previously dw $7920
+
+; Zebes escape timer third tile transfer destination
+org $A6C4B5  <--  org $A6C4EC
+    dw $7A00      ; previously dw $7A20
+
+; Zebes escape timer fourth tile transfer destination
+org $A6C4BC  <--  org $A6C4F3
+    dw $7B00      ; previously dw $7B20
+
+; Zebes escape timer fifth tile transfer destination
+org $A6C4C3  <--  org $A6C4FA
+    dw $7C00      ; previously dw $7C20
 
 ;======== Insert 7 bytes ========
-; Escape timer tile transfer entries
+; Zebes escape timer sixth tile transfer
+org $A6C4C5  <--  org $A6C4FC
+    dw $0100      ;
+    dl $B7E3C0    ;
+    dw $7D00      ;
+org $A6C4CC  <--  org $A6C4FC
+
+; Ceres escape timer first tile transfer size
 org $A6C4CE  <--  org $A6C4FE
-    db ...
-org $A6C50F  <--  org $A6C538
+    dw $01C0      ; previously dw $0200
+
+; Ceres escape timer second tile transfer destination
+org $A6C4DA  <--  org $A6C50A
+    dw $1900      ; previously dw $1920
+
+; Ceres escape timer third tile transfer destination
+org $A6C4E1  <--  org $A6C511
+    dw $1A00      ; previously dw $1A20
+
+; Ceres escape timer fourth tile transfer destination
+org $A6C4E8  <--  org $A6C518
+    dw $1B00      ; previously dw $1B20
+
+; Ceres escape timer fifth tile transfer destination
+org $A6C4EF  <--  org $A6C51F
+    dw $1C00      ; previously dw $1C20
+
+;======== Insert 7 bytes ========
+; Ceres escape timer sixth tile transfer
+org $A6C4F1  <--  org $A6C521
+    dw $0100      ;
+    dl $B7E3C0    ;
+    dw $1D00      ;
+org $A6C4F8  <--  org $A6C521
 
 ; Ceres Steam AI velocity?
 org $A6E8C2  <--  org $A6E8EB
@@ -3336,13 +3762,13 @@ org $A7AA7F  <--  org $A7AA69
     LDA #$00FA    ; previously LDA #$012C
 
 ; Kraid background palette
-; NOTE: This section is the same on NTSC and PAL and Virtual Console NTSC but different on JU
+; NOTE: This section is the same on NTSC and PAL and NSO and Virtual Console NTSC but different on JU
 org $A7B3E9  <--  org $A7B3D3
     dw ...
 org $A7B409  <--  org $A7B3F3
 
 ; Kraid sprite palette
-; NOTE: This section is the same on NTSC and PAL and Virtual Console NTSC but different on JU
+; NOTE: This section is the same on NTSC and PAL and NSO and Virtual Console NTSC but different on JU
 org $A7B529  <--  org $A7B513
     dw ...
 org $A7B549  <--  org $A7B533
@@ -3389,9 +3815,9 @@ org $A7B6C7  <--  org $A7B696
 ;======== Insert 3 bytes ========
 ; Kraid X position
 org $A7B6CC  <--  org $A7B69B
-    LDA $A938     ; previously STZ $12
-    STA $12       ; previously LDA $A922
-    LDA $A936     ;
+    LDA $A938     ;
+    STA $12       ; previously STZ $12
+    LDA $A936     ; previously LDA $A922
 org $A7B6D4  <--  org $A7B6A0
 
 ; Kraid projectile velocities
@@ -3405,7 +3831,7 @@ org $A7C8D7  <--  org $A7C8A3
 
 ; Kraid timer
 org $A7C926  <--  org $A7C8F2
-    LDA #$0064    ; previously LDA #$0078
+    LDA #$0050    ; previously LDA #$0060
 
 ; Phantoon velocities?
 org $A7CDA7  <--  org $A7CD73
@@ -3458,7 +3884,7 @@ org $A7E9C4  <--  org $A7E990
     CMP #$0006    ; previously CMP #$0005
 
 ; Dachora constants?
-org $A7F4FD  <--  org $A7F4C9
+org $A7F509  <--  org $A7F4D5
     dw ...
 org $A7F511  <--  org $A7F4DD
 
@@ -3699,7 +4125,7 @@ org $A8F401  <--  org $A8F3F9
 ;======== Insert 7 bytes ========
 ; Kihunter AI
 org $A8F41C  <--  org $A8F414
-    BNE $0B       ; previously BNE $04
+    BPL $0B       ; previously BPL $04
     LDA #$6666    ;
     STA $7E7806,X ;
 org $A8F425  <--  org $A8F416
@@ -3729,7 +4155,7 @@ org $A9B224  <--  org $A9B214
 ; MB3 AI
 org $A9B22C  <--  org $A9B21C
     LDA #$0000    ;
-    STA $17A9     ;
+    STA $179A     ;
     STA $7EC09A   ;
     LDA #$7FFF    ;
     STA $7EC09C   ;
@@ -3740,9 +4166,9 @@ org $A9B23D  <--  org $A9B21C
 org $A9B243  <--  org $A9B222
     LDA #$0000    ;
     STA $7E7844   ;
-    LDA $A900     ;
+    LDA #$A900    ;
     STA $0605     ;
-    LDA $B257     ;
+    LDA #$B257    ;
     STA $0604     ;
 org $A9B256  <--  org $A9B222
 
@@ -3750,13 +4176,13 @@ org $A9B256  <--  org $A9B222
 ; MB3 AI
 org $A9B257  <--  org $A9B223
     LDY $0330     ;
-    LDA $0B0C     ;
-    STA $000D,Y   ;
-    LDA $B700     ;
+    LDA $0BC0     ;
+    STA $00D0,Y   ;
+    LDA #$B700    ;
     STA $00D3,Y   ;
-    LDA $DA00     ;
+    LDA #$DA00    ;
     STA $00D2,Y   ;
-    LDA $1820     ;
+    LDA #$1820    ;
     STA $00D5,Y   ;
     TYA           ;
     CLC           ;
@@ -3822,7 +4248,7 @@ org $A9BBC0  <--  org $A9BB73
     ADC #$01CC    ; previously ADC #$0180
 
 ; MB1 phase ended room palettes
-; NOTE: This section is the same on NTSC and PAL but different on Virtual Console NTSC and JU
+; NOTE: This section is the same on NTSC and PAL but different on NSO and Virtual Console NTSC and JU
 org $A9D0FF  <--  org $A9D0B2
     dw ...
 org $A9D18F  <--  org $A9D142
@@ -3846,7 +4272,7 @@ org $AA839F  <--  org $AA838F
 org $AA8697  <--  org $AA8687
 
 ; Torizo AI instruction lists (timing differences)
-org $AAB897  <--  org $AAB887
+org $AAB889  <--  org $AAB879
     db ...
 org $AAC21A  <--  org $AAC20A
 
@@ -3895,7 +4321,7 @@ org $AAC538  <--  org $AAC528
     LDA #$003C    ; previously LDA #$0048
 
 ; Torizo AI instruction list (timing differences)
-org $AAC9F2  <--  org $AAC9E2
+org $AAC9DB  <--  org $AAC9CB
     db ...
 org $AACADE  <--  org $AACACE
 
@@ -3957,10 +4383,105 @@ org $ACEE00
 ; Bank AD
 ;=======================================================
 
-;======== Insert 388 bytes ========
-; Unknown (PAL only)
+;======== Insert 30 bytes ========
+; Escape timer tilemap transfer entries
 org $ADDE00
-    db ...
+    dw $002A
+    dl $ADDE78
+    dw $5287
+    dw $002A
+    dl $ADDEA2
+    dw $52A7
+    dw $001E
+    dl $ADDECC
+    dw $52CA
+    dw $001E
+    dl $ADDEEA
+    dw $52EA
+    dw $0000
+org $ADDE1E  <--  org $ADDE00
+
+;======== Start of 152 bytes from bank A6 ========
+; Escape timer tilemaps and transfer entries
+org $ADDE1E  <--  org $ADDE00
+org $ADDE1E  <--  org $ADDE00 ($A6C3B8)
+
+; Escape timer tilemap transfer entries
+org $ADDE1E  <--  org $ADDE00 ($A6C3B8)
+    dw $002E      ; previously dw $0018
+    dl $ADDF08    ; previously dw $A6C3F4
+    dw $5287      ; previously dw $528A
+    dw $002E      ; previously dw $0018
+    dl $ADDF36    ; previously dw $A6C40C
+    dw $52A7      ; previously dw $52AA
+    dw $002A      ; previously dw $0016
+    dl $ADDF64    ; previously dw $A6C424
+    dw $52C7      ; previously dw $52CA
+    dw $002A      ; previously dw $0016
+    dl $ADDF8E    ; previously dw $A6C43A
+    dw $52E7      ; previously dw $52EA
+org $ADDE3A  <--  org $ADDE00 ($A6C3D4)
+
+;======== Insert 30 bytes ========
+; Escape timer tilemap transfer entries
+org $ADDE3C  <--  org $ADDE00 ($A6C3D6)
+    dw $0026
+    dl $ADDFB8
+    dw $4A87
+    dw $0026
+    dl $ADDFDE
+    dw $4AA7
+    dw $0026
+    dl $ADE004
+    dw $4AC7
+    dw $0026
+    dl $ADE02A
+    dw $4AE7
+    dw $0000
+org $ADDE5A  <--  org $ADDE00 ($A6C3D6)
+
+; Escape timer tilemap transfer entries
+org $ADDE5A  <--  org $ADDE00 ($A6C3D6)
+    dw $001A      ; previously dw $0018
+    dl $ADE050    ; previously dw $A6C3F4
+    dw $4A8A      ; previously dw $4A8A
+    dw $001A      ; previously dw $0018
+    dl $ADE06A    ; previously dw $A6C40C
+    dw $4AAA      ; previously dw $4AAA
+    dw $0024      ; previously dw $0016
+    dl $ADE084    ; previously dw $A6C424
+    dw $4AC8      ; previously dw $4ACA
+    dw $0024      ; previously dw $0016
+    dl $ADE0A8    ; previously dw $A6C43A
+    dw $4AE8      ; previously dw $4AEA
+org $ADDE76  <--  org $ADDE00 ($A6C3F2)
+
+;======== Insert 144 bytes ========
+; Escape timer tilemaps
+org $ADDE78  <--  org $ADDE00 ($A6C3F4)
+    dw ...
+org $ADDF08  <--  org $ADDE00 ($A6C3F4)
+
+;======== Insert 84 bytes ========
+; Escape timer tilemaps
+org $ADDF08  <--  org $ADDE00 ($A6C3F4)
+    dw ...
+org $ADDFB8  <--  org $ADDE00 ($A6C450)
+
+;======== End of 152 bytes from bank A6 ========
+org $ADDFB8  <--  org $ADDE00 ($A6C450)
+org $ADDFB8  <--  org $ADDE00
+
+;======== Insert 152 bytes ========
+; Escape timer tilemaps
+org $ADDFB8  <--  org $ADDE00
+    dw ...
+org $ADE050  <--  org $ADDE00
+
+;======== Insert 124 bytes ========
+; Escape timer tilemaps
+org $ADE050  <--  org $ADDE00
+    dw ...
 org $ADE0CC  <--  org $ADDE00
 
 ; Freespace
@@ -4023,11 +4544,10 @@ org $B2EFDF  <--  org $B2EFCF
 ;======== Remove 5 bytes ========
 ; Wall space pirate AI
 org $B2EFF9  <--  org $B2EFE9
-    LDA $0466     ; previously LDA $7E8004,X
-    STA $7E8004,X ; previously CLC
+    LDA #$0466    ; previously LDA $7E8004,X
+                  ; previously CLC
                   ; previously ADC #$0002
-                  ; previously STA $7E8004,X
-org $B2F000  <--  org $B2EFF5
+org $B2EFFC  <--  org $B2EFF1
 
 ;======== Insert 63 bytes ========
 ; Wall space pirate AI
@@ -4037,7 +4557,7 @@ org $B2F08D  <--  org $B2F082
     XBA           ;
     CLC           ;
     ADC $7E8006,X ;
-    STA $7E8006   ;
+    STA $7E8006,X ;
     BCC $20       ;
     LDA $7E8004,X ;
     AND #$FF00    ;
@@ -4063,12 +4583,12 @@ org $B2F0D0  <--  org $B2F086
 ;======== Insert 47 bytes ========
 ; Wall space pirate AI
 org $B2F160  <--  org $B2F116
-    LDA $7E8004,X ; LDA $0FB2,X
-    AND #$00FF    ; CLS
-    XBA           ; ADC $7E8004,X
+    LDA $7E8004,X ; previously LDA $0FB2,X
+    AND #$00FF    ; previously CLC
+    XBA           ; previously ADC $7E8004,X
     CLC           ;
     ADC $7E8006,X ;
-    STA $7E8006   ;
+    STA $7E8006,X ;
     BCC $18       ;
     LDA $7E8004,X ;
     AND #$FF00    ;
@@ -4077,7 +4597,7 @@ org $B2F160  <--  org $B2F116
     ADC $0FB2,X   ;
     AND #$00FF    ;
     STA $0FB2,X   ;
-    CMP $7E8000,X ;
+    CMP $7E8002,X ;
     BEQ $18       ;
     LDA $7E8004,X ;
     AND #$FF00    ;
@@ -4292,9 +4812,36 @@ org $B6F200
 ; Bank B7
 ;=======================================================
 
-;======== Insert 704 bytes ========
-; Tiles
+;======== Remove 64 bytes ========
+; Escape Timer first set of tiles
 org $B7DA00
+    db ...
+org $B7DBC0  <--  org $B7DC00
+
+; Escape Timer second set of tiles
+org $B7DBC0  <--  org $B7DC00
+    db ...
+org $B7DDC0  <--  org $B7DE00
+
+; Escape Timer third set of tiles
+org $B7DDC0  <--  org $B7DE00
+    db ...
+org $B7DFC0  <--  org $B7E000
+
+; Escape Timer fourth set of tiles
+org $B7DFC0  <--  org $B7E000
+    db ...
+org $B7E1C0  <--  org $B7E200
+
+;======== Insert 256 bytes ========
+; Escape Timer fifth set of tiles
+org $B7E1C0  <--  org $B7E200
+    db ...
+org $B7E3C0  <--  org $B7E300
+
+;======== Insert 512 bytes ========
+; Escape Timer sixth set of tiles
+org $B7E3C0  <--  org $B7E300
     db ...
 org $B7E5C0  <--  org $B7E300
 
@@ -4334,7 +4881,7 @@ org $B88000
 ;=======================================================
 
 ; Tileset 9 Heated Norfair palette
-; NOTE: This section is the same on NTSC and PAL and Virtual Console NTSC but different on JU
+; NOTE: This section is the same on NTSC and PAL and NSO and Virtual Console NTSC but different on JU
 org $C2B5E4
     dw ...
 org $C2B6BB
@@ -4359,6 +4906,7 @@ org $CEB22D
 ; Bank DC
 ; Bank DD
 ; Bank DE
+; NOTE: These banks are unchanged on NSO but are different on Virtual Console NTSC and JU
 ;=======================================================
 
 ; SPC engine main data length
@@ -4521,6 +5069,7 @@ org $DED18C  <--  org $DED1C0
 
 ;=======================================================
 ; Bank DF
+; NOTE: This bank is unchanged on NSO but is different on Virtual Console NTSC and JU
 ;=======================================================
 
 ; Freespace

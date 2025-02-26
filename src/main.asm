@@ -15,8 +15,8 @@ lorom
 
 !VERSION_MAJOR = 2
 !VERSION_MINOR = 6
-!VERSION_BUILD = 5
-!VERSION_REV   = 2
+!VERSION_BUILD = 6
+!VERSION_REV   = 0
 
 table ../resources/normal.tbl
 print ""
@@ -46,6 +46,11 @@ if !ORIGINAL_MESSAGE_TEXT
     print "PRESERVE FANFARE MESSAGES"
 endif
 
+if !PRESERVE_WRAM_DURING_SPACETIME
+else
+    print "WRAM NOT PRESERVED DURING SPACETIME"
+endif
+
 if !RAW_TILE_GRAPHICS
 else
     print "FAST PRESETS DISABLED"
@@ -60,6 +65,7 @@ if !FEATURE_SD2SNES
     !FEATURE_TINYSTATES = 0
     incsrc macros.asm
     incsrc defines.asm
+    incsrc freespace.asm
     incsrc save.asm
 else
 if !FEATURE_TINYSTATES
@@ -67,22 +73,25 @@ if !FEATURE_TINYSTATES
     !FEATURE_SD2SNES = 1       ; Set this to enable savestate features
     incsrc macros.asm
     incsrc defines.asm
+    incsrc freespace.asm
     incsrc tinystates.asm
 else
     print "SD2SNES AND TINYSTATES DISABLED"
     incsrc macros.asm
     incsrc defines.asm
+    incsrc freespace.asm
 endif
 endif
 
 incsrc gamemode.asm
 incsrc minimap.asm
 incsrc menu.asm
+incsrc BRBmenu.asm
 incsrc roomnames.asm
 incsrc clearenemies.asm
 incsrc demos.asm
 incsrc infohud.asm
-incsrc rng.asm
+incsrc enemy_rng.asm
 incsrc custompresets.asm
 incsrc presets.asm
 incsrc damage.asm
@@ -106,4 +115,6 @@ endif
 ; Make sure the ROM expands to 4MB
 org $FFFFFF : db $FF
 
+%printfreespace()
 print "Assembly complete. Total bytes written: ", bytes
+

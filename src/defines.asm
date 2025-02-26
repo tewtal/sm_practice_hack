@@ -61,10 +61,8 @@
 !ram_magic_pants_pal3               = !WRAM_START+$40
 
 !ram_room_has_set_rng               = !WRAM_START+$42
-
-!ram_watch_left_hud                 = !WRAM_START+$44
-!ram_watch_right_hud                = !WRAM_START+$46
-
+!ram_HUD_top                        = !WRAM_START+$44
+!ram_HUD_middle                     = !WRAM_START+$46
 !ram_HUD_check                      = !WRAM_START+$48
 !ram_roomstrat_counter              = !WRAM_START+$4A
 !ram_roomstrat_state                = !WRAM_START+$4C
@@ -78,24 +76,44 @@
 !ram_kraid_adjust_timer             = !WRAM_START+$5A
 !ram_print_segment_timer            = !WRAM_START+$5C
 !ram_activated_shine_duration       = !WRAM_START+$5E
+!ram_watch_left_hud                 = !WRAM_START+$60
+!ram_watch_right_hud                = !WRAM_START+$62
 
 ; ^ FREE SPACE ^ up to +$6C
 
 ; ----------------------------------------------------------
-; Shinetune uses several variables not used by other modes,
-; but also shinetune does not use many other variables,
+; A few room strats like shinetune use several variables
+; that are not used by other modes,
+; but also they do not need many other variables,
 ; so the following variables share the same WRAM
 
 !ram_xpos                           = !WRAM_START+$6E
 !ram_ypos                           = !WRAM_START+$70
 !ram_subpixel_pos                   = !WRAM_START+$72
-!ram_horizontal_speed               = !WRAM_START+$74
-!ram_vertical_speed                 = !WRAM_START+$76
+!ram_HUD_top_counter                = !WRAM_START+$74
+!ram_HUD_middle_counter             = !WRAM_START+$76
 !ram_quickdrop_counter              = !WRAM_START+$78
 !ram_walljump_counter               = !WRAM_START+$7A
 !ram_fail_sum                       = !WRAM_START+$7C
 !ram_fail_count                     = !WRAM_START+$7E
 
+; Kihunter manip
+!ram_enemy0_last_xpos               = !WRAM_START+$6E
+!ram_enemy0_last_ypos               = !WRAM_START+$70
+!ram_enemy4_last_xpos               = !WRAM_START+$72
+!ram_enemy4_last_ypos               = !WRAM_START+$74
+!ram_enemy6_last_xpos               = !WRAM_START+$76
+!ram_enemy6_last_ypos               = !WRAM_START+$78
+!ram_enemy8_last_xpos               = !WRAM_START+$7A
+!ram_enemy8_last_ypos               = !WRAM_START+$7C
+
+; Kraid radar (reuses above ram_enemy6 variables)
+!ram_radar6                         = !WRAM_START+$6E
+!ram_radar7                         = !WRAM_START+$70
+!ram_enemy7_last_xpos               = !WRAM_START+$7A
+!ram_enemy7_last_ypos               = !WRAM_START+$7C
+
+; Shinetune
 !ram_shine_dash_held_late           = !WRAM_START+$6E
 !ram_shinetune_early_1              = !WRAM_START+$70
 !ram_shinetune_late_1               = !WRAM_START+$72
@@ -169,8 +187,9 @@
 !ram_itempickups_hidden             = !WRAM_PERSIST_START+$62
 !ram_frames_held                    = !WRAM_PERSIST_START+$64
 !ram_baby_rng                       = !WRAM_PERSIST_START+$66
+!ram_turret_rng                     = !WRAM_PERSIST_START+$68
 
-!ram_quickboot_spc_state            = !WRAM_PERSIST_START+$68
+!ram_quickboot_spc_state            = !WRAM_PERSIST_START+$6A
     ; 0: SPC load completed/not requested
     ; 1: SPC load requested
     ; ROM address: routine to perform next initialization step
@@ -241,6 +260,8 @@
 !ram_cm_palette_numseloutline = !WRAM_MENU_START+$70
 !ram_cm_palette_numsel = !WRAM_MENU_START+$72
 
+!ram_infidoppler_active = !WRAM_START+$74
+
 ; ^ FREE SPACE ^ up to +$76
 
 !ram_cm_preserved_timers = !WRAM_MENU_START+$78 ; 8 bytes
@@ -269,6 +290,7 @@
 
 !ram_cm_phan_first_phase = !WRAM_MENU_START+$80
 !ram_cm_phan_second_phase = !WRAM_MENU_START+$82
+!ram_cm_turret_rng = !WRAM_MENU_START+$84
 
 !ram_cm_varia = !WRAM_MENU_START+$80
 !ram_cm_gravity = !WRAM_MENU_START+$82
@@ -298,6 +320,23 @@
 !ram_cm_dummy_on = !WRAM_MENU_START+$8A
 !ram_cm_dummy_off = !WRAM_MENU_START+$8C
 !ram_cm_dummy_num = !WRAM_MENU_START+$8E
+
+!ram_cm_brb = !WRAM_MENU_START+$80
+!ram_cm_brb_timer = !WRAM_MENU_START+$82
+!ram_cm_brb_frames = !WRAM_MENU_START+$84
+!ram_cm_brb_secs = !WRAM_MENU_START+$86
+!ram_cm_brb_mins = !WRAM_MENU_START+$88
+!ram_cm_brb_screen = !WRAM_MENU_START+$8A
+!ram_cm_brb_timer_mode = !WRAM_MENU_START+$8C
+!ram_cm_brb_scroll = !WRAM_MENU_START+$8E
+!ram_cm_brb_scroll_X = !WRAM_MENU_START+$90
+!ram_cm_brb_scroll_Y = !WRAM_MENU_START+$92
+!ram_cm_brb_scroll_H = !WRAM_MENU_START+$94
+!ram_cm_brb_scroll_V = !WRAM_MENU_START+$96
+!ram_cm_brb_scroll_timer = !WRAM_MENU_START+$98
+!ram_cm_brb_palette = !WRAM_MENU_START+$9A
+!ram_cm_brb_set_cycle = !WRAM_MENU_START+$9C
+!ram_cm_brb_cycle_time = !WRAM_MENU_START+$9E
 
 !ram_cm_keyboard_buffer = !WRAM_MENU_START+$80 ; $18 bytes
 
@@ -349,11 +388,50 @@
 !ram_crash_input_timer = !CRASHDUMP+$66
 
 
+; -----------
+; Bank 7F RAM
+; -----------
+
+; NOTE: Be careful with using Bank 7F RAM,
+;       since the game may not clean this RAM up
+;       and the out of bounds blocks depend on this RAM,
+;       so if we make a mess not cleaned up by the vanilla game
+;       then we won't be accurate to the vanilla game anymore
+
+!LEVEL_DATA_SIZE = $7F0000
+!LEVEL_DATA = $7F0002
+
+; Temporary stack written here since level data will be initialized afterwards
+!CATEGORY_PRESET_STACK = !LEVEL_DATA
+
+!END_OF_SINGLE_SCROLL_ROOM_LEVEL_DATA = $7F0202
+
+; Phantoon infidoppler can use the next $200 of RAM,
+; since the room outside phantoon's room is larger and will overwrite this data,
+; so the only way this could have some impact is you went OOB
+; either from Phantoon's room or after teleporting to another single scroll room,
+; and then fell a long ways out of bounds
+
+; An array of 5 words, one per projectile, representing
+; the distance Samus travelled horizontally before firing.
+; The low byte of each word is integer pixels,
+; and the high byte is fractional pixels.
+; Yes, that sounds weird, but the math is a little easier.
+!ram_infidoppler_offsets         = !END_OF_SINGLE_SCROLL_ROOM_LEVEL_DATA ; array of 5 words
+!ram_infidoppler_x               = !END_OF_SINGLE_SCROLL_ROOM_LEVEL_DATA+$10
+!ram_infidoppler_subx            = !END_OF_SINGLE_SCROLL_ROOM_LEVEL_DATA+$12
+!ram_infidoppler_y               = !END_OF_SINGLE_SCROLL_ROOM_LEVEL_DATA+$14
+!ram_infidoppler_suby            = !END_OF_SINGLE_SCROLL_ROOM_LEVEL_DATA+$16
+
+; Do not use RAM for variables at or beyond this point
+!LEVEL_BTS = $7F6402
+
+
 ; -----
 ; SRAM
 ; -----
 
-!SRAM_VERSION = #$0017
+!SRAM_VERSION = #$0018
 
 !SRAM_START = $702000
 !PRESET_SLOTS = $703000
@@ -375,8 +453,7 @@
 !sram_ctrl_dec_custom_preset = !SRAM_START+$1A
 !sram_ctrl_toggle_tileviewer = !SRAM_START+$1C
 !sram_ctrl_update_timers = !SRAM_START+$1E
-!sram_ctrl_auto_save_state = !SRAM_START+$F0 ; note the change of order
-!sram_ctrl_toggle_spin_lock = !SRAM_START+$F2
+; More ctrl shortcuts starting at $F0
 
 !sram_artificial_lag = !SRAM_START+$20
 !sram_rerandomize = !SRAM_START+$22
@@ -439,8 +516,18 @@
 !sram_cm_font = !SRAM_START+$8C
 !sram_spin_lock = !SRAM_START+$8E
 !sram_map_grid_alignment = !SRAM_START+$90
+!sram_number_gfx_choice = !SRAM_START+$92
+!sram_superhud_bottom = !SRAM_START+$94
+!sram_superhud_middle = !SRAM_START+$96
+!sram_superhud_top = !SRAM_START+$98
+!sram_infidoppler_enabled = !SRAM_START+$9A
 
 ; ^ FREE SPACE ^ up to +$EE
+
+!sram_ctrl_auto_save_state = !SRAM_START+$F0
+!sram_ctrl_toggle_spin_lock = !SRAM_START+$F2
+
+; ^ FREE SPACE ^ up to +$FE
 
 !sram_presetequiprando = !SRAM_START+$100
 !sram_presetequiprando_beampref = !SRAM_START+$102
@@ -478,6 +565,8 @@
 !KB_DEL1 = $9C
 !KB_DEL2 = $9D
 
+!BRB_METROID = #$287F
+!BRB_HEART = #$2899
 !MENU_CLEAR = #$000E
 !MENU_BLANK = #$281F
 !MENU_SLASH = #$287F
@@ -504,10 +593,26 @@
 !IH_LETTER_X = #$0C66
 !IH_LETTER_Y = #$0C67
 !IH_NUMBER_ZERO = #$0C09
+!IH_NUMBER_ZERO_YELLOW = #$2009
 !IH_ARROW_LEFT = #$0C60
+!IH_ARROW_LEFT_GREY = #$1460
+!IH_ARROW_LEFT_PINK_OUTLINE = #$0860
+!IH_ARROW_LEFT_RED = #$1C60
 !IH_ARROW_UP = #$0C61
+!IH_ARROW_UP_GREY = #$1461
+!IH_ARROW_UP_PINK_OUTLINE = #$0861
+!IH_ARROW_UP_RED = #$1C61
 !IH_ARROW_RIGHT = #$0C62
+!IH_ARROW_RIGHT_GREY = #$1462
+!IH_ARROW_RIGHT_PINK_OUTLINE = #$0862
+!IH_ARROW_RIGHT_RED = #$1C62
 !IH_ARROW_DOWN = #$0C63
+!IH_ARROW_DOWN_GREY = #$1463
+!IH_ARROW_DOWN_PINK_OUTLINE = #$0863
+!IH_ARROW_DOWN_RED = #$1C63
+!IH_MORPH_BALL_YELLOW = #$00C9
+!IH_MORPH_BALL_GREEN = #$10C9
+!IH_STUCK_GREEN = #$106B
 
 !IH_PAUSE = #$0100 ; right
 !IH_SLOWDOWN = #$0400 ; down
@@ -561,6 +666,8 @@
 !REG_210E_BG1_Y = $B3
 !REG_210F_BG2_X = $B5
 !REG_2110_BG2_Y = $B7
+!REG_2111_BG3_X = $B9
+!REG_2112_BG3_Y = $BB
 
 !VRAM_WRITE_STACK_POINTER = $0330
 !OAM_LOW = $0370
@@ -745,9 +852,12 @@
 !SAMUS_X_SUBMOMENTUM = $0B48
 !SAMUS_PROJ_X = $0B64
 !SAMUS_PROJ_Y = $0B78
+!SAMUS_PROJ_X_SUBPX = $0B8C
+!SAMUS_PROJ_Y_SUBPX = $0BA0
 !SAMUS_PROJ_RADIUS_X = $0BB4
 !SAMUS_PROJ_RADIUS_Y = $0BC8
 !SAMUS_PROJ_PROPERTIES = $0C18
+!SAMUS_PROJ_DAMAGE = $0C2C
 !SAMUS_COOLDOWN = $0CCC
 !SAMUS_PROJECTILE_TIMER = $0CCE
 !SAMUS_CHARGE_TIMER = $0CD0
@@ -834,11 +944,6 @@
 !MAP_DATA_EXPLORED_COMPRESSED = $7ED91C
 !MAP_STATION_FLAGS = $7ED908
 !LOADING_GAME_STATE = $7ED914
-
-!LEVEL_DATA_SIZE = $7F0000
-!LEVEL_DATA = $7F0002
-!LEVEL_BTS = $7F6402
-!CATEGORY_PRESET_STACK = !LEVEL_DATA ; Temporary stack written here since level data will be initialized afterwards
 
 !INPUT_BIND_UP = $7E09AA
 !INPUT_BIND_DOWN = $7E09AC
@@ -1090,4 +1195,5 @@ endif
 !PROFILE_PapaSchmo    = #$0019
 !PROFILE_Vespher      = #$001A
 !PROFILE_EXAKT        = #$001B
+!PROFILE_COUNT        = #$001C
 

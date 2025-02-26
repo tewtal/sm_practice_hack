@@ -3,6 +3,33 @@
 ; Phantoon hijacks
 ; ----------------
 
+org $8699EB
+    ; Phantoon flame direction
+    JSL hook_phantoon_flame_direction
+    BRA $05
+
+if !FEATURE_PAL
+org $A7D00A
+else    ; Phantoon flame pattern
+org $A7CFD6
+endif
+    JSL hook_phantoon_flame_pattern
+
+if !FEATURE_PAL
+org $A7D098
+else    ; Phantoon eye close timer
+org $A7D064
+endif
+    JSL hook_phantoon_eyeclose
+
+if !FEATURE_PAL
+org $A7D0B0
+else    ; 2nd pattern
+org $A7D07C
+endif
+    JSL hook_phantoon_2nd_rng
+    BRA $0F
+
 if !FEATURE_PAL
 org $A7D4DD
 else    ; Phantoon Intro
@@ -20,31 +47,11 @@ endif
     BRA $10
 
 if !FEATURE_PAL
-org $A7D0B0
-else    ; 2nd pattern
-org $A7D07C
+org $A7D6B9
+else
+org $A7D685
 endif
-    JSL hook_phantoon_2nd_rng
-    BRA $0F
-
-if !FEATURE_PAL
-org $A7D098
-else    ; Phantoon eye close timer
-org $A7D064
-endif
-    JSL hook_phantoon_eyeclose
-
-if !FEATURE_PAL
-org $A7D00A
-else    ; Phantoon flame pattern
-org $A7CFD6
-endif
-    JSL hook_phantoon_flame_pattern
-
-    ; Phantoon flame direction
-org $8699EB
-    JSL hook_phantoon_flame_direction
-    BRA $05
+    JML infidoppler_hook_phantoon_swoop_end
 
 if !FEATURE_PAL
 org $A7DDB3
@@ -52,6 +59,21 @@ else
 org $A7DD7F
 endif
     JMP phantoon_damage_palette
+
+; Adjust Phantoon to look at adjusted projectile damage instead of absolute difference in health
+if !FEATURE_PAL
+org $A7DE2F
+else
+org $A7DDFB
+endif
+    LDA $187A
+
+if !FEATURE_PAL
+org $A7DE99
+else
+org $A7DE65
+endif
+    LDA $187A
 
 
 ; --------------
@@ -79,11 +101,13 @@ endif
 ; ---------------
 
 if !FEATURE_PAL
-org $A58AEC
+org $A587C2
 else
-org $A58ADC
+org $A587B2
 endif
-    JSR hook_draygon_rng_left
+    LDA !ram_turret_rng : TAX
+    JSL $808111 : AND #$0003
+    JMP (hook_turret_rng_table,X)
 
 if !FEATURE_PAL
 org $A589AD
@@ -91,6 +115,13 @@ else
 org $A5899D
 endif
     JSR hook_draygon_rng_right
+
+if !FEATURE_PAL
+org $A58AEC
+else
+org $A58ADC
+endif
+    JSR hook_draygon_rng_left
 
 if !FEATURE_PAL
 org $A5956B
@@ -232,8 +263,7 @@ endif
 ; Hooks
 ; -----
 
-org $83AE00
-print pc, " rng start"
+%startfree(83)
 
 MenuRNG:
 ; Generates new random number
@@ -595,12 +625,10 @@ hook_botwoon_spit:
     JML $808111
 }
 
-print pc, " rng end"
-warnpc $83B000 ; custompresets.asm
+%endfree(83)
 
 
-org $A4F700
-print pc, " crocomire rng start"
+%startfree(A4)
 
 hook_crocomire_rng:
 {
@@ -633,15 +661,254 @@ hook_crocomire_damage:
     RTS
 }
 
-print pc, " crocomire rng end"
+%endfree(A4)
 
 
-org $A5FA00
-print pc, " draygon rng start"
+%startfree(A5)
 
-hook_draygon_rng_left:
+turret_x_positions:
+    dw $0034, $01CC, $01CC, $01BC
+
+turret_y_positions:
+    dw $012F, $0101, $015E, $0188
+
+hook_turret_rng_table:
+    dw turret_rng_vanilla
+    dw turret_rng_reroll
+    dw turret_rng_aggressive
+    dw turret_rng_upper_left
+    dw turret_rng_lower_left
+    dw turret_rng_upper_right
+    dw turret_rng_lower_right
+    dw turret_rng_left
+    dw turret_rng_right
+    dw turret_rng_upper
+    dw turret_rng_lower
+    dw turret_rng_not_upper_left
+    dw turret_rng_not_lower_left
+    dw turret_rng_not_upper_right
+    dw turret_rng_not_lower_right
+
+turret_rng_upper:
 {
-    LDA !ram_draygon_rng_left : BEQ .no_manip
+    BIT #$0002 : BEQ turret_rng_upper_right
+    ; Fallthrough to turret_rng_upper_left
+}
+
+turret_rng_upper_left:
+{
+    LDX #$0006
+    BRA turret_rng_vanilla_check_alive
+}
+
+turret_rng_left:
+{
+    BIT #$0002 : BNE turret_rng_upper_left
+    ; Fallthrough to turret_rng_lower_left
+}
+
+turret_rng_lower_left:
+{
+    LDX #$0000
+    BRA turret_rng_vanilla_check_alive
+}
+
+turret_rng_right:
+{
+    BIT #$0002 : BNE turret_rng_lower_right
+    ; Fallthrough to turret_rng_upper_right
+}
+
+turret_rng_upper_right:
+{
+    LDX #$0002
+    BRA turret_rng_vanilla_check_alive
+}
+
+turret_rng_lower:
+{
+    BIT #$0002 : BEQ turret_rng_lower_left
+    ; Fallthrough to turret_rng_lower_right
+}
+
+turret_rng_lower_right:
+{
+    LDX #$0004
+    BRA turret_rng_vanilla_check_alive
+}
+
+turret_rng_vanilla:
+{
+    ASL : TAX
+  .check_alive
+    LDA $7E8804,X : BNE .done
+    LDA.w turret_x_positions,X : STA $12
+    LDA.w turret_y_positions,X : STA $14
+    LDY #$8E5E
+    LDA #$0003
+    JSL $868027
+  .done
+    RTS
+}
+
+turret_rng_not_upper_left:
+{
+    LDX #$0003 : STX $12
+    BRA turret_rng_not
+}
+
+turret_rng_not_lower_left:
+{
+    LDX #$0000 : STX $12
+    BRA turret_rng_not
+}
+
+turret_rng_not_upper_right:
+{
+    LDX #$0001 : STX $12
+    BRA turret_rng_not
+}
+
+turret_rng_not_lower_right:
+{
+    LDX #$0002 : STX $12
+    BRA turret_rng_not
+}
+
+turret_rng_not:
+{
+    CMP $12 : BNE turret_rng_vanilla
+    LDA !CACHED_RANDOM_NUMBER
+    LSR : LSR : STA $14 : AND #$0003
+    CMP $12 : BNE turret_rng_vanilla
+    LDA $14 : LSR : LSR : STA $14 : AND #$0003
+    CMP $12 : BNE turret_rng_vanilla
+    LDA $14 : LSR : LSR : STA $14 : AND #$0003
+    CMP $12 : BNE turret_rng_vanilla
+    LDA $14 : LSR : LSR : STA $14 : AND #$0003
+    CMP $12 : BNE turret_rng_vanilla
+    LDA $14 : LSR : LSR : STA $14 : AND #$0003
+    CMP $12 : BNE turret_rng_vanilla
+    JSL $808111 : AND #$0003
+    BRA turret_rng_not
+}
+
+turret_rng_aggressive:
+{
+    LDA $7E8804 : ASL
+    ORA $7E8806 : ASL
+    ORA $7E8808 : ASL
+    TAX : JMP (turret_rng_aggressive_table,X)
+}
+
+turret_rng_aggressive_table:
+    dw turret_rng_all_alive
+    dw turret_rng_lower_right_dead
+    dw turret_rng_upper_right_dead
+    dw turret_rng_lower_left_alive
+    dw turret_rng_lower_left_dead
+    dw turret_rng_upper_right_alive
+    dw turret_rng_lower_right_alive
+    dw turret_rng_vanilla_done ; all turrets dead
+
+turret_rng_all_alive:
+{
+    LDA !CACHED_RANDOM_NUMBER : AND #$0003
+  .loop
+    CMP #$0003 : BNE turret_rng_all_alive_option_picked
+    LDA !CACHED_RANDOM_NUMBER
+    LSR : LSR : STA $14 : AND #$0003
+    CMP #$0003 : BNE turret_rng_all_alive_option_picked
+    LDA $14 : LSR : LSR : STA $14 : AND #$0003
+    CMP #$0003 : BNE turret_rng_all_alive_option_picked
+    LDA $14 : LSR : LSR : STA $14 : AND #$0003
+    CMP #$0003 : BNE turret_rng_all_alive_option_picked
+    LDA $14 : LSR : LSR : STA $14 : AND #$0003
+    CMP #$0003 : BNE turret_rng_all_alive_option_picked
+    LDA $14 : LSR : LSR : STA $14 : AND #$0003
+    CMP #$0003 : BNE turret_rng_all_alive_option_picked
+    JSL $808111 : AND #$0003
+    BRA .loop
+}
+
+turret_rng_all_alive_option_picked:
+{
+    ASL : TAX
+    ; Fallthrough to next routine
+}
+
+turret_rng_skip_alive_check:
+{
+    LDA.w turret_x_positions,X : STA $12
+    LDA.w turret_y_positions,X : STA $14
+    LDY #$8E5E
+    LDA #$0003
+    JSL $868027
+  .done
+    RTS
+}
+
+turret_rng_lower_right_dead:
+{
+    LDA !CACHED_RANDOM_NUMBER
+    BIT #$0002 : BNE turret_rng_upper_right_alive
+    ; Fallthrough to turret_rng_lower_left_alive
+}
+
+turret_rng_lower_left_alive:
+{
+    LDX #$0000
+    BRA turret_rng_skip_alive_check
+}
+
+turret_rng_lower_left_dead:
+{
+    LDA !CACHED_RANDOM_NUMBER
+    BIT #$0002 : BNE turret_rng_lower_right_alive
+    ; Fallthrough to turret_rng_upper_right_alive
+}
+
+turret_rng_upper_right_alive:
+{
+    LDX #$0002
+    BRA turret_rng_skip_alive_check
+}
+
+turret_rng_upper_right_dead:
+{
+    LDA !CACHED_RANDOM_NUMBER
+    BIT #$0002 : BEQ turret_rng_lower_left_alive
+    ; Fallthrough to turret_rng_lower_right_alive
+}
+
+turret_rng_lower_right_alive:
+{
+    LDX #$0004
+    BRA turret_rng_skip_alive_check
+}
+
+turret_rng_reroll:
+{
+    ASL : TAX
+    LDA $7E8804,X : BNE .reroll
+  .spawn
+    LDA.w turret_x_positions,X : STA $12
+    LDA.w turret_y_positions,X : STA $14
+    LDY #$8E5E
+    LDA #$0003
+    JSL $868027
+    RTS
+
+  .reroll
+    LDA !CACHED_RANDOM_NUMBER : LSR
+    AND #$0006 : TAX
+    LDA $7E8804,X : BEQ .spawn
+    RTS
+}
+
+hook_draygon_rng_right:
+{
+    LDA !ram_draygon_rng_right : BEQ .no_manip
     DEC    ; return with 1-swoop or 0-goop
     RTS
 
@@ -650,9 +917,9 @@ hook_draygon_rng_left:
     RTS
 }
 
-hook_draygon_rng_right:
+hook_draygon_rng_left:
 {
-    LDA !ram_draygon_rng_right : BEQ .no_manip
+    LDA !ram_draygon_rng_left : BEQ .no_manip
     DEC    ; return with 1-swoop or 0-goop
     RTS
 
@@ -680,7 +947,7 @@ endif
     RTS
 }
 
-print pc, " draygon rng end"
+%endfree(A5)
 
 
 ; This is actually for preset support instead of RNG
@@ -732,8 +999,7 @@ endif
     LDA $7ED82E
 
 
-org $A6FEC0
-print pc, " ridley rng start"
+%startfree(A6)
 
 ridley_init_hook:
 {
@@ -817,11 +1083,10 @@ else
     dw $80ED, $F598
 endif
 
-print pc, " ridley rng end"
+%endfree(A6)
 
 
-org $A7FFB6
-print pc, " kraid rng start"
+%startfree(A7)
 
 phantoon_damage_palette:
 {
@@ -890,11 +1155,10 @@ endif
     RTS
 }
 
-print pc, " kraid rng end"
+%endfree(A7)
 
 
-org $A9FFE0
-print pc, " baby rng start"
+%startfree(A9)
 
 hook_baby_skip_rng:
 {
@@ -919,4 +1183,5 @@ else
 endif
 }
 
-print pc, " baby rng end"
+%endfree(A9)
+

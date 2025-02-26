@@ -33,6 +33,17 @@ org $80AE29      ; fix for scroll offset misalignment
 org $828B4B      ; optional debug functions
     JML ih_debug_routine
 
+org $90BEBF
+    JML infidoppler_hook_fire_missile
+
+if !FEATURE_PAL
+org $A09CD8
+else
+org $A09CC8
+endif
+    JSL infidoppler_hook_projectile_collision
+    NOP : NOP
+
 if !FEATURE_VANILLAHUD
 ; skip the rest of the hijacks if Vanilla HUD build
 else
@@ -206,8 +217,7 @@ endif ; !FEATURE_VANILLAHUD
 
 
 ; Main bank stuff
-org $F08000
-print pc, " infohud start"
+%startfree(F0)
 
 ; List this first since it affects bank $84 where we are trying to minimize change
 ih_get_item_code:
@@ -505,7 +515,7 @@ ih_before_room_transition:
     dw status_door_vspeed
     dw status_chargetimer
     dw status_shinetimer
-    dw status_dashcounter
+    dw status_door_dashcounter
     dw status_door_xpos
     dw status_door_ypos
 }
@@ -1089,7 +1099,13 @@ endif
 
     ; Status Icons
   .statusIcons
-    LDA !sram_status_icons : BNE .checkHealthBomb
+    LDA !sram_status_icons : BNE .checkSuperHUD
+    RTL
+
+    ; Super HUD
+  .checkSuperHUD
+    LDA !sram_display_mode : CMP !IH_MODE_ROOMSTRAT_INDEX : BNE .checkHealthBomb
+    LDA !sram_room_strat : BNE .checkHealthBomb
     RTL
 
     ; health bomb
@@ -1629,7 +1645,8 @@ else
     STA !ram_enemy_hp : STA !ram_mb_hp
     STA !ram_dash_counter : STA !ram_shine_counter
     STA !ram_xpos : STA !ram_ypos : STA !ram_subpixel_pos
-    STA !ram_horizontal_speed : STA !ram_vertical_speed
+    LDA !ram_seed_X : LSR : STA !ram_HUD_top : STA !ram_HUD_middle
+    STA !ram_HUD_top_counter : STA !ram_HUD_middle_counter
 
     JML $808111 ; overwritten code + return
 endif ; !FEATURE_VANILLAHUD
@@ -1815,17 +1832,197 @@ ih_adjust_realtime:
     RTL
 }
 
-; Placeholder for future support
+NumberGFXChoice:
+incbin ../resources/num_gfx_choice.bin
+
 overwrite_HUD_numbers:
+{
+    ; runs after cm_transfer_original_tileset
+    LDA !sram_number_gfx_choice : BNE .custom
     RTL
 
-print pc, " infohud end"
-warnpc $F0E000 ; spritefeat.asm
+  .custom
+    PHP : %ai16()
+    PHB : PEA $0000 : PLB : PLB
+    ; multiply by 100h and add to addr
+    LDA !sram_number_gfx_choice : XBA : CLC : ADC.w #NumberGFXChoice : TAY
+    %a8()
+
+    ; DMA tiles 1-9, 0
+    LDA #$80 : STA $2115 ; word access, inc by 1
+    LDX #$4000 : STX $2116 ; VRAM addr ($4000 x 2 = $8000)
+    STY $4302 ; src addr
+    LDA.b #NumberGFXChoice>>16 : STA $4304 ; src bank
+    LDX #$00A0 : STX $4305 ; size
+    LDA #$01 : STA $4300 ; word, normal increment (DMA MODE)
+    LDA #$18 : STA $4301 ; destination (VRAM write)
+    LDA #$01 : STA $420B ; initiate DMA (channel 1)
+
+    ; fix src addr in Y
+    %a16()
+    TYA : CLC : ADC #$00A0 : TAY
+    %a8()
+
+    ; DMA tiles A-B
+    LDX #$43B0 : STX $2116 ; VRAM addr ($43B0 x 2 = $8760)
+    STY $4302 ; src addr
+    LDA.b #NumberGFXChoice>>16 : STA $4304 ; src bank
+    LDX #$0020 : STX $4305 ; size
+    LDA #$01 : STA $4300 ; word, normal increment (DMA MODE)
+    LDA #$18 : STA $4301 ; destination (VRAM write)
+    LDA #$01 : STA $420B ; initiate DMA (channel 1)
+
+    ; fix src addr in Y again
+    %a16()
+    TYA : CLC : ADC #$0020 : TAY
+    %a8()
+
+    ; DMA tiles C-F
+    LDX #$42C0 : STX $2116 ; VRAM addr ($42C0 x 2 = $8580)
+    STY $4302 ; src addr
+    LDA.b #NumberGFXChoice>>16 : STA $4304 ; src bank
+    LDX #$0040 : STX $4305 ; size
+    LDA #$01 : STA $4300 ; word, normal increment (DMA MODE)
+    LDA #$18 : STA $4301 ; destination (VRAM write)
+    LDA #$01 : STA $420B ; initiate DMA (channel 1)
+
+    PLB : PLP
+    RTL
+}
+
+; Infidoppler routines.
+;
+; When Samus fires a missile during a Phantoon swoop, record her position.
+; Each successive time she fires a missile, teleport her back to the initial
+; position. Each time a missile hits, teleport it back by the amount Samus
+; moved before firing it, and allow it to hit again. This way, Phantoon's
+; cooldowns behave as if we were dopplering, but we never run out of room.
+infidoppler_hook_fire_missile:
+{
+    ; Is infidoppler active?
+    LDA !ram_infidoppler_active : BEQ .done
+
+    ; Are we in phantoon's room?
+    LDA !ROOM_ID : CMP.w #ROOM_PhantoonRoom : BEQ .active
+
+    TDC : STA !ram_infidoppler_active
+    BRA .done
+
+  .active
+    LDX $14     ; projectile index
+    SEC
+
+    LDA !SAMUS_X_SUBPX : SBC !ram_infidoppler_subx
+    AND #$FF00 : STA !ram_infidoppler_offsets,X
+    LDA !SAMUS_X : SBC !ram_infidoppler_x
+    AND #$00FF : ORA !ram_infidoppler_offsets,X : STA !ram_infidoppler_offsets,X
+
+    LDA !ram_infidoppler_x : STA !SAMUS_X
+    LDA !ram_infidoppler_subx : STA !SAMUS_X_SUBPX
+
+    LDA !ram_infidoppler_y : STA !SAMUS_Y
+    LDA !ram_infidoppler_suby : STA !SAMUS_Y_SUBPX
+
+  .done
+    DEC !SAMUS_MISSILES
+    JML $90BEC7
+}
+
+infidoppler_hook_projectile_collision:
+{
+    ; Is infidoppler enabled?
+    LDA !sram_infidoppler_enabled : BNE .check
+
+  .no
+    ; Vanilla logic
+    LDA !SAMUS_PROJ_PROPERTIES,Y
+    BIT #$0008
+    RTL
+
+  .disable
+    TDC : STA !ram_infidoppler_active
+    BRA .no
+
+  .check
+    ; Are we in phantoon's room?
+    LDA !ROOM_ID : CMP.w #ROOM_PhantoonRoom : BNE .disable
+
+    ; Is infidoppler already active?
+    LDA !ram_infidoppler_active : BNE .active
+
+    LDA !SAMUS_PROJ_PROPERTIES,Y
+    AND #$0F00 : CMP #$0100 : BNE .no ; Is this a missile?
+    CPX #$0000 : BNE .no              ; Is this phantoon?
+
+    ; Is phantoon in a swoop?
+if !FEATURE_PAL
+    LDA !ENEMY_VAR_5 : CMP #$D6AC : BNE .no
+else
+    LDA !ENEMY_VAR_5 : CMP #$D678 : BNE .no
+endif
+
+    ; Stop infidoppler if health is 100 or less
+    LDA !ENEMY_HP : CMP #$0065 : BCC .disable
+
+    ; Initialize infidoppler
+    LDA #$FFFF : STA !ram_infidoppler_active
+    LDA !SAMUS_X : STA !ram_infidoppler_x
+    LDA !SAMUS_X_SUBPX : STA !ram_infidoppler_subx
+    LDA !SAMUS_Y : STA !ram_infidoppler_y
+    LDA !SAMUS_Y_SUBPX : STA !ram_infidoppler_suby
+
+    BRA .no
+
+  .active
+    TYX
+
+    ; We've shot Phantoon with a missile in infidoppler mode.
+    ; if projectile variable is 0, this missile has already hit
+    LDA !ram_infidoppler_offsets,X
+    BEQ .done
+
+    ; Stop infidoppler if health is 100 or less
+    LDA !ENEMY_HP : CMP #$0065 : BCC .disable
+
+    ; Subtract projectile variable from missile position
+    ; the LOW 8 bits are pixels, the HIGH 8 bits are fractional
+    ; yes, it's weird. but it saves a couple XBAs
+    LDA !ram_infidoppler_offsets,X : PHA : AND #$FF00 : SEC
+    EOR #$FFFF : ADC !SAMUS_PROJ_X_SUBPX,Y : STA !SAMUS_PROJ_X_SUBPX,Y
+    PLA : AND #$00FF
+    EOR #$FFFF : ADC !SAMUS_PROJ_X,Y : STA !SAMUS_PROJ_X,Y
+
+    ; halve damage, since it will double hit
+    LSR !SAMUS_PROJ_DAMAGE,X
+    TDC : STA !ram_infidoppler_offsets,X
+    TAX : INC
+
+  .done
+    ; if zero flag is set, the projectile despawns
+    RTL
+}
+
+infidoppler_hook_phantoon_swoop_end:
+{
+    TDC : STA !ram_infidoppler_active
+
+    ; Hijacked code
+if !FEATURE_PAL
+    LDA #$D6ED
+    STA !ENEMY_VAR_5,X
+    JML $A7D6BF
+else
+    LDA #$D6B9
+    STA !ENEMY_VAR_5,X
+    JML $A7D68B
+endif
+}
+
+%endfree(F0)
 
 
 ; Stuff that needs to be placed in bank 80
-org $80FD00
-print pc, " infohud bank80 start"
+%startfree(80)
 
 ; Used by room layout
 ih_set_picky_chozo_event_and_enemy_speed:
@@ -1943,6 +2140,5 @@ HexToNumberGFX2:
     dw #$0C09, #$0C00, #$0C01, #$0C02, #$0C03, #$0C04, #$0C05, #$0C06, #$0C07, #$0C08
     dw #$0C09, #$0C00, #$0C01, #$0C02, #$0C03, #$0C04, #$0C05, #$0C06, #$0C07, #$0C08
 
-print pc, " infohud bank80 end"
-warnpc $80FF80 ; cutscenes.asm door transition code
+%endfree(80)
 

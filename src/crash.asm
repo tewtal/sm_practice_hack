@@ -41,8 +41,7 @@ BRKHandlerHook:
     JML BRKHandler_setBank
 
 
-org $80E000
-print pc, " crash handler bank80 start"
+%startfree(80)
 
 ; This routine (or a bridge to it) must live in bank $80
 CrashHandler:
@@ -184,11 +183,9 @@ COPHandler:
     JMP CrashHandler_fixStack
 }
 
-print pc, " crash handler bank80 end"
-warnpc $80F000 ; presets.asm
+%endfree(80)
 
 pullpc
-print pc, " crash handler bank89 start"
 
 CrashViewer:
 {
@@ -196,7 +193,7 @@ CrashViewer:
     PHK : PLB
     %a8()
     STZ $420C
-    LDA #$80 : STA $2100  ; Force blank on, zero brightness
+    LDA #$80 : STA $002100  ; Force blank on, zero brightness
     LDA #$A1 : STA $4200  ; NMI, V-blank IRQ, and auto-joypad read on
     LDA #$09 : STA $2105  ; BG3 priority on, BG Mode 1
     LDA #$58 : STA $2109  ; BG3 address, 32x32 size
@@ -206,7 +203,7 @@ CrashViewer:
     LDA #$33 : STA $2131  ; Enable color math on backgrounds and OAM
     STZ $2111 : STZ $2111 ; BG3 X scroll, write twice
     STZ $2112 : STZ $2112 ; BG3 Y scroll, write twice
-    LDA #$0F : STA $2100  ; Force blank off, max brightness
+    LDA #$0F : STA $002100  ; Force blank off, max brightness
 
     %ai16()
     JSL crash_next_frame
@@ -954,7 +951,7 @@ crash_cgram_transfer:
 crash_toggle_bg:
 {
     %a8()
-    LDA #$80 : STA $2100 ; enable forced blanking
+    LDA #$80 : STA $002100 ; enable forced blanking
     LDA !ram_crash_bg : BEQ .enableBG
     ; disable BG1/2 and sprites on main/sub screen
     LDA #$04 : STA $212C : STA $212D
@@ -965,7 +962,7 @@ crash_toggle_bg:
     LDA #$17 : STA $212C : STA $212D
 
   .done
-    LDA #$0F : STA $2100 ; disable forced blanking
+    LDA #$0F : STA $002100 ; disable forced blanking
     LDA !ram_crash_bg : EOR #$01 : STA !ram_crash_bg
     %a16()
     RTS
@@ -1127,6 +1124,4 @@ endif
 CrashTextInfo11:
 ; Press LRSlSt to soft reset
     db "Press ", #$8D, #$8C, #$85, #$84, " to soft reset", #$FF
-
-print pc, " crash handler bank89 end"
 

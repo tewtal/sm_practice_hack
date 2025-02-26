@@ -1,7 +1,6 @@
 
 pushpc
-org $E4E000
-print pc, " menu customization start"
+%startfree(E4)
 
 ; ----------
 ; Audio Menu
@@ -280,12 +279,13 @@ CustomizeMenu:
     dw #mc_menubackground
     dw #mc_custompalettes_menu
     dw #mc_paletteprofile
-    dw #mc_palette2custom
+    dw #mc_palette_to_custom
     dw #mc_paletterando
     dw #$FFFF
     dw #mc_customsfx
     dw #$FFFF
     dw #mc_customfont
+    dw #mc_customnumber
     dw #$FFFF
     dw #mc_menuscroll_button
     dw #mc_menuscroll_delay
@@ -335,23 +335,23 @@ mc_paletteprofile:
     db #$28, "      EXAKT", #$FF
     db #$FF
 
-mc_palette2custom:
-    %cm_submenu("Copy Palette to Custom", #Palette2CustomConfirm)
+mc_palette_to_custom:
+    %cm_submenu("Copy Palette to Custom", #PaletteToCustomConfirm)
 
-Palette2CustomConfirm:
-    dw #palette2custom_abort
+PaletteToCustomConfirm:
+    dw #palette_to_custom_abort
     dw #$FFFF
-    dw #palette2custom_confirm
+    dw #palette_to_custom_confirm
     dw #$0000
     %cm_header("OVERWRITE CUSTOM PALETTES")
     %cm_footer("YOU WILL LOSE SAVED COLORS")
 
-palette2custom_abort:
+palette_to_custom_abort:
     %cm_jsl("ABORT", #.routine, #$0000)
   .routine
     JML cm_previous_menu
 
-palette2custom_confirm:
+palette_to_custom_confirm:
     %cm_jsl("Copy Palette to Custom", .routine, #$0000)
   .routine
     LDA !sram_custompalette_profile : BEQ .custom_selected
@@ -449,6 +449,100 @@ mc_customfont:
     %cm_numfield("Select Font", !sram_cm_font, 0, 1, 1, 1, .routine)
   .routine
     JML cm_transfer_custom_tileset
+
+mc_customnumber:
+    dw !ACTION_CHOICE
+    dl #!sram_number_gfx_choice
+    dw #.routine
+    db #$28, "HUD Number Font", #$FF
+    db #$28, "    DEFAULT", #$FF
+    db #$28, "       LTTP", #$FF
+    db #$28, "     KLONOA", #$FF
+    db #$28, "      TI-83", #$FF
+    db #$28, "  SHIN-CHAN", #$FF
+    db #$28, "        SMT", #$FF
+    db #$28, "        SMW", #$FF
+    db #$28, "        DKC", #$FF
+    db #$28, "       ZAMN", #$FF
+    db #$28, "    EMERALD", #$FF
+    db #$28, " EARTHBOUND", #$FF
+    db #$28, "       FFVI", #$FF
+    db #$28, "    LUFIA 2", #$FF
+    db #$28, "  GOONIES 2", #$FF
+    db #$28, "    PAC-MAN", #$FF
+    db #$28, "       DOOM", #$FF
+    db #$28, "  UNDERTALE", #$FF
+    db #$28, "        ???", #$FF
+    db #$28, "   SKYROADS", #$FF
+    db #$28, "    YOSHI'S", #$FF
+    db #$28, "     NOT-SM", #$FF
+    db #$28, "   TAZMANIA", #$FF
+    db #$28, " BLACK BASS", #$FF
+    db #$FF
+  .routine
+    ; check if already on submenu
+    LDA !DP_MenuIndices : CMP.w #NumberGFXMenu : BEQ .uploadGFX
+
+    ; don't increment address if A/X/Y pressed
+    LDA !IH_CONTROLLER_PRI_NEW : BIT #$40C0 : BEQ .submenu
+    LDA !sram_number_gfx_choice : DEC : STA !sram_number_gfx_choice
+
+  .submenu
+    ; upload new GFX first
+    JSL .uploadGFX
+    ; jump to submenu
+    LDY #NumberGFXMenu
+    JML action_submenu
+
+  .uploadGFX
+    ; wait for vertical blanking before uploading GFX
+    PHB : PEA $0000 : PLB : PLB
+    ; multiply by 100h and add to addr
+    LDA !sram_number_gfx_choice : XBA
+    CLC : ADC.w #NumberGFXChoice : TAY
+
+    JSL cm_wait_for_lag_frame
+    %a8()
+    ; DMA number GFX to second to last row ($E0-EF)
+    LDA #$80 : STA $2115 ; word access, inc by 1
+    LDX #$4700 : STX $2116 ; VRAM addr ($4700 x 2 = $8E00)
+    STY $4302 ; src addr
+    LDA.b #NumberGFXChoice>>16 : STA $4304 ; src bank
+    LDX #$0100 : STX $4305 ; size
+    LDA #$01 : STA $4300 ; word, normal increment (DMA MODE)
+    LDA #$18 : STA $4301 ; destination (VRAM write)
+    LDA #$01 : STA $420B ; initiate DMA (channel 1)
+    %a16()
+
+    PLB
+    RTL
+
+NumberGFXMenu:
+    dw mc_customnumber
+    dw #$FFFF
+    dw mc_numbergfx_display
+    dw #$0000
+    %cm_header("PREVIEW NUMBER GFX")
+
+mc_numbergfx_display:
+; manual cm_jsl for custom text
+  .dm_actionIndex
+    dw !ACTION_JSL
+  .dm_jsl
+    dw #.routine
+  .dm_arg
+    dw #$0000
+  .dm_text
+    db #$3C, "     "
+    db #$E9, #$E0, #$E1, #$E2, #$E3, #$E4, #$E5, #$E6
+    db #$E7, #$E8, #$EA, #$EB, #$EC, #$ED, #$EE, #$EF
+    db #$FF
+  .routine
+    ; set cursor back to first position
+    LDX !MENU_STACK_INDEX
+    TDC : STA !ram_cm_cursor_stack,X
+    %sfxfail()
+    RTL
 
 mc_customheader:
     %cm_jsl("Customize Menu Header", #.routine, #$0000)
@@ -700,6 +794,7 @@ PrepMenuPalette:
 {
     LDA !sram_custompalette_profile : BEQ .customPalette
 
+  .standard
     ; load palettes from profile table
     PHP : PHB
     %i8()
@@ -984,11 +1079,10 @@ ConvertNormal2Header:
     %norm2head("%")
 }
 
-print pc, " menu customization end"
+%endfree(E4)
 
 
-org $AEFD20
-print pc, " menu PaletteProfileTables start"
+%startfree(AE)
 
 ; These tables can live anywhere
 PaletteProfileTables:
@@ -1106,5 +1200,5 @@ EXAKTProfileTable:
     dw $2DC6, $5F65, $3A42, $18A1, $2982, $4F0A, $6F08, $4EC9, $18A1, $2DE6, $63CC
 }
 
-print pc, " menu PaletteProfileTables end"
+%endfree(AE)
 pullpc

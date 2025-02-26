@@ -38,8 +38,7 @@ macro sram_to_vram(vram_addr, size, sram_addr)
 endmacro
 
 
-org $80F500
-print pc, " save start"
+%startfree(80)
 
 ; These can be modified to do game-specific things before and after saving and loading
 ; Both A and X/Y are 16-bit here
@@ -415,5 +414,5 @@ vm:
     JMP ($0002,X)
 }
 
-print pc, " save end"
-warnpc $80FD00 ; infohud.asm
+%endfree(80)
+

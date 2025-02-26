@@ -168,7 +168,7 @@ DDFFFF,chained
 82EE28,replace,1,28
 82EE34,replace,1,28
 82EED2,replace,2,80c0   ; bank 8B, originally 1bc1
-82EEE0,replace,1,65
+82EEE0,replace,2,65a3   ; bank 8B, originally 95a3
 82EF47,replace,1,32
 82EF4C,replace,1,2f
 82EF4D,remove,5
@@ -343,11 +343,13 @@ DDFFFF,chained
 84D4D8,replace,2,27d5   ; bank 84, originally 21d5
 84D4E8,insert,6,ca863000d198
 84D4F0,replace,2,f8d4   ; bank 84, originally f2d4
-84D4F8,ignore,47
 84D4FA,replace,2,ecd5   ; bank 84, originally e6d5
 84D4FC,replace,2,32d5   ; bank 84, originally 2cd5
+84D4FE,replace,1,28
+84D50A,replace,1,2b
 84D50D,replace,2,49d5   ; bank 84, originally 43d5
 84D50F,replace,2,3cd5   ; bank 84, originally 36d5
+84D511,replace,1,50
 84D519,replace,2,2bd5   ; bank 84, originally 25d5
 84D51B,replace,2,f4d5   ; bank 84, originally eed5
 84D527,replace,2,2bd5   ; bank 84, originally 25d5
@@ -1849,7 +1851,7 @@ DDFFFF,chained
 86C9B2,replace,2,d0c9   ; bank 86, originally 94c9
 86C9BC,replace,2,eec9   ; bank 86, originally b2c9
 86C9C2,replace,2,f0c9   ; bank 86, originally b4c9
-86C9CE,ignore,64
+86C9EE,ignore,32
 86CA57,replace,2,45e5   ; bank 86, originally 09e5
 86CA80,replace,2,5eca   ; bank 86, originally 22ca
 86CAA4,replace,2,82ca   ; bank 86, originally 46ca
@@ -2582,12 +2584,10 @@ DDFFFF,chained
 8B94D5,replace,2,e094   ; bank 8B, originally 3795
 8B94F8,replace,2,ed94   ; bank 8B, originally 4495
 8B9529,replace,2,2e95   ; bank 8B, originally 8595
-8B95D8,insert,14,08c2302cf1191020a206008eed19
-8B95E6,insert,15,bdcd19f006202996aeed19caca10ee
-8B95F5,insert,13,2cf319100320a08720d3872860
-8B9609,replace,1,1d
-8B9616,replace,2,2996   ; bank 8B, originally 5996
-8B9627,remove,3
+8B95EC,replace,2,2996   ; bank 8B, originally 5996
+8B9602,insert,14,08c2302cf119101da206008eed19
+8B9610,insert,15,bdcd19f006202996aeed19caca10ee
+8B961F,insert,10,2cf319100320a0872860
 8B9647,replace,2,3c96   ; bank 8B, originally 6c96
 8B968C,replace,2,9196   ; bank 8B, originally c196
 8B96A2,replace,2,ad96   ; bank 8B, originally dd96
@@ -2939,11 +2939,13 @@ DDFFFF,chained
 8BAD6F,replace,1,16
 8BAD78,replace,2,d8cd   ; bank 8B, originally 73ce
 8BAD7B,replace,2,3393   ; bank 8B, originally 8a93
-8BAD7E,remove,8
-8BAD7F,remove,1
+8BAD7E,move,10
+8BAD7E,insert,1,ab
 8BAD80,replace,2,52ae   ; bank 8B, originally 6caf
 8BAD86,insert,14,8bf4008babab5aa0d8cd2033937a
-8BAD94,insert,10,5aa084d3208d947aab60
+8BAD94,place,10
+8BAD96,replace,2,84d3   ; bank 8B, originally 0dd4
+8BAD99,replace,2,8d94   ; bank 8B, originally e494
 8BADBC,replace,2,98f3   ; bank 91, originally 33f4
 8BADC0,replace,2,6dfa   ; bank 91, originally 08fb
 8BADF7,replace,2,bacd   ; bank 8B, originally 55ce
@@ -2971,11 +2973,13 @@ DDFFFF,chained
 8BAF74,replace,1,16
 8BAF7D,replace,2,d8cd   ; bank 8B, originally 73ce
 8BAF80,replace,2,3393   ; bank 8B, originally 8a93
-8BAF83,remove,8
-8BAF84,remove,1
+8BAF83,move,10
+8BAF83,insert,1,ab
 8BAF85,replace,2,d1af   ; bank 8B, originally f2b0
 8BAF8B,insert,14,8bf4008babab5aa0d8cd2033937a
-8BAF99,insert,10,5aa090d3208d947aab60
+8BAF99,place,10
+8BAF9B,replace,2,90d3   ; bank 8B, originally 19d4
+8BAF9E,replace,2,8d94   ; bank 8B, originally e494
 8BAFA6,remove,5
 8BAFAE,replace,2,96d3   ; bank 8B, originally 1fd4
 8BAFB1,replace,2,8d94   ; bank 8B, originally e494
@@ -3000,11 +3004,13 @@ DDFFFF,chained
 8BB094,replace,1,16
 8BB09D,replace,2,d8cd   ; bank 8B, originally 73ce
 8BB0A0,replace,2,3393   ; bank 8B, originally 8a93
-8BB0A3,remove,8
-8BB0A4,remove,1
+8BB0A3,move,10
+8BB0A3,insert,1,ab
 8BB0A5,replace,2,c3b0   ; bank 8B, originally dab1
 8BB0AB,insert,14,8bf4008babab5aa0d8cd2033937a
-8BB0B9,insert,10,5aa0a8d3208d947aab60
+8BB0B9,place,10
+8BB0BB,replace,2,a8d3   ; bank 8B, originally 31d4
+8BB0BE,replace,2,8d94   ; bank 8B, originally e494
 8BB0C4,replace,2,cfb3   ; bank 8B, originally 10b7
 8BB0E0,replace,2,f0b0   ; bank 8B, originally 07b2
 8BB0E6,replace,2,6c95   ; bank 8B, originally c395
@@ -3119,46 +3125,91 @@ DDFFFF,chained
 8BB7D4,replace,2,e3b7   ; bank 8B, originally 24bb
 8BB7EF,replace,2,b8cd   ; bank 8B, originally 53ce
 8BB95F,place,678
-8BB95F,remove,50
-8BB960,ignore,49
-8BB991,filler,14
+8BB95F,remove,46
+8BB95F,remove,4
+8BB961,remove,4
+8BB962,replace,2,bfe7   ; bank 8B, originally 0be4
+8BB96A,replace,2,c1e7   ; bank 8B, originally 0de4
+8BB972,replace,2,c3e7   ; bank 8B, originally 0fe4
+8BB97A,replace,2,75a7   ; bank 8B, originally 6aa8
+8BB97C,replace,15,ade209d00fa900a08500a900018512
+8BB98B,insert,18,20238d800da900a88500a90001851220238d
 8BB9A0,replace,2,6195   ; bank 8B, originally b895
 8BB9A4,insert,16,a58ff028a900d39da119a901009da919
 8BB9B4,insert,14,a982939da5192075a7a900a18500
 8BB9C2,insert,15,a90001851220238da93c008da31b60
 8BB9D1,insert,11,2261958ba99ead8d511f60
-8BB9DC,ignore,49
-8BBA0D,filler,14
-8BBA1B,ignore,45
+8BB9DD,remove,4
+8BB9DE,replace,2,bfe7   ; bank 8B, originally 0be4
+8BB9E6,replace,2,c1e7   ; bank 8B, originally 0de4
+8BB9EE,replace,2,c3e7   ; bank 8B, originally 0fe4
+8BB9F6,replace,2,75a7   ; bank 8B, originally 6aa8
+8BB9F8,replace,15,ade209d00fa940a28500a900018512
+8BBA07,insert,18,20238d800da940aa8500a90001851220238d
+8BBA1E,replace,1,28
 8BBA20,replace,2,16d3   ; bank 8B, originally a5d3
 8BBA2C,replace,2,8293   ; bank 8B, originally d993
-8BBA48,remove,6
+8BBA31,remove,4
+8BBA32,replace,2,75a7   ; bank 8B, originally 6aa8
+8BBA34,replace,13,a940a38500a90001851220238d
+8BBA41,remove,2
 8BBA49,replace,2,6195   ; bank 8B, originally b895
 8BBA4D,replace,2,52ae   ; bank 8B, originally 6caf
-8BBA53,ignore,43
-8BBA7E,filler,20
-8BBA92,ignore,45
+8BBA54,remove,4
+8BBA55,replace,2,bfe7   ; bank 8B, originally 0be4
+8BBA5D,replace,2,c1e7   ; bank 8B, originally 0de4
+8BBA65,replace,2,c3e7   ; bank 8B, originally 0fe4
+8BBA6D,replace,2,75a7   ; bank 8B, originally 6aa8
+8BBA6F,replace,9,ade209d00fa980a485
+8BBA78,insert,11,00a90001851220238d800d
+8BBA83,insert,13,a980ac8500a90001851220238d
 8BBA97,replace,2,2cd3   ; bank 8B, originally bbd3
 8BBAA3,replace,2,8293   ; bank 8B, originally d993
+8BBAA8,remove,4
+8BBAA9,replace,2,75a7   ; bank 8B, originally 6aa8
+8BBAAB,replace,9,a980a58500a9800085
+8BBAB4,insert,4,1220238d
 8BBAC0,replace,2,6195   ; bank 8B, originally b895
 8BBAC4,replace,2,d1af   ; bank 8B, originally f2b0
-8BBACA,ignore,49
-8BBAFB,filler,14
-8BBB09,ignore,51
+8BBACB,remove,4
+8BBACC,replace,2,bfe7   ; bank 8B, originally 0be4
+8BBAD4,replace,2,c1e7   ; bank 8B, originally 0de4
+8BBADC,replace,2,c3e7   ; bank 8B, originally 0fe4
+8BBAE4,replace,2,75a7   ; bank 8B, originally 6aa8
+8BBAE6,replace,15,ade209d00fa980a68500a900018512
+8BBAF5,insert,18,20238d800da980ae8500a90001851220238d
+8BBB0C,replace,1,49
 8BBB0E,replace,2,42d3   ; bank 8B, originally d1d3
 8BBB1A,replace,2,8293   ; bank 8B, originally d993
-8BBB3C,filler,27
+8BBB1F,remove,4
+8BBB20,replace,2,75a7   ; bank 8B, originally 6aa8
+8BBB22,replace,15,ade209d00fa980a78500a980008512
+8BBB31,insert,5,20238d801a
+8BBB36,insert,13,a980af8500a98000851220238d
+8BBB43,insert,13,a900b88500a98000851220578d
 8BBB58,replace,2,6195   ; bank 8B, originally b895
 8BBB5C,replace,2,02b0   ; bank 8B, originally 23b1
-8BBB62,ignore,43
-8BBB8D,filler,20
-8BBBA1,ignore,45
+8BBB63,remove,4
+8BBB64,replace,2,bfe7   ; bank 8B, originally 0be4
+8BBB6C,replace,2,c1e7   ; bank 8B, originally 0de4
+8BBB74,replace,2,c3e7   ; bank 8B, originally 0fe4
+8BBB7C,replace,2,75a7   ; bank 8B, originally 6aa8
+8BBB7E,replace,9,ade209d00fa9c0b085
+8BBB87,insert,11,00a90001851220238d800d
+8BBB92,insert,13,a9c0b88500a90001851220238d
 8BBBA6,replace,2,58d3   ; bank 8B, originally e7d3
 8BBBB2,replace,2,8293   ; bank 8B, originally d993
+8BBBB7,remove,4
+8BBBB8,replace,2,75a7   ; bank 8B, originally 6aa8
+8BBBBA,replace,9,a9c0b18500a9000185
+8BBBC3,insert,4,1220238d
 8BBBCF,replace,2,6195   ; bank 8B, originally b895
 8BBBD3,replace,2,c3b0   ; bank 8B, originally dab1
-8BBBD9,ignore,19
-8BBBEC,filler,20
+8BBBDA,remove,4
+8BBBDB,replace,2,75a7   ; bank 8B, originally 6aa8
+8BBBDD,replace,9,ade209d00fa900b385
+8BBBE6,insert,11,00a90001851220238d800d
+8BBBF1,insert,13,a900bb8500a90001851220238d
 8BBC01,replace,2,6195   ; bank 8B, originally b895
 8BBC09,replace,2,8393   ; bank 8B, originally da93
 8BBC13,replace,2,9de9   ; bank 8C, originally e9e5
@@ -3702,7 +3753,7 @@ DDFFFF,chained
 8BD3E0,replace,2,6997   ; bank 8B, originally 9997
 8BD3E3,replace,2,9ae7   ; bank 8B, originally 12e8
 8BD3EF,replace,2,7be4   ; bank 8B, originally 04e5
-8BD3F4,replace,2,0296   ; bank 8B, originally 2f96
+8BD3F4,replace,2,0296
 8BD41D,replace,2,9df1   ; bank 8C, originally e9ed
 8BD431,replace,2,5dbb   ; bank 98, originally d6bc
 8BD442,replace,2,f6a3   ; bank 99, originally 6fa5
@@ -3958,7 +4009,7 @@ DDFFFF,chained
 8BE8E7,replace,2,2fe9   ; bank 8B, originally a7e9
 8BE8FE,replace,2,85e8   ; bank 8B, originally fde8
 8BE92D,replace,2,f3e8   ; bank 8B, originally 6be9
-8BE92F,ignore,1522
+8BEA97,ignore,362
 8BEA97,replace,2,7f94   ; bank 8B, originally d694
 8BEA9D,replace,2,d2a3   ; bank 8C, originally 96a3
 8BEAA1,replace,2,e8a3   ; bank 8C, originally aca3
@@ -4131,6 +4182,7 @@ DDFFFF,chained
 8BECAF,replace,2,7fa2   ; bank 8C, originally 43a2
 8BECB1,replace,2,6594   ; bank 8B, originally bc94
 8BECB3,replace,2,adec   ; bank 8B, originally 25ed
+8BECB5,ignore,366
 8BECB7,replace,2,33a0   ; bank 8C, originally f79f
 8BECBB,replace,2,c1a0   ; bank 8C, originally 85a0
 8BECBF,replace,2,f0a0   ; bank 8C, originally b4a0
@@ -6015,18 +6067,15 @@ DDFFFF,chained
 9193FE,ignore,6
 919406,ignore,156
 9194A2,filler,36
-9194C8,ignore,84
 91951E,ignore,90
 91957A,ignore,156
 919618,ignore,222
 9196F6,filler,6
 9196FE,ignore,354
-919862,ignore,270
 919972,ignore,24
 91998C,ignore,186
 919A46,remove,108
 919A48,ignore,486
-919C30,ignore,204
 919CFE,ignore,6
 919D06,ignore,162
 919DD8,replace,2,ee90   ; bank 91, originally 5491
@@ -6552,7 +6601,7 @@ DDFFFF,chained
 91B15C,replace,2,8bb4   ; bank 91, originally 33b5
 91B15E,replace,2,8eb4   ; bank 91, originally 36b5
 91B160,replace,2,91b4   ; bank 91, originally 39b5
-91B162,ignore,1055
+91B162,ignore,1045
 91B529,replace,2,2bb5   ; bank 91, originally d3b5
 91B536,replace,2,40b5   ; bank 91, originally e8b5
 91B538,replace,2,4bb5   ; bank 91, originally f3b5
@@ -7647,12 +7696,2405 @@ A0C950,replace,2,80bb   ; bank A0, originally 70bb
 A0C9CF,ignore,520
 A0CBD7,filler,16
 A0CBE7,ignore,760
-A0CEDF,ignore,10516
+A0CEE1,replace,2,9786   ; bank A2, originally 8786
+A0CEF1,replace,2,2c87   ; bank A2, originally 1c87
+A0CEF7,replace,2,ac87   ; bank A2, originally 9c87
+A0CF21,replace,2,2289   ; bank A2, originally 1289
+A0CF31,replace,2,bd89   ; bank A2, originally ad89
+A0CF37,replace,2,008a   ; bank A2, originally f089
+A0CF61,replace,2,708b   ; bank A2, originally 608b
+A0CF71,replace,2,7c8d   ; bank A2, originally 6c8d
+A0CF77,replace,2,e28d   ; bank A2, originally d28d
+A0CF8F,replace,2,9192   ; bank A2, originally 8192
+A0CFA1,replace,2,708b   ; bank A2, originally 608b
+A0CFB1,replace,2,ad8d   ; bank A2, originally 9d8d
+A0CFB7,replace,2,3e91   ; bank A2, originally 2e91
+A0CFCF,replace,2,af92   ; bank A2, originally 9f92
+A0CFD1,replace,2,1f93   ; bank A2, originally 0f93
+A0CFE1,replace,2,9d99   ; bank A2, originally 8d99
+A0CFF1,replace,2,4f9a   ; bank A2, originally 3f9a
+A0CFF7,replace,2,8d9a   ; bank A2, originally 7d9a
+A0D021,replace,2,829e   ; bank A2, originally 6a9e
+A0D031,replace,2,609f   ; bank A2, originally 489f
+A0D037,replace,2,cb9f   ; bank A2, originally b39f
+A0D061,replace,2,a3a3   ; bank A2, originally 8ba3
+A0D071,replace,2,11a4   ; bank A2, originally f9a3
+A0D077,replace,2,96a4   ; bank A2, originally 7ea4
+A0D091,replace,2,91a5   ; bank A2, originally 79a5
+A0D0A1,replace,2,b6a5   ; bank A2, originally 9ea5
+A0D0B1,replace,2,5ca6   ; bank A2, originally 44a6
+A0D0B7,replace,2,71a7   ; bank A2, originally 59a7
+A0D0E1,replace,2,b6a5   ; bank A2, originally 9ea5
+A0D0F1,replace,2,eaa6   ; bank A2, originally d2a6
+A0D121,replace,2,0bb0   ; bank A2, originally f3af
+A0D131,replace,2,83b0   ; bank A2, originally 6bb0
+A0D137,replace,2,37b1   ; bank A2, originally 1fb1
+A0D149,replace,2,2bb0   ; bank A2, originally 13b0
+A0D153,replace,2,1cb2   ; bank A2, originally 04b2
+A0D161,replace,2,24b2   ; bank A2, originally 0cb2
+A0D171,replace,2,83b0   ; bank A2, originally 6bb0
+A0D177,replace,2,37b1   ; bank A2, originally 1fb1
+A0D189,replace,2,44b2   ; bank A2, originally 2cb2
+A0D193,replace,2,74b2   ; bank A2, originally 5cb2
+A0D1A1,replace,2,7cb2   ; bank A2, originally 64b2
+A0D1B1,replace,2,83b0   ; bank A2, originally 6bb0
+A0D1B7,replace,2,37b1   ; bank A2, originally 1fb1
+A0D1C9,replace,2,9cb2   ; bank A2, originally 84b2
+A0D1D3,replace,2,ccb2   ; bank A2, originally b4b2
+A0D1E1,replace,2,d4b2   ; bank A2, originally bcb2
+A0D1F1,replace,2,f8b3   ; bank A2, originally e0b3
+A0D1F7,replace,2,27b4   ; bank A2, originally 0fb4
+A0D209,replace,2,f4b2   ; bank A2, originally dcb2
+A0D221,replace,2,73ba   ; bank A2, originally 5bba
+A0D231,replace,2,88b5   ; bank A2, originally 70b5
+A0D237,replace,2,a7b5   ; bank A2, originally 8fb5
+A0D261,replace,2,73ba   ; bank A2, originally 5bba
+A0D271,replace,2,1ab6   ; bank A2, originally 02b6
+A0D277,replace,2,dcb7   ; bank A2, originally c4b7
+A0D27D,replace,2,41b9   ; bank A2, originally 29b9
+A0D287,replace,2,6bb9   ; bank A2, originally 53b9
+A0D28F,replace,2,5fb9   ; bank A2, originally 47b9
+A0D291,replace,2,65b9   ; bank A2, originally 4db9
+A0D2A1,replace,2,93ba   ; bank A2, originally 7bba
+A0D2B1,replace,2,e5bb   ; bank A2, originally cdbb
+A0D2B7,replace,2,fbbb   ; bank A2, originally e3bb
+A0D2E1,replace,2,34be   ; bank A2, originally 1cbe
+A0D2F1,replace,2,b1be   ; bank A2, originally 99be
+A0D2F7,replace,2,eabe   ; bank A2, originally d2be
+A0D321,replace,2,e9c0   ; bank A2, originally d1c0
+A0D331,replace,2,5ac2   ; bank A2, originally 42c2
+A0D337,replace,2,8fc2   ; bank A2, originally 77c2
+A0D361,replace,2,12c6   ; bank A2, originally fac5
+A0D371,replace,2,0bc7   ; bank A2, originally f3c6
+A0D377,replace,2,3cc7   ; bank A2, originally 24c7
+A0D3A1,replace,2,43ca   ; bank A2, originally 2bca
+A0D3B1,replace,2,eccc   ; bank A2, originally d4cc
+A0D3B7,replace,2,2bcd   ; bank A2, originally 13cd
+A0D3CF,replace,2,a4d3   ; bank A2, originally 8cd3
+A0D3D1,replace,2,ccd3   ; bank A2, originally b4d3
+A0D3E1,replace,2,24d8   ; bank A2, originally 0cd8
+A0D3F1,replace,2,8edf   ; bank A2, originally 76df
+A0D3F7,replace,2,46e0   ; bank A2, originally 2ee0
+A0D421,replace,2,93e1   ; bank A2, originally 7be1
+A0D431,replace,2,ebe1   ; bank A2, originally d3e1
+A0D437,replace,2,39e2   ; bank A2, originally 21e2
+A0D451,replace,2,c1e3   ; bank A2, originally a9e3
+A0D461,replace,2,d8e2   ; bank A2, originally c0e2
+A0D471,replace,2,30e3   ; bank A2, originally 18e3
+A0D477,replace,2,6be3   ; bank A2, originally 53e3
+A0D489,replace,2,8fe4   ; bank A2, originally 77e4
+A0D491,replace,2,c1e3   ; bank A2, originally a9e3
+A0D4A1,replace,2,6fe4   ; bank A2, originally 57e4
+A0D4B1,replace,2,b7e4   ; bank A2, originally 9fe4
+A0D4B7,replace,2,f2e4   ; bank A2, originally dae4
+A0D4C9,replace,2,8fe4   ; bank A2, originally 77e4
+A0D4D3,replace,2,87e5   ; bank A2, originally 6fe5
+A0D4E1,replace,2,93e5   ; bank A2, originally 7be5
+A0D4F1,replace,2,1ee6   ; bank A2, originally 06e6
+A0D4F7,replace,2,66e6   ; bank A2, originally 4ee6
+A0D507,replace,2,ece7   ; bank A2, originally d4e7
+A0D50F,replace,2,e0e7   ; bank A2, originally c8e7
+A0D511,replace,2,e6e7   ; bank A2, originally cee7
+A0D521,replace,2,90e9   ; bank A2, originally 78e9
+A0D531,replace,2,f2e9   ; bank A2, originally dae9
+A0D537,replace,2,ceea   ; bank A2, originally b6ea
+A0D561,replace,2,90e9   ; bank A2, originally 78e9
+A0D571,replace,2,2aee   ; bank A2, originally 12ee
+A0D577,replace,2,e9ee   ; bank A2, originally d1ee
+A0D587,replace,2,cef0   ; bank A2, originally b6f0
+A0D58F,replace,2,b5f0   ; bank A2, originally 9df0
+A0D591,replace,2,baf0   ; bank A2, originally a2f0
+A0D5A1,replace,2,90e9   ; bank A2, originally 78e9
+A0D5B1,replace,2,29f1   ; bank A2, originally 11f1
+A0D5B7,replace,2,f6f1   ; bank A2, originally def1
+A0D5C7,replace,2,32f4   ; bank A2, originally 1af4
+A0D5CF,replace,2,f0f3   ; bank A2, originally d8f3
+A0D5D1,replace,2,26f4   ; bank A2, originally 0ef4
+A0D5E1,replace,2,90e9   ; bank A2, originally 78e9
+A0D5F1,replace,2,2aee   ; bank A2, originally 12ee
+A0D5F7,replace,2,e9ee   ; bank A2, originally d1ee
+A0D607,replace,2,cef0   ; bank A2, originally b6f0
+A0D60F,replace,2,b5f0   ; bank A2, originally 9df0
+A0D611,replace,2,c2f0   ; bank A2, originally aaf0
+A0D621,replace,2,dfed   ; bank A2, originally c7ed
+A0D631,replace,2,1dee   ; bank A2, originally 05ee
+A0D637,replace,2,e9ee   ; bank A2, originally d1ee
+A0D647,replace,2,cef0   ; bank A2, originally b6f0
+A0D64F,replace,2,b5f0   ; bank A2, originally 9df0
+A0D651,replace,2,baf0   ; bank A2, originally a2f0
+A0D661,replace,2,9786   ; bank A3, originally 8786
+A0D671,replace,2,fd86   ; bank A3, originally ed86
+A0D677,replace,2,5c87   ; bank A3, originally 4c87
+A0D6A1,replace,2,0089   ; bank A3, originally f088
+A0D6B1,replace,2,7089   ; bank A3, originally 6089
+A0D6B7,replace,2,8989   ; bank A3, originally 7989
+A0D6D1,replace,2,1f8b   ; bank A3, originally 0f8b
+A0D6E1,replace,2,1f8c   ; bank A3, originally 0f8c
+A0D6F1,replace,2,3d8d   ; bank A3, originally 2d8d
+A0D6F7,replace,2,fe8d   ; bank A3, originally ee8d
+A0D707,replace,2,938e   ; bank A3, originally 838e
+A0D70F,replace,2,7b8e   ; bank A3, originally 6b8e
+A0D711,replace,2,998e   ; bank A3, originally 898e
+A0D721,replace,2,1a90   ; bank A3, originally 0a90
+A0D731,replace,2,c590   ; bank A3, originally b590
+A0D737,replace,2,3b91   ; bank A3, originally 2b91
+A0D753,replace,2,ba94   ; bank A3, originally aa94
+A0D771,replace,2,f694   ; bank A3, originally e694
+A0D777,replace,2,3a95   ; bank A3, originally 2a95
+A0D779,replace,2,3a95   ; bank A3, originally 2a95
+A0D77D,replace,2,3a95   ; bank A3, originally 2a95
+A0D7A1,replace,2,6b96   ; bank A3, originally 5b96
+A0D7B1,replace,2,f396   ; bank A3, originally e396
+A0D7B7,replace,2,dee6   ; bank A3, originally c2e6
+A0D7E1,replace,2,1b98   ; bank A3, originally 0b98
+A0D7F1,replace,2,4b99   ; bank A3, originally 3b99
+A0D7F7,replace,2,dee6   ; bank A3, originally c2e6
+A0D821,replace,2,8b9b   ; bank A3, originally 7b9b
+A0D831,replace,2,ca9c   ; bank A3, originally ba9c
+A0D837,replace,2,269d   ; bank A3, originally 169d
+A0D84F,replace,2,179f   ; bank A3, originally 079f
+A0D851,replace,2,189f   ; bank A3, originally 089f
+A0D861,replace,2,ab9b   ; bank A3, originally 9b9b
+A0D871,replace,2,af9c   ; bank A3, originally 9f9c
+A0D877,replace,2,269d   ; bank A3, originally 169d
+A0D88F,replace,2,179f   ; bank A3, originally 079f
+A0D8A1,replace,2,61a0   ; bank A3, originally 51a0
+A0D8B1,replace,2,5da1   ; bank A3, originally 4da1
+A0D8B7,replace,2,e0a2   ; bank A3, originally d0a2
+A0D8E1,replace,2,61a0   ; bank A3, originally 51a0
+A0D8F1,replace,2,5da1   ; bank A3, originally 4da1
+A0D8F7,replace,2,e0a2   ; bank A3, originally d0a2
+A0D921,replace,2,35a7   ; bank A3, originally 25a7
+A0D931,replace,2,8da7   ; bank A3, originally 7da7
+A0D937,replace,2,a0a7   ; bank A3, originally 90a7
+A0D94F,replace,2,6fa9   ; bank A3, originally 53a9
+A0D951,replace,2,c4a9   ; bank A3, originally a8a9
+A0D961,replace,2,64aa   ; bank A3, originally 48aa
+A0D971,replace,2,25ab   ; bank A3, originally 09ab
+A0D977,replace,2,ebab   ; bank A3, originally cfab
+A0D9A1,replace,2,a1af   ; bank A3, originally 85af
+A0D9B1,replace,2,25ab   ; bank A3, originally 09ab
+A0D9B7,replace,2,ebab   ; bank A3, originally cfab
+A0D9E1,replace,2,a1b0   ; bank A3, originally 85b0
+A0D9F1,replace,2,25ab   ; bank A3, originally 09ab
+A0D9F7,replace,2,ebab   ; bank A3, originally cfab
+A0DA21,replace,2,c1b0   ; bank A3, originally a5b0
+A0DA31,replace,2,25ab   ; bank A3, originally 09ab
+A0DA37,replace,2,ebab   ; bank A3, originally cfab
+A0DA61,replace,2,33b2   ; bank A3, originally 17b2
+A0DA71,replace,2,25ab   ; bank A3, originally 09ab
+A0DA77,replace,2,ebab   ; bank A3, originally cfab
+A0DAA1,replace,2,bdb3   ; bank A3, originally a1b3
+A0DAB1,replace,2,66b4   ; bank A3, originally 4ab4
+A0DAB7,replace,2,98b4   ; bank A3, originally 7cb4
+A0DAE1,replace,2,cfb5   ; bank A3, originally b3b5
+A0DAF1,replace,2,8bb6   ; bank A3, originally 6fb6
+A0DAF7,replace,2,dee6   ; bank A3, originally c2e6
+A0DB09,replace,2,efb5   ; bank A3, originally d3b5
+A0DB61,replace,2,1eb7   ; bank A3, originally 02b7
+A0DB71,replace,2,cfba   ; bank A3, originally b3ba
+A0DB77,replace,2,41bb   ; bank A3, originally 25bb
+A0DB91,replace,2,19bf   ; bank A3, originally fdbe
+A0DBA1,replace,2,5ac6   ; bank A3, originally 3ec6
+A0DBB1,replace,2,cac6   ; bank A3, originally aec6
+A0DBB7,replace,2,e3c6   ; bank A3, originally c7c6
+A0DBD1,replace,2,11c8   ; bank A3, originally f5c7
+A0DBE1,replace,2,c2c8   ; bank A3, originally a6c8
+A0DBF1,replace,2,fecd   ; bank A3, originally e2cd
+A0DBF7,replace,2,80ce   ; bank A3, originally 64ce
+A0DC0F,replace,2,ccd3   ; bank A3, originally b0d3
+A0DC11,replace,2,85d4   ; bank A3, originally 69d4
+A0DC21,replace,2,b8da   ; bank A3, originally 9cda
+A0DC31,replace,2,efdb   ; bank A3, originally d3db
+A0DC37,replace,2,37dc   ; bank A3, originally 1bdc
+A0DC51,replace,2,38dc   ; bank A3, originally 1cdc
+A0DC61,replace,2,bedf   ; bank A3, originally a2df
+A0DC71,replace,2,5fe0   ; bank A3, originally 43e0
+A0DC77,replace,2,a7e0   ; bank A3, originally 8be0
+A0DCA1,replace,2,58e2   ; bank A3, originally 3ce2
+A0DCB1,replace,2,f0e2   ; bank A3, originally d4e2
+A0DCB7,replace,2,dee6   ; bank A3, originally c2e6
+A0DCE1,replace,2,98e5   ; bank A3, originally 7ce5
+A0DCF1,replace,2,b8e5   ; bank A3, originally 9ce5
+A0DCF7,replace,2,dee6   ; bank A3, originally c2e6
+A0DD21,replace,2,cce5   ; bank A3, originally b0e5
+A0DD31,replace,2,85e6   ; bank A3, originally 69e6
+A0DD37,replace,2,dee6   ; bank A3, originally c2e6
+A0DD61,replace,2,ece5   ; bank A3, originally d0e5
+A0DD71,replace,2,85e6   ; bank A3, originally 69e6
+A0DD77,replace,2,dee6   ; bank A3, originally c2e6
+A0DDA1,replace,2,cbe9   ; bank A3, originally afe9
+A0DDB1,replace,2,6bea   ; bank A3, originally 4fea
+A0DDB7,replace,2,b4eb   ; bank A3, originally 98eb
+A0DDBB,replace,2,4feb   ; bank A3, originally 33eb
+A0DDBD,replace,2,02eb   ; bank A3, originally e6ea
+A0DDC7,replace,2,5ef0   ; bank A3, originally 42f0
+A0DDCF,replace,2,07ee   ; bank A3, originally ebed
+A0DDD1,replace,2,23ef   ; bank A3, originally 07ef
+A0DDE1,replace,2,96b8   ; bank A4, originally 7db8
+A0DDF1,replace,2,6a8a   ; bank A4, originally 5a8a
+A0DDF7,replace,2,148c   ; bank A4, originally 048c
+A0DDFB,replace,2,9786   ; bank A4, originally 8786
+A0DE07,replace,2,abb9   ; bank A4, originally 92b9
+A0DE0F,replace,2,69b9   ; bank A4, originally 50b9
+A0DE21,replace,2,96b8   ; bank A4, originally 7db8
+A0DE31,replace,2,93f6   ; bank A4, originally 7af6
+A0DE37,replace,2,d4f6   ; bank A4, originally bbf6
+A0DE61,replace,2,03a2   ; bank A5, originally f7a1
+A0DE71,replace,2,9786   ; bank A5, originally 8786
+A0DE77,replace,2,0c87   ; bank A5, originally fc86
+A0DE7B,replace,2,5d95   ; bank A5, originally 4d95
+A0DE87,replace,2,1796   ; bank A5, originally 0796
+A0DE8F,replace,2,fa95   ; bank A5, originally ea95
+A0DE91,replace,2,0096   ; bank A5, originally f095
+A0DEB1,replace,2,77c4   ; bank A5, originally 6bc4
+A0DEB7,replace,2,92c4   ; bank A5, originally 86c4
+A0DEE1,replace,2,03a2   ; bank A5, originally f7a1
+A0DEF1,replace,2,a5c5   ; bank A5, originally 99c5
+A0DEF7,replace,2,b6c5   ; bank A5, originally aac5
+A0DF21,replace,2,03a2   ; bank A5, originally f7a1
+A0DF31,replace,2,b9c5   ; bank A5, originally adc5
+A0DF37,replace,2,d0c5   ; bank A5, originally c4c5
+A0DF61,replace,2,65e3   ; bank A5, originally 59e3
+A0DF6D,replace,1,00
+A0DF71,replace,2,2fea   ; bank A5, originally 2aea
+A0DF77,replace,2,18eb   ; bank A5, originally 13eb
+A0DF87,replace,2,2eee   ; bank A5, originally f2ed
+A0DF8F,replace,2,28ee   ; bank A5, originally eced
+A0DF91,replace,2,8fed   ; bank A5, originally 5aed
+A0DFA1,replace,2,65e3   ; bank A5, originally 59e3
+A0DFB1,replace,2,2fea   ; bank A5, originally 2aea
+A0DFB7,replace,2,18eb   ; bank A5, originally 13eb
+A0DFCF,replace,2,28ee   ; bank A5, originally eced
+A0DFD1,replace,2,8fed   ; bank A5, originally 5aed
+A0DFE1,replace,2,9786   ; bank A6, originally 8786
+A0DFF1,replace,2,0587   ; bank A6, originally f586
+A0DFF7,replace,2,a387   ; bank A6, originally 9387
+A0E021,replace,2,198b   ; bank A6, originally 098b
+A0E031,replace,2,3f8b   ; bank A6, originally 2f8b
+A0E037,replace,2,bd8b   ; bank A6, originally ad8b
+A0E061,replace,2,198b   ; bank A6, originally 098b
+A0E071,replace,2,958b   ; bank A6, originally 858b
+A0E077,replace,2,a98b   ; bank A6, originally 998b
+A0E0A1,replace,2,0b8d   ; bank A6, originally fb8c
+A0E0B1,replace,2,0c90   ; bank A6, originally fc8f
+A0E0B7,replace,2,3390   ; bank A6, originally 2390
+A0E0E1,replace,2,8094   ; bank A6, originally 7094
+A0E0F1,replace,2,d494   ; bank A6, originally c494
+A0E0F7,replace,2,1e96   ; bank A6, originally 0e96
+A0E121,replace,2,9c99   ; bank A6, originally 8c99
+A0E131,replace,2,689a   ; bank A6, originally 589a
+A0E137,replace,2,d29a   ; bank A6, originally c29a
+A0E147,replace,2,499c   ; bank A6, originally 399c
+A0E14F,replace,2,329c   ; bank A6, originally 229c
+A0E151,replace,2,499c   ; bank A6, originally 399c
+A0E161,replace,2,26e1   ; bank A6, originally 4fe1
+A0E171,replace,2,05a1   ; bank A6, originally f5a0
+A0E177,replace,2,98a2   ; bank A6, originally 88a2
+A0E17B,replace,2,e3a2   ; bank A6, originally d3a2
+A0E187,replace,2,89df   ; bank A6, originally b2df
+A0E191,replace,2,61df   ; bank A6, originally 8adf
+A0E1A1,replace,2,26e1   ; bank A6, originally 4fe1
+A0E1B1,replace,2,05a1   ; bank A6, originally f5a0
+A0E1B7,replace,2,37b2   ; bank A6, originally 27b2
+A0E1BB,replace,2,a7b2   ; bank A6, originally 97b2
+A0E1BF,replace,2,9ab2   ; bank A6, originally 8ab2
+A0E1C7,replace,2,89df   ; bank A6, originally b2df
+A0E1D1,replace,2,61df   ; bank A6, originally 8adf
+A0E1E1,replace,2,86e1   ; bank A6, originally afe1
+A0E1F1,replace,2,6dc6   ; bank A6, originally 96c6
+A0E1F7,replace,2,abc8   ; bank A6, originally d4c8
+A0E221,replace,1,5f
+A0E231,replace,2,88ef   ; bank A6, originally b1ef
+A0E237,replace,2,e4ef   ; bank A6, originally 0df0
+A0E24F,replace,2,16f0   ; bank A6, originally 3ff0
+A0E255,replace,2,5fe2   ; bank A0, originally 3fe2
+A0E261,replace,2,c3f4   ; bank A6, originally ecf4
+A0E271,replace,2,9cf6   ; bank A6, originally c5f6
+A0E277,replace,2,3cf7   ; bank A6, originally 65f7
+A0E289,replace,2,03f5   ; bank A6, originally 2cf5
+A0E28F,replace,2,f7f8   ; bank A6, originally 20f9
+A0E291,replace,2,f7f8   ; bank A6, originally 20f9
+A0E293,replace,2,49fb   ; bank A6, originally 72fb
+A0E2B1,replace,2,49fb   ; bank A6, originally 72fb
+A0E2B7,replace,2,0afc   ; bank A6, originally 33fc
+A0E2CF,replace,2,7efd   ; bank A6, originally a7fd
+A0E2D1,replace,2,83fd   ; bank A6, originally acfd
+A0E2E1,replace,2,9786   ; bank A7, originally 8786
+A0E2F1,replace,2,6fa9   ; bank A7, originally 59a9
+A0E2F7,replace,2,37ac   ; bank A7, originally 21ac
+A0E30F,replace,2,af94   ; bank A7, originally 9f94
+A0E321,replace,2,9786   ; bank A7, originally 8786
+A0E331,replace,2,59ab   ; bank A7, originally 43ab
+A0E337,replace,2,f1b7   ; bank A7, originally bdb7
+A0E34F,replace,2,a094   ; bank A7, originally 9094
+A0E351,replace,2,c594   ; bank A7, originally b594
+A0E361,replace,2,9786   ; bank A7, originally 8786
+A0E371,replace,2,7eab   ; bank A7, originally 68ab
+A0E377,replace,2,35b8   ; bank A7, originally 01b8
+A0E38F,replace,2,9f94   ; bank A7, originally 8f94
+A0E3A1,replace,2,9786   ; bank A7, originally 8786
+A0E3B1,replace,2,b2ab   ; bank A7, originally 9cab
+A0E3B7,replace,2,41b8   ; bank A7, originally 0db8
+A0E3CF,replace,2,9f94   ; bank A7, originally 8f94
+A0E3E1,replace,2,9786   ; bank A7, originally 8786
+A0E3F1,replace,2,e0ab   ; bank A7, originally caab
+A0E3F7,replace,2,4db8   ; bank A7, originally 19b8
+A0E40F,replace,2,9f94   ; bank A7, originally 8f94
+A0E421,replace,2,9786   ; bank A7, originally 8786
+A0E431,replace,2,0eac   ; bank A7, originally f8ab
+A0E437,replace,2,2aba   ; bank A7, originally f6b9
+A0E44F,replace,2,9f94   ; bank A7, originally 8f94
+A0E451,replace,2,c594   ; bank A7, originally b594
+A0E461,replace,2,9786   ; bank A7, originally 8786
+A0E471,replace,2,23bd   ; bank A7, originally efbc
+A0E477,replace,2,66bd   ; bank A7, originally 32bd
+A0E48F,replace,2,03bd   ; bank A7, originally cfbc
+A0E4A1,replace,2,9786   ; bank A7, originally 8786
+A0E4B1,replace,2,61bd   ; bank A7, originally 2dbd
+A0E4B7,replace,2,7dbd   ; bank A7, originally 49bd
+A0E4CF,replace,2,12bd   ; bank A7, originally debc
+A0E4E1,replace,2,35ca   ; bank A7, originally 01ca
+A0E4F1,replace,2,27ce   ; bank A7, originally f3cd
+A0E4F7,replace,2,dace   ; bank A7, originally a6ce
+A0E4FB,replace,2,73dd   ; bank A7, originally 3fdd
+A0E507,replace,2,cedd   ; bank A7, originally 9add
+A0E50F,replace,2,c9dd   ; bank A7, originally 95dd
+A0E511,replace,2,cfdd   ; bank A7, originally 9bdd
+A0E521,replace,2,35ca   ; bank A7, originally 01ca
+A0E531,replace,2,89ce   ; bank A7, originally 55ce
+A0E561,replace,2,35ca   ; bank A7, originally 01ca
+A0E571,replace,2,89ce   ; bank A7, originally 55ce
+A0E577,replace,2,45e0   ; bank A7, originally 11e0
+A0E5A1,replace,2,35ca   ; bank A7, originally 01ca
+A0E5B1,replace,2,89ce   ; bank A7, originally 55ce
+A0E5B7,replace,2,45e0   ; bank A7, originally 11e0
+A0E5E1,replace,2,32e8   ; bank A7, originally fee7
+A0E5F1,replace,2,46e9   ; bank A7, originally 12e9
+A0E5F7,replace,2,74e9   ; bank A7, originally 40e9
+A0E621,replace,2,59f2   ; bank A7, originally 25f2
+A0E631,replace,2,11f5   ; bank A7, originally ddf4
+A0E637,replace,2,62f5   ; bank A7, originally 2ef5
+A0E661,replace,2,9786   ; bank A8, originally 8786
+A0E671,replace,2,f087   ; bank A8, originally e087
+A0E677,replace,2,2b89   ; bank A8, originally 1b89
+A0E687,replace,2,1c8b   ; bank A8, originally 0c8b
+A0E68F,replace,2,168b   ; bank A8, originally 068b
+A0E691,replace,2,228b   ; bank A8, originally 128b
+A0E6A1,replace,2,9786   ; bank A8, originally 8786
+A0E6B1,replace,2,c088   ; bank A8, originally b088
+A0E6B7,replace,2,ae89   ; bank A8, originally 9e89
+A0E6E1,replace,2,9c8f   ; bank A8, originally 8c8f
+A0E6F1,replace,2,6890   ; bank A8, originally 5890
+A0E6F7,replace,2,f290   ; bank A8, originally e290
+A0E721,replace,2,8993   ; bank A8, originally 7993
+A0E731,replace,2,f396   ; bank A8, originally e396
+A0E737,replace,2,4097   ; bank A8, originally 3097
+A0E761,replace,2,ad95   ; bank A8, originally 9d95
+A0E771,replace,2,f396   ; bank A8, originally e396
+A0E777,replace,2,4097   ; bank A8, originally 3097
+A0E7A1,replace,2,bc99   ; bank A8, originally ac99
+A0E7B1,replace,2,fe9a   ; bank A8, originally ee9a
+A0E7B7,replace,2,4c9b   ; bank A8, originally 3c9b
+A0E7E1,replace,2,5f9f   ; bank A8, originally 4f9f
+A0E7F1,replace,2,58a1   ; bank A8, originally 48a1
+A0E7F7,replace,2,21a2   ; bank A8, originally 11a2
+A0E7FD,replace,2,45a8   ; bank A8, originally 35a8
+A0E80F,replace,2,a9a7   ; bank A8, originally 99a7
+A0E811,replace,2,cda7   ; bank A8, originally bda7
+A0E821,replace,2,0eab   ; bank A8, originally feaa
+A0E831,replace,2,56ab   ; bank A8, originally 46ab
+A0E837,replace,2,85ab   ; bank A8, originally 75ab
+A0E851,replace,2,93ab   ; bank A8, originally 83ab
+A0E861,replace,2,2cac   ; bank A8, originally 1cac
+A0E871,replace,2,9baf   ; bank A8, originally 8baf
+A0E877,replace,2,1ab1   ; bank A8, originally 0ab1
+A0E887,replace,2,10b4   ; bank A8, originally 00b4
+A0E88F,replace,2,16b4   ; bank A8, originally 06b4
+A0E891,replace,2,1cb4   ; bank A8, originally 0cb4
+A0E8A1,replace,2,6eb6   ; bank A8, originally 5eb6
+A0E8B1,replace,2,86b7   ; bank A8, originally 76b7
+A0E8B7,replace,2,1db8   ; bank A8, originally 0db8
+A0E8CF,replace,2,36be   ; bank A8, originally 2ebe
+A0E8D1,replace,2,b4be   ; bank A8, originally acbe
+A0E8E1,replace,2,4bc1   ; bank A8, originally 43c1
+A0E8F1,replace,2,d1c1   ; bank A8, originally c9c1
+A0E8F7,replace,2,24c2   ; bank A8, originally 1cc2
+A0E907,replace,2,47c6   ; bank A8, originally 3fc6
+A0E90F,replace,2,c6c5   ; bank A8, originally bec5
+A0E911,replace,2,f7c5   ; bank A8, originally efc5
+A0E921,replace,2,bbc6   ; bank A8, originally b3c6
+A0E931,replace,2,7fcb   ; bank A8, originally 77cb
+A0E937,replace,2,3ecc   ; bank A8, originally 36cc
+A0E94F,replace,2,7cd1   ; bank A8, originally 74d1
+A0E951,replace,2,9ad1   ; bank A8, originally 92d1
+A0E961,replace,2,bbc6   ; bank A8, originally b3c6
+A0E971,replace,2,d4cb   ; bank A8, originally cccb
+A0E977,replace,2,6ecc   ; bank A8, originally 66cc
+A0E98F,replace,2,7cd1   ; bank A8, originally 74d1
+A0E991,replace,2,95d1   ; bank A8, originally 8dd1
+A0E9A1,replace,2,29d8   ; bank A8, originally 21d8
+A0E9B1,replace,2,d1d8   ; bank A8, originally c9d8
+A0E9B7,replace,2,13d9   ; bank A8, originally 0bd9
+A0E9D1,replace,2,1cdb   ; bank A8, originally 14db
+A0E9E1,replace,2,cfdb   ; bank A8, originally c7db
+A0E9F1,replace,2,d5dc   ; bank A8, originally cddc
+A0E9F7,replace,2,73dd   ; bank A8, originally 6bdd
+A0EA21,replace,2,38e2   ; bank A8, originally 30e2
+A0EA31,replace,2,90e3   ; bank A8, originally 88e3
+A0EA37,replace,2,cbe3   ; bank A8, originally c3e3
+A0EA61,replace,2,8fe5   ; bank A8, originally 87e5
+A0EA71,replace,2,3fe6   ; bank A8, originally 37e6
+A0EA77,replace,2,96e6   ; bank A8, originally 8ee6
+A0EA91,replace,2,16e7   ; bank A8, originally 0ee7
+A0EAA1,replace,2,b4e7   ; bank A8, originally ace7
+A0EAB1,replace,2,36e8   ; bank A8, originally 2ee8
+A0EAB7,replace,2,b6e8   ; bank A8, originally aee8
+A0EAD1,replace,2,25e9   ; bank A8, originally 1de9
+A0EAE1,replace,2,a2e9   ; bank A8, originally 9ae9
+A0EAF1,replace,2,90f1   ; bank A8, originally 88f1
+A0EAF7,replace,2,64f2   ; bank A8, originally 5cf2
+A0EB11,replace,2,10f7   ; bank A8, originally 01f7
+A0EB21,replace,2,a2e9   ; bank A8, originally 9ae9
+A0EB31,replace,2,1cf2   ; bank A8, originally 14f2
+A0EB37,replace,2,6af2   ; bank A8, originally 62f2
+A0EB61,replace,2,c2e9   ; bank A8, originally bae9
+A0EB71,replace,2,90f1   ; bank A8, originally 88f1
+A0EB77,replace,2,64f2   ; bank A8, originally 5cf2
+A0EB91,replace,2,10f7   ; bank A8, originally 01f7
+A0EBA1,replace,2,c2e9   ; bank A8, originally bae9
+A0EBB1,replace,2,1cf2   ; bank A8, originally 14f2
+A0EBB7,replace,2,6af2   ; bank A8, originally 62f2
+A0EBE1,replace,2,e2e9   ; bank A8, originally dae9
+A0EBF1,replace,2,90f1   ; bank A8, originally 88f1
+A0EBF7,replace,2,64f2   ; bank A8, originally 5cf2
+A0EC11,replace,2,10f7   ; bank A8, originally 01f7
+A0EC21,replace,2,e2e9   ; bank A8, originally dae9
+A0EC31,replace,2,1cf2   ; bank A8, originally 14f2
+A0EC37,replace,2,6af2   ; bank A8, originally 62f2
+A0EC61,replace,2,8294   ; bank A9, originally 7294
+A0EC71,replace,2,1587   ; bank A9, originally 0587
+A0EC77,replace,2,9b87   ; bank A9, originally 8b87
+A0EC7B,replace,2,9b87   ; bank A9, originally 8b87
+A0EC87,replace,2,9787   ; bank A9, originally 8787
+A0EC8F,replace,2,13b6   ; bank A9, originally c6b5
+A0EC91,replace,2,54b5   ; bank A9, originally 07b5
+A0ECA1,replace,2,8294   ; bank A9, originally 7294
+A0ECB1,replace,2,9786   ; bank A9, originally 8786
+A0ECB7,replace,2,4e87   ; bank A9, originally 3e87
+A0ECBB,replace,2,4e87   ; bank A9, originally 3e87
+A0ECC7,replace,2,9787   ; bank A9, originally 8787
+A0ECCF,replace,2,12b6   ; bank A9, originally c5b5
+A0ECD1,replace,2,50b5   ; bank A9, originally 03b5
+A0ECE1,replace,2,33f9   ; bank A9, originally e6f8
+A0ECF1,replace,2,5dc7   ; bank A9, originally 10c7
+A0ECF7,replace,2,c6c7   ; bank A9, originally 79c7
+A0ED0F,replace,2,50cf   ; bank A9, originally 03cf
+A0ED21,replace,2,8294   ; bank A9, originally 7294
+A0ED31,replace,2,458b   ; bank A9, originally 358b
+A0ED37,replace,2,958b   ; bank A9, originally 858b
+A0ED61,replace,2,09d7   ; bank A9, originally bcd6
+A0ED71,replace,2,55d3   ; bank A9, originally 08d3
+A0ED77,replace,2,b5d3   ; bank A9, originally 68d3
+A0ED87,replace,2,77d4   ; bank A9, originally 2ad4
+A0ED8F,replace,2,80d4   ; bank A9, originally 33d4
+A0ED91,replace,2,80d4   ; bank A9, originally 33d4
+A0EDA1,replace,2,f3f8   ; bank A9, originally a6f8
+A0EDB1,replace,2,03d8   ; bank A9, originally b6d7
+A0EDB7,replace,2,28d9   ; bank A9, originally dbd8
+A0EDBB,replace,2,28d9   ; bank A9, originally dbd8
+A0EDC7,replace,2,19d9   ; bank A9, originally ccd8
+A0EDCF,replace,2,91dd   ; bank A9, originally 44dd
+A0EDD1,replace,2,6add   ; bank A9, originally 1ddd
+A0EDE1,replace,2,f9eb   ; bank A9, originally aceb
+A0EDF1,replace,2,03d8   ; bank A9, originally b6d7
+A0EDF7,replace,2,28d9   ; bank A9, originally dbd8
+A0EE07,replace,2,6add   ; bank A9, originally 1ddd
+A0EE0F,replace,2,6add   ; bank A9, originally 1ddd
+A0EE11,replace,2,6add   ; bank A9, originally 1ddd
+A0EE21,replace,2,f3f8   ; bank A9, originally a6f8
+A0EE31,replace,2,96d8   ; bank A9, originally 49d8
+A0EE37,replace,2,28d9   ; bank A9, originally dbd8
+A0EE47,replace,2,3add   ; bank A9, originally eddc
+A0EE4F,replace,2,45dd   ; bank A9, originally f8dc
+A0EE51,replace,2,45dd   ; bank A9, originally f8dc
+A0EE61,replace,2,f3f8   ; bank A9, originally a6f8
+A0EE71,replace,2,c3d8   ; bank A9, originally 76d8
+A0EE77,replace,2,28d9   ; bank A9, originally dbd8
+A0EE87,replace,2,4add   ; bank A9, originally fddc
+A0EE8F,replace,2,55dd   ; bank A9, originally 08dd
+A0EE91,replace,2,55dd   ; bank A9, originally 08dd
+A0EEA1,replace,2,f3f8   ; bank A9, originally a6f8
+A0EEB1,replace,2,ecd8   ; bank A9, originally 9fd8
+A0EEB7,replace,2,28d9   ; bank A9, originally dbd8
+A0EEC7,replace,2,5add   ; bank A9, originally 0ddd
+A0EECF,replace,2,65dd   ; bank A9, originally 18dd
+A0EED1,replace,2,65dd   ; bank A9, originally 18dd
+A0EEE1,replace,2,33f9   ; bank A9, originally e6f8
+A0EEF1,replace,2,84ef   ; bank A9, originally 37ef
+A0EEF7,replace,2,12f0   ; bank A9, originally c5ef
+A0EF07,replace,2,07f0   ; bank A9, originally baef
+A0EF0F,replace,2,d6f7   ; bank A9, originally 89f7
+A0EF11,replace,2,8ff8   ; bank A9, originally 42f8
+A0EF21,replace,2,9786   ; bank AA, originally 8786
+A0EF31,replace,2,8fc8   ; bank AA, originally 7fc8
+A0EF37,replace,2,b4c6   ; bank AA, originally a4c6
+A0EF3B,replace,2,8ec6   ; bank AA, originally 7ec6
+A0EF4F,replace,2,87c9   ; bank AA, originally 77c9
+A0EF51,replace,2,8cc9   ; bank AA, originally 7cc9
+A0EF61,replace,2,9786   ; bank AA, originally 8786
+A0EF71,replace,2,8fc8   ; bank AA, originally 7fc8
+A0EF77,replace,2,b4c6   ; bank AA, originally a4c6
+A0EF7B,replace,2,8ec6   ; bank AA, originally 7ec6
+A0EF8F,replace,2,87c9   ; bank AA, originally 77c9
+A0EF91,replace,2,8cc9   ; bank AA, originally 7cc9
+A0EFA1,replace,2,9786   ; bank AA, originally 8786
+A0EFB1,replace,2,8fc8   ; bank AA, originally 7fc8
+A0EFB7,replace,2,79d3   ; bank AA, originally 69d3
+A0EFBB,replace,2,cad3   ; bank AA, originally bad3
+A0EFCF,replace,2,87c9   ; bank AA, originally 77c9
+A0EFD1,replace,2,77d6   ; bank AA, originally 67d6
+A0EFE1,replace,2,9786   ; bank AA, originally 8786
+A0EFF1,replace,2,8fc8   ; bank AA, originally 7fc8
+A0EFF7,replace,2,79d3   ; bank AA, originally 69d3
+A0EFFB,replace,2,cad3   ; bank AA, originally bad3
+A0F00F,replace,2,87c9   ; bank AA, originally 77c9
+A0F011,replace,2,77d6   ; bank AA, originally 67d6
+A0F021,replace,2,55d7   ; bank AA, originally 45d7
+A0F031,replace,2,d8d7   ; bank AA, originally c8d7
+A0F037,replace,2,d7d7   ; bank AA, originally c7d7
+A0F061,replace,2,55d7   ; bank AA, originally 45d7
+A0F0A1,replace,2,21d9   ; bank AA, originally 11d9
+A0F0B1,replace,2,53de   ; bank AA, originally 43de
+A0F0B7,replace,2,b3dc   ; bank AA, originally a3dc
+A0F0BB,replace,2,b3dc   ; bank AA, originally a3dc
+A0F0CF,replace,2,3fdf   ; bank AA, originally 2fdf
+A0F0D1,replace,2,44df   ; bank AA, originally 34df
+A0F0E1,replace,2,cde2   ; bank AA, originally bde2
+A0F0F1,replace,2,26e7   ; bank AA, originally 16e7
+A0F121,replace,2,2de3   ; bank AA, originally 1de3
+A0F131,replace,2,35e7   ; bank AA, originally 25e7
+A0F137,replace,2,b7e7   ; bank AA, originally a7e7
+A0F14F,replace,2,ebe7   ; bank AA, originally dbe7
+A0F151,replace,2,ece7   ; bank AA, originally dce7
+A0F175,replace,2,9786   ; bank B3, originally 8786
+A0F185,replace,2,0b87   ; bank B3, originally fb86
+A0F18B,replace,2,1e87   ; bank B3, originally 0e87
+A0F1A9,replace,2,c0fd   ; bank B7, originally 00fb
+A0F1B5,replace,2,9b87   ; bank B3, originally 8b87
+A0F1C5,replace,2,4b88   ; bank B3, originally 3b88
+A0F1CB,replace,2,8a88   ; bank B3, originally 7a88
+A0F1F5,replace,2,0d8a   ; bank B3, originally fd89
+A0F205,replace,2,4b88   ; bank B3, originally 3b88
+A0F20B,replace,2,8a88   ; bank B3, originally 7a88
+A0F235,replace,2,d18a   ; bank B3, originally c18a
+A0F245,replace,2,718b   ; bank B3, originally 618b
+A0F24B,replace,2,ae8b   ; bank B3, originally 9e8b
+A0F275,replace,2,ec8e   ; bank B3, originally dc8e
+A0F285,replace,2,5c8f   ; bank B3, originally 4c8f
+A0F28B,replace,2,be8f   ; bank B3, originally ae8f
+A0F2B5,replace,2,2993   ; bank B3, originally 1993
+A0F2C5,replace,2,9395   ; bank B3, originally 8395
+A0F2CB,replace,2,7896   ; bank B3, originally 6896
+A0F2DB,replace,2,51a0   ; bank B3, originally 41a0
+A0F2E3,replace,2,0fa0   ; bank B3, originally ff9f
+A0F2E5,replace,2,26a0   ; bank B3, originally 16a0
+A0F2E9,replace,2,c0e5   ; bank B7, originally 00e3
+A0F2F5,replace,2,35e5   ; bank B3, originally 25e5
+A0F305,replace,2,dbe6   ; bank B3, originally cbe6
+A0F30B,replace,2,65e6   ; bank B3, originally 55e6
+A0F335,replace,2,54e9   ; bank B3, originally 44e9
+A0F345,replace,2,f5ea   ; bank B3, originally e5ea
+A0F34B,replace,2,2aeb   ; bank B3, originally 1aeb
+A0F375,replace,2,9786   ; bank B2, originally 8786
+A0F385,replace,2,afef   ; bank B2, originally 9fef
+A0F38B,replace,2,38f0   ; bank B2, originally 2df0
+A0F39B,replace,2,7787   ; bank B2, originally 6787
+A0F3A3,replace,2,7c87   ; bank B2, originally 6c87
+A0F3A5,replace,2,8987   ; bank B2, originally 7987
+A0F3B5,replace,2,b786   ; bank B2, originally a786
+A0F3C5,replace,2,afef   ; bank B2, originally 9fef
+A0F3CB,replace,2,38f0   ; bank B2, originally 2df0
+A0F3E3,replace,2,7c87   ; bank B2, originally 6c87
+A0F3E5,replace,2,8987   ; bank B2, originally 7987
+A0F3F5,replace,2,f786   ; bank B2, originally e786
+A0F405,replace,2,afef   ; bank B2, originally 9fef
+A0F40B,replace,2,38f0   ; bank B2, originally 2df0
+A0F423,replace,2,7c87   ; bank B2, originally 6c87
+A0F425,replace,2,8987   ; bank B2, originally 7987
+A0F435,replace,2,3787   ; bank B2, originally 2787
+A0F445,replace,2,afef   ; bank B2, originally 9fef
+A0F44B,replace,2,38f0   ; bank B2, originally 2df0
+A0F463,replace,2,7c87   ; bank B2, originally 6c87
+A0F465,replace,2,8987   ; bank B2, originally 7987
+A0F475,replace,2,d786   ; bank B2, originally c786
+A0F485,replace,2,afef   ; bank B2, originally 9fef
+A0F48B,replace,2,38f0   ; bank B2, originally 2df0
+A0F4A3,replace,2,7c87   ; bank B2, originally 6c87
+A0F4A5,replace,2,8987   ; bank B2, originally 7987
+A0F4B5,replace,2,1787   ; bank B2, originally 0787
+A0F4C5,replace,2,afef   ; bank B2, originally 9fef
+A0F4CB,replace,2,38f0   ; bank B2, originally 2df0
+A0F4E3,replace,2,7c87   ; bank B2, originally 6c87
+A0F4E5,replace,2,8987   ; bank B2, originally 7987
+A0F4F5,replace,2,9786   ; bank B2, originally 8786
+A0F505,replace,2,57f6   ; bank B2, originally def5
+A0F50B,replace,2,1bf7   ; bank B2, originally a2f6
+A0F51B,replace,2,7787   ; bank B2, originally 6787
+A0F523,replace,2,7c87   ; bank B2, originally 6c87
+A0F525,replace,2,8987   ; bank B2, originally 7987
+A0F535,replace,2,b786   ; bank B2, originally a786
+A0F545,replace,2,57f6   ; bank B2, originally def5
+A0F54B,replace,2,1bf7   ; bank B2, originally a2f6
+A0F55B,replace,2,7787   ; bank B2, originally 6787
+A0F563,replace,2,7c87   ; bank B2, originally 6c87
+A0F565,replace,2,8987   ; bank B2, originally 7987
+A0F575,replace,2,f786   ; bank B2, originally e786
+A0F585,replace,2,57f6   ; bank B2, originally def5
+A0F58B,replace,2,1bf7   ; bank B2, originally a2f6
+A0F59B,replace,2,7787   ; bank B2, originally 6787
+A0F5A3,replace,2,7c87   ; bank B2, originally 6c87
+A0F5A5,replace,2,8987   ; bank B2, originally 7987
+A0F5B5,replace,2,1787   ; bank B2, originally 0787
+A0F5C5,replace,2,57f6   ; bank B2, originally def5
+A0F5CB,replace,2,1bf7   ; bank B2, originally a2f6
+A0F5DB,replace,2,7787   ; bank B2, originally 6787
+A0F5E3,replace,2,7c87   ; bank B2, originally 6c87
+A0F5E5,replace,2,8987   ; bank B2, originally 7987
+A0F5F5,replace,2,d786   ; bank B2, originally c786
+A0F605,replace,2,57f6   ; bank B2, originally def5
+A0F60B,replace,2,1bf7   ; bank B2, originally a2f6
+A0F61B,replace,2,7787   ; bank B2, originally 6787
+A0F623,replace,2,7c87   ; bank B2, originally 6c87
+A0F625,replace,2,8987   ; bank B2, originally 7987
+A0F635,replace,2,1787   ; bank B2, originally 0787
+A0F645,replace,2,57f6   ; bank B2, originally def5
+A0F64B,replace,2,1bf7   ; bank B2, originally a2f6
+A0F65B,replace,2,7787   ; bank B2, originally 6787
+A0F663,replace,2,7c87   ; bank B2, originally 6c87
+A0F665,replace,2,8987   ; bank B2, originally 7987
+A0F675,replace,2,9786   ; bank B2, originally 8786
+A0F685,replace,2,7bfd   ; bank B2, originally 02fd
+A0F68B,replace,2,abfd   ; bank B2, originally 32fd
+A0F69B,replace,2,7787   ; bank B2, originally 6787
+A0F6A3,replace,2,7c87   ; bank B2, originally 6c87
+A0F6A5,replace,2,8987   ; bank B2, originally 7987
+A0F6B5,replace,2,b786   ; bank B2, originally a786
+A0F6C5,replace,2,7bfd   ; bank B2, originally 02fd
+A0F6CB,replace,2,abfd   ; bank B2, originally 32fd
+A0F6DB,replace,2,7787   ; bank B2, originally 6787
+A0F6E3,replace,2,7c87   ; bank B2, originally 6c87
+A0F6E5,replace,2,8987   ; bank B2, originally 7987
+A0F6F5,replace,2,f786   ; bank B2, originally e786
+A0F705,replace,2,7bfd   ; bank B2, originally 02fd
+A0F70B,replace,2,abfd   ; bank B2, originally 32fd
+A0F71B,replace,2,7787   ; bank B2, originally 6787
+A0F723,replace,2,7c87   ; bank B2, originally 6c87
+A0F725,replace,2,8987   ; bank B2, originally 7987
+A0F735,replace,2,3787   ; bank B2, originally 2787
+A0F745,replace,2,7bfd   ; bank B2, originally 02fd
+A0F74B,replace,2,abfd   ; bank B2, originally 32fd
+A0F75B,replace,2,7787   ; bank B2, originally 6787
+A0F763,replace,2,7c87   ; bank B2, originally 6c87
+A0F765,replace,2,8987   ; bank B2, originally 7987
+A0F775,replace,2,d786   ; bank B2, originally c786
+A0F785,replace,2,7bfd   ; bank B2, originally 02fd
+A0F78B,replace,2,abfd   ; bank B2, originally 32fd
+A0F79B,replace,2,7787   ; bank B2, originally 6787
+A0F7A3,replace,2,7c87   ; bank B2, originally 6c87
+A0F7A5,replace,2,8987   ; bank B2, originally 7987
+A0F7B5,replace,2,1787   ; bank B2, originally 0787
+A0F7C5,replace,2,7bfd   ; bank B2, originally 02fd
+A0F7CB,replace,2,abfd   ; bank B2, originally 32fd
+A0F7DB,replace,2,7787   ; bank B2, originally 6787
+A0F7E3,replace,2,7c87   ; bank B2, originally 6c87
+A0F7E5,replace,2,8987   ; bank B2, originally 7987
 
 ;=======================================================
 ; Bank A1
 ;=======================================================
-A18000,ignore,27601
+A18002,replace,2,dfd3   ; bank A0, originally bfd3
+A18012,replace,2,dfd3   ; bank A0, originally bfd3
+A18022,replace,2,dfd3   ; bank A0, originally bfd3
+A18032,replace,2,dfd3   ; bank A0, originally bfd3
+A18042,replace,2,dfd3   ; bank A0, originally bfd3
+A18052,replace,2,1fd7   ; bank A0, originally ffd6
+A18062,replace,2,1fd7   ; bank A0, originally ffd6
+A18072,replace,2,1fd7   ; bank A0, originally ffd6
+A18082,replace,2,1fd7   ; bank A0, originally ffd6
+A18092,replace,2,1fd7   ; bank A0, originally ffd6
+A180A2,replace,2,5fd8   ; bank A0, originally 3fd8
+A180B2,replace,2,5fd8   ; bank A0, originally 3fd8
+A180C2,replace,2,5fd8   ; bank A0, originally 3fd8
+A180D5,replace,2,dfe9   ; bank A0, originally bfe9
+A180E5,replace,2,dfe9   ; bank A0, originally bfe9
+A180F5,replace,2,dfe9   ; bank A0, originally bfe9
+A18108,replace,2,5fd6   ; bank A0, originally 3fd6
+A18118,replace,2,5fd6   ; bank A0, originally 3fd6
+A18128,replace,2,5fd6   ; bank A0, originally 3fd6
+A18138,replace,2,1fdd   ; bank A0, originally ffdc
+A18148,replace,2,1fdd   ; bank A0, originally ffdc
+A18158,replace,2,1fdd   ; bank A0, originally ffdc
+A18168,replace,2,1fdd   ; bank A0, originally ffdc
+A18178,replace,2,1fdd   ; bank A0, originally ffdc
+A18188,replace,2,1fdd   ; bank A0, originally ffdc
+A1819B,replace,2,9fea   ; bank A0, originally 7fea
+A181AB,replace,2,9fea   ; bank A0, originally 7fea
+A181BB,replace,2,9fea   ; bank A0, originally 7fea
+A181CB,replace,2,9fea   ; bank A0, originally 7fea
+A181DB,replace,2,9fea   ; bank A0, originally 7fea
+A181EB,replace,2,9fea   ; bank A0, originally 7fea
+A181FE,replace,2,9fea   ; bank A0, originally 7fea
+A1820E,replace,2,9fea   ; bank A0, originally 7fea
+A1821E,replace,2,9fea   ; bank A0, originally 7fea
+A1822E,replace,2,9fea   ; bank A0, originally 7fea
+A1823E,replace,2,9fea   ; bank A0, originally 7fea
+A1824E,replace,2,9fea   ; bank A0, originally 7fea
+A18261,replace,2,1fdd   ; bank A0, originally ffdc
+A18271,replace,2,1fdd   ; bank A0, originally ffdc
+A18281,replace,2,1fdd   ; bank A0, originally ffdc
+A18291,replace,2,9fdb   ; bank A0, originally 7fdb
+A182A1,replace,2,9fdb   ; bank A0, originally 7fdb
+A182B1,replace,2,9fdb   ; bank A0, originally 7fdb
+A182C1,replace,2,1fdd   ; bank A0, originally ffdc
+A182D1,replace,2,9fd4   ; bank A0, originally 7fd4
+A182E1,replace,2,1fdd   ; bank A0, originally ffdc
+A182F1,replace,2,1fdd   ; bank A0, originally ffdc
+A18301,replace,2,1fdd   ; bank A0, originally ffdc
+A18311,replace,2,1fdd   ; bank A0, originally ffdc
+A18321,replace,2,1fdd   ; bank A0, originally ffdc
+A18331,replace,2,1fdd   ; bank A0, originally ffdc
+A18341,replace,2,1fdd   ; bank A0, originally ffdc
+A18351,replace,2,9fd4   ; bank A0, originally 7fd4
+A18364,replace,2,1fd1   ; bank A0, originally ffd0
+A18374,replace,2,1fd1   ; bank A0, originally ffd0
+A18384,replace,2,1fd1   ; bank A0, originally ffd0
+A18394,replace,2,1fd1   ; bank A0, originally ffd0
+A183A4,replace,2,1fd1   ; bank A0, originally ffd0
+A183B4,replace,2,1fd1   ; bank A0, originally ffd0
+A183C4,replace,2,1fd1   ; bank A0, originally ffd0
+A183D4,replace,2,1fd1   ; bank A0, originally ffd0
+A183E4,replace,2,1fd1   ; bank A0, originally ffd0
+A183F4,replace,2,1fd1   ; bank A0, originally ffd0
+A18404,replace,2,1fd1   ; bank A0, originally ffd0
+A18414,replace,2,1fd1   ; bank A0, originally ffd0
+A18427,replace,2,73f6   ; bank A0, originally 53f6
+A18437,replace,2,73f3   ; bank A0, originally 53f3
+A18447,replace,2,73f6   ; bank A0, originally 53f6
+A18457,replace,2,73f6   ; bank A0, originally 53f6
+A18467,replace,2,73f6   ; bank A0, originally 53f6
+A1847A,replace,2,dfe7   ; bank A0, originally bfe7
+A1848A,replace,2,dfe7   ; bank A0, originally bfe7
+A1849A,replace,2,dfe7   ; bank A0, originally bfe7
+A184AA,replace,2,5fd6   ; bank A0, originally 3fd6
+A184BA,replace,2,5fd6   ; bank A0, originally 3fd6
+A184CA,replace,2,5fd6   ; bank A0, originally 3fd6
+A184DA,replace,2,dfe7   ; bank A0, originally bfe7
+A184ED,replace,2,1fef   ; bank A0, originally ffee
+A18500,replace,2,b3f6   ; bank A0, originally 93f6
+A18510,replace,2,b3f6   ; bank A0, originally 93f6
+A18520,replace,2,b3f6   ; bank A0, originally 93f6
+A18530,replace,2,b3f6   ; bank A0, originally 93f6
+A18540,replace,2,b3f6   ; bank A0, originally 93f6
+A18550,replace,2,9fe8   ; bank A0, originally 7fe8
+A18560,replace,2,9fe8   ; bank A0, originally 7fe8
+A18573,replace,2,5fd7   ; bank A0, originally 3fd7
+A18586,replace,2,dfe6   ; bank A0, originally bfe6
+A18596,replace,2,dfe6   ; bank A0, originally bfe6
+A185B2,replace,2,33f6   ; bank A0, originally 13f6
+A185C2,replace,2,33f6   ; bank A0, originally 13f6
+A185E1,replace,2,9fd8   ; bank A0, originally 7fd8
+A185F1,replace,2,9fd8   ; bank A0, originally 7fd8
+A18601,replace,2,9fd8   ; bank A0, originally 7fd8
+A18611,replace,2,9fd8   ; bank A0, originally 7fd8
+A18621,replace,2,9fd8   ; bank A0, originally 7fd8
+A18631,replace,2,9fd8   ; bank A0, originally 7fd8
+A18641,replace,2,9fd8   ; bank A0, originally 7fd8
+A18651,replace,2,9fd8   ; bank A0, originally 7fd8
+A18661,replace,2,9fd8   ; bank A0, originally 7fd8
+A18671,replace,2,9fd8   ; bank A0, originally 7fd8
+A18684,replace,2,1fd7   ; bank A0, originally ffd6
+A18694,replace,2,1fd7   ; bank A0, originally ffd6
+A186A4,replace,2,b3f1   ; bank A0, originally 93f1
+A186B4,replace,2,1fd4   ; bank A0, originally ffd3
+A186C4,replace,2,1fd8   ; bank A0, originally ffd7
+A186D4,replace,2,1fd8   ; bank A0, originally ffd7
+A186E4,replace,2,1fd8   ; bank A0, originally ffd7
+A186FA,replace,2,9fd8   ; bank A0, originally 7fd8
+A1870A,replace,2,9fd8   ; bank A0, originally 7fd8
+A1871A,replace,2,9fd8   ; bank A0, originally 7fd8
+A1872A,replace,2,9fd8   ; bank A0, originally 7fd8
+A1873A,replace,2,9fd8   ; bank A0, originally 7fd8
+A1874A,replace,2,9fd8   ; bank A0, originally 7fd8
+A1875A,replace,2,9fd8   ; bank A0, originally 7fd8
+A1876A,replace,2,9fd8   ; bank A0, originally 7fd8
+A1877A,replace,2,9fd8   ; bank A0, originally 7fd8
+A1878A,replace,2,9fd8   ; bank A0, originally 7fd8
+A1879A,replace,2,9fd8   ; bank A0, originally 7fd8
+A187AA,replace,2,9fd8   ; bank A0, originally 7fd8
+A187BA,replace,2,9fd8   ; bank A0, originally 7fd8
+A187CA,replace,2,9fd8   ; bank A0, originally 7fd8
+A187DA,replace,2,9fd8   ; bank A0, originally 7fd8
+A187EA,replace,2,9fd8   ; bank A0, originally 7fd8
+A187FA,replace,2,9fd8   ; bank A0, originally 7fd8
+A1880A,replace,2,9fd8   ; bank A0, originally 7fd8
+A1881A,replace,2,9fd8   ; bank A0, originally 7fd8
+A1882A,replace,2,9fd8   ; bank A0, originally 7fd8
+A1883D,replace,2,9fd0   ; bank A0, originally 7fd0
+A1884D,replace,2,dfd0   ; bank A0, originally bfd0
+A1885D,replace,2,dfd0   ; bank A0, originally bfd0
+A18870,replace,2,dfce   ; bank A0, originally bfce
+A18880,replace,2,dfce   ; bank A0, originally bfce
+A18890,replace,2,dfce   ; bank A0, originally bfce
+A188A0,replace,2,dfce   ; bank A0, originally bfce
+A188B6,replace,2,5fdc   ; bank A0, originally 3fdc
+A188C9,replace,2,73f3   ; bank A0, originally 53f3
+A188D9,replace,2,73f3   ; bank A0, originally 53f3
+A188E9,replace,2,73f3   ; bank A0, originally 53f3
+A188F9,replace,2,73f3   ; bank A0, originally 53f3
+A18909,replace,2,73f3   ; bank A0, originally 53f3
+A18919,replace,2,73f3   ; bank A0, originally 53f3
+A18929,replace,2,73f3   ; bank A0, originally 53f3
+A18939,replace,2,73f3   ; bank A0, originally 53f3
+A18949,replace,2,73f3   ; bank A0, originally 53f3
+A18959,replace,2,73f3   ; bank A0, originally 53f3
+A18969,replace,2,73f3   ; bank A0, originally 53f3
+A1897C,replace,2,dfd3   ; bank A0, originally bfd3
+A1898C,replace,2,dfd3   ; bank A0, originally bfd3
+A1899C,replace,2,dfd3   ; bank A0, originally bfd3
+A189AC,replace,2,5fd6   ; bank A0, originally 3fd6
+A189BC,replace,2,5fd6   ; bank A0, originally 3fd6
+A189CC,replace,2,5fd6   ; bank A0, originally 3fd6
+A189DF,replace,2,5fd7   ; bank A0, originally 3fd7
+A189F2,replace,2,dfe7   ; bank A0, originally bfe7
+A18A02,replace,2,f3f1   ; bank A0, originally d3f1
+A18A15,replace,2,9fd8   ; bank A0, originally 7fd8
+A18A25,replace,2,9fd8   ; bank A0, originally 7fd8
+A18A35,replace,2,9fd8   ; bank A0, originally 7fd8
+A18A45,replace,2,9fd8   ; bank A0, originally 7fd8
+A18A55,replace,2,9fd8   ; bank A0, originally 7fd8
+A18A65,replace,2,9fd8   ; bank A0, originally 7fd8
+A18A75,replace,2,9fd8   ; bank A0, originally 7fd8
+A18A85,replace,2,9fd8   ; bank A0, originally 7fd8
+A18A95,replace,2,9fd8   ; bank A0, originally 7fd8
+A18AA5,replace,2,9fd8   ; bank A0, originally 7fd8
+A18AB8,replace,2,9fd7   ; bank A0, originally 7fd7
+A18AC8,replace,2,9fd7   ; bank A0, originally 7fd7
+A18AD8,replace,2,9fd7   ; bank A0, originally 7fd7
+A18AE8,replace,2,9fd7   ; bank A0, originally 7fd7
+A18AF8,replace,2,9fd7   ; bank A0, originally 7fd7
+A18B08,replace,2,9fd7   ; bank A0, originally 7fd7
+A18B18,replace,2,9fd7   ; bank A0, originally 7fd7
+A18B28,replace,2,9fd7   ; bank A0, originally 7fd7
+A18B3E,replace,2,1fe8   ; bank A0, originally ffe7
+A18B4E,replace,2,1fe8   ; bank A0, originally ffe7
+A18B61,replace,2,5fd7   ; bank A0, originally 3fd7
+A18B74,replace,2,5fd7   ; bank A0, originally 3fd7
+A18B87,replace,2,1fd1   ; bank A0, originally ffd0
+A18B97,replace,2,1fd1   ; bank A0, originally ffd0
+A18BA7,replace,2,1fd1   ; bank A0, originally ffd0
+A18BB7,replace,2,9fd2   ; bank A0, originally 7fd2
+A18BCA,replace,2,1fe8   ; bank A0, originally ffe7
+A18BDA,replace,2,1fe8   ; bank A0, originally ffe7
+A18BEA,replace,2,5fdd   ; bank A0, originally 3fdd
+A18BFA,replace,2,5fdd   ; bank A0, originally 3fdd
+A18C0D,replace,2,9fd0   ; bank A0, originally 7fd0
+A18C1D,replace,2,dfd0   ; bank A0, originally bfd0
+A18C2D,replace,2,dfd0   ; bank A0, originally bfd0
+A18C3D,replace,2,1fe2   ; bank A0, originally ffe1
+A18C4D,replace,2,1fe2   ; bank A0, originally ffe1
+A18C5D,replace,2,1fe2   ; bank A0, originally ffe1
+A18C6D,replace,2,1fe2   ; bank A0, originally ffe1
+A18C7D,replace,2,1fe2   ; bank A0, originally ffe1
+A18C8D,replace,2,1fe2   ; bank A0, originally ffe1
+A18C9D,replace,2,1fe2   ; bank A0, originally ffe1
+A18CAD,replace,2,1fe2   ; bank A0, originally ffe1
+A18CBD,replace,2,1fe2   ; bank A0, originally ffe1
+A18CCD,replace,2,1fe2   ; bank A0, originally ffe1
+A18CDD,replace,2,1fe2   ; bank A0, originally ffe1
+A18CED,replace,2,1fe2   ; bank A0, originally ffe1
+A18CFD,replace,2,1fe2   ; bank A0, originally ffe1
+A18D0D,replace,2,1fe2   ; bank A0, originally ffe1
+A18D1D,replace,2,1fe2   ; bank A0, originally ffe1
+A18D2D,replace,2,1fe2   ; bank A0, originally ffe1
+A18D3D,replace,2,1fe2   ; bank A0, originally ffe1
+A18D4D,replace,2,1fe2   ; bank A0, originally ffe1
+A18D5D,replace,2,1fe2   ; bank A0, originally ffe1
+A18D6D,replace,2,1fe2   ; bank A0, originally ffe1
+A18D7D,replace,2,1fe2   ; bank A0, originally ffe1
+A18D8D,replace,2,1fe2   ; bank A0, originally ffe1
+A18DA0,replace,2,1fe2   ; bank A0, originally ffe1
+A18DB0,replace,2,1fe2   ; bank A0, originally ffe1
+A18DC0,replace,2,1fe2   ; bank A0, originally ffe1
+A18DD0,replace,2,1fe2   ; bank A0, originally ffe1
+A18DE0,replace,2,1fe2   ; bank A0, originally ffe1
+A18DF0,replace,2,1fe2   ; bank A0, originally ffe1
+A18E00,replace,2,1fe2   ; bank A0, originally ffe1
+A18E10,replace,2,1fe2   ; bank A0, originally ffe1
+A18E20,replace,2,1fe2   ; bank A0, originally ffe1
+A18E30,replace,2,1fe2   ; bank A0, originally ffe1
+A18E40,replace,2,1fe2   ; bank A0, originally ffe1
+A18E50,replace,2,1fe2   ; bank A0, originally ffe1
+A18E60,replace,2,1fe2   ; bank A0, originally ffe1
+A18E70,replace,2,1fe2   ; bank A0, originally ffe1
+A18E80,replace,2,1fe2   ; bank A0, originally ffe1
+A18E90,replace,2,1fe2   ; bank A0, originally ffe1
+A18EA0,replace,2,1fe2   ; bank A0, originally ffe1
+A18EB0,replace,2,1fe2   ; bank A0, originally ffe1
+A18EC0,replace,2,1fe2   ; bank A0, originally ffe1
+A18ED3,replace,2,33f3   ; bank A0, originally 13f3
+A18EE3,replace,2,f3f2   ; bank A0, originally d3f2
+A18EF3,replace,2,f3f2   ; bank A0, originally d3f2
+A18F03,replace,2,f3f2   ; bank A0, originally d3f2
+A18F19,replace,2,dfea   ; bank A0, originally bfea
+A18F29,replace,2,1feb   ; bank A0, originally ffea
+A18F39,replace,2,dfea   ; bank A0, originally bfea
+A18F49,replace,2,1feb   ; bank A0, originally ffea
+A18F59,replace,2,9fd7   ; bank A0, originally 7fd7
+A18F69,replace,2,9fd7   ; bank A0, originally 7fd7
+A18F7C,replace,2,5fd9   ; bank A0, originally 3fd9
+A18F8C,replace,2,9fdc   ; bank A0, originally 7fdc
+A18F9C,replace,2,9fdc   ; bank A0, originally 7fdc
+A18FAC,replace,2,9fdc   ; bank A0, originally 7fdc
+A18FC5,replace,2,dfea   ; bank A0, originally bfea
+A18FD5,replace,2,1feb   ; bank A0, originally ffea
+A18FE5,replace,2,dfea   ; bank A0, originally bfea
+A18FF5,replace,2,1feb   ; bank A0, originally ffea
+A19005,replace,2,dfea   ; bank A0, originally bfea
+A19015,replace,2,1feb   ; bank A0, originally ffea
+A1902E,replace,2,b3f1   ; bank A0, originally 93f1
+A1903E,replace,2,b3f1   ; bank A0, originally 93f1
+A1904E,replace,2,b3f1   ; bank A0, originally 93f1
+A1905E,replace,2,9fdc   ; bank A0, originally 7fdc
+A1906E,replace,2,9fdc   ; bank A0, originally 7fdc
+A19081,replace,2,5fd7   ; bank A0, originally 3fd7
+A19091,replace,2,1ff0   ; bank A0, originally ffef
+A190A1,replace,2,1ff0   ; bank A0, originally ffef
+A190B1,replace,2,1ff0   ; bank A0, originally ffef
+A190C7,replace,2,dfe7   ; bank A0, originally bfe7
+A190D7,replace,2,dfe7   ; bank A0, originally bfe7
+A190E7,replace,2,dfd9   ; bank A0, originally bfd9
+A190F7,replace,2,dfd9   ; bank A0, originally bfd9
+A19107,replace,2,dfd9   ; bank A0, originally bfd9
+A1911A,replace,2,1fd7   ; bank A0, originally ffd6
+A1912A,replace,2,dfcf   ; bank A0, originally bfcf
+A1913A,replace,2,dfcf   ; bank A0, originally bfcf
+A1914A,replace,2,dfcf   ; bank A0, originally bfcf
+A1915A,replace,2,1fd7   ; bank A0, originally ffd6
+A1916A,replace,2,dfd7   ; bank A0, originally bfd7
+A1917A,replace,2,dfd7   ; bank A0, originally bfd7
+A1918D,replace,2,1fdd   ; bank A0, originally ffdc
+A1919D,replace,2,1fdd   ; bank A0, originally ffdc
+A191AD,replace,2,9fea   ; bank A0, originally 7fea
+A191BD,replace,2,9fea   ; bank A0, originally 7fea
+A191CD,replace,2,9fea   ; bank A0, originally 7fea
+A191DD,replace,2,9fea   ; bank A0, originally 7fea
+A191ED,replace,2,9fea   ; bank A0, originally 7fea
+A19200,replace,2,1fdd   ; bank A0, originally ffdc
+A19210,replace,2,1fdd   ; bank A0, originally ffdc
+A19220,replace,2,9fdb   ; bank A0, originally 7fdb
+A19230,replace,2,9fdb   ; bank A0, originally 7fdb
+A19240,replace,2,9fd2   ; bank A0, originally 7fd2
+A19250,replace,2,9fea   ; bank A0, originally 7fea
+A19260,replace,2,9fea   ; bank A0, originally 7fea
+A19270,replace,2,9fea   ; bank A0, originally 7fea
+A19280,replace,2,9fea   ; bank A0, originally 7fea
+A19290,replace,2,9fea   ; bank A0, originally 7fea
+A192A3,replace,2,1fd0   ; bank A0, originally ffcf
+A192B3,replace,2,1fd0   ; bank A0, originally ffcf
+A192C3,replace,2,1fd0   ; bank A0, originally ffcf
+A192D3,replace,2,1fd0   ; bank A0, originally ffcf
+A192E3,replace,2,9fdc   ; bank A0, originally 7fdc
+A192F3,replace,2,9fdc   ; bank A0, originally 7fdc
+A19303,replace,2,9fdc   ; bank A0, originally 7fdc
+A19313,replace,2,9fdc   ; bank A0, originally 7fdc
+A19326,replace,2,5fd7   ; bank A0, originally 3fd7
+A19336,replace,2,dfd9   ; bank A0, originally bfd9
+A19346,replace,2,dfd9   ; bank A0, originally bfd9
+A19356,replace,2,dfd9   ; bank A0, originally bfd9
+A19366,replace,2,9fea   ; bank A0, originally 7fea
+A19376,replace,2,9fea   ; bank A0, originally 7fea
+A19386,replace,2,9fea   ; bank A0, originally 7fea
+A19396,replace,2,9fea   ; bank A0, originally 7fea
+A193AC,replace,2,dfe6   ; bank A0, originally bfe6
+A193BC,replace,2,dfe6   ; bank A0, originally bfe6
+A193CC,replace,2,5fd7   ; bank A0, originally 3fd7
+A193DC,replace,2,9fea   ; bank A0, originally 7fea
+A193EC,replace,2,9fea   ; bank A0, originally 7fea
+A193FC,replace,2,9fea   ; bank A0, originally 7fea
+A1940C,replace,2,9fea   ; bank A0, originally 7fea
+A1941F,replace,2,9fdc   ; bank A0, originally 7fdc
+A1942F,replace,2,9fdc   ; bank A0, originally 7fdc
+A1943F,replace,2,9fdc   ; bank A0, originally 7fdc
+A19452,replace,2,9fd4   ; bank A0, originally 7fd4
+A19462,replace,2,9fd4   ; bank A0, originally 7fd4
+A19472,replace,2,9fd4   ; bank A0, originally 7fd4
+A19482,replace,2,9fd4   ; bank A0, originally 7fd4
+A19492,replace,2,9fe8   ; bank A0, originally 7fe8
+A194A2,replace,2,9fd4   ; bank A0, originally 7fd4
+A194B2,replace,2,9fd4   ; bank A0, originally 7fd4
+A194C2,replace,2,9fd4   ; bank A0, originally 7fd4
+A194D2,replace,2,9fd4   ; bank A0, originally 7fd4
+A194E2,replace,2,73f2   ; bank A0, originally 53f2
+A194F2,replace,2,73f2   ; bank A0, originally 53f2
+A19505,replace,2,dfdf   ; bank A0, originally bfdf
+A19515,replace,2,dfdf   ; bank A0, originally bfdf
+A19525,replace,2,dfdf   ; bank A0, originally bfdf
+A1953E,replace,2,9fd2   ; bank A0, originally 7fd2
+A1954E,replace,2,9fd2   ; bank A0, originally 7fd2
+A1955E,replace,2,9fd2   ; bank A0, originally 7fd2
+A1956E,replace,2,5fd9   ; bank A0, originally 3fd9
+A1957E,replace,2,5fd9   ; bank A0, originally 3fd9
+A1958E,replace,2,5fd9   ; bank A0, originally 3fd9
+A1959E,replace,2,5fd9   ; bank A0, originally 3fd9
+A195AE,replace,2,b3f1   ; bank A0, originally 93f1
+A195BE,replace,2,b3f1   ; bank A0, originally 93f1
+A195CE,replace,2,b3f1   ; bank A0, originally 93f1
+A195E4,replace,2,dfe7   ; bank A0, originally bfe7
+A195F4,replace,2,dfe7   ; bank A0, originally bfe7
+A19604,replace,2,1fd0   ; bank A0, originally ffcf
+A1961D,replace,2,5fd5   ; bank A0, originally 3fd5
+A1962D,replace,2,5fd5   ; bank A0, originally 3fd5
+A1963D,replace,2,dfd9   ; bank A0, originally bfd9
+A1964D,replace,2,dfd9   ; bank A0, originally bfd9
+A1966F,replace,2,dfe6   ; bank A0, originally bfe6
+A1967F,replace,2,dfe6   ; bank A0, originally bfe6
+A1968F,replace,2,9fea   ; bank A0, originally 7fea
+A1969F,replace,2,9fea   ; bank A0, originally 7fea
+A196AF,replace,2,9fea   ; bank A0, originally 7fea
+A196BF,replace,2,9fea   ; bank A0, originally 7fea
+A196CF,replace,2,9fea   ; bank A0, originally 7fea
+A196E2,replace,2,dfd6   ; bank A0, originally bfd6
+A196F2,replace,2,dfd6   ; bank A0, originally bfd6
+A19702,replace,2,dfd6   ; bank A0, originally bfd6
+A19712,replace,2,dfd6   ; bank A0, originally bfd6
+A19722,replace,2,dfd6   ; bank A0, originally bfd6
+A19735,replace,2,9fe8   ; bank A0, originally 7fe8
+A19745,replace,2,9fe8   ; bank A0, originally 7fe8
+A19755,replace,2,9fe8   ; bank A0, originally 7fe8
+A19765,replace,2,9fe8   ; bank A0, originally 7fe8
+A19778,replace,2,f3f1   ; bank A0, originally d3f1
+A19788,replace,2,f3f1   ; bank A0, originally d3f1
+A19798,replace,2,f3f1   ; bank A0, originally d3f1
+A197A8,replace,2,9fe8   ; bank A0, originally 7fe8
+A197B8,replace,2,9fe8   ; bank A0, originally 7fe8
+A197C8,replace,2,9fe8   ; bank A0, originally 7fe8
+A197D8,replace,2,9fe8   ; bank A0, originally 7fe8
+A197E8,replace,2,9fe8   ; bank A0, originally 7fe8
+A197FB,replace,2,dfd9   ; bank A0, originally bfd9
+A1980B,replace,2,5fd9   ; bank A0, originally 3fd9
+A1981B,replace,2,5fd9   ; bank A0, originally 3fd9
+A1982B,replace,2,5fd5   ; bank A0, originally 3fd5
+A1983B,replace,2,5fd5   ; bank A0, originally 3fd5
+A1984B,replace,2,5fd5   ; bank A0, originally 3fd5
+A1985B,replace,2,5fd5   ; bank A0, originally 3fd5
+A1986B,replace,2,5fd5   ; bank A0, originally 3fd5
+A1987B,replace,2,5fd5   ; bank A0, originally 3fd5
+A1988E,replace,2,9fe8   ; bank A0, originally 7fe8
+A1989E,replace,2,9fe8   ; bank A0, originally 7fe8
+A198AE,replace,2,9fe8   ; bank A0, originally 7fe8
+A198BE,replace,2,9fe8   ; bank A0, originally 7fe8
+A198D1,replace,2,5fd7   ; bank A0, originally 3fd7
+A198E4,replace,2,5fd7   ; bank A0, originally 3fd7
+A198F7,replace,2,dfea   ; bank A0, originally bfea
+A19907,replace,2,1feb   ; bank A0, originally ffea
+A19917,replace,2,dfea   ; bank A0, originally bfea
+A19927,replace,2,1feb   ; bank A0, originally ffea
+A19937,replace,2,dfea   ; bank A0, originally bfea
+A19947,replace,2,1feb   ; bank A0, originally ffea
+A19957,replace,2,dfea   ; bank A0, originally bfea
+A19967,replace,2,1feb   ; bank A0, originally ffea
+A1997A,replace,2,5fd7   ; bank A0, originally 3fd7
+A1998A,replace,2,9fdc   ; bank A0, originally 7fdc
+A1999A,replace,2,9fdc   ; bank A0, originally 7fdc
+A199AA,replace,2,5fd4   ; bank A0, originally 3fd4
+A199BA,replace,2,9fdc   ; bank A0, originally 7fdc
+A199CA,replace,2,5fd4   ; bank A0, originally 3fd4
+A199DA,replace,2,9fdc   ; bank A0, originally 7fdc
+A199EA,replace,2,9fdc   ; bank A0, originally 7fdc
+A199FA,replace,2,dfe5   ; bank A0, originally bfe5
+A19A0A,replace,2,dfe5   ; bank A0, originally bfe5
+A19A1A,replace,2,dfe5   ; bank A0, originally bfe5
+A19A2D,replace,2,b3f1   ; bank A0, originally 93f1
+A19A40,replace,2,5fd9   ; bank A0, originally 3fd9
+A19A50,replace,2,5fd9   ; bank A0, originally 3fd9
+A19A60,replace,2,1fd5   ; bank A0, originally ffd4
+A19A6C,replace,1,a4
+A19A70,replace,2,1fd5   ; bank A0, originally ffd4
+A19A80,replace,2,1fd5   ; bank A0, originally ffd4
+A19A90,replace,2,5fd6   ; bank A0, originally 3fd6
+A19AA0,replace,2,5fd6   ; bank A0, originally 3fd6
+A19AB0,replace,2,5fd6   ; bank A0, originally 3fd6
+A19AC0,replace,2,5fd6   ; bank A0, originally 3fd6
+A19AD0,replace,2,b3f1   ; bank A0, originally 93f1
+A19AE0,replace,2,5fd9   ; bank A0, originally 3fd9
+A19AF0,replace,2,5fd9   ; bank A0, originally 3fd9
+A19B00,replace,2,5fd9   ; bank A0, originally 3fd9
+A19B13,replace,2,dfd6   ; bank A0, originally bfd6
+A19B23,replace,2,dfd6   ; bank A0, originally bfd6
+A19B33,replace,2,dfd6   ; bank A0, originally bfd6
+A19B43,replace,2,dfd6   ; bank A0, originally bfd6
+A19B53,replace,2,dfd6   ; bank A0, originally bfd6
+A19B63,replace,2,5fd6   ; bank A0, originally 3fd6
+A19B73,replace,2,5fd6   ; bank A0, originally 3fd6
+A19B83,replace,2,5fd6   ; bank A0, originally 3fd6
+A19B93,replace,2,dfe7   ; bank A0, originally bfe7
+A19BA3,replace,2,dfe7   ; bank A0, originally bfe7
+A19BB3,replace,2,dfe7   ; bank A0, originally bfe7
+A19BC6,replace,2,9fd8   ; bank A0, originally 7fd8
+A19BD6,replace,2,9fd8   ; bank A0, originally 7fd8
+A19BE6,replace,2,9fd8   ; bank A0, originally 7fd8
+A19BF6,replace,2,9fd8   ; bank A0, originally 7fd8
+A19C06,replace,2,9fd8   ; bank A0, originally 7fd8
+A19C16,replace,2,9fd8   ; bank A0, originally 7fd8
+A19C26,replace,2,9fd8   ; bank A0, originally 7fd8
+A19C36,replace,2,9fd8   ; bank A0, originally 7fd8
+A19C46,replace,2,9fd8   ; bank A0, originally 7fd8
+A19C56,replace,2,9fd8   ; bank A0, originally 7fd8
+A19C66,replace,2,9fea   ; bank A0, originally 7fea
+A19C76,replace,2,9fea   ; bank A0, originally 7fea
+A19C86,replace,2,9fea   ; bank A0, originally 7fea
+A19C96,replace,2,9fea   ; bank A0, originally 7fea
+A19CA6,replace,2,9fea   ; bank A0, originally 7fea
+A19CB9,replace,2,5fd9   ; bank A0, originally 3fd9
+A19CC9,replace,2,5fd9   ; bank A0, originally 3fd9
+A19CD9,replace,2,5fd9   ; bank A0, originally 3fd9
+A19CE9,replace,2,73f2   ; bank A0, originally 53f2
+A19CF9,replace,2,73f2   ; bank A0, originally 53f2
+A19D09,replace,2,73f2   ; bank A0, originally 53f2
+A19D19,replace,2,73f2   ; bank A0, originally 53f2
+A19D29,replace,2,73f2   ; bank A0, originally 53f2
+A19D39,replace,2,5fd9   ; bank A0, originally 3fd9
+A19D49,replace,2,5fd9   ; bank A0, originally 3fd9
+A19D5C,replace,2,9fdc   ; bank A0, originally 7fdc
+A19D6C,replace,2,9fdc   ; bank A0, originally 7fdc
+A19D7C,replace,2,9fd6   ; bank A0, originally 7fd6
+A19D8C,replace,2,9fd6   ; bank A0, originally 7fd6
+A19D9C,replace,2,9fd6   ; bank A0, originally 7fd6
+A19DAC,replace,2,9fd2   ; bank A0, originally 7fd2
+A19DBC,replace,2,9fd2   ; bank A0, originally 7fd2
+A19DCC,replace,2,9fd2   ; bank A0, originally 7fd2
+A19DDC,replace,2,1fe6   ; bank A0, originally ffe5
+A19DEC,replace,2,1fe6   ; bank A0, originally ffe5
+A19DFC,replace,2,1fe6   ; bank A0, originally ffe5
+A19E0C,replace,2,1fe6   ; bank A0, originally ffe5
+A19E1C,replace,2,1fe6   ; bank A0, originally ffe5
+A19E2F,replace,2,9fdc   ; bank A0, originally 7fdc
+A19E3F,replace,2,9fdc   ; bank A0, originally 7fdc
+A19E4F,replace,2,9fdc   ; bank A0, originally 7fdc
+A19E5F,replace,2,9fdc   ; bank A0, originally 7fdc
+A19E6F,replace,2,f3f1   ; bank A0, originally d3f1
+A19E7F,replace,2,f3f1   ; bank A0, originally d3f1
+A19E8F,replace,2,f3f1   ; bank A0, originally d3f1
+A19E9F,replace,2,f3f1   ; bank A0, originally d3f1
+A19EB5,replace,2,dfe2   ; bank A0, originally bfe2
+A19EC5,replace,2,1fe3   ; bank A0, originally ffe2
+A19ED5,replace,2,5fe3   ; bank A0, originally 3fe3
+A19EE5,replace,2,9fe3   ; bank A0, originally 7fe3
+A19EF5,replace,2,dfe3   ; bank A0, originally bfe3
+A19F05,replace,2,1fe4   ; bank A0, originally ffe3
+A19F15,replace,2,5fe4   ; bank A0, originally 3fe4
+A19F25,replace,2,9fe4   ; bank A0, originally 7fe4
+A19F3B,replace,2,5fd5   ; bank A0, originally 3fd5
+A19F4B,replace,2,5fd5   ; bank A0, originally 3fd5
+A19F61,replace,2,dfce   ; bank A0, originally bfce
+A19F71,replace,2,dfce   ; bank A0, originally bfce
+A19F81,replace,2,dfce   ; bank A0, originally bfce
+A19F91,replace,2,dfce   ; bank A0, originally bfce
+A19FA4,replace,2,b3f1   ; bank A0, originally 93f1
+A19FB4,replace,2,9fd8   ; bank A0, originally 7fd8
+A19FC4,replace,2,9fd8   ; bank A0, originally 7fd8
+A19FD4,replace,2,9fd8   ; bank A0, originally 7fd8
+A19FE4,replace,2,9fd8   ; bank A0, originally 7fd8
+A19FF4,replace,2,9fd8   ; bank A0, originally 7fd8
+A1A004,replace,2,9fd8   ; bank A0, originally 7fd8
+A1A014,replace,2,9fd8   ; bank A0, originally 7fd8
+A1A024,replace,2,9fd8   ; bank A0, originally 7fd8
+A1A034,replace,2,9fd8   ; bank A0, originally 7fd8
+A1A044,replace,2,9fd8   ; bank A0, originally 7fd8
+A1A057,replace,2,5fd7   ; bank A0, originally 3fd7
+A1A067,replace,2,dfd7   ; bank A0, originally bfd7
+A1A077,replace,2,dfd7   ; bank A0, originally bfd7
+A1A087,replace,2,dfd7   ; bank A0, originally bfd7
+A1A097,replace,2,1fd0   ; bank A0, originally ffcf
+A1A0A7,replace,2,1fd0   ; bank A0, originally ffcf
+A1A0BA,replace,2,b3f6   ; bank A0, originally 93f6
+A1A0CA,replace,2,b3f6   ; bank A0, originally 93f6
+A1A0DA,replace,2,b3f6   ; bank A0, originally 93f6
+A1A0EA,replace,2,1fe1   ; bank A0, originally ffe0
+A1A0FD,replace,2,5fdf   ; bank A0, originally 3fdf
+A1A110,replace,2,9fdb   ; bank A0, originally 7fdb
+A1A120,replace,2,9fdb   ; bank A0, originally 7fdb
+A1A133,replace,2,33f2   ; bank A0, originally 13f2
+A1A143,replace,2,33f2   ; bank A0, originally 13f2
+A1A153,replace,2,33f2   ; bank A0, originally 13f2
+A1A163,replace,2,33f2   ; bank A0, originally 13f2
+A1A173,replace,2,33f2   ; bank A0, originally 13f2
+A1A183,replace,2,dfcf   ; bank A0, originally bfcf
+A1A193,replace,2,dfcf   ; bank A0, originally bfcf
+A1A1A3,replace,2,dfcf   ; bank A0, originally bfcf
+A1A1B3,replace,2,dfcf   ; bank A0, originally bfcf
+A1A1C3,replace,2,dfcf   ; bank A0, originally bfcf
+A1A1D6,replace,2,dfda   ; bank A0, originally bfda
+A1A1E6,replace,2,dfda   ; bank A0, originally bfda
+A1A1F6,replace,2,dfda   ; bank A0, originally bfda
+A1A206,replace,2,dfda   ; bank A0, originally bfda
+A1A219,replace,2,b3f5   ; bank A0, originally 93f5
+A1A229,replace,2,b3f5   ; bank A0, originally 93f5
+A1A23C,replace,2,1ff1   ; bank A0, originally fff0
+A1A24C,replace,2,5fe8   ; bank A0, originally 3fe8
+A1A25C,replace,2,5fe8   ; bank A0, originally 3fe8
+A1A26C,replace,2,5fe8   ; bank A0, originally 3fe8
+A1A27C,replace,2,5fd3   ; bank A0, originally 3fd3
+A1A28C,replace,2,5fd3   ; bank A0, originally 3fd3
+A1A29C,replace,2,5fd3   ; bank A0, originally 3fd3
+A1A2AC,replace,2,5fd3   ; bank A0, originally 3fd3
+A1A2BC,replace,2,5fd3   ; bank A0, originally 3fd3
+A1A2CC,replace,2,5fd3   ; bank A0, originally 3fd3
+A1A2DF,replace,2,33f2   ; bank A0, originally 13f2
+A1A2EF,replace,2,33f2   ; bank A0, originally 13f2
+A1A2FF,replace,2,33f2   ; bank A0, originally 13f2
+A1A30F,replace,2,33f2   ; bank A0, originally 13f2
+A1A31F,replace,2,33f2   ; bank A0, originally 13f2
+A1A332,replace,2,1fd5   ; bank A0, originally ffd4
+A1A340,replace,1,10
+A1A342,replace,2,1fd5   ; bank A0, originally ffd4
+A1A34E,replace,1,70
+A1A352,replace,2,9fd9   ; bank A0, originally 7fd9
+A1A362,replace,2,9fd9   ; bank A0, originally 7fd9
+A1A372,replace,2,9fd9   ; bank A0, originally 7fd9
+A1A382,replace,2,5fd1   ; bank A0, originally 3fd1
+A1A392,replace,2,5fd1   ; bank A0, originally 3fd1
+A1A3A2,replace,2,5fd1   ; bank A0, originally 3fd1
+A1A3B2,replace,2,5fd1   ; bank A0, originally 3fd1
+A1A3C2,replace,2,5fd1   ; bank A0, originally 3fd1
+A1A3D2,replace,2,5fd1   ; bank A0, originally 3fd1
+A1A3E2,replace,2,dfdc   ; bank A0, originally bfdc
+A1A3F5,replace,2,dfe7   ; bank A0, originally bfe7
+A1A405,replace,2,dfe7   ; bank A0, originally bfe7
+A1A415,replace,2,dfe7   ; bank A0, originally bfe7
+A1A428,replace,2,dfeb   ; bank A0, originally bfeb
+A1A438,replace,2,1fec   ; bank A0, originally ffeb
+A1A448,replace,2,dfeb   ; bank A0, originally bfeb
+A1A458,replace,2,1fec   ; bank A0, originally ffeb
+A1A468,replace,2,dfeb   ; bank A0, originally bfeb
+A1A478,replace,2,1fec   ; bank A0, originally ffeb
+A1A48B,replace,2,5fd4   ; bank A0, originally 3fd4
+A1A49B,replace,2,5fd4   ; bank A0, originally 3fd4
+A1A4AB,replace,2,5fd4   ; bank A0, originally 3fd4
+A1A4BB,replace,2,5fd4   ; bank A0, originally 3fd4
+A1A4CB,replace,2,5fd4   ; bank A0, originally 3fd4
+A1A4DB,replace,2,5fd4   ; bank A0, originally 3fd4
+A1A4F1,replace,2,33f4   ; bank A0, originally 13f4
+A1A501,replace,2,33f4   ; bank A0, originally 13f4
+A1A511,replace,2,33f7   ; bank A0, originally 13f7
+A1A521,replace,2,dfda   ; bank A0, originally bfda
+A1A531,replace,2,dfda   ; bank A0, originally bfda
+A1A544,replace,2,5fd7   ; bank A0, originally 3fd7
+A1A560,replace,2,5fda   ; bank A0, originally 3fda
+A1A570,replace,2,5fda   ; bank A0, originally 3fda
+A1A580,replace,2,5fda   ; bank A0, originally 3fda
+A1A590,replace,2,5fda   ; bank A0, originally 3fda
+A1A5A0,replace,2,5fda   ; bank A0, originally 3fda
+A1A5B0,replace,2,dfd1   ; bank A0, originally bfd1
+A1A5C0,replace,2,dfd1   ; bank A0, originally bfd1
+A1A5D0,replace,2,dfd1   ; bank A0, originally bfd1
+A1A5E0,replace,2,dfd1   ; bank A0, originally bfd1
+A1A5F0,replace,2,dfd1   ; bank A0, originally bfd1
+A1A600,replace,2,dfd1   ; bank A0, originally bfd1
+A1A610,replace,2,dfd1   ; bank A0, originally bfd1
+A1A626,replace,2,9fe1   ; bank A0, originally 7fe1
+A1A645,replace,2,9fe8   ; bank A0, originally 7fe8
+A1A655,replace,2,9fe8   ; bank A0, originally 7fe8
+A1A665,replace,2,9fe8   ; bank A0, originally 7fe8
+A1A675,replace,2,9fe8   ; bank A0, originally 7fe8
+A1A685,replace,2,9fe8   ; bank A0, originally 7fe8
+A1A695,replace,2,9fe8   ; bank A0, originally 7fe8
+A1A6A8,replace,2,dfd2   ; bank A0, originally bfd2
+A1A6B8,replace,2,dfd2   ; bank A0, originally bfd2
+A1A6C8,replace,2,dfdc   ; bank A0, originally bfdc
+A1A6D8,replace,2,dfdc   ; bank A0, originally bfdc
+A1A6E8,replace,2,dfdc   ; bank A0, originally bfdc
+A1A6F8,replace,2,dfdc   ; bank A0, originally bfdc
+A1A708,replace,2,dfdc   ; bank A0, originally bfdc
+A1A718,replace,2,dfd4   ; bank A0, originally bfd4
+A1A728,replace,2,dfd4   ; bank A0, originally bfd4
+A1A738,replace,2,dfd4   ; bank A0, originally bfd4
+A1A748,replace,2,dfd4   ; bank A0, originally bfd4
+A1A758,replace,2,dfd4   ; bank A0, originally bfd4
+A1A768,replace,2,dfd4   ; bank A0, originally bfd4
+A1A778,replace,2,dfd4   ; bank A0, originally bfd4
+A1A788,replace,2,dfd4   ; bank A0, originally bfd4
+A1A798,replace,2,dfd2   ; bank A0, originally bfd2
+A1A7A8,replace,2,dfd2   ; bank A0, originally bfd2
+A1A7BB,replace,2,33f2   ; bank A0, originally 13f2
+A1A7CB,replace,2,33f2   ; bank A0, originally 13f2
+A1A7DB,replace,2,33f2   ; bank A0, originally 13f2
+A1A7EB,replace,2,33f2   ; bank A0, originally 13f2
+A1A7FB,replace,2,33f2   ; bank A0, originally 13f2
+A1A80B,replace,2,1fd4   ; bank A0, originally ffd3
+A1A81B,replace,2,5fd8   ; bank A0, originally 3fd8
+A1A82E,replace,2,5fe7   ; bank A0, originally 3fe7
+A1A83E,replace,2,33f4   ; bank A0, originally 13f4
+A1A84E,replace,2,33f4   ; bank A0, originally 13f4
+A1A85E,replace,2,33f4   ; bank A0, originally 13f4
+A1A86E,replace,2,5fe7   ; bank A0, originally 3fe7
+A1A87E,replace,2,33f7   ; bank A0, originally 13f7
+A1A88E,replace,2,5fe7   ; bank A0, originally 3fe7
+A1A89E,replace,2,33f7   ; bank A0, originally 13f7
+A1A8AE,replace,2,5fe7   ; bank A0, originally 3fe7
+A1A8BE,replace,2,5fe7   ; bank A0, originally 3fe7
+A1A8CE,replace,2,33f7   ; bank A0, originally 13f7
+A1A8E1,replace,2,1fe7   ; bank A0, originally ffe6
+A1A8F1,replace,2,1fe7   ; bank A0, originally ffe6
+A1A901,replace,2,1fd6   ; bank A0, originally ffd5
+A1A911,replace,2,1fd6   ; bank A0, originally ffd5
+A1A921,replace,2,1fd6   ; bank A0, originally ffd5
+A1A931,replace,2,1fd6   ; bank A0, originally ffd5
+A1A941,replace,2,1fe8   ; bank A0, originally ffe7
+A1A951,replace,2,1fd4   ; bank A0, originally ffd3
+A1A967,replace,2,f3f6   ; bank A0, originally d3f6
+A1A977,replace,2,f3f6   ; bank A0, originally d3f6
+A1A987,replace,2,f3f6   ; bank A0, originally d3f6
+A1A997,replace,2,5fdd   ; bank A0, originally 3fdd
+A1A9A7,replace,2,5fdd   ; bank A0, originally 3fdd
+A1A9B7,replace,2,5fdd   ; bank A0, originally 3fdd
+A1A9C7,replace,2,5fdd   ; bank A0, originally 3fdd
+A1A9DA,replace,2,f3f6   ; bank A0, originally d3f6
+A1A9EA,replace,2,dfd1   ; bank A0, originally bfd1
+A1A9FA,replace,2,f3f6   ; bank A0, originally d3f6
+A1AA0A,replace,2,dfd1   ; bank A0, originally bfd1
+A1AA1A,replace,2,f3f6   ; bank A0, originally d3f6
+A1AA2A,replace,2,dfd1   ; bank A0, originally bfd1
+A1AA3A,replace,2,dfd1   ; bank A0, originally bfd1
+A1AA4A,replace,2,f3f6   ; bank A0, originally d3f6
+A1AA5A,replace,2,f3f6   ; bank A0, originally d3f6
+A1AA6A,replace,2,1fd0   ; bank A0, originally ffcf
+A1AA7A,replace,2,1fd0   ; bank A0, originally ffcf
+A1AA8D,replace,2,5fd3   ; bank A0, originally 3fd3
+A1AA9D,replace,2,5fd3   ; bank A0, originally 3fd3
+A1AAAD,replace,2,5fd3   ; bank A0, originally 3fd3
+A1AABD,replace,2,5fd3   ; bank A0, originally 3fd3
+A1AACD,replace,2,5fd3   ; bank A0, originally 3fd3
+A1AADD,replace,2,5fd3   ; bank A0, originally 3fd3
+A1AAED,replace,2,5fd3   ; bank A0, originally 3fd3
+A1AAFD,replace,2,5fd3   ; bank A0, originally 3fd3
+A1AB0D,replace,2,5fd3   ; bank A0, originally 3fd3
+A1AB1D,replace,2,5fd3   ; bank A0, originally 3fd3
+A1AB2D,replace,2,5fd3   ; bank A0, originally 3fd3
+A1AB3D,replace,2,5fd3   ; bank A0, originally 3fd3
+A1AB4D,replace,2,f3f1   ; bank A0, originally d3f1
+A1AB5D,replace,2,f3f1   ; bank A0, originally d3f1
+A1AB6D,replace,2,f3f1   ; bank A0, originally d3f1
+A1AB80,replace,2,1fe7   ; bank A0, originally ffe6
+A1AB90,replace,2,1fe7   ; bank A0, originally ffe6
+A1ABA0,replace,2,1fe7   ; bank A0, originally ffe6
+A1ABB0,replace,2,1fe7   ; bank A0, originally ffe6
+A1ABC0,replace,2,1fe7   ; bank A0, originally ffe6
+A1ABD0,replace,2,dfdf   ; bank A0, originally bfdf
+A1ABE0,replace,2,dfdf   ; bank A0, originally bfdf
+A1ABF0,replace,2,dfdf   ; bank A0, originally bfdf
+A1AC00,replace,2,dfd6   ; bank A0, originally bfd6
+A1AC10,replace,2,dfd6   ; bank A0, originally bfd6
+A1AC20,replace,2,dfd6   ; bank A0, originally bfd6
+A1AC30,replace,2,dfd6   ; bank A0, originally bfd6
+A1AC40,replace,2,dfd6   ; bank A0, originally bfd6
+A1AC53,replace,2,5fe8   ; bank A0, originally 3fe8
+A1AC63,replace,2,5fe8   ; bank A0, originally 3fe8
+A1AC73,replace,2,5fe8   ; bank A0, originally 3fe8
+A1AC83,replace,2,5fe8   ; bank A0, originally 3fe8
+A1AC93,replace,2,5fe8   ; bank A0, originally 3fe8
+A1ACA3,replace,2,5fe8   ; bank A0, originally 3fe8
+A1ACB3,replace,2,5fe8   ; bank A0, originally 3fe8
+A1ACC3,replace,2,5fe8   ; bank A0, originally 3fe8
+A1ACD3,replace,2,5fe8   ; bank A0, originally 3fe8
+A1ACE3,replace,2,dfd1   ; bank A0, originally bfd1
+A1ACF3,replace,2,dfd1   ; bank A0, originally bfd1
+A1AD09,replace,2,5fe7   ; bank A0, originally 3fe7
+A1AD19,replace,2,5fe7   ; bank A0, originally 3fe7
+A1AD29,replace,2,5fe7   ; bank A0, originally 3fe7
+A1AD39,replace,2,5fe7   ; bank A0, originally 3fe7
+A1AD49,replace,2,5fe7   ; bank A0, originally 3fe7
+A1AD59,replace,2,5fe7   ; bank A0, originally 3fe7
+A1AD6C,replace,2,dfe0   ; bank A0, originally bfe0
+A1AD7C,replace,2,dfe0   ; bank A0, originally bfe0
+A1AD8F,replace,2,dfd4   ; bank A0, originally bfd4
+A1AD9F,replace,2,dfd4   ; bank A0, originally bfd4
+A1ADAF,replace,2,1fd3   ; bank A0, originally ffd2
+A1ADBF,replace,2,1fd3   ; bank A0, originally ffd2
+A1ADCF,replace,2,dfd4   ; bank A0, originally bfd4
+A1ADDF,replace,2,dfd4   ; bank A0, originally bfd4
+A1ADEF,replace,2,dfd4   ; bank A0, originally bfd4
+A1ADFF,replace,2,dfd4   ; bank A0, originally bfd4
+A1AE0F,replace,2,dfd4   ; bank A0, originally bfd4
+A1AE1F,replace,2,dfd4   ; bank A0, originally bfd4
+A1AE2F,replace,2,dfd4   ; bank A0, originally bfd4
+A1AE3F,replace,2,dfd4   ; bank A0, originally bfd4
+A1AE52,replace,2,dfe9   ; bank A0, originally bfe9
+A1AE62,replace,2,dfe9   ; bank A0, originally bfe9
+A1AE72,replace,2,dfe9   ; bank A0, originally bfe9
+A1AE82,replace,2,dfe9   ; bank A0, originally bfe9
+A1AE92,replace,2,dfe9   ; bank A0, originally bfe9
+A1AEB1,replace,2,5fd5   ; bank A0, originally 3fd5
+A1AEC1,replace,2,5fd5   ; bank A0, originally 3fd5
+A1AED1,replace,2,1fd3   ; bank A0, originally ffd2
+A1AEE1,replace,2,1fd3   ; bank A0, originally ffd2
+A1AEF4,replace,2,33f7   ; bank A0, originally 13f7
+A1AF04,replace,2,33f7   ; bank A0, originally 13f7
+A1AF14,replace,2,33f7   ; bank A0, originally 13f7
+A1AF24,replace,2,33f7   ; bank A0, originally 13f7
+A1AF34,replace,2,33f7   ; bank A0, originally 13f7
+A1AF44,replace,2,33f7   ; bank A0, originally 13f7
+A1AF54,replace,2,33f7   ; bank A0, originally 13f7
+A1AF64,replace,2,33f7   ; bank A0, originally 13f7
+A1AF74,replace,2,33f7   ; bank A0, originally 13f7
+A1AF87,replace,2,dfdc   ; bank A0, originally bfdc
+A1AF97,replace,2,dfdc   ; bank A0, originally bfdc
+A1AFA7,replace,2,dfdc   ; bank A0, originally bfdc
+A1AFB7,replace,2,dfdc   ; bank A0, originally bfdc
+A1AFC7,replace,2,9fd9   ; bank A0, originally 7fd9
+A1AFD7,replace,2,9fd9   ; bank A0, originally 7fd9
+A1AFEA,replace,2,5fd7   ; bank A0, originally 3fd7
+A1AFFA,replace,2,dfd4   ; bank A0, originally bfd4
+A1B00A,replace,2,dfd4   ; bank A0, originally bfd4
+A1B01A,replace,2,dfd4   ; bank A0, originally bfd4
+A1B02A,replace,2,dfd4   ; bank A0, originally bfd4
+A1B03A,replace,2,9fe0   ; bank A0, originally 7fe0
+A1B04A,replace,2,9fe0   ; bank A0, originally 7fe0
+A1B05A,replace,2,9fe0   ; bank A0, originally 7fe0
+A1B06A,replace,2,9fe0   ; bank A0, originally 7fe0
+A1B07A,replace,2,9fe0   ; bank A0, originally 7fe0
+A1B08A,replace,2,9fe0   ; bank A0, originally 7fe0
+A1B09A,replace,2,9fe0   ; bank A0, originally 7fe0
+A1B0AA,replace,2,9fe0   ; bank A0, originally 7fe0
+A1B0BA,replace,2,dfd4   ; bank A0, originally bfd4
+A1B0CA,replace,2,dfd4   ; bank A0, originally bfd4
+A1B0DA,replace,2,dfd4   ; bank A0, originally bfd4
+A1B0EA,replace,2,dfd4   ; bank A0, originally bfd4
+A1B0FA,replace,2,dfd4   ; bank A0, originally bfd4
+A1B10A,replace,2,dfd4   ; bank A0, originally bfd4
+A1B11D,replace,2,5fd1   ; bank A0, originally 3fd1
+A1B12D,replace,2,5fd1   ; bank A0, originally 3fd1
+A1B13D,replace,2,5fd1   ; bank A0, originally 3fd1
+A1B14D,replace,2,5fd1   ; bank A0, originally 3fd1
+A1B15D,replace,2,5fd1   ; bank A0, originally 3fd1
+A1B16D,replace,2,1fd4   ; bank A0, originally ffd3
+A1B17D,replace,2,1fd4   ; bank A0, originally ffd3
+A1B18D,replace,2,1fd4   ; bank A0, originally ffd3
+A1B19D,replace,2,1fd4   ; bank A0, originally ffd3
+A1B1AD,replace,2,5fd8   ; bank A0, originally 3fd8
+A1B1BD,replace,2,5fd8   ; bank A0, originally 3fd8
+A1B1CD,replace,2,5fd8   ; bank A0, originally 3fd8
+A1B1DD,replace,2,5fd8   ; bank A0, originally 3fd8
+A1B1F6,replace,2,dfdc   ; bank A0, originally bfdc
+A1B206,replace,2,dfdc   ; bank A0, originally bfdc
+A1B216,replace,2,dfdc   ; bank A0, originally bfdc
+A1B226,replace,2,dfdc   ; bank A0, originally bfdc
+A1B236,replace,2,dfdc   ; bank A0, originally bfdc
+A1B246,replace,2,dfdc   ; bank A0, originally bfdc
+A1B259,replace,2,9fe0   ; bank A0, originally 7fe0
+A1B269,replace,2,9fe0   ; bank A0, originally 7fe0
+A1B279,replace,2,5fda   ; bank A0, originally 3fda
+A1B289,replace,2,5fda   ; bank A0, originally 3fda
+A1B299,replace,2,5fda   ; bank A0, originally 3fda
+A1B2A9,replace,2,5fda   ; bank A0, originally 3fda
+A1B2B9,replace,2,9fe0   ; bank A0, originally 7fe0
+A1B2C9,replace,2,9fe0   ; bank A0, originally 7fe0
+A1B2D9,replace,2,5fd5   ; bank A0, originally 3fd5
+A1B2E9,replace,2,1fe0   ; bank A0, originally ffdf
+A1B2F9,replace,2,5fe0   ; bank A0, originally 3fe0
+A1B309,replace,2,1fe0   ; bank A0, originally ffdf
+A1B319,replace,2,5fe0   ; bank A0, originally 3fe0
+A1B32C,replace,2,33f2   ; bank A0, originally 13f2
+A1B33C,replace,2,33f2   ; bank A0, originally 13f2
+A1B34C,replace,2,33f2   ; bank A0, originally 13f2
+A1B35C,replace,2,33f2   ; bank A0, originally 13f2
+A1B36C,replace,2,33f2   ; bank A0, originally 13f2
+A1B37C,replace,2,dfd4   ; bank A0, originally bfd4
+A1B38C,replace,2,dfd4   ; bank A0, originally bfd4
+A1B39C,replace,2,dfd4   ; bank A0, originally bfd4
+A1B3AC,replace,2,dfd4   ; bank A0, originally bfd4
+A1B3C5,replace,2,dfdc   ; bank A0, originally bfdc
+A1B3D1,replace,1,05
+A1B3D8,replace,2,5fd4   ; bank A0, originally 3fd4
+A1B3E8,replace,2,dfdc   ; bank A0, originally bfdc
+A1B3F8,replace,2,dfdc   ; bank A0, originally bfdc
+A1B408,replace,2,dfdc   ; bank A0, originally bfdc
+A1B418,replace,2,5fd6   ; bank A0, originally 3fd6
+A1B428,replace,2,5fd6   ; bank A0, originally 3fd6
+A1B438,replace,2,5fd6   ; bank A0, originally 3fd6
+A1B448,replace,2,1fd0   ; bank A0, originally ffcf
+A1B45B,replace,2,1fd8   ; bank A0, originally ffd7
+A1B46B,replace,2,1fd8   ; bank A0, originally ffd7
+A1B47B,replace,2,1fd8   ; bank A0, originally ffd7
+A1B48E,replace,2,dfce   ; bank A0, originally bfce
+A1B492,replace,1,d5
+A1B49E,replace,2,dfce   ; bank A0, originally bfce
+A1B4A2,replace,1,d5
+A1B4AE,replace,2,dfce   ; bank A0, originally bfce
+A1B4B2,replace,1,d5
+A1B4BE,replace,2,5fd4   ; bank A0, originally 3fd4
+A1B4D1,replace,2,9fd6   ; bank A0, originally 7fd6
+A1B4E1,replace,2,9fd6   ; bank A0, originally 7fd6
+A1B4F1,replace,2,33f2   ; bank A0, originally 13f2
+A1B501,replace,2,33f2   ; bank A0, originally 13f2
+A1B511,replace,2,33f2   ; bank A0, originally 13f2
+A1B521,replace,2,33f2   ; bank A0, originally 13f2
+A1B531,replace,2,33f2   ; bank A0, originally 13f2
+A1B544,replace,2,1fd3   ; bank A0, originally ffd2
+A1B554,replace,2,1fd3   ; bank A0, originally ffd2
+A1B564,replace,2,1fd3   ; bank A0, originally ffd2
+A1B574,replace,2,1fd3   ; bank A0, originally ffd2
+A1B584,replace,2,1fd3   ; bank A0, originally ffd2
+A1B594,replace,2,1fd3   ; bank A0, originally ffd2
+A1B5A4,replace,2,dfdc   ; bank A0, originally bfdc
+A1B5B4,replace,2,dfdc   ; bank A0, originally bfdc
+A1B5C4,replace,2,dfdc   ; bank A0, originally bfdc
+A1B5D4,replace,2,dfdc   ; bank A0, originally bfdc
+A1B5E7,replace,2,dfd4   ; bank A0, originally bfd4
+A1B5F7,replace,2,dfd4   ; bank A0, originally bfd4
+A1B607,replace,2,dfd4   ; bank A0, originally bfd4
+A1B617,replace,2,dfd4   ; bank A0, originally bfd4
+A1B627,replace,2,dfd4   ; bank A0, originally bfd4
+A1B637,replace,2,dfd4   ; bank A0, originally bfd4
+A1B647,replace,2,dfdc   ; bank A0, originally bfdc
+A1B657,replace,2,dfdc   ; bank A0, originally bfdc
+A1B667,replace,2,dfdc   ; bank A0, originally bfdc
+A1B67A,replace,2,1fe7   ; bank A0, originally ffe6
+A1B68A,replace,2,1fe7   ; bank A0, originally ffe6
+A1B69A,replace,2,1fe7   ; bank A0, originally ffe6
+A1B6AD,replace,2,dfdc   ; bank A0, originally bfdc
+A1B6B9,replace,1,02
+A1B6BD,replace,2,dfdc   ; bank A0, originally bfdc
+A1B6C9,replace,1,02
+A1B6CD,replace,2,dfdc   ; bank A0, originally bfdc
+A1B6D9,replace,1,02
+A1B6DD,replace,2,1fe7   ; bank A0, originally ffe6
+A1B6ED,replace,2,1fe7   ; bank A0, originally ffe6
+A1B6FD,replace,2,1fe7   ; bank A0, originally ffe6
+A1B70D,replace,2,1fe7   ; bank A0, originally ffe6
+A1B720,replace,2,9fef   ; bank A0, originally 7fef
+A1B733,replace,2,1fd8   ; bank A0, originally ffd7
+A1B743,replace,2,1fd8   ; bank A0, originally ffd7
+A1B753,replace,2,5fd5   ; bank A0, originally 3fd5
+A1B769,replace,2,dfda   ; bank A0, originally bfda
+A1B779,replace,2,dfda   ; bank A0, originally bfda
+A1B789,replace,2,dfda   ; bank A0, originally bfda
+A1B799,replace,2,dfda   ; bank A0, originally bfda
+A1B7A9,replace,2,dfda   ; bank A0, originally bfda
+A1B7B9,replace,2,f3f1   ; bank A0, originally d3f1
+A1B7C9,replace,2,f3f1   ; bank A0, originally d3f1
+A1B7D9,replace,2,f3f1   ; bank A0, originally d3f1
+A1B7E9,replace,2,f3f1   ; bank A0, originally d3f1
+A1B7F9,replace,2,f3f1   ; bank A0, originally d3f1
+A1B809,replace,2,f3f1   ; bank A0, originally d3f1
+A1B81C,replace,2,dfd1   ; bank A0, originally bfd1
+A1B828,replace,1,d8
+A1B82C,replace,2,dfd1   ; bank A0, originally bfd1
+A1B83C,replace,2,dfd1   ; bank A0, originally bfd1
+A1B848,replace,1,98
+A1B84C,replace,2,dfe9   ; bank A0, originally bfe9
+A1B85C,replace,2,dfe9   ; bank A0, originally bfe9
+A1B86C,replace,2,dfe9   ; bank A0, originally bfe9
+A1B87C,replace,2,dfe9   ; bank A0, originally bfe9
+A1B88F,replace,2,1fd3   ; bank A0, originally ffd2
+A1B89F,replace,2,1fd3   ; bank A0, originally ffd2
+A1B8AF,replace,2,1fd3   ; bank A0, originally ffd2
+A1B8BF,replace,2,1fd3   ; bank A0, originally ffd2
+A1B8CF,replace,2,1fd3   ; bank A0, originally ffd2
+A1B8DF,replace,2,1fd3   ; bank A0, originally ffd2
+A1B8EF,replace,2,9fd6   ; bank A0, originally 7fd6
+A1B8FF,replace,2,9fd6   ; bank A0, originally 7fd6
+A1B912,replace,2,33f2   ; bank A0, originally 13f2
+A1B922,replace,2,33f2   ; bank A0, originally 13f2
+A1B932,replace,2,33f2   ; bank A0, originally 13f2
+A1B942,replace,2,33f2   ; bank A0, originally 13f2
+A1B952,replace,2,33f2   ; bank A0, originally 13f2
+A1B962,replace,2,9fdb   ; bank A0, originally 7fdb
+A1B972,replace,2,9fdb   ; bank A0, originally 7fdb
+A1B982,replace,2,9fdb   ; bank A0, originally 7fdb
+A1B995,replace,2,dfda   ; bank A0, originally bfda
+A1B9A5,replace,2,dfda   ; bank A0, originally bfda
+A1B9B5,replace,2,dfda   ; bank A0, originally bfda
+A1B9C5,replace,2,dfda   ; bank A0, originally bfda
+A1B9D8,replace,2,5fd7   ; bank A0, originally 3fd7
+A1B9E8,replace,2,dfdc   ; bank A0, originally bfdc
+A1B9F8,replace,2,dfdc   ; bank A0, originally bfdc
+A1BA08,replace,2,dfdc   ; bank A0, originally bfdc
+A1BA18,replace,2,dfdc   ; bank A0, originally bfdc
+A1BA28,replace,2,dfdc   ; bank A0, originally bfdc
+A1BA38,replace,2,dfdc   ; bank A0, originally bfdc
+A1BA4B,replace,2,9fe0   ; bank A0, originally 7fe0
+A1BA5B,replace,2,9fe0   ; bank A0, originally 7fe0
+A1BA6B,replace,2,9fe0   ; bank A0, originally 7fe0
+A1BA7B,replace,2,9fe0   ; bank A0, originally 7fe0
+A1BA8B,replace,2,dfeb   ; bank A0, originally bfeb
+A1BA9B,replace,2,1fec   ; bank A0, originally ffeb
+A1BAAB,replace,2,dfeb   ; bank A0, originally bfeb
+A1BABB,replace,2,1fec   ; bank A0, originally ffeb
+A1BACB,replace,2,dfeb   ; bank A0, originally bfeb
+A1BADB,replace,2,1fec   ; bank A0, originally ffeb
+A1BAEB,replace,2,5fd5   ; bank A0, originally 3fd5
+A1BAFB,replace,2,5fd5   ; bank A0, originally 3fd5
+A1BB0E,replace,2,dfdd   ; bank A0, originally bfdd
+A1BB14,replace,2,43bd   ; bank A4, originally 2abd
+A1BB1E,replace,2,1fde   ; bank A0, originally ffdd
+A1BB24,replace,2,43bd   ; bank A4, originally 2abd
+A1BB34,replace,2,1fe7   ; bank A0, originally ffe6
+A1BB44,replace,2,1fe7   ; bank A0, originally ffe6
+A1BB54,replace,2,1fe7   ; bank A0, originally ffe6
+A1BB64,replace,2,1fe7   ; bank A0, originally ffe6
+A1BB74,replace,2,1fe7   ; bank A0, originally ffe6
+A1BB84,replace,2,1fe7   ; bank A0, originally ffe6
+A1BB94,replace,2,1fd2   ; bank A0, originally ffd1
+A1BBA4,replace,2,1fd2   ; bank A0, originally ffd1
+A1BBB4,replace,2,1fd2   ; bank A0, originally ffd1
+A1BBC4,replace,2,1fd2   ; bank A0, originally ffd1
+A1BBD7,replace,2,1fe7   ; bank A0, originally ffe6
+A1BBE7,replace,2,33f2   ; bank A0, originally 13f2
+A1BBF7,replace,2,33f2   ; bank A0, originally 13f2
+A1BC07,replace,2,33f2   ; bank A0, originally 13f2
+A1BC17,replace,2,33f2   ; bank A0, originally 13f2
+A1BC27,replace,2,33f2   ; bank A0, originally 13f2
+A1BC3A,replace,2,9fe9   ; bank A0, originally 7fe9
+A1BC4D,replace,2,1fd7   ; bank A0, originally ffd6
+A1BC5D,replace,2,1fd7   ; bank A0, originally ffd6
+A1BC6D,replace,2,5fd8   ; bank A0, originally 3fd8
+A1BC7D,replace,2,5fd8   ; bank A0, originally 3fd8
+A1BC8D,replace,2,5fd8   ; bank A0, originally 3fd8
+A1BCA0,replace,2,9fe7   ; bank A0, originally 7fe7
+A1BCB0,replace,2,9fd8   ; bank A0, originally 7fd8
+A1BCC0,replace,2,9fd8   ; bank A0, originally 7fd8
+A1BCD0,replace,2,9fd8   ; bank A0, originally 7fd8
+A1BCE0,replace,2,9fd8   ; bank A0, originally 7fd8
+A1BCF0,replace,2,9fd8   ; bank A0, originally 7fd8
+A1BD00,replace,2,9fd8   ; bank A0, originally 7fd8
+A1BD10,replace,2,9fd8   ; bank A0, originally 7fd8
+A1BD20,replace,2,9fd8   ; bank A0, originally 7fd8
+A1BD30,replace,2,9fd8   ; bank A0, originally 7fd8
+A1BD40,replace,2,9fd8   ; bank A0, originally 7fd8
+A1BD50,replace,2,9fd8   ; bank A0, originally 7fd8
+A1BD60,replace,2,9fd8   ; bank A0, originally 7fd8
+A1BD70,replace,2,9fd8   ; bank A0, originally 7fd8
+A1BD80,replace,2,9fd8   ; bank A0, originally 7fd8
+A1BD90,replace,2,9fd8   ; bank A0, originally 7fd8
+A1BDA0,replace,2,9fd8   ; bank A0, originally 7fd8
+A1BDB0,replace,2,9fd8   ; bank A0, originally 7fd8
+A1BDC0,replace,2,9fd8   ; bank A0, originally 7fd8
+A1BDD0,replace,2,9fd8   ; bank A0, originally 7fd8
+A1BDE0,replace,2,9fd8   ; bank A0, originally 7fd8
+A1BDF0,replace,2,1fe0   ; bank A0, originally ffdf
+A1BE00,replace,2,5fe0   ; bank A0, originally 3fe0
+A1BE10,replace,2,1fe0   ; bank A0, originally ffdf
+A1BE20,replace,2,5fe0   ; bank A0, originally 3fe0
+A1BE30,replace,2,1fe0   ; bank A0, originally ffdf
+A1BE40,replace,2,5fe0   ; bank A0, originally 3fe0
+A1BE50,replace,2,1fe0   ; bank A0, originally ffdf
+A1BE60,replace,2,5fe0   ; bank A0, originally 3fe0
+A1BE70,replace,2,1fea   ; bank A0, originally ffe9
+A1BE80,replace,2,1fea   ; bank A0, originally ffe9
+A1BE93,replace,2,1ff1   ; bank A0, originally fff0
+A1BEA3,replace,2,9fd8   ; bank A0, originally 7fd8
+A1BEB3,replace,2,9fd8   ; bank A0, originally 7fd8
+A1BEC3,replace,2,9fd8   ; bank A0, originally 7fd8
+A1BED3,replace,2,9fd8   ; bank A0, originally 7fd8
+A1BEE3,replace,2,9fd8   ; bank A0, originally 7fd8
+A1BEF3,replace,2,9fd8   ; bank A0, originally 7fd8
+A1BF03,replace,2,9fd8   ; bank A0, originally 7fd8
+A1BF13,replace,2,9fd8   ; bank A0, originally 7fd8
+A1BF23,replace,2,9fd8   ; bank A0, originally 7fd8
+A1BF33,replace,2,9fd8   ; bank A0, originally 7fd8
+A1BF43,replace,2,9fd8   ; bank A0, originally 7fd8
+A1BF53,replace,2,9fd8   ; bank A0, originally 7fd8
+A1BF63,replace,2,9fd8   ; bank A0, originally 7fd8
+A1BF73,replace,2,9fd8   ; bank A0, originally 7fd8
+A1BF83,replace,2,9fd8   ; bank A0, originally 7fd8
+A1BF93,replace,2,9fd8   ; bank A0, originally 7fd8
+A1BFA3,replace,2,9fd8   ; bank A0, originally 7fd8
+A1BFB3,replace,2,9fd8   ; bank A0, originally 7fd8
+A1BFC3,replace,2,9fd8   ; bank A0, originally 7fd8
+A1BFD3,replace,2,9fd8   ; bank A0, originally 7fd8
+A1BFE6,replace,2,5feb   ; bank A0, originally 3feb
+A1BFF6,replace,2,9feb   ; bank A0, originally 7feb
+A1C006,replace,2,5feb   ; bank A0, originally 3feb
+A1C016,replace,2,9feb   ; bank A0, originally 7feb
+A1C026,replace,2,5feb   ; bank A0, originally 3feb
+A1C036,replace,2,9feb   ; bank A0, originally 7feb
+A1C046,replace,2,1fea   ; bank A0, originally ffe9
+A1C056,replace,2,1fea   ; bank A0, originally ffe9
+A1C066,replace,2,1fea   ; bank A0, originally ffe9
+A1C076,replace,2,1fea   ; bank A0, originally ffe9
+A1C086,replace,2,5feb   ; bank A0, originally 3feb
+A1C096,replace,2,9feb   ; bank A0, originally 7feb
+A1C0A6,replace,2,5fea   ; bank A0, originally 3fea
+A1C0B6,replace,2,5fea   ; bank A0, originally 3fea
+A1C0C6,replace,2,5fea   ; bank A0, originally 3fea
+A1C0D6,replace,2,5fea   ; bank A0, originally 3fea
+A1C0E6,replace,2,5fea   ; bank A0, originally 3fea
+A1C0F6,replace,2,5fea   ; bank A0, originally 3fea
+A1C106,replace,2,5fea   ; bank A0, originally 3fea
+A1C116,replace,2,5fea   ; bank A0, originally 3fea
+A1C126,replace,2,5fea   ; bank A0, originally 3fea
+A1C139,replace,2,1fe9   ; bank A0, originally ffe8
+A1C149,replace,2,1fe9   ; bank A0, originally ffe8
+A1C159,replace,2,1fea   ; bank A0, originally ffe9
+A1C169,replace,2,1fea   ; bank A0, originally ffe9
+A1C179,replace,2,1fea   ; bank A0, originally ffe9
+A1C189,replace,2,5fea   ; bank A0, originally 3fea
+A1C1AE,replace,2,1ff1   ; bank A0, originally fff0
+A1C1BE,replace,2,1fe9   ; bank A0, originally ffe8
+A1C1CE,replace,2,1fe9   ; bank A0, originally ffe8
+A1C1ED,replace,2,9fe7   ; bank A0, originally 7fe7
+A1C1FD,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C20D,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C21D,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C22D,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C23D,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C24D,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C25D,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C26D,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C283,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C293,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C2A3,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C2B3,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C2C3,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C2D3,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C2E3,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C2F3,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C303,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C313,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C323,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C333,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C343,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C353,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C363,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C373,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C383,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C393,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C3A3,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C3B3,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C3C3,replace,2,5fe9   ; bank A0, originally 3fe9
+A1C3D3,replace,2,5fe9   ; bank A0, originally 3fe9
+A1C3E6,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C3F6,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C406,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C416,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C426,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C436,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C446,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C456,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C466,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C476,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C486,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C496,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C4A6,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C4B6,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C4C6,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C4D6,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C4E6,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C4F6,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C506,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C516,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C526,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C536,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C546,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C556,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C566,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C576,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C586,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C596,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C5A6,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C5B6,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C5C6,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C5D6,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C5E9,replace,2,5fea   ; bank A0, originally 3fea
+A1C5F9,replace,2,5fea   ; bank A0, originally 3fea
+A1C609,replace,2,5fea   ; bank A0, originally 3fea
+A1C619,replace,2,5fea   ; bank A0, originally 3fea
+A1C629,replace,2,5fea   ; bank A0, originally 3fea
+A1C639,replace,2,5fea   ; bank A0, originally 3fea
+A1C649,replace,2,5fea   ; bank A0, originally 3fea
+A1C659,replace,2,5fea   ; bank A0, originally 3fea
+A1C669,replace,2,1fe9   ; bank A0, originally ffe8
+A1C679,replace,2,1fe9   ; bank A0, originally ffe8
+A1C689,replace,2,1fe9   ; bank A0, originally ffe8
+A1C69F,replace,2,5fea   ; bank A0, originally 3fea
+A1C6AF,replace,2,5fea   ; bank A0, originally 3fea
+A1C6BF,replace,2,5fea   ; bank A0, originally 3fea
+A1C6CF,replace,2,5fea   ; bank A0, originally 3fea
+A1C6DF,replace,2,5fea   ; bank A0, originally 3fea
+A1C6F2,replace,2,9fe7   ; bank A0, originally 7fe7
+A1C702,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C712,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C722,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C732,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C742,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C752,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C762,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C772,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C782,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C792,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C7A2,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C7B2,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C7C2,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C7D2,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C7E2,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C7F2,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C802,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C812,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C822,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C832,replace,2,1fea   ; bank A0, originally ffe9
+A1C842,replace,2,1fea   ; bank A0, originally ffe9
+A1C852,replace,2,1fea   ; bank A0, originally ffe9
+A1C862,replace,2,1fea   ; bank A0, originally ffe9
+A1C872,replace,2,1fea   ; bank A0, originally ffe9
+A1C882,replace,2,1fea   ; bank A0, originally ffe9
+A1C892,replace,2,1fea   ; bank A0, originally ffe9
+A1C8A2,replace,2,1fea   ; bank A0, originally ffe9
+A1C8B2,replace,2,1fea   ; bank A0, originally ffe9
+A1C8C5,replace,2,9fe7   ; bank A0, originally 7fe7
+A1C8D5,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C8E5,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C8F5,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C905,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C915,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C925,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C935,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C945,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C955,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C965,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C975,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C985,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C995,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C9A5,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C9B5,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C9C5,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C9D5,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C9E5,replace,2,9fd8   ; bank A0, originally 7fd8
+A1C9F5,replace,2,9fd8   ; bank A0, originally 7fd8
+A1CA05,replace,2,9fd8   ; bank A0, originally 7fd8
+A1CA15,replace,2,5fe9   ; bank A0, originally 3fe9
+A1CA25,replace,2,5fe9   ; bank A0, originally 3fe9
+A1CA35,replace,2,1fea   ; bank A0, originally ffe9
+A1CA45,replace,2,1fea   ; bank A0, originally ffe9
+A1CA55,replace,2,1fea   ; bank A0, originally ffe9
+A1CA65,replace,2,1fea   ; bank A0, originally ffe9
+A1CA78,replace,2,9fe7   ; bank A0, originally 7fe7
+A1CA88,replace,2,9fd8   ; bank A0, originally 7fd8
+A1CA98,replace,2,9fd8   ; bank A0, originally 7fd8
+A1CAA8,replace,2,9fd8   ; bank A0, originally 7fd8
+A1CAB8,replace,2,9fd8   ; bank A0, originally 7fd8
+A1CAC8,replace,2,9fd8   ; bank A0, originally 7fd8
+A1CAD8,replace,2,9fd8   ; bank A0, originally 7fd8
+A1CAE8,replace,2,9fd8   ; bank A0, originally 7fd8
+A1CAF8,replace,2,9fd8   ; bank A0, originally 7fd8
+A1CB08,replace,2,9fd8   ; bank A0, originally 7fd8
+A1CB18,replace,2,9fd8   ; bank A0, originally 7fd8
+A1CB28,replace,2,9fd8   ; bank A0, originally 7fd8
+A1CB3B,replace,2,5fea   ; bank A0, originally 3fea
+A1CB4B,replace,2,5fea   ; bank A0, originally 3fea
+A1CB5B,replace,2,5fea   ; bank A0, originally 3fea
+A1CB6B,replace,2,5fea   ; bank A0, originally 3fea
+A1CB7B,replace,2,5fea   ; bank A0, originally 3fea
+A1CB8B,replace,2,5fea   ; bank A0, originally 3fea
+A1CB9B,replace,2,5fea   ; bank A0, originally 3fea
+A1CBAE,replace,2,1fe0   ; bank A0, originally ffdf
+A1CBBE,replace,2,5fe0   ; bank A0, originally 3fe0
+A1CBCE,replace,2,1fe0   ; bank A0, originally ffdf
+A1CBDE,replace,2,5fe0   ; bank A0, originally 3fe0
+A1CBEE,replace,2,1fe0   ; bank A0, originally ffdf
+A1CBFE,replace,2,5fe0   ; bank A0, originally 3fe0
+A1CC0E,replace,2,1fe0   ; bank A0, originally ffdf
+A1CC1E,replace,2,5fe0   ; bank A0, originally 3fe0
+A1CC2E,replace,2,1fe0   ; bank A0, originally ffdf
+A1CC3E,replace,2,5fe0   ; bank A0, originally 3fe0
+A1CC51,replace,2,1fe9   ; bank A0, originally ffe8
+A1CC61,replace,2,1fe9   ; bank A0, originally ffe8
+A1CC71,replace,2,9fe9   ; bank A0, originally 7fe9
+A1CC81,replace,2,9fe9   ; bank A0, originally 7fe9
+A1CC91,replace,2,5fea   ; bank A0, originally 3fea
+A1CCA1,replace,2,5fea   ; bank A0, originally 3fea
+A1CCB1,replace,2,5fea   ; bank A0, originally 3fea
+A1CCC1,replace,2,5fea   ; bank A0, originally 3fea
+A1CCD4,replace,2,dfe4   ; bank A0, originally bfe4
+A1CCE4,replace,2,1fe5   ; bank A0, originally ffe4
+A1CCF4,replace,2,5fe5   ; bank A0, originally 3fe5
+A1CD04,replace,2,9fe5   ; bank A0, originally 7fe5
+A1CD17,replace,2,5fea   ; bank A0, originally 3fea
+A1CD27,replace,2,5fea   ; bank A0, originally 3fea
+A1CD37,replace,2,5fea   ; bank A0, originally 3fea
+A1CD47,replace,2,5fea   ; bank A0, originally 3fea
+A1CD57,replace,2,5fea   ; bank A0, originally 3fea
+A1CD67,replace,2,5fea   ; bank A0, originally 3fea
+A1CD77,replace,2,5fea   ; bank A0, originally 3fea
+A1CD87,replace,2,1fea   ; bank A0, originally ffe9
+A1CD97,replace,2,1fea   ; bank A0, originally ffe9
+A1CDA7,replace,2,1fea   ; bank A0, originally ffe9
+A1CDB7,replace,2,1fea   ; bank A0, originally ffe9
+A1CDC7,replace,2,1fe0   ; bank A0, originally ffdf
+A1CDD7,replace,2,5fe0   ; bank A0, originally 3fe0
+A1CDE7,replace,2,1fe0   ; bank A0, originally ffdf
+A1CDF7,replace,2,5fe0   ; bank A0, originally 3fe0
+A1CE07,replace,2,1fe0   ; bank A0, originally ffdf
+A1CE17,replace,2,5fe0   ; bank A0, originally 3fe0
+A1CE27,replace,2,1fe0   ; bank A0, originally ffdf
+A1CE37,replace,2,5fe0   ; bank A0, originally 3fe0
+A1CE47,replace,2,5fea   ; bank A0, originally 3fea
+A1CE57,replace,2,5fea   ; bank A0, originally 3fea
+A1CE6A,replace,2,dfe8   ; bank A0, originally bfe8
+A1CE7A,replace,2,dfe8   ; bank A0, originally bfe8
+A1CE8A,replace,2,dfe8   ; bank A0, originally bfe8
+A1CE9A,replace,2,dfe8   ; bank A0, originally bfe8
+A1CEAA,replace,2,dfe8   ; bank A0, originally bfe8
+A1CEBA,replace,2,dfe8   ; bank A0, originally bfe8
+A1CECA,replace,2,9fd7   ; bank A0, originally 7fd7
+A1CEDA,replace,2,9fd7   ; bank A0, originally 7fd7
+A1CEEA,replace,2,9fd7   ; bank A0, originally 7fd7
+A1CEFA,replace,2,9fd7   ; bank A0, originally 7fd7
+A1CF0A,replace,2,9fd7   ; bank A0, originally 7fd7
+A1CF1A,replace,2,9fd7   ; bank A0, originally 7fd7
+A1CF2D,replace,2,9fd3   ; bank A0, originally 7fd3
+A1CF3D,replace,2,9fd3   ; bank A0, originally 7fd3
+A1CF4D,replace,2,9fd3   ; bank A0, originally 7fd3
+A1CF5D,replace,2,1fd9   ; bank A0, originally ffd8
+A1CF6D,replace,2,1fd9   ; bank A0, originally ffd8
+A1CF7D,replace,2,1fd9   ; bank A0, originally ffd8
+A1CF90,replace,2,dfd3   ; bank A0, originally bfd3
+A1CFA0,replace,2,b3f1   ; bank A0, originally 93f1
+A1CFB0,replace,2,b3f1   ; bank A0, originally 93f1
+A1CFC3,replace,2,9fd7   ; bank A0, originally 7fd7
+A1CFCF,replace,1,02
+A1CFD3,replace,2,9fd7   ; bank A0, originally 7fd7
+A1CFE3,replace,2,9fd7   ; bank A0, originally 7fd7
+A1CFF3,replace,2,9fd7   ; bank A0, originally 7fd7
+A1D006,replace,2,5fd7   ; bank A0, originally 3fd7
+A1D016,replace,2,9fd4   ; bank A0, originally 7fd4
+A1D026,replace,2,9fd4   ; bank A0, originally 7fd4
+A1D036,replace,2,9fd4   ; bank A0, originally 7fd4
+A1D046,replace,2,9fd4   ; bank A0, originally 7fd4
+A1D056,replace,2,9fd4   ; bank A0, originally 7fd4
+A1D066,replace,2,9fd4   ; bank A0, originally 7fd4
+A1D076,replace,2,5fd0   ; bank A0, originally 3fd0
+A1D089,replace,2,1fd9   ; bank A0, originally ffd8
+A1D099,replace,2,1fd9   ; bank A0, originally ffd8
+A1D0A9,replace,2,1fd9   ; bank A0, originally ffd8
+A1D0B9,replace,2,1fd9   ; bank A0, originally ffd8
+A1D0C9,replace,2,1fd9   ; bank A0, originally ffd8
+A1D0D9,replace,2,1fd9   ; bank A0, originally ffd8
+A1D0E9,replace,2,1fd9   ; bank A0, originally ffd8
+A1D0F9,replace,2,1fd9   ; bank A0, originally ffd8
+A1D112,replace,2,dfcf   ; bank A0, originally bfcf
+A1D122,replace,2,dfcf   ; bank A0, originally bfcf
+A1D132,replace,2,dfcf   ; bank A0, originally bfcf
+A1D142,replace,2,dfcf   ; bank A0, originally bfcf
+A1D152,replace,2,dfcf   ; bank A0, originally bfcf
+A1D162,replace,2,9fda   ; bank A0, originally 7fda
+A1D172,replace,2,9fda   ; bank A0, originally 7fda
+A1D182,replace,2,9fda   ; bank A0, originally 7fda
+A1D192,replace,2,9fda   ; bank A0, originally 7fda
+A1D1A2,replace,2,9fda   ; bank A0, originally 7fda
+A1D1BB,replace,2,9fe9   ; bank A0, originally 7fe9
+A1D1CB,replace,2,9fe9   ; bank A0, originally 7fe9
+A1D1DB,replace,2,9fe9   ; bank A0, originally 7fe9
+A1D1EE,replace,2,9fe9   ; bank A0, originally 7fe9
+A1D1FE,replace,2,9fe9   ; bank A0, originally 7fe9
+A1D20E,replace,2,9fe9   ; bank A0, originally 7fe9
+A1D21E,replace,2,9fe9   ; bank A0, originally 7fe9
+A1D22E,replace,2,9fe9   ; bank A0, originally 7fe9
+A1D23E,replace,2,9fe9   ; bank A0, originally 7fe9
+A1D24E,replace,2,9fe9   ; bank A0, originally 7fe9
+A1D25E,replace,2,9fe9   ; bank A0, originally 7fe9
+A1D26E,replace,2,9fe9   ; bank A0, originally 7fe9
+A1D281,replace,2,9ff0   ; bank A0, originally 7ff0
+A1D291,replace,2,9ff0   ; bank A0, originally 7ff0
+A1D2A1,replace,2,9ff0   ; bank A0, originally 7ff0
+A1D2B1,replace,2,9ff0   ; bank A0, originally 7ff0
+A1D2C1,replace,2,9ff0   ; bank A0, originally 7ff0
+A1D2D1,replace,2,9ff0   ; bank A0, originally 7ff0
+A1D2E1,replace,2,9ff0   ; bank A0, originally 7ff0
+A1D2F1,replace,2,dfdb   ; bank A0, originally bfdb
+A1D301,replace,2,dfdb   ; bank A0, originally bfdb
+A1D314,replace,2,5fde   ; bank A0, originally 3fde
+A1D324,replace,2,9fde   ; bank A0, originally 7fde
+A1D334,replace,2,dfde   ; bank A0, originally bfde
+A1D344,replace,2,1fdf   ; bank A0, originally ffde
+A1D357,replace,2,dfdb   ; bank A0, originally bfdb
+A1D367,replace,2,dfdb   ; bank A0, originally bfdb
+A1D377,replace,2,dfdb   ; bank A0, originally bfdb
+A1D387,replace,2,dfdb   ; bank A0, originally bfdb
+A1D397,replace,2,dfdb   ; bank A0, originally bfdb
+A1D3AA,replace,2,1fd7   ; bank A0, originally ffd6
+A1D3BA,replace,2,f3f1   ; bank A0, originally d3f1
+A1D3CA,replace,2,f3f1   ; bank A0, originally d3f1
+A1D3DA,replace,2,f3f1   ; bank A0, originally d3f1
+A1D3ED,replace,2,73f7   ; bank A0, originally 53f7
+A1D3FD,replace,2,73f7   ; bank A0, originally 53f7
+A1D40D,replace,2,73f7   ; bank A0, originally 53f7
+A1D41D,replace,2,73f4   ; bank A0, originally 53f4
+A1D42D,replace,2,73f4   ; bank A0, originally 53f4
+A1D43D,replace,2,73f7   ; bank A0, originally 53f7
+A1D453,replace,2,9fd1   ; bank A0, originally 7fd1
+A1D463,replace,2,9fd1   ; bank A0, originally 7fd1
+A1D473,replace,2,9fd1   ; bank A0, originally 7fd1
+A1D483,replace,2,dfcf   ; bank A0, originally bfcf
+A1D493,replace,2,dfcf   ; bank A0, originally bfcf
+A1D4A3,replace,2,9fd1   ; bank A0, originally 7fd1
+A1D4B3,replace,2,9fd1   ; bank A0, originally 7fd1
+A1D4C3,replace,2,9fd1   ; bank A0, originally 7fd1
+A1D4D3,replace,2,dfcf   ; bank A0, originally bfcf
+A1D4E3,replace,2,dfcf   ; bank A0, originally bfcf
+A1D4F3,replace,2,dfcf   ; bank A0, originally bfcf
+A1D503,replace,2,dfcf   ; bank A0, originally bfcf
+A1D513,replace,2,dfcf   ; bank A0, originally bfcf
+A1D529,replace,2,dff0   ; bank A0, originally bff0
+A1D53F,replace,2,dfce   ; bank A0, originally bfce
+A1D54F,replace,2,dfce   ; bank A0, originally bfce
+A1D55F,replace,2,dfce   ; bank A0, originally bfce
+A1D56F,replace,2,dfce   ; bank A0, originally bfce
+A1D57F,replace,2,dfce   ; bank A0, originally bfce
+A1D58F,replace,2,dfce   ; bank A0, originally bfce
+A1D59F,replace,2,dfce   ; bank A0, originally bfce
+A1D5AF,replace,2,f3f1   ; bank A0, originally d3f1
+A1D5BF,replace,2,f3f1   ; bank A0, originally d3f1
+A1D5CF,replace,2,f3f1   ; bank A0, originally d3f1
+A1D5E2,replace,2,5fcf   ; bank A0, originally 3fcf
+A1D5F2,replace,2,9fcf   ; bank A0, originally 7fcf
+A1D602,replace,2,9fcf   ; bank A0, originally 7fcf
+A1D612,replace,2,9fcf   ; bank A0, originally 7fcf
+A1D622,replace,2,9fcf   ; bank A0, originally 7fcf
+A1D635,replace,2,9fd7   ; bank A0, originally 7fd7
+A1D645,replace,2,9fd7   ; bank A0, originally 7fd7
+A1D655,replace,2,9fd7   ; bank A0, originally 7fd7
+A1D665,replace,2,9fd7   ; bank A0, originally 7fd7
+A1D675,replace,2,9fd7   ; bank A0, originally 7fd7
+A1D685,replace,2,9fd7   ; bank A0, originally 7fd7
+A1D698,replace,2,5fd0   ; bank A0, originally 3fd0
+A1D6A8,replace,2,5fd0   ; bank A0, originally 3fd0
+A1D6B8,replace,2,5fd0   ; bank A0, originally 3fd0
+A1D6C8,replace,2,5fd0   ; bank A0, originally 3fd0
+A1D6D8,replace,2,5fd0   ; bank A0, originally 3fd0
+A1D6E8,replace,2,5fd0   ; bank A0, originally 3fd0
+A1D6F8,replace,2,5fd0   ; bank A0, originally 3fd0
+A1D708,replace,2,9fd1   ; bank A0, originally 7fd1
+A1D718,replace,2,9fd1   ; bank A0, originally 7fd1
+A1D728,replace,2,9fd1   ; bank A0, originally 7fd1
+A1D738,replace,2,9fd1   ; bank A0, originally 7fd1
+A1D748,replace,2,9fd1   ; bank A0, originally 7fd1
+A1D75B,replace,2,5fd0   ; bank A0, originally 3fd0
+A1D76B,replace,2,dfd3   ; bank A0, originally bfd3
+A1D77B,replace,2,dfd3   ; bank A0, originally bfd3
+A1D78B,replace,2,dfd3   ; bank A0, originally bfd3
+A1D79B,replace,2,dfd3   ; bank A0, originally bfd3
+A1D7AB,replace,2,dfd3   ; bank A0, originally bfd3
+A1D7BB,replace,2,1fd7   ; bank A0, originally ffd6
+A1D7CB,replace,2,1fd7   ; bank A0, originally ffd6
+A1D7DB,replace,2,dfd3   ; bank A0, originally bfd3
+A1D7EE,replace,2,9fd7   ; bank A0, originally 7fd7
+A1D801,replace,2,dfcf   ; bank A0, originally bfcf
+A1D811,replace,2,dfcf   ; bank A0, originally bfcf
+A1D821,replace,2,dfcf   ; bank A0, originally bfcf
+A1D831,replace,2,dfcf   ; bank A0, originally bfcf
+A1D841,replace,2,dfcf   ; bank A0, originally bfcf
+A1D851,replace,2,dfcf   ; bank A0, originally bfcf
+A1D864,replace,2,dfcf   ; bank A0, originally bfcf
+A1D874,replace,2,dfcf   ; bank A0, originally bfcf
+A1D884,replace,2,dfcf   ; bank A0, originally bfcf
+A1D894,replace,2,dfcf   ; bank A0, originally bfcf
+A1D8A4,replace,2,dfcf   ; bank A0, originally bfcf
+A1D8B4,replace,2,dfcf   ; bank A0, originally bfcf
+A1D8C4,replace,2,dfcf   ; bank A0, originally bfcf
+A1D8D4,replace,2,dfd3   ; bank A0, originally bfd3
+A1D8E4,replace,2,dfd3   ; bank A0, originally bfd3
+A1D8F4,replace,2,dfd3   ; bank A0, originally bfd3
+A1D904,replace,2,dfd3   ; bank A0, originally bfd3
+A1D914,replace,2,dfd3   ; bank A0, originally bfd3
+A1D924,replace,2,dfd3   ; bank A0, originally bfd3
+A1D934,replace,2,dfd3   ; bank A0, originally bfd3
+A1D944,replace,2,dfd3   ; bank A0, originally bfd3
+A1D957,replace,2,5fd0   ; bank A0, originally 3fd0
+A1D967,replace,2,5fd0   ; bank A0, originally 3fd0
+A1D977,replace,2,5fd0   ; bank A0, originally 3fd0
+A1D987,replace,2,5fd0   ; bank A0, originally 3fd0
+A1D997,replace,2,dfd3   ; bank A0, originally bfd3
+A1D9A7,replace,2,dfd3   ; bank A0, originally bfd3
+A1D9B7,replace,2,dfd3   ; bank A0, originally bfd3
+A1D9C7,replace,2,dfd3   ; bank A0, originally bfd3
+A1D9D7,replace,2,dfd3   ; bank A0, originally bfd3
+A1D9E7,replace,2,1fd7   ; bank A0, originally ffd6
+A1D9F7,replace,2,1fd7   ; bank A0, originally ffd6
+A1DA0A,replace,2,1fd9   ; bank A0, originally ffd8
+A1DA1A,replace,2,dfcf   ; bank A0, originally bfcf
+A1DA2A,replace,2,dfdb   ; bank A0, originally bfdb
+A1DA3D,replace,2,5fe6   ; bank A0, originally 3fe6
+A1DA4D,replace,2,5fe6   ; bank A0, originally 3fe6
+A1DA5D,replace,2,9fe6   ; bank A0, originally 7fe6
+A1DA6D,replace,2,5fe6   ; bank A0, originally 3fe6
+A1DA7D,replace,2,5fe6   ; bank A0, originally 3fe6
+A1DA8D,replace,2,9fe6   ; bank A0, originally 7fe6
+A1DA9D,replace,2,5fe6   ; bank A0, originally 3fe6
+A1DAAD,replace,2,5fe6   ; bank A0, originally 3fe6
+A1DABD,replace,2,9fe6   ; bank A0, originally 7fe6
+A1DAD3,replace,2,5fe6   ; bank A0, originally 3fe6
+A1DAE3,replace,2,5fe6   ; bank A0, originally 3fe6
+A1DAF3,replace,2,9fe6   ; bank A0, originally 7fe6
+A1DB03,replace,2,5fe6   ; bank A0, originally 3fe6
+A1DB13,replace,2,5fe6   ; bank A0, originally 3fe6
+A1DB23,replace,2,9fe6   ; bank A0, originally 7fe6
+A1DB33,replace,2,5fe6   ; bank A0, originally 3fe6
+A1DB43,replace,2,5fe6   ; bank A0, originally 3fe6
+A1DB53,replace,2,9fe6   ; bank A0, originally 7fe6
+A1DB66,replace,2,9fe9   ; bank A0, originally 7fe9
+A1DB76,replace,2,9fe9   ; bank A0, originally 7fe9
+A1DB86,replace,2,9fe9   ; bank A0, originally 7fe9
+A1DB96,replace,2,9fe9   ; bank A0, originally 7fe9
+A1DBA6,replace,2,9fe9   ; bank A0, originally 7fe9
+A1DBB6,replace,2,9fe9   ; bank A0, originally 7fe9
+A1DBC6,replace,2,9fe9   ; bank A0, originally 7fe9
+A1DBD9,replace,2,9fe9   ; bank A0, originally 7fe9
+A1DBE9,replace,2,9fe9   ; bank A0, originally 7fe9
+A1DBF9,replace,2,9fe9   ; bank A0, originally 7fe9
+A1DC09,replace,2,9fe9   ; bank A0, originally 7fe9
+A1DC19,replace,2,9fe9   ; bank A0, originally 7fe9
+A1DC29,replace,2,9fe9   ; bank A0, originally 7fe9
+A1DC3C,replace,2,9fda   ; bank A0, originally 7fda
+A1DC4C,replace,2,9fda   ; bank A0, originally 7fda
+A1DC5C,replace,2,9fda   ; bank A0, originally 7fda
+A1DC6F,replace,2,1fd9   ; bank A0, originally ffd8
+A1DC7F,replace,2,1fd9   ; bank A0, originally ffd8
+A1DC8F,replace,2,1fd9   ; bank A0, originally ffd8
+A1DC9F,replace,2,1fd9   ; bank A0, originally ffd8
+A1DCAF,replace,2,1fd9   ; bank A0, originally ffd8
+A1DCBF,replace,2,dfcf   ; bank A0, originally bfcf
+A1DCCF,replace,2,dfcf   ; bank A0, originally bfcf
+A1DCE2,replace,2,dfcf   ; bank A0, originally bfcf
+A1DCF2,replace,2,dfcf   ; bank A0, originally bfcf
+A1DD02,replace,2,dfcf   ; bank A0, originally bfcf
+A1DD12,replace,2,dfcf   ; bank A0, originally bfcf
+A1DD22,replace,2,dfcf   ; bank A0, originally bfcf
+A1DD38,replace,2,9fda   ; bank A0, originally 7fda
+A1DD48,replace,2,9fda   ; bank A0, originally 7fda
+A1DD58,replace,2,9fda   ; bank A0, originally 7fda
+A1DD68,replace,2,9fda   ; bank A0, originally 7fda
+A1DD78,replace,2,9fda   ; bank A0, originally 7fda
+A1DD88,replace,2,5fd0   ; bank A0, originally 3fd0
+A1DD9B,replace,2,dfd3   ; bank A0, originally bfd3
+A1DDAB,replace,2,dfd3   ; bank A0, originally bfd3
+A1DDBB,replace,2,dfd3   ; bank A0, originally bfd3
+A1DDCB,replace,2,dfcf   ; bank A0, originally bfcf
+A1DDDB,replace,2,dfcf   ; bank A0, originally bfcf
+A1DDEB,replace,2,dfcf   ; bank A0, originally bfcf
+A1DDFB,replace,2,dfcf   ; bank A0, originally bfcf
+A1DE17,replace,2,9fd7   ; bank A0, originally 7fd7
+A1DE27,replace,2,9fd7   ; bank A0, originally 7fd7
+A1DE37,replace,2,9fd7   ; bank A0, originally 7fd7
+A1DE47,replace,2,9fd7   ; bank A0, originally 7fd7
+A1DE5A,replace,2,b3f2   ; bank A0, originally 93f2
+A1DE6D,replace,2,1fd7   ; bank A0, originally ffd6
+A1DE7D,replace,2,1fd7   ; bank A0, originally ffd6
+A1DE8D,replace,2,1fd7   ; bank A0, originally ffd6
+A1DE9D,replace,2,1fd7   ; bank A0, originally ffd6
+A1DEAD,replace,2,1fd7   ; bank A0, originally ffd6
+A1DEBD,replace,2,9fd7   ; bank A0, originally 7fd7
+A1DECD,replace,2,9fd7   ; bank A0, originally 7fd7
+A1DEDD,replace,2,9fd7   ; bank A0, originally 7fd7
+A1DEED,replace,2,9fd7   ; bank A0, originally 7fd7
+A1DEFD,replace,2,9fd7   ; bank A0, originally 7fd7
+A1DF0D,replace,2,9fd7   ; bank A0, originally 7fd7
+A1DF1D,replace,2,9fd7   ; bank A0, originally 7fd7
+A1DF30,replace,2,dfe7   ; bank A0, originally bfe7
+A1DF40,replace,2,9fda   ; bank A0, originally 7fda
+A1DF50,replace,2,dfe7   ; bank A0, originally bfe7
+A1DF63,replace,2,dfdf   ; bank A0, originally bfdf
+A1DF73,replace,2,dfdf   ; bank A0, originally bfdf
+A1DF83,replace,2,dfdf   ; bank A0, originally bfdf
+A1DF96,replace,2,dfdf   ; bank A0, originally bfdf
+A1DFA6,replace,2,dfdf   ; bank A0, originally bfdf
+A1DFB6,replace,2,dfdf   ; bank A0, originally bfdf
+A1DFC6,replace,2,dfdf   ; bank A0, originally bfdf
+A1DFD9,replace,2,1fd0   ; bank A0, originally ffcf
+A1DFE9,replace,2,1fd0   ; bank A0, originally ffcf
+A1DFF9,replace,2,1fd0   ; bank A0, originally ffcf
+A1E009,replace,2,1fd0   ; bank A0, originally ffcf
+A1E01C,replace,2,1fd0   ; bank A0, originally ffcf
+A1E02C,replace,2,1fd0   ; bank A0, originally ffcf
+A1E03C,replace,2,1fd0   ; bank A0, originally ffcf
+A1E04C,replace,2,1fd0   ; bank A0, originally ffcf
+A1E05C,replace,2,1fd0   ; bank A0, originally ffcf
+A1E06C,replace,2,1fd0   ; bank A0, originally ffcf
+A1E07F,replace,2,1fd7   ; bank A0, originally ffd6
+A1E08F,replace,2,1fd7   ; bank A0, originally ffd6
+A1E09F,replace,2,1fd7   ; bank A0, originally ffd6
+A1E0AF,replace,2,73f7   ; bank A0, originally 53f7
+A1E0BF,replace,2,73f7   ; bank A0, originally 53f7
+A1E0CF,replace,2,73f7   ; bank A0, originally 53f7
+A1E0DF,replace,2,73f7   ; bank A0, originally 53f7
+A1E0EF,replace,2,1fd7   ; bank A0, originally ffd6
+A1E102,replace,2,b3f4   ; bank A0, originally 93f4
+A1E112,replace,2,b3f4   ; bank A0, originally 93f4
+A1E122,replace,2,b3f4   ; bank A0, originally 93f4
+A1E132,replace,2,b3f4   ; bank A0, originally 93f4
+A1E142,replace,2,b3f4   ; bank A0, originally 93f4
+A1E152,replace,2,b3f4   ; bank A0, originally 93f4
+A1E162,replace,2,b3f7   ; bank A0, originally 93f7
+A1E172,replace,2,b3f7   ; bank A0, originally 93f7
+A1E182,replace,2,b3f7   ; bank A0, originally 93f7
+A1E192,replace,2,b3f7   ; bank A0, originally 93f7
+A1E1A2,replace,2,b3f7   ; bank A0, originally 93f7
+A1E1B2,replace,2,b3f7   ; bank A0, originally 93f7
+A1E1C2,replace,2,b3f7   ; bank A0, originally 93f7
+A1E1D8,replace,2,9fdd   ; bank A0, originally 7fdd
+A1E1E8,replace,2,9fdd   ; bank A0, originally 7fdd
+A1E1F8,replace,2,9fdd   ; bank A0, originally 7fdd
+A1E208,replace,2,9fdd   ; bank A0, originally 7fdd
+A1E218,replace,2,5fd2   ; bank A0, originally 3fd2
+A1E228,replace,2,5fd2   ; bank A0, originally 3fd2
+A1E238,replace,2,5fd2   ; bank A0, originally 3fd2
+A1E248,replace,2,5fd2   ; bank A0, originally 3fd2
+A1E25B,replace,2,5fed   ; bank A0, originally 3fed
+A1E26E,replace,2,dfee   ; bank A0, originally bfee
+A1E27E,replace,2,9fed   ; bank A0, originally 7fed
+A1E28E,replace,2,9fed   ; bank A0, originally 7fed
+A1E29E,replace,2,1fee   ; bank A0, originally ffed
+A1E2AE,replace,2,1fee   ; bank A0, originally ffed
+A1E2BE,replace,2,1fee   ; bank A0, originally ffed
+A1E2CE,replace,2,5fee   ; bank A0, originally 3fee
+A1E2DE,replace,2,5fee   ; bank A0, originally 3fee
+A1E2EE,replace,2,9fee   ; bank A0, originally 7fee
+A1E2FE,replace,2,9fee   ; bank A0, originally 7fee
+A1E30E,replace,2,9fee   ; bank A0, originally 7fee
+A1E321,replace,2,9fec   ; bank A0, originally 7fec
+A1E331,replace,2,5fec   ; bank A0, originally 3fec
+A1E341,replace,2,9fe2   ; bank A0, originally 7fe2
+A1E351,replace,2,5fd2   ; bank A0, originally 3fd2
+A1E361,replace,2,5fd2   ; bank A0, originally 3fd2
+A1E371,replace,2,5fd2   ; bank A0, originally 3fd2
+A1E387,replace,2,1fda   ; bank A0, originally ffd9
+A1E397,replace,2,1fda   ; bank A0, originally ffd9
+A1E3AA,replace,2,dfd5   ; bank A0, originally bfd5
+A1E3BA,replace,2,dfd5   ; bank A0, originally bfd5
+A1E3CA,replace,2,dfd5   ; bank A0, originally bfd5
+A1E3DA,replace,2,dfd5   ; bank A0, originally bfd5
+A1E3EA,replace,2,dfd5   ; bank A0, originally bfd5
+A1E3FA,replace,2,dfd5   ; bank A0, originally bfd5
+A1E40A,replace,2,dfd5   ; bank A0, originally bfd5
+A1E41A,replace,2,dfd5   ; bank A0, originally bfd5
+A1E42D,replace,2,5fd7   ; bank A0, originally 3fd7
+A1E440,replace,2,9fdd   ; bank A0, originally 7fdd
+A1E450,replace,2,5fd2   ; bank A0, originally 3fd2
+A1E460,replace,2,5fd2   ; bank A0, originally 3fd2
+A1E470,replace,2,5fd2   ; bank A0, originally 3fd2
+A1E480,replace,2,5fd2   ; bank A0, originally 3fd2
+A1E490,replace,2,9fdd   ; bank A0, originally 7fdd
+A1E4A3,replace,2,9fdd   ; bank A0, originally 7fdd
+A1E4B3,replace,2,9fdd   ; bank A0, originally 7fdd
+A1E4C3,replace,2,5fd2   ; bank A0, originally 3fd2
+A1E4D3,replace,2,5fd2   ; bank A0, originally 3fd2
+A1E4E3,replace,2,5fd2   ; bank A0, originally 3fd2
+A1E4F3,replace,2,5fd2   ; bank A0, originally 3fd2
+A1E503,replace,2,9fdd   ; bank A0, originally 7fdd
+A1E516,replace,2,5fd2   ; bank A0, originally 3fd2
+A1E526,replace,2,5fd2   ; bank A0, originally 3fd2
+A1E536,replace,2,5fd2   ; bank A0, originally 3fd2
+A1E546,replace,2,5fd2   ; bank A0, originally 3fd2
+A1E559,replace,2,5fd2   ; bank A0, originally 3fd2
+A1E569,replace,2,5fd2   ; bank A0, originally 3fd2
+A1E579,replace,2,5fd2   ; bank A0, originally 3fd2
+A1E589,replace,2,5fd2   ; bank A0, originally 3fd2
+A1E59C,replace,2,b3f4   ; bank A0, originally 93f4
+A1E5AC,replace,2,b3f4   ; bank A0, originally 93f4
+A1E5BF,replace,2,5fd2   ; bank A0, originally 3fd2
+A1E5CF,replace,2,5fd2   ; bank A0, originally 3fd2
+A1E5DF,replace,2,5fd2   ; bank A0, originally 3fd2
+A1E5EF,replace,2,5fd2   ; bank A0, originally 3fd2
+A1E5FF,replace,2,5fd2   ; bank A0, originally 3fd2
+A1E60F,replace,2,5fd2   ; bank A0, originally 3fd2
+A1E61F,replace,2,5fd2   ; bank A0, originally 3fd2
+A1E62F,replace,2,5fd2   ; bank A0, originally 3fd2
+A1E63F,replace,2,5fd2   ; bank A0, originally 3fd2
+A1E652,replace,2,5fd2   ; bank A0, originally 3fd2
+A1E662,replace,2,5fd2   ; bank A0, originally 3fd2
+A1E672,replace,2,5fd2   ; bank A0, originally 3fd2
+A1E682,replace,2,5fd2   ; bank A0, originally 3fd2
+A1E695,replace,2,b3f7   ; bank A0, originally 93f7
+A1E6A5,replace,2,b3f7   ; bank A0, originally 93f7
+A1E6B5,replace,2,b3f7   ; bank A0, originally 93f7
+A1E6C5,replace,2,b3f7   ; bank A0, originally 93f7
+A1E6D5,replace,2,b3f7   ; bank A0, originally 93f7
+A1E6E5,replace,2,b3f7   ; bank A0, originally 93f7
+A1E6F5,replace,2,b3f7   ; bank A0, originally 93f7
+A1E70E,replace,2,1fee   ; bank A0, originally ffed
+A1E71E,replace,2,1fee   ; bank A0, originally ffed
+A1E72E,replace,2,1fee   ; bank A0, originally ffed
+A1E73E,replace,2,5fee   ; bank A0, originally 3fee
+A1E74E,replace,2,5fee   ; bank A0, originally 3fee
+A1E75E,replace,2,9fee   ; bank A0, originally 7fee
+A1E76E,replace,2,9fee   ; bank A0, originally 7fee
+A1E77E,replace,2,9fee   ; bank A0, originally 7fee
+A1E794,replace,2,9fdd   ; bank A0, originally 7fdd
+A1E7A4,replace,2,9fdd   ; bank A0, originally 7fdd
+A1E7B4,replace,2,9fdd   ; bank A0, originally 7fdd
+A1E7C4,replace,2,5fd2   ; bank A0, originally 3fd2
+A1E7D4,replace,2,5fd2   ; bank A0, originally 3fd2
+A1E7E4,replace,2,5fd2   ; bank A0, originally 3fd2
+A1E7F4,replace,2,5fd2   ; bank A0, originally 3fd2
+A1E804,replace,2,5fd2   ; bank A0, originally 3fd2
+A1E814,replace,2,5fd2   ; bank A0, originally 3fd2
+A1E824,replace,2,5fd2   ; bank A0, originally 3fd2
+A1E834,replace,2,5fd2   ; bank A0, originally 3fd2
+A1E844,replace,2,5fd2   ; bank A0, originally 3fd2
+A1E857,replace,2,5fd2   ; bank A0, originally 3fd2
+A1E867,replace,2,5fd2   ; bank A0, originally 3fd2
+A1E877,replace,2,5fd2   ; bank A0, originally 3fd2
+A1E88A,replace,2,5fe2   ; bank A0, originally 3fe2
+A1E89A,replace,2,5fe2   ; bank A0, originally 3fe2
+A1E8AD,replace,2,5fe2   ; bank A0, originally 3fe2
+A1E8BD,replace,2,5fe2   ; bank A0, originally 3fe2
+A1E8D0,replace,2,5fe2   ; bank A0, originally 3fe2
+A1E8E0,replace,2,5fe2   ; bank A0, originally 3fe2
+A1E8F3,replace,2,5fe2   ; bank A0, originally 3fe2
+A1E903,replace,2,5fe2   ; bank A0, originally 3fe2
+A1E916,replace,2,5fe2   ; bank A0, originally 3fe2
+A1E926,replace,2,5fe2   ; bank A0, originally 3fe2
+A1E939,replace,2,5fe1   ; bank A0, originally 3fe1
+A1E949,replace,2,5fe2   ; bank A0, originally 3fe2
+A1E95C,replace,2,5fe2   ; bank A0, originally 3fe2
+A1E96C,replace,2,5fe2   ; bank A0, originally 3fe2
+A1E97C,replace,2,1fe2   ; bank A0, originally ffe1
+A1E98C,replace,2,1fe2   ; bank A0, originally ffe1
+A1E99C,replace,2,1fe2   ; bank A0, originally ffe1
+A1E9AC,replace,2,1fe2   ; bank A0, originally ffe1
+A1E9BC,replace,2,1fe2   ; bank A0, originally ffe1
+A1E9CC,replace,2,1fe2   ; bank A0, originally ffe1
+A1E9DC,replace,2,1fe2   ; bank A0, originally ffe1
+A1E9EC,replace,2,1fe2   ; bank A0, originally ffe1
+A1E9FC,replace,2,1fe2   ; bank A0, originally ffe1
+A1EA0C,replace,2,1fe2   ; bank A0, originally ffe1
+A1EA1C,replace,2,1fe2   ; bank A0, originally ffe1
+A1EA2F,replace,2,1fe2   ; bank A0, originally ffe1
+A1EA3F,replace,2,1fe2   ; bank A0, originally ffe1
+A1EA4F,replace,2,1fe2   ; bank A0, originally ffe1
+A1EA5F,replace,2,1fe2   ; bank A0, originally ffe1
+A1EA6F,replace,2,1fe2   ; bank A0, originally ffe1
+A1EA7F,replace,2,1fe2   ; bank A0, originally ffe1
+A1EA8F,replace,2,1fe2   ; bank A0, originally ffe1
+A1EA9F,replace,2,1fe2   ; bank A0, originally ffe1
+A1EAAF,replace,2,1fe2   ; bank A0, originally ffe1
+A1EABF,replace,2,1fe2   ; bank A0, originally ffe1
+A1EACF,replace,2,1fe2   ; bank A0, originally ffe1
+A1EADF,replace,2,5fe2   ; bank A0, originally 3fe2
+A1EAEF,replace,2,5fe2   ; bank A0, originally 3fe2
+A1EB02,replace,2,5fe2   ; bank A0, originally 3fe2
+A1EB12,replace,2,5fe2   ; bank A0, originally 3fe2
+A1EB22,replace,2,1fe2   ; bank A0, originally ffe1
+A1EB32,replace,2,1fe2   ; bank A0, originally ffe1
+A1EB42,replace,2,1fe2   ; bank A0, originally ffe1
+A1EB52,replace,2,1fe2   ; bank A0, originally ffe1
+A1EB62,replace,2,1fe2   ; bank A0, originally ffe1
+A1EB75,replace,2,5fe2   ; bank A0, originally 3fe2
+A1EB85,replace,2,5fe2   ; bank A0, originally 3fe2
+A1EB98,replace,2,5fe2   ; bank A0, originally 3fe2
+A1EBA8,replace,2,5fe2   ; bank A0, originally 3fe2
+A1EBBB,replace,2,5fe2   ; bank A0, originally 3fe2
 
 ;=======================================================
 ; Bank A2
@@ -8039,8 +10481,8 @@ A29C17,replace,2,1b9a   ; bank A2, originally 0b9a
 A29C1F,replace,2,d69c   ; bank A2, originally be9c
 A29C26,replace,2,1b9a   ; bank A2, originally 0b9a
 A29C3B,replace,2,199a   ; bank A2, originally 099a
-A29C43,replace,2,b919
-A29C45,insert,7,9a29ff00eb8512
+A29C43,insert,7,b9199a29ff00eb
+A29C4A,replace,2,8512
 A29C5B,replace,2,bbc6   ; bank A0, originally abc6
 A29C81,replace,2,b09d   ; bank A2, originally 989d
 A29CA4,replace,2,f999   ; bank A2, originally e999
@@ -9934,19 +12376,19 @@ A3A8D2,replace,2,55a7   ; bank A3, originally 45a7
 A3A8D5,replace,2,58a9   ; bank A3, originally 3ca9
 A3A8E6,replace,1,16
 A3A8EE,replace,1,1c
-A3A8EF,replace,6,a9d0cc9da80f
-A3A8F5,insert,3,a9feff
+A3A8EF,insert,3,a9d0cc
+A3A8F2,replace,6,9da80fa9feff
 A3A8FC,replace,1,0e
-A3A8FD,replace,3,a93033
-A3A900,insert,3,9da80f
+A3A8FD,insert,3,a93033
+A3A900,replace,3,9da80f
 A3A916,replace,2,bbc6   ; bank A0, originally abc6
 A3A924,replace,1,16
 A3A92C,replace,1,1c
-A3A92D,replace,6,a9d0cc9dac0f
-A3A933,insert,3,a9feff
+A3A92D,insert,3,a9d0cc
+A3A930,replace,6,9dac0fa9feff
 A3A93A,replace,1,0e
-A3A93B,replace,3,a93033
-A3A93E,insert,3,9dac0f
+A3A93B,insert,3,a93033
+A3A93E,replace,3,9dac0f
 A3A954,replace,2,96c7   ; bank A0, originally 86c7
 A3A979,replace,2,69a7   ; bank A3, originally 59a7
 A3A97C,replace,2,58a9   ; bank A3, originally 3ca9
@@ -10119,7 +12561,7 @@ A3B429,replace,2,ddb3   ; bank A3, originally c1b3
 A3B42B,replace,2,f3b3   ; bank A3, originally d7b3
 A3B42D,replace,2,03b4   ; bank A3, originally e7b3
 A3B42F,replace,2,19b4   ; bank A3, originally fdb3
-A3B435,ignore,16
+A3B431,ignore,20
 A3B46A,replace,2,9eb4   ; bank A3, originally 82b4
 A3B47D,replace,2,ddb3   ; bank A3, originally c1b3
 A3B4A5,replace,2,1baf   ; bank A0, originally 0baf
@@ -14206,10 +16648,44 @@ A5E759,replace,2,6be7   ; bank A5, originally 5fe7
 A5E75D,replace,2,b4ee   ; bank A5, originally 6fee
 A5E765,replace,2,b4ee   ; bank A5, originally 6fee
 A5E769,replace,2,efe6   ; bank A5, originally e3e6
-A5E789,ignore,136
-A5E811,remove,40
-A5E811,insert,14,b900008f16787eb902008f18787e
-A5E81F,insert,14,b904008f14787e9818690600a86b
+A5E789,remove,4
+A5E78B,replace,2,18ef   ; bank A5, originally d3ee
+A5E78D,remove,4
+A5E791,replace,1,08
+A5E793,replace,2,18ef   ; bank A5, originally d3ee
+A5E795,replace,2,b6e9   ; bank A5, originally b1e9
+A5E797,remove,4
+A5E799,replace,2,91e7   ; bank A5, originally 8de7
+A5E79D,replace,2,18ef   ; bank A5, originally d3ee
+A5E7A1,replace,2,06ef   ; bank A5, originally c1ee
+A5E7A5,replace,2,f4ee   ; bank A5, originally afee
+A5E7A9,replace,2,e2ee   ; bank A5, originally 9dee
+A5E7AD,replace,2,d0ee   ; bank A5, originally 8bee
+A5E7B1,replace,2,beee   ; bank A5, originally 79ee
+A5E7B5,replace,2,aaee   ; bank A5, originally 65ee
+A5E7BD,replace,2,73e9   ; bank A5, originally 6ee9
+A5E7C7,replace,2,cfe8   ; bank A5, originally cae8
+A5E7CB,replace,2,73e9   ; bank A5, originally 6ee9
+A5E7CF,replace,2,aaee   ; bank A5, originally 65ee
+A5E7D1,replace,2,cfe8   ; bank A5, originally cae8
+A5E7D5,replace,2,73e9   ; bank A5, originally 6ee9
+A5E7D9,replace,2,aaee   ; bank A5, originally 65ee
+A5E7DB,replace,2,cfe8   ; bank A5, originally cae8
+A5E7DF,replace,2,73e9   ; bank A5, originally 6ee9
+A5E7E3,replace,2,aaee   ; bank A5, originally 65ee
+A5E7E5,replace,2,cfe8   ; bank A5, originally cae8
+A5E7E9,replace,2,73e9   ; bank A5, originally 6ee9
+A5E7ED,replace,2,aaee   ; bank A5, originally 65ee
+A5E7EF,replace,2,cfe8   ; bank A5, originally cae8
+A5E7F3,replace,2,73e9   ; bank A5, originally 6ee9
+A5E7F7,replace,2,aaee   ; bank A5, originally 65ee
+A5E7F9,replace,2,cfe8   ; bank A5, originally cae8
+A5E7FD,replace,2,73e9   ; bank A5, originally 6ee9
+A5E801,replace,2,aaee   ; bank A5, originally 65ee
+A5E803,replace,2,cfe8   ; bank A5, originally cae8
+A5E807,replace,2,73e9   ; bank A5, originally 6ee9
+A5E80B,replace,2,aaee   ; bank A5, originally 65ee
+A5E80D,replace,2,b6e8   ; bank A5, originally b1e8
 A5E897,insert,5,ad8c0ff007
 A5E8A0,replace,1,c1
 A5E8AE,replace,1,43
@@ -15195,10 +17671,9 @@ A6C0BB,replace,2,46c1   ; bank A6, originally 36c1
 A6C0CC,replace,2,acc1   ; bank A6, originally 9cc1
 A6C0D2,replace,1,26
 A6C0D4,replace,2,dfc3   ; bank A6, originally 50c4
-A6C0F3,move,11
+A6C0F3,remove,11
 A6C0FE,replace,1,15
-A6C105,place,11
-A6C10A,replace,6,22a2c3a68004
+A6C105,insert,11,ade209d00622a2c3a68004
 A6C111,replace,2,a7c3   ; bank A6, originally 83c3
 A6C115,replace,2,acc1   ; bank A6, originally 9cc1
 A6C11B,replace,2,b7c2   ; bank A6, originally a7c2
@@ -15216,14 +17691,34 @@ A6C2F2,replace,2,dac2   ; bank A6, originally cac2
 A6C305,replace,2,dac2   ; bank A6, originally cac2
 A6C393,insert,10,ade209d005a23cde800d
 A6C39D,insert,10,a25ade8008a200de8003
-A6C3A7,replace,5,a21ede8bf4
-A6C3AC,insert,3,00adab
-A6C3DF,remove,152
-A6C45A,filler,58
-A6C494,ignore,51
-A6C4C7,filler,7
-A6C4CE,ignore,58
-A6C508,filler,7
+A6C3A8,replace,2,1ede
+A6C3AB,insert,3,f400ad
+A6C3AE,replace,1,ab
+A6C3DF,move,152
+A6C45A,insert,14,000200c0b0007e200100c2b0007f
+A6C468,insert,14,c00100dab720180002c0dbb70019
+A6C476,insert,14,0002c0ddb7001a0002c0dfb7001b
+A6C484,insert,16,0001c0e1b7001c0001c0e3b7001d0000
+A6C4A2,replace,2,c001
+A6C4AB,replace,2,c0db   ; bank B7, originally 00dc
+A6C4AE,replace,1,00
+A6C4B2,replace,2,c0dd   ; bank B7, originally 00de
+A6C4B5,replace,1,00
+A6C4B9,replace,2,c0df   ; bank B7, originally 00e0
+A6C4BC,replace,1,00
+A6C4C0,replace,2,c0e1   ; bank B7, originally 00e2
+A6C4C3,replace,1,00
+A6C4C5,insert,7,0001c0e3b7007d
+A6C4CE,replace,2,c001
+A6C4D7,replace,2,c0db   ; bank B7, originally 00dc
+A6C4DA,replace,1,00
+A6C4DE,replace,2,c0dd   ; bank B7, originally 00de
+A6C4E1,replace,1,00
+A6C4E5,replace,2,c0df   ; bank B7, originally 00e0
+A6C4E8,replace,1,00
+A6C4EC,replace,2,c0e1   ; bank B7, originally 00e2
+A6C4EF,replace,1,00
+A6C4F1,insert,7,0001c0e3b7001d
 A6C510,replace,2,d8c5   ; bank A6, originally 01c6
 A6C516,replace,2,9fe6   ; bank A6, originally c8e6
 A6C519,replace,2,3ed4   ; bank A6, originally 67d4
@@ -17362,8 +19857,8 @@ A7B695,replace,2,2ca9   ; bank A0, originally 1ca9
 A7B69F,replace,1,34
 A7B6A2,insert,9,6d7c0f8d7c0fad32a9
 A7B6C8,replace,1,13
-A7B6CC,replace,5,ad38a98512
-A7B6D1,insert,3,ad36a9
+A7B6CC,insert,3,ad38a9
+A7B6CF,replace,5,8512ad36a9
 A7B6D7,replace,2,bbc6   ; bank A0, originally abc6
 A7B6F4,replace,2,faae   ; bank A7, originally e4ae
 A7B6FA,replace,2,0bb7   ; bank A7, originally d7b6
@@ -18206,7 +20701,7 @@ A7F4EF,replace,2,2ffe   ; bank A7, originally fbfd
 A7F4F3,replace,2,edf4   ; bank A7, originally b9f4
 A7F4F7,replace,2,9dfd   ; bank A7, originally 69fd
 A7F4FB,replace,2,f5f4   ; bank A7, originally c1f4
-A7F4FD,ignore,20
+A7F509,ignore,8
 A7F534,replace,2,8ff4   ; bank A7, originally 5bf4
 A7F53C,replace,2,cdf3   ; bank A7, originally 99f3
 A7F542,replace,2,a4f5   ; bank A7, originally 70f5
@@ -21347,8 +23842,8 @@ A9B31B,replace,2,21b3   ; bank A9, originally d1b2
 A9B31D,remove,8
 A9B325,replace,1,0a
 A9B327,replace,2,30b3   ; bank A9, originally e3b2
+A9B32C,remove,3
 A9B32C,replace,4,2293c3a6
-A9B330,remove,3
 A9B334,replace,2,b7c2   ; bank A6, originally a7c2
 A9B33A,replace,2,46b3   ; bank A9, originally f9b2
 A9B347,replace,2,93b3   ; bank A9, originally 46b3
@@ -23088,12 +25583,12 @@ AAB230,replace,2,5db2   ; bank AA, originally 4db2
 AAB265,replace,2,aab0   ; bank AA, originally 9ab0
 AAB274,replace,2,b4ba   ; bank A0, originally a4ba
 AAB27A,replace,2,e7ba   ; bank A0, originally d7ba
+AAB889,ignore,2449
 AAB889,replace,2,b0c3   ; bank AA, originally a0c3
 AAB88B,replace,2,d9c2   ; bank AA, originally c9c2
 AAB88F,replace,2,e087   ; bank AA, originally d087
 AAB891,replace,2,acb0   ; bank AA, originally 9cb0
 AAB893,replace,2,d6c6   ; bank AA, originally c6c6
-AAB897,ignore,2435
 AAB897,replace,2,acb0   ; bank AA, originally 9cb0
 AAB899,replace,2,cfc6   ; bank AA, originally bfc6
 AAB89D,replace,2,22aa   ; bank AA, originally 12aa
@@ -23885,12 +26380,12 @@ AAC9A1,replace,2,b7a6   ; bank A0, originally a7a6
 AAC9AD,replace,2,bbc6   ; bank AA, originally abc6
 AAC9B3,replace,2,d8b1   ; bank AA, originally c8b1
 AAC9D8,replace,2,68d6   ; bank AA, originally 58d6
+AAC9DB,ignore,259
 AAC9E4,replace,2,b0c3   ; bank AA, originally a0c3
 AAC9E6,replace,2,d9c2   ; bank AA, originally c9c2
 AAC9E8,replace,2,acb0   ; bank AA, originally 9cb0
 AAC9EA,replace,2,d2d5   ; bank AA, originally c2d5
 AAC9EE,replace,2,40aa   ; bank AA, originally 30aa
-AAC9F2,ignore,236
 AAC9F2,replace,2,acb0   ; bank AA, originally 9cb0
 AAC9F4,replace,2,cfc6   ; bank AA, originally bfc6
 AAC9F8,replace,2,40aa   ; bank AA, originally 30aa
@@ -24828,7 +27323,20 @@ AAE7D2,replace,2,71e4   ; bank AA, originally 61e4
 ;=======================================================
 ; Bank AD
 ;=======================================================
-ADDE00,filler,716
+ADDE00,insert,14,2a0078dead87522a00a2deada752
+ADDE0E,insert,16,1e00ccdeadca521e00eadeadea520000
+ADDE1E,place,326
+ADDE1E,replace,14,2e0008dfad87522e0036dfada752
+ADDE2C,replace,14,2a0064dfadc7522a008edfade752
+ADDE3C,insert,14,2600b8dfad874a2600dedfada74a
+ADDE4A,insert,16,260004e0adc74a26002ae0ade74a0000
+ADDE5A,replace,14,1a0050e0ad8a4a1a006ae0adaa4a
+ADDE68,replace,14,240084e0adc84a2400a8e0ade84a
+ADDE78,filler,144
+ADDF08,ignore,92
+ADDF64,filler,84
+ADDFB8,filler,152
+ADE050,filler,124
 ADE127,replace,2,2be1   ; bank AD, originally 5fde
 ADE12B,replace,2,72e4   ; bank AD, originally a6e1
 ADE12D,replace,2,4be1   ; bank AD, originally 7fde
@@ -26614,8 +29122,8 @@ B2EFB3,replace,2,46ed   ; bank B2, originally 36ed
 B2EFBE,replace,2,bced   ; bank B2, originally aced
 B2EFD3,replace,2,3302
 B2EFE0,replace,1,1f
-B2EFF9,replace,7,a966049f04807e
-B2F000,remove,5
+B2EFF9,replace,3,a96604
+B2EFFC,remove,5
 B2F001,replace,2,3ff0   ; bank B2, originally 34f0
 B2F00C,replace,2,12f1   ; bank B2, originally c8f0
 B2F046,replace,2,fdae   ; bank A0, originally edae
@@ -28356,8 +30864,14 @@ B4EC09,replace,2,5fe9   ; bank A0, originally 3fe9
 ;=======================================================
 ; Bank B7
 ;=======================================================
-B7DA00,ignore,2304
-B7E300,filler,704
+B7DA00,ignore,448
+B7DBC0,remove,64
+B7DBC0,ignore,512
+B7DDC0,ignore,512
+B7DFC0,ignore,512
+B7E1C0,ignore,256
+B7E2C0,filler,256
+B7E3C0,filler,512
 
 ;=======================================================
 ; Bank B8

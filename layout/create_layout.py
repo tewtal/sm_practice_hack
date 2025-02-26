@@ -169,6 +169,8 @@ for line in template_lines:
             key2 = key + "2"
             if key2 in menus:
                has_page2 = True
+               if door_prefix != "areaboss":
+                  f_menu_output.write("    dw #$FFFF\n")
                f_menu_output.write("    dw #doormenu_%s%s_goto_page2\n" % (goto_prefix, door_prefix))
             has_page3 = False
             key3 = key + "3"
@@ -191,6 +193,8 @@ for line in template_lines:
                      f_menu_output.write("    dw #doormenu_%s %s\n" % (f'{door_menu_label:14}', data[2]))
                   else:
                      f_menu_output.write("    dw #doormenu_%s\n" % door_menu_label)
+               if door_prefix != "areaboss":
+                  f_menu_output.write("    dw #$FFFF\n")
                f_menu_output.write("    dw #doormenu_%s%s_goto_page1\n" % (goto_prefix, door_prefix))
                if has_page3:
                   f_menu_output.write("    dw #doormenu_%s%s_goto_page3\n" % (goto_prefix, door_prefix))
@@ -203,6 +207,7 @@ for line in template_lines:
                         f_menu_output.write("    dw #doormenu_%s %s\n" % (f'{door_menu_label:14}', data[2]))
                      else:
                         f_menu_output.write("    dw #doormenu_%s\n" % door_menu_label)
+                  f_menu_output.write("    dw #$FFFF\n")
                   f_menu_output.write("    dw #doormenu_%s%s_goto_page1\n" % (goto_prefix, door_prefix))
                   f_menu_output.write("    dw #doormenu_%s%s_goto_page2\n" % (goto_prefix, door_prefix))
                f_menu_output.write("    dw #$0000\n")

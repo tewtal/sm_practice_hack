@@ -59,10 +59,8 @@ ram_magic_pants_pal2 = !ram_magic_pants_pal2 ; !WRAM_START+$3E
 ram_magic_pants_pal3 = !ram_magic_pants_pal3 ; !WRAM_START+$40
 
 ram_room_has_set_rng = !ram_room_has_set_rng ; !WRAM_START+$42
-
-ram_watch_left_hud = !ram_watch_left_hud ; !WRAM_START+$44
-ram_watch_right_hud = !ram_watch_right_hud ; !WRAM_START+$46
-
+ram_HUD_top = !ram_HUD_top ; !WRAM_START+$44
+ram_HUD_middle = !ram_HUD_middle ; !WRAM_START+$46
 ram_HUD_check = !ram_HUD_check ; !WRAM_START+$48
 ram_roomstrat_counter = !ram_roomstrat_counter ; !WRAM_START+$4A
 ram_roomstrat_state = !ram_roomstrat_state ; !WRAM_START+$4C
@@ -76,24 +74,44 @@ ram_lag_counter = !ram_lag_counter ; !WRAM_START+$58
 ram_kraid_adjust_timer = !ram_kraid_adjust_timer ; !WRAM_START+$5A
 ram_print_segment_timer = !ram_print_segment_timer ; !WRAM_START+$5C
 ram_activated_shine_duration = !ram_activated_shine_duration ; !WRAM_START+$5E
+ram_watch_left_hud = !ram_watch_left_hud ; !WRAM_START+$60
+ram_watch_right_hud = !ram_watch_right_hud ; !WRAM_START+$62
 
 ; ^ FREE SPACE ^ up to +$6C
 
 ; ----------------------------------------------------------
-; Shinetune uses several variables not used by other modes,
-; but also shinetune does not use many other variables,
+; A few room strats like shinetune use several variables
+; that are not used by other modes,
+; but also they do not need many other variables,
 ; so the following variables share the same WRAM
 
 ram_xpos = !ram_xpos ; !WRAM_START+$6E
 ram_ypos = !ram_ypos ; !WRAM_START+$70
 ram_subpixel_pos = !ram_subpixel_pos ; !WRAM_START+$72
-ram_horizontal_speed = !ram_horizontal_speed ; !WRAM_START+$74
-ram_vertical_speed = !ram_vertical_speed ; !WRAM_START+$76
+ram_HUD_top_counter = !ram_HUD_top_counter ; !WRAM_START+$74
+ram_HUD_middle_counter = !ram_HUD_middle_counter ; !WRAM_START+$76
 ram_quickdrop_counter = !ram_quickdrop_counter ; !WRAM_START+$78
 ram_walljump_counter = !ram_walljump_counter ; !WRAM_START+$7A
 ram_fail_sum = !ram_fail_sum ; !WRAM_START+$7C
 ram_fail_count = !ram_fail_count ; !WRAM_START+$7E
 
+; Kihunter manip
+ram_enemy0_last_xpos = !ram_enemy0_last_xpos ; !WRAM_START+$6E
+ram_enemy0_last_ypos = !ram_enemy0_last_ypos ; !WRAM_START+$70
+ram_enemy4_last_xpos = !ram_enemy4_last_xpos ; !WRAM_START+$72
+ram_enemy4_last_ypos = !ram_enemy4_last_ypos ; !WRAM_START+$74
+ram_enemy6_last_xpos = !ram_enemy6_last_xpos ; !WRAM_START+$76
+ram_enemy6_last_ypos = !ram_enemy6_last_ypos ; !WRAM_START+$78
+ram_enemy8_last_xpos = !ram_enemy8_last_xpos ; !WRAM_START+$7A
+ram_enemy8_last_ypos = !ram_enemy8_last_ypos ; !WRAM_START+$7C
+
+; Kraid radar (reuses above ram_enemy6 variables)
+ram_radar6 = !ram_radar6 ; !WRAM_START+$6E
+ram_radar7 = !ram_radar7 ; !WRAM_START+$70
+ram_enemy7_last_xpos = !ram_enemy7_last_xpos ; !WRAM_START+$7A
+ram_enemy7_last_ypos = !ram_enemy7_last_ypos ; !WRAM_START+$7C
+
+; Shinetune
 ram_shine_dash_held_late = !ram_shine_dash_held_late ; !WRAM_START+$6E
 ram_shinetune_early_1 = !ram_shinetune_early_1 ; !WRAM_START+$70
 ram_shinetune_late_1 = !ram_shinetune_late_1 ; !WRAM_START+$72
@@ -167,8 +185,9 @@ ram_itempickups_chozo = !ram_itempickups_chozo ; !WRAM_PERSIST_START+$60
 ram_itempickups_hidden = !ram_itempickups_hidden ; !WRAM_PERSIST_START+$62
 ram_frames_held = !ram_frames_held ; !WRAM_PERSIST_START+$64
 ram_baby_rng = !ram_baby_rng ; !WRAM_PERSIST_START+$66
+ram_turret_rng = !ram_turret_rng ; !WRAM_PERSIST_START+$68
 
-ram_quickboot_spc_state = !ram_quickboot_spc_state ; !WRAM_PERSIST_START+$68
+ram_quickboot_spc_state = !ram_quickboot_spc_state ; !WRAM_PERSIST_START+$6A
 
 ; ^ FREE SPACE ^ up to +$7C (!WRAM_START+$FC - !WRAM_PERSIST_START)
 
@@ -236,6 +255,8 @@ ram_cm_palette_seltextbg = !ram_cm_palette_seltextbg ; !WRAM_MENU_START+$6E
 ram_cm_palette_numseloutline = !ram_cm_palette_numseloutline ; !WRAM_MENU_START+$70
 ram_cm_palette_numsel = !ram_cm_palette_numsel ; !WRAM_MENU_START+$72
 
+ram_infidoppler_active = !ram_infidoppler_active ; !WRAM_START+$74
+
 ; ^ FREE SPACE ^ up to +$76
 
 ram_cm_preserved_timers = !ram_cm_preserved_timers ; !WRAM_MENU_START+$78 ; 8 bytes
@@ -264,6 +285,7 @@ ram_cm_itempickups_hidden = !ram_cm_itempickups_hidden ; !WRAM_MENU_START+$8C
 
 ram_cm_phan_first_phase = !ram_cm_phan_first_phase ; !WRAM_MENU_START+$80
 ram_cm_phan_second_phase = !ram_cm_phan_second_phase ; !WRAM_MENU_START+$82
+ram_cm_turret_rng = !ram_cm_turret_rng ; !WRAM_MENU_START+$84
 
 ram_cm_varia = !ram_cm_varia ; !WRAM_MENU_START+$80
 ram_cm_gravity = !ram_cm_gravity ; !WRAM_MENU_START+$82
@@ -293,6 +315,23 @@ ram_cm_custompalette = !ram_cm_custompalette ; !WRAM_MENU_START+$86
 ram_cm_dummy_on = !ram_cm_dummy_on ; !WRAM_MENU_START+$8A
 ram_cm_dummy_off = !ram_cm_dummy_off ; !WRAM_MENU_START+$8C
 ram_cm_dummy_num = !ram_cm_dummy_num ; !WRAM_MENU_START+$8E
+
+ram_cm_brb = !ram_cm_brb ; !WRAM_MENU_START+$80
+ram_cm_brb_timer = !ram_cm_brb_timer ; !WRAM_MENU_START+$82
+ram_cm_brb_frames = !ram_cm_brb_frames ; !WRAM_MENU_START+$84
+ram_cm_brb_secs = !ram_cm_brb_secs ; !WRAM_MENU_START+$86
+ram_cm_brb_mins = !ram_cm_brb_mins ; !WRAM_MENU_START+$88
+ram_cm_brb_screen = !ram_cm_brb_screen ; !WRAM_MENU_START+$8A
+ram_cm_brb_timer_mode = !ram_cm_brb_timer_mode ; !WRAM_MENU_START+$8C
+ram_cm_brb_scroll = !ram_cm_brb_scroll ; !WRAM_MENU_START+$8E
+ram_cm_brb_scroll_X = !ram_cm_brb_scroll_X ; !WRAM_MENU_START+$90
+ram_cm_brb_scroll_Y = !ram_cm_brb_scroll_Y ; !WRAM_MENU_START+$92
+ram_cm_brb_scroll_H = !ram_cm_brb_scroll_H ; !WRAM_MENU_START+$94
+ram_cm_brb_scroll_V = !ram_cm_brb_scroll_V ; !WRAM_MENU_START+$96
+ram_cm_brb_scroll_timer = !ram_cm_brb_scroll_timer ; !WRAM_MENU_START+$98
+ram_cm_brb_palette = !ram_cm_brb_palette ; !WRAM_MENU_START+$9A
+ram_cm_brb_set_cycle = !ram_cm_brb_set_cycle ; !WRAM_MENU_START+$9C
+ram_cm_brb_cycle_time = !ram_cm_brb_cycle_time ; !WRAM_MENU_START+$9E
 
 ram_cm_keyboard_buffer = !ram_cm_keyboard_buffer ; !WRAM_MENU_START+$80 ; $18 bytes
 
@@ -342,6 +381,37 @@ ram_crash_input_new = !ram_crash_input_new ; !CRASHDUMP+$62
 ram_crash_input_prev = !ram_crash_input_prev ; !CRASHDUMP+$64
 ram_crash_input_timer = !ram_crash_input_timer ; !CRASHDUMP+$66
 
+; -----------
+; Bank 7F RAM
+; -----------
+
+; NOTE: Be careful with using Bank 7F RAM,
+;       since the game may not clean this RAM up
+;       and the out of bounds blocks depend on this RAM,
+;       so if we make a mess not cleaned up by the vanilla game
+;       then we won't be accurate to the vanilla game anymore
+
+; Temporary stack written here since level data will be initialized afterwards
+
+; Phantoon infidoppler can use the next $200 of RAM,
+; since the room outside phantoon's room is larger and will overwrite this data,
+; so the only way this could have some impact is you went OOB
+; either from Phantoon's room or after teleporting to another single scroll room,
+; and then fell a long ways out of bounds
+
+; An array of 5 words, one per projectile, representing
+; the distance Samus travelled horizontally before firing.
+; The low byte of each word is integer pixels,
+; and the high byte is fractional pixels.
+; Yes, that sounds weird, but the math is a little easier.
+ram_infidoppler_offsets = !ram_infidoppler_offsets ; !END_OF_SINGLE_SCROLL_ROOM_LEVEL_DATA ; array of 5 words
+ram_infidoppler_x = !ram_infidoppler_x ; !END_OF_SINGLE_SCROLL_ROOM_LEVEL_DATA+$10
+ram_infidoppler_subx = !ram_infidoppler_subx ; !END_OF_SINGLE_SCROLL_ROOM_LEVEL_DATA+$12
+ram_infidoppler_y = !ram_infidoppler_y ; !END_OF_SINGLE_SCROLL_ROOM_LEVEL_DATA+$14
+ram_infidoppler_suby = !ram_infidoppler_suby ; !END_OF_SINGLE_SCROLL_ROOM_LEVEL_DATA+$16
+
+; Do not use RAM for variables at or beyond this point
+
 ; -----
 ; SRAM
 ; -----
@@ -363,8 +433,7 @@ sram_ctrl_inc_custom_preset = !sram_ctrl_inc_custom_preset ; !SRAM_START+$18
 sram_ctrl_dec_custom_preset = !sram_ctrl_dec_custom_preset ; !SRAM_START+$1A
 sram_ctrl_toggle_tileviewer = !sram_ctrl_toggle_tileviewer ; !SRAM_START+$1C
 sram_ctrl_update_timers = !sram_ctrl_update_timers ; !SRAM_START+$1E
-sram_ctrl_auto_save_state = !sram_ctrl_auto_save_state ; !SRAM_START+$F0 ; note the change of order
-sram_ctrl_toggle_spin_lock = !sram_ctrl_toggle_spin_lock ; !SRAM_START+$F2
+; More ctrl shortcuts starting at $F0
 
 sram_artificial_lag = !sram_artificial_lag ; !SRAM_START+$20
 sram_rerandomize = !sram_rerandomize ; !SRAM_START+$22
@@ -427,8 +496,18 @@ sram_cm_fast_scroll_button = !sram_cm_fast_scroll_button ; !SRAM_START+$8A
 sram_cm_font = !sram_cm_font ; !SRAM_START+$8C
 sram_spin_lock = !sram_spin_lock ; !SRAM_START+$8E
 sram_map_grid_alignment = !sram_map_grid_alignment ; !SRAM_START+$90
+sram_number_gfx_choice = !sram_number_gfx_choice ; !SRAM_START+$92
+sram_superhud_bottom = !sram_superhud_bottom ; !SRAM_START+$94
+sram_superhud_middle = !sram_superhud_middle ; !SRAM_START+$96
+sram_superhud_top = !sram_superhud_top ; !SRAM_START+$98
+sram_infidoppler_enabled = !sram_infidoppler_enabled ; !SRAM_START+$9A
 
 ; ^ FREE SPACE ^ up to +$EE
+
+sram_ctrl_auto_save_state = !sram_ctrl_auto_save_state ; !SRAM_START+$F0
+sram_ctrl_toggle_spin_lock = !sram_ctrl_toggle_spin_lock ; !SRAM_START+$F2
+
+; ^ FREE SPACE ^ up to +$FE
 
 sram_presetequiprando = !sram_presetequiprando ; !SRAM_START+$100
 sram_presetequiprando_beampref = !sram_presetequiprando_beampref ; !SRAM_START+$102

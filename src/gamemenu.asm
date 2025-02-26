@@ -1,6 +1,5 @@
 
-org $B3F000
-print pc, " gamemenu start"
+%startfree(B3)
 
 ; ----------
 ; Game menu
@@ -20,6 +19,7 @@ GameMenu:
     dw #$FFFF
 if !FEATURE_VANILLAHUD
 else
+    dw #game_top_HUD_mode
     dw #game_minimap
 endif
     dw #game_clear_minimap
@@ -57,6 +57,17 @@ game_goto_debug:
 
 if !FEATURE_VANILLAHUD
 else
+game_top_HUD_mode:
+    dw !ACTION_CHOICE
+    dl #!sram_top_display_mode
+    dw #$0000
+    db #$28, "Top-Left Displa", #$FF
+    db #$28, "y    ITEM %", #$FF
+    db #$28, "y  RESERVES", #$FF
+    db #$28, "y  VANILLA+", #$FF
+    db #$28, "y   VANILLA", #$FF
+    db #$FF
+
 game_minimap:
     %cm_toggle("Minimap", !ram_minimap, #$0001, #0)
 endif
@@ -213,7 +224,15 @@ cutscenes_fast_phantoon:
     %cm_toggle_bit("Skip Phantoon Intro", !sram_cutscenes, !CUTSCENE_FAST_PHANTOON, #0)
 
 cutscenes_kraid_camera:
-    %cm_toggle_bit("Unlock Kraid Death Cam", !sram_cutscenes, !CUTSCENE_KRAID_DEATH_CAMERA, #0)
+    %cm_toggle_bit("Unlock Kraid Death Cam", !sram_cutscenes, !CUTSCENE_KRAID_DEATH_CAMERA, #.routine)
+  .routine
+    LDA !ROOM_ID : CMP #ROOM_KraidRoom : BNE .done
+    LDA !ENEMY_HP : BNE .done
+    ; unlock camera now
+    LDA #$0202 : STA $7ECD20
+    LDA #$0101 : STA $7ECD22
+  .done
+    RTL
 
 cutscenes_fast_bowling:
     %cm_toggle_bit("Fast Bowling", !sram_cutscenes, !CUTSCENE_FAST_BOWLING, #0)
@@ -551,5 +570,5 @@ ControllerLayoutTable:
     dw !CTRL_Y, !CTRL_B, !CTRL_A, !CTRL_SELECT, !CTRL_X,      !CTRL_L, !CTRL_R ; MMX Style (D4)
     dw !CTRL_X, !CTRL_B, !CTRL_Y, !CTRL_SELECT, !CTRL_A,      !CTRL_L, !CTRL_R ; SMW Style (D5)
 
-print pc, " gamemenu end"
+%endfree(B3)
 

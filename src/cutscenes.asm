@@ -14,12 +14,11 @@ endif
     JSR cutscenes_nintendo_logo_hijack
     NOP
 
-
 org $80AE5C
     JSR cutscenes_door_transition
 
-org $80FF80
-print pc, " cutscenes bank80 start"
+
+%startfree(80)
 
 cutscenes_door_transition:
 {
@@ -37,8 +36,7 @@ cutscenes_door_transition:
     JMP ($AE76,x)
 }
 
-warnpc $80FFB0  ; header
-print pc, " cutscenes bank80 end"
+%endfree(80)
 
 
 if !FEATURE_PAL
@@ -105,8 +103,7 @@ endif
     JSL cutscenes_kraid_death_camera
 
 
-org $8BF800
-print pc, " cutscenes start"
+%startfree(8B)
 
 cutscenes_nintendo_logo_hijack:
 {
@@ -288,8 +285,684 @@ cutscenes_kraid_death_camera:
     RTL
 }
 
-print pc, " cutscenes end"
-warnpc $8BFA00 ; misc.asm
+if !FEATURE_PAL
+else
+custom_intro_init:
+{
+    JSL $888293
+    JSL $88829E
+    LDA #$0001 : STA !sram_music_toggle
+    JSR $A395
+    LDA #custom_intro_InitialFadeIn : STA !CINEMATIC_FUNCTION_POINTER
+    RTS
+}
+
+custom_intro_InitialFadeIn:
+{
+    JSL $808EF4 : BCS .done
+    LDA #custom_intro_InitialFadeInWait : STA !CINEMATIC_FUNCTION_POINTER
+    LDA #$0002 : STA !SCREEN_FADE_DELAY : STA !SCREEN_FADE_COUNTER
+  .done
+    RTS
+}
+
+custom_intro_InitialFadeInWait:
+{
+    JSR $911B : BCC .done
+    LDA #custom_intro_LastMetroidMusic : STA !CINEMATIC_FUNCTION_POINTER
+    LDA #$003C : STA $1A49
+  .done
+    RTS
+}
+
+custom_intro_LastMetroidMusic:
+{
+    DEC $1A49 : BNE .done
+    LDA #custom_intro_GalaxyIsAtPeaceMusic : STA !CINEMATIC_FUNCTION_POINTER
+    LDA #$00C8 : STA $1A49
+    LDA #$0005 : JSL !MUSIC_ROUTINE
+  .done
+    RTS
+}
+
+custom_intro_GalaxyIsAtPeaceMusic:
+{
+    DEC $1A49 : BNE .done
+    TDC : JSL !MUSIC_ROUTINE
+    LDA #$FF42 : JSL !MUSIC_ROUTINE
+    LDA #$0005 : LDY #$000E : JSL $808FF7
+    LDA #custom_intro_WaitMusicQueue : STA !CINEMATIC_FUNCTION_POINTER
+  .done
+    RTS
+}
+
+custom_intro_WaitMusicQueue:
+{
+    JSL $808EF4 : BCS .done
+    LDA #custom_intro_InitialFadeOut : STA !CINEMATIC_FUNCTION_POINTER
+    LDA #$00F0 : STA $1A49
+  .done
+    RTS
+}
+
+custom_intro_InitialFadeOut:
+{
+    DEC $1A49 : BNE .done
+    LDA #custom_intro_InitialFadeOutWait : STA !CINEMATIC_FUNCTION_POINTER
+    LDA #$0002 : STA !SCREEN_FADE_DELAY : STA !SCREEN_FADE_COUNTER
+  .done
+    RTS
+}
+
+custom_intro_InitialFadeOutWait:
+{
+    JSR $90D5 : BCC .done
+    LDA #custom_intro_SetupCustomPage : STA !CINEMATIC_FUNCTION_POINTER
+  .done
+    RTS
+}
+
+custom_intro_SetupCustomPage:
+{
+    JSR $A66F
+    LDA.W #custom_intro_SpawnCustomText : STA !CINEMATIC_FUNCTION_POINTER
+    RTS
+}
+
+custom_intro_SpawnCustomText:
+{
+    JSL $808EF4 : BCS .done
+    LDA #custom_intro_CustomFadeInWait : STA !CINEMATIC_FUNCTION_POINTER
+    LDA #$0002 : STA !SCREEN_FADE_DELAY : STA !SCREEN_FADE_COUNTER
+    LDA #custom_intro_HideCaret : STA $1B3B
+    LDY #custom_intro_CustomDefinition : LDA #$4C00
+    JSR $95F0
+  .done
+    RTS
+}
+
+custom_intro_HideCaret:
+    dw $0005, $0000
+    dw $94BC, #custom_intro_HideCaret
+
+custom_intro_CustomFadeInWait:
+{
+    JSR $911B : BCC .done
+    LDA #$A391 : STA !CINEMATIC_FUNCTION_POINTER
+  .done
+    RTS
+}
+
+custom_intro_CustomDefinition:
+    dw #custom_intro_CustomFadeInWait_done
+    dw #custom_intro_CustomFadeInWait_done
+    dw custom_intro_CustomText
+
+custom_intro_EndCustomText:
+{
+    JSR $ADE1
+    LDA #custom_intro_WaitForInput : STA !CINEMATIC_FUNCTION_POINTER
+    RTS
+}
+
+custom_intro_WaitForInput:
+{
+    LDA $1BA3 : BEQ .timerExpired
+    DEC : STA $1BA3
+    RTS
+
+  .timerExpired:
+    LDA !IH_CONTROLLER_PRI_NEW : BNE .newInputs
+    RTS
+
+  .newInputs:
+    JML $808462
+}
+
+endif
+%endfree(8B)
+
+
+org $8CD67D
+IndirectInstructions_IntroText_Space:
+org $8CD683
+IndirectInstructions_IntroText_Nothing:
+org $8CD685
+IndirectInstructions_IntroText_A:
+org $8CD68B
+IndirectInstructions_IntroText_B:
+org $8CD691
+IndirectInstructions_IntroText_C:
+org $8CD697
+IndirectInstructions_IntroText_D:
+org $8CD69D
+IndirectInstructions_IntroText_E:
+org $8CD6A3
+IndirectInstructions_IntroText_F:
+org $8CD6A9
+IndirectInstructions_IntroText_G:
+org $8CD6AF
+IndirectInstructions_IntroText_H:
+org $8CD6B5
+IndirectInstructions_IntroText_I:
+org $8CD6BB
+IndirectInstructions_IntroText_J:
+org $8CD6C1
+IndirectInstructions_IntroText_K:
+org $8CD6C7
+IndirectInstructions_IntroText_L:
+org $8CD6CD
+IndirectInstructions_IntroText_M:
+org $8CD6D3
+IndirectInstructions_IntroText_N:
+org $8CD6D9
+IndirectInstructions_IntroText_O:
+org $8CD6DF
+IndirectInstructions_IntroText_P:
+org $8CD6E5
+IndirectInstructions_IntroText_Q:
+org $8CD6EB
+IndirectInstructions_IntroText_R:
+org $8CD6F1
+IndirectInstructions_IntroText_S:
+org $8CD6F7
+IndirectInstructions_IntroText_T:
+org $8CD6FD
+IndirectInstructions_IntroText_U:
+org $8CD703
+IndirectInstructions_IntroText_V:
+org $8CD709
+IndirectInstructions_IntroText_W:
+org $8CD70F
+IndirectInstructions_IntroText_X:
+org $8CD715
+IndirectInstructions_IntroText_Y:
+org $8CD71B
+IndirectInstructions_IntroText_Z:
+org $8CD721
+IndirectInstructions_IntroText_Zero:
+org $8CD727
+IndirectInstructions_IntroText_One:
+org $8CD72D
+IndirectInstructions_IntroText_Two:
+org $8CD733
+IndirectInstructions_IntroText_Three:
+org $8CD739
+IndirectInstructions_IntroText_Four:
+org $8CD73F
+IndirectInstructions_IntroText_Five:
+org $8CD745
+IndirectInstructions_IntroText_Six:
+org $8CD74B
+IndirectInstructions_IntroText_Seven:
+org $8CD751
+IndirectInstructions_IntroText_Eight:
+org $8CD757
+IndirectInstructions_IntroText_Nine:
+org $8CD75D
+IndirectInstructions_IntroText_Period:
+org $8CD763
+IndirectInstructions_IntroText_Comma:
+org $8CD769
+IndirectInstructions_IntroText_DecimalPoint:
+org $8CD76F
+IndirectInstructions_IntroText_Apostrophe:
+org $8CD775
+IndirectInstructions_IntroText_Colon:
+org $8CD77B
+IndirectInstructions_IntroText_ExclamationPoint:
+
+
+macro intro_char(label, x, y)
+    dw $0005
+    db <x>
+    db <y>
+    dw #IndirectInstructions_IntroText_<label>
+endmacro
+
+
+if !FEATURE_PAL
+else
+%startfree(8C)
+
+custom_intro_CustomText:
+    dw $0001
+    db $01,$01
+    dw IndirectInstructions_IntroText_Nothing
+    %intro_char(One, $00, $04)
+    %intro_char(Zero, $01, $04)
+    %intro_char(Space, $02, $04)
+    %intro_char(Y, $03, $04)
+    %intro_char(E, $04, $04)
+    %intro_char(A, $05, $04)
+    %intro_char(R, $06, $04)
+    %intro_char(S, $07, $04)
+    %intro_char(Space, $08, $04)
+    %intro_char(S, $09, $04)
+    %intro_char(I, $0A, $04)
+    %intro_char(N, $0B, $04)
+    %intro_char(C, $0C, $04)
+    %intro_char(E, $0D, $04)
+    %intro_char(Space, $0E, $04)
+    %intro_char(E, $0F, $04)
+    %intro_char(D, $10, $04)
+    %intro_char(D, $11, $04)
+    %intro_char(I, $12, $04)
+    %intro_char(E, $13, $04)
+    %intro_char(Space, $14, $04)
+    %intro_char(S, $15, $04)
+    %intro_char(T, $16, $04)
+    %intro_char(R, $17, $04)
+    %intro_char(I, $18, $04)
+    %intro_char(M, $19, $04)
+    %intro_char(Period, $1A, $04)
+    %intro_char(I, $00, $06)
+    %intro_char(Space, $01, $06)
+    %intro_char(W, $02, $06)
+    %intro_char(A, $03, $06)
+    %intro_char(L, $04, $06)
+    %intro_char(K, $05, $06)
+    %intro_char(Space, $06, $06)
+    %intro_char(T, $07, $06)
+    %intro_char(H, $08, $06)
+    %intro_char(R, $09, $06)
+    %intro_char(O, $0A, $06)
+    %intro_char(U, $0B, $06)
+    %intro_char(G, $0C, $06)
+    %intro_char(H, $0D, $06)
+    %intro_char(Space, $0E, $06)
+    %intro_char(T, $0F, $06)
+    %intro_char(H, $10, $06)
+    %intro_char(E, $11, $06)
+    %intro_char(Space, $12, $06)
+    %intro_char(E, $13, $06)
+    %intro_char(M, $14, $06)
+    %intro_char(P, $15, $06)
+    %intro_char(T, $16, $06)
+    %intro_char(Y, $17, $06)
+    %intro_char(Space, $18, $06)
+    %intro_char(S, $19, $06)
+    %intro_char(T, $1A, $06)
+    %intro_char(R, $1B, $06)
+    %intro_char(E, $1C, $06)
+    %intro_char(E, $1D, $06)
+    %intro_char(T, $1E, $06)
+    %intro_char(S, $1F, $06)
+    %intro_char(T, $00, $07)
+    %intro_char(R, $01, $07)
+    %intro_char(Y, $02, $07)
+    %intro_char(I, $03, $07)
+    %intro_char(N, $04, $07)
+    %intro_char(G, $05, $07)
+    %intro_char(Space, $06, $07)
+    %intro_char(T, $07, $07)
+    %intro_char(O, $08, $07)
+    %intro_char(Space, $09, $07)
+    %intro_char(T, $0A, $07)
+    %intro_char(H, $0B, $07)
+    %intro_char(I, $0C, $07)
+    %intro_char(N, $0D, $07)
+    %intro_char(K, $0E, $07)
+    %intro_char(Space, $0F, $07)
+    %intro_char(O, $10, $07)
+    %intro_char(F, $11, $07)
+    %intro_char(Space, $12, $07)
+    %intro_char(S, $13, $07)
+    %intro_char(O, $14, $07)
+    %intro_char(M, $15, $07)
+    %intro_char(E, $16, $07)
+    %intro_char(T, $17, $07)
+    %intro_char(H, $18, $07)
+    %intro_char(I, $19, $07)
+    %intro_char(N, $1A, $07)
+    %intro_char(G, $1B, $07)
+    %intro_char(E, $00, $08)
+    %intro_char(L, $01, $08)
+    %intro_char(S, $02, $08)
+    %intro_char(E, $03, $08)
+    %intro_char(Space, $04, $08)
+    %intro_char(B, $05, $08)
+    %intro_char(U, $06, $08)
+    %intro_char(T, $07, $08)
+    %intro_char(Space, $08, $08)
+    %intro_char(M, $09, $08)
+    %intro_char(Y, $0A, $08)
+    %intro_char(Space, $0B, $08)
+    %intro_char(P, $0C, $08)
+    %intro_char(A, $0D, $08)
+    %intro_char(T, $0E, $08)
+    %intro_char(H, $0F, $08)
+    %intro_char(Space, $10, $08)
+    %intro_char(A, $11, $08)
+    %intro_char(L, $12, $08)
+    %intro_char(W, $13, $08)
+    %intro_char(A, $14, $08)
+    %intro_char(Y, $15, $08)
+    %intro_char(S, $16, $08)
+    %intro_char(Space, $17, $08)
+    %intro_char(L, $18, $08)
+    %intro_char(E, $19, $08)
+    %intro_char(A, $1A, $08)
+    %intro_char(D, $1B, $08)
+    %intro_char(S, $1C, $08)
+    %intro_char(T, $00, $09)
+    %intro_char(O, $01, $09)
+    %intro_char(Space, $02, $09)
+    %intro_char(T, $03, $09)
+    %intro_char(H, $04, $09)
+    %intro_char(E, $05, $09)
+    %intro_char(Space, $06, $09)
+    %intro_char(S, $07, $09)
+    %intro_char(T, $08, $09)
+    %intro_char(R, $09, $09)
+    %intro_char(E, $0A, $09)
+    %intro_char(A, $0B, $09)
+    %intro_char(M, $0C, $09)
+    %intro_char(Period, $0D, $09)
+    %intro_char(I, $00, $0B)
+    %intro_char(Space, $01, $0B)
+    %intro_char(S, $02, $0B)
+    %intro_char(T, $03, $0B)
+    %intro_char(A, $04, $0B)
+    %intro_char(R, $05, $0B)
+    %intro_char(E, $06, $0B)
+    %intro_char(Space, $07, $0B)
+    %intro_char(A, $08, $0B)
+    %intro_char(T, $09, $0B)
+    %intro_char(Space, $0A, $0B)
+    %intro_char(T, $0B, $0B)
+    %intro_char(H, $0C, $0B)
+    %intro_char(E, $0D, $0B)
+    %intro_char(Space, $0E, $0B)
+    %intro_char(S, $0F, $0B)
+    %intro_char(C, $10, $0B)
+    %intro_char(R, $11, $0B)
+    %intro_char(E, $12, $0B)
+    %intro_char(E, $13, $0B)
+    %intro_char(N, $14, $0B)
+    %intro_char(Space, $15, $0B)
+    %intro_char(F, $16, $0B)
+    %intro_char(O, $17, $0B)
+    %intro_char(R, $18, $0B)
+    %intro_char(Space, $19, $0B)
+    %intro_char(H, $1A, $0B)
+    %intro_char(O, $1B, $0B)
+    %intro_char(U, $1C, $0B)
+    %intro_char(R, $1D, $0B)
+    %intro_char(S, $1E, $0B)
+    %intro_char(A, $00, $0C)
+    %intro_char(N, $01, $0C)
+    %intro_char(D, $02, $0C)
+    %intro_char(Space, $03, $0C)
+    %intro_char(T, $04, $0C)
+    %intro_char(R, $05, $0C)
+    %intro_char(Y, $06, $0C)
+    %intro_char(Space, $07, $0C)
+    %intro_char(T, $08, $0C)
+    %intro_char(O, $09, $0C)
+    %intro_char(Space, $0A, $0C)
+    %intro_char(S, $0B, $0C)
+    %intro_char(U, $0C, $0C)
+    %intro_char(M, $0D, $0C)
+    %intro_char(M, $0E, $0C)
+    %intro_char(O, $0F, $0C)
+    %intro_char(N, $10, $0C)
+    %intro_char(Space, $11, $0C)
+    %intro_char(T, $12, $0C)
+    %intro_char(H, $13, $0C)
+    %intro_char(E, $14, $0C)
+    %intro_char(Space, $15, $0C)
+    %intro_char(U, $16, $0C)
+    %intro_char(W, $17, $0C)
+    %intro_char(J, $18, $0C)
+    %intro_char(Space, $19, $0C)
+    %intro_char(G, $1A, $0C)
+    %intro_char(O, $1B, $0C)
+    %intro_char(D, $1C, $0C)
+    %intro_char(Period, $1D, $0C)
+    %intro_char(I, $00, $0E)
+    %intro_char(Space, $01, $0E)
+    %intro_char(W, $02, $0E)
+    %intro_char(A, $03, $0E)
+    %intro_char(T, $04, $0E)
+    %intro_char(C, $05, $0E)
+    %intro_char(H, $06, $0E)
+    %intro_char(Space, $07, $0E)
+    %intro_char(O, $08, $0E)
+    %intro_char(T, $09, $0E)
+    %intro_char(H, $0A, $0E)
+    %intro_char(E, $0B, $0E)
+    %intro_char(R, $0C, $0E)
+    %intro_char(Space, $0D, $0E)
+    %intro_char(M, $0E, $0E)
+    %intro_char(A, $0F, $0E)
+    %intro_char(P, $10, $0E)
+    %intro_char(Space, $11, $0E)
+    %intro_char(R, $12, $0E)
+    %intro_char(A, $13, $0E)
+    %intro_char(N, $14, $0E)
+    %intro_char(D, $15, $0E)
+    %intro_char(O, $16, $0E)
+    %intro_char(Space, $17, $0E)
+    %intro_char(S, $18, $0E)
+    %intro_char(T, $19, $0E)
+    %intro_char(R, $1A, $0E)
+    %intro_char(E, $1B, $0E)
+    %intro_char(A, $1C, $0E)
+    %intro_char(M, $1D, $0E)
+    %intro_char(S, $1E, $0E)
+    %intro_char(B, $00, $0F)
+    %intro_char(U, $01, $0F)
+    %intro_char(T, $02, $0F)
+    %intro_char(Space, $03, $0F)
+    %intro_char(I, $04, $0F)
+    %intro_char(T, $05, $0F)
+    %intro_char(Space, $06, $0F)
+    %intro_char(I, $07, $0F)
+    %intro_char(S, $08, $0F)
+    %intro_char(Space, $09, $0F)
+    %intro_char(N, $0A, $0F)
+    %intro_char(O, $0B, $0F)
+    %intro_char(Space, $0C, $0F)
+    %intro_char(G, $0D, $0F)
+    %intro_char(O, $0E, $0F)
+    %intro_char(O, $0F, $0F)
+    %intro_char(D, $10, $0F)
+    %intro_char(Period, $11, $0F)
+    %intro_char(I, $00, $11)
+    %intro_char(Space, $01, $11)
+    %intro_char(F, $02, $11)
+    %intro_char(L, $03, $11)
+    %intro_char(A, $04, $11)
+    %intro_char(M, $05, $11)
+    %intro_char(E, $06, $11)
+    %intro_char(Space, $07, $11)
+    %intro_char(C, $08, $11)
+    %intro_char(H, $09, $11)
+    %intro_char(A, $0A, $11)
+    %intro_char(R, $0B, $11)
+    %intro_char(L, $0C, $11)
+    %intro_char(E, $0D, $11)
+    %intro_char(S, $0E, $11)
+    %intro_char(Space, $0F, $11)
+    %intro_char(I, $10, $11)
+    %intro_char(N, $11, $11)
+    %intro_char(Space, $12, $11)
+    %intro_char(D, $13, $11)
+    %intro_char(M, $14, $11)
+    %intro_char(S, $15, $11)
+    %intro_char(Space, $16, $11)
+    %intro_char(A, $17, $11)
+    %intro_char(N, $18, $11)
+    %intro_char(D, $19, $11)
+    %intro_char(Space, $1A, $11)
+    %intro_char(T, $1B, $11)
+    %intro_char(R, $1C, $11)
+    %intro_char(Y, $1D, $11)
+    %intro_char(T, $00, $12)
+    %intro_char(O, $01, $12)
+    %intro_char(Space, $02, $12)
+    %intro_char(C, $03, $12)
+    %intro_char(H, $04, $12)
+    %intro_char(E, $05, $12)
+    %intro_char(E, $06, $12)
+    %intro_char(R, $07, $12)
+    %intro_char(Six, $08, $12)
+    %intro_char(Six, $09, $12)
+    %intro_char(Six, $0A, $12)
+    %intro_char(Six, $0B, $12)
+    %intro_char(Space, $0C, $12)
+    %intro_char(I, $0D, $12)
+    %intro_char(N, $0E, $12)
+    %intro_char(Space, $0F, $12)
+    %intro_char(O, $10, $12)
+    %intro_char(T, $11, $12)
+    %intro_char(H, $12, $12)
+    %intro_char(E, $13, $12)
+    %intro_char(R, $14, $12)
+    %intro_char(Space, $15, $12)
+    %intro_char(C, $16, $12)
+    %intro_char(H, $17, $12)
+    %intro_char(A, $18, $12)
+    %intro_char(N, $19, $12)
+    %intro_char(N, $1A, $12)
+    %intro_char(E, $1B, $12)
+    %intro_char(L, $1C, $12)
+    %intro_char(S, $1D, $12)
+    %intro_char(B, $00, $13)
+    %intro_char(U, $01, $13)
+    %intro_char(T, $02, $13)
+    %intro_char(Space, $03, $13)
+    %intro_char(I, $04, $13)
+    %intro_char(T, $05, $13)
+    %intro_char(Space, $06, $13)
+    %intro_char(I, $07, $13)
+    %intro_char(S, $08, $13)
+    %intro_char(Space, $09, $13)
+    %intro_char(A, $0A, $13)
+    %intro_char(L, $0B, $13)
+    %intro_char(L, $0C, $13)
+    %intro_char(Space, $0D, $13)
+    %intro_char(M, $0E, $13)
+    %intro_char(E, $0F, $13)
+    %intro_char(A, $10, $13)
+    %intro_char(N, $11, $13)
+    %intro_char(I, $12, $13)
+    %intro_char(N, $13, $13)
+    %intro_char(G, $14, $13)
+    %intro_char(L, $15, $13)
+    %intro_char(E, $16, $13)
+    %intro_char(S, $17, $13)
+    %intro_char(S, $18, $13)
+    %intro_char(Period, $19, $13)
+    %intro_char(T, $00, $15)
+    %intro_char(H, $01, $15)
+    %intro_char(E, $02, $15)
+    %intro_char(Space, $03, $15)
+    %intro_char(E, $04, $15)
+    %intro_char(N, $05, $15)
+    %intro_char(D, $06, $15)
+    %intro_char(Space, $07, $15)
+    %intro_char(I, $08, $15)
+    %intro_char(S, $09, $15)
+    %intro_char(Space, $0A, $15)
+    %intro_char(N, $0B, $15)
+    %intro_char(E, $0C, $15)
+    %intro_char(A, $0D, $15)
+    %intro_char(R, $0E, $15)
+    %intro_char(Period, $0F, $15)
+    %intro_char(Space, $10, $15)
+    %intro_char(I, $11, $15)
+    %intro_char(Space, $12, $15)
+    %intro_char(T, $13, $15)
+    %intro_char(H, $14, $15)
+    %intro_char(E, $15, $15)
+    %intro_char(N, $16, $15)
+    %intro_char(Space, $17, $15)
+    %intro_char(U, $18, $15)
+    %intro_char(S, $19, $15)
+    %intro_char(U, $1A, $15)
+    %intro_char(A, $1B, $15)
+    %intro_char(L, $1C, $15)
+    %intro_char(L, $1D, $15)
+    %intro_char(Y, $1E, $15)
+    %intro_char(W, $00, $16)
+    %intro_char(A, $01, $16)
+    %intro_char(T, $02, $16)
+    %intro_char(C, $03, $16)
+    %intro_char(H, $04, $16)
+    %intro_char(Space, $05, $16)
+    %intro_char(S, $06, $16)
+    %intro_char(O, $07, $16)
+    %intro_char(M, $08, $16)
+    %intro_char(E, $09, $16)
+    %intro_char(Space, $0A, $16)
+    %intro_char(O, $0B, $16)
+    %intro_char(L, $0C, $16)
+    %intro_char(D, $0D, $16)
+    %intro_char(Space, $0E, $16)
+    %intro_char(S, $0F, $16)
+    %intro_char(U, $10, $16)
+    %intro_char(P, $11, $16)
+    %intro_char(E, $12, $16)
+    %intro_char(R, $13, $16)
+    %intro_char(Space, $14, $16)
+    %intro_char(M, $15, $16)
+    %intro_char(E, $16, $16)
+    %intro_char(T, $17, $16)
+    %intro_char(R, $18, $16)
+    %intro_char(O, $19, $16)
+    %intro_char(I, $1A, $16)
+    %intro_char(D, $1B, $16)
+    %intro_char(V, $00, $17)
+    %intro_char(O, $01, $17)
+    %intro_char(D, $02, $17)
+    %intro_char(S, $03, $17)
+    %intro_char(Space, $04, $17)
+    %intro_char(A, $05, $17)
+    %intro_char(N, $06, $17)
+    %intro_char(D, $07, $17)
+    %intro_char(Space, $08, $17)
+    %intro_char(D, $09, $17)
+    %intro_char(R, $0A, $17)
+    %intro_char(I, $0B, $17)
+    %intro_char(N, $0C, $17)
+    %intro_char(K, $0D, $17)
+    %intro_char(Space, $0E, $17)
+    %intro_char(C, $0F, $17)
+    %intro_char(O, $10, $17)
+    %intro_char(C, $11, $17)
+    %intro_char(A, $12, $17)
+    %intro_char(Space, $13, $17)
+    %intro_char(C, $14, $17)
+    %intro_char(O, $15, $17)
+    %intro_char(L, $16, $17)
+    %intro_char(A, $17, $17)
+    %intro_char(U, $00, $18)
+    %intro_char(N, $01, $18)
+    %intro_char(T, $02, $18)
+    %intro_char(I, $03, $18)
+    %intro_char(L, $04, $18)
+    %intro_char(Space, $05, $18)
+    %intro_char(I, $06, $18)
+    %intro_char(Space, $07, $18)
+    %intro_char(P, $08, $18)
+    %intro_char(A, $09, $18)
+    %intro_char(S, $0A, $18)
+    %intro_char(S, $0B, $18)
+    %intro_char(Space, $0C, $18)
+    %intro_char(T, $0D, $18)
+    %intro_char(F, $0E, $18)
+    %intro_char(Space, $0F, $18)
+    %intro_char(O, $10, $18)
+    %intro_char(U, $11, $18)
+    %intro_char(T, $12, $18)
+    %intro_char(Period, $13, $18)
+    dw custom_intro_EndCustomText
+    dw $9698
+
+%endfree(8C)
+endif
 
 
 ; Non-flashing palette instruction
@@ -416,8 +1089,7 @@ hook_tourian_crateria_palette_fx_objects:
     dw $C685, #crateria_4_palette
 
 
-org $88F000
-print pc, " cutscenes bank88 start"
+%startfree(88)
 
 pb_soft_explosion_colors:
     db $01, $01, $00
@@ -804,7 +1476,7 @@ rising_earthquake_start:
     JMP rising_earthquake_end
 }
 
-print pc, " cutscenes bank88 end"
+%endfree(88)
 
 
 org $888AD1
@@ -1061,8 +1733,7 @@ endif
     JSL cutscenes_mb_custom_damage
 
 
-org $A9FBC0
-print pc, " cutscenes MB start"
+%startfree(A9)
 
 cutscenes_mb_fast_init:
 {
@@ -1093,8 +1764,7 @@ cutscenes_mb_normal_init:
     ; Overwritten logic with the song
     LDA #$0001 : STA $7E783A : STA $7E7800
     JSL $90A7E2
-    LDA #$0006
-    JSL $808FC1
+    LDA #$0006 : JSL !MUSIC_ROUTINE
 
 if !FEATURE_PAL
     JMP $8824
@@ -1619,5 +2289,5 @@ cutscenes_mb_custom_damage:
     JML $91DF51
 }
 
-print pc, " cutscenes MB end"
-warnpc $A9FFE0 ; rng.asm
+%endfree(A9)
+

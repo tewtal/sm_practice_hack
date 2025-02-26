@@ -14,8 +14,7 @@ incsrc mainmenu.asm
 ; Menu logic
 ; ----------
 
-org $85FD00
-print pc, " menu bank85 start"
+%startfree(85)
 
 initialize_ppu_long:
     PHP : %a16()
@@ -39,12 +38,10 @@ maybe_trigger_pause_long:
     JSR $80FA
     RTL
 
-print pc, " menu bank85 end"
-warnpc $85FE00 ; fanfare.asm
+%endfree(85)
 
 
-org $89B000
-print pc, " menu start"
+%startfree(89)
 
 cm_start:
 {
@@ -591,6 +588,12 @@ endif
     RTS
 }
 
+cm_tilemap_bg_interior_long:
+{
+    JSR cm_tilemap_bg_fillInterior
+    RTL
+}
+
 cm_tilemap_menu:
 {
     LDX !MENU_STACK_INDEX
@@ -677,6 +680,12 @@ endif
     ; no footer, back up two bytes
     DEC !DP_CurrentMenu : DEC !DP_CurrentMenu
     RTS
+}
+
+cm_tilemap_transfer_long:
+{
+    JSR cm_tilemap_transfer
+    RTL
 }
 
 cm_tilemap_transfer:
@@ -3773,7 +3782,23 @@ incbin ../resources/cm_gfx.bin
 HexMenuGFXTable:
     dw $2C70, $2C71, $2C72, $2C73, $2C74, $2C75, $2C76, $2C77, $2C78, $2C79, $2C50, $2C51, $2C52, $2C53, $2C54, $2C55
 
-print pc, " menu end"
+TimerNumberGFX1:
+    dw #$2870, #$2870, #$2870, #$2870, #$2870, #$2870, #$2870, #$2870, #$2870, #$2870
+    dw #$2871, #$2871, #$2871, #$2871, #$2871, #$2871, #$2871, #$2871, #$2871, #$2871
+    dw #$2872, #$2872, #$2872, #$2872, #$2872, #$2872, #$2872, #$2872, #$2872, #$2872
+    dw #$2873, #$2873, #$2873, #$2873, #$2873, #$2873, #$2873, #$2873, #$2873, #$2873
+    dw #$2874, #$2874, #$2874, #$2874, #$2874, #$2874, #$2874, #$2874, #$2874, #$2874
+    dw #$2875, #$2875, #$2875, #$2875, #$2875, #$2875, #$2875, #$2875, #$2875, #$2875
+
+TimerNumberGFX2:
+    dw #$2870, #$2871, #$2872, #$2873, #$2874, #$2875, #$2876, #$2877, #$2878, #$2879
+    dw #$2870, #$2871, #$2872, #$2873, #$2874, #$2875, #$2876, #$2877, #$2878, #$2879
+    dw #$2870, #$2871, #$2872, #$2873, #$2874, #$2875, #$2876, #$2877, #$2878, #$2879
+    dw #$2870, #$2871, #$2872, #$2873, #$2874, #$2875, #$2876, #$2877, #$2878, #$2879
+    dw #$2870, #$2871, #$2872, #$2873, #$2874, #$2875, #$2876, #$2877, #$2878, #$2879
+    dw #$2870, #$2871, #$2872, #$2873, #$2874, #$2875, #$2876, #$2877, #$2878, #$2879
+
+%endfree(89)
 
 
 ; -------------
@@ -3783,11 +3808,10 @@ print pc, " menu end"
 incsrc crash.asm
 
 
-org $B5F000
-print pc, " menu bankB5 start"
+%startfree(B5)
 
 cm_hud_table2:
 incbin ../resources/cm_gfx2.bin
 
-print pc, " menu bankB5 end"
+%endfree(B5)
 

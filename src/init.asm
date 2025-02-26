@@ -28,8 +28,7 @@ org $80856E
     JML init_post_boot
 
 
-org $81F000
-print pc, " init start"
+%startfree(81)
 
 init_code:
 {
@@ -37,11 +36,15 @@ init_code:
     PHA
 
     ; Initialize RAM (Bank 7E required)
-    LDA #$0000 : STA !ram_slowdown_mode
+    TDC : STA !ram_slowdown_mode
 
     ; Check if we should initialize SRAM
     LDA !sram_initialized : CMP !SRAM_VERSION : BEQ .sram_initialized
-    JSR init_sram
+    BCC .sram_init_routine
+    TDC
+  .sram_init_routine
+    ASL : TAX
+    JSR (init_sram_routine_table,X)
 
   .sram_initialized
 if !FEATURE_SD2SNES
@@ -77,111 +80,36 @@ init_nonzero_wram:
     JML init_wram_based_on_sram
 }
 
+init_sram_routine_table:
+    dw init_sram ; Version 0 treated same as 0-9
+    dw init_sram ; Version 1 treated same as 0-9
+    dw init_sram ; Version 2 treated same as 0-9
+    dw init_sram ; Version 3 treated same as 0-9
+    dw init_sram ; Version 4 treated same as 0-9
+    dw init_sram ; Version 5 treated same as 0-9
+    dw init_sram ; Version 6 treated same as 0-9
+    dw init_sram ; Version 7 treated same as 0-9
+    dw init_sram ; Version 8 treated same as 0-9
+    dw init_sram ; Version 9 treated same as 0-9
+    dw init_sram_upgrade_9toA
+    dw init_sram_upgrade_AtoB
+    dw init_sram_upgrade_BtoC
+    dw init_sram_upgrade_CtoD
+    dw init_sram_upgrade_DtoE
+    dw init_sram_upgrade_EtoF
+    dw init_sram_upgrade_Fto10
+    dw init_sram_upgrade_10to11
+    dw init_sram_upgrade_11to12
+    dw init_sram_upgrade_12to13
+    dw init_sram_upgrade_13to14
+    dw init_sram_upgrade_14to15
+    dw init_sram_upgrade_15to16
+    dw init_sram_upgrade_16to17
+    dw init_sram_upgrade_17to18
+
 init_sram:
 {
-    ; check SRAM version from !sram_initialized
-    CMP #$000F : BEQ .sram_upgrade_Fto10
-    BPL .sram_upgrade_1xto1x
-    CMP #$0009 : BEQ .sram_upgrade_9toA
-    CMP #$000A : BEQ .sram_upgrade_AtoB
-    CMP #$000B : BEQ .sram_upgrade_BtoC
-    CMP #$000C : BEQ .sram_upgrade_CtoD
-    CMP #$000D : BEQ .sram_upgrade_DtoE
-    CMP #$000E : BEQ .sram_upgrade_EtoF
-
-  .sram_upgrade_upto9
-    JSL init_sram_upto9
-
-  .sram_upgrade_9toA
-    TDC : STA !sram_ctrl_toggle_tileviewer
-    STA !sram_status_icons
-    STA !sram_suit_properties
-
-  .sram_upgrade_AtoB
-    TDC : STA !sram_ctrl_update_timers
-
-  .sram_upgrade_BtoC
-    TDC : STA !sram_top_display_mode
-    STA !sram_room_layout
-    INC : STA !sram_healthalarm
-
-if !FEATURE_DEV
-    LDA !CUTSCENE_QUICKBOOT|$0003 : STA !sram_cutscenes
-else
-    LDA #$0003 : STA !sram_cutscenes
-endif
-
-  .sram_upgrade_CtoD
-    TDC : STA !sram_preset_options
-    STA !sram_lag_counter_mode
-
-  .sram_upgrade_DtoE
-    TDC : STA !sram_fast_doors
-
-  .sram_upgrade_EtoF
-    TDC : STA !sram_suppress_flashing
-
-  .sram_upgrade_Fto10
-    TDC : STA !sram_fast_elevators
-    BRA .sram_upgrade_10to11
-
-  .sram_upgrade_1xto1x
-    CMP #$0010 : BEQ .sram_upgrade_10to11
-    CMP #$0011 : BEQ .sram_upgrade_11to12
-    CMP #$0012 : BEQ .sram_upgrade_12to13
-    CMP #$0013 : BEQ .sram_upgrade_13to14
-    CMP #$0014 : BEQ .sram_upgrade_14to15
-    CMP #$0015 : BEQ .sram_upgrade_15to16
-    CMP #$0016 : BEQ .sram_upgrade_16to17
-    BRA .sram_upgrade_upto9
-
-  .sram_upgrade_16to17
-    TDC : STA !sram_spin_lock : STA !sram_ctrl_toggle_spin_lock
-    DEC : STA !sram_map_grid_alignment
-
-    LDA !SRAM_VERSION : STA !sram_initialized
-    RTS
-
-  .sram_upgrade_10to11
-    TDC : STA !sram_custom_damage
-    STA !sram_custom_charge_damage
-    STA !sram_custom_uncharge_damage
-    STA !sram_water_physics
-    STA !sram_double_jump
-
-  .sram_upgrade_11to12
-    JSL init_menu_customization
-    TDC : STA !sram_ctrl_auto_save_state
-
-  .sram_upgrade_12to13
-    TDC : STA !sram_custom_header
-
-  .sram_upgrade_13to14
-    ; "skip fanfares, but adjust timer" option has been replaced with "speedrun" timer mode
-    LDA !sram_fanfare : BIT #$0002 : BEQ .sram_upgrade_14to15
-    LDA !sram_fanfare : AND #$0001 : STA !sram_fanfare
-    LDA !sram_frame_counter_mode : BNE .sram_upgrade_14to15
-    LDA !FRAME_COUNTER_ADJUST_REALTIME : STA !sram_frame_counter_mode
-
-  .sram_upgrade_14to15
-    TDC : STA !sram_bomb_torizo_door
-
-  .sram_upgrade_15to16
-    TDC : STA !sram_door_display_mode
-    STA !sram_cm_font : STA !sram_presetequiprando_beampref
-    STA !sram_display_mode_reward
-    LDA !CTRL_Y : STA !sram_cm_fast_scroll_button
-    LDA !PRESET_EQUIP_RANDO_INIT : STA !sram_presetequiprando
-    LDA #$000E : STA !sram_presetequiprando_max_etanks
-    LDA #$0004 : STA !sram_presetequiprando_max_reserves
-    LDA #$002E : STA !sram_presetequiprando_max_missiles
-    LDA #$000A : STA !sram_presetequiprando_max_supers
-    LDA #$000A : STA !sram_presetequiprando_max_pbs
-    JMP .sram_upgrade_16to17
-}
-
-init_sram_upto9:
-{
+    JSL init_sram_controller_shortcuts
     LDA #$0015 : STA !sram_artificial_lag
     TDC : STA !sram_fanfare
     STA !sram_frame_counter_mode
@@ -197,7 +125,91 @@ init_sram_upto9:
     INC : STA !sram_metronome_sfx
     LDA #$000A : STA !sram_metronome_tickrate
 
-  .controller_shortcuts
+  .upgrade_9toA
+    TDC : STA !sram_ctrl_toggle_tileviewer
+    STA !sram_status_icons
+    STA !sram_suit_properties
+
+  .upgrade_AtoB
+    TDC : STA !sram_ctrl_update_timers
+
+  .upgrade_BtoC
+    TDC : STA !sram_top_display_mode
+    STA !sram_room_layout
+    INC : STA !sram_healthalarm
+
+if !FEATURE_DEV
+    LDA !CUTSCENE_QUICKBOOT|$0003 : STA !sram_cutscenes
+else
+    LDA #$0003 : STA !sram_cutscenes
+endif
+
+  .upgrade_CtoD
+    TDC : STA !sram_preset_options
+    STA !sram_lag_counter_mode
+
+  .upgrade_DtoE
+    TDC : STA !sram_fast_doors
+
+  .upgrade_EtoF
+    TDC : STA !sram_suppress_flashing
+
+  .upgrade_Fto10
+    TDC : STA !sram_fast_elevators
+
+  .upgrade_10to11
+    TDC : STA !sram_custom_damage
+    STA !sram_custom_charge_damage
+    STA !sram_custom_uncharge_damage
+    STA !sram_water_physics
+    STA !sram_double_jump
+
+  .upgrade_11to12
+    JSL init_menu_customization
+    TDC : STA !sram_ctrl_auto_save_state
+
+  .upgrade_12to13
+    TDC : STA !sram_custom_header
+
+  .upgrade_13to14
+    ; "skip fanfares, but adjust timer" option has been replaced with "speedrun" timer mode
+    LDA !sram_fanfare : BIT #$0002 : BEQ .upgrade_14to15
+    LDA !sram_fanfare : AND #$0001 : STA !sram_fanfare
+    LDA !sram_frame_counter_mode : BNE .upgrade_14to15
+    LDA !FRAME_COUNTER_ADJUST_REALTIME : STA !sram_frame_counter_mode
+
+  .upgrade_14to15
+    TDC : STA !sram_bomb_torizo_door
+
+  .upgrade_15to16
+    TDC : STA !sram_door_display_mode
+    STA !sram_cm_font : STA !sram_presetequiprando_beampref
+    STA !sram_display_mode_reward
+    LDA !CTRL_Y : STA !sram_cm_fast_scroll_button
+    LDA !PRESET_EQUIP_RANDO_INIT : STA !sram_presetequiprando
+    LDA #$000E : STA !sram_presetequiprando_max_etanks
+    LDA #$0004 : STA !sram_presetequiprando_max_reserves
+    LDA #$002E : STA !sram_presetequiprando_max_missiles
+    LDA #$000A : STA !sram_presetequiprando_max_supers
+    LDA #$000A : STA !sram_presetequiprando_max_pbs
+
+  .upgrade_16to17
+    TDC : STA !sram_spin_lock : STA !sram_ctrl_toggle_spin_lock
+    DEC : STA !sram_map_grid_alignment
+
+  .upgrade_17to18
+    TDC : STA !sram_number_gfx_choice
+    STA !sram_superhud_bottom
+    STA !sram_superhud_middle
+    STA !sram_superhud_top
+    STA !sram_infidoppler_enabled
+
+    LDA !SRAM_VERSION : STA !sram_initialized
+    RTS
+}
+
+init_sram_controller_shortcuts:
+{
     ; branch called by ctrl_reset_defaults in mainmenu.asm
     LDA #$3000 : STA !sram_ctrl_menu                  ; Start + Select
     LDA #$6010 : STA !sram_ctrl_save_state            ; Select + Y + R
@@ -278,5 +290,4 @@ init_post_boot:
     JML $82893D ; hijacked code: start main game loop
 }
 
-print pc, " init end"
-warnpc $81FF00 ; Special thanks
+%endfree(81)

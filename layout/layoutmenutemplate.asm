@@ -1,7 +1,6 @@
 
 pushpc
-org $E48000
-print pc, " layoutmenu start"
+%startfree(E4)
 
 ; -------------------------
 ; Room Layout menu
@@ -321,6 +320,7 @@ layout_bombtorizodoor:
     db #$28, "r   VANILLA", #$FF
     db #$28, "r      FAST", #$FF
     db #$28, "r      SLOW", #$FF
+    db #$FF
 
 layout_magnetstairs:
     %cm_toggle_bit("Remove Magnet Stairs", !sram_room_layout, !ROOM_LAYOUT_MAGNET_STAIRS, #0)
@@ -869,6 +869,5 @@ layout_updown_downdoor:
 portals_down_vanilla_table:
 
 
-print pc, " layoutmenu end"
-warnpc $E4E000 ; customizemenu.asm
+%endfree(E4)
 pullpc

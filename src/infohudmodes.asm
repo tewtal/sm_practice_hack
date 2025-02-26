@@ -9,7 +9,7 @@
     dw status_roomstrat
     dw status_chargetimer
     dw status_xfactor
-    dw status_cooldowncounter
+    dw status_cooldown
     dw status_shinetimer
     dw status_dashcounter
     dw status_shinetune
@@ -17,13 +17,14 @@
     dw status_spikesuit
     dw status_lagcounter
     dw status_cpuusage
-    dw status_xpos
-    dw status_ypos
     dw status_hspeed
     dw status_vspeed
     dw status_quickdrop
     dw status_walljump
     dw status_armpump
+    dw status_pumpcounter
+    dw status_xpos
+    dw status_ypos
     dw status_shottimer
     dw status_ramwatch
 
@@ -43,9 +44,13 @@ status_roomstrat:
     RTS
 
   .status_room_table
+    dw status_superhud
+    dw status_ceresridley
     dw status_doorskip
     dw status_tacotank
+    dw status_pitdoor
     dw status_moondance
+    dw status_kraidradar
     dw status_gateglitch
     dw status_moatcwj
     dw status_robotflush
@@ -56,7 +61,9 @@ status_roomstrat:
     dw status_snailclip
     dw status_wasteland
     dw status_ridleyai
+    dw status_kihuntermanip
     dw status_downbackzeb
+    dw status_zebskip
     dw status_mbhp
     dw status_twocries
 }
@@ -107,7 +114,7 @@ status_xfactor:
     RTS
 }
 
-status_cooldowncounter:
+status_cooldown:
 {
     LDA !SAMUS_COOLDOWN : CMP !ram_HUD_check : BEQ .done : STA !ram_HUD_check
     LDX #$0088 : JSR Draw4
@@ -706,14 +713,12 @@ status_spikesuit:
 
 status_lagcounter:
 {
-    LDA !REALTIME_LAG_COUNTER : BEQ .done ; unused RAM
+    LDA !REALTIME_LAG_COUNTER : BEQ .check
     CLC : ADC !ram_lag_counter : STA !ram_lag_counter : STZ !REALTIME_LAG_COUNTER
-    CMP !ram_HUD_check : BEQ .done : STA !ram_HUD_check
-    LDX #$0082
-    PHA : LDA !ram_minimap : BEQ .draw3
-    LDX #$0014
-  .draw3
-    PLA : JSR Draw3
+
+  .check
+    LDA !ram_lag_counter : CMP !ram_HUD_check : BEQ .done : STA !ram_HUD_check
+    LDX #$0088 : JSR Draw4
 
   .done
     RTS
@@ -731,56 +736,15 @@ status_cpuusage:
     RTS
 }
 
-status_xpos:
-{
-    ; Suppress Samus HP display
-    LDA !SAMUS_HP : STA !ram_last_hp
-
-    LDA !SAMUS_X : CMP !ram_xpos : BEQ .checksubpixel
-    STA !ram_xpos : LDX #$0088 : JSR Draw4
-    LDA !SAMUS_X_SUBPX : BRA .drawsubpixel
-
-  .checksubpixel
-    LDA !SAMUS_X_SUBPX : CMP !ram_subpixel_pos : BEQ .done
-
-  .drawsubpixel
-    STA !ram_subpixel_pos : LDX #$0092 : JSR Draw4Hex
-    LDA !IH_DECIMAL : STA !HUD_TILEMAP+$90
-
-  .done
-    RTS
-}
-
-status_ypos:
-{
-    ; Suppress Samus HP display
-    LDA !SAMUS_HP : STA !ram_last_hp
-
-    LDA !SAMUS_Y : CMP !ram_ypos : BEQ .checksubpixel
-    STA !ram_ypos : LDX #$0088 : JSR Draw4
-    LDA !SAMUS_Y_SUBPX : BRA .drawsubpixel
-
-  .checksubpixel
-    LDA !SAMUS_Y_SUBPX : CMP !ram_subpixel_pos : BEQ .done
-
-  .drawsubpixel
-    STA !ram_subpixel_pos : LDX #$0092 : JSR Draw4Hex
-    LDA !IH_DECIMAL : STA !HUD_TILEMAP+$90
-
-  .done
-    RTS
-}
-
 status_hspeed:
 {
-    ; converted to only use 4 tiles in the HUD, saving 202 cycles
     ; subspeed + submomentum into low byte of Hspeed
     LDA !SAMUS_X_SUBRUNSPEED : CLC : ADC !SAMUS_X_SUBMOMENTUM
-    AND #$FF00 : XBA : STA !ram_horizontal_speed
+    AND #$FF00 : XBA : STA !ram_momentum_sum
 
     ; speed + momentum + carry into high byte of Hspeed
     LDA !SAMUS_X_RUNSPEED : ADC !SAMUS_X_MOMENTUM
-    AND #$00FF : XBA : ORA !ram_horizontal_speed
+    AND #$00FF : XBA : ORA !ram_momentum_sum
 
     ; maybe skip drawing
     CMP !ram_HUD_check : BEQ .done
@@ -791,7 +755,7 @@ status_hspeed:
     LDA !IH_DECIMAL : STA !HUD_TILEMAP+$8C
 
     ; draw fraction in hex
-    LDA !ram_horizontal_speed : AND #$00F0 : LSR #3 : TAY
+    LDA !ram_momentum_sum : AND #$00F0 : LSR #3 : TAY
     LDA.w HexGFXTable,Y : STA !HUD_TILEMAP+$8E
 
   .done
@@ -815,27 +779,27 @@ endif
     ; Suppress Samus HP display
     LDA !SAMUS_HP : STA !ram_last_hp
 
-    LDA !SAMUS_Y_SPEED : CMP !ram_vertical_speed : BEQ .checkfalling : CMP #$FFFF : BNE .drawspeed
+    LDA !SAMUS_Y_SPEED : CMP !ram_momentum_sum : BEQ .checkfalling : CMP #$FFFF : BNE .drawspeed
 
     ; At the peak of a normal jump, speed will go negative for one frame
     ; Instead of drawing 65535 for one frame, draw a hyphen
     ; We can detect this if our speed was previously positive
     ; If speed was previously negative, then proceed as normal to draw 65535
-    TAY : LDA !ram_vertical_speed : AND #$8000 : BNE .restorespeed
+    TAY : LDA !ram_momentum_sum : AND #$8000 : BNE .restorespeed
 
     LDA !IH_BLANK : STA !HUD_TILEMAP+$88 : STA !HUD_TILEMAP+$8A : STA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$90
     LDA !IH_HYPHEN : STA !HUD_TILEMAP+$8E
 
     ; Store speed as some negative value that isn't FFFF,
     ; so if it is negative again we'll update it to 65535
-    LDA #$8000 : STA !ram_vertical_speed
+    LDA #$8000 : STA !ram_momentum_sum
     BRA .checkfalling
 
   .restorespeed
     TYA
 
   .drawspeed
-    STA !ram_vertical_speed : LDX #$0088 : JSR Draw4
+    STA !ram_momentum_sum : LDX #$0088 : JSR Draw4
     LDA !IH_BLANK : STA !HUD_TILEMAP+$90
 
   .checkfalling
@@ -939,9 +903,13 @@ endif
   .newjump
     LDA #$0001 : STA !ram_roomstrat_counter : STA !ram_walljump_counter
 
-    ; Print initial jump speed over item%
+    ; Print initial jump speed over item% when Samus doesn't bonk and superhud not selected
     LDA !sram_top_display_mode : BNE .skipprint
     LDA $0B1A : BNE .skipprint
+    LDA !sram_display_mode : CMP !IH_MODE_ROOMSTRAT_INDEX : BNE .printjumpseed
+    LDA !sram_room_strat : BEQ .skipprint
+
+  .printjumpseed
     LDA !HUD_TILEMAP+$12 : STA $14
     LDA !SAMUS_Y_SPEEDCOMBINED : AND #$0FFF
     LDX #$0012 : JSR Draw4Hex
@@ -971,11 +939,11 @@ status_door_hspeed:
 {
     ; subspeed + submomentum into low byte of Hspeed
     LDA !SAMUS_X_SUBRUNSPEED : CLC : ADC !SAMUS_X_SUBMOMENTUM
-    AND #$FF00 : XBA : STA !ram_horizontal_speed
+    AND #$FF00 : XBA : STA !ram_momentum_sum
 
     ; speed + momentum + carry into high byte of Hspeed
     LDA !SAMUS_X_RUNSPEED : ADC !SAMUS_X_MOMENTUM
-    AND #$00FF : XBA : ORA !ram_horizontal_speed
+    AND #$00FF : XBA : ORA !ram_momentum_sum
 
     ; draw whole number in decimal
     AND #$FF00 : XBA
@@ -1007,7 +975,7 @@ status_door_hspeed:
     LDA !IH_DECIMAL : STA !HUD_TILEMAP+$8C
 
     ; draw fraction in hex
-    LDA !ram_horizontal_speed : AND #$00F0 : LSR #3 : TAX
+    LDA !ram_momentum_sum : AND #$00F0 : LSR #3 : TAX
     LDA.l HexGFXTable,X : STA !HUD_TILEMAP+$8E
 
   .done
@@ -1046,14 +1014,19 @@ status_door_vspeed:
     RTS
 }
 
+status_door_dashcounter:
+{
+    LDA !SAMUS_DASH_COUNTER : LDX #$0088 : JMP Draw4
+}
+
 status_door_xpos:
 {
-    LDA !SAMUS_X : LDX #$0088 : JMP Draw4
+    LDA !SAMUS_X : LDX #$0088 : JMP Draw4Hex
 }
 
 status_door_ypos:
 {
-    LDA !SAMUS_Y : LDX #$0088 : JMP Draw4
+    LDA !SAMUS_Y : LDX #$0088 : JMP Draw4Hex
 }
 
 status_quickdrop:
@@ -1118,7 +1091,7 @@ status_walljump:
     LDA !ram_roomstrat_counter : BEQ .blankaverage
 
     ; Divide total vertical speed by frame count
-    TAX : LDA !ram_vertical_speed
+    TAX : LDA !ram_momentum_sum
     STA $4204
     TXA
     %a8()
@@ -1132,7 +1105,7 @@ status_walljump:
     LDA !IH_BLANK : STA !HUD_TILEMAP+$90
 
   .startaverage
-    TDC : STA !ram_vertical_speed : INC : STA !ram_roomstrat_counter
+    TDC : STA !ram_momentum_sum : INC : STA !ram_roomstrat_counter
     BRA .incspeed
 
   .blankaverage
@@ -1164,13 +1137,13 @@ status_walljump:
 
   .addspeed
     ; If total speed overflows, stop tracking the average
-    LDA !ram_vertical_speed : CLC : CLV : ADC $12 : BVS .clearaverage
-    STA !ram_vertical_speed
+    LDA !ram_momentum_sum : CLC : CLV : ADC $12 : BVS .clearaverage
+    STA !ram_momentum_sum
     BRA .checkjump
 
   .subtractspeed
-    LDA !ram_vertical_speed : CMP $12 : BMI .zerospeed
-    SEC : SBC $12 : STA !ram_vertical_speed
+    LDA !ram_momentum_sum : CMP $12 : BMI .zerospeed
+    SEC : SBC $12 : STA !ram_momentum_sum
     BRA .checkjump
 
   .resetreleasejump
@@ -1179,7 +1152,7 @@ status_walljump:
     BRA .blanksides
 
   .zerospeed
-    TDC : STA !ram_vertical_speed
+    TDC : STA !ram_momentum_sum
 
   .checkjump
     LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_JUMP : BNE .pressedjump
@@ -1445,6 +1418,85 @@ status_armpump:
     RTS
 }
 
+status_pumpcounter:
+{
+; this makes the assumption that the user only attempting to pump on one angle button
+; !ram_HUD_check = where to draw (index * 6 + $88)
+; !ram_roomstrat_counter = pumps counted
+; !ram_roomstrat_state = neutral/angle
+; !ram_fail_count = reset after fail, non-zero during counting
+    LDA !SAMUS_HP : STA !ram_last_hp
+
+    LDA !ram_roomstrat_state : BNE .angleLast
+    LDA !IH_CONTROLLER_PRI : AND #$0030 : BEQ .fail
+    LDA !ram_roomstrat_state : EOR #$0001 : STA !ram_roomstrat_state
+    LDA !ram_roomstrat_counter : INC : STA !ram_roomstrat_counter
+    RTS
+
+  .angleLast
+    LDA !IH_CONTROLLER_PRI : AND #$0030 : BNE .fail
+    LDA !ram_roomstrat_state : EOR #$0001 : STA !ram_roomstrat_state
+    LDA !ram_roomstrat_counter : INC : STA !ram_roomstrat_counter
+    STA !ram_fail_count
+    RTS
+
+  .fail
+    LDA !ram_fail_count : BEQ .done
+    LDA !ram_HUD_check : CMP #$0006 : BMI .draw
+    TDC : STA !ram_HUD_check
+
+  .draw
+    ASL : ADC !ram_HUD_check : ASL : ADC #$0088 : TAX
+    LDA !ram_roomstrat_counter
+    JSR Draw2
+    LDA !IH_BLANK : STA !HUD_TILEMAP,X
+    TDC : STA !ram_roomstrat_counter : STA !ram_roomstrat_state : STA !ram_fail_count
+    LDA !ram_HUD_check : INC : STA !ram_HUD_check
+
+  .done
+    RTS
+}
+
+status_xpos:
+{
+    ; Suppress Samus HP display
+    LDA !SAMUS_HP : STA !ram_last_hp
+
+    LDA !SAMUS_X : CMP !ram_xpos : BEQ .checksubpixel
+    STA !ram_xpos : LDX #$0088 : JSR Draw4Hex
+    LDA !SAMUS_X_SUBPX : BRA .drawsubpixel
+
+  .checksubpixel
+    LDA !SAMUS_X_SUBPX : CMP !ram_subpixel_pos : BEQ .done
+
+  .drawsubpixel
+    STA !ram_subpixel_pos : LDX #$0092 : JSR Draw4Hex
+    LDA !IH_DECIMAL : STA !HUD_TILEMAP+$90
+
+  .done
+    RTS
+}
+
+status_ypos:
+{
+    ; Suppress Samus HP display
+    LDA !SAMUS_HP : STA !ram_last_hp
+
+    LDA !SAMUS_Y : CMP !ram_ypos : BEQ .checksubpixel
+    STA !ram_ypos : LDX #$0088 : JSR Draw4Hex
+    LDA !SAMUS_Y_SUBPX : BRA .drawsubpixel
+
+  .checksubpixel
+    LDA !SAMUS_Y_SUBPX : CMP !ram_subpixel_pos : BEQ .done
+
+  .drawsubpixel
+    STA !ram_subpixel_pos : LDX #$0092 : JSR Draw4Hex
+    LDA !IH_DECIMAL : STA !HUD_TILEMAP+$90
+
+  .done
+    RTS
+}
+
 status_shottimer:
 {
     LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_SHOT : BEQ .incShot
@@ -1565,6 +1617,439 @@ status_ramwatch:
     LDA !ram_watch_edit_lock_right : BEQ .e16RightDone
     LDA !ram_watch_edit_right : STA [$C5]
   .e16RightDone
+    RTS
+}
+
+status_superhud:
+{
+    LDA !sram_superhud_top : BEQ .middle
+    ASL : TAX
+    JSR (superhud_top_table,X)
+
+  .middle
+    LDA !sram_superhud_middle : BEQ .bottom
+    ASL : TAX
+    JSR (superhud_middle_table,X)
+
+  .bottom
+    LDA !sram_superhud_bottom : ASL : TAX
+    JMP (superhud_bottom_table,X)
+
+superhud_bottom_table:
+    dw status_enemyhp
+    dw status_chargetimer
+    dw status_xfactor
+    dw status_cooldown
+    dw status_shinetimer
+    dw status_dashcounter
+    dw status_iframecounter
+    dw status_spikesuit
+    dw status_lagcounter
+    dw status_cpuusage
+    dw status_hspeed
+    dw status_vspeed
+    dw status_quickdrop
+    dw status_walljump
+    dw status_armpump
+    dw status_pumpcounter
+    dw status_xpos
+    dw status_ypos
+    dw status_shottimer
+    dw status_ramwatch
+    dw status_ceresridley
+    dw status_doorskip
+    dw status_tacotank
+    dw status_pitdoor
+    dw status_moondance
+    dw status_gateglitch
+    dw status_moatcwj
+    dw status_robotflush
+    dw status_shinetopb
+    dw status_elevatorcf
+    dw status_botwooncf
+    dw status_draygonai
+    dw status_snailclip
+    dw status_wasteland
+    dw status_ridleyai
+    dw status_downbackzeb
+    dw status_zebskip
+    dw status_mbhp
+    dw status_twocries
+
+superhud_middle_table:
+    dw status_enemyhp_done
+    dw middleHUD_chargetimer
+    dw middleHUD_xfactor
+    dw middleHUD_cooldown
+    dw middleHUD_shinetimer
+    dw middleHUD_dashcounter
+    dw middleHUD_iframecounter
+    dw middleHUD_lagcounter
+    dw middleHUD_cpuusage
+    dw middleHUD_hspeed
+    dw middleHUD_shottimer
+
+superhud_top_table:
+    dw status_enemyhp_done
+    dw topHUD_chargetimer
+    dw topHUD_xfactor
+    dw topHUD_cooldown
+    dw topHUD_shinetimer
+    dw topHUD_dashcounter
+    dw topHUD_iframecounter
+    dw topHUD_lagcounter
+    dw topHUD_cpuusage
+    dw topHUD_hspeed
+    dw topHUD_shottimer
+
+middleHUD_chargetimer:
+{
+    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_SHOT : BNE .pressedShot
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_SHOT : BNE .charging
+
+    ; count up to 36 frames of shot released
+    LDA !ram_HUD_middle_counter : CMP #$0024 : BPL .reset
+    INC : STA !ram_HUD_middle_counter
+    ASL : TAX : LDA NumberGFXTable,X : STA !HUD_TILEMAP+$54
+    RTS
+
+  .reset
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$54
+    LDA #$003C : STA !ram_HUD_middle
+    RTS
+
+  .pressedShot
+    TDC : STA !ram_HUD_middle_counter
+
+  .charging
+    LDA #$003C : SEC : SBC !SAMUS_CHARGE_TIMER
+    CMP !ram_HUD_middle : BEQ .done : STA !ram_HUD_middle
+    CMP #$0001 : BPL .drawCharge
+
+    ; Beam charged
+    LDA !IH_SHINESPARK : STA !HUD_TILEMAP+$56
+    LDA !SAMUS_CHARGE_TIMER : SEC : SBC #$003C
+    ASL : TAX : LDA NumberGFXTable,X : STA !HUD_TILEMAP+$58
+    RTS
+
+  .drawCharge
+    LDX #$0054 : JSR Draw3
+
+  .done
+    RTS
+}
+
+topHUD_chargetimer:
+{
+    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_SHOT : BNE .pressedShot
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_SHOT : BNE .charging
+
+    ; count up to 36 frames of shot released
+    LDA !ram_HUD_top_counter : CMP #$0024 : BPL .reset
+    INC : STA !ram_HUD_top_counter
+    ASL : TAX : LDA NumberGFXTable,X : STA !HUD_TILEMAP+$14
+    RTS
+
+  .reset
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$14
+    LDA #$003C : STA !ram_HUD_top
+    RTS
+
+  .pressedShot
+    TDC : STA !ram_HUD_top_counter
+
+  .charging
+    LDA #$003C : SEC : SBC !SAMUS_CHARGE_TIMER
+    CMP !ram_HUD_top : BEQ .done : STA !ram_HUD_top
+    CMP #$0001 : BPL .drawCharge
+
+    ; Beam charged
+    LDA !IH_SHINESPARK : STA !HUD_TILEMAP+$16
+    LDA !SAMUS_CHARGE_TIMER : SEC : SBC #$003C
+    ASL : TAX : LDA NumberGFXTable,X : STA !HUD_TILEMAP+$18
+    RTS
+
+  .drawCharge
+    LDX #$0014 : JSR Draw3
+
+  .done
+    RTS
+}
+
+middleHUD_xfactor:
+{
+    LDA #$0079 : SEC : SBC !SAMUS_CHARGE_TIMER : CMP !ram_HUD_middle : BEQ .done : STA !ram_HUD_middle
+    LDX #$0054 : JSR Draw3
+
+  .done
+    RTS
+}
+
+topHUD_xfactor:
+{
+    LDA #$0079 : SEC : SBC !SAMUS_CHARGE_TIMER : CMP !ram_HUD_top : BEQ .done : STA !ram_HUD_top
+    LDX #$0014 : JSR Draw3
+
+  .done
+    RTS
+}
+
+middleHUD_cooldown:
+{
+    LDA !SAMUS_COOLDOWN : CMP !ram_HUD_middle : BEQ .done : STA !ram_HUD_middle
+    LDX #$0054 : JSR Draw3
+
+  .done
+    RTS
+}
+
+topHUD_cooldown:
+{
+    LDA !SAMUS_COOLDOWN : CMP !ram_HUD_top : BEQ .done : STA !ram_HUD_top
+    LDX #$0014 : JSR Draw3
+
+  .done
+    RTS
+}
+
+middleHUD_shinetimer:
+{
+    LDA !ram_armed_shine_duration : BNE .nonZero
+
+    ; count up to 36 frames of shinespark being late
+    LDA !ram_HUD_middle_counter : CMP !SAFEWORD : BEQ .done
+    CMP #$0024 : BPL .reset
+    INC : STA !ram_HUD_middle_counter
+    ASL : TAX : LDA NumberGFXTable,X : STA !HUD_TILEMAP+$54
+
+    LDA !SAMUS_MOVEMENT_TYPE : AND #$00FF : CMP #$0002 : BEQ .late
+    BRA .draw
+
+  .reset
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$54
+    BRA .draw
+
+  .late
+    ; arbitrary value indicating normal jumping pose already observed
+    LDA !SAFEWORD : STA !ram_HUD_middle_counter
+    BRA .draw
+
+  .nonZero
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$54
+    TDC : STA !ram_HUD_middle_counter
+
+  .draw
+    LDA !ram_armed_shine_duration : CMP !ram_HUD_middle : BEQ .done
+    STA !ram_HUD_middle
+    LDX #$0056 : JSR Draw2
+
+  .done
+    RTS
+}
+
+topHUD_shinetimer:
+{
+    LDA !ram_armed_shine_duration : BNE .nonZero
+
+    ; count up to 36 frames of shinespark being late
+    LDA !ram_HUD_top_counter : CMP !SAFEWORD : BEQ .done
+    CMP #$0024 : BPL .reset
+    INC : STA !ram_HUD_top_counter
+    ASL : TAX : LDA NumberGFXTable,X : STA !HUD_TILEMAP+$14
+
+    LDA !SAMUS_MOVEMENT_TYPE : AND #$00FF : CMP #$0002 : BEQ .late
+    BRA .draw
+
+  .reset
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$14
+    BRA .draw
+
+  .late
+    ; arbitrary value indicating normal jumping pose already observed
+    LDA !SAFEWORD : STA !ram_HUD_top_counter
+    BRA .draw
+
+  .nonZero
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$14
+    TDC : STA !ram_HUD_top_counter
+
+  .draw
+    LDA !ram_armed_shine_duration : CMP !ram_HUD_top : BEQ .done
+    STA !ram_HUD_top
+    LDX #$0016 : JSR Draw2
+
+  .done
+    RTS
+}
+
+middleHUD_dashcounter:
+{
+    LDA !SAMUS_DASH_COUNTER : AND #$00FF : CMP !ram_HUD_middle : BEQ .done
+    STA !ram_HUD_middle : LDX #$0054 : JSR Draw3
+
+  .done
+    RTS
+}
+
+topHUD_dashcounter:
+{
+    LDA !SAMUS_DASH_COUNTER : AND #$00FF : CMP !ram_HUD_top : BEQ .done
+    STA !ram_HUD_top : LDX #$0014 : JSR Draw3
+
+  .done
+    RTS
+}
+
+middleHUD_iframecounter:
+{
+    LDA !SAMUS_IFRAME_TIMER : CMP !ram_HUD_middle : BEQ .done : STA !ram_HUD_middle
+    LDX #$0054 : JSR Draw3
+
+  .done
+    RTS
+}
+
+topHUD_iframecounter:
+{
+    LDA !SAMUS_IFRAME_TIMER : CMP !ram_HUD_top : BEQ .done : STA !ram_HUD_top
+    LDX #$0014 : JSR Draw3
+
+  .done
+    RTS
+}
+
+middleHUD_lagcounter:
+{
+    LDA !REALTIME_LAG_COUNTER : BEQ .check
+    CLC : ADC !ram_lag_counter : STA !ram_lag_counter : STZ !REALTIME_LAG_COUNTER
+
+  .check
+    LDA !ram_lag_counter : CMP !ram_HUD_middle : BEQ .done : STA !ram_HUD_middle
+    LDX #$0054 : JSR Draw3
+
+  .done
+    RTS
+}
+
+topHUD_lagcounter:
+{
+    LDA !REALTIME_LAG_COUNTER : BEQ .check
+    CLC : ADC !ram_lag_counter : STA !ram_lag_counter : STZ !REALTIME_LAG_COUNTER
+
+  .check
+    LDA !ram_lag_counter : CMP !ram_HUD_top : BEQ .done : STA !ram_HUD_top
+    LDX #$0014 : JSR Draw3
+
+  .done
+    RTS
+}
+
+middleHUD_cpuusage:
+{
+    LDA !ram_vcounter_data : AND #$00FF
+    %a8() : STA $211B : XBA : STA $211B : LDA #$64 : STA $211C : %a16()
+    LDA $2134 : STA $4204
+    %a8() : LDA #$E1 : STA $4206 : %a16()
+    PHA : PLA : PHA : PLA : LDA $4214
+    LDX #$0054 : JSR Draw2
+    LDA !IH_PERCENT : STA !HUD_TILEMAP+$58
+    RTS
+}
+
+topHUD_cpuusage:
+{
+    LDA !ram_vcounter_data : AND #$00FF
+    %a8() : STA $211B : XBA : STA $211B : LDA #$64 : STA $211C : %a16()
+    LDA $2134 : STA $4204
+    %a8() : LDA #$E1 : STA $4206 : %a16()
+    PHA : PLA : PHA : PLA : LDA $4214
+    LDX #$0014 : JSR Draw2
+    LDA !IH_PERCENT : STA !HUD_TILEMAP+$18
+    RTS
+}
+
+middleHUD_hspeed:
+{
+    ; subspeed + submomentum into low byte of Hspeed
+    LDA !SAMUS_X_SUBRUNSPEED : CLC : ADC !SAMUS_X_SUBMOMENTUM
+    AND #$FF00 : XBA : STA !ram_momentum_sum
+
+    ; speed + momentum + carry into high byte of Hspeed
+    LDA !SAMUS_X_RUNSPEED : ADC !SAMUS_X_MOMENTUM
+    AND #$00FF : XBA : ORA !ram_momentum_sum
+
+    ; maybe skip drawing
+    CMP !ram_HUD_middle : BEQ .done
+    STA !ram_HUD_middle
+
+    ; draw whole number in decimal
+    AND #$FF00 : XBA : ASL : TAY : LDA.w HexGFXTable,Y : STA !HUD_TILEMAP+$54
+    LDA !IH_DECIMAL : STA !HUD_TILEMAP+$56
+
+    ; draw fraction in hex
+    LDA !ram_momentum_sum : AND #$00F0 : LSR #3 : TAY
+    LDA.w HexGFXTable,Y : STA !HUD_TILEMAP+$58
+
+  .done
+    RTS
+}
+
+topHUD_hspeed:
+{
+    ; subspeed + submomentum into low byte of Hspeed
+    LDA !SAMUS_X_SUBRUNSPEED : CLC : ADC !SAMUS_X_SUBMOMENTUM
+    AND #$FF00 : XBA : STA !ram_momentum_sum
+
+    ; speed + momentum + carry into high byte of Hspeed
+    LDA !SAMUS_X_RUNSPEED : ADC !SAMUS_X_MOMENTUM
+    AND #$00FF : XBA : ORA !ram_momentum_sum
+
+    ; maybe skip drawing
+    CMP !ram_HUD_top : BEQ .done
+    STA !ram_HUD_top
+
+    ; draw whole number in decimal
+    AND #$FF00 : XBA : ASL : TAY : LDA.w HexGFXTable,Y : STA !HUD_TILEMAP+$14
+    LDA !IH_DECIMAL : STA !HUD_TILEMAP+$16
+
+    ; draw fraction in hex
+    LDA !ram_momentum_sum : AND #$00F0 : LSR #3 : TAY
+    LDA.w HexGFXTable,Y : STA !HUD_TILEMAP+$18
+
+  .done
+    RTS
+}
+
+middleHUD_shottimer:
+{
+    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_SHOT : BEQ .incShot
+    LDA !ram_HUD_middle_counter : LDX #$0054 : JSR Draw3
+    TDC : STA !ram_HUD_middle_counter
+
+  .incShot
+    LDA !ram_HUD_middle_counter : INC : STA !ram_HUD_middle_counter
+    RTS
+}
+
+topHUD_shottimer:
+{
+    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_SHOT : BEQ .incShot
+    LDA !ram_HUD_top_counter : LDX #$0014 : JSR Draw3
+    TDC : STA !ram_HUD_top_counter
+
+  .incShot
+    LDA !ram_HUD_top_counter : INC : STA !ram_HUD_top_counter
+    RTS
+}
+
+status_ceresridley:
+{
+    ; displays number of shots until Ridley "dies"
+    LDA $7E781A : CMP !ram_HUD_check : BEQ .done
+    STA !ram_HUD_check
+    LDX #$0088 : JSR Draw4
+
+  .done
     RTS
 }
 
@@ -2028,6 +2513,22 @@ endif
     LDA !ram_ypos : SEC : SBC !ram_xpos
     ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$94
     JMP .incstate
+}
+
+status_pitdoor:
+{
+    LDA !ROOM_ID : CMP.w #ROOM_PitRoom : BNE .done
+    LDA $7EDE64 : BNE .draw_N
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$8E
+    LDA !sram_display_mode_reward : BEQ .done
+    %sfxreward()
+    RTS
+
+  .draw_N
+    LDA !IH_LETTER_N : STA !HUD_TILEMAP+$8E
+
+  .done
+    RTS
 }
 
 status_moondance:
@@ -2601,6 +3102,178 @@ status_moondance_tas:
   .fallreleaseperfect
     LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$96 : STA !HUD_TILEMAP+$98
     JMP .alldone
+}
+
+status_kraidradar:
+{
+    LDA !ROOM_ID : CMP.w #ROOM_KraidRoom : BNE .skip
+    ; stop tracking when Kraid takes damage
+    LDA !ENEMY_HP : CMP #$03E8 : BEQ .setup
+
+  .skip
+    RTS
+
+  .setup
+    LDA !SAMUS_HP : STA !ram_last_hp ; suppress Samus HP
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$88 : STA !HUD_TILEMAP+$8A ; clear space on HUD
+    STA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$8E : STA !HUD_TILEMAP+$90
+    STA !HUD_TILEMAP+$92 : STA !HUD_TILEMAP+$94 : STA !HUD_TILEMAP+$96
+    STA !HUD_TILEMAP+$98
+
+    ; Detect and draw Samus first
+
+    ; check if sweet spot (2 missile KQK using bomb setup)
+    LDY !SAMUS_X : CPY #$004B : BEQ .greenSamus
+    LDA !IH_MORPH_BALL_YELLOW : BRA .checkSamusX
+
+  .greenSamus
+    LDA !IH_MORPH_BALL_GREEN
+
+  .checkSamusX
+    CPY #$0060 : BPL .samusXrightSide
+    CPY #$0030 : BMI .samusXpos1
+    CPY #$0040 : BMI .samusXpos2
+    CPY #$0050 : BMI .samusXpos3
+    STA !HUD_TILEMAP+$92 : BRA .checkEnemies
+  .samusXpos1
+    STA !HUD_TILEMAP+$8C : BRA .checkEnemies
+  .samusXpos2
+    STA !HUD_TILEMAP+$8E : BRA .checkEnemies
+  .samusXpos3
+    STA !HUD_TILEMAP+$90 : BRA .checkEnemies
+  .samusXrightSide
+    CPY #$0070 : BMI .samusXpos5
+    CPY #$0080 : BMI .samusXpos6
+    STA !HUD_TILEMAP+$98 : BRA .checkEnemies
+  .samusXpos5
+    STA !HUD_TILEMAP+$94 : BRA .checkEnemies
+  .samusXpos6
+    STA !HUD_TILEMAP+$96
+
+    ; Detect stuff
+  .checkEnemies
+    ; Enemy 6 (good fingernail)
+    LDX #$0180
+
+    ; Y position, check if Y < 624
+    LDA !ENEMY_Y,X : CMP #$0270 : BCC .enemy6X
+    LDA #$FFFF : STA !ram_radar6 : BRA .checkEnemy7
+
+  .enemy6X
+    ; check X position, set position bit on radar
+    LDY !ENEMY_X,X : TDC
+    CPY #$0020 : BMI .enemy6X_store : INC
+    CPY #$0030 : BMI .enemy6X_store : INC
+    CPY #$0040 : BMI .enemy6X_store : INC
+    CPY #$0050 : BMI .enemy6X_store : INC
+    CPY #$0060 : BMI .enemy6X_store : INC
+    CPY #$0070 : BMI .enemy6X_store : INC
+    CPY #$0080 : BMI .enemy6X_store : INC
+  .enemy6X_store
+    ASL : STA !ram_radar6
+
+    ; check if Y position is moving up or down
+    LDA !ENEMY_Y,X : CMP !ram_enemy6_last_ypos : BCC .enemy6Y_movingUp
+    STA !ram_enemy6_last_ypos
+    ; check if Y position is high or low, Y < 594
+    CMP #$0252 : BCC .enemy6YHigh_movingDown
+    LDA !ram_radar6 : ORA #$0800 : BRA .enemy6Y_store
+  .enemy6YHigh_movingDown
+    LDA !ram_radar6 : ORA #$0400 : BRA .enemy6Y_store
+
+  .enemy6Y_movingUp
+    STA !ram_enemy6_last_ypos
+    ; check if Y position is high or low, Y < 594
+    CMP #$0252 : BCC .enemy6YHigh_movingUp
+    LDA !ram_radar6 : AND #$00FF : ORA #$0200 : BRA .enemy6Y_store
+  .enemy6YHigh_movingUp
+    LDA !ram_radar6 : AND #$00FF : ORA #$0100
+  .enemy6Y_store
+    STA !ram_radar6
+
+  .checkEnemy7
+    ; Enemy 7 (bad fingernail)
+    LDX #$01C0
+
+    ; Y position, check if Y < 624
+    LDA !ENEMY_Y,X : CMP #$0270 : BCC .enemy7X
+    LDA #$FFFF : STA !ram_radar7 : BRA .drawEnemy6
+
+  .enemy7X
+    ; check X position, set position bit on radar
+    LDY !ENEMY_X,X : TDC
+    CPY #$0020 : BMI .enemy7X_store : INC
+    CPY #$0030 : BMI .enemy7X_store : INC
+    CPY #$0040 : BMI .enemy7X_store : INC
+    CPY #$0050 : BMI .enemy7X_store : INC
+    CPY #$0060 : BMI .enemy7X_store : INC
+    CPY #$0070 : BMI .enemy7X_store : INC
+    CPY #$0080 : BMI .enemy7X_store : INC
+  .enemy7X_store
+    ASL : STA !ram_radar7
+
+    ; check if Y position is moving up or down
+    LDA !ENEMY_Y,X : CMP !ram_enemy7_last_ypos : BCC .enemy7Y_movingUp
+    STA !ram_enemy7_last_ypos
+    ; check if Y position is high or low, Y < 594
+    CMP #$0252 : BCC .enemy7YHigh_movingDown
+    LDA !ram_radar7 : ORA #$0800 : BRA .enemy7Y_store
+  .enemy7YHigh_movingDown
+    LDA !ram_radar7 : ORA #$0400 : BRA .enemy7Y_store
+
+  .enemy7Y_movingUp
+    STA !ram_enemy7_last_ypos
+    ; check if Y position is high or low, Y < 594
+    CMP #$0252 : BCC .enemy7YHigh_movingUp
+    LDA !ram_radar7 : AND #$00FF : ORA #$0200 : BRA .enemy7Y_store
+  .enemy7YHigh_movingUp
+    LDA !ram_radar7 : AND #$00FF : ORA #$0100
+  .enemy7Y_store
+    STA !ram_radar7
+
+; Draw stuff
+; Don't draw the enemy if first nibble is non-zero
+; Second bit determines arrow direction and color:
+; 8 = far away moving down, 4 = close moving down
+; 2 = far away moving up, 1 = close moving up
+; Low byte contains the position offset
+; The bottom-left tile of the HUD is unused
+  .drawEnemy6
+    ; Enemy 6 (good fingernail)
+    LDA !ram_radar6 : BIT #$F000 : BNE .drawEnemy7
+    AND #$00FF : TAX
+    LDA !ram_radar6 : AND #$0F00
+    CMP #$0800 : BEQ .farDown6
+    CMP #$0400 : BEQ .closeDown6
+    CMP #$0200 : BEQ .farUp6
+
+    LDA !IH_ARROW_UP_PINK_OUTLINE : STA !HUD_TILEMAP+$8A,X : BRA .drawEnemy7
+  .farUp6
+    LDA !IH_ARROW_UP : STA !HUD_TILEMAP+$8A,X : BRA .drawEnemy7
+  .closeDown6
+    LDA !IH_ARROW_DOWN_PINK_OUTLINE : STA !HUD_TILEMAP+$8A,X : BRA .drawEnemy7
+  .farDown6
+    LDA !IH_ARROW_DOWN : STA !HUD_TILEMAP+$8A,X
+
+  .drawEnemy7
+    ; Enemy 7 (bad fingernail)
+    LDA !ram_radar7 : AND #$F000 : BNE .done
+    AND #$00FF : TAX
+    LDA !ram_radar7 : AND #$0F00
+    CMP #$0800 : BEQ .farDown7
+    CMP #$0400 : BEQ .closeDown7
+    CMP #$0200 : BEQ .farUp7
+
+    LDA !IH_ARROW_UP_RED : STA !HUD_TILEMAP+$8A,X : BRA .done
+  .farUp7
+    LDA !IH_ARROW_UP_GREY : STA !HUD_TILEMAP+$8A,X : BRA .done
+  .closeDown7
+    LDA !IH_ARROW_DOWN_RED : STA !HUD_TILEMAP+$8A,X : BRA .done
+  .farDown7
+    LDA !IH_ARROW_DOWN_GREY : STA !HUD_TILEMAP+$8A,X
+
+  .done
+    RTS
 }
 
 status_gateglitch:
@@ -3203,6 +3876,201 @@ endif
     RTS
 }
 
+status_kihuntermanip:
+{
+    LDA !ROOM_ID : CMP.w #ROOM_RedKihunterShaft : BEQ .roomStairs
+    CMP.w #ROOM_ThreeMusketeersRoom : BNE .done
+    JMP status_musketeermanip
+
+  .done
+    RTS
+
+  .roomStairs
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$90
+
+    ; start with top kihunter, enemy0
+    LDX #$0000
+
+    ; Y position, check if below (greater than) Y = 500
+    LDA !ENEMY_Y,X : CMP #$01F4 : BPL .topYSuccess
+    LDA !IH_LETTER_N : STA !HUD_TILEMAP+$88 : STA !HUD_TILEMAP+$8A
+    STA !HUD_TILEMAP+$8E : BRA .movementEnemy0
+
+  .topYSuccess
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$88
+
+    ; X position, check if left of (less than) X = 168
+    LDA !ENEMY_X,X : CMP #$00A8 : BMI .topXSuccess
+    LDA !IH_LETTER_N : STA !HUD_TILEMAP+$8A : BRA .movementEnemy0
+
+  .topXSuccess
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$8A
+
+  .movementEnemy0
+    ; check for change in enemy0 xpos
+    LDA !ENEMY_X,X : CMP !ram_enemy0_last_xpos
+    BEQ .finishX0 : BMI .leftX0
+    LDA !IH_ARROW_RIGHT : STA !HUD_TILEMAP+$16
+    BRA .finishX0
+  .leftX0
+    LDA !IH_ARROW_LEFT : STA !HUD_TILEMAP+$16
+  .finishX0
+    LDA !ENEMY_X,X : STA !ram_enemy0_last_xpos
+
+    ; check for change in enemy0 ypos
+    LDA !ENEMY_Y,X : CMP !ram_enemy0_last_ypos
+    BEQ .finishY0 : BMI .upY0
+    LDA !IH_ARROW_DOWN : STA !HUD_TILEMAP+$18
+    BRA .finishY0
+  .upY0
+    LDA !IH_ARROW_UP : STA !HUD_TILEMAP+$18
+  .finishY0
+    LDA !ENEMY_Y,X : STA !ram_enemy0_last_ypos
+
+    ; bottom kihunter, enemy4
+    LDX #$0100
+
+    ; Y position, check if below (greater than) Y = 790
+    LDA !ENEMY_Y,X : CMP #$0316 : BPL .bottomYSuccess
+    LDA !IH_LETTER_N : STA !HUD_TILEMAP+$8E : BRA .movementEnemy4
+
+  .bottomYSuccess
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$8E
+
+  .movementEnemy4
+    ; check for change in enemy4 xpos
+    LDA !ENEMY_X,X : CMP !ram_enemy4_last_xpos
+    BEQ .finishX4 : BMI .leftX4
+    LDA !IH_ARROW_RIGHT : STA !HUD_TILEMAP+$56
+    BRA .finishX4
+  .leftX4
+    LDA !IH_ARROW_LEFT : STA !HUD_TILEMAP+$56
+  .finishX4
+    LDA !ENEMY_X,X : STA !ram_enemy4_last_xpos
+
+    ; check for change in enemy4 ypos
+    LDA !ENEMY_Y,X : CMP !ram_enemy4_last_ypos
+    BEQ .finishY4 : BMI .upY4
+    LDA !IH_ARROW_DOWN : STA !HUD_TILEMAP+$58
+    BRA .finishY4
+  .upY4
+    LDA !IH_ARROW_UP : STA !HUD_TILEMAP+$58
+  .finishY4
+    LDA !ENEMY_Y,X : STA !ram_enemy4_last_ypos
+
+    RTS
+}
+
+status_musketeermanip:
+{
+    LDA !SAMUS_HP : STA !ram_last_hp
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$8E
+    STA !HUD_TILEMAP+$90 : STA !HUD_TILEMAP+$92 : STA !HUD_TILEMAP+$94
+    STA !HUD_TILEMAP+$96 : STA !HUD_TILEMAP+$98 : STA !HUD_TILEMAP+$14
+
+    ; top kihunter, enemy8
+    LDX #$0200
+
+    ; X position, check if right of (greater than) X = 396 or X = 343
+    LDA !ENEMY_X,X : CMP #$018C : BPL .successBothTop
+    CMP #$0157 : BPL .successSingleTop
+    LDA !IH_LETTER_N : STA !HUD_TILEMAP+$16 : STA !HUD_TILEMAP+$18
+    BRA .movementEnemy8
+
+  .successBothTop
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$16 : STA !HUD_TILEMAP+$18
+    BRA .movementEnemy8
+
+  .successSingleTop
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$16
+    LDA !IH_LETTER_N : STA !HUD_TILEMAP+$18
+
+  .movementEnemy8
+    ; check for change in enemy8 xpos
+    LDA !ENEMY_X,X : CMP !ram_enemy8_last_xpos
+    BEQ .x8Finish : BMI .x8Left
+    LDA !IH_ARROW_RIGHT : STA !HUD_TILEMAP+$56
+    BRA .x8Finish
+  .x8Left
+    LDA !IH_ARROW_LEFT : STA !HUD_TILEMAP+$56
+  .x8Finish
+    LDA !ENEMY_X,X : STA !ram_enemy8_last_xpos
+
+    ; check for change in enemy8 ypos
+    LDA !ENEMY_Y,X : CMP !ram_enemy8_last_ypos
+    BEQ .y8Finish : BMI .y8Up
+    LDA !IH_ARROW_DOWN : STA !HUD_TILEMAP+$58
+    BRA .y8Finish
+  .y8Up
+    LDA !IH_ARROW_UP : STA !HUD_TILEMAP+$58
+  .y8Finish
+    LDA !ENEMY_Y,X : STA !ram_enemy8_last_ypos
+
+    ; middle kihunter, enemy6
+    LDX #$0180
+
+    ; X position, check if left of (less than) X = 343
+    LDA !ENEMY_X,X : CMP #$0157 : BMI .successMiddle
+    LDA !IH_LETTER_N : STA !HUD_TILEMAP+$88 : BRA .movementEnemy6
+
+  .successMiddle
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$88
+
+  .movementEnemy6
+    ; check for change in enemy6 xpos
+    LDA !ENEMY_X,X : CMP !ram_enemy6_last_xpos
+    BEQ .x6Finish : BMI .x6Left
+    LDA !IH_ARROW_RIGHT : STA !HUD_TILEMAP+$8C
+    BRA .x6Finish
+  .x6Left
+    LDA !IH_ARROW_LEFT : STA !HUD_TILEMAP+$8C
+  .x6Finish
+    LDA !ENEMY_X,X : STA !ram_enemy6_last_xpos
+
+    ; check for change in enemy6 ypos
+    LDA !ENEMY_Y,X : CMP !ram_enemy6_last_ypos
+    BEQ .y6Finish : BMI .y6Up
+    LDA !IH_ARROW_DOWN : STA !HUD_TILEMAP+$8E
+    BRA .y6Finish
+  .y6Up
+    LDA !IH_ARROW_UP : STA !HUD_TILEMAP+$8E
+  .y6Finish
+    LDA !ENEMY_Y,X : STA !ram_enemy6_last_ypos
+
+    ; bottom kihunter, enemy4
+    LDX #$0100
+
+    ; X position, check if right of (greater than) X = 343
+    LDA !ENEMY_X,X : CMP #$0157 : BPL .successBottom
+    LDA !IH_LETTER_N : STA !HUD_TILEMAP+$92 : BRA .movementEnemy4
+
+  .successBottom
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$92
+
+  .movementEnemy4
+    ; check for change in enemy4 xpos
+    LDA !ENEMY_X,X : CMP !ram_enemy4_last_xpos
+    BEQ .x4Finish : BMI .x4Left
+    LDA !IH_ARROW_RIGHT : STA !HUD_TILEMAP+$96
+    BRA .x4Finish
+  .x4Left
+    LDA !IH_ARROW_LEFT : STA !HUD_TILEMAP+$96
+  .x4Finish
+    LDA !ENEMY_X,X : STA !ram_enemy4_last_xpos
+
+    ; check for change in enemy4 ypos
+    LDA !ENEMY_Y,X : CMP !ram_enemy4_last_ypos
+    BEQ .y4Finish : BMI .y4Up
+    LDA !IH_ARROW_DOWN : STA !HUD_TILEMAP+$98
+    BRA .y4Finish
+  .y4Up
+    LDA !IH_ARROW_UP : STA !HUD_TILEMAP+$98
+  .y4Finish
+    LDA !ENEMY_Y,X : STA !ram_enemy4_last_ypos
+
+    RTS
+}
+
 status_wasteland:
 {
     ; save a bunch of bytes/cycles by using 16bit addressing
@@ -3371,15 +4239,6 @@ status_wasteland:
     LDA.l NumberGFXTable,X : STA.w !HUD_TILEMAP+$8E
     LDA !IH_LETTER_Y : STA.w !HUD_TILEMAP+$8C : STA.w !HUD_TILEMAP+$96
     JMP .reset
-}
-
-status_mbhp:
-{
-    LDA !ENEMY_HP+$40 : CMP !ram_mb_hp : BEQ .done : STA !ram_mb_hp
-    LDX #$0088 : JSR Draw4
-
-  .done
-    RTS
 }
 
 status_ridleyai:
@@ -3808,6 +4667,57 @@ status_downbackzeb:
 
   .reset
     TDC : STA !ram_roomstrat_counter : STA !ram_roomstrat_state
+    RTS
+}
+
+status_zebskip:
+{
+    LDA !ROOM_ID : CMP.w #ROOM_MotherBrainRoom : BNE .end
+
+    ; check if first zeb dead
+    LDA $7ED820 : AND #$0038 : BNE .secondZeb
+
+    ; check if X position is beyond first zeb
+    ; exit if first zeb alive and X beyond first zeb
+    LDA !SAMUS_X : CMP #$0334 : BPL .firstZeb
+
+  .end
+    RTS
+
+  .firstZeb
+    LDA !SAMUS_X : CMP #$0345 : BMI .stuck
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$8E
+    BRA .iFrames
+
+  .secondZeb
+    ; check if X is beyond 2nd zeb, exit if so
+    LDA !SAMUS_X : CMP #$0274 : BMI .end
+    CMP #$0285 : BMI .stuck
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$8E : STA !HUD_TILEMAP+$90
+    BRA .iFrames
+
+  .stuck
+    LDA !IH_STUCK_GREEN : STA !HUD_TILEMAP+$8E
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$90
+
+  .iFrames
+    LDA !SAMUS_IFRAME_TIMER : BEQ .noIframes
+    AND #$00FF ; don't draw out-of-range garbage
+    LDX #$0088 : JSR Draw2
+    RTS
+
+  .noIframes
+    LDA !IH_NUMBER_ZERO_YELLOW : STA !HUD_TILEMAP+$8A
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$88
+    RTS
+}
+
+status_mbhp:
+{
+    LDA !ENEMY_HP+$40 : CMP !ram_mb_hp : BEQ .done : STA !ram_mb_hp
+    LDX #$0088 : JSR Draw4
+
+  .done
     RTS
 }
 
