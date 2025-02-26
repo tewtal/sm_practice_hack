@@ -289,6 +289,8 @@ if !FEATURE_PAL
 else
 custom_intro_init:
 {
+    JSL $888293
+    JSL $88829E
     LDA #$0001 : STA !sram_music_toggle
     JSR $A395
     LDA #custom_intro_InitialFadeIn : STA !CINEMATIC_FUNCTION_POINTER
