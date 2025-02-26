@@ -1,6 +1,6 @@
 {
     "name": "Super Metroid Practice Hack",
-    "version": "2.6.5.2",
+    "version": "2.6.6",
     "variants": ["NTSC", "PAL"],
     "base": {
         "NTSC": {
@@ -17,7 +17,7 @@
             "id": "platform",
             "name": "Platform",
             "options": [
-                { "id": "sd2snes", "name": "SD2SNES, FXPAK, SuperNT, Snes9x 1.61+"},
+                { "id": "sd2snes", "name": "SD2SNES, FXPAK, SuperNT, Snes9x 1.61+, BSNES v115"},
                 { "id": "tinystates", "name": "MiSTer, Everdrive, Modern Emulators" },
                 { "id": "emulator", "name": "SNES Classic, Virtual Console" }
             ]
