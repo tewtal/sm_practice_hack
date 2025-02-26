@@ -2819,10 +2819,10 @@ save_freeze:
     %cm_toggle("Freeze on Load State", !ram_freeze_on_load, #$0001, #0)
 
 save_middoorsave:
-    %cm_toggle("Auto-Save Mid-Door", !ram_auto_save_state, #$0001, #0)
+    %cm_toggle_bit("Auto-Save Mid-Door", !ram_auto_save_state, #$0001, #0)
 
 save_alwayssave:
-    %cm_toggle("Auto-Save Every Door", !ram_auto_save_state+1, #$80, #0)
+    %cm_toggle_bit("Auto-Save Every Door", !ram_auto_save_state, #$8000, #0)
 
 save_delete:
     %cm_jsl("DEV Delete Savestate", .routine, #$DEAD)
