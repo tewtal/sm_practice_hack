@@ -15,8 +15,8 @@ lorom
 
 !VERSION_MAJOR = 2
 !VERSION_MINOR = 6
-!VERSION_BUILD = 6
-!VERSION_REV   = 1
+!VERSION_BUILD = 7
+!VERSION_REV   = 0
 
 table ../resources/normal.tbl
 print ""
@@ -83,10 +83,9 @@ else
 endif
 endif
 
-incsrc gamemode.asm
 incsrc minimap.asm
 incsrc menu.asm
-incsrc BRBmenu.asm
+incsrc gamemode.asm
 incsrc roomnames.asm
 incsrc clearenemies.asm
 incsrc demos.asm

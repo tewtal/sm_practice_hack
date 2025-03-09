@@ -76,7 +76,7 @@ brb_menu_palette_cycle:
     %cm_toggle_bit_inverted("Cycle Palettes", !ram_cm_brb_palette, #$FFFF, #0)
 
 brb_menu_scroll:
-    %cm_toggle("Screen Scrolling", !ram_cm_brb_scroll, #$0001, #0)
+    %cm_toggle("Screen Scrolling", !ram_cm_brb_scroll, #$01, #0)
 
 brb_menu_music_toggle:
     dw !ACTION_CHOICE

@@ -7,8 +7,6 @@
 ; This resource adds a crash handler to dump data to SRAM
 ; whenever one of these "crash vectors" is triggered
 
-pushpc
-
 ; Hijack generic crash handler
 org $808573
 hook_crash_handler:
@@ -185,7 +183,7 @@ COPHandler:
 
 %endfree(80)
 
-pullpc
+%startfree(89)
 
 CrashViewer:
 {
@@ -1124,4 +1122,6 @@ endif
 CrashTextInfo11:
 ; Press LRSlSt to soft reset
     db "Press ", #$8D, #$8C, #$85, #$84, " to soft reset", #$FF
+
+%endfree(89)
 

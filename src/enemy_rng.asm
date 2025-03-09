@@ -9,6 +9,48 @@ org $8699EB
     BRA $05
 
 if !FEATURE_PAL
+org $A7894D
+else    ; Overwrite unused instruction list
+org $A7893D
+endif
+phantoon_always_visible:
+{
+    LDA !ram_phantoon_always_visible : BNE .enabled
+    ; overwritten code
+if !FEATURE_PAL
+    JMP $DBCE
+else
+    JMP $DB9A
+endif
+
+  .enabled
+    ; fake the fade in so it takes the same number of frames
+    LDA !ENEMY_VAR_3+$40 : INC
+    CMP !ENEMY_VAR_4+$40 : BCS .inc
+    STZ !ENEMY_VAR_4+$40
+    SEC : RTS
+
+  .inc
+    INC !ENEMY_VAR_4+$40
+    CLC : RTS
+}
+
+phantoon_reset_damagecounter:
+{
+    TDC : STA !DAMAGE_COUNTER
+    STZ !ENEMY_TIMER,X ; overwritten code
+    RTS
+}
+%warnpc($A789F3, $A78A03)
+
+if !FEATURE_PAL
+org $A7CE98
+else    ; hijack, Phantoon AI init
+org $A7CE64
+endif
+    JSR phantoon_reset_damagecounter
+
+if !FEATURE_PAL
 org $A7D00A
 else    ; Phantoon flame pattern
 org $A7CFD6
@@ -45,6 +87,13 @@ org $A7D5A6
 endif
     JSL hook_phantoon_1st_rng
     BRA $10
+
+if !FEATURE_PAL
+org $A7D4AD
+else
+org $A7D479
+endif
+    JSR phantoon_always_visible
 
 if !FEATURE_PAL
 org $A7D6B9
@@ -962,6 +1011,13 @@ endif
     LDA !ENEMY_PROPERTIES
 
 if !FEATURE_PAL
+org $A6A18C
+else             ; hijack, Ridley AI init
+org $A6A17C
+endif
+    JSR ridley_reset_damagecounter
+
+if !FEATURE_PAL
 org $A6A302
 else
 org $A6A2F2
@@ -974,6 +1030,49 @@ else
 org $A6A360
 endif
     LDA #ridley_init_hook
+
+if !FEATURE_PAL
+org $A6EFA9
+else
+org $A6EFD2
+endif
+; Overwrite end of steam ai init (also used by zebes steam)
+ceres_steam_ai_init:
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_NO_STEAM_COLLISION : BNE .noCollision
+
+    ; vanilla palette index
+    LDA #$0A00
+
+  .setPaletteIndex
+    STA !ENEMY_PALETTE_INDEX,X
+    JSL $808111 : AND #$001F
+    INC : STA !ENEMY_VAR_3,X
+    LDA !ENEMY_PARAM_1,X : ASL : TAY
+    LDA.w SteamInstructionListPointers,Y
+    STA !ENEMY_INIT_PARAM,X
+    LDA.w SteamInitialFunctionPointers,Y
+    STA !ENEMY_FUNCTION_POINTER,X
+    RTL
+
+  .noCollision
+    ; Use a different palette index
+    LDA #$0800
+    BRA .setPaletteIndex
+%warnpc($A6F00D, $A6EFE4)
+
+if !FEATURE_PAL
+org $A6F016
+else
+org $A6F03F
+endif
+hook_ceres_steam_touch_ai:
+    LDX $0E54
+    LDA #$7FFF : STA !ENEMY_HP
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_NO_STEAM_COLLISION : BNE .noCollision
+    JML $A0A477
+  .noCollision
+    RTL
+%warnpc($A6F059, $A6F030)
 
 ; Fix ceres ridley door instruction list to keep door visible when skipping ridley fight
 if !FEATURE_PAL
@@ -1000,6 +1099,12 @@ endif
 
 
 %startfree(A6)
+
+ridley_reset_damagecounter:
+{
+    TDC : STA !DAMAGE_COUNTER
+    RTS
+}
 
 ridley_init_hook:
 {
@@ -1081,6 +1186,32 @@ else
     dw #$0002, $FA13
     dw $F66A, $F55C
     dw $80ED, $F598
+endif
+
+SteamInstructionListPointers:
+    dw #ceres_steam_up_instruction_list
+if !FEATURE_PAL
+    dw $F058, $F08C, $F0C0, $F058, $F0C0
+else
+    dw $F081, $F0B5, $F0E9, $F081, $F0E9
+endif
+
+SteamInitialFunctionPointers:
+if !FEATURE_PAL
+    dw $F015, $F015, $F015, $F015, $EFF0, $EFF0
+else  ; Use a different RTL since we overwrote the one being used
+    dw $F03E, $F03E, $F03E, $F03E, $F019, $F019
+endif
+
+ceres_steam_up_instruction_list:
+if !FEATURE_PAL
+    dw $F0F4
+    dw $0001, $F119
+    dw $F0FE, #ceres_steam_up_instruction_list, $F038
+else
+    dw $F11D
+    dw $0001, $F142
+    dw $F127, #ceres_steam_up_instruction_list, $F061
 endif
 
 %endfree(A6)

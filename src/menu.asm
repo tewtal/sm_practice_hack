@@ -3,6 +3,8 @@
 ; Main menu
 ; ---------
 
+incsrc BRBmenu.asm
+incsrc cropmenu.asm
 incsrc customizemenu.asm
 incsrc flagmenu.asm
 incsrc gamemenu.asm
@@ -1139,8 +1141,7 @@ draw_choice:
 
   .found
     %a16()
-    JSR cm_draw_text
-    RTS
+    JMP cm_draw_text
 }
 
 draw_choice_jsl_text:
@@ -1169,8 +1170,7 @@ draw_choice_jsl_text:
     ; go to jsl text
     %a16()
     LDA [!DP_CurrentMenu] : CLC : ADC #$0006 : STA !DP_CurrentMenu
-    JSR cm_draw_text
-    RTS
+    JMP cm_draw_text
 }
 
 draw_ctrl_shortcut:
@@ -1189,9 +1189,7 @@ draw_ctrl_shortcut:
 
     ; draw the inputs
     LDA [!DP_Address]
-    JSR menu_ctrl_input_display
-
-    RTS
+    JMP menu_ctrl_input_display
 }
 
 draw_controller_input:
@@ -1254,8 +1252,7 @@ draw_submenu:
 
     ; draw text normally
     %item_index_to_vram_index()
-    JSR cm_draw_text
-    RTS
+    JMP cm_draw_text
 }
 
 draw_custom_preset:
@@ -2712,7 +2709,7 @@ cm_execute:
     INC !DP_CurrentMenu : INC !DP_CurrentMenu
 
     ; Execute action
-    JSR (cm_execute_action_table,X)
+    JMP (cm_execute_action_table,X)
 
   .end
     RTS
@@ -3387,6 +3384,8 @@ else
 
   .done
     JSL cm_previous_menu
+    ; set bank for manual submenu jump
+    LDA !DP_MenuIndices+2 : STA !ram_cm_menu_bank
     JSL action_submenu
 endif
 endif

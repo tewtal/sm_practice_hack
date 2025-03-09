@@ -5,7 +5,7 @@
 ; Menu Helpers
 ; ------------
 
-action_brb_menu:
+action_brb_mainmenu:
 {
     ; Since BRB ram is shared with other menu ram,
     ; clear all of the values so they are initially sane
@@ -29,6 +29,13 @@ action_brb_menu:
     ; Set reasonable cycle time values
     LDA #$000A : STA !ram_cm_brb_set_cycle
     LDA #$0258 : STA !ram_cm_brb_cycle_time
+    BRA action_mainmenu
+}
+
+action_crop_mainmenu:
+{
+    ; Prepare crop modes
+    TDC : STA !ram_cm_crop_mode : STA !ram_cm_crop_tile
     BRA action_mainmenu
 }
 
@@ -212,6 +219,7 @@ endif
     dw #mm_goto_ctrlsmenu
     dw #mm_goto_audiomenu
     dw #mm_goto_customize
+    dw #mm_goto_cropmenu
     dw #mm_goto_brbmenu
     dw #$0000
     %cm_version_header("SM PRACTICE HACK")
@@ -248,6 +256,7 @@ endif
     dw #CtrlMenu>>16
     dw #AudioMenu>>16
     dw #CustomizeMenu>>16
+    dw #CaptureCroppingMenu>>16
     dw #BRBMenu>>16
 
 mm_goto_equipment:
@@ -260,18 +269,18 @@ mm_goto_presets_menu:
     %cm_jsl("Preset Options", #action_preset_options_mainmenu, #PresetOptionsMenu)
 
 mm_goto_teleport:
-    %cm_mainmenu("Teleport", #TeleportMenu)
+    %cm_mainmenu("Save Stations", #TeleportMenu)
 
 mm_goto_events:
     %cm_mainmenu("Event Flags", #EventFlagsMenu)
 
 mm_goto_misc:
-    %cm_mainmenu("Misc", #MiscMenu)
+    %cm_mainmenu("Misc Options", #MiscMenu)
 
 if !FEATURE_VANILLAHUD
 else
 mm_goto_infohud:
-    %cm_jsl("Infohud", #action_infohud_mainmenu, #InfoHudMenu)
+    %cm_jsl("InfoHUD", #action_infohud_mainmenu, #InfoHudMenu)
 endif
 
 mm_goto_sprites:
@@ -301,10 +310,13 @@ mm_goto_audiomenu:
     %cm_mainmenu("Audio Menu", #AudioMenu)
 
 mm_goto_customize:
-    %cm_jsl("Menu Customization", #action_customize_mainmenu, #CustomizeMenu)
+    %cm_jsl("Customize Practice Menu", #action_customize_mainmenu, #CustomizeMenu)
+
+mm_goto_cropmenu:
+    %cm_jsl("Capture Cropping Mode", #action_crop_mainmenu, #CaptureCroppingMenu)
 
 mm_goto_brbmenu:
-    %cm_jsl("Be Right Back Menu", #action_brb_menu, #BRBMenu)
+    %cm_jsl("Be Right Back Menu", #action_brb_mainmenu, #BRBMenu)
 
 
 ; -------------------
@@ -433,7 +445,7 @@ presets_load_random:
 
 if !FEATURE_DEV
 presets_random_preset_rng:
-    %cm_toggle("Presets In Order", !ram_random_preset_rng, #$0001, #0)
+    %cm_toggle("Presets In Order", !ram_random_preset_rng, #$01, #0)
 endif
 
 presets_equip_rando_menu:
@@ -1489,6 +1501,7 @@ DisplayModeMenu:
     %cm_header("INFOHUD DISPLAY MODE")
 
 DisplayModeMenu2:
+    dw ihmode_countdamage
     dw ihmode_armpump
     dw ihmode_pumpcounter
     dw ihmode_xpos
@@ -1542,37 +1555,41 @@ ihmode_hspeed:
     %cm_jsl("Horizontal Speed", #action_select_infohud_mode, #$000C)
 
 ihmode_vspeed:
-!IH_MODE_VSPEED_INDEX = #$000F
+!IH_MODE_VSPEED_INDEX = #$000D
     %cm_jsl("Vertical Speed", #action_select_infohud_mode, #$000D)
 
 ihmode_quickdrop:
     %cm_jsl("Quickdrop Trainer", #action_select_infohud_mode, #$000E)
 
 ihmode_walljump:
-!IH_MODE_WALLJUMP_INDEX = #$0011
+!IH_MODE_WALLJUMP_INDEX = #$000F
     %cm_jsl("Walljump Trainer", #action_select_infohud_mode, #$000F)
 
+ihmode_countdamage:
+!IH_MODE_COUNTDAMAGE_INDEX = #$0010
+    %cm_jsl("Boss Damage Counter", #action_select_infohud_mode, #$0010)
+
 ihmode_armpump:
-!IH_MODE_ARMPUMP_INDEX = #$0012
-    %cm_jsl("Arm Pump Trainer", #action_select_infohud_mode, #$0010)
+!IH_MODE_ARMPUMP_INDEX = #$0011
+    %cm_jsl("Arm Pump Trainer", #action_select_infohud_mode, #$0011)
 
 ihmode_pumpcounter:
-    %cm_jsl("Arm Pump Counter", #action_select_infohud_mode, #$0011)
+    %cm_jsl("Arm Pump Counter", #action_select_infohud_mode, #$0012)
 
 ihmode_xpos:
-    %cm_jsl("X Position", #action_select_infohud_mode, #$0012)
+    %cm_jsl("X Position", #action_select_infohud_mode, #$0013)
 
 ihmode_ypos:
-    %cm_jsl("Y Position", #action_select_infohud_mode, #$0013)
+    %cm_jsl("Y Position", #action_select_infohud_mode, #$0014)
 
 ihmode_shottimer:
-    %cm_jsl("Shot Timer", #action_select_infohud_mode, #$0014)
+    %cm_jsl("Shot Timer", #action_select_infohud_mode, #$0015)
 
 ihmode_ramwatch:
-!IH_MODE_RAMWATCH_INDEX = #$0015
-    %cm_jsl("Custom RAM Watch", #action_select_infohud_mode, #$0015)
+!IH_MODE_RAMWATCH_INDEX = #$0016
+    %cm_jsl("Custom RAM Watch", #action_select_infohud_mode, #$0016)
 
-!IH_MODE_COUNT = #$0016
+!IH_MODE_COUNT = #$0017
 action_select_infohud_mode:
 {
     TYA : STA !sram_display_mode
@@ -1607,6 +1624,7 @@ ih_display_mode:
     db #$28, " VERT SPEED", #$FF
     db #$28, " QUICK DROP", #$FF
     db #$28, "  WALL JUMP", #$FF
+    db #$28, "DMG COUNTER", #$FF
     db #$28, "   ARM PUMP", #$FF
     db #$28, " PUMP COUNT", #$FF
     db #$28, " X POSITION", #$FF
@@ -1618,7 +1636,7 @@ ih_display_mode:
     JML init_print_segment_timer
 
 ih_display_mode_reward:
-    %cm_toggle("Strat Reward SFX", !sram_display_mode_reward, #$0001, #0)
+    %cm_toggle("Strat Reward SFX", !sram_display_mode_reward, #$01, #0)
 
 ih_goto_room_strat:
     %cm_submenu("Select Room Strat", #RoomStratMenu)
@@ -1810,6 +1828,7 @@ ih_superhud_bottom_selector:
     db #$28, " VERT SPEED", #$FF
     db #$28, " QUICK DROP", #$FF
     db #$28, "  WALL JUMP", #$FF
+    db #$28, "DMG COUNTER", #$FF
     db #$28, "   ARM PUMP", #$FF
     db #$28, " PUMP COUNT", #$FF
     db #$28, " X POSITION", #$FF
@@ -1855,8 +1874,7 @@ SuperHUDBottomMenu:
     dw ih_superhud_vspeed
     dw ih_superhud_quickdrop
     dw ih_superhud_walljump
-    dw ih_superhud_armpump
-    dw ih_superhud_pumpcounter
+    dw ih_superhud_countdamage
     dw #$FFFF
     dw ih_superhud_goto_page2
     dw ih_superhud_goto_page3
@@ -1864,6 +1882,8 @@ SuperHUDBottomMenu:
     %cm_header("SUPER HUD BOTTOM MODE")
 
 SuperHUDBottomMenu2:
+    dw ih_superhud_armpump
+    dw ih_superhud_pumpcounter
     dw ih_superhud_xpos
     dw ih_superhud_ypos
     dw ih_superhud_shottimer
@@ -1942,80 +1962,83 @@ ih_superhud_quickdrop:
 ih_superhud_walljump:
     %cm_jsl("Walljump Trainer", #action_select_superhud_bottom, #$000D)
 
+ih_superhud_countdamage:
+    %cm_jsl("Boss Damage Counter", #action_select_superhud_bottom, #$000E)
+
 ih_superhud_armpump:
-    %cm_jsl("Arm Pump Trainer", #action_select_superhud_bottom, #$000E)
+    %cm_jsl("Arm Pump Trainer", #action_select_superhud_bottom, #$000F)
 
 ih_superhud_pumpcounter:
-    %cm_jsl("Arm Pump Counter", #action_select_superhud_bottom, #$000F)
+    %cm_jsl("Arm Pump Counter", #action_select_superhud_bottom, #$0010)
 
 ih_superhud_xpos:
-    %cm_jsl("X Position", #action_select_superhud_bottom, #$0010)
+    %cm_jsl("X Position", #action_select_superhud_bottom, #$0011)
 
 ih_superhud_ypos:
-    %cm_jsl("Y Position", #action_select_superhud_bottom, #$0011)
+    %cm_jsl("Y Position", #action_select_superhud_bottom, #$0012)
 
 ih_superhud_shottimer:
-    %cm_jsl("Shot Timer", #action_select_superhud_bottom, #$0012)
+    %cm_jsl("Shot Timer", #action_select_superhud_bottom, #$0013)
 
 ih_superhud_ramwatch:
-    %cm_jsl("Custom RAM Watch", #action_select_superhud_bottom, #$0013)
+    %cm_jsl("Custom RAM Watch", #action_select_superhud_bottom, #$0014)
 
 ih_superhud_ceresridley:
-    %cm_jsl("Ceres Ridley Hits", #action_select_superhud_bottom, #$0014)
+    %cm_jsl("Ceres Ridley Hits", #action_select_superhud_bottom, #$0015)
 
 ih_superhud_doorskip:
-    %cm_jsl("Parlor-Climb Door Skip", #action_select_superhud_bottom, #$0015)
+    %cm_jsl("Parlor-Climb Door Skip", #action_select_superhud_bottom, #$0016)
 
 ih_superhud_tacotank:
-    %cm_jsl("Taco Tank", #action_select_superhud_bottom, #$0016)
+    %cm_jsl("Taco Tank", #action_select_superhud_bottom, #$0017)
 
 ih_superhud_pitdoor:
-    %cm_jsl("Pit Room Right Door", #action_select_superhud_bottom, #$0017)
+    %cm_jsl("Pit Room Right Door", #action_select_superhud_bottom, #$0018)
 
 ih_superhud_moondance:
-    %cm_jsl("Moondance", #action_select_superhud_bottom, #$0018)
+    %cm_jsl("Moondance", #action_select_superhud_bottom, #$0019)
 
 ih_superhud_gateglitch:
-    %cm_jsl("Gate Glitch", #action_select_superhud_bottom, #$0019)
+    %cm_jsl("Gate Glitch", #action_select_superhud_bottom, #$001A)
 
 ih_superhud_moatcwj:
-    %cm_jsl("Moat CWJ", #action_select_superhud_bottom, #$001A)
+    %cm_jsl("Moat CWJ", #action_select_superhud_bottom, #$001B)
 
 ih_superhud_robotflush:
-    %cm_jsl("Robot Flush", #action_select_superhud_bottom, #$001B)
+    %cm_jsl("Robot Flush", #action_select_superhud_bottom, #$001C)
 
 ih_superhud_shinetopb:
-    %cm_jsl("Shine to PB", #action_select_superhud_bottom, #$001C)
+    %cm_jsl("Shine to PB", #action_select_superhud_bottom, #$001D)
 
 ih_superhud_elevatorcf:
-    %cm_jsl("Elevator Crystal Flash", #action_select_superhud_bottom, #$001D)
+    %cm_jsl("Elevator Crystal Flash", #action_select_superhud_bottom, #$001E)
 
 ih_superhud_botwooncf:
-    %cm_jsl("Botwoon Crystal Flash", #action_select_superhud_bottom, #$001E)
+    %cm_jsl("Botwoon Crystal Flash", #action_select_superhud_bottom, #$001F)
 
 ih_superhud_draygonai:
-    %cm_jsl("Draygon AI", #action_select_superhud_bottom, #$001F)
+    %cm_jsl("Draygon AI", #action_select_superhud_bottom, #$0020)
 
 ih_superhud_snailclip:
-    %cm_jsl("Aqueduct Snail Clip", #action_select_superhud_bottom, #$0020)
+    %cm_jsl("Aqueduct Snail Clip", #action_select_superhud_bottom, #$0021)
 
 ih_superhud_wasteland:
-    %cm_jsl("Wasteland Entry", #action_select_superhud_bottom, #$0021)
+    %cm_jsl("Wasteland Entry", #action_select_superhud_bottom, #$0022)
 
 ih_superhud_ridleyai:
-    %cm_jsl("Ridley AI", #action_select_superhud_bottom, #$0022)
+    %cm_jsl("Ridley AI", #action_select_superhud_bottom, #$0023)
 
 ih_superhud_downbackzeb:
-    %cm_jsl("Downback Zeb Skip", #action_select_superhud_bottom, #$0023)
+    %cm_jsl("Downback Zeb Skip", #action_select_superhud_bottom, #$0024)
 
 ih_superhud_zebskip:
-    %cm_jsl("Zeb Skip Indicator", #action_select_superhud_bottom, #$0024)
+    %cm_jsl("Zeb Skip Indicator", #action_select_superhud_bottom, #$0025)
 
 ih_superhud_mbhp:
-    %cm_jsl("Mother Brain HP", #action_select_superhud_bottom, #$0025)
+    %cm_jsl("Mother Brain HP", #action_select_superhud_bottom, #$0026)
 
 ih_superhud_twocries:
-    %cm_jsl("Two Cries Standup", #action_select_superhud_bottom, #$0026)
+    %cm_jsl("Two Cries Standup", #action_select_superhud_bottom, #$0027)
 
 ih_superhud_goto_page1:
     %cm_adjacent_submenu("GOTO PAGE ONE", #SuperHUDBottomMenu)
@@ -2256,7 +2279,7 @@ ih_reset_seg_item_touch:
 if !FEATURE_VANILLAHUD
 else
 ih_minimap:
-    %cm_toggle("Minimap", !ram_minimap, #$0001, #0)
+    %cm_toggle("Minimap", !ram_minimap, #$01, #0)
 
 ih_top_HUD_mode:
 !TOP_HUD_RESERVES_INDEX = #$0001
@@ -2335,7 +2358,7 @@ ih_frames_held_down:
     %cm_toggle_bit("Down", !ram_frames_held, !IH_INPUT_DOWN, #0)
 
 ih_status_icons:
-    %cm_toggle("Status Icons", !sram_status_icons, #1, #.routine)
+    %cm_toggle("Status Icons", !sram_status_icons, #$01, #.routine)
   .routine
     LDA !IH_BLANK : STA !HUD_TILEMAP+$54 : STA !HUD_TILEMAP+$56 : STA !HUD_TILEMAP+$58
     RTL
@@ -2591,7 +2614,6 @@ PhantoonMenu:
     dw #phan_fast_right_1
     dw #phan_mid_right_1
     dw #phan_slow_right_1
-    dw #$FFFF
     dw #phan_second_phase
     dw #phan_fast_left_2
     dw #phan_mid_left_2
@@ -2605,6 +2627,7 @@ PhantoonMenu:
     dw #phan_flamepattern
     dw #phan_next_flamepattern
     dw #phan_flame_direction
+    dw #phan_always_visible
     dw #$0000
     %cm_header("PHANTOON RNG CONTROL")
 
@@ -2794,6 +2817,9 @@ phan_flame_direction:
     db #$28, "      RIGHT", #$FF
     db #$FF
 
+phan_always_visible:
+    %cm_toggle("Always Visible", !ram_phantoon_always_visible, #$01, #0)
+
 
 if !FEATURE_SD2SNES
 ; --------------
@@ -2805,6 +2831,12 @@ SavestateMenu:
     dw #save_freeze
     dw #save_middoorsave
     dw #save_alwayssave
+    dw #$FFFF
+    dw #save_rando_energy
+    dw #save_rando_reserves
+    dw #save_rando_missiles
+    dw #save_rando_supers
+    dw #save_rando_powerbombs
 if !FEATURE_DEV
     dw #$FFFF
     dw #save_delete
@@ -2813,10 +2845,10 @@ endif
     %cm_header("SAVESTATE SETTINGS")
 
 save_rerandomize:
-    %cm_toggle("Rerandomize", !sram_rerandomize, #$0001, #0)
+    %cm_toggle("Rerandomize", !sram_rerandomize, #$01, #0)
 
 save_freeze:
-    %cm_toggle("Freeze on Load State", !ram_freeze_on_load, #$0001, #0)
+    %cm_toggle("Freeze on Load State", !ram_freeze_on_load, #$01, #0)
 
 save_middoorsave:
     %cm_toggle_bit("Auto-Save Mid-Door", !ram_auto_save_state, #$0001, #0)
@@ -2830,6 +2862,26 @@ save_delete:
     TYA : STA !SRAM_SAVED_STATE
     %sfxconfirm()
     RTL
+
+save_rando_energy:
+    %cm_numfield("Energy Variance", !sram_loadstate_rando_energy, 0, 255, 1, 4, #save_rando_enable)
+
+save_rando_reserves:
+    %cm_numfield("Reserve Variance", !sram_loadstate_rando_reserves, 0, 255, 1, 4, #save_rando_enable)
+
+save_rando_missiles:
+    %cm_numfield("Missile Variance", !sram_loadstate_rando_missiles, 0, 230, 1, 4, #save_rando_enable)
+
+save_rando_supers:
+    %cm_numfield("Super Missile Variance", !sram_loadstate_rando_supers, 0, 50, 1, 2, #save_rando_enable)
+
+save_rando_powerbombs:
+    %cm_numfield("Power Bomb Variance", !sram_loadstate_rando_powerbombs, 0, 50, 1, 2, #save_rando_enable)
+
+save_rando_enable:
+{
+    JML RandomizeOnLoad_Flag
+}
 endif
 
 
@@ -2864,6 +2916,7 @@ slowdown_frames:
 
 CtrlMenu:
     dw #ctrl_menu
+    dw #$FFFF
 if !FEATURE_SD2SNES
     dw #ctrl_save_state
     dw #ctrl_load_state
@@ -2877,11 +2930,30 @@ endif
     dw #ctrl_dec_custom_preset
     dw #ctrl_reset_segment_timer
     dw #ctrl_reset_segment_later
+    dw #$FFFF
+    dw #ctrl_goto_page2
+    dw #ctrl_clear_shortcuts
+    dw #ctrl_reset_defaults
+    dw #$0000
+    %cm_header("CONTROLLER SHORTCUTS")
+    %cm_footer("PRESS AND HOLD FOR 2 SEC")
+
+CtrlMenu2:
+    dw #ctrl_menu
+    dw #$FFFF
     dw #ctrl_full_equipment
     dw #ctrl_kill_enemies
     dw #ctrl_toggle_tileviewer
+    dw #ctrl_randomize_rng
+if !FEATURE_VANILLAHUD
+else
+    dw #ctrl_reveal_damage
     dw #ctrl_update_timers
+endif
+    dw #ctrl_force_stand
     dw #ctrl_toggle_spin_lock
+    dw #$FFFF
+    dw #ctrl_goto_page1
     dw #ctrl_clear_shortcuts
     dw #ctrl_reset_defaults
     dw #$0000
@@ -2889,7 +2961,7 @@ endif
     %cm_footer("PRESS AND HOLD FOR 2 SEC")
 
 ctrl_menu:
-    %cm_ctrl_shortcut("Main menu", !sram_ctrl_menu)
+    %cm_ctrl_shortcut("Main Menu", !sram_ctrl_menu)
 
 ctrl_load_last_preset:
     %cm_ctrl_shortcut("Reload Preset", !sram_ctrl_load_last_preset)
@@ -2935,8 +3007,20 @@ ctrl_dec_custom_preset:
 ctrl_toggle_tileviewer:
     %cm_ctrl_shortcut("Toggle OOB Tiles", !sram_ctrl_toggle_tileviewer)
 
+ctrl_randomize_rng:
+    %cm_ctrl_shortcut("Randomize RNG", !sram_ctrl_randomize_rng)
+
+if !FEATURE_VANILLAHUD
+else
+ctrl_reveal_damage:
+    %cm_ctrl_shortcut("Toggle Boss Dmg", !sram_ctrl_reveal_damage)
+
 ctrl_update_timers:
     %cm_ctrl_shortcut("Update Timers", !sram_ctrl_update_timers)
+endif
+
+ctrl_force_stand:
+    %cm_ctrl_shortcut("Force Stand", !sram_ctrl_force_stand)
 
 ctrl_toggle_spin_lock:
     %cm_ctrl_shortcut("Toggle Spin Lock", !sram_ctrl_toggle_spin_lock)
@@ -2960,7 +3044,10 @@ ctrl_clear_shortcuts:
     STA !sram_ctrl_reset_segment_timer
     STA !sram_ctrl_reset_segment_later
     STA !sram_ctrl_toggle_tileviewer
+    STA !sram_ctrl_randomize_rng
+    STA !sram_ctrl_reveal_damage
     STA !sram_ctrl_update_timers
+    STA !sram_ctrl_force_stand
     STA !sram_ctrl_toggle_spin_lock
     ; menu to default, Start + Select
     LDA #$3000 : STA !sram_ctrl_menu
@@ -2978,6 +3065,12 @@ else
     RTL
 endif
 
+ctrl_goto_page1:
+    %cm_adjacent_submenu("GOTO PAGE ONE", #CtrlMenu)
+
+ctrl_goto_page2:
+    %cm_adjacent_submenu("GOTO PAGE TWO", #CtrlMenu2)
+
 
 ; ---------------
 ; Helper Routines
@@ -2985,6 +3078,7 @@ endif
 
 init_wram_based_on_sram:
 {
+    JSL RandomizeOnLoad_Flag
     JSL init_suit_properties_ram
     JSL init_physics_ram
     JSL init_print_segment_timer
@@ -3003,11 +3097,29 @@ GameModeExtras:
     LDA !sram_ctrl_inc_custom_preset : BNE .enabled
     LDA !sram_ctrl_dec_custom_preset : BNE .enabled
     LDA !sram_ctrl_toggle_tileviewer : BNE .enabled
+    LDA !sram_ctrl_randomize_rng : BNE .enabled
+    LDA !sram_ctrl_reveal_damage : BNE .enabled
     LDA !sram_ctrl_update_timers : BNE .enabled
+    LDA !sram_ctrl_force_stand : BNE .enabled
     LDA !sram_ctrl_toggle_spin_lock : BNE .enabled
 
   .enabled
     STA !ram_game_mode_extras
+    RTL
+}
+
+GameLoopExtras:
+{
+    ; This allows us to maintain a baseline for CPU timing
+    ; without restricting our ability to add non-essential features
+    ; Set the flag if any of these features are enabled
+    LDA !ram_magic_pants_enabled : BNE .enabled
+    LDA !ram_space_pants_enabled : BNE .enabled
+    LDA !ram_metronome : BNE .enabled
+    LDA !ram_infinite_ammo
+
+  .enabled
+    STA !ram_game_loop_extras
     RTL
 }
 

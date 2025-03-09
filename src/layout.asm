@@ -2164,7 +2164,7 @@ layout_asm_magnetstairs:
 {
     PHP
     %ai16()
-    LDA !sram_room_layout : BIT !ROOM_LAYOUT_MAGNET_STAIRS : BEQ layout_asm_magnetstairs_done
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_NO_MAGNET_STAIRS : BEQ layout_asm_magnetstairs_done
 
     ; Modify graphics to indicate magnet stairs removed
     %a8()

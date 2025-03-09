@@ -627,10 +627,10 @@ ramwatch_execute_right:
     JML init_print_segment_timer
 
 ramwatch_lock_left:
-    %cm_toggle("Lock Left Value", !ram_watch_edit_lock_left, #$0001, #action_HUD_ramwatch)
+    %cm_toggle("Lock Left Value", !ram_watch_edit_lock_left, #$01, #action_HUD_ramwatch)
 
 ramwatch_lock_right:
-    %cm_toggle("Lock Right Value", !ram_watch_edit_lock_right, #$0001, #action_HUD_ramwatch)
+    %cm_toggle("Lock Right Value", !ram_watch_edit_lock_right, #$01, #action_HUD_ramwatch)
 
 action_HUD_ramwatch:
 {

@@ -69,13 +69,12 @@ init_nonzero_wram:
     LDA !sram_seed_X : STA !ram_seed_X
     LDA !sram_seed_Y : STA !ram_seed_Y
 
-    TDC
-    STA !ram_watch_left_index : STA !ram_watch_right_index
-    STA !ram_cm_watch_enemy_side
+    TDC : STA !ram_cm_watch_enemy_side
     STA !ram_cm_watch_enemy_property : STA !ram_cm_watch_enemy_index
+    STA !ram_watch_left_index : STA !ram_watch_right_index
 
-    LDA #$0001 : STA !ram_cm_dummy_on
-    STA !ram_cm_sfxlib1 : STA !ram_cm_sfxlib2 : STA !ram_cm_sfxlib3
+    INC : STA !ram_cm_sfxlib1
+    STA !ram_cm_sfxlib2 : STA !ram_cm_sfxlib3
 
     JML init_wram_based_on_sram
 }
@@ -106,6 +105,7 @@ init_sram_routine_table:
     dw init_sram_upgrade_15to16
     dw init_sram_upgrade_16to17
     dw init_sram_upgrade_17to18
+    dw init_sram_upgrade_18to19
 
 init_sram:
 {
@@ -204,6 +204,18 @@ endif
     STA !sram_superhud_top
     STA !sram_infidoppler_enabled
 
+  .upgrade_18to19
+    TDC : STA !sram_ctrl_randomize_rng
+    STA !sram_ctrl_reveal_damage
+    STA !sram_ctrl_force_stand
+    STA !sram_random_bubble_sfx
+    STA !sram_loadstate_rando_energy
+    STA !sram_loadstate_rando_reserves
+    STA !sram_loadstate_rando_missiles
+    STA !sram_loadstate_rando_supers
+    STA !sram_loadstate_rando_powerbombs
+    LDA #$0384 : STA !sram_demo_timer
+
     LDA !SRAM_VERSION : STA !sram_initialized
     RTS
 }
@@ -229,6 +241,9 @@ init_sram_controller_shortcuts:
     STA !sram_ctrl_update_timers
     STA !sram_ctrl_auto_save_state
     STA !sram_ctrl_toggle_spin_lock
+    STA !sram_ctrl_randomize_rng
+    STA !sram_ctrl_reveal_damage
+    STA !sram_ctrl_force_stand
     RTL
 }
 

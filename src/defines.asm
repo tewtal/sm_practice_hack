@@ -190,9 +190,10 @@
 !ram_turret_rng                     = !WRAM_PERSIST_START+$68
 
 !ram_quickboot_spc_state            = !WRAM_PERSIST_START+$6A
-    ; 0: SPC load completed/not requested
-    ; 1: SPC load requested
-    ; ROM address: routine to perform next initialization step
+!ram_display_backup                 = !WRAM_PERSIST_START+$6C
+!ram_phantoon_always_visible        = !WRAM_PERSIST_START+$6E
+!ram_loadstate_rando_enable         = !WRAM_PERSIST_START+$70
+!ram_infinite_ammo                  = !WRAM_PERSIST_START+$72
 
 ; ^ FREE SPACE ^ up to +$7C (!WRAM_START+$FC - !WRAM_PERSIST_START)
 
@@ -321,6 +322,9 @@
 !ram_cm_dummy_off = !WRAM_MENU_START+$8C
 !ram_cm_dummy_num = !WRAM_MENU_START+$8E
 
+!ram_cm_crop_mode = !WRAM_MENU_START+$80
+!ram_cm_crop_tile = !WRAM_MENU_START+$82
+
 !ram_cm_brb = !WRAM_MENU_START+$80
 !ram_cm_brb_timer = !WRAM_MENU_START+$82
 !ram_cm_brb_frames = !WRAM_MENU_START+$84
@@ -431,9 +435,10 @@
 ; SRAM
 ; -----
 
-!SRAM_VERSION = #$0018
+!SRAM_VERSION = #$0019
 
 !SRAM_START = $702000
+!SRAM_SIZE = #$1000
 !PRESET_SLOTS = $703000
 
 !sram_initialized = !SRAM_START+$00
@@ -521,11 +526,16 @@
 !sram_superhud_middle = !SRAM_START+$96
 !sram_superhud_top = !SRAM_START+$98
 !sram_infidoppler_enabled = !SRAM_START+$9A
+!sram_random_bubble_sfx = !SRAM_START+$9C
+!sram_demo_timer = !SRAM_START+$9E
 
 ; ^ FREE SPACE ^ up to +$EE
 
 !sram_ctrl_auto_save_state = !SRAM_START+$F0
 !sram_ctrl_toggle_spin_lock = !SRAM_START+$F2
+!sram_ctrl_randomize_rng = !SRAM_START+$F4
+!sram_ctrl_reveal_damage = !SRAM_START+$F6
+!sram_ctrl_force_stand = !SRAM_START+$F8
 
 ; ^ FREE SPACE ^ up to +$FE
 
@@ -537,6 +547,11 @@
 !sram_presetequiprando_max_supers = !SRAM_START+$10A
 !sram_presetequiprando_max_pbs = !SRAM_START+$10C
 !sram_display_mode_reward = !SRAM_START+$10E
+!sram_loadstate_rando_energy = !SRAM_START+$110
+!sram_loadstate_rando_reserves = !SRAM_START+$112
+!sram_loadstate_rando_missiles = !SRAM_START+$114
+!sram_loadstate_rando_supers = !SRAM_START+$116
+!sram_loadstate_rando_powerbombs = !SRAM_START+$118
 
 ; ^ FREE SPACE ^ up to +$BA6
 
@@ -549,11 +564,11 @@
 !sram_custom_preset_names_tinystates = !SRAM_START+$E50 ; $180 bytes
 
 ; SM specific things
-!SRAM_MUSIC_DATA = !SRAM_START+$0FD0
-!SRAM_MUSIC_TRACK = !SRAM_START+$0FD2
-!SRAM_SOUND_TIMER = !SRAM_START+$0FD4
+!SRAM_MUSIC_DATA = !SRAM_START+$FD0
+!SRAM_MUSIC_TRACK = !SRAM_START+$FD2
+!SRAM_SOUND_TIMER = !SRAM_START+$FD4
 
-; ^ FREE SPACE ^ up to +$0FFE
+; ^ FREE SPACE ^ up to +$FFE
 
 
 ; --------------
@@ -835,6 +850,7 @@
 !SAMUS_Y_RADIUS = $0B00
 !SAMUS_COLLISION_DIRECTION = $0B02
 !SAMUS_SPRITEMAP_X = $0B04
+!DAMAGE_COUNTER = $0B0C  ; Not used in vanilla
 !SAMUS_PREVIOUS_X = $0B10
 !SAMUS_PREVIOUS_X_SUBPX = $0B12
 !SAMUS_PREVIOUS_Y = $0B14
@@ -886,6 +902,8 @@
 !ENEMY_HP = $0F8C
 !ENEMY_SPRITEMAP = $0F8E
 !ENEMY_TIMER = $0F90
+!ENEMY_INIT_PARAM = $0F92
+!ENEMY_PALETTE_INDEX = $0F96
 !ENEMY_BANK = $0FA6
 !ENEMY_FUNCTION_POINTER = $0FA8
 !ENEMY_VAR_1 = $0FAA
@@ -893,6 +911,8 @@
 !ENEMY_VAR_3 = $0FAE
 !ENEMY_VAR_4 = $0FB0
 !ENEMY_VAR_5 = $0FB2
+!ENEMY_PARAM_1 = $0FB4
+!ENEMY_PARAM_2 = $0FB6
 !EARTHQUAKE_TYPE = $183E
 !EARTHQUAKE_TIMER = $1840
 !SAMUS_IFRAME_TIMER = $18A8
@@ -1102,7 +1122,7 @@ endif
 !SUIT_PROPERTIES_MASK = #$0007
 !SUIT_PROPRETIES_PAL_DEBUG_FLAG = #$0008
 
-!ROOM_LAYOUT_MAGNET_STAIRS = #$0001
+!ROOM_LAYOUT_NO_MAGNET_STAIRS = #$0001
 !ROOM_LAYOUT_AREA_RANDO = #$0002
 !ROOM_LAYOUT_ANTISOFTLOCK = #$0004
 !ROOM_LAYOUT_DASH_RECALL = #$0008
@@ -1112,6 +1132,7 @@ endif
 !ROOM_LAYOUT_VARIA_TWEAKS = #$0010
 !ROOM_LAYOUT_DASH_RECALL_OR_VARIA_TWEAKS = #$0018
 !ROOM_LAYOUT_ANY_RANDO = #$001E
+!ROOM_LAYOUT_NO_STEAM_COLLISION = #$0020
 
 !SPRITE_SAMUS_HITBOX = #$0001
 !SPRITE_ENEMY_HITBOX = #$0002
