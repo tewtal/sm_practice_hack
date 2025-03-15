@@ -4908,6 +4908,8 @@ status_twocries_nosb:
 
 status_door_hspeed:
 {
+    LDA $12 : PHA
+
     ; subspeed + submomentum into low byte of Hspeed
     LDA !SAMUS_X_SUBRUNSPEED : CLC : ADC !SAMUS_X_SUBMOMENTUM
     AND #$FF00 : XBA : STA !ram_momentum_sum
@@ -4950,11 +4952,14 @@ status_door_hspeed:
     LDA.l HexGFXTable,X : STA !HUD_TILEMAP+$8E
 
   .done
+    PLA : STA $12
     RTS
 }
 
 status_door_vspeed:
 {
+    LDA $12 : PHA
+
     ; draw two digits of speed in decimal form
     LDA !SAMUS_Y_SPEED : STA $4204
     %a8()
@@ -4982,11 +4987,14 @@ status_door_vspeed:
     LDA !SAMUS_Y_SUBSPEED : XBA : AND #$00F0 : LSR #3 : TAY
     LDA.l HexGFXTable,X : STA !HUD_TILEMAP+$8C
 
+    PLA : STA $12
     RTS
 }
 
 status_door_chargetimer:
 {
+    LDA $12 : PHA
+
     LDA !SAMUS_CHARGE_TIMER : CMP #$003C : BPL .charged
     LDA #$003C : SEC : SBC !SAMUS_CHARGE_TIMER
     LDX #$0088 : JMP Draw4
@@ -4996,26 +5004,40 @@ status_door_chargetimer:
     LDA !IH_SHINESPARK : STA !HUD_TILEMAP+$8C
     LDA !SAMUS_CHARGE_TIMER : SEC : SBC #$003C
     ASL : TAX : LDA NumberGFXTable,X : STA !HUD_TILEMAP+$8E
+
+    PLA : STA $12
     RTS
 }
 
 status_door_shinetimer:
 {
-    LDA !ram_armed_shine_duration : LDX #$0088 : JMP Draw4
+    LDA $12 : PHA
+    LDA !ram_armed_shine_duration : LDX #$0088 : JSR Draw4
+    PLA : STA $12
+    RTS
 }
 
 status_door_dashcounter:
 {
-    LDA !SAMUS_DASH_COUNTER : LDX #$0088 : JMP Draw4
+    LDA $12 : PHA
+    LDA !SAMUS_DASH_COUNTER : LDX #$0088 : JSR Draw4
+    PLA : STA $12
+    RTS
 }
 
 status_door_xpos:
 {
-    LDA !SAMUS_X : LDX #$0088 : JMP Draw4Hex
+    LDA $12 : PHA
+    LDA !SAMUS_X : LDX #$0088 : JSR Draw4Hex
+    PLA : STA $12
+    RTS
 }
 
 status_door_ypos:
 {
-    LDA !SAMUS_Y : LDX #$0088 : JMP Draw4Hex
+    LDA $12 : PHA
+    LDA !SAMUS_Y : LDX #$0088 : JSR Draw4Hex
+    PLA : STA $12
+    RTS
 }
 

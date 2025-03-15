@@ -1246,14 +1246,14 @@ Draw2:
     LDA #$0A : STA $4206
     %a16()
     PEA $0000 : PLA ; wait for CPU math
-    LDA $4214 : STA $16 ; tens
+    LDA $4214 : STA $12 ; tens
 
     ; Ones digit
     LDA $4216 : ASL : TAY
     LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+2,X
 
     ; Tens digit
-    LDA $16 : BEQ .blanktens : ASL : TAY
+    LDA $12 : BEQ .blanktens : ASL : TAY
     LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP,X
 
   .done
@@ -1274,13 +1274,13 @@ Draw3:
     LDA #$0A : STA $4206
     %a16()
     PEA $0000 : PLA ; wait for CPU math
-    LDA $4214 : STA $16 ; tens
+    LDA $4214 : STA $12 ; tens
 
     ; Ones digit
     LDA $4216 : ASL : TAY
     LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+4,X
 
-    LDA $16 : BEQ .blanktens
+    LDA $12 : BEQ .blanktens
     STA $4204
     %a8()
 
@@ -1288,14 +1288,14 @@ Draw3:
     LDA #$0A : STA $4206
     %a16()
     PEA $0000 : PLA ; wait for CPU math
-    LDA $4214 : STA $14 ; hundreds
+    LDA $4214 : STA $12 ; hundreds
 
     ; Tens digit
     LDA $4216 : ASL : TAY
     LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+2,X
 
     ; Hundreds digit
-    LDA $14 : BEQ .blankhundreds : ASL : TAY
+    LDA $12 : BEQ .blankhundreds : ASL : TAY
     LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP,X
 
   .done
@@ -1320,13 +1320,13 @@ Draw4:
     LDA #$0A : STA $4206
     %a16()
     PEA $0000 : PLA ; wait for CPU math
-    LDA $4214 : STA $16 ; tens
+    LDA $4214 : STA $12 ; tens
 
     ; Ones digit
     LDA $4216 : ASL : TAY
     LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+6,X
 
-    LDA $16 : BEQ .blanktens
+    LDA $12 : BEQ .blanktens
     STA $4204
     %a8()
 
@@ -1334,13 +1334,13 @@ Draw4:
     LDA #$0A : STA $4206
     %a16()
     PEA $0000 : PLA ; wait for CPU math
-    LDA $4214 : STA $14 ; hundreds
+    LDA $4214 : STA $12 ; hundreds
 
     ; Tens digit
     LDA $4216 : ASL : TAY
     LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+4,X
 
-    LDA $14 : BEQ .blankhundreds
+    LDA $12 : BEQ .blankhundreds
     STA $4204
     %a8()
 
@@ -1454,13 +1454,13 @@ Draw4Hundredths:
     LDA #$0A : STA $4206   ; divide by 10
     %a16()
     PEA $0000 : PLA ; wait for CPU math
-    LDA $4214 : STA $14 ; hundreds
+    LDA $4214 : STA $12 ; hundreds
 
     ; Tens digit
     LDA $4216 : ASL : TAY
     LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+6,X
 
-    LDA $14 : BEQ .zerohundreds
+    LDA $12 : BEQ .zerohundreds
     STA $4204
     %a8()
 
