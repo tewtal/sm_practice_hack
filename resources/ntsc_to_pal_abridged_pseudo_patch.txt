@@ -64,6 +64,12 @@ org $80FFD9
 ;=======================================================
 
 ; Freespace
+org $81EF1A
+
+; Thanks
+org $81FF00
+
+; Freespace
 org $81FF60
 
 ;=======================================================
@@ -2673,7 +2679,7 @@ org $9BC645
 org $9BCBFB
 
 ; Samus tiles
-org $9BCBFB
+org $9BE000
 
 ; Freespace (used by SpriteSomething)
 org $9BFDA0
@@ -4887,7 +4893,7 @@ org $C2B5E4
 org $C2B6BB
 
 ; Freespace
-org $CEB22D
+org $CEB22E
 
 ;=======================================================
 ; Bank CF
