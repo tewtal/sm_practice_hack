@@ -304,12 +304,15 @@ endif
     CLC : JMP skip_pause
 
   .reveal_damage
+if !FEATURE_VANILLAHUD
+else
     LDA !sram_display_mode : CMP !IH_MODE_COUNTDAMAGE_INDEX : BEQ .unreveal_damage
     STA !ram_display_backup
     LDA !IH_MODE_COUNTDAMAGE_INDEX : STA !sram_display_mode
     ; set ram_HUD_check to some value that cannot match the damage counter
     ; conveniently the current value of A will work
     STA !ram_HUD_check
+endif
     %sfxconfirm()
     ; CLC to continue normal gameplay after reveal damage
     LDA !sram_ctrl_reveal_damage

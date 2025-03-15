@@ -215,6 +215,8 @@ endif
     STA !sram_loadstate_rando_supers
     STA !sram_loadstate_rando_powerbombs
     LDA #$0384 : STA !sram_demo_timer
+    LDA #$0100 : STA !sram_ceres_timer
+    LDA #$0300 : STA !sram_zebes_timer
 
     LDA !SRAM_VERSION : STA !sram_initialized
     RTS

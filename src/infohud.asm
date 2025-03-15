@@ -15,6 +15,11 @@ org $8095FC      ; hijack, end of NMI routine to update realtime frames
 org $809609      ; inc counter if NMI lag branch
     INC !REALTIME_LAG_COUNTER
 
+org $809DFD
+hook_start_escape_timers:
+    dw #ih_set_ceres_timer
+    dw #ih_set_zebes_timer
+
 if !FEATURE_VANILLAHUD
 else
 org $809B48      ; hijack, HUD routine (game timer by Quote58)
@@ -2103,6 +2108,30 @@ endif
     JMP $9B51
 }
 
+ih_set_ceres_timer:
+{
+    JSL $809E93
+    LDA !sram_ceres_timer
+    JSL $809E8C
+    LDA #$8003
+    STA !TIMER_STATUS
+    CLC
+    RTS
+}
+
+ih_set_zebes_timer:
+{
+    JSL $809E93
+    LDA !sram_zebes_timer
+    JSL $809E8C
+    LDA #$8003
+    STA !TIMER_STATUS
+    CLC
+    RTS
+}
+
+if !FEATURE_VANILLAHUD
+else
 NumberGFXTable:
     dw #$0C09, #$0C00, #$0C01, #$0C02, #$0C03, #$0C04, #$0C05, #$0C06, #$0C07, #$0C08
     dw #$0C70, #$0C71, #$0C72, #$0C73, #$0C74, #$0C75, #$0C78, #$0C79, #$0C7A, #$0C7B
@@ -2144,6 +2173,7 @@ HexToNumberGFX2:
     dw #$0C09, #$0C00, #$0C01, #$0C02, #$0C03, #$0C04, #$0C05, #$0C06, #$0C07, #$0C08
     dw #$0C09, #$0C00, #$0C01, #$0C02, #$0C03, #$0C04, #$0C05, #$0C06, #$0C07, #$0C08
     dw #$0C09, #$0C00, #$0C01, #$0C02, #$0C03, #$0C04, #$0C05, #$0C06, #$0C07, #$0C08
+endif
 
 %endfree(80)
 

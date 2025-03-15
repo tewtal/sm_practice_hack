@@ -13,6 +13,8 @@ GameMenu:
     dw #$FFFF
     dw #game_cutscenes
     dw #game_demo_wait_timer
+    dw #game_ceres_escape_timer
+    dw #game_zebes_escape_timer
     dw #game_fast_doors_toggle
     dw #game_fast_elevators
     dw #$FFFF
@@ -49,6 +51,68 @@ game_cutscenes:
 
 game_demo_wait_timer:
     %cm_numfield_word("Demo Timer (frames)", !sram_demo_timer, 1, 9999, 1, 20, #0)
+
+game_ceres_escape_timer:
+    %cm_numfield_word("Ceres Timer (seconds)", !ram_cm_ceres_seconds, 1, 5999, 1, 20, .routine)
+  .routine
+    LDA !ram_cm_ceres_seconds : STA $4204
+    %a8()
+    LDA.b #$0A : STA $4206
+    %a16()
+    PEA $0000 : PLA ; wait for CPU math
+    LDA $4216 : STA !sram_ceres_timer
+    LDA $4214 : BEQ .end
+    STA $4204
+    %a8()
+    LDA.b #$06 : STA $4206
+    %a16()
+    PEA $0000 : PLA ; wait for CPU math
+    LDA $4216 : ASL #4
+    ORA !sram_ceres_timer : STA !sram_ceres_timer
+    LDA $4214 : BEQ .end
+    STA $4204
+    %a8()
+    LDA.b #$0A : STA $4206
+    %a16()
+    PEA $0000 : PLA ; wait for CPU math
+    LDA $4216 : XBA
+    ORA !sram_ceres_timer : STA !sram_ceres_timer
+    LDA $4214 : BEQ .end
+    XBA : ASL #4
+    ORA !sram_ceres_timer : STA !sram_ceres_timer
+  .end
+    RTL
+
+game_zebes_escape_timer:
+    %cm_numfield_word("Zebes Timer (seconds)", !ram_cm_zebes_seconds, 1, 5999, 1, 20, .routine)
+  .routine
+    LDA !ram_cm_zebes_seconds : STA $4204
+    %a8()
+    LDA.b #$0A : STA $4206
+    %a16()
+    PEA $0000 : PLA ; wait for CPU math
+    LDA $4216 : STA !sram_zebes_timer
+    LDA $4214 : BEQ .end
+    STA $4204
+    %a8()
+    LDA.b #$06 : STA $4206
+    %a16()
+    PEA $0000 : PLA ; wait for CPU math
+    LDA $4216 : ASL #4
+    ORA !sram_zebes_timer : STA !sram_zebes_timer
+    LDA $4214 : BEQ .end
+    %a8()
+    STA $4204
+    LDA.b #$0A : STA $4206
+    %a16()
+    PEA $0000 : PLA ; wait for CPU math
+    LDA $4216 : XBA
+    ORA !sram_zebes_timer : STA !sram_zebes_timer
+    LDA $4214 : BEQ .end
+    XBA : ASL #4
+    ORA !sram_zebes_timer : STA !sram_zebes_timer
+  .end
+    RTL
 
 game_fast_doors_toggle:
     %cm_toggle("Fast Doors", !sram_fast_doors, #$01, #0)

@@ -29,6 +29,61 @@ action_brb_mainmenu:
     ; Set reasonable cycle time values
     LDA #$000A : STA !ram_cm_brb_set_cycle
     LDA #$0258 : STA !ram_cm_brb_cycle_time
+    JMP action_mainmenu
+}
+
+action_game_mainmenu:
+{
+    ; Each hexadecimal nibble represents a decimal
+    ; Convert to plain number to allow user to set it
+
+    ; Start with most significant nibble, divide by 512, multiply by 75
+    LDA !sram_ceres_timer : AND #$F000 : XBA : LSR
+    %a8()
+    STA $4202 : LDA #$4B : STA $4203
+    %a16()
+    PEA $0000 : PLA ; wait for CPU math
+    LDA $4216 : STA !ram_cm_ceres_seconds
+    LDA !sram_zebes_timer : AND #$F000 : XBA : LSR
+    %a8()
+    STA $4202 : LDA #$4B : STA $4203
+    %a16()
+    PEA $0000 : PLA ; wait for CPU math
+    LDA $4216 : STA !ram_cm_zebes_seconds
+
+    ; Next nibble, divide by 256, multiply by 60
+    LDA !sram_ceres_timer : AND #$0F00 : XBA
+    %a8()
+    STA $4202 : LDA #$3C : STA $4203
+    %a16()
+    PEA $0000 : PLA ; wait for CPU math
+    LDA $4216 : CLC : ADC !ram_cm_ceres_seconds : STA !ram_cm_ceres_seconds
+    LDA !sram_zebes_timer : AND #$0F00 : XBA
+    %a8()
+    STA $4202 : LDA #$3C : STA $4203
+    %a16()
+    PEA $0000 : PLA ; wait for CPU math
+    LDA $4216 : CLC : ADC !ram_cm_zebes_seconds : STA !ram_cm_zebes_seconds
+
+    ; Next nibble, divide by 8, multiply by 5
+    LDA !sram_ceres_timer : AND #$00F0 : LSR #3
+    %a8()
+    STA $4202 : LDA #$05 : STA $4203
+    %a16()
+    PEA $0000 : PLA ; wait for CPU math
+    LDA $4216 : CLC : ADC !ram_cm_ceres_seconds : STA !ram_cm_ceres_seconds
+    LDA !sram_zebes_timer : AND #$00F0 : LSR #3
+    %a8()
+    STA $4202 : LDA #$05 : STA $4203
+    %a16()
+    PEA $0000 : PLA ; wait for CPU math
+    LDA $4216 : CLC : ADC !ram_cm_zebes_seconds : STA !ram_cm_zebes_seconds
+
+    ; Least significant nibble
+    LDA !sram_ceres_timer : AND #$000F
+    ORA !ram_cm_ceres_seconds : STA !ram_cm_ceres_seconds
+    LDA !sram_zebes_timer : AND #$000F
+    ORA !ram_cm_zebes_seconds : STA !ram_cm_zebes_seconds
     BRA action_mainmenu
 }
 
@@ -290,7 +345,7 @@ mm_goto_layout:
     %cm_jsl("Room Layout", #action_layout_mainmenu, #LayoutMenu)
 
 mm_goto_gamemenu:
-    %cm_mainmenu("Game Options", #GameMenu)
+    %cm_jsl("Game Options", #action_game_mainmenu, #GameMenu)
 
 mm_goto_rngmenu:
     %cm_jsl("RNG Control", #action_rng_mainmenu, #RngMenu)

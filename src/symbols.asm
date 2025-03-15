@@ -320,6 +320,9 @@ ram_cm_dummy_on = !ram_cm_dummy_on ; !WRAM_MENU_START+$8A
 ram_cm_dummy_off = !ram_cm_dummy_off ; !WRAM_MENU_START+$8C
 ram_cm_dummy_num = !ram_cm_dummy_num ; !WRAM_MENU_START+$8E
 
+ram_cm_ceres_seconds = !ram_cm_ceres_seconds ; !WRAM_MENU_START+$80
+ram_cm_zebes_seconds = !ram_cm_zebes_seconds ; !WRAM_MENU_START+$82
+
 ram_cm_crop_mode = !ram_cm_crop_mode ; !WRAM_MENU_START+$80
 ram_cm_crop_tile = !ram_cm_crop_tile ; !WRAM_MENU_START+$82
 
@@ -510,6 +513,8 @@ sram_superhud_top = !sram_superhud_top ; !SRAM_START+$98
 sram_infidoppler_enabled = !sram_infidoppler_enabled ; !SRAM_START+$9A
 sram_random_bubble_sfx = !sram_random_bubble_sfx ; !SRAM_START+$9C
 sram_demo_timer = !sram_demo_timer ; !SRAM_START+$9E
+sram_ceres_timer = !sram_ceres_timer ; !SRAM_START+$A0
+sram_zebes_timer = !sram_zebes_timer ; !SRAM_START+$A2
 
 ; ^ FREE SPACE ^ up to +$EE
 

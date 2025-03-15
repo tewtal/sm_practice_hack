@@ -322,6 +322,9 @@
 !ram_cm_dummy_off = !WRAM_MENU_START+$8C
 !ram_cm_dummy_num = !WRAM_MENU_START+$8E
 
+!ram_cm_ceres_seconds = !WRAM_MENU_START+$80
+!ram_cm_zebes_seconds = !WRAM_MENU_START+$82
+
 !ram_cm_crop_mode = !WRAM_MENU_START+$80
 !ram_cm_crop_tile = !WRAM_MENU_START+$82
 
@@ -528,6 +531,8 @@
 !sram_infidoppler_enabled = !SRAM_START+$9A
 !sram_random_bubble_sfx = !SRAM_START+$9C
 !sram_demo_timer = !SRAM_START+$9E
+!sram_ceres_timer = !SRAM_START+$A0
+!sram_zebes_timer = !SRAM_START+$A2
 
 ; ^ FREE SPACE ^ up to +$EE
 
@@ -762,6 +767,8 @@
 !DOOR_FINISHED_SCROLLING = $0931
 !CERES_STATUS = $093F
 !TIMER_STATUS = $0943
+!TIMER_CENTISECONDS = $0945
+!TIMER_SECONDS_MINUTES = $0946
 !CURRENT_SAVE_FILE = $0952
 !GAMEMODE = $0998
 !DOOR_FUNCTION_POINTER = $099C
