@@ -517,13 +517,6 @@ dash_charge_4_damage_table:
 
 
 if !FEATURE_PAL
-org $A0A872
-else            ; general damage hijack
-org $A0A862
-endif
-    JSR EnemyDamage
-
-if !FEATURE_PAL
 org $A0A55C
 else            ; shinespark damage
 org $A0A54C
@@ -537,17 +530,26 @@ org $A0A62B
 endif
     JSR EnemyDamagePowerBomb
 
+if !FEATURE_PAL
+org $A0A872
+else            ; general damage hijack
+org $A0A862
+endif
+    JSR EnemyDamage
+
 
 %startfree(A0)
 
 EnemyDamage:
 {
     LDA !ram_pacifist : BNE .no_damage
-    LDA $0F8C,X ; original code
+    LDA !DAMAGE_COUNTER : CLC : ADC $187A : STA !DAMAGE_COUNTER
+    LDA !ENEMY_HP,X ; original code
     RTS
 
   .no_damage
-    PLA ; pull return address and jump past storing enemy hp
+    ; pull return address and jump past saving enemy hp
+    PLA
 if !FEATURE_PAL
     JMP $A8CA
 else
@@ -558,11 +560,13 @@ endif
 EnemyDamageShinespark:
 {
     LDA !ram_pacifist : BNE .no_damage
-    LDA $0F8C,X ; original code
+    LDA !DAMAGE_COUNTER : CLC : ADC $12 : STA !DAMAGE_COUNTER
+    LDA !ENEMY_HP,X ; original code
     RTS
 
   .no_damage
-    PLA ; pull return address and jump past storing enemy hp
+    ; pull return address and jump past saving enemy hp
+    PLA
 if !FEATURE_PAL
     JMP $A86A
 else
@@ -573,16 +577,19 @@ endif
 EnemyDamagePowerBomb:
 {
     LDA !ram_pacifist : BNE .no_damage
-    LDA $0F8C,X ; original code
+    LDA !DAMAGE_COUNTER : CLC : ADC $12 : STA !DAMAGE_COUNTER
+    LDA !ENEMY_HP,X ; original code
     RTS
 
   .no_damage
-    PLA ; pull return address and jump past storing enemy hp
+    ; pull return address and jump past saving enemy hp
+    PLA
 if !FEATURE_PAL
     JMP $A64C
 else
     JMP $A63C
 endif
+}
 
 %endfree(A0)
 

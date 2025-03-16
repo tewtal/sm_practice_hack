@@ -269,8 +269,13 @@ startgame_seg_timer:
     ; 20 frames more if the file was new
     ; initializing to 1:50 for now
     TDC : STA !ram_seg_rt_minutes
+if !FEATURE_PAL
+    INC : INC : STA !ram_seg_rt_seconds
+    LDA #$000A : STA !ram_seg_rt_frames
+else
     INC : STA !ram_seg_rt_seconds
     LDA #$0032 : STA !ram_seg_rt_frames
+endif
     JML $808924 ; overwritten code
 }
 

@@ -12,6 +12,9 @@ GameMenu:
     dw #game_goto_controls
     dw #$FFFF
     dw #game_cutscenes
+    dw #game_demo_wait_timer
+    dw #game_ceres_escape_timer
+    dw #game_zebes_escape_timer
     dw #game_fast_doors_toggle
     dw #game_fast_elevators
     dw #$FFFF
@@ -25,20 +28,20 @@ endif
     dw #game_clear_minimap
     dw #game_map_grid_alignment
     dw #$0000
-    %cm_header("GAME")
+    %cm_header("GAME OPTIONS")
 
 game_alternatetext:
 if !FEATURE_PAL
-    %cm_toggle("French Text", $7E09E2, #$0001, #0)
+    %cm_toggle("French Text", $7E09E2, #$01, #0)
 else
-    %cm_toggle("Japanese Text", $7E09E2, #$0001, #0)
+    %cm_toggle("Japanese Text", $7E09E2, #$01, #0)
 endif
 
 game_moonwalk:
-    %cm_toggle("Moon Walk", $7E09E4, #$0001, #0)
+    %cm_toggle("Moon Walk", $7E09E4, #$01, #0)
 
 game_iconcancel:
-    %cm_toggle("Icon Cancel", $7E09EA, #$0001, #0)
+    %cm_toggle("Icon Cancel", $7E09EA, #$01, #0)
 
 game_goto_controls:
     %cm_submenu("Controller Setting Mode", #ControllerSettingMenu)
@@ -46,11 +49,76 @@ game_goto_controls:
 game_cutscenes:
     %cm_submenu("Cutscenes and Effects", #CutscenesMenu)
 
+game_demo_wait_timer:
+    %cm_numfield_word("Demo Timer (frames)", !sram_demo_timer, 1, 9999, 1, 20, #0)
+
+game_ceres_escape_timer:
+    %cm_numfield_word("Ceres Timer (seconds)", !ram_cm_ceres_seconds, 1, 5999, 1, 20, .routine)
+  .routine
+    LDA !ram_cm_ceres_seconds : STA $4204
+    %a8()
+    LDA.b #$0A : STA $4206
+    %a16()
+    PEA $0000 : PLA ; wait for CPU math
+    LDA $4216 : STA !sram_ceres_timer
+    LDA $4214 : BEQ .end
+    STA $4204
+    %a8()
+    LDA.b #$06 : STA $4206
+    %a16()
+    PEA $0000 : PLA ; wait for CPU math
+    LDA $4216 : ASL #4
+    ORA !sram_ceres_timer : STA !sram_ceres_timer
+    LDA $4214 : BEQ .end
+    STA $4204
+    %a8()
+    LDA.b #$0A : STA $4206
+    %a16()
+    PEA $0000 : PLA ; wait for CPU math
+    LDA $4216 : XBA
+    ORA !sram_ceres_timer : STA !sram_ceres_timer
+    LDA $4214 : BEQ .end
+    XBA : ASL #4
+    ORA !sram_ceres_timer : STA !sram_ceres_timer
+  .end
+    RTL
+
+game_zebes_escape_timer:
+    %cm_numfield_word("Zebes Timer (seconds)", !ram_cm_zebes_seconds, 1, 5999, 1, 20, .routine)
+  .routine
+    LDA !ram_cm_zebes_seconds : STA $4204
+    %a8()
+    LDA.b #$0A : STA $4206
+    %a16()
+    PEA $0000 : PLA ; wait for CPU math
+    LDA $4216 : STA !sram_zebes_timer
+    LDA $4214 : BEQ .end
+    STA $4204
+    %a8()
+    LDA.b #$06 : STA $4206
+    %a16()
+    PEA $0000 : PLA ; wait for CPU math
+    LDA $4216 : ASL #4
+    ORA !sram_zebes_timer : STA !sram_zebes_timer
+    LDA $4214 : BEQ .end
+    %a8()
+    STA $4204
+    LDA.b #$0A : STA $4206
+    %a16()
+    PEA $0000 : PLA ; wait for CPU math
+    LDA $4216 : XBA
+    ORA !sram_zebes_timer : STA !sram_zebes_timer
+    LDA $4214 : BEQ .end
+    XBA : ASL #4
+    ORA !sram_zebes_timer : STA !sram_zebes_timer
+  .end
+    RTL
+
 game_fast_doors_toggle:
-    %cm_toggle("Fast Doors", !sram_fast_doors, #$0001, #0)
+    %cm_toggle("Fast Doors", !sram_fast_doors, #$01, #0)
 
 game_fast_elevators:
-    %cm_toggle("Fast Elevators", !sram_fast_elevators, #$0001, #0)
+    %cm_toggle("Fast Elevators", !sram_fast_elevators, #$01, #0)
 
 game_goto_debug:
     %cm_submenu("Debug Settings", #DebugMenu)
@@ -69,7 +137,7 @@ game_top_HUD_mode:
     db #$FF
 
 game_minimap:
-    %cm_toggle("Minimap", !ram_minimap, #$0001, #0)
+    %cm_toggle("Minimap", !ram_minimap, #$01, #0)
 endif
 
 game_clear_minimap:
@@ -111,6 +179,7 @@ DebugMenu:
     dw #game_paldebug
     dw #game_debugbrightness
     dw #game_invincibility
+    dw #game_infiniteammo
     dw #game_pacifist
     dw #$FFFF
     dw #game_debugplms
@@ -121,7 +190,7 @@ DebugMenu:
     %cm_header("DEBUG SETTINGS")
 
 game_debugmode:
-    %cm_toggle("Debug Mode", !DEBUG_MODE, #$0001, #0)
+    %cm_toggle("Debug Mode", !DEBUG_MODE, #$01, #0)
 
 game_paldebug:
     %cm_toggle_inverted("PAL Debug Movement", !PAL_DEBUG_MOVEMENT, #$0001, .routine)
@@ -136,13 +205,18 @@ game_paldebug:
     RTL
 
 game_debugbrightness:
-    %cm_toggle("Debug CPU Brightness", $7E0DF4, #$0001, #0)
+    %cm_toggle("Debug CPU Brightness", $7E0DF4, #$01, #0)
 
 game_invincibility:
     %cm_toggle_bit("Invincibility", $7E0DE0, #$0007, #0)
 
+game_infiniteammo:
+    %cm_toggle("Infinite Ammo", !ram_infinite_ammo, #$01, .routine)
+  .routine
+    JML GameLoopExtras
+
 game_pacifist:
-    %cm_toggle("Deal Zero Damage", !ram_pacifist, #$0001, #0)
+    %cm_toggle("Deal Zero Damage", !ram_pacifist, #$01, #0)
 
 game_debugplms:
     %cm_toggle_bit_inverted("Pseudo G-Mode", $7E1C23, #$8000, #0)

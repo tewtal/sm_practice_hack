@@ -24,19 +24,19 @@ Displays the HP of the first enemy. Most useful for boss fights, although Mother
 ## Room Strat
 Allows you to select a Room Strat instead of an Infohud Mode. See below section for the various Room Strats.
 
-## Charge
+## Charge Timer
 Counts down the frames from the time you press shot until the time the beam would be charged, after which it will count up the number of extra frames applied towards charging the beam. The timer resets if you let go of the shot button, and begins counting up the frames shot was released to the left of the charge timer.
 
-## X Factor
+## X-Factor Timer
 Counts down the frames from the time you press shoot until the time the SBA (Special Beam Attack) would activate. The timer resets if you let go of the shoot button or if the SBA activates.
 
-## Cooldown
+## Cooldown Timer
 Counts down the frames from time you activate a weapon or lay a bomb until the time you can fire again.
 
-## Shinespark
+## Shinespark Timer
 Counts down the frames from the time you charge a shinespark until the time the charge runs out, after which it will count up the number of frames you were late to the left of the shinespark timer. If you activate the shinespark in time, it will display the number of frames that were remaining, with 1 indicating there were no frames to spare.
 
-## Dash
+## Dash Counter
 Displays the speed boost counter. This number can be between 0 and 4. When building a shinespark charge, each successful tap (or held dash button) will increment the dash counter.
 
 ## Shine Tune
@@ -58,10 +58,10 @@ There is also an "average starting momentum" number printed out which gives some
 Even a single stutter will lower this number from above 2 to below 2, but you can reduce the number further with more stutters.
 It also accounts for the amount of the time the dpad was released, since each frame the dpad is released while decelerating, Samus moves an extra pixel forward, so shorter releases of the dpad are more optimal.
 
-## I Frames
+## I-Frame Counter
 Counts down the invulnerability frames after Samus takes damage.
 
-## Spikesuit
+## Spikesuit Trainer
 Displays feedback on the two inputs required to generate a spikesuit. It assumes you will be taking damage from spikes which give 60 I-frames and 10 frames of knockback. The feedback is as follows:  
 &nbsp;  
 First two characters = Feedback on the unmorph:
@@ -83,16 +83,10 @@ Counts up lag frames in real time. Resets after each door transition.
 ## CPU Usage
 Counts down the number of scanlines that were drawn during processing of the next frame. The screen has a resolution of 256x224, so at 60 fps, 224 scanlines must be drawn every 1/60th of a second. This count is converted to a percentage to get a sense of the lag. The higher the percentage, the closer we were to not finishing processing in time. If processing does not finish in time, then the game must draw the current frame again and this is a lag frame. If the percentage is a low number, then it is likely the game lagged with most of the work done during the previous frame and a small amount of work left over for the next frame.
 
-## X Position
-Displays the X position in pixels. Also Samus HP is replaced by the subpixels in hexadecimal.
-
-## Y Position
-Displays the Y position in pixels. Also Samus HP is replaced by the subpixels in hexadecimal.
-
-## Horiz Speed
+## Horizontal Speed
 Displays the horizontal speed combined with momentum in pixels. Also Samus HP is replaced by the subpixels in hexadecimal.
 
-## Vert Speed
+## Vertical Speed
 Displays the vertical speed in pixels. Initial jump speed will displayed as a three digit hex value, overwriting the item collection percentage. Samus HP will be overwritten with space jump feedback:
 &nbsp;  
 First two characters = Number of frames that the jump button was held.
@@ -102,7 +96,7 @@ Last two characters = Feedback on the time when you jumped, with respect to spac
 - Y# indicates you made a valid space jump. On NTSC, you normally have 23 frames, but if underwater you have 41 frames. On PAL, you normally have 19 frames, but if underwater you have 28 frames.
 - L# indicates you were late where the number tells you how many frames you were late.
 
-## Quick Drop
+## Quickdrop Trainer
 Displays the number of frames between pressing a left or right input and another left or right input, if the number of frames is between 1 and 20. If a down input is pressed, then feedback on mid-air morph bomb spread will be given:
 &nbsp;  
 First two characters = Feedback on mid-air morph while beam is charged:
@@ -110,7 +104,7 @@ First two characters = Feedback on mid-air morph while beam is charged:
 - YY indicates you attempted to morph on the correct frame.
 - L# indicates you were late where the number tells you how many frames you were late.
 
-## Wall Jump
+## Walljump Trainer
 Displays the number of frames between pressing a left or right input and pressing the jump button, if the number of frames is between 1 and 20.
 To walljump this number should be between 2 and 9 inclusive, although on PAL 8 does not work due to Samus' animation running out and being in the incorrect pose on that particular frame.
 Also, if the number of frames is 7-9 (a delayed walljump) and the walljump is taking place in WRITG or Bubble Mountain or Mt. Everest, then additional information may be presented if you appear to be making hi-jump-less walljump attempts (also known as the hypo jump):
@@ -138,11 +132,23 @@ First two characters = Feedback on the walljump:
 
 Note that the namihe does not pull Samus in like a wall does (subpixels are not reset), so while a delayed walljump is preferred (it matters if you jump from a higher position), walljumps off of the namihe do not provide the traditional 2-9 frame window for walljumps.
 
-## Arm Pump
+## Boss Damage Counter
+Counts the amount of damage dealt to a boss.
+
+## Arm Pump Trainer
 Displays the number of armpumps (pose changes) per second, and the number of wasted angle down and/or angle up inputs per second.
 An input is considered wasted if it does not change the pose, or if both angle down and angle up are changed on the same frame.
 When exiting the room, the totals for the room are displayed.
 Note that the specific pose is not actually checked, so other actions performed by Samus may be counted.
+
+## Arm Pump Counter
+Displays the number of consecutive single-frame armpumps. This is shown as a rolling count in order to have time to stop pumping and observe when a larger number is achieved.
+
+## X Position
+Displays the X position in hexadecimal pixels. Also Samus HP is replaced by the subpixels in hexadecimal.
+
+## Y Position
+Displays the Y position in hexadecimal pixels. Also Samus HP is replaced by the subpixels in hexadecimal.
 
 ## Shot Timer
 Displays the number of frames between pressing the shoot button.
@@ -162,10 +168,16 @@ It is still possible to avoid an enrage though, if you cam stand close to Phanto
 Phantoon's hitbox expands upon moving around, so standing close to Phantoon can cause Samus to take damage and knockback if Phantoon starts moving early due to the fast eye close,
 which can prevent the super missile from firing and hitting Phantoon.
 
-## RAM Watch
-Displays the value of two configurable memory addresses in bank $7E, $7F, or the first bank of SRAM. Values can also be "locked" or rewritten each frame while the RAM Watch HUD mode is enabled. These addresses and values can be configured in the 'Customize RAM Watch' submenu.
+## Custom RAM Watch
+Displays the value of two configurable memory addresses in any bank. Values can also be "locked" or rewritten each frame while the RAM Watch HUD mode is enabled. These addresses and values can be configured in the 'Customize RAM Watch' submenu.
 
 # Room strat features
+## Super HUD
+Options to replace the item% and status icons and reserves area with other infohud modes, while still having a primary infohud mode or room strat. Compatible with most but not all other infohud modes and room strats.
+
+## Ceres Ridley Hits
+Display number of hits Ceres Ridley has taken. Ceres Ridley fly away conditions are upon Samus health dropping below 30 or upon hitting Ridley 100 times, at which point Ridley drops the baby metroid before recollecting it and flying away.
+
 ## Parlor-Climb Door Skip
 Provides feedback on attempts to get out of bounds while falling through the door from parlor to climb:  
 &nbsp;  
@@ -210,6 +222,9 @@ Last two characters = Feedback on the time when you expanded your hitbox to grab
 
 Unfortunately even if you are coming in with a Y3 73 jump, you only get one chance to grab the tank. It does not matter if you choose Y1, Y2, or Y3 to attempt the grab, as it will come down to the collision oscillator. When Samus expands her hitbox, she will contact both the tank and the ceiling, but the game will only check one of the tiles. If it checks the ceiling tile, it will push Samus down and out of the ceiling and she will not be able to grab the tank on the next frame.
 
+## Pit Room Right Door
+Yes or No indicator on whether or not this flashing gray door has been opened.
+
 ## Moondance (currently only supported on NTSC)
 Provides feedback on moondance (Dachora room) or tasdance (Green Brinstar Main Shaft room):  
 
@@ -238,6 +253,12 @@ Last four characters = The time between presses and releases during the turns (e
 - E# indicates you were early where the number tells you how many frames you were early.
 - YY indicates you hit one of the frame perfect inputs.
 - L# indicates you were late where the number tells you how many frames you were late.
+
+## Kraid Nail Radar
+Feedback on both Samus position and on Kraid's fingernails.
+For Samus position, if you successfully perform the bomb bounce setup for KQK, then the Samus indicator will turn green.
+For Kraid's fingernails, the indicators show if the nails are moving around and in what directions. If both are moving indicating both are below, then Kraid will be laggier than if just one nail is moving.
+Using a power bomb or wave beam shots to kill nails below Samus may cause one of them to respawn above Samus and reduce Kraid lag. It is not possible to spawn both nails above Samus.
 
 ## Gate Glitch
 Provides feedback on attempts to open a left-facing gate from the right side:  
@@ -331,7 +352,7 @@ Last two characters = Feedback on your timing in returning to the correct positi
 
 Note: Snail clip works with three pixels on NTSC and five pixels on PAL. However because the snail moves 1.25 pixels per frame on NTSC and roughly 1.5 pixels per frame on PAL, it works out to only 3 frames on NTSC and 3 or 4 frames on PAL.  Without Hi-Jump Boots equipped, it's only a 2-frame window on both NTSC and PAL.
 
-## Wasteland (currently only supported on NTSC)
+## Wasteland Entry (currently only supported on NTSC)
 Provides feedback on the timing of bombs during wasteland entry from kihunter shaft. This assumes a normalized entry (roll off ledge in prior room, press against left side of door, continue holding left). If you do this, then you should see a pair of Y's after entry (although it may be possible to fool this check to give Y's even if the setup is off, for example not pressing against the left side of the door).  
 
 The first block of four characters (two characters for each bomb) is for a simple roll into the room, requiring a high hop from the third hopper (second one on the ground):
@@ -350,6 +371,9 @@ Note: The trainer doesn't verify that the bombs break open the tunnel. For examp
 ## Ridley AI
 Prints the name of Ridley's current AI routine on the bottom-right of the HUD to assist with finding manipulation strategies. Ridley's HP is displayed on the left until it reaches zero, at which point it will start counting Ridley's "death grab" attempts until Ridley explodes.
 
+## Kihunter Manipulation
+Indicators on how the Kihunters are moving in the Red Kihunter Shaft, with Yes/No indicators on whether or not they are in a good position in order to travel from the bottom to the top of the room.
+
 ## Downback Zeb Skip
 Provides feedback on downback zeb skip attempts:
 &nbsp;  
@@ -357,10 +381,13 @@ Provides feedback on downback zeb skip attempts:
 - Second character = Feedback on your vertical subpixel normalization. A Y indicates your vertical subpixel was correctly normalized; an N indicates it was not. (If you're getting an N here, the most likely cause is that you're holding forward during knockback from the Rinka and getting a downwards damage boost, which you do not want.)
 - Third character = number of frames between knockback ending and the start of your downback. Values of 1-4, 6-10, or 13-14 are "good frames" that result in a successful clip, while 0, 5, 11-12, and 15+ are "bad frames" that will result in a failed attempt.
 
+## Zeb Skip Indicator
+Indicators useful for Zeb Skip. The yellow indicator is replaced by an I-Frame counter when Samus takes damage, since I-Frames are needed to get past a zebitite. When the green indicator appears, it means that Samus has correctly moved far enough left where she is at least one pixel inside the zebitite.
+
 ## Mother Brain HP
 Displays the HP of the second enemy. Most useful for the Mother Brain fight since Mother Brain uses the second enemy slot.
 
-## Two Cries (currently only supported on NTSC)
+## Two Cries Standup (currently only supported on NTSC)
 Provides feedback on attempts to manipulate Mother Brain into a fast sitdown animation (baby detaches after just two cries) while performing the standup glitch.
 This assumes you are using the method starting from angle-crouch jump, aim down while below Mother Brain's head (stay in this pose the entire time you are at or above head level), morph into an automatic springball jump, and unmorph while falling.
 You can also do this strat without springball by using a buffered auto-jump into a quick morph, but the trick is more difficult as there are fewer frames that work.

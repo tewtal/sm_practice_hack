@@ -1,5 +1,4 @@
 
-pushpc
 %startfree(E4)
 
 ; -------------------------
@@ -9,8 +8,8 @@ pushpc
 
 LayoutMenu:
     dw #layout_itempickups
-    dw #$FFFF
     dw #layout_bombtorizodoor
+    dw #layout_steamcollision
     dw #layout_magnetstairs
     dw #layout_arearando
     dw #layout_antisoftlock
@@ -322,8 +321,11 @@ layout_bombtorizodoor:
     db #$28, "r      SLOW", #$FF
     db #$FF
 
+layout_steamcollision:
+    %cm_toggle_bit("Remove Steam Collision", !sram_room_layout, !ROOM_LAYOUT_NO_STEAM_COLLISION, #0)
+
 layout_magnetstairs:
-    %cm_toggle_bit("Remove Magnet Stairs", !sram_room_layout, !ROOM_LAYOUT_MAGNET_STAIRS, #0)
+    %cm_toggle_bit("Remove Magnet Stairs", !sram_room_layout, !ROOM_LAYOUT_NO_MAGNET_STAIRS, #0)
 
 layout_arearando:
     %cm_toggle_bit("Area Rando Patches", !sram_room_layout, !ROOM_LAYOUT_AREA_RANDO, #0)
@@ -870,4 +872,3 @@ portals_down_vanilla_table:
 
 
 %endfree(E4)
-pullpc

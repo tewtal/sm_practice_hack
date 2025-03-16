@@ -172,6 +172,21 @@ endif
     JMP .toggle_tileviewer
   .skip_toggle_tileviewer
 
+    LDA !IH_CONTROLLER_PRI : AND !sram_ctrl_reveal_damage : CMP !sram_ctrl_reveal_damage : BNE .skip_reveal_damage
+    AND !IH_CONTROLLER_PRI_NEW : BEQ .skip_reveal_damage
+    JMP .reveal_damage
+  .skip_reveal_damage
+
+    LDA !IH_CONTROLLER_PRI : AND !sram_ctrl_randomize_rng : CMP !sram_ctrl_randomize_rng : BNE .skip_randomize_rng
+    AND !IH_CONTROLLER_PRI_NEW : BEQ .skip_randomize_rng
+    JMP .randomize_rng
+  .skip_randomize_rng
+
+    LDA !IH_CONTROLLER_PRI : AND !sram_ctrl_force_stand : CMP !sram_ctrl_force_stand : BNE .skip_force_stand
+    AND !IH_CONTROLLER_PRI_NEW : BEQ .skip_force_stand
+    JMP .force_stand
+  .skip_force_stand
+
     LDA !IH_CONTROLLER_PRI : AND !sram_ctrl_update_timers : CMP !sram_ctrl_update_timers : BNE .skip_update_timers
     AND !IH_CONTROLLER_PRI_NEW : BEQ .skip_update_timers
     JMP .update_timers
@@ -259,9 +274,15 @@ endif
 
   .full_equipment
     LDA !SAMUS_HP_MAX : STA !SAMUS_HP
-    LDA !SAMUS_MISSILES_MAX : STA !SAMUS_MISSILES
-    LDA !SAMUS_SUPERS_MAX : STA !SAMUS_SUPERS
-    LDA !SAMUS_PBS_MAX : STA !SAMUS_PBS
+    LDA !SAMUS_MISSILES_MAX : CMP !SAMUS_MISSILES : BCC .full_equip_done_missiles
+    STA !SAMUS_MISSILES
+  .full_equip_done_missiles
+    LDA !SAMUS_SUPERS_MAX : CMP !SAMUS_SUPERS : BCC .full_equip_done_supers
+    STA !SAMUS_SUPERS
+  .full_equip_done_supers
+    LDA !SAMUS_PBS_MAX : CMP !SAMUS_PBS : BCC .full_equip_done_pbs
+    STA !SAMUS_PBS
+  .full_equip_done_pbs
     LDA !SAMUS_RESERVE_MAX : STA !SAMUS_RESERVE_ENERGY
     %sfxconfirm()
     ; CLC to continue normal gameplay after equipment refill
@@ -280,6 +301,28 @@ endif
     JSL upload_sprite_oob_tiles
     ; CLC to continue normal gameplay after enabling OoB Tile Viewer
     LDA !sram_ctrl_toggle_tileviewer
+    CLC : JMP skip_pause
+
+  .reveal_damage
+if !FEATURE_VANILLAHUD
+else
+    LDA !sram_display_mode : CMP !IH_MODE_COUNTDAMAGE_INDEX : BEQ .unreveal_damage
+    STA !ram_display_backup
+    LDA !IH_MODE_COUNTDAMAGE_INDEX : STA !sram_display_mode
+    ; set ram_HUD_check to some value that cannot match the damage counter
+    ; conveniently the current value of A will work
+    STA !ram_HUD_check
+endif
+    %sfxconfirm()
+    ; CLC to continue normal gameplay after reveal damage
+    LDA !sram_ctrl_reveal_damage
+    CLC : JMP skip_pause
+
+  .unreveal_damage
+    LDA !ram_display_backup : STA !sram_display_mode
+    %sfxreset()
+    ; CLC to continue normal gameplay after unreveal damage
+    LDA !sram_ctrl_reveal_damage
     CLC : JMP skip_pause
 
   .load_last_preset
@@ -360,6 +403,22 @@ endif
     %sfxnumber()
     ; CLC to continue normal gameplay after decrementing preset slot
     LDA !sram_ctrl_dec_custom_preset
+    CLC : JMP skip_pause
+
+  .randomize_rng
+    JSL MenuRNG2
+    AND #$00FF : STA !FRAME_COUNTER_8BIT ; little extra for Phantoon
+    JSL MenuRNG : STA !CACHED_RANDOM_NUMBER
+    %sfxbeep()
+    ; CLC to continue normal gameplay after reseeding RNG
+    LDA !sram_ctrl_randomize_rng
+    CLC : JMP skip_pause
+
+  .force_stand
+    JSL $90E2D4 ; Release Samus from Draygon
+    %sfxconfirm()
+    ; CLC to continue normal gameplay after forced stand
+    LDA !sram_ctrl_force_stand
     CLC : JMP skip_pause
 
   .update_timers
@@ -478,6 +537,9 @@ else
     LDA !sram_ctrl_update_timers : CMP #$C0C0 : BEQ .end
     LDA !sram_ctrl_auto_save_state : CMP #$C0C0 : BEQ .end
     LDA !sram_ctrl_toggle_spin_lock : CMP #$C0C0 : BEQ .end
+    LDA !sram_ctrl_randomize_rng : CMP #$C0C0 : BEQ .end
+    LDA !sram_ctrl_reveal_damage : CMP #$C0C0 : BEQ .end
+    LDA !sram_ctrl_force_stand : CMP #$C0C0 : BEQ .end
     LDA #custom_intro_init : STA !CINEMATIC_FUNCTION_POINTER
     LDA #$001E : STA !GAMEMODE
   .end

@@ -933,7 +933,7 @@ events_metroid4:
     %cm_toggle_bit("4th Metroids Cleared", $7ED822, #$0008, #0)
 
 events_zeb1:
-    %cm_toggle("1st Zebitite Cleared", !ram_cm_zeb1, #$0008, #.routine)
+    %cm_toggle("1st Zebitite Cleared", !ram_cm_zeb1, #$08, #.routine)
   .routine
     LDA !ram_cm_zeb1 : BNE .set
     TDC
@@ -942,7 +942,7 @@ events_zeb1:
     JML eventflags_set_zeb_ram
 
 events_zeb2:
-    %cm_toggle("2nd Zebitite Cleared", !ram_cm_zeb2, #$0010, #.routine)
+    %cm_toggle("2nd Zebitite Cleared", !ram_cm_zeb2, #$10, #.routine)
   .routine
     LDA !ram_cm_zeb2 : BNE .set
     LDA #$0008
@@ -951,7 +951,7 @@ events_zeb2:
     JML eventflags_set_zeb_ram
 
 events_zeb3:
-    %cm_toggle("3rd Zebitite Cleared", !ram_cm_zeb3, #$0018, #.routine)
+    %cm_toggle("3rd Zebitite Cleared", !ram_cm_zeb3, #$18, #.routine)
   .routine
     LDA !ram_cm_zeb3 : BNE .set
     LDA #$0010
@@ -960,7 +960,7 @@ events_zeb3:
     JML eventflags_set_zeb_ram
 
 events_zeb4:
-    %cm_toggle("4th Zebitite Cleared", !ram_cm_zeb4, #$0020, #.routine)
+    %cm_toggle("4th Zebitite Cleared", !ram_cm_zeb4, #$20, #.routine)
   .routine
     LDA !ram_cm_zeb4 : BNE .set
     LDA #$0018
@@ -2337,10 +2337,10 @@ MiscMenu:
     %cm_header("MISC OPTIONS")
 
 misc_bluesuit:
-    %cm_toggle("Blue Suit", !SAMUS_DASH_COUNTER, #$0004, #0)
+    %cm_toggle("Blue Suit", !SAMUS_DASH_COUNTER, #$04, #0)
 
 misc_flashsuit:
-    %cm_toggle("Flash Suit", !SAMUS_SHINE_TIMER, #$0001, #0)
+    %cm_toggle("Flash Suit", !SAMUS_SHINE_TIMER, #$01, #0)
 
 misc_hyperbeam:
     %cm_toggle_bit("Hyper Beam", !SAMUS_HYPER_BEAM, #$8000, #.routine)
@@ -2384,7 +2384,7 @@ misc_gooslowdown:
     %cm_numfield("Goo Slowdown", $7E0A66, 0, 4, 1, 1, #0)
 
 misc_healthbomb:
-    %cm_toggle("Health Bomb Flag", !SAMUS_HEALTH_WARNING, #$0001, #0)
+    %cm_toggle("Health Bomb Flag", !SAMUS_HEALTH_WARNING, #$01, #0)
 
 misc_magicpants:
     dw !ACTION_CHOICE
@@ -2409,7 +2409,7 @@ misc_spacepants:
     db #$FF
 
 misc_metronome:
-    %cm_toggle("Metronome", !ram_metronome, #$0001, GameLoopExtras)
+    %cm_toggle("Metronome", !ram_metronome, #$01, GameLoopExtras)
 
 misc_metronome_tickrate:
     %cm_numfield("Metronome Tickrate", !sram_metronome_tickrate, 1, 255, 1, 8, #.routine)
@@ -2552,10 +2552,10 @@ misc_double_jump:
     %cm_toggle_bit("Double Jump", !sram_double_jump, #$0200, init_physics_ram)
 
 misc_spin_lock:
-    %cm_toggle("Spin Lock", !sram_spin_lock, #$0001, #0)
+    %cm_toggle("Spin Lock", !sram_spin_lock, #$01, #0)
 
 misc_infidoppler:
-    %cm_toggle("Phantoon Infi-Doppler", !sram_infidoppler_enabled, #$0001, #0)
+    %cm_toggle("Phantoon Infi-Doppler", !sram_infidoppler_enabled, #$01, #0)
 
 init_physics_ram:
 {
@@ -2636,20 +2636,6 @@ misc_forcestand:
     JSL $90E2D4 ; bridge to: Release Samus from Draygon
     %sfxconfirm()
     RTL
-
-GameLoopExtras:
-{
-    ; This allows us to maintain a baseline for CPU timing
-    ; without restricting our ability to add non-essential features
-    ; Set the flag if any of these features are enabled
-    LDA !ram_magic_pants_enabled : BNE .enabled
-    LDA !ram_space_pants_enabled : BNE .enabled
-    LDA !ram_metronome
-
-  .enabled
-    STA !ram_game_loop_extras
-    RTL
-}
 
 %endfree(85)
 

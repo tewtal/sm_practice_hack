@@ -5,7 +5,7 @@ For other TODO items, recommend using the github issue system
 ================================================================
 
 ================================================================
-Features that have not been ported yet
+Features that are being ported now
 ================================================================
 
 - Capture Cropping
@@ -24,6 +24,8 @@ Features that have not been ported yet
 
 - Phantoon always visible
 
+- Random bubble SFX
+
 - Randomize on load
 
 - Randomize RNG shortcut
@@ -39,7 +41,7 @@ and there isn't much benefit in porting or backporting them
 
 - Resources folder structure and unusued resources
 
-- Order of included sources
+- Order of included sources and bank freespace locations
 
 - Structure of defines.asm and main.asm (and separating printdebug.asm from main.asm)
 
@@ -47,9 +49,15 @@ and there isn't much benefit in porting or backporting them
 
 - Various sound effect macros
 
-- Walk Through Walls option
+- Walk Through Walls option and unfinished dboost infohud mode
 
-- Leading > or arrow on menu items, or menuing differences in general
+- Detect emulator inaccuracy developer option
+
+- The taller menu (this is available as a build option)
+
+- Leading > or arrow on menu items, or menuing layout and text differences in general
+
+- Differences in how menu options can be scrolled through
 
 - AREA_ID stored in custom presets
 

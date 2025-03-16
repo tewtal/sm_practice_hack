@@ -1,5 +1,4 @@
 
-pushpc
 %startfree(E4)
 
 ; ----------
@@ -10,6 +9,7 @@ AudioMenu:
     dw #audio_music_toggle
     dw #audio_fanfare_toggle
     dw #audio_health_alarm
+    dw #audio_bubble_sfx
     dw #$FFFF
     dw #mc_customsfx
     dw #$FFFF
@@ -72,8 +72,23 @@ audio_health_alarm:
     db #$28, "m ALWAYS ON", #$FF
     db #$FF
 
+audio_bubble_sfx:
+    dw !ACTION_CHOICE
+    dl #!sram_random_bubble_sfx
+    dw #$0000
+    db #$28, "Random Bubble S", #$FF
+    db #$28, "FX  VANILLA", #$FF
+    db #$28, "FX      OFF", #$FF
+    db #$28, "FX    LOW 1", #$FF
+    db #$28, "FX    LOW 2", #$FF
+    db #$28, "FX    LOW 3", #$FF
+    db #$28, "FX   HIGH 1", #$FF
+    db #$28, "FX   HIGH 2", #$FF
+    db #$28, "FX   HIGH 3", #$FF
+    db #$FF
+
 audio_goto_music:
-    %cm_submenu("Music Selection", #MusicSelectMenu1)
+    %cm_submenu("Music Selection", #MusicSelectMenu)
 
 audio_sfx_lib1:
     %cm_numfield_sound("Library One Sound", !ram_cm_sfxlib1, 1, 66, 1, 4, .routine)
@@ -100,7 +115,7 @@ audio_sfx_silence:
   .routine
     JML stop_all_sounds
 
-MusicSelectMenu1:
+MusicSelectMenu:
     dw #audio_music_title1
     dw #audio_music_title2
     dw #audio_music_intro
@@ -252,7 +267,7 @@ audio_music_galaxypeace:
     %cm_jsl("The Galaxy is at Peace", #audio_playmusic, #$4205)
 
 audio_music_goto_1:
-    %cm_adjacent_submenu("GOTO PAGE TWO", #MusicSelectMenu1)
+    %cm_adjacent_submenu("GOTO PAGE TWO", #MusicSelectMenu)
 
 audio_playmusic:
 {
@@ -291,11 +306,13 @@ CustomizeMenu:
     dw #mc_menuscroll_delay
     dw #$FFFF
     dw #mc_customheader
+    dw #$FFFF
+    dw #mc_factory_reset
     dw #$0000
     %cm_header("CUSTOMIZE PRACTICE MENU")
 
 mc_menubackground:
-    %cm_toggle("Menu Background", !sram_menu_background, #$0001, #0)
+    %cm_toggle("Menu Background", !sram_menu_background, #$01, #0)
 
 mc_custompalettes_menu:
     %cm_submenu("Customize Menu Palette", #CustomPalettesMenu)
@@ -644,10 +661,10 @@ custompalettes_dec_blue:
     %cm_numfield("Decimal Blue", !ram_cm_custompalette_blue, 0, 31, 1, 2, #MixRGB)
 
 mc_dummy_on:
-    %cm_toggle("Example Toggle ON", !ram_cm_dummy_on, #$0001, #0)
+    %cm_toggle("Example Toggle ON", !ram_cm_dummy_on, #$01, #0)
 
 mc_dummy_off:
-    %cm_toggle("Example Toggle OFF", !ram_cm_dummy_off, #$0001, #0)
+    %cm_toggle("Example Toggle OFF", !ram_cm_dummy_off, #$01, #0)
 
 mc_dummy_hexnum:
     %cm_numfield_hex("Example Hex Number", !ram_cm_dummy_num, 0, 255, 1, 8, #0)
@@ -712,6 +729,83 @@ custompalettes_toggleon_test:
 
 custompalettes_background_test:
     %cm_numfield_hex_word("Background", !sram_palette_background, #$7FFF, #0)
+
+
+; -------------
+; Factory Reset
+; -------------
+
+mc_factory_reset:
+    %cm_submenu("Factory Reset", #FactoryResetConfirm)
+
+FactoryResetConfirm:
+    dw #mc_factory_reset_abort
+    dw #$FFFF
+    dw #mc_factory_reset_keep_presets
+    dw #mc_factory_reset_delete_presets
+    dw #$0000
+    %cm_header("KEEP CUSTOM PRESETS?")
+    %cm_footer("THIS WILL REBOOT THE GAME")
+
+mc_factory_reset_abort:
+    %cm_jsl("ABORT", #.routine, #$0000)
+  .routine
+    %sfxgoback()
+    JML cm_previous_menu
+
+mc_factory_reset_keep_presets:
+    %cm_jsl("Yes, keep my presets", #action_factory_reset, #$0000)
+
+mc_factory_reset_delete_presets:
+    %cm_jsl("No, mark them as empty", .routine, #$0000)
+  .routine
+    TYX : TXA ; LDA/X/Y #$0000
+  .loop
+    STA !PRESET_SLOTS,X ; overwrite "5AFE" words
+    ; inc and multiply Y by $200/$100 for next slot index
+    INY : TYA : %presetslotsize()
+    TDC : CPY !TOTAL_PRESET_SLOTS : BNE .loop
+    ; continue into action_factory_reset
+
+action_factory_reset:
+{
+    ; Wipe standard practice hack memory
+    TDC : LDX !WRAM_SIZE-2
+  .wram_loop
+    STA !WRAM_START,X
+    DEX #2 : BPL .wram_loop
+
+    ; Wipe stored practice hack memory
+    LDX !SRAM_SIZE-2
+  .sram_loop
+    STA !SRAM_START,X
+    DEX #2 : BPL .sram_loop
+
+    ; Mark practice hack SRAM as invalid
+    STA !sram_initialized
+
+    ; silence audio
+    JSL !MUSIC_ROUTINE
+    JSL stop_all_sounds
+
+    ; wait for music queue to clear
+    STZ !MUSIC_QUEUE_TIMERS : STZ !MUSIC_QUEUE_TIMERS+$2
+    STZ !MUSIC_QUEUE_TIMERS+$4 : STZ !MUSIC_QUEUE_TIMERS+$6
+    STZ !MUSIC_QUEUE_TIMERS+$8 : STZ !MUSIC_QUEUE_TIMERS+$A
+    STZ !MUSIC_QUEUE_TIMERS+$C : STZ !MUSIC_QUEUE_TIMERS+$E
+    STZ !MUSIC_QUEUE_NEXT : STZ !MUSIC_QUEUE_START
+    STZ !MUSIC_ENTRY : STZ !MUSIC_TIMER
+
+    ; wait for NMI
+  .nmi_loop
+    JSL $808EF4 : BCC .reboot
+    JSL $808338 ; wait for NMI
+    BRA .nmi_loop
+
+    ; Reboot
+  .reboot
+    JML $80841C
+}
 
 
 ; ---------------
@@ -912,7 +1006,6 @@ cm_colors:
   .done
     PLB : PLP
     RTL
-}
 
   .ColorMenuTable
     ; the order of this table must match the menu order
@@ -927,6 +1020,7 @@ cm_colors:
     dw ColorMenuTable_toggleon
     dw ColorMenuTable_border
     dw ColorMenuTable_background
+}
 
 ; macro routines to load an SRAM address into A/X
 ColorMenuTable_text:
@@ -1201,4 +1295,4 @@ EXAKTProfileTable:
 }
 
 %endfree(AE)
-pullpc
+

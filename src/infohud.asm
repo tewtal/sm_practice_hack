@@ -15,6 +15,11 @@ org $8095FC      ; hijack, end of NMI routine to update realtime frames
 org $809609      ; inc counter if NMI lag branch
     INC !REALTIME_LAG_COUNTER
 
+org $809DFD
+hook_start_escape_timers:
+    dw #ih_set_ceres_timer
+    dw #ih_set_zebes_timer
+
 if !FEATURE_VANILLAHUD
 else
 org $809B48      ; hijack, HUD routine (game timer by Quote58)
@@ -283,7 +288,7 @@ else
     LDA !ram_realtime_room : INC : STA !ram_realtime_room
 
     ; Segment real timer
-    LDA !ram_seg_rt_frames : INC : STA !ram_seg_rt_frames : CMP #$003C : BNE .doneTimer
+    LDA !ram_seg_rt_frames : INC : STA !ram_seg_rt_frames : CMP !FRAMERATE : BNE .doneTimer
     TDC : STA !ram_seg_rt_frames
     LDA !ram_seg_rt_seconds : INC : STA !ram_seg_rt_seconds : CMP #$003C : BNE .doneTimer
     TDC : STA !ram_seg_rt_seconds
@@ -513,8 +518,8 @@ ih_before_room_transition:
     dw #$0000 ; off/dummy
     dw status_door_hspeed
     dw status_door_vspeed
-    dw status_chargetimer
-    dw status_shinetimer
+    dw status_door_chargetimer
+    dw status_door_shinetimer
     dw status_door_dashcounter
     dw status_door_xpos
     dw status_door_ypos
@@ -545,8 +550,8 @@ ih_unpause:
 
     ; RT seg
     LDA !ram_seg_rt_frames : CLC : ADC #$0029 : STA !ram_seg_rt_frames
-    CMP #$003C : BCC .updateHUD
-    SEC : SBC #$003C : STA !ram_seg_rt_frames
+    CMP !FRAMERATE : BCC .updateHUD
+    SEC : SBC !FRAMERATE : STA !ram_seg_rt_frames
 
     LDA !ram_seg_rt_seconds : INC : STA !ram_seg_rt_seconds
     CMP #$003C : BCC .updateHUD
@@ -595,6 +600,7 @@ else            ; overwritten code
     JSL $90F084
 endif
 
+    TDC : STA !DAMAGE_COUNTER
     JML ih_update_hud_early
 }
 
@@ -617,6 +623,7 @@ ih_mb2_segment_rainbow:
     ; runs during baby spawn routine for MB2
     STA $7E7854 ; overwritten code
 
+    TDC : STA !DAMAGE_COUNTER
     JML ih_update_hud_early
 }
 
@@ -1072,7 +1079,7 @@ endif
     ; Reserve energy counter
   .reserves
     LDA !sram_top_display_mode : BEQ .statusIcons
-    CMP !TOP_HUD_VANILLA_BIT : BNE .vanilla_check_health
+    BIT !TOP_HUD_VANILLA_BIT : BNE .vanilla_check_health
 
     LDA !SAMUS_RESERVE_MAX : BEQ .noReserves
     LDA !SAMUS_RESERVE_ENERGY : CMP !ram_reserves_last : BEQ .checkAuto
@@ -1142,7 +1149,6 @@ endif
 
     ; reserve tank
   .checkReserves
-    LDA !sram_top_display_mode : BNE .end
     LDA !SAMUS_RESERVE_MODE : CMP #$0001 : BNE .clearReserve
     LDA !SAMUS_RESERVE_ENERGY : BEQ .empty
     LDA !SAMUS_RESERVE_MAX : BEQ .clearReserve
@@ -1240,14 +1246,14 @@ Draw2:
     LDA #$0A : STA $4206
     %a16()
     PEA $0000 : PLA ; wait for CPU math
-    LDA $4214 : STA $16 ; tens
+    LDA $4214 : STA $12 ; tens
 
     ; Ones digit
     LDA $4216 : ASL : TAY
     LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+2,X
 
     ; Tens digit
-    LDA $16 : BEQ .blanktens : ASL : TAY
+    LDA $12 : BEQ .blanktens : ASL : TAY
     LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP,X
 
   .done
@@ -1268,13 +1274,13 @@ Draw3:
     LDA #$0A : STA $4206
     %a16()
     PEA $0000 : PLA ; wait for CPU math
-    LDA $4214 : STA $16 ; tens
+    LDA $4214 : STA $12 ; tens
 
     ; Ones digit
     LDA $4216 : ASL : TAY
     LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+4,X
 
-    LDA $16 : BEQ .blanktens
+    LDA $12 : BEQ .blanktens
     STA $4204
     %a8()
 
@@ -1282,14 +1288,14 @@ Draw3:
     LDA #$0A : STA $4206
     %a16()
     PEA $0000 : PLA ; wait for CPU math
-    LDA $4214 : STA $14 ; hundreds
+    LDA $4214 : STA $12 ; hundreds
 
     ; Tens digit
     LDA $4216 : ASL : TAY
     LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+2,X
 
     ; Hundreds digit
-    LDA $14 : BEQ .blankhundreds : ASL : TAY
+    LDA $12 : BEQ .blankhundreds : ASL : TAY
     LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP,X
 
   .done
@@ -1314,13 +1320,13 @@ Draw4:
     LDA #$0A : STA $4206
     %a16()
     PEA $0000 : PLA ; wait for CPU math
-    LDA $4214 : STA $16 ; tens
+    LDA $4214 : STA $12 ; tens
 
     ; Ones digit
     LDA $4216 : ASL : TAY
     LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+6,X
 
-    LDA $16 : BEQ .blanktens
+    LDA $12 : BEQ .blanktens
     STA $4204
     %a8()
 
@@ -1328,13 +1334,13 @@ Draw4:
     LDA #$0A : STA $4206
     %a16()
     PEA $0000 : PLA ; wait for CPU math
-    LDA $4214 : STA $14 ; hundreds
+    LDA $4214 : STA $12 ; hundreds
 
     ; Tens digit
     LDA $4216 : ASL : TAY
     LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+4,X
 
-    LDA $14 : BEQ .blankhundreds
+    LDA $12 : BEQ .blankhundreds
     STA $4204
     %a8()
 
@@ -1448,13 +1454,13 @@ Draw4Hundredths:
     LDA #$0A : STA $4206   ; divide by 10
     %a16()
     PEA $0000 : PLA ; wait for CPU math
-    LDA $4214 : STA $14 ; hundreds
+    LDA $4214 : STA $12 ; hundreds
 
     ; Tens digit
     LDA $4216 : ASL : TAY
     LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+6,X
 
-    LDA $14 : BEQ .zerohundreds
+    LDA $12 : BEQ .zerohundreds
     STA $4204
     %a8()
 
@@ -1569,20 +1575,23 @@ ih_game_loop_code:
     JSR metronome
   .metronome_done
 
-  .pants
-    LDA !ram_magic_pants_enabled : XBA : ORA !ram_space_pants_enabled : BEQ .checkinputs
+    LDA !ram_magic_pants_enabled : XBA : ORA !ram_space_pants_enabled : BEQ .pants_done
     BIT #$00FF : BEQ .magicpants    ; if spacepants are disabled, handle magicpants
     BIT #$FF00 : BEQ .spacepants    ; if magicpants are disabled, handle spacepants
 
     ; both are enabled, check Samus movement type to decide
     LDA !SAMUS_MOVEMENT_TYPE : AND #$00FF : CMP #$0001 : BEQ .magicpants    ; check if running
-
   .spacepants
     JSR space_pants
-    BRA .checkinputs
-
+    BRA .pants_done
   .magicpants
     JSR magic_pants
+  .pants_done
+
+    LDA !ram_infinite_ammo : BEQ .checkinputs
+    LDA !SAMUS_MISSILES_MAX : STA !SAMUS_MISSILES
+    LDA !SAMUS_SUPERS_MAX : STA !SAMUS_SUPERS
+    LDA !SAMUS_PBS_MAX : STA !SAMUS_PBS
     BRA .checkinputs
 
   .handleinputs
@@ -1645,7 +1654,8 @@ else
     STA !ram_enemy_hp : STA !ram_mb_hp
     STA !ram_dash_counter : STA !ram_shine_counter
     STA !ram_xpos : STA !ram_ypos : STA !ram_subpixel_pos
-    LDA !ram_seed_X : LSR : STA !ram_HUD_top : STA !ram_HUD_middle
+    LDA !ram_seed_X : LSR
+    STA !ram_HUD_top : STA !ram_HUD_middle
     STA !ram_HUD_top_counter : STA !ram_HUD_middle_counter
 
     JML $808111 ; overwritten code + return
@@ -2098,6 +2108,30 @@ endif
     JMP $9B51
 }
 
+ih_set_ceres_timer:
+{
+    JSL $809E93
+    LDA !sram_ceres_timer
+    JSL $809E8C
+    LDA #$8003
+    STA !TIMER_STATUS
+    CLC
+    RTS
+}
+
+ih_set_zebes_timer:
+{
+    JSL $809E93
+    LDA !sram_zebes_timer
+    JSL $809E8C
+    LDA #$8003
+    STA !TIMER_STATUS
+    CLC
+    RTS
+}
+
+if !FEATURE_VANILLAHUD
+else
 NumberGFXTable:
     dw #$0C09, #$0C00, #$0C01, #$0C02, #$0C03, #$0C04, #$0C05, #$0C06, #$0C07, #$0C08
     dw #$0C70, #$0C71, #$0C72, #$0C73, #$0C74, #$0C75, #$0C78, #$0C79, #$0C7A, #$0C7B
@@ -2139,6 +2173,7 @@ HexToNumberGFX2:
     dw #$0C09, #$0C00, #$0C01, #$0C02, #$0C03, #$0C04, #$0C05, #$0C06, #$0C07, #$0C08
     dw #$0C09, #$0C00, #$0C01, #$0C02, #$0C03, #$0C04, #$0C05, #$0C06, #$0C07, #$0C08
     dw #$0C09, #$0C00, #$0C01, #$0C02, #$0C03, #$0C04, #$0C05, #$0C06, #$0C07, #$0C08
+endif
 
 %endfree(80)
 

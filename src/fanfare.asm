@@ -43,9 +43,9 @@ original_button_tilemap_offset_table:
     dw #$8436, #$8289, EndFanfareText
     dw #$8436, #$8289, EndFanfareText
 
-%startfree(85)
 
 ;;; Message text must be listed in order
+org $859643
 table ../resources/HUDfont.tbl
 EnemiesKilledText:
     dw #$000E, #$000E, #$000E, #$000E, #$000E, #$000E
@@ -204,7 +204,7 @@ SpecialButtonTilemapOffsets:
     dw #$0000  ; 25h:
     dw #$0000  ; 26h: Reserved
 
-%endfree(85)
+warnpc $85A000
 endif
 
 

@@ -294,13 +294,10 @@ hijack_after_load_level_data:
   .checkRoom
     ; Several rooms need to be handled before the door scroll
     LDA !ROOM_ID : CMP #ROOM_EastTunnel : BEQ .eastTunnel
+    CMP #ROOM_MainStreet : BEQ .mainStreet
     CMP #ROOM_PantsRoom : BEQ .pantsRoom
-    CMP #ROOM_BelowBotwoonETank : BNE .done
-
-    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ .done
-    JSL layout_asm_aqueductfarmsandpit_external
-
-  .done
+    CMP #ROOM_BelowBotwoonETank : BEQ .belowBotwoonETank
+    CMP #ROOM_MotherBrainRoom : BEQ .mb
     JMP $E38E
 
   .eastTunnel
@@ -308,9 +305,30 @@ hijack_after_load_level_data:
     JSL layout_asm_easttunnel_external
     JMP $E38E
 
+  .mainStreet
+    LDA !ram_door_portal_flags : AND !DOOR_PORTAL_MODE_MASK : CMP #$0002 : BNE .done
+    LDA !ram_door_source : ASL : TAX
+    LDA portals_left_vanilla_table,X : CMP #$A3CC : BNE .done
+    JSL layout_asm_mainstreet_external
+    JMP $E38E
+
   .pantsRoom
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_DASH_RECALL : BEQ .done
     JSL layout_asm_pants_external
+    JMP $E38E
+
+  .belowBotwoonETank
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ .done
+    JSL layout_asm_aqueductfarmsandpit_external
+
+  .done
+    JMP $E38E
+
+  .mb
+    LDA !ram_door_portal_flags : AND !DOOR_PORTAL_MODE_MASK : CMP #$0002 : BNE .done
+    LDA !ram_door_source : ASL : TAX
+    LDA portals_left_vanilla_table,X : CMP #$AA80 : BNE .done
+    JSL layout_asm_mb_external
     JMP $E38E
 }
 
@@ -430,15 +448,30 @@ hook_layout_asm_pants_to_pants:
     dw #$8000
     dw #layout_asm_pants_to_pants_scrolls
 
+; Tourian Escape 1 right door
+org $83AA96
+hook_layout_asm_motherbrain_door1:
+    dw #layout_asm_mb_to_tourian
+
 ; Mother Brain right door
 org $83AAD2
 hook_layout_asm_rinkashaft_door2:
     dw #layout_asm_mbhp
 
+; Mother Brain left door direction (keep door open)
+org $83AAE3
+hook_layout_direction_tourianescape1_door0:
+    db $00
+
 ; Mother Brain left door
 org $83AAEA
 hook_layout_asm_tourianescape1_door0:
-    dw #layout_asm_mbhp
+    dw #layout_asm_mb_spawn_escape_door
+
+; Tourian Escape 1 bottom door
+org $83AB02
+hook_layout_asm_tourianescape2_door0:
+    dw #layout_asm_tourianescape1
 
 ; Magnet Stairs left door
 org $83AB6E
@@ -1050,6 +1083,25 @@ layout_asm_easttunnel_external:
     RTL
 }
 
+layout_asm_mainstreet_external:
+{
+    ; Expand tunnel entrance
+    LDA #$8D21 : STA $7F0E3A
+    LDA #$892D : STA $7F0E3C : STA $7F0E3E : STA $7F0E40
+    LDA #$8522 : STA $7F0E9A : STA $7F0EFA
+    LDA #$8D23 : STA $7F0F5A
+    LDA #$812D : STA $7F101C : STA $7F101E : STA $7F1020
+    LDA #$00FF : STA $7F0E9C : STA $7F0EFC : STA $7F0F5C
+    STA $7F0E9E : STA $7F0EFE : STA $7F0F5E : STA $7F0FBE
+    LDA #$90FF : STA $7F0EA0 : STA $7F0F00 : STA $7F0F60 : STA $7F0FC0
+
+    ; Set door BTS
+    %a8()
+    LDA #$04 : STA $7F6B51 : STA $7F6B81 : STA $7F6BB1
+    %a16()
+    RTL
+}
+
 layout_asm_plasma_external:
 {
     ; Add platform and surrounding decoration
@@ -1273,21 +1325,73 @@ layout_asm_waterway_external:
     RTL
 }
 
+layout_asm_mb_external:
+{
+    ; Replace MB enemy with maprando variant
+    LDA #layout_maprando_mb_enemy_header : STA !ENEMY_ID+$40
+
+    ; Place the four barrier ceiling
+    LDA #$82E6 : STA $7F016E : STA $7F0170 : STA $7F0172
+    LDA #$8AE8 : STA $7F01EE : STA $7F01F0 : STA $7F01F2 : STA $7F01F4
+    INC : STA $7F016C
+
+    ; Place the four barrier floor
+    LDA #$82E8 : STA $7F056E : STA $7F0570 : STA $7F0572 : STA $7F0574
+    LDA #$82E0 : STA $7F05EE : STA $7F05F0 : STA $7F05F2 : STA $7F05F4
+    INC : STA $7F06EE : STA $7F06F4
+    LDA #$830F : STA $7F066E : STA $7F0674
+
+    ; Clear slopes
+    TDC : STA $7F64B7 : STA $7F64B9
+    STA $7F66BC : STA $7F66BE : STA $7F6778 : STA $7F677A
+    LDA #$8351 : STA $7F0576
+    LDA #$82EF : STA $7F0578 : STA $7F057A
+    LDA #$830B : STA $7F057C
+
+    ; Place barriers depending on boss flags
+    LDA $7ED828 : BIT #$0100 : BNE .kraid_dead
+    LDA $7ED82A : BIT #$0100 : BNE .phantoon_dead
+    LDA $7ED82C : BIT #$0001 : BNE .two_or_three_alive
+    LDA $7ED82A : BIT #$0001 : BNE .three_alive
+    LDA #$830F : STA $7F026E : STA $7F02EE : STA $7F036E
+    STA $7F03EE : STA $7F046E : STA $7F04EE
+    BRA .three_alive
+
+  .phantoon_dead
+    LDA $7ED82C : BIT #$0001 : BEQ .two_or_three_alive
+  .one_or_two_alive
+    LDA $7ED82A : BIT #$0001 : BNE .one_alive
+    BRA .two_alive
+
+  .kraid_dead
+    LDA $7ED82A : BIT #$0100 : BNE .kraid_phantoon_dead
+    LDA $7ED82C : BIT #$0001 : BNE .one_or_two_alive
+  .two_or_three_alive
+    LDA $7ED82A : BIT #$0001 : BNE .two_alive
+
+  .three_alive
+    LDA #$830F : STA $7F0270 : STA $7F02F0 : STA $7F0370
+    STA $7F03F0 : STA $7F0470 : STA $7F04F0
+
+  .two_alive
+    LDA #$830F : STA $7F0272 : STA $7F02F2 : STA $7F0372
+    STA $7F03F2 : STA $7F0472 : STA $7F04F2
+    BRA .one_alive
+
+  .kraid_phantoon_dead
+    LDA $7ED82C : BIT #$0001 : BEQ .one_or_two_alive
+    LDA $7ED82A : BIT #$0001 : BNE .all_dead
+
+  .one_alive
+    LDA #$830F : STA $7F0274 : STA $7F02F4 : STA $7F0374
+    STA $7F03F4 : STA $7F0474 : STA $7F04F4
+
+  .all_dead
+    RTL
+}
+
 %endfree(83)
 
-
-; Allow debug save stations to be used
-org $848D0C
-    AND #$000F
-
-; Relocate grey door preinstruction table and add new type that has no prerequisite to begin flashing
-org $848C4F
-layout_grey_door_preinstruction_table:
-    dw $BDD4, $BDE3, $BDF2, $BE01, $BE1C, $BE1F, $BE30, $BDB2
-warnpc $848C7C
-
-org $84BE43
-    LDA layout_grey_door_preinstruction_table,Y
 
 ; Ignore bombs for bomb torizo with VARIA tweaks
 org $848258
@@ -1297,9 +1401,32 @@ layout_bomb_torizo_finish_crumbling:
     RTS
 warnpc $848270
 
+; Relocate grey door preinstruction table and add new type that has no prerequisite to begin flashing
+org $848C4F
+layout_grey_door_preinstruction_table:
+    dw $BDD4, $BDE3, $BDF2, $BE01, $BE1C, $BE1F, $BE30, $BDB2
+warnpc $848C7C
+
+; Allow debug save stations to be used
+org $848D0C
+    AND #$000F
+
+; Instruction set to restore MB escape wall
+org $8494C9
+layout_restore_mb_escape_wall:
+    dw $8004, $8B0F, $8AE8, $82E8, $830F
+    db $01, $00
+    dw $8004, $8B0F, $8AE8, $82E8, $830F
+    dw $0000
+warnpc $849505
+
 org $84AADF
 layout_save_station_mini_entry:
     dw $B5EE, #layout_save_station_mini_instructions
+
+org $84AC01
+hook_layout_restore_mb_escape_wall:
+    dw #layout_restore_mb_escape_wall
 
 org $84BA4C
 layout_bomb_grey_door_original_instructions:
@@ -1335,25 +1462,13 @@ warnpc $84BAF4
 org $84BAF8
     dw layout_bomb_grey_door_new_instructions
 
-org $84D33B
-layout_bomb_torizo_crumbling_preinstruction:
-    LDA !sram_room_layout : BIT !ROOM_LAYOUT_VARIA_TWEAKS : BNE layout_bomb_torizo_end_preinstruction
-    LDA !SAMUS_ITEMS_COLLECTED : AND #$1000 : BEQ layout_bomb_torizo_end_preinstruction
+org $84BE43
+    LDA layout_grey_door_preinstruction_table,Y
 
-layout_bomb_torizo_start_crumbling:
-    LDA #$0001 : STA $7EDE1C,X
-    JMP layout_bomb_torizo_finish_crumbling
-
-layout_bomb_torizo_end_preinstruction:
-warnpc $84D356
-
-if !FEATURE_PAL
-org $84E543
-else
-org $84E53D
-endif
-hook_layout_bomb_set_room_argument:
-    dw #layout_bomb_set_room_argument
+; Allow spazer blocks to be shot
+org $84D014
+layout_spazer_block_plm_entry:
+    dw #layout_spazer_block_plm, $CBB7
 
 ; Ignore picky chozo in DASH or VARIA tweaks
 org $84D18F
@@ -1375,10 +1490,17 @@ warnpc $84D1C1
 org $84D1DE
 layout_picky_chozo_end:
 
-; Allow spazer blocks to be shot
-org $84D014
-layout_spazer_block_plm_entry:
-    dw #layout_spazer_block_plm, $CBB7
+org $84D33B
+layout_bomb_torizo_crumbling_preinstruction:
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_VARIA_TWEAKS : BNE layout_bomb_torizo_end_preinstruction
+    LDA !SAMUS_ITEMS_COLLECTED : AND #$1000 : BEQ layout_bomb_torizo_end_preinstruction
+
+layout_bomb_torizo_start_crumbling:
+    LDA #$0001 : STA $7EDE1C,X
+    JMP layout_bomb_torizo_finish_crumbling
+
+layout_bomb_torizo_end_preinstruction:
+warnpc $84D356
 
 org $84D476
 layout_spazer_block_plm:
@@ -1390,6 +1512,14 @@ layout_spazer_block_plm:
     RTS
 }
 warnpc $84D490
+
+if !FEATURE_PAL
+org $84E543
+else
+org $84E53D
+endif
+hook_layout_bomb_set_room_argument:
+    dw #layout_bomb_set_room_argument
 
 ; Fix Morph Ball Hidden/Chozo PLM's
 if !FEATURE_PAL
@@ -1465,6 +1595,17 @@ layout_bomb_grey_door_check_fast:
     LDY #layout_bomb_grey_door_original_delay
   .done
     RTS
+}
+
+layout_fix_mb_escape_wall:
+{
+    ; Overwritten logic
+    STA !ENEMY_FUNCTION_POINTER
+
+    ; Custom PLM that restores escape wall
+    JSL $8483D7
+    dw $0600, $B66F
+    RTL
 }
 
 %endfree(84)
@@ -1861,6 +2002,11 @@ org $8FD0AF
 hook_layout_asm_crabtunnel:
     dw #layout_asm_crabtunnel
 
+; Mt Everest setup asm
+org $8FD0DE
+hook_layout_asm_mteverest:
+    dw #layout_asm_mteverest
+
 ; Red Fish setup asm
 org $8FD129
 hook_layout_asm_redfish:
@@ -1920,6 +2066,11 @@ hook_layout_asm_dust_torizo:
 org $8FDCDB
 hook_layout_asm_big_boy:
     dw #layout_asm_big_boy
+
+; Mother Brain state check asm
+org $8FDD67
+hook_layout_asm_mb_state_check:
+    dw #layout_asm_mb_state_check
 
 ; Tourian escape 2 main asm
 org $8FDE99
@@ -2123,6 +2274,37 @@ layout_asm_cutscene_g4skip:
     RTS
 }
 
+layout_asm_maprando_mb_header:
+    dl $CDDEDE
+    db $0E, $00, $00
+    dw $A0A4, #layout_asm_maprando_mb_enemies, #layout_asm_maprando_mb_enemy_set
+    dw $C1C1, $DDC0, $0000, $0000, $C84F, $E48A, $C91E
+
+layout_asm_mb_state_check:
+{
+    LDA !ram_door_portal_flags : AND !DOOR_PORTAL_MODE_MASK
+    CMP #$0002 : BNE .vanilla
+    LDA !ram_door_source : ASL : TAX
+    LDA portals_left_vanilla_table,X : CMP #$AA80 : BNE .vanilla
+    LDX #layout_asm_maprando_mb_header
+    JMP $E5E6
+  .vanilla
+    LDX #$DD6E
+    JMP $E5E6
+}
+
+layout_asm_mb_spawn_escape_door:
+{
+    ; Spawn Mother Brain's room escape door
+    JSL $8483D7
+    dw $0600, $B677
+
+    ; Replace MB enemy with maprando variant
+    LDA #layout_maprando_mb_enemy_header : STA !ENEMY_ID+$40
+
+    ; Fallthrough to Mother Brain HP
+}
+
 layout_asm_mbhp:
 {
 if !FEATURE_VANILLAHUD
@@ -2133,6 +2315,36 @@ else
 
   .done
 endif ; !FEATURE_VANILLAHUD
+    RTS
+}
+
+layout_asm_mb_to_tourian:
+{
+    LDA !ram_door_portal_flags : AND !DOOR_PORTAL_MODE_MASK
+    CMP #$0002 : BNE layout_asm_mbhp_done
+    LDA !ram_door_source : ASL : TAX
+    LDA portals_left_vanilla_table,X : CMP #$AAE0 : BNE layout_asm_mbhp_done
+
+    ; Set door direction to keep gate from appearing
+    LDA #$0001 : STA !DOOR_DIRECTION
+
+    ; Fallthrough to delete gate PLM
+}
+
+layout_asm_tourianescape1_remove_plm:
+{
+    ; Relocate and delete gate PLM that blocks the door
+    LDA #$05BE : STA $1CD3
+    LDA #!PLM_DELETE : STA $1D73
+    RTS
+}
+
+layout_asm_tourianescape1:
+{
+    LDA !ram_door_portal_flags : AND !DOOR_PORTAL_MODE_MASK
+    CMP #$0002 : BNE layout_asm_mbhp_done
+    LDA !ram_door_source : ASL : TAX
+    LDA portals_left_vanilla_table,X : CMP #$AAE0 : BEQ layout_asm_tourianescape1_remove_plm
     RTS
 }
 
@@ -2164,7 +2376,7 @@ layout_asm_magnetstairs:
 {
     PHP
     %ai16()
-    LDA !sram_room_layout : BIT !ROOM_LAYOUT_MAGNET_STAIRS : BEQ layout_asm_magnetstairs_done
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_NO_MAGNET_STAIRS : BEQ layout_asm_magnetstairs_done
 
     ; Modify graphics to indicate magnet stairs removed
     %a8()
@@ -2411,11 +2623,34 @@ layout_asm_crabtunnel_done:
 layout_asm_crabtunnel_savestation_plm_data:
     db #$DF, #$AA, #$07, #$0D, #$05, #$00
 
+layout_asm_mteverest:
+{
+    PHP
+    %ai16()
+
+    LDA !ram_door_portal_flags : AND !DOOR_PORTAL_MODE_MASK
+    CMP #$0002 : BNE layout_asm_crabtunnel_done
+    LDA !ram_door_destination : ASL : TAX
+    LDA portals_right_vanilla_table,X : CMP #$A45C : BNE layout_asm_crabtunnel_done
+
+    ; Expand hidden door and space in front of door
+    LDA #$911D : STA $7F1CA2 : STA $7F1D62 : STA $7F1E22
+    LDA #$011D : STA $7F1CA4 : STA $7F1D64 : STA $7F1E24 : STA $7F1EE4
+    STA $7F1CA6 : STA $7F1D66 : STA $7F1E26 : STA $7F1EE6
+
+    %a8()
+    LDA #$04 : STA $7F7252 : STA $7F72B2 : STA $7F7312
+}
+
+layout_asm_mteverest_done:
+    PLP
+    RTS
+
 layout_asm_easttunnel:
 {
     PHP
     %ai16()
-    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ layout_asm_crabtunnel_done
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BEQ layout_asm_mteverest_done
 
     ; Add flashing door PLMs
     PHX : LDX #layout_asm_easttunnel_lower_door_plm_data
@@ -3546,32 +3781,107 @@ layout_asm_pants_to_pants_scrolls:
 %endfree(8F)
 
 
+%startfree(A0)
+
+layout_maprando_mb_enemy_header:
+if !FEATURE_PAL
+    dw $1000, $9482, $4650, $0078, $0010, $0010, $00A9, $0000
+    dw $000A, $8715, $0001, $0000, $879B, $800F, $879B, $8041
+    dw $0000, $0000, $0000, $0000, $8797, $0000, $0000, $0000
+    dw $B613, $B554, $0000, $8000, $05B7, $F49A
+else
+    dw $1000, $9472, $4650, $0078, $0010, $0010, $00A9, $0000
+    dw $000A, $8705, $0001, $0000, $878B, $800F, $878B, $8041
+    dw $0000, $0000, $0000, $0000, $8787, $0000, $0000, $0000
+    dw $B5C6, $B507, $0000, $8000, $05B7, $F49A
+endif
+    dw layout_maprando_mb_vulnerabilities, $0000
+
+%endfree(A0)
+
+
 %startfree(A1)
 
 layout_asm_plasma_dash_enemies:
+if !FEATURE_PAL
+    dw $F6B3, #$0100, #$0080, #$0000, #$2000, #$0004, #$8001, #$0020
+    dw $F6B3, #$0080, #$01D0, #$0000, #$2000, #$0004, #$8000, #$0030
+    dw $F6B3, #$01B0, #$01D0, #$0000, #$2000, #$0004, #$8001, #$0030
+    dw $F3B3, #$0030, #$0180, #$0000, #$2000, #$0004, #$0000, #$01A0
+    dw $F3B3, #$01D0, #$0130, #$0000, #$2000, #$0004, #$0001, #$01A0
+    dw $F6B3, #$0078, #$0280, #$0000, #$2000, #$0004, #$8001, #$0080
+else
     dw $F693, #$0100, #$0080, #$0000, #$2000, #$0004, #$8001, #$0020
     dw $F693, #$0080, #$01D0, #$0000, #$2000, #$0004, #$8000, #$0030
     dw $F693, #$01B0, #$01D0, #$0000, #$2000, #$0004, #$8001, #$0030
     dw $F393, #$0030, #$0180, #$0000, #$2000, #$0004, #$0000, #$01A0
     dw $F393, #$01D0, #$0130, #$0000, #$2000, #$0004, #$0001, #$01A0
     dw $F693, #$0078, #$0280, #$0000, #$2000, #$0004, #$8001, #$0080
+endif
     db #$FF, #$FF, #$06
 
 layout_asm_statues_oob_viewer_enemies:
+if !FEATURE_PAL
+    dw $D75F, #$0080, #$01B0, #$0000, #$2C00, #$0000, #$0000, #$0240
+else
     dw $D73F, #$0080, #$01B0, #$0000, #$2C00, #$0000, #$0000, #$0240
+endif
+    db #$FF, #$FF, #$00
+
+layout_asm_maprando_mb_enemies:
+if !FEATURE_PAL
+    dw $EC9F, #$0081, #$006F, #$0000, #$2800, #$0004, #$0000, #$0000
+else
+    dw $EC7F, #$0081, #$006F, #$0000, #$2800, #$0004, #$0000, #$0000
+endif
+    dw #layout_maprando_mb_enemy_header
+    dw #$0081, #$006F, #$0000, #$2800, #$0004, #$0000, #$0000
+if !FEATURE_PAL
+    dw $E29F, #$0081, #$0000, #$0000, #$2000, #$0000, #$0000, #$0000
+    dw $D25F, #$0337, #$0036, #$0000, #$6000, #$0000, #$0001, #$0000
+    dw $D25F, #$0337, #$00A6, #$0000, #$6000, #$0000, #$0002, #$0000
+    dw $D25F, #$0277, #$001C, #$0000, #$6000, #$0000, #$0003, #$0000
+else
+    dw $E27F, #$0081, #$0000, #$0000, #$2000, #$0000, #$0000, #$0000
+    dw $D23F, #$0337, #$0036, #$0000, #$6000, #$0000, #$0001, #$0000
+    dw $D23F, #$0337, #$00A6, #$0000, #$6000, #$0000, #$0002, #$0000
+    dw $D23F, #$0277, #$001C, #$0000, #$6000, #$0000, #$0003, #$0000
+endif
     db #$FF, #$FF, #$00
 
 %endfree(A1)
 
 
+; Restore escape wall after MB1 in case of left entry
+org $ADE3D1
+    JSL layout_fix_mb_escape_wall
+
+
 %startfree(B4)
 
 layout_asm_plasma_dash_enemy_set:
+if !FEATURE_PAL
+    dw $F6B3, #$0001, $F3B3, #$0002
+else
     dw $F693, #$0001, $F393, #$0002
+endif
     db #$FF, #$FF, #$00
 
 layout_asm_statues_oob_viewer_enemy_set:
     db #$FF, #$FF, #$00
+
+layout_asm_maprando_mb_enemy_set:
+    dw #layout_maprando_mb_enemy_header, #$0001
+if !FEATURE_PAL
+    dw $D25F, #$0002, $EC9F, #$0001
+else
+    dw $D23F, #$0002, $EC7F, #$0001
+endif
+    db #$FF, #$FF, #$00
+
+layout_maprando_mb_vulnerabilities:
+    db #$80, #$80, #$80, #$80, #$80, #$80, #$80, #$80, #$80, #$80, #$80, #$80
+    db #$82, #$84, #$80, #$80, #$80, #$80, #$80, #$02, #$80, #$80
 
 %endfree(B4)
 

@@ -21,6 +21,7 @@
     dw status_vspeed
     dw status_quickdrop
     dw status_walljump
+    dw status_countdamage
     dw status_armpump
     dw status_pumpcounter
     dw status_xpos
@@ -935,100 +936,6 @@ endif
     RTS
 }
 
-status_door_hspeed:
-{
-    ; subspeed + submomentum into low byte of Hspeed
-    LDA !SAMUS_X_SUBRUNSPEED : CLC : ADC !SAMUS_X_SUBMOMENTUM
-    AND #$FF00 : XBA : STA !ram_momentum_sum
-
-    ; speed + momentum + carry into high byte of Hspeed
-    LDA !SAMUS_X_RUNSPEED : ADC !SAMUS_X_MOMENTUM
-    AND #$00FF : XBA : ORA !ram_momentum_sum
-
-    ; draw whole number in decimal
-    AND #$FF00 : XBA
-    STA $4204
-    %a8()
-    ; divide by 10
-    LDA #$0A : STA $4206
-    %a16()
-    PEA $0000 : PLA ; wait for CPU math
-
-    ; draw integer speed value
-    LDA $4214 : BEQ .blanktens
-    ; tens digit
-    ASL : TAX
-    LDA.l NumberGFXTable,X : STA !HUD_TILEMAP+$88
-    ; ones digit
-    LDA $4216 : ASL : TAX
-    LDA.l NumberGFXTable,X : STA !HUD_TILEMAP+$8A
-    BRA .subspeed
-
-  .blanktens
-    ; ones digit
-    LDA $4216 : ASL : TAX
-    LDA.l NumberGFXTable,X : STA !HUD_TILEMAP+$8A
-    ; tens digit
-    LDA !IH_BLANK : STA !HUD_TILEMAP+$88
-
-  .subspeed
-    LDA !IH_DECIMAL : STA !HUD_TILEMAP+$8C
-
-    ; draw fraction in hex
-    LDA !ram_momentum_sum : AND #$00F0 : LSR #3 : TAX
-    LDA.l HexGFXTable,X : STA !HUD_TILEMAP+$8E
-
-  .done
-    RTS
-}
-
-status_door_vspeed:
-{
-    ; draw two digits of speed in decimal form
-    LDA !SAMUS_Y_SPEED : STA $4204
-    %a8()
-    ; divide by 10
-    LDA #$0A : STA $4206
-    %a16()
-    PEA $0000 : PLA ; wait for CPU math
-    LDA $4214 : BEQ .blanktens
-    ASL : TAX
-    LDA.l NumberGFXTable,X : STA !HUD_TILEMAP+$88
-
-    ; Ones digit
-    LDA $4216 : ASL : TAY
-    LDA.l NumberGFXTable,X : STA !HUD_TILEMAP+$8A
-    BRA .subspeed
-
-  .blanktens
-    LDA $4216 : ASL : TAX
-    LDA.l NumberGFXTable,X : STA !HUD_TILEMAP+$88
-    LDA !IH_BLANK : STA !HUD_TILEMAP+$8A
-
-  .subspeed
-    LDA !IH_DECIMAL : STA !HUD_TILEMAP+$8A
-
-    LDA !SAMUS_Y_SUBSPEED : XBA : AND #$00F0 : LSR #3 : TAY
-    LDA.l HexGFXTable,X : STA !HUD_TILEMAP+$8C
-
-    RTS
-}
-
-status_door_dashcounter:
-{
-    LDA !SAMUS_DASH_COUNTER : LDX #$0088 : JMP Draw4
-}
-
-status_door_xpos:
-{
-    LDA !SAMUS_X : LDX #$0088 : JMP Draw4Hex
-}
-
-status_door_ypos:
-{
-    LDA !SAMUS_Y : LDX #$0088 : JMP Draw4Hex
-}
-
 status_quickdrop:
 {
     LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_LEFT : BNE .leftright
@@ -1358,6 +1265,15 @@ endif
     JMP .drawjumpcounter
 }
 
+status_countdamage:
+{
+    LDA !DAMAGE_COUNTER : CMP !ram_HUD_check : BEQ .done : STA !ram_HUD_check
+    LDX #$0088 : JSR Draw4
+
+  .done
+    RTS
+}
+
 status_armpump:
 {
     ; Store Samus HP so it doesn't overwrite our HUD
@@ -1650,6 +1566,7 @@ superhud_bottom_table:
     dw status_vspeed
     dw status_quickdrop
     dw status_walljump
+    dw status_countdamage
     dw status_armpump
     dw status_pumpcounter
     dw status_xpos
@@ -4986,6 +4903,141 @@ status_twocries_nosb:
 
   .clearhangtime
     TDC : STA !ram_quickdrop_counter
+    RTS
+}
+
+status_door_hspeed:
+{
+    LDA $12 : PHA
+
+    ; subspeed + submomentum into low byte of Hspeed
+    LDA !SAMUS_X_SUBRUNSPEED : CLC : ADC !SAMUS_X_SUBMOMENTUM
+    AND #$FF00 : XBA : STA !ram_momentum_sum
+
+    ; speed + momentum + carry into high byte of Hspeed
+    LDA !SAMUS_X_RUNSPEED : ADC !SAMUS_X_MOMENTUM
+    AND #$00FF : XBA : ORA !ram_momentum_sum
+
+    ; draw whole number in decimal
+    AND #$FF00 : XBA
+    STA $4204
+    %a8()
+    ; divide by 10
+    LDA #$0A : STA $4206
+    %a16()
+    PEA $0000 : PLA ; wait for CPU math
+
+    ; draw integer speed value
+    LDA $4214 : BEQ .blanktens
+    ; tens digit
+    ASL : TAX
+    LDA.l NumberGFXTable,X : STA !HUD_TILEMAP+$88
+    ; ones digit
+    LDA $4216 : ASL : TAX
+    LDA.l NumberGFXTable,X : STA !HUD_TILEMAP+$8A
+    BRA .subspeed
+
+  .blanktens
+    ; ones digit
+    LDA $4216 : ASL : TAX
+    LDA.l NumberGFXTable,X : STA !HUD_TILEMAP+$8A
+    ; tens digit
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$88
+
+  .subspeed
+    LDA !IH_DECIMAL : STA !HUD_TILEMAP+$8C
+
+    ; draw fraction in hex
+    LDA !ram_momentum_sum : AND #$00F0 : LSR #3 : TAX
+    LDA.l HexGFXTable,X : STA !HUD_TILEMAP+$8E
+
+  .done
+    PLA : STA $12
+    RTS
+}
+
+status_door_vspeed:
+{
+    LDA $12 : PHA
+
+    ; draw two digits of speed in decimal form
+    LDA !SAMUS_Y_SPEED : STA $4204
+    %a8()
+    ; divide by 10
+    LDA #$0A : STA $4206
+    %a16()
+    PEA $0000 : PLA ; wait for CPU math
+    LDA $4214 : BEQ .blanktens
+    ASL : TAX
+    LDA.l NumberGFXTable,X : STA !HUD_TILEMAP+$88
+
+    ; Ones digit
+    LDA $4216 : ASL : TAY
+    LDA.l NumberGFXTable,X : STA !HUD_TILEMAP+$8A
+    BRA .subspeed
+
+  .blanktens
+    LDA $4216 : ASL : TAX
+    LDA.l NumberGFXTable,X : STA !HUD_TILEMAP+$88
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$8A
+
+  .subspeed
+    LDA !IH_DECIMAL : STA !HUD_TILEMAP+$8A
+
+    LDA !SAMUS_Y_SUBSPEED : XBA : AND #$00F0 : LSR #3 : TAY
+    LDA.l HexGFXTable,X : STA !HUD_TILEMAP+$8C
+
+    PLA : STA $12
+    RTS
+}
+
+status_door_chargetimer:
+{
+    LDA $12 : PHA
+
+    LDA !SAMUS_CHARGE_TIMER : CMP #$003C : BPL .charged
+    LDA #$003C : SEC : SBC !SAMUS_CHARGE_TIMER
+    LDX #$0088 : JMP Draw4
+
+  .charged
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$88 : STA !HUD_TILEMAP+$8A
+    LDA !IH_SHINESPARK : STA !HUD_TILEMAP+$8C
+    LDA !SAMUS_CHARGE_TIMER : SEC : SBC #$003C
+    ASL : TAX : LDA NumberGFXTable,X : STA !HUD_TILEMAP+$8E
+
+    PLA : STA $12
+    RTS
+}
+
+status_door_shinetimer:
+{
+    LDA $12 : PHA
+    LDA !ram_armed_shine_duration : LDX #$0088 : JSR Draw4
+    PLA : STA $12
+    RTS
+}
+
+status_door_dashcounter:
+{
+    LDA $12 : PHA
+    LDA !SAMUS_DASH_COUNTER : LDX #$0088 : JSR Draw4
+    PLA : STA $12
+    RTS
+}
+
+status_door_xpos:
+{
+    LDA $12 : PHA
+    LDA !SAMUS_X : LDX #$0088 : JSR Draw4Hex
+    PLA : STA $12
+    RTS
+}
+
+status_door_ypos:
+{
+    LDA $12 : PHA
+    LDA !SAMUS_Y : LDX #$0088 : JSR Draw4Hex
+    PLA : STA $12
     RTS
 }
 

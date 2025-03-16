@@ -188,6 +188,10 @@ ram_baby_rng = !ram_baby_rng ; !WRAM_PERSIST_START+$66
 ram_turret_rng = !ram_turret_rng ; !WRAM_PERSIST_START+$68
 
 ram_quickboot_spc_state = !ram_quickboot_spc_state ; !WRAM_PERSIST_START+$6A
+ram_display_backup = !ram_display_backup ; !WRAM_PERSIST_START+$6C
+ram_phantoon_always_visible = !ram_phantoon_always_visible ; !WRAM_PERSIST_START+$6E
+ram_loadstate_rando_enable = !ram_loadstate_rando_enable ; !WRAM_PERSIST_START+$70
+ram_infinite_ammo = !ram_infinite_ammo ; !WRAM_PERSIST_START+$72
 
 ; ^ FREE SPACE ^ up to +$7C (!WRAM_START+$FC - !WRAM_PERSIST_START)
 
@@ -315,6 +319,12 @@ ram_cm_custompalette = !ram_cm_custompalette ; !WRAM_MENU_START+$86
 ram_cm_dummy_on = !ram_cm_dummy_on ; !WRAM_MENU_START+$8A
 ram_cm_dummy_off = !ram_cm_dummy_off ; !WRAM_MENU_START+$8C
 ram_cm_dummy_num = !ram_cm_dummy_num ; !WRAM_MENU_START+$8E
+
+ram_cm_ceres_seconds = !ram_cm_ceres_seconds ; !WRAM_MENU_START+$80
+ram_cm_zebes_seconds = !ram_cm_zebes_seconds ; !WRAM_MENU_START+$82
+
+ram_cm_crop_mode = !ram_cm_crop_mode ; !WRAM_MENU_START+$80
+ram_cm_crop_tile = !ram_cm_crop_tile ; !WRAM_MENU_START+$82
 
 ram_cm_brb = !ram_cm_brb ; !WRAM_MENU_START+$80
 ram_cm_brb_timer = !ram_cm_brb_timer ; !WRAM_MENU_START+$82
@@ -501,11 +511,18 @@ sram_superhud_bottom = !sram_superhud_bottom ; !SRAM_START+$94
 sram_superhud_middle = !sram_superhud_middle ; !SRAM_START+$96
 sram_superhud_top = !sram_superhud_top ; !SRAM_START+$98
 sram_infidoppler_enabled = !sram_infidoppler_enabled ; !SRAM_START+$9A
+sram_random_bubble_sfx = !sram_random_bubble_sfx ; !SRAM_START+$9C
+sram_demo_timer = !sram_demo_timer ; !SRAM_START+$9E
+sram_ceres_timer = !sram_ceres_timer ; !SRAM_START+$A0
+sram_zebes_timer = !sram_zebes_timer ; !SRAM_START+$A2
 
 ; ^ FREE SPACE ^ up to +$EE
 
 sram_ctrl_auto_save_state = !sram_ctrl_auto_save_state ; !SRAM_START+$F0
 sram_ctrl_toggle_spin_lock = !sram_ctrl_toggle_spin_lock ; !SRAM_START+$F2
+sram_ctrl_randomize_rng = !sram_ctrl_randomize_rng ; !SRAM_START+$F4
+sram_ctrl_reveal_damage = !sram_ctrl_reveal_damage ; !SRAM_START+$F6
+sram_ctrl_force_stand = !sram_ctrl_force_stand ; !SRAM_START+$F8
 
 ; ^ FREE SPACE ^ up to +$FE
 
@@ -517,6 +534,11 @@ sram_presetequiprando_max_missiles = !sram_presetequiprando_max_missiles ; !SRAM
 sram_presetequiprando_max_supers = !sram_presetequiprando_max_supers ; !SRAM_START+$10A
 sram_presetequiprando_max_pbs = !sram_presetequiprando_max_pbs ; !SRAM_START+$10C
 sram_display_mode_reward = !sram_display_mode_reward ; !SRAM_START+$10E
+sram_loadstate_rando_energy = !sram_loadstate_rando_energy ; !SRAM_START+$110
+sram_loadstate_rando_reserves = !sram_loadstate_rando_reserves ; !SRAM_START+$112
+sram_loadstate_rando_missiles = !sram_loadstate_rando_missiles ; !SRAM_START+$114
+sram_loadstate_rando_supers = !sram_loadstate_rando_supers ; !SRAM_START+$116
+sram_loadstate_rando_powerbombs = !sram_loadstate_rando_powerbombs ; !SRAM_START+$118
 
 ; ^ FREE SPACE ^ up to +$BA6
 
@@ -530,6 +552,6 @@ sram_custom_preset_names_tinystates = !sram_custom_preset_names_tinystates ; !SR
 
 ; SM specific things
 
-; ^ FREE SPACE ^ up to +$0FFE
+; ^ FREE SPACE ^ up to +$FFE
 
 ; --------------
