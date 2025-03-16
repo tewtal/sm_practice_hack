@@ -86,11 +86,11 @@ If you experience crashes or severe glitches when using savestates, your platfor
 |                               | Only enable this if you are applying custom room palettes.
 | - Compressed Tables           | Use built-in compressed tile tables when loading presets.
 |&nbsp;|
-| **Teleport**                  | Warp to any save station or hidden debug load station
+| **Save Stations**             | Warp to any save station or hidden debug load station
 |&nbsp;|
-| **Events**                    | Toggle event flags for events, bosses, items, doors, and map stations
+| **Event Flags**               | Toggle event flags for events, bosses, items, doors, and map stations
 |&nbsp;|
-| **Misc**                      | Toggle extra features
+| **Misc Options**              | Toggle extra features
 | - Blue Suit                   | Give Samus the Blue Suit
 | - Flash Suit                  | Give Samus the Flash Suit (aka Spike Suit)
 | - Hyper Beam                  | Toggle Hyper Beam
@@ -117,14 +117,16 @@ If you experience crashes or severe glitches when using savestates, your platfor
 | - Kill Enemies                | Kills all non-solid enemies in the current room
 | - Force Samus to Stand Up     | Forces Samus into a standing pose
 |&nbsp;|
-| **Infohud**                   | Configure the HUD
+| **InfoHUD**                   | Configure the HUD
 | - Infohud Mode                | Select the value from RAM to be displayed in the bottom-left of the HUD.
 |                               | [Click the link for more details.](/infohudmode)
 | - Strat Reward SFX            | Toggle a sound effect that plays when achieving certain HUD mode and room strats.
 | - Room Strat                  | Select which Room Strat to be displayed in the bottom-left of the HUD.
 |                               | This only works if "Room Strat" is selected as the above Infohud Mode.
+| - Configure Super HUD         | Options to replace the item% and status icons and reserves area with other infohud modes, while still having a primary infohud mode or room strat. Compatible with most but not all other infohud modes and room strats.
 | - Door HUD Mode               | Configure the HUD mode that runs when touching a door transition.
 |                               | Only works when the normal HUD mode is set to Enemy HP.
+| - Minimap                     | Restores the game minimap, which also allows the pause menu map to be updated. When enabled, a map tile counter will also be displayed.
 | - Top-Left Display            | Choose item collection percentage, reserve energy, or vanilla health to be displayed at the top-left of the HUD.
 |                               | The vanilla options also compresses the viewable area so it is more suitable for practice on an curved CRT monitor or TV.
 |                               | Vanilla+ allows infohud mode or roomstrat to overwrite the energy text while Vanilla simply shows the energy text.
@@ -135,7 +137,7 @@ If you experience crashes or severe glitches when using savestates, your platfor
 | - Artificial Lag              | Select a value to adjust how much lag occurs during normal gameplay. 
 |                               | This is to compensate for the lack of a minimap on the HUD which would normally consume CPU cycles.
 | - Customize RAM Watch         | Setup addresses to be monitored by the RAM Watch HUD mode. Address 1 will appear in the bottom-left corner of the HUD, while Address 2 appears just to the right of Address 1. Memory at these locations can be edited by configuring a Value and selecting 'Write to Address'. Toggle 'Lock Value' to automatically write the value once every frame. RAM Watch must must be the selected HUD mode to continue writing to the address. Only one byte of hex can be configured at a time in the menu. 'Hi' refers to the first byte, while 'Lo' refers to the second. Set the Hi Address to 0D and the Lo Address to EC to monitor the memory address $0DEC, which stores the counter for Samus direction changes while held by Draygon (among other uses). You can find lists of known RAM addresses by selecting 'Select Common Addresses'.
-| **Timer Settings**            | Located within the Infohud menu
+| **Timer Settings**            | Located within the InfoHUD menu
 | - Frame Counters              | Toggle the room timer in the top-right of the HUD between realtime, gametime, and "speedrun time".
 |                               | - Speedrun time is like realtime, except it includes time that was skipped due to practice hack features like shortened item fanfares, boss intros, door transitions, or elevators. This way, rooms and segments measured in the practice hack can be accurately compared to times from an actual run.
 | - Transition Lag              | Toggle the door time to include the full length of the room transition.
@@ -157,7 +159,8 @@ If you experience crashes or severe glitches when using savestates, your platfor
 | **Room Layout**               | Modify the room layout, usually to help practice rando scenarios.
 | - Item Pickups                | Option to replace all items with a specific item.  Can also be done by icon type (visible, chozo orb, hidden).
 | - Bomb Torizo Door            | Control Bomb Torizo Door oscillator, whether door waits 40 (fast) or 41 (slow) frames before closing after collecting bombs.
-| - Remove Magnet Stairs        | Adds slope tiles to prevent the magnet stairs effect.
+| - Remove Steam Collision      | Makes Ceres and Zebes escape steam intangible, and also changes the color of the steam indicating this option is enabled.
+| - Remove Magnet Stairs        | Adds slope tiles to prevent the magnet stairs effect, and also modifies the stair decoration indicating this option is enabled.
 | - Area Rando Patches          | Room modifications as you would see in a VARIA area randomizer.
 | - Anti-Softlock Patches       | Room modifications as you would see in a typical VARIA randomizer.
 | - VARIA Tweaks                | Room modifications as you would see with VARIA tweaks enabled.
@@ -171,23 +174,30 @@ If you experience crashes or severe glitches when using savestates, your platfor
 | - Select Portal Destination   | Choose the other portal connection, also the one used for Next Door Jump To Dest.
 | - Select Portal Door          | Choose a pair of aligned left/right or up/down portal connections.  Note that some up doors do not exist in the vanilla game (some of the ones requiring you to go up through falling sand) so those cannot be travelled going up.
 |&nbsp;|
-| **Game**                      | Toggle game options
+| **Game Options**              | Toggle game options
 | - Japanese/French Text        | Standard game option to toggle between English and Japanese text (NTSC) or between German and French text (PAL).
 | - Moon Walk                   | Standard game option for Moon Walk.
 | - Icon Cancel                 | Standard game option for Icon Cancel.
 | - Controller Setting Mode     | Allows controller bindings to be updated.
 | - Cutscenes and Effects       | Turn off specific cutscenes, or make specific game sequences faster.
 |                               | Also includes karafruit's options to disable or reduce flashing effects.
+| - Demo Timer                  | Set the amount of time you have to wait on the title screen before demos begin.
+| - Ceres Timer                 | Override the initial starting time of 60 seconds to escape Ceres.
+| - Zebes Timer                 | Override the initial starting time of 180 seconds to escape Zebes.
 | - Fast Doors                  | Toggle for fast doors similar to some randomizers.
 | - Fast Elevators              | Toggle for fast elevators similar to some randomizers.
+| - Top-Left Display            | Choose item collection percentage, reserve energy, or vanilla health to be displayed at the top-left of the HUD.
+|                               | The vanilla options also compresses the viewable area so it is more suitable for practice on an curved CRT monitor or TV.
+|                               | Vanilla+ allows infohud mode or roomstrat to overwrite the energy text while Vanilla simply shows the energy text.
 | - Minimap                     | Restores the game minimap, which also allows the pause menu map to be updated. When enabled, a map tile counter will also be displayed.
 | - Clear Minimap               | Clears the map tile counter and all minimap data.
 | - Force Map Grid Aligned      | When set, prevents vanilla bug where pause menu map can become horizontally misaligned with the grid behind the map.
-| **Debug Settings**            | Located within the Game menu
+| **Debug Settings**            | Located within the Game Options menu
 | - Debug Mode                  | Toggles the debug mode. Note that debug mode shortcuts and features may not be well supported in the practice rom.
 | - PAL Debug Movement          | Gives Samus extra movement correlated to the dpad input.
 | - Debug CPU Brightness        | Toggles a built-in debug feature to darken the screen after the game is done processing the next frame. Useful for estimating CPU usage.
 | - Invincibility               | Prevents Samus from taking damage or knockback.
+| - Infinite Ammo               | Sets ammo to maximum values and keeps it there.
 | - Deal Zero Damage            | Reduces Samus' attack damage to zero, allowing for never-ending boss battles.
 | - Pseudo G-Mode               | Disables PLMs to imitate the primary effect of G-Mode.
 | - Enable Projectiles          | Toggles a built-in debug feature to disable enemy projectiles.
@@ -201,6 +211,7 @@ If you experience crashes or severe glitches when using savestates, your platfor
 |                               | - Phan Eye Close: Choose how long Phantoon's eye will remain open after a ring of flames
 |                               | - Phan Flame Pattern: Choose one of four patterns for Phantoon's flames
 |                               | - Next Flame Pattern: Swaps with Phan Flame Pattern each time Phantoon chooses a pattern
+|                               | - Always Visible: Allows you to see how Phantoon moves after despawning and before raining down flames
 | - Botwoon First               | Choose the movement pattern for Botwoon's first cycle. The pattern names represent the hole Botwoon will the cycle at.
 | - Botwoon Hidden              | Choose the movement pattern for Botwoon's hidden cycle behind the background. Each pair of letters respresets the start and end position of the pattern.
 | - Botwoon Second              | Choose the movement pattern for Botwoon's second and subsequent cycles. Each pair of letters respresets the start and end position of the pattern.
@@ -220,6 +231,7 @@ If you experience crashes or severe glitches when using savestates, your platfor
 |                               | It also resets the segment timer. Beware that since it leverages the existing frame advance feature, toggling this on changes the way frame advance works.
 | - Auto-Save Mid Door          | Creates a savestate in the middle of the next door transition.
 | - Auto-Save Every Door        | Creates a savestate in the middle of every door transition.
+| - Energy/Ammo Variance        | Set ranges allowing resources to vary randomly when you reload a savestate.
 |&nbsp;|
 | **Slowdown Mode**             | Set if practice hack is in slowdown mode and the number of lag frames it is set for.
 |&nbsp;|
@@ -239,7 +251,10 @@ If you experience crashes or severe glitches when using savestates, your platfor
 | - Full Equipment              | Refills your energy and ammo to their current max capacities.
 | - Kill Enemies                | Instantly deletes all enemies in the current room.
 | - Toggle OOB Tiles            | Toggles the OOB Tile Viewer.
+| - Randomize RNG               | Force a reroll of the RNG routine.
+| - Toggle Boss Dmg             | Toggle the damage counter infohud mode to be shown or hidden.
 | - Update Timers               | Updates the HUD timers immediately.
+| - Force Stand                 | Force Samus into a standing position.
 | - Toggle Spin Lock            | Toggles Spin Lock.
 | - Clear Shortcuts             | Resets Main Menu shortcut to default and removes button combos for all others.
 | - Reset to Defaults           | Resets controller shortcuts to their original defaults.
@@ -253,13 +268,14 @@ If you experience crashes or severe glitches when using savestates, your platfor
 |                               | PB Fix = Defers trigger during power bomb explosions, which fixes issue where the alarm may not turn on or turn off.
 |                               | Improved = PB Fix + only triggers on with health+reserves is less than 30 (same requirements as initiating health bomb).
 |                               | Always On = Self-explanatory.
+| - Random Bubble SFX           | Option to turn these vanilla sound effects while underwater or in lava off, or to specify which sound is played.
 | - Customize Menu Sound        | Customize sounds that the practice hack menu makes.
 | - Music Selection             | Play any music track from a list.
 | - Library One/Two/Three Sound | Choose a sound effect to play from one of the three collections. Sounds from Libraries two and three usually depend on a partiular music track.
 |                               | Press Y to play the selected sound effect.
 | - Silence Sound FX            | Stops all sound effects. This is useful for certain sound effects that loop, such as Mother Brain's rainbow beam.
 |&nbsp;|
-| **Customize Menu**            | Change color palettes and sound effects used by the practice hack menus.
+| **Customize Practice Menu**   | Change color palettes and sound effects used by the practice hack menus.
 | - Menu Background             | Toggle the background of the menu on or off. The background will always be drawn in the pause menu and Ceres Elevator Room.
 | - Customize Menu Palette      | Customize the color palettes of each element of the menu. There are three sets of options for editing colors. The Hexadecimal set is an approximation of traditional 24bit RGB values. The Decimal set is a simplified version with a scale of 0-31 for each color. The SNES BGR set is the 15bit color value used internally, which is also how it's displayed in the "Screenshot To Share Colors" submenu. Example menu items are provided to show your changes in real time.
 | - Menu Palette                | Cycle through a list of pre-made palette profiles from the community. Select CUSTOM to edit your own palettes.
@@ -270,6 +286,9 @@ If you experience crashes or severe glitches when using savestates, your platfor
 | - Fast-Scroll Button          | Choose between holding X or Y to make numbers scroll at 4x speed, or disable this feature and scroll at pre-defined increments.
 | - Menu Scroll Delay           | Set the number of frames before scrolling to the next menu item when Up or Down are held.
 | - Customize Menu Header       | Type a customized header for the main menu, up to 23 characters. Set it blank to restore the default header.
+| - Factory Reset               | Clears WRAM and SRAM used by the practice hack allowing for a reset to default settings, which an option to keep custom presets.
+|&nbsp;|
+| **Capture Cropping Mode**     | Put a border around the screen to help with cropping or monitor adjustments.
 |&nbsp;|
 | **Be Right Back Menu**        | Put a BRB screen, with various options including a countdown timer for your estimated return (timer begins counting up when it expires).
 
