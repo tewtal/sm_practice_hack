@@ -3685,6 +3685,7 @@ cm_spc_next_block:
 
     STA $2141
 
+    STY !cm_spc_data
     %a16()
     LDA.w #cm_spc_next_block_wait : STA !ram_quickboot_spc_state
 
@@ -3709,7 +3710,6 @@ cm_spc_next_block_wait:
     %a16()
     LDA !cm_spc_len : BEQ .eof
     LDA.w #cm_spc_transfer : STA !ram_quickboot_spc_state
-    STY !cm_spc_data
     RTS
 
   .eof
