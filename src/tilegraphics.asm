@@ -537,7 +537,7 @@ preset_transfer_to_vram:
     LDA !SAMUS_Y : ASL #3 : XBA : AND #$003C
     ; The bottom of west ocean is the same as east ocean
     CMP #$0028 : BPL .east_ocean
-    CLC : ADC.w #preset_vram_landing_site_params : TAX
+    CLC : ADC.w #preset_vram_west_ocean_params : TAX
     BRA .transfer
 
   .east_ocean
