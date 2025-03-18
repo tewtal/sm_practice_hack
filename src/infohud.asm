@@ -470,10 +470,6 @@ ih_before_room_transition:
     ; Update HUD
     JSL ih_update_hud_before_transition
 
-    ; Restore temp variables
-    PLA : STA $14
-    PLA : STA $12
-
     ; Calculate door alignment time
     LDX !DOOR_ID : AND #$00FF
     %a8() ; Draw3 returns a16
@@ -506,6 +502,11 @@ ih_before_room_transition:
 
   .done
     PLB
+
+    ; Restore temp variables
+    PLA : STA $14
+    PLA : STA $12
+
     CLC ; overwritten code
     RTL
 
