@@ -294,11 +294,12 @@ if !FEATURE_SD2SNES
     LDA $4212 : BIT #$01 : BNE .wait_joypad
 
     %a16()
-    LDA $4218 : BEQ .done
-    CMP !sram_ctrl_load_state : BNE .done
-    LDA !SRAM_SAVED_STATE : CMP !SAFEWORD : BNE .done
-    PHB : PHK : PLB
-    JML load_state
+    ; TODO re-enable load state, or maybe run the whole shortcut routine from here?
+    ; LDA $4218 : BEQ .done
+    ; CMP !sram_ctrl_load_state : BNE .done
+    ; LDA !SRAM_SAVED_STATE : CMP !SAFEWORD : BNE .done
+    ; PHB : PHK : PLB
+    ; JML load_state
 
   .done
 endif

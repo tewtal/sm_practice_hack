@@ -247,9 +247,7 @@ cutscenes_game_over:
     ; check for cutscene flag or whatever
     LDA !sram_cutscenes : BIT !CUTSCENE_SKIP_GAMEOVER : BEQ .game_over
 if !FEATURE_SD2SNES
-    ; check if valid savestate
-    LDA !SRAM_SAVED_STATE : CMP !SAFEWORD : BNE .no_savestate
-    JML gamemode_shortcuts_load_state
+    JSL gamemode_load_state
 endif
 
   .no_savestate

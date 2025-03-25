@@ -347,9 +347,10 @@ load_return:
     %ai16()
     LDA !SRAM_SAVED_SP : TCS
 
-    ; rewrite inputs so that holding load won't keep loading, as well as rewriting saving input to loading input
-    LDA !IH_CONTROLLER_PRI : EOR !sram_ctrl_save_state : ORA !sram_ctrl_load_state
-    STA !IH_CONTROLLER_PRI : STA !IH_CONTROLLER_PRI_NEW : STA !IH_CONTROLLER_PRI_PREV
+    ; rewrite inputs so that holding load won't keep loading
+    TDC : STA !IH_CONTROLLER_PRI : STA !IH_CONTROLLER_SEC
+    DEC : STA !IH_CONTROLLER_PRI_NEW : STA !IH_CONTROLLER_SEC_NEW
+    STA !IH_CONTROLLER_PRI_PREV : STA !IH_CONTROLLER_SEC_PREV
 
     ; clear frame held counters
     TDC

@@ -10,7 +10,16 @@ incsrc wram_symbols.asm
 ; Work RAM
 ; ---------
 
-ram_tilemap_buffer = !ram_tilemap_buffer ; $7E5800
+; The crash buffer and initial address can be moved around as needed
+; It is currently placed in the back half of the backup of BG2 tilemap during x-ray,
+; which means it is unlikely to overwrite anything relevant for debugging
+
+; Practice hack menu tilemap buffer
+ram_tilemap_buffer = !ram_tilemap_buffer ; $7EF500 ; 2048 bytes
+
+; Shortcut routine is written on boot and each time the menu closes,
+; so it can use the same space as the practice hack menu tilemap buffer
+; Shortcuts can skip remaining checks by replacing the return address word
 
 ; These variables are NOT PERSISTENT across savestates --
 ; they're saved and reloaded along with the game state.
@@ -174,7 +183,7 @@ ram_watch_edit_lock_left = !ram_watch_edit_lock_left ; !WRAM_PERSIST_START+$4A
 ram_watch_edit_lock_right = !ram_watch_edit_lock_right ; !WRAM_PERSIST_START+$4C
 
 ram_game_loop_extras = !ram_game_loop_extras ; !WRAM_PERSIST_START+$4E
-ram_game_mode_extras = !ram_game_mode_extras ; !WRAM_PERSIST_START+$50
+ram_infinite_ammo = !ram_infinite_ammo ; !WRAM_PERSIST_START+$50
 ram_suits_heat_damage_value = !ram_suits_heat_damage_value ; !WRAM_PERSIST_START+$52
 ram_sprite_feature_flags = !ram_sprite_feature_flags ; !WRAM_PERSIST_START+$54
 ram_door_portal_flags = !ram_door_portal_flags ; !WRAM_PERSIST_START+$56
@@ -192,7 +201,6 @@ ram_quickboot_spc_state = !ram_quickboot_spc_state ; !WRAM_PERSIST_START+$6A
 ram_display_backup = !ram_display_backup ; !WRAM_PERSIST_START+$6C
 ram_phantoon_always_visible = !ram_phantoon_always_visible ; !WRAM_PERSIST_START+$6E
 ram_loadstate_rando_enable = !ram_loadstate_rando_enable ; !WRAM_PERSIST_START+$70
-ram_infinite_ammo = !ram_infinite_ammo ; !WRAM_PERSIST_START+$72
 
 ; ^ FREE SPACE ^ up to +$7C (!WRAM_START+$FC - !WRAM_PERSIST_START)
 
@@ -215,52 +223,47 @@ ram_cm_controller = !ram_cm_controller ; !WRAM_MENU_START+$24
 ram_cm_menu_bank = !ram_cm_menu_bank ; !WRAM_MENU_START+$26
 ram_cm_horizontal_cursor = !ram_cm_horizontal_cursor ; !WRAM_MENU_START+$28
 
-ram_cm_etanks = !ram_cm_etanks ; !WRAM_MENU_START+$2A
-ram_cm_reserve = !ram_cm_reserve ; !WRAM_MENU_START+$2C
-ram_cm_leave = !ram_cm_leave ; !WRAM_MENU_START+$2E
-ram_cm_input_counter = !ram_cm_input_counter ; !WRAM_MENU_START+$30
-ram_cm_last_nmi_counter = !ram_cm_last_nmi_counter ; !WRAM_MENU_START+$32
+ram_cm_leave = !ram_cm_leave ; !WRAM_MENU_START+$2A
+ram_cm_input_counter = !ram_cm_input_counter ; !WRAM_MENU_START+$2C
+ram_cm_last_nmi_counter = !ram_cm_last_nmi_counter ; !WRAM_MENU_START+$2E
+ram_cm_ctrl_mode = !ram_cm_ctrl_mode ; !WRAM_MENU_START+$30
+ram_cm_custom_preset_labels = !ram_cm_custom_preset_labels ; !WRAM_MENU_START+$32
 
-ram_cm_ctrl_mode = !ram_cm_ctrl_mode ; !WRAM_MENU_START+$34
-ram_cm_ctrl_timer = !ram_cm_ctrl_timer ; !WRAM_MENU_START+$36
-ram_cm_ctrl_last_input = !ram_cm_ctrl_last_input ; !WRAM_MENU_START+$38
-ram_cm_ctrl_assign = !ram_cm_ctrl_assign ; !WRAM_MENU_START+$3A
-ram_cm_ctrl_swap = !ram_cm_ctrl_swap ; !WRAM_MENU_START+$3C
+ram_cm_slowdown_mode = !ram_cm_slowdown_mode ; !WRAM_MENU_START+$34
+ram_cm_slowdown_frames = !ram_cm_slowdown_frames ; !WRAM_MENU_START+$36
 
-ram_cm_slowdown_mode = !ram_cm_slowdown_mode ; !WRAM_MENU_START+$3E
-ram_cm_slowdown_frames = !ram_cm_slowdown_frames ; !WRAM_MENU_START+$40
+ram_seed_X = !ram_seed_X ; !WRAM_MENU_START+$38
+ram_seed_Y = !ram_seed_Y ; !WRAM_MENU_START+$3A
 
-ram_cm_botwoon_rng = !ram_cm_botwoon_rng ; !WRAM_MENU_START+$42
-ram_cm_botwoon_first = !ram_cm_botwoon_first ; !WRAM_MENU_START+$44
-ram_cm_botwoon_hidden = !ram_cm_botwoon_hidden ; !WRAM_MENU_START+$46
-ram_cm_botwoon_second = !ram_cm_botwoon_second ; !WRAM_MENU_START+$48
-ram_cm_botwoon_spit = !ram_cm_botwoon_spit ; !WRAM_MENU_START+$4A
-ram_cm_custom_preset_labels = !ram_cm_custom_preset_labels ; !WRAM_MENU_START+$4C
+ram_cm_fast_scroll_menu_selection = !ram_cm_fast_scroll_menu_selection ; !WRAM_MENU_START+$3C
+ram_cm_suit_properties = !ram_cm_suit_properties ; !WRAM_MENU_START+$3E
 
-ram_seed_X = !ram_seed_X ; !WRAM_MENU_START+$4E
-ram_seed_Y = !ram_seed_Y ; !WRAM_MENU_START+$50
+ram_cm_palette_border = !ram_cm_palette_border ; !WRAM_MENU_START+$40
+ram_cm_palette_headeroutline = !ram_cm_palette_headeroutline ; !WRAM_MENU_START+$42
+ram_cm_palette_text = !ram_cm_palette_text ; !WRAM_MENU_START+$44
+ram_cm_palette_background = !ram_cm_palette_background ; !WRAM_MENU_START+$46
+ram_cm_palette_numoutline = !ram_cm_palette_numoutline ; !WRAM_MENU_START+$48
+ram_cm_palette_numfill = !ram_cm_palette_numfill ; !WRAM_MENU_START+$4A
+ram_cm_palette_toggleon = !ram_cm_palette_toggleon ; !WRAM_MENU_START+$4C
+ram_cm_palette_seltext = !ram_cm_palette_seltext ; !WRAM_MENU_START+$4E
+ram_cm_palette_seltextbg = !ram_cm_palette_seltextbg ; !WRAM_MENU_START+$50
+ram_cm_palette_numseloutline = !ram_cm_palette_numseloutline ; !WRAM_MENU_START+$52
+ram_cm_palette_numsel = !ram_cm_palette_numsel ; !WRAM_MENU_START+$54
 
-ram_cm_sfxlib1 = !ram_cm_sfxlib1 ; !WRAM_MENU_START+$52
-ram_cm_sfxlib2 = !ram_cm_sfxlib2 ; !WRAM_MENU_START+$54
-ram_cm_sfxlib3 = !ram_cm_sfxlib3 ; !WRAM_MENU_START+$56
+ram_cm_sfxlib1 = !ram_cm_sfxlib1 ; !WRAM_MENU_START+$56
+ram_cm_sfxlib2 = !ram_cm_sfxlib2 ; !WRAM_MENU_START+$58
+ram_cm_sfxlib3 = !ram_cm_sfxlib3 ; !WRAM_MENU_START+$5A
 
-ram_cm_fast_scroll_menu_selection = !ram_cm_fast_scroll_menu_selection ; !WRAM_MENU_START+$58
-ram_timers_autoupdate = !ram_timers_autoupdate ; !WRAM_MENU_START+$5A
-ram_cm_suit_properties = !ram_cm_suit_properties ; !WRAM_MENU_START+$5C
+ram_sram_savestates = !ram_sram_savestates ; !WRAM_MENU_START+$5C
 
-ram_cm_palette_border = !ram_cm_palette_border ; !WRAM_MENU_START+$5E
-ram_cm_palette_headeroutline = !ram_cm_palette_headeroutline ; !WRAM_MENU_START+$60
-ram_cm_palette_text = !ram_cm_palette_text ; !WRAM_MENU_START+$62
-ram_cm_palette_background = !ram_cm_palette_background ; !WRAM_MENU_START+$64
-ram_cm_palette_numoutline = !ram_cm_palette_numoutline ; !WRAM_MENU_START+$66
-ram_cm_palette_numfill = !ram_cm_palette_numfill ; !WRAM_MENU_START+$68
-ram_cm_palette_toggleon = !ram_cm_palette_toggleon ; !WRAM_MENU_START+$6A
-ram_cm_palette_seltext = !ram_cm_palette_seltext ; !WRAM_MENU_START+$6C
-ram_cm_palette_seltextbg = !ram_cm_palette_seltextbg ; !WRAM_MENU_START+$6E
-ram_cm_palette_numseloutline = !ram_cm_palette_numseloutline ; !WRAM_MENU_START+$70
-ram_cm_palette_numsel = !ram_cm_palette_numsel ; !WRAM_MENU_START+$72
+ram_timers_autoupdate = !ram_timers_autoupdate ; !WRAM_MENU_START+$5E
+ram_cm_gmode = !ram_cm_gmode ; !WRAM_MENU_START+$60
 
-ram_cm_gmode = !ram_cm_gmode ; !WRAM_MENU_START+$74
+ram_cm_botwoon_rng = !ram_cm_botwoon_rng ; !WRAM_MENU_START+$62
+ram_cm_botwoon_first = !ram_cm_botwoon_first ; !WRAM_MENU_START+$64
+ram_cm_botwoon_hidden = !ram_cm_botwoon_hidden ; !WRAM_MENU_START+$66
+ram_cm_botwoon_second = !ram_cm_botwoon_second ; !WRAM_MENU_START+$68
+ram_cm_botwoon_spit = !ram_cm_botwoon_spit ; !WRAM_MENU_START+$68
 
 ; ^ FREE SPACE ^ up to +$86
 
@@ -306,6 +309,8 @@ ram_cm_ice = !ram_cm_ice ; !WRAM_MENU_START+$A4
 ram_cm_wave = !ram_cm_wave ; !WRAM_MENU_START+$A6
 ram_cm_spazer = !ram_cm_spazer ; !WRAM_MENU_START+$A8
 ram_cm_plasma = !ram_cm_plasma ; !WRAM_MENU_START+$AA
+ram_cm_etanks = !ram_cm_etanks ; !WRAM_MENU_START+$AC
+ram_cm_reserve = !ram_cm_reserve ; !WRAM_MENU_START+$AE
 
 ram_cm_zeb1 = !ram_cm_zeb1 ; !WRAM_MENU_START+$90
 ram_cm_zeb2 = !ram_cm_zeb2 ; !WRAM_MENU_START+$92
@@ -323,6 +328,13 @@ ram_cm_dummy_num = !ram_cm_dummy_num ; !WRAM_MENU_START+$9E
 
 ram_cm_ceres_seconds = !ram_cm_ceres_seconds ; !WRAM_MENU_START+$90
 ram_cm_zebes_seconds = !ram_cm_zebes_seconds ; !WRAM_MENU_START+$92
+
+ram_cm_ctrl_add_shortcut_slot = !ram_cm_ctrl_add_shortcut_slot ; !WRAM_MENU_START+$90
+ram_cm_ctrl_last_pri = !ram_cm_ctrl_last_pri ; !WRAM_MENU_START+$92
+ram_cm_ctrl_last_sec = !ram_cm_ctrl_last_sec ; !WRAM_MENU_START+$94
+ram_cm_ctrl_assign = !ram_cm_ctrl_assign ; !WRAM_MENU_START+$96
+ram_cm_ctrl_swap = !ram_cm_ctrl_swap ; !WRAM_MENU_START+$98
+ram_cm_ctrl_timer = !ram_cm_ctrl_timer ; !WRAM_MENU_START+$9A
 
 ram_cm_crop_mode = !ram_cm_crop_mode ; !WRAM_MENU_START+$90
 ram_cm_crop_tile = !ram_cm_crop_tile ; !WRAM_MENU_START+$92
@@ -428,23 +440,8 @@ ram_infidoppler_suby = !ram_infidoppler_suby ; !END_OF_SINGLE_SCROLL_ROOM_LEVEL_
 ; -----
 
 sram_initialized = !sram_initialized ; !SRAM_START+$00
-
-sram_ctrl_menu = !sram_ctrl_menu ; !SRAM_START+$02
-sram_ctrl_kill_enemies = !sram_ctrl_kill_enemies ; !SRAM_START+$04
-sram_ctrl_full_equipment = !sram_ctrl_full_equipment ; !SRAM_START+$06
-sram_ctrl_reset_segment_timer = !sram_ctrl_reset_segment_timer ; !SRAM_START+$08
-sram_ctrl_reset_segment_later = !sram_ctrl_reset_segment_later ; !SRAM_START+$0A
-sram_ctrl_load_state = !sram_ctrl_load_state ; !SRAM_START+$0C
-sram_ctrl_save_state = !sram_ctrl_save_state ; !SRAM_START+$0E
-sram_ctrl_load_last_preset = !sram_ctrl_load_last_preset ; !SRAM_START+$10
-sram_ctrl_random_preset = !sram_ctrl_random_preset ; !SRAM_START+$12
-sram_ctrl_save_custom_preset = !sram_ctrl_save_custom_preset ; !SRAM_START+$14
-sram_ctrl_load_custom_preset = !sram_ctrl_load_custom_preset ; !SRAM_START+$16
-sram_ctrl_inc_custom_preset = !sram_ctrl_inc_custom_preset ; !SRAM_START+$18
-sram_ctrl_dec_custom_preset = !sram_ctrl_dec_custom_preset ; !SRAM_START+$1A
-sram_ctrl_toggle_tileviewer = !sram_ctrl_toggle_tileviewer ; !SRAM_START+$1C
-sram_ctrl_update_timers = !sram_ctrl_update_timers ; !SRAM_START+$1E
-; More ctrl shortcuts starting at $F0
+sram_ctrl_shortcut_selections = !sram_ctrl_shortcut_selections ; !SRAM_START+$02 ; 30 bytes
+; More ctrl shortcut selections starting at $EE
 
 sram_artificial_lag = !sram_artificial_lag ; !SRAM_START+$20
 sram_rerandomize = !sram_rerandomize ; !SRAM_START+$22
@@ -517,15 +514,10 @@ sram_demo_timer = !sram_demo_timer ; !SRAM_START+$9E
 sram_ceres_timer = !sram_ceres_timer ; !SRAM_START+$A0
 sram_zebes_timer = !sram_zebes_timer ; !SRAM_START+$A2
 
-; ^ FREE SPACE ^ up to +$EE
+; ^ FREE SPACE ^ up to +$EC
 
-sram_ctrl_auto_save_state = !sram_ctrl_auto_save_state ; !SRAM_START+$F0
-sram_ctrl_toggle_spin_lock = !sram_ctrl_toggle_spin_lock ; !SRAM_START+$F2
-sram_ctrl_randomize_rng = !sram_ctrl_randomize_rng ; !SRAM_START+$F4
-sram_ctrl_reveal_damage = !sram_ctrl_reveal_damage ; !SRAM_START+$F6
-sram_ctrl_force_stand = !sram_ctrl_force_stand ; !SRAM_START+$F8
-
-; ^ FREE SPACE ^ up to +$FE
+; This is a continuation of sram_ctrl_shortcut_selections
+sram_ctrl_additional_selections = !sram_ctrl_additional_selections ; !SRAM_START+$D0 ; 18 bytes starting from +$EE
 
 sram_presetequiprando = !sram_presetequiprando ; !SRAM_START+$100
 sram_presetequiprando_beampref = !sram_presetequiprando_beampref ; !SRAM_START+$102
@@ -540,6 +532,11 @@ sram_loadstate_rando_reserves = !sram_loadstate_rando_reserves ; !SRAM_START+$11
 sram_loadstate_rando_missiles = !sram_loadstate_rando_missiles ; !SRAM_START+$114
 sram_loadstate_rando_supers = !sram_loadstate_rando_supers ; !SRAM_START+$116
 sram_loadstate_rando_powerbombs = !sram_loadstate_rando_powerbombs ; !SRAM_START+$118
+
+; ^ FREE SPACE ^ up to +$13E
+
+sram_ctrl_1_shortcut_inputs = !sram_ctrl_1_shortcut_inputs ; !SRAM_START+$140 ; 96 bytes
+sram_ctrl_2_shortcut_inputs = !sram_ctrl_2_shortcut_inputs ; !SRAM_START+$1A0 ; 96 bytes
 
 ; ^ FREE SPACE ^ up to +$BA6
 

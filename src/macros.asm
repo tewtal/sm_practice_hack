@@ -86,7 +86,18 @@ macro cm_footer(title)
 ; optional outlined text below the menu items
   .dm_footer
 table ../resources/header.tbl
-    dw #$F007 : db #$28, "<title>", #$FF
+    dw #$F007
+    db #$28, "<title>", #$FF
+table ../resources/normal.tbl
+endmacro
+
+macro cm_footer_ctrlshortcut(title1, title2)
+; optional outlined text below the menu items
+  .dm_footer1
+table ../resources/header.tbl
+    dw #$F006
+    db #$28, "<title1>", #$FF
+    db #$28, "<title2>", #$FF
 table ../resources/normal.tbl
 endmacro
 
@@ -327,7 +338,7 @@ macro cm_adjacent_submenu(title, target)
 ; can only used for submenus and when already on a submenu
     %cm_jsl("<title>", #.routine, <target>)
   .routine
-    JSL cm_previous_menu
+    JSL cm_go_back_adjacent_submenu
     JML action_submenu
 endmacro
 
@@ -360,15 +371,13 @@ table ../resources/normal.tbl
     db #$28, "<slot>", #$FF
 endmacro
 
-macro cm_ctrl_shortcut(title, addr)
-; configure controller shortcuts
+macro cm_ctrl_shortcut(slot)
+; Configure controller shortcuts
+ctrlshortcut_<slot>:
   .dm_actionIndex
     dw !ACTION_CTRL_SHORTCUT
-  .dm_addr
-    dl <addr> ; 24bit RAM address to display/manipulate
-  .dm_text
-table ../resources/normal.tbl
-    db #$28, "<title>", #$FF
+  .dm_slot
+    db <slot>
 endmacro
 
 macro cm_ctrl_input(title, addr, routine, argument)

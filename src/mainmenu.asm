@@ -84,6 +84,22 @@ action_game_mainmenu:
     ORA !ram_cm_ceres_seconds : STA !ram_cm_ceres_seconds
     LDA !sram_zebes_timer : AND #$000F
     ORA !ram_cm_zebes_seconds : STA !ram_cm_zebes_seconds
+    JMP action_mainmenu
+}
+
+action_ctrlshortcut_mainmenu:
+{
+    TDC : TAX
+    %a8()
+  .firstLoop
+    LDA !sram_ctrl_shortcut_selections,X : BEQ .found
+    INX : CPX #$001E : BMI .firstLoop
+  .secondLoop
+    LDA !sram_ctrl_additional_selections,X : BEQ .found
+    INX : CPX #$0030 : BMI .secondLoop
+  .found
+    %a16()
+    TXA : STA !ram_cm_ctrl_add_shortcut_slot
     BRA action_mainmenu
 }
 
@@ -91,6 +107,12 @@ action_crop_mainmenu:
 {
     ; Prepare crop modes
     TDC : STA !ram_cm_crop_mode : STA !ram_cm_crop_tile
+    BRA action_mainmenu
+}
+
+action_equipment_mainmenu:
+{
+    JSL cm_set_etanks_and_reserve
     BRA action_mainmenu
 }
 
@@ -162,7 +184,7 @@ action_submenu:
     BRA action_submenu_jump
 }
 
-action_presets_submenu:
+action_presets_mainmenu:
 {
     ; Increment stack pointer by 2, then store current menu
     LDA !MENU_STACK_INDEX : INC #2 : STA !MENU_STACK_INDEX : TAX
@@ -182,12 +204,16 @@ action_submenu_jump:
 {
     ; Set cursor to top for new menus
     TDC : STA !ram_cm_cursor_stack,X
-
-    %sfxmove()
     JSL cm_calculate_max
     JSL cm_colors
-    JSL cm_draw
-    RTL
+
+    ; Perform the cm_move check
+    ; in case we shouldn't be on the first line
+    LDA #$0002 : STA !DP_Temp
+    LDY #$0000 : LDX !MENU_STACK_INDEX
+    LDA !ram_cm_menu_stack,X : STA !DP_MenuIndices
+    JSL cm_move_checkBlankLine
+    JML cm_draw
 }
 
 preset_category_submenus:
@@ -271,7 +297,7 @@ if !FEATURE_SD2SNES
     dw #mm_goto_savestate
 endif
     dw #mm_goto_timecontrol
-    dw #mm_goto_ctrlsmenu
+    dw #mm_goto_ctrlshortcut
     dw #mm_goto_audiomenu
     dw #mm_goto_customize
     dw #mm_goto_cropmenu
@@ -308,17 +334,17 @@ if !FEATURE_SD2SNES
     dw #SavestateMenu>>16
 endif
     dw #SlowdownMenu>>16
-    dw #CtrlMenu>>16
+    dw #CtrlShortcutMenu>>16
     dw #AudioMenu>>16
     dw #CustomizeMenu>>16
     dw #CaptureCroppingMenu>>16
     dw #BRBMenu>>16
 
 mm_goto_equipment:
-    %cm_mainmenu("Equipment", #EquipmentMenu)
+    %cm_jsl("Equipment", #action_equipment_mainmenu, #EquipmentMenu)
 
 mm_goto_presets:
-    %cm_jsl("Category Presets", #action_presets_submenu, #$0000)
+    %cm_jsl("Category Presets", #action_presets_mainmenu, #$0000)
 
 mm_goto_presets_menu:
     %cm_jsl("Preset Options", #action_preset_options_mainmenu, #PresetOptionsMenu)
@@ -358,8 +384,8 @@ endif
 mm_goto_timecontrol:
     %cm_mainmenu("Slowdown Mode", #SlowdownMenu)
 
-mm_goto_ctrlsmenu:
-    %cm_mainmenu("Controller Shortcuts", #CtrlMenu)
+mm_goto_ctrlshortcut:
+    %cm_jsl("Controller Shortcuts", #action_ctrlshortcut_mainmenu, #CtrlShortcutMenu)
 
 mm_goto_audiomenu:
     %cm_mainmenu("Audio Menu", #AudioMenu)
@@ -892,8 +918,7 @@ else
   .done
 endif
 endif
-    JSL cm_previous_menu
-    %setmenubank()
+    JSL cm_go_back_adjacent_submenu
     JML action_submenu
 
 ManagePresetsMenu:
@@ -1060,17 +1085,13 @@ custompreset_goto_page3:
     %cm_adjacent_submenu("GOTO PAGE THREE", #CustomPresetsMenu3)
 
 managepreset_goto_page1:
-    %cm_jsl("GOTO PAGE ONE", .routine, #ManagePresetsMenu)
-  .routine
-    JSL cm_previous_menu
-    %setmenubank()
-    JML action_submenu
+    %cm_adjacent_submenu("GOTO PAGE ONE", #ManagePresetsMenu)
 
 managepreset_goto_page2:
-    %cm_jsl("GOTO PAGE TWO", managepreset_goto_page1_routine, #ManagePresetsMenu2)
+    %cm_adjacent_submenu("GOTO PAGE TWO", #ManagePresetsMenu2)
 
 managepreset_goto_page3:
-    %cm_jsl("GOTO PAGE THREE", managepreset_goto_page1_routine, #ManagePresetsMenu3)
+    %cm_adjacent_submenu("GOTO PAGE THREE", #ManagePresetsMenu3)
 endif
 endif
 
@@ -1800,6 +1821,7 @@ ihstrat_mbhp:
 ihstrat_twocries:
     %cm_jsl("Two Cries Standup", #action_select_room_strat, #$0015)
 
+!IH_ROOM_STRAT_COUNT = #$0016
 action_select_room_strat:
 {
     TYA : STA !sram_room_strat
@@ -2095,6 +2117,13 @@ ih_superhud_mbhp:
 ih_superhud_twocries:
     %cm_jsl("Two Cries Standup", #action_select_superhud_bottom, #$0027)
 
+!IH_SUPERHUD_BOTTOM_COUNT = #$0028
+action_select_superhud_bottom:
+{
+    TYA : STA !sram_superhud_bottom
+    JML cm_previous_menu
+}
+
 ih_superhud_goto_page1:
     %cm_adjacent_submenu("GOTO PAGE ONE", #SuperHUDBottomMenu)
 
@@ -2103,12 +2132,6 @@ ih_superhud_goto_page2:
 
 ih_superhud_goto_page3:
     %cm_adjacent_submenu("GOTO PAGE THREE", #SuperHUDBottomMenu3)
-
-action_select_superhud_bottom:
-{
-    TYA : STA !sram_superhud_bottom
-    JML cm_previous_menu
-}
 
 ih_superhud_middle_selector:
     dw !ACTION_CHOICE
@@ -2965,168 +2988,6 @@ slowdown_frames:
     %cm_numfield("Slowdown (Lag) Frames", !ram_cm_slowdown_frames, 0, 120, 1, 4, #0)
 
 
-; ----------
-; Ctrl Menu
-; ----------
-
-CtrlMenu:
-    dw #ctrl_menu
-    dw #$FFFF
-if !FEATURE_SD2SNES
-    dw #ctrl_save_state
-    dw #ctrl_load_state
-    dw #ctrl_auto_save_state
-endif
-    dw #ctrl_load_last_preset
-    dw #ctrl_random_preset
-    dw #ctrl_save_custom_preset
-    dw #ctrl_load_custom_preset
-    dw #ctrl_inc_custom_preset
-    dw #ctrl_dec_custom_preset
-    dw #ctrl_reset_segment_timer
-    dw #ctrl_reset_segment_later
-    dw #$FFFF
-    dw #ctrl_goto_page2
-    dw #ctrl_clear_shortcuts
-    dw #ctrl_reset_defaults
-    dw #$0000
-    %cm_header("CONTROLLER SHORTCUTS")
-    %cm_footer("PRESS AND HOLD FOR 2 SEC")
-
-CtrlMenu2:
-    dw #ctrl_menu
-    dw #$FFFF
-    dw #ctrl_full_equipment
-    dw #ctrl_kill_enemies
-    dw #ctrl_toggle_tileviewer
-    dw #ctrl_randomize_rng
-if !FEATURE_VANILLAHUD
-else
-    dw #ctrl_reveal_damage
-    dw #ctrl_update_timers
-endif
-    dw #ctrl_force_stand
-    dw #ctrl_toggle_spin_lock
-    dw #$FFFF
-    dw #ctrl_goto_page1
-    dw #ctrl_clear_shortcuts
-    dw #ctrl_reset_defaults
-    dw #$0000
-    %cm_header("CONTROLLER SHORTCUTS")
-    %cm_footer("PRESS AND HOLD FOR 2 SEC")
-
-ctrl_menu:
-    %cm_ctrl_shortcut("Main Menu", !sram_ctrl_menu)
-
-ctrl_load_last_preset:
-    %cm_ctrl_shortcut("Reload Preset", !sram_ctrl_load_last_preset)
-
-if !FEATURE_SD2SNES
-ctrl_save_state:
-    %cm_ctrl_shortcut("Save State", !sram_ctrl_save_state)
-
-ctrl_load_state:
-    %cm_ctrl_shortcut("Load State", !sram_ctrl_load_state)
-
-ctrl_auto_save_state:
-    %cm_ctrl_shortcut("Auto Save State", !sram_ctrl_auto_save_state)
-endif
-
-ctrl_reset_segment_timer:
-    %cm_ctrl_shortcut("Reset Seg Timer", !sram_ctrl_reset_segment_timer)
-
-ctrl_reset_segment_later:
-    %cm_ctrl_shortcut("Reset Seg Later", !sram_ctrl_reset_segment_later)
-
-ctrl_full_equipment:
-    %cm_ctrl_shortcut("Full Equipment", !sram_ctrl_full_equipment)
-
-ctrl_kill_enemies:
-    %cm_ctrl_shortcut("Kill Enemies", !sram_ctrl_kill_enemies)
-
-ctrl_random_preset:
-    %cm_ctrl_shortcut("Random Preset", !sram_ctrl_random_preset)
-
-ctrl_save_custom_preset:
-    %cm_ctrl_shortcut("Save Cust Preset", !sram_ctrl_save_custom_preset)
-
-ctrl_load_custom_preset:
-    %cm_ctrl_shortcut("Load Cust Preset", !sram_ctrl_load_custom_preset)
-
-ctrl_inc_custom_preset:
-    %cm_ctrl_shortcut("Next Preset Slot", !sram_ctrl_inc_custom_preset)
-
-ctrl_dec_custom_preset:
-    %cm_ctrl_shortcut("Prev Preset Slot", !sram_ctrl_dec_custom_preset)
-
-ctrl_toggle_tileviewer:
-    %cm_ctrl_shortcut("Toggle OOB Tiles", !sram_ctrl_toggle_tileviewer)
-
-ctrl_randomize_rng:
-    %cm_ctrl_shortcut("Randomize RNG", !sram_ctrl_randomize_rng)
-
-if !FEATURE_VANILLAHUD
-else
-ctrl_reveal_damage:
-    %cm_ctrl_shortcut("Toggle Boss Dmg", !sram_ctrl_reveal_damage)
-
-ctrl_update_timers:
-    %cm_ctrl_shortcut("Update Timers", !sram_ctrl_update_timers)
-endif
-
-ctrl_force_stand:
-    %cm_ctrl_shortcut("Force Stand", !sram_ctrl_force_stand)
-
-ctrl_toggle_spin_lock:
-    %cm_ctrl_shortcut("Toggle Spin Lock", !sram_ctrl_toggle_spin_lock)
-
-ctrl_clear_shortcuts:
-    %cm_jsl("Clear Shortcuts", .routine, #$0000)
-  .routine
-    TYA
-    STA !ram_game_mode_extras
-    STA !sram_ctrl_save_state
-    STA !sram_ctrl_load_state
-    STA !sram_ctrl_auto_save_state
-    STA !sram_ctrl_load_last_preset
-    STA !sram_ctrl_full_equipment
-    STA !sram_ctrl_kill_enemies
-    STA !sram_ctrl_random_preset
-    STA !sram_ctrl_save_custom_preset
-    STA !sram_ctrl_load_custom_preset
-    STA !sram_ctrl_inc_custom_preset
-    STA !sram_ctrl_dec_custom_preset
-    STA !sram_ctrl_reset_segment_timer
-    STA !sram_ctrl_reset_segment_later
-    STA !sram_ctrl_toggle_tileviewer
-    STA !sram_ctrl_randomize_rng
-    STA !sram_ctrl_reveal_damage
-    STA !sram_ctrl_update_timers
-    STA !sram_ctrl_force_stand
-    STA !sram_ctrl_toggle_spin_lock
-    ; menu to default, Start + Select
-    LDA #$3000 : STA !sram_ctrl_menu
-    %sfxconfirm()
-    RTL
-
-ctrl_reset_defaults:
-    %cm_jsl("Reset to Defaults", .routine, #$0000)
-  .routine
-    %sfxreset()
-    JSL init_sram_controller_shortcuts
-if !FEATURE_SD2SNES
-    JML validate_sram_for_savestates
-else
-    RTL
-endif
-
-ctrl_goto_page1:
-    %cm_adjacent_submenu("GOTO PAGE ONE", #CtrlMenu)
-
-ctrl_goto_page2:
-    %cm_adjacent_submenu("GOTO PAGE TWO", #CtrlMenu2)
-
-
 ; ---------------
 ; Helper Routines
 ; ---------------
@@ -3136,31 +2997,10 @@ init_wram_based_on_sram:
     JSL RandomizeOnLoad_Flag
     JSL init_suit_properties_ram
     JSL init_physics_ram
-    JSL init_print_segment_timer
-    ; Fallthrough to GameModeExtras
-}
-
-GameModeExtras:
-{
-    ; Check if any less common shortcuts are configured
-    LDA !sram_ctrl_reset_segment_timer : BNE .enabled
-    LDA !sram_ctrl_reset_segment_later : BNE .enabled
-    LDA !sram_ctrl_kill_enemies : BNE .enabled
-    LDA !sram_ctrl_full_equipment : BNE .enabled
-    LDA !sram_ctrl_save_custom_preset : BNE .enabled
-    LDA !sram_ctrl_load_custom_preset : BNE .enabled
-    LDA !sram_ctrl_inc_custom_preset : BNE .enabled
-    LDA !sram_ctrl_dec_custom_preset : BNE .enabled
-    LDA !sram_ctrl_toggle_tileviewer : BNE .enabled
-    LDA !sram_ctrl_randomize_rng : BNE .enabled
-    LDA !sram_ctrl_reveal_damage : BNE .enabled
-    LDA !sram_ctrl_update_timers : BNE .enabled
-    LDA !sram_ctrl_force_stand : BNE .enabled
-    LDA !sram_ctrl_toggle_spin_lock : BNE .enabled
-
-  .enabled
-    STA !ram_game_mode_extras
-    RTL
+if !FEATURE_SD2SNES
+    JSL validate_sram_for_savestates
+endif
+    JML init_print_segment_timer
 }
 
 GameLoopExtras:
@@ -3177,38 +3017,6 @@ GameLoopExtras:
     STA !ram_game_loop_extras
     RTL
 }
-
-if !FEATURE_SD2SNES
-validate_sram_for_savestates:
-{
-    ; check if required SRAM range is valid
-    ; writes to SRAM will mirror in other banks if not valid
-if !FEATURE_TINYSTATES
-    LDA $737FFE : INC : STA $707FFE
-    CMP $737FFE : BEQ .double_check
-else
-    LDA $777FFE : INC : STA $707FFE
-    CMP $777FFE : BEQ .double_check
-endif
-    RTL
-
-  .double_check
-    ; double check
-if !FEATURE_TINYSTATES
-    LDA $732FFE : INC : STA $702FFE
-    CMP $732FFE : BEQ .fail
-else
-    LDA $772FFE : INC : STA $702FFE
-    CMP $772FFE : BEQ .fail
-endif
-    RTL
-
-  .fail
-    ; disable savestate controls
-    TDC : STA !sram_ctrl_save_state : STA !sram_ctrl_load_state
-    RTL
-}
-endif
 
 init_print_segment_timer:
 {

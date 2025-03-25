@@ -329,8 +329,9 @@ endif
     JMP .done
 
   .pause
-    LDA !IH_CONTROLLER_PRI : CMP !sram_ctrl_menu : BNE .noMenu
-    LDA !IH_PAUSE : STA !IH_CONTROLLER_SEC_NEW
+    ; TODO make pause work properly
+    ; LDA !IH_CONTROLLER_PRI : CMP !sram_ctrl_menu : BNE .noMenu
+    ; LDA !IH_PAUSE : STA !IH_CONTROLLER_SEC_NEW
     BRA .frameAdvance
 
   .noMenu
@@ -343,8 +344,9 @@ endif
     LDA !IH_CONTROLLER_SEC : EOR !IH_CONTROLLER_SEC_NEW : STA !ram_slowdown_controller_2
 
   .checkFrameAdvance
-    LDA !IH_CONTROLLER_SEC_NEW : CMP !IH_PAUSE : BEQ .frameAdvance
-    CMP !IH_RESET : BNE .checkFreezeOnLoad
+    ; TODO make resume work properly
+    ; LDA !IH_CONTROLLER_SEC_NEW : CMP !IH_PAUSE : BEQ .frameAdvance
+    ; CMP !IH_RESET : BNE .checkFreezeOnLoad
     ; resume normal play
     TDC : STA !ram_slowdown_mode : STA !ram_slowdown_frames
     BRA .done
@@ -1566,8 +1568,6 @@ ih_game_loop_code:
 
     LDA !ram_game_loop_extras : BNE .extrafeatures
 
-  .checkinputs
-    LDA !IH_CONTROLLER_SEC_NEW : BNE .handleinputs
     ; overwritten code + return
     JML $808111
 
@@ -1589,62 +1589,20 @@ ih_game_loop_code:
     JSR magic_pants
   .pants_done
 
-    LDA !ram_infinite_ammo : BEQ .checkinputs
+    LDA !ram_infinite_ammo : BEQ .infinite_ammo_done
     LDA !SAMUS_MISSILES_MAX : STA !SAMUS_MISSILES
     LDA !SAMUS_SUPERS_MAX : STA !SAMUS_SUPERS
     LDA !SAMUS_PBS_MAX : STA !SAMUS_PBS
-    BRA .checkinputs
+  .infinite_ammo_done
 
-  .handleinputs
-    CMP !IH_PAUSE : BEQ .toggle_pause
-    CMP !IH_SLOWDOWN : BEQ .toggle_slowdown
-    CMP !IH_SPEEDUP : BEQ .toggle_speedup
-    CMP !IH_RESET : BEQ .reset_slowdown
-if !FEATURE_VANILLAHUD
-else
-    CMP !IH_STATUS_R : BEQ .inc_statusdisplay
-    CMP !IH_STATUS_L : BEQ .dec_statusdisplay
-endif
-
-  .done
-    JML $808111 ; overwritten code + return
-
-  .toggle_pause
-    TDC : STA !ram_slowdown_frames
-    DEC : STA !ram_slowdown_mode
-    BRA .done
-
-  .toggle_slowdown
-    LDA !ram_slowdown_mode : INC : STA !ram_slowdown_mode
-    BRA .done
-
-  .toggle_speedup
-    LDA !ram_slowdown_mode : BEQ .done
-    DEC : STA !ram_slowdown_mode
-    BRA .done
-
-  .reset_slowdown
-    TDC : STA !ram_slowdown_mode : STA !ram_slowdown_frames
-    BRA .done
+    ; overwritten code + return
+    JML $808111
+}
 
 if !FEATURE_VANILLAHUD
 else
-  .inc_statusdisplay
-    LDA !sram_display_mode : INC
-    CMP !IH_MODE_COUNT : BNE .set_displaymode
-    TDC
-    BRA .set_displaymode
-
-  .dec_statusdisplay
-    LDA !sram_display_mode : DEC
-    CMP #$FFFF : BNE .set_displaymode
-    LDA !IH_MODE_COUNT-1
-
-  .set_displaymode
-    STA !sram_display_mode
-    JSL init_print_segment_timer
-
-  .update_status
+ih_update_status:
+{
     TDC
     STA !ram_momentum_sum : STA !ram_momentum_count
     STA !ram_HUD_check
@@ -1658,10 +1616,9 @@ else
     LDA !ram_seed_X : LSR
     STA !ram_HUD_top : STA !ram_HUD_middle
     STA !ram_HUD_top_counter : STA !ram_HUD_middle_counter
-
-    JML $808111 ; overwritten code + return
-endif ; !FEATURE_VANILLAHUD
+    JML init_print_segment_timer
 }
+endif ; !FEATURE_VANILLAHUD
 
 metronome:
 {
