@@ -78,6 +78,7 @@
 !ram_activated_shine_duration       = !WRAM_START+$5E
 !ram_watch_left_hud                 = !WRAM_START+$60
 !ram_watch_right_hud                = !WRAM_START+$62
+!ram_infidoppler_active             = !WRAM_START+$64
 
 ; ^ FREE SPACE ^ up to +$6C
 
@@ -261,11 +262,11 @@
 !ram_cm_palette_numseloutline = !WRAM_MENU_START+$70
 !ram_cm_palette_numsel = !WRAM_MENU_START+$72
 
-!ram_infidoppler_active = !WRAM_START+$74
+!ram_cm_gmode = !WRAM_MENU_START+$74
 
-; ^ FREE SPACE ^ up to +$76
+; ^ FREE SPACE ^ up to +$86
 
-!ram_cm_preserved_timers = !WRAM_MENU_START+$78 ; 8 bytes
+!ram_cm_preserved_timers = !WRAM_MENU_START+$88 ; 8 bytes
 
 ; ------------------
 ; Reusable RAM Menu
@@ -274,81 +275,81 @@
 ; The following RAM may be used multiple times,
 ; as long as it isn't used multiple times on the same menu page
 
-!ram_cm_watch_enemy_property = !WRAM_MENU_START+$80
-!ram_cm_watch_enemy_index = !WRAM_MENU_START+$82
-!ram_cm_watch_enemy_side = !WRAM_MENU_START+$84
-!ram_cm_watch_common_address = !WRAM_MENU_START+$86
+!ram_cm_watch_enemy_property = !WRAM_MENU_START+$90
+!ram_cm_watch_enemy_index = !WRAM_MENU_START+$92
+!ram_cm_watch_enemy_side = !WRAM_MENU_START+$94
+!ram_cm_watch_common_address = !WRAM_MENU_START+$96
 
-!ram_cm_preset_elevator = !WRAM_MENU_START+$80
+!ram_cm_preset_elevator = !WRAM_MENU_START+$90
 
-!ram_cm_door_dynamic = !WRAM_MENU_START+$80
-!ram_cm_door_menu_value = !WRAM_MENU_START+$82
-!ram_cm_door_menu_bank = !WRAM_MENU_START+$84
-!ram_cm_door_direction_index = !WRAM_MENU_START+$86
-!ram_cm_itempickups_visible = !WRAM_MENU_START+$88
-!ram_cm_itempickups_chozo = !WRAM_MENU_START+$8A
-!ram_cm_itempickups_hidden = !WRAM_MENU_START+$8C
+!ram_cm_door_dynamic = !WRAM_MENU_START+$90
+!ram_cm_door_menu_value = !WRAM_MENU_START+$92
+!ram_cm_door_menu_bank = !WRAM_MENU_START+$94
+!ram_cm_door_direction_index = !WRAM_MENU_START+$96
+!ram_cm_itempickups_visible = !WRAM_MENU_START+$98
+!ram_cm_itempickups_chozo = !WRAM_MENU_START+$9A
+!ram_cm_itempickups_hidden = !WRAM_MENU_START+$9C
 
-!ram_cm_phan_first_phase = !WRAM_MENU_START+$80
-!ram_cm_phan_second_phase = !WRAM_MENU_START+$82
-!ram_cm_turret_rng = !WRAM_MENU_START+$84
+!ram_cm_phan_first_phase = !WRAM_MENU_START+$90
+!ram_cm_phan_second_phase = !WRAM_MENU_START+$92
+!ram_cm_turret_rng = !WRAM_MENU_START+$94
 
-!ram_cm_varia = !WRAM_MENU_START+$80
-!ram_cm_gravity = !WRAM_MENU_START+$82
-!ram_cm_morph = !WRAM_MENU_START+$84
-!ram_cm_bombs = !WRAM_MENU_START+$86
-!ram_cm_spring = !WRAM_MENU_START+$88
-!ram_cm_screw = !WRAM_MENU_START+$8A
-!ram_cm_hijump = !WRAM_MENU_START+$8C
-!ram_cm_space = !WRAM_MENU_START+$8E
-!ram_cm_speed = !WRAM_MENU_START+$90
-!ram_cm_charge = !WRAM_MENU_START+$92
-!ram_cm_ice = !WRAM_MENU_START+$94
-!ram_cm_wave = !WRAM_MENU_START+$96
-!ram_cm_spazer = !WRAM_MENU_START+$98
-!ram_cm_plasma = !WRAM_MENU_START+$9A
+!ram_cm_varia = !WRAM_MENU_START+$90
+!ram_cm_gravity = !WRAM_MENU_START+$92
+!ram_cm_morph = !WRAM_MENU_START+$94
+!ram_cm_bombs = !WRAM_MENU_START+$96
+!ram_cm_spring = !WRAM_MENU_START+$98
+!ram_cm_screw = !WRAM_MENU_START+$9A
+!ram_cm_hijump = !WRAM_MENU_START+$9C
+!ram_cm_space = !WRAM_MENU_START+$9E
+!ram_cm_speed = !WRAM_MENU_START+$A0
+!ram_cm_charge = !WRAM_MENU_START+$A2
+!ram_cm_ice = !WRAM_MENU_START+$A4
+!ram_cm_wave = !WRAM_MENU_START+$A6
+!ram_cm_spazer = !WRAM_MENU_START+$A8
+!ram_cm_plasma = !WRAM_MENU_START+$AA
 
-!ram_cm_zeb1 = !WRAM_MENU_START+$80
-!ram_cm_zeb2 = !WRAM_MENU_START+$82
-!ram_cm_zeb3 = !WRAM_MENU_START+$84
-!ram_cm_zeb4 = !WRAM_MENU_START+$86
-!ram_cm_zebmask = !WRAM_MENU_START+$88
+!ram_cm_zeb1 = !WRAM_MENU_START+$90
+!ram_cm_zeb2 = !WRAM_MENU_START+$92
+!ram_cm_zeb3 = !WRAM_MENU_START+$94
+!ram_cm_zeb4 = !WRAM_MENU_START+$96
+!ram_cm_zebmask = !WRAM_MENU_START+$98
 
-!ram_cm_custompalette_blue = !WRAM_MENU_START+$80
-!ram_cm_custompalette_green = !WRAM_MENU_START+$82
-!ram_cm_custompalette_red = !WRAM_MENU_START+$84
-!ram_cm_custompalette = !WRAM_MENU_START+$86
-!ram_cm_dummy_on = !WRAM_MENU_START+$8A
-!ram_cm_dummy_off = !WRAM_MENU_START+$8C
-!ram_cm_dummy_num = !WRAM_MENU_START+$8E
+!ram_cm_custompalette_blue = !WRAM_MENU_START+$90
+!ram_cm_custompalette_green = !WRAM_MENU_START+$92
+!ram_cm_custompalette_red = !WRAM_MENU_START+$94
+!ram_cm_custompalette = !WRAM_MENU_START+$96
+!ram_cm_dummy_on = !WRAM_MENU_START+$9A
+!ram_cm_dummy_off = !WRAM_MENU_START+$9C
+!ram_cm_dummy_num = !WRAM_MENU_START+$9E
 
-!ram_cm_ceres_seconds = !WRAM_MENU_START+$80
-!ram_cm_zebes_seconds = !WRAM_MENU_START+$82
+!ram_cm_ceres_seconds = !WRAM_MENU_START+$90
+!ram_cm_zebes_seconds = !WRAM_MENU_START+$92
 
-!ram_cm_crop_mode = !WRAM_MENU_START+$80
-!ram_cm_crop_tile = !WRAM_MENU_START+$82
+!ram_cm_crop_mode = !WRAM_MENU_START+$90
+!ram_cm_crop_tile = !WRAM_MENU_START+$92
 
-!ram_cm_brb = !WRAM_MENU_START+$80
-!ram_cm_brb_timer = !WRAM_MENU_START+$82
-!ram_cm_brb_frames = !WRAM_MENU_START+$84
-!ram_cm_brb_secs = !WRAM_MENU_START+$86
-!ram_cm_brb_mins = !WRAM_MENU_START+$88
-!ram_cm_brb_screen = !WRAM_MENU_START+$8A
-!ram_cm_brb_timer_mode = !WRAM_MENU_START+$8C
-!ram_cm_brb_scroll = !WRAM_MENU_START+$8E
-!ram_cm_brb_scroll_X = !WRAM_MENU_START+$90
-!ram_cm_brb_scroll_Y = !WRAM_MENU_START+$92
-!ram_cm_brb_scroll_H = !WRAM_MENU_START+$94
-!ram_cm_brb_scroll_V = !WRAM_MENU_START+$96
-!ram_cm_brb_scroll_timer = !WRAM_MENU_START+$98
-!ram_cm_brb_palette = !WRAM_MENU_START+$9A
-!ram_cm_brb_set_cycle = !WRAM_MENU_START+$9C
-!ram_cm_brb_cycle_time = !WRAM_MENU_START+$9E
+!ram_cm_brb = !WRAM_MENU_START+$90
+!ram_cm_brb_timer = !WRAM_MENU_START+$92
+!ram_cm_brb_frames = !WRAM_MENU_START+$94
+!ram_cm_brb_secs = !WRAM_MENU_START+$96
+!ram_cm_brb_mins = !WRAM_MENU_START+$98
+!ram_cm_brb_screen = !WRAM_MENU_START+$9A
+!ram_cm_brb_timer_mode = !WRAM_MENU_START+$9C
+!ram_cm_brb_scroll = !WRAM_MENU_START+$9E
+!ram_cm_brb_scroll_X = !WRAM_MENU_START+$A0
+!ram_cm_brb_scroll_Y = !WRAM_MENU_START+$A2
+!ram_cm_brb_scroll_H = !WRAM_MENU_START+$A4
+!ram_cm_brb_scroll_V = !WRAM_MENU_START+$A6
+!ram_cm_brb_scroll_timer = !WRAM_MENU_START+$A8
+!ram_cm_brb_palette = !WRAM_MENU_START+$AA
+!ram_cm_brb_set_cycle = !WRAM_MENU_START+$AC
+!ram_cm_brb_cycle_time = !WRAM_MENU_START+$AE
 
-!ram_cm_keyboard_buffer = !WRAM_MENU_START+$80 ; $18 bytes
+!ram_cm_keyboard_buffer = !WRAM_MENU_START+$90 ; $18 bytes
 
-!ram_cm_manage_slots = !WRAM_MENU_START+$80
-!ram_cm_selected_slot = !WRAM_MENU_START+$82
+!ram_cm_manage_slots = !WRAM_MENU_START+$90
+!ram_cm_selected_slot = !WRAM_MENU_START+$92
 
 ; ^ FREE SPACE ^ up to +$CE
 ; Note: +$B8 to +$CE range also used as frames held counters
@@ -835,6 +836,7 @@
 !SAMUS_CONTACT_DAMAGE_INDEX = $0A6E
 !SAMUS_WATER_PHYSICS = $0A70  ; Not used in vanilla
 !SAMUS_HYPER_BEAM = $0A76
+!TIME_IS_FROZEN = $0A78
 !DEMO_PREINSTRUCTION_POINTER = $0A7A
 !DEMO_INSTRUCTION_TIMER = $0A7C
 !DEMO_INSTRUCTION_POINTER = $0A7E
@@ -926,6 +928,7 @@
 !SAMUS_KNOCKBACK_TIMER = $18AA
 !LAVA_ACID_Y = $1962
 !FX_BASE_Y = $1978
+!ENEMY_PROJ_ENABLE = $198D
 !ENEMY_PROJ_ID = $1997
 !ENEMY_PROJ_X_SUBPX = $1A27
 !ENEMY_PROJ_X = $1A4B
@@ -936,6 +939,7 @@
 !ENEMY_PROJ_RADIUS = $1BB3
 !ENEMY_PROJ_PROPERTIES = $1BD7
 !MESSAGE_BOX_INDEX = $1C1F
+!PLM_ENABLE = $1C23
 !PLM_GFX_INDEX = $1C2D
 !PLM_ID = $1C37
 !PLM_BLOCK_INDEX = $1C87
@@ -945,6 +949,7 @@
 !PLM_ROOM_ARGUMENT = $1DC7
 !PLM_VARIABLE = $1E17
 !SAVE_STATION_LOCKOUT = $1E75
+!PALETTE_FX_ENABLE = $1E79
 !PALETTE_FX_ID = $1E7D
 !PALETTE_FX_COLOR_INDICES = $1E8D
 !PALETTE_FX_VARIABLE = $1E9D

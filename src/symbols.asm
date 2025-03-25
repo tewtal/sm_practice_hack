@@ -76,6 +76,7 @@ ram_print_segment_timer = !ram_print_segment_timer ; !WRAM_START+$5C
 ram_activated_shine_duration = !ram_activated_shine_duration ; !WRAM_START+$5E
 ram_watch_left_hud = !ram_watch_left_hud ; !WRAM_START+$60
 ram_watch_right_hud = !ram_watch_right_hud ; !WRAM_START+$62
+ram_infidoppler_active = !ram_infidoppler_active ; !WRAM_START+$64
 
 ; ^ FREE SPACE ^ up to +$6C
 
@@ -259,11 +260,11 @@ ram_cm_palette_seltextbg = !ram_cm_palette_seltextbg ; !WRAM_MENU_START+$6E
 ram_cm_palette_numseloutline = !ram_cm_palette_numseloutline ; !WRAM_MENU_START+$70
 ram_cm_palette_numsel = !ram_cm_palette_numsel ; !WRAM_MENU_START+$72
 
-ram_infidoppler_active = !ram_infidoppler_active ; !WRAM_START+$74
+ram_cm_gmode = !ram_cm_gmode ; !WRAM_MENU_START+$74
 
-; ^ FREE SPACE ^ up to +$76
+; ^ FREE SPACE ^ up to +$86
 
-ram_cm_preserved_timers = !ram_cm_preserved_timers ; !WRAM_MENU_START+$78 ; 8 bytes
+ram_cm_preserved_timers = !ram_cm_preserved_timers ; !WRAM_MENU_START+$88 ; 8 bytes
 
 ; ------------------
 ; Reusable RAM Menu
@@ -272,81 +273,81 @@ ram_cm_preserved_timers = !ram_cm_preserved_timers ; !WRAM_MENU_START+$78 ; 8 by
 ; The following RAM may be used multiple times,
 ; as long as it isn't used multiple times on the same menu page
 
-ram_cm_watch_enemy_property = !ram_cm_watch_enemy_property ; !WRAM_MENU_START+$80
-ram_cm_watch_enemy_index = !ram_cm_watch_enemy_index ; !WRAM_MENU_START+$82
-ram_cm_watch_enemy_side = !ram_cm_watch_enemy_side ; !WRAM_MENU_START+$84
-ram_cm_watch_common_address = !ram_cm_watch_common_address ; !WRAM_MENU_START+$86
+ram_cm_watch_enemy_property = !ram_cm_watch_enemy_property ; !WRAM_MENU_START+$90
+ram_cm_watch_enemy_index = !ram_cm_watch_enemy_index ; !WRAM_MENU_START+$92
+ram_cm_watch_enemy_side = !ram_cm_watch_enemy_side ; !WRAM_MENU_START+$94
+ram_cm_watch_common_address = !ram_cm_watch_common_address ; !WRAM_MENU_START+$96
 
-ram_cm_preset_elevator = !ram_cm_preset_elevator ; !WRAM_MENU_START+$80
+ram_cm_preset_elevator = !ram_cm_preset_elevator ; !WRAM_MENU_START+$90
 
-ram_cm_door_dynamic = !ram_cm_door_dynamic ; !WRAM_MENU_START+$80
-ram_cm_door_menu_value = !ram_cm_door_menu_value ; !WRAM_MENU_START+$82
-ram_cm_door_menu_bank = !ram_cm_door_menu_bank ; !WRAM_MENU_START+$84
-ram_cm_door_direction_index = !ram_cm_door_direction_index ; !WRAM_MENU_START+$86
-ram_cm_itempickups_visible = !ram_cm_itempickups_visible ; !WRAM_MENU_START+$88
-ram_cm_itempickups_chozo = !ram_cm_itempickups_chozo ; !WRAM_MENU_START+$8A
-ram_cm_itempickups_hidden = !ram_cm_itempickups_hidden ; !WRAM_MENU_START+$8C
+ram_cm_door_dynamic = !ram_cm_door_dynamic ; !WRAM_MENU_START+$90
+ram_cm_door_menu_value = !ram_cm_door_menu_value ; !WRAM_MENU_START+$92
+ram_cm_door_menu_bank = !ram_cm_door_menu_bank ; !WRAM_MENU_START+$94
+ram_cm_door_direction_index = !ram_cm_door_direction_index ; !WRAM_MENU_START+$96
+ram_cm_itempickups_visible = !ram_cm_itempickups_visible ; !WRAM_MENU_START+$98
+ram_cm_itempickups_chozo = !ram_cm_itempickups_chozo ; !WRAM_MENU_START+$9A
+ram_cm_itempickups_hidden = !ram_cm_itempickups_hidden ; !WRAM_MENU_START+$9C
 
-ram_cm_phan_first_phase = !ram_cm_phan_first_phase ; !WRAM_MENU_START+$80
-ram_cm_phan_second_phase = !ram_cm_phan_second_phase ; !WRAM_MENU_START+$82
-ram_cm_turret_rng = !ram_cm_turret_rng ; !WRAM_MENU_START+$84
+ram_cm_phan_first_phase = !ram_cm_phan_first_phase ; !WRAM_MENU_START+$90
+ram_cm_phan_second_phase = !ram_cm_phan_second_phase ; !WRAM_MENU_START+$92
+ram_cm_turret_rng = !ram_cm_turret_rng ; !WRAM_MENU_START+$94
 
-ram_cm_varia = !ram_cm_varia ; !WRAM_MENU_START+$80
-ram_cm_gravity = !ram_cm_gravity ; !WRAM_MENU_START+$82
-ram_cm_morph = !ram_cm_morph ; !WRAM_MENU_START+$84
-ram_cm_bombs = !ram_cm_bombs ; !WRAM_MENU_START+$86
-ram_cm_spring = !ram_cm_spring ; !WRAM_MENU_START+$88
-ram_cm_screw = !ram_cm_screw ; !WRAM_MENU_START+$8A
-ram_cm_hijump = !ram_cm_hijump ; !WRAM_MENU_START+$8C
-ram_cm_space = !ram_cm_space ; !WRAM_MENU_START+$8E
-ram_cm_speed = !ram_cm_speed ; !WRAM_MENU_START+$90
-ram_cm_charge = !ram_cm_charge ; !WRAM_MENU_START+$92
-ram_cm_ice = !ram_cm_ice ; !WRAM_MENU_START+$94
-ram_cm_wave = !ram_cm_wave ; !WRAM_MENU_START+$96
-ram_cm_spazer = !ram_cm_spazer ; !WRAM_MENU_START+$98
-ram_cm_plasma = !ram_cm_plasma ; !WRAM_MENU_START+$9A
+ram_cm_varia = !ram_cm_varia ; !WRAM_MENU_START+$90
+ram_cm_gravity = !ram_cm_gravity ; !WRAM_MENU_START+$92
+ram_cm_morph = !ram_cm_morph ; !WRAM_MENU_START+$94
+ram_cm_bombs = !ram_cm_bombs ; !WRAM_MENU_START+$96
+ram_cm_spring = !ram_cm_spring ; !WRAM_MENU_START+$98
+ram_cm_screw = !ram_cm_screw ; !WRAM_MENU_START+$9A
+ram_cm_hijump = !ram_cm_hijump ; !WRAM_MENU_START+$9C
+ram_cm_space = !ram_cm_space ; !WRAM_MENU_START+$9E
+ram_cm_speed = !ram_cm_speed ; !WRAM_MENU_START+$A0
+ram_cm_charge = !ram_cm_charge ; !WRAM_MENU_START+$A2
+ram_cm_ice = !ram_cm_ice ; !WRAM_MENU_START+$A4
+ram_cm_wave = !ram_cm_wave ; !WRAM_MENU_START+$A6
+ram_cm_spazer = !ram_cm_spazer ; !WRAM_MENU_START+$A8
+ram_cm_plasma = !ram_cm_plasma ; !WRAM_MENU_START+$AA
 
-ram_cm_zeb1 = !ram_cm_zeb1 ; !WRAM_MENU_START+$80
-ram_cm_zeb2 = !ram_cm_zeb2 ; !WRAM_MENU_START+$82
-ram_cm_zeb3 = !ram_cm_zeb3 ; !WRAM_MENU_START+$84
-ram_cm_zeb4 = !ram_cm_zeb4 ; !WRAM_MENU_START+$86
-ram_cm_zebmask = !ram_cm_zebmask ; !WRAM_MENU_START+$88
+ram_cm_zeb1 = !ram_cm_zeb1 ; !WRAM_MENU_START+$90
+ram_cm_zeb2 = !ram_cm_zeb2 ; !WRAM_MENU_START+$92
+ram_cm_zeb3 = !ram_cm_zeb3 ; !WRAM_MENU_START+$94
+ram_cm_zeb4 = !ram_cm_zeb4 ; !WRAM_MENU_START+$96
+ram_cm_zebmask = !ram_cm_zebmask ; !WRAM_MENU_START+$98
 
-ram_cm_custompalette_blue = !ram_cm_custompalette_blue ; !WRAM_MENU_START+$80
-ram_cm_custompalette_green = !ram_cm_custompalette_green ; !WRAM_MENU_START+$82
-ram_cm_custompalette_red = !ram_cm_custompalette_red ; !WRAM_MENU_START+$84
-ram_cm_custompalette = !ram_cm_custompalette ; !WRAM_MENU_START+$86
-ram_cm_dummy_on = !ram_cm_dummy_on ; !WRAM_MENU_START+$8A
-ram_cm_dummy_off = !ram_cm_dummy_off ; !WRAM_MENU_START+$8C
-ram_cm_dummy_num = !ram_cm_dummy_num ; !WRAM_MENU_START+$8E
+ram_cm_custompalette_blue = !ram_cm_custompalette_blue ; !WRAM_MENU_START+$90
+ram_cm_custompalette_green = !ram_cm_custompalette_green ; !WRAM_MENU_START+$92
+ram_cm_custompalette_red = !ram_cm_custompalette_red ; !WRAM_MENU_START+$94
+ram_cm_custompalette = !ram_cm_custompalette ; !WRAM_MENU_START+$96
+ram_cm_dummy_on = !ram_cm_dummy_on ; !WRAM_MENU_START+$9A
+ram_cm_dummy_off = !ram_cm_dummy_off ; !WRAM_MENU_START+$9C
+ram_cm_dummy_num = !ram_cm_dummy_num ; !WRAM_MENU_START+$9E
 
-ram_cm_ceres_seconds = !ram_cm_ceres_seconds ; !WRAM_MENU_START+$80
-ram_cm_zebes_seconds = !ram_cm_zebes_seconds ; !WRAM_MENU_START+$82
+ram_cm_ceres_seconds = !ram_cm_ceres_seconds ; !WRAM_MENU_START+$90
+ram_cm_zebes_seconds = !ram_cm_zebes_seconds ; !WRAM_MENU_START+$92
 
-ram_cm_crop_mode = !ram_cm_crop_mode ; !WRAM_MENU_START+$80
-ram_cm_crop_tile = !ram_cm_crop_tile ; !WRAM_MENU_START+$82
+ram_cm_crop_mode = !ram_cm_crop_mode ; !WRAM_MENU_START+$90
+ram_cm_crop_tile = !ram_cm_crop_tile ; !WRAM_MENU_START+$92
 
-ram_cm_brb = !ram_cm_brb ; !WRAM_MENU_START+$80
-ram_cm_brb_timer = !ram_cm_brb_timer ; !WRAM_MENU_START+$82
-ram_cm_brb_frames = !ram_cm_brb_frames ; !WRAM_MENU_START+$84
-ram_cm_brb_secs = !ram_cm_brb_secs ; !WRAM_MENU_START+$86
-ram_cm_brb_mins = !ram_cm_brb_mins ; !WRAM_MENU_START+$88
-ram_cm_brb_screen = !ram_cm_brb_screen ; !WRAM_MENU_START+$8A
-ram_cm_brb_timer_mode = !ram_cm_brb_timer_mode ; !WRAM_MENU_START+$8C
-ram_cm_brb_scroll = !ram_cm_brb_scroll ; !WRAM_MENU_START+$8E
-ram_cm_brb_scroll_X = !ram_cm_brb_scroll_X ; !WRAM_MENU_START+$90
-ram_cm_brb_scroll_Y = !ram_cm_brb_scroll_Y ; !WRAM_MENU_START+$92
-ram_cm_brb_scroll_H = !ram_cm_brb_scroll_H ; !WRAM_MENU_START+$94
-ram_cm_brb_scroll_V = !ram_cm_brb_scroll_V ; !WRAM_MENU_START+$96
-ram_cm_brb_scroll_timer = !ram_cm_brb_scroll_timer ; !WRAM_MENU_START+$98
-ram_cm_brb_palette = !ram_cm_brb_palette ; !WRAM_MENU_START+$9A
-ram_cm_brb_set_cycle = !ram_cm_brb_set_cycle ; !WRAM_MENU_START+$9C
-ram_cm_brb_cycle_time = !ram_cm_brb_cycle_time ; !WRAM_MENU_START+$9E
+ram_cm_brb = !ram_cm_brb ; !WRAM_MENU_START+$90
+ram_cm_brb_timer = !ram_cm_brb_timer ; !WRAM_MENU_START+$92
+ram_cm_brb_frames = !ram_cm_brb_frames ; !WRAM_MENU_START+$94
+ram_cm_brb_secs = !ram_cm_brb_secs ; !WRAM_MENU_START+$96
+ram_cm_brb_mins = !ram_cm_brb_mins ; !WRAM_MENU_START+$98
+ram_cm_brb_screen = !ram_cm_brb_screen ; !WRAM_MENU_START+$9A
+ram_cm_brb_timer_mode = !ram_cm_brb_timer_mode ; !WRAM_MENU_START+$9C
+ram_cm_brb_scroll = !ram_cm_brb_scroll ; !WRAM_MENU_START+$9E
+ram_cm_brb_scroll_X = !ram_cm_brb_scroll_X ; !WRAM_MENU_START+$A0
+ram_cm_brb_scroll_Y = !ram_cm_brb_scroll_Y ; !WRAM_MENU_START+$A2
+ram_cm_brb_scroll_H = !ram_cm_brb_scroll_H ; !WRAM_MENU_START+$A4
+ram_cm_brb_scroll_V = !ram_cm_brb_scroll_V ; !WRAM_MENU_START+$A6
+ram_cm_brb_scroll_timer = !ram_cm_brb_scroll_timer ; !WRAM_MENU_START+$A8
+ram_cm_brb_palette = !ram_cm_brb_palette ; !WRAM_MENU_START+$AA
+ram_cm_brb_set_cycle = !ram_cm_brb_set_cycle ; !WRAM_MENU_START+$AC
+ram_cm_brb_cycle_time = !ram_cm_brb_cycle_time ; !WRAM_MENU_START+$AE
 
-ram_cm_keyboard_buffer = !ram_cm_keyboard_buffer ; !WRAM_MENU_START+$80 ; $18 bytes
+ram_cm_keyboard_buffer = !ram_cm_keyboard_buffer ; !WRAM_MENU_START+$90 ; $18 bytes
 
-ram_cm_manage_slots = !ram_cm_manage_slots ; !WRAM_MENU_START+$80
-ram_cm_selected_slot = !ram_cm_selected_slot ; !WRAM_MENU_START+$82
+ram_cm_manage_slots = !ram_cm_manage_slots ; !WRAM_MENU_START+$90
+ram_cm_selected_slot = !ram_cm_selected_slot ; !WRAM_MENU_START+$92
 
 ; ^ FREE SPACE ^ up to +$CE
 ; Note: +$B8 to +$CE range also used as frames held counters
