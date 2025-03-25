@@ -51,10 +51,10 @@ brb_menu_timer_mode:
     db #$FF
 
 brb_menu_timer_min:
-    %cm_numfield("Minutes on Timer", !ram_cm_brb_mins, 0, 99, 1, 5, #0)
+    %cm_numfield("Minutes on Timer", !ram_cm_brb_mins, 0, 99, 1, 2, #0)
 
 brb_menu_timer_sec:
-    %cm_numfield("Seconds on Timer", !ram_cm_brb_secs, 0, 59, 1, 5, #0)
+    %cm_numfield("Seconds on Timer", !ram_cm_brb_secs, 0, 59, 1, 2, #0)
 
 brb_menu_timer_clear:
     %cm_jsl("Clear Timer", .routine, #0)
@@ -481,27 +481,6 @@ BRBTilemapAddress:
     dw #BRB_screen_06
     dw #BRB_screen_07
 
-BRB_screen_01:
-    db #$28, "   SM Speedrunning Wiki", #$FF
-
-BRB_screen_02:
-    db #$28, "  SM Speedrunning Discord", #$FF
-
-BRB_screen_03:
-    db #$28, "Find the practice hack at", #$FF
-
-BRB_screen_04:
-    db #$28, "  Control Schemes for SM", #$FF
-
-BRB_screen_05:
-    db #$28, "Support FUNtoon on Patreon", #$FF
-
-BRB_screen_06:
-    db #$28, " Crazy chain damage clips", #$FF
-
-BRB_screen_07:
-    db #$28, " Customized practice hacks", #$FF
-
 BRBTilemapAddress2:
     dw #BRB_screen2_01
     dw #BRB_screen2_02
@@ -511,27 +490,47 @@ BRBTilemapAddress2:
     dw #BRB_screen2_06
     dw #BRB_screen2_07
 
+BRB_screen_01:
+    db #$28, "   SM Speedrunning Wiki", #$FF
 BRB_screen2_01:
     db #$28, "   wiki.supermetroid.run", #$FF
 
+
+BRB_screen_02:
+    db #$28, "  SM Speedrunning Discord", #$FF
 BRB_screen2_02:
     db #$28, "   SMDiscord.spazer.link", #$FF
 
+
+BRB_screen_03:
+    db #$28, "Find the practice hack at", #$FF
 BRB_screen2_03:
     db #$28, "  smpractice.speedga.me", #$FF
 
+
+BRB_screen_04:
+    db #$28, "  Control Schemes for SM", #$FF
 BRB_screen2_04:
     db #$28, "   controls.spazer.link", #$FF
 
+
+BRB_screen_05:
+    db #$28, "Support FUNtoon on Patreon", #$FF
 BRB_screen2_05:
 ; !funtoonpatreon
     db #$28, "      ", #$1A, "funtoonpatreon", #$FF
 
+
+BRB_screen_06:
+    db #$28, " Crazy chain damage clips", #$FF
 BRB_screen2_06:
     db #$28, "    chain.spazer.link", #$FF
 
+
+BRB_screen_07:
+    db #$28, "  Learn new SM strats at", #$FF
 BRB_screen2_07:
-    db #$28, "     by InsaneFirebat", #$FF
+    db #$28, "        crocomi.re", #$FF
 
 %endfree(8E)
 
