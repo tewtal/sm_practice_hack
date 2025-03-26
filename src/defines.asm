@@ -6,7 +6,7 @@
 ; The crash buffer and initial address can be moved around as needed
 ; It is currently placed in the back half of the backup of BG2 tilemap during x-ray,
 ; which means it is unlikely to overwrite anything relevant for debugging
-!CRASHDUMP_TILEMAP_BUFFER = !ram_tilemap_buffer ; 2048 bytes
+!CRASHDUMP_TILEMAP_BUFFER = $7E5800 ; 2048 bytes
 !CRASH_INITIAL_ADDRESS = #$7E0A44
 
 ; Practice hack menu tilemap buffer
@@ -271,9 +271,7 @@
 !ram_cm_sfxlib2 = !WRAM_MENU_START+$58
 !ram_cm_sfxlib3 = !WRAM_MENU_START+$5A
 
-if !FEATURE_SD2SNES
-!ram_sram_savestates = !WRAM_MENU_START+$5C
-endif
+!ram_sram_detection = !WRAM_MENU_START+$5C
 
 !ram_timers_autoupdate = !WRAM_MENU_START+$5E
 !ram_cm_gmode = !WRAM_MENU_START+$60
@@ -354,6 +352,7 @@ endif
 !ram_cm_ctrl_assign = !WRAM_MENU_START+$96
 !ram_cm_ctrl_swap = !WRAM_MENU_START+$98
 !ram_cm_ctrl_timer = !WRAM_MENU_START+$9A
+!ram_cm_ctrl_savestates_allowed = !WRAM_MENU_START+$9C
 
 !ram_cm_crop_mode = !WRAM_MENU_START+$90
 !ram_cm_crop_tile = !WRAM_MENU_START+$92
@@ -1144,6 +1143,11 @@ endif
 
 !CTRL_SHORTCUT_TYPE_MASK = #$007F
 !CTRL_SHORTCUT_EXACT_MATCH = #$0080
+
+; By default, value is zero and we assume there are no issues
+!SRAM_DETECTION_32KB = #$0032
+!SRAM_DETECTION_128KB = #$0128
+!SRAM_DETECTION_ZSNES = #$0505
 
 !SUIT_PROPERTIES_MASK = #$0007
 !SUIT_PROPRETIES_PAL_DEBUG_FLAG = #$0008

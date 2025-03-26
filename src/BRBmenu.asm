@@ -10,6 +10,10 @@ cm_brb_table:
 ; 1000h bytes transferred
 incbin ../resources/cm_brb_gfx.bin
 
+%endfree(8E)
+
+
+%startfree(A1)
 
 ; --------
 ; BRB Menu
@@ -182,9 +186,15 @@ cm_brb_loop:
 cm_draw_brb:
 {
     JSL cm_tilemap_bg_interior_long
+    LDA !ram_sram_detection : BNE .splash_screen
     JSR cm_tilemap_brb
     JSL cm_tilemap_transfer_long
     JMP cm_brb_scroll_BG3
+
+  .splash_screen
+    JSR cm_tilemap_splash_screen
+    JSL cm_tilemap_transfer_long
+    RTS
 }
 
 cm_tilemap_brb:
@@ -284,6 +294,36 @@ cm_tilemap_brb:
     LDX #$0586
     JSR cm_draw_brb_text
 
+    RTS
+}
+
+cm_tilemap_splash_screen:
+{
+    ; Same bank for all of the BRB text
+    PHK : PHK : PLA : STA !DP_CurrentMenu+2
+
+    LDA !ram_sram_detection
+    CMP !SRAM_DETECTION_32KB : BEQ .legacy
+    CMP !SRAM_DETECTION_128KB : BEQ .tinystates
+    CMP !SRAM_DETECTION_ZSNES : BEQ .zsnes
+    BRK
+
+  .legacy
+    LDA.w #BRB_legacy : STA !DP_CurrentMenu
+    LDX #$0286
+    JSR cm_draw_brb_text
+    RTS
+
+  .tinystates
+    LDA.w #BRB_tinystates : STA !DP_CurrentMenu
+    LDX #$0286
+    JSR cm_draw_brb_text
+    RTS
+
+  .zsnes
+    LDA.w #BRB_zsnes : STA !DP_CurrentMenu
+    LDX #$0286
+    JSR cm_draw_brb_text
     RTS
 }
 
@@ -470,6 +510,15 @@ table ../resources/header.tbl
 
 BRB_common_2:
     db #$28, "    Will Be Right Back", #$FF
+
+BRB_legacy:
+db #$28, "    SNES CLASSIC OR VC", #$FF
+
+BRB_tinystates:
+db #$28, "  SELECT MODERN EMULATORS", #$FF
+
+BRB_zsnes:
+db #$28, "    DO NOT USE ZSNES", #$FF
 table ../resources/normal.tbl
 
 BRBTilemapAddress:
@@ -532,5 +581,5 @@ BRB_screen_07:
 BRB_screen2_07:
     db #$28, "        crocomi.re", #$FF
 
-%endfree(8E)
+%endfree(A1)
 

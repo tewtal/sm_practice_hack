@@ -89,7 +89,7 @@ action_game_mainmenu:
 
 action_ctrlshortcut_mainmenu:
 {
-    TDC : TAX
+    TDC : TAX : STA !ram_cm_ctrl_savestates_allowed
     %a8()
   .firstLoop
     LDA !sram_ctrl_shortcut_selections,X : BEQ .found
@@ -100,6 +100,9 @@ action_ctrlshortcut_mainmenu:
   .found
     %a16()
     TXA : STA !ram_cm_ctrl_add_shortcut_slot
+
+    LDA !ram_sram_detection : BNE action_mainmenu
+    INC : STA !ram_cm_ctrl_savestates_allowed
     BRA action_mainmenu
 }
 
@@ -2997,9 +3000,7 @@ init_wram_based_on_sram:
     JSL RandomizeOnLoad_Flag
     JSL init_suit_properties_ram
     JSL init_physics_ram
-if !FEATURE_SD2SNES
-    JSL validate_sram_for_savestates
-endif
+    JSL validate_sram
     JML init_print_segment_timer
 }
 

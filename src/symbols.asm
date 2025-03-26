@@ -254,7 +254,7 @@ ram_cm_sfxlib1 = !ram_cm_sfxlib1 ; !WRAM_MENU_START+$56
 ram_cm_sfxlib2 = !ram_cm_sfxlib2 ; !WRAM_MENU_START+$58
 ram_cm_sfxlib3 = !ram_cm_sfxlib3 ; !WRAM_MENU_START+$5A
 
-ram_sram_savestates = !ram_sram_savestates ; !WRAM_MENU_START+$5C
+ram_sram_detection = !ram_sram_detection ; !WRAM_MENU_START+$5C
 
 ram_timers_autoupdate = !ram_timers_autoupdate ; !WRAM_MENU_START+$5E
 ram_cm_gmode = !ram_cm_gmode ; !WRAM_MENU_START+$60
@@ -335,6 +335,7 @@ ram_cm_ctrl_last_sec = !ram_cm_ctrl_last_sec ; !WRAM_MENU_START+$94
 ram_cm_ctrl_assign = !ram_cm_ctrl_assign ; !WRAM_MENU_START+$96
 ram_cm_ctrl_swap = !ram_cm_ctrl_swap ; !WRAM_MENU_START+$98
 ram_cm_ctrl_timer = !ram_cm_ctrl_timer ; !WRAM_MENU_START+$9A
+ram_cm_ctrl_savestates_allowed = !ram_cm_ctrl_savestates_allowed ; !WRAM_MENU_START+$9C
 
 ram_cm_crop_mode = !ram_cm_crop_mode ; !WRAM_MENU_START+$90
 ram_cm_crop_tile = !ram_cm_crop_tile ; !WRAM_MENU_START+$92

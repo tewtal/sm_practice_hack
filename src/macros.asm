@@ -523,7 +523,7 @@ endmacro
 
 macro SDE_dec(label, address)
 ; increments or decrements an address based on controller input, used in cm_edit_decimal_digits
-    LDA !IH_CONTROLLER_PRI : BIT !IH_INPUT_UP : BNE .<label>_inc
+    LDA !IH_CONTROLLER_PRI : ORA !IH_CONTROLLER_SEC : BIT !IH_INPUT_UP : BNE .<label>_inc
     ; dec
     LDA <address> : DEC : BPL .store_<label>
     LDA #$0009 : BRA .store_<label>

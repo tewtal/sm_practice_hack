@@ -549,7 +549,7 @@ endif
     BPL .initialFirstCheckInputs
     CMP #$01 : BEQ .initialFirstCheckInputs
 if !FEATURE_SD2SNES
-    LDA !ram_sram_savestates : BNE .initialFirstCheckInputs
+    LDA !ram_sram_detection : BEQ .initialFirstCheckInputs
 endif
   .initialFirstInvalid
     TDC : STA !CTRL_SHORTCUT_TABLE,X
@@ -593,7 +593,7 @@ endif
     BPL .initialSecondCheckInputs
     CMP #$01 : BEQ .initialSecondCheckInputs
 if !FEATURE_SD2SNES
-    LDA !ram_sram_savestates : BNE .initialSecondCheckInputs
+    LDA !ram_sram_detection : BEQ .initialSecondCheckInputs
 endif
   .initialSecondInvalid
     TDC : STA !CTRL_SHORTCUT_TABLE,X
@@ -825,7 +825,7 @@ endif
     LDA #$F0 : STA !CTRL_SHORTCUT_ROUTINE,X : INX
 
     ; Determine how much to branch by
-    PHX : LDA !CTRL_SHORTCUT_TYPE : AND.b !CTRL_SHORTCUT_TYPE_MASK : TAX
+    PHX : TDC : LDA !CTRL_SHORTCUT_TYPE : AND.b !CTRL_SHORTCUT_TYPE_MASK : TAX
     LDA.l ctrl_shortcut_jsl_word_lsb_table,X : STA !CTRL_SHORTCUT_JSL_WORD_LSB
     LDA.l ctrl_shortcut_jsl_word_msb_table,X : STA !CTRL_SHORTCUT_JSL_WORD_MSB
     LDA.l ctrl_shortcut_cancel_gameplay_table,X : BNE .priWriteMatchClc
@@ -888,7 +888,7 @@ endif
     LDA #$F0 : STA !CTRL_SHORTCUT_ROUTINE,X : INX
 
     ; Determine how much to branch by
-    PHX : LDA !CTRL_SHORTCUT_TYPE : AND.b !CTRL_SHORTCUT_TYPE_MASK : TAX
+    PHX : TDC : LDA !CTRL_SHORTCUT_TYPE : AND.b !CTRL_SHORTCUT_TYPE_MASK : TAX
     LDA.l ctrl_shortcut_jsl_word_lsb_table,X : STA !CTRL_SHORTCUT_JSL_WORD_LSB
     LDA.l ctrl_shortcut_jsl_word_msb_table,X : STA !CTRL_SHORTCUT_JSL_WORD_MSB
     LDA.l ctrl_shortcut_cancel_gameplay_table,X : BNE .priWriteSpecialClc
@@ -1065,7 +1065,7 @@ endif
     LDA #$F0 : STA !CTRL_SHORTCUT_ROUTINE,X : INX
 
     ; Determine how much to branch by
-    PHX : LDA !CTRL_SHORTCUT_TYPE : AND.b !CTRL_SHORTCUT_TYPE_MASK : TAX
+    PHX : TDC : LDA !CTRL_SHORTCUT_TYPE : AND.b !CTRL_SHORTCUT_TYPE_MASK : TAX
     LDA.l ctrl_shortcut_jsl_word_lsb_table,X : STA !CTRL_SHORTCUT_JSL_WORD_LSB
     LDA.l ctrl_shortcut_jsl_word_msb_table,X : STA !CTRL_SHORTCUT_JSL_WORD_MSB
     LDA.l ctrl_shortcut_cancel_gameplay_table,X : BNE .secWriteMatchClc
@@ -1128,7 +1128,7 @@ endif
     LDA #$F0 : STA !CTRL_SHORTCUT_ROUTINE,X : INX
 
     ; Determine how much to branch by
-    PHX : LDA !CTRL_SHORTCUT_TYPE : AND.b !CTRL_SHORTCUT_TYPE_MASK : TAX
+    PHX : TDC : LDA !CTRL_SHORTCUT_TYPE : AND.b !CTRL_SHORTCUT_TYPE_MASK : TAX
     LDA.l ctrl_shortcut_jsl_word_lsb_table,X : STA !CTRL_SHORTCUT_JSL_WORD_LSB
     LDA.l ctrl_shortcut_jsl_word_msb_table,X : STA !CTRL_SHORTCUT_JSL_WORD_MSB
     LDA.l ctrl_shortcut_cancel_gameplay_table,X : BNE .secWriteSpecialClc
@@ -1261,7 +1261,7 @@ endif
     LDA #$F0 : STA !CTRL_SHORTCUT_ROUTINE,X : INX
 
     ; Determine how much to branch by
-    PHX : LDA !CTRL_SHORTCUT_TYPE : AND.b !CTRL_SHORTCUT_TYPE_MASK : TAX
+    PHX : TDC : LDA !CTRL_SHORTCUT_TYPE : AND.b !CTRL_SHORTCUT_TYPE_MASK : TAX
     LDA.l ctrl_shortcut_jsl_word_lsb_table,X : STA !CTRL_SHORTCUT_JSL_WORD_LSB
     LDA.l ctrl_shortcut_jsl_word_msb_table,X : STA !CTRL_SHORTCUT_JSL_WORD_MSB
     LDA.l ctrl_shortcut_cancel_gameplay_table,X : BNE .dualWriteMatchClc
@@ -1396,35 +1396,75 @@ cm_condense_ctrl_shortcuts:
     RTL
 }
 
-if !FEATURE_SD2SNES
-validate_sram_for_savestates:
+validate_sram:
 {
+    ; check if this is ZSNES
+    PHP : SEP #$28
+    LDA #$FF : CLC : ADC #$FF
+    CMP #$64 : CLD : BNE .doneZSNES
+    PLP
+    LDA !SRAM_DETECTION_ZSNES : STA !ram_sram_detection
+    JMP .fail
+
+  .doneZSNES
+    PLP
+
+if !FEATURE_SD2SNES
     ; check if required SRAM range is valid
     ; writes to SRAM will mirror in other banks if not valid
-if !FEATURE_TINYSTATES
+    LDA $707FFE : PHA
     LDA $737FFE : INC : STA $707FFE
-    CMP $737FFE : BNE .success
-else
-    LDA $777FFE : INC : STA $707FFE
-    CMP $777FFE : BNE .success
-endif
+    CMP $737FFE : BNE .first128CheckPass
 
     ; double check
-if !FEATURE_TINYSTATES
+    LDA $702FFE : PHA
     LDA $732FFE : INC : STA $702FFE
-    CMP $732FFE : BEQ .fail
+    CMP $732FFE : BNE .second128CheckPass
+
+    ; 128kb check failed
+    PLA : STA $702FFE
+    PLA : STA $707FFE
+    LDA !SRAM_DETECTION_32KB : STA !ram_sram_detection
+    BRA .fail
+
+  .second128CheckPass
+    PLA : STA $702FFE
+  .first128CheckPass
+    PLA : STA $707FFE
+
+if !FEATURE_TINYSTATES
 else
-    LDA $772FFE : INC : STA $702FFE
-    CMP $772FFE : BEQ .fail
+    LDA $737FFE : PHA
+    LDA $777FFE : INC : STA $737FFE
+    CMP $777FFE : BNE .first256CheckPass
+
+    ; double check
+    LDA $732FFE : PHA
+    LDA $772FFE : INC : STA $732FFE
+    CMP $772FFE : BNE .second256CheckPass
+
+    ; 256kb check failed
+    PLA : STA $732FFE
+    PLA : STA $737FFE
+    LDA !SRAM_DETECTION_128KB : STA !ram_sram_detection
+    BRA .fail
+
+  .second256CheckPass
+    PLA : STA $732FFE
+  .first256CheckPass
+    PLA : STA $737FFE
+endif
 endif
 
-  .success
-    LDA #$0001 : STA !ram_sram_savestates
+    ; success
+    TDC : STA !ram_sram_detection
     RTL
 
   .fail
+    LDA !sram_cutscenes : ORA !CUTSCENE_QUICKBOOT : STA !sram_cutscenes
+if !FEATURE_SD2SNES
     ; disable savestate controls
-    TDC : TAX : STA !ram_sram_savestates
+    TDC : TAX
     %a8()
   .firstLoop
     LDA !sram_ctrl_shortcut_selections,X : ASL
@@ -1440,9 +1480,9 @@ endif
     INX : CPX #$0030 : BMI .secondLoop
   .found
     %a16()
+endif
     RTL
 }
-endif
 
 
 ; ------------------
@@ -1662,19 +1702,19 @@ ctrl_select_shortcut_goto_page3:
 if !FEATURE_SD2SNES
 ctrl_add_save_state_dynamic:
     dw !ACTION_DYNAMIC
-    dl #!ram_sram_savestates
+    dl #!ram_cm_ctrl_savestates_allowed
     dw #$0000
     dw #ctrl_add_save_state
 
 ctrl_add_load_state_dynamic:
     dw !ACTION_DYNAMIC
-    dl #!ram_sram_savestates
+    dl #!ram_cm_ctrl_savestates_allowed
     dw #$0000
     dw #ctrl_add_load_state
 
 ctrl_add_auto_save_state_dynamic:
     dw !ACTION_DYNAMIC
-    dl #!ram_sram_savestates
+    dl #!ram_cm_ctrl_savestates_allowed
     dw #$0000
     dw #ctrl_add_auto_save_state
 endif
@@ -1986,8 +2026,8 @@ endif
 
 ctrl_add_shortcut_select:
 {
-    LDA !ram_cm_ctrl_add_shortcut_slot : TAX
-    CMP #$001E : BPL .additional
+    LDA !ram_cm_ctrl_add_shortcut_slot
+    TAX : CPX #$001E : BPL .additional
     TYA : %a8() : STA !sram_ctrl_shortcut_selections,X
     INX : CPX #$001E : BPL .secondLoop
   .firstLoop

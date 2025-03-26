@@ -237,7 +237,7 @@ init_sram_controller_shortcuts:
     ; Main Menu
     LDA #$81 : LDX #$0000 : STA !sram_ctrl_shortcut_selections,X
 if !FEATURE_SD2SNES
-    LDA !ram_sram_savestates : BEQ .skipTypes
+    LDA !ram_sram_detection : BNE .skipTypes
     ; Save State
     LDA #$82 : INX : STA !sram_ctrl_shortcut_selections,X
     ; Load State
@@ -246,6 +246,8 @@ if !FEATURE_SD2SNES
 endif
     ; Reload Preset
     LDA #$86 : INX : STA !sram_ctrl_shortcut_selections,X
+    ; Main Menu
+    LDA #$81 : INX : STA !sram_ctrl_shortcut_selections,X
     ; Pause
     LDA #$95 : INX : STA !sram_ctrl_shortcut_selections,X
     ; Unpause
@@ -276,7 +278,7 @@ endif
     ; Main Menu (Controller 1, Start + Select)
     LDA #$3000 : LDX #$0000 : STA !sram_ctrl_1_shortcut_inputs,X
 if !FEATURE_SD2SNES
-    LDA !ram_sram_savestates : BEQ .skipValues
+    LDA !ram_sram_detection : BNE .skipValues
     ; Save State (Controller 1, Select + Y + R)
     LDA #$6010 : INX #2 : STA !sram_ctrl_1_shortcut_inputs,X
     ; Load State (Controller 1, Select + Y + L)
@@ -285,6 +287,8 @@ if !FEATURE_SD2SNES
 endif
     ; Reload Preset (Controller 1, Start + Y + L)
     LDA #$5020 : INX #2 : STA !sram_ctrl_1_shortcut_inputs,X
+    ; Main Menu (Controller 2, Start + Select)
+    LDA #$3000 : INX #2 : STA !sram_ctrl_2_shortcut_inputs,X
     ; Pause (Controller 2, Right)
     LDA #$0100 : INX #2 : STA !sram_ctrl_2_shortcut_inputs,X
     ; Unpause (Controller 2, Left)
