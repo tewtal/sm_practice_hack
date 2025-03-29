@@ -370,6 +370,7 @@ init_post_boot:
     JML cm_boot
 
   .done
+    JSL cm_write_ctrl_routine
     JML $82893D ; hijacked code: start main game loop
 }
 
