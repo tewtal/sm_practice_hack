@@ -10,6 +10,10 @@ cm_brb_table:
 ; 1000h bytes transferred
 incbin ../resources/cm_brb_gfx.bin
 
+%endfree(8E)
+
+
+%startfree(A1)
 
 ; --------
 ; BRB Menu
@@ -51,10 +55,10 @@ brb_menu_timer_mode:
     db #$FF
 
 brb_menu_timer_min:
-    %cm_numfield("Minutes on Timer", !ram_cm_brb_mins, 0, 99, 1, 5, #0)
+    %cm_numfield("Minutes on Timer", !ram_cm_brb_mins, 0, 99, 1, 2, #0)
 
 brb_menu_timer_sec:
-    %cm_numfield("Seconds on Timer", !ram_cm_brb_secs, 0, 59, 1, 5, #0)
+    %cm_numfield("Seconds on Timer", !ram_cm_brb_secs, 0, 59, 1, 2, #0)
 
 brb_menu_timer_clear:
     %cm_jsl("Clear Timer", .routine, #0)
@@ -182,9 +186,15 @@ cm_brb_loop:
 cm_draw_brb:
 {
     JSL cm_tilemap_bg_interior_long
+    LDA !ram_sram_detection : BNE .splash_screen
     JSR cm_tilemap_brb
     JSL cm_tilemap_transfer_long
     JMP cm_brb_scroll_BG3
+
+  .splash_screen
+    JSR cm_tilemap_splash_screen
+    JSL cm_tilemap_transfer_long
+    RTS
 }
 
 cm_tilemap_brb:
@@ -284,6 +294,36 @@ cm_tilemap_brb:
     LDX #$0586
     JSR cm_draw_brb_text
 
+    RTS
+}
+
+cm_tilemap_splash_screen:
+{
+    ; Same bank for all of the BRB text
+    PHK : PHK : PLA : STA !DP_CurrentMenu+2
+
+    LDA !ram_sram_detection
+    CMP !SRAM_DETECTION_32KB : BEQ .legacy
+    CMP !SRAM_DETECTION_128KB : BEQ .tinystates
+    CMP !SRAM_DETECTION_ZSNES : BEQ .zsnes
+    BRK
+
+  .legacy
+    LDA.w #BRB_legacy : STA !DP_CurrentMenu
+    LDX #$0286
+    JSR cm_draw_brb_text
+    RTS
+
+  .tinystates
+    LDA.w #BRB_tinystates : STA !DP_CurrentMenu
+    LDX #$0286
+    JSR cm_draw_brb_text
+    RTS
+
+  .zsnes
+    LDA.w #BRB_zsnes : STA !DP_CurrentMenu
+    LDX #$0286
+    JSR cm_draw_brb_text
     RTS
 }
 
@@ -470,6 +510,15 @@ table ../resources/header.tbl
 
 BRB_common_2:
     db #$28, "    Will Be Right Back", #$FF
+
+BRB_legacy:
+db #$28, "    SNES CLASSIC OR VC", #$FF
+
+BRB_tinystates:
+db #$28, "  SELECT MODERN EMULATORS", #$FF
+
+BRB_zsnes:
+db #$28, "    DO NOT USE ZSNES", #$FF
 table ../resources/normal.tbl
 
 BRBTilemapAddress:
@@ -481,27 +530,6 @@ BRBTilemapAddress:
     dw #BRB_screen_06
     dw #BRB_screen_07
 
-BRB_screen_01:
-    db #$28, "   SM Speedrunning Wiki", #$FF
-
-BRB_screen_02:
-    db #$28, "  SM Speedrunning Discord", #$FF
-
-BRB_screen_03:
-    db #$28, "Find the practice hack at", #$FF
-
-BRB_screen_04:
-    db #$28, "  Control Schemes for SM", #$FF
-
-BRB_screen_05:
-    db #$28, "Support FUNtoon on Patreon", #$FF
-
-BRB_screen_06:
-    db #$28, " Crazy chain damage clips", #$FF
-
-BRB_screen_07:
-    db #$28, " Customized practice hacks", #$FF
-
 BRBTilemapAddress2:
     dw #BRB_screen2_01
     dw #BRB_screen2_02
@@ -511,27 +539,47 @@ BRBTilemapAddress2:
     dw #BRB_screen2_06
     dw #BRB_screen2_07
 
+BRB_screen_01:
+    db #$28, "   SM Speedrunning Wiki", #$FF
 BRB_screen2_01:
     db #$28, "   wiki.supermetroid.run", #$FF
 
+
+BRB_screen_02:
+    db #$28, "  SM Speedrunning Discord", #$FF
 BRB_screen2_02:
     db #$28, "   SMDiscord.spazer.link", #$FF
 
+
+BRB_screen_03:
+    db #$28, "Find the practice hack at", #$FF
 BRB_screen2_03:
     db #$28, "  smpractice.speedga.me", #$FF
 
+
+BRB_screen_04:
+    db #$28, "  Control Schemes for SM", #$FF
 BRB_screen2_04:
     db #$28, "   controls.spazer.link", #$FF
 
+
+BRB_screen_05:
+    db #$28, "Support FUNtoon on Patreon", #$FF
 BRB_screen2_05:
 ; !funtoonpatreon
     db #$28, "      ", #$1A, "funtoonpatreon", #$FF
 
+
+BRB_screen_06:
+    db #$28, " Crazy chain damage clips", #$FF
 BRB_screen2_06:
     db #$28, "    chain.spazer.link", #$FF
 
-BRB_screen2_07:
-    db #$28, "     by InsaneFirebat", #$FF
 
-%endfree(8E)
+BRB_screen_07:
+    db #$28, "  Learn new SM strats at", #$FF
+BRB_screen2_07:
+    db #$28, "        crocomi.re", #$FF
+
+%endfree(A1)
 

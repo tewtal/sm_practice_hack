@@ -2312,9 +2312,8 @@ else
     LDA !sram_display_mode : BNE .done
     LDA !IH_MODE_ROOMSTRAT_INDEX : STA !sram_display_mode
     LDA !IH_STRAT_MBHP_INDEX : STA !sram_room_strat
-
-  .done
 endif ; !FEATURE_VANILLAHUD
+  .done
     RTS
 }
 

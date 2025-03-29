@@ -212,8 +212,8 @@ CrashViewer:
     STA !ram_crash_input : STA !ram_crash_input_new
     LDA #$0001 : STA !ram_crash_bg
     LDA !IH_CONTROLLER_PRI_NEW : STA !ram_crash_input_prev
-    LDA #$0A44 : STA !ram_crash_mem_viewer
-    LDA #$007E : STA !ram_crash_mem_viewer_bank
+    LDA.w !CRASH_INITIAL_ADDRESS : STA !ram_crash_mem_viewer
+    LDA.w !CRASH_INITIAL_ADDRESS>>16 : STA !ram_crash_mem_viewer_bank
 
     ; fall through to CrashLoop
 }
@@ -247,16 +247,10 @@ CrashLoop:
   .skipSoftReset
 
 if !FEATURE_SD2SNES
-    ; check for load state shortcut
-    LDA !ram_crash_input : CMP !sram_ctrl_load_state : BNE .skipLoadState
+    ; check for load state shortcut (Select+Y+L)
+    LDA !ram_crash_input : CMP #$6020 : BNE .skipLoadState
     AND !ram_crash_input_new : BEQ .skipLoadState
-    LDA !SRAM_SAVED_STATE : CMP !SAFEWORD : BNE .skipLoadState
-    ; prepare to jump to load_state
-    %a8()
-    LDA.b #gamemode_start>>16 : PHA : PLB
-    %a16()
-    PEA.w gamemode_start_return-1
-    JML gamemode_shortcuts_load_state
+    JSL gamemode_load_state
   .skipLoadState
 endif
 
