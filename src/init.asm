@@ -209,6 +209,12 @@ endif
     LDA #$0300 : STA !sram_zebes_timer
 
   .upgrade_19to1A
+    LDA !sram_loadstate_rando_energy
+    ORA !sram_loadstate_rando_reserves
+    ORA !sram_loadstate_rando_missiles
+    ORA !sram_loadstate_rando_supers
+    ORA !sram_loadstate_rando_powerbombs
+    STA !sram_loadstate_rando_enable
     JSL init_sram_controller_shortcuts
 
     LDA !SRAM_VERSION : STA !sram_initialized

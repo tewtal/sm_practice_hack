@@ -200,7 +200,6 @@ ram_turret_rng = !ram_turret_rng ; !WRAM_PERSIST_START+$68
 ram_quickboot_spc_state = !ram_quickboot_spc_state ; !WRAM_PERSIST_START+$6A
 ram_display_backup = !ram_display_backup ; !WRAM_PERSIST_START+$6C
 ram_phantoon_always_visible = !ram_phantoon_always_visible ; !WRAM_PERSIST_START+$6E
-ram_loadstate_rando_enable = !ram_loadstate_rando_enable ; !WRAM_PERSIST_START+$70
 
 ; ^ FREE SPACE ^ up to +$7C (!WRAM_START+$FC - !WRAM_PERSIST_START)
 
@@ -533,6 +532,7 @@ sram_loadstate_rando_reserves = !sram_loadstate_rando_reserves ; !SRAM_START+$11
 sram_loadstate_rando_missiles = !sram_loadstate_rando_missiles ; !SRAM_START+$114
 sram_loadstate_rando_supers = !sram_loadstate_rando_supers ; !SRAM_START+$116
 sram_loadstate_rando_powerbombs = !sram_loadstate_rando_powerbombs ; !SRAM_START+$118
+sram_loadstate_rando_enable = !sram_loadstate_rando_enable ; !SRAM_START+$11A
 
 ; ^ FREE SPACE ^ up to +$13E
 

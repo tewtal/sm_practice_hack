@@ -103,7 +103,7 @@ post_load_state:
 
   .randomizeOnLoad
     ; Randomize energy/ammo?
-    LDA !ram_loadstate_rando_enable : BEQ .done
+    LDA !sram_loadstate_rando_enable : BEQ .done
     JSL RandomizeOnLoad
 
   .done

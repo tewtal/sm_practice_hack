@@ -606,19 +606,6 @@ RandomizeOnLoad:
     RTL
 }
 
-RandomizeOnLoad_Flag:
-{
-    LDA !sram_loadstate_rando_energy : BNE .enable
-    LDA !sram_loadstate_rando_reserves : BNE .enable
-    LDA !sram_loadstate_rando_missiles : BNE .enable
-    LDA !sram_loadstate_rando_supers : BNE .enable
-    LDA !sram_loadstate_rando_powerbombs : BNE .enable
-
-  .enable
-    STA !ram_loadstate_rando_enable
-    RTL
-}
-
 lock_samus_bowling:
 {
     LDA !sram_cutscenes : BIT !CUTSCENE_FAST_BOWLING : BNE .speedup

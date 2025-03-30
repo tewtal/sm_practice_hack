@@ -2913,6 +2913,7 @@ SavestateMenu:
     dw #save_middoorsave
     dw #save_alwayssave
     dw #$FFFF
+    dw #save_rando_enable
     dw #save_rando_energy
     dw #save_rando_reserves
     dw #save_rando_missiles
@@ -2944,25 +2945,23 @@ save_delete:
     %sfxconfirm()
     RTL
 
+save_rando_enable:
+    %cm_toggle("Variance on Load State", !sram_loadstate_rando_enable, #$01, #0)
+
 save_rando_energy:
-    %cm_numfield("Energy Variance", !sram_loadstate_rando_energy, 0, 255, 1, 4, #save_rando_enable)
+    %cm_numfield("Energy Variance", !sram_loadstate_rando_energy, 0, 255, 1, 4, #0)
 
 save_rando_reserves:
-    %cm_numfield("Reserve Variance", !sram_loadstate_rando_reserves, 0, 255, 1, 4, #save_rando_enable)
+    %cm_numfield("Reserve Variance", !sram_loadstate_rando_reserves, 0, 255, 1, 4, #0)
 
 save_rando_missiles:
-    %cm_numfield("Missile Variance", !sram_loadstate_rando_missiles, 0, 230, 1, 4, #save_rando_enable)
+    %cm_numfield("Missile Variance", !sram_loadstate_rando_missiles, 0, 230, 1, 4, #0)
 
 save_rando_supers:
-    %cm_numfield("Super Missile Variance", !sram_loadstate_rando_supers, 0, 50, 1, 2, #save_rando_enable)
+    %cm_numfield("Super Missile Variance", !sram_loadstate_rando_supers, 0, 50, 1, 2, #0)
 
 save_rando_powerbombs:
-    %cm_numfield("Power Bomb Variance", !sram_loadstate_rando_powerbombs, 0, 50, 1, 2, #save_rando_enable)
-
-save_rando_enable:
-{
-    JML RandomizeOnLoad_Flag
-}
+    %cm_numfield("Power Bomb Variance", !sram_loadstate_rando_powerbombs, 0, 50, 1, 2, #0)
 endif
 
 
@@ -2997,7 +2996,6 @@ slowdown_frames:
 
 init_wram_based_on_sram:
 {
-    JSL RandomizeOnLoad_Flag
     JSL init_suit_properties_ram
     JSL init_physics_ram
     JSL validate_sram
