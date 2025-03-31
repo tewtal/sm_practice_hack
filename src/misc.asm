@@ -851,14 +851,14 @@ spacetime_routine:
     INY #2
     INX #2 : CPX #($7EF378-$7EC1C0) : BMI .loop_skip_sprite_object_ram
 
-    ; Check if Y will cause us to reach WRAM
-    TYA : CLC : ADC #(!WRAM_START-$7EF398) : CMP #$0000 : BPL .normal_load_loop
+    ; Check if Y will cause us to reach CTRL_SHORTCUT_ROUTINE
+    TYA : CLC : ADC #(!CTRL_SHORTCUT_ROUTINE-$7EF398) : CMP #$0000 : BPL .normal_load_loop
 
     ; It will, so run our own loop
   .loop_before_wram
     LDA [$00],Y : STA $7EC1C0,X
     INY #2
-    INX #2 : CPX #(!WRAM_START-$7EC1C0) : BMI .loop_before_wram
+    INX #2 : CPX #(!CTRL_SHORTCUT_ROUTINE-$7EC1C0) : BMI .loop_before_wram
 
     ; Skip over WRAM
     ; Instead of load and store, load and load
@@ -874,7 +874,7 @@ spacetime_routine:
 
   .overwrite_sprite_object_ram
     ; Check if Y will cause us to reach WRAM
-    TYA : CLC : ADC #(!WRAM_START-$7EEF98) : CMP #$0000 : BPL .normal_load_loop
+    TYA : CLC : ADC #(!CTRL_SHORTCUT_ROUTINE-$7EEF98) : CMP #$0000 : BPL .normal_load_loop
     BRA .loop_before_wram
 }
 endif
