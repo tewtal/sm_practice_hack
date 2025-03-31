@@ -280,8 +280,6 @@ ram_cm_watch_enemy_index = !ram_cm_watch_enemy_index ; !WRAM_MENU_START+$92
 ram_cm_watch_enemy_side = !ram_cm_watch_enemy_side ; !WRAM_MENU_START+$94
 ram_cm_watch_common_address = !ram_cm_watch_common_address ; !WRAM_MENU_START+$96
 
-ram_cm_preset_elevator = !ram_cm_preset_elevator ; !WRAM_MENU_START+$90
-
 ram_cm_door_dynamic = !ram_cm_door_dynamic ; !WRAM_MENU_START+$90
 ram_cm_door_menu_value = !ram_cm_door_menu_value ; !WRAM_MENU_START+$92
 ram_cm_door_menu_bank = !ram_cm_door_menu_bank ; !WRAM_MENU_START+$94
@@ -317,14 +315,6 @@ ram_cm_zeb3 = !ram_cm_zeb3 ; !WRAM_MENU_START+$94
 ram_cm_zeb4 = !ram_cm_zeb4 ; !WRAM_MENU_START+$96
 ram_cm_zebmask = !ram_cm_zebmask ; !WRAM_MENU_START+$98
 
-ram_cm_custompalette_blue = !ram_cm_custompalette_blue ; !WRAM_MENU_START+$90
-ram_cm_custompalette_green = !ram_cm_custompalette_green ; !WRAM_MENU_START+$92
-ram_cm_custompalette_red = !ram_cm_custompalette_red ; !WRAM_MENU_START+$94
-ram_cm_custompalette = !ram_cm_custompalette ; !WRAM_MENU_START+$96
-ram_cm_dummy_on = !ram_cm_dummy_on ; !WRAM_MENU_START+$9A
-ram_cm_dummy_off = !ram_cm_dummy_off ; !WRAM_MENU_START+$9C
-ram_cm_dummy_num = !ram_cm_dummy_num ; !WRAM_MENU_START+$9E
-
 ram_cm_ceres_seconds = !ram_cm_ceres_seconds ; !WRAM_MENU_START+$90
 ram_cm_zebes_seconds = !ram_cm_zebes_seconds ; !WRAM_MENU_START+$92
 
@@ -356,10 +346,20 @@ ram_cm_brb_palette = !ram_cm_brb_palette ; !WRAM_MENU_START+$AA
 ram_cm_brb_set_cycle = !ram_cm_brb_set_cycle ; !WRAM_MENU_START+$AC
 ram_cm_brb_cycle_time = !ram_cm_brb_cycle_time ; !WRAM_MENU_START+$AE
 
-ram_cm_keyboard_buffer = !ram_cm_keyboard_buffer ; !WRAM_MENU_START+$90 ; $18 bytes
-
 ram_cm_manage_slots = !ram_cm_manage_slots ; !WRAM_MENU_START+$90
 ram_cm_selected_slot = !ram_cm_selected_slot ; !WRAM_MENU_START+$92
+ram_cm_preset_elevator = !ram_cm_preset_elevator ; !WRAM_MENU_START+$94
+
+; keyboard used by both presets and customize menus
+ram_cm_keyboard_buffer = !ram_cm_keyboard_buffer ; !WRAM_MENU_START+$98 ; $18 bytes
+
+ram_cm_custompalette_blue = !ram_cm_custompalette_blue ; !WRAM_MENU_START+$90
+ram_cm_custompalette_green = !ram_cm_custompalette_green ; !WRAM_MENU_START+$92
+ram_cm_custompalette_red = !ram_cm_custompalette_red ; !WRAM_MENU_START+$94
+ram_cm_custompalette = !ram_cm_custompalette ; !WRAM_MENU_START+$96
+ram_cm_dummy_on = !ram_cm_dummy_on ; !WRAM_MENU_START+$AA
+ram_cm_dummy_off = !ram_cm_dummy_off ; !WRAM_MENU_START+$AC
+ram_cm_dummy_num = !ram_cm_dummy_num ; !WRAM_MENU_START+$AE
 
 ; ^ FREE SPACE ^ up to +$CE
 ; Note: +$B8 to +$CE range also used as frames held counters
