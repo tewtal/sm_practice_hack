@@ -34,6 +34,19 @@ action_brb_mainmenu:
 
 action_game_mainmenu:
 {
+    ; Attempt to update g-mode flag
+    LDA !PALETTE_FX_ENABLE : ORA !PLM_ENABLE
+    ORA !ENEMY_PROJ_ENABLE : ORA !ANIMATED_TILES_ENABLE
+    BEQ .set_gmode_flag
+    LDA !PALETTE_FX_ENABLE : AND !PLM_ENABLE
+    AND !ENEMY_PROJ_ENABLE : AND !ANIMATED_TILES_ENABLE
+    BEQ .init_timers
+
+  .set_gmode_flag
+    ; If all four on or off, set g-mode flag accordingly
+    STA !ram_cm_gmode
+
+  .init_timers
     ; Each hexadecimal nibble represents a decimal
     ; Convert to plain number to allow user to set it
 
@@ -446,7 +459,7 @@ presets_custom_preset_slot:
     %cm_numfield("Custom Preset Slot", !sram_custom_preset_slot, 0, !TOTAL_PRESET_SLOTS, 1, 2, #.routine)
   .routine
     ; ignore if not A, X, or Y
-    LDA !IH_CONTROLLER_PRI_NEW : BIT #$40C0 : BNE .submenu
+    LDA !IH_CONTROLLER_PRI_NEW : ORA !IH_CONTROLLER_SEC_NEW : BIT #$40C0 : BNE .submenu
     LDA !sram_last_preset : BMI .exit
     TDC : STA !sram_last_preset
   .exit

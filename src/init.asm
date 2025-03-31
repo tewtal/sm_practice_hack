@@ -73,6 +73,8 @@ init_nonzero_wram:
     INC : STA !ram_cm_sfxlib1
     STA !ram_cm_sfxlib2 : STA !ram_cm_sfxlib3
 
+    LDA #$8000 : STA !ram_cm_gmode
+
     JML init_wram_based_on_sram
 }
 

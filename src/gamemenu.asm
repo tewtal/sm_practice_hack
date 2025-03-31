@@ -219,20 +219,36 @@ game_pacifist:
     %cm_toggle("Deal Zero Damage", !ram_pacifist, #$01, #0)
 
 game_debugplms:
-    %cm_toggle_bit("Pseudo G-Mode", !ram_cm_gmode, #$0001, #.routine)
+    %cm_toggle_bit_inverted("Pseudo G-Mode", !ram_cm_gmode, #$8000, #.routine)
   .routine
-    CMP #$0000 : BNE .enable
-    ; disable
-    LDA #$8000
+    LDA !ram_cm_gmode
     STA !PALETTE_FX_ENABLE
     STA !PLM_ENABLE
     STA !ENEMY_PROJ_ENABLE
+    STA !ANIMATED_TILES_ENABLE
+    BEQ .xray_hdma
+if !FEATURE_PAL
+    LDA #$E910 : STA !SAMUS_CONTROLLER_HANDLER
+else
+    LDA #$E913 : STA !SAMUS_CONTROLLER_HANDLER
+endif
     RTL
-
-  .enable
-    STZ !PALETTE_FX_ENABLE
-    STZ !PLM_ENABLE
-    STZ !ENEMY_PROJ_ENABLE
+  .xray_hdma
+    LDX #$01FE : LDA #$00FF
+  .xray_loop
+    STA $7E9800,X
+    DEX #2 : BPL .xray_loop
+    LDA #$0001 : STA $0A88
+    LDA #$9800 : STA $0A89
+    STZ $0A8B
+    LDA #$98C8 : STA $0A8C
+    LDA #$0098 : STA $0A8E
+    LDA #$9990 : STA $0A8F
+if !FEATURE_PAL
+    LDA #$E915 : STA !SAMUS_CONTROLLER_HANDLER
+else
+    LDA #$E918 : STA !SAMUS_CONTROLLER_HANDLER
+endif
     RTL
 
 game_debugprojectiles:
