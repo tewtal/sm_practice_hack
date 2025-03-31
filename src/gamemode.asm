@@ -505,8 +505,14 @@ gamemode_decrement_super_hud:
 }
 endif
 
+gamemode_soft_reset:
+{
+    STZ !DISABLE_SOUNDS
+    JML $808462
+}
+
 ; Write a customized routine based on ctrl shortcut selections
-!GAMEMODE_CTRL_SHORTCUT_COUNT = #$001F
+!GAMEMODE_CTRL_SHORTCUT_COUNT = #$0020
 cm_write_ctrl_routine:
 {
     ; No bounds check on X is done as we shouldn't exceed our buffer.
@@ -540,6 +546,7 @@ cm_write_ctrl_routine:
     STA !CTRL_SHORTCUT_TABLE,X : AND.b !CTRL_SHORTCUT_TYPE_MASK
     BEQ .initialFirstInvalid : CMP.b !GAMEMODE_CTRL_SHORTCUT_COUNT : BPL .initialFirstInvalid
 if !FEATURE_VANILLAHUD
+    CMP #$1F : BPL .initialFirstCheckInputs
     CMP #$19 : BPL .initialFirstInvalid
     CMP #$12 : BEQ .initialFirstInvalid
     CMP #$05 : BEQ .initialFirstInvalid
@@ -1630,6 +1637,7 @@ ctrl_add_shortcut:
 
 CtrlSelectShortcutTypeMenu:
     dw #ctrl_add_main_menu
+    dw #ctrl_add_soft_reset
 if !FEATURE_SD2SNES
     dw #ctrl_add_save_state_dynamic
     dw #ctrl_add_load_state_dynamic
@@ -1774,6 +1782,7 @@ else
     dw #ctrl_add_inc_super_hud_dm_text
     dw #ctrl_add_dec_super_hud_dm_text
 endif
+    dw #ctrl_add_soft_reset_dm_text
 
 ctrl_shortcut_cancel_gameplay_table:
     db $00 ; Empty
@@ -1807,6 +1816,7 @@ ctrl_shortcut_cancel_gameplay_table:
     db $00 ; Decrement Room Strat
     db $00 ; Increment Super HUD
     db $00 ; Decrement Super HUD
+    db $01 ; Soft Reset
 
 ctrl_shortcut_jsl_word_lsb_table:
     db #gamemode_placeholder
@@ -1863,6 +1873,7 @@ else
     db #gamemode_increment_super_hud
     db #gamemode_decrement_super_hud
 endif
+    db #gamemode_soft_reset
 
 ctrl_shortcut_jsl_word_msb_table:
     db #gamemode_placeholder>>8
@@ -1919,6 +1930,7 @@ else
     db #gamemode_increment_super_hud>>8
     db #gamemode_decrement_super_hud>>8
 endif
+    db #gamemode_soft_reset>>8
 
 ctrl_add_empty:
     %cm_jsl("", #ctrl_add_shortcut_select, #$0000)
@@ -2023,6 +2035,9 @@ ctrl_add_inc_super_hud:
 ctrl_add_dec_super_hud:
     %cm_jsl("Prev Super HUD", #ctrl_add_shortcut_select, #$009E)
 endif
+
+ctrl_add_soft_reset:
+    %cm_jsl("Soft Reset", #ctrl_add_shortcut_select, #$009F)
 
 ctrl_add_shortcut_select:
 {

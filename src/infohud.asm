@@ -3,7 +3,10 @@
 ; =======================================================
 
 org $809490
-    JMP $9497    ; skip resetting player 2 inputs
+    BRA $05      ; skip resetting player 2 inputs
+
+org $8094C2
+    BRA $10      ; skip hard-coded soft reset shortcut
 
 org $8094DF
     PLP          ; patch out resetting of controller 2 buttons and enable debug mode

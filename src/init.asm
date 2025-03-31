@@ -242,6 +242,8 @@ init_sram_controller_shortcuts:
     %a8()
     ; Main Menu
     LDA #$81 : LDX #$0000 : STA !sram_ctrl_shortcut_selections,X
+    ; Soft Reset
+    LDA #$9F : INX : STA !sram_ctrl_shortcut_selections,X
 if !FEATURE_SD2SNES
     LDA !ram_sram_detection : BNE .skipTypes
     ; Save State
@@ -283,6 +285,8 @@ endif
     %a16()
     ; Main Menu (Controller 1, Start + Select)
     LDA #$3000 : LDX #$0000 : STA !sram_ctrl_1_shortcut_inputs,X
+    ; Soft Reset (Controller 1, Start + Select + L + R)
+    LDA #$3030 : INX #2 : STA !sram_ctrl_1_shortcut_inputs,X
 if !FEATURE_SD2SNES
     LDA !ram_sram_detection : BNE .skipValues
     ; Save State (Controller 1, Select + Y + R)
