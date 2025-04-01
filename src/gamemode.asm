@@ -185,19 +185,24 @@ if !FEATURE_TINYSTATES
   .save
 endif
     PHP
+    PHB
     JSL save_state
+    PLB
     PLP
+
+    ; Skip remaining shortcuts
+    PLA : PEA !CTRL_SHORTCUT_SKIP_REMAINING_PEA_VALUE
     RTL
 }
 
 gamemode_load_state:
 {
-    ; check if a saved state exists
+    ; Check if a saved state exists
     LDA !SRAM_SAVED_STATE : CMP !SAFEWORD : BNE .not_available
-    JSL load_state
 
-    ; Skip remaining shortcuts
-    PLA : PEA !CTRL_SHORTCUT_SKIP_REMAINING_PEA_VALUE
+    ; We will not return from this method,
+    ; since loading the state includes loading the stack
+    JML load_state
 
   .not_available
     RTL
