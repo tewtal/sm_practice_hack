@@ -511,8 +511,16 @@ gamemode_soft_reset:
     JML $808462
 }
 
+if !FEATURE_DEV
+gamemode_dev_shortcut:
+{
+    ; Could put anything here for development purposes
+    BRK
+}
+endif
+
 ; Write a customized routine based on ctrl shortcut selections
-!GAMEMODE_CTRL_SHORTCUT_COUNT = #$0020
+!GAMEMODE_CTRL_SHORTCUT_COUNT = #$0021
 cm_write_ctrl_routine:
 {
     ; No bounds check on X is done as we shouldn't exceed our buffer.
@@ -1692,6 +1700,9 @@ else
     dw #ctrl_add_inc_super_hud
     dw #ctrl_add_dec_super_hud
 endif
+if !FEATURE_DEV
+    dw #ctrl_add_dev_shortcut
+endif
     dw #$FFFF
     dw #ctrl_select_shortcut_goto_page1
     dw #ctrl_select_shortcut_goto_page2
@@ -1783,6 +1794,11 @@ else
     dw #ctrl_add_dec_super_hud_dm_text
 endif
     dw #ctrl_add_soft_reset_dm_text
+if !FEATURE_DEV
+    dw #ctrl_add_dev_shortcut_dm_text
+else
+    dw #ctrl_add_empty_dm_text
+endif
 
 ctrl_shortcut_cancel_gameplay_table:
     db $00 ; Empty
@@ -1817,6 +1833,7 @@ ctrl_shortcut_cancel_gameplay_table:
     db $00 ; Increment Super HUD
     db $00 ; Decrement Super HUD
     db $01 ; Soft Reset
+    db $01 ; DEV Shortcut
 
 ctrl_shortcut_jsl_word_lsb_table:
     db #gamemode_placeholder
@@ -1874,6 +1891,11 @@ else
     db #gamemode_decrement_super_hud
 endif
     db #gamemode_soft_reset
+if !FEATURE_DEV
+    db #gamemode_dev_shortcut
+else
+    db #gamemode_placeholder
+endif
 
 ctrl_shortcut_jsl_word_msb_table:
     db #gamemode_placeholder>>8
@@ -1931,6 +1953,11 @@ else
     db #gamemode_decrement_super_hud>>8
 endif
     db #gamemode_soft_reset>>8
+if !FEATURE_DEV
+    db #gamemode_dev_shortcut>>8
+else
+    db #gamemode_placeholder>>8
+endif
 
 ctrl_add_empty:
     %cm_jsl("", #ctrl_add_shortcut_select, #$0000)
@@ -2038,6 +2065,9 @@ endif
 
 ctrl_add_soft_reset:
     %cm_jsl("Soft Reset", #ctrl_add_shortcut_select, #$009F)
+
+ctrl_add_dev_shortcut:
+    %cm_jsl("DEV Shortcut", #ctrl_add_shortcut_select, #$0020)
 
 ctrl_add_shortcut_select:
 {
