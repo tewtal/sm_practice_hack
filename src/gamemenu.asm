@@ -226,29 +226,6 @@ game_debugplms:
     STA !PLM_ENABLE
     STA !ENEMY_PROJ_ENABLE
     STA !ANIMATED_TILES_ENABLE
-    BEQ .xray_hdma
-if !FEATURE_PAL
-    LDA #$E910 : STA !SAMUS_CONTROLLER_HANDLER
-else
-    LDA #$E913 : STA !SAMUS_CONTROLLER_HANDLER
-endif
-    RTL
-  .xray_hdma
-    LDX #$01FE : LDA #$00FF
-  .xray_loop
-    STA $7E9800,X
-    DEX #2 : BPL .xray_loop
-    LDA #$0001 : STA $0A88
-    LDA #$9800 : STA $0A89
-    STZ $0A8B
-    LDA #$98C8 : STA $0A8C
-    LDA #$0098 : STA $0A8E
-    LDA #$9990 : STA $0A8F
-if !FEATURE_PAL
-    LDA #$E915 : STA !SAMUS_CONTROLLER_HANDLER
-else
-    LDA #$E918 : STA !SAMUS_CONTROLLER_HANDLER
-endif
     RTL
 
 game_debugprojectiles:
