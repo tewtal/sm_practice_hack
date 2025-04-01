@@ -353,10 +353,13 @@ draw_enemy_hitbox:
     LDY !OAM_STACK_POINTER ; Y = OAM stack pointer
 
   .loopEnemies
-    ; skip enemy if extended spritemap or deleted enemy
-    LDA !ENEMY_EXTRA_PROPERTIES,X : AND #$0004 : BNE .skipEnemy
+    ; skip enemy if deleted
     LDA !ENEMY_PROPERTIES,X : AND #$0200 : BNE .skipEnemy
+    ; skip enemy if extended spritemap and not frozen
+    LDA !ENEMY_FROZEN_TIMER,X : BNE .checkOffscreen
+    LDA !ENEMY_EXTRA_PROPERTIES,X : AND #$0004 : BNE .skipEnemy
 
+  .checkOffscreen
     ; skip enemy if off-screen
     LDA !ENEMY_X,X : CLC : ADC !ENEMY_X_RADIUS,X
     CMP !LAYER1_X : BMI .skipEnemy
@@ -425,7 +428,10 @@ draw_ext_spritemap_hitbox:
     LDY !OAM_STACK_POINTER ; Y = OAM stack pointer
 
   .loopEnemies
-    ; check if extended spritemap
+    ; skip enemy if deleted
+    LDA !ENEMY_PROPERTIES,X : AND #$0200 : BNE .nextEnemy
+    ; check if extended spritemap and not frozen
+    LDA !ENEMY_FROZEN_TIMER,X : BNE .nextEnemy
     LDA !ENEMY_EXTRA_PROPERTIES,X : AND #$0004 : BNE .extended
 
   .nextEnemy
