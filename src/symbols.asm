@@ -70,12 +70,12 @@ ram_magic_pants_pal3 = !ram_magic_pants_pal3 ; !WRAM_START+$40
 ram_room_has_set_rng = !ram_room_has_set_rng ; !WRAM_START+$42
 ram_HUD_top = !ram_HUD_top ; !WRAM_START+$44
 ram_HUD_middle = !ram_HUD_middle ; !WRAM_START+$46
-ram_HUD_check = !ram_HUD_check ; !WRAM_START+$48
+ram_infidoppler_active = !ram_infidoppler_active ; !WRAM_START+$48
 ram_roomstrat_counter = !ram_roomstrat_counter ; !WRAM_START+$4A
 ram_roomstrat_state = !ram_roomstrat_state ; !WRAM_START+$4C
 ram_enemy_hp = !ram_enemy_hp ; !WRAM_START+$4E
-ram_mb_hp = !ram_mb_hp ; !WRAM_START+$50
-ram_shot_timer = !ram_shot_timer ; !WRAM_START+$52
+ram_HUD_top_counter = !ram_HUD_top_counter ; !WRAM_START+$50
+ram_HUD_middle_counter = !ram_HUD_middle_counter ; !WRAM_START+$52
 ram_shine_counter = !ram_shine_counter ; !WRAM_START+$54
 ram_dash_counter = !ram_dash_counter ; !WRAM_START+$56
 
@@ -85,7 +85,6 @@ ram_print_segment_timer = !ram_print_segment_timer ; !WRAM_START+$5C
 ram_activated_shine_duration = !ram_activated_shine_duration ; !WRAM_START+$5E
 ram_watch_left_hud = !ram_watch_left_hud ; !WRAM_START+$60
 ram_watch_right_hud = !ram_watch_right_hud ; !WRAM_START+$62
-ram_infidoppler_active = !ram_infidoppler_active ; !WRAM_START+$64
 
 ; ^ FREE SPACE ^ up to +$6C
 
@@ -98,8 +97,8 @@ ram_infidoppler_active = !ram_infidoppler_active ; !WRAM_START+$64
 ram_xpos = !ram_xpos ; !WRAM_START+$6E
 ram_ypos = !ram_ypos ; !WRAM_START+$70
 ram_subpixel_pos = !ram_subpixel_pos ; !WRAM_START+$72
-ram_HUD_top_counter = !ram_HUD_top_counter ; !WRAM_START+$74
-ram_HUD_middle_counter = !ram_HUD_middle_counter ; !WRAM_START+$76
+ram_HUD_check = !ram_HUD_check ; !WRAM_START+$74
+ram_shot_timer = !ram_shot_timer ; !WRAM_START+$76
 ram_quickdrop_counter = !ram_quickdrop_counter ; !WRAM_START+$78
 ram_walljump_counter = !ram_walljump_counter ; !WRAM_START+$7A
 ram_fail_sum = !ram_fail_sum ; !WRAM_START+$7C

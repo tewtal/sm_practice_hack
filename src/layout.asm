@@ -2309,7 +2309,15 @@ layout_asm_mbhp:
 {
 if !FEATURE_VANILLAHUD
 else
-    LDA !sram_display_mode : BNE .done
+    LDA !sram_display_mode : BEQ .assignMBHP
+    CMP !IH_MODE_ROOMSTRAT_INDEX : BNE .done
+    LDA !sram_superhud_bottom : BNE .done
+    ; Switch Super HUD enemy HP to MB HP
+    LDA !IH_SUPERHUD_MBHP_BOTTOM_INDEX : STA !sram_superhud_bottom
+    RTS
+
+  .assignMBHP
+    ; Switch enemy HP to MB HP
     LDA !IH_MODE_ROOMSTRAT_INDEX : STA !sram_display_mode
     LDA !IH_STRAT_MBHP_INDEX : STA !sram_room_strat
 endif ; !FEATURE_VANILLAHUD

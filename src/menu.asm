@@ -212,7 +212,9 @@ cm_exit:
     JSL $809B44 ; Handle HUD tilemap
 if !FEATURE_VANILLAHUD
 else
+    LDA #$FFFF : STA !ram_reserves_last
     JSL ih_update_hud_code
+    JSL ih_update_status
 endif
     LDA !ram_seed_X : STA !sram_seed_X
     LDA !ram_seed_Y : STA !sram_seed_Y

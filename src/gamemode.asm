@@ -377,19 +377,41 @@ if !FEATURE_VANILLAHUD
 else
 gamemode_reveal_damage:
 {
-    LDA !sram_display_mode : CMP !IH_MODE_COUNTDAMAGE_INDEX : BEQ .unreveal
+    LDA !sram_display_mode : CMP !IH_MODE_ROOMSTRAT_INDEX : BEQ .checkRoomStrat
+    CMP !IH_MODE_COUNTDAMAGE_INDEX : BNE .reveal
+    ; revert to prior mode
+    LDA !ram_display_backup : STA !sram_display_mode
+    %sfxreset()
+    JML init_print_segment_timer
+
+  .revealRoomStrat
+    LDA !sram_display_mode
+  .reveal
     STA !ram_display_backup
     LDA !IH_MODE_COUNTDAMAGE_INDEX : STA !sram_display_mode
     ; set ram_HUD_check to some value that cannot match the damage counter
     ; conveniently the current value of A will work
     STA !ram_HUD_check
     %sfxconfirm()
-    RTL
+    JML init_print_segment_timer
 
-  .unreveal
-    LDA !ram_display_backup : STA !sram_display_mode
+  .checkRoomStrat
+    LDA !sram_room_strat : BNE .revealRoomStrat
+    ; handle Super HUD case
+    LDA !sram_superhud_bottom : CMP !IH_SUPERHUD_COUNTDAMAGE_BOTTOM_INDEX : BNE .revealSuperHUD
+    ; revert to prior Super HUD mode
+    LDA !ram_display_backup : STA !sram_superhud_bottom
     %sfxreset()
-    RTL
+    JML init_print_segment_timer
+
+  .revealSuperHUD
+    STA !ram_display_backup
+    LDA !IH_SUPERHUD_COUNTDAMAGE_BOTTOM_INDEX : STA !sram_superhud_bottom
+    ; set ram_HUD_check to some value that cannot match the damage counter
+    ; conveniently the current value of A will work
+    STA !ram_HUD_check
+    %sfxconfirm()
+    JML init_print_segment_timer
 }
 endif
 

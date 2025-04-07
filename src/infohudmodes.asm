@@ -181,7 +181,7 @@ else
 endif
 
     ; Suppress Samus HP display
-    ; The segment timer is also suppressed elsewhere just for shinetune
+    ; The segment timer is also suppressed elsewhere
     LDA !SAMUS_HP : STA !ram_last_hp
 
     ; Track Samus momentum
@@ -206,6 +206,9 @@ endif
     BRA .shinetune_start
 
   .average_momentum
+    ; Do not print out momentum if Super HUD is enabled
+    LDA !sram_room_strat : BEQ .invalid_momentum
+
     ; We have total momentum (x256) over 44 frames
     ; To get the average (x1024), divide by 11
     LDA !ram_momentum_sum
@@ -217,7 +220,7 @@ endif
     LDA $4214 : LDX #$0054 : JSR Draw4Hundredths
 
   .invalid_momentum
-    LDA #$FFFF : STA !ram_momentum_count
+    TDC : DEC : STA !ram_momentum_count
     BRA .shinetune_start
 
   .wait_for_stop
@@ -989,6 +992,7 @@ status_quickdrop:
 status_walljump:
 {
     ; Suppress Samus HP display
+    ; The segment timer is also suppressed elsewhere
     LDA !SAMUS_HP : STA !ram_last_hp
 
     ; Check if it is time to calculate average climb speed
@@ -1558,6 +1562,7 @@ superhud_bottom_table:
     dw status_cooldown
     dw status_shinetimer
     dw status_dashcounter
+    dw status_shinetune
     dw status_iframecounter
     dw status_spikesuit
     dw status_lagcounter
@@ -1578,6 +1583,7 @@ superhud_bottom_table:
     dw status_tacotank
     dw status_pitdoor
     dw status_moondance
+    dw status_kraidradar
     dw status_gateglitch
     dw status_moatcwj
     dw status_robotflush
@@ -1588,6 +1594,7 @@ superhud_bottom_table:
     dw status_snailclip
     dw status_wasteland
     dw status_ridleyai
+    dw status_kihuntermanip
     dw status_downbackzeb
     dw status_zebskip
     dw status_mbhp
@@ -1605,6 +1612,10 @@ superhud_middle_table:
     dw middleHUD_cpuusage
     dw middleHUD_hspeed
     dw middleHUD_shottimer
+    dw middleHUD_itempercent
+    dw middleHUD_reserves
+    dw middleHUD_statusicons
+    dw middleHUD_tilecounter
 
 superhud_top_table:
     dw status_enemyhp_done
@@ -1618,6 +1629,10 @@ superhud_top_table:
     dw topHUD_cpuusage
     dw topHUD_hspeed
     dw topHUD_shottimer
+    dw topHUD_itempercent
+    dw topHUD_reserves
+    dw topHUD_statusicons
+    dw topHUD_tilecounter
 
 middleHUD_chargetimer:
 {
@@ -1956,6 +1971,272 @@ topHUD_shottimer:
 
   .incShot
     LDA !ram_HUD_top_counter : INC : STA !ram_HUD_top_counter
+    RTS
+}
+
+middleHUD_itempercent:
+{
+    LDA !SAMUS_BEAMS_COLLECTED : CLC : ADC !SAMUS_HP_MAX : ADC !SAMUS_RESERVE_MAX
+    ADC !SAMUS_MISSILES_MAX : ADC !SAMUS_SUPERS_MAX : ADC !SAMUS_PBS_MAX
+    CMP !ram_HUD_middle_counter : BEQ .checkMajors
+    STA !ram_HUD_middle_counter : LDA !SAMUS_ITEMS_COLLECTED
+    BRA .calculate
+
+  .checkMajors
+    LDA !SAMUS_ITEMS_COLLECTED : CMP !ram_HUD_middle : BEQ .done
+
+  .calculate
+    STA !ram_HUD_middle
+
+    ; Max HP and Reserves
+    LDA !SAMUS_HP_MAX : CLC : ADC !SAMUS_RESERVE_MAX
+    JSR CalcEtank : STA $C1
+
+    ; Max Missiles, Supers and Power Bombs
+    LDA !SAMUS_MISSILES_MAX : CLC : ADC !SAMUS_SUPERS_MAX : ADC !SAMUS_PBS_MAX
+    JSR CalcItem : CLC : ADC $C1 : STA $C1
+
+    ; Collected items
+    JSR CalcLargeItem : CLC : ADC $C1 : STA $C1
+
+    ; Collected beams and charge
+    JSR CalcBeams : CLC : ADC $C1
+
+    ; Percent counter -> decimal form and drawn on HUD
+    LDX #$0052 : JSR Draw3
+    LDA !IH_PERCENT : STA !HUD_TILEMAP+$58
+
+  .done
+    RTS
+}
+
+topHUD_itempercent:
+{
+    LDA !SAMUS_BEAMS_COLLECTED : CLC : ADC !SAMUS_HP_MAX : ADC !SAMUS_RESERVE_MAX
+    ADC !SAMUS_MISSILES_MAX : ADC !SAMUS_SUPERS_MAX : ADC !SAMUS_PBS_MAX
+    CMP !ram_HUD_top_counter : BEQ .checkMajors
+    STA !ram_HUD_top_counter : LDA !SAMUS_ITEMS_COLLECTED
+    BRA .calculate
+
+  .checkMajors
+    LDA !SAMUS_ITEMS_COLLECTED : CMP !ram_HUD_top : BEQ .done
+
+  .calculate
+    STA !ram_HUD_top
+
+    ; Max HP and Reserves
+    LDA !SAMUS_HP_MAX : CLC : ADC !SAMUS_RESERVE_MAX
+    JSR CalcEtank : STA $C1
+
+    ; Max Missiles, Supers and Power Bombs
+    LDA !SAMUS_MISSILES_MAX : CLC : ADC !SAMUS_SUPERS_MAX : ADC !SAMUS_PBS_MAX
+    JSR CalcItem : CLC : ADC $C1 : STA $C1
+
+    ; Collected items
+    JSR CalcLargeItem : CLC : ADC $C1 : STA $C1
+
+    ; Collected beams and charge
+    JSR CalcBeams : CLC : ADC $C1
+
+    ; Percent counter -> decimal form and drawn on HUD
+    LDX #$0012 : JSR Draw3
+    LDA !IH_PERCENT : STA !HUD_TILEMAP+$18
+
+  .done
+    RTS
+}
+
+middleHUD_reserves:
+{
+    LDA !SAMUS_RESERVE_MAX : BEQ .noReserves
+    CMP !ram_HUD_middle : BEQ .checkReserves
+    STA !ram_HUD_middle : LDA !SAMUS_RESERVE_ENERGY
+    BRA .drawReserves
+
+  .checkReserves
+    LDA !SAMUS_RESERVE_ENERGY : CMP !ram_HUD_middle_counter : BEQ .checkAuto
+
+  .drawReserves
+    STA !ram_HUD_middle_counter : LDX #$0054 : JSR Draw3
+
+  .checkAuto
+    LDA !SAMUS_RESERVE_MODE : CMP #$0001 : BEQ .autoOn
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$5A
+    RTS
+
+  .autoOn
+    LDA !SAMUS_RESERVE_ENERGY : BEQ .autoEmpty
+    LDA !IH_RESERVE_AUTO : STA !HUD_TILEMAP+$5A
+    RTS
+
+  .autoEmpty
+    LDA !IH_RESERVE_EMPTY : STA !HUD_TILEMAP+$5A
+    RTS
+
+  .noReserves
+    CMP !ram_HUD_middle : BEQ .done
+    STA !ram_HUD_middle : LDA !IH_BLANK
+    STA !HUD_TILEMAP+$54 : STA !HUD_TILEMAP+$56
+    STA !HUD_TILEMAP+$58 : STA !HUD_TILEMAP+$5A
+
+  .done
+    RTS
+}
+
+topHUD_reserves:
+{
+    LDA !SAMUS_RESERVE_MAX : BEQ .noReserves
+    CMP !ram_HUD_top : BEQ .checkReserves
+    STA !ram_HUD_top : LDA !SAMUS_RESERVE_ENERGY
+    BRA .drawReserves
+
+  .checkReserves
+    LDA !SAMUS_RESERVE_ENERGY : CMP !ram_HUD_top_counter : BEQ .checkAuto
+
+  .drawReserves
+    STA !ram_HUD_top_counter : LDX #$0014 : JSR Draw3
+
+  .checkAuto
+    LDA !SAMUS_RESERVE_MODE : CMP #$0001 : BEQ .autoOn
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$1A
+    RTS
+
+  .autoOn
+    LDA !SAMUS_RESERVE_ENERGY : BEQ .autoEmpty
+    LDA !IH_RESERVE_AUTO : STA !HUD_TILEMAP+$1A
+    RTS
+
+  .autoEmpty
+    LDA !IH_RESERVE_EMPTY : STA !HUD_TILEMAP+$1A
+    RTS
+
+  .noReserves
+    CMP !ram_HUD_top : BEQ .done
+    STA !ram_HUD_top : LDA !IH_BLANK
+    STA !HUD_TILEMAP+$14 : STA !HUD_TILEMAP+$16
+    STA !HUD_TILEMAP+$18 : STA !HUD_TILEMAP+$1A
+
+  .done
+    RTS
+}
+
+middleHUD_statusicons:
+{
+    ; health bomb
+    LDA !HEALTH_BOMB_FLAG : BEQ .clearHealthBomb
+    LDA !SAMUS_HP : CMP #$0032 : BMI .inHealthBomb
+    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$54
+    BRA .checkElevator
+
+  .inHealthBomb
+    LDA !IH_HEALTHBOMB : STA !HUD_TILEMAP+$54
+    BRA .checkElevator
+
+  .clearHealthBomb
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$54
+
+    ; elevator
+  .checkElevator
+    LDA !ELEVATOR_PROPERTIES : BEQ .clearElevator
+    LDA !IH_ELEVATOR : STA !HUD_TILEMAP+$56
+    BRA .checkSpark
+
+  .clearElevator
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$56
+
+    ; shinespark
+  .checkSpark
+    LDA !SAMUS_SHINE_TIMER : BEQ .clearSpark
+    LDA !IH_SHINESPARK : STA !HUD_TILEMAP+$58
+    BRA .checkReserves
+
+  .clearSpark
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$58
+
+    ; reserve tank
+  .checkReserves
+    LDA !SAMUS_RESERVE_MODE : CMP #$0001 : BNE .clearReserve
+    LDA !SAMUS_RESERVE_ENERGY : BEQ .empty
+    LDA !SAMUS_RESERVE_MAX : BEQ .clearReserve
+    LDA !IH_RESERVE_AUTO : STA !HUD_TILEMAP+$5A
+    RTS
+
+  .empty
+    LDA !SAMUS_RESERVE_MAX : BEQ .clearReserve
+    LDA !IH_RESERVE_EMPTY : STA !HUD_TILEMAP+$5A
+    RTS
+
+  .clearReserve
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$5A
+    RTS
+}
+
+topHUD_statusicons:
+{
+    ; health bomb
+    LDA !HEALTH_BOMB_FLAG : BEQ .clearHealthBomb
+    LDA !SAMUS_HP : CMP #$0032 : BMI .inHealthBomb
+    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$14
+    BRA .checkElevator
+
+  .inHealthBomb
+    LDA !IH_HEALTHBOMB : STA !HUD_TILEMAP+$14
+    BRA .checkElevator
+
+  .clearHealthBomb
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$14
+
+    ; elevator
+  .checkElevator
+    LDA !ELEVATOR_PROPERTIES : BEQ .clearElevator
+    LDA !IH_ELEVATOR : STA !HUD_TILEMAP+$16
+    BRA .checkSpark
+
+  .clearElevator
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$16
+
+    ; shinespark
+  .checkSpark
+    LDA !SAMUS_SHINE_TIMER : BEQ .clearSpark
+    LDA !IH_SHINESPARK : STA !HUD_TILEMAP+$18
+    BRA .checkReserves
+
+  .clearSpark
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$18
+
+    ; reserve tank
+  .checkReserves
+    LDA !SAMUS_RESERVE_MODE : CMP #$0001 : BNE .clearReserve
+    LDA !SAMUS_RESERVE_ENERGY : BEQ .empty
+    LDA !SAMUS_RESERVE_MAX : BEQ .clearReserve
+    LDA !IH_RESERVE_AUTO : STA !HUD_TILEMAP+$1A
+    RTS
+
+  .empty
+    LDA !SAMUS_RESERVE_MAX : BEQ .clearReserve
+    LDA !IH_RESERVE_EMPTY : STA !HUD_TILEMAP+$1A
+    RTS
+
+  .clearReserve
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$1A
+    RTS
+}
+
+middleHUD_tilecounter:
+{
+    LDA !MAP_COUNTER : CMP !ram_HUD_middle : BEQ .done : STA !ram_HUD_middle
+    LDX #$0054 : JSR Draw3
+
+  .done
+    RTS
+}
+
+topHUD_tilecounter:
+{
+    LDA !MAP_COUNTER : CMP !ram_HUD_top : BEQ .done : STA !ram_HUD_top
+    LDX #$0014 : JSR Draw3
+
+  .done
     RTS
 }
 
@@ -4631,7 +4912,7 @@ status_zebskip:
 
 status_mbhp:
 {
-    LDA !ENEMY_HP+$40 : CMP !ram_mb_hp : BEQ .done : STA !ram_mb_hp
+    LDA !ENEMY_HP+$40 : CMP !ram_HUD_check : BEQ .done : STA !ram_HUD_check
     LDX #$0088 : JSR Draw4
 
   .done

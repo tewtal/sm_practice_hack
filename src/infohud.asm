@@ -259,7 +259,11 @@ ih_get_item_code:
     PLY
 if !FEATURE_VANILLAHUD
 else
+    ; assume we are about to collect an item
+    ; adding an extra beam will increase item % by one
+    LDA !SAMUS_BEAMS_COLLECTED : PHA : ORA #$0010 : STA !SAMUS_BEAMS_COLLECTED
     JSL ih_update_hud_code
+    PLA : STA !SAMUS_BEAMS_COLLECTED
 endif
     JSL init_heat_damage_ram
     JSL init_physics_ram
@@ -412,17 +416,24 @@ ih_after_room_transition:
 
     ; Check if MBHP needs to be disabled
     LDA !sram_display_mode : CMP !IH_MODE_ROOMSTRAT_INDEX : BNE .segmentTimer
-    LDA !sram_room_strat : CMP !IH_STRAT_MBHP_INDEX : BNE .segmentTimer
+    LDA !sram_room_strat : BEQ .checkSuperHUD
+    CMP !IH_STRAT_MBHP_INDEX : BNE .segmentTimer
     LDA !ROOM_ID : CMP.w #ROOM_MotherBrainRoom : BEQ .segmentTimer
     TDC : STA !sram_display_mode
+    BRA .segmentTimer
+
+  .checkSuperHUD
+    LDA !sram_superhud_bottom : CMP !IH_SUPERHUD_MBHP_BOTTOM_INDEX : BNE .segmentTimer
+    LDA !ROOM_ID : CMP.w #ROOM_MotherBrainRoom : BEQ .segmentTimer
+    TDC : STA !sram_superhud_bottom
 
   .segmentTimer
-    LDA !ram_reset_segment_later : AND #$0001 : BEQ .updateHud
+    LDA !ram_reset_segment_later : AND #$0001 : BEQ .updateHUD
     TDC : STA !ram_reset_segment_later : STA !ram_lag_counter
     STA !ram_seg_rt_frames : STA !ram_seg_rt_seconds : STA !ram_seg_rt_minutes
 
-  .updateHud
-    JSL ih_update_hud_code
+  .updateHUD
+    JSL ih_update_hud_after_transition
 
     ; Reset realtime and gametime/transition timers
     TDC : STA !ram_realtime_room : STA !ram_transition_counter
@@ -491,6 +502,11 @@ ih_before_room_transition:
     LDX #$00C2
     LDA !sram_top_display_mode : BIT.b !TOP_HUD_VANILLA_BIT : BNE .vanillaDoorLag
     LDA !ram_minimap : BEQ .draw3
+    LDA !sram_display_mode : CMP.b !IH_MODE_ROOMSTRAT_INDEX : BNE .drawDoorMM
+    LDA !sram_room_strat : BNE .drawDoorMM
+    %a16()
+    BRA .done
+  .drawDoorMM
     LDX #$0054
   .draw3
     TYA : JSR Draw3
@@ -701,16 +717,53 @@ ih_update_hud_before_transition:
     ; Bank 80
     PEA $8080 : PLB : PLB
 
-    LDA !sram_display_mode : CMP !IH_MODE_ARMPUMP_INDEX : BNE .start
+    LDA !sram_display_mode : CMP !IH_MODE_ARMPUMP_INDEX : BNE ih_update_hud_after_transition_start
 
     ; Report armpump room totals
+  .armpump
     LDA !ram_momentum_sum : CLC : ADC !ram_momentum_count : LDX #$0088 : JSR Draw4
     LDA !ram_fail_sum : CLC : ADC !ram_fail_count : LDX #$0092 : JSR Draw4
     TDC : STA !ram_momentum_count : STA !ram_fail_count
     STA !ram_momentum_sum : STA !ram_fail_sum : STA !ram_roomstrat_counter
+    BRA ih_update_hud_code_start
+}
+
+ih_update_hud_after_transition:
+{
+    PHX : PHY : PHP : PHB
+    ; Bank 80
+    PEA $8080 : PLB : PLB
 
   .start
-    BRA ih_update_hud_code_start
+    LDA !sram_display_mode : CMP !IH_MODE_ROOMSTRAT_INDEX : BNE ih_update_hud_code_start
+    LDA !sram_room_strat : BNE ih_update_hud_code_start
+
+    ; Update Super HUD lag counters
+    LDA !sram_superhud_top : CMP !IH_SUPERHUD_LAG_COUNTER_TOP_INDEX : BNE .middleHUD
+    LDA !sram_lag_counter_mode : BNE .topFullTime
+    LDA !ram_last_door_lag_frames
+    BRA .topDrawTime
+  .topFullTime
+    LDA !ram_last_realtime_door
+  .topDrawTime
+    LDX #$0014 : JSR Draw3
+    TDC : STA !ram_HUD_top
+
+  .middleHUD
+    LDA !sram_superhud_middle : CMP !IH_SUPERHUD_LAG_COUNTER_MIDDLE_INDEX : BNE .bottomHUD
+    LDA !sram_lag_counter_mode : BNE .middleFullTime
+    LDA !ram_last_door_lag_frames
+    BRA .middleDrawTime
+  .middleFullTime
+    LDA !ram_last_realtime_door
+  .middleDrawTime
+    LDX #$0054 : JSR Draw3
+    TDC : STA !ram_HUD_middle
+
+    ; Check armpump
+  .bottomHUD
+    LDA !sram_superhud_bottom : CMP !IH_SUPERHUD_ARMPUMP_BOTTOM_INDEX : BNE ih_update_hud_code_start
+    JMP ih_update_hud_before_transition_armpump
 }
 
 ih_update_hud_code:
@@ -720,15 +773,19 @@ ih_update_hud_code:
     PEA $8080 : PLB : PLB
 
   .start
-    LDA !ram_minimap : BNE .mmHud
+    LDA !ram_minimap : BNE .mmHUD
     JMP .startUpdate
 
   .mmVanilla
     JMP .end
 
-  .mmHud
+  .mmHUD
     ; Map visible, so draw map counter over item%
     LDA !sram_top_display_mode : BIT !TOP_HUD_VANILLA_BIT : BNE .mmVanilla
+    LDA !sram_display_mode : CMP !IH_MODE_ROOMSTRAT_INDEX : BNE .mmTileCounter
+    LDA !sram_room_strat : BEQ .mmRoomTimer
+
+  .mmTileCounter
     LDA !MAP_COUNTER : LDX #$0014 : JSR Draw3
     LDA !ram_print_segment_timer : BEQ .mmRoomTimer
 
@@ -761,6 +818,7 @@ ih_update_hud_code:
     LDA $C1 : ASL : TAX
     LDA HexToNumberGFX1,X : STA !HUD_TILEMAP+$B6
     LDA HexToNumberGFX2,X : STA !HUD_TILEMAP+$B8
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$AE : STA !HUD_TILEMAP+$BA
     JMP .end
 
   .startUpdate
@@ -795,16 +853,18 @@ ih_update_hud_code:
 
     ; 3 tiles between input display and missile icon
     ; skip item% if display mode = vspeed
-    LDA !sram_display_mode : CMP !IH_MODE_VSPEED_INDEX : BEQ .skipToLag
     LDA !sram_top_display_mode : BNE .skipToLag
+    LDA !sram_display_mode : CMP !IH_MODE_VSPEED_INDEX : BEQ .skipToLag
+    CMP !IH_MODE_ROOMSTRAT_INDEX : BNE .drawItemPercent
+    LDA !sram_room_strat : BEQ .skipToLag
 
-    ; Draw Item percent
+  .drawItemPercent
     ; Max HP and Reserves
     LDA !SAMUS_HP_MAX : CLC : ADC !SAMUS_RESERVE_MAX
     JSR CalcEtank : STA $C1
 
-    ; Max Missiles, Supers & Power Bombs
-    LDA !SAMUS_MISSILES_MAX : CLC : ADC !SAMUS_SUPERS_MAX : CLC : ADC !SAMUS_PBS_MAX
+    ; Max Missiles, Supers and Power Bombs
+    LDA !SAMUS_MISSILES_MAX : CLC : ADC !SAMUS_SUPERS_MAX : ADC !SAMUS_PBS_MAX
     JSR CalcItem : CLC : ADC $C1 : STA $C1
 
     ; Collected items
@@ -931,17 +991,17 @@ ih_hud_vanilla_health:
     %a16()
     PEA $0000 : PLA ; wait for CPU math
     LDA $4214 : STA $14
-    LDA $4216 : STA $12
+    LDA $4216 : PHA
     LDA !SAMUS_HP_MAX : STA $4204
     %a8()
     LDA #$64 : STA $4206
     %a16()
     PEA $0000 : PLA ; wait for CPU math
     LDY #$0000 : LDA $4214
-    INC : STA $16
+    INC : STA $12
 
   .loopTanks
-    DEC $16 : BEQ .drawEmptyTanks
+    DEC $12 : BEQ .drawEmptyTanks
     LDX #$3430
     LDA $14 : BEQ .drawTankHealth
     DEC $14 : LDX #$2831
@@ -958,8 +1018,8 @@ ih_hud_vanilla_health:
     INY #2 : CPY #$001C : BMI .loopEmptyTanks
 
   .subtankHealth
-    LDA $12 : LDX #$0094 : JSR Draw2
-    LDA $16 : BNE .subtankWhitespace
+    PLA : LDX #$0094 : JSR Draw2
+    LDA $12 : BNE .subtankWhitespace
     ; Draw the leading zero
     LDA.w NumberGFXTable : STA !HUD_TILEMAP+$94
 
@@ -1086,7 +1146,11 @@ endif
   .reserves
     LDA !sram_top_display_mode : BEQ .statusIcons
     BIT !TOP_HUD_VANILLA_BIT : BNE .vanilla_check_health
+    LDA !sram_display_mode : CMP !IH_MODE_ROOMSTRAT_INDEX : BNE .checkReserves
+    LDA !sram_room_strat : BNE .checkReserves
+    RTL
 
+  .checkReserves
     LDA !SAMUS_RESERVE_MAX : BEQ .noReserves
     LDA !SAMUS_RESERVE_ENERGY : CMP !ram_reserves_last : BEQ .checkAuto
     STA !ram_reserves_last : LDX #$0014 : JSR Draw3
@@ -1099,11 +1163,11 @@ endif
   .autoOn
     LDA !SAMUS_RESERVE_ENERGY : BEQ .autoEmpty
     LDA !IH_RESERVE_AUTO : STA !HUD_TILEMAP+$1A
-    BRA .statusIcons
+    BRA .reservesStatusIcons
 
   .autoEmpty
     LDA !IH_RESERVE_EMPTY : STA !HUD_TILEMAP+$1A
-    BRA .statusIcons
+    BRA .reservesStatusIcons
 
   .noReserves
     LDA !IH_BLANK
@@ -1111,6 +1175,10 @@ endif
     STA !HUD_TILEMAP+$18 : STA !HUD_TILEMAP+$1A
 
     ; Status Icons
+  .reservesStatusIcons
+    LDA !sram_status_icons : BNE .checkHealthBomb
+    RTL
+
   .statusIcons
     LDA !sram_status_icons : BNE .checkSuperHUD
     RTL
@@ -1148,25 +1216,25 @@ endif
   .checkSpark
     LDA !SAMUS_SHINE_TIMER : BEQ .clearSpark
     LDA !IH_SHINESPARK : STA !HUD_TILEMAP+$58
-    BRA .checkReserves
+    BRA .checkReserveIcon
 
   .clearSpark
     LDA !IH_BLANK : STA !HUD_TILEMAP+$58
 
     ; reserve tank
-  .checkReserves
-    LDA !SAMUS_RESERVE_MODE : CMP #$0001 : BNE .clearReserve
+  .checkReserveIcon
+    LDA !SAMUS_RESERVE_MODE : CMP #$0001 : BNE .clearReserveIcon
     LDA !SAMUS_RESERVE_ENERGY : BEQ .empty
-    LDA !SAMUS_RESERVE_MAX : BEQ .clearReserve
+    LDA !SAMUS_RESERVE_MAX : BEQ .clearReserveIcon
     LDA !IH_RESERVE_AUTO : STA !HUD_TILEMAP+$1A
     RTL
 
   .empty
-    LDA !SAMUS_RESERVE_MAX : BEQ .clearReserve
+    LDA !SAMUS_RESERVE_MAX : BEQ .clearReserveIcon
     LDA !IH_RESERVE_EMPTY : STA !HUD_TILEMAP+$1A
     RTL
 
-  .clearReserve
+  .clearReserveIcon
     LDA !IH_BLANK : STA !HUD_TILEMAP+$1A
 
   .end
@@ -1613,7 +1681,7 @@ ih_update_status:
     STA !ram_armed_shine_duration
     STA !ram_fail_count : STA !ram_fail_sum
     INC
-    STA !ram_enemy_hp : STA !ram_mb_hp
+    STA !ram_enemy_hp
     STA !ram_dash_counter : STA !ram_shine_counter
     STA !ram_xpos : STA !ram_ypos : STA !ram_subpixel_pos
     LDA !ram_seed_X : LSR

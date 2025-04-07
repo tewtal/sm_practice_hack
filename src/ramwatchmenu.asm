@@ -562,11 +562,7 @@ ramwatch_common_back:
     RTL
 
 ramwatch_enable:
-    %cm_jsl("Turn On RAM Watch", .routine, !IH_MODE_RAMWATCH_INDEX)
-  .routine
-    TYA : STA !sram_display_mode
-    %sfxconfirm()
-    JML init_print_segment_timer
+    %cm_jsl("Turn On RAM Watch", #action_HUD_ramwatch, #$0000)
 
 ramwatch_bank:
     %cm_numfield_hex("Select Bank", !ram_watch_bank, 0, 255, 1, 4, #0)
@@ -608,9 +604,7 @@ ramwatch_execute_left:
   .setValue
     LDA !ram_watch_edit_left : STA [$C1]
     %a16()
-    LDA !IH_MODE_RAMWATCH_INDEX : STA !sram_display_mode
-    %sfxconfirm()
-    JML init_print_segment_timer
+    BRA action_HUD_ramwatch
 
 ramwatch_execute_right:
     %cm_jsl("Write to Right Address", #.routine, #$0000)
@@ -622,9 +616,7 @@ ramwatch_execute_right:
   .setValue
     LDA !ram_watch_edit_right : STA [$C1]
     %a16()
-    LDA !IH_MODE_RAMWATCH_INDEX : STA !sram_display_mode
-    %sfxconfirm()
-    JML init_print_segment_timer
+    BRA action_HUD_ramwatch
 
 ramwatch_lock_left:
     %cm_toggle("Lock Left Value", !ram_watch_edit_lock_left, #$01, #action_HUD_ramwatch)
@@ -634,7 +626,16 @@ ramwatch_lock_right:
 
 action_HUD_ramwatch:
 {
+    LDA !sram_display_mode : CMP !IH_MODE_ROOMSTRAT_INDEX : BNE .notSuperHUD
+    LDA !sram_room_strat : BEQ .superHUD
+  .notSuperHUD
     LDA !IH_MODE_RAMWATCH_INDEX : STA !sram_display_mode
+    %sfxconfirm()
+    JML init_print_segment_timer
+
+  .superHUD
+    LDA !IH_SUPERHUD_RAMATCH_BOTTOM_INDEX : STA !sram_superhud_bottom
+    %sfxconfirm()
     JML init_print_segment_timer
 }
 
