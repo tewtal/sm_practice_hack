@@ -216,6 +216,8 @@
 !ram_quickboot_spc_state            = !WRAM_PERSIST_START+$6A
 !ram_display_backup                 = !WRAM_PERSIST_START+$6C
 !ram_phantoon_always_visible        = !WRAM_PERSIST_START+$6E
+!ram_ridley_rng_flags               = !WRAM_PERSIST_START+$70
+!ram_ridley_rng_times_and_fireball  = !WRAM_PERSIST_START+$72
 
 ; ^ FREE SPACE ^ up to +$7C (!WRAM_START+$FC - !WRAM_PERSIST_START)
 
@@ -304,9 +306,21 @@
 !ram_cm_itempickups_chozo = !WRAM_MENU_START+$9A
 !ram_cm_itempickups_hidden = !WRAM_MENU_START+$9C
 
-!ram_cm_phan_first_phase = !WRAM_MENU_START+$90
-!ram_cm_phan_second_phase = !WRAM_MENU_START+$92
-!ram_cm_turret_rng = !WRAM_MENU_START+$94
+!ram_cm_turret_rng = !WRAM_MENU_START+$90
+!ram_cm_phan_first_phase = !WRAM_MENU_START+$92
+!ram_cm_phan_second_phase = !WRAM_MENU_START+$94
+
+!ram_cm_ridley_pogo_height = !WRAM_MENU_START+$92
+!ram_cm_ridley_lunge_pogo = !WRAM_MENU_START+$94
+!ram_cm_ridley_swoop_pogo = !WRAM_MENU_START+$96
+!ram_cm_ridley_ceres_ai = !WRAM_MENU_START+$98
+!ram_cm_ridley_hover_fireball = !WRAM_MENU_START+$9A
+!ram_cm_ridley_backpogo_left = !WRAM_MENU_START+$9C
+!ram_cm_ridley_backpogo_right = !WRAM_MENU_START+$9E
+!ram_cm_ridley_pogo_time = !WRAM_MENU_START+$A0
+!ram_cm_ridley_pogo_time_value = !WRAM_MENU_START+$A2
+!ram_cm_ridley_hover_time = !WRAM_MENU_START+$A4
+!ram_cm_ridley_hover_time_value = !WRAM_MENU_START+$A6
 
 !ram_cm_varia = !WRAM_MENU_START+$90
 !ram_cm_gravity = !WRAM_MENU_START+$92
@@ -436,26 +450,11 @@
 !LEVEL_DATA = $7F0002
 
 ; Temporary stack written here since level data will be initialized afterwards
+; There is room for 256 entries in the stack before risking leaving data behind,
+; since even the smallest room has 512 bytes of level data
 !CATEGORY_PRESET_STACK = !LEVEL_DATA
 
 !END_OF_SINGLE_SCROLL_ROOM_LEVEL_DATA = $7F0202
-
-; Phantoon infidoppler can use the next $200 of RAM,
-; since the room outside phantoon's room is larger and will overwrite this data,
-; so the only way this could have some impact is you went OOB
-; either from Phantoon's room or after teleporting to another single scroll room,
-; and then fell a long ways out of bounds
-
-; An array of 5 words, one per projectile, representing
-; the distance Samus travelled horizontally before firing.
-; The low byte of each word is integer pixels,
-; and the high byte is fractional pixels.
-; Yes, that sounds weird, but the math is a little easier.
-!ram_infidoppler_offsets         = !END_OF_SINGLE_SCROLL_ROOM_LEVEL_DATA ; array of 5 words
-!ram_infidoppler_x               = !END_OF_SINGLE_SCROLL_ROOM_LEVEL_DATA+$10
-!ram_infidoppler_subx            = !END_OF_SINGLE_SCROLL_ROOM_LEVEL_DATA+$12
-!ram_infidoppler_y               = !END_OF_SINGLE_SCROLL_ROOM_LEVEL_DATA+$14
-!ram_infidoppler_suby            = !END_OF_SINGLE_SCROLL_ROOM_LEVEL_DATA+$16
 
 ; Do not use RAM for variables at or beyond this point
 !LEVEL_BTS = $7F6402
@@ -972,6 +971,34 @@
 !DEMO_CURRENT_SET = $1F55
 !DEMO_CURRENT_SCENE = $1F57
 
+; In rooms with fewer enemies, some enemy RAM is available for use
+!ENEMY_1_OFFSET = $40
+!ENEMY_2_OFFSET = $80
+!ENEMY_1E_OFFSET = $780
+!ENEMY_1F_OFFSET = $7C0
+
+; An array of 5 words, one per projectile, representing
+; the distance Samus travelled horizontally before firing.
+; The low byte of each word is integer pixels,
+; and the high byte is fractional pixels.
+; Yes, that sounds weird, but the math is a little easier.
+!eram_infidoppler_offsets         = !ENEMY_VAR_1+!ENEMY_1E_OFFSET ; array of 5 words
+!eram_infidoppler_x               = !ENEMY_VAR_1+!ENEMY_1F_OFFSET
+!eram_infidoppler_subx            = !ENEMY_VAR_2+!ENEMY_1F_OFFSET
+!eram_infidoppler_y               = !ENEMY_VAR_3+!ENEMY_1F_OFFSET
+!eram_infidoppler_suby            = !ENEMY_VAR_4+!ENEMY_1F_OFFSET
+
+!eram_ceres_ridley_rng            = !ENEMY_VAR_1+!ENEMY_1E_OFFSET
+!eram_ridley_lunge_pogo_rng       = !ENEMY_VAR_2+!ENEMY_1E_OFFSET
+!eram_ridley_swoop_pogo_rng       = !ENEMY_VAR_3+!ENEMY_1E_OFFSET
+!eram_ridley_pogo_swoop_rng       = !ENEMY_VAR_4+!ENEMY_1E_OFFSET
+!eram_ridley_fireball_rng         = !ENEMY_VAR_5+!ENEMY_1E_OFFSET
+!eram_ridley_hover_time_rng       = !ENEMY_VAR_1+!ENEMY_1F_OFFSET
+!eram_ridley_pogo_time_rng        = !ENEMY_VAR_2+!ENEMY_1F_OFFSET
+!eram_ridley_pogo_height_rng      = !ENEMY_VAR_3+!ENEMY_1F_OFFSET
+!eram_ridley_backpogo_left_rng    = !ENEMY_VAR_4+!ENEMY_1F_OFFSET
+!eram_ridley_backpogo_right_rng   = !ENEMY_VAR_5+!ENEMY_1F_OFFSET
+
 !HUD_TILEMAP = $7EC600
 !MAP_COUNTER = $7ECAE8 ; Not used in vanilla
 !SCROLLS = $7ECD20
@@ -1218,6 +1245,35 @@ endif
 !DOOR_PORTAL_JUMP_BIT = #$0008
 !DOOR_PORTAL_HORIZONTAL_MIRRORING_BIT = #$0010
 !DOOR_PORTAL_EXCLUDE_JUMP_MASK = #$FFF7
+
+!RIDLEY_RNG_POGO_HEIGHT_MASK        = #$0007
+!RIDLEY_RNG_POGO_HEIGHT_INVERTED    = #$FFF8
+!RIDLEY_RNG_BACKPOGO_LEFT_MASK      = #$0038
+!RIDLEY_RNG_BACKPOGO_LEFT_INVERTED  = #$FFC7
+!RIDLEY_RNG_75_25_LUNGE             = #$0040
+!RIDLEY_RNG_75_25_POGO              = #$0080
+!RIDLEY_RNG_75_25_MASK              = #$00C0
+!RIDLEY_RNG_75_25_INVERTED          = #$FF3F
+!RIDLEY_RNG_CERES_FIREBALL          = #$0100
+!RIDLEY_RNG_CERES_LUNGE             = #$0200
+!RIDLEY_RNG_CERES_SWOOP             = #$0300
+!RIDLEY_RNG_CERES_MASK              = #$0700
+!RIDLEY_RNG_CERES_INVERTED          = #$F8FF
+!RIDLEY_RNG_BACKPOGO_RIGHT_MASK     = #$3800
+!RIDLEY_RNG_BACKPOGO_RIGHT_INVERTED = #$C7FF
+!RIDLEY_RNG_50_50_SWOOP             = #$4000
+!RIDLEY_RNG_50_50_POGO              = #$8000
+!RIDLEY_RNG_50_50_MASK              = #$C000
+!RIDLEY_RNG_50_50_INVERTED          = #$3FFF
+
+!RIDLEY_RNG_HOVER_TIME_MASK         = #$003F
+!RIDLEY_RNG_HOVER_TIME_INVERTED     = #$FFC0
+!RIDLEY_RNG_ALL_FIREBALL            = #$0040
+!RIDLEY_RNG_NO_FIREBALL             = #$0080
+!RIDLEY_RNG_FIREBALL_MASK           = #$00C0
+!RIDLEY_RNG_FIREBALL_INVERTED       = #$FF3F
+!RIDLEY_RNG_POGO_TIME_MASK          = #$FF00
+!RIDLEY_RNG_POGO_TIME_INVERTED      = #$00FF
 
 !PROFILE_CUSTOM       = #$0000
 !PROFILE_Twitch       = #$0001

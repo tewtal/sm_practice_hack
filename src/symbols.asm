@@ -199,6 +199,8 @@ ram_turret_rng = !ram_turret_rng ; !WRAM_PERSIST_START+$68
 ram_quickboot_spc_state = !ram_quickboot_spc_state ; !WRAM_PERSIST_START+$6A
 ram_display_backup = !ram_display_backup ; !WRAM_PERSIST_START+$6C
 ram_phantoon_always_visible = !ram_phantoon_always_visible ; !WRAM_PERSIST_START+$6E
+ram_ridley_rng_flags = !ram_ridley_rng_flags ; !WRAM_PERSIST_START+$70
+ram_ridley_rng_times_and_fireball = !ram_ridley_rng_times_and_fireball ; !WRAM_PERSIST_START+$72
 
 ; ^ FREE SPACE ^ up to +$7C (!WRAM_START+$FC - !WRAM_PERSIST_START)
 
@@ -287,9 +289,21 @@ ram_cm_itempickups_visible = !ram_cm_itempickups_visible ; !WRAM_MENU_START+$98
 ram_cm_itempickups_chozo = !ram_cm_itempickups_chozo ; !WRAM_MENU_START+$9A
 ram_cm_itempickups_hidden = !ram_cm_itempickups_hidden ; !WRAM_MENU_START+$9C
 
-ram_cm_phan_first_phase = !ram_cm_phan_first_phase ; !WRAM_MENU_START+$90
-ram_cm_phan_second_phase = !ram_cm_phan_second_phase ; !WRAM_MENU_START+$92
-ram_cm_turret_rng = !ram_cm_turret_rng ; !WRAM_MENU_START+$94
+ram_cm_turret_rng = !ram_cm_turret_rng ; !WRAM_MENU_START+$90
+ram_cm_phan_first_phase = !ram_cm_phan_first_phase ; !WRAM_MENU_START+$92
+ram_cm_phan_second_phase = !ram_cm_phan_second_phase ; !WRAM_MENU_START+$94
+
+ram_cm_ridley_pogo_height = !ram_cm_ridley_pogo_height ; !WRAM_MENU_START+$92
+ram_cm_ridley_lunge_pogo = !ram_cm_ridley_lunge_pogo ; !WRAM_MENU_START+$94
+ram_cm_ridley_swoop_pogo = !ram_cm_ridley_swoop_pogo ; !WRAM_MENU_START+$96
+ram_cm_ridley_ceres_ai = !ram_cm_ridley_ceres_ai ; !WRAM_MENU_START+$98
+ram_cm_ridley_hover_fireball = !ram_cm_ridley_hover_fireball ; !WRAM_MENU_START+$9A
+ram_cm_ridley_backpogo_left = !ram_cm_ridley_backpogo_left ; !WRAM_MENU_START+$9C
+ram_cm_ridley_backpogo_right = !ram_cm_ridley_backpogo_right ; !WRAM_MENU_START+$9E
+ram_cm_ridley_pogo_time = !ram_cm_ridley_pogo_time ; !WRAM_MENU_START+$A0
+ram_cm_ridley_pogo_time_value = !ram_cm_ridley_pogo_time_value ; !WRAM_MENU_START+$A2
+ram_cm_ridley_hover_time = !ram_cm_ridley_hover_time ; !WRAM_MENU_START+$A4
+ram_cm_ridley_hover_time_value = !ram_cm_ridley_hover_time_value ; !WRAM_MENU_START+$A6
 
 ram_cm_varia = !ram_cm_varia ; !WRAM_MENU_START+$90
 ram_cm_gravity = !ram_cm_gravity ; !WRAM_MENU_START+$92
@@ -414,23 +428,8 @@ ram_crash_input_timer = !ram_crash_input_timer ; !CRASHDUMP+$66
 ;       then we won't be accurate to the vanilla game anymore
 
 ; Temporary stack written here since level data will be initialized afterwards
-
-; Phantoon infidoppler can use the next $200 of RAM,
-; since the room outside phantoon's room is larger and will overwrite this data,
-; so the only way this could have some impact is you went OOB
-; either from Phantoon's room or after teleporting to another single scroll room,
-; and then fell a long ways out of bounds
-
-; An array of 5 words, one per projectile, representing
-; the distance Samus travelled horizontally before firing.
-; The low byte of each word is integer pixels,
-; and the high byte is fractional pixels.
-; Yes, that sounds weird, but the math is a little easier.
-ram_infidoppler_offsets = !ram_infidoppler_offsets ; !END_OF_SINGLE_SCROLL_ROOM_LEVEL_DATA ; array of 5 words
-ram_infidoppler_x = !ram_infidoppler_x ; !END_OF_SINGLE_SCROLL_ROOM_LEVEL_DATA+$10
-ram_infidoppler_subx = !ram_infidoppler_subx ; !END_OF_SINGLE_SCROLL_ROOM_LEVEL_DATA+$12
-ram_infidoppler_y = !ram_infidoppler_y ; !END_OF_SINGLE_SCROLL_ROOM_LEVEL_DATA+$14
-ram_infidoppler_suby = !ram_infidoppler_suby ; !END_OF_SINGLE_SCROLL_ROOM_LEVEL_DATA+$16
+; There is room for 256 entries in the stack before risking leaving data behind,
+; since even the smallest room has 512 bytes of level data
 
 ; Do not use RAM for variables at or beyond this point
 

@@ -25,13 +25,13 @@ endif
 
   .enabled
     ; fake the fade in so it takes the same number of frames
-    LDA !ENEMY_VAR_3+$40 : INC
-    CMP !ENEMY_VAR_4+$40 : BCS .inc
-    STZ !ENEMY_VAR_4+$40
+    LDA !ENEMY_VAR_3+!ENEMY_1_OFFSET : INC
+    CMP !ENEMY_VAR_4+!ENEMY_1_OFFSET : BCS .inc
+    STZ !ENEMY_VAR_4+!ENEMY_1_OFFSET
     SEC : RTS
 
   .inc
-    INC !ENEMY_VAR_4+$40
+    INC !ENEMY_VAR_4+!ENEMY_1_OFFSET
     CLC : RTS
 }
 
@@ -438,7 +438,7 @@ if !FEATURE_PAL
 else
     LDA $CD53,Y
 endif
-    STA !ENEMY_FUNCTION_POINTER+$40
+    STA !ENEMY_FUNCTION_POINTER+!ENEMY_1_OFFSET
     JSL $808111
     BIT #$0001
     RTL
@@ -468,7 +468,8 @@ if !FEATURE_PAL
 else
     LDA $CD53,Y
 endif
-    STA !ENEMY_FUNCTION_POINTER+$40    ; Intentional fallthrough to invert logic
+    STA !ENEMY_FUNCTION_POINTER+!ENEMY_1_OFFSET
+    ; Intentional fallthrough to invert logic
 }
 
 hook_phantoon_invert:
@@ -542,7 +543,7 @@ endif
     BNE .round1
     ; Save the pattern timer, check the direction,
     ; and set Phantoon's starting point and pattern index.
-    LSR : STA !ENEMY_FUNCTION_POINTER+$40 : BCS .round2left
+    LSR : STA !ENEMY_FUNCTION_POINTER+!ENEMY_1_OFFSET : BCS .round2left
 
     ; Right pattern
     LDA #$0088 : LDY #$00D0
@@ -559,7 +560,7 @@ endif
 
   .round1
     ; Save the pattern timer and check the direction
-    LSR : STA !ENEMY_FUNCTION_POINTER+$40
+    LSR : STA !ENEMY_FUNCTION_POINTER+!ENEMY_1_OFFSET
     BCS .round1left
 
     ; Round 1 right pattern
@@ -996,6 +997,137 @@ endif
     RTS
 }
 
+; Migrated from bank A6 since not enough freespace there
+init_ceres_ridley_rng:
+{
+    LDA !ram_ridley_rng_flags : AND !RIDLEY_RNG_CERES_MASK : BEQ .set_ceres_rng
+    CMP !RIDLEY_RNG_CERES_FIREBALL : BEQ .ceres_fireball
+    CMP !RIDLEY_RNG_CERES_LUNGE : BEQ .ceres_lunge
+    CMP !RIDLEY_RNG_CERES_SWOOP : BEQ .ceres_swoop
+    TDC : BRA .set_ceres_rng
+
+  .ceres_fireball
+if !FEATURE_PAL
+    LDA #$A792
+else
+    LDA #$A782
+endif
+    BRA .set_ceres_rng
+
+  .ceres_lunge
+if !FEATURE_PAL
+    LDA #$A84C
+else
+    LDA #$A83C
+endif
+    BRA .set_ceres_rng
+
+  .ceres_swoop
+if !FEATURE_PAL
+    LDA #$A8(D
+else
+    LDA #$A88D
+endif
+
+  .set_ceres_rng
+    STA !eram_ceres_ridley_rng
+    RTL
+}
+
+init_zebes_ridley_rng:
+{
+    LDA !ram_ridley_rng_flags
+    BIT !RIDLEY_RNG_75_25_LUNGE : BNE .set_75_25_lunge
+    BIT !RIDLEY_RNG_75_25_POGO : BNE .set_75_25_pogo
+if !FEATURE_PAL
+    LDA #$B3BC
+else
+    LDA #$B3AC
+endif
+    BRA .set_75_25
+
+  .set_75_25_lunge
+if !FEATURE_PAL
+    LDA #$B3EC
+else
+    LDA #$B3DC
+endif
+    BRA .set_75_25
+
+  .set_75_25_pogo
+if !FEATURE_PAL
+    LDA #$B3CC
+else
+    LDA #$B3BC
+endif
+
+  .set_75_25
+    STA !eram_ridley_lunge_pogo_rng
+
+    LDA !ram_ridley_rng_flags
+    BIT !RIDLEY_RNG_50_50_SWOOP : BNE .set_50_50_swoop
+    BIT !RIDLEY_RNG_50_50_POGO : BNE .set_50_50_pogo
+if !FEATURE_PAL
+    LDA #$B3AC
+else
+    LDA #$B39C
+endif
+    STA !eram_ridley_swoop_pogo_rng
+if !FEATURE_PAL
+    LDA #$B39C
+else
+    LDA #$B38C
+endif
+    BRA .set_50_50
+
+  .set_50_50_swoop
+    LDA #ridley_all_swoop_table
+    BRA .set_50_50_both
+
+  .set_50_50_pogo
+if !FEATURE_PAL
+    LDA #$B3CC
+else
+    LDA #$B3BC
+endif
+
+  .set_50_50_both
+    STA !eram_ridley_swoop_pogo_rng
+  .set_50_50
+    STA !eram_ridley_pogo_swoop_rng
+
+    LDA !ram_ridley_rng_times_and_fireball
+    BIT !RIDLEY_RNG_ALL_FIREBALL : BNE .set_all_fireball
+    BIT !RIDLEY_RNG_NO_FIREBALL : BNE .set_no_fireball
+    TDC : BRA .set_fireball
+
+  .set_all_fireball
+    LDA #$0081
+    BRA .set_fireball
+
+  .set_no_fireball
+    TDC : INC
+
+  .set_fireball
+    STA !eram_ridley_fireball_rng
+
+    LDA !ram_ridley_rng_times_and_fireball : AND !RIDLEY_RNG_HOVER_TIME_MASK
+    STA !eram_ridley_hover_time_rng
+
+    LDA !ram_ridley_rng_times_and_fireball : AND !RIDLEY_RNG_POGO_TIME_MASK
+    XBA : STA !eram_ridley_pogo_time_rng
+
+    LDA !ram_ridley_rng_flags : AND !RIDLEY_RNG_POGO_HEIGHT_MASK
+    STA !eram_ridley_pogo_height_rng
+
+    PHX : LDA !ram_ridley_rng_flags : LSR #2 : PHA
+    AND #$000E : TAX : LDA.l ridley_backpogo_threshold_table,X
+    STA !eram_ridley_backpogo_left_rng : PLA : XBA
+    AND #$000E : TAX : LDA.l ridley_backpogo_threshold_table,X
+    STA !eram_ridley_backpogo_right_rng : PLX
+    RTL
+}
+
 %endfree(A5)
 
 
@@ -1030,6 +1162,261 @@ else
 org $A6A360
 endif
     LDA #ridley_init_hook
+
+if !FEATURE_PAL
+org $A6A72C
+else
+org $A6A71C
+endif
+    BCC $0E ; overwrite a NOP to save one byte
+
+if !FEATURE_PAL
+org $A6A73A
+else
+org $A6A72A
+endif
+    BCC $55 ; branch to a different RTS since we overwrite the original
+
+    ; See if Ceres Ridley RNG is fixed, requires five bytes
+    LDA !eram_ceres_ridley_rng : BNE ceres_ridley_set_ai
+
+    ; Original vanilla RNG
+    LDA !CACHED_RANDOM_NUMBER : AND #$000F
+    ASL : TAX : LDA.w ceres_ridley_set_ai_table,X
+ceres_ridley_set_ai:
+    STA !ENEMY_FUNCTION_POINTER
+
+    ; We need to save five bytes, but we already saved one
+    ; Replacing LDA #$0000 with TDC saves two more
+    ; Jumping to another location that does STA $7E7800 : RTS saves two more
+    TDC
+if !FEATURE_PAL
+    JMP $B4CE
+else
+    JMP $B4BE
+endif
+ceres_ridley_set_ai_table:
+%warnpc($A6A743, $A6A753)
+
+if !FEATURE_PAL
+org $A6B36F
+else
+org $A6B35F
+endif
+    LDY !eram_ridley_pogo_swoop_rng
+
+if !FEATURE_PAL
+org $A6B385
+else
+org $A6B375
+endif
+    LDY !eram_ridley_lunge_pogo_rng
+
+if !FEATURE_PAL
+org $A6B38B
+else
+org $A6B37B
+endif
+    LDY !eram_ridley_pogo_swoop_rng
+
+if !FEATURE_PAL
+org $A6B396
+else
+org $A6B386
+endif
+    LDY !eram_ridley_swoop_pogo_rng
+
+if !FEATURE_PAL
+org $A6B3DC
+else
+org $A6B3CC
+endif
+ridley_all_hover_table:
+    ; move hover start back five bytes
+if !FEATURE_PAL
+    dw $B5CF, $B5CF, $B5CF, $B5CF, $B5CF, $B5CF, $B5CF, $B5CF
+else
+    dw $B5BF, $B5BF, $B5BF, $B5BF, $B5BF, $B5BF, $B5BF, $B5BF
+endif
+
+if !FEATURE_PAL
+org $A6B5CF
+else
+org $A6B5BF
+endif
+    ; Vanilla logic from $A6:B5C4
+    LDA #$000B : STA $7E201E
+    LDA #$0180 : STA $7E2012
+if !FEATURE_PAL
+    LDA #$B5F5
+else
+    LDA #$B5E5
+endif
+    STA !ENEMY_FUNCTION_POINTER
+
+    ; Check if we have a fixed hover delay
+    LDA !eram_ridley_hover_time_rng : BNE $0A
+
+    ; Continue to vanilla logic
+%warnpc($A6B5D8, $A6B5E8)
+
+if !FEATURE_PAL
+org $A6B605
+    JMP $B69C
+else ; Move jump by one byte due to below changes
+org $A6B5F5
+    JMP $B68C
+endif
+
+if !FEATURE_PAL
+org $A6B633
+    JMP $B69C
+else ; Move jump by one byte due to below changes
+org $A6B623
+    JMP $B68C
+endif
+
+if !FEATURE_PAL
+org $A6B651
+else
+org $A6B641
+endif
+    ; We need to save five bytes, which we can do if we switch to 8-bit mode,
+    ; but this means we now need to save eleven bytes
+    ; Start by replacing LDX #$0000 with TDC : TAX (saved 1, spent 0)
+    TDC : TAX
+    ; Vanilla logic
+    LDA !SAMUS_Y : CMP #$0160 : BMI $03
+    LDA #$0160
+    STA $14
+if !FEATURE_PAL
+    JSR $B43E
+    JSR $D533
+else
+    JSR $B42E
+    JSR $D523
+endif
+    ; Replace LDA #$0001 with TDC : INC (saved 2, spent 0)
+    TDC : INC : STA $7E2004
+    ; Switch to 8-bit mode (saved 2, spent 2)
+    %a8()
+    ; Skip AND #$00FF and reduce CMP #$0003 (saved 6, spent 2)
+    LDA !SAMUS_MOVEMENT_TYPE : CMP #$03
+    BNE $23
+    ; New logic (saved 6, spent 7)
+    LDA !eram_ridley_fireball_rng : BNE $03
+    ; Original logic, but skip AND #$00FF and reduce #$0080 (saved 10, spent 7)
+    LDA !CACHED_RANDOM_NUMBER : CMP #$80
+    ; Switch back to 16-bit mode (saved 10, spent 9)
+    %a16()
+    ; Vanilla logic
+    BCC $13
+    LDA $7E781E : BNE $0D
+    LDA $7E7820 : DEC : BEQ $06
+if !FEATURE_PAL
+    LDA #$E711
+    JSR $D43E
+else
+    LDA #$E73A
+    JSR $D467
+endif
+    CLC : RTS
+    ; Switch back to 16-bit mode (saved 10, spent 11)
+    %a16()
+    SEC : RTS
+    ; Start into the next routine one byte later than vanilla
+    LDA #$00F0 : STA $7E2012
+    LDA #$0010 : STA $7E201E
+    ; Replace LDA #$0001 with TDC : INC (saved 11, spent 11)
+    TDC : INC
+%warnpc($A6B69C, $A6B6AC)
+
+if !FEATURE_PAL
+org $A6B6BD
+else ; Migrate vanilla routine up five bytes
+org $A6B6AD
+endif
+    BMI $1A
+
+if !FEATURE_PAL
+org $A6B6C5
+else
+org $A6B6B5
+endif
+    LDA.w ridley_acceleration_table,Y
+
+if !FEATURE_PAL
+org $A6B6D9
+    JSR $D92C
+    LDA #$B6E8
+else ; Migrate vanilla routine up five bytes
+org $A6B6C9
+    JSR $D955
+    LDA #$B6D8
+endif
+    STA !ENEMY_FUNCTION_POINTER
+    LDA #$0020 : STA !ENEMY_VAR_5
+    ; Start into the next routine five bytes earlier than vanilla
+    LDA !ENEMY_X : STA $12
+    LDA #$0120 : STA $14
+    LDX #$0000 : LDY #$0000
+if !FEATURE_PAL
+    JSR $D4FA
+else
+    JSR $D523
+endif
+    DEC !ENEMY_VAR_5 : BPL $1D
+if !FEATURE_PAL
+    JSR $CB0A
+    JSR ridley_set_pogo_height
+    LDA #$B71E
+else
+    JSR $CB33
+    JSR ridley_set_pogo_height
+    LDA #$B70E
+endif
+    STA !ENEMY_FUNCTION_POINTER
+    ; Add new logic here
+    LDA !eram_ridley_pogo_time_rng : BNE $09
+%warnpc($A6B701, $A6B711)
+
+   if !FEATURE_PAL
+org $A6B772
+else
+org $A6B762
+endif
+    JSR ridley_set_pogo_height
+
+if !FEATURE_PAL
+org $A6B8EB
+else
+org $A6B8DB
+endif
+    CMP !eram_ridley_backpogo_right_rng
+
+if !FEATURE_PAL
+org $A6B90D
+else
+org $A6B8FD
+endif
+    CMP !eram_ridley_backpogo_left_rng
+
+if !FEATURE_PAL
+org $A6B93B
+else
+org $A6B92B
+endif
+    LDA.w ridley_pogo_parameter_table,Y
+
+if !FEATURE_PAL
+org $A6B95D
+else
+org $A6B94D
+endif
+ridley_set_pogo_height:
+    LDA !eram_ridley_pogo_height_rng : BEQ $BD
+    DEC : BRA $C0
+%warnpc($A6B959, $A6B969)
 
 if !FEATURE_PAL
 org $A6EFA9
@@ -1100,6 +1487,22 @@ endif
 
 %startfree(A6)
 
+ridley_acceleration_table:
+    dw #$00B0, #$0080, #$0060
+
+ridley_pogo_parameter_table:
+    dw #$000A, #$0010, #$0020, #$0030, #$0040, #$0050
+
+ridley_all_swoop_table:
+if !FEATURE_PAL
+    dw $B451, $B451, $B451, $B451, $B451, $B451, $B451, $B451
+else
+    dw $B441, $B441, $B441, $B441, $B441, $B441, $B441, $B441
+endif
+
+ridley_backpogo_threshold_table:
+    dw #$0555, #$0AAA, #$0FFF, #$1AA9, #$2AA8, #$4551, #$6FF9, #$0000
+
 ridley_reset_damagecounter:
 {
     TDC : STA !DAMAGE_COUNTER
@@ -1108,7 +1511,9 @@ ridley_reset_damagecounter:
 
 ridley_init_hook:
 {
-    LDA !ROOM_ID : CMP.w #ROOM_CeresRidleyRoom : BNE .continue
+    LDA !ROOM_ID : CMP.w #ROOM_CeresRidleyRoom : BNE .not_ceres
+    JSL init_ceres_ridley_rng
+
     LDA $7ED82E : BIT #$0001 : BEQ .continue
 
     ; Ceres Ridley is already dead, so skip to the escape
@@ -1131,6 +1536,9 @@ else
 endif
     STA !ENEMY_FUNCTION_POINTER
     JMP (!ENEMY_FUNCTION_POINTER)
+
+  .not_ceres
+    JSL init_zebes_ridley_rng
 
   .continue
 if !FEATURE_PAL

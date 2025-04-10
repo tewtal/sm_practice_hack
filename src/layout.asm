@@ -1328,7 +1328,7 @@ layout_asm_waterway_external:
 layout_asm_mb_external:
 {
     ; Replace MB enemy with maprando variant
-    LDA #layout_maprando_mb_enemy_header : STA !ENEMY_ID+$40
+    LDA #layout_maprando_mb_enemy_header : STA !ENEMY_ID+!ENEMY_1_OFFSET
 
     ; Place the four barrier ceiling
     LDA #$82E6 : STA $7F016E : STA $7F0170 : STA $7F0172
@@ -2300,7 +2300,7 @@ layout_asm_mb_spawn_escape_door:
     dw $0600, $B677
 
     ; Replace MB enemy with maprando variant
-    LDA #layout_maprando_mb_enemy_header : STA !ENEMY_ID+$40
+    LDA #layout_maprando_mb_enemy_header : STA !ENEMY_ID+!ENEMY_1_OFFSET
 
     ; Fallthrough to Mother Brain HP
 }

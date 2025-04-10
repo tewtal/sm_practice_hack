@@ -3743,22 +3743,22 @@ status_robotflush:
 {
     ; Checking hit on first robot
     LDA !IH_BLANK : STA !HUD_TILEMAP+$88
-    LDA !ENEMY_VAR_1+$40 : CMP #$0030 : BMI .checkfirstfall
+    LDA !ENEMY_VAR_1+!ENEMY_1_OFFSET : CMP #$0030 : BMI .checkfirstfall
     LDA #$0C3C : STA !HUD_TILEMAP+$88
 
   .checkfirstfall
     LDA !IH_BLANK : STA !HUD_TILEMAP+$8A
-    LDA !ENEMY_Y+$40 : CMP #$0280 : BMI .checksecondhit
+    LDA !ENEMY_Y+!ENEMY_1_OFFSET : CMP #$0280 : BMI .checksecondhit
     LDA #$0C3C : STA !HUD_TILEMAP+$8A
 
   .checksecondhit
     LDA !IH_BLANK : STA !HUD_TILEMAP+$8C
-    LDA !ENEMY_VAR_1+$80 : CMP #$0030 : BMI .checksecondfall
+    LDA !ENEMY_VAR_1+!ENEMY_2_OFFSET : CMP #$0030 : BMI .checksecondfall
     LDA #$0C3D : STA !HUD_TILEMAP+$8C
 
   .checksecondfall
     LDA !IH_BLANK : STA !HUD_TILEMAP+$8E
-    LDA !ENEMY_VAR_5+$80 : CMP #$0280 : BMI .done
+    LDA !ENEMY_VAR_5+!ENEMY_2_OFFSET : CMP #$0280 : BMI .done
     LDA #$0C3D : STA !HUD_TILEMAP+$8E
 
   .done
@@ -4521,13 +4521,13 @@ if !FEATURE_PAL
                                          ; B2 -> END
     dw $B303, $B331, $B3FC               ; [$00+6] B3
     dw $B408, $B451, $B465, $B4A3, $B4E1 ; [$06+A] B4
-    dw $B526, $B564, $B5A4, $B5F5        ; [$10+8] B5
-    dw $B623, $B6B7, $B6ED               ; [$18+6] B6
-    dw $B71E, $B7C9                      ; [$1E+4] B7
+    dw $B526, $B564, $B5A4, $B5CF, $B5F5 ; [$10+A] B5 (B5D4 moved back to B5CF to recover five bytes)
+    dw $B623, $B6B7, $B6E8               ; [$1A+6] B6
+    dw $B71E, $B7C9                      ; [$20+4] B7
                                          ; B8, B9 -> END
-    dw $BAC7                             ; [$22+2] BA
-    dw $BB9F, $BBD4                      ; [$24+4] BB
-    dw $BC01, $BC3E, $BC64               ; [$28+6] BC
+    dw $BAC7                             ; [$24+2] BA
+    dw $BB9F, $BBD4                      ; [$26+4] BB
+    dw $BC01, $BC3E                      ; [$2A+4] BC
     dw $BD5E                             ; [$2E+2] BD
                                          ; BE, BF, C0, C1, C2, C3, C4 -> END
     dw $C50F, $C55F                      ; [$30+4] C5
@@ -4535,13 +4535,13 @@ else
     dw $B2F3                             ; [$00+2] B2
     dw $B321, $B3EC, $B3F8               ; [$02+6] B3
     dw $B441, $B455, $B493, $B4D1        ; [$08+8] B4
-    dw $B516, $B554, $B594, $B5E5        ; [$10+8] B5
-    dw $B613, $B6A7, $B6DD               ; [$18+6] B6
-    dw $B70E, $B7B9                      ; [$1E+4] B7
+    dw $B516, $B554, $B594, $B5BF, $B5E5 ; [$10+A] B5 (B5C4 moved back to B5BF to recover five bytes)
+    dw $B613, $B6A7, $B6D8               ; [$1A+6] B6
+    dw $B70E, $B7B9                      ; [$20+4] B7
                                          ; B8, B9 -> END
-    dw $BAB7                             ; [$22+2] BA
-    dw $BB8F, $BBC4, $BBF1               ; [$24+6] BB
-    dw $BC2E, $BC54                      ; [$2A+4] BC
+    dw $BAB7                             ; [$24+2] BA
+    dw $BB8F, $BBC4, $BBF1               ; [$26+6] BB
+    dw $BC2E                             ; [$2C+2] BC
     dw $BD4E                             ; [$2E+2] BD
                                          ; BE, BF, C0, C1, C2, C3, C4 -> END
     dw $C538, $C588                      ; [$30+4] C5
@@ -4552,12 +4552,12 @@ RidleyAI_prefix_table:
 ; Unused entries are filled with $32 (the last element in the table) to finish the search faster
 if !FEATURE_PAL
     ;   B2   B3   B4   B5   B6   B7             BA   BB   BC   BD
-    db $34, $00, $06, $10, $18, $1E, $34, $34, $22, $24, $28, $2E, $34, $34, $34, $34
+    db $34, $00, $06, $10, $1A, $20, $34, $34, $24, $26, $2A, $2E, $34, $34, $34, $34
     ;                  C5
     db $34, $34, $34, $30, $34, $34, $34, $34, $34, $34, $34, $34, $34, $34, $34, $34
 else
     ;   B2   B3   B4   B5   B6   B7             BA   BB   BC   BD
-    db $00, $02, $08, $10, $18, $1E, $34, $34, $22, $24, $2A, $2E, $34, $34, $34, $34
+    db $00, $02, $08, $10, $1A, $20, $34, $34, $24, $26, $2C, $2E, $34, $34, $34, $34
     ;                  C5
     db $34, $34, $34, $30, $34, $34, $34, $34, $34, $34, $34, $34, $34, $34, $34, $34
 endif
@@ -4574,6 +4574,7 @@ RidleyAI_text_table:
     dw #RidleyAIText_B516 ; climb
     dw #RidleyAIText_B554 ; climbing
     dw #RidleyAIText_B594 ; swoop end
+    dw #RidleyAIText_B5C4 ; hover start
     dw #RidleyAIText_B5E5 ; hover
     dw #RidleyAIText_B613 ; hover spin
     dw #RidleyAIText_B6A7 ; pogo start
@@ -4585,7 +4586,6 @@ RidleyAI_text_table:
     dw #RidleyAIText_BBC4 ; grab move
     dw #RidleyAIText_BBF1 ; dropping
     dw #RidleyAIText_BC2E ; dropped
-    dw #RidleyAIText_BC54 ; hover start
     dw #RidleyAIText_BD4E ; dodge power bomb
     dw #RidleyAIText_C538 ; dead move
     dw #RidleyAIText_C588 ; explode
@@ -4605,6 +4605,7 @@ table ../resources/HUDfont.tbl
   .B516 : db "CLIMB"        : db $FF
   .B554 : db "CLIMBING"     : db $FF
   .B594 : db "SWOOP END"    : db $FF
+  .B5C4 : db "HOVER START"  : db $FF
   .B5E5 : db "HOVER"        : db $FF
   .B613 : db "HOVER SPIN"   : db $FF
   .B6A7 : db "POGO START"   : db $FF
@@ -4616,7 +4617,6 @@ table ../resources/HUDfont.tbl
   .BBC4 : db "GRAB MOVE"    : db $FF
   .BBF1 : db "DROP SAMUS"   : db $FF
   .BC2E : db "DROPPED"      : db $FF
-  .BC54 : db "HOVER START"  : db $FF
   .BD4E : db "DODGE PB"     : db $FF
   .C538 : db "DEAD MOVE"    : db $FF
   .C588 : db "EXPLODE"      : db $FF
@@ -4912,7 +4912,7 @@ status_zebskip:
 
 status_mbhp:
 {
-    LDA !ENEMY_HP+$40 : CMP !ram_HUD_check : BEQ .done : STA !ram_HUD_check
+    LDA !ENEMY_HP+!ENEMY_1_OFFSET : CMP !ram_HUD_check : BEQ .done : STA !ram_HUD_check
     LDX #$0088 : JSR Draw4
 
   .done

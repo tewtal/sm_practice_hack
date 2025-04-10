@@ -1951,16 +1951,16 @@ infidoppler_hook_fire_missile:
     LDX $14     ; projectile index
     SEC
 
-    LDA !SAMUS_X_SUBPX : SBC !ram_infidoppler_subx
-    AND #$FF00 : STA !ram_infidoppler_offsets,X
-    LDA !SAMUS_X : SBC !ram_infidoppler_x
-    AND #$00FF : ORA !ram_infidoppler_offsets,X : STA !ram_infidoppler_offsets,X
+    LDA !SAMUS_X_SUBPX : SBC !eram_infidoppler_subx
+    AND #$FF00 : STA !eram_infidoppler_offsets,X
+    LDA !SAMUS_X : SBC !eram_infidoppler_x
+    AND #$00FF : ORA !eram_infidoppler_offsets,X : STA !eram_infidoppler_offsets,X
 
-    LDA !ram_infidoppler_x : STA !SAMUS_X
-    LDA !ram_infidoppler_subx : STA !SAMUS_X_SUBPX
+    LDA !eram_infidoppler_x : STA !SAMUS_X
+    LDA !eram_infidoppler_subx : STA !SAMUS_X_SUBPX
 
-    LDA !ram_infidoppler_y : STA !SAMUS_Y
-    LDA !ram_infidoppler_suby : STA !SAMUS_Y_SUBPX
+    LDA !eram_infidoppler_y : STA !SAMUS_Y
+    LDA !eram_infidoppler_suby : STA !SAMUS_Y_SUBPX
 
   .done
     DEC !SAMUS_MISSILES
@@ -1994,21 +1994,23 @@ infidoppler_hook_projectile_collision:
     CPX #$0000 : BNE .no              ; Is this phantoon?
 
     ; Is phantoon in a swoop?
+    LDA !ENEMY_VAR_5
 if !FEATURE_PAL
-    LDA !ENEMY_VAR_5 : CMP #$D6AC : BNE .no
+    CMP #$D6AC
 else
-    LDA !ENEMY_VAR_5 : CMP #$D678 : BNE .no
+    CMP #$D678
 endif
+    BNE .no
 
     ; Stop infidoppler if health is 100 or less
     LDA !ENEMY_HP : CMP #$0065 : BCC .disable
 
     ; Initialize infidoppler
     LDA #$FFFF : STA !ram_infidoppler_active
-    LDA !SAMUS_X : STA !ram_infidoppler_x
-    LDA !SAMUS_X_SUBPX : STA !ram_infidoppler_subx
-    LDA !SAMUS_Y : STA !ram_infidoppler_y
-    LDA !SAMUS_Y_SUBPX : STA !ram_infidoppler_suby
+    LDA !SAMUS_X : STA !eram_infidoppler_x
+    LDA !SAMUS_X_SUBPX : STA !eram_infidoppler_subx
+    LDA !SAMUS_Y : STA !eram_infidoppler_y
+    LDA !SAMUS_Y_SUBPX : STA !eram_infidoppler_suby
 
     BRA .no
 
@@ -2017,7 +2019,7 @@ endif
 
     ; We've shot Phantoon with a missile in infidoppler mode.
     ; if projectile variable is 0, this missile has already hit
-    LDA !ram_infidoppler_offsets,X
+    LDA !eram_infidoppler_offsets,X
     BEQ .done
 
     ; Stop infidoppler if health is 100 or less
@@ -2026,14 +2028,14 @@ endif
     ; Subtract projectile variable from missile position
     ; the LOW 8 bits are pixels, the HIGH 8 bits are fractional
     ; yes, it's weird. but it saves a couple XBAs
-    LDA !ram_infidoppler_offsets,X : PHA : AND #$FF00 : SEC
+    LDA !eram_infidoppler_offsets,X : PHA : AND #$FF00 : SEC
     EOR #$FFFF : ADC !SAMUS_PROJ_X_SUBPX,Y : STA !SAMUS_PROJ_X_SUBPX,Y
     PLA : AND #$00FF
     EOR #$FFFF : ADC !SAMUS_PROJ_X,Y : STA !SAMUS_PROJ_X,Y
 
     ; halve damage, since it will double hit
     LSR !SAMUS_PROJ_DAMAGE,X
-    TDC : STA !ram_infidoppler_offsets,X
+    TDC : STA !eram_infidoppler_offsets,X
     TAX : INC
 
   .done
