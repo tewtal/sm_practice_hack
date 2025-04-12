@@ -17,8 +17,10 @@
             "id": "platform",
             "name": "Platform",
             "options": [
-                { "id": "sd2snes", "name": "SD2SNES, FXPAK, SuperNT, Snes9x 1.61+, BSNES v115"},
-                { "id": "tinystates", "name": "MiSTer, Everdrive, Modern Emulators" },
+                { "id": "sd2snes", "name": "SD2SNES, FXPAK" },
+                { "id": "mister", "name": "MiSTer, SuperNT" },
+                { "id": "bsnes", "name": "Snes9x 1.61+, BSNES v115"},
+                { "id": "tinystates", "name": "Snes9x 1.60 or older, Everdrive" },
                 { "id": "emulator", "name": "SNES Classic, Virtual Console" }
             ]
         }
@@ -28,7 +30,11 @@
         { "platform": "emulator", "variant": "PAL", "file": "/patches/emulator-pal.ips", "size": 4194304},
 
         { "platform": "sd2snes", "variant": "NTSC", "file": "/patches/sd2snes-ntsc.ips", "size": 4194304},
+        { "platform": "mister", "variant": "NTSC", "file": "/patches/sd2snes-ntsc.ips", "size": 4194304},
+        { "platform": "bsnes", "variant": "NTSC", "file": "/patches/sd2snes-ntsc.ips", "size": 4194304},
         { "platform": "sd2snes", "variant": "PAL", "file": "/patches/sd2snes-pal.ips", "size": 4194304},
+        { "platform": "mister", "variant": "PAL", "file": "/patches/sd2snes-pal.ips", "size": 4194304},
+        { "platform": "bsnes", "variant": "PAL", "file": "/patches/sd2snes-pal.ips", "size": 4194304},
 
         { "platform": "tinystates", "variant": "NTSC", "file": "/patches/tinystates-ntsc.ips", "size": 4194304},
         { "platform": "tinystates", "variant": "PAL", "file": "/patches/tinystates-pal.ips", "size": 4194304}

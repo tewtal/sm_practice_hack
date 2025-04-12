@@ -1024,7 +1024,7 @@ endif
 
   .ceres_swoop
 if !FEATURE_PAL
-    LDA #$A8(D
+    LDA #$A89D
 else
     LDA #$A88D
 endif
