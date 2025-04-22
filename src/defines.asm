@@ -339,11 +339,7 @@
 !ram_cm_etanks = !WRAM_MENU_START+$AC
 !ram_cm_reserve = !WRAM_MENU_START+$AE
 
-!ram_cm_zeb1 = !WRAM_MENU_START+$90
-!ram_cm_zeb2 = !WRAM_MENU_START+$92
-!ram_cm_zeb3 = !WRAM_MENU_START+$94
-!ram_cm_zeb4 = !WRAM_MENU_START+$96
-!ram_cm_zebmask = !WRAM_MENU_START+$98
+!ram_cm_zebmask = !WRAM_MENU_START+$90
 
 !ram_cm_ceres_seconds = !WRAM_MENU_START+$90
 !ram_cm_zebes_seconds = !WRAM_MENU_START+$92
