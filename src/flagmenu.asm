@@ -900,16 +900,7 @@ events_metroid4:
     %cm_toggle_bit("4th Metroids Cleared", $7ED822, #$0008, #0)
 
 events_zebettites:
-    dw !ACTION_CHOICE
-    dl #!ram_cm_zebmask
-    dw .routine
-    db #$28, "Zebs Killed", #$FF
-    db #$28, "          0", #$FF
-    db #$28, "          1", #$FF
-    db #$28, "          2", #$FF
-    db #$28, "          3", #$FF
-    db #$28, "          4", #$FF
-    db #$FF
+    %cm_numfield("Zebs Killed", !ram_cm_zebmask, 0, 4, 1, 1, #.routine)
   .routine
     CMP #$0000 : BEQ .done
     CMP #$0001 : BEQ .one
