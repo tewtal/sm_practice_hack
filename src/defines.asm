@@ -340,6 +340,7 @@
 !ram_cm_reserve = !WRAM_MENU_START+$AE
 
 !ram_cm_zebmask = !WRAM_MENU_START+$90
+!ram_cm_metmask = !WRAM_MENU_START+$92
 
 !ram_cm_ceres_seconds = !WRAM_MENU_START+$90
 !ram_cm_zebes_seconds = !WRAM_MENU_START+$92

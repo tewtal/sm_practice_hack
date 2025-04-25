@@ -827,24 +827,42 @@ eventflags_setmapstations:
 
 eventflags_prepare_events_menu:
 {
+    ; Zebettites
     LDA $7ED820 : AND #$0038
-    CMP #$0020 : BEQ .four
-    CMP #$0018 : BEQ .three
-    CMP #$0010 : BEQ .two
-    CMP #$0008 : BEQ .one
-    BRA .done
-
-  .one
-    LDA #$0001 : BRA .done
-  .two
-    LDA #$0002 : BRA .done
-  .three
-    LDA #$0003 : BRA .done
-  .four
-    LDA #$0004
-
-  .done
+    CMP #$0020 : BEQ .fourZeb
+    CMP #$0018 : BEQ .threeZeb
+    CMP #$0010 : BEQ .twoZeb
+    CMP #$0008 : BEQ .oneZeb
+    LDA #$0000 : BRA .doneZeb
+  .fourZeb
+    LDA #$0004 : BRA .doneZeb
+  .threeZeb
+    LDA #$0003 : BRA .doneZeb
+  .twoZeb
+    LDA #$0002 : BRA .doneZeb
+  .oneZeb
+    LDA #$0001 : BRA .doneZeb
+  .doneZeb
     STA !ram_cm_zebmask
+
+    ; Metroids
+    LDA $7ED822 : AND #$000F
+    BIT #$0008 : BNE .fourMet
+    BIT #$0004 : BNE .threeMet
+    BIT #$0002 : BNE .twoMet
+    BIT #$0001 : BNE .oneMet
+    LDA #$0000 : BRA .doneMet
+  .fourMet
+    LDA #$0004 : BRA .doneMet
+  .threeMet
+    LDA #$0003 : BRA .doneMet
+  .twoMet
+    LDA #$0002 : BRA .doneMet
+  .oneMet
+    LDA #$0001 : BRA .doneMet
+  .doneMet
+    STA !ram_cm_metmask
+
     %setmenubank()
     JML action_submenu
 }
@@ -855,10 +873,7 @@ EventsMenu:
     dw #events_maridiatubebroken
     dw #events_shaktool
     dw #events_chozoacid
-    dw #events_metroid1
-    dw #events_metroid2
-    dw #events_metroid3
-    dw #events_metroid4
+    dw #events_metroids
     dw #events_zebettites
     dw #events_mb1glass
     dw #events_zebesexploding
@@ -887,17 +902,26 @@ events_shaktool:
 events_chozoacid:
     %cm_toggle_bit("Chozo Lowered Acid", $7ED821, #$0010, #0)
 
-events_metroid1:
-    %cm_toggle_bit("1st Metroids Cleared", $7ED822, #$0001, #0)
+events_metroids:
+    %cm_numfield("Metroid Rooms Cleared", !ram_cm_metmask, 0, 4, 1, 1, #.routine)
+  .routine
+    CMP #$0000 : BEQ .done
+    CMP #$0001 : BEQ .one
+    CMP #$0002 : BEQ .two
+    CMP #$0003 : BEQ .three
 
-events_metroid2:
-    %cm_toggle_bit("2nd Metroids Cleared", $7ED822, #$0002, #0)
+    LDA #$000F : BRA .done
+  .three
+    LDA #$0007 : BRA .done
+  .two
+    LDA #$0003 : BRA .done
+  .one
+    LDA #$0001 : BRA .done
 
-events_metroid3:
-    %cm_toggle_bit("3rd Metroids Cleared", $7ED822, #$0004, #0)
-
-events_metroid4:
-    %cm_toggle_bit("4th Metroids Cleared", $7ED822, #$0008, #0)
+  .done
+    STA $C1
+    LDA $7ED822 : AND #$FFF0 : ORA $C1 : STA $7ED822
+    RTL
 
 events_zebettites:
     %cm_numfield("Zebs Killed", !ram_cm_zebmask, 0, 4, 1, 1, #.routine)
