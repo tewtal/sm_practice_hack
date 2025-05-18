@@ -1730,6 +1730,83 @@ org $A9B5E1
 endif
     JSL cutscenes_mb_custom_damage
 
+if !FEATURE_PAL
+org $A9B672
+else
+org $A9B625
+endif
+    CMP !eram_mb_normal_walking_rng
+
+if !FEATURE_PAL
+org $A9B684
+else
+org $A9B637
+endif
+    CMP !eram_mb_ketchup_walking_rng
+
+if !FEATURE_PAL
+org $A9B68C
+else
+org $A9B63F
+endif
+    CMP !eram_mb_ketchup_rng
+
+if !FEATURE_PAL
+org $A9B6B9
+else
+org $A9B66C
+endif
+    LDX !eram_mb_ground_attack_rng_table
+
+if !FEATURE_PAL
+org $A9B6D2
+else
+org $A9B685
+endif
+    LDX !eram_mb_close_attack_rng_table
+
+if !FEATURE_PAL
+org $A9B742
+else
+org $A9B6F5
+endif
+    CMP !eram_mb_air_rings_rng
+
+if !FEATURE_PAL
+org $A9B75F
+else
+org $A9B712
+endif
+    CMP !eram_mb_ground_bomb_rng
+
+if !FEATURE_PAL
+org $A9B7D1
+else
+org $A9B784
+endif
+    CMP !eram_mb_try_bomb_crouch
+
+if !FEATURE_PAL
+org $A9B808
+else
+org $A9B7BB
+endif
+    CMP !eram_mb_bomb_crouch
+
+if !FEATURE_PAL
+org $A9BDC7
+else
+org $A9BD7A
+endif
+    CMP !eram_mb_damage_down_rng
+
+if !FEATURE_PAL
+org $A9C282
+else
+org $A9C235
+endif
+    CMP !eram_mb_phase3_attack_rng
+
 
 %startfree(A9)
 

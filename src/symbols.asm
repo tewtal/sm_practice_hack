@@ -148,21 +148,22 @@ ram_magic_pants_enabled = !ram_magic_pants_enabled ; !WRAM_PERSIST_START+$0A
 ram_space_pants_enabled = !ram_space_pants_enabled ; !WRAM_PERSIST_START+$0C
 ram_kraid_claw_rng = !ram_kraid_claw_rng ; !WRAM_PERSIST_START+$0E
 ram_kraid_wait_rng = !ram_kraid_wait_rng ; !WRAM_PERSIST_START+$10
-ram_botwoon_first = !ram_botwoon_first ; !WRAM_PERSIST_START+$12
-ram_botwoon_second = !ram_botwoon_second ; !WRAM_PERSIST_START+$14
-ram_botwoon_hidden = !ram_botwoon_hidden ; !WRAM_PERSIST_START+$16
-ram_botwoon_spit = !ram_botwoon_spit ; !WRAM_PERSIST_START+$18
-ram_botwoon_rng = !ram_botwoon_rng ; !WRAM_PERSIST_START+$1A
+ram_draygon_rng_left = !ram_draygon_rng_left ; !WRAM_PERSIST_START+$12
+ram_draygon_rng_right = !ram_draygon_rng_right ; !WRAM_PERSIST_START+$14
+ram_turret_rng = !ram_turret_rng ; !WRAM_PERSIST_START+$16
+ram_ridley_rng_flags = !ram_ridley_rng_flags ; !WRAM_PERSIST_START+$18
+ram_ridley_rng_times_and_fireball = !ram_ridley_rng_times_and_fireball ; !WRAM_PERSIST_START+$1A
 ram_crocomire_rng = !ram_crocomire_rng ; !WRAM_PERSIST_START+$1C
-ram_phantoon_rng_round_1 = !ram_phantoon_rng_round_1 ; !WRAM_PERSIST_START+$1E
-ram_phantoon_rng_round_2 = !ram_phantoon_rng_round_2 ; !WRAM_PERSIST_START+$20
-ram_phantoon_rng_inverted = !ram_phantoon_rng_inverted ; !WRAM_PERSIST_START+$22
-ram_phantoon_rng_eyeclose = !ram_phantoon_rng_eyeclose ; !WRAM_PERSIST_START+$24
-ram_phantoon_rng_flames = !ram_phantoon_rng_flames ; !WRAM_PERSIST_START+$26
-ram_phantoon_rng_next_flames = !ram_phantoon_rng_next_flames ; !WRAM_PERSIST_START+$28
-ram_phantoon_flame_direction = !ram_phantoon_flame_direction ; !WRAM_PERSIST_START+$2A
-ram_draygon_rng_left = !ram_draygon_rng_left ; !WRAM_PERSIST_START+$2C
-ram_draygon_rng_right = !ram_draygon_rng_right ; !WRAM_PERSIST_START+$2E
+ram_phantoon_phase_rng = !ram_phantoon_phase_rng ; !WRAM_PERSIST_START+$1E
+ram_phantoon_eye_and_flames_rng = !ram_phantoon_eye_and_flames_rng ; !WRAM_PERSIST_START+$20
+ram_botwoon_rng = !ram_botwoon_rng ; !WRAM_PERSIST_START+$22
+ram_baby_rng = !ram_baby_rng ; !WRAM_PERSIST_START+$24
+ram_mb_rng = !ram_mb_rng ; !WRAM_PERSIST_START+$26
+
+ram_itempickups_all = !ram_itempickups_all ; !WRAM_PERSIST_START+$28
+ram_itempickups_visible = !ram_itempickups_visible ; !WRAM_PERSIST_START+$2A
+ram_itempickups_chozo = !ram_itempickups_chozo ; !WRAM_PERSIST_START+$2C
+ram_itempickups_hidden = !ram_itempickups_hidden ; !WRAM_PERSIST_START+$2E
 
 ram_suits_enemy_damage_check = !ram_suits_enemy_damage_check ; !WRAM_PERSIST_START+$30
 ram_suits_heat_damage_check = !ram_suits_heat_damage_check ; !WRAM_PERSIST_START+$32
@@ -188,19 +189,9 @@ ram_sprite_feature_flags = !ram_sprite_feature_flags ; !WRAM_PERSIST_START+$54
 ram_door_portal_flags = !ram_door_portal_flags ; !WRAM_PERSIST_START+$56
 ram_door_source = !ram_door_source ; !WRAM_PERSIST_START+$58
 ram_door_destination = !ram_door_destination ; !WRAM_PERSIST_START+$5A
-ram_itempickups_all = !ram_itempickups_all ; !WRAM_PERSIST_START+$5C
-ram_itempickups_visible = !ram_itempickups_visible ; !WRAM_PERSIST_START+$5E
-ram_itempickups_chozo = !ram_itempickups_chozo ; !WRAM_PERSIST_START+$60
-ram_itempickups_hidden = !ram_itempickups_hidden ; !WRAM_PERSIST_START+$62
-ram_frames_held = !ram_frames_held ; !WRAM_PERSIST_START+$64
-ram_baby_rng = !ram_baby_rng ; !WRAM_PERSIST_START+$66
-ram_turret_rng = !ram_turret_rng ; !WRAM_PERSIST_START+$68
-
-ram_quickboot_spc_state = !ram_quickboot_spc_state ; !WRAM_PERSIST_START+$6A
-ram_display_backup = !ram_display_backup ; !WRAM_PERSIST_START+$6C
-ram_phantoon_always_visible = !ram_phantoon_always_visible ; !WRAM_PERSIST_START+$6E
-ram_ridley_rng_flags = !ram_ridley_rng_flags ; !WRAM_PERSIST_START+$70
-ram_ridley_rng_times_and_fireball = !ram_ridley_rng_times_and_fireball ; !WRAM_PERSIST_START+$72
+ram_frames_held = !ram_frames_held ; !WRAM_PERSIST_START+$5C
+ram_quickboot_spc_state = !ram_quickboot_spc_state ; !WRAM_PERSIST_START+$5E
+ram_display_backup = !ram_display_backup ; !WRAM_PERSIST_START+$60
 
 ; ^ FREE SPACE ^ up to +$7C (!WRAM_START+$FC - !WRAM_PERSIST_START)
 
@@ -259,12 +250,6 @@ ram_sram_detection = !ram_sram_detection ; !WRAM_MENU_START+$5C
 ram_timers_autoupdate = !ram_timers_autoupdate ; !WRAM_MENU_START+$5E
 ram_cm_gmode = !ram_cm_gmode ; !WRAM_MENU_START+$60
 
-ram_cm_botwoon_rng = !ram_cm_botwoon_rng ; !WRAM_MENU_START+$62
-ram_cm_botwoon_first = !ram_cm_botwoon_first ; !WRAM_MENU_START+$64
-ram_cm_botwoon_hidden = !ram_cm_botwoon_hidden ; !WRAM_MENU_START+$66
-ram_cm_botwoon_second = !ram_cm_botwoon_second ; !WRAM_MENU_START+$68
-ram_cm_botwoon_spit = !ram_cm_botwoon_spit ; !WRAM_MENU_START+$68
-
 ; ^ FREE SPACE ^ up to +$86
 
 ram_cm_preserved_timers = !ram_cm_preserved_timers ; !WRAM_MENU_START+$88 ; 8 bytes
@@ -290,20 +275,37 @@ ram_cm_itempickups_chozo = !ram_cm_itempickups_chozo ; !WRAM_MENU_START+$9A
 ram_cm_itempickups_hidden = !ram_cm_itempickups_hidden ; !WRAM_MENU_START+$9C
 
 ram_cm_turret_rng = !ram_cm_turret_rng ; !WRAM_MENU_START+$90
-ram_cm_phan_first_phase = !ram_cm_phan_first_phase ; !WRAM_MENU_START+$92
-ram_cm_phan_second_phase = !ram_cm_phan_second_phase ; !WRAM_MENU_START+$94
+ram_cm_botwoon_first_rng = !ram_cm_botwoon_first_rng ; !WRAM_MENU_START+$92
+ram_cm_botwoon_hidden_rng = !ram_cm_botwoon_hidden_rng ; !WRAM_MENU_START+$94
+ram_cm_botwoon_second_rng = !ram_cm_botwoon_second_rng ; !WRAM_MENU_START+$96
+ram_cm_botwoon_spit_rng = !ram_cm_botwoon_spit_rng ; !WRAM_MENU_START+$98
+ram_cm_botwoon_after_spit_rng = !ram_cm_botwoon_after_spit_rng ; !WRAM_MENU_START+$9A
 
-ram_cm_ridley_pogo_height = !ram_cm_ridley_pogo_height ; !WRAM_MENU_START+$92
-ram_cm_ridley_lunge_pogo = !ram_cm_ridley_lunge_pogo ; !WRAM_MENU_START+$94
-ram_cm_ridley_swoop_pogo = !ram_cm_ridley_swoop_pogo ; !WRAM_MENU_START+$96
-ram_cm_ridley_ceres_ai = !ram_cm_ridley_ceres_ai ; !WRAM_MENU_START+$98
-ram_cm_ridley_hover_fireball = !ram_cm_ridley_hover_fireball ; !WRAM_MENU_START+$9A
-ram_cm_ridley_backpogo_left = !ram_cm_ridley_backpogo_left ; !WRAM_MENU_START+$9C
-ram_cm_ridley_backpogo_right = !ram_cm_ridley_backpogo_right ; !WRAM_MENU_START+$9E
-ram_cm_ridley_pogo_time = !ram_cm_ridley_pogo_time ; !WRAM_MENU_START+$A0
-ram_cm_ridley_pogo_time_value = !ram_cm_ridley_pogo_time_value ; !WRAM_MENU_START+$A2
-ram_cm_ridley_hover_time = !ram_cm_ridley_hover_time ; !WRAM_MENU_START+$A4
-ram_cm_ridley_hover_time_value = !ram_cm_ridley_hover_time_value ; !WRAM_MENU_START+$A6
+ram_cm_phantoon_first_phase_rng = !ram_cm_phantoon_first_phase_rng ; !WRAM_MENU_START+$9C
+ram_cm_phantoon_second_phase_rng = !ram_cm_phantoon_second_phase_rng ; !WRAM_MENU_START+$9E
+ram_cm_phantoon_flip_rng = !ram_cm_phantoon_flip_rng ; !WRAM_MENU_START+$A0
+ram_cm_phantoon_eyeclose_rng = !ram_cm_phantoon_eyeclose_rng ; !WRAM_MENU_START+$A2
+ram_cm_phantoon_flames_rng = !ram_cm_phantoon_flames_rng ; !WRAM_MENU_START+$A4
+ram_cm_phantoon_next_flames_rng = !ram_cm_phantoon_next_flames_rng ; !WRAM_MENU_START+$A6
+ram_cm_phantoon_flame_direction_rng = !ram_cm_phantoon_flame_direction_rng ; !WRAM_MENU_START+$A8
+
+ram_cm_ridley_pogo_height_rng = !ram_cm_ridley_pogo_height_rng ; !WRAM_MENU_START+$9C
+ram_cm_ridley_lunge_pogo_rng = !ram_cm_ridley_lunge_pogo_rng ; !WRAM_MENU_START+$9E
+ram_cm_ridley_swoop_pogo_rng = !ram_cm_ridley_swoop_pogo_rng ; !WRAM_MENU_START+$A0
+ram_cm_ridley_ceres_ai_rng = !ram_cm_ridley_ceres_ai_rng ; !WRAM_MENU_START+$A2
+ram_cm_ridley_hover_fireball_rng = !ram_cm_ridley_hover_fireball_rng ; !WRAM_MENU_START+$A4
+ram_cm_ridley_backpogo_rng = !ram_cm_ridley_backpogo_rng ; !WRAM_MENU_START+$A6
+ram_cm_ridley_pogo_time_rng = !ram_cm_ridley_pogo_time_rng ; !WRAM_MENU_START+$A8
+ram_cm_ridley_pogo_time_value_rng = !ram_cm_ridley_pogo_time_value_rng ; !WRAM_MENU_START+$AA
+ram_cm_ridley_hover_time_rng = !ram_cm_ridley_hover_time_rng ; !WRAM_MENU_START+$AC
+ram_cm_ridley_hover_time_value_rng = !ram_cm_ridley_hover_time_value_rng ; !WRAM_MENU_START+$AE
+
+ram_cm_mb_walking_rng = !ram_cm_mb_walking_rng ; !WRAM_MENU_START+$9C
+ram_cm_mb_ketchup_rng = !ram_cm_mb_ketchup_rng ; !WRAM_MENU_START+$9E
+ram_cm_mb_damage_down_rng = !ram_cm_mb_damage_down_rng ; !WRAM_MENU_START+$A0
+ram_cm_mb_phase3_attack_rng = !ram_cm_mb_phase3_attack_rng ; !WRAM_MENU_START+$A2
+ram_cm_mb_normal_attack_rng = !ram_cm_mb_normal_attack_rng ; !WRAM_MENU_START+$A4
+ram_cm_mb_bomb_crouch_rng = !ram_cm_mb_bomb_crouch_rng ; !WRAM_MENU_START+$A6
 
 ram_cm_varia = !ram_cm_varia ; !WRAM_MENU_START+$90
 ram_cm_gravity = !ram_cm_gravity ; !WRAM_MENU_START+$92

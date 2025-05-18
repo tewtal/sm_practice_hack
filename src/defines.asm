@@ -165,21 +165,22 @@
 !ram_space_pants_enabled            = !WRAM_PERSIST_START+$0C
 !ram_kraid_claw_rng                 = !WRAM_PERSIST_START+$0E
 !ram_kraid_wait_rng                 = !WRAM_PERSIST_START+$10
-!ram_botwoon_first                  = !WRAM_PERSIST_START+$12
-!ram_botwoon_second                 = !WRAM_PERSIST_START+$14
-!ram_botwoon_hidden                 = !WRAM_PERSIST_START+$16
-!ram_botwoon_spit                   = !WRAM_PERSIST_START+$18
-!ram_botwoon_rng                    = !WRAM_PERSIST_START+$1A
+!ram_draygon_rng_left               = !WRAM_PERSIST_START+$12
+!ram_draygon_rng_right              = !WRAM_PERSIST_START+$14
+!ram_turret_rng                     = !WRAM_PERSIST_START+$16
+!ram_ridley_rng_flags               = !WRAM_PERSIST_START+$18
+!ram_ridley_rng_times_and_fireball  = !WRAM_PERSIST_START+$1A
 !ram_crocomire_rng                  = !WRAM_PERSIST_START+$1C
-!ram_phantoon_rng_round_1           = !WRAM_PERSIST_START+$1E
-!ram_phantoon_rng_round_2           = !WRAM_PERSIST_START+$20
-!ram_phantoon_rng_inverted          = !WRAM_PERSIST_START+$22
-!ram_phantoon_rng_eyeclose          = !WRAM_PERSIST_START+$24
-!ram_phantoon_rng_flames            = !WRAM_PERSIST_START+$26
-!ram_phantoon_rng_next_flames       = !WRAM_PERSIST_START+$28
-!ram_phantoon_flame_direction       = !WRAM_PERSIST_START+$2A
-!ram_draygon_rng_left               = !WRAM_PERSIST_START+$2C
-!ram_draygon_rng_right              = !WRAM_PERSIST_START+$2E
+!ram_phantoon_phase_rng             = !WRAM_PERSIST_START+$1E
+!ram_phantoon_eye_and_flames_rng    = !WRAM_PERSIST_START+$20
+!ram_botwoon_rng                    = !WRAM_PERSIST_START+$22
+!ram_baby_rng                       = !WRAM_PERSIST_START+$24
+!ram_mb_rng                         = !WRAM_PERSIST_START+$26
+
+!ram_itempickups_all                = !WRAM_PERSIST_START+$28
+!ram_itempickups_visible            = !WRAM_PERSIST_START+$2A
+!ram_itempickups_chozo              = !WRAM_PERSIST_START+$2C
+!ram_itempickups_hidden             = !WRAM_PERSIST_START+$2E
 
 !ram_suits_enemy_damage_check       = !WRAM_PERSIST_START+$30
 !ram_suits_heat_damage_check        = !WRAM_PERSIST_START+$32
@@ -205,19 +206,9 @@
 !ram_door_portal_flags              = !WRAM_PERSIST_START+$56
 !ram_door_source                    = !WRAM_PERSIST_START+$58
 !ram_door_destination               = !WRAM_PERSIST_START+$5A
-!ram_itempickups_all                = !WRAM_PERSIST_START+$5C
-!ram_itempickups_visible            = !WRAM_PERSIST_START+$5E
-!ram_itempickups_chozo              = !WRAM_PERSIST_START+$60
-!ram_itempickups_hidden             = !WRAM_PERSIST_START+$62
-!ram_frames_held                    = !WRAM_PERSIST_START+$64
-!ram_baby_rng                       = !WRAM_PERSIST_START+$66
-!ram_turret_rng                     = !WRAM_PERSIST_START+$68
-
-!ram_quickboot_spc_state            = !WRAM_PERSIST_START+$6A
-!ram_display_backup                 = !WRAM_PERSIST_START+$6C
-!ram_phantoon_always_visible        = !WRAM_PERSIST_START+$6E
-!ram_ridley_rng_flags               = !WRAM_PERSIST_START+$70
-!ram_ridley_rng_times_and_fireball  = !WRAM_PERSIST_START+$72
+!ram_frames_held                    = !WRAM_PERSIST_START+$5C
+!ram_quickboot_spc_state            = !WRAM_PERSIST_START+$5E
+!ram_display_backup                 = !WRAM_PERSIST_START+$60
 
 ; ^ FREE SPACE ^ up to +$7C (!WRAM_START+$FC - !WRAM_PERSIST_START)
 
@@ -276,12 +267,6 @@
 !ram_timers_autoupdate = !WRAM_MENU_START+$5E
 !ram_cm_gmode = !WRAM_MENU_START+$60
 
-!ram_cm_botwoon_rng = !WRAM_MENU_START+$62
-!ram_cm_botwoon_first = !WRAM_MENU_START+$64
-!ram_cm_botwoon_hidden = !WRAM_MENU_START+$66
-!ram_cm_botwoon_second = !WRAM_MENU_START+$68
-!ram_cm_botwoon_spit = !WRAM_MENU_START+$68
-
 ; ^ FREE SPACE ^ up to +$86
 
 !ram_cm_preserved_timers = !WRAM_MENU_START+$88 ; 8 bytes
@@ -307,20 +292,37 @@
 !ram_cm_itempickups_hidden = !WRAM_MENU_START+$9C
 
 !ram_cm_turret_rng = !WRAM_MENU_START+$90
-!ram_cm_phan_first_phase = !WRAM_MENU_START+$92
-!ram_cm_phan_second_phase = !WRAM_MENU_START+$94
+!ram_cm_botwoon_first_rng = !WRAM_MENU_START+$92
+!ram_cm_botwoon_hidden_rng = !WRAM_MENU_START+$94
+!ram_cm_botwoon_second_rng = !WRAM_MENU_START+$96
+!ram_cm_botwoon_spit_rng = !WRAM_MENU_START+$98
+!ram_cm_botwoon_after_spit_rng = !WRAM_MENU_START+$9A
 
-!ram_cm_ridley_pogo_height = !WRAM_MENU_START+$92
-!ram_cm_ridley_lunge_pogo = !WRAM_MENU_START+$94
-!ram_cm_ridley_swoop_pogo = !WRAM_MENU_START+$96
-!ram_cm_ridley_ceres_ai = !WRAM_MENU_START+$98
-!ram_cm_ridley_hover_fireball = !WRAM_MENU_START+$9A
-!ram_cm_ridley_backpogo_left = !WRAM_MENU_START+$9C
-!ram_cm_ridley_backpogo_right = !WRAM_MENU_START+$9E
-!ram_cm_ridley_pogo_time = !WRAM_MENU_START+$A0
-!ram_cm_ridley_pogo_time_value = !WRAM_MENU_START+$A2
-!ram_cm_ridley_hover_time = !WRAM_MENU_START+$A4
-!ram_cm_ridley_hover_time_value = !WRAM_MENU_START+$A6
+!ram_cm_phantoon_first_phase_rng = !WRAM_MENU_START+$9C
+!ram_cm_phantoon_second_phase_rng = !WRAM_MENU_START+$9E
+!ram_cm_phantoon_flip_rng = !WRAM_MENU_START+$A0
+!ram_cm_phantoon_eyeclose_rng = !WRAM_MENU_START+$A2
+!ram_cm_phantoon_flames_rng = !WRAM_MENU_START+$A4
+!ram_cm_phantoon_next_flames_rng = !WRAM_MENU_START+$A6
+!ram_cm_phantoon_flame_direction_rng = !WRAM_MENU_START+$A8
+
+!ram_cm_ridley_pogo_height_rng = !WRAM_MENU_START+$9C
+!ram_cm_ridley_lunge_pogo_rng = !WRAM_MENU_START+$9E
+!ram_cm_ridley_swoop_pogo_rng = !WRAM_MENU_START+$A0
+!ram_cm_ridley_ceres_ai_rng = !WRAM_MENU_START+$A2
+!ram_cm_ridley_hover_fireball_rng = !WRAM_MENU_START+$A4
+!ram_cm_ridley_backpogo_rng = !WRAM_MENU_START+$A6
+!ram_cm_ridley_pogo_time_rng = !WRAM_MENU_START+$A8
+!ram_cm_ridley_pogo_time_value_rng = !WRAM_MENU_START+$AA
+!ram_cm_ridley_hover_time_rng = !WRAM_MENU_START+$AC
+!ram_cm_ridley_hover_time_value_rng = !WRAM_MENU_START+$AE
+
+!ram_cm_mb_walking_rng = !WRAM_MENU_START+$9C
+!ram_cm_mb_ketchup_rng = !WRAM_MENU_START+$9E
+!ram_cm_mb_damage_down_rng = !WRAM_MENU_START+$A0
+!ram_cm_mb_phase3_attack_rng = !WRAM_MENU_START+$A2
+!ram_cm_mb_normal_attack_rng = !WRAM_MENU_START+$A4
+!ram_cm_mb_bomb_crouch_rng = !WRAM_MENU_START+$A6
 
 !ram_cm_varia = !WRAM_MENU_START+$90
 !ram_cm_gravity = !WRAM_MENU_START+$92
@@ -974,6 +976,8 @@
 ; In rooms with fewer enemies, some enemy RAM is available for use
 !ENEMY_1_OFFSET = $40
 !ENEMY_2_OFFSET = $80
+!ENEMY_1C_OFFSET = $700
+!ENEMY_1D_OFFSET = $740
 !ENEMY_1E_OFFSET = $780
 !ENEMY_1F_OFFSET = $7C0
 
@@ -982,22 +986,49 @@
 ; The low byte of each word is integer pixels,
 ; and the high byte is fractional pixels.
 ; Yes, that sounds weird, but the math is a little easier.
-!eram_infidoppler_offsets         = !ENEMY_VAR_1+!ENEMY_1E_OFFSET ; array of 5 words
-!eram_infidoppler_x               = !ENEMY_VAR_1+!ENEMY_1F_OFFSET
-!eram_infidoppler_subx            = !ENEMY_VAR_2+!ENEMY_1F_OFFSET
-!eram_infidoppler_y               = !ENEMY_VAR_3+!ENEMY_1F_OFFSET
-!eram_infidoppler_suby            = !ENEMY_VAR_4+!ENEMY_1F_OFFSET
+!eram_infidoppler_offsets          = !ENEMY_VAR_1+!ENEMY_1C_OFFSET ; array of 5 words
+!eram_infidoppler_x                = !ENEMY_VAR_1+!ENEMY_1D_OFFSET
+!eram_infidoppler_subx             = !ENEMY_VAR_2+!ENEMY_1D_OFFSET
+!eram_infidoppler_y                = !ENEMY_VAR_3+!ENEMY_1D_OFFSET
+!eram_infidoppler_suby             = !ENEMY_VAR_4+!ENEMY_1D_OFFSET
+!eram_phantoon_always_visible      = !ENEMY_VAR_5+!ENEMY_1D_OFFSET
+!eram_phantoon_rng_round_1         = !ENEMY_VAR_1+!ENEMY_1E_OFFSET
+!eram_phantoon_rng_round_2         = !ENEMY_VAR_2+!ENEMY_1E_OFFSET
+!eram_phantoon_rng_flip            = !ENEMY_VAR_3+!ENEMY_1E_OFFSET
+!eram_phantoon_rng_eyeclose        = !ENEMY_VAR_4+!ENEMY_1E_OFFSET
+!eram_phantoon_rng_flames          = !ENEMY_VAR_1+!ENEMY_1F_OFFSET
+!eram_phantoon_rng_next_flames     = !ENEMY_VAR_2+!ENEMY_1F_OFFSET
+!eram_phantoon_rng_flame_direction = !ENEMY_VAR_3+!ENEMY_1F_OFFSET
 
-!eram_ceres_ridley_rng            = !ENEMY_VAR_1+!ENEMY_1E_OFFSET
-!eram_ridley_lunge_pogo_rng       = !ENEMY_VAR_2+!ENEMY_1E_OFFSET
-!eram_ridley_swoop_pogo_rng       = !ENEMY_VAR_3+!ENEMY_1E_OFFSET
-!eram_ridley_pogo_swoop_rng       = !ENEMY_VAR_4+!ENEMY_1E_OFFSET
-!eram_ridley_fireball_rng         = !ENEMY_VAR_5+!ENEMY_1E_OFFSET
-!eram_ridley_hover_time_rng       = !ENEMY_VAR_1+!ENEMY_1F_OFFSET
-!eram_ridley_pogo_time_rng        = !ENEMY_VAR_2+!ENEMY_1F_OFFSET
-!eram_ridley_pogo_height_rng      = !ENEMY_VAR_3+!ENEMY_1F_OFFSET
-!eram_ridley_backpogo_left_rng    = !ENEMY_VAR_4+!ENEMY_1F_OFFSET
-!eram_ridley_backpogo_right_rng   = !ENEMY_VAR_5+!ENEMY_1F_OFFSET
+!eram_ceres_ridley_rng             = !ENEMY_VAR_1+!ENEMY_1E_OFFSET
+!eram_ridley_lunge_pogo_rng        = !ENEMY_VAR_2+!ENEMY_1E_OFFSET
+!eram_ridley_swoop_pogo_rng        = !ENEMY_VAR_3+!ENEMY_1E_OFFSET
+!eram_ridley_pogo_swoop_rng        = !ENEMY_VAR_4+!ENEMY_1E_OFFSET
+!eram_ridley_fireball_rng          = !ENEMY_VAR_5+!ENEMY_1E_OFFSET
+!eram_ridley_hover_time_rng        = !ENEMY_VAR_1+!ENEMY_1F_OFFSET
+!eram_ridley_pogo_time_rng         = !ENEMY_VAR_2+!ENEMY_1F_OFFSET
+!eram_ridley_pogo_height_rng       = !ENEMY_VAR_3+!ENEMY_1F_OFFSET
+!eram_ridley_backpogo_rng          = !ENEMY_VAR_4+!ENEMY_1F_OFFSET
+
+!eram_mb_normal_walking_rng        = !ENEMY_VAR_5+!ENEMY_1D_OFFSET
+!eram_mb_ketchup_walking_rng       = !ENEMY_VAR_1+!ENEMY_1E_OFFSET
+!eram_mb_ketchup_rng               = !ENEMY_VAR_2+!ENEMY_1E_OFFSET
+!eram_mb_try_bomb_crouch           = !ENEMY_VAR_3+!ENEMY_1E_OFFSET
+!eram_mb_bomb_crouch               = !ENEMY_VAR_4+!ENEMY_1E_OFFSET
+!eram_mb_air_rings_rng             = !ENEMY_VAR_5+!ENEMY_1E_OFFSET
+!eram_mb_ground_bomb_rng           = !ENEMY_VAR_1+!ENEMY_1F_OFFSET
+!eram_mb_ground_attack_rng_table   = !ENEMY_VAR_2+!ENEMY_1F_OFFSET
+!eram_mb_close_attack_rng_table    = !ENEMY_VAR_3+!ENEMY_1F_OFFSET
+!eram_mb_damage_down_rng           = !ENEMY_VAR_4+!ENEMY_1F_OFFSET
+!eram_mb_phase3_attack_rng         = !ENEMY_VAR_5+!ENEMY_1F_OFFSET
+
+!eram_botwoon_first_roll           = !ENEMY_VAR_4+!ENEMY_1E_OFFSET
+!eram_botwoon_all_pattern_rng      = !ENEMY_VAR_5+!ENEMY_1E_OFFSET
+!eram_botwoon_first_rng            = !ENEMY_VAR_1+!ENEMY_1F_OFFSET
+!eram_botwoon_hidden_rng           = !ENEMY_VAR_2+!ENEMY_1F_OFFSET
+!eram_botwoon_second_rng           = !ENEMY_VAR_3+!ENEMY_1F_OFFSET
+!eram_botwoon_spit_rng             = !ENEMY_VAR_4+!ENEMY_1F_OFFSET
+!eram_botwoon_after_spit_rng       = !ENEMY_VAR_5+!ENEMY_1F_OFFSET
 
 !HUD_TILEMAP = $7EC600
 !MAP_COUNTER = $7ECAE8 ; Not used in vanilla
@@ -1246,21 +1277,38 @@ endif
 !DOOR_PORTAL_HORIZONTAL_MIRRORING_BIT = #$0010
 !DOOR_PORTAL_EXCLUDE_JUMP_MASK = #$FFF7
 
-!RIDLEY_RNG_POGO_HEIGHT_MASK        = #$0007
-!RIDLEY_RNG_POGO_HEIGHT_INVERTED    = #$FFF8
-!RIDLEY_RNG_BACKPOGO_LEFT_MASK      = #$0038
-!RIDLEY_RNG_BACKPOGO_LEFT_INVERTED  = #$FFC7
+!PHANTOON_RNG_PHASE_1_MASK          = #$003F
+!PHANTOON_RNG_PHASE_1_INVERTED      = #$FFC0
+!PHANTOON_RNG_FLIP_MASK             = #$00C0
+!PHANTOON_RNG_FLIP_INVERTED         = #$FF3F
+!PHANTOON_RNG_PHASE_2_MASK          = #$3F00
+!PHANTOON_RNG_PHASE_2_INVERTED      = #$C0FF
+!PHANTOON_RNG_PHASE_2_FLIP_INVERTED = #$C03F
+!PHANTOON_RNG_VISIBLE_BIT           = #$4000
+!PHANTOON_RNG_VISIBLE_INVERTED      = #$BFFF
+
+!PHANTOON_RNG_FLAMES_MASK           = #$0007
+!PHANTOON_RNG_FLAMES_INVERTED       = #$FFF8
+!PHANTOON_RNG_FLAMES_PATH_MASK      = #$00C0
+!PHANTOON_RNG_FLAMES_PATH_INVERTED  = #$FF3F
+!PHANTOON_RNG_FLAMES_NEXT_MASK      = #$0700
+!PHANTOON_RNG_FLAMES_NEXT_INVERTED  = #$F8FF
+!PHANTOON_RNG_EYE_CLOSE_MASK        = #$C000
+!PHANTOON_RNG_EYE_CLOSE_INVERTED    = #$3FFF
+
+!RIDLEY_RNG_CERES_FIREBALL          = #$0001
+!RIDLEY_RNG_CERES_LUNGE             = #$0002
+!RIDLEY_RNG_CERES_SWOOP             = #$0003
+!RIDLEY_RNG_CERES_MASK              = #$0007
+!RIDLEY_RNG_CERES_INVERTED          = #$FFF8
+!RIDLEY_RNG_POGO_HEIGHT_MASK        = #$0038
+!RIDLEY_RNG_POGO_HEIGHT_INVERTED    = #$FFC7
 !RIDLEY_RNG_75_25_LUNGE             = #$0040
 !RIDLEY_RNG_75_25_POGO              = #$0080
 !RIDLEY_RNG_75_25_MASK              = #$00C0
 !RIDLEY_RNG_75_25_INVERTED          = #$FF3F
-!RIDLEY_RNG_CERES_FIREBALL          = #$0100
-!RIDLEY_RNG_CERES_LUNGE             = #$0200
-!RIDLEY_RNG_CERES_SWOOP             = #$0300
-!RIDLEY_RNG_CERES_MASK              = #$0700
-!RIDLEY_RNG_CERES_INVERTED          = #$F8FF
-!RIDLEY_RNG_BACKPOGO_RIGHT_MASK     = #$3800
-!RIDLEY_RNG_BACKPOGO_RIGHT_INVERTED = #$C7FF
+!RIDLEY_RNG_BACKPOGO_MASK           = #$3F00
+!RIDLEY_RNG_BACKPOGO_INVERTED       = #$C0FF
 !RIDLEY_RNG_50_50_SWOOP             = #$4000
 !RIDLEY_RNG_50_50_POGO              = #$8000
 !RIDLEY_RNG_50_50_MASK              = #$C000
@@ -1274,6 +1322,45 @@ endif
 !RIDLEY_RNG_FIREBALL_INVERTED       = #$FF3F
 !RIDLEY_RNG_POGO_TIME_MASK          = #$FF00
 !RIDLEY_RNG_POGO_TIME_INVERTED      = #$00FF
+
+!MB_RNG_WALKING_MASK                = #$0003
+!MB_RNG_WALKING_INVERTED            = #$FFFC
+!MB_RNG_KETCHUP_MASK                = #$000C
+!MB_RNG_KETCHUP_INVERTED            = #$FFF3
+!MB_RNG_DAMAGE_DOWN_MASK            = #$0030
+!MB_RNG_DAMAGE_DOWN_INVERTED        = #$FFCF
+!MB_RNG_PHASE3_ATTACK_RINGS         = #$0080
+!MB_RNG_PHASE3_ATTACK_BOMBS         = #$0100
+!MB_RNG_PHASE3_ATTACK_MASK          = #$0180
+!MB_RNG_PHASE3_ATTACK_INVERTED      = #$FE7F
+!MB_RNG_NORMAL_ATTACK_MASK          = #$0E00
+!MB_RNG_NORMAL_ATTACK_INVERTED      = #$F1FF
+!MB_RNG_BOMB_CROUCH_MASK            = #$C000
+!MB_RNG_BOMB_CROUCH_INVERTED        = #$3FFF
+
+; Each botwoon pattern can be #$00 (off), #$01, #$09, #$11, #$19
+; (except hidden pattern cannot be #$19)
+; This corresponds to just three bits of information
+; For efficiency this information can be overlapped,
+; allowing for the spit value (#$00, #$04, #$08) to be included
+; and also the after spit value in the most and least significant bits
+!BOTWOON_RNG_FIRST_MASK             = #$0032 ; #$0019 << 1
+!BOTWOON_RNG_FIRST_INVERTED         = #$FFCD
+!BOTWOON_RNG_FIRST_ENABLED          = #$0002
+!BOTWOON_RNG_FIRST_VALUE            = #$0030
+!BOTWOON_RNG_HIDDEN_MASK            = #$0C80 ; #$1900 >> 1
+!BOTWOON_RNG_HIDDEN_INVERTED        = #$F37F
+!BOTWOON_RNG_HIDDEN_ENABLED         = #$0080
+!BOTWOON_RNG_HIDDEN_VALUE           = #$0C00
+!BOTWOON_RNG_SECOND_MASK            = #$3200 ; #$1900 << 1
+!BOTWOON_RNG_SECOND_INVERTED        = #$CDFF
+!BOTWOON_RNG_SECOND_ENABLED         = #$0200
+!BOTWOON_RNG_SECOND_VALUE           = #$3000
+!BOTWOON_RNG_SPIT_MASK              = #$000C
+!BOTWOON_RNG_SPIT_INVERTED          = #$FFF3
+!BOTWOON_RNG_AFTER_SPIT_ENABLED     = #$8000
+!BOTWOON_RNG_AFTER_SPIT_MASK        = #$8001
+!BOTWOON_RNG_AFTER_SPIT_INVERTED    = #$7FFE
 
 !PROFILE_CUSTOM       = #$0000
 !PROFILE_Twitch       = #$0001

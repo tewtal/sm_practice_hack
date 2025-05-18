@@ -16,7 +16,7 @@ lorom
 !VERSION_MAJOR = 2
 !VERSION_MINOR = 6
 !VERSION_BUILD = 7
-!VERSION_REV   = 10
+!VERSION_REV   = 11
 
 table ../resources/normal.tbl
 print ""

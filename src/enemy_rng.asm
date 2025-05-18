@@ -15,7 +15,7 @@ org $A7893D
 endif
 phantoon_always_visible:
 {
-    LDA !ram_phantoon_always_visible : BNE .enabled
+    LDA !eram_phantoon_always_visible : BNE .enabled
     ; overwritten code
 if !FEATURE_PAL
     JMP $DBCE
@@ -130,6 +130,67 @@ endif
 ; --------------
 
 if !FEATURE_PAL
+org $A0F2CB
+else
+org $A0F2AB
+endif
+    dw #botwoon_vanilla_main_ai
+
+if !FEATURE_PAL
+org $B395BD
+else
+org $B395AD
+endif
+    RTL
+
+if !FEATURE_PAL
+org $B39677
+else
+org $B39667
+endif
+    LDA #$0001 : STA !eram_botwoon_first_roll
+    ; fallthrough to initialize botwoon RNG
+
+init_botwoon_rng:
+{
+    LDA !ram_botwoon_rng : AND !BOTWOON_RNG_SPIT_INVERTED : STA !eram_botwoon_all_pattern_rng
+    AND !BOTWOON_RNG_FIRST_MASK : LSR : STA !eram_botwoon_first_rng
+    LDA !ram_botwoon_rng : AND !BOTWOON_RNG_HIDDEN_MASK
+    ASL : XBA : STA !eram_botwoon_hidden_rng
+    LDA !ram_botwoon_rng : AND !BOTWOON_RNG_SECOND_MASK
+    LSR : XBA : STA !eram_botwoon_second_rng
+    LDA !ram_botwoon_rng : AND !BOTWOON_RNG_SPIT_MASK : STA !eram_botwoon_spit_rng
+    LDA !ram_botwoon_rng : AND !BOTWOON_RNG_AFTER_SPIT_MASK : STA !eram_botwoon_after_spit_rng
+    RTL
+}
+
+; Vanilla main AI routine, just migrated
+botwoon_vanilla_main_ai:
+{
+    LDX !ENEMY_INDEX
+if !FEATURE_PAL
+    JSR $96D6
+else
+    JSR $96C6
+endif
+    JSR (!ENEMY_VAR_3,X)
+if !FEATURE_PAL
+    JSR $983B
+else
+    JSR $982B
+endif
+    RTL
+}
+%warnpc($B396C6, $B396D6)
+
+if !FEATURE_PAL
+org $B398D1
+else
+org $B398C1
+endif
+    JSL hook_botwoon_spit
+
+if !FEATURE_PAL
 org $B39953
 else
 org $B39943
@@ -138,11 +199,12 @@ endif
     JSL hook_botwoon_move
 
 if !FEATURE_PAL
-org $B398D1
+org $B39A2A
 else
-org $B398C1
+org $B39A1A
 endif
-    JSL hook_botwoon_spit
+    ; $B3:9A1A 22 11 81 80 JSL $808111[$80:8111]
+    JSL hook_botwoon_move_after_spit
 
 
 ; ---------------
@@ -273,6 +335,18 @@ endif
     JMP hook_baby_skip_rng
 
 
+; -------------------
+; Mother Brain hijack
+; -------------------
+
+if !FEATURE_PAL
+org $A9874A
+else
+org $A9873A
+endif
+    JML hook_mb_init_rng
+
+
 ; -----------------
 ; "Set rng" hijacks
 ; -----------------
@@ -375,6 +449,7 @@ hook_beetom_set_rng:
 ; $A7:D4AE 10 3D       BPL $3D    [$D4ED]       ; else, return
 hook_phantoon_init:
 {
+    JSL init_phantoon_rng
     LDA !sram_cutscenes : AND !CUTSCENE_FAST_PHANTOON : BNE .skip_cutscene
 
     DEC !ENEMY_VAR_4,X
@@ -392,6 +467,27 @@ if !FEATURE_PAL
 else
     JML $A7D50F
 endif
+}
+
+init_phantoon_rng:
+{
+    LDA !ram_phantoon_phase_rng : AND !PHANTOON_RNG_VISIBLE_BIT
+    STA !eram_phantoon_always_visible
+    LDA !ram_phantoon_phase_rng : AND !PHANTOON_RNG_PHASE_1_MASK
+    STA !eram_phantoon_rng_round_1
+    LDA !ram_phantoon_phase_rng : AND !PHANTOON_RNG_PHASE_2_MASK
+    XBA : STA !eram_phantoon_rng_round_2
+    LDA !ram_phantoon_phase_rng : AND !PHANTOON_RNG_FLIP_MASK
+    ASL #2 : XBA : STA !eram_phantoon_rng_flip
+    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_MASK
+    STA !eram_phantoon_rng_flames
+    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_PATH_MASK
+    ASL #2 : XBA : STA !eram_phantoon_rng_flame_direction
+    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_NEXT_MASK
+    XBA : STA !eram_phantoon_rng_next_flames
+    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_EYE_CLOSE_MASK
+    XBA : ASL #2 : XBA : STA !eram_phantoon_rng_eyeclose
+    RTL
 }
 
 
@@ -427,7 +523,7 @@ hook_phantoon_1st_rng:
 
   .rng
     ; If set to all-on or all-off, don't mess with RNG
-    LDA !ram_phantoon_rng_round_1 : BEQ .no_manip
+    LDA !eram_phantoon_rng_round_1 : BEQ .no_manip
     CMP #$003F : BNE choose_phantoon_pattern
 
   .no_manip
@@ -457,7 +553,7 @@ endif
 hook_phantoon_2nd_rng:
 {
     ; If set to all-on or all-off, don't mess with RNG
-    LDA !ram_phantoon_rng_round_2 : BEQ .no_manip
+    LDA !eram_phantoon_rng_round_2 : BEQ .no_manip
     CMP #$003F : BNE choose_phantoon_pattern
 
   .no_manip
@@ -469,28 +565,28 @@ else
     LDA $CD53,Y
 endif
     STA !ENEMY_FUNCTION_POINTER+!ENEMY_1_OFFSET
-    ; Intentional fallthrough to invert logic
+    ; Intentional fallthrough to flip logic
 }
 
-hook_phantoon_invert:
+hook_phantoon_flip:
 {
-    LDA !ram_phantoon_rng_inverted : BEQ .vanilla_inverted
-    CMP #$0001 : BEQ .inverted
-    CMP #$0002 : BEQ .not_inverted
+    LDA !eram_phantoon_rng_flip : BEQ .vanilla_flip
+    DEC : BEQ .flipped
+    DEC : BEQ .not_flipped
 
     ; Random
     LDA !CACHED_RANDOM_NUMBER : BIT #$0080
     RTL
 
-  .inverted
-    LDA #$0000 : BIT #$0001
+  .flipped
+    TDC : BIT #$0001
     RTL
 
-  .not_inverted
+  .not_flipped
     LDA #$0001 : BIT #$0001
     RTL
 
-  .vanilla_inverted
+  .vanilla_flip
     LDA !FRAME_COUNTER : BIT #$0001
     RTL
 }
@@ -556,7 +652,7 @@ endif
     STA !ENEMY_FUNCTION_POINTER  ; Index into figure-8 movement table
     STY !ENEMY_X  ; X position
     LDA #$0060 : STA !ENEMY_Y  ; Y position
-    BRA hook_phantoon_invert
+    BRA hook_phantoon_flip
 
   .round1
     ; Save the pattern timer and check the direction
@@ -574,7 +670,7 @@ endif
 
 hook_phantoon_eyeclose:
 {
-    LDA !ram_phantoon_rng_eyeclose : BEQ .no_manip
+    LDA !eram_phantoon_rng_eyeclose : BEQ .no_manip
     DEC : ASL ; return with 0-slow, 2-mid, 4-fast
     RTL
 
@@ -588,9 +684,9 @@ hook_phantoon_flame_pattern:
 {
     JSL $808111 ; Trying to preserve the number of RNG calls being done in the frame
 
-    LDA !ram_phantoon_rng_flames : TAY
-    LDA !ram_phantoon_rng_next_flames : STA !ram_phantoon_rng_flames
-    TYA : STA !ram_phantoon_rng_next_flames : BEQ .no_manip
+    LDA !eram_phantoon_rng_flames : TAY
+    LDA !eram_phantoon_rng_next_flames : STA !eram_phantoon_rng_flames
+    TYA : STA !eram_phantoon_rng_next_flames : BEQ .no_manip
     DEC
     RTL
 
@@ -601,7 +697,7 @@ hook_phantoon_flame_pattern:
 
 hook_phantoon_flame_direction:
 {
-    LDA !ram_phantoon_flame_direction : BEQ .no_manip
+    LDA !eram_phantoon_rng_flame_direction : BEQ .no_manip
     DEC : BNE .right
 
   .left
@@ -624,38 +720,45 @@ endif
     RTL
 }
 
-
 hook_botwoon_move:
 {
-    LDA !ram_botwoon_rng : BEQ .no_manip
+    LDA !eram_botwoon_all_pattern_rng : BEQ .no_manip_maybe_first_roll
+    ; check if first round
+    LDA !eram_botwoon_first_roll : BNE .first_round
     ; 0 = head visible, 1 = behind wall
     LDA $7E8026 : BNE .hidden
-    ; check if first round, $7E8022 unused by Botwoon
-    LDA $7E8022 : BEQ .first_round
 
+    ; check if second round pattern fixed
+    LDA !eram_botwoon_second_rng : BEQ .no_manip
     ; preserve number of RNG calls in the frame
     JSL $808111
     ; return chosen pattern
-    LDA !ram_botwoon_second
+    LDA !eram_botwoon_second_rng
     RTL
 
   .first_round
+    ; check if first round pattern fixed
+    LDA !eram_botwoon_first_rng : BEQ .no_manip_maybe_first_roll
     ; preserve number of RNG calls in the frame
     JSL $808111
     ; mark first round complete
-    LDA #$0001 : STA $7E8022
+    STZ !eram_botwoon_first_roll
     ; return chosen pattern
-    LDA !ram_botwoon_first
+    LDA !eram_botwoon_first_rng
     RTL
 
   .hidden
-    LDA !ram_botwoon_hidden : BEQ .no_manip
+    ; check if hidden round pattern fixed
+    LDA !eram_botwoon_hidden_rng : BEQ .no_manip
     ; preserve number of RNG calls in the frame
     JSL $808111
     ; return chosen pattern
-    LDA !ram_botwoon_hidden
+    LDA !eram_botwoon_hidden_rng
     RTL
 
+  .no_manip_maybe_first_roll
+    ; mark first round complete
+    STZ !eram_botwoon_first_roll
   .no_manip
     ; return random pattern
     JML $808111
@@ -663,16 +766,22 @@ hook_botwoon_move:
 
 hook_botwoon_spit:
 {
-    LDA !ram_botwoon_spit : BEQ .no_manip
+    LDA !eram_botwoon_spit_rng : BEQ hook_botwoon_move_no_manip
     ; preserve number of RNG calls in the frame
     JSL $808111
     ; return chosen pattern
-    LDA !ram_botwoon_spit
+    LDA !eram_botwoon_spit_rng
     RTL
+}
 
-  .no_manip
-    ; return random pattern
-    JML $808111
+hook_botwoon_move_after_spit:
+{
+    LDA !eram_botwoon_after_spit_rng : BEQ hook_botwoon_move_no_manip
+    ; preserve number of RNG calls in the frame
+    JSL $808111
+    ; return chosen pattern
+    LDA !eram_botwoon_after_spit_rng
+    RTL
 }
 
 %endfree(83)
@@ -684,7 +793,7 @@ hook_crocomire_rng:
 {
     LDA !ram_crocomire_rng : BEQ .no_manip
     DEC : BEQ .step
-    LDA #$0000    ; return with <400 for swipe
+    TDC           ; return with <400 for swipe
     RTS
 
   .step
@@ -1118,15 +1227,32 @@ endif
     XBA : STA !eram_ridley_pogo_time_rng
 
     LDA !ram_ridley_rng_flags : AND !RIDLEY_RNG_POGO_HEIGHT_MASK
-    STA !eram_ridley_pogo_height_rng
+    LSR #3 : STA !eram_ridley_pogo_height_rng
 
-    PHX : LDA !ram_ridley_rng_flags : LSR #2 : PHA
-    AND #$000E : TAX : LDA.l ridley_backpogo_threshold_table,X
-    STA !eram_ridley_backpogo_left_rng : PLA : XBA
-    AND #$000E : TAX : LDA.l ridley_backpogo_threshold_table,X
-    STA !eram_ridley_backpogo_right_rng : PLX
+    PHX : LDA !ram_ridley_rng_flags : AND !RIDLEY_RNG_BACKPOGO_MASK
+    XBA : ASL : TAX : LDA.l ridley_backpogo_threshold_table,X
+    STA !eram_ridley_backpogo_rng : PLX
     RTL
 }
+
+ridley_backpogo_threshold_table:
+    dw #$0555, #$0000
+    dw #$FFFF, #$0AAA, #$0FFF
+    dw #$1554, #$1AA9, #$1FFE
+    dw #$2553, #$2AA8, #$2FFD
+    dw #$3552, #$3AA7, #$3FFC
+    dw #$4551, #$4AA6, #$4FFB
+    dw #$5550, #$5AA5, #$5FFA
+    dw #$654F, #$6AA4, #$6FF9
+    dw #$754E, #$7AA3, #$7FF8
+    dw #$854D, #$8AA2, #$8FF7
+    dw #$954C, #$9AA1, #$9FF6
+    dw #$A54B, #$AAA0, #$AFF5
+    dw #$B54A, #$BA9F, #$BFF4
+    dw #$C549, #$CA9E, #$CFF3
+    dw #$D548, #$DA9D, #$DFF2
+    dw #$E547, #$EA9C, #$EFF1
+    dw #$F546, #$FA9B, #$FFF0
 
 %endfree(A5)
 
@@ -1392,14 +1518,14 @@ org $A6B8EB
 else
 org $A6B8DB
 endif
-    CMP !eram_ridley_backpogo_right_rng
+    CMP !eram_ridley_backpogo_rng
 
 if !FEATURE_PAL
 org $A6B90D
 else
 org $A6B8FD
 endif
-    CMP !eram_ridley_backpogo_left_rng
+    CMP !eram_ridley_backpogo_rng
 
 if !FEATURE_PAL
 org $A6B93B
@@ -1499,9 +1625,6 @@ if !FEATURE_PAL
 else
     dw $B441, $B441, $B441, $B441, $B441, $B441, $B441, $B441
 endif
-
-ridley_backpogo_threshold_table:
-    dw #$0555, #$0AAA, #$0FFF, #$1AA9, #$2AA8, #$4551, #$6FF9, #$0000
 
 ridley_reset_damagecounter:
 {
@@ -1722,5 +1845,116 @@ else
 endif
 }
 
+mb_ground_attack_max_rings_rng_table:
+    db #$00, #$FF, #$FF
+
+mb_ground_attack_max_fries_rng_table:
+    db #$00, #$00, #$FF
+
+mb_ground_attack_max_bombs_rng_table:
+    db #$00, #$00, #$00
+
+mb_ground_attack_min_rings_rng_table:
+    db #$54, #$54, #$AA
+
+mb_ground_attack_min_fries_rng_table:
+    db #$54, #$AA, #$AA
+
+mb_ground_attack_min_bombs_rng_table:
+    db #$55, #$AA, #$FF
+
+mb_ground_attack_minimized_rng_table:
+    db #$FF, #$FF, #$FF
+
 %endfree(A9)
+
+
+%startfree(AA)
+
+mb_normal_walking_rng_table:
+    dw #$1000, #$0000, #$FFFF, #$1000
+
+mb_ketchup_walking_rng_table:
+    dw #$2000, #$FFFF, #$0000, #$2000
+
+mb_damage_down_rng_table:
+    dw #$0FF0, #$1000, #$0000, #$0FF0
+
+mb_ketchup_rng_table:
+    dw #$A000, #$FFFF, #$0000, #$A000
+
+mb_air_rings_rng_table:
+    dw #$0080, #$0000, #$0080, #$0100, #$0100, #$0080, #$0000, #$0080
+
+mb_ground_bomb_rng_table:
+    dw #$0080, #$0100, #$0000, #$0100, #$0080, #$0100, #$0080, #$0100
+
+mb_ground_attack_rng_tables_table:
+if !FEATURE_PAL
+    dw $B729
+else
+    dw $B6DC
+endif
+    dw #mb_ground_attack_max_rings_rng_table
+    dw #mb_ground_attack_max_bombs_rng_table
+    dw #mb_ground_attack_max_fries_rng_table
+    dw #mb_ground_attack_min_rings_rng_table
+    dw #mb_ground_attack_min_bombs_rng_table
+    dw #mb_ground_attack_min_fries_rng_table
+    dw #mb_ground_attack_minimized_rng_table
+
+mb_close_attack_rng_tables_table:
+if !FEATURE_PAL
+    dw $B72C
+else
+    dw $B6DF
+endif
+    dw #mb_ground_attack_max_rings_rng_table
+    dw #mb_ground_attack_max_bombs_rng_table
+    dw #mb_ground_attack_max_fries_rng_table
+    dw #mb_ground_attack_min_rings_rng_table
+    dw #mb_ground_attack_min_bombs_rng_table
+    dw #mb_ground_attack_min_fries_rng_table
+    dw #mb_ground_attack_minimized_rng_table
+
+mb_try_bomb_crouch_rng_table:
+    dw #$FF80, #$0000, #$FFFF, #$FF80
+
+mb_bomb_crouch_rng_table:
+    dw #$8000, #$0000, #$FFFF, #$8000
+
+init_mb_rng_from_menu:
+{
+    LDA !ENEMY_VAR_4 : PHA
+    JSL hook_mb_init_rng
+    PLA : STA !ENEMY_VAR_4
+    RTL
+}
+
+hook_mb_init_rng:
+{
+    LDA !ram_mb_rng : AND !MB_RNG_WALKING_MASK : ASL : TAX
+    LDA.l mb_normal_walking_rng_table,X : STA !eram_mb_normal_walking_rng
+    LDA.l mb_ketchup_walking_rng_table,X : STA !eram_mb_ketchup_walking_rng
+    LDA !ram_mb_rng : AND !MB_RNG_KETCHUP_MASK : LSR : TAX
+    LDA.l mb_ketchup_rng_table,X : STA !eram_mb_ketchup_rng
+    LDA !ram_mb_rng : AND !MB_RNG_DAMAGE_DOWN_MASK : LSR #3 : TAX
+    LDA.l mb_damage_down_rng_table,X : STA !eram_mb_damage_down_rng
+    LDA !ram_mb_rng : AND !MB_RNG_PHASE3_ATTACK_MASK
+    EOR !MB_RNG_PHASE3_ATTACK_RINGS : STA !eram_mb_phase3_attack_rng
+    LDA !ram_mb_rng : AND !MB_RNG_NORMAL_ATTACK_MASK : XBA : TAX
+    LDA.l mb_air_rings_rng_table,X : STA !eram_mb_air_rings_rng
+    LDA.l mb_ground_bomb_rng_table,X : STA !eram_mb_ground_bomb_rng
+    LDA.l mb_ground_attack_rng_tables_table,X : STA !eram_mb_ground_attack_rng_table
+    LDA.l mb_close_attack_rng_tables_table,X : STA !eram_mb_close_attack_rng_table
+    LDA !ram_mb_rng : AND !MB_RNG_BOMB_CROUCH_MASK : XBA : ASL #3 : XBA : TAX
+    LDA.l mb_try_bomb_crouch_rng_table,X : STA !eram_mb_try_bomb_crouch
+    LDA.l mb_bomb_crouch_rng_table,X : STA !eram_mb_bomb_crouch
+
+    ; Overwritten logic
+    LDA #$000A : STA !ENEMY_VAR_4
+    RTL
+}
+
+%endfree(AA)
 
