@@ -1,4 +1,16 @@
 
+if !FEATURE_PAL
+org $86F14A
+else
+org $86F10E
+endif
+    LDA !ram_drop_chance_table : BNE $10
+    ; Since we replaced unnecessary logic,
+    ; we need to burn some cycles to compensate
+    BRA $00 : BRA $00
+%warnpc($86F118, $86F154)
+
+
 ; ----------------
 ; Phantoon hijacks
 ; ----------------

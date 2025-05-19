@@ -1,4 +1,33 @@
 
+%startfree(B4)
+
+; No reason these drop tables can't overlap
+all_power_bombs_drop_table:
+    db #$00
+all_supers_drop_table:
+    db #$00
+all_nothing_drop_table:
+    db #$00
+all_missiles_drop_table:
+    db #$00
+all_big_hp_drop_table:
+    db #$00
+all_small_hp_drop_table:
+    db #$FF, #$00, #$00, #$00, #$00, #$00
+
+!DROP_CHANCE_TABLE_LENGTH = #$0007
+drop_chance_tables:
+    dw #$0000
+    dw #all_small_hp_drop_table
+    dw #all_big_hp_drop_table
+    dw #all_missiles_drop_table
+    dw #all_nothing_drop_table
+    dw #all_supers_drop_table
+    dw #all_power_bombs_drop_table
+
+%endfree(B4)
+
+
 %startfree(B8)
 
 ; ------------
@@ -103,26 +132,13 @@ action_game_mainmenu:
 action_rng_mainmenu:
 {
     LDA !ram_turret_rng : LSR : STA !ram_cm_turret_rng
-    TDC : STA !ram_cm_botwoon_first_rng
-    STA !ram_cm_botwoon_hidden_rng : STA !ram_cm_botwoon_second_rng
-    LDA !ram_botwoon_rng : BIT !BOTWOON_RNG_FIRST_ENABLED : BEQ .botwoonHidden
-    AND !BOTWOON_RNG_FIRST_VALUE : LSR #4 : INC
-    STA !ram_cm_botwoon_first_rng : LDA !ram_botwoon_rng
-  .botwoonHidden
-    BIT !BOTWOON_RNG_HIDDEN_ENABLED : BEQ .botwoonSecond
-    AND !BOTWOON_RNG_HIDDEN_VALUE : XBA : LSR #2 : INC
-    STA !ram_cm_botwoon_hidden_rng : LDA !ram_botwoon_rng
-  .botwoonSecond
-    BIT !BOTWOON_RNG_SECOND_ENABLED : BEQ .botwoonSpit
-    AND !BOTWOON_RNG_SECOND_VALUE : XBA : LSR #4 : INC
-    STA !ram_cm_botwoon_second_rng : LDA !ram_botwoon_rng
-  .botwoonSpit
-    AND !BOTWOON_RNG_SPIT_MASK : LSR #2 : STA !ram_cm_botwoon_spit_rng
-    LDA !ram_botwoon_rng : AND !BOTWOON_RNG_AFTER_SPIT_MASK
-    BEQ .botwoonAfterSpit
-    EOR !BOTWOON_RNG_AFTER_SPIT_ENABLED : INC
-  .botwoonAfterSpit
-    STA !ram_cm_botwoon_after_spit_rng
+    LDA !DROP_CHANCE_TABLE_LENGTH-1 : ASL : TAX
+  .dropTableLoop
+    LDA.l drop_chance_tables,X : CMP !ram_drop_chance_table : BEQ .setDropChances
+    DEX #2 : BPL .dropTableLoop
+    TDC : TAX
+  .setDropChances
+    TXA : LSR : STA !ram_cm_drop_chances
     JMP action_mainmenu
 }
 
@@ -2567,17 +2583,13 @@ endif ; !FEATURE_VANILLAHUD
 RngMenu:
     dw #rng_goto_phantoon
     dw #rng_goto_ridley
+    dw #rng_goto_botwoon
+    dw #rng_goto_mb
     dw #$FFFF
     dw #rng_kraid_claw_rng
     dw #rng_kraid_wait_rng
     dw #$FFFF
     dw #rng_crocomire_rng
-    dw #$FFFF
-    dw #rng_botwoon_first
-    dw #rng_botwoon_hidden
-    dw #rng_botwoon_second
-    dw #rng_botwoon_spit
-    dw #rng_botwoon_after_spit
     dw #$FFFF
     dw #rng_draygon_rng_right
     dw #rng_draygon_rng_left
@@ -2585,9 +2597,9 @@ RngMenu:
     dw #$FFFF
     dw #rng_baby_rng
     dw #$FFFF
-    dw #rng_goto_mb
+    dw #rng_drop_chances
     dw #$0000
-    %cm_header("BOSS RNG CONTROL")
+    %cm_header("RNG CONTROL")
 
 rng_goto_phantoon:
     %cm_jsl("Phantoon Menu", rng_prepare_phantoon_menu, #RngPhantoonMenu)
@@ -2595,118 +2607,46 @@ rng_goto_phantoon:
 rng_goto_ridley:
     %cm_jsl("Ridley Menu", rng_prepare_ridley_menu, #RngRidleyMenu)
 
-rng_botwoon_first:
-    dw !ACTION_CHOICE
-    dl #!ram_cm_botwoon_first_rng
-    dw #.routine
-    db #$28, "Botwoon First", #$FF
-    db #$28, "     RANDOM", #$FF
-    db #$28, "  LB BOTTOM", #$FF
-    db #$28, "  LT    TOP", #$FF
-    db #$28, "  LR  RIGHT", #$FF
-    db #$28, "  LL   LEFT", #$FF
-    db #$FF
-  .routine
-    LDA !ram_botwoon_rng : AND !BOTWOON_RNG_FIRST_INVERTED
-    STA !ram_botwoon_rng
-    LDA !ram_cm_botwoon_first_rng : BEQ .checkRoom
-    ; possible values are $01, $09, $11, $19
-    DEC : ASL #3 : INC : ASL
-    ORA !ram_botwoon_rng : STA !ram_botwoon_rng
-  .checkRoom
-    LDA !ROOM_ID : CMP.w #ROOM_BotwoonRoom : BNE .done
-    JML init_botwoon_rng
-  .done
-    RTL
+rng_goto_botwoon:
+    %cm_jsl("Botwoon Menu", rng_prepare_botwoon_menu, #RngBotwoonMenu)
 
-rng_botwoon_hidden:
-    dw !ACTION_CHOICE
-    dl #!ram_cm_botwoon_hidden_rng
-    dw #.routine
-    db #$28, "Botwoon Hidden", #$FF
-    db #$28, "     RANDOM", #$FF
-    db #$28, "LB BL TL RL", #$FF
-    db #$28, "LT BT TB RB", #$FF
-    db #$28, "LR BR TR RT", #$FF
-    db #$FF
-  .routine
-    LDA !ram_botwoon_rng : AND !BOTWOON_RNG_HIDDEN_INVERTED
-    STA !ram_botwoon_rng
-    LDA !ram_cm_botwoon_hidden_rng : BEQ .checkRoom
-    ; possible values are $01, $09, $11
-    DEC : ASL #3 : INC : XBA : LSR
-    ORA !ram_botwoon_rng : STA !ram_botwoon_rng
-  .checkRoom
-    LDA !ROOM_ID : CMP.w #ROOM_BotwoonRoom : BNE .done
-    JML init_botwoon_rng
-  .done
-    RTL
+rng_goto_mb:
+    %cm_jsl("Mother Brain Menu", rng_prepare_mb_menu, #RngMBMenu)
 
-rng_botwoon_second:
+rng_kraid_claw_rng:
     dw !ACTION_CHOICE
-    dl #!ram_cm_botwoon_second_rng
-    dw #.routine
-    db #$28, "Botwoon Second", #$FF
+    dl #!ram_kraid_claw_rng
+    dw #$0000
+    db #$28, "Kraid Claw RNG", #$FF
     db #$28, "     RANDOM", #$FF
-    db #$28, "LB BL TL RL", #$FF
-    db #$28, "LT BT TB RB", #$FF
-    db #$28, "LR BR TR RT", #$FF
-    db #$28, "LL BB TT RR", #$FF
+    db #$28, "      LAGGY", #$FF
+    db #$28, "    LAGGIER", #$FF
     db #$FF
-  .routine
-    LDA !ram_botwoon_rng : AND !BOTWOON_RNG_SECOND_INVERTED
-    STA !ram_botwoon_rng
-    LDA !ram_cm_botwoon_second_rng : BEQ .checkRoom
-    ; possible values are $01, $09, $11, $19
-    DEC : ASL #3 : INC : XBA : ASL
-    ORA !ram_botwoon_rng : STA !ram_botwoon_rng
-  .checkRoom
-    LDA !ROOM_ID : CMP.w #ROOM_BotwoonRoom : BNE .done
-    JML init_botwoon_rng
-  .done
-    RTL
 
-rng_botwoon_spit:
+rng_kraid_wait_rng:
     dw !ACTION_CHOICE
-    dl #!ram_cm_botwoon_spit_rng
-    dw #.routine
-    db #$28, "Botwoon Spit", #$FF
+    dl #!ram_kraid_wait_rng
+    dw #$0000
+    db #$28, "Kraid Wait RNG", #$FF
     db #$28, "     RANDOM", #$FF
-    db #$28, " NEVER SPIT", #$FF
-    db #$28, "ALWAYS SPIT", #$FF
+    db #$28, "         64", #$FF
+    db #$28, "        128", #$FF
+    db #$28, "        192", #$FF
+    db #$28, "        256", #$FF
+    db #$28, "        320", #$FF
+    db #$28, "        384", #$FF
+    db #$28, "        448", #$FF
     db #$FF
-  .routine
-    LDA !ram_botwoon_rng : AND !BOTWOON_RNG_SPIT_INVERTED
-    STA !ram_botwoon_rng
-    LDA !ram_cm_botwoon_spit_rng : BEQ .checkRoom
-    ; 0-4 = no spit, 6-E = spit
-    ASL #2 : ORA !ram_botwoon_rng : STA !ram_botwoon_rng
-  .checkRoom
-    LDA !ROOM_ID : CMP.w #ROOM_BotwoonRoom : BNE .done
-    JML init_botwoon_rng
-  .done
-    RTL
 
-rng_botwoon_after_spit:
+rng_crocomire_rng:
     dw !ACTION_CHOICE
-    dl #!ram_cm_botwoon_after_spit_rng
-    dw #.routine
-    db #$28, "Botwoon After S", #$FF
-    db #$28, "pit  RANDOM", #$FF
-    db #$28, "pit    MOVE", #$FF
-    db #$28, "pit    HIDE", #$FF
+    dl #!ram_crocomire_rng
+    dw #$0000
+    db #$28, "Crocomire RNG", #$FF
+    db #$28, "     RANDOM", #$FF
+    db #$28, "       STEP", #$FF
+    db #$28, "      SWIPE", #$FF
     db #$FF
-  .routine
-    LDA !ram_botwoon_rng : AND !BOTWOON_RNG_AFTER_SPIT_INVERTED
-    STA !ram_botwoon_rng
-    LDA !ram_cm_botwoon_after_spit_rng : BEQ .checkRoom
-    DEC : ORA !BOTWOON_RNG_AFTER_SPIT_ENABLED
-    ORA !ram_botwoon_rng : STA !ram_botwoon_rng
-  .checkRoom
-    LDA !ROOM_ID : CMP.w #ROOM_BotwoonRoom : BNE .done
-    JML init_botwoon_rng
-  .done
-    RTL
 
 rng_draygon_rng_right:
     dw !ACTION_CHOICE
@@ -2753,41 +2693,6 @@ rng_turret_rng:
     ASL : STA !ram_turret_rng
     RTL
 
-rng_crocomire_rng:
-    dw !ACTION_CHOICE
-    dl #!ram_crocomire_rng
-    dw #$0000
-    db #$28, "Crocomire RNG", #$FF
-    db #$28, "     RANDOM", #$FF
-    db #$28, "       STEP", #$FF
-    db #$28, "      SWIPE", #$FF
-    db #$FF
-
-rng_kraid_claw_rng:
-    dw !ACTION_CHOICE
-    dl #!ram_kraid_claw_rng
-    dw #$0000
-    db #$28, "Kraid Claw RNG", #$FF
-    db #$28, "     RANDOM", #$FF
-    db #$28, "      LAGGY", #$FF
-    db #$28, "    LAGGIER", #$FF
-    db #$FF
-
-rng_kraid_wait_rng:
-    dw !ACTION_CHOICE
-    dl #!ram_kraid_wait_rng
-    dw #$0000
-    db #$28, "Kraid Wait RNG", #$FF
-    db #$28, "     RANDOM", #$FF
-    db #$28, "         64", #$FF
-    db #$28, "        128", #$FF
-    db #$28, "        192", #$FF
-    db #$28, "        256", #$FF
-    db #$28, "        320", #$FF
-    db #$28, "        384", #$FF
-    db #$28, "        448", #$FF
-    db #$FF
-
 rng_baby_rng:
     dw !ACTION_CHOICE
     dl #!ram_baby_rng
@@ -2798,8 +2703,23 @@ rng_baby_rng:
     db #$28, "      LUNGE", #$FF
     db #$FF
 
-rng_goto_mb:
-    %cm_jsl("Mother Brain Menu", rng_prepare_mb_menu, #RngMBMenu)
+rng_drop_chances:
+    dw !ACTION_CHOICE
+    dl #!ram_cm_drop_chances
+    dw #.routine
+    db #$28, "All Drops", #$FF
+    db #$28, "    VANILLA", #$FF
+    db #$28, " SMALL HEAL", #$FF
+    db #$28, "   BIG HEAL", #$FF
+    db #$28, "   MISSILES", #$FF
+    db #$28, "    NOTHING", #$FF
+    db #$28, "     SUPERS", #$FF
+    db #$28, "POWER BOMBS", #$FF
+    db #$FF
+  .routine
+    LDA !ram_cm_drop_chances : ASL : TAX
+    LDA.l drop_chance_tables,X : STA !ram_drop_chance_table
+    RTL
 
 
 ; --------------
@@ -3395,6 +3315,159 @@ rng_ridley_hover_fireball:
     ORA !ram_ridley_rng_times_and_fireball : STA !ram_ridley_rng_times_and_fireball
     LDA !ROOM_ID : CMP.w #ROOM_RidleyRoom : BNE .done
     JML init_zebes_ridley_rng
+  .done
+    RTL
+
+
+; ------------
+; Botwoon Menu
+; ------------
+
+rng_prepare_botwoon_menu:
+{
+    TDC : STA !ram_cm_botwoon_first_rng
+    STA !ram_cm_botwoon_hidden_rng : STA !ram_cm_botwoon_second_rng
+    LDA !ram_botwoon_rng : BIT !BOTWOON_RNG_FIRST_ENABLED : BEQ .botwoonHidden
+    AND !BOTWOON_RNG_FIRST_VALUE : LSR #4 : INC
+    STA !ram_cm_botwoon_first_rng : LDA !ram_botwoon_rng
+  .botwoonHidden
+    BIT !BOTWOON_RNG_HIDDEN_ENABLED : BEQ .botwoonSecond
+    AND !BOTWOON_RNG_HIDDEN_VALUE : XBA : LSR #2 : INC
+    STA !ram_cm_botwoon_hidden_rng : LDA !ram_botwoon_rng
+  .botwoonSecond
+    BIT !BOTWOON_RNG_SECOND_ENABLED : BEQ .botwoonSpit
+    AND !BOTWOON_RNG_SECOND_VALUE : XBA : LSR #4 : INC
+    STA !ram_cm_botwoon_second_rng : LDA !ram_botwoon_rng
+  .botwoonSpit
+    AND !BOTWOON_RNG_SPIT_MASK : LSR #2 : STA !ram_cm_botwoon_spit_rng
+    LDA !ram_botwoon_rng : AND !BOTWOON_RNG_AFTER_SPIT_MASK
+    BEQ .botwoonAfterSpit
+    EOR !BOTWOON_RNG_AFTER_SPIT_ENABLED : INC
+  .botwoonAfterSpit
+    STA !ram_cm_botwoon_after_spit_rng
+    %setmenubank()
+    JML action_submenu
+}
+
+RngBotwoonMenu:
+    dw #rng_botwoon_first
+    dw #rng_botwoon_hidden
+    dw #rng_botwoon_second
+    dw #rng_botwoon_spit
+    dw #rng_botwoon_after_spit
+    dw #$0000
+    %cm_header("BOTWOON RNG CONTROL")
+
+rng_botwoon_first:
+    dw !ACTION_CHOICE
+    dl #!ram_cm_botwoon_first_rng
+    dw #.routine
+    db #$28, "Botwoon First", #$FF
+    db #$28, "     RANDOM", #$FF
+    db #$28, "  LB BOTTOM", #$FF
+    db #$28, "  LT    TOP", #$FF
+    db #$28, "  LR  RIGHT", #$FF
+    db #$28, "  LL   LEFT", #$FF
+    db #$FF
+  .routine
+    LDA !ram_botwoon_rng : AND !BOTWOON_RNG_FIRST_INVERTED
+    STA !ram_botwoon_rng
+    LDA !ram_cm_botwoon_first_rng : BEQ .checkRoom
+    ; possible values are $01, $09, $11, $19
+    DEC : ASL #3 : INC : ASL
+    ORA !ram_botwoon_rng : STA !ram_botwoon_rng
+  .checkRoom
+    LDA !ROOM_ID : CMP.w #ROOM_BotwoonRoom : BNE .done
+    JML init_botwoon_rng
+  .done
+    RTL
+
+rng_botwoon_hidden:
+    dw !ACTION_CHOICE
+    dl #!ram_cm_botwoon_hidden_rng
+    dw #.routine
+    db #$28, "Botwoon Hidden", #$FF
+    db #$28, "     RANDOM", #$FF
+    db #$28, "LB BL TL RL", #$FF
+    db #$28, "LT BT TB RB", #$FF
+    db #$28, "LR BR TR RT", #$FF
+    db #$FF
+  .routine
+    LDA !ram_botwoon_rng : AND !BOTWOON_RNG_HIDDEN_INVERTED
+    STA !ram_botwoon_rng
+    LDA !ram_cm_botwoon_hidden_rng : BEQ .checkRoom
+    ; possible values are $01, $09, $11
+    DEC : ASL #3 : INC : XBA : LSR
+    ORA !ram_botwoon_rng : STA !ram_botwoon_rng
+  .checkRoom
+    LDA !ROOM_ID : CMP.w #ROOM_BotwoonRoom : BNE .done
+    JML init_botwoon_rng
+  .done
+    RTL
+
+rng_botwoon_second:
+    dw !ACTION_CHOICE
+    dl #!ram_cm_botwoon_second_rng
+    dw #.routine
+    db #$28, "Botwoon Second", #$FF
+    db #$28, "     RANDOM", #$FF
+    db #$28, "LB BL TL RL", #$FF
+    db #$28, "LT BT TB RB", #$FF
+    db #$28, "LR BR TR RT", #$FF
+    db #$28, "LL BB TT RR", #$FF
+    db #$FF
+  .routine
+    LDA !ram_botwoon_rng : AND !BOTWOON_RNG_SECOND_INVERTED
+    STA !ram_botwoon_rng
+    LDA !ram_cm_botwoon_second_rng : BEQ .checkRoom
+    ; possible values are $01, $09, $11, $19
+    DEC : ASL #3 : INC : XBA : ASL
+    ORA !ram_botwoon_rng : STA !ram_botwoon_rng
+  .checkRoom
+    LDA !ROOM_ID : CMP.w #ROOM_BotwoonRoom : BNE .done
+    JML init_botwoon_rng
+  .done
+    RTL
+
+rng_botwoon_spit:
+    dw !ACTION_CHOICE
+    dl #!ram_cm_botwoon_spit_rng
+    dw #.routine
+    db #$28, "Botwoon Spit", #$FF
+    db #$28, "     RANDOM", #$FF
+    db #$28, " NEVER SPIT", #$FF
+    db #$28, "ALWAYS SPIT", #$FF
+    db #$FF
+  .routine
+    LDA !ram_botwoon_rng : AND !BOTWOON_RNG_SPIT_INVERTED
+    STA !ram_botwoon_rng
+    LDA !ram_cm_botwoon_spit_rng : BEQ .checkRoom
+    ; 0-4 = no spit, 6-E = spit
+    ASL #2 : ORA !ram_botwoon_rng : STA !ram_botwoon_rng
+  .checkRoom
+    LDA !ROOM_ID : CMP.w #ROOM_BotwoonRoom : BNE .done
+    JML init_botwoon_rng
+  .done
+    RTL
+
+rng_botwoon_after_spit:
+    dw !ACTION_CHOICE
+    dl #!ram_cm_botwoon_after_spit_rng
+    dw #.routine
+    db #$28, "Botwoon After S", #$FF
+    db #$28, "pit  RANDOM", #$FF
+    db #$28, "pit    MOVE", #$FF
+    db #$28, "pit    HIDE", #$FF
+    db #$FF
+  .routine
+    LDA !ram_botwoon_rng : AND !BOTWOON_RNG_AFTER_SPIT_INVERTED
+    STA !ram_botwoon_rng
+    LDA !ram_cm_botwoon_after_spit_rng : BEQ .checkRoom
+    DEC : ORA !BOTWOON_RNG_AFTER_SPIT_ENABLED
+    ORA !ram_botwoon_rng : STA !ram_botwoon_rng
+  .checkRoom
+    LDA !ROOM_ID : CMP.w #ROOM_BotwoonRoom : BNE .done
+    JML init_botwoon_rng
   .done
     RTL
 
