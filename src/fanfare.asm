@@ -337,8 +337,11 @@ hook_end_fanfare:
     LDA !sram_healthalarm : CMP #$0004 : BNE .done_health_alarm
     LDA #$0002 : JSL $80914D
   .done_health_alarm
-    PLY : PLX        ; original logic
-    PLB : PLP : RTL
+    ; original logic
+    PLY : PLX
+    PLB : PLP
+    ; initialize water physics in case we just collected gravity or space jump
+    JML init_physics_ram
 }
 
 %endfree(85)
