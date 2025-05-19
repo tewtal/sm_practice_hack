@@ -3933,11 +3933,11 @@ endif
     ; Note by only checking the lower byte of Y position,
     ; the same check now works for the shaktool CF clip
     ; Arbitrary wait of 90 frames before checking
-    CMP #$005A : BMI .inc
-    LDA !SAMUS_X : CMP !ram_xpos : BNE .inc
-    LDA !SAMUS_Y : AND #$00FF : CMP #$00B7 : BNE .inc
-    LDA !SAMUS_Y_SPEED : CMP #$0000 : BNE .inc
-    LDA !SAMUS_Y_SUBSPEED : CMP #$0000 : BNE .inc
+    CMP #$005A : BMI .incNonZeroSpeed
+    LDA !SAMUS_X : CMP !ram_xpos : BNE .incNonZeroSpeed
+    LDA !SAMUS_Y : AND #$00FF : CMP #$00B7 : BNE .incNonZeroSpeed
+    LDA !SAMUS_Y_SPEED : CMP #$0000 : BNE .incNonZeroSpeed
+    LDA !SAMUS_Y_SUBSPEED : CMP #$0000 : BNE .incY2
     LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$8A
     BRA .timecheck
 
@@ -3961,7 +3961,14 @@ endif
     LDA !SAMUS_Y : STA !ram_ypos
     RTS
 
+  .incY2
+    LDA #$0002
+    BRA .inc
+
+  .incNonZeroSpeed
+    TDC
   .inc
+    STA !ram_quickdrop_counter
     ; Arbitrary give up waiting after 192 frames
     LDA !ram_roomstrat_state : CMP #$00C0 : BPL .reset
     INC : STA !ram_roomstrat_state
@@ -3984,11 +3991,18 @@ endif
     LDA #!botwooncf_frame : SEC : SBC !ram_roomstrat_state
     ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
     LDA !IH_LETTER_E : STA !HUD_TILEMAP+$8C
-    ; Keep waiting if we are early
+    ; Keep waiting if we are early for a potential Y1
+    LDA #$0001
     BRA .inc
 
   .frameperfect
+    LDA !ram_quickdrop_counter : BNE .frameY1Y2
     LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$8E
+    BRA .reset
+
+  .frameY1Y2
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$8C
     BRA .reset
 }
 
