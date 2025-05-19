@@ -622,8 +622,8 @@ preset_scroll_fixes:
     CPX.w #ROOM_AlphaPowerBombRoom : BEQ .alpha_pbs
     CPX.w #ROOM_BelowSpazer : BEQ .below_spazer
     CPX.w #ROOM_WarehouseEntrance : BEQ .warehouse_entrance
-    CPX.w #ROOM_CaterpillarRoom : BEQ .caterpillar
-    BRA .topdone
+    CPX.w #ROOM_CaterpillarRoom : BNE .topdone
+    BRA .caterpillar
 
   .gauntlet_etank
     LDY !SAMUS_X : CPY #$0510    ; no fix if Xpos >= 1296
@@ -634,6 +634,8 @@ preset_scroll_fixes:
   .green_brin_main_shaft
     LDY !SAMUS_Y : CPY #$0700    ; no fix if Ypos < 1792
     BMI .topdone
+    LDY !SAMUS_X : CPY #$0100    ; no fix if Xpos >= 256
+    BPL .topdone
     INC : STA $CD3C
     BRA .topdone
 
@@ -645,9 +647,10 @@ preset_scroll_fixes:
 
   .big_pink_pbs
     LDY !SAMUS_Y : CPY #$0136    ; no fix if Ypos >= 310
-    BMI .topdone
+    BMI .big_pink_pbs_done
     STZ $CD21
     STA $CD22 : STA $CD23
+  .big_pink_pbs_done
     JMP .topdone
 
   .taco_tank_room
