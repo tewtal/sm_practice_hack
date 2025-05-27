@@ -240,11 +240,11 @@ cm_tilemap_brb:
     ; Same bank for all of the BRB text
     PHK : PHK : PLA : STA !DP_CurrentMenu+2
 
-    LDA.w #BRB_common_1 : STA !DP_CurrentMenu
+    LDA.w #BRB_common_line1 : STA !DP_CurrentMenu
     LDX #$01C6
     JSR cm_draw_brb_text
 
-    LDA.w #BRB_common_2 : STA !DP_CurrentMenu
+    LDA.w #BRB_common_line2 : STA !DP_CurrentMenu
     LDX #$0286
     JSR cm_draw_brb_text
 
@@ -284,13 +284,13 @@ cm_tilemap_brb:
     ; Draw cycling text
     ; first cycled line
     LDA !ram_cm_brb_screen : ASL : TAX
-    LDA.l BRBTilemapAddress,X : STA !DP_CurrentMenu
+    LDA.l BRBTilemapTableLine1,X : STA !DP_CurrentMenu
     LDX #$04C6
     JSR cm_draw_brb_text
 
     ; second cycled line
     LDA !ram_cm_brb_screen : ASL : TAX
-    LDA.l BRBTilemapAddress2,X : STA !DP_CurrentMenu
+    LDA.l BRBTilemapTableLine2,X : STA !DP_CurrentMenu
     LDX #$0586
     JSR cm_draw_brb_text
 
@@ -309,22 +309,44 @@ cm_tilemap_splash_screen:
     BRK
 
   .legacy
-    LDA.w #BRB_legacy : STA !DP_CurrentMenu
-    LDX #$0286
+    LDA.w #BRB_legacy_line2 : STA !DP_CurrentMenu
+    LDX #$0406
     JSR cm_draw_brb_text
-    RTS
+    LDA.w #BRB_legacy_line3 : STA !DP_CurrentMenu
+    LDX #$04C6
+    JSR cm_draw_brb_text
+    BRA .splashLine4
 
   .tinystates
-    LDA.w #BRB_tinystates : STA !DP_CurrentMenu
-    LDX #$0286
+    LDA.w #BRB_tinystates_line2 : STA !DP_CurrentMenu
+    LDX #$0406
     JSR cm_draw_brb_text
-    RTS
+    LDA.w #BRB_tinystates_line3 : STA !DP_CurrentMenu
+    LDX #$04C6
+    JSR cm_draw_brb_text
+    BRA .splashLine4
 
   .zsnes
-    LDA.w #BRB_zsnes : STA !DP_CurrentMenu
-    LDX #$0286
+    LDA.w #BRB_zsnes_line2 : STA !DP_CurrentMenu
+    LDX #$0406
     JSR cm_draw_brb_text
-    RTS
+    LDA.w #BRB_zsnes_line4 : STA !DP_CurrentMenu
+    LDX #$0586
+    JSR cm_draw_brb_text
+    BRA .splashLine1
+
+  .splashLine4
+    LDA.w #BRB_splash_line4 : STA !DP_CurrentMenu
+    LDX #$0586
+    JSR cm_draw_brb_text
+
+  .splashLine1
+    LDA.w #BRB_splash_line1 : STA !DP_CurrentMenu
+    LDX #$0346
+    JSR cm_draw_brb_text
+    LDA.w #BRB_splash_title : STA !DP_CurrentMenu
+    LDX #$01C6
+    JMP cm_draw_brb_text
 }
 
 brb_handle_countup_timer:
@@ -504,81 +526,103 @@ cm_brb_scroll_BG3:
 ; BRB Text Data
 ; -------------
 
-BRB_common_1:
 table ../resources/header.tbl
+BRB_common_line1:
     db #$28, "       The Streamer", #$FF
-
-BRB_common_2:
+BRB_common_line2:
     db #$28, "    Will Be Right Back", #$FF
 
-BRB_legacy:
-db #$28, "    SNES CLASSIC OR VC", #$FF
 
-BRB_tinystates:
-db #$28, "  SELECT MODERN EMULATORS", #$FF
+BRB_splash_title:
+    db #$28, "  Wrong Platform Selected", #$FF
 
-BRB_zsnes:
-db #$28, "    DO NOT USE ZSNES", #$FF
+
+BRB_zsnes_line4:
+    db #$28, "     DO NOT USE ZSNES", #$FF
 table ../resources/normal.tbl
 
-BRBTilemapAddress:
-    dw #BRB_screen_01
-    dw #BRB_screen_02
-    dw #BRB_screen_03
-    dw #BRB_screen_04
-    dw #BRB_screen_05
-    dw #BRB_screen_06
-    dw #BRB_screen_07
 
-BRBTilemapAddress2:
-    dw #BRB_screen2_01
-    dw #BRB_screen2_02
-    dw #BRB_screen2_03
-    dw #BRB_screen2_04
-    dw #BRB_screen2_05
-    dw #BRB_screen2_06
-    dw #BRB_screen2_07
+BRB_splash_line1:
+    db #$28, "    You need to select", #$FF
+BRB_splash_line4:
+    db #$28, " at smpractice.speedga.me", #$FF
 
-BRB_screen_01:
+
+BRB_legacy_line2:
+    db #$28, "     SNES Classic or", #$FF
+BRB_legacy_line3:
+    db #$28, "     Virtual Console", #$FF
+
+
+BRB_tinystates_line2:
+    db #$28, "       Everdrive or", #$FF
+BRB_tinystates_line3:
+    db #$28, "   Snes9x 1.60 or older", #$FF
+
+
+BRB_zsnes_line2:
+    db #$28, "     another emulator", #$FF
+
+
+BRBTilemapTableLine1:
+    dw #BRB_screen1_line1
+    dw #BRB_screen2_line1
+    dw #BRB_screen3_line1
+    dw #BRB_screen4_line1
+    dw #BRB_screen5_line1
+    dw #BRB_screen6_line1
+    dw #BRB_screen7_line1
+
+BRBTilemapTableLine2:
+    dw #BRB_screen1_line2
+    dw #BRB_screen2_line2
+    dw #BRB_screen3_line2
+    dw #BRB_screen4_line2
+    dw #BRB_screen5_line2
+    dw #BRB_screen6_line2
+    dw #BRB_screen7_line2
+
+
+BRB_screen1_line1:
     db #$28, "   SM Speedrunning Wiki", #$FF
-BRB_screen2_01:
+BRB_screen1_line2:
     db #$28, "   wiki.supermetroid.run", #$FF
 
 
-BRB_screen_02:
+BRB_screen2_line1:
     db #$28, "  SM Speedrunning Discord", #$FF
-BRB_screen2_02:
+BRB_screen2_line2:
     db #$28, "   SMDiscord.spazer.link", #$FF
 
 
-BRB_screen_03:
+BRB_screen3_line1:
     db #$28, "Find the practice hack at", #$FF
-BRB_screen2_03:
+BRB_screen3_line2:
     db #$28, "  smpractice.speedga.me", #$FF
 
 
-BRB_screen_04:
+BRB_screen4_line1:
     db #$28, "  Control Schemes for SM", #$FF
-BRB_screen2_04:
+BRB_screen4_line2:
     db #$28, "   controls.spazer.link", #$FF
 
 
-BRB_screen_05:
+BRB_screen5_line1:
     db #$28, "Support FUNtoon on Patreon", #$FF
-BRB_screen2_05:
+BRB_screen5_line2:
 ; !funtoonpatreon
     db #$28, "      ", #$1A, "funtoonpatreon", #$FF
 
 
-BRB_screen_06:
+BRB_screen6_line1:
     db #$28, " Crazy chain damage clips", #$FF
-BRB_screen2_06:
+BRB_screen6_line2:
     db #$28, "    chain.spazer.link", #$FF
 
 
-BRB_screen_07:
+BRB_screen7_line1:
     db #$28, "  Learn new SM strats at", #$FF
-BRB_screen2_07:
+BRB_screen7_line2:
     db #$28, "        crocomi.re", #$FF
 
 %endfree(A1)
