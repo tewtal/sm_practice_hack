@@ -1925,7 +1925,8 @@ cm_loop:
 
 cm_ctrl_mode:
 ; This routine cuts off input handling in cm_loop to keep focus on the selected controller shortcut
-; Held inputs are displayed until held for 120 frames
+; Held inputs are displayed until held for one second
+; If inputs blank then must be blank for two seconds
 {
     JSL $809459 ; Read controller input
 
@@ -1939,8 +1940,16 @@ cm_ctrl_mode:
   .skipInputCtrl2
     ; Holding an input for one second
     LDA !ram_cm_ctrl_timer : INC : STA !ram_cm_ctrl_timer
-    CMP !FRAMERATE : BNE .nextFrame
+    CMP !FRAMERATE : BNE .checkTwoSeconds
 
+    ; If input blank then we must hold it for two seconds
+    LDA !IH_CONTROLLER_PRI : ORA !IH_CONTROLLER_SEC : BNE .checkFirstShortcut
+
+  .checkTwoSeconds
+    ; Holding an input for two seconds
+    CMP !FRAMERATE_2X : BNE .nextFrame
+
+  .checkFirstShortcut
     ; Disallow first Main Menu shortcut to be empty
     LDA !DP_Ctrl2Input : BNE .store
     LDA !IH_CONTROLLER_PRI : BNE .store
