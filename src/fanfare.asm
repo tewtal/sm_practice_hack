@@ -266,7 +266,8 @@ endif
 hook_message_box_wait:
 {
     LDA !sram_fanfare : BNE .fanfareloop
-    ; shorten message box length
+    ; shorten message box length if necessary
+    CPX #$0020 : BMI .nofanfareloop
     LDX #$0020
 
   .nofanfareloop
