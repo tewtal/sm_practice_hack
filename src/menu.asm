@@ -162,16 +162,16 @@ cm_init:
     LDA !ram_seg_rt_minutes : STA !ram_cm_preserved_timers+6
 
     ; Preserve and disable slowdown mode
-    TDC : STA !ram_cm_slowdown_mode : STA !ram_slowdown_frames
-    LDA !ram_slowdown_mode : BMI .paused
+    TDC : STA !ram_cm_slowdown_mode : STA !ram_cm_slowdown_frames
+    LDA !ram_slowdown_mode : BEQ .done_slowdown : BMI .paused
     STA !ram_cm_slowdown_frames
-    LDA !ram_slowdown_mode : BEQ .done_slowdown
     LDA #$0002 : STA !ram_cm_slowdown_mode
     BRA .done_slowdown
+
   .paused
     LDA #$0001 : STA !ram_cm_slowdown_mode
   .done_slowdown
-    TDC : STA !ram_slowdown_mode
+    TDC : STA !ram_slowdown_mode : STA !ram_slowdown_frames
 
     JSL initialize_ppu_long
     JSL cm_transfer_custom_tileset
@@ -249,10 +249,13 @@ endif
     ; Restore slowdown mode
     LDA !ram_cm_slowdown_mode : BEQ .done_slowdown
     DEC : BEQ .paused
-    LDA !ram_cm_slowdown_frames : BRA .done_slowdown
+    LDA !ram_cm_slowdown_frames
+    BRA .done_slowdown
+
   .paused
     JSL EnsureSamusIsDrawn_long
-    LDA #$FFFF
+    LDA #$0001 : STA !ram_slowdown_frames
+    LDA !SLOWDOWN_PAUSED
   .done_slowdown
     STA !ram_slowdown_mode
     RTS

@@ -302,22 +302,28 @@ else
     LDA !ram_seg_rt_minutes : INC : STA !ram_seg_rt_minutes
 endif
 
-    ; Slowdown / Pause / Frame Advance on P2 Dpad
+    ; Slowdown / Pause / Frame Advance
   .doneTimer
     LDA !ram_slowdown_mode : BNE .slowdown
     JMP .done
 
   .slowdown
-    CMP #$FFFF : BEQ .pause
+    BMI .pause
     LDA !ram_slowdown_frames : BNE .delay
 
     ; reset slowdown timer and restore previous inputs
     LDA !ram_slowdown_mode : STA !ram_slowdown_frames
     LDA !ram_slowdown_controller_1 : STA !IH_CONTROLLER_PRI_PREV
     LDA !ram_slowdown_controller_2 : STA !IH_CONTROLLER_SEC_PREV
-
     JSL $809459 ; Read controller input
+
+  .skipDelay
     JMP .done
+
+  .delayDoorTransition
+    LDA !DOOR_FUNCTION_POINTER : CMP #optimized_fade_in : BCC .skipDelay
+    CMP #hijack_after_load_level_data : BEQ .skipDelay
+    BRA .keepDelay
 
   .delay
     CMP !ram_slowdown_mode : BNE .decTimer
@@ -326,6 +332,13 @@ endif
     LDA !IH_CONTROLLER_PRI : EOR !IH_CONTROLLER_PRI_NEW : STA !ram_slowdown_controller_1
     LDA !IH_CONTROLLER_SEC : EOR !IH_CONTROLLER_SEC_NEW : STA !ram_slowdown_controller_2
 
+    LDA !GAMEMODE : CMP #$0007 : BMI .skipDelay
+    CMP #$000B : BEQ .delayDoorTransition
+    CMP #$000D : BMI .keepDelay
+    CMP #$0012 : BEQ .keepDelay
+    CMP #$001B : BNE .skipDelay
+
+  .keepDelay
     LDA !ram_slowdown_frames
 
   .decTimer
@@ -336,34 +349,12 @@ endif
     JMP .done
 
   .pause
-    ; TODO make pause work properly
-    ; LDA !IH_CONTROLLER_PRI : CMP !sram_ctrl_menu : BNE .noMenu
-    ; LDA !IH_PAUSE : STA !IH_CONTROLLER_SEC_NEW
-    BRA .frameAdvance
-
-  .noMenu
-    LDA !ram_slowdown_frames : BNE .checkFrameAdvance
-    ; remain paused, store inputs
-    INC : STA !ram_slowdown_frames
-
-  .storeInputs
-    LDA !IH_CONTROLLER_PRI : EOR !IH_CONTROLLER_PRI_NEW : STA !ram_slowdown_controller_1
-    LDA !IH_CONTROLLER_SEC : EOR !IH_CONTROLLER_SEC_NEW : STA !ram_slowdown_controller_2
-
-  .checkFrameAdvance
-    ; TODO make resume work properly
-    ; LDA !IH_CONTROLLER_SEC_NEW : CMP !IH_PAUSE : BEQ .frameAdvance
-    ; CMP !IH_RESET : BNE .checkFreezeOnLoad
-    ; resume normal play
-    TDC : STA !ram_slowdown_mode : STA !ram_slowdown_frames
-    BRA .done
-
-  .checkFreezeOnLoad
     ; option to pause on loadstate
-    LDA !ram_freeze_on_load : BEQ .frozen
-    LDA !IH_CONTROLLER_PRI_NEW : BEQ .frozen
+    LDA !ram_freeze_on_load : BEQ .checkFrameAdvance
+    LDA !IH_CONTROLLER_PRI_NEW : BEQ .checkFrameAdvance
     ; unfreeze
     TDC : STA !ram_slowdown_mode : STA !ram_slowdown_frames
+    STA !ram_freeze_on_load
 if !FEATURE_SD2SNES
     LDA !SRAM_SEG_TIMER_F : STA !ram_seg_rt_frames
     LDA !SRAM_SEG_TIMER_S : STA !ram_seg_rt_seconds
@@ -373,16 +364,50 @@ else
     STA !ram_seg_rt_seconds
     STA !ram_seg_rt_minutes
 endif
-    BRA .done
+    JMP .done
+
+  .pauseDoorTransition
+    LDA !DOOR_FUNCTION_POINTER : CMP #optimized_fade_in : BCC .done
+    CMP #hijack_after_load_level_data : BEQ .done
+    BRA .keepPause
+
+  .checkFrameAdvance
+    LDA !ram_slowdown_mode : CMP !SLOWDOWN_PAUSED : BNE .frameAdvance
+    LDA !GAMEMODE : CMP #$0007 : BMI .done
+    CMP #$000B : BEQ .pauseDoorTransition
+    CMP #$000D : BMI .keepPause
+    CMP #$0012 : BEQ .keepPause
+    CMP #$001B : BNE .done
+
+  .keepPause
+    LDA !ram_slowdown_frames : BNE .frozen
+    INC : STA !ram_slowdown_frames
+
+    ; we just ran a new frame, store previous inputs
+    LDA !IH_CONTROLLER_PRI : EOR !IH_CONTROLLER_PRI_NEW : STA !ram_slowdown_controller_1
+    LDA !IH_CONTROLLER_SEC : EOR !IH_CONTROLLER_SEC_NEW : STA !ram_slowdown_controller_2
 
   .frozen
-    ; request a lag frame
+    ; Set overflow and carry flags before calling routine
+    SEP #$41
+    JSL !CTRL_SHORTCUT_ROUTINE
+    CLV
+
+    ; Main menu doesn't work out the NMI routine,
+    ; so instead of running, it changes ram_slowdown_mode instead
+    ; Use this as a trigger to run the current frame
+    ; Also check for regular frame advance here
+    LDA !ram_slowdown_mode : CMP !SLOWDOWN_PAUSED_MAIN_MENU : BEQ .done
+    BMI .frameAdvance
+
+    ; Request a lag frame
     %a8() : LDA #$01 : STA !NMI_REQUEST_FLAG : %a16()
     BRA .done
 
   .frameAdvance
     ; run a new frame
     TDC : STA !ram_slowdown_frames
+    DEC : STA !ram_slowdown_mode
     LDA !ram_slowdown_controller_1 : STA !IH_CONTROLLER_PRI_PREV
     LDA !ram_slowdown_controller_2 : STA !IH_CONTROLLER_SEC_PREV
     JSL $809459 ; Read controller input

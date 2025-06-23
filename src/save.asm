@@ -88,10 +88,10 @@ post_load_state:
     ; Reload custom HUD number GFX
     JSL overwrite_HUD_numbers
 
-    LDA !SRAM_SLOWDOWN_MODE : CMP #$FFFF : BEQ .rng
-    AND #$00FF : STA !ram_slowdown_mode
+    LDA !SRAM_SLOWDOWN_MODE : STA !ram_slowdown_mode
+    TDC : STA !ram_slowdown_frames
+    STA !ram_slowdown_controller_1 : STA !ram_slowdown_controller_2
 
-  .rng
     ; Rerandomize
     LDA !sram_save_has_set_rng : BNE .randomizeOnLoad
     LDA !sram_rerandomize : BEQ .randomizeOnLoad
@@ -112,7 +112,7 @@ post_load_state:
     ; Freeze inputs if necessary
     LDA !ram_freeze_on_load : BEQ .return
     LDA !ram_slowdown_mode : BNE .return
-    LDA #$FFFF : STA !ram_slowdown_mode
+    LDA !SLOWDOWN_PAUSED : STA !ram_slowdown_mode
     INC : STA !ram_slowdown_controller_1 : STA !ram_slowdown_controller_2
     INC : STA !ram_slowdown_frames
     ; Preserve segment timer during freeze

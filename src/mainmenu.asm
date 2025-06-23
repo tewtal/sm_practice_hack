@@ -3696,7 +3696,6 @@ SlowdownMenu:
     dw #slowdown_frames
     dw #$0000
     %cm_header("SLOWDOWN MODE")
-    %cm_footer("PAUSE IS STILL WIP")
 
 slowdown_mode:
     dw !ACTION_CHOICE

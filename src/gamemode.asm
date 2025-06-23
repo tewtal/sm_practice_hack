@@ -61,10 +61,26 @@ if !FEATURE_PAL
 else
     LDA !IH_CONTROLLER_PRI : CMP #$C0C0 : BNE .done
     LDA !AREA_ID : BEQ .done : CMP #$0002 : BEQ .done
-    BRA .done ; disabled during beta testing phase
-    LDA #custom_intro_init : STA !CINEMATIC_FUNCTION_POINTER
+    PHX : PHP
+    %ai16() : TDC : TAX : %a8()
+  .firstLoop
+    LDA !sram_ctrl_shortcut_selections,X : BEQ .firstNext
+    %a16() : TXA : ASL : TAX
+    LDA !sram_ctrl_1_shortcut_inputs,X : CMP #$C0C0 : BEQ .end
+    TXA : LSR : TAX : %a8()
+  .firstNext
+    INX : CPX #$001E : BMI .firstLoop
+  .secondLoop
+    LDA !sram_ctrl_additional_selections,X : BEQ .secondNext
+    %a16() : TXA : ASL : TAX
+    LDA !sram_ctrl_1_shortcut_inputs,X : CMP #$C0C0 : BEQ .end
+    TXA : LSR : TAX : %a8()
+  .secondNext
+    INX : CPX #$0030 : BMI .secondLoop
+    %a16() : LDA #custom_intro_init : STA !CINEMATIC_FUNCTION_POINTER
     LDA #$001E : STA !GAMEMODE
   .end
+    PLP : PLX
     JML $82E4A9 ; return to hijacked code
 endif
 }
@@ -150,6 +166,14 @@ gamemode_start:
 
 gamemode_main_menu:
 {
+    ; Check for paused states
+    LDA !ram_slowdown_mode : BPL .openMainMenu
+    CMP !SLOWDOWN_PAUSED_MAIN_MENU : BNE .paused
+
+    ; Set slowdown mode to paused but allow menu to open
+    LDA !SLOWDOWN_PAUSED : STA !ram_slowdown_mode
+
+  .openMainMenu
     ; Set IRQ vector
     LDA !IRQ_CMD : PHA
     LDA #$0004 : STA !IRQ_CMD
@@ -159,7 +183,14 @@ gamemode_main_menu:
 
     ; Restore IRQ vector
     PLA : STA !IRQ_CMD
+    BRA .done
 
+  .paused
+    ; We are paused in the NMI routine, so we cannot open the menu here
+    ; Set flag so we know to open the menu later
+    LDA !SLOWDOWN_PAUSED_MAIN_MENU : STA !ram_slowdown_mode
+
+  .done
     ; Skip remaining shortcuts
     PLA : PEA !CTRL_SHORTCUT_SKIP_REMAINING_PEA_VALUE
 
@@ -434,8 +465,13 @@ gamemode_toggle_spin_lock:
 
 gamemode_pause:
 {
+    LDA !ram_slowdown_mode : CMP !SLOWDOWN_PAUSED : BEQ .frameAdvance
     TDC : STA !ram_slowdown_frames
     DEC : STA !ram_slowdown_mode
+    RTL
+
+  .frameAdvance
+    LDA #$8000 : STA !ram_slowdown_mode
     RTL
 }
 
@@ -447,13 +483,17 @@ gamemode_unpause:
 
 gamemode_slowdown:
 {
-    LDA !ram_slowdown_mode : INC : STA !ram_slowdown_mode
+    LDA !ram_slowdown_mode : BMI .done
+    CMP #$0078 : BPL .done
+    INC : STA !ram_slowdown_mode
+    LDA !ram_slowdown_frames : INC : STA !ram_slowdown_frames
+  .done
     RTL
 }
 
 gamemode_speedup:
 {
-    LDA !ram_slowdown_mode : BEQ .done
+    LDA !ram_slowdown_mode : BEQ .done : BMI .done
     DEC : STA !ram_slowdown_mode
   .done
     RTL
