@@ -947,6 +947,17 @@ set_fade_in_door_function:
     JML $908E0F
 }
 
+misc_force_stand_routine:
+{
+    ; Similar to $90:E2D4 routine, except use facing forward pose
+    PHP : PHB : PHK : PLB
+    LDA !SAMUS_ITEMS_EQUIPPED : AND #$0021 : BEQ .pose_chosen
+    LDA #$009B
+  .pose_chosen
+    JSR $E2F4
+    PLB : PLP : RTL
+}
+
 %endfree(90)
 
 

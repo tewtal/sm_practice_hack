@@ -2633,9 +2633,8 @@ misc_killenemies:
 misc_forcestand:
     %cm_jsl("Force Samus to Stand Up", .routine, #0)
   .routine
-    JSL $90E2D4 ; bridge to: Release Samus from Draygon
     %sfxconfirm()
-    RTL
+    JML misc_force_stand_routine
 
 %endfree(85)
 
