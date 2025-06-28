@@ -28,13 +28,18 @@ if !FEATURE_SD2SNES
 gamemode_door_transition:
 {
   .checkloadstate
-    ; TODO re-enable load state, or maybe run the whole shortcut routine from here?
-    ; LDA !IH_CONTROLLER_PRI : BEQ .checktransition
-    ; CMP !sram_ctrl_load_state : BNE .checktransition
-    ; check if a saved state exists
-    ; LDA !SRAM_SAVED_STATE : CMP !SAFEWORD : BNE .checktransition
-    ; PHB : PHK : PLB
-    ; JML load_state
+    ; We need to run the controller shortcut routine, but we can't save here
+    ; Set game mode to invalid value to signify we should not save
+    LDA !GAMEMODE : PHA
+    LDA #$0003 : STA !GAMEMODE
+
+    ; Set overflow and carry flags before calling routine
+    PHP : SEP #$41
+    JSL !CTRL_SHORTCUT_ROUTINE
+    PLP
+
+    ; Restore gamemode
+    PLA : STA !GAMEMODE
 
   .checktransition
     ; check if door is done scrolling
@@ -166,6 +171,9 @@ gamemode_start:
 
 gamemode_main_menu:
 {
+    ; Check if main menu not allowed
+    LDA !GAMEMODE : CMP #$0003 : BEQ gamemode_placeholder
+
     ; Check for paused states
     LDA !ram_slowdown_mode : BPL .openMainMenu
     CMP !SLOWDOWN_PAUSED_MAIN_MENU : BNE .paused
@@ -203,16 +211,14 @@ gamemode_placeholder:
 if !FEATURE_SD2SNES
 gamemode_save_state:
 {
+    ; Check if save not allowed
+    LDA !GAMEMODE : CMP #$0003 : BEQ .done
 if !FEATURE_TINYSTATES
     ; Disallow tiny states outside of gameplay
     ; Most other gamemodes will crash on load
-    LDA !GAMEMODE : CMP #$0020 : BEQ .save ; end of Ceres allowed
-    CMP #$0007 : BMI .not_allowed
-    CMP #$001C : BMI .save
-
-  .not_allowed
-    RTL
-
+    CMP #$0020 : BEQ .save
+    CMP #$0007 : BMI .done
+    CMP #$001C : BPL .done
   .save
 endif
     PHP
@@ -223,6 +229,8 @@ endif
 
     ; Skip remaining shortcuts
     PLA : PEA !CTRL_SHORTCUT_SKIP_REMAINING_PEA_VALUE
+
+  .done
     RTL
 }
 
