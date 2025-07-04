@@ -327,11 +327,8 @@ ram_cm_plasma = !ram_cm_plasma ; !WRAM_MENU_START+$AA
 ram_cm_etanks = !ram_cm_etanks ; !WRAM_MENU_START+$AC
 ram_cm_reserve = !ram_cm_reserve ; !WRAM_MENU_START+$AE
 
-ram_cm_zeb1 = !ram_cm_zeb1 ; !WRAM_MENU_START+$90
-ram_cm_zeb2 = !ram_cm_zeb2 ; !WRAM_MENU_START+$92
-ram_cm_zeb3 = !ram_cm_zeb3 ; !WRAM_MENU_START+$94
-ram_cm_zeb4 = !ram_cm_zeb4 ; !WRAM_MENU_START+$96
-ram_cm_zebmask = !ram_cm_zebmask ; !WRAM_MENU_START+$98
+ram_cm_zebmask = !ram_cm_zebmask ; !WRAM_MENU_START+$90
+ram_cm_metmask = !ram_cm_metmask ; !WRAM_MENU_START+$92
 
 ram_cm_ceres_seconds = !ram_cm_ceres_seconds ; !WRAM_MENU_START+$90
 ram_cm_zebes_seconds = !ram_cm_zebes_seconds ; !WRAM_MENU_START+$92
