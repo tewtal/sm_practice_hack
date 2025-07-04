@@ -104,6 +104,12 @@ ram_walljump_counter = !ram_walljump_counter ; !WRAM_START+$7A
 ram_fail_sum = !ram_fail_sum ; !WRAM_START+$7C
 ram_fail_count = !ram_fail_count ; !WRAM_START+$7E
 
+; Shot timer also reuses values
+ram_shot_timer_past1 = !ram_shot_timer_past1 ; !WRAM_START+$78
+ram_shot_timer_past2 = !ram_shot_timer_past2 ; !WRAM_START+$7A
+ram_shot_timer_past3 = !ram_shot_timer_past3 ; !WRAM_START+$7C
+ram_shot_timer_past4 = !ram_shot_timer_past4 ; !WRAM_START+$7E
+
 ; Kihunter manip
 ram_enemy0_last_xpos = !ram_enemy0_last_xpos ; !WRAM_START+$6E
 ram_enemy0_last_ypos = !ram_enemy0_last_ypos ; !WRAM_START+$70

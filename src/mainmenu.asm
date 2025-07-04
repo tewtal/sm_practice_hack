@@ -1711,6 +1711,7 @@ ihmode_ypos:
     %cm_jsl("Y Position", #action_select_infohud_mode, #$0014)
 
 ihmode_shottimer:
+!IH_MODE_SHOTTIMER_INDEX = #$0015
     %cm_jsl("Shot Timer", #action_select_infohud_mode, #$0015)
 
 ihmode_ramwatch:
@@ -2121,10 +2122,11 @@ ih_superhud_ypos:
     %cm_jsl("Y Position", #action_select_superhud_bottom, #$0013)
 
 ih_superhud_shottimer:
+!IH_SUPERHUD_SHOTTIMER_BOTTOM_INDEX = #$0014
     %cm_jsl("Shot Timer", #action_select_superhud_bottom, #$0014)
 
 ih_superhud_ramwatch:
-!IH_SUPERHUD_RAMATCH_BOTTOM_INDEX = #$0015
+!IH_SUPERHUD_RAMWATCH_BOTTOM_INDEX = #$0015
     %cm_jsl("Custom RAM Watch", #action_select_superhud_bottom, #$0015)
 
 ih_superhud_ceresridley:
@@ -3744,10 +3746,11 @@ if !FEATURE_VANILLAHUD
 else
 if !INFOHUD_ALWAYS_SHOW_X_Y
 else
-    ; Skip printing segment timer when shinetune or walljump enabled
+    ; Skip printing segment timer when shinetune or walljump or shot timer enabled
     LDA !sram_display_mode : CMP !IH_MODE_ROOMSTRAT_INDEX : BEQ .checkSuperHUD
     CMP !IH_MODE_SHINETUNE_INDEX : BEQ .skip
     CMP !IH_MODE_WALLJUMP_INDEX : BEQ .skip
+    CMP !IH_MODE_SHOTTIMER_INDEX : BEQ .skip
   .print
     LDA #$0001 : STA !ram_print_segment_timer
     RTL
@@ -3755,7 +3758,8 @@ else
   .checkSuperHUD
     LDA !sram_room_strat : BNE .print
     LDA !sram_superhud_bottom : CMP !IH_SUPERHUD_SHINETUNE_BOTTOM_INDEX : BEQ .skip
-    CMP !IH_SUPERHUD_WALLJUMP_BOTTOM_INDEX : BNE .print
+    CMP !IH_SUPERHUD_WALLJUMP_BOTTOM_INDEX : BEQ .skip
+    CMP !IH_SUPERHUD_SHOTTIMER_BOTTOM_INDEX : BNE .print
 
   .skip
 endif

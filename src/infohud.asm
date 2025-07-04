@@ -1701,7 +1701,8 @@ ih_update_status:
 {
     TDC
     STA !ram_momentum_sum : STA !ram_momentum_count
-    STA !ram_HUD_check
+    STA !ram_HUD_check : STA !ram_shot_timer
+    STA !ram_quickdrop_counter : STA !ram_walljump_counter
     STA !ram_roomstrat_counter : STA !ram_roomstrat_state
     STA !ram_armed_shine_duration
     STA !ram_fail_count : STA !ram_fail_sum

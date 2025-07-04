@@ -1420,13 +1420,36 @@ status_ypos:
 status_shottimer:
 {
     LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_SHOT : BEQ .incShot
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$AE
+    STA !HUD_TILEMAP+$B2 : STA !HUD_TILEMAP+$B6
+    STA !HUD_TILEMAP+$BA : STA !HUD_TILEMAP+$BE
+    LDA !ram_shot_timer_past4 : BEQ .initPast
+  .doneInitPast
+    STA !HUD_TILEMAP+$BC
+    LDA !ram_shot_timer_past3 : STA !HUD_TILEMAP+$B8 : STA !ram_shot_timer_past4
+    LDA !ram_shot_timer_past2 : STA !HUD_TILEMAP+$B4 : STA !ram_shot_timer_past3
+    LDA !ram_shot_timer_past1 : STA !HUD_TILEMAP+$B0 : STA !ram_shot_timer_past2
     LDA !ram_shot_timer : LDX #$0088 : JSR Draw4
+    LDA !ram_shot_timer : CMP #$0042 : BPL .setX
+    ASL : TAX : LDA NumberGFXTable,X
+    BRA .setPast1
+
+  .setX
+    LDA !IH_LETTER_X
+
+  .setPast1
+    STA !ram_shot_timer_past1
     TDC : STA !ram_shot_timer
 
   .incShot
     LDA !ram_shot_timer : INC : STA !ram_shot_timer
     LDA !ROOM_ID : CMP.w #ROOM_PhantoonRoom : BEQ .phantoon
     RTS
+
+  .initPast
+    LDA !IH_BLANK : STA !ram_shot_timer_past4 : STA !ram_shot_timer_past3
+    STA !ram_shot_timer_past2 : STA !ram_shot_timer_past1
+    BRA .doneInitPast
 
   .phantoonCheckInit
     LDA !ENEMY_VAR_5
