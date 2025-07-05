@@ -253,6 +253,7 @@ endif
   .no_savestate
     ; reload last preset if it exists
     LDA !sram_last_preset : BEQ .save_file : STA !ram_load_preset
+    JSL preset_load
     BRA .skip_gameplay
 
   .save_file
