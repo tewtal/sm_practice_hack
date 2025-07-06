@@ -14,9 +14,9 @@ lorom
 !RAW_TILE_GRAPHICS ?= 1
 
 !VERSION_MAJOR = 2
-!VERSION_MINOR = 6
-!VERSION_BUILD = 7
-!VERSION_REV   = 13
+!VERSION_MINOR = 7
+!VERSION_BUILD = 0
+!VERSION_REV   = 0
 
 table ../resources/normal.tbl
 print ""
