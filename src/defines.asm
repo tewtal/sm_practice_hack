@@ -1040,6 +1040,16 @@
 !eram_botwoon_spit_rng             = !ENEMY_VAR_4+!ENEMY_1F_OFFSET
 !eram_botwoon_after_spit_rng       = !ENEMY_VAR_5+!ENEMY_1F_OFFSET
 
+!eram_baby_leaving_left            = !ENEMY_VAR_2+!ENEMY_1E_OFFSET
+!eram_baby_leaving_right           = !ENEMY_VAR_3+!ENEMY_1E_OFFSET
+!eram_baby_backing_off             = !ENEMY_VAR_4+!ENEMY_1E_OFFSET
+!eram_baby_rising_delay            = !ENEMY_VAR_5+!ENEMY_1E_OFFSET
+!eram_baby_after_drain_delay       = !ENEMY_VAR_1+!ENEMY_1F_OFFSET
+!eram_baby_target_x_pos            = !ENEMY_VAR_2+!ENEMY_1F_OFFSET
+!eram_baby_dead_hop_delay          = !ENEMY_VAR_3+!ENEMY_1F_OFFSET
+!eram_baby_hop_velocity_tables     = !ENEMY_VAR_4+!ENEMY_1F_OFFSET
+!eram_baby_initial_delay           = !ENEMY_VAR_5+!ENEMY_1F_OFFSET
+
 !HUD_TILEMAP = $7EC600
 !MAP_COUNTER = $7ECAE8 ; Not used in vanilla
 !SCROLLS = $7ECD20

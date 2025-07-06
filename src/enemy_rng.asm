@@ -335,18 +335,6 @@ endif
     JSR hook_kraid_claw_rng
 
 
-; -----------
-; Baby hijack
-; -----------
-
-if !FEATURE_PAL
-org $A9F21B
-else    ; Baby skip rng
-org $A9F1CE
-endif
-    JMP hook_baby_skip_rng
-
-
 ; -------------------
 ; Mother Brain hijack
 ; -------------------
@@ -357,6 +345,92 @@ else
 org $A9873A
 endif
     JML hook_mb_init_rng
+
+
+; -----------
+; Baby hijack
+; -----------
+
+if !FEATURE_PAL
+org $A9D963
+else
+org $A9D916
+endif
+    LDA !eram_baby_dead_hop_delay
+
+if !FEATURE_PAL
+org $A9D98E
+else
+org $A9D941
+endif
+    CLC : ADC !eram_baby_hop_velocity_tables : TAY
+    LDA $0000,Y : STA $7E7816,X
+    LDA $0008,Y : STA $7E7814,X
+    RTS
+%warnpc($A9D961, $A9D9AE)
+
+if !FEATURE_PAL
+org $A9F002
+else
+org $A9EFB5
+endif
+    JML hook_baby_init
+
+if !FEATURE_PAL
+org $A9F07E
+else
+org $A9F031
+endif
+    LDA !eram_baby_initial_delay
+
+if !FEATURE_PAL
+org $A9F096
+else
+org $A9F049
+endif
+    LDA !eram_baby_target_x_pos
+
+if !FEATURE_PAL
+org $A9F21B
+else    ; Baby skip rng
+org $A9F1CE
+endif
+    JMP hook_baby_skip_rng
+
+if !FEATURE_PAL
+org $A9F2F5
+else
+org $A9F2A8
+endif
+    LDA !eram_baby_after_drain_delay
+
+if !FEATURE_PAL
+org $A9F307
+else
+org $A9F2BA
+endif
+    LDA !eram_baby_rising_delay
+
+if !FEATURE_PAL
+org $A9F333
+else
+org $A9F2E6
+endif
+    LDA !eram_baby_backing_off
+
+if !FEATURE_PAL
+org $A9F36B
+else
+org $A9F31E
+endif
+    LDA !eram_baby_leaving_left
+
+if !FEATURE_PAL
+org $A9F397
+else
+org $A9F34A
+endif
+    LDA !eram_baby_leaving_right
 
 
 ; -----------------
@@ -1857,6 +1931,14 @@ else
 endif
 }
 
+baby_vanilla_hop_initial_velocities:
+    dw #$FE00, #$FE00, #$FE00, #$FC00
+    dw #$01C0, #$0120, #$0120, #$0300
+
+baby_maprando_hop_initial_velocities:
+    dw #$FE00, #$FE00, #$FC00, #$FE00
+    dw #$0120, #$0250, #$0300, #$01C0
+
 mb_ground_attack_max_rings_rng_table:
     db #$00, #$FF, #$FF
 
@@ -1965,6 +2047,44 @@ hook_mb_init_rng:
 
     ; Overwritten logic
     LDA #$000A : STA !ENEMY_VAR_4
+    RTL
+}
+
+hook_baby_init:
+{
+if !FEATURE_PAL
+    JSL $A9D343
+else  ; Overridden logic
+    JSL $A9D2F6
+endif
+
+    LDA !ram_door_portal_flags : AND !DOOR_PORTAL_MODE_MASK
+    CMP #$0002 : BNE .vanilla
+    LDA !ram_door_source : ASL : TAX
+    LDA portals_left_vanilla_table,X : CMP #$AA38 : BNE .vanilla
+
+    ; Use maprando values
+    LDA #$0001 : STA !eram_baby_dead_hop_delay
+    LDA #baby_maprando_hop_initial_velocities : STA !eram_baby_hop_velocity_tables
+    LDA #$002C : STA !eram_baby_initial_delay
+    LDA #$01B0 : STA !eram_baby_target_x_pos
+    LDA #$0020 : STA !eram_baby_after_drain_delay
+    LDA #$0030 : STA !eram_baby_rising_delay
+    LDA #$0016 : STA !eram_baby_backing_off
+    STA !eram_baby_leaving_left
+    STA !eram_baby_leaving_right
+    RTL
+
+  .vanilla
+    LDA #$0040 : STA !eram_baby_dead_hop_delay
+    LDA #baby_vanilla_hop_initial_velocities : STA !eram_baby_hop_velocity_tables
+    LDA #$01D0 : STA !eram_baby_initial_delay
+    LDA #$0248 : STA !eram_baby_target_x_pos
+    LDA #$0078 : STA !eram_baby_after_drain_delay
+    LDA #$00C0 : STA !eram_baby_rising_delay
+    LDA #$0058 : STA !eram_baby_backing_off
+    STA !eram_baby_leaving_left
+    LDA #$0100 : STA !eram_baby_leaving_right
     RTL
 }
 
