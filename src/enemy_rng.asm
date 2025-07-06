@@ -261,6 +261,17 @@ endif
     JSR hook_draygon_damage
 
 
+; ------------------
+; Spore Spawn hijack
+; ------------------
+if !FEATURE_PAL
+org $A5EADC
+else
+org $A5EAD7
+endif
+    JSR hook_spore_spawn_scroll
+
+
 ; ----------------
 ; Crocomire hijack
 ; ----------------
@@ -1189,6 +1200,24 @@ if !FEATURE_PAL
 else
     LDY #$A257
 endif
+    RTS
+}
+
+hook_spore_spawn_scroll:
+{
+    LDA !ram_door_portal_flags : AND !DOOR_PORTAL_MODE_MASK
+    CMP #$0002 : BNE .vanilla
+    LDA !ram_door_source : ASL : TAX
+    LDA portals_left_vanilla_table,X : CMP #$8E4A : BNE .vanilla
+
+    ; In map rando when top door selected,
+    ; do not use a scroll hook for spore spawn
+    TDC
+    RTS
+
+  .vanilla
+    ; Overwritten scrolling finished hook
+    LDA #$9589
     RTS
 }
 
