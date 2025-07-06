@@ -3,8 +3,8 @@
 org $8DE37C
     AND !ram_suits_heat_damage_check : BNE $29
     LDA !ram_suits_heat_damage_value : BEQ $23
-    CLC : ADC $0A4E : STA $0A4E
-    BCC $03 : INC $0A50
+    CLC : ADC !SAMUS_PERIODIC_SUBDAMAGE : STA !SAMUS_PERIODIC_SUBDAMAGE
+    BCC $03 : INC !SAMUS_PERIODIC_DAMAGE
 warnpc $8DE394
 
 
@@ -14,11 +14,11 @@ org $9081DB
     ; Everything else is vanilla but needs to be shifted down three bytes
     AND !SAMUS_LAVA_DAMAGE_SUITS
     CMP !SAMUS_LAVA_DAMAGE_SUITS : BEQ $2C
-    LDA $09DA : BIT #$0007 : BNE $0F
-    LDA $09C2 : CMP #$0047 : BMI $07
+    LDA !IGT_FRAMES : BIT #$0007 : BNE $0F
+    LDA !SAMUS_HP : CMP #$0047 : BMI $07
     LDA #$002D : JSL $809139
-    LDA $0A4E : CLC : ADC $9E8B : STA $0A4E
-    LDA $0A50 : ADC $9E8D
+    LDA !SAMUS_PERIODIC_SUBDAMAGE : CLC : ADC $9E8B : STA !SAMUS_PERIODIC_SUBDAMAGE
+    LDA !SAMUS_PERIODIC_DAMAGE : ADC $9E8D
     ; Originally STA $0A50 and BRA $40 to $90824C
     ; Conveniently the command at $908249 is STA $0A50 so we can save three bytes
     BRA $3D
@@ -143,10 +143,10 @@ endif
 suit_metroid_damage:
 {
     LDA #$C000 : STA $12
-    LDA $09A2 : AND !ram_suits_enemy_damage_check : BEQ .checkGrav
+    LDA !SAMUS_ITEMS_EQUIPPED : AND !ram_suits_enemy_damage_check : BEQ .checkGrav
     LSR $12
   .checkGrav
-    LDA $09A2 : BIT #$0020 : BEQ .noGrav
+    LDA !SAMUS_ITEMS_EQUIPPED : BIT #$0020 : BEQ .noGrav
     LSR $12
   .noGrav
     ; Continue vanilla routine
@@ -157,8 +157,8 @@ suit_metroid_damage:
 
 damage_overwritten_movement_routine:
     ; We overwrote an unnecessary JSR, a STZ command, and a jump to the movement routine
-    STZ $0A6E
-    JMP ($0A58)
+    STZ !SAMUS_CONTACT_DAMAGE_INDEX
+    JMP (!SAMUS_NORMAL_MOVEMENT_HANDLER)
 
 periodic_damage_table:
 if !FEATURE_PAL
@@ -207,14 +207,14 @@ endif
 periodic_damage_balanced:
 {
     PHP : REP #$30
-    LDA $0A78 : BEQ $03
+    LDA !TIME_IS_FROZEN : BEQ $03
     ; Nothing to do, jump back to vanilla routine
 if !FEATURE_PAL
     JMP $EA32
 else
     JMP $EA35
 endif
-    LDA $09A2 : BIT #$0001 : BNE $03
+    LDA !SAMUS_ITEMS_EQUIPPED : BIT #$0001 : BNE $03
     ; Either jump to gravity (75% reduction) or power suit (no reduction)
 if !FEATURE_PAL
     JMP $EA0E   ; Varia not equipped
@@ -228,7 +228,7 @@ endif
 periodic_damage_progressive:
 {
     PHP : REP #$30
-    LDA $0A78 : BEQ $03
+    LDA !TIME_IS_FROZEN : BEQ $03
     ; Nothing to do, jump back to vanilla routine
 if !FEATURE_PAL
     JMP $EA32
@@ -236,18 +236,18 @@ else
     JMP $EA35
 endif
 
-    LDA $09A2 : BIT #$0020 : BEQ .nogravity
+    LDA !SAMUS_ITEMS_EQUIPPED : BIT #$0020 : BEQ .nogravity
     ; Gravity equipped, so halve damage
-    LDA $0A4F : LSR
-    PHA : XBA : AND #$FF00 : STA $0A4E
-    PLA : XBA : AND #$00FF : STA $0A50
+    LDA !SAMUS_PERIODIC_DAMAGECOMBINED : LSR
+    PHA : XBA : AND #$FF00 : STA !SAMUS_PERIODIC_SUBDAMAGE
+    PLA : XBA : AND #$00FF : STA !SAMUS_PERIODIC_DAMAGE
 
   .nogravity
-    LDA $09A2 : BIT #$0001 : BEQ .novaria
+    LDA !SAMUS_ITEMS_EQUIPPED : BIT #$0001 : BEQ .novaria
     ; Varia equipped, so halve damage
-    LDA $0A4F : LSR
-    PHA : XBA : AND #$FF00 : STA $0A4E
-    PLA : XBA : AND #$00FF : STA $0A50
+    LDA !SAMUS_PERIODIC_DAMAGECOMBINED : LSR
+    PHA : XBA : AND #$FF00 : STA !SAMUS_PERIODIC_SUBDAMAGE
+    PLA : XBA : AND #$00FF : STA !SAMUS_PERIODIC_DAMAGE
 
   .novaria
     ; Jump back into the vanilla routine
@@ -261,7 +261,7 @@ endif
 periodic_damage_dash_recall:
 {
     PHP : REP #$30
-    LDA $0A78 : BEQ $03
+    LDA !TIME_IS_FROZEN : BEQ $03
     ; Nothing to do, jump back to vanilla routine
 if !FEATURE_PAL
     JMP $EA32
@@ -269,7 +269,7 @@ else
     JMP $EA35
 endif
 
-    LDA $09A2 : BIT #$0001 : BEQ .novaria
+    LDA !SAMUS_ITEMS_EQUIPPED : BIT #$0001 : BEQ .novaria
     ; Jump back to gravity vanilla routine for 75% reduction
 if !FEATURE_PAL
     JMP $E9F9
@@ -278,11 +278,11 @@ else
 endif
 
   .novaria
-    LDA $09A2 : BIT #$0020 : BEQ .nogravity
+    LDA !SAMUS_ITEMS_EQUIPPED : BIT #$0020 : BEQ .nogravity
     ; Gravity equipped, so halve damage
-    LDA $0A4F : LSR
-    PHA : XBA : AND #$FF00 : STA $0A4E
-    PLA : XBA : AND #$00FF : STA $0A50
+    LDA !SAMUS_PERIODIC_DAMAGECOMBINED : LSR
+    PHA : XBA : AND #$FF00 : STA !SAMUS_PERIODIC_SUBDAMAGE
+    PLA : XBA : AND #$00FF : STA !SAMUS_PERIODIC_DAMAGE
 
   .nogravity
     ; Jump back into the vanilla routine
@@ -296,7 +296,7 @@ endif
 periodic_damage_heat_shield:
 {
     PHP : REP #$30
-    LDA $0A78 : BEQ $03
+    LDA !TIME_IS_FROZEN : BEQ $03
     ; Nothing to do, jump back to vanilla routine
 if !FEATURE_PAL
     JMP $EA32
@@ -304,11 +304,11 @@ else
     JMP $EA35
 endif
 
-    LDA $09A2 : BIT #$0020 : BEQ .nogravity
+    LDA !SAMUS_ITEMS_EQUIPPED : BIT #$0020 : BEQ .nogravity
     ; Gravity equipped, so halve damage
-    LDA $0A4F : LSR
-    PHA : XBA : AND #$FF00 : STA $0A4E
-    PLA : XBA : AND #$00FF : STA $0A50
+    LDA !SAMUS_PERIODIC_DAMAGECOMBINED : LSR
+    PHA : XBA : AND #$FF00 : STA !SAMUS_PERIODIC_SUBDAMAGE
+    PLA : XBA : AND #$00FF : STA !SAMUS_PERIODIC_DAMAGE
 
   .nogravity
     ; Jump back into the vanilla routine
@@ -329,12 +329,12 @@ healthalarm_turn_on_table:
 
 healthalarm_turn_on_improved:
     ; Do not sound alarm until below 30 combined health
-    LDA $09C2 : CLC : ADC $09D6 : CMP #$001E : BPL healthalarm_turn_on_done
+    LDA !SAMUS_HP : CLC : ADC !SAMUS_RESERVE_ENERGY : CMP #$001E : BPL healthalarm_turn_on_done
 
 healthalarm_turn_on_always_on:
 healthalarm_turn_on_pb_fix:
     ; Do not sound alarm if it won't play due to power bomb explosion
-    LDA $0592 : BMI healthalarm_turn_on_done
+    LDA !PB_EXPLOSION_STATUS : BMI healthalarm_turn_on_done
 
 healthalarm_turn_on_vanilla:
     LDA #$0002 : JSL $80914D
@@ -356,7 +356,7 @@ healthalarm_turn_off_table:
 healthalarm_turn_off_improved:
 healthalarm_turn_off_pb_fix:
     ; Do not stop alarm if it won't stop due to power bomb explosion
-    LDA $0592 : BMI healthalarm_turn_off_done
+    LDA !PB_EXPLOSION_STATUS : BMI healthalarm_turn_off_done
 
 healthalarm_turn_off_vanilla:
     LDA #$0001 : JSL $80914D
@@ -369,7 +369,7 @@ healthalarm_turn_off_done:
 
 healthalarm_turn_off_always_on:
     ; Do not sound alarm if it won't play due to power bomb explosion
-    LDA $0592 : BMI healthalarm_turn_off_done
+    LDA !PB_EXPLOSION_STATUS : BMI healthalarm_turn_off_done
     LDA #$0002 : JSL $80914D
     BRA healthalarm_turn_off_never
 
@@ -394,32 +394,32 @@ damage_init_beam:
     ; so we can inject custom damage without a CPU hit
     PHP : PHB : PHK : PLB
     %ai16()
-    LDA $0C04,X : AND #$000F
+    LDA !SAMUS_PROJ_DIRECTION,X : AND #$000F
     ASL : STA $12
-    LDA $0C18,X
+    LDA !SAMUS_PROJ_PROPERTIES,X
     BIT #$0010 : BNE .charged
     AND #$000F : ASL
     TAY : LDA $83C1,Y : TAY
     LDA !sram_custom_damage : BNE .nonVanillaUncharged
-    LDA $0000,Y : STA $0C2C,X
+    LDA $0000,Y : STA !SAMUS_PROJ_DAMAGE,X
     JMP $8048
 
   .charged
     AND #$000F : ASL
     TAY : LDA $83D9,Y : TAY
     LDA !sram_custom_damage : BNE .nonVanillaCharged
-    LDA $0000,Y : STA $0C2C,X
+    LDA $0000,Y : STA !SAMUS_PROJ_DAMAGE,X
     JMP $8048
 
   .nonVanillaUncharged
     DEC : BEQ .customUncharged
 
   .dashCharge0
-    PHX : JSL compute_dash_charge_0_damage : PLX : STA $0C2C,X
+    PHX : JSL compute_dash_charge_0_damage : PLX : STA !SAMUS_PROJ_DAMAGE,X
     JMP $8048
 
   .customUncharged
-    LDA !sram_custom_uncharge_damage : STA $0C2C,X
+    LDA !sram_custom_uncharge_damage : STA !SAMUS_PROJ_DAMAGE,X
     JMP $8048
 
   .nonVanillaCharged
@@ -428,23 +428,23 @@ damage_init_beam:
     DEC : BEQ .dashCharge1
     DEC : BEQ .dashCharge2
     DEC : BEQ .dashCharge3
-    PHX : JSL compute_dash_charge_4_damage : PLX : STA $0C2C,X
+    PHX : JSL compute_dash_charge_4_damage : PLX : STA !SAMUS_PROJ_DAMAGE,X
     JMP $8048
 
   .customCharged
-    LDA !sram_custom_charge_damage : STA $0C2C,X
+    LDA !sram_custom_charge_damage : STA !SAMUS_PROJ_DAMAGE,X
     JMP $8048
 
   .dashCharge1
-    PHX : JSL compute_dash_charge_1_damage : PLX : STA $0C2C,X
+    PHX : JSL compute_dash_charge_1_damage : PLX : STA !SAMUS_PROJ_DAMAGE,X
     JMP $8048
 
   .dashCharge2
-    PHX : JSL compute_dash_charge_2_damage : PLX : STA $0C2C,X
+    PHX : JSL compute_dash_charge_2_damage : PLX : STA !SAMUS_PROJ_DAMAGE,X
     JMP $8048
 
   .dashCharge3
-    PHX : JSL compute_dash_charge_3_damage : PLX : STA $0C2C,X
+    PHX : JSL compute_dash_charge_3_damage : PLX : STA !SAMUS_PROJ_DAMAGE,X
     JMP $8048
 }
 

@@ -37,6 +37,7 @@ init_code:
 
     ; Initialize RAM (Bank 7E required)
     TDC : STA !ram_slowdown_mode
+    JSL validate_sram
 
     ; Check if we should initialize SRAM
     LDA !sram_initialized : CMP !SRAM_VERSION : BEQ .sram_initialized
@@ -47,9 +48,6 @@ init_code:
     JSR (init_sram_routine_table,X)
 
   .sram_initialized
-if !FEATURE_SD2SNES
-    JSL validate_sram_for_savestates
-endif
     PLA
     ; Execute overwritten logic and return
 if !FEATURE_PAL
@@ -75,6 +73,8 @@ init_nonzero_wram:
 
     INC : STA !ram_cm_sfxlib1
     STA !ram_cm_sfxlib2 : STA !ram_cm_sfxlib3
+
+    LDA #$8000 : STA !ram_cm_gmode
 
     JML init_wram_based_on_sram
 }
@@ -106,10 +106,10 @@ init_sram_routine_table:
     dw init_sram_upgrade_16to17
     dw init_sram_upgrade_17to18
     dw init_sram_upgrade_18to19
+    dw init_sram_upgrade_19to1A
 
 init_sram:
 {
-    JSL init_sram_controller_shortcuts
     LDA #$0015 : STA !sram_artificial_lag
     TDC : STA !sram_fanfare
     STA !sram_frame_counter_mode
@@ -126,13 +126,10 @@ init_sram:
     LDA #$000A : STA !sram_metronome_tickrate
 
   .upgrade_9toA
-    TDC : STA !sram_ctrl_toggle_tileviewer
-    STA !sram_status_icons
+    TDC : STA !sram_status_icons
     STA !sram_suit_properties
 
   .upgrade_AtoB
-    TDC : STA !sram_ctrl_update_timers
-
   .upgrade_BtoC
     TDC : STA !sram_top_display_mode
     STA !sram_room_layout
@@ -166,7 +163,6 @@ endif
 
   .upgrade_11to12
     JSL init_menu_customization
-    TDC : STA !sram_ctrl_auto_save_state
 
   .upgrade_12to13
     TDC : STA !sram_custom_header
@@ -194,7 +190,7 @@ endif
     LDA #$000A : STA !sram_presetequiprando_max_pbs
 
   .upgrade_16to17
-    TDC : STA !sram_spin_lock : STA !sram_ctrl_toggle_spin_lock
+    TDC : STA !sram_spin_lock
     DEC : STA !sram_map_grid_alignment
 
   .upgrade_17to18
@@ -205,10 +201,7 @@ endif
     STA !sram_infidoppler_enabled
 
   .upgrade_18to19
-    TDC : STA !sram_ctrl_randomize_rng
-    STA !sram_ctrl_reveal_damage
-    STA !sram_ctrl_force_stand
-    STA !sram_random_bubble_sfx
+    TDC : STA !sram_random_bubble_sfx
     STA !sram_loadstate_rando_energy
     STA !sram_loadstate_rando_reserves
     STA !sram_loadstate_rando_missiles
@@ -218,34 +211,120 @@ endif
     LDA #$0100 : STA !sram_ceres_timer
     LDA #$0300 : STA !sram_zebes_timer
 
+  .upgrade_19to1A
+    LDA !sram_loadstate_rando_energy
+    ORA !sram_loadstate_rando_reserves
+    ORA !sram_loadstate_rando_missiles
+    ORA !sram_loadstate_rando_supers
+    ORA !sram_loadstate_rando_powerbombs
+    STA !sram_loadstate_rando_enable
+    JSL init_sram_controller_shortcuts
+
     LDA !SRAM_VERSION : STA !sram_initialized
     RTS
 }
 
 init_sram_controller_shortcuts:
 {
-    ; branch called by ctrl_reset_defaults in mainmenu.asm
-    LDA #$3000 : STA !sram_ctrl_menu                  ; Start + Select
-    LDA #$6010 : STA !sram_ctrl_save_state            ; Select + Y + R
-    LDA #$6020 : STA !sram_ctrl_load_state            ; Select + Y + L
-    LDA #$5020 : STA !sram_ctrl_load_last_preset      ; Start + Y + L
-    TDC : STA !sram_ctrl_full_equipment
-    STA !sram_ctrl_kill_enemies
-    STA !sram_ctrl_reset_segment_timer
-    STA !sram_ctrl_reset_segment_later
-    STA !sram_ctrl_random_preset
-    STA !sram_ctrl_save_custom_preset
-    STA !sram_ctrl_load_custom_preset
-    STA !sram_ctrl_inc_custom_preset
-    STA !sram_ctrl_dec_custom_preset
-    ; duplicates for reset defaults routine
-    STA !sram_ctrl_toggle_tileviewer
-    STA !sram_ctrl_update_timers
-    STA !sram_ctrl_auto_save_state
-    STA !sram_ctrl_toggle_spin_lock
-    STA !sram_ctrl_randomize_rng
-    STA !sram_ctrl_reveal_damage
-    STA !sram_ctrl_force_stand
+    TDC : TAX
+  .firstLoop
+    STA !sram_ctrl_shortcut_selections,X
+    STA !sram_ctrl_1_shortcut_inputs,X
+    STA !sram_ctrl_2_shortcut_inputs,X
+    INX : INX : CPX #$001E : BMI .firstLoop
+  .secondLoop
+    STA !sram_ctrl_additional_selections,X
+    STA !sram_ctrl_1_shortcut_inputs,X
+    STA !sram_ctrl_2_shortcut_inputs,X
+    INX : INX : CPX #$0030 : BMI .secondLoop
+  .thirdLoop
+    STA !sram_ctrl_1_shortcut_inputs,X
+    STA !sram_ctrl_2_shortcut_inputs,X
+    INX : INX : CPX #$0060 : BMI .thirdLoop
+
+    %a8()
+    ; Main Menu
+    LDA #$81 : LDX #$0000 : STA !sram_ctrl_shortcut_selections,X
+    ; Soft Reset
+    LDA #$9F : INX : STA !sram_ctrl_shortcut_selections,X
+if !FEATURE_SD2SNES
+    LDA !ram_sram_detection : BNE .skipTypes
+    ; Save State
+    LDA #$82 : INX : STA !sram_ctrl_shortcut_selections,X
+    ; Load State
+    LDA #$83 : INX : STA !sram_ctrl_shortcut_selections,X
+  .skipTypes
+endif
+    ; Reload Preset
+    LDA #$86 : INX : STA !sram_ctrl_shortcut_selections,X
+    ; Main Menu
+    LDA #$81 : INX : STA !sram_ctrl_shortcut_selections,X
+    ; Pause
+    LDA #$95 : INX : STA !sram_ctrl_shortcut_selections,X
+    ; Unpause
+    LDA #$96 : INX : STA !sram_ctrl_shortcut_selections,X
+    ; Slowdown
+    LDA #$97 : INX : STA !sram_ctrl_shortcut_selections,X
+    ; Speedup
+    LDA #$98 : INX : STA !sram_ctrl_shortcut_selections,X
+if !FEATURE_VANILLAHUD
+else
+    ; Increment Display Mode
+    LDA #$99 : INX : STA !sram_ctrl_shortcut_selections,X
+    ; Decrement Display Mode
+    LDA #$9A : INX : STA !sram_ctrl_shortcut_selections,X
+    ; Increment Room Strat
+    LDA #$9B : INX : STA !sram_ctrl_shortcut_selections,X
+    ; Decrement Room Strat
+    LDA #$9C : INX : STA !sram_ctrl_shortcut_selections,X
+    ; Increment Super HUD
+    LDA #$9D : INX : STA !sram_ctrl_shortcut_selections,X
+    ; Decrement Super HUD
+    LDA #$9E : INX : STA !sram_ctrl_shortcut_selections,X
+endif
+    ; Add Shortcut
+    INX : TXA : STA !ram_cm_ctrl_add_shortcut_slot
+
+    %a16()
+    ; Main Menu (Controller 1, Start + Select)
+    LDA #$3000 : LDX #$0000 : STA !sram_ctrl_1_shortcut_inputs,X
+    ; Soft Reset (Controller 1, Start + Select + L + R)
+    LDA #$3030 : INX #2 : STA !sram_ctrl_1_shortcut_inputs,X
+if !FEATURE_SD2SNES
+    LDA !ram_sram_detection : BNE .skipValues
+    ; Save State (Controller 1, Select + Y + R)
+    LDA #$6010 : INX #2 : STA !sram_ctrl_1_shortcut_inputs,X
+    ; Load State (Controller 1, Select + Y + L)
+    LDA #$6020 : INX #2 : STA !sram_ctrl_1_shortcut_inputs,X
+  .skipValues
+endif
+    ; Reload Preset (Controller 1, Start + Y + L)
+    LDA #$5020 : INX #2 : STA !sram_ctrl_1_shortcut_inputs,X
+    ; Main Menu (Controller 2, Start + Select)
+    LDA #$3000 : INX #2 : STA !sram_ctrl_2_shortcut_inputs,X
+    ; Pause (Controller 2, Right)
+    LDA #$0100 : INX #2 : STA !sram_ctrl_2_shortcut_inputs,X
+    ; Unpause (Controller 2, Left)
+    LDA #$0200 : INX #2 : STA !sram_ctrl_2_shortcut_inputs,X
+    ; Slowdown (Controller 2, Down)
+    LDA #$0400 : INX #2 : STA !sram_ctrl_2_shortcut_inputs,X
+    ; Speedup (Controller 2, Up)
+    LDA #$0800 : INX #2 : STA !sram_ctrl_2_shortcut_inputs,X
+if !FEATURE_VANILLAHUD
+else
+    ; Increment Display Mode (Controller 2, R)
+    LDA #$0010 : INX #2 : STA !sram_ctrl_2_shortcut_inputs,X
+    ; Decrement Display Mode (Controller 2, L)
+    LDA #$0020 : INX #2 : STA !sram_ctrl_2_shortcut_inputs,X
+    ; Increment Room Strat (Controller 2, X + R)
+    LDA #$0050 : INX #2 : STA !sram_ctrl_2_shortcut_inputs,X
+    ; Decrement Room Strat (Controller 2, X + L)
+    LDA #$0060 : INX #2 : STA !sram_ctrl_2_shortcut_inputs,X
+    ; Increment Super HUD (Controller 2, A + R)
+    LDA #$0090 : INX #2 : STA !sram_ctrl_2_shortcut_inputs,X
+    ; Decrement Super HUD (Controller 2, A + L)
+    LDA #$00A0 : INX #2 : STA !sram_ctrl_2_shortcut_inputs,X
+endif
     RTL
 }
 
@@ -304,6 +383,7 @@ init_post_boot:
     JML cm_boot
 
   .done
+    JSL cm_write_ctrl_routine
     JML $82893D ; hijacked code: start main game loop
 }
 

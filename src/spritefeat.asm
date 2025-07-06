@@ -20,7 +20,7 @@ hook_standard_sprite_tiles:
     db $FF, $FF, $80, $80, $80, $80, $80, $80, $80, $80, $80, $80, $80, $80, $80, $80
 
 
-%startfree(F0)
+%startfree(87)
 
 ; This runs every frame before any other sprites are drawn, this is needed so we can get priority over everything else
 update_sprite_features:
@@ -353,10 +353,13 @@ draw_enemy_hitbox:
     LDY !OAM_STACK_POINTER ; Y = OAM stack pointer
 
   .loopEnemies
-    ; skip enemy if extended spritemap or deleted enemy
-    LDA !ENEMY_EXTRA_PROPERTIES,X : AND #$0004 : BNE .skipEnemy
+    ; skip enemy if deleted
     LDA !ENEMY_PROPERTIES,X : AND #$0200 : BNE .skipEnemy
+    ; skip enemy if extended spritemap and not frozen
+    LDA !ENEMY_FROZEN_TIMER,X : BNE .checkOffscreen
+    LDA !ENEMY_EXTRA_PROPERTIES,X : AND #$0004 : BNE .skipEnemy
 
+  .checkOffscreen
     ; skip enemy if off-screen
     LDA !ENEMY_X,X : CLC : ADC !ENEMY_X_RADIUS,X
     CMP !LAYER1_X : BMI .skipEnemy
@@ -425,7 +428,10 @@ draw_ext_spritemap_hitbox:
     LDY !OAM_STACK_POINTER ; Y = OAM stack pointer
 
   .loopEnemies
-    ; check if extended spritemap
+    ; skip enemy if deleted
+    LDA !ENEMY_PROPERTIES,X : AND #$0200 : BNE .nextEnemy
+    ; check if extended spritemap and not frozen
+    LDA !ENEMY_FROZEN_TIMER,X : BNE .nextEnemy
     LDA !ENEMY_EXTRA_PROPERTIES,X : AND #$0004 : BNE .extended
 
   .nextEnemy
@@ -767,8 +773,8 @@ draw_samusproj_hitbox:
     JMP .skipProjectile
 
   .check32x32
-    ; skip bombs ($0500), bomb explosions ($0501) and power bombs ($0300)
-    LDA !SAMUS_PROJ_PROPERTIES,X : BIT #$0701 : BNE .skip32x32
+    ; Only show beams, missiles, and super missiles
+    LDA !SAMUS_PROJ_PROPERTIES,X : AND #$0F00 : CMP #$0300 : BPL .skip32x32
 
     LDA !SAMUS_PROJ_X,X : CMP !LAYER1_X : BMI .skip32x32
     LDA !LAYER1_X : CLC : ADC #$0100 : CMP !SAMUS_PROJ_X,X : BMI .skip32x32
@@ -964,4 +970,4 @@ DrawMBHitbox:
 sprite_tiles:
 incbin "../resources/spritegfx.bin":0-600
 
-%endfree(F0)
+%endfree(87)

@@ -139,7 +139,7 @@ endif
     ; If glass is broken, assume we should skip MB1
     LDA $7ED820 : BIT #$0004 : BEQ .done
     ; Set health to 1 as a hint this was done by a preset
-    LDA #$0001 : STA !ENEMY_HP+$40
+    LDA #$0001 : STA !ENEMY_HP+!ENEMY_1_OFFSET
     ; Reset segment timer now
     TDC : STA !ram_reset_segment_later
     STA !ram_seg_rt_frames : STA !ram_seg_rt_seconds

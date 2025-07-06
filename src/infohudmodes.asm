@@ -181,7 +181,7 @@ else
 endif
 
     ; Suppress Samus HP display
-    ; The segment timer is also suppressed elsewhere just for shinetune
+    ; The segment timer is also suppressed elsewhere
     LDA !SAMUS_HP : STA !ram_last_hp
 
     ; Track Samus momentum
@@ -206,6 +206,9 @@ endif
     BRA .shinetune_start
 
   .average_momentum
+    ; Do not print out momentum if Super HUD is enabled
+    LDA !sram_room_strat : BEQ .invalid_momentum
+
     ; We have total momentum (x256) over 44 frames
     ; To get the average (x1024), divide by 11
     LDA !ram_momentum_sum
@@ -217,7 +220,7 @@ endif
     LDA $4214 : LDX #$0054 : JSR Draw4Hundredths
 
   .invalid_momentum
-    LDA #$FFFF : STA !ram_momentum_count
+    TDC : DEC : STA !ram_momentum_count
     BRA .shinetune_start
 
   .wait_for_stop
@@ -989,6 +992,7 @@ status_quickdrop:
 status_walljump:
 {
     ; Suppress Samus HP display
+    ; The segment timer is also suppressed elsewhere
     LDA !SAMUS_HP : STA !ram_last_hp
 
     ; Check if it is time to calculate average climb speed
@@ -1416,13 +1420,36 @@ status_ypos:
 status_shottimer:
 {
     LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_SHOT : BEQ .incShot
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$AE
+    STA !HUD_TILEMAP+$B2 : STA !HUD_TILEMAP+$B6
+    STA !HUD_TILEMAP+$BA : STA !HUD_TILEMAP+$BE
+    LDA !ram_shot_timer_past4 : BEQ .initPast
+  .doneInitPast
+    STA !HUD_TILEMAP+$BC
+    LDA !ram_shot_timer_past3 : STA !HUD_TILEMAP+$B8 : STA !ram_shot_timer_past4
+    LDA !ram_shot_timer_past2 : STA !HUD_TILEMAP+$B4 : STA !ram_shot_timer_past3
+    LDA !ram_shot_timer_past1 : STA !HUD_TILEMAP+$B0 : STA !ram_shot_timer_past2
     LDA !ram_shot_timer : LDX #$0088 : JSR Draw4
+    LDA !ram_shot_timer : CMP #$0042 : BPL .setX
+    ASL : TAX : LDA NumberGFXTable,X
+    BRA .setPast1
+
+  .setX
+    LDA !IH_LETTER_X
+
+  .setPast1
+    STA !ram_shot_timer_past1
     TDC : STA !ram_shot_timer
 
   .incShot
     LDA !ram_shot_timer : INC : STA !ram_shot_timer
     LDA !ROOM_ID : CMP.w #ROOM_PhantoonRoom : BEQ .phantoon
     RTS
+
+  .initPast
+    LDA !IH_BLANK : STA !ram_shot_timer_past4 : STA !ram_shot_timer_past3
+    STA !ram_shot_timer_past2 : STA !ram_shot_timer_past1
+    BRA .doneInitPast
 
   .phantoonCheckInit
     LDA !ENEMY_VAR_5
@@ -1558,6 +1585,7 @@ superhud_bottom_table:
     dw status_cooldown
     dw status_shinetimer
     dw status_dashcounter
+    dw status_shinetune
     dw status_iframecounter
     dw status_spikesuit
     dw status_lagcounter
@@ -1578,6 +1606,7 @@ superhud_bottom_table:
     dw status_tacotank
     dw status_pitdoor
     dw status_moondance
+    dw status_kraidradar
     dw status_gateglitch
     dw status_moatcwj
     dw status_robotflush
@@ -1588,6 +1617,7 @@ superhud_bottom_table:
     dw status_snailclip
     dw status_wasteland
     dw status_ridleyai
+    dw status_kihuntermanip
     dw status_downbackzeb
     dw status_zebskip
     dw status_mbhp
@@ -1605,6 +1635,10 @@ superhud_middle_table:
     dw middleHUD_cpuusage
     dw middleHUD_hspeed
     dw middleHUD_shottimer
+    dw middleHUD_itempercent
+    dw middleHUD_reserves
+    dw middleHUD_statusicons
+    dw middleHUD_tilecounter
 
 superhud_top_table:
     dw status_enemyhp_done
@@ -1618,6 +1652,10 @@ superhud_top_table:
     dw topHUD_cpuusage
     dw topHUD_hspeed
     dw topHUD_shottimer
+    dw topHUD_itempercent
+    dw topHUD_reserves
+    dw topHUD_statusicons
+    dw topHUD_tilecounter
 
 middleHUD_chargetimer:
 {
@@ -1956,6 +1994,272 @@ topHUD_shottimer:
 
   .incShot
     LDA !ram_HUD_top_counter : INC : STA !ram_HUD_top_counter
+    RTS
+}
+
+middleHUD_itempercent:
+{
+    LDA !SAMUS_BEAMS_COLLECTED : CLC : ADC !SAMUS_HP_MAX : ADC !SAMUS_RESERVE_MAX
+    ADC !SAMUS_MISSILES_MAX : ADC !SAMUS_SUPERS_MAX : ADC !SAMUS_PBS_MAX
+    CMP !ram_HUD_middle_counter : BEQ .checkMajors
+    STA !ram_HUD_middle_counter : LDA !SAMUS_ITEMS_COLLECTED
+    BRA .calculate
+
+  .checkMajors
+    LDA !SAMUS_ITEMS_COLLECTED : CMP !ram_HUD_middle : BEQ .done
+
+  .calculate
+    STA !ram_HUD_middle
+
+    ; Max HP and Reserves
+    LDA !SAMUS_HP_MAX : CLC : ADC !SAMUS_RESERVE_MAX
+    JSR CalcEtank : STA $C1
+
+    ; Max Missiles, Supers and Power Bombs
+    LDA !SAMUS_MISSILES_MAX : CLC : ADC !SAMUS_SUPERS_MAX : ADC !SAMUS_PBS_MAX
+    JSR CalcItem : CLC : ADC $C1 : STA $C1
+
+    ; Collected items
+    JSR CalcLargeItem : CLC : ADC $C1 : STA $C1
+
+    ; Collected beams and charge
+    JSR CalcBeams : CLC : ADC $C1
+
+    ; Percent counter -> decimal form and drawn on HUD
+    LDX #$0052 : JSR Draw3
+    LDA !IH_PERCENT : STA !HUD_TILEMAP+$58
+
+  .done
+    RTS
+}
+
+topHUD_itempercent:
+{
+    LDA !SAMUS_BEAMS_COLLECTED : CLC : ADC !SAMUS_HP_MAX : ADC !SAMUS_RESERVE_MAX
+    ADC !SAMUS_MISSILES_MAX : ADC !SAMUS_SUPERS_MAX : ADC !SAMUS_PBS_MAX
+    CMP !ram_HUD_top_counter : BEQ .checkMajors
+    STA !ram_HUD_top_counter : LDA !SAMUS_ITEMS_COLLECTED
+    BRA .calculate
+
+  .checkMajors
+    LDA !SAMUS_ITEMS_COLLECTED : CMP !ram_HUD_top : BEQ .done
+
+  .calculate
+    STA !ram_HUD_top
+
+    ; Max HP and Reserves
+    LDA !SAMUS_HP_MAX : CLC : ADC !SAMUS_RESERVE_MAX
+    JSR CalcEtank : STA $C1
+
+    ; Max Missiles, Supers and Power Bombs
+    LDA !SAMUS_MISSILES_MAX : CLC : ADC !SAMUS_SUPERS_MAX : ADC !SAMUS_PBS_MAX
+    JSR CalcItem : CLC : ADC $C1 : STA $C1
+
+    ; Collected items
+    JSR CalcLargeItem : CLC : ADC $C1 : STA $C1
+
+    ; Collected beams and charge
+    JSR CalcBeams : CLC : ADC $C1
+
+    ; Percent counter -> decimal form and drawn on HUD
+    LDX #$0012 : JSR Draw3
+    LDA !IH_PERCENT : STA !HUD_TILEMAP+$18
+
+  .done
+    RTS
+}
+
+middleHUD_reserves:
+{
+    LDA !SAMUS_RESERVE_MAX : BEQ .noReserves
+    CMP !ram_HUD_middle : BEQ .checkReserves
+    STA !ram_HUD_middle : LDA !SAMUS_RESERVE_ENERGY
+    BRA .drawReserves
+
+  .checkReserves
+    LDA !SAMUS_RESERVE_ENERGY : CMP !ram_HUD_middle_counter : BEQ .checkAuto
+
+  .drawReserves
+    STA !ram_HUD_middle_counter : LDX #$0054 : JSR Draw3
+
+  .checkAuto
+    LDA !SAMUS_RESERVE_MODE : CMP #$0001 : BEQ .autoOn
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$5A
+    RTS
+
+  .autoOn
+    LDA !SAMUS_RESERVE_ENERGY : BEQ .autoEmpty
+    LDA !IH_RESERVE_AUTO : STA !HUD_TILEMAP+$5A
+    RTS
+
+  .autoEmpty
+    LDA !IH_RESERVE_EMPTY : STA !HUD_TILEMAP+$5A
+    RTS
+
+  .noReserves
+    CMP !ram_HUD_middle : BEQ .done
+    STA !ram_HUD_middle : LDA !IH_BLANK
+    STA !HUD_TILEMAP+$54 : STA !HUD_TILEMAP+$56
+    STA !HUD_TILEMAP+$58 : STA !HUD_TILEMAP+$5A
+
+  .done
+    RTS
+}
+
+topHUD_reserves:
+{
+    LDA !SAMUS_RESERVE_MAX : BEQ .noReserves
+    CMP !ram_HUD_top : BEQ .checkReserves
+    STA !ram_HUD_top : LDA !SAMUS_RESERVE_ENERGY
+    BRA .drawReserves
+
+  .checkReserves
+    LDA !SAMUS_RESERVE_ENERGY : CMP !ram_HUD_top_counter : BEQ .checkAuto
+
+  .drawReserves
+    STA !ram_HUD_top_counter : LDX #$0014 : JSR Draw3
+
+  .checkAuto
+    LDA !SAMUS_RESERVE_MODE : CMP #$0001 : BEQ .autoOn
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$1A
+    RTS
+
+  .autoOn
+    LDA !SAMUS_RESERVE_ENERGY : BEQ .autoEmpty
+    LDA !IH_RESERVE_AUTO : STA !HUD_TILEMAP+$1A
+    RTS
+
+  .autoEmpty
+    LDA !IH_RESERVE_EMPTY : STA !HUD_TILEMAP+$1A
+    RTS
+
+  .noReserves
+    CMP !ram_HUD_top : BEQ .done
+    STA !ram_HUD_top : LDA !IH_BLANK
+    STA !HUD_TILEMAP+$14 : STA !HUD_TILEMAP+$16
+    STA !HUD_TILEMAP+$18 : STA !HUD_TILEMAP+$1A
+
+  .done
+    RTS
+}
+
+middleHUD_statusicons:
+{
+    ; health bomb
+    LDA !HEALTH_BOMB_FLAG : BEQ .clearHealthBomb
+    LDA !SAMUS_HP : CMP #$0032 : BMI .inHealthBomb
+    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$54
+    BRA .checkElevator
+
+  .inHealthBomb
+    LDA !IH_HEALTHBOMB : STA !HUD_TILEMAP+$54
+    BRA .checkElevator
+
+  .clearHealthBomb
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$54
+
+    ; elevator
+  .checkElevator
+    LDA !ELEVATOR_PROPERTIES : BEQ .clearElevator
+    LDA !IH_ELEVATOR : STA !HUD_TILEMAP+$56
+    BRA .checkSpark
+
+  .clearElevator
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$56
+
+    ; shinespark
+  .checkSpark
+    LDA !SAMUS_SHINE_TIMER : BEQ .clearSpark
+    LDA !IH_SHINESPARK : STA !HUD_TILEMAP+$58
+    BRA .checkReserves
+
+  .clearSpark
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$58
+
+    ; reserve tank
+  .checkReserves
+    LDA !SAMUS_RESERVE_MODE : CMP #$0001 : BNE .clearReserve
+    LDA !SAMUS_RESERVE_ENERGY : BEQ .empty
+    LDA !SAMUS_RESERVE_MAX : BEQ .clearReserve
+    LDA !IH_RESERVE_AUTO : STA !HUD_TILEMAP+$5A
+    RTS
+
+  .empty
+    LDA !SAMUS_RESERVE_MAX : BEQ .clearReserve
+    LDA !IH_RESERVE_EMPTY : STA !HUD_TILEMAP+$5A
+    RTS
+
+  .clearReserve
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$5A
+    RTS
+}
+
+topHUD_statusicons:
+{
+    ; health bomb
+    LDA !HEALTH_BOMB_FLAG : BEQ .clearHealthBomb
+    LDA !SAMUS_HP : CMP #$0032 : BMI .inHealthBomb
+    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$14
+    BRA .checkElevator
+
+  .inHealthBomb
+    LDA !IH_HEALTHBOMB : STA !HUD_TILEMAP+$14
+    BRA .checkElevator
+
+  .clearHealthBomb
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$14
+
+    ; elevator
+  .checkElevator
+    LDA !ELEVATOR_PROPERTIES : BEQ .clearElevator
+    LDA !IH_ELEVATOR : STA !HUD_TILEMAP+$16
+    BRA .checkSpark
+
+  .clearElevator
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$16
+
+    ; shinespark
+  .checkSpark
+    LDA !SAMUS_SHINE_TIMER : BEQ .clearSpark
+    LDA !IH_SHINESPARK : STA !HUD_TILEMAP+$18
+    BRA .checkReserves
+
+  .clearSpark
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$18
+
+    ; reserve tank
+  .checkReserves
+    LDA !SAMUS_RESERVE_MODE : CMP #$0001 : BNE .clearReserve
+    LDA !SAMUS_RESERVE_ENERGY : BEQ .empty
+    LDA !SAMUS_RESERVE_MAX : BEQ .clearReserve
+    LDA !IH_RESERVE_AUTO : STA !HUD_TILEMAP+$1A
+    RTS
+
+  .empty
+    LDA !SAMUS_RESERVE_MAX : BEQ .clearReserve
+    LDA !IH_RESERVE_EMPTY : STA !HUD_TILEMAP+$1A
+    RTS
+
+  .clearReserve
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$1A
+    RTS
+}
+
+middleHUD_tilecounter:
+{
+    LDA !MAP_COUNTER : CMP !ram_HUD_middle : BEQ .done : STA !ram_HUD_middle
+    LDX #$0054 : JSR Draw3
+
+  .done
+    RTS
+}
+
+topHUD_tilecounter:
+{
+    LDA !MAP_COUNTER : CMP !ram_HUD_top : BEQ .done : STA !ram_HUD_top
+    LDX #$0014 : JSR Draw3
+
+  .done
     RTS
 }
 
@@ -3462,22 +3766,22 @@ status_robotflush:
 {
     ; Checking hit on first robot
     LDA !IH_BLANK : STA !HUD_TILEMAP+$88
-    LDA !ENEMY_VAR_1+$40 : CMP #$0030 : BMI .checkfirstfall
+    LDA !ENEMY_VAR_1+!ENEMY_1_OFFSET : CMP #$0030 : BMI .checkfirstfall
     LDA #$0C3C : STA !HUD_TILEMAP+$88
 
   .checkfirstfall
     LDA !IH_BLANK : STA !HUD_TILEMAP+$8A
-    LDA !ENEMY_Y+$40 : CMP #$0280 : BMI .checksecondhit
+    LDA !ENEMY_Y+!ENEMY_1_OFFSET : CMP #$0280 : BMI .checksecondhit
     LDA #$0C3C : STA !HUD_TILEMAP+$8A
 
   .checksecondhit
     LDA !IH_BLANK : STA !HUD_TILEMAP+$8C
-    LDA !ENEMY_VAR_1+$80 : CMP #$0030 : BMI .checksecondfall
+    LDA !ENEMY_VAR_1+!ENEMY_2_OFFSET : CMP #$0030 : BMI .checksecondfall
     LDA #$0C3D : STA !HUD_TILEMAP+$8C
 
   .checksecondfall
     LDA !IH_BLANK : STA !HUD_TILEMAP+$8E
-    LDA !ENEMY_VAR_5+$80 : CMP #$0280 : BMI .done
+    LDA !ENEMY_VAR_5+!ENEMY_2_OFFSET : CMP #$0280 : BMI .done
     LDA #$0C3D : STA !HUD_TILEMAP+$8E
 
   .done
@@ -3652,11 +3956,11 @@ endif
     ; Note by only checking the lower byte of Y position,
     ; the same check now works for the shaktool CF clip
     ; Arbitrary wait of 90 frames before checking
-    CMP #$005A : BMI .inc
-    LDA !SAMUS_X : CMP !ram_xpos : BNE .inc
-    LDA !SAMUS_Y : AND #$00FF : CMP #$00B7 : BNE .inc
-    LDA !SAMUS_Y_SPEED : CMP #$0000 : BNE .inc
-    LDA !SAMUS_Y_SUBSPEED : CMP #$0000 : BNE .inc
+    CMP #$005A : BMI .incNonZeroSpeed
+    LDA !SAMUS_X : CMP !ram_xpos : BNE .incNonZeroSpeed
+    LDA !SAMUS_Y : AND #$00FF : CMP #$00B7 : BNE .incNonZeroSpeed
+    LDA !SAMUS_Y_SPEED : CMP #$0000 : BNE .incNonZeroSpeed
+    LDA !SAMUS_Y_SUBSPEED : CMP #$0000 : BNE .incY2
     LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$8A
     BRA .timecheck
 
@@ -3680,7 +3984,14 @@ endif
     LDA !SAMUS_Y : STA !ram_ypos
     RTS
 
+  .incY2
+    LDA #$0002
+    BRA .inc
+
+  .incNonZeroSpeed
+    TDC
   .inc
+    STA !ram_quickdrop_counter
     ; Arbitrary give up waiting after 192 frames
     LDA !ram_roomstrat_state : CMP #$00C0 : BPL .reset
     INC : STA !ram_roomstrat_state
@@ -3703,11 +4014,18 @@ endif
     LDA #!botwooncf_frame : SEC : SBC !ram_roomstrat_state
     ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
     LDA !IH_LETTER_E : STA !HUD_TILEMAP+$8C
-    ; Keep waiting if we are early
+    ; Keep waiting if we are early for a potential Y1
+    LDA #$0001
     BRA .inc
 
   .frameperfect
+    LDA !ram_quickdrop_counter : BNE .frameY1Y2
     LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$8E
+    BRA .reset
+
+  .frameY1Y2
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$8C
     BRA .reset
 }
 
@@ -4240,13 +4558,13 @@ if !FEATURE_PAL
                                          ; B2 -> END
     dw $B303, $B331, $B3FC               ; [$00+6] B3
     dw $B408, $B451, $B465, $B4A3, $B4E1 ; [$06+A] B4
-    dw $B526, $B564, $B5A4, $B5F5        ; [$10+8] B5
-    dw $B623, $B6B7, $B6ED               ; [$18+6] B6
-    dw $B71E, $B7C9                      ; [$1E+4] B7
+    dw $B526, $B564, $B5A4, $B5CF, $B5F5 ; [$10+A] B5 (B5D4 moved back to B5CF to recover five bytes)
+    dw $B623, $B6B7, $B6E8               ; [$1A+6] B6
+    dw $B71E, $B7C9                      ; [$20+4] B7
                                          ; B8, B9 -> END
-    dw $BAC7                             ; [$22+2] BA
-    dw $BB9F, $BBD4                      ; [$24+4] BB
-    dw $BC01, $BC3E, $BC64               ; [$28+6] BC
+    dw $BAC7                             ; [$24+2] BA
+    dw $BB9F, $BBD4                      ; [$26+4] BB
+    dw $BC01, $BC3E                      ; [$2A+4] BC
     dw $BD5E                             ; [$2E+2] BD
                                          ; BE, BF, C0, C1, C2, C3, C4 -> END
     dw $C50F, $C55F                      ; [$30+4] C5
@@ -4254,13 +4572,13 @@ else
     dw $B2F3                             ; [$00+2] B2
     dw $B321, $B3EC, $B3F8               ; [$02+6] B3
     dw $B441, $B455, $B493, $B4D1        ; [$08+8] B4
-    dw $B516, $B554, $B594, $B5E5        ; [$10+8] B5
-    dw $B613, $B6A7, $B6DD               ; [$18+6] B6
-    dw $B70E, $B7B9                      ; [$1E+4] B7
+    dw $B516, $B554, $B594, $B5BF, $B5E5 ; [$10+A] B5 (B5C4 moved back to B5BF to recover five bytes)
+    dw $B613, $B6A7, $B6D8               ; [$1A+6] B6
+    dw $B70E, $B7B9                      ; [$20+4] B7
                                          ; B8, B9 -> END
-    dw $BAB7                             ; [$22+2] BA
-    dw $BB8F, $BBC4, $BBF1               ; [$24+6] BB
-    dw $BC2E, $BC54                      ; [$2A+4] BC
+    dw $BAB7                             ; [$24+2] BA
+    dw $BB8F, $BBC4, $BBF1               ; [$26+6] BB
+    dw $BC2E                             ; [$2C+2] BC
     dw $BD4E                             ; [$2E+2] BD
                                          ; BE, BF, C0, C1, C2, C3, C4 -> END
     dw $C538, $C588                      ; [$30+4] C5
@@ -4271,12 +4589,12 @@ RidleyAI_prefix_table:
 ; Unused entries are filled with $32 (the last element in the table) to finish the search faster
 if !FEATURE_PAL
     ;   B2   B3   B4   B5   B6   B7             BA   BB   BC   BD
-    db $34, $00, $06, $10, $18, $1E, $34, $34, $22, $24, $28, $2E, $34, $34, $34, $34
+    db $34, $00, $06, $10, $1A, $20, $34, $34, $24, $26, $2A, $2E, $34, $34, $34, $34
     ;                  C5
     db $34, $34, $34, $30, $34, $34, $34, $34, $34, $34, $34, $34, $34, $34, $34, $34
 else
     ;   B2   B3   B4   B5   B6   B7             BA   BB   BC   BD
-    db $00, $02, $08, $10, $18, $1E, $34, $34, $22, $24, $2A, $2E, $34, $34, $34, $34
+    db $00, $02, $08, $10, $1A, $20, $34, $34, $24, $26, $2C, $2E, $34, $34, $34, $34
     ;                  C5
     db $34, $34, $34, $30, $34, $34, $34, $34, $34, $34, $34, $34, $34, $34, $34, $34
 endif
@@ -4293,6 +4611,7 @@ RidleyAI_text_table:
     dw #RidleyAIText_B516 ; climb
     dw #RidleyAIText_B554 ; climbing
     dw #RidleyAIText_B594 ; swoop end
+    dw #RidleyAIText_B5C4 ; hover start
     dw #RidleyAIText_B5E5 ; hover
     dw #RidleyAIText_B613 ; hover spin
     dw #RidleyAIText_B6A7 ; pogo start
@@ -4304,7 +4623,6 @@ RidleyAI_text_table:
     dw #RidleyAIText_BBC4 ; grab move
     dw #RidleyAIText_BBF1 ; dropping
     dw #RidleyAIText_BC2E ; dropped
-    dw #RidleyAIText_BC54 ; hover start
     dw #RidleyAIText_BD4E ; dodge power bomb
     dw #RidleyAIText_C538 ; dead move
     dw #RidleyAIText_C588 ; explode
@@ -4324,6 +4642,7 @@ table ../resources/HUDfont.tbl
   .B516 : db "CLIMB"        : db $FF
   .B554 : db "CLIMBING"     : db $FF
   .B594 : db "SWOOP END"    : db $FF
+  .B5C4 : db "HOVER START"  : db $FF
   .B5E5 : db "HOVER"        : db $FF
   .B613 : db "HOVER SPIN"   : db $FF
   .B6A7 : db "POGO START"   : db $FF
@@ -4335,7 +4654,6 @@ table ../resources/HUDfont.tbl
   .BBC4 : db "GRAB MOVE"    : db $FF
   .BBF1 : db "DROP SAMUS"   : db $FF
   .BC2E : db "DROPPED"      : db $FF
-  .BC54 : db "HOVER START"  : db $FF
   .BD4E : db "DODGE PB"     : db $FF
   .C538 : db "DEAD MOVE"    : db $FF
   .C588 : db "EXPLODE"      : db $FF
@@ -4631,7 +4949,7 @@ status_zebskip:
 
 status_mbhp:
 {
-    LDA !ENEMY_HP+$40 : CMP !ram_mb_hp : BEQ .done : STA !ram_mb_hp
+    LDA !ENEMY_HP+!ENEMY_1_OFFSET : CMP !ram_HUD_check : BEQ .done : STA !ram_HUD_check
     LDX #$0088 : JSR Draw4
 
   .done

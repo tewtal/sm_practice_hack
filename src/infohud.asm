@@ -3,7 +3,10 @@
 ; =======================================================
 
 org $809490
-    JMP $9497    ; skip resetting player 2 inputs
+    BRA $05      ; skip resetting player 2 inputs
+
+org $8094C2
+    BRA $10      ; skip hard-coded soft reset shortcut
 
 org $8094DF
     PLP          ; patch out resetting of controller 2 buttons and enable debug mode
@@ -256,7 +259,11 @@ ih_get_item_code:
     PLY
 if !FEATURE_VANILLAHUD
 else
+    ; assume we are about to collect an item
+    ; adding an extra beam will increase item % by one
+    LDA !SAMUS_BEAMS_COLLECTED : PHA : ORA #$0010 : STA !SAMUS_BEAMS_COLLECTED
     JSL ih_update_hud_code
+    PLA : STA !SAMUS_BEAMS_COLLECTED
 endif
     JSL init_heat_damage_ram
     JSL init_physics_ram
@@ -295,22 +302,28 @@ else
     LDA !ram_seg_rt_minutes : INC : STA !ram_seg_rt_minutes
 endif
 
-    ; Slowdown / Pause / Frame Advance on P2 Dpad
+    ; Slowdown / Pause / Frame Advance
   .doneTimer
     LDA !ram_slowdown_mode : BNE .slowdown
     JMP .done
 
   .slowdown
-    CMP #$FFFF : BEQ .pause
+    BMI .pause
     LDA !ram_slowdown_frames : BNE .delay
 
     ; reset slowdown timer and restore previous inputs
     LDA !ram_slowdown_mode : STA !ram_slowdown_frames
     LDA !ram_slowdown_controller_1 : STA !IH_CONTROLLER_PRI_PREV
     LDA !ram_slowdown_controller_2 : STA !IH_CONTROLLER_SEC_PREV
-
     JSL $809459 ; Read controller input
+
+  .skipDelay
     JMP .done
+
+  .delayDoorTransition
+    LDA !DOOR_FUNCTION_POINTER : CMP #optimized_fade_in : BCC .skipDelay
+    CMP #hijack_after_load_level_data : BEQ .skipDelay
+    BRA .keepDelay
 
   .delay
     CMP !ram_slowdown_mode : BNE .decTimer
@@ -319,6 +332,13 @@ endif
     LDA !IH_CONTROLLER_PRI : EOR !IH_CONTROLLER_PRI_NEW : STA !ram_slowdown_controller_1
     LDA !IH_CONTROLLER_SEC : EOR !IH_CONTROLLER_SEC_NEW : STA !ram_slowdown_controller_2
 
+    LDA !GAMEMODE : CMP #$0007 : BMI .skipDelay
+    CMP #$000B : BEQ .delayDoorTransition
+    CMP #$000D : BMI .keepDelay
+    CMP #$0012 : BEQ .keepDelay
+    CMP #$001B : BNE .skipDelay
+
+  .keepDelay
     LDA !ram_slowdown_frames
 
   .decTimer
@@ -329,32 +349,12 @@ endif
     JMP .done
 
   .pause
-    LDA !IH_CONTROLLER_PRI : CMP !sram_ctrl_menu : BNE .noMenu
-    LDA !IH_PAUSE : STA !IH_CONTROLLER_SEC_NEW
-    BRA .frameAdvance
-
-  .noMenu
-    LDA !ram_slowdown_frames : BNE .checkFrameAdvance
-    ; remain paused, store inputs
-    INC : STA !ram_slowdown_frames
-
-  .storeInputs
-    LDA !IH_CONTROLLER_PRI : EOR !IH_CONTROLLER_PRI_NEW : STA !ram_slowdown_controller_1
-    LDA !IH_CONTROLLER_SEC : EOR !IH_CONTROLLER_SEC_NEW : STA !ram_slowdown_controller_2
-
-  .checkFrameAdvance
-    LDA !IH_CONTROLLER_SEC_NEW : CMP !IH_PAUSE : BEQ .frameAdvance
-    CMP !IH_RESET : BNE .checkFreezeOnLoad
-    ; resume normal play
-    TDC : STA !ram_slowdown_mode : STA !ram_slowdown_frames
-    BRA .done
-
-  .checkFreezeOnLoad
     ; option to pause on loadstate
-    LDA !ram_freeze_on_load : BEQ .frozen
-    LDA !IH_CONTROLLER_PRI_NEW : BEQ .frozen
+    LDA !ram_freeze_on_load : BEQ .checkFrameAdvance
+    LDA !IH_CONTROLLER_PRI_NEW : BEQ .checkFrameAdvance
     ; unfreeze
     TDC : STA !ram_slowdown_mode : STA !ram_slowdown_frames
+    STA !ram_freeze_on_load
 if !FEATURE_SD2SNES
     LDA !SRAM_SEG_TIMER_F : STA !ram_seg_rt_frames
     LDA !SRAM_SEG_TIMER_S : STA !ram_seg_rt_seconds
@@ -364,16 +364,50 @@ else
     STA !ram_seg_rt_seconds
     STA !ram_seg_rt_minutes
 endif
-    BRA .done
+    JMP .done
+
+  .pauseDoorTransition
+    LDA !DOOR_FUNCTION_POINTER : CMP #optimized_fade_in : BCC .done
+    CMP #hijack_after_load_level_data : BEQ .done
+    BRA .keepPause
+
+  .checkFrameAdvance
+    LDA !ram_slowdown_mode : CMP !SLOWDOWN_PAUSED : BNE .frameAdvance
+    LDA !GAMEMODE : CMP #$0007 : BMI .done
+    CMP #$000B : BEQ .pauseDoorTransition
+    CMP #$000D : BMI .keepPause
+    CMP #$0012 : BEQ .keepPause
+    CMP #$001B : BNE .done
+
+  .keepPause
+    LDA !ram_slowdown_frames : BNE .frozen
+    INC : STA !ram_slowdown_frames
+
+    ; we just ran a new frame, store previous inputs
+    LDA !IH_CONTROLLER_PRI : EOR !IH_CONTROLLER_PRI_NEW : STA !ram_slowdown_controller_1
+    LDA !IH_CONTROLLER_SEC : EOR !IH_CONTROLLER_SEC_NEW : STA !ram_slowdown_controller_2
 
   .frozen
-    ; request a lag frame
+    ; Set overflow and carry flags before calling routine
+    SEP #$41
+    JSL !CTRL_SHORTCUT_ROUTINE
+    CLV
+
+    ; Main menu doesn't work out the NMI routine,
+    ; so instead of running, it changes ram_slowdown_mode instead
+    ; Use this as a trigger to run the current frame
+    ; Also check for regular frame advance here
+    LDA !ram_slowdown_mode : CMP !SLOWDOWN_PAUSED_MAIN_MENU : BEQ .done
+    BMI .frameAdvance
+
+    ; Request a lag frame
     %a8() : LDA #$01 : STA !NMI_REQUEST_FLAG : %a16()
     BRA .done
 
   .frameAdvance
     ; run a new frame
     TDC : STA !ram_slowdown_frames
+    DEC : STA !ram_slowdown_mode
     LDA !ram_slowdown_controller_1 : STA !IH_CONTROLLER_PRI_PREV
     LDA !ram_slowdown_controller_2 : STA !IH_CONTROLLER_SEC_PREV
     JSL $809459 ; Read controller input
@@ -407,17 +441,24 @@ ih_after_room_transition:
 
     ; Check if MBHP needs to be disabled
     LDA !sram_display_mode : CMP !IH_MODE_ROOMSTRAT_INDEX : BNE .segmentTimer
-    LDA !sram_room_strat : CMP !IH_STRAT_MBHP_INDEX : BNE .segmentTimer
+    LDA !sram_room_strat : BEQ .checkSuperHUD
+    CMP !IH_STRAT_MBHP_INDEX : BNE .segmentTimer
     LDA !ROOM_ID : CMP.w #ROOM_MotherBrainRoom : BEQ .segmentTimer
     TDC : STA !sram_display_mode
+    BRA .segmentTimer
+
+  .checkSuperHUD
+    LDA !sram_superhud_bottom : CMP !IH_SUPERHUD_MBHP_BOTTOM_INDEX : BNE .segmentTimer
+    LDA !ROOM_ID : CMP.w #ROOM_MotherBrainRoom : BEQ .segmentTimer
+    TDC : STA !sram_superhud_bottom
 
   .segmentTimer
-    LDA !ram_reset_segment_later : AND #$0001 : BEQ .updateHud
+    LDA !ram_reset_segment_later : AND #$0001 : BEQ .updateHUD
     TDC : STA !ram_reset_segment_later : STA !ram_lag_counter
     STA !ram_seg_rt_frames : STA !ram_seg_rt_seconds : STA !ram_seg_rt_minutes
 
-  .updateHud
-    JSL ih_update_hud_code
+  .updateHUD
+    JSL ih_update_hud_after_transition
 
     ; Reset realtime and gametime/transition timers
     TDC : STA !ram_realtime_room : STA !ram_transition_counter
@@ -486,6 +527,11 @@ ih_before_room_transition:
     LDX #$00C2
     LDA !sram_top_display_mode : BIT.b !TOP_HUD_VANILLA_BIT : BNE .vanillaDoorLag
     LDA !ram_minimap : BEQ .draw3
+    LDA !sram_display_mode : CMP.b !IH_MODE_ROOMSTRAT_INDEX : BNE .drawDoorMM
+    LDA !sram_room_strat : BNE .drawDoorMM
+    %a16()
+    BRA .done
+  .drawDoorMM
     LDX #$0054
   .draw3
     TYA : JSR Draw3
@@ -696,16 +742,53 @@ ih_update_hud_before_transition:
     ; Bank 80
     PEA $8080 : PLB : PLB
 
-    LDA !sram_display_mode : CMP !IH_MODE_ARMPUMP_INDEX : BNE .start
+    LDA !sram_display_mode : CMP !IH_MODE_ARMPUMP_INDEX : BNE ih_update_hud_after_transition_start
 
     ; Report armpump room totals
+  .armpump
     LDA !ram_momentum_sum : CLC : ADC !ram_momentum_count : LDX #$0088 : JSR Draw4
     LDA !ram_fail_sum : CLC : ADC !ram_fail_count : LDX #$0092 : JSR Draw4
     TDC : STA !ram_momentum_count : STA !ram_fail_count
     STA !ram_momentum_sum : STA !ram_fail_sum : STA !ram_roomstrat_counter
+    BRA ih_update_hud_code_start
+}
+
+ih_update_hud_after_transition:
+{
+    PHX : PHY : PHP : PHB
+    ; Bank 80
+    PEA $8080 : PLB : PLB
 
   .start
-    BRA ih_update_hud_code_start
+    LDA !sram_display_mode : CMP !IH_MODE_ROOMSTRAT_INDEX : BNE ih_update_hud_code_start
+    LDA !sram_room_strat : BNE ih_update_hud_code_start
+
+    ; Update Super HUD lag counters
+    LDA !sram_superhud_top : CMP !IH_SUPERHUD_LAG_COUNTER_TOP_INDEX : BNE .middleHUD
+    LDA !sram_lag_counter_mode : BNE .topFullTime
+    LDA !ram_last_door_lag_frames
+    BRA .topDrawTime
+  .topFullTime
+    LDA !ram_last_realtime_door
+  .topDrawTime
+    LDX #$0014 : JSR Draw3
+    TDC : STA !ram_HUD_top
+
+  .middleHUD
+    LDA !sram_superhud_middle : CMP !IH_SUPERHUD_LAG_COUNTER_MIDDLE_INDEX : BNE .bottomHUD
+    LDA !sram_lag_counter_mode : BNE .middleFullTime
+    LDA !ram_last_door_lag_frames
+    BRA .middleDrawTime
+  .middleFullTime
+    LDA !ram_last_realtime_door
+  .middleDrawTime
+    LDX #$0054 : JSR Draw3
+    TDC : STA !ram_HUD_middle
+
+    ; Check armpump
+  .bottomHUD
+    LDA !sram_superhud_bottom : CMP !IH_SUPERHUD_ARMPUMP_BOTTOM_INDEX : BNE ih_update_hud_code_start
+    JMP ih_update_hud_before_transition_armpump
 }
 
 ih_update_hud_code:
@@ -715,15 +798,19 @@ ih_update_hud_code:
     PEA $8080 : PLB : PLB
 
   .start
-    LDA !ram_minimap : BNE .mmHud
+    LDA !ram_minimap : BNE .mmHUD
     JMP .startUpdate
 
   .mmVanilla
     JMP .end
 
-  .mmHud
+  .mmHUD
     ; Map visible, so draw map counter over item%
     LDA !sram_top_display_mode : BIT !TOP_HUD_VANILLA_BIT : BNE .mmVanilla
+    LDA !sram_display_mode : CMP !IH_MODE_ROOMSTRAT_INDEX : BNE .mmTileCounter
+    LDA !sram_room_strat : BEQ .mmRoomTimer
+
+  .mmTileCounter
     LDA !MAP_COUNTER : LDX #$0014 : JSR Draw3
     LDA !ram_print_segment_timer : BEQ .mmRoomTimer
 
@@ -756,6 +843,7 @@ ih_update_hud_code:
     LDA $C1 : ASL : TAX
     LDA HexToNumberGFX1,X : STA !HUD_TILEMAP+$B6
     LDA HexToNumberGFX2,X : STA !HUD_TILEMAP+$B8
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$AE : STA !HUD_TILEMAP+$BA
     JMP .end
 
   .startUpdate
@@ -790,16 +878,18 @@ ih_update_hud_code:
 
     ; 3 tiles between input display and missile icon
     ; skip item% if display mode = vspeed
-    LDA !sram_display_mode : CMP !IH_MODE_VSPEED_INDEX : BEQ .skipToLag
     LDA !sram_top_display_mode : BNE .skipToLag
+    LDA !sram_display_mode : CMP !IH_MODE_VSPEED_INDEX : BEQ .skipToLag
+    CMP !IH_MODE_ROOMSTRAT_INDEX : BNE .drawItemPercent
+    LDA !sram_room_strat : BEQ .skipToLag
 
-    ; Draw Item percent
+  .drawItemPercent
     ; Max HP and Reserves
     LDA !SAMUS_HP_MAX : CLC : ADC !SAMUS_RESERVE_MAX
     JSR CalcEtank : STA $C1
 
-    ; Max Missiles, Supers & Power Bombs
-    LDA !SAMUS_MISSILES_MAX : CLC : ADC !SAMUS_SUPERS_MAX : CLC : ADC !SAMUS_PBS_MAX
+    ; Max Missiles, Supers and Power Bombs
+    LDA !SAMUS_MISSILES_MAX : CLC : ADC !SAMUS_SUPERS_MAX : ADC !SAMUS_PBS_MAX
     JSR CalcItem : CLC : ADC $C1 : STA $C1
 
     ; Collected items
@@ -926,17 +1016,17 @@ ih_hud_vanilla_health:
     %a16()
     PEA $0000 : PLA ; wait for CPU math
     LDA $4214 : STA $14
-    LDA $4216 : STA $12
+    LDA $4216 : PHA
     LDA !SAMUS_HP_MAX : STA $4204
     %a8()
     LDA #$64 : STA $4206
     %a16()
     PEA $0000 : PLA ; wait for CPU math
     LDY #$0000 : LDA $4214
-    INC : STA $16
+    INC : STA $12
 
   .loopTanks
-    DEC $16 : BEQ .drawEmptyTanks
+    DEC $12 : BEQ .drawEmptyTanks
     LDX #$3430
     LDA $14 : BEQ .drawTankHealth
     DEC $14 : LDX #$2831
@@ -953,8 +1043,8 @@ ih_hud_vanilla_health:
     INY #2 : CPY #$001C : BMI .loopEmptyTanks
 
   .subtankHealth
-    LDA $12 : LDX #$0094 : JSR Draw2
-    LDA $16 : BNE .subtankWhitespace
+    PLA : LDX #$0094 : JSR Draw2
+    LDA $12 : BNE .subtankWhitespace
     ; Draw the leading zero
     LDA.w NumberGFXTable : STA !HUD_TILEMAP+$94
 
@@ -1081,7 +1171,11 @@ endif
   .reserves
     LDA !sram_top_display_mode : BEQ .statusIcons
     BIT !TOP_HUD_VANILLA_BIT : BNE .vanilla_check_health
+    LDA !sram_display_mode : CMP !IH_MODE_ROOMSTRAT_INDEX : BNE .checkReserves
+    LDA !sram_room_strat : BNE .checkReserves
+    RTL
 
+  .checkReserves
     LDA !SAMUS_RESERVE_MAX : BEQ .noReserves
     LDA !SAMUS_RESERVE_ENERGY : CMP !ram_reserves_last : BEQ .checkAuto
     STA !ram_reserves_last : LDX #$0014 : JSR Draw3
@@ -1094,11 +1188,11 @@ endif
   .autoOn
     LDA !SAMUS_RESERVE_ENERGY : BEQ .autoEmpty
     LDA !IH_RESERVE_AUTO : STA !HUD_TILEMAP+$1A
-    BRA .statusIcons
+    BRA .reservesStatusIcons
 
   .autoEmpty
     LDA !IH_RESERVE_EMPTY : STA !HUD_TILEMAP+$1A
-    BRA .statusIcons
+    BRA .reservesStatusIcons
 
   .noReserves
     LDA !IH_BLANK
@@ -1106,6 +1200,10 @@ endif
     STA !HUD_TILEMAP+$18 : STA !HUD_TILEMAP+$1A
 
     ; Status Icons
+  .reservesStatusIcons
+    LDA !sram_status_icons : BNE .checkHealthBomb
+    RTL
+
   .statusIcons
     LDA !sram_status_icons : BNE .checkSuperHUD
     RTL
@@ -1143,25 +1241,25 @@ endif
   .checkSpark
     LDA !SAMUS_SHINE_TIMER : BEQ .clearSpark
     LDA !IH_SHINESPARK : STA !HUD_TILEMAP+$58
-    BRA .checkReserves
+    BRA .checkReserveIcon
 
   .clearSpark
     LDA !IH_BLANK : STA !HUD_TILEMAP+$58
 
     ; reserve tank
-  .checkReserves
-    LDA !SAMUS_RESERVE_MODE : CMP #$0001 : BNE .clearReserve
+  .checkReserveIcon
+    LDA !SAMUS_RESERVE_MODE : CMP #$0001 : BNE .clearReserveIcon
     LDA !SAMUS_RESERVE_ENERGY : BEQ .empty
-    LDA !SAMUS_RESERVE_MAX : BEQ .clearReserve
+    LDA !SAMUS_RESERVE_MAX : BEQ .clearReserveIcon
     LDA !IH_RESERVE_AUTO : STA !HUD_TILEMAP+$1A
     RTL
 
   .empty
-    LDA !SAMUS_RESERVE_MAX : BEQ .clearReserve
+    LDA !SAMUS_RESERVE_MAX : BEQ .clearReserveIcon
     LDA !IH_RESERVE_EMPTY : STA !HUD_TILEMAP+$1A
     RTL
 
-  .clearReserve
+  .clearReserveIcon
     LDA !IH_BLANK : STA !HUD_TILEMAP+$1A
 
   .end
@@ -1566,8 +1664,6 @@ ih_game_loop_code:
 
     LDA !ram_game_loop_extras : BNE .extrafeatures
 
-  .checkinputs
-    LDA !IH_CONTROLLER_SEC_NEW : BNE .handleinputs
     ; overwritten code + return
     JML $808111
 
@@ -1589,79 +1685,37 @@ ih_game_loop_code:
     JSR magic_pants
   .pants_done
 
-    LDA !ram_infinite_ammo : BEQ .checkinputs
+    LDA !ram_infinite_ammo : BEQ .infinite_ammo_done
     LDA !SAMUS_MISSILES_MAX : STA !SAMUS_MISSILES
     LDA !SAMUS_SUPERS_MAX : STA !SAMUS_SUPERS
     LDA !SAMUS_PBS_MAX : STA !SAMUS_PBS
-    BRA .checkinputs
+  .infinite_ammo_done
 
-  .handleinputs
-    CMP !IH_PAUSE : BEQ .toggle_pause
-    CMP !IH_SLOWDOWN : BEQ .toggle_slowdown
-    CMP !IH_SPEEDUP : BEQ .toggle_speedup
-    CMP !IH_RESET : BEQ .reset_slowdown
-if !FEATURE_VANILLAHUD
-else
-    CMP !IH_STATUS_R : BEQ .inc_statusdisplay
-    CMP !IH_STATUS_L : BEQ .dec_statusdisplay
-endif
-
-  .done
-    JML $808111 ; overwritten code + return
-
-  .toggle_pause
-    TDC : STA !ram_slowdown_frames
-    DEC : STA !ram_slowdown_mode
-    BRA .done
-
-  .toggle_slowdown
-    LDA !ram_slowdown_mode : INC : STA !ram_slowdown_mode
-    BRA .done
-
-  .toggle_speedup
-    LDA !ram_slowdown_mode : BEQ .done
-    DEC : STA !ram_slowdown_mode
-    BRA .done
-
-  .reset_slowdown
-    TDC : STA !ram_slowdown_mode : STA !ram_slowdown_frames
-    BRA .done
+    ; overwritten code + return
+    JML $808111
+}
 
 if !FEATURE_VANILLAHUD
 else
-  .inc_statusdisplay
-    LDA !sram_display_mode : INC
-    CMP !IH_MODE_COUNT : BNE .set_displaymode
-    TDC
-    BRA .set_displaymode
-
-  .dec_statusdisplay
-    LDA !sram_display_mode : DEC
-    CMP #$FFFF : BNE .set_displaymode
-    LDA !IH_MODE_COUNT-1
-
-  .set_displaymode
-    STA !sram_display_mode
-    JSL init_print_segment_timer
-
-  .update_status
+ih_update_status:
+{
     TDC
     STA !ram_momentum_sum : STA !ram_momentum_count
-    STA !ram_HUD_check
+    STA !ram_HUD_check : STA !ram_shot_timer
+    STA !ram_quickdrop_counter : STA !ram_walljump_counter
     STA !ram_roomstrat_counter : STA !ram_roomstrat_state
     STA !ram_armed_shine_duration
     STA !ram_fail_count : STA !ram_fail_sum
     INC
-    STA !ram_enemy_hp : STA !ram_mb_hp
+    STA !ram_enemy_hp
     STA !ram_dash_counter : STA !ram_shine_counter
     STA !ram_xpos : STA !ram_ypos : STA !ram_subpixel_pos
     LDA !ram_seed_X : LSR
     STA !ram_HUD_top : STA !ram_HUD_middle
     STA !ram_HUD_top_counter : STA !ram_HUD_middle_counter
-
-    JML $808111 ; overwritten code + return
-endif ; !FEATURE_VANILLAHUD
+    JML init_print_segment_timer
 }
+endif ; !FEATURE_VANILLAHUD
 
 metronome:
 {
@@ -1923,16 +1977,16 @@ infidoppler_hook_fire_missile:
     LDX $14     ; projectile index
     SEC
 
-    LDA !SAMUS_X_SUBPX : SBC !ram_infidoppler_subx
-    AND #$FF00 : STA !ram_infidoppler_offsets,X
-    LDA !SAMUS_X : SBC !ram_infidoppler_x
-    AND #$00FF : ORA !ram_infidoppler_offsets,X : STA !ram_infidoppler_offsets,X
+    LDA !SAMUS_X_SUBPX : SBC !eram_infidoppler_subx
+    AND #$FF00 : STA !eram_infidoppler_offsets,X
+    LDA !SAMUS_X : SBC !eram_infidoppler_x
+    AND #$00FF : ORA !eram_infidoppler_offsets,X : STA !eram_infidoppler_offsets,X
 
-    LDA !ram_infidoppler_x : STA !SAMUS_X
-    LDA !ram_infidoppler_subx : STA !SAMUS_X_SUBPX
+    LDA !eram_infidoppler_x : STA !SAMUS_X
+    LDA !eram_infidoppler_subx : STA !SAMUS_X_SUBPX
 
-    LDA !ram_infidoppler_y : STA !SAMUS_Y
-    LDA !ram_infidoppler_suby : STA !SAMUS_Y_SUBPX
+    LDA !eram_infidoppler_y : STA !SAMUS_Y
+    LDA !eram_infidoppler_suby : STA !SAMUS_Y_SUBPX
 
   .done
     DEC !SAMUS_MISSILES
@@ -1966,21 +2020,23 @@ infidoppler_hook_projectile_collision:
     CPX #$0000 : BNE .no              ; Is this phantoon?
 
     ; Is phantoon in a swoop?
+    LDA !ENEMY_VAR_5
 if !FEATURE_PAL
-    LDA !ENEMY_VAR_5 : CMP #$D6AC : BNE .no
+    CMP #$D6AC
 else
-    LDA !ENEMY_VAR_5 : CMP #$D678 : BNE .no
+    CMP #$D678
 endif
+    BNE .no
 
     ; Stop infidoppler if health is 100 or less
     LDA !ENEMY_HP : CMP #$0065 : BCC .disable
 
     ; Initialize infidoppler
     LDA #$FFFF : STA !ram_infidoppler_active
-    LDA !SAMUS_X : STA !ram_infidoppler_x
-    LDA !SAMUS_X_SUBPX : STA !ram_infidoppler_subx
-    LDA !SAMUS_Y : STA !ram_infidoppler_y
-    LDA !SAMUS_Y_SUBPX : STA !ram_infidoppler_suby
+    LDA !SAMUS_X : STA !eram_infidoppler_x
+    LDA !SAMUS_X_SUBPX : STA !eram_infidoppler_subx
+    LDA !SAMUS_Y : STA !eram_infidoppler_y
+    LDA !SAMUS_Y_SUBPX : STA !eram_infidoppler_suby
 
     BRA .no
 
@@ -1989,7 +2045,7 @@ endif
 
     ; We've shot Phantoon with a missile in infidoppler mode.
     ; if projectile variable is 0, this missile has already hit
-    LDA !ram_infidoppler_offsets,X
+    LDA !eram_infidoppler_offsets,X
     BEQ .done
 
     ; Stop infidoppler if health is 100 or less
@@ -1998,14 +2054,14 @@ endif
     ; Subtract projectile variable from missile position
     ; the LOW 8 bits are pixels, the HIGH 8 bits are fractional
     ; yes, it's weird. but it saves a couple XBAs
-    LDA !ram_infidoppler_offsets,X : PHA : AND #$FF00 : SEC
+    LDA !eram_infidoppler_offsets,X : PHA : AND #$FF00 : SEC
     EOR #$FFFF : ADC !SAMUS_PROJ_X_SUBPX,Y : STA !SAMUS_PROJ_X_SUBPX,Y
     PLA : AND #$00FF
     EOR #$FFFF : ADC !SAMUS_PROJ_X,Y : STA !SAMUS_PROJ_X,Y
 
     ; halve damage, since it will double hit
     LSR !SAMUS_PROJ_DAMAGE,X
-    TDC : STA !ram_infidoppler_offsets,X
+    TDC : STA !eram_infidoppler_offsets,X
     TAX : INC
 
   .done

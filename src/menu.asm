@@ -95,6 +95,29 @@ cm_boot:
     LDA #$04 : STA $212C ; Enable BG3; disable all else
     %a16()
     JSR cm_init
+    LDA !ram_sram_detection : BEQ .skip_splash_screen
+
+    TDC : STA !ram_cm_brb
+    STA !ram_cm_brb_timer
+    STA !ram_cm_brb_frames
+    STA !ram_cm_brb_secs
+    STA !ram_cm_brb_mins
+    STA !ram_cm_brb_screen
+    STA !ram_cm_brb_timer_mode
+    STA !ram_cm_brb_scroll
+    STA !ram_cm_brb_scroll_X
+    STA !ram_cm_brb_scroll_Y
+    STA !ram_cm_brb_scroll_H
+    STA !ram_cm_brb_scroll_V
+    STA !ram_cm_brb_scroll_timer
+    ; Palette option is initialized to FFFF
+    DEC : STA !ram_cm_brb_palette
+    JSL cm_brb_loop
+    JSL cm_wait_for_lag_frame
+    JSL cm_transfer_custom_tileset
+    JSL refresh_cgram_long
+
+  .skip_splash_screen
     JSL cm_draw
     JSR cm_loop
 
@@ -108,6 +131,7 @@ cm_boot:
     LDA #$0001 : STA !ram_minimap
 
   .check_preset
+    JSL cm_write_ctrl_routine
     LDA !ram_custom_preset : BNE .preset_load
     LDA !ram_load_preset : BEQ .main_game_loop
 
@@ -138,34 +162,34 @@ cm_init:
     LDA !ram_seg_rt_minutes : STA !ram_cm_preserved_timers+6
 
     ; Preserve and disable slowdown mode
-    TDC : STA !ram_cm_slowdown_mode : STA !ram_slowdown_frames
-    LDA !ram_slowdown_mode : BMI .paused
+    TDC : STA !ram_cm_slowdown_mode : STA !ram_cm_slowdown_frames
+    LDA !ram_slowdown_mode : BEQ .done_slowdown : BMI .paused
     STA !ram_cm_slowdown_frames
-    LDA !ram_slowdown_mode : BEQ .done_slowdown
     LDA #$0002 : STA !ram_cm_slowdown_mode
     BRA .done_slowdown
+
   .paused
     LDA #$0001 : STA !ram_cm_slowdown_mode
   .done_slowdown
-    TDC : STA !ram_slowdown_mode
+    TDC : STA !ram_slowdown_mode : STA !ram_slowdown_frames
 
     JSL initialize_ppu_long
     JSL cm_transfer_custom_tileset
     JSL cm_transfer_custom_cgram
+    JSL cm_condense_ctrl_shortcuts
 
     ; Set up menu state
     TDC : STA !MENU_STACK_INDEX : STA !ram_cm_cursor_stack
-    STA !ram_cm_horizontal_cursor
-    STA !ram_cm_ctrl_mode : STA !ram_cm_ctrl_timer
+    STA !ram_cm_horizontal_cursor : STA !ram_cm_ctrl_mode
     STA !ram_cm_leave : STA !ram_load_preset
     STA !IH_CONTROLLER_PRI_NEW : STA !IH_CONTROLLER_PRI
+    STA !IH_CONTROLLER_SEC_NEW : STA !IH_CONTROLLER_SEC
 
     LDA !FRAME_COUNTER : STA !ram_cm_input_counter
     LDA.w #MainMenu : STA !ram_cm_menu_stack
     LDA.w #MainMenu>>16 : STA !ram_cm_menu_bank
 
     JSL cm_calculate_max
-    JSL cm_set_etanks_and_reserve
     LDA !sram_suit_properties : AND !SUIT_PROPERTIES_MASK
     STA !ram_cm_suit_properties
     RTS
@@ -177,6 +201,7 @@ cm_exit:
     JSL cm_transfer_original_tileset
     JSL overwrite_HUD_numbers
     JSL cm_transfer_original_cgram
+    JSL cm_write_ctrl_routine
 
     ; Update HUD (in case we added missiles etc.)
     LDA !ram_gametime_room : STA $C1
@@ -187,7 +212,9 @@ cm_exit:
     JSL $809B44 ; Handle HUD tilemap
 if !FEATURE_VANILLAHUD
 else
+    LDA #$FFFF : STA !ram_reserves_last
     JSL ih_update_hud_code
+    JSL ih_update_status
 endif
     LDA !ram_seed_X : STA !sram_seed_X
     LDA !ram_seed_Y : STA !sram_seed_Y
@@ -222,10 +249,13 @@ endif
     ; Restore slowdown mode
     LDA !ram_cm_slowdown_mode : BEQ .done_slowdown
     DEC : BEQ .paused
-    LDA !ram_cm_slowdown_frames : BRA .done_slowdown
+    LDA !ram_cm_slowdown_frames
+    BRA .done_slowdown
+
   .paused
     JSL EnsureSamusIsDrawn_long
-    LDA #$FFFF
+    LDA #$0001 : STA !ram_slowdown_frames
+    LDA !SLOWDOWN_PAUSED
   .done_slowdown
     STA !ram_slowdown_mode
     RTS
@@ -665,18 +695,41 @@ cm_tilemap_menu:
   .footer
     ; menu pointer + header pointer + 1 = footer
     TYA : CLC : ADC !DP_CurrentMenu : INC : STA !DP_CurrentMenu
-    LDA [!DP_CurrentMenu] : CMP #$F007 : BNE .done
+    LDA [!DP_CurrentMenu] : CMP #$F006 : BEQ .ctrlShortcutFooter : CMP #$F007 : BNE .done
 
     ; INC past #$F007
     INC !DP_CurrentMenu : INC !DP_CurrentMenu : STZ !DP_Palette
-    ; Optional footer
+
 if !FEATURE_TALLMENU
     LDX #$0686
 else
     LDX #$0646
 endif
+    JMP cm_draw_text
+
+  .ctrlShortcutFooter
+    ; INC past #$F006
+    INC !DP_CurrentMenu : INC !DP_CurrentMenu : STZ !DP_Palette
+if !FEATURE_TALLMENU
+    LDX #$0646
+else
+    LDX #$0606
+endif
     JSR cm_draw_text
-    RTS
+    ; menu pointer + footer pointer + 1 = second footer
+    TYA : CLC : ADC !DP_CurrentMenu : INC : STA !DP_CurrentMenu
+
+    ; the first part of the second line is custom
+if !FEATURE_TALLMENU
+    LDX #$0694
+else
+    LDX #$0654
+endif
+    LDA #$6C80 : STA !ram_tilemap_buffer-$E,X
+    LDA #$285E : STA !ram_tilemap_buffer-$A,X
+    LDA #$2861 : STA !ram_tilemap_buffer-$8,X
+    LDA #$2C80 : STA !ram_tilemap_buffer-$4,X
+    JMP cm_draw_text
 
   .done
     ; no footer, back up two bytes
@@ -1168,28 +1221,84 @@ draw_choice_jsl_text:
 
   .found
     ; go to jsl text
-    %a16()
     LDA [!DP_CurrentMenu] : CLC : ADC #$0006 : STA !DP_CurrentMenu
     JMP cm_draw_text
 }
 
 draw_ctrl_shortcut:
 {
-    ; grab the memory address (long)
-    LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : INC !DP_CurrentMenu : STA !DP_Address
-    LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : STA !DP_Address+2
+    ; grab the slot number
+    LDA [!DP_CurrentMenu] : AND #$00FF
 
-    ; draw the text
+    ; at most one slot will allow a shortcut to be added
+    ; check if it is this one
+    CMP !ram_cm_ctrl_add_shortcut_slot : BNE .notAddShortcut
+
+    LDA #ctrl_add_shortcut_dm_text : STA !DP_CurrentMenu
     %item_index_to_vram_index()
-    PHX
-    JSR cm_draw_text
+    JMP cm_draw_text
 
+  .notAddShortcut
+    ; grab the inputs
+    ASL : TAX
+    LDA !sram_ctrl_1_shortcut_inputs,X : PHA
+    LDA !sram_ctrl_2_shortcut_inputs,X : PHA
+
+    ; grab the shortcut type
+    TXA : LSR : TAX
+    CMP #$001E : BPL .additional
+    LDA !sram_ctrl_shortcut_selections,X
+    BIT !CTRL_SHORTCUT_EXACT_MATCH : BEQ .prepareText
+
+  .prepareExactMatchText
+    ; select text from shortcut type
+    AND !CTRL_SHORTCUT_TYPE_MASK : BEQ .skipDraw
+    ASL : TAX : LDA.l ctrl_shortcut_text_table,X : STA !DP_CurrentMenu
+
+    ; draw text
+    %item_index_to_vram_index()
+    PHX : JSR cm_draw_text : PLX
+
+    ; draw preceding equals sign
+    LDA #$DB00 : ORA !DP_Palette : XBA
+    STA !ram_tilemap_buffer-$2,X : TXA
+    BRA .drawInputs
+
+  .skipDraw
+    PLA : PLA
+    RTS
+
+  .additional
+    LDA !sram_ctrl_additional_selections,X
+    BIT !CTRL_SHORTCUT_EXACT_MATCH : BNE .prepareExactMatchText
+
+  .prepareText
+    ; select text from shortcut type
+    AND !CTRL_SHORTCUT_TYPE_MASK : BEQ .skipDraw
+    ASL : TAX : LDA.l ctrl_shortcut_text_table,X : STA !DP_CurrentMenu
+
+    ; draw text
+    %item_index_to_vram_index()
+    PHX : JSR cm_draw_text : PLA
+
+  .drawInputs
     ; set position of inputs
-    PLA : CLC : ADC #$0022 : TAX
+    CLC : ADC #$0032 : TAX
 
     ; draw the inputs
-    LDA [!DP_Address]
-    JMP menu_ctrl_input_display
+    PLA : JSR menu_ctrl_2_input_display
+    PLA : JSR menu_ctrl_1_input_display
+    TXA : AND #$003F : CMP #$0038 : BNE .end
+
+    ; draw dashes when input is empty
+    LDA #$CC00 : ORA !DP_Palette : XBA
+    STA !ram_tilemap_buffer,X
+    STA !ram_tilemap_buffer-$2,X
+    STA !ram_tilemap_buffer-$4,X
+
+  .end
+    RTS
+
 }
 
 draw_controller_input:
@@ -1668,41 +1777,65 @@ cm_draw_text:
 ; Input Display
 ; --------------
 
-menu_ctrl_input_display:
+menu_ctrl_2_input_display:
 ; X = pointer to tilemap area (STA !ram_tilemap_buffer,X)
 ; A = Controller word
 {
-    PHA
-
     ; clear out tilemap area
+    PHA
     LDA !MENU_BLANK
     STA !ram_tilemap_buffer,X
-    STA !ram_tilemap_buffer+$2,X
-    STA !ram_tilemap_buffer+$4,X
-    STA !ram_tilemap_buffer+$6,X
-    STA !ram_tilemap_buffer+$8,X
-    STA !ram_tilemap_buffer+$A,X
-    STA !ram_tilemap_buffer+$C,X
-    STA !ram_tilemap_buffer+$E,X
-    STA !ram_tilemap_buffer+$10,X
+    STA !ram_tilemap_buffer-$2,X
+    STA !ram_tilemap_buffer-$4,X
+    STA !ram_tilemap_buffer-$6,X
+    STA !ram_tilemap_buffer-$8,X
+    STA !ram_tilemap_buffer-$A,X
+    STA !ram_tilemap_buffer-$C,X
+    STA !ram_tilemap_buffer-$E,X
+    STA !ram_tilemap_buffer-$10,X
+    STA !ram_tilemap_buffer-$12,X
     PLA
 
     XBA
     LDY #$0000
   .loop
-    PHA
-    BIT #$0001 : BEQ .no_draw
+    BIT #$8000 : BEQ .no_draw
 
-    TYA : CLC : ADC #$0080
-    XBA : ORA !DP_Palette : XBA
-    STA !ram_tilemap_buffer,X : INX #2
+    PHA : TYA : ASL : PHX : TAX
+    LDA.l .table,X : ORA !DP_Palette : XBA
+    PLX : STA !ram_tilemap_buffer,X : DEX #2 : PLA
 
   .no_draw
-    PLA
-    INY : LSR : BNE .loop
-
-  .done
+    INY : ASL : BNE .loop
     RTS
+
+  .table
+    dw #$A100, #$B800, #$AC00, #$B200, #$9400, #$9400, #$9400, #$9400
+    dw #$A200, #$B900, #$8300, #$8200, #$F900, #$F980, #$FF40, #$FF00
+}
+
+menu_ctrl_1_input_display:
+; X = pointer to tilemap area (STA !ram_tilemap_buffer,X)
+; A = Controller word
+{
+    XBA
+    LDY #$0000
+  .loop
+    BIT #$8000 : BEQ .no_draw
+
+    PHA : TYA : ASL : PHX : TAX
+    LDA.l .table,X : ORA !DP_Palette : XBA
+    PLX : STA !ram_tilemap_buffer,X : DEX #2 : PLA
+
+  .no_draw
+    INY : ASL : BNE .loop
+    LDA #$9400 : ORA !DP_Palette : XBA
+    STA !ram_tilemap_buffer,X
+    RTS
+
+  .table
+    dw #$8F00, #$8E00, #$8D00, #$8C00, #$9400, #$9400, #$9400, #$9400
+    dw #$8700, #$8600, #$8500, #$8400, #$8180, #$8100, #$8040, #$8000
 }
 
 
@@ -1753,12 +1886,12 @@ cm_loop:
 
   .pressedDown
     LDA #$0002
-    JSR cm_move
+    JSL cm_move
     BRA .redraw
 
   .pressedUp
     LDA #$FFFE
-    JSR cm_move
+    JSL cm_move
     BRA .redraw
 
   .pressedL
@@ -1795,60 +1928,68 @@ cm_loop:
 
 cm_ctrl_mode:
 ; This routine cuts off input handling in cm_loop to keep focus on the selected controller shortcut
-; Held inputs are displayed until held for 120 frames
+; Held inputs are displayed until held for one second
+; If inputs blank then must be blank for two seconds
 {
     JSL $809459 ; Read controller input
-    LDA !IH_CONTROLLER_PRI
 
     ; set palette
     %a8() : LDA #$28 : STA !DP_Palette : %a16()
 
-    LDA !IH_CONTROLLER_PRI : BEQ .clear_and_draw
-    CMP !ram_cm_ctrl_last_input : BNE .clear_and_draw
+    LDA !IH_CONTROLLER_PRI : CMP !ram_cm_ctrl_last_pri : BNE .clearAndDraw
+    LDA !DP_Ctrl2Input : BEQ .skipInputCtrl2
+    LDA !IH_CONTROLLER_SEC : CMP !ram_cm_ctrl_last_sec : BNE .clearAndDraw
 
-    ; Holding an input for more than one second
+  .skipInputCtrl2
+    ; Holding an input for one second
     LDA !ram_cm_ctrl_timer : INC : STA !ram_cm_ctrl_timer
-    CMP.w #0060 : BNE .next_frame
+    CMP !FRAMERATE : BNE .checkTwoSeconds
 
-    ; disallow inputs that match the menu shortcut
-    LDA !DP_CtrlInput : CMP.w #!sram_ctrl_menu : BEQ .store
-    LDA !IH_CONTROLLER_PRI : CMP !sram_ctrl_menu : BNE .store
-    %sfxfail()
-    ; set cursor position to 0 (menu shortcut)
-    LDX !MENU_STACK_INDEX
-    TDC : STA !ram_cm_cursor_stack,X
+    ; If input blank then we must hold it for two seconds
+    LDA !IH_CONTROLLER_PRI : ORA !IH_CONTROLLER_SEC : BNE .checkFirstShortcut
+
+  .checkTwoSeconds
+    ; Holding an input for two seconds
+    CMP !FRAMERATE_2X : BNE .nextFrame
+
+  .checkFirstShortcut
+    ; Disallow first Main Menu shortcut to be empty
+    LDA !DP_Ctrl2Input : BNE .store
+    LDA !IH_CONTROLLER_PRI : BNE .store
+
+    ; Store default Main Menu input to SRAM
+    LDA #$3000 : STA [!DP_CtrlInput]
     BRA .exit
 
   .store
     ; Store controller input to SRAM
     LDA !IH_CONTROLLER_PRI : STA [!DP_CtrlInput]
-    JSL GameModeExtras
-if !FEATURE_SD2SNES
-    JSL validate_sram_for_savestates
-endif
-    %sfxconfirm()
+    LDA !DP_Ctrl2Input : BEQ .exit
+    LDA !IH_CONTROLLER_SEC : STA [!DP_Ctrl2Input]
     BRA .exit
 
-  .clear_and_draw
-    STA !ram_cm_ctrl_last_input
+  .clearAndDraw
     TDC : STA !ram_cm_ctrl_timer
 
     ; Put text cursor in X
     LDX !MENU_STACK_INDEX
-    LDA !ram_cm_cursor_stack,X : ASL #5 : CLC : ADC #$0168 : TAX
+    LDA !ram_cm_cursor_stack,X : ASL #5 : CLC : ADC #$0178 : TAX
 
     ; Input display
-    LDA !IH_CONTROLLER_PRI
-    JSR menu_ctrl_input_display
+    LDA !DP_Ctrl2Input : BEQ .skipDrawCtrl2
+    LDA !IH_CONTROLLER_SEC : STA !ram_cm_ctrl_last_sec
+    JSR menu_ctrl_2_input_display
+  .skipDrawCtrl2
+    LDA !IH_CONTROLLER_PRI : STA !ram_cm_ctrl_last_pri
+    JSR menu_ctrl_1_input_display
     JSR cm_tilemap_transfer
 
-  .next_frame
+  .nextFrame
     RTS
 
   .exit
-    TDC : STA !ram_cm_ctrl_last_input
-    STA !ram_cm_ctrl_mode
-    STA !ram_cm_ctrl_timer
+    %sfxconfirm()
+    TDC : STA !ram_cm_ctrl_mode
     JSL cm_draw
     RTS
 }
@@ -1863,7 +2004,7 @@ cm_edit_digits:
     AND #$8F80 : BEQ .redraw
     BIT !IH_INPUT_LEFTRIGHT : BNE .selecting
     BIT !IH_INPUT_UPDOWN : BNE .editing
-    BIT #$8080 : BEQ .redraw
+    BIT !CTRL_AB : BEQ .redraw
 
     ; exit if A or B pressed
     ; skip if JSL target is zero
@@ -1906,7 +2047,7 @@ cm_edit_digits:
     ; use horizontal cursor index to ADC/SBC
     LDA !ram_cm_horizontal_cursor : ASL : TAX
     ; determine which direction was pressed
-    LDA !IH_CONTROLLER_PRI : BIT !IH_INPUT_UP : BNE .incDecDigit
+    LDA !IH_CONTROLLER_PRI : ORA !IH_CONTROLLER_SEC : BIT !IH_INPUT_UP : BNE .incDecDigit
     TXA : CLC : ADC #$0008 : TAX
 
   .incDecDigit
@@ -1995,7 +2136,7 @@ cm_edit_decimal_digits:
     AND #$8F80 : BEQ .redraw
     BIT !IH_INPUT_LEFTRIGHT : BNE .selecting
     BIT !IH_INPUT_UPDOWN : BNE .editing
-    BIT #$8080 : BEQ .redraw
+    BIT !CTRL_AB : BEQ .redraw
 
     ; exit if A or B pressed
     JMP .exit
@@ -2227,7 +2368,7 @@ kb_handle_inputs:
     BIT !CTRL_B : BNE .input_backspace
     BIT !CTRL_Y : BNE .input_shift
     BIT !CTRL_A : BNE .bridge_A
-    LDA !IH_CONTROLLER_PRI : BIT !CTRL_X : BNE .input_X
+    LDA !IH_CONTROLLER_PRI : ORA !IH_CONTROLLER_SEC : BIT !CTRL_X : BNE .input_X
     RTS
 
   .bridge_A
@@ -2347,7 +2488,7 @@ kb_handle_inputs:
     LDA #$0001 : STA !DP_KB_Index : STA !ram_cm_controller
     LDA #$FF28 : STA !ram_cm_keyboard_buffer
     ; clear previous input to prevent SFX spam
-    STZ !IH_CONTROLLER_PRI_PREV
+    STZ !IH_CONTROLLER_PRI_PREV : STZ !IH_CONTROLLER_SEC_PREV
     %sfxreset()
     RTS
 }
@@ -2548,6 +2689,15 @@ cm_previous_menu:
     JML cm_calculate_max
 }
 
+cm_go_back_adjacent_submenu:
+{
+    ; make sure next time we go to a submenu, we start on the first line.
+    LDX !MENU_STACK_INDEX
+    TDC : STA !ram_cm_cursor_stack,X
+    DEX #2 : STX !MENU_STACK_INDEX
+    RTL
+}
+
 cm_go_back:
 {
     ; make sure next time we go to a submenu, we start on the first line.
@@ -2602,25 +2752,39 @@ cm_get_inputs:
     JSL $809459 ; Read controller input
 
   .input_read
-    LDA !IH_CONTROLLER_PRI_NEW : BEQ .check_holding
+    LDA !IH_CONTROLLER_PRI_NEW : BEQ .check_input_sec
 
     LDA !input_held_delay : STA !ram_cm_input_timer
 
     ; Check if fast scroll button is held
-    LDA !IH_CONTROLLER_PRI : AND !sram_cm_fast_scroll_button : BEQ .return_input
+    LDA !IH_CONTROLLER_PRI : AND !sram_cm_fast_scroll_button : BEQ .return_input_pri
 
     ; Reduce delay to double the scroll delay
-    LDA !sram_cm_scroll_delay : ASL : CMP !input_held_delay : BPL .return_input
+    LDA !sram_cm_scroll_delay : ASL : CMP !input_held_delay : BPL .return_input_pri
     STA !ram_cm_input_timer
 
-  .return_input
-    ; Return the new input
+  .return_input_pri
     LDA !IH_CONTROLLER_PRI_NEW
     RTS
 
+  .check_input_sec
+    LDA !IH_CONTROLLER_SEC_NEW : BEQ .check_holding
+
+    LDA !input_held_delay : STA !ram_cm_input_timer
+
+    ; Check if fast scroll button is held
+    LDA !IH_CONTROLLER_SEC : AND !sram_cm_fast_scroll_button : BEQ .return_input_sec
+
+    ; Reduce delay to double the scroll delay
+    LDA !sram_cm_scroll_delay : ASL : CMP !input_held_delay : BPL .return_input_sec
+    STA !ram_cm_input_timer
+
+  .return_input_sec
+    LDA !IH_CONTROLLER_SEC_NEW
+    RTS
+
   .check_holding
-    ; Check if we're holding the dpad
-    LDA !IH_CONTROLLER_PRI : AND #$0F00 : BEQ .noinput
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_DPAD : BEQ .check_holding_sec
 
     ; Decrement delay timer and check if it's zero
     LDA !ram_cm_input_timer : DEC : STA !ram_cm_input_timer : BNE .noinput
@@ -2629,7 +2793,20 @@ cm_get_inputs:
     LDA !sram_cm_scroll_delay : STA !ram_cm_input_timer
 
     ; Return held input
-    LDA !IH_CONTROLLER_PRI : AND #$0F00 : ORA !IH_INPUT_HELD
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_DPAD : ORA !IH_INPUT_HELD
+    RTS
+
+  .check_holding_sec
+    LDA !IH_CONTROLLER_SEC : AND !IH_INPUT_DPAD : BEQ .noinput
+
+    ; Decrement delay timer and check if it's zero
+    LDA !ram_cm_input_timer : DEC : STA !ram_cm_input_timer : BNE .noinput
+
+    ; Set new delay, default is 2
+    LDA !sram_cm_scroll_delay : STA !ram_cm_input_timer
+
+    ; Return held input
+    LDA !IH_CONTROLLER_SEC : AND !IH_INPUT_DPAD : ORA !IH_INPUT_HELD
     RTS
 
   .noinput
@@ -2651,15 +2828,40 @@ cm_move:
   .inBounds
     STA !ram_cm_cursor_stack,X : TAY
 
+  .checkBlankLine
     ; check for blank menu line ($FFFF)
-    LDA [!DP_MenuIndices],Y : CMP #$FFFF : BNE .checkDynamic
+    LDA [!DP_MenuIndices],Y : CMP #$FFFF : BNE .checkCtrlShortcut
 
   .repeat
     ; repeat move to skip blank line
     LDA !DP_Temp : BRA cm_move
 
-  .checkDynamic
+  .checkCtrlShortcut
     STA !DP_CurrentMenu : LDA [!DP_CurrentMenu]
+    CMP !ACTION_CTRL_SHORTCUT : BNE .checkDynamic
+
+    ; grab the shortcut slot
+    INC !DP_CurrentMenu : INC !DP_CurrentMenu
+    LDA [!DP_CurrentMenu] : AND #$00FF
+    DEC !DP_CurrentMenu : DEC !DP_CurrentMenu
+
+    ; at most one slot will allow a shortcut to be added
+    ; check if it is this one
+    CMP !ram_cm_ctrl_add_shortcut_slot : BEQ .end
+
+    ; grab the shortcut type
+    PHX : TAX
+    CMP #$001E : BPL .additionalCtrlShortcut
+    LDA !sram_ctrl_shortcut_selections,X
+    PLX : AND !CTRL_SHORTCUT_TYPE_MASK : BEQ .repeat
+    BRA .end
+
+  .additionalCtrlShortcut
+    LDA !sram_ctrl_additional_selections,X
+    PLX : AND !CTRL_SHORTCUT_TYPE_MASK : BEQ .repeat
+    BRA .end
+
+  .checkDynamic
     CMP !ACTION_DYNAMIC : BNE .end
 
     ; grab the memory address (long)
@@ -2683,7 +2885,7 @@ cm_move:
 
   .end
     %sfxmove()
-    RTS
+    RTL
 }
 
 
@@ -2832,7 +3034,8 @@ execute_numfield:
     LDA !ram_cm_controller : AND !sram_cm_fast_scroll_button : BNE .skip_inc
 
     ; check if fast scroll button is held
-    LDA !IH_CONTROLLER_PRI : AND !sram_cm_fast_scroll_button : BEQ .check_held
+    LDA !IH_CONTROLLER_PRI : ORA !IH_CONTROLLER_SEC
+    AND !sram_cm_fast_scroll_button : BEQ .check_held
     ; grab normal increment multiplied by four and skip past both
     LDA [!DP_CurrentMenu] : ASL #2 : INC !DP_CurrentMenu : INC !DP_CurrentMenu
     BRA .store_increment
@@ -2857,7 +3060,7 @@ execute_numfield:
     AND #$00FF : STA !DP_Increment
 
     ; determine dpad direction
-    LDA !ram_cm_controller : BIT #$0200 : BNE .pressed_left
+    LDA !ram_cm_controller : BIT !IH_INPUT_LEFT : BNE .pressed_left
     ; pressed right, inc
     LDA [!DP_Address] : AND #$00FF : CLC : ADC !DP_Increment
     CMP !DP_Maximum : BCS .set_to_min
@@ -2914,7 +3117,8 @@ execute_numfield_word:
     LDA !ram_cm_controller : AND !sram_cm_fast_scroll_button : BNE .skip_inc
 
     ; check if fast scroll button is held
-    LDA !IH_CONTROLLER_PRI : AND !sram_cm_fast_scroll_button : BEQ .check_held
+    LDA !IH_CONTROLLER_PRI : ORA !IH_CONTROLLER_SEC
+    AND !sram_cm_fast_scroll_button : BEQ .check_held
     ; grab normal increment multiplied by four and skip past both
     LDA [!DP_CurrentMenu] : ASL #2 : INC !DP_CurrentMenu : INC !DP_CurrentMenu
     INC !DP_CurrentMenu : INC !DP_CurrentMenu
@@ -2946,7 +3150,7 @@ execute_numfield_word:
     LDA !ram_cm_controller : BIT !IH_INPUT_LEFTRIGHT : BEQ .singleDigitEditing
 
     ; check direction held
-    BIT #$0200 : BNE .pressed_left
+    BIT !IH_INPUT_LEFT : BNE .pressed_left
     ; pressed right, inc
     LDA [!DP_DigitAddress] : CLC : ADC !DP_Increment
     CMP !DP_DigitMaximum : BCS .set_to_min
@@ -3029,7 +3233,7 @@ execute_numfield_color:
     LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : INC !DP_CurrentMenu : STA !DP_JSLTarget
 
     ; determine dpad direction
-    LDA !ram_cm_controller : BIT #$0200 : BNE .pressed_left
+    LDA !ram_cm_controller : BIT !IH_INPUT_LEFT : BNE .pressed_left
     ; pressed right, inc
     LDA [!DP_Address] : INC : CMP #$0020 : BCS .set_to_min
     STA [!DP_Address] : BRA .jsl
@@ -3071,7 +3275,7 @@ execute_choice:
     LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : INC !DP_CurrentMenu : STA !DP_JSLTarget
 
     ; we either increment or decrement
-    LDA !ram_cm_controller : BIT #$0200 : BNE .pressed_left
+    LDA !ram_cm_controller : BIT !IH_INPUT_LEFT : BNE .pressed_left
     ; pressed right
     LDA [!DP_Address] : INC : BRA .bounds_check
 
@@ -3140,7 +3344,7 @@ execute_choice_jsl_text:
     LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : INC !DP_CurrentMenu : STA !DP_JSLTarget
 
     ; we either increment or decrement
-    LDA !ram_cm_controller : BIT #$0200 : BNE .pressed_left
+    LDA !ram_cm_controller : BIT !IH_INPUT_LEFT : BNE .pressed_left
     ; pressed right
     LDA [!DP_Address] : INC : BRA .bounds_check
 
@@ -3193,29 +3397,67 @@ execute_choice_jsl_text:
 
 execute_ctrl_shortcut:
 {
-    ; < and > should do nothing here
-    ; also ignore the input held flag
-    LDA !ram_cm_controller : BIT #$0301 : BNE .end
+    ; ignore the input held flag
+    LDA !ram_cm_controller : BIT !IH_INPUT_HELD : BNE .end
+    BIT !IH_INPUT_LEFTRIGHT : BNE .toggleExactMatch
 
-    ; grab memory address (long)
-    LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : INC !DP_CurrentMenu : STA !DP_CtrlInput
-    LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : STA !DP_CtrlInput+2
+    ; grab the slot number
+    LDA [!DP_CurrentMenu] : AND #$00FF
 
-    ; press X to delete a shortcut
-    LDA !ram_cm_controller : BIT !CTRL_X : BNE .reset_shortcut
+    ; at most one slot will allow a shortcut to be added
+    ; check if it is this one
+    CMP !ram_cm_ctrl_add_shortcut_slot : BNE .notAddShortcutText
+
+    ; in this case, ignore X input as well
+    LDA !ram_cm_controller : BIT !CTRL_X : BNE .end
+
+    ; Y = Argument
+    LDY #CtrlSelectShortcutTypeMenu
+
+    LDX #$0000
+    JSL action_submenu
+
+  .end
+    RTS
+
+  .toggleExactMatch
+    ; grab the slot number
+    TDC : %a8() : LDA [!DP_CurrentMenu]
+
+    ; grab the shortcut type
+    TAX : CMP #$1E : BPL .additionalExactMatch
+    LDA !sram_ctrl_shortcut_selections,X : BEQ .endExactMatch
+    EOR.b !CTRL_SHORTCUT_EXACT_MATCH : STA !sram_ctrl_shortcut_selections,X
+    BRA .endExactMatch
+
+  .additionalExactMatch
+    LDA !sram_ctrl_additional_selections,X : BEQ .endExactMatch
+    EOR.b !CTRL_SHORTCUT_EXACT_MATCH : STA !sram_ctrl_additional_selections,X
+
+  .endExactMatch
+    %a16()
+    RTS
+
+  .notAddShortcutText
+    ; grab the input addresses
+    ASL : CLC : ADC.w #!sram_ctrl_1_shortcut_inputs : STA !DP_CtrlInput
+    CMP #!sram_ctrl_1_shortcut_inputs : BEQ .firstShortcut
+    CLC : ADC #$0060 : STA !DP_Ctrl2Input
+    LDA.w #!sram_ctrl_1_shortcut_inputs>>16 : STA !DP_CtrlInput+2 : STA !DP_Ctrl2Input+2
 
     ; enable ctrl mode to edit shortcuts
-    TDC : STA !ram_cm_ctrl_timer
+    TDC : STA !ram_cm_ctrl_timer : STA !ram_cm_ctrl_last_pri : STA !ram_cm_ctrl_last_sec
     INC : STA !ram_cm_ctrl_mode
     RTS
 
-  .reset_shortcut
-    LDA.w #!sram_ctrl_menu : CMP !DP_CtrlInput : BEQ .end
-    %sfxconfirm()
+  .firstShortcut
+    ; first shortcut limited to primary inputs only
+    LDA.w #!sram_ctrl_1_shortcut_inputs>>16 : STA !DP_CtrlInput+2
+    TDC : STA !DP_Ctrl2Input : STA !DP_Ctrl2Input+2
 
-    TDC : STA [!DP_CtrlInput]
-
-  .end
+    ; enable ctrl mode to edit shortcuts
+    STA !ram_cm_ctrl_timer : STA !ram_cm_ctrl_last_pri : STA !ram_cm_ctrl_last_sec
+    INC : STA !ram_cm_ctrl_mode
     RTS
 }
 
@@ -3223,7 +3465,7 @@ execute_controller_input:
 {
     ; <, > and X should do nothing here
     ; also ignore input held flag
-    LDA !ram_cm_controller : BIT #$0341 : BNE .end
+    LDA !ram_cm_controller : BIT !IH_INPUT_XLEFTRIGHTHELD : BNE .end
 
     ; store long address as short address for now
     LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : INC !DP_CurrentMenu : INC !DP_CurrentMenu
@@ -3254,7 +3496,7 @@ execute_jsl:
 {
     ; <, > and X should do nothing here
     ; also ignore input held flag
-    LDA !ram_cm_controller : BIT #$0341 : BNE .end
+    LDA !ram_cm_controller : BIT !IH_INPUT_XLEFTRIGHTHELD : BNE .end
 
     ; !DP_JSLTarget = JSL target
     LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : INC !DP_CurrentMenu : STA !DP_JSLTarget
@@ -3278,7 +3520,7 @@ execute_submenu:
 {
     ; <, > and X should do nothing here
     ; also ignore input held flag
-    LDA !ram_cm_controller : BIT #$0341 : BNE .end
+    LDA !ram_cm_controller : BIT !IH_INPUT_XLEFTRIGHTHELD : BNE .end
 
     ; !DP_JSLTarget = JSL target
     LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : INC !DP_CurrentMenu : STA !DP_JSLTarget
@@ -3304,8 +3546,8 @@ execute_submenu:
 execute_custom_preset:
 {
     ; check if X or Y newly pressed
-    LDA !IH_CONTROLLER_PRI_NEW : BIT !CTRL_Y : BNE .toggleDisplay
-    LDA !IH_CONTROLLER_PRI_NEW : BIT !CTRL_X : BEQ .checkLeftRight
+    LDA !IH_CONTROLLER_PRI_NEW : ORA !IH_CONTROLLER_SEC_NEW : BIT !CTRL_Y : BNE .toggleDisplay
+    LDA !IH_CONTROLLER_PRI_NEW : ORA !IH_CONTROLLER_SEC_NEW : BIT !CTRL_X : BEQ .checkLeftRight
 
     ; enter keyboard editing mode
     ; get slot number * 2 in !DP_CtrlInput
@@ -3348,7 +3590,7 @@ execute_custom_preset:
 
   .checkLeftRight
     ; change pages if left/right
-    LDA !IH_CONTROLLER_PRI : BIT !IH_INPUT_LEFTRIGHT : BNE .flipPage
+    LDA !IH_CONTROLLER_PRI : ORA !IH_CONTROLLER_SEC : BIT !IH_INPUT_LEFTRIGHT : BNE .flipPage
 
     ; set preset slot and return to the previous menu
     LDA [!DP_CurrentMenu] : AND #$00FF : STA !sram_custom_preset_slot
@@ -3383,9 +3625,7 @@ else
     BRA .loadPage3
 
   .done
-    JSL cm_previous_menu
-    ; set bank for manual submenu jump
-    LDA !DP_MenuIndices+2 : STA !ram_cm_menu_bank
+    JSL cm_go_back_adjacent_submenu
     JSL action_submenu
 endif
 endif
@@ -3394,7 +3634,7 @@ endif
 
 execute_manage_presets:
 {
-    LDA !IH_CONTROLLER_PRI : BIT !IH_INPUT_LEFTRIGHT : BEQ .manageSlots
+    LDA !IH_CONTROLLER_PRI : ORA !IH_CONTROLLER_SEC : BIT !IH_INPUT_LEFTRIGHT : BEQ .manageSlots
 if !FEATURE_MAPSTATES
     ; Mapstates only has one page
 else
@@ -3425,7 +3665,7 @@ endif
 
   .manageSlots
     ; are we deleting (X) or swapping?
-    LDA !IH_CONTROLLER_PRI_NEW : BIT !CTRL_X : BEQ .swapMode
+    LDA !IH_CONTROLLER_PRI_NEW : ORA !IH_CONTROLLER_SEC_NEW : BIT !CTRL_X : BEQ .swapMode
     ; check if preset exists
     LDA [!DP_CurrentMenu] : AND #$00FF : STA !ram_cm_selected_slot
     %presetslotsize()

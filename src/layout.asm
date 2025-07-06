@@ -284,11 +284,13 @@ hijack_after_load_level_data:
 
     ; Swap to left side of room if necessary
     LDA !SAMUS_X : BIT #$0080 : BEQ .checkRoom
+    LDA !ram_door_portal_flags : BIT !DOOR_PORTAL_HORIZONTAL_MIRRORING_BIT : BEQ .checkRoom
     JSL layout_swap_left_right
     BRA .checkRoom
 
   .checkSwapToRight
     LDA !SAMUS_X : BIT #$0080 : BNE .checkRoom
+    LDA !ram_door_portal_flags : BIT !DOOR_PORTAL_HORIZONTAL_MIRRORING_BIT : BEQ .checkRoom
     JSL layout_swap_left_right
 
   .checkRoom
@@ -1328,7 +1330,7 @@ layout_asm_waterway_external:
 layout_asm_mb_external:
 {
     ; Replace MB enemy with maprando variant
-    LDA #layout_maprando_mb_enemy_header : STA !ENEMY_ID+$40
+    LDA #layout_maprando_mb_enemy_header : STA !ENEMY_ID+!ENEMY_1_OFFSET
 
     ; Place the four barrier ceiling
     LDA #$82E6 : STA $7F016E : STA $7F0170 : STA $7F0172
@@ -2300,7 +2302,7 @@ layout_asm_mb_spawn_escape_door:
     dw $0600, $B677
 
     ; Replace MB enemy with maprando variant
-    LDA #layout_maprando_mb_enemy_header : STA !ENEMY_ID+$40
+    LDA #layout_maprando_mb_enemy_header : STA !ENEMY_ID+!ENEMY_1_OFFSET
 
     ; Fallthrough to Mother Brain HP
 }
@@ -2309,12 +2311,19 @@ layout_asm_mbhp:
 {
 if !FEATURE_VANILLAHUD
 else
-    LDA !sram_display_mode : BNE .done
+    LDA !sram_display_mode : BEQ .assignMBHP
+    CMP !IH_MODE_ROOMSTRAT_INDEX : BNE .done
+    LDA !sram_superhud_bottom : BNE .done
+    ; Switch Super HUD enemy HP to MB HP
+    LDA !IH_SUPERHUD_MBHP_BOTTOM_INDEX : STA !sram_superhud_bottom
+    RTS
+
+  .assignMBHP
+    ; Switch enemy HP to MB HP
     LDA !IH_MODE_ROOMSTRAT_INDEX : STA !sram_display_mode
     LDA !IH_STRAT_MBHP_INDEX : STA !sram_room_strat
-
-  .done
 endif ; !FEATURE_VANILLAHUD
+  .done
     RTS
 }
 

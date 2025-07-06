@@ -266,7 +266,8 @@ endif
 hook_message_box_wait:
 {
     LDA !sram_fanfare : BNE .fanfareloop
-    ; shorten message box length
+    ; shorten message box length if necessary
+    CPX #$0020 : BMI .nofanfareloop
     LDX #$0020
 
   .nofanfareloop
@@ -294,11 +295,33 @@ if !FEATURE_SD2SNES
     LDA $4212 : BIT #$01 : BNE .wait_joypad
 
     %a16()
-    LDA $4218 : BEQ .done
-    CMP !sram_ctrl_load_state : BNE .done
-    LDA !SRAM_SAVED_STATE : CMP !SAFEWORD : BNE .done
-    PHB : PHK : PLB
-    JML load_state
+    ; Check if any input present
+    LDA $4218 : ORA $421A : BEQ .done
+
+    ; We need to run the controller shortcut routine, but we can't save here
+    ; Set game mode to invalid value to signify we should not save
+    LDA !GAMEMODE : PHA
+    LDA #$0003 : STA !GAMEMODE
+    ; We need to update the controller input variables, so remember the original values
+    LDA !IH_CONTROLLER_PRI : PHA
+    LDA !IH_CONTROLLER_PRI_NEW : PHA
+    LDA !IH_CONTROLLER_SEC : PHA
+    LDA !IH_CONTROLLER_SEC_NEW : PHA
+
+    LDA $4218 : STA !IH_CONTROLLER_PRI : STA !IH_CONTROLLER_PRI_NEW
+    LDA $421A : STA !IH_CONTROLLER_SEC : STA !IH_CONTROLLER_SEC_NEW
+
+    ; Set overflow and carry flags before calling routine
+    PHP : SEP #$41
+    JSL !CTRL_SHORTCUT_ROUTINE
+    PLP
+
+    ; Restore controller inputs and gamemode
+    PLA : STA !IH_CONTROLLER_SEC_NEW
+    PLA : STA !IH_CONTROLLER_SEC
+    PLA : STA !IH_CONTROLLER_PRI_NEW
+    PLA : STA !IH_CONTROLLER_PRI
+    PLA : STA !GAMEMODE
 
   .done
 endif
@@ -336,8 +359,11 @@ hook_end_fanfare:
     LDA !sram_healthalarm : CMP #$0004 : BNE .done_health_alarm
     LDA #$0002 : JSL $80914D
   .done_health_alarm
-    PLY : PLX        ; original logic
-    PLB : PLP : RTL
+    ; original logic
+    PLY : PLX
+    PLB : PLP
+    ; initialize water physics in case we just collected gravity or space jump
+    JML init_physics_ram
 }
 
 %endfree(85)

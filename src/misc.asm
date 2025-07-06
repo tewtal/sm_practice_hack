@@ -154,14 +154,6 @@ org $808F24
 org $808F65
     JML hook_set_music_data
 
-if !FEATURE_PAL
-org $82F067
-else
-org $82F071
-endif
-    JSL IconCancelMenu
-    NOP
-
 
 org $90D000       ; hijack, runs when a shinespark is activated
     JMP misc_shinespark_activation
@@ -228,18 +220,6 @@ move_kraid_rocks_horizontally:
   .store
     STA $22 : LSR #4 : CLC : ADC $4216 : ASL : TAX
     JMP $8930
-}
-
-IconCancelMenu:
-{
-    ; Reset to default menu shortcut if L+R+Sl+X held
-    LDA !IH_CONTROLLER_PRI : CMP #$2060 : BNE .done
-    LDA #$3000 : STA !sram_ctrl_menu
-
-  .done
-    ; overwritten code
-    LDA !IH_CONTROLLER_PRI_NEW : BIT #$1380
-    RTL
 }
 
 %endfree(86)
@@ -626,19 +606,6 @@ RandomizeOnLoad:
     RTL
 }
 
-RandomizeOnLoad_Flag:
-{
-    LDA !sram_loadstate_rando_energy : BNE .enable
-    LDA !sram_loadstate_rando_reserves : BNE .enable
-    LDA !sram_loadstate_rando_missiles : BNE .enable
-    LDA !sram_loadstate_rando_supers : BNE .enable
-    LDA !sram_loadstate_rando_powerbombs : BNE .enable
-
-  .enable
-    STA !ram_loadstate_rando_enable
-    RTL
-}
-
 lock_samus_bowling:
 {
     LDA !sram_cutscenes : BIT !CUTSCENE_FAST_BOWLING : BNE .speedup
@@ -884,14 +851,14 @@ spacetime_routine:
     INY #2
     INX #2 : CPX #($7EF378-$7EC1C0) : BMI .loop_skip_sprite_object_ram
 
-    ; Check if Y will cause us to reach WRAM
-    TYA : CLC : ADC #(!WRAM_START-$7EF398) : CMP #$0000 : BPL .normal_load_loop
+    ; Check if Y will cause us to reach CTRL_SHORTCUT_ROUTINE
+    TYA : CLC : ADC #(!CTRL_SHORTCUT_ROUTINE-$7EF398) : CMP #$0000 : BPL .normal_load_loop
 
     ; It will, so run our own loop
   .loop_before_wram
     LDA [$00],Y : STA $7EC1C0,X
     INY #2
-    INX #2 : CPX #(!WRAM_START-$7EC1C0) : BMI .loop_before_wram
+    INX #2 : CPX #(!CTRL_SHORTCUT_ROUTINE-$7EC1C0) : BMI .loop_before_wram
 
     ; Skip over WRAM
     ; Instead of load and store, load and load
@@ -907,7 +874,7 @@ spacetime_routine:
 
   .overwrite_sprite_object_ram
     ; Check if Y will cause us to reach WRAM
-    TYA : CLC : ADC #(!WRAM_START-$7EEF98) : CMP #$0000 : BPL .normal_load_loop
+    TYA : CLC : ADC #(!CTRL_SHORTCUT_ROUTINE-$7EEF98) : CMP #$0000 : BPL .normal_load_loop
     BRA .loop_before_wram
 }
 endif
@@ -978,6 +945,17 @@ set_fade_in_door_function:
     ; Overwritten logic
     LDA $51 : ORA #$001F : STA $51
     JML $908E0F
+}
+
+misc_force_stand_routine:
+{
+    ; Similar to $90:E2D4 routine, except use facing forward pose
+    PHP : PHB : PHK : PLB
+    LDA !SAMUS_ITEMS_EQUIPPED : AND #$0021 : BEQ .pose_chosen
+    LDA #$009B
+  .pose_chosen
+    JSR $E2F4
+    PLB : PLP : RTL
 }
 
 %endfree(90)

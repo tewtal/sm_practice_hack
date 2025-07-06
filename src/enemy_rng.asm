@@ -1,4 +1,16 @@
 
+if !FEATURE_PAL
+org $86F14A
+else
+org $86F10E
+endif
+    LDA !ram_drop_chance_table : BNE $10
+    ; Since we replaced unnecessary logic,
+    ; we need to burn some cycles to compensate
+    BRA $00 : BRA $00
+%warnpc($86F118, $86F154)
+
+
 ; ----------------
 ; Phantoon hijacks
 ; ----------------
@@ -15,7 +27,7 @@ org $A7893D
 endif
 phantoon_always_visible:
 {
-    LDA !ram_phantoon_always_visible : BNE .enabled
+    LDA !eram_phantoon_always_visible : BNE .enabled
     ; overwritten code
 if !FEATURE_PAL
     JMP $DBCE
@@ -25,13 +37,13 @@ endif
 
   .enabled
     ; fake the fade in so it takes the same number of frames
-    LDA !ENEMY_VAR_3+$40 : INC
-    CMP !ENEMY_VAR_4+$40 : BCS .inc
-    STZ !ENEMY_VAR_4+$40
+    LDA !ENEMY_VAR_3+!ENEMY_1_OFFSET : INC
+    CMP !ENEMY_VAR_4+!ENEMY_1_OFFSET : BCS .inc
+    STZ !ENEMY_VAR_4+!ENEMY_1_OFFSET
     SEC : RTS
 
   .inc
-    INC !ENEMY_VAR_4+$40
+    INC !ENEMY_VAR_4+!ENEMY_1_OFFSET
     CLC : RTS
 }
 
@@ -130,6 +142,67 @@ endif
 ; --------------
 
 if !FEATURE_PAL
+org $A0F2CB
+else
+org $A0F2AB
+endif
+    dw #botwoon_vanilla_main_ai
+
+if !FEATURE_PAL
+org $B395BD
+else
+org $B395AD
+endif
+    RTL
+
+if !FEATURE_PAL
+org $B39677
+else
+org $B39667
+endif
+    LDA #$0001 : STA !eram_botwoon_first_roll
+    ; fallthrough to initialize botwoon RNG
+
+init_botwoon_rng:
+{
+    LDA !ram_botwoon_rng : AND !BOTWOON_RNG_SPIT_INVERTED : STA !eram_botwoon_all_pattern_rng
+    AND !BOTWOON_RNG_FIRST_MASK : LSR : STA !eram_botwoon_first_rng
+    LDA !ram_botwoon_rng : AND !BOTWOON_RNG_HIDDEN_MASK
+    ASL : XBA : STA !eram_botwoon_hidden_rng
+    LDA !ram_botwoon_rng : AND !BOTWOON_RNG_SECOND_MASK
+    LSR : XBA : STA !eram_botwoon_second_rng
+    LDA !ram_botwoon_rng : AND !BOTWOON_RNG_SPIT_MASK : STA !eram_botwoon_spit_rng
+    LDA !ram_botwoon_rng : AND !BOTWOON_RNG_AFTER_SPIT_MASK : STA !eram_botwoon_after_spit_rng
+    RTL
+}
+
+; Vanilla main AI routine, just migrated
+botwoon_vanilla_main_ai:
+{
+    LDX !ENEMY_INDEX
+if !FEATURE_PAL
+    JSR $96D6
+else
+    JSR $96C6
+endif
+    JSR (!ENEMY_VAR_3,X)
+if !FEATURE_PAL
+    JSR $983B
+else
+    JSR $982B
+endif
+    RTL
+}
+%warnpc($B396C6, $B396D6)
+
+if !FEATURE_PAL
+org $B398D1
+else
+org $B398C1
+endif
+    JSL hook_botwoon_spit
+
+if !FEATURE_PAL
 org $B39953
 else
 org $B39943
@@ -138,11 +211,12 @@ endif
     JSL hook_botwoon_move
 
 if !FEATURE_PAL
-org $B398D1
+org $B39A2A
 else
-org $B398C1
+org $B39A1A
 endif
-    JSL hook_botwoon_spit
+    ; $B3:9A1A 22 11 81 80 JSL $808111[$80:8111]
+    JSL hook_botwoon_move_after_spit
 
 
 ; ---------------
@@ -187,6 +261,17 @@ endif
     JSR hook_draygon_damage
 
 
+; ------------------
+; Spore Spawn hijack
+; ------------------
+if !FEATURE_PAL
+org $A5EADC
+else
+org $A5EAD7
+endif
+    JSR hook_spore_spawn_scroll
+
+
 ; ----------------
 ; Crocomire hijack
 ; ----------------
@@ -197,6 +282,13 @@ else
 org $A48753
 endif
     JSR hook_crocomire_rng
+
+if !FEATURE_PAL
+org $A48A9F
+else
+org $A48A8F
+endif
+    JSR hook_crocomire_scroll
 
 if !FEATURE_PAL
 org $A48CED
@@ -261,9 +353,60 @@ endif
     JSR hook_kraid_claw_rng
 
 
+; -------------------
+; Mother Brain hijack
+; -------------------
+
+if !FEATURE_PAL
+org $A9874A
+else
+org $A9873A
+endif
+    JML hook_mb_init_rng
+
+
 ; -----------
 ; Baby hijack
 ; -----------
+
+if !FEATURE_PAL
+org $A9D963
+else
+org $A9D916
+endif
+    LDA !eram_baby_dead_hop_delay
+
+if !FEATURE_PAL
+org $A9D98E
+else
+org $A9D941
+endif
+    CLC : ADC !eram_baby_hop_velocity_tables : TAY
+    LDA $0000,Y : STA $7E7816,X
+    LDA $0008,Y : STA $7E7814,X
+    RTS
+%warnpc($A9D961, $A9D9AE)
+
+if !FEATURE_PAL
+org $A9F002
+else
+org $A9EFB5
+endif
+    JML hook_baby_init
+
+if !FEATURE_PAL
+org $A9F07E
+else
+org $A9F031
+endif
+    LDA !eram_baby_initial_delay
+
+if !FEATURE_PAL
+org $A9F096
+else
+org $A9F049
+endif
+    LDA !eram_baby_target_x_pos
 
 if !FEATURE_PAL
 org $A9F21B
@@ -271,6 +414,41 @@ else    ; Baby skip rng
 org $A9F1CE
 endif
     JMP hook_baby_skip_rng
+
+if !FEATURE_PAL
+org $A9F2F5
+else
+org $A9F2A8
+endif
+    LDA !eram_baby_after_drain_delay
+
+if !FEATURE_PAL
+org $A9F307
+else
+org $A9F2BA
+endif
+    LDA !eram_baby_rising_delay
+
+if !FEATURE_PAL
+org $A9F333
+else
+org $A9F2E6
+endif
+    LDA !eram_baby_backing_off
+
+if !FEATURE_PAL
+org $A9F36B
+else
+org $A9F31E
+endif
+    LDA !eram_baby_leaving_left
+
+if !FEATURE_PAL
+org $A9F397
+else
+org $A9F34A
+endif
+    LDA !eram_baby_leaving_right
 
 
 ; -----------------
@@ -375,6 +553,7 @@ hook_beetom_set_rng:
 ; $A7:D4AE 10 3D       BPL $3D    [$D4ED]       ; else, return
 hook_phantoon_init:
 {
+    JSL init_phantoon_rng
     LDA !sram_cutscenes : AND !CUTSCENE_FAST_PHANTOON : BNE .skip_cutscene
 
     DEC !ENEMY_VAR_4,X
@@ -392,6 +571,27 @@ if !FEATURE_PAL
 else
     JML $A7D50F
 endif
+}
+
+init_phantoon_rng:
+{
+    LDA !ram_phantoon_phase_rng : AND !PHANTOON_RNG_VISIBLE_BIT
+    STA !eram_phantoon_always_visible
+    LDA !ram_phantoon_phase_rng : AND !PHANTOON_RNG_PHASE_1_MASK
+    STA !eram_phantoon_rng_round_1
+    LDA !ram_phantoon_phase_rng : AND !PHANTOON_RNG_PHASE_2_MASK
+    XBA : STA !eram_phantoon_rng_round_2
+    LDA !ram_phantoon_phase_rng : AND !PHANTOON_RNG_FLIP_MASK
+    ASL #2 : XBA : STA !eram_phantoon_rng_flip
+    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_MASK
+    STA !eram_phantoon_rng_flames
+    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_PATH_MASK
+    ASL #2 : XBA : STA !eram_phantoon_rng_flame_direction
+    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_NEXT_MASK
+    XBA : STA !eram_phantoon_rng_next_flames
+    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_EYE_CLOSE_MASK
+    XBA : ASL #2 : XBA : STA !eram_phantoon_rng_eyeclose
+    RTL
 }
 
 
@@ -427,7 +627,7 @@ hook_phantoon_1st_rng:
 
   .rng
     ; If set to all-on or all-off, don't mess with RNG
-    LDA !ram_phantoon_rng_round_1 : BEQ .no_manip
+    LDA !eram_phantoon_rng_round_1 : BEQ .no_manip
     CMP #$003F : BNE choose_phantoon_pattern
 
   .no_manip
@@ -438,7 +638,7 @@ if !FEATURE_PAL
 else
     LDA $CD53,Y
 endif
-    STA !ENEMY_FUNCTION_POINTER+$40
+    STA !ENEMY_FUNCTION_POINTER+!ENEMY_1_OFFSET
     JSL $808111
     BIT #$0001
     RTL
@@ -457,7 +657,7 @@ endif
 hook_phantoon_2nd_rng:
 {
     ; If set to all-on or all-off, don't mess with RNG
-    LDA !ram_phantoon_rng_round_2 : BEQ .no_manip
+    LDA !eram_phantoon_rng_round_2 : BEQ .no_manip
     CMP #$003F : BNE choose_phantoon_pattern
 
   .no_manip
@@ -468,28 +668,29 @@ if !FEATURE_PAL
 else
     LDA $CD53,Y
 endif
-    STA !ENEMY_FUNCTION_POINTER+$40    ; Intentional fallthrough to invert logic
+    STA !ENEMY_FUNCTION_POINTER+!ENEMY_1_OFFSET
+    ; Intentional fallthrough to flip logic
 }
 
-hook_phantoon_invert:
+hook_phantoon_flip:
 {
-    LDA !ram_phantoon_rng_inverted : BEQ .vanilla_inverted
-    CMP #$0001 : BEQ .inverted
-    CMP #$0002 : BEQ .not_inverted
+    LDA !eram_phantoon_rng_flip : BEQ .vanilla_flip
+    DEC : BEQ .flipped
+    DEC : BEQ .not_flipped
 
     ; Random
     LDA !CACHED_RANDOM_NUMBER : BIT #$0080
     RTL
 
-  .inverted
-    LDA #$0000 : BIT #$0001
+  .flipped
+    TDC : BIT #$0001
     RTL
 
-  .not_inverted
+  .not_flipped
     LDA #$0001 : BIT #$0001
     RTL
 
-  .vanilla_inverted
+  .vanilla_flip
     LDA !FRAME_COUNTER : BIT #$0001
     RTL
 }
@@ -542,7 +743,7 @@ endif
     BNE .round1
     ; Save the pattern timer, check the direction,
     ; and set Phantoon's starting point and pattern index.
-    LSR : STA !ENEMY_FUNCTION_POINTER+$40 : BCS .round2left
+    LSR : STA !ENEMY_FUNCTION_POINTER+!ENEMY_1_OFFSET : BCS .round2left
 
     ; Right pattern
     LDA #$0088 : LDY #$00D0
@@ -555,11 +756,11 @@ endif
     STA !ENEMY_FUNCTION_POINTER  ; Index into figure-8 movement table
     STY !ENEMY_X  ; X position
     LDA #$0060 : STA !ENEMY_Y  ; Y position
-    BRA hook_phantoon_invert
+    BRA hook_phantoon_flip
 
   .round1
     ; Save the pattern timer and check the direction
-    LSR : STA !ENEMY_FUNCTION_POINTER+$40
+    LSR : STA !ENEMY_FUNCTION_POINTER+!ENEMY_1_OFFSET
     BCS .round1left
 
     ; Round 1 right pattern
@@ -573,7 +774,7 @@ endif
 
 hook_phantoon_eyeclose:
 {
-    LDA !ram_phantoon_rng_eyeclose : BEQ .no_manip
+    LDA !eram_phantoon_rng_eyeclose : BEQ .no_manip
     DEC : ASL ; return with 0-slow, 2-mid, 4-fast
     RTL
 
@@ -587,9 +788,9 @@ hook_phantoon_flame_pattern:
 {
     JSL $808111 ; Trying to preserve the number of RNG calls being done in the frame
 
-    LDA !ram_phantoon_rng_flames : TAY
-    LDA !ram_phantoon_rng_next_flames : STA !ram_phantoon_rng_flames
-    TYA : STA !ram_phantoon_rng_next_flames : BEQ .no_manip
+    LDA !eram_phantoon_rng_flames : TAY
+    LDA !eram_phantoon_rng_next_flames : STA !eram_phantoon_rng_flames
+    TYA : STA !eram_phantoon_rng_next_flames : BEQ .no_manip
     DEC
     RTL
 
@@ -600,7 +801,7 @@ hook_phantoon_flame_pattern:
 
 hook_phantoon_flame_direction:
 {
-    LDA !ram_phantoon_flame_direction : BEQ .no_manip
+    LDA !eram_phantoon_rng_flame_direction : BEQ .no_manip
     DEC : BNE .right
 
   .left
@@ -623,38 +824,45 @@ endif
     RTL
 }
 
-
 hook_botwoon_move:
 {
-    LDA !ram_botwoon_rng : BEQ .no_manip
+    LDA !eram_botwoon_all_pattern_rng : BEQ .no_manip_maybe_first_roll
+    ; check if first round
+    LDA !eram_botwoon_first_roll : BNE .first_round
     ; 0 = head visible, 1 = behind wall
     LDA $7E8026 : BNE .hidden
-    ; check if first round, $7E8022 unused by Botwoon
-    LDA $7E8022 : BEQ .first_round
 
+    ; check if second round pattern fixed
+    LDA !eram_botwoon_second_rng : BEQ .no_manip
     ; preserve number of RNG calls in the frame
     JSL $808111
     ; return chosen pattern
-    LDA !ram_botwoon_second
+    LDA !eram_botwoon_second_rng
     RTL
 
   .first_round
+    ; check if first round pattern fixed
+    LDA !eram_botwoon_first_rng : BEQ .no_manip_maybe_first_roll
     ; preserve number of RNG calls in the frame
     JSL $808111
     ; mark first round complete
-    LDA #$0001 : STA $7E8022
+    STZ !eram_botwoon_first_roll
     ; return chosen pattern
-    LDA !ram_botwoon_first
+    LDA !eram_botwoon_first_rng
     RTL
 
   .hidden
-    LDA !ram_botwoon_hidden : BEQ .no_manip
+    ; check if hidden round pattern fixed
+    LDA !eram_botwoon_hidden_rng : BEQ .no_manip
     ; preserve number of RNG calls in the frame
     JSL $808111
     ; return chosen pattern
-    LDA !ram_botwoon_hidden
+    LDA !eram_botwoon_hidden_rng
     RTL
 
+  .no_manip_maybe_first_roll
+    ; mark first round complete
+    STZ !eram_botwoon_first_roll
   .no_manip
     ; return random pattern
     JML $808111
@@ -662,16 +870,22 @@ hook_botwoon_move:
 
 hook_botwoon_spit:
 {
-    LDA !ram_botwoon_spit : BEQ .no_manip
+    LDA !eram_botwoon_spit_rng : BEQ hook_botwoon_move_no_manip
     ; preserve number of RNG calls in the frame
     JSL $808111
     ; return chosen pattern
-    LDA !ram_botwoon_spit
+    LDA !eram_botwoon_spit_rng
     RTL
+}
 
-  .no_manip
-    ; return random pattern
-    JML $808111
+hook_botwoon_move_after_spit:
+{
+    LDA !eram_botwoon_after_spit_rng : BEQ hook_botwoon_move_no_manip
+    ; preserve number of RNG calls in the frame
+    JSL $808111
+    ; return chosen pattern
+    LDA !eram_botwoon_after_spit_rng
+    RTL
 }
 
 %endfree(83)
@@ -683,7 +897,7 @@ hook_crocomire_rng:
 {
     LDA !ram_crocomire_rng : BEQ .no_manip
     DEC : BEQ .step
-    LDA #$0000    ; return with <400 for swipe
+    TDC           ; return with <400 for swipe
     RTS
 
   .step
@@ -692,6 +906,23 @@ hook_crocomire_rng:
 
   .no_manip
     LDA !CACHED_RANDOM_NUMBER ; return with random number (overwritten code)
+    RTS
+}
+
+hook_crocomire_scroll:
+{
+    LDA !ram_door_portal_flags : AND !DOOR_PORTAL_MODE_MASK
+    CMP #$0002 : BNE .vanilla
+    LDA !ram_door_destination : ASL : TAX
+    LDA portals_right_vanilla_table,X : CMP #$93DE : BNE .vanilla
+
+    ; In map rando when right door selected,
+    ; do not set red scrolls
+    LDA $7ECD20
+    RTS
+
+  .vanilla
+    TDC
     RTS
 }
 
@@ -996,6 +1227,172 @@ endif
     RTS
 }
 
+hook_spore_spawn_scroll:
+{
+    LDA !ram_door_portal_flags : AND !DOOR_PORTAL_MODE_MASK
+    CMP #$0002 : BNE .vanilla
+    LDA !ram_door_source : ASL : TAX
+    LDA portals_left_vanilla_table,X : CMP #$8E4A : BNE .vanilla
+
+    ; In map rando when top door selected,
+    ; do not use a scroll hook for spore spawn
+    TDC
+    RTS
+
+  .vanilla
+    ; Overwritten scrolling finished hook
+    LDA #$9589
+    RTS
+}
+
+; Migrated from bank A6 since not enough freespace there
+init_ceres_ridley_rng:
+{
+    LDA !ram_ridley_rng_flags : AND !RIDLEY_RNG_CERES_MASK : BEQ .set_ceres_rng
+    CMP !RIDLEY_RNG_CERES_FIREBALL : BEQ .ceres_fireball
+    CMP !RIDLEY_RNG_CERES_LUNGE : BEQ .ceres_lunge
+    CMP !RIDLEY_RNG_CERES_SWOOP : BEQ .ceres_swoop
+    TDC : BRA .set_ceres_rng
+
+  .ceres_fireball
+if !FEATURE_PAL
+    LDA #$A792
+else
+    LDA #$A782
+endif
+    BRA .set_ceres_rng
+
+  .ceres_lunge
+if !FEATURE_PAL
+    LDA #$A84C
+else
+    LDA #$A83C
+endif
+    BRA .set_ceres_rng
+
+  .ceres_swoop
+if !FEATURE_PAL
+    LDA #$A89D
+else
+    LDA #$A88D
+endif
+
+  .set_ceres_rng
+    STA !eram_ceres_ridley_rng
+    RTL
+}
+
+init_zebes_ridley_rng:
+{
+    LDA !ram_ridley_rng_flags
+    BIT !RIDLEY_RNG_75_25_LUNGE : BNE .set_75_25_lunge
+    BIT !RIDLEY_RNG_75_25_POGO : BNE .set_75_25_pogo
+if !FEATURE_PAL
+    LDA #$B3BC
+else
+    LDA #$B3AC
+endif
+    BRA .set_75_25
+
+  .set_75_25_lunge
+if !FEATURE_PAL
+    LDA #$B3EC
+else
+    LDA #$B3DC
+endif
+    BRA .set_75_25
+
+  .set_75_25_pogo
+if !FEATURE_PAL
+    LDA #$B3CC
+else
+    LDA #$B3BC
+endif
+
+  .set_75_25
+    STA !eram_ridley_lunge_pogo_rng
+
+    LDA !ram_ridley_rng_flags
+    BIT !RIDLEY_RNG_50_50_SWOOP : BNE .set_50_50_swoop
+    BIT !RIDLEY_RNG_50_50_POGO : BNE .set_50_50_pogo
+if !FEATURE_PAL
+    LDA #$B3AC
+else
+    LDA #$B39C
+endif
+    STA !eram_ridley_swoop_pogo_rng
+if !FEATURE_PAL
+    LDA #$B39C
+else
+    LDA #$B38C
+endif
+    BRA .set_50_50
+
+  .set_50_50_swoop
+    LDA #ridley_all_swoop_table
+    BRA .set_50_50_both
+
+  .set_50_50_pogo
+if !FEATURE_PAL
+    LDA #$B3CC
+else
+    LDA #$B3BC
+endif
+
+  .set_50_50_both
+    STA !eram_ridley_swoop_pogo_rng
+  .set_50_50
+    STA !eram_ridley_pogo_swoop_rng
+
+    LDA !ram_ridley_rng_times_and_fireball
+    BIT !RIDLEY_RNG_ALL_FIREBALL : BNE .set_all_fireball
+    BIT !RIDLEY_RNG_NO_FIREBALL : BNE .set_no_fireball
+    TDC : BRA .set_fireball
+
+  .set_all_fireball
+    LDA #$0081
+    BRA .set_fireball
+
+  .set_no_fireball
+    TDC : INC
+
+  .set_fireball
+    STA !eram_ridley_fireball_rng
+
+    LDA !ram_ridley_rng_times_and_fireball : AND !RIDLEY_RNG_HOVER_TIME_MASK
+    STA !eram_ridley_hover_time_rng
+
+    LDA !ram_ridley_rng_times_and_fireball : AND !RIDLEY_RNG_POGO_TIME_MASK
+    XBA : STA !eram_ridley_pogo_time_rng
+
+    LDA !ram_ridley_rng_flags : AND !RIDLEY_RNG_POGO_HEIGHT_MASK
+    LSR #3 : STA !eram_ridley_pogo_height_rng
+
+    PHX : LDA !ram_ridley_rng_flags : AND !RIDLEY_RNG_BACKPOGO_MASK
+    XBA : ASL : TAX : LDA.l ridley_backpogo_threshold_table,X
+    STA !eram_ridley_backpogo_rng : PLX
+    RTL
+}
+
+ridley_backpogo_threshold_table:
+    dw #$0555, #$0000
+    dw #$FFFF, #$0AAA, #$0FFF
+    dw #$1554, #$1AA9, #$1FFE
+    dw #$2553, #$2AA8, #$2FFD
+    dw #$3552, #$3AA7, #$3FFC
+    dw #$4551, #$4AA6, #$4FFB
+    dw #$5550, #$5AA5, #$5FFA
+    dw #$654F, #$6AA4, #$6FF9
+    dw #$754E, #$7AA3, #$7FF8
+    dw #$854D, #$8AA2, #$8FF7
+    dw #$954C, #$9AA1, #$9FF6
+    dw #$A54B, #$AAA0, #$AFF5
+    dw #$B54A, #$BA9F, #$BFF4
+    dw #$C549, #$CA9E, #$CFF3
+    dw #$D548, #$DA9D, #$DFF2
+    dw #$E547, #$EA9C, #$EFF1
+    dw #$F546, #$FA9B, #$FFF0
+
 %endfree(A5)
 
 
@@ -1030,6 +1427,261 @@ else
 org $A6A360
 endif
     LDA #ridley_init_hook
+
+if !FEATURE_PAL
+org $A6A72C
+else
+org $A6A71C
+endif
+    BCC $0E ; overwrite a NOP to save one byte
+
+if !FEATURE_PAL
+org $A6A73A
+else
+org $A6A72A
+endif
+    BCC $55 ; branch to a different RTS since we overwrite the original
+
+    ; See if Ceres Ridley RNG is fixed, requires five bytes
+    LDA !eram_ceres_ridley_rng : BNE ceres_ridley_set_ai
+
+    ; Original vanilla RNG
+    LDA !CACHED_RANDOM_NUMBER : AND #$000F
+    ASL : TAX : LDA.w ceres_ridley_set_ai_table,X
+ceres_ridley_set_ai:
+    STA !ENEMY_FUNCTION_POINTER
+
+    ; We need to save five bytes, but we already saved one
+    ; Replacing LDA #$0000 with TDC saves two more
+    ; Jumping to another location that does STA $7E7800 : RTS saves two more
+    TDC
+if !FEATURE_PAL
+    JMP $B4CE
+else
+    JMP $B4BE
+endif
+ceres_ridley_set_ai_table:
+%warnpc($A6A743, $A6A753)
+
+if !FEATURE_PAL
+org $A6B36F
+else
+org $A6B35F
+endif
+    LDY !eram_ridley_pogo_swoop_rng
+
+if !FEATURE_PAL
+org $A6B385
+else
+org $A6B375
+endif
+    LDY !eram_ridley_lunge_pogo_rng
+
+if !FEATURE_PAL
+org $A6B38B
+else
+org $A6B37B
+endif
+    LDY !eram_ridley_pogo_swoop_rng
+
+if !FEATURE_PAL
+org $A6B396
+else
+org $A6B386
+endif
+    LDY !eram_ridley_swoop_pogo_rng
+
+if !FEATURE_PAL
+org $A6B3DC
+else
+org $A6B3CC
+endif
+ridley_all_hover_table:
+    ; move hover start back five bytes
+if !FEATURE_PAL
+    dw $B5CF, $B5CF, $B5CF, $B5CF, $B5CF, $B5CF, $B5CF, $B5CF
+else
+    dw $B5BF, $B5BF, $B5BF, $B5BF, $B5BF, $B5BF, $B5BF, $B5BF
+endif
+
+if !FEATURE_PAL
+org $A6B5CF
+else
+org $A6B5BF
+endif
+    ; Vanilla logic from $A6:B5C4
+    LDA #$000B : STA $7E201E
+    LDA #$0180 : STA $7E2012
+if !FEATURE_PAL
+    LDA #$B5F5
+else
+    LDA #$B5E5
+endif
+    STA !ENEMY_FUNCTION_POINTER
+
+    ; Check if we have a fixed hover delay
+    LDA !eram_ridley_hover_time_rng : BNE $0A
+
+    ; Continue to vanilla logic
+%warnpc($A6B5D8, $A6B5E8)
+
+if !FEATURE_PAL
+org $A6B605
+    JMP $B69C
+else ; Move jump by one byte due to below changes
+org $A6B5F5
+    JMP $B68C
+endif
+
+if !FEATURE_PAL
+org $A6B633
+    JMP $B69C
+else ; Move jump by one byte due to below changes
+org $A6B623
+    JMP $B68C
+endif
+
+if !FEATURE_PAL
+org $A6B651
+else
+org $A6B641
+endif
+    ; We need to save five bytes, which we can do if we switch to 8-bit mode,
+    ; but this means we now need to save eleven bytes
+    ; Start by replacing LDX #$0000 with TDC : TAX (saved 1, spent 0)
+    TDC : TAX
+    ; Vanilla logic
+    LDA !SAMUS_Y : CMP #$0160 : BMI $03
+    LDA #$0160
+    STA $14
+if !FEATURE_PAL
+    JSR $B43E
+    JSR $D533
+else
+    JSR $B42E
+    JSR $D523
+endif
+    ; Replace LDA #$0001 with TDC : INC (saved 2, spent 0)
+    TDC : INC : STA $7E2004
+    ; Switch to 8-bit mode (saved 2, spent 2)
+    %a8()
+    ; Skip AND #$00FF and reduce CMP #$0003 (saved 6, spent 2)
+    LDA !SAMUS_MOVEMENT_TYPE : CMP #$03
+    BNE $23
+    ; New logic (saved 6, spent 7)
+    LDA !eram_ridley_fireball_rng : BNE $03
+    ; Original logic, but skip AND #$00FF and reduce #$0080 (saved 10, spent 7)
+    LDA !CACHED_RANDOM_NUMBER : CMP #$80
+    ; Switch back to 16-bit mode (saved 10, spent 9)
+    %a16()
+    ; Vanilla logic
+    BCC $13
+    LDA $7E781E : BNE $0D
+    LDA $7E7820 : DEC : BEQ $06
+if !FEATURE_PAL
+    LDA #$E711
+    JSR $D43E
+else
+    LDA #$E73A
+    JSR $D467
+endif
+    CLC : RTS
+    ; Switch back to 16-bit mode (saved 10, spent 11)
+    %a16()
+    SEC : RTS
+    ; Start into the next routine one byte later than vanilla
+    LDA #$00F0 : STA $7E2012
+    LDA #$0010 : STA $7E201E
+    ; Replace LDA #$0001 with TDC : INC (saved 11, spent 11)
+    TDC : INC
+%warnpc($A6B69C, $A6B6AC)
+
+if !FEATURE_PAL
+org $A6B6BD
+else ; Migrate vanilla routine up five bytes
+org $A6B6AD
+endif
+    BMI $1A
+
+if !FEATURE_PAL
+org $A6B6C5
+else
+org $A6B6B5
+endif
+    LDA.w ridley_acceleration_table,Y
+
+if !FEATURE_PAL
+org $A6B6D9
+    JSR $D92C
+    LDA #$B6E8
+else ; Migrate vanilla routine up five bytes
+org $A6B6C9
+    JSR $D955
+    LDA #$B6D8
+endif
+    STA !ENEMY_FUNCTION_POINTER
+    LDA #$0020 : STA !ENEMY_VAR_5
+    ; Start into the next routine five bytes earlier than vanilla
+    LDA !ENEMY_X : STA $12
+    LDA #$0120 : STA $14
+    LDX #$0000 : LDY #$0000
+if !FEATURE_PAL
+    JSR $D4FA
+else
+    JSR $D523
+endif
+    DEC !ENEMY_VAR_5 : BPL $1D
+if !FEATURE_PAL
+    JSR $CB0A
+    JSR ridley_set_pogo_height
+    LDA #$B71E
+else
+    JSR $CB33
+    JSR ridley_set_pogo_height
+    LDA #$B70E
+endif
+    STA !ENEMY_FUNCTION_POINTER
+    ; Add new logic here
+    LDA !eram_ridley_pogo_time_rng : BNE $09
+%warnpc($A6B701, $A6B711)
+
+   if !FEATURE_PAL
+org $A6B772
+else
+org $A6B762
+endif
+    JSR ridley_set_pogo_height
+
+if !FEATURE_PAL
+org $A6B8EB
+else
+org $A6B8DB
+endif
+    CMP !eram_ridley_backpogo_rng
+
+if !FEATURE_PAL
+org $A6B90D
+else
+org $A6B8FD
+endif
+    CMP !eram_ridley_backpogo_rng
+
+if !FEATURE_PAL
+org $A6B93B
+else
+org $A6B92B
+endif
+    LDA.w ridley_pogo_parameter_table,Y
+
+if !FEATURE_PAL
+org $A6B95D
+else
+org $A6B94D
+endif
+ridley_set_pogo_height:
+    LDA !eram_ridley_pogo_height_rng : BEQ $BD
+    DEC : BRA $C0
+%warnpc($A6B959, $A6B969)
 
 if !FEATURE_PAL
 org $A6EFA9
@@ -1100,6 +1752,19 @@ endif
 
 %startfree(A6)
 
+ridley_acceleration_table:
+    dw #$00B0, #$0080, #$0060
+
+ridley_pogo_parameter_table:
+    dw #$000A, #$0010, #$0020, #$0030, #$0040, #$0050
+
+ridley_all_swoop_table:
+if !FEATURE_PAL
+    dw $B451, $B451, $B451, $B451, $B451, $B451, $B451, $B451
+else
+    dw $B441, $B441, $B441, $B441, $B441, $B441, $B441, $B441
+endif
+
 ridley_reset_damagecounter:
 {
     TDC : STA !DAMAGE_COUNTER
@@ -1108,7 +1773,9 @@ ridley_reset_damagecounter:
 
 ridley_init_hook:
 {
-    LDA !ROOM_ID : CMP.w #ROOM_CeresRidleyRoom : BNE .continue
+    LDA !ROOM_ID : CMP.w #ROOM_CeresRidleyRoom : BNE .not_ceres
+    JSL init_ceres_ridley_rng
+
     LDA $7ED82E : BIT #$0001 : BEQ .continue
 
     ; Ceres Ridley is already dead, so skip to the escape
@@ -1131,6 +1798,9 @@ else
 endif
     STA !ENEMY_FUNCTION_POINTER
     JMP (!ENEMY_FUNCTION_POINTER)
+
+  .not_ceres
+    JSL init_zebes_ridley_rng
 
   .continue
 if !FEATURE_PAL
@@ -1314,5 +1984,162 @@ else
 endif
 }
 
+baby_vanilla_hop_initial_velocities:
+    dw #$FE00, #$FE00, #$FE00, #$FC00
+    dw #$01C0, #$0120, #$0120, #$0300
+
+baby_maprando_hop_initial_velocities:
+    dw #$FE00, #$FE00, #$FC00, #$FE00
+    dw #$0120, #$0250, #$0300, #$01C0
+
+mb_ground_attack_max_rings_rng_table:
+    db #$00, #$FF, #$FF
+
+mb_ground_attack_max_fries_rng_table:
+    db #$00, #$00, #$FF
+
+mb_ground_attack_max_bombs_rng_table:
+    db #$00, #$00, #$00
+
+mb_ground_attack_min_rings_rng_table:
+    db #$54, #$54, #$AA
+
+mb_ground_attack_min_fries_rng_table:
+    db #$54, #$AA, #$AA
+
+mb_ground_attack_min_bombs_rng_table:
+    db #$55, #$AA, #$FF
+
+mb_ground_attack_minimized_rng_table:
+    db #$FF, #$FF, #$FF
+
 %endfree(A9)
+
+
+%startfree(AA)
+
+mb_normal_walking_rng_table:
+    dw #$1000, #$0000, #$FFFF, #$1000
+
+mb_ketchup_walking_rng_table:
+    dw #$2000, #$FFFF, #$0000, #$2000
+
+mb_damage_down_rng_table:
+    dw #$0FF0, #$1000, #$0000, #$0FF0
+
+mb_ketchup_rng_table:
+    dw #$A000, #$FFFF, #$0000, #$A000
+
+mb_air_rings_rng_table:
+    dw #$0080, #$0000, #$0080, #$0100, #$0100, #$0080, #$0000, #$0080
+
+mb_ground_bomb_rng_table:
+    dw #$0080, #$0100, #$0000, #$0100, #$0080, #$0100, #$0080, #$0100
+
+mb_ground_attack_rng_tables_table:
+if !FEATURE_PAL
+    dw $B729
+else
+    dw $B6DC
+endif
+    dw #mb_ground_attack_max_rings_rng_table
+    dw #mb_ground_attack_max_bombs_rng_table
+    dw #mb_ground_attack_max_fries_rng_table
+    dw #mb_ground_attack_min_rings_rng_table
+    dw #mb_ground_attack_min_bombs_rng_table
+    dw #mb_ground_attack_min_fries_rng_table
+    dw #mb_ground_attack_minimized_rng_table
+
+mb_close_attack_rng_tables_table:
+if !FEATURE_PAL
+    dw $B72C
+else
+    dw $B6DF
+endif
+    dw #mb_ground_attack_max_rings_rng_table
+    dw #mb_ground_attack_max_bombs_rng_table
+    dw #mb_ground_attack_max_fries_rng_table
+    dw #mb_ground_attack_min_rings_rng_table
+    dw #mb_ground_attack_min_bombs_rng_table
+    dw #mb_ground_attack_min_fries_rng_table
+    dw #mb_ground_attack_minimized_rng_table
+
+mb_try_bomb_crouch_rng_table:
+    dw #$FF80, #$0000, #$FFFF, #$FF80
+
+mb_bomb_crouch_rng_table:
+    dw #$8000, #$0000, #$FFFF, #$8000
+
+init_mb_rng_from_menu:
+{
+    LDA !ENEMY_VAR_4 : PHA
+    JSL hook_mb_init_rng
+    PLA : STA !ENEMY_VAR_4
+    RTL
+}
+
+hook_mb_init_rng:
+{
+    LDA !ram_mb_rng : AND !MB_RNG_WALKING_MASK : ASL : TAX
+    LDA.l mb_normal_walking_rng_table,X : STA !eram_mb_normal_walking_rng
+    LDA.l mb_ketchup_walking_rng_table,X : STA !eram_mb_ketchup_walking_rng
+    LDA !ram_mb_rng : AND !MB_RNG_KETCHUP_MASK : LSR : TAX
+    LDA.l mb_ketchup_rng_table,X : STA !eram_mb_ketchup_rng
+    LDA !ram_mb_rng : AND !MB_RNG_DAMAGE_DOWN_MASK : LSR #3 : TAX
+    LDA.l mb_damage_down_rng_table,X : STA !eram_mb_damage_down_rng
+    LDA !ram_mb_rng : AND !MB_RNG_PHASE3_ATTACK_MASK
+    EOR !MB_RNG_PHASE3_ATTACK_RINGS : STA !eram_mb_phase3_attack_rng
+    LDA !ram_mb_rng : AND !MB_RNG_NORMAL_ATTACK_MASK : XBA : TAX
+    LDA.l mb_air_rings_rng_table,X : STA !eram_mb_air_rings_rng
+    LDA.l mb_ground_bomb_rng_table,X : STA !eram_mb_ground_bomb_rng
+    LDA.l mb_ground_attack_rng_tables_table,X : STA !eram_mb_ground_attack_rng_table
+    LDA.l mb_close_attack_rng_tables_table,X : STA !eram_mb_close_attack_rng_table
+    LDA !ram_mb_rng : AND !MB_RNG_BOMB_CROUCH_MASK : XBA : ASL #3 : XBA : TAX
+    LDA.l mb_try_bomb_crouch_rng_table,X : STA !eram_mb_try_bomb_crouch
+    LDA.l mb_bomb_crouch_rng_table,X : STA !eram_mb_bomb_crouch
+
+    ; Overwritten logic
+    LDA #$000A : STA !ENEMY_VAR_4
+    RTL
+}
+
+hook_baby_init:
+{
+if !FEATURE_PAL
+    JSL $A9D343
+else  ; Overridden logic
+    JSL $A9D2F6
+endif
+
+    LDA !ram_door_portal_flags : AND !DOOR_PORTAL_MODE_MASK
+    CMP #$0002 : BNE .vanilla
+    LDA !ram_door_source : ASL : TAX
+    LDA portals_left_vanilla_table,X : CMP #$AA38 : BNE .vanilla
+
+    ; Use maprando values
+    LDA #$0001 : STA !eram_baby_dead_hop_delay
+    LDA #baby_maprando_hop_initial_velocities : STA !eram_baby_hop_velocity_tables
+    LDA #$002C : STA !eram_baby_initial_delay
+    LDA #$01B0 : STA !eram_baby_target_x_pos
+    LDA #$0020 : STA !eram_baby_after_drain_delay
+    LDA #$0030 : STA !eram_baby_rising_delay
+    LDA #$0016 : STA !eram_baby_backing_off
+    STA !eram_baby_leaving_left
+    STA !eram_baby_leaving_right
+    RTL
+
+  .vanilla
+    LDA #$0040 : STA !eram_baby_dead_hop_delay
+    LDA #baby_vanilla_hop_initial_velocities : STA !eram_baby_hop_velocity_tables
+    LDA #$01D0 : STA !eram_baby_initial_delay
+    LDA #$0248 : STA !eram_baby_target_x_pos
+    LDA #$0078 : STA !eram_baby_after_drain_delay
+    LDA #$00C0 : STA !eram_baby_rising_delay
+    LDA #$0058 : STA !eram_baby_backing_off
+    STA !eram_baby_leaving_left
+    LDA #$0100 : STA !eram_baby_leaving_right
+    RTL
+}
+
+%endfree(AA)
 

@@ -827,75 +827,54 @@ eventflags_setmapstations:
 
 eventflags_prepare_events_menu:
 {
-    LDA $7ED820 : AND #$0038 : STA !ram_cm_zebmask
-    JSL eventflags_setup_zeb_ram
+    ; Zebettites
+    LDA $7ED820 : AND #$0038
+    CMP #$0020 : BEQ .fourZeb
+    CMP #$0018 : BEQ .threeZeb
+    CMP #$0010 : BEQ .twoZeb
+    CMP #$0008 : BEQ .oneZeb
+    LDA #$0000 : BRA .doneZeb
+  .fourZeb
+    LDA #$0004 : BRA .doneZeb
+  .threeZeb
+    LDA #$0003 : BRA .doneZeb
+  .twoZeb
+    LDA #$0002 : BRA .doneZeb
+  .oneZeb
+    LDA #$0001 : BRA .doneZeb
+  .doneZeb
+    STA !ram_cm_zebmask
+
+    ; Metroids
+    LDA $7ED822 : AND #$000F
+    BIT #$0008 : BNE .fourMet
+    BIT #$0004 : BNE .threeMet
+    BIT #$0002 : BNE .twoMet
+    BIT #$0001 : BNE .oneMet
+    LDA #$0000 : BRA .doneMet
+  .fourMet
+    LDA #$0004 : BRA .doneMet
+  .threeMet
+    LDA #$0003 : BRA .doneMet
+  .twoMet
+    LDA #$0002 : BRA .doneMet
+  .oneMet
+    LDA #$0001 : BRA .doneMet
+  .doneMet
+    STA !ram_cm_metmask
+
     %setmenubank()
     JML action_submenu
 }
 
-eventflags_set_zeb_ram:
-{
-    LDA $7ED820 : AND #$FFC7
-    ORA !ram_cm_zebmask : STA $7ED820
-
-    ; Intentional fallthrough
-    LDA !ram_cm_zebmask
-}
-
-eventflags_setup_zeb_ram:
-{
-    CMP #$0020 : BPL .zeb4
-    CMP #$0018 : BPL .zeb3
-    CMP #$0010 : BPL .zeb2
-    CMP #$0008 : BPL .zeb1
-    STA !ram_cm_zeb1
-  .clear_zeb2
-    STA !ram_cm_zeb2
-  .clear_zeb3
-    STA !ram_cm_zeb3
-  .clear_zeb4
-    STA !ram_cm_zeb4
-    RTL
-
-  .zeb4
-    LDA #$0020 : STA !ram_cm_zeb4
-    LDA #$0018 : STA !ram_cm_zeb3
-    LDA #$0010 : STA !ram_cm_zeb2
-    LDA #$0008 : STA !ram_cm_zeb1
-    RTL
-
-  .zeb3
-    LDA #$0018 : STA !ram_cm_zeb3
-    LDA #$0010 : STA !ram_cm_zeb2
-    LDA #$0008 : STA !ram_cm_zeb1
-    TDC
-    BRA .clear_zeb4
-
-  .zeb2
-    LDA #$0010 : STA !ram_cm_zeb2
-    LDA #$0008 : STA !ram_cm_zeb1
-    TDC
-    BRA .clear_zeb3
-
-  .zeb1
-    LDA #$0008 : STA !ram_cm_zeb1
-    TDC
-    BRA .clear_zeb2
-}
-
 EventsMenu:
     dw #events_zebesawake
+    dw #events_speedboostquake
     dw #events_maridiatubebroken
     dw #events_shaktool
     dw #events_chozoacid
-    dw #events_metroid1
-    dw #events_metroid2
-    dw #events_metroid3
-    dw #events_metroid4
-    dw #events_zeb1
-    dw #events_zeb2
-    dw #events_zeb3
-    dw #events_zeb4
+    dw #events_metroids
+    dw #events_zebettites
     dw #events_mb1glass
     dw #events_zebesexploding
     dw #events_animals
@@ -911,6 +890,9 @@ EventsMenu:
 events_zebesawake:
     %cm_toggle_bit("Zebes Awake", $7ED820, #$0001, #0)
 
+events_speedboostquake:
+    %cm_toggle_bit("Speedbooster Lavaquake", $7ED822, #$0020, #0)
+
 events_maridiatubebroken:
     %cm_toggle_bit("Maridia Tube Broken", $7ED820, #$0800, #0)
 
@@ -920,53 +902,47 @@ events_shaktool:
 events_chozoacid:
     %cm_toggle_bit("Chozo Lowered Acid", $7ED821, #$0010, #0)
 
-events_metroid1:
-    %cm_toggle_bit("1st Metroids Cleared", $7ED822, #$0001, #0)
-
-events_metroid2:
-    %cm_toggle_bit("2nd Metroids Cleared", $7ED822, #$0002, #0)
-
-events_metroid3:
-    %cm_toggle_bit("3rd Metroids Cleared", $7ED822, #$0004, #0)
-
-events_metroid4:
-    %cm_toggle_bit("4th Metroids Cleared", $7ED822, #$0008, #0)
-
-events_zeb1:
-    %cm_toggle("1st Zebitite Cleared", !ram_cm_zeb1, #$08, #.routine)
+events_metroids:
+    %cm_numfield("Metroid Rooms Cleared", !ram_cm_metmask, 0, 4, 1, 1, #.routine)
   .routine
-    LDA !ram_cm_zeb1 : BNE .set
-    TDC
-  .set
-    STA !ram_cm_zebmask
-    JML eventflags_set_zeb_ram
+    CMP #$0000 : BEQ .done
+    CMP #$0001 : BEQ .one
+    CMP #$0002 : BEQ .two
+    CMP #$0003 : BEQ .three
 
-events_zeb2:
-    %cm_toggle("2nd Zebitite Cleared", !ram_cm_zeb2, #$10, #.routine)
+    LDA #$000F : BRA .done
+  .three
+    LDA #$0007 : BRA .done
+  .two
+    LDA #$0003 : BRA .done
+  .one
+    LDA #$0001 : BRA .done
+
+  .done
+    STA $C1
+    LDA $7ED822 : AND #$FFF0 : ORA $C1 : STA $7ED822
+    RTL
+
+events_zebettites:
+    %cm_numfield("Zebs Killed", !ram_cm_zebmask, 0, 4, 1, 1, #.routine)
   .routine
-    LDA !ram_cm_zeb2 : BNE .set
+    CMP #$0000 : BEQ .done
+    CMP #$0001 : BEQ .one
+    CMP #$0002 : BEQ .two
+    CMP #$0003 : BEQ .three
+
+    LDA #$0020 : BRA .done
+  .three
+    LDA #$0018 : BRA .done
+  .two
+    LDA #$0010 : BRA .done
+  .one
     LDA #$0008
-  .set
-    STA !ram_cm_zebmask
-    JML eventflags_set_zeb_ram
 
-events_zeb3:
-    %cm_toggle("3rd Zebitite Cleared", !ram_cm_zeb3, #$18, #.routine)
-  .routine
-    LDA !ram_cm_zeb3 : BNE .set
-    LDA #$0010
-  .set
-    STA !ram_cm_zebmask
-    JML eventflags_set_zeb_ram
-
-events_zeb4:
-    %cm_toggle("4th Zebitite Cleared", !ram_cm_zeb4, #$20, #.routine)
-  .routine
-    LDA !ram_cm_zeb4 : BNE .set
-    LDA #$0018
-  .set
-    STA !ram_cm_zebmask
-    JML eventflags_set_zeb_ram
+  .done
+    STA $C1
+    LDA $7ED820 : AND #$FFC7 : ORA $C1 : STA $7ED820
+    RTL
 
 events_mb1glass:
     %cm_toggle_bit("MB1 Glass Broken", $7ED820, #$0004, #0)
@@ -2633,9 +2609,8 @@ misc_killenemies:
 misc_forcestand:
     %cm_jsl("Force Samus to Stand Up", .routine, #0)
   .routine
-    JSL $90E2D4 ; bridge to: Release Samus from Draygon
     %sfxconfirm()
-    RTL
+    JML misc_force_stand_routine
 
 %endfree(85)
 

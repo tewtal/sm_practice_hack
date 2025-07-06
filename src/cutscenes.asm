@@ -247,14 +247,13 @@ cutscenes_game_over:
     ; check for cutscene flag or whatever
     LDA !sram_cutscenes : BIT !CUTSCENE_SKIP_GAMEOVER : BEQ .game_over
 if !FEATURE_SD2SNES
-    ; check if valid savestate
-    LDA !SRAM_SAVED_STATE : CMP !SAFEWORD : BNE .no_savestate
-    JML gamemode_shortcuts_load_state
+    JSL gamemode_load_state
 endif
 
   .no_savestate
     ; reload last preset if it exists
     LDA !sram_last_preset : BEQ .save_file : STA !ram_load_preset
+    JSL preset_load
     BRA .skip_gameplay
 
   .save_file
@@ -1732,6 +1731,83 @@ org $A9B5E1
 endif
     JSL cutscenes_mb_custom_damage
 
+if !FEATURE_PAL
+org $A9B672
+else
+org $A9B625
+endif
+    CMP !eram_mb_normal_walking_rng
+
+if !FEATURE_PAL
+org $A9B684
+else
+org $A9B637
+endif
+    CMP !eram_mb_ketchup_walking_rng
+
+if !FEATURE_PAL
+org $A9B68C
+else
+org $A9B63F
+endif
+    CMP !eram_mb_ketchup_rng
+
+if !FEATURE_PAL
+org $A9B6B9
+else
+org $A9B66C
+endif
+    LDX !eram_mb_ground_attack_rng_table
+
+if !FEATURE_PAL
+org $A9B6D2
+else
+org $A9B685
+endif
+    LDX !eram_mb_close_attack_rng_table
+
+if !FEATURE_PAL
+org $A9B742
+else
+org $A9B6F5
+endif
+    CMP !eram_mb_air_rings_rng
+
+if !FEATURE_PAL
+org $A9B75F
+else
+org $A9B712
+endif
+    CMP !eram_mb_ground_bomb_rng
+
+if !FEATURE_PAL
+org $A9B7D1
+else
+org $A9B784
+endif
+    CMP !eram_mb_try_bomb_crouch
+
+if !FEATURE_PAL
+org $A9B808
+else
+org $A9B7BB
+endif
+    CMP !eram_mb_bomb_crouch
+
+if !FEATURE_PAL
+org $A9BDC7
+else
+org $A9BD7A
+endif
+    CMP !eram_mb_damage_down_rng
+
+if !FEATURE_PAL
+org $A9C282
+else
+org $A9C235
+endif
+    CMP !eram_mb_phase3_attack_rng
+
 
 %startfree(A9)
 
@@ -1741,7 +1817,7 @@ cutscenes_mb_fast_init:
     ; If loading a preset, certain flags may already be set
     ; which allow MB to take damage, so setting value high,
     ; but also set below 18000 to avoid confusion with vanilla logic
-    LDA #$464F : STA !ENEMY_HP+$40
+    LDA #$464F : STA !ENEMY_HP+!ENEMY_1_OFFSET
 
     ; If MB already defeated, reset health to full to simulate baby metroid refill
     LDA $7ED82D : BIT #$0002 : BEQ .end_refill
@@ -1775,7 +1851,7 @@ endif
 
 cutscenes_mb_fake_death_pause:
 {
-    LDA !ENEMY_HP+$40 : BEQ .continue
+    LDA !ENEMY_HP+!ENEMY_1_OFFSET : BEQ .continue
     LDA #$0001 : STA !ENEMY_VAR_5
 
   .continue
@@ -1790,7 +1866,7 @@ endif
 
 cutscenes_mb_fake_death_lock:
 {
-    LDA !ENEMY_HP+$40 : BEQ .continue
+    LDA !ENEMY_HP+!ENEMY_1_OFFSET : BEQ .continue
     LDA #$0001 : STA !ENEMY_VAR_5
 
   .continue
@@ -1827,7 +1903,7 @@ endif
     STA !ENEMY_FUNCTION_POINTER
 
     LDA #$000C : STA !ENEMY_VAR_5
-    LDA !ENEMY_HP+$40 : BEQ .continue
+    LDA !ENEMY_HP+!ENEMY_1_OFFSET : BEQ .continue
     LDA #$0002 : STA !ENEMY_VAR_5
 
   .continue
@@ -1839,7 +1915,7 @@ endif
 
 cutscenes_mb_fake_death_unlock:
 {
-    LDA !ENEMY_HP+$40 : BEQ .continue
+    LDA !ENEMY_HP+!ENEMY_1_OFFSET : BEQ .continue
     LDA #$0001 : STA !ENEMY_VAR_5
 
   .continue
@@ -1871,8 +1947,8 @@ endif
 
 cutscenes_mb_bottom_left_tube:
 {
-    LDA !ENEMY_HP+$40 : BEQ .continue
-    LDA #$0010 : STA !ENEMY_VAR_5+$40
+    LDA !ENEMY_HP+!ENEMY_1_OFFSET : BEQ .continue
+    LDA #$0010 : STA !ENEMY_VAR_5+!ENEMY_1_OFFSET
 
   .continue
 if !FEATURE_PAL
@@ -1880,14 +1956,14 @@ if !FEATURE_PAL
 else
     LDA #$8983
 endif
-    STA !ENEMY_VAR_4+$40
-    JMP (!ENEMY_VAR_4+$40)
+    STA !ENEMY_VAR_4+!ENEMY_1_OFFSET
+    JMP (!ENEMY_VAR_4+!ENEMY_1_OFFSET)
 }
 
 cutscenes_mb_ceiling_column_9:
 {
-    LDA !ENEMY_HP+$40 : BEQ .continue
-    LDA #$0010 : STA !ENEMY_VAR_5+$40
+    LDA !ENEMY_HP+!ENEMY_1_OFFSET : BEQ .continue
+    LDA #$0010 : STA !ENEMY_VAR_5+!ENEMY_1_OFFSET
 
   .continue
 if !FEATURE_PAL
@@ -1895,14 +1971,14 @@ if !FEATURE_PAL
 else
     LDA #$89B5
 endif
-    STA !ENEMY_VAR_4+$40
-    JMP (!ENEMY_VAR_4+$40)
+    STA !ENEMY_VAR_4+!ENEMY_1_OFFSET
+    JMP (!ENEMY_VAR_4+!ENEMY_1_OFFSET)
 }
 
 cutscenes_mb_ceiling_column_6:
 {
-    LDA !ENEMY_HP+$40 : BEQ .continue
-    LDA #$0010 : STA !ENEMY_VAR_5+$40
+    LDA !ENEMY_HP+!ENEMY_1_OFFSET : BEQ .continue
+    LDA #$0010 : STA !ENEMY_VAR_5+!ENEMY_1_OFFSET
 
   .continue
 if !FEATURE_PAL
@@ -1910,14 +1986,14 @@ if !FEATURE_PAL
 else
     LDA #$89E7
 endif
-    STA !ENEMY_VAR_4+$40
-    JMP (!ENEMY_VAR_4+$40)
+    STA !ENEMY_VAR_4+!ENEMY_1_OFFSET
+    JMP (!ENEMY_VAR_4+!ENEMY_1_OFFSET)
 }
 
 cutscenes_mb_bottom_right_tube:
 {
-    LDA !ENEMY_HP+$40 : BEQ .continue
-    LDA #$0010 : STA !ENEMY_VAR_5+$40
+    LDA !ENEMY_HP+!ENEMY_1_OFFSET : BEQ .continue
+    LDA #$0010 : STA !ENEMY_VAR_5+!ENEMY_1_OFFSET
 
   .continue
 if !FEATURE_PAL
@@ -1925,14 +2001,14 @@ if !FEATURE_PAL
 else
     LDA #$8A0F
 endif
-    STA !ENEMY_VAR_4+$40
-    JMP (!ENEMY_VAR_4+$40)
+    STA !ENEMY_VAR_4+!ENEMY_1_OFFSET
+    JMP (!ENEMY_VAR_4+!ENEMY_1_OFFSET)
 }
 
 cutscenes_mb_bottom_middle_left_tube:
 {
-    LDA !ENEMY_HP+$40 : BEQ .continue
-    LDA #$0010 : STA !ENEMY_VAR_5+$40
+    LDA !ENEMY_HP+!ENEMY_1_OFFSET : BEQ .continue
+    LDA #$0010 : STA !ENEMY_VAR_5+!ENEMY_1_OFFSET
 
   .continue
 if !FEATURE_PAL
@@ -1940,14 +2016,14 @@ if !FEATURE_PAL
 else
     LDA #$8A37
 endif
-    STA !ENEMY_VAR_4+$40
-    JMP (!ENEMY_VAR_4+$40)
+    STA !ENEMY_VAR_4+!ENEMY_1_OFFSET
+    JMP (!ENEMY_VAR_4+!ENEMY_1_OFFSET)
 }
 
 cutscenes_mb_ceiling_column_7:
 {
-    LDA !ENEMY_HP+$40 : BEQ .continue
-    LDA #$0010 : STA !ENEMY_VAR_5+$40
+    LDA !ENEMY_HP+!ENEMY_1_OFFSET : BEQ .continue
+    LDA #$0010 : STA !ENEMY_VAR_5+!ENEMY_1_OFFSET
 
   .continue
 if !FEATURE_PAL
@@ -1955,14 +2031,14 @@ if !FEATURE_PAL
 else
     LDA #$8A69
 endif
-    STA !ENEMY_VAR_4+$40
-    JMP (!ENEMY_VAR_4+$40)
+    STA !ENEMY_VAR_4+!ENEMY_1_OFFSET
+    JMP (!ENEMY_VAR_4+!ENEMY_1_OFFSET)
 }
 
 cutscenes_mb_ceiling_column_8:
 {
-    LDA !ENEMY_HP+$40 : BEQ .continue
-    LDA #$0010 : STA !ENEMY_VAR_5+$40
+    LDA !ENEMY_HP+!ENEMY_1_OFFSET : BEQ .continue
+    LDA #$0010 : STA !ENEMY_VAR_5+!ENEMY_1_OFFSET
 
   .continue
 if !FEATURE_PAL
@@ -1970,8 +2046,8 @@ if !FEATURE_PAL
 else
     LDA #$8A9B
 endif
-    STA !ENEMY_VAR_4+$40
-    JMP (!ENEMY_VAR_4+$40)
+    STA !ENEMY_VAR_4+!ENEMY_1_OFFSET
+    JMP (!ENEMY_VAR_4+!ENEMY_1_OFFSET)
 }
 
 cutscenes_mb_setup_fight_or_escape:
@@ -1988,12 +2064,12 @@ else
 endif
 
   .mb
-    LDA !ENEMY_HP+$40 : BEQ .init_health
-    TDC : STA !ENEMY_VAR_5 : STA !ENEMY_HP+$40
+    LDA !ENEMY_HP+!ENEMY_1_OFFSET : BEQ .init_health
+    TDC : STA !ENEMY_VAR_5 : STA !ENEMY_HP+!ENEMY_1_OFFSET
     BRA .continue
 
   .init_health
-    LDA #$4650 : STA !ENEMY_HP+$40
+    LDA #$4650 : STA !ENEMY_HP+!ENEMY_1_OFFSET
 
   .continue
 if !FEATURE_PAL
@@ -2007,7 +2083,7 @@ endif
 
 cutscenes_mb_pause_phase_2:
 {
-    LDA !ENEMY_HP+$40 : BNE .continue
+    LDA !ENEMY_HP+!ENEMY_1_OFFSET : BNE .continue
     TDC : STA !ENEMY_VAR_5
     LDA !sram_cutscenes : BIT !CUTSCENE_FAST_MB : BEQ .lower_acid
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_DASH_RECALL : BEQ .continue
@@ -2027,7 +2103,7 @@ endif
 
 cutscenes_mb_load_tiles_phase_2:
 {
-    LDA !ENEMY_HP+$40 : BNE .continue
+    LDA !ENEMY_HP+!ENEMY_1_OFFSET : BNE .continue
     TDC : STA !ENEMY_VAR_5
 
   .continue
@@ -2071,7 +2147,7 @@ cutscenes_mb_choose_phase_2_or_3:
     LDA #$0004 : STA $7E7800
 
     ; 36000 health
-    LDA #$8CA0 : STA !ENEMY_HP+$40
+    LDA #$8CA0 : STA !ENEMY_HP+!ENEMY_1_OFFSET
 
     ; Enable health-based palette
     TDC : STA $7E7860 : STA $7E7868
@@ -2093,7 +2169,7 @@ endif
     LDA #$0002 : STA $7E7800
 
     ; 18000 health
-    LDA #$4650 : STA !ENEMY_HP+$40
+    LDA #$4650 : STA !ENEMY_HP+!ENEMY_1_OFFSET
 if !FEATURE_PAL
     JMP $8EE1
 else
@@ -2197,7 +2273,7 @@ cutscenes_mb_death_brain_falling_fast:
 {
     ; Vanilla logic except add $40 instead of $20
     LDA !ENEMY_VAR_5 : CLC : ADC #$0040 : STA !ENEMY_VAR_5
-    XBA : AND #$00FF : CLC : ADC !ENEMY_Y+$40
+    XBA : AND #$00FF : CLC : ADC !ENEMY_Y+!ENEMY_1_OFFSET
     CMP #$00C4 : BCC .rts
 
 if !FEATURE_PAL
@@ -2207,7 +2283,7 @@ else
 endif
 
   .rts
-    STA !ENEMY_Y+$40
+    STA !ENEMY_Y+!ENEMY_1_OFFSET
     RTS
 }
 

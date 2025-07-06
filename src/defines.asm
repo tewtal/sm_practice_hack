@@ -3,16 +3,40 @@
 ; Work RAM
 ; ---------
 
-!ram_tilemap_buffer = $7E5800
-!CRASHDUMP_TILEMAP_BUFFER = !ram_tilemap_buffer
+; The crash buffer and initial address can be moved around as needed
+; It is currently placed in the back half of the backup of BG2 tilemap during x-ray,
+; which means it is unlikely to overwrite anything relevant for debugging
+!CRASHDUMP_TILEMAP_BUFFER = $7E5800 ; 2048 bytes
+!CRASH_INITIAL_ADDRESS = #$7E0A44
 
-!WRAM_BANK = !WRAM_START>>16
+; Practice hack menu tilemap buffer
+!ram_tilemap_buffer = $7EF500 ; 2048 bytes
+
+; Shortcut routine is written on boot and each time the menu closes,
+; so it can use the same space as the practice hack menu tilemap buffer
+!CTRL_SHORTCUT_ROUTINE = $7EF502 ; up to 1883 bytes or +$75A
+!CTRL_SHORTCUT_TABLE = !CTRL_SHORTCUT_ROUTINE+$7B6 ; 48 bytes
+!CTRL_SHORTCUT_TYPE = !CTRL_SHORTCUT_ROUTINE+$7E6
+!CTRL_SHORTCUT_PRI = !CTRL_SHORTCUT_ROUTINE+$7E8
+!CTRL_SHORTCUT_SEC = !CTRL_SHORTCUT_ROUTINE+$7EA
+!CTRL_SHORTCUT_JSL_WORD_LSB = !CTRL_SHORTCUT_ROUTINE+$7EC
+!CTRL_SHORTCUT_JSL_WORD_MSB = !CTRL_SHORTCUT_ROUTINE+$7EE
+!CTRL_SHORTCUT_PRI_TO_SEC_DUAL_JUMP = !CTRL_SHORTCUT_ROUTINE+$7F0
+!CTRL_SHORTCUT_SEC_TO_DUAL_JUMP = !CTRL_SHORTCUT_ROUTINE+$7F2
+!CTRL_SHORTCUT_TABLE_PRI_INDEX = !CTRL_SHORTCUT_ROUTINE+$7F4
+!CTRL_SHORTCUT_TABLE_SEC_INDEX = !CTRL_SHORTCUT_ROUTINE+$7F6
+!CTRL_SHORTCUT_TABLE_DUAL_INDEX = !CTRL_SHORTCUT_ROUTINE+$7F8
+; Shortcuts can skip remaining checks by replacing the return address word
+!CTRL_SHORTCUT_SKIP_REMAINING_PEA = !CTRL_SHORTCUT_ROUTINE+$7FA
+!CTRL_SHORTCUT_SKIP_REMAINING_PEA_VALUE = $FCFC
+
 !WRAM_SIZE = #$0200
 !WRAM_START = $7EFD00
 !WRAM_PERSIST_START = $7EFD80
 !WRAM_MENU_START = $7EFE00
 !WRAM_END = $7EFF00
 !CRASHDUMP = $7EFF00
+!WRAM_BANK = !WRAM_START>>16
 
 ; These variables are NOT PERSISTENT across savestates --
 ; they're saved and reloaded along with the game state.
@@ -63,12 +87,12 @@
 !ram_room_has_set_rng               = !WRAM_START+$42
 !ram_HUD_top                        = !WRAM_START+$44
 !ram_HUD_middle                     = !WRAM_START+$46
-!ram_HUD_check                      = !WRAM_START+$48
+!ram_infidoppler_active             = !WRAM_START+$48
 !ram_roomstrat_counter              = !WRAM_START+$4A
 !ram_roomstrat_state                = !WRAM_START+$4C
 !ram_enemy_hp                       = !WRAM_START+$4E
-!ram_mb_hp                          = !WRAM_START+$50
-!ram_shot_timer                     = !WRAM_START+$52
+!ram_HUD_top_counter                = !WRAM_START+$50
+!ram_HUD_middle_counter             = !WRAM_START+$52
 !ram_shine_counter                  = !WRAM_START+$54
 !ram_dash_counter                   = !WRAM_START+$56
 
@@ -90,12 +114,18 @@
 !ram_xpos                           = !WRAM_START+$6E
 !ram_ypos                           = !WRAM_START+$70
 !ram_subpixel_pos                   = !WRAM_START+$72
-!ram_HUD_top_counter                = !WRAM_START+$74
-!ram_HUD_middle_counter             = !WRAM_START+$76
+!ram_HUD_check                      = !WRAM_START+$74
+!ram_shot_timer                     = !WRAM_START+$76
 !ram_quickdrop_counter              = !WRAM_START+$78
 !ram_walljump_counter               = !WRAM_START+$7A
 !ram_fail_sum                       = !WRAM_START+$7C
 !ram_fail_count                     = !WRAM_START+$7E
+
+; Shot timer also reuses values
+!ram_shot_timer_past1               = !WRAM_START+$78
+!ram_shot_timer_past2               = !WRAM_START+$7A
+!ram_shot_timer_past3               = !WRAM_START+$7C
+!ram_shot_timer_past4               = !WRAM_START+$7E
 
 ; Kihunter manip
 !ram_enemy0_last_xpos               = !WRAM_START+$6E
@@ -141,21 +171,22 @@
 !ram_space_pants_enabled            = !WRAM_PERSIST_START+$0C
 !ram_kraid_claw_rng                 = !WRAM_PERSIST_START+$0E
 !ram_kraid_wait_rng                 = !WRAM_PERSIST_START+$10
-!ram_botwoon_first                  = !WRAM_PERSIST_START+$12
-!ram_botwoon_second                 = !WRAM_PERSIST_START+$14
-!ram_botwoon_hidden                 = !WRAM_PERSIST_START+$16
-!ram_botwoon_spit                   = !WRAM_PERSIST_START+$18
-!ram_botwoon_rng                    = !WRAM_PERSIST_START+$1A
+!ram_draygon_rng_left               = !WRAM_PERSIST_START+$12
+!ram_draygon_rng_right              = !WRAM_PERSIST_START+$14
+!ram_turret_rng                     = !WRAM_PERSIST_START+$16
+!ram_ridley_rng_flags               = !WRAM_PERSIST_START+$18
+!ram_ridley_rng_times_and_fireball  = !WRAM_PERSIST_START+$1A
 !ram_crocomire_rng                  = !WRAM_PERSIST_START+$1C
-!ram_phantoon_rng_round_1           = !WRAM_PERSIST_START+$1E
-!ram_phantoon_rng_round_2           = !WRAM_PERSIST_START+$20
-!ram_phantoon_rng_inverted          = !WRAM_PERSIST_START+$22
-!ram_phantoon_rng_eyeclose          = !WRAM_PERSIST_START+$24
-!ram_phantoon_rng_flames            = !WRAM_PERSIST_START+$26
-!ram_phantoon_rng_next_flames       = !WRAM_PERSIST_START+$28
-!ram_phantoon_flame_direction       = !WRAM_PERSIST_START+$2A
-!ram_draygon_rng_left               = !WRAM_PERSIST_START+$2C
-!ram_draygon_rng_right              = !WRAM_PERSIST_START+$2E
+!ram_phantoon_phase_rng             = !WRAM_PERSIST_START+$1E
+!ram_phantoon_eye_and_flames_rng    = !WRAM_PERSIST_START+$20
+!ram_botwoon_rng                    = !WRAM_PERSIST_START+$22
+!ram_baby_rng                       = !WRAM_PERSIST_START+$24
+!ram_mb_rng                         = !WRAM_PERSIST_START+$26
+
+!ram_itempickups_all                = !WRAM_PERSIST_START+$28
+!ram_itempickups_visible            = !WRAM_PERSIST_START+$2A
+!ram_itempickups_chozo              = !WRAM_PERSIST_START+$2C
+!ram_itempickups_hidden             = !WRAM_PERSIST_START+$2E
 
 !ram_suits_enemy_damage_check       = !WRAM_PERSIST_START+$30
 !ram_suits_heat_damage_check        = !WRAM_PERSIST_START+$32
@@ -175,25 +206,16 @@
 !ram_watch_edit_lock_right          = !WRAM_PERSIST_START+$4C
 
 !ram_game_loop_extras               = !WRAM_PERSIST_START+$4E
-!ram_game_mode_extras               = !WRAM_PERSIST_START+$50
+!ram_infinite_ammo                  = !WRAM_PERSIST_START+$50
 !ram_suits_heat_damage_value        = !WRAM_PERSIST_START+$52
 !ram_sprite_feature_flags           = !WRAM_PERSIST_START+$54
 !ram_door_portal_flags              = !WRAM_PERSIST_START+$56
 !ram_door_source                    = !WRAM_PERSIST_START+$58
 !ram_door_destination               = !WRAM_PERSIST_START+$5A
-!ram_itempickups_all                = !WRAM_PERSIST_START+$5C
-!ram_itempickups_visible            = !WRAM_PERSIST_START+$5E
-!ram_itempickups_chozo              = !WRAM_PERSIST_START+$60
-!ram_itempickups_hidden             = !WRAM_PERSIST_START+$62
-!ram_frames_held                    = !WRAM_PERSIST_START+$64
-!ram_baby_rng                       = !WRAM_PERSIST_START+$66
-!ram_turret_rng                     = !WRAM_PERSIST_START+$68
-
-!ram_quickboot_spc_state            = !WRAM_PERSIST_START+$6A
-!ram_display_backup                 = !WRAM_PERSIST_START+$6C
-!ram_phantoon_always_visible        = !WRAM_PERSIST_START+$6E
-!ram_loadstate_rando_enable         = !WRAM_PERSIST_START+$70
-!ram_infinite_ammo                  = !WRAM_PERSIST_START+$72
+!ram_frames_held                    = !WRAM_PERSIST_START+$5C
+!ram_quickboot_spc_state            = !WRAM_PERSIST_START+$5E
+!ram_display_backup                 = !WRAM_PERSIST_START+$60
+!ram_drop_chance_table              = !WRAM_PERSIST_START+$62
 
 ; ^ FREE SPACE ^ up to +$7C (!WRAM_START+$FC - !WRAM_PERSIST_START)
 
@@ -216,56 +238,45 @@
 !ram_cm_menu_bank = !WRAM_MENU_START+$26
 !ram_cm_horizontal_cursor = !WRAM_MENU_START+$28
 
-!ram_cm_etanks = !WRAM_MENU_START+$2A
-!ram_cm_reserve = !WRAM_MENU_START+$2C
-!ram_cm_leave = !WRAM_MENU_START+$2E
-!ram_cm_input_counter = !WRAM_MENU_START+$30
-!ram_cm_last_nmi_counter = !WRAM_MENU_START+$32
+!ram_cm_leave = !WRAM_MENU_START+$2A
+!ram_cm_input_counter = !WRAM_MENU_START+$2C
+!ram_cm_last_nmi_counter = !WRAM_MENU_START+$2E
+!ram_cm_ctrl_mode = !WRAM_MENU_START+$30
+!ram_cm_custom_preset_labels = !WRAM_MENU_START+$32
 
-!ram_cm_ctrl_mode = !WRAM_MENU_START+$34
-!ram_cm_ctrl_timer = !WRAM_MENU_START+$36
-!ram_cm_ctrl_last_input = !WRAM_MENU_START+$38
-!ram_cm_ctrl_assign = !WRAM_MENU_START+$3A
-!ram_cm_ctrl_swap = !WRAM_MENU_START+$3C
+!ram_cm_slowdown_mode = !WRAM_MENU_START+$34
+!ram_cm_slowdown_frames = !WRAM_MENU_START+$36
 
-!ram_cm_slowdown_mode = !WRAM_MENU_START+$3E
-!ram_cm_slowdown_frames = !WRAM_MENU_START+$40
+!ram_seed_X = !WRAM_MENU_START+$38
+!ram_seed_Y = !WRAM_MENU_START+$3A
 
-!ram_cm_botwoon_rng = !WRAM_MENU_START+$42
-!ram_cm_botwoon_first = !WRAM_MENU_START+$44
-!ram_cm_botwoon_hidden = !WRAM_MENU_START+$46
-!ram_cm_botwoon_second = !WRAM_MENU_START+$48
-!ram_cm_botwoon_spit = !WRAM_MENU_START+$4A
-!ram_cm_custom_preset_labels = !WRAM_MENU_START+$4C
+!ram_cm_fast_scroll_menu_selection = !WRAM_MENU_START+$3C
+!ram_cm_suit_properties = !WRAM_MENU_START+$3E
 
-!ram_seed_X = !WRAM_MENU_START+$4E
-!ram_seed_Y = !WRAM_MENU_START+$50
+!ram_cm_palette_border = !WRAM_MENU_START+$40
+!ram_cm_palette_headeroutline = !WRAM_MENU_START+$42
+!ram_cm_palette_text = !WRAM_MENU_START+$44
+!ram_cm_palette_background = !WRAM_MENU_START+$46
+!ram_cm_palette_numoutline = !WRAM_MENU_START+$48
+!ram_cm_palette_numfill = !WRAM_MENU_START+$4A
+!ram_cm_palette_toggleon = !WRAM_MENU_START+$4C
+!ram_cm_palette_seltext = !WRAM_MENU_START+$4E
+!ram_cm_palette_seltextbg = !WRAM_MENU_START+$50
+!ram_cm_palette_numseloutline = !WRAM_MENU_START+$52
+!ram_cm_palette_numsel = !WRAM_MENU_START+$54
 
-!ram_cm_sfxlib1 = !WRAM_MENU_START+$52
-!ram_cm_sfxlib2 = !WRAM_MENU_START+$54
-!ram_cm_sfxlib3 = !WRAM_MENU_START+$56
+!ram_cm_sfxlib1 = !WRAM_MENU_START+$56
+!ram_cm_sfxlib2 = !WRAM_MENU_START+$58
+!ram_cm_sfxlib3 = !WRAM_MENU_START+$5A
 
-!ram_cm_fast_scroll_menu_selection = !WRAM_MENU_START+$58
-!ram_timers_autoupdate = !WRAM_MENU_START+$5A
-!ram_cm_suit_properties = !WRAM_MENU_START+$5C
+!ram_sram_detection = !WRAM_MENU_START+$5C
 
-!ram_cm_palette_border = !WRAM_MENU_START+$5E
-!ram_cm_palette_headeroutline = !WRAM_MENU_START+$60
-!ram_cm_palette_text = !WRAM_MENU_START+$62
-!ram_cm_palette_background = !WRAM_MENU_START+$64
-!ram_cm_palette_numoutline = !WRAM_MENU_START+$66
-!ram_cm_palette_numfill = !WRAM_MENU_START+$68
-!ram_cm_palette_toggleon = !WRAM_MENU_START+$6A
-!ram_cm_palette_seltext = !WRAM_MENU_START+$6C
-!ram_cm_palette_seltextbg = !WRAM_MENU_START+$6E
-!ram_cm_palette_numseloutline = !WRAM_MENU_START+$70
-!ram_cm_palette_numsel = !WRAM_MENU_START+$72
+!ram_timers_autoupdate = !WRAM_MENU_START+$5E
+!ram_cm_gmode = !WRAM_MENU_START+$60
 
-!ram_infidoppler_active = !WRAM_START+$74
+; ^ FREE SPACE ^ up to +$86
 
-; ^ FREE SPACE ^ up to +$76
-
-!ram_cm_preserved_timers = !WRAM_MENU_START+$78 ; 8 bytes
+!ram_cm_preserved_timers = !WRAM_MENU_START+$88 ; 8 bytes
 
 ; ------------------
 ; Reusable RAM Menu
@@ -274,81 +285,119 @@
 ; The following RAM may be used multiple times,
 ; as long as it isn't used multiple times on the same menu page
 
-!ram_cm_watch_enemy_property = !WRAM_MENU_START+$80
-!ram_cm_watch_enemy_index = !WRAM_MENU_START+$82
-!ram_cm_watch_enemy_side = !WRAM_MENU_START+$84
-!ram_cm_watch_common_address = !WRAM_MENU_START+$86
+!ram_cm_watch_enemy_property = !WRAM_MENU_START+$90
+!ram_cm_watch_enemy_index = !WRAM_MENU_START+$92
+!ram_cm_watch_enemy_side = !WRAM_MENU_START+$94
+!ram_cm_watch_common_address = !WRAM_MENU_START+$96
 
-!ram_cm_preset_elevator = !WRAM_MENU_START+$80
+!ram_cm_door_dynamic = !WRAM_MENU_START+$90
+!ram_cm_door_menu_value = !WRAM_MENU_START+$92
+!ram_cm_door_menu_bank = !WRAM_MENU_START+$94
+!ram_cm_door_direction_index = !WRAM_MENU_START+$96
+!ram_cm_itempickups_visible = !WRAM_MENU_START+$98
+!ram_cm_itempickups_chozo = !WRAM_MENU_START+$9A
+!ram_cm_itempickups_hidden = !WRAM_MENU_START+$9C
 
-!ram_cm_door_dynamic = !WRAM_MENU_START+$80
-!ram_cm_door_menu_value = !WRAM_MENU_START+$82
-!ram_cm_door_menu_bank = !WRAM_MENU_START+$84
-!ram_cm_door_direction_index = !WRAM_MENU_START+$86
-!ram_cm_itempickups_visible = !WRAM_MENU_START+$88
-!ram_cm_itempickups_chozo = !WRAM_MENU_START+$8A
-!ram_cm_itempickups_hidden = !WRAM_MENU_START+$8C
+!ram_cm_turret_rng = !WRAM_MENU_START+$90
+!ram_cm_drop_chances = !WRAM_MENU_START+$92
 
-!ram_cm_phan_first_phase = !WRAM_MENU_START+$80
-!ram_cm_phan_second_phase = !WRAM_MENU_START+$82
-!ram_cm_turret_rng = !WRAM_MENU_START+$84
+!ram_cm_phantoon_first_phase_rng = !WRAM_MENU_START+$9C
+!ram_cm_phantoon_second_phase_rng = !WRAM_MENU_START+$9E
+!ram_cm_phantoon_flip_rng = !WRAM_MENU_START+$A0
+!ram_cm_phantoon_eyeclose_rng = !WRAM_MENU_START+$A2
+!ram_cm_phantoon_flames_rng = !WRAM_MENU_START+$A4
+!ram_cm_phantoon_next_flames_rng = !WRAM_MENU_START+$A6
+!ram_cm_phantoon_flame_direction_rng = !WRAM_MENU_START+$A8
 
-!ram_cm_varia = !WRAM_MENU_START+$80
-!ram_cm_gravity = !WRAM_MENU_START+$82
-!ram_cm_morph = !WRAM_MENU_START+$84
-!ram_cm_bombs = !WRAM_MENU_START+$86
-!ram_cm_spring = !WRAM_MENU_START+$88
-!ram_cm_screw = !WRAM_MENU_START+$8A
-!ram_cm_hijump = !WRAM_MENU_START+$8C
-!ram_cm_space = !WRAM_MENU_START+$8E
-!ram_cm_speed = !WRAM_MENU_START+$90
-!ram_cm_charge = !WRAM_MENU_START+$92
-!ram_cm_ice = !WRAM_MENU_START+$94
-!ram_cm_wave = !WRAM_MENU_START+$96
-!ram_cm_spazer = !WRAM_MENU_START+$98
-!ram_cm_plasma = !WRAM_MENU_START+$9A
+!ram_cm_ridley_pogo_height_rng = !WRAM_MENU_START+$9C
+!ram_cm_ridley_lunge_pogo_rng = !WRAM_MENU_START+$9E
+!ram_cm_ridley_swoop_pogo_rng = !WRAM_MENU_START+$A0
+!ram_cm_ridley_ceres_ai_rng = !WRAM_MENU_START+$A2
+!ram_cm_ridley_hover_fireball_rng = !WRAM_MENU_START+$A4
+!ram_cm_ridley_backpogo_rng = !WRAM_MENU_START+$A6
+!ram_cm_ridley_pogo_time_rng = !WRAM_MENU_START+$A8
+!ram_cm_ridley_pogo_time_value_rng = !WRAM_MENU_START+$AA
+!ram_cm_ridley_hover_time_rng = !WRAM_MENU_START+$AC
+!ram_cm_ridley_hover_time_value_rng = !WRAM_MENU_START+$AE
 
-!ram_cm_zeb1 = !WRAM_MENU_START+$80
-!ram_cm_zeb2 = !WRAM_MENU_START+$82
-!ram_cm_zeb3 = !WRAM_MENU_START+$84
-!ram_cm_zeb4 = !WRAM_MENU_START+$86
-!ram_cm_zebmask = !WRAM_MENU_START+$88
+!ram_cm_botwoon_first_rng = !WRAM_MENU_START+$9C
+!ram_cm_botwoon_hidden_rng = !WRAM_MENU_START+$9E
+!ram_cm_botwoon_second_rng = !WRAM_MENU_START+$A0
+!ram_cm_botwoon_spit_rng = !WRAM_MENU_START+$A2
+!ram_cm_botwoon_after_spit_rng = !WRAM_MENU_START+$A4
 
-!ram_cm_custompalette_blue = !WRAM_MENU_START+$80
-!ram_cm_custompalette_green = !WRAM_MENU_START+$82
-!ram_cm_custompalette_red = !WRAM_MENU_START+$84
-!ram_cm_custompalette = !WRAM_MENU_START+$86
-!ram_cm_dummy_on = !WRAM_MENU_START+$8A
-!ram_cm_dummy_off = !WRAM_MENU_START+$8C
-!ram_cm_dummy_num = !WRAM_MENU_START+$8E
+!ram_cm_mb_walking_rng = !WRAM_MENU_START+$9C
+!ram_cm_mb_ketchup_rng = !WRAM_MENU_START+$9E
+!ram_cm_mb_damage_down_rng = !WRAM_MENU_START+$A0
+!ram_cm_mb_phase3_attack_rng = !WRAM_MENU_START+$A2
+!ram_cm_mb_normal_attack_rng = !WRAM_MENU_START+$A4
+!ram_cm_mb_bomb_crouch_rng = !WRAM_MENU_START+$A6
 
-!ram_cm_ceres_seconds = !WRAM_MENU_START+$80
-!ram_cm_zebes_seconds = !WRAM_MENU_START+$82
+!ram_cm_varia = !WRAM_MENU_START+$90
+!ram_cm_gravity = !WRAM_MENU_START+$92
+!ram_cm_morph = !WRAM_MENU_START+$94
+!ram_cm_bombs = !WRAM_MENU_START+$96
+!ram_cm_spring = !WRAM_MENU_START+$98
+!ram_cm_screw = !WRAM_MENU_START+$9A
+!ram_cm_hijump = !WRAM_MENU_START+$9C
+!ram_cm_space = !WRAM_MENU_START+$9E
+!ram_cm_speed = !WRAM_MENU_START+$A0
+!ram_cm_charge = !WRAM_MENU_START+$A2
+!ram_cm_ice = !WRAM_MENU_START+$A4
+!ram_cm_wave = !WRAM_MENU_START+$A6
+!ram_cm_spazer = !WRAM_MENU_START+$A8
+!ram_cm_plasma = !WRAM_MENU_START+$AA
+!ram_cm_etanks = !WRAM_MENU_START+$AC
+!ram_cm_reserve = !WRAM_MENU_START+$AE
 
-!ram_cm_crop_mode = !WRAM_MENU_START+$80
-!ram_cm_crop_tile = !WRAM_MENU_START+$82
+!ram_cm_zebmask = !WRAM_MENU_START+$90
+!ram_cm_metmask = !WRAM_MENU_START+$92
 
-!ram_cm_brb = !WRAM_MENU_START+$80
-!ram_cm_brb_timer = !WRAM_MENU_START+$82
-!ram_cm_brb_frames = !WRAM_MENU_START+$84
-!ram_cm_brb_secs = !WRAM_MENU_START+$86
-!ram_cm_brb_mins = !WRAM_MENU_START+$88
-!ram_cm_brb_screen = !WRAM_MENU_START+$8A
-!ram_cm_brb_timer_mode = !WRAM_MENU_START+$8C
-!ram_cm_brb_scroll = !WRAM_MENU_START+$8E
-!ram_cm_brb_scroll_X = !WRAM_MENU_START+$90
-!ram_cm_brb_scroll_Y = !WRAM_MENU_START+$92
-!ram_cm_brb_scroll_H = !WRAM_MENU_START+$94
-!ram_cm_brb_scroll_V = !WRAM_MENU_START+$96
-!ram_cm_brb_scroll_timer = !WRAM_MENU_START+$98
-!ram_cm_brb_palette = !WRAM_MENU_START+$9A
-!ram_cm_brb_set_cycle = !WRAM_MENU_START+$9C
-!ram_cm_brb_cycle_time = !WRAM_MENU_START+$9E
+!ram_cm_ceres_seconds = !WRAM_MENU_START+$90
+!ram_cm_zebes_seconds = !WRAM_MENU_START+$92
 
-!ram_cm_keyboard_buffer = !WRAM_MENU_START+$80 ; $18 bytes
+!ram_cm_ctrl_add_shortcut_slot = !WRAM_MENU_START+$90
+!ram_cm_ctrl_last_pri = !WRAM_MENU_START+$92
+!ram_cm_ctrl_last_sec = !WRAM_MENU_START+$94
+!ram_cm_ctrl_assign = !WRAM_MENU_START+$96
+!ram_cm_ctrl_swap = !WRAM_MENU_START+$98
+!ram_cm_ctrl_timer = !WRAM_MENU_START+$9A
+!ram_cm_ctrl_savestates_allowed = !WRAM_MENU_START+$9C
 
-!ram_cm_manage_slots = !WRAM_MENU_START+$80
-!ram_cm_selected_slot = !WRAM_MENU_START+$82
+!ram_cm_crop_mode = !WRAM_MENU_START+$90
+!ram_cm_crop_tile = !WRAM_MENU_START+$92
+
+!ram_cm_brb = !WRAM_MENU_START+$90
+!ram_cm_brb_timer = !WRAM_MENU_START+$92
+!ram_cm_brb_frames = !WRAM_MENU_START+$94
+!ram_cm_brb_secs = !WRAM_MENU_START+$96
+!ram_cm_brb_mins = !WRAM_MENU_START+$98
+!ram_cm_brb_screen = !WRAM_MENU_START+$9A
+!ram_cm_brb_timer_mode = !WRAM_MENU_START+$9C
+!ram_cm_brb_scroll = !WRAM_MENU_START+$9E
+!ram_cm_brb_scroll_X = !WRAM_MENU_START+$A0
+!ram_cm_brb_scroll_Y = !WRAM_MENU_START+$A2
+!ram_cm_brb_scroll_H = !WRAM_MENU_START+$A4
+!ram_cm_brb_scroll_V = !WRAM_MENU_START+$A6
+!ram_cm_brb_scroll_timer = !WRAM_MENU_START+$A8
+!ram_cm_brb_palette = !WRAM_MENU_START+$AA
+!ram_cm_brb_set_cycle = !WRAM_MENU_START+$AC
+!ram_cm_brb_cycle_time = !WRAM_MENU_START+$AE
+
+!ram_cm_manage_slots = !WRAM_MENU_START+$90
+!ram_cm_selected_slot = !WRAM_MENU_START+$92
+!ram_cm_preset_elevator = !WRAM_MENU_START+$94
+
+; keyboard used by both presets and customize menus
+!ram_cm_keyboard_buffer = !WRAM_MENU_START+$98 ; $18 bytes
+
+!ram_cm_custompalette_blue = !WRAM_MENU_START+$90
+!ram_cm_custompalette_green = !WRAM_MENU_START+$92
+!ram_cm_custompalette_red = !WRAM_MENU_START+$94
+!ram_cm_custompalette = !WRAM_MENU_START+$96
+!ram_cm_dummy_on = !WRAM_MENU_START+$AA
+!ram_cm_dummy_off = !WRAM_MENU_START+$AC
+!ram_cm_dummy_num = !WRAM_MENU_START+$AE
 
 ; ^ FREE SPACE ^ up to +$CE
 ; Note: +$B8 to +$CE range also used as frames held counters
@@ -409,26 +458,11 @@
 !LEVEL_DATA = $7F0002
 
 ; Temporary stack written here since level data will be initialized afterwards
+; There is room for 256 entries in the stack before risking leaving data behind,
+; since even the smallest room has 512 bytes of level data
 !CATEGORY_PRESET_STACK = !LEVEL_DATA
 
 !END_OF_SINGLE_SCROLL_ROOM_LEVEL_DATA = $7F0202
-
-; Phantoon infidoppler can use the next $200 of RAM,
-; since the room outside phantoon's room is larger and will overwrite this data,
-; so the only way this could have some impact is you went OOB
-; either from Phantoon's room or after teleporting to another single scroll room,
-; and then fell a long ways out of bounds
-
-; An array of 5 words, one per projectile, representing
-; the distance Samus travelled horizontally before firing.
-; The low byte of each word is integer pixels,
-; and the high byte is fractional pixels.
-; Yes, that sounds weird, but the math is a little easier.
-!ram_infidoppler_offsets         = !END_OF_SINGLE_SCROLL_ROOM_LEVEL_DATA ; array of 5 words
-!ram_infidoppler_x               = !END_OF_SINGLE_SCROLL_ROOM_LEVEL_DATA+$10
-!ram_infidoppler_subx            = !END_OF_SINGLE_SCROLL_ROOM_LEVEL_DATA+$12
-!ram_infidoppler_y               = !END_OF_SINGLE_SCROLL_ROOM_LEVEL_DATA+$14
-!ram_infidoppler_suby            = !END_OF_SINGLE_SCROLL_ROOM_LEVEL_DATA+$16
 
 ; Do not use RAM for variables at or beyond this point
 !LEVEL_BTS = $7F6402
@@ -438,30 +472,15 @@
 ; SRAM
 ; -----
 
-!SRAM_VERSION = #$0019
+!SRAM_VERSION = #$001A
 
 !SRAM_START = $702000
 !SRAM_SIZE = #$1000
 !PRESET_SLOTS = $703000
 
 !sram_initialized = !SRAM_START+$00
-
-!sram_ctrl_menu = !SRAM_START+$02
-!sram_ctrl_kill_enemies = !SRAM_START+$04
-!sram_ctrl_full_equipment = !SRAM_START+$06
-!sram_ctrl_reset_segment_timer = !SRAM_START+$08
-!sram_ctrl_reset_segment_later = !SRAM_START+$0A
-!sram_ctrl_load_state = !SRAM_START+$0C
-!sram_ctrl_save_state = !SRAM_START+$0E
-!sram_ctrl_load_last_preset = !SRAM_START+$10
-!sram_ctrl_random_preset = !SRAM_START+$12
-!sram_ctrl_save_custom_preset = !SRAM_START+$14
-!sram_ctrl_load_custom_preset = !SRAM_START+$16
-!sram_ctrl_inc_custom_preset = !SRAM_START+$18
-!sram_ctrl_dec_custom_preset = !SRAM_START+$1A
-!sram_ctrl_toggle_tileviewer = !SRAM_START+$1C
-!sram_ctrl_update_timers = !SRAM_START+$1E
-; More ctrl shortcuts starting at $F0
+!sram_ctrl_shortcut_selections = !SRAM_START+$02 ; 30 bytes
+; More ctrl shortcut selections starting at $EE
 
 !sram_artificial_lag = !SRAM_START+$20
 !sram_rerandomize = !SRAM_START+$22
@@ -534,15 +553,10 @@
 !sram_ceres_timer = !SRAM_START+$A0
 !sram_zebes_timer = !SRAM_START+$A2
 
-; ^ FREE SPACE ^ up to +$EE
+; ^ FREE SPACE ^ up to +$EC
 
-!sram_ctrl_auto_save_state = !SRAM_START+$F0
-!sram_ctrl_toggle_spin_lock = !SRAM_START+$F2
-!sram_ctrl_randomize_rng = !SRAM_START+$F4
-!sram_ctrl_reveal_damage = !SRAM_START+$F6
-!sram_ctrl_force_stand = !SRAM_START+$F8
-
-; ^ FREE SPACE ^ up to +$FE
+; This is a continuation of sram_ctrl_shortcut_selections
+!sram_ctrl_additional_selections = !SRAM_START+$D0 ; 18 bytes starting from +$EE
 
 !sram_presetequiprando = !SRAM_START+$100
 !sram_presetequiprando_beampref = !SRAM_START+$102
@@ -557,6 +571,12 @@
 !sram_loadstate_rando_missiles = !SRAM_START+$114
 !sram_loadstate_rando_supers = !SRAM_START+$116
 !sram_loadstate_rando_powerbombs = !SRAM_START+$118
+!sram_loadstate_rando_enable = !SRAM_START+$11A
+
+; ^ FREE SPACE ^ up to +$13E
+
+!sram_ctrl_1_shortcut_inputs = !SRAM_START+$140 ; 96 bytes
+!sram_ctrl_2_shortcut_inputs = !SRAM_START+$1A0 ; 96 bytes
 
 ; ^ FREE SPACE ^ up to +$BA6
 
@@ -634,22 +654,18 @@
 !IH_MORPH_BALL_GREEN = #$10C9
 !IH_STUCK_GREEN = #$106B
 
-!IH_PAUSE = #$0100 ; right
-!IH_SLOWDOWN = #$0400 ; down
-!IH_SPEEDUP = #$0800 ; up
-!IH_RESET = #$0200 ; left
-!IH_STATUS_R = #$0010 ; r
-!IH_STATUS_L = #$0020 ; l
-
 !IH_INPUT_START = #$1000
+!IH_INPUT_DPAD = #$0F00
 !IH_INPUT_UPDOWN = #$0C00
 !IH_INPUT_UP = #$0800
 !IH_INPUT_DOWN = #$0400
+!IH_INPUT_XLEFTRIGHTHELD = #$0341
 !IH_INPUT_LEFTRIGHT = #$0300
 !IH_INPUT_LEFT = #$0200
 !IH_INPUT_RIGHT = #$0100
 !IH_INPUT_HELD = #$0001 ; used by menu
 
+!CTRL_AB = #$8080
 !CTRL_B = #$8000
 !CTRL_Y = #$4000
 !CTRL_SELECT = #$2000
@@ -745,6 +761,7 @@
 !ENEMY_POPULATION = $07CF
 !ENEMY_SET = $07D1
 !ROOM_MAIN_ASM_POINTER = $07DF
+!SCROLLING_FINISHED_HOOK = $07E9
 !CERES_HDMA_DATA = $07EB
 !MUSIC_DATA = $07F3
 !MUSIC_TRACK = $07F5
@@ -823,6 +840,9 @@
 !SAMUS_LOCKED_HANDLER = $0A42
 !SAMUS_MOVEMENT_HANDLER = $0A44
 !SAMUS_SUBUNIT_ENERGY = $0A4C
+!SAMUS_PERIODIC_SUBDAMAGE = $0A4E
+!SAMUS_PERIODIC_DAMAGECOMBINED = $0A4F
+!SAMUS_PERIODIC_DAMAGE = $0A50
 !SAMUS_KNOCKBACK_DIRECTION = $0A54
 !SAMUS_BOMB_JUMP_DIRECTION = $0A56
 !SAMUS_NORMAL_MOVEMENT_HANDLER = $0A58
@@ -835,6 +855,7 @@
 !SAMUS_CONTACT_DAMAGE_INDEX = $0A6E
 !SAMUS_WATER_PHYSICS = $0A70  ; Not used in vanilla
 !SAMUS_HYPER_BEAM = $0A76
+!TIME_IS_FROZEN = $0A78
 !DEMO_PREINSTRUCTION_POINTER = $0A7A
 !DEMO_INSTRUCTION_TIMER = $0A7C
 !DEMO_INSTRUCTION_POINTER = $0A7E
@@ -879,6 +900,7 @@
 !SAMUS_PROJ_Y_SUBPX = $0BA0
 !SAMUS_PROJ_RADIUS_X = $0BB4
 !SAMUS_PROJ_RADIUS_Y = $0BC8
+!SAMUS_PROJ_DIRECTION = $0C04
 !SAMUS_PROJ_PROPERTIES = $0C18
 !SAMUS_PROJ_DAMAGE = $0C2C
 !SAMUS_COOLDOWN = $0CCC
@@ -911,6 +933,7 @@
 !ENEMY_TIMER = $0F90
 !ENEMY_INIT_PARAM = $0F92
 !ENEMY_PALETTE_INDEX = $0F96
+!ENEMY_FROZEN_TIMER = $0F9E
 !ENEMY_BANK = $0FA6
 !ENEMY_FUNCTION_POINTER = $0FA8
 !ENEMY_VAR_1 = $0FAA
@@ -926,6 +949,7 @@
 !SAMUS_KNOCKBACK_TIMER = $18AA
 !LAVA_ACID_Y = $1962
 !FX_BASE_Y = $1978
+!ENEMY_PROJ_ENABLE = $198D
 !ENEMY_PROJ_ID = $1997
 !ENEMY_PROJ_X_SUBPX = $1A27
 !ENEMY_PROJ_X = $1A4B
@@ -936,6 +960,7 @@
 !ENEMY_PROJ_RADIUS = $1BB3
 !ENEMY_PROJ_PROPERTIES = $1BD7
 !MESSAGE_BOX_INDEX = $1C1F
+!PLM_ENABLE = $1C23
 !PLM_GFX_INDEX = $1C2D
 !PLM_ID = $1C37
 !PLM_BLOCK_INDEX = $1C87
@@ -945,6 +970,7 @@
 !PLM_ROOM_ARGUMENT = $1DC7
 !PLM_VARIABLE = $1E17
 !SAVE_STATION_LOCKOUT = $1E75
+!PALETTE_FX_ENABLE = $1E79
 !PALETTE_FX_ID = $1E7D
 !PALETTE_FX_COLOR_INDICES = $1E8D
 !PALETTE_FX_VARIABLE = $1E9D
@@ -952,10 +978,78 @@
 !PALETTE_FX_INSTRUCTION_POINTER = $1EBD
 !PALETTE_FX_INSTRUCTION_TIMER = $1ECD
 !PALETTE_FX_TIMER = $1EDD
+!ANIMATED_TILES_ENABLE = $1EF1
 !CINEMATIC_FUNCTION_POINTER = $1F51
 !DEMO_TIMER = $1F53
 !DEMO_CURRENT_SET = $1F55
 !DEMO_CURRENT_SCENE = $1F57
+
+; In rooms with fewer enemies, some enemy RAM is available for use
+!ENEMY_1_OFFSET = $40
+!ENEMY_2_OFFSET = $80
+!ENEMY_1C_OFFSET = $700
+!ENEMY_1D_OFFSET = $740
+!ENEMY_1E_OFFSET = $780
+!ENEMY_1F_OFFSET = $7C0
+
+; An array of 5 words, one per projectile, representing
+; the distance Samus travelled horizontally before firing.
+; The low byte of each word is integer pixels,
+; and the high byte is fractional pixels.
+; Yes, that sounds weird, but the math is a little easier.
+!eram_infidoppler_offsets          = !ENEMY_VAR_1+!ENEMY_1C_OFFSET ; array of 5 words
+!eram_infidoppler_x                = !ENEMY_VAR_1+!ENEMY_1D_OFFSET
+!eram_infidoppler_subx             = !ENEMY_VAR_2+!ENEMY_1D_OFFSET
+!eram_infidoppler_y                = !ENEMY_VAR_3+!ENEMY_1D_OFFSET
+!eram_infidoppler_suby             = !ENEMY_VAR_4+!ENEMY_1D_OFFSET
+!eram_phantoon_always_visible      = !ENEMY_VAR_5+!ENEMY_1D_OFFSET
+!eram_phantoon_rng_round_1         = !ENEMY_VAR_1+!ENEMY_1E_OFFSET
+!eram_phantoon_rng_round_2         = !ENEMY_VAR_2+!ENEMY_1E_OFFSET
+!eram_phantoon_rng_flip            = !ENEMY_VAR_3+!ENEMY_1E_OFFSET
+!eram_phantoon_rng_eyeclose        = !ENEMY_VAR_4+!ENEMY_1E_OFFSET
+!eram_phantoon_rng_flames          = !ENEMY_VAR_1+!ENEMY_1F_OFFSET
+!eram_phantoon_rng_next_flames     = !ENEMY_VAR_2+!ENEMY_1F_OFFSET
+!eram_phantoon_rng_flame_direction = !ENEMY_VAR_3+!ENEMY_1F_OFFSET
+
+!eram_ceres_ridley_rng             = !ENEMY_VAR_1+!ENEMY_1E_OFFSET
+!eram_ridley_lunge_pogo_rng        = !ENEMY_VAR_2+!ENEMY_1E_OFFSET
+!eram_ridley_swoop_pogo_rng        = !ENEMY_VAR_3+!ENEMY_1E_OFFSET
+!eram_ridley_pogo_swoop_rng        = !ENEMY_VAR_4+!ENEMY_1E_OFFSET
+!eram_ridley_fireball_rng          = !ENEMY_VAR_5+!ENEMY_1E_OFFSET
+!eram_ridley_hover_time_rng        = !ENEMY_VAR_1+!ENEMY_1F_OFFSET
+!eram_ridley_pogo_time_rng         = !ENEMY_VAR_2+!ENEMY_1F_OFFSET
+!eram_ridley_pogo_height_rng       = !ENEMY_VAR_3+!ENEMY_1F_OFFSET
+!eram_ridley_backpogo_rng          = !ENEMY_VAR_4+!ENEMY_1F_OFFSET
+
+!eram_mb_normal_walking_rng        = !ENEMY_VAR_5+!ENEMY_1D_OFFSET
+!eram_mb_ketchup_walking_rng       = !ENEMY_VAR_1+!ENEMY_1E_OFFSET
+!eram_mb_ketchup_rng               = !ENEMY_VAR_2+!ENEMY_1E_OFFSET
+!eram_mb_try_bomb_crouch           = !ENEMY_VAR_3+!ENEMY_1E_OFFSET
+!eram_mb_bomb_crouch               = !ENEMY_VAR_4+!ENEMY_1E_OFFSET
+!eram_mb_air_rings_rng             = !ENEMY_VAR_5+!ENEMY_1E_OFFSET
+!eram_mb_ground_bomb_rng           = !ENEMY_VAR_1+!ENEMY_1F_OFFSET
+!eram_mb_ground_attack_rng_table   = !ENEMY_VAR_2+!ENEMY_1F_OFFSET
+!eram_mb_close_attack_rng_table    = !ENEMY_VAR_3+!ENEMY_1F_OFFSET
+!eram_mb_damage_down_rng           = !ENEMY_VAR_4+!ENEMY_1F_OFFSET
+!eram_mb_phase3_attack_rng         = !ENEMY_VAR_5+!ENEMY_1F_OFFSET
+
+!eram_botwoon_first_roll           = !ENEMY_VAR_4+!ENEMY_1E_OFFSET
+!eram_botwoon_all_pattern_rng      = !ENEMY_VAR_5+!ENEMY_1E_OFFSET
+!eram_botwoon_first_rng            = !ENEMY_VAR_1+!ENEMY_1F_OFFSET
+!eram_botwoon_hidden_rng           = !ENEMY_VAR_2+!ENEMY_1F_OFFSET
+!eram_botwoon_second_rng           = !ENEMY_VAR_3+!ENEMY_1F_OFFSET
+!eram_botwoon_spit_rng             = !ENEMY_VAR_4+!ENEMY_1F_OFFSET
+!eram_botwoon_after_spit_rng       = !ENEMY_VAR_5+!ENEMY_1F_OFFSET
+
+!eram_baby_leaving_left            = !ENEMY_VAR_2+!ENEMY_1E_OFFSET
+!eram_baby_leaving_right           = !ENEMY_VAR_3+!ENEMY_1E_OFFSET
+!eram_baby_backing_off             = !ENEMY_VAR_4+!ENEMY_1E_OFFSET
+!eram_baby_rising_delay            = !ENEMY_VAR_5+!ENEMY_1E_OFFSET
+!eram_baby_after_drain_delay       = !ENEMY_VAR_1+!ENEMY_1F_OFFSET
+!eram_baby_target_x_pos            = !ENEMY_VAR_2+!ENEMY_1F_OFFSET
+!eram_baby_dead_hop_delay          = !ENEMY_VAR_3+!ENEMY_1F_OFFSET
+!eram_baby_hop_velocity_tables     = !ENEMY_VAR_4+!ENEMY_1F_OFFSET
+!eram_baby_initial_delay           = !ENEMY_VAR_5+!ENEMY_1F_OFFSET
 
 !HUD_TILEMAP = $7EC600
 !MAP_COUNTER = $7ECAE8 ; Not used in vanilla
@@ -1090,6 +1184,7 @@ endif
 !DP_KB_Row = $1A
 !DP_KB_Control = $1C
 !DP_KB_Shift = $1E
+!DP_Ctrl2Input = $1C ; 0x4
 ; v single digit editing v
 !DP_DigitAddress = $20 ; 0x4
 !DP_DigitValue = $24
@@ -1122,9 +1217,23 @@ endif
 
 if !FEATURE_PAL
 !FRAMERATE = #$0032
+!FRAMERATE_2X = #$0064
 else
 !FRAMERATE = #$003C
+!FRAMERATE_2X = #$0078
 endif
+
+!CTRL_SHORTCUT_TYPE_MASK = #$007F
+!CTRL_SHORTCUT_EXACT_MATCH = #$0080
+
+; By default, value is zero and we assume there are no issues
+!SRAM_DETECTION_32KB = #$0032
+!SRAM_DETECTION_128KB = #$0128
+!SRAM_DETECTION_ZSNES = #$0505
+
+!SLOWDOWN_FRAME_ADVANCE = #$8000
+!SLOWDOWN_PAUSED_MAIN_MENU = #$FFFE
+!SLOWDOWN_PAUSED = #$FFFF
 
 !SUIT_PROPERTIES_MASK = #$0007
 !SUIT_PROPRETIES_PAL_DEBUG_FLAG = #$0008
@@ -1194,6 +1303,91 @@ endif
 !DOOR_PORTAL_JUMP_BIT = #$0008
 !DOOR_PORTAL_HORIZONTAL_MIRRORING_BIT = #$0010
 !DOOR_PORTAL_EXCLUDE_JUMP_MASK = #$FFF7
+
+!PHANTOON_RNG_PHASE_1_MASK          = #$003F
+!PHANTOON_RNG_PHASE_1_INVERTED      = #$FFC0
+!PHANTOON_RNG_FLIP_MASK             = #$00C0
+!PHANTOON_RNG_FLIP_INVERTED         = #$FF3F
+!PHANTOON_RNG_PHASE_2_MASK          = #$3F00
+!PHANTOON_RNG_PHASE_2_INVERTED      = #$C0FF
+!PHANTOON_RNG_PHASE_2_FLIP_INVERTED = #$C03F
+!PHANTOON_RNG_VISIBLE_BIT           = #$4000
+!PHANTOON_RNG_VISIBLE_INVERTED      = #$BFFF
+
+!PHANTOON_RNG_FLAMES_MASK           = #$0007
+!PHANTOON_RNG_FLAMES_INVERTED       = #$FFF8
+!PHANTOON_RNG_FLAMES_PATH_MASK      = #$00C0
+!PHANTOON_RNG_FLAMES_PATH_INVERTED  = #$FF3F
+!PHANTOON_RNG_FLAMES_NEXT_MASK      = #$0700
+!PHANTOON_RNG_FLAMES_NEXT_INVERTED  = #$F8FF
+!PHANTOON_RNG_EYE_CLOSE_MASK        = #$C000
+!PHANTOON_RNG_EYE_CLOSE_INVERTED    = #$3FFF
+
+!RIDLEY_RNG_CERES_FIREBALL          = #$0001
+!RIDLEY_RNG_CERES_LUNGE             = #$0002
+!RIDLEY_RNG_CERES_SWOOP             = #$0003
+!RIDLEY_RNG_CERES_MASK              = #$0007
+!RIDLEY_RNG_CERES_INVERTED          = #$FFF8
+!RIDLEY_RNG_POGO_HEIGHT_MASK        = #$0038
+!RIDLEY_RNG_POGO_HEIGHT_INVERTED    = #$FFC7
+!RIDLEY_RNG_75_25_LUNGE             = #$0040
+!RIDLEY_RNG_75_25_POGO              = #$0080
+!RIDLEY_RNG_75_25_MASK              = #$00C0
+!RIDLEY_RNG_75_25_INVERTED          = #$FF3F
+!RIDLEY_RNG_BACKPOGO_MASK           = #$3F00
+!RIDLEY_RNG_BACKPOGO_INVERTED       = #$C0FF
+!RIDLEY_RNG_50_50_SWOOP             = #$4000
+!RIDLEY_RNG_50_50_POGO              = #$8000
+!RIDLEY_RNG_50_50_MASK              = #$C000
+!RIDLEY_RNG_50_50_INVERTED          = #$3FFF
+
+!RIDLEY_RNG_HOVER_TIME_MASK         = #$003F
+!RIDLEY_RNG_HOVER_TIME_INVERTED     = #$FFC0
+!RIDLEY_RNG_ALL_FIREBALL            = #$0040
+!RIDLEY_RNG_NO_FIREBALL             = #$0080
+!RIDLEY_RNG_FIREBALL_MASK           = #$00C0
+!RIDLEY_RNG_FIREBALL_INVERTED       = #$FF3F
+!RIDLEY_RNG_POGO_TIME_MASK          = #$FF00
+!RIDLEY_RNG_POGO_TIME_INVERTED      = #$00FF
+
+!MB_RNG_WALKING_MASK                = #$0003
+!MB_RNG_WALKING_INVERTED            = #$FFFC
+!MB_RNG_KETCHUP_MASK                = #$000C
+!MB_RNG_KETCHUP_INVERTED            = #$FFF3
+!MB_RNG_DAMAGE_DOWN_MASK            = #$0030
+!MB_RNG_DAMAGE_DOWN_INVERTED        = #$FFCF
+!MB_RNG_PHASE3_ATTACK_RINGS         = #$0080
+!MB_RNG_PHASE3_ATTACK_BOMBS         = #$0100
+!MB_RNG_PHASE3_ATTACK_MASK          = #$0180
+!MB_RNG_PHASE3_ATTACK_INVERTED      = #$FE7F
+!MB_RNG_NORMAL_ATTACK_MASK          = #$0E00
+!MB_RNG_NORMAL_ATTACK_INVERTED      = #$F1FF
+!MB_RNG_BOMB_CROUCH_MASK            = #$C000
+!MB_RNG_BOMB_CROUCH_INVERTED        = #$3FFF
+
+; Each botwoon pattern can be #$00 (off), #$01, #$09, #$11, #$19
+; (except hidden pattern cannot be #$19)
+; This corresponds to just three bits of information
+; For efficiency this information can be overlapped,
+; allowing for the spit value (#$00, #$04, #$08) to be included
+; and also the after spit value in the most and least significant bits
+!BOTWOON_RNG_FIRST_MASK             = #$0032 ; #$0019 << 1
+!BOTWOON_RNG_FIRST_INVERTED         = #$FFCD
+!BOTWOON_RNG_FIRST_ENABLED          = #$0002
+!BOTWOON_RNG_FIRST_VALUE            = #$0030
+!BOTWOON_RNG_HIDDEN_MASK            = #$0C80 ; #$1900 >> 1
+!BOTWOON_RNG_HIDDEN_INVERTED        = #$F37F
+!BOTWOON_RNG_HIDDEN_ENABLED         = #$0080
+!BOTWOON_RNG_HIDDEN_VALUE           = #$0C00
+!BOTWOON_RNG_SECOND_MASK            = #$3200 ; #$1900 << 1
+!BOTWOON_RNG_SECOND_INVERTED        = #$CDFF
+!BOTWOON_RNG_SECOND_ENABLED         = #$0200
+!BOTWOON_RNG_SECOND_VALUE           = #$3000
+!BOTWOON_RNG_SPIT_MASK              = #$000C
+!BOTWOON_RNG_SPIT_INVERTED          = #$FFF3
+!BOTWOON_RNG_AFTER_SPIT_ENABLED     = #$8000
+!BOTWOON_RNG_AFTER_SPIT_MASK        = #$8001
+!BOTWOON_RNG_AFTER_SPIT_INVERTED    = #$7FFE
 
 !PROFILE_CUSTOM       = #$0000
 !PROFILE_Twitch       = #$0001

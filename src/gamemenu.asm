@@ -219,10 +219,17 @@ game_pacifist:
     %cm_toggle("Deal Zero Damage", !ram_pacifist, #$01, #0)
 
 game_debugplms:
-    %cm_toggle_bit_inverted("Pseudo G-Mode", $7E1C23, #$8000, #0)
+    %cm_toggle_bit_inverted("Pseudo G-Mode", !ram_cm_gmode, #$8000, #.routine)
+  .routine
+    LDA !ram_cm_gmode
+    STA !PALETTE_FX_ENABLE
+    STA !PLM_ENABLE
+    STA !ENEMY_PROJ_ENABLE
+    STA !ANIMATED_TILES_ENABLE
+    RTL
 
 game_debugprojectiles:
-    %cm_toggle_bit("Enable Projectiles", $7E198D, #$8000, #0)
+    %cm_toggle_bit("Enable Projectiles", !ENEMY_PROJ_ENABLE, #$8000, #0)
 
 game_debugfixscrolloffsets:
     %cm_toggle_bit("Fix Scroll Offsets", !ram_fix_scroll_offsets, #$0001, #0)
