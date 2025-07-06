@@ -284,11 +284,13 @@ hijack_after_load_level_data:
 
     ; Swap to left side of room if necessary
     LDA !SAMUS_X : BIT #$0080 : BEQ .checkRoom
+    LDA !ram_door_portal_flags : BIT !DOOR_PORTAL_HORIZONTAL_MIRRORING_BIT : BEQ .checkRoom
     JSL layout_swap_left_right
     BRA .checkRoom
 
   .checkSwapToRight
     LDA !SAMUS_X : BIT #$0080 : BNE .checkRoom
+    LDA !ram_door_portal_flags : BIT !DOOR_PORTAL_HORIZONTAL_MIRRORING_BIT : BEQ .checkRoom
     JSL layout_swap_left_right
 
   .checkRoom
