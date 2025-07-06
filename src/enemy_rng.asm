@@ -284,6 +284,13 @@ endif
     JSR hook_crocomire_rng
 
 if !FEATURE_PAL
+org $A48A9F
+else
+org $A48A8F
+endif
+    JSR hook_crocomire_scroll
+
+if !FEATURE_PAL
 org $A48CED
 else
 org $A48CDD
@@ -899,6 +906,23 @@ hook_crocomire_rng:
 
   .no_manip
     LDA !CACHED_RANDOM_NUMBER ; return with random number (overwritten code)
+    RTS
+}
+
+hook_crocomire_scroll:
+{
+    LDA !ram_door_portal_flags : AND !DOOR_PORTAL_MODE_MASK
+    CMP #$0002 : BNE .vanilla
+    LDA !ram_door_destination : ASL : TAX
+    LDA portals_right_vanilla_table,X : CMP #$93DE : BNE .vanilla
+
+    ; In map rando when right door selected,
+    ; do not set red scrolls
+    LDA $7ECD20
+    RTS
+
+  .vanilla
+    TDC
     RTS
 }
 
