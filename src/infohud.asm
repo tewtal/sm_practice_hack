@@ -812,7 +812,6 @@ ih_update_hud_code:
 
   .mmTileCounter
     LDA !MAP_COUNTER : LDX #$0014 : JSR Draw3
-    LDA !ram_print_segment_timer : BEQ .mmRoomTimer
 
     LDA !sram_lag_counter_mode : BNE .mmFullTransitionTime
     LDA !ram_last_door_lag_frames
@@ -905,8 +904,6 @@ ih_update_hud_code:
   .skipToLag
     LDA !sram_top_display_mode : BIT !TOP_HUD_VANILLA_BIT : BNE .vanillaLagReserves
     LDA !ram_last_room_lag : LDX #$0080 : JSR Draw4
-    ; Skip door lag and segment timer when certain HUD modes enabled
-    LDA !ram_print_segment_timer : BEQ .end
 
     ; Door lag / transition time
     LDA !sram_lag_counter_mode : BNE .fullTransitionTime
@@ -916,6 +913,9 @@ ih_update_hud_code:
     LDA !ram_last_realtime_door
   .drawTransitionTime
     LDX #$00C2 : JSR Draw3
+
+    ; Skip segment timer when certain HUD modes enabled
+    LDA !ram_print_segment_timer : BEQ .end
     BRA .pickSegmentTimer
 
   .end
@@ -936,9 +936,6 @@ ih_update_hud_code:
   .vanillaDrawLag
     LDA !ram_last_room_lag : LDX #$007E : JSR Draw4
 
-    ; Skip door lag and segment timer when certain HUD modes enabled
-    LDA !ram_print_segment_timer : BEQ .end
-
     ; Door lag / transition time
     LDA !sram_lag_counter_mode : BNE .vanillaFullTransitionTime
     LDA !ram_last_door_lag_frames
@@ -947,6 +944,9 @@ ih_update_hud_code:
     LDA !ram_last_realtime_door
   .vanillaDrawTransitiontime
     LDX #$00C2 : JSR Draw2
+
+    ; Skip segment timer when certain HUD modes enabled
+    LDA !ram_print_segment_timer : BEQ .end
 
   .pickSegmentTimer
     LDA !sram_frame_counter_mode : BIT #$0001 : BNE .inGameSegmentTimer

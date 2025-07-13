@@ -246,12 +246,14 @@ endif
 
     ; Samus has reached fourth gear and is ready to charge the shinespark by pressing down
     ; When this happens, the gear resets to zero, so check for that
-    LDA !SAMUS_DASH_COUNTER : AND #$00FF : CMP !ram_dash_counter : BEQ .chargespark
+    LDA !SAMUS_DASH_COUNTER : AND #$00FF : CMP !ram_dash_counter : BNE .draw_end
+    JMP .chargespark
 
   .draw_end
     ; Skip drawing if minimap on
     LDA !ram_minimap : BNE .reset
     LDA !ram_shinetune_late_4 : LDX #$00C0 : JSR Draw3
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$C6
 
   .reset
     TDC : STA !ram_shine_counter : STA !ram_dash_counter
@@ -1026,7 +1028,7 @@ status_walljump:
 
   .clearaverage
     TDC : STA !ram_roomstrat_counter
-    BRA .checkjump
+    JMP .checkjump
 
   .incframecount
     ; Arbitrary wait of 120 frames before we stop tracking the average
@@ -1058,34 +1060,51 @@ status_walljump:
     BRA .checkjump
 
   .resetreleasejump
-    LDA !ram_roomstrat_state : DEC : AND #$0003
+    BNE .gotocheckleftright : STA !ram_shot_timer
+    LDA !ram_roomstrat_state : BEQ .gotocheckleftright
+    DEC : AND #$0003
     ASL #2 : TAX : LDA !IH_BLANK : STA !HUD_TILEMAP+$B0,X
     BRA .blanksides
+
+  .incwithmap
+    LDA !ram_roomstrat_state : INC
+    BIT #$0003 : BNE .storeroomstate
+
+  .incroomstate
+    INC
+
+  .storeroomstate
+    STA !ram_roomstrat_state
+    JMP .checkleftright
 
   .zerospeed
     TDC : STA !ram_momentum_sum
 
   .checkjump
     LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_JUMP : BNE .pressedjump
-    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_JUMP : BNE .checkleftright
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_JUMP : BNE .gotocheckleftright
 
     ; count up to 36 frames of jump released
-    LDA !ram_shot_timer : CMP #$0024 : BPL .resetreleasejump
-    INC : STA !ram_shot_timer
-    ASL : TAX
+    LDA !ram_shot_timer : INC
+    CMP #$0025 : BPL .resetreleasejump
+    STA !ram_shot_timer : ASL : TAX
     LDA NumberGFXTable,X : PHA
-    LDA !ram_roomstrat_state : DEC : AND #$0003
+    LDA !ram_roomstrat_state : BEQ .placheckleftright
+    DEC : AND #$0003
     ASL #2 : TAX : PLA : STA !HUD_TILEMAP+$B0,X
     LDA !IH_BLANK
 
   .blanksides
     STA !HUD_TILEMAP+$AE,X : STA !HUD_TILEMAP+$B2,X
+
+  .gotocheckleftright
     BRA .checkleftright
 
   .pressedjump
     TDC : STA !ram_shot_timer
-    LDA !ram_roomstrat_state : INC : STA !ram_roomstrat_state
-    BRA .checkleftright
+    LDA !ram_minimap : BNE .incwithmap
+    LDA !ram_roomstrat_state
+    BRA .incroomstate
 
   .writg
     LDA #$042F : STA !ram_ypos
@@ -1108,6 +1127,9 @@ status_walljump:
     CMP.w #ROOM_BubbleMountain : BEQ .bubble
     CMP.w #ROOM_MtEverest : BEQ .everest
     JMP .clear
+
+  .placheckleftright
+    PLA
 
   .checkleftright
     LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_LEFT : BNE .leftright
@@ -1420,17 +1442,25 @@ status_ypos:
 status_shottimer:
 {
     LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_SHOT : BEQ .incShot
-    LDA !IH_BLANK : STA !HUD_TILEMAP+$AE
-    STA !HUD_TILEMAP+$B2 : STA !HUD_TILEMAP+$B6
-    STA !HUD_TILEMAP+$BA : STA !HUD_TILEMAP+$BE
-    LDA !ram_shot_timer_past4 : BEQ .initPast
+    LDA !ram_shot_timer_past4 : BNE .doneInitPast
+    JMP .initPast
+
   .doneInitPast
-    STA !HUD_TILEMAP+$BC
+    LDA !ram_minimap : BEQ .drawPast4
+    LDA !IH_BLANK
+    BRA .donePast4
+  .drawPast4
+    LDA !ram_shot_timer_past4 : STA !HUD_TILEMAP+$BC
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$BE
+  .donePast4
+    STA !HUD_TILEMAP+$AE : STA !HUD_TILEMAP+$B2
+    STA !HUD_TILEMAP+$B6 : STA !HUD_TILEMAP+$BA
     LDA !ram_shot_timer_past3 : STA !HUD_TILEMAP+$B8 : STA !ram_shot_timer_past4
     LDA !ram_shot_timer_past2 : STA !HUD_TILEMAP+$B4 : STA !ram_shot_timer_past3
     LDA !ram_shot_timer_past1 : STA !HUD_TILEMAP+$B0 : STA !ram_shot_timer_past2
     LDA !ram_shot_timer : LDX #$0088 : JSR Draw4
-    LDA !ram_shot_timer : CMP #$0042 : BPL .setX
+    LDA !ram_shot_timer : CMP #$0025 : BPL .setXMap
+  .setValue
     ASL : TAX : LDA NumberGFXTable,X
     BRA .setPast1
 
@@ -1446,10 +1476,16 @@ status_shottimer:
     LDA !ROOM_ID : CMP.w #ROOM_PhantoonRoom : BEQ .phantoon
     RTS
 
+  .setXMap
+    CMP #$0042 : BPL .setX
+    LDA !ram_minimap : BNE .setX
+    LDA !ram_shot_timer
+    BRA .setValue
+
   .initPast
     LDA !IH_BLANK : STA !ram_shot_timer_past4 : STA !ram_shot_timer_past3
     STA !ram_shot_timer_past2 : STA !ram_shot_timer_past1
-    BRA .doneInitPast
+    JMP .doneInitPast
 
   .phantoonCheckInit
     LDA !ENEMY_VAR_5
