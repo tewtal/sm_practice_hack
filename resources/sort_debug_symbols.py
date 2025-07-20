@@ -92,7 +92,7 @@ for row in rows:
    elif in_source_files:
       if new_file:
          new_file.write(row)
-      parts = re.split(" |\.|\/", row)
+      parts = re.split(" |\\.|\\/", row)
       if len(parts) > 3:
          named_source = parts[len(parts) - 2]
          if named_source in sources_dict.values():

@@ -181,7 +181,7 @@ custom_preset_load:
     LDA !PRESET_SLOTS+$88,X : STA $7ED90A ; Map Stations
     LDA !PRESET_SLOTS+$8A,X : STA $7ED90C ; Map Stations
     ; set flag to load scrolls later
-    LDA !SAFEWORD : STA !ram_custom_preset
+    LDA !SAFEWORD : STA !ram_load_preset_low_word
     ; next available byte is !PRESET_SLOTS+$BE
     ; last two bytes of the first 100h are the map counter
     LDA !PRESET_SLOTS+$FE,X : STA !MAP_COUNTER
@@ -363,7 +363,7 @@ custom_preset_load:
     LDA !PRESET_SLOTS+$88,X : STA $7ED90A ; Map Stations
     LDA !PRESET_SLOTS+$8A,X : STA $7ED90C ; Map Stations
     ; set flag to load scrolls later
-    LDA !SAFEWORD : STA !ram_custom_preset
+    LDA !SAFEWORD : STA !ram_load_preset_low_word
     ; next available byte is !PRESET_SLOTS+$BE
     RTL
 }
