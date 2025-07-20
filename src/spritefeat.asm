@@ -421,9 +421,6 @@ draw_enemy_hitbox:
 ; draw hitboxes around enemies that use extended spritemaps
 draw_ext_spritemap_hitbox:
 {
-    ; Kraid has too many hitboxes and overflows the OAM stack
-    LDA !ROOM_ID : CMP.w #ROOM_KraidRoom : BEQ .end
-
     LDX #$0000 ; X = enemy index
     LDY !OAM_STACK_POINTER ; Y = OAM stack pointer
 
@@ -443,11 +440,13 @@ draw_ext_spritemap_hitbox:
 
   .extended
     ; get spritemap pointer
-    LDA !ENEMY_SPRITEMAP,X : STA $10
+    ; Kraid has no pointer set
+    LDA !ENEMY_SPRITEMAP,X : BEQ .nextEnemy
+    STA $10
     LDA !ENEMY_BANK,X : STA $12
 
     ; get number of spritemaps
-    ; Ceres steam has $1001 here ??
+    ; Ceres steam has $1001 here
     LDA [$10] : AND #$00FF : BEQ .nextEnemy
     STA $C1
 
@@ -802,6 +801,7 @@ draw_samusproj_hitbox:
 draw_custom_boss_hitbox:
 {
     LDA !ROOM_ID : CMP.w #ROOM_MotherBrainRoom : BEQ .mother_brain
+    CMP.w #ROOM_KraidRoom : BEQ .kraid_bridge
     CMP.w #ROOM_RidleyRoom : BEQ .ridley_bridge
     CMP.w #ROOM_CeresRidleyRoom : BNE .end
 
@@ -810,6 +810,9 @@ draw_custom_boss_hitbox:
 
   .end
     RTS
+
+  .kraid_bridge
+    JMP .kraid
 
   .mother_brain
     ; check which phase MB is in, 2 = 2nd phase
@@ -860,7 +863,7 @@ draw_custom_boss_hitbox:
 
   .neck
     ; draw neck hitboxes
-    LSR $C1 : BCC .done
+    LSR $C1 : BCC .mb_done
 
     ; second head hitbox
     LDA #$FFF8 : STA $14 ; left offset
@@ -883,7 +886,48 @@ draw_custom_boss_hitbox:
     LDA $7E8058 : STA !ENEMY_Y,X
     JSR DrawMBHitbox
 
-  .done
+  .mb_done
+    RTS
+
+  .kraid
+    ; load kraid's mouth hitbox if active
+    LDA !ENEMY_FUNCTION_POINTER : CMP #$C537 : BPL .mb_done
+    LDA !ENEMY_VAR_1 : SEC : SBC #$0008 : TAX
+    LDA $A70006,X : CMP #$FFFF : BEQ .mb_done
+    TAX
+    LDA $A70000,X : CLC : ADC !ENEMY_X : CMP !LAYER1_X : BMI .mb_done
+    SEC : SBC !LAYER1_X : CMP #$0100 : BPL .mb_done
+    STA $14 ; left offset
+    LDA #$00F8 : STA $18 ; right offset
+    LDA $A70002,X : CLC : ADC !ENEMY_Y : CMP !LAYER1_Y : BMI .mb_done
+    SEC : SBC !LAYER1_Y : STA $16 ; top offset
+    LDA $A70006,X : CLC : ADC !ENEMY_Y : STA $1A
+    LDA !LAYER1_Y : CLC : ADC #$0100 : CMP $1A : BMI .mb_done
+    LDA $1A : SEC : SBC !LAYER1_Y : SBC #$0008 : STA $1A ; bottom offset
+
+    ; draw kraid's mouth hitbox
+    LDY !OAM_STACK_POINTER
+    %a8()
+    ; X coord
+    LDA $14 : STA $0370,Y : STA $0378,Y
+    LDA $18 : STA $0374,Y : STA $037C,Y
+    ; Y coord
+    LDA $16 : DEC : STA $0371,Y : STA $0375,Y
+    LDA $1A : STA $0379,Y : STA $037D,Y
+
+    ; Sprite Attributes - xxxxxxxx yyyyyyyy YXPPpppt tttttttt
+    ; x=X pos, y=Y pos (low nibbles only), Y=Y flip, X=X flip
+    ; P=Priority, p=Palette, t=Tile number
+    %ai16()
+    LDA #$3A47 : STA $0372,Y ; %00111010 top-left
+    LDA #$7A47 : STA $0376,Y ; %01111010 top-right
+    LDA #$BA47 : STA $037A,Y ; %10111010 bottom-left
+    LDA #$FA47 : STA $037E,Y ; %11111010 bottom-right
+
+    ; inc oam stack
+    TYA : CLC : ADC #$0010 : STA !OAM_STACK_POINTER
+
+  .kraid_done
     RTS
 
   .ridley
@@ -892,13 +936,13 @@ draw_custom_boss_hitbox:
     ; $7E20A6 tail Y
     ; exit if off-screen
     LDA $7E20A4 : CLC : ADC #$000E
-    CMP !LAYER1_X : BMI .done
+    CMP !LAYER1_X : BMI .kraid_done
     LDA !LAYER1_X : CLC : ADC #$0100 : CLC : ADC #$000E
-    CMP $7E20A4 : BMI .done
+    CMP $7E20A4 : BMI .kraid_done
     LDA $7E20A6 : CLC : ADC #$0008
-    CMP !LAYER1_Y : BMI .done
+    CMP !LAYER1_Y : BMI .kraid_done
     LDA !LAYER1_Y : CLC : ADC #$00F8
-    CMP $7E20A6 : BMI .done
+    CMP $7E20A6 : BMI .kraid_done
 
     ; draw tail hitbox
     LDY !OAM_STACK_POINTER
@@ -909,14 +953,14 @@ draw_custom_boss_hitbox:
     ; X coord
     PLA : SEC : SBC #$0E
     STA $0370,Y : STA $0378,Y ; X pos
-    CLC : ADC #$1C : SEC : SBC #$08
+    CLC : ADC #$14
     STA $0374,Y : STA $037C,Y
     PLA ; discard high byte
 
     ; Y coord
     PLA : DEC : SEC : SBC #$0E
     STA $0371,Y : STA $0375,Y
-    CLC : ADC #$1C : SEC : SBC #$08
+    CLC : ADC #$14
     STA $0379,Y : STA $037D,Y
     PLA ; discard high byte
 
