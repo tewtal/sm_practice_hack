@@ -124,19 +124,19 @@ eq_setmissiles:
     RTL
 
 eq_currentsupers:
-    %cm_numfield("Current Super Missiles", !SAMUS_SUPERS, 0, 65, 1, 5, #0)
+    %cm_numfield_word("Current Super Missiles", !SAMUS_SUPERS, 0, 65, 1, 5, #0)
 
 eq_setsupers:
-    %cm_numfield("Super Missiles", !SAMUS_SUPERS_MAX, 0, 65, 5, 5, .routine)
+    %cm_numfield_word("Super Missiles", !SAMUS_SUPERS_MAX, 0, 65, 5, 5, .routine)
   .routine
     LDA !SAMUS_SUPERS_MAX : STA !SAMUS_SUPERS
     RTL
 
 eq_currentpbs:
-    %cm_numfield("Current Power Bombs", !SAMUS_PBS, 0, 70, 1, 5, #0)
+    %cm_numfield_word("Current Power Bombs", !SAMUS_PBS, 0, 70, 1, 5, #0)
 
 eq_setpbs:
-    %cm_numfield("Power Bombs", !SAMUS_PBS_MAX, 0, 70, 5, 5, .routine)
+    %cm_numfield_word("Power Bombs", !SAMUS_PBS_MAX, 0, 70, 5, 5, .routine)
   .routine
     LDA !SAMUS_PBS_MAX : STA !SAMUS_PBS
     RTL
@@ -2388,7 +2388,7 @@ misc_metronome:
     %cm_toggle("Metronome", !ram_metronome, #$01, GameLoopExtras)
 
 misc_metronome_tickrate:
-    %cm_numfield("Metronome Tickrate", !sram_metronome_tickrate, 1, 255, 1, 8, #.routine)
+    %cm_numfield_word("Metronome Tickrate", !sram_metronome_tickrate, 1, 255, 1, 8, #.routine)
   .routine
     TDC : STA !ram_metronome_counter
     RTL

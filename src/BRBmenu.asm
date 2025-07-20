@@ -55,10 +55,10 @@ brb_menu_timer_mode:
     db #$FF
 
 brb_menu_timer_min:
-    %cm_numfield("Minutes on Timer", !ram_cm_brb_mins, 0, 99, 1, 2, #0)
+    %cm_numfield_word("Minutes on Timer", !ram_cm_brb_mins, 0, 99, 1, 2, #0)
 
 brb_menu_timer_sec:
-    %cm_numfield("Seconds on Timer", !ram_cm_brb_secs, 0, 59, 1, 2, #0)
+    %cm_numfield_word("Seconds on Timer", !ram_cm_brb_secs, 0, 59, 1, 2, #0)
 
 brb_menu_timer_clear:
     %cm_jsl("Clear Timer", .routine, #0)

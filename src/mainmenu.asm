@@ -282,6 +282,7 @@ preset_category_submenus:
     dw #PresetsMenu100early
     dw #PresetsMenuHundo
     dw #PresetsMenu100map
+    dw #PresetsMenuSpazermap
     dw #PresetsMenu14ice
     dw #PresetsMenu14speed
     dw #PresetsMenuRbo
@@ -309,6 +310,7 @@ preset_category_banks:
     dw #PresetsMenu100early>>16
     dw #PresetsMenuHundo>>16
     dw #PresetsMenu100map>>16
+    dw #PresetsMenuSpazermap>>16
     dw #PresetsMenu14ice>>16
     dw #PresetsMenu14speed>>16
     dw #PresetsMenuRbo>>16
@@ -496,8 +498,8 @@ presets_custom_preset_slot:
   .routine
     ; ignore if not A, X, or Y
     LDA !IH_CONTROLLER_PRI_NEW : ORA !IH_CONTROLLER_SEC_NEW : BIT #$40C0 : BNE .submenu
-    LDA !sram_last_preset : BMI .exit
-    TDC : STA !sram_last_preset
+    LDA !sram_last_preset_low_word : BMI .exit
+    TDC : STA !sram_last_preset_low_word : STA !sram_last_preset_high_word
   .exit
     RTL
   .submenu
@@ -559,14 +561,16 @@ presets_load_custom_preset:
     RTL
 
   .safe
-    STA !ram_custom_preset
+    STA !ram_load_preset_low_word
+    XBA : AND #$00FF : STA !ram_load_preset_high_word
     LDA #$0001 : STA !ram_cm_leave
     RTL
 
 presets_reload_last:
     %cm_jsl("Reload Last Preset", .routine, #$0001)
   .routine
-    LDA !sram_last_preset : STA !ram_load_preset
+    LDA !sram_last_preset_low_word : STA !ram_load_preset_low_word
+    LDA !sram_last_preset_high_word : STA !ram_load_preset_high_word
     TYA : STA !ram_cm_leave
     RTL
 
@@ -635,6 +639,7 @@ SelectPresetCategoryMenu:
     dw #precat_100early
     dw #precat_hundo
     dw #precat_100map
+    dw #precat_spazermap
     dw #precat_14ice
     dw #precat_14speed
     dw #precat_rbo
@@ -663,6 +668,7 @@ presets_current:
     db #$28, " 100% EARLY", #$FF
     db #$28, "  100% LATE", #$FF
     db #$28, "   100% MAP", #$FF
+    db #$28, " SPAZER MAP", #$FF
     db #$28, "    14% ICE", #$FF
     db #$28, "  14% SPEED", #$FF
     db #$28, "        RBO", #$FF
@@ -675,7 +681,7 @@ presets_current:
     db #$28, "  BOSS PRKD", #$FF
     db #$FF
   .routine
-    TDC : STA !sram_last_preset
+    TDC : STA !sram_last_preset_low_word : STA !sram_last_preset_high_word
     RTL
 
 precat_kpdr:
@@ -726,26 +732,30 @@ precat_100map:
 !PRESET_CATEGORY_100MAP_INDEX = #$000B
     %cm_jsl("100% Map Completion", #action_select_preset_category, #$000B)
 
+precat_spazermap:
+!PRESET_CATEGORY_SPAZERMAP_INDEX = #$000C
+    %cm_jsl("100% Map with Spazer", #action_select_preset_category, #$000C)
+
 precat_14ice:
-    %cm_jsl("14% Ice", #action_select_preset_category, #$000C)
+    %cm_jsl("14% Ice", #action_select_preset_category, #$000D)
 
 precat_14speed:
-    %cm_jsl("14% Speed", #action_select_preset_category, #$000D)
+    %cm_jsl("14% Speed", #action_select_preset_category, #$000E)
 
 precat_rbo:
-    %cm_jsl("Reverse Boss Order", #action_select_preset_category, #$000E)
+    %cm_jsl("Reverse Boss Order", #action_select_preset_category, #$000F)
 
 precat_suitless:
-    %cm_jsl("Max% Suitless", #action_select_preset_category, #$000F)
+    %cm_jsl("Max% Suitless", #action_select_preset_category, #$0010)
 
 precat_ngplasma:
-    %cm_jsl("NewGame+ Plasma", #action_select_preset_category, #$0010)
+    %cm_jsl("NewGame+ Plasma", #action_select_preset_category, #$0011)
 
 precat_nghyper:
-    %cm_jsl("NewGame+ Hyper", #action_select_preset_category, #$0011)
+    %cm_jsl("NewGame+ Hyper", #action_select_preset_category, #$0012)
 
 precat_nintendopower:
-    %cm_jsl("Nintendo Power%", #action_select_preset_category, #$0012)
+    %cm_jsl("Nintendo Power%", #action_select_preset_category, #$0013)
 
 precat_allboss:
     %cm_submenu("All Bosses", #SelectAllBossesPresetCategoryMenu)
@@ -758,28 +768,21 @@ SelectAllBossesPresetCategoryMenu:
     %cm_header("SELECT ALL BOSSES CATEGORY")
 
 precat_allbosskpdr:
-    %cm_jsl("All Bosses KPDR", #action_select_preset_category, #$0013)
+    %cm_jsl("All Bosses KPDR", #action_select_preset_category, #$0014)
 
 precat_allbosspkdr:
-    %cm_jsl("All Bosses PKDR", #action_select_preset_category, #$0014)
+    %cm_jsl("All Bosses PKDR", #action_select_preset_category, #$0015)
 
 precat_allbossprkd:
-    %cm_jsl("All Bosses PRKD", #action_select_preset_category, #$0015)
+    %cm_jsl("All Bosses PRKD", #action_select_preset_category, #$0016)
 
 action_select_preset_category:
 {
     ; category index in Y
     TYA : STA !sram_preset_category
     ; clear stale preset
-    TDC : STA !sram_last_preset
+    TDC : STA !sram_last_preset_low_word : STA !sram_last_preset_high_word
     JML cm_previous_menu
-}
-
-action_load_preset:
-{
-    TYA : STA !ram_load_preset
-    LDA #$0001 : STA !ram_cm_leave
-    RTL
 }
 
 
@@ -3253,7 +3256,7 @@ rng_ridley_pogo_time_dynamic:
     dw #rng_ridley_pogo_time_value
 
 rng_ridley_pogo_time_value:
-    %cm_numfield("Pogo Time Value", !ram_cm_ridley_pogo_time_value_rng, 128, 191, 1, 4, #.routine)
+    %cm_numfield_word("Pogo Time Value", !ram_cm_ridley_pogo_time_value_rng, 128, 191, 1, 4, #.routine)
   .routine
     LDA !ram_ridley_rng_times_and_fireball : AND !RIDLEY_RNG_POGO_TIME_INVERTED
     STA !ram_ridley_rng_times_and_fireball
@@ -3292,7 +3295,7 @@ rng_ridley_hover_time_dynamic:
     dw #rng_ridley_hover_time_value
 
 rng_ridley_hover_time_value:
-    %cm_numfield("Hover Time Value", !ram_cm_ridley_hover_time_value_rng, 32, 63, 1, 4, #.routine)
+    %cm_numfield_word("Hover Time Value", !ram_cm_ridley_hover_time_value_rng, 32, 63, 1, 4, #.routine)
   .routine
     LDA !ram_ridley_rng_times_and_fireball : AND !RIDLEY_RNG_HOVER_TIME_INVERTED
     ORA !ram_cm_ridley_hover_time_value_rng : STA !ram_ridley_rng_times_and_fireball
@@ -3673,19 +3676,19 @@ save_rando_enable:
     %cm_toggle("Variance on Load State", !sram_loadstate_rando_enable, #$01, #0)
 
 save_rando_energy:
-    %cm_numfield("Energy Variance", !sram_loadstate_rando_energy, 0, 255, 1, 4, #0)
+    %cm_numfield_word("Energy Variance", !sram_loadstate_rando_energy, 0, 255, 1, 4, #0)
 
 save_rando_reserves:
-    %cm_numfield("Reserve Variance", !sram_loadstate_rando_reserves, 0, 255, 1, 4, #0)
+    %cm_numfield_word("Reserve Variance", !sram_loadstate_rando_reserves, 0, 255, 1, 4, #0)
 
 save_rando_missiles:
-    %cm_numfield("Missile Variance", !sram_loadstate_rando_missiles, 0, 230, 1, 4, #0)
+    %cm_numfield_word("Missile Variance", !sram_loadstate_rando_missiles, 0, 230, 1, 4, #0)
 
 save_rando_supers:
-    %cm_numfield("Super Missile Variance", !sram_loadstate_rando_supers, 0, 50, 1, 2, #0)
+    %cm_numfield_word("Super Missile Variance", !sram_loadstate_rando_supers, 0, 50, 1, 2, #0)
 
 save_rando_powerbombs:
-    %cm_numfield("Power Bomb Variance", !sram_loadstate_rando_powerbombs, 0, 50, 1, 2, #0)
+    %cm_numfield_word("Power Bomb Variance", !sram_loadstate_rando_powerbombs, 0, 50, 1, 2, #0)
 endif
 
 
@@ -3752,7 +3755,7 @@ else
     CMP !IH_MODE_WALLJUMP_INDEX : BEQ .skip
     CMP !IH_MODE_SHOTTIMER_INDEX : BEQ .skip
   .print
-    LDA #$0001 : STA !ram_print_segment_timer
+    LDA !ram_print_segment_timer : ORA #$8000 : STA !ram_print_segment_timer
     RTL
 
   .checkSuperHUD
@@ -3764,7 +3767,7 @@ else
   .skip
 endif
 endif
-    TDC : STA !ram_print_segment_timer
+    LDA !ram_print_segment_timer : AND #$7FFF : STA !ram_print_segment_timer
     RTL
 }
 

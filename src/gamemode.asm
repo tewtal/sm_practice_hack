@@ -132,11 +132,7 @@ gamemode_start:
   .skip_gameplay_done_pause
     ; Don't load presets or decrement counters if we're in credits
     LDA !GAMEMODE : CMP #$0027 : BEQ .skip_load
-
-    LDA !ram_custom_preset : BNE .preset_load
-    LDA !ram_load_preset : BEQ .dec_rta
-
-  .preset_load
+    LDA !ram_load_preset_low_word : BEQ .dec_rta
     JSL preset_load
 
   .skip_load
@@ -265,8 +261,9 @@ endif
 gamemode_reload_preset:
 {
     ; Choose a random preset if zero
-    LDA !sram_last_preset : BEQ gamemode_random_preset
-    STA !ram_load_preset
+    LDA !sram_last_preset_low_word : BEQ gamemode_random_preset
+    STA !ram_load_preset_low_word
+    LDA !sram_last_preset_high_word : STA !ram_load_preset_high_word
 
     ; Skip remaining shortcuts
     PLA : PEA !CTRL_SHORTCUT_SKIP_REMAINING_PEA_VALUE
@@ -309,7 +306,8 @@ gamemode_load_custom_preset:
     RTL
 
   .safe
-    STA !ram_custom_preset
+    STA !ram_load_preset_low_word
+    XBA : AND #$00FF : STA !ram_load_preset_high_word
     JML preset_load
 }
 
@@ -323,8 +321,8 @@ if !FEATURE_VANILLAHUD
 else
     ASL : TAX : LDA.l NumberGFXTable,X : STA !HUD_TILEMAP+$7C
 endif
-    LDA !sram_last_preset : BMI .done
-    TDC : STA !sram_last_preset
+    LDA !sram_last_preset_low_word : BMI .done
+    TDC : STA !sram_last_preset_low_word : STA !sram_last_preset_high_word
   .done
     %sfxnumber()
     RTL
@@ -340,8 +338,8 @@ if !FEATURE_VANILLAHUD
 else
     ASL : TAX : LDA.l NumberGFXTable,X : STA !HUD_TILEMAP+$7C
 endif
-    LDA !sram_last_preset : BMI .done
-    TDC : STA !sram_last_preset
+    LDA !sram_last_preset_low_word : BMI .done
+    TDC : STA !sram_last_preset_low_word : STA !sram_last_preset_high_word
   .done
     %sfxnumber()
     RTL

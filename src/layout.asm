@@ -3186,13 +3186,13 @@ layout_asm_halfie_climb_done:
 
 layout_asm_dust_torizo:
 {
-    TDC : INC : STA !ram_room_has_set_rng
+    LDA !ram_room_has_set_rng : ORA #$8000 : STA !ram_room_has_set_rng
     RTS
 }
 
 layout_asm_big_boy:
 {
-    TDC : INC : STA !ram_room_has_set_rng
+    LDA !ram_room_has_set_rng : ORA #$8000 : STA !ram_room_has_set_rng
     RTS
 }
 

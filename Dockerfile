@@ -27,6 +27,7 @@ RUN mkdir -p /app/build \
 COPY build.sh /app/build.sh
 COPY build_dev.sh /app/build_dev.sh
 COPY build_PAL.sh /app/build_PAL.sh
+COPY build_presets.sh /app/build_presets.sh
 
 ARG now
 
@@ -44,6 +45,7 @@ COPY resources/ resources/
 RUN rm -rf src
 COPY src/ src/
 
+RUN ./build_presets.sh
 RUN ./build_dev.sh
 RUN ./build_PAL.sh
 RUN ./build.sh

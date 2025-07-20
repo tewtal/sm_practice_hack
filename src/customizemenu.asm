@@ -670,7 +670,7 @@ mc_dummy_hexnum:
     %cm_numfield_hex("Example Hex Number", !ram_cm_dummy_num, 0, 255, 1, 8, #0)
 
 mc_dummy_num:
-    %cm_numfield("Example Number", !ram_cm_dummy_num, 0, 255, 1, 8, #0)
+    %cm_numfield_word("Example Number", !ram_cm_dummy_num, 0, 255, 1, 8, #0)
 
 
 mc_custompalettes_test_menu:

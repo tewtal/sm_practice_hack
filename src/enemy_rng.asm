@@ -528,20 +528,20 @@ MenuRNG2:
 
 hook_hopper_set_rng:
 {
-    LDA #$0001 : STA !ram_room_has_set_rng
+    LDA !ram_room_has_set_rng : ORA #$8000 : STA !ram_room_has_set_rng
     JML $808111
 }
 
 hook_lavarocks_set_rng:
 {
-    LDA #$0001 : STA !ram_room_has_set_rng
+    LDA !ram_room_has_set_rng : ORA #$8000 : STA !ram_room_has_set_rng
     LDA #$0011 : STA !CACHED_RANDOM_NUMBER
     RTL
 }
 
 hook_beetom_set_rng:
 {
-    LDA #$0001 : STA !ram_room_has_set_rng
+    LDA !ram_room_has_set_rng : ORA #$8000 : STA !ram_room_has_set_rng
     LDA #$0017 : STA !CACHED_RANDOM_NUMBER
     RTL
 }

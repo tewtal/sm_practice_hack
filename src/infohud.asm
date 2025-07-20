@@ -499,8 +499,8 @@ ih_before_room_transition:
     LDA !ram_realtime_room : STA !ram_last_realtime_room
 
     ; Reset variables
-    TDC : STA !ram_room_has_set_rng
-    STA !ram_transition_counter : STA !ram_gametime_room
+    LDA !ram_room_has_set_rng : AND #$7FFF : STA !ram_room_has_set_rng
+    TDC : STA !ram_transition_counter : STA !ram_gametime_room
     STA !ram_realtime_room : STA !ram_last_realtime_door
     INC : STA !ram_transition_flag
 
@@ -915,7 +915,7 @@ ih_update_hud_code:
     LDX #$00C2 : JSR Draw3
 
     ; Skip segment timer when certain HUD modes enabled
-    LDA !ram_print_segment_timer : BEQ .end
+    LDA !ram_print_segment_timer : BPL .end
     BRA .pickSegmentTimer
 
   .end
@@ -946,7 +946,7 @@ ih_update_hud_code:
     LDX #$00C2 : JSR Draw2
 
     ; Skip segment timer when certain HUD modes enabled
-    LDA !ram_print_segment_timer : BEQ .end
+    LDA !ram_print_segment_timer : BPL .end
 
   .pickSegmentTimer
     LDA !sram_frame_counter_mode : BIT #$0001 : BNE .inGameSegmentTimer

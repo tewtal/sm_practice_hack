@@ -516,7 +516,7 @@ custom_preset_load:
     LDA !PRESET_SLOTS+$1B6,X : STA !BG2_Y_OFFSET
 
     LDA !PRESET_SLOTS+$02,X : CMP #$01BA : BMI .done_no_scrolls
-    LDA !SAFEWORD : STA !ram_custom_preset
+    LDA !SAFEWORD : STA !ram_load_preset_low_word
 
     LDA !PRESET_SLOTS+$02,X : CMP #$01EC : BMI .done_with_scrolls
     LDA !PRESET_SLOTS+$1EA,X : STA !SAMUS_X_SUBPX
@@ -528,7 +528,7 @@ custom_preset_load:
     ; next available byte is !PRESET_SLOTS+$1EE
 
   .done_no_scrolls
-    TDC : STA !ram_custom_preset
+    TDC : STA !ram_load_preset_low_word
     RTL
 }
 endif
@@ -543,7 +543,7 @@ preset_scroll_fixes:
     PHB
     %ai16()
     STZ !BG2_X_OFFSET : STZ !BG2_Y_OFFSET
-    LDA !ram_custom_preset : CMP !SAFEWORD : BNE .category_presets
+    LDA !ram_load_preset_low_word : CMP !SAFEWORD : BNE .category_presets
     JMP .custom_presets
 
   .category_presets
@@ -964,7 +964,7 @@ endif
 endif
     LDY #$CD51 : LDA #$0031      ; Y = Destination, A = Size-1
     MVP $707E                    ; srcBank, destBank
-    TDC : STA !ram_custom_preset
+    TDC : STA !ram_load_preset_low_word
 
     %a8()
     ; X = room ID
@@ -1085,8 +1085,10 @@ LoadRandomPreset:
 
     ASL : TAY
     LDA [$16],Y : STA $16                      ; random preset macro pointer in $16
-    LDY #$0004 : LDA [$16],Y                   ; finally reached the pointer to the preset
-    STA !ram_load_preset
+    LDY #$0002 : LDA [$16],Y                   ; finally reached the pointer to the preset
+    STA !ram_load_preset_low_word
+    INY : LDA [$16],Y
+    STA !ram_load_preset_high_word
 
     ; !FEATURE_DEV for crawling through preset categories in order
     LDA !ram_random_preset_rng : BEQ .done

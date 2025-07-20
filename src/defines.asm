@@ -44,7 +44,7 @@
 ; on the game state. For variables that depend on user
 ; settings, place them below WRAM_PERSIST_START below.
 
-!ram_load_preset                    = !WRAM_START+$00
+!ram_vcounter_data                  = !WRAM_START+$00
 !ram_gametime_room                  = !WRAM_START+$02
 !ram_last_gametime_room             = !WRAM_START+$04
 !ram_realtime_room                  = !WRAM_START+$06
@@ -76,15 +76,15 @@
 !ram_metronome_counter              = !WRAM_START+$30
 !ram_armed_shine_duration           = !WRAM_START+$32
 !ram_auto_save_state                = !WRAM_START+$34
-!ram_vcounter_data                  = !WRAM_START+$36
-!ram_custom_preset                  = !WRAM_START+$38
+!ram_watch_left_hud                 = !WRAM_START+$36
+!ram_watch_right_hud                = !WRAM_START+$38
 
 !ram_magic_pants_state              = !WRAM_START+$3A
 !ram_magic_pants_pal1               = !WRAM_START+$3C
 !ram_magic_pants_pal2               = !WRAM_START+$3E
 !ram_magic_pants_pal3               = !WRAM_START+$40
 
-!ram_room_has_set_rng               = !WRAM_START+$42
+!ram_print_segment_timer            = !WRAM_START+$42
 !ram_HUD_top                        = !WRAM_START+$44
 !ram_HUD_middle                     = !WRAM_START+$46
 !ram_infidoppler_active             = !WRAM_START+$48
@@ -98,10 +98,10 @@
 
 !ram_lag_counter                    = !WRAM_START+$58
 !ram_kraid_adjust_timer             = !WRAM_START+$5A
-!ram_print_segment_timer            = !WRAM_START+$5C
-!ram_activated_shine_duration       = !WRAM_START+$5E
-!ram_watch_left_hud                 = !WRAM_START+$60
-!ram_watch_right_hud                = !WRAM_START+$62
+!ram_load_preset_low_word           = !WRAM_START+$5C
+!ram_load_preset_high_word          = !WRAM_START+$5D ; Load preset is three bytes
+!ram_room_has_set_rng               = !WRAM_START+$5E ; Room set RNG only uses the most significant bit
+!ram_activated_shine_duration       = !WRAM_START+$60
 
 ; ^ FREE SPACE ^ up to +$6C
 
@@ -488,8 +488,9 @@
 !sram_frame_counter_mode = !SRAM_START+$26
 !sram_display_mode = !SRAM_START+$28
 !sram_music_toggle = !SRAM_START+$2A
-!sram_last_preset = !SRAM_START+$2C
-!sram_save_has_set_rng = !SRAM_START+$2E
+!sram_last_preset_low_word = !SRAM_START+$2C
+!sram_last_preset_high_word = !SRAM_START+$2D ; Last preset is three bytes
+!sram_save_has_set_rng = !SRAM_START+$2E ; Room set RNG only uses the most significant bit
 !sram_preset_category = !SRAM_START+$30
 !sram_custom_preset_slot = !SRAM_START+$32
 !sram_room_strat = !SRAM_START+$34
@@ -1212,6 +1213,7 @@ endif
 !ACTION_RAM_WATCH           = #$0024
 !ACTION_DYNAMIC             = #$0026
 !ACTION_MANAGE_PRESETS      = #$0028
+!ACTION_CATEGORY_PRESET     = #$002A
 
 !SAFEWORD = #$5AFE
 

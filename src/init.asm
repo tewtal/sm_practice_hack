@@ -114,7 +114,7 @@ init_sram:
     TDC : STA !sram_fanfare
     STA !sram_frame_counter_mode
     STA !sram_display_mode
-    STA !sram_last_preset
+    STA !sram_last_preset_low_word
     STA !sram_save_has_set_rng
     STA !sram_preset_category
     STA !sram_custom_preset_slot
