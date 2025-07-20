@@ -206,7 +206,9 @@ CrashViewer:
     %ai16()
     JSL crash_next_frame
     JSL crash_cgram_transfer
+    LDA $C1 : PHA : LDA $C3 : PHA
     JSL cm_transfer_custom_tileset
+    PLA : STA $C3 : PLA : STA $C1
 
     LDA #$0000 : STA !ram_crash_page : STA !ram_crash_palette : STA !ram_crash_cursor
     STA !ram_crash_input : STA !ram_crash_input_new
