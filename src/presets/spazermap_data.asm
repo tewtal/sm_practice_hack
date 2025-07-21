@@ -2332,6 +2332,8 @@ preset_spazermap_forgotten_highway_pancakes_from_hell:
     dw $0913, $F000  ; Screen subpixel Y position
     dw $0915, $0500  ; Screen Y position in pixels
     dw $0919, $03C0  ; Layer 2 Y position
+    dw $09A2, $7124  ; Equipped Items
+    dw $09A6, $1001  ; Equipped Beams
     dw $09C2, $022A  ; Health
     dw $09CA, $0007  ; Supers
     dw $09D2, $0000  ; Currently selected item
@@ -2776,7 +2778,7 @@ preset_spazermap_maridia_cleanup_reverse_halfie:
     dw $0913, $7C00  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0919, $0000  ; Layer 2 Y position
-    dw $09A2, $7325  ; Equipped Items
+    dw $09A2, $7324  ; Equipped Items
     dw $09A4, $7325  ; Collected Items
     dw $09C2, $00CF  ; Health
     dw $09C6, $0002  ; Missiles
@@ -2892,7 +2894,7 @@ preset_spazermap_maridia_cleanup_pants_room_corner:
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $4C00  ; Screen subpixel Y position
     dw $0917, $0000  ; Layer 2 X position
-    dw $09A2, $7327  ; Equipped Items
+    dw $09A2, $7326  ; Equipped Items
     dw $09A4, $7327  ; Collected Items
     dw $0A1C, $008A  ; Samus position/state
     dw $0A1E, $1504  ; More position/state
@@ -3444,7 +3446,7 @@ preset_spazermap_lower_norfair_fast_ripper_room:
     dw $0915, $001C  ; Screen Y position in pixels
     dw $0917, $0001  ; Layer 2 X position
     dw $0919, $0015  ; Layer 2 Y position
-    dw $09A2, $732F  ; Equipped Items
+    dw $09A2, $732E  ; Equipped Items
     dw $09A4, $732F  ; Collected Items
     dw $0AF6, $00B2  ; Samus X
     dw $0AFA, $008B  ; Samus Y

@@ -2593,7 +2593,7 @@ preset_spazermap_forgotten_highway_maridia_elevator:
 
 preset_spazermap_forgotten_highway_pancakes_from_hell:
     dw #preset_100map_forgotten_highway_pancakes_from_hell
-    dw $09A6, $1005  ; Equipped Beams
+    dw $09A2, $7124  ; Equipped Items
     dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
 
@@ -2618,7 +2618,7 @@ preset_100map_forgotten_highway_plasma_spark_room:
 
 preset_spazermap_forgotten_highway_plasma_spark_room:
     dw #preset_100map_forgotten_highway_plasma_spark_room
-    dw $09A6, $1005  ; Equipped Beams
+    dw $09A2, $7124  ; Equipped Items
     dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
 
@@ -2656,7 +2656,7 @@ preset_100map_forgotten_highway_west_sand_hall:
 
 preset_spazermap_forgotten_highway_west_sand_hall:
     dw #preset_100map_forgotten_highway_west_sand_hall
-    dw $09A6, $1005  ; Equipped Beams
+    dw $09A2, $7124  ; Equipped Items
     dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
 
@@ -2680,7 +2680,7 @@ preset_100map_forgotten_highway_crab_ggg:
 
 preset_spazermap_forgotten_highway_crab_ggg:
     dw #preset_100map_forgotten_highway_crab_ggg
-    dw $09A6, $1005  ; Equipped Beams
+    dw $09A2, $7124  ; Equipped Items
     dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
 
@@ -2704,7 +2704,7 @@ preset_100map_space_jump_main_street:
 
 preset_spazermap_space_jump_main_street:
     dw #preset_100map_space_jump_main_street
-    dw $09A6, $1005  ; Equipped Beams
+    dw $09A2, $7124  ; Equipped Items
     dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
 
@@ -2732,7 +2732,7 @@ preset_100map_space_jump_mama_turtle:
 
 preset_spazermap_space_jump_mama_turtle:
     dw #preset_100map_space_jump_mama_turtle
-    dw $09A6, $1005  ; Equipped Beams
+    dw $09A2, $7124  ; Equipped Items
     dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
 
@@ -2763,7 +2763,7 @@ preset_100map_space_jump_leaving_mama_turtle:
 
 preset_spazermap_space_jump_leaving_mama_turtle:
     dw #preset_100map_space_jump_leaving_mama_turtle
-    dw $09A6, $1005  ; Equipped Beams
+    dw $09A2, $7124  ; Equipped Items
     dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
 
@@ -2790,7 +2790,7 @@ preset_100map_space_jump_everest_post_fish_tank:
 
 preset_spazermap_space_jump_everest_post_fish_tank:
     dw #preset_100map_space_jump_everest_post_fish_tank
-    dw $09A6, $1005  ; Equipped Beams
+    dw $09A2, $7124  ; Equipped Items
     dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
 
@@ -2817,7 +2817,7 @@ preset_100map_space_jump_everest_post_crab_supers:
 
 preset_spazermap_space_jump_everest_post_crab_supers:
     dw #preset_100map_space_jump_everest_post_crab_supers
-    dw $09A6, $1005  ; Equipped Beams
+    dw $09A2, $7124  ; Equipped Items
     dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
 
@@ -2848,7 +2848,7 @@ preset_100map_space_jump_beach:
 
 preset_spazermap_space_jump_beach:
     dw #preset_100map_space_jump_beach
-    dw $09A6, $1005  ; Equipped Beams
+    dw $09A2, $7124  ; Equipped Items
     dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
 
@@ -2870,7 +2870,7 @@ preset_100map_space_jump_swiss_cheese_room:
 
 preset_spazermap_space_jump_swiss_cheese_room:
     dw #preset_100map_space_jump_swiss_cheese_room
-    dw $09A6, $1005  ; Equipped Beams
+    dw $09A2, $7124  ; Equipped Items
     dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
 
@@ -2902,7 +2902,7 @@ preset_100map_space_jump_swiss_cheese_revisit:
 
 preset_spazermap_space_jump_swiss_cheese_revisit:
     dw #preset_100map_space_jump_swiss_cheese_revisit
-    dw $09A6, $1005  ; Equipped Beams
+    dw $09A2, $7124  ; Equipped Items
     dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
 
@@ -2923,7 +2923,7 @@ preset_100map_space_jump_beach_revisit:
 
 preset_spazermap_space_jump_beach_revisit:
     dw #preset_100map_space_jump_beach_revisit
-    dw $09A6, $1005  ; Equipped Beams
+    dw $09A2, $7124  ; Equipped Items
     dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
 
@@ -2948,7 +2948,7 @@ preset_100map_space_jump_crab_shaft_down:
 
 preset_spazermap_space_jump_crab_shaft_down:
     dw #preset_100map_space_jump_crab_shaft_down
-    dw $09A6, $1005  ; Equipped Beams
+    dw $09A2, $7124  ; Equipped Items
     dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
 
@@ -2976,7 +2976,7 @@ preset_100map_space_jump_aqueduct_post_save:
 
 preset_spazermap_space_jump_aqueduct_post_save:
     dw #preset_100map_space_jump_aqueduct_post_save
-    dw $09A6, $1005  ; Equipped Beams
+    dw $09A2, $7124  ; Equipped Items
     dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
 
@@ -2998,7 +2998,7 @@ preset_100map_space_jump_prebotwoon:
 
 preset_spazermap_space_jump_prebotwoon:
     dw #preset_100map_space_jump_prebotwoon
-    dw $09A6, $1005  ; Equipped Beams
+    dw $09A2, $7124  ; Equipped Items
     dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
 
@@ -3065,19 +3065,19 @@ preset_100map_space_jump_under_over_spark:
 
 preset_spazermap_space_jump_botwoon:
     dw #preset_100map_space_jump_botwoon
-    dw $09A6, $1005  ; Equipped Beams
+    dw $09A2, $7124  ; Equipped Items
     dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
 
 preset_spazermap_space_jump_over_under_spark:
     dw #preset_100map_space_jump_over_under_spark
-    dw $09A6, $1005  ; Equipped Beams
+    dw $09A2, $7124  ; Equipped Items
     dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
 
 preset_spazermap_space_jump_under_over_spark:
     dw #preset_100map_space_jump_under_over_spark
-    dw $09A6, $1005  ; Equipped Beams
+    dw $09A2, $7124  ; Equipped Items
     dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
 
@@ -3121,13 +3121,13 @@ preset_100map_space_jump_draygon:
 
 preset_spazermap_space_jump_colosseum:
     dw #preset_100map_space_jump_colosseum
-    dw $09A6, $1005  ; Equipped Beams
+    dw $09A2, $7124  ; Equipped Items
     dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
 
 preset_spazermap_space_jump_draygon:
     dw #preset_100map_space_jump_draygon
-    dw $09A6, $1005  ; Equipped Beams
+    dw $09A2, $7124  ; Equipped Items
     dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
 
@@ -3156,7 +3156,7 @@ preset_100map_maridia_cleanup_reverse_halfie:
 
 preset_spazermap_maridia_cleanup_reverse_halfie:
     dw #preset_100map_maridia_cleanup_reverse_halfie
-    dw $09A6, $1005  ; Equipped Beams
+    dw $09A2, $7324  ; Equipped Items
     dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
 
@@ -3178,7 +3178,7 @@ preset_100map_maridia_cleanup_botwoon_hallway_revisit:
 
 preset_spazermap_maridia_cleanup_botwoon_hallway_revisit:
     dw #preset_100map_maridia_cleanup_botwoon_hallway_revisit
-    dw $09A6, $1005  ; Equipped Beams
+    dw $09A2, $7324  ; Equipped Items
     dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
 
@@ -3202,7 +3202,7 @@ preset_100map_maridia_cleanup_right_sand_pit:
 
 preset_spazermap_maridia_cleanup_right_sand_pit:
     dw #preset_100map_maridia_cleanup_right_sand_pit
-    dw $09A6, $1005  ; Equipped Beams
+    dw $09A2, $7324  ; Equipped Items
     dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
 
@@ -3228,7 +3228,7 @@ preset_100map_maridia_cleanup_east_sand_hall:
 
 preset_spazermap_maridia_cleanup_east_sand_hall:
     dw #preset_100map_maridia_cleanup_east_sand_hall
-    dw $09A6, $1005  ; Equipped Beams
+    dw $09A2, $7324  ; Equipped Items
     dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
 
@@ -3253,7 +3253,7 @@ preset_100map_maridia_cleanup_pants_room:
 
 preset_spazermap_maridia_cleanup_pants_room:
     dw #preset_100map_maridia_cleanup_pants_room
-    dw $09A6, $1005  ; Equipped Beams
+    dw $09A2, $7324  ; Equipped Items
     dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
 
@@ -3279,7 +3279,7 @@ preset_100map_maridia_cleanup_spring_ball_room:
 
 preset_spazermap_maridia_cleanup_spring_ball_room:
     dw #preset_100map_maridia_cleanup_spring_ball_room
-    dw $09A6, $1005  ; Equipped Beams
+    dw $09A2, $7324  ; Equipped Items
     dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
 
@@ -3304,7 +3304,7 @@ preset_100map_maridia_cleanup_pants_room_corner:
 
 preset_spazermap_maridia_cleanup_pants_room_corner:
     dw #preset_100map_maridia_cleanup_pants_room_corner
-    dw $09A6, $1005  ; Equipped Beams
+    dw $09A2, $7326  ; Equipped Items
     dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
 
@@ -3325,7 +3325,7 @@ preset_100map_maridia_cleanup_plasma_spark_room_revisit:
 
 preset_spazermap_maridia_cleanup_plasma_spark_room_revisit:
     dw #preset_100map_maridia_cleanup_plasma_spark_room_revisit
-    dw $09A6, $1005  ; Equipped Beams
+    dw $09A2, $7326  ; Equipped Items
     dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
 
@@ -3393,18 +3393,19 @@ preset_100map_maridia_cleanup_plasma_spark_room_final:
 
 preset_spazermap_maridia_cleanup_kassiuz_room:
     dw #preset_100map_maridia_cleanup_kassiuz_room
-    dw $09A6, $1005  ; Equipped Beams
+    dw $09A2, $7326  ; Equipped Items
     dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
 
 preset_spazermap_maridia_cleanup_plasma_room:
     dw #preset_100map_maridia_cleanup_plasma_room
-    dw $09A6, $1005  ; Equipped Beams
+    dw $09A2, $7326  ; Equipped Items
     dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
 
 preset_spazermap_maridia_cleanup_plasma_spark_room_final:
     dw #preset_100map_maridia_cleanup_plasma_spark_room_final
+    dw $09A2, $7326  ; Equipped Items
     dw $09A8, $100D  ; Collected Beams
     dw #$FFFF
 
@@ -3430,6 +3431,7 @@ preset_100map_maridia_cleanup_west_cac_alley:
 
 preset_spazermap_maridia_cleanup_west_cac_alley:
     dw #preset_100map_maridia_cleanup_west_cac_alley
+    dw $09A2, $7326  ; Equipped Items
     dw $09A8, $100D  ; Collected Beams
     dw #$FFFF
 
@@ -3454,6 +3456,7 @@ preset_100map_maridia_cleanup_east_cac_alley:
 
 preset_spazermap_maridia_cleanup_east_cac_alley:
     dw #preset_100map_maridia_cleanup_east_cac_alley
+    dw $09A2, $7326  ; Equipped Items
     dw $09A8, $100D  ; Collected Beams
     dw #$FFFF
 
@@ -3478,6 +3481,7 @@ preset_100map_maridia_cleanup_botwoon_hallway_final:
 
 preset_spazermap_maridia_cleanup_botwoon_hallway_final:
     dw #preset_100map_maridia_cleanup_botwoon_hallway_final
+    dw $09A2, $7326  ; Equipped Items
     dw $09A8, $100D  ; Collected Beams
     dw #$FFFF
 
@@ -3502,6 +3506,7 @@ preset_100map_maridia_cleanup_aqueduct_final:
 
 preset_spazermap_maridia_cleanup_aqueduct_final:
     dw #preset_100map_maridia_cleanup_aqueduct_final
+    dw $09A2, $7326  ; Equipped Items
     dw $09A8, $100D  ; Collected Beams
     dw #$FFFF
 
@@ -3523,6 +3528,7 @@ preset_100map_maridia_cleanup_left_sand_pit:
 
 preset_spazermap_maridia_cleanup_left_sand_pit:
     dw #preset_100map_maridia_cleanup_left_sand_pit
+    dw $09A2, $7326  ; Equipped Items
     dw $09A8, $100D  ; Collected Beams
     dw #$FFFF
 
@@ -3546,6 +3552,7 @@ preset_100map_maridia_cleanup_crab_hole:
 
 preset_spazermap_maridia_cleanup_crab_hole:
     dw #preset_100map_maridia_cleanup_crab_hole
+    dw $09A2, $7326  ; Equipped Items
     dw $09A8, $100D  ; Collected Beams
     dw #$FFFF
 
@@ -3570,6 +3577,7 @@ preset_100map_maridia_cleanup_kpdr_exit:
 
 preset_spazermap_maridia_cleanup_kpdr_exit:
     dw #preset_100map_maridia_cleanup_kpdr_exit
+    dw $09A2, $7326  ; Equipped Items
     dw $09A8, $100D  ; Collected Beams
     dw #$FFFF
 
@@ -3684,6 +3692,7 @@ preset_100map_screw_attack_business_center:
 
 preset_spazermap_screw_attack_business_center:
     dw #preset_100map_screw_attack_business_center
+    dw $09A2, $7326  ; Equipped Items
     dw $09A8, $100D  ; Collected Beams
     dw #$FFFF
 
@@ -3707,6 +3716,7 @@ preset_100map_screw_attack_ice_beam_snake_room:
 
 preset_spazermap_screw_attack_ice_beam_snake_room:
     dw #preset_100map_screw_attack_ice_beam_snake_room
+    dw $09A2, $7326  ; Equipped Items
     dw $09A8, $100D  ; Collected Beams
     dw #$FFFF
 
@@ -3731,6 +3741,7 @@ preset_100map_screw_attack_ice_beam_foosball:
 
 preset_spazermap_screw_attack_ice_beam_foosball:
     dw #preset_100map_screw_attack_ice_beam_foosball
+    dw $09A2, $7326  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
@@ -3754,6 +3765,7 @@ preset_100map_screw_attack_ice_beam_boyon_room:
 
 preset_spazermap_screw_attack_ice_beam_boyon_room:
     dw #preset_100map_screw_attack_ice_beam_boyon_room
+    dw $09A2, $7326  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
@@ -3779,6 +3791,7 @@ preset_100map_screw_attack_crocomire_speedway:
 
 preset_spazermap_screw_attack_crocomire_speedway:
     dw #preset_100map_screw_attack_crocomire_speedway
+    dw $09A2, $7326  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
@@ -3804,6 +3817,7 @@ preset_100map_screw_attack_kronic_boost_room:
 
 preset_spazermap_screw_attack_kronic_boost_room:
     dw #preset_100map_screw_attack_kronic_boost_room
+    dw $09A2, $7326  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
@@ -3829,6 +3843,7 @@ preset_100map_screw_attack_lava_dive_room:
 
 preset_spazermap_screw_attack_lava_dive_room:
     dw #preset_100map_screw_attack_lava_dive_room
+    dw $09A2, $7326  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
@@ -3879,11 +3894,13 @@ preset_100map_screw_attack_blue_fireball:
 
 preset_spazermap_screw_attack_lower_norfair_main_hall:
     dw #preset_100map_screw_attack_lower_norfair_main_hall
+    dw $09A2, $7326  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
 preset_spazermap_screw_attack_blue_fireball:
     dw #preset_100map_screw_attack_blue_fireball
+    dw $09A2, $7326  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
@@ -3916,6 +3933,7 @@ preset_100map_screw_attack_golden_torizo:
 
 preset_spazermap_screw_attack_golden_torizo:
     dw #preset_100map_screw_attack_golden_torizo
+    dw $09A2, $7326  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
@@ -3945,6 +3963,7 @@ preset_100map_screw_attack_screw_attack:
 
 preset_spazermap_screw_attack_screw_attack:
     dw #preset_100map_screw_attack_screw_attack
+    dw $09A2, $7326  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
@@ -3971,6 +3990,7 @@ preset_100map_lower_norfair_fast_ripper_room:
 
 preset_spazermap_lower_norfair_fast_ripper_room:
     dw #preset_100map_lower_norfair_fast_ripper_room
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
@@ -3995,6 +4015,7 @@ preset_100map_lower_norfair_worst_room_in_the_game:
 
 preset_spazermap_lower_norfair_worst_room_in_the_game:
     dw #preset_100map_lower_norfair_worst_room_in_the_game
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
@@ -4022,6 +4043,7 @@ preset_100map_lower_norfair_mickey_mouse:
 
 preset_spazermap_lower_norfair_mickey_mouse:
     dw #preset_100map_lower_norfair_mickey_mouse
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
@@ -4043,6 +4065,7 @@ preset_100map_lower_norfair_amphitheatre:
 
 preset_spazermap_lower_norfair_amphitheatre:
     dw #preset_100map_lower_norfair_amphitheatre
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
@@ -4072,6 +4095,7 @@ preset_100map_lower_norfair_kihunter_stairs_down:
 
 preset_spazermap_lower_norfair_kihunter_stairs_down:
     dw #preset_100map_lower_norfair_kihunter_stairs_down
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
@@ -4101,6 +4125,7 @@ preset_100map_lower_norfair_wasteland:
 
 preset_spazermap_lower_norfair_wasteland:
     dw #preset_100map_lower_norfair_wasteland
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
@@ -4130,6 +4155,7 @@ preset_100map_lower_norfair_metal_pirates:
 
 preset_spazermap_lower_norfair_metal_pirates:
     dw #preset_100map_lower_norfair_metal_pirates
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
@@ -4156,6 +4182,7 @@ preset_100map_lower_norfair_ridley:
 
 preset_spazermap_lower_norfair_ridley:
     dw #preset_100map_lower_norfair_ridley
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
@@ -4186,6 +4213,7 @@ preset_100map_lower_norfair_leaving_ridley:
 
 preset_spazermap_lower_norfair_leaving_ridley:
     dw #preset_100map_lower_norfair_leaving_ridley
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
@@ -4232,11 +4260,13 @@ preset_100map_lower_norfair_kihunter_stairs_up:
 
 preset_spazermap_lower_norfair_wasteland_revisit:
     dw #preset_100map_lower_norfair_wasteland_revisit
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
 preset_spazermap_lower_norfair_kihunter_stairs_up:
     dw #preset_100map_lower_norfair_kihunter_stairs_up
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
@@ -4278,11 +4308,13 @@ preset_100map_lower_norfair_hotarubi_missile_room:
 
 preset_spazermap_lower_norfair_fireflea_room:
     dw #preset_100map_lower_norfair_fireflea_room
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
 preset_spazermap_lower_norfair_hotarubi_missile_room:
     dw #preset_100map_lower_norfair_hotarubi_missile_room
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
@@ -4306,6 +4338,7 @@ preset_100map_lower_norfair_three_musketeers_room:
 
 preset_spazermap_lower_norfair_three_musketeers_room:
     dw #preset_100map_lower_norfair_three_musketeers_room
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
@@ -4330,6 +4363,7 @@ preset_100map_begin_cleanup_single_chamber_revisit:
 
 preset_spazermap_begin_cleanup_single_chamber_revisit:
     dw #preset_100map_begin_cleanup_single_chamber_revisit
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
@@ -4352,6 +4386,7 @@ preset_100map_begin_cleanup_bubble_mountain_dboost:
 
 preset_spazermap_begin_cleanup_bubble_mountain_dboost:
     dw #preset_100map_begin_cleanup_bubble_mountain_dboost
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
@@ -4370,6 +4405,7 @@ preset_100map_begin_cleanup_norfair_reserve_front:
 
 preset_spazermap_begin_cleanup_norfair_reserve_front:
     dw #preset_100map_begin_cleanup_norfair_reserve_front
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
@@ -4385,6 +4421,7 @@ preset_100map_begin_cleanup_norfair_reserve_back:
 
 preset_spazermap_begin_cleanup_norfair_reserve_back:
     dw #preset_100map_begin_cleanup_norfair_reserve_back
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
@@ -4510,11 +4547,13 @@ preset_100map_begin_cleanup_tube:
 
 preset_spazermap_begin_cleanup_bubble_mountain_final:
     dw #preset_100map_begin_cleanup_bubble_mountain_final
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
 preset_spazermap_begin_cleanup_tube:
     dw #preset_100map_begin_cleanup_tube
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
@@ -4538,6 +4577,7 @@ preset_100map_begin_cleanup_tube_climb:
 
 preset_spazermap_begin_cleanup_tube_climb:
     dw #preset_100map_begin_cleanup_tube_climb
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
@@ -4653,11 +4693,13 @@ preset_100map_begin_cleanup_crateria_kihunters_revisit:
 
 preset_spazermap_begin_cleanup_sephy_fish_room:
     dw #preset_100map_begin_cleanup_sephy_fish_room
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
 preset_spazermap_begin_cleanup_crateria_kihunters_revisit:
     dw #preset_100map_begin_cleanup_crateria_kihunters_revisit
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
@@ -4678,6 +4720,7 @@ preset_100map_begin_cleanup_landing_site_revisit:
 
 preset_spazermap_begin_cleanup_landing_site_revisit:
     dw #preset_100map_begin_cleanup_landing_site_revisit
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
@@ -4733,11 +4776,13 @@ preset_100map_begin_cleanup_gauntlet_etank:
 
 preset_spazermap_begin_cleanup_crateria_pbs:
     dw #preset_100map_begin_cleanup_crateria_pbs
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
 preset_spazermap_begin_cleanup_gauntlet_etank:
     dw #preset_100map_begin_cleanup_gauntlet_etank
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
@@ -4758,6 +4803,7 @@ preset_100map_begin_cleanup_quickdrops:
 
 preset_spazermap_begin_cleanup_quickdrops:
     dw #preset_100map_begin_cleanup_quickdrops
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
@@ -4862,11 +4908,13 @@ preset_100map_greenpink_brin_cleanup_brinstar_map_entrance:
 
 preset_spazermap_greenpink_brin_cleanup_green_brinstar_elevator:
     dw #preset_100map_greenpink_brin_cleanup_green_brinstar_elevator
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
 preset_spazermap_greenpink_brin_cleanup_brinstar_map_entrance:
     dw #preset_100map_greenpink_brin_cleanup_brinstar_map_entrance
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
@@ -4891,6 +4939,7 @@ preset_100map_greenpink_brin_cleanup_green_brin_fireflea_room:
 
 preset_spazermap_greenpink_brin_cleanup_green_brin_fireflea_room:
     dw #preset_100map_greenpink_brin_cleanup_green_brin_fireflea_room
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
@@ -4917,6 +4966,7 @@ preset_100map_greenpink_brin_cleanup_etecoons_etank_skip:
 
 preset_spazermap_greenpink_brin_cleanup_etecoons_etank_skip:
     dw #preset_100map_greenpink_brin_cleanup_etecoons_etank_skip
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
@@ -4939,6 +4989,7 @@ preset_100map_greenpink_brin_cleanup_etecoons_dboosts:
 
 preset_spazermap_greenpink_brin_cleanup_etecoons_dboosts:
     dw #preset_100map_greenpink_brin_cleanup_etecoons_dboosts
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
@@ -4961,6 +5012,7 @@ preset_100map_greenpink_brin_cleanup_etecoons_climb:
 
 preset_spazermap_greenpink_brin_cleanup_etecoons_climb:
     dw #preset_100map_greenpink_brin_cleanup_etecoons_climb
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
@@ -5011,11 +5063,13 @@ preset_100map_greenpink_brin_cleanup_big_pink_climb:
 
 preset_spazermap_greenpink_brin_cleanup_dachora_moonfall:
     dw #preset_100map_greenpink_brin_cleanup_dachora_moonfall
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
 preset_spazermap_greenpink_brin_cleanup_big_pink_climb:
     dw #preset_100map_greenpink_brin_cleanup_big_pink_climb
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
@@ -5058,11 +5112,13 @@ preset_100map_greenpink_brin_cleanup_spore_spawn:
 
 preset_spazermap_greenpink_brin_cleanup_spo_spo_kihunters_room:
     dw #preset_100map_greenpink_brin_cleanup_spo_spo_kihunters_room
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
 preset_spazermap_greenpink_brin_cleanup_spore_spawn:
     dw #preset_100map_greenpink_brin_cleanup_spore_spawn
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
@@ -5091,6 +5147,7 @@ preset_100map_greenpink_brin_cleanup_spo_spo_moonfall:
 
 preset_spazermap_greenpink_brin_cleanup_spo_spo_moonfall:
     dw #preset_100map_greenpink_brin_cleanup_spo_spo_moonfall
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
@@ -5123,6 +5180,7 @@ preset_100map_greenpink_brin_cleanup_spo_spo_farm_room:
 
 preset_spazermap_greenpink_brin_cleanup_spo_spo_farm_room:
     dw #preset_100map_greenpink_brin_cleanup_spo_spo_farm_room
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
@@ -5152,6 +5210,7 @@ preset_100map_greenpink_brin_cleanup_wave_gate_room:
 
 preset_spazermap_greenpink_brin_cleanup_wave_gate_room:
     dw #preset_100map_greenpink_brin_cleanup_wave_gate_room
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
@@ -5179,6 +5238,7 @@ preset_100map_greenpink_brin_cleanup_mission_impossible_room:
 
 preset_spazermap_greenpink_brin_cleanup_mission_impossible_room:
     dw #preset_100map_greenpink_brin_cleanup_mission_impossible_room
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
@@ -5211,6 +5271,7 @@ preset_100map_greenpink_brin_cleanup_green_hill_zone_final:
 
 preset_spazermap_greenpink_brin_cleanup_green_hill_zone_final:
     dw #preset_100map_greenpink_brin_cleanup_green_hill_zone_final
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
@@ -5254,11 +5315,13 @@ preset_100map_blue_brinstar_cleanup_blue_brinstar_etank_room:
 
 preset_spazermap_blue_brinstar_cleanup_blue_brinstar_hoppers:
     dw #preset_100map_blue_brinstar_cleanup_blue_brinstar_hoppers
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
 preset_spazermap_blue_brinstar_cleanup_blue_brinstar_etank_room:
     dw #preset_100map_blue_brinstar_cleanup_blue_brinstar_etank_room
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
@@ -5288,6 +5351,7 @@ preset_100map_blue_brinstar_cleanup_john_cena_bridge:
 
 preset_spazermap_blue_brinstar_cleanup_john_cena_bridge:
     dw #preset_100map_blue_brinstar_cleanup_john_cena_bridge
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
@@ -5369,11 +5433,13 @@ preset_100map_blue_brinstar_cleanup_pit_room_final:
 
 preset_spazermap_blue_brinstar_cleanup_blue_brinstar_screwfall:
     dw #preset_100map_blue_brinstar_cleanup_blue_brinstar_screwfall
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
 preset_spazermap_blue_brinstar_cleanup_pit_room_final:
     dw #preset_100map_blue_brinstar_cleanup_pit_room_final
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
@@ -5404,6 +5470,7 @@ preset_100map_blue_brinstar_cleanup_climb_supers:
 
 preset_spazermap_blue_brinstar_cleanup_climb_supers:
     dw #preset_100map_blue_brinstar_cleanup_climb_supers
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
@@ -5434,6 +5501,7 @@ preset_100map_blue_brinstar_cleanup_parlor_again:
 
 preset_spazermap_blue_brinstar_cleanup_parlor_again:
     dw #preset_100map_blue_brinstar_cleanup_parlor_again
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
@@ -5472,11 +5540,13 @@ preset_100map_blue_brinstar_cleanup_crateria_map_exit:
 
 preset_spazermap_blue_brinstar_cleanup_crateria_map_entry:
     dw #preset_100map_blue_brinstar_cleanup_crateria_map_entry
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
 preset_spazermap_blue_brinstar_cleanup_crateria_map_exit:
     dw #preset_100map_blue_brinstar_cleanup_crateria_map_exit
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
@@ -5497,6 +5567,7 @@ preset_100map_blue_brinstar_cleanup_230_mockball:
 
 preset_spazermap_blue_brinstar_cleanup_230_mockball:
     dw #preset_100map_blue_brinstar_cleanup_230_mockball
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
@@ -5514,6 +5585,7 @@ preset_100map_blue_brinstar_cleanup_parlor_not_final_climb:
 
 preset_spazermap_blue_brinstar_cleanup_parlor_not_final_climb:
     dw #preset_100map_blue_brinstar_cleanup_parlor_not_final_climb
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
@@ -5538,6 +5610,7 @@ preset_100map_tourian_tourian_elevator:
 
 preset_spazermap_tourian_tourian_elevator:
     dw #preset_100map_tourian_tourian_elevator
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
@@ -5616,6 +5689,7 @@ preset_100map_tourian_metroids_1:
 
 preset_spazermap_tourian_metroids_1:
     dw #preset_100map_tourian_metroids_1
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
@@ -5643,6 +5717,7 @@ preset_100map_tourian_metroids_2:
 
 preset_spazermap_tourian_metroids_2:
     dw #preset_100map_tourian_metroids_2
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
@@ -5669,6 +5744,7 @@ preset_100map_tourian_metroids_3:
 
 preset_spazermap_tourian_metroids_3:
     dw #preset_100map_tourian_metroids_3
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
@@ -5695,6 +5771,7 @@ preset_100map_tourian_metroids_4:
 
 preset_spazermap_tourian_metroids_4:
     dw #preset_100map_tourian_metroids_4
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
@@ -5743,11 +5820,13 @@ preset_100map_tourian_dusty_shaft_revisit:
 
 preset_spazermap_tourian_baby_skip:
     dw #preset_100map_tourian_baby_skip
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
 preset_spazermap_tourian_dusty_shaft_revisit:
     dw #preset_100map_tourian_dusty_shaft_revisit
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
@@ -5774,6 +5853,7 @@ preset_100map_tourian_zeb_skip:
 
 preset_spazermap_tourian_zeb_skip:
     dw #preset_100map_tourian_zeb_skip
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
@@ -5799,6 +5879,7 @@ preset_100map_tourian_mother_brain_2:
 
 preset_spazermap_tourian_mother_brain_2:
     dw #preset_100map_tourian_mother_brain_2
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
@@ -5821,6 +5902,7 @@ preset_100map_tourian_zebes_escape:
 
 preset_spazermap_tourian_zebes_escape:
     dw #preset_100map_tourian_zebes_escape
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
@@ -5846,6 +5928,7 @@ preset_100map_tourian_escape_room_3:
 
 preset_spazermap_tourian_escape_room_3:
     dw #preset_100map_tourian_escape_room_3
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
@@ -5952,16 +6035,19 @@ preset_100map_tourian_escape_parlor:
 
 preset_spazermap_tourian_escape_room_4:
     dw #preset_100map_tourian_escape_room_4
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
 preset_spazermap_tourian_escape_climb:
     dw #preset_100map_tourian_escape_climb
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
 preset_spazermap_tourian_escape_parlor:
     dw #preset_100map_tourian_escape_parlor
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
@@ -5981,5 +6067,6 @@ preset_100map_tourian_landing_site_final:
 
 preset_spazermap_tourian_landing_site_final:
     dw #preset_100map_tourian_landing_site_final
+    dw $09A2, $732E  ; Equipped Items
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
