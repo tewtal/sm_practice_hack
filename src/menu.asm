@@ -127,15 +127,15 @@ cm_boot:
 
   .done
     ; If Map Completion preset category selected then turn minimap on
-    LDA !sram_preset_category : CMP !PRESET_CATEGORY_100MAP_INDEX : BNE .check_preset
+    LDA !sram_preset_category : CMP !PRESET_CATEGORY_100MAP_INDEX : BEQ .set_minimap
+    CMP !PRESET_CATEGORY_SPAZERMAP_INDEX : BNE .check_preset
+
+  .set_minimap
     LDA #$0001 : STA !ram_minimap
 
   .check_preset
     JSL cm_write_ctrl_routine
-    LDA !ram_custom_preset : BNE .preset_load
-    LDA !ram_load_preset : BEQ .main_game_loop
-
-  .preset_load
+    LDA !ram_load_preset_low_word : BEQ .main_game_loop
     JSL preset_load
 
   .main_game_loop
@@ -180,8 +180,8 @@ cm_init:
 
     ; Set up menu state
     TDC : STA !MENU_STACK_INDEX : STA !ram_cm_cursor_stack
-    STA !ram_cm_horizontal_cursor : STA !ram_cm_ctrl_mode
-    STA !ram_cm_leave : STA !ram_load_preset
+    STA !ram_cm_horizontal_cursor : STA !ram_cm_ctrl_mode : STA !ram_cm_leave
+    STA !ram_load_preset_low_word : STA !ram_load_preset_high_word
     STA !IH_CONTROLLER_PRI_NEW : STA !IH_CONTROLLER_PRI
     STA !IH_CONTROLLER_SEC_NEW : STA !IH_CONTROLLER_SEC
 
@@ -356,7 +356,10 @@ cm_transfer_original_tileset:
     PHP : %ai16()
 
     ; If Map Completion preset category selected then turn minimap on
-    LDA !sram_preset_category : CMP !PRESET_CATEGORY_100MAP_INDEX : BNE .check_room
+    LDA !sram_preset_category : CMP !PRESET_CATEGORY_100MAP_INDEX : BEQ .set_minimap
+    CMP !PRESET_CATEGORY_SPAZERMAP_INDEX : BNE .check_room
+
+  .set_minimap
     LDA #$0001 : STA !ram_minimap
 
   .check_room
@@ -785,6 +788,7 @@ cm_draw_action_table:
     dw draw_ram_watch
     dw draw_dynamic
     dw draw_manage_presets
+    dw draw_category_preset
 
 draw_toggle:
 {
@@ -1669,6 +1673,16 @@ draw_dynamic:
     RTS
 }
 
+draw_category_preset:
+{
+    ; skip argument
+    INC !DP_CurrentMenu : INC !DP_CurrentMenu : INC !DP_CurrentMenu
+
+    ; draw text normally
+    %item_index_to_vram_index()
+    JMP cm_draw_text
+}
+
 cm_hex2dec_draw5:
 ; Converts a hex number into a five digit decimal number
 ; expects value to be drawn in !DP_DrawValue
@@ -1835,7 +1849,7 @@ menu_ctrl_1_input_display:
 
   .table
     dw #$8F00, #$8E00, #$8D00, #$8C00, #$9400, #$9400, #$9400, #$9400
-    dw #$8700, #$8600, #$8500, #$8400, #$8180, #$8100, #$8040, #$8000
+    dw #$8700, #$8600, #$8500, #$8400, #$8100, #$8180, #$8040, #$8000
 }
 
 
@@ -2939,6 +2953,7 @@ cm_execute_action_table:
     dw execute_nop
     dw execute_dynamic
     dw execute_manage_presets
+    dw execute_category_preset
 
 execute_nop:
     RTS
@@ -3594,8 +3609,8 @@ execute_custom_preset:
 
     ; set preset slot and return to the previous menu
     LDA [!DP_CurrentMenu] : AND #$00FF : STA !sram_custom_preset_slot
-    LDA !sram_last_preset : BMI .sfx
-    TDC : STA !sram_last_preset
+    LDA !sram_last_preset_low_word : BMI .sfx
+    TDC : STA !sram_last_preset_low_word : STA !sram_last_preset_high_word
   .sfx
     %sfxconfirm()
     JSL cm_previous_menu
@@ -3750,8 +3765,8 @@ endif
     LDX !DP_Temp : LDA !DP_Address : STA !sram_custom_preset_safewords,X
 
     TDC : STA !ram_cm_manage_slots
-    LDA !sram_last_preset : BMI .done
-    TDC : STA !sram_last_preset
+    LDA !sram_last_preset_low_word : BMI .done
+    TDC : STA !sram_last_preset_low_word : STA !sram_last_preset_high_word
   .done
     PLB
     RTS
@@ -3787,6 +3802,24 @@ execute_dynamic:
     JMP (cm_execute_action_table,X)
 
   .skip
+    RTS
+}
+
+execute_category_preset:
+{
+    ; <, > and X should do nothing here
+    ; also ignore input held flag
+    LDA !ram_cm_controller : BIT !IH_INPUT_XLEFTRIGHTHELD : BNE .end
+
+    ; Store category preset
+    LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : STA !ram_load_preset_low_word
+    LDA [!DP_CurrentMenu] : STA !ram_load_preset_high_word
+
+    ; Exit menu
+    LDA #$0001 : STA !ram_cm_leave
+    LDX #$0000
+
+  .end
     RTS
 }
 

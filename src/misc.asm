@@ -141,6 +141,10 @@ org $CF8BBF       ; Set map scroll beep to high priority
 hook_spc_engine_map_scroll_beep_priority:
     dw $2A97
 
+org $CFC2C8       ; Mute track 4 so it can be used when music is off
+hook_spc_engine_mute_track_4:
+    db $30, $C9, $00, $00
+
 
 org $E0E7E0       ; Make EOR $E067E0 read $E0E0 to match vanilla behavior
 hook_artificial_varia:
@@ -328,7 +332,13 @@ hook_set_music_track:
     CMP #$02 : BEQ .play_music
 
   .no_music
-    PLA
+    PLA : BEQ .set_register
+
+    ; play muted track 4
+    LDA #$04
+
+  .set_register
+    STA $2140
     RTL
 }
 

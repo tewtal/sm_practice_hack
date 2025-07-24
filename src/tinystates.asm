@@ -51,7 +51,7 @@ pre_load_state:
     LDA !ram_slowdown_mode : STA !SRAM_SLOWDOWN_MODE
 
     ; Rerandomize
-    LDA !sram_save_has_set_rng : BNE .done
+    LDA !sram_save_has_set_rng : BMI .done
     LDA !sram_rerandomize : BEQ .done
     LDA !CACHED_RANDOM_NUMBER : STA !SRAM_SAVED_RNG
     LDA !FRAME_COUNTER : STA !SRAM_SAVED_FRAME_COUNTER
@@ -132,7 +132,7 @@ post_load_state:
     STA !ram_slowdown_controller_1 : STA !ram_slowdown_controller_2
 
     ; Rerandomize
-    LDA !sram_save_has_set_rng : BNE .randomizeOnLoad
+    LDA !sram_save_has_set_rng : BMI .randomizeOnLoad
     LDA !sram_rerandomize : BEQ .randomizeOnLoad
     LDA !SRAM_SAVED_RNG : STA !CACHED_RANDOM_NUMBER
     LDA !SRAM_SAVED_FRAME_COUNTER : STA !FRAME_COUNTER
@@ -341,7 +341,14 @@ save_return:
     PEA $0000 : PLB : PLB
 
     %ai16()
-    LDA !ram_room_has_set_rng : STA !sram_save_has_set_rng
+    LDA !ram_room_has_set_rng : BMI .has_set_rng
+    LDA !sram_save_has_set_rng : AND #$7FFF : STA !sram_save_has_set_rng
+    BRA .continue
+
+  .has_set_rng
+    LDA !sram_save_has_set_rng : ORA #$8000 : STA !sram_save_has_set_rng
+
+  .continue
     LDA !ram_minimap : STA !SRAM_SAVED_MINIMAP
     LDA !SAFEWORD : STA !SRAM_SAVED_STATE
 

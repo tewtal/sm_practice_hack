@@ -52,6 +52,7 @@ status_roomstrat:
     dw status_pitdoor
     dw status_moondance
     dw status_kraidradar
+    dw status_bootlessup
     dw status_gateglitch
     dw status_moatcwj
     dw status_robotflush
@@ -1643,6 +1644,7 @@ superhud_bottom_table:
     dw status_pitdoor
     dw status_moondance
     dw status_kraidradar
+    dw status_bootlessup
     dw status_gateglitch
     dw status_moatcwj
     dw status_robotflush
@@ -3533,6 +3535,157 @@ status_kraidradar:
     RTS
 }
 
+status_bootlessup:
+{
+    LDA !ram_roomstrat_state : BEQ .checkstartpos
+    DEC : BEQ .checkstartjump
+    DEC : BEQ .checkfirstbomb
+    DEC : BEQ .checky1bomb
+    DEC : BEQ .checky2bomb
+
+  .checkstartpos
+    ; Check if we are at a valid starting position
+    ; Make sure we aren't rising or falling first
+    LDA !SAMUS_Y_SPEEDCOMBINED : BNE .done
+    LDA !SAMUS_Y : CMP #$0130 : BNE .incorrectstartpos
+    LDA !SAMUS_X : CMP #$027C : BMI .incorrectstartpos
+    CMP #$02A5 : BPL .incorrectstartpos
+    LDA !ram_roomstrat_state : CMP #$0001 : BEQ .done
+    LDA !sram_display_mode_reward : BEQ .donestartreward
+    %sfxreward()
+    BRA .donestartreward
+
+  .checkstartjump
+    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_JUMP : BEQ .checkstartpos
+    LDA !ram_roomstrat_state : INC : STA !ram_roomstrat_state
+
+  .done
+    RTS
+
+  .checkfirstbomb
+    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_SHOT : BNE .laidfirstbomb
+
+  .inccounter
+    LDA !ram_roomstrat_counter : INC : STA !ram_roomstrat_counter
+    BRA .checkstartpos
+  
+  .checky1bomb
+    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_SHOT : BEQ .inccounter
+    JMP .laidy1bomb
+
+  .checky2bomb
+    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_SHOT : BEQ .inccounter
+    JMP .laidy2bomb
+
+  .incorrectstartpos
+    LDA !ram_roomstrat_state : CMP #$0001 : BNE .done
+    TDC : STA !ram_roomstrat_counter : STA !ram_roomstrat_state
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$88 : STA !HUD_TILEMAP+$8A
+    STA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$8E : STA !HUD_TILEMAP+$90
+    RTS
+
+  .donestartreward
+    TDC : STA !ram_roomstrat_counter
+    INC : STA !ram_roomstrat_state
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$88
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$8A : STA !HUD_TILEMAP+$8C
+    STA !HUD_TILEMAP+$8E : STA !HUD_TILEMAP+$90
+    RTS
+
+  .laidfirstbomb
+    LDA !ram_roomstrat_counter : CMP #$0013 : BEQ .firsty1 : BMI .firstbombearly
+    CMP #$0014 : BEQ .firsty2
+
+    ; First bomb late
+    SEC : SBC #$0014 : ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A
+    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$88
+    BRA .clearstate
+
+  .firsty1
+    LDA !sram_display_mode_reward : BEQ .donefirsty1reward
+    %sfxreward()
+
+  .donefirsty1reward
+    LDA #$0003 : STA !ram_roomstrat_state : DEC
+
+  .printfirstsuccess
+    TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$88
+    TDC : STA !ram_roomstrat_counter
+    RTS
+
+  .firsty2
+    LDA !sram_display_mode_reward : BEQ .donefirsty2reward
+    %sfxreward()
+
+  .donefirsty2reward
+    LDA #$0004 : STA !ram_roomstrat_state
+    BRA .printfirstsuccess
+
+  .firstbombearly
+    LDA #$0013 : SEC : SBC !ram_roomstrat_counter
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A
+    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$88
+
+  .clearstate
+    TDC : STA !ram_roomstrat_state : STA !ram_roomstrat_counter
+    RTS
+
+  .laidy1bomb
+    LDA !ram_roomstrat_counter : CMP #$0012 : BMI .y1bombearly
+    CMP #$0024 : BPL .y1bomblate : CMP #$001B : BEQ .x1bomb
+    SEC : SBC #$0011
+    BRA .secondbombgood
+
+  .laidy2bomb
+    LDA !ram_roomstrat_counter : CMP #$0017 : BMI .y2bombearly
+    CMP #$001F : BPL .y2bomblate : CMP #$001B : BEQ .x2bomb
+    SEC : SBC #$0016
+
+  .secondbombgood
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$8C
+    LDA !sram_display_mode_reward : BEQ .clearstate
+    %sfxreward()
+    BRA .clearstate
+
+  .y1bombearly
+    LDA #$0012 : SEC : SBC !ram_roomstrat_counter
+    BRA .secondbombearly
+
+  .y1bomblate
+    SEC : SBC #$0023
+    BRA .secondbomblate
+
+  .x1bomb
+    LDA #$0014
+    BRA .secondbombfail
+
+  .y2bombearly
+    LDA #$0017 : SEC : SBC !ram_roomstrat_counter
+
+  .secondbombearly
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
+    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$8C
+    JMP .clearstate
+
+  .y2bomblate
+    SEC : SBC #$001E
+
+  .secondbomblate
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
+    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$8C
+    JMP .clearstate
+
+  .x2bomb
+    LDA #$000A
+
+  .secondbombfail
+    TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
+    LDA !IH_LETTER_X : STA !HUD_TILEMAP+$8C
+    JMP .clearstate
+}
+
 status_gateglitch:
 {
     ; Arbitrarily expecting shot and gate events to be within 20 frames of each other
@@ -3746,7 +3899,8 @@ status_moatcwj:
 
     ; If X and Y did not change and we aren't holding a direction, reset
     TDC : STA !ram_roomstrat_state : STA !ram_roomstrat_counter
-    LDA !IH_BLANK : STA !HUD_TILEMAP+$88 : STA !HUD_TILEMAP+$8A : STA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$8E : STA !HUD_TILEMAP+$90
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$88 : STA !HUD_TILEMAP+$8A
+    STA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$8E : STA !HUD_TILEMAP+$90
     RTS
 
   .startcounter
@@ -3758,7 +3912,8 @@ status_moatcwj:
 
   .donestartreward
     LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$88
-    LDA !IH_BLANK : STA !HUD_TILEMAP+$8A : STA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$8E : STA !HUD_TILEMAP+$90
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$8A : STA !HUD_TILEMAP+$8C
+    STA !HUD_TILEMAP+$8E : STA !HUD_TILEMAP+$90
 
   .resetcounter
     TDC : STA !ram_roomstrat_counter

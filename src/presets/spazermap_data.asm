@@ -1,5 +1,5 @@
 
-preset_100map_bombs_ceres_elevator:
+preset_spazermap_bombs_ceres_elevator:
     dw #$0000
     dw $078D, $AB58  ; DDB
     dw $079B, $DF45  ; MDB
@@ -70,8 +70,8 @@ preset_100map_bombs_ceres_elevator:
     dw $D90C, $0000  ; Map Stations
     dw #$FFFF
 
-preset_100map_bombs_ceres_escape:
-    dw #preset_100map_bombs_ceres_elevator ; Bombs: Ceres Elevator
+preset_spazermap_bombs_ceres_escape:
+    dw #preset_spazermap_bombs_ceres_elevator ; Bombs: Ceres Elevator
     dw $078D, $ABAC  ; DDB
     dw $079B, $E0B5  ; MDB
     dw $07F3, $0024  ; Music Bank
@@ -95,8 +95,8 @@ preset_100map_bombs_ceres_escape:
     dw $D82E, $0001  ; Bosses
     dw #$FFFF
 
-preset_100map_bombs_ceres_last_3_rooms:
-    dw #preset_100map_bombs_ceres_escape ; Bombs: Ceres Escape
+preset_spazermap_bombs_ceres_last_3_rooms:
+    dw #preset_spazermap_bombs_ceres_escape ; Bombs: Ceres Escape
     dw $078D, $ABA0  ; DDB
     dw $079B, $E021  ; MDB
     dw $083D, $00F8  ; Explored map tiles
@@ -107,8 +107,8 @@ preset_100map_bombs_ceres_last_3_rooms:
     dw $CAE8, $000C  ; Map counter
     dw #$FFFF
 
-preset_100map_bombs_ship:
-    dw #preset_100map_bombs_ceres_last_3_rooms ; Bombs: Ceres Last 3 Rooms
+preset_spazermap_bombs_ship:
+    dw #preset_spazermap_bombs_ceres_last_3_rooms ; Bombs: Ceres Last 3 Rooms
     dw $078D, $88FE  ; DDB
     dw $079B, $91F8  ; MDB
     dw $07F3, $0006  ; Music Bank
@@ -139,8 +139,8 @@ preset_100map_bombs_ship:
     dw $CAE8, $0011  ; Map counter
     dw #$FFFF
 
-preset_100map_bombs_parlor:
-    dw #preset_100map_bombs_ship ; Bombs: Ship
+preset_spazermap_bombs_parlor:
+    dw #preset_spazermap_bombs_ship ; Bombs: Ship
     dw $080D, $F001  ; Explored map tiles
     dw $090F, $0000  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
@@ -154,8 +154,8 @@ preset_100map_bombs_parlor:
     dw $CAE8, $0015  ; Map counter
     dw #$FFFF
 
-preset_100map_bombs_climb_down:
-    dw #preset_100map_bombs_parlor ; Bombs: Parlor
+preset_spazermap_bombs_climb_down:
+    dw #preset_spazermap_bombs_parlor ; Bombs: Parlor
     dw $078D, $8916  ; DDB
     dw $079B, $92FD  ; MDB
     dw $080D, $F01F  ; Explored map tiles
@@ -177,8 +177,8 @@ preset_100map_bombs_climb_down:
     dw $CAE8, $001D  ; Map counter
     dw #$FFFF
 
-preset_100map_bombs_pit_room:
-    dw #preset_100map_bombs_climb_down ; Bombs: Climb Down
+preset_spazermap_bombs_pit_room:
+    dw #preset_spazermap_bombs_climb_down ; Bombs: Climb Down
     dw $078D, $898E  ; DDB
     dw $079B, $96BA  ; MDB
     dw $0821, $0010  ; Explored map tiles
@@ -203,8 +203,8 @@ preset_100map_bombs_pit_room:
     dw $CAE8, $0026  ; Map counter
     dw #$FFFF
 
-preset_100map_bombs_morph:
-    dw #preset_100map_bombs_pit_room ; Bombs: Pit Room
+preset_spazermap_bombs_morph:
+    dw #preset_spazermap_bombs_pit_room ; Bombs: Pit Room
     dw $078D, $8B9E  ; DDB
     dw $079B, $9E9F  ; MDB
     dw $07F5, $0007  ; Music Track
@@ -257,8 +257,8 @@ preset_100map_bombs_morph:
     dw $CD9C, $001F  ; Explored map tiles (Crateria)
     dw #$FFFF
 
-preset_100map_bombs_construction_zone_down:
-    dw #preset_100map_bombs_morph ; Bombs: Morph
+preset_spazermap_bombs_construction_zone_down:
+    dw #preset_spazermap_bombs_morph ; Bombs: Morph
     dw $0825, $7800  ; Explored map tiles
     dw $090F, $2000  ; Screen subpixel X position
     dw $0911, $0700  ; Screen X position in pixels
@@ -274,8 +274,8 @@ preset_100map_bombs_construction_zone_down:
     dw $D872, $0400  ; Items
     dw #$FFFF
 
-preset_100map_bombs_construction_zone_up:
-    dw #preset_100map_bombs_construction_zone_down ; Bombs: Construction Zone Down
+preset_spazermap_bombs_construction_zone_up:
+    dw #preset_spazermap_bombs_construction_zone_down ; Bombs: Construction Zone Down
     dw $078D, $8EDA  ; DDB
     dw $079B, $A107  ; MDB
     dw $0825, $7C00  ; Explored map tiles
@@ -294,8 +294,8 @@ preset_100map_bombs_construction_zone_up:
     dw $D874, $0004  ; Items
     dw #$FFFF
 
-preset_100map_bombs_pit_room_revisit:
-    dw #preset_100map_bombs_construction_zone_up ; Bombs: Construction Zone Up
+preset_spazermap_bombs_pit_room_revisit:
+    dw #preset_spazermap_bombs_construction_zone_up ; Bombs: Construction Zone Up
     dw $078D, $8EB6  ; DDB
     dw $079B, $97B5  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -330,8 +330,8 @@ preset_100map_bombs_pit_room_revisit:
     dw $CE84, $0C00  ; Explored map tiles (Brinstar)
     dw #$FFFF
 
-preset_100map_bombs_climb_up:
-    dw #preset_100map_bombs_pit_room_revisit ; Bombs: Pit Room Revisit
+preset_spazermap_bombs_climb_up:
+    dw #preset_spazermap_bombs_pit_room_revisit ; Bombs: Pit Room Revisit
     dw $078D, $8B92  ; DDB
     dw $079B, $975C  ; MDB
     dw $07F3, $0009  ; Music Bank
@@ -346,8 +346,8 @@ preset_100map_bombs_climb_up:
     dw $D8B2, $0400  ; Doors
     dw #$FFFF
 
-preset_100map_bombs_parlor_revisit:
-    dw #preset_100map_bombs_climb_up ; Bombs: Climb Up
+preset_spazermap_bombs_parlor_revisit:
+    dw #preset_spazermap_bombs_climb_up ; Bombs: Climb Up
     dw $078D, $8B7A  ; DDB
     dw $079B, $96BA  ; MDB
     dw $090F, $0000  ; Screen subpixel X position
@@ -358,8 +358,8 @@ preset_100map_bombs_parlor_revisit:
     dw $0AFA, $005B  ; Samus Y
     dw #$FFFF
 
-preset_100map_bombs_flyway:
-    dw #preset_100map_bombs_parlor_revisit ; Bombs: Parlor Revisit
+preset_spazermap_bombs_flyway:
+    dw #preset_spazermap_bombs_parlor_revisit ; Bombs: Parlor Revisit
     dw $078D, $8B3E  ; DDB
     dw $079B, $92FD  ; MDB
     dw $0811, $0014  ; Explored map tiles
@@ -378,8 +378,8 @@ preset_100map_bombs_flyway:
     dw $CAE8, $0035  ; Map counter
     dw #$FFFF
 
-preset_100map_bombs_bomb_torizo:
-    dw #preset_100map_bombs_flyway ; Bombs: Flyway
+preset_spazermap_bombs_bomb_torizo:
+    dw #preset_spazermap_bombs_flyway ; Bombs: Flyway
     dw $078D, $8982  ; DDB
     dw $079B, $9879  ; MDB
     dw $0815, $8017  ; Explored map tiles
@@ -397,8 +397,8 @@ preset_100map_bombs_bomb_torizo:
     dw $D8B2, $2400  ; Doors
     dw #$FFFF
 
-preset_100map_bombs_alcatraz:
-    dw #preset_100map_bombs_bomb_torizo ; Bombs: Bomb Torizo
+preset_spazermap_bombs_alcatraz:
+    dw #preset_spazermap_bombs_bomb_torizo ; Bombs: Bomb Torizo
     dw $078D, $8BAA  ; DDB
     dw $0815, $C017  ; Explored map tiles
     dw $090F, $2001  ; Screen subpixel X position
@@ -416,8 +416,8 @@ preset_100map_bombs_alcatraz:
     dw $D8B2, $2C00  ; Doors
     dw #$FFFF
 
-preset_100map_bombs_terminator:
-    dw #preset_100map_bombs_alcatraz ; Bombs: Alcatraz
+preset_spazermap_bombs_terminator:
+    dw #preset_spazermap_bombs_alcatraz ; Bombs: Alcatraz
     dw $078D, $8BB6  ; DDB
     dw $079B, $92FD  ; MDB
     dw $090F, $6000  ; Screen subpixel X position
@@ -430,8 +430,8 @@ preset_100map_bombs_terminator:
     dw $0AFA, $0099  ; Samus Y
     dw #$FFFF
 
-preset_100map_bombs_green_pirate_shaft:
-    dw #preset_100map_bombs_terminator ; Bombs: Terminator
+preset_spazermap_bombs_green_pirate_shaft:
+    dw #preset_spazermap_bombs_terminator ; Bombs: Terminator
     dw $078D, $895E  ; DDB
     dw $079B, $990D  ; MDB
     dw $080B, $0100  ; Explored map tiles
@@ -455,8 +455,8 @@ preset_100map_bombs_green_pirate_shaft:
     dw $D870, $0180  ; Items
     dw #$FFFF
 
-preset_100map_varia_green_brinstar_elevator:
-    dw #preset_100map_bombs_green_pirate_shaft ; Bombs: Green Pirate Shaft
+preset_spazermap_varia_green_brinstar_elevator:
+    dw #preset_spazermap_bombs_green_pirate_shaft ; Bombs: Green Pirate Shaft
     dw $078D, $8C22  ; DDB
     dw $079B, $9938  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -473,8 +473,8 @@ preset_100map_varia_green_brinstar_elevator:
     dw $CAE8, $004A  ; Map counter
     dw #$FFFF
 
-preset_100map_varia_early_supers:
-    dw #preset_100map_varia_green_brinstar_elevator ; Varia: Green Brinstar Elevator
+preset_spazermap_varia_early_supers:
+    dw #preset_spazermap_varia_green_brinstar_elevator ; Varia: Green Brinstar Elevator
     dw $078D, $8C0A  ; DDB
     dw $079B, $9AD9  ; MDB
     dw $07F3, $000F  ; Music Bank
@@ -527,8 +527,8 @@ preset_100map_varia_early_supers:
     dw $D8B4, $0002  ; Doors
     dw #$FFFF
 
-preset_100map_varia_brinstar_reserve:
-    dw #preset_100map_varia_early_supers ; Varia: Early Supers
+preset_spazermap_varia_brinstar_reserve:
+    dw #preset_spazermap_varia_early_supers ; Varia: Early Supers
     dw $078D, $8CD6  ; DDB
     dw $079B, $9BC8  ; MDB
     dw $0807, $7800  ; Explored map tiles
@@ -549,8 +549,8 @@ preset_100map_varia_brinstar_reserve:
     dw $D8B4, $0042  ; Doors
     dw #$FFFF
 
-preset_100map_varia_reverse_mockball:
-    dw #preset_100map_varia_brinstar_reserve ; Varia: Brinstar Reserve
+preset_spazermap_varia_reverse_mockball:
+    dw #preset_spazermap_varia_brinstar_reserve ; Varia: Brinstar Reserve
     dw $078D, $8D5A  ; DDB
     dw $079B, $9C07  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -568,8 +568,8 @@ preset_100map_varia_reverse_mockball:
     dw $CAE8, $0057  ; Map counter
     dw #$FFFF
 
-preset_100map_varia_green_hill_zone:
-    dw #preset_100map_varia_reverse_mockball ; Varia: Reverse Mockball
+preset_spazermap_varia_green_hill_zone:
+    dw #preset_spazermap_varia_reverse_mockball ; Varia: Reverse Mockball
     dw $078D, $8DAE  ; DDB
     dw $079B, $9D19  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -601,8 +601,8 @@ preset_100map_varia_green_hill_zone:
     dw $D8B4, $0246  ; Doors
     dw #$FFFF
 
-preset_100map_varia_red_tower_down:
-    dw #preset_100map_varia_green_hill_zone ; Varia: Green Hill Zone
+preset_spazermap_varia_red_tower_down:
+    dw #preset_spazermap_varia_green_hill_zone ; Varia: Green Hill Zone
     dw $078D, $8E92  ; DDB
     dw $079B, $9FBA  ; MDB
     dw $0825, $7C70  ; Explored map tiles
@@ -624,8 +624,8 @@ preset_100map_varia_red_tower_down:
     dw $D8B6, $0008  ; Doors
     dw #$FFFF
 
-preset_100map_varia_skree_boost:
-    dw #preset_100map_varia_red_tower_down ; Varia: Red Tower Down
+preset_spazermap_varia_skree_boost:
+    dw #preset_spazermap_varia_red_tower_down ; Varia: Red Tower Down
     dw $078D, $8F0A  ; DDB
     dw $079B, $A253  ; MDB
     dw $07F3, $0012  ; Music Bank
@@ -647,8 +647,8 @@ preset_100map_varia_skree_boost:
     dw $D8B6, $0108  ; Doors
     dw #$FFFF
 
-preset_100map_varia_leaving_spazer:
-    dw #preset_100map_varia_skree_boost ; Varia: Skree Boost
+preset_spazermap_varia_leaving_spazer:
+    dw #preset_spazermap_varia_skree_boost ; Varia: Skree Boost
     dw $078D, $9132  ; DDB
     dw $079B, $A408  ; MDB
     dw $08BF, $004E  ; Explored map tiles
@@ -659,6 +659,8 @@ preset_100map_varia_leaving_spazer:
     dw $0915, $0100  ; Screen Y position in pixels
     dw $0917, $00C0  ; Layer 2 X position
     dw $0919, $00C0  ; Layer 2 Y position
+    dw $09A6, $1004  ; Equipped Beams
+    dw $09A8, $1004  ; Collected Beams
     dw $09C2, $006E  ; Health
     dw $09CA, $0002  ; Supers
     dw $0AF6, $01AF  ; Samus X
@@ -668,8 +670,8 @@ preset_100map_varia_leaving_spazer:
     dw $D8B6, $8108  ; Doors
     dw #$FFFF
 
-preset_100map_varia_kraid_kihunter_room:
-    dw #preset_100map_varia_leaving_spazer ; Varia: Leaving Spazer
+preset_spazermap_varia_kraid_kihunter_room:
+    dw #preset_spazermap_varia_leaving_spazer ; Varia: Leaving Spazer
     dw $078D, $923A  ; DDB
     dw $079B, $A471  ; MDB
     dw $08C3, $787C  ; Explored map tiles
@@ -708,8 +710,8 @@ preset_100map_varia_kraid_kihunter_room:
     dw $D19E, $3800  ; Explored map tiles (Maridia)
     dw #$FFFF
 
-preset_100map_varia_kihunter_save_room:
-    dw #preset_100map_varia_kraid_kihunter_room ; Varia: Kraid Kihunter Room
+preset_spazermap_varia_kihunter_save_room:
+    dw #preset_spazermap_varia_kraid_kihunter_room ; Varia: Kraid Kihunter Room
     dw $078D, $9186  ; DDB
     dw $079B, $A70B  ; MDB
     dw $08C3, $7F7C  ; Explored map tiles
@@ -727,8 +729,8 @@ preset_100map_varia_kihunter_save_room:
     dw $CAE8, $0099  ; Map counter
     dw #$FFFF
 
-preset_100map_varia_kraid:
-    dw #preset_100map_varia_kihunter_save_room ; Varia: Kihunter Save Room
+preset_spazermap_varia_kraid:
+    dw #preset_spazermap_varia_kihunter_save_room ; Varia: Kihunter Save Room
     dw $078D, $919E  ; DDB
     dw $079B, $A56B  ; MDB
     dw $07F3, $0027  ; Music Bank
@@ -752,8 +754,8 @@ preset_100map_varia_kraid:
     dw $D8B8, $0024  ; Doors
     dw #$FFFF
 
-preset_100map_varia_kraid_dboost_room_out:
-    dw #preset_100map_varia_kraid ; Varia: Kraid
+preset_spazermap_varia_kraid_dboost_room_out:
+    dw #preset_spazermap_varia_kraid ; Varia: Kraid
     dw $078D, $9252  ; DDB
     dw $079B, $A59F  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -779,8 +781,8 @@ preset_100map_varia_kraid_dboost_room_out:
     dw $D8B8, $00E4  ; Doors
     dw #$FFFF
 
-preset_100map_varia_leaving_kraid_refill:
-    dw #preset_100map_varia_kraid_dboost_room_out ; Varia: Kraid D-Boost Room Out
+preset_spazermap_varia_leaving_kraid_refill:
+    dw #preset_spazermap_varia_kraid_dboost_room_out ; Varia: Kraid D-Boost Room Out
     dw $078D, $91C2  ; DDB
     dw $079B, $A641  ; MDB
     dw $08C5, $80C7  ; Explored map tiles
@@ -796,8 +798,8 @@ preset_100map_varia_leaving_kraid_refill:
     dw $D8B8, $00F4  ; Doors
     dw #$FFFF
 
-preset_100map_varia_kihunter_room_leaving:
-    dw #preset_100map_varia_leaving_kraid_refill ; Varia: Leaving Kraid Refill
+preset_spazermap_varia_kihunter_room_leaving:
+    dw #preset_spazermap_varia_leaving_kraid_refill ; Varia: Leaving Kraid Refill
     dw $078D, $91AA  ; DDB
     dw $079B, $A521  ; MDB
     dw $090F, $0000  ; Screen subpixel X position
@@ -811,8 +813,8 @@ preset_100map_varia_kihunter_room_leaving:
     dw $D8B8, $00FC  ; Doors
     dw #$FFFF
 
-preset_100map_varia_mouthball:
-    dw #preset_100map_varia_kihunter_room_leaving ; Varia: Kihunter Room Leaving
+preset_spazermap_varia_mouthball:
+    dw #preset_spazermap_varia_kihunter_room_leaving ; Varia: Kihunter Room Leaving
     dw $078D, $9162  ; DDB
     dw $079B, $A471  ; MDB
     dw $07F3, $0012  ; Music Bank
@@ -834,8 +836,8 @@ preset_100map_varia_mouthball:
     dw $D8B8, $00FF  ; Doors
     dw #$FFFF
 
-preset_100map_upper_norfair_hi_jump_boots:
-    dw #preset_100map_varia_mouthball ; Varia: Mouthball
+preset_spazermap_upper_norfair_hi_jump_boots:
+    dw #preset_spazermap_varia_mouthball ; Varia: Mouthball
     dw $078D, $9246  ; DDB
     dw $079B, $A7DE  ; MDB
     dw $07F3, $0015  ; Music Bank
@@ -879,8 +881,8 @@ preset_100map_upper_norfair_hi_jump_boots:
     dw $D8B8, $20FF  ; Doors
     dw #$FFFF
 
-preset_100map_upper_norfair_precathedral:
-    dw #preset_100map_upper_norfair_hi_jump_boots ; Upper Norfair: Hi Jump Boots
+preset_spazermap_upper_norfair_precathedral:
+    dw #preset_spazermap_upper_norfair_hi_jump_boots ; Upper Norfair: Hi Jump Boots
     dw $078D, $941A  ; DDB
     dw $080F, $E000  ; Explored map tiles
     dw $0813, $8001  ; Explored map tiles
@@ -902,8 +904,8 @@ preset_100map_upper_norfair_precathedral:
     dw $D8BA, $0001  ; Doors
     dw #$FFFF
 
-preset_100map_upper_norfair_cathedral:
-    dw #preset_100map_upper_norfair_precathedral ; Upper Norfair: Pre-Cathedral
+preset_spazermap_upper_norfair_cathedral:
+    dw #preset_spazermap_upper_norfair_precathedral ; Upper Norfair: Pre-Cathedral
     dw $078D, $92CA  ; DDB
     dw $079B, $A7B3  ; MDB
     dw $0807, $3C00  ; Explored map tiles
@@ -921,8 +923,8 @@ preset_100map_upper_norfair_cathedral:
     dw $D8B8, $24FF  ; Doors
     dw #$FFFF
 
-preset_100map_upper_norfair_bubble_mountain:
-    dw #preset_100map_upper_norfair_cathedral ; Upper Norfair: Cathedral
+preset_spazermap_upper_norfair_bubble_mountain:
+    dw #preset_spazermap_upper_norfair_cathedral ; Upper Norfair: Cathedral
     dw $078D, $929A  ; DDB
     dw $079B, $AFA3  ; MDB
     dw $0807, $3F00  ; Explored map tiles
@@ -940,8 +942,8 @@ preset_100map_upper_norfair_bubble_mountain:
     dw $D8B8, $26FF  ; Doors
     dw #$FFFF
 
-preset_100map_upper_norfair_bubble_mountain_climb:
-    dw #preset_100map_upper_norfair_bubble_mountain ; Upper Norfair: Bubble Mountain
+preset_spazermap_upper_norfair_bubble_mountain_climb:
+    dw #preset_spazermap_upper_norfair_bubble_mountain ; Upper Norfair: Bubble Mountain
     dw $078D, $959A  ; DDB
     dw $079B, $B0DD  ; MDB
     dw $0809, $0086  ; Explored map tiles
@@ -954,8 +956,8 @@ preset_100map_upper_norfair_bubble_mountain_climb:
     dw $CAE8, $00C4  ; Map counter
     dw #$FFFF
 
-preset_100map_upper_norfair_bat_cave:
-    dw #preset_100map_upper_norfair_bubble_mountain_climb ; Upper Norfair: Bubble Mountain Climb
+preset_spazermap_upper_norfair_bat_cave:
+    dw #preset_spazermap_upper_norfair_bubble_mountain_climb ; Upper Norfair: Bubble Mountain Climb
     dw $078D, $97CE  ; DDB
     dw $079B, $ACB3  ; MDB
     dw $0805, $0003  ; Explored map tiles
@@ -970,8 +972,8 @@ preset_100map_upper_norfair_bat_cave:
     dw $D8BA, $0011  ; Doors
     dw #$FFFF
 
-preset_100map_upper_norfair_speed_hallway_in:
-    dw #preset_100map_upper_norfair_bat_cave ; Upper Norfair: Bat Cave
+preset_spazermap_upper_norfair_speed_hallway_in:
+    dw #preset_spazermap_upper_norfair_bat_cave ; Upper Norfair: Bat Cave
     dw $078D, $958E  ; DDB
     dw $079B, $B07A  ; MDB
     dw $0801, $8000  ; Explored map tiles
@@ -988,8 +990,8 @@ preset_100map_upper_norfair_speed_hallway_in:
     dw $CAE8, $00C9  ; Map counter
     dw #$FFFF
 
-preset_100map_upper_norfair_speed_booster:
-    dw #preset_100map_upper_norfair_speed_hallway_in ; Upper Norfair: Speed Hallway In
+preset_spazermap_upper_norfair_speed_booster:
+    dw #preset_spazermap_upper_norfair_speed_hallway_in ; Upper Norfair: Speed Hallway In
     dw $078D, $97B6  ; DDB
     dw $079B, $ACF0  ; MDB
     dw $0801, $FE00  ; Explored map tiles
@@ -1007,8 +1009,8 @@ preset_100map_upper_norfair_speed_booster:
     dw $D8BA, $0031  ; Doors
     dw #$FFFF
 
-preset_100map_upper_norfair_single_chamber:
-    dw #preset_100map_upper_norfair_speed_booster ; Upper Norfair: Speed Booster
+preset_spazermap_upper_norfair_single_chamber:
+    dw #preset_spazermap_upper_norfair_speed_booster ; Upper Norfair: Speed Booster
     dw $078D, $97AA  ; DDB
     dw $079B, $ACB3  ; MDB
     dw $0883, $00FC  ; Explored map tiles
@@ -1028,8 +1030,8 @@ preset_100map_upper_norfair_single_chamber:
     dw $D878, $0004  ; Items
     dw #$FFFF
 
-preset_100map_upper_norfair_double_chamber:
-    dw #preset_100map_upper_norfair_single_chamber ; Upper Norfair: Single Chamber
+preset_spazermap_upper_norfair_double_chamber:
+    dw #preset_spazermap_upper_norfair_single_chamber ; Upper Norfair: Single Chamber
     dw $078D, $9606  ; DDB
     dw $079B, $AD5E  ; MDB
     dw $0809, $8087  ; Explored map tiles
@@ -1046,8 +1048,8 @@ preset_100map_upper_norfair_double_chamber:
     dw $D8BA, $0071  ; Doors
     dw #$FFFF
 
-preset_100map_upper_norfair_double_chamber_out:
-    dw #preset_100map_upper_norfair_double_chamber ; Upper Norfair: Double Chamber
+preset_spazermap_upper_norfair_double_chamber_out:
+    dw #preset_spazermap_upper_norfair_double_chamber ; Upper Norfair: Double Chamber
     dw $078D, $961E  ; DDB
     dw $079B, $ADDE  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -1057,8 +1059,8 @@ preset_100map_upper_norfair_double_chamber_out:
     dw $0913, $CC00  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0919, $0000  ; Layer 2 Y position
-    dw $09A6, $1001  ; Equipped Beams
-    dw $09A8, $1001  ; Collected Beams
+    dw $09A6, $1005  ; Equipped Beams
+    dw $09A8, $1005  ; Collected Beams
     dw $09C6, $000F  ; Missiles
     dw $09C8, $000F  ; Max missiles
     dw $09CA, $0003  ; Supers
@@ -1071,8 +1073,8 @@ preset_100map_upper_norfair_double_chamber_out:
     dw $D8BA, $00F1  ; Doors
     dw #$FFFF
 
-preset_100map_upper_norfair_river_styx:
-    dw #preset_100map_upper_norfair_double_chamber_out ; Upper Norfair: Double Chamber Out
+preset_spazermap_upper_norfair_river_styx:
+    dw #preset_spazermap_upper_norfair_double_chamber_out ; Upper Norfair: Double Chamber Out
     dw $078D, $9612  ; DDB
     dw $079B, $AD5E  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -1090,8 +1092,8 @@ preset_100map_upper_norfair_river_styx:
     dw $CAE8, $00E6  ; Map counter
     dw #$FFFF
 
-preset_100map_upper_norfair_volcano_room:
-    dw #preset_100map_upper_norfair_river_styx ; Upper Norfair: River Styx
+preset_spazermap_upper_norfair_volcano_room:
+    dw #preset_spazermap_upper_norfair_river_styx ; Upper Norfair: River Styx
     dw $078D, $95EE  ; DDB
     dw $079B, $AE07  ; MDB
     dw $0815, $F800  ; Explored map tiles
@@ -1107,8 +1109,8 @@ preset_100map_upper_norfair_volcano_room:
     dw $CAE8, $00EA  ; Map counter
     dw #$FFFF
 
-preset_100map_upper_norfair_reverse_magdollite_room:
-    dw #preset_100map_upper_norfair_volcano_room ; Upper Norfair: Volcano Room
+preset_spazermap_upper_norfair_reverse_magdollite_room:
+    dw #preset_spazermap_upper_norfair_volcano_room ; Upper Norfair: Volcano Room
     dw $078D, $965A  ; DDB
     dw $079B, $AE74  ; MDB
     dw $0815, $FC00  ; Explored map tiles
@@ -1127,8 +1129,8 @@ preset_100map_upper_norfair_reverse_magdollite_room:
     dw $CAE8, $00F0  ; Map counter
     dw #$FFFF
 
-preset_100map_upper_norfair_purple_shaft:
-    dw #preset_100map_upper_norfair_reverse_magdollite_room ; Upper Norfair: Reverse Magdollite Room
+preset_spazermap_upper_norfair_purple_shaft:
+    dw #preset_spazermap_upper_norfair_reverse_magdollite_room ; Upper Norfair: Reverse Magdollite Room
     dw $078D, $9666  ; DDB
     dw $079B, $AEB4  ; MDB
     dw $081D, $FC01  ; Explored map tiles
@@ -1143,8 +1145,8 @@ preset_100map_upper_norfair_purple_shaft:
     dw $CAE8, $00F3  ; Map counter
     dw #$FFFF
 
-preset_100map_upper_norfair_bubble_mountain_corner:
-    dw #preset_100map_upper_norfair_purple_shaft ; Upper Norfair: Purple Shaft
+preset_spazermap_upper_norfair_bubble_mountain_corner:
+    dw #preset_spazermap_upper_norfair_purple_shaft ; Upper Norfair: Purple Shaft
     dw $078D, $96C6  ; DDB
     dw $079B, $B051  ; MDB
     dw $0819, $0403  ; Explored map tiles
@@ -1158,8 +1160,8 @@ preset_100map_upper_norfair_bubble_mountain_corner:
     dw $CAE8, $00F6  ; Map counter
     dw #$FFFF
 
-preset_100map_grapple_crocomire:
-    dw #preset_100map_upper_norfair_bubble_mountain_corner ; Upper Norfair: Bubble Mountain Corner
+preset_spazermap_grapple_crocomire:
+    dw #preset_spazermap_upper_norfair_bubble_mountain_corner ; Upper Norfair: Bubble Mountain Corner
     dw $078D, $974A  ; DDB
     dw $079B, $A923  ; MDB
     dw $0811, $F807  ; Explored map tiles
@@ -1179,8 +1181,8 @@ preset_100map_grapple_crocomire:
     dw $D8B8, $66FF  ; Doors
     dw #$FFFF
 
-preset_100map_grapple_leaving_croc:
-    dw #preset_100map_grapple_crocomire ; Grapple: Crocomire
+preset_spazermap_grapple_leaving_croc:
+    dw #preset_spazermap_grapple_crocomire ; Grapple: Crocomire
     dw $078D, $93D2  ; DDB
     dw $079B, $A98D  ; MDB
     dw $07F3, $0027  ; Music Bank
@@ -1203,8 +1205,8 @@ preset_100map_grapple_leaving_croc:
     dw $D876, $0131  ; Items
     dw #$FFFF
 
-preset_100map_grapple_crocomire_shaft:
-    dw #preset_100map_grapple_leaving_croc ; Grapple: Leaving Croc
+preset_spazermap_grapple_crocomire_shaft:
+    dw #preset_spazermap_grapple_leaving_croc ; Grapple: Leaving Croc
     dw $078D, $943E  ; DDB
     dw $079B, $AADE  ; MDB
     dw $07F3, $0015  ; Music Bank
@@ -1227,8 +1229,8 @@ preset_100map_grapple_crocomire_shaft:
     dw $D8BA, $00F3  ; Doors
     dw #$FFFF
 
-preset_100map_grapple_cosine_missile_room:
-    dw #preset_100map_grapple_crocomire_shaft ; Grapple: Crocomire Shaft
+preset_spazermap_grapple_cosine_missile_room:
+    dw #preset_spazermap_grapple_crocomire_shaft ; Grapple: Crocomire Shaft
     dw $078D, $944A  ; DDB
     dw $079B, $AB07  ; MDB
     dw $0827, $2000  ; Explored map tiles
@@ -1247,8 +1249,8 @@ preset_100map_grapple_cosine_missile_room:
     dw $D8BA, $00F7  ; Doors
     dw #$FFFF
 
-preset_100map_grapple_indiana_jones_room:
-    dw #preset_100map_grapple_cosine_missile_room ; Grapple: Cosine Missile Room
+preset_spazermap_grapple_indiana_jones_room:
+    dw #preset_spazermap_grapple_cosine_missile_room ; Grapple: Cosine Missile Room
     dw $078D, $94AA  ; DDB
     dw $0837, $3E00  ; Explored map tiles
     dw $083B, $2000  ; Explored map tiles
@@ -1265,8 +1267,8 @@ preset_100map_grapple_indiana_jones_room:
     dw $CAE8, $0116  ; Map counter
     dw #$FFFF
 
-preset_100map_grapple_grapple_beam:
-    dw #preset_100map_grapple_indiana_jones_room ; Grapple: Indiana Jones Room
+preset_spazermap_grapple_grapple_beam:
+    dw #preset_spazermap_grapple_indiana_jones_room ; Grapple: Indiana Jones Room
     dw $078D, $949E  ; DDB
     dw $079B, $AB8F  ; MDB
     dw $0837, $BE0F  ; Explored map tiles
@@ -1284,8 +1286,8 @@ preset_100map_grapple_grapple_beam:
     dw $CAE8, $0128  ; Map counter
     dw #$FFFF
 
-preset_100map_grapple_grapple_playground_1:
-    dw #preset_100map_grapple_grapple_beam ; Grapple: Grapple Beam
+preset_spazermap_grapple_grapple_playground_1:
+    dw #preset_spazermap_grapple_grapple_beam ; Grapple: Grapple Beam
     dw $078D, $94DA  ; DDB
     dw $079B, $AC2B  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -1308,8 +1310,8 @@ preset_100map_grapple_grapple_playground_1:
     dw $D876, $1331  ; Items
     dw #$FFFF
 
-preset_100map_grapple_grapple_playground_2:
-    dw #preset_100map_grapple_grapple_playground_1 ; Grapple: Grapple Playground 1
+preset_spazermap_grapple_grapple_playground_2:
+    dw #preset_spazermap_grapple_grapple_playground_1 ; Grapple: Grapple Playground 1
     dw $078D, $9522  ; DDB
     dw $079B, $AC00  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -1322,8 +1324,8 @@ preset_100map_grapple_grapple_playground_2:
     dw $CAE8, $012D  ; Map counter
     dw #$FFFF
 
-preset_100map_grapple_grapple_playground_final:
-    dw #preset_100map_grapple_grapple_playground_2 ; Grapple: Grapple Playground 2
+preset_spazermap_grapple_grapple_playground_final:
+    dw #preset_spazermap_grapple_grapple_playground_2 ; Grapple: Grapple Playground 2
     dw $078D, $950A  ; DDB
     dw $079B, $ABD2  ; MDB
     dw $082B, $2002  ; Explored map tiles
@@ -1340,8 +1342,8 @@ preset_100map_grapple_grapple_playground_final:
     dw $CAE8, $0130  ; Map counter
     dw #$FFFF
 
-preset_100map_grapple_crocomire_farm_room:
-    dw #preset_100map_grapple_grapple_playground_final ; Grapple: Grapple Playground Final
+preset_spazermap_grapple_crocomire_farm_room:
+    dw #preset_spazermap_grapple_grapple_playground_final ; Grapple: Grapple Playground Final
     dw $078D, $94C2  ; DDB
     dw $079B, $AB07  ; MDB
     dw $082B, $E003  ; Explored map tiles
@@ -1358,8 +1360,8 @@ preset_100map_grapple_crocomire_farm_room:
     dw $CAE8, $0136  ; Map counter
     dw #$FFFF
 
-preset_100map_grapple_crocomire_cac_shaft:
-    dw #preset_100map_grapple_crocomire_farm_room ; Grapple: Crocomire Farm Room
+preset_spazermap_grapple_crocomire_cac_shaft:
+    dw #preset_spazermap_grapple_crocomire_farm_room ; Grapple: Crocomire Farm Room
     dw $078D, $9432  ; DDB
     dw $079B, $A98D  ; MDB
     dw $0827, $3800  ; Explored map tiles
@@ -1374,8 +1376,8 @@ preset_100map_grapple_crocomire_cac_shaft:
     dw $CAE8, $0138  ; Map counter
     dw #$FFFF
 
-preset_100map_grapple_crocomire_escape:
-    dw #preset_100map_grapple_crocomire_cac_shaft ; Grapple: Crocomire Cac Shaft
+preset_spazermap_grapple_crocomire_escape:
+    dw #preset_spazermap_grapple_crocomire_cac_shaft ; Grapple: Crocomire Cac Shaft
     dw $078D, $93BA  ; DDB
     dw $079B, $B192  ; MDB
     dw $081B, $0100  ; Explored map tiles
@@ -1393,8 +1395,8 @@ preset_100map_grapple_crocomire_escape:
     dw $D8B8, $E6FF  ; Doors
     dw #$FFFF
 
-preset_100map_grapple_business_center:
-    dw #preset_100map_grapple_crocomire_escape ; Grapple: Crocomire Escape
+preset_spazermap_grapple_business_center:
+    dw #preset_spazermap_grapple_crocomire_escape ; Grapple: Crocomire Escape
     dw $078D, $93AE  ; DDB
     dw $079B, $AA0E  ; MDB
     dw $0813, $9E01  ; Explored map tiles
@@ -1409,8 +1411,8 @@ preset_100map_grapple_business_center:
     dw $CAE8, $0143  ; Map counter
     dw #$FFFF
 
-preset_100map_red_brinstar_warehouse_entrance:
-    dw #preset_100map_grapple_business_center ; Grapple: Business Center
+preset_spazermap_red_brinstar_warehouse_entrance:
+    dw #preset_spazermap_grapple_business_center ; Grapple: Business Center
     dw $078D, $92EE  ; DDB
     dw $079B, $A6A1  ; MDB
     dw $07F3, $0012  ; Music Bank
@@ -1500,8 +1502,8 @@ preset_100map_red_brinstar_warehouse_entrance:
     dw $D8B8, $F6FF  ; Doors
     dw #$FFFF
 
-preset_100map_red_brinstar_red_tower_climb:
-    dw #preset_100map_red_brinstar_warehouse_entrance ; Red Brinstar: Warehouse Entrance
+preset_spazermap_red_brinstar_red_tower_climb:
+    dw #preset_spazermap_red_brinstar_warehouse_entrance ; Red Brinstar: Warehouse Entrance
     dw $078D, $904E  ; DDB
     dw $079B, $A618  ; MDB
     dw $08C3, $7FFC  ; Explored map tiles
@@ -1515,8 +1517,8 @@ preset_100map_red_brinstar_red_tower_climb:
     dw $CAE8, $0147  ; Map counter
     dw #$FFFF
 
-preset_100map_red_brinstar_xray_hall_in:
-    dw #preset_100map_red_brinstar_red_tower_climb ; Red Brinstar: Red Tower Climb
+preset_spazermap_red_brinstar_xray_hall_in:
+    dw #preset_spazermap_red_brinstar_red_tower_climb ; Red Brinstar: Red Tower Climb
     dw $078D, $91FE  ; DDB
     dw $079B, $A253  ; MDB
     dw $090F, $4001  ; Screen subpixel X position
@@ -1531,8 +1533,8 @@ preset_100map_red_brinstar_xray_hall_in:
     dw $D8B6, $8308  ; Doors
     dw #$FFFF
 
-preset_100map_red_brinstar_xray_hall_out:
-    dw #preset_100map_red_brinstar_xray_hall_in ; Red Brinstar: X-Ray Hall In
+preset_spazermap_red_brinstar_xray_hall_out:
+    dw #preset_spazermap_red_brinstar_xray_hall_in ; Red Brinstar: X-Ray Hall In
     dw $078D, $905A  ; DDB
     dw $079B, $A2CE  ; MDB
     dw $0839, $FF01  ; Explored map tiles
@@ -1556,8 +1558,8 @@ preset_100map_red_brinstar_xray_hall_out:
     dw $D8B6, $8708  ; Doors
     dw #$FFFF
 
-preset_100map_red_brinstar_red_tower_up:
-    dw #preset_100map_red_brinstar_xray_hall_out ; Red Brinstar: X-Ray Hall Out
+preset_spazermap_red_brinstar_red_tower_up:
+    dw #preset_spazermap_red_brinstar_xray_hall_out ; Red Brinstar: X-Ray Hall Out
     dw $078D, $9072  ; DDB
     dw $079B, $A293  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -1571,8 +1573,8 @@ preset_100map_red_brinstar_red_tower_up:
     dw $CAE8, $0155  ; Map counter
     dw #$FFFF
 
-preset_100map_red_brinstar_hellway:
-    dw #preset_100map_red_brinstar_red_tower_up ; Red Brinstar: Red Tower Up
+preset_spazermap_red_brinstar_hellway:
+    dw #preset_spazermap_red_brinstar_red_tower_up ; Red Brinstar: Red Tower Up
     dw $078D, $9066  ; DDB
     dw $079B, $A253  ; MDB
     dw $089F, $0040  ; Explored map tiles
@@ -1590,8 +1592,8 @@ preset_100map_red_brinstar_hellway:
     dw $CAE8, $0159  ; Map counter
     dw #$FFFF
 
-preset_100map_red_brinstar_alpha_pbs:
-    dw #preset_100map_red_brinstar_hellway ; Red Brinstar: Hellway
+preset_spazermap_red_brinstar_alpha_pbs:
+    dw #preset_spazermap_red_brinstar_hellway ; Red Brinstar: Hellway
     dw $078D, $908A  ; DDB
     dw $079B, $A322  ; MDB
     dw $089F, $007C  ; Explored map tiles
@@ -1612,8 +1614,8 @@ preset_100map_red_brinstar_alpha_pbs:
     dw $D8B6, $A708  ; Doors
     dw #$FFFF
 
-preset_100map_red_brinstar_caterpillar_room_up:
-    dw #preset_100map_red_brinstar_alpha_pbs ; Red Brinstar: Alpha PBs
+preset_spazermap_red_brinstar_caterpillar_room_up:
+    dw #preset_spazermap_red_brinstar_alpha_pbs ; Red Brinstar: Alpha PBs
     dw $078D, $9096  ; DDB
     dw $079B, $A3AE  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -1635,8 +1637,8 @@ preset_100map_red_brinstar_caterpillar_room_up:
     dw $D874, $0904  ; Items
     dw #$FFFF
 
-preset_100map_red_brinstar_beta_pbs:
-    dw #preset_100map_red_brinstar_caterpillar_room_up ; Red Brinstar: Caterpillar Room Up
+preset_spazermap_red_brinstar_beta_pbs:
+    dw #preset_spazermap_red_brinstar_caterpillar_room_up ; Red Brinstar: Caterpillar Room Up
     dw $078D, $926A  ; DDB
     dw $079B, $A322  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -1658,8 +1660,8 @@ preset_100map_red_brinstar_beta_pbs:
     dw $D8B6, $AF08  ; Doors
     dw #$FFFF
 
-preset_100map_red_brinstar_crateria_kihunters_room:
-    dw #preset_100map_red_brinstar_beta_pbs ; Red Brinstar: Beta PBs
+preset_spazermap_red_brinstar_crateria_kihunters_room:
+    dw #preset_spazermap_red_brinstar_beta_pbs ; Red Brinstar: Beta PBs
     dw $078D, $90BA  ; DDB
     dw $079B, $962A  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -1733,8 +1735,8 @@ preset_100map_red_brinstar_crateria_kihunters_room:
     dw $D8B6, $EF08  ; Doors
     dw #$FFFF
 
-preset_100map_wrecked_ship_ws_shaft_down:
-    dw #preset_100map_red_brinstar_crateria_kihunters_room ; Red Brinstar: Crateria Kihunters Room
+preset_spazermap_wrecked_ship_ws_shaft_down:
+    dw #preset_spazermap_red_brinstar_crateria_kihunters_room ; Red Brinstar: Crateria Kihunters Room
     dw $078D, $89D6  ; DDB
     dw $079B, $CA08  ; MDB
     dw $07F3, $0030  ; Music Bank
@@ -1785,8 +1787,8 @@ preset_100map_wrecked_ship_ws_shaft_down:
     dw $D8B2, $2C01  ; Doors
     dw #$FFFF
 
-preset_100map_wrecked_ship_basement:
-    dw #preset_100map_wrecked_ship_ws_shaft_down ; Wrecked Ship: WS Shaft Down
+preset_spazermap_wrecked_ship_basement:
+    dw #preset_spazermap_wrecked_ship_ws_shaft_down ; Wrecked Ship: WS Shaft Down
     dw $078D, $A318  ; DDB
     dw $079B, $CAF6  ; MDB
     dw $0835, $00C0  ; Explored map tiles
@@ -1811,8 +1813,8 @@ preset_100map_wrecked_ship_basement:
     dw $D8C0, $0010  ; Doors
     dw #$FFFF
 
-preset_100map_wrecked_ship_basement_speedball:
-    dw #preset_100map_wrecked_ship_basement ; Wrecked Ship: Basement
+preset_spazermap_wrecked_ship_basement_speedball:
+    dw #preset_spazermap_wrecked_ship_basement ; Wrecked Ship: Basement
     dw $078D, $A2A0  ; DDB
     dw $079B, $CCCB  ; MDB
     dw $0847, $0700  ; Explored map tiles
@@ -1830,8 +1832,8 @@ preset_100map_wrecked_ship_basement_speedball:
     dw $CAE8, $018E  ; Map counter
     dw #$FFFF
 
-preset_100map_wrecked_ship_phantoon:
-    dw #preset_100map_wrecked_ship_basement_speedball ; Wrecked Ship: Basement Speedball
+preset_spazermap_wrecked_ship_phantoon:
+    dw #preset_spazermap_wrecked_ship_basement_speedball ; Wrecked Ship: Basement Speedball
     dw $078D, $A2B8  ; DDB
     dw $079B, $CC6F  ; MDB
     dw $0849, $00E0  ; Explored map tiles
@@ -1847,8 +1849,8 @@ preset_100map_wrecked_ship_phantoon:
     dw $D8C0, $0030  ; Doors
     dw #$FFFF
 
-preset_100map_wrecked_ship_right_supers:
-    dw #preset_100map_wrecked_ship_phantoon ; Wrecked Ship: Phantoon
+preset_spazermap_wrecked_ship_right_supers:
+    dw #preset_spazermap_wrecked_ship_phantoon ; Wrecked Ship: Phantoon
     dw $078D, $A2C4  ; DDB
     dw $07F5, $0006  ; Music Track
     dw $0849, $00F0  ; Explored map tiles
@@ -1867,8 +1869,8 @@ preset_100map_wrecked_ship_right_supers:
     dw $D8C0, $0070  ; Doors
     dw #$FFFF
 
-preset_100map_wrecked_ship_main_shaft_climb:
-    dw #preset_100map_wrecked_ship_right_supers ; Wrecked Ship: Right Supers
+preset_spazermap_wrecked_ship_main_shaft_climb:
+    dw #preset_spazermap_wrecked_ship_right_supers ; Wrecked Ship: Right Supers
     dw $078D, $A210  ; DDB
     dw $079B, $CDA8  ; MDB
     dw $083F, $0100  ; Explored map tiles
@@ -1890,8 +1892,8 @@ preset_100map_wrecked_ship_main_shaft_climb:
     dw $D8C0, $0074  ; Doors
     dw #$FFFF
 
-preset_100map_wrecked_ship_attic:
-    dw #preset_100map_wrecked_ship_main_shaft_climb ; Wrecked Ship: Main Shaft Climb
+preset_spazermap_wrecked_ship_attic:
+    dw #preset_spazermap_wrecked_ship_main_shaft_climb ; Wrecked Ship: Main Shaft Climb
     dw $078D, $A2E8  ; DDB
     dw $079B, $CAF6  ; MDB
     dw $0829, $0080  ; Explored map tiles
@@ -1908,8 +1910,8 @@ preset_100map_wrecked_ship_attic:
     dw $CAE8, $0199  ; Map counter
     dw #$FFFF
 
-preset_100map_wrecked_ship_robots_of_pain:
-    dw #preset_100map_wrecked_ship_attic ; Wrecked Ship: Attic
+preset_spazermap_wrecked_ship_robots_of_pain:
+    dw #preset_spazermap_wrecked_ship_attic ; Wrecked Ship: Attic
     dw $078D, $A228  ; DDB
     dw $079B, $CA52  ; MDB
     dw $0823, $0F00  ; Explored map tiles
@@ -1929,8 +1931,8 @@ preset_100map_wrecked_ship_robots_of_pain:
     dw $D8C0, $0374  ; Doors
     dw #$FFFF
 
-preset_100map_wrecked_ship_west_ocean:
-    dw #preset_100map_wrecked_ship_robots_of_pain ; Wrecked Ship: Robots of Pain
+preset_spazermap_wrecked_ship_west_ocean:
+    dw #preset_spazermap_wrecked_ship_robots_of_pain ; Wrecked Ship: Robots of Pain
     dw $078D, $A1EC  ; DDB
     dw $0825, $00FC  ; Explored map tiles
     dw $090F, $1401  ; Screen subpixel X position
@@ -1946,8 +1948,8 @@ preset_100map_wrecked_ship_west_ocean:
     dw $CAE8, $01A3  ; Map counter
     dw #$FFFF
 
-preset_100map_wrecked_ship_bowling_area:
-    dw #preset_100map_wrecked_ship_west_ocean ; Wrecked Ship: West Ocean
+preset_spazermap_wrecked_ship_bowling_area:
+    dw #preset_spazermap_wrecked_ship_west_ocean ; Wrecked Ship: West Ocean
     dw $078D, $89E2  ; DDB
     dw $079B, $9461  ; MDB
     dw $07F3, $000C  ; Music Bank
@@ -2021,8 +2023,8 @@ preset_100map_wrecked_ship_bowling_area:
     dw $D0A4, $00F0  ; Explored map tiles (Wrecked Ship)
     dw #$FFFF
 
-preset_100map_wrecked_ship_leaving_gravity:
-    dw #preset_100map_wrecked_ship_bowling_area ; Wrecked Ship: Bowling Area
+preset_spazermap_wrecked_ship_leaving_gravity:
+    dw #preset_spazermap_wrecked_ship_bowling_area ; Wrecked Ship: Bowling Area
     dw $078D, $A1A4  ; DDB
     dw $079B, $CE40  ; MDB
     dw $07F3, $0030  ; Music Bank
@@ -2087,8 +2089,8 @@ preset_100map_wrecked_ship_leaving_gravity:
     dw $D880, $00E0  ; Items
     dw #$FFFF
 
-preset_100map_wrecked_ship_sponge_bath:
-    dw #preset_100map_wrecked_ship_leaving_gravity ; Wrecked Ship: Leaving Gravity
+preset_spazermap_wrecked_ship_sponge_bath:
+    dw #preset_spazermap_wrecked_ship_leaving_gravity ; Wrecked Ship: Leaving Gravity
     dw $078D, $A1BC  ; DDB
     dw $079B, $CAF6  ; MDB
     dw $07F5, $0006  ; Music Track
@@ -2110,8 +2112,8 @@ preset_100map_wrecked_ship_sponge_bath:
     dw $D8C0, $037C  ; Doors
     dw #$FFFF
 
-preset_100map_wrecked_ship_electric_death_room:
-    dw #preset_100map_wrecked_ship_sponge_bath ; Wrecked Ship: Sponge Bath
+preset_spazermap_wrecked_ship_electric_death_room:
+    dw #preset_spazermap_wrecked_ship_sponge_bath ; Wrecked Ship: Sponge Bath
     dw $078D, $A2DC  ; DDB
     dw $079B, $CB8B  ; MDB
     dw $0839, $00F8  ; Explored map tiles
@@ -2128,8 +2130,8 @@ preset_100map_wrecked_ship_electric_death_room:
     dw $CAE8, $01DB  ; Map counter
     dw #$FFFF
 
-preset_100map_wrecked_ship_wrecked_ship_etank:
-    dw #preset_100map_wrecked_ship_electric_death_room ; Wrecked Ship: Electric Death Room
+preset_spazermap_wrecked_ship_wrecked_ship_etank:
+    dw #preset_spazermap_wrecked_ship_electric_death_room ; Wrecked Ship: Electric Death Room
     dw $078D, $A258  ; DDB
     dw $079B, $CBD5  ; MDB
     dw $0831, $0084  ; Explored map tiles
@@ -2152,8 +2154,8 @@ preset_100map_wrecked_ship_wrecked_ship_etank:
     dw $D8C0, $0B7C  ; Doors
     dw #$FFFF
 
-preset_100map_forgotten_highway_east_ocean:
-    dw #preset_100map_wrecked_ship_wrecked_ship_etank ; Wrecked Ship: Wrecked Ship E-Tank
+preset_spazermap_forgotten_highway_east_ocean:
+    dw #preset_spazermap_wrecked_ship_wrecked_ship_etank ; Wrecked Ship: Wrecked Ship E-Tank
     dw $078D, $A288  ; DDB
     dw $0831, $00BC  ; Explored map tiles
     dw $0835, $00FC  ; Explored map tiles
@@ -2171,8 +2173,8 @@ preset_100map_forgotten_highway_east_ocean:
     dw $D880, $00F4  ; Items
     dw #$FFFF
 
-preset_100map_forgotten_highway_kago_room:
-    dw #preset_100map_forgotten_highway_east_ocean ; Forgotten Highway: East Ocean
+preset_spazermap_forgotten_highway_kago_room:
+    dw #preset_spazermap_forgotten_highway_east_ocean ; Forgotten Highway: East Ocean
     dw $078D, $A264  ; DDB
     dw $079B, $94FD  ; MDB
     dw $07F3, $000C  ; Music Bank
@@ -2237,8 +2239,8 @@ preset_100map_forgotten_highway_kago_room:
     dw $D094, $00FC  ; Explored map tiles (Wrecked Ship)
     dw #$FFFF
 
-preset_100map_forgotten_highway_crab_maze:
-    dw #preset_100map_forgotten_highway_kago_room ; Forgotten Highway: Kago Room
+preset_spazermap_forgotten_highway_crab_maze:
+    dw #preset_spazermap_forgotten_highway_kago_room ; Forgotten Highway: Kago Room
     dw $078D, $8A72  ; DDB
     dw $079B, $9552  ; MDB
     dw $088D, $807F  ; Explored map tiles
@@ -2258,8 +2260,8 @@ preset_100map_forgotten_highway_crab_maze:
     dw $CAE8, $01F6  ; Map counter
     dw #$FFFF
 
-preset_100map_forgotten_highway_maridia_elevator:
-    dw #preset_100map_forgotten_highway_crab_maze ; Forgotten Highway: Crab Maze
+preset_spazermap_forgotten_highway_maridia_elevator:
+    dw #preset_spazermap_forgotten_highway_crab_maze ; Forgotten Highway: Crab Maze
     dw $078D, $8ABA  ; DDB
     dw $079B, $94CC  ; MDB
     dw $07F3, $0009  ; Music Bank
@@ -2281,8 +2283,8 @@ preset_100map_forgotten_highway_maridia_elevator:
     dw $D8B0, $B000  ; Doors
     dw #$FFFF
 
-preset_100map_forgotten_highway_pancakes_from_hell:
-    dw #preset_100map_forgotten_highway_maridia_elevator ; Forgotten Highway: Maridia Elevator
+preset_spazermap_forgotten_highway_pancakes_from_hell:
+    dw #preset_spazermap_forgotten_highway_maridia_elevator ; Forgotten Highway: Maridia Elevator
     dw $078D, $A5F4  ; DDB
     dw $079B, $D30B  ; MDB
     dw $07F3, $001B  ; Music Bank
@@ -2330,6 +2332,8 @@ preset_100map_forgotten_highway_pancakes_from_hell:
     dw $0913, $F000  ; Screen subpixel Y position
     dw $0915, $0500  ; Screen Y position in pixels
     dw $0919, $03C0  ; Layer 2 Y position
+    dw $09A2, $7124  ; Equipped Items
+    dw $09A6, $1001  ; Equipped Beams
     dw $09C2, $022A  ; Health
     dw $09CA, $0007  ; Supers
     dw $09D2, $0000  ; Currently selected item
@@ -2348,8 +2352,8 @@ preset_100map_forgotten_highway_pancakes_from_hell:
     dw $D8C2, $0004  ; Doors
     dw #$FFFF
 
-preset_100map_forgotten_highway_plasma_spark_room:
-    dw #preset_100map_forgotten_highway_pancakes_from_hell ; Forgotten Highway: Pancakes from Hell
+preset_spazermap_forgotten_highway_plasma_spark_room:
+    dw #preset_spazermap_forgotten_highway_pancakes_from_hell ; Forgotten Highway: Pancakes from Hell
     dw $078D, $A8A0  ; DDB
     dw $079B, $D5EC  ; MDB
     dw $0811, $3F00  ; Explored map tiles
@@ -2367,8 +2371,8 @@ preset_100map_forgotten_highway_plasma_spark_room:
     dw $CAE8, $0211  ; Map counter
     dw #$FFFF
 
-preset_100map_forgotten_highway_west_sand_hall:
-    dw #preset_100map_forgotten_highway_plasma_spark_room ; Forgotten Highway: Plasma Spark Room
+preset_spazermap_forgotten_highway_west_sand_hall:
+    dw #preset_spazermap_forgotten_highway_plasma_spark_room ; Forgotten Highway: Plasma Spark Room
     dw $078D, $A600  ; DDB
     dw $079B, $D48E  ; MDB
     dw $080D, $0003  ; Explored map tiles
@@ -2399,8 +2403,8 @@ preset_100map_forgotten_highway_west_sand_hall:
     dw $D8C2, $0014  ; Doors
     dw #$FFFF
 
-preset_100map_forgotten_highway_crab_ggg:
-    dw #preset_100map_forgotten_highway_west_sand_hall ; Forgotten Highway: West Sand Hall
+preset_spazermap_forgotten_highway_crab_ggg:
+    dw #preset_spazermap_forgotten_highway_west_sand_hall ; Forgotten Highway: West Sand Hall
     dw $078D, $A528  ; DDB
     dw $079B, $D21C  ; MDB
     dw $083D, $00FE  ; Explored map tiles
@@ -2417,8 +2421,8 @@ preset_100map_forgotten_highway_crab_ggg:
     dw $CAE8, $022A  ; Map counter
     dw #$FFFF
 
-preset_100map_space_jump_main_street:
-    dw #preset_100map_forgotten_highway_crab_ggg ; Forgotten Highway: Crab GGG
+preset_spazermap_space_jump_main_street:
+    dw #preset_spazermap_forgotten_highway_crab_ggg ; Forgotten Highway: Crab GGG
     dw $078D, $A4F8  ; DDB
     dw $079B, $D08A  ; MDB
     dw $07F5, $0006  ; Music Track
@@ -2435,8 +2439,8 @@ preset_100map_space_jump_main_street:
     dw $CAE8, $022E  ; Map counter
     dw #$FFFF
 
-preset_100map_space_jump_mama_turtle:
-    dw #preset_100map_space_jump_main_street ; Space Jump: Main Street
+preset_spazermap_space_jump_mama_turtle:
+    dw #preset_spazermap_space_jump_main_street ; Space Jump: Main Street
     dw $078D, $A3B4  ; DDB
     dw $079B, $D017  ; MDB
     dw $082F, $0600  ; Explored map tiles
@@ -2457,8 +2461,8 @@ preset_100map_space_jump_mama_turtle:
     dw $CAE8, $0237  ; Map counter
     dw #$FFFF
 
-preset_100map_space_jump_leaving_mama_turtle:
-    dw #preset_100map_space_jump_mama_turtle ; Space Jump: Mama Turtle
+preset_spazermap_space_jump_leaving_mama_turtle:
+    dw #preset_spazermap_space_jump_mama_turtle ; Space Jump: Mama Turtle
     dw $078D, $A3E4  ; DDB
     dw $079B, $D055  ; MDB
     dw $082D, $0032  ; Explored map tiles
@@ -2482,8 +2486,8 @@ preset_100map_space_jump_leaving_mama_turtle:
     dw $D8C0, $4B7C  ; Doors
     dw #$FFFF
 
-preset_100map_space_jump_everest_post_fish_tank:
-    dw #preset_100map_space_jump_leaving_mama_turtle ; Space Jump: Leaving Mama Turtle
+preset_spazermap_space_jump_everest_post_fish_tank:
+    dw #preset_spazermap_space_jump_leaving_mama_turtle ; Space Jump: Leaving Mama Turtle
     dw $078D, $A408  ; DDB
     dw $079B, $D017  ; MDB
     dw $082F, $0700  ; Explored map tiles
@@ -2503,8 +2507,8 @@ preset_100map_space_jump_everest_post_fish_tank:
     dw $CAE8, $0246  ; Map counter
     dw #$FFFF
 
-preset_100map_space_jump_everest_post_crab_supers:
-    dw #preset_100map_space_jump_everest_post_fish_tank ; Space Jump: Everest Post Fish Tank
+preset_spazermap_space_jump_everest_post_crab_supers:
+    dw #preset_spazermap_space_jump_everest_post_fish_tank ; Space Jump: Everest Post Fish Tank
     dw $078D, $A45C  ; DDB
     dw $079B, $CFC9  ; MDB
     dw $0827, $1D00  ; Explored map tiles
@@ -2524,8 +2528,8 @@ preset_100map_space_jump_everest_post_crab_supers:
     dw $CAE8, $024F  ; Map counter
     dw #$FFFF
 
-preset_100map_space_jump_beach:
-    dw #preset_100map_space_jump_everest_post_crab_supers ; Space Jump: Everest Post Crab Supers
+preset_spazermap_space_jump_beach:
+    dw #preset_spazermap_space_jump_everest_post_crab_supers ; Space Jump: Everest Post Crab Supers
     dw $078D, $A468  ; DDB
     dw $079B, $D1A3  ; MDB
     dw $0819, $E023  ; Explored map tiles
@@ -2549,8 +2553,8 @@ preset_100map_space_jump_beach:
     dw $CAE8, $0259  ; Map counter
     dw #$FFFF
 
-preset_100map_space_jump_swiss_cheese_room:
-    dw #preset_100map_space_jump_beach ; Space Jump: Beach
+preset_spazermap_space_jump_swiss_cheese_room:
+    dw #preset_spazermap_space_jump_beach ; Space Jump: Beach
     dw $078D, $A4BC  ; DDB
     dw $079B, $D1DD  ; MDB
     dw $0811, $3F23  ; Explored map tiles
@@ -2565,8 +2569,8 @@ preset_100map_space_jump_swiss_cheese_room:
     dw $CAE8, $025D  ; Map counter
     dw #$FFFF
 
-preset_100map_space_jump_swiss_cheese_revisit:
-    dw #preset_100map_space_jump_swiss_cheese_room ; Space Jump: Swiss Cheese Room
+preset_spazermap_space_jump_swiss_cheese_revisit:
+    dw #preset_spazermap_space_jump_swiss_cheese_room ; Space Jump: Swiss Cheese Room
     dw $078D, $A498  ; DDB
     dw $079B, $D13B  ; MDB
     dw $080B, $0E00  ; Explored map tiles
@@ -2591,8 +2595,8 @@ preset_100map_space_jump_swiss_cheese_revisit:
     dw $D880, $10F4  ; Items
     dw #$FFFF
 
-preset_100map_space_jump_beach_revisit:
-    dw #preset_100map_space_jump_swiss_cheese_revisit ; Space Jump: Swiss Cheese Revisit
+preset_spazermap_space_jump_beach_revisit:
+    dw #preset_spazermap_space_jump_swiss_cheese_revisit ; Space Jump: Swiss Cheese Revisit
     dw $078D, $A48C  ; DDB
     dw $079B, $D16D  ; MDB
     dw $090F, $6000  ; Screen subpixel X position
@@ -2606,8 +2610,8 @@ preset_100map_space_jump_beach_revisit:
     dw $0AFA, $018B  ; Samus Y
     dw #$FFFF
 
-preset_100map_space_jump_crab_shaft_down:
-    dw #preset_100map_space_jump_beach_revisit ; Space Jump: Beach Revisit
+preset_spazermap_space_jump_crab_shaft_down:
+    dw #preset_spazermap_space_jump_beach_revisit ; Space Jump: Beach Revisit
     dw $078D, $A4A4  ; DDB
     dw $079B, $D1DD  ; MDB
     dw $080D, $003F  ; Explored map tiles
@@ -2625,8 +2629,8 @@ preset_100map_space_jump_crab_shaft_down:
     dw $CAE8, $026D  ; Map counter
     dw #$FFFF
 
-preset_100map_space_jump_aqueduct_post_save:
-    dw #preset_100map_space_jump_crab_shaft_down ; Space Jump: Crab Shaft Down
+preset_spazermap_space_jump_aqueduct_post_save:
+    dw #preset_spazermap_space_jump_crab_shaft_down ; Space Jump: Crab Shaft Down
     dw $078D, $A744  ; DDB
     dw $079B, $D765  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -2647,8 +2651,8 @@ preset_100map_space_jump_aqueduct_post_save:
     dw $D8C2, $0054  ; Doors
     dw #$FFFF
 
-preset_100map_space_jump_prebotwoon:
-    dw #preset_100map_space_jump_aqueduct_post_save ; Space Jump: Aqueduct (Post Save)
+preset_spazermap_space_jump_prebotwoon:
+    dw #preset_spazermap_space_jump_aqueduct_post_save ; Space Jump: Aqueduct (Post Save)
     dw $078D, $A828  ; DDB
     dw $079B, $D5A7  ; MDB
     dw $0821, $00EE  ; Explored map tiles
@@ -2663,8 +2667,8 @@ preset_100map_space_jump_prebotwoon:
     dw $CAE8, $0276  ; Map counter
     dw #$FFFF
 
-preset_100map_space_jump_botwoon:
-    dw #preset_100map_space_jump_prebotwoon ; Space Jump: Pre-Botwoon
+preset_spazermap_space_jump_botwoon:
+    dw #preset_spazermap_space_jump_prebotwoon ; Space Jump: Pre-Botwoon
     dw $078D, $A72C  ; DDB
     dw $079B, $D617  ; MDB
     dw $081D, $002F  ; Explored map tiles
@@ -2681,8 +2685,8 @@ preset_100map_space_jump_botwoon:
     dw $CAE8, $0279  ; Map counter
     dw #$FFFF
 
-preset_100map_space_jump_over_under_spark:
-    dw #preset_100map_space_jump_botwoon ; Space Jump: Botwoon
+preset_spazermap_space_jump_over_under_spark:
+    dw #preset_spazermap_space_jump_botwoon ; Space Jump: Botwoon
     dw $078D, $A918  ; DDB
     dw $079B, $D7E4  ; MDB
     dw $081D, $E02F  ; Explored map tiles
@@ -2705,8 +2709,8 @@ preset_100map_space_jump_over_under_spark:
     dw $D82C, $0002  ; Bosses
     dw #$FFFF
 
-preset_100map_space_jump_under_over_spark:
-    dw #preset_100map_space_jump_over_under_spark ; Space Jump: Over Under Spark
+preset_spazermap_space_jump_under_over_spark:
+    dw #preset_spazermap_space_jump_over_under_spark ; Space Jump: Over Under Spark
     dw $078D, $A8F4  ; DDB
     dw $079B, $D845  ; MDB
     dw $081D, $FF2F  ; Explored map tiles
@@ -2726,8 +2730,8 @@ preset_100map_space_jump_under_over_spark:
     dw $CAE8, $0288  ; Map counter
     dw #$FFFF
 
-preset_100map_space_jump_colosseum:
-    dw #preset_100map_space_jump_under_over_spark ; Space Jump: Under Over Spark
+preset_spazermap_space_jump_colosseum:
+    dw #preset_spazermap_space_jump_under_over_spark ; Space Jump: Under Over Spark
     dw $078D, $A894  ; DDB
     dw $079B, $D913  ; MDB
     dw $0893, $0040  ; Explored map tiles
@@ -2744,8 +2748,8 @@ preset_100map_space_jump_colosseum:
     dw $CAE8, $028A  ; Map counter
     dw #$FFFF
 
-preset_100map_space_jump_draygon:
-    dw #preset_100map_space_jump_colosseum ; Space Jump: Colosseum
+preset_spazermap_space_jump_draygon:
+    dw #preset_spazermap_space_jump_colosseum ; Space Jump: Colosseum
     dw $078D, $A7F8  ; DDB
     dw $079B, $D78F  ; MDB
     dw $0893, $E06F  ; Explored map tiles
@@ -2765,8 +2769,8 @@ preset_100map_space_jump_draygon:
     dw $D8C2, $0D54  ; Doors
     dw #$FFFF
 
-preset_100map_maridia_cleanup_reverse_halfie:
-    dw #preset_100map_space_jump_draygon ; Space Jump: Draygon
+preset_spazermap_maridia_cleanup_reverse_halfie:
+    dw #preset_spazermap_space_jump_draygon ; Space Jump: Draygon
     dw $078D, $A96C  ; DDB
     dw $089F, $C001  ; Explored map tiles
     dw $08A3, $8003  ; Explored map tiles
@@ -2774,7 +2778,7 @@ preset_100map_maridia_cleanup_reverse_halfie:
     dw $0913, $7C00  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0919, $0000  ; Layer 2 Y position
-    dw $09A2, $7325  ; Equipped Items
+    dw $09A2, $7324  ; Equipped Items
     dw $09A4, $7325  ; Collected Items
     dw $09C2, $00CF  ; Health
     dw $09C6, $0002  ; Missiles
@@ -2788,8 +2792,8 @@ preset_100map_maridia_cleanup_reverse_halfie:
     dw $D8C2, $CD54  ; Doors
     dw #$FFFF
 
-preset_100map_maridia_cleanup_botwoon_hallway_revisit:
-    dw #preset_100map_maridia_cleanup_reverse_halfie ; Maridia Cleanup: Reverse Halfie
+preset_spazermap_maridia_cleanup_botwoon_hallway_revisit:
+    dw #preset_spazermap_maridia_cleanup_reverse_halfie ; Maridia Cleanup: Reverse Halfie
     dw $078D, $A7E0  ; DDB
     dw $079B, $D913  ; MDB
     dw $0893, $E07F  ; Explored map tiles
@@ -2804,8 +2808,8 @@ preset_100map_maridia_cleanup_botwoon_hallway_revisit:
     dw $CAE8, $029F  ; Map counter
     dw #$FFFF
 
-preset_100map_maridia_cleanup_right_sand_pit:
-    dw #preset_100map_maridia_cleanup_botwoon_hallway_revisit ; Maridia Cleanup: Botwoon Hallway Revisit
+preset_spazermap_maridia_cleanup_right_sand_pit:
+    dw #preset_spazermap_maridia_cleanup_botwoon_hallway_revisit ; Maridia Cleanup: Botwoon Hallway Revisit
     dw $078D, $A7D4  ; DDB
     dw $079B, $D5A7  ; MDB
     dw $0821, $04EF  ; Explored map tiles
@@ -2822,8 +2826,8 @@ preset_100map_maridia_cleanup_right_sand_pit:
     dw $CAE8, $02AB  ; Map counter
     dw #$FFFF
 
-preset_100map_maridia_cleanup_east_sand_hall:
-    dw #preset_100map_maridia_cleanup_right_sand_pit ; Maridia Cleanup: Right Sand Pit
+preset_spazermap_maridia_cleanup_east_sand_hall:
+    dw #preset_spazermap_maridia_cleanup_right_sand_pit ; Maridia Cleanup: Right Sand Pit
     dw $078D, $A6FC  ; DDB
     dw $079B, $D51E  ; MDB
     dw $082D, $00B3  ; Explored map tiles
@@ -2842,8 +2846,8 @@ preset_100map_maridia_cleanup_east_sand_hall:
     dw $CAE8, $02B1  ; Map counter
     dw #$FFFF
 
-preset_100map_maridia_cleanup_pants_room:
-    dw #preset_100map_maridia_cleanup_east_sand_hall ; Maridia Cleanup: East Sand Hall
+preset_spazermap_maridia_cleanup_pants_room:
+    dw #preset_spazermap_maridia_cleanup_east_sand_hall ; Maridia Cleanup: East Sand Hall
     dw $078D, $A6CC  ; DDB
     dw $079B, $D4C2  ; MDB
     dw $083D, $C0FE  ; Explored map tiles
@@ -2861,8 +2865,8 @@ preset_100map_maridia_cleanup_pants_room:
     dw $CAE8, $02B3  ; Map counter
     dw #$FFFF
 
-preset_100map_maridia_cleanup_spring_ball_room:
-    dw #preset_100map_maridia_cleanup_pants_room ; Maridia Cleanup: Pants Room
+preset_spazermap_maridia_cleanup_spring_ball_room:
+    dw #preset_spazermap_maridia_cleanup_pants_room ; Maridia Cleanup: Pants Room
     dw $078D, $A798  ; DDB
     dw $079B, $D8C5  ; MDB
     dw $0831, $30B3  ; Explored map tiles
@@ -2881,8 +2885,8 @@ preset_100map_maridia_cleanup_spring_ball_room:
     dw $D820, $2001  ; Events
     dw #$FFFF
 
-preset_100map_maridia_cleanup_pants_room_corner:
-    dw #preset_100map_maridia_cleanup_spring_ball_room ; Maridia Cleanup: Spring Ball Room
+preset_spazermap_maridia_cleanup_pants_room_corner:
+    dw #preset_spazermap_maridia_cleanup_spring_ball_room ; Maridia Cleanup: Spring Ball Room
     dw $078D, $A7C8  ; DDB
     dw $08B7, $0080  ; Explored map tiles
     dw $08BB, $00C0  ; Explored map tiles
@@ -2890,7 +2894,7 @@ preset_100map_maridia_cleanup_pants_room_corner:
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $4C00  ; Screen subpixel Y position
     dw $0917, $0000  ; Layer 2 X position
-    dw $09A2, $7327  ; Equipped Items
+    dw $09A2, $7326  ; Equipped Items
     dw $09A4, $7327  ; Collected Items
     dw $0A1C, $008A  ; Samus position/state
     dw $0A1E, $1504  ; More position/state
@@ -2900,8 +2904,8 @@ preset_100map_maridia_cleanup_pants_room_corner:
     dw $D882, $0440  ; Items
     dw #$FFFF
 
-preset_100map_maridia_cleanup_plasma_spark_room_revisit:
-    dw #preset_100map_maridia_cleanup_pants_room_corner ; Maridia Cleanup: Pants Room Corner
+preset_spazermap_maridia_cleanup_plasma_spark_room_revisit:
+    dw #preset_spazermap_maridia_cleanup_pants_room_corner ; Maridia Cleanup: Pants Room Corner
     dw $078D, $A780  ; DDB
     dw $079B, $D4C2  ; MDB
     dw $083D, $F0FF  ; Explored map tiles
@@ -2915,8 +2919,8 @@ preset_100map_maridia_cleanup_plasma_spark_room_revisit:
     dw $CAE8, $02C3  ; Map counter
     dw #$FFFF
 
-preset_100map_maridia_cleanup_kassiuz_room:
-    dw #preset_100map_maridia_cleanup_plasma_spark_room_revisit ; Maridia Cleanup: Plasma Spark Room Revisit
+preset_spazermap_maridia_cleanup_kassiuz_room:
+    dw #preset_spazermap_maridia_cleanup_plasma_spark_room_revisit ; Maridia Cleanup: Plasma Spark Room Revisit
     dw $078D, $A60C  ; DDB
     dw $079B, $D340  ; MDB
     dw $0805, $8001  ; Explored map tiles
@@ -2935,8 +2939,8 @@ preset_100map_maridia_cleanup_kassiuz_room:
     dw $D8C2, $CD7C  ; Doors
     dw #$FFFF
 
-preset_100map_maridia_cleanup_plasma_room:
-    dw #preset_100map_maridia_cleanup_kassiuz_room ; Maridia Cleanup: Kassiuz Room
+preset_spazermap_maridia_cleanup_plasma_room:
+    dw #preset_spazermap_maridia_cleanup_kassiuz_room ; Maridia Cleanup: Kassiuz Room
     dw $078D, $A5DC  ; DDB
     dw $079B, $D27E  ; MDB
     dw $07FD, $6000  ; Explored map tiles
@@ -2954,8 +2958,8 @@ preset_100map_maridia_cleanup_plasma_room:
     dw $CAE8, $02CC  ; Map counter
     dw #$FFFF
 
-preset_100map_maridia_cleanup_plasma_spark_room_final:
-    dw #preset_100map_maridia_cleanup_plasma_room ; Maridia Cleanup: Plasma Room
+preset_spazermap_maridia_cleanup_plasma_spark_room_final:
+    dw #preset_spazermap_maridia_cleanup_plasma_room ; Maridia Cleanup: Plasma Room
     dw $078D, $A540  ; DDB
     dw $079B, $D387  ; MDB
     dw $07FD, $7800  ; Explored map tiles
@@ -2966,7 +2970,7 @@ preset_100map_maridia_cleanup_plasma_spark_room_final:
     dw $0915, $031F  ; Screen Y position in pixels
     dw $0919, $0257  ; Layer 2 Y position
     dw $09A6, $1009  ; Equipped Beams
-    dw $09A8, $1009  ; Collected Beams
+    dw $09A8, $100D  ; Collected Beams
     dw $09C2, $0044  ; Health
     dw $09C6, $0004  ; Missiles
     dw $09CA, $000A  ; Supers
@@ -2980,8 +2984,8 @@ preset_100map_maridia_cleanup_plasma_spark_room_final:
     dw $D8C2, $CD7E  ; Doors
     dw #$FFFF
 
-preset_100map_maridia_cleanup_west_cac_alley:
-    dw #preset_100map_maridia_cleanup_plasma_spark_room_final ; Maridia Cleanup: Plasma Spark Room Final
+preset_spazermap_maridia_cleanup_west_cac_alley:
+    dw #preset_spazermap_maridia_cleanup_plasma_spark_room_final ; Maridia Cleanup: Plasma Spark Room Final
     dw $078D, $A5D0  ; DDB
     dw $079B, $D340  ; MDB
     dw $080D, $C03F  ; Explored map tiles
@@ -3000,8 +3004,8 @@ preset_100map_maridia_cleanup_west_cac_alley:
     dw $CAE8, $02D8  ; Map counter
     dw #$FFFF
 
-preset_100map_maridia_cleanup_east_cac_alley:
-    dw #preset_100map_maridia_cleanup_west_cac_alley ; Maridia Cleanup: West Cac Alley
+preset_spazermap_maridia_cleanup_east_cac_alley:
+    dw #preset_spazermap_maridia_cleanup_west_cac_alley ; Maridia Cleanup: West Cac Alley
     dw $078D, $A75C  ; DDB
     dw $079B, $D9FE  ; MDB
     dw $0815, $F03B  ; Explored map tiles
@@ -3019,8 +3023,8 @@ preset_100map_maridia_cleanup_east_cac_alley:
     dw $D8C2, $CDFE  ; Doors
     dw #$FFFF
 
-preset_100map_maridia_cleanup_botwoon_hallway_final:
-    dw #preset_100map_maridia_cleanup_east_cac_alley ; Maridia Cleanup: East Cac Alley
+preset_spazermap_maridia_cleanup_botwoon_hallway_final:
+    dw #preset_spazermap_maridia_cleanup_east_cac_alley ; Maridia Cleanup: East Cac Alley
     dw $078D, $A960  ; DDB
     dw $079B, $D913  ; MDB
     dw $0815, $FF3B  ; Explored map tiles
@@ -3038,8 +3042,8 @@ preset_100map_maridia_cleanup_botwoon_hallway_final:
     dw $CAE8, $02E4  ; Map counter
     dw #$FFFF
 
-preset_100map_maridia_cleanup_aqueduct_final:
-    dw #preset_100map_maridia_cleanup_botwoon_hallway_final ; Maridia Cleanup: Botwoon Hallway Final
+preset_spazermap_maridia_cleanup_aqueduct_final:
+    dw #preset_spazermap_maridia_cleanup_botwoon_hallway_final ; Maridia Cleanup: Botwoon Hallway Final
     dw $078D, $A8AC  ; DDB
     dw $079B, $D6FD  ; MDB
     dw $0821, $0CEF  ; Explored map tiles
@@ -3057,8 +3061,8 @@ preset_100map_maridia_cleanup_aqueduct_final:
     dw $D882, $0540  ; Items
     dw #$FFFF
 
-preset_100map_maridia_cleanup_left_sand_pit:
-    dw #preset_100map_maridia_cleanup_aqueduct_final ; Maridia Cleanup: Aqueduct Final
+preset_spazermap_maridia_cleanup_left_sand_pit:
+    dw #preset_spazermap_maridia_cleanup_aqueduct_final ; Maridia Cleanup: Aqueduct Final
     dw $078D, $A7D4  ; DDB
     dw $079B, $D5A7  ; MDB
     dw $0821, $CCEF  ; Explored map tiles
@@ -3073,8 +3077,8 @@ preset_100map_maridia_cleanup_left_sand_pit:
     dw $CAE8, $02E7  ; Map counter
     dw #$FFFF
 
-preset_100map_maridia_cleanup_crab_hole:
-    dw #preset_100map_maridia_cleanup_left_sand_pit ; Maridia Cleanup: Left Sand Pit
+preset_spazermap_maridia_cleanup_crab_hole:
+    dw #preset_spazermap_maridia_cleanup_left_sand_pit ; Maridia Cleanup: Left Sand Pit
     dw $078D, $A6B4  ; DDB
     dw $079B, $D461  ; MDB
     dw $082D, $00B7  ; Explored map tiles
@@ -3091,8 +3095,8 @@ preset_100map_maridia_cleanup_crab_hole:
     dw $CAE8, $02ED  ; Map counter
     dw #$FFFF
 
-preset_100map_maridia_cleanup_kpdr_exit:
-    dw #preset_100map_maridia_cleanup_crab_hole ; Maridia Cleanup: Crab Hole
+preset_spazermap_maridia_cleanup_kpdr_exit:
+    dw #preset_spazermap_maridia_cleanup_crab_hole ; Maridia Cleanup: Crab Hole
     dw $078D, $A5E8  ; DDB
     dw $079B, $D21C  ; MDB
     dw $0841, $00C0  ; Explored map tiles
@@ -3110,8 +3114,8 @@ preset_100map_maridia_cleanup_kpdr_exit:
     dw $D8C2, $CDFF  ; Doors
     dw #$FFFF
 
-preset_100map_screw_attack_business_center:
-    dw #preset_100map_maridia_cleanup_kpdr_exit ; Maridia Cleanup: KPDR Exit
+preset_spazermap_screw_attack_business_center:
+    dw #preset_spazermap_maridia_cleanup_kpdr_exit ; Maridia Cleanup: KPDR Exit
     dw $078D, $9246  ; DDB
     dw $079B, $A7DE  ; MDB
     dw $07F3, $0015  ; Music Bank
@@ -3219,8 +3223,8 @@ preset_100map_screw_attack_business_center:
     dw $D216, $00C0  ; Explored map tiles (Maridia)
     dw #$FFFF
 
-preset_100map_screw_attack_ice_beam_snake_room:
-    dw #preset_100map_screw_attack_business_center ; Screw Attack: Business Center
+preset_spazermap_screw_attack_ice_beam_snake_room:
+    dw #preset_spazermap_screw_attack_business_center ; Screw Attack: Business Center
     dw $078D, $931E  ; DDB
     dw $079B, $A75D  ; MDB
     dw $0807, $FF0F  ; Explored map tiles
@@ -3237,8 +3241,8 @@ preset_100map_screw_attack_ice_beam_snake_room:
     dw $D8B8, $FEFF  ; Doors
     dw #$FFFF
 
-preset_100map_screw_attack_ice_beam_foosball:
-    dw #preset_100map_screw_attack_ice_beam_snake_room ; Screw Attack: Ice Beam Snake Room
+preset_spazermap_screw_attack_ice_beam_foosball:
+    dw #preset_spazermap_screw_attack_ice_beam_snake_room ; Screw Attack: Ice Beam Snake Room
     dw $078D, $937E  ; DDB
     dw $079B, $A890  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -3248,7 +3252,7 @@ preset_100map_screw_attack_ice_beam_foosball:
     dw $0913, $C800  ; Screen subpixel Y position
     dw $0917, $0001  ; Layer 2 X position
     dw $09A6, $100B  ; Equipped Beams
-    dw $09A8, $100B  ; Collected Beams
+    dw $09A8, $100F  ; Collected Beams
     dw $09C2, $0261  ; Health
     dw $09D2, $0004  ; Currently selected item
     dw $0AF6, $00B9  ; Samus X
@@ -3256,8 +3260,8 @@ preset_100map_screw_attack_ice_beam_foosball:
     dw $D876, $1335  ; Items
     dw #$FFFF
 
-preset_100map_screw_attack_ice_beam_boyon_room:
-    dw #preset_100map_screw_attack_ice_beam_foosball ; Screw Attack: Ice Beam Foosball
+preset_spazermap_screw_attack_ice_beam_boyon_room:
+    dw #preset_spazermap_screw_attack_ice_beam_foosball ; Screw Attack: Ice Beam Foosball
     dw $078D, $935A  ; DDB
     dw $079B, $A8B9  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -3274,8 +3278,8 @@ preset_100map_screw_attack_ice_beam_boyon_room:
     dw $CAE8, $02FE  ; Map counter
     dw #$FFFF
 
-preset_100map_screw_attack_crocomire_speedway:
-    dw #preset_100map_screw_attack_ice_beam_boyon_room ; Screw Attack: Ice Beam Boyon Room
+preset_spazermap_screw_attack_crocomire_speedway:
+    dw #preset_spazermap_screw_attack_ice_beam_boyon_room ; Screw Attack: Ice Beam Boyon Room
     dw $078D, $9336  ; DDB
     dw $079B, $A8F8  ; MDB
     dw $07FF, $201E  ; Explored map tiles
@@ -3294,8 +3298,8 @@ preset_100map_screw_attack_crocomire_speedway:
     dw $CAE8, $030A  ; Map counter
     dw #$FFFF
 
-preset_100map_screw_attack_kronic_boost_room:
-    dw #preset_100map_screw_attack_crocomire_speedway ; Screw Attack: Crocomire Speedway
+preset_spazermap_screw_attack_kronic_boost_room:
+    dw #preset_spazermap_screw_attack_crocomire_speedway ; Screw Attack: Crocomire Speedway
     dw $078D, $9792  ; DDB
     dw $079B, $AFFB  ; MDB
     dw $0817, $1F3F  ; Explored map tiles
@@ -3314,8 +3318,8 @@ preset_100map_screw_attack_kronic_boost_room:
     dw $CAE8, $031D  ; Map counter
     dw #$FFFF
 
-preset_100map_screw_attack_lava_dive_room:
-    dw #preset_100map_screw_attack_kronic_boost_room ; Screw Attack: Kronic Boost Room
+preset_spazermap_screw_attack_lava_dive_room:
+    dw #preset_spazermap_screw_attack_kronic_boost_room ; Screw Attack: Kronic Boost Room
     dw $078D, $977A  ; DDB
     dw $079B, $AE74  ; MDB
     dw $0821, $E0FF  ; Explored map tiles
@@ -3334,8 +3338,8 @@ preset_100map_screw_attack_lava_dive_room:
     dw $D8BA, $01F7  ; Doors
     dw #$FFFF
 
-preset_100map_screw_attack_lower_norfair_main_hall:
-    dw #preset_100map_screw_attack_lava_dive_room ; Screw Attack: Lava Dive Room
+preset_spazermap_screw_attack_lower_norfair_main_hall:
+    dw #preset_spazermap_screw_attack_lava_dive_room ; Screw Attack: Lava Dive Room
     dw $078D, $96F6  ; DDB
     dw $079B, $B236  ; MDB
     dw $07F3, $0018  ; Music Bank
@@ -3356,8 +3360,8 @@ preset_100map_screw_attack_lower_norfair_main_hall:
     dw $CAE8, $032E  ; Map counter
     dw #$FFFF
 
-preset_100map_screw_attack_blue_fireball:
-    dw #preset_100map_screw_attack_lower_norfair_main_hall ; Screw Attack: Lower Norfair Main Hall
+preset_spazermap_screw_attack_blue_fireball:
+    dw #preset_spazermap_screw_attack_lower_norfair_main_hall ; Screw Attack: Lower Norfair Main Hall
     dw $078D, $992A  ; DDB
     dw $079B, $B3A5  ; MDB
     dw $0829, $C405  ; Explored map tiles
@@ -3379,8 +3383,8 @@ preset_100map_screw_attack_blue_fireball:
     dw $D8BA, $21F7  ; Doors
     dw #$FFFF
 
-preset_100map_screw_attack_golden_torizo:
-    dw #preset_100map_screw_attack_blue_fireball ; Screw Attack: Blue Fireball
+preset_spazermap_screw_attack_golden_torizo:
+    dw #preset_spazermap_screw_attack_blue_fireball ; Screw Attack: Blue Fireball
     dw $078D, $9852  ; DDB
     dw $079B, $B1E5  ; MDB
     dw $082F, $E103  ; Explored map tiles
@@ -3406,8 +3410,8 @@ preset_100map_screw_attack_golden_torizo:
     dw $D820, $3001  ; Events
     dw #$FFFF
 
-preset_100map_screw_attack_screw_attack:
-    dw #preset_100map_screw_attack_golden_torizo ; Screw Attack: Golden Torizo
+preset_spazermap_screw_attack_screw_attack:
+    dw #preset_spazermap_screw_attack_golden_torizo ; Screw Attack: Golden Torizo
     dw $078D, $983A  ; DDB
     dw $079B, $B283  ; MDB
     dw $07F3, $0024  ; Music Bank
@@ -3430,8 +3434,8 @@ preset_100map_screw_attack_screw_attack:
     dw $D82A, $0106  ; Bosses
     dw #$FFFF
 
-preset_100map_lower_norfair_fast_ripper_room:
-    dw #preset_100map_screw_attack_screw_attack ; Screw Attack: Screw Attack
+preset_spazermap_lower_norfair_fast_ripper_room:
+    dw #preset_spazermap_screw_attack_screw_attack ; Screw Attack: Screw Attack
     dw $078D, $98A6  ; DDB
     dw $079B, $B6C1  ; MDB
     dw $0835, $0088  ; Explored map tiles
@@ -3442,7 +3446,7 @@ preset_100map_lower_norfair_fast_ripper_room:
     dw $0915, $001C  ; Screen Y position in pixels
     dw $0917, $0001  ; Layer 2 X position
     dw $0919, $0015  ; Layer 2 Y position
-    dw $09A2, $732F  ; Equipped Items
+    dw $09A2, $732E  ; Equipped Items
     dw $09A4, $732F  ; Collected Items
     dw $0AF6, $00B2  ; Samus X
     dw $0AFA, $008B  ; Samus Y
@@ -3451,8 +3455,8 @@ preset_100map_lower_norfair_fast_ripper_room:
     dw $D8BA, $23F7  ; Doors
     dw #$FFFF
 
-preset_100map_lower_norfair_worst_room_in_the_game:
-    dw #preset_100map_lower_norfair_fast_ripper_room ; Lower Norfair: Fast Ripper Room
+preset_spazermap_lower_norfair_worst_room_in_the_game:
+    dw #preset_spazermap_lower_norfair_fast_ripper_room ; Lower Norfair: Fast Ripper Room
     dw $078D, $9912  ; DDB
     dw $079B, $B457  ; MDB
     dw $07F3, $0018  ; Music Bank
@@ -3470,8 +3474,8 @@ preset_100map_lower_norfair_worst_room_in_the_game:
     dw $CAE8, $0354  ; Map counter
     dw #$FFFF
 
-preset_100map_lower_norfair_mickey_mouse:
-    dw #preset_100map_lower_norfair_worst_room_in_the_game ; Lower Norfair: Worst Room in the Game
+preset_spazermap_lower_norfair_mickey_mouse:
+    dw #preset_spazermap_lower_norfair_worst_room_in_the_game ; Lower Norfair: Worst Room in the Game
     dw $078D, $994E  ; DDB
     dw $079B, $B4AD  ; MDB
     dw $0821, $E2FF  ; Explored map tiles
@@ -3492,8 +3496,8 @@ preset_100map_lower_norfair_mickey_mouse:
     dw $CAE8, $035A  ; Map counter
     dw #$FFFF
 
-preset_100map_lower_norfair_amphitheatre:
-    dw #preset_100map_lower_norfair_mickey_mouse ; Lower Norfair: Mickey Mouse
+preset_spazermap_lower_norfair_amphitheatre:
+    dw #preset_spazermap_lower_norfair_mickey_mouse ; Lower Norfair: Mickey Mouse
     dw $078D, $9936  ; DDB
     dw $0821, $E6FF  ; Explored map tiles
     dw $0825, $EEFF  ; Explored map tiles
@@ -3508,8 +3512,8 @@ preset_100map_lower_norfair_amphitheatre:
     dw $CAE8, $035D  ; Map counter
     dw #$FFFF
 
-preset_100map_lower_norfair_kihunter_stairs_down:
-    dw #preset_100map_lower_norfair_amphitheatre ; Lower Norfair: Amphitheatre
+preset_spazermap_lower_norfair_kihunter_stairs_down:
+    dw #preset_spazermap_lower_norfair_amphitheatre ; Lower Norfair: Amphitheatre
     dw $078D, $997E  ; DDB
     dw $079B, $B4E5  ; MDB
     dw $0825, $EFFF  ; Explored map tiles
@@ -3532,8 +3536,8 @@ preset_100map_lower_norfair_kihunter_stairs_down:
     dw $CAE8, $036F  ; Map counter
     dw #$FFFF
 
-preset_100map_lower_norfair_wasteland:
-    dw #preset_100map_lower_norfair_kihunter_stairs_down ; Lower Norfair: Kihunter Stairs Down
+preset_spazermap_lower_norfair_wasteland:
+    dw #preset_spazermap_lower_norfair_kihunter_stairs_down ; Lower Norfair: Kihunter Stairs Down
     dw $078D, $99A2  ; DDB
     dw $079B, $B585  ; MDB
     dw $089F, $00F0  ; Explored map tiles
@@ -3556,8 +3560,8 @@ preset_100map_lower_norfair_wasteland:
     dw $D8BA, $63F7  ; Doors
     dw #$FFFF
 
-preset_100map_lower_norfair_metal_pirates:
-    dw #preset_100map_lower_norfair_wasteland ; Lower Norfair: Wasteland
+preset_spazermap_lower_norfair_metal_pirates:
+    dw #preset_spazermap_lower_norfair_wasteland ; Lower Norfair: Wasteland
     dw $078D, $99EA  ; DDB
     dw $079B, $B5D5  ; MDB
     dw $08B3, $00FC  ; Explored map tiles
@@ -3580,8 +3584,8 @@ preset_100map_lower_norfair_metal_pirates:
     dw $D8BA, $E3F7  ; Doors
     dw #$FFFF
 
-preset_100map_lower_norfair_ridley:
-    dw #preset_100map_lower_norfair_metal_pirates ; Lower Norfair: Metal Pirates
+preset_spazermap_lower_norfair_ridley:
+    dw #preset_spazermap_lower_norfair_metal_pirates ; Lower Norfair: Metal Pirates
     dw $078D, $995A  ; DDB
     dw $079B, $B37A  ; MDB
     dw $083D, $FF38  ; Explored map tiles
@@ -3601,8 +3605,8 @@ preset_100map_lower_norfair_ridley:
     dw $D8BC, $0001  ; Doors
     dw #$FFFF
 
-preset_100map_lower_norfair_leaving_ridley:
-    dw #preset_100map_lower_norfair_ridley ; Lower Norfair: Ridley
+preset_spazermap_lower_norfair_leaving_ridley:
+    dw #preset_spazermap_lower_norfair_ridley ; Lower Norfair: Ridley
     dw $078D, $9A62  ; DDB
     dw $079B, $B32E  ; MDB
     dw $07F3, $0024  ; Music Bank
@@ -3626,8 +3630,8 @@ preset_100map_lower_norfair_leaving_ridley:
     dw $D8BA, $FBF7  ; Doors
     dw #$FFFF
 
-preset_100map_lower_norfair_wasteland_revisit:
-    dw #preset_100map_lower_norfair_leaving_ridley ; Lower Norfair: Leaving Ridley
+preset_spazermap_lower_norfair_wasteland_revisit:
+    dw #preset_spazermap_lower_norfair_leaving_ridley ; Lower Norfair: Leaving Ridley
     dw $078D, $9966  ; DDB
     dw $079B, $B62B  ; MDB
     dw $07F3, $0018  ; Music Bank
@@ -3648,8 +3652,8 @@ preset_100map_lower_norfair_wasteland_revisit:
     dw $D8BA, $FFF7  ; Doors
     dw #$FFFF
 
-preset_100map_lower_norfair_kihunter_stairs_up:
-    dw #preset_100map_lower_norfair_wasteland_revisit ; Lower Norfair: Wasteland Revisit
+preset_spazermap_lower_norfair_kihunter_stairs_up:
+    dw #preset_spazermap_lower_norfair_wasteland_revisit ; Lower Norfair: Wasteland Revisit
     dw $078D, $9A0E  ; DDB
     dw $079B, $B741  ; MDB
     dw $08AB, $00F8  ; Explored map tiles
@@ -3667,8 +3671,8 @@ preset_100map_lower_norfair_kihunter_stairs_up:
     dw $CAE8, $038A  ; Map counter
     dw #$FFFF
 
-preset_100map_lower_norfair_fireflea_room:
-    dw #preset_100map_lower_norfair_kihunter_stairs_up ; Lower Norfair: Kihunter Stairs Up
+preset_spazermap_lower_norfair_fireflea_room:
+    dw #preset_spazermap_lower_norfair_kihunter_stairs_up ; Lower Norfair: Kihunter Stairs Up
     dw $078D, $9AB6  ; DDB
     dw $079B, $B585  ; MDB
     dw $090F, $367F  ; Screen subpixel X position
@@ -3679,8 +3683,8 @@ preset_100map_lower_norfair_fireflea_room:
     dw $0AF6, $00AC  ; Samus X
     dw #$FFFF
 
-preset_100map_lower_norfair_hotarubi_missile_room:
-    dw #preset_100map_lower_norfair_fireflea_room ; Lower Norfair: Fireflea Room
+preset_spazermap_lower_norfair_hotarubi_missile_room:
+    dw #preset_spazermap_lower_norfair_fireflea_room ; Lower Norfair: Fireflea Room
     dw $078D, $9A02  ; DDB
     dw $079B, $B6EE  ; MDB
     dw $0893, $0008  ; Explored map tiles
@@ -3705,8 +3709,8 @@ preset_100map_lower_norfair_hotarubi_missile_room:
     dw $CAE8, $0393  ; Map counter
     dw #$FFFF
 
-preset_100map_lower_norfair_three_musketeers_room:
-    dw #preset_100map_lower_norfair_hotarubi_missile_room ; Lower Norfair: Hotarubi Missile Room
+preset_spazermap_lower_norfair_three_musketeers_room:
+    dw #preset_spazermap_lower_norfair_hotarubi_missile_room ; Lower Norfair: Hotarubi Missile Room
     dw $078D, $9A92  ; DDB
     dw $079B, $B510  ; MDB
     dw $088F, $007C  ; Explored map tiles
@@ -3723,8 +3727,8 @@ preset_100map_lower_norfair_three_musketeers_room:
     dw $CAE8, $039C  ; Map counter
     dw #$FFFF
 
-preset_100map_begin_cleanup_single_chamber_revisit:
-    dw #preset_100map_lower_norfair_three_musketeers_room ; Lower Norfair: Three Musketeers Room
+preset_spazermap_begin_cleanup_single_chamber_revisit:
+    dw #preset_spazermap_lower_norfair_three_musketeers_room ; Lower Norfair: Three Musketeers Room
     dw $078D, $99AE  ; DDB
     dw $079B, $B656  ; MDB
     dw $0809, $8287  ; Explored map tiles
@@ -3742,8 +3746,8 @@ preset_100map_begin_cleanup_single_chamber_revisit:
     dw $CAE8, $03A2  ; Map counter
     dw #$FFFF
 
-preset_100map_begin_cleanup_bubble_mountain_dboost:
-    dw #preset_100map_begin_cleanup_single_chamber_revisit ; Begin Cleanup: Single Chamber Revisit
+preset_spazermap_begin_cleanup_bubble_mountain_dboost:
+    dw #preset_spazermap_begin_cleanup_single_chamber_revisit ; Begin Cleanup: Single Chamber Revisit
     dw $078D, $9A4A  ; DDB
     dw $079B, $AD5E  ; MDB
     dw $07F3, $0015  ; Music Bank
@@ -3759,8 +3763,8 @@ preset_100map_begin_cleanup_bubble_mountain_dboost:
     dw $CAE8, $03A7  ; Map counter
     dw #$FFFF
 
-preset_100map_begin_cleanup_norfair_reserve_front:
-    dw #preset_100map_begin_cleanup_bubble_mountain_dboost ; Begin Cleanup: Bubble Mountain D-Boost
+preset_spazermap_begin_cleanup_norfair_reserve_front:
+    dw #preset_spazermap_begin_cleanup_bubble_mountain_dboost ; Begin Cleanup: Bubble Mountain D-Boost
     dw $078D, $95CA  ; DDB
     dw $079B, $ACB3  ; MDB
     dw $090F, $C000  ; Screen subpixel X position
@@ -3772,8 +3776,8 @@ preset_100map_begin_cleanup_norfair_reserve_front:
     dw $D8BA, $FFFF  ; Doors
     dw #$FFFF
 
-preset_100map_begin_cleanup_norfair_reserve_back:
-    dw #preset_100map_begin_cleanup_norfair_reserve_front ; Begin Cleanup: Norfair Reserve Front
+preset_spazermap_begin_cleanup_norfair_reserve_back:
+    dw #preset_spazermap_begin_cleanup_norfair_reserve_front ; Begin Cleanup: Norfair Reserve Front
     dw $078D, $9552  ; DDB
     dw $079B, $AC83  ; MDB
     dw $0805, $8F0F  ; Explored map tiles
@@ -3782,8 +3786,8 @@ preset_100map_begin_cleanup_norfair_reserve_back:
     dw $CAE8, $03A9  ; Map counter
     dw #$FFFF
 
-preset_100map_begin_cleanup_bubble_mountain_final:
-    dw #preset_100map_begin_cleanup_norfair_reserve_back ; Begin Cleanup: Norfair Reserve Back
+preset_spazermap_begin_cleanup_bubble_mountain_final:
+    dw #preset_spazermap_begin_cleanup_norfair_reserve_back ; Begin Cleanup: Norfair Reserve Back
     dw $078D, $952E  ; DDB
     dw $0805, $8F3F  ; Explored map tiles
     dw $090F, $8000  ; Screen subpixel X position
@@ -3797,8 +3801,8 @@ preset_100map_begin_cleanup_bubble_mountain_final:
     dw $CAE8, $03AB  ; Map counter
     dw #$FFFF
 
-preset_100map_begin_cleanup_tube:
-    dw #preset_100map_begin_cleanup_bubble_mountain_final ; Begin Cleanup: Bubble Mountain Final
+preset_spazermap_begin_cleanup_tube:
+    dw #preset_spazermap_begin_cleanup_bubble_mountain_final ; Begin Cleanup: Bubble Mountain Final
     dw $078D, $922E  ; DDB
     dw $079B, $CF80  ; MDB
     dw $07F3, $0012  ; Music Bank
@@ -3907,8 +3911,8 @@ preset_100map_begin_cleanup_tube:
     dw $D016, $00C0  ; Explored map tiles (Norfair)
     dw #$FFFF
 
-preset_100map_begin_cleanup_tube_climb:
-    dw #preset_100map_begin_cleanup_tube ; Begin Cleanup: Tube
+preset_spazermap_begin_cleanup_tube_climb:
+    dw #preset_spazermap_begin_cleanup_tube ; Begin Cleanup: Tube
     dw $078D, $A354  ; DDB
     dw $079B, $CED2  ; MDB
     dw $0847, $1800  ; Explored map tiles
@@ -3925,8 +3929,8 @@ preset_100map_begin_cleanup_tube_climb:
     dw $D8C0, $DB7C  ; Doors
     dw #$FFFF
 
-preset_100map_begin_cleanup_sephy_fish_room:
-    dw #preset_100map_begin_cleanup_tube_climb ; Begin Cleanup: Tube Climb
+preset_spazermap_begin_cleanup_sephy_fish_room:
+    dw #preset_spazermap_begin_cleanup_tube_climb ; Begin Cleanup: Tube Climb
     dw $078D, $A3C0  ; DDB
     dw $079B, $D0B9  ; MDB
     dw $07F3, $001B  ; Music Bank
@@ -3953,8 +3957,8 @@ preset_100map_begin_cleanup_sephy_fish_room:
     dw $CAE8, $03CC  ; Map counter
     dw #$FFFF
 
-preset_100map_begin_cleanup_crateria_kihunters_revisit:
-    dw #preset_100map_begin_cleanup_sephy_fish_room ; Begin Cleanup: Sephy Fish Room
+preset_spazermap_begin_cleanup_crateria_kihunters_revisit:
+    dw #preset_spazermap_begin_cleanup_sephy_fish_room ; Begin Cleanup: Sephy Fish Room
     dw $078D, $90BA  ; DDB
     dw $079B, $962A  ; MDB
     dw $07F3, $0012  ; Music Bank
@@ -4040,8 +4044,8 @@ preset_100map_begin_cleanup_crateria_kihunters_revisit:
     dw $D1A2, $1800  ; Explored map tiles (Maridia)
     dw #$FFFF
 
-preset_100map_begin_cleanup_landing_site_revisit:
-    dw #preset_100map_begin_cleanup_crateria_kihunters_revisit ; Begin Cleanup: Crateria Kihunters Revisit
+preset_spazermap_begin_cleanup_landing_site_revisit:
+    dw #preset_spazermap_begin_cleanup_crateria_kihunters_revisit ; Begin Cleanup: Crateria Kihunters Revisit
     dw $078D, $8AF6  ; DDB
     dw $079B, $948C  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -4055,8 +4059,8 @@ preset_100map_begin_cleanup_landing_site_revisit:
     dw $0AFA, $00BB  ; Samus Y
     dw #$FFFF
 
-preset_100map_begin_cleanup_crateria_pbs:
-    dw #preset_100map_begin_cleanup_landing_site_revisit ; Begin Cleanup: Landing Site Revisit
+preset_spazermap_begin_cleanup_crateria_pbs:
+    dw #preset_spazermap_begin_cleanup_landing_site_revisit ; Begin Cleanup: Landing Site Revisit
     dw $078D, $8AC6  ; DDB
     dw $079B, $91F8  ; MDB
     dw $07F3, $000C  ; Music Bank
@@ -4082,8 +4086,8 @@ preset_100map_begin_cleanup_crateria_pbs:
     dw $D8B0, $B002  ; Doors
     dw #$FFFF
 
-preset_100map_begin_cleanup_gauntlet_etank:
-    dw #preset_100map_begin_cleanup_crateria_pbs ; Begin Cleanup: Crateria PBs
+preset_spazermap_begin_cleanup_gauntlet_etank:
+    dw #preset_spazermap_begin_cleanup_crateria_pbs ; Begin Cleanup: Crateria PBs
     dw $078D, $892E  ; DDB
     dw $079B, $92B3  ; MDB
     dw $07F3, $0009  ; Music Bank
@@ -4105,8 +4109,8 @@ preset_100map_begin_cleanup_gauntlet_etank:
     dw $CAE8, $03F4  ; Map counter
     dw #$FFFF
 
-preset_100map_begin_cleanup_quickdrops:
-    dw #preset_100map_begin_cleanup_gauntlet_etank ; Begin Cleanup: Gauntlet E-Tank
+preset_spazermap_begin_cleanup_quickdrops:
+    dw #preset_spazermap_begin_cleanup_gauntlet_etank ; Begin Cleanup: Gauntlet E-Tank
     dw $078D, $8952  ; DDB
     dw $079B, $965B  ; MDB
     dw $0803, $0F00  ; Explored map tiles
@@ -4120,8 +4124,8 @@ preset_100map_begin_cleanup_quickdrops:
     dw $CAE8, $03FA  ; Map counter
     dw #$FFFF
 
-preset_100map_greenpink_brin_cleanup_green_brinstar_elevator:
-    dw #preset_100map_begin_cleanup_quickdrops ; Begin Cleanup: Quickdrops
+preset_spazermap_greenpink_brin_cleanup_green_brinstar_elevator:
+    dw #preset_spazermap_begin_cleanup_quickdrops ; Begin Cleanup: Quickdrops
     dw $078D, $8C22  ; DDB
     dw $079B, $9938  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -4137,8 +4141,8 @@ preset_100map_greenpink_brin_cleanup_green_brinstar_elevator:
     dw $CAE8, $03FE  ; Map counter
     dw #$FFFF
 
-preset_100map_greenpink_brin_cleanup_brinstar_map_entrance:
-    dw #preset_100map_greenpink_brin_cleanup_green_brinstar_elevator ; Green-Pink Brin Cleanup: Green Brinstar Elevator
+preset_spazermap_greenpink_brin_cleanup_brinstar_map_entrance:
+    dw #preset_spazermap_greenpink_brin_cleanup_green_brinstar_elevator ; Green-Pink Brin Cleanup: Green Brinstar Elevator
     dw $078D, $8C0A  ; DDB
     dw $079B, $9AD9  ; MDB
     dw $07F3, $000F  ; Music Bank
@@ -4221,8 +4225,8 @@ preset_100map_greenpink_brin_cleanup_brinstar_map_entrance:
     dw $CDE6, $FCFF  ; Explored map tiles (Crateria)
     dw #$FFFF
 
-preset_100map_greenpink_brin_cleanup_green_brin_fireflea_room:
-    dw #preset_100map_greenpink_brin_cleanup_brinstar_map_entrance ; Green-Pink Brin Cleanup: Brinstar Map Entrance
+preset_spazermap_greenpink_brin_cleanup_green_brin_fireflea_room:
+    dw #preset_spazermap_greenpink_brin_cleanup_brinstar_map_entrance ; Green-Pink Brin Cleanup: Brinstar Map Entrance
     dw $078D, $9006  ; DDB
     dw $080B, $FE07  ; Explored map tiles
     dw $080F, $C000  ; Explored map tiles
@@ -4240,8 +4244,8 @@ preset_100map_greenpink_brin_cleanup_green_brin_fireflea_room:
     dw $D8B4, $026F  ; Doors
     dw #$FFFF
 
-preset_100map_greenpink_brin_cleanup_etecoons_etank_skip:
-    dw #preset_100map_greenpink_brin_cleanup_green_brin_fireflea_room ; Green-Pink Brin Cleanup: Green Brin Fireflea Room
+preset_spazermap_greenpink_brin_cleanup_etecoons_etank_skip:
+    dw #preset_spazermap_greenpink_brin_cleanup_green_brin_fireflea_room ; Green-Pink Brin Cleanup: Green Brin Fireflea Room
     dw $078D, $8CBE  ; DDB
     dw $079B, $9FE5  ; MDB
     dw $0813, $FF03  ; Explored map tiles
@@ -4261,8 +4265,8 @@ preset_100map_greenpink_brin_cleanup_etecoons_etank_skip:
     dw $CAE8, $040E  ; Map counter
     dw #$FFFF
 
-preset_100map_greenpink_brin_cleanup_etecoons_dboosts:
-    dw #preset_100map_greenpink_brin_cleanup_etecoons_etank_skip ; Green-Pink Brin Cleanup: Etecoons E-Tank Skip
+preset_spazermap_greenpink_brin_cleanup_etecoons_dboosts:
+    dw #preset_spazermap_greenpink_brin_cleanup_etecoons_etank_skip ; Green-Pink Brin Cleanup: Etecoons E-Tank Skip
     dw $078D, $8F52  ; DDB
     dw $079B, $A22A  ; MDB
     dw $0823, $C007  ; Explored map tiles
@@ -4278,8 +4282,8 @@ preset_100map_greenpink_brin_cleanup_etecoons_dboosts:
     dw $D8B6, $EF18  ; Doors
     dw #$FFFF
 
-preset_100map_greenpink_brin_cleanup_etecoons_climb:
-    dw #preset_100map_greenpink_brin_cleanup_etecoons_dboosts ; Green-Pink Brin Cleanup: Etecoons D-Boosts
+preset_spazermap_greenpink_brin_cleanup_etecoons_climb:
+    dw #preset_spazermap_greenpink_brin_cleanup_etecoons_dboosts ; Green-Pink Brin Cleanup: Etecoons D-Boosts
     dw $078D, $9012  ; DDB
     dw $079B, $A011  ; MDB
     dw $0827, $E007  ; Explored map tiles
@@ -4295,8 +4299,8 @@ preset_100map_greenpink_brin_cleanup_etecoons_climb:
     dw $CAE8, $0417  ; Map counter
     dw #$FFFF
 
-preset_100map_greenpink_brin_cleanup_dachora_moonfall:
-    dw #preset_100map_greenpink_brin_cleanup_etecoons_climb ; Green-Pink Brin Cleanup: Etecoons Climb
+preset_spazermap_greenpink_brin_cleanup_dachora_moonfall:
+    dw #preset_spazermap_greenpink_brin_cleanup_etecoons_climb ; Green-Pink Brin Cleanup: Etecoons Climb
     dw $078D, $8F46  ; DDB
     dw $079B, $9AD9  ; MDB
     dw $0817, $7807  ; Explored map tiles
@@ -4318,8 +4322,8 @@ preset_100map_greenpink_brin_cleanup_dachora_moonfall:
     dw $CAE8, $041F  ; Map counter
     dw #$FFFF
 
-preset_100map_greenpink_brin_cleanup_big_pink_climb:
-    dw #preset_100map_greenpink_brin_cleanup_dachora_moonfall ; Green-Pink Brin Cleanup: Dachora Moonfall
+preset_spazermap_greenpink_brin_cleanup_big_pink_climb:
+    dw #preset_spazermap_greenpink_brin_cleanup_dachora_moonfall ; Green-Pink Brin Cleanup: Dachora Moonfall
     dw $078D, $8F6A  ; DDB
     dw $079B, $9CB3  ; MDB
     dw $0817, $7A07  ; Explored map tiles
@@ -4345,8 +4349,8 @@ preset_100map_greenpink_brin_cleanup_big_pink_climb:
     dw $CAE8, $042A  ; Map counter
     dw #$FFFF
 
-preset_100map_greenpink_brin_cleanup_spo_spo_kihunters_room:
-    dw #preset_100map_greenpink_brin_cleanup_big_pink_climb ; Green-Pink Brin Cleanup: Big Pink Climb
+preset_spazermap_greenpink_brin_cleanup_spo_spo_kihunters_room:
+    dw #preset_spazermap_greenpink_brin_cleanup_big_pink_climb ; Green-Pink Brin Cleanup: Big Pink Climb
     dw $078D, $8FD6  ; DDB
     dw $079B, $9D19  ; MDB
     dw $080B, $FF07  ; Explored map tiles
@@ -4363,8 +4367,8 @@ preset_100map_greenpink_brin_cleanup_spo_spo_kihunters_room:
     dw $CAE8, $042F  ; Map counter
     dw #$FFFF
 
-preset_100map_greenpink_brin_cleanup_spore_spawn:
-    dw #preset_100map_greenpink_brin_cleanup_spo_spo_kihunters_room ; Green-Pink Brin Cleanup: Spo Spo Kihunters Room
+preset_spazermap_greenpink_brin_cleanup_spore_spawn:
+    dw #preset_spazermap_greenpink_brin_cleanup_spo_spo_kihunters_room ; Green-Pink Brin Cleanup: Spo Spo Kihunters Room
     dw $078D, $8DC6  ; DDB
     dw $079B, $9D9C  ; MDB
     dw $080D, $00FE  ; Explored map tiles
@@ -4382,8 +4386,8 @@ preset_100map_greenpink_brin_cleanup_spore_spawn:
     dw $D8B4, $266F  ; Doors
     dw #$FFFF
 
-preset_100map_greenpink_brin_cleanup_spo_spo_moonfall:
-    dw #preset_100map_greenpink_brin_cleanup_spore_spawn ; Green-Pink Brin Cleanup: Spore Spawn
+preset_spazermap_greenpink_brin_cleanup_spo_spo_moonfall:
+    dw #preset_spazermap_greenpink_brin_cleanup_spore_spawn ; Green-Pink Brin Cleanup: Spore Spawn
     dw $078D, $8E3E  ; DDB
     dw $079B, $9DC7  ; MDB
     dw $07F3, $002A  ; Music Bank
@@ -4405,8 +4409,8 @@ preset_100map_greenpink_brin_cleanup_spo_spo_moonfall:
     dw $D828, $0304  ; Bosses
     dw #$FFFF
 
-preset_100map_greenpink_brin_cleanup_spo_spo_farm_room:
-    dw #preset_100map_greenpink_brin_cleanup_spo_spo_moonfall ; Green-Pink Brin Cleanup: Spo Spo Moonfall
+preset_spazermap_greenpink_brin_cleanup_spo_spo_farm_room:
+    dw #preset_spazermap_greenpink_brin_cleanup_spo_spo_moonfall ; Green-Pink Brin Cleanup: Spo Spo Moonfall
     dw $078D, $8E4A  ; DDB
     dw $079B, $9B5B  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -4432,8 +4436,8 @@ preset_100map_greenpink_brin_cleanup_spo_spo_farm_room:
     dw $CAE8, $0442  ; Map counter
     dw #$FFFF
 
-preset_100map_greenpink_brin_cleanup_wave_gate_room:
-    dw #preset_100map_greenpink_brin_cleanup_spo_spo_farm_room ; Green-Pink Brin Cleanup: Spo Spo Farm Room
+preset_spazermap_greenpink_brin_cleanup_wave_gate_room:
+    dw #preset_spazermap_greenpink_brin_cleanup_spo_spo_farm_room ; Green-Pink Brin Cleanup: Spo Spo Farm Room
     dw $078D, $8F82  ; DDB
     dw $079B, $9D19  ; MDB
     dw $07F3, $000F  ; Music Bank
@@ -4456,8 +4460,8 @@ preset_100map_greenpink_brin_cleanup_wave_gate_room:
     dw $D8B6, $EF38  ; Doors
     dw #$FFFF
 
-preset_100map_greenpink_brin_cleanup_mission_impossible_room:
-    dw #preset_100map_greenpink_brin_cleanup_wave_gate_room ; Green-Pink Brin Cleanup: Wave Gate Room
+preset_spazermap_greenpink_brin_cleanup_mission_impossible_room:
+    dw #preset_spazermap_greenpink_brin_cleanup_wave_gate_room ; Green-Pink Brin Cleanup: Wave Gate Room
     dw $078D, $8FB2  ; DDB
     dw $0819, $8078  ; Explored map tiles
     dw $081D, $A07C  ; Explored map tiles
@@ -4478,8 +4482,8 @@ preset_100map_greenpink_brin_cleanup_mission_impossible_room:
     dw $D8B6, $EFF8  ; Doors
     dw #$FFFF
 
-preset_100map_greenpink_brin_cleanup_green_hill_zone_final:
-    dw #preset_100map_greenpink_brin_cleanup_mission_impossible_room ; Green-Pink Brin Cleanup: Mission Impossible Room
+preset_spazermap_greenpink_brin_cleanup_green_hill_zone_final:
+    dw #preset_spazermap_greenpink_brin_cleanup_mission_impossible_room ; Green-Pink Brin Cleanup: Mission Impossible Room
     dw $078D, $8F8E  ; DDB
     dw $0817, $7B07  ; Explored map tiles
     dw $0819, $80F8  ; Explored map tiles
@@ -4506,8 +4510,8 @@ preset_100map_greenpink_brin_cleanup_green_hill_zone_final:
     dw $D8B4, $2F6F  ; Doors
     dw #$FFFF
 
-preset_100map_blue_brinstar_cleanup_blue_brinstar_hoppers:
-    dw #preset_100map_greenpink_brin_cleanup_green_hill_zone_final ; Green-Pink Brin Cleanup: Green Hill Zone Final
+preset_spazermap_blue_brinstar_cleanup_blue_brinstar_hoppers:
+    dw #preset_spazermap_greenpink_brin_cleanup_green_hill_zone_final ; Green-Pink Brin Cleanup: Green Hill Zone Final
     dw $078D, $8DEA  ; DDB
     dw $079B, $9E52  ; MDB
     dw $0825, $7C78  ; Explored map tiles
@@ -4524,8 +4528,8 @@ preset_100map_blue_brinstar_cleanup_blue_brinstar_hoppers:
     dw $D8B6, $EFF9  ; Doors
     dw #$FFFF
 
-preset_100map_blue_brinstar_cleanup_blue_brinstar_etank_room:
-    dw #preset_100map_blue_brinstar_cleanup_blue_brinstar_hoppers ; Blue Brinstar Cleanup: Blue Brinstar Hoppers
+preset_spazermap_blue_brinstar_cleanup_blue_brinstar_etank_room:
+    dw #preset_spazermap_blue_brinstar_cleanup_blue_brinstar_hoppers ; Blue Brinstar Cleanup: Blue Brinstar Hoppers
     dw $078D, $8EAA  ; DDB
     dw $079B, $9F11  ; MDB
     dw $07F3, $0009  ; Music Bank
@@ -4545,8 +4549,8 @@ preset_100map_blue_brinstar_cleanup_blue_brinstar_etank_room:
     dw $D8B6, $EFFD  ; Doors
     dw #$FFFF
 
-preset_100map_blue_brinstar_cleanup_john_cena_bridge:
-    dw #preset_100map_blue_brinstar_cleanup_blue_brinstar_etank_room ; Blue Brinstar Cleanup: Blue Brinstar E-Tank Room
+preset_spazermap_blue_brinstar_cleanup_john_cena_bridge:
+    dw #preset_spazermap_blue_brinstar_cleanup_blue_brinstar_etank_room ; Blue Brinstar Cleanup: Blue Brinstar E-Tank Room
     dw $078D, $8ECE  ; DDB
     dw $079B, $9F64  ; MDB
     dw $0825, $FF7F  ; Explored map tiles
@@ -4569,8 +4573,8 @@ preset_100map_blue_brinstar_cleanup_john_cena_bridge:
     dw $D872, $24C1  ; Items
     dw #$FFFF
 
-preset_100map_blue_brinstar_cleanup_blue_brinstar_screwfall:
-    dw #preset_100map_blue_brinstar_cleanup_john_cena_bridge ; Blue Brinstar Cleanup: John Cena Bridge
+preset_spazermap_blue_brinstar_cleanup_blue_brinstar_screwfall:
+    dw #preset_spazermap_blue_brinstar_cleanup_john_cena_bridge ; Blue Brinstar Cleanup: John Cena Bridge
     dw $078D, $8FFA  ; DDB
     dw $079B, $A1AD  ; MDB
     dw $081D, $A7FC  ; Explored map tiles
@@ -4588,8 +4592,8 @@ preset_100map_blue_brinstar_cleanup_blue_brinstar_screwfall:
     dw $D872, $04C1  ; Items
     dw #$FFFF
 
-preset_100map_blue_brinstar_cleanup_pit_room_final:
-    dw #preset_100map_blue_brinstar_cleanup_blue_brinstar_screwfall ; Blue Brinstar Cleanup: Blue Brinstar Screwfall
+preset_spazermap_blue_brinstar_cleanup_pit_room_final:
+    dw #preset_spazermap_blue_brinstar_cleanup_blue_brinstar_screwfall ; Blue Brinstar Cleanup: Blue Brinstar Screwfall
     dw $078D, $8EB6  ; DDB
     dw $079B, $97B5  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -4689,8 +4693,8 @@ preset_100map_blue_brinstar_cleanup_pit_room_final:
     dw $CEFE, $00C4  ; Explored map tiles (Brinstar)
     dw #$FFFF
 
-preset_100map_blue_brinstar_cleanup_climb_supers:
-    dw #preset_100map_blue_brinstar_cleanup_pit_room_final ; Blue Brinstar Cleanup: Pit Room Final
+preset_spazermap_blue_brinstar_cleanup_climb_supers:
+    dw #preset_spazermap_blue_brinstar_cleanup_pit_room_final ; Blue Brinstar Cleanup: Pit Room Final
     dw $078D, $8B7A  ; DDB
     dw $079B, $96BA  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -4714,8 +4718,8 @@ preset_100map_blue_brinstar_cleanup_climb_supers:
     dw $D8B2, $AC09  ; Doors
     dw #$FFFF
 
-preset_100map_blue_brinstar_cleanup_parlor_again:
-    dw #preset_100map_blue_brinstar_cleanup_climb_supers ; Blue Brinstar Cleanup: Climb Supers
+preset_spazermap_blue_brinstar_cleanup_parlor_again:
+    dw #preset_spazermap_blue_brinstar_cleanup_climb_supers ; Blue Brinstar Cleanup: Climb Supers
     dw $078D, $8C6A  ; DDB
     dw $0821, $801F  ; Explored map tiles
     dw $0825, $8010  ; Explored map tiles
@@ -4739,8 +4743,8 @@ preset_100map_blue_brinstar_cleanup_parlor_again:
     dw $CAE8, $0479  ; Map counter
     dw #$FFFF
 
-preset_100map_blue_brinstar_cleanup_crateria_map_entry:
-    dw #preset_100map_blue_brinstar_cleanup_parlor_again ; Blue Brinstar Cleanup: Parlor Again
+preset_spazermap_blue_brinstar_cleanup_crateria_map_entry:
+    dw #preset_spazermap_blue_brinstar_cleanup_parlor_again ; Blue Brinstar Cleanup: Parlor Again
     dw $078D, $8B3E  ; DDB
     dw $079B, $92FD  ; MDB
     dw $090F, $2000  ; Screen subpixel X position
@@ -4755,8 +4759,8 @@ preset_100map_blue_brinstar_cleanup_crateria_map_entry:
     dw $D8B0, $B022  ; Doors
     dw #$FFFF
 
-preset_100map_blue_brinstar_cleanup_crateria_map_exit:
-    dw #preset_100map_blue_brinstar_cleanup_crateria_map_entry ; Blue Brinstar Cleanup: Crateria Map Entry
+preset_spazermap_blue_brinstar_cleanup_crateria_map_exit:
+    dw #preset_spazermap_blue_brinstar_cleanup_crateria_map_entry ; Blue Brinstar Cleanup: Crateria Map Entry
     dw $078D, $8BDA  ; DDB
     dw $079B, $9994  ; MDB
     dw $0819, $001F  ; Explored map tiles
@@ -4774,8 +4778,8 @@ preset_100map_blue_brinstar_cleanup_crateria_map_exit:
     dw $CAE8, $047D  ; Map counter
     dw #$FFFF
 
-preset_100map_blue_brinstar_cleanup_230_mockball:
-    dw #preset_100map_blue_brinstar_cleanup_crateria_map_exit ; Blue Brinstar Cleanup: Crateria Map Exit
+preset_spazermap_blue_brinstar_cleanup_230_mockball:
+    dw #preset_spazermap_blue_brinstar_cleanup_crateria_map_exit ; Blue Brinstar Cleanup: Crateria Map Exit
     dw $078D, $8C82  ; DDB
     dw $079B, $9A90  ; MDB
     dw $0819, $00FF  ; Explored map tiles
@@ -4789,8 +4793,8 @@ preset_100map_blue_brinstar_cleanup_230_mockball:
     dw $CAE8, $0480  ; Map counter
     dw #$FFFF
 
-preset_100map_blue_brinstar_cleanup_parlor_not_final_climb:
-    dw #preset_100map_blue_brinstar_cleanup_230_mockball ; Blue Brinstar Cleanup: 230 Mockball
+preset_spazermap_blue_brinstar_cleanup_parlor_not_final_climb:
+    dw #preset_spazermap_blue_brinstar_cleanup_230_mockball ; Blue Brinstar Cleanup: 230 Mockball
     dw $078D, $899A  ; DDB
     dw $079B, $93D5  ; MDB
     dw $0815, $C037  ; Explored map tiles
@@ -4801,8 +4805,8 @@ preset_100map_blue_brinstar_cleanup_parlor_not_final_climb:
     dw $CAE8, $0481  ; Map counter
     dw #$FFFF
 
-preset_100map_tourian_tourian_elevator:
-    dw #preset_100map_blue_brinstar_cleanup_parlor_not_final_climb ; Blue Brinstar Cleanup: Parlor (not) Final Climb
+preset_spazermap_tourian_tourian_elevator:
+    dw #preset_spazermap_blue_brinstar_cleanup_parlor_not_final_climb ; Blue Brinstar Cleanup: Parlor (not) Final Climb
     dw $078D, $91F2  ; DDB
     dw $079B, $A66A  ; MDB
     dw $07F5, $0006  ; Music Track
@@ -4820,8 +4824,8 @@ preset_100map_tourian_tourian_elevator:
     dw $D8B2, $EC09  ; Doors
     dw #$FFFF
 
-preset_100map_tourian_metroids_1:
-    dw #preset_100map_tourian_tourian_elevator ; Tourian: Tourian Elevator
+preset_spazermap_tourian_metroids_1:
+    dw #preset_spazermap_tourian_tourian_elevator ; Tourian: Tourian Elevator
     dw $078D, $AB40  ; DDB
     dw $079B, $DAAE  ; MDB
     dw $07F3, $001E  ; Music Bank
@@ -4893,8 +4897,8 @@ preset_100map_tourian_metroids_1:
     dw $D90C, $0100  ; Map Stations
     dw #$FFFF
 
-preset_100map_tourian_metroids_2:
-    dw #preset_100map_tourian_metroids_1 ; Tourian: Metroids 1
+preset_spazermap_tourian_metroids_2:
+    dw #preset_spazermap_tourian_metroids_1 ; Tourian: Metroids 1
     dw $078D, $A984  ; DDB
     dw $079B, $DAE1  ; MDB
     dw $082B, $0300  ; Explored map tiles
@@ -4915,8 +4919,8 @@ preset_100map_tourian_metroids_2:
     dw $D8C4, $0001  ; Doors
     dw #$FFFF
 
-preset_100map_tourian_metroids_3:
-    dw #preset_100map_tourian_metroids_2 ; Tourian: Metroids 2
+preset_spazermap_tourian_metroids_3:
+    dw #preset_spazermap_tourian_metroids_2 ; Tourian: Metroids 2
     dw $078D, $A9B4  ; DDB
     dw $079B, $DB31  ; MDB
     dw $082B, $0700  ; Explored map tiles
@@ -4936,8 +4940,8 @@ preset_100map_tourian_metroids_3:
     dw $D8C4, $0003  ; Doors
     dw #$FFFF
 
-preset_100map_tourian_metroids_4:
-    dw #preset_100map_tourian_metroids_3 ; Tourian: Metroids 3
+preset_spazermap_tourian_metroids_4:
+    dw #preset_spazermap_tourian_metroids_3 ; Tourian: Metroids 3
     dw $078D, $A9CC  ; DDB
     dw $079B, $DB7D  ; MDB
     dw $082F, $0700  ; Explored map tiles
@@ -4957,8 +4961,8 @@ preset_100map_tourian_metroids_4:
     dw $D8C4, $0007  ; Doors
     dw #$FFFF
 
-preset_100map_tourian_baby_skip:
-    dw #preset_100map_tourian_metroids_4 ; Tourian: Metroids 4
+preset_spazermap_tourian_baby_skip:
+    dw #preset_spazermap_tourian_metroids_4 ; Tourian: Metroids 4
     dw $078D, $AA14  ; DDB
     dw $079B, $DC65  ; MDB
     dw $07F3, $0045  ; Music Bank
@@ -4981,8 +4985,8 @@ preset_100map_tourian_baby_skip:
     dw $D8C4, $000F  ; Doors
     dw #$FFFF
 
-preset_100map_tourian_dusty_shaft_revisit:
-    dw #preset_100map_tourian_baby_skip ; Tourian: Baby Skip
+preset_spazermap_tourian_dusty_shaft_revisit:
+    dw #preset_spazermap_tourian_baby_skip ; Tourian: Baby Skip
     dw $078D, $AA68  ; DDB
     dw $079B, $DD2E  ; MDB
     dw $07F3, $001E  ; Music Bank
@@ -5002,8 +5006,8 @@ preset_100map_tourian_dusty_shaft_revisit:
     dw $D8C4, $002F  ; Doors
     dw #$FFFF
 
-preset_100map_tourian_zeb_skip:
-    dw #preset_100map_tourian_dusty_shaft_revisit ; Tourian: Dusty Shaft Revisit
+preset_spazermap_tourian_zeb_skip:
+    dw #preset_spazermap_tourian_dusty_shaft_revisit ; Tourian: Dusty Shaft Revisit
     dw $078D, $AAD4  ; DDB
     dw $079B, $DDF3  ; MDB
     dw $083B, $1F00  ; Explored map tiles
@@ -5023,8 +5027,8 @@ preset_100map_tourian_zeb_skip:
     dw $D8C4, $03AF  ; Doors
     dw #$FFFF
 
-preset_100map_tourian_mother_brain_2:
-    dw #preset_100map_tourian_zeb_skip ; Tourian: Zeb Skip
+preset_spazermap_tourian_mother_brain_2:
+    dw #preset_spazermap_tourian_zeb_skip ; Tourian: Zeb Skip
     dw $078D, $AAC8  ; DDB
     dw $079B, $DD58  ; MDB
     dw $07F3, $0021  ; Music Bank
@@ -5043,8 +5047,8 @@ preset_100map_tourian_mother_brain_2:
     dw $D820, $3FC5  ; Events
     dw #$FFFF
 
-preset_100map_tourian_zebes_escape:
-    dw #preset_100map_tourian_mother_brain_2 ; Tourian: Mother Brain 2
+preset_spazermap_tourian_zebes_escape:
+    dw #preset_spazermap_tourian_mother_brain_2 ; Tourian: Mother Brain 2
     dw $09A6, $1009  ; Equipped Beams
     dw $09C2, $031F  ; Health
     dw $09C6, $0000  ; Missiles
@@ -5060,8 +5064,8 @@ preset_100map_tourian_zebes_escape:
     dw $D82C, $0203  ; Bosses
     dw #$FFFF
 
-preset_100map_tourian_escape_room_3:
-    dw #preset_100map_tourian_zebes_escape ; Tourian: Zebes Escape
+preset_spazermap_tourian_escape_room_3:
+    dw #preset_spazermap_tourian_zebes_escape ; Tourian: Zebes Escape
     dw $078D, $AAEC  ; DDB
     dw $079B, $DE7A  ; MDB
     dw $07F3, $0024  ; Music Bank
@@ -5080,8 +5084,8 @@ preset_100map_tourian_escape_room_3:
     dw $CAE8, $04B8  ; Map counter
     dw #$FFFF
 
-preset_100map_tourian_escape_room_4:
-    dw #preset_100map_tourian_escape_room_3 ; Tourian: Escape Room 3
+preset_spazermap_tourian_escape_room_4:
+    dw #preset_spazermap_tourian_escape_room_3 ; Tourian: Escape Room 3
     dw $078D, $AB04  ; DDB
     dw $079B, $DEA7  ; MDB
     dw $0847, $1E00  ; Explored map tiles
@@ -5097,8 +5101,8 @@ preset_100map_tourian_escape_room_4:
     dw $CAE8, $04C1  ; Map counter
     dw #$FFFF
 
-preset_100map_tourian_escape_climb:
-    dw #preset_100map_tourian_escape_room_4 ; Tourian: Escape Room 4
+preset_spazermap_tourian_escape_climb:
+    dw #preset_spazermap_tourian_escape_room_4 ; Tourian: Escape Room 4
     dw $078D, $AB1C  ; DDB
     dw $079B, $DEDE  ; MDB
     dw $083D, $00F8  ; Explored map tiles
@@ -5118,8 +5122,8 @@ preset_100map_tourian_escape_climb:
     dw $CAE8, $04D5  ; Map counter
     dw #$FFFF
 
-preset_100map_tourian_escape_parlor:
-    dw #preset_100map_tourian_escape_climb ; Tourian: Escape Climb
+preset_spazermap_tourian_escape_parlor:
+    dw #preset_spazermap_tourian_escape_climb ; Tourian: Escape Climb
     dw $078D, $AB34  ; DDB
     dw $079B, $96BA  ; MDB
     dw $07FD, $1F00  ; Explored map tiles
@@ -5206,8 +5210,8 @@ preset_100map_tourian_escape_parlor:
     dw $D2AC, $0038  ; Explored map tiles (Tourian)
     dw #$FFFF
 
-preset_100map_tourian_landing_site_final:
-    dw #preset_100map_tourian_escape_parlor ; Tourian: Escape Parlor
+preset_spazermap_tourian_landing_site_final:
+    dw #preset_spazermap_tourian_escape_parlor ; Tourian: Escape Parlor
     dw $078D, $8B3E  ; DDB
     dw $079B, $92FD  ; MDB
     dw $090F, $4000  ; Screen subpixel X position

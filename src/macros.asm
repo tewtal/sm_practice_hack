@@ -343,8 +343,14 @@ macro cm_adjacent_submenu(title, target)
 endmacro
 
 macro cm_preset(title, target)
-; runs action_load_preset to set the bank of the preset menu that matches the current category
-    %cm_jsl_submenu("<title>", #action_load_preset, <target>)
+; Displays category preset name and saves full 24-bit address to preset
+  .dm_actionIndex
+    dw !ACTION_CATEGORY_PRESET
+  .dm_arg
+    dl <target>
+  .dm_text
+table ../resources/normal.tbl
+    db #$28, "<title>", #$FF
 endmacro
 
 macro cm_custompreset(slot)

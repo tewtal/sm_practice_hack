@@ -282,6 +282,7 @@ preset_category_submenus:
     dw #PresetsMenu100early
     dw #PresetsMenuHundo
     dw #PresetsMenu100map
+    dw #PresetsMenuSpazermap
     dw #PresetsMenu14ice
     dw #PresetsMenu14speed
     dw #PresetsMenuRbo
@@ -309,6 +310,7 @@ preset_category_banks:
     dw #PresetsMenu100early>>16
     dw #PresetsMenuHundo>>16
     dw #PresetsMenu100map>>16
+    dw #PresetsMenuSpazermap>>16
     dw #PresetsMenu14ice>>16
     dw #PresetsMenu14speed>>16
     dw #PresetsMenuRbo>>16
@@ -496,8 +498,8 @@ presets_custom_preset_slot:
   .routine
     ; ignore if not A, X, or Y
     LDA !IH_CONTROLLER_PRI_NEW : ORA !IH_CONTROLLER_SEC_NEW : BIT #$40C0 : BNE .submenu
-    LDA !sram_last_preset : BMI .exit
-    TDC : STA !sram_last_preset
+    LDA !sram_last_preset_low_word : BMI .exit
+    TDC : STA !sram_last_preset_low_word : STA !sram_last_preset_high_word
   .exit
     RTL
   .submenu
@@ -559,14 +561,16 @@ presets_load_custom_preset:
     RTL
 
   .safe
-    STA !ram_custom_preset
+    STA !ram_load_preset_low_word
+    XBA : AND #$00FF : STA !ram_load_preset_high_word
     LDA #$0001 : STA !ram_cm_leave
     RTL
 
 presets_reload_last:
     %cm_jsl("Reload Last Preset", .routine, #$0001)
   .routine
-    LDA !sram_last_preset : STA !ram_load_preset
+    LDA !sram_last_preset_low_word : STA !ram_load_preset_low_word
+    LDA !sram_last_preset_high_word : STA !ram_load_preset_high_word
     TYA : STA !ram_cm_leave
     RTL
 
@@ -635,6 +639,7 @@ SelectPresetCategoryMenu:
     dw #precat_100early
     dw #precat_hundo
     dw #precat_100map
+    dw #precat_spazermap
     dw #precat_14ice
     dw #precat_14speed
     dw #precat_rbo
@@ -663,6 +668,7 @@ presets_current:
     db #$28, " 100% EARLY", #$FF
     db #$28, "  100% LATE", #$FF
     db #$28, "   100% MAP", #$FF
+    db #$28, " SPAZER MAP", #$FF
     db #$28, "    14% ICE", #$FF
     db #$28, "  14% SPEED", #$FF
     db #$28, "        RBO", #$FF
@@ -675,7 +681,7 @@ presets_current:
     db #$28, "  BOSS PRKD", #$FF
     db #$FF
   .routine
-    TDC : STA !sram_last_preset
+    TDC : STA !sram_last_preset_low_word : STA !sram_last_preset_high_word
     RTL
 
 precat_kpdr:
@@ -726,26 +732,30 @@ precat_100map:
 !PRESET_CATEGORY_100MAP_INDEX = #$000B
     %cm_jsl("100% Map Completion", #action_select_preset_category, #$000B)
 
+precat_spazermap:
+!PRESET_CATEGORY_SPAZERMAP_INDEX = #$000C
+    %cm_jsl("100% Map with Spazer", #action_select_preset_category, #$000C)
+
 precat_14ice:
-    %cm_jsl("14% Ice", #action_select_preset_category, #$000C)
+    %cm_jsl("14% Ice", #action_select_preset_category, #$000D)
 
 precat_14speed:
-    %cm_jsl("14% Speed", #action_select_preset_category, #$000D)
+    %cm_jsl("14% Speed", #action_select_preset_category, #$000E)
 
 precat_rbo:
-    %cm_jsl("Reverse Boss Order", #action_select_preset_category, #$000E)
+    %cm_jsl("Reverse Boss Order", #action_select_preset_category, #$000F)
 
 precat_suitless:
-    %cm_jsl("Max% Suitless", #action_select_preset_category, #$000F)
+    %cm_jsl("Max% Suitless", #action_select_preset_category, #$0010)
 
 precat_ngplasma:
-    %cm_jsl("NewGame+ Plasma", #action_select_preset_category, #$0010)
+    %cm_jsl("NewGame+ Plasma", #action_select_preset_category, #$0011)
 
 precat_nghyper:
-    %cm_jsl("NewGame+ Hyper", #action_select_preset_category, #$0011)
+    %cm_jsl("NewGame+ Hyper", #action_select_preset_category, #$0012)
 
 precat_nintendopower:
-    %cm_jsl("Nintendo Power%", #action_select_preset_category, #$0012)
+    %cm_jsl("Nintendo Power%", #action_select_preset_category, #$0013)
 
 precat_allboss:
     %cm_submenu("All Bosses", #SelectAllBossesPresetCategoryMenu)
@@ -758,28 +768,21 @@ SelectAllBossesPresetCategoryMenu:
     %cm_header("SELECT ALL BOSSES CATEGORY")
 
 precat_allbosskpdr:
-    %cm_jsl("All Bosses KPDR", #action_select_preset_category, #$0013)
+    %cm_jsl("All Bosses KPDR", #action_select_preset_category, #$0014)
 
 precat_allbosspkdr:
-    %cm_jsl("All Bosses PKDR", #action_select_preset_category, #$0014)
+    %cm_jsl("All Bosses PKDR", #action_select_preset_category, #$0015)
 
 precat_allbossprkd:
-    %cm_jsl("All Bosses PRKD", #action_select_preset_category, #$0015)
+    %cm_jsl("All Bosses PRKD", #action_select_preset_category, #$0016)
 
 action_select_preset_category:
 {
     ; category index in Y
     TYA : STA !sram_preset_category
     ; clear stale preset
-    TDC : STA !sram_last_preset
+    TDC : STA !sram_last_preset_low_word : STA !sram_last_preset_high_word
     JML cm_previous_menu
-}
-
-action_load_preset:
-{
-    TYA : STA !ram_load_preset
-    LDA #$0001 : STA !ram_cm_leave
-    RTL
 }
 
 
@@ -1778,6 +1781,7 @@ RoomStratMenu:
     dw ihstrat_pitdoor
     dw ihstrat_moondance
     dw ihstrat_kraidradar
+    dw ihstrat_bootlessup
     dw ihstrat_gateglitch
     dw ihstrat_moatcwj
     dw ihstrat_robotflush
@@ -1828,53 +1832,56 @@ ihstrat_moondance:
 ihstrat_kraidradar:
     %cm_jsl("Kraid Nail Radar", #action_select_room_strat, #$0006)
 
+ihstrat_bootlessup:
+    %cm_jsl("Bootless Up In Two", #action_select_room_strat, #$0007)
+
 ihstrat_gateglitch:
-    %cm_jsl("Gate Glitch", #action_select_room_strat, #$0007)
+    %cm_jsl("Gate Glitch", #action_select_room_strat, #$0008)
 
 ihstrat_moatcwj:
-    %cm_jsl("Moat CWJ", #action_select_room_strat, #$0008)
+    %cm_jsl("Moat CWJ", #action_select_room_strat, #$0009)
 
 ihstrat_robotflush:
-    %cm_jsl("Robot Flush", #action_select_room_strat, #$0009)
+    %cm_jsl("Robot Flush", #action_select_room_strat, #$000A)
 
 ihstrat_shinetopb:
-    %cm_jsl("Shine to PB", #action_select_room_strat, #$000A)
+    %cm_jsl("Shine to PB", #action_select_room_strat, #$000B)
 
 ihstrat_elevatorcf:
-    %cm_jsl("Elevator Crystal Flash", #action_select_room_strat, #$000B)
+    %cm_jsl("Elevator Crystal Flash", #action_select_room_strat, #$000C)
 
 ihstrat_botwooncf:
-    %cm_jsl("Botwoon Crystal Flash", #action_select_room_strat, #$000C)
+    %cm_jsl("Botwoon Crystal Flash", #action_select_room_strat, #$000D)
 
 ihstrat_draygonai:
-    %cm_jsl("Draygon AI", #action_select_room_strat, #$000D)
+    %cm_jsl("Draygon AI", #action_select_room_strat, #$000E)
 
 ihstrat_snailclip:
-    %cm_jsl("Aqueduct Snail Clip", #action_select_room_strat, #$000E)
+    %cm_jsl("Aqueduct Snail Clip", #action_select_room_strat, #$000F)
 
 ihstrat_wasteland:
-    %cm_jsl("Wasteland Entry", #action_select_room_strat, #$000F)
+    %cm_jsl("Wasteland Entry", #action_select_room_strat, #$0010)
 
 ihstrat_ridleyai:
-    %cm_jsl("Ridley AI", #action_select_room_strat, #$0010)
+    %cm_jsl("Ridley AI", #action_select_room_strat, #$0011)
 
 ihstrat_kihuntermanip:
-    %cm_jsl("Kihunter Manipulation", #action_select_room_strat, #$0011)
+    %cm_jsl("Kihunter Manipulation", #action_select_room_strat, #$0012)
 
 ihstrat_downbackzeb:
-    %cm_jsl("Downback Zeb Skip", #action_select_room_strat, #$0012)
+    %cm_jsl("Downback Zeb Skip", #action_select_room_strat, #$0013)
 
 ihstrat_zebskip:
-    %cm_jsl("Zeb Skip Indicator", #action_select_room_strat, #$0013)
+    %cm_jsl("Zeb Skip Indicator", #action_select_room_strat, #$0014)
 
 ihstrat_mbhp:
-!IH_STRAT_MBHP_INDEX = #$0014
-    %cm_jsl("Mother Brain HP", #action_select_room_strat, #$0014)
+!IH_STRAT_MBHP_INDEX = #$0015
+    %cm_jsl("Mother Brain HP", #action_select_room_strat, #$0015)
 
 ihstrat_twocries:
-    %cm_jsl("Two Cries Standup", #action_select_room_strat, #$0015)
+    %cm_jsl("Two Cries Standup", #action_select_room_strat, #$0016)
 
-!IH_ROOM_STRAT_COUNT = #$0016
+!IH_ROOM_STRAT_COUNT = #$0017
 action_select_room_strat:
 {
     TYA : STA !sram_room_strat
@@ -1902,6 +1909,7 @@ ih_room_strat:
     db #$28, "   PIT DOOR", #$FF
     db #$28, "  MOONDANCE", #$FF
     db #$28, "KRAID RADAR", #$FF
+    db #$28, "BOOTLESS ", #$81, #$22, #$FF
     db #$28, "GATE GLITCH", #$FF
     db #$28, "   MOAT CWJ", #$FF
     db #$28, "ROBOT FLUSH", #$FF
@@ -1972,6 +1980,7 @@ ih_superhud_bottom_selector:
     db #$28, "   PIT DOOR", #$FF
     db #$28, "  MOONDANCE", #$FF
     db #$28, "KRAID RADAR", #$FF
+    db #$28, "BOOTLESS ", #$81, #$22, #$FF
     db #$28, "GATE GLITCH", #$FF
     db #$28, "   MOAT CWJ", #$FF
     db #$28, "ROBOT FLUSH", #$FF
@@ -2028,6 +2037,7 @@ SuperHUDBottomMenu2:
     dw ih_superhud_pitdoor
     dw ih_superhud_moondance
     dw ih_superhud_kraidradar
+    dw ih_superhud_bootlessup
     dw ih_superhud_gateglitch
     dw ih_superhud_moatcwj
     dw ih_superhud_robotflush
@@ -2147,53 +2157,56 @@ ih_superhud_moondance:
 ih_superhud_kraidradar:
     %cm_jsl("Kraid Nail Radar", #action_select_room_strat, #$001B)
 
+ih_superhud_bootlessup:
+    %cm_jsl("Bootless Up In Two", #action_select_superhud_bottom, #$001C)
+
 ih_superhud_gateglitch:
-    %cm_jsl("Gate Glitch", #action_select_superhud_bottom, #$001C)
+    %cm_jsl("Gate Glitch", #action_select_superhud_bottom, #$001D)
 
 ih_superhud_moatcwj:
-    %cm_jsl("Moat CWJ", #action_select_superhud_bottom, #$001D)
+    %cm_jsl("Moat CWJ", #action_select_superhud_bottom, #$001E)
 
 ih_superhud_robotflush:
-    %cm_jsl("Robot Flush", #action_select_superhud_bottom, #$001E)
+    %cm_jsl("Robot Flush", #action_select_superhud_bottom, #$001F)
 
 ih_superhud_shinetopb:
-    %cm_jsl("Shine to PB", #action_select_superhud_bottom, #$001F)
+    %cm_jsl("Shine to PB", #action_select_superhud_bottom, #$0020)
 
 ih_superhud_elevatorcf:
-    %cm_jsl("Elevator Crystal Flash", #action_select_superhud_bottom, #$0020)
+    %cm_jsl("Elevator Crystal Flash", #action_select_superhud_bottom, #$0021)
 
 ih_superhud_botwooncf:
-    %cm_jsl("Botwoon Crystal Flash", #action_select_superhud_bottom, #$0021)
+    %cm_jsl("Botwoon Crystal Flash", #action_select_superhud_bottom, #$0022)
 
 ih_superhud_draygonai:
-    %cm_jsl("Draygon AI", #action_select_superhud_bottom, #$0022)
+    %cm_jsl("Draygon AI", #action_select_superhud_bottom, #$0023)
 
 ih_superhud_snailclip:
-    %cm_jsl("Aqueduct Snail Clip", #action_select_superhud_bottom, #$0023)
+    %cm_jsl("Aqueduct Snail Clip", #action_select_superhud_bottom, #$0024)
 
 ih_superhud_wasteland:
-    %cm_jsl("Wasteland Entry", #action_select_superhud_bottom, #$0024)
+    %cm_jsl("Wasteland Entry", #action_select_superhud_bottom, #$0025)
 
 ih_superhud_ridleyai:
-    %cm_jsl("Ridley AI", #action_select_superhud_bottom, #$0025)
+    %cm_jsl("Ridley AI", #action_select_superhud_bottom, #$0026)
 
 ih_superhud_kihuntermanip:
-    %cm_jsl("Kihunter Manipulation", #action_select_room_strat, #$0026)
+    %cm_jsl("Kihunter Manipulation", #action_select_room_strat, #$0027)
 
 ih_superhud_downbackzeb:
-    %cm_jsl("Downback Zeb Skip", #action_select_superhud_bottom, #$0027)
+    %cm_jsl("Downback Zeb Skip", #action_select_superhud_bottom, #$0028)
 
 ih_superhud_zebskip:
-    %cm_jsl("Zeb Skip Indicator", #action_select_superhud_bottom, #$0028)
+    %cm_jsl("Zeb Skip Indicator", #action_select_superhud_bottom, #$0029)
 
 ih_superhud_mbhp:
-!IH_SUPERHUD_MBHP_BOTTOM_INDEX = #$0029
-    %cm_jsl("Mother Brain HP", #action_select_superhud_bottom, #$0029)
+!IH_SUPERHUD_MBHP_BOTTOM_INDEX = #$002A
+    %cm_jsl("Mother Brain HP", #action_select_superhud_bottom, #$002A)
 
 ih_superhud_twocries:
-    %cm_jsl("Two Cries Standup", #action_select_superhud_bottom, #$002A)
+    %cm_jsl("Two Cries Standup", #action_select_superhud_bottom, #$002B)
 
-!IH_SUPERHUD_BOTTOM_COUNT = #$002B
+!IH_SUPERHUD_BOTTOM_COUNT = #$002C
 action_select_superhud_bottom:
 {
     TYA : STA !sram_superhud_bottom
@@ -3253,7 +3266,7 @@ rng_ridley_pogo_time_dynamic:
     dw #rng_ridley_pogo_time_value
 
 rng_ridley_pogo_time_value:
-    %cm_numfield("Pogo Time Value", !ram_cm_ridley_pogo_time_value_rng, 128, 191, 1, 4, #.routine)
+    %cm_numfield_word("Pogo Time Value", !ram_cm_ridley_pogo_time_value_rng, 128, 191, 1, 4, #.routine)
   .routine
     LDA !ram_ridley_rng_times_and_fireball : AND !RIDLEY_RNG_POGO_TIME_INVERTED
     STA !ram_ridley_rng_times_and_fireball
@@ -3292,7 +3305,7 @@ rng_ridley_hover_time_dynamic:
     dw #rng_ridley_hover_time_value
 
 rng_ridley_hover_time_value:
-    %cm_numfield("Hover Time Value", !ram_cm_ridley_hover_time_value_rng, 32, 63, 1, 4, #.routine)
+    %cm_numfield_word("Hover Time Value", !ram_cm_ridley_hover_time_value_rng, 32, 63, 1, 4, #.routine)
   .routine
     LDA !ram_ridley_rng_times_and_fireball : AND !RIDLEY_RNG_HOVER_TIME_INVERTED
     ORA !ram_cm_ridley_hover_time_value_rng : STA !ram_ridley_rng_times_and_fireball
@@ -3673,19 +3686,19 @@ save_rando_enable:
     %cm_toggle("Variance on Load State", !sram_loadstate_rando_enable, #$01, #0)
 
 save_rando_energy:
-    %cm_numfield("Energy Variance", !sram_loadstate_rando_energy, 0, 255, 1, 4, #0)
+    %cm_numfield_word("Energy Variance", !sram_loadstate_rando_energy, 0, 255, 1, 4, #0)
 
 save_rando_reserves:
-    %cm_numfield("Reserve Variance", !sram_loadstate_rando_reserves, 0, 255, 1, 4, #0)
+    %cm_numfield_word("Reserve Variance", !sram_loadstate_rando_reserves, 0, 255, 1, 4, #0)
 
 save_rando_missiles:
-    %cm_numfield("Missile Variance", !sram_loadstate_rando_missiles, 0, 230, 1, 4, #0)
+    %cm_numfield_word("Missile Variance", !sram_loadstate_rando_missiles, 0, 230, 1, 4, #0)
 
 save_rando_supers:
-    %cm_numfield("Super Missile Variance", !sram_loadstate_rando_supers, 0, 50, 1, 2, #0)
+    %cm_numfield_word("Super Missile Variance", !sram_loadstate_rando_supers, 0, 50, 1, 2, #0)
 
 save_rando_powerbombs:
-    %cm_numfield("Power Bomb Variance", !sram_loadstate_rando_powerbombs, 0, 50, 1, 2, #0)
+    %cm_numfield_word("Power Bomb Variance", !sram_loadstate_rando_powerbombs, 0, 50, 1, 2, #0)
 endif
 
 
@@ -3752,7 +3765,7 @@ else
     CMP !IH_MODE_WALLJUMP_INDEX : BEQ .skip
     CMP !IH_MODE_SHOTTIMER_INDEX : BEQ .skip
   .print
-    LDA #$0001 : STA !ram_print_segment_timer
+    LDA !ram_print_segment_timer : ORA #$8000 : STA !ram_print_segment_timer
     RTL
 
   .checkSuperHUD
@@ -3764,7 +3777,7 @@ else
   .skip
 endif
 endif
-    TDC : STA !ram_print_segment_timer
+    LDA !ram_print_segment_timer : AND #$7FFF : STA !ram_print_segment_timer
     RTL
 }
 

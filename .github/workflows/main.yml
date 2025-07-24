@@ -34,8 +34,10 @@ jobs:
     - name: Build practice hack patches
       run: |
         cp ./asar/asar-1.81/asar/asar-standalone ./tools/asar
+        chmod +x ./build_presets.sh
         chmod +x ./build.sh
         chmod +x ./build_PAL.sh
+        ./build_presets.sh
         ./build.sh
         ./build_PAL.sh
         mkdir ./web/public/patches
