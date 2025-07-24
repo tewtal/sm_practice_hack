@@ -261,6 +261,24 @@ For Samus position, if you successfully perform the bomb bounce setup for KQK, t
 For Kraid's fingernails, the indicators show if the nails are moving around and in what directions. If both are moving indicating both are below, then Kraid will be laggier than if just one nail is moving.
 Using a power bomb or wave beam shots to kill nails below Samus may cause one of them to respawn above Samus and reduce Kraid lag. It is not possible to spawn both nails above Samus.
 
+## Bootless Up In Two
+Provides feedback on bootless attempts to bomb jump up to the cathedral entrance with just two bombs:
+&nbsp;  
+First Y = You started from the correct position (crouched on the platform below cathedral entrance).
+&nbsp;  
+First two characters = Feedback on the first bomb (this will overwrite the first Y):
+- E# indicates you bombed early where the number tells you how many frames you were early.
+- Y# indicates you bombed on one of the two correct frames. Y1 is preferred, since getting propelled on the first possible frame means Samus spends less time falling before being propelled upward, making her high enough that the second bomb doesn't need to be as precise to work.
+- L# indicates you bombed late where the number tells you how many frames you were late.
+
+Last two characters = Feedback on the second bomb:
+- E# indicates you bombed early where the number tells you how many frames you were early.
+- Y# indicates you bombed on time and were not scammed where the number tells you which frame you hit.  If first bomb was Y1 then this has an 18-frame window (except frame 10 is the scam frame).  If first bomb was Y2 then this has an 8-frame window (except frame 5 is the scam frame).
+- X# indicates you bombed on the scam frame (immediately after reaching the peak of the first bomb jump).  If first bomb was Y1 then this is X10.  If first bomb was Y2 then this is X5.
+- L# indicates you bombed late where the number tells you how many frames you were late.
+
+Note: You can also lay a third bomb as a backup.  No feedback is given on the third bomb, and optimally you will get up in two.  However if you end up a little bit short, you can unmorph as you fall down and hope to get bounced back up by the third bomb.  If successful, you may be able to downgrab the ledge.
+
 ## Gate Glitch
 Provides feedback on attempts to open a left-facing gate from the right side:  
 &nbsp;  
