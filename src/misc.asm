@@ -141,7 +141,11 @@ org $CF8BBF       ; Set map scroll beep to high priority
 hook_spc_engine_map_scroll_beep_priority:
     dw $2A97
 
-org $CFC2C8       ; Mute track 4 so it can be used when music is off
+if !FEATURE_PAL
+org $CFC288
+else              ; Mute track 4 so it can be used when music is off
+org $CFC2C8
+endif
 hook_spc_engine_mute_track_4:
     db $30, $C9, $00, $00
 
