@@ -1781,6 +1781,7 @@ RoomStratMenu:
     dw ihstrat_pitdoor
     dw ihstrat_moondance
     dw ihstrat_kraidradar
+    dw ihstrat_bootlessup
     dw ihstrat_gateglitch
     dw ihstrat_moatcwj
     dw ihstrat_robotflush
@@ -1831,53 +1832,56 @@ ihstrat_moondance:
 ihstrat_kraidradar:
     %cm_jsl("Kraid Nail Radar", #action_select_room_strat, #$0006)
 
+ihstrat_bootlessup:
+    %cm_jsl("Bootless Up In Two", #action_select_room_strat, #$0007)
+
 ihstrat_gateglitch:
-    %cm_jsl("Gate Glitch", #action_select_room_strat, #$0007)
+    %cm_jsl("Gate Glitch", #action_select_room_strat, #$0008)
 
 ihstrat_moatcwj:
-    %cm_jsl("Moat CWJ", #action_select_room_strat, #$0008)
+    %cm_jsl("Moat CWJ", #action_select_room_strat, #$0009)
 
 ihstrat_robotflush:
-    %cm_jsl("Robot Flush", #action_select_room_strat, #$0009)
+    %cm_jsl("Robot Flush", #action_select_room_strat, #$000A)
 
 ihstrat_shinetopb:
-    %cm_jsl("Shine to PB", #action_select_room_strat, #$000A)
+    %cm_jsl("Shine to PB", #action_select_room_strat, #$000B)
 
 ihstrat_elevatorcf:
-    %cm_jsl("Elevator Crystal Flash", #action_select_room_strat, #$000B)
+    %cm_jsl("Elevator Crystal Flash", #action_select_room_strat, #$000C)
 
 ihstrat_botwooncf:
-    %cm_jsl("Botwoon Crystal Flash", #action_select_room_strat, #$000C)
+    %cm_jsl("Botwoon Crystal Flash", #action_select_room_strat, #$000D)
 
 ihstrat_draygonai:
-    %cm_jsl("Draygon AI", #action_select_room_strat, #$000D)
+    %cm_jsl("Draygon AI", #action_select_room_strat, #$000E)
 
 ihstrat_snailclip:
-    %cm_jsl("Aqueduct Snail Clip", #action_select_room_strat, #$000E)
+    %cm_jsl("Aqueduct Snail Clip", #action_select_room_strat, #$000F)
 
 ihstrat_wasteland:
-    %cm_jsl("Wasteland Entry", #action_select_room_strat, #$000F)
+    %cm_jsl("Wasteland Entry", #action_select_room_strat, #$0010)
 
 ihstrat_ridleyai:
-    %cm_jsl("Ridley AI", #action_select_room_strat, #$0010)
+    %cm_jsl("Ridley AI", #action_select_room_strat, #$0011)
 
 ihstrat_kihuntermanip:
-    %cm_jsl("Kihunter Manipulation", #action_select_room_strat, #$0011)
+    %cm_jsl("Kihunter Manipulation", #action_select_room_strat, #$0012)
 
 ihstrat_downbackzeb:
-    %cm_jsl("Downback Zeb Skip", #action_select_room_strat, #$0012)
+    %cm_jsl("Downback Zeb Skip", #action_select_room_strat, #$0013)
 
 ihstrat_zebskip:
-    %cm_jsl("Zeb Skip Indicator", #action_select_room_strat, #$0013)
+    %cm_jsl("Zeb Skip Indicator", #action_select_room_strat, #$0014)
 
 ihstrat_mbhp:
-!IH_STRAT_MBHP_INDEX = #$0014
-    %cm_jsl("Mother Brain HP", #action_select_room_strat, #$0014)
+!IH_STRAT_MBHP_INDEX = #$0015
+    %cm_jsl("Mother Brain HP", #action_select_room_strat, #$0015)
 
 ihstrat_twocries:
-    %cm_jsl("Two Cries Standup", #action_select_room_strat, #$0015)
+    %cm_jsl("Two Cries Standup", #action_select_room_strat, #$0016)
 
-!IH_ROOM_STRAT_COUNT = #$0016
+!IH_ROOM_STRAT_COUNT = #$0017
 action_select_room_strat:
 {
     TYA : STA !sram_room_strat
@@ -1905,6 +1909,7 @@ ih_room_strat:
     db #$28, "   PIT DOOR", #$FF
     db #$28, "  MOONDANCE", #$FF
     db #$28, "KRAID RADAR", #$FF
+    db #$28, "BOOTLESS ", #$81, #$22, #$FF
     db #$28, "GATE GLITCH", #$FF
     db #$28, "   MOAT CWJ", #$FF
     db #$28, "ROBOT FLUSH", #$FF
@@ -1975,6 +1980,7 @@ ih_superhud_bottom_selector:
     db #$28, "   PIT DOOR", #$FF
     db #$28, "  MOONDANCE", #$FF
     db #$28, "KRAID RADAR", #$FF
+    db #$28, "BOOTLESS ", #$81, #$22, #$FF
     db #$28, "GATE GLITCH", #$FF
     db #$28, "   MOAT CWJ", #$FF
     db #$28, "ROBOT FLUSH", #$FF
@@ -2031,6 +2037,7 @@ SuperHUDBottomMenu2:
     dw ih_superhud_pitdoor
     dw ih_superhud_moondance
     dw ih_superhud_kraidradar
+    dw ih_superhud_bootlessup
     dw ih_superhud_gateglitch
     dw ih_superhud_moatcwj
     dw ih_superhud_robotflush
@@ -2150,53 +2157,56 @@ ih_superhud_moondance:
 ih_superhud_kraidradar:
     %cm_jsl("Kraid Nail Radar", #action_select_room_strat, #$001B)
 
+ih_superhud_bootlessup:
+    %cm_jsl("Bootless Up In Two", #action_select_superhud_bottom, #$001C)
+
 ih_superhud_gateglitch:
-    %cm_jsl("Gate Glitch", #action_select_superhud_bottom, #$001C)
+    %cm_jsl("Gate Glitch", #action_select_superhud_bottom, #$001D)
 
 ih_superhud_moatcwj:
-    %cm_jsl("Moat CWJ", #action_select_superhud_bottom, #$001D)
+    %cm_jsl("Moat CWJ", #action_select_superhud_bottom, #$001E)
 
 ih_superhud_robotflush:
-    %cm_jsl("Robot Flush", #action_select_superhud_bottom, #$001E)
+    %cm_jsl("Robot Flush", #action_select_superhud_bottom, #$001F)
 
 ih_superhud_shinetopb:
-    %cm_jsl("Shine to PB", #action_select_superhud_bottom, #$001F)
+    %cm_jsl("Shine to PB", #action_select_superhud_bottom, #$0020)
 
 ih_superhud_elevatorcf:
-    %cm_jsl("Elevator Crystal Flash", #action_select_superhud_bottom, #$0020)
+    %cm_jsl("Elevator Crystal Flash", #action_select_superhud_bottom, #$0021)
 
 ih_superhud_botwooncf:
-    %cm_jsl("Botwoon Crystal Flash", #action_select_superhud_bottom, #$0021)
+    %cm_jsl("Botwoon Crystal Flash", #action_select_superhud_bottom, #$0022)
 
 ih_superhud_draygonai:
-    %cm_jsl("Draygon AI", #action_select_superhud_bottom, #$0022)
+    %cm_jsl("Draygon AI", #action_select_superhud_bottom, #$0023)
 
 ih_superhud_snailclip:
-    %cm_jsl("Aqueduct Snail Clip", #action_select_superhud_bottom, #$0023)
+    %cm_jsl("Aqueduct Snail Clip", #action_select_superhud_bottom, #$0024)
 
 ih_superhud_wasteland:
-    %cm_jsl("Wasteland Entry", #action_select_superhud_bottom, #$0024)
+    %cm_jsl("Wasteland Entry", #action_select_superhud_bottom, #$0025)
 
 ih_superhud_ridleyai:
-    %cm_jsl("Ridley AI", #action_select_superhud_bottom, #$0025)
+    %cm_jsl("Ridley AI", #action_select_superhud_bottom, #$0026)
 
 ih_superhud_kihuntermanip:
-    %cm_jsl("Kihunter Manipulation", #action_select_room_strat, #$0026)
+    %cm_jsl("Kihunter Manipulation", #action_select_room_strat, #$0027)
 
 ih_superhud_downbackzeb:
-    %cm_jsl("Downback Zeb Skip", #action_select_superhud_bottom, #$0027)
+    %cm_jsl("Downback Zeb Skip", #action_select_superhud_bottom, #$0028)
 
 ih_superhud_zebskip:
-    %cm_jsl("Zeb Skip Indicator", #action_select_superhud_bottom, #$0028)
+    %cm_jsl("Zeb Skip Indicator", #action_select_superhud_bottom, #$0029)
 
 ih_superhud_mbhp:
-!IH_SUPERHUD_MBHP_BOTTOM_INDEX = #$0029
-    %cm_jsl("Mother Brain HP", #action_select_superhud_bottom, #$0029)
+!IH_SUPERHUD_MBHP_BOTTOM_INDEX = #$002A
+    %cm_jsl("Mother Brain HP", #action_select_superhud_bottom, #$002A)
 
 ih_superhud_twocries:
-    %cm_jsl("Two Cries Standup", #action_select_superhud_bottom, #$002A)
+    %cm_jsl("Two Cries Standup", #action_select_superhud_bottom, #$002B)
 
-!IH_SUPERHUD_BOTTOM_COUNT = #$002B
+!IH_SUPERHUD_BOTTOM_COUNT = #$002C
 action_select_superhud_bottom:
 {
     TYA : STA !sram_superhud_bottom

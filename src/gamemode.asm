@@ -1623,7 +1623,7 @@ CtrlShortcutMenu2:
     dw #ctrlshortcut_reset_defaults
     dw #$0000
     %cm_header("CONTROLLER SHORTCUTS")
-    %cm_footer_ctrlshortcut("PRESS AND HOLD FOR 2 SEC", "TOGGLES EXACT MATCH")
+    %cm_footer_ctrlshortcut("PRESS AND HOLD FOR ONE SEC", "TOGGLES EXACT MATCH")
 
 CtrlShortcutMenu3:
     dw #ctrlshortcut_32
@@ -1647,7 +1647,7 @@ CtrlShortcutMenu3:
     dw #ctrlshortcut_reset_defaults
     dw #$0000
     %cm_header("CONTROLLER SHORTCUTS")
-    %cm_footer_ctrlshortcut("PRESS AND HOLD FOR 2 SEC", "TOGGLES EXACT MATCH")
+    %cm_footer_ctrlshortcut("PRESS AND HOLD FOR ONE SEC", "TOGGLES EXACT MATCH")
 
 %cm_ctrl_shortcut(00)
 %cm_ctrl_shortcut(01)

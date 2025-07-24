@@ -769,28 +769,26 @@ preset_gtclassic_bootless_upper_norfair_cathedral:
     dw #preset_gtclassic_bootless_upper_norfair_business_center ; Bootless Upper Norfair: Business Center
     dw $078D, $92CA  ; DDB
     dw $079B, $A7B3  ; MDB
-    dw $090F, $D000  ; Screen subpixel X position
-    dw $0911, $0200  ; Screen X position in pixels
-    dw $0913, $EC00  ; Screen subpixel Y position
-    dw $0915, $0006  ; Screen Y position in pixels
-    dw $0917, $0200  ; Layer 2 X position
-    dw $0919, $0006  ; Layer 2 Y position
+    dw $090F, $B000  ; Screen subpixel X position
+    dw $0911, $01F4  ; Screen X position in pixels
+    dw $0915, $00BB  ; Screen Y position in pixels
+    dw $0917, $01F4  ; Layer 2 X position
+    dw $0919, $00BB  ; Layer 2 Y position
     dw $09C6, $0002  ; Missiles
-    dw $09CA, $0003  ; Supers
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $02AD  ; Samus X
-    dw $0AFA, $008B  ; Samus Y
-    dw $D8B8, $04EF  ; Doors
+    dw $0AF6, $0291  ; Samus X
+    dw $0AFA, $012B  ; Samus Y
     dw #$FFFF
 
 preset_gtclassic_bootless_upper_norfair_rising_tide:
     dw #preset_gtclassic_bootless_upper_norfair_cathedral ; Bootless Upper Norfair: Cathedral
     dw $078D, $92B2  ; DDB
     dw $079B, $A788  ; MDB
-    dw $090F, $B000  ; Screen subpixel X position
+    dw $0911, $0200  ; Screen X position in pixels
     dw $0913, $2000  ; Screen subpixel Y position
     dw $0915, $0100  ; Screen Y position in pixels
+    dw $0917, $0200  ; Layer 2 X position
     dw $0919, $0100  ; Layer 2 Y position
     dw $09CA, $0002  ; Supers
     dw $0AF6, $02AE  ; Samus X
@@ -838,6 +836,7 @@ preset_gtclassic_bootless_upper_norfair_kronic_room:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0180  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
+    dw $09C2, $012B  ; Health
     dw $0AF6, $02B1  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
