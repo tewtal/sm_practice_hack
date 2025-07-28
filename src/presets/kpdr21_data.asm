@@ -590,7 +590,7 @@ preset_kpdr21_kraid_kraid:
     dw $0915, $0100  ; Screen Y position in pixels
     dw $0917, $0100  ; Layer 2 X position
     dw $0919, $0100  ; Layer 2 Y position
-    dw $09C2, $00B1  ; Health
+    dw $09C2, $0043  ; Health
     dw $09CA, $0004  ; Supers
     dw $0AF6, $01BD  ; Samus X
     dw $0AF8, $EFFF  ; Samus subpixel X
