@@ -356,14 +356,19 @@ hook_unpause_play_sound:
 
 hook_end_fanfare:
 {
+    ; save answer
+    PHA
     LDA !sram_healthalarm : CMP #$0004 : BNE .done_health_alarm
     LDA #$0002 : JSL $80914D
   .done_health_alarm
+    ; initialize water physics in case we just collected gravity or space jump
+    JSL init_physics_ram
+    ; restore answer
+    PLA
     ; original logic
     PLY : PLX
     PLB : PLP
-    ; initialize water physics in case we just collected gravity or space jump
-    JML init_physics_ram
+    RTL
 }
 
 %endfree(85)
