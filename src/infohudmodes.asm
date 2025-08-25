@@ -3972,7 +3972,7 @@ status_robotflush:
 
   .checksecondfall
     LDA !IH_BLANK : STA !HUD_TILEMAP+$8E
-    LDA !ENEMY_VAR_5+!ENEMY_2_OFFSET : CMP #$0280 : BMI .done
+    LDA !ENEMY_Y+!ENEMY_2_OFFSET : CMP #$0280 : BMI .done
     LDA #$0C3D : STA !HUD_TILEMAP+$8E
 
   .done
