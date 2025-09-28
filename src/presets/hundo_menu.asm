@@ -88,7 +88,7 @@ presets_submenu_hundo_bombs:
 presets_submenu_hundo_kraid:
     dw #presets_hundo_kraid_alcatraz
     dw #presets_hundo_kraid_terminator
-    dw #presets_hundo_kraid_pirates_shaft
+    dw #presets_hundo_kraid_green_pirate_shaft
     dw #presets_hundo_kraid_elevator
     dw #presets_hundo_kraid_early_supers
     dw #presets_hundo_kraid_reverse_mockball
@@ -108,7 +108,7 @@ presets_submenu_hundo_kraid:
 
 presets_submenu_hundo_speed_booster:
     dw #presets_hundo_speed_booster_business_center
-    dw #presets_hundo_speed_booster_hijump
+    dw #presets_hundo_speed_booster_hijump_boots
     dw #presets_hundo_speed_booster_business_center_climb
     dw #presets_hundo_speed_booster_cathedral_entrance
     dw #presets_hundo_speed_booster_cathedral
@@ -122,8 +122,8 @@ presets_submenu_hundo_speed_booster:
 presets_submenu_hundo_ice_beam:
     dw #presets_hundo_ice_beam_single_chamber
     dw #presets_hundo_ice_beam_double_chamber
-    dw #presets_hundo_ice_beam_double_chamber_revisited
-    dw #presets_hundo_ice_beam_bubble_mountain_revisited
+    dw #presets_hundo_ice_beam_double_chamber_revisit
+    dw #presets_hundo_ice_beam_bubble_mountain_revisit
     dw #presets_hundo_ice_beam_business_center_climb_ice
     dw #presets_hundo_ice_beam_ice_beam_gate_room
     dw #presets_hundo_ice_beam_ice_beam_snake_room
@@ -137,7 +137,7 @@ presets_submenu_hundo_phantoon:
     dw #presets_hundo_phantoon_alpha_spark
     dw #presets_hundo_phantoon_red_tower_revisit
     dw #presets_hundo_phantoon_hellway
-    dw #presets_hundo_phantoon_leaving_alpha_pbs
+    dw #presets_hundo_phantoon_leaving_alpha_power_bombs
     dw #presets_hundo_phantoon_kihunter_room
     dw #presets_hundo_phantoon_ocean_fly
     dw #presets_hundo_phantoon_phantoon
@@ -162,17 +162,17 @@ presets_submenu_hundo_gravity:
     %cm_header("GRAVITY")
 
 presets_submenu_hundo_brinstar_cleanup:
-    dw #presets_hundo_brinstar_cleanup_crateria_pbs
+    dw #presets_hundo_brinstar_cleanup_crateria_power_bombs
     dw #presets_hundo_brinstar_cleanup_ship_room
     dw #presets_hundo_brinstar_cleanup_gauntlet_etank
-    dw #presets_hundo_brinstar_cleanup_green_pirates_shaft
+    dw #presets_hundo_brinstar_cleanup_green_pirate_shaft
     dw #presets_hundo_brinstar_cleanup_green_shaft_revisit
     dw #presets_hundo_brinstar_cleanup_green_brinstar_beetoms
     dw #presets_hundo_brinstar_cleanup_etecoon_energy_tank_room
     dw #presets_hundo_brinstar_cleanup_etecoon_room
     dw #presets_hundo_brinstar_cleanup_dachora_room_revisit
     dw #presets_hundo_brinstar_cleanup_big_pink_revisit
-    dw #presets_hundo_brinstar_cleanup_mission_impossible_pbs
+    dw #presets_hundo_brinstar_cleanup_mission_impossible
     dw #presets_hundo_brinstar_cleanup_pink_brinstar_etank
     dw #presets_hundo_brinstar_cleanup_spore_spawn_supers
     dw #presets_hundo_brinstar_cleanup_waterway_etank
@@ -181,7 +181,7 @@ presets_submenu_hundo_brinstar_cleanup:
 
 presets_submenu_hundo_mama_turtle_etank:
     dw #presets_hundo_mama_turtle_etank_big_pink_charge_escape
-    dw #presets_hundo_mama_turtle_etank_green_hills_revisit
+    dw #presets_hundo_mama_turtle_etank_green_hill_zone_revisit
     dw #presets_hundo_mama_turtle_etank_blockbuster
     dw #presets_hundo_mama_turtle_etank_breaking_the_tube
     dw #presets_hundo_mama_turtle_etank_main_street
@@ -214,7 +214,7 @@ presets_submenu_hundo_draygon:
 
 presets_submenu_hundo_maridia_cleanup:
     dw #presets_hundo_maridia_cleanup_aqueduct_revisit
-    dw #presets_hundo_maridia_cleanup_right_sandpit
+    dw #presets_hundo_maridia_cleanup_right_sand_pit
     dw #presets_hundo_maridia_cleanup_puyo_ice_clip_springball
     dw #presets_hundo_maridia_cleanup_shaktool
     dw #presets_hundo_maridia_cleanup_shaktool_revisit
@@ -225,7 +225,7 @@ presets_submenu_hundo_maridia_cleanup:
     dw #presets_hundo_maridia_cleanup_plasma_spark_room_down
     dw #presets_hundo_maridia_cleanup_cac_alley
     dw #presets_hundo_maridia_cleanup_aqueduct_final_visit
-    dw #presets_hundo_maridia_cleanup_left_sandpit
+    dw #presets_hundo_maridia_cleanup_left_sand_pit
     dw #presets_hundo_maridia_cleanup_leaving_maridia
     dw #$0000
     %cm_header("MARIDIA CLEANUP")
@@ -244,7 +244,7 @@ presets_submenu_hundo_golden_torizo:
 
 presets_submenu_hundo_ridley:
     dw #presets_hundo_ridley_fast_ripper_room
-    dw #presets_hundo_ridley_writg
+    dw #presets_hundo_ridley_worst_room_in_the_game
     dw #presets_hundo_ridley_mickey_mouse_missiles
     dw #presets_hundo_ridley_amphitheatre
     dw #presets_hundo_ridley_kihunter_shaft_down
@@ -257,7 +257,7 @@ presets_submenu_hundo_ridley:
     dw #presets_hundo_ridley_kihunter_shaft_up
     dw #presets_hundo_ridley_firefleas_room
     dw #presets_hundo_ridley_hotarubi_special
-    dw #presets_hundo_ridley_3_muskateers
+    dw #presets_hundo_ridley_3_musketeers
     dw #$0000
     %cm_header("RIDLEY")
 
@@ -309,6 +309,7 @@ presets_submenu_hundo_tourian:
     dw #presets_hundo_tourian_escape_parlor
     dw #$0000
     %cm_header("TOURIAN")
+
 
 ; Bombs
 presets_hundo_bombs_ceres_elevator:
@@ -364,8 +365,8 @@ presets_hundo_kraid_alcatraz:
 presets_hundo_kraid_terminator:
     %cm_preset("Terminator", #preset_hundo_kraid_terminator)
 
-presets_hundo_kraid_pirates_shaft:
-    %cm_preset("Pirates Shaft", #preset_hundo_kraid_pirates_shaft)
+presets_hundo_kraid_green_pirate_shaft:
+    %cm_preset("Green Pirate Shaft", #preset_hundo_kraid_green_pirate_shaft)
 
 presets_hundo_kraid_elevator:
     %cm_preset("Elevator", #preset_hundo_kraid_elevator)
@@ -407,15 +408,15 @@ presets_hundo_kraid_leaving_kraid_hallway:
     %cm_preset("Leaving Kraid Hallway", #preset_hundo_kraid_leaving_kraid_hallway)
 
 presets_hundo_kraid_leaving_kraid_etank:
-    %cm_preset("Kraid Escape", #preset_hundo_kraid_leaving_kraid_etank)
+    %cm_preset("Leaving Kraid E-Tank", #preset_hundo_kraid_leaving_kraid_etank)
 
 
 ; Speed Booster
 presets_hundo_speed_booster_business_center:
     %cm_preset("Business Center", #preset_hundo_speed_booster_business_center)
 
-presets_hundo_speed_booster_hijump:
-    %cm_preset("Hi-Jump", #preset_hundo_speed_booster_hijump)
+presets_hundo_speed_booster_hijump_boots:
+    %cm_preset("Hi-Jump Boots", #preset_hundo_speed_booster_hijump_boots)
 
 presets_hundo_speed_booster_business_center_climb:
     %cm_preset("Business Center Climb", #preset_hundo_speed_booster_business_center_climb)
@@ -446,11 +447,11 @@ presets_hundo_ice_beam_single_chamber:
 presets_hundo_ice_beam_double_chamber:
     %cm_preset("Double Chamber", #preset_hundo_ice_beam_double_chamber)
 
-presets_hundo_ice_beam_double_chamber_revisited:
-    %cm_preset("Double Chamber Revisited", #preset_hundo_ice_beam_double_chamber_revisited)
+presets_hundo_ice_beam_double_chamber_revisit:
+    %cm_preset("Double Chamber Revisit", #preset_hundo_ice_beam_double_chamber_revisit)
 
-presets_hundo_ice_beam_bubble_mountain_revisited:
-    %cm_preset("Bubble Mountain Revisited", #preset_hundo_ice_beam_bubble_mountain_revisited)
+presets_hundo_ice_beam_bubble_mountain_revisit:
+    %cm_preset("Bubble Mountain Revisit", #preset_hundo_ice_beam_bubble_mountain_revisit)
 
 presets_hundo_ice_beam_business_center_climb_ice:
     %cm_preset("Business Center Climb Ice", #preset_hundo_ice_beam_business_center_climb_ice)
@@ -481,8 +482,8 @@ presets_hundo_phantoon_red_tower_revisit:
 presets_hundo_phantoon_hellway:
     %cm_preset("Hellway", #preset_hundo_phantoon_hellway)
 
-presets_hundo_phantoon_leaving_alpha_pbs:
-    %cm_preset("Leaving Alpha PBs", #preset_hundo_phantoon_leaving_alpha_pbs)
+presets_hundo_phantoon_leaving_alpha_power_bombs:
+    %cm_preset("Leaving Alpha Power Bombs", #preset_hundo_phantoon_leaving_alpha_power_bombs)
 
 presets_hundo_phantoon_kihunter_room:
     %cm_preset("Kihunter Room", #preset_hundo_phantoon_kihunter_room)
@@ -536,8 +537,8 @@ presets_hundo_gravity_leaving_gravity:
 
 
 ; Brinstar Cleanup
-presets_hundo_brinstar_cleanup_crateria_pbs:
-    %cm_preset("Crateria PBs", #preset_hundo_brinstar_cleanup_crateria_pbs)
+presets_hundo_brinstar_cleanup_crateria_power_bombs:
+    %cm_preset("Crateria Power Bombs", #preset_hundo_brinstar_cleanup_crateria_power_bombs)
 
 presets_hundo_brinstar_cleanup_ship_room:
     %cm_preset("Ship Room", #preset_hundo_brinstar_cleanup_ship_room)
@@ -545,8 +546,8 @@ presets_hundo_brinstar_cleanup_ship_room:
 presets_hundo_brinstar_cleanup_gauntlet_etank:
     %cm_preset("Gauntlet E-Tank", #preset_hundo_brinstar_cleanup_gauntlet_etank)
 
-presets_hundo_brinstar_cleanup_green_pirates_shaft:
-    %cm_preset("Green Pirates Shaft", #preset_hundo_brinstar_cleanup_green_pirates_shaft)
+presets_hundo_brinstar_cleanup_green_pirate_shaft:
+    %cm_preset("Green Pirate Shaft", #preset_hundo_brinstar_cleanup_green_pirate_shaft)
 
 presets_hundo_brinstar_cleanup_green_shaft_revisit:
     %cm_preset("Green Shaft Revisit", #preset_hundo_brinstar_cleanup_green_shaft_revisit)
@@ -566,8 +567,8 @@ presets_hundo_brinstar_cleanup_dachora_room_revisit:
 presets_hundo_brinstar_cleanup_big_pink_revisit:
     %cm_preset("Big Pink Revisit", #preset_hundo_brinstar_cleanup_big_pink_revisit)
 
-presets_hundo_brinstar_cleanup_mission_impossible_pbs:
-    %cm_preset("Mission Impossible PBs", #preset_hundo_brinstar_cleanup_mission_impossible_pbs)
+presets_hundo_brinstar_cleanup_mission_impossible:
+    %cm_preset("Mission Impossible", #preset_hundo_brinstar_cleanup_mission_impossible)
 
 presets_hundo_brinstar_cleanup_pink_brinstar_etank:
     %cm_preset("Pink Brinstar E-Tank", #preset_hundo_brinstar_cleanup_pink_brinstar_etank)
@@ -583,8 +584,8 @@ presets_hundo_brinstar_cleanup_waterway_etank:
 presets_hundo_mama_turtle_etank_big_pink_charge_escape:
     %cm_preset("Big Pink Charge Escape", #preset_hundo_mama_turtle_etank_big_pink_charge_escape)
 
-presets_hundo_mama_turtle_etank_green_hills_revisit:
-    %cm_preset("Green Hills Revisit", #preset_hundo_mama_turtle_etank_green_hills_revisit)
+presets_hundo_mama_turtle_etank_green_hill_zone_revisit:
+    %cm_preset("Green Hill Zone Revisit", #preset_hundo_mama_turtle_etank_green_hill_zone_revisit)
 
 presets_hundo_mama_turtle_etank_blockbuster:
     %cm_preset("Blockbuster", #preset_hundo_mama_turtle_etank_blockbuster)
@@ -610,7 +611,7 @@ presets_hundo_maridia_beach_crab_supers:
     %cm_preset("Crab Supers", #preset_hundo_maridia_beach_crab_supers)
 
 presets_hundo_maridia_beach_mt_everest:
-    %cm_preset("Mt Everest", #preset_hundo_maridia_beach_mt_everest)
+    %cm_preset("Mt. Everest", #preset_hundo_maridia_beach_mt_everest)
 
 presets_hundo_maridia_beach_beach_missiles:
     %cm_preset("Beach Missiles", #preset_hundo_maridia_beach_beach_missiles)
@@ -652,8 +653,8 @@ presets_hundo_draygon_draygon_escape:
 presets_hundo_maridia_cleanup_aqueduct_revisit:
     %cm_preset("Aqueduct Revisit", #preset_hundo_maridia_cleanup_aqueduct_revisit)
 
-presets_hundo_maridia_cleanup_right_sandpit:
-    %cm_preset("Right Sandpit", #preset_hundo_maridia_cleanup_right_sandpit)
+presets_hundo_maridia_cleanup_right_sand_pit:
+    %cm_preset("Right Sand Pit", #preset_hundo_maridia_cleanup_right_sand_pit)
 
 presets_hundo_maridia_cleanup_puyo_ice_clip_springball:
     %cm_preset("Puyo Ice Clip (Springball)", #preset_hundo_maridia_cleanup_puyo_ice_clip_springball)
@@ -685,8 +686,8 @@ presets_hundo_maridia_cleanup_cac_alley:
 presets_hundo_maridia_cleanup_aqueduct_final_visit:
     %cm_preset("Aqueduct Final Visit", #preset_hundo_maridia_cleanup_aqueduct_final_visit)
 
-presets_hundo_maridia_cleanup_left_sandpit:
-    %cm_preset("Left Sandpit", #preset_hundo_maridia_cleanup_left_sandpit)
+presets_hundo_maridia_cleanup_left_sand_pit:
+    %cm_preset("Left Sand Pit", #preset_hundo_maridia_cleanup_left_sand_pit)
 
 presets_hundo_maridia_cleanup_leaving_maridia:
     %cm_preset("Leaving Maridia", #preset_hundo_maridia_cleanup_leaving_maridia)
@@ -722,8 +723,8 @@ presets_hundo_golden_torizo_golden_torizo:
 presets_hundo_ridley_fast_ripper_room:
     %cm_preset("Fast Ripper Room", #preset_hundo_ridley_fast_ripper_room)
 
-presets_hundo_ridley_writg:
-    %cm_preset("WRITG", #preset_hundo_ridley_writg)
+presets_hundo_ridley_worst_room_in_the_game:
+    %cm_preset("Worst Room In The Game", #preset_hundo_ridley_worst_room_in_the_game)
 
 presets_hundo_ridley_mickey_mouse_missiles:
     %cm_preset("Mickey Mouse Missiles", #preset_hundo_ridley_mickey_mouse_missiles)
@@ -761,8 +762,8 @@ presets_hundo_ridley_firefleas_room:
 presets_hundo_ridley_hotarubi_special:
     %cm_preset("Hotarubi Special", #preset_hundo_ridley_hotarubi_special)
 
-presets_hundo_ridley_3_muskateers:
-    %cm_preset("3 Muskateers", #preset_hundo_ridley_3_muskateers)
+presets_hundo_ridley_3_musketeers:
+    %cm_preset("3 Musketeers", #preset_hundo_ridley_3_musketeers)
 
 
 ; Crocomire
@@ -880,5 +881,4 @@ presets_hundo_tourian_escape_climb:
 
 presets_hundo_tourian_escape_parlor:
     %cm_preset("Escape Parlor", #preset_hundo_tourian_escape_parlor)
-
 

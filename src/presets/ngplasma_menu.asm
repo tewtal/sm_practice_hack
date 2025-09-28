@@ -66,7 +66,7 @@ presets_submenu_ngplasma_red_brinstar:
     dw #presets_ngplasma_red_brinstar_hellway
     dw #presets_ngplasma_red_brinstar_red_tower
     dw #presets_ngplasma_red_brinstar_bottom_of_red_tower
-    dw #presets_ngplasma_red_brinstar_breaking_tube
+    dw #presets_ngplasma_red_brinstar_breaking_the_tube
     dw #presets_ngplasma_red_brinstar_upper_norfair_elevator
     dw #$0000
     %cm_header("RED BRINSTAR")
@@ -96,7 +96,7 @@ presets_submenu_ngplasma_norfair_postridley:
     dw #presets_ngplasma_norfair_postridley_reverse_plowerhouse
     dw #presets_ngplasma_norfair_postridley_wasteland_revisit
     dw #presets_ngplasma_norfair_postridley_kihunter_stairs_up
-    dw #presets_ngplasma_norfair_postridley_fire_flea_room
+    dw #presets_ngplasma_norfair_postridley_fireflea_room
     dw #presets_ngplasma_norfair_postridley_springball_maze
     dw #presets_ngplasma_norfair_postridley_three_musketeers
     dw #presets_ngplasma_norfair_postridley_single_chamber
@@ -109,12 +109,12 @@ presets_submenu_ngplasma_norfair_postridley:
 presets_submenu_ngplasma_kraids_lair:
     dw #presets_ngplasma_kraids_lair_entering_kraids_lair
     dw #presets_ngplasma_kraids_lair_warehouse_kihunters
-    dw #presets_ngplasma_kraids_lair_minikraid_hallway
+    dw #presets_ngplasma_kraids_lair_minikraid
     dw #presets_ngplasma_kraids_lair_kraid
     dw #presets_ngplasma_kraids_lair_leaving_kraid
-    dw #presets_ngplasma_kraids_lair_minikraid_hallway_revisit
-    dw #presets_ngplasma_kraids_lair_kihunters_revisit_2
-    dw #presets_ngplasma_kraids_lair_warehouse_zealas
+    dw #presets_ngplasma_kraids_lair_minikraid_revisit
+    dw #presets_ngplasma_kraids_lair_kihunters_revisit
+    dw #presets_ngplasma_kraids_lair_warehouse_zeelas
     dw #presets_ngplasma_kraids_lair_leaving_kraids_lair
     dw #$0000
     %cm_header("KRAID'S LAIR")
@@ -131,7 +131,7 @@ presets_submenu_ngplasma_maridia:
     dw #presets_ngplasma_maridia_halfie
     dw #presets_ngplasma_maridia_draygon
     dw #presets_ngplasma_maridia_spike_suit_colosseum
-    dw #presets_ngplasma_maridia_womple_jump
+    dw #presets_ngplasma_maridia_whomple_jump
     dw #presets_ngplasma_maridia_reverse_botwoon_hallway
     dw #presets_ngplasma_maridia_aqueduct_revisit
     dw #presets_ngplasma_maridia_crab_shaft_revisit
@@ -167,6 +167,7 @@ presets_submenu_ngplasma_tourian:
     dw #presets_ngplasma_tourian_escape_parlor
     dw #$0000
     %cm_header("TOURIAN")
+
 
 ; Ceres Station
 presets_ngplasma_ceres_station_ceres_elevator:
@@ -230,8 +231,8 @@ presets_ngplasma_red_brinstar_red_tower:
 presets_ngplasma_red_brinstar_bottom_of_red_tower:
     %cm_preset("Bottom of Red Tower", #preset_ngplasma_red_brinstar_bottom_of_red_tower)
 
-presets_ngplasma_red_brinstar_breaking_tube:
-    %cm_preset("Breaking Tube", #preset_ngplasma_red_brinstar_breaking_tube)
+presets_ngplasma_red_brinstar_breaking_the_tube:
+    %cm_preset("Breaking The Tube", #preset_ngplasma_red_brinstar_breaking_the_tube)
 
 presets_ngplasma_red_brinstar_upper_norfair_elevator:
     %cm_preset("Upper Norfair Elevator", #preset_ngplasma_red_brinstar_upper_norfair_elevator)
@@ -266,7 +267,7 @@ presets_ngplasma_norfair_preridley_fast_pillars:
     %cm_preset("Fast Pillars", #preset_ngplasma_norfair_preridley_fast_pillars)
 
 presets_ngplasma_norfair_preridley_worst_room_in_the_game:
-    %cm_preset("Worst Room in the Game", #preset_ngplasma_norfair_preridley_worst_room_in_the_game)
+    %cm_preset("Worst Room In The Game", #preset_ngplasma_norfair_preridley_worst_room_in_the_game)
 
 presets_ngplasma_norfair_preridley_amphitheatre:
     %cm_preset("Amphitheatre", #preset_ngplasma_norfair_preridley_amphitheatre)
@@ -300,8 +301,8 @@ presets_ngplasma_norfair_postridley_wasteland_revisit:
 presets_ngplasma_norfair_postridley_kihunter_stairs_up:
     %cm_preset("Kihunter Stairs Up", #preset_ngplasma_norfair_postridley_kihunter_stairs_up)
 
-presets_ngplasma_norfair_postridley_fire_flea_room:
-    %cm_preset("Fire Flea Room", #preset_ngplasma_norfair_postridley_fire_flea_room)
+presets_ngplasma_norfair_postridley_fireflea_room:
+    %cm_preset("Fireflea Room", #preset_ngplasma_norfair_postridley_fireflea_room)
 
 presets_ngplasma_norfair_postridley_springball_maze:
     %cm_preset("Springball Maze", #preset_ngplasma_norfair_postridley_springball_maze)
@@ -329,8 +330,8 @@ presets_ngplasma_kraids_lair_entering_kraids_lair:
 presets_ngplasma_kraids_lair_warehouse_kihunters:
     %cm_preset("Warehouse Kihunters", #preset_ngplasma_kraids_lair_warehouse_kihunters)
 
-presets_ngplasma_kraids_lair_minikraid_hallway:
-    %cm_preset("MiniKraid Hallway", #preset_ngplasma_kraids_lair_minikraid_hallway)
+presets_ngplasma_kraids_lair_minikraid:
+    %cm_preset("Mini-Kraid", #preset_ngplasma_kraids_lair_minikraid)
 
 presets_ngplasma_kraids_lair_kraid:
     %cm_preset("Kraid", #preset_ngplasma_kraids_lair_kraid)
@@ -338,17 +339,17 @@ presets_ngplasma_kraids_lair_kraid:
 presets_ngplasma_kraids_lair_leaving_kraid:
     %cm_preset("Leaving Kraid", #preset_ngplasma_kraids_lair_leaving_kraid)
 
-presets_ngplasma_kraids_lair_minikraid_hallway_revisit:
-    %cm_preset("MiniKraid Hallway Revisit", #preset_ngplasma_kraids_lair_minikraid_hallway_revisit)
+presets_ngplasma_kraids_lair_minikraid_revisit:
+    %cm_preset("Mini-Kraid Revisit", #preset_ngplasma_kraids_lair_minikraid_revisit)
 
-presets_ngplasma_kraids_lair_kihunters_revisit_2:
-    %cm_preset("Kihunters Revisit", #preset_ngplasma_kraids_lair_kihunters_revisit_2)
+presets_ngplasma_kraids_lair_kihunters_revisit:
+    %cm_preset("Kihunters Revisit", #preset_ngplasma_kraids_lair_kihunters_revisit)
 
-presets_ngplasma_kraids_lair_warehouse_zealas:
-    %cm_preset("Warehouse Zealas", #preset_ngplasma_kraids_lair_warehouse_zealas)
+presets_ngplasma_kraids_lair_warehouse_zeelas:
+    %cm_preset("Warehouse Zeelas", #preset_ngplasma_kraids_lair_warehouse_zeelas)
 
 presets_ngplasma_kraids_lair_leaving_kraids_lair:
-    %cm_preset("Leaving Kraids Lair", #preset_ngplasma_kraids_lair_leaving_kraids_lair)
+    %cm_preset("Leaving Kraid's Lair", #preset_ngplasma_kraids_lair_leaving_kraids_lair)
 
 
 ; Maridia
@@ -362,7 +363,7 @@ presets_ngplasma_maridia_fish_tank:
     %cm_preset("Fish Tank", #preset_ngplasma_maridia_fish_tank)
 
 presets_ngplasma_maridia_mt_everest:
-    %cm_preset("Mt Everest", #preset_ngplasma_maridia_mt_everest)
+    %cm_preset("Mt. Everest", #preset_ngplasma_maridia_mt_everest)
 
 presets_ngplasma_maridia_crab_shaft:
     %cm_preset("Crab Shaft", #preset_ngplasma_maridia_crab_shaft)
@@ -385,8 +386,8 @@ presets_ngplasma_maridia_draygon:
 presets_ngplasma_maridia_spike_suit_colosseum:
     %cm_preset("Spike Suit Colosseum", #preset_ngplasma_maridia_spike_suit_colosseum)
 
-presets_ngplasma_maridia_womple_jump:
-    %cm_preset("Womple Jump", #preset_ngplasma_maridia_womple_jump)
+presets_ngplasma_maridia_whomple_jump:
+    %cm_preset("Whomple Jump", #preset_ngplasma_maridia_whomple_jump)
 
 presets_ngplasma_maridia_reverse_botwoon_hallway:
     %cm_preset("Reverse Botwoon Hallway", #preset_ngplasma_maridia_reverse_botwoon_hallway)
@@ -398,7 +399,7 @@ presets_ngplasma_maridia_crab_shaft_revisit:
     %cm_preset("Crab Shaft Revisit", #preset_ngplasma_maridia_crab_shaft_revisit)
 
 presets_ngplasma_maridia_mt_everest_revisit:
-    %cm_preset("Mt Everest Revisit", #preset_ngplasma_maridia_mt_everest_revisit)
+    %cm_preset("Mt. Everest Revisit", #preset_ngplasma_maridia_mt_everest_revisit)
 
 presets_ngplasma_maridia_leaving_maridia:
     %cm_preset("Leaving Maridia", #preset_ngplasma_maridia_leaving_maridia)
@@ -466,5 +467,4 @@ presets_ngplasma_tourian_escape_climb:
 
 presets_ngplasma_tourian_escape_parlor:
     %cm_preset("Escape Parlor", #preset_ngplasma_tourian_escape_parlor)
-
 

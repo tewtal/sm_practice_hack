@@ -1,9 +1,9 @@
 PresetsMenuGtclassic:
     dw #presets_goto_gtclassic_crateria
     dw #presets_goto_gtclassic_brinstar
-    dw #presets_goto_gtclassic_kraid
+    dw #presets_goto_gtclassic_kraids_lair
     dw #presets_goto_gtclassic_bootless_upper_norfair
-    dw #presets_goto_gtclassic_hi_jump_upper_norfair
+    dw #presets_goto_gtclassic_hijump_upper_norfair
     dw #presets_goto_gtclassic_lower_norfair
     dw #presets_goto_gtclassic_maridia
     dw #presets_goto_gtclassic_wrecked_ship
@@ -17,14 +17,14 @@ presets_goto_gtclassic_crateria:
 presets_goto_gtclassic_brinstar:
     %cm_submenu("Brinstar", #presets_submenu_gtclassic_brinstar)
 
-presets_goto_gtclassic_kraid:
-    %cm_submenu("Kraid's Lair", #presets_submenu_gtclassic_kraid)
+presets_goto_gtclassic_kraids_lair:
+    %cm_submenu("Kraid's Lair", #presets_submenu_gtclassic_kraids_lair)
 
 presets_goto_gtclassic_bootless_upper_norfair:
     %cm_submenu("Bootless Upper Norfair", #presets_submenu_gtclassic_bootless_upper_norfair)
 
-presets_goto_gtclassic_hi_jump_upper_norfair:
-    %cm_submenu("Hi Jump Upper Norfair", #presets_submenu_gtclassic_hi_jump_upper_norfair)
+presets_goto_gtclassic_hijump_upper_norfair:
+    %cm_submenu("Hi-Jump Upper Norfair", #presets_submenu_gtclassic_hijump_upper_norfair)
 
 presets_goto_gtclassic_lower_norfair:
     %cm_submenu("Lower Norfair", #presets_submenu_gtclassic_lower_norfair)
@@ -77,20 +77,20 @@ presets_submenu_gtclassic_brinstar:
     dw #presets_gtclassic_brinstar_red_tower_down
     dw #presets_gtclassic_brinstar_skree_boost
     dw #presets_gtclassic_brinstar_below_spazer
-    dw #presets_gtclassic_brinstar_breaking_tube
+    dw #presets_gtclassic_brinstar_breaking_the_tube
     dw #$0000
     %cm_header("BRINSTAR")
 
-presets_submenu_gtclassic_kraid:
-    dw #presets_gtclassic_kraid_entering_kraids_lair
-    dw #presets_gtclassic_kraid_kraid_kihunters
-    dw #presets_gtclassic_kraid_mini_kraid
-    dw #presets_gtclassic_kraid_kraid_2
-    dw #presets_gtclassic_kraid_leaving_varia
-    dw #presets_gtclassic_kraid_mini_kraid_revisit
-    dw #presets_gtclassic_kraid_kraid_kihunters_revisit
-    dw #presets_gtclassic_kraid_kraid_etank
-    dw #presets_gtclassic_kraid_leaving_kraids_lair
+presets_submenu_gtclassic_kraids_lair:
+    dw #presets_gtclassic_kraids_lair_entering_kraids_lair
+    dw #presets_gtclassic_kraids_lair_kraid_kihunters
+    dw #presets_gtclassic_kraids_lair_minikraid
+    dw #presets_gtclassic_kraids_lair_kraid
+    dw #presets_gtclassic_kraids_lair_leaving_varia
+    dw #presets_gtclassic_kraids_lair_minikraid_revisit
+    dw #presets_gtclassic_kraids_lair_kraid_kihunters_revisit
+    dw #presets_gtclassic_kraids_lair_kraid_etank
+    dw #presets_gtclassic_kraids_lair_leaving_kraids_lair
     dw #$0000
     %cm_header("KRAID'S LAIR")
 
@@ -109,24 +109,24 @@ presets_submenu_gtclassic_bootless_upper_norfair:
     dw #$0000
     %cm_header("BOOTLESS UPPER NORFAIR")
 
-presets_submenu_gtclassic_hi_jump_upper_norfair:
-    dw #presets_gtclassic_hi_jump_upper_norfair_business_center
-    dw #presets_gtclassic_hi_jump_upper_norfair_hi_jump_etank
-    dw #presets_gtclassic_hi_jump_upper_norfair_leaving_hi_jump
-    dw #presets_gtclassic_hi_jump_upper_norfair_business_center_revisit
-    dw #presets_gtclassic_hi_jump_upper_norfair_precathedral
-    dw #presets_gtclassic_hi_jump_upper_norfair_cathedral
-    dw #presets_gtclassic_hi_jump_upper_norfair_rising_tide
-    dw #presets_gtclassic_hi_jump_upper_norfair_bubble_mountain
-    dw #presets_gtclassic_hi_jump_upper_norfair_magdollite_tunnel
-    dw #presets_gtclassic_hi_jump_upper_norfair_kronic_room
-    dw #presets_gtclassic_hi_jump_upper_norfair_lava_dive
-    dw #presets_gtclassic_hi_jump_upper_norfair_ln_main_hall
-    dw #presets_gtclassic_hi_jump_upper_norfair_prepillars
-    dw #presets_gtclassic_hi_jump_upper_norfair_green_gate_glitch
-    dw #presets_gtclassic_hi_jump_upper_norfair_gt_code
+presets_submenu_gtclassic_hijump_upper_norfair:
+    dw #presets_gtclassic_hijump_upper_norfair_business_center
+    dw #presets_gtclassic_hijump_upper_norfair_hijump_etank
+    dw #presets_gtclassic_hijump_upper_norfair_leaving_hijump
+    dw #presets_gtclassic_hijump_upper_norfair_business_center_revisit
+    dw #presets_gtclassic_hijump_upper_norfair_precathedral
+    dw #presets_gtclassic_hijump_upper_norfair_cathedral
+    dw #presets_gtclassic_hijump_upper_norfair_rising_tide
+    dw #presets_gtclassic_hijump_upper_norfair_bubble_mountain
+    dw #presets_gtclassic_hijump_upper_norfair_magdollite_tunnel
+    dw #presets_gtclassic_hijump_upper_norfair_kronic_room
+    dw #presets_gtclassic_hijump_upper_norfair_lava_dive
+    dw #presets_gtclassic_hijump_upper_norfair_ln_main_hall
+    dw #presets_gtclassic_hijump_upper_norfair_prepillars
+    dw #presets_gtclassic_hijump_upper_norfair_green_gate_glitch
+    dw #presets_gtclassic_hijump_upper_norfair_gt_code
     dw #$0000
-    %cm_header("HI JUMP UPPER NORFAIR")
+    %cm_header("HI-JUMP UPPER NORFAIR")
 
 presets_submenu_gtclassic_lower_norfair:
     dw #presets_gtclassic_lower_norfair_leaving_golden_torizo
@@ -163,7 +163,7 @@ presets_submenu_gtclassic_maridia:
     dw #presets_gtclassic_maridia_halfie_setup
     dw #presets_gtclassic_maridia_draygon
     dw #presets_gtclassic_maridia_reverse_halfie_spikesuit
-    dw #presets_gtclassic_maridia_womple_jump
+    dw #presets_gtclassic_maridia_whomple_jump
     dw #presets_gtclassic_maridia_reverse_halfie_climb
     dw #presets_gtclassic_maridia_reverse_botwoon_etank
     dw #presets_gtclassic_maridia_reverse_botwoon_hallway
@@ -186,7 +186,7 @@ presets_submenu_gtclassic_wrecked_ship:
     dw #presets_gtclassic_wrecked_ship_crateria_kihunters_revisit
     dw #presets_gtclassic_wrecked_ship_parlor_return
     dw #presets_gtclassic_wrecked_ship_terminator_revisit
-    dw #presets_gtclassic_wrecked_ship_green_pirate_shaft_2
+    dw #presets_gtclassic_wrecked_ship_green_pirate_shaft
     dw #presets_gtclassic_wrecked_ship_g4_elevator
     dw #$0000
     %cm_header("WRECKED SHIP")
@@ -209,6 +209,7 @@ presets_submenu_gtclassic_tourian:
     dw #presets_gtclassic_tourian_escape_parlor
     dw #$0000
     %cm_header("TOURIAN")
+
 
 ; Crateria
 presets_gtclassic_crateria_ceres_elevator:
@@ -315,37 +316,37 @@ presets_gtclassic_brinstar_skree_boost:
 presets_gtclassic_brinstar_below_spazer:
     %cm_preset("Below Spazer", #preset_gtclassic_brinstar_below_spazer)
 
-presets_gtclassic_brinstar_breaking_tube:
-    %cm_preset("Breaking Tube", #preset_gtclassic_brinstar_breaking_tube)
+presets_gtclassic_brinstar_breaking_the_tube:
+    %cm_preset("Breaking The Tube", #preset_gtclassic_brinstar_breaking_the_tube)
 
 
 ; Kraid's Lair
-presets_gtclassic_kraid_entering_kraids_lair:
-    %cm_preset("Entering Kraid's Lair", #preset_gtclassic_kraid_entering_kraids_lair)
+presets_gtclassic_kraids_lair_entering_kraids_lair:
+    %cm_preset("Entering Kraid's Lair", #preset_gtclassic_kraids_lair_entering_kraids_lair)
 
-presets_gtclassic_kraid_kraid_kihunters:
-    %cm_preset("Kraid Kihunters", #preset_gtclassic_kraid_kraid_kihunters)
+presets_gtclassic_kraids_lair_kraid_kihunters:
+    %cm_preset("Kraid Kihunters", #preset_gtclassic_kraids_lair_kraid_kihunters)
 
-presets_gtclassic_kraid_mini_kraid:
-    %cm_preset("Mini Kraid", #preset_gtclassic_kraid_mini_kraid)
+presets_gtclassic_kraids_lair_minikraid:
+    %cm_preset("Mini-Kraid", #preset_gtclassic_kraids_lair_minikraid)
 
-presets_gtclassic_kraid_kraid_2:
-    %cm_preset("Kraid", #preset_gtclassic_kraid_kraid_2)
+presets_gtclassic_kraids_lair_kraid:
+    %cm_preset("Kraid", #preset_gtclassic_kraids_lair_kraid)
 
-presets_gtclassic_kraid_leaving_varia:
-    %cm_preset("Leaving Varia", #preset_gtclassic_kraid_leaving_varia)
+presets_gtclassic_kraids_lair_leaving_varia:
+    %cm_preset("Leaving Varia", #preset_gtclassic_kraids_lair_leaving_varia)
 
-presets_gtclassic_kraid_mini_kraid_revisit:
-    %cm_preset("Mini Kraid Revisit", #preset_gtclassic_kraid_mini_kraid_revisit)
+presets_gtclassic_kraids_lair_minikraid_revisit:
+    %cm_preset("Mini-Kraid Revisit", #preset_gtclassic_kraids_lair_minikraid_revisit)
 
-presets_gtclassic_kraid_kraid_kihunters_revisit:
-    %cm_preset("Kraid Kihunters Revisit", #preset_gtclassic_kraid_kraid_kihunters_revisit)
+presets_gtclassic_kraids_lair_kraid_kihunters_revisit:
+    %cm_preset("Kraid Kihunters Revisit", #preset_gtclassic_kraids_lair_kraid_kihunters_revisit)
 
-presets_gtclassic_kraid_kraid_etank:
-    %cm_preset("Kraid E-tank", #preset_gtclassic_kraid_kraid_etank)
+presets_gtclassic_kraids_lair_kraid_etank:
+    %cm_preset("Kraid E-Tank", #preset_gtclassic_kraids_lair_kraid_etank)
 
-presets_gtclassic_kraid_leaving_kraids_lair:
-    %cm_preset("Leaving Kraid's Lair", #preset_gtclassic_kraid_leaving_kraids_lair)
+presets_gtclassic_kraids_lair_leaving_kraids_lair:
+    %cm_preset("Leaving Kraid's Lair", #preset_gtclassic_kraids_lair_leaving_kraids_lair)
 
 
 ; Bootless Upper Norfair
@@ -383,51 +384,51 @@ presets_gtclassic_bootless_upper_norfair_gt_code:
     %cm_preset("GT Code", #preset_gtclassic_bootless_upper_norfair_gt_code)
 
 
-; Hi Jump Upper Norfair
-presets_gtclassic_hi_jump_upper_norfair_business_center:
-    %cm_preset("Business Center", #preset_gtclassic_hi_jump_upper_norfair_business_center)
+; Hi-Jump Upper Norfair
+presets_gtclassic_hijump_upper_norfair_business_center:
+    %cm_preset("Business Center", #preset_gtclassic_hijump_upper_norfair_business_center)
 
-presets_gtclassic_hi_jump_upper_norfair_hi_jump_etank:
-    %cm_preset("Hi Jump E-tank", #preset_gtclassic_hi_jump_upper_norfair_hi_jump_etank)
+presets_gtclassic_hijump_upper_norfair_hijump_etank:
+    %cm_preset("Hi-Jump E-Tank", #preset_gtclassic_hijump_upper_norfair_hijump_etank)
 
-presets_gtclassic_hi_jump_upper_norfair_leaving_hi_jump:
-    %cm_preset("Leaving Hi Jump", #preset_gtclassic_hi_jump_upper_norfair_leaving_hi_jump)
+presets_gtclassic_hijump_upper_norfair_leaving_hijump:
+    %cm_preset("Leaving Hi-Jump", #preset_gtclassic_hijump_upper_norfair_leaving_hijump)
 
-presets_gtclassic_hi_jump_upper_norfair_business_center_revisit:
-    %cm_preset("Business Center Revisit", #preset_gtclassic_hi_jump_upper_norfair_business_center_revisit)
+presets_gtclassic_hijump_upper_norfair_business_center_revisit:
+    %cm_preset("Business Center Revisit", #preset_gtclassic_hijump_upper_norfair_business_center_revisit)
 
-presets_gtclassic_hi_jump_upper_norfair_precathedral:
-    %cm_preset("Pre-Cathedral", #preset_gtclassic_hi_jump_upper_norfair_precathedral)
+presets_gtclassic_hijump_upper_norfair_precathedral:
+    %cm_preset("Pre-Cathedral", #preset_gtclassic_hijump_upper_norfair_precathedral)
 
-presets_gtclassic_hi_jump_upper_norfair_cathedral:
-    %cm_preset("Cathedral", #preset_gtclassic_hi_jump_upper_norfair_cathedral)
+presets_gtclassic_hijump_upper_norfair_cathedral:
+    %cm_preset("Cathedral", #preset_gtclassic_hijump_upper_norfair_cathedral)
 
-presets_gtclassic_hi_jump_upper_norfair_rising_tide:
-    %cm_preset("Rising Tide", #preset_gtclassic_hi_jump_upper_norfair_rising_tide)
+presets_gtclassic_hijump_upper_norfair_rising_tide:
+    %cm_preset("Rising Tide", #preset_gtclassic_hijump_upper_norfair_rising_tide)
 
-presets_gtclassic_hi_jump_upper_norfair_bubble_mountain:
-    %cm_preset("Bubble Mountain", #preset_gtclassic_hi_jump_upper_norfair_bubble_mountain)
+presets_gtclassic_hijump_upper_norfair_bubble_mountain:
+    %cm_preset("Bubble Mountain", #preset_gtclassic_hijump_upper_norfair_bubble_mountain)
 
-presets_gtclassic_hi_jump_upper_norfair_magdollite_tunnel:
-    %cm_preset("Magdollite Tunnel", #preset_gtclassic_hi_jump_upper_norfair_magdollite_tunnel)
+presets_gtclassic_hijump_upper_norfair_magdollite_tunnel:
+    %cm_preset("Magdollite Tunnel", #preset_gtclassic_hijump_upper_norfair_magdollite_tunnel)
 
-presets_gtclassic_hi_jump_upper_norfair_kronic_room:
-    %cm_preset("Kronic Room", #preset_gtclassic_hi_jump_upper_norfair_kronic_room)
+presets_gtclassic_hijump_upper_norfair_kronic_room:
+    %cm_preset("Kronic Room", #preset_gtclassic_hijump_upper_norfair_kronic_room)
 
-presets_gtclassic_hi_jump_upper_norfair_lava_dive:
-    %cm_preset("Lava Dive", #preset_gtclassic_hi_jump_upper_norfair_lava_dive)
+presets_gtclassic_hijump_upper_norfair_lava_dive:
+    %cm_preset("Lava Dive", #preset_gtclassic_hijump_upper_norfair_lava_dive)
 
-presets_gtclassic_hi_jump_upper_norfair_ln_main_hall:
-    %cm_preset("LN Main Hall", #preset_gtclassic_hi_jump_upper_norfair_ln_main_hall)
+presets_gtclassic_hijump_upper_norfair_ln_main_hall:
+    %cm_preset("LN Main Hall", #preset_gtclassic_hijump_upper_norfair_ln_main_hall)
 
-presets_gtclassic_hi_jump_upper_norfair_prepillars:
-    %cm_preset("Pre-Pillars", #preset_gtclassic_hi_jump_upper_norfair_prepillars)
+presets_gtclassic_hijump_upper_norfair_prepillars:
+    %cm_preset("Pre-Pillars", #preset_gtclassic_hijump_upper_norfair_prepillars)
 
-presets_gtclassic_hi_jump_upper_norfair_green_gate_glitch:
-    %cm_preset("Green Gate Glitch", #preset_gtclassic_hi_jump_upper_norfair_green_gate_glitch)
+presets_gtclassic_hijump_upper_norfair_green_gate_glitch:
+    %cm_preset("Green Gate Glitch", #preset_gtclassic_hijump_upper_norfair_green_gate_glitch)
 
-presets_gtclassic_hi_jump_upper_norfair_gt_code:
-    %cm_preset("GT Code", #preset_gtclassic_hi_jump_upper_norfair_gt_code)
+presets_gtclassic_hijump_upper_norfair_gt_code:
+    %cm_preset("GT Code", #preset_gtclassic_hijump_upper_norfair_gt_code)
 
 
 ; Lower Norfair
@@ -438,7 +439,7 @@ presets_gtclassic_lower_norfair_green_gate_revisit:
     %cm_preset("Green Gate Revisit", #preset_gtclassic_lower_norfair_green_gate_revisit)
 
 presets_gtclassic_lower_norfair_worst_room_in_the_game:
-    %cm_preset("Worst Room in the Game", #preset_gtclassic_lower_norfair_worst_room_in_the_game)
+    %cm_preset("Worst Room In The Game", #preset_gtclassic_lower_norfair_worst_room_in_the_game)
 
 presets_gtclassic_lower_norfair_amphitheatre:
     %cm_preset("Amphitheatre", #preset_gtclassic_lower_norfair_amphitheatre)
@@ -500,7 +501,7 @@ presets_gtclassic_maridia_fish_tank:
     %cm_preset("Fish Tank", #preset_gtclassic_maridia_fish_tank)
 
 presets_gtclassic_maridia_mt_everest:
-    %cm_preset("Mt Everest", #preset_gtclassic_maridia_mt_everest)
+    %cm_preset("Mt. Everest", #preset_gtclassic_maridia_mt_everest)
 
 presets_gtclassic_maridia_crab_shaft:
     %cm_preset("Crab Shaft", #preset_gtclassic_maridia_crab_shaft)
@@ -523,14 +524,14 @@ presets_gtclassic_maridia_draygon:
 presets_gtclassic_maridia_reverse_halfie_spikesuit:
     %cm_preset("Reverse Halfie (Spikesuit)", #preset_gtclassic_maridia_reverse_halfie_spikesuit)
 
-presets_gtclassic_maridia_womple_jump:
-    %cm_preset("Womple Jump", #preset_gtclassic_maridia_womple_jump)
+presets_gtclassic_maridia_whomple_jump:
+    %cm_preset("Whomple Jump", #preset_gtclassic_maridia_whomple_jump)
 
 presets_gtclassic_maridia_reverse_halfie_climb:
     %cm_preset("Reverse Halfie Climb", #preset_gtclassic_maridia_reverse_halfie_climb)
 
 presets_gtclassic_maridia_reverse_botwoon_etank:
-    %cm_preset("Reverse Botwoon E-tank", #preset_gtclassic_maridia_reverse_botwoon_etank)
+    %cm_preset("Reverse Botwoon E-Tank", #preset_gtclassic_maridia_reverse_botwoon_etank)
 
 presets_gtclassic_maridia_reverse_botwoon_hallway:
     %cm_preset("Reverse Botwoon Hallway", #preset_gtclassic_maridia_reverse_botwoon_hallway)
@@ -542,7 +543,7 @@ presets_gtclassic_maridia_reverse_crab_shaft:
     %cm_preset("Reverse Crab Shaft", #preset_gtclassic_maridia_reverse_crab_shaft)
 
 presets_gtclassic_maridia_mt_everest_revisit:
-    %cm_preset("Mt Everest Revisit", #preset_gtclassic_maridia_mt_everest_revisit)
+    %cm_preset("Mt. Everest Revisit", #preset_gtclassic_maridia_mt_everest_revisit)
 
 presets_gtclassic_maridia_red_brinstar_green_gate:
     %cm_preset("Red Brinstar Green Gate", #preset_gtclassic_maridia_red_brinstar_green_gate)
@@ -582,8 +583,8 @@ presets_gtclassic_wrecked_ship_parlor_return:
 presets_gtclassic_wrecked_ship_terminator_revisit:
     %cm_preset("Terminator Revisit", #preset_gtclassic_wrecked_ship_terminator_revisit)
 
-presets_gtclassic_wrecked_ship_green_pirate_shaft_2:
-    %cm_preset("Green Pirate Shaft", #preset_gtclassic_wrecked_ship_green_pirate_shaft_2)
+presets_gtclassic_wrecked_ship_green_pirate_shaft:
+    %cm_preset("Green Pirate Shaft", #preset_gtclassic_wrecked_ship_green_pirate_shaft)
 
 presets_gtclassic_wrecked_ship_g4_elevator:
     %cm_preset("G4 Elevator", #preset_gtclassic_wrecked_ship_g4_elevator)
@@ -634,5 +635,4 @@ presets_gtclassic_tourian_escape_climb:
 
 presets_gtclassic_tourian_escape_parlor:
     %cm_preset("Escape Parlor", #preset_gtclassic_tourian_escape_parlor)
-
 

@@ -2353,7 +2353,7 @@ preset_spazermap_forgotten_highway_pancakes_from_hell:
     dw #$FFFF
 
 preset_spazermap_forgotten_highway_plasma_spark_room:
-    dw #preset_spazermap_forgotten_highway_pancakes_from_hell ; Forgotten Highway: Pancakes from Hell
+    dw #preset_spazermap_forgotten_highway_pancakes_from_hell ; Forgotten Highway: Pancakes From Hell
     dw $078D, $A8A0  ; DDB
     dw $079B, $D5EC  ; MDB
     dw $0811, $3F00  ; Explored map tiles
@@ -3475,7 +3475,7 @@ preset_spazermap_lower_norfair_worst_room_in_the_game:
     dw #$FFFF
 
 preset_spazermap_lower_norfair_mickey_mouse:
-    dw #preset_spazermap_lower_norfair_worst_room_in_the_game ; Lower Norfair: Worst Room in the Game
+    dw #preset_spazermap_lower_norfair_worst_room_in_the_game ; Lower Norfair: Worst Room In The Game
     dw $078D, $994E  ; DDB
     dw $079B, $B4AD  ; MDB
     dw $0821, $E2FF  ; Explored map tiles

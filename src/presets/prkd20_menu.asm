@@ -5,7 +5,7 @@ PresetsMenuPrkd20:
     dw #presets_goto_prkd20_red_brinstar_revisit
     dw #presets_goto_prkd20_upper_norfair
     dw #presets_goto_prkd20_lower_norfair
-    dw #presets_goto_prkd20_lower_norfair_nox
+    dw #presets_goto_prkd20_lower_norfair_nox_ridley
     dw #presets_goto_prkd20_kraid
     dw #presets_goto_prkd20_maridia
     dw #presets_goto_prkd20_backtracking
@@ -31,8 +31,8 @@ presets_goto_prkd20_upper_norfair:
 presets_goto_prkd20_lower_norfair:
     %cm_submenu("Lower Norfair", #presets_submenu_prkd20_lower_norfair)
 
-presets_goto_prkd20_lower_norfair_nox:
-    %cm_submenu("Lower Norfair No-X Ridley", #presets_submenu_prkd20_lower_norfair_nox)
+presets_goto_prkd20_lower_norfair_nox_ridley:
+    %cm_submenu("Lower Norfair No-X Ridley", #presets_submenu_prkd20_lower_norfair_nox_ridley)
 
 presets_goto_prkd20_kraid:
     %cm_submenu("Kraid", #presets_submenu_prkd20_kraid)
@@ -113,15 +113,15 @@ presets_submenu_prkd20_red_brinstar_revisit:
     dw #presets_prkd20_red_brinstar_revisit_skree_boost
     dw #presets_prkd20_red_brinstar_revisit_below_spazer
     dw #presets_prkd20_red_brinstar_revisit_leaving_spazer
-    dw #presets_prkd20_red_brinstar_revisit_breaking_tube
+    dw #presets_prkd20_red_brinstar_revisit_breaking_the_tube
     dw #presets_prkd20_red_brinstar_revisit_business_center_preelev
     dw #$0000
     %cm_header("RED BRINSTAR REVISIT")
 
 presets_submenu_prkd20_upper_norfair:
     dw #presets_prkd20_upper_norfair_business_center_postelev
-    dw #presets_prkd20_upper_norfair_hi_jump_etank
-    dw #presets_prkd20_upper_norfair_leaving_hi_jump
+    dw #presets_prkd20_upper_norfair_hijump_etank
+    dw #presets_prkd20_upper_norfair_leaving_hijump
     dw #presets_prkd20_upper_norfair_business_center_revisit
     dw #presets_prkd20_upper_norfair_ice_beam_gates
     dw #presets_prkd20_upper_norfair_ice_maze_up
@@ -135,8 +135,8 @@ presets_submenu_prkd20_upper_norfair:
     dw #presets_prkd20_upper_norfair_leaving_speedbooster
     dw #presets_prkd20_upper_norfair_single_chamber
     dw #presets_prkd20_upper_norfair_double_chamber
-    dw #presets_prkd20_upper_norfair_double_chamber_revisited
-    dw #presets_prkd20_upper_norfair_single_chamber_revisited
+    dw #presets_prkd20_upper_norfair_double_chamber_revisit
+    dw #presets_prkd20_upper_norfair_single_chamber_revisit
     dw #presets_prkd20_upper_norfair_volcano_room
     dw #presets_prkd20_upper_norfair_kronic_boost
     dw #presets_prkd20_upper_norfair_lava_spark
@@ -158,7 +158,7 @@ presets_submenu_prkd20_lower_norfair:
     dw #presets_prkd20_lower_norfair_reverse_plowerhouse
     dw #presets_prkd20_lower_norfair_wasteland_revisit
     dw #presets_prkd20_lower_norfair_kihunter_stairs_up
-    dw #presets_prkd20_lower_norfair_fire_flea_room
+    dw #presets_prkd20_lower_norfair_fireflea_room
     dw #presets_prkd20_lower_norfair_springball_maze
     dw #presets_prkd20_lower_norfair_three_musketeers
     dw #presets_prkd20_lower_norfair_single_chamber_final
@@ -168,22 +168,22 @@ presets_submenu_prkd20_lower_norfair:
     dw #$0000
     %cm_header("LOWER NORFAIR")
 
-presets_submenu_prkd20_lower_norfair_nox:
-    dw #presets_prkd20_lower_norfair_nox_ln_main_hall
-    dw #presets_prkd20_lower_norfair_nox_prepillars
-    dw #presets_prkd20_lower_norfair_nox_worst_room_in_the_game
-    dw #presets_prkd20_lower_norfair_nox_amphitheatre
-    dw #presets_prkd20_lower_norfair_nox_kihunter_stairs_down
-    dw #presets_prkd20_lower_norfair_nox_wasteland
-    dw #presets_prkd20_lower_norfair_nox_metal_ninja_pirates
-    dw #presets_prkd20_lower_norfair_nox_plowerhouse
-    dw #presets_prkd20_lower_norfair_nox_ridley_farming_room
-    dw #presets_prkd20_lower_norfair_nox_ridley
+presets_submenu_prkd20_lower_norfair_nox_ridley:
+    dw #presets_prkd20_lower_norfair_nox_ridley_ln_main_hall
+    dw #presets_prkd20_lower_norfair_nox_ridley_prepillars
+    dw #presets_prkd20_lower_norfair_nox_ridley_worst_room_in_the_game
+    dw #presets_prkd20_lower_norfair_nox_ridley_amphitheatre
+    dw #presets_prkd20_lower_norfair_nox_ridley_kihunter_stairs_down
+    dw #presets_prkd20_lower_norfair_nox_ridley_wasteland
+    dw #presets_prkd20_lower_norfair_nox_ridley_metal_ninja_pirates
+    dw #presets_prkd20_lower_norfair_nox_ridley_plowerhouse
+    dw #presets_prkd20_lower_norfair_nox_ridley_ridley_farming_room
+    dw #presets_prkd20_lower_norfair_nox_ridley_ridley
     dw #presets_prkd20_lower_norfair_leaving_ridley
     dw #presets_prkd20_lower_norfair_reverse_plowerhouse
     dw #presets_prkd20_lower_norfair_wasteland_revisit
     dw #presets_prkd20_lower_norfair_kihunter_stairs_up
-    dw #presets_prkd20_lower_norfair_fire_flea_room
+    dw #presets_prkd20_lower_norfair_fireflea_room
     dw #presets_prkd20_lower_norfair_springball_maze
     dw #presets_prkd20_lower_norfair_three_musketeers
     dw #presets_prkd20_lower_norfair_single_chamber_final
@@ -196,10 +196,10 @@ presets_submenu_prkd20_lower_norfair_nox:
 presets_submenu_prkd20_kraid:
     dw #presets_prkd20_kraid_entering_kraids_lair
     dw #presets_prkd20_kraid_kraid_kihunters
-    dw #presets_prkd20_kraid_mini_kraid
+    dw #presets_prkd20_kraid_minikraid
     dw #presets_prkd20_kraid_kraid
     dw #presets_prkd20_kraid_leaving_varia
-    dw #presets_prkd20_kraid_mini_kraid_revisit
+    dw #presets_prkd20_kraid_minikraid_revisit
     dw #presets_prkd20_kraid_kraid_kihunters_revisit
     dw #presets_prkd20_kraid_leaving_kraids_lair
     dw #$0000
@@ -257,6 +257,7 @@ presets_submenu_prkd20_tourian:
     dw #presets_prkd20_tourian_escape_parlor
     dw #$0000
     %cm_header("TOURIAN")
+
 
 ; Crateria
 presets_prkd20_crateria_ceres_elevator:
@@ -427,8 +428,8 @@ presets_prkd20_red_brinstar_revisit_below_spazer:
 presets_prkd20_red_brinstar_revisit_leaving_spazer:
     %cm_preset("Leaving Spazer", #preset_prkd20_red_brinstar_revisit_leaving_spazer)
 
-presets_prkd20_red_brinstar_revisit_breaking_tube:
-    %cm_preset("Breaking Tube", #preset_prkd20_red_brinstar_revisit_breaking_tube)
+presets_prkd20_red_brinstar_revisit_breaking_the_tube:
+    %cm_preset("Breaking The Tube", #preset_prkd20_red_brinstar_revisit_breaking_the_tube)
 
 presets_prkd20_red_brinstar_revisit_business_center_preelev:
     %cm_preset("Business Center Pre-Elev", #preset_prkd20_red_brinstar_revisit_business_center_preelev)
@@ -438,11 +439,11 @@ presets_prkd20_red_brinstar_revisit_business_center_preelev:
 presets_prkd20_upper_norfair_business_center_postelev:
     %cm_preset("Business Center Post-Elev", #preset_prkd20_upper_norfair_business_center_postelev)
 
-presets_prkd20_upper_norfair_hi_jump_etank:
-    %cm_preset("Hi Jump E-Tank", #preset_prkd20_upper_norfair_hi_jump_etank)
+presets_prkd20_upper_norfair_hijump_etank:
+    %cm_preset("Hi-Jump E-Tank", #preset_prkd20_upper_norfair_hijump_etank)
 
-presets_prkd20_upper_norfair_leaving_hi_jump:
-    %cm_preset("Leaving Hi Jump", #preset_prkd20_upper_norfair_leaving_hi_jump)
+presets_prkd20_upper_norfair_leaving_hijump:
+    %cm_preset("Leaving Hi-Jump", #preset_prkd20_upper_norfair_leaving_hijump)
 
 presets_prkd20_upper_norfair_business_center_revisit:
     %cm_preset("Business Center Revisit", #preset_prkd20_upper_norfair_business_center_revisit)
@@ -483,11 +484,11 @@ presets_prkd20_upper_norfair_single_chamber:
 presets_prkd20_upper_norfair_double_chamber:
     %cm_preset("Double Chamber", #preset_prkd20_upper_norfair_double_chamber)
 
-presets_prkd20_upper_norfair_double_chamber_revisited:
-    %cm_preset("Double Chamber Revisited", #preset_prkd20_upper_norfair_double_chamber_revisited)
+presets_prkd20_upper_norfair_double_chamber_revisit:
+    %cm_preset("Double Chamber Revisit", #preset_prkd20_upper_norfair_double_chamber_revisit)
 
-presets_prkd20_upper_norfair_single_chamber_revisited:
-    %cm_preset("Single Chamber Revisited", #preset_prkd20_upper_norfair_single_chamber_revisited)
+presets_prkd20_upper_norfair_single_chamber_revisit:
+    %cm_preset("Single Chamber Revisit", #preset_prkd20_upper_norfair_single_chamber_revisit)
 
 presets_prkd20_upper_norfair_volcano_room:
     %cm_preset("Volcano Room", #preset_prkd20_upper_norfair_volcano_room)
@@ -507,7 +508,7 @@ presets_prkd20_lower_norfair_prepillars:
     %cm_preset("Pre-Pillars", #preset_prkd20_lower_norfair_prepillars)
 
 presets_prkd20_lower_norfair_worst_room_in_the_game:
-    %cm_preset("Worst Room in the Game", #preset_prkd20_lower_norfair_worst_room_in_the_game)
+    %cm_preset("Worst Room In The Game", #preset_prkd20_lower_norfair_worst_room_in_the_game)
 
 presets_prkd20_lower_norfair_amphitheatre:
     %cm_preset("Amphitheatre", #preset_prkd20_lower_norfair_amphitheatre)
@@ -530,35 +531,35 @@ presets_prkd20_lower_norfair_ridley_farming_room:
 presets_prkd20_lower_norfair_ridley:
     %cm_preset("Ridley", #preset_prkd20_lower_norfair_ridley)
 
-presets_prkd20_lower_norfair_nox_ln_main_hall:
-    %cm_preset("LN Main Hall", #preset_prkd20_lower_norfair_nox_ln_main_hall)
+presets_prkd20_lower_norfair_nox_ridley_ln_main_hall:
+    %cm_preset("LN Main Hall", #preset_prkd20_lower_norfair_nox_ridley_ln_main_hall)
 
-presets_prkd20_lower_norfair_nox_prepillars:
-    %cm_preset("Pre-Pillars", #preset_prkd20_lower_norfair_nox_prepillars)
+presets_prkd20_lower_norfair_nox_ridley_prepillars:
+    %cm_preset("Pre-Pillars", #preset_prkd20_lower_norfair_nox_ridley_prepillars)
 
-presets_prkd20_lower_norfair_nox_worst_room_in_the_game:
-    %cm_preset("Worst Room in the Game", #preset_prkd20_lower_norfair_nox_worst_room_in_the_game)
+presets_prkd20_lower_norfair_nox_ridley_worst_room_in_the_game:
+    %cm_preset("Worst Room In The Game", #preset_prkd20_lower_norfair_nox_ridley_worst_room_in_the_game)
 
-presets_prkd20_lower_norfair_nox_amphitheatre:
-    %cm_preset("Amphitheatre", #preset_prkd20_lower_norfair_nox_amphitheatre)
+presets_prkd20_lower_norfair_nox_ridley_amphitheatre:
+    %cm_preset("Amphitheatre", #preset_prkd20_lower_norfair_nox_ridley_amphitheatre)
 
-presets_prkd20_lower_norfair_nox_kihunter_stairs_down:
-    %cm_preset("Kihunter Stairs Down", #preset_prkd20_lower_norfair_nox_kihunter_stairs_down)
+presets_prkd20_lower_norfair_nox_ridley_kihunter_stairs_down:
+    %cm_preset("Kihunter Stairs Down", #preset_prkd20_lower_norfair_nox_ridley_kihunter_stairs_down)
 
-presets_prkd20_lower_norfair_nox_wasteland:
-    %cm_preset("Wasteland", #preset_prkd20_lower_norfair_nox_wasteland)
+presets_prkd20_lower_norfair_nox_ridley_wasteland:
+    %cm_preset("Wasteland", #preset_prkd20_lower_norfair_nox_ridley_wasteland)
 
-presets_prkd20_lower_norfair_nox_metal_ninja_pirates:
-    %cm_preset("Metal Ninja Pirates", #preset_prkd20_lower_norfair_nox_metal_ninja_pirates)
+presets_prkd20_lower_norfair_nox_ridley_metal_ninja_pirates:
+    %cm_preset("Metal Ninja Pirates", #preset_prkd20_lower_norfair_nox_ridley_metal_ninja_pirates)
 
-presets_prkd20_lower_norfair_nox_plowerhouse:
-    %cm_preset("Plowerhouse", #preset_prkd20_lower_norfair_nox_plowerhouse)
+presets_prkd20_lower_norfair_nox_ridley_plowerhouse:
+    %cm_preset("Plowerhouse", #preset_prkd20_lower_norfair_nox_ridley_plowerhouse)
 
-presets_prkd20_lower_norfair_nox_ridley_farming_room:
-    %cm_preset("Ridley Farming Room", #preset_prkd20_lower_norfair_nox_ridley_farming_room)
+presets_prkd20_lower_norfair_nox_ridley_ridley_farming_room:
+    %cm_preset("Ridley Farming Room", #preset_prkd20_lower_norfair_nox_ridley_ridley_farming_room)
 
-presets_prkd20_lower_norfair_nox_ridley:
-    %cm_preset("Ridley", #preset_prkd20_lower_norfair_nox_ridley)
+presets_prkd20_lower_norfair_nox_ridley_ridley:
+    %cm_preset("Ridley", #preset_prkd20_lower_norfair_nox_ridley_ridley)
 
 presets_prkd20_lower_norfair_leaving_ridley:
     %cm_preset("Leaving Ridley", #preset_prkd20_lower_norfair_leaving_ridley)
@@ -572,8 +573,8 @@ presets_prkd20_lower_norfair_wasteland_revisit:
 presets_prkd20_lower_norfair_kihunter_stairs_up:
     %cm_preset("Kihunter Stairs Up", #preset_prkd20_lower_norfair_kihunter_stairs_up)
 
-presets_prkd20_lower_norfair_fire_flea_room:
-    %cm_preset("Fire Flea Room", #preset_prkd20_lower_norfair_fire_flea_room)
+presets_prkd20_lower_norfair_fireflea_room:
+    %cm_preset("Fireflea Room", #preset_prkd20_lower_norfair_fireflea_room)
 
 presets_prkd20_lower_norfair_springball_maze:
     %cm_preset("Springball Maze", #preset_prkd20_lower_norfair_springball_maze)
@@ -596,13 +597,13 @@ presets_prkd20_lower_norfair_business_center_final:
 
 ; Kraid
 presets_prkd20_kraid_entering_kraids_lair:
-    %cm_preset("Entering Kraids Lair", #preset_prkd20_kraid_entering_kraids_lair)
+    %cm_preset("Entering Kraid's Lair", #preset_prkd20_kraid_entering_kraids_lair)
 
 presets_prkd20_kraid_kraid_kihunters:
     %cm_preset("Kraid Kihunters", #preset_prkd20_kraid_kraid_kihunters)
 
-presets_prkd20_kraid_mini_kraid:
-    %cm_preset("Mini Kraid", #preset_prkd20_kraid_mini_kraid)
+presets_prkd20_kraid_minikraid:
+    %cm_preset("Mini-Kraid", #preset_prkd20_kraid_minikraid)
 
 presets_prkd20_kraid_kraid:
     %cm_preset("Kraid", #preset_prkd20_kraid_kraid)
@@ -610,14 +611,14 @@ presets_prkd20_kraid_kraid:
 presets_prkd20_kraid_leaving_varia:
     %cm_preset("Leaving Varia", #preset_prkd20_kraid_leaving_varia)
 
-presets_prkd20_kraid_mini_kraid_revisit:
-    %cm_preset("Mini Kraid Revisit", #preset_prkd20_kraid_mini_kraid_revisit)
+presets_prkd20_kraid_minikraid_revisit:
+    %cm_preset("Mini-Kraid Revisit", #preset_prkd20_kraid_minikraid_revisit)
 
 presets_prkd20_kraid_kraid_kihunters_revisit:
     %cm_preset("Kraid Kihunters Revisit", #preset_prkd20_kraid_kraid_kihunters_revisit)
 
 presets_prkd20_kraid_leaving_kraids_lair:
-    %cm_preset("Leaving Kraids Lair", #preset_prkd20_kraid_leaving_kraids_lair)
+    %cm_preset("Leaving Kraid's Lair", #preset_prkd20_kraid_leaving_kraids_lair)
 
 
 ; Maridia
@@ -628,7 +629,7 @@ presets_prkd20_maridia_fish_tank:
     %cm_preset("Fish Tank", #preset_prkd20_maridia_fish_tank)
 
 presets_prkd20_maridia_mt_everest:
-    %cm_preset("Mt Everest", #preset_prkd20_maridia_mt_everest)
+    %cm_preset("Mt. Everest", #preset_prkd20_maridia_mt_everest)
 
 presets_prkd20_maridia_crab_shaft:
     %cm_preset("Crab Shaft", #preset_prkd20_maridia_crab_shaft)
@@ -670,7 +671,7 @@ presets_prkd20_maridia_reverse_crab_shaft:
     %cm_preset("Reverse Crab Shaft", #preset_prkd20_maridia_reverse_crab_shaft)
 
 presets_prkd20_maridia_mt_everest_revisit:
-    %cm_preset("Mt Everest Revisit", #preset_prkd20_maridia_mt_everest_revisit)
+    %cm_preset("Mt. Everest Revisit", #preset_prkd20_maridia_mt_everest_revisit)
 
 
 ; Backtracking
@@ -747,5 +748,4 @@ presets_prkd20_tourian_escape_climb:
 
 presets_prkd20_tourian_escape_parlor:
     %cm_preset("Escape Parlor", #preset_prkd20_tourian_escape_parlor)
-
 

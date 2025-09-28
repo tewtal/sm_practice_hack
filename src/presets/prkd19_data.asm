@@ -914,7 +914,7 @@ preset_prkd19_red_brinstar_revisit_leaving_spazer:
     dw $D8B6, $B008  ; Doors
     dw #$FFFF
 
-preset_prkd19_red_brinstar_revisit_breaking_tube:
+preset_prkd19_red_brinstar_revisit_breaking_the_tube:
     dw #preset_prkd19_red_brinstar_revisit_leaving_spazer ; Red Brinstar Revisit: Leaving Spazer
     dw $078D, $9132  ; DDB
     dw $079B, $A408  ; MDB
@@ -934,7 +934,7 @@ preset_prkd19_red_brinstar_revisit_breaking_tube:
     dw #$FFFF
 
 preset_prkd19_red_brinstar_revisit_business_center_preelev:
-    dw #preset_prkd19_red_brinstar_revisit_breaking_tube ; Red Brinstar Revisit: Breaking Tube
+    dw #preset_prkd19_red_brinstar_revisit_breaking_the_tube ; Red Brinstar Revisit: Breaking The Tube
     dw $078D, $A384  ; DDB
     dw $079B, $A6A1  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -966,7 +966,7 @@ preset_prkd19_upper_norfair_business_center_postelev:
     dw $0AFA, $02A8  ; Samus Y
     dw #$FFFF
 
-preset_prkd19_upper_norfair_hi_jump_etank:
+preset_prkd19_upper_norfair_hijump_etank:
     dw #preset_prkd19_upper_norfair_business_center_postelev ; Upper Norfair: Business Center Post-Elev
     dw $090F, $FFFF  ; Screen subpixel X position
     dw $0915, $051B  ; Screen Y position in pixels
@@ -979,8 +979,8 @@ preset_prkd19_upper_norfair_hi_jump_etank:
     dw $D8B8, $2000  ; Doors
     dw #$FFFF
 
-preset_prkd19_upper_norfair_leaving_hi_jump:
-    dw #preset_prkd19_upper_norfair_hi_jump_etank ; Upper Norfair: Hi Jump E-Tank
+preset_prkd19_upper_norfair_leaving_hijump:
+    dw #preset_prkd19_upper_norfair_hijump_etank ; Upper Norfair: Hi-Jump E-Tank
     dw $078D, $9426  ; DDB
     dw $079B, $A9E5  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -1002,7 +1002,7 @@ preset_prkd19_upper_norfair_leaving_hi_jump:
     dw #$FFFF
 
 preset_prkd19_upper_norfair_business_center_revisit:
-    dw #preset_prkd19_upper_norfair_leaving_hi_jump ; Upper Norfair: Leaving Hi Jump
+    dw #preset_prkd19_upper_norfair_leaving_hijump ; Upper Norfair: Leaving Hi-Jump
     dw $078D, $93F6  ; DDB
     dw $079B, $AA41  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -1209,7 +1209,7 @@ preset_prkd19_upper_norfair_double_chamber:
     dw $D8BA, $0071  ; Doors
     dw #$FFFF
 
-preset_prkd19_upper_norfair_double_chamber_revisited:
+preset_prkd19_upper_norfair_double_chamber_revisit:
     dw #preset_prkd19_upper_norfair_double_chamber ; Upper Norfair: Double Chamber
     dw $078D, $961E  ; DDB
     dw $079B, $ADDE  ; MDB
@@ -1228,8 +1228,8 @@ preset_prkd19_upper_norfair_double_chamber_revisited:
     dw $D8BA, $00F1  ; Doors
     dw #$FFFF
 
-preset_prkd19_upper_norfair_single_chamber_revisited:
-    dw #preset_prkd19_upper_norfair_double_chamber_revisited ; Upper Norfair: Double Chamber Revisited
+preset_prkd19_upper_norfair_single_chamber_revisit:
+    dw #preset_prkd19_upper_norfair_double_chamber_revisit ; Upper Norfair: Double Chamber Revisit
     dw $078D, $962A  ; DDB
     dw $079B, $ADAD  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -1244,7 +1244,7 @@ preset_prkd19_upper_norfair_single_chamber_revisited:
     dw #$FFFF
 
 preset_prkd19_upper_norfair_volcano_room:
-    dw #preset_prkd19_upper_norfair_single_chamber_revisited ; Upper Norfair: Single Chamber Revisited
+    dw #preset_prkd19_upper_norfair_single_chamber_revisit ; Upper Norfair: Single Chamber Revisit
     dw $078D, $95EE  ; DDB
     dw $079B, $AE07  ; MDB
     dw $090F, $9E80  ; Screen subpixel X position
@@ -1341,7 +1341,7 @@ preset_prkd19_lower_norfair_worst_room_in_the_game:
     dw #$FFFF
 
 preset_prkd19_lower_norfair_amphitheatre:
-    dw #preset_prkd19_lower_norfair_worst_room_in_the_game ; Lower Norfair: Worst Room in the Game
+    dw #preset_prkd19_lower_norfair_worst_room_in_the_game ; Lower Norfair: Worst Room In The Game
     dw $078D, $994E  ; DDB
     dw $079B, $B4AD  ; MDB
     dw $090F, $4000  ; Screen subpixel X position
@@ -1451,7 +1451,7 @@ preset_prkd19_lower_norfair_ridley:
     dw $D8BA, $D1F1  ; Doors
     dw #$FFFF
 
-preset_prkd19_lower_norfair_nox_ln_main_hall:
+preset_prkd19_lower_norfair_nox_ridley_ln_main_hall:
     dw #preset_prkd19_upper_norfair_lava_spark ; Upper Norfair: Lava Spark
     dw $078D, $96F6  ; DDB
     dw $079B, $B236  ; MDB
@@ -1469,8 +1469,8 @@ preset_prkd19_lower_norfair_nox_ln_main_hall:
     dw $0AFA, $0288  ; Samus Y
     dw #$FFFF
 
-preset_prkd19_lower_norfair_nox_prepillars:
-    dw #preset_prkd19_lower_norfair_nox_ln_main_hall ; Lower Norfair: LN Main Hall
+preset_prkd19_lower_norfair_nox_ridley_prepillars:
+    dw #preset_prkd19_lower_norfair_nox_ridley_ln_main_hall ; Lower Norfair No-X Ridley: LN Main Hall
     dw $090F, $3000  ; Screen subpixel X position
     dw $0911, $0700  ; Screen X position in pixels
     dw $0913, $9400  ; Screen subpixel Y position
@@ -1481,8 +1481,8 @@ preset_prkd19_lower_norfair_nox_prepillars:
     dw $0AFA, $028B  ; Samus Y
     dw #$FFFF
 
-preset_prkd19_lower_norfair_nox_worst_room_in_the_game:
-    dw #preset_prkd19_lower_norfair_nox_prepillars ; Lower Norfair: Pre-Pillars
+preset_prkd19_lower_norfair_nox_ridley_worst_room_in_the_game:
+    dw #preset_prkd19_lower_norfair_nox_ridley_prepillars ; Lower Norfair No-X Ridley: Pre-Pillars
     dw $078D, $9912  ; DDB
     dw $079B, $B457  ; MDB
     dw $090F, $277F  ; Screen subpixel X position
@@ -1496,8 +1496,8 @@ preset_prkd19_lower_norfair_nox_worst_room_in_the_game:
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 
-preset_prkd19_lower_norfair_nox_amphitheatre:
-    dw #preset_prkd19_lower_norfair_nox_worst_room_in_the_game ; Lower Norfair: Worst Room in the Game
+preset_prkd19_lower_norfair_nox_ridley_amphitheatre:
+    dw #preset_prkd19_lower_norfair_nox_ridley_worst_room_in_the_game ; Lower Norfair No-X Ridley: Worst Room In The Game
     dw $078D, $994E  ; DDB
     dw $079B, $B4AD  ; MDB
     dw $090F, $4000  ; Screen subpixel X position
@@ -1512,8 +1512,8 @@ preset_prkd19_lower_norfair_nox_amphitheatre:
     dw $0AFA, $018B  ; Samus Y
     dw #$FFFF
 
-preset_prkd19_lower_norfair_nox_kihunter_stairs_down:
-    dw #preset_prkd19_lower_norfair_nox_amphitheatre ; Lower Norfair: Amphitheatre
+preset_prkd19_lower_norfair_nox_ridley_kihunter_stairs_down:
+    dw #preset_prkd19_lower_norfair_nox_ridley_amphitheatre ; Lower Norfair No-X Ridley: Amphitheatre
     dw $078D, $997E  ; DDB
     dw $079B, $B4E5  ; MDB
     dw $0911, $0270  ; Screen X position in pixels
@@ -1525,8 +1525,8 @@ preset_prkd19_lower_norfair_nox_kihunter_stairs_down:
     dw $0AFA, $00BB  ; Samus Y
     dw #$FFFF
 
-preset_prkd19_lower_norfair_nox_wasteland:
-    dw #preset_prkd19_lower_norfair_nox_kihunter_stairs_down ; Lower Norfair: Kihunter Stairs Down
+preset_prkd19_lower_norfair_nox_ridley_wasteland:
+    dw #preset_prkd19_lower_norfair_nox_ridley_kihunter_stairs_down ; Lower Norfair No-X Ridley: Kihunter Stairs Down
     dw $078D, $99A2  ; DDB
     dw $079B, $B585  ; MDB
     dw $090F, $A980  ; Screen subpixel X position
@@ -1544,8 +1544,8 @@ preset_prkd19_lower_norfair_nox_wasteland:
     dw $D8BA, $41F1  ; Doors
     dw #$FFFF
 
-preset_prkd19_lower_norfair_nox_metal_ninja_pirates:
-    dw #preset_prkd19_lower_norfair_nox_wasteland ; Lower Norfair: Wasteland
+preset_prkd19_lower_norfair_nox_ridley_metal_ninja_pirates:
+    dw #preset_prkd19_lower_norfair_nox_ridley_wasteland ; Lower Norfair No-X Ridley: Wasteland
     dw $078D, $99EA  ; DDB
     dw $079B, $B5D5  ; MDB
     dw $090F, $1000  ; Screen subpixel X position
@@ -1564,8 +1564,8 @@ preset_prkd19_lower_norfair_nox_metal_ninja_pirates:
     dw $D8BA, $C1F1  ; Doors
     dw #$FFFF
 
-preset_prkd19_lower_norfair_nox_plowerhouse:
-    dw #preset_prkd19_lower_norfair_nox_metal_ninja_pirates ; Lower Norfair: Metal Ninja Pirates
+preset_prkd19_lower_norfair_nox_ridley_plowerhouse:
+    dw #preset_prkd19_lower_norfair_nox_ridley_metal_ninja_pirates ; Lower Norfair No-X Ridley: Metal Ninja Pirates
     dw $078D, $9A1A  ; DDB
     dw $079B, $B62B  ; MDB
     dw $090F, $0000  ; Screen subpixel X position
@@ -1581,8 +1581,8 @@ preset_prkd19_lower_norfair_nox_plowerhouse:
     dw $D8BC, $0001  ; Doors
     dw #$FFFF
 
-preset_prkd19_lower_norfair_nox_ridley_farming_room:
-    dw #preset_prkd19_lower_norfair_nox_plowerhouse ; Lower Norfair: Plowerhouse
+preset_prkd19_lower_norfair_nox_ridley_ridley_farming_room:
+    dw #preset_prkd19_lower_norfair_nox_ridley_plowerhouse ; Lower Norfair No-X Ridley: Plowerhouse
     dw $078D, $9A32  ; DDB
     dw $079B, $B482  ; MDB
     dw $090F, $9000  ; Screen subpixel X position
@@ -1594,8 +1594,8 @@ preset_prkd19_lower_norfair_nox_ridley_farming_room:
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 
-preset_prkd19_lower_norfair_nox_ridley:
-    dw #preset_prkd19_lower_norfair_nox_ridley_farming_room ; Lower Norfair: Ridley Farming Room
+preset_prkd19_lower_norfair_nox_ridley_ridley:
+    dw #preset_prkd19_lower_norfair_nox_ridley_ridley_farming_room ; Lower Norfair No-X Ridley: Ridley Farming Room
     dw $078D, $995A  ; DDB
     dw $079B, $B37A  ; MDB
     dw $090F, $1000  ; Screen subpixel X position
@@ -1671,7 +1671,7 @@ preset_prkd19_lower_norfair_kihunter_stairs_up:
     dw $0AFA, $009B  ; Samus Y
     dw #$FFFF
 
-preset_prkd19_lower_norfair_fire_flea_room:
+preset_prkd19_lower_norfair_fireflea_room:
     dw #preset_prkd19_lower_norfair_kihunter_stairs_up ; Lower Norfair: Kihunter Stairs Up
     dw $078D, $9A26  ; DDB
     dw $079B, $B585  ; MDB
@@ -1686,7 +1686,7 @@ preset_prkd19_lower_norfair_fire_flea_room:
     dw #$FFFF
 
 preset_prkd19_lower_norfair_springball_maze:
-    dw #preset_prkd19_lower_norfair_fire_flea_room ; Lower Norfair: Fire Flea Room
+    dw #preset_prkd19_lower_norfair_fireflea_room ; Lower Norfair: Fireflea Room
     dw $078D, $9A02  ; DDB
     dw $079B, $B6EE  ; MDB
     dw $090F, $0000  ; Screen subpixel X position
@@ -1786,7 +1786,7 @@ preset_prkd19_kraid_entering_kraids_lair:
     dw #$FFFF
 
 preset_prkd19_kraid_kraid_kihunters:
-    dw #preset_prkd19_kraid_entering_kraids_lair ; Kraid: Entering Kraids Lair
+    dw #preset_prkd19_kraid_entering_kraids_lair ; Kraid: Entering Kraid's Lair
     dw $078D, $923A  ; DDB
     dw $079B, $A471  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -1805,7 +1805,7 @@ preset_prkd19_kraid_kraid_kihunters:
     dw $0AFA, $018B  ; Samus Y
     dw #$FFFF
 
-preset_prkd19_kraid_mini_kraid:
+preset_prkd19_kraid_minikraid:
     dw #preset_prkd19_kraid_kraid_kihunters ; Kraid: Kraid Kihunters
     dw $078D, $9156  ; DDB
     dw $079B, $A4DA  ; MDB
@@ -1816,7 +1816,7 @@ preset_prkd19_kraid_mini_kraid:
     dw #$FFFF
 
 preset_prkd19_kraid_kraid:
-    dw #preset_prkd19_kraid_mini_kraid ; Kraid: Mini Kraid
+    dw #preset_prkd19_kraid_minikraid ; Kraid: Mini-Kraid
     dw $078D, $919E  ; DDB
     dw $079B, $A56B  ; MDB
     dw $07F3, $0027  ; Music Bank
@@ -1859,7 +1859,7 @@ preset_prkd19_kraid_leaving_varia:
     dw $D8B8, $2E64  ; Doors
     dw #$FFFF
 
-preset_prkd19_kraid_mini_kraid_revisit:
+preset_prkd19_kraid_minikraid_revisit:
     dw #preset_prkd19_kraid_leaving_varia ; Kraid: Leaving Varia
     dw $078D, $91CE  ; DDB
     dw $079B, $A56B  ; MDB
@@ -1877,7 +1877,7 @@ preset_prkd19_kraid_mini_kraid_revisit:
     dw #$FFFF
 
 preset_prkd19_kraid_kraid_kihunters_revisit:
-    dw #preset_prkd19_kraid_mini_kraid_revisit ; Kraid: Mini Kraid Revisit
+    dw #preset_prkd19_kraid_minikraid_revisit ; Kraid: Mini-Kraid Revisit
     dw $078D, $91AA  ; DDB
     dw $079B, $A521  ; MDB
     dw $090F, $0000  ; Screen subpixel X position
@@ -1913,7 +1913,7 @@ preset_prkd19_kraid_leaving_kraids_lair:
     dw #$FFFF
 
 preset_prkd19_maridia_maridia_tube_revisit:
-    dw #preset_prkd19_kraid_leaving_kraids_lair ; Kraid: Leaving Kraids Lair
+    dw #preset_prkd19_kraid_leaving_kraids_lair ; Kraid: Leaving Kraid's Lair
     dw $078D, $922E  ; DDB
     dw $079B, $CF80  ; MDB
     dw $090F, $D000  ; Screen subpixel X position
@@ -1958,7 +1958,7 @@ preset_prkd19_maridia_mt_everest:
     dw #$FFFF
 
 preset_prkd19_maridia_crab_shaft:
-    dw #preset_prkd19_maridia_mt_everest ; Maridia: Mt Everest
+    dw #preset_prkd19_maridia_mt_everest ; Maridia: Mt. Everest
     dw $090F, $6000  ; Screen subpixel X position
     dw $0911, $0500  ; Screen X position in pixels
     dw $0913, $9C01  ; Screen subpixel Y position
@@ -2176,7 +2176,7 @@ preset_prkd19_maridia_mt_everest_revisit:
     dw #$FFFF
 
 preset_prkd19_backtracking_red_brinstar_green_gate:
-    dw #preset_prkd19_maridia_mt_everest_revisit ; Maridia: Mt Everest Revisit
+    dw #preset_prkd19_maridia_mt_everest_revisit ; Maridia: Mt. Everest Revisit
     dw $078D, $A42C  ; DDB
     dw $079B, $D104  ; MDB
     dw $090F, $C000  ; Screen subpixel X position

@@ -96,7 +96,7 @@ presets_submenu_100early_brinstar:
 
 presets_submenu_100early_speed_booster:
     dw #presets_100early_speed_booster_business_center
-    dw #presets_100early_speed_booster_hijump
+    dw #presets_100early_speed_booster_hijump_boots
     dw #presets_100early_speed_booster_business_center_climb
     dw #presets_100early_speed_booster_cathedral_entrance
     dw #presets_100early_speed_booster_cathedral
@@ -110,8 +110,8 @@ presets_submenu_100early_speed_booster:
 presets_submenu_100early_grapple:
     dw #presets_100early_grapple_single_chamber
     dw #presets_100early_grapple_double_chamber
-    dw #presets_100early_grapple_double_chamber_revisited
-    dw #presets_100early_grapple_bubble_mountain_revisited
+    dw #presets_100early_grapple_double_chamber_revisit
+    dw #presets_100early_grapple_bubble_mountain_revisit
     dw #presets_100early_grapple_red_pirate_shaft
     dw #presets_100early_grapple_crocomire
     dw #presets_100early_grapple_postcrocomire
@@ -133,7 +133,7 @@ presets_submenu_100early_red_tower_and_crateria:
     dw #presets_100early_red_tower_and_crateria_elevator_room_ascent
     dw #presets_100early_red_tower_and_crateria_beta_power_bombs
     dw #presets_100early_red_tower_and_crateria_crateria_kihunters
-    dw #presets_100early_red_tower_and_crateria_oceanfly
+    dw #presets_100early_red_tower_and_crateria_ocean_fly
     dw #presets_100early_red_tower_and_crateria_the_moat
     dw #presets_100early_red_tower_and_crateria_ocean_spark
     dw #$0000
@@ -174,7 +174,7 @@ presets_submenu_100early_brinstar_cleanup:
     dw #presets_100early_brinstar_cleanup_big_pink_hopper_room
     dw #presets_100early_brinstar_cleanup_spore_spawn_supers
     dw #presets_100early_brinstar_cleanup_waterway_etank
-    dw #presets_100early_brinstar_cleanup_green_hills_revisit
+    dw #presets_100early_brinstar_cleanup_green_hill_zone_revisit
     dw #presets_100early_brinstar_cleanup_blockbuster
     dw #$0000
     %cm_header("BRINSTAR CLEANUP")
@@ -199,7 +199,7 @@ presets_submenu_100early_maridia_predraygon:
     %cm_header("MARIDIA PRE-DRAYGON")
 
 presets_submenu_100early_maridia_postdraygon:
-    dw #presets_100early_maridia_postdraygon_return_halfie
+    dw #presets_100early_maridia_postdraygon_reverse_halfie
     dw #presets_100early_maridia_postdraygon_reverse_botwoon_etank
     dw #presets_100early_maridia_postdraygon_east_sand_pit
     dw #presets_100early_maridia_postdraygon_pants_room
@@ -250,7 +250,7 @@ presets_submenu_100early_lower_norfair:
     dw #presets_100early_lower_norfair_kihunter_shaft_revisit
     dw #presets_100early_lower_norfair_firefleas_room
     dw #presets_100early_lower_norfair_springball_maze
-    dw #presets_100early_lower_norfair_three_muskateers
+    dw #presets_100early_lower_norfair_three_musketeers
     dw #presets_100early_lower_norfair_bubble_mountain_return
     dw #presets_100early_lower_norfair_norfair_reserve
     dw #presets_100early_lower_norfair_bubble_mountain_final
@@ -293,6 +293,7 @@ presets_submenu_100early_tourian:
     dw #presets_100early_tourian_escape_parlor
     dw #$0000
     %cm_header("TOURIAN")
+
 
 ; Crateria
 presets_100early_crateria_ceres_elevator:
@@ -398,8 +399,8 @@ presets_100early_brinstar_leaving_kraid_etank:
 presets_100early_speed_booster_business_center:
     %cm_preset("Business Center", #preset_100early_speed_booster_business_center)
 
-presets_100early_speed_booster_hijump:
-    %cm_preset("Hi-Jump", #preset_100early_speed_booster_hijump)
+presets_100early_speed_booster_hijump_boots:
+    %cm_preset("Hi-Jump Boots", #preset_100early_speed_booster_hijump_boots)
 
 presets_100early_speed_booster_business_center_climb:
     %cm_preset("Business Center Climb", #preset_100early_speed_booster_business_center_climb)
@@ -430,11 +431,11 @@ presets_100early_grapple_single_chamber:
 presets_100early_grapple_double_chamber:
     %cm_preset("Double Chamber", #preset_100early_grapple_double_chamber)
 
-presets_100early_grapple_double_chamber_revisited:
-    %cm_preset("Double Chamber Revisited", #preset_100early_grapple_double_chamber_revisited)
+presets_100early_grapple_double_chamber_revisit:
+    %cm_preset("Double Chamber Revisit", #preset_100early_grapple_double_chamber_revisit)
 
-presets_100early_grapple_bubble_mountain_revisited:
-    %cm_preset("Bubble Mountain Revisited", #preset_100early_grapple_bubble_mountain_revisited)
+presets_100early_grapple_bubble_mountain_revisit:
+    %cm_preset("Bubble Mountain Revisit", #preset_100early_grapple_bubble_mountain_revisit)
 
 presets_100early_grapple_red_pirate_shaft:
     %cm_preset("Red Pirate Shaft", #preset_100early_grapple_red_pirate_shaft)
@@ -489,8 +490,8 @@ presets_100early_red_tower_and_crateria_beta_power_bombs:
 presets_100early_red_tower_and_crateria_crateria_kihunters:
     %cm_preset("Crateria Kihunters", #preset_100early_red_tower_and_crateria_crateria_kihunters)
 
-presets_100early_red_tower_and_crateria_oceanfly:
-    %cm_preset("Oceanfly", #preset_100early_red_tower_and_crateria_oceanfly)
+presets_100early_red_tower_and_crateria_ocean_fly:
+    %cm_preset("Ocean Fly", #preset_100early_red_tower_and_crateria_ocean_fly)
 
 presets_100early_red_tower_and_crateria_the_moat:
     %cm_preset("The Moat", #preset_100early_red_tower_and_crateria_the_moat)
@@ -592,8 +593,8 @@ presets_100early_brinstar_cleanup_spore_spawn_supers:
 presets_100early_brinstar_cleanup_waterway_etank:
     %cm_preset("Waterway E-Tank", #preset_100early_brinstar_cleanup_waterway_etank)
 
-presets_100early_brinstar_cleanup_green_hills_revisit:
-    %cm_preset("Green Hills Revisit", #preset_100early_brinstar_cleanup_green_hills_revisit)
+presets_100early_brinstar_cleanup_green_hill_zone_revisit:
+    %cm_preset("Green Hill Zone Revisit", #preset_100early_brinstar_cleanup_green_hill_zone_revisit)
 
 presets_100early_brinstar_cleanup_blockbuster:
     %cm_preset("Blockbuster", #preset_100early_brinstar_cleanup_blockbuster)
@@ -613,7 +614,7 @@ presets_100early_maridia_predraygon_fish_tank_revisit:
     %cm_preset("Fish Tank Revisit", #preset_100early_maridia_predraygon_fish_tank_revisit)
 
 presets_100early_maridia_predraygon_mt_everest:
-    %cm_preset("Mt Everest", #preset_100early_maridia_predraygon_mt_everest)
+    %cm_preset("Mt. Everest", #preset_100early_maridia_predraygon_mt_everest)
 
 presets_100early_maridia_predraygon_beach_missiles:
     %cm_preset("Beach Missiles", #preset_100early_maridia_predraygon_beach_missiles)
@@ -647,8 +648,8 @@ presets_100early_maridia_predraygon_draygon:
 
 
 ; Maridia Post-Draygon
-presets_100early_maridia_postdraygon_return_halfie:
-    %cm_preset("Return Halfie", #preset_100early_maridia_postdraygon_return_halfie)
+presets_100early_maridia_postdraygon_reverse_halfie:
+    %cm_preset("Reverse Halfie", #preset_100early_maridia_postdraygon_reverse_halfie)
 
 presets_100early_maridia_postdraygon_reverse_botwoon_etank:
     %cm_preset("Reverse Botwoon E-Tank", #preset_100early_maridia_postdraygon_reverse_botwoon_etank)
@@ -745,7 +746,7 @@ presets_100early_lower_norfair_fast_ripper_room:
     %cm_preset("Fast Ripper Room", #preset_100early_lower_norfair_fast_ripper_room)
 
 presets_100early_lower_norfair_worst_room_in_the_game:
-    %cm_preset("Worst Room in the Game", #preset_100early_lower_norfair_worst_room_in_the_game)
+    %cm_preset("Worst Room In The Game", #preset_100early_lower_norfair_worst_room_in_the_game)
 
 presets_100early_lower_norfair_mickey_mouse_missiles:
     %cm_preset("Mickey Mouse Missiles", #preset_100early_lower_norfair_mickey_mouse_missiles)
@@ -780,8 +781,8 @@ presets_100early_lower_norfair_firefleas_room:
 presets_100early_lower_norfair_springball_maze:
     %cm_preset("Springball Maze", #preset_100early_lower_norfair_springball_maze)
 
-presets_100early_lower_norfair_three_muskateers:
-    %cm_preset("Three Muskateers", #preset_100early_lower_norfair_three_muskateers)
+presets_100early_lower_norfair_three_musketeers:
+    %cm_preset("Three Musketeers", #preset_100early_lower_norfair_three_musketeers)
 
 presets_100early_lower_norfair_bubble_mountain_return:
     %cm_preset("Bubble Mountain Return", #preset_100early_lower_norfair_bubble_mountain_return)
@@ -882,5 +883,4 @@ presets_100early_tourian_escape_climb:
 
 presets_100early_tourian_escape_parlor:
     %cm_preset("Escape Parlor", #preset_100early_tourian_escape_parlor)
-
 

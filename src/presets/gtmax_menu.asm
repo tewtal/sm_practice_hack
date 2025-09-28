@@ -1,15 +1,15 @@
 PresetsMenuGtmax:
     dw #presets_goto_gtmax_crateria
     dw #presets_goto_gtmax_brinstar
-    dw #presets_goto_gtmax_kraid
+    dw #presets_goto_gtmax_kraids_lair
     dw #presets_goto_gtmax_upper_norfair
     dw #presets_goto_gtmax_lower_norfair
     dw #presets_goto_gtmax_upper_norfair_and_kraid
     dw #presets_goto_gtmax_maridia_predraygon
     dw #presets_goto_gtmax_maridia_postdraygon
     dw #presets_goto_gtmax_wrecked_ship
-    dw #presets_goto_gtmax_brinstar_cleanup_1
-    dw #presets_goto_gtmax_brinstar_cleanup_2
+    dw #presets_goto_gtmax_brinstar_cleanup
+    dw #presets_goto_gtmax_blue_brinstar_cleanup
     dw #presets_goto_gtmax_tourian
     dw #$0000
     %cm_header("PRESETS FOR GT MAX%")
@@ -20,8 +20,8 @@ presets_goto_gtmax_crateria:
 presets_goto_gtmax_brinstar:
     %cm_submenu("Brinstar", #presets_submenu_gtmax_brinstar)
 
-presets_goto_gtmax_kraid:
-    %cm_submenu("Kraid's Lair", #presets_submenu_gtmax_kraid)
+presets_goto_gtmax_kraids_lair:
+    %cm_submenu("Kraid's Lair", #presets_submenu_gtmax_kraids_lair)
 
 presets_goto_gtmax_upper_norfair:
     %cm_submenu("Upper Norfair", #presets_submenu_gtmax_upper_norfair)
@@ -41,11 +41,11 @@ presets_goto_gtmax_maridia_postdraygon:
 presets_goto_gtmax_wrecked_ship:
     %cm_submenu("Wrecked Ship", #presets_submenu_gtmax_wrecked_ship)
 
-presets_goto_gtmax_brinstar_cleanup_1:
-    %cm_submenu("Brinstar Cleanup 1", #presets_submenu_gtmax_brinstar_cleanup_1)
+presets_goto_gtmax_brinstar_cleanup:
+    %cm_submenu("Brinstar Cleanup", #presets_submenu_gtmax_brinstar_cleanup)
 
-presets_goto_gtmax_brinstar_cleanup_2:
-    %cm_submenu("Brinstar Cleanup 2", #presets_submenu_gtmax_brinstar_cleanup_2)
+presets_goto_gtmax_blue_brinstar_cleanup:
+    %cm_submenu("Blue Brinstar Cleanup", #presets_submenu_gtmax_blue_brinstar_cleanup)
 
 presets_goto_gtmax_tourian:
     %cm_submenu("Tourian", #presets_submenu_gtmax_tourian)
@@ -89,19 +89,19 @@ presets_submenu_gtmax_brinstar:
     dw #presets_gtmax_brinstar_red_tower_down
     dw #presets_gtmax_brinstar_skree_boost
     dw #presets_gtmax_brinstar_below_spazer
-    dw #presets_gtmax_brinstar_breaking_tube
+    dw #presets_gtmax_brinstar_breaking_the_tube
     dw #$0000
     %cm_header("BRINSTAR")
 
-presets_submenu_gtmax_kraid:
-    dw #presets_gtmax_kraid_entering_kraids_lair
-    dw #presets_gtmax_kraid_kraid_kihunters
-    dw #presets_gtmax_kraid_mini_kraid
-    dw #presets_gtmax_kraid_kraid_2
-    dw #presets_gtmax_kraid_leaving_varia
-    dw #presets_gtmax_kraid_mini_kraid_revisit
-    dw #presets_gtmax_kraid_kraid_kihunters_revisit
-    dw #presets_gtmax_kraid_leaving_kraids_lair
+presets_submenu_gtmax_kraids_lair:
+    dw #presets_gtmax_kraids_lair_entering_kraids_lair
+    dw #presets_gtmax_kraids_lair_kraid_kihunters
+    dw #presets_gtmax_kraids_lair_minikraid
+    dw #presets_gtmax_kraids_lair_kraid
+    dw #presets_gtmax_kraids_lair_leaving_varia
+    dw #presets_gtmax_kraids_lair_minikraid_revisit
+    dw #presets_gtmax_kraids_lair_kraid_kihunters_revisit
+    dw #presets_gtmax_kraids_lair_leaving_kraids_lair
     dw #$0000
     %cm_header("KRAID'S LAIR")
 
@@ -143,7 +143,7 @@ presets_submenu_gtmax_lower_norfair:
     dw #presets_gtmax_lower_norfair_kihunter_stairs_up
     dw #presets_gtmax_lower_norfair_fireflea_room
     dw #presets_gtmax_lower_norfair_springball_maze
-    dw #presets_gtmax_lower_norfair_three_muskateers
+    dw #presets_gtmax_lower_norfair_three_musketeers
     dw #$0000
     %cm_header("LOWER NORFAIR")
 
@@ -190,13 +190,13 @@ presets_submenu_gtmax_maridia_predraygon:
 
 presets_submenu_gtmax_maridia_postdraygon:
     dw #presets_gtmax_maridia_postdraygon_reverse_halfie
-    dw #presets_gtmax_maridia_postdraygon_womple_jump
+    dw #presets_gtmax_maridia_postdraygon_whomple_jump
     dw #presets_gtmax_maridia_postdraygon_reverse_botwoon_etank
     dw #presets_gtmax_maridia_postdraygon_aqueduct_ammo
-    dw #presets_gtmax_maridia_postdraygon_right_sandpit
+    dw #presets_gtmax_maridia_postdraygon_right_sand_pit
     dw #presets_gtmax_maridia_postdraygon_oasis_and_sewer
     dw #presets_gtmax_maridia_postdraygon_maridia_ggg
-    dw #presets_gtmax_maridia_postdraygon_left_sandpit
+    dw #presets_gtmax_maridia_postdraygon_left_sand_pit
     dw #presets_gtmax_maridia_postdraygon_maridia_ggg_revisit
     dw #presets_gtmax_maridia_postdraygon_mt_everest_exit
     dw #presets_gtmax_maridia_postdraygon_red_brinstar_green_gate
@@ -228,42 +228,42 @@ presets_submenu_gtmax_wrecked_ship:
     dw #$0000
     %cm_header("WRECKED SHIP")
 
-presets_submenu_gtmax_brinstar_cleanup_1:
-    dw #presets_gtmax_brinstar_cleanup_1_crateria_power_bombs
-    dw #presets_gtmax_brinstar_cleanup_1_landing_site_revisit
-    dw #presets_gtmax_brinstar_cleanup_1_gauntlet_etank
-    dw #presets_gtmax_brinstar_cleanup_1_crumble_blocks
-    dw #presets_gtmax_brinstar_cleanup_1_kago_mushroom_room
-    dw #presets_gtmax_brinstar_cleanup_1_green_brinstar_revisit
-    dw #presets_gtmax_brinstar_cleanup_1_brinstar_reserve_tank
-    dw #presets_gtmax_brinstar_cleanup_1_reverse_mockball
-    dw #presets_gtmax_brinstar_cleanup_1_green_shaft_descent
-    dw #presets_gtmax_brinstar_cleanup_1_green_brinstar_beetoms
-    dw #presets_gtmax_brinstar_cleanup_1_etecoon_etank_room
-    dw #presets_gtmax_brinstar_cleanup_1_etecoon_room
-    dw #presets_gtmax_brinstar_cleanup_1_green_shaft_final
-    dw #presets_gtmax_brinstar_cleanup_1_dachora_room_revisit
-    dw #presets_gtmax_brinstar_cleanup_1_big_pink_revisit
-    dw #presets_gtmax_brinstar_cleanup_1_mission_impossible
-    dw #presets_gtmax_brinstar_cleanup_1_leaving_pink_etank
-    dw #presets_gtmax_brinstar_cleanup_1_leaving_spore_spawn_supers
-    dw #presets_gtmax_brinstar_cleanup_1_waterway_etank
+presets_submenu_gtmax_brinstar_cleanup:
+    dw #presets_gtmax_brinstar_cleanup_crateria_power_bombs
+    dw #presets_gtmax_brinstar_cleanup_landing_site_revisit
+    dw #presets_gtmax_brinstar_cleanup_gauntlet_etank
+    dw #presets_gtmax_brinstar_cleanup_crumble_blocks
+    dw #presets_gtmax_brinstar_cleanup_kago_mushroom_room
+    dw #presets_gtmax_brinstar_cleanup_green_brinstar_revisit
+    dw #presets_gtmax_brinstar_cleanup_brinstar_reserve_tank
+    dw #presets_gtmax_brinstar_cleanup_reverse_mockball
+    dw #presets_gtmax_brinstar_cleanup_green_shaft_descent
+    dw #presets_gtmax_brinstar_cleanup_green_brinstar_beetoms
+    dw #presets_gtmax_brinstar_cleanup_etecoon_etank_room
+    dw #presets_gtmax_brinstar_cleanup_etecoon_room
+    dw #presets_gtmax_brinstar_cleanup_green_shaft_final
+    dw #presets_gtmax_brinstar_cleanup_dachora_room_revisit
+    dw #presets_gtmax_brinstar_cleanup_big_pink_revisit
+    dw #presets_gtmax_brinstar_cleanup_mission_impossible
+    dw #presets_gtmax_brinstar_cleanup_leaving_pink_etank
+    dw #presets_gtmax_brinstar_cleanup_leaving_spore_spawn_supers
+    dw #presets_gtmax_brinstar_cleanup_waterway_etank
     dw #$0000
-    %cm_header("BRINSTAR CLEANUP 1")
+    %cm_header("BRINSTAR CLEANUP")
 
-presets_submenu_gtmax_brinstar_cleanup_2:
-    dw #presets_gtmax_brinstar_cleanup_2_green_hills_revisit
-    dw #presets_gtmax_brinstar_cleanup_2_blue_brinstar_hoppers
-    dw #presets_gtmax_brinstar_cleanup_2_billy_mays
-    dw #presets_gtmax_brinstar_cleanup_2_leaving_blue_brinstar
-    dw #presets_gtmax_brinstar_cleanup_2_pit_room_final_spark
-    dw #presets_gtmax_brinstar_cleanup_2_climb_supers
-    dw #presets_gtmax_brinstar_cleanup_2_to_final_missiles
-    dw #presets_gtmax_brinstar_cleanup_2_parlor_missiles
-    dw #presets_gtmax_brinstar_cleanup_2_parlor_again
-    dw #presets_gtmax_brinstar_cleanup_2_terminator_etank
+presets_submenu_gtmax_blue_brinstar_cleanup:
+    dw #presets_gtmax_blue_brinstar_cleanup_green_hill_zone_revisit
+    dw #presets_gtmax_blue_brinstar_cleanup_blue_brinstar_hoppers
+    dw #presets_gtmax_blue_brinstar_cleanup_billy_mays
+    dw #presets_gtmax_blue_brinstar_cleanup_leaving_blue_brinstar
+    dw #presets_gtmax_blue_brinstar_cleanup_pit_room_final_spark
+    dw #presets_gtmax_blue_brinstar_cleanup_climb_supers
+    dw #presets_gtmax_blue_brinstar_cleanup_to_final_missiles
+    dw #presets_gtmax_blue_brinstar_cleanup_parlor_missiles
+    dw #presets_gtmax_blue_brinstar_cleanup_parlor_again
+    dw #presets_gtmax_blue_brinstar_cleanup_terminator_etank
     dw #$0000
-    %cm_header("BRINSTAR CLEANUP 2")
+    %cm_header("BLUE BRINSTAR CLEANUP")
 
 presets_submenu_gtmax_tourian:
     dw #presets_gtmax_tourian_tourian_elevator_room
@@ -283,6 +283,7 @@ presets_submenu_gtmax_tourian:
     dw #presets_gtmax_tourian_escape_parlor
     dw #$0000
     %cm_header("TOURIAN")
+
 
 ; Crateria
 presets_gtmax_crateria_ceres_elevator:
@@ -389,34 +390,34 @@ presets_gtmax_brinstar_skree_boost:
 presets_gtmax_brinstar_below_spazer:
     %cm_preset("Below Spazer", #preset_gtmax_brinstar_below_spazer)
 
-presets_gtmax_brinstar_breaking_tube:
-    %cm_preset("Breaking Tube", #preset_gtmax_brinstar_breaking_tube)
+presets_gtmax_brinstar_breaking_the_tube:
+    %cm_preset("Breaking The Tube", #preset_gtmax_brinstar_breaking_the_tube)
 
 
 ; Kraid's Lair
-presets_gtmax_kraid_entering_kraids_lair:
-    %cm_preset("Entering Kraid's Lair", #preset_gtmax_kraid_entering_kraids_lair)
+presets_gtmax_kraids_lair_entering_kraids_lair:
+    %cm_preset("Entering Kraid's Lair", #preset_gtmax_kraids_lair_entering_kraids_lair)
 
-presets_gtmax_kraid_kraid_kihunters:
-    %cm_preset("Kraid Kihunters", #preset_gtmax_kraid_kraid_kihunters)
+presets_gtmax_kraids_lair_kraid_kihunters:
+    %cm_preset("Kraid Kihunters", #preset_gtmax_kraids_lair_kraid_kihunters)
 
-presets_gtmax_kraid_mini_kraid:
-    %cm_preset("Mini Kraid", #preset_gtmax_kraid_mini_kraid)
+presets_gtmax_kraids_lair_minikraid:
+    %cm_preset("Mini-Kraid", #preset_gtmax_kraids_lair_minikraid)
 
-presets_gtmax_kraid_kraid_2:
-    %cm_preset("Kraid", #preset_gtmax_kraid_kraid_2)
+presets_gtmax_kraids_lair_kraid:
+    %cm_preset("Kraid", #preset_gtmax_kraids_lair_kraid)
 
-presets_gtmax_kraid_leaving_varia:
-    %cm_preset("Leaving Varia", #preset_gtmax_kraid_leaving_varia)
+presets_gtmax_kraids_lair_leaving_varia:
+    %cm_preset("Leaving Varia", #preset_gtmax_kraids_lair_leaving_varia)
 
-presets_gtmax_kraid_mini_kraid_revisit:
-    %cm_preset("Mini Kraid Revisit", #preset_gtmax_kraid_mini_kraid_revisit)
+presets_gtmax_kraids_lair_minikraid_revisit:
+    %cm_preset("Mini-Kraid Revisit", #preset_gtmax_kraids_lair_minikraid_revisit)
 
-presets_gtmax_kraid_kraid_kihunters_revisit:
-    %cm_preset("Kraid Kihunters Revisit", #preset_gtmax_kraid_kraid_kihunters_revisit)
+presets_gtmax_kraids_lair_kraid_kihunters_revisit:
+    %cm_preset("Kraid Kihunters Revisit", #preset_gtmax_kraids_lair_kraid_kihunters_revisit)
 
-presets_gtmax_kraid_leaving_kraids_lair:
-    %cm_preset("Leaving Kraid's Lair", #preset_gtmax_kraid_leaving_kraids_lair)
+presets_gtmax_kraids_lair_leaving_kraids_lair:
+    %cm_preset("Leaving Kraid's Lair", #preset_gtmax_kraids_lair_leaving_kraids_lair)
 
 
 ; Upper Norfair
@@ -480,7 +481,7 @@ presets_gtmax_lower_norfair_green_gate_final:
     %cm_preset("Green Gate Final", #preset_gtmax_lower_norfair_green_gate_final)
 
 presets_gtmax_lower_norfair_worst_room_in_the_game:
-    %cm_preset("Worst Room in the Game", #preset_gtmax_lower_norfair_worst_room_in_the_game)
+    %cm_preset("Worst Room In The Game", #preset_gtmax_lower_norfair_worst_room_in_the_game)
 
 presets_gtmax_lower_norfair_mickey_mouse_missiles:
     %cm_preset("Mickey Mouse Missiles", #preset_gtmax_lower_norfair_mickey_mouse_missiles)
@@ -521,8 +522,8 @@ presets_gtmax_lower_norfair_fireflea_room:
 presets_gtmax_lower_norfair_springball_maze:
     %cm_preset("Springball Maze", #preset_gtmax_lower_norfair_springball_maze)
 
-presets_gtmax_lower_norfair_three_muskateers:
-    %cm_preset("Three Muskateers", #preset_gtmax_lower_norfair_three_muskateers)
+presets_gtmax_lower_norfair_three_musketeers:
+    %cm_preset("Three Musketeers", #preset_gtmax_lower_norfair_three_musketeers)
 
 
 ; Upper Norfair and Kraid
@@ -598,7 +599,7 @@ presets_gtmax_maridia_predraygon_tatori_room:
     %cm_preset("Tatori Room", #preset_gtmax_maridia_predraygon_tatori_room)
 
 presets_gtmax_maridia_predraygon_mt_everest_and_crab_supers:
-    %cm_preset("Mt Everest and Crab Supers", #preset_gtmax_maridia_predraygon_mt_everest_and_crab_supers)
+    %cm_preset("Mt. Everest and Crab Supers", #preset_gtmax_maridia_predraygon_mt_everest_and_crab_supers)
 
 presets_gtmax_maridia_predraygon_crab_shaft:
     %cm_preset("Crab Shaft", #preset_gtmax_maridia_predraygon_crab_shaft)
@@ -632,8 +633,8 @@ presets_gtmax_maridia_predraygon_draygon:
 presets_gtmax_maridia_postdraygon_reverse_halfie:
     %cm_preset("Reverse Halfie", #preset_gtmax_maridia_postdraygon_reverse_halfie)
 
-presets_gtmax_maridia_postdraygon_womple_jump:
-    %cm_preset("Womple Jump", #preset_gtmax_maridia_postdraygon_womple_jump)
+presets_gtmax_maridia_postdraygon_whomple_jump:
+    %cm_preset("Whomple Jump", #preset_gtmax_maridia_postdraygon_whomple_jump)
 
 presets_gtmax_maridia_postdraygon_reverse_botwoon_etank:
     %cm_preset("Reverse Botwoon E-Tank", #preset_gtmax_maridia_postdraygon_reverse_botwoon_etank)
@@ -641,8 +642,8 @@ presets_gtmax_maridia_postdraygon_reverse_botwoon_etank:
 presets_gtmax_maridia_postdraygon_aqueduct_ammo:
     %cm_preset("Aqueduct Ammo", #preset_gtmax_maridia_postdraygon_aqueduct_ammo)
 
-presets_gtmax_maridia_postdraygon_right_sandpit:
-    %cm_preset("Right Sandpit", #preset_gtmax_maridia_postdraygon_right_sandpit)
+presets_gtmax_maridia_postdraygon_right_sand_pit:
+    %cm_preset("Right Sand Pit", #preset_gtmax_maridia_postdraygon_right_sand_pit)
 
 presets_gtmax_maridia_postdraygon_oasis_and_sewer:
     %cm_preset("Oasis and Sewer", #preset_gtmax_maridia_postdraygon_oasis_and_sewer)
@@ -650,14 +651,14 @@ presets_gtmax_maridia_postdraygon_oasis_and_sewer:
 presets_gtmax_maridia_postdraygon_maridia_ggg:
     %cm_preset("Maridia GGG", #preset_gtmax_maridia_postdraygon_maridia_ggg)
 
-presets_gtmax_maridia_postdraygon_left_sandpit:
-    %cm_preset("Left Sandpit", #preset_gtmax_maridia_postdraygon_left_sandpit)
+presets_gtmax_maridia_postdraygon_left_sand_pit:
+    %cm_preset("Left Sand Pit", #preset_gtmax_maridia_postdraygon_left_sand_pit)
 
 presets_gtmax_maridia_postdraygon_maridia_ggg_revisit:
     %cm_preset("Maridia GGG Revisit", #preset_gtmax_maridia_postdraygon_maridia_ggg_revisit)
 
 presets_gtmax_maridia_postdraygon_mt_everest_exit:
-    %cm_preset("Mt Everest Exit", #preset_gtmax_maridia_postdraygon_mt_everest_exit)
+    %cm_preset("Mt. Everest Exit", #preset_gtmax_maridia_postdraygon_mt_everest_exit)
 
 presets_gtmax_maridia_postdraygon_red_brinstar_green_gate:
     %cm_preset("Red Brinstar Green Gate", #preset_gtmax_maridia_postdraygon_red_brinstar_green_gate)
@@ -689,7 +690,7 @@ presets_gtmax_wrecked_ship_phantoon:
     %cm_preset("Phantoon", #preset_gtmax_wrecked_ship_phantoon)
 
 presets_gtmax_wrecked_ship_shaft_to_supers:
-    %cm_preset("Shaft to Supers", #preset_gtmax_wrecked_ship_shaft_to_supers)
+    %cm_preset("Shaft To Supers", #preset_gtmax_wrecked_ship_shaft_to_supers)
 
 presets_gtmax_wrecked_ship_east_supers:
     %cm_preset("East Supers", #preset_gtmax_wrecked_ship_east_supers)
@@ -728,95 +729,95 @@ presets_gtmax_wrecked_ship_ocean_revisit:
     %cm_preset("Ocean Revisit", #preset_gtmax_wrecked_ship_ocean_revisit)
 
 
-; Brinstar Cleanup 1
-presets_gtmax_brinstar_cleanup_1_crateria_power_bombs:
-    %cm_preset("Crateria Power Bombs", #preset_gtmax_brinstar_cleanup_1_crateria_power_bombs)
+; Brinstar Cleanup
+presets_gtmax_brinstar_cleanup_crateria_power_bombs:
+    %cm_preset("Crateria Power Bombs", #preset_gtmax_brinstar_cleanup_crateria_power_bombs)
 
-presets_gtmax_brinstar_cleanup_1_landing_site_revisit:
-    %cm_preset("Landing Site Revisit", #preset_gtmax_brinstar_cleanup_1_landing_site_revisit)
+presets_gtmax_brinstar_cleanup_landing_site_revisit:
+    %cm_preset("Landing Site Revisit", #preset_gtmax_brinstar_cleanup_landing_site_revisit)
 
-presets_gtmax_brinstar_cleanup_1_gauntlet_etank:
-    %cm_preset("Gauntlet E-Tank", #preset_gtmax_brinstar_cleanup_1_gauntlet_etank)
+presets_gtmax_brinstar_cleanup_gauntlet_etank:
+    %cm_preset("Gauntlet E-Tank", #preset_gtmax_brinstar_cleanup_gauntlet_etank)
 
-presets_gtmax_brinstar_cleanup_1_crumble_blocks:
-    %cm_preset("Crumble Blocks", #preset_gtmax_brinstar_cleanup_1_crumble_blocks)
+presets_gtmax_brinstar_cleanup_crumble_blocks:
+    %cm_preset("Crumble Blocks", #preset_gtmax_brinstar_cleanup_crumble_blocks)
 
-presets_gtmax_brinstar_cleanup_1_kago_mushroom_room:
-    %cm_preset("Kago Mushroom Room", #preset_gtmax_brinstar_cleanup_1_kago_mushroom_room)
+presets_gtmax_brinstar_cleanup_kago_mushroom_room:
+    %cm_preset("Kago Mushroom Room", #preset_gtmax_brinstar_cleanup_kago_mushroom_room)
 
-presets_gtmax_brinstar_cleanup_1_green_brinstar_revisit:
-    %cm_preset("Green Brinstar Revisit", #preset_gtmax_brinstar_cleanup_1_green_brinstar_revisit)
+presets_gtmax_brinstar_cleanup_green_brinstar_revisit:
+    %cm_preset("Green Brinstar Revisit", #preset_gtmax_brinstar_cleanup_green_brinstar_revisit)
 
-presets_gtmax_brinstar_cleanup_1_brinstar_reserve_tank:
-    %cm_preset("Brinstar Reserve Tank", #preset_gtmax_brinstar_cleanup_1_brinstar_reserve_tank)
+presets_gtmax_brinstar_cleanup_brinstar_reserve_tank:
+    %cm_preset("Brinstar Reserve Tank", #preset_gtmax_brinstar_cleanup_brinstar_reserve_tank)
 
-presets_gtmax_brinstar_cleanup_1_reverse_mockball:
-    %cm_preset("Reverse Mockball", #preset_gtmax_brinstar_cleanup_1_reverse_mockball)
+presets_gtmax_brinstar_cleanup_reverse_mockball:
+    %cm_preset("Reverse Mockball", #preset_gtmax_brinstar_cleanup_reverse_mockball)
 
-presets_gtmax_brinstar_cleanup_1_green_shaft_descent:
-    %cm_preset("Green Shaft Descent", #preset_gtmax_brinstar_cleanup_1_green_shaft_descent)
+presets_gtmax_brinstar_cleanup_green_shaft_descent:
+    %cm_preset("Green Shaft Descent", #preset_gtmax_brinstar_cleanup_green_shaft_descent)
 
-presets_gtmax_brinstar_cleanup_1_green_brinstar_beetoms:
-    %cm_preset("Green Brinstar Beetoms", #preset_gtmax_brinstar_cleanup_1_green_brinstar_beetoms)
+presets_gtmax_brinstar_cleanup_green_brinstar_beetoms:
+    %cm_preset("Green Brinstar Beetoms", #preset_gtmax_brinstar_cleanup_green_brinstar_beetoms)
 
-presets_gtmax_brinstar_cleanup_1_etecoon_etank_room:
-    %cm_preset("Etecoon E-Tank Room", #preset_gtmax_brinstar_cleanup_1_etecoon_etank_room)
+presets_gtmax_brinstar_cleanup_etecoon_etank_room:
+    %cm_preset("Etecoon E-Tank Room", #preset_gtmax_brinstar_cleanup_etecoon_etank_room)
 
-presets_gtmax_brinstar_cleanup_1_etecoon_room:
-    %cm_preset("Etecoon Room", #preset_gtmax_brinstar_cleanup_1_etecoon_room)
+presets_gtmax_brinstar_cleanup_etecoon_room:
+    %cm_preset("Etecoon Room", #preset_gtmax_brinstar_cleanup_etecoon_room)
 
-presets_gtmax_brinstar_cleanup_1_green_shaft_final:
-    %cm_preset("Green Shaft Final", #preset_gtmax_brinstar_cleanup_1_green_shaft_final)
+presets_gtmax_brinstar_cleanup_green_shaft_final:
+    %cm_preset("Green Shaft Final", #preset_gtmax_brinstar_cleanup_green_shaft_final)
 
-presets_gtmax_brinstar_cleanup_1_dachora_room_revisit:
-    %cm_preset("Dachora Room Revisit", #preset_gtmax_brinstar_cleanup_1_dachora_room_revisit)
+presets_gtmax_brinstar_cleanup_dachora_room_revisit:
+    %cm_preset("Dachora Room Revisit", #preset_gtmax_brinstar_cleanup_dachora_room_revisit)
 
-presets_gtmax_brinstar_cleanup_1_big_pink_revisit:
-    %cm_preset("Big Pink Revisit", #preset_gtmax_brinstar_cleanup_1_big_pink_revisit)
+presets_gtmax_brinstar_cleanup_big_pink_revisit:
+    %cm_preset("Big Pink Revisit", #preset_gtmax_brinstar_cleanup_big_pink_revisit)
 
-presets_gtmax_brinstar_cleanup_1_mission_impossible:
-    %cm_preset("Mission Impossible", #preset_gtmax_brinstar_cleanup_1_mission_impossible)
+presets_gtmax_brinstar_cleanup_mission_impossible:
+    %cm_preset("Mission Impossible", #preset_gtmax_brinstar_cleanup_mission_impossible)
 
-presets_gtmax_brinstar_cleanup_1_leaving_pink_etank:
-    %cm_preset("Leaving Pink E-Tank", #preset_gtmax_brinstar_cleanup_1_leaving_pink_etank)
+presets_gtmax_brinstar_cleanup_leaving_pink_etank:
+    %cm_preset("Leaving Pink E-Tank", #preset_gtmax_brinstar_cleanup_leaving_pink_etank)
 
-presets_gtmax_brinstar_cleanup_1_leaving_spore_spawn_supers:
-    %cm_preset("Leaving Spore Spawn Supers", #preset_gtmax_brinstar_cleanup_1_leaving_spore_spawn_supers)
+presets_gtmax_brinstar_cleanup_leaving_spore_spawn_supers:
+    %cm_preset("Leaving Spore Spawn Supers", #preset_gtmax_brinstar_cleanup_leaving_spore_spawn_supers)
 
-presets_gtmax_brinstar_cleanup_1_waterway_etank:
-    %cm_preset("Waterway E-Tank", #preset_gtmax_brinstar_cleanup_1_waterway_etank)
+presets_gtmax_brinstar_cleanup_waterway_etank:
+    %cm_preset("Waterway E-Tank", #preset_gtmax_brinstar_cleanup_waterway_etank)
 
 
-; Brinstar Cleanup 2
-presets_gtmax_brinstar_cleanup_2_green_hills_revisit:
-    %cm_preset("Green Hills Revisit", #preset_gtmax_brinstar_cleanup_2_green_hills_revisit)
+; Blue Brinstar Cleanup
+presets_gtmax_blue_brinstar_cleanup_green_hill_zone_revisit:
+    %cm_preset("Green Hill Zone Revisit", #preset_gtmax_blue_brinstar_cleanup_green_hill_zone_revisit)
 
-presets_gtmax_brinstar_cleanup_2_blue_brinstar_hoppers:
-    %cm_preset("Blue Brinstar Hoppers", #preset_gtmax_brinstar_cleanup_2_blue_brinstar_hoppers)
+presets_gtmax_blue_brinstar_cleanup_blue_brinstar_hoppers:
+    %cm_preset("Blue Brinstar Hoppers", #preset_gtmax_blue_brinstar_cleanup_blue_brinstar_hoppers)
 
-presets_gtmax_brinstar_cleanup_2_billy_mays:
-    %cm_preset("Billy Mays", #preset_gtmax_brinstar_cleanup_2_billy_mays)
+presets_gtmax_blue_brinstar_cleanup_billy_mays:
+    %cm_preset("Billy Mays", #preset_gtmax_blue_brinstar_cleanup_billy_mays)
 
-presets_gtmax_brinstar_cleanup_2_leaving_blue_brinstar:
-    %cm_preset("Leaving Blue Brinstar", #preset_gtmax_brinstar_cleanup_2_leaving_blue_brinstar)
+presets_gtmax_blue_brinstar_cleanup_leaving_blue_brinstar:
+    %cm_preset("Leaving Blue Brinstar", #preset_gtmax_blue_brinstar_cleanup_leaving_blue_brinstar)
 
-presets_gtmax_brinstar_cleanup_2_pit_room_final_spark:
-    %cm_preset("Pit Room Final (Spark)", #preset_gtmax_brinstar_cleanup_2_pit_room_final_spark)
+presets_gtmax_blue_brinstar_cleanup_pit_room_final_spark:
+    %cm_preset("Pit Room Final (Spark)", #preset_gtmax_blue_brinstar_cleanup_pit_room_final_spark)
 
-presets_gtmax_brinstar_cleanup_2_climb_supers:
-    %cm_preset("Climb Supers", #preset_gtmax_brinstar_cleanup_2_climb_supers)
+presets_gtmax_blue_brinstar_cleanup_climb_supers:
+    %cm_preset("Climb Supers", #preset_gtmax_blue_brinstar_cleanup_climb_supers)
 
-presets_gtmax_brinstar_cleanup_2_to_final_missiles:
-    %cm_preset("To Final Missiles", #preset_gtmax_brinstar_cleanup_2_to_final_missiles)
+presets_gtmax_blue_brinstar_cleanup_to_final_missiles:
+    %cm_preset("To Final Missiles", #preset_gtmax_blue_brinstar_cleanup_to_final_missiles)
 
-presets_gtmax_brinstar_cleanup_2_parlor_missiles:
-    %cm_preset("Parlor Missiles", #preset_gtmax_brinstar_cleanup_2_parlor_missiles)
+presets_gtmax_blue_brinstar_cleanup_parlor_missiles:
+    %cm_preset("Parlor Missiles", #preset_gtmax_blue_brinstar_cleanup_parlor_missiles)
 
-presets_gtmax_brinstar_cleanup_2_parlor_again:
-    %cm_preset("Parlor Again", #preset_gtmax_brinstar_cleanup_2_parlor_again)
+presets_gtmax_blue_brinstar_cleanup_parlor_again:
+    %cm_preset("Parlor Again", #preset_gtmax_blue_brinstar_cleanup_parlor_again)
 
-presets_gtmax_brinstar_cleanup_2_terminator_etank:
-    %cm_preset("Terminator E-tank", #preset_gtmax_brinstar_cleanup_2_terminator_etank)
+presets_gtmax_blue_brinstar_cleanup_terminator_etank:
+    %cm_preset("Terminator E-Tank", #preset_gtmax_blue_brinstar_cleanup_terminator_etank)
 
 
 ; Tourian
@@ -864,5 +865,4 @@ presets_gtmax_tourian_escape_climb:
 
 presets_gtmax_tourian_escape_parlor:
     %cm_preset("Escape Parlor", #preset_gtmax_tourian_escape_parlor)
-
 

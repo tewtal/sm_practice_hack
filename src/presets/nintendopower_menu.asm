@@ -63,7 +63,7 @@ presets_submenu_nintendopower_spore_spawn:
     %cm_header("SPORE SPAWN")
 
 presets_submenu_nintendopower_shopping_with_power:
-    dw #presets_nintendopower_shopping_with_power_hi_jump_first
+    dw #presets_nintendopower_shopping_with_power_hijump_first
     dw #presets_nintendopower_shopping_with_power_kraid_warehouse
     dw #presets_nintendopower_shopping_with_power_kraid_fight
     dw #presets_nintendopower_shopping_with_power_rising_tide
@@ -100,7 +100,7 @@ presets_submenu_nintendopower_wrecked_ship:
     %cm_header("WRECKED SHIP")
 
 presets_submenu_nintendopower_maridia:
-    dw #presets_nintendopower_maridia_mainstreet
+    dw #presets_nintendopower_maridia_main_street
     dw #presets_nintendopower_maridia_pants_room
     dw #presets_nintendopower_maridia_east_pants_room
     dw #presets_nintendopower_maridia_super_door
@@ -145,6 +145,7 @@ presets_submenu_nintendopower_tourian:
     dw #presets_nintendopower_tourian_escape_parlor
     dw #$0000
     %cm_header("TOURIAN")
+
 
 ; Crateria
 presets_nintendopower_crateria_ceres_elevator:
@@ -222,9 +223,9 @@ presets_nintendopower_spore_spawn_red_tower:
     %cm_preset("Red Tower", #preset_nintendopower_spore_spawn_red_tower)
 
 
-; Norfair
-presets_nintendopower_shopping_with_power_hi_jump_first:
-    %cm_preset("Hi Jump First", #preset_nintendopower_shopping_with_power_hi_jump_first)
+; Shopping With Power
+presets_nintendopower_shopping_with_power_hijump_first:
+    %cm_preset("Hi-Jump First", #preset_nintendopower_shopping_with_power_hijump_first)
 
 presets_nintendopower_shopping_with_power_kraid_warehouse:
     %cm_preset("Kraid Warehouse", #preset_nintendopower_shopping_with_power_kraid_warehouse)
@@ -314,8 +315,8 @@ presets_nintendopower_wrecked_ship_heading_to_maridia:
 
 
 ; Maridia
-presets_nintendopower_maridia_mainstreet:
-    %cm_preset("Mainstreet", #preset_nintendopower_maridia_mainstreet)
+presets_nintendopower_maridia_main_street:
+    %cm_preset("Main Street", #preset_nintendopower_maridia_main_street)
 
 presets_nintendopower_maridia_pants_room:
     %cm_preset("Pants Room", #preset_nintendopower_maridia_pants_room)
@@ -422,5 +423,4 @@ presets_nintendopower_tourian_escape_climb:
 
 presets_nintendopower_tourian_escape_parlor:
     %cm_preset("Escape Parlor", #preset_nintendopower_tourian_escape_parlor)
-
 

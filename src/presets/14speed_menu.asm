@@ -84,11 +84,11 @@ presets_submenu_14speed_wrecked_ship:
 
 presets_submenu_14speed_brinstar_revisit:
     dw #presets_14speed_brinstar_revisit_red_tower_elevator
-    dw #presets_14speed_brinstar_revisit_breaking_tube
+    dw #presets_14speed_brinstar_revisit_breaking_the_tube
     dw #presets_14speed_brinstar_revisit_entering_kraids_lair
-    dw #presets_14speed_brinstar_revisit_baby_kraid_entering
+    dw #presets_14speed_brinstar_revisit_minikraid
     dw #presets_14speed_brinstar_revisit_kraid
-    dw #presets_14speed_brinstar_revisit_baby_kraid_exiting
+    dw #presets_14speed_brinstar_revisit_minikraid_revisit
     dw #presets_14speed_brinstar_revisit_kraid_etank
     dw #$0000
     %cm_header("BRINSTAR REVISIT")
@@ -105,7 +105,7 @@ presets_submenu_14speed_upper_norfair:
 presets_submenu_14speed_lower_norfair:
     dw #presets_14speed_lower_norfair_ln_main_hall
     dw #presets_14speed_lower_norfair_pillars
-    dw #presets_14speed_lower_norfair_worst_room
+    dw #presets_14speed_lower_norfair_worst_room_in_the_game
     dw #presets_14speed_lower_norfair_amphitheatre
     dw #presets_14speed_lower_norfair_kihunter_stairs
     dw #presets_14speed_lower_norfair_wasteland
@@ -117,7 +117,7 @@ presets_submenu_14speed_lower_norfair:
     dw #presets_14speed_lower_norfair_kihunter_stairs_revisit
     dw #presets_14speed_lower_norfair_fireflea_room
     dw #presets_14speed_lower_norfair_three_musketeers
-    dw #presets_14speed_lower_norfair_bubble_mountain_revisit_2
+    dw #presets_14speed_lower_norfair_bubble_mountain_revisit
     dw #$0000
     %cm_header("LOWER NORFAIR")
 
@@ -156,6 +156,7 @@ presets_submenu_14speed_tourian:
     dw #presets_14speed_tourian_escape_parlor
     dw #$0000
     %cm_header("TOURIAN")
+
 
 ; Crateria
 presets_14speed_crateria_ceres_elevator:
@@ -275,23 +276,23 @@ presets_14speed_wrecked_ship_leaving_gravity:
 presets_14speed_brinstar_revisit_red_tower_elevator:
     %cm_preset("Red Tower Elevator", #preset_14speed_brinstar_revisit_red_tower_elevator)
 
-presets_14speed_brinstar_revisit_breaking_tube:
-    %cm_preset("Breaking Tube", #preset_14speed_brinstar_revisit_breaking_tube)
+presets_14speed_brinstar_revisit_breaking_the_tube:
+    %cm_preset("Breaking The Tube", #preset_14speed_brinstar_revisit_breaking_the_tube)
 
 presets_14speed_brinstar_revisit_entering_kraids_lair:
     %cm_preset("Entering Kraid's Lair", #preset_14speed_brinstar_revisit_entering_kraids_lair)
 
-presets_14speed_brinstar_revisit_baby_kraid_entering:
-    %cm_preset("Baby Kraid (Entering)", #preset_14speed_brinstar_revisit_baby_kraid_entering)
+presets_14speed_brinstar_revisit_minikraid:
+    %cm_preset("Mini-Kraid", #preset_14speed_brinstar_revisit_minikraid)
 
 presets_14speed_brinstar_revisit_kraid:
     %cm_preset("Kraid", #preset_14speed_brinstar_revisit_kraid)
 
-presets_14speed_brinstar_revisit_baby_kraid_exiting:
-    %cm_preset("Baby Kraid (Exiting)", #preset_14speed_brinstar_revisit_baby_kraid_exiting)
+presets_14speed_brinstar_revisit_minikraid_revisit:
+    %cm_preset("Mini-Kraid Revisit", #preset_14speed_brinstar_revisit_minikraid_revisit)
 
 presets_14speed_brinstar_revisit_kraid_etank:
-    %cm_preset("Kraid E-tank", #preset_14speed_brinstar_revisit_kraid_etank)
+    %cm_preset("Kraid E-Tank", #preset_14speed_brinstar_revisit_kraid_etank)
 
 
 ; Upper Norfair
@@ -318,8 +319,8 @@ presets_14speed_lower_norfair_ln_main_hall:
 presets_14speed_lower_norfair_pillars:
     %cm_preset("Pillars", #preset_14speed_lower_norfair_pillars)
 
-presets_14speed_lower_norfair_worst_room:
-    %cm_preset("Worst Room", #preset_14speed_lower_norfair_worst_room)
+presets_14speed_lower_norfair_worst_room_in_the_game:
+    %cm_preset("Worst Room In The Game", #preset_14speed_lower_norfair_worst_room_in_the_game)
 
 presets_14speed_lower_norfair_amphitheatre:
     %cm_preset("Amphitheatre", #preset_14speed_lower_norfair_amphitheatre)
@@ -354,8 +355,8 @@ presets_14speed_lower_norfair_fireflea_room:
 presets_14speed_lower_norfair_three_musketeers:
     %cm_preset("Three Musketeers", #preset_14speed_lower_norfair_three_musketeers)
 
-presets_14speed_lower_norfair_bubble_mountain_revisit_2:
-    %cm_preset("Bubble Mountain Revisit", #preset_14speed_lower_norfair_bubble_mountain_revisit_2)
+presets_14speed_lower_norfair_bubble_mountain_revisit:
+    %cm_preset("Bubble Mountain Revisit", #preset_14speed_lower_norfair_bubble_mountain_revisit)
 
 
 ; Maridia
@@ -363,7 +364,7 @@ presets_14speed_maridia_entering_maridia:
     %cm_preset("Entering Maridia", #preset_14speed_maridia_entering_maridia)
 
 presets_14speed_maridia_mt_everest:
-    %cm_preset("Mt Everest", #preset_14speed_maridia_mt_everest)
+    %cm_preset("Mt. Everest", #preset_14speed_maridia_mt_everest)
 
 presets_14speed_maridia_aqueduct:
     %cm_preset("Aqueduct", #preset_14speed_maridia_aqueduct)
@@ -372,7 +373,7 @@ presets_14speed_maridia_botwoon:
     %cm_preset("Botwoon", #preset_14speed_maridia_botwoon)
 
 presets_14speed_maridia_botwoon_etank_room:
-    %cm_preset("Botwoon E-tank Room", #preset_14speed_maridia_botwoon_etank_room)
+    %cm_preset("Botwoon E-Tank Room", #preset_14speed_maridia_botwoon_etank_room)
 
 presets_14speed_maridia_colosseum:
     %cm_preset("Colosseum", #preset_14speed_maridia_colosseum)
@@ -444,5 +445,4 @@ presets_14speed_tourian_escape_climb:
 
 presets_14speed_tourian_escape_parlor:
     %cm_preset("Escape Parlor", #preset_14speed_tourian_escape_parlor)
-
 

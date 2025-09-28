@@ -113,12 +113,12 @@ presets_submenu_suitless_xray:
     dw #presets_suitless_xray_wave_gate_out
     dw #presets_suitless_xray_big_pink_revisit
     dw #presets_suitless_xray_green_hill_zone
-    dw #presets_suitless_xray_blue_brin_hopper
-    dw #presets_suitless_xray_green_hill_zone_2
+    dw #presets_suitless_xray_blue_brin_hoppers
+    dw #presets_suitless_xray_green_hill_zone_revisit
     dw #presets_suitless_xray_noob_bridge
     dw #presets_suitless_xray_red_tower
     dw #presets_suitless_xray_xray_dboost
-    dw #presets_suitless_xray_xray_2
+    dw #presets_suitless_xray_xray
     dw #presets_suitless_xray_xray_escape
     dw #$0000
     %cm_header("X-RAY")
@@ -127,7 +127,7 @@ presets_submenu_suitless_warehouse:
     dw #presets_suitless_warehouse_red_tower_down
     dw #presets_suitless_warehouse_skree_boost
     dw #presets_suitless_warehouse_below_spazer
-    dw #presets_suitless_warehouse_below_spazer_2
+    dw #presets_suitless_warehouse_below_spazer_revisit
     dw #presets_suitless_warehouse_warehouse_entrance
     dw #presets_suitless_warehouse_warehouse_zeelas
     dw #presets_suitless_warehouse_warehouse_kihunters
@@ -174,14 +174,14 @@ presets_submenu_suitless_upper_norfair_2:
     dw #presets_suitless_upper_norfair_2_red_pirate_shaft
     dw #presets_suitless_upper_norfair_2_acid_snakes_tunnel
     dw #presets_suitless_upper_norfair_2_crocomire
-    dw #presets_suitless_upper_norfair_2_croc_pbs
+    dw #presets_suitless_upper_norfair_2_croc_power_bombs
     dw #presets_suitless_upper_norfair_2_croc_shaft_down
     dw #presets_suitless_upper_norfair_2_indiana_jones
     dw #presets_suitless_upper_norfair_2_grapple_escape
     dw #presets_suitless_upper_norfair_2_croc_shaft_up
     dw #presets_suitless_upper_norfair_2_cosine_missile
     dw #presets_suitless_upper_norfair_2_croc_farm
-    dw #presets_suitless_upper_norfair_2_croc_revisit
+    dw #presets_suitless_upper_norfair_2_crocomire_revisit
     dw #presets_suitless_upper_norfair_2_croc_speedway_up
     dw #presets_suitless_upper_norfair_2_croc_escape
     dw #presets_suitless_upper_norfair_2_rmode_blue_suit
@@ -271,7 +271,7 @@ presets_submenu_suitless_wrecked_ship:
     dw #presets_suitless_wrecked_ship_right_supers
     dw #presets_suitless_wrecked_ship_left_supers
     dw #presets_suitless_wrecked_ship_shaft_to_sponge_bath
-    dw #presets_suitless_wrecked_ship_sponge_bath_2
+    dw #presets_suitless_wrecked_ship_sponge_bath
     dw #presets_suitless_wrecked_ship_electric_death_room
     dw #presets_suitless_wrecked_ship_wrecked_ship_etank
     dw #presets_suitless_wrecked_ship_electric_death_down
@@ -325,7 +325,7 @@ presets_submenu_suitless_ridley:
     dw #presets_suitless_ridley_metal_pirates
     dw #presets_suitless_ridley_plowerhouse
     dw #presets_suitless_ridley_preridley_room
-    dw #presets_suitless_ridley_ridley_2
+    dw #presets_suitless_ridley_ridley
     dw #$0000
     %cm_header("RIDLEY")
 
@@ -339,7 +339,7 @@ presets_submenu_suitless_norfair_cleanup:
     dw #presets_suitless_norfair_cleanup_hotarubi_missile_room
     dw #presets_suitless_norfair_cleanup_hotarubi_revisit
     dw #presets_suitless_norfair_cleanup_three_musketeers
-    dw #presets_suitless_norfair_cleanup_single_chamber_2
+    dw #presets_suitless_norfair_cleanup_single_chamber
     dw #presets_suitless_norfair_cleanup_bubble_mountain_return
     dw #presets_suitless_norfair_cleanup_norfair_reserve_back
     dw #presets_suitless_norfair_cleanup_bubble_mountain_final
@@ -367,7 +367,7 @@ presets_submenu_suitless_final_cleanup:
     dw #presets_suitless_final_cleanup_230_mockball
     dw #presets_suitless_final_cleanup_parlor_revisit
     dw #presets_suitless_final_cleanup_landing_site_revisit
-    dw #presets_suitless_final_cleanup_crateria_pbs
+    dw #presets_suitless_final_cleanup_crateria_power_bombs
     dw #presets_suitless_final_cleanup_gauntlet_entry
     dw #presets_suitless_final_cleanup_gauntlet_etank
     dw #presets_suitless_final_cleanup_quickdrops
@@ -393,6 +393,7 @@ presets_submenu_suitless_tourian:
     dw #presets_suitless_tourian_landing_site
     dw #$0000
     %cm_header("TOURIAN")
+
 
 ; Bombs
 presets_suitless_bombs_ceres_elevator:
@@ -513,11 +514,11 @@ presets_suitless_xray_big_pink_revisit:
 presets_suitless_xray_green_hill_zone:
     %cm_preset("Green Hill Zone", #preset_suitless_xray_green_hill_zone)
 
-presets_suitless_xray_blue_brin_hopper:
-    %cm_preset("Blue Brin Hoppers", #preset_suitless_xray_blue_brin_hopper)
+presets_suitless_xray_blue_brin_hoppers:
+    %cm_preset("Blue Brin Hoppers", #preset_suitless_xray_blue_brin_hoppers)
 
-presets_suitless_xray_green_hill_zone_2:
-    %cm_preset("Green Hill Zone 2", #preset_suitless_xray_green_hill_zone_2)
+presets_suitless_xray_green_hill_zone_revisit:
+    %cm_preset("Green Hill Zone Revisit", #preset_suitless_xray_green_hill_zone_revisit)
 
 presets_suitless_xray_noob_bridge:
     %cm_preset("Noob Bridge", #preset_suitless_xray_noob_bridge)
@@ -528,8 +529,8 @@ presets_suitless_xray_red_tower:
 presets_suitless_xray_xray_dboost:
     %cm_preset("X-Ray D-Boost", #preset_suitless_xray_xray_dboost)
 
-presets_suitless_xray_xray_2:
-    %cm_preset("X-Ray", #preset_suitless_xray_xray_2)
+presets_suitless_xray_xray:
+    %cm_preset("X-Ray", #preset_suitless_xray_xray)
 
 presets_suitless_xray_xray_escape:
     %cm_preset("X-Ray Escape", #preset_suitless_xray_xray_escape)
@@ -545,8 +546,8 @@ presets_suitless_warehouse_skree_boost:
 presets_suitless_warehouse_below_spazer:
     %cm_preset("Below Spazer", #preset_suitless_warehouse_below_spazer)
 
-presets_suitless_warehouse_below_spazer_2:
-    %cm_preset("Below Spazer 2", #preset_suitless_warehouse_below_spazer_2)
+presets_suitless_warehouse_below_spazer_revisit:
+    %cm_preset("Below Spazer Revisit", #preset_suitless_warehouse_below_spazer_revisit)
 
 presets_suitless_warehouse_warehouse_entrance:
     %cm_preset("Warehouse Entrance", #preset_suitless_warehouse_warehouse_entrance)
@@ -666,8 +667,8 @@ presets_suitless_upper_norfair_2_acid_snakes_tunnel:
 presets_suitless_upper_norfair_2_crocomire:
     %cm_preset("Crocomire", #preset_suitless_upper_norfair_2_crocomire)
 
-presets_suitless_upper_norfair_2_croc_pbs:
-    %cm_preset("Croc PBs", #preset_suitless_upper_norfair_2_croc_pbs)
+presets_suitless_upper_norfair_2_croc_power_bombs:
+    %cm_preset("Croc Power Bombs", #preset_suitless_upper_norfair_2_croc_power_bombs)
 
 presets_suitless_upper_norfair_2_croc_shaft_down:
     %cm_preset("Croc Shaft Down", #preset_suitless_upper_norfair_2_croc_shaft_down)
@@ -687,8 +688,8 @@ presets_suitless_upper_norfair_2_cosine_missile:
 presets_suitless_upper_norfair_2_croc_farm:
     %cm_preset("Croc Farm", #preset_suitless_upper_norfair_2_croc_farm)
 
-presets_suitless_upper_norfair_2_croc_revisit:
-    %cm_preset("Crocomire Revisit", #preset_suitless_upper_norfair_2_croc_revisit)
+presets_suitless_upper_norfair_2_crocomire_revisit:
+    %cm_preset("Crocomire Revisit", #preset_suitless_upper_norfair_2_crocomire_revisit)
 
 presets_suitless_upper_norfair_2_croc_speedway_up:
     %cm_preset("Croc Speedway Up", #preset_suitless_upper_norfair_2_croc_speedway_up)
@@ -811,7 +812,7 @@ presets_suitless_maridia_cleanup_2_fish_tank_sbj:
     %cm_preset("Fish Tank SBJ", #preset_suitless_maridia_cleanup_2_fish_tank_sbj)
 
 presets_suitless_maridia_cleanup_2_mt_everest_final:
-    %cm_preset("Mt Everest Final", #preset_suitless_maridia_cleanup_2_mt_everest_final)
+    %cm_preset("Mt. Everest Final", #preset_suitless_maridia_cleanup_2_mt_everest_final)
 
 presets_suitless_maridia_cleanup_2_crab_shaft_up:
     %cm_preset("Crab Shaft Up", #preset_suitless_maridia_cleanup_2_crab_shaft_up)
@@ -896,7 +897,7 @@ presets_suitless_forgotten_highway_phantoon:
 
 ; Wrecked Ship
 presets_suitless_wrecked_ship_shaft_to_supers:
-    %cm_preset("Shaft to Supers", #preset_suitless_wrecked_ship_shaft_to_supers)
+    %cm_preset("Shaft To Supers", #preset_suitless_wrecked_ship_shaft_to_supers)
 
 presets_suitless_wrecked_ship_right_supers:
     %cm_preset("Right Supers", #preset_suitless_wrecked_ship_right_supers)
@@ -907,8 +908,8 @@ presets_suitless_wrecked_ship_left_supers:
 presets_suitless_wrecked_ship_shaft_to_sponge_bath:
     %cm_preset("Shaft to Sponge Bath", #preset_suitless_wrecked_ship_shaft_to_sponge_bath)
 
-presets_suitless_wrecked_ship_sponge_bath_2:
-    %cm_preset("Sponge Bath", #preset_suitless_wrecked_ship_sponge_bath_2)
+presets_suitless_wrecked_ship_sponge_bath:
+    %cm_preset("Sponge Bath", #preset_suitless_wrecked_ship_sponge_bath)
 
 presets_suitless_wrecked_ship_electric_death_room:
     %cm_preset("Electric Death Room", #preset_suitless_wrecked_ship_electric_death_room)
@@ -1023,7 +1024,7 @@ presets_suitless_ridley_fast_ripper_room:
     %cm_preset("Fast Ripper Room", #preset_suitless_ridley_fast_ripper_room)
 
 presets_suitless_ridley_worst_room_in_the_game:
-    %cm_preset("Worst Room in the Game", #preset_suitless_ridley_worst_room_in_the_game)
+    %cm_preset("Worst Room In The Game", #preset_suitless_ridley_worst_room_in_the_game)
 
 presets_suitless_ridley_mickey_mouse_room:
     %cm_preset("Mickey Mouse Room", #preset_suitless_ridley_mickey_mouse_room)
@@ -1049,8 +1050,8 @@ presets_suitless_ridley_plowerhouse:
 presets_suitless_ridley_preridley_room:
     %cm_preset("Pre-Ridley Room", #preset_suitless_ridley_preridley_room)
 
-presets_suitless_ridley_ridley_2:
-    %cm_preset("Ridley", #preset_suitless_ridley_ridley_2)
+presets_suitless_ridley_ridley:
+    %cm_preset("Ridley", #preset_suitless_ridley_ridley)
 
 
 ; Norfair Cleanup
@@ -1081,8 +1082,8 @@ presets_suitless_norfair_cleanup_hotarubi_revisit:
 presets_suitless_norfair_cleanup_three_musketeers:
     %cm_preset("Three Musketeers", #preset_suitless_norfair_cleanup_three_musketeers)
 
-presets_suitless_norfair_cleanup_single_chamber_2:
-    %cm_preset("Single Chamber", #preset_suitless_norfair_cleanup_single_chamber_2)
+presets_suitless_norfair_cleanup_single_chamber:
+    %cm_preset("Single Chamber", #preset_suitless_norfair_cleanup_single_chamber)
 
 presets_suitless_norfair_cleanup_bubble_mountain_return:
     %cm_preset("Bubble Mountain Return", #preset_suitless_norfair_cleanup_bubble_mountain_return)
@@ -1155,8 +1156,8 @@ presets_suitless_final_cleanup_parlor_revisit:
 presets_suitless_final_cleanup_landing_site_revisit:
     %cm_preset("Landing Site Revisit", #preset_suitless_final_cleanup_landing_site_revisit)
 
-presets_suitless_final_cleanup_crateria_pbs:
-    %cm_preset("Crateria PBs", #preset_suitless_final_cleanup_crateria_pbs)
+presets_suitless_final_cleanup_crateria_power_bombs:
+    %cm_preset("Crateria Power Bombs", #preset_suitless_final_cleanup_crateria_power_bombs)
 
 presets_suitless_final_cleanup_gauntlet_entry:
     %cm_preset("Gauntlet Entry", #preset_suitless_final_cleanup_gauntlet_entry)
@@ -1216,5 +1217,4 @@ presets_suitless_tourian_escape_parlor:
 
 presets_suitless_tourian_landing_site:
     %cm_preset("Landing Site", #preset_suitless_tourian_landing_site)
-
 

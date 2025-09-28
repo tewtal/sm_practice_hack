@@ -530,7 +530,7 @@ preset_allbosspkdr_wrecked_ship_red_tower_descent:
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 
-preset_allbosspkdr_wrecked_ship_breaking_tube:
+preset_allbosspkdr_wrecked_ship_breaking_the_tube:
     dw #preset_allbosspkdr_wrecked_ship_red_tower_descent ; Wrecked Ship: Red Tower Descent
     dw $078D, $911A  ; DDB
     dw $079B, $CF54  ; MDB
@@ -544,7 +544,7 @@ preset_allbosspkdr_wrecked_ship_breaking_tube:
     dw #$FFFF
 
 preset_allbosspkdr_upper_norfair_business_center:
-    dw #preset_allbosspkdr_wrecked_ship_breaking_tube ; Wrecked Ship: Breaking Tube
+    dw #preset_allbosspkdr_wrecked_ship_breaking_the_tube ; Wrecked Ship: Breaking The Tube
     dw $078D, $9246  ; DDB
     dw $079B, $A7DE  ; MDB
     dw $07F3, $0015  ; Music Bank
@@ -560,7 +560,7 @@ preset_allbosspkdr_upper_norfair_business_center:
     dw $D820, $0801  ; Events
     dw #$FFFF
 
-preset_allbosspkdr_upper_norfair_hi_jump_etank:
+preset_allbosspkdr_upper_norfair_hijump_etank:
     dw #preset_allbosspkdr_upper_norfair_business_center ; Upper Norfair: Business Center
     dw $090F, $8000  ; Screen subpixel X position
     dw $0915, $051C  ; Screen Y position in pixels
@@ -572,8 +572,8 @@ preset_allbosspkdr_upper_norfair_hi_jump_etank:
     dw $D8B8, $2000  ; Doors
     dw #$FFFF
 
-preset_allbosspkdr_upper_norfair_leaving_hi_jump:
-    dw #preset_allbosspkdr_upper_norfair_hi_jump_etank ; Upper Norfair: Hi Jump E-tank
+preset_allbosspkdr_upper_norfair_leaving_hijump:
+    dw #preset_allbosspkdr_upper_norfair_hijump_etank ; Upper Norfair: Hi-Jump E-Tank
     dw $078D, $93F6  ; DDB
     dw $079B, $AA41  ; MDB
     dw $090F, $A000  ; Screen subpixel X position
@@ -594,7 +594,7 @@ preset_allbosspkdr_upper_norfair_leaving_hi_jump:
     dw #$FFFF
 
 preset_allbosspkdr_upper_norfair_precathedral:
-    dw #preset_allbosspkdr_upper_norfair_leaving_hi_jump ; Upper Norfair: Leaving Hi Jump
+    dw #preset_allbosspkdr_upper_norfair_leaving_hijump ; Upper Norfair: Leaving Hi-Jump
     dw $078D, $941A  ; DDB
     dw $079B, $A7DE  ; MDB
     dw $090F, $1000  ; Screen subpixel X position
@@ -704,8 +704,8 @@ preset_allbosspkdr_kraids_lair_entering_kraids_lair:
     dw $0AFA, $0086  ; Samus Y
     dw #$FFFF
 
-preset_allbosspkdr_kraids_lair_baby_kraid_entering:
-    dw #preset_allbosspkdr_kraids_lair_entering_kraids_lair ; Kraids Lair: Entering Kraids Lair
+preset_allbosspkdr_kraids_lair_minikraid:
+    dw #preset_allbosspkdr_kraids_lair_entering_kraids_lair ; Kraid's Lair: Entering Kraid's Lair
     dw $078D, $9156  ; DDB
     dw $079B, $A4DA  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -722,7 +722,7 @@ preset_allbosspkdr_kraids_lair_baby_kraid_entering:
     dw #$FFFF
 
 preset_allbosspkdr_kraids_lair_kraid:
-    dw #preset_allbosspkdr_kraids_lair_baby_kraid_entering ; Kraids Lair: Baby Kraid (Entering)
+    dw #preset_allbosspkdr_kraids_lair_minikraid ; Kraid's Lair: Mini-Kraid
     dw $078D, $919E  ; DDB
     dw $079B, $A56B  ; MDB
     dw $07F3, $0027  ; Music Bank
@@ -735,8 +735,8 @@ preset_allbosspkdr_kraids_lair_kraid:
     dw $D8B8, $2624  ; Doors
     dw #$FFFF
 
-preset_allbosspkdr_kraids_lair_baby_kraid_entering_2:
-    dw #preset_allbosspkdr_kraids_lair_kraid ; Kraids Lair: Kraid
+preset_allbosspkdr_kraids_lair_minikraid_revisit:
+    dw #preset_allbosspkdr_kraids_lair_kraid ; Kraid's Lair: Kraid
     dw $078D, $91AA  ; DDB
     dw $07F5, $0003  ; Music Track
     dw $090F, $8000  ; Screen subpixel X position
@@ -756,7 +756,7 @@ preset_allbosspkdr_kraids_lair_baby_kraid_entering_2:
     dw #$FFFF
 
 preset_allbosspkdr_kraids_lair_leaving_kraids_lair:
-    dw #preset_allbosspkdr_kraids_lair_baby_kraid_entering_2 ; Kraids Lair: Baby Kraid (Entering)
+    dw #preset_allbosspkdr_kraids_lair_minikraid_revisit ; Kraid's Lair: Mini-Kraid Revisit
     dw $078D, $916E  ; DDB
     dw $079B, $A471  ; MDB
     dw $07F3, $0012  ; Music Bank
@@ -774,7 +774,7 @@ preset_allbosspkdr_kraids_lair_leaving_kraids_lair:
     dw #$FFFF
 
 preset_allbosspkdr_maridia_mt_everest:
-    dw #preset_allbosspkdr_kraids_lair_leaving_kraids_lair ; Kraids Lair: Leaving Kraids Lair
+    dw #preset_allbosspkdr_kraids_lair_leaving_kraids_lair ; Kraid's Lair: Leaving Kraid's Lair
     dw $078D, $A3B4  ; DDB
     dw $079B, $D017  ; MDB
     dw $07F3, $001B  ; Music Bank
@@ -789,7 +789,7 @@ preset_allbosspkdr_maridia_mt_everest:
     dw #$FFFF
 
 preset_allbosspkdr_maridia_botwoon:
-    dw #preset_allbosspkdr_maridia_mt_everest ; Maridia: Mt Everest
+    dw #preset_allbosspkdr_maridia_mt_everest ; Maridia: Mt. Everest
     dw $078D, $A72C  ; DDB
     dw $079B, $D617  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -841,7 +841,7 @@ preset_allbosspkdr_maridia_draygon:
     dw $D8C2, $0C00  ; Doors
     dw #$FFFF
 
-preset_allbosspkdr_maridia_womple_jump:
+preset_allbosspkdr_maridia_whomple_jump:
     dw #preset_allbosspkdr_maridia_draygon ; Maridia: Draygon
     dw $078D, $A96C  ; DDB
     dw $090F, $1FFF  ; Screen subpixel X position
@@ -861,7 +861,7 @@ preset_allbosspkdr_maridia_womple_jump:
     dw #$FFFF
 
 preset_allbosspkdr_maridia_cac_alley:
-    dw #preset_allbosspkdr_maridia_womple_jump ; Maridia: Womple Jump
+    dw #preset_allbosspkdr_maridia_whomple_jump ; Maridia: Whomple Jump
     dw $078D, $A7E0  ; DDB
     dw $079B, $D913  ; MDB
     dw $090F, $C000  ; Screen subpixel X position
@@ -1124,7 +1124,7 @@ preset_allbosspkdr_lower_norfair_worst_room_in_the_game:
     dw #$FFFF
 
 preset_allbosspkdr_lower_norfair_kihunter_stairs:
-    dw #preset_allbosspkdr_lower_norfair_worst_room_in_the_game ; Lower Norfair: Worst Room in the Game
+    dw #preset_allbosspkdr_lower_norfair_worst_room_in_the_game ; Lower Norfair: Worst Room In The Game
     dw $078D, $997E  ; DDB
     dw $079B, $B4E5  ; MDB
     dw $090F, $2D80  ; Screen subpixel X position
@@ -1208,7 +1208,7 @@ preset_allbosspkdr_lower_norfair_wasteland_revisit:
     dw $D8BA, $D7F1  ; Doors
     dw #$FFFF
 
-preset_allbosspkdr_lower_norfair_fire_flea_room:
+preset_allbosspkdr_lower_norfair_fireflea_room:
     dw #preset_allbosspkdr_lower_norfair_wasteland_revisit ; Lower Norfair: Wasteland Revisit
     dw $078D, $9A26  ; DDB
     dw $079B, $B585  ; MDB
@@ -1225,7 +1225,7 @@ preset_allbosspkdr_lower_norfair_fire_flea_room:
     dw #$FFFF
 
 preset_allbosspkdr_lower_norfair_three_musketeers:
-    dw #preset_allbosspkdr_lower_norfair_fire_flea_room ; Lower Norfair: Fire Flea Room
+    dw #preset_allbosspkdr_lower_norfair_fireflea_room ; Lower Norfair: Fireflea Room
     dw $078D, $9A92  ; DDB
     dw $079B, $B510  ; MDB
     dw $090F, $2000  ; Screen subpixel X position
@@ -1237,7 +1237,7 @@ preset_allbosspkdr_lower_norfair_three_musketeers:
     dw $0AF6, $0060  ; Samus X
     dw #$FFFF
 
-preset_allbosspkdr_lower_norfair_bubble_mountain_rerevisit:
+preset_allbosspkdr_lower_norfair_bubble_mountain_final:
     dw #preset_allbosspkdr_lower_norfair_three_musketeers ; Lower Norfair: Three Musketeers
     dw $078D, $9A4A  ; DDB
     dw $079B, $AD5E  ; MDB
@@ -1250,7 +1250,7 @@ preset_allbosspkdr_lower_norfair_bubble_mountain_rerevisit:
     dw #$FFFF
 
 preset_allbosspkdr_spore_spawn_maridia_passthrough:
-    dw #preset_allbosspkdr_lower_norfair_bubble_mountain_rerevisit ; Lower Norfair: Bubble Mountain ReRevisit
+    dw #preset_allbosspkdr_lower_norfair_bubble_mountain_final ; Lower Norfair: Bubble Mountain Final
     dw $078D, $92EE  ; DDB
     dw $079B, $A6A1  ; MDB
     dw $07F3, $0012  ; Music Bank
@@ -1267,7 +1267,7 @@ preset_allbosspkdr_spore_spawn_maridia_passthrough:
     dw $0AFA, $0086  ; Samus Y
     dw #$FFFF
 
-preset_allbosspkdr_spore_spawn_red_tower_2:
+preset_allbosspkdr_spore_spawn_red_tower:
     dw #preset_allbosspkdr_spore_spawn_maridia_passthrough ; Spore Spawn: Maridia Passthrough
     dw $078D, $910E  ; DDB
     dw $079B, $A3DD  ; MDB
@@ -1282,7 +1282,7 @@ preset_allbosspkdr_spore_spawn_red_tower_2:
     dw #$FFFF
 
 preset_allbosspkdr_spore_spawn_lower_green_brinstar:
-    dw #preset_allbosspkdr_spore_spawn_red_tower_2 ; Spore Spawn: Red Tower
+    dw #preset_allbosspkdr_spore_spawn_red_tower ; Spore Spawn: Red Tower
     dw $078D, $90F6  ; DDB
     dw $079B, $A253  ; MDB
     dw $090F, $A000  ; Screen subpixel X position
@@ -1307,7 +1307,7 @@ preset_allbosspkdr_spore_spawn_big_pink_up:
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 
-preset_allbosspkdr_spore_spawn_spore_spawn_2:
+preset_allbosspkdr_spore_spawn_spore_spawn:
     dw #preset_allbosspkdr_spore_spawn_big_pink_up ; Spore Spawn: Big Pink Up
     dw $078D, $8DC6  ; DDB
     dw $079B, $9D9C  ; MDB
@@ -1324,7 +1324,7 @@ preset_allbosspkdr_spore_spawn_spore_spawn_2:
     dw #$FFFF
 
 preset_allbosspkdr_spore_spawn_big_pink_down:
-    dw #preset_allbosspkdr_spore_spawn_spore_spawn_2 ; Spore Spawn: Spore Spawn
+    dw #preset_allbosspkdr_spore_spawn_spore_spawn ; Spore Spawn: Spore Spawn
     dw $078D, $8E56  ; DDB
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $9000  ; Screen subpixel Y position
@@ -1350,7 +1350,7 @@ preset_allbosspkdr_spore_spawn_dachora_room_revisit:
     dw $0AFA, $028B  ; Samus Y
     dw #$FFFF
 
-preset_allbosspkdr_spore_spawn_crateria_2:
+preset_allbosspkdr_spore_spawn_crateria:
     dw #preset_allbosspkdr_spore_spawn_dachora_room_revisit ; Spore Spawn: Dachora Room Revisit
     dw $078D, $8CA6  ; DDB
     dw $079B, $9938  ; MDB
@@ -1367,7 +1367,7 @@ preset_allbosspkdr_spore_spawn_crateria_2:
     dw #$FFFF
 
 preset_allbosspkdr_tourian_metroids_1:
-    dw #preset_allbosspkdr_spore_spawn_crateria_2 ; Spore Spawn: Crateria
+    dw #preset_allbosspkdr_spore_spawn_crateria ; Spore Spawn: Crateria
     dw $078D, $9222  ; DDB
     dw $079B, $DAAE  ; MDB
     dw $07F3, $001E  ; Music Bank

@@ -109,17 +109,17 @@ presets_submenu_pkrd_red_brinstar_revisit:
     dw #presets_pkrd_red_brinstar_revisit_skree_boost
     dw #presets_pkrd_red_brinstar_revisit_below_spazer
     dw #presets_pkrd_red_brinstar_revisit_leaving_spazer
-    dw #presets_pkrd_red_brinstar_revisit_breaking_tube
+    dw #presets_pkrd_red_brinstar_revisit_breaking_the_tube
     dw #$0000
     %cm_header("RED BRINSTAR REVISIT")
 
 presets_submenu_pkrd_kraid:
     dw #presets_pkrd_kraid_entering_kraids_lair
     dw #presets_pkrd_kraid_kraid_kihunters
-    dw #presets_pkrd_kraid_mini_kraid
+    dw #presets_pkrd_kraid_minikraid
     dw #presets_pkrd_kraid_kraid
     dw #presets_pkrd_kraid_leaving_varia
-    dw #presets_pkrd_kraid_mini_kraid_revisit
+    dw #presets_pkrd_kraid_minikraid_revisit
     dw #presets_pkrd_kraid_kraid_kihunters_revisit
     dw #presets_pkrd_kraid_kraid_etank
     dw #presets_pkrd_kraid_leaving_kraids_lair
@@ -129,8 +129,8 @@ presets_submenu_pkrd_kraid:
 
 presets_submenu_pkrd_upper_norfair:
     dw #presets_pkrd_upper_norfair_business_center_postelev
-    dw #presets_pkrd_upper_norfair_hi_jump_etank
-    dw #presets_pkrd_upper_norfair_leaving_hi_jump
+    dw #presets_pkrd_upper_norfair_hijump_etank
+    dw #presets_pkrd_upper_norfair_leaving_hijump
     dw #presets_pkrd_upper_norfair_business_center_revisit
     dw #presets_pkrd_upper_norfair_ice_beam_gates
     dw #presets_pkrd_upper_norfair_ice_maze_up
@@ -144,8 +144,8 @@ presets_submenu_pkrd_upper_norfair:
     dw #presets_pkrd_upper_norfair_leaving_speedbooster
     dw #presets_pkrd_upper_norfair_single_chamber
     dw #presets_pkrd_upper_norfair_double_chamber
-    dw #presets_pkrd_upper_norfair_double_chamber_revisited
-    dw #presets_pkrd_upper_norfair_single_chamber_revisited
+    dw #presets_pkrd_upper_norfair_double_chamber_revisit
+    dw #presets_pkrd_upper_norfair_single_chamber_revisit
     dw #presets_pkrd_upper_norfair_volcano_room
     dw #presets_pkrd_upper_norfair_kronic_boost
     dw #presets_pkrd_upper_norfair_lava_spark
@@ -167,7 +167,7 @@ presets_submenu_pkrd_lower_norfair:
     dw #presets_pkrd_lower_norfair_reverse_plowerhouse
     dw #presets_pkrd_lower_norfair_wasteland_revisit
     dw #presets_pkrd_lower_norfair_kihunter_stairs_up
-    dw #presets_pkrd_lower_norfair_fire_flea_room
+    dw #presets_pkrd_lower_norfair_fireflea_room
     dw #presets_pkrd_lower_norfair_springball_maze
     dw #presets_pkrd_lower_norfair_three_musketeers
     dw #presets_pkrd_lower_norfair_single_chamber_final
@@ -229,6 +229,7 @@ presets_submenu_pkrd_tourian:
     dw #presets_pkrd_tourian_escape_parlor
     dw #$0000
     %cm_header("TOURIAN")
+
 
 ; Crateria
 presets_pkrd_crateria_ceres_elevator:
@@ -399,19 +400,19 @@ presets_pkrd_red_brinstar_revisit_below_spazer:
 presets_pkrd_red_brinstar_revisit_leaving_spazer:
     %cm_preset("Leaving Spazer", #preset_pkrd_red_brinstar_revisit_leaving_spazer)
 
-presets_pkrd_red_brinstar_revisit_breaking_tube:
-    %cm_preset("Breaking Tube", #preset_pkrd_red_brinstar_revisit_breaking_tube)
+presets_pkrd_red_brinstar_revisit_breaking_the_tube:
+    %cm_preset("Breaking The Tube", #preset_pkrd_red_brinstar_revisit_breaking_the_tube)
 
 
 ; Kraid
 presets_pkrd_kraid_entering_kraids_lair:
-    %cm_preset("Entering Kraids Lair", #preset_pkrd_kraid_entering_kraids_lair)
+    %cm_preset("Entering Kraid's Lair", #preset_pkrd_kraid_entering_kraids_lair)
 
 presets_pkrd_kraid_kraid_kihunters:
     %cm_preset("Kraid Kihunters", #preset_pkrd_kraid_kraid_kihunters)
 
-presets_pkrd_kraid_mini_kraid:
-    %cm_preset("Mini Kraid", #preset_pkrd_kraid_mini_kraid)
+presets_pkrd_kraid_minikraid:
+    %cm_preset("Mini-Kraid", #preset_pkrd_kraid_minikraid)
 
 presets_pkrd_kraid_kraid:
     %cm_preset("Kraid", #preset_pkrd_kraid_kraid)
@@ -419,8 +420,8 @@ presets_pkrd_kraid_kraid:
 presets_pkrd_kraid_leaving_varia:
     %cm_preset("Leaving Varia", #preset_pkrd_kraid_leaving_varia)
 
-presets_pkrd_kraid_mini_kraid_revisit:
-    %cm_preset("Mini Kraid Revisit", #preset_pkrd_kraid_mini_kraid_revisit)
+presets_pkrd_kraid_minikraid_revisit:
+    %cm_preset("Mini-Kraid Revisit", #preset_pkrd_kraid_minikraid_revisit)
 
 presets_pkrd_kraid_kraid_kihunters_revisit:
     %cm_preset("Kraid Kihunters Revisit", #preset_pkrd_kraid_kraid_kihunters_revisit)
@@ -429,7 +430,7 @@ presets_pkrd_kraid_kraid_etank:
     %cm_preset("Kraid E-Tank", #preset_pkrd_kraid_kraid_etank)
 
 presets_pkrd_kraid_leaving_kraids_lair:
-    %cm_preset("Leaving Kraids Lair", #preset_pkrd_kraid_leaving_kraids_lair)
+    %cm_preset("Leaving Kraid's Lair", #preset_pkrd_kraid_leaving_kraids_lair)
 
 presets_pkrd_kraid_business_center_preelev:
     %cm_preset("Business Center Pre-Elev", #preset_pkrd_kraid_business_center_preelev)
@@ -439,11 +440,11 @@ presets_pkrd_kraid_business_center_preelev:
 presets_pkrd_upper_norfair_business_center_postelev:
     %cm_preset("Business Center Post-Elev", #preset_pkrd_upper_norfair_business_center_postelev)
 
-presets_pkrd_upper_norfair_hi_jump_etank:
-    %cm_preset("Hi Jump E-Tank", #preset_pkrd_upper_norfair_hi_jump_etank)
+presets_pkrd_upper_norfair_hijump_etank:
+    %cm_preset("Hi-Jump E-Tank", #preset_pkrd_upper_norfair_hijump_etank)
 
-presets_pkrd_upper_norfair_leaving_hi_jump:
-    %cm_preset("Leaving Hi Jump", #preset_pkrd_upper_norfair_leaving_hi_jump)
+presets_pkrd_upper_norfair_leaving_hijump:
+    %cm_preset("Leaving Hi-Jump", #preset_pkrd_upper_norfair_leaving_hijump)
 
 presets_pkrd_upper_norfair_business_center_revisit:
     %cm_preset("Business Center Revisit", #preset_pkrd_upper_norfair_business_center_revisit)
@@ -484,11 +485,11 @@ presets_pkrd_upper_norfair_single_chamber:
 presets_pkrd_upper_norfair_double_chamber:
     %cm_preset("Double Chamber", #preset_pkrd_upper_norfair_double_chamber)
 
-presets_pkrd_upper_norfair_double_chamber_revisited:
-    %cm_preset("Double Chamber Revisited", #preset_pkrd_upper_norfair_double_chamber_revisited)
+presets_pkrd_upper_norfair_double_chamber_revisit:
+    %cm_preset("Double Chamber Revisit", #preset_pkrd_upper_norfair_double_chamber_revisit)
 
-presets_pkrd_upper_norfair_single_chamber_revisited:
-    %cm_preset("Single Chamber Revisited", #preset_pkrd_upper_norfair_single_chamber_revisited)
+presets_pkrd_upper_norfair_single_chamber_revisit:
+    %cm_preset("Single Chamber Revisit", #preset_pkrd_upper_norfair_single_chamber_revisit)
 
 presets_pkrd_upper_norfair_volcano_room:
     %cm_preset("Volcano Room", #preset_pkrd_upper_norfair_volcano_room)
@@ -508,7 +509,7 @@ presets_pkrd_lower_norfair_prepillars:
     %cm_preset("Pre-Pillars", #preset_pkrd_lower_norfair_prepillars)
 
 presets_pkrd_lower_norfair_worst_room_in_the_game:
-    %cm_preset("Worst Room in the Game", #preset_pkrd_lower_norfair_worst_room_in_the_game)
+    %cm_preset("Worst Room In The Game", #preset_pkrd_lower_norfair_worst_room_in_the_game)
 
 presets_pkrd_lower_norfair_amphitheatre:
     %cm_preset("Amphitheatre", #preset_pkrd_lower_norfair_amphitheatre)
@@ -543,8 +544,8 @@ presets_pkrd_lower_norfair_wasteland_revisit:
 presets_pkrd_lower_norfair_kihunter_stairs_up:
     %cm_preset("Kihunter Stairs Up", #preset_pkrd_lower_norfair_kihunter_stairs_up)
 
-presets_pkrd_lower_norfair_fire_flea_room:
-    %cm_preset("Fire Flea Room", #preset_pkrd_lower_norfair_fire_flea_room)
+presets_pkrd_lower_norfair_fireflea_room:
+    %cm_preset("Fireflea Room", #preset_pkrd_lower_norfair_fireflea_room)
 
 presets_pkrd_lower_norfair_springball_maze:
     %cm_preset("Springball Maze", #preset_pkrd_lower_norfair_springball_maze)
@@ -573,7 +574,7 @@ presets_pkrd_maridia_fish_tank:
     %cm_preset("Fish Tank", #preset_pkrd_maridia_fish_tank)
 
 presets_pkrd_maridia_mt_everest:
-    %cm_preset("Mt Everest", #preset_pkrd_maridia_mt_everest)
+    %cm_preset("Mt. Everest", #preset_pkrd_maridia_mt_everest)
 
 presets_pkrd_maridia_crab_shaft:
     %cm_preset("Crab Shaft", #preset_pkrd_maridia_crab_shaft)
@@ -615,7 +616,7 @@ presets_pkrd_maridia_reverse_crab_shaft:
     %cm_preset("Reverse Crab Shaft", #preset_pkrd_maridia_reverse_crab_shaft)
 
 presets_pkrd_maridia_mt_everest_revisit:
-    %cm_preset("Mt Everest Revisit", #preset_pkrd_maridia_mt_everest_revisit)
+    %cm_preset("Mt. Everest Revisit", #preset_pkrd_maridia_mt_everest_revisit)
 
 
 ; Backtracking
@@ -692,5 +693,4 @@ presets_pkrd_tourian_escape_climb:
 
 presets_pkrd_tourian_escape_parlor:
     %cm_preset("Escape Parlor", #preset_pkrd_tourian_escape_parlor)
-
 

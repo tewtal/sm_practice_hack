@@ -445,7 +445,7 @@ preset_nintendopower_spore_spawn_red_tower:
     dw $D8B6, $002C  ; Doors
     dw #$FFFF
 
-preset_nintendopower_shopping_with_power_hi_jump_first:
+preset_nintendopower_shopping_with_power_hijump_first:
     dw #preset_nintendopower_spore_spawn_red_tower ; Spore Spawn: Red Tower
     dw $078D, $A384  ; DDB
     dw $079B, $A6A1  ; MDB
@@ -464,7 +464,7 @@ preset_nintendopower_shopping_with_power_hi_jump_first:
     dw #$FFFF
 
 preset_nintendopower_shopping_with_power_kraid_warehouse:
-    dw #preset_nintendopower_shopping_with_power_hi_jump_first ; Shopping With Power: Hi Jump First
+    dw #preset_nintendopower_shopping_with_power_hijump_first ; Shopping With Power: Hi-Jump First
     dw $078D, $92EE  ; DDB
     dw $090F, $D000  ; Screen subpixel X position
     dw $0913, $0000  ; Screen subpixel Y position
@@ -914,7 +914,7 @@ preset_nintendopower_wrecked_ship_movement_before_attic:
     dw #$FFFF
 
 preset_nintendopower_wrecked_ship_attic:
-    dw #preset_nintendopower_wrecked_ship_movement_before_attic ; Wrecked Ship: Movement before Attic
+    dw #preset_nintendopower_wrecked_ship_movement_before_attic ; Wrecked Ship: Movement Before Attic
     dw $078D, $A2E8  ; DDB
     dw $079B, $CAF6  ; MDB
     dw $090F, $B000  ; Screen subpixel X position
@@ -976,7 +976,7 @@ preset_nintendopower_wrecked_ship_heading_to_maridia:
     dw $0AF6, $0034  ; Samus X
     dw #$FFFF
 
-preset_nintendopower_maridia_mainstreet:
+preset_nintendopower_maridia_main_street:
     dw #preset_nintendopower_wrecked_ship_heading_to_maridia ; Wrecked Ship: Heading To Maridia
     dw $078D, $A330  ; DDB
     dw $079B, $CFC9  ; MDB
@@ -1000,7 +1000,7 @@ preset_nintendopower_maridia_mainstreet:
     dw #$FFFF
 
 preset_nintendopower_maridia_pants_room:
-    dw #preset_nintendopower_maridia_mainstreet ; Maridia: Mainstreet
+    dw #preset_nintendopower_maridia_main_street ; Maridia: Main Street
     dw $078D, $A66C  ; DDB
     dw $079B, $D4C2  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -1415,7 +1415,7 @@ preset_nintendopower_norfair_escape_from_ridley:
     dw #$FFFF
 
 preset_nintendopower_norfair_landing_site:
-    dw #preset_nintendopower_norfair_escape_from_ridley ; Norfair: Escape from Ridley
+    dw #preset_nintendopower_norfair_escape_from_ridley ; Norfair: Escape From Ridley
     dw $078D, $8AC6  ; DDB
     dw $079B, $91F8  ; MDB
     dw $07F3, $000C  ; Music Bank

@@ -925,7 +925,7 @@ preset_100early_crateria_climb_up:
     dw $D8B2, $0400  ; Doors
     dw #$FFFF
 
-preset_rbo_bombs_taco_tank:
+preset_rbo_bombs_taco_tank_optional:
     dw #preset_suitless_bombs_pit_room_up
     dw $078D, $8ECE  ; DDB
     dw $079B, $9F64  ; MDB
@@ -1533,7 +1533,7 @@ preset_100early_brinstar_green_brinstar:
     dw $0AF8, $FFFF  ; Samus subpixel X
     dw #$FFFF
 
-preset_hundo_kraid_pirates_shaft:
+preset_hundo_kraid_green_pirate_shaft:
     dw #preset_prkd19_crateria_green_pirate_shaft
     dw $090F, $4280  ; Screen subpixel X position
     dw $0915, $01EB  ; Screen Y position in pixels
@@ -2505,7 +2505,7 @@ preset_gtmax_brinstar_noob_bridge:
     dw $D870, $0080  ; Items
     dw #$FFFF
 
-preset_nghyper_red_brinstar_breaking_tube:
+preset_nghyper_red_brinstar_breaking_the_tube:
     dw #preset_nghyper_red_brinstar_bottom_of_red_tower
     dw $078D, $9102  ; DDB
     dw $079B, $A408  ; MDB
@@ -2595,8 +2595,8 @@ preset_hundo_kraid_green_hill_zone:
     dw $0AF6, $0365  ; Samus X
     dw #$FFFF
 
-preset_ngplasma_red_brinstar_breaking_tube:
-    dw #preset_nghyper_red_brinstar_breaking_tube
+preset_ngplasma_red_brinstar_breaking_the_tube:
+    dw #preset_nghyper_red_brinstar_breaking_the_tube
     dw $090F, $B000  ; Screen subpixel X position
     dw $0913, $6800  ; Screen subpixel Y position
     dw $09CA, $0030  ; Supers
@@ -2739,7 +2739,7 @@ preset_gtclassic_brinstar_hellway:
     dw $0AF6, $00A1  ; Samus X
     dw #$FFFF
 
-preset_allbosskpdr_brinstar_baby_kraid_entering:
+preset_allbosskpdr_brinstar_minikraid:
     dw #preset_allbosskpdr_brinstar_entering_kraids_lair
     dw $078D, $9156  ; DDB
     dw $079B, $A4DA  ; MDB
@@ -2793,7 +2793,7 @@ preset_ngplasma_norfair_preridley_business_center:
     dw $0AF8, $E000  ; Samus subpixel X
     dw #$FFFF
 
-preset_rbo_brinstar_hellway_2n1m:
+preset_rbo_brinstar_hellway_1x_maridia:
     dw #preset_rbo_brinstar_red_tower
     dw $078D, $8F0A  ; DDB
     dw $079B, $A253  ; MDB
@@ -3229,7 +3229,7 @@ preset_gtclassic_brinstar_caterpillars_up:
     dw #$FFFF
 
 preset_allbosskpdr_brinstar_kraid:
-    dw #preset_allbosskpdr_brinstar_baby_kraid_entering
+    dw #preset_allbosskpdr_brinstar_minikraid
     dw $078D, $919E  ; DDB
     dw $079B, $A56B  ; MDB
     dw $07F3, $0027  ; Music Bank
@@ -3258,8 +3258,8 @@ preset_nghyper_norfair_preridley_prepillars:
     dw $0AFC, $FFFF  ; Samus subpixel Y
     dw #$FFFF
 
-preset_rbo_brinstar_spazer_2n2m:
-    dw #preset_rbo_brinstar_hellway_2n1m
+preset_rbo_brinstar_spazer_2x_maridia:
+    dw #preset_rbo_brinstar_hellway_1x_maridia
     dw $078D, $9102  ; DDB
     dw $079B, $A408  ; MDB
     dw $090F, $6000  ; Screen subpixel X position
@@ -3272,8 +3272,8 @@ preset_rbo_brinstar_spazer_2n2m:
     dw $0AFA, $018B  ; Samus Y
     dw #$FFFF
 
-preset_rbo_brinstar_alpha_pbs_2n1m:
-    dw #preset_rbo_brinstar_hellway_2n1m
+preset_rbo_brinstar_alpha_power_bombs_1m:
+    dw #preset_rbo_brinstar_hellway_1x_maridia
     dw $078D, $908A  ; DDB
     dw $079B, $A322  ; MDB
     dw $090F, $8000  ; Screen subpixel X position
@@ -3394,7 +3394,7 @@ preset_kpdr25_brinstar_below_spazer:
 
 preset_kpdr21_brinstar_passing_through_maridia:
 preset_kpdr22_brinstar_passing_through_maridia:
-    dw #preset_allbosskpdr_brinstar_baby_kraid_entering
+    dw #preset_allbosskpdr_brinstar_minikraid
     dw $078D, $9132  ; DDB
     dw $079B, $A408  ; MDB
     dw $090F, $8000  ; Screen subpixel X position
@@ -3482,7 +3482,7 @@ preset_100early_brinstar_skree_boost:
     dw $09C6, $000F  ; Missiles
     dw #$FFFF
 
-preset_nintendopower_shopping_with_power_hi_jump_first:
+preset_nintendopower_shopping_with_power_hijump_first:
     dw #preset_nintendopower_spore_spawn_red_tower
     dw $078D, $A384  ; DDB
     dw $079B, $A6A1  ; MDB
@@ -3669,7 +3669,7 @@ preset_gtmax_brinstar_caterpillars_up:
     dw $D870, $0080  ; Items
     dw #$FFFF
 
-preset_allbosskpdr_brinstar_baby_kraid_exiting:
+preset_allbosskpdr_brinstar_minikraid_revisit:
     dw #preset_allbosskpdr_brinstar_kraid
     dw $078D, $91CE  ; DDB
     dw $07F5, $0003  ; Music Track
@@ -3689,8 +3689,8 @@ preset_allbosskpdr_brinstar_baby_kraid_exiting:
     dw $D8B8, $00E4  ; Doors
     dw #$FFFF
 
-preset_rbo_brinstar_norfair_elevator_2n2m:
-    dw #preset_rbo_brinstar_spazer_2n2m
+preset_rbo_brinstar_norfair_elevator_2m:
+    dw #preset_rbo_brinstar_spazer_2x_maridia
     dw $078D, $A384  ; DDB
     dw $079B, $A6A1  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -3707,8 +3707,8 @@ preset_rbo_brinstar_norfair_elevator_2n2m:
     dw $D8B6, $8004  ; Doors
     dw #$FFFF
 
-preset_rbo_brinstar_reverse_hellway_2n1m:
-    dw #preset_rbo_brinstar_alpha_pbs_2n1m
+preset_rbo_brinstar_reverse_hellway_1m:
+    dw #preset_rbo_brinstar_alpha_power_bombs_1m
     dw $078D, $90EA  ; DDB
     dw $090F, $D000  ; Screen subpixel X position
     dw $0913, $7800  ; Screen subpixel Y position
@@ -3879,7 +3879,7 @@ preset_allbosspkdr_wrecked_ship_leaving_phantoon:
     dw #$FFFF
 
 preset_nintendopower_shopping_with_power_kraid_warehouse:
-    dw #preset_nintendopower_shopping_with_power_hi_jump_first
+    dw #preset_nintendopower_shopping_with_power_hijump_first
     dw $078D, $92EE  ; DDB
     dw $090F, $D000  ; Screen subpixel X position
     dw $0913, $0000  ; Screen subpixel Y position
@@ -3967,7 +3967,7 @@ preset_gtclassic_brinstar_red_tower_down:
     dw #$FFFF
 
 preset_allbosskpdr_upper_norfair_business_center:
-    dw #preset_allbosskpdr_brinstar_baby_kraid_exiting
+    dw #preset_allbosskpdr_brinstar_minikraid_revisit
     dw $078D, $9246  ; DDB
     dw $079B, $A7DE  ; MDB
     dw $07F3, $0015  ; Music Bank
@@ -3983,8 +3983,8 @@ preset_allbosskpdr_upper_norfair_business_center:
     dw $D8B8, $00EC  ; Doors
     dw #$FFFF
 
-preset_rbo_shopping_high_jump_2n2m:
-    dw #preset_rbo_brinstar_norfair_elevator_2n2m
+preset_rbo_shopping_double_maridia_hijump_boots:
+    dw #preset_rbo_brinstar_norfair_elevator_2m
     dw $078D, $9246  ; DDB
     dw $079B, $A7DE  ; MDB
     dw $07F3, $0015  ; Music Bank
@@ -4001,8 +4001,8 @@ preset_rbo_shopping_high_jump_2n2m:
     dw $D8B8, $2000  ; Doors
     dw #$FFFF
 
-preset_rbo_brinstar_red_tower_moonfalls_2n1m:
-    dw #preset_rbo_brinstar_reverse_hellway_2n1m
+preset_rbo_brinstar_red_tower_moonfalls_1m:
+    dw #preset_rbo_brinstar_reverse_hellway_1m
     dw $078D, $90AE  ; DDB
     dw $079B, $A2F7  ; MDB
     dw $090F, $E000  ; Screen subpixel X position
@@ -4014,8 +4014,8 @@ preset_rbo_brinstar_red_tower_moonfalls_2n1m:
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 
-preset_rbo_shopping_business_center_up_2n2m:
-    dw #preset_rbo_brinstar_norfair_elevator_2n2m
+preset_rbo_shopping_double_maridia_business_center_up:
+    dw #preset_rbo_brinstar_norfair_elevator_2m
     dw $078D, $93F6  ; DDB
     dw $079B, $AA41  ; MDB
     dw $07F3, $0015  ; Music Bank
@@ -4038,8 +4038,8 @@ preset_rbo_shopping_business_center_up_2n2m:
     dw $D8BA, $0001  ; Doors
     dw #$FFFF
 
-preset_rbo_brinstar_spazer_2n1m:
-    dw #preset_rbo_brinstar_spazer_2n2m
+preset_rbo_brinstar_spazer_1m:
+    dw #preset_rbo_brinstar_spazer_2x_maridia
     dw $09C2, $004B  ; Health
     dw $09CA, $0003  ; Supers
     dw $09CE, $0004  ; Pbs
@@ -4159,8 +4159,8 @@ preset_kpdr25_kraid_kraid_kihunters:
     dw $D8B6, $8008  ; Doors
     dw #$FFFF
 
-preset_kpdr21_kraid_mini_kraid:
-preset_kpdr22_kraid_mini_kraid:
+preset_kpdr21_kraid_minikraid:
+preset_kpdr22_kraid_minikraid:
     dw #preset_kpdr21_kraid_kraid_kihunters
     dw $078D, $9156  ; DDB
     dw $079B, $A4DA  ; MDB
@@ -4449,7 +4449,7 @@ preset_gtclassic_brinstar_below_spazer:
     dw $0AF6, $01DC  ; Samus X
     dw #$FFFF
 
-preset_allbosskpdr_upper_norfair_hi_jump_etank:
+preset_allbosskpdr_upper_norfair_hijump_etank:
     dw #preset_allbosskpdr_upper_norfair_business_center
     dw $090F, $4000  ; Screen subpixel X position
     dw $0915, $051B  ; Screen Y position in pixels
@@ -4481,8 +4481,8 @@ preset_kpdr22_kraid_leaving_varia:
     dw $D8B8, $0064  ; Doors
     dw #$FFFF
 
-preset_rbo_shopping_first_hell_run_2n2m:
-    dw #preset_rbo_shopping_business_center_up_2n2m
+preset_rbo_shopping_double_maridia_first_hell_run:
+    dw #preset_rbo_shopping_double_maridia_business_center_up
     dw $078D, $941A  ; DDB
     dw $079B, $A7DE  ; MDB
     dw $090F, $0000  ; Screen subpixel X position
@@ -4497,8 +4497,8 @@ preset_rbo_shopping_first_hell_run_2n2m:
     dw $0AFA, $038B  ; Samus Y
     dw #$FFFF
 
-preset_rbo_brinstar_norfair_elevator_2n1m:
-    dw #preset_rbo_brinstar_norfair_elevator_2n2m
+preset_rbo_brinstar_norfair_elevator_1m:
+    dw #preset_rbo_brinstar_norfair_elevator_2m
     dw $09C2, $004B  ; Health
     dw $09CA, $0003  ; Supers
     dw $09CE, $0004  ; Pbs
@@ -4507,8 +4507,8 @@ preset_rbo_brinstar_norfair_elevator_2n1m:
     dw $D8B6, $B00C  ; Doors
     dw #$FFFF
 
-preset_rbo_shopping_bubble_mountain_2n2m:
-    dw #preset_rbo_shopping_business_center_up_2n2m
+preset_rbo_shopping_double_maridia_bubble_mountain:
+    dw #preset_rbo_shopping_double_maridia_business_center_up
     dw $078D, $929A  ; DDB
     dw $079B, $AFA3  ; MDB
     dw $090F, $0000  ; Screen subpixel X position
@@ -4523,8 +4523,8 @@ preset_rbo_shopping_bubble_mountain_2n2m:
     dw $D8B8, $2600  ; Doors
     dw #$FFFF
 
-preset_rbo_shopping_high_jump_2n1m:
-    dw #preset_rbo_shopping_high_jump_2n2m
+preset_rbo_shopping_single_maridia_hijump_boots:
+    dw #preset_rbo_shopping_double_maridia_hijump_boots
     dw $09C2, $004B  ; Health
     dw $09CA, $0003  ; Supers
     dw $09CE, $0004  ; Pbs
@@ -4533,9 +4533,9 @@ preset_rbo_shopping_high_jump_2n1m:
     dw $D8B6, $B00C  ; Doors
     dw #$FFFF
 
-preset_kpdr23_kraid_mini_kraid:
-preset_kpdr25_kraid_mini_kraid:
-    dw #preset_kpdr21_kraid_mini_kraid
+preset_kpdr23_kraid_minikraid:
+preset_kpdr25_kraid_minikraid:
+    dw #preset_kpdr21_kraid_minikraid
     dw $09A6, $1004  ; Equipped Beams
     dw $09A8, $1004  ; Collected Beams
     dw $09C6, $0007  ; Missiles
@@ -4824,7 +4824,7 @@ preset_gtmax_brinstar_skree_boost:
     dw $D870, $0080  ; Items
     dw #$FFFF
 
-preset_suitless_xray_blue_brin_hopper:
+preset_suitless_xray_blue_brin_hoppers:
     dw #preset_suitless_xray_green_hill_zone
     dw $078D, $8DEA  ; DDB
     dw $079B, $9E52  ; MDB
@@ -4841,7 +4841,7 @@ preset_suitless_xray_blue_brin_hopper:
     dw $D8B6, $00F1  ; Doors
     dw #$FFFF
 
-preset_suitless_xray_green_hill_zone_2:
+preset_suitless_xray_green_hill_zone_revisit:
     dw #preset_suitless_xray_green_hill_zone
     dw $078D, $8E86  ; DDB
     dw $079B, $9E9F  ; MDB
@@ -4889,7 +4889,7 @@ preset_gtmax_brinstar_below_spazer:
     dw $D870, $0080  ; Items
     dw #$FFFF
 
-preset_gtclassic_brinstar_breaking_tube:
+preset_gtclassic_brinstar_breaking_the_tube:
     dw #preset_gtclassic_brinstar_below_spazer
     dw $078D, $9102  ; DDB
     dw $079B, $A408  ; MDB
@@ -4903,8 +4903,8 @@ preset_gtclassic_brinstar_breaking_tube:
     dw $0AFA, $018B  ; Samus Y
     dw #$FFFF
 
-preset_allbosskpdr_upper_norfair_leaving_hi_jump:
-    dw #preset_allbosskpdr_upper_norfair_hi_jump_etank
+preset_allbosskpdr_upper_norfair_leaving_hijump:
+    dw #preset_allbosskpdr_upper_norfair_hijump_etank
     dw $078D, $9426  ; DDB
     dw $079B, $A9E5  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -4948,8 +4948,8 @@ preset_kpdr22_kraid_arthur_j_metroid:
     dw $D8B8, $00E4  ; Doors
     dw #$FFFF
 
-preset_rbo_shopping_bat_cave_farm_2n2m:
-    dw #preset_rbo_shopping_bubble_mountain_2n2m
+preset_rbo_shopping_double_maridia_bat_cave_farm_1:
+    dw #preset_rbo_shopping_double_maridia_bubble_mountain
     dw $078D, $973E  ; DDB
     dw $079B, $ACB3  ; MDB
     dw $090F, $4000  ; Screen subpixel X position
@@ -4963,8 +4963,8 @@ preset_rbo_shopping_bat_cave_farm_2n2m:
     dw $D8BA, $0011  ; Doors
     dw #$FFFF
 
-preset_rbo_shopping_business_center_up_2n1m:
-    dw #preset_rbo_shopping_business_center_up_2n2m
+preset_rbo_shopping_single_maridia_business_center_up:
+    dw #preset_rbo_shopping_double_maridia_business_center_up
     dw $09C6, $0002  ; Missiles
     dw $09C8, $000A  ; Max missiles
     dw $09CA, $0003  ; Supers
@@ -4976,8 +4976,8 @@ preset_rbo_shopping_business_center_up_2n1m:
     dw $D8B6, $B00C  ; Doors
     dw #$FFFF
 
-preset_rbo_shopping_leaving_speed_farm_2n2m:
-    dw #preset_rbo_shopping_business_center_up_2n2m
+preset_rbo_shopping_double_maridia_leaving_speed_farm_2:
+    dw #preset_rbo_shopping_double_maridia_business_center_up
     dw $078D, $95B2  ; DDB
     dw $079B, $AD1B  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -4999,8 +4999,8 @@ preset_rbo_shopping_leaving_speed_farm_2n2m:
     dw $D8BA, $0031  ; Doors
     dw #$FFFF
 
-preset_rbo_shopping_first_hell_run_2n1m:
-    dw #preset_rbo_shopping_first_hell_run_2n2m
+preset_rbo_shopping_single_maridia_first_hell_run:
+    dw #preset_rbo_shopping_double_maridia_first_hell_run
     dw $09C6, $0002  ; Missiles
     dw $09C8, $000A  ; Max missiles
     dw $09CA, $0003  ; Supers
@@ -5193,7 +5193,7 @@ preset_hundo_kraid_leaving_kraid_etank:
     dw #$FFFF
 
 preset_suitless_xray_noob_bridge:
-    dw #preset_suitless_xray_green_hill_zone_2
+    dw #preset_suitless_xray_green_hill_zone_revisit
     dw $078D, $8E9E  ; DDB
     dw $079B, $9E52  ; MDB
     dw $07F3, $000F  ; Music Bank
@@ -5213,8 +5213,8 @@ preset_suitless_xray_noob_bridge:
     dw $D872, $CFEF  ; Items
     dw #$FFFF
 
-preset_gtmax_brinstar_breaking_tube:
-    dw #preset_gtclassic_brinstar_breaking_tube
+preset_gtmax_brinstar_breaking_the_tube:
+    dw #preset_gtclassic_brinstar_breaking_the_tube
     dw $090F, $F000  ; Screen subpixel X position
     dw $0913, $9000  ; Screen subpixel Y position
     dw $09C2, $004B  ; Health
@@ -5225,8 +5225,8 @@ preset_gtmax_brinstar_breaking_tube:
     dw $D870, $0080  ; Items
     dw #$FFFF
 
-preset_gtclassic_kraid_entering_kraids_lair:
-    dw #preset_gtclassic_brinstar_breaking_tube
+preset_gtclassic_kraids_lair_entering_kraids_lair:
+    dw #preset_gtclassic_brinstar_breaking_the_tube
     dw $078D, $A348  ; DDB
     dw $079B, $CF80  ; MDB
     dw $090F, $F000  ; Screen subpixel X position
@@ -5241,7 +5241,7 @@ preset_gtclassic_kraid_entering_kraids_lair:
     dw #$FFFF
 
 preset_allbosskpdr_upper_norfair_precathedral:
-    dw #preset_allbosskpdr_upper_norfair_leaving_hi_jump
+    dw #preset_allbosskpdr_upper_norfair_leaving_hijump
     dw $078D, $941A  ; DDB
     dw $079B, $A7DE  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -5265,8 +5265,8 @@ preset_kpdr25_kraid_arthur_j_metroid:
     dw $D8B6, $8008  ; Doors
     dw #$FFFF
 
-preset_kpdr21_kraid_mini_kraid_revisit:
-preset_kpdr22_kraid_mini_kraid_revisit:
+preset_kpdr21_kraid_minikraid_revisit:
+preset_kpdr22_kraid_minikraid_revisit:
     dw #preset_kpdr21_kraid_arthur_j_metroid
     dw $078D, $91CE  ; DDB
     dw $079B, $A56B  ; MDB
@@ -5295,8 +5295,8 @@ preset_kpdr22_kraid_kraid_kihunters_revisit:
     dw $D8B8, $00EC  ; Doors
     dw #$FFFF
 
-preset_rbo_shopping_wave_beam_entry_2n2m:
-    dw #preset_rbo_shopping_leaving_speed_farm_2n2m
+preset_rbo_shopping_double_maridia_wave_beam_entry:
+    dw #preset_rbo_shopping_double_maridia_leaving_speed_farm_2
     dw $078D, $97AA  ; DDB
     dw $079B, $ACB3  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -5316,8 +5316,8 @@ preset_rbo_shopping_wave_beam_entry_2n2m:
     dw $D822, $0020  ; Events
     dw #$FFFF
 
-preset_rbo_shopping_bubble_mountain_2n1m:
-    dw #preset_rbo_shopping_bubble_mountain_2n2m
+preset_rbo_shopping_single_maridia_bubble_mountain:
+    dw #preset_rbo_shopping_double_maridia_bubble_mountain
     dw $09C6, $0000  ; Missiles
     dw $09C8, $000A  ; Max missiles
     dw $09CA, $0001  ; Supers
@@ -5328,8 +5328,8 @@ preset_rbo_shopping_bubble_mountain_2n1m:
     dw $D8B6, $B00C  ; Doors
     dw #$FFFF
 
-preset_rbo_shopping_wave_escape_2n2m:
-    dw #preset_rbo_shopping_leaving_speed_farm_2n2m
+preset_rbo_shopping_double_maridia_wave_escape:
+    dw #preset_rbo_shopping_double_maridia_leaving_speed_farm_2
     dw $078D, $961E  ; DDB
     dw $079B, $ADDE  ; MDB
     dw $090F, $0000  ; Screen subpixel X position
@@ -5347,8 +5347,8 @@ preset_rbo_shopping_wave_escape_2n2m:
     dw $D8BA, $00F1  ; Doors
     dw #$FFFF
 
-preset_rbo_shopping_bat_cave_farm_2n1m:
-    dw #preset_rbo_shopping_business_center_up_2n1m
+preset_rbo_shopping_single_maridia_bat_cave_farm_1:
+    dw #preset_rbo_shopping_single_maridia_business_center_up
     dw $078D, $973E  ; DDB
     dw $079B, $ACB3  ; MDB
     dw $0913, $B000  ; Screen subpixel Y position
@@ -5583,7 +5583,7 @@ preset_suitless_xray_red_tower:
     dw #$FFFF
 
 preset_suitless_xray_xray_dboost:
-    dw #preset_suitless_xray_green_hill_zone_2
+    dw #preset_suitless_xray_green_hill_zone_revisit
     dw $078D, $8F0A  ; DDB
     dw $079B, $A253  ; MDB
     dw $07F3, $0012  ; Music Bank
@@ -5602,8 +5602,8 @@ preset_suitless_xray_xray_dboost:
     dw $D8B6, $02FB  ; Doors
     dw #$FFFF
 
-preset_gtmax_kraid_entering_kraids_lair:
-    dw #preset_gtclassic_kraid_entering_kraids_lair
+preset_gtmax_kraids_lair_entering_kraids_lair:
+    dw #preset_gtclassic_kraids_lair_entering_kraids_lair
     dw $090F, $0000  ; Screen subpixel X position
     dw $0913, $4C01  ; Screen subpixel Y position
     dw $09C2, $004B  ; Health
@@ -5613,8 +5613,8 @@ preset_gtmax_kraid_entering_kraids_lair:
     dw $D870, $0080  ; Items
     dw #$FFFF
 
-preset_gtclassic_kraid_kraid_kihunters:
-    dw #preset_gtclassic_kraid_entering_kraids_lair
+preset_gtclassic_kraids_lair_kraid_kihunters:
+    dw #preset_gtclassic_kraids_lair_entering_kraids_lair
     dw $078D, $923A  ; DDB
     dw $079B, $A471  ; MDB
     dw $090F, $8000  ; Screen subpixel X position
@@ -5684,9 +5684,9 @@ preset_nghyper_norfair_postridley_reverse_plowerhouse:
     dw $0A76, $0001  ; Hyper beam
     dw #$FFFF
 
-preset_kpdr23_kraid_mini_kraid_revisit:
-preset_kpdr25_kraid_mini_kraid_revisit:
-    dw #preset_kpdr21_kraid_mini_kraid_revisit
+preset_kpdr23_kraid_minikraid_revisit:
+preset_kpdr25_kraid_minikraid_revisit:
+    dw #preset_kpdr21_kraid_minikraid_revisit
     dw $09A6, $1004  ; Equipped Beams
     dw $09A8, $1004  ; Collected Beams
     dw $09C6, $000A  ; Missiles
@@ -5719,8 +5719,8 @@ preset_kpdr22_kraid_kraid_etank:
     dw $D8B8, $00ED  ; Doors
     dw #$FFFF
 
-preset_rbo_shopping_heading_to_croc_2n2m:
-    dw #preset_rbo_shopping_wave_escape_2n2m
+preset_rbo_shopping_double_maridia_heading_to_croc:
+    dw #preset_rbo_shopping_double_maridia_wave_escape
     dw $078D, $95CA  ; DDB
     dw $079B, $ACB3  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -5736,8 +5736,8 @@ preset_rbo_shopping_heading_to_croc_2n2m:
     dw $0AFA, $038B  ; Samus Y
     dw #$FFFF
 
-preset_rbo_shopping_leaving_speed_farm_2n1m:
-    dw #preset_rbo_shopping_leaving_speed_farm_2n2m
+preset_rbo_shopping_single_maridia_leaving_speed_farm_2:
+    dw #preset_rbo_shopping_double_maridia_leaving_speed_farm_2
     dw $09C6, $000A  ; Missiles
     dw $09C8, $000A  ; Max missiles
     dw $09CE, $0005  ; Pbs
@@ -5810,8 +5810,8 @@ preset_kpdr21_upper_norfair_business_center_postelev:
     dw $D8B8, $00ED  ; Doors
     dw #$FFFF
 
-preset_kpdr21_upper_norfair_hi_jump_etank:
-    dw #preset_allbosskpdr_upper_norfair_hi_jump_etank
+preset_kpdr21_upper_norfair_hijump_etank:
+    dw #preset_allbosskpdr_upper_norfair_hijump_etank
     dw $090F, $EFFF  ; Screen subpixel X position
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $03D4  ; Layer 2 Y position
@@ -5822,8 +5822,8 @@ preset_kpdr21_upper_norfair_hi_jump_etank:
     dw $D8B8, $20ED  ; Doors
     dw #$FFFF
 
-preset_kpdr21_upper_norfair_leaving_hi_jump:
-    dw #preset_allbosskpdr_upper_norfair_leaving_hi_jump
+preset_kpdr21_upper_norfair_leaving_hijump:
+    dw #preset_allbosskpdr_upper_norfair_leaving_hijump
     dw $090F, $1FFF  ; Screen subpixel X position
     dw $0913, $0800  ; Screen subpixel Y position
     dw $0917, $0000  ; Layer 2 X position
@@ -5851,7 +5851,7 @@ preset_ngplasma_norfair_postridley_kihunter_stairs_up:
     dw $0AFA, $005B  ; Samus Y
     dw #$FFFF
 
-preset_ngplasma_norfair_postridley_fire_flea_room:
+preset_ngplasma_norfair_postridley_fireflea_room:
     dw #preset_ngplasma_norfair_postridley_reverse_plowerhouse
     dw $078D, $9A26  ; DDB
     dw $079B, $B585  ; MDB
@@ -5954,8 +5954,8 @@ preset_14speed_brinstar_revisit_red_tower_elevator:
     dw $D872, $0481  ; Items
     dw #$FFFF
 
-preset_14ice_brinstar_revisit_breaking_tube:
-preset_14speed_brinstar_revisit_breaking_tube:
+preset_14ice_brinstar_revisit_breaking_the_tube:
+preset_14speed_brinstar_revisit_breaking_the_tube:
     dw #preset_14ice_wrecked_ship_shaft_revisit
     dw $078D, $911A  ; DDB
     dw $079B, $CF54  ; MDB
@@ -6030,7 +6030,7 @@ preset_hundo_speed_booster_business_center:
     dw $0A1C, $009B  ; Samus position/state
     dw #$FFFF
 
-preset_suitless_xray_xray_2:
+preset_suitless_xray_xray:
     dw #preset_suitless_xray_xray_dboost
     dw $078D, $9036  ; DDB
     dw $079B, $A293  ; MDB
@@ -6073,8 +6073,8 @@ preset_nghyper_norfair_postridley_kihunter_stairs_up:
     dw $0AF8, $FFFF  ; Samus subpixel X
     dw #$FFFF
 
-preset_nghyper_norfair_postridley_fire_flea_room:
-    dw #preset_ngplasma_norfair_postridley_fire_flea_room
+preset_nghyper_norfair_postridley_fireflea_room:
+    dw #preset_ngplasma_norfair_postridley_fireflea_room
     dw $090F, $2000  ; Screen subpixel X position
     dw $0913, $EC00  ; Screen subpixel Y position
     dw $09C2, $053D  ; Health
@@ -6087,7 +6087,7 @@ preset_nghyper_norfair_postridley_fire_flea_room:
     dw #$FFFF
 
 preset_ngplasma_norfair_postridley_springball_maze:
-    dw #preset_ngplasma_norfair_postridley_fire_flea_room
+    dw #preset_ngplasma_norfair_postridley_fireflea_room
     dw $078D, $9A02  ; DDB
     dw $079B, $B6EE  ; MDB
     dw $090F, $8001  ; Screen subpixel X position
@@ -6103,7 +6103,7 @@ preset_ngplasma_norfair_postridley_springball_maze:
     dw #$FFFF
 
 preset_ngplasma_norfair_postridley_three_musketeers:
-    dw #preset_ngplasma_norfair_postridley_fire_flea_room
+    dw #preset_ngplasma_norfair_postridley_fireflea_room
     dw $078D, $9A92  ; DDB
     dw $079B, $B510  ; MDB
     dw $090F, $A800  ; Screen subpixel X position
@@ -6116,8 +6116,8 @@ preset_ngplasma_norfair_postridley_three_musketeers:
     dw $0AF8, $8000  ; Samus subpixel X
     dw #$FFFF
 
-preset_allbosspkdr_wrecked_ship_breaking_tube:
-    dw #preset_14ice_brinstar_revisit_breaking_tube
+preset_allbosspkdr_wrecked_ship_breaking_the_tube:
+    dw #preset_14ice_brinstar_revisit_breaking_the_tube
     dw $090F, $8000  ; Screen subpixel X position
     dw $0913, $8C00  ; Screen subpixel Y position
     dw $0917, $0200  ; Layer 2 X position
@@ -6140,7 +6140,7 @@ preset_allbosspkdr_upper_norfair_business_center:
     dw $D820, $0801  ; Events
     dw #$FFFF
 
-preset_100early_speed_booster_hijump:
+preset_100early_speed_booster_hijump_boots:
     dw #preset_100early_speed_booster_business_center
     dw $090F, $9000  ; Screen subpixel X position
     dw $0915, $051B  ; Screen Y position in pixels
@@ -6154,7 +6154,7 @@ preset_100early_speed_booster_hijump:
     dw #$FFFF
 
 preset_100early_speed_booster_business_center_climb:
-    dw #preset_rbo_shopping_business_center_up_2n2m
+    dw #preset_rbo_shopping_double_maridia_business_center_up
     dw $090F, $0000  ; Screen subpixel X position
     dw $0913, $9400  ; Screen subpixel Y position
     dw $09A2, $1105  ; Equipped Items
@@ -6174,8 +6174,8 @@ preset_100early_speed_booster_business_center_climb:
     dw $D8B8, $20EF  ; Doors
     dw #$FFFF
 
-preset_gtclassic_kraid_mini_kraid:
-    dw #preset_gtclassic_kraid_kraid_kihunters
+preset_gtclassic_kraids_lair_minikraid:
+    dw #preset_gtclassic_kraids_lair_kraid_kihunters
     dw $078D, $9156  ; DDB
     dw $079B, $A4DA  ; MDB
     dw $090F, $5000  ; Screen subpixel X position
@@ -6184,8 +6184,8 @@ preset_gtclassic_kraid_mini_kraid:
     dw $0AF6, $016B  ; Samus X
     dw #$FFFF
 
-preset_gtclassic_kraid_kraid_2:
-    dw #preset_gtclassic_kraid_entering_kraids_lair
+preset_gtclassic_kraids_lair_kraid:
+    dw #preset_gtclassic_kraids_lair_entering_kraids_lair
     dw $078D, $919E  ; DDB
     dw $079B, $A56B  ; MDB
     dw $07F3, $0027  ; Music Bank
@@ -6200,7 +6200,7 @@ preset_gtclassic_kraid_kraid_2:
     dw $D8B8, $0024  ; Doors
     dw #$FFFF
 
-preset_gtclassic_kraid_leaving_varia:
+preset_gtclassic_kraids_lair_leaving_varia:
     dw #preset_kpdr21_kraid_leaving_varia
     dw $090F, $B000  ; Screen subpixel X position
     dw $0913, $9C00  ; Screen subpixel Y position
@@ -6220,8 +6220,8 @@ preset_gtclassic_kraid_leaving_varia:
     dw $D8B6, $3008  ; Doors
     dw #$FFFF
 
-preset_gtmax_kraid_kraid_kihunters:
-    dw #preset_gtclassic_kraid_kraid_kihunters
+preset_gtmax_kraids_lair_kraid_kihunters:
+    dw #preset_gtclassic_kraids_lair_kraid_kihunters
     dw $0913, $8000  ; Screen subpixel Y position
     dw $09C2, $004B  ; Health
     dw $09C4, $0063  ; Max health
@@ -6266,8 +6266,8 @@ preset_kpdr23_kraid_kraid_etank:
     dw $D8B6, $8008  ; Doors
     dw #$FFFF
 
-preset_rbo_shopping_nutella_refill_2n2m:
-    dw #preset_rbo_shopping_heading_to_croc_2n2m
+preset_rbo_shopping_double_maridia_nutella_refill:
+    dw #preset_rbo_shopping_double_maridia_heading_to_croc
     dw $078D, $9756  ; DDB
     dw $079B, $B026  ; MDB
     dw $090F, $D001  ; Screen subpixel X position
@@ -6282,8 +6282,8 @@ preset_rbo_shopping_nutella_refill_2n2m:
     dw $0AFA, $00AB  ; Samus Y
     dw #$FFFF
 
-preset_rbo_shopping_wave_beam_entry_2n1m:
-    dw #preset_rbo_shopping_wave_beam_entry_2n2m
+preset_rbo_shopping_single_maridia_wave_beam_entry:
+    dw #preset_rbo_shopping_double_maridia_wave_beam_entry
     dw $09C6, $000A  ; Missiles
     dw $09C8, $000A  ; Max missiles
     dw $09CE, $0005  ; Pbs
@@ -6293,8 +6293,8 @@ preset_rbo_shopping_wave_beam_entry_2n1m:
     dw $D8B6, $B00C  ; Doors
     dw #$FFFF
 
-preset_rbo_shopping_croc_power_bombs_2n2m:
-    dw #preset_rbo_shopping_wave_escape_2n2m
+preset_rbo_shopping_double_maridia_croc_power_bombs:
+    dw #preset_rbo_shopping_double_maridia_wave_escape
     dw $078D, $93DE  ; DDB
     dw $079B, $AA82  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -6311,8 +6311,8 @@ preset_rbo_shopping_croc_power_bombs_2n2m:
     dw $D8BA, $00F3  ; Doors
     dw #$FFFF
 
-preset_rbo_shopping_wave_escape_2n1m:
-    dw #preset_rbo_shopping_wave_escape_2n2m
+preset_rbo_shopping_single_maridia_wave_escape:
+    dw #preset_rbo_shopping_double_maridia_wave_escape
     dw $090F, $7000  ; Screen subpixel X position
     dw $0913, $C400  ; Screen subpixel Y position
     dw $09C2, $00CC  ; Health
@@ -6356,8 +6356,8 @@ preset_kpdr22_upper_norfair_business_center_postelev:
     dw $D8B8, $00EF  ; Doors
     dw #$FFFF
 
-preset_kpdr22_upper_norfair_hi_jump_etank:
-    dw #preset_kpdr21_upper_norfair_hi_jump_etank
+preset_kpdr22_upper_norfair_hijump_etank:
+    dw #preset_kpdr21_upper_norfair_hijump_etank
     dw $09C2, $012B  ; Health
     dw $09C4, $012B  ; Max health
     dw $0AF8, $3000  ; Samus subpixel X
@@ -6365,8 +6365,8 @@ preset_kpdr22_upper_norfair_hi_jump_etank:
     dw $D8B8, $20EF  ; Doors
     dw #$FFFF
 
-preset_kpdr22_upper_norfair_leaving_hi_jump:
-    dw #preset_kpdr21_upper_norfair_leaving_hi_jump
+preset_kpdr22_upper_norfair_leaving_hijump:
+    dw #preset_kpdr21_upper_norfair_leaving_hijump
     dw $09C2, $018F  ; Health
     dw $09C4, $018F  ; Max health
     dw $0AF8, $3000  ; Samus subpixel X
@@ -6376,7 +6376,7 @@ preset_kpdr22_upper_norfair_leaving_hi_jump:
 
 preset_14ice_brinstar_revisit_entering_kraids_lair:
 preset_14speed_brinstar_revisit_entering_kraids_lair:
-    dw #preset_14ice_brinstar_revisit_breaking_tube
+    dw #preset_14ice_brinstar_revisit_breaking_the_tube
     dw $078D, $A348  ; DDB
     dw $079B, $CF80  ; MDB
     dw $090F, $5000  ; Screen subpixel X position
@@ -6421,7 +6421,7 @@ preset_nintendopower_shopping_with_power_heading_to_croc:
     dw #$FFFF
 
 preset_suitless_xray_xray_escape:
-    dw #preset_suitless_xray_xray_2
+    dw #preset_suitless_xray_xray
     dw $078D, $905A  ; DDB
     dw $079B, $A2CE  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -6497,7 +6497,7 @@ preset_ngplasma_norfair_postridley_frog_speedway_revisit:
     dw $0AFA, $038B  ; Samus Y
     dw #$FFFF
 
-preset_allbosspkdr_upper_norfair_hi_jump_etank:
+preset_allbosspkdr_upper_norfair_hijump_etank:
     dw #preset_allbosspkdr_upper_norfair_business_center
     dw $090F, $8000  ; Screen subpixel X position
     dw $0915, $051C  ; Screen Y position in pixels
@@ -6509,8 +6509,8 @@ preset_allbosspkdr_upper_norfair_hi_jump_etank:
     dw $D8B8, $2000  ; Doors
     dw #$FFFF
 
-preset_hundo_speed_booster_hijump:
-    dw #preset_100early_speed_booster_hijump
+preset_hundo_speed_booster_hijump_boots:
+    dw #preset_100early_speed_booster_hijump_boots
     dw $090F, $6001  ; Screen subpixel X position
     dw $09C6, $0011  ; Missiles
     dw $09D6, $001D  ; Reserves
@@ -6569,8 +6569,8 @@ preset_100early_speed_booster_rising_tide:
     dw $D8B6, $8008  ; Doors
     dw #$FFFF
 
-preset_gtclassic_kraid_mini_kraid_revisit:
-    dw #preset_gtclassic_kraid_leaving_varia
+preset_gtclassic_kraids_lair_minikraid_revisit:
+    dw #preset_gtclassic_kraids_lair_leaving_varia
     dw $078D, $91CE  ; DDB
     dw $079B, $A56B  ; MDB
     dw $0913, $7800  ; Screen subpixel Y position
@@ -6597,8 +6597,8 @@ preset_allbosskpdr_upper_norfair_bubble_mountain_revisit:
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 
-preset_rbo_shopping_leaving_grapple_2n2m:
-    dw #preset_rbo_shopping_croc_power_bombs_2n2m
+preset_rbo_shopping_double_maridia_leaving_grapple:
+    dw #preset_rbo_shopping_double_maridia_croc_power_bombs
     dw $078D, $94DA  ; DDB
     dw $079B, $AC2B  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -6618,8 +6618,8 @@ preset_rbo_shopping_leaving_grapple_2n2m:
     dw $D876, $13B0  ; Items
     dw #$FFFF
 
-preset_rbo_shopping_heading_to_business_center_2n1m:
-    dw #preset_rbo_shopping_heading_to_croc_2n2m
+preset_rbo_shopping_single_maridia_heading_to_business_center:
+    dw #preset_rbo_shopping_double_maridia_heading_to_croc
     dw $09C2, $004E  ; Health
     dw $09C6, $000D  ; Missiles
     dw $09C8, $000F  ; Max missiles
@@ -6630,8 +6630,8 @@ preset_rbo_shopping_heading_to_business_center_2n1m:
     dw $D8B6, $B00C  ; Doors
     dw #$FFFF
 
-preset_rbo_shopping_leaving_croc_2n2m:
-    dw #preset_rbo_shopping_croc_power_bombs_2n2m
+preset_rbo_shopping_double_maridia_leaving_croc:
+    dw #preset_rbo_shopping_double_maridia_croc_power_bombs
     dw $090F, $0E01  ; Screen subpixel X position
     dw $0911, $0100  ; Screen X position in pixels
     dw $0913, $1000  ; Screen subpixel Y position
@@ -6650,8 +6650,8 @@ preset_rbo_shopping_leaving_croc_2n2m:
     dw $D8B8, $E600  ; Doors
     dw #$FFFF
 
-preset_rbo_shopping_leaving_norfair_2n1m:
-    dw #preset_rbo_shopping_wave_escape_2n1m
+preset_rbo_shopping_single_maridia_leaving_norfair:
+    dw #preset_rbo_shopping_single_maridia_wave_escape
     dw $078D, $92EE  ; DDB
     dw $079B, $A6A1  ; MDB
     dw $07F3, $0012  ; Music Bank
@@ -6666,8 +6666,8 @@ preset_rbo_shopping_leaving_norfair_2n1m:
     dw $0AFA, $0086  ; Samus Y
     dw #$FFFF
 
-preset_14ice_brinstar_revisit_baby_kraid_entering:
-preset_14speed_brinstar_revisit_baby_kraid_entering:
+preset_14ice_brinstar_revisit_minikraid:
+preset_14speed_brinstar_revisit_minikraid:
     dw #preset_14ice_brinstar_revisit_entering_kraids_lair
     dw $078D, $9156  ; DDB
     dw $079B, $A4DA  ; MDB
@@ -6696,8 +6696,8 @@ preset_14speed_brinstar_revisit_kraid:
     dw $D8B8, $0024  ; Doors
     dw #$FFFF
 
-preset_14ice_brinstar_revisit_baby_kraid_exiting:
-preset_14speed_brinstar_revisit_baby_kraid_exiting:
+preset_14ice_brinstar_revisit_minikraid_revisit:
+preset_14speed_brinstar_revisit_minikraid_revisit:
     dw #preset_14ice_brinstar_revisit_entering_kraids_lair
     dw $078D, $91CE  ; DDB
     dw $079B, $A56B  ; MDB
@@ -6732,7 +6732,7 @@ preset_allbossprkd_wrecked_ship_spazer:
     dw $0AFA, $009B  ; Samus Y
     dw #$FFFF
 
-preset_allbossprkd_wrecked_ship_breaking_tube:
+preset_allbossprkd_wrecked_ship_breaking_the_tube:
     dw #preset_allbossprkd_wrecked_ship_red_tower_descent
     dw $078D, $911A  ; DDB
     dw $079B, $CF54  ; MDB
@@ -6838,8 +6838,8 @@ preset_ngplasma_norfair_postridley_business_center_revisit:
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 
-preset_allbosspkdr_upper_norfair_leaving_hi_jump:
-    dw #preset_allbosspkdr_upper_norfair_hi_jump_etank
+preset_allbosspkdr_upper_norfair_leaving_hijump:
+    dw #preset_allbosspkdr_upper_norfair_hijump_etank
     dw $078D, $93F6  ; DDB
     dw $079B, $AA41  ; MDB
     dw $090F, $A000  ; Screen subpixel X position
@@ -6875,7 +6875,7 @@ preset_100early_speed_booster_bubble_mountain:
     dw #$FFFF
 
 preset_kpdr21_upper_norfair_business_center_revisit:
-    dw #preset_kpdr21_upper_norfair_leaving_hi_jump
+    dw #preset_kpdr21_upper_norfair_leaving_hijump
     dw $078D, $93F6  ; DDB
     dw $079B, $AA41  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -6921,8 +6921,8 @@ preset_pkrd_wrecked_ship_reverse_moat:
     dw $0AFA, $049B  ; Samus Y
     dw #$FFFF
 
-preset_gtclassic_kraid_kraid_kihunters_revisit:
-    dw #preset_gtclassic_kraid_leaving_varia
+preset_gtclassic_kraids_lair_kraid_kihunters_revisit:
+    dw #preset_gtclassic_kraids_lair_leaving_varia
     dw $078D, $91AA  ; DDB
     dw $079B, $A521  ; MDB
     dw $090F, $4000  ; Screen subpixel X position
@@ -6939,8 +6939,8 @@ preset_gtclassic_kraid_kraid_kihunters_revisit:
     dw $D8B8, $00EC  ; Doors
     dw #$FFFF
 
-preset_gtmax_kraid_mini_kraid:
-    dw #preset_gtmax_kraid_kraid_kihunters
+preset_gtmax_kraids_lair_minikraid:
+    dw #preset_gtmax_kraids_lair_kraid_kihunters
     dw $078D, $9156  ; DDB
     dw $079B, $A4DA  ; MDB
     dw $090F, $1000  ; Screen subpixel X position
@@ -6949,8 +6949,8 @@ preset_gtmax_kraid_mini_kraid:
     dw $0AF6, $016B  ; Samus X
     dw #$FFFF
 
-preset_gtmax_kraid_kraid_2:
-    dw #preset_gtclassic_kraid_kraid_2
+preset_gtmax_kraids_lair_kraid:
+    dw #preset_gtclassic_kraids_lair_kraid
     dw $090F, $3000  ; Screen subpixel X position
     dw $0913, $0000  ; Screen subpixel Y position
     dw $09C2, $0021  ; Health
@@ -6959,8 +6959,8 @@ preset_gtmax_kraid_kraid_2:
     dw $D870, $0080  ; Items
     dw #$FFFF
 
-preset_gtmax_kraid_leaving_varia:
-    dw #preset_gtclassic_kraid_leaving_varia
+preset_gtmax_kraids_lair_leaving_varia:
+    dw #preset_gtclassic_kraids_lair_leaving_varia
     dw $090F, $9000  ; Screen subpixel X position
     dw $0913, $6400  ; Screen subpixel Y position
     dw $09C2, $0044  ; Health
@@ -6996,16 +6996,16 @@ preset_kpdr23_upper_norfair_business_center_postelev:
     dw $D8B6, $8008  ; Doors
     dw #$FFFF
 
-preset_kpdr23_upper_norfair_hi_jump_etank:
-    dw #preset_kpdr22_upper_norfair_hi_jump_etank
+preset_kpdr23_upper_norfair_hijump_etank:
+    dw #preset_kpdr22_upper_norfair_hijump_etank
     dw $09A6, $1004  ; Equipped Beams
     dw $09A8, $1004  ; Collected Beams
     dw $09C6, $000A  ; Missiles
     dw $D8B6, $8008  ; Doors
     dw #$FFFF
 
-preset_kpdr23_upper_norfair_leaving_hi_jump:
-    dw #preset_kpdr22_upper_norfair_leaving_hi_jump
+preset_kpdr23_upper_norfair_leaving_hijump:
+    dw #preset_kpdr22_upper_norfair_leaving_hijump
     dw $09A6, $1004  ; Equipped Beams
     dw $09A8, $1004  ; Collected Beams
     dw $09C6, $000A  ; Missiles
@@ -7033,8 +7033,8 @@ preset_hundo_speed_booster_rising_tide:
     dw $0AF6, $02AF  ; Samus X
     dw #$FFFF
 
-preset_gtmax_kraid_mini_kraid_revisit:
-    dw #preset_gtclassic_kraid_mini_kraid_revisit
+preset_gtmax_kraids_lair_minikraid_revisit:
+    dw #preset_gtclassic_kraids_lair_minikraid_revisit
     dw $090F, $8000  ; Screen subpixel X position
     dw $0913, $3800  ; Screen subpixel Y position
     dw $09C2, $003C  ; Health
@@ -7045,8 +7045,8 @@ preset_gtmax_kraid_mini_kraid_revisit:
     dw $D870, $0080  ; Items
     dw #$FFFF
 
-preset_gtclassic_kraid_kraid_etank:
-    dw #preset_gtclassic_kraid_mini_kraid_revisit
+preset_gtclassic_kraids_lair_kraid_etank:
+    dw #preset_gtclassic_kraids_lair_minikraid_revisit
     dw $078D, $916E  ; DDB
     dw $079B, $A471  ; MDB
     dw $07F3, $0012  ; Music Bank
@@ -7059,7 +7059,7 @@ preset_gtclassic_kraid_kraid_etank:
     dw $D8B8, $00ED  ; Doors
     dw #$FFFF
 
-preset_allbossprkd_upper_norfair_hi_jump_etank:
+preset_allbossprkd_upper_norfair_hijump_etank:
     dw #preset_allbossprkd_upper_norfair_business_center
     dw $090F, $3001  ; Screen subpixel X position
     dw $0915, $051B  ; Screen Y position in pixels
@@ -7083,8 +7083,8 @@ preset_allbosskpdr_upper_norfair_business_center_revisit:
     dw $0AF6, $003C  ; Samus X
     dw #$FFFF
 
-preset_rbo_shopping_ice_beam_entry_2n2m:
-    dw #preset_rbo_shopping_leaving_croc_2n2m
+preset_rbo_shopping_double_maridia_ice_entry:
+    dw #preset_rbo_shopping_double_maridia_leaving_croc
     dw $078D, $9402  ; DDB
     dw $079B, $A7DE  ; MDB
     dw $090F, $0000  ; Screen subpixel X position
@@ -7103,8 +7103,8 @@ preset_rbo_shopping_ice_beam_entry_2n2m:
     dw $D8B8, $EE00  ; Doors
     dw #$FFFF
 
-preset_rbo_cleanup_red_tower_up_2n1m:
-    dw #preset_rbo_shopping_leaving_norfair_2n1m
+preset_rbo_cleanup_single_maridia_red_tower_up:
+    dw #preset_rbo_shopping_single_maridia_leaving_norfair
     dw $078D, $910E  ; DDB
     dw $079B, $A3DD  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -7119,7 +7119,7 @@ preset_rbo_cleanup_red_tower_up_2n1m:
 
 preset_14ice_brinstar_revisit_kraid_etank:
 preset_14speed_brinstar_revisit_kraid_etank:
-    dw #preset_14ice_brinstar_revisit_baby_kraid_exiting
+    dw #preset_14ice_brinstar_revisit_minikraid_revisit
     dw $078D, $916E  ; DDB
     dw $079B, $A471  ; MDB
     dw $07F3, $0012  ; Music Bank
@@ -7204,8 +7204,8 @@ preset_suitless_warehouse_below_spazer:
     dw $0AF8, $C000  ; Samus subpixel X
     dw #$FFFF
 
-preset_suitless_warehouse_below_spazer_2:
-    dw #preset_suitless_xray_xray_2
+preset_suitless_warehouse_below_spazer_revisit:
+    dw #preset_suitless_xray_xray
     dw $078D, $9126  ; DDB
     dw $079B, $A447  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -7271,7 +7271,7 @@ preset_ngplasma_kraids_lair_entering_kraids_lair:
     dw #$FFFF
 
 preset_ngplasma_kraids_lair_warehouse_kihunters:
-    dw #preset_ngplasma_norfair_postridley_fire_flea_room
+    dw #preset_ngplasma_norfair_postridley_fireflea_room
     dw $078D, $923A  ; DDB
     dw $079B, $A471  ; MDB
     dw $07F3, $0012  ; Music Bank
@@ -7289,7 +7289,7 @@ preset_ngplasma_kraids_lair_warehouse_kihunters:
     dw #$FFFF
 
 preset_allbosspkdr_upper_norfair_precathedral:
-    dw #preset_allbosspkdr_upper_norfair_leaving_hi_jump
+    dw #preset_allbosspkdr_upper_norfair_leaving_hijump
     dw $078D, $941A  ; DDB
     dw $079B, $A7DE  ; MDB
     dw $090F, $1000  ; Screen subpixel X position
@@ -7301,7 +7301,7 @@ preset_allbosspkdr_upper_norfair_precathedral:
     dw #$FFFF
 
 preset_allbosspkdr_upper_norfair_bubble_mountain:
-    dw #preset_allbosspkdr_upper_norfair_leaving_hi_jump
+    dw #preset_allbosspkdr_upper_norfair_leaving_hijump
     dw $078D, $929A  ; DDB
     dw $079B, $AFA3  ; MDB
     dw $090F, $4000  ; Screen subpixel X position
@@ -7317,7 +7317,7 @@ preset_allbosspkdr_upper_norfair_bubble_mountain:
     dw #$FFFF
 
 preset_allbosspkdr_upper_norfair_single_chamber:
-    dw #preset_allbosspkdr_upper_norfair_leaving_hi_jump
+    dw #preset_allbosspkdr_upper_norfair_leaving_hijump
     dw $078D, $97AA  ; DDB
     dw $079B, $ACB3  ; MDB
     dw $090F, $E000  ; Screen subpixel X position
@@ -7456,8 +7456,8 @@ preset_pkrd_red_brinstar_revisit_caterpillars_revisit:
     dw $D872, $04C1  ; Items
     dw #$FFFF
 
-preset_gtmax_kraid_kraid_kihunters_revisit:
-    dw #preset_gtclassic_kraid_kraid_kihunters_revisit
+preset_gtmax_kraids_lair_kraid_kihunters_revisit:
+    dw #preset_gtclassic_kraids_lair_kraid_kihunters_revisit
     dw $090F, $0000  ; Screen subpixel X position
     dw $0911, $0020  ; Screen X position in pixels
     dw $0913, $0000  ; Screen subpixel Y position
@@ -7479,18 +7479,18 @@ preset_kpdr25_upper_norfair_business_center_postelev:
     dw $09C6, $0009  ; Missiles
     dw #$FFFF
 
-preset_kpdr25_upper_norfair_hi_jump_etank:
-    dw #preset_kpdr23_upper_norfair_hi_jump_etank
+preset_kpdr25_upper_norfair_hijump_etank:
+    dw #preset_kpdr23_upper_norfair_hijump_etank
     dw $09C6, $0009  ; Missiles
     dw #$FFFF
 
-preset_kpdr25_upper_norfair_leaving_hi_jump:
-    dw #preset_kpdr23_upper_norfair_leaving_hi_jump
+preset_kpdr25_upper_norfair_leaving_hijump:
+    dw #preset_kpdr23_upper_norfair_leaving_hijump
     dw $09C6, $0009  ; Missiles
     dw #$FFFF
 
-preset_gtclassic_kraid_leaving_kraids_lair:
-    dw #preset_gtclassic_kraid_kraid_etank
+preset_gtclassic_kraids_lair_leaving_kraids_lair:
+    dw #preset_gtclassic_kraids_lair_kraid_etank
     dw $078D, $9162  ; DDB
     dw $090F, $6000  ; Screen subpixel X position
     dw $0913, $F000  ; Screen subpixel Y position
@@ -7505,8 +7505,8 @@ preset_gtclassic_kraid_leaving_kraids_lair:
     dw $D8B8, $00EF  ; Doors
     dw #$FFFF
 
-preset_gtclassic_hi_jump_upper_norfair_business_center:
-    dw #preset_gtclassic_kraid_kraid_etank
+preset_gtclassic_hijump_upper_norfair_business_center:
+    dw #preset_gtclassic_kraids_lair_kraid_etank
     dw $078D, $9246  ; DDB
     dw $079B, $A7DE  ; MDB
     dw $07F3, $0015  ; Music Bank
@@ -7521,8 +7521,8 @@ preset_gtclassic_hi_jump_upper_norfair_business_center:
     dw $0AFA, $02A8  ; Samus Y
     dw #$FFFF
 
-preset_allbossprkd_upper_norfair_leaving_hi_jump:
-    dw #preset_allbossprkd_upper_norfair_hi_jump_etank
+preset_allbossprkd_upper_norfair_leaving_hijump:
+    dw #preset_allbossprkd_upper_norfair_hijump_etank
     dw $078D, $9426  ; DDB
     dw $079B, $A9E5  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -7557,8 +7557,8 @@ preset_allbosskpdr_wrecked_ship_alpha_spark:
     dw $0AFA, $0086  ; Samus Y
     dw #$FFFF
 
-preset_rbo_shopping_leaving_ice_2n2m:
-    dw #preset_rbo_shopping_ice_beam_entry_2n2m
+preset_rbo_shopping_double_maridia_leaving_ice:
+    dw #preset_rbo_shopping_double_maridia_ice_entry
     dw $078D, $937E  ; DDB
     dw $079B, $A890  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -7576,8 +7576,8 @@ preset_rbo_shopping_leaving_ice_2n2m:
     dw $D876, $13B4  ; Items
     dw #$FFFF
 
-preset_rbo_cleanup_green_brinstar_backdoor_2n1m:
-    dw #preset_rbo_cleanup_red_tower_up_2n1m
+preset_rbo_cleanup_single_maridia_green_brinstar_backdoor:
+    dw #preset_rbo_cleanup_single_maridia_red_tower_up
     dw $078D, $90F6  ; DDB
     dw $079B, $A253  ; MDB
     dw $090F, $B000  ; Screen subpixel X position
@@ -7668,7 +7668,7 @@ preset_nintendopower_shopping_with_power_exit_grapple_beam:
     dw #$FFFF
 
 preset_suitless_warehouse_warehouse_entrance:
-    dw #preset_suitless_warehouse_below_spazer_2
+    dw #preset_suitless_warehouse_below_spazer_revisit
     dw $078D, $A348  ; DDB
     dw $079B, $CF80  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -7685,7 +7685,7 @@ preset_suitless_warehouse_warehouse_entrance:
     dw #$FFFF
 
 preset_suitless_warehouse_warehouse_zeelas:
-    dw #preset_suitless_warehouse_below_spazer_2
+    dw #preset_suitless_warehouse_below_spazer_revisit
     dw $078D, $A384  ; DDB
     dw $079B, $A6A1  ; MDB
     dw $090F, $E000  ; Screen subpixel X position
@@ -7702,7 +7702,7 @@ preset_suitless_warehouse_warehouse_zeelas:
     dw #$FFFF
 
 preset_suitless_warehouse_warehouse_kihunters:
-    dw #preset_suitless_warehouse_below_spazer_2
+    dw #preset_suitless_warehouse_below_spazer_revisit
     dw $078D, $923A  ; DDB
     dw $079B, $A471  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -7750,7 +7750,7 @@ preset_nghyper_kraids_lair_warehouse_kihunters:
     dw $0A76, $0001  ; Hyper beam
     dw #$FFFF
 
-preset_ngplasma_kraids_lair_minikraid_hallway:
+preset_ngplasma_kraids_lair_minikraid:
     dw #preset_ngplasma_kraids_lair_warehouse_kihunters
     dw $078D, $9156  ; DDB
     dw $079B, $A4DA  ; MDB
@@ -7857,8 +7857,8 @@ preset_kpdr22_upper_norfair_cathedral:
     dw $D8B8, $24EF  ; Doors
     dw #$FFFF
 
-preset_gtmax_kraid_leaving_kraids_lair:
-    dw #preset_gtmax_kraid_kraid_kihunters_revisit
+preset_gtmax_kraids_lair_leaving_kraids_lair:
+    dw #preset_gtmax_kraids_lair_kraid_kihunters_revisit
     dw $078D, $923A  ; DDB
     dw $079B, $A471  ; MDB
     dw $07F3, $0012  ; Music Bank
@@ -7952,7 +7952,7 @@ preset_pkrd_red_brinstar_revisit_red_tower_down:
     dw #$FFFF
 
 preset_gtclassic_bootless_upper_norfair_business_center:
-    dw #preset_gtclassic_hi_jump_upper_norfair_business_center
+    dw #preset_gtclassic_hijump_upper_norfair_business_center
     dw $090F, $6000  ; Screen subpixel X position
     dw $09C2, $012B  ; Health
     dw $09C4, $012B  ; Max health
@@ -7961,7 +7961,7 @@ preset_gtclassic_bootless_upper_norfair_business_center:
     dw #$FFFF
 
 preset_gtmax_upper_norfair_business_center:
-    dw #preset_gtclassic_hi_jump_upper_norfair_business_center
+    dw #preset_gtclassic_hijump_upper_norfair_business_center
     dw $090F, $E000  ; Screen subpixel X position
     dw $09C2, $003C  ; Health
     dw $09C4, $0063  ; Max health
@@ -7970,8 +7970,8 @@ preset_gtmax_upper_norfair_business_center:
     dw $D8B8, $00EC  ; Doors
     dw #$FFFF
 
-preset_gtclassic_hi_jump_upper_norfair_hi_jump_etank:
-    dw #preset_gtclassic_hi_jump_upper_norfair_business_center
+preset_gtclassic_hijump_upper_norfair_hijump_etank:
+    dw #preset_gtclassic_hijump_upper_norfair_business_center
     dw $090F, $1000  ; Screen subpixel X position
     dw $0915, $051B  ; Screen Y position in pixels
     dw $0919, $03D4  ; Layer 2 Y position
@@ -7984,7 +7984,7 @@ preset_gtclassic_hi_jump_upper_norfair_hi_jump_etank:
     dw #$FFFF
 
 preset_allbossprkd_upper_norfair_ice_beam_hallway:
-    dw #preset_allbossprkd_upper_norfair_leaving_hi_jump
+    dw #preset_allbossprkd_upper_norfair_leaving_hijump
     dw $078D, $941A  ; DDB
     dw $079B, $A7DE  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -8000,7 +8000,7 @@ preset_allbossprkd_upper_norfair_ice_beam_hallway:
     dw $D8B8, $2800  ; Doors
     dw #$FFFF
 
-preset_allbosskpdr_wrecked_ship_red_tower_2:
+preset_allbosskpdr_wrecked_ship_red_tower:
     dw #preset_allbosskpdr_wrecked_ship_alpha_spark
     dw $078D, $910E  ; DDB
     dw $079B, $A3DD  ; MDB
@@ -8015,8 +8015,8 @@ preset_allbosskpdr_wrecked_ship_red_tower_2:
     dw $0AFA, $009B  ; Samus Y
     dw #$FFFF
 
-preset_rbo_shopping_ice_escape_2n2m:
-    dw #preset_rbo_shopping_leaving_ice_2n2m
+preset_rbo_shopping_double_maridia_ice_escape:
+    dw #preset_rbo_shopping_double_maridia_leaving_ice
     dw $078D, $935A  ; DDB
     dw $079B, $A8B9  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -8030,8 +8030,8 @@ preset_rbo_shopping_ice_escape_2n2m:
     dw $0AFA, $028B  ; Samus Y
     dw #$FFFF
 
-preset_rbo_cleanup_big_pink_2n1m:
-    dw #preset_rbo_cleanup_red_tower_up_2n1m
+preset_rbo_cleanup_single_maridia_big_pink:
+    dw #preset_rbo_cleanup_single_maridia_red_tower_up
     dw $078D, $8EFE  ; DDB
     dw $079B, $9E52  ; MDB
     dw $07F3, $000F  ; Music Bank
@@ -8042,8 +8042,8 @@ preset_rbo_cleanup_big_pink_2n1m:
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 
-preset_rbo_shopping_leaving_norfair_2n2m:
-    dw #preset_rbo_shopping_leaving_ice_2n2m
+preset_rbo_shopping_double_maridia_leaving_norfair:
+    dw #preset_rbo_shopping_double_maridia_leaving_ice
     dw $078D, $92EE  ; DDB
     dw $079B, $A6A1  ; MDB
     dw $07F3, $0012  ; Music Bank
@@ -8162,7 +8162,7 @@ preset_suitless_warehouse_minikraid:
     dw $D874, $144C  ; Items
     dw #$FFFF
 
-preset_nghyper_kraids_lair_minikraid_hallway:
+preset_nghyper_kraids_lair_minikraid:
     dw #preset_nghyper_kraids_lair_warehouse_kihunters
     dw $078D, $9156  ; DDB
     dw $079B, $A4DA  ; MDB
@@ -8236,7 +8236,7 @@ preset_100early_grapple_double_chamber:
     dw $D8BA, $0071  ; Doors
     dw #$FFFF
 
-preset_100early_grapple_double_chamber_revisited:
+preset_100early_grapple_double_chamber_revisit:
     dw #preset_100early_speed_booster_leaving_speed_booster
     dw $078D, $961E  ; DDB
     dw $079B, $ADDE  ; MDB
@@ -8374,8 +8374,8 @@ preset_gtclassic_bootless_upper_norfair_cathedral:
     dw $0AFA, $012B  ; Samus Y
     dw #$FFFF
 
-preset_gtclassic_hi_jump_upper_norfair_leaving_hi_jump:
-    dw #preset_allbosskpdr_upper_norfair_leaving_hi_jump
+preset_gtclassic_hijump_upper_norfair_leaving_hijump:
+    dw #preset_allbosskpdr_upper_norfair_leaving_hijump
     dw $090F, $E000  ; Screen subpixel X position
     dw $0913, $2800  ; Screen subpixel Y position
     dw $0917, $0000  ; Layer 2 X position
@@ -8394,7 +8394,7 @@ preset_gtclassic_hi_jump_upper_norfair_leaving_hi_jump:
     dw #$FFFF
 
 preset_gtmax_upper_norfair_hijump_etank_room:
-    dw #preset_gtclassic_hi_jump_upper_norfair_hi_jump_etank
+    dw #preset_gtclassic_hijump_upper_norfair_hijump_etank
     dw $090F, $0000  ; Screen subpixel X position
     dw $09C2, $003C  ; Health
     dw $09C4, $0063  ; Max health
@@ -8415,7 +8415,7 @@ preset_allbossprkd_upper_norfair_ice_maze:
     dw #$FFFF
 
 preset_allbossprkd_upper_norfair_ice_escape:
-    dw #preset_allbossprkd_upper_norfair_leaving_hi_jump
+    dw #preset_allbossprkd_upper_norfair_leaving_hijump
     dw $078D, $935A  ; DDB
     dw $079B, $A8B9  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -8433,7 +8433,7 @@ preset_allbossprkd_upper_norfair_ice_escape:
     dw #$FFFF
 
 preset_allbosskpdr_wrecked_ship_hellway:
-    dw #preset_allbosskpdr_wrecked_ship_red_tower_2
+    dw #preset_allbosskpdr_wrecked_ship_red_tower
     dw $078D, $90F6  ; DDB
     dw $079B, $A253  ; MDB
     dw $090F, $2000  ; Screen subpixel X position
@@ -8465,8 +8465,8 @@ preset_allbosskpdr_wrecked_ship_leaving_power_bombs:
     dw $D8B6, $2008  ; Doors
     dw #$FFFF
 
-preset_rbo_cleanup_spore_spawn_supers_2n1m:
-    dw #preset_rbo_cleanup_big_pink_2n1m
+preset_rbo_cleanup_single_maridia_spore_spawn_supers:
+    dw #preset_rbo_cleanup_single_maridia_big_pink
     dw $078D, $8E7A  ; DDB
     dw $079B, $9D19  ; MDB
     dw $090F, $3000  ; Screen subpixel X position
@@ -8482,8 +8482,8 @@ preset_rbo_cleanup_spore_spawn_supers_2n1m:
     dw $0AFA, $05AB  ; Samus Y
     dw #$FFFF
 
-preset_rbo_cleanup_red_tower_up_2n2m:
-    dw #preset_rbo_shopping_leaving_norfair_2n2m
+preset_rbo_cleanup_double_maridia_red_tower_up:
+    dw #preset_rbo_shopping_double_maridia_leaving_norfair
     dw $078D, $910E  ; DDB
     dw $079B, $A3DD  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -8496,8 +8496,8 @@ preset_rbo_cleanup_red_tower_up_2n2m:
     dw $0AFA, $009B  ; Samus Y
     dw #$FFFF
 
-preset_rbo_cleanup_spore_spawn_supers_escape_2n1m:
-    dw #preset_rbo_cleanup_big_pink_2n1m
+preset_rbo_cleanup_single_maridia_spore_spawn_supers_escape:
+    dw #preset_rbo_cleanup_single_maridia_big_pink
     dw $078D, $8F76  ; DDB
     dw $079B, $9B5B  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -8608,7 +8608,7 @@ preset_suitless_warehouse_kraid:
     dw #$FFFF
 
 preset_suitless_warehouse_kraid_exit:
-    dw #preset_suitless_warehouse_below_spazer_2
+    dw #preset_suitless_warehouse_below_spazer_revisit
     dw $078D, $91B6  ; DDB
     dw $079B, $A59F  ; MDB
     dw $07F3, $0027  ; Music Bank
@@ -8641,7 +8641,7 @@ preset_ngplasma_kraids_lair_leaving_kraid:
     dw $0AF6, $0050  ; Samus X
     dw #$FFFF
 
-preset_nghyper_kraids_lair_minikraid_hallway_revisit:
+preset_nghyper_kraids_lair_minikraid_revisit:
     dw #preset_nghyper_kraids_lair_leaving_kraid
     dw $078D, $91CE  ; DDB
     dw $079B, $A56B  ; MDB
@@ -8677,16 +8677,16 @@ preset_hundo_ice_beam_double_chamber:
     dw $09D6, $0064  ; Reserves
     dw #$FFFF
 
-preset_hundo_ice_beam_double_chamber_revisited:
-    dw #preset_100early_grapple_double_chamber_revisited
+preset_hundo_ice_beam_double_chamber_revisit:
+    dw #preset_100early_grapple_double_chamber_revisit
     dw $09C2, $0171  ; Health
     dw $09C6, $0025  ; Missiles
     dw $09CA, $0003  ; Supers
     dw $09D6, $0064  ; Reserves
     dw #$FFFF
 
-preset_100early_grapple_bubble_mountain_revisited:
-    dw #preset_100early_grapple_double_chamber_revisited
+preset_100early_grapple_bubble_mountain_revisit:
+    dw #preset_100early_grapple_double_chamber_revisit
     dw $078D, $9606  ; DDB
     dw $079B, $AD5E  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -8800,8 +8800,8 @@ preset_allbosskpdr_wrecked_ship_entering_wrecked_ship:
     dw $D8B6, $3008  ; Doors
     dw #$FFFF
 
-preset_rbo_cleanup_hellway_2n2m:
-    dw #preset_rbo_cleanup_red_tower_up_2n2m
+preset_rbo_cleanup_double_maridia_hellway:
+    dw #preset_rbo_cleanup_double_maridia_red_tower_up
     dw $078D, $90F6  ; DDB
     dw $079B, $A253  ; MDB
     dw $090F, $9000  ; Screen subpixel X position
@@ -8813,8 +8813,8 @@ preset_rbo_cleanup_hellway_2n2m:
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 
-preset_rbo_cleanup_wave_gate_etank_2n1m:
-    dw #preset_rbo_cleanup_spore_spawn_supers_2n1m
+preset_rbo_cleanup_single_maridia_wave_gate_etank:
+    dw #preset_rbo_cleanup_single_maridia_spore_spawn_supers
     dw $078D, $8F82  ; DDB
     dw $090F, $6000  ; Screen subpixel X position
     dw $0915, $0472  ; Screen Y position in pixels
@@ -8830,8 +8830,8 @@ preset_rbo_cleanup_wave_gate_etank_2n1m:
     dw $D8B6, $B02C  ; Doors
     dw #$FFFF
 
-preset_rbo_cleanup_alpha_pbs_2n2m:
-    dw #preset_rbo_cleanup_red_tower_up_2n2m
+preset_rbo_cleanup_double_maridia_alpha_power_bombs:
+    dw #preset_rbo_cleanup_double_maridia_red_tower_up
     dw $078D, $908A  ; DDB
     dw $079B, $A322  ; MDB
     dw $090F, $6000  ; Screen subpixel X position
@@ -8906,8 +8906,8 @@ preset_suitless_warehouse_minikraid_revisit:
     dw $0AF8, $3FFF  ; Samus subpixel X
     dw #$FFFF
 
-preset_ngplasma_kraids_lair_minikraid_hallway_revisit:
-    dw #preset_nghyper_kraids_lair_minikraid_hallway_revisit
+preset_ngplasma_kraids_lair_minikraid_revisit:
+    dw #preset_nghyper_kraids_lair_minikraid_revisit
     dw $090F, $A001  ; Screen subpixel X position
     dw $0913, $E400  ; Screen subpixel Y position
     dw $09C2, $0513  ; Health
@@ -8919,7 +8919,7 @@ preset_ngplasma_kraids_lair_minikraid_hallway_revisit:
     dw $0AF8, $4000  ; Samus subpixel X
     dw #$FFFF
 
-preset_ngplasma_kraids_lair_kihunters_revisit_2:
+preset_ngplasma_kraids_lair_kihunters_revisit:
     dw #preset_ngplasma_kraids_lair_leaving_kraid
     dw $078D, $91AA  ; DDB
     dw $079B, $A521  ; MDB
@@ -8981,7 +8981,7 @@ preset_allbossprkd_upper_norfair_lava_spark:
     dw $D8BA, $01F1  ; Doors
     dw #$FFFF
 
-preset_allbosspkdr_kraids_lair_baby_kraid_entering:
+preset_allbosspkdr_kraids_lair_minikraid:
     dw #preset_allbosspkdr_upper_norfair_business_center_revisit
     dw $078D, $9156  ; DDB
     dw $079B, $A4DA  ; MDB
@@ -8998,8 +8998,8 @@ preset_allbosspkdr_kraids_lair_baby_kraid_entering:
     dw $0AFA, $018B  ; Samus Y
     dw #$FFFF
 
-preset_hundo_ice_beam_bubble_mountain_revisited:
-    dw #preset_100early_grapple_bubble_mountain_revisited
+preset_hundo_ice_beam_bubble_mountain_revisit:
+    dw #preset_100early_grapple_bubble_mountain_revisit
     dw $09C2, $0171  ; Health
     dw $09C6, $0023  ; Missiles
     dw $09CA, $0003  ; Supers
@@ -9071,9 +9071,9 @@ preset_kpdr21_upper_norfair_single_chamber:
     dw $D8B8, $26ED  ; Doors
     dw #$FFFF
 
-preset_prkd19_red_brinstar_revisit_breaking_tube:
-preset_prkd20_red_brinstar_revisit_breaking_tube:
-preset_pkrd_red_brinstar_revisit_breaking_tube:
+preset_prkd19_red_brinstar_revisit_breaking_the_tube:
+preset_prkd20_red_brinstar_revisit_breaking_the_tube:
+preset_pkrd_red_brinstar_revisit_breaking_the_tube:
     dw #preset_prkd19_red_brinstar_revisit_below_spazer
     dw $078D, $9132  ; DDB
     dw $079B, $A408  ; MDB
@@ -9140,7 +9140,7 @@ preset_gtclassic_bootless_upper_norfair_rising_tide:
     dw #$FFFF
 
 preset_gtmax_upper_norfair_leaving_hijump:
-    dw #preset_gtclassic_hi_jump_upper_norfair_leaving_hi_jump
+    dw #preset_gtclassic_hijump_upper_norfair_leaving_hijump
     dw $090F, $C000  ; Screen subpixel X position
     dw $0913, $8C00  ; Screen subpixel Y position
     dw $09C2, $0050  ; Health
@@ -9153,8 +9153,8 @@ preset_gtmax_upper_norfair_leaving_hijump:
     dw $D8BA, $0000  ; Doors
     dw #$FFFF
 
-preset_gtclassic_hi_jump_upper_norfair_business_center_revisit:
-    dw #preset_gtclassic_hi_jump_upper_norfair_leaving_hi_jump
+preset_gtclassic_hijump_upper_norfair_business_center_revisit:
+    dw #preset_gtclassic_hijump_upper_norfair_leaving_hijump
     dw $078D, $93F6  ; DDB
     dw $079B, $AA41  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -9169,7 +9169,7 @@ preset_gtclassic_hi_jump_upper_norfair_business_center_revisit:
     dw #$FFFF
 
 preset_100early_grapple_red_pirate_shaft:
-    dw #preset_100early_grapple_bubble_mountain_revisited
+    dw #preset_100early_grapple_bubble_mountain_revisit
     dw $078D, $956A  ; DDB
     dw $079B, $AF72  ; MDB
     dw $090F, $C000  ; Screen subpixel X position
@@ -9218,8 +9218,8 @@ preset_allbosskpdr_wrecked_ship_leaving_phantoon:
     dw $D8C0, $0070  ; Doors
     dw #$FFFF
 
-preset_rbo_cleanup_dachora_room_2n1m:
-    dw #preset_rbo_cleanup_wave_gate_etank_2n1m
+preset_rbo_cleanup_single_maridia_dachora_room:
+    dw #preset_rbo_cleanup_single_maridia_wave_gate_etank
     dw $078D, $8FB2  ; DDB
     dw $090F, $D000  ; Screen subpixel X position
     dw $0911, $02FA  ; Screen X position in pixels
@@ -9239,8 +9239,8 @@ preset_rbo_cleanup_dachora_room_2n1m:
     dw $D8B6, $B0EC  ; Doors
     dw #$FFFF
 
-preset_rbo_cleanup_beta_pbs_2n2m:
-    dw #preset_rbo_cleanup_alpha_pbs_2n2m
+preset_rbo_cleanup_double_maridia_beta_power_bombs:
+    dw #preset_rbo_cleanup_double_maridia_alpha_power_bombs
     dw $078D, $90EA  ; DDB
     dw $090F, $1000  ; Screen subpixel X position
     dw $0913, $B800  ; Screen subpixel Y position
@@ -9255,7 +9255,7 @@ preset_rbo_cleanup_beta_pbs_2n2m:
     dw $D8B6, $B80C  ; Doors
     dw #$FFFF
 
-preset_14ice_lower_norfair_worst_room:
+preset_14ice_lower_norfair_worst_room_in_the_game:
     dw #preset_14ice_lower_norfair_pillars
     dw $078D, $9912  ; DDB
     dw $079B, $B457  ; MDB
@@ -9287,7 +9287,7 @@ preset_14ice_lower_norfair_amphitheatre:
     dw $D8BA, $0100  ; Doors
     dw #$FFFF
 
-preset_14speed_lower_norfair_worst_room:
+preset_14speed_lower_norfair_worst_room_in_the_game:
     dw #preset_14speed_lower_norfair_pillars
     dw $078D, $9912  ; DDB
     dw $079B, $B457  ; MDB
@@ -9389,8 +9389,8 @@ preset_suitless_warehouse_kraid_etank:
     dw $D8B8, $00AD  ; Doors
     dw #$FFFF
 
-preset_nghyper_kraids_lair_kihunters_revisit_2:
-    dw #preset_ngplasma_kraids_lair_kihunters_revisit_2
+preset_nghyper_kraids_lair_kihunters_revisit:
+    dw #preset_ngplasma_kraids_lair_kihunters_revisit
     dw $0911, $0020  ; Screen X position in pixels
     dw $0913, $2400  ; Screen subpixel Y position
     dw $0917, $0018  ; Layer 2 X position
@@ -9403,8 +9403,8 @@ preset_nghyper_kraids_lair_kihunters_revisit_2:
     dw $0AF8, $4000  ; Samus subpixel X
     dw #$FFFF
 
-preset_ngplasma_kraids_lair_warehouse_zealas:
-    dw #preset_ngplasma_kraids_lair_kihunters_revisit_2
+preset_ngplasma_kraids_lair_warehouse_zeelas:
+    dw #preset_ngplasma_kraids_lair_kihunters_revisit
     dw $078D, $9192  ; DDB
     dw $079B, $A4DA  ; MDB
     dw $07F3, $0012  ; Music Bank
@@ -9449,7 +9449,7 @@ preset_allbossprkd_lower_norfair_green_gate_glitch:
     dw #$FFFF
 
 preset_allbosspkdr_kraids_lair_kraid:
-    dw #preset_allbosspkdr_kraids_lair_baby_kraid_entering
+    dw #preset_allbosspkdr_kraids_lair_minikraid
     dw $078D, $919E  ; DDB
     dw $079B, $A56B  ; MDB
     dw $07F3, $0027  ; Music Bank
@@ -9463,7 +9463,7 @@ preset_allbosspkdr_kraids_lair_kraid:
     dw #$FFFF
 
 preset_hundo_ice_beam_business_center_climb_ice:
-    dw #preset_hundo_ice_beam_bubble_mountain_revisited
+    dw #preset_hundo_ice_beam_bubble_mountain_revisit
     dw $078D, $97DA  ; DDB
     dw $079B, $B167  ; MDB
     dw $090F, $3000  ; Screen subpixel X position
@@ -9516,7 +9516,7 @@ preset_kpdr21_upper_norfair_double_chamber:
     dw #$FFFF
 
 preset_gtmax_upper_norfair_business_center_revisit:
-    dw #preset_gtclassic_hi_jump_upper_norfair_business_center_revisit
+    dw #preset_gtclassic_hijump_upper_norfair_business_center_revisit
     dw $090F, $0000  ; Screen subpixel X position
     dw $0913, $BBFF  ; Screen subpixel Y position
     dw $09C2, $0046  ; Health
@@ -9554,8 +9554,8 @@ preset_pkrd_kraid_entering_kraids_lair:
     dw $0AFA, $018B  ; Samus Y
     dw #$FFFF
 
-preset_prkd19_upper_norfair_hi_jump_etank:
-preset_prkd20_upper_norfair_hi_jump_etank:
+preset_prkd19_upper_norfair_hijump_etank:
+preset_prkd20_upper_norfair_hijump_etank:
     dw #preset_prkd19_upper_norfair_business_center_postelev
     dw $090F, $FFFF  ; Screen subpixel X position
     dw $0915, $051B  ; Screen Y position in pixels
@@ -9568,9 +9568,9 @@ preset_prkd20_upper_norfair_hi_jump_etank:
     dw $D8B8, $2000  ; Doors
     dw #$FFFF
 
-preset_prkd19_upper_norfair_leaving_hi_jump:
-preset_prkd20_upper_norfair_leaving_hi_jump:
-    dw #preset_allbossprkd_upper_norfair_leaving_hi_jump
+preset_prkd19_upper_norfair_leaving_hijump:
+preset_prkd20_upper_norfair_leaving_hijump:
+    dw #preset_allbossprkd_upper_norfair_leaving_hijump
     dw $090F, $E000  ; Screen subpixel X position
     dw $0913, $7800  ; Screen subpixel Y position
     dw $0917, $0000  ; Layer 2 X position
@@ -9589,7 +9589,7 @@ preset_prkd20_upper_norfair_leaving_hi_jump:
 
 preset_prkd19_upper_norfair_business_center_revisit:
 preset_prkd20_upper_norfair_business_center_revisit:
-    dw #preset_allbosspkdr_upper_norfair_leaving_hi_jump
+    dw #preset_allbosspkdr_upper_norfair_leaving_hijump
     dw $090F, $7FFF  ; Screen subpixel X position
     dw $0913, $27FF  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
@@ -9622,7 +9622,7 @@ preset_100early_grapple_crocomire:
     dw #$FFFF
 
 preset_100early_grapple_postcrocomire:
-    dw #preset_100early_grapple_double_chamber_revisited
+    dw #preset_100early_grapple_double_chamber_revisit
     dw $078D, $93D2  ; DDB
     dw $079B, $A98D  ; MDB
     dw $07F3, $0027  ; Music Bank
@@ -9660,8 +9660,8 @@ preset_gtclassic_bootless_upper_norfair_bubble_mountain:
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 
-preset_gtclassic_hi_jump_upper_norfair_precathedral:
-    dw #preset_gtclassic_hi_jump_upper_norfair_business_center_revisit
+preset_gtclassic_hijump_upper_norfair_precathedral:
+    dw #preset_gtclassic_hijump_upper_norfair_business_center_revisit
     dw $078D, $941A  ; DDB
     dw $079B, $A7DE  ; MDB
     dw $090F, $C000  ; Screen subpixel X position
@@ -9690,8 +9690,8 @@ preset_gtclassic_bootless_upper_norfair_magdollite_tunnel:
     dw $0AFA, $028B  ; Samus Y
     dw #$FFFF
 
-preset_gtclassic_hi_jump_upper_norfair_cathedral:
-    dw #preset_gtclassic_hi_jump_upper_norfair_business_center_revisit
+preset_gtclassic_hijump_upper_norfair_cathedral:
+    dw #preset_gtclassic_hijump_upper_norfair_business_center_revisit
     dw $078D, $92CA  ; DDB
     dw $079B, $A7B3  ; MDB
     dw $090F, $2000  ; Screen subpixel X position
@@ -9722,8 +9722,8 @@ preset_allbosskpdr_wrecked_ship_wrecked_ship_shaft:
     dw $D8C0, $0074  ; Doors
     dw #$FFFF
 
-preset_rbo_cleanup_green_shaft_down_2n1m:
-    dw #preset_rbo_cleanup_dachora_room_2n1m
+preset_rbo_cleanup_single_maridia_green_shaft_down:
+    dw #preset_rbo_cleanup_single_maridia_dachora_room
     dw $078D, $8DA2  ; DDB
     dw $079B, $9AD9  ; MDB
     dw $090F, $0000  ; Screen subpixel X position
@@ -9739,8 +9739,8 @@ preset_rbo_cleanup_green_shaft_down_2n1m:
     dw $0AFA, $066E  ; Samus Y
     dw #$FFFF
 
-preset_rbo_cleanup_crateria_kihunters_2n2m:
-    dw #preset_rbo_shopping_leaving_norfair_2n2m
+preset_rbo_cleanup_double_maridia_crateria_kihunters:
+    dw #preset_rbo_shopping_double_maridia_leaving_norfair
     dw $078D, $90BA  ; DDB
     dw $079B, $962A  ; MDB
     dw $090F, $B000  ; Screen subpixel X position
@@ -9754,8 +9754,8 @@ preset_rbo_cleanup_crateria_kihunters_2n2m:
     dw $D8B6, $F80C  ; Doors
     dw #$FFFF
 
-preset_rbo_cleanup_etecoon_supers_2n1m:
-    dw #preset_rbo_cleanup_dachora_room_2n1m
+preset_rbo_cleanup_single_maridia_etecoon_supers:
+    dw #preset_rbo_cleanup_single_maridia_dachora_room
     dw $078D, $8CBE  ; DDB
     dw $079B, $9FE5  ; MDB
     dw $0911, $0000  ; Screen X position in pixels
@@ -9770,8 +9770,8 @@ preset_rbo_cleanup_etecoon_supers_2n1m:
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 
-preset_rbo_cleanup_crateria_pbs_2n2m:
-    dw #preset_rbo_cleanup_hellway_2n2m
+preset_rbo_cleanup_double_maridia_crateria_power_bombs:
+    dw #preset_rbo_cleanup_double_maridia_hellway
     dw $078D, $8AC6  ; DDB
     dw $079B, $91F8  ; MDB
     dw $07F3, $000C  ; Music Bank
@@ -10002,8 +10002,8 @@ preset_suitless_warehouse_kraid_zeelas_revisit:
     dw $D8B8, $00AF  ; Doors
     dw #$FFFF
 
-preset_nghyper_kraids_lair_warehouse_zealas:
-    dw #preset_nghyper_kraids_lair_kihunters_revisit_2
+preset_nghyper_kraids_lair_warehouse_zeelas:
+    dw #preset_nghyper_kraids_lair_kihunters_revisit
     dw $078D, $9192  ; DDB
     dw $079B, $A4DA  ; MDB
     dw $07F3, $0012  ; Music Bank
@@ -10106,7 +10106,7 @@ preset_allbossprkd_lower_norfair_golden_torizo:
     dw $0AF6, $0025  ; Samus X
     dw #$FFFF
 
-preset_allbosspkdr_kraids_lair_baby_kraid_entering_2:
+preset_allbosspkdr_kraids_lair_minikraid_revisit:
     dw #preset_allbosspkdr_kraids_lair_kraid
     dw $078D, $91AA  ; DDB
     dw $07F5, $0003  ; Music Track
@@ -10241,7 +10241,7 @@ preset_100early_grapple_leaving_power_bombs:
     dw #$FFFF
 
 preset_gtmax_upper_norfair_cathedral:
-    dw #preset_gtclassic_hi_jump_upper_norfair_cathedral
+    dw #preset_gtclassic_hijump_upper_norfair_cathedral
     dw $090F, $4000  ; Screen subpixel X position
     dw $0913, $8800  ; Screen subpixel Y position
     dw $09C2, $0046  ; Health
@@ -10298,8 +10298,8 @@ preset_gtclassic_bootless_upper_norfair_kronic_room:
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 
-preset_gtclassic_hi_jump_upper_norfair_rising_tide:
-    dw #preset_gtclassic_hi_jump_upper_norfair_cathedral
+preset_gtclassic_hijump_upper_norfair_rising_tide:
+    dw #preset_gtclassic_hijump_upper_norfair_cathedral
     dw $078D, $92B2  ; DDB
     dw $079B, $A788  ; MDB
     dw $090F, $E000  ; Screen subpixel X position
@@ -10331,8 +10331,8 @@ preset_gtclassic_bootless_upper_norfair_lava_dive:
     dw $D8BA, $0100  ; Doors
     dw #$FFFF
 
-preset_gtclassic_hi_jump_upper_norfair_bubble_mountain:
-    dw #preset_gtclassic_hi_jump_upper_norfair_cathedral
+preset_gtclassic_hijump_upper_norfair_bubble_mountain:
+    dw #preset_gtclassic_hijump_upper_norfair_cathedral
     dw $078D, $929A  ; DDB
     dw $079B, $AFA3  ; MDB
     dw $090F, $E000  ; Screen subpixel X position
@@ -10397,8 +10397,8 @@ preset_allbosskpdr_wrecked_ship_leaving_gravity:
     dw $D8C0, $0174  ; Doors
     dw #$FFFF
 
-preset_rbo_cleanup_etecoon_power_bombs_2n1m:
-    dw #preset_rbo_cleanup_etecoon_supers_2n1m
+preset_rbo_cleanup_single_maridia_etecoon_pbs_optional:
+    dw #preset_rbo_cleanup_single_maridia_etecoon_supers
     dw $078D, $8F5E  ; DDB
     dw $079B, $A011  ; MDB
     dw $090F, $0000  ; Screen subpixel X position
@@ -10419,8 +10419,8 @@ preset_rbo_cleanup_etecoon_power_bombs_2n1m:
     dw $D8B6, $B0FC  ; Doors
     dw #$FFFF
 
-preset_rbo_cleanup_gauntlet_wraparound_shot_2n2m:
-    dw #preset_rbo_cleanup_crateria_pbs_2n2m
+preset_rbo_cleanup_double_maridia_gauntlet_wraparound_shot:
+    dw #preset_rbo_cleanup_double_maridia_crateria_power_bombs
     dw $078D, $89B2  ; DDB
     dw $090F, $A000  ; Screen subpixel X position
     dw $0911, $0752  ; Screen X position in pixels
@@ -10716,7 +10716,7 @@ preset_nghyper_maridia_aqueduct:
     dw #$FFFF
 
 preset_nghyper_maridia_botwoon_hallway:
-    dw #preset_nghyper_kraids_lair_warehouse_zealas
+    dw #preset_nghyper_kraids_lair_warehouse_zeelas
     dw $078D, $A4C8  ; DDB
     dw $079B, $D5A7  ; MDB
     dw $07F3, $001B  ; Music Bank
@@ -10772,7 +10772,7 @@ preset_allbossprkd_lower_norfair_worst_room_in_the_game:
     dw #$FFFF
 
 preset_allbosspkdr_kraids_lair_leaving_kraids_lair:
-    dw #preset_allbosspkdr_kraids_lair_baby_kraid_entering_2
+    dw #preset_allbosspkdr_kraids_lair_minikraid_revisit
     dw $078D, $916E  ; DDB
     dw $079B, $A471  ; MDB
     dw $07F3, $0012  ; Music Bank
@@ -10886,7 +10886,7 @@ preset_100early_grapple_leaving_grapple:
     dw $D876, $13B3  ; Items
     dw #$FFFF
 
-preset_pkrd_kraid_mini_kraid:
+preset_pkrd_kraid_minikraid:
     dw #preset_pkrd_kraid_kraid_kihunters
     dw $078D, $9156  ; DDB
     dw $079B, $A4DA  ; MDB
@@ -10934,7 +10934,7 @@ preset_pkrd_kraid_leaving_varia:
     dw #$FFFF
 
 preset_gtmax_upper_norfair_rising_tide:
-    dw #preset_gtclassic_hi_jump_upper_norfair_rising_tide
+    dw #preset_gtclassic_hijump_upper_norfair_rising_tide
     dw $090F, $D000  ; Screen subpixel X position
     dw $09C2, $0046  ; Health
     dw $09C4, $0063  ; Max health
@@ -10976,8 +10976,8 @@ preset_gtclassic_bootless_upper_norfair_ln_main_hall:
     dw $0AFA, $0288  ; Samus Y
     dw #$FFFF
 
-preset_gtclassic_hi_jump_upper_norfair_magdollite_tunnel:
-    dw #preset_gtclassic_hi_jump_upper_norfair_precathedral
+preset_gtclassic_hijump_upper_norfair_magdollite_tunnel:
+    dw #preset_gtclassic_hijump_upper_norfair_precathedral
     dw $078D, $979E  ; DDB
     dw $079B, $AEDF  ; MDB
     dw $0913, $0000  ; Screen subpixel Y position
@@ -10993,7 +10993,7 @@ preset_gtclassic_hi_jump_upper_norfair_magdollite_tunnel:
     dw #$FFFF
 
 preset_gtmax_upper_norfair_bubble_mountain:
-    dw #preset_gtclassic_hi_jump_upper_norfair_bubble_mountain
+    dw #preset_gtclassic_hijump_upper_norfair_bubble_mountain
     dw $090F, $3000  ; Screen subpixel X position
     dw $0913, $BA00  ; Screen subpixel Y position
     dw $09C2, $003A  ; Health
@@ -11071,8 +11071,8 @@ preset_allbosskpdr_maridia_red_tower_elevator:
     dw $0AFA, $02A8  ; Samus Y
     dw #$FFFF
 
-preset_rbo_cleanup_green_shaft_up_2n1m:
-    dw #preset_rbo_cleanup_etecoon_power_bombs_2n1m
+preset_rbo_cleanup_single_maridia_green_shaft_up:
+    dw #preset_rbo_cleanup_single_maridia_etecoon_pbs_optional
     dw $078D, $8F46  ; DDB
     dw $079B, $9AD9  ; MDB
     dw $090F, $C000  ; Screen subpixel X position
@@ -11091,8 +11091,8 @@ preset_rbo_cleanup_green_shaft_up_2n1m:
     dw $D870, $6180  ; Items
     dw #$FFFF
 
-preset_rbo_cleanup_gauntlet_etank_2n2m:
-    dw #preset_rbo_cleanup_gauntlet_wraparound_shot_2n2m
+preset_rbo_cleanup_double_maridia_gauntlet_etank:
+    dw #preset_rbo_cleanup_double_maridia_gauntlet_wraparound_shot
     dw $078D, $892E  ; DDB
     dw $079B, $92B3  ; MDB
     dw $07F3, $0009  ; Music Bank
@@ -11206,7 +11206,7 @@ preset_nghyper_maridia_botwoon:
     dw #$FFFF
 
 preset_nghyper_maridia_halfie:
-    dw #preset_nghyper_norfair_postridley_fire_flea_room
+    dw #preset_nghyper_norfair_postridley_fireflea_room
     dw $078D, $A774  ; DDB
     dw $079B, $D95E  ; MDB
     dw $07F3, $002A  ; Music Bank
@@ -11390,7 +11390,7 @@ preset_100early_grapple_postcrocomire_missiles:
     dw $D8BA, $00F7  ; Doors
     dw #$FFFF
 
-preset_pkrd_kraid_mini_kraid_revisit:
+preset_pkrd_kraid_minikraid_revisit:
     dw #preset_pkrd_kraid_leaving_varia
     dw $078D, $91CE  ; DDB
     dw $079B, $A56B  ; MDB
@@ -11441,7 +11441,7 @@ preset_prkd20_upper_norfair_ice_maze_down:
     dw #$FFFF
 
 preset_gtmax_upper_norfair_magdollite_tunnel:
-    dw #preset_gtclassic_hi_jump_upper_norfair_magdollite_tunnel
+    dw #preset_gtclassic_hijump_upper_norfair_magdollite_tunnel
     dw $090F, $7280  ; Screen subpixel X position
     dw $0915, $01F2  ; Screen Y position in pixels
     dw $0919, $0175  ; Layer 2 Y position
@@ -11497,7 +11497,7 @@ preset_suitless_upper_norfair_1_ice_escape:
     dw $0AFA, $028B  ; Samus Y
     dw #$FFFF
 
-preset_allbosskpdr_maridia_breaking_tube:
+preset_allbosskpdr_maridia_breaking_the_tube:
     dw #preset_allbosskpdr_maridia_red_tower_elevator
     dw $078D, $9102  ; DDB
     dw $079B, $A408  ; MDB
@@ -11514,8 +11514,8 @@ preset_allbosskpdr_maridia_breaking_tube:
     dw $0AFA, $018B  ; Samus Y
     dw #$FFFF
 
-preset_rbo_cleanup_reverse_terminator_2n1m:
-    dw #preset_rbo_cleanup_green_shaft_up_2n1m
+preset_rbo_cleanup_single_maridia_reverse_terminator:
+    dw #preset_rbo_cleanup_single_maridia_green_shaft_up
     dw $078D, $8C16  ; DDB
     dw $079B, $99BD  ; MDB
     dw $07F3, $0009  ; Music Bank
@@ -11534,8 +11534,8 @@ preset_rbo_cleanup_reverse_terminator_2n1m:
     dw $0AFA, $048B  ; Samus Y
     dw #$FFFF
 
-preset_rbo_cleanup_parlor_down_2n2m:
-    dw #preset_rbo_cleanup_gauntlet_etank_2n2m
+preset_rbo_cleanup_double_maridia_parlor_down:
+    dw #preset_rbo_cleanup_double_maridia_gauntlet_etank
     dw $078D, $8946  ; DDB
     dw $079B, $91F8  ; MDB
     dw $07F3, $000C  ; Music Bank
@@ -11774,7 +11774,7 @@ preset_100early_grapple_crocomire_revisit:
     dw $D876, $1FB3  ; Items
     dw #$FFFF
 
-preset_gtclassic_hi_jump_upper_norfair_kronic_room:
+preset_gtclassic_hijump_upper_norfair_kronic_room:
     dw #preset_gtmax_upper_norfair_kronic_room
     dw $090F, $C000  ; Screen subpixel X position
     dw $0913, $F000  ; Screen subpixel Y position
@@ -11936,8 +11936,8 @@ preset_suitless_upper_norfair_1_hijump_etank:
     dw $D8B8, $28AF  ; Doors
     dw #$FFFF
 
-preset_rbo_cleanup_climb_supers_moonfall_2n1m:
-    dw #preset_rbo_cleanup_reverse_terminator_2n1m
+preset_rbo_cleanup_single_maridia_climb_supers_moonfall:
+    dw #preset_rbo_cleanup_single_maridia_reverse_terminator
     dw $078D, $8BF2  ; DDB
     dw $079B, $92FD  ; MDB
     dw $090F, $7000  ; Screen subpixel X position
@@ -11952,8 +11952,8 @@ preset_rbo_cleanup_climb_supers_moonfall_2n1m:
     dw $0AFA, $04C2  ; Samus Y
     dw #$FFFF
 
-preset_rbo_cleanup_climb_supers_2n2m:
-    dw #preset_rbo_cleanup_crateria_pbs_2n2m
+preset_rbo_cleanup_double_maridia_climb_supers:
+    dw #preset_rbo_cleanup_double_maridia_crateria_power_bombs
     dw $078D, $898E  ; DDB
     dw $079B, $96BA  ; MDB
     dw $07F3, $0009  ; Music Bank
@@ -11973,8 +11973,8 @@ preset_rbo_cleanup_climb_supers_2n2m:
     dw $D8B2, $2E09  ; Doors
     dw #$FFFF
 
-preset_rbo_cleanup_pit_room_shortcharge_2n1m:
-    dw #preset_rbo_cleanup_reverse_terminator_2n1m
+preset_rbo_cleanup_single_maridia_pit_room_shortcharge:
+    dw #preset_rbo_cleanup_single_maridia_reverse_terminator
     dw $078D, $8C6A  ; DDB
     dw $079B, $96BA  ; MDB
     dw $090F, $6000  ; Screen subpixel X position
@@ -12079,7 +12079,7 @@ preset_nintendopower_wrecked_ship_movement_before_attic:
     dw $D8C0, $0074  ; Doors
     dw #$FFFF
 
-preset_nghyper_maridia_womple_jump:
+preset_nghyper_maridia_whomple_jump:
     dw #preset_nghyper_maridia_spike_suit_colosseum
     dw $0A68, $0000  ; Flash suit
     dw #$FFFF
@@ -12214,7 +12214,7 @@ preset_suitless_upper_norfair_1_hijump_boots:
     dw #$FFFF
 
 preset_nghyper_maridia_aqueduct_revisit:
-    dw #preset_nghyper_maridia_womple_jump
+    dw #preset_nghyper_maridia_whomple_jump
     dw $078D, $A90C  ; DDB
     dw $079B, $D617  ; MDB
     dw $090F, $0000  ; Screen subpixel X position
@@ -12230,7 +12230,7 @@ preset_nghyper_maridia_aqueduct_revisit:
     dw $D8C2, $6C00  ; Doors
     dw #$FFFF
 
-preset_ngplasma_maridia_womple_jump:
+preset_ngplasma_maridia_whomple_jump:
     dw #preset_ngplasma_maridia_spike_suit_colosseum
     dw $0A68, $0000  ; Flash suit
     dw #$FFFF
@@ -12286,8 +12286,8 @@ preset_allbosspkdr_maridia_draygon:
     dw $D8C2, $0C00  ; Doors
     dw #$FFFF
 
-preset_rbo_cleanup_terminator_revisit_2n2m:
-    dw #preset_rbo_cleanup_climb_supers_2n2m
+preset_rbo_cleanup_double_maridia_terminator_revisit:
+    dw #preset_rbo_cleanup_double_maridia_climb_supers
     dw $078D, $8B3E  ; DDB
     dw $079B, $92FD  ; MDB
     dw $090F, $4000  ; Screen subpixel X position
@@ -12308,8 +12308,8 @@ preset_rbo_cleanup_terminator_revisit_2n2m:
     dw $D870, $09A1  ; Items
     dw #$FFFF
 
-preset_rbo_cleanup_retro_brinstar_powerbombs_2n1m:
-    dw #preset_rbo_cleanup_pit_room_shortcharge_2n1m
+preset_rbo_cleanup_single_maridia_retro_brinstar_power_bombs:
+    dw #preset_rbo_cleanup_single_maridia_pit_room_shortcharge
     dw $078D, $8B86  ; DDB
     dw $079B, $97B5  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -12325,7 +12325,7 @@ preset_rbo_cleanup_retro_brinstar_powerbombs_2n1m:
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 
-preset_14speed_lower_norfair_bubble_mountain_revisit_2:
+preset_14speed_lower_norfair_bubble_mountain_revisit:
     dw #preset_14speed_lower_norfair_three_musketeers
     dw $078D, $9A4A  ; DDB
     dw $079B, $AD5E  ; MDB
@@ -12505,7 +12505,7 @@ preset_allbosskpdr_maridia_draygon:
     dw $D876, $01A1  ; Items
     dw #$FFFF
 
-preset_allbosspkdr_maridia_womple_jump:
+preset_allbosspkdr_maridia_whomple_jump:
     dw #preset_allbosspkdr_maridia_draygon
     dw $078D, $A96C  ; DDB
     dw $090F, $1FFF  ; Screen subpixel X position
@@ -12524,8 +12524,8 @@ preset_allbosspkdr_maridia_womple_jump:
     dw $D8C2, $CC00  ; Doors
     dw #$FFFF
 
-preset_rbo_cleanup_green_brinstar_revisit_2n2m:
-    dw #preset_rbo_cleanup_terminator_revisit_2n2m
+preset_rbo_cleanup_double_maridia_green_brinstar_revisit:
+    dw #preset_rbo_cleanup_double_maridia_terminator_revisit
     dw $078D, $8C22  ; DDB
     dw $079B, $9938  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -12543,8 +12543,8 @@ preset_rbo_cleanup_green_brinstar_revisit_2n2m:
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 
-preset_rbo_cleanup_blockbuster_2n1m:
-    dw #preset_rbo_cleanup_retro_brinstar_powerbombs_2n1m
+preset_rbo_cleanup_single_maridia_blockbuster:
+    dw #preset_rbo_cleanup_single_maridia_retro_brinstar_power_bombs
     dw $078D, $8E92  ; DDB
     dw $079B, $9FBA  ; MDB
     dw $07F3, $000F  ; Music Bank
@@ -12563,8 +12563,8 @@ preset_rbo_cleanup_blockbuster_2n1m:
     dw $D8B6, $B0FE  ; Doors
     dw #$FFFF
 
-preset_rbo_cleanup_leaving_etecoons_2n2m:
-    dw #preset_rbo_cleanup_gauntlet_wraparound_shot_2n2m
+preset_rbo_cleanup_double_maridia_leaving_etecoons:
+    dw #preset_rbo_cleanup_double_maridia_gauntlet_wraparound_shot
     dw $078D, $8F2E  ; DDB
     dw $079B, $9FE5  ; MDB
     dw $07F3, $000F  ; Music Bank
@@ -12686,7 +12686,7 @@ preset_nintendopower_wrecked_ship_gravity_suit_room:
     dw $D8C0, $0174  ; Doors
     dw #$FFFF
 
-preset_allbossprkd_lower_norfair_fire_flea_room:
+preset_allbossprkd_lower_norfair_fireflea_room:
     dw #preset_allbossprkd_lower_norfair_kihunter_stairs_revisit
     dw $078D, $9A26  ; DDB
     dw $079B, $B585  ; MDB
@@ -12803,8 +12803,8 @@ preset_ngplasma_maridia_mt_everest_revisit:
     dw $D8C2, $6C00  ; Doors
     dw #$FFFF
 
-preset_allbosskpdr_maridia_womple_jump:
-    dw #preset_allbosspkdr_maridia_womple_jump
+preset_allbosskpdr_maridia_whomple_jump:
+    dw #preset_allbosspkdr_maridia_whomple_jump
     dw $090F, $0000  ; Screen subpixel X position
     dw $0913, $8800  ; Screen subpixel Y position
     dw $0915, $0001  ; Screen Y position in pixels
@@ -12817,7 +12817,7 @@ preset_allbosskpdr_maridia_womple_jump:
     dw #$FFFF
 
 preset_allbosspkdr_maridia_cac_alley:
-    dw #preset_allbosspkdr_maridia_womple_jump
+    dw #preset_allbosspkdr_maridia_whomple_jump
     dw $078D, $A7E0  ; DDB
     dw $079B, $D913  ; MDB
     dw $090F, $C000  ; Screen subpixel X position
@@ -12831,7 +12831,7 @@ preset_allbosspkdr_maridia_cac_alley:
     dw #$FFFF
 
 preset_allbosspkdr_maridia_plasma_spark:
-    dw #preset_allbosspkdr_maridia_womple_jump
+    dw #preset_allbosspkdr_maridia_whomple_jump
     dw $078D, $A93C  ; DDB
     dw $079B, $D5EC  ; MDB
     dw $090F, $9000  ; Screen subpixel X position
@@ -12845,8 +12845,8 @@ preset_allbosspkdr_maridia_plasma_spark:
     dw $D8C2, $DC00  ; Doors
     dw #$FFFF
 
-preset_rbo_ice_croc_ice_beam_entry_2n1m:
-    dw #preset_rbo_cleanup_blockbuster_2n1m
+preset_rbo_icecroc_single_maridia_ice_entry:
+    dw #preset_rbo_cleanup_single_maridia_blockbuster
     dw $078D, $9246  ; DDB
     dw $079B, $A7DE  ; MDB
     dw $07F3, $0015  ; Music Bank
@@ -12865,8 +12865,8 @@ preset_rbo_ice_croc_ice_beam_entry_2n1m:
     dw $D8B8, $2E00  ; Doors
     dw #$FFFF
 
-preset_rbo_cleanup_spore_spawn_supers_2n2m:
-    dw #preset_rbo_cleanup_leaving_etecoons_2n2m
+preset_rbo_cleanup_double_maridia_spore_spawn_supers:
+    dw #preset_rbo_cleanup_double_maridia_leaving_etecoons
     dw $078D, $8DAE  ; DDB
     dw $079B, $9D19  ; MDB
     dw $090F, $9000  ; Screen subpixel X position
@@ -12957,7 +12957,7 @@ preset_14speed_maridia_colosseum:
     dw $D8C0, $8174  ; Doors
     dw #$FFFF
 
-preset_hundo_phantoon_leaving_alpha_pbs:
+preset_hundo_phantoon_leaving_alpha_power_bombs:
     dw #preset_hundo_phantoon_alpha_spark
     dw $078D, $9096  ; DDB
     dw $079B, $A3AE  ; MDB
@@ -13045,7 +13045,7 @@ preset_100early_grapple_business_center_return:
     dw $D8B8, $E6EF  ; Doors
     dw #$FFFF
 
-preset_gtclassic_hi_jump_upper_norfair_lava_dive:
+preset_gtclassic_hijump_upper_norfair_lava_dive:
     dw #preset_gtmax_upper_norfair_lava_dive
     dw $090F, $8000  ; Screen subpixel X position
     dw $0913, $4400  ; Screen subpixel Y position
@@ -13075,7 +13075,7 @@ preset_gtclassic_bootless_upper_norfair_gt_code:
     dw $0AFA, $028B  ; Samus Y
     dw #$FFFF
 
-preset_gtclassic_hi_jump_upper_norfair_ln_main_hall:
+preset_gtclassic_hijump_upper_norfair_ln_main_hall:
     dw #preset_gtmax_upper_norfair_ln_main_hall
     dw $090F, $0000  ; Screen subpixel X position
     dw $09C2, $009C  ; Health
@@ -13087,7 +13087,7 @@ preset_gtclassic_hi_jump_upper_norfair_ln_main_hall:
     dw #$FFFF
 
 preset_gtclassic_lower_norfair_leaving_golden_torizo:
-    dw #preset_gtclassic_kraid_mini_kraid_revisit
+    dw #preset_gtclassic_kraids_lair_minikraid_revisit
     dw $078D, $9A86  ; DDB
     dw $079B, $B283  ; MDB
     dw $07F3, $0024  ; Music Bank
@@ -13286,7 +13286,7 @@ preset_nintendopower_wrecked_ship_heading_to_maridia:
     dw $0AF6, $0034  ; Samus X
     dw #$FFFF
 
-preset_nintendopower_maridia_mainstreet:
+preset_nintendopower_maridia_main_street:
     dw #preset_nintendopower_wrecked_ship_movement_before_attic
     dw $078D, $A330  ; DDB
     dw $079B, $CFC9  ; MDB
@@ -13471,8 +13471,8 @@ preset_allbosspkdr_maridia_plasma_spark_revisit:
     dw $D8C2, $DC0A  ; Doors
     dw #$FFFF
 
-preset_rbo_ice_croc_leaving_ice_2n1m:
-    dw #preset_rbo_ice_croc_ice_beam_entry_2n1m
+preset_rbo_icecroc_single_maridia_leaving_ice:
+    dw #preset_rbo_icecroc_single_maridia_ice_entry
     dw $078D, $937E  ; DDB
     dw $079B, $A890  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -13489,8 +13489,8 @@ preset_rbo_ice_croc_leaving_ice_2n1m:
     dw $D876, $0124  ; Items
     dw #$FFFF
 
-preset_rbo_cleanup_spore_spawn_supers_escape_2n2m:
-    dw #preset_rbo_cleanup_spore_spawn_supers_2n2m
+preset_rbo_cleanup_double_maridia_spore_spawn_supers_escape:
+    dw #preset_rbo_cleanup_double_maridia_spore_spawn_supers
     dw $078D, $8F76  ; DDB
     dw $079B, $9B5B  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -13529,7 +13529,7 @@ preset_14speed_maridia_draygon:
     dw #$FFFF
 
 preset_hundo_phantoon_kihunter_room:
-    dw #preset_hundo_phantoon_leaving_alpha_pbs
+    dw #preset_hundo_phantoon_leaving_alpha_power_bombs
     dw $078D, $90BA  ; DDB
     dw $079B, $962A  ; MDB
     dw $090F, $3000  ; Screen subpixel X position
@@ -13605,8 +13605,8 @@ preset_100early_red_tower_and_crateria_red_tower_climb:
     dw $0AFA, $009B  ; Samus Y
     dw #$FFFF
 
-preset_gtclassic_hi_jump_upper_norfair_prepillars:
-    dw #preset_gtclassic_hi_jump_upper_norfair_ln_main_hall
+preset_gtclassic_hijump_upper_norfair_prepillars:
+    dw #preset_gtclassic_hijump_upper_norfair_ln_main_hall
     dw $090F, $7000  ; Screen subpixel X position
     dw $0911, $0700  ; Screen X position in pixels
     dw $0913, $D000  ; Screen subpixel Y position
@@ -13634,7 +13634,7 @@ preset_gtclassic_lower_norfair_green_gate_revisit:
     dw $D8BA, $0300  ; Doors
     dw #$FFFF
 
-preset_gtclassic_hi_jump_upper_norfair_green_gate_glitch:
+preset_gtclassic_hijump_upper_norfair_green_gate_glitch:
     dw #preset_gtmax_upper_norfair_green_gate_glitch
     dw $090F, $3FFF  ; Screen subpixel X position
     dw $0913, $4000  ; Screen subpixel Y position
@@ -13740,7 +13740,7 @@ preset_kpdr22_red_brinstar_hellway:
     dw #$FFFF
 
 preset_nintendopower_maridia_pants_room:
-    dw #preset_nintendopower_maridia_mainstreet
+    dw #preset_nintendopower_maridia_main_street
     dw $078D, $A66C  ; DDB
     dw $079B, $D4C2  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -14019,8 +14019,8 @@ preset_allbosspkdr_maridia_sewers:
     dw $D8C2, $DC1A  ; Doors
     dw #$FFFF
 
-preset_rbo_ice_croc_ice_escape_2n1m:
-    dw #preset_rbo_ice_croc_leaving_ice_2n1m
+preset_rbo_icecroc_single_maridia_ice_escape:
+    dw #preset_rbo_icecroc_single_maridia_leaving_ice
     dw $078D, $935A  ; DDB
     dw $079B, $A8B9  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -14035,8 +14035,8 @@ preset_rbo_ice_croc_ice_escape_2n1m:
     dw $0AFA, $028B  ; Samus Y
     dw #$FFFF
 
-preset_rbo_cleanup_wave_gate_etank_2n2m:
-    dw #preset_rbo_cleanup_spore_spawn_supers_2n2m
+preset_rbo_cleanup_double_maridia_wave_gate_etank:
+    dw #preset_rbo_cleanup_double_maridia_spore_spawn_supers
     dw $078D, $8F82  ; DDB
     dw $090F, $0000  ; Screen subpixel X position
     dw $0911, $0300  ; Screen X position in pixels
@@ -14054,8 +14054,8 @@ preset_rbo_cleanup_wave_gate_etank_2n2m:
     dw $D8B6, $F83C  ; Doors
     dw #$FFFF
 
-preset_rbo_ice_croc_croc_shaft_moonfall_2n1m:
-    dw #preset_rbo_ice_croc_leaving_ice_2n1m
+preset_rbo_icecroc_single_maridia_croc_shaft_moonfall:
+    dw #preset_rbo_icecroc_single_maridia_leaving_ice
     dw $078D, $9276  ; DDB
     dw $079B, $A815  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -14227,7 +14227,7 @@ preset_gtmax_lower_norfair_green_gate_revisit:
     dw $D8BA, $0301  ; Doors
     dw #$FFFF
 
-preset_gtclassic_hi_jump_upper_norfair_gt_code:
+preset_gtclassic_hijump_upper_norfair_gt_code:
     dw #preset_gtmax_upper_norfair_gt_code
     dw $090F, $8000  ; Screen subpixel X position
     dw $0913, $4800  ; Screen subpixel Y position
@@ -14243,7 +14243,7 @@ preset_gtclassic_hi_jump_upper_norfair_gt_code:
     dw $D876, $0121  ; Items
     dw #$FFFF
 
-preset_pkrd_upper_norfair_hi_jump_etank:
+preset_pkrd_upper_norfair_hijump_etank:
     dw #preset_pkrd_upper_norfair_business_center_postelev
     dw $090F, $4000  ; Screen subpixel X position
     dw $0915, $051B  ; Screen Y position in pixels
@@ -14423,8 +14423,8 @@ preset_allbosspkdr_upper_norfair_revisit_ice_maze:
     dw $D8B8, $2EEC  ; Doors
     dw #$FFFF
 
-preset_rbo_cleanup_waterway_etank_2n2m:
-    dw #preset_rbo_cleanup_wave_gate_etank_2n2m
+preset_rbo_cleanup_double_maridia_waterway_etank:
+    dw #preset_rbo_cleanup_double_maridia_wave_gate_etank
     dw $078D, $8FB2  ; DDB
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $0000  ; Screen subpixel Y position
@@ -14447,8 +14447,8 @@ preset_rbo_cleanup_waterway_etank_2n2m:
     dw $D8B6, $F8FC  ; Doors
     dw #$FFFF
 
-preset_rbo_ice_croc_croc_speedway_2n1m:
-    dw #preset_rbo_ice_croc_ice_escape_2n1m
+preset_rbo_icecroc_single_maridia_croc_speedway:
+    dw #preset_rbo_icecroc_single_maridia_ice_escape
     dw $078D, $9336  ; DDB
     dw $079B, $A8F8  ; MDB
     dw $090F, $377F  ; Screen subpixel X position
@@ -14573,8 +14573,8 @@ preset_gtmax_lower_norfair_ln_main_hall_revisit:
     dw $0AFA, $018B  ; Samus Y
     dw #$FFFF
 
-preset_pkrd_upper_norfair_leaving_hi_jump:
-    dw #preset_prkd19_upper_norfair_leaving_hi_jump
+preset_pkrd_upper_norfair_leaving_hijump:
+    dw #preset_prkd19_upper_norfair_leaving_hijump
     dw $090F, $F000  ; Screen subpixel X position
     dw $0913, $B800  ; Screen subpixel Y position
     dw $0919, $01AA  ; Layer 2 Y position
@@ -14742,7 +14742,7 @@ preset_nintendopower_maridia_super_door:
     dw #$FFFF
 
 preset_nintendopower_maridia_fish_tank:
-    dw #preset_nintendopower_maridia_mainstreet
+    dw #preset_nintendopower_maridia_main_street
     dw $090F, $A200  ; Screen subpixel X position
     dw $0911, $0200  ; Screen X position in pixels
     dw $0913, $0000  ; Screen subpixel Y position
@@ -15001,7 +15001,7 @@ preset_suitless_upper_norfair_2_crocomire:
     dw $D8B8, $6EAF  ; Doors
     dw #$FFFF
 
-preset_suitless_upper_norfair_2_croc_pbs:
+preset_suitless_upper_norfair_2_croc_power_bombs:
     dw #preset_suitless_upper_norfair_2_bubble_mountain_down
     dw $078D, $93DE  ; DDB
     dw $079B, $AA82  ; MDB
@@ -15053,7 +15053,7 @@ preset_nghyper_tourian_giant_hoppers:
     dw #$FFFF
 
 preset_suitless_upper_norfair_2_croc_shaft_down:
-    dw #preset_suitless_upper_norfair_2_croc_pbs
+    dw #preset_suitless_upper_norfair_2_croc_power_bombs
     dw $078D, $946E  ; DDB
     dw $090F, $B000  ; Screen subpixel X position
     dw $0913, $0000  ; Screen subpixel Y position
@@ -15105,7 +15105,7 @@ preset_nghyper_tourian_gadora_room:
     dw $D8C4, $00AF  ; Doors
     dw #$FFFF
 
-preset_allbossprkd_kraids_lair_baby_kraid_entering:
+preset_allbossprkd_kraids_lair_minikraid:
     dw #preset_allbossprkd_kraids_lair_entering_kraids_lair
     dw $078D, $9156  ; DDB
     dw $079B, $A4DA  ; MDB
@@ -15163,8 +15163,8 @@ preset_allbosspkdr_upper_norfair_revisit_ice_escape:
     dw $D876, $0125  ; Items
     dw #$FFFF
 
-preset_rbo_cleanup_leaving_waterway_2n2m:
-    dw #preset_rbo_cleanup_waterway_etank_2n2m
+preset_rbo_cleanup_double_maridia_leaving_waterway:
+    dw #preset_rbo_cleanup_double_maridia_waterway_etank
     dw $078D, $8E0E  ; DDB
     dw $079B, $A0D2  ; MDB
     dw $090F, $A000  ; Screen subpixel X position
@@ -15183,8 +15183,8 @@ preset_rbo_cleanup_leaving_waterway_2n2m:
     dw $D874, $058E  ; Items
     dw #$FFFF
 
-preset_rbo_ice_croc_croc_2n1m:
-    dw #preset_rbo_ice_croc_croc_shaft_moonfall_2n1m
+preset_rbo_icecroc_single_maridia_croc:
+    dw #preset_rbo_icecroc_single_maridia_croc_shaft_moonfall
     dw $078D, $9396  ; DDB
     dw $079B, $A923  ; MDB
     dw $090F, $B000  ; Screen subpixel X position
@@ -15313,7 +15313,7 @@ preset_14ice_tourian_kihunter_room_revisit:
     dw $0AFA, $005B  ; Samus Y
     dw #$FFFF
 
-preset_100early_red_tower_and_crateria_oceanfly:
+preset_100early_red_tower_and_crateria_ocean_fly:
     dw #preset_100early_red_tower_and_crateria_crateria_kihunters
     dw $078D, $8AF6  ; DDB
     dw $079B, $948C  ; MDB
@@ -15446,7 +15446,7 @@ preset_ngplasma_tourian_zeb_skip:
     dw #$FFFF
 
 preset_allbossprkd_kraids_lair_kraid:
-    dw #preset_allbossprkd_kraids_lair_baby_kraid_entering
+    dw #preset_allbossprkd_kraids_lair_minikraid
     dw $078D, $919E  ; DDB
     dw $079B, $A56B  ; MDB
     dw $07F3, $0027  ; Music Bank
@@ -15482,8 +15482,8 @@ preset_allbosspkdr_upper_norfair_revisit_crocomire_speedway:
     dw $0AFA, $03BB  ; Samus Y
     dw #$FFFF
 
-preset_rbo_cleanup_blue_brinstar_pbs_2n2m:
-    dw #preset_rbo_cleanup_leaving_waterway_2n2m
+preset_rbo_cleanup_double_maridia_blue_brinstar_power_bombs:
+    dw #preset_rbo_cleanup_double_maridia_leaving_waterway
     dw $078D, $8DEA  ; DDB
     dw $079B, $9E52  ; MDB
     dw $090F, $0000  ; Screen subpixel X position
@@ -15495,8 +15495,8 @@ preset_rbo_cleanup_blue_brinstar_pbs_2n2m:
     dw $D8B6, $F8FD  ; Doors
     dw #$FFFF
 
-preset_rbo_ice_croc_grapple_shaft_down_2n1m:
-    dw #preset_rbo_ice_croc_leaving_ice_2n1m
+preset_rbo_icecroc_single_maridia_grapple_shaft_down:
+    dw #preset_rbo_icecroc_single_maridia_leaving_ice
     dw $078D, $944A  ; DDB
     dw $079B, $AB07  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -15626,7 +15626,7 @@ preset_14ice_tourian_metroids_1:
     dw #$FFFF
 
 preset_100early_red_tower_and_crateria_the_moat:
-    dw #preset_100early_red_tower_and_crateria_oceanfly
+    dw #preset_100early_red_tower_and_crateria_ocean_fly
     dw $090F, $17FF  ; Screen subpixel X position
     dw $0911, $0200  ; Screen X position in pixels
     dw $0913, $F400  ; Screen subpixel Y position
@@ -15782,7 +15782,7 @@ preset_ngplasma_tourian_mother_brain_2:
     dw $D820, $0FCD  ; Events
     dw #$FFFF
 
-preset_allbossprkd_kraids_lair_baby_kraid_entering_2:
+preset_allbossprkd_kraids_lair_minikraid_revisit:
     dw #preset_allbossprkd_kraids_lair_kraid
     dw $078D, $91CE  ; DDB
     dw $07F5, $0003  ; Music Track
@@ -15869,7 +15869,7 @@ preset_nghyper_tourian_zebes_escape:
     dw #$FFFF
 
 preset_allbossprkd_kraids_lair_leaving_kraids_lair:
-    dw #preset_allbossprkd_kraids_lair_baby_kraid_entering_2
+    dw #preset_allbossprkd_kraids_lair_minikraid_revisit
     dw $078D, $916E  ; DDB
     dw $079B, $A471  ; MDB
     dw $07F3, $0012  ; Music Bank
@@ -15914,8 +15914,8 @@ preset_allbosskpdr_upper_norfair_revisit_leaving_crocomire:
     dw $D8B8, $EEEC  ; Doors
     dw #$FFFF
 
-preset_rbo_cleanup_blockbuster_2n2m:
-    dw #preset_rbo_cleanup_blue_brinstar_pbs_2n2m
+preset_rbo_cleanup_double_maridia_blockbuster:
+    dw #preset_rbo_cleanup_double_maridia_blue_brinstar_power_bombs
     dw $078D, $8E92  ; DDB
     dw $079B, $9FBA  ; MDB
     dw $0911, $003B  ; Screen X position in pixels
@@ -15934,8 +15934,8 @@ preset_rbo_cleanup_blockbuster_2n2m:
     dw $D8B6, $F8FF  ; Doors
     dw #$FFFF
 
-preset_rbo_ice_croc_grapple_escape_2n1m:
-    dw #preset_rbo_ice_croc_grapple_shaft_down_2n1m
+preset_rbo_icecroc_single_maridia_grapple_escape:
+    dw #preset_rbo_icecroc_single_maridia_grapple_shaft_down
     dw $078D, $94DA  ; DDB
     dw $079B, $AC2B  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -16057,7 +16057,7 @@ preset_nintendopower_maridia_draygon:
     dw $D8C2, $0500  ; Doors
     dw #$FFFF
 
-preset_suitless_upper_norfair_2_croc_revisit:
+preset_suitless_upper_norfair_2_crocomire_revisit:
     dw #preset_suitless_upper_norfair_2_croc_farm
     dw $078D, $947A  ; DDB
     dw $079B, $AA82  ; MDB
@@ -16149,7 +16149,7 @@ preset_allbosspkdr_upper_norfair_revisit_leaving_crocomire:
     dw #$FFFF
 
 preset_suitless_upper_norfair_2_croc_speedway_up:
-    dw #preset_suitless_upper_norfair_2_croc_revisit
+    dw #preset_suitless_upper_norfair_2_crocomire_revisit
     dw $078D, $9432  ; DDB
     dw $079B, $A98D  ; MDB
     dw $090F, $C000  ; Screen subpixel X position
@@ -16307,8 +16307,8 @@ preset_allbosskpdr_lower_norfair_green_gate_glitch:
     dw $D8BA, $01F1  ; Doors
     dw #$FFFF
 
-preset_rbo_maridia_maridia_entry_2n2m:
-    dw #preset_rbo_cleanup_blockbuster_2n2m
+preset_rbo_maridia_double_maridia_maridia_entry:
+    dw #preset_rbo_cleanup_double_maridia_blockbuster
     dw $078D, $911A  ; DDB
     dw $079B, $CF54  ; MDB
     dw $07F3, $0012  ; Music Bank
@@ -16326,8 +16326,8 @@ preset_rbo_maridia_maridia_entry_2n2m:
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 
-preset_rbo_ice_croc_grapple_shaft_up_2n1m:
-    dw #preset_rbo_ice_croc_grapple_escape_2n1m
+preset_rbo_icecroc_single_maridia_grapple_shaft_up:
+    dw #preset_rbo_icecroc_single_maridia_grapple_escape
     dw $078D, $9516  ; DDB
     dw $079B, $AB8F  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -16475,7 +16475,7 @@ preset_gtmax_lower_norfair_amphitheatre:
     dw $D878, $82C0  ; Items
     dw #$FFFF
 
-preset_kpdr21_wrecked_ship_oceanfly_setup:
+preset_kpdr21_wrecked_ship_ocean_fly_setup:
     dw #preset_kpdr21_red_brinstar_hellway
     dw $078D, $8AF6  ; DDB
     dw $079B, $948C  ; MDB
@@ -16568,7 +16568,7 @@ preset_gtclassic_lower_norfair_metal_ninja_pirates:
     dw #$FFFF
 
 preset_pkrd_upper_norfair_business_center_revisit:
-    dw #preset_pkrd_upper_norfair_leaving_hi_jump
+    dw #preset_pkrd_upper_norfair_leaving_hijump
     dw $078D, $93F6  ; DDB
     dw $079B, $AA41  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -16676,7 +16676,7 @@ preset_suitless_maridia_predraygon_maridia_tube:
     dw #$FFFF
 
 preset_suitless_maridia_predraygon_mt_everest:
-    dw #preset_suitless_upper_norfair_2_croc_revisit
+    dw #preset_suitless_upper_norfair_2_crocomire_revisit
     dw $078D, $A330  ; DDB
     dw $079B, $CFC9  ; MDB
     dw $07F3, $001B  ; Music Bank
@@ -16821,8 +16821,8 @@ preset_allbosskpdr_lower_norfair_worst_room_in_the_game:
     dw $D8BA, $03F1  ; Doors
     dw #$FFFF
 
-preset_rbo_maridia_mount_everest_2n2m:
-    dw #preset_rbo_maridia_maridia_entry_2n2m
+preset_rbo_maridia_double_maridia_mount_everest:
+    dw #preset_rbo_maridia_double_maridia_maridia_entry
     dw $078D, $A330  ; DDB
     dw $079B, $CFC9  ; MDB
     dw $07F3, $001B  ; Music Bank
@@ -16838,8 +16838,8 @@ preset_rbo_maridia_mount_everest_2n2m:
     dw $D820, $0801  ; Events
     dw #$FFFF
 
-preset_rbo_ice_croc_croc_revisit_2n1m:
-    dw #preset_rbo_ice_croc_grapple_escape_2n1m
+preset_rbo_icecroc_single_maridia_croc_revisit:
+    dw #preset_rbo_icecroc_single_maridia_grapple_escape
     dw $078D, $947A  ; DDB
     dw $079B, $AA82  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -17066,8 +17066,8 @@ preset_kpdr22_wrecked_ship_crateria_kihunters:
     dw $D8B8, $26EF  ; Doors
     dw #$FFFF
 
-preset_kpdr22_wrecked_ship_oceanfly_setup:
-    dw #preset_kpdr21_wrecked_ship_oceanfly_setup
+preset_kpdr22_wrecked_ship_ocean_fly_setup:
+    dw #preset_kpdr21_wrecked_ship_ocean_fly_setup
     dw $09C2, $0181  ; Health
     dw $09C4, $018F  ; Max health
     dw $D874, $0D04  ; Items
@@ -17076,7 +17076,7 @@ preset_kpdr22_wrecked_ship_oceanfly_setup:
     dw #$FFFF
 
 preset_kpdr21_wrecked_ship_ocean_spark:
-    dw #preset_kpdr21_wrecked_ship_oceanfly_setup
+    dw #preset_kpdr21_wrecked_ship_ocean_fly_setup
     dw $078D, $8A36  ; DDB
     dw $079B, $95FF  ; MDB
     dw $090F, $A3FF  ; Screen subpixel X position
@@ -17277,8 +17277,8 @@ preset_allbosskpdr_lower_norfair_metal_pirates:
     dw $D8BA, $C3F1  ; Doors
     dw #$FFFF
 
-preset_rbo_maridia_leaving_crab_supers_2n2m:
-    dw #preset_rbo_maridia_mount_everest_2n2m
+preset_rbo_maridia_double_maridia_leaving_crab_supers:
+    dw #preset_rbo_maridia_double_maridia_mount_everest
     dw $078D, $A45C  ; DDB
     dw $090F, $E000  ; Screen subpixel X position
     dw $0911, $0200  ; Screen X position in pixels
@@ -17296,8 +17296,8 @@ preset_rbo_maridia_leaving_crab_supers_2n2m:
     dw $D880, $0200  ; Items
     dw #$FFFF
 
-preset_rbo_lower_norfair_segment_ln_20_7_1:
-    dw #preset_rbo_ice_croc_croc_revisit_2n1m
+preset_rbo_lower_norfair_segment_ln_20_supers_7_1_ridley:
+    dw #preset_rbo_icecroc_single_maridia_croc_revisit
     dw $078D, $9756  ; DDB
     dw $079B, $B026  ; MDB
     dw $090F, $D000  ; Screen subpixel X position
@@ -17493,7 +17493,7 @@ preset_prkd20_upper_norfair_double_chamber:
     dw $D8BA, $0071  ; Doors
     dw #$FFFF
 
-preset_prkd19_upper_norfair_double_chamber_revisited:
+preset_prkd19_upper_norfair_double_chamber_revisit:
     dw #preset_prkd19_upper_norfair_leaving_speedbooster
     dw $078D, $961E  ; DDB
     dw $079B, $ADDE  ; MDB
@@ -17527,8 +17527,8 @@ preset_kpdr23_wrecked_ship_crateria_kihunters:
     dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
 
-preset_kpdr23_wrecked_ship_oceanfly_setup:
-    dw #preset_kpdr22_wrecked_ship_oceanfly_setup
+preset_kpdr23_wrecked_ship_ocean_fly_setup:
+    dw #preset_kpdr22_wrecked_ship_ocean_fly_setup
     dw $09A6, $1005  ; Equipped Beams
     dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
@@ -17644,7 +17644,7 @@ preset_suitless_maridia_predraygon_mt_everest_2:
     dw $D880, $0300  ; Items
     dw #$FFFF
 
-preset_allbossprkd_maridia_womple_jump:
+preset_allbossprkd_maridia_whomple_jump:
     dw #preset_allbossprkd_maridia_draygon
     dw $078D, $A96C  ; DDB
     dw $090F, $4000  ; Screen subpixel X position
@@ -17733,8 +17733,8 @@ preset_allbosskpdr_lower_norfair_leaving_ridley:
     dw $D8BC, $0001  ; Doors
     dw #$FFFF
 
-preset_rbo_maridia_mama_turtle_2n2m:
-    dw #preset_rbo_maridia_leaving_crab_supers_2n2m
+preset_rbo_maridia_double_maridia_mama_turtle:
+    dw #preset_rbo_maridia_double_maridia_leaving_crab_supers
     dw $078D, $A444  ; DDB
     dw $079B, $D017  ; MDB
     dw $090F, $0000  ; Screen subpixel X position
@@ -17751,8 +17751,8 @@ preset_rbo_maridia_mama_turtle_2n2m:
     dw $D8C0, $4000  ; Doors
     dw #$FFFF
 
-preset_rbo_ln_entry_lava_dive_2n1m:
-    dw #preset_rbo_ice_croc_croc_revisit_2n1m
+preset_rbo_ln_entry_single_maridia_lava_dive:
+    dw #preset_rbo_icecroc_single_maridia_croc_revisit
     dw $078D, $9792  ; DDB
     dw $079B, $AFFB  ; MDB
     dw $090F, $FC4C  ; Screen subpixel X position
@@ -17764,8 +17764,8 @@ preset_rbo_ln_entry_lava_dive_2n1m:
     dw $D8B8, $EE00  ; Doors
     dw #$FFFF
 
-preset_rbo_lower_norfair_segment_ln_25_9_1:
-    dw #preset_rbo_lower_norfair_segment_ln_20_7_1
+preset_rbo_lower_norfair_segment_ln_25_supers_9_1_ridley:
+    dw #preset_rbo_lower_norfair_segment_ln_20_supers_7_1_ridley
     dw $09C2, $0383  ; Health
     dw $09C4, $0383  ; Max health
     dw $09C6, $0028  ; Missiles
@@ -18131,7 +18131,7 @@ preset_allbossprkd_maridia_red_brinstar_gate:
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 
-preset_allbosskpdr_lower_norfair_fire_flea_room:
+preset_allbosskpdr_lower_norfair_fireflea_room:
     dw #preset_allbosskpdr_lower_norfair_leaving_ridley
     dw $078D, $9A26  ; DDB
     dw $079B, $B585  ; MDB
@@ -18145,8 +18145,8 @@ preset_allbosskpdr_lower_norfair_fire_flea_room:
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 
-preset_rbo_ln_entry_ln_main_hall_2n1m:
-    dw #preset_rbo_ln_entry_lava_dive_2n1m
+preset_rbo_ln_entry_single_maridia_ln_main_hall:
+    dw #preset_rbo_ln_entry_single_maridia_lava_dive
     dw $078D, $96F6  ; DDB
     dw $079B, $B236  ; MDB
     dw $07F3, $0018  ; Music Bank
@@ -18169,8 +18169,8 @@ preset_rbo_ln_entry_ln_main_hall_2n1m:
     dw $D8BA, $01F3  ; Doors
     dw #$FFFF
 
-preset_rbo_lower_norfair_segment_ln_25_8_1:
-    dw #preset_rbo_lower_norfair_segment_ln_25_9_1
+preset_rbo_lower_norfair_segment_ln_25_supers_8_1_ridley:
+    dw #preset_rbo_lower_norfair_segment_ln_25_supers_9_1_ridley
     dw $09C2, $031F  ; Health
     dw $09C4, $031F  ; Max health
     dw $09C6, $0014  ; Missiles
@@ -18241,7 +18241,7 @@ preset_100early_wrecked_ship_leaving_west_supers:
     dw $D8C0, $0074  ; Doors
     dw #$FFFF
 
-preset_hundo_brinstar_cleanup_crateria_pbs:
+preset_hundo_brinstar_cleanup_crateria_power_bombs:
     dw #preset_hundo_gravity_leaving_gravity
     dw $078D, $8ADE  ; DDB
     dw $079B, $948C  ; MDB
@@ -18438,7 +18438,7 @@ preset_suitless_maridia_predraygon_prebotwoon_hallway:
     dw #$FFFF
 
 preset_allbosskpdr_lower_norfair_three_musketeers:
-    dw #preset_allbosskpdr_lower_norfair_fire_flea_room
+    dw #preset_allbosskpdr_lower_norfair_fireflea_room
     dw $078D, $9A92  ; DDB
     dw $079B, $B510  ; MDB
     dw $090F, $3D00  ; Screen subpixel X position
@@ -18450,8 +18450,8 @@ preset_allbosskpdr_lower_norfair_three_musketeers:
     dw $0AF6, $0053  ; Samus X
     dw #$FFFF
 
-preset_allbosspkdr_lower_norfair_fire_flea_room:
-    dw #preset_allbosskpdr_lower_norfair_fire_flea_room
+preset_allbosspkdr_lower_norfair_fireflea_room:
+    dw #preset_allbosskpdr_lower_norfair_fireflea_room
     dw $090F, $2900  ; Screen subpixel X position
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $0002  ; Screen Y position in pixels
@@ -18463,8 +18463,8 @@ preset_allbosspkdr_lower_norfair_fire_flea_room:
     dw $D8BA, $D7F1  ; Doors
     dw #$FFFF
 
-preset_rbo_ln_entry_green_gate_glitch_2n1m:
-    dw #preset_rbo_ln_entry_ln_main_hall_2n1m
+preset_rbo_ln_entry_single_maridia_green_gate_glitch:
+    dw #preset_rbo_ln_entry_single_maridia_ln_main_hall
     dw $090F, $C000  ; Screen subpixel X position
     dw $0911, $0700  ; Screen X position in pixels
     dw $0913, $8000  ; Screen subpixel Y position
@@ -18479,8 +18479,8 @@ preset_rbo_ln_entry_green_gate_glitch_2n1m:
     dw $0AFC, $FFFF  ; Samus subpixel Y
     dw #$FFFF
 
-preset_rbo_lower_norfair_segment_ln_25_9_2:
-    dw #preset_rbo_lower_norfair_segment_ln_25_9_1
+preset_rbo_lower_norfair_segment_ln_25_supers_9_2_ridley:
+    dw #preset_rbo_lower_norfair_segment_ln_25_supers_9_1_ridley
     dw $09C6, $0029  ; Missiles
     dw $09C8, $0032  ; Max missiles
     dw $09D4, $00C8  ; Max reserves
@@ -18571,7 +18571,7 @@ preset_100early_wrecked_ship_wrecked_ship_etank:
     dw #$FFFF
 
 preset_hundo_brinstar_cleanup_ship_room:
-    dw #preset_hundo_brinstar_cleanup_crateria_pbs
+    dw #preset_hundo_brinstar_cleanup_crateria_power_bombs
     dw $078D, $893A  ; DDB
     dw $079B, $93AA  ; MDB
     dw $090F, $5000  ; Screen subpixel X position
@@ -18637,8 +18637,8 @@ preset_kpdr25_wrecked_ship_crateria_kihunters:
     dw $D8B8, $2EEF  ; Doors
     dw #$FFFF
 
-preset_kpdr25_wrecked_ship_oceanfly_setup:
-    dw #preset_kpdr22_wrecked_ship_oceanfly_setup
+preset_kpdr25_wrecked_ship_ocean_fly_setup:
+    dw #preset_kpdr22_wrecked_ship_ocean_fly_setup
     dw $09A6, $1007  ; Equipped Beams
     dw $09A8, $1007  ; Collected Beams
     dw $09C2, $0172  ; Health
@@ -18664,8 +18664,8 @@ preset_gtclassic_lower_norfair_kihunter_stairs_up:
     dw $D8BA, $D700  ; Doors
     dw #$FFFF
 
-preset_prkd20_upper_norfair_double_chamber_revisited:
-    dw #preset_prkd19_upper_norfair_double_chamber_revisited
+preset_prkd20_upper_norfair_double_chamber_revisit:
+    dw #preset_prkd19_upper_norfair_double_chamber_revisit
     dw $09C6, $0014  ; Missiles
     dw $09C8, $0014  ; Max missiles
     dw $D878, $001C  ; Items
@@ -18686,8 +18686,8 @@ preset_gtclassic_lower_norfair_fireflea_room:
     dw $0AF6, $009C  ; Samus X
     dw #$FFFF
 
-preset_prkd19_upper_norfair_single_chamber_revisited:
-    dw #preset_prkd19_upper_norfair_double_chamber_revisited
+preset_prkd19_upper_norfair_single_chamber_revisit:
+    dw #preset_prkd19_upper_norfair_double_chamber_revisit
     dw $078D, $962A  ; DDB
     dw $079B, $ADAD  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -18702,7 +18702,7 @@ preset_prkd19_upper_norfair_single_chamber_revisited:
     dw #$FFFF
 
 preset_prkd19_upper_norfair_volcano_room:
-    dw #preset_prkd19_upper_norfair_double_chamber_revisited
+    dw #preset_prkd19_upper_norfair_double_chamber_revisit
     dw $078D, $95EE  ; DDB
     dw $079B, $AE07  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -18733,7 +18733,7 @@ preset_gtmax_lower_norfair_kihunter_stairs_up:
     dw #$FFFF
 
 preset_prkd19_upper_norfair_kronic_boost:
-    dw #preset_prkd19_upper_norfair_double_chamber_revisited
+    dw #preset_prkd19_upper_norfair_double_chamber_revisit
     dw $078D, $9642  ; DDB
     dw $079B, $AE32  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -18919,7 +18919,7 @@ preset_suitless_maridia_predraygon_postbotwoon_hallway:
     dw $D82C, $0002  ; Bosses
     dw #$FFFF
 
-preset_allbosskpdr_lower_norfair_bubble_mountain_rerevisit:
+preset_allbosskpdr_lower_norfair_bubble_mountain_final:
     dw #preset_allbosskpdr_lower_norfair_three_musketeers
     dw $078D, $9A4A  ; DDB
     dw $079B, $AD5E  ; MDB
@@ -18950,7 +18950,7 @@ preset_allbosskpdr_spore_spawn_maridia_passthrough:
     dw #$FFFF
 
 preset_allbosspkdr_lower_norfair_three_musketeers:
-    dw #preset_allbosspkdr_lower_norfair_fire_flea_room
+    dw #preset_allbosspkdr_lower_norfair_fireflea_room
     dw $078D, $9A92  ; DDB
     dw $079B, $B510  ; MDB
     dw $090F, $2000  ; Screen subpixel X position
@@ -18962,8 +18962,8 @@ preset_allbosspkdr_lower_norfair_three_musketeers:
     dw $0AF6, $0060  ; Samus X
     dw #$FFFF
 
-preset_rbo_ln_entry_golden_torizo_2n1m:
-    dw #preset_rbo_ln_entry_green_gate_glitch_2n1m
+preset_rbo_ln_entry_single_maridia_golden_torizo:
+    dw #preset_rbo_ln_entry_single_maridia_green_gate_glitch
     dw $078D, $98A6  ; DDB
     dw $079B, $B6C1  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -18984,14 +18984,14 @@ preset_rbo_ln_entry_golden_torizo_2n1m:
     dw $D878, $801C  ; Items
     dw #$FFFF
 
-preset_rbo_lower_norfair_segment_ln_25_7_1:
-    dw #preset_rbo_lower_norfair_segment_ln_20_7_1
+preset_rbo_lower_norfair_segment_ln_25_supers_7_1_ridley:
+    dw #preset_rbo_lower_norfair_segment_ln_20_supers_7_1_ridley
     dw $09CA, $0014  ; Supers
     dw $09CC, $0014  ; Max supers
     dw #$FFFF
 
-preset_rbo_ln_entry_energy_refill_escape_2n1m:
-    dw #preset_rbo_lower_norfair_segment_ln_20_7_1
+preset_rbo_ln_entry_single_maridia_energy_refill_escape:
+    dw #preset_rbo_lower_norfair_segment_ln_20_supers_7_1_ridley
     dw $078D, $9A7A  ; DDB
     dw $079B, $B305  ; MDB
     dw $07F3, $0024  ; Music Bank
@@ -19013,8 +19013,8 @@ preset_rbo_ln_entry_energy_refill_escape_2n1m:
     dw $D8BA, $03F3  ; Doors
     dw #$FFFF
 
-preset_rbo_lower_norfair_segment_ln_20_8_1:
-    dw #preset_rbo_lower_norfair_segment_ln_20_7_1
+preset_rbo_lower_norfair_segment_ln_20_supers_8_1_ridley:
+    dw #preset_rbo_lower_norfair_segment_ln_20_supers_7_1_ridley
     dw $09C2, $031F  ; Health
     dw $09C4, $031F  ; Max health
     dw #$FFFF
@@ -19073,7 +19073,7 @@ preset_hundo_brinstar_cleanup_gauntlet_etank:
     dw $0AF6, $0084  ; Samus X
     dw #$FFFF
 
-preset_hundo_brinstar_cleanup_green_pirates_shaft:
+preset_hundo_brinstar_cleanup_green_pirate_shaft:
     dw #preset_hundo_brinstar_cleanup_ship_room
     dw $078D, $8952  ; DDB
     dw $079B, $965B  ; MDB
@@ -19166,8 +19166,8 @@ preset_pkrd_upper_norfair_ice_escape:
     dw $D8B8, $28EF  ; Doors
     dw #$FFFF
 
-preset_prkd20_upper_norfair_single_chamber_revisited:
-    dw #preset_prkd19_upper_norfair_single_chamber_revisited
+preset_prkd20_upper_norfair_single_chamber_revisit:
+    dw #preset_prkd19_upper_norfair_single_chamber_revisit
     dw $09C6, $0014  ; Missiles
     dw $09C8, $0014  ; Max missiles
     dw $D878, $001C  ; Items
@@ -19320,7 +19320,7 @@ preset_suitless_maridia_predraygon_halfie_climb_room:
     dw $0AF8, $8580  ; Samus subpixel X
     dw #$FFFF
 
-preset_allbosskpdr_spore_spawn_red_tower_3:
+preset_allbosskpdr_spore_spawn_red_tower:
     dw #preset_allbosskpdr_spore_spawn_maridia_passthrough
     dw $078D, $910E  ; DDB
     dw $079B, $A3DD  ; MDB
@@ -19333,7 +19333,7 @@ preset_allbosskpdr_spore_spawn_red_tower_3:
     dw $0AFA, $009B  ; Samus Y
     dw #$FFFF
 
-preset_allbosspkdr_lower_norfair_bubble_mountain_rerevisit:
+preset_allbosspkdr_lower_norfair_bubble_mountain_final:
     dw #preset_allbosspkdr_lower_norfair_three_musketeers
     dw $078D, $9A4A  ; DDB
     dw $079B, $AD5E  ; MDB
@@ -19355,8 +19355,8 @@ preset_allbosspkdr_spore_spawn_maridia_passthrough:
     dw $D8BA, $D7F1  ; Doors
     dw #$FFFF
 
-preset_rbo_ln_entry_fast_pillars_2n1m:
-    dw #preset_rbo_ln_entry_energy_refill_escape_2n1m
+preset_rbo_ln_entry_single_maridia_fast_pillars:
+    dw #preset_rbo_ln_entry_single_maridia_energy_refill_escape
     dw $078D, $9A6E  ; DDB
     dw $079B, $B2DA  ; MDB
     dw $07F3, $0018  ; Music Bank
@@ -19372,8 +19372,8 @@ preset_rbo_ln_entry_fast_pillars_2n1m:
     dw $0AF6, $02C4  ; Samus X
     dw #$FFFF
 
-preset_rbo_maridia_leaving_mama_turtle_2n2m:
-    dw #preset_rbo_maridia_mama_turtle_2n2m
+preset_rbo_maridia_double_maridia_leaving_mama_turtle:
+    dw #preset_rbo_maridia_double_maridia_mama_turtle
     dw $078D, $A3E4  ; DDB
     dw $079B, $D055  ; MDB
     dw $090F, $AAE5  ; Screen subpixel X position
@@ -19419,7 +19419,7 @@ preset_100early_wrecked_ship_shaft_ascent:
     dw #$FFFF
 
 preset_hundo_brinstar_cleanup_green_shaft_revisit:
-    dw #preset_hundo_brinstar_cleanup_green_pirates_shaft
+    dw #preset_hundo_brinstar_cleanup_green_pirate_shaft
     dw $078D, $8C22  ; DDB
     dw $079B, $9938  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -19496,7 +19496,7 @@ preset_kpdr22_wrecked_ship_wrecked_ship_shaft:
     dw $D8B8, $26EF  ; Doors
     dw #$FFFF
 
-preset_gtmax_lower_norfair_three_muskateers:
+preset_gtmax_lower_norfair_three_musketeers:
     dw #preset_gtmax_lower_norfair_springball_maze
     dw $078D, $9A92  ; DDB
     dw $079B, $B510  ; MDB
@@ -19633,8 +19633,8 @@ preset_suitless_maridia_predraygon_precious_room:
     dw $D8C2, $0400  ; Doors
     dw #$FFFF
 
-preset_allbosspkdr_spore_spawn_red_tower_2:
-    dw #preset_allbosskpdr_spore_spawn_red_tower_3
+preset_allbosspkdr_spore_spawn_red_tower:
+    dw #preset_allbosskpdr_spore_spawn_red_tower
     dw $090F, $D000  ; Screen subpixel X position
     dw $0913, $B800  ; Screen subpixel Y position
     dw $09C2, $016A  ; Health
@@ -19645,7 +19645,7 @@ preset_allbosspkdr_spore_spawn_red_tower_2:
     dw #$FFFF
 
 preset_allbosskpdr_spore_spawn_lower_green_brinstar:
-    dw #preset_allbosskpdr_spore_spawn_red_tower_3
+    dw #preset_allbosskpdr_spore_spawn_red_tower
     dw $078D, $90F6  ; DDB
     dw $079B, $A253  ; MDB
     dw $090F, $D000  ; Screen subpixel X position
@@ -19657,8 +19657,8 @@ preset_allbosskpdr_spore_spawn_lower_green_brinstar:
     dw $0AFA, $048B  ; Samus Y
     dw #$FFFF
 
-preset_rbo_ln_entry_writg_2n1m:
-    dw #preset_rbo_ln_entry_fast_pillars_2n1m
+preset_rbo_ln_entry_single_maridia_worst_room_in_the_game:
+    dw #preset_rbo_ln_entry_single_maridia_fast_pillars
     dw $078D, $9912  ; DDB
     dw $079B, $B457  ; MDB
     dw $090F, $E600  ; Screen subpixel X position
@@ -19673,8 +19673,8 @@ preset_rbo_ln_entry_writg_2n1m:
     dw $0AFA, $0074  ; Samus Y
     dw #$FFFF
 
-preset_rbo_maridia_maridia_exit_2n2m:
-    dw #preset_rbo_maridia_maridia_entry_2n2m
+preset_rbo_maridia_double_maridia_maridia_exit:
+    dw #preset_rbo_maridia_double_maridia_maridia_entry
     dw $078D, $A384  ; DDB
     dw $079B, $A6A1  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -19692,8 +19692,8 @@ preset_rbo_maridia_maridia_exit_2n2m:
     dw $D8C0, $4000  ; Doors
     dw #$FFFF
 
-preset_rbo_ln_entry_amphitheater_2n1m:
-    dw #preset_rbo_ln_entry_fast_pillars_2n1m
+preset_rbo_ln_entry_single_maridia_amphitheatre:
+    dw #preset_rbo_ln_entry_single_maridia_fast_pillars
     dw $078D, $994E  ; DDB
     dw $079B, $B4AD  ; MDB
     dw $090F, $0000  ; Screen subpixel X position
@@ -20097,8 +20097,8 @@ preset_allbosskpdr_spore_spawn_big_pink_up:
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 
-preset_allbosskpdr_spore_spawn_spore_spawn_2:
-    dw #preset_allbosskpdr_lower_norfair_fire_flea_room
+preset_allbosskpdr_spore_spawn_spore_spawn:
+    dw #preset_allbosskpdr_lower_norfair_fireflea_room
     dw $078D, $8DC6  ; DDB
     dw $079B, $9D9C  ; MDB
     dw $07F3, $000F  ; Music Bank
@@ -20114,7 +20114,7 @@ preset_allbosskpdr_spore_spawn_spore_spawn_2:
     dw #$FFFF
 
 preset_allbosskpdr_spore_spawn_big_pink_down:
-    dw #preset_allbosskpdr_lower_norfair_bubble_mountain_rerevisit
+    dw #preset_allbosskpdr_lower_norfair_bubble_mountain_final
     dw $078D, $8E56  ; DDB
     dw $079B, $9D9C  ; MDB
     dw $07F3, $000F  ; Music Bank
@@ -20140,8 +20140,8 @@ preset_allbosspkdr_spore_spawn_lower_green_brinstar:
     dw $D8BA, $D7F1  ; Doors
     dw #$FFFF
 
-preset_rbo_lower_norfair_segment_ln_30_7_1:
-    dw #preset_rbo_maridia_maridia_exit_2n2m
+preset_rbo_lower_norfair_segment_ln_30_supers_7_1_ridley:
+    dw #preset_rbo_maridia_double_maridia_maridia_exit
     dw $078D, $9756  ; DDB
     dw $079B, $B026  ; MDB
     dw $07F3, $0015  ; Music Bank
@@ -20157,8 +20157,8 @@ preset_rbo_lower_norfair_segment_ln_30_7_1:
     dw $0AF6, $00BE  ; Samus X
     dw #$FFFF
 
-preset_rbo_ln_entry_firefleas_entry_2n1m:
-    dw #preset_rbo_ln_entry_amphitheater_2n1m
+preset_rbo_ln_entry_single_maridia_firefleas_entry:
+    dw #preset_rbo_ln_entry_single_maridia_amphitheatre
     dw $078D, $997E  ; DDB
     dw $079B, $B4E5  ; MDB
     dw $0911, $0257  ; Screen X position in pixels
@@ -20322,7 +20322,7 @@ preset_kpdr21_wrecked_ship_leaving_gravity:
     dw $D8C0, $0174  ; Doors
     dw #$FFFF
 
-preset_prkd19_lower_norfair_nox_ln_main_hall:
+preset_prkd19_lower_norfair_nox_ridley_ln_main_hall:
     dw #preset_prkd19_lower_norfair_ln_main_hall
     dw $09A6, $1007  ; Equipped Beams
     dw $0AF8, $FFFF  ; Samus subpixel X
@@ -20434,8 +20434,8 @@ preset_allbosspkdr_spore_spawn_big_pink_up:
     dw $D8BA, $D7F1  ; Doors
     dw #$FFFF
 
-preset_allbosspkdr_spore_spawn_spore_spawn_2:
-    dw #preset_allbosskpdr_spore_spawn_spore_spawn_2
+preset_allbosspkdr_spore_spawn_spore_spawn:
+    dw #preset_allbosskpdr_spore_spawn_spore_spawn
     dw $090F, $9000  ; Screen subpixel X position
     dw $0913, $E000  ; Screen subpixel Y position
     dw $09C2, $015B  ; Health
@@ -20457,7 +20457,7 @@ preset_allbosskpdr_spore_spawn_dachora_room_revisit:
     dw $0AFA, $028B  ; Samus Y
     dw #$FFFF
 
-preset_allbosskpdr_spore_spawn_crateria_2:
+preset_allbosskpdr_spore_spawn_crateria:
     dw #preset_allbosskpdr_spore_spawn_maridia_passthrough
     dw $078D, $8CA6  ; DDB
     dw $079B, $9938  ; MDB
@@ -20500,8 +20500,8 @@ preset_allbosskpdr_tourian_metroids_1:
     dw $D90C, $0100  ; Map Stations
     dw #$FFFF
 
-preset_rbo_ln_entry_lava_dive_2n2m:
-    dw #preset_rbo_lower_norfair_segment_ln_30_7_1
+preset_rbo_ln_entry_double_maridia_lava_dive:
+    dw #preset_rbo_lower_norfair_segment_ln_30_supers_7_1_ridley
     dw $078D, $9792  ; DDB
     dw $079B, $AFFB  ; MDB
     dw $090F, $FC4C  ; Screen subpixel X position
@@ -20515,14 +20515,14 @@ preset_rbo_ln_entry_lava_dive_2n2m:
     dw $0AF8, $FFFF  ; Samus subpixel X
     dw #$FFFF
 
-preset_rbo_lower_norfair_segment_ln_30_8_1:
-    dw #preset_rbo_lower_norfair_segment_ln_30_7_1
+preset_rbo_lower_norfair_segment_ln_30_supers_8_1_ridley:
+    dw #preset_rbo_lower_norfair_segment_ln_30_supers_7_1_ridley
     dw $09C2, $031F  ; Health
     dw $09C4, $031F  ; Max health
     dw #$FFFF
 
-preset_rbo_ln_entry_ln_main_hall_2n2m:
-    dw #preset_rbo_ln_entry_ln_main_hall_2n1m
+preset_rbo_ln_entry_double_maridia_ln_main_hall:
+    dw #preset_rbo_ln_entry_single_maridia_ln_main_hall
     dw $09C2, $0345  ; Health
     dw $09C4, $03E7  ; Max health
     dw $09C6, $000F  ; Missiles
@@ -20544,8 +20544,8 @@ preset_rbo_ln_entry_ln_main_hall_2n2m:
     dw $D8C0, $4000  ; Doors
     dw #$FFFF
 
-preset_rbo_ln_entry_kihunter_stairs_down_2n1m:
-    dw #preset_rbo_ln_entry_amphitheater_2n1m
+preset_rbo_ln_entry_single_maridia_kihunter_stairs_down:
+    dw #preset_rbo_ln_entry_single_maridia_amphitheatre
     dw $078D, $9A02  ; DDB
     dw $079B, $B6EE  ; MDB
     dw $0911, $0100  ; Screen X position in pixels
@@ -20799,7 +20799,7 @@ preset_kpdr21_wrecked_ship_moat_ball:
     dw $0AFA, $04D0  ; Samus Y
     dw #$FFFF
 
-preset_prkd20_lower_norfair_nox_ln_main_hall:
+preset_prkd20_lower_norfair_nox_ridley_ln_main_hall:
     dw #preset_prkd20_lower_norfair_ln_main_hall
     dw $09A6, $1007  ; Equipped Beams
     dw #$FFFF
@@ -20909,8 +20909,8 @@ preset_allbosspkdr_spore_spawn_dachora_room_revisit:
     dw $0AFA, $028B  ; Samus Y
     dw #$FFFF
 
-preset_allbosspkdr_spore_spawn_crateria_2:
-    dw #preset_allbosskpdr_spore_spawn_crateria_2
+preset_allbosspkdr_spore_spawn_crateria:
+    dw #preset_allbosskpdr_spore_spawn_crateria
     dw $090F, $1000  ; Screen subpixel X position
     dw $09C2, $014F  ; Health
     dw $09C6, $0013  ; Missiles
@@ -20949,8 +20949,8 @@ preset_allbosskpdr_tourian_metroids_2:
     dw $D8C4, $0001  ; Doors
     dw #$FFFF
 
-preset_rbo_ln_entry_green_gate_glitch_2n2m:
-    dw #preset_rbo_ln_entry_ln_main_hall_2n2m
+preset_rbo_ln_entry_double_maridia_green_gate_glitch:
+    dw #preset_rbo_ln_entry_double_maridia_ln_main_hall
     dw $090F, $C000  ; Screen subpixel X position
     dw $0911, $0700  ; Screen X position in pixels
     dw $0913, $8000  ; Screen subpixel Y position
@@ -20965,8 +20965,8 @@ preset_rbo_ln_entry_green_gate_glitch_2n2m:
     dw $0AFC, $FFFF  ; Samus subpixel Y
     dw #$FFFF
 
-preset_rbo_lower_norfair_segment_ln_35_11_1:
-    dw #preset_rbo_lower_norfair_segment_ln_30_7_1
+preset_rbo_lower_norfair_segment_ln_35_supers_11_1_ridley:
+    dw #preset_rbo_lower_norfair_segment_ln_30_supers_7_1_ridley
     dw $09C2, $044B  ; Health
     dw $09C4, $044B  ; Max health
     dw $09C6, $0028  ; Missiles
@@ -21008,7 +21008,7 @@ preset_hundo_brinstar_cleanup_big_pink_revisit:
     dw $0AFA, $00AB  ; Samus Y
     dw #$FFFF
 
-preset_hundo_brinstar_cleanup_mission_impossible_pbs:
+preset_hundo_brinstar_cleanup_mission_impossible:
     dw #preset_hundo_brinstar_cleanup_dachora_room_revisit
     dw $078D, $8DAE  ; DDB
     dw $079B, $9D19  ; MDB
@@ -21078,8 +21078,8 @@ preset_pkrd_upper_norfair_double_chamber:
     dw $D8BA, $0071  ; Doors
     dw #$FFFF
 
-preset_pkrd_upper_norfair_double_chamber_revisited:
-    dw #preset_prkd20_upper_norfair_double_chamber_revisited
+preset_pkrd_upper_norfair_double_chamber_revisit:
+    dw #preset_prkd20_upper_norfair_double_chamber_revisit
     dw $090F, $8000  ; Screen subpixel X position
     dw $0913, $C800  ; Screen subpixel Y position
     dw $09A2, $3125  ; Equipped Items
@@ -21095,7 +21095,7 @@ preset_pkrd_upper_norfair_double_chamber_revisited:
     dw $D8B8, $2EEF  ; Doors
     dw #$FFFF
 
-preset_prkd19_lower_norfair_nox_prepillars:
+preset_prkd19_lower_norfair_nox_ridley_prepillars:
     dw #preset_prkd19_lower_norfair_prepillars
     dw $09A6, $1007  ; Equipped Beams
     dw $0AF8, $FFFF  ; Samus subpixel X
@@ -21192,8 +21192,8 @@ preset_allbosskpdr_tourian_metroids_3:
     dw $D8C4, $0003  ; Doors
     dw #$FFFF
 
-preset_rbo_ln_entry_golden_torizo_2n2m:
-    dw #preset_rbo_ln_entry_green_gate_glitch_2n2m
+preset_rbo_ln_entry_double_maridia_golden_torizo:
+    dw #preset_rbo_ln_entry_double_maridia_green_gate_glitch
     dw $078D, $98A6  ; DDB
     dw $079B, $B6C1  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -21214,8 +21214,8 @@ preset_rbo_ln_entry_golden_torizo_2n2m:
     dw $D878, $801C  ; Items
     dw #$FFFF
 
-preset_rbo_ln_entry_ninja_pirates_2n1m:
-    dw #preset_rbo_ln_entry_kihunter_stairs_down_2n1m
+preset_rbo_ln_entry_single_maridia_ninja_pirates:
+    dw #preset_rbo_ln_entry_single_maridia_kihunter_stairs_down
     dw $078D, $99EA  ; DDB
     dw $079B, $B5D5  ; MDB
     dw $090F, $7000  ; Screen subpixel X position
@@ -21231,8 +21231,8 @@ preset_rbo_ln_entry_ninja_pirates_2n1m:
     dw $D8BA, $C3F3  ; Doors
     dw #$FFFF
 
-preset_rbo_ln_entry_energy_refill_escape_2n2m:
-    dw #preset_rbo_ln_entry_energy_refill_escape_2n1m
+preset_rbo_ln_entry_double_maridia_energy_refill_escape:
+    dw #preset_rbo_ln_entry_single_maridia_energy_refill_escape
     dw $09C2, $03E7  ; Health
     dw $09C4, $03E7  ; Max health
     dw $09C6, $0017  ; Missiles
@@ -21254,8 +21254,8 @@ preset_rbo_ln_entry_energy_refill_escape_2n2m:
     dw $D8C0, $4000  ; Doors
     dw #$FFFF
 
-preset_rbo_lower_norfair_segment_ln_35_10_1:
-    dw #preset_rbo_lower_norfair_segment_ln_30_7_1
+preset_rbo_lower_norfair_segment_ln_35_supers_10_1_ridley:
+    dw #preset_rbo_lower_norfair_segment_ln_30_supers_7_1_ridley
     dw $09C2, $03E7  ; Health
     dw $09C4, $03E7  ; Max health
     dw $09CA, $001E  ; Supers
@@ -21279,7 +21279,7 @@ preset_100early_brinstar_cleanup_gauntlet_spark:
     dw #$FFFF
 
 preset_hundo_brinstar_cleanup_pink_brinstar_etank:
-    dw #preset_hundo_brinstar_cleanup_mission_impossible_pbs
+    dw #preset_hundo_brinstar_cleanup_mission_impossible
     dw $078D, $8E62  ; DDB
     dw $090F, $0000  ; Screen subpixel X position
     dw $0911, $0299  ; Screen X position in pixels
@@ -21331,8 +21331,8 @@ preset_gtclassic_maridia_botwoon_hallway:
     dw $D8C0, $8000  ; Doors
     dw #$FFFF
 
-preset_pkrd_upper_norfair_single_chamber_revisited:
-    dw #preset_pkrd_upper_norfair_double_chamber_revisited
+preset_pkrd_upper_norfair_single_chamber_revisit:
+    dw #preset_pkrd_upper_norfair_double_chamber_revisit
     dw $078D, $962A  ; DDB
     dw $079B, $ADAD  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -21347,7 +21347,7 @@ preset_pkrd_upper_norfair_single_chamber_revisited:
     dw #$FFFF
 
 preset_pkrd_upper_norfair_volcano_room:
-    dw #preset_pkrd_upper_norfair_double_chamber_revisited
+    dw #preset_pkrd_upper_norfair_double_chamber_revisit
     dw $078D, $95EE  ; DDB
     dw $079B, $AE07  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -21422,7 +21422,7 @@ preset_kpdr22_wrecked_ship_moat_ball:
     dw #$FFFF
 
 preset_pkrd_upper_norfair_kronic_boost:
-    dw #preset_pkrd_upper_norfair_double_chamber_revisited
+    dw #preset_pkrd_upper_norfair_double_chamber_revisit
     dw $078D, $9642  ; DDB
     dw $079B, $AE32  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -21466,7 +21466,7 @@ preset_kpdr21_red_brinstar_revisit_red_brinstar_elevator:
     dw $0AFA, $00A8  ; Samus Y
     dw #$FFFF
 
-preset_prkd20_lower_norfair_nox_prepillars:
+preset_prkd20_lower_norfair_nox_ridley_prepillars:
     dw #preset_prkd20_lower_norfair_prepillars
     dw $09A6, $1007  ; Equipped Beams
     dw #$FFFF
@@ -21627,8 +21627,8 @@ preset_allbosskpdr_tourian_metroids_4:
     dw $D8C4, $0007  ; Doors
     dw #$FFFF
 
-preset_rbo_ln_entry_fast_pillars_2n2m:
-    dw #preset_rbo_ln_entry_energy_refill_escape_2n2m
+preset_rbo_ln_entry_double_maridia_fast_pillars:
+    dw #preset_rbo_ln_entry_double_maridia_energy_refill_escape
     dw $078D, $9A6E  ; DDB
     dw $079B, $B2DA  ; MDB
     dw $07F3, $0018  ; Music Bank
@@ -21644,8 +21644,8 @@ preset_rbo_ln_entry_fast_pillars_2n2m:
     dw $0AF6, $02C4  ; Samus X
     dw #$FFFF
 
-preset_rbo_ln_entry_preridley_2n1m:
-    dw #preset_rbo_ln_entry_ninja_pirates_2n1m
+preset_rbo_ln_entry_single_maridia_preridley:
+    dw #preset_rbo_ln_entry_single_maridia_ninja_pirates
     dw $078D, $9A32  ; DDB
     dw $079B, $B482  ; MDB
     dw $090F, $4000  ; Screen subpixel X position
@@ -21712,7 +21712,7 @@ preset_hundo_brinstar_cleanup_spore_spawn_supers:
     dw #$FFFF
 
 preset_hundo_brinstar_cleanup_waterway_etank:
-    dw #preset_hundo_brinstar_cleanup_green_pirates_shaft
+    dw #preset_hundo_brinstar_cleanup_green_pirate_shaft
     dw $078D, $8F82  ; DDB
     dw $079B, $9D19  ; MDB
     dw $07F3, $000F  ; Music Bank
@@ -21788,7 +21788,7 @@ preset_gtclassic_maridia_draygon:
     dw $D8C2, $0C00  ; Doors
     dw #$FFFF
 
-preset_prkd19_lower_norfair_nox_worst_room_in_the_game:
+preset_prkd19_lower_norfair_nox_ridley_worst_room_in_the_game:
     dw #preset_prkd19_lower_norfair_worst_room_in_the_game
     dw $09A6, $1007  ; Equipped Beams
     dw $0AF8, $FFFF  ; Samus subpixel X
@@ -21919,8 +21919,8 @@ preset_allbosspkdr_tourian_escape_parlor:
     dw $0AFA, $005B  ; Samus Y
     dw #$FFFF
 
-preset_rbo_ln_entry_writg_2n2m:
-    dw #preset_rbo_ln_entry_fast_pillars_2n2m
+preset_rbo_ln_entry_double_maridia_worst_room_in_the_game:
+    dw #preset_rbo_ln_entry_double_maridia_fast_pillars
     dw $078D, $9912  ; DDB
     dw $079B, $B457  ; MDB
     dw $090F, $E600  ; Screen subpixel X position
@@ -21935,8 +21935,8 @@ preset_rbo_ln_entry_writg_2n2m:
     dw $0AFA, $0074  ; Samus Y
     dw #$FFFF
 
-preset_rbo_ridley_ridley_20_7_1:
-    dw #preset_rbo_ln_entry_preridley_2n1m
+preset_rbo_ridley_ridley_20_supers_7_1:
+    dw #preset_rbo_ln_entry_single_maridia_preridley
     dw $078D, $995A  ; DDB
     dw $079B, $B37A  ; MDB
     dw $090F, $7000  ; Screen subpixel X position
@@ -21952,16 +21952,16 @@ preset_rbo_ridley_ridley_20_7_1:
     dw $D8BA, $D3F3  ; Doors
     dw #$FFFF
 
-preset_rbo_lower_norfair_segment_ln_35_11_2:
-    dw #preset_rbo_lower_norfair_segment_ln_35_11_1
+preset_rbo_lower_norfair_segment_ln_35_supers_11_2_ridley:
+    dw #preset_rbo_lower_norfair_segment_ln_35_supers_11_1_ridley
     dw $09C6, $0029  ; Missiles
     dw $09C8, $0032  ; Max missiles
     dw $09D4, $00C8  ; Max reserves
     dw $09D6, $00C8  ; Reserves
     dw #$FFFF
 
-preset_rbo_ln_escape_ridley_etank_2n1m:
-    dw #preset_rbo_ln_entry_energy_refill_escape_2n1m
+preset_rbo_ln_escape_single_maridia_ridley_etank:
+    dw #preset_rbo_ln_entry_single_maridia_energy_refill_escape
     dw $078D, $98B2  ; DDB
     dw $079B, $B698  ; MDB
     dw $090F, $5FFF  ; Screen subpixel X position
@@ -22080,7 +22080,7 @@ preset_pkrd_upper_norfair_lava_spark:
     dw #$FFFF
 
 preset_pkrd_lower_norfair_ln_main_hall:
-    dw #preset_prkd20_lower_norfair_nox_ln_main_hall
+    dw #preset_prkd20_lower_norfair_nox_ridley_ln_main_hall
     dw $090F, $2000  ; Screen subpixel X position
     dw $09A2, $3125  ; Equipped Items
     dw $09A4, $3125  ; Collected Items
@@ -22202,8 +22202,8 @@ preset_allbosskpdr_tourian_escape_parlor:
     dw $D8BA, $DFF1  ; Doors
     dw #$FFFF
 
-preset_rbo_ridley_ridley_25_9_1:
-    dw #preset_rbo_ridley_ridley_20_7_1
+preset_rbo_ridley_ridley_25_supers_9_1:
+    dw #preset_rbo_ridley_ridley_20_supers_7_1
     dw $09C2, $0314  ; Health
     dw $09C4, $03E7  ; Max health
     dw $09C6, $001E  ; Missiles
@@ -22212,8 +22212,8 @@ preset_rbo_ridley_ridley_25_9_1:
     dw $09CC, $0019  ; Max supers
     dw #$FFFF
 
-preset_rbo_ln_escape_postridley_2n1m:
-    dw #preset_rbo_ln_escape_ridley_etank_2n1m
+preset_rbo_ln_escape_single_maridia_postridley:
+    dw #preset_rbo_ln_escape_single_maridia_ridley_etank
     dw $078D, $9A62  ; DDB
     dw $079B, $B32E  ; MDB
     dw $090F, $EFFF  ; Screen subpixel X position
@@ -22227,16 +22227,16 @@ preset_rbo_ln_escape_postridley_2n1m:
     dw $0AFA, $019B  ; Samus Y
     dw #$FFFF
 
-preset_rbo_ridley_ridley_25_8_1:
-    dw #preset_rbo_ridley_ridley_20_7_1
+preset_rbo_ridley_ridley_25_supers_8_1:
+    dw #preset_rbo_ridley_ridley_20_supers_7_1
     dw $09C2, $02C0  ; Health
     dw $09C4, $0383  ; Max health
     dw $09CA, $0019  ; Supers
     dw $09CC, $0019  ; Max supers
     dw #$FFFF
 
-preset_rbo_ln_escape_firefleas_2n1m:
-    dw #preset_rbo_ln_entry_preridley_2n1m
+preset_rbo_ln_escape_single_maridia_firefleas:
+    dw #preset_rbo_ln_entry_single_maridia_preridley
     dw $078D, $9A26  ; DDB
     dw $079B, $B585  ; MDB
     dw $090F, $E000  ; Screen subpixel X position
@@ -22271,7 +22271,7 @@ preset_100early_brinstar_cleanup_green_brinstar_beetoms:
     dw $0AFA, $0A8B  ; Samus Y
     dw #$FFFF
 
-preset_hundo_mama_turtle_etank_green_hills_revisit:
+preset_hundo_mama_turtle_etank_green_hill_zone_revisit:
     dw #preset_hundo_mama_turtle_etank_big_pink_charge_escape
     dw $090F, $0000  ; Screen subpixel X position
     dw $0911, $02D1  ; Screen X position in pixels
@@ -22306,17 +22306,17 @@ preset_hundo_mama_turtle_etank_blockbuster:
     dw $D8B6, $E8F9  ; Doors
     dw #$FFFF
 
-preset_gtclassic_maridia_womple_jump:
+preset_gtclassic_maridia_whomple_jump:
     dw #preset_gtclassic_maridia_reverse_halfie_spikesuit
     dw $0A68, $0000  ; Flash suit
     dw #$FFFF
 
-preset_prkd20_lower_norfair_nox_worst_room_in_the_game:
+preset_prkd20_lower_norfair_nox_ridley_worst_room_in_the_game:
     dw #preset_prkd20_lower_norfair_worst_room_in_the_game
     dw $09A6, $1007  ; Equipped Beams
     dw #$FFFF
 
-preset_prkd19_lower_norfair_nox_amphitheatre:
+preset_prkd19_lower_norfair_nox_ridley_amphitheatre:
     dw #preset_prkd19_lower_norfair_amphitheatre
     dw $09A6, $1007  ; Equipped Beams
     dw $0AF8, $FFFF  ; Samus subpixel X
@@ -22511,16 +22511,16 @@ preset_suitless_maridia_cleanup_1_rjump:
     dw $D820, $2801  ; Events
     dw #$FFFF
 
-preset_rbo_ridley_ridley_25_9_2:
-    dw #preset_rbo_ridley_ridley_25_9_1
+preset_rbo_ridley_ridley_25_supers_9_2:
+    dw #preset_rbo_ridley_ridley_25_supers_9_1
     dw $09C6, $0025  ; Missiles
     dw $09C8, $0032  ; Max missiles
     dw $09D4, $00C8  ; Max reserves
     dw $09D6, $00C8  ; Reserves
     dw #$FFFF
 
-preset_rbo_ln_escape_firefleas_exit_2n1m:
-    dw #preset_rbo_ln_escape_firefleas_2n1m
+preset_rbo_ln_escape_single_maridia_firefleas_exit:
+    dw #preset_rbo_ln_escape_single_maridia_firefleas
     dw $078D, $9A02  ; DDB
     dw $079B, $B6EE  ; MDB
     dw $090F, $0000  ; Screen subpixel X position
@@ -22537,8 +22537,8 @@ preset_rbo_ln_escape_firefleas_exit_2n1m:
     dw $0AF6, $015F  ; Samus X
     dw #$FFFF
 
-preset_rbo_ridley_ridley_25_7_1:
-    dw #preset_rbo_ridley_ridley_20_7_1
+preset_rbo_ridley_ridley_25_supers_7_1:
+    dw #preset_rbo_ridley_ridley_20_supers_7_1
     dw $09CA, $0019  ; Supers
     dw $09CC, $0019  ; Max supers
     dw #$FFFF
@@ -22599,7 +22599,7 @@ preset_hundo_mama_turtle_etank_breaking_the_tube:
     dw #$FFFF
 
 preset_gtclassic_maridia_reverse_halfie_climb:
-    dw #preset_gtclassic_maridia_womple_jump
+    dw #preset_gtclassic_maridia_whomple_jump
     dw $078D, $A834  ; DDB
     dw $079B, $D72A  ; MDB
     dw $090F, $4000  ; Screen subpixel X position
@@ -22608,12 +22608,12 @@ preset_gtclassic_maridia_reverse_halfie_climb:
     dw $0AF6, $0037  ; Samus X
     dw #$FFFF
 
-preset_prkd20_lower_norfair_nox_amphitheatre:
+preset_prkd20_lower_norfair_nox_ridley_amphitheatre:
     dw #preset_prkd20_lower_norfair_amphitheatre
     dw $09A6, $1007  ; Equipped Beams
     dw #$FFFF
 
-preset_prkd19_lower_norfair_nox_kihunter_stairs_down:
+preset_prkd19_lower_norfair_nox_ridley_kihunter_stairs_down:
     dw #preset_prkd19_lower_norfair_kihunter_stairs_down
     dw $09A6, $1007  ; Equipped Beams
     dw $0AF8, $FFFF  ; Samus subpixel X
@@ -22791,8 +22791,8 @@ preset_suitless_maridia_cleanup_1_pants_room_corner:
     dw $D882, $05F3  ; Items
     dw #$FFFF
 
-preset_rbo_ln_escape_3_musketeers_2n1m:
-    dw #preset_rbo_ln_escape_firefleas_exit_2n1m
+preset_rbo_ln_escape_single_maridia_3_musketeers:
+    dw #preset_rbo_ln_escape_single_maridia_firefleas_exit
     dw $078D, $9A92  ; DDB
     dw $079B, $B510  ; MDB
     dw $090F, $5000  ; Screen subpixel X position
@@ -22806,8 +22806,8 @@ preset_rbo_ln_escape_3_musketeers_2n1m:
     dw $0AF6, $0067  ; Samus X
     dw #$FFFF
 
-preset_rbo_ridley_ridley_20_8_1:
-    dw #preset_rbo_ridley_ridley_20_7_1
+preset_rbo_ridley_ridley_20_supers_8_1:
+    dw #preset_rbo_ridley_ridley_20_supers_7_1
     dw $09C2, $02C0  ; Health
     dw $09C4, $0383  ; Max health
     dw #$FFFF
@@ -22891,7 +22891,7 @@ preset_gtclassic_maridia_reverse_botwoon_hallway:
     dw $D8C2, $6C00  ; Doors
     dw #$FFFF
 
-preset_prkd19_lower_norfair_nox_wasteland:
+preset_prkd19_lower_norfair_nox_ridley_wasteland:
     dw #preset_prkd19_lower_norfair_wasteland
     dw $09A6, $1007  ; Equipped Beams
     dw $0AF8, $FFFF  ; Samus subpixel X
@@ -22916,7 +22916,7 @@ preset_prkd19_lower_norfair_metal_ninja_pirates:
     dw $D8BA, $C1F1  ; Doors
     dw #$FFFF
 
-preset_prkd20_lower_norfair_nox_kihunter_stairs_down:
+preset_prkd20_lower_norfair_nox_ridley_kihunter_stairs_down:
     dw #preset_prkd20_lower_norfair_kihunter_stairs_down
     dw $09A6, $1007  ; Equipped Beams
     dw #$FFFF
@@ -22981,13 +22981,13 @@ preset_suitless_maridia_cleanup_1_east_sand_hall_revisit:
     dw $0AFA, $038B  ; Samus Y
     dw #$FFFF
 
-preset_rbo_ln_escape_3_musketeers_spikesuit_2n1m:
-    dw #preset_rbo_ln_escape_3_musketeers_2n1m
+preset_rbo_ln_escape_single_maridia_3_musketeers_spikesuit:
+    dw #preset_rbo_ln_escape_single_maridia_3_musketeers
     dw $0A68, $0001  ; Flash suit
     dw #$FFFF
 
-preset_rbo_ln_escape_single_chamber_2n1m:
-    dw #preset_rbo_ln_escape_firefleas_exit_2n1m
+preset_rbo_ln_escape_single_maridia_single_chamber:
+    dw #preset_rbo_ln_escape_single_maridia_firefleas_exit
     dw $078D, $99AE  ; DDB
     dw $079B, $B656  ; MDB
     dw $090F, $6000  ; Screen subpixel X position
@@ -23001,8 +23001,8 @@ preset_rbo_ln_escape_single_chamber_2n1m:
     dw $0AF6, $016A  ; Samus X
     dw #$FFFF
 
-preset_rbo_ln_entry_amphitheater_2n2m:
-    dw #preset_rbo_ln_entry_fast_pillars_2n2m
+preset_rbo_ln_entry_double_maridia_amphitheatre:
+    dw #preset_rbo_ln_entry_double_maridia_fast_pillars
     dw $078D, $994E  ; DDB
     dw $079B, $B4AD  ; MDB
     dw $090F, $0000  ; Screen subpixel X position
@@ -23122,7 +23122,7 @@ preset_gtclassic_wrecked_ship_crateria_kihunters:
     dw $D8B2, $2C01  ; Doors
     dw #$FFFF
 
-preset_prkd19_lower_norfair_nox_metal_ninja_pirates:
+preset_prkd19_lower_norfair_nox_ridley_metal_ninja_pirates:
     dw #preset_prkd19_lower_norfair_metal_ninja_pirates
     dw $09A6, $1007  ; Equipped Beams
     dw $0AF8, $FFFF  ; Samus subpixel X
@@ -23195,7 +23195,7 @@ preset_prkd19_lower_norfair_plowerhouse:
     dw $D8BC, $0001  ; Doors
     dw #$FFFF
 
-preset_prkd20_lower_norfair_nox_wasteland:
+preset_prkd20_lower_norfair_nox_ridley_wasteland:
     dw #preset_prkd20_lower_norfair_wasteland
     dw $09A6, $1007  ; Equipped Beams
     dw #$FFFF
@@ -23253,13 +23253,13 @@ preset_suitless_maridia_cleanup_1_west_sand_hall_revisit:
     dw $0AFA, $018B  ; Samus Y
     dw #$FFFF
 
-preset_rbo_ln_escape_single_chamber_spikesuit_2n1m:
-    dw #preset_rbo_ln_escape_single_chamber_2n1m
+preset_rbo_ln_escape_single_maridia_single_chamber_spikesuit:
+    dw #preset_rbo_ln_escape_single_maridia_single_chamber
     dw $0A68, $0001  ; Flash suit
     dw #$FFFF
 
-preset_rbo_ln_escape_croc_gate_farm_2n1m:
-    dw #preset_rbo_ln_escape_single_chamber_2n1m
+preset_rbo_ln_escape_single_maridia_croc_gate_farm:
+    dw #preset_rbo_ln_escape_single_maridia_single_chamber
     dw $078D, $95CA  ; DDB
     dw $079B, $ACB3  ; MDB
     dw $07F3, $0015  ; Music Bank
@@ -23276,8 +23276,8 @@ preset_rbo_ln_escape_croc_gate_farm_2n1m:
     dw $0AFA, $038B  ; Samus Y
     dw #$FFFF
 
-preset_rbo_lower_norfair_segment_ln_35_9_1:
-    dw #preset_rbo_lower_norfair_segment_ln_35_10_1
+preset_rbo_lower_norfair_segment_ln_35_supers_9_1_ridley:
+    dw #preset_rbo_lower_norfair_segment_ln_35_supers_10_1_ridley
     dw $09C2, $0383  ; Health
     dw $09C4, $0383  ; Max health
     dw #$FFFF
@@ -23359,7 +23359,7 @@ preset_gtclassic_wrecked_ship_moat:
     dw $D8B0, $2000  ; Doors
     dw #$FFFF
 
-preset_prkd19_lower_norfair_nox_plowerhouse:
+preset_prkd19_lower_norfair_nox_ridley_plowerhouse:
     dw #preset_prkd19_lower_norfair_plowerhouse
     dw $09A6, $1007  ; Equipped Beams
     dw $0AF8, $FFFF  ; Samus subpixel X
@@ -23392,7 +23392,7 @@ preset_kpdr22_red_brinstar_revisit_below_spazer_final:
     dw $D8B8, $26EF  ; Doors
     dw #$FFFF
 
-preset_kpdr21_red_brinstar_revisit_breaking_tube:
+preset_kpdr21_red_brinstar_revisit_breaking_the_tube:
     dw #preset_kpdr21_red_brinstar_revisit_below_spazer_final
     dw $078D, $9102  ; DDB
     dw $079B, $A408  ; MDB
@@ -23457,7 +23457,7 @@ preset_prkd19_lower_norfair_ridley_farming_room:
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 
-preset_prkd20_lower_norfair_nox_metal_ninja_pirates:
+preset_prkd20_lower_norfair_nox_ridley_metal_ninja_pirates:
     dw #preset_prkd20_lower_norfair_metal_ninja_pirates
     dw $09A6, $1007  ; Equipped Beams
     dw #$FFFF
@@ -23531,13 +23531,13 @@ preset_suitless_maridia_cleanup_1_crab_hole:
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 
-preset_rbo_ln_escape_croc_gate_farm_spikesuit_2n1m:
-    dw #preset_rbo_ln_escape_croc_gate_farm_2n1m
+preset_rbo_ln_escape_single_maridia_croc_gate_farm_spikesuit:
+    dw #preset_rbo_ln_escape_single_maridia_croc_gate_farm
     dw $0A68, $0001  ; Flash suit
     dw #$FFFF
 
-preset_rbo_ln_escape_business_center_2n1m:
-    dw #preset_rbo_ln_escape_firefleas_2n1m
+preset_rbo_ln_escape_single_maridia_business_center:
+    dw #preset_rbo_ln_escape_single_maridia_firefleas
     dw $078D, $97DA  ; DDB
     dw $079B, $B167  ; MDB
     dw $07F3, $0015  ; Music Bank
@@ -23552,8 +23552,8 @@ preset_rbo_ln_escape_business_center_2n1m:
     dw $0AF6, $0031  ; Samus X
     dw #$FFFF
 
-preset_rbo_ln_entry_firefleas_entry_2n2m:
-    dw #preset_rbo_ln_entry_amphitheater_2n2m
+preset_rbo_ln_entry_double_maridia_firefleas_entry:
+    dw #preset_rbo_ln_entry_double_maridia_amphitheatre
     dw $078D, $997E  ; DDB
     dw $079B, $B4E5  ; MDB
     dw $0911, $0257  ; Screen X position in pixels
@@ -23645,7 +23645,7 @@ preset_gtclassic_wrecked_ship_wrecked_ship_shaft:
     dw $D8B0, $3000  ; Doors
     dw #$FFFF
 
-preset_prkd19_lower_norfair_nox_ridley_farming_room:
+preset_prkd19_lower_norfair_nox_ridley_ridley_farming_room:
     dw #preset_prkd19_lower_norfair_ridley_farming_room
     dw $09A6, $1007  ; Equipped Beams
     dw $0AF8, $FFFF  ; Samus subpixel X
@@ -23669,8 +23669,8 @@ preset_kpdr25_red_brinstar_revisit_below_spazer_final:
     dw $D8B8, $2EEF  ; Doors
     dw #$FFFF
 
-preset_kpdr22_red_brinstar_revisit_breaking_tube:
-    dw #preset_kpdr21_red_brinstar_revisit_breaking_tube
+preset_kpdr22_red_brinstar_revisit_breaking_the_tube:
+    dw #preset_kpdr21_red_brinstar_revisit_breaking_the_tube
     dw $09C2, $0118  ; Health
     dw $09C4, $018F  ; Max health
     dw $D874, $0D04  ; Items
@@ -23714,7 +23714,7 @@ preset_prkd19_lower_norfair_ridley:
     dw $D8BA, $D1F1  ; Doors
     dw #$FFFF
 
-preset_prkd20_lower_norfair_nox_plowerhouse:
+preset_prkd20_lower_norfair_nox_ridley_plowerhouse:
     dw #preset_prkd20_lower_norfair_plowerhouse
     dw $09A6, $1007  ; Equipped Beams
     dw #$FFFF
@@ -23809,13 +23809,13 @@ preset_suitless_maridia_cleanup_2_main_street_revisit:
     dw $0AFA, $00A8  ; Samus Y
     dw #$FFFF
 
-preset_rbo_ln_escape_business_center_spikesuit_2n1m:
-    dw #preset_rbo_ln_escape_business_center_2n1m
+preset_rbo_ln_escape_single_maridia_business_center_spikesuit:
+    dw #preset_rbo_ln_escape_single_maridia_business_center
     dw $0A68, $0001  ; Flash suit
     dw #$FFFF
 
-preset_rbo_ln_escape_maridia_entry_2n1m:
-    dw #preset_rbo_ln_escape_business_center_2n1m
+preset_rbo_ln_escape_single_maridia_maridia_entry:
+    dw #preset_rbo_ln_escape_single_maridia_business_center
     dw $078D, $922E  ; DDB
     dw $079B, $CF80  ; MDB
     dw $07F3, $0012  ; Music Bank
@@ -23828,8 +23828,8 @@ preset_rbo_ln_escape_maridia_entry_2n1m:
     dw $0AFA, $018B  ; Samus Y
     dw #$FFFF
 
-preset_rbo_lower_norfair_segment_ln_35_8_1:
-    dw #preset_rbo_lower_norfair_segment_ln_35_10_1
+preset_rbo_lower_norfair_segment_ln_35_supers_8_1_ridley:
+    dw #preset_rbo_lower_norfair_segment_ln_35_supers_10_1_ridley
     dw $09C2, $031F  ; Health
     dw $09C4, $031F  ; Max health
     dw #$FFFF
@@ -23905,14 +23905,14 @@ preset_gtclassic_wrecked_ship_phantoon:
     dw $D8C0, $8030  ; Doors
     dw #$FFFF
 
-preset_kpdr23_red_brinstar_revisit_breaking_tube:
-    dw #preset_kpdr22_red_brinstar_revisit_breaking_tube
+preset_kpdr23_red_brinstar_revisit_breaking_the_tube:
+    dw #preset_kpdr22_red_brinstar_revisit_breaking_the_tube
     dw $09A6, $1005  ; Equipped Beams
     dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
 
-preset_kpdr25_red_brinstar_revisit_breaking_tube:
-    dw #preset_kpdr22_red_brinstar_revisit_breaking_tube
+preset_kpdr25_red_brinstar_revisit_breaking_the_tube:
+    dw #preset_kpdr22_red_brinstar_revisit_breaking_the_tube
     dw $09A6, $1007  ; Equipped Beams
     dw $09A8, $1007  ; Collected Beams
     dw $09C6, $000F  ; Missiles
@@ -23997,14 +23997,14 @@ preset_kpdr21_maridia_botwoon_hallway:
     dw $D8C0, $8174  ; Doors
     dw #$FFFF
 
-preset_prkd19_lower_norfair_nox_ridley:
+preset_prkd19_lower_norfair_nox_ridley_ridley:
     dw #preset_prkd19_lower_norfair_ridley
     dw $09A6, $1007  ; Equipped Beams
     dw $09C6, $000F  ; Missiles
     dw $0AF8, $FFFF  ; Samus subpixel X
     dw #$FFFF
 
-preset_prkd20_lower_norfair_nox_ridley_farming_room:
+preset_prkd20_lower_norfair_nox_ridley_ridley_farming_room:
     dw #preset_prkd20_lower_norfair_ridley_farming_room
     dw $09A6, $1007  ; Equipped Beams
     dw #$FFFF
@@ -24151,13 +24151,13 @@ preset_suitless_maridia_cleanup_2_swiss_cheese_room:
     dw $D880, $4F00  ; Items
     dw #$FFFF
 
-preset_rbo_ln_escape_maridia_entry_spikesuit_2n1m:
-    dw #preset_rbo_ln_escape_maridia_entry_2n1m
+preset_rbo_ln_escape_single_maridia_maridia_entry_spikesuit:
+    dw #preset_rbo_ln_escape_single_maridia_maridia_entry
     dw $0A68, $0001  ; Flash suit
     dw #$FFFF
 
-preset_rbo_ln_entry_kihunter_stairs_down_2n2m:
-    dw #preset_rbo_ln_entry_amphitheater_2n2m
+preset_rbo_ln_entry_double_maridia_kihunter_stairs_down:
+    dw #preset_rbo_ln_entry_double_maridia_amphitheatre
     dw $078D, $9A02  ; DDB
     dw $079B, $B6EE  ; MDB
     dw $0911, $0100  ; Screen X position in pixels
@@ -24177,7 +24177,7 @@ preset_rbo_ln_entry_kihunter_stairs_down_2n2m:
     dw #$FFFF
 
 preset_rbo_maridia_mount_everest_spikesuit:
-    dw #preset_rbo_ln_escape_business_center_spikesuit_2n1m
+    dw #preset_rbo_ln_escape_single_maridia_business_center_spikesuit
     dw $078D, $A330  ; DDB
     dw $079B, $CFC9  ; MDB
     dw $07F3, $001B  ; Music Bank
@@ -24195,13 +24195,13 @@ preset_rbo_maridia_mount_everest_spikesuit:
     dw $D820, $0801  ; Events
     dw #$FFFF
 
-preset_rbo_lower_norfair_segment_ln_30_11_1:
-    dw #preset_rbo_lower_norfair_segment_ln_35_11_1
+preset_rbo_lower_norfair_segment_ln_30_supers_11_1_ridley:
+    dw #preset_rbo_lower_norfair_segment_ln_35_supers_11_1_ridley
     dw $09CA, $0019  ; Supers
     dw $09CC, $0019  ; Max supers
     dw #$FFFF
 
-preset_100early_brinstar_cleanup_green_hills_revisit:
+preset_100early_brinstar_cleanup_green_hill_zone_revisit:
     dw #preset_100early_brinstar_cleanup_waterway_etank
     dw $078D, $8F8E  ; DDB
     dw $090F, $0000  ; Screen subpixel X position
@@ -24317,7 +24317,7 @@ preset_kpdr21_maridia_botwoon:
     dw #$FFFF
 
 preset_prkd20_lower_norfair_ridley:
-    dw #preset_prkd19_lower_norfair_nox_ridley
+    dw #preset_prkd19_lower_norfair_nox_ridley_ridley
     dw $09A6, $1001  ; Equipped Beams
     dw $09C8, $0014  ; Max missiles
     dw $D878, $001C  ; Items
@@ -24454,8 +24454,8 @@ preset_rbo_maridia_aqueduct_spikesuit:
     dw $D8C0, $8000  ; Doors
     dw #$FFFF
 
-preset_rbo_ln_entry_ninja_pirates_2n2m:
-    dw #preset_rbo_ln_entry_kihunter_stairs_down_2n2m
+preset_rbo_ln_entry_double_maridia_ninja_pirates:
+    dw #preset_rbo_ln_entry_double_maridia_kihunter_stairs_down
     dw $078D, $99EA  ; DDB
     dw $079B, $B5D5  ; MDB
     dw $090F, $7000  ; Screen subpixel X position
@@ -24472,7 +24472,7 @@ preset_rbo_ln_entry_ninja_pirates_2n2m:
     dw #$FFFF
 
 preset_100early_brinstar_cleanup_blockbuster:
-    dw #preset_100early_brinstar_cleanup_green_hills_revisit
+    dw #preset_100early_brinstar_cleanup_green_hill_zone_revisit
     dw $078D, $8DEA  ; DDB
     dw $079B, $9E52  ; MDB
     dw $090F, $2000  ; Screen subpixel X position
@@ -24630,7 +24630,7 @@ preset_kpdr21_maridia_botwoon_etank:
     dw $D82C, $0002  ; Bosses
     dw #$FFFF
 
-preset_prkd20_lower_norfair_nox_ridley:
+preset_prkd20_lower_norfair_nox_ridley_ridley:
     dw #preset_prkd20_lower_norfair_ridley
     dw $09A6, $1007  ; Equipped Beams
     dw #$FFFF
@@ -24663,7 +24663,7 @@ preset_prkd20_lower_norfair_kihunter_stairs_up:
     dw $D878, $001C  ; Items
     dw #$FFFF
 
-preset_prkd19_lower_norfair_fire_flea_room:
+preset_prkd19_lower_norfair_fireflea_room:
     dw #preset_prkd19_lower_norfair_kihunter_stairs_up
     dw $078D, $9A26  ; DDB
     dw $079B, $B585  ; MDB
@@ -24691,7 +24691,7 @@ preset_prkd19_lower_norfair_springball_maze:
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 
-preset_pkrd_lower_norfair_fire_flea_room:
+preset_pkrd_lower_norfair_fireflea_room:
     dw #preset_pkrd_lower_norfair_kihunter_stairs_up
     dw $078D, $9A26  ; DDB
     dw $079B, $B585  ; MDB
@@ -24809,8 +24809,8 @@ preset_rbo_maridia_botwoon_clip_spikesuit:
     dw $0AFA, $006B  ; Samus Y
     dw #$FFFF
 
-preset_rbo_lower_norfair_segment_ln_30_10_1:
-    dw #preset_rbo_lower_norfair_segment_ln_30_7_1
+preset_rbo_lower_norfair_segment_ln_30_supers_10_1_ridley:
+    dw #preset_rbo_lower_norfair_segment_ln_30_supers_7_1_ridley
     dw $09C2, $03E7  ; Health
     dw $09C4, $03E7  ; Max health
     dw #$FFFF
@@ -24835,7 +24835,7 @@ preset_100early_maridia_predraygon_main_street:
     dw #$FFFF
 
 preset_100early_maridia_predraygon_fish_tank:
-    dw #preset_100early_brinstar_cleanup_green_hills_revisit
+    dw #preset_100early_brinstar_cleanup_green_hill_zone_revisit
     dw $078D, $A330  ; DDB
     dw $079B, $CFC9  ; MDB
     dw $07F3, $001B  ; Music Bank
@@ -24900,7 +24900,7 @@ preset_gtclassic_wrecked_ship_terminator_revisit:
     dw $0B3F, $0104  ; Blue suit
     dw #$FFFF
 
-preset_gtclassic_wrecked_ship_green_pirate_shaft_2:
+preset_gtclassic_wrecked_ship_green_pirate_shaft:
     dw #preset_gtclassic_wrecked_ship_crateria_kihunters_revisit
     dw $078D, $895E  ; DDB
     dw $079B, $990D  ; MDB
@@ -24936,8 +24936,8 @@ preset_kpdr23_maridia_botwoon:
     dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
 
-preset_prkd20_lower_norfair_fire_flea_room:
-    dw #preset_prkd19_lower_norfair_fire_flea_room
+preset_prkd20_lower_norfair_fireflea_room:
+    dw #preset_prkd19_lower_norfair_fireflea_room
     dw $09C8, $0014  ; Max missiles
     dw $0AF8, $FFFF  ; Samus subpixel X
     dw $D878, $001C  ; Items
@@ -25118,8 +25118,8 @@ preset_rbo_maridia_botwoon_spikesuit:
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 
-preset_rbo_ln_entry_preridley_2n2m:
-    dw #preset_rbo_ln_entry_ninja_pirates_2n2m
+preset_rbo_ln_entry_double_maridia_preridley:
+    dw #preset_rbo_ln_entry_double_maridia_ninja_pirates
     dw $078D, $9A32  ; DDB
     dw $079B, $B482  ; MDB
     dw $090F, $4000  ; Screen subpixel X position
@@ -25395,8 +25395,8 @@ preset_rbo_maridia_postbotwoon_spikesuit:
     dw $D82C, $0002  ; Bosses
     dw #$FFFF
 
-preset_rbo_lower_norfair_segment_ln_30_9_1:
-    dw #preset_rbo_lower_norfair_segment_ln_30_7_1
+preset_rbo_lower_norfair_segment_ln_30_supers_9_1_ridley:
+    dw #preset_rbo_lower_norfair_segment_ln_30_supers_7_1_ridley
     dw $09C2, $0383  ; Health
     dw $09C4, $0383  ; Max health
     dw #$FFFF
@@ -25580,8 +25580,8 @@ preset_rbo_maridia_postbotwoon:
     dw $0A68, $0000  ; Flash suit
     dw #$FFFF
 
-preset_rbo_ridley_ridley_30_7_1:
-    dw #preset_rbo_ln_entry_preridley_2n2m
+preset_rbo_ridley_ridley_30_supers_7_1:
+    dw #preset_rbo_ln_entry_double_maridia_preridley
     dw $078D, $995A  ; DDB
     dw $079B, $B37A  ; MDB
     dw $090F, $7000  ; Screen subpixel X position
@@ -25875,8 +25875,8 @@ preset_rbo_maridia_colosseum:
     dw $0AF6, $00C6  ; Samus X
     dw #$FFFF
 
-preset_rbo_ridley_ridley_30_8_1:
-    dw #preset_rbo_ridley_ridley_30_7_1
+preset_rbo_ridley_ridley_30_supers_8_1:
+    dw #preset_rbo_ridley_ridley_30_supers_7_1
     dw $09C2, $02B0  ; Health
     dw $09C4, $0383  ; Max health
     dw #$FFFF
@@ -25970,7 +25970,7 @@ preset_prkd20_kraid_kraid_kihunters:
     dw $D878, $001C  ; Items
     dw #$FFFF
 
-preset_prkd19_kraid_mini_kraid:
+preset_prkd19_kraid_minikraid:
     dw #preset_prkd19_kraid_kraid_kihunters
     dw $078D, $9156  ; DDB
     dw $079B, $A4DA  ; MDB
@@ -26082,8 +26082,8 @@ preset_rbo_maridia_draygon:
     dw $D8C2, $0C00  ; Doors
     dw #$FFFF
 
-preset_rbo_ln_escape_ridley_etank_2n2m:
-    dw #preset_rbo_ln_escape_ridley_etank_2n1m
+preset_rbo_ln_escape_double_maridia_ridley_etank:
+    dw #preset_rbo_ln_escape_single_maridia_ridley_etank
     dw $09C2, $048D  ; Health
     dw $09C4, $048F  ; Max health
     dw $09C6, $0018  ; Missiles
@@ -26129,8 +26129,8 @@ preset_rbo_maridia_draygon_escape:
     dw $D8C2, $8C00  ; Doors
     dw #$FFFF
 
-preset_rbo_ridley_ridley_35_11_1:
-    dw #preset_rbo_ridley_ridley_30_7_1
+preset_rbo_ridley_ridley_35_supers_11_1:
+    dw #preset_rbo_ridley_ridley_30_supers_7_1
     dw $09C2, $037C  ; Health
     dw $09C4, $04AF  ; Max health
     dw $09C6, $001E  ; Missiles
@@ -26155,7 +26155,7 @@ preset_100early_maridia_predraygon_west_beach:
     dw $D880, $4FFF  ; Items
     dw #$FFFF
 
-preset_hundo_maridia_cleanup_right_sandpit:
+preset_hundo_maridia_cleanup_right_sand_pit:
     dw #preset_hundo_maridia_cleanup_aqueduct_revisit
     dw $078D, $A7D4  ; DDB
     dw $079B, $D5A7  ; MDB
@@ -26274,8 +26274,8 @@ preset_kpdr25_maridia_reverse_halfie_spikesuit:
     dw $D8B8, $2EEF  ; Doors
     dw #$FFFF
 
-preset_prkd20_kraid_mini_kraid:
-    dw #preset_prkd19_kraid_mini_kraid
+preset_prkd20_kraid_minikraid:
+    dw #preset_prkd19_kraid_minikraid
     dw $09C8, $0014  ; Max missiles
     dw $0AF8, $FFFF  ; Samus subpixel X
     dw $D878, $001C  ; Items
@@ -26295,7 +26295,7 @@ preset_prkd20_kraid_leaving_varia:
     dw $D878, $001C  ; Items
     dw #$FFFF
 
-preset_prkd19_kraid_mini_kraid_revisit:
+preset_prkd19_kraid_minikraid_revisit:
     dw #preset_prkd19_kraid_leaving_varia
     dw $078D, $91CE  ; DDB
     dw $079B, $A56B  ; MDB
@@ -26402,8 +26402,8 @@ preset_rbo_maridia_reverse_colosseum:
     dw $D8C2, $CC00  ; Doors
     dw #$FFFF
 
-preset_rbo_ln_escape_postridley_2n2m:
-    dw #preset_rbo_ln_escape_ridley_etank_2n2m
+preset_rbo_ln_escape_double_maridia_postridley:
+    dw #preset_rbo_ln_escape_double_maridia_ridley_etank
     dw $078D, $9A62  ; DDB
     dw $079B, $B32E  ; MDB
     dw $090F, $EFFF  ; Screen subpixel X position
@@ -26447,8 +26447,8 @@ preset_100early_maridia_predraygon_west_beach_revisit:
     dw $D880, $7FFF  ; Items
     dw #$FFFF
 
-preset_hundo_maridia_cleanup_left_sandpit:
-    dw #preset_hundo_maridia_cleanup_right_sandpit
+preset_hundo_maridia_cleanup_left_sand_pit:
+    dw #preset_hundo_maridia_cleanup_right_sand_pit
     dw $090F, $9000  ; Screen subpixel X position
     dw $0913, $FC00  ; Screen subpixel Y position
     dw $09A2, $3326  ; Equipped Items
@@ -26470,7 +26470,7 @@ preset_hundo_maridia_cleanup_left_sandpit:
     dw #$FFFF
 
 preset_hundo_maridia_cleanup_puyo_ice_clip_springball:
-    dw #preset_hundo_maridia_cleanup_right_sandpit
+    dw #preset_hundo_maridia_cleanup_right_sand_pit
     dw $078D, $A690  ; DDB
     dw $079B, $D646  ; MDB
     dw $0911, $0000  ; Screen X position in pixels
@@ -26552,8 +26552,8 @@ preset_kpdr25_maridia_whomple_jump:
     dw $0A68, $0000  ; Flash suit
     dw #$FFFF
 
-preset_prkd20_kraid_mini_kraid_revisit:
-    dw #preset_prkd19_kraid_mini_kraid_revisit
+preset_prkd20_kraid_minikraid_revisit:
+    dw #preset_prkd19_kraid_minikraid_revisit
     dw $09C8, $0014  ; Max missiles
     dw $0AF8, $FFFF  ; Samus subpixel X
     dw $D878, $001C  ; Items
@@ -26685,8 +26685,8 @@ preset_rbo_maridia_cac_alley:
     dw $D8C2, $DC00  ; Doors
     dw #$FFFF
 
-preset_rbo_ridley_ridley_35_10_1:
-    dw #preset_rbo_ridley_ridley_30_7_1
+preset_rbo_ridley_ridley_35_supers_10_1:
+    dw #preset_rbo_ridley_ridley_30_supers_7_1
     dw $09C2, $0338  ; Health
     dw $09C4, $044B  ; Max health
     dw $09CA, $0023  ; Supers
@@ -26707,8 +26707,8 @@ preset_rbo_maridia_plasma_spark_room:
     dw $D8C2, $DC00  ; Doors
     dw #$FFFF
 
-preset_rbo_ln_escape_firefleas_2n2m:
-    dw #preset_rbo_ln_escape_ridley_etank_2n2m
+preset_rbo_ln_escape_double_maridia_firefleas:
+    dw #preset_rbo_ln_escape_double_maridia_ridley_etank
     dw $078D, $9A26  ; DDB
     dw $079B, $B585  ; MDB
     dw $07F3, $0018  ; Music Bank
@@ -26743,7 +26743,7 @@ preset_100early_maridia_predraygon_beach_missiles_revisit:
     dw #$FFFF
 
 preset_hundo_maridia_cleanup_leaving_maridia:
-    dw #preset_hundo_maridia_cleanup_left_sandpit
+    dw #preset_hundo_maridia_cleanup_left_sand_pit
     dw $078D, $A528  ; DDB
     dw $079B, $D21C  ; MDB
     dw $090F, $B000  ; Screen subpixel X position
@@ -26959,8 +26959,8 @@ preset_rbo_maridia_kassiuz_room:
     dw $D8C2, $DC08  ; Doors
     dw #$FFFF
 
-preset_rbo_ridley_ridley_35_11_2:
-    dw #preset_rbo_ridley_ridley_35_11_1
+preset_rbo_ridley_ridley_35_supers_11_2:
+    dw #preset_rbo_ridley_ridley_35_supers_11_1
     dw $09C6, $0025  ; Missiles
     dw $09C8, $0032  ; Max missiles
     dw $09D4, $00C8  ; Max reserves
@@ -26980,8 +26980,8 @@ preset_rbo_maridia_plasma_screw_attack_strat:
     dw $D8C2, $DC08  ; Doors
     dw #$FFFF
 
-preset_rbo_ln_escape_firefleas_exit_2n2m:
-    dw #preset_rbo_ln_escape_firefleas_2n2m
+preset_rbo_ln_escape_double_maridia_firefleas_exit:
+    dw #preset_rbo_ln_escape_double_maridia_firefleas
     dw $078D, $9A02  ; DDB
     dw $079B, $B6EE  ; MDB
     dw $090F, $0000  ; Screen subpixel X position
@@ -27266,7 +27266,7 @@ preset_kpdr25_maridia_plasma_spark:
     dw $D8C2, $DC00  ; Doors
     dw #$FFFF
 
-preset_gtmax_maridia_postdraygon_womple_jump:
+preset_gtmax_maridia_postdraygon_whomple_jump:
     dw #preset_gtmax_maridia_postdraygon_reverse_halfie
     dw $0A68, $0000  ; Flash suit
     dw #$FFFF
@@ -27337,8 +27337,8 @@ preset_rbo_maridia_leaving_maridia:
     dw $D8C2, $DC0A  ; Doors
     dw #$FFFF
 
-preset_rbo_ridley_ridley_35_9_1:
-    dw #preset_rbo_ridley_ridley_35_10_1
+preset_rbo_ridley_ridley_35_supers_9_1:
+    dw #preset_rbo_ridley_ridley_35_supers_10_1
     dw $09C2, $02F4  ; Health
     dw $09C4, $03E7  ; Max health
     dw #$FFFF
@@ -27488,7 +27488,7 @@ preset_kpdr22_maridia_plasma_spark_revisit:
     dw #$FFFF
 
 preset_gtmax_maridia_postdraygon_reverse_botwoon_etank:
-    dw #preset_gtmax_maridia_postdraygon_womple_jump
+    dw #preset_gtmax_maridia_postdraygon_whomple_jump
     dw $078D, $A7E0  ; DDB
     dw $079B, $D913  ; MDB
     dw $090F, $0000  ; Screen subpixel X position
@@ -27501,7 +27501,7 @@ preset_gtmax_maridia_postdraygon_reverse_botwoon_etank:
     dw #$FFFF
 
 preset_gtmax_maridia_postdraygon_aqueduct_ammo:
-    dw #preset_gtmax_maridia_postdraygon_womple_jump
+    dw #preset_gtmax_maridia_postdraygon_whomple_jump
     dw $078D, $A8AC  ; DDB
     dw $079B, $D6FD  ; MDB
     dw $090F, $4000  ; Screen subpixel X position
@@ -27568,8 +27568,8 @@ preset_rbo_wrecked_ship_forgotten_highway:
     dw $0AFA, $00AB  ; Samus Y
     dw #$FFFF
 
-preset_rbo_ln_escape_3_musketeers_2n2m:
-    dw #preset_rbo_ln_escape_firefleas_exit_2n2m
+preset_rbo_ln_escape_double_maridia_3_musketeers:
+    dw #preset_rbo_ln_escape_double_maridia_firefleas_exit
     dw $078D, $9A92  ; DDB
     dw $079B, $B510  ; MDB
     dw $090F, $5000  ; Screen subpixel X position
@@ -27848,7 +27848,7 @@ preset_kpdr23_maridia_plasma_beam:
     dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
 
-preset_gtmax_maridia_postdraygon_right_sandpit:
+preset_gtmax_maridia_postdraygon_right_sand_pit:
     dw #preset_gtmax_maridia_postdraygon_aqueduct_ammo
     dw $078D, $A7D4  ; DDB
     dw $079B, $D5A7  ; MDB
@@ -27922,13 +27922,13 @@ preset_rbo_wrecked_ship_east_ocean:
     dw $0AFA, $007B  ; Samus Y
     dw #$FFFF
 
-preset_rbo_ridley_ridley_35_8_1:
-    dw #preset_rbo_ridley_ridley_35_10_1
+preset_rbo_ridley_ridley_35_supers_8_1:
+    dw #preset_rbo_ridley_ridley_35_supers_10_1
     dw $09C2, $02B0  ; Health
     dw $09C4, $0383  ; Max health
     dw #$FFFF
 
-preset_100early_maridia_postdraygon_return_halfie:
+preset_100early_maridia_postdraygon_reverse_halfie:
     dw #preset_100early_maridia_predraygon_draygon
     dw $078D, $A96C  ; DDB
     dw $090F, $A000  ; Screen subpixel X position
@@ -28096,7 +28096,7 @@ preset_prkd19_maridia_draygon:
     dw #$FFFF
 
 preset_gtmax_maridia_postdraygon_oasis_and_sewer:
-    dw #preset_gtmax_maridia_postdraygon_right_sandpit
+    dw #preset_gtmax_maridia_postdraygon_right_sand_pit
     dw $078D, $A6CC  ; DDB
     dw $079B, $D4C2  ; MDB
     dw $090F, $8000  ; Screen subpixel X position
@@ -28147,13 +28147,13 @@ preset_rbo_wrecked_ship_wrecked_ship_backdoor_entry:
     dw $0AFA, $049B  ; Samus Y
     dw #$FFFF
 
-preset_rbo_ln_escape_3_musketeers_spikesuit_2n2m:
-    dw #preset_rbo_ln_escape_3_musketeers_2n2m
+preset_rbo_ln_escape_double_maridia_3_musketeers_spikesuit:
+    dw #preset_rbo_ln_escape_double_maridia_3_musketeers
     dw $0A68, $0001  ; Flash suit
     dw #$FFFF
 
 preset_100early_maridia_postdraygon_reverse_botwoon_etank:
-    dw #preset_100early_maridia_postdraygon_return_halfie
+    dw #preset_100early_maridia_postdraygon_reverse_halfie
     dw $078D, $A7E0  ; DDB
     dw $079B, $D913  ; MDB
     dw $090F, $4000  ; Screen subpixel X position
@@ -28270,8 +28270,8 @@ preset_gtmax_maridia_postdraygon_maridia_ggg:
     dw $0AF6, $004E  ; Samus X
     dw #$FFFF
 
-preset_gtmax_maridia_postdraygon_left_sandpit:
-    dw #preset_gtmax_maridia_postdraygon_right_sandpit
+preset_gtmax_maridia_postdraygon_left_sand_pit:
+    dw #preset_gtmax_maridia_postdraygon_right_sand_pit
     dw $078D, $A4C8  ; DDB
     dw $090F, $C000  ; Screen subpixel X position
     dw $0913, $4800  ; Screen subpixel Y position
@@ -28335,8 +28335,8 @@ preset_rbo_wrecked_ship_ws_shaft_down:
     dw $0B3F, $0001  ; Blue suit
     dw #$FFFF
 
-preset_rbo_ln_escape_single_chamber_2n2m:
-    dw #preset_rbo_ln_escape_firefleas_exit_2n2m
+preset_rbo_ln_escape_double_maridia_single_chamber:
+    dw #preset_rbo_ln_escape_double_maridia_firefleas_exit
     dw $078D, $99AE  ; DDB
     dw $079B, $B656  ; MDB
     dw $090F, $6000  ; Screen subpixel X position
@@ -28366,7 +28366,7 @@ preset_100early_maridia_postdraygon_east_sand_pit:
     dw #$FFFF
 
 preset_100early_maridia_postdraygon_pants_room:
-    dw #preset_100early_maridia_postdraygon_return_halfie
+    dw #preset_100early_maridia_postdraygon_reverse_halfie
     dw $078D, $A6CC  ; DDB
     dw $079B, $D4C2  ; MDB
     dw $090F, $F000  ; Screen subpixel X position
@@ -28579,7 +28579,7 @@ preset_gtmax_maridia_postdraygon_maridia_ggg_revisit:
     dw $D882, $01BF  ; Items
     dw #$FFFF
 
-preset_suitless_wrecked_ship_sponge_bath_2:
+preset_suitless_wrecked_ship_sponge_bath:
     dw #preset_suitless_wrecked_ship_shaft_to_sponge_bath
     dw $078D, $A2E8  ; DDB
     dw $079B, $CAF6  ; MDB
@@ -28663,8 +28663,8 @@ preset_rbo_wrecked_ship_phantoon:
     dw $D8C0, $8010  ; Doors
     dw #$FFFF
 
-preset_rbo_ridley_ridley_30_11_1:
-    dw #preset_rbo_ridley_ridley_35_11_1
+preset_rbo_ridley_ridley_30_supers_11_1:
+    dw #preset_rbo_ridley_ridley_35_supers_11_1
     dw $09CA, $001E  ; Supers
     dw $09CC, $001E  ; Max supers
     dw #$FFFF
@@ -28685,7 +28685,7 @@ preset_100early_maridia_postdraygon_shaktool:
     dw #$FFFF
 
 preset_100early_maridia_postdraygon_shaktool_revisit:
-    dw #preset_100early_maridia_postdraygon_return_halfie
+    dw #preset_100early_maridia_postdraygon_reverse_halfie
     dw $078D, $A8D0  ; DDB
     dw $079B, $D6D0  ; MDB
     dw $090F, $C000  ; Screen subpixel X position
@@ -28929,8 +28929,8 @@ preset_rbo_wrecked_ship_ws_shaft_up:
     dw $D8C0, $8070  ; Doors
     dw #$FFFF
 
-preset_rbo_ln_escape_single_chamber_spikesuit_2n2m:
-    dw #preset_rbo_ln_escape_single_chamber_2n2m
+preset_rbo_ln_escape_double_maridia_single_chamber_spikesuit:
+    dw #preset_rbo_ln_escape_double_maridia_single_chamber
     dw $0A68, $0001  ; Flash suit
     dw #$FFFF
 
@@ -28947,7 +28947,7 @@ preset_100early_maridia_postdraygon_east_sand_hall:
     dw $0AFA, $038B  ; Samus Y
     dw #$FFFF
 
-preset_hundo_ridley_writg:
+preset_hundo_ridley_worst_room_in_the_game:
     dw #preset_hundo_ridley_fast_ripper_room
     dw $078D, $9912  ; DDB
     dw $079B, $B457  ; MDB
@@ -29116,8 +29116,8 @@ preset_rbo_wrecked_ship_west_ocean:
     dw $D8C0, $8074  ; Doors
     dw #$FFFF
 
-preset_rbo_ln_escape_croc_gate_farm_2n2m:
-    dw #preset_rbo_ln_escape_single_chamber_2n2m
+preset_rbo_ln_escape_double_maridia_croc_gate_farm:
+    dw #preset_rbo_ln_escape_double_maridia_single_chamber
     dw $078D, $95CA  ; DDB
     dw $079B, $ACB3  ; MDB
     dw $07F3, $0015  ; Music Bank
@@ -29150,8 +29150,8 @@ preset_rbo_kraidg4_kihunters_room_down:
     dw $D8C0, $8074  ; Doors
     dw #$FFFF
 
-preset_rbo_ridley_ridley_30_10_1:
-    dw #preset_rbo_ridley_ridley_30_7_1
+preset_rbo_ridley_ridley_30_supers_10_1:
+    dw #preset_rbo_ridley_ridley_30_supers_7_1
     dw $09C2, $0338  ; Health
     dw $09C4, $044B  ; Max health
     dw #$FFFF
@@ -29191,7 +29191,7 @@ preset_100early_maridia_postdraygon_kassiuz_room:
     dw #$FFFF
 
 preset_hundo_ridley_mickey_mouse_missiles:
-    dw #preset_hundo_ridley_writg
+    dw #preset_hundo_ridley_worst_room_in_the_game
     dw $078D, $994E  ; DDB
     dw $079B, $B4AD  ; MDB
     dw $090F, $8000  ; Screen subpixel X position
@@ -29233,7 +29233,7 @@ preset_kpdr23_upper_norfair_revisit_ice_beam_gates:
     dw $09A8, $100D  ; Collected Beams
     dw #$FFFF
 
-preset_kpdr25_lower_norfair_business_center_revisit:
+preset_kpdr25_maridia_business_center_revisit:
     dw #preset_kpdr22_upper_norfair_revisit_ice_beam_gates
     dw $09A6, $100B  ; Equipped Beams
     dw $09A8, $100F  ; Collected Beams
@@ -29394,8 +29394,8 @@ preset_rbo_kraidg4_red_brinstar_elevator_down:
     dw $D8B2, $2E09  ; Doors
     dw #$FFFF
 
-preset_rbo_ln_escape_croc_gate_farm_spikesuit_2n2m:
-    dw #preset_rbo_ln_escape_croc_gate_farm_2n2m
+preset_rbo_ln_escape_double_maridia_croc_gate_farm_spikesuit:
+    dw #preset_rbo_ln_escape_double_maridia_croc_gate_farm
     dw $0A68, $0001  ; Flash suit
     dw #$FFFF
 
@@ -29494,7 +29494,7 @@ preset_prkd19_backtracking_parlor_return:
     dw #$FFFF
 
 preset_kpdr25_lower_norfair_magdollite_tunnel:
-    dw #preset_kpdr25_lower_norfair_business_center_revisit
+    dw #preset_kpdr25_maridia_business_center_revisit
     dw $078D, $9576  ; DDB
     dw $079B, $AEDF  ; MDB
     dw $090F, $B001  ; Screen subpixel X position
@@ -29505,7 +29505,7 @@ preset_kpdr25_lower_norfair_magdollite_tunnel:
     dw #$FFFF
 
 preset_kpdr25_lower_norfair_ln_main_hall:
-    dw #preset_kpdr25_lower_norfair_business_center_revisit
+    dw #preset_kpdr25_maridia_business_center_revisit
     dw $078D, $96F6  ; DDB
     dw $079B, $B236  ; MDB
     dw $07F3, $0018  ; Music Bank
@@ -29671,7 +29671,7 @@ preset_suitless_wrecked_ship_west_ocean_revisit:
     dw $D880, $FF7F  ; Items
     dw #$FFFF
 
-preset_rbo_kraidg4_red_tower_moonfall_screw_attack:
+preset_rbo_kraidg4_red_tower_screwfall:
     dw #preset_rbo_kraidg4_red_brinstar_elevator_down
     dw $078D, $90AE  ; DDB
     dw $079B, $A2F7  ; MDB
@@ -29684,8 +29684,8 @@ preset_rbo_kraidg4_red_tower_moonfall_screw_attack:
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 
-preset_rbo_ln_escape_business_center_2n2m:
-    dw #preset_rbo_ln_escape_firefleas_2n2m
+preset_rbo_ln_escape_double_maridia_business_center:
+    dw #preset_rbo_ln_escape_double_maridia_firefleas
     dw $078D, $97DA  ; DDB
     dw $079B, $B167  ; MDB
     dw $07F3, $0015  ; Music Bank
@@ -29955,7 +29955,7 @@ preset_suitless_wrecked_ship_crateria_kihunters:
     dw #$FFFF
 
 preset_rbo_kraidg4_kraid_entry:
-    dw #preset_rbo_kraidg4_red_tower_moonfall_screw_attack
+    dw #preset_rbo_kraidg4_red_tower_screwfall
     dw $078D, $A348  ; DDB
     dw $079B, $CF80  ; MDB
     dw $090F, $4000  ; Screen subpixel X position
@@ -29970,8 +29970,8 @@ preset_rbo_kraidg4_kraid_entry:
     dw $0B3F, $0001  ; Blue suit
     dw #$FFFF
 
-preset_rbo_ridley_ridley_30_9_1:
-    dw #preset_rbo_ridley_ridley_30_7_1
+preset_rbo_ridley_ridley_30_supers_9_1:
+    dw #preset_rbo_ridley_ridley_30_supers_7_1
     dw $09C2, $02F4  ; Health
     dw $09C4, $03E7  ; Max health
     dw #$FFFF
@@ -30214,8 +30214,8 @@ preset_rbo_kraidg4_kraid_hallway:
     dw $0B3F, $0000  ; Blue suit
     dw #$FFFF
 
-preset_rbo_ln_escape_business_center_spikesuit_2n2m:
-    dw #preset_rbo_ln_escape_business_center_2n2m
+preset_rbo_ln_escape_double_maridia_business_center_spikesuit:
+    dw #preset_rbo_ln_escape_double_maridia_business_center
     dw $0A68, $0001  ; Flash suit
     dw #$FFFF
 
@@ -30532,8 +30532,8 @@ preset_rbo_kraidg4_kraid:
     dw $D8B8, $EE24  ; Doors
     dw #$FFFF
 
-preset_rbo_ln_escape_maridia_entry_2n2m:
-    dw #preset_rbo_ln_escape_business_center_2n2m
+preset_rbo_ln_escape_double_maridia_maridia_entry:
+    dw #preset_rbo_ln_escape_double_maridia_business_center
     dw $078D, $922E  ; DDB
     dw $079B, $CF80  ; MDB
     dw $07F3, $0012  ; Music Bank
@@ -30802,8 +30802,8 @@ preset_rbo_kraidg4_kraid_hallway_exit:
     dw $D8B8, $EEA4  ; Doors
     dw #$FFFF
 
-preset_rbo_ln_escape_maridia_entry_spikesuit_2n2m:
-    dw #preset_rbo_ln_escape_maridia_entry_2n2m
+preset_rbo_ln_escape_double_maridia_maridia_entry_spikesuit:
+    dw #preset_rbo_ln_escape_double_maridia_maridia_entry
     dw $0A68, $0001  ; Flash suit
     dw #$FFFF
 
@@ -31378,7 +31378,7 @@ preset_100early_kraidicekronic_ice_beam_gate_room:
     dw $D8B8, $EEEF  ; Doors
     dw #$FFFF
 
-preset_hundo_ridley_3_muskateers:
+preset_hundo_ridley_3_musketeers:
     dw #preset_hundo_ridley_hotarubi_special
     dw $078D, $9A92  ; DDB
     dw $079B, $B510  ; MDB
@@ -31520,7 +31520,7 @@ preset_100early_kraidicekronic_ice_beam_snake_room:
     dw #$FFFF
 
 preset_hundo_crocomire_bubble_mountain_revisit:
-    dw #preset_hundo_ridley_3_muskateers
+    dw #preset_hundo_ridley_3_musketeers
     dw $078D, $9A4A  ; DDB
     dw $079B, $AD5E  ; MDB
     dw $07F3, $0015  ; Music Bank
@@ -32491,7 +32491,7 @@ preset_kpdr22_lower_norfair_kihunter_stairs_up:
     dw $09A8, $100B  ; Collected Beams
     dw #$FFFF
 
-preset_kpdr23_lower_norfair_fire_flea_room:
+preset_kpdr23_lower_norfair_fireflea_room:
     dw #preset_kpdr23_lower_norfair_kihunter_stairs_up
     dw $078D, $9A26  ; DDB
     dw $079B, $B585  ; MDB
@@ -32529,7 +32529,7 @@ preset_kpdr25_lower_norfair_kihunter_stairs_up:
     dw $0AFA, $009B  ; Samus Y
     dw #$FFFF
 
-preset_gtmax_brinstar_cleanup_1_crateria_power_bombs:
+preset_gtmax_brinstar_cleanup_crateria_power_bombs:
     dw #preset_gtmax_wrecked_ship_ocean_revisit
     dw $078D, $8AC6  ; DDB
     dw $079B, $91F8  ; MDB
@@ -32667,13 +32667,13 @@ preset_kpdr21_lower_norfair_kihunter_stairs_up:
     dw $D8B8, $2EED  ; Doors
     dw #$FFFF
 
-preset_kpdr22_lower_norfair_fire_flea_room:
-    dw #preset_kpdr23_lower_norfair_fire_flea_room
+preset_kpdr22_lower_norfair_fireflea_room:
+    dw #preset_kpdr23_lower_norfair_fireflea_room
     dw $09A8, $100B  ; Collected Beams
     dw #$FFFF
 
 preset_kpdr25_lower_norfair_fireflea_room:
-    dw #preset_kpdr23_lower_norfair_fire_flea_room
+    dw #preset_kpdr23_lower_norfair_fireflea_room
     dw $09C2, $01FB  ; Health
     dw $09C4, $0257  ; Max health
     dw $09C6, $000E  ; Missiles
@@ -32687,7 +32687,7 @@ preset_kpdr25_lower_norfair_fireflea_room:
     dw #$FFFF
 
 preset_kpdr23_lower_norfair_springball_maze:
-    dw #preset_kpdr23_lower_norfair_fire_flea_room
+    dw #preset_kpdr23_lower_norfair_fireflea_room
     dw $078D, $9A02  ; DDB
     dw $079B, $B6EE  ; MDB
     dw $090F, $0000  ; Screen subpixel X position
@@ -32702,7 +32702,7 @@ preset_kpdr23_lower_norfair_springball_maze:
     dw #$FFFF
 
 preset_kpdr23_lower_norfair_three_musketeers:
-    dw #preset_kpdr23_lower_norfair_fire_flea_room
+    dw #preset_kpdr23_lower_norfair_fireflea_room
     dw $078D, $9A92  ; DDB
     dw $079B, $B510  ; MDB
     dw $090F, $5A81  ; Screen subpixel X position
@@ -32714,8 +32714,8 @@ preset_kpdr23_lower_norfair_three_musketeers:
     dw $0AF6, $0060  ; Samus X
     dw #$FFFF
 
-preset_gtmax_brinstar_cleanup_1_landing_site_revisit:
-    dw #preset_gtmax_brinstar_cleanup_1_crateria_power_bombs
+preset_gtmax_brinstar_cleanup_landing_site_revisit:
+    dw #preset_gtmax_brinstar_cleanup_crateria_power_bombs
     dw $078D, $893A  ; DDB
     dw $079B, $93AA  ; MDB
     dw $090F, $D000  ; Screen subpixel X position
@@ -32841,8 +32841,8 @@ preset_hundo_crocomire_croc_escape:
     dw $D8B8, $EEEF  ; Doors
     dw #$FFFF
 
-preset_kpdr21_lower_norfair_fire_flea_room:
-    dw #preset_kpdr22_lower_norfair_fire_flea_room
+preset_kpdr21_lower_norfair_fireflea_room:
+    dw #preset_kpdr22_lower_norfair_fireflea_room
     dw $09C2, $00B2  ; Health
     dw $09C4, $018F  ; Max health
     dw $D874, $0104  ; Items
@@ -32928,8 +32928,8 @@ preset_kpdr25_lower_norfair_three_musketeers:
     dw $D8BA, $DDF1  ; Doors
     dw #$FFFF
 
-preset_gtmax_brinstar_cleanup_1_gauntlet_etank:
-    dw #preset_gtmax_brinstar_cleanup_1_landing_site_revisit
+preset_gtmax_brinstar_cleanup_gauntlet_etank:
+    dw #preset_gtmax_brinstar_cleanup_landing_site_revisit
     dw $078D, $892E  ; DDB
     dw $079B, $92B3  ; MDB
     dw $07F3, $0009  ; Music Bank
@@ -33165,8 +33165,8 @@ preset_kpdr25_lower_norfair_business_center_final:
     dw $D8BA, $DDF1  ; Doors
     dw #$FFFF
 
-preset_gtmax_brinstar_cleanup_1_crumble_blocks:
-    dw #preset_gtmax_brinstar_cleanup_1_gauntlet_etank
+preset_gtmax_brinstar_cleanup_crumble_blocks:
+    dw #preset_gtmax_brinstar_cleanup_gauntlet_etank
     dw $078D, $8952  ; DDB
     dw $079B, $965B  ; MDB
     dw $090F, $4000  ; Screen subpixel X position
@@ -33364,8 +33364,8 @@ preset_kpdr25_backtracking_red_brinstar_green_gate:
     dw $0AF6, $0079  ; Samus X
     dw #$FFFF
 
-preset_gtmax_brinstar_cleanup_1_kago_mushroom_room:
-    dw #preset_gtmax_brinstar_cleanup_1_crumble_blocks
+preset_gtmax_brinstar_cleanup_kago_mushroom_room:
+    dw #preset_gtmax_brinstar_cleanup_crumble_blocks
     dw $078D, $8B1A  ; DDB
     dw $079B, $99BD  ; MDB
     dw $090F, $C000  ; Screen subpixel X position
@@ -33716,8 +33716,8 @@ preset_100early_lower_norfair_ninja_pirates:
     dw $D8BA, $C3F7  ; Doors
     dw #$FFFF
 
-preset_gtmax_brinstar_cleanup_1_green_brinstar_revisit:
-    dw #preset_gtmax_brinstar_cleanup_1_kago_mushroom_room
+preset_gtmax_brinstar_cleanup_green_brinstar_revisit:
+    dw #preset_gtmax_brinstar_cleanup_kago_mushroom_room
     dw $078D, $8C22  ; DDB
     dw $079B, $9938  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -33730,8 +33730,8 @@ preset_gtmax_brinstar_cleanup_1_green_brinstar_revisit:
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 
-preset_gtmax_brinstar_cleanup_1_brinstar_reserve_tank:
-    dw #preset_gtmax_brinstar_cleanup_1_kago_mushroom_room
+preset_gtmax_brinstar_cleanup_brinstar_reserve_tank:
+    dw #preset_gtmax_brinstar_cleanup_kago_mushroom_room
     dw $078D, $8CD6  ; DDB
     dw $079B, $9BC8  ; MDB
     dw $07F3, $000F  ; Music Bank
@@ -33887,7 +33887,7 @@ preset_kpdr25_tourian_tourian_elevator_room:
     dw $D8BA, $DDF1  ; Doors
     dw #$FFFF
 
-preset_suitless_ridley_ridley_2:
+preset_suitless_ridley_ridley:
     dw #preset_suitless_ridley_preridley_room
     dw $078D, $995A  ; DDB
     dw $079B, $B37A  ; MDB
@@ -33948,8 +33948,8 @@ preset_100early_lower_norfair_plowerhouse_room:
     dw $D8BC, $0001  ; Doors
     dw #$FFFF
 
-preset_gtmax_brinstar_cleanup_1_reverse_mockball:
-    dw #preset_gtmax_brinstar_cleanup_1_green_brinstar_revisit
+preset_gtmax_brinstar_cleanup_reverse_mockball:
+    dw #preset_gtmax_brinstar_cleanup_green_brinstar_revisit
     dw $078D, $8D5A  ; DDB
     dw $079B, $9C07  ; MDB
     dw $07F3, $000F  ; Music Bank
@@ -34215,8 +34215,8 @@ preset_100early_lower_norfair_kihunter_shaft_revisit:
     dw $D8BA, $DFF7  ; Doors
     dw #$FFFF
 
-preset_gtmax_brinstar_cleanup_1_green_shaft_descent:
-    dw #preset_gtmax_brinstar_cleanup_1_reverse_mockball
+preset_gtmax_brinstar_cleanup_green_shaft_descent:
+    dw #preset_gtmax_brinstar_cleanup_reverse_mockball
     dw $078D, $8D66  ; DDB
     dw $079B, $9BC8  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -34363,8 +34363,8 @@ preset_100early_lower_norfair_springball_maze:
     dw $D87A, $0001  ; Items
     dw #$FFFF
 
-preset_gtmax_brinstar_cleanup_1_green_brinstar_beetoms:
-    dw #preset_gtmax_brinstar_cleanup_1_green_shaft_descent
+preset_gtmax_brinstar_cleanup_green_brinstar_beetoms:
+    dw #preset_gtmax_brinstar_cleanup_green_shaft_descent
     dw $078D, $8D4E  ; DDB
     dw $079B, $9AD9  ; MDB
     dw $0911, $0000  ; Screen X position in pixels
@@ -34394,7 +34394,7 @@ preset_suitless_norfair_cleanup_hotarubi_revisit:
     dw $D878, $DEDE  ; Items
     dw #$FFFF
 
-preset_100early_lower_norfair_three_muskateers:
+preset_100early_lower_norfair_three_musketeers:
     dw #preset_100early_lower_norfair_springball_maze
     dw $078D, $9A92  ; DDB
     dw $079B, $B510  ; MDB
@@ -34525,8 +34525,8 @@ preset_kpdr25_tourian_metroids_4:
     dw $D8BA, $DDF1  ; Doors
     dw #$FFFF
 
-preset_gtmax_brinstar_cleanup_1_etecoon_etank_room:
-    dw #preset_gtmax_brinstar_cleanup_1_green_brinstar_beetoms
+preset_gtmax_brinstar_cleanup_etecoon_etank_room:
+    dw #preset_gtmax_brinstar_cleanup_green_brinstar_beetoms
     dw $078D, $8F3A  ; DDB
     dw $079B, $A051  ; MDB
     dw $090F, $C000  ; Screen subpixel X position
@@ -34559,7 +34559,7 @@ preset_suitless_norfair_cleanup_three_musketeers:
     dw $0AF8, $2000  ; Samus subpixel X
     dw #$FFFF
 
-preset_suitless_norfair_cleanup_single_chamber_2:
+preset_suitless_norfair_cleanup_single_chamber:
     dw #preset_suitless_norfair_cleanup_hotarubi_revisit
     dw $078D, $99AE  ; DDB
     dw $079B, $B656  ; MDB
@@ -34580,7 +34580,7 @@ preset_suitless_norfair_cleanup_single_chamber_2:
     dw #$FFFF
 
 preset_100early_lower_norfair_bubble_mountain_return:
-    dw #preset_100early_lower_norfair_three_muskateers
+    dw #preset_100early_lower_norfair_three_musketeers
     dw $078D, $9A4A  ; DDB
     dw $079B, $AD5E  ; MDB
     dw $07F3, $0015  ; Music Bank
@@ -34692,8 +34692,8 @@ preset_kpdr21_tourian_metroids_4:
     dw $D8B8, $2EED  ; Doors
     dw #$FFFF
 
-preset_gtmax_brinstar_cleanup_1_etecoon_room:
-    dw #preset_gtmax_brinstar_cleanup_1_etecoon_etank_room
+preset_gtmax_brinstar_cleanup_etecoon_room:
+    dw #preset_gtmax_brinstar_cleanup_etecoon_etank_room
     dw $078D, $8F5E  ; DDB
     dw $079B, $A011  ; MDB
     dw $090F, $BFFF  ; Screen subpixel X position
@@ -34712,7 +34712,7 @@ preset_gtmax_brinstar_cleanup_1_etecoon_room:
     dw #$FFFF
 
 preset_suitless_norfair_cleanup_bubble_mountain_return:
-    dw #preset_suitless_norfair_cleanup_single_chamber_2
+    dw #preset_suitless_norfair_cleanup_single_chamber
     dw $078D, $9A4A  ; DDB
     dw $079B, $AD5E  ; MDB
     dw $07F3, $0015  ; Music Bank
@@ -34830,8 +34830,8 @@ preset_kpdr21_tourian_baby_skip:
     dw $D8B8, $2EED  ; Doors
     dw #$FFFF
 
-preset_gtmax_brinstar_cleanup_1_green_shaft_final:
-    dw #preset_gtmax_brinstar_cleanup_1_etecoon_room
+preset_gtmax_brinstar_cleanup_green_shaft_final:
+    dw #preset_gtmax_brinstar_cleanup_etecoon_room
     dw $078D, $8F46  ; DDB
     dw $079B, $9AD9  ; MDB
     dw $090F, $0000  ; Screen subpixel X position
@@ -34971,8 +34971,8 @@ preset_kpdr25_tourian_mother_brain_2:
     dw $D8BA, $DDF1  ; Doors
     dw #$FFFF
 
-preset_gtmax_brinstar_cleanup_1_dachora_room_revisit:
-    dw #preset_gtmax_brinstar_cleanup_1_green_shaft_final
+preset_gtmax_brinstar_cleanup_dachora_room_revisit:
+    dw #preset_gtmax_brinstar_cleanup_green_shaft_final
     dw $078D, $8D06  ; DDB
     dw $090F, $4000  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
@@ -35099,8 +35099,8 @@ preset_kpdr25_tourian_mother_brain_3:
     dw $D82C, $0203  ; Bosses
     dw #$FFFF
 
-preset_gtmax_brinstar_cleanup_1_big_pink_revisit:
-    dw #preset_gtmax_brinstar_cleanup_1_dachora_room_revisit
+preset_gtmax_brinstar_cleanup_big_pink_revisit:
+    dw #preset_gtmax_brinstar_cleanup_dachora_room_revisit
     dw $078D, $8CE2  ; DDB
     dw $079B, $9CB3  ; MDB
     dw $090F, $9C00  ; Screen subpixel X position
@@ -35115,8 +35115,8 @@ preset_gtmax_brinstar_cleanup_1_big_pink_revisit:
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 
-preset_gtmax_brinstar_cleanup_1_mission_impossible:
-    dw #preset_gtmax_brinstar_cleanup_1_green_shaft_final
+preset_gtmax_brinstar_cleanup_mission_impossible:
+    dw #preset_gtmax_brinstar_cleanup_green_shaft_final
     dw $078D, $8DAE  ; DDB
     dw $079B, $9D19  ; MDB
     dw $090F, $5000  ; Screen subpixel X position
@@ -35266,8 +35266,8 @@ preset_kpdr25_tourian_zebes_escape:
     dw $D820, $4FC5  ; Events
     dw #$FFFF
 
-preset_gtmax_brinstar_cleanup_1_leaving_pink_etank:
-    dw #preset_gtmax_brinstar_cleanup_1_mission_impossible
+preset_gtmax_brinstar_cleanup_leaving_pink_etank:
+    dw #preset_gtmax_brinstar_cleanup_mission_impossible
     dw $078D, $8FBE  ; DDB
     dw $079B, $A15B  ; MDB
     dw $0911, $0000  ; Screen X position in pixels
@@ -35588,8 +35588,8 @@ preset_kpdr21_tourian_escape_room_3:
     dw $D8B8, $2EED  ; Doors
     dw #$FFFF
 
-preset_gtmax_brinstar_cleanup_1_leaving_spore_spawn_supers:
-    dw #preset_gtmax_brinstar_cleanup_1_leaving_pink_etank
+preset_gtmax_brinstar_cleanup_leaving_spore_spawn_supers:
+    dw #preset_gtmax_brinstar_cleanup_leaving_pink_etank
     dw $078D, $8F76  ; DDB
     dw $079B, $9B5B  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -35837,8 +35837,8 @@ preset_kpdr25_tourian_escape_parlor:
     dw $D8BA, $DDF1  ; Doors
     dw #$FFFF
 
-preset_gtmax_brinstar_cleanup_1_waterway_etank:
-    dw #preset_gtmax_brinstar_cleanup_1_leaving_spore_spawn_supers
+preset_gtmax_brinstar_cleanup_waterway_etank:
+    dw #preset_gtmax_brinstar_cleanup_leaving_spore_spawn_supers
     dw $078D, $8F82  ; DDB
     dw $079B, $9D19  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -35959,8 +35959,8 @@ preset_kpdr21_tourian_escape_parlor:
     dw $D8B8, $2EED  ; Doors
     dw #$FFFF
 
-preset_gtmax_brinstar_cleanup_2_green_hills_revisit:
-    dw #preset_gtmax_brinstar_cleanup_1_waterway_etank
+preset_gtmax_blue_brinstar_cleanup_green_hill_zone_revisit:
+    dw #preset_gtmax_brinstar_cleanup_waterway_etank
     dw $078D, $8F8E  ; DDB
     dw $090F, $0000  ; Screen subpixel X position
     dw $0911, $02E0  ; Screen X position in pixels
@@ -36044,8 +36044,8 @@ preset_hundo_tourian_zebes_escape:
     dw $D82C, $0203  ; Bosses
     dw #$FFFF
 
-preset_gtmax_brinstar_cleanup_2_blue_brinstar_hoppers:
-    dw #preset_gtmax_brinstar_cleanup_2_green_hills_revisit
+preset_gtmax_blue_brinstar_cleanup_blue_brinstar_hoppers:
+    dw #preset_gtmax_blue_brinstar_cleanup_green_hill_zone_revisit
     dw $078D, $8DEA  ; DDB
     dw $079B, $9E52  ; MDB
     dw $0911, $00E5  ; Screen X position in pixels
@@ -36130,8 +36130,8 @@ preset_hundo_tourian_escape_room_3:
     dw $0AFA, $018B  ; Samus Y
     dw #$FFFF
 
-preset_gtmax_brinstar_cleanup_2_billy_mays:
-    dw #preset_gtmax_brinstar_cleanup_2_blue_brinstar_hoppers
+preset_gtmax_blue_brinstar_cleanup_billy_mays:
+    dw #preset_gtmax_blue_brinstar_cleanup_blue_brinstar_hoppers
     dw $078D, $8ECE  ; DDB
     dw $079B, $9F64  ; MDB
     dw $07F3, $0009  ; Music Bank
@@ -36204,8 +36204,8 @@ preset_hundo_tourian_escape_climb:
     dw $0AF6, $0151  ; Samus X
     dw #$FFFF
 
-preset_gtmax_brinstar_cleanup_2_leaving_blue_brinstar:
-    dw #preset_gtmax_brinstar_cleanup_2_billy_mays
+preset_gtmax_blue_brinstar_cleanup_leaving_blue_brinstar:
+    dw #preset_gtmax_blue_brinstar_cleanup_billy_mays
     dw $078D, $8FE2  ; DDB
     dw $090F, $7000  ; Screen subpixel X position
     dw $0911, $019E  ; Screen X position in pixels
@@ -36268,8 +36268,8 @@ preset_hundo_tourian_escape_parlor:
     dw $0AFA, $005B  ; Samus Y
     dw #$FFFF
 
-preset_gtmax_brinstar_cleanup_2_pit_room_final_spark:
-    dw #preset_gtmax_brinstar_cleanup_2_leaving_blue_brinstar
+preset_gtmax_blue_brinstar_cleanup_pit_room_final_spark:
+    dw #preset_gtmax_blue_brinstar_cleanup_leaving_blue_brinstar
     dw $078D, $8EB6  ; DDB
     dw $079B, $97B5  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -36287,8 +36287,8 @@ preset_gtmax_brinstar_cleanup_2_pit_room_final_spark:
     dw $0AFA, $0088  ; Samus Y
     dw #$FFFF
 
-preset_gtmax_brinstar_cleanup_2_climb_supers:
-    dw #preset_gtmax_brinstar_cleanup_2_billy_mays
+preset_gtmax_blue_brinstar_cleanup_climb_supers:
+    dw #preset_gtmax_blue_brinstar_cleanup_billy_mays
     dw $078D, $8B7A  ; DDB
     dw $079B, $96BA  ; MDB
     dw $090F, $0400  ; Screen subpixel X position
@@ -36327,8 +36327,8 @@ preset_100early_tourian_escape_parlor:
     dw $09A2, $F32F  ; Equipped Items
     dw #$FFFF
 
-preset_gtmax_brinstar_cleanup_2_to_final_missiles:
-    dw #preset_gtmax_brinstar_cleanup_2_climb_supers
+preset_gtmax_blue_brinstar_cleanup_to_final_missiles:
+    dw #preset_gtmax_blue_brinstar_cleanup_climb_supers
     dw $078D, $8C6A  ; DDB
     dw $090F, $0000  ; Screen subpixel X position
     dw $0911, $0100  ; Screen X position in pixels
@@ -36361,7 +36361,7 @@ preset_suitless_final_cleanup_landing_site_revisit:
     dw $0AFC, $43FF  ; Samus subpixel Y
     dw #$FFFF
 
-preset_suitless_final_cleanup_crateria_pbs:
+preset_suitless_final_cleanup_crateria_power_bombs:
     dw #preset_suitless_final_cleanup_parlor_revisit
     dw $078D, $896A  ; DDB
     dw $079B, $91F8  ; MDB
@@ -36400,8 +36400,8 @@ preset_suitless_final_cleanup_gauntlet_entry:
     dw $D8B0, $4002  ; Doors
     dw #$FFFF
 
-preset_gtmax_brinstar_cleanup_2_parlor_missiles:
-    dw #preset_gtmax_brinstar_cleanup_2_to_final_missiles
+preset_gtmax_blue_brinstar_cleanup_parlor_missiles:
+    dw #preset_gtmax_blue_brinstar_cleanup_to_final_missiles
     dw $078D, $89A6  ; DDB
     dw $079B, $9A44  ; MDB
     dw $090F, $E001  ; Screen subpixel X position
@@ -36440,8 +36440,8 @@ preset_suitless_final_cleanup_quickdrops:
     dw $D870, $F9FF  ; Items
     dw #$FFFF
 
-preset_gtmax_brinstar_cleanup_2_parlor_again:
-    dw #preset_gtmax_brinstar_cleanup_2_parlor_missiles
+preset_gtmax_blue_brinstar_cleanup_parlor_again:
+    dw #preset_gtmax_blue_brinstar_cleanup_parlor_missiles
     dw $078D, $8C9A  ; DDB
     dw $090F, $4000  ; Screen subpixel X position
     dw $0911, $0100  ; Screen X position in pixels
@@ -36480,8 +36480,8 @@ preset_suitless_tourian_tourian_elevator:
     dw $D90C, $0100  ; Map Stations
     dw #$FFFF
 
-preset_gtmax_brinstar_cleanup_2_terminator_etank:
-    dw #preset_gtmax_brinstar_cleanup_2_parlor_again
+preset_gtmax_blue_brinstar_cleanup_terminator_etank:
+    dw #preset_gtmax_blue_brinstar_cleanup_parlor_again
     dw $078D, $8C8E  ; DDB
     dw $079B, $92FD  ; MDB
     dw $0913, $1000  ; Screen subpixel Y position
@@ -36492,7 +36492,7 @@ preset_gtmax_brinstar_cleanup_2_terminator_etank:
     dw #$FFFF
 
 preset_gtmax_tourian_tourian_elevator_room:
-    dw #preset_gtmax_brinstar_cleanup_2_pit_room_final_spark
+    dw #preset_gtmax_blue_brinstar_cleanup_pit_room_final_spark
     dw $078D, $9222  ; DDB
     dw $079B, $DAAE  ; MDB
     dw $07F3, $001E  ; Music Bank

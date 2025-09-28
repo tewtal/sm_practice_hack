@@ -89,12 +89,12 @@ presets_submenu_kpdr25_kraid:
     dw #presets_kpdr25_kraid_entering_kraids_lair
     dw #presets_kpdr25_kraid_warehouse_zeelas
     dw #presets_kpdr25_kraid_kraid_kihunters
-    dw #presets_kpdr25_kraid_mini_kraid
+    dw #presets_kpdr25_kraid_minikraid
     dw #presets_kpdr25_kraid_fallen_hero
     dw #presets_kpdr25_kraid_kraid
     dw #presets_kpdr25_kraid_leaving_varia
     dw #presets_kpdr25_kraid_arthur_j_metroid
-    dw #presets_kpdr25_kraid_mini_kraid_revisit
+    dw #presets_kpdr25_kraid_minikraid_revisit
     dw #presets_kpdr25_kraid_kraid_kihunters_revisit
     dw #presets_kpdr25_kraid_kraid_etank
     dw #presets_kpdr25_kraid_leaving_kraid_etank
@@ -104,8 +104,8 @@ presets_submenu_kpdr25_kraid:
 
 presets_submenu_kpdr25_upper_norfair:
     dw #presets_kpdr25_upper_norfair_business_center_postelev
-    dw #presets_kpdr25_upper_norfair_hi_jump_etank
-    dw #presets_kpdr25_upper_norfair_leaving_hi_jump
+    dw #presets_kpdr25_upper_norfair_hijump_etank
+    dw #presets_kpdr25_upper_norfair_leaving_hijump
     dw #presets_kpdr25_upper_norfair_business_center_revisit
     dw #presets_kpdr25_upper_norfair_precathedral
     dw #presets_kpdr25_upper_norfair_cathedral
@@ -138,7 +138,7 @@ presets_submenu_kpdr25_red_brinstar:
 
 presets_submenu_kpdr25_wrecked_ship:
     dw #presets_kpdr25_wrecked_ship_crateria_kihunters
-    dw #presets_kpdr25_wrecked_ship_oceanfly_setup
+    dw #presets_kpdr25_wrecked_ship_ocean_fly_setup
     dw #presets_kpdr25_wrecked_ship_ocean_spark
     dw #presets_kpdr25_wrecked_ship_entering_wrecked_ship
     dw #presets_kpdr25_wrecked_ship_basement
@@ -163,7 +163,7 @@ presets_submenu_kpdr25_red_brinstar_revisit:
     dw #presets_kpdr25_red_brinstar_revisit_red_tower_down
     dw #presets_kpdr25_red_brinstar_revisit_skree_boost_final
     dw #presets_kpdr25_red_brinstar_revisit_below_spazer_final
-    dw #presets_kpdr25_red_brinstar_revisit_breaking_tube
+    dw #presets_kpdr25_red_brinstar_revisit_breaking_the_tube
     dw #$0000
     %cm_header("RED BRINSTAR REVISIT")
 
@@ -188,14 +188,15 @@ presets_submenu_kpdr25_maridia:
     dw #presets_kpdr25_maridia_toilet
     dw #presets_kpdr25_maridia_sewers
     dw #presets_kpdr25_maridia_lower_maridia_gate
+    dw #presets_kpdr25_maridia_business_center_revisit
     dw #$0000
     %cm_header("MARIDIA")
 
 presets_submenu_kpdr25_lower_norfair:
-    dw #presets_kpdr25_lower_norfair_business_center_revisit
     dw #presets_kpdr25_lower_norfair_magdollite_tunnel
     dw #presets_kpdr25_lower_norfair_ln_main_hall
     dw #presets_kpdr25_lower_norfair_prepillars
+    dw #presets_kpdr25_lower_norfair_fast_pillars_setup
     dw #presets_kpdr25_lower_norfair_worst_room_in_the_game
     dw #presets_kpdr25_lower_norfair_amphitheatre
     dw #presets_kpdr25_lower_norfair_kihunter_stairs_down
@@ -249,6 +250,7 @@ presets_submenu_kpdr25_tourian:
     dw #presets_kpdr25_tourian_escape_parlor
     dw #$0000
     %cm_header("TOURIAN")
+
 
 ; Crateria
 presets_kpdr25_crateria_ceres_elevator:
@@ -357,8 +359,8 @@ presets_kpdr25_kraid_warehouse_zeelas:
 presets_kpdr25_kraid_kraid_kihunters:
     %cm_preset("Kraid Kihunters", #preset_kpdr25_kraid_kraid_kihunters)
 
-presets_kpdr25_kraid_mini_kraid:
-    %cm_preset("Mini Kraid", #preset_kpdr25_kraid_mini_kraid)
+presets_kpdr25_kraid_minikraid:
+    %cm_preset("Mini-Kraid", #preset_kpdr25_kraid_minikraid)
 
 presets_kpdr25_kraid_fallen_hero:
     %cm_preset("Fallen Hero", #preset_kpdr25_kraid_fallen_hero)
@@ -372,8 +374,8 @@ presets_kpdr25_kraid_leaving_varia:
 presets_kpdr25_kraid_arthur_j_metroid:
     %cm_preset("Arthur J. Metroid", #preset_kpdr25_kraid_arthur_j_metroid)
 
-presets_kpdr25_kraid_mini_kraid_revisit:
-    %cm_preset("Mini Kraid Revisit", #preset_kpdr25_kraid_mini_kraid_revisit)
+presets_kpdr25_kraid_minikraid_revisit:
+    %cm_preset("Mini-Kraid Revisit", #preset_kpdr25_kraid_minikraid_revisit)
 
 presets_kpdr25_kraid_kraid_kihunters_revisit:
     %cm_preset("Kraid Kihunters Revisit", #preset_kpdr25_kraid_kraid_kihunters_revisit)
@@ -392,11 +394,11 @@ presets_kpdr25_kraid_business_center_preelev:
 presets_kpdr25_upper_norfair_business_center_postelev:
     %cm_preset("Business Center Post-Elev", #preset_kpdr25_upper_norfair_business_center_postelev)
 
-presets_kpdr25_upper_norfair_hi_jump_etank:
-    %cm_preset("Hi Jump E-Tank", #preset_kpdr25_upper_norfair_hi_jump_etank)
+presets_kpdr25_upper_norfair_hijump_etank:
+    %cm_preset("Hi-Jump E-Tank", #preset_kpdr25_upper_norfair_hijump_etank)
 
-presets_kpdr25_upper_norfair_leaving_hi_jump:
-    %cm_preset("Leaving Hi Jump", #preset_kpdr25_upper_norfair_leaving_hi_jump)
+presets_kpdr25_upper_norfair_leaving_hijump:
+    %cm_preset("Leaving Hi-Jump", #preset_kpdr25_upper_norfair_leaving_hijump)
 
 presets_kpdr25_upper_norfair_business_center_revisit:
     %cm_preset("Business Center Revisit", #preset_kpdr25_upper_norfair_business_center_revisit)
@@ -474,8 +476,8 @@ presets_kpdr25_red_brinstar_caterpillars_up:
 presets_kpdr25_wrecked_ship_crateria_kihunters:
     %cm_preset("Crateria Kihunters", #preset_kpdr25_wrecked_ship_crateria_kihunters)
 
-presets_kpdr25_wrecked_ship_oceanfly_setup:
-    %cm_preset("Oceanfly Setup", #preset_kpdr25_wrecked_ship_oceanfly_setup)
+presets_kpdr25_wrecked_ship_ocean_fly_setup:
+    %cm_preset("Ocean Fly Setup", #preset_kpdr25_wrecked_ship_ocean_fly_setup)
 
 presets_kpdr25_wrecked_ship_ocean_spark:
     %cm_preset("Ocean Spark", #preset_kpdr25_wrecked_ship_ocean_spark)
@@ -539,8 +541,8 @@ presets_kpdr25_red_brinstar_revisit_skree_boost_final:
 presets_kpdr25_red_brinstar_revisit_below_spazer_final:
     %cm_preset("Below Spazer Final", #preset_kpdr25_red_brinstar_revisit_below_spazer_final)
 
-presets_kpdr25_red_brinstar_revisit_breaking_tube:
-    %cm_preset("Breaking Tube", #preset_kpdr25_red_brinstar_revisit_breaking_tube)
+presets_kpdr25_red_brinstar_revisit_breaking_the_tube:
+    %cm_preset("Breaking The Tube", #preset_kpdr25_red_brinstar_revisit_breaking_the_tube)
 
 
 ; Maridia
@@ -604,11 +606,11 @@ presets_kpdr25_maridia_sewers:
 presets_kpdr25_maridia_lower_maridia_gate:
     %cm_preset("Lower Maridia Gate", #preset_kpdr25_maridia_lower_maridia_gate)
 
+presets_kpdr25_maridia_business_center_revisit:
+    %cm_preset("Business Center Revisit", #preset_kpdr25_maridia_business_center_revisit)
+
 
 ; Lower Norfair
-presets_kpdr25_lower_norfair_business_center_revisit:
-    %cm_preset("Business Center Revisit", #preset_kpdr25_lower_norfair_business_center_revisit)
-
 presets_kpdr25_lower_norfair_magdollite_tunnel:
     %cm_preset("Magdollite Tunnel", #preset_kpdr25_lower_norfair_magdollite_tunnel)
 
@@ -618,8 +620,11 @@ presets_kpdr25_lower_norfair_ln_main_hall:
 presets_kpdr25_lower_norfair_prepillars:
     %cm_preset("Pre-Pillars", #preset_kpdr25_lower_norfair_prepillars)
 
+presets_kpdr25_lower_norfair_fast_pillars_setup:
+    %cm_preset("Fast Pillars Setup", #preset_kpdr25_lower_norfair_fast_pillars_setup)
+
 presets_kpdr25_lower_norfair_worst_room_in_the_game:
-    %cm_preset("Worst Room in the Game", #preset_kpdr25_lower_norfair_worst_room_in_the_game)
+    %cm_preset("Worst Room In The Game", #preset_kpdr25_lower_norfair_worst_room_in_the_game)
 
 presets_kpdr25_lower_norfair_amphitheatre:
     %cm_preset("Amphitheatre", #preset_kpdr25_lower_norfair_amphitheatre)
@@ -750,5 +755,4 @@ presets_kpdr25_tourian_escape_climb:
 
 presets_kpdr25_tourian_escape_parlor:
     %cm_preset("Escape Parlor", #preset_kpdr25_tourian_escape_parlor)
-
 

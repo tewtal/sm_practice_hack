@@ -30,7 +30,7 @@ presets_goto_allbossprkd_upper_norfair_revisit:
     %cm_submenu("Upper Norfair Revisit", #presets_submenu_allbossprkd_upper_norfair_revisit)
 
 presets_goto_allbossprkd_kraids_lair:
-    %cm_submenu("Kraids Lair", #presets_submenu_allbossprkd_kraids_lair)
+    %cm_submenu("Kraid's Lair", #presets_submenu_allbossprkd_kraids_lair)
 
 presets_goto_allbossprkd_maridia:
     %cm_submenu("Maridia", #presets_submenu_allbossprkd_maridia)
@@ -79,14 +79,14 @@ presets_submenu_allbossprkd_wrecked_ship:
     dw #presets_allbossprkd_wrecked_ship_red_tower_elevator
     dw #presets_allbossprkd_wrecked_ship_red_tower_descent
     dw #presets_allbossprkd_wrecked_ship_spazer
-    dw #presets_allbossprkd_wrecked_ship_breaking_tube
+    dw #presets_allbossprkd_wrecked_ship_breaking_the_tube
     dw #$0000
     %cm_header("WRECKED SHIP")
 
 presets_submenu_allbossprkd_upper_norfair:
     dw #presets_allbossprkd_upper_norfair_business_center
-    dw #presets_allbossprkd_upper_norfair_hi_jump_etank
-    dw #presets_allbossprkd_upper_norfair_leaving_hi_jump
+    dw #presets_allbossprkd_upper_norfair_hijump_etank
+    dw #presets_allbossprkd_upper_norfair_leaving_hijump
     dw #presets_allbossprkd_upper_norfair_ice_beam_hallway
     dw #presets_allbossprkd_upper_norfair_ice_maze
     dw #presets_allbossprkd_upper_norfair_ice_escape
@@ -113,7 +113,7 @@ presets_submenu_allbossprkd_lower_norfair:
     dw #presets_allbossprkd_lower_norfair_leaving_ridley
     dw #presets_allbossprkd_lower_norfair_wasteland_revisit
     dw #presets_allbossprkd_lower_norfair_kihunter_stairs_revisit
-    dw #presets_allbossprkd_lower_norfair_fire_flea_room
+    dw #presets_allbossprkd_lower_norfair_fireflea_room
     dw #presets_allbossprkd_lower_norfair_three_musketeers
     dw #$0000
     %cm_header("LOWER NORFAIR")
@@ -131,9 +131,9 @@ presets_submenu_allbossprkd_upper_norfair_revisit:
 
 presets_submenu_allbossprkd_kraids_lair:
     dw #presets_allbossprkd_kraids_lair_entering_kraids_lair
-    dw #presets_allbossprkd_kraids_lair_baby_kraid_entering
+    dw #presets_allbossprkd_kraids_lair_minikraid
     dw #presets_allbossprkd_kraids_lair_kraid
-    dw #presets_allbossprkd_kraids_lair_baby_kraid_entering_2
+    dw #presets_allbossprkd_kraids_lair_minikraid_revisit
     dw #presets_allbossprkd_kraids_lair_leaving_kraids_lair
     dw #$0000
     %cm_header("KRAIDS LAIR")
@@ -144,7 +144,7 @@ presets_submenu_allbossprkd_maridia:
     dw #presets_allbossprkd_maridia_botwoon
     dw #presets_allbossprkd_maridia_halfie
     dw #presets_allbossprkd_maridia_draygon
-    dw #presets_allbossprkd_maridia_womple_jump
+    dw #presets_allbossprkd_maridia_whomple_jump
     dw #presets_allbossprkd_maridia_reverse_botwoon_hallway
     dw #presets_allbossprkd_maridia_aqueduct_revisit
     dw #presets_allbossprkd_maridia_mt_everest_revisit
@@ -166,6 +166,7 @@ presets_submenu_allbossprkd_tourian:
     dw #presets_allbossprkd_tourian_escape_parlor
     dw #$0000
     %cm_header("TOURIAN")
+
 
 ; Crateria
 presets_allbossprkd_crateria_ceres_elevator:
@@ -268,19 +269,19 @@ presets_allbossprkd_wrecked_ship_red_tower_descent:
 presets_allbossprkd_wrecked_ship_spazer:
     %cm_preset("Spazer", #preset_allbossprkd_wrecked_ship_spazer)
 
-presets_allbossprkd_wrecked_ship_breaking_tube:
-    %cm_preset("Breaking Tube", #preset_allbossprkd_wrecked_ship_breaking_tube)
+presets_allbossprkd_wrecked_ship_breaking_the_tube:
+    %cm_preset("Breaking The Tube", #preset_allbossprkd_wrecked_ship_breaking_the_tube)
 
 
 ; Upper Norfair
 presets_allbossprkd_upper_norfair_business_center:
     %cm_preset("Business Center", #preset_allbossprkd_upper_norfair_business_center)
 
-presets_allbossprkd_upper_norfair_hi_jump_etank:
-    %cm_preset("Hi Jump E-tank", #preset_allbossprkd_upper_norfair_hi_jump_etank)
+presets_allbossprkd_upper_norfair_hijump_etank:
+    %cm_preset("Hi-Jump E-Tank", #preset_allbossprkd_upper_norfair_hijump_etank)
 
-presets_allbossprkd_upper_norfair_leaving_hi_jump:
-    %cm_preset("Leaving Hi Jump", #preset_allbossprkd_upper_norfair_leaving_hi_jump)
+presets_allbossprkd_upper_norfair_leaving_hijump:
+    %cm_preset("Leaving Hi-Jump", #preset_allbossprkd_upper_norfair_leaving_hijump)
 
 presets_allbossprkd_upper_norfair_ice_beam_hallway:
     %cm_preset("Ice Beam Hallway", #preset_allbossprkd_upper_norfair_ice_beam_hallway)
@@ -324,7 +325,7 @@ presets_allbossprkd_lower_norfair_screw_attack_escape:
     %cm_preset("Screw Attack Escape", #preset_allbossprkd_lower_norfair_screw_attack_escape)
 
 presets_allbossprkd_lower_norfair_worst_room_in_the_game:
-    %cm_preset("Worst Room in the Game", #preset_allbossprkd_lower_norfair_worst_room_in_the_game)
+    %cm_preset("Worst Room In The Game", #preset_allbossprkd_lower_norfair_worst_room_in_the_game)
 
 presets_allbossprkd_lower_norfair_amphitheatre:
     %cm_preset("Amphitheatre", #preset_allbossprkd_lower_norfair_amphitheatre)
@@ -350,8 +351,8 @@ presets_allbossprkd_lower_norfair_wasteland_revisit:
 presets_allbossprkd_lower_norfair_kihunter_stairs_revisit:
     %cm_preset("Kihunter Stairs Revisit", #preset_allbossprkd_lower_norfair_kihunter_stairs_revisit)
 
-presets_allbossprkd_lower_norfair_fire_flea_room:
-    %cm_preset("Fire Flea Room", #preset_allbossprkd_lower_norfair_fire_flea_room)
+presets_allbossprkd_lower_norfair_fireflea_room:
+    %cm_preset("Fireflea Room", #preset_allbossprkd_lower_norfair_fireflea_room)
 
 presets_allbossprkd_lower_norfair_three_musketeers:
     %cm_preset("Three Musketeers", #preset_allbossprkd_lower_norfair_three_musketeers)
@@ -380,26 +381,26 @@ presets_allbossprkd_upper_norfair_revisit_business_center_revisit:
     %cm_preset("Business Center Revisit", #preset_allbossprkd_upper_norfair_revisit_business_center_revisit)
 
 
-; Kraids Lair
+; Kraid's Lair
 presets_allbossprkd_kraids_lair_entering_kraids_lair:
-    %cm_preset("Entering Kraids Lair", #preset_allbossprkd_kraids_lair_entering_kraids_lair)
+    %cm_preset("Entering Kraid's Lair", #preset_allbossprkd_kraids_lair_entering_kraids_lair)
 
-presets_allbossprkd_kraids_lair_baby_kraid_entering:
-    %cm_preset("Baby Kraid (Entering)", #preset_allbossprkd_kraids_lair_baby_kraid_entering)
+presets_allbossprkd_kraids_lair_minikraid:
+    %cm_preset("Mini-Kraid", #preset_allbossprkd_kraids_lair_minikraid)
 
 presets_allbossprkd_kraids_lair_kraid:
     %cm_preset("Kraid", #preset_allbossprkd_kraids_lair_kraid)
 
-presets_allbossprkd_kraids_lair_baby_kraid_entering_2:
-    %cm_preset("Baby Kraid (Entering)", #preset_allbossprkd_kraids_lair_baby_kraid_entering_2)
+presets_allbossprkd_kraids_lair_minikraid_revisit:
+    %cm_preset("Mini-Kraid Revisit", #preset_allbossprkd_kraids_lair_minikraid_revisit)
 
 presets_allbossprkd_kraids_lair_leaving_kraids_lair:
-    %cm_preset("Leaving Kraids Lair", #preset_allbossprkd_kraids_lair_leaving_kraids_lair)
+    %cm_preset("Leaving Kraid's Lair", #preset_allbossprkd_kraids_lair_leaving_kraids_lair)
 
 
 ; Maridia
 presets_allbossprkd_maridia_mt_everest:
-    %cm_preset("Mt Everest", #preset_allbossprkd_maridia_mt_everest)
+    %cm_preset("Mt. Everest", #preset_allbossprkd_maridia_mt_everest)
 
 presets_allbossprkd_maridia_aqueduct:
     %cm_preset("Aqueduct", #preset_allbossprkd_maridia_aqueduct)
@@ -413,8 +414,8 @@ presets_allbossprkd_maridia_halfie:
 presets_allbossprkd_maridia_draygon:
     %cm_preset("Draygon", #preset_allbossprkd_maridia_draygon)
 
-presets_allbossprkd_maridia_womple_jump:
-    %cm_preset("Womple Jump", #preset_allbossprkd_maridia_womple_jump)
+presets_allbossprkd_maridia_whomple_jump:
+    %cm_preset("Whomple Jump", #preset_allbossprkd_maridia_whomple_jump)
 
 presets_allbossprkd_maridia_reverse_botwoon_hallway:
     %cm_preset("Reverse Botwoon Hallway", #preset_allbossprkd_maridia_reverse_botwoon_hallway)
@@ -423,7 +424,7 @@ presets_allbossprkd_maridia_aqueduct_revisit:
     %cm_preset("Aqueduct Revisit", #preset_allbossprkd_maridia_aqueduct_revisit)
 
 presets_allbossprkd_maridia_mt_everest_revisit:
-    %cm_preset("Mt Everest Revisit", #preset_allbossprkd_maridia_mt_everest_revisit)
+    %cm_preset("Mt. Everest Revisit", #preset_allbossprkd_maridia_mt_everest_revisit)
 
 presets_allbossprkd_maridia_red_brinstar_gate:
     %cm_preset("Red Brinstar Gate", #preset_allbossprkd_maridia_red_brinstar_gate)
@@ -462,5 +463,4 @@ presets_allbossprkd_tourian_escape_room_3:
 
 presets_allbossprkd_tourian_escape_parlor:
     %cm_preset("Escape Parlor", #preset_allbossprkd_tourian_escape_parlor)
-
 
