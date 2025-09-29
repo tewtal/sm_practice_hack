@@ -979,45 +979,44 @@ resume_infohud_icon_initialization:
 
 org $E8E000
 check bankcross off
+
 print pc, " preset data crossbank start"
 incsrc presets/combined_preset_data.asm
 incsrc presets/combined_map_preset_data.asm
 print pc, " preset data crossbank end"
-warnpc $EF8000
+
+table ../resources/normal.tbl
+incsrc presets/combined_preset_names.asm
+
+warnpc $F08000
 check bankcross on
 
-%startfree(EF)
-incsrc presets/kpdr21_menu.asm         ; 10FFh bytes
-incsrc presets/kpdr22_menu.asm         ; 111Ch bytes
-incsrc presets/kpdr23_menu.asm         ; 1140h bytes
-incsrc presets/kpdr25_menu.asm         ; 1038h bytes
-incsrc presets/prkd19_menu.asm         ; 100Ch bytes
-incsrc presets/prkd20_menu.asm         ; 100Ch bytes
-incsrc presets/pkrd_menu.asm           ;  EE5h bytes
-%endfree(EF)
-
 %startfree(F1)
-incsrc presets/gtclassic_menu.asm      ;  D7Ch bytes
-incsrc presets/gtmax_menu.asm          ; 134Ah bytes
-incsrc presets/100early_menu.asm       ; 138Dh bytes
-incsrc presets/hundo_menu.asm          ; 12DDh bytes
-incsrc presets/100map_menu.asm         ; 15D3h bytes
-incsrc presets/spazermap_menu.asm      ; 15D3h bytes
+incsrc presets/kpdr21_menu.asm
+incsrc presets/kpdr22_menu.asm
+incsrc presets/kpdr23_menu.asm
+incsrc presets/kpdr25_menu.asm
+incsrc presets/prkd19_menu.asm
+incsrc presets/prkd20_menu.asm
+incsrc presets/pkrd_menu.asm
+incsrc presets/gtclassic_menu.asm
+incsrc presets/gtmax_menu.asm
+incsrc presets/100early_menu.asm
+incsrc presets/hundo_menu.asm
 %endfree(F1)
 
 %startfree(F2)
-incsrc presets/14ice_menu.asm          ;  909h bytes
-incsrc presets/14speed_menu.asm        ;  91Bh bytes
-incsrc presets/rbo_menu.asm            ; 1C1Eh bytes
-incsrc presets/suitless_menu.asm       ; 1A26h bytes
-incsrc presets/ngplasma_menu.asm       ;  9F1h bytes
-incsrc presets/nghyper_menu.asm        ;  9F0h bytes
-incsrc presets/nintendopower_menu.asm  ;  875h bytes
+incsrc presets/100map_menu.asm
+incsrc presets/spazermap_menu.asm
+incsrc presets/14ice_menu.asm
+incsrc presets/14speed_menu.asm
+incsrc presets/rbo_menu.asm
+incsrc presets/suitless_menu.asm
+incsrc presets/ngplasma_menu.asm
+incsrc presets/nghyper_menu.asm
+incsrc presets/nintendopower_menu.asm
+incsrc presets/allbosskpdr_menu.asm
+incsrc presets/allbosspkdr_menu.asm
+incsrc presets/allbossprkd_menu.asm
 %endfree(F2)
-
-%startfree(F3)
-incsrc presets/allbosskpdr_menu.asm    ;  900h bytes
-incsrc presets/allbosspkdr_menu.asm    ;  96Bh bytes
-incsrc presets/allbossprkd_menu.asm    ;  977h bytes
-%endfree(F3)
 

@@ -411,789 +411,789 @@ presets_submenu_rbo_tourian:
 
 ; Bombs
 presets_rbo_bombs_ceres_elevator:
-    %cm_preset("Ceres Elevator", #preset_rbo_bombs_ceres_elevator)
+    %cm_preset("Ceres Elevator", #preset_names_ceres_elevator, #preset_rbo_bombs_ceres_elevator)
 
 presets_rbo_bombs_ceres_escape:
-    %cm_preset("Ceres Escape", #preset_rbo_bombs_ceres_escape)
+    %cm_preset("Ceres Escape", #preset_names_ceres_escape, #preset_rbo_bombs_ceres_escape)
 
 presets_rbo_bombs_ceres_last_3_rooms:
-    %cm_preset("Ceres Last 3 Rooms", #preset_rbo_bombs_ceres_last_3_rooms)
+    %cm_preset("Ceres Last 3 Rooms", #preset_names_ceres_last_3_rooms, #preset_rbo_bombs_ceres_last_3_rooms)
 
 presets_rbo_bombs_ship:
-    %cm_preset("Ship", #preset_rbo_bombs_ship)
+    %cm_preset("Ship", #preset_names_ship, #preset_rbo_bombs_ship)
 
 presets_rbo_bombs_parlor_down:
-    %cm_preset("Parlor Down", #preset_rbo_bombs_parlor_down)
+    %cm_preset("Parlor Down", #preset_names_parlor_down, #preset_rbo_bombs_parlor_down)
 
 presets_rbo_bombs_climb_down:
-    %cm_preset("Climb Down", #preset_rbo_bombs_climb_down)
+    %cm_preset("Climb Down", #preset_names_climb_down, #preset_rbo_bombs_climb_down)
 
 presets_rbo_bombs_pit_room:
-    %cm_preset("Pit Room", #preset_rbo_bombs_pit_room)
+    %cm_preset("Pit Room", #preset_names_pit_room, #preset_rbo_bombs_pit_room)
 
 presets_rbo_bombs_morph:
-    %cm_preset("Morph", #preset_rbo_bombs_morph)
+    %cm_preset("Morph", #preset_names_morph, #preset_rbo_bombs_morph)
 
 presets_rbo_bombs_construction_zone_down:
-    %cm_preset("Construction Zone Down", #preset_rbo_bombs_construction_zone_down)
+    %cm_preset("Construction Zone Down", #preset_names_construction_zone_down, #preset_rbo_bombs_construction_zone_down)
 
 presets_rbo_bombs_construction_zone_up:
-    %cm_preset("Construction Zone Up", #preset_rbo_bombs_construction_zone_up)
+    %cm_preset("Construction Zone Up", #preset_names_construction_zone_up, #preset_rbo_bombs_construction_zone_up)
 
 presets_rbo_bombs_pit_room_revisit:
-    %cm_preset("Pit Room Revisit", #preset_rbo_bombs_pit_room_revisit)
+    %cm_preset("Pit Room Revisit", #preset_names_pit_room_revisit, #preset_rbo_bombs_pit_room_revisit)
 
 presets_rbo_bombs_retro_etank:
-    %cm_preset("Retro E-Tank", #preset_rbo_bombs_retro_etank)
+    %cm_preset("Retro E-Tank", #preset_names_retro_etank, #preset_rbo_bombs_retro_etank)
 
 presets_rbo_bombs_taco_tank_optional:
-    %cm_preset("Taco Tank (Optional)", #preset_rbo_bombs_taco_tank_optional)
+    %cm_preset("Taco Tank (Optional)", #preset_names_taco_tank_optional, #preset_rbo_bombs_taco_tank_optional)
 
 presets_rbo_bombs_pit_room_final_visit:
-    %cm_preset("Pit Room Final Visit", #preset_rbo_bombs_pit_room_final_visit)
+    %cm_preset("Pit Room Final Visit", #preset_names_pit_room_final_visit, #preset_rbo_bombs_pit_room_final_visit)
 
 presets_rbo_bombs_climb_up:
-    %cm_preset("Climb Up", #preset_rbo_bombs_climb_up)
+    %cm_preset("Climb Up", #preset_names_climb_up, #preset_rbo_bombs_climb_up)
 
 presets_rbo_bombs_parlor_up:
-    %cm_preset("Parlor Up", #preset_rbo_bombs_parlor_up)
+    %cm_preset("Parlor Up", #preset_names_parlor_up, #preset_rbo_bombs_parlor_up)
 
 presets_rbo_bombs_flyway:
-    %cm_preset("Flyway", #preset_rbo_bombs_flyway)
+    %cm_preset("Flyway", #preset_names_flyway, #preset_rbo_bombs_flyway)
 
 presets_rbo_bombs_bomb_torizo:
-    %cm_preset("Bomb Torizo", #preset_rbo_bombs_bomb_torizo)
+    %cm_preset("Bomb Torizo", #preset_names_bomb_torizo, #preset_rbo_bombs_bomb_torizo)
 
 presets_rbo_bombs_alcatraz:
-    %cm_preset("Alcatraz", #preset_rbo_bombs_alcatraz)
+    %cm_preset("Alcatraz", #preset_names_alcatraz, #preset_rbo_bombs_alcatraz)
 
 presets_rbo_bombs_terminator:
-    %cm_preset("Terminator", #preset_rbo_bombs_terminator)
+    %cm_preset("Terminator", #preset_names_terminator, #preset_rbo_bombs_terminator)
 
 presets_rbo_bombs_green_pirate_shaft:
-    %cm_preset("Green Pirate Shaft", #preset_rbo_bombs_green_pirate_shaft)
+    %cm_preset("Green Pirate Shaft", #preset_names_green_pirate_shaft, #preset_rbo_bombs_green_pirate_shaft)
 
 
 ; Brinstar
 presets_rbo_brinstar_green_brinstar_elevator:
-    %cm_preset("Green Brinstar Elevator", #preset_rbo_brinstar_green_brinstar_elevator)
+    %cm_preset("Green Brinstar Elevator", #preset_names_green_brinstar_elevator, #preset_rbo_brinstar_green_brinstar_elevator)
 
 presets_rbo_brinstar_early_supers_reserve:
-    %cm_preset("Early Supers Reserve", #preset_rbo_brinstar_early_supers_reserve)
+    %cm_preset("Early Supers Reserve", #preset_names_early_supers_reserve, #preset_rbo_brinstar_early_supers_reserve)
 
 presets_rbo_brinstar_early_supers_collection:
-    %cm_preset("Early Supers Collection", #preset_rbo_brinstar_early_supers_collection)
+    %cm_preset("Early Supers Collection", #preset_names_early_supers_collection, #preset_rbo_brinstar_early_supers_collection)
 
 presets_rbo_brinstar_dachora_room:
-    %cm_preset("Dachora Room", #preset_rbo_brinstar_dachora_room)
+    %cm_preset("Dachora Room", #preset_names_dachora_room, #preset_rbo_brinstar_dachora_room)
 
 presets_rbo_brinstar_big_pink:
-    %cm_preset("Big Pink", #preset_rbo_brinstar_big_pink)
+    %cm_preset("Big Pink", #preset_names_big_pink, #preset_rbo_brinstar_big_pink)
 
 presets_rbo_brinstar_green_hill_zone:
-    %cm_preset("Green Hill Zone", #preset_rbo_brinstar_green_hill_zone)
+    %cm_preset("Green Hill Zone", #preset_names_green_hill_zone, #preset_rbo_brinstar_green_hill_zone)
 
 presets_rbo_brinstar_noob_bridge:
-    %cm_preset("Noob Bridge", #preset_rbo_brinstar_noob_bridge)
+    %cm_preset("Noob Bridge", #preset_names_noob_bridge, #preset_rbo_brinstar_noob_bridge)
 
 presets_rbo_brinstar_red_tower:
-    %cm_preset("Red Tower", #preset_rbo_brinstar_red_tower)
+    %cm_preset("Red Tower", #preset_names_red_tower, #preset_rbo_brinstar_red_tower)
 
 presets_rbo_brinstar_hellway_1x_maridia:
-    %cm_preset("Hellway (1x Maridia)", #preset_rbo_brinstar_hellway_1x_maridia)
+    %cm_preset("Hellway (1x Maridia)", #preset_names_hellway_1x_maridia, #preset_rbo_brinstar_hellway_1x_maridia)
 
 presets_rbo_brinstar_alpha_power_bombs_1m:
-    %cm_preset("Alpha Power Bombs (1M)", #preset_rbo_brinstar_alpha_power_bombs_1m)
+    %cm_preset("Alpha Power Bombs (1M)", #preset_names_alpha_power_bombs_1m, #preset_rbo_brinstar_alpha_power_bombs_1m)
 
 presets_rbo_brinstar_reverse_hellway_1m:
-    %cm_preset("Reverse Hellway (1M)", #preset_rbo_brinstar_reverse_hellway_1m)
+    %cm_preset("Reverse Hellway (1M)", #preset_names_reverse_hellway_1m, #preset_rbo_brinstar_reverse_hellway_1m)
 
 presets_rbo_brinstar_red_tower_moonfalls_1m:
-    %cm_preset("Red Tower Moonfalls (1M)", #preset_rbo_brinstar_red_tower_moonfalls_1m)
+    %cm_preset("Red Tower Moonfalls (1M)", #preset_names_red_tower_moonfalls_1m, #preset_rbo_brinstar_red_tower_moonfalls_1m)
 
 presets_rbo_brinstar_spazer_1m:
-    %cm_preset("Spazer (1M)", #preset_rbo_brinstar_spazer_1m)
+    %cm_preset("Spazer (1M)", #preset_names_spazer_1m, #preset_rbo_brinstar_spazer_1m)
 
 presets_rbo_brinstar_norfair_elevator_1m:
-    %cm_preset("Norfair Elevator (1M)", #preset_rbo_brinstar_norfair_elevator_1m)
+    %cm_preset("Norfair Elevator (1M)", #preset_names_norfair_elevator_1m, #preset_rbo_brinstar_norfair_elevator_1m)
 
 presets_rbo_brinstar_spazer_2x_maridia:
-    %cm_preset("Spazer (2x Maridia)", #preset_rbo_brinstar_spazer_2x_maridia)
+    %cm_preset("Spazer (2x Maridia)", #preset_names_spazer_2x_maridia, #preset_rbo_brinstar_spazer_2x_maridia)
 
 presets_rbo_brinstar_norfair_elevator_2m:
-    %cm_preset("Norfair Elevator (2M)", #preset_rbo_brinstar_norfair_elevator_2m)
+    %cm_preset("Norfair Elevator (2M)", #preset_names_norfair_elevator_2m, #preset_rbo_brinstar_norfair_elevator_2m)
 
 
 ; Shopping (Single Maridia)
 presets_rbo_shopping_single_maridia_hijump_boots:
-    %cm_preset("Hi-Jump Boots", #preset_rbo_shopping_single_maridia_hijump_boots)
+    %cm_preset("Hi-Jump Boots", #preset_names_hijump_boots, #preset_rbo_shopping_single_maridia_hijump_boots)
 
 presets_rbo_shopping_single_maridia_business_center_up:
-    %cm_preset("Business Center Up", #preset_rbo_shopping_single_maridia_business_center_up)
+    %cm_preset("Business Center Up", #preset_names_business_center_up, #preset_rbo_shopping_single_maridia_business_center_up)
 
 presets_rbo_shopping_single_maridia_first_hell_run:
-    %cm_preset("First Hell Run", #preset_rbo_shopping_single_maridia_first_hell_run)
+    %cm_preset("First Hell Run", #preset_names_first_hell_run, #preset_rbo_shopping_single_maridia_first_hell_run)
 
 presets_rbo_shopping_single_maridia_bubble_mountain:
-    %cm_preset("Bubble Mountain", #preset_rbo_shopping_single_maridia_bubble_mountain)
+    %cm_preset("Bubble Mountain", #preset_names_bubble_mountain, #preset_rbo_shopping_single_maridia_bubble_mountain)
 
 presets_rbo_shopping_single_maridia_bat_cave_farm_1:
-    %cm_preset("Bat Cave (Farm 1)", #preset_rbo_shopping_single_maridia_bat_cave_farm_1)
+    %cm_preset("Bat Cave (Farm 1)", #preset_names_bat_cave_farm_1, #preset_rbo_shopping_single_maridia_bat_cave_farm_1)
 
 presets_rbo_shopping_single_maridia_leaving_speed_farm_2:
-    %cm_preset("Leaving Speed (Farm 2)", #preset_rbo_shopping_single_maridia_leaving_speed_farm_2)
+    %cm_preset("Leaving Speed (Farm 2)", #preset_names_leaving_speed_farm_2, #preset_rbo_shopping_single_maridia_leaving_speed_farm_2)
 
 presets_rbo_shopping_single_maridia_wave_beam_entry:
-    %cm_preset("Wave Beam Entry", #preset_rbo_shopping_single_maridia_wave_beam_entry)
+    %cm_preset("Wave Beam Entry", #preset_names_wave_beam_entry, #preset_rbo_shopping_single_maridia_wave_beam_entry)
 
 presets_rbo_shopping_single_maridia_wave_escape:
-    %cm_preset("Wave Escape", #preset_rbo_shopping_single_maridia_wave_escape)
+    %cm_preset("Wave Escape", #preset_names_wave_escape, #preset_rbo_shopping_single_maridia_wave_escape)
 
 presets_rbo_shopping_single_maridia_heading_to_business_center:
-    %cm_preset("Heading To Business Center", #preset_rbo_shopping_single_maridia_heading_to_business_center)
+    %cm_preset("Heading To Business Center", #preset_names_heading_to_business_center, #preset_rbo_shopping_single_maridia_heading_to_business_center)
 
 presets_rbo_shopping_single_maridia_leaving_norfair:
-    %cm_preset("Leaving Norfair", #preset_rbo_shopping_single_maridia_leaving_norfair)
+    %cm_preset("Leaving Norfair", #preset_names_leaving_norfair, #preset_rbo_shopping_single_maridia_leaving_norfair)
 
 
 ; Shopping (Double Maridia)
 presets_rbo_shopping_double_maridia_hijump_boots:
-    %cm_preset("Hi-Jump Boots", #preset_rbo_shopping_double_maridia_hijump_boots)
+    %cm_preset("Hi-Jump Boots", #preset_names_hijump_boots, #preset_rbo_shopping_double_maridia_hijump_boots)
 
 presets_rbo_shopping_double_maridia_business_center_up:
-    %cm_preset("Business Center Up", #preset_rbo_shopping_double_maridia_business_center_up)
+    %cm_preset("Business Center Up", #preset_names_business_center_up, #preset_rbo_shopping_double_maridia_business_center_up)
 
 presets_rbo_shopping_double_maridia_first_hell_run:
-    %cm_preset("First Hell Run", #preset_rbo_shopping_double_maridia_first_hell_run)
+    %cm_preset("First Hell Run", #preset_names_first_hell_run, #preset_rbo_shopping_double_maridia_first_hell_run)
 
 presets_rbo_shopping_double_maridia_bubble_mountain:
-    %cm_preset("Bubble Mountain", #preset_rbo_shopping_double_maridia_bubble_mountain)
+    %cm_preset("Bubble Mountain", #preset_names_bubble_mountain, #preset_rbo_shopping_double_maridia_bubble_mountain)
 
 presets_rbo_shopping_double_maridia_bat_cave_farm_1:
-    %cm_preset("Bat Cave (Farm 1)", #preset_rbo_shopping_double_maridia_bat_cave_farm_1)
+    %cm_preset("Bat Cave (Farm 1)", #preset_names_bat_cave_farm_1, #preset_rbo_shopping_double_maridia_bat_cave_farm_1)
 
 presets_rbo_shopping_double_maridia_leaving_speed_farm_2:
-    %cm_preset("Leaving Speed (Farm 2)", #preset_rbo_shopping_double_maridia_leaving_speed_farm_2)
+    %cm_preset("Leaving Speed (Farm 2)", #preset_names_leaving_speed_farm_2, #preset_rbo_shopping_double_maridia_leaving_speed_farm_2)
 
 presets_rbo_shopping_double_maridia_wave_beam_entry:
-    %cm_preset("Wave Beam Entry", #preset_rbo_shopping_double_maridia_wave_beam_entry)
+    %cm_preset("Wave Beam Entry", #preset_names_wave_beam_entry, #preset_rbo_shopping_double_maridia_wave_beam_entry)
 
 presets_rbo_shopping_double_maridia_wave_escape:
-    %cm_preset("Wave Escape", #preset_rbo_shopping_double_maridia_wave_escape)
+    %cm_preset("Wave Escape", #preset_names_wave_escape, #preset_rbo_shopping_double_maridia_wave_escape)
 
 presets_rbo_shopping_double_maridia_heading_to_croc:
-    %cm_preset("Heading To Croc", #preset_rbo_shopping_double_maridia_heading_to_croc)
+    %cm_preset("Heading To Croc", #preset_names_heading_to_croc, #preset_rbo_shopping_double_maridia_heading_to_croc)
 
 presets_rbo_shopping_double_maridia_nutella_refill:
-    %cm_preset("Nutella Refill", #preset_rbo_shopping_double_maridia_nutella_refill)
+    %cm_preset("Nutella Refill", #preset_names_nutella_refill, #preset_rbo_shopping_double_maridia_nutella_refill)
 
 presets_rbo_shopping_double_maridia_croc_power_bombs:
-    %cm_preset("Croc Power Bombs", #preset_rbo_shopping_double_maridia_croc_power_bombs)
+    %cm_preset("Croc Power Bombs", #preset_names_croc_power_bombs, #preset_rbo_shopping_double_maridia_croc_power_bombs)
 
 presets_rbo_shopping_double_maridia_leaving_grapple:
-    %cm_preset("Leaving Grapple", #preset_rbo_shopping_double_maridia_leaving_grapple)
+    %cm_preset("Leaving Grapple", #preset_names_leaving_grapple, #preset_rbo_shopping_double_maridia_leaving_grapple)
 
 presets_rbo_shopping_double_maridia_leaving_croc:
-    %cm_preset("Leaving Croc", #preset_rbo_shopping_double_maridia_leaving_croc)
+    %cm_preset("Leaving Croc", #preset_names_leaving_croc, #preset_rbo_shopping_double_maridia_leaving_croc)
 
 presets_rbo_shopping_double_maridia_ice_entry:
-    %cm_preset("Ice Entry", #preset_rbo_shopping_double_maridia_ice_entry)
+    %cm_preset("Ice Entry", #preset_names_ice_entry, #preset_rbo_shopping_double_maridia_ice_entry)
 
 presets_rbo_shopping_double_maridia_leaving_ice:
-    %cm_preset("Leaving Ice", #preset_rbo_shopping_double_maridia_leaving_ice)
+    %cm_preset("Leaving Ice", #preset_names_leaving_ice, #preset_rbo_shopping_double_maridia_leaving_ice)
 
 presets_rbo_shopping_double_maridia_ice_escape:
-    %cm_preset("Ice Escape", #preset_rbo_shopping_double_maridia_ice_escape)
+    %cm_preset("Ice Escape", #preset_names_ice_escape, #preset_rbo_shopping_double_maridia_ice_escape)
 
 presets_rbo_shopping_double_maridia_leaving_norfair:
-    %cm_preset("Leaving Norfair", #preset_rbo_shopping_double_maridia_leaving_norfair)
+    %cm_preset("Leaving Norfair", #preset_names_leaving_norfair, #preset_rbo_shopping_double_maridia_leaving_norfair)
 
 
 ; Cleanup (Single Maridia)
 presets_rbo_cleanup_single_maridia_red_tower_up:
-    %cm_preset("Red Tower Up", #preset_rbo_cleanup_single_maridia_red_tower_up)
+    %cm_preset("Red Tower Up", #preset_names_red_tower_up, #preset_rbo_cleanup_single_maridia_red_tower_up)
 
 presets_rbo_cleanup_single_maridia_green_brinstar_backdoor:
-    %cm_preset("Green Brinstar Backdoor", #preset_rbo_cleanup_single_maridia_green_brinstar_backdoor)
+    %cm_preset("Green Brinstar Backdoor", #preset_names_green_brinstar_backdoor, #preset_rbo_cleanup_single_maridia_green_brinstar_backdoor)
 
 presets_rbo_cleanup_single_maridia_big_pink:
-    %cm_preset("Big Pink", #preset_rbo_cleanup_single_maridia_big_pink)
+    %cm_preset("Big Pink", #preset_names_big_pink, #preset_rbo_cleanup_single_maridia_big_pink)
 
 presets_rbo_cleanup_single_maridia_spore_spawn_supers:
-    %cm_preset("Spore Spawn Supers", #preset_rbo_cleanup_single_maridia_spore_spawn_supers)
+    %cm_preset("Spore Spawn Supers", #preset_names_spore_spawn_supers, #preset_rbo_cleanup_single_maridia_spore_spawn_supers)
 
 presets_rbo_cleanup_single_maridia_spore_spawn_supers_escape:
-    %cm_preset("Spore Spawn Supers Escape", #preset_rbo_cleanup_single_maridia_spore_spawn_supers_escape)
+    %cm_preset("Spore Spawn Supers Escape", #preset_names_spore_spawn_supers_escape, #preset_rbo_cleanup_single_maridia_spore_spawn_supers_escape)
 
 presets_rbo_cleanup_single_maridia_wave_gate_etank:
-    %cm_preset("Wave Gate E-Tank", #preset_rbo_cleanup_single_maridia_wave_gate_etank)
+    %cm_preset("Wave Gate E-Tank", #preset_names_wave_gate_etank, #preset_rbo_cleanup_single_maridia_wave_gate_etank)
 
 presets_rbo_cleanup_single_maridia_dachora_room:
-    %cm_preset("Dachora Room", #preset_rbo_cleanup_single_maridia_dachora_room)
+    %cm_preset("Dachora Room", #preset_names_dachora_room, #preset_rbo_cleanup_single_maridia_dachora_room)
 
 presets_rbo_cleanup_single_maridia_green_shaft_down:
-    %cm_preset("Green Shaft Down", #preset_rbo_cleanup_single_maridia_green_shaft_down)
+    %cm_preset("Green Shaft Down", #preset_names_green_shaft_down, #preset_rbo_cleanup_single_maridia_green_shaft_down)
 
 presets_rbo_cleanup_single_maridia_etecoon_supers:
-    %cm_preset("Etecoon Supers", #preset_rbo_cleanup_single_maridia_etecoon_supers)
+    %cm_preset("Etecoon Supers", #preset_names_etecoon_supers, #preset_rbo_cleanup_single_maridia_etecoon_supers)
 
 presets_rbo_cleanup_single_maridia_etecoon_pbs_optional:
-    %cm_preset("Etecoon PBs (Optional)", #preset_rbo_cleanup_single_maridia_etecoon_pbs_optional)
+    %cm_preset("Etecoon PBs (Optional)", #preset_names_etecoon_pbs_optional, #preset_rbo_cleanup_single_maridia_etecoon_pbs_optional)
 
 presets_rbo_cleanup_single_maridia_green_shaft_up:
-    %cm_preset("Green Shaft Up", #preset_rbo_cleanup_single_maridia_green_shaft_up)
+    %cm_preset("Green Shaft Up", #preset_names_green_shaft_up, #preset_rbo_cleanup_single_maridia_green_shaft_up)
 
 presets_rbo_cleanup_single_maridia_reverse_terminator:
-    %cm_preset("Reverse Terminator", #preset_rbo_cleanup_single_maridia_reverse_terminator)
+    %cm_preset("Reverse Terminator", #preset_names_reverse_terminator, #preset_rbo_cleanup_single_maridia_reverse_terminator)
 
 presets_rbo_cleanup_single_maridia_climb_supers_moonfall:
-    %cm_preset("Climb Supers Moonfall", #preset_rbo_cleanup_single_maridia_climb_supers_moonfall)
+    %cm_preset("Climb Supers Moonfall", #preset_names_climb_supers_moonfall, #preset_rbo_cleanup_single_maridia_climb_supers_moonfall)
 
 presets_rbo_cleanup_single_maridia_pit_room_shortcharge:
-    %cm_preset("Pit Room Shortcharge", #preset_rbo_cleanup_single_maridia_pit_room_shortcharge)
+    %cm_preset("Pit Room Shortcharge", #preset_names_pit_room_shortcharge, #preset_rbo_cleanup_single_maridia_pit_room_shortcharge)
 
 presets_rbo_cleanup_single_maridia_retro_brinstar_power_bombs:
-    %cm_preset("Retro Brinstar Power Bombs", #preset_rbo_cleanup_single_maridia_retro_brinstar_power_bombs)
+    %cm_preset("Retro Brinstar Power Bombs", #preset_names_retro_brinstar_power_bombs, #preset_rbo_cleanup_single_maridia_retro_brinstar_power_bombs)
 
 presets_rbo_cleanup_single_maridia_blockbuster:
-    %cm_preset("Blockbuster", #preset_rbo_cleanup_single_maridia_blockbuster)
+    %cm_preset("Blockbuster", #preset_names_blockbuster, #preset_rbo_cleanup_single_maridia_blockbuster)
 
 
 ; Cleanup (Double Maridia)
 presets_rbo_cleanup_double_maridia_red_tower_up:
-    %cm_preset("Red Tower Up", #preset_rbo_cleanup_double_maridia_red_tower_up)
+    %cm_preset("Red Tower Up", #preset_names_red_tower_up, #preset_rbo_cleanup_double_maridia_red_tower_up)
 
 presets_rbo_cleanup_double_maridia_hellway:
-    %cm_preset("Hellway", #preset_rbo_cleanup_double_maridia_hellway)
+    %cm_preset("Hellway", #preset_names_hellway, #preset_rbo_cleanup_double_maridia_hellway)
 
 presets_rbo_cleanup_double_maridia_alpha_power_bombs:
-    %cm_preset("Alpha Power Bombs", #preset_rbo_cleanup_double_maridia_alpha_power_bombs)
+    %cm_preset("Alpha Power Bombs", #preset_names_alpha_power_bombs, #preset_rbo_cleanup_double_maridia_alpha_power_bombs)
 
 presets_rbo_cleanup_double_maridia_beta_power_bombs:
-    %cm_preset("Beta Power Bombs", #preset_rbo_cleanup_double_maridia_beta_power_bombs)
+    %cm_preset("Beta Power Bombs", #preset_names_beta_power_bombs, #preset_rbo_cleanup_double_maridia_beta_power_bombs)
 
 presets_rbo_cleanup_double_maridia_crateria_kihunters:
-    %cm_preset("Crateria Kihunters", #preset_rbo_cleanup_double_maridia_crateria_kihunters)
+    %cm_preset("Crateria Kihunters", #preset_names_crateria_kihunters, #preset_rbo_cleanup_double_maridia_crateria_kihunters)
 
 presets_rbo_cleanup_double_maridia_crateria_power_bombs:
-    %cm_preset("Crateria Power Bombs", #preset_rbo_cleanup_double_maridia_crateria_power_bombs)
+    %cm_preset("Crateria Power Bombs", #preset_names_crateria_power_bombs, #preset_rbo_cleanup_double_maridia_crateria_power_bombs)
 
 presets_rbo_cleanup_double_maridia_gauntlet_wraparound_shot:
-    %cm_preset("Gauntlet Wraparound Shot", #preset_rbo_cleanup_double_maridia_gauntlet_wraparound_shot)
+    %cm_preset("Gauntlet Wraparound Shot", #preset_names_gauntlet_wraparound_shot, #preset_rbo_cleanup_double_maridia_gauntlet_wraparound_shot)
 
 presets_rbo_cleanup_double_maridia_gauntlet_etank:
-    %cm_preset("Gauntlet E-Tank", #preset_rbo_cleanup_double_maridia_gauntlet_etank)
+    %cm_preset("Gauntlet E-Tank", #preset_names_gauntlet_etank, #preset_rbo_cleanup_double_maridia_gauntlet_etank)
 
 presets_rbo_cleanup_double_maridia_parlor_down:
-    %cm_preset("Parlor Down", #preset_rbo_cleanup_double_maridia_parlor_down)
+    %cm_preset("Parlor Down", #preset_names_parlor_down, #preset_rbo_cleanup_double_maridia_parlor_down)
 
 presets_rbo_cleanup_double_maridia_climb_supers:
-    %cm_preset("Climb Supers", #preset_rbo_cleanup_double_maridia_climb_supers)
+    %cm_preset("Climb Supers", #preset_names_climb_supers, #preset_rbo_cleanup_double_maridia_climb_supers)
 
 presets_rbo_cleanup_double_maridia_terminator_revisit:
-    %cm_preset("Terminator Revisit", #preset_rbo_cleanup_double_maridia_terminator_revisit)
+    %cm_preset("Terminator Revisit", #preset_names_terminator_revisit, #preset_rbo_cleanup_double_maridia_terminator_revisit)
 
 presets_rbo_cleanup_double_maridia_green_brinstar_revisit:
-    %cm_preset("Green Brinstar Revisit", #preset_rbo_cleanup_double_maridia_green_brinstar_revisit)
+    %cm_preset("Green Brinstar Revisit", #preset_names_green_brinstar_revisit, #preset_rbo_cleanup_double_maridia_green_brinstar_revisit)
 
 presets_rbo_cleanup_double_maridia_leaving_etecoons:
-    %cm_preset("Leaving Etecoons", #preset_rbo_cleanup_double_maridia_leaving_etecoons)
+    %cm_preset("Leaving Etecoons", #preset_names_leaving_etecoons, #preset_rbo_cleanup_double_maridia_leaving_etecoons)
 
 presets_rbo_cleanup_double_maridia_spore_spawn_supers:
-    %cm_preset("Spore Spawn Supers", #preset_rbo_cleanup_double_maridia_spore_spawn_supers)
+    %cm_preset("Spore Spawn Supers", #preset_names_spore_spawn_supers, #preset_rbo_cleanup_double_maridia_spore_spawn_supers)
 
 presets_rbo_cleanup_double_maridia_spore_spawn_supers_escape:
-    %cm_preset("Spore Spawn Supers Escape", #preset_rbo_cleanup_double_maridia_spore_spawn_supers_escape)
+    %cm_preset("Spore Spawn Supers Escape", #preset_names_spore_spawn_supers_escape, #preset_rbo_cleanup_double_maridia_spore_spawn_supers_escape)
 
 presets_rbo_cleanup_double_maridia_wave_gate_etank:
-    %cm_preset("Wave Gate E-Tank", #preset_rbo_cleanup_double_maridia_wave_gate_etank)
+    %cm_preset("Wave Gate E-Tank", #preset_names_wave_gate_etank, #preset_rbo_cleanup_double_maridia_wave_gate_etank)
 
 presets_rbo_cleanup_double_maridia_waterway_etank:
-    %cm_preset("Waterway E-Tank", #preset_rbo_cleanup_double_maridia_waterway_etank)
+    %cm_preset("Waterway E-Tank", #preset_names_waterway_etank, #preset_rbo_cleanup_double_maridia_waterway_etank)
 
 presets_rbo_cleanup_double_maridia_leaving_waterway:
-    %cm_preset("Leaving Waterway", #preset_rbo_cleanup_double_maridia_leaving_waterway)
+    %cm_preset("Leaving Waterway", #preset_names_leaving_waterway, #preset_rbo_cleanup_double_maridia_leaving_waterway)
 
 presets_rbo_cleanup_double_maridia_blue_brinstar_power_bombs:
-    %cm_preset("Blue Brinstar Power Bombs", #preset_rbo_cleanup_double_maridia_blue_brinstar_power_bombs)
+    %cm_preset("Blue Brinstar Power Bombs", #preset_names_blue_brinstar_power_bombs, #preset_rbo_cleanup_double_maridia_blue_brinstar_power_bombs)
 
 presets_rbo_cleanup_double_maridia_blockbuster:
-    %cm_preset("Blockbuster", #preset_rbo_cleanup_double_maridia_blockbuster)
+    %cm_preset("Blockbuster", #preset_names_blockbuster, #preset_rbo_cleanup_double_maridia_blockbuster)
 
 
 ; Ice-Croc (Single Maridia)
 presets_rbo_icecroc_single_maridia_ice_entry:
-    %cm_preset("Ice Entry", #preset_rbo_icecroc_single_maridia_ice_entry)
+    %cm_preset("Ice Entry", #preset_names_ice_entry, #preset_rbo_icecroc_single_maridia_ice_entry)
 
 presets_rbo_icecroc_single_maridia_leaving_ice:
-    %cm_preset("Leaving Ice", #preset_rbo_icecroc_single_maridia_leaving_ice)
+    %cm_preset("Leaving Ice", #preset_names_leaving_ice, #preset_rbo_icecroc_single_maridia_leaving_ice)
 
 presets_rbo_icecroc_single_maridia_ice_escape:
-    %cm_preset("Ice Escape", #preset_rbo_icecroc_single_maridia_ice_escape)
+    %cm_preset("Ice Escape", #preset_names_ice_escape, #preset_rbo_icecroc_single_maridia_ice_escape)
 
 presets_rbo_icecroc_single_maridia_croc_shaft_moonfall:
-    %cm_preset("Croc Shaft Moonfall", #preset_rbo_icecroc_single_maridia_croc_shaft_moonfall)
+    %cm_preset("Croc Shaft Moonfall", #preset_names_croc_shaft_moonfall, #preset_rbo_icecroc_single_maridia_croc_shaft_moonfall)
 
 presets_rbo_icecroc_single_maridia_croc_speedway:
-    %cm_preset("Croc Speedway", #preset_rbo_icecroc_single_maridia_croc_speedway)
+    %cm_preset("Croc Speedway", #preset_names_croc_speedway, #preset_rbo_icecroc_single_maridia_croc_speedway)
 
 presets_rbo_icecroc_single_maridia_croc:
-    %cm_preset("Croc", #preset_rbo_icecroc_single_maridia_croc)
+    %cm_preset("Croc", #preset_names_croc, #preset_rbo_icecroc_single_maridia_croc)
 
 presets_rbo_icecroc_single_maridia_grapple_shaft_down:
-    %cm_preset("Grapple Shaft Down", #preset_rbo_icecroc_single_maridia_grapple_shaft_down)
+    %cm_preset("Grapple Shaft Down", #preset_names_grapple_shaft_down, #preset_rbo_icecroc_single_maridia_grapple_shaft_down)
 
 presets_rbo_icecroc_single_maridia_grapple_escape:
-    %cm_preset("Grapple Escape", #preset_rbo_icecroc_single_maridia_grapple_escape)
+    %cm_preset("Grapple Escape", #preset_names_grapple_escape, #preset_rbo_icecroc_single_maridia_grapple_escape)
 
 presets_rbo_icecroc_single_maridia_grapple_shaft_up:
-    %cm_preset("Grapple Shaft Up", #preset_rbo_icecroc_single_maridia_grapple_shaft_up)
+    %cm_preset("Grapple Shaft Up", #preset_names_grapple_shaft_up, #preset_rbo_icecroc_single_maridia_grapple_shaft_up)
 
 presets_rbo_icecroc_single_maridia_croc_revisit:
-    %cm_preset("Croc Revisit", #preset_rbo_icecroc_single_maridia_croc_revisit)
+    %cm_preset("Croc Revisit", #preset_names_croc_revisit, #preset_rbo_icecroc_single_maridia_croc_revisit)
 
 
 ; Maridia (Double Maridia)
 presets_rbo_maridia_double_maridia_maridia_entry:
-    %cm_preset("Maridia Entry", #preset_rbo_maridia_double_maridia_maridia_entry)
+    %cm_preset("Maridia Entry", #preset_names_maridia_entry, #preset_rbo_maridia_double_maridia_maridia_entry)
 
 presets_rbo_maridia_double_maridia_mount_everest:
-    %cm_preset("Mount Everest", #preset_rbo_maridia_double_maridia_mount_everest)
+    %cm_preset("Mount Everest", #preset_names_mount_everest, #preset_rbo_maridia_double_maridia_mount_everest)
 
 presets_rbo_maridia_double_maridia_leaving_crab_supers:
-    %cm_preset("Leaving Crab Supers", #preset_rbo_maridia_double_maridia_leaving_crab_supers)
+    %cm_preset("Leaving Crab Supers", #preset_names_leaving_crab_supers, #preset_rbo_maridia_double_maridia_leaving_crab_supers)
 
 presets_rbo_maridia_double_maridia_mama_turtle:
-    %cm_preset("Mama Turtle", #preset_rbo_maridia_double_maridia_mama_turtle)
+    %cm_preset("Mama Turtle", #preset_names_mama_turtle, #preset_rbo_maridia_double_maridia_mama_turtle)
 
 presets_rbo_maridia_double_maridia_leaving_mama_turtle:
-    %cm_preset("Leaving Mama Turtle", #preset_rbo_maridia_double_maridia_leaving_mama_turtle)
+    %cm_preset("Leaving Mama Turtle", #preset_names_leaving_mama_turtle, #preset_rbo_maridia_double_maridia_leaving_mama_turtle)
 
 presets_rbo_maridia_double_maridia_maridia_exit:
-    %cm_preset("Maridia Exit", #preset_rbo_maridia_double_maridia_maridia_exit)
+    %cm_preset("Maridia Exit", #preset_names_maridia_exit, #preset_rbo_maridia_double_maridia_maridia_exit)
 
 
 ; Lower Norfair Segment
 presets_rbo_lower_norfair_segment_ln_20_supers_7_1_ridley:
-    %cm_preset("LN (20 Supers  7+1 Ridley)", #preset_rbo_lower_norfair_segment_ln_20_supers_7_1_ridley)
+    %cm_preset("LN (20 Supers  7+1 Ridley)", #preset_names_ln_20_supers_7_1_ridley, #preset_rbo_lower_norfair_segment_ln_20_supers_7_1_ridley)
 
 presets_rbo_lower_norfair_segment_ln_20_supers_8_1_ridley:
-    %cm_preset("LN (20 Supers  8+1 Ridley)", #preset_rbo_lower_norfair_segment_ln_20_supers_8_1_ridley)
+    %cm_preset("LN (20 Supers  8+1 Ridley)", #preset_names_ln_20_supers_8_1_ridley, #preset_rbo_lower_norfair_segment_ln_20_supers_8_1_ridley)
 
 presets_rbo_lower_norfair_segment_ln_25_supers_7_1_ridley:
-    %cm_preset("LN (25 Supers  7+1 Ridley)", #preset_rbo_lower_norfair_segment_ln_25_supers_7_1_ridley)
+    %cm_preset("LN (25 Supers  7+1 Ridley)", #preset_names_ln_25_supers_7_1_ridley, #preset_rbo_lower_norfair_segment_ln_25_supers_7_1_ridley)
 
 presets_rbo_lower_norfair_segment_ln_25_supers_8_1_ridley:
-    %cm_preset("LN (25 Supers  8+1 Ridley)", #preset_rbo_lower_norfair_segment_ln_25_supers_8_1_ridley)
+    %cm_preset("LN (25 Supers  8+1 Ridley)", #preset_names_ln_25_supers_8_1_ridley, #preset_rbo_lower_norfair_segment_ln_25_supers_8_1_ridley)
 
 presets_rbo_lower_norfair_segment_ln_25_supers_9_1_ridley:
-    %cm_preset("LN (25 Supers  9+1 Ridley)", #preset_rbo_lower_norfair_segment_ln_25_supers_9_1_ridley)
+    %cm_preset("LN (25 Supers  9+1 Ridley)", #preset_names_ln_25_supers_9_1_ridley, #preset_rbo_lower_norfair_segment_ln_25_supers_9_1_ridley)
 
 presets_rbo_lower_norfair_segment_ln_25_supers_9_2_ridley:
-    %cm_preset("LN (25 Supers  9+2 Ridley)", #preset_rbo_lower_norfair_segment_ln_25_supers_9_2_ridley)
+    %cm_preset("LN (25 Supers  9+2 Ridley)", #preset_names_ln_25_supers_9_2_ridley, #preset_rbo_lower_norfair_segment_ln_25_supers_9_2_ridley)
 
 presets_rbo_lower_norfair_segment_ln_30_supers_7_1_ridley:
-    %cm_preset("LN (30 Supers  7+1 Ridley)", #preset_rbo_lower_norfair_segment_ln_30_supers_7_1_ridley)
+    %cm_preset("LN (30 Supers  7+1 Ridley)", #preset_names_ln_30_supers_7_1_ridley, #preset_rbo_lower_norfair_segment_ln_30_supers_7_1_ridley)
 
 presets_rbo_lower_norfair_segment_ln_30_supers_8_1_ridley:
-    %cm_preset("LN (30 Supers  8+1 Ridley)", #preset_rbo_lower_norfair_segment_ln_30_supers_8_1_ridley)
+    %cm_preset("LN (30 Supers  8+1 Ridley)", #preset_names_ln_30_supers_8_1_ridley, #preset_rbo_lower_norfair_segment_ln_30_supers_8_1_ridley)
 
 presets_rbo_lower_norfair_segment_ln_30_supers_9_1_ridley:
-    %cm_preset("LN (30 Supers  9+1 Ridley)", #preset_rbo_lower_norfair_segment_ln_30_supers_9_1_ridley)
+    %cm_preset("LN (30 Supers  9+1 Ridley)", #preset_names_ln_30_supers_9_1_ridley, #preset_rbo_lower_norfair_segment_ln_30_supers_9_1_ridley)
 
 presets_rbo_lower_norfair_segment_ln_30_supers_10_1_ridley:
-    %cm_preset("LN (30 Supers 10+1 Ridley)", #preset_rbo_lower_norfair_segment_ln_30_supers_10_1_ridley)
+    %cm_preset("LN (30 Supers 10+1 Ridley)", #preset_names_ln_30_supers_10_1_ridley, #preset_rbo_lower_norfair_segment_ln_30_supers_10_1_ridley)
 
 presets_rbo_lower_norfair_segment_ln_30_supers_11_1_ridley:
-    %cm_preset("LN (30 Supers 11+1 Ridley)", #preset_rbo_lower_norfair_segment_ln_30_supers_11_1_ridley)
+    %cm_preset("LN (30 Supers 11+1 Ridley)", #preset_names_ln_30_supers_11_1_ridley, #preset_rbo_lower_norfair_segment_ln_30_supers_11_1_ridley)
 
 presets_rbo_lower_norfair_segment_ln_35_supers_8_1_ridley:
-    %cm_preset("LN (35 Supers  8+1 Ridley)", #preset_rbo_lower_norfair_segment_ln_35_supers_8_1_ridley)
+    %cm_preset("LN (35 Supers  8+1 Ridley)", #preset_names_ln_35_supers_8_1_ridley, #preset_rbo_lower_norfair_segment_ln_35_supers_8_1_ridley)
 
 presets_rbo_lower_norfair_segment_ln_35_supers_9_1_ridley:
-    %cm_preset("LN (35 Supers  9+1 Ridley)", #preset_rbo_lower_norfair_segment_ln_35_supers_9_1_ridley)
+    %cm_preset("LN (35 Supers  9+1 Ridley)", #preset_names_ln_35_supers_9_1_ridley, #preset_rbo_lower_norfair_segment_ln_35_supers_9_1_ridley)
 
 presets_rbo_lower_norfair_segment_ln_35_supers_10_1_ridley:
-    %cm_preset("LN (35 Supers 10+1 Ridley)", #preset_rbo_lower_norfair_segment_ln_35_supers_10_1_ridley)
+    %cm_preset("LN (35 Supers 10+1 Ridley)", #preset_names_ln_35_supers_10_1_ridley, #preset_rbo_lower_norfair_segment_ln_35_supers_10_1_ridley)
 
 presets_rbo_lower_norfair_segment_ln_35_supers_11_1_ridley:
-    %cm_preset("LN (35 Supers 11+1 Ridley)", #preset_rbo_lower_norfair_segment_ln_35_supers_11_1_ridley)
+    %cm_preset("LN (35 Supers 11+1 Ridley)", #preset_names_ln_35_supers_11_1_ridley, #preset_rbo_lower_norfair_segment_ln_35_supers_11_1_ridley)
 
 presets_rbo_lower_norfair_segment_ln_35_supers_11_2_ridley:
-    %cm_preset("LN (35 Supers 11+2 Ridley)", #preset_rbo_lower_norfair_segment_ln_35_supers_11_2_ridley)
+    %cm_preset("LN (35 Supers 11+2 Ridley)", #preset_names_ln_35_supers_11_2_ridley, #preset_rbo_lower_norfair_segment_ln_35_supers_11_2_ridley)
 
 
 ; LN Entry (Single Maridia)
 presets_rbo_ln_entry_single_maridia_lava_dive:
-    %cm_preset("Lava Dive", #preset_rbo_ln_entry_single_maridia_lava_dive)
+    %cm_preset("Lava Dive", #preset_names_lava_dive, #preset_rbo_ln_entry_single_maridia_lava_dive)
 
 presets_rbo_ln_entry_single_maridia_ln_main_hall:
-    %cm_preset("LN Main Hall", #preset_rbo_ln_entry_single_maridia_ln_main_hall)
+    %cm_preset("LN Main Hall", #preset_names_ln_main_hall, #preset_rbo_ln_entry_single_maridia_ln_main_hall)
 
 presets_rbo_ln_entry_single_maridia_green_gate_glitch:
-    %cm_preset("Green Gate Glitch", #preset_rbo_ln_entry_single_maridia_green_gate_glitch)
+    %cm_preset("Green Gate Glitch", #preset_names_green_gate_glitch, #preset_rbo_ln_entry_single_maridia_green_gate_glitch)
 
 presets_rbo_ln_entry_single_maridia_golden_torizo:
-    %cm_preset("Golden Torizo", #preset_rbo_ln_entry_single_maridia_golden_torizo)
+    %cm_preset("Golden Torizo", #preset_names_golden_torizo, #preset_rbo_ln_entry_single_maridia_golden_torizo)
 
 presets_rbo_ln_entry_single_maridia_energy_refill_escape:
-    %cm_preset("Energy Refill Escape", #preset_rbo_ln_entry_single_maridia_energy_refill_escape)
+    %cm_preset("Energy Refill Escape", #preset_names_energy_refill_escape, #preset_rbo_ln_entry_single_maridia_energy_refill_escape)
 
 presets_rbo_ln_entry_single_maridia_fast_pillars:
-    %cm_preset("Fast Pillars", #preset_rbo_ln_entry_single_maridia_fast_pillars)
+    %cm_preset("Fast Pillars", #preset_names_fast_pillars, #preset_rbo_ln_entry_single_maridia_fast_pillars)
 
 presets_rbo_ln_entry_single_maridia_worst_room_in_the_game:
-    %cm_preset("Worst Room In The Game", #preset_rbo_ln_entry_single_maridia_worst_room_in_the_game)
+    %cm_preset("Worst Room In The Game", #preset_names_worst_room_in_the_game, #preset_rbo_ln_entry_single_maridia_worst_room_in_the_game)
 
 presets_rbo_ln_entry_single_maridia_amphitheatre:
-    %cm_preset("Amphitheatre", #preset_rbo_ln_entry_single_maridia_amphitheatre)
+    %cm_preset("Amphitheatre", #preset_names_amphitheatre, #preset_rbo_ln_entry_single_maridia_amphitheatre)
 
 presets_rbo_ln_entry_single_maridia_firefleas_entry:
-    %cm_preset("Firefleas Entry", #preset_rbo_ln_entry_single_maridia_firefleas_entry)
+    %cm_preset("Firefleas Entry", #preset_names_firefleas_entry, #preset_rbo_ln_entry_single_maridia_firefleas_entry)
 
 presets_rbo_ln_entry_single_maridia_kihunter_stairs_down:
-    %cm_preset("Kihunter Stairs Down", #preset_rbo_ln_entry_single_maridia_kihunter_stairs_down)
+    %cm_preset("Kihunter Stairs Down", #preset_names_kihunter_stairs_down, #preset_rbo_ln_entry_single_maridia_kihunter_stairs_down)
 
 presets_rbo_ln_entry_single_maridia_ninja_pirates:
-    %cm_preset("Ninja Pirates", #preset_rbo_ln_entry_single_maridia_ninja_pirates)
+    %cm_preset("Ninja Pirates", #preset_names_ninja_pirates, #preset_rbo_ln_entry_single_maridia_ninja_pirates)
 
 presets_rbo_ln_entry_single_maridia_preridley:
-    %cm_preset("Pre-Ridley", #preset_rbo_ln_entry_single_maridia_preridley)
+    %cm_preset("Pre-Ridley", #preset_names_preridley, #preset_rbo_ln_entry_single_maridia_preridley)
 
 
 ; LN Entry (Double Maridia)
 presets_rbo_ln_entry_double_maridia_lava_dive:
-    %cm_preset("Lava Dive", #preset_rbo_ln_entry_double_maridia_lava_dive)
+    %cm_preset("Lava Dive", #preset_names_lava_dive, #preset_rbo_ln_entry_double_maridia_lava_dive)
 
 presets_rbo_ln_entry_double_maridia_ln_main_hall:
-    %cm_preset("LN Main Hall", #preset_rbo_ln_entry_double_maridia_ln_main_hall)
+    %cm_preset("LN Main Hall", #preset_names_ln_main_hall, #preset_rbo_ln_entry_double_maridia_ln_main_hall)
 
 presets_rbo_ln_entry_double_maridia_green_gate_glitch:
-    %cm_preset("Green Gate Glitch", #preset_rbo_ln_entry_double_maridia_green_gate_glitch)
+    %cm_preset("Green Gate Glitch", #preset_names_green_gate_glitch, #preset_rbo_ln_entry_double_maridia_green_gate_glitch)
 
 presets_rbo_ln_entry_double_maridia_golden_torizo:
-    %cm_preset("Golden Torizo", #preset_rbo_ln_entry_double_maridia_golden_torizo)
+    %cm_preset("Golden Torizo", #preset_names_golden_torizo, #preset_rbo_ln_entry_double_maridia_golden_torizo)
 
 presets_rbo_ln_entry_double_maridia_energy_refill_escape:
-    %cm_preset("Energy Refill Escape", #preset_rbo_ln_entry_double_maridia_energy_refill_escape)
+    %cm_preset("Energy Refill Escape", #preset_names_energy_refill_escape, #preset_rbo_ln_entry_double_maridia_energy_refill_escape)
 
 presets_rbo_ln_entry_double_maridia_fast_pillars:
-    %cm_preset("Fast Pillars", #preset_rbo_ln_entry_double_maridia_fast_pillars)
+    %cm_preset("Fast Pillars", #preset_names_fast_pillars, #preset_rbo_ln_entry_double_maridia_fast_pillars)
 
 presets_rbo_ln_entry_double_maridia_worst_room_in_the_game:
-    %cm_preset("Worst Room In The Game", #preset_rbo_ln_entry_double_maridia_worst_room_in_the_game)
+    %cm_preset("Worst Room In The Game", #preset_names_worst_room_in_the_game, #preset_rbo_ln_entry_double_maridia_worst_room_in_the_game)
 
 presets_rbo_ln_entry_double_maridia_amphitheatre:
-    %cm_preset("Amphitheatre", #preset_rbo_ln_entry_double_maridia_amphitheatre)
+    %cm_preset("Amphitheatre", #preset_names_amphitheatre, #preset_rbo_ln_entry_double_maridia_amphitheatre)
 
 presets_rbo_ln_entry_double_maridia_firefleas_entry:
-    %cm_preset("Firefleas Entry", #preset_rbo_ln_entry_double_maridia_firefleas_entry)
+    %cm_preset("Firefleas Entry", #preset_names_firefleas_entry, #preset_rbo_ln_entry_double_maridia_firefleas_entry)
 
 presets_rbo_ln_entry_double_maridia_kihunter_stairs_down:
-    %cm_preset("Kihunter Stairs Down", #preset_rbo_ln_entry_double_maridia_kihunter_stairs_down)
+    %cm_preset("Kihunter Stairs Down", #preset_names_kihunter_stairs_down, #preset_rbo_ln_entry_double_maridia_kihunter_stairs_down)
 
 presets_rbo_ln_entry_double_maridia_ninja_pirates:
-    %cm_preset("Ninja Pirates", #preset_rbo_ln_entry_double_maridia_ninja_pirates)
+    %cm_preset("Ninja Pirates", #preset_names_ninja_pirates, #preset_rbo_ln_entry_double_maridia_ninja_pirates)
 
 presets_rbo_ln_entry_double_maridia_preridley:
-    %cm_preset("Pre-Ridley", #preset_rbo_ln_entry_double_maridia_preridley)
+    %cm_preset("Pre-Ridley", #preset_names_preridley, #preset_rbo_ln_entry_double_maridia_preridley)
 
 
 ; Ridley
 presets_rbo_ridley_ridley_20_supers_7_1:
-    %cm_preset("Ridley (20 Supers  7+1)", #preset_rbo_ridley_ridley_20_supers_7_1)
+    %cm_preset("Ridley (20 Supers  7+1)", #preset_names_ridley_20_supers_7_1, #preset_rbo_ridley_ridley_20_supers_7_1)
 
 presets_rbo_ridley_ridley_20_supers_8_1:
-    %cm_preset("Ridley (20 Supers  8+1)", #preset_rbo_ridley_ridley_20_supers_8_1)
+    %cm_preset("Ridley (20 Supers  8+1)", #preset_names_ridley_20_supers_8_1, #preset_rbo_ridley_ridley_20_supers_8_1)
 
 presets_rbo_ridley_ridley_25_supers_7_1:
-    %cm_preset("Ridley (25 Supers  7+1)", #preset_rbo_ridley_ridley_25_supers_7_1)
+    %cm_preset("Ridley (25 Supers  7+1)", #preset_names_ridley_25_supers_7_1, #preset_rbo_ridley_ridley_25_supers_7_1)
 
 presets_rbo_ridley_ridley_25_supers_8_1:
-    %cm_preset("Ridley (25 Supers  8+1)", #preset_rbo_ridley_ridley_25_supers_8_1)
+    %cm_preset("Ridley (25 Supers  8+1)", #preset_names_ridley_25_supers_8_1, #preset_rbo_ridley_ridley_25_supers_8_1)
 
 presets_rbo_ridley_ridley_25_supers_9_1:
-    %cm_preset("Ridley (25 Supers  9+1)", #preset_rbo_ridley_ridley_25_supers_9_1)
+    %cm_preset("Ridley (25 Supers  9+1)", #preset_names_ridley_25_supers_9_1, #preset_rbo_ridley_ridley_25_supers_9_1)
 
 presets_rbo_ridley_ridley_25_supers_9_2:
-    %cm_preset("Ridley (25 Supers  9+2)", #preset_rbo_ridley_ridley_25_supers_9_2)
+    %cm_preset("Ridley (25 Supers  9+2)", #preset_names_ridley_25_supers_9_2, #preset_rbo_ridley_ridley_25_supers_9_2)
 
 presets_rbo_ridley_ridley_30_supers_7_1:
-    %cm_preset("Ridley (30 Supers  7+1)", #preset_rbo_ridley_ridley_30_supers_7_1)
+    %cm_preset("Ridley (30 Supers  7+1)", #preset_names_ridley_30_supers_7_1, #preset_rbo_ridley_ridley_30_supers_7_1)
 
 presets_rbo_ridley_ridley_30_supers_8_1:
-    %cm_preset("Ridley (30 Supers  8+1)", #preset_rbo_ridley_ridley_30_supers_8_1)
+    %cm_preset("Ridley (30 Supers  8+1)", #preset_names_ridley_30_supers_8_1, #preset_rbo_ridley_ridley_30_supers_8_1)
 
 presets_rbo_ridley_ridley_30_supers_9_1:
-    %cm_preset("Ridley (30 Supers  9+1)", #preset_rbo_ridley_ridley_30_supers_9_1)
+    %cm_preset("Ridley (30 Supers  9+1)", #preset_names_ridley_30_supers_9_1, #preset_rbo_ridley_ridley_30_supers_9_1)
 
 presets_rbo_ridley_ridley_30_supers_10_1:
-    %cm_preset("Ridley (30 Supers 10+1)", #preset_rbo_ridley_ridley_30_supers_10_1)
+    %cm_preset("Ridley (30 Supers 10+1)", #preset_names_ridley_30_supers_10_1, #preset_rbo_ridley_ridley_30_supers_10_1)
 
 presets_rbo_ridley_ridley_30_supers_11_1:
-    %cm_preset("Ridley (30 Supers 11+1)", #preset_rbo_ridley_ridley_30_supers_11_1)
+    %cm_preset("Ridley (30 Supers 11+1)", #preset_names_ridley_30_supers_11_1, #preset_rbo_ridley_ridley_30_supers_11_1)
 
 presets_rbo_ridley_ridley_35_supers_8_1:
-    %cm_preset("Ridley (35 Supers  8+1)", #preset_rbo_ridley_ridley_35_supers_8_1)
+    %cm_preset("Ridley (35 Supers  8+1)", #preset_names_ridley_35_supers_8_1, #preset_rbo_ridley_ridley_35_supers_8_1)
 
 presets_rbo_ridley_ridley_35_supers_9_1:
-    %cm_preset("Ridley (35 Supers  9+1)", #preset_rbo_ridley_ridley_35_supers_9_1)
+    %cm_preset("Ridley (35 Supers  9+1)", #preset_names_ridley_35_supers_9_1, #preset_rbo_ridley_ridley_35_supers_9_1)
 
 presets_rbo_ridley_ridley_35_supers_10_1:
-    %cm_preset("Ridley (35 Supers 10+1)", #preset_rbo_ridley_ridley_35_supers_10_1)
+    %cm_preset("Ridley (35 Supers 10+1)", #preset_names_ridley_35_supers_10_1, #preset_rbo_ridley_ridley_35_supers_10_1)
 
 presets_rbo_ridley_ridley_35_supers_11_1:
-    %cm_preset("Ridley (35 Supers 11+1)", #preset_rbo_ridley_ridley_35_supers_11_1)
+    %cm_preset("Ridley (35 Supers 11+1)", #preset_names_ridley_35_supers_11_1, #preset_rbo_ridley_ridley_35_supers_11_1)
 
 presets_rbo_ridley_ridley_35_supers_11_2:
-    %cm_preset("Ridley (35 Supers 11+2)", #preset_rbo_ridley_ridley_35_supers_11_2)
+    %cm_preset("Ridley (35 Supers 11+2)", #preset_names_ridley_35_supers_11_2, #preset_rbo_ridley_ridley_35_supers_11_2)
 
 
 ; LN Escape (Single Maridia)
 presets_rbo_ln_escape_single_maridia_ridley_etank:
-    %cm_preset("Ridley E-Tank", #preset_rbo_ln_escape_single_maridia_ridley_etank)
+    %cm_preset("Ridley E-Tank", #preset_names_ridley_etank, #preset_rbo_ln_escape_single_maridia_ridley_etank)
 
 presets_rbo_ln_escape_single_maridia_postridley:
-    %cm_preset("Post-Ridley", #preset_rbo_ln_escape_single_maridia_postridley)
+    %cm_preset("Post-Ridley", #preset_names_postridley, #preset_rbo_ln_escape_single_maridia_postridley)
 
 presets_rbo_ln_escape_single_maridia_firefleas:
-    %cm_preset("Firefleas", #preset_rbo_ln_escape_single_maridia_firefleas)
+    %cm_preset("Firefleas", #preset_names_firefleas, #preset_rbo_ln_escape_single_maridia_firefleas)
 
 presets_rbo_ln_escape_single_maridia_firefleas_exit:
-    %cm_preset("Firefleas Exit", #preset_rbo_ln_escape_single_maridia_firefleas_exit)
+    %cm_preset("Firefleas Exit", #preset_names_firefleas_exit, #preset_rbo_ln_escape_single_maridia_firefleas_exit)
 
 presets_rbo_ln_escape_single_maridia_3_musketeers:
-    %cm_preset("3 Musketeers", #preset_rbo_ln_escape_single_maridia_3_musketeers)
+    %cm_preset("3 Musketeers", #preset_names_3_musketeers, #preset_rbo_ln_escape_single_maridia_3_musketeers)
 
 presets_rbo_ln_escape_single_maridia_single_chamber:
-    %cm_preset("Single Chamber", #preset_rbo_ln_escape_single_maridia_single_chamber)
+    %cm_preset("Single Chamber", #preset_names_single_chamber, #preset_rbo_ln_escape_single_maridia_single_chamber)
 
 presets_rbo_ln_escape_single_maridia_croc_gate_farm:
-    %cm_preset("Croc Gate Farm", #preset_rbo_ln_escape_single_maridia_croc_gate_farm)
+    %cm_preset("Croc Gate Farm", #preset_names_croc_gate_farm, #preset_rbo_ln_escape_single_maridia_croc_gate_farm)
 
 presets_rbo_ln_escape_single_maridia_business_center:
-    %cm_preset("Business Center", #preset_rbo_ln_escape_single_maridia_business_center)
+    %cm_preset("Business Center", #preset_names_business_center, #preset_rbo_ln_escape_single_maridia_business_center)
 
 presets_rbo_ln_escape_single_maridia_maridia_entry:
-    %cm_preset("Maridia Entry", #preset_rbo_ln_escape_single_maridia_maridia_entry)
+    %cm_preset("Maridia Entry", #preset_names_maridia_entry, #preset_rbo_ln_escape_single_maridia_maridia_entry)
 
 presets_rbo_ln_escape_single_maridia_3_musketeers_spikesuit:
-    %cm_preset("3 Musketeers (Spikesuit)", #preset_rbo_ln_escape_single_maridia_3_musketeers_spikesuit)
+    %cm_preset("3 Musketeers (Spikesuit)", #preset_names_3_musketeers_spikesuit, #preset_rbo_ln_escape_single_maridia_3_musketeers_spikesuit)
 
 presets_rbo_ln_escape_single_maridia_single_chamber_spikesuit:
-    %cm_preset("Single Chamber (Spikesuit)", #preset_rbo_ln_escape_single_maridia_single_chamber_spikesuit)
+    %cm_preset("Single Chamber (Spikesuit)", #preset_names_single_chamber_spikesuit, #preset_rbo_ln_escape_single_maridia_single_chamber_spikesuit)
 
 presets_rbo_ln_escape_single_maridia_croc_gate_farm_spikesuit:
-    %cm_preset("Croc Gate Farm (Spikesuit)", #preset_rbo_ln_escape_single_maridia_croc_gate_farm_spikesuit)
+    %cm_preset("Croc Gate Farm (Spikesuit)", #preset_names_croc_gate_farm_spikesuit, #preset_rbo_ln_escape_single_maridia_croc_gate_farm_spikesuit)
 
 presets_rbo_ln_escape_single_maridia_business_center_spikesuit:
-    %cm_preset("Business Center (Spikesuit)", #preset_rbo_ln_escape_single_maridia_business_center_spikesuit)
+    %cm_preset("Business Center (Spikesuit)", #preset_names_business_center_spikesuit, #preset_rbo_ln_escape_single_maridia_business_center_spikesuit)
 
 presets_rbo_ln_escape_single_maridia_maridia_entry_spikesuit:
-    %cm_preset("Maridia Entry (Spikesuit)", #preset_rbo_ln_escape_single_maridia_maridia_entry_spikesuit)
+    %cm_preset("Maridia Entry (Spikesuit)", #preset_names_maridia_entry_spikesuit, #preset_rbo_ln_escape_single_maridia_maridia_entry_spikesuit)
 
 
 ; LN Escape (Double Maridia)
 presets_rbo_ln_escape_double_maridia_ridley_etank:
-    %cm_preset("Ridley E-Tank", #preset_rbo_ln_escape_double_maridia_ridley_etank)
+    %cm_preset("Ridley E-Tank", #preset_names_ridley_etank, #preset_rbo_ln_escape_double_maridia_ridley_etank)
 
 presets_rbo_ln_escape_double_maridia_postridley:
-    %cm_preset("Post-Ridley", #preset_rbo_ln_escape_double_maridia_postridley)
+    %cm_preset("Post-Ridley", #preset_names_postridley, #preset_rbo_ln_escape_double_maridia_postridley)
 
 presets_rbo_ln_escape_double_maridia_firefleas:
-    %cm_preset("Firefleas", #preset_rbo_ln_escape_double_maridia_firefleas)
+    %cm_preset("Firefleas", #preset_names_firefleas, #preset_rbo_ln_escape_double_maridia_firefleas)
 
 presets_rbo_ln_escape_double_maridia_firefleas_exit:
-    %cm_preset("Firefleas Exit", #preset_rbo_ln_escape_double_maridia_firefleas_exit)
+    %cm_preset("Firefleas Exit", #preset_names_firefleas_exit, #preset_rbo_ln_escape_double_maridia_firefleas_exit)
 
 presets_rbo_ln_escape_double_maridia_3_musketeers:
-    %cm_preset("3 Musketeers", #preset_rbo_ln_escape_double_maridia_3_musketeers)
+    %cm_preset("3 Musketeers", #preset_names_3_musketeers, #preset_rbo_ln_escape_double_maridia_3_musketeers)
 
 presets_rbo_ln_escape_double_maridia_single_chamber:
-    %cm_preset("Single Chamber", #preset_rbo_ln_escape_double_maridia_single_chamber)
+    %cm_preset("Single Chamber", #preset_names_single_chamber, #preset_rbo_ln_escape_double_maridia_single_chamber)
 
 presets_rbo_ln_escape_double_maridia_croc_gate_farm:
-    %cm_preset("Croc Gate Farm", #preset_rbo_ln_escape_double_maridia_croc_gate_farm)
+    %cm_preset("Croc Gate Farm", #preset_names_croc_gate_farm, #preset_rbo_ln_escape_double_maridia_croc_gate_farm)
 
 presets_rbo_ln_escape_double_maridia_business_center:
-    %cm_preset("Business Center", #preset_rbo_ln_escape_double_maridia_business_center)
+    %cm_preset("Business Center", #preset_names_business_center, #preset_rbo_ln_escape_double_maridia_business_center)
 
 presets_rbo_ln_escape_double_maridia_maridia_entry:
-    %cm_preset("Maridia Entry", #preset_rbo_ln_escape_double_maridia_maridia_entry)
+    %cm_preset("Maridia Entry", #preset_names_maridia_entry, #preset_rbo_ln_escape_double_maridia_maridia_entry)
 
 presets_rbo_ln_escape_double_maridia_3_musketeers_spikesuit:
-    %cm_preset("3 Musketeers (Spikesuit)", #preset_rbo_ln_escape_double_maridia_3_musketeers_spikesuit)
+    %cm_preset("3 Musketeers (Spikesuit)", #preset_names_3_musketeers_spikesuit, #preset_rbo_ln_escape_double_maridia_3_musketeers_spikesuit)
 
 presets_rbo_ln_escape_double_maridia_single_chamber_spikesuit:
-    %cm_preset("Single Chamber (Spikesuit)", #preset_rbo_ln_escape_double_maridia_single_chamber_spikesuit)
+    %cm_preset("Single Chamber (Spikesuit)", #preset_names_single_chamber_spikesuit, #preset_rbo_ln_escape_double_maridia_single_chamber_spikesuit)
 
 presets_rbo_ln_escape_double_maridia_croc_gate_farm_spikesuit:
-    %cm_preset("Croc Gate Farm (Spikesuit)", #preset_rbo_ln_escape_double_maridia_croc_gate_farm_spikesuit)
+    %cm_preset("Croc Gate Farm (Spikesuit)", #preset_names_croc_gate_farm_spikesuit, #preset_rbo_ln_escape_double_maridia_croc_gate_farm_spikesuit)
 
 presets_rbo_ln_escape_double_maridia_business_center_spikesuit:
-    %cm_preset("Business Center (Spikesuit)", #preset_rbo_ln_escape_double_maridia_business_center_spikesuit)
+    %cm_preset("Business Center (Spikesuit)", #preset_names_business_center_spikesuit, #preset_rbo_ln_escape_double_maridia_business_center_spikesuit)
 
 presets_rbo_ln_escape_double_maridia_maridia_entry_spikesuit:
-    %cm_preset("Maridia Entry (Spikesuit)", #preset_rbo_ln_escape_double_maridia_maridia_entry_spikesuit)
+    %cm_preset("Maridia Entry (Spikesuit)", #preset_names_maridia_entry_spikesuit, #preset_rbo_ln_escape_double_maridia_maridia_entry_spikesuit)
 
 
 ; Maridia
 presets_rbo_maridia_mount_everest_spikesuit:
-    %cm_preset("Mount Everest (Spikesuit)", #preset_rbo_maridia_mount_everest_spikesuit)
+    %cm_preset("Mount Everest (Spikesuit)", #preset_names_mount_everest_spikesuit, #preset_rbo_maridia_mount_everest_spikesuit)
 
 presets_rbo_maridia_aqueduct_spikesuit:
-    %cm_preset("Aqueduct (Spikesuit)", #preset_rbo_maridia_aqueduct_spikesuit)
+    %cm_preset("Aqueduct (Spikesuit)", #preset_names_aqueduct_spikesuit, #preset_rbo_maridia_aqueduct_spikesuit)
 
 presets_rbo_maridia_botwoon_clip_spikesuit:
-    %cm_preset("Botwoon Clip (Spikesuit)", #preset_rbo_maridia_botwoon_clip_spikesuit)
+    %cm_preset("Botwoon Clip (Spikesuit)", #preset_names_botwoon_clip_spikesuit, #preset_rbo_maridia_botwoon_clip_spikesuit)
 
 presets_rbo_maridia_botwoon_spikesuit:
-    %cm_preset("Botwoon (Spikesuit)", #preset_rbo_maridia_botwoon_spikesuit)
+    %cm_preset("Botwoon (Spikesuit)", #preset_names_botwoon_spikesuit, #preset_rbo_maridia_botwoon_spikesuit)
 
 presets_rbo_maridia_postbotwoon_spikesuit:
-    %cm_preset("Post-Botwoon (Spikesuit)", #preset_rbo_maridia_postbotwoon_spikesuit)
+    %cm_preset("Post-Botwoon (Spikesuit)", #preset_names_postbotwoon_spikesuit, #preset_rbo_maridia_postbotwoon_spikesuit)
 
 presets_rbo_maridia_mount_everest:
-    %cm_preset("Mount Everest", #preset_rbo_maridia_mount_everest)
+    %cm_preset("Mount Everest", #preset_names_mount_everest, #preset_rbo_maridia_mount_everest)
 
 presets_rbo_maridia_aqueduct:
-    %cm_preset("Aqueduct", #preset_rbo_maridia_aqueduct)
+    %cm_preset("Aqueduct", #preset_names_aqueduct, #preset_rbo_maridia_aqueduct)
 
 presets_rbo_maridia_botwoon_clip:
-    %cm_preset("Botwoon Clip", #preset_rbo_maridia_botwoon_clip)
+    %cm_preset("Botwoon Clip", #preset_names_botwoon_clip, #preset_rbo_maridia_botwoon_clip)
 
 presets_rbo_maridia_botwoon:
-    %cm_preset("Botwoon", #preset_rbo_maridia_botwoon)
+    %cm_preset("Botwoon", #preset_names_botwoon, #preset_rbo_maridia_botwoon)
 
 presets_rbo_maridia_postbotwoon:
-    %cm_preset("Post-Botwoon", #preset_rbo_maridia_postbotwoon)
+    %cm_preset("Post-Botwoon", #preset_names_postbotwoon, #preset_rbo_maridia_postbotwoon)
 
 presets_rbo_maridia_colosseum:
-    %cm_preset("Colosseum", #preset_rbo_maridia_colosseum)
+    %cm_preset("Colosseum", #preset_names_colosseum, #preset_rbo_maridia_colosseum)
 
 presets_rbo_maridia_draygon:
-    %cm_preset("Draygon", #preset_rbo_maridia_draygon)
+    %cm_preset("Draygon", #preset_names_draygon, #preset_rbo_maridia_draygon)
 
 presets_rbo_maridia_draygon_escape:
-    %cm_preset("Draygon Escape", #preset_rbo_maridia_draygon_escape)
+    %cm_preset("Draygon Escape", #preset_names_draygon_escape, #preset_rbo_maridia_draygon_escape)
 
 presets_rbo_maridia_reverse_colosseum:
-    %cm_preset("Reverse Colosseum", #preset_rbo_maridia_reverse_colosseum)
+    %cm_preset("Reverse Colosseum", #preset_names_reverse_colosseum, #preset_rbo_maridia_reverse_colosseum)
 
 presets_rbo_maridia_cac_alley:
-    %cm_preset("Cac Alley", #preset_rbo_maridia_cac_alley)
+    %cm_preset("Cac Alley", #preset_names_cac_alley, #preset_rbo_maridia_cac_alley)
 
 presets_rbo_maridia_plasma_spark_room:
-    %cm_preset("Plasma Spark Room", #preset_rbo_maridia_plasma_spark_room)
+    %cm_preset("Plasma Spark Room", #preset_names_plasma_spark_room, #preset_rbo_maridia_plasma_spark_room)
 
 presets_rbo_maridia_kassiuz_room:
-    %cm_preset("Kassiuz Room", #preset_rbo_maridia_kassiuz_room)
+    %cm_preset("Kassiuz Room", #preset_names_kassiuz_room, #preset_rbo_maridia_kassiuz_room)
 
 presets_rbo_maridia_plasma_screw_attack_strat:
-    %cm_preset("Plasma (Screw Attack Strat)", #preset_rbo_maridia_plasma_screw_attack_strat)
+    %cm_preset("Plasma (Screw Attack Strat)", #preset_names_plasma_screw_attack_strat, #preset_rbo_maridia_plasma_screw_attack_strat)
 
 presets_rbo_maridia_leaving_maridia:
-    %cm_preset("Leaving Maridia", #preset_rbo_maridia_leaving_maridia)
+    %cm_preset("Leaving Maridia", #preset_names_leaving_maridia, #preset_rbo_maridia_leaving_maridia)
 
 
 ; Wrecked Ship
 presets_rbo_wrecked_ship_forgotten_highway:
-    %cm_preset("Forgotten Highway", #preset_rbo_wrecked_ship_forgotten_highway)
+    %cm_preset("Forgotten Highway", #preset_names_forgotten_highway, #preset_rbo_wrecked_ship_forgotten_highway)
 
 presets_rbo_wrecked_ship_east_ocean:
-    %cm_preset("East Ocean", #preset_rbo_wrecked_ship_east_ocean)
+    %cm_preset("East Ocean", #preset_names_east_ocean, #preset_rbo_wrecked_ship_east_ocean)
 
 presets_rbo_wrecked_ship_wrecked_ship_backdoor_entry:
-    %cm_preset("Wrecked Ship Backdoor Entry", #preset_rbo_wrecked_ship_wrecked_ship_backdoor_entry)
+    %cm_preset("Wrecked Ship Backdoor Entry", #preset_names_wrecked_ship_backdoor_entry, #preset_rbo_wrecked_ship_wrecked_ship_backdoor_entry)
 
 presets_rbo_wrecked_ship_ws_shaft_down:
-    %cm_preset("WS Shaft Down", #preset_rbo_wrecked_ship_ws_shaft_down)
+    %cm_preset("WS Shaft Down", #preset_names_ws_shaft_down, #preset_rbo_wrecked_ship_ws_shaft_down)
 
 presets_rbo_wrecked_ship_phantoon:
-    %cm_preset("Phantoon", #preset_rbo_wrecked_ship_phantoon)
+    %cm_preset("Phantoon", #preset_names_phantoon, #preset_rbo_wrecked_ship_phantoon)
 
 presets_rbo_wrecked_ship_ws_shaft_up:
-    %cm_preset("WS Shaft Up", #preset_rbo_wrecked_ship_ws_shaft_up)
+    %cm_preset("WS Shaft Up", #preset_names_ws_shaft_up, #preset_rbo_wrecked_ship_ws_shaft_up)
 
 presets_rbo_wrecked_ship_west_ocean:
-    %cm_preset("West Ocean", #preset_rbo_wrecked_ship_west_ocean)
+    %cm_preset("West Ocean", #preset_names_west_ocean, #preset_rbo_wrecked_ship_west_ocean)
 
 
 ; Kraid-G4
 presets_rbo_kraidg4_kihunters_room_down:
-    %cm_preset("Kihunters Room Down", #preset_rbo_kraidg4_kihunters_room_down)
+    %cm_preset("Kihunters Room Down", #preset_names_kihunters_room_down, #preset_rbo_kraidg4_kihunters_room_down)
 
 presets_rbo_kraidg4_red_brinstar_elevator_down:
-    %cm_preset("Red Brinstar Elevator Down", #preset_rbo_kraidg4_red_brinstar_elevator_down)
+    %cm_preset("Red Brinstar Elevator Down", #preset_names_red_brinstar_elevator_down, #preset_rbo_kraidg4_red_brinstar_elevator_down)
 
 presets_rbo_kraidg4_red_tower_screwfall:
-    %cm_preset("Red Tower Screwfall", #preset_rbo_kraidg4_red_tower_screwfall)
+    %cm_preset("Red Tower Screwfall", #preset_names_red_tower_screwfall, #preset_rbo_kraidg4_red_tower_screwfall)
 
 presets_rbo_kraidg4_kraid_entry:
-    %cm_preset("Kraid Entry", #preset_rbo_kraidg4_kraid_entry)
+    %cm_preset("Kraid Entry", #preset_names_kraid_entry, #preset_rbo_kraidg4_kraid_entry)
 
 presets_rbo_kraidg4_kraid_hallway:
-    %cm_preset("Kraid Hallway", #preset_rbo_kraidg4_kraid_hallway)
+    %cm_preset("Kraid Hallway", #preset_names_kraid_hallway, #preset_rbo_kraidg4_kraid_hallway)
 
 presets_rbo_kraidg4_kraid:
-    %cm_preset("Kraid", #preset_rbo_kraidg4_kraid)
+    %cm_preset("Kraid", #preset_names_kraid, #preset_rbo_kraidg4_kraid)
 
 presets_rbo_kraidg4_kraid_hallway_exit:
-    %cm_preset("Kraid Hallway Exit", #preset_rbo_kraidg4_kraid_hallway_exit)
+    %cm_preset("Kraid Hallway Exit", #preset_names_kraid_hallway_exit, #preset_rbo_kraidg4_kraid_hallway_exit)
 
 presets_rbo_kraidg4_kraid_escape:
-    %cm_preset("Kraid Escape", #preset_rbo_kraidg4_kraid_escape)
+    %cm_preset("Kraid Escape", #preset_names_kraid_escape, #preset_rbo_kraidg4_kraid_escape)
 
 presets_rbo_kraidg4_red_tower_up:
-    %cm_preset("Red Tower Up", #preset_rbo_kraidg4_red_tower_up)
+    %cm_preset("Red Tower Up", #preset_names_red_tower_up, #preset_rbo_kraidg4_red_tower_up)
 
 presets_rbo_kraidg4_kihunters_room_up:
-    %cm_preset("Kihunters Room Up", #preset_rbo_kraidg4_kihunters_room_up)
+    %cm_preset("Kihunters Room Up", #preset_names_kihunters_room_up, #preset_rbo_kraidg4_kihunters_room_up)
 
 presets_rbo_kraidg4_ship_room:
-    %cm_preset("Ship Room", #preset_rbo_kraidg4_ship_room)
+    %cm_preset("Ship Room", #preset_names_ship_room, #preset_rbo_kraidg4_ship_room)
 
 presets_rbo_kraidg4_terminator:
-    %cm_preset("Terminator", #preset_rbo_kraidg4_terminator)
+    %cm_preset("Terminator", #preset_names_terminator, #preset_rbo_kraidg4_terminator)
 
 presets_rbo_kraidg4_g4:
-    %cm_preset("G4", #preset_rbo_kraidg4_g4)
+    %cm_preset("G4", #preset_names_g4, #preset_rbo_kraidg4_g4)
 
 
 ; Tourian
 presets_rbo_tourian_metroids:
-    %cm_preset("Metroids", #preset_rbo_tourian_metroids)
+    %cm_preset("Metroids", #preset_names_metroids, #preset_rbo_tourian_metroids)
 
 presets_rbo_tourian_metroids_2:
-    %cm_preset("Metroids 2", #preset_rbo_tourian_metroids_2)
+    %cm_preset("Metroids 2", #preset_names_metroids_2, #preset_rbo_tourian_metroids_2)
 
 presets_rbo_tourian_metroids_3:
-    %cm_preset("Metroids 3", #preset_rbo_tourian_metroids_3)
+    %cm_preset("Metroids 3", #preset_names_metroids_3, #preset_rbo_tourian_metroids_3)
 
 presets_rbo_tourian_metroids_4:
-    %cm_preset("Metroids 4", #preset_rbo_tourian_metroids_4)
+    %cm_preset("Metroids 4", #preset_names_metroids_4, #preset_rbo_tourian_metroids_4)
 
 presets_rbo_tourian_baby_skip:
-    %cm_preset("Baby Skip", #preset_rbo_tourian_baby_skip)
+    %cm_preset("Baby Skip", #preset_names_baby_skip, #preset_rbo_tourian_baby_skip)
 
 presets_rbo_tourian_zeb_skip:
-    %cm_preset("Zeb Skip", #preset_rbo_tourian_zeb_skip)
+    %cm_preset("Zeb Skip", #preset_names_zeb_skip, #preset_rbo_tourian_zeb_skip)
 
 presets_rbo_tourian_mother_brain_2:
-    %cm_preset("Mother Brain 2", #preset_rbo_tourian_mother_brain_2)
+    %cm_preset("Mother Brain 2", #preset_names_mother_brain_2, #preset_rbo_tourian_mother_brain_2)
 
 presets_rbo_tourian_zebes_escape:
-    %cm_preset("Zebes Escape", #preset_rbo_tourian_zebes_escape)
+    %cm_preset("Zebes Escape", #preset_names_zebes_escape, #preset_rbo_tourian_zebes_escape)
 
 presets_rbo_tourian_escape_room_3:
-    %cm_preset("Escape Room 3", #preset_rbo_tourian_escape_room_3)
+    %cm_preset("Escape Room 3", #preset_names_escape_room_3, #preset_rbo_tourian_escape_room_3)
 
 presets_rbo_tourian_escape_room_4:
-    %cm_preset("Escape Room 4", #preset_rbo_tourian_escape_room_4)
+    %cm_preset("Escape Room 4", #preset_names_escape_room_4, #preset_rbo_tourian_escape_room_4)
 
 presets_rbo_tourian_escape_climb:
-    %cm_preset("Escape Climb", #preset_rbo_tourian_escape_climb)
+    %cm_preset("Escape Climb", #preset_names_escape_climb, #preset_rbo_tourian_escape_climb)
 
 presets_rbo_tourian_escape_parlor:
-    %cm_preset("Escape Parlor", #preset_rbo_tourian_escape_parlor)
+    %cm_preset("Escape Parlor", #preset_names_escape_parlor, #preset_rbo_tourian_escape_parlor)
 

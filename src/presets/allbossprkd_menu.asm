@@ -170,297 +170,297 @@ presets_submenu_allbossprkd_tourian:
 
 ; Crateria
 presets_allbossprkd_crateria_ceres_elevator:
-    %cm_preset("Ceres Elevator", #preset_allbossprkd_crateria_ceres_elevator)
+    %cm_preset("Ceres Elevator", #preset_names_ceres_elevator, #preset_allbossprkd_crateria_ceres_elevator)
 
 presets_allbossprkd_crateria_ceres_escape:
-    %cm_preset("Ceres Escape", #preset_allbossprkd_crateria_ceres_escape)
+    %cm_preset("Ceres Escape", #preset_names_ceres_escape, #preset_allbossprkd_crateria_ceres_escape)
 
 presets_allbossprkd_crateria_ceres_last_3_rooms:
-    %cm_preset("Ceres Last 3 Rooms", #preset_allbossprkd_crateria_ceres_last_3_rooms)
+    %cm_preset("Ceres Last 3 Rooms", #preset_names_ceres_last_3_rooms, #preset_allbossprkd_crateria_ceres_last_3_rooms)
 
 presets_allbossprkd_crateria_ship:
-    %cm_preset("Ship", #preset_allbossprkd_crateria_ship)
+    %cm_preset("Ship", #preset_names_ship, #preset_allbossprkd_crateria_ship)
 
 presets_allbossprkd_crateria_pit_room:
-    %cm_preset("Pit Room", #preset_allbossprkd_crateria_pit_room)
+    %cm_preset("Pit Room", #preset_names_pit_room, #preset_allbossprkd_crateria_pit_room)
 
 presets_allbossprkd_crateria_morph:
-    %cm_preset("Morph", #preset_allbossprkd_crateria_morph)
+    %cm_preset("Morph", #preset_names_morph, #preset_allbossprkd_crateria_morph)
 
 presets_allbossprkd_crateria_pit_room_revisit:
-    %cm_preset("Pit Room Revisit", #preset_allbossprkd_crateria_pit_room_revisit)
+    %cm_preset("Pit Room Revisit", #preset_names_pit_room_revisit, #preset_allbossprkd_crateria_pit_room_revisit)
 
 presets_allbossprkd_crateria_climb:
-    %cm_preset("Climb", #preset_allbossprkd_crateria_climb)
+    %cm_preset("Climb", #preset_names_climb, #preset_allbossprkd_crateria_climb)
 
 presets_allbossprkd_crateria_parlor:
-    %cm_preset("Parlor", #preset_allbossprkd_crateria_parlor)
+    %cm_preset("Parlor", #preset_names_parlor, #preset_allbossprkd_crateria_parlor)
 
 presets_allbossprkd_crateria_bomb_torizo:
-    %cm_preset("Bomb Torizo", #preset_allbossprkd_crateria_bomb_torizo)
+    %cm_preset("Bomb Torizo", #preset_names_bomb_torizo, #preset_allbossprkd_crateria_bomb_torizo)
 
 presets_allbossprkd_crateria_terminator:
-    %cm_preset("Terminator", #preset_allbossprkd_crateria_terminator)
+    %cm_preset("Terminator", #preset_names_terminator, #preset_allbossprkd_crateria_terminator)
 
 presets_allbossprkd_crateria_green_pirate_shaft:
-    %cm_preset("Green Pirate Shaft", #preset_allbossprkd_crateria_green_pirate_shaft)
+    %cm_preset("Green Pirate Shaft", #preset_names_green_pirate_shaft, #preset_allbossprkd_crateria_green_pirate_shaft)
 
 
 ; Brinstar
 presets_allbossprkd_brinstar_green_brinstar_elevator:
-    %cm_preset("Green Brinstar Elevator", #preset_allbossprkd_brinstar_green_brinstar_elevator)
+    %cm_preset("Green Brinstar Elevator", #preset_names_green_brinstar_elevator, #preset_allbossprkd_brinstar_green_brinstar_elevator)
 
 presets_allbossprkd_brinstar_dachora_room:
-    %cm_preset("Dachora Room", #preset_allbossprkd_brinstar_dachora_room)
+    %cm_preset("Dachora Room", #preset_names_dachora_room, #preset_allbossprkd_brinstar_dachora_room)
 
 presets_allbossprkd_brinstar_big_pink:
-    %cm_preset("Big Pink", #preset_allbossprkd_brinstar_big_pink)
+    %cm_preset("Big Pink", #preset_names_big_pink, #preset_allbossprkd_brinstar_big_pink)
 
 presets_allbossprkd_brinstar_spore_spawn:
-    %cm_preset("Spore Spawn", #preset_allbossprkd_brinstar_spore_spawn)
+    %cm_preset("Spore Spawn", #preset_names_spore_spawn, #preset_allbossprkd_brinstar_spore_spawn)
 
 presets_allbossprkd_brinstar_sporefall:
-    %cm_preset("Sporefall", #preset_allbossprkd_brinstar_sporefall)
+    %cm_preset("Sporefall", #preset_names_sporefall, #preset_allbossprkd_brinstar_sporefall)
 
 presets_allbossprkd_brinstar_big_pink_revisit:
-    %cm_preset("Big Pink Revisit", #preset_allbossprkd_brinstar_big_pink_revisit)
+    %cm_preset("Big Pink Revisit", #preset_names_big_pink_revisit, #preset_allbossprkd_brinstar_big_pink_revisit)
 
 presets_allbossprkd_brinstar_red_tower:
-    %cm_preset("Red Tower", #preset_allbossprkd_brinstar_red_tower)
+    %cm_preset("Red Tower", #preset_names_red_tower, #preset_allbossprkd_brinstar_red_tower)
 
 presets_allbossprkd_brinstar_hellway:
-    %cm_preset("Hellway", #preset_allbossprkd_brinstar_hellway)
+    %cm_preset("Hellway", #preset_names_hellway, #preset_allbossprkd_brinstar_hellway)
 
 presets_allbossprkd_brinstar_leaving_power_bombs:
-    %cm_preset("Leaving Power Bombs", #preset_allbossprkd_brinstar_leaving_power_bombs)
+    %cm_preset("Leaving Power Bombs", #preset_names_leaving_power_bombs, #preset_allbossprkd_brinstar_leaving_power_bombs)
 
 
 ; Wrecked Ship
 presets_allbossprkd_wrecked_ship_moat:
-    %cm_preset("Moat", #preset_allbossprkd_wrecked_ship_moat)
+    %cm_preset("Moat", #preset_names_moat, #preset_allbossprkd_wrecked_ship_moat)
 
 presets_allbossprkd_wrecked_ship_ocean:
-    %cm_preset("Ocean", #preset_allbossprkd_wrecked_ship_ocean)
+    %cm_preset("Ocean", #preset_names_ocean, #preset_allbossprkd_wrecked_ship_ocean)
 
 presets_allbossprkd_wrecked_ship_entering_wrecked_ship:
-    %cm_preset("Entering Wrecked Ship", #preset_allbossprkd_wrecked_ship_entering_wrecked_ship)
+    %cm_preset("Entering Wrecked Ship", #preset_names_entering_wrecked_ship, #preset_allbossprkd_wrecked_ship_entering_wrecked_ship)
 
 presets_allbossprkd_wrecked_ship_phantoon:
-    %cm_preset("Phantoon", #preset_allbossprkd_wrecked_ship_phantoon)
+    %cm_preset("Phantoon", #preset_names_phantoon, #preset_allbossprkd_wrecked_ship_phantoon)
 
 presets_allbossprkd_wrecked_ship_wrecked_ship_shaft:
-    %cm_preset("Wrecked Ship Shaft", #preset_allbossprkd_wrecked_ship_wrecked_ship_shaft)
+    %cm_preset("Wrecked Ship Shaft", #preset_names_wrecked_ship_shaft, #preset_allbossprkd_wrecked_ship_wrecked_ship_shaft)
 
 presets_allbossprkd_wrecked_ship_attic:
-    %cm_preset("Attic", #preset_allbossprkd_wrecked_ship_attic)
+    %cm_preset("Attic", #preset_names_attic, #preset_allbossprkd_wrecked_ship_attic)
 
 presets_allbossprkd_wrecked_ship_bowling_alley:
-    %cm_preset("Bowling Alley", #preset_allbossprkd_wrecked_ship_bowling_alley)
+    %cm_preset("Bowling Alley", #preset_names_bowling_alley, #preset_allbossprkd_wrecked_ship_bowling_alley)
 
 presets_allbossprkd_wrecked_ship_leaving_gravity:
-    %cm_preset("Leaving Gravity", #preset_allbossprkd_wrecked_ship_leaving_gravity)
+    %cm_preset("Leaving Gravity", #preset_names_leaving_gravity, #preset_allbossprkd_wrecked_ship_leaving_gravity)
 
 presets_allbossprkd_wrecked_ship_red_tower_elevator:
-    %cm_preset("Red Tower Elevator", #preset_allbossprkd_wrecked_ship_red_tower_elevator)
+    %cm_preset("Red Tower Elevator", #preset_names_red_tower_elevator, #preset_allbossprkd_wrecked_ship_red_tower_elevator)
 
 presets_allbossprkd_wrecked_ship_red_tower_descent:
-    %cm_preset("Red Tower Descent", #preset_allbossprkd_wrecked_ship_red_tower_descent)
+    %cm_preset("Red Tower Descent", #preset_names_red_tower_descent, #preset_allbossprkd_wrecked_ship_red_tower_descent)
 
 presets_allbossprkd_wrecked_ship_spazer:
-    %cm_preset("Spazer", #preset_allbossprkd_wrecked_ship_spazer)
+    %cm_preset("Spazer", #preset_names_spazer, #preset_allbossprkd_wrecked_ship_spazer)
 
 presets_allbossprkd_wrecked_ship_breaking_the_tube:
-    %cm_preset("Breaking The Tube", #preset_allbossprkd_wrecked_ship_breaking_the_tube)
+    %cm_preset("Breaking The Tube", #preset_names_breaking_the_tube, #preset_allbossprkd_wrecked_ship_breaking_the_tube)
 
 
 ; Upper Norfair
 presets_allbossprkd_upper_norfair_business_center:
-    %cm_preset("Business Center", #preset_allbossprkd_upper_norfair_business_center)
+    %cm_preset("Business Center", #preset_names_business_center, #preset_allbossprkd_upper_norfair_business_center)
 
 presets_allbossprkd_upper_norfair_hijump_etank:
-    %cm_preset("Hi-Jump E-Tank", #preset_allbossprkd_upper_norfair_hijump_etank)
+    %cm_preset("Hi-Jump E-Tank", #preset_names_hijump_etank, #preset_allbossprkd_upper_norfair_hijump_etank)
 
 presets_allbossprkd_upper_norfair_leaving_hijump:
-    %cm_preset("Leaving Hi-Jump", #preset_allbossprkd_upper_norfair_leaving_hijump)
+    %cm_preset("Leaving Hi-Jump", #preset_names_leaving_hijump, #preset_allbossprkd_upper_norfair_leaving_hijump)
 
 presets_allbossprkd_upper_norfair_ice_beam_hallway:
-    %cm_preset("Ice Beam Hallway", #preset_allbossprkd_upper_norfair_ice_beam_hallway)
+    %cm_preset("Ice Beam Hallway", #preset_names_ice_beam_hallway, #preset_allbossprkd_upper_norfair_ice_beam_hallway)
 
 presets_allbossprkd_upper_norfair_ice_maze:
-    %cm_preset("Ice Maze", #preset_allbossprkd_upper_norfair_ice_maze)
+    %cm_preset("Ice Maze", #preset_names_ice_maze, #preset_allbossprkd_upper_norfair_ice_maze)
 
 presets_allbossprkd_upper_norfair_ice_escape:
-    %cm_preset("Ice Escape", #preset_allbossprkd_upper_norfair_ice_escape)
+    %cm_preset("Ice Escape", #preset_names_ice_escape, #preset_allbossprkd_upper_norfair_ice_escape)
 
 presets_allbossprkd_upper_norfair_precathedral:
-    %cm_preset("Pre-Cathedral", #preset_allbossprkd_upper_norfair_precathedral)
+    %cm_preset("Pre-Cathedral", #preset_names_precathedral, #preset_allbossprkd_upper_norfair_precathedral)
 
 presets_allbossprkd_upper_norfair_bubble_mountain:
-    %cm_preset("Bubble Mountain", #preset_allbossprkd_upper_norfair_bubble_mountain)
+    %cm_preset("Bubble Mountain", #preset_names_bubble_mountain, #preset_allbossprkd_upper_norfair_bubble_mountain)
 
 presets_allbossprkd_upper_norfair_single_chamber:
-    %cm_preset("Single Chamber", #preset_allbossprkd_upper_norfair_single_chamber)
+    %cm_preset("Single Chamber", #preset_names_single_chamber, #preset_allbossprkd_upper_norfair_single_chamber)
 
 presets_allbossprkd_upper_norfair_double_chamber_revisit:
-    %cm_preset("Double Chamber Revisit", #preset_allbossprkd_upper_norfair_double_chamber_revisit)
+    %cm_preset("Double Chamber Revisit", #preset_names_double_chamber_revisit, #preset_allbossprkd_upper_norfair_double_chamber_revisit)
 
 presets_allbossprkd_upper_norfair_volcano_room:
-    %cm_preset("Volcano Room", #preset_allbossprkd_upper_norfair_volcano_room)
+    %cm_preset("Volcano Room", #preset_names_volcano_room, #preset_allbossprkd_upper_norfair_volcano_room)
 
 presets_allbossprkd_upper_norfair_lava_spark:
-    %cm_preset("Lava Spark", #preset_allbossprkd_upper_norfair_lava_spark)
+    %cm_preset("Lava Spark", #preset_names_lava_spark, #preset_allbossprkd_upper_norfair_lava_spark)
 
 
 ; Lower Norfair
 presets_allbossprkd_lower_norfair_ln_main_hall:
-    %cm_preset("LN Main Hall", #preset_allbossprkd_lower_norfair_ln_main_hall)
+    %cm_preset("LN Main Hall", #preset_names_ln_main_hall, #preset_allbossprkd_lower_norfair_ln_main_hall)
 
 presets_allbossprkd_lower_norfair_green_gate_glitch:
-    %cm_preset("Green Gate Glitch", #preset_allbossprkd_lower_norfair_green_gate_glitch)
+    %cm_preset("Green Gate Glitch", #preset_names_green_gate_glitch, #preset_allbossprkd_lower_norfair_green_gate_glitch)
 
 presets_allbossprkd_lower_norfair_golden_torizo:
-    %cm_preset("Golden Torizo", #preset_allbossprkd_lower_norfair_golden_torizo)
+    %cm_preset("Golden Torizo", #preset_names_golden_torizo, #preset_allbossprkd_lower_norfair_golden_torizo)
 
 presets_allbossprkd_lower_norfair_screw_attack_escape:
-    %cm_preset("Screw Attack Escape", #preset_allbossprkd_lower_norfair_screw_attack_escape)
+    %cm_preset("Screw Attack Escape", #preset_names_screw_attack_escape, #preset_allbossprkd_lower_norfair_screw_attack_escape)
 
 presets_allbossprkd_lower_norfair_worst_room_in_the_game:
-    %cm_preset("Worst Room In The Game", #preset_allbossprkd_lower_norfair_worst_room_in_the_game)
+    %cm_preset("Worst Room In The Game", #preset_names_worst_room_in_the_game, #preset_allbossprkd_lower_norfair_worst_room_in_the_game)
 
 presets_allbossprkd_lower_norfair_amphitheatre:
-    %cm_preset("Amphitheatre", #preset_allbossprkd_lower_norfair_amphitheatre)
+    %cm_preset("Amphitheatre", #preset_names_amphitheatre, #preset_allbossprkd_lower_norfair_amphitheatre)
 
 presets_allbossprkd_lower_norfair_kihunter_stairs:
-    %cm_preset("Kihunter Stairs", #preset_allbossprkd_lower_norfair_kihunter_stairs)
+    %cm_preset("Kihunter Stairs", #preset_names_kihunter_stairs, #preset_allbossprkd_lower_norfair_kihunter_stairs)
 
 presets_allbossprkd_lower_norfair_wasteland:
-    %cm_preset("Wasteland", #preset_allbossprkd_lower_norfair_wasteland)
+    %cm_preset("Wasteland", #preset_names_wasteland, #preset_allbossprkd_lower_norfair_wasteland)
 
 presets_allbossprkd_lower_norfair_metal_pirates:
-    %cm_preset("Metal Pirates", #preset_allbossprkd_lower_norfair_metal_pirates)
+    %cm_preset("Metal Pirates", #preset_names_metal_pirates, #preset_allbossprkd_lower_norfair_metal_pirates)
 
 presets_allbossprkd_lower_norfair_ridley:
-    %cm_preset("Ridley", #preset_allbossprkd_lower_norfair_ridley)
+    %cm_preset("Ridley", #preset_names_ridley, #preset_allbossprkd_lower_norfair_ridley)
 
 presets_allbossprkd_lower_norfair_leaving_ridley:
-    %cm_preset("Leaving Ridley", #preset_allbossprkd_lower_norfair_leaving_ridley)
+    %cm_preset("Leaving Ridley", #preset_names_leaving_ridley, #preset_allbossprkd_lower_norfair_leaving_ridley)
 
 presets_allbossprkd_lower_norfair_wasteland_revisit:
-    %cm_preset("Wasteland Revisit", #preset_allbossprkd_lower_norfair_wasteland_revisit)
+    %cm_preset("Wasteland Revisit", #preset_names_wasteland_revisit, #preset_allbossprkd_lower_norfair_wasteland_revisit)
 
 presets_allbossprkd_lower_norfair_kihunter_stairs_revisit:
-    %cm_preset("Kihunter Stairs Revisit", #preset_allbossprkd_lower_norfair_kihunter_stairs_revisit)
+    %cm_preset("Kihunter Stairs Revisit", #preset_names_kihunter_stairs_revisit, #preset_allbossprkd_lower_norfair_kihunter_stairs_revisit)
 
 presets_allbossprkd_lower_norfair_fireflea_room:
-    %cm_preset("Fireflea Room", #preset_allbossprkd_lower_norfair_fireflea_room)
+    %cm_preset("Fireflea Room", #preset_names_fireflea_room, #preset_allbossprkd_lower_norfair_fireflea_room)
 
 presets_allbossprkd_lower_norfair_three_musketeers:
-    %cm_preset("Three Musketeers", #preset_allbossprkd_lower_norfair_three_musketeers)
+    %cm_preset("Three Musketeers", #preset_names_three_musketeers, #preset_allbossprkd_lower_norfair_three_musketeers)
 
 
 ; Upper Norfair Revisit
 presets_allbossprkd_upper_norfair_revisit_bubble_mountain_revisit:
-    %cm_preset("Bubble Mountain Revisit", #preset_allbossprkd_upper_norfair_revisit_bubble_mountain_revisit)
+    %cm_preset("Bubble Mountain Revisit", #preset_names_bubble_mountain_revisit, #preset_allbossprkd_upper_norfair_revisit_bubble_mountain_revisit)
 
 presets_allbossprkd_upper_norfair_revisit_red_pirate_shaft:
-    %cm_preset("Red Pirate Shaft", #preset_allbossprkd_upper_norfair_revisit_red_pirate_shaft)
+    %cm_preset("Red Pirate Shaft", #preset_names_red_pirate_shaft, #preset_allbossprkd_upper_norfair_revisit_red_pirate_shaft)
 
 presets_allbossprkd_upper_norfair_revisit_acid_snakes_tunnel:
-    %cm_preset("Acid Snakes Tunnel", #preset_allbossprkd_upper_norfair_revisit_acid_snakes_tunnel)
+    %cm_preset("Acid Snakes Tunnel", #preset_names_acid_snakes_tunnel, #preset_allbossprkd_upper_norfair_revisit_acid_snakes_tunnel)
 
 presets_allbossprkd_upper_norfair_revisit_crocomire:
-    %cm_preset("Crocomire", #preset_allbossprkd_upper_norfair_revisit_crocomire)
+    %cm_preset("Crocomire", #preset_names_crocomire, #preset_allbossprkd_upper_norfair_revisit_crocomire)
 
 presets_allbossprkd_upper_norfair_revisit_leaving_crocomire:
-    %cm_preset("Leaving Crocomire", #preset_allbossprkd_upper_norfair_revisit_leaving_crocomire)
+    %cm_preset("Leaving Crocomire", #preset_names_leaving_crocomire, #preset_allbossprkd_upper_norfair_revisit_leaving_crocomire)
 
 presets_allbossprkd_upper_norfair_revisit_crocomire_escape:
-    %cm_preset("Crocomire Escape", #preset_allbossprkd_upper_norfair_revisit_crocomire_escape)
+    %cm_preset("Crocomire Escape", #preset_names_crocomire_escape, #preset_allbossprkd_upper_norfair_revisit_crocomire_escape)
 
 presets_allbossprkd_upper_norfair_revisit_business_center_revisit:
-    %cm_preset("Business Center Revisit", #preset_allbossprkd_upper_norfair_revisit_business_center_revisit)
+    %cm_preset("Business Center Revisit", #preset_names_business_center_revisit, #preset_allbossprkd_upper_norfair_revisit_business_center_revisit)
 
 
 ; Kraid's Lair
 presets_allbossprkd_kraids_lair_entering_kraids_lair:
-    %cm_preset("Entering Kraid's Lair", #preset_allbossprkd_kraids_lair_entering_kraids_lair)
+    %cm_preset("Entering Kraid's Lair", #preset_names_entering_kraids_lair, #preset_allbossprkd_kraids_lair_entering_kraids_lair)
 
 presets_allbossprkd_kraids_lair_minikraid:
-    %cm_preset("Mini-Kraid", #preset_allbossprkd_kraids_lair_minikraid)
+    %cm_preset("Mini-Kraid", #preset_names_minikraid, #preset_allbossprkd_kraids_lair_minikraid)
 
 presets_allbossprkd_kraids_lair_kraid:
-    %cm_preset("Kraid", #preset_allbossprkd_kraids_lair_kraid)
+    %cm_preset("Kraid", #preset_names_kraid, #preset_allbossprkd_kraids_lair_kraid)
 
 presets_allbossprkd_kraids_lair_minikraid_revisit:
-    %cm_preset("Mini-Kraid Revisit", #preset_allbossprkd_kraids_lair_minikraid_revisit)
+    %cm_preset("Mini-Kraid Revisit", #preset_names_minikraid_revisit, #preset_allbossprkd_kraids_lair_minikraid_revisit)
 
 presets_allbossprkd_kraids_lair_leaving_kraids_lair:
-    %cm_preset("Leaving Kraid's Lair", #preset_allbossprkd_kraids_lair_leaving_kraids_lair)
+    %cm_preset("Leaving Kraid's Lair", #preset_names_leaving_kraids_lair, #preset_allbossprkd_kraids_lair_leaving_kraids_lair)
 
 
 ; Maridia
 presets_allbossprkd_maridia_mt_everest:
-    %cm_preset("Mt. Everest", #preset_allbossprkd_maridia_mt_everest)
+    %cm_preset("Mt. Everest", #preset_names_mt_everest, #preset_allbossprkd_maridia_mt_everest)
 
 presets_allbossprkd_maridia_aqueduct:
-    %cm_preset("Aqueduct", #preset_allbossprkd_maridia_aqueduct)
+    %cm_preset("Aqueduct", #preset_names_aqueduct, #preset_allbossprkd_maridia_aqueduct)
 
 presets_allbossprkd_maridia_botwoon:
-    %cm_preset("Botwoon", #preset_allbossprkd_maridia_botwoon)
+    %cm_preset("Botwoon", #preset_names_botwoon, #preset_allbossprkd_maridia_botwoon)
 
 presets_allbossprkd_maridia_halfie:
-    %cm_preset("Halfie", #preset_allbossprkd_maridia_halfie)
+    %cm_preset("Halfie", #preset_names_halfie, #preset_allbossprkd_maridia_halfie)
 
 presets_allbossprkd_maridia_draygon:
-    %cm_preset("Draygon", #preset_allbossprkd_maridia_draygon)
+    %cm_preset("Draygon", #preset_names_draygon, #preset_allbossprkd_maridia_draygon)
 
 presets_allbossprkd_maridia_whomple_jump:
-    %cm_preset("Whomple Jump", #preset_allbossprkd_maridia_whomple_jump)
+    %cm_preset("Whomple Jump", #preset_names_whomple_jump, #preset_allbossprkd_maridia_whomple_jump)
 
 presets_allbossprkd_maridia_reverse_botwoon_hallway:
-    %cm_preset("Reverse Botwoon Hallway", #preset_allbossprkd_maridia_reverse_botwoon_hallway)
+    %cm_preset("Reverse Botwoon Hallway", #preset_names_reverse_botwoon_hallway, #preset_allbossprkd_maridia_reverse_botwoon_hallway)
 
 presets_allbossprkd_maridia_aqueduct_revisit:
-    %cm_preset("Aqueduct Revisit", #preset_allbossprkd_maridia_aqueduct_revisit)
+    %cm_preset("Aqueduct Revisit", #preset_names_aqueduct_revisit, #preset_allbossprkd_maridia_aqueduct_revisit)
 
 presets_allbossprkd_maridia_mt_everest_revisit:
-    %cm_preset("Mt. Everest Revisit", #preset_allbossprkd_maridia_mt_everest_revisit)
+    %cm_preset("Mt. Everest Revisit", #preset_names_mt_everest_revisit, #preset_allbossprkd_maridia_mt_everest_revisit)
 
 presets_allbossprkd_maridia_red_brinstar_gate:
-    %cm_preset("Red Brinstar Gate", #preset_allbossprkd_maridia_red_brinstar_gate)
+    %cm_preset("Red Brinstar Gate", #preset_names_red_brinstar_gate, #preset_allbossprkd_maridia_red_brinstar_gate)
 
 
 ; Tourian
 presets_allbossprkd_tourian_crateria_kihunters:
-    %cm_preset("Crateria Kihunters", #preset_allbossprkd_tourian_crateria_kihunters)
+    %cm_preset("Crateria Kihunters", #preset_names_crateria_kihunters, #preset_allbossprkd_tourian_crateria_kihunters)
 
 presets_allbossprkd_tourian_terminator_revisit:
-    %cm_preset("Terminator Revisit", #preset_allbossprkd_tourian_terminator_revisit)
+    %cm_preset("Terminator Revisit", #preset_names_terminator_revisit, #preset_allbossprkd_tourian_terminator_revisit)
 
 presets_allbossprkd_tourian_metroids_1:
-    %cm_preset("Metroids 1", #preset_allbossprkd_tourian_metroids_1)
+    %cm_preset("Metroids 1", #preset_names_metroids_1, #preset_allbossprkd_tourian_metroids_1)
 
 presets_allbossprkd_tourian_metroids_2:
-    %cm_preset("Metroids 2", #preset_allbossprkd_tourian_metroids_2)
+    %cm_preset("Metroids 2", #preset_names_metroids_2, #preset_allbossprkd_tourian_metroids_2)
 
 presets_allbossprkd_tourian_metroids_3:
-    %cm_preset("Metroids 3", #preset_allbossprkd_tourian_metroids_3)
+    %cm_preset("Metroids 3", #preset_names_metroids_3, #preset_allbossprkd_tourian_metroids_3)
 
 presets_allbossprkd_tourian_metroids_4:
-    %cm_preset("Metroids 4", #preset_allbossprkd_tourian_metroids_4)
+    %cm_preset("Metroids 4", #preset_names_metroids_4, #preset_allbossprkd_tourian_metroids_4)
 
 presets_allbossprkd_tourian_baby_skip:
-    %cm_preset("Baby Skip", #preset_allbossprkd_tourian_baby_skip)
+    %cm_preset("Baby Skip", #preset_names_baby_skip, #preset_allbossprkd_tourian_baby_skip)
 
 presets_allbossprkd_tourian_gadora_room:
-    %cm_preset("Gadora Room", #preset_allbossprkd_tourian_gadora_room)
+    %cm_preset("Gadora Room", #preset_names_gadora_room, #preset_allbossprkd_tourian_gadora_room)
 
 presets_allbossprkd_tourian_zeb_skip:
-    %cm_preset("Zeb Skip", #preset_allbossprkd_tourian_zeb_skip)
+    %cm_preset("Zeb Skip", #preset_names_zeb_skip, #preset_allbossprkd_tourian_zeb_skip)
 
 presets_allbossprkd_tourian_escape_room_3:
-    %cm_preset("Escape Room 3", #preset_allbossprkd_tourian_escape_room_3)
+    %cm_preset("Escape Room 3", #preset_names_escape_room_3, #preset_allbossprkd_tourian_escape_room_3)
 
 presets_allbossprkd_tourian_escape_parlor:
-    %cm_preset("Escape Parlor", #preset_allbossprkd_tourian_escape_parlor)
+    %cm_preset("Escape Parlor", #preset_names_escape_parlor, #preset_allbossprkd_tourian_escape_parlor)
 

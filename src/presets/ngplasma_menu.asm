@@ -171,300 +171,300 @@ presets_submenu_ngplasma_tourian:
 
 ; Ceres Station
 presets_ngplasma_ceres_station_ceres_elevator:
-    %cm_preset("Ceres Elevator", #preset_ngplasma_ceres_station_ceres_elevator)
+    %cm_preset("Ceres Elevator", #preset_names_ceres_elevator, #preset_ngplasma_ceres_station_ceres_elevator)
 
 presets_ngplasma_ceres_station_magnet_stairs:
-    %cm_preset("Magnet Stairs", #preset_ngplasma_ceres_station_magnet_stairs)
+    %cm_preset("Magnet Stairs", #preset_names_magnet_stairs, #preset_ngplasma_ceres_station_magnet_stairs)
 
 presets_ngplasma_ceres_station_ceres_ridley:
-    %cm_preset("Ceres Ridley", #preset_ngplasma_ceres_station_ceres_ridley)
+    %cm_preset("Ceres Ridley", #preset_names_ceres_ridley, #preset_ngplasma_ceres_station_ceres_ridley)
 
 presets_ngplasma_ceres_station_ceres_escape:
-    %cm_preset("Ceres Escape", #preset_ngplasma_ceres_station_ceres_escape)
+    %cm_preset("Ceres Escape", #preset_names_ceres_escape, #preset_ngplasma_ceres_station_ceres_escape)
 
 presets_ngplasma_ceres_station_magnet_stairs_escape:
-    %cm_preset("Magnet Stairs Escape", #preset_ngplasma_ceres_station_magnet_stairs_escape)
+    %cm_preset("Magnet Stairs Escape", #preset_names_magnet_stairs_escape, #preset_ngplasma_ceres_station_magnet_stairs_escape)
 
 
 ; Wrecked Ship
 presets_ngplasma_wrecked_ship_ship:
-    %cm_preset("Ship", #preset_ngplasma_wrecked_ship_ship)
+    %cm_preset("Ship", #preset_names_ship, #preset_ngplasma_wrecked_ship_ship)
 
 presets_ngplasma_wrecked_ship_moat:
-    %cm_preset("Moat", #preset_ngplasma_wrecked_ship_moat)
+    %cm_preset("Moat", #preset_names_moat, #preset_ngplasma_wrecked_ship_moat)
 
 presets_ngplasma_wrecked_ship_ocean:
-    %cm_preset("Ocean", #preset_ngplasma_wrecked_ship_ocean)
+    %cm_preset("Ocean", #preset_names_ocean, #preset_ngplasma_wrecked_ship_ocean)
 
 presets_ngplasma_wrecked_ship_entering_wrecked_ship:
-    %cm_preset("Entering Wrecked Ship", #preset_ngplasma_wrecked_ship_entering_wrecked_ship)
+    %cm_preset("Entering Wrecked Ship", #preset_names_entering_wrecked_ship, #preset_ngplasma_wrecked_ship_entering_wrecked_ship)
 
 presets_ngplasma_wrecked_ship_basement:
-    %cm_preset("Basement", #preset_ngplasma_wrecked_ship_basement)
+    %cm_preset("Basement", #preset_names_basement, #preset_ngplasma_wrecked_ship_basement)
 
 presets_ngplasma_wrecked_ship_phantoon:
-    %cm_preset("Phantoon", #preset_ngplasma_wrecked_ship_phantoon)
+    %cm_preset("Phantoon", #preset_names_phantoon, #preset_ngplasma_wrecked_ship_phantoon)
 
 presets_ngplasma_wrecked_ship_leaving_phantoon:
-    %cm_preset("Leaving Phantoon", #preset_ngplasma_wrecked_ship_leaving_phantoon)
+    %cm_preset("Leaving Phantoon", #preset_names_leaving_phantoon, #preset_ngplasma_wrecked_ship_leaving_phantoon)
 
 presets_ngplasma_wrecked_ship_wrecked_ship_shaft:
-    %cm_preset("Wrecked Ship Shaft", #preset_ngplasma_wrecked_ship_wrecked_ship_shaft)
+    %cm_preset("Wrecked Ship Shaft", #preset_names_wrecked_ship_shaft, #preset_ngplasma_wrecked_ship_wrecked_ship_shaft)
 
 presets_ngplasma_wrecked_ship_leaving_wrecked_ship:
-    %cm_preset("Leaving Wrecked Ship", #preset_ngplasma_wrecked_ship_leaving_wrecked_ship)
+    %cm_preset("Leaving Wrecked Ship", #preset_names_leaving_wrecked_ship, #preset_ngplasma_wrecked_ship_leaving_wrecked_ship)
 
 presets_ngplasma_wrecked_ship_kihunters_revisit:
-    %cm_preset("Kihunters Revisit", #preset_ngplasma_wrecked_ship_kihunters_revisit)
+    %cm_preset("Kihunters Revisit", #preset_names_kihunters_revisit, #preset_ngplasma_wrecked_ship_kihunters_revisit)
 
 
 ; Red Brinstar
 presets_ngplasma_red_brinstar_red_brinstar_elevator:
-    %cm_preset("Red Brinstar Elevator", #preset_ngplasma_red_brinstar_red_brinstar_elevator)
+    %cm_preset("Red Brinstar Elevator", #preset_names_red_brinstar_elevator, #preset_ngplasma_red_brinstar_red_brinstar_elevator)
 
 presets_ngplasma_red_brinstar_hellway:
-    %cm_preset("Hellway", #preset_ngplasma_red_brinstar_hellway)
+    %cm_preset("Hellway", #preset_names_hellway, #preset_ngplasma_red_brinstar_hellway)
 
 presets_ngplasma_red_brinstar_red_tower:
-    %cm_preset("Red Tower", #preset_ngplasma_red_brinstar_red_tower)
+    %cm_preset("Red Tower", #preset_names_red_tower, #preset_ngplasma_red_brinstar_red_tower)
 
 presets_ngplasma_red_brinstar_bottom_of_red_tower:
-    %cm_preset("Bottom of Red Tower", #preset_ngplasma_red_brinstar_bottom_of_red_tower)
+    %cm_preset("Bottom of Red Tower", #preset_names_bottom_of_red_tower, #preset_ngplasma_red_brinstar_bottom_of_red_tower)
 
 presets_ngplasma_red_brinstar_breaking_the_tube:
-    %cm_preset("Breaking The Tube", #preset_ngplasma_red_brinstar_breaking_the_tube)
+    %cm_preset("Breaking The Tube", #preset_names_breaking_the_tube, #preset_ngplasma_red_brinstar_breaking_the_tube)
 
 presets_ngplasma_red_brinstar_upper_norfair_elevator:
-    %cm_preset("Upper Norfair Elevator", #preset_ngplasma_red_brinstar_upper_norfair_elevator)
+    %cm_preset("Upper Norfair Elevator", #preset_names_upper_norfair_elevator, #preset_ngplasma_red_brinstar_upper_norfair_elevator)
 
 
 ; Norfair Pre-Ridley
 presets_ngplasma_norfair_preridley_business_center:
-    %cm_preset("Business Center", #preset_ngplasma_norfair_preridley_business_center)
+    %cm_preset("Business Center", #preset_names_business_center, #preset_ngplasma_norfair_preridley_business_center)
 
 presets_ngplasma_norfair_preridley_frog_speedway:
-    %cm_preset("Frog Speedway", #preset_ngplasma_norfair_preridley_frog_speedway)
+    %cm_preset("Frog Speedway", #preset_names_frog_speedway, #preset_ngplasma_norfair_preridley_frog_speedway)
 
 presets_ngplasma_norfair_preridley_purple_shaft:
-    %cm_preset("Purple Shaft", #preset_ngplasma_norfair_preridley_purple_shaft)
+    %cm_preset("Purple Shaft", #preset_names_purple_shaft, #preset_ngplasma_norfair_preridley_purple_shaft)
 
 presets_ngplasma_norfair_preridley_magdollite_room:
-    %cm_preset("Magdollite Room", #preset_ngplasma_norfair_preridley_magdollite_room)
+    %cm_preset("Magdollite Room", #preset_names_magdollite_room, #preset_ngplasma_norfair_preridley_magdollite_room)
 
 presets_ngplasma_norfair_preridley_kronic_boost:
-    %cm_preset("Kronic Boost", #preset_ngplasma_norfair_preridley_kronic_boost)
+    %cm_preset("Kronic Boost", #preset_names_kronic_boost, #preset_ngplasma_norfair_preridley_kronic_boost)
 
 presets_ngplasma_norfair_preridley_lower_norfair_elevator:
-    %cm_preset("Lower Norfair Elevator", #preset_ngplasma_norfair_preridley_lower_norfair_elevator)
+    %cm_preset("Lower Norfair Elevator", #preset_names_lower_norfair_elevator, #preset_ngplasma_norfair_preridley_lower_norfair_elevator)
 
 presets_ngplasma_norfair_preridley_ln_main_hall:
-    %cm_preset("LN Main Hall", #preset_ngplasma_norfair_preridley_ln_main_hall)
+    %cm_preset("LN Main Hall", #preset_names_ln_main_hall, #preset_ngplasma_norfair_preridley_ln_main_hall)
 
 presets_ngplasma_norfair_preridley_prepillars:
-    %cm_preset("Pre-Pillars", #preset_ngplasma_norfair_preridley_prepillars)
+    %cm_preset("Pre-Pillars", #preset_names_prepillars, #preset_ngplasma_norfair_preridley_prepillars)
 
 presets_ngplasma_norfair_preridley_fast_pillars:
-    %cm_preset("Fast Pillars", #preset_ngplasma_norfair_preridley_fast_pillars)
+    %cm_preset("Fast Pillars", #preset_names_fast_pillars, #preset_ngplasma_norfair_preridley_fast_pillars)
 
 presets_ngplasma_norfair_preridley_worst_room_in_the_game:
-    %cm_preset("Worst Room In The Game", #preset_ngplasma_norfair_preridley_worst_room_in_the_game)
+    %cm_preset("Worst Room In The Game", #preset_names_worst_room_in_the_game, #preset_ngplasma_norfair_preridley_worst_room_in_the_game)
 
 presets_ngplasma_norfair_preridley_amphitheatre:
-    %cm_preset("Amphitheatre", #preset_ngplasma_norfair_preridley_amphitheatre)
+    %cm_preset("Amphitheatre", #preset_names_amphitheatre, #preset_ngplasma_norfair_preridley_amphitheatre)
 
 presets_ngplasma_norfair_preridley_kihunter_stairs_down:
-    %cm_preset("Kihunter Stairs Down", #preset_ngplasma_norfair_preridley_kihunter_stairs_down)
+    %cm_preset("Kihunter Stairs Down", #preset_names_kihunter_stairs_down, #preset_ngplasma_norfair_preridley_kihunter_stairs_down)
 
 presets_ngplasma_norfair_preridley_wasteland:
-    %cm_preset("Wasteland", #preset_ngplasma_norfair_preridley_wasteland)
+    %cm_preset("Wasteland", #preset_names_wasteland, #preset_ngplasma_norfair_preridley_wasteland)
 
 presets_ngplasma_norfair_preridley_metal_ninja_pirates:
-    %cm_preset("Metal Ninja Pirates", #preset_ngplasma_norfair_preridley_metal_ninja_pirates)
+    %cm_preset("Metal Ninja Pirates", #preset_names_metal_ninja_pirates, #preset_ngplasma_norfair_preridley_metal_ninja_pirates)
 
 presets_ngplasma_norfair_preridley_plowerhouse:
-    %cm_preset("Plowerhouse", #preset_ngplasma_norfair_preridley_plowerhouse)
+    %cm_preset("Plowerhouse", #preset_names_plowerhouse, #preset_ngplasma_norfair_preridley_plowerhouse)
 
 presets_ngplasma_norfair_preridley_ridley:
-    %cm_preset("Ridley", #preset_ngplasma_norfair_preridley_ridley)
+    %cm_preset("Ridley", #preset_names_ridley, #preset_ngplasma_norfair_preridley_ridley)
 
 
 ; Norfair Post-Ridley
 presets_ngplasma_norfair_postridley_leaving_ridley:
-    %cm_preset("Leaving Ridley", #preset_ngplasma_norfair_postridley_leaving_ridley)
+    %cm_preset("Leaving Ridley", #preset_names_leaving_ridley, #preset_ngplasma_norfair_postridley_leaving_ridley)
 
 presets_ngplasma_norfair_postridley_reverse_plowerhouse:
-    %cm_preset("Reverse Plowerhouse", #preset_ngplasma_norfair_postridley_reverse_plowerhouse)
+    %cm_preset("Reverse Plowerhouse", #preset_names_reverse_plowerhouse, #preset_ngplasma_norfair_postridley_reverse_plowerhouse)
 
 presets_ngplasma_norfair_postridley_wasteland_revisit:
-    %cm_preset("Wasteland Revisit", #preset_ngplasma_norfair_postridley_wasteland_revisit)
+    %cm_preset("Wasteland Revisit", #preset_names_wasteland_revisit, #preset_ngplasma_norfair_postridley_wasteland_revisit)
 
 presets_ngplasma_norfair_postridley_kihunter_stairs_up:
-    %cm_preset("Kihunter Stairs Up", #preset_ngplasma_norfair_postridley_kihunter_stairs_up)
+    %cm_preset("Kihunter Stairs Up", #preset_names_kihunter_stairs_up, #preset_ngplasma_norfair_postridley_kihunter_stairs_up)
 
 presets_ngplasma_norfair_postridley_fireflea_room:
-    %cm_preset("Fireflea Room", #preset_ngplasma_norfair_postridley_fireflea_room)
+    %cm_preset("Fireflea Room", #preset_names_fireflea_room, #preset_ngplasma_norfair_postridley_fireflea_room)
 
 presets_ngplasma_norfair_postridley_springball_maze:
-    %cm_preset("Springball Maze", #preset_ngplasma_norfair_postridley_springball_maze)
+    %cm_preset("Springball Maze", #preset_names_springball_maze, #preset_ngplasma_norfair_postridley_springball_maze)
 
 presets_ngplasma_norfair_postridley_three_musketeers:
-    %cm_preset("Three Musketeers", #preset_ngplasma_norfair_postridley_three_musketeers)
+    %cm_preset("Three Musketeers", #preset_names_three_musketeers, #preset_ngplasma_norfair_postridley_three_musketeers)
 
 presets_ngplasma_norfair_postridley_single_chamber:
-    %cm_preset("Single Chamber", #preset_ngplasma_norfair_postridley_single_chamber)
+    %cm_preset("Single Chamber", #preset_names_single_chamber, #preset_ngplasma_norfair_postridley_single_chamber)
 
 presets_ngplasma_norfair_postridley_bubble_mountain:
-    %cm_preset("Bubble Mountain", #preset_ngplasma_norfair_postridley_bubble_mountain)
+    %cm_preset("Bubble Mountain", #preset_names_bubble_mountain, #preset_ngplasma_norfair_postridley_bubble_mountain)
 
 presets_ngplasma_norfair_postridley_frog_speedway_revisit:
-    %cm_preset("Frog Speedway Revisit", #preset_ngplasma_norfair_postridley_frog_speedway_revisit)
+    %cm_preset("Frog Speedway Revisit", #preset_names_frog_speedway_revisit, #preset_ngplasma_norfair_postridley_frog_speedway_revisit)
 
 presets_ngplasma_norfair_postridley_business_center_revisit:
-    %cm_preset("Business Center Revisit", #preset_ngplasma_norfair_postridley_business_center_revisit)
+    %cm_preset("Business Center Revisit", #preset_names_business_center_revisit, #preset_ngplasma_norfair_postridley_business_center_revisit)
 
 
 ; Kraid's Lair
 presets_ngplasma_kraids_lair_entering_kraids_lair:
-    %cm_preset("Entering Kraid's Lair", #preset_ngplasma_kraids_lair_entering_kraids_lair)
+    %cm_preset("Entering Kraid's Lair", #preset_names_entering_kraids_lair, #preset_ngplasma_kraids_lair_entering_kraids_lair)
 
 presets_ngplasma_kraids_lair_warehouse_kihunters:
-    %cm_preset("Warehouse Kihunters", #preset_ngplasma_kraids_lair_warehouse_kihunters)
+    %cm_preset("Warehouse Kihunters", #preset_names_warehouse_kihunters, #preset_ngplasma_kraids_lair_warehouse_kihunters)
 
 presets_ngplasma_kraids_lair_minikraid:
-    %cm_preset("Mini-Kraid", #preset_ngplasma_kraids_lair_minikraid)
+    %cm_preset("Mini-Kraid", #preset_names_minikraid, #preset_ngplasma_kraids_lair_minikraid)
 
 presets_ngplasma_kraids_lair_kraid:
-    %cm_preset("Kraid", #preset_ngplasma_kraids_lair_kraid)
+    %cm_preset("Kraid", #preset_names_kraid, #preset_ngplasma_kraids_lair_kraid)
 
 presets_ngplasma_kraids_lair_leaving_kraid:
-    %cm_preset("Leaving Kraid", #preset_ngplasma_kraids_lair_leaving_kraid)
+    %cm_preset("Leaving Kraid", #preset_names_leaving_kraid, #preset_ngplasma_kraids_lair_leaving_kraid)
 
 presets_ngplasma_kraids_lair_minikraid_revisit:
-    %cm_preset("Mini-Kraid Revisit", #preset_ngplasma_kraids_lair_minikraid_revisit)
+    %cm_preset("Mini-Kraid Revisit", #preset_names_minikraid_revisit, #preset_ngplasma_kraids_lair_minikraid_revisit)
 
 presets_ngplasma_kraids_lair_kihunters_revisit:
-    %cm_preset("Kihunters Revisit", #preset_ngplasma_kraids_lair_kihunters_revisit)
+    %cm_preset("Kihunters Revisit", #preset_names_kihunters_revisit, #preset_ngplasma_kraids_lair_kihunters_revisit)
 
 presets_ngplasma_kraids_lair_warehouse_zeelas:
-    %cm_preset("Warehouse Zeelas", #preset_ngplasma_kraids_lair_warehouse_zeelas)
+    %cm_preset("Warehouse Zeelas", #preset_names_warehouse_zeelas, #preset_ngplasma_kraids_lair_warehouse_zeelas)
 
 presets_ngplasma_kraids_lair_leaving_kraids_lair:
-    %cm_preset("Leaving Kraid's Lair", #preset_ngplasma_kraids_lair_leaving_kraids_lair)
+    %cm_preset("Leaving Kraid's Lair", #preset_names_leaving_kraids_lair, #preset_ngplasma_kraids_lair_leaving_kraids_lair)
 
 
 ; Maridia
 presets_ngplasma_maridia_entering_maridia:
-    %cm_preset("Entering Maridia", #preset_ngplasma_maridia_entering_maridia)
+    %cm_preset("Entering Maridia", #preset_names_entering_maridia, #preset_ngplasma_maridia_entering_maridia)
 
 presets_ngplasma_maridia_main_street:
-    %cm_preset("Main Street", #preset_ngplasma_maridia_main_street)
+    %cm_preset("Main Street", #preset_names_main_street, #preset_ngplasma_maridia_main_street)
 
 presets_ngplasma_maridia_fish_tank:
-    %cm_preset("Fish Tank", #preset_ngplasma_maridia_fish_tank)
+    %cm_preset("Fish Tank", #preset_names_fish_tank, #preset_ngplasma_maridia_fish_tank)
 
 presets_ngplasma_maridia_mt_everest:
-    %cm_preset("Mt. Everest", #preset_ngplasma_maridia_mt_everest)
+    %cm_preset("Mt. Everest", #preset_names_mt_everest, #preset_ngplasma_maridia_mt_everest)
 
 presets_ngplasma_maridia_crab_shaft:
-    %cm_preset("Crab Shaft", #preset_ngplasma_maridia_crab_shaft)
+    %cm_preset("Crab Shaft", #preset_names_crab_shaft, #preset_ngplasma_maridia_crab_shaft)
 
 presets_ngplasma_maridia_aqueduct:
-    %cm_preset("Aqueduct", #preset_ngplasma_maridia_aqueduct)
+    %cm_preset("Aqueduct", #preset_names_aqueduct, #preset_ngplasma_maridia_aqueduct)
 
 presets_ngplasma_maridia_botwoon_hallway:
-    %cm_preset("Botwoon Hallway", #preset_ngplasma_maridia_botwoon_hallway)
+    %cm_preset("Botwoon Hallway", #preset_names_botwoon_hallway, #preset_ngplasma_maridia_botwoon_hallway)
 
 presets_ngplasma_maridia_botwoon:
-    %cm_preset("Botwoon", #preset_ngplasma_maridia_botwoon)
+    %cm_preset("Botwoon", #preset_names_botwoon, #preset_ngplasma_maridia_botwoon)
 
 presets_ngplasma_maridia_halfie:
-    %cm_preset("Halfie", #preset_ngplasma_maridia_halfie)
+    %cm_preset("Halfie", #preset_names_halfie, #preset_ngplasma_maridia_halfie)
 
 presets_ngplasma_maridia_draygon:
-    %cm_preset("Draygon", #preset_ngplasma_maridia_draygon)
+    %cm_preset("Draygon", #preset_names_draygon, #preset_ngplasma_maridia_draygon)
 
 presets_ngplasma_maridia_spike_suit_colosseum:
-    %cm_preset("Spike Suit Colosseum", #preset_ngplasma_maridia_spike_suit_colosseum)
+    %cm_preset("Spike Suit Colosseum", #preset_names_spike_suit_colosseum, #preset_ngplasma_maridia_spike_suit_colosseum)
 
 presets_ngplasma_maridia_whomple_jump:
-    %cm_preset("Whomple Jump", #preset_ngplasma_maridia_whomple_jump)
+    %cm_preset("Whomple Jump", #preset_names_whomple_jump, #preset_ngplasma_maridia_whomple_jump)
 
 presets_ngplasma_maridia_reverse_botwoon_hallway:
-    %cm_preset("Reverse Botwoon Hallway", #preset_ngplasma_maridia_reverse_botwoon_hallway)
+    %cm_preset("Reverse Botwoon Hallway", #preset_names_reverse_botwoon_hallway, #preset_ngplasma_maridia_reverse_botwoon_hallway)
 
 presets_ngplasma_maridia_aqueduct_revisit:
-    %cm_preset("Aqueduct Revisit", #preset_ngplasma_maridia_aqueduct_revisit)
+    %cm_preset("Aqueduct Revisit", #preset_names_aqueduct_revisit, #preset_ngplasma_maridia_aqueduct_revisit)
 
 presets_ngplasma_maridia_crab_shaft_revisit:
-    %cm_preset("Crab Shaft Revisit", #preset_ngplasma_maridia_crab_shaft_revisit)
+    %cm_preset("Crab Shaft Revisit", #preset_names_crab_shaft_revisit, #preset_ngplasma_maridia_crab_shaft_revisit)
 
 presets_ngplasma_maridia_mt_everest_revisit:
-    %cm_preset("Mt. Everest Revisit", #preset_ngplasma_maridia_mt_everest_revisit)
+    %cm_preset("Mt. Everest Revisit", #preset_names_mt_everest_revisit, #preset_ngplasma_maridia_mt_everest_revisit)
 
 presets_ngplasma_maridia_leaving_maridia:
-    %cm_preset("Leaving Maridia", #preset_ngplasma_maridia_leaving_maridia)
+    %cm_preset("Leaving Maridia", #preset_names_leaving_maridia, #preset_ngplasma_maridia_leaving_maridia)
 
 
 ; Crateria
 presets_ngplasma_crateria_red_brinstar_gate:
-    %cm_preset("Red Brinstar Gate", #preset_ngplasma_crateria_red_brinstar_gate)
+    %cm_preset("Red Brinstar Gate", #preset_names_red_brinstar_gate, #preset_ngplasma_crateria_red_brinstar_gate)
 
 presets_ngplasma_crateria_crateria_kihunters_final:
-    %cm_preset("Crateria Kihunters Final", #preset_ngplasma_crateria_crateria_kihunters_final)
+    %cm_preset("Crateria Kihunters Final", #preset_names_crateria_kihunters_final, #preset_ngplasma_crateria_crateria_kihunters_final)
 
 presets_ngplasma_crateria_landing_site:
-    %cm_preset("Landing Site", #preset_ngplasma_crateria_landing_site)
+    %cm_preset("Landing Site", #preset_names_landing_site, #preset_ngplasma_crateria_landing_site)
 
 presets_ngplasma_crateria_terminator_etank:
-    %cm_preset("Terminator E-Tank", #preset_ngplasma_crateria_terminator_etank)
+    %cm_preset("Terminator E-Tank", #preset_names_terminator_etank, #preset_ngplasma_crateria_terminator_etank)
 
 presets_ngplasma_crateria_green_pirate_shaft:
-    %cm_preset("Green Pirate Shaft", #preset_ngplasma_crateria_green_pirate_shaft)
+    %cm_preset("Green Pirate Shaft", #preset_names_green_pirate_shaft, #preset_ngplasma_crateria_green_pirate_shaft)
 
 
 ; Tourian
 presets_ngplasma_tourian_tourian_elevator_room:
-    %cm_preset("Tourian Elevator Room", #preset_ngplasma_tourian_tourian_elevator_room)
+    %cm_preset("Tourian Elevator Room", #preset_names_tourian_elevator_room, #preset_ngplasma_tourian_tourian_elevator_room)
 
 presets_ngplasma_tourian_metroids_1:
-    %cm_preset("Metroids 1", #preset_ngplasma_tourian_metroids_1)
+    %cm_preset("Metroids 1", #preset_names_metroids_1, #preset_ngplasma_tourian_metroids_1)
 
 presets_ngplasma_tourian_metroids_2:
-    %cm_preset("Metroids 2", #preset_ngplasma_tourian_metroids_2)
+    %cm_preset("Metroids 2", #preset_names_metroids_2, #preset_ngplasma_tourian_metroids_2)
 
 presets_ngplasma_tourian_metroids_3:
-    %cm_preset("Metroids 3", #preset_ngplasma_tourian_metroids_3)
+    %cm_preset("Metroids 3", #preset_names_metroids_3, #preset_ngplasma_tourian_metroids_3)
 
 presets_ngplasma_tourian_metroids_4:
-    %cm_preset("Metroids 4", #preset_ngplasma_tourian_metroids_4)
+    %cm_preset("Metroids 4", #preset_names_metroids_4, #preset_ngplasma_tourian_metroids_4)
 
 presets_ngplasma_tourian_giant_hoppers:
-    %cm_preset("Giant Hoppers", #preset_ngplasma_tourian_giant_hoppers)
+    %cm_preset("Giant Hoppers", #preset_names_giant_hoppers, #preset_ngplasma_tourian_giant_hoppers)
 
 presets_ngplasma_tourian_baby_skip:
-    %cm_preset("Baby Skip", #preset_ngplasma_tourian_baby_skip)
+    %cm_preset("Baby Skip", #preset_names_baby_skip, #preset_ngplasma_tourian_baby_skip)
 
 presets_ngplasma_tourian_gadora_room:
-    %cm_preset("Gadora Room", #preset_ngplasma_tourian_gadora_room)
+    %cm_preset("Gadora Room", #preset_names_gadora_room, #preset_ngplasma_tourian_gadora_room)
 
 presets_ngplasma_tourian_zeb_skip:
-    %cm_preset("Zeb Skip", #preset_ngplasma_tourian_zeb_skip)
+    %cm_preset("Zeb Skip", #preset_names_zeb_skip, #preset_ngplasma_tourian_zeb_skip)
 
 presets_ngplasma_tourian_mother_brain_2:
-    %cm_preset("Mother Brain 2", #preset_ngplasma_tourian_mother_brain_2)
+    %cm_preset("Mother Brain 2", #preset_names_mother_brain_2, #preset_ngplasma_tourian_mother_brain_2)
 
 presets_ngplasma_tourian_zebes_escape:
-    %cm_preset("Zebes Escape", #preset_ngplasma_tourian_zebes_escape)
+    %cm_preset("Zebes Escape", #preset_names_zebes_escape, #preset_ngplasma_tourian_zebes_escape)
 
 presets_ngplasma_tourian_escape_room_3:
-    %cm_preset("Escape Room 3", #preset_ngplasma_tourian_escape_room_3)
+    %cm_preset("Escape Room 3", #preset_names_escape_room_3, #preset_ngplasma_tourian_escape_room_3)
 
 presets_ngplasma_tourian_escape_room_4:
-    %cm_preset("Escape Room 4", #preset_ngplasma_tourian_escape_room_4)
+    %cm_preset("Escape Room 4", #preset_names_escape_room_4, #preset_ngplasma_tourian_escape_room_4)
 
 presets_ngplasma_tourian_escape_climb:
-    %cm_preset("Escape Climb", #preset_ngplasma_tourian_escape_climb)
+    %cm_preset("Escape Climb", #preset_names_escape_climb, #preset_ngplasma_tourian_escape_climb)
 
 presets_ngplasma_tourian_escape_parlor:
-    %cm_preset("Escape Parlor", #preset_ngplasma_tourian_escape_parlor)
+    %cm_preset("Escape Parlor", #preset_names_escape_parlor, #preset_ngplasma_tourian_escape_parlor)
 

@@ -1678,9 +1678,27 @@ draw_category_preset:
     ; skip argument
     INC !DP_CurrentMenu : INC !DP_CurrentMenu : INC !DP_CurrentMenu
 
-    ; draw text normally
+    ; get address to text label
     %item_index_to_vram_index()
-    JMP cm_draw_text
+    LDA [!DP_CurrentMenu] : TAY
+
+    ; prepare to draw text
+    %a8()
+    ; ORA with palette info
+    LDA #$28 : ORA !DP_Palette : STA !DP_Palette
+    ; set bank to preset names bank
+    PHB : LDA.b #preset_names>>16 : PHA : PLB
+
+  .loop
+    LDA $0000,Y : CMP #$FF : BEQ .end                   ; terminator
+    STA !ram_tilemap_buffer,X : INX                     ; tile
+    LDA !DP_Palette : STA !ram_tilemap_buffer,X : INX   ; palette
+    INY : BRA .loop
+
+  .end
+    PLB
+    %a16()
+    RTS
 }
 
 cm_hex2dec_draw5:

@@ -1451,6 +1451,167 @@ preset_prkd19_lower_norfair_ridley:
     dw $D8BA, $D1F1  ; Doors
     dw #$FFFF
 
+preset_prkd19_lower_norfair_leaving_ridley:
+    dw #preset_prkd19_lower_norfair_ridley ; Lower Norfair: Ridley
+    dw $078D, $98CA  ; DDB
+    dw $079B, $B32E  ; MDB
+    dw $07F3, $0024  ; Music Bank
+    dw $07F5, $0003  ; Music Track
+    dw $090F, $C000  ; Screen subpixel X position
+    dw $0913, $C400  ; Screen subpixel Y position
+    dw $0915, $011F  ; Screen Y position in pixels
+    dw $0917, $0001  ; Layer 2 X position
+    dw $0919, $00D7  ; Layer 2 Y position
+    dw $09C6, $0004  ; Missiles
+    dw $09CA, $0003  ; Supers
+    dw $09CE, $0005  ; Pbs
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $005F  ; Samus X
+    dw $0AFA, $019B  ; Samus Y
+    dw $D82A, $0101  ; Bosses
+    dw #$FFFF
+
+preset_prkd19_lower_norfair_reverse_plowerhouse:
+    dw #preset_prkd19_lower_norfair_leaving_ridley ; Lower Norfair: Leaving Ridley
+    dw $078D, $98BE  ; DDB
+    dw $079B, $B37A  ; MDB
+    dw $07F3, $0018  ; Music Bank
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $F000  ; Screen subpixel X position
+    dw $0911, $0200  ; Screen X position in pixels
+    dw $0913, $0400  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $0180  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09C2, $00F1  ; Health
+    dw $09C6, $0009  ; Missiles
+    dw $0AF6, $02B1  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw $D8BA, $D5F1  ; Doors
+    dw #$FFFF
+
+preset_prkd19_lower_norfair_wasteland_revisit:
+    dw #preset_prkd19_lower_norfair_reverse_plowerhouse ; Lower Norfair: Reverse Plowerhouse
+    dw $078D, $9966  ; DDB
+    dw $079B, $B62B  ; MDB
+    dw $090F, $6000  ; Screen subpixel X position
+    dw $0913, $8800  ; Screen subpixel Y position
+    dw $09C2, $00C8  ; Health
+    dw $0AF6, $02DC  ; Samus X
+    dw #$FFFF
+
+preset_prkd19_lower_norfair_kihunter_stairs_up:
+    dw #preset_prkd19_lower_norfair_wasteland_revisit ; Lower Norfair: Wasteland Revisit
+    dw $078D, $9A3E  ; DDB
+    dw $079B, $B5D5  ; MDB
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $0500  ; Screen X position in pixels
+    dw $0913, $B000  ; Screen subpixel Y position
+    dw $0917, $03C0  ; Layer 2 X position
+    dw $09C2, $0099  ; Health
+    dw $09CE, $0004  ; Pbs
+    dw $0AF6, $055B  ; Samus X
+    dw $0AFA, $009B  ; Samus Y
+    dw #$FFFF
+
+preset_prkd19_lower_norfair_fireflea_room:
+    dw #preset_prkd19_lower_norfair_kihunter_stairs_up ; Lower Norfair: Kihunter Stairs Up
+    dw $078D, $9A26  ; DDB
+    dw $079B, $B585  ; MDB
+    dw $090F, $2001  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $4C00  ; Screen subpixel Y position
+    dw $0915, $000D  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $0009  ; Layer 2 Y position
+    dw $0AF6, $009C  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw #$FFFF
+
+preset_prkd19_lower_norfair_springball_maze:
+    dw #preset_prkd19_lower_norfair_fireflea_room ; Lower Norfair: Fireflea Room
+    dw $078D, $9A02  ; DDB
+    dw $079B, $B6EE  ; MDB
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $0100  ; Layer 2 X position
+    dw $0919, $000D  ; Layer 2 Y position
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $016C  ; Samus X
+    dw #$FFFF
+
+preset_prkd19_lower_norfair_three_musketeers:
+    dw #preset_prkd19_lower_norfair_springball_maze ; Lower Norfair: Springball Maze
+    dw $078D, $9A92  ; DDB
+    dw $079B, $B510  ; MDB
+    dw $090F, $E100  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $5400  ; Screen subpixel Y position
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $0AF6, $0069  ; Samus X
+    dw #$FFFF
+
+preset_prkd19_lower_norfair_single_chamber_final:
+    dw #preset_prkd19_lower_norfair_three_musketeers ; Lower Norfair: Three Musketeers
+    dw $078D, $99AE  ; DDB
+    dw $079B, $B656  ; MDB
+    dw $090F, $E000  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $5800  ; Screen subpixel Y position
+    dw $0915, $0002  ; Screen Y position in pixels
+    dw $0917, $00C0  ; Layer 2 X position
+    dw $0919, $0001  ; Layer 2 Y position
+    dw $09C2, $0062  ; Health
+    dw $0AF6, $016F  ; Samus X
+    dw #$FFFF
+
+preset_prkd19_lower_norfair_bubble_mountain_final:
+    dw #preset_prkd19_lower_norfair_single_chamber_final ; Lower Norfair: Single Chamber Final
+    dw $078D, $9A4A  ; DDB
+    dw $079B, $AD5E  ; MDB
+    dw $07F3, $0015  ; Music Bank
+    dw $090F, $B000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $D800  ; Screen subpixel Y position
+    dw $0915, $001B  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $0014  ; Layer 2 Y position
+    dw $09C2, $0056  ; Health
+    dw $0AF6, $007D  ; Samus X
+    dw #$FFFF
+
+preset_prkd19_lower_norfair_frog_speedway:
+    dw #preset_prkd19_lower_norfair_bubble_mountain_final ; Lower Norfair: Bubble Mountain Final
+    dw $078D, $956A  ; DDB
+    dw $079B, $AF72  ; MDB
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $001B  ; Screen X position in pixels
+    dw $0913, $7C00  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $0014  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09C6, $0008  ; Missiles
+    dw $09CA, $0004  ; Supers
+    dw $09CE, $0003  ; Pbs
+    dw $0AF6, $00BB  ; Samus X
+    dw #$FFFF
+
+preset_prkd19_lower_norfair_business_center_final:
+    dw #preset_prkd19_lower_norfair_frog_speedway ; Lower Norfair: Frog Speedway
+    dw $078D, $97DA  ; DDB
+    dw $079B, $B167  ; MDB
+    dw $090F, $9000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $1800  ; Screen subpixel Y position
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0AF6, $0032  ; Samus X
+    dw #$FFFF
+
 preset_prkd19_lower_norfair_nox_ridley_ln_main_hall:
     dw #preset_prkd19_upper_norfair_lava_spark ; Upper Norfair: Lava Spark
     dw $078D, $96F6  ; DDB
@@ -1607,8 +1768,8 @@ preset_prkd19_lower_norfair_nox_ridley_ridley:
     dw $D8BA, $D1F1  ; Doors
     dw #$FFFF
 
-preset_prkd19_lower_norfair_leaving_ridley:
-    dw #preset_prkd19_lower_norfair_ridley ; Lower Norfair: Ridley
+preset_prkd19_lower_norfair_nox_ridley_leaving_ridley:
+    dw #preset_prkd19_lower_norfair_nox_ridley_ridley ; Lower Norfair No-X Ridley: Ridley
     dw $078D, $98CA  ; DDB
     dw $079B, $B32E  ; MDB
     dw $07F3, $0024  ; Music Bank
@@ -1618,6 +1779,7 @@ preset_prkd19_lower_norfair_leaving_ridley:
     dw $0915, $011F  ; Screen Y position in pixels
     dw $0917, $0001  ; Layer 2 X position
     dw $0919, $00D7  ; Layer 2 Y position
+    dw $09A6, $1001  ; Equipped Beams
     dw $09C6, $0004  ; Missiles
     dw $09CA, $0003  ; Supers
     dw $09CE, $0005  ; Pbs
@@ -1628,8 +1790,8 @@ preset_prkd19_lower_norfair_leaving_ridley:
     dw $D82A, $0101  ; Bosses
     dw #$FFFF
 
-preset_prkd19_lower_norfair_reverse_plowerhouse:
-    dw #preset_prkd19_lower_norfair_leaving_ridley ; Lower Norfair: Leaving Ridley
+preset_prkd19_lower_norfair_nox_ridley_reverse_plowerhouse:
+    dw #preset_prkd19_lower_norfair_nox_ridley_leaving_ridley ; Lower Norfair No-X Ridley: Leaving Ridley
     dw $078D, $98BE  ; DDB
     dw $079B, $B37A  ; MDB
     dw $07F3, $0018  ; Music Bank
@@ -1647,8 +1809,8 @@ preset_prkd19_lower_norfair_reverse_plowerhouse:
     dw $D8BA, $D5F1  ; Doors
     dw #$FFFF
 
-preset_prkd19_lower_norfair_wasteland_revisit:
-    dw #preset_prkd19_lower_norfair_reverse_plowerhouse ; Lower Norfair: Reverse Plowerhouse
+preset_prkd19_lower_norfair_nox_ridley_wasteland_revisit:
+    dw #preset_prkd19_lower_norfair_nox_ridley_reverse_plowerhouse ; Lower Norfair No-X Ridley: Reverse Plowerhouse
     dw $078D, $9966  ; DDB
     dw $079B, $B62B  ; MDB
     dw $090F, $6000  ; Screen subpixel X position
@@ -1657,8 +1819,8 @@ preset_prkd19_lower_norfair_wasteland_revisit:
     dw $0AF6, $02DC  ; Samus X
     dw #$FFFF
 
-preset_prkd19_lower_norfair_kihunter_stairs_up:
-    dw #preset_prkd19_lower_norfair_wasteland_revisit ; Lower Norfair: Wasteland Revisit
+preset_prkd19_lower_norfair_nox_ridley_kihunter_stairs_up:
+    dw #preset_prkd19_lower_norfair_nox_ridley_wasteland_revisit ; Lower Norfair No-X Ridley: Wasteland Revisit
     dw $078D, $9A3E  ; DDB
     dw $079B, $B5D5  ; MDB
     dw $090F, $0000  ; Screen subpixel X position
@@ -1671,8 +1833,8 @@ preset_prkd19_lower_norfair_kihunter_stairs_up:
     dw $0AFA, $009B  ; Samus Y
     dw #$FFFF
 
-preset_prkd19_lower_norfair_fireflea_room:
-    dw #preset_prkd19_lower_norfair_kihunter_stairs_up ; Lower Norfair: Kihunter Stairs Up
+preset_prkd19_lower_norfair_nox_ridley_fireflea_room:
+    dw #preset_prkd19_lower_norfair_nox_ridley_kihunter_stairs_up ; Lower Norfair No-X Ridley: Kihunter Stairs Up
     dw $078D, $9A26  ; DDB
     dw $079B, $B585  ; MDB
     dw $090F, $2001  ; Screen subpixel X position
@@ -1685,8 +1847,8 @@ preset_prkd19_lower_norfair_fireflea_room:
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 
-preset_prkd19_lower_norfair_springball_maze:
-    dw #preset_prkd19_lower_norfair_fireflea_room ; Lower Norfair: Fireflea Room
+preset_prkd19_lower_norfair_nox_ridley_springball_maze:
+    dw #preset_prkd19_lower_norfair_nox_ridley_fireflea_room ; Lower Norfair No-X Ridley: Fireflea Room
     dw $078D, $9A02  ; DDB
     dw $079B, $B6EE  ; MDB
     dw $090F, $0000  ; Screen subpixel X position
@@ -1700,8 +1862,8 @@ preset_prkd19_lower_norfair_springball_maze:
     dw $0AF6, $016C  ; Samus X
     dw #$FFFF
 
-preset_prkd19_lower_norfair_three_musketeers:
-    dw #preset_prkd19_lower_norfair_springball_maze ; Lower Norfair: Springball Maze
+preset_prkd19_lower_norfair_nox_ridley_three_musketeers:
+    dw #preset_prkd19_lower_norfair_nox_ridley_springball_maze ; Lower Norfair No-X Ridley: Springball Maze
     dw $078D, $9A92  ; DDB
     dw $079B, $B510  ; MDB
     dw $090F, $E100  ; Screen subpixel X position
@@ -1712,8 +1874,8 @@ preset_prkd19_lower_norfair_three_musketeers:
     dw $0AF6, $0069  ; Samus X
     dw #$FFFF
 
-preset_prkd19_lower_norfair_single_chamber_final:
-    dw #preset_prkd19_lower_norfair_three_musketeers ; Lower Norfair: Three Musketeers
+preset_prkd19_lower_norfair_nox_ridley_single_chamber_final:
+    dw #preset_prkd19_lower_norfair_nox_ridley_three_musketeers ; Lower Norfair No-X Ridley: Three Musketeers
     dw $078D, $99AE  ; DDB
     dw $079B, $B656  ; MDB
     dw $090F, $E000  ; Screen subpixel X position
@@ -1726,8 +1888,8 @@ preset_prkd19_lower_norfair_single_chamber_final:
     dw $0AF6, $016F  ; Samus X
     dw #$FFFF
 
-preset_prkd19_lower_norfair_bubble_mountain_final:
-    dw #preset_prkd19_lower_norfair_single_chamber_final ; Lower Norfair: Single Chamber Final
+preset_prkd19_lower_norfair_nox_ridley_bubble_mountain_final:
+    dw #preset_prkd19_lower_norfair_nox_ridley_single_chamber_final ; Lower Norfair No-X Ridley: Single Chamber Final
     dw $078D, $9A4A  ; DDB
     dw $079B, $AD5E  ; MDB
     dw $07F3, $0015  ; Music Bank
@@ -1741,8 +1903,8 @@ preset_prkd19_lower_norfair_bubble_mountain_final:
     dw $0AF6, $007D  ; Samus X
     dw #$FFFF
 
-preset_prkd19_lower_norfair_frog_speedway:
-    dw #preset_prkd19_lower_norfair_bubble_mountain_final ; Lower Norfair: Bubble Mountain Final
+preset_prkd19_lower_norfair_nox_ridley_frog_speedway:
+    dw #preset_prkd19_lower_norfair_nox_ridley_bubble_mountain_final ; Lower Norfair No-X Ridley: Bubble Mountain Final
     dw $078D, $956A  ; DDB
     dw $079B, $AF72  ; MDB
     dw $090F, $0000  ; Screen subpixel X position
@@ -1757,8 +1919,8 @@ preset_prkd19_lower_norfair_frog_speedway:
     dw $0AF6, $00BB  ; Samus X
     dw #$FFFF
 
-preset_prkd19_lower_norfair_business_center_final:
-    dw #preset_prkd19_lower_norfair_frog_speedway ; Lower Norfair: Frog Speedway
+preset_prkd19_lower_norfair_nox_ridley_business_center_final:
+    dw #preset_prkd19_lower_norfair_nox_ridley_frog_speedway ; Lower Norfair No-X Ridley: Frog Speedway
     dw $078D, $97DA  ; DDB
     dw $079B, $B167  ; MDB
     dw $090F, $9000  ; Screen subpixel X position
