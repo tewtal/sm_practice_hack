@@ -95,6 +95,7 @@ def write_combined_preset_names():
         print("", file=file)
 
 
+load_preset_names("kpdr20")
 load_preset_names("kpdr21")
 load_preset_names("kpdr22")
 load_preset_names("kpdr23")

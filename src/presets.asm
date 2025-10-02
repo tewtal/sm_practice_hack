@@ -992,6 +992,7 @@ warnpc $F08000
 check bankcross on
 
 %startfree(F1)
+incsrc presets/kpdr20_menu.asm
 incsrc presets/kpdr21_menu.asm
 incsrc presets/kpdr22_menu.asm
 incsrc presets/kpdr23_menu.asm

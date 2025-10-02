@@ -116,13 +116,13 @@ init_sram:
     STA !sram_display_mode
     STA !sram_last_preset_low_word
     STA !sram_save_has_set_rng
-    STA !sram_preset_category
     STA !sram_custom_preset_slot
     STA !sram_room_strat
     STA !sram_sprite_prio_flag
     INC : STA !sram_rerandomize
     STA !sram_music_toggle
     INC : STA !sram_metronome_sfx
+    STA !sram_preset_category
     LDA #$000A : STA !sram_metronome_tickrate
 
   .upgrade_9toA

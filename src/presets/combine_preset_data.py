@@ -274,6 +274,7 @@ def write_combined_preset_data():
             print("    dw #$FFFF", file=file)
 
 
+load_preset_data("kpdr20")
 load_preset_data("kpdr21")
 load_preset_data("kpdr22")
 load_preset_data("kpdr23")
