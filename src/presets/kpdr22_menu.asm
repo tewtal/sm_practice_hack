@@ -2,8 +2,10 @@ PresetsMenuKpdr22:
     dw #presets_goto_kpdr22_crateria
     dw #presets_goto_kpdr22_brinstar
     dw #presets_goto_kpdr22_kraid
-    dw #presets_goto_kpdr22_upper_norfair
-    dw #presets_goto_kpdr22_red_brinstar
+    dw #presets_goto_kpdr22_upper_norfair_hjb_missile
+    dw #presets_goto_kpdr22_upper_norfair_moat_missile
+    dw #presets_goto_kpdr22_red_brinstar_hjb_missile
+    dw #presets_goto_kpdr22_red_brinstar_moat_missile
     dw #presets_goto_kpdr22_wrecked_ship
     dw #presets_goto_kpdr22_red_brinstar_revisit
     dw #presets_goto_kpdr22_maridia
@@ -23,11 +25,17 @@ presets_goto_kpdr22_brinstar:
 presets_goto_kpdr22_kraid:
     %cm_submenu("Kraid's Lair", #presets_submenu_kpdr22_kraid)
 
-presets_goto_kpdr22_upper_norfair:
-    %cm_submenu("Upper Norfair", #presets_submenu_kpdr22_upper_norfair)
+presets_goto_kpdr22_upper_norfair_hjb_missile:
+    %cm_submenu("Upper Norfair HJB Missile", #presets_submenu_kpdr22_upper_norfair_hjb_missile)
 
-presets_goto_kpdr22_red_brinstar:
-    %cm_submenu("Red Brinstar", #presets_submenu_kpdr22_red_brinstar)
+presets_goto_kpdr22_upper_norfair_moat_missile:
+    %cm_submenu("Upper Norfair Moat Missile", #presets_submenu_kpdr22_upper_norfair_moat_missile)
+
+presets_goto_kpdr22_red_brinstar_hjb_missile:
+    %cm_submenu("Red Brinstar HJB Missile", #presets_submenu_kpdr22_red_brinstar_hjb_missile)
+
+presets_goto_kpdr22_red_brinstar_moat_missile:
+    %cm_submenu("Red Brinstar Moat Missile", #presets_submenu_kpdr22_red_brinstar_moat_missile)
 
 presets_goto_kpdr22_wrecked_ship:
     %cm_submenu("Wrecked Ship", #presets_submenu_kpdr22_wrecked_ship)
@@ -104,44 +112,81 @@ presets_submenu_kpdr22_kraid:
     dw #$0000
     %cm_header("KRAID'S LAIR")
 
-presets_submenu_kpdr22_upper_norfair:
-    dw #presets_kpdr22_upper_norfair_business_center_postelev
-    dw #presets_kpdr22_upper_norfair_hijump_etank
-    dw #presets_kpdr22_upper_norfair_leaving_hijump
-    dw #presets_kpdr22_upper_norfair_business_center_revisit
-    dw #presets_kpdr22_upper_norfair_precathedral
-    dw #presets_kpdr22_upper_norfair_cathedral
-    dw #presets_kpdr22_upper_norfair_rising_tide
-    dw #presets_kpdr22_upper_norfair_bubble_mountain
-    dw #presets_kpdr22_upper_norfair_bat_cave
-    dw #presets_kpdr22_upper_norfair_speed_hallway
-    dw #presets_kpdr22_upper_norfair_bat_cave_revisit
-    dw #presets_kpdr22_upper_norfair_single_chamber
-    dw #presets_kpdr22_upper_norfair_double_chamber
-    dw #presets_kpdr22_upper_norfair_double_chamber_revisit
-    dw #presets_kpdr22_upper_norfair_single_chamber_revisit
-    dw #presets_kpdr22_upper_norfair_bubble_mountain_revisit
-    dw #presets_kpdr22_upper_norfair_frog_speedway
-    dw #presets_kpdr22_upper_norfair_heading_to_red_brinstar
+presets_submenu_kpdr22_upper_norfair_hjb_missile:
+    dw #presets_kpdr22_upper_norfair_hjb_missile_business_center_postelev
+    dw #presets_kpdr22_upper_norfair_hjb_missile_hijump_etank
+    dw #presets_kpdr22_upper_norfair_hjb_missile_leaving_hijump
+    dw #presets_kpdr22_upper_norfair_hjb_missile_business_center_revisit
+    dw #presets_kpdr22_upper_norfair_hjb_missile_precathedral
+    dw #presets_kpdr22_upper_norfair_hjb_missile_cathedral
+    dw #presets_kpdr22_upper_norfair_hjb_missile_rising_tide
+    dw #presets_kpdr22_upper_norfair_hjb_missile_bubble_mountain
+    dw #presets_kpdr22_upper_norfair_hjb_missile_bat_cave
+    dw #presets_kpdr22_upper_norfair_hjb_missile_speed_hallway
+    dw #presets_kpdr22_upper_norfair_hjb_missile_bat_cave_revisit
+    dw #presets_kpdr22_upper_norfair_hjb_missile_single_chamber
+    dw #presets_kpdr22_upper_norfair_hjb_missile_double_chamber
+    dw #presets_kpdr22_upper_norfair_hjb_missile_double_chamber_revisit
+    dw #presets_kpdr22_upper_norfair_hjb_missile_single_chamber_revisit
+    dw #presets_kpdr22_upper_norfair_hjb_missile_bubble_mountain_revisit
+    dw #presets_kpdr22_upper_norfair_hjb_missile_frog_speedway
+    dw #presets_kpdr22_upper_norfair_hjb_missile_heading_to_red_brinstar
     dw #$0000
-    %cm_header("UPPER NORFAIR")
+    %cm_header("UPPER NORFAIR HJB MISSILE")
 
-presets_submenu_kpdr22_red_brinstar:
-    dw #presets_kpdr22_red_brinstar_alpha_spark
-    dw #presets_kpdr22_red_brinstar_reverse_skree_boost
-    dw #presets_kpdr22_red_brinstar_red_tower_climb
-    dw #presets_kpdr22_red_brinstar_hellway
-    dw #presets_kpdr22_red_brinstar_caterpillars_down
-    dw #presets_kpdr22_red_brinstar_alpha_power_bombs
-    dw #presets_kpdr22_red_brinstar_caterpillars_up
+presets_submenu_kpdr22_upper_norfair_moat_missile:
+    dw #presets_kpdr22_upper_norfair_moat_missile_business_center_postelev
+    dw #presets_kpdr22_upper_norfair_moat_missile_hijump_etank
+    dw #presets_kpdr22_upper_norfair_moat_missile_leaving_hijump
+    dw #presets_kpdr22_upper_norfair_moat_missile_business_center_revisit
+    dw #presets_kpdr22_upper_norfair_moat_missile_precathedral
+    dw #presets_kpdr22_upper_norfair_moat_missile_cathedral
+    dw #presets_kpdr22_upper_norfair_moat_missile_rising_tide
+    dw #presets_kpdr22_upper_norfair_moat_missile_bubble_mountain
+    dw #presets_kpdr22_upper_norfair_moat_missile_bat_cave
+    dw #presets_kpdr22_upper_norfair_moat_missile_speed_hallway
+    dw #presets_kpdr22_upper_norfair_moat_missile_bat_cave_revisit
+    dw #presets_kpdr22_upper_norfair_moat_missile_single_chamber
+    dw #presets_kpdr22_upper_norfair_moat_missile_double_chamber
+    dw #presets_kpdr22_upper_norfair_moat_missile_double_chamber_revisit
+    dw #presets_kpdr22_upper_norfair_moat_missile_single_chamber_revisit
+    dw #presets_kpdr22_upper_norfair_moat_missile_bubble_mountain_revisit
+    dw #presets_kpdr22_upper_norfair_moat_missile_frog_speedway
+    dw #presets_kpdr22_upper_norfair_moat_missile_heading_to_red_brinstar
     dw #$0000
-    %cm_header("RED BRINSTAR")
+    %cm_header("UPPER NORFAIR MOAT MISSILE")
+
+presets_submenu_kpdr22_red_brinstar_hjb_missile:
+    dw #presets_kpdr22_red_brinstar_hjb_missile_alpha_spark
+    dw #presets_kpdr22_red_brinstar_hjb_missile_reverse_skree_boost
+    dw #presets_kpdr22_red_brinstar_hjb_missile_red_tower_climb
+    dw #presets_kpdr22_red_brinstar_hjb_missile_hellway
+    dw #presets_kpdr22_red_brinstar_hjb_missile_caterpillars_down
+    dw #presets_kpdr22_red_brinstar_hjb_missile_alpha_power_bombs
+    dw #presets_kpdr22_red_brinstar_hjb_missile_caterpillars_up
+    dw #presets_kpdr22_red_brinstar_hjb_missile_crateria_kihunters
+    dw #presets_kpdr22_red_brinstar_hjb_missile_ocean_fly_setup
+    dw #presets_kpdr22_red_brinstar_hjb_missile_ocean_spark
+    dw #$0000
+    %cm_header("RED BRINSTAR HJB MISSILE")
+
+presets_submenu_kpdr22_red_brinstar_moat_missile:
+    dw #presets_kpdr22_red_brinstar_moat_missile_alpha_spark
+    dw #presets_kpdr22_red_brinstar_moat_missile_reverse_skree_boost
+    dw #presets_kpdr22_red_brinstar_moat_missile_red_tower_climb
+    dw #presets_kpdr22_red_brinstar_moat_missile_hellway
+    dw #presets_kpdr22_red_brinstar_moat_missile_caterpillars_down
+    dw #presets_kpdr22_red_brinstar_moat_missile_alpha_power_bombs
+    dw #presets_kpdr22_red_brinstar_moat_missile_caterpillars_up
+    dw #presets_kpdr22_red_brinstar_moat_missile_crateria_kihunters
+    dw #presets_kpdr22_red_brinstar_moat_missile_ocean_fly_setup
+    dw #presets_kpdr22_red_brinstar_moat_missile_ocean_spark
+    dw #$0000
+    %cm_header("RED BRINSTAR MOAT MISSILE")
 
 presets_submenu_kpdr22_wrecked_ship:
-    dw #presets_kpdr22_wrecked_ship_crateria_kihunters
-    dw #presets_kpdr22_wrecked_ship_ocean_fly_setup
-    dw #presets_kpdr22_wrecked_ship_ocean_spark
     dw #presets_kpdr22_wrecked_ship_entering_wrecked_ship
+    dw #presets_kpdr22_wrecked_ship_entering_with_extra_pb
     dw #presets_kpdr22_wrecked_ship_basement
     dw #presets_kpdr22_wrecked_ship_phantoon
     dw #presets_kpdr22_wrecked_ship_leaving_phantoon
@@ -153,7 +198,9 @@ presets_submenu_kpdr22_wrecked_ship:
     dw #presets_kpdr22_wrecked_ship_bowling_spark
     dw #presets_kpdr22_wrecked_ship_leaving_gravity
     dw #presets_kpdr22_wrecked_ship_moat_ball
+    dw #presets_kpdr22_wrecked_ship_moat_with_missile_gone
     dw #presets_kpdr22_wrecked_ship_crateria_kihunters_return
+    dw #presets_kpdr22_wrecked_ship_return_with_yellow_door
     dw #$0000
     %cm_header("WRECKED SHIP")
 
@@ -399,97 +446,188 @@ presets_kpdr22_kraid_business_center_preelev:
     %cm_preset("Business Center Pre-Elev", #preset_names_business_center_preelev, #preset_kpdr22_kraid_business_center_preelev)
 
 
-; Upper Norfair
-presets_kpdr22_upper_norfair_business_center_postelev:
-    %cm_preset("Business Center Post-Elev", #preset_names_business_center_postelev, #preset_kpdr22_upper_norfair_business_center_postelev)
+; Upper Norfair HJB Missile
+presets_kpdr22_upper_norfair_hjb_missile_business_center_postelev:
+    %cm_preset("Business Center Post-Elev", #preset_names_business_center_postelev, #preset_kpdr22_upper_norfair_hjb_missile_business_center_postelev)
 
-presets_kpdr22_upper_norfair_hijump_etank:
-    %cm_preset("Hi-Jump E-Tank", #preset_names_hijump_etank, #preset_kpdr22_upper_norfair_hijump_etank)
+presets_kpdr22_upper_norfair_hjb_missile_hijump_etank:
+    %cm_preset("Hi-Jump E-Tank", #preset_names_hijump_etank, #preset_kpdr22_upper_norfair_hjb_missile_hijump_etank)
 
-presets_kpdr22_upper_norfair_leaving_hijump:
-    %cm_preset("Leaving Hi-Jump", #preset_names_leaving_hijump, #preset_kpdr22_upper_norfair_leaving_hijump)
+presets_kpdr22_upper_norfair_hjb_missile_leaving_hijump:
+    %cm_preset("Leaving Hi-Jump", #preset_names_leaving_hijump, #preset_kpdr22_upper_norfair_hjb_missile_leaving_hijump)
 
-presets_kpdr22_upper_norfair_business_center_revisit:
-    %cm_preset("Business Center Revisit", #preset_names_business_center_revisit, #preset_kpdr22_upper_norfair_business_center_revisit)
+presets_kpdr22_upper_norfair_hjb_missile_business_center_revisit:
+    %cm_preset("Business Center Revisit", #preset_names_business_center_revisit, #preset_kpdr22_upper_norfair_hjb_missile_business_center_revisit)
 
-presets_kpdr22_upper_norfair_precathedral:
-    %cm_preset("Pre-Cathedral", #preset_names_precathedral, #preset_kpdr22_upper_norfair_precathedral)
+presets_kpdr22_upper_norfair_hjb_missile_precathedral:
+    %cm_preset("Pre-Cathedral", #preset_names_precathedral, #preset_kpdr22_upper_norfair_hjb_missile_precathedral)
 
-presets_kpdr22_upper_norfair_cathedral:
-    %cm_preset("Cathedral", #preset_names_cathedral, #preset_kpdr22_upper_norfair_cathedral)
+presets_kpdr22_upper_norfair_hjb_missile_cathedral:
+    %cm_preset("Cathedral", #preset_names_cathedral, #preset_kpdr22_upper_norfair_hjb_missile_cathedral)
 
-presets_kpdr22_upper_norfair_rising_tide:
-    %cm_preset("Rising Tide", #preset_names_rising_tide, #preset_kpdr22_upper_norfair_rising_tide)
+presets_kpdr22_upper_norfair_hjb_missile_rising_tide:
+    %cm_preset("Rising Tide", #preset_names_rising_tide, #preset_kpdr22_upper_norfair_hjb_missile_rising_tide)
 
-presets_kpdr22_upper_norfair_bubble_mountain:
-    %cm_preset("Bubble Mountain", #preset_names_bubble_mountain, #preset_kpdr22_upper_norfair_bubble_mountain)
+presets_kpdr22_upper_norfair_hjb_missile_bubble_mountain:
+    %cm_preset("Bubble Mountain", #preset_names_bubble_mountain, #preset_kpdr22_upper_norfair_hjb_missile_bubble_mountain)
 
-presets_kpdr22_upper_norfair_bat_cave:
-    %cm_preset("Bat Cave", #preset_names_bat_cave, #preset_kpdr22_upper_norfair_bat_cave)
+presets_kpdr22_upper_norfair_hjb_missile_bat_cave:
+    %cm_preset("Bat Cave", #preset_names_bat_cave, #preset_kpdr22_upper_norfair_hjb_missile_bat_cave)
 
-presets_kpdr22_upper_norfair_speed_hallway:
-    %cm_preset("Speed Hallway", #preset_names_speed_hallway, #preset_kpdr22_upper_norfair_speed_hallway)
+presets_kpdr22_upper_norfair_hjb_missile_speed_hallway:
+    %cm_preset("Speed Hallway", #preset_names_speed_hallway, #preset_kpdr22_upper_norfair_hjb_missile_speed_hallway)
 
-presets_kpdr22_upper_norfair_bat_cave_revisit:
-    %cm_preset("Bat Cave Revisit", #preset_names_bat_cave_revisit, #preset_kpdr22_upper_norfair_bat_cave_revisit)
+presets_kpdr22_upper_norfair_hjb_missile_bat_cave_revisit:
+    %cm_preset("Bat Cave Revisit", #preset_names_bat_cave_revisit, #preset_kpdr22_upper_norfair_hjb_missile_bat_cave_revisit)
 
-presets_kpdr22_upper_norfair_single_chamber:
-    %cm_preset("Single Chamber", #preset_names_single_chamber, #preset_kpdr22_upper_norfair_single_chamber)
+presets_kpdr22_upper_norfair_hjb_missile_single_chamber:
+    %cm_preset("Single Chamber", #preset_names_single_chamber, #preset_kpdr22_upper_norfair_hjb_missile_single_chamber)
 
-presets_kpdr22_upper_norfair_double_chamber:
-    %cm_preset("Double Chamber", #preset_names_double_chamber, #preset_kpdr22_upper_norfair_double_chamber)
+presets_kpdr22_upper_norfair_hjb_missile_double_chamber:
+    %cm_preset("Double Chamber", #preset_names_double_chamber, #preset_kpdr22_upper_norfair_hjb_missile_double_chamber)
 
-presets_kpdr22_upper_norfair_double_chamber_revisit:
-    %cm_preset("Double Chamber Revisit", #preset_names_double_chamber_revisit, #preset_kpdr22_upper_norfair_double_chamber_revisit)
+presets_kpdr22_upper_norfair_hjb_missile_double_chamber_revisit:
+    %cm_preset("Double Chamber Revisit", #preset_names_double_chamber_revisit, #preset_kpdr22_upper_norfair_hjb_missile_double_chamber_revisit)
 
-presets_kpdr22_upper_norfair_single_chamber_revisit:
-    %cm_preset("Single Chamber Revisit", #preset_names_single_chamber_revisit, #preset_kpdr22_upper_norfair_single_chamber_revisit)
+presets_kpdr22_upper_norfair_hjb_missile_single_chamber_revisit:
+    %cm_preset("Single Chamber Revisit", #preset_names_single_chamber_revisit, #preset_kpdr22_upper_norfair_hjb_missile_single_chamber_revisit)
 
-presets_kpdr22_upper_norfair_bubble_mountain_revisit:
-    %cm_preset("Bubble Mountain Revisit", #preset_names_bubble_mountain_revisit, #preset_kpdr22_upper_norfair_bubble_mountain_revisit)
+presets_kpdr22_upper_norfair_hjb_missile_bubble_mountain_revisit:
+    %cm_preset("Bubble Mountain Revisit", #preset_names_bubble_mountain_revisit, #preset_kpdr22_upper_norfair_hjb_missile_bubble_mountain_revisit)
 
-presets_kpdr22_upper_norfair_frog_speedway:
-    %cm_preset("Frog Speedway", #preset_names_frog_speedway, #preset_kpdr22_upper_norfair_frog_speedway)
+presets_kpdr22_upper_norfair_hjb_missile_frog_speedway:
+    %cm_preset("Frog Speedway", #preset_names_frog_speedway, #preset_kpdr22_upper_norfair_hjb_missile_frog_speedway)
 
-presets_kpdr22_upper_norfair_heading_to_red_brinstar:
-    %cm_preset("Heading To Red Brinstar", #preset_names_heading_to_red_brinstar, #preset_kpdr22_upper_norfair_heading_to_red_brinstar)
+presets_kpdr22_upper_norfair_hjb_missile_heading_to_red_brinstar:
+    %cm_preset("Heading To Red Brinstar", #preset_names_heading_to_red_brinstar, #preset_kpdr22_upper_norfair_hjb_missile_heading_to_red_brinstar)
 
 
-; Red Brinstar
-presets_kpdr22_red_brinstar_alpha_spark:
-    %cm_preset("Alpha Spark", #preset_names_alpha_spark, #preset_kpdr22_red_brinstar_alpha_spark)
+; Upper Norfair Moat Missile
+presets_kpdr22_upper_norfair_moat_missile_business_center_postelev:
+    %cm_preset("Business Center Post-Elev", #preset_names_business_center_postelev, #preset_kpdr22_upper_norfair_moat_missile_business_center_postelev)
 
-presets_kpdr22_red_brinstar_reverse_skree_boost:
-    %cm_preset("Reverse Skree Boost", #preset_names_reverse_skree_boost, #preset_kpdr22_red_brinstar_reverse_skree_boost)
+presets_kpdr22_upper_norfair_moat_missile_hijump_etank:
+    %cm_preset("Hi-Jump E-Tank", #preset_names_hijump_etank, #preset_kpdr22_upper_norfair_moat_missile_hijump_etank)
 
-presets_kpdr22_red_brinstar_red_tower_climb:
-    %cm_preset("Red Tower Climb", #preset_names_red_tower_climb, #preset_kpdr22_red_brinstar_red_tower_climb)
+presets_kpdr22_upper_norfair_moat_missile_leaving_hijump:
+    %cm_preset("Leaving Hi-Jump", #preset_names_leaving_hijump, #preset_kpdr22_upper_norfair_moat_missile_leaving_hijump)
 
-presets_kpdr22_red_brinstar_hellway:
-    %cm_preset("Hellway", #preset_names_hellway, #preset_kpdr22_red_brinstar_hellway)
+presets_kpdr22_upper_norfair_moat_missile_business_center_revisit:
+    %cm_preset("Business Center Revisit", #preset_names_business_center_revisit, #preset_kpdr22_upper_norfair_moat_missile_business_center_revisit)
 
-presets_kpdr22_red_brinstar_caterpillars_down:
-    %cm_preset("Caterpillars Down", #preset_names_caterpillars_down, #preset_kpdr22_red_brinstar_caterpillars_down)
+presets_kpdr22_upper_norfair_moat_missile_precathedral:
+    %cm_preset("Pre-Cathedral", #preset_names_precathedral, #preset_kpdr22_upper_norfair_moat_missile_precathedral)
 
-presets_kpdr22_red_brinstar_alpha_power_bombs:
-    %cm_preset("Alpha Power Bombs", #preset_names_alpha_power_bombs, #preset_kpdr22_red_brinstar_alpha_power_bombs)
+presets_kpdr22_upper_norfair_moat_missile_cathedral:
+    %cm_preset("Cathedral", #preset_names_cathedral, #preset_kpdr22_upper_norfair_moat_missile_cathedral)
 
-presets_kpdr22_red_brinstar_caterpillars_up:
-    %cm_preset("Caterpillars Up", #preset_names_caterpillars_up, #preset_kpdr22_red_brinstar_caterpillars_up)
+presets_kpdr22_upper_norfair_moat_missile_rising_tide:
+    %cm_preset("Rising Tide", #preset_names_rising_tide, #preset_kpdr22_upper_norfair_moat_missile_rising_tide)
+
+presets_kpdr22_upper_norfair_moat_missile_bubble_mountain:
+    %cm_preset("Bubble Mountain", #preset_names_bubble_mountain, #preset_kpdr22_upper_norfair_moat_missile_bubble_mountain)
+
+presets_kpdr22_upper_norfair_moat_missile_bat_cave:
+    %cm_preset("Bat Cave", #preset_names_bat_cave, #preset_kpdr22_upper_norfair_moat_missile_bat_cave)
+
+presets_kpdr22_upper_norfair_moat_missile_speed_hallway:
+    %cm_preset("Speed Hallway", #preset_names_speed_hallway, #preset_kpdr22_upper_norfair_moat_missile_speed_hallway)
+
+presets_kpdr22_upper_norfair_moat_missile_bat_cave_revisit:
+    %cm_preset("Bat Cave Revisit", #preset_names_bat_cave_revisit, #preset_kpdr22_upper_norfair_moat_missile_bat_cave_revisit)
+
+presets_kpdr22_upper_norfair_moat_missile_single_chamber:
+    %cm_preset("Single Chamber", #preset_names_single_chamber, #preset_kpdr22_upper_norfair_moat_missile_single_chamber)
+
+presets_kpdr22_upper_norfair_moat_missile_double_chamber:
+    %cm_preset("Double Chamber", #preset_names_double_chamber, #preset_kpdr22_upper_norfair_moat_missile_double_chamber)
+
+presets_kpdr22_upper_norfair_moat_missile_double_chamber_revisit:
+    %cm_preset("Double Chamber Revisit", #preset_names_double_chamber_revisit, #preset_kpdr22_upper_norfair_moat_missile_double_chamber_revisit)
+
+presets_kpdr22_upper_norfair_moat_missile_single_chamber_revisit:
+    %cm_preset("Single Chamber Revisit", #preset_names_single_chamber_revisit, #preset_kpdr22_upper_norfair_moat_missile_single_chamber_revisit)
+
+presets_kpdr22_upper_norfair_moat_missile_bubble_mountain_revisit:
+    %cm_preset("Bubble Mountain Revisit", #preset_names_bubble_mountain_revisit, #preset_kpdr22_upper_norfair_moat_missile_bubble_mountain_revisit)
+
+presets_kpdr22_upper_norfair_moat_missile_frog_speedway:
+    %cm_preset("Frog Speedway", #preset_names_frog_speedway, #preset_kpdr22_upper_norfair_moat_missile_frog_speedway)
+
+presets_kpdr22_upper_norfair_moat_missile_heading_to_red_brinstar:
+    %cm_preset("Heading To Red Brinstar", #preset_names_heading_to_red_brinstar, #preset_kpdr22_upper_norfair_moat_missile_heading_to_red_brinstar)
+
+
+; Red Brinstar HJB Missile
+presets_kpdr22_red_brinstar_hjb_missile_alpha_spark:
+    %cm_preset("Alpha Spark", #preset_names_alpha_spark, #preset_kpdr22_red_brinstar_hjb_missile_alpha_spark)
+
+presets_kpdr22_red_brinstar_hjb_missile_reverse_skree_boost:
+    %cm_preset("Reverse Skree Boost", #preset_names_reverse_skree_boost, #preset_kpdr22_red_brinstar_hjb_missile_reverse_skree_boost)
+
+presets_kpdr22_red_brinstar_hjb_missile_red_tower_climb:
+    %cm_preset("Red Tower Climb", #preset_names_red_tower_climb, #preset_kpdr22_red_brinstar_hjb_missile_red_tower_climb)
+
+presets_kpdr22_red_brinstar_hjb_missile_hellway:
+    %cm_preset("Hellway", #preset_names_hellway, #preset_kpdr22_red_brinstar_hjb_missile_hellway)
+
+presets_kpdr22_red_brinstar_hjb_missile_caterpillars_down:
+    %cm_preset("Caterpillars Down", #preset_names_caterpillars_down, #preset_kpdr22_red_brinstar_hjb_missile_caterpillars_down)
+
+presets_kpdr22_red_brinstar_hjb_missile_alpha_power_bombs:
+    %cm_preset("Alpha Power Bombs", #preset_names_alpha_power_bombs, #preset_kpdr22_red_brinstar_hjb_missile_alpha_power_bombs)
+
+presets_kpdr22_red_brinstar_hjb_missile_caterpillars_up:
+    %cm_preset("Caterpillars Up", #preset_names_caterpillars_up, #preset_kpdr22_red_brinstar_hjb_missile_caterpillars_up)
+
+presets_kpdr22_red_brinstar_hjb_missile_crateria_kihunters:
+    %cm_preset("Crateria Kihunters", #preset_names_crateria_kihunters, #preset_kpdr22_red_brinstar_hjb_missile_crateria_kihunters)
+
+presets_kpdr22_red_brinstar_hjb_missile_ocean_fly_setup:
+    %cm_preset("Ocean Fly Setup", #preset_names_ocean_fly_setup, #preset_kpdr22_red_brinstar_hjb_missile_ocean_fly_setup)
+
+presets_kpdr22_red_brinstar_hjb_missile_ocean_spark:
+    %cm_preset("Ocean Spark", #preset_names_ocean_spark, #preset_kpdr22_red_brinstar_hjb_missile_ocean_spark)
+
+
+; Red Brinstar Moat Missile
+presets_kpdr22_red_brinstar_moat_missile_alpha_spark:
+    %cm_preset("Alpha Spark", #preset_names_alpha_spark, #preset_kpdr22_red_brinstar_moat_missile_alpha_spark)
+
+presets_kpdr22_red_brinstar_moat_missile_reverse_skree_boost:
+    %cm_preset("Reverse Skree Boost", #preset_names_reverse_skree_boost, #preset_kpdr22_red_brinstar_moat_missile_reverse_skree_boost)
+
+presets_kpdr22_red_brinstar_moat_missile_red_tower_climb:
+    %cm_preset("Red Tower Climb", #preset_names_red_tower_climb, #preset_kpdr22_red_brinstar_moat_missile_red_tower_climb)
+
+presets_kpdr22_red_brinstar_moat_missile_hellway:
+    %cm_preset("Hellway", #preset_names_hellway, #preset_kpdr22_red_brinstar_moat_missile_hellway)
+
+presets_kpdr22_red_brinstar_moat_missile_caterpillars_down:
+    %cm_preset("Caterpillars Down", #preset_names_caterpillars_down, #preset_kpdr22_red_brinstar_moat_missile_caterpillars_down)
+
+presets_kpdr22_red_brinstar_moat_missile_alpha_power_bombs:
+    %cm_preset("Alpha Power Bombs", #preset_names_alpha_power_bombs, #preset_kpdr22_red_brinstar_moat_missile_alpha_power_bombs)
+
+presets_kpdr22_red_brinstar_moat_missile_caterpillars_up:
+    %cm_preset("Caterpillars Up", #preset_names_caterpillars_up, #preset_kpdr22_red_brinstar_moat_missile_caterpillars_up)
+
+presets_kpdr22_red_brinstar_moat_missile_crateria_kihunters:
+    %cm_preset("Crateria Kihunters", #preset_names_crateria_kihunters, #preset_kpdr22_red_brinstar_moat_missile_crateria_kihunters)
+
+presets_kpdr22_red_brinstar_moat_missile_ocean_fly_setup:
+    %cm_preset("Ocean Fly Setup", #preset_names_ocean_fly_setup, #preset_kpdr22_red_brinstar_moat_missile_ocean_fly_setup)
+
+presets_kpdr22_red_brinstar_moat_missile_ocean_spark:
+    %cm_preset("Ocean Spark", #preset_names_ocean_spark, #preset_kpdr22_red_brinstar_moat_missile_ocean_spark)
 
 
 ; Wrecked Ship
-presets_kpdr22_wrecked_ship_crateria_kihunters:
-    %cm_preset("Crateria Kihunters", #preset_names_crateria_kihunters, #preset_kpdr22_wrecked_ship_crateria_kihunters)
-
-presets_kpdr22_wrecked_ship_ocean_fly_setup:
-    %cm_preset("Ocean Fly Setup", #preset_names_ocean_fly_setup, #preset_kpdr22_wrecked_ship_ocean_fly_setup)
-
-presets_kpdr22_wrecked_ship_ocean_spark:
-    %cm_preset("Ocean Spark", #preset_names_ocean_spark, #preset_kpdr22_wrecked_ship_ocean_spark)
-
 presets_kpdr22_wrecked_ship_entering_wrecked_ship:
     %cm_preset("Entering Wrecked Ship", #preset_names_entering_wrecked_ship, #preset_kpdr22_wrecked_ship_entering_wrecked_ship)
+
+presets_kpdr22_wrecked_ship_entering_with_extra_pb:
+    %cm_preset("Entering With Extra PB", #preset_names_entering_with_extra_pb, #preset_kpdr22_wrecked_ship_entering_with_extra_pb)
 
 presets_kpdr22_wrecked_ship_basement:
     %cm_preset("Basement", #preset_names_basement, #preset_kpdr22_wrecked_ship_basement)
@@ -524,8 +662,14 @@ presets_kpdr22_wrecked_ship_leaving_gravity:
 presets_kpdr22_wrecked_ship_moat_ball:
     %cm_preset("Moat Ball", #preset_names_moat_ball, #preset_kpdr22_wrecked_ship_moat_ball)
 
+presets_kpdr22_wrecked_ship_moat_with_missile_gone:
+    %cm_preset("Moat With Missile Gone", #preset_names_moat_with_missile_gone, #preset_kpdr22_wrecked_ship_moat_with_missile_gone)
+
 presets_kpdr22_wrecked_ship_crateria_kihunters_return:
     %cm_preset("Crateria Kihunters Return", #preset_names_crateria_kihunters_return, #preset_kpdr22_wrecked_ship_crateria_kihunters_return)
+
+presets_kpdr22_wrecked_ship_return_with_yellow_door:
+    %cm_preset("Return With Yellow Door", #preset_names_return_with_yellow_door, #preset_kpdr22_wrecked_ship_return_with_yellow_door)
 
 
 ; Red Brinstar Revisit

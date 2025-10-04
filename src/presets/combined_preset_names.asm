@@ -1,6 +1,6 @@
 
-warnpc $EFC9B2
-org $EFC9B2
+warnpc $EFC96C
+org $EFC96C
 print pc, " preset names start"
 
 preset_names:
@@ -652,6 +652,9 @@ preset_names_entering_kraids_lair:
 
 preset_names_entering_maridia:
     db "Entering Maridia", #$FF
+
+preset_names_entering_with_extra_pb:
+    db "Entering With Extra PB", #$FF
 
 preset_names_entering_wrecked_ship:
     db "Entering Wrecked Ship", #$FF
@@ -1514,6 +1517,9 @@ preset_names_moat_ball:
 preset_names_moat_missiles:
     db "Moat Missiles", #$FF
 
+preset_names_moat_with_missile_gone:
+    db "Moat With Missile Gone", #$FF
+
 preset_names_moondance:
     db "Moondance", #$FF
 
@@ -1891,6 +1897,9 @@ preset_names_retro_brinstar_power_bombs:
 
 preset_names_retro_etank:
     db "Retro E-Tank", #$FF
+
+preset_names_return_with_yellow_door:
+    db "Return With Yellow Door", #$FF
 
 preset_names_reverse_botwoon:
     db "Reverse Botwoon", #$FF
