@@ -296,6 +296,7 @@ load_preset_data("nintendopower")
 load_preset_data("allbosskpdr")
 load_preset_data("allbosspkdr")
 load_preset_data("allbossprkd")
+load_preset_data("nodropskpdr")
 combine_preset_data()
 write_combined_preset_data()
 

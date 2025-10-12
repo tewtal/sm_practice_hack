@@ -294,6 +294,7 @@ preset_category_submenus:
     dw #PresetsMenuAllbosskpdr
     dw #PresetsMenuAllbosspkdr
     dw #PresetsMenuAllbossprkd
+    dw #PresetsMenuNoDropsKpdr
     dw #$0000
 }
 
@@ -323,6 +324,7 @@ preset_category_banks:
     dw #PresetsMenuAllbosskpdr>>16
     dw #PresetsMenuAllbosspkdr>>16
     dw #PresetsMenuAllbossprkd>>16
+    dw #PresetsMenuNoDropsKpdr>>16
     dw #$0000
 }
 
@@ -682,6 +684,7 @@ presets_current:
     db #$28, "  BOSS KPDR", #$FF
     db #$28, "  BOSS PKDR", #$FF
     db #$28, "  BOSS PRKD", #$FF
+    db #$28, "NODROP KPDR", #$FF
     db #$FF
   .routine
     TDC : STA !sram_last_preset_low_word : STA !sram_last_preset_high_word
@@ -696,6 +699,8 @@ SelectKpdrPresetCategoryMenu:
     dw #precat_kpdr22
     dw #precat_kpdr23
     dw #precat_kpdr25
+    dw #precat_allbosskpdr
+    dw #precat_nodropskpdr
     dw #$0000
     %cm_header("SELECT KPDR CATEGORY")
 
@@ -782,6 +787,9 @@ precat_allbosspkdr:
 
 precat_allbossprkd:
     %cm_jsl("All Bosses PRKD", #action_select_preset_category, #$0017)
+
+precat_nodropskpdr:
+    %cm_jsl("No Drops KPDR", #action_select_preset_category, #$0018)
 
 action_select_preset_category:
 {

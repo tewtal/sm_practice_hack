@@ -1,9 +1,15 @@
 
-warnpc $EFC96C
-org $EFC96C
+warnpc $EFC8CC
+org $EFC8CC
 print pc, " preset names start"
 
 preset_names:
+
+preset_names_230_bombway:
+    db "230 Bombway", #$FF
+
+preset_names_230_bombway_revisit:
+    db "230 Bombway Revisit", #$FF
 
 preset_names_230_mockball:
     db "230 Mockball", #$FF
@@ -194,6 +200,9 @@ preset_names_blue_brinstar_etank_room:
 preset_names_blue_brinstar_hoppers:
     db "Blue Brinstar Hoppers", #$FF
 
+preset_names_blue_brinstar_missiles:
+    db "Blue Brinstar Missiles", #$FF
+
 preset_names_blue_brinstar_power_bombs:
     db "Blue Brinstar Power Bombs", #$FF
 
@@ -262,6 +271,9 @@ preset_names_brinstar_map_entrance:
 
 preset_names_brinstar_reserve:
     db "Brinstar Reserve", #$FF
+
+preset_names_brinstar_reserve_missiles:
+    db "Brinstar Reserve Missiles", #$FF
 
 preset_names_brinstar_reserve_tank:
     db "Brinstar Reserve Tank", #$FF
@@ -592,6 +604,9 @@ preset_names_early_supers:
 
 preset_names_early_supers_collection:
     db "Early Supers Collection", #$FF
+
+preset_names_early_supers_missile:
+    db "Early Supers Missile", #$FF
 
 preset_names_early_supers_reserve:
     db "Early Supers Reserve", #$FF
@@ -1262,6 +1277,9 @@ preset_names_leaving_mama_turtle:
 preset_names_leaving_maridia:
     db "Leaving Maridia", #$FF
 
+preset_names_leaving_missile_refill:
+    db "Leaving Missile Refill", #$FF
+
 preset_names_leaving_norfair:
     db "Leaving Norfair", #$FF
 
@@ -1502,6 +1520,9 @@ preset_names_minikraid:
 preset_names_minikraid_revisit:
     db "Mini-Kraid Revisit", #$FF
 
+preset_names_missile_refill:
+    db "Missile Refill", #$FF
+
 preset_names_mission_impossible:
     db "Mission Impossible", #$FF
 
@@ -1642,6 +1663,9 @@ preset_names_pants_room_corner:
 
 preset_names_parlor:
     db "Parlor", #$FF
+
+preset_names_parlor_after_refill:
+    db "Parlor After Refill", #$FF
 
 preset_names_parlor_again:
     db "Parlor Again", #$FF

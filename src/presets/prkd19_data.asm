@@ -1225,6 +1225,7 @@ preset_prkd19_upper_norfair_double_chamber_revisit:
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $004F  ; Samus X
     dw $0AFA, $008B  ; Samus Y
+    dw $D878, $0014  ; Items
     dw $D8BA, $00F1  ; Doors
     dw #$FFFF
 

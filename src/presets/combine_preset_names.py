@@ -119,5 +119,6 @@ load_preset_names("nintendopower")
 load_preset_names("allbosskpdr")
 load_preset_names("allbosspkdr")
 load_preset_names("allbossprkd")
+load_preset_names("nodropskpdr")
 write_combined_preset_names()
 
