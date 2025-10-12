@@ -790,11 +790,26 @@ hook_phantoon_flame_pattern:
 
     LDA !eram_phantoon_rng_flames : TAY
     LDA !eram_phantoon_rng_next_flames : STA !eram_phantoon_rng_flames
-    TYA : STA !eram_phantoon_rng_next_flames : BEQ .no_manip
+    TYA : BEQ .no_manip : CMP #$0005 : BMI .dec_manip : BEQ .pick_left
+
+    ; Pick a pattern corresponding with first round right movement
+    STZ !eram_phantoon_rng_next_flames
+    LDA !CACHED_RANDOM_NUMBER : AND #$0002
+    RTL
+
+  .pick_left
+    ; Pick a pattern corresponding with first round left movement
+    STZ !eram_phantoon_rng_next_flames
+    LDA !CACHED_RANDOM_NUMBER : AND #$0002 : INC
+    RTL
+
+  .dec_manip
+    STA !eram_phantoon_rng_next_flames
     DEC
     RTL
 
   .no_manip
+    STA !eram_phantoon_rng_next_flames
     LDA !CACHED_RANDOM_NUMBER ; return with random number
     RTL
 }

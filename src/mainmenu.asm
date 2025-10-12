@@ -2828,6 +2828,24 @@ rng_phan_first_phase:
     STA !ram_phantoon_phase_rng
     LDA.l rng_phan_phase_1_table,X
     ORA !ram_phantoon_phase_rng : STA !ram_phantoon_phase_rng
+  .check_flames
+    ; If first round pattern is random or #1 Left or #1 Right, update it
+    LDA !ram_cm_phantoon_flames_rng : BEQ .update_flames
+    CMP #$0005 : BMI .done_flames
+  .update_flames
+    LDA !ram_phantoon_phase_rng : AND !PHANTOON_RNG_PHASE_1_MASK
+    BEQ .set_random : AND #$0015 : BEQ .set_left
+    LDA !ram_phantoon_phase_rng : AND #$002A : BEQ .set_right
+  .set_random
+    LDA #$0000 : STA !ram_cm_phantoon_flames_rng
+    JMP rng_phan_flamepattern_routine
+  .set_left
+    LDA #$0005 : STA !ram_cm_phantoon_flames_rng
+    JMP rng_phan_flamepattern_routine
+  .set_right
+    LDA #$0006 : STA !ram_cm_phantoon_flames_rng
+    JMP rng_phan_flamepattern_routine
+  .done_flames
     LDA !ROOM_ID : CMP.w #ROOM_PhantoonRoom : BNE .done
     JML init_phantoon_rng
   .done
@@ -2893,10 +2911,7 @@ rng_phan_set_phan_first_phase:
     INX #2 : CPX #$001E : BNE .first_loop
   .end_first_loop
     TXA : LSR : STA !ram_cm_phantoon_first_phase_rng
-    LDA !ROOM_ID : CMP.w #ROOM_PhantoonRoom : BNE .done
-    JML init_phantoon_rng
-  .done
-    RTL
+    JMP rng_phan_first_phase_check_flames
 }
 
 rng_phan_set_phan_second_phase:
@@ -3012,6 +3027,8 @@ rng_phan_flamepattern:
     db #$28, "        111", #$FF
     db #$28, "    3333333", #$FF
     db #$28, "    1424212", #$FF
+    db #$28, "    #1 LEFT", #$FF
+    db #$28, "   #1 RIGHT", #$FF
     db #$FF
   .routine
     LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_INVERTED
