@@ -322,7 +322,7 @@ preset_hundo_kraid_terminator:
     dw $0AFA, $0099  ; Samus Y
     dw #$FFFF
 
-preset_hundo_kraid_pirates_shaft:
+preset_hundo_kraid_green_pirate_shaft:
     dw #preset_hundo_kraid_terminator ; Kraid: Terminator
     dw $078D, $895E  ; DDB
     dw $079B, $990D  ; MDB
@@ -343,7 +343,7 @@ preset_hundo_kraid_pirates_shaft:
     dw #$FFFF
 
 preset_hundo_kraid_elevator:
-    dw #preset_hundo_kraid_pirates_shaft ; Kraid: Pirates Shaft
+    dw #preset_hundo_kraid_green_pirate_shaft ; Kraid: Green Pirate Shaft
     dw $078D, $8C22  ; DDB
     dw $079B, $9938  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -611,7 +611,7 @@ preset_hundo_speed_booster_business_center:
     dw $0AFA, $02A8  ; Samus Y
     dw #$FFFF
 
-preset_hundo_speed_booster_hijump:
+preset_hundo_speed_booster_hijump_boots:
     dw #preset_hundo_speed_booster_business_center ; Speed Booster: Business Center
     dw $090F, $6001  ; Screen subpixel X position
     dw $0915, $051B  ; Screen Y position in pixels
@@ -626,7 +626,7 @@ preset_hundo_speed_booster_hijump:
     dw #$FFFF
 
 preset_hundo_speed_booster_business_center_climb:
-    dw #preset_hundo_speed_booster_hijump ; Speed Booster: Hi-Jump
+    dw #preset_hundo_speed_booster_hijump_boots ; Speed Booster: Hi-Jump Boots
     dw $078D, $93F6  ; DDB
     dw $079B, $AA41  ; MDB
     dw $090F, $0000  ; Screen subpixel X position
@@ -793,7 +793,7 @@ preset_hundo_ice_beam_double_chamber:
     dw $D8BA, $0071  ; Doors
     dw #$FFFF
 
-preset_hundo_ice_beam_double_chamber_revisited:
+preset_hundo_ice_beam_double_chamber_revisit:
     dw #preset_hundo_ice_beam_double_chamber ; Ice Beam: Double Chamber
     dw $078D, $961E  ; DDB
     dw $079B, $ADDE  ; MDB
@@ -815,8 +815,8 @@ preset_hundo_ice_beam_double_chamber_revisited:
     dw $D8BA, $00F1  ; Doors
     dw #$FFFF
 
-preset_hundo_ice_beam_bubble_mountain_revisited:
-    dw #preset_hundo_ice_beam_double_chamber_revisited ; Ice Beam: Double Chamber Revisited
+preset_hundo_ice_beam_bubble_mountain_revisit:
+    dw #preset_hundo_ice_beam_double_chamber_revisit ; Ice Beam: Double Chamber Revisit
     dw $078D, $9606  ; DDB
     dw $079B, $AD5E  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -829,7 +829,7 @@ preset_hundo_ice_beam_bubble_mountain_revisited:
     dw #$FFFF
 
 preset_hundo_ice_beam_business_center_climb_ice:
-    dw #preset_hundo_ice_beam_bubble_mountain_revisited ; Ice Beam: Bubble Mountain Revisited
+    dw #preset_hundo_ice_beam_bubble_mountain_revisit ; Ice Beam: Bubble Mountain Revisit
     dw $078D, $97DA  ; DDB
     dw $079B, $B167  ; MDB
     dw $090F, $3000  ; Screen subpixel X position
@@ -956,7 +956,7 @@ preset_hundo_phantoon_hellway:
     dw $0B3F, $0000  ; Blue suit
     dw #$FFFF
 
-preset_hundo_phantoon_leaving_alpha_pbs:
+preset_hundo_phantoon_leaving_alpha_power_bombs:
     dw #preset_hundo_phantoon_hellway ; Phantoon: Hellway
     dw $078D, $9096  ; DDB
     dw $079B, $A3AE  ; MDB
@@ -979,7 +979,7 @@ preset_hundo_phantoon_leaving_alpha_pbs:
     dw #$FFFF
 
 preset_hundo_phantoon_kihunter_room:
-    dw #preset_hundo_phantoon_leaving_alpha_pbs ; Phantoon: Leaving Alpha PBs
+    dw #preset_hundo_phantoon_leaving_alpha_power_bombs ; Phantoon: Leaving Alpha Power Bombs
     dw $078D, $90BA  ; DDB
     dw $079B, $962A  ; MDB
     dw $090F, $3000  ; Screen subpixel X position
@@ -1286,7 +1286,7 @@ preset_hundo_gravity_leaving_gravity:
     dw $D880, $00FF  ; Items
     dw #$FFFF
 
-preset_hundo_brinstar_cleanup_crateria_pbs:
+preset_hundo_brinstar_cleanup_crateria_power_bombs:
     dw #preset_hundo_gravity_leaving_gravity ; Gravity: Leaving Gravity
     dw $078D, $8ADE  ; DDB
     dw $079B, $948C  ; MDB
@@ -1303,7 +1303,7 @@ preset_hundo_brinstar_cleanup_crateria_pbs:
     dw #$FFFF
 
 preset_hundo_brinstar_cleanup_ship_room:
-    dw #preset_hundo_brinstar_cleanup_crateria_pbs ; Brinstar Cleanup: Crateria PBs
+    dw #preset_hundo_brinstar_cleanup_crateria_power_bombs ; Brinstar Cleanup: Crateria Power Bombs
     dw $078D, $893A  ; DDB
     dw $079B, $93AA  ; MDB
     dw $090F, $5000  ; Screen subpixel X position
@@ -1334,7 +1334,7 @@ preset_hundo_brinstar_cleanup_gauntlet_etank:
     dw $0AF6, $0084  ; Samus X
     dw #$FFFF
 
-preset_hundo_brinstar_cleanup_green_pirates_shaft:
+preset_hundo_brinstar_cleanup_green_pirate_shaft:
     dw #preset_hundo_brinstar_cleanup_gauntlet_etank ; Brinstar Cleanup: Gauntlet E-Tank
     dw $078D, $8952  ; DDB
     dw $079B, $965B  ; MDB
@@ -1351,7 +1351,7 @@ preset_hundo_brinstar_cleanup_green_pirates_shaft:
     dw #$FFFF
 
 preset_hundo_brinstar_cleanup_green_shaft_revisit:
-    dw #preset_hundo_brinstar_cleanup_green_pirates_shaft ; Brinstar Cleanup: Green Pirates Shaft
+    dw #preset_hundo_brinstar_cleanup_green_pirate_shaft ; Brinstar Cleanup: Green Pirate Shaft
     dw $078D, $8C22  ; DDB
     dw $079B, $9938  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -1451,7 +1451,7 @@ preset_hundo_brinstar_cleanup_big_pink_revisit:
     dw $0AFA, $00AB  ; Samus Y
     dw #$FFFF
 
-preset_hundo_brinstar_cleanup_mission_impossible_pbs:
+preset_hundo_brinstar_cleanup_mission_impossible:
     dw #preset_hundo_brinstar_cleanup_big_pink_revisit ; Brinstar Cleanup: Big Pink Revisit
     dw $078D, $8DAE  ; DDB
     dw $079B, $9D19  ; MDB
@@ -1475,7 +1475,7 @@ preset_hundo_brinstar_cleanup_mission_impossible_pbs:
     dw #$FFFF
 
 preset_hundo_brinstar_cleanup_pink_brinstar_etank:
-    dw #preset_hundo_brinstar_cleanup_mission_impossible_pbs ; Brinstar Cleanup: Mission Impossible PBs
+    dw #preset_hundo_brinstar_cleanup_mission_impossible ; Brinstar Cleanup: Mission Impossible
     dw $078D, $8E62  ; DDB
     dw $090F, $0000  ; Screen subpixel X position
     dw $0911, $0299  ; Screen X position in pixels
@@ -1559,7 +1559,7 @@ preset_hundo_mama_turtle_etank_big_pink_charge_escape:
     dw $D874, $0F8E  ; Items
     dw #$FFFF
 
-preset_hundo_mama_turtle_etank_green_hills_revisit:
+preset_hundo_mama_turtle_etank_green_hill_zone_revisit:
     dw #preset_hundo_mama_turtle_etank_big_pink_charge_escape ; Mama Turtle E-Tank: Big Pink Charge Escape
     dw $090F, $0000  ; Screen subpixel X position
     dw $0911, $02D1  ; Screen X position in pixels
@@ -1573,7 +1573,7 @@ preset_hundo_mama_turtle_etank_green_hills_revisit:
     dw #$FFFF
 
 preset_hundo_mama_turtle_etank_blockbuster:
-    dw #preset_hundo_mama_turtle_etank_green_hills_revisit ; Mama Turtle E-Tank: Green Hills Revisit
+    dw #preset_hundo_mama_turtle_etank_green_hill_zone_revisit ; Mama Turtle E-Tank: Green Hill Zone Revisit
     dw $078D, $8E92  ; DDB
     dw $079B, $9FBA  ; MDB
     dw $090F, $9000  ; Screen subpixel X position
@@ -1689,7 +1689,7 @@ preset_hundo_mama_turtle_etank_fish_tank_revisit:
     dw #$FFFF
 
 preset_hundo_maridia_beach_crab_supers:
-    dw #preset_hundo_mama_turtle_etank_fish_tank_revisit ; Maridia Turtle E-Tank: Fish Tank Revisit
+    dw #preset_hundo_mama_turtle_etank_fish_tank_revisit ; Mama Turtle E-Tank: Fish Tank Revisit
     dw $078D, $A3F0  ; DDB
     dw $079B, $D0B9  ; MDB
     dw $090F, $2C00  ; Screen subpixel X position
@@ -1724,7 +1724,7 @@ preset_hundo_maridia_beach_mt_everest:
     dw #$FFFF
 
 preset_hundo_maridia_beach_beach_missiles:
-    dw #preset_hundo_maridia_beach_mt_everest ; Maridia Beach: Mt Everest
+    dw #preset_hundo_maridia_beach_mt_everest ; Maridia Beach: Mt. Everest
     dw $078D, $A468  ; DDB
     dw $079B, $D1A3  ; MDB
     dw $090F, $F000  ; Screen subpixel X position
@@ -1952,7 +1952,7 @@ preset_hundo_maridia_cleanup_aqueduct_revisit:
     dw $D8C2, $CC00  ; Doors
     dw #$FFFF
 
-preset_hundo_maridia_cleanup_right_sandpit:
+preset_hundo_maridia_cleanup_right_sand_pit:
     dw #preset_hundo_maridia_cleanup_aqueduct_revisit ; Maridia Cleanup: Aqueduct Revisit
     dw $078D, $A7D4  ; DDB
     dw $079B, $D5A7  ; MDB
@@ -1970,7 +1970,7 @@ preset_hundo_maridia_cleanup_right_sandpit:
     dw #$FFFF
 
 preset_hundo_maridia_cleanup_puyo_ice_clip_springball:
-    dw #preset_hundo_maridia_cleanup_right_sandpit ; Maridia Cleanup: Right Sandpit
+    dw #preset_hundo_maridia_cleanup_right_sand_pit ; Maridia Cleanup: Right Sand Pit
     dw $078D, $A690  ; DDB
     dw $079B, $D646  ; MDB
     dw $0911, $0000  ; Screen X position in pixels
@@ -2142,8 +2142,8 @@ preset_hundo_maridia_cleanup_aqueduct_final_visit:
     dw $D8C2, $CCAA  ; Doors
     dw #$FFFF
 
-preset_hundo_maridia_cleanup_left_sandpit:
-    dw #preset_hundo_maridia_cleanup_aqueduct_revisit ; Maridia Cleanup: Aqueduct Final Visit
+preset_hundo_maridia_cleanup_left_sand_pit:
+    dw #preset_hundo_maridia_cleanup_aqueduct_revisit ; Maridia Cleanup: Aqueduct Revisit
     dw $078D, $A7D4  ; DDB
     dw $079B, $D5A7  ; MDB
     dw $090F, $9000  ; Screen subpixel X position
@@ -2174,7 +2174,7 @@ preset_hundo_maridia_cleanup_left_sandpit:
     dw #$FFFF
 
 preset_hundo_maridia_cleanup_leaving_maridia:
-    dw #preset_hundo_maridia_cleanup_left_sandpit ; Maridia Cleanup: Left Sandpit
+    dw #preset_hundo_maridia_cleanup_left_sand_pit ; Maridia Cleanup: Left Sand Pit
     dw $078D, $A528  ; DDB
     dw $079B, $D21C  ; MDB
     dw $090F, $B000  ; Screen subpixel X position
@@ -2355,7 +2355,7 @@ preset_hundo_ridley_fast_ripper_room:
     dw $D8BA, $03F1  ; Doors
     dw #$FFFF
 
-preset_hundo_ridley_writg:
+preset_hundo_ridley_worst_room_in_the_game:
     dw #preset_hundo_ridley_fast_ripper_room ; Ridley: Fast Ripper Room
     dw $078D, $9912  ; DDB
     dw $079B, $B457  ; MDB
@@ -2373,7 +2373,7 @@ preset_hundo_ridley_writg:
     dw #$FFFF
 
 preset_hundo_ridley_mickey_mouse_missiles:
-    dw #preset_hundo_ridley_writg ; Ridley: WRITG
+    dw #preset_hundo_ridley_worst_room_in_the_game ; Ridley: Worst Room In The Game
     dw $078D, $994E  ; DDB
     dw $079B, $B4AD  ; MDB
     dw $090F, $8000  ; Screen subpixel X position
@@ -2576,7 +2576,7 @@ preset_hundo_ridley_hotarubi_special:
     dw $D87A, $0001  ; Items
     dw #$FFFF
 
-preset_hundo_ridley_3_muskateers:
+preset_hundo_ridley_3_musketeers:
     dw #preset_hundo_ridley_hotarubi_special ; Ridley: Hotarubi Special
     dw $078D, $9A92  ; DDB
     dw $079B, $B510  ; MDB
@@ -2594,7 +2594,7 @@ preset_hundo_ridley_3_muskateers:
     dw #$FFFF
 
 preset_hundo_crocomire_bubble_mountain_revisit:
-    dw #preset_hundo_ridley_3_muskateers ; Ridley: 3 Muskateers
+    dw #preset_hundo_ridley_3_musketeers ; Ridley: 3 Musketeers
     dw $078D, $9A4A  ; DDB
     dw $079B, $AD5E  ; MDB
     dw $07F3, $0015  ; Music Bank

@@ -100,16 +100,17 @@ def compute_distance(current_index, last_data_index):
             distance = distance + 1
     return distance
 
-def load_preset_data(file_path):
+def load_preset_data(file_label):
     global all_presets_data_list
     global all_presets_name_list
     global name_dict
     data_dict = {}
+    input_filepath = file_label + "_data.asm"
     last_data_index = -2
     preset_data_list = []
     preset_name = None
     preset_name_list = []
-    with open(file_path, 'r') as file:
+    with open(input_filepath, 'r') as file:
         for line in file:
             line = line.rstrip()
             if line.startswith("preset_"):
@@ -158,7 +159,7 @@ def load_preset_data(file_path):
             elif preset_name:
                 raise Exception("Empty line in preset: " + preset_name)
     if len(preset_data_list) <= 0:
-        raise Exception("No preset data found in file: " + file_path)
+        raise Exception("No preset data found in file: " + input_filepath)
     all_presets_data_list.append(preset_data_list)
     all_presets_name_list.append(preset_name_list)
 
@@ -342,8 +343,8 @@ def write_combined_preset_data():
             print("    dw #$FFFF", file=file)
 
 
-load_preset_data("100map_data.asm")
-load_preset_data("spazermap_data.asm")
+load_preset_data("100map")
+load_preset_data("spazermap")
 combine_preset_data()
 write_combined_preset_data()
 

@@ -914,7 +914,7 @@ preset_pkrd_red_brinstar_revisit_leaving_spazer:
     dw $D8B6, $B008  ; Doors
     dw #$FFFF
 
-preset_pkrd_red_brinstar_revisit_breaking_tube:
+preset_pkrd_red_brinstar_revisit_breaking_the_tube:
     dw #preset_pkrd_red_brinstar_revisit_leaving_spazer ; Red Brinstar Revisit: Leaving Spazer
     dw $078D, $9132  ; DDB
     dw $079B, $A408  ; MDB
@@ -934,7 +934,7 @@ preset_pkrd_red_brinstar_revisit_breaking_tube:
     dw #$FFFF
 
 preset_pkrd_kraid_entering_kraids_lair:
-    dw #preset_pkrd_red_brinstar_revisit_breaking_tube ; Red Brinstar Revisit: Breaking Tube
+    dw #preset_pkrd_red_brinstar_revisit_breaking_the_tube ; Red Brinstar Revisit: Breaking The Tube
     dw $078D, $A348  ; DDB
     dw $079B, $CF80  ; MDB
     dw $090F, $0000  ; Screen subpixel X position
@@ -947,7 +947,7 @@ preset_pkrd_kraid_entering_kraids_lair:
     dw #$FFFF
 
 preset_pkrd_kraid_kraid_kihunters:
-    dw #preset_pkrd_kraid_entering_kraids_lair ; Kraid: Entering Kraids Lair
+    dw #preset_pkrd_kraid_entering_kraids_lair ; Kraid: Entering Kraid's Lair
     dw $078D, $923A  ; DDB
     dw $079B, $A471  ; MDB
     dw $090F, $8000  ; Screen subpixel X position
@@ -960,7 +960,7 @@ preset_pkrd_kraid_kraid_kihunters:
     dw $0AF6, $0168  ; Samus X
     dw #$FFFF
 
-preset_pkrd_kraid_mini_kraid:
+preset_pkrd_kraid_minikraid:
     dw #preset_pkrd_kraid_kraid_kihunters ; Kraid: Kraid Kihunters
     dw $078D, $9156  ; DDB
     dw $079B, $A4DA  ; MDB
@@ -971,7 +971,7 @@ preset_pkrd_kraid_mini_kraid:
     dw #$FFFF
 
 preset_pkrd_kraid_kraid:
-    dw #preset_pkrd_kraid_mini_kraid ; Kraid: Mini Kraid
+    dw #preset_pkrd_kraid_minikraid ; Kraid: Mini-Kraid
     dw $078D, $919E  ; DDB
     dw $079B, $A56B  ; MDB
     dw $07F3, $0027  ; Music Bank
@@ -1012,7 +1012,7 @@ preset_pkrd_kraid_leaving_varia:
     dw $D8B8, $0064  ; Doors
     dw #$FFFF
 
-preset_pkrd_kraid_mini_kraid_revisit:
+preset_pkrd_kraid_minikraid_revisit:
     dw #preset_pkrd_kraid_leaving_varia ; Kraid: Leaving Varia
     dw $078D, $91CE  ; DDB
     dw $079B, $A56B  ; MDB
@@ -1030,7 +1030,7 @@ preset_pkrd_kraid_mini_kraid_revisit:
     dw #$FFFF
 
 preset_pkrd_kraid_kraid_kihunters_revisit:
-    dw #preset_pkrd_kraid_mini_kraid_revisit ; Kraid: Mini Kraid Revisit
+    dw #preset_pkrd_kraid_minikraid_revisit ; Kraid: Mini-Kraid Revisit
     dw $078D, $91AA  ; DDB
     dw $079B, $A521  ; MDB
     dw $090F, $7000  ; Screen subpixel X position
@@ -1084,7 +1084,7 @@ preset_pkrd_kraid_leaving_kraids_lair:
     dw #$FFFF
 
 preset_pkrd_kraid_business_center_preelev:
-    dw #preset_pkrd_kraid_leaving_kraids_lair ; Kraid: Leaving Kraids Lair
+    dw #preset_pkrd_kraid_leaving_kraids_lair ; Kraid: Leaving Kraid's Lair
     dw $078D, $913E  ; DDB
     dw $079B, $A6A1  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -1117,7 +1117,7 @@ preset_pkrd_upper_norfair_business_center_postelev:
     dw $0AFA, $02A8  ; Samus Y
     dw #$FFFF
 
-preset_pkrd_upper_norfair_hi_jump_etank:
+preset_pkrd_upper_norfair_hijump_etank:
     dw #preset_pkrd_upper_norfair_business_center_postelev ; Upper Norfair: Business Center Post-Elev
     dw $090F, $4000  ; Screen subpixel X position
     dw $0915, $051B  ; Screen Y position in pixels
@@ -1129,8 +1129,8 @@ preset_pkrd_upper_norfair_hi_jump_etank:
     dw $D8B8, $20EF  ; Doors
     dw #$FFFF
 
-preset_pkrd_upper_norfair_leaving_hi_jump:
-    dw #preset_pkrd_upper_norfair_hi_jump_etank ; Upper Norfair: Hi Jump E-Tank
+preset_pkrd_upper_norfair_leaving_hijump:
+    dw #preset_pkrd_upper_norfair_hijump_etank ; Upper Norfair: Hi-Jump E-Tank
     dw $078D, $9426  ; DDB
     dw $079B, $A9E5  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -1151,7 +1151,7 @@ preset_pkrd_upper_norfair_leaving_hi_jump:
     dw #$FFFF
 
 preset_pkrd_upper_norfair_business_center_revisit:
-    dw #preset_pkrd_upper_norfair_leaving_hi_jump ; Upper Norfair: Leaving Hi Jump
+    dw #preset_pkrd_upper_norfair_leaving_hijump ; Upper Norfair: Leaving Hi-Jump
     dw $078D, $93F6  ; DDB
     dw $079B, $AA41  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -1353,7 +1353,7 @@ preset_pkrd_upper_norfair_double_chamber:
     dw $D8BA, $0071  ; Doors
     dw #$FFFF
 
-preset_pkrd_upper_norfair_double_chamber_revisited:
+preset_pkrd_upper_norfair_double_chamber_revisit:
     dw #preset_pkrd_upper_norfair_double_chamber ; Upper Norfair: Double Chamber
     dw $078D, $961E  ; DDB
     dw $079B, $ADDE  ; MDB
@@ -1374,8 +1374,8 @@ preset_pkrd_upper_norfair_double_chamber_revisited:
     dw $D8BA, $00F1  ; Doors
     dw #$FFFF
 
-preset_pkrd_upper_norfair_single_chamber_revisited:
-    dw #preset_pkrd_upper_norfair_double_chamber_revisited ; Upper Norfair: Double Chamber Revisited
+preset_pkrd_upper_norfair_single_chamber_revisit:
+    dw #preset_pkrd_upper_norfair_double_chamber_revisit ; Upper Norfair: Double Chamber Revisit
     dw $078D, $962A  ; DDB
     dw $079B, $ADAD  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -1390,7 +1390,7 @@ preset_pkrd_upper_norfair_single_chamber_revisited:
     dw #$FFFF
 
 preset_pkrd_upper_norfair_volcano_room:
-    dw #preset_pkrd_upper_norfair_single_chamber_revisited ; Upper Norfair: Single Chamber Revisited
+    dw #preset_pkrd_upper_norfair_single_chamber_revisit ; Upper Norfair: Single Chamber Revisit
     dw $078D, $95EE  ; DDB
     dw $079B, $AE07  ; MDB
     dw $090F, $7200  ; Screen subpixel X position
@@ -1484,7 +1484,7 @@ preset_pkrd_lower_norfair_worst_room_in_the_game:
     dw #$FFFF
 
 preset_pkrd_lower_norfair_amphitheatre:
-    dw #preset_pkrd_lower_norfair_worst_room_in_the_game ; Lower Norfair: Worst Room in the Game
+    dw #preset_pkrd_lower_norfair_worst_room_in_the_game ; Lower Norfair: Worst Room In The Game
     dw $078D, $994E  ; DDB
     dw $079B, $B4AD  ; MDB
     dw $090F, $B000  ; Screen subpixel X position
@@ -1663,7 +1663,7 @@ preset_pkrd_lower_norfair_kihunter_stairs_up:
     dw $0AFA, $009B  ; Samus Y
     dw #$FFFF
 
-preset_pkrd_lower_norfair_fire_flea_room:
+preset_pkrd_lower_norfair_fireflea_room:
     dw #preset_pkrd_lower_norfair_kihunter_stairs_up ; Lower Norfair: Kihunter Stairs Up
     dw $078D, $9A26  ; DDB
     dw $079B, $B585  ; MDB
@@ -1678,7 +1678,7 @@ preset_pkrd_lower_norfair_fire_flea_room:
     dw #$FFFF
 
 preset_pkrd_lower_norfair_springball_maze:
-    dw #preset_pkrd_lower_norfair_fire_flea_room ; Lower Norfair: Fire Flea Room
+    dw #preset_pkrd_lower_norfair_fireflea_room ; Lower Norfair: Fireflea Room
     dw $078D, $9A02  ; DDB
     dw $079B, $B6EE  ; MDB
     dw $090F, $0000  ; Screen subpixel X position
@@ -1808,7 +1808,7 @@ preset_pkrd_maridia_mt_everest:
     dw #$FFFF
 
 preset_pkrd_maridia_crab_shaft:
-    dw #preset_pkrd_maridia_mt_everest ; Maridia: Mt Everest
+    dw #preset_pkrd_maridia_mt_everest ; Maridia: Mt. Everest
     dw $090F, $F800  ; Screen subpixel X position
     dw $0911, $0500  ; Screen X position in pixels
     dw $0913, $0000  ; Screen subpixel Y position
@@ -2024,7 +2024,7 @@ preset_pkrd_maridia_mt_everest_revisit:
     dw #$FFFF
 
 preset_pkrd_backtracking_red_brinstar_green_gate:
-    dw #preset_pkrd_maridia_mt_everest_revisit ; Maridia: Mt Everest Revisit
+    dw #preset_pkrd_maridia_mt_everest_revisit ; Maridia: Mt. Everest Revisit
     dw $078D, $A42C  ; DDB
     dw $079B, $D104  ; MDB
     dw $090F, $C000  ; Screen subpixel X position
