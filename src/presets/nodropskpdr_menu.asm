@@ -5,13 +5,13 @@ PresetsMenuNoDropsKpdr:
     dw #presets_goto_nodropskpdr_refill_15_missiles_path
     dw #presets_goto_nodropskpdr_refill_25_missiles_path
     dw #presets_goto_nodropskpdr_speed_wave_power_bombs
-;    dw #presets_goto_nodropskpdr_wrecked_ship
-;    dw #presets_goto_nodropskpdr_red_brinstar_revisit
-;    dw #presets_goto_nodropskpdr_maridia
-;    dw #presets_goto_nodropskpdr_upper_norfair_revisit
-;    dw #presets_goto_nodropskpdr_lower_norfair
-;    dw #presets_goto_nodropskpdr_backtracking
-;    dw #presets_goto_nodropskpdr_tourian
+    dw #presets_goto_nodropskpdr_wrecked_ship
+    dw #presets_goto_nodropskpdr_red_brinstar_revisit
+    dw #presets_goto_nodropskpdr_maridia
+    dw #presets_goto_nodropskpdr_upper_norfair_revisit
+    dw #presets_goto_nodropskpdr_lower_norfair
+    dw #presets_goto_nodropskpdr_backtracking
+    dw #presets_goto_nodropskpdr_tourian
     dw #$0000
     %cm_header("PRESETS FOR NO DROPS KPDR")
 
@@ -178,8 +178,8 @@ presets_submenu_nodropskpdr_speed_wave_power_bombs:
 
 presets_submenu_nodropskpdr_wrecked_ship:
     dw #presets_nodropskpdr_wrecked_ship_crateria_kihunters
-    dw #presets_nodropskpdr_wrecked_ship_ocean_fly_setup
-    dw #presets_nodropskpdr_wrecked_ship_ocean_spark
+    dw #presets_nodropskpdr_wrecked_ship_crateria_refill
+    dw #presets_nodropskpdr_wrecked_ship_ocean_jumps
     dw #presets_nodropskpdr_wrecked_ship_entering_wrecked_ship
     dw #presets_nodropskpdr_wrecked_ship_basement
     dw #presets_nodropskpdr_wrecked_ship_phantoon
@@ -192,12 +192,14 @@ presets_submenu_nodropskpdr_wrecked_ship:
     dw #presets_nodropskpdr_wrecked_ship_bowling_spark
     dw #presets_nodropskpdr_wrecked_ship_leaving_gravity
     dw #presets_nodropskpdr_wrecked_ship_moat_ball
+    dw #presets_nodropskpdr_wrecked_ship_crateria_refill_return
     dw #presets_nodropskpdr_wrecked_ship_crateria_kihunters_return
     dw #$0000
     %cm_header("WRECKED SHIP")
 
 presets_submenu_nodropskpdr_red_brinstar_revisit:
     dw #presets_nodropskpdr_red_brinstar_revisit_red_brinstar_elevator
+    dw #presets_nodropskpdr_red_brinstar_revisit_leaving_beta_power_bombs
     dw #presets_nodropskpdr_red_brinstar_revisit_caterpillars_revisit
     dw #presets_nodropskpdr_red_brinstar_revisit_hellway_revisit
     dw #presets_nodropskpdr_red_brinstar_revisit_red_tower_down
@@ -236,14 +238,9 @@ presets_submenu_nodropskpdr_upper_norfair_revisit:
     dw #presets_nodropskpdr_upper_norfair_revisit_ice_maze_up
     dw #presets_nodropskpdr_upper_norfair_revisit_ice_maze_down
     dw #presets_nodropskpdr_upper_norfair_revisit_ice_escape
-    dw #$FFFF
-    dw #presets_nodropskpdr_upper_norfair_revisit_purple_shaft_upper
-    dw #presets_nodropskpdr_upper_norfair_revisit_magdollite_tunnel_upper
-    dw #presets_nodropskpdr_upper_norfair_revisit_kronic_boost_upper
-    dw #$FFFF
-    dw #presets_nodropskpdr_upper_norfair_revisit_croc_speedway_lower
-    dw #presets_nodropskpdr_upper_norfair_revisit_spiky_acid_snakes_lower
-    dw #presets_nodropskpdr_upper_norfair_revisit_kronic_boost_lower
+    dw #presets_nodropskpdr_upper_norfair_revisit_croc_speedway
+    dw #presets_nodropskpdr_upper_norfair_revisit_spiky_acid_snakes
+    dw #presets_nodropskpdr_upper_norfair_revisit_kronic_boost
     dw #$0000
     %cm_header("UPPER NORFAIR REVISIT")
 
@@ -616,11 +613,11 @@ presets_nodropskpdr_speed_wave_power_bombs_caterpillars_up:
 presets_nodropskpdr_wrecked_ship_crateria_kihunters:
     %cm_preset("Crateria Kihunters", #preset_names_crateria_kihunters, #preset_nodropskpdr_wrecked_ship_crateria_kihunters)
 
-presets_nodropskpdr_wrecked_ship_ocean_fly_setup:
-    %cm_preset("Ocean Fly Setup", #preset_names_ocean_fly_setup, #preset_nodropskpdr_wrecked_ship_ocean_fly_setup)
+presets_nodropskpdr_wrecked_ship_crateria_refill:
+    %cm_preset("Crateria Refill", #preset_names_crateria_refill, #preset_nodropskpdr_wrecked_ship_crateria_refill)
 
-presets_nodropskpdr_wrecked_ship_ocean_spark:
-    %cm_preset("Ocean Spark", #preset_names_ocean_spark, #preset_nodropskpdr_wrecked_ship_ocean_spark)
+presets_nodropskpdr_wrecked_ship_ocean_jumps:
+    %cm_preset("Ocean Jumps", #preset_names_ocean_jumps, #preset_nodropskpdr_wrecked_ship_ocean_jumps)
 
 presets_nodropskpdr_wrecked_ship_entering_wrecked_ship:
     %cm_preset("Entering Wrecked Ship", #preset_names_entering_wrecked_ship, #preset_nodropskpdr_wrecked_ship_entering_wrecked_ship)
@@ -661,10 +658,16 @@ presets_nodropskpdr_wrecked_ship_moat_ball:
 presets_nodropskpdr_wrecked_ship_crateria_kihunters_return:
     %cm_preset("Crateria Kihunters Return", #preset_names_crateria_kihunters_return, #preset_nodropskpdr_wrecked_ship_crateria_kihunters_return)
 
+presets_nodropskpdr_wrecked_ship_crateria_refill_return:
+    %cm_preset("Crateria Refill Return", #preset_names_crateria_refill_return, #preset_nodropskpdr_wrecked_ship_crateria_refill_return)
+
 
 ; Red Brinstar Revisit
 presets_nodropskpdr_red_brinstar_revisit_red_brinstar_elevator:
     %cm_preset("Red Brinstar Elevator", #preset_names_red_brinstar_elevator, #preset_nodropskpdr_red_brinstar_revisit_red_brinstar_elevator)
+
+presets_nodropskpdr_red_brinstar_revisit_leaving_beta_power_bombs:
+    %cm_preset("Leaving Beta Power Bombs", #preset_names_leaving_beta_power_bombs, #preset_nodropskpdr_red_brinstar_revisit_leaving_beta_power_bombs)
 
 presets_nodropskpdr_red_brinstar_revisit_caterpillars_revisit:
     %cm_preset("Caterpillars Revisit", #preset_names_caterpillars_revisit, #preset_nodropskpdr_red_brinstar_revisit_caterpillars_revisit)
@@ -760,23 +763,14 @@ presets_nodropskpdr_upper_norfair_revisit_ice_maze_down:
 presets_nodropskpdr_upper_norfair_revisit_ice_escape:
     %cm_preset("Ice Escape", #preset_names_ice_escape, #preset_nodropskpdr_upper_norfair_revisit_ice_escape)
 
-presets_nodropskpdr_upper_norfair_revisit_purple_shaft_upper:
-    %cm_preset("Purple Shaft (Upper)", #preset_names_purple_shaft_upper, #preset_nodropskpdr_upper_norfair_revisit_purple_shaft_upper)
+presets_nodropskpdr_upper_norfair_revisit_croc_speedway:
+    %cm_preset("Croc Speedway", #preset_names_croc_speedway, #preset_nodropskpdr_upper_norfair_revisit_croc_speedway)
 
-presets_nodropskpdr_upper_norfair_revisit_magdollite_tunnel_upper:
-    %cm_preset("Magdollite Tunnel (Upper)", #preset_names_magdollite_tunnel_upper, #preset_nodropskpdr_upper_norfair_revisit_magdollite_tunnel_upper)
+presets_nodropskpdr_upper_norfair_revisit_spiky_acid_snakes:
+    %cm_preset("Spiky Acid Snakes", #preset_names_spiky_acid_snakes, #preset_nodropskpdr_upper_norfair_revisit_spiky_acid_snakes)
 
-presets_nodropskpdr_upper_norfair_revisit_kronic_boost_upper:
-    %cm_preset("Kronic Boost (Upper)", #preset_names_kronic_boost_upper, #preset_nodropskpdr_upper_norfair_revisit_kronic_boost_upper)
-
-presets_nodropskpdr_upper_norfair_revisit_croc_speedway_lower:
-    %cm_preset("Croc Speedway (Lower)", #preset_names_croc_speedway_lower, #preset_nodropskpdr_upper_norfair_revisit_croc_speedway_lower)
-
-presets_nodropskpdr_upper_norfair_revisit_spiky_acid_snakes_lower:
-    %cm_preset("Spiky Acid Snakes (Lower)", #preset_names_spiky_acid_snakes_lower, #preset_nodropskpdr_upper_norfair_revisit_spiky_acid_snakes_lower)
-
-presets_nodropskpdr_upper_norfair_revisit_kronic_boost_lower:
-    %cm_preset("Kronic Boost (Lower)", #preset_names_kronic_boost_lower, #preset_nodropskpdr_upper_norfair_revisit_kronic_boost_lower)
+presets_nodropskpdr_upper_norfair_revisit_kronic_boost:
+    %cm_preset("Kronic Boost", #preset_names_kronic_boost, #preset_nodropskpdr_upper_norfair_revisit_kronic_boost)
 
 
 ; Lower Norfair

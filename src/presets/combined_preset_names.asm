@@ -1,6 +1,6 @@
 
-warnpc $EFC8CC
-org $EFC8CC
+warnpc $EFC86E
+org $EFC86E
 print pc, " preset names start"
 
 preset_names:
@@ -487,6 +487,12 @@ preset_names_crateria_pbs:
 
 preset_names_crateria_power_bombs:
     db "Crateria Power Bombs", #$FF
+
+preset_names_crateria_refill:
+    db "Crateria Refill", #$FF
+
+preset_names_crateria_refill_return:
+    db "Crateria Refill Return", #$FF
 
 preset_names_croc:
     db "Croc", #$FF
@@ -1217,6 +1223,9 @@ preset_names_lava_spark:
 preset_names_leaving_alpha_power_bombs:
     db "Leaving Alpha Power Bombs", #$FF
 
+preset_names_leaving_beta_power_bombs:
+    db "Leaving Beta Power Bombs", #$FF
+
 preset_names_leaving_billy_mays:
     db "Leaving Billy Mays", #$FF
 
@@ -1630,6 +1639,9 @@ preset_names_ocean_fly:
 
 preset_names_ocean_fly_setup:
     db "Ocean Fly Setup", #$FF
+
+preset_names_ocean_jumps:
+    db "Ocean Jumps", #$FF
 
 preset_names_ocean_revisit:
     db "Ocean Revisit", #$FF
@@ -2179,6 +2191,9 @@ preset_names_spike_suit_colosseum:
 
 preset_names_spikesuit_reverse_halfie:
     db "Spikesuit Reverse Halfie", #$FF
+
+preset_names_spiky_acid_snakes:
+    db "Spiky Acid Snakes", #$FF
 
 preset_names_spiky_acid_snakes_lower:
     db "Spiky Acid Snakes (Lower)", #$FF

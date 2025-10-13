@@ -655,6 +655,8 @@ preset_nodropskpdr_refill_15_missiles_path_leaving_missile_refill:
     dw $0919, $0000  ; Layer 2 Y position
     dw $09C2, $0073  ; Health
     dw $09C6, $000F  ; Missiles
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
     dw $0AF6, $00C0  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
@@ -1613,50 +1615,56 @@ preset_nodropskpdr_wrecked_ship_crateria_kihunters:
     dw $D8B6, $3008  ; Doors
     dw #$FFFF
 
-preset_nodropskpdr_wrecked_ship_ocean_fly_setup:
+preset_nodropskpdr_wrecked_ship_crateria_refill:
     dw #preset_nodropskpdr_wrecked_ship_crateria_kihunters ; Wrecked Ship: Crateria Kihunters
-    dw $078D, $8AF6  ; DDB
-    dw $079B, $948C  ; MDB
+    dw $078D, $8A2A  ; DDB
+    dw $079B, $95D4  ; MDB
     dw $07F5, $0005  ; Music Track
-    dw $090F, $8C00  ; Screen subpixel X position
-    dw $0913, $3000  ; Screen subpixel Y position
+    dw $090F, $A000  ; Screen subpixel X position
+    dw $0913, $8400  ; Screen subpixel Y position
+    dw $09C2, $0052  ; Health
     dw $09CE, $0001  ; Pbs
     dw $09D2, $0000  ; Currently selected item
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $002C  ; Samus X
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $00D1  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw $D8B0, $6000  ; Doors
     dw $D8B2, $2C01  ; Doors
     dw #$FFFF
 
-preset_nodropskpdr_wrecked_ship_ocean_spark:
-    dw #preset_nodropskpdr_wrecked_ship_ocean_fly_setup ; Wrecked Ship: Ocean Fly Setup
+preset_nodropskpdr_wrecked_ship_ocean_jumps:
+    dw #preset_nodropskpdr_wrecked_ship_crateria_refill ; Wrecked Ship: Crateria Refill
     dw $078D, $8A36  ; DDB
     dw $079B, $95FF  ; MDB
-    dw $090F, $A3FF  ; Screen subpixel X position
+    dw $090F, $D000  ; Screen subpixel X position
     dw $0911, $0100  ; Screen X position in pixels
-    dw $0913, $6C00  ; Screen subpixel Y position
+    dw $0913, $7000  ; Screen subpixel Y position
     dw $0917, $00C0  ; Layer 2 X position
-    dw $09C2, $00EE  ; Health
-    dw $0AF6, $01C6  ; Samus X
+    dw $09C2, $00F7  ; Health
+    dw $09C6, $0028  ; Missiles
+    dw $09CA, $0009  ; Supers
+    dw $09CE, $0005  ; Pbs
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $01DB  ; Samus X
+    dw $D8B0, $6001  ; Doors
     dw #$FFFF
 
 preset_nodropskpdr_wrecked_ship_entering_wrecked_ship:
-    dw #preset_nodropskpdr_wrecked_ship_ocean_spark ; Wrecked Ship: Ocean Spark
+    dw #preset_nodropskpdr_wrecked_ship_ocean_jumps ; Wrecked Ship: Ocean Jumps
     dw $078D, $8AEA  ; DDB
     dw $079B, $93FE  ; MDB
     dw $07F3, $000C  ; Music Bank
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $0911, $0700  ; Screen X position in pixels
-    dw $0913, $B000  ; Screen subpixel Y position
-    dw $0915, $0400  ; Screen Y position in pixels
-    dw $0917, $0380  ; Layer 2 X position
-    dw $09C2, $0074  ; Health
-    dw $09CA, $0004  ; Supers
-    dw $0AF6, $07DB  ; Samus X
-    dw $0AFA, $048B  ; Samus Y
-    dw $D8B0, $7000  ; Doors
+    dw $090F, $A000  ; Screen subpixel X position
+    dw $0911, $06DD  ; Screen X position in pixels
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $041B  ; Screen Y position in pixels
+    dw $0917, $036E  ; Layer 2 X position
+    dw $09CA, $0008  ; Supers
+    dw $0AF6, $0774  ; Samus X
+    dw $0AFA, $04AB  ; Samus Y
+    dw $D8B0, $7001  ; Doors
     dw #$FFFF
 
 preset_nodropskpdr_wrecked_ship_basement:
@@ -1664,19 +1672,17 @@ preset_nodropskpdr_wrecked_ship_basement:
     dw $078D, $A1BC  ; DDB
     dw $079B, $CAF6  ; MDB
     dw $07F3, $0030  ; Music Bank
-    dw $090F, $4000  ; Screen subpixel X position
+    dw $090F, $D000  ; Screen subpixel X position
     dw $0911, $0400  ; Screen X position in pixels
-    dw $0913, $AC00  ; Screen subpixel Y position
-    dw $0915, $0691  ; Screen Y position in pixels
+    dw $0913, $BC00  ; Screen subpixel Y position
+    dw $0915, $06C0  ; Screen Y position in pixels
     dw $0917, $0300  ; Layer 2 X position
-    dw $0919, $04EC  ; Layer 2 Y position
+    dw $0919, $0510  ; Layer 2 Y position
     dw $09D2, $0002  ; Currently selected item
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $04C9  ; Samus X
-    dw $0AF8, $7FFF  ; Samus subpixel X
-    dw $0AFA, $0742  ; Samus Y
-    dw $0AFC, $B7FF  ; Samus subpixel Y
+    dw $0AF6, $04A2  ; Samus X
+    dw $0AFA, $075B  ; Samus Y
     dw #$FFFF
 
 preset_nodropskpdr_wrecked_ship_phantoon:
@@ -1687,12 +1693,14 @@ preset_nodropskpdr_wrecked_ship_phantoon:
     dw $0913, $7000  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0919, $0000  ; Layer 2 Y position
-    dw $09CA, $0002  ; Supers
+    dw $09CA, $0006  ; Supers
     dw $09D2, $0000  ; Currently selected item
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $04CC  ; Samus X
+    dw $0AF8, $7FFF  ; Samus subpixel X
     dw $0AFA, $008B  ; Samus Y
+    dw $0AFC, $B7FF  ; Samus subpixel Y
     dw $D8C0, $0030  ; Doors
     dw #$FFFF
 
@@ -1701,21 +1709,18 @@ preset_nodropskpdr_wrecked_ship_leaving_phantoon:
     dw $078D, $A2AC  ; DDB
     dw $079B, $CD13  ; MDB
     dw $07F5, $0003  ; Music Track
-    dw $090F, $6000  ; Screen subpixel X position
+    dw $090F, $F001  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $8400  ; Screen subpixel Y position
+    dw $0913, $6C00  ; Screen subpixel Y position
     dw $0917, $0001  ; Layer 2 X position
-    dw $09C2, $00E2  ; Health
-    dw $09C6, $000A  ; Missiles
+    dw $09C2, $00A7  ; Health
+    dw $09C6, $0013  ; Missiles
     dw $09CA, $0005  ; Supers
-    dw $09CE, $0002  ; Pbs
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
+    dw $0A1C, $008A  ; Samus position/state
+    dw $0A1E, $1504  ; More position/state
     dw $0AF6, $0025  ; Samus X
-    dw $0AF8, $0000  ; Samus subpixel X
-    dw $0AFA, $00C9  ; Samus Y
+    dw $0AFA, $00BB  ; Samus Y
     dw $D82A, $0100  ; Bosses
-    dw $D8C0, $0070  ; Doors
     dw #$FFFF
 
 preset_nodropskpdr_wrecked_ship_shaft_to_supers:
@@ -1727,9 +1732,12 @@ preset_nodropskpdr_wrecked_ship_shaft_to_supers:
     dw $0911, $0233  ; Screen X position in pixels
     dw $0913, $E000  ; Screen subpixel Y position
     dw $0917, $01A6  ; Layer 2 X position
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
     dw $0AF6, $02CE  ; Samus X
     dw $0AF8, $1000  ; Samus subpixel X
     dw $0AFA, $006B  ; Samus Y
+    dw $D8C0, $0070  ; Doors
     dw #$FFFF
 
 preset_nodropskpdr_wrecked_ship_wrecked_ship_shaft:
@@ -1740,7 +1748,9 @@ preset_nodropskpdr_wrecked_ship_wrecked_ship_shaft:
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $0400  ; Screen subpixel Y position
     dw $0917, $0000  ; Layer 2 X position
+    dw $09C2, $0098  ; Health
     dw $09CA, $000A  ; Supers
+    dw $09CC, $000F  ; Max supers
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $00CC  ; Samus X
@@ -1754,27 +1764,28 @@ preset_nodropskpdr_wrecked_ship_attic:
     dw #preset_nodropskpdr_wrecked_ship_wrecked_ship_shaft ; Wrecked Ship: Wrecked Ship Shaft
     dw $078D, $A2E8  ; DDB
     dw $079B, $CAF6  ; MDB
-    dw $090F, $AC00  ; Screen subpixel X position
+    dw $090F, $6000  ; Screen subpixel X position
     dw $0911, $0400  ; Screen X position in pixels
-    dw $0913, $B000  ; Screen subpixel Y position
     dw $0917, $0300  ; Layer 2 X position
     dw $09D2, $0003  ; Currently selected item
-    dw $0AF6, $0445  ; Samus X
-    dw $0AFA, $006B  ; Samus Y
+    dw $0AF6, $0465  ; Samus X
+    dw $0AFA, $005B  ; Samus Y
     dw #$FFFF
 
 preset_nodropskpdr_wrecked_ship_upper_west_ocean:
     dw #preset_nodropskpdr_wrecked_ship_attic ; Wrecked Ship: Attic
     dw $078D, $A228  ; DDB
     dw $079B, $CA52  ; MDB
-    dw $090F, $7000  ; Screen subpixel X position
+    dw $090F, $4000  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $C7FD  ; Screen subpixel Y position
+    dw $0913, $C400  ; Screen subpixel Y position
     dw $0915, $001F  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $001E  ; Layer 2 Y position
-    dw $09C2, $00EE  ; Health
-    dw $09CA, $0009  ; Supers
+    dw $09C2, $0096  ; Health
+    dw $09C6, $0012  ; Missiles
+    dw $09CA, $0004  ; Supers
+    dw $09CE, $0004  ; Pbs
     dw $09D2, $0000  ; Currently selected item
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
@@ -1789,16 +1800,15 @@ preset_nodropskpdr_wrecked_ship_pancakes_and_wavers:
     dw $079B, $93FE  ; MDB
     dw $07F3, $000C  ; Music Bank
     dw $07F5, $0005  ; Music Track
-    dw $090F, $E000  ; Screen subpixel X position
+    dw $090F, $B000  ; Screen subpixel X position
     dw $0911, $0200  ; Screen X position in pixels
     dw $0913, $F800  ; Screen subpixel Y position
-    dw $0915, $01FC  ; Screen Y position in pixels
+    dw $0915, $0201  ; Screen Y position in pixels
     dw $0917, $0100  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $09C2, $0102  ; Health
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $02C2  ; Samus X
+    dw $0AF6, $02CA  ; Samus X
     dw $0AFA, $028B  ; Samus Y
     dw #$FFFF
 
@@ -1811,6 +1821,7 @@ preset_nodropskpdr_wrecked_ship_bowling_spark:
     dw $0913, $2400  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $00C0  ; Layer 2 X position
+    dw $09C2, $0091  ; Health
     dw $0AF6, $016E  ; Samus X
     dw $0AFA, $009D  ; Samus Y
     dw #$FFFF
@@ -1821,17 +1832,17 @@ preset_nodropskpdr_wrecked_ship_leaving_gravity:
     dw $079B, $CE40  ; MDB
     dw $07F3, $0030  ; Music Bank
     dw $07F5, $0003  ; Music Track
-    dw $090F, $3000  ; Screen subpixel X position
+    dw $090F, $D000  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $E400  ; Screen subpixel Y position
+    dw $0913, $4800  ; Screen subpixel Y position
     dw $0917, $0001  ; Layer 2 X position
     dw $09A2, $3125  ; Equipped Items
     dw $09A4, $3125  ; Collected Items
-    dw $09C2, $00A9  ; Health
-    dw $0A1C, $009B  ; Samus position/state
-    dw $0A1E, $0000  ; More position/state
-    dw $0AF6, $0078  ; Samus X
-    dw $0AFA, $0088  ; Samus Y
+    dw $09C2, $0038  ; Health
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0075  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
     dw $D880, $00A0  ; Items
     dw #$FFFF
 
@@ -1846,8 +1857,6 @@ preset_nodropskpdr_wrecked_ship_moat_ball:
     dw $0913, $2800  ; Screen subpixel Y position
     dw $0915, $0445  ; Screen Y position in pixels
     dw $0917, $0072  ; Layer 2 X position
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
     dw $0AF6, $0184  ; Samus X
     dw $0AFA, $04D0  ; Samus Y
     dw #$FFFF
@@ -1866,18 +1875,32 @@ preset_nodropskpdr_wrecked_ship_crateria_kihunters_return:
     dw $0AFA, $0097  ; Samus Y
     dw #$FFFF
 
-preset_nodropskpdr_red_brinstar_revisit_red_brinstar_elevator:
+preset_nodropskpdr_wrecked_ship_crateria_refill_return:
     dw #preset_nodropskpdr_wrecked_ship_crateria_kihunters_return ; Wrecked Ship: Crateria Kihunters Return
+    dw $078D, $8A2A  ; DDB
+    dw $079B, $95D4  ; MDB
+    dw $090F, $EC00  ; Screen subpixel X position
+    dw $0913, $9C00  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09C6, $0011  ; Missiles
+    dw $09D2, $0001  ; Currently selected item
+    dw $0AF6, $00CA  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw #$FFFF
+
+preset_nodropskpdr_red_brinstar_revisit_red_brinstar_elevator:
+    dw #preset_nodropskpdr_wrecked_ship_crateria_refill_return ; Wrecked Ship: Crateria Refill Return
     dw $078D, $8A42  ; DDB
     dw $079B, $962A  ; MDB
     dw $07F5, $0003  ; Music Track
     dw $090F, $7000  ; Screen subpixel X position
     dw $0913, $5800  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $09C2, $00BD  ; Health
-    dw $09C6, $0008  ; Missiles
-    dw $09CE, $0003  ; Pbs
+    dw $09C2, $012B  ; Health
+    dw $09C6, $0028  ; Missiles
+    dw $09CA, $000F  ; Supers
+    dw $09CE, $0005  ; Pbs
+    dw $09D2, $0000  ; Currently selected item
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $0080  ; Samus X
@@ -1894,20 +1917,48 @@ preset_nodropskpdr_red_brinstar_revisit_caterpillars_revisit:
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $0238  ; Screen Y position in pixels
     dw $0919, $0238  ; Layer 2 Y position
+    dw $09D2, $0002  ; Currently selected item
     dw $0A1C, $009B  ; Samus position/state
     dw $0A1E, $0000  ; More position/state
-    dw $0AFA, $02AB  ; Samus Y
+    dw $0AFA, $02A8  ; Samus Y
+    dw #$FFFF
+
+preset_nodropskpdr_red_brinstar_revisit_leaving_beta_power_bombs:
+    dw #preset_nodropskpdr_red_brinstar_revisit_caterpillars_revisit ; Red Brinstar Revisit: Caterpillars Revisit
+    dw $078D, $90A2  ; DDB
+    dw $079B, $A37C  ; MDB
+    dw $090F, $4000  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $9000  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $00C0  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09C2, $0123  ; Health
+    dw $09CA, $000E  ; Supers
+    dw $09CE, $0009  ; Pbs
+    dw $09D0, $000A  ; Max pbs
+    dw $09D2, $0000  ; Currently selected item
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $019F  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw $D874, $0184  ; Items
+    dw $D8B6, $7809  ; Doors
     dw #$FFFF
 
 preset_nodropskpdr_red_brinstar_revisit_hellway_revisit:
-    dw #preset_nodropskpdr_red_brinstar_revisit_caterpillars_revisit ; Red Brinstar Revisit: Caterpillars Revisit
+    dw #preset_nodropskpdr_red_brinstar_revisit_leaving_beta_power_bombs ; Red Brinstar Revisit: Leaving Beta Power Bombs
+    dw $078D, $90DE  ; DDB
+    dw $079B, $A322  ; MDB
     dw $090F, $C000  ; Screen subpixel X position
-    dw $0913, $2800  ; Screen subpixel Y position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $E400  ; Screen subpixel Y position
     dw $0915, $0500  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0500  ; Layer 2 Y position
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $0040  ; Samus X
+    dw $0AF6, $0043  ; Samus X
     dw $0AFA, $058B  ; Samus Y
     dw #$FFFF
 
@@ -1918,7 +1969,7 @@ preset_nodropskpdr_red_brinstar_revisit_red_tower_down:
     dw $0913, $9000  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0919, $0000  ; Layer 2 Y position
-    dw $09C2, $00B5  ; Health
+    dw $09C2, $011B  ; Health
     dw $0AF6, $003D  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
@@ -1947,7 +1998,7 @@ preset_nodropskpdr_red_brinstar_revisit_below_spazer_final:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $00C0  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $09C2, $00B4  ; Health
+    dw $09C2, $0119  ; Health
     dw $0AF6, $01DC  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
@@ -1960,7 +2011,7 @@ preset_nodropskpdr_red_brinstar_revisit_breaking_the_tube:
     dw $0913, $D000  ; Screen subpixel Y position
     dw $0915, $0100  ; Screen Y position in pixels
     dw $0919, $00C0  ; Layer 2 Y position
-    dw $09CA, $000A  ; Supers
+    dw $09C2, $0118  ; Health
     dw $09D2, $0003  ; Currently selected item
     dw $0AF6, $01B1  ; Samus X
     dw $0AFA, $018B  ; Samus Y
@@ -1978,7 +2029,7 @@ preset_nodropskpdr_maridia_fish_tank:
     dw $0915, $05ED  ; Screen Y position in pixels
     dw $0917, $00B4  ; Layer 2 X position
     dw $0919, $0471  ; Layer 2 Y position
-    dw $09CE, $0002  ; Pbs
+    dw $09CE, $0008  ; Pbs
     dw $09D2, $0000  ; Currently selected item
     dw $0AF6, $0161  ; Samus X
     dw $0AF8, $7FFF  ; Samus subpixel X
@@ -2008,7 +2059,7 @@ preset_nodropskpdr_maridia_crab_shaft:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $03C0  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $09C2, $0079  ; Health
+    dw $09C2, $00DD  ; Health
     dw $0AF6, $05C0  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
@@ -2023,7 +2074,7 @@ preset_nodropskpdr_maridia_aqueduct:
     dw $0915, $0300  ; Screen Y position in pixels
     dw $0917, $0100  ; Layer 2 X position
     dw $0919, $0240  ; Layer 2 Y position
-    dw $09CA, $0009  ; Supers
+    dw $09CA, $000D  ; Supers
     dw $09D2, $0003  ; Currently selected item
     dw $0AF6, $01AD  ; Samus X
     dw $0AFA, $038B  ; Samus Y
@@ -2041,7 +2092,7 @@ preset_nodropskpdr_maridia_botwoon_hallway:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $09CE, $0001  ; Pbs
+    dw $09CE, $0007  ; Pbs
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $009D  ; Samus X
@@ -2073,10 +2124,8 @@ preset_nodropskpdr_maridia_botwoon_etank:
     dw $0911, $0100  ; Screen X position in pixels
     dw $0913, $C000  ; Screen subpixel Y position
     dw $0917, $0100  ; Layer 2 X position
-    dw $09C2, $00A1  ; Health
-    dw $09C6, $000F  ; Missiles
-    dw $09CA, $0003  ; Supers
-    dw $09CE, $0002  ; Pbs
+    dw $09CA, $0007  ; Supers
+    dw $09CE, $0006  ; Pbs
     dw $0AF6, $01C6  ; Samus X
     dw $D82C, $0002  ; Bosses
     dw #$FFFF
@@ -2092,8 +2141,9 @@ preset_nodropskpdr_maridia_halfie_setup:
     dw $0915, $001F  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $001F  ; Layer 2 Y position
-    dw $09C2, $018F  ; Health
+    dw $09C2, $0180  ; Health
     dw $09C4, $018F  ; Max health
+    dw $09C6, $0026  ; Missiles
     dw $0A1C, $009B  ; Samus position/state
     dw $0A1E, $0000  ; More position/state
     dw $0AF6, $008D  ; Samus X
@@ -2109,8 +2159,9 @@ preset_nodropskpdr_maridia_draygon:
     dw $0913, $E400  ; Screen subpixel Y position
     dw $0915, $0200  ; Screen Y position in pixels
     dw $0919, $0180  ; Layer 2 Y position
-    dw $09C2, $0110  ; Health
-    dw $09CA, $0001  ; Supers
+    dw $09C2, $0101  ; Health
+    dw $09C6, $0023  ; Missiles
+    dw $09CA, $0006  ; Supers
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $0041  ; Samus X
@@ -2127,10 +2178,10 @@ preset_nodropskpdr_maridia_reverse_halfie_spikesuit:
     dw $0919, $0000  ; Layer 2 Y position
     dw $09A2, $3325  ; Equipped Items
     dw $09A4, $3325  ; Collected Items
-    dw $09C2, $00BA  ; Health
-    dw $09C6, $000C  ; Missiles
+    dw $09C2, $00D7  ; Health
+    dw $09C6, $000F  ; Missiles
     dw $09CA, $0005  ; Supers
-    dw $09CE, $0003  ; Pbs
+    dw $09CE, $0005  ; Pbs
     dw $0A68, $0001  ; Flash suit
     dw $0AF6, $0044  ; Samus X
     dw $0AFA, $008B  ; Samus Y
@@ -2151,8 +2202,7 @@ preset_nodropskpdr_maridia_cac_alley_east:
     dw $090F, $8000  ; Screen subpixel X position
     dw $0915, $011A  ; Screen Y position in pixels
     dw $0919, $011A  ; Layer 2 Y position
-    dw $09C2, $004A  ; Health
-    dw $09C6, $000B  ; Missiles
+    dw $09C2, $0067  ; Health
     dw $0AF6, $0030  ; Samus X
     dw $0AFA, $018B  ; Samus Y
     dw $D8C2, $DC00  ; Doors
@@ -2165,8 +2215,7 @@ preset_nodropskpdr_maridia_cac_alley_west:
     dw $090F, $B000  ; Screen subpixel X position
     dw $0915, $0002  ; Screen Y position in pixels
     dw $0919, $0002  ; Layer 2 Y position
-    dw $09C6, $000A  ; Missiles
-    dw $09CA, $0007  ; Supers
+    dw $09C2, $0058  ; Health
     dw $0AF6, $005B  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
@@ -2179,7 +2228,7 @@ preset_nodropskpdr_maridia_plasma_spark:
     dw $0913, $7400  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0919, $0000  ; Layer 2 Y position
-    dw $09CA, $0008  ; Supers
+    dw $09C2, $0053  ; Health
     dw $0AF6, $001F  ; Samus X
     dw #$FFFF
 
@@ -2209,7 +2258,9 @@ preset_nodropskpdr_maridia_plasma_beam:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $09D2, $0003  ; Currently selected item
+    dw $09C2, $003F  ; Health
+    dw $09C6, $000D  ; Missiles
+    dw $09D2, $0001  ; Currently selected item
     dw $0AF6, $0095  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw $D8C2, $DC08  ; Doors
@@ -2225,9 +2276,6 @@ preset_nodropskpdr_maridia_plasma_spark_revisit:
     dw $0919, $0253  ; Layer 2 Y position
     dw $09A6, $1009  ; Equipped Beams
     dw $09A8, $1009  ; Collected Beams
-    dw $09C2, $00A4  ; Health
-    dw $09C6, $000F  ; Missiles
-    dw $09CE, $0002  ; Pbs
     dw $09D2, $0000  ; Currently selected item
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
@@ -2246,8 +2294,7 @@ preset_nodropskpdr_maridia_toilet:
     dw $0915, $021F  ; Screen Y position in pixels
     dw $0917, $0028  ; Layer 2 X position
     dw $0919, $021F  ; Layer 2 Y position
-    dw $09C2, $00A9  ; Health
-    dw $09CA, $0009  ; Supers
+    dw $09CA, $0004  ; Supers
     dw $0AF6, $00A3  ; Samus X
     dw $0AFA, $02AB  ; Samus Y
     dw $D8C2, $DC1A  ; Doors
@@ -2275,8 +2322,7 @@ preset_nodropskpdr_maridia_lower_maridia_gate:
     dw $0913, $5C00  ; Screen subpixel Y position
     dw $0915, $0100  ; Screen Y position in pixels
     dw $0919, $0100  ; Layer 2 Y position
-    dw $09C2, $00AE  ; Health
-    dw $09CE, $0005  ; Pbs
+    dw $09C2, $0021  ; Health
     dw $0AF6, $002E  ; Samus X
     dw #$FFFF
 
@@ -2288,7 +2334,7 @@ preset_nodropskpdr_upper_norfair_revisit_ice_beam_gates:
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $0238  ; Screen Y position in pixels
     dw $0919, $01AA  ; Layer 2 Y position
-    dw $09CA, $0008  ; Supers
+    dw $09CA, $0003  ; Supers
     dw $09D2, $0002  ; Currently selected item
     dw $0A1C, $009B  ; Samus position/state
     dw $0A1E, $0000  ; More position/state
@@ -2304,7 +2350,7 @@ preset_nodropskpdr_upper_norfair_revisit_ice_maze_up:
     dw $0913, $E800  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0919, $0000  ; Layer 2 Y position
-    dw $09CA, $0007  ; Supers
+    dw $09CA, $0002  ; Supers
     dw $09D2, $0000  ; Currently selected item
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
@@ -2325,7 +2371,7 @@ preset_nodropskpdr_upper_norfair_revisit_ice_maze_down:
     dw $0917, $0001  ; Layer 2 X position
     dw $09A6, $100B  ; Equipped Beams
     dw $09A8, $100B  ; Collected Beams
-    dw $09C2, $00BD  ; Health
+    dw $09C2, $001C  ; Health
     dw $0AF6, $00BA  ; Samus X
     dw $D876, $01A5  ; Items
     dw #$FFFF
@@ -2346,45 +2392,7 @@ preset_nodropskpdr_upper_norfair_revisit_ice_escape:
     dw $0AFA, $028B  ; Samus Y
     dw #$FFFF
 
-preset_nodropskpdr_upper_norfair_revisit_purple_shaft_upper:
-    dw #preset_nodropskpdr_upper_norfair_revisit_ice_escape ; Upper Norfair Revisit: Ice Escape
-    dw $078D, $971A  ; DDB
-    dw $079B, $ACB3  ; MDB
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $0913, $E800  ; Screen subpixel Y position
-    dw $0915, $0300  ; Screen Y position in pixels
-    dw $0919, $0240  ; Layer 2 Y position
-    dw $0AF6, $0036  ; Samus X
-    dw $0AFA, $038B  ; Samus Y
-    dw #$FFFF
-
-preset_nodropskpdr_upper_norfair_revisit_magdollite_tunnel_upper:
-    dw #preset_nodropskpdr_upper_norfair_revisit_purple_shaft_upper ; Upper Norfair Revisit: Purple Shaft (Upper)
-    dw $078D, $9576  ; DDB
-    dw $079B, $AEDF  ; MDB
-    dw $090F, $B001  ; Screen subpixel X position
-    dw $0913, $0000  ; Screen subpixel Y position
-    dw $0915, $01F4  ; Screen Y position in pixels
-    dw $0919, $0177  ; Layer 2 Y position
-    dw $0AF6, $0059  ; Samus X
-    dw $0AFA, $028B  ; Samus Y
-    dw #$FFFF
-
-preset_nodropskpdr_upper_norfair_revisit_kronic_boost_upper:
-    dw #preset_nodropskpdr_upper_norfair_revisit_magdollite_tunnel_upper ; Upper Norfair Revisit: Magdollite Tunnel (Upper)
-    dw $078D, $96BA  ; DDB
-    dw $079B, $AEB4  ; MDB
-    dw $090F, $8000  ; Screen subpixel X position
-    dw $0911, $0200  ; Screen X position in pixels
-    dw $0913, $9000  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0917, $0180  ; Layer 2 X position
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $0AF6, $02B7  ; Samus X
-    dw $0AFA, $008B  ; Samus Y
-    dw #$FFFF
-
-preset_nodropskpdr_upper_norfair_revisit_croc_speedway_lower:
+preset_nodropskpdr_upper_norfair_revisit_croc_speedway:
     dw #preset_nodropskpdr_upper_norfair_revisit_ice_escape ; Upper Norfair Revisit: Ice Escape
     dw $078D, $9336  ; DDB
     dw $079B, $A8F8  ; MDB
@@ -2392,12 +2400,14 @@ preset_nodropskpdr_upper_norfair_revisit_croc_speedway_lower:
     dw $0913, $0800  ; Screen subpixel Y position
     dw $0915, $0300  ; Screen Y position in pixels
     dw $0919, $0240  ; Layer 2 Y position
+    dw $09C2, $0018  ; Health
+    dw $09CE, $0004  ; Pbs
     dw $0AF6, $00DD  ; Samus X
     dw $0AFA, $038B  ; Samus Y
     dw #$FFFF
 
-preset_nodropskpdr_upper_norfair_revisit_spiky_acid_snakes_lower:
-    dw #preset_nodropskpdr_upper_norfair_revisit_croc_speedway_lower ; Upper Norfair Revisit: Croc Speedway (Lower)
+preset_nodropskpdr_upper_norfair_revisit_spiky_acid_snakes:
+    dw #preset_nodropskpdr_upper_norfair_revisit_croc_speedway ; Upper Norfair Revisit: Croc Speedway
     dw $078D, $93C6  ; DDB
     dw $079B, $AFCE  ; MDB
     dw $090F, $A000  ; Screen subpixel X position
@@ -2406,12 +2416,13 @@ preset_nodropskpdr_upper_norfair_revisit_spiky_acid_snakes_lower:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $01FA  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
+    dw $09C2, $018F  ; Health
     dw $0AF6, $030E  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 
-preset_nodropskpdr_upper_norfair_revisit_kronic_boost_lower:
-    dw #preset_nodropskpdr_upper_norfair_revisit_spiky_acid_snakes_lower ; Upper Norfair Revisit: Spiky Acid Snakes (Lower)
+preset_nodropskpdr_upper_norfair_revisit_kronic_boost:
+    dw #preset_nodropskpdr_upper_norfair_revisit_spiky_acid_snakes ; Upper Norfair Revisit: Spiky Acid Snakes
     dw $078D, $9792  ; DDB
     dw $079B, $AFFB  ; MDB
     dw $090F, $B000  ; Screen subpixel X position
@@ -2423,7 +2434,7 @@ preset_nodropskpdr_upper_norfair_revisit_kronic_boost_lower:
     dw #$FFFF
 
 preset_nodropskpdr_lower_norfair_ln_main_hall:
-    dw #preset_nodropskpdr_upper_norfair_revisit_kronic_boost_upper ; Upper Norfair Revisit: Kronic Boost (Upper)
+    dw #preset_nodropskpdr_upper_norfair_revisit_kronic_boost ; Upper Norfair Revisit: Kronic Boost
     dw $078D, $96F6  ; DDB
     dw $079B, $B236  ; MDB
     dw $07F3, $0018  ; Music Bank
@@ -2433,13 +2444,13 @@ preset_nodropskpdr_lower_norfair_ln_main_hall:
     dw $0915, $0200  ; Screen Y position in pixels
     dw $0917, $0300  ; Layer 2 X position
     dw $0919, $0301  ; Layer 2 Y position
-    dw $09C2, $00BA  ; Health
-    dw $09CE, $0004  ; Pbs
+    dw $09C2, $018C  ; Health
+    dw $09CE, $0003  ; Pbs
     dw $0A1C, $009B  ; Samus position/state
     dw $0A1E, $0000  ; More position/state
     dw $0AF6, $0480  ; Samus X
     dw $0AFA, $0288  ; Samus Y
-    dw $D8BA, $01F1  ; Doors
+    dw $D8BA, $01B1  ; Doors
     dw #$FFFF
 
 preset_nodropskpdr_lower_norfair_prepillars:
@@ -2463,7 +2474,9 @@ preset_nodropskpdr_lower_norfair_fast_pillars_setup:
     dw $0913, $7000  ; Screen subpixel Y position
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0180  ; Layer 2 Y position
-    dw $09CE, $0005  ; Pbs
+    dw $09C6, $000B  ; Missiles
+    dw $09CE, $0002  ; Pbs
+    dw $09D2, $0001  ; Currently selected item
     dw $0AF6, $0025  ; Samus X
     dw #$FFFF
 
@@ -2477,7 +2490,8 @@ preset_nodropskpdr_lower_norfair_worst_room_in_the_game:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0240  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $09C2, $0070  ; Health
+    dw $09C2, $0142  ; Health
+    dw $09D2, $0003  ; Currently selected item
     dw $0AF6, $03DB  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
@@ -2492,8 +2506,8 @@ preset_nodropskpdr_lower_norfair_amphitheatre:
     dw $0915, $011D  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $00D5  ; Layer 2 Y position
-    dw $09C2, $0084  ; Health
-    dw $09CE, $0004  ; Pbs
+    dw $09CE, $0001  ; Pbs
+    dw $09D2, $0000  ; Currently selected item
     dw $0AF6, $00A7  ; Samus X
     dw $0AFA, $018B  ; Samus Y
     dw #$FFFF
@@ -2521,13 +2535,12 @@ preset_nodropskpdr_lower_norfair_wasteland:
     dw $0915, $0419  ; Screen Y position in pixels
     dw $0917, $0180  ; Layer 2 X position
     dw $0919, $0312  ; Layer 2 Y position
-    dw $09C2, $00AC  ; Health
-    dw $09CE, $0002  ; Pbs
+    dw $09CE, $0000  ; Pbs
     dw $0A1C, $001D  ; Samus position/state
     dw $0A1E, $0408  ; More position/state
     dw $0AF6, $0248  ; Samus X
     dw $0AFA, $0489  ; Samus Y
-    dw $D8BA, $41F1  ; Doors
+    dw $D8BA, $41B1  ; Doors
     dw #$FFFF
 
 preset_nodropskpdr_lower_norfair_metal_ninja_pirates:
@@ -2537,14 +2550,16 @@ preset_nodropskpdr_lower_norfair_metal_ninja_pirates:
     dw $090F, $E000  ; Screen subpixel X position
     dw $0911, $0100  ; Screen X position in pixels
     dw $0915, $021B  ; Screen Y position in pixels
-    dw $09C2, $0087  ; Health
-    dw $09CA, $0006  ; Supers
-    dw $09CE, $0001  ; Pbs
+    dw $09C2, $00F5  ; Health
+    dw $09CA, $0001  ; Supers
+    dw $09CE, $0004  ; Pbs
+    dw $09D0, $000F  ; Max pbs
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $0168  ; Samus X
     dw $0AFA, $028B  ; Samus Y
-    dw $D8BA, $C1F1  ; Doors
+    dw $D878, $101E  ; Items
+    dw $D8BA, $C1B1  ; Doors
     dw #$FFFF
 
 preset_nodropskpdr_lower_norfair_plowerhouse:
@@ -2557,8 +2572,7 @@ preset_nodropskpdr_lower_norfair_plowerhouse:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $09C2, $0122  ; Health
-    dw $09CA, $0009  ; Supers
+    dw $09C2, $00F4  ; Health
     dw $0AF6, $006A  ; Samus X
     dw $0AFA, $00BB  ; Samus Y
     dw $D8BC, $0001  ; Doors
@@ -2570,11 +2584,10 @@ preset_nodropskpdr_lower_norfair_ridley:
     dw $079B, $B37A  ; MDB
     dw $090F, $2000  ; Screen subpixel X position
     dw $0913, $5000  ; Screen subpixel Y position
-    dw $09C2, $00E3  ; Health
-    dw $09CA, $0008  ; Supers
+    dw $09C6, $0008  ; Missiles
     dw $0AF6, $003D  ; Samus X
     dw $0AFA, $009B  ; Samus Y
-    dw $D8BA, $D1F1  ; Doors
+    dw $D8BA, $D1B1  ; Doors
     dw #$FFFF
 
 preset_nodropskpdr_lower_norfair_leaving_ridley:
@@ -2588,9 +2601,7 @@ preset_nodropskpdr_lower_norfair_leaving_ridley:
     dw $0915, $011F  ; Screen Y position in pixels
     dw $0917, $0001  ; Layer 2 X position
     dw $0919, $00D7  ; Layer 2 Y position
-    dw $09C2, $00D9  ; Health
-    dw $09CA, $000A  ; Supers
-    dw $09CE, $0003  ; Pbs
+    dw $09C2, $00D6  ; Health
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $0057  ; Samus X
@@ -2610,10 +2621,11 @@ preset_nodropskpdr_lower_norfair_reverse_plowerhouse:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0180  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $09C2, $00D6  ; Health
+    dw $09C2, $00D3  ; Health
+    dw $09C6, $0007  ; Missiles
     dw $0AF6, $02B8  ; Samus X
     dw $0AFA, $008B  ; Samus Y
-    dw $D8BA, $D5F1  ; Doors
+    dw $D8BA, $D5B1  ; Doors
     dw #$FFFF
 
 preset_nodropskpdr_lower_norfair_wasteland_revisit:
@@ -2622,7 +2634,7 @@ preset_nodropskpdr_lower_norfair_wasteland_revisit:
     dw $079B, $B62B  ; MDB
     dw $090F, $9000  ; Screen subpixel X position
     dw $0913, $7400  ; Screen subpixel Y position
-    dw $09C2, $00B4  ; Health
+    dw $09C2, $00AC  ; Health
     dw $0AF6, $02DC  ; Samus X
     dw #$FFFF
 
@@ -2634,8 +2646,8 @@ preset_nodropskpdr_lower_norfair_kihunter_stairs_up:
     dw $0911, $0500  ; Screen X position in pixels
     dw $0913, $B000  ; Screen subpixel Y position
     dw $0917, $03C0  ; Layer 2 X position
-    dw $09C2, $00B2  ; Health
-    dw $09CE, $0002  ; Pbs
+    dw $09C2, $007D  ; Health
+    dw $09CE, $0003  ; Pbs
     dw $0AF6, $055B  ; Samus X
     dw $0AFA, $009B  ; Samus Y
     dw #$FFFF
@@ -2650,6 +2662,7 @@ preset_nodropskpdr_lower_norfair_fireflea_room:
     dw $0915, $000D  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0009  ; Layer 2 Y position
+    dw $09CE, $0002  ; Pbs
     dw $0AF6, $009C  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
@@ -2690,7 +2703,7 @@ preset_nodropskpdr_lower_norfair_single_chamber_final:
     dw $0911, $0100  ; Screen X position in pixels
     dw $0913, $E000  ; Screen subpixel Y position
     dw $0917, $00C0  ; Layer 2 X position
-    dw $09C2, $0080  ; Health
+    dw $09C2, $0044  ; Health
     dw $0AF6, $016E  ; Samus X
     dw #$FFFF
 
@@ -2705,7 +2718,6 @@ preset_nodropskpdr_lower_norfair_bubble_mountain_final:
     dw $0915, $0016  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $0010  ; Layer 2 Y position
-    dw $09C2, $0074  ; Health
     dw $09D2, $0001  ; Currently selected item
     dw $0AF6, $0075  ; Samus X
     dw #$FFFF
@@ -2718,8 +2730,7 @@ preset_nodropskpdr_lower_norfair_business_center_final:
     dw $0913, $5000  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0919, $0000  ; Layer 2 Y position
-    dw $09C2, $0088  ; Health
-    dw $09C6, $000C  ; Missiles
+    dw $09C2, $003F  ; Health
     dw $09CE, $0001  ; Pbs
     dw $09D2, $0000  ; Currently selected item
     dw $0AF6, $0032  ; Samus X
@@ -2792,7 +2803,7 @@ preset_nodropskpdr_backtracking_crateria_kihunters_final:
     dw $07F5, $0003  ; Music Track
     dw $090F, $0000  ; Screen subpixel X position
     dw $0913, $0000  ; Screen subpixel Y position
-    dw $09CA, $0009  ; Supers
+    dw $09CA, $0000  ; Supers
     dw $09D2, $0000  ; Currently selected item
     dw $0A1C, $009B  ; Samus position/state
     dw $0A1E, $0000  ; More position/state
@@ -2806,15 +2817,20 @@ preset_nodropskpdr_backtracking_parlor_spacejump:
     dw $079B, $91F8  ; MDB
     dw $07F3, $000C  ; Music Bank
     dw $07F5, $0005  ; Music Track
-    dw $0911, $05DC  ; Screen X position in pixels
-    dw $0913, $CC00  ; Screen subpixel Y position
-    dw $0915, $0400  ; Screen Y position in pixels
-    dw $0917, $02EE  ; Layer 2 X position
-    dw $09C6, $000B  ; Missiles
+    dw $090F, $5400  ; Screen subpixel X position
+    dw $0911, $040C  ; Screen X position in pixels
+    dw $0913, $C000  ; Screen subpixel Y position
+    dw $0915, $03D3  ; Screen Y position in pixels
+    dw $0917, $0206  ; Layer 2 X position
+    dw $0919, $0400  ; Layer 2 Y position
+    dw $09C2, $018F  ; Health
+    dw $09C6, $0028  ; Missiles
+    dw $09CA, $000F  ; Supers
+    dw $09CE, $000F  ; Pbs
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $067C  ; Samus X
-    dw $0AFA, $04BB  ; Samus Y
+    dw $0AF6, $047D  ; Samus X
+    dw $0AFA, $0443  ; Samus Y
     dw #$FFFF
 
 preset_nodropskpdr_backtracking_terminator_revisit:
@@ -2827,6 +2843,7 @@ preset_nodropskpdr_backtracking_terminator_revisit:
     dw $0913, $B400  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $00C0  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
     dw $0A1C, $001C  ; Samus position/state
     dw $0A1E, $0304  ; More position/state
     dw $0AF6, $0101  ; Samus X
@@ -2858,9 +2875,7 @@ preset_nodropskpdr_backtracking_g4_hallway:
     dw $0915, $0600  ; Screen Y position in pixels
     dw $0917, $0001  ; Layer 2 X position
     dw $0919, $0480  ; Layer 2 Y position
-    dw $09C2, $00B0  ; Health
-    dw $09C6, $000D  ; Missiles
-    dw $09CA, $0008  ; Supers
+    dw $09CA, $000E  ; Supers
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $00BC  ; Samus X
@@ -2923,10 +2938,8 @@ preset_nodropskpdr_tourian_metroids_2:
     dw $0913, $5000  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0919, $0000  ; Layer 2 Y position
-    dw $09C2, $00EC  ; Health
-    dw $09C6, $000F  ; Missiles
-    dw $09CA, $0009  ; Supers
-    dw $09CE, $0002  ; Pbs
+    dw $09C2, $0167  ; Health
+    dw $09CA, $000A  ; Supers
     dw $0AF6, $003B  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw $D822, $0021  ; Events
@@ -2941,7 +2954,7 @@ preset_nodropskpdr_tourian_metroids_3:
     dw $0913, $1000  ; Screen subpixel Y position
     dw $0915, $0109  ; Screen Y position in pixels
     dw $0919, $00C6  ; Layer 2 Y position
-    dw $09C2, $0164  ; Health
+    dw $09CA, $0008  ; Supers
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $00C2  ; Samus X
@@ -2960,7 +2973,8 @@ preset_nodropskpdr_tourian_metroids_4:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $03C0  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $09C2, $018F  ; Health
+    dw $09C6, $0024  ; Missiles
+    dw $09CA, $0005  ; Supers
     dw $0AF6, $059E  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw $D822, $0027  ; Events
@@ -2977,8 +2991,7 @@ preset_nodropskpdr_tourian_giant_hoppers:
     dw $0915, $011F  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $00D7  ; Layer 2 Y position
-    dw $09CA, $000A  ; Supers
-    dw $09CE, $0005  ; Pbs
+    dw $09CA, $0004  ; Supers
     dw $0AF6, $0058  ; Samus X
     dw $0AFA, $01CB  ; Samus Y
     dw $D822, $002F  ; Events
@@ -2997,7 +3010,7 @@ preset_nodropskpdr_tourian_baby_skip:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $00C0  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $09C2, $0171  ; Health
+    dw $09C2, $0149  ; Health
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $01D8  ; Samus X
@@ -3016,7 +3029,7 @@ preset_nodropskpdr_tourian_gadora_room:
     dw $0915, $0117  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $00D1  ; Layer 2 Y position
-    dw $09CA, $0009  ; Supers
+    dw $09CA, $0003  ; Supers
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $00DC  ; Samus X
@@ -3032,7 +3045,7 @@ preset_nodropskpdr_tourian_zeb_skip:
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $021A  ; Screen Y position in pixels
     dw $0919, $0193  ; Layer 2 Y position
-    dw $09CA, $0007  ; Supers
+    dw $09CA, $0001  ; Supers
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $0038  ; Samus X
@@ -3049,8 +3062,7 @@ preset_nodropskpdr_tourian_mother_brain_2:
     dw $090F, $79FF  ; Screen subpixel X position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0919, $0000  ; Layer 2 Y position
-    dw $09C2, $0176  ; Health
-    dw $09C6, $0000  ; Missiles
+    dw $09C6, $0003  ; Missiles
     dw $09CA, $0000  ; Supers
     dw $0AF6, $00CF  ; Samus X
     dw $0AFA, $009B  ; Samus Y
@@ -3061,6 +3073,7 @@ preset_nodropskpdr_tourian_mother_brain_3:
     dw #preset_nodropskpdr_tourian_mother_brain_2 ; Tourian: Mother Brain 2
     dw $09A6, $1009  ; Equipped Beams
     dw $09C2, $018F  ; Health
+    dw $09C6, $0000  ; Missiles
     dw $09CE, $0000  ; Pbs
     dw $0A76, $8000  ; Hyper beam
     dw $D82C, $0203  ; Bosses
