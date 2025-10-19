@@ -4676,7 +4676,7 @@ status_ridleyai:
     LDA !ENEMY_FUNCTION_POINTER : CMP !ram_HUD_check : BNE .update_HUD
 
     ; fallbacks for convenience
-    LDA !ENEMY_HP : BEQ .ridleygrab
+    LDA !ram_enemy_hp : ORA !ENEMY_HP : BEQ .ridleygrab
     JMP status_enemyhp
 
   .done
@@ -4740,7 +4740,7 @@ status_ridleyai:
 
   .left_HUD
     %ai16()
-    LDA !ENEMY_HP : BEQ .ridleygrab
+    LDA !ram_enemy_hp : ORA !ENEMY_HP : BEQ .ridleygrab
     JMP status_enemyhp
 
 ; this data could live anywhere in the ROM
