@@ -1644,6 +1644,7 @@ DisplayModeMenu:
     dw ihmode_lagcounter
     dw ihmode_cpuusage
     dw ihmode_hspeed
+    dw ihmode_dashspeed
     dw ihmode_vspeed
     dw ihmode_quickdrop
     dw ihmode_walljump
@@ -1707,43 +1708,46 @@ ihmode_cpuusage:
 ihmode_hspeed:
     %cm_jsl("Horizontal Speed", #action_select_infohud_mode, #$000C)
 
+ihmode_dashspeed:
+    %cm_jsl("Dash Speed", #action_select_infohud_mode, #$000D)
+
 ihmode_vspeed:
 !IH_MODE_VSPEED_INDEX = #$000D
-    %cm_jsl("Vertical Speed", #action_select_infohud_mode, #$000D)
+    %cm_jsl("Vertical Speed", #action_select_infohud_mode, #$000E)
 
 ihmode_quickdrop:
-    %cm_jsl("Quickdrop Trainer", #action_select_infohud_mode, #$000E)
+    %cm_jsl("Quickdrop Trainer", #action_select_infohud_mode, #$000F)
 
 ihmode_walljump:
 !IH_MODE_WALLJUMP_INDEX = #$000F
-    %cm_jsl("Walljump Trainer", #action_select_infohud_mode, #$000F)
+    %cm_jsl("Walljump Trainer", #action_select_infohud_mode, #$0010)
 
 ihmode_countdamage:
 !IH_MODE_COUNTDAMAGE_INDEX = #$0010
-    %cm_jsl("Boss Damage Counter", #action_select_infohud_mode, #$0010)
+    %cm_jsl("Boss Damage Counter", #action_select_infohud_mode, #$0011)
 
 ihmode_armpump:
 !IH_MODE_ARMPUMP_INDEX = #$0011
-    %cm_jsl("Arm Pump Trainer", #action_select_infohud_mode, #$0011)
+    %cm_jsl("Arm Pump Trainer", #action_select_infohud_mode, #$0012)
 
 ihmode_pumpcounter:
-    %cm_jsl("Arm Pump Counter", #action_select_infohud_mode, #$0012)
+    %cm_jsl("Arm Pump Counter", #action_select_infohud_mode, #$0013)
 
 ihmode_xpos:
-    %cm_jsl("X Position", #action_select_infohud_mode, #$0013)
+    %cm_jsl("X Position", #action_select_infohud_mode, #$0014)
 
 ihmode_ypos:
-    %cm_jsl("Y Position", #action_select_infohud_mode, #$0014)
+    %cm_jsl("Y Position", #action_select_infohud_mode, #$0015)
 
 ihmode_shottimer:
 !IH_MODE_SHOTTIMER_INDEX = #$0015
-    %cm_jsl("Shot Timer", #action_select_infohud_mode, #$0015)
+    %cm_jsl("Shot Timer", #action_select_infohud_mode, #$0016)
 
 ihmode_ramwatch:
 !IH_MODE_RAMWATCH_INDEX = #$0016
-    %cm_jsl("Custom RAM Watch", #action_select_infohud_mode, #$0016)
+    %cm_jsl("Custom RAM Watch", #action_select_infohud_mode, #$0017)
 
-!IH_MODE_COUNT = #$0017
+!IH_MODE_COUNT = #$0018
 action_select_infohud_mode:
 {
     TYA : STA !sram_display_mode
@@ -1775,6 +1779,7 @@ ih_display_mode:
     db #$28, "LAG COUNTER", #$FF
     db #$28, "  CPU USAGE", #$FF
     db #$28, "HORIZ SPEED", #$FF
+    db #$28, " DASH SPEED", #$FF
     db #$28, " VERT SPEED", #$FF
     db #$28, " QUICK DROP", #$FF
     db #$28, "  WALL JUMP", #$FF
