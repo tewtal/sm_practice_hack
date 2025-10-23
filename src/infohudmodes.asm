@@ -18,6 +18,7 @@
     dw status_lagcounter
     dw status_cpuusage
     dw status_hspeed
+    dw status_dashspeed
     dw status_vspeed
     dw status_quickdrop
     dw status_walljump
@@ -766,6 +767,19 @@ status_hspeed:
     LDA.w HexGFXTable,Y : STA !HUD_TILEMAP+$8E
 
   .done
+    RTS
+}
+
+status_dashspeed:
+{
+    LDA !SAMUS_X_RUNSPEED : ASL : TAY
+    LDA.w HexGFXTable,Y : STA !HUD_TILEMAP+$8A
+
+    LDA !IH_DECIMAL : STA !HUD_TILEMAP+$8C
+
+    LDA !SAMUS_X_SUBRUNSPEED+1 : AND #$00F0 : LSR #3 : TAY
+    LDA.w HexGFXTable,Y : STA !HUD_TILEMAP+$8E
+
     RTS
 }
 
