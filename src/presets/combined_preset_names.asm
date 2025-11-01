@@ -1,6 +1,6 @@
 
-warnpc $EFC86E
-org $EFC86E
+warnpc $EFC6F2
+org $EFC6F2
 print pc, " preset names start"
 
 preset_names:
@@ -34,6 +34,9 @@ preset_names_after_baby_skip:
 
 preset_names_alcatraz:
     db "Alcatraz", #$FF
+
+preset_names_alcatraz_hijump_boots:
+    db "Alcatraz Hi-Jump Boots", #$FF
 
 preset_names_alpha_pbs:
     db "Alpha PBs", #$FF
@@ -215,6 +218,9 @@ preset_names_blue_fireball:
 preset_names_bomb_torizo:
     db "Bomb Torizo", #$FF
 
+preset_names_bomb_torizo_speed_escape:
+    db "Bomb Torizo Speed Escape", #$FF
+
 preset_names_bottom_of_red_tower:
     db "Bottom of Red Tower", #$FF
 
@@ -377,6 +383,9 @@ preset_names_cathedral_entrance:
 preset_names_cathedral_revisit:
     db "Cathedral Revisit", #$FF
 
+preset_names_ceiling_morph:
+    db "Ceiling Morph", #$FF
+
 preset_names_ceres_elevator:
     db "Ceres Elevator", #$FF
 
@@ -394,6 +403,12 @@ preset_names_climb:
 
 preset_names_climb_down:
     db "Climb Down", #$FF
+
+preset_names_climb_hijump_boots:
+    db "Climb Hi-Jump Boots", #$FF
+
+preset_names_climb_short_charge:
+    db "Climb Short Charge", #$FF
 
 preset_names_climb_supers:
     db "Climb Supers", #$FF
@@ -680,6 +695,15 @@ preset_names_entering_with_extra_pb:
 preset_names_entering_wrecked_ship:
     db "Entering Wrecked Ship", #$FF
 
+preset_names_entry:
+    db "Entry", #$FF
+
+preset_names_entry_with_hijump:
+    db "Entry with Hi-Jump", #$FF
+
+preset_names_entry_with_speed_booster:
+    db "Entry with Speed Booster", #$FF
+
 preset_names_escape_climb:
     db "Escape Climb", #$FF
 
@@ -775,6 +799,12 @@ preset_names_firefleas_room:
 
 preset_names_firefleas_up:
     db "Firefleas Up", #$FF
+
+preset_names_first_half:
+    db "First Half", #$FF
+
+preset_names_first_half_with_hijump:
+    db "First Half with Hi-Jump", #$FF
 
 preset_names_first_hell_run:
     db "First Hell Run", #$FF
@@ -935,6 +965,12 @@ preset_names_halfie_climb_room:
 preset_names_halfie_setup:
     db "Halfie Setup", #$FF
 
+preset_names_halfway_escape:
+    db "Halfway Escape", #$FF
+
+preset_names_halfway_with_hijump:
+    db "Halfway with Hi-Jump", #$FF
+
 preset_names_heading_to_business_center:
     db "Heading To Business Center", #$FF
 
@@ -991,6 +1027,12 @@ preset_names_hotarubi_revisit:
 
 preset_names_hotarubi_special:
     db "Hotarubi Special", #$FF
+
+preset_names_ibj_to_power_bombs:
+    db "IBJ to Power Bombs", #$FF
+
+preset_names_ibj_with_hijump_boots:
+    db "IBJ with Hi-Jump Boots", #$FF
 
 preset_names_ice_beam:
     db "Ice Beam", #$FF
@@ -1493,6 +1535,9 @@ preset_names_maridia_tube:
 preset_names_maridia_tube_revisit:
     db "Maridia Tube Revisit", #$FF
 
+preset_names_meme_route:
+    db "Meme Route", #$FF
+
 preset_names_metal_ninja_pirates:
     db "Metal Ninja Pirates", #$FF
 
@@ -1543,6 +1588,12 @@ preset_names_moat:
 
 preset_names_moat_ball:
     db "Moat Ball", #$FF
+
+preset_names_moat_cwj:
+    db "Moat CWJ", #$FF
+
+preset_names_moat_hbj:
+    db "Moat HBJ", #$FF
 
 preset_names_moat_missiles:
     db "Moat Missiles", #$FF
@@ -1648,6 +1699,12 @@ preset_names_ocean_revisit:
 
 preset_names_ocean_spark:
     db "Ocean Spark", #$FF
+
+preset_names_old_mb_screw_attack:
+    db "Old MB Screw Attack", #$FF
+
+preset_names_old_mb_short_charge:
+    db "Old MB Short Charge", #$FF
 
 preset_names_old_tourian_missiles:
     db "Old Tourian Missiles", #$FF
@@ -2084,6 +2141,12 @@ preset_names_screw_attack:
 preset_names_screw_attack_escape:
     db "Screw Attack Escape", #$FF
 
+preset_names_second_half:
+    db "Second Half", #$FF
+
+preset_names_second_half_with_hijump:
+    db "Second Half with Hi-Jump", #$FF
+
 preset_names_sephy_fish_room:
     db "Sephy Fish Room", #$FF
 
@@ -2254,6 +2317,9 @@ preset_names_swiss_cheese_revisit:
 
 preset_names_swiss_cheese_room:
     db "Swiss Cheese Room", #$FF
+
+preset_names_taco_tank:
+    db "Taco Tank", #$FF
 
 preset_names_taco_tank_optional:
     db "Taco Tank (Optional)", #$FF

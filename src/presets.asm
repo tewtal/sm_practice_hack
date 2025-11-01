@@ -1020,5 +1020,6 @@ incsrc presets/allbosskpdr_menu.asm
 incsrc presets/allbosspkdr_menu.asm
 incsrc presets/allbossprkd_menu.asm
 incsrc presets/nodropskpdr_menu.asm
+incsrc presets/rando_menu.asm
 %endfree(F2)
 

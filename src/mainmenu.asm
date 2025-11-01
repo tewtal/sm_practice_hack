@@ -295,6 +295,7 @@ preset_category_submenus:
     dw #PresetsMenuAllbosspkdr
     dw #PresetsMenuAllbossprkd
     dw #PresetsMenuNoDropsKpdr
+    dw #PresetsMenuRando
     dw #$0000
 }
 
@@ -325,6 +326,7 @@ preset_category_banks:
     dw #PresetsMenuAllbosspkdr>>16
     dw #PresetsMenuAllbossprkd>>16
     dw #PresetsMenuNoDropsKpdr>>16
+    dw #PresetsMenuRando>>16
     dw #$0000
 }
 
@@ -652,6 +654,7 @@ SelectPresetCategoryMenu:
     dw #precat_nghyper
     dw #precat_nintendopower
     dw #precat_allboss
+    dw #precat_rando
     dw #$0000
     %cm_header("SELECT PRESET CATEGORY")
 
@@ -685,6 +688,7 @@ presets_current:
     db #$28, "  BOSS PKDR", #$FF
     db #$28, "  BOSS PRKD", #$FF
     db #$28, "NODROP KPDR", #$FF
+    db #$28, "      RANDO", #$FF
     db #$FF
   .routine
     TDC : STA !sram_last_preset_low_word : STA !sram_last_preset_high_word
@@ -790,6 +794,9 @@ precat_allbossprkd:
 
 precat_nodropskpdr:
     %cm_jsl("No Drops KPDR", #action_select_preset_category, #$0018)
+
+precat_rando:
+    %cm_jsl("Randomizer", #action_select_preset_category, #$0019)
 
 action_select_preset_category:
 {

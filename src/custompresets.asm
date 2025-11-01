@@ -603,6 +603,8 @@ preset_scroll_fixes:
 
   .climb
     STA $CD39
+    JMP .specialized_climb
+
   .topdone
     PLB
     PLP
@@ -976,16 +978,42 @@ endif
     ; -----------------------------------------------
   .specialized_parlor
     LDY !SAMUS_Y : CPY #$00D0    ; no fix if Ypos >= 208
-    BPL .specialdone
+    BPL .specialized_parlor_done
     LDY !SAMUS_X : CPY #$0175    ; no fix if Xpos >= 373
-    BPL .specialdone
+    BPL .specialized_parlor_done
     %a16() : LDA #$00FF
     STA $7F05C0 : STA $7F05C2
     LDY !SAMUS_PBS_MAX           ; only clear bottom row if no power bombs
-    BEQ .specialdone
+    BEQ .specialized_parlor_done
     STA $7F0520 : STA $7F0522
     STA $7F0480 : STA $7F0482
+  .specialized_parlor_done
     BRA .specialdone
+
+  .specialized_climb
+    LDY !SAMUS_X : CPY #$0125    ; no fix if Xpos >= 285
+    BPL .specialdone
+    LDA #$01 : STA $CD38
+    CPY #$0095                   ; only clear wall if Xpos >= 149
+    BPL .specialized_climb_wall
+    TDC : STA $CD39
+  .specialized_climb_wall
+    %a16() : LDA #$00FF : STA $7F3262 : STA $7F3264
+    STA $7F32C2 : STA $7F32C4 : STA $7F3322
+    STA $7F3324 : STA $7F3382 : STA $7F3384
+    BRA .specialdone
+
+  .specialized_fixes
+    CPX.w #ROOM_ParlorAndAlcatraz : BEQ .specialized_parlor
+    CPX.w #ROOM_Climb : BEQ .specialized_climb
+    CPX.w #ROOM_BigPink : BEQ .specialized_big_pink
+    CPX.w #ROOM_BlueBrinstarETank : BEQ .specialized_taco_tank_room
+    CPX.w #ROOM_HiJumpBootsRoom : BEQ .specialized_hjb_room
+    CPX.w #ROOM_RedKihunterShaft : BEQ .specialized_kihunter_stairs
+  .specialdone
+    PLB
+    PLP
+    RTL
 
   .specialized_big_pink
     LDY !SAMUS_Y : CPY #$02C0    ; no fix if Ypos < 704
@@ -996,17 +1024,6 @@ endif
     STA $7F2208 : STA $7F220A : STA $7F22A8 : STA $7F22AA
     STA $7F2348 : STA $7F234A : STA $7F23E8 : STA $7F23EA
     BRA .specialdone
-
-  .specialized_fixes
-    CPX.w #ROOM_ParlorAndAlcatraz : BEQ .specialized_parlor
-    CPX.w #ROOM_BigPink : BEQ .specialized_big_pink
-    CPX.w #ROOM_BlueBrinstarETank : BEQ .specialized_taco_tank_room
-    CPX.w #ROOM_HiJumpBootsRoom : BEQ .specialized_hjb_room
-    CPX.w #ROOM_RedKihunterShaft : BEQ .specialized_kihunter_stairs
-  .specialdone
-    PLB
-    PLP
-    RTL
 
   .specialized_taco_tank_room
     LDY !SAMUS_X : CPY #$022B    ; no fix if Xpos < 555
@@ -1033,7 +1050,7 @@ endif
     %a16() : LDA #$00FF
     STA $7F036E : STA $7F0370 : STA $7F0374 : STA $7F0376
     STA $7F03D4 : STA $7F0610 : STA $7F0612
-    BRA .specialdone
+    JMP .specialdone
 }
 
 LoadRandomPreset:
