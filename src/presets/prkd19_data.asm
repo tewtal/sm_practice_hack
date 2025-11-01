@@ -1286,7 +1286,6 @@ preset_prkd19_upper_norfair_lava_spark:
     dw $0911, $0100  ; Screen X position in pixels
     dw $0913, $C000  ; Screen subpixel Y position
     dw $0917, $0100  ; Layer 2 X position
-    dw $09C6, $000B  ; Missiles
     dw $09CE, $0005  ; Pbs
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
@@ -1446,8 +1445,7 @@ preset_prkd19_lower_norfair_ridley:
     dw $090F, $1000  ; Screen subpixel X position
     dw $0913, $7C00  ; Screen subpixel Y position
     dw $09C2, $00F2  ; Health
-    dw $09C6, $000C  ; Missiles
-    dw $09CE, $0004  ; Pbs
+    dw $09CE, $0005  ; Pbs
     dw $0AF6, $0024  ; Samus X
     dw $D8BA, $D1F1  ; Doors
     dw #$FFFF
@@ -1763,7 +1761,6 @@ preset_prkd19_lower_norfair_nox_ridley_ridley:
     dw $090F, $1000  ; Screen subpixel X position
     dw $0913, $7C00  ; Screen subpixel Y position
     dw $09C2, $00F2  ; Health
-    dw $09C6, $000F  ; Missiles
     dw $09CE, $0004  ; Pbs
     dw $0AF6, $0024  ; Samus X
     dw $D8BA, $D1F1  ; Doors
