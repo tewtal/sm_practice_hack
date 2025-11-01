@@ -549,6 +549,11 @@ preset_scroll_fixes:
   .category_presets
     ; organized by room ID for efficiency
     PEA $7E7E : PLB : PLB
+    ; if riding an elevator then skip straight to specialized start
+    LDA !ELEVATOR_STATUS : BEQ .category_start
+    JMP .specialized_start
+
+  .category_start
     %a8()
     LDA #$01 : LDX !ROOM_ID      ; X = room ID
     CPX.w #ROOM_BowlingAlley : BMI .tophalf
@@ -968,6 +973,7 @@ endif
     MVP $707E                    ; srcBank, destBank
     TDC : STA !ram_load_preset_low_word
 
+  .specialized_start
     %a8()
     ; X = room ID
     LDX !ROOM_ID : CPX.w #ROOM_CeresElevatorRoom : BMI .specialized_fixes
