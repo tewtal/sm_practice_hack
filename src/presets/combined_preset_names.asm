@@ -1,6 +1,6 @@
 
-warnpc $EFC6F2
-org $EFC6F2
+warnpc $EFC386
+org $EFC386
 print pc, " preset names start"
 
 preset_names:
@@ -104,6 +104,9 @@ preset_names_basement_speedball:
 preset_names_bat_cave:
     db "Bat Cave", #$FF
 
+preset_names_bat_cave_farm:
+    db "Bat Cave Farm", #$FF
+
 preset_names_bat_cave_farm_1:
     db "Bat Cave (Farm 1)", #$FF
 
@@ -185,6 +188,9 @@ preset_names_billy_mays:
 preset_names_billy_mays_escape:
     db "Billy Mays Escape", #$FF
 
+preset_names_billy_mays_return:
+    db "Billy Mays Return", #$FF
+
 preset_names_blockbuster:
     db "Blockbuster", #$FF
 
@@ -214,6 +220,9 @@ preset_names_blue_brinstar_screwfall:
 
 preset_names_blue_fireball:
     db "Blue Fireball", #$FF
+
+preset_names_blue_gate_glitch:
+    db "Blue Gate Glitch", #$FF
 
 preset_names_bomb_torizo:
     db "Bomb Torizo", #$FF
@@ -311,6 +320,9 @@ preset_names_bubble_mountain_return:
 preset_names_bubble_mountain_revisit:
     db "Bubble Mountain Revisit", #$FF
 
+preset_names_bubble_mountain_up:
+    db "Bubble Mountain Up", #$FF
+
 preset_names_business_center:
     db "Business Center", #$FF
 
@@ -376,6 +388,12 @@ preset_names_caterpillars_up:
 
 preset_names_cathedral:
     db "Cathedral", #$FF
+
+preset_names_cathedral_2tank_hijump:
+    db "Cathedral 2-Tank Hi-Jump", #$FF
+
+preset_names_cathedral_3tank:
+    db "Cathedral 3-Tank", #$FF
 
 preset_names_cathedral_entrance:
     db "Cathedral Entrance", #$FF
@@ -563,6 +581,9 @@ preset_names_crocomire_cac_shaft:
 preset_names_crocomire_escape:
     db "Crocomire Escape", #$FF
 
+preset_names_crocomire_etank:
+    db "Crocomire E-Tank", #$FF
+
 preset_names_crocomire_farm_room:
     db "Crocomire Farm Room", #$FF
 
@@ -581,8 +602,14 @@ preset_names_crocomire_speedway:
 preset_names_crumble_blocks:
     db "Crumble Blocks", #$FF
 
+preset_names_crumble_shaft:
+    db "Crumble Shaft", #$FF
+
 preset_names_crumble_shaft_missiles:
     db "Crumble Shaft Missiles", #$FF
+
+preset_names_crumble_shaft_up:
+    db "Crumble Shaft Up", #$FF
 
 preset_names_crumble_tower:
     db "Crumble Tower", #$FF
@@ -631,6 +658,12 @@ preset_names_early_supers_missile:
 
 preset_names_early_supers_reserve:
     db "Early Supers Reserve", #$FF
+
+preset_names_early_xray_0tank:
+    db "Early X-Ray 0-Tank", #$FF
+
+preset_names_early_xray_2tank:
+    db "Early X-Ray 2-Tank", #$FF
 
 preset_names_east_cac_alley:
     db "East Cac Alley", #$FF
@@ -722,6 +755,9 @@ preset_names_escape_room_3:
 preset_names_escape_room_4:
     db "Escape Room 4", #$FF
 
+preset_names_etank_return:
+    db "E-Tank Return", #$FF
+
 preset_names_etecoon_beetoms:
     db "Etecoon Beetoms", #$FF
 
@@ -782,6 +818,9 @@ preset_names_fast_pillars_setup:
 preset_names_fast_ripper_room:
     db "Fast Ripper Room", #$FF
 
+preset_names_fight_with_charge:
+    db "Fight With Charge", #$FF
+
 preset_names_fireflea_room:
     db "Fireflea Room", #$FF
 
@@ -832,6 +871,9 @@ preset_names_frog_speedway:
 
 preset_names_frog_speedway_revisit:
     db "Frog Speedway Revisit", #$FF
+
+preset_names_from_ln_hellrun:
+    db "From LN Hellrun", #$FF
 
 preset_names_full_halfie:
     db "Full Halfie", #$FF
@@ -889,6 +931,9 @@ preset_names_grapple_shaft_up:
 
 preset_names_gravity_suit_room:
     db "Gravity Suit Room", #$FF
+
+preset_names_gravless_speedway:
+    db "Gravless Speedway", #$FF
 
 preset_names_green_brin_fireflea_room:
     db "Green Brin Fireflea Room", #$FF
@@ -965,8 +1010,8 @@ preset_names_halfie_climb_room:
 preset_names_halfie_setup:
     db "Halfie Setup", #$FF
 
-preset_names_halfway_escape:
-    db "Halfway Escape", #$FF
+preset_names_halfway_return:
+    db "Halfway Return", #$FF
 
 preset_names_halfway_with_hijump:
     db "Halfway with Hi-Jump", #$FF
@@ -997,6 +1042,9 @@ preset_names_hellway_1x_maridia:
 
 preset_names_hellway_revisit:
     db "Hellway Revisit", #$FF
+
+preset_names_hero_shot:
+    db "Hero Shot", #$FF
 
 preset_names_hi_jump_boots:
     db "Hi Jump Boots", #$FF
@@ -1076,6 +1124,9 @@ preset_names_ice_gate_room:
 preset_names_ice_gates_revisit:
     db "Ice Gates Revisit", #$FF
 
+preset_names_ice_hellrun:
+    db "Ice Hellrun", #$FF
+
 preset_names_ice_maze:
     db "Ice Maze", #$FF
 
@@ -1090,6 +1141,9 @@ preset_names_ice_missiles:
 
 preset_names_ice_mockball:
     db "Ice Mockball", #$FF
+
+preset_names_ice_return:
+    db "Ice Return", #$FF
 
 preset_names_ice_snakes_in:
     db "Ice Snakes In", #$FF
@@ -1108,6 +1162,12 @@ preset_names_indiana_jones_room:
 
 preset_names_john_cena_bridge:
     db "John Cena Bridge", #$FF
+
+preset_names_jump_room_ibj:
+    db "Jump Room IBJ", #$FF
+
+preset_names_jump_room_short_charge:
+    db "Jump Room Short Charge", #$FF
 
 preset_names_kago_mushroom_room:
     db "Kago Mushroom Room", #$FF
@@ -1174,6 +1234,12 @@ preset_names_kpdr_exit:
 
 preset_names_kraid:
     db "Kraid", #$FF
+
+preset_names_kraid_2_3:
+    db "Kraid 2+3", #$FF
+
+preset_names_kraid_all_missiles:
+    db "Kraid All Missiles", #$FF
 
 preset_names_kraid_dboost_room_out:
     db "Kraid D-Boost Room Out", #$FF
@@ -1243,6 +1309,9 @@ preset_names_kronic_boost_upper:
 
 preset_names_kronic_room:
     db "Kronic Room", #$FF
+
+preset_names_kronic_to_mountain:
+    db "Kronic To Mountain", #$FF
 
 preset_names_landing_site:
     db "Landing Site", #$FF
@@ -1394,6 +1463,9 @@ preset_names_leaving_ws_left_supers:
 preset_names_leaving_xray:
     db "Leaving X-Ray", #$FF
 
+preset_names_left_jump_with_speed:
+    db "Left Jump with Speed", #$FF
+
 preset_names_left_sand_pit:
     db "Left Sand Pit", #$FF
 
@@ -1459,6 +1531,9 @@ preset_names_ln_main_hall_revisit:
 
 preset_names_long_tube:
     db "Long Tube", #$FF
+
+preset_names_low_ammo_fight:
+    db "Low Ammo Fight", #$FF
 
 preset_names_lower_green_brinstar:
     db "Lower Green Brinstar", #$FF
@@ -1619,6 +1694,9 @@ preset_names_mount_everest:
 preset_names_mount_everest_spikesuit:
     db "Mount Everest (Spikesuit)", #$FF
 
+preset_names_mountain_to_kronic:
+    db "Mountain To Kronic", #$FF
+
 preset_names_mouthball:
     db "Mouthball", #$FF
 
@@ -1667,11 +1745,20 @@ preset_names_norfair_elevator_2m:
 preset_names_norfair_reserve:
     db "Norfair Reserve", #$FF
 
+preset_names_norfair_reserve_2tank:
+    db "Norfair Reserve 2-Tank", #$FF
+
 preset_names_norfair_reserve_back:
     db "Norfair Reserve Back", #$FF
 
 preset_names_norfair_reserve_front:
     db "Norfair Reserve Front", #$FF
+
+preset_names_norfair_reserve_return:
+    db "Norfair Reserve Return", #$FF
+
+preset_names_norfair_reserve_room:
+    db "Norfair Reserve Room", #$FF
 
 preset_names_nutella_refill:
     db "Nutella Refill", #$FF
@@ -1711,6 +1798,9 @@ preset_names_old_tourian_missiles:
 
 preset_names_on_route_to_ridley:
     db "On Route To Ridley", #$FF
+
+preset_names_over_dachora_pit:
+    db "Over Dachora Pit", #$FF
 
 preset_names_over_under_spark:
     db "Over Under Spark", #$FF
@@ -1774,6 +1864,12 @@ preset_names_path_to_watering_hole:
 
 preset_names_phantoon:
     db "Phantoon", #$FF
+
+preset_names_phantoon_0tank:
+    db "Phantoon 0-Tank", #$FF
+
+preset_names_phantoon_5_missiles:
+    db "Phantoon 5 Missiles", #$FF
 
 preset_names_pillars:
     db "Pillars", #$FF
@@ -1849,6 +1945,9 @@ preset_names_plowerhouse:
 
 preset_names_plowerhouse_room:
     db "Plowerhouse Room", #$FF
+
+preset_names_popeil_missiles_with_screw:
+    db "Popeil Missiles with Screw", #$FF
 
 preset_names_postbotwoon:
     db "Post-Botwoon", #$FF
@@ -2111,6 +2210,9 @@ preset_names_ridley_etank:
 preset_names_ridley_farming_room:
     db "Ridley Farming Room", #$FF
 
+preset_names_right_jump_with_speed:
+    db "Right Jump with Speed", #$FF
+
 preset_names_right_sand_pit:
     db "Right Sand Pit", #$FF
 
@@ -2119,6 +2221,9 @@ preset_names_right_supers:
 
 preset_names_rinka_shaft:
     db "Rinka Shaft", #$FF
+
+preset_names_ripper_dboost:
+    db "Ripper D-Boost", #$FF
 
 preset_names_rising_tide:
     db "Rising Tide", #$FF
@@ -2240,6 +2345,12 @@ preset_names_spazer_2x_maridia:
 preset_names_speed_booster:
     db "Speed Booster", #$FF
 
+preset_names_speed_booster_hellrun:
+    db "Speed Booster Hellrun", #$FF
+
+preset_names_speed_booster_return:
+    db "Speed Booster Return", #$FF
+
 preset_names_speed_hallway:
     db "Speed Hallway", #$FF
 
@@ -2248,6 +2359,9 @@ preset_names_speed_hallway_in:
 
 preset_names_speed_hallway_out:
     db "Speed Hallway Out", #$FF
+
+preset_names_speedless_speedway:
+    db "Speedless Speedway", #$FF
 
 preset_names_spike_suit_colosseum:
     db "Spike Suit Colosseum", #$FF
@@ -2288,8 +2402,14 @@ preset_names_spore_fall:
 preset_names_spore_spawn:
     db "Spore Spawn", #$FF
 
+preset_names_spore_spawn_backdoor:
+    db "Spore Spawn Backdoor", #$FF
+
 preset_names_spore_spawn_farm_in:
     db "Spore Spawn Farm In", #$FF
+
+preset_names_spore_spawn_fight:
+    db "Spore Spawn Fight", #$FF
 
 preset_names_spore_spawn_skip:
     db "Spore Spawn Skip", #$FF
@@ -2375,6 +2495,12 @@ preset_names_tube:
 preset_names_tube_climb:
     db "Tube Climb", #$FF
 
+preset_names_tube_jump_from_left:
+    db "Tube Jump From Left", #$FF
+
+preset_names_tube_jump_from_right:
+    db "Tube Jump From Right", #$FF
+
 preset_names_under_over_spark:
     db "Under Over Spark", #$FF
 
@@ -2426,6 +2552,12 @@ preset_names_wave_beam:
 preset_names_wave_beam_entry:
     db "Wave Beam Entry", #$FF
 
+preset_names_wave_beam_hellrun:
+    db "Wave Beam Hellrun", #$FF
+
+preset_names_wave_beam_return:
+    db "Wave Beam Return", #$FF
+
 preset_names_wave_escape:
     db "Wave Escape", #$FF
 
@@ -2435,11 +2567,17 @@ preset_names_wave_gate:
 preset_names_wave_gate_etank:
     db "Wave Gate E-Tank", #$FF
 
+preset_names_wave_gate_glitch:
+    db "Wave Gate Glitch", #$FF
+
 preset_names_wave_gate_out:
     db "Wave Gate Out", #$FF
 
 preset_names_wave_gate_room:
     db "Wave Gate Room", #$FF
+
+preset_names_wave_gate_with_hijump:
+    db "Wave Gate with Hi-Jump", #$FF
 
 preset_names_west_beach:
     db "West Beach", #$FF
@@ -2536,6 +2674,12 @@ preset_names_xray_passage:
 
 preset_names_xray_passage_return:
     db "X-Ray Passage Return", #$FF
+
+preset_names_xray_return_0tank:
+    db "X-Ray Return 0-Tank", #$FF
+
+preset_names_xray_return_2tank:
+    db "X-Ray Return 2-Tank", #$FF
 
 preset_names_zeb_skip:
     db "Zeb Skip", #$FF
