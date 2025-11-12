@@ -871,7 +871,7 @@ preset_14ice_lower_norfair_ln_main_hall:
 
 preset_14ice_lower_norfair_pillars:
     dw #preset_14ice_lower_norfair_ln_main_hall ; Lower Norfair: LN Main Hall
-    dw $078D, $985E  ; DDB
+    dw $078D, $989A  ; DDB
     dw $079B, $B3A5  ; MDB
     dw $090F, $4000  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels

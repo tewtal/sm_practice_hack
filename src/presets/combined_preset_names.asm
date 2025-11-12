@@ -1,6 +1,6 @@
 
-warnpc $EFC386
-org $EFC386
+warnpc $EFBEFD
+org $EFBEFD
 print pc, " preset names start"
 
 preset_names:
@@ -94,6 +94,9 @@ preset_names_baby:
 
 preset_names_baby_skip:
     db "Baby Skip", #$FF
+
+preset_names_back_to_back_hellrun:
+    db "Back To Back Hellrun", #$FF
 
 preset_names_basement:
     db "Basement", #$FF
@@ -224,11 +227,17 @@ preset_names_blue_fireball:
 preset_names_blue_gate_glitch:
     db "Blue Gate Glitch", #$FF
 
+preset_names_blue_hoppers:
+    db "Blue Hoppers", #$FF
+
 preset_names_bomb_torizo:
     db "Bomb Torizo", #$FF
 
 preset_names_bomb_torizo_speed_escape:
     db "Bomb Torizo Speed Escape", #$FF
+
+preset_names_bombs_cf_clip:
+    db "Bombs CF Clip", #$FF
 
 preset_names_bottom_of_red_tower:
     db "Bottom of Red Tower", #$FF
@@ -470,6 +479,12 @@ preset_names_crab_ggg:
 preset_names_crab_hole:
     db "Crab Hole", #$FF
 
+preset_names_crab_hole_double_sbj:
+    db "Crab Hole Double SBJ", #$FF
+
+preset_names_crab_hole_gravity_jump:
+    db "Crab Hole Gravity Jump", #$FF
+
 preset_names_crab_maze:
     db "Crab Maze", #$FF
 
@@ -479,8 +494,14 @@ preset_names_crab_shaft:
 preset_names_crab_shaft_down:
     db "Crab Shaft Down", #$FF
 
+preset_names_crab_shaft_entry:
+    db "Crab Shaft Entry", #$FF
+
 preset_names_crab_shaft_revisit:
     db "Crab Shaft Revisit", #$FF
+
+preset_names_crab_shaft_suitless:
+    db "Crab Shaft Suitless", #$FF
 
 preset_names_crab_shaft_up:
     db "Crab Shaft Up", #$FF
@@ -635,6 +656,9 @@ preset_names_double_chamber_out:
 preset_names_double_chamber_revisit:
     db "Double Chamber Revisit", #$FF
 
+preset_names_double_springball_jump:
+    db "Double Springball Jump", #$FF
+
 preset_names_draygon:
     db "Draygon", #$FF
 
@@ -646,6 +670,9 @@ preset_names_draygon_missiles:
 
 preset_names_dusty_shaft_revisit:
     db "Dusty Shaft Revisit", #$FF
+
+preset_names_early_suitless_escape:
+    db "Early Suitless Escape", #$FF
 
 preset_names_early_supers:
     db "Early Supers", #$FF
@@ -670,6 +697,15 @@ preset_names_east_cac_alley:
 
 preset_names_east_ocean:
     db "East Ocean", #$FF
+
+preset_names_east_ocean_return:
+    db "East Ocean Return", #$FF
+
+preset_names_east_ocean_with_ice:
+    db "East Ocean with Ice", #$FF
+
+preset_names_east_ocean_with_springball:
+    db "East Ocean with Springball", #$FF
 
 preset_names_east_pants_room:
     db "East Pants Room", #$FF
@@ -739,6 +775,9 @@ preset_names_entry_with_speed_booster:
 
 preset_names_escape_climb:
     db "Escape Climb", #$FF
+
+preset_names_escape_climb_with_hijump:
+    db "Escape Climb with Hi-Jump", #$FF
 
 preset_names_escape_elevator:
     db "Escape Elevator", #$FF
@@ -890,6 +929,9 @@ preset_names_g4_hallway:
 preset_names_gadora_room:
     db "Gadora Room", #$FF
 
+preset_names_gate_glitch_suitless:
+    db "Gate Glitch Suitless", #$FF
+
 preset_names_gauntlet_entry:
     db "Gauntlet Entry", #$FF
 
@@ -913,6 +955,12 @@ preset_names_grapple_beam:
 
 preset_names_grapple_escape:
     db "Grapple Escape", #$FF
+
+preset_names_grapple_escape_hijump:
+    db "Grapple Escape Hi-Jump", #$FF
+
+preset_names_grapple_escape_hijumpless:
+    db "Grapple Escape Hi-Jumpless", #$FF
 
 preset_names_grapple_playground_1:
     db "Grapple Playground 1", #$FF
@@ -1154,6 +1202,9 @@ preset_names_ice_snakes_out:
 preset_names_ice_trippers_in:
     db "Ice Trippers In", #$FF
 
+preset_names_ice_zeb_skip:
+    db "Ice Zeb Skip", #$FF
+
 preset_names_indiana_jones:
     db "Indiana Jones", #$FF
 
@@ -1327,6 +1378,12 @@ preset_names_lava_dive:
 
 preset_names_lava_dive_room:
     db "Lava Dive Room", #$FF
+
+preset_names_lava_dive_with_gravity:
+    db "Lava Dive with Gravity", #$FF
+
+preset_names_lava_dive_with_hijump:
+    db "Lava Dive with Hi-Jump", #$FF
 
 preset_names_lava_spark:
     db "Lava Spark", #$FF
@@ -1571,11 +1628,29 @@ preset_names_main_street:
 preset_names_main_street_revisit:
     db "Main Street Revisit", #$FF
 
+preset_names_mainstreet_short_charge:
+    db "Mainstreet Short Charge", #$FF
+
+preset_names_mainstreet_suitless:
+    db "Mainstreet Suitless", #$FF
+
 preset_names_mama_turtle:
     db "Mama Turtle", #$FF
 
+preset_names_mama_turtle_double_sbj:
+    db "Mama Turtle Double SBJ", #$FF
+
 preset_names_mama_turtle_etank:
     db "Mama Turtle E-Tank", #$FF
+
+preset_names_mama_turtle_ibj:
+    db "Mama Turtle IBJ", #$FF
+
+preset_names_mama_turtle_spark:
+    db "Mama Turtle Spark", #$FF
+
+preset_names_mama_turtle_unmorph_entry:
+    db "Mama Turtle Unmorph Entry", #$FF
 
 preset_names_maridia_bug_room:
     db "Maridia Bug Room", #$FF
@@ -1676,6 +1751,9 @@ preset_names_moat_missiles:
 preset_names_moat_with_missile_gone:
     db "Moat With Missile Gone", #$FF
 
+preset_names_mochtroid_ice_clip:
+    db "Mochtroid Ice Clip", #$FF
+
 preset_names_moondance:
     db "Moondance", #$FF
 
@@ -1687,6 +1765,12 @@ preset_names_mother_brain_2:
 
 preset_names_mother_brain_3:
     db "Mother Brain 3", #$FF
+
+preset_names_mother_brain_all_missiles:
+    db "Mother Brain All Missiles", #$FF
+
+preset_names_mother_brain_all_supers:
+    db "Mother Brain All Supers", #$FF
 
 preset_names_mount_everest:
     db "Mount Everest", #$FF
@@ -1706,8 +1790,14 @@ preset_names_movement_before_attic:
 preset_names_mt_everest:
     db "Mt. Everest", #$FF
 
+preset_names_mt_everest_1st_wall_jump:
+    db "Mt. Everest 1st Wall Jump", #$FF
+
 preset_names_mt_everest_2:
     db "Mt. Everest 2", #$FF
+
+preset_names_mt_everest_2nd_wall_jump:
+    db "Mt. Everest 2nd Wall Jump", #$FF
 
 preset_names_mt_everest_3:
     db "Mt. Everest 3", #$FF
@@ -1721,8 +1811,14 @@ preset_names_mt_everest_exit:
 preset_names_mt_everest_final:
     db "Mt. Everest Final", #$FF
 
+preset_names_mt_everest_gravity_jump:
+    db "Mt. Everest Gravity Jump", #$FF
+
 preset_names_mt_everest_revisit:
     db "Mt. Everest Revisit", #$FF
+
+preset_names_mt_everest_suitless:
+    db "Mt. Everest Suitless", #$FF
 
 preset_names_mushroom_kingdom:
     db "Mushroom Kingdom", #$FF
@@ -1916,6 +2012,9 @@ preset_names_plasma_beam:
 preset_names_plasma_climb:
     db "Plasma Climb", #$FF
 
+preset_names_plasma_pseudoscrew:
+    db "Plasma Pseudo-Screw", #$FF
+
 preset_names_plasma_room:
     db "Plasma Room", #$FF
 
@@ -1939,6 +2038,9 @@ preset_names_plasma_spark_room_final:
 
 preset_names_plasma_spark_room_revisit:
     db "Plasma Spark Room Revisit", #$FF
+
+preset_names_plasma_speed_booster:
+    db "Plasma Speed Booster", #$FF
 
 preset_names_plowerhouse:
     db "Plowerhouse", #$FF
@@ -2093,6 +2195,9 @@ preset_names_retro_etank:
 preset_names_return_with_yellow_door:
     db "Return With Yellow Door", #$FF
 
+preset_names_reverse_amphitheatre:
+    db "Reverse Amphitheatre", #$FF
+
 preset_names_reverse_botwoon:
     db "Reverse Botwoon", #$FF
 
@@ -2153,6 +2258,9 @@ preset_names_reverse_terminator:
 preset_names_ridley:
     db "Ridley", #$FF
 
+preset_names_ridley_10_20_15_ammo:
+    db "Ridley 10+20+15 Ammo", #$FF
+
 preset_names_ridley_20_supers_7_1:
     db "Ridley (20 Supers  7+1)", #$FF
 
@@ -2170,6 +2278,9 @@ preset_names_ridley_25_supers_9_1:
 
 preset_names_ridley_25_supers_9_2:
     db "Ridley (25 Supers  9+2)", #$FF
+
+preset_names_ridley_30_25_5_ammo:
+    db "Ridley 30+25+5 Ammo", #$FF
 
 preset_names_ridley_30_supers_10_1:
     db "Ridley (30 Supers 10+1)", #$FF
@@ -2209,6 +2320,15 @@ preset_names_ridley_etank:
 
 preset_names_ridley_farming_room:
     db "Ridley Farming Room", #$FF
+
+preset_names_ridley_low_hp:
+    db "Ridley Low HP", #$FF
+
+preset_names_ridley_low_ice:
+    db "Ridley Low Ice", #$FF
+
+preset_names_ridley_suitless:
+    db "Ridley Suitless", #$FF
 
 preset_names_right_jump_with_speed:
     db "Right Jump with Speed", #$FF
@@ -2285,8 +2405,20 @@ preset_names_shaft_up:
 preset_names_shaktool:
     db "Shaktool", #$FF
 
+preset_names_shaktool_cf_clip:
+    db "Shaktool CF Clip", #$FF
+
+preset_names_shaktool_hijump_entry:
+    db "Shaktool Hi-Jump Entry", #$FF
+
+preset_names_shaktool_puyo_ice_clip:
+    db "Shaktool Puyo Ice Clip", #$FF
+
 preset_names_shaktool_revisit:
     db "Shaktool Revisit", #$FF
+
+preset_names_shaktool_suitless_entry:
+    db "Shaktool Suitless Entry", #$FF
 
 preset_names_shinespark_to_phantoon:
     db "Shinespark To Phantoon", #$FF
@@ -2330,6 +2462,9 @@ preset_names_skree_boost_revisit:
 preset_names_sky_missiles:
     db "Sky Missiles", #$FF
 
+preset_names_snail_clip:
+    db "Snail Clip", #$FF
+
 preset_names_snake_room_revisit:
     db "Snake Room Revisit", #$FF
 
@@ -2360,6 +2495,9 @@ preset_names_speed_hallway_in:
 preset_names_speed_hallway_out:
     db "Speed Hallway Out", #$FF
 
+preset_names_speed_zeb_skip:
+    db "Speed Zeb Skip", #$FF
+
 preset_names_speedless_speedway:
     db "Speedless Speedway", #$FF
 
@@ -2383,6 +2521,12 @@ preset_names_spiky_room_of_death_revisit:
 
 preset_names_spiky_room_revisit:
     db "Spiky Room Revisit", #$FF
+
+preset_names_spiky_room_to_east_ocean:
+    db "Spiky Room To East Ocean", #$FF
+
+preset_names_spiky_room_to_main_shaft:
+    db "Spiky Room To Main Shaft", #$FF
 
 preset_names_spo_spo_farm_room:
     db "Spo Spo Farm Room", #$FF
@@ -2428,6 +2572,30 @@ preset_names_spring_ball_room:
 
 preset_names_springball_maze:
     db "Springball Maze", #$FF
+
+preset_names_suitless_aqueduct:
+    db "Suitless Aqueduct", #$FF
+
+preset_names_suitless_cac_alley:
+    db "Suitless Cac Alley", #$FF
+
+preset_names_suitless_cf_clip:
+    db "Suitless CF Clip", #$FF
+
+preset_names_suitless_colosseum:
+    db "Suitless Colosseum", #$FF
+
+preset_names_suitless_draygon:
+    db "Suitless Draygon", #$FF
+
+preset_names_suitless_halfie_climb:
+    db "Suitless Halfie Climb", #$FF
+
+preset_names_suitless_jump_morphs:
+    db "Suitless Jump Morphs", #$FF
+
+preset_names_suitless_return:
+    db "Suitless Return", #$FF
 
 preset_names_super_door:
     db "Super Door", #$FF
@@ -2650,6 +2818,9 @@ preset_names_xray:
 
 preset_names_xray_beam:
     db "X-Ray Beam", #$FF
+
+preset_names_xray_climb:
+    db "X-Ray Climb", #$FF
 
 preset_names_xray_dboost:
     db "X-Ray D-Boost", #$FF

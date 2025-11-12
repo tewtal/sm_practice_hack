@@ -531,7 +531,7 @@ preset_nghyper_norfair_preridley_prepillars:
 
 preset_nghyper_norfair_preridley_fast_pillars:
     dw #preset_nghyper_norfair_preridley_prepillars ; Norfair Pre-Ridley: Pre-Pillars
-    dw $078D, $985E  ; DDB
+    dw $078D, $989A  ; DDB
     dw $079B, $B3A5  ; MDB
     dw $090F, $5E80  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels

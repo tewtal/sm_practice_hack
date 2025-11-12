@@ -155,7 +155,7 @@ def combine_preset_data():
         combined_preset_jump_list.append(1 + combined_preset_jump_list[last_index])
         combined_preset_last_index_list.append(last_index)
         combined_preset_names_lists.append([all_presets_name_list[next_file_index][preset_index]])
-        
+
         # Prepare next preset for this file
         next_preset_index = preset_index + 1
         difference = 0
@@ -165,17 +165,16 @@ def combine_preset_data():
             distance_list[next_file_index] = distance
             jump_list[next_file_index] = combined_preset_jump_list[current_index]
             last_index_list[next_file_index] = current_index
-            for i in reversed(range(current_index)):
-                distance = distance + combined_preset_distance_list[i]
+            for i in reversed(range(current_index + 1)):
                 difference = compare_preset_data(i, all_presets_data_list[next_file_index][next_preset_index])
                 if 0 == difference:
                     combined_preset_names_lists[i].append(all_presets_name_list[next_file_index][next_preset_index])
                     next_preset_index = next_preset_index + 1
-                    if len(all_presets_data_list[next_file_index]) <= next_preset_index:
-                        next_preset_index = -1
                     break
-                if distance > largest_allowed_distance:
-                    break
+                if i < current_index:
+                    distance = distance + combined_preset_distance_list[i]
+                    if distance > largest_allowed_distance:
+                        break
                 if ((difference < difference_list[next_file_index]) or
                     ((difference == difference_list[next_file_index]) and
                      (combined_preset_jump_list[i] < jump_list[next_file_index]))):

@@ -1910,7 +1910,7 @@ preset_kpdr25_lower_norfair_prepillars:
 
 preset_kpdr25_lower_norfair_fast_pillars_setup:
     dw #preset_kpdr25_lower_norfair_prepillars ; Lower Norfair: Pre-Pillars
-    dw $078D, $985E  ; DDB
+    dw $078D, $989A  ; DDB
     dw $079B, $B3A5  ; MDB
     dw $090F, $8001  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels

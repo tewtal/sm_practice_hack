@@ -892,7 +892,7 @@ preset_gtclassic_bootless_upper_norfair_prepillars:
 
 preset_gtclassic_bootless_upper_norfair_green_gate_glitch:
     dw #preset_gtclassic_bootless_upper_norfair_prepillars ; Bootless Upper Norfair: Pre-Pillars
-    dw $078D, $985E  ; DDB
+    dw $078D, $989A  ; DDB
     dw $079B, $B3A5  ; MDB
     dw $090F, $C000  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels

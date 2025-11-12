@@ -797,7 +797,7 @@ preset_allbossprkd_lower_norfair_ln_main_hall:
 
 preset_allbossprkd_lower_norfair_green_gate_glitch:
     dw #preset_allbossprkd_lower_norfair_ln_main_hall ; Lower Norfair: LN Main Hall
-    dw $078D, $985E  ; DDB
+    dw $078D, $989A  ; DDB
     dw $079B, $B3A5  ; MDB
     dw $090F, $4000  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels

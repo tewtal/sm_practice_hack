@@ -929,7 +929,7 @@ preset_gtmax_upper_norfair_prepillars:
 
 preset_gtmax_upper_norfair_green_gate_glitch:
     dw #preset_gtmax_upper_norfair_prepillars ; Upper Norfair: Pre-Pillars
-    dw $078D, $985E  ; DDB
+    dw $078D, $989A  ; DDB
     dw $079B, $B3A5  ; MDB
     dw $090F, $4000  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels

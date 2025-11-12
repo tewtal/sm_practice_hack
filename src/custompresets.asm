@@ -732,7 +732,6 @@ preset_scroll_fixes:
     CPX.w #ROOM_BatCave : BEQ .bat_cave
     CPX.w #ROOM_AcidStatueRoom : BEQ .acid_chozo_room
     CPX.w #ROOM_GoldenTorizoRoom : BEQ .golden_torizo
-    CPX.w #ROOM_FastPillarsSetupRoom : BEQ .fast_pillars_setup
     CPX.w #ROOM_WorstRoomInTheGame : BEQ .worst_room
     CPX.w #ROOM_RedKihunterShaft : BEQ .kihunter_stairs
     CPX.w #ROOM_Wasteland : BEQ .wasteland
@@ -776,16 +775,6 @@ preset_scroll_fixes:
     BMI .norfairdone
     STA $CD22 : STA $CD23
     INC : STA $CD20 : STA $CD21
-    BRA .norfairdone
-
-  .fast_pillars_setup
-    LDY !SAMUS_Y : CPY #$0199    ; fix varies depending on Y position
-    BMI .above_pillars
-    STA $CD24 : INC : STA $CD22
-    STZ $CD21
-    BRA .norfairdone
-  .above_pillars
-    INC : STA $CD21
     BRA .norfairdone
 
   .worst_room
@@ -896,7 +885,7 @@ preset_scroll_fixes:
     BRA .halfwaydone
 
   .pants_room
-    STA $CD21 : STZ $CD22
+    STA $CD21
     BRA .halfwaydone
 
   .precious
