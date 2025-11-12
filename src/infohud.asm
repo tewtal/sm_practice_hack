@@ -564,6 +564,7 @@ ih_before_room_transition:
   .doorDisplayTable
     dw #$0000 ; off/dummy
     dw status_door_hspeed
+    dw status_door_dashspeed
     dw status_door_vspeed
     dw status_door_chargetimer
     dw status_door_shinetimer
