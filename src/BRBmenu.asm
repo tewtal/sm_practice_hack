@@ -405,7 +405,7 @@ brb_zsnes_splashscreen:
     LDA #$01
     STA $420B   ; Start DMA transfer
 
-    LDX #$0000
+    LDX.w #ZSNES_Tiles
     STX $4302   ; Low DMA source address
     LDA.b #ZSNES_Tiles>>16
     STA $4304   ; High DMA source address
@@ -414,7 +414,7 @@ brb_zsnes_splashscreen:
     LDA #$01
     STA $420B   ; Start DMA transfer
 
-    LDX #$8000
+    LDX.w #ZSNES_Tiles
     STX $4302   ; Low DMA source address
     LDA.b #ZSNES_Tiles>>16
     INC
