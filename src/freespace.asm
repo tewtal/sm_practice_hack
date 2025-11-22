@@ -277,7 +277,7 @@ endif
 !END_FREESPACE_FC = $FC8000 ; tilegraphics.asm
 !END_FREESPACE_FD = $FD8000 ; tilegraphics.asm
 !END_FREESPACE_FE = $FE8000 ; tilegraphics.asm
-!END_FREESPACE_FF = $1000000
+!END_FREESPACE_FF = $FFFFFF
 
 ; Allows us to setup warnings for mishandled macros
 !FREESPACE_BANK = -1

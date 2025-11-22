@@ -310,7 +310,7 @@ custom_intro_InitialFadeInWait:
 {
     JSR $911B : BCC .done
     LDA #custom_intro_LastMetroidMusic : STA !CINEMATIC_FUNCTION_POINTER
-    LDA #$003C : STA $1A49
+    LDA #$0010 : STA $1A49
   .done
     RTS
 }
@@ -419,9 +419,154 @@ custom_intro_WaitForInput:
     JML $808462
 }
 
+custom_intro_ApuUpload:
+{
+    PHP : %a16()
+    LDA !CINEMATIC_FUNCTION_POINTER : CMP #custom_intro_InitialFadeIn : BEQ .lastMetroid
+    CMP #custom_intro_WaitMusicQueue : BEQ .galaxyIsAtPeace
+    PLP : JML $808024
+
+  .lastMetroid:
+    LDA #LastMetroidMusic>>8 : STA $01
+    LDA #LastMetroidMusic : STA $00
+    PLP : JML $808024
+
+  .galaxyIsAtPeace:
+    LDA #GalaxyIsAtPeaceMusic>>8 : STA $01
+    LDA #GalaxyIsAtPeaceMusic : STA $00
+    PLP : JML $808024
+}
+
 endif
 %endfree(8B)
 
+if !FEATURE_PAL
+else
+org $808F7E
+    JSL custom_intro_ApuUpload
+endif
+
+%startfree(FF)
+LastMetroidMusic:
+{
+; Sample table
+    dw $0010, $6D60,
+        $B516,$B516, $FFFF,$FFFF, $FFFF,$FFFF, $FFFF,$FFFF
+
+; Sample data
+dw .end-.start+$0A, $B516
+.start:
+incbin ../resources/10years.0.brr
+.end:
+db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+db $FF
+
+; Instrument table
+    dw $000C, $6C90
+    db $18,$FF,$E0,$B8,$03,$B0, $19,$FF,$E0,$B8,$03,$A0
+
+; Note length table
+    dw $0018, $5800
+    db $32,$65,$7F,$98,$B2,$CB,$E5,$FC,
+       $19,$32,$4C,$65,$72,$7F,$8C,$98,$A5,$B2,$BF,$CB,$D8,$E5,$F2,$FC
+
+; Trackers
+    dw $0035, $5828
+
+; Tracker pointers
+    dw $582A
+
+; Tracker 0 commands
+    dw $582E
+    dw $0000
+
+; Tracker 0 track pointers
+    dw $583E, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+
+; Tracker 0, track set $582E, track 0 commands
+    db $FA,$1A,            ; Percussion instruments base index = 1Ah
+       $E7,$15,            ; Music tempo = 41.015625 tics per second
+       $E5,$E6,            ; Music volume multiplier = E6h / 100h
+       $E0,$18,            ; Select instrument 18h
+       $F4,$00,            ; Set subtranspose of 0 / 100h semitones
+       $ED,$E6,            ; Volume multiplier = E6h / 100h
+       $F5,$00,$00,$00,    ; Static echo off
+       $F7,$02,$3C,$00,    ; Set echo parameters: echo delay = 2, echo feedback volume = 3Ch, echo FIR filter index = 0
+       $57,$7F,            ; Note length = 57h tics, note volume multiplier = FCh / 100h, note ring length multiplier = FCh / 100h
+       $A3,                ; Note B_3
+       $00,$00,            ; filler
+       $00,$00,
+       $00,
+       $00,
+       $00
+
+; Random zero
+db $00
+
+; EOF
+dw $0000, $1500
+}
+
+GalaxyIsAtPeaceMusic:
+{
+; Sample table
+    dw $0010, $6D60,
+        $B516,$B516, $FFFF,$FFFF, $FFFF,$FFFF, $FFFF,$FFFF
+
+; Sample data
+dw .end-.start+$0A, $B516
+.start:
+incbin ../resources/10years.1.brr
+.end:
+db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+db $FF
+
+; Instrument table
+    dw $000C, $6C90
+    db $18,$FF,$E0,$B8,$03,$B0, $19,$FF,$E0,$B8,$03,$A0
+
+; Note length table
+    dw $0018, $5800
+    db $32,$65,$7F,$98,$B2,$CB,$E5,$FC,
+       $19,$32,$4C,$65,$72,$7F,$8C,$98,$A5,$B2,$BF,$CB,$D8,$E5,$F2,$FC
+
+; Trackers
+    dw $0035, $5828
+
+; Tracker pointers
+    dw $582A
+
+; Tracker 0 commands
+    dw $582E
+    dw $0000
+
+; Tracker 0 track pointers
+    dw $583E, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+
+; Tracker 0, track set $582E, track 0 commands
+    db $FA,$1A,            ; Percussion instruments base index = 1Ah
+       $E7,$15,            ; Music tempo = 41.015625 tics per second
+       $E5,$E6,            ; Music volume multiplier = E6h / 100h
+       $E0,$18,            ; Select instrument 18h
+       $F4,$00,            ; Set subtranspose of 0 / 100h semitones
+       $ED,$E6,            ; Volume multiplier = E6h / 100h
+       $F5,$00,$00,$00,    ; Static echo off
+       $F7,$02,$3C,$00,    ; Set echo parameters: echo delay = 2, echo feedback volume = 3Ch, echo FIR filter index = 0
+       $57,$7F,            ; Note length = 57h tics, note volume multiplier = FCh / 100h, note ring length multiplier = FCh / 100h
+       $A3,                ; Note B_3
+       $00,$00,            ; filler
+       $00,$00,
+       $00,
+       $00,
+       $00
+
+; Random zero
+db $00
+
+; EOF
+dw $0000, $1500
+}
+%endfree(FF)
 
 org $8CD67D
 IndirectInstructions_IntroText_Space:
