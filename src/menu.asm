@@ -97,7 +97,8 @@ cm_boot:
     JSR cm_init
     LDA !ram_sram_detection : BEQ .skip_splash_screen
 
-    TDC : STA !ram_cm_brb
+    TDC : STA !ram_cm_leave
+    STA !ram_cm_brb
     STA !ram_cm_brb_timer
     STA !ram_cm_brb_frames
     STA !ram_cm_brb_secs

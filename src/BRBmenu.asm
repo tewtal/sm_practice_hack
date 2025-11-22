@@ -137,6 +137,12 @@ cm_brb_loop:
     JSL $808F0C ; Music queue
     JSL $8289EF ; Sound fx queue
 
+if !ZSNES_SPLASHSCREEN_GRAPHICS
+    LDA !ram_sram_detection
+    CMP !SRAM_DETECTION_ZSNES : BNE .loop
+    JSR brb_zsnes_splashscreen
+endif
+
   .loop
     ; [do entertaining stuff here]
     JSR cm_draw_brb
@@ -188,15 +194,21 @@ cm_brb_loop:
 
 cm_draw_brb:
 {
-    JSL cm_tilemap_bg_interior_long
     LDA !ram_sram_detection : BNE .splash_screen
+    JSL cm_tilemap_bg_interior_long
     JSR cm_tilemap_brb
     JSL cm_tilemap_transfer_long
     JMP cm_brb_scroll_BG3
 
   .splash_screen
+if !ZSNES_SPLASHSCREEN_GRAPHICS
+    CMP !SRAM_DETECTION_ZSNES : BEQ .end
+endif
+    JSL cm_tilemap_bg_interior_long
     JSR cm_tilemap_splash_screen
     JSL cm_tilemap_transfer_long
+
+  .end
     RTS
 }
 
@@ -330,9 +342,6 @@ cm_tilemap_splash_screen:
     BRA .splashLine4
 
   .zsnes
-if !ZSNES_SPLASHSCREEN_GRAPHICS
-    JMP brb_zsnes_splashscreen
-else
     LDA.w #BRB_zsnes_line2 : STA !DP_CurrentMenu
     LDX #$0406
     JSR cm_draw_brb_text
@@ -340,7 +349,6 @@ else
     LDX #$0586
     JSR cm_draw_brb_text
     BRA .splashLine1
-endif
 
   .splashLine4
     LDA.w #BRB_splash_line4 : STA !DP_CurrentMenu
@@ -383,7 +391,6 @@ brb_zsnes_splashscreen:
     LDA #$E0
     STA $2132   ; color data for addition/subtraction
     STZ $2133   ; Screen setting (interlace x,y/enable SFX data)
-    STZ $4200   ; Disable V-blank, interrupt, Joypad register
 
     ; Load tilemap and tile data
     %i16()
