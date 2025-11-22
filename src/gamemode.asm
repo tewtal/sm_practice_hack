@@ -1490,6 +1490,10 @@ validate_sram:
     PHP : SEP #$28
     LDA #$FF : CLC : ADC #$FF
     CMP #$64 : CLD : BNE .doneZSNES
+
+    ; check if this is no$sns
+    LDA $0021FC : CMP $0021FC : BNE .doneZSNES
+    CMP $0021FC : BNE .doneZSNES
     PLP
     LDA !SRAM_DETECTION_ZSNES : STA !ram_sram_detection
     JMP .fail
