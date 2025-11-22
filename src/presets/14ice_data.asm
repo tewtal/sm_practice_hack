@@ -648,7 +648,7 @@ preset_14ice_brinstar_revisit_red_tower_elevator:
     dw $0AFA, $02A8  ; Samus Y
     dw #$FFFF
 
-preset_14ice_brinstar_revisit_breaking_tube:
+preset_14ice_brinstar_revisit_breaking_the_tube:
     dw #preset_14ice_brinstar_revisit_red_tower_elevator ; Brinstar Revisit: Red Tower Elevator
     dw $078D, $911A  ; DDB
     dw $079B, $CF54  ; MDB
@@ -667,7 +667,7 @@ preset_14ice_brinstar_revisit_breaking_tube:
     dw #$FFFF
 
 preset_14ice_brinstar_revisit_entering_kraids_lair:
-    dw #preset_14ice_brinstar_revisit_breaking_tube ; Brinstar Revisit: Breaking Tube
+    dw #preset_14ice_brinstar_revisit_breaking_the_tube ; Brinstar Revisit: Breaking The Tube
     dw $078D, $A348  ; DDB
     dw $079B, $CF80  ; MDB
     dw $090F, $5000  ; Screen subpixel X position
@@ -681,8 +681,8 @@ preset_14ice_brinstar_revisit_entering_kraids_lair:
     dw $D820, $0801  ; Events
     dw #$FFFF
 
-preset_14ice_brinstar_revisit_baby_kraid_entering:
-    dw #preset_14ice_brinstar_revisit_entering_kraids_lair ; Brinstar Revisit: Entering Kraids Lair
+preset_14ice_brinstar_revisit_minikraid:
+    dw #preset_14ice_brinstar_revisit_entering_kraids_lair ; Brinstar Revisit: Entering Kraid's Lair
     dw $078D, $9156  ; DDB
     dw $079B, $A4DA  ; MDB
     dw $090F, $3000  ; Screen subpixel X position
@@ -694,7 +694,7 @@ preset_14ice_brinstar_revisit_baby_kraid_entering:
     dw #$FFFF
 
 preset_14ice_brinstar_revisit_kraid:
-    dw #preset_14ice_brinstar_revisit_baby_kraid_entering ; Brinstar Revisit: Baby Kraid (Entering)
+    dw #preset_14ice_brinstar_revisit_minikraid ; Brinstar Revisit: Mini-Kraid
     dw $078D, $919E  ; DDB
     dw $079B, $A56B  ; MDB
     dw $07F3, $0027  ; Music Bank
@@ -709,7 +709,7 @@ preset_14ice_brinstar_revisit_kraid:
     dw $D8B8, $0024  ; Doors
     dw #$FFFF
 
-preset_14ice_brinstar_revisit_baby_kraid_exiting:
+preset_14ice_brinstar_revisit_minikraid_revisit:
     dw #preset_14ice_brinstar_revisit_kraid ; Brinstar Revisit: Kraid
     dw $078D, $91CE  ; DDB
     dw $07F5, $0003  ; Music Track
@@ -732,7 +732,7 @@ preset_14ice_brinstar_revisit_baby_kraid_exiting:
     dw #$FFFF
 
 preset_14ice_brinstar_revisit_kraid_etank:
-    dw #preset_14ice_brinstar_revisit_baby_kraid_exiting ; Brinstar Revisit: Baby Kraid (Exiting)
+    dw #preset_14ice_brinstar_revisit_minikraid_revisit ; Brinstar Revisit: Mini-Kraid Revisit
     dw $078D, $916E  ; DDB
     dw $079B, $A471  ; MDB
     dw $07F3, $0012  ; Music Bank
@@ -747,7 +747,7 @@ preset_14ice_brinstar_revisit_kraid_etank:
     dw #$FFFF
 
 preset_14ice_upper_norfair_ice_beam:
-    dw #preset_14ice_brinstar_revisit_kraid_etank ; Brinstar Revisit: Big Pink
+    dw #preset_14ice_brinstar_revisit_kraid_etank ; Brinstar Revisit: Kraid E-Tank
     dw $078D, $9246  ; DDB
     dw $079B, $A7DE  ; MDB
     dw $07F3, $0015  ; Music Bank
@@ -871,7 +871,7 @@ preset_14ice_lower_norfair_ln_main_hall:
 
 preset_14ice_lower_norfair_pillars:
     dw #preset_14ice_lower_norfair_ln_main_hall ; Lower Norfair: LN Main Hall
-    dw $078D, $985E  ; DDB
+    dw $078D, $989A  ; DDB
     dw $079B, $B3A5  ; MDB
     dw $090F, $4000  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
@@ -885,7 +885,7 @@ preset_14ice_lower_norfair_pillars:
     dw $0AFA, $029B  ; Samus Y
     dw #$FFFF
 
-preset_14ice_lower_norfair_worst_room:
+preset_14ice_lower_norfair_worst_room_in_the_game:
     dw #preset_14ice_lower_norfair_pillars ; Lower Norfair: Pillars
     dw $078D, $9912  ; DDB
     dw $079B, $B457  ; MDB
@@ -902,7 +902,7 @@ preset_14ice_lower_norfair_worst_room:
     dw #$FFFF
 
 preset_14ice_lower_norfair_amphitheatre:
-    dw #preset_14ice_lower_norfair_worst_room ; Lower Norfair: Worst Room
+    dw #preset_14ice_lower_norfair_worst_room_in_the_game ; Lower Norfair: Worst Room In The Game
     dw $078D, $994E  ; DDB
     dw $079B, $B4AD  ; MDB
     dw $090F, $7000  ; Screen subpixel X position
@@ -1133,7 +1133,7 @@ preset_14ice_maridia_mt_everest:
     dw #$FFFF
 
 preset_14ice_maridia_ice_clip:
-    dw #preset_14ice_maridia_mt_everest ; Maridia: Mt Everest
+    dw #preset_14ice_maridia_mt_everest ; Maridia: Mt. Everest
     dw $078D, $A4C8  ; DDB
     dw $079B, $D5A7  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -1188,7 +1188,7 @@ preset_14ice_maridia_botwoon_etank_room:
     dw #$FFFF
 
 preset_14ice_maridia_colosseum:
-    dw #preset_14ice_maridia_botwoon_etank_room ; Maridia: Botwoon E-tank Room
+    dw #preset_14ice_maridia_botwoon_etank_room ; Maridia: Botwoon E-Tank Room
     dw $078D, $A870  ; DDB
     dw $079B, $D913  ; MDB
     dw $07F3, $001B  ; Music Bank

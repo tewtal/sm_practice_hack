@@ -577,7 +577,7 @@ preset_gtmax_brinstar_below_spazer:
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 
-preset_gtmax_brinstar_breaking_tube:
+preset_gtmax_brinstar_breaking_the_tube:
     dw #preset_gtmax_brinstar_below_spazer ; Brinstar: Below Spazer
     dw $078D, $9102  ; DDB
     dw $079B, $A408  ; MDB
@@ -591,8 +591,8 @@ preset_gtmax_brinstar_breaking_tube:
     dw $0AFA, $018B  ; Samus Y
     dw #$FFFF
 
-preset_gtmax_kraid_entering_kraids_lair:
-    dw #preset_gtmax_brinstar_breaking_tube ; Brinstar: Breaking Tube
+preset_gtmax_kraids_lair_entering_kraids_lair:
+    dw #preset_gtmax_brinstar_breaking_the_tube ; Brinstar: Breaking The Tube
     dw $078D, $A348  ; DDB
     dw $079B, $CF80  ; MDB
     dw $090F, $0000  ; Screen subpixel X position
@@ -606,8 +606,8 @@ preset_gtmax_kraid_entering_kraids_lair:
     dw $D820, $0801  ; Events
     dw #$FFFF
 
-preset_gtmax_kraid_kraid_kihunters:
-    dw #preset_gtmax_kraid_entering_kraids_lair ; Kraid: Entering Kraid's Lair
+preset_gtmax_kraids_lair_kraid_kihunters:
+    dw #preset_gtmax_kraids_lair_entering_kraids_lair ; Kraid's Lair: Entering Kraid's Lair
     dw $078D, $923A  ; DDB
     dw $079B, $A471  ; MDB
     dw $090F, $8000  ; Screen subpixel X position
@@ -618,8 +618,8 @@ preset_gtmax_kraid_kraid_kihunters:
     dw $0AF6, $0167  ; Samus X
     dw #$FFFF
 
-preset_gtmax_kraid_mini_kraid:
-    dw #preset_gtmax_kraid_kraid_kihunters ; Kraid: Kraid Kihunters
+preset_gtmax_kraids_lair_minikraid:
+    dw #preset_gtmax_kraids_lair_kraid_kihunters ; Kraid's Lair: Kraid Kihunters
     dw $078D, $9156  ; DDB
     dw $079B, $A4DA  ; MDB
     dw $090F, $1000  ; Screen subpixel X position
@@ -628,8 +628,8 @@ preset_gtmax_kraid_mini_kraid:
     dw $0AF6, $016B  ; Samus X
     dw #$FFFF
 
-preset_gtmax_kraid_kraid_2:
-    dw #preset_gtmax_kraid_mini_kraid ; Kraid: Mini Kraid
+preset_gtmax_kraids_lair_kraid:
+    dw #preset_gtmax_kraids_lair_minikraid ; Kraid's Lair: Mini-Kraid
     dw $078D, $919E  ; DDB
     dw $079B, $A56B  ; MDB
     dw $07F3, $0027  ; Music Bank
@@ -645,8 +645,8 @@ preset_gtmax_kraid_kraid_2:
     dw $D8B8, $0024  ; Doors
     dw #$FFFF
 
-preset_gtmax_kraid_leaving_varia:
-    dw #preset_gtmax_kraid_kraid_2 ; Kraid: Kraid
+preset_gtmax_kraids_lair_leaving_varia:
+    dw #preset_gtmax_kraids_lair_kraid ; Kraid's Lair: Kraid
     dw $078D, $91DA  ; DDB
     dw $079B, $A6E2  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -670,8 +670,8 @@ preset_gtmax_kraid_leaving_varia:
     dw $D8B8, $0064  ; Doors
     dw #$FFFF
 
-preset_gtmax_kraid_mini_kraid_revisit:
-    dw #preset_gtmax_kraid_leaving_varia ; Kraid: Leaving Varia
+preset_gtmax_kraids_lair_minikraid_revisit:
+    dw #preset_gtmax_kraids_lair_leaving_varia ; Kraid's Lair: Leaving Varia
     dw $078D, $91CE  ; DDB
     dw $079B, $A56B  ; MDB
     dw $090F, $8000  ; Screen subpixel X position
@@ -686,8 +686,8 @@ preset_gtmax_kraid_mini_kraid_revisit:
     dw $D8B8, $00E4  ; Doors
     dw #$FFFF
 
-preset_gtmax_kraid_kraid_kihunters_revisit:
-    dw #preset_gtmax_kraid_mini_kraid_revisit ; Kraid: Mini Kraid Revisit
+preset_gtmax_kraids_lair_kraid_kihunters_revisit:
+    dw #preset_gtmax_kraids_lair_minikraid_revisit ; Kraid's Lair: Mini-Kraid Revisit
     dw $078D, $91AA  ; DDB
     dw $079B, $A521  ; MDB
     dw $090F, $0000  ; Screen subpixel X position
@@ -703,8 +703,8 @@ preset_gtmax_kraid_kraid_kihunters_revisit:
     dw $D8B8, $00EC  ; Doors
     dw #$FFFF
 
-preset_gtmax_kraid_leaving_kraids_lair:
-    dw #preset_gtmax_kraid_kraid_kihunters_revisit ; Kraid: Kraid Kihunters Revisit
+preset_gtmax_kraids_lair_leaving_kraids_lair:
+    dw #preset_gtmax_kraids_lair_kraid_kihunters_revisit ; Kraid's Lair: Kraid Kihunters Revisit
     dw $078D, $923A  ; DDB
     dw $079B, $A471  ; MDB
     dw $07F3, $0012  ; Music Bank
@@ -718,7 +718,7 @@ preset_gtmax_kraid_leaving_kraids_lair:
     dw #$FFFF
 
 preset_gtmax_upper_norfair_business_center:
-    dw #preset_gtmax_kraid_leaving_kraids_lair ; Kraid: Leaving Kraid's Lair
+    dw #preset_gtmax_kraids_lair_leaving_kraids_lair ; Kraid's Lair: Leaving Kraid's Lair
     dw $078D, $9246  ; DDB
     dw $079B, $A7DE  ; MDB
     dw $07F3, $0015  ; Music Bank
@@ -929,7 +929,7 @@ preset_gtmax_upper_norfair_prepillars:
 
 preset_gtmax_upper_norfair_green_gate_glitch:
     dw #preset_gtmax_upper_norfair_prepillars ; Upper Norfair: Pre-Pillars
-    dw $078D, $985E  ; DDB
+    dw $078D, $989A  ; DDB
     dw $079B, $B3A5  ; MDB
     dw $090F, $4000  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
@@ -1070,7 +1070,7 @@ preset_gtmax_lower_norfair_worst_room_in_the_game:
     dw #$FFFF
 
 preset_gtmax_lower_norfair_mickey_mouse_missiles:
-    dw #preset_gtmax_lower_norfair_worst_room_in_the_game ; Lower Norfair: Worst Room in the Game
+    dw #preset_gtmax_lower_norfair_worst_room_in_the_game ; Lower Norfair: Worst Room In The Game
     dw $078D, $994E  ; DDB
     dw $079B, $B4AD  ; MDB
     dw $090F, $2000  ; Screen subpixel X position
@@ -1288,7 +1288,7 @@ preset_gtmax_lower_norfair_springball_maze:
     dw $D87A, $0001  ; Items
     dw #$FFFF
 
-preset_gtmax_lower_norfair_three_muskateers:
+preset_gtmax_lower_norfair_three_musketeers:
     dw #preset_gtmax_lower_norfair_springball_maze ; Lower Norfair: Springball Maze
     dw $078D, $9A92  ; DDB
     dw $079B, $B510  ; MDB
@@ -1307,7 +1307,7 @@ preset_gtmax_lower_norfair_three_muskateers:
     dw #$FFFF
 
 preset_gtmax_upper_norfair_and_kraid_single_chamber:
-    dw #preset_gtmax_lower_norfair_three_muskateers ; Lower Norfair: Three Muskateers
+    dw #preset_gtmax_lower_norfair_three_musketeers ; Lower Norfair: Three Musketeers
     dw $078D, $99AE  ; DDB
     dw $079B, $B656  ; MDB
     dw $090F, $B000  ; Screen subpixel X position
@@ -1753,7 +1753,7 @@ preset_gtmax_maridia_predraygon_mt_everest_and_crab_supers:
     dw #$FFFF
 
 preset_gtmax_maridia_predraygon_crab_shaft:
-    dw #preset_gtmax_maridia_predraygon_mt_everest_and_crab_supers ; Maridia Pre-Draygon: Mt Everest and Crab Supers
+    dw #preset_gtmax_maridia_predraygon_mt_everest_and_crab_supers ; Maridia Pre-Draygon: Mt. Everest and Crab Supers
     dw $078D, $A3CC  ; DDB
     dw $079B, $D0B9  ; MDB
     dw $090F, $D000  ; Screen subpixel X position
@@ -1939,13 +1939,13 @@ preset_gtmax_maridia_postdraygon_reverse_halfie:
     dw $D8C2, $4C00  ; Doors
     dw #$FFFF
 
-preset_gtmax_maridia_postdraygon_womple_jump:
+preset_gtmax_maridia_postdraygon_whomple_jump:
     dw #preset_gtmax_maridia_postdraygon_reverse_halfie ; Maridia Post-Draygon: Reverse Halfie
     dw $0A68, $0000  ; Flash suit
     dw #$FFFF
 
 preset_gtmax_maridia_postdraygon_reverse_botwoon_etank:
-    dw #preset_gtmax_maridia_postdraygon_womple_jump ; Maridia Post-Draygon: Womple Jump
+    dw #preset_gtmax_maridia_postdraygon_whomple_jump ; Maridia Post-Draygon: Whomple Jump
     dw $078D, $A7E0  ; DDB
     dw $079B, $D913  ; MDB
     dw $090F, $0000  ; Screen subpixel X position
@@ -1975,7 +1975,7 @@ preset_gtmax_maridia_postdraygon_aqueduct_ammo:
     dw $D882, $0180  ; Items
     dw #$FFFF
 
-preset_gtmax_maridia_postdraygon_right_sandpit:
+preset_gtmax_maridia_postdraygon_right_sand_pit:
     dw #preset_gtmax_maridia_postdraygon_aqueduct_ammo ; Maridia Post-Draygon: Aqueduct Ammo
     dw $078D, $A7D4  ; DDB
     dw $079B, $D5A7  ; MDB
@@ -1996,7 +1996,7 @@ preset_gtmax_maridia_postdraygon_right_sandpit:
     dw #$FFFF
 
 preset_gtmax_maridia_postdraygon_oasis_and_sewer:
-    dw #preset_gtmax_maridia_postdraygon_right_sandpit ; Maridia Post-Draygon: Right Sandpit
+    dw #preset_gtmax_maridia_postdraygon_right_sand_pit ; Maridia Post-Draygon: Right Sand Pit
     dw $078D, $A6CC  ; DDB
     dw $079B, $D4C2  ; MDB
     dw $090F, $8000  ; Screen subpixel X position
@@ -2024,7 +2024,7 @@ preset_gtmax_maridia_postdraygon_maridia_ggg:
     dw $0AF6, $004E  ; Samus X
     dw #$FFFF
 
-preset_gtmax_maridia_postdraygon_left_sandpit:
+preset_gtmax_maridia_postdraygon_left_sand_pit:
     dw #preset_gtmax_maridia_postdraygon_maridia_ggg ; Maridia Post-Draygon: Maridia GGG
     dw $078D, $A4C8  ; DDB
     dw $079B, $D5A7  ; MDB
@@ -2042,7 +2042,7 @@ preset_gtmax_maridia_postdraygon_left_sandpit:
     dw #$FFFF
 
 preset_gtmax_maridia_postdraygon_maridia_ggg_revisit:
-    dw #preset_gtmax_maridia_postdraygon_left_sandpit ; Maridia Post-Draygon: Left Sandpit
+    dw #preset_gtmax_maridia_postdraygon_left_sand_pit ; Maridia Post-Draygon: Left Sand Pit
     dw $078D, $A6B4  ; DDB
     dw $079B, $D461  ; MDB
     dw $090F, $E000  ; Screen subpixel X position
@@ -2083,7 +2083,7 @@ preset_gtmax_maridia_postdraygon_mt_everest_exit:
     dw #$FFFF
 
 preset_gtmax_maridia_postdraygon_red_brinstar_green_gate:
-    dw #preset_gtmax_maridia_postdraygon_mt_everest_exit ; Maridia Post-Draygon: Mt Everest Exit
+    dw #preset_gtmax_maridia_postdraygon_mt_everest_exit ; Maridia Post-Draygon: Mt. Everest Exit
     dw $078D, $A42C  ; DDB
     dw $079B, $D104  ; MDB
     dw $090F, $0001  ; Screen subpixel X position
@@ -2262,7 +2262,7 @@ preset_gtmax_wrecked_ship_shaft_to_supers:
     dw #$FFFF
 
 preset_gtmax_wrecked_ship_east_supers:
-    dw #preset_gtmax_wrecked_ship_shaft_to_supers ; Wrecked Ship: Shaft to Supers
+    dw #preset_gtmax_wrecked_ship_shaft_to_supers ; Wrecked Ship: Shaft To Supers
     dw $078D, $A294  ; DDB
     dw $079B, $CAF6  ; MDB
     dw $090F, $EFFF  ; Screen subpixel X position
@@ -2486,7 +2486,7 @@ preset_gtmax_wrecked_ship_ocean_revisit:
     dw $D880, $7FFF  ; Items
     dw #$FFFF
 
-preset_gtmax_brinstar_cleanup_1_crateria_power_bombs:
+preset_gtmax_brinstar_cleanup_crateria_power_bombs:
     dw #preset_gtmax_wrecked_ship_ocean_revisit ; Wrecked Ship: Ocean Revisit
     dw $078D, $8AC6  ; DDB
     dw $079B, $91F8  ; MDB
@@ -2508,8 +2508,8 @@ preset_gtmax_brinstar_cleanup_1_crateria_power_bombs:
     dw $D870, $009E  ; Items
     dw #$FFFF
 
-preset_gtmax_brinstar_cleanup_1_landing_site_revisit:
-    dw #preset_gtmax_brinstar_cleanup_1_crateria_power_bombs ; Brinstar Cleanup 1: Crateria Power Bombs
+preset_gtmax_brinstar_cleanup_landing_site_revisit:
+    dw #preset_gtmax_brinstar_cleanup_crateria_power_bombs ; Brinstar Cleanup: Crateria Power Bombs
     dw $078D, $893A  ; DDB
     dw $079B, $93AA  ; MDB
     dw $090F, $D000  ; Screen subpixel X position
@@ -2528,8 +2528,8 @@ preset_gtmax_brinstar_cleanup_1_landing_site_revisit:
     dw $D8B0, $3002  ; Doors
     dw #$FFFF
 
-preset_gtmax_brinstar_cleanup_1_gauntlet_etank:
-    dw #preset_gtmax_brinstar_cleanup_1_landing_site_revisit ; Brinstar Cleanup 1: Landing Site Revisit
+preset_gtmax_brinstar_cleanup_gauntlet_etank:
+    dw #preset_gtmax_brinstar_cleanup_landing_site_revisit ; Brinstar Cleanup: Landing Site Revisit
     dw $078D, $892E  ; DDB
     dw $079B, $92B3  ; MDB
     dw $07F3, $0009  ; Music Bank
@@ -2540,8 +2540,8 @@ preset_gtmax_brinstar_cleanup_1_gauntlet_etank:
     dw $0AF6, $0081  ; Samus X
     dw #$FFFF
 
-preset_gtmax_brinstar_cleanup_1_crumble_blocks:
-    dw #preset_gtmax_brinstar_cleanup_1_gauntlet_etank ; Brinstar Cleanup 1: Gauntlet E-Tank
+preset_gtmax_brinstar_cleanup_crumble_blocks:
+    dw #preset_gtmax_brinstar_cleanup_gauntlet_etank ; Brinstar Cleanup: Gauntlet E-Tank
     dw $078D, $8952  ; DDB
     dw $079B, $965B  ; MDB
     dw $090F, $4000  ; Screen subpixel X position
@@ -2552,8 +2552,8 @@ preset_gtmax_brinstar_cleanup_1_crumble_blocks:
     dw $D870, $00BD  ; Items
     dw #$FFFF
 
-preset_gtmax_brinstar_cleanup_1_kago_mushroom_room:
-    dw #preset_gtmax_brinstar_cleanup_1_crumble_blocks ; Brinstar Cleanup 1: Crumble Blocks
+preset_gtmax_brinstar_cleanup_kago_mushroom_room:
+    dw #preset_gtmax_brinstar_cleanup_crumble_blocks ; Brinstar Cleanup: Crumble Blocks
     dw $078D, $8B1A  ; DDB
     dw $079B, $99BD  ; MDB
     dw $090F, $C000  ; Screen subpixel X position
@@ -2570,8 +2570,8 @@ preset_gtmax_brinstar_cleanup_1_kago_mushroom_room:
     dw $D870, $06BD  ; Items
     dw #$FFFF
 
-preset_gtmax_brinstar_cleanup_1_green_brinstar_revisit:
-    dw #preset_gtmax_brinstar_cleanup_1_kago_mushroom_room ; Brinstar Cleanup 1: Kago Mushroom Room
+preset_gtmax_brinstar_cleanup_green_brinstar_revisit:
+    dw #preset_gtmax_brinstar_cleanup_kago_mushroom_room ; Brinstar Cleanup: Kago Mushroom Room
     dw $078D, $8C22  ; DDB
     dw $079B, $9938  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -2584,8 +2584,8 @@ preset_gtmax_brinstar_cleanup_1_green_brinstar_revisit:
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 
-preset_gtmax_brinstar_cleanup_1_brinstar_reserve_tank:
-    dw #preset_gtmax_brinstar_cleanup_1_green_brinstar_revisit ; Brinstar Cleanup 1: Green Brinstar Revisit
+preset_gtmax_brinstar_cleanup_brinstar_reserve_tank:
+    dw #preset_gtmax_brinstar_cleanup_green_brinstar_revisit ; Brinstar Cleanup: Green Brinstar Revisit
     dw $078D, $8CD6  ; DDB
     dw $079B, $9BC8  ; MDB
     dw $07F3, $000F  ; Music Bank
@@ -2604,8 +2604,8 @@ preset_gtmax_brinstar_cleanup_1_brinstar_reserve_tank:
     dw $D8B4, $0246  ; Doors
     dw #$FFFF
 
-preset_gtmax_brinstar_cleanup_1_reverse_mockball:
-    dw #preset_gtmax_brinstar_cleanup_1_brinstar_reserve_tank ; Brinstar Cleanup 1: Brinstar Reserve Tank
+preset_gtmax_brinstar_cleanup_reverse_mockball:
+    dw #preset_gtmax_brinstar_cleanup_brinstar_reserve_tank ; Brinstar Cleanup: Brinstar Reserve Tank
     dw $078D, $8D5A  ; DDB
     dw $079B, $9C07  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -2626,8 +2626,8 @@ preset_gtmax_brinstar_cleanup_1_reverse_mockball:
     dw $D872, $040F  ; Items
     dw #$FFFF
 
-preset_gtmax_brinstar_cleanup_1_green_shaft_descent:
-    dw #preset_gtmax_brinstar_cleanup_1_reverse_mockball ; Brinstar Cleanup 1: Reverse Mockball
+preset_gtmax_brinstar_cleanup_green_shaft_descent:
+    dw #preset_gtmax_brinstar_cleanup_reverse_mockball ; Brinstar Cleanup: Reverse Mockball
     dw $078D, $8D66  ; DDB
     dw $079B, $9BC8  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -2644,8 +2644,8 @@ preset_gtmax_brinstar_cleanup_1_green_shaft_descent:
     dw $D870, $86BD  ; Items
     dw #$FFFF
 
-preset_gtmax_brinstar_cleanup_1_green_brinstar_beetoms:
-    dw #preset_gtmax_brinstar_cleanup_1_green_shaft_descent ; Brinstar Cleanup 1: Green Shaft Descent
+preset_gtmax_brinstar_cleanup_green_brinstar_beetoms:
+    dw #preset_gtmax_brinstar_cleanup_green_shaft_descent ; Brinstar Cleanup: Green Shaft Descent
     dw $078D, $8D4E  ; DDB
     dw $079B, $9AD9  ; MDB
     dw $0911, $0000  ; Screen X position in pixels
@@ -2658,8 +2658,8 @@ preset_gtmax_brinstar_cleanup_1_green_brinstar_beetoms:
     dw $0AFA, $0A8B  ; Samus Y
     dw #$FFFF
 
-preset_gtmax_brinstar_cleanup_1_etecoon_etank_room:
-    dw #preset_gtmax_brinstar_cleanup_1_green_brinstar_beetoms ; Brinstar Cleanup 1: Green Brinstar Beetoms
+preset_gtmax_brinstar_cleanup_etecoon_etank_room:
+    dw #preset_gtmax_brinstar_cleanup_green_brinstar_beetoms ; Brinstar Cleanup: Green Brinstar Beetoms
     dw $078D, $8F3A  ; DDB
     dw $079B, $A051  ; MDB
     dw $090F, $C000  ; Screen subpixel X position
@@ -2677,8 +2677,8 @@ preset_gtmax_brinstar_cleanup_1_etecoon_etank_room:
     dw $D8B6, $7818  ; Doors
     dw #$FFFF
 
-preset_gtmax_brinstar_cleanup_1_etecoon_room:
-    dw #preset_gtmax_brinstar_cleanup_1_etecoon_etank_room ; Brinstar Cleanup 1: Etecoon E-Tank Room
+preset_gtmax_brinstar_cleanup_etecoon_room:
+    dw #preset_gtmax_brinstar_cleanup_etecoon_etank_room ; Brinstar Cleanup: Etecoon E-Tank Room
     dw $078D, $8F5E  ; DDB
     dw $079B, $A011  ; MDB
     dw $090F, $BFFF  ; Screen subpixel X position
@@ -2696,8 +2696,8 @@ preset_gtmax_brinstar_cleanup_1_etecoon_room:
     dw $D872, $C40F  ; Items
     dw #$FFFF
 
-preset_gtmax_brinstar_cleanup_1_green_shaft_final:
-    dw #preset_gtmax_brinstar_cleanup_1_etecoon_room ; Brinstar Cleanup 1: Etecoon Room
+preset_gtmax_brinstar_cleanup_green_shaft_final:
+    dw #preset_gtmax_brinstar_cleanup_etecoon_room ; Brinstar Cleanup: Etecoon Room
     dw $078D, $8F46  ; DDB
     dw $079B, $9AD9  ; MDB
     dw $090F, $0000  ; Screen subpixel X position
@@ -2715,8 +2715,8 @@ preset_gtmax_brinstar_cleanup_1_green_shaft_final:
     dw $D870, $A6BD  ; Items
     dw #$FFFF
 
-preset_gtmax_brinstar_cleanup_1_dachora_room_revisit:
-    dw #preset_gtmax_brinstar_cleanup_1_green_shaft_final ; Brinstar Cleanup 1: Green Shaft Final
+preset_gtmax_brinstar_cleanup_dachora_room_revisit:
+    dw #preset_gtmax_brinstar_cleanup_green_shaft_final ; Brinstar Cleanup: Green Shaft Final
     dw $078D, $8D06  ; DDB
     dw $090F, $4000  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
@@ -2731,8 +2731,8 @@ preset_gtmax_brinstar_cleanup_1_dachora_room_revisit:
     dw $0AFA, $068B  ; Samus Y
     dw #$FFFF
 
-preset_gtmax_brinstar_cleanup_1_big_pink_revisit:
-    dw #preset_gtmax_brinstar_cleanup_1_dachora_room_revisit ; Brinstar Cleanup 1: Dachora Room Revisit
+preset_gtmax_brinstar_cleanup_big_pink_revisit:
+    dw #preset_gtmax_brinstar_cleanup_dachora_room_revisit ; Brinstar Cleanup: Dachora Room Revisit
     dw $078D, $8CE2  ; DDB
     dw $079B, $9CB3  ; MDB
     dw $090F, $9C00  ; Screen subpixel X position
@@ -2747,8 +2747,8 @@ preset_gtmax_brinstar_cleanup_1_big_pink_revisit:
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 
-preset_gtmax_brinstar_cleanup_1_mission_impossible:
-    dw #preset_gtmax_brinstar_cleanup_1_big_pink_revisit ; Brinstar Cleanup 1: Big Pink Revisit
+preset_gtmax_brinstar_cleanup_mission_impossible:
+    dw #preset_gtmax_brinstar_cleanup_big_pink_revisit ; Brinstar Cleanup: Big Pink Revisit
     dw $078D, $8DAE  ; DDB
     dw $079B, $9D19  ; MDB
     dw $090F, $5000  ; Screen subpixel X position
@@ -2769,8 +2769,8 @@ preset_gtmax_brinstar_cleanup_1_mission_impossible:
     dw $D8B4, $0346  ; Doors
     dw #$FFFF
 
-preset_gtmax_brinstar_cleanup_1_leaving_pink_etank:
-    dw #preset_gtmax_brinstar_cleanup_1_mission_impossible ; Brinstar Cleanup 1: Mission Impossible
+preset_gtmax_brinstar_cleanup_leaving_pink_etank:
+    dw #preset_gtmax_brinstar_cleanup_mission_impossible ; Brinstar Cleanup: Mission Impossible
     dw $078D, $8FBE  ; DDB
     dw $079B, $A15B  ; MDB
     dw $0911, $0000  ; Screen X position in pixels
@@ -2791,8 +2791,8 @@ preset_gtmax_brinstar_cleanup_1_leaving_pink_etank:
     dw $D8B6, $78D8  ; Doors
     dw #$FFFF
 
-preset_gtmax_brinstar_cleanup_1_leaving_spore_spawn_supers:
-    dw #preset_gtmax_brinstar_cleanup_1_leaving_pink_etank ; Brinstar Cleanup 1: Leaving Pink E-Tank
+preset_gtmax_brinstar_cleanup_leaving_spore_spawn_supers:
+    dw #preset_gtmax_brinstar_cleanup_leaving_pink_etank ; Brinstar Cleanup: Leaving Pink E-Tank
     dw $078D, $8F76  ; DDB
     dw $079B, $9B5B  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -2813,8 +2813,8 @@ preset_gtmax_brinstar_cleanup_1_leaving_spore_spawn_supers:
     dw $D8B6, $78F8  ; Doors
     dw #$FFFF
 
-preset_gtmax_brinstar_cleanup_1_waterway_etank:
-    dw #preset_gtmax_brinstar_cleanup_1_leaving_spore_spawn_supers ; Brinstar Cleanup 1: Leaving Spore Spawn Supers
+preset_gtmax_brinstar_cleanup_waterway_etank:
+    dw #preset_gtmax_brinstar_cleanup_leaving_spore_spawn_supers ; Brinstar Cleanup: Leaving Spore Spawn Supers
     dw $078D, $8F82  ; DDB
     dw $079B, $9D19  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -2834,8 +2834,8 @@ preset_gtmax_brinstar_cleanup_1_waterway_etank:
     dw $D8B4, $8B46  ; Doors
     dw #$FFFF
 
-preset_gtmax_brinstar_cleanup_2_green_hills_revisit:
-    dw #preset_gtmax_brinstar_cleanup_1_waterway_etank ; Brinstar Cleanup 1: Waterway E-Tank
+preset_gtmax_blue_brinstar_cleanup_green_hill_zone_revisit:
+    dw #preset_gtmax_brinstar_cleanup_waterway_etank ; Brinstar Cleanup: Waterway E-Tank
     dw $078D, $8F8E  ; DDB
     dw $090F, $0000  ; Screen subpixel X position
     dw $0911, $02E0  ; Screen X position in pixels
@@ -2854,8 +2854,8 @@ preset_gtmax_brinstar_cleanup_2_green_hills_revisit:
     dw $D874, $1B8E  ; Items
     dw #$FFFF
 
-preset_gtmax_brinstar_cleanup_2_blue_brinstar_hoppers:
-    dw #preset_gtmax_brinstar_cleanup_2_green_hills_revisit ; Brinstar Cleanup 2: Green Hills Revisit
+preset_gtmax_blue_brinstar_cleanup_blue_brinstar_hoppers:
+    dw #preset_gtmax_blue_brinstar_cleanup_green_hill_zone_revisit ; Blue Brinstar Cleanup: Green Hill Zone Revisit
     dw $078D, $8DEA  ; DDB
     dw $079B, $9E52  ; MDB
     dw $0911, $00E5  ; Screen X position in pixels
@@ -2873,8 +2873,8 @@ preset_gtmax_brinstar_cleanup_2_blue_brinstar_hoppers:
     dw $D8B6, $78F9  ; Doors
     dw #$FFFF
 
-preset_gtmax_brinstar_cleanup_2_billy_mays:
-    dw #preset_gtmax_brinstar_cleanup_2_blue_brinstar_hoppers ; Brinstar Cleanup 2: Blue Brinstar Hoppers
+preset_gtmax_blue_brinstar_cleanup_billy_mays:
+    dw #preset_gtmax_blue_brinstar_cleanup_blue_brinstar_hoppers ; Blue Brinstar Cleanup: Blue Brinstar Hoppers
     dw $078D, $8ECE  ; DDB
     dw $079B, $9F64  ; MDB
     dw $07F3, $0009  ; Music Bank
@@ -2895,8 +2895,8 @@ preset_gtmax_brinstar_cleanup_2_billy_mays:
     dw $D8B6, $78FD  ; Doors
     dw #$FFFF
 
-preset_gtmax_brinstar_cleanup_2_leaving_blue_brinstar:
-    dw #preset_gtmax_brinstar_cleanup_2_billy_mays ; Brinstar Cleanup 2: Billy Mays
+preset_gtmax_blue_brinstar_cleanup_leaving_blue_brinstar:
+    dw #preset_gtmax_blue_brinstar_cleanup_billy_mays ; Blue Brinstar Cleanup: Billy Mays
     dw $078D, $8FE2  ; DDB
     dw $090F, $7000  ; Screen subpixel X position
     dw $0911, $019E  ; Screen X position in pixels
@@ -2913,8 +2913,8 @@ preset_gtmax_brinstar_cleanup_2_leaving_blue_brinstar:
     dw $D874, $1BBE  ; Items
     dw #$FFFF
 
-preset_gtmax_brinstar_cleanup_2_pit_room_final_spark:
-    dw #preset_gtmax_brinstar_cleanup_2_leaving_blue_brinstar ; Brinstar Cleanup 2: Leaving Blue Brinstar
+preset_gtmax_blue_brinstar_cleanup_pit_room_final_spark:
+    dw #preset_gtmax_blue_brinstar_cleanup_leaving_blue_brinstar ; Blue Brinstar Cleanup: Leaving Blue Brinstar
     dw $078D, $8EB6  ; DDB
     dw $079B, $97B5  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -2932,8 +2932,8 @@ preset_gtmax_brinstar_cleanup_2_pit_room_final_spark:
     dw $0AFA, $0088  ; Samus Y
     dw #$FFFF
 
-preset_gtmax_brinstar_cleanup_2_climb_supers:
-    dw #preset_gtmax_brinstar_cleanup_2_pit_room_final_spark ; Brinstar Cleanup 2: Pit Room Final (Spark)
+preset_gtmax_blue_brinstar_cleanup_climb_supers:
+    dw #preset_gtmax_blue_brinstar_cleanup_pit_room_final_spark ; Blue Brinstar Cleanup: Pit Room Final (Spark)
     dw $078D, $8B7A  ; DDB
     dw $079B, $96BA  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -2956,8 +2956,8 @@ preset_gtmax_brinstar_cleanup_2_climb_supers:
     dw $D8B2, $2C09  ; Doors
     dw #$FFFF
 
-preset_gtmax_brinstar_cleanup_2_to_final_missiles:
-    dw #preset_gtmax_brinstar_cleanup_2_climb_supers ; Brinstar Cleanup 2: Climb Supers
+preset_gtmax_blue_brinstar_cleanup_to_final_missiles:
+    dw #preset_gtmax_blue_brinstar_cleanup_climb_supers ; Blue Brinstar Cleanup: Climb Supers
     dw $078D, $8C6A  ; DDB
     dw $090F, $0000  ; Screen subpixel X position
     dw $0911, $0100  ; Screen X position in pixels
@@ -2976,8 +2976,8 @@ preset_gtmax_brinstar_cleanup_2_to_final_missiles:
     dw $D870, $EEFD  ; Items
     dw #$FFFF
 
-preset_gtmax_brinstar_cleanup_2_parlor_missiles:
-    dw #preset_gtmax_brinstar_cleanup_2_to_final_missiles ; Brinstar Cleanup 2: To Final Missiles
+preset_gtmax_blue_brinstar_cleanup_parlor_missiles:
+    dw #preset_gtmax_blue_brinstar_cleanup_to_final_missiles ; Blue Brinstar Cleanup: To Final Missiles
     dw $078D, $89A6  ; DDB
     dw $079B, $9A44  ; MDB
     dw $090F, $E001  ; Screen subpixel X position
@@ -2989,8 +2989,8 @@ preset_gtmax_brinstar_cleanup_2_parlor_missiles:
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 
-preset_gtmax_brinstar_cleanup_2_parlor_again:
-    dw #preset_gtmax_brinstar_cleanup_2_parlor_missiles ; Brinstar Cleanup 2: Parlor Missiles
+preset_gtmax_blue_brinstar_cleanup_parlor_again:
+    dw #preset_gtmax_blue_brinstar_cleanup_parlor_missiles ; Blue Brinstar Cleanup: Parlor Missiles
     dw $078D, $8C9A  ; DDB
     dw $090F, $4000  ; Screen subpixel X position
     dw $0911, $0100  ; Screen X position in pixels
@@ -3004,8 +3004,8 @@ preset_gtmax_brinstar_cleanup_2_parlor_again:
     dw $D870, $FEFD  ; Items
     dw #$FFFF
 
-preset_gtmax_brinstar_cleanup_2_terminator_etank:
-    dw #preset_gtmax_brinstar_cleanup_2_parlor_again ; Brinstar Cleanup 2: Parlor Again
+preset_gtmax_blue_brinstar_cleanup_terminator_etank:
+    dw #preset_gtmax_blue_brinstar_cleanup_parlor_again ; Blue Brinstar Cleanup: Parlor Again
     dw $078D, $8C8E  ; DDB
     dw $079B, $92FD  ; MDB
     dw $0913, $1000  ; Screen subpixel Y position
@@ -3016,7 +3016,7 @@ preset_gtmax_brinstar_cleanup_2_terminator_etank:
     dw #$FFFF
 
 preset_gtmax_tourian_tourian_elevator_room:
-    dw #preset_gtmax_brinstar_cleanup_2_terminator_etank ; Brinstar Cleanup 2: Terminator E-tank
+    dw #preset_gtmax_blue_brinstar_cleanup_terminator_etank ; Blue Brinstar Cleanup: Terminator E-Tank
     dw $078D, $9222  ; DDB
     dw $079B, $DAAE  ; MDB
     dw $07F3, $001E  ; Music Bank

@@ -18,6 +18,7 @@
     dw status_lagcounter
     dw status_cpuusage
     dw status_hspeed
+    dw status_dashspeed
     dw status_vspeed
     dw status_quickdrop
     dw status_walljump
@@ -611,12 +612,12 @@ status_spikesuit:
 
     ; Handle jump with springball depending on state
     LDA !ram_roomstrat_state : BEQ .nojumpnoup
-    CMP #$0002 : BEQ .checkspark : CMP #$0004 : BEQ .checkspark
+    CMP #$0002 : BEQ .checkspark : CMP #$0004 : BEQ .checkslope
     BRA .donewait
 
   .checksparkunmorph
-    LDA !ram_roomstrat_state : CMP #$0006 : BEQ .donewait
-    CMP #$0002 : BEQ .checkspark : CMP #$0004 : BEQ .checkspark
+    LDA !ram_roomstrat_state : CMP #$0003 : BEQ .donewait
+    CMP #$0002 : BEQ .checkspark : CMP #$0004 : BEQ .checkslope
     JMP .checkunmorph
 
   .nojump
@@ -627,11 +628,13 @@ status_spikesuit:
 
   .nojumpnoup
     ; Arbitrary reset counter after 20 frames
-    LDA !ram_roomstrat_counter : BEQ .done : CMP #$0014 : BPL .resetstate
+    LDA !ram_roomstrat_counter : BEQ .checkfirstdamage : CMP #$0014 : BPL .resetstate
     INC : STA !ram_roomstrat_counter
 
     ; If counter running when we first take damage, then we unmorphed early
-    LDA !SAMUS_IFRAME_TIMER : CMP #$003C : BEQ .unmorphearly
+  .checkfirstdamage
+    LDA !SAMUS_IFRAME_TIMER : CMP #$0060 : BEQ .firstdamage
+    CMP #$003C : BEQ .unmorphearly
 
   .done
     RTS
@@ -643,26 +646,33 @@ status_spikesuit:
 
   .resetstate
     TDC : STA !ram_roomstrat_state : STA !ram_roomstrat_counter
-    RTS
-
-  .checkspark
-    LDA !SAMUS_IFRAME_TIMER : CMP #$0033 : BEQ .sparkframeperfect : BPL .sparkearly
-
-    ; Sparked late
-    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$8C
-    LDA #$0033 : SEC : SBC !SAMUS_IFRAME_TIMER
-    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
-    BRA .endstate
-
-  .unmorphearly
-    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$88
-    LDA !IH_BLANK : STA !HUD_TILEMAP+$8A : STA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$8E : STA !HUD_TILEMAP+$90
-    LDA #$0002 : STA !ram_roomstrat_state
-    RTS
+    BRA .checkfirstdamage
 
   .sparkframeperfect
     LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$8E
     BRA .endstate
+
+  .checkspark
+    LDA !SAMUS_IFRAME_TIMER : CMP #$0033 : BEQ .sparkframeperfect : BPL .sparkearly
+    JMP .sparklate
+
+  .checkslope
+    LDA !SAMUS_IFRAME_TIMER : CMP #$005F : BEQ .slopelategood
+    JMP .slopelate
+
+  .firstdamage
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$88 : STA !HUD_TILEMAP+$8A
+    STA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$8E : STA !HUD_TILEMAP+$90
+    LDA #$0004 : STA !ram_roomstrat_state
+    RTS
+
+  .unmorphearly
+    LDA !ram_roomstrat_counter : BEQ .done
+    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$88
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$8A : STA !HUD_TILEMAP+$8C
+    STA !HUD_TILEMAP+$8E : STA !HUD_TILEMAP+$90
+    LDA #$0002 : STA !ram_roomstrat_state
+    RTS
 
   .sparkearly
     LDA !IH_LETTER_E : STA !HUD_TILEMAP+$8C
@@ -670,14 +680,41 @@ status_spikesuit:
     ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
 
     ; If more than one frame early, keep checking for updates
-    CPY #$0002 : BNE .done
+    CPY #$0002 : BNE .enddone
 
   .endstate
-    LDA #$0006 : STA !ram_roomstrat_state
+    LDA #$0003 : STA !ram_roomstrat_state
+
+  .enddone
     RTS
 
+  .slopelategood
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$8C
+    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$8E
+    BRA .endstate
+
+  .slopeearly
+    ; If we took damage earlier, ignore it
+    CMP #$0060 : BMI .enddone
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$8C
+    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$8E
+    BRA .endstate
+
+  .sparklate
+    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$8C
+    LDA #$0033 : SEC : SBC !SAMUS_IFRAME_TIMER
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
+    BRA .endstate
+
+  .slopelate
+    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$8C
+    LDA #$005F : SEC : SBC !SAMUS_IFRAME_TIMER
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
+    BRA .endstate
+
   .checkunmorph
-    LDA !SAMUS_IFRAME_TIMER : BEQ .damagewait : CMP #$003C : BEQ .damageunmorph
+    LDA !SAMUS_IFRAME_TIMER : BEQ .damagewait
+    CMP #$003C : BEQ .damageunmorph : BPL .slopeearly
     CMP #$003B : BEQ .prepspark1 : CMP #$003A : BEQ .prepspark2
 
     ; Unmorphed late
@@ -708,7 +745,7 @@ status_spikesuit:
     BRA .prepspark
 
   .prepspark2
-    LDA #$0004 : STA !ram_roomstrat_state
+    LDA #$0002 : STA !ram_roomstrat_state : ASL
 
   .prepspark
     ; We unmorphed on one of the two good frames
@@ -745,24 +782,45 @@ status_cpuusage:
 
 status_hspeed:
 {
-    ; subspeed + submomentum into low byte of Hspeed
+    ; subspeed + submomentum into high byte of Hspeed
     LDA !SAMUS_X_SUBRUNSPEED : CLC : ADC !SAMUS_X_SUBMOMENTUM
-    AND #$FF00 : XBA : STA !ram_momentum_sum
+    AND #$F000 : STA $12
 
-    ; speed + momentum + carry into high byte of Hspeed
+    ; speed + momentum + carry into low byte of Hspeed
     LDA !SAMUS_X_RUNSPEED : ADC !SAMUS_X_MOMENTUM
-    AND #$00FF : XBA : ORA !ram_momentum_sum
+    AND #$00FF : ORA $12
 
     ; maybe skip drawing
     CMP !ram_HUD_check : BEQ .done
     STA !ram_HUD_check
 
     ; draw whole number in decimal
-    AND #$FF00 : XBA : LDX #$0088 : JSR Draw2
+    AND #$00FF : LDX #$0088 : JSR Draw2
     LDA !IH_DECIMAL : STA !HUD_TILEMAP+$8C
 
     ; draw fraction in hex
-    LDA !ram_momentum_sum : AND #$00F0 : LSR #3 : TAY
+    LDA !ram_HUD_check : AND #$F000 : XBA : LSR #3 : TAY
+    LDA.w HexGFXTable,Y : STA !HUD_TILEMAP+$8E
+
+  .done
+    RTS
+}
+
+status_dashspeed:
+{
+    LDA !SAMUS_X_SUBRUNSPEED : AND #$F000 : STA $12
+    LDA !SAMUS_X_RUNSPEED : AND #$00FF : ORA $12
+
+    ; maybe skip drawing
+    CMP !ram_HUD_check : BEQ .done
+    STA !ram_HUD_check
+
+    ; draw whole number in decimal
+    AND #$00FF : LDX #$0088 : JSR Draw2
+    LDA !IH_DECIMAL : STA !HUD_TILEMAP+$8C
+
+    ; draw fraction in hex
+    LDA !ram_HUD_check : AND #$F000 : XBA : LSR #3 : TAY
     LDA.w HexGFXTable,Y : STA !HUD_TILEMAP+$8E
 
   .done
@@ -1628,6 +1686,7 @@ superhud_bottom_table:
     dw status_lagcounter
     dw status_cpuusage
     dw status_hspeed
+    dw status_dashspeed
     dw status_vspeed
     dw status_quickdrop
     dw status_walljump
@@ -1672,6 +1731,7 @@ superhud_middle_table:
     dw middleHUD_lagcounter
     dw middleHUD_cpuusage
     dw middleHUD_hspeed
+    dw middleHUD_dashspeed
     dw middleHUD_shottimer
     dw middleHUD_itempercent
     dw middleHUD_reserves
@@ -1689,6 +1749,7 @@ superhud_top_table:
     dw topHUD_lagcounter
     dw topHUD_cpuusage
     dw topHUD_hspeed
+    dw topHUD_dashspeed
     dw topHUD_shottimer
     dw topHUD_itempercent
     dw topHUD_reserves
@@ -1963,24 +2024,24 @@ topHUD_cpuusage:
 
 middleHUD_hspeed:
 {
-    ; subspeed + submomentum into low byte of Hspeed
+    ; subspeed + submomentum into high byte of Hspeed
     LDA !SAMUS_X_SUBRUNSPEED : CLC : ADC !SAMUS_X_SUBMOMENTUM
-    AND #$FF00 : XBA : STA !ram_momentum_sum
+    AND #$F000 : STA $12
 
-    ; speed + momentum + carry into high byte of Hspeed
+    ; speed + momentum + carry into low byte of Hspeed
     LDA !SAMUS_X_RUNSPEED : ADC !SAMUS_X_MOMENTUM
-    AND #$00FF : XBA : ORA !ram_momentum_sum
+    AND #$00FF : ORA $12
 
     ; maybe skip drawing
     CMP !ram_HUD_middle : BEQ .done
     STA !ram_HUD_middle
 
     ; draw whole number in decimal
-    AND #$FF00 : XBA : ASL : TAY : LDA.w HexGFXTable,Y : STA !HUD_TILEMAP+$54
+    AND #$00FF : ASL : TAY : LDA.w HexGFXTable,Y : STA !HUD_TILEMAP+$54
     LDA !IH_DECIMAL : STA !HUD_TILEMAP+$56
 
     ; draw fraction in hex
-    LDA !ram_momentum_sum : AND #$00F0 : LSR #3 : TAY
+    LDA !ram_HUD_middle : AND #$F000 : XBA : LSR #3 : TAY
     LDA.w HexGFXTable,Y : STA !HUD_TILEMAP+$58
 
   .done
@@ -1989,24 +2050,66 @@ middleHUD_hspeed:
 
 topHUD_hspeed:
 {
-    ; subspeed + submomentum into low byte of Hspeed
+    ; subspeed + submomentum into high byte of Hspeed
     LDA !SAMUS_X_SUBRUNSPEED : CLC : ADC !SAMUS_X_SUBMOMENTUM
-    AND #$FF00 : XBA : STA !ram_momentum_sum
+    AND #$F000 : STA $12
 
-    ; speed + momentum + carry into high byte of Hspeed
+    ; speed + momentum + carry into low byte of Hspeed
     LDA !SAMUS_X_RUNSPEED : ADC !SAMUS_X_MOMENTUM
-    AND #$00FF : XBA : ORA !ram_momentum_sum
+    AND #$00FF : ORA $12
 
     ; maybe skip drawing
     CMP !ram_HUD_top : BEQ .done
     STA !ram_HUD_top
 
     ; draw whole number in decimal
-    AND #$FF00 : XBA : ASL : TAY : LDA.w HexGFXTable,Y : STA !HUD_TILEMAP+$14
+    AND #$00FF : ASL : TAY : LDA.w HexGFXTable,Y : STA !HUD_TILEMAP+$14
     LDA !IH_DECIMAL : STA !HUD_TILEMAP+$16
 
     ; draw fraction in hex
-    LDA !ram_momentum_sum : AND #$00F0 : LSR #3 : TAY
+    LDA !ram_HUD_top : AND #$F000 : XBA : LSR #3 : TAY
+    LDA.w HexGFXTable,Y : STA !HUD_TILEMAP+$18
+
+  .done
+    RTS
+}
+
+middleHUD_dashspeed:
+{
+    LDA !SAMUS_X_SUBRUNSPEED : AND #$F000 : STA $12
+    LDA !SAMUS_X_RUNSPEED : AND #$00FF : ORA $12
+
+    ; maybe skip drawing
+    CMP !ram_HUD_middle : BEQ .done
+    STA !ram_HUD_middle
+
+    ; draw whole number in decimal
+    AND #$00FF : ASL : TAY : LDA.w HexGFXTable,Y : STA !HUD_TILEMAP+$54
+    LDA !IH_DECIMAL : STA !HUD_TILEMAP+$56
+
+    ; draw fraction in hex
+    LDA !ram_HUD_middle : AND #$F000 : XBA : LSR #3 : TAY
+    LDA.w HexGFXTable,Y : STA !HUD_TILEMAP+$58
+
+  .done
+    RTS
+}
+
+topHUD_dashspeed:
+{
+    LDA !SAMUS_X_SUBRUNSPEED : AND #$F000 : STA $12
+    LDA !SAMUS_X_RUNSPEED : AND #$00FF : ORA $12
+
+    ; maybe skip drawing
+    CMP !ram_HUD_top : BEQ .done
+    STA !ram_HUD_top
+
+    ; draw whole number in decimal
+    AND #$00FF : ASL : TAY : LDA.w HexGFXTable,Y : STA !HUD_TILEMAP+$14
+    LDA !IH_DECIMAL : STA !HUD_TILEMAP+$16
+
+    ; draw fraction in hex
+    LDA !ram_HUD_top : AND #$F000 : XBA : LSR #3 : TAY
     LDA.w HexGFXTable,Y : STA !HUD_TILEMAP+$18
 
   .done
@@ -5417,16 +5520,14 @@ status_twocries_nosb:
 
 status_door_hspeed:
 {
-    ; subspeed + submomentum into low byte of Hspeed
+    ; subspeed + submomentum into high byte of Hspeed
     LDA !SAMUS_X_SUBRUNSPEED : CLC : ADC !SAMUS_X_SUBMOMENTUM
-    AND #$FF00 : XBA : STA !ram_momentum_sum
+    AND #$F000 : STA $12
 
-    ; speed + momentum + carry into high byte of Hspeed
+    ; speed + momentum + carry into low byte of Hspeed
     LDA !SAMUS_X_RUNSPEED : ADC !SAMUS_X_MOMENTUM
-    AND #$00FF : XBA : ORA !ram_momentum_sum
 
     ; draw whole number in decimal
-    AND #$FF00 : XBA
     STA $4204
     %a8()
     ; divide by 10
@@ -5455,10 +5556,46 @@ status_door_hspeed:
     LDA !IH_DECIMAL : STA !HUD_TILEMAP+$8C
 
     ; draw fraction in hex
-    LDA !ram_momentum_sum : AND #$00F0 : LSR #3 : TAX
+    LDA $12 : XBA : LSR #3 : TAX
     LDA.l HexGFXTable,X : STA !HUD_TILEMAP+$8E
 
-  .done
+    RTS
+}
+
+status_door_dashspeed:
+{
+    ; draw whole number in decimal
+    LDA !SAMUS_X_RUNSPEED : STA $4204
+    %a8()
+    ; divide by 10
+    LDA #$0A : STA $4206
+    %a16()
+    PEA $0000 : PLA ; wait for CPU math
+
+    ; draw integer speed value
+    LDA $4214 : BEQ .blanktens
+    ; tens digit
+    ASL : TAX
+    LDA.l NumberGFXTable,X : STA !HUD_TILEMAP+$88
+    ; ones digit
+    LDA $4216 : ASL : TAX
+    LDA.l NumberGFXTable,X : STA !HUD_TILEMAP+$8A
+    BRA .subspeed
+
+  .blanktens
+    ; ones digit
+    LDA $4216 : ASL : TAX
+    LDA.l NumberGFXTable,X : STA !HUD_TILEMAP+$8A
+    ; tens digit
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$88
+
+  .subspeed
+    LDA !IH_DECIMAL : STA !HUD_TILEMAP+$8C
+
+    ; draw fraction in hex
+    LDA !SAMUS_X_SUBRUNSPEED : AND #$F000 : XBA : LSR #3 : TAX
+    LDA.l HexGFXTable,X : STA !HUD_TILEMAP+$8E
+
     RTS
 }
 

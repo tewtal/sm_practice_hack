@@ -84,7 +84,10 @@ Counts up lag frames in real time. Resets after each door transition.
 Counts down the number of scanlines that were drawn during processing of the next frame. The screen has a resolution of 256x224, so at 60 fps, 224 scanlines must be drawn every 1/60th of a second. This count is converted to a percentage to get a sense of the lag. The higher the percentage, the closer we were to not finishing processing in time. If processing does not finish in time, then the game must draw the current frame again and this is a lag frame. If the percentage is a low number, then it is likely the game lagged with most of the work done during the previous frame and a small amount of work left over for the next frame.
 
 ## Horizontal Speed
-Displays the horizontal speed combined with momentum in pixels. Also Samus HP is replaced by the subpixels in hexadecimal.
+Displays the horizontal speed combined with momentum in pixels and 1/16th pixels (subpixels).
+
+## Dash Speed
+Displays the horizontal speed (without momentum) in pixels and 1/16th pixels (subpixels).
 
 ## Vertical Speed
 Displays the vertical speed in pixels. Initial jump speed will displayed as a three digit hex value, overwriting the item collection percentage. Samus HP will be overwritten with space jump feedback:

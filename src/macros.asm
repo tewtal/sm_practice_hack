@@ -342,15 +342,14 @@ macro cm_adjacent_submenu(title, target)
     JML action_submenu
 endmacro
 
-macro cm_preset(title, target)
+macro cm_preset(title, textAddr, target)
 ; Displays category preset name and saves full 24-bit address to preset
   .dm_actionIndex
     dw !ACTION_CATEGORY_PRESET
   .dm_arg
     dl <target>
-  .dm_text
-table ../resources/normal.tbl
-    db #$28, "<title>", #$FF
+  .dm_textAddr
+    dw <textAddr>
 endmacro
 
 macro cm_custompreset(slot)

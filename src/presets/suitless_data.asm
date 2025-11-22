@@ -734,7 +734,7 @@ preset_suitless_xray_green_hill_zone:
     dw $D8B4, $0346  ; Doors
     dw #$FFFF
 
-preset_suitless_xray_blue_brin_hopper:
+preset_suitless_xray_blue_brin_hoppers:
     dw #preset_suitless_xray_green_hill_zone ; X-Ray: Green Hill Zone
     dw $078D, $8DEA  ; DDB
     dw $079B, $9E52  ; MDB
@@ -751,8 +751,8 @@ preset_suitless_xray_blue_brin_hopper:
     dw $D8B6, $00F1  ; Doors
     dw #$FFFF
 
-preset_suitless_xray_green_hill_zone_2:
-    dw #preset_suitless_xray_blue_brin_hopper ; X-Ray: Blue Brin Hopper
+preset_suitless_xray_green_hill_zone_revisit:
+    dw #preset_suitless_xray_blue_brin_hoppers ; X-Ray: Blue Brin Hoppers
     dw $078D, $8E86  ; DDB
     dw $079B, $9E9F  ; MDB
     dw $07F3, $0009  ; Music Bank
@@ -776,7 +776,7 @@ preset_suitless_xray_green_hill_zone_2:
     dw #$FFFF
 
 preset_suitless_xray_noob_bridge:
-    dw #preset_suitless_xray_green_hill_zone_2 ; X-Ray: Green Hill Zone 2
+    dw #preset_suitless_xray_green_hill_zone_revisit ; X-Ray: Green Hill Zone Revisit
     dw $078D, $8E9E  ; DDB
     dw $079B, $9E52  ; MDB
     dw $07F3, $000F  ; Music Bank
@@ -834,7 +834,7 @@ preset_suitless_xray_xray_dboost:
     dw $D8B6, $02FB  ; Doors
     dw #$FFFF
 
-preset_suitless_xray_xray_2:
+preset_suitless_xray_xray:
     dw #preset_suitless_xray_xray_dboost ; X-Ray: X-Ray D-Boost
     dw $078D, $9036  ; DDB
     dw $079B, $A293  ; MDB
@@ -851,7 +851,7 @@ preset_suitless_xray_xray_2:
     dw #$FFFF
 
 preset_suitless_xray_xray_escape:
-    dw #preset_suitless_xray_xray_2 ; X-Ray: X-Ray
+    dw #preset_suitless_xray_xray ; X-Ray: X-Ray
     dw $078D, $905A  ; DDB
     dw $079B, $A2CE  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -916,7 +916,7 @@ preset_suitless_warehouse_below_spazer:
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 
-preset_suitless_warehouse_below_spazer_2:
+preset_suitless_warehouse_below_spazer_revisit:
     dw #preset_suitless_warehouse_below_spazer ; Warehouse: Below Spazer
     dw $078D, $9126  ; DDB
     dw $079B, $A447  ; MDB
@@ -937,7 +937,7 @@ preset_suitless_warehouse_below_spazer_2:
     dw #$FFFF
 
 preset_suitless_warehouse_warehouse_entrance:
-    dw #preset_suitless_warehouse_below_spazer_2 ; Warehouse: Below Spazer 2
+    dw #preset_suitless_warehouse_below_spazer_revisit ; Warehouse: Below Spazer Revisit
     dw $078D, $A348  ; DDB
     dw $079B, $CF80  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -1582,7 +1582,7 @@ preset_suitless_upper_norfair_2_crocomire:
     dw $D8B8, $6EAF  ; Doors
     dw #$FFFF
 
-preset_suitless_upper_norfair_2_croc_pbs:
+preset_suitless_upper_norfair_2_croc_power_bombs:
     dw #preset_suitless_upper_norfair_2_crocomire ; Upper Norfair 2: Crocomire
     dw $078D, $93DE  ; DDB
     dw $079B, $AA82  ; MDB
@@ -1606,7 +1606,7 @@ preset_suitless_upper_norfair_2_croc_pbs:
     dw #$FFFF
 
 preset_suitless_upper_norfair_2_croc_shaft_down:
-    dw #preset_suitless_upper_norfair_2_croc_pbs ; Upper Norfair 2: Croc PBs
+    dw #preset_suitless_upper_norfair_2_croc_power_bombs ; Upper Norfair 2: Croc Power Bombs
     dw $078D, $946E  ; DDB
     dw $090F, $B000  ; Screen subpixel X position
     dw $0913, $0000  ; Screen subpixel Y position
@@ -1714,7 +1714,7 @@ preset_suitless_upper_norfair_2_croc_farm:
     dw $D876, $1FB6  ; Items
     dw #$FFFF
 
-preset_suitless_upper_norfair_2_croc_revisit:
+preset_suitless_upper_norfair_2_crocomire_revisit:
     dw #preset_suitless_upper_norfair_2_croc_farm ; Upper Norfair 2: Croc Farm
     dw $078D, $947A  ; DDB
     dw $079B, $AA82  ; MDB
@@ -1732,7 +1732,7 @@ preset_suitless_upper_norfair_2_croc_revisit:
     dw #$FFFF
 
 preset_suitless_upper_norfair_2_croc_speedway_up:
-    dw #preset_suitless_upper_norfair_2_croc_revisit ; Upper Norfair 2: Croc Revisit
+    dw #preset_suitless_upper_norfair_2_crocomire_revisit ; Upper Norfair 2: Crocomire Revisit
     dw $078D, $9432  ; DDB
     dw $079B, $A98D  ; MDB
     dw $090F, $C000  ; Screen subpixel X position
@@ -2432,7 +2432,7 @@ preset_suitless_maridia_cleanup_2_mt_everest_final:
     dw #$FFFF
 
 preset_suitless_maridia_cleanup_2_crab_shaft_up:
-    dw #preset_suitless_maridia_cleanup_2_mt_everest_final ; Maridia Cleanup 2: Mt Everest Final
+    dw #preset_suitless_maridia_cleanup_2_mt_everest_final ; Maridia Cleanup 2: Mt. Everest Final
     dw $078D, $A3F0  ; DDB
     dw $079B, $D0B9  ; MDB
     dw $090F, $99DE  ; Screen subpixel X position
@@ -2889,7 +2889,7 @@ preset_suitless_wrecked_ship_shaft_to_supers:
     dw #$FFFF
 
 preset_suitless_wrecked_ship_right_supers:
-    dw #preset_suitless_wrecked_ship_shaft_to_supers ; Wrecked Ship: Shaft to Supers
+    dw #preset_suitless_wrecked_ship_shaft_to_supers ; Wrecked Ship: Shaft To Supers
     dw $078D, $A294  ; DDB
     dw $079B, $CAF6  ; MDB
     dw $090F, $E000  ; Screen subpixel X position
@@ -2946,7 +2946,7 @@ preset_suitless_wrecked_ship_shaft_to_sponge_bath:
     dw $D880, $FF61  ; Items
     dw #$FFFF
 
-preset_suitless_wrecked_ship_sponge_bath_2:
+preset_suitless_wrecked_ship_sponge_bath:
     dw #preset_suitless_wrecked_ship_shaft_to_sponge_bath ; Wrecked Ship: Shaft to Sponge Bath
     dw $078D, $A2E8  ; DDB
     dw $079B, $CAF6  ; MDB
@@ -2963,7 +2963,7 @@ preset_suitless_wrecked_ship_sponge_bath_2:
     dw #$FFFF
 
 preset_suitless_wrecked_ship_electric_death_room:
-    dw #preset_suitless_wrecked_ship_sponge_bath_2 ; Wrecked Ship: Sponge Bath
+    dw #preset_suitless_wrecked_ship_sponge_bath ; Wrecked Ship: Sponge Bath
     dw $078D, $A2DC  ; DDB
     dw $079B, $CB8B  ; MDB
     dw $090F, $F000  ; Screen subpixel X position
@@ -3646,7 +3646,7 @@ preset_suitless_ridley_worst_room_in_the_game:
     dw #$FFFF
 
 preset_suitless_ridley_mickey_mouse_room:
-    dw #preset_suitless_ridley_worst_room_in_the_game ; Ridley: Worst Room in the Game
+    dw #preset_suitless_ridley_worst_room_in_the_game ; Ridley: Worst Room In The Game
     dw $078D, $994E  ; DDB
     dw $079B, $B4AD  ; MDB
     dw $090F, $B000  ; Screen subpixel X position
@@ -3788,7 +3788,7 @@ preset_suitless_ridley_preridley_room:
     dw $D8BC, $0001  ; Doors
     dw #$FFFF
 
-preset_suitless_ridley_ridley_2:
+preset_suitless_ridley_ridley:
     dw #preset_suitless_ridley_preridley_room ; Ridley: Pre-Ridley Room
     dw $078D, $995A  ; DDB
     dw $079B, $B37A  ; MDB
@@ -3807,7 +3807,7 @@ preset_suitless_ridley_ridley_2:
     dw #$FFFF
 
 preset_suitless_norfair_cleanup_ridley_escape:
-    dw #preset_suitless_ridley_ridley_2 ; Ridley: Ridley
+    dw #preset_suitless_ridley_ridley ; Ridley: Ridley
     dw $078D, $9A62  ; DDB
     dw $079B, $B32E  ; MDB
     dw $07F3, $0024  ; Music Bank
@@ -3962,7 +3962,7 @@ preset_suitless_norfair_cleanup_three_musketeers:
     dw $0AF8, $2000  ; Samus subpixel X
     dw #$FFFF
 
-preset_suitless_norfair_cleanup_single_chamber_2:
+preset_suitless_norfair_cleanup_single_chamber:
     dw #preset_suitless_norfair_cleanup_three_musketeers ; Norfair Cleanup: Three Musketeers
     dw $078D, $99AE  ; DDB
     dw $079B, $B656  ; MDB
@@ -3983,7 +3983,7 @@ preset_suitless_norfair_cleanup_single_chamber_2:
     dw #$FFFF
 
 preset_suitless_norfair_cleanup_bubble_mountain_return:
-    dw #preset_suitless_norfair_cleanup_single_chamber_2 ; Norfair Cleanup: Single Chamber
+    dw #preset_suitless_norfair_cleanup_single_chamber ; Norfair Cleanup: Single Chamber
     dw $078D, $9A4A  ; DDB
     dw $079B, $AD5E  ; MDB
     dw $07F3, $0015  ; Music Bank
@@ -4380,7 +4380,7 @@ preset_suitless_final_cleanup_landing_site_revisit:
     dw $0AFC, $43FF  ; Samus subpixel Y
     dw #$FFFF
 
-preset_suitless_final_cleanup_crateria_pbs:
+preset_suitless_final_cleanup_crateria_power_bombs:
     dw #preset_suitless_final_cleanup_landing_site_revisit ; Final Cleanup: Landing Site Revisit
     dw $078D, $896A  ; DDB
     dw $079B, $91F8  ; MDB
@@ -4401,7 +4401,7 @@ preset_suitless_final_cleanup_crateria_pbs:
     dw #$FFFF
 
 preset_suitless_final_cleanup_gauntlet_entry:
-    dw #preset_suitless_final_cleanup_crateria_pbs ; Final Cleanup: Crateria PBs
+    dw #preset_suitless_final_cleanup_crateria_power_bombs ; Final Cleanup: Crateria Power Bombs
     dw $078D, $893A  ; DDB
     dw $079B, $93AA  ; MDB
     dw $090F, $6001  ; Screen subpixel X position

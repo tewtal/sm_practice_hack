@@ -270,6 +270,7 @@ action_submenu_jump:
 
 preset_category_submenus:
 {
+    dw #PresetsMenuKpdr20
     dw #PresetsMenuKpdr21
     dw #PresetsMenuKpdr22
     dw #PresetsMenuKpdr23
@@ -293,11 +294,14 @@ preset_category_submenus:
     dw #PresetsMenuAllbosskpdr
     dw #PresetsMenuAllbosspkdr
     dw #PresetsMenuAllbossprkd
+    dw #PresetsMenuNoDropsKpdr
+    dw #PresetsMenuRando
     dw #$0000
 }
 
 preset_category_banks:
 {
+    dw #PresetsMenuKpdr20>>16
     dw #PresetsMenuKpdr21>>16
     dw #PresetsMenuKpdr22>>16
     dw #PresetsMenuKpdr23>>16
@@ -321,6 +325,8 @@ preset_category_banks:
     dw #PresetsMenuAllbosskpdr>>16
     dw #PresetsMenuAllbosspkdr>>16
     dw #PresetsMenuAllbossprkd>>16
+    dw #PresetsMenuNoDropsKpdr>>16
+    dw #PresetsMenuRando>>16
     dw #$0000
 }
 
@@ -648,6 +654,7 @@ SelectPresetCategoryMenu:
     dw #precat_nghyper
     dw #precat_nintendopower
     dw #precat_allboss
+    dw #precat_rando
     dw #$0000
     %cm_header("SELECT PRESET CATEGORY")
 
@@ -656,6 +663,7 @@ presets_current:
     dl #!sram_preset_category
     dw #.routine
     db #$28, "CURRENT PRESET", #$FF
+    db #$28, "   KPDR 20%", #$FF
     db #$28, "   KPDR 21%", #$FF
     db #$28, "   KPDR 22%", #$FF
     db #$28, "   KPDR 23%", #$FF
@@ -679,6 +687,8 @@ presets_current:
     db #$28, "  BOSS KPDR", #$FF
     db #$28, "  BOSS PKDR", #$FF
     db #$28, "  BOSS PRKD", #$FF
+    db #$28, "NODROP KPDR", #$FF
+    db #$28, "      RANDO", #$FF
     db #$FF
   .routine
     TDC : STA !sram_last_preset_low_word : STA !sram_last_preset_high_word
@@ -688,74 +698,80 @@ precat_kpdr:
     %cm_submenu("KPDR", #SelectKpdrPresetCategoryMenu)
 
 SelectKpdrPresetCategoryMenu:
+    dw #precat_kpdr20
     dw #precat_kpdr21
     dw #precat_kpdr22
     dw #precat_kpdr23
     dw #precat_kpdr25
+    dw #precat_allbosskpdr
+    dw #precat_nodropskpdr
     dw #$0000
     %cm_header("SELECT KPDR CATEGORY")
 
+precat_kpdr20:
+    %cm_jsl("20% KPDR 15 Missiles", #action_select_preset_category, #$0000)
+
 precat_kpdr21:
-    %cm_jsl("21% KPDR 3 E-Tanks", #action_select_preset_category, #$0000)
+    %cm_jsl("21% KPDR 3 E-Tanks", #action_select_preset_category, #$0001)
 
 precat_kpdr22:
-    %cm_jsl("22% KPDR 4 E-Tanks", #action_select_preset_category, #$0001)
+    %cm_jsl("22% KPDR 4 E-Tanks", #action_select_preset_category, #$0002)
 
 precat_kpdr23:
-    %cm_jsl("23% KPDR with Spazer", #action_select_preset_category, #$0002)
+    %cm_jsl("23% KPDR with Spazer", #action_select_preset_category, #$0003)
 
 precat_kpdr25:
-    %cm_jsl("25% KPDR Early Ice", #action_select_preset_category, #$0003)
+    %cm_jsl("25% KPDR Early Ice", #action_select_preset_category, #$0004)
 
 precat_prkd19:
-    %cm_jsl("19% PRKD 15 Missiles", #action_select_preset_category, #$0004)
+    %cm_jsl("19% PRKD 15 Missiles", #action_select_preset_category, #$0005)
 
 precat_prkd20:
-    %cm_jsl("20% PRKD 20 Missiles", #action_select_preset_category, #$0005)
+    %cm_jsl("20% PRKD 20 Missiles", #action_select_preset_category, #$0006)
 
 precat_pkrd:
-    %cm_jsl("Any% PKRD", #action_select_preset_category, #$0006)
+    %cm_jsl("Any% PKRD", #action_select_preset_category, #$0007)
 
 precat_gtclassic:
-    %cm_jsl("GT Classic", #action_select_preset_category, #$0007)
+    %cm_jsl("GT Classic", #action_select_preset_category, #$0008)
 
 precat_gtmax:
-    %cm_jsl("GT Max%", #action_select_preset_category, #$0008)
+    %cm_jsl("GT Max%", #action_select_preset_category, #$0009)
 
 precat_100early:
-    %cm_jsl("100% Early Crocomire", #action_select_preset_category, #$0009)
+    %cm_jsl("100% Early Crocomire", #action_select_preset_category, #$000A)
 
 precat_hundo:
-    %cm_jsl("100% Late Crocomire", #action_select_preset_category, #$000A)
+    %cm_jsl("100% Late Crocomire", #action_select_preset_category, #$000B)
 
 precat_100map:
-!PRESET_CATEGORY_100MAP_INDEX = #$000B
-    %cm_jsl("100% Map Completion", #action_select_preset_category, #$000B)
+!PRESET_CATEGORY_100MAP_INDEX = #$000C
+    %cm_jsl("100% Map Completion", #action_select_preset_category, #$000C)
 
 precat_spazermap:
-!PRESET_CATEGORY_SPAZERMAP_INDEX = #$000C
-    %cm_jsl("100% Map with Spazer", #action_select_preset_category, #$000C)
+!PRESET_CATEGORY_SPAZERMAP_INDEX = #$000D
+    %cm_jsl("100% Map with Spazer", #action_select_preset_category, #$000D)
 
 precat_14ice:
-    %cm_jsl("14% Ice", #action_select_preset_category, #$000D)
+    %cm_jsl("14% Ice", #action_select_preset_category, #$000E)
 
 precat_14speed:
-    %cm_jsl("14% Speed", #action_select_preset_category, #$000E)
+    %cm_jsl("14% Speed", #action_select_preset_category, #$000F)
 
 precat_rbo:
-    %cm_jsl("Reverse Boss Order", #action_select_preset_category, #$000F)
+    %cm_jsl("Reverse Boss Order", #action_select_preset_category, #$0010)
 
 precat_suitless:
-    %cm_jsl("Max% Suitless", #action_select_preset_category, #$0010)
+    %cm_jsl("Max% Suitless", #action_select_preset_category, #$0011)
 
 precat_ngplasma:
-    %cm_jsl("NewGame+ Plasma", #action_select_preset_category, #$0011)
+    %cm_jsl("NewGame+ Plasma", #action_select_preset_category, #$0012)
 
 precat_nghyper:
-    %cm_jsl("NewGame+ Hyper", #action_select_preset_category, #$0012)
+    %cm_jsl("NewGame+ Hyper", #action_select_preset_category, #$0013)
 
 precat_nintendopower:
-    %cm_jsl("Nintendo Power%", #action_select_preset_category, #$0013)
+    %cm_jsl("Nintendo Power%", #action_select_preset_category, #$0014)
 
 precat_allboss:
     %cm_submenu("All Bosses", #SelectAllBossesPresetCategoryMenu)
@@ -768,13 +784,19 @@ SelectAllBossesPresetCategoryMenu:
     %cm_header("SELECT ALL BOSSES CATEGORY")
 
 precat_allbosskpdr:
-    %cm_jsl("All Bosses KPDR", #action_select_preset_category, #$0014)
+    %cm_jsl("All Bosses KPDR", #action_select_preset_category, #$0015)
 
 precat_allbosspkdr:
-    %cm_jsl("All Bosses PKDR", #action_select_preset_category, #$0015)
+    %cm_jsl("All Bosses PKDR", #action_select_preset_category, #$0016)
 
 precat_allbossprkd:
-    %cm_jsl("All Bosses PRKD", #action_select_preset_category, #$0016)
+    %cm_jsl("All Bosses PRKD", #action_select_preset_category, #$0017)
+
+precat_nodropskpdr:
+    %cm_jsl("No Drops KPDR", #action_select_preset_category, #$0018)
+
+precat_rando:
+    %cm_jsl("Randomizer", #action_select_preset_category, #$0019)
 
 action_select_preset_category:
 {
@@ -1622,6 +1644,7 @@ DisplayModeMenu:
     dw ihmode_lagcounter
     dw ihmode_cpuusage
     dw ihmode_hspeed
+    dw ihmode_dashspeed
     dw ihmode_vspeed
     dw ihmode_quickdrop
     dw ihmode_walljump
@@ -1685,43 +1708,46 @@ ihmode_cpuusage:
 ihmode_hspeed:
     %cm_jsl("Horizontal Speed", #action_select_infohud_mode, #$000C)
 
+ihmode_dashspeed:
+    %cm_jsl("Dash Speed", #action_select_infohud_mode, #$000D)
+
 ihmode_vspeed:
-!IH_MODE_VSPEED_INDEX = #$000D
-    %cm_jsl("Vertical Speed", #action_select_infohud_mode, #$000D)
+!IH_MODE_VSPEED_INDEX = #$000E
+    %cm_jsl("Vertical Speed", #action_select_infohud_mode, #$000E)
 
 ihmode_quickdrop:
-    %cm_jsl("Quickdrop Trainer", #action_select_infohud_mode, #$000E)
+    %cm_jsl("Quickdrop Trainer", #action_select_infohud_mode, #$000F)
 
 ihmode_walljump:
-!IH_MODE_WALLJUMP_INDEX = #$000F
-    %cm_jsl("Walljump Trainer", #action_select_infohud_mode, #$000F)
+!IH_MODE_WALLJUMP_INDEX = #$0010
+    %cm_jsl("Walljump Trainer", #action_select_infohud_mode, #$0010)
 
 ihmode_countdamage:
-!IH_MODE_COUNTDAMAGE_INDEX = #$0010
-    %cm_jsl("Boss Damage Counter", #action_select_infohud_mode, #$0010)
+!IH_MODE_COUNTDAMAGE_INDEX = #$0011
+    %cm_jsl("Boss Damage Counter", #action_select_infohud_mode, #$0011)
 
 ihmode_armpump:
-!IH_MODE_ARMPUMP_INDEX = #$0011
-    %cm_jsl("Arm Pump Trainer", #action_select_infohud_mode, #$0011)
+!IH_MODE_ARMPUMP_INDEX = #$0012
+    %cm_jsl("Arm Pump Trainer", #action_select_infohud_mode, #$0012)
 
 ihmode_pumpcounter:
-    %cm_jsl("Arm Pump Counter", #action_select_infohud_mode, #$0012)
+    %cm_jsl("Arm Pump Counter", #action_select_infohud_mode, #$0013)
 
 ihmode_xpos:
-    %cm_jsl("X Position", #action_select_infohud_mode, #$0013)
+    %cm_jsl("X Position", #action_select_infohud_mode, #$0014)
 
 ihmode_ypos:
-    %cm_jsl("Y Position", #action_select_infohud_mode, #$0014)
+    %cm_jsl("Y Position", #action_select_infohud_mode, #$0015)
 
 ihmode_shottimer:
-!IH_MODE_SHOTTIMER_INDEX = #$0015
-    %cm_jsl("Shot Timer", #action_select_infohud_mode, #$0015)
+!IH_MODE_SHOTTIMER_INDEX = #$0016
+    %cm_jsl("Shot Timer", #action_select_infohud_mode, #$0016)
 
 ihmode_ramwatch:
-!IH_MODE_RAMWATCH_INDEX = #$0016
-    %cm_jsl("Custom RAM Watch", #action_select_infohud_mode, #$0016)
+!IH_MODE_RAMWATCH_INDEX = #$0017
+    %cm_jsl("Custom RAM Watch", #action_select_infohud_mode, #$0017)
 
-!IH_MODE_COUNT = #$0017
+!IH_MODE_COUNT = #$0018
 action_select_infohud_mode:
 {
     TYA : STA !sram_display_mode
@@ -1753,6 +1779,7 @@ ih_display_mode:
     db #$28, "LAG COUNTER", #$FF
     db #$28, "  CPU USAGE", #$FF
     db #$28, "HORIZ SPEED", #$FF
+    db #$28, " DASH SPEED", #$FF
     db #$28, " VERT SPEED", #$FF
     db #$28, " QUICK DROP", #$FF
     db #$28, "  WALL JUMP", #$FF
@@ -1964,6 +1991,7 @@ ih_superhud_bottom_selector:
     db #$28, "LAG COUNTER", #$FF
     db #$28, "  CPU USAGE", #$FF
     db #$28, "HORIZ SPEED", #$FF
+    db #$28, " DASH SPEED", #$FF
     db #$28, " VERT SPEED", #$FF
     db #$28, " QUICK DROP", #$FF
     db #$28, "  WALL JUMP", #$FF
@@ -2014,6 +2042,7 @@ SuperHUDBottomMenu:
     dw ih_superhud_lagcounter
     dw ih_superhud_cpuusage
     dw ih_superhud_hspeed
+    dw ih_superhud_dashspeed
     dw ih_superhud_vspeed
     dw ih_superhud_quickdrop
     dw ih_superhud_walljump
@@ -2104,109 +2133,112 @@ ih_superhud_cpuusage:
 ih_superhud_hspeed:
     %cm_jsl("Horizontal Speed", #action_select_superhud_bottom, #$000B)
 
+ih_superhud_dashspeed:
+    %cm_jsl("Dash Speed", #action_select_infohud_mode, #$000C)
+
 ih_superhud_vspeed:
-    %cm_jsl("Vertical Speed", #action_select_superhud_bottom, #$000C)
+    %cm_jsl("Vertical Speed", #action_select_superhud_bottom, #$000D)
 
 ih_superhud_quickdrop:
-    %cm_jsl("Quickdrop Trainer", #action_select_superhud_bottom, #$000D)
+    %cm_jsl("Quickdrop Trainer", #action_select_superhud_bottom, #$000E)
 
 ih_superhud_walljump:
-!IH_SUPERHUD_WALLJUMP_BOTTOM_INDEX = #$000E
-    %cm_jsl("Walljump Trainer", #action_select_superhud_bottom, #$000E)
+!IH_SUPERHUD_WALLJUMP_BOTTOM_INDEX = #$000F
+    %cm_jsl("Walljump Trainer", #action_select_superhud_bottom, #$000F)
 
 ih_superhud_countdamage:
-!IH_SUPERHUD_COUNTDAMAGE_BOTTOM_INDEX = #$000F
-    %cm_jsl("Boss Damage Counter", #action_select_superhud_bottom, #$000F)
+!IH_SUPERHUD_COUNTDAMAGE_BOTTOM_INDEX = #$0010
+    %cm_jsl("Boss Damage Counter", #action_select_superhud_bottom, #$0010)
 
 ih_superhud_armpump:
-!IH_SUPERHUD_ARMPUMP_BOTTOM_INDEX = #$0010
-    %cm_jsl("Arm Pump Trainer", #action_select_superhud_bottom, #$0010)
+!IH_SUPERHUD_ARMPUMP_BOTTOM_INDEX = #$0011
+    %cm_jsl("Arm Pump Trainer", #action_select_superhud_bottom, #$0011)
 
 ih_superhud_pumpcounter:
-    %cm_jsl("Arm Pump Counter", #action_select_superhud_bottom, #$0011)
+    %cm_jsl("Arm Pump Counter", #action_select_superhud_bottom, #$0012)
 
 ih_superhud_xpos:
-    %cm_jsl("X Position", #action_select_superhud_bottom, #$0012)
+    %cm_jsl("X Position", #action_select_superhud_bottom, #$0013)
 
 ih_superhud_ypos:
-    %cm_jsl("Y Position", #action_select_superhud_bottom, #$0013)
+    %cm_jsl("Y Position", #action_select_superhud_bottom, #$0014)
 
 ih_superhud_shottimer:
-!IH_SUPERHUD_SHOTTIMER_BOTTOM_INDEX = #$0014
-    %cm_jsl("Shot Timer", #action_select_superhud_bottom, #$0014)
+!IH_SUPERHUD_SHOTTIMER_BOTTOM_INDEX = #$0015
+    %cm_jsl("Shot Timer", #action_select_superhud_bottom, #$0015)
 
 ih_superhud_ramwatch:
-!IH_SUPERHUD_RAMWATCH_BOTTOM_INDEX = #$0015
-    %cm_jsl("Custom RAM Watch", #action_select_superhud_bottom, #$0015)
+!IH_SUPERHUD_RAMWATCH_BOTTOM_INDEX = #$0016
+    %cm_jsl("Custom RAM Watch", #action_select_superhud_bottom, #$0016)
 
 ih_superhud_ceresridley:
-    %cm_jsl("Ceres Ridley Hits", #action_select_superhud_bottom, #$0016)
+    %cm_jsl("Ceres Ridley Hits", #action_select_superhud_bottom, #$0017)
 
 ih_superhud_doorskip:
-    %cm_jsl("Parlor-Climb Door Skip", #action_select_superhud_bottom, #$0017)
+    %cm_jsl("Parlor-Climb Door Skip", #action_select_superhud_bottom, #$0018)
 
 ih_superhud_tacotank:
-    %cm_jsl("Taco Tank", #action_select_superhud_bottom, #$0018)
+    %cm_jsl("Taco Tank", #action_select_superhud_bottom, #$0019)
 
 ih_superhud_pitdoor:
-    %cm_jsl("Pit Room Right Door", #action_select_superhud_bottom, #$0019)
+    %cm_jsl("Pit Room Right Door", #action_select_superhud_bottom, #$001A)
 
 ih_superhud_moondance:
-    %cm_jsl("Moondance", #action_select_superhud_bottom, #$001A)
+    %cm_jsl("Moondance", #action_select_superhud_bottom, #$001B)
 
 ih_superhud_kraidradar:
-    %cm_jsl("Kraid Nail Radar", #action_select_room_strat, #$001B)
+    %cm_jsl("Kraid Nail Radar", #action_select_room_strat, #$001C)
 
 ih_superhud_bootlessup:
-    %cm_jsl("Bootless Up In Two", #action_select_superhud_bottom, #$001C)
+    %cm_jsl("Bootless Up In Two", #action_select_superhud_bottom, #$001D)
 
 ih_superhud_gateglitch:
-    %cm_jsl("Gate Glitch", #action_select_superhud_bottom, #$001D)
+    %cm_jsl("Gate Glitch", #action_select_superhud_bottom, #$001E)
 
 ih_superhud_moatcwj:
-    %cm_jsl("Moat CWJ", #action_select_superhud_bottom, #$001E)
+    %cm_jsl("Moat CWJ", #action_select_superhud_bottom, #$001F)
 
 ih_superhud_robotflush:
-    %cm_jsl("Robot Flush", #action_select_superhud_bottom, #$001F)
+    %cm_jsl("Robot Flush", #action_select_superhud_bottom, #$0020)
 
 ih_superhud_shinetopb:
-    %cm_jsl("Shine to PB", #action_select_superhud_bottom, #$0020)
+    %cm_jsl("Shine to PB", #action_select_superhud_bottom, #$0021)
 
 ih_superhud_elevatorcf:
-    %cm_jsl("Elevator Crystal Flash", #action_select_superhud_bottom, #$0021)
+    %cm_jsl("Elevator Crystal Flash", #action_select_superhud_bottom, #$0022)
 
 ih_superhud_botwooncf:
-    %cm_jsl("Botwoon Crystal Flash", #action_select_superhud_bottom, #$0022)
+    %cm_jsl("Botwoon Crystal Flash", #action_select_superhud_bottom, #$0023)
 
 ih_superhud_draygonai:
-    %cm_jsl("Draygon AI", #action_select_superhud_bottom, #$0023)
+    %cm_jsl("Draygon AI", #action_select_superhud_bottom, #$0024)
 
 ih_superhud_snailclip:
-    %cm_jsl("Aqueduct Snail Clip", #action_select_superhud_bottom, #$0024)
+    %cm_jsl("Aqueduct Snail Clip", #action_select_superhud_bottom, #$0025)
 
 ih_superhud_wasteland:
-    %cm_jsl("Wasteland Entry", #action_select_superhud_bottom, #$0025)
+    %cm_jsl("Wasteland Entry", #action_select_superhud_bottom, #$0026)
 
 ih_superhud_ridleyai:
-    %cm_jsl("Ridley AI", #action_select_superhud_bottom, #$0026)
+    %cm_jsl("Ridley AI", #action_select_superhud_bottom, #$0027)
 
 ih_superhud_kihuntermanip:
-    %cm_jsl("Kihunter Manipulation", #action_select_room_strat, #$0027)
+    %cm_jsl("Kihunter Manipulation", #action_select_room_strat, #$0028)
 
 ih_superhud_downbackzeb:
-    %cm_jsl("Downback Zeb Skip", #action_select_superhud_bottom, #$0028)
+    %cm_jsl("Downback Zeb Skip", #action_select_superhud_bottom, #$0029)
 
 ih_superhud_zebskip:
-    %cm_jsl("Zeb Skip Indicator", #action_select_superhud_bottom, #$0029)
+    %cm_jsl("Zeb Skip Indicator", #action_select_superhud_bottom, #$002A)
 
 ih_superhud_mbhp:
-!IH_SUPERHUD_MBHP_BOTTOM_INDEX = #$002A
-    %cm_jsl("Mother Brain HP", #action_select_superhud_bottom, #$002A)
+!IH_SUPERHUD_MBHP_BOTTOM_INDEX = #$002B
+    %cm_jsl("Mother Brain HP", #action_select_superhud_bottom, #$002B)
 
 ih_superhud_twocries:
-    %cm_jsl("Two Cries Standup", #action_select_superhud_bottom, #$002B)
+    %cm_jsl("Two Cries Standup", #action_select_superhud_bottom, #$002C)
 
-!IH_SUPERHUD_BOTTOM_COUNT = #$002C
+!IH_SUPERHUD_BOTTOM_COUNT = #$002D
 action_select_superhud_bottom:
 {
     TYA : STA !sram_superhud_bottom
@@ -2237,6 +2269,7 @@ ih_superhud_middle_selector:
     db #$28, "LAG COUNTER", #$FF
     db #$28, "  CPU USAGE", #$FF
     db #$28, "HORIZ SPEED", #$FF
+    db #$28, " DASH SPEED", #$FF
     db #$28, " SHOT TIMER", #$FF
     db #$28, "     ITEM %", #$FF
     db #$28, "   RESERVES", #$FF
@@ -2258,6 +2291,7 @@ SuperHUDMiddleMenu:
     dw ih_superhud_middle_lagcounter
     dw ih_superhud_middle_cpuusage
     dw ih_superhud_middle_hspeed
+    dw ih_superhud_middle_dashspeed
     dw ih_superhud_middle_shottimer
     dw ih_superhud_middle_itempercent
     dw ih_superhud_middle_reserves
@@ -2297,20 +2331,23 @@ ih_superhud_middle_cpuusage:
 ih_superhud_middle_hspeed:
     %cm_jsl("Horizontal Speed", #action_select_superhud_middle, #$0009)
 
+ih_superhud_middle_dashspeed:
+    %cm_jsl("Dash Speed", #action_select_infohud_mode, #$000A)
+
 ih_superhud_middle_shottimer:
-    %cm_jsl("Shot Timer", #action_select_superhud_middle, #$000A)
+    %cm_jsl("Shot Timer", #action_select_superhud_middle, #$000B)
 
 ih_superhud_middle_itempercent:
-    %cm_jsl("Item Collection %", #action_select_superhud_middle, #$000B)
+    %cm_jsl("Item Collection %", #action_select_superhud_middle, #$000C)
 
 ih_superhud_middle_reserves:
-    %cm_jsl("Reserves", #action_select_superhud_middle, #$000C)
+    %cm_jsl("Reserves", #action_select_superhud_middle, #$000D)
 
 ih_superhud_middle_statusicons:
-    %cm_jsl("Status Icons", #action_select_superhud_middle, #$000D)
+    %cm_jsl("Status Icons", #action_select_superhud_middle, #$000E)
 
 ih_superhud_middle_tilecounter:
-    %cm_jsl("Map Tile Counter", #action_select_superhud_middle, #$000E)
+    %cm_jsl("Map Tile Counter", #action_select_superhud_middle, #$000F)
 
 action_select_superhud_middle:
 {
@@ -2333,6 +2370,7 @@ ih_superhud_top_selector:
     db #$28, "LAG COUNTER", #$FF
     db #$28, "  CPU USAGE", #$FF
     db #$28, "HORIZ SPEED", #$FF
+    db #$28, " DASH SPEED", #$FF
     db #$28, " SHOT TIMER", #$FF
     db #$28, "     ITEM %", #$FF
     db #$28, "   RESERVES", #$FF
@@ -2354,6 +2392,7 @@ SuperHUDTopMenu:
     dw ih_superhud_top_lagcounter
     dw ih_superhud_top_cpuusage
     dw ih_superhud_top_hspeed
+    dw ih_superhud_top_dashspeed
     dw ih_superhud_top_shottimer
     dw ih_superhud_top_itempercent
     dw ih_superhud_top_reserves
@@ -2393,20 +2432,23 @@ ih_superhud_top_cpuusage:
 ih_superhud_top_hspeed:
     %cm_jsl("Horizontal Speed", #action_select_superhud_top, #$0009)
 
+ih_superhud_top_dashspeed:
+    %cm_jsl("Dash Speed", #action_select_infohud_mode, #$000A)
+
 ih_superhud_top_shottimer:
-    %cm_jsl("Shot Timer", #action_select_superhud_top, #$000A)
+    %cm_jsl("Shot Timer", #action_select_superhud_top, #$000B)
 
 ih_superhud_top_itempercent:
-    %cm_jsl("Item Collection %", #action_select_superhud_top, #$000B)
+    %cm_jsl("Item Collection %", #action_select_superhud_top, #$000C)
 
 ih_superhud_top_reserves:
-    %cm_jsl("Reserves", #action_select_superhud_top, #$000C)
+    %cm_jsl("Reserves", #action_select_superhud_top, #$000D)
 
 ih_superhud_top_statusicons:
-    %cm_jsl("Status Icons", #action_select_superhud_top, #$000D)
+    %cm_jsl("Status Icons", #action_select_superhud_top, #$000E)
 
 ih_superhud_top_tilecounter:
-    %cm_jsl("Map Tile Counter", #action_select_superhud_top, #$000E)
+    %cm_jsl("Map Tile Counter", #action_select_superhud_top, #$000F)
 
 action_select_superhud_top:
 {
@@ -2429,6 +2471,7 @@ ih_door_display_mode:
     db #$28, "Door HUD Mode", #$FF
     db #$28, "        OFF", #$FF
     db #$28, "HORIZ SPEED", #$FF
+    db #$28, " DASH SPEED", #$FF
     db #$28, " VERT SPEED", #$FF
     db #$28, "     CHARGE", #$FF
     db #$28, "SHINE TIMER", #$FF
@@ -2813,6 +2856,24 @@ rng_phan_first_phase:
     STA !ram_phantoon_phase_rng
     LDA.l rng_phan_phase_1_table,X
     ORA !ram_phantoon_phase_rng : STA !ram_phantoon_phase_rng
+  .check_flames
+    ; If first round pattern is random or #1 Left or #1 Right, update it
+    LDA !ram_cm_phantoon_flames_rng : BEQ .update_flames
+    CMP #$0005 : BMI .done_flames
+  .update_flames
+    LDA !ram_phantoon_phase_rng : AND !PHANTOON_RNG_PHASE_1_MASK
+    BEQ .set_random : AND #$0015 : BEQ .set_left
+    LDA !ram_phantoon_phase_rng : AND #$002A : BEQ .set_right
+  .set_random
+    LDA #$0000 : STA !ram_cm_phantoon_flames_rng
+    JMP rng_phan_flamepattern_routine
+  .set_left
+    LDA #$0005 : STA !ram_cm_phantoon_flames_rng
+    JMP rng_phan_flamepattern_routine
+  .set_right
+    LDA #$0006 : STA !ram_cm_phantoon_flames_rng
+    JMP rng_phan_flamepattern_routine
+  .done_flames
     LDA !ROOM_ID : CMP.w #ROOM_PhantoonRoom : BNE .done
     JML init_phantoon_rng
   .done
@@ -2878,10 +2939,7 @@ rng_phan_set_phan_first_phase:
     INX #2 : CPX #$001E : BNE .first_loop
   .end_first_loop
     TXA : LSR : STA !ram_cm_phantoon_first_phase_rng
-    LDA !ROOM_ID : CMP.w #ROOM_PhantoonRoom : BNE .done
-    JML init_phantoon_rng
-  .done
-    RTL
+    JMP rng_phan_first_phase_check_flames
 }
 
 rng_phan_set_phan_second_phase:
@@ -2997,6 +3055,8 @@ rng_phan_flamepattern:
     db #$28, "        111", #$FF
     db #$28, "    3333333", #$FF
     db #$28, "    1424212", #$FF
+    db #$28, "    #1 LEFT", #$FF
+    db #$28, "   #1 RIGHT", #$FF
     db #$FF
   .routine
     LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_INVERTED

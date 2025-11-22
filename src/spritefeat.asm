@@ -152,7 +152,7 @@ draw_sprite_oob:
     LDY !OAM_STACK_POINTER : STA $0372,Y
 
     ; Get X coord
-    LDA $C0 : CLC : ADC #$02 : ASL #4 : SEC : SBC $C4
+    LDA $C0 : INC #2 : ASL #4 : SEC : SBC $C4
     STA $0370,Y
 
     ; Get Y coord
@@ -451,9 +451,9 @@ draw_ext_spritemap_hitbox:
     STA $C1
 
     ; get spritemap X/Y offsets
-    LDA $10 : CLC : ADC #$0002 : STA $10
+    LDA $10 : INC #2 : STA $10
     LDA [$10] : STA $C5 ; X
-    LDA $10 : CLC : ADC #$0002 : STA $10
+    LDA $10 : INC #2 : STA $10
     LDA [$10] : STA $C7 ; Y
 
     ; set hitbox pointer
@@ -470,13 +470,13 @@ draw_ext_spritemap_hitbox:
 
   .nextHitbox
     ; grab X and Y offsets
-    LDA $10 : CLC : ADC #$0002 : STA $10
+    LDA $10 : INC #2 : STA $10
     LDA [$10] : STA $14 ; left offset
-    LDA $10 : CLC : ADC #$0002 : STA $10
+    LDA $10 : INC #2 : STA $10
     LDA [$10] : STA $16 ; top offset
-    LDA $10 : CLC : ADC #$0002 : STA $10
+    LDA $10 : INC #2 : STA $10
     LDA [$10] : STA $18 ; right offset
-    LDA $10 : CLC : ADC #$0002 : STA $10
+    LDA $10 : INC #2 : STA $10
     LDA [$10] : STA $1A ; bottom offset
 
     ; skip two pointers to reach next hitbox
@@ -534,9 +534,9 @@ draw_ext_spritemap_hitbox:
   .nextSpritemap
     DEC $C1 : BEQ .nextEnemy2
     ; add 2 and grab X, add 2 and grab Y, add 4 and grab hitbox
-    LDA $C3 : CLC : ADC #$0002 : STA $10
+    LDA $C3 : INC #2 : STA $10
     LDA [$10] : STA $C5 ; X
-    LDA $10 : CLC : ADC #$0002 : STA $10
+    LDA $10 : INC #2 : STA $10
     LDA [$10] : STA $C7 ; Y
     LDA $10 : CLC : ADC #$0004 : STA $10 : STA $C3
     LDA [$10] : STA $10 ; next hitbox pointer

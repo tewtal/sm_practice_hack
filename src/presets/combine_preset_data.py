@@ -35,16 +35,17 @@ def compute_distance(current_index, last_data_index):
             distance = distance + 1
     return distance
 
-def load_preset_data(file_path):
+def load_preset_data(file_label):
     global all_presets_data_list
     global all_presets_name_list
     global name_dict
     data_dict = {}
+    input_filepath = file_label + "_data.asm"
     last_data_index = -2
     preset_data_list = []
     preset_name = None
     preset_name_list = []
-    with open(file_path, 'r') as file:
+    with open(input_filepath, 'r') as file:
         for line in file:
             line = line.rstrip()
             if line.startswith("preset_"):
@@ -90,7 +91,7 @@ def load_preset_data(file_path):
             elif preset_name:
                 raise Exception("Empty line in preset: " + preset_name)
     if len(preset_data_list) <= 0:
-        raise Exception("No preset data found in file: " + file_path)
+        raise Exception("No preset data found in file: " + input_filepath)
     all_presets_data_list.append(preset_data_list)
     all_presets_name_list.append(preset_name_list)
 
@@ -154,7 +155,7 @@ def combine_preset_data():
         combined_preset_jump_list.append(1 + combined_preset_jump_list[last_index])
         combined_preset_last_index_list.append(last_index)
         combined_preset_names_lists.append([all_presets_name_list[next_file_index][preset_index]])
-        
+
         # Prepare next preset for this file
         next_preset_index = preset_index + 1
         difference = 0
@@ -164,17 +165,16 @@ def combine_preset_data():
             distance_list[next_file_index] = distance
             jump_list[next_file_index] = combined_preset_jump_list[current_index]
             last_index_list[next_file_index] = current_index
-            for i in reversed(range(current_index)):
-                distance = distance + combined_preset_distance_list[i]
+            for i in reversed(range(current_index + 1)):
                 difference = compare_preset_data(i, all_presets_data_list[next_file_index][next_preset_index])
                 if 0 == difference:
                     combined_preset_names_lists[i].append(all_presets_name_list[next_file_index][next_preset_index])
                     next_preset_index = next_preset_index + 1
-                    if len(all_presets_data_list[next_file_index]) <= next_preset_index:
-                        next_preset_index = -1
                     break
-                if distance > largest_allowed_distance:
-                    break
+                if i < current_index:
+                    distance = distance + combined_preset_distance_list[i]
+                    if distance > largest_allowed_distance:
+                        break
                 if ((difference < difference_list[next_file_index]) or
                     ((difference == difference_list[next_file_index]) and
                      (combined_preset_jump_list[i] < jump_list[next_file_index]))):
@@ -273,27 +273,30 @@ def write_combined_preset_data():
             print("    dw #$FFFF", file=file)
 
 
-load_preset_data("kpdr21_data.asm")
-load_preset_data("kpdr22_data.asm")
-load_preset_data("kpdr23_data.asm")
-load_preset_data("kpdr25_data.asm")
-load_preset_data("prkd19_data.asm")
-load_preset_data("prkd20_data.asm")
-load_preset_data("pkrd_data.asm")
-load_preset_data("gtclassic_data.asm")
-load_preset_data("gtmax_data.asm")
-load_preset_data("hundo_data.asm")
-load_preset_data("100early_data.asm")
-load_preset_data("14ice_data.asm")
-load_preset_data("14speed_data.asm")
-load_preset_data("rbo_data.asm")
-load_preset_data("nintendopower_data.asm")
-load_preset_data("allbosskpdr_data.asm")
-load_preset_data("allbosspkdr_data.asm")
-load_preset_data("allbossprkd_data.asm")
-load_preset_data("nghyper_data.asm")
-load_preset_data("ngplasma_data.asm")
-load_preset_data("suitless_data.asm")
+load_preset_data("kpdr20")
+load_preset_data("kpdr21")
+load_preset_data("kpdr22")
+load_preset_data("kpdr23")
+load_preset_data("kpdr25")
+load_preset_data("prkd19")
+load_preset_data("prkd20")
+load_preset_data("pkrd")
+load_preset_data("gtclassic")
+load_preset_data("gtmax")
+load_preset_data("100early")
+load_preset_data("hundo")
+load_preset_data("14ice")
+load_preset_data("14speed")
+load_preset_data("rbo")
+load_preset_data("suitless")
+load_preset_data("ngplasma")
+load_preset_data("nghyper")
+load_preset_data("nintendopower")
+load_preset_data("allbosskpdr")
+load_preset_data("allbosspkdr")
+load_preset_data("allbossprkd")
+load_preset_data("nodropskpdr")
+load_preset_data("rando")
 combine_preset_data()
 write_combined_preset_data()
 

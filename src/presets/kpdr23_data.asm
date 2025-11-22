@@ -554,7 +554,7 @@ preset_kpdr23_kraid_entering_kraids_lair:
     dw #$FFFF
 
 preset_kpdr23_kraid_warehouse_zeelas:
-    dw #preset_kpdr23_kraid_entering_kraids_lair ; Kraid: Entering Kraids Lair
+    dw #preset_kpdr23_kraid_entering_kraids_lair ; Kraid: Entering Kraid's Lair
     dw $078D, $A384  ; DDB
     dw $079B, $A6A1  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -572,7 +572,7 @@ preset_kpdr23_kraid_warehouse_zeelas:
     dw #$FFFF
 
 preset_kpdr23_kraid_kraid_kihunters:
-    dw #preset_kpdr23_kraid_entering_kraids_lair ; Kraid: Entering Kraids Lair
+    dw #preset_kpdr23_kraid_entering_kraids_lair ; Kraid: Entering Kraid's Lair
     dw $078D, $923A  ; DDB
     dw $079B, $A471  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -586,7 +586,7 @@ preset_kpdr23_kraid_kraid_kihunters:
     dw $0AFA, $018B  ; Samus Y
     dw #$FFFF
 
-preset_kpdr23_kraid_mini_kraid:
+preset_kpdr23_kraid_minikraid:
     dw #preset_kpdr23_kraid_kraid_kihunters ; Kraid: Kraid Kihunters
     dw $078D, $9156  ; DDB
     dw $079B, $A4DA  ; MDB
@@ -599,7 +599,7 @@ preset_kpdr23_kraid_mini_kraid:
     dw #$FFFF
 
 preset_kpdr23_kraid_fallen_hero:
-    dw #preset_kpdr23_kraid_mini_kraid ; Kraid: Mini Kraid
+    dw #preset_kpdr23_kraid_minikraid ; Kraid: Mini-Kraid
     dw $078D, $917A  ; DDB
     dw $079B, $A521  ; MDB
     dw $07F3, $0027  ; Music Bank
@@ -674,7 +674,7 @@ preset_kpdr23_kraid_arthur_j_metroid:
     dw $D8B8, $00E4  ; Doors
     dw #$FFFF
 
-preset_kpdr23_kraid_mini_kraid_revisit:
+preset_kpdr23_kraid_minikraid_revisit:
     dw #preset_kpdr23_kraid_arthur_j_metroid ; Kraid: Arthur J. Metroid
     dw $078D, $91CE  ; DDB
     dw $079B, $A56B  ; MDB
@@ -691,7 +691,7 @@ preset_kpdr23_kraid_mini_kraid_revisit:
     dw #$FFFF
 
 preset_kpdr23_kraid_kraid_kihunters_revisit:
-    dw #preset_kpdr23_kraid_mini_kraid_revisit ; Kraid: Mini Kraid Revisit
+    dw #preset_kpdr23_kraid_minikraid_revisit ; Kraid: Mini-Kraid Revisit
     dw $078D, $91AA  ; DDB
     dw $079B, $A521  ; MDB
     dw $090F, $9000  ; Screen subpixel X position
@@ -776,7 +776,7 @@ preset_kpdr23_upper_norfair_business_center_postelev:
     dw $0AFA, $02A8  ; Samus Y
     dw #$FFFF
 
-preset_kpdr23_upper_norfair_hi_jump_etank:
+preset_kpdr23_upper_norfair_hijump_etank:
     dw #preset_kpdr23_upper_norfair_business_center_postelev ; Upper Norfair: Business Center Post-Elev
     dw $090F, $EFFF  ; Screen subpixel X position
     dw $0915, $051B  ; Screen Y position in pixels
@@ -789,8 +789,8 @@ preset_kpdr23_upper_norfair_hi_jump_etank:
     dw $D8B8, $20EF  ; Doors
     dw #$FFFF
 
-preset_kpdr23_upper_norfair_leaving_hi_jump:
-    dw #preset_kpdr23_upper_norfair_hi_jump_etank ; Upper Norfair: Hi Jump E-Tank
+preset_kpdr23_upper_norfair_leaving_hijump:
+    dw #preset_kpdr23_upper_norfair_hijump_etank ; Upper Norfair: Hi-Jump E-Tank
     dw $078D, $9426  ; DDB
     dw $079B, $A9E5  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -811,7 +811,7 @@ preset_kpdr23_upper_norfair_leaving_hi_jump:
     dw #$FFFF
 
 preset_kpdr23_upper_norfair_business_center_revisit:
-    dw #preset_kpdr23_upper_norfair_leaving_hi_jump ; Upper Norfair: Leaving Hi Jump
+    dw #preset_kpdr23_upper_norfair_leaving_hijump ; Upper Norfair: Leaving Hi-Jump
     dw $078D, $93F6  ; DDB
     dw $079B, $AA41  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -1155,7 +1155,7 @@ preset_kpdr23_wrecked_ship_crateria_kihunters:
     dw $D8B6, $B008  ; Doors
     dw #$FFFF
 
-preset_kpdr23_wrecked_ship_oceanfly_setup:
+preset_kpdr23_wrecked_ship_ocean_fly_setup:
     dw #preset_kpdr23_wrecked_ship_crateria_kihunters ; Wrecked Ship: Crateria Kihunters
     dw $078D, $8AF6  ; DDB
     dw $079B, $948C  ; MDB
@@ -1174,7 +1174,7 @@ preset_kpdr23_wrecked_ship_oceanfly_setup:
     dw #$FFFF
 
 preset_kpdr23_wrecked_ship_ocean_spark:
-    dw #preset_kpdr23_wrecked_ship_oceanfly_setup ; Wrecked Ship: Oceanfly Setup
+    dw #preset_kpdr23_wrecked_ship_ocean_fly_setup ; Wrecked Ship: Ocean Fly Setup
     dw $078D, $8A36  ; DDB
     dw $079B, $95FF  ; MDB
     dw $090F, $A3FF  ; Screen subpixel X position
@@ -1254,9 +1254,8 @@ preset_kpdr23_wrecked_ship_leaving_phantoon:
     dw $09CE, $0002  ; Pbs
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $0025  ; Samus X
-    dw $0AF8, $0000  ; Samus subpixel X
-    dw $0AFA, $00C9  ; Samus Y
+    dw $0AF6, $006D  ; Samus X
+    dw $0AFA, $00BB  ; Samus Y
     dw $D82A, $0100  ; Bosses
     dw $D8C0, $0070  ; Doors
     dw #$FFFF
@@ -1496,7 +1495,7 @@ preset_kpdr23_red_brinstar_revisit_below_spazer_final:
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 
-preset_kpdr23_red_brinstar_revisit_breaking_tube:
+preset_kpdr23_red_brinstar_revisit_breaking_the_tube:
     dw #preset_kpdr23_red_brinstar_revisit_below_spazer_final ; Red Brinstar Revisit: Below Spazer Final
     dw $078D, $9102  ; DDB
     dw $079B, $A408  ; MDB
@@ -1511,7 +1510,7 @@ preset_kpdr23_red_brinstar_revisit_breaking_tube:
     dw #$FFFF
 
 preset_kpdr23_maridia_fish_tank:
-    dw #preset_kpdr23_red_brinstar_revisit_breaking_tube ; Red Brinstar Revisit: Breaking Tube
+    dw #preset_kpdr23_red_brinstar_revisit_breaking_the_tube ; Red Brinstar Revisit: Breaking The Tube
     dw $078D, $A330  ; DDB
     dw $079B, $CFC9  ; MDB
     dw $07F3, $001B  ; Music Bank
@@ -1942,7 +1941,7 @@ preset_kpdr23_upper_norfair_revisit_croc_speedway_lower:
     dw #$FFFF
 
 preset_kpdr23_upper_norfair_revisit_spiky_acid_snakes_lower:
-    dw #preset_kpdr23_upper_norfair_revisit_croc_speedway_lower ; Upper Norfair Revisit: Croc Speedway (Lower
+    dw #preset_kpdr23_upper_norfair_revisit_croc_speedway_lower ; Upper Norfair Revisit: Croc Speedway (Lower)
     dw $078D, $93C6  ; DDB
     dw $079B, $AFCE  ; MDB
     dw $090F, $A000  ; Screen subpixel X position
@@ -2001,7 +2000,7 @@ preset_kpdr23_lower_norfair_prepillars:
 
 preset_kpdr23_lower_norfair_fast_pillars_setup:
     dw #preset_kpdr23_lower_norfair_prepillars ; Lower Norfair: Pre-Pillars
-    dw $078D, $985E  ; DDB
+    dw $078D, $989A  ; DDB
     dw $079B, $B3A5  ; MDB
     dw $090F, $8001  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
@@ -2029,7 +2028,7 @@ preset_kpdr23_lower_norfair_worst_room_in_the_game:
     dw #$FFFF
 
 preset_kpdr23_lower_norfair_amphitheatre:
-    dw #preset_kpdr23_lower_norfair_worst_room_in_the_game ; Lower Norfair: Worst Room in the Game
+    dw #preset_kpdr23_lower_norfair_worst_room_in_the_game ; Lower Norfair: Worst Room In The Game
     dw $078D, $994E  ; DDB
     dw $079B, $B4AD  ; MDB
     dw $090F, $C000  ; Screen subpixel X position
@@ -2187,7 +2186,7 @@ preset_kpdr23_lower_norfair_kihunter_stairs_up:
     dw $0AFA, $009B  ; Samus Y
     dw #$FFFF
 
-preset_kpdr23_lower_norfair_fire_flea_room:
+preset_kpdr23_lower_norfair_fireflea_room:
     dw #preset_kpdr23_lower_norfair_kihunter_stairs_up ; Lower Norfair: Kihunter Stairs Up
     dw $078D, $9A26  ; DDB
     dw $079B, $B585  ; MDB
@@ -2202,7 +2201,7 @@ preset_kpdr23_lower_norfair_fire_flea_room:
     dw #$FFFF
 
 preset_kpdr23_lower_norfair_springball_maze:
-    dw #preset_kpdr23_lower_norfair_fire_flea_room ; Lower Norfair: Fire Flea Room
+    dw #preset_kpdr23_lower_norfair_fireflea_room ; Lower Norfair: Fireflea Room
     dw $078D, $9A02  ; DDB
     dw $079B, $B6EE  ; MDB
     dw $090F, $0000  ; Screen subpixel X position

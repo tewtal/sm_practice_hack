@@ -516,7 +516,7 @@ preset_kpdr22_kraid_entering_kraids_lair:
     dw #$FFFF
 
 preset_kpdr22_kraid_warehouse_zeelas:
-    dw #preset_kpdr22_kraid_entering_kraids_lair ; Kraid: Entering Kraids Lair
+    dw #preset_kpdr22_kraid_entering_kraids_lair ; Kraid: Entering Kraid's Lair
     dw $078D, $A384  ; DDB
     dw $079B, $A6A1  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -534,7 +534,7 @@ preset_kpdr22_kraid_warehouse_zeelas:
     dw #$FFFF
 
 preset_kpdr22_kraid_kraid_kihunters:
-    dw #preset_kpdr22_kraid_entering_kraids_lair ; Kraid: Entering Kraids Lair
+    dw #preset_kpdr22_kraid_entering_kraids_lair ; Kraid: Entering Kraid's Lair
     dw $078D, $923A  ; DDB
     dw $079B, $A471  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -548,7 +548,7 @@ preset_kpdr22_kraid_kraid_kihunters:
     dw $0AFA, $018B  ; Samus Y
     dw #$FFFF
 
-preset_kpdr22_kraid_mini_kraid:
+preset_kpdr22_kraid_minikraid:
     dw #preset_kpdr22_kraid_kraid_kihunters ; Kraid: Kraid Kihunters
     dw $078D, $9156  ; DDB
     dw $079B, $A4DA  ; MDB
@@ -561,7 +561,7 @@ preset_kpdr22_kraid_mini_kraid:
     dw #$FFFF
 
 preset_kpdr22_kraid_fallen_hero:
-    dw #preset_kpdr22_kraid_mini_kraid ; Kraid: Mini Kraid
+    dw #preset_kpdr22_kraid_minikraid ; Kraid: Mini-Kraid
     dw $078D, $917A  ; DDB
     dw $079B, $A521  ; MDB
     dw $07F3, $0027  ; Music Bank
@@ -636,7 +636,7 @@ preset_kpdr22_kraid_arthur_j_metroid:
     dw $D8B8, $00E4  ; Doors
     dw #$FFFF
 
-preset_kpdr22_kraid_mini_kraid_revisit:
+preset_kpdr22_kraid_minikraid_revisit:
     dw #preset_kpdr22_kraid_arthur_j_metroid ; Kraid: Arthur J. Metroid
     dw $078D, $91CE  ; DDB
     dw $079B, $A56B  ; MDB
@@ -653,7 +653,7 @@ preset_kpdr22_kraid_mini_kraid_revisit:
     dw #$FFFF
 
 preset_kpdr22_kraid_kraid_kihunters_revisit:
-    dw #preset_kpdr22_kraid_mini_kraid_revisit ; Kraid: Mini Kraid Revisit
+    dw #preset_kpdr22_kraid_minikraid_revisit ; Kraid: Mini-Kraid Revisit
     dw $078D, $91AA  ; DDB
     dw $079B, $A521  ; MDB
     dw $090F, $9000  ; Screen subpixel X position
@@ -721,7 +721,7 @@ preset_kpdr22_kraid_business_center_preelev:
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 
-preset_kpdr22_upper_norfair_business_center_postelev:
+preset_kpdr22_upper_norfair_hjb_missile_business_center_postelev:
     dw #preset_kpdr22_kraid_business_center_preelev ; Kraid: Business Center Pre-Elev
     dw $078D, $9246  ; DDB
     dw $079B, $A7DE  ; MDB
@@ -738,8 +738,8 @@ preset_kpdr22_upper_norfair_business_center_postelev:
     dw $0AFA, $02A8  ; Samus Y
     dw #$FFFF
 
-preset_kpdr22_upper_norfair_hi_jump_etank:
-    dw #preset_kpdr22_upper_norfair_business_center_postelev ; Upper Norfair: Business Center Post-Elev
+preset_kpdr22_upper_norfair_hjb_missile_hijump_etank:
+    dw #preset_kpdr22_upper_norfair_hjb_missile_business_center_postelev ; Upper Norfair HJB Missile: Business Center Post-Elev
     dw $090F, $EFFF  ; Screen subpixel X position
     dw $0915, $051B  ; Screen Y position in pixels
     dw $0919, $03D4  ; Layer 2 Y position
@@ -751,8 +751,8 @@ preset_kpdr22_upper_norfair_hi_jump_etank:
     dw $D8B8, $20EF  ; Doors
     dw #$FFFF
 
-preset_kpdr22_upper_norfair_leaving_hi_jump:
-    dw #preset_kpdr22_upper_norfair_hi_jump_etank ; Upper Norfair: Hi Jump E-Tank
+preset_kpdr22_upper_norfair_hjb_missile_leaving_hijump:
+    dw #preset_kpdr22_upper_norfair_hjb_missile_hijump_etank ; Upper Norfair HJB Missile: Hi-Jump E-Tank
     dw $078D, $9426  ; DDB
     dw $079B, $A9E5  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -772,8 +772,8 @@ preset_kpdr22_upper_norfair_leaving_hi_jump:
     dw $D8BA, $0001  ; Doors
     dw #$FFFF
 
-preset_kpdr22_upper_norfair_business_center_revisit:
-    dw #preset_kpdr22_upper_norfair_leaving_hi_jump ; Upper Norfair: Leaving Hi Jump
+preset_kpdr22_upper_norfair_hjb_missile_business_center_revisit:
+    dw #preset_kpdr22_upper_norfair_hjb_missile_leaving_hijump ; Upper Norfair HJB Missile: Leaving Hi-Jump
     dw $078D, $93F6  ; DDB
     dw $079B, $AA41  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -787,8 +787,8 @@ preset_kpdr22_upper_norfair_business_center_revisit:
     dw $D876, $01A1  ; Items
     dw #$FFFF
 
-preset_kpdr22_upper_norfair_precathedral:
-    dw #preset_kpdr22_upper_norfair_business_center_revisit ; Upper Norfair: Business Center Revisit
+preset_kpdr22_upper_norfair_hjb_missile_precathedral:
+    dw #preset_kpdr22_upper_norfair_hjb_missile_business_center_revisit ; Upper Norfair HJB Missile: Business Center Revisit
     dw $078D, $941A  ; DDB
     dw $079B, $A7DE  ; MDB
     dw $090F, $B000  ; Screen subpixel X position
@@ -801,8 +801,8 @@ preset_kpdr22_upper_norfair_precathedral:
     dw $0AFA, $038B  ; Samus Y
     dw #$FFFF
 
-preset_kpdr22_upper_norfair_cathedral:
-    dw #preset_kpdr22_upper_norfair_precathedral ; Upper Norfair: Pre-Cathedral
+preset_kpdr22_upper_norfair_hjb_missile_cathedral:
+    dw #preset_kpdr22_upper_norfair_hjb_missile_precathedral ; Upper Norfair HJB Missile: Pre-Cathedral
     dw $078D, $92CA  ; DDB
     dw $079B, $A7B3  ; MDB
     dw $090F, $3000  ; Screen subpixel X position
@@ -818,8 +818,8 @@ preset_kpdr22_upper_norfair_cathedral:
     dw $D8B8, $24EF  ; Doors
     dw #$FFFF
 
-preset_kpdr22_upper_norfair_rising_tide:
-    dw #preset_kpdr22_upper_norfair_cathedral ; Upper Norfair: Cathedral
+preset_kpdr22_upper_norfair_hjb_missile_rising_tide:
+    dw #preset_kpdr22_upper_norfair_hjb_missile_cathedral ; Upper Norfair HJB Missile: Cathedral
     dw $078D, $92B2  ; DDB
     dw $079B, $A788  ; MDB
     dw $090F, $7FFF  ; Screen subpixel X position
@@ -832,8 +832,8 @@ preset_kpdr22_upper_norfair_rising_tide:
     dw $D8B8, $26EF  ; Doors
     dw #$FFFF
 
-preset_kpdr22_upper_norfair_bubble_mountain:
-    dw #preset_kpdr22_upper_norfair_rising_tide ; Upper Norfair: Rising Tide
+preset_kpdr22_upper_norfair_hjb_missile_bubble_mountain:
+    dw #preset_kpdr22_upper_norfair_hjb_missile_rising_tide ; Upper Norfair HJB Missile: Rising Tide
     dw $078D, $929A  ; DDB
     dw $079B, $AFA3  ; MDB
     dw $090F, $8000  ; Screen subpixel X position
@@ -847,8 +847,8 @@ preset_kpdr22_upper_norfair_bubble_mountain:
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 
-preset_kpdr22_upper_norfair_bat_cave:
-    dw #preset_kpdr22_upper_norfair_bubble_mountain ; Upper Norfair: Bubble Mountain
+preset_kpdr22_upper_norfair_hjb_missile_bat_cave:
+    dw #preset_kpdr22_upper_norfair_hjb_missile_bubble_mountain ; Upper Norfair HJB Missile: Bubble Mountain
     dw $078D, $973E  ; DDB
     dw $079B, $ACB3  ; MDB
     dw $090F, $C000  ; Screen subpixel X position
@@ -862,8 +862,8 @@ preset_kpdr22_upper_norfair_bat_cave:
     dw $D8BA, $0011  ; Doors
     dw #$FFFF
 
-preset_kpdr22_upper_norfair_speed_hallway:
-    dw #preset_kpdr22_upper_norfair_bat_cave ; Upper Norfair: Bat Cave
+preset_kpdr22_upper_norfair_hjb_missile_speed_hallway:
+    dw #preset_kpdr22_upper_norfair_hjb_missile_bat_cave ; Upper Norfair HJB Missile: Bat Cave
     dw $078D, $958E  ; DDB
     dw $079B, $B07A  ; MDB
     dw $090F, $EFFF  ; Screen subpixel X position
@@ -875,8 +875,8 @@ preset_kpdr22_upper_norfair_speed_hallway:
     dw $0AF6, $00C5  ; Samus X
     dw #$FFFF
 
-preset_kpdr22_upper_norfair_bat_cave_revisit:
-    dw #preset_kpdr22_upper_norfair_speed_hallway ; Upper Norfair: Speed Hallway
+preset_kpdr22_upper_norfair_hjb_missile_bat_cave_revisit:
+    dw #preset_kpdr22_upper_norfair_hjb_missile_speed_hallway ; Upper Norfair HJB Missile: Speed Hallway
     dw $078D, $95BE  ; DDB
     dw $079B, $ACF0  ; MDB
     dw $090F, $C000  ; Screen subpixel X position
@@ -894,8 +894,8 @@ preset_kpdr22_upper_norfair_bat_cave_revisit:
     dw $D8BA, $0031  ; Doors
     dw #$FFFF
 
-preset_kpdr22_upper_norfair_single_chamber:
-    dw #preset_kpdr22_upper_norfair_bat_cave_revisit ; Upper Norfair: Bat Cave Revisit
+preset_kpdr22_upper_norfair_hjb_missile_single_chamber:
+    dw #preset_kpdr22_upper_norfair_hjb_missile_bat_cave_revisit ; Upper Norfair HJB Missile: Bat Cave Revisit
     dw $078D, $97AA  ; DDB
     dw $079B, $ACB3  ; MDB
     dw $090F, $BFFF  ; Screen subpixel X position
@@ -913,8 +913,8 @@ preset_kpdr22_upper_norfair_single_chamber:
     dw $0AFA, $018B  ; Samus Y
     dw #$FFFF
 
-preset_kpdr22_upper_norfair_double_chamber:
-    dw #preset_kpdr22_upper_norfair_single_chamber ; Upper Norfair: Single Chamber
+preset_kpdr22_upper_norfair_hjb_missile_double_chamber:
+    dw #preset_kpdr22_upper_norfair_hjb_missile_single_chamber ; Upper Norfair HJB Missile: Single Chamber
     dw $078D, $9582  ; DDB
     dw $079B, $AD5E  ; MDB
     dw $090F, $3000  ; Screen subpixel X position
@@ -928,8 +928,8 @@ preset_kpdr22_upper_norfair_double_chamber:
     dw $D8BA, $0071  ; Doors
     dw #$FFFF
 
-preset_kpdr22_upper_norfair_double_chamber_revisit:
-    dw #preset_kpdr22_upper_norfair_double_chamber ; Upper Norfair: Double Chamber
+preset_kpdr22_upper_norfair_hjb_missile_double_chamber_revisit:
+    dw #preset_kpdr22_upper_norfair_hjb_missile_double_chamber ; Upper Norfair HJB Missile: Double Chamber
     dw $078D, $961E  ; DDB
     dw $079B, $ADDE  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -950,8 +950,8 @@ preset_kpdr22_upper_norfair_double_chamber_revisit:
     dw $D8BA, $00F1  ; Doors
     dw #$FFFF
 
-preset_kpdr22_upper_norfair_single_chamber_revisit:
-    dw #preset_kpdr22_upper_norfair_double_chamber_revisit ; Upper Norfair: Double Chamber Revisit
+preset_kpdr22_upper_norfair_hjb_missile_single_chamber_revisit:
+    dw #preset_kpdr22_upper_norfair_hjb_missile_double_chamber_revisit ; Upper Norfair HJB Missile: Double Chamber Revisit
     dw $078D, $962A  ; DDB
     dw $079B, $ADAD  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -960,8 +960,8 @@ preset_kpdr22_upper_norfair_single_chamber_revisit:
     dw $0AF6, $0050  ; Samus X
     dw #$FFFF
 
-preset_kpdr22_upper_norfair_bubble_mountain_revisit:
-    dw #preset_kpdr22_upper_norfair_single_chamber_revisit ; Upper Norfair: Single Chamber Revisit
+preset_kpdr22_upper_norfair_hjb_missile_bubble_mountain_revisit:
+    dw #preset_kpdr22_upper_norfair_hjb_missile_single_chamber_revisit ; Upper Norfair HJB Missile: Single Chamber Revisit
     dw $078D, $9606  ; DDB
     dw $079B, $AD5E  ; MDB
     dw $090F, $1000  ; Screen subpixel X position
@@ -971,8 +971,8 @@ preset_kpdr22_upper_norfair_bubble_mountain_revisit:
     dw $0AF6, $008F  ; Samus X
     dw #$FFFF
 
-preset_kpdr22_upper_norfair_frog_speedway:
-    dw #preset_kpdr22_upper_norfair_bubble_mountain_revisit ; Upper Norfair: Bubble Mountain Revisit
+preset_kpdr22_upper_norfair_hjb_missile_frog_speedway:
+    dw #preset_kpdr22_upper_norfair_hjb_missile_bubble_mountain_revisit ; Upper Norfair HJB Missile: Bubble Mountain Revisit
     dw $078D, $956A  ; DDB
     dw $079B, $AF72  ; MDB
     dw $090F, $5000  ; Screen subpixel X position
@@ -984,8 +984,8 @@ preset_kpdr22_upper_norfair_frog_speedway:
     dw $0AF6, $008E  ; Samus X
     dw #$FFFF
 
-preset_kpdr22_upper_norfair_heading_to_red_brinstar:
-    dw #preset_kpdr22_upper_norfair_frog_speedway ; Upper Norfair: Frog Speedway
+preset_kpdr22_upper_norfair_hjb_missile_heading_to_red_brinstar:
+    dw #preset_kpdr22_upper_norfair_hjb_missile_frog_speedway ; Upper Norfair HJB Missile: Frog Speedway
     dw $078D, $97DA  ; DDB
     dw $079B, $B167  ; MDB
     dw $090F, $0000  ; Screen subpixel X position
@@ -993,8 +993,278 @@ preset_kpdr22_upper_norfair_heading_to_red_brinstar:
     dw $0AF6, $0029  ; Samus X
     dw #$FFFF
 
-preset_kpdr22_red_brinstar_alpha_spark:
-    dw #preset_kpdr22_upper_norfair_heading_to_red_brinstar ; Upper Norfair: Heading To Red Brinstar
+preset_kpdr22_upper_norfair_moat_missile_business_center_postelev:
+    dw #preset_kpdr22_kraid_business_center_preelev ; Kraid: Business Center Pre-Elev
+    dw $078D, $9246  ; DDB
+    dw $079B, $A7DE  ; MDB
+    dw $07F3, $0015  ; Music Bank
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0915, $0238  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $01AA  ; Layer 2 Y position
+    dw $0A1C, $009B  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
+    dw $0AF6, $0080  ; Samus X
+    dw $0AFA, $02A8  ; Samus Y
+    dw #$FFFF
+
+preset_kpdr22_upper_norfair_moat_missile_hijump_etank:
+    dw #preset_kpdr22_upper_norfair_moat_missile_business_center_postelev ; Upper Norfair Moat Missile: Business Center Post-Elev
+    dw $090F, $EFFF  ; Screen subpixel X position
+    dw $0915, $051B  ; Screen Y position in pixels
+    dw $0919, $03D4  ; Layer 2 Y position
+    dw $09CA, $0003  ; Supers
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0041  ; Samus X
+    dw $0AFA, $058B  ; Samus Y
+    dw $D8B8, $20EF  ; Doors
+    dw #$FFFF
+
+preset_kpdr22_upper_norfair_moat_missile_leaving_hijump:
+    dw #preset_kpdr22_upper_norfair_moat_missile_hijump_etank ; Upper Norfair Moat Missile: Hi-Jump E-Tank
+    dw $078D, $9426  ; DDB
+    dw $079B, $A9E5  ; MDB
+    dw $07F5, $0003  ; Music Track
+    dw $090F, $1FFF  ; Screen subpixel X position
+    dw $0913, $0800  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09A2, $1105  ; Equipped Items
+    dw $09A4, $1105  ; Collected Items
+    dw $09C2, $018F  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $00B5  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw $D876, $0121  ; Items
+    dw $D8BA, $0001  ; Doors
+    dw #$FFFF
+
+preset_kpdr22_upper_norfair_moat_missile_business_center_revisit:
+    dw #preset_kpdr22_upper_norfair_moat_missile_leaving_hijump ; Upper Norfair Moat Missile: Leaving Hi-Jump
+    dw $078D, $93F6  ; DDB
+    dw $079B, $AA41  ; MDB
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $4000  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $E400  ; Screen subpixel Y position
+    dw $0917, $00C0  ; Layer 2 X position
+    dw $0AF6, $019C  ; Samus X
+    dw #$FFFF
+
+preset_kpdr22_upper_norfair_moat_missile_precathedral:
+    dw #preset_kpdr22_upper_norfair_moat_missile_business_center_revisit ; Upper Norfair Moat Missile: Business Center Revisit
+    dw $078D, $941A  ; DDB
+    dw $079B, $A7DE  ; MDB
+    dw $090F, $B000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $53FE  ; Screen subpixel Y position
+    dw $0915, $02F8  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $023A  ; Layer 2 Y position
+    dw $0AF6, $00A5  ; Samus X
+    dw $0AFA, $038B  ; Samus Y
+    dw $D876, $01A1  ; Items
+    dw #$FFFF
+
+preset_kpdr22_upper_norfair_moat_missile_cathedral:
+    dw #preset_kpdr22_upper_norfair_moat_missile_precathedral ; Upper Norfair Moat Missile: Pre-Cathedral
+    dw $078D, $92CA  ; DDB
+    dw $079B, $A7B3  ; MDB
+    dw $090F, $3000  ; Screen subpixel X position
+    dw $0911, $0200  ; Screen X position in pixels
+    dw $0913, $F400  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $0200  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09C6, $0004  ; Missiles
+    dw $09CA, $0002  ; Supers
+    dw $0AF6, $02A6  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw $D8B8, $24EF  ; Doors
+    dw #$FFFF
+
+preset_kpdr22_upper_norfair_moat_missile_rising_tide:
+    dw #preset_kpdr22_upper_norfair_moat_missile_cathedral ; Upper Norfair Moat Missile: Cathedral
+    dw $078D, $92B2  ; DDB
+    dw $079B, $A788  ; MDB
+    dw $090F, $7FFF  ; Screen subpixel X position
+    dw $0913, $2800  ; Screen subpixel Y position
+    dw $0915, $0100  ; Screen Y position in pixels
+    dw $0919, $0100  ; Layer 2 Y position
+    dw $09CA, $0001  ; Supers
+    dw $0AF6, $02BB  ; Samus X
+    dw $0AFA, $018B  ; Samus Y
+    dw $D8B8, $26EF  ; Doors
+    dw #$FFFF
+
+preset_kpdr22_upper_norfair_moat_missile_bubble_mountain:
+    dw #preset_kpdr22_upper_norfair_moat_missile_rising_tide ; Upper Norfair Moat Missile: Rising Tide
+    dw $078D, $929A  ; DDB
+    dw $079B, $AFA3  ; MDB
+    dw $090F, $8000  ; Screen subpixel X position
+    dw $0911, $0400  ; Screen X position in pixels
+    dw $0913, $CC00  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $0300  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09C2, $0179  ; Health
+    dw $0AF6, $04AD  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw #$FFFF
+
+preset_kpdr22_upper_norfair_moat_missile_bat_cave:
+    dw #preset_kpdr22_upper_norfair_moat_missile_bubble_mountain ; Upper Norfair Moat Missile: Bubble Mountain
+    dw $078D, $973E  ; DDB
+    dw $079B, $ACB3  ; MDB
+    dw $090F, $C000  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $E800  ; Screen subpixel Y position
+    dw $0917, $00C0  ; Layer 2 X position
+    dw $09C2, $017E  ; Health
+    dw $09C6, $0003  ; Missiles
+    dw $0AF6, $01BF  ; Samus X
+    dw $0AF8, $FFFF  ; Samus subpixel X
+    dw $D8BA, $0011  ; Doors
+    dw #$FFFF
+
+preset_kpdr22_upper_norfair_moat_missile_speed_hallway:
+    dw #preset_kpdr22_upper_norfair_moat_missile_bat_cave ; Upper Norfair Moat Missile: Bat Cave
+    dw $078D, $958E  ; DDB
+    dw $079B, $B07A  ; MDB
+    dw $090F, $EFFF  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $1400  ; Screen subpixel Y position
+    dw $0915, $0012  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $0012  ; Layer 2 Y position
+    dw $0AF6, $00C5  ; Samus X
+    dw #$FFFF
+
+preset_kpdr22_upper_norfair_moat_missile_bat_cave_revisit:
+    dw #preset_kpdr22_upper_norfair_moat_missile_speed_hallway ; Upper Norfair Moat Missile: Speed Hallway
+    dw $078D, $95BE  ; DDB
+    dw $079B, $ACF0  ; MDB
+    dw $090F, $C000  ; Screen subpixel X position
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $001B  ; Screen Y position in pixels
+    dw $0919, $0014  ; Layer 2 Y position
+    dw $09A2, $3105  ; Equipped Items
+    dw $09A4, $3105  ; Collected Items
+    dw $09CA, $0001  ; Supers
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $002D  ; Samus X
+    dw $D822, $0020  ; Events
+    dw $D878, $0004  ; Items
+    dw $D8BA, $0031  ; Doors
+    dw #$FFFF
+
+preset_kpdr22_upper_norfair_moat_missile_single_chamber:
+    dw #preset_kpdr22_upper_norfair_moat_missile_bat_cave_revisit ; Upper Norfair Moat Missile: Bat Cave Revisit
+    dw $078D, $97AA  ; DDB
+    dw $079B, $ACB3  ; MDB
+    dw $090F, $BFFF  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $0104  ; Screen Y position in pixels
+    dw $0917, $00C0  ; Layer 2 X position
+    dw $0919, $00C3  ; Layer 2 Y position
+    dw $09C2, $018A  ; Health
+    dw $09C6, $000A  ; Missiles
+    dw $09CA, $0004  ; Supers
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $01AD  ; Samus X
+    dw $0AFA, $018B  ; Samus Y
+    dw #$FFFF
+
+preset_kpdr22_upper_norfair_moat_missile_double_chamber:
+    dw #preset_kpdr22_upper_norfair_moat_missile_single_chamber ; Upper Norfair Moat Missile: Single Chamber
+    dw $078D, $9582  ; DDB
+    dw $079B, $AD5E  ; MDB
+    dw $090F, $3000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $A400  ; Screen subpixel Y position
+    dw $0915, $011C  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $00D5  ; Layer 2 Y position
+    dw $09C6, $0003  ; Missiles
+    dw $0AF6, $00BE  ; Samus X
+    dw $D8BA, $0071  ; Doors
+    dw #$FFFF
+
+preset_kpdr22_upper_norfair_moat_missile_double_chamber_revisit:
+    dw #preset_kpdr22_upper_norfair_moat_missile_double_chamber ; Upper Norfair Moat Missile: Double Chamber
+    dw $078D, $961E  ; DDB
+    dw $079B, $ADDE  ; MDB
+    dw $07F5, $0003  ; Music Track
+    dw $090F, $1000  ; Screen subpixel X position
+    dw $0913, $7800  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09A8, $1001  ; Collected Beams
+    dw $09C6, $0009  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $09CA, $0003  ; Supers
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0051  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw $D878, $001C  ; Items
+    dw $D8BA, $00F1  ; Doors
+    dw #$FFFF
+
+preset_kpdr22_upper_norfair_moat_missile_single_chamber_revisit:
+    dw #preset_kpdr22_upper_norfair_moat_missile_double_chamber_revisit ; Upper Norfair Moat Missile: Double Chamber Revisit
+    dw $078D, $962A  ; DDB
+    dw $079B, $ADAD  ; MDB
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $3000  ; Screen subpixel X position
+    dw $0913, $6000  ; Screen subpixel Y position
+    dw $0AF6, $0050  ; Samus X
+    dw #$FFFF
+
+preset_kpdr22_upper_norfair_moat_missile_bubble_mountain_revisit:
+    dw #preset_kpdr22_upper_norfair_moat_missile_single_chamber_revisit ; Upper Norfair Moat Missile: Single Chamber Revisit
+    dw $078D, $9606  ; DDB
+    dw $079B, $AD5E  ; MDB
+    dw $090F, $1000  ; Screen subpixel X position
+    dw $0913, $EC00  ; Screen subpixel Y position
+    dw $0915, $0002  ; Screen Y position in pixels
+    dw $0919, $0001  ; Layer 2 Y position
+    dw $0AF6, $008F  ; Samus X
+    dw #$FFFF
+
+preset_kpdr22_upper_norfair_moat_missile_frog_speedway:
+    dw #preset_kpdr22_upper_norfair_moat_missile_bubble_mountain_revisit ; Upper Norfair Moat Missile: Bubble Mountain Revisit
+    dw $078D, $956A  ; DDB
+    dw $079B, $AF72  ; MDB
+    dw $090F, $5000  ; Screen subpixel X position
+    dw $0913, $1400  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09C2, $018F  ; Health
+    dw $09CA, $0004  ; Supers
+    dw $0AF6, $008E  ; Samus X
+    dw #$FFFF
+
+preset_kpdr22_upper_norfair_moat_missile_heading_to_red_brinstar:
+    dw #preset_kpdr22_upper_norfair_moat_missile_frog_speedway ; Upper Norfair Moat Missile: Frog Speedway
+    dw $078D, $97DA  ; DDB
+    dw $079B, $B167  ; MDB
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0913, $A800  ; Screen subpixel Y position
+    dw $0AF6, $0029  ; Samus X
+    dw #$FFFF
+
+preset_kpdr22_red_brinstar_hjb_missile_alpha_spark:
+    dw #preset_kpdr22_upper_norfair_hjb_missile_heading_to_red_brinstar ; Upper Norfair HJB Missile: Heading To Red Brinstar
     dw $078D, $92EE  ; DDB
     dw $079B, $A6A1  ; MDB
     dw $07F3, $0012  ; Music Bank
@@ -1008,8 +1278,8 @@ preset_kpdr22_red_brinstar_alpha_spark:
     dw $0AFA, $0086  ; Samus Y
     dw #$FFFF
 
-preset_kpdr22_red_brinstar_reverse_skree_boost:
-    dw #preset_kpdr22_red_brinstar_alpha_spark ; Red Brinstar: Alpha Spark
+preset_kpdr22_red_brinstar_hjb_missile_reverse_skree_boost:
+    dw #preset_kpdr22_red_brinstar_hjb_missile_alpha_spark ; Red Brinstar HJB Missile: Alpha Spark
     dw $078D, $A36C  ; DDB
     dw $079B, $A408  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -1024,8 +1294,8 @@ preset_kpdr22_red_brinstar_reverse_skree_boost:
     dw $0AFA, $018B  ; Samus Y
     dw #$FFFF
 
-preset_kpdr22_red_brinstar_red_tower_climb:
-    dw #preset_kpdr22_red_brinstar_reverse_skree_boost ; Red Brinstar: Reverse Skree Boost
+preset_kpdr22_red_brinstar_hjb_missile_red_tower_climb:
+    dw #preset_kpdr22_red_brinstar_hjb_missile_reverse_skree_boost ; Red Brinstar HJB Missile: Reverse Skree Boost
     dw $078D, $910E  ; DDB
     dw $079B, $A3DD  ; MDB
     dw $090F, $0000  ; Screen subpixel X position
@@ -1037,8 +1307,8 @@ preset_kpdr22_red_brinstar_red_tower_climb:
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 
-preset_kpdr22_red_brinstar_hellway:
-    dw #preset_kpdr22_red_brinstar_red_tower_climb ; Red Brinstar: Red Tower Climb
+preset_kpdr22_red_brinstar_hjb_missile_hellway:
+    dw #preset_kpdr22_red_brinstar_hjb_missile_red_tower_climb ; Red Brinstar HJB Missile: Red Tower Climb
     dw $078D, $90F6  ; DDB
     dw $079B, $A253  ; MDB
     dw $090F, $D000  ; Screen subpixel X position
@@ -1049,8 +1319,8 @@ preset_kpdr22_red_brinstar_hellway:
     dw $0AF6, $008F  ; Samus X
     dw #$FFFF
 
-preset_kpdr22_red_brinstar_caterpillars_down:
-    dw #preset_kpdr22_red_brinstar_hellway ; Red Brinstar: Hellway
+preset_kpdr22_red_brinstar_hjb_missile_caterpillars_down:
+    dw #preset_kpdr22_red_brinstar_hjb_missile_hellway ; Red Brinstar HJB Missile: Hellway
     dw $078D, $901E  ; DDB
     dw $079B, $A2F7  ; MDB
     dw $090F, $0000  ; Screen subpixel X position
@@ -1061,8 +1331,8 @@ preset_kpdr22_red_brinstar_caterpillars_down:
     dw $0AF6, $0291  ; Samus X
     dw #$FFFF
 
-preset_kpdr22_red_brinstar_alpha_power_bombs:
-    dw #preset_kpdr22_red_brinstar_caterpillars_down ; Red Brinstar: Caterpillars Down
+preset_kpdr22_red_brinstar_hjb_missile_alpha_power_bombs:
+    dw #preset_kpdr22_red_brinstar_hjb_missile_caterpillars_down ; Red Brinstar HJB Missile: Caterpillars Down
     dw $078D, $908A  ; DDB
     dw $079B, $A322  ; MDB
     dw $090F, $D000  ; Screen subpixel X position
@@ -1079,8 +1349,8 @@ preset_kpdr22_red_brinstar_alpha_power_bombs:
     dw $D8B6, $A008  ; Doors
     dw #$FFFF
 
-preset_kpdr22_red_brinstar_caterpillars_up:
-    dw #preset_kpdr22_red_brinstar_alpha_power_bombs ; Red Brinstar: Alpha Power Bombs
+preset_kpdr22_red_brinstar_hjb_missile_caterpillars_up:
+    dw #preset_kpdr22_red_brinstar_hjb_missile_alpha_power_bombs ; Red Brinstar HJB Missile: Alpha Power Bombs
     dw $078D, $9096  ; DDB
     dw $079B, $A3AE  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -1101,8 +1371,8 @@ preset_kpdr22_red_brinstar_caterpillars_up:
     dw $D874, $0D04  ; Items
     dw #$FFFF
 
-preset_kpdr22_wrecked_ship_crateria_kihunters:
-    dw #preset_kpdr22_red_brinstar_caterpillars_up ; Red Brinstar: Caterpillars Up
+preset_kpdr22_red_brinstar_hjb_missile_crateria_kihunters:
+    dw #preset_kpdr22_red_brinstar_hjb_missile_caterpillars_up ; Red Brinstar HJB Missile: Caterpillars Up
     dw $078D, $90BA  ; DDB
     dw $079B, $962A  ; MDB
     dw $090F, $0000  ; Screen subpixel X position
@@ -1119,8 +1389,8 @@ preset_kpdr22_wrecked_ship_crateria_kihunters:
     dw $D8B6, $B008  ; Doors
     dw #$FFFF
 
-preset_kpdr22_wrecked_ship_oceanfly_setup:
-    dw #preset_kpdr22_wrecked_ship_crateria_kihunters ; Wrecked Ship: Crateria Kihunters
+preset_kpdr22_red_brinstar_hjb_missile_ocean_fly_setup:
+    dw #preset_kpdr22_red_brinstar_hjb_missile_crateria_kihunters ; Red Brinstar HJB Missile: Crateria Kihunters
     dw $078D, $8AF6  ; DDB
     dw $079B, $948C  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -1137,8 +1407,8 @@ preset_kpdr22_wrecked_ship_oceanfly_setup:
     dw $D8B2, $2C01  ; Doors
     dw #$FFFF
 
-preset_kpdr22_wrecked_ship_ocean_spark:
-    dw #preset_kpdr22_wrecked_ship_oceanfly_setup ; Wrecked Ship: Oceanfly Setup
+preset_kpdr22_red_brinstar_hjb_missile_ocean_spark:
+    dw #preset_kpdr22_red_brinstar_hjb_missile_ocean_fly_setup ; Red Brinstar HJB Missile: Ocean Fly Setup
     dw $078D, $8A36  ; DDB
     dw $079B, $95FF  ; MDB
     dw $090F, $A3FF  ; Screen subpixel X position
@@ -1149,8 +1419,167 @@ preset_kpdr22_wrecked_ship_ocean_spark:
     dw $0AF6, $01C6  ; Samus X
     dw #$FFFF
 
+preset_kpdr22_red_brinstar_moat_missile_alpha_spark:
+    dw #preset_kpdr22_upper_norfair_moat_missile_heading_to_red_brinstar ; Upper Norfair Moat Missile: Heading To Red Brinstar
+    dw $078D, $92EE  ; DDB
+    dw $079B, $A6A1  ; MDB
+    dw $07F3, $0012  ; Music Bank
+    dw $07F5, $0003  ; Music Track
+    dw $090F, $E000  ; Screen subpixel X position
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $09C6, $000B  ; Missiles
+    dw $0A1C, $009B  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
+    dw $0AF6, $0080  ; Samus X
+    dw $0AFA, $0086  ; Samus Y
+    dw #$FFFF
+
+preset_kpdr22_red_brinstar_moat_missile_reverse_skree_boost:
+    dw #preset_kpdr22_red_brinstar_moat_missile_alpha_spark ; Red Brinstar Moat Missile: Alpha Spark
+    dw $078D, $A36C  ; DDB
+    dw $079B, $A408  ; MDB
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $C000  ; Screen subpixel X position
+    dw $0913, $B400  ; Screen subpixel Y position
+    dw $0915, $0100  ; Screen Y position in pixels
+    dw $0919, $00C0  ; Layer 2 Y position
+    dw $09CA, $0005  ; Supers
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $003F  ; Samus X
+    dw $0AFA, $018B  ; Samus Y
+    dw #$FFFF
+
+preset_kpdr22_red_brinstar_moat_missile_red_tower_climb:
+    dw #preset_kpdr22_red_brinstar_moat_missile_reverse_skree_boost ; Red Brinstar Moat Missile: Reverse Skree Boost
+    dw $078D, $910E  ; DDB
+    dw $079B, $A3DD  ; MDB
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0913, $EC00  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09C2, $0152  ; Health
+    dw $0AF6, $0024  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw #$FFFF
+
+preset_kpdr22_red_brinstar_moat_missile_hellway:
+    dw #preset_kpdr22_red_brinstar_moat_missile_red_tower_climb ; Red Brinstar Moat Missile: Red Tower Climb
+    dw $078D, $90F6  ; DDB
+    dw $079B, $A253  ; MDB
+    dw $090F, $D000  ; Screen subpixel X position
+    dw $0913, $6800  ; Screen subpixel Y position
+    dw $09C2, $0157  ; Health
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $008F  ; Samus X
+    dw #$FFFF
+
+preset_kpdr22_red_brinstar_moat_missile_caterpillars_down:
+    dw #preset_kpdr22_red_brinstar_moat_missile_hellway ; Red Brinstar Moat Missile: Hellway
+    dw $078D, $901E  ; DDB
+    dw $079B, $A2F7  ; MDB
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $01FB  ; Screen X position in pixels
+    dw $0913, $4400  ; Screen subpixel Y position
+    dw $0917, $017C  ; Layer 2 X position
+    dw $09C2, $0163  ; Health
+    dw $0AF6, $0291  ; Samus X
+    dw #$FFFF
+
+preset_kpdr22_red_brinstar_moat_missile_alpha_power_bombs:
+    dw #preset_kpdr22_red_brinstar_moat_missile_caterpillars_down ; Red Brinstar Moat Missile: Caterpillars Down
+    dw $078D, $908A  ; DDB
+    dw $079B, $A322  ; MDB
+    dw $090F, $D000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $071C  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $071C  ; Layer 2 Y position
+    dw $09CA, $0004  ; Supers
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0041  ; Samus X
+    dw $0AFA, $078B  ; Samus Y
+    dw $D8B6, $A008  ; Doors
+    dw #$FFFF
+
+preset_kpdr22_red_brinstar_moat_missile_caterpillars_up:
+    dw #preset_kpdr22_red_brinstar_moat_missile_alpha_power_bombs ; Red Brinstar Moat Missile: Alpha Power Bombs
+    dw $078D, $9096  ; DDB
+    dw $079B, $A3AE  ; MDB
+    dw $07F5, $0003  ; Music Track
+    dw $090F, $4000  ; Screen subpixel X position
+    dw $0911, $0200  ; Screen X position in pixels
+    dw $0913, $FC00  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $0180  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09C2, $015E  ; Health
+    dw $09CE, $0005  ; Pbs
+    dw $09D0, $0005  ; Max pbs
+    dw $09D2, $0003  ; Currently selected item
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $02AF  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw $D874, $0D04  ; Items
+    dw #$FFFF
+
+preset_kpdr22_red_brinstar_moat_missile_crateria_kihunters:
+    dw #preset_kpdr22_red_brinstar_moat_missile_caterpillars_up ; Red Brinstar Moat Missile: Caterpillars Up
+    dw $078D, $90BA  ; DDB
+    dw $079B, $962A  ; MDB
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0917, $0000  ; Layer 2 X position
+    dw $09C2, $016D  ; Health
+    dw $09CA, $0005  ; Supers
+    dw $09CE, $0004  ; Pbs
+    dw $0A1C, $009B  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
+    dw $0AF6, $0080  ; Samus X
+    dw $0AFA, $00A8  ; Samus Y
+    dw $D8B6, $B008  ; Doors
+    dw #$FFFF
+
+preset_kpdr22_red_brinstar_moat_missile_ocean_fly_setup:
+    dw #preset_kpdr22_red_brinstar_moat_missile_crateria_kihunters ; Red Brinstar Moat Missile: Crateria Kihunters
+    dw $078D, $8AF6  ; DDB
+    dw $079B, $948C  ; MDB
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $8C00  ; Screen subpixel X position
+    dw $0913, $3000  ; Screen subpixel Y position
+    dw $09C2, $0181  ; Health
+    dw $09CE, $0001  ; Pbs
+    dw $09D2, $0000  ; Currently selected item
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $002C  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw $D8B0, $6000  ; Doors
+    dw $D8B2, $2C01  ; Doors
+    dw #$FFFF
+
+preset_kpdr22_red_brinstar_moat_missile_ocean_spark:
+    dw #preset_kpdr22_red_brinstar_moat_missile_ocean_fly_setup ; Red Brinstar Moat Missile: Ocean Fly Setup
+    dw $078D, $8A36  ; DDB
+    dw $079B, $95FF  ; MDB
+    dw $090F, $A3FF  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $6C00  ; Screen subpixel Y position
+    dw $0917, $00C0  ; Layer 2 X position
+    dw $09C2, $014C  ; Health
+    dw $09C6, $0010  ; Missiles
+    dw $09C8, $0014  ; Max missiles
+    dw $0AF6, $01C6  ; Samus X
+    dw $D870, $0190  ; Items
+    dw #$FFFF
+
 preset_kpdr22_wrecked_ship_entering_wrecked_ship:
-    dw #preset_kpdr22_wrecked_ship_ocean_spark ; Wrecked Ship: Ocean Spark
+    dw #preset_kpdr22_red_brinstar_hjb_missile_ocean_spark ; Red Brinstar HJB Missile: Ocean Spark
     dw $078D, $8AEA  ; DDB
     dw $079B, $93FE  ; MDB
     dw $07F3, $000C  ; Music Bank
@@ -1164,6 +1593,11 @@ preset_kpdr22_wrecked_ship_entering_wrecked_ship:
     dw $0AF6, $07DB  ; Samus X
     dw $0AFA, $048B  ; Samus Y
     dw $D8B0, $7000  ; Doors
+    dw #$FFFF
+
+preset_kpdr22_wrecked_ship_entering_with_extra_pb:
+    dw #preset_kpdr22_wrecked_ship_entering_wrecked_ship ; Wrecked Ship: Entering Wrecked Ship
+    dw $09CE, $0002  ; Pbs
     dw #$FFFF
 
 preset_kpdr22_wrecked_ship_basement:
@@ -1218,9 +1652,8 @@ preset_kpdr22_wrecked_ship_leaving_phantoon:
     dw $09CE, $0002  ; Pbs
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $0025  ; Samus X
-    dw $0AF8, $0000  ; Samus subpixel X
-    dw $0AFA, $00C9  ; Samus Y
+    dw $0AF6, $006D  ; Samus X
+    dw $0AFA, $00BB  ; Samus Y
     dw $D82A, $0100  ; Bosses
     dw $D8C0, $0070  ; Doors
     dw #$FFFF
@@ -1282,7 +1715,8 @@ preset_kpdr22_wrecked_ship_upper_west_ocean:
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $001E  ; Layer 2 Y position
     dw $09C2, $0152  ; Health
-    dw $09CA, $0009  ; Supers
+    dw $09C6, $000D  ; Missiles
+    dw $09CA, $0006  ; Supers
     dw $09D2, $0000  ; Currently selected item
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
@@ -1360,6 +1794,11 @@ preset_kpdr22_wrecked_ship_moat_ball:
     dw $0AFA, $04D0  ; Samus Y
     dw #$FFFF
 
+preset_kpdr22_wrecked_ship_moat_with_missile_gone:
+    dw #preset_kpdr22_wrecked_ship_moat_ball ; Wrecked Ship: Moat Ball
+    dw $D870, $0190  ; Items
+    dw #$FFFF
+
 preset_kpdr22_wrecked_ship_crateria_kihunters_return:
     dw #preset_kpdr22_wrecked_ship_moat_ball ; Wrecked Ship: Moat Ball
     dw $078D, $89CA  ; DDB
@@ -1374,6 +1813,13 @@ preset_kpdr22_wrecked_ship_crateria_kihunters_return:
     dw $0AFA, $0097  ; Samus Y
     dw #$FFFF
 
+preset_kpdr22_wrecked_ship_return_with_yellow_door:
+    dw #preset_kpdr22_wrecked_ship_crateria_kihunters_return ; Wrecked Ship: Crateria Kihunters Return
+    dw $09CE, $0004  ; Pbs
+    dw $D870, $0190  ; Items
+    dw $D8B0, $3000  ; Doors
+    dw #$FFFF
+
 preset_kpdr22_red_brinstar_revisit_red_brinstar_elevator:
     dw #preset_kpdr22_wrecked_ship_crateria_kihunters_return ; Wrecked Ship: Crateria Kihunters Return
     dw $078D, $8A42  ; DDB
@@ -1384,7 +1830,7 @@ preset_kpdr22_red_brinstar_revisit_red_brinstar_elevator:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0919, $0000  ; Layer 2 Y position
     dw $09C2, $0121  ; Health
-    dw $09C6, $000A  ; Missiles
+    dw $09C6, $000B  ; Missiles
     dw $09CE, $0003  ; Pbs
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
@@ -1413,6 +1859,7 @@ preset_kpdr22_red_brinstar_revisit_hellway_revisit:
     dw $0913, $2800  ; Screen subpixel Y position
     dw $0915, $0500  ; Screen Y position in pixels
     dw $0919, $0500  ; Layer 2 Y position
+    dw $09CA, $0008  ; Supers
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $0040  ; Samus X
@@ -1460,7 +1907,7 @@ preset_kpdr22_red_brinstar_revisit_below_spazer_final:
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 
-preset_kpdr22_red_brinstar_revisit_breaking_tube:
+preset_kpdr22_red_brinstar_revisit_breaking_the_tube:
     dw #preset_kpdr22_red_brinstar_revisit_below_spazer_final ; Red Brinstar Revisit: Below Spazer Final
     dw $078D, $9102  ; DDB
     dw $079B, $A408  ; MDB
@@ -1468,14 +1915,14 @@ preset_kpdr22_red_brinstar_revisit_breaking_tube:
     dw $0913, $D000  ; Screen subpixel Y position
     dw $0915, $0100  ; Screen Y position in pixels
     dw $0919, $00C0  ; Layer 2 Y position
-    dw $09CA, $000A  ; Supers
+    dw $09CA, $0009  ; Supers
     dw $09D2, $0003  ; Currently selected item
     dw $0AF6, $01B1  ; Samus X
     dw $0AFA, $018B  ; Samus Y
     dw #$FFFF
 
 preset_kpdr22_maridia_fish_tank:
-    dw #preset_kpdr22_red_brinstar_revisit_breaking_tube ; Red Brinstar Revisit: Breaking Tube
+    dw #preset_kpdr22_red_brinstar_revisit_breaking_the_tube ; Red Brinstar Revisit: Breaking The Tube
     dw $078D, $A330  ; DDB
     dw $079B, $CFC9  ; MDB
     dw $07F3, $001B  ; Music Bank
@@ -1531,7 +1978,7 @@ preset_kpdr22_maridia_aqueduct:
     dw $0915, $0300  ; Screen Y position in pixels
     dw $0917, $0100  ; Layer 2 X position
     dw $0919, $0240  ; Layer 2 Y position
-    dw $09CA, $0009  ; Supers
+    dw $09CA, $0008  ; Supers
     dw $09D2, $0003  ; Currently selected item
     dw $0AF6, $01AD  ; Samus X
     dw $0AFA, $038B  ; Samus Y
@@ -1906,7 +2353,7 @@ preset_kpdr22_upper_norfair_revisit_croc_speedway_lower:
     dw #$FFFF
 
 preset_kpdr22_upper_norfair_revisit_spiky_acid_snakes_lower:
-    dw #preset_kpdr22_upper_norfair_revisit_croc_speedway_lower ; Upper Norfair Revisit: Croc Speedway (Lower
+    dw #preset_kpdr22_upper_norfair_revisit_croc_speedway_lower ; Upper Norfair Revisit: Croc Speedway (Lower)
     dw $078D, $93C6  ; DDB
     dw $079B, $AFCE  ; MDB
     dw $090F, $A000  ; Screen subpixel X position
@@ -1965,7 +2412,7 @@ preset_kpdr22_lower_norfair_prepillars:
 
 preset_kpdr22_lower_norfair_fast_pillars_setup:
     dw #preset_kpdr22_lower_norfair_prepillars ; Lower Norfair: Pre-Pillars
-    dw $078D, $985E  ; DDB
+    dw $078D, $989A  ; DDB
     dw $079B, $B3A5  ; MDB
     dw $090F, $8001  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
@@ -1993,7 +2440,7 @@ preset_kpdr22_lower_norfair_worst_room_in_the_game:
     dw #$FFFF
 
 preset_kpdr22_lower_norfair_amphitheatre:
-    dw #preset_kpdr22_lower_norfair_worst_room_in_the_game ; Lower Norfair: Worst Room in the Game
+    dw #preset_kpdr22_lower_norfair_worst_room_in_the_game ; Lower Norfair: Worst Room In The Game
     dw $078D, $994E  ; DDB
     dw $079B, $B4AD  ; MDB
     dw $090F, $C000  ; Screen subpixel X position
@@ -2151,7 +2598,7 @@ preset_kpdr22_lower_norfair_kihunter_stairs_up:
     dw $0AFA, $009B  ; Samus Y
     dw #$FFFF
 
-preset_kpdr22_lower_norfair_fire_flea_room:
+preset_kpdr22_lower_norfair_fireflea_room:
     dw #preset_kpdr22_lower_norfair_kihunter_stairs_up ; Lower Norfair: Kihunter Stairs Up
     dw $078D, $9A26  ; DDB
     dw $079B, $B585  ; MDB
@@ -2166,7 +2613,7 @@ preset_kpdr22_lower_norfair_fire_flea_room:
     dw #$FFFF
 
 preset_kpdr22_lower_norfair_springball_maze:
-    dw #preset_kpdr22_lower_norfair_fire_flea_room ; Lower Norfair: Fire Flea Room
+    dw #preset_kpdr22_lower_norfair_fireflea_room ; Lower Norfair: Fireflea Room
     dw $078D, $9A02  ; DDB
     dw $079B, $B6EE  ; MDB
     dw $090F, $0000  ; Screen subpixel X position

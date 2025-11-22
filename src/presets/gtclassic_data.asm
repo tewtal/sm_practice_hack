@@ -591,7 +591,7 @@ preset_gtclassic_brinstar_below_spazer:
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 
-preset_gtclassic_brinstar_breaking_tube:
+preset_gtclassic_brinstar_breaking_the_tube:
     dw #preset_gtclassic_brinstar_below_spazer ; Brinstar: Below Spazer
     dw $078D, $9102  ; DDB
     dw $079B, $A408  ; MDB
@@ -605,8 +605,8 @@ preset_gtclassic_brinstar_breaking_tube:
     dw $0AFA, $018B  ; Samus Y
     dw #$FFFF
 
-preset_gtclassic_kraid_entering_kraids_lair:
-    dw #preset_gtclassic_brinstar_breaking_tube ; Brinstar: Breaking Tube
+preset_gtclassic_kraids_lair_entering_kraids_lair:
+    dw #preset_gtclassic_brinstar_breaking_the_tube ; Brinstar: Breaking The Tube
     dw $078D, $A348  ; DDB
     dw $079B, $CF80  ; MDB
     dw $090F, $F000  ; Screen subpixel X position
@@ -620,8 +620,8 @@ preset_gtclassic_kraid_entering_kraids_lair:
     dw $D820, $0801  ; Events
     dw #$FFFF
 
-preset_gtclassic_kraid_kraid_kihunters:
-    dw #preset_gtclassic_kraid_entering_kraids_lair ; Kraid: Entering Kraid's Lair
+preset_gtclassic_kraids_lair_kraid_kihunters:
+    dw #preset_gtclassic_kraids_lair_entering_kraids_lair ; Kraid's Lair: Entering Kraid's Lair
     dw $078D, $923A  ; DDB
     dw $079B, $A471  ; MDB
     dw $090F, $8000  ; Screen subpixel X position
@@ -632,8 +632,8 @@ preset_gtclassic_kraid_kraid_kihunters:
     dw $0AF6, $0167  ; Samus X
     dw #$FFFF
 
-preset_gtclassic_kraid_mini_kraid:
-    dw #preset_gtclassic_kraid_kraid_kihunters ; Kraid: Kraid Kihunters
+preset_gtclassic_kraids_lair_minikraid:
+    dw #preset_gtclassic_kraids_lair_kraid_kihunters ; Kraid's Lair: Kraid Kihunters
     dw $078D, $9156  ; DDB
     dw $079B, $A4DA  ; MDB
     dw $090F, $5000  ; Screen subpixel X position
@@ -642,8 +642,8 @@ preset_gtclassic_kraid_mini_kraid:
     dw $0AF6, $016B  ; Samus X
     dw #$FFFF
 
-preset_gtclassic_kraid_kraid_2:
-    dw #preset_gtclassic_kraid_mini_kraid ; Kraid: Mini Kraid
+preset_gtclassic_kraids_lair_kraid:
+    dw #preset_gtclassic_kraids_lair_minikraid ; Kraid's Lair: Mini-Kraid
     dw $078D, $919E  ; DDB
     dw $079B, $A56B  ; MDB
     dw $07F3, $0027  ; Music Bank
@@ -658,8 +658,8 @@ preset_gtclassic_kraid_kraid_2:
     dw $D8B8, $0024  ; Doors
     dw #$FFFF
 
-preset_gtclassic_kraid_leaving_varia:
-    dw #preset_gtclassic_kraid_kraid_2 ; Kraid: Kraid
+preset_gtclassic_kraids_lair_leaving_varia:
+    dw #preset_gtclassic_kraids_lair_kraid ; Kraid's Lair: Kraid
     dw $078D, $91DA  ; DDB
     dw $079B, $A6E2  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -684,8 +684,8 @@ preset_gtclassic_kraid_leaving_varia:
     dw $D8B8, $0064  ; Doors
     dw #$FFFF
 
-preset_gtclassic_kraid_mini_kraid_revisit:
-    dw #preset_gtclassic_kraid_leaving_varia ; Kraid: Leaving Varia
+preset_gtclassic_kraids_lair_minikraid_revisit:
+    dw #preset_gtclassic_kraids_lair_leaving_varia ; Kraid's Lair: Leaving Varia
     dw $078D, $91CE  ; DDB
     dw $079B, $A56B  ; MDB
     dw $0913, $7800  ; Screen subpixel Y position
@@ -699,8 +699,8 @@ preset_gtclassic_kraid_mini_kraid_revisit:
     dw $D8B8, $00E4  ; Doors
     dw #$FFFF
 
-preset_gtclassic_kraid_kraid_kihunters_revisit:
-    dw #preset_gtclassic_kraid_mini_kraid_revisit ; Kraid: Mini Kraid Revisit
+preset_gtclassic_kraids_lair_kraid_kihunters_revisit:
+    dw #preset_gtclassic_kraids_lair_minikraid_revisit ; Kraid's Lair: Mini-Kraid Revisit
     dw $078D, $91AA  ; DDB
     dw $079B, $A521  ; MDB
     dw $090F, $4000  ; Screen subpixel X position
@@ -717,8 +717,8 @@ preset_gtclassic_kraid_kraid_kihunters_revisit:
     dw $D8B8, $00EC  ; Doors
     dw #$FFFF
 
-preset_gtclassic_kraid_kraid_etank:
-    dw #preset_gtclassic_kraid_kraid_kihunters_revisit ; Kraid: Kraid Kihunters Revisit
+preset_gtclassic_kraids_lair_kraid_etank:
+    dw #preset_gtclassic_kraids_lair_kraid_kihunters_revisit ; Kraid's Lair: Kraid Kihunters Revisit
     dw $078D, $916E  ; DDB
     dw $079B, $A471  ; MDB
     dw $07F3, $0012  ; Music Bank
@@ -734,8 +734,8 @@ preset_gtclassic_kraid_kraid_etank:
     dw $D8B8, $00ED  ; Doors
     dw #$FFFF
 
-preset_gtclassic_kraid_leaving_kraids_lair:
-    dw #preset_gtclassic_kraid_kraid_etank ; Kraid: Kraid E-tank
+preset_gtclassic_kraids_lair_leaving_kraids_lair:
+    dw #preset_gtclassic_kraids_lair_kraid_etank ; Kraid's Lair: Kraid E-Tank
     dw $078D, $9162  ; DDB
     dw $090F, $6000  ; Screen subpixel X position
     dw $0913, $F000  ; Screen subpixel Y position
@@ -751,7 +751,7 @@ preset_gtclassic_kraid_leaving_kraids_lair:
     dw #$FFFF
 
 preset_gtclassic_bootless_upper_norfair_business_center:
-    dw #preset_gtclassic_kraid_leaving_kraids_lair ; Kraid: Leaving Kraids Lair
+    dw #preset_gtclassic_kraids_lair_leaving_kraids_lair ; Kraid's Lair: Leaving Kraid's Lair
     dw $078D, $9246  ; DDB
     dw $079B, $A7DE  ; MDB
     dw $07F3, $0015  ; Music Bank
@@ -892,7 +892,7 @@ preset_gtclassic_bootless_upper_norfair_prepillars:
 
 preset_gtclassic_bootless_upper_norfair_green_gate_glitch:
     dw #preset_gtclassic_bootless_upper_norfair_prepillars ; Bootless Upper Norfair: Pre-Pillars
-    dw $078D, $985E  ; DDB
+    dw $078D, $989A  ; DDB
     dw $079B, $B3A5  ; MDB
     dw $090F, $C000  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
@@ -924,8 +924,8 @@ preset_gtclassic_bootless_upper_norfair_gt_code:
     dw $0AFA, $028B  ; Samus Y
     dw #$FFFF
 
-preset_gtclassic_hi_jump_upper_norfair_business_center:
-    dw #preset_gtclassic_kraid_kraid_etank ; Kraid: Kraid E-tank
+preset_gtclassic_hijump_upper_norfair_business_center:
+    dw #preset_gtclassic_kraids_lair_kraid_etank ; Kraid's Lair: Kraid E-Tank
     dw $078D, $9246  ; DDB
     dw $079B, $A7DE  ; MDB
     dw $07F3, $0015  ; Music Bank
@@ -940,8 +940,8 @@ preset_gtclassic_hi_jump_upper_norfair_business_center:
     dw $0AFA, $02A8  ; Samus Y
     dw #$FFFF
 
-preset_gtclassic_hi_jump_upper_norfair_hi_jump_etank:
-    dw #preset_gtclassic_hi_jump_upper_norfair_business_center ; Hi Jump Upper Norfair: Business Center
+preset_gtclassic_hijump_upper_norfair_hijump_etank:
+    dw #preset_gtclassic_hijump_upper_norfair_business_center ; Hi-Jump Upper Norfair: Business Center
     dw $090F, $1000  ; Screen subpixel X position
     dw $0915, $051B  ; Screen Y position in pixels
     dw $0919, $03D4  ; Layer 2 Y position
@@ -953,8 +953,8 @@ preset_gtclassic_hi_jump_upper_norfair_hi_jump_etank:
     dw $D8B8, $20EC  ; Doors
     dw #$FFFF
 
-preset_gtclassic_hi_jump_upper_norfair_leaving_hi_jump:
-    dw #preset_gtclassic_hi_jump_upper_norfair_hi_jump_etank ; Hi Jump Upper Norfair: Hi Jump E-tank
+preset_gtclassic_hijump_upper_norfair_leaving_hijump:
+    dw #preset_gtclassic_hijump_upper_norfair_hijump_etank ; Hi-Jump Upper Norfair: Hi-Jump E-Tank
     dw $078D, $9426  ; DDB
     dw $079B, $A9E5  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -975,8 +975,8 @@ preset_gtclassic_hi_jump_upper_norfair_leaving_hi_jump:
     dw $D8BA, $0001  ; Doors
     dw #$FFFF
 
-preset_gtclassic_hi_jump_upper_norfair_business_center_revisit:
-    dw #preset_gtclassic_hi_jump_upper_norfair_leaving_hi_jump ; Hi Jump Upper Norfair: Leaving Hi Jump
+preset_gtclassic_hijump_upper_norfair_business_center_revisit:
+    dw #preset_gtclassic_hijump_upper_norfair_leaving_hijump ; Hi-Jump Upper Norfair: Leaving Hi-Jump
     dw $078D, $93F6  ; DDB
     dw $079B, $AA41  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -990,8 +990,8 @@ preset_gtclassic_hi_jump_upper_norfair_business_center_revisit:
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 
-preset_gtclassic_hi_jump_upper_norfair_precathedral:
-    dw #preset_gtclassic_hi_jump_upper_norfair_business_center_revisit ; Hi Jump Upper Norfair: Business Center Revisit
+preset_gtclassic_hijump_upper_norfair_precathedral:
+    dw #preset_gtclassic_hijump_upper_norfair_business_center_revisit ; Hi-Jump Upper Norfair: Business Center Revisit
     dw $078D, $941A  ; DDB
     dw $079B, $A7DE  ; MDB
     dw $090F, $C000  ; Screen subpixel X position
@@ -1004,8 +1004,8 @@ preset_gtclassic_hi_jump_upper_norfair_precathedral:
     dw $0AFA, $038B  ; Samus Y
     dw #$FFFF
 
-preset_gtclassic_hi_jump_upper_norfair_cathedral:
-    dw #preset_gtclassic_hi_jump_upper_norfair_precathedral ; Hi Jump Upper Norfair: Pre-Cathedral
+preset_gtclassic_hijump_upper_norfair_cathedral:
+    dw #preset_gtclassic_hijump_upper_norfair_precathedral ; Hi-Jump Upper Norfair: Pre-Cathedral
     dw $078D, $92CA  ; DDB
     dw $079B, $A7B3  ; MDB
     dw $090F, $2000  ; Screen subpixel X position
@@ -1021,8 +1021,8 @@ preset_gtclassic_hi_jump_upper_norfair_cathedral:
     dw $D8B8, $24EC  ; Doors
     dw #$FFFF
 
-preset_gtclassic_hi_jump_upper_norfair_rising_tide:
-    dw #preset_gtclassic_hi_jump_upper_norfair_cathedral ; Hi Jump Upper Norfair: Cathedral
+preset_gtclassic_hijump_upper_norfair_rising_tide:
+    dw #preset_gtclassic_hijump_upper_norfair_cathedral ; Hi-Jump Upper Norfair: Cathedral
     dw $078D, $92B2  ; DDB
     dw $079B, $A788  ; MDB
     dw $090F, $E000  ; Screen subpixel X position
@@ -1035,8 +1035,8 @@ preset_gtclassic_hi_jump_upper_norfair_rising_tide:
     dw $D8B8, $26EC  ; Doors
     dw #$FFFF
 
-preset_gtclassic_hi_jump_upper_norfair_bubble_mountain:
-    dw #preset_gtclassic_hi_jump_upper_norfair_rising_tide ; Hi Jump Upper Norfair: Rising Tide
+preset_gtclassic_hijump_upper_norfair_bubble_mountain:
+    dw #preset_gtclassic_hijump_upper_norfair_rising_tide ; Hi-Jump Upper Norfair: Rising Tide
     dw $078D, $929A  ; DDB
     dw $079B, $AFA3  ; MDB
     dw $0911, $0400  ; Screen X position in pixels
@@ -1050,8 +1050,8 @@ preset_gtclassic_hi_jump_upper_norfair_bubble_mountain:
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 
-preset_gtclassic_hi_jump_upper_norfair_magdollite_tunnel:
-    dw #preset_gtclassic_hi_jump_upper_norfair_bubble_mountain ; Hi Jump Upper Norfair: Bubble Mountain
+preset_gtclassic_hijump_upper_norfair_magdollite_tunnel:
+    dw #preset_gtclassic_hijump_upper_norfair_bubble_mountain ; Hi-Jump Upper Norfair: Bubble Mountain
     dw $078D, $979E  ; DDB
     dw $079B, $AEDF  ; MDB
     dw $090F, $C000  ; Screen subpixel X position
@@ -1069,8 +1069,8 @@ preset_gtclassic_hi_jump_upper_norfair_magdollite_tunnel:
     dw $0AFA, $028B  ; Samus Y
     dw #$FFFF
 
-preset_gtclassic_hi_jump_upper_norfair_kronic_room:
-    dw #preset_gtclassic_hi_jump_upper_norfair_magdollite_tunnel ; Hi Jump Upper Norfair: Magdollite Tunnel
+preset_gtclassic_hijump_upper_norfair_kronic_room:
+    dw #preset_gtclassic_hijump_upper_norfair_magdollite_tunnel ; Hi-Jump Upper Norfair: Magdollite Tunnel
     dw $078D, $96BA  ; DDB
     dw $079B, $AEB4  ; MDB
     dw $0911, $0200  ; Screen X position in pixels
@@ -1083,8 +1083,8 @@ preset_gtclassic_hi_jump_upper_norfair_kronic_room:
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 
-preset_gtclassic_hi_jump_upper_norfair_lava_dive:
-    dw #preset_gtclassic_hi_jump_upper_norfair_kronic_room ; Hi Jump Upper Norfair: Kronic Room
+preset_gtclassic_hijump_upper_norfair_lava_dive:
+    dw #preset_gtclassic_hijump_upper_norfair_kronic_room ; Hi-Jump Upper Norfair: Kronic Room
     dw $078D, $96A2  ; DDB
     dw $079B, $AE74  ; MDB
     dw $090F, $8000  ; Screen subpixel X position
@@ -1101,8 +1101,8 @@ preset_gtclassic_hi_jump_upper_norfair_lava_dive:
     dw $D8BA, $0101  ; Doors
     dw #$FFFF
 
-preset_gtclassic_hi_jump_upper_norfair_ln_main_hall:
-    dw #preset_gtclassic_hi_jump_upper_norfair_lava_dive ; Hi Jump Upper Norfair: Lava Dive
+preset_gtclassic_hijump_upper_norfair_ln_main_hall:
+    dw #preset_gtclassic_hijump_upper_norfair_lava_dive ; Hi-Jump Upper Norfair: Lava Dive
     dw $078D, $96F6  ; DDB
     dw $079B, $B236  ; MDB
     dw $07F3, $0018  ; Music Bank
@@ -1119,8 +1119,8 @@ preset_gtclassic_hi_jump_upper_norfair_ln_main_hall:
     dw $0AFA, $0288  ; Samus Y
     dw #$FFFF
 
-preset_gtclassic_hi_jump_upper_norfair_prepillars:
-    dw #preset_gtclassic_hi_jump_upper_norfair_ln_main_hall ; Hi Jump Upper Norfair: LN Main Hall
+preset_gtclassic_hijump_upper_norfair_prepillars:
+    dw #preset_gtclassic_hijump_upper_norfair_ln_main_hall ; Hi-Jump Upper Norfair: LN Main Hall
     dw $090F, $7000  ; Screen subpixel X position
     dw $0911, $0700  ; Screen X position in pixels
     dw $0913, $D000  ; Screen subpixel Y position
@@ -1131,8 +1131,8 @@ preset_gtclassic_hi_jump_upper_norfair_prepillars:
     dw $0AFA, $028B  ; Samus Y
     dw #$FFFF
 
-preset_gtclassic_hi_jump_upper_norfair_green_gate_glitch:
-    dw #preset_gtclassic_hi_jump_upper_norfair_prepillars ; Hi Jump Upper Norfair: Pre-Pillars
+preset_gtclassic_hijump_upper_norfair_green_gate_glitch:
+    dw #preset_gtclassic_hijump_upper_norfair_prepillars ; Hi-Jump Upper Norfair: Pre-Pillars
     dw $078D, $985E  ; DDB
     dw $079B, $B3A5  ; MDB
     dw $090F, $3FFF  ; Screen subpixel X position
@@ -1148,8 +1148,8 @@ preset_gtclassic_hi_jump_upper_norfair_green_gate_glitch:
     dw $0AFA, $029B  ; Samus Y
     dw #$FFFF
 
-preset_gtclassic_hi_jump_upper_norfair_gt_code:
-    dw #preset_gtclassic_hi_jump_upper_norfair_green_gate_glitch ; Hi Jump Upper Norfair: Green Gate Glitch
+preset_gtclassic_hijump_upper_norfair_gt_code:
+    dw #preset_gtclassic_hijump_upper_norfair_green_gate_glitch ; Hi-Jump Upper Norfair: Green Gate Glitch
     dw $078D, $988E  ; DDB
     dw $079B, $B6C1  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -1230,7 +1230,7 @@ preset_gtclassic_lower_norfair_worst_room_in_the_game:
     dw #$FFFF
 
 preset_gtclassic_lower_norfair_amphitheatre:
-    dw #preset_gtclassic_lower_norfair_worst_room_in_the_game ; Lower Norfair: Worst Room in the Game
+    dw #preset_gtclassic_lower_norfair_worst_room_in_the_game ; Lower Norfair: Worst Room In The Game
     dw $078D, $994E  ; DDB
     dw $079B, $B4AD  ; MDB
     dw $090F, $3000  ; Screen subpixel X position
@@ -1539,7 +1539,7 @@ preset_gtclassic_maridia_mt_everest:
     dw #$FFFF
 
 preset_gtclassic_maridia_crab_shaft:
-    dw #preset_gtclassic_maridia_mt_everest ; Maridia: Mt Everest
+    dw #preset_gtclassic_maridia_mt_everest ; Maridia: Mt. Everest
     dw $090F, $0800  ; Screen subpixel X position
     dw $0911, $0500  ; Screen X position in pixels
     dw $0913, $0000  ; Screen subpixel Y position
@@ -1660,13 +1660,13 @@ preset_gtclassic_maridia_reverse_halfie_spikesuit:
     dw $D8C2, $4C00  ; Doors
     dw #$FFFF
 
-preset_gtclassic_maridia_womple_jump:
+preset_gtclassic_maridia_whomple_jump:
     dw #preset_gtclassic_maridia_reverse_halfie_spikesuit ; Maridia: Reverse Halfie (Spikesuit)
     dw $0A68, $0000  ; Flash suit
     dw #$FFFF
 
 preset_gtclassic_maridia_reverse_halfie_climb:
-    dw #preset_gtclassic_maridia_womple_jump ; Maridia: Womple Jump
+    dw #preset_gtclassic_maridia_whomple_jump ; Maridia: Whomple Jump
     dw $078D, $A834  ; DDB
     dw $079B, $D72A  ; MDB
     dw $090F, $4000  ; Screen subpixel X position
@@ -1689,7 +1689,7 @@ preset_gtclassic_maridia_reverse_botwoon_etank:
     dw #$FFFF
 
 preset_gtclassic_maridia_reverse_botwoon_hallway:
-    dw #preset_gtclassic_maridia_reverse_botwoon_etank ; Maridia: Reverse Botwoon E-tank
+    dw #preset_gtclassic_maridia_reverse_botwoon_etank ; Maridia: Reverse Botwoon E-Tank
     dw $078D, $A84C  ; DDB
     dw $079B, $D95E  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -1744,7 +1744,7 @@ preset_gtclassic_maridia_mt_everest_revisit:
     dw #$FFFF
 
 preset_gtclassic_maridia_red_brinstar_green_gate:
-    dw #preset_gtclassic_maridia_mt_everest_revisit ; Maridia: Mt Everest Revisit
+    dw #preset_gtclassic_maridia_mt_everest_revisit ; Maridia: Mt. Everest Revisit
     dw $078D, $A42C  ; DDB
     dw $079B, $D104  ; MDB
     dw $090F, $2C00  ; Screen subpixel X position
@@ -1928,7 +1928,7 @@ preset_gtclassic_wrecked_ship_terminator_revisit:
     dw $0B3F, $0104  ; Blue suit
     dw #$FFFF
 
-preset_gtclassic_wrecked_ship_green_pirate_shaft_2:
+preset_gtclassic_wrecked_ship_green_pirate_shaft:
     dw #preset_gtclassic_wrecked_ship_terminator_revisit ; Wrecked Ship: Terminator Revisit
     dw $078D, $895E  ; DDB
     dw $079B, $990D  ; MDB
@@ -1946,7 +1946,7 @@ preset_gtclassic_wrecked_ship_green_pirate_shaft_2:
     dw #$FFFF
 
 preset_gtclassic_wrecked_ship_g4_elevator:
-    dw #preset_gtclassic_wrecked_ship_green_pirate_shaft_2 ; Wrecked Ship: Green Pirate Shaft
+    dw #preset_gtclassic_wrecked_ship_green_pirate_shaft ; Wrecked Ship: Green Pirate Shaft
     dw $078D, $91F2  ; DDB
     dw $079B, $A66A  ; MDB
     dw $07F5, $0006  ; Music Track

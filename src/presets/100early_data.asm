@@ -607,7 +607,7 @@ preset_100early_speed_booster_business_center:
     dw $0AFA, $02A8  ; Samus Y
     dw #$FFFF
 
-preset_100early_speed_booster_hijump:
+preset_100early_speed_booster_hijump_boots:
     dw #preset_100early_speed_booster_business_center ; Speed Booster: Business Center
     dw $090F, $9000  ; Screen subpixel X position
     dw $0915, $051B  ; Screen Y position in pixels
@@ -621,7 +621,7 @@ preset_100early_speed_booster_hijump:
     dw #$FFFF
 
 preset_100early_speed_booster_business_center_climb:
-    dw #preset_100early_speed_booster_hijump ; Speed Booster: Hi-Jump
+    dw #preset_100early_speed_booster_hijump_boots ; Speed Booster: Hi-Jump Boots
     dw $078D, $93F6  ; DDB
     dw $079B, $AA41  ; MDB
     dw $090F, $0000  ; Screen subpixel X position
@@ -784,7 +784,7 @@ preset_100early_grapple_double_chamber:
     dw $D8BA, $0071  ; Doors
     dw #$FFFF
 
-preset_100early_grapple_double_chamber_revisited:
+preset_100early_grapple_double_chamber_revisit:
     dw #preset_100early_grapple_double_chamber ; Grapple: Double Chamber
     dw $078D, $961E  ; DDB
     dw $079B, $ADDE  ; MDB
@@ -806,8 +806,8 @@ preset_100early_grapple_double_chamber_revisited:
     dw $D8BA, $00F1  ; Doors
     dw #$FFFF
 
-preset_100early_grapple_bubble_mountain_revisited:
-    dw #preset_100early_grapple_double_chamber_revisited ; Grapple: Double Chamber Revisited
+preset_100early_grapple_bubble_mountain_revisit:
+    dw #preset_100early_grapple_double_chamber_revisit ; Grapple: Double Chamber Revisit
     dw $078D, $9606  ; DDB
     dw $079B, $AD5E  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -820,7 +820,7 @@ preset_100early_grapple_bubble_mountain_revisited:
     dw #$FFFF
 
 preset_100early_grapple_red_pirate_shaft:
-    dw #preset_100early_grapple_bubble_mountain_revisited ; Grapple: Bubble Mountain Revisited
+    dw #preset_100early_grapple_bubble_mountain_revisit ; Grapple: Bubble Mountain Revisit
     dw $078D, $956A  ; DDB
     dw $079B, $AF72  ; MDB
     dw $090F, $C000  ; Screen subpixel X position
@@ -981,7 +981,7 @@ preset_100early_grapple_crocomire_escape:
     dw #$FFFF
 
 preset_100early_grapple_business_center_return:
-    dw #preset_100early_grapple_crocomire_escape ; Grapplegrapple: Crocomire Escape
+    dw #preset_100early_grapple_crocomire_escape ; Grapple: Crocomire Escape
     dw $078D, $93AE  ; DDB
     dw $079B, $AA0E  ; MDB
     dw $090F, $D348  ; Screen subpixel X position
@@ -1126,7 +1126,7 @@ preset_100early_red_tower_and_crateria_crateria_kihunters:
     dw $D8B6, $E808  ; Doors
     dw #$FFFF
 
-preset_100early_red_tower_and_crateria_oceanfly:
+preset_100early_red_tower_and_crateria_ocean_fly:
     dw #preset_100early_red_tower_and_crateria_crateria_kihunters ; Red Tower and Crateria: Crateria Kihunters
     dw $078D, $8AF6  ; DDB
     dw $079B, $948C  ; MDB
@@ -1141,7 +1141,7 @@ preset_100early_red_tower_and_crateria_oceanfly:
     dw #$FFFF
 
 preset_100early_red_tower_and_crateria_the_moat:
-    dw #preset_100early_red_tower_and_crateria_oceanfly ; Red Tower and Crateria: Oceanfly
+    dw #preset_100early_red_tower_and_crateria_ocean_fly ; Red Tower and Crateria: Ocean Fly
     dw $090F, $17FF  ; Screen subpixel X position
     dw $0911, $0200  ; Screen X position in pixels
     dw $0913, $F400  ; Screen subpixel Y position
@@ -1691,7 +1691,7 @@ preset_100early_brinstar_cleanup_waterway_etank:
     dw $D8B6, $E8F8  ; Doors
     dw #$FFFF
 
-preset_100early_brinstar_cleanup_green_hills_revisit:
+preset_100early_brinstar_cleanup_green_hill_zone_revisit:
     dw #preset_100early_brinstar_cleanup_waterway_etank ; Brinstar Cleanup: Waterway E-Tank
     dw $078D, $8F8E  ; DDB
     dw $090F, $0000  ; Screen subpixel X position
@@ -1711,7 +1711,7 @@ preset_100early_brinstar_cleanup_green_hills_revisit:
     dw #$FFFF
 
 preset_100early_brinstar_cleanup_blockbuster:
-    dw #preset_100early_brinstar_cleanup_green_hills_revisit ; Brinstar Cleanup: Green Hills Revisit
+    dw #preset_100early_brinstar_cleanup_green_hill_zone_revisit ; Brinstar Cleanup: Green Hill Zone Revisit
     dw $078D, $8DEA  ; DDB
     dw $079B, $9E52  ; MDB
     dw $090F, $2000  ; Screen subpixel X position
@@ -1828,7 +1828,7 @@ preset_100early_maridia_predraygon_mt_everest:
     dw #$FFFF
 
 preset_100early_maridia_predraygon_beach_missiles:
-    dw #preset_100early_maridia_predraygon_mt_everest ; Maridia Pre-Draygon: Mt Everest
+    dw #preset_100early_maridia_predraygon_mt_everest ; Maridia Pre-Draygon: Mt. Everest
     dw $078D, $A468  ; DDB
     dw $079B, $D1A3  ; MDB
     dw $090F, $8000  ; Screen subpixel X position
@@ -2001,7 +2001,7 @@ preset_100early_maridia_predraygon_draygon:
     dw $D8C2, $0C00  ; Doors
     dw #$FFFF
 
-preset_100early_maridia_postdraygon_return_halfie:
+preset_100early_maridia_postdraygon_reverse_halfie:
     dw #preset_100early_maridia_predraygon_draygon ; Maridia Pre-Draygon: Draygon
     dw $078D, $A96C  ; DDB
     dw $090F, $A000  ; Screen subpixel X position
@@ -2023,7 +2023,7 @@ preset_100early_maridia_postdraygon_return_halfie:
     dw #$FFFF
 
 preset_100early_maridia_postdraygon_reverse_botwoon_etank:
-    dw #preset_100early_maridia_postdraygon_return_halfie ; Maridia Post-Draygon: Return Halfie
+    dw #preset_100early_maridia_postdraygon_reverse_halfie ; Maridia Post-Draygon: Reverse Halfie
     dw $078D, $A7E0  ; DDB
     dw $079B, $D913  ; MDB
     dw $090F, $4000  ; Screen subpixel X position
@@ -2542,7 +2542,7 @@ preset_100early_lower_norfair_worst_room_in_the_game:
     dw #$FFFF
 
 preset_100early_lower_norfair_mickey_mouse_missiles:
-    dw #preset_100early_lower_norfair_worst_room_in_the_game ; Lower Norfair: Worst Room in the Game
+    dw #preset_100early_lower_norfair_worst_room_in_the_game ; Lower Norfair: Worst Room In The Game
     dw $078D, $994E  ; DDB
     dw $079B, $B4AD  ; MDB
     dw $090F, $8000  ; Screen subpixel X position
@@ -2727,7 +2727,7 @@ preset_100early_lower_norfair_springball_maze:
     dw $D87A, $0001  ; Items
     dw #$FFFF
 
-preset_100early_lower_norfair_three_muskateers:
+preset_100early_lower_norfair_three_musketeers:
     dw #preset_100early_lower_norfair_springball_maze ; Lower Norfair: Springball Maze
     dw $078D, $9A92  ; DDB
     dw $079B, $B510  ; MDB
@@ -2744,7 +2744,7 @@ preset_100early_lower_norfair_three_muskateers:
     dw #$FFFF
 
 preset_100early_lower_norfair_bubble_mountain_return:
-    dw #preset_100early_lower_norfair_three_muskateers ; Lower Norfair: Three Muskateers
+    dw #preset_100early_lower_norfair_three_musketeers ; Lower Norfair: Three Musketeers
     dw $078D, $9A4A  ; DDB
     dw $079B, $AD5E  ; MDB
     dw $07F3, $0015  ; Music Bank

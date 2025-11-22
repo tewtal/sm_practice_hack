@@ -375,7 +375,7 @@ preset_nghyper_red_brinstar_bottom_of_red_tower:
     dw $0AFA, $098B  ; Samus Y
     dw #$FFFF
 
-preset_nghyper_red_brinstar_breaking_tube:
+preset_nghyper_red_brinstar_breaking_the_tube:
     dw #preset_nghyper_red_brinstar_bottom_of_red_tower ; Red Brinstar: Bottom of Red Tower
     dw $078D, $9102  ; DDB
     dw $079B, $A408  ; MDB
@@ -391,7 +391,7 @@ preset_nghyper_red_brinstar_breaking_tube:
     dw #$FFFF
 
 preset_nghyper_red_brinstar_upper_norfair_elevator:
-    dw #preset_nghyper_red_brinstar_breaking_tube ; Red Brinstar: Breaking Tube
+    dw #preset_nghyper_red_brinstar_breaking_the_tube ; Red Brinstar: Breaking The Tube
     dw $078D, $A384  ; DDB
     dw $079B, $A6A1  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -531,7 +531,7 @@ preset_nghyper_norfair_preridley_prepillars:
 
 preset_nghyper_norfair_preridley_fast_pillars:
     dw #preset_nghyper_norfair_preridley_prepillars ; Norfair Pre-Ridley: Pre-Pillars
-    dw $078D, $985E  ; DDB
+    dw $078D, $989A  ; DDB
     dw $079B, $B3A5  ; MDB
     dw $090F, $5E80  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
@@ -565,7 +565,7 @@ preset_nghyper_norfair_preridley_worst_room_in_the_game:
     dw #$FFFF
 
 preset_nghyper_norfair_preridley_amphitheatre:
-    dw #preset_nghyper_norfair_preridley_worst_room_in_the_game ; Norfair Pre-Ridley: Worst Room in the Game
+    dw #preset_nghyper_norfair_preridley_worst_room_in_the_game ; Norfair Pre-Ridley: Worst Room In The Game
     dw $078D, $994E  ; DDB
     dw $079B, $B4AD  ; MDB
     dw $090F, $0000  ; Screen subpixel X position
@@ -739,7 +739,7 @@ preset_nghyper_norfair_postridley_kihunter_stairs_up:
     dw $0AFA, $005B  ; Samus Y
     dw #$FFFF
 
-preset_nghyper_norfair_postridley_fire_flea_room:
+preset_nghyper_norfair_postridley_fireflea_room:
     dw #preset_nghyper_norfair_postridley_kihunter_stairs_up ; Norfair Post-Ridley: Kihunter Stairs Up
     dw $078D, $9A26  ; DDB
     dw $079B, $B585  ; MDB
@@ -756,7 +756,7 @@ preset_nghyper_norfair_postridley_fire_flea_room:
     dw #$FFFF
 
 preset_nghyper_norfair_postridley_springball_maze:
-    dw #preset_nghyper_norfair_postridley_fire_flea_room ; Norfair Post-Ridley: Fire Flea Room
+    dw #preset_nghyper_norfair_postridley_fireflea_room ; Norfair Post-Ridley: Fireflea Room
     dw $078D, $9A02  ; DDB
     dw $079B, $B6EE  ; MDB
     dw $090F, $4000  ; Screen subpixel X position
@@ -878,7 +878,7 @@ preset_nghyper_kraids_lair_warehouse_kihunters:
     dw $0AFC, $FFFF  ; Samus subpixel Y
     dw #$FFFF
 
-preset_nghyper_kraids_lair_minikraid_hallway:
+preset_nghyper_kraids_lair_minikraid:
     dw #preset_nghyper_kraids_lair_warehouse_kihunters ; Kraid's Lair: Warehouse Kihunters
     dw $078D, $9156  ; DDB
     dw $079B, $A4DA  ; MDB
@@ -888,7 +888,7 @@ preset_nghyper_kraids_lair_minikraid_hallway:
     dw #$FFFF
 
 preset_nghyper_kraids_lair_kraid:
-    dw #preset_nghyper_kraids_lair_minikraid_hallway ; Kraid's Lair: MiniKraid Hallway
+    dw #preset_nghyper_kraids_lair_minikraid ; Kraid's Lair: Mini-Kraid
     dw $078D, $919E  ; DDB
     dw $079B, $A56B  ; MDB
     dw $07F3, $0027  ; Music Bank
@@ -919,7 +919,7 @@ preset_nghyper_kraids_lair_leaving_kraid:
     dw $D828, $0100  ; Bosses
     dw #$FFFF
 
-preset_nghyper_kraids_lair_minikraid_hallway_revisit:
+preset_nghyper_kraids_lair_minikraid_revisit:
     dw #preset_nghyper_kraids_lair_leaving_kraid ; Kraid's Lair: Leaving Kraid
     dw $078D, $91CE  ; DDB
     dw $079B, $A56B  ; MDB
@@ -934,8 +934,8 @@ preset_nghyper_kraids_lair_minikraid_hallway_revisit:
     dw $D8B8, $00A4  ; Doors
     dw #$FFFF
 
-preset_nghyper_kraids_lair_kihunters_revisit_2:
-    dw #preset_nghyper_kraids_lair_minikraid_hallway_revisit ; Kraid's Lair: MiniKraid Hallway Revisit
+preset_nghyper_kraids_lair_kihunters_revisit:
+    dw #preset_nghyper_kraids_lair_minikraid_revisit ; Kraid's Lair: Mini-Kraid Revisit
     dw $078D, $91AA  ; DDB
     dw $079B, $A521  ; MDB
     dw $0911, $0020  ; Screen X position in pixels
@@ -950,8 +950,8 @@ preset_nghyper_kraids_lair_kihunters_revisit_2:
     dw $D8B8, $00AC  ; Doors
     dw #$FFFF
 
-preset_nghyper_kraids_lair_warehouse_zealas:
-    dw #preset_nghyper_kraids_lair_kihunters_revisit_2 ; Kraid's Lair: Kihunters Revisit
+preset_nghyper_kraids_lair_warehouse_zeelas:
+    dw #preset_nghyper_kraids_lair_kihunters_revisit ; Kraid's Lair: Kihunters Revisit
     dw $078D, $9192  ; DDB
     dw $079B, $A4DA  ; MDB
     dw $07F3, $0012  ; Music Bank
@@ -964,7 +964,7 @@ preset_nghyper_kraids_lair_warehouse_zealas:
     dw #$FFFF
 
 preset_nghyper_kraids_lair_leaving_kraids_lair:
-    dw #preset_nghyper_kraids_lair_warehouse_zealas ; Kraid's Lair: Warehouse Zealas
+    dw #preset_nghyper_kraids_lair_warehouse_zeelas ; Kraid's Lair: Warehouse Zeelas
     dw $078D, $916E  ; DDB
     dw $079B, $A471  ; MDB
     dw $090F, $F001  ; Screen subpixel X position
@@ -978,7 +978,7 @@ preset_nghyper_kraids_lair_leaving_kraids_lair:
     dw #$FFFF
 
 preset_nghyper_maridia_entering_maridia:
-    dw #preset_nghyper_kraids_lair_leaving_kraids_lair ; Kraid's Lair: Leaving Kraids Lair
+    dw #preset_nghyper_kraids_lair_leaving_kraids_lair ; Kraid's Lair: Leaving Kraid's Lair
     dw $078D, $913E  ; DDB
     dw $079B, $A6A1  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -1043,7 +1043,7 @@ preset_nghyper_maridia_mt_everest:
     dw #$FFFF
 
 preset_nghyper_maridia_crab_shaft:
-    dw #preset_nghyper_maridia_mt_everest ; Maridia: Mt Everest
+    dw #preset_nghyper_maridia_mt_everest ; Maridia: Mt. Everest
     dw $078D, $A3F0  ; DDB
     dw $079B, $D0B9  ; MDB
     dw $0911, $0500  ; Screen X position in pixels
@@ -1179,13 +1179,13 @@ preset_nghyper_maridia_spike_suit_colosseum:
     dw $D8C2, $4C00  ; Doors
     dw #$FFFF
 
-preset_nghyper_maridia_womple_jump:
+preset_nghyper_maridia_whomple_jump:
     dw #preset_nghyper_maridia_spike_suit_colosseum ; Maridia: Spike Suit Colosseum
     dw $0A68, $0000  ; Flash suit
     dw #$FFFF
 
 preset_nghyper_maridia_reverse_botwoon_hallway:
-    dw #preset_nghyper_maridia_womple_jump ; Maridia: Womple Jump
+    dw #preset_nghyper_maridia_whomple_jump ; Maridia: Whomple Jump
     dw $078D, $A834  ; DDB
     dw $079B, $D72A  ; MDB
     dw $090F, $F000  ; Screen subpixel X position
@@ -1255,7 +1255,7 @@ preset_nghyper_maridia_mt_everest_revisit:
     dw #$FFFF
 
 preset_nghyper_maridia_leaving_maridia:
-    dw #preset_nghyper_maridia_mt_everest_revisit ; Maridia: Mt Everest Revisit
+    dw #preset_nghyper_maridia_mt_everest_revisit ; Maridia: Mt. Everest Revisit
     dw $078D, $A4B0  ; DDB
     dw $079B, $D0B9  ; MDB
     dw $090F, $8000  ; Screen subpixel X position
