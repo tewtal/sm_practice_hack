@@ -1652,9 +1652,8 @@ preset_kpdr22_wrecked_ship_leaving_phantoon:
     dw $09CE, $0002  ; Pbs
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $0025  ; Samus X
-    dw $0AF8, $0000  ; Samus subpixel X
-    dw $0AFA, $00C9  ; Samus Y
+    dw $0AF6, $006D  ; Samus X
+    dw $0AFA, $00BB  ; Samus Y
     dw $D82A, $0100  ; Bosses
     dw $D8C0, $0070  ; Doors
     dw #$FFFF
