@@ -2116,7 +2116,7 @@ ih_superhud_dashcounter:
 
 ih_superhud_shinetune:
 !IH_SUPERHUD_SHINETUNE_BOTTOM_INDEX = #$0006
-    %cm_jsl("Shine Tune", #action_select_infohud_mode, #$0006)
+    %cm_jsl("Shine Tune", #action_select_superhud_bottom, #$0006)
 
 ih_superhud_iframecounter:
     %cm_jsl("I-Frame Counter", #action_select_superhud_bottom, #$0007)
@@ -2134,7 +2134,7 @@ ih_superhud_hspeed:
     %cm_jsl("Horizontal Speed", #action_select_superhud_bottom, #$000B)
 
 ih_superhud_dashspeed:
-    %cm_jsl("Dash Speed", #action_select_infohud_mode, #$000C)
+    %cm_jsl("Dash Speed", #action_select_superhud_bottom, #$000C)
 
 ih_superhud_vspeed:
     %cm_jsl("Vertical Speed", #action_select_superhud_bottom, #$000D)
@@ -2187,7 +2187,7 @@ ih_superhud_moondance:
     %cm_jsl("Moondance", #action_select_superhud_bottom, #$001B)
 
 ih_superhud_kraidradar:
-    %cm_jsl("Kraid Nail Radar", #action_select_room_strat, #$001C)
+    %cm_jsl("Kraid Nail Radar", #action_select_superhud_bottom, #$001C)
 
 ih_superhud_bootlessup:
     %cm_jsl("Bootless Up In Two", #action_select_superhud_bottom, #$001D)
@@ -2223,7 +2223,7 @@ ih_superhud_ridleyai:
     %cm_jsl("Ridley AI", #action_select_superhud_bottom, #$0027)
 
 ih_superhud_kihuntermanip:
-    %cm_jsl("Kihunter Manipulation", #action_select_room_strat, #$0028)
+    %cm_jsl("Kihunter Manipulation", #action_select_superhud_bottom, #$0028)
 
 ih_superhud_downbackzeb:
     %cm_jsl("Downback Zeb Skip", #action_select_superhud_bottom, #$0029)
@@ -2332,7 +2332,7 @@ ih_superhud_middle_hspeed:
     %cm_jsl("Horizontal Speed", #action_select_superhud_middle, #$0009)
 
 ih_superhud_middle_dashspeed:
-    %cm_jsl("Dash Speed", #action_select_infohud_mode, #$000A)
+    %cm_jsl("Dash Speed", #action_select_superhud_middle, #$000A)
 
 ih_superhud_middle_shottimer:
     %cm_jsl("Shot Timer", #action_select_superhud_middle, #$000B)
@@ -2433,7 +2433,7 @@ ih_superhud_top_hspeed:
     %cm_jsl("Horizontal Speed", #action_select_superhud_top, #$0009)
 
 ih_superhud_top_dashspeed:
-    %cm_jsl("Dash Speed", #action_select_infohud_mode, #$000A)
+    %cm_jsl("Dash Speed", #action_select_superhud_top, #$000A)
 
 ih_superhud_top_shottimer:
     %cm_jsl("Shot Timer", #action_select_superhud_top, #$000B)
