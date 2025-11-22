@@ -446,7 +446,7 @@ org $808F7E
     JSL custom_intro_ApuUpload
 endif
 
-%startfree(FF)
+%startfree(E0)
 LastMetroidMusic:
 {
 ; Sample table
@@ -566,7 +566,7 @@ db $00
 ; EOF
 dw $0000, $1500
 }
-%endfree(FF)
+%endfree(E0)
 
 org $8CD67D
 IndirectInstructions_IntroText_Space:
