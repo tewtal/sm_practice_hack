@@ -1,4 +1,4 @@
-FROM python:3.8-slim-buster AS build-stage
+FROM python:3.14-slim-trixie AS build-stage
 
 WORKDIR /app
 RUN apt-get update -yq \
