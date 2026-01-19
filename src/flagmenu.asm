@@ -792,7 +792,7 @@ eventflags_setbosses:
     RTL
 
 eventflags_setdoors:
-    %cm_jsl("Set All Doors", .routine, #$0000)
+    %cm_jsl("Set All Doors Unlocked", .routine, #$0000)
   .routine
     TDC : DEC : LDX #$0040
   .loop
@@ -1973,13 +1973,13 @@ doors_004A_uppernorfair:
     %cm_toggle_bit_inverted("Cathedral Entrance", #$7ED8B8, #$0400, #0)
 
 doors_004B_uppernorfair:
-    %cm_toggle_bit_inverted("Business Center (Green)", #$7ED8B8, #$0800, #0)
+    %cm_toggle_bit_inverted("Business Center(Green)", #$7ED8B8, #$0800, #0)
 
 doors_004C_uppernorfair:
-    %cm_toggle_bit_inverted("Business Center (Yellow)", #$7ED8B8, #$1000, #0)
+    %cm_toggle_bit_inverted("Business Center(Yellow)", #$7ED8B8, #$1000, #0)
 
 doors_004D_uppernorfair:
-    %cm_toggle_bit_inverted("Business Center (Red)", #$7ED8B8, #$2000, #0)
+    %cm_toggle_bit_inverted("Business Center(Red)", #$7ED8B8, #$2000, #0)
 
 doors_004E_uppernorfair:
     %cm_toggle_bit_inverted("Crocomire Speedway", #$7ED8B8, #$4000, #0)
@@ -1997,10 +1997,10 @@ doors_0052_uppernorfair:
     %cm_toggle_bit_inverted("Post Croc Shaft", #$7ED8BA, #$0004, #0)
 
 doors_0053_uppernorfair:
-    %cm_toggle_bit_inverted("Bubble Mtn (To Reserve)", #$7ED8BA, #$0008, #0)
+    %cm_toggle_bit_inverted("Bubble Mtn(To Reserve)", #$7ED8BA, #$0008, #0)
 
 doors_0054_uppernorfair:
-    %cm_toggle_bit_inverted("Bubble Mtn (To Bat Cave)", #$7ED8BA, #$0010, #0)
+    %cm_toggle_bit_inverted("Bubble Mtn(To Bat Cave)", #$7ED8BA, #$0010, #0)
 
 doors_0055_uppernorfair:
     %cm_toggle_bit_inverted("Speed Booster Hall", #$7ED8BA, #$0020, #0)
@@ -2062,19 +2062,19 @@ DoorsWreckedShipOffMenu:
     %cm_header("WRECKED SHIP OFF DOORS")
 
 doors_0080_wreckedshipoff:
-    %cm_toggle_bit_inverted("Attic (To West Ocean)", #$7ED8C0, #$0001, #0)
+    %cm_toggle_bit_inverted("Attic(To West Ocean)", #$7ED8C0, #$0001, #0)
 
 doors_0081_wreckedshipoff:
-    %cm_toggle_bit_inverted("Attic (To Robot Missiles)", #$7ED8C0, #$0002, #0)
+    %cm_toggle_bit_inverted("Attic(To Robot Missile)", #$7ED8C0, #$0002, #0)
 
 doors_0082_wreckedship:
-    %cm_toggle_bit_inverted("Main Shaft (To Left Supers)", #$7ED8C0, #$0004, #0)
+    %cm_toggle_bit_inverted("Main Shaft(To L Supers)", #$7ED8C0, #$0004, #0)
 
 doors_0083_wreckedship:
-    %cm_toggle_bit_inverted("Main Shaft (To Sponge Bath)", #$7ED8C0, #$0008, #0)
+    %cm_toggle_bit_inverted("Main Shaft(To Sponge)", #$7ED8C0, #$0008, #0)
 
 doors_0084_wreckedshipoff:
-    %cm_toggle_bit_inverted("Main Shaft (To Basement)", #$7ED8C0, #$0010, #0)
+    %cm_toggle_bit_inverted("Main Shaft(To Basement)", #$7ED8C0, #$0010, #0)
 
 doors_0085_wreckedshipoff:
     %cm_toggle_bit_inverted("Phantoon Eye Door", #$7ED8C0, #$0020, #0)
@@ -2098,13 +2098,13 @@ doors_0087_wreckedshipon:
     %cm_toggle_bit_inverted("Bowling Alley", #$7ED8C0, #$0080, #0)
 
 doors_0088_wreckedshipon:
-    %cm_toggle_bit_inverted("Attic (To West Ocean)", #$7ED8C0, #$0100, #0)
+    %cm_toggle_bit_inverted("Attic(To West Ocean)", #$7ED8C0, #$0100, #0)
 
 doors_0089_wreckedshipon:
-    %cm_toggle_bit_inverted("Attic (To Robot Missiles)", #$7ED8C0, #$0200, #0)
+    %cm_toggle_bit_inverted("Attic(To Robot Missile)", #$7ED8C0, #$0200, #0)
 
 doors_008A_wreckedshipon:
-    %cm_toggle_bit_inverted("Attic (To Main Shaft)", #$7ED8C0, #$0400, #0)
+    %cm_toggle_bit_inverted("Attic(To Main Shaft)", #$7ED8C0, #$0400, #0)
 
 doors_008B_wreckedshipon:
     %cm_toggle_bit_inverted("Electric Death", #$7ED8C0, #$0800, #0)
@@ -2223,10 +2223,10 @@ doors_00A3_tourian:
     %cm_toggle_bit_inverted("Metroid Room 4", #$7ED8C4, #$0008, #0)
 
 doors_00A4_tourian:
-    %cm_toggle_bit_inverted("Dust Torizo (To Hoppers)", #$7ED8C4, #$0010, #0)
+    %cm_toggle_bit_inverted("Dust Torizo(To Hoppers)", #$7ED8C4, #$0010, #0)
 
 doors_00A5_tourian:
-    %cm_toggle_bit_inverted("Dust Torizo (To Big Boy)", #$7ED8C4, #$0020, #0)
+    %cm_toggle_bit_inverted("Dust Torizo(To Big Boy)", #$7ED8C4, #$0020, #0)
 
 doors_00A6_tourian:
     %cm_toggle_bit_inverted("Big Boy Room", #$7ED8C4, #$0040, #0)
