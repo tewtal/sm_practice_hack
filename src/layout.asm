@@ -1674,6 +1674,91 @@ hook_layout_spazer_block_plm_entry:
     dw #layout_spazer_block_plm_entry
 
 
+; Landing site top-left grey door (escape)
+org $8F8048
+hook_layout_asm_landingsite_door1_escape_plm:
+    dw #$1002
+
+; Landing site bottom-right grey door (escape)
+org $8F804E
+hook_layout_asm_landingsite_door2_escape_plm:
+    dw #$1003
+
+; Landing site top-right grey door (escape)
+org $8F8054
+hook_layout_asm_landingsite_door3_escape_plm:
+    dw #$1004
+
+; Parlor top-left grey door (escape)
+org $8F81B0
+hook_layout_asm_parlor_door0_escape_plm:
+    dw #$1006
+
+; Parlor middle-left grey door (escape)
+org $8F81B6
+hook_layout_asm_parlor_door5_escape_plm:
+    dw #$1007
+
+; Parlor bottom-left grey door (escape)
+org $8F81BC
+hook_layout_asm_parlor_door6_escape_plm:
+    dw #$1008
+
+; Parlor bottom-right grey door (escape)
+org $8F81C2
+hook_layout_asm_parlor_door2_escape_plm:
+    dw #$1009
+
+; Parlor bottom grey door (escape)
+org $8F81C8
+hook_layout_asm_parlor_door4_escape_plm:
+    dw #$100A
+
+; West Ocean grey door
+org $8F81E0
+hook_layout_asm_westocean_door5_plm:
+    dw #$100B
+
+; Climb top-right grey door
+org $8F82FC
+hook_layout_asm_climb_door1_plm:
+    dw #$1011
+
+; Climb bottom-left grey door
+org $8F8302
+hook_layout_asm_climb_door4_plm:
+    dw #$1012
+
+; Climb top-left grey door (escape)
+org $8F83A0
+hook_layout_asm_climb_door1_escape_plm:
+    dw #$1014
+
+; Climb middle-right grey door (escape)
+org $8F83A6
+hook_layout_asm_climb_door2_escape_plm:
+    dw #$1015
+
+; Climb bottom-right grey door (escape)
+org $8F83AC
+hook_layout_asm_climb_door3_escape_plm:
+    dw #$1016
+
+; Climb bottom-left grey door (escape)
+org $8F83B2
+hook_layout_asm_climb_door4_escape_plm:
+    dw #$1017
+
+; Pit Room left grey door (Zebes asleep)
+org $8F83CC
+hook_layout_asm_pitroom_door0_asleep_plm:
+    dw #$1018
+
+; Green Brinstar Main Shaft bottom-right grey door
+org $8F84D4
+hook_layout_asm_greenbrinmainshaft_door6_plm:
+    dw #$1024
+
 ; Parlor escape setup asm
 org $8F919C
 layout_parlor_escape_setup_asm:
@@ -1918,6 +2003,36 @@ hook_layout_asm_escape_explosion:
   .end_explosion
     JMP layout_asm_escape_screen_shake
 warnpc $8FC183
+
+; Bowling middle-left grey door
+org $8FC2F9
+hook_layout_asm_bowling_door1_plm:
+    dw #$1087
+
+; Dust Torizo right grey door
+org $8FC827
+hook_layout_asm_dusttorizo_door0_plm:
+    dw #$10A4
+
+; Big Boy Room right grey door
+org $8FC835
+hook_layout_asm_bigboyroom_door0_plm:
+    dw #$10A6
+
+; Tourian Escape 2 top grey door
+org $8FC893
+hook_layout_asm_tourianescape2_door0_plm:
+    dw #$10AA
+
+; Tourian Escape 3 left grey door
+org $8FC8A1
+hook_layout_asm_tourianescape3_door0_plm:
+    dw #$10AB
+
+; Tourian Escape 4 left grey door
+org $8FC8AF
+hook_layout_asm_tourianescape4_door0_plm:
+    dw #$10AC
 
 ; Tourian escape 1 setup asm
 org $8FC926
