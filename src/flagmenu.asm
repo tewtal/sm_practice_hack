@@ -120,7 +120,7 @@ eq_currentmissiles:
 eq_setmissiles:
     %cm_numfield_word("Missiles", !SAMUS_MISSILES_MAX, 0, 325, 5, 20, .routine)
   .routine
-    LDA !SAMUS_MISSILES_MAX : STA !SAMUS_MISSILES
+    STA !SAMUS_MISSILES
     RTL
 
 eq_currentsupers:
@@ -129,7 +129,7 @@ eq_currentsupers:
 eq_setsupers:
     %cm_numfield_word("Super Missiles", !SAMUS_SUPERS_MAX, 0, 65, 5, 5, .routine)
   .routine
-    LDA !SAMUS_SUPERS_MAX : STA !SAMUS_SUPERS
+    STA !SAMUS_SUPERS
     RTL
 
 eq_currentpbs:
@@ -138,7 +138,7 @@ eq_currentpbs:
 eq_setpbs:
     %cm_numfield_word("Power Bombs", !SAMUS_PBS_MAX, 0, 70, 5, 5, .routine)
   .routine
-    LDA !SAMUS_PBS_MAX : STA !SAMUS_PBS
+    STA !SAMUS_PBS
     RTL
 
 
