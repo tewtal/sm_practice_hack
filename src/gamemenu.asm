@@ -55,7 +55,7 @@ game_demo_wait_timer:
 game_ceres_escape_timer:
     %cm_numfield_word("Ceres Timer (seconds)", !ram_cm_ceres_seconds, 1, 5999, 1, 20, .routine)
   .routine
-    LDA !ram_cm_ceres_seconds : STA $4204
+    STA $4204
     %a8()
     LDA.b #$0A : STA $4206
     %a16()
@@ -86,7 +86,7 @@ game_ceres_escape_timer:
 game_zebes_escape_timer:
     %cm_numfield_word("Zebes Timer (seconds)", !ram_cm_zebes_seconds, 1, 5999, 1, 20, .routine)
   .routine
-    LDA !ram_cm_zebes_seconds : STA $4204
+    STA $4204
     %a8()
     LDA.b #$0A : STA $4206
     %a16()
