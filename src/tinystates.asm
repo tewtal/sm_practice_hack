@@ -149,6 +149,7 @@ post_load_state:
 
   .done
     JSL init_wram_based_on_sram
+    JSL cm_write_ctrl_routine
 
     ; Freeze inputs if necessary
     LDA !ram_freeze_on_load : BEQ .return
