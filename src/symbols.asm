@@ -367,6 +367,8 @@ ram_cm_brb_palette = !ram_cm_brb_palette ; !WRAM_MENU_START+$AA
 ram_cm_brb_set_cycle = !ram_cm_brb_set_cycle ; !WRAM_MENU_START+$AC
 ram_cm_brb_cycle_time = !ram_cm_brb_cycle_time ; !WRAM_MENU_START+$AE
 
+ram_cm_grapple = !ram_cm_grapple ; !WRAM_MENU_START+$90
+ram_cm_xray = !ram_cm_xray ; !WRAM_MENU_START+$92
 ram_cm_manage_slots = !ram_cm_manage_slots ; !WRAM_MENU_START+$90
 ram_cm_selected_slot = !ram_cm_selected_slot ; !WRAM_MENU_START+$92
 ram_cm_preset_elevator = !ram_cm_preset_elevator ; !WRAM_MENU_START+$94
@@ -540,6 +542,22 @@ sram_loadstate_rando_missiles = !sram_loadstate_rando_missiles ; !SRAM_START+$11
 sram_loadstate_rando_supers = !sram_loadstate_rando_supers ; !SRAM_START+$116
 sram_loadstate_rando_powerbombs = !sram_loadstate_rando_powerbombs ; !SRAM_START+$118
 sram_loadstate_rando_enable = !sram_loadstate_rando_enable ; !SRAM_START+$11A
+sram_categoryadjust_item_equip = !sram_categoryadjust_item_equip ; !SRAM_START+$11C
+sram_categoryadjust_item_unequip = !sram_categoryadjust_item_unequip ; !SRAM_START+$11E
+sram_categoryadjust_item_remove = !sram_categoryadjust_item_remove ; !SRAM_START+$120
+sram_categoryadjust_beam_equip = !sram_categoryadjust_beam_equip ; !SRAM_START+$122
+sram_categoryadjust_beam_unequip = !sram_categoryadjust_beam_unequip ; !SRAM_START+$124
+sram_categoryadjust_beam_remove = !sram_categoryadjust_beam_remove ; !SRAM_START+$126
+sram_categoryadjust_energy = !sram_categoryadjust_energy ; !SRAM_START+$128
+sram_categoryadjust_etanks = !sram_categoryadjust_etanks ; !SRAM_START+$12A
+sram_categoryadjust_reserves = !sram_categoryadjust_reserves ; !SRAM_START+$12C
+sram_categoryadjust_rtanks = !sram_categoryadjust_rtanks ; !SRAM_START+$12E
+sram_categoryadjust_missiles = !sram_categoryadjust_missiles ; !SRAM_START+$130
+sram_categoryadjust_maxmissiles = !sram_categoryadjust_maxmissiles ; !SRAM_START+$132
+sram_categoryadjust_supers = !sram_categoryadjust_supers ; !SRAM_START+$134
+sram_categoryadjust_maxsupers = !sram_categoryadjust_maxsupers ; !SRAM_START+$136
+sram_categoryadjust_pbs = !sram_categoryadjust_pbs ; !SRAM_START+$138
+sram_categoryadjust_maxpbs = !sram_categoryadjust_maxpbs ; !SRAM_START+$13A
 
 ; ^ FREE SPACE ^ up to +$13E
 
