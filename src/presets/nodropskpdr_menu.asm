@@ -199,8 +199,8 @@ presets_submenu_nodropskpdr_wrecked_ship:
 
 presets_submenu_nodropskpdr_red_brinstar_revisit:
     dw #presets_nodropskpdr_red_brinstar_revisit_red_brinstar_elevator
-    dw #presets_nodropskpdr_red_brinstar_revisit_leaving_beta_power_bombs
     dw #presets_nodropskpdr_red_brinstar_revisit_caterpillars_revisit
+    dw #presets_nodropskpdr_red_brinstar_revisit_leaving_beta_power_bombs
     dw #presets_nodropskpdr_red_brinstar_revisit_hellway_revisit
     dw #presets_nodropskpdr_red_brinstar_revisit_red_tower_down
     dw #presets_nodropskpdr_red_brinstar_revisit_skree_boost_final
@@ -666,11 +666,11 @@ presets_nodropskpdr_wrecked_ship_crateria_refill_return:
 presets_nodropskpdr_red_brinstar_revisit_red_brinstar_elevator:
     %cm_preset("Red Brinstar Elevator", #preset_names_red_brinstar_elevator, #preset_nodropskpdr_red_brinstar_revisit_red_brinstar_elevator)
 
-presets_nodropskpdr_red_brinstar_revisit_leaving_beta_power_bombs:
-    %cm_preset("Leaving Beta Power Bombs", #preset_names_leaving_beta_power_bombs, #preset_nodropskpdr_red_brinstar_revisit_leaving_beta_power_bombs)
-
 presets_nodropskpdr_red_brinstar_revisit_caterpillars_revisit:
     %cm_preset("Caterpillars Revisit", #preset_names_caterpillars_revisit, #preset_nodropskpdr_red_brinstar_revisit_caterpillars_revisit)
+
+presets_nodropskpdr_red_brinstar_revisit_leaving_beta_power_bombs:
+    %cm_preset("Leaving Beta Power Bombs", #preset_names_leaving_beta_power_bombs, #preset_nodropskpdr_red_brinstar_revisit_leaving_beta_power_bombs)
 
 presets_nodropskpdr_red_brinstar_revisit_hellway_revisit:
     %cm_preset("Hellway Revisit", #preset_names_hellway_revisit, #preset_nodropskpdr_red_brinstar_revisit_hellway_revisit)

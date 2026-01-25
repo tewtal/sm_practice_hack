@@ -107,6 +107,7 @@ init_sram_routine_table:
     dw init_sram_upgrade_17to18
     dw init_sram_upgrade_18to19
     dw init_sram_upgrade_19to1A
+    dw init_sram_upgrade_1Ato1B
 
 init_sram:
 {
@@ -219,6 +220,24 @@ endif
     ORA !sram_loadstate_rando_powerbombs
     STA !sram_loadstate_rando_enable
     JSL init_sram_controller_shortcuts
+
+  .upgrade_1Ato1B
+    TDC : STA !sram_categoryadjust_item_equip
+    STA !sram_categoryadjust_item_unequip
+    STA !sram_categoryadjust_beam_equip
+    STA !sram_categoryadjust_beam_unequip
+    STA !sram_categoryadjust_energy
+    STA !sram_categoryadjust_etanks
+    STA !sram_categoryadjust_reserves
+    STA !sram_categoryadjust_rtanks
+    STA !sram_categoryadjust_missiles
+    STA !sram_categoryadjust_maxmissiles
+    STA !sram_categoryadjust_supers
+    STA !sram_categoryadjust_maxsupers
+    STA !sram_categoryadjust_pbs
+    STA !sram_categoryadjust_maxpbs
+    DEC : STA !sram_categoryadjust_item_remove
+    STA !sram_categoryadjust_beam_remove
 
     LDA !SRAM_VERSION : STA !sram_initialized
     RTS

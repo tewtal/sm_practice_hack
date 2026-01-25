@@ -70,7 +70,7 @@ brb_menu_timer_clear:
 brb_menu_cycle_timer:
     %cm_numfield_word("Cycle Timer (seconds)", !ram_cm_brb_set_cycle, 1, 512, 1, 10, .routine)
   .routine
-    LDA !ram_cm_brb_set_cycle : BNE .setTime
+    TAX : BNE .setTime
     LDA #$0009 ; default to ~10s
   .setTime
     ASL #6 : STA !ram_cm_brb_cycle_time

@@ -468,6 +468,8 @@ PresetOptionsMenu:
     dw #presets_select_preset_category
     dw #presets_current
     dw #$FFFF
+    dw #presets_category_adjustments
+    dw #$FFFF
     dw #presets_custom_preset_slot
     dw #presets_save_custom_preset
     dw #presets_load_custom_preset
@@ -486,9 +488,7 @@ endif
     dw #presets_auto_segment_reset
 if !RAW_TILE_GRAPHICS
     dw #$FFFF
-    dw #presets_compressed_graphics
-    dw #presets_compressed_palettes
-    dw #presets_compressed_tables
+    dw #presets_compressed_data
 endif
     dw #$0000
     %cm_header("PRESET OPTIONS MENU")
@@ -498,6 +498,9 @@ endif
 
 presets_select_preset_category:
     %cm_submenu("Select Preset Category", #SelectPresetCategoryMenu)
+
+presets_category_adjustments:
+    %cm_submenu("Category Adjustments", #PresetCategoryAdjustmentMenu)
 
 presets_custom_preset_slot:
     %cm_numfield("Custom Preset Slot", !sram_custom_preset_slot, 0, !TOTAL_PRESET_SLOTS, 1, 2, #.routine)
@@ -623,15 +626,251 @@ presets_auto_segment_reset:
     %cm_toggle_bit_inverted("Auto Reset Segment", !sram_preset_options, !PRESETS_AUTO_SEGMENT_OFF, #0)
 
 if !RAW_TILE_GRAPHICS
-presets_compressed_graphics:
-    %cm_toggle_bit("Compressed Graphics", !sram_preset_options, !PRESETS_COMPRESSED_GRAPHICS, #0)
-
-presets_compressed_palettes:
-    %cm_toggle_bit("Compressed Palettes", !sram_preset_options, !PRESETS_COMPRESSED_PALETTES, #0)
-
-presets_compressed_tables:
-    %cm_toggle_bit("Compressed Tables", !sram_preset_options, !PRESETS_COMPRESSED_TABLES, #0)
+presets_compressed_data:
+    %cm_toggle_bit("Compressed Data", !sram_preset_options, !PRESETS_COMPRESSED, #0)
 endif
+
+PresetCategoryAdjustmentMenu:
+    dw #preset_adjust_items
+    dw #$FFFF
+    dw #preset_adjust_currentenergy
+    dw #preset_adjust_setetanks
+    dw #$FFFF
+    dw #preset_adjust_currentreserves
+    dw #preset_adjust_setreserves
+    dw #$FFFF
+    dw #preset_adjust_currentmissiles
+    dw #preset_adjust_setmissiles
+    dw #$FFFF
+    dw #preset_adjust_currentsupers
+    dw #preset_adjust_setsupers
+    dw #$FFFF
+    dw #preset_adjust_currentpbs
+    dw #preset_adjust_setpbs
+    dw #$0000
+    %cm_header("CATEGORY ADJUSTMENTS")
+
+preset_adjust_items:
+    %cm_jsl("Adjust Items and Beams", #preset_prepare_adjust_items_menu, #PresetAdjustItemsBeamsMenu)
+
+preset_adjust_currentenergy:
+    %cm_numfield_signed("Current Energy", !sram_categoryadjust_energy, #$FC19, #$03E7, 1, 20, #0)
+
+preset_adjust_setetanks:
+    %cm_numfield_signed("Energy Tanks", !sram_categoryadjust_etanks, #$FFF2, #$000E, 1, 1, .routine)
+  .routine
+    TAX : BPL .positive
+    LDA #$FF9C
+  .negloop
+    ; subtract 100 per reserve
+    INX : BPL .endloop
+    SEC : SBC #$0064
+    CMP #$FC19 : BPL .negloop
+    LDA #$FC19 : BRA .endloop
+  .positive
+    TDC
+  .posloop
+    ; add 100 per reserve
+    DEX : BMI .endloop
+    CLC : ADC #$0064
+    CMP #$03E7 : BMI .posloop
+    LDA #$03E7
+  .endloop
+    STA !sram_categoryadjust_energy
+    RTL
+
+preset_adjust_currentreserves:
+    %cm_numfield_signed("Current Reserves", !sram_categoryadjust_reserves, #$FE70, #$0190, 1, 20, #0)
+
+preset_adjust_setreserves:
+    %cm_numfield_signed("Reserve Tanks", !sram_categoryadjust_rtanks, #$FFFC, #$0004, 1, 1, .routine)
+  .routine
+    TAX : BPL .positive
+    LDA #$FF9C
+  .negloop
+    ; subtract 100 per reserve
+    INX : BPL .endloop
+    SEC : SBC #$0064
+    BRA .negloop
+  .positive
+    TDC
+  .posloop
+    ; add 100 per reserve
+    DEX : BMI .endloop
+    CLC : ADC #$0064
+    BRA .posloop
+  .endloop
+    STA !sram_categoryadjust_reserves
+    RTL
+
+preset_adjust_currentmissiles:
+    %cm_numfield_signed("Current Missiles", !sram_categoryadjust_missiles, #$FF1A, #$00E6, 1, 20, #0)
+
+preset_adjust_setmissiles:
+    %cm_numfield_signed("Missiles", !sram_categoryadjust_maxmissiles, #$FF1A, #$00E6, 5, 20, .routine)
+  .routine
+    STA !sram_categoryadjust_missiles
+    RTL
+
+preset_adjust_currentsupers:
+    %cm_numfield_signed("Current Super Missile", !sram_categoryadjust_supers, #$FFCE, #$0032, 1, 5, #0)
+
+preset_adjust_setsupers:
+    %cm_numfield_signed("Super Missiles", !sram_categoryadjust_maxsupers, #$FFCE, #$0032, 5, 5, .routine)
+  .routine
+    STA !sram_categoryadjust_supers
+    RTL
+
+preset_adjust_currentpbs:
+    %cm_numfield_signed("Current Power Bombs", !sram_categoryadjust_pbs, #$FFCE, #$0032, 1, 5, #0)
+
+preset_adjust_setpbs:
+    %cm_numfield_signed("Power Bombs", !sram_categoryadjust_maxpbs, #$FFCE, #$0032, 5, 5, .routine)
+  .routine
+    STA !sram_categoryadjust_pbs
+    RTL
+
+preset_prepare_adjust_items_menu:
+{
+    LDA !sram_categoryadjust_item_equip : BIT #$4000 : BNE .equip_grapple
+    LDA !sram_categoryadjust_item_remove : BIT #$4000 : BEQ .remove_grapple
+    ; no change
+    TDC : STA !ram_cm_grapple : BRA .done_grapple
+  .equip_grapple
+    LDA #$0001 : STA !ram_cm_grapple : BRA .done_grapple
+  .remove_grapple
+    LDA #$0002 : STA !ram_cm_grapple
+  .done_grapple
+
+    LDA !sram_categoryadjust_item_equip : BIT #$8000 : BNE .equip_xray
+    LDA !sram_categoryadjust_item_remove : BIT #$8000 : BEQ .remove_xray
+    ; no change
+    TDC : STA !ram_cm_xray : BRA .done_xray
+  .equip_xray
+    LDA #$0001 : STA !ram_cm_xray : BRA .done_xray
+  .remove_xray
+    LDA #$0002 : STA !ram_cm_xray
+  .done_xray
+
+    %setmenubank()
+    JML action_submenu
+}
+
+PresetAdjustItemsBeamsMenu:
+    dw #preset_adjust_variasuit
+    dw #preset_adjust_gravitysuit
+    dw #$FFFF
+    dw #preset_adjust_morphball
+    dw #preset_adjust_bomb
+    dw #preset_adjust_springball
+    dw #preset_adjust_screwattack
+    dw #$FFFF
+    dw #preset_adjust_hijumpboots
+    dw #preset_adjust_spacejump
+    dw #preset_adjust_speedbooster
+    dw #$FFFF
+    dw #preset_adjust_grapple
+    dw #preset_adjust_xray
+    dw #$FFFF
+    dw #preset_adjust_chargebeam
+    dw #preset_adjust_icebeam
+    dw #preset_adjust_wavebeam
+    dw #preset_adjust_spazerbeam
+    dw #preset_adjust_plasmabeam
+    dw #$0000
+    %cm_header("CATEGORY ADJUSTMENTS")
+
+preset_adjust_variasuit:
+    %cm_preset_adjust_item("Varia Suit", !sram_categoryadjust_item_equip, #$0001)
+
+preset_adjust_gravitysuit:
+    %cm_preset_adjust_item("Gravity Suit", !sram_categoryadjust_item_equip, #$0020)
+
+preset_adjust_morphball:
+    %cm_preset_adjust_item("Morph Ball", !sram_categoryadjust_item_equip, #$0004)
+
+preset_adjust_bomb:
+    %cm_preset_adjust_item("Bombs", !sram_categoryadjust_item_equip, #$1000)
+
+preset_adjust_springball:
+    %cm_preset_adjust_item("Spring Ball", !sram_categoryadjust_item_equip, #$0002)
+
+preset_adjust_screwattack:
+    %cm_preset_adjust_item("Screw Attack", !sram_categoryadjust_item_equip, #$0008)
+
+preset_adjust_hijumpboots:
+    %cm_preset_adjust_item("Hi Jump Boots", !sram_categoryadjust_item_equip, #$0100)
+
+preset_adjust_spacejump:
+    %cm_preset_adjust_item("Space Jump", !sram_categoryadjust_item_equip, #$0200)
+
+preset_adjust_speedbooster:
+    %cm_preset_adjust_item("Speed Booster", !sram_categoryadjust_item_equip, #$2000)
+
+preset_adjust_grapple:
+    dw !ACTION_CHOICE
+    dl #!ram_cm_grapple
+    dw #.routine
+    db #$28, "Grapple", #$FF
+    db #$28, "  NO CHANGE", #$FF
+    db #$28, "      EQUIP", #$FF
+    db #$28, "     REMOVE", #$FF
+    db #$FF
+  .routine
+    LDA !ram_cm_grapple : BEQ .no_change
+    DEC : BEQ .equip
+    ; remove
+    LDA !sram_categoryadjust_item_equip : AND #$BFFF : STA !sram_categoryadjust_item_equip
+    LDA !sram_categoryadjust_item_remove : AND #$BFFF : STA !sram_categoryadjust_item_remove
+    RTL
+  .no_change
+    LDA !sram_categoryadjust_item_equip : AND #$BFFF : STA !sram_categoryadjust_item_equip
+    LDA !sram_categoryadjust_item_remove : ORA #$4000 : STA !sram_categoryadjust_item_remove
+    RTL
+  .equip
+    LDA !sram_categoryadjust_item_equip : ORA #$4000 : STA !sram_categoryadjust_item_equip
+    LDA !sram_categoryadjust_item_remove : ORA #$4000 : STA !sram_categoryadjust_item_remove
+    RTL
+
+preset_adjust_xray:
+    dw !ACTION_CHOICE
+    dl #!ram_cm_xray
+    dw #.routine
+    db #$28, "X-Ray", #$FF
+    db #$28, "  NO CHANGE", #$FF
+    db #$28, "      EQUIP", #$FF
+    db #$28, "     REMOVE", #$FF
+    db #$FF
+  .routine
+    LDA !ram_cm_xray : BEQ .no_change
+    DEC : BEQ .equip
+    ; remove
+    LDA !sram_categoryadjust_item_equip : AND #$7FFF : STA !sram_categoryadjust_item_equip
+    LDA !sram_categoryadjust_item_remove : AND #$7FFF : STA !sram_categoryadjust_item_remove
+    RTL
+  .no_change
+    LDA !sram_categoryadjust_item_equip : AND #$7FFF : STA !sram_categoryadjust_item_equip
+    LDA !sram_categoryadjust_item_remove : ORA #$8000 : STA !sram_categoryadjust_item_remove
+    RTL
+  .equip
+    LDA !sram_categoryadjust_item_equip : ORA #$8000 : STA !sram_categoryadjust_item_equip
+    LDA !sram_categoryadjust_item_remove : ORA #$8000 : STA !sram_categoryadjust_item_remove
+    RTL
+
+preset_adjust_chargebeam:
+    %cm_preset_adjust_item("Charge", !sram_categoryadjust_beam_equip, #$1000)
+
+preset_adjust_icebeam:
+    %cm_preset_adjust_item("Ice", !sram_categoryadjust_beam_equip, #$0002)
+
+preset_adjust_wavebeam:
+    %cm_preset_adjust_item("Wave", !sram_categoryadjust_beam_equip, #$0001)
+
+preset_adjust_spazerbeam:
+    %cm_preset_adjust_item("Spazer", !sram_categoryadjust_beam_equip, #$0004)
+
+preset_adjust_plasmabeam:
+    %cm_preset_adjust_item("Plasma", !sram_categoryadjust_beam_equip, #$0008)
 
 SelectPresetCategoryMenu:
     dw #presets_current
