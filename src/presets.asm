@@ -297,13 +297,172 @@ preset_load_preset:
   .custom_preset
     JSL custom_preset_load
     LDA !SAFEWORD : STA !sram_last_preset_low_word
-    BRA .done
+    PLB
+    RTL
 
   .category_preset
     JSR category_preset_load
-
-  .done
     PLB
+
+    ; apply category adjustments
+    LDA !SAMUS_ITEMS_EQUIPPED : EOR #$FFFF
+    ORA !sram_categoryadjust_item_unequip : EOR #$FFFF
+    AND !sram_categoryadjust_item_remove
+    ORA !sram_categoryadjust_item_equip : STA !SAMUS_ITEMS_EQUIPPED
+    LDA !SAMUS_ITEMS_COLLECTED : AND !sram_categoryadjust_item_remove
+    ORA !sram_categoryadjust_item_equip
+    ORA !sram_categoryadjust_item_unequip : STA !SAMUS_ITEMS_COLLECTED
+
+    LDA !SAMUS_BEAMS_EQUIPPED : EOR #$FFFF
+    ORA !sram_categoryadjust_beam_unequip : EOR #$FFFF
+    AND !sram_categoryadjust_beam_remove
+    ORA !sram_categoryadjust_beam_equip : STA !SAMUS_BEAMS_EQUIPPED
+    LDA !SAMUS_BEAMS_COLLECTED : AND !sram_categoryadjust_beam_remove
+    ORA !sram_categoryadjust_beam_equip
+    ORA !sram_categoryadjust_beam_unequip : STA !SAMUS_BEAMS_COLLECTED
+
+    ; don't allow adjustments to equip spazer+plasma
+    LDA !SAMUS_HYPER_BEAM : BNE .beams_hyper
+    LDA !sram_categoryadjust_beam_equip : AND #$000C : BEQ .beams_done
+    LDA !SAMUS_BEAMS_EQUIPPED : AND #$000C : CMP #$000C : BNE .beams_done
+    LDA !SAMUS_BEAMS_EQUIPPED : AND #$FFFB : STA !SAMUS_BEAMS_EQUIPPED
+    BRA .beams_done
+  .beams_hyper
+    LDA #$1009 : STA !SAMUS_BEAMS_EQUIPPED
+  .beams_done
+
+    LDA !sram_categoryadjust_etanks : BEQ .etanks_done
+    TAX : BPL .etanks_positive
+    LDA !SAMUS_HP_MAX
+  .etanks_negloop
+    SEC : SBC #$0064
+    INX : BMI .etanks_negloop
+    CMP #$0063 : BPL .etanks_set
+    LDA #$0063 : BRA .etanks_set
+  .etanks_positive
+    LDA !SAMUS_HP_MAX
+  .etanks_posloop
+    DEX : BMI .etanks_set
+    CLC : ADC #$0064
+    BRA .etanks_posloop
+  .etanks_set
+    STA !SAMUS_HP_MAX
+    LDA !sram_categoryadjust_energy : BNE .energy_adjust
+    LDA !SAMUS_HP : BRA .energy_cap
+  .etanks_done
+
+    LDA !sram_categoryadjust_energy : BEQ .energy_done
+  .energy_adjust
+    CLC : ADC !SAMUS_HP : BMI .energy_zero : BEQ .energy_zero
+  .energy_cap
+    CMP !SAMUS_HP_MAX : BMI .energy_set : BEQ .energy_set
+    LDA !SAMUS_HP_MAX : BRA .energy_set
+  .energy_zero
+    LDA #$0001
+  .energy_set
+    STA !SAMUS_HP
+  .energy_done
+
+    LDA !sram_categoryadjust_rtanks : BEQ .rtanks_done
+    TAX : BPL .rtanks_positive
+    LDA !SAMUS_RESERVE_MAX
+  .rtanks_negloop
+    SEC : SBC #$0064
+    INX : BMI .rtanks_negloop
+    CMP #$0000 : BPL .rtanks_set
+    TDC : BRA .rtanks_set
+  .rtanks_positive
+    LDA !SAMUS_RESERVE_MAX
+  .rtanks_posloop
+    DEX : BMI .rtanks_set
+    CLC : ADC #$0064
+    BRA .rtanks_posloop
+  .rtanks_set
+    STA !SAMUS_RESERVE_MAX : BEQ .rtanks_zero
+    LDA !SAMUS_RESERVE_MODE : BNE .rtanks_cap
+    INC
+  .rtanks_zero
+    STA !SAMUS_RESERVE_MODE
+  .rtanks_cap
+    LDA !sram_categoryadjust_reserves : BNE .reserves_adjust
+    LDA !SAMUS_RESERVE_ENERGY : BRA .reserves_cap
+  .rtanks_done
+
+    LDA !sram_categoryadjust_reserves : BEQ .reserves_done
+  .reserves_adjust
+    CLC : ADC !SAMUS_RESERVE_ENERGY : BMI .reserves_zero
+  .reserves_cap
+    CMP !SAMUS_RESERVE_MAX : BMI .reserves_set : BEQ .reserves_set
+    LDA !SAMUS_RESERVE_MAX : BRA .reserves_set
+  .reserves_zero
+    TDC
+  .reserves_set
+    STA !SAMUS_RESERVE_ENERGY
+  .reserves_done
+
+    LDA !sram_categoryadjust_maxmissiles : BEQ .maxmissiles_done
+    CLC : ADC !SAMUS_MISSILES_MAX : BPL .maxmissiles_set : BEQ .maxmissiles_set
+    TDC
+  .maxmissiles_set
+    STA !SAMUS_MISSILES_MAX
+    LDA !sram_categoryadjust_missiles : BNE .missiles_adjust
+    LDA !SAMUS_MISSILES : BRA .missiles_cap
+  .maxmissiles_done
+
+    LDA !sram_categoryadjust_missiles : BEQ .missiles_done
+  .missiles_adjust
+    CLC : ADC !SAMUS_MISSILES : BMI .missiles_zero
+  .missiles_cap
+    CMP !SAMUS_MISSILES_MAX : BMI .missiles_set : BEQ .missiles_set
+    LDA !SAMUS_MISSILES_MAX : BRA .missiles_set
+  .missiles_zero
+    TDC
+  .missiles_set
+    STA !SAMUS_MISSILES
+  .missiles_done
+
+    LDA !sram_categoryadjust_maxsupers : BEQ .maxsupers_done
+    CLC : ADC !SAMUS_SUPERS_MAX : BPL .maxsupers_set : BEQ .maxsupers_set
+    TDC
+  .maxsupers_set
+    STA !SAMUS_SUPERS_MAX
+    LDA !sram_categoryadjust_supers : BNE .supers_adjust
+    LDA !SAMUS_SUPERS : BRA .supers_cap
+  .maxsupers_done
+
+    LDA !sram_categoryadjust_supers : BEQ .supers_done
+  .supers_adjust
+    CLC : ADC !SAMUS_SUPERS : BMI .supers_zero
+  .supers_cap
+    CMP !SAMUS_SUPERS_MAX : BMI .supers_set : BEQ .supers_set
+    LDA !SAMUS_SUPERS_MAX : BRA .supers_set
+  .supers_zero
+    TDC
+  .supers_set
+    STA !SAMUS_SUPERS
+  .supers_done
+
+    LDA !sram_categoryadjust_maxpbs : BEQ .maxpbs_done
+    CLC : ADC !SAMUS_PBS_MAX : BPL .maxpbs_set : BEQ .maxpbs_set
+    TDC
+  .maxpbs_set
+    STA !SAMUS_PBS_MAX
+    LDA !sram_categoryadjust_pbs : BNE .pbs_adjust
+    LDA !SAMUS_PBS : BRA .pbs_cap
+  .maxpbs_done
+
+    LDA !sram_categoryadjust_pbs : BEQ .pbs_done
+  .pbs_adjust
+    CLC : ADC !SAMUS_PBS : BMI .pbs_zero
+  .pbs_cap
+    CMP !SAMUS_PBS_MAX : BMI .pbs_set : BEQ .pbs_set
+    LDA !SAMUS_PBS_MAX : BRA .pbs_set
+  .pbs_zero
+    TDC
+  .pbs_set
+    STA !SAMUS_PBS
+  .pbs_done
+
     RTL
 }
 
@@ -394,7 +553,7 @@ preset_start_gameplay:
     %ai16()
     SEI ; Disable IRQ
     STZ $420B ; Disable all (H)DMA
-    STZ $07E9 ; Scrolling finished hook = 0
+    STZ !SCROLLING_FINISHED_HOOK
     STZ !TIMER_STATUS
 
     JSL $828A9A  ; Reset sound queues

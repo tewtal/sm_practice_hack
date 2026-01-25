@@ -151,6 +151,26 @@ table ../resources/normal.tbl
     db #$28, "<title>", #$FF
 endmacro
 
+macro cm_numfield_signed(title, addr, start, end, increment, heldincrement, jsltarget)
+; Allows editing a 16-bit signed value at the specified address
+; Start must be in range -1 to -999 and end must be in range 1 to 999
+  .dm_actionIndex
+    dw !ACTION_NUMFIELD_SIGNED
+  .dm_addr
+    dl <addr> ; 24bit RAM address to display/manipulate
+  .dm_minMax
+    dw <start>, <end> ; minimum and maximum values allowed
+  .dm_inc
+    dw <increment> ; inc/dec amount when pressed
+  .dm_heldinc
+    dw <heldincrement> ; inc/dec amount when direction is held (scroll faster)
+  .dm_jsl
+    dw <jsltarget> ; 16bit address to code in the same bank as current menu/submenu
+  .dm_text
+table ../resources/normal.tbl
+    db #$28, "<title>", #$FF
+endmacro
+
 macro cm_numfield_hex(title, addr, start, end, increment, heldincrement, jsltarget)
 ; Allows editing an 8-bit value displayed in hexadecimal
   .dm_actionIndex
@@ -496,6 +516,18 @@ macro cm_equipment_beam(name, addr, bitmask, inverse, and)
     LDA <inverse> : STA !DP_Increment
     LDA <and> : STA !DP_Temp
     JMP equipment_toggle_beams
+endmacro
+
+macro cm_preset_adjust_item(name, addr, bitmask)
+; Allows four-way toggling of items:  NO CHANGE/EQUIP/UNEQUIP/REMOVE
+  .dm_actionIndex
+    dw !ACTION_ADJUST_ITEM
+  .dm_addr
+    dl <addr>
+  .dm_bitmask
+    dw <bitmask>
+  .dm_text
+    db #$28, "<name>", #$FF
 endmacro
 
 macro SDE_add(label, value, mask, inverse)
