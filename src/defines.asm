@@ -384,6 +384,8 @@
 !ram_cm_brb_set_cycle = !WRAM_MENU_START+$AC
 !ram_cm_brb_cycle_time = !WRAM_MENU_START+$AE
 
+!ram_cm_grapple = !WRAM_MENU_START+$90
+!ram_cm_xray = !WRAM_MENU_START+$92
 !ram_cm_manage_slots = !WRAM_MENU_START+$90
 !ram_cm_selected_slot = !WRAM_MENU_START+$92
 !ram_cm_preset_elevator = !WRAM_MENU_START+$94
@@ -472,7 +474,7 @@
 ; SRAM
 ; -----
 
-!SRAM_VERSION = #$001A
+!SRAM_VERSION = #$001B
 
 !SRAM_START = $702000
 !SRAM_SIZE = #$1000
@@ -573,6 +575,22 @@
 !sram_loadstate_rando_supers = !SRAM_START+$116
 !sram_loadstate_rando_powerbombs = !SRAM_START+$118
 !sram_loadstate_rando_enable = !SRAM_START+$11A
+!sram_categoryadjust_item_equip = !SRAM_START+$11C
+!sram_categoryadjust_item_unequip = !SRAM_START+$11E
+!sram_categoryadjust_item_remove = !SRAM_START+$120
+!sram_categoryadjust_beam_equip = !SRAM_START+$122
+!sram_categoryadjust_beam_unequip = !SRAM_START+$124
+!sram_categoryadjust_beam_remove = !SRAM_START+$126
+!sram_categoryadjust_energy = !SRAM_START+$128
+!sram_categoryadjust_etanks = !SRAM_START+$12A
+!sram_categoryadjust_reserves = !SRAM_START+$12C
+!sram_categoryadjust_rtanks = !SRAM_START+$12E
+!sram_categoryadjust_missiles = !SRAM_START+$130
+!sram_categoryadjust_maxmissiles = !SRAM_START+$132
+!sram_categoryadjust_supers = !SRAM_START+$134
+!sram_categoryadjust_maxsupers = !SRAM_START+$136
+!sram_categoryadjust_pbs = !SRAM_START+$138
+!sram_categoryadjust_maxpbs = !SRAM_START+$13A
 
 ; ^ FREE SPACE ^ up to +$13E
 
@@ -1203,20 +1221,22 @@ endif
 !ACTION_NUMFIELD_HEX        = #$000A
 !ACTION_NUMFIELD_WORD       = #$000C
 !ACTION_NUMFIELD_HEX_WORD   = #$000E
-!ACTION_NUMFIELD_READONLY   = #$0010
-!ACTION_NUMFIELD_COLOR      = #$0012
-!ACTION_NUMFIELD_SOUND      = #$0014
-!ACTION_CHOICE              = #$0016
-!ACTION_CHOICE_JSL_TEXT     = #$0018
-!ACTION_CTRL_SHORTCUT       = #$001A
-!ACTION_CTRL_INPUT          = #$001C
-!ACTION_JSL                 = #$001E
-!ACTION_JSL_SUBMENU         = #$0020
-!ACTION_CUSTOM_PRESET       = #$0022
-!ACTION_RAM_WATCH           = #$0024
-!ACTION_DYNAMIC             = #$0026
-!ACTION_MANAGE_PRESETS      = #$0028
-!ACTION_CATEGORY_PRESET     = #$002A
+!ACTION_NUMFIELD_SIGNED     = #$0010
+!ACTION_NUMFIELD_READONLY   = #$0012
+!ACTION_NUMFIELD_COLOR      = #$0014
+!ACTION_NUMFIELD_SOUND      = #$0016
+!ACTION_CHOICE              = #$0018
+!ACTION_CHOICE_JSL_TEXT     = #$001A
+!ACTION_CTRL_SHORTCUT       = #$001C
+!ACTION_CTRL_INPUT          = #$001E
+!ACTION_JSL                 = #$0020
+!ACTION_JSL_SUBMENU         = #$0022
+!ACTION_CUSTOM_PRESET       = #$0024
+!ACTION_RAM_WATCH           = #$0026
+!ACTION_DYNAMIC             = #$0028
+!ACTION_MANAGE_PRESETS      = #$002A
+!ACTION_CATEGORY_PRESET     = #$002C
+!ACTION_ADJUST_ITEM         = #$002E
 
 !SAFEWORD = #$5AFE
 
@@ -1286,6 +1306,7 @@ endif
 !PRESETS_COMPRESSED_GRAPHICS = #$0001
 !PRESETS_COMPRESSED_PALETTES = #$0002
 !PRESETS_COMPRESSED_TABLES = #$0004
+!PRESETS_COMPRESSED = #$0007
 !PRESETS_CLOSE_BLUE_DOORS = #$0008
 !PRESETS_PRESERVE_ENEMIES = #$0010
 !PRESETS_CLEAR_MAP_TILES = #$0020

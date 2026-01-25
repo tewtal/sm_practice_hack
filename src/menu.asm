@@ -776,6 +776,7 @@ cm_draw_action_table:
     dw draw_numfield_hex
     dw draw_numfield_word
     dw draw_numfield_hex_word
+    dw draw_numfield_signed
     dw draw_numfield_word
     dw draw_numfield_color
     dw draw_numfield_sound
@@ -790,6 +791,7 @@ cm_draw_action_table:
     dw draw_dynamic
     dw draw_manage_presets
     dw draw_category_preset
+    dw draw_adjust_item
 
 draw_toggle:
 {
@@ -1121,6 +1123,67 @@ draw_numfield_hex_word:
     STA !ram_tilemap_buffer+5,X : STA !ram_tilemap_buffer+7,X
     %a16()
 
+    RTS
+}
+
+draw_numfield_signed:
+{
+    ; grab the memory address (long)
+    LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : INC !DP_CurrentMenu : STA !DP_Address
+    LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : STA !DP_Address+2
+
+    ; skip min/max and increment values
+    INC !DP_CurrentMenu : INC !DP_CurrentMenu : INC !DP_CurrentMenu : INC !DP_CurrentMenu
+    INC !DP_CurrentMenu : INC !DP_CurrentMenu : INC !DP_CurrentMenu : INC !DP_CurrentMenu
+
+    ; increment past JSL
+    INC !DP_CurrentMenu : INC !DP_CurrentMenu
+
+    ; Draw the text
+    %item_index_to_vram_index()
+    PHX : JSR cm_draw_text : PLX
+
+    ; set position for the number
+    TXA : CLC : ADC #$002C : TAX
+
+    ; Clear out the area
+    LDA !MENU_BLANK : STA !ram_tilemap_buffer,X
+                      STA !ram_tilemap_buffer+2,X
+                      STA !ram_tilemap_buffer+4,X
+                      STA !ram_tilemap_buffer+6,X
+
+    ; Draw sign
+    LDA [!DP_Address] : BEQ .convert_value : BPL .plus
+    LDA.w #$1C00 : ORA !DP_Palette : XBA : STA !ram_tilemap_buffer,X
+    LDA [!DP_Address] : EOR #$FFFF : INC
+    BRA .convert_value
+
+  .plus
+    LDA.w #$4F00 : ORA !DP_Palette : XBA : STA !ram_tilemap_buffer,X
+    LDA [!DP_Address]
+
+  .convert_value
+    ; Convert value to decimal
+    JSR cm_hex2dec
+
+    ; Set palette
+    %a8()
+    LDA #$24 : ORA !DP_Palette : STA !DP_Palette+1
+    LDA #$70 : STA !DP_Palette ; number tiles are 70-79
+
+    ; Draw numbers
+    %a16()
+    ; ones
+    LDA !DP_ThirdDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+6,X
+    ; tens
+    LDA !DP_SecondDigit : ORA !DP_FirstDigit
+    ORA !DP_Temp : BEQ .done
+    LDA !DP_SecondDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+4,X
+    ; hundreds
+    LDA !DP_FirstDigit : ORA !DP_Temp : BEQ .done
+    LDA !DP_FirstDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+2,X
+
+  .done
     RTS
 }
 
@@ -1699,6 +1762,70 @@ draw_category_preset:
   .end
     PLB
     %a16()
+    RTS
+}
+
+draw_adjust_item:
+{
+    ; grab the memory address (long)
+    LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : INC !DP_CurrentMenu : STA !DP_Address
+    LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : STA !DP_Address+2
+
+    ; grab the bitmask
+    LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : INC !DP_CurrentMenu : STA !DP_ToggleValue
+
+    ; draw the text first
+    %item_index_to_vram_index()
+    PHX : JSR cm_draw_text : PLX
+
+    ; check if item equipped
+    LDA [!DP_Address] : BIT !DP_ToggleValue : BEQ .check_unequip
+    LDA.w #' '<<8 : ORA !DP_Palette : XBA : STA !ram_tilemap_buffer+$22,X
+    LDA.w #' '<<8 : ORA !DP_Palette : XBA : STA !ram_tilemap_buffer+$24,X
+    LDA.w #' '<<8 : ORA !DP_Palette : XBA : STA !ram_tilemap_buffer+$26,X
+    LDA.w #' '<<8 : ORA !DP_Palette : XBA : STA !ram_tilemap_buffer+$28,X
+    BRA .draw_equip
+
+  .check_unequip
+    INC !DP_Address : INC !DP_Address
+    LDA [!DP_Address] : BIT !DP_ToggleValue : BEQ .check_remove
+    LDA.w #' '<<8 : ORA !DP_Palette : XBA : STA !ram_tilemap_buffer+$22,X
+    LDA.w #' '<<8 : ORA !DP_Palette : XBA : STA !ram_tilemap_buffer+$24,X
+    LDA.w #'U'<<8 : ORA !DP_Palette : XBA : STA !ram_tilemap_buffer+$26,X
+    LDA.w #'N'<<8 : ORA !DP_Palette : XBA : STA !ram_tilemap_buffer+$28,X
+
+  .draw_equip
+    LDA.w #'E'<<8 : ORA !DP_Palette : XBA : STA !ram_tilemap_buffer+$2A,X
+    LDA.w #'Q'<<8 : ORA !DP_Palette : XBA : STA !ram_tilemap_buffer+$2C,X
+    LDA.w #'U'<<8 : ORA !DP_Palette : XBA : STA !ram_tilemap_buffer+$2E,X
+    LDA.w #'I'<<8 : ORA !DP_Palette : XBA : STA !ram_tilemap_buffer+$30,X
+    LDA.w #'P'<<8 : ORA !DP_Palette : XBA : STA !ram_tilemap_buffer+$32,X
+    RTS
+
+  .check_remove
+    INC !DP_Address : INC !DP_Address
+    LDA [!DP_Address] : BIT !DP_ToggleValue : BNE .no_change
+    LDA.w #' '<<8 : ORA !DP_Palette : XBA : STA !ram_tilemap_buffer+$22,X
+    LDA.w #' '<<8 : ORA !DP_Palette : XBA : STA !ram_tilemap_buffer+$24,X
+    LDA.w #' '<<8 : ORA !DP_Palette : XBA : STA !ram_tilemap_buffer+$26,X
+    LDA.w #'R'<<8 : ORA !DP_Palette : XBA : STA !ram_tilemap_buffer+$28,X
+    LDA.w #'E'<<8 : ORA !DP_Palette : XBA : STA !ram_tilemap_buffer+$2A,X
+    LDA.w #'M'<<8 : ORA !DP_Palette : XBA : STA !ram_tilemap_buffer+$2C,X
+    LDA.w #'O'<<8 : ORA !DP_Palette : XBA : STA !ram_tilemap_buffer+$2E,X
+    LDA.w #'V'<<8 : ORA !DP_Palette : XBA : STA !ram_tilemap_buffer+$30,X
+    LDA.w #'E'<<8 : ORA !DP_Palette : XBA : STA !ram_tilemap_buffer+$32,X
+    RTS
+
+  .no_change
+    LDA.w #'N'<<8 : ORA !DP_Palette : XBA : STA !ram_tilemap_buffer+$22,X
+    LDA.w #'O'<<8 : ORA !DP_Palette : XBA : STA !ram_tilemap_buffer+$24,X
+    LDA.w #' '<<8 : ORA !DP_Palette : XBA : STA !ram_tilemap_buffer+$26,X
+    LDA.w #'C'<<8 : ORA !DP_Palette : XBA : STA !ram_tilemap_buffer+$28,X
+    LDA.w #'H'<<8 : ORA !DP_Palette : XBA : STA !ram_tilemap_buffer+$2A,X
+    LDA.w #'A'<<8 : ORA !DP_Palette : XBA : STA !ram_tilemap_buffer+$2C,X
+    LDA.w #'N'<<8 : ORA !DP_Palette : XBA : STA !ram_tilemap_buffer+$2E,X
+    LDA.w #'G'<<8 : ORA !DP_Palette : XBA : STA !ram_tilemap_buffer+$30,X
+    LDA.w #'E'<<8 : ORA !DP_Palette : XBA : STA !ram_tilemap_buffer+$32,X
     RTS
 }
 
@@ -2959,6 +3086,7 @@ cm_execute_action_table:
     dw execute_numfield_hex
     dw execute_numfield_word
     dw execute_numfield_hex_word
+    dw execute_numfield_signed
     dw execute_nop
     dw execute_numfield_color
     dw execute_numfield_sound
@@ -2973,6 +3101,7 @@ cm_execute_action_table:
     dw execute_dynamic
     dw execute_manage_presets
     dw execute_category_preset
+    dw execute_adjust_item
 
 execute_nop:
     RTS
@@ -3254,6 +3383,84 @@ execute_numfield_hex_word:
     %sfxnumber()
 
   .done
+    RTS
+}
+
+execute_numfield_signed:
+{
+    ; grab the memory address (long)
+    LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : INC !DP_CurrentMenu : STA !DP_Address
+    LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : STA !DP_Address+2
+
+    ; grab minimum (!DP_DigitMinimum) and maximum (!DP_DigitMaximum) values
+    LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : INC !DP_CurrentMenu : STA !DP_DigitMinimum
+    LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : INC !DP_CurrentMenu : INC : STA !DP_DigitMaximum ; INC for convenience
+
+    ; check if fast scroll button pressed to skip inc/dec
+    LDA !ram_cm_controller : AND !sram_cm_fast_scroll_button : BNE .skip_inc
+
+    ; check if fast scroll button is held
+    LDA !IH_CONTROLLER_PRI : ORA !IH_CONTROLLER_SEC
+    AND !sram_cm_fast_scroll_button : BEQ .check_held
+    ; grab normal increment multiplied by four and skip past both
+    LDA [!DP_CurrentMenu] : ASL #2 : INC !DP_CurrentMenu : INC !DP_CurrentMenu
+    INC !DP_CurrentMenu : INC !DP_CurrentMenu
+    BRA .store_increment
+
+  .check_held
+    ; check for held inputs
+    LDA !ram_cm_controller : BIT !IH_INPUT_HELD : BNE .input_held
+    ; grab normal increment and skip past both
+    LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : INC !DP_CurrentMenu
+    INC !DP_CurrentMenu : INC !DP_CurrentMenu
+    BRA .store_increment
+
+  .skip_inc
+    ; skipping inc/dec and just playing sfx
+    INC !DP_CurrentMenu : INC !DP_CurrentMenu
+    INC !DP_CurrentMenu : INC !DP_CurrentMenu
+    BRA .jsl
+
+  .input_held
+    ; grab faster increment and skip past both
+    INC !DP_CurrentMenu : INC !DP_CurrentMenu
+    LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : INC !DP_CurrentMenu
+
+  .store_increment
+    STA !DP_Increment
+
+    ; check direction held
+    LDA !ram_cm_controller : BIT !IH_INPUT_LEFT : BNE .pressed_left
+    ; pressed right, inc
+    LDA [!DP_Address] : CLC : ADC !DP_Increment
+    BMI .set_value : CMP !DP_DigitMaximum : BCC .set_value
+    LDA !DP_DigitMinimum
+    STA [!DP_Address] : BRA .jsl
+
+  .pressed_left ; dec
+    LDA [!DP_Address] : SEC : SBC !DP_Increment
+    BPL .set_value : CMP !DP_DigitMinimum : BPL .set_value
+    LDA !DP_DigitMaximum : DEC
+
+  .set_value
+    STA [!DP_Address]
+
+  .jsl
+    ; grab JSL pointer and skip if zero
+    LDA [!DP_CurrentMenu] : BEQ .end
+    STA !DP_JSLTarget
+
+    ; Set return address for indirect JSL
+    LDA !ram_cm_menu_bank : STA !DP_JSLTarget+2
+    PHK : PEA .end-1
+
+    ; addr in A
+    LDA [!DP_Address] : LDX #$0000
+    JML.w [!DP_JSLTarget]
+
+  .end
+    %ai16()
+    %sfxnumber()
     RTS
 }
 
@@ -3839,6 +4046,77 @@ execute_category_preset:
     LDX #$0000
 
   .end
+    RTS
+}
+
+execute_adjust_item:
+{
+    ; grab the memory address (long)
+    LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : INC !DP_CurrentMenu : STA !DP_Address
+    LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : STA !DP_Address+2
+
+    ; grab the bitmask
+    LDA [!DP_CurrentMenu] : STA !DP_ToggleValue : EOR #$FFFF : STA !DP_Increment
+
+    ; we either increment or decrement
+    LDA !ram_cm_controller : BIT !IH_INPUT_LEFT : BNE .pressed_left
+
+    LDA [!DP_Address] : BIT !DP_ToggleValue : BNE .equip_to_unequip
+    INC !DP_Address : INC !DP_Address
+    LDA [!DP_Address] : BIT !DP_ToggleValue : BNE .unequip_to_remove
+    INC !DP_Address : INC !DP_Address
+    LDA [!DP_Address] : BIT !DP_ToggleValue : BEQ .remove_to_no_change
+
+    ; no change to equip
+    DEC !DP_Address : DEC !DP_Address : DEC !DP_Address : DEC !DP_Address
+    LDA [!DP_Address] : ORA !DP_ToggleValue : STA [!DP_Address]
+    RTS
+
+  .equip_to_unequip
+    LDA [!DP_Address] : AND !DP_Increment : STA [!DP_Address]
+    INC !DP_Address : INC !DP_Address
+    LDA [!DP_Address] : ORA !DP_ToggleValue : STA [!DP_Address]
+    RTS
+
+  .unequip_to_remove
+    LDA [!DP_Address] : AND !DP_Increment : STA [!DP_Address]
+    INC !DP_Address : INC !DP_Address
+    LDA [!DP_Address] : AND !DP_Increment : STA [!DP_Address]
+    RTS
+
+  .remove_to_no_change
+    LDA [!DP_Address] : ORA !DP_ToggleValue : STA [!DP_Address]
+    RTS
+
+  .pressed_left
+    LDA [!DP_Address] : BIT !DP_ToggleValue : BNE .equip_to_no_change
+    INC !DP_Address : INC !DP_Address
+    LDA [!DP_Address] : BIT !DP_ToggleValue : BNE .unequip_to_equip
+    INC !DP_Address : INC !DP_Address
+    LDA [!DP_Address] : BIT !DP_ToggleValue : BEQ .remove_to_unequip
+
+    ; no change to remove
+    LDA [!DP_Address] : AND !DP_Increment : STA [!DP_Address]
+    RTS
+
+  .equip_to_no_change
+    LDA [!DP_Address] : AND !DP_Increment : STA [!DP_Address]
+    INC !DP_Address : INC !DP_Address
+    LDA [!DP_Address] : AND !DP_Increment : STA [!DP_Address]
+    INC !DP_Address : INC !DP_Address
+    LDA [!DP_Address] : ORA !DP_ToggleValue : STA [!DP_Address]
+    RTS
+
+  .unequip_to_equip
+    LDA [!DP_Address] : AND !DP_Increment : STA [!DP_Address]
+    DEC !DP_Address : DEC !DP_Address
+    LDA [!DP_Address] : ORA !DP_ToggleValue : STA [!DP_Address]
+    RTS
+
+  .remove_to_unequip
+    LDA [!DP_Address] : ORA !DP_ToggleValue : STA [!DP_Address]
+    DEC !DP_Address : DEC !DP_Address
+    LDA [!DP_Address] : ORA !DP_ToggleValue : STA [!DP_Address]
     RTS
 }
 
