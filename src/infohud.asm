@@ -848,6 +848,7 @@ ih_update_hud_code:
 
   .startUpdate
     LDA #$FFFF : STA !ram_last_hp : STA !ram_enemy_hp
+    LDA !ram_watch_right_hud : EOR #$FFFF : STA !ram_watch_right_hud
 
     ; Determine starting point of time display
     LDX #$003C
@@ -1702,13 +1703,12 @@ ih_update_status:
 {
     TDC
     STA !ram_momentum_sum : STA !ram_momentum_count
-    STA !ram_HUD_check : STA !ram_shot_timer
     STA !ram_quickdrop_counter : STA !ram_walljump_counter
     STA !ram_roomstrat_counter : STA !ram_roomstrat_state
-    STA !ram_armed_shine_duration
+    STA !ram_shot_timer : STA !ram_armed_shine_duration
     STA !ram_fail_count : STA !ram_fail_sum
     INC
-    STA !ram_enemy_hp
+    STA !ram_enemy_hp : STA !ram_HUD_check
     STA !ram_dash_counter : STA !ram_shine_counter
     STA !ram_xpos : STA !ram_ypos : STA !ram_subpixel_pos
     LDA !ram_seed_X : LSR
