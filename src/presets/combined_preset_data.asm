@@ -19923,7 +19923,7 @@ preset_ngplasma_tourian_metroids_3:
 
 preset_suitless_upper_norfair_1_hijump_boots:
     dw #preset_suitless_upper_norfair_1_hijump_etank
-    dw $078D, $92D6  ; DDB
+    dw $078D, $93F6  ; DDB
     dw $079B, $AA41  ; MDB
     dw $090F, $E000  ; Screen subpixel X position
     dw $0913, $C800  ; Screen subpixel Y position
