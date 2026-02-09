@@ -2090,8 +2090,8 @@ SuperHUDBottomMenu3:
     dw ih_superhud_mbhp
     dw ih_superhud_twocries
     dw #$FFFF
+    dw ih_superhud_goto_page1
     dw ih_superhud_goto_page2
-    dw ih_superhud_goto_page3
     dw #$0000
     %cm_header("SUPER HUD BOTTOM MODE")
 
