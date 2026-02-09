@@ -245,12 +245,12 @@ ih_get_item_code:
 
     ; check if segment timer should be reset
     LDA !ram_reset_segment_later : BPL .fanfare_timing
-    LDA !sram_frame_counter_mode : BEQ .reset_RTA
+    LDA !sram_frame_counter_mode : AND !FRAME_COUNTER_USE_IGT : BEQ .reset_RTA
     STZ !IGT_FRAMES : STZ !IGT_SECONDS
-    STZ !IGT_MINUTES : STZ !IGT_HOURS
+    STZ !IGT_MINUTES : STZ !IGT_HOURS : TDC
 
   .reset_RTA
-    TDC : STA !ram_reset_segment_later : STA !ram_lag_counter
+    STA !ram_reset_segment_later : STA !ram_lag_counter
     STA !ram_seg_rt_frames : STA !ram_seg_rt_seconds : STA !ram_seg_rt_minutes
 
   .fanfare_timing
@@ -824,7 +824,7 @@ ih_update_hud_code:
 
   .mmRoomTimer
     STZ $4205
-    LDA !sram_frame_counter_mode : BIT #$0001 : BNE .mmInGameTimer
+    LDA !sram_frame_counter_mode : BIT !FRAME_COUNTER_USE_IGT : BNE .mmInGameTimer
     LDA !IH_DECIMAL : STA !HUD_TILEMAP+$B4
     LDA !ram_last_realtime_room
     BRA .mmCalculateTimer
@@ -857,7 +857,7 @@ ih_update_hud_code:
 
   .pickRoomTimer
     STZ $4205
-    LDA !sram_frame_counter_mode : BIT #$0001 : BNE .inGameRoomTimer
+    LDA !sram_frame_counter_mode : BIT !FRAME_COUNTER_USE_IGT : BNE .inGameRoomTimer
     LDA !IH_DECIMAL : STA !HUD_TILEMAP+6,X
     LDA !ram_last_realtime_room
     BRA .calculateRoomTimer
@@ -951,7 +951,7 @@ ih_update_hud_code:
     LDA !ram_print_segment_timer : BPL .end
 
   .pickSegmentTimer
-    LDA !sram_frame_counter_mode : BIT #$0001 : BNE .inGameSegmentTimer
+    LDA !sram_frame_counter_mode : BIT !FRAME_COUNTER_USE_IGT : BNE .inGameSegmentTimer
     LDA.w #!ram_seg_rt_frames : STA $C1
     LDA.w #!WRAM_BANK : STA $C3
     BRA .drawSegmentTimer
@@ -975,7 +975,7 @@ ih_update_hud_code:
     LDA [$C1] : LDX #$00AE : JSR Draw3
 
     ; Draw decimal/hyphen seperators
-    LDA !sram_frame_counter_mode : BIT #$0001 : BNE .ingameSeparators
+    LDA !sram_frame_counter_mode : BIT !FRAME_COUNTER_USE_IGT : BNE .ingameSeparators
     LDA !IH_DECIMAL : STA !HUD_TILEMAP+$B4 : STA !HUD_TILEMAP+$BA
     BRA .blankEnd
 
@@ -1875,7 +1875,7 @@ ih_adjust_realtime:
 {
     ; If the frame counter is set to "SPEEDRUN" mode, adds the number of frames in Y to the room and segment timers.
     ; X must be preserved if used
-    LDA !sram_frame_counter_mode : BIT !FRAME_COUNTER_ADJUST_REALTIME : BEQ .done
+    LDA !sram_frame_counter_mode : CMP !FRAME_COUNTER_ADJUST_REALTIME : BNE .done
     LDA !sram_fanfare : BNE .done
 
     TYA

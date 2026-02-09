@@ -252,6 +252,13 @@ endif
 
 if !FEATURE_VANILLAHUD
 else
+gamemode_toggle_igt_rta:
+{
+    LDA !sram_frame_counter_mode : EOR !FRAME_COUNTER_USE_IGT
+    STA !sram_frame_counter_mode
+    ; Fallthrough
+}
+
 gamemode_update_timers:
 {
     JML ih_update_hud_early
@@ -347,11 +354,11 @@ endif
 
 gamemode_reset_segment_timer:
 {
-    LDA !sram_frame_counter_mode : BEQ .rta
+    LDA !sram_frame_counter_mode : AND !FRAME_COUNTER_USE_IGT : BEQ .rta
     STZ !IGT_FRAMES : STZ !IGT_SECONDS
-    STZ !IGT_MINUTES : STZ !IGT_HOURS
+    STZ !IGT_MINUTES : STZ !IGT_HOURS : TDC
   .rta
-    TDC : STA !ram_seg_rt_frames
+    STA !ram_seg_rt_frames
     STA !ram_seg_rt_seconds : STA !ram_seg_rt_minutes
     %sfxconfirm()
 if !FEATURE_VANILLAHUD
@@ -419,18 +426,15 @@ gamemode_reveal_damage:
     ; revert to prior mode
     LDA !ram_display_backup : STA !sram_display_mode
     %sfxreset()
-    JML init_print_segment_timer
+    BRA gamemode_reveal_hp_updateHUD
 
   .revealRoomStrat
     LDA !sram_display_mode
   .reveal
     STA !ram_display_backup
     LDA !IH_MODE_COUNTDAMAGE_INDEX : STA !sram_display_mode
-    ; set ram_HUD_check to some value that cannot match the damage counter
-    ; conveniently the current value of A will work
-    STA !ram_HUD_check
     %sfxconfirm()
-    JML init_print_segment_timer
+    BRA gamemode_reveal_hp_updateHUD
 
   .checkRoomStrat
     LDA !sram_room_strat : BNE .revealRoomStrat
@@ -439,16 +443,54 @@ gamemode_reveal_damage:
     ; revert to prior Super HUD mode
     LDA !ram_display_backup : STA !sram_superhud_bottom
     %sfxreset()
-    JML init_print_segment_timer
+    BRA gamemode_reveal_hp_updateHUD
 
   .revealSuperHUD
     STA !ram_display_backup
     LDA !IH_SUPERHUD_COUNTDAMAGE_BOTTOM_INDEX : STA !sram_superhud_bottom
+    %sfxconfirm()
+    BRA gamemode_reveal_hp_updateHUD
+}
+
+gamemode_reveal_hp:
+{
+    LDA !sram_display_mode : CMP !IH_MODE_ROOMSTRAT_INDEX : BEQ .checkRoomStrat
+    CMP !IH_MODE_COUNTHP_INDEX : BNE .reveal
+    ; revert to prior mode
+    LDA !ram_display_backup : STA !sram_display_mode
+    %sfxreset()
+  .updateHUD
+    LDA #$FFFF : STA !ram_enemy_hp : STA !ram_HUD_check
+    STA !ram_xpos : STA !ram_ypos : STA !ram_subpixel_pos
+    STA !ram_HUD_top : STA !ram_HUD_middle
+    STA !ram_HUD_top_counter : STA !ram_HUD_middle_counter
+    JML init_print_segment_timer
+
+  .revealRoomStrat
+    LDA !sram_display_mode
+  .reveal
+    STA !ram_display_backup
+    LDA !IH_MODE_COUNTHP_INDEX : STA !sram_display_mode
+    %sfxconfirm()
+    BRA .updateHUD
+
+  .checkRoomStrat
+    LDA !sram_room_strat : BNE .revealRoomStrat
+    ; handle Super HUD case
+    LDA !sram_superhud_bottom : CMP !IH_SUPERHUD_COUNTHP_BOTTOM_INDEX : BNE .revealSuperHUD
+    ; revert to prior Super HUD mode
+    LDA !ram_display_backup : STA !sram_superhud_bottom
+    %sfxreset()
+    BRA .updateHUD
+
+  .revealSuperHUD
+    STA !ram_display_backup
+    LDA !IH_SUPERHUD_COUNTHP_BOTTOM_INDEX : STA !sram_superhud_bottom
     ; set ram_HUD_check to some value that cannot match the damage counter
     ; conveniently the current value of A will work
     STA !ram_HUD_check
     %sfxconfirm()
-    JML init_print_segment_timer
+    BRA .updateHUD
 }
 endif
 
@@ -593,7 +635,7 @@ gamemode_dev_shortcut:
 endif
 
 ; Write a customized routine based on ctrl shortcut selections
-!GAMEMODE_CTRL_SHORTCUT_COUNT = #$0021
+!GAMEMODE_CTRL_SHORTCUT_COUNT = #$0023
 cm_write_ctrl_routine:
 {
     ; No bounds check on X is done as we shouldn't exceed our buffer.
@@ -1731,6 +1773,7 @@ endif
 if !FEATURE_VANILLAHUD
 else
     dw #ctrl_add_update_timers
+    dw #ctrl_add_toggle_igt_rta
 endif
     dw #ctrl_add_reload_preset
     dw #ctrl_add_random_preset
@@ -1754,6 +1797,7 @@ CtrlSelectShortcutTypeMenu2:
 if !FEATURE_VANILLAHUD
 else
     dw #ctrl_add_reveal_damage
+    dw #ctrl_add_reveal_hp
 endif
     dw #ctrl_add_force_stand
     dw #ctrl_add_toggle_spin_lock
@@ -1876,6 +1920,13 @@ if !FEATURE_DEV
 else
     dw #ctrl_add_empty_dm_text
 endif
+if !FEATURE_VANILLAHUD
+    dw #ctrl_add_empty_dm_text
+    dw #ctrl_add_empty_dm_text
+else
+    dw #ctrl_add_reveal_hp_dm_text
+    dw #ctrl_add_toggle_igt_rta_dm_text
+endif
 
 ctrl_shortcut_cancel_gameplay_table:
     db $00 ; Empty
@@ -1911,6 +1962,8 @@ ctrl_shortcut_cancel_gameplay_table:
     db $00 ; Decrement Super HUD
     db $01 ; Soft Reset
     db $01 ; DEV Shortcut
+    db $00 ; Reveal HP
+    db $00 ; Toggle IGT/RTA
 
 ctrl_shortcut_jsl_word_lsb_table:
     db #gamemode_placeholder
@@ -1973,6 +2026,13 @@ if !FEATURE_DEV
 else
     db #gamemode_placeholder
 endif
+if !FEATURE_VANILLAHUD
+    db #gamemode_placeholder
+    db #gamemode_placeholder
+else
+    db #gamemode_reveal_hp
+    db #gamemode_toggle_igt_rta
+endif
 
 ctrl_shortcut_jsl_word_msb_table:
     db #gamemode_placeholder>>8
@@ -2034,6 +2094,13 @@ if !FEATURE_DEV
     db #gamemode_dev_shortcut>>8
 else
     db #gamemode_placeholder>>8
+endif
+if !FEATURE_VANILLAHUD
+    db #gamemode_placeholder>>8
+    db #gamemode_placeholder>>8
+else
+    db #gamemode_reveal_hp>>8
+    db #gamemode_toggle_igt_rta>>8
 endif
 
 ctrl_add_empty:
@@ -2145,6 +2212,15 @@ ctrl_add_soft_reset:
 
 ctrl_add_dev_shortcut:
     %cm_jsl("DEV Shortcut", #ctrl_add_shortcut_select, #$0020)
+
+if !FEATURE_VANILLAHUD
+else
+ctrl_add_reveal_hp:
+    %cm_jsl("Toggle Boss HP", #ctrl_add_shortcut_select, #$0021)
+
+ctrl_add_toggle_igt_rta:
+    %cm_jsl("Toggle IGT/RTA", #ctrl_add_shortcut_select, #$0022)
+endif
 
 ctrl_add_shortcut_select:
 {

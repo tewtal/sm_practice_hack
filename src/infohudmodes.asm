@@ -23,6 +23,7 @@
     dw status_quickdrop
     dw status_walljump
     dw status_countdamage
+    dw status_enemyhp
     dw status_armpump
     dw status_pumpcounter
     dw status_xpos
@@ -1691,6 +1692,7 @@ superhud_bottom_table:
     dw status_quickdrop
     dw status_walljump
     dw status_countdamage
+    dw status_enemyhp
     dw status_armpump
     dw status_pumpcounter
     dw status_xpos
