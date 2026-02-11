@@ -167,6 +167,26 @@ org $90D000       ; hijack, runs when a shinespark is activated
     JMP misc_shinespark_activation
 
 
+org $91DD32
+misc_check_bonk:
+{
+    LDA !SAMUS_POTENTIAL_POSE_VALUES : BMI .return
+    LDA $7EC622 : CMP !IH_BLANK : BNE .second
+    LDA !IH_LETTER_B : STA $7EC622
+  .return
+    LDA !SAMUS_POSE
+    JMP hijack_bonk_return
+  .second
+    LDA !IH_LETTER_B : STA $7EC628
+    BRA .return
+}
+warnpc $91DD5B
+
+org $91EB53
+    JMP misc_check_bonk
+hijack_bonk_return:
+
+
 ; Continue drawing escape timer after reaching ship
 if !FEATURE_PAL
 org $90E905
@@ -175,6 +195,7 @@ org $90E908
 endif
     JSR preserve_escape_timer
 
+
 ; Stop drawing timer when its VRAM is overwritten
 if !FEATURE_PAL
 org $A2AC15
@@ -182,6 +203,7 @@ else
 org $A2ABFD
 endif
     JML clear_escape_timer
+
 
 ; Fast bowling chozo cutscene
 if !FEATURE_PAL

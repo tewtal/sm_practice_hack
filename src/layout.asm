@@ -157,6 +157,9 @@ endif
 
 hijack_loading_room_CRE:
 {
+    ; Overwrite HUD bonk indicators
+    LDA !IH_BLANK : STA $7EC622 : STA $7EC628
+
     LDA !ram_door_portal_flags : BEQ .noChange
     PHX : BIT !DOOR_PORTAL_JUMP_BIT : BNE .jump
     AND !DOOR_PORTAL_MODE_MASK : CMP #$0002 : BEQ .leftRight : BPL .upDown
