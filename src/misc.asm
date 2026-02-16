@@ -167,7 +167,11 @@ org $90D000       ; hijack, runs when a shinespark is activated
     JMP misc_shinespark_activation
 
 
+if !FEATURE_PAL
+org $91DC97
+else
 org $91DD32
+endif
 misc_check_bonk:
 {
     LDA !SAMUS_POTENTIAL_POSE_VALUES : BMI .return
@@ -180,9 +184,13 @@ misc_check_bonk:
     LDA !IH_LETTER_B : STA $7EC628
     BRA .return
 }
-warnpc $91DD5B
+%warnpc($91DD5B, $91DCC0)
 
+if !FEATURE_PAL
+org $91EAB8
+else
 org $91EB53
+endif
     JMP misc_check_bonk
 hijack_bonk_return:
 
