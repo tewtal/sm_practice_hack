@@ -309,6 +309,7 @@
 !ram_cm_phantoon_next_flames_rng = !WRAM_MENU_START+$A6
 !ram_cm_phantoon_flame_direction_rng = !WRAM_MENU_START+$A8
 
+!ram_cm_ridley_tail_rng = !WRAM_MENU_START+$9A
 !ram_cm_ridley_pogo_height_rng = !WRAM_MENU_START+$9C
 !ram_cm_ridley_lunge_pogo_rng = !WRAM_MENU_START+$9E
 !ram_cm_ridley_swoop_pogo_rng = !WRAM_MENU_START+$A0
@@ -1042,6 +1043,7 @@
 !eram_ridley_pogo_time_rng         = !ENEMY_VAR_2+!ENEMY_1F_OFFSET
 !eram_ridley_pogo_height_rng       = !ENEMY_VAR_3+!ENEMY_1F_OFFSET
 !eram_ridley_backpogo_rng          = !ENEMY_VAR_4+!ENEMY_1F_OFFSET
+!eram_ridley_tail_rng              = !ENEMY_VAR_5+!ENEMY_1F_OFFSET
 
 !eram_mb_normal_walking_rng        = !ENEMY_VAR_5+!ENEMY_1D_OFFSET
 !eram_mb_ketchup_walking_rng       = !ENEMY_VAR_1+!ENEMY_1E_OFFSET
@@ -1368,8 +1370,10 @@ endif
 !RIDLEY_RNG_75_25_POGO              = #$0080
 !RIDLEY_RNG_75_25_MASK              = #$00C0
 !RIDLEY_RNG_75_25_INVERTED          = #$FF3F
-!RIDLEY_RNG_BACKPOGO_MASK           = #$3F00
-!RIDLEY_RNG_BACKPOGO_INVERTED       = #$C0FF
+!RIDLEY_RNG_BACKPOGO_MASK           = #$0700
+!RIDLEY_RNG_BACKPOGO_INVERTED       = #$F8FF
+!RIDLEY_RNG_TAIL_MASK               = #$3800
+!RIDLEY_RNG_TAIL_INVERTED           = #$C7FF
 !RIDLEY_RNG_50_50_SWOOP             = #$4000
 !RIDLEY_RNG_50_50_POGO              = #$8000
 !RIDLEY_RNG_50_50_MASK              = #$C000

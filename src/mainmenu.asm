@@ -1867,6 +1867,7 @@ DisplayModeMenu:
 
 DisplayModeMenu2:
     dw ihmode_countdamage
+    dw ihmode_counthp
     dw ihmode_armpump
     dw ihmode_pumpcounter
     dw ihmode_xpos
@@ -3341,6 +3342,8 @@ rng_prepare_ridley_menu:
     ASL #2 : XBA : STA !ram_cm_ridley_lunge_pogo_rng
     LDA !ram_ridley_rng_flags : AND !RIDLEY_RNG_BACKPOGO_MASK
     XBA : STA !ram_cm_ridley_backpogo_rng
+    LDA !ram_ridley_rng_flags : AND !RIDLEY_RNG_TAIL_MASK
+    XBA : LSR #3 : STA !ram_cm_ridley_tail_rng
     LDA !ram_ridley_rng_flags : AND !RIDLEY_RNG_50_50_MASK
     XBA : ASL #2 : XBA : STA !ram_cm_ridley_swoop_pogo_rng
     LDA !ram_ridley_rng_times_and_fireball : AND !RIDLEY_RNG_HOVER_TIME_MASK
@@ -3372,6 +3375,8 @@ RngRidleyMenu:
     dw #rng_ridley_hover_time
     dw #rng_ridley_hover_time_dynamic
     dw #rng_ridley_hover_fireball
+    dw #$FFFF
+    dw #rng_ridley_tail
     dw #$0000
     %cm_header("RIDLEY RNG CONTROL")
 
@@ -3441,51 +3446,9 @@ rng_ridley_backpogo:
     db #$28, "        MAX", #$FF
     db #$28, "         2x", #$FF
     db #$28, "         3x", #$FF
-    db #$28, "         4x", #$FF
-    db #$28, "         5x", #$FF
-    db #$28, "         6x", #$FF
-    db #$28, "         7x", #$FF
-    db #$28, "         8x", #$FF
-    db #$28, "         9x", #$FF
-    db #$28, "        10x", #$FF
-    db #$28, "        11x", #$FF
-    db #$28, "        12x", #$FF
-    db #$28, "        13x", #$FF
-    db #$28, "        14x", #$FF
-    db #$28, "        15x", #$FF
-    db #$28, "        16x", #$FF
-    db #$28, "        17x", #$FF
-    db #$28, "        18x", #$FF
-    db #$28, "        19x", #$FF
-    db #$28, "        20x", #$FF
-    db #$28, "        21x", #$FF
-    db #$28, "        22x", #$FF
-    db #$28, "        23x", #$FF
-    db #$28, "        24x", #$FF
-    db #$28, "        25x", #$FF
-    db #$28, "        26x", #$FF
-    db #$28, "        27x", #$FF
-    db #$28, "        28x", #$FF
-    db #$28, "        29x", #$FF
-    db #$28, "        30x", #$FF
-    db #$28, "        31x", #$FF
-    db #$28, "        32x", #$FF
-    db #$28, "        33x", #$FF
-    db #$28, "        34x", #$FF
-    db #$28, "        35x", #$FF
-    db #$28, "        36x", #$FF
-    db #$28, "        37x", #$FF
-    db #$28, "        38x", #$FF
-    db #$28, "        39x", #$FF
-    db #$28, "        40x", #$FF
-    db #$28, "        41x", #$FF
-    db #$28, "        42x", #$FF
-    db #$28, "        43x", #$FF
-    db #$28, "        44x", #$FF
-    db #$28, "        45x", #$FF
-    db #$28, "        46x", #$FF
-    db #$28, "        47x", #$FF
-    db #$28, "        48x", #$FF
+    db #$28, "        25%", #$FF
+    db #$28, "        50%", #$FF
+    db #$28, "        75%", #$FF
     db #$FF
   .routine
     LDA !ram_ridley_rng_flags : AND !RIDLEY_RNG_BACKPOGO_INVERTED
@@ -3608,6 +3571,30 @@ rng_ridley_hover_fireball:
     STA !ram_ridley_rng_times_and_fireball
     LDA !ram_cm_ridley_hover_fireball_rng : XBA : LSR #2
     ORA !ram_ridley_rng_times_and_fireball : STA !ram_ridley_rng_times_and_fireball
+    LDA !ROOM_ID : CMP.w #ROOM_RidleyRoom : BNE .done
+    JML init_zebes_ridley_rng
+  .done
+    RTL
+
+rng_ridley_tail:
+    dw !ACTION_CHOICE
+    dl #!ram_cm_ridley_tail_rng
+    dw #.routine
+    db #$28, "Tail", #$FF
+    db #$28, "    VANILLA", #$FF
+    db #$28, "        OFF", #$FF
+    db #$28, "        MAX", #$FF
+    db #$28, "         2x", #$FF
+    db #$28, "         3x", #$FF
+    db #$28, "        25%", #$FF
+    db #$28, "        50%", #$FF
+    db #$28, "        75%", #$FF
+    db #$FF
+  .routine
+    LDA !ram_ridley_rng_flags : AND !RIDLEY_RNG_TAIL_INVERTED
+    STA !ram_ridley_rng_flags
+    LDA !ram_cm_ridley_tail_rng : ASL #3 : XBA
+    ORA !ram_ridley_rng_flags : STA !ram_ridley_rng_flags
     LDA !ROOM_ID : CMP.w #ROOM_RidleyRoom : BNE .done
     JML init_zebes_ridley_rng
   .done
