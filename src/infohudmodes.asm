@@ -845,27 +845,41 @@ endif
     ; Suppress Samus HP display
     LDA !SAMUS_HP : STA !ram_last_hp
 
-    LDA !SAMUS_Y_SPEED : CMP !ram_momentum_sum : BEQ .checkfalling : CMP #$FFFF : BNE .drawspeed
+    LDA !SAMUS_Y_SPEEDCOMBINED : BPL .positivespeed
+    CMP !ram_momentum_sum : BEQ .checkfalling
 
     ; At the peak of a normal jump, speed will go negative for one frame
     ; Instead of drawing 65535 for one frame, draw a hyphen
     ; We can detect this if our speed was previously positive
-    ; If speed was previously negative, then proceed as normal to draw 65535
-    TAY : LDA !ram_momentum_sum : AND #$8000 : BNE .restorespeed
+    ; If speed was previously negative, then proceed to draw negative speed
+    TAY : LDA !ram_momentum_sum : AND #$8000 : BNE .negativespeed
 
-    LDA !IH_BLANK : STA !HUD_TILEMAP+$88 : STA !HUD_TILEMAP+$8A : STA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$90
-    LDA !IH_HYPHEN : STA !HUD_TILEMAP+$8E
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$88 : STA !HUD_TILEMAP+$90
+    LDA !IH_HYPHEN : STA !HUD_TILEMAP+$8A : STA !HUD_TILEMAP+$8E
+    LDA !IH_DECIMAL : STA !HUD_TILEMAP+$8C
 
-    ; Store speed as some negative value that isn't FFFF,
-    ; so if it is negative again we'll update it to 65535
+    ; Store speed as some negative value that isn't FFxx,
+    ; so if it is negative again we'll update it
     LDA #$8000 : STA !ram_momentum_sum
     BRA .checkfalling
 
-  .restorespeed
-    TYA
+  .negativespeed
+    TYA : STA !ram_momentum_sum
+    LDA !SAMUS_Y_SPEED : LDX #$0088 : JSR Draw4
+    BRA .drawblankcheckfalling
 
-  .drawspeed
-    STA !ram_momentum_sum : LDX #$0088 : JSR Draw4
+  .positivespeed
+    CMP !ram_momentum_sum : BEQ .checkfalling : STA !ram_momentum_sum
+
+    ; draw whole number in decimal
+    XBA : AND #$00FF : LDX #$0088 : JSR Draw2
+    LDA !IH_DECIMAL : STA !HUD_TILEMAP+$8C
+
+    ; draw fraction in hex
+    LDA !ram_momentum_sum : AND #$00F0 : LSR #3 : TAY
+    LDA.w HexGFXTable,Y : STA !HUD_TILEMAP+$8E
+
+  .drawblankcheckfalling
     LDA !IH_BLANK : STA !HUD_TILEMAP+$90
 
   .checkfalling
