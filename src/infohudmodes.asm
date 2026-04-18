@@ -210,8 +210,9 @@ endif
 
   .average_momentum
     ; Do not print out momentum if Super HUD is enabled
-    LDA !sram_room_strat : BEQ .invalid_momentum
+    LDA !sram_room_strat : BEQ .check_superhud
 
+  .print_momentum
     ; We have total momentum (x256) over 44 frames
     ; To get the average (x1024), divide by 11
     LDA !ram_momentum_sum
@@ -237,6 +238,11 @@ endif
 
   .momentum_stopped
     TDC : STA !ram_momentum_sum : STA !ram_momentum_count : STA !ram_momentum_direction
+    BRA .shinetune_start
+
+  .check_superhud
+    LDA !sram_display_mode : CMP !IH_MODE_ROOMSTRAT_INDEX : BEQ .invalid_momentum
+    BRA .print_momentum
 
   .shinetune_start
     ; Track momentum
