@@ -2433,18 +2433,23 @@ status_ceresridley:
 
 status_doorskip:
 {
+    ; Constants also account for code optimization
 if !FEATURE_PAL
-    !start_to_jump_delay = $0011
+    !parlor_pause_to_jump_delay = $0015
+    !botwoon_pause_to_jump_delay = $0009
 else
-    !start_to_jump_delay = $0007
+    !parlor_pause_to_jump_delay = $000B
+    !botwoon_jump_to_pause_delay = $0003
 endif
 
     ; Check if Samus is in starting position
     LDA !SAMUS_Y : CMP #$04BB : BEQ .startpos
+    CMP #$004B : BEQ .startpos
 
     ; Reset state if Samus is well out of position
+    CMP #$0100 : BMI .notinit
     CMP #$0300 : BMI .clearstate
-    JMP .notinit
+    BRA .notinit
 
     ; Check if we are initial state, which means no vertical speed
     ; and no animation delay in normal gamestate holding jump and not holding start
@@ -2463,29 +2468,67 @@ endif
     ; Initial state
     LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$88
     LDA !IH_BLANK : STA !HUD_TILEMAP+$8A : STA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$8E
-    LDA #$0001 : STA !ram_roomstrat_state
+    LDA !SAMUS_Y : XBA : AND #$0004 : INC : STA !ram_roomstrat_state
     RTS
 
   .clearstate
-    LDA !ram_roomstrat_state : CMP #$0001 : BNE .resetstate : CMP #$0004 : BNE .clear
+    LDA !ram_roomstrat_state : CMP #$0001 : BEQ .clear
+    CMP #$0005 : BEQ .clear : CMP #$0004 : BNE .resetstate
     JMP .expandlate
 
   .clear
-    LDA !IH_BLANK : STA !HUD_TILEMAP+$88 : STA !HUD_TILEMAP+$8A : STA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$8E
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$88 : STA !HUD_TILEMAP+$8A
+    STA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$8E
     BRA .resetstate
 
   .notinit
-    LDA !ram_roomstrat_state : CMP #$0001 : BEQ .checkpause : CMP #$0002 : BEQ .checkjump
-    CMP #$0003 : BEQ .checkfall : CMP #$0004 : BEQ .checkexpand
+    LDA !ram_roomstrat_state
+    DEC : BEQ .checkjumpfirst : DEC : BEQ .checkpausesecond
+    DEC : BEQ .checkfall : DEC : BNE .notinitparlor
+    JMP .checkexpand
+
+  .notinitparlor
+    DEC : BEQ .checkpausefirst : DEC : BEQ .checkjumpsecond
 
   .resetstate
     TDC : STA !ram_roomstrat_state : STA !ram_roomstrat_counter
     RTS
 
-  .checkpause
+  .checkjumpfirst
+    ; On PAL we still need to pause first
+if !FEATURE_PAL
     LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_START : BEQ .done
+else
+    LDA !SAMUS_Y_DIRECTION : CMP #$0001 : BNE .done
+endif
     LDA #$0002 : STA !ram_roomstrat_counter : STA !ram_roomstrat_state
     RTS
+
+  .checkpausefirst
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_START : BEQ .done
+    LDA #$0006 : STA !ram_roomstrat_counter : STA !ram_roomstrat_state
+
+  .done
+    RTS
+
+  .checkpausesecond
+    ; On PAL we still need to jump first
+if !FEATURE_PAL
+    LDA !SAMUS_Y_DIRECTION : CMP #$0001 : BNE .inccounter
+    LDA !ram_roomstrat_counter : CMP #!botwoon_pause_to_jump_delay
+else
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_START : BEQ .inccounter
+    LDA !ram_roomstrat_counter : CMP #!botwoon_jump_to_pause_delay
+endif
+    BEQ .botwoonframeperfect : BMI .pauseearly
+
+    ; Paused late
+if !FEATURE_PAL
+    SEC : SBC #!botwoon_pause_to_jump_delay
+else
+    SEC : SBC #!botwoon_jump_to_pause_delay
+endif
+    BRA .pausejumplate
 
   .checkfall
     ; Check if we are falling in aim down pose
@@ -2494,18 +2537,45 @@ endif
 
   .inccounter
     LDA !ram_roomstrat_counter : INC : STA !ram_roomstrat_counter
-
-  .done
     RTS
 
-  .checkjump
+  .checkjumpsecond
     LDA !SAMUS_Y_DIRECTION : CMP #$0001 : BNE .inccounter
-    LDA !ram_roomstrat_counter : CMP #!start_to_jump_delay : BEQ .jumpframeperfect : BMI .jumpearly
+    LDA !ram_roomstrat_counter : CMP #!parlor_pause_to_jump_delay
+    BEQ .parlorframeperfect : BMI .jumpearly
 
     ; Jumped late
-    SEC : SBC #!start_to_jump_delay : ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A
+    SEC : SBC #!parlor_pause_to_jump_delay
+  .pausejumplate
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A
     LDA !IH_LETTER_L : STA !HUD_TILEMAP+$88
-    BRA .resetstate
+    JMP .resetstate
+
+  .jumpearly
+    LDA #!parlor_pause_to_jump_delay
+  .pausejumpearly
+    SEC : SBC !ram_roomstrat_counter
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A
+    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$88
+    JMP .resetstate
+
+  .botwoonframeperfect
+    BRA .botwoonadjustcounter
+
+  .parlorframeperfect
+    BRA .parloradjustcounter
+
+  .pauseearly
+if !FEATURE_PAL
+    LDA #!botwoon_pause_to_jump_delay
+else
+    LDA #!botwoon_jump_to_pause_delay
+endif
+    BRA .pausejumpearly
+
+  .readyexpand
+    LDA #$0004 : STA !ram_roomstrat_state
+    BRA .inccounter
 
   .checkexpand
     LDA !SAMUS_POSE : CMP #$0017 : BEQ .inccounter : CMP #$0018 : BEQ .inccounter
@@ -2517,17 +2587,18 @@ endif
     LDA !IH_LETTER_X : STA !HUD_TILEMAP+$8E
     JMP .resetstate
 
-  .readyexpand
-    LDA #$0004 : STA !ram_roomstrat_state
-    BRA .inccounter
+  .botwoonadjustcounter
+if !FEATURE_PAL
+    LDA !ram_roomstrat_counter
+else
+    LDA #$0001
+endif
+    BRA .firstframeperfect
 
-  .jumpearly
-    LDA #!start_to_jump_delay : SEC : SBC !ram_roomstrat_counter
-    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A
-    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$88
-    JMP .resetstate
-
-  .jumpframeperfect
+  .parloradjustcounter
+    LDA !ram_roomstrat_counter : SEC : SBC #$0004
+  .firstframeperfect
+    STA !ram_roomstrat_counter
     LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$88 : STA !HUD_TILEMAP+$8A
     LDA #$0003 : STA !ram_roomstrat_state
     RTS

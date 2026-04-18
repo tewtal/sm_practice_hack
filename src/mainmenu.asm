@@ -2063,7 +2063,7 @@ ihstrat_ceresridley:
     %cm_jsl("Ceres Ridley Hits", #action_select_room_strat, #$0001)
 
 ihstrat_doorskip:
-    %cm_jsl("Parlor-Climb Door Skip", #action_select_room_strat, #$0002)
+    %cm_jsl("Parlor/Botwoon Door Skip", #action_select_room_strat, #$0002)
 
 ihstrat_tacotank:
     %cm_jsl("Taco Tank", #action_select_room_strat, #$0003)
