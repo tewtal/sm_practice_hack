@@ -22,6 +22,7 @@
     dw status_vspeed
     dw status_quickdrop
     dw status_walljump
+    dw status_doublesbj
     dw status_countdamage
     dw status_enemyhp
     dw status_armpump
@@ -1371,6 +1372,78 @@ endif
     JMP .drawjumpcounter
 }
 
+status_doublesbj:
+{
+    LDA !SAMUS_Y_DIRECTION : BNE .checkstate
+    LDA !SAMUS_ITEMS_EQUIPPED : EOR !SAMUS_ITEMS_COLLECTED
+    AND #$0002 : BEQ .checkstate
+    LDA !GAMEMODE : CMP #$000C : BEQ .checkstate
+
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$88
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$8A : STA !HUD_TILEMAP+$8C
+    STA !HUD_TILEMAP+$8E : STA !HUD_TILEMAP+$90
+    TDC : STA !ram_roomstrat_state
+    RTS
+
+  .checkfirstpause
+    LDA !GAMEMODE : CMP #$000C : BEQ .incstate
+    RTS
+
+  .checkunpause
+    LDA !GAMEMODE : CMP #$0012 : BEQ .incstate
+    RTS
+
+  .inccounter
+    LDA !ram_roomstrat_counter : INC : STA !ram_roomstrat_counter
+    RTS
+
+  .checkstate
+    LDA !ram_roomstrat_state : BEQ .checkfirstpause
+    DEC : BEQ .checkmorphed
+    DEC : BEQ .checkunpause
+    DEC : BNE .done
+
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_START : BEQ .inccounter
+    LDA !ram_roomstrat_counter : CMP #$001F : BMI .pauseearly
+    SEC : SBC #$001E
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$8C
+    LDA !ram_roomstrat_state : DEC : STA !ram_roomstrat_state
+    RTS
+
+  .checkmorphed
+    LDA !SAMUS_POSE : CMP #$0031 : BEQ .morphed
+    CMP #$0032 : BNE .incpausetimer
+  .morphed
+    LDA #$001E : SEC : SBC !ram_roomstrat_counter
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A
+
+  .incstate
+    LDA !ram_roomstrat_state : STA !ram_roomstrat_counter
+    INC : STA !ram_roomstrat_state
+
+  .done
+    RTS
+
+  .pauseearly
+    LDA #$001F : SEC : SBC !ram_roomstrat_counter
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
+    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$8C
+
+  .clearstate
+    TDC : STA !ram_roomstrat_state
+    RTS
+
+  .incpausetimer
+    LDA !ram_roomstrat_counter : CMP #$001D : BPL .latemorph
+    INC : STA !ram_roomstrat_counter
+    RTS
+
+  .latemorph
+    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$8A
+    BRA .clearstate
+}
+
 status_countdamage:
 {
     LDA !DAMAGE_COUNTER : CMP !ram_HUD_check : BEQ .done : STA !ram_HUD_check
@@ -1711,6 +1784,7 @@ superhud_bottom_table:
     dw status_vspeed
     dw status_quickdrop
     dw status_walljump
+    dw status_doublesbj
     dw status_countdamage
     dw status_enemyhp
     dw status_armpump

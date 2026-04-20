@@ -1860,6 +1860,7 @@ DisplayModeMenu:
     dw ihmode_vspeed
     dw ihmode_quickdrop
     dw ihmode_walljump
+    dw ihmode_doublesbj
     dw #$FFFF
     dw ihmode_goto_page2
     dw #$0000
@@ -1935,34 +1936,37 @@ ihmode_walljump:
 !IH_MODE_WALLJUMP_INDEX = #$0010
     %cm_jsl("Walljump Trainer", #action_select_infohud_mode, #$0010)
 
+ihmode_doublesbj:
+    %cm_jsl("Double Springball Jump", #action_select_infohud_mode, #$0011)
+
 ihmode_countdamage:
-!IH_MODE_COUNTDAMAGE_INDEX = #$0011
-    %cm_jsl("Boss Damage Counter", #action_select_infohud_mode, #$0011)
+!IH_MODE_COUNTDAMAGE_INDEX = #$0012
+    %cm_jsl("Boss Damage Counter", #action_select_infohud_mode, #$0012)
 
 ihmode_counthp:
-!IH_MODE_COUNTHP_INDEX = #$0012
-    %cm_jsl("Boss HP Counter", #action_select_infohud_mode, #$0012)
+!IH_MODE_COUNTHP_INDEX = #$0013
+    %cm_jsl("Boss HP Counter", #action_select_infohud_mode, #$0013)
 
 ihmode_armpump:
-!IH_MODE_ARMPUMP_INDEX = #$0013
-    %cm_jsl("Arm Pump Trainer", #action_select_infohud_mode, #$0013)
+!IH_MODE_ARMPUMP_INDEX = #$0014
+    %cm_jsl("Arm Pump Trainer", #action_select_infohud_mode, #$0014)
 
 ihmode_pumpcounter:
-    %cm_jsl("Arm Pump Counter", #action_select_infohud_mode, #$0014)
+    %cm_jsl("Arm Pump Counter", #action_select_infohud_mode, #$0015)
 
 ihmode_xpos:
-    %cm_jsl("X Position", #action_select_infohud_mode, #$0015)
+    %cm_jsl("X Position", #action_select_infohud_mode, #$0016)
 
 ihmode_ypos:
-    %cm_jsl("Y Position", #action_select_infohud_mode, #$0016)
+    %cm_jsl("Y Position", #action_select_infohud_mode, #$0017)
 
 ihmode_shottimer:
-!IH_MODE_SHOTTIMER_INDEX = #$0017
-    %cm_jsl("Shot Timer", #action_select_infohud_mode, #$0017)
+!IH_MODE_SHOTTIMER_INDEX = #$0018
+    %cm_jsl("Shot Timer", #action_select_infohud_mode, #$0018)
 
 ihmode_ramwatch:
-!IH_MODE_RAMWATCH_INDEX = #$0018
-    %cm_jsl("Custom RAM Watch", #action_select_infohud_mode, #$0018)
+!IH_MODE_RAMWATCH_INDEX = #$0019
+    %cm_jsl("Custom RAM Watch", #action_select_infohud_mode, #$0019)
 
 !IH_MODE_COUNT = #$0019
 action_select_infohud_mode:
@@ -2000,6 +2004,7 @@ ih_display_mode:
     db #$28, " VERT SPEED", #$FF
     db #$28, " QUICK DROP", #$FF
     db #$28, "  WALL JUMP", #$FF
+    db #$28, " DOUBLE SBJ", #$FF
     db #$28, "DMG COUNTER", #$FF
     db #$28, " HP COUNTER", #$FF
     db #$28, "   ARM PUMP", #$FF
@@ -2213,6 +2218,7 @@ ih_superhud_bottom_selector:
     db #$28, " VERT SPEED", #$FF
     db #$28, " QUICK DROP", #$FF
     db #$28, "  WALL JUMP", #$FF
+    db #$28, " DOUBLE SBJ", #$FF
     db #$28, "DMG COUNTER", #$FF
     db #$28, " HP COUNTER", #$FF
     db #$28, "   ARM PUMP", #$FF
@@ -2265,8 +2271,7 @@ SuperHUDBottomMenu:
     dw ih_superhud_vspeed
     dw ih_superhud_quickdrop
     dw ih_superhud_walljump
-    dw ih_superhud_countdamage
-    dw ih_superhud_counthp
+    dw ih_superhud_doublesbj
     dw #$FFFF
     dw ih_superhud_goto_page2
     dw ih_superhud_goto_page3
@@ -2274,6 +2279,8 @@ SuperHUDBottomMenu:
     %cm_header("SUPER HUD BOTTOM MODE")
 
 SuperHUDBottomMenu2:
+    dw ih_superhud_countdamage
+    dw ih_superhud_counthp
     dw ih_superhud_armpump
     dw ih_superhud_pumpcounter
     dw ih_superhud_xpos
@@ -2290,7 +2297,6 @@ SuperHUDBottomMenu2:
     dw ih_superhud_gateglitch
     dw ih_superhud_moatcwj
     dw ih_superhud_robotflush
-    dw ih_superhud_shinetopb
     dw #$FFFF
     dw ih_superhud_goto_page1
     dw ih_superhud_goto_page3
@@ -2298,6 +2304,7 @@ SuperHUDBottomMenu2:
     %cm_header("SUPER HUD BOTTOM MODE")
 
 SuperHUDBottomMenu3:
+    dw ih_superhud_shinetopb
     dw ih_superhud_elevatorcf
     dw ih_superhud_botwooncf
     dw ih_superhud_draygonai
@@ -2366,103 +2373,106 @@ ih_superhud_walljump:
 !IH_SUPERHUD_WALLJUMP_BOTTOM_INDEX = #$000F
     %cm_jsl("Walljump Trainer", #action_select_superhud_bottom, #$000F)
 
+ih_superhud_doublesbj:
+    %cm_jsl("Double Springball Jump", #action_select_superhud_bottom, #$0010)
+
 ih_superhud_countdamage:
-!IH_SUPERHUD_COUNTDAMAGE_BOTTOM_INDEX = #$0010
-    %cm_jsl("Boss Damage Counter", #action_select_superhud_bottom, #$0010)
+!IH_SUPERHUD_COUNTDAMAGE_BOTTOM_INDEX = #$0011
+    %cm_jsl("Boss Damage Counter", #action_select_superhud_bottom, #$0011)
 
 ih_superhud_counthp:
-!IH_SUPERHUD_COUNTHP_BOTTOM_INDEX = #$0011
-    %cm_jsl("Boss HP Counter", #action_select_superhud_bottom, #$0011)
+!IH_SUPERHUD_COUNTHP_BOTTOM_INDEX = #$0012
+    %cm_jsl("Boss HP Counter", #action_select_superhud_bottom, #$0012)
 
 ih_superhud_armpump:
-!IH_SUPERHUD_ARMPUMP_BOTTOM_INDEX = #$0012
-    %cm_jsl("Arm Pump Trainer", #action_select_superhud_bottom, #$0012)
+!IH_SUPERHUD_ARMPUMP_BOTTOM_INDEX = #$0013
+    %cm_jsl("Arm Pump Trainer", #action_select_superhud_bottom, #$0013)
 
 ih_superhud_pumpcounter:
-    %cm_jsl("Arm Pump Counter", #action_select_superhud_bottom, #$0013)
+    %cm_jsl("Arm Pump Counter", #action_select_superhud_bottom, #$0014)
 
 ih_superhud_xpos:
-    %cm_jsl("X Position", #action_select_superhud_bottom, #$0014)
+    %cm_jsl("X Position", #action_select_superhud_bottom, #$0015)
 
 ih_superhud_ypos:
-    %cm_jsl("Y Position", #action_select_superhud_bottom, #$0015)
+    %cm_jsl("Y Position", #action_select_superhud_bottom, #$0016)
 
 ih_superhud_shottimer:
-!IH_SUPERHUD_SHOTTIMER_BOTTOM_INDEX = #$0016
-    %cm_jsl("Shot Timer", #action_select_superhud_bottom, #$0016)
+!IH_SUPERHUD_SHOTTIMER_BOTTOM_INDEX = #$0017
+    %cm_jsl("Shot Timer", #action_select_superhud_bottom, #$0017)
 
 ih_superhud_ramwatch:
-!IH_SUPERHUD_RAMWATCH_BOTTOM_INDEX = #$0017
-    %cm_jsl("Custom RAM Watch", #action_select_superhud_bottom, #$0017)
+!IH_SUPERHUD_RAMWATCH_BOTTOM_INDEX = #$0018
+    %cm_jsl("Custom RAM Watch", #action_select_superhud_bottom, #$0018)
 
 ih_superhud_ceresridley:
-    %cm_jsl("Ceres Ridley Hits", #action_select_superhud_bottom, #$0018)
+    %cm_jsl("Ceres Ridley Hits", #action_select_superhud_bottom, #$0019)
 
 ih_superhud_doorskip:
-    %cm_jsl("Parlor-Climb Door Skip", #action_select_superhud_bottom, #$0019)
+    %cm_jsl("Parlor-Climb Door Skip", #action_select_superhud_bottom, #$001A)
 
 ih_superhud_tacotank:
-    %cm_jsl("Taco Tank", #action_select_superhud_bottom, #$001A)
+    %cm_jsl("Taco Tank", #action_select_superhud_bottom, #$001B)
 
 ih_superhud_pitdoor:
-    %cm_jsl("Pit Room Right Door", #action_select_superhud_bottom, #$001B)
+    %cm_jsl("Pit Room Right Door", #action_select_superhud_bottom, #$001C)
 
 ih_superhud_moondance:
-    %cm_jsl("Moondance", #action_select_superhud_bottom, #$001C)
+    %cm_jsl("Moondance", #action_select_superhud_bottom, #$001D)
 
 ih_superhud_kraidradar:
-    %cm_jsl("Kraid Nail Radar", #action_select_superhud_bottom, #$001D)
+    %cm_jsl("Kraid Nail Radar", #action_select_superhud_bottom, #$001E)
 
 ih_superhud_bootlessup:
-    %cm_jsl("Bootless Up In Two", #action_select_superhud_bottom, #$001E)
+    %cm_jsl("Bootless Up In Two", #action_select_superhud_bottom, #$001F)
 
 ih_superhud_gateglitch:
-    %cm_jsl("Gate Glitch", #action_select_superhud_bottom, #$001F)
+    %cm_jsl("Gate Glitch", #action_select_superhud_bottom, #$0020)
 
 ih_superhud_moatcwj:
-    %cm_jsl("Moat CWJ", #action_select_superhud_bottom, #$0020)
+    %cm_jsl("Moat CWJ", #action_select_superhud_bottom, #$0021)
 
 ih_superhud_robotflush:
-    %cm_jsl("Robot Flush", #action_select_superhud_bottom, #$0021)
+    %cm_jsl("Robot Flush", #action_select_superhud_bottom, #$0022)
 
 ih_superhud_shinetopb:
-    %cm_jsl("Shine to PB", #action_select_superhud_bottom, #$0022)
+    %cm_jsl("Shine to PB", #action_select_superhud_bottom, #$0023)
 
 ih_superhud_elevatorcf:
-    %cm_jsl("Elevator Crystal Flash", #action_select_superhud_bottom, #$0023)
+    %cm_jsl("Elevator Crystal Flash", #action_select_superhud_bottom, #$0024)
 
 ih_superhud_botwooncf:
-    %cm_jsl("Botwoon Crystal Flash", #action_select_superhud_bottom, #$0024)
+    %cm_jsl("Botwoon Crystal Flash", #action_select_superhud_bottom, #$0025)
 
 ih_superhud_draygonai:
-    %cm_jsl("Draygon AI", #action_select_superhud_bottom, #$0025)
+    %cm_jsl("Draygon AI", #action_select_superhud_bottom, #$0026)
 
 ih_superhud_snailclip:
-    %cm_jsl("Aqueduct Snail Clip", #action_select_superhud_bottom, #$0026)
+    %cm_jsl("Aqueduct Snail Clip", #action_select_superhud_bottom, #$0027)
 
 ih_superhud_wasteland:
-    %cm_jsl("Wasteland Entry", #action_select_superhud_bottom, #$0027)
+    %cm_jsl("Wasteland Entry", #action_select_superhud_bottom, #$0028)
 
 ih_superhud_ridleyai:
-    %cm_jsl("Ridley AI", #action_select_superhud_bottom, #$0028)
+    %cm_jsl("Ridley AI", #action_select_superhud_bottom, #$0029)
 
 ih_superhud_kihuntermanip:
-    %cm_jsl("Kihunter Manipulation", #action_select_superhud_bottom, #$0029)
+    %cm_jsl("Kihunter Manipulation", #action_select_superhud_bottom, #$002A)
 
 ih_superhud_downbackzeb:
-    %cm_jsl("Downback Zeb Skip", #action_select_superhud_bottom, #$002A)
+    %cm_jsl("Downback Zeb Skip", #action_select_superhud_bottom, #$002B)
 
 ih_superhud_zebskip:
-    %cm_jsl("Zeb Skip Indicator", #action_select_superhud_bottom, #$002B)
+    %cm_jsl("Zeb Skip Indicator", #action_select_superhud_bottom, #$002C)
 
 ih_superhud_mbhp:
-!IH_SUPERHUD_MBHP_BOTTOM_INDEX = #$002C
-    %cm_jsl("Mother Brain HP", #action_select_superhud_bottom, #$002C)
+!IH_SUPERHUD_MBHP_BOTTOM_INDEX = #$002D
+    %cm_jsl("Mother Brain HP", #action_select_superhud_bottom, #$002D)
 
 ih_superhud_twocries:
-    %cm_jsl("Two Cries Standup", #action_select_superhud_bottom, #$002D)
+    %cm_jsl("Two Cries Standup", #action_select_superhud_bottom, #$002E)
 
-!IH_SUPERHUD_BOTTOM_COUNT = #$002E
+!IH_SUPERHUD_BOTTOM_COUNT = #$002F
 action_select_superhud_bottom:
 {
     TYA : STA !sram_superhud_bottom
