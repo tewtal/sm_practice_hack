@@ -453,6 +453,11 @@ hook_layout_asm_pants_to_pants:
     dw #$8000
     dw #layout_asm_pants_to_pants_scrolls
 
+; Big Boy Room right door
+org $83AA36
+hook_layout_asm_dusttorizo_door1:
+    dw #layout_asm_big_boy_music
+
 ; Tourian Escape 1 right door
 org $83AA96
 hook_layout_asm_motherbrain_door1:
@@ -2472,6 +2477,20 @@ layout_asm_tourianescape1:
     CMP #$0002 : BNE layout_asm_mbhp_done
     LDA !ram_door_source : ASL : TAX
     LDA portals_left_vanilla_table,X : CMP #$AAE0 : BEQ layout_asm_tourianescape1_remove_plm
+    RTS
+}
+
+layout_asm_big_boy_music:
+{
+    LDA !MUSIC_DATA : CMP #$0045 : BEQ .check_track
+    TDC : JSL !MUSIC_ROUTINE
+    LDA #$FF45 : JSL !MUSIC_ROUTINE
+
+  .check_track
+    LDA #$0006 : CMP !MUSIC_TRACK : BEQ .done
+    JSL !MUSIC_ROUTINE
+
+  .done
     RTS
 }
 
