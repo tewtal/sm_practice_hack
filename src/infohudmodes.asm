@@ -29,6 +29,7 @@
     dw status_pumpcounter
     dw status_xpos
     dw status_ypos
+    dw status_camerapos
     dw status_shottimer
     dw status_ramwatch
 
@@ -1592,6 +1593,22 @@ status_ypos:
     RTS
 }
 
+status_camerapos:
+{
+    ; Suppress Samus HP display
+    LDA !SAMUS_HP : STA !ram_last_hp
+
+    LDA !LAYER1_X : CMP !ram_xpos : BEQ .checkypos
+    STA !ram_xpos : LDX #$0088 : JSR Draw4Hex
+
+  .checkypos
+    LDA !LAYER1_Y : CMP !ram_ypos : BEQ .done
+    STA !ram_ypos : LDX #$0092 : JSR Draw4Hex
+
+  .done
+    RTS
+}
+
 status_shottimer:
 {
     LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_SHOT : BEQ .incShot
@@ -1791,6 +1808,7 @@ superhud_bottom_table:
     dw status_pumpcounter
     dw status_xpos
     dw status_ypos
+    dw status_camerapos
     dw status_shottimer
     dw status_ramwatch
     dw status_ceresridley

@@ -1873,6 +1873,7 @@ DisplayModeMenu2:
     dw ihmode_pumpcounter
     dw ihmode_xpos
     dw ihmode_ypos
+    dw ihmode_camerapos
     dw ihmode_shottimer
     dw ihmode_ramwatch
     dw #$FFFF
@@ -1960,15 +1961,18 @@ ihmode_xpos:
 ihmode_ypos:
     %cm_jsl("Y Position", #action_select_infohud_mode, #$0017)
 
+ihmode_camerapos:
+    %cm_jsl("Camera Position", #action_select_infohud_mode, #$0018)
+
 ihmode_shottimer:
-!IH_MODE_SHOTTIMER_INDEX = #$0018
-    %cm_jsl("Shot Timer", #action_select_infohud_mode, #$0018)
+!IH_MODE_SHOTTIMER_INDEX = #$0019
+    %cm_jsl("Shot Timer", #action_select_infohud_mode, #$0019)
 
 ihmode_ramwatch:
-!IH_MODE_RAMWATCH_INDEX = #$0019
-    %cm_jsl("Custom RAM Watch", #action_select_infohud_mode, #$0019)
+!IH_MODE_RAMWATCH_INDEX = #$001A
+    %cm_jsl("Custom RAM Watch", #action_select_infohud_mode, #$001A)
 
-!IH_MODE_COUNT = #$0019
+!IH_MODE_COUNT = #$001B
 action_select_infohud_mode:
 {
     TYA : STA !sram_display_mode
@@ -2011,6 +2015,7 @@ ih_display_mode:
     db #$28, " PUMP COUNT", #$FF
     db #$28, " X POSITION", #$FF
     db #$28, " Y POSITION", #$FF
+    db #$28, " CAMERA POS", #$FF
     db #$28, " SHOT TIMER", #$FF
     db #$28, "  RAM WATCH", #$FF
     db #$FF
@@ -2225,6 +2230,7 @@ ih_superhud_bottom_selector:
     db #$28, " PUMP COUNT", #$FF
     db #$28, " X POSITION", #$FF
     db #$28, " Y POSITION", #$FF
+    db #$28, " CAMERA POS", #$FF
     db #$28, " SHOT TIMER", #$FF
     db #$28, "  RAM WATCH", #$FF
     db #$28, " CERES HITS", #$FF
@@ -2285,6 +2291,7 @@ SuperHUDBottomMenu2:
     dw ih_superhud_pumpcounter
     dw ih_superhud_xpos
     dw ih_superhud_ypos
+    dw ih_superhud_camerapos
     dw ih_superhud_shottimer
     dw ih_superhud_ramwatch
     dw ih_superhud_ceresridley
@@ -2296,7 +2303,6 @@ SuperHUDBottomMenu2:
     dw ih_superhud_bootlessup
     dw ih_superhud_gateglitch
     dw ih_superhud_moatcwj
-    dw ih_superhud_robotflush
     dw #$FFFF
     dw ih_superhud_goto_page1
     dw ih_superhud_goto_page3
@@ -2304,6 +2310,7 @@ SuperHUDBottomMenu2:
     %cm_header("SUPER HUD BOTTOM MODE")
 
 SuperHUDBottomMenu3:
+    dw ih_superhud_robotflush
     dw ih_superhud_shinetopb
     dw ih_superhud_elevatorcf
     dw ih_superhud_botwooncf
@@ -2397,82 +2404,85 @@ ih_superhud_xpos:
 ih_superhud_ypos:
     %cm_jsl("Y Position", #action_select_superhud_bottom, #$0016)
 
+ih_superhud_camerapos:
+    %cm_jsl("Camera Position", #action_select_superhud_bottom, #$0017)
+
 ih_superhud_shottimer:
-!IH_SUPERHUD_SHOTTIMER_BOTTOM_INDEX = #$0017
-    %cm_jsl("Shot Timer", #action_select_superhud_bottom, #$0017)
+!IH_SUPERHUD_SHOTTIMER_BOTTOM_INDEX = #$0018
+    %cm_jsl("Shot Timer", #action_select_superhud_bottom, #$0018)
 
 ih_superhud_ramwatch:
-!IH_SUPERHUD_RAMWATCH_BOTTOM_INDEX = #$0018
-    %cm_jsl("Custom RAM Watch", #action_select_superhud_bottom, #$0018)
+!IH_SUPERHUD_RAMWATCH_BOTTOM_INDEX = #$0019
+    %cm_jsl("Custom RAM Watch", #action_select_superhud_bottom, #$0019)
 
 ih_superhud_ceresridley:
-    %cm_jsl("Ceres Ridley Hits", #action_select_superhud_bottom, #$0019)
+    %cm_jsl("Ceres Ridley Hits", #action_select_superhud_bottom, #$001A)
 
 ih_superhud_doorskip:
-    %cm_jsl("Parlor-Climb Door Skip", #action_select_superhud_bottom, #$001A)
+    %cm_jsl("Parlor-Climb Door Skip", #action_select_superhud_bottom, #$001B)
 
 ih_superhud_tacotank:
-    %cm_jsl("Taco Tank", #action_select_superhud_bottom, #$001B)
+    %cm_jsl("Taco Tank", #action_select_superhud_bottom, #$001C)
 
 ih_superhud_pitdoor:
-    %cm_jsl("Pit Room Right Door", #action_select_superhud_bottom, #$001C)
+    %cm_jsl("Pit Room Right Door", #action_select_superhud_bottom, #$001D)
 
 ih_superhud_moondance:
-    %cm_jsl("Moondance", #action_select_superhud_bottom, #$001D)
+    %cm_jsl("Moondance", #action_select_superhud_bottom, #$001E)
 
 ih_superhud_kraidradar:
-    %cm_jsl("Kraid Nail Radar", #action_select_superhud_bottom, #$001E)
+    %cm_jsl("Kraid Nail Radar", #action_select_superhud_bottom, #$001F)
 
 ih_superhud_bootlessup:
-    %cm_jsl("Bootless Up In Two", #action_select_superhud_bottom, #$001F)
+    %cm_jsl("Bootless Up In Two", #action_select_superhud_bottom, #$0020)
 
 ih_superhud_gateglitch:
-    %cm_jsl("Gate Glitch", #action_select_superhud_bottom, #$0020)
+    %cm_jsl("Gate Glitch", #action_select_superhud_bottom, #$0021)
 
 ih_superhud_moatcwj:
-    %cm_jsl("Moat CWJ", #action_select_superhud_bottom, #$0021)
+    %cm_jsl("Moat CWJ", #action_select_superhud_bottom, #$0022)
 
 ih_superhud_robotflush:
-    %cm_jsl("Robot Flush", #action_select_superhud_bottom, #$0022)
+    %cm_jsl("Robot Flush", #action_select_superhud_bottom, #$0023)
 
 ih_superhud_shinetopb:
-    %cm_jsl("Shine to PB", #action_select_superhud_bottom, #$0023)
+    %cm_jsl("Shine to PB", #action_select_superhud_bottom, #$0024)
 
 ih_superhud_elevatorcf:
-    %cm_jsl("Elevator Crystal Flash", #action_select_superhud_bottom, #$0024)
+    %cm_jsl("Elevator Crystal Flash", #action_select_superhud_bottom, #$0025)
 
 ih_superhud_botwooncf:
-    %cm_jsl("Botwoon Crystal Flash", #action_select_superhud_bottom, #$0025)
+    %cm_jsl("Botwoon Crystal Flash", #action_select_superhud_bottom, #$0026)
 
 ih_superhud_draygonai:
-    %cm_jsl("Draygon AI", #action_select_superhud_bottom, #$0026)
+    %cm_jsl("Draygon AI", #action_select_superhud_bottom, #$0027)
 
 ih_superhud_snailclip:
-    %cm_jsl("Aqueduct Snail Clip", #action_select_superhud_bottom, #$0027)
+    %cm_jsl("Aqueduct Snail Clip", #action_select_superhud_bottom, #$0028)
 
 ih_superhud_wasteland:
-    %cm_jsl("Wasteland Entry", #action_select_superhud_bottom, #$0028)
+    %cm_jsl("Wasteland Entry", #action_select_superhud_bottom, #$0029)
 
 ih_superhud_ridleyai:
-    %cm_jsl("Ridley AI", #action_select_superhud_bottom, #$0029)
+    %cm_jsl("Ridley AI", #action_select_superhud_bottom, #$002A)
 
 ih_superhud_kihuntermanip:
-    %cm_jsl("Kihunter Manipulation", #action_select_superhud_bottom, #$002A)
+    %cm_jsl("Kihunter Manipulation", #action_select_superhud_bottom, #$002B)
 
 ih_superhud_downbackzeb:
-    %cm_jsl("Downback Zeb Skip", #action_select_superhud_bottom, #$002B)
+    %cm_jsl("Downback Zeb Skip", #action_select_superhud_bottom, #$002C)
 
 ih_superhud_zebskip:
-    %cm_jsl("Zeb Skip Indicator", #action_select_superhud_bottom, #$002C)
+    %cm_jsl("Zeb Skip Indicator", #action_select_superhud_bottom, #$002D)
 
 ih_superhud_mbhp:
-!IH_SUPERHUD_MBHP_BOTTOM_INDEX = #$002D
-    %cm_jsl("Mother Brain HP", #action_select_superhud_bottom, #$002D)
+!IH_SUPERHUD_MBHP_BOTTOM_INDEX = #$002E
+    %cm_jsl("Mother Brain HP", #action_select_superhud_bottom, #$002E)
 
 ih_superhud_twocries:
-    %cm_jsl("Two Cries Standup", #action_select_superhud_bottom, #$002E)
+    %cm_jsl("Two Cries Standup", #action_select_superhud_bottom, #$002F)
 
-!IH_SUPERHUD_BOTTOM_COUNT = #$002F
+!IH_SUPERHUD_BOTTOM_COUNT = #$0030
 action_select_superhud_bottom:
 {
     TYA : STA !sram_superhud_bottom
