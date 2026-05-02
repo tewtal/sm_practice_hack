@@ -465,7 +465,7 @@ endif
     dw #$0000
     %cm_header("PRESET OPTIONS MENU")
 if !RAW_TILE_GRAPHICS
-    %cm_footer("COMPRESSED OFF IS FASTER")
+    %cm_footer("SAMUS SKIN OFF IS FASTER")
 endif
 
 presets_select_preset_category:
@@ -599,7 +599,7 @@ presets_auto_segment_reset:
 
 if !RAW_TILE_GRAPHICS
 presets_compressed_data:
-    %cm_toggle_bit("Compressed Data", !sram_preset_options, !PRESETS_COMPRESSED, #0)
+    %cm_toggle_bit("Custom Samus Skin", !sram_preset_options, !PRESETS_COMPRESSED, #0)
 endif
 
 PresetCategoryAdjustmentMenu:
