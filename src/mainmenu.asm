@@ -1,32 +1,4 @@
 
-%startfree(B4)
-
-; No reason these drop tables can't overlap
-all_power_bombs_drop_table:
-    db #$00
-all_supers_drop_table:
-    db #$00
-all_nothing_drop_table:
-    db #$00
-all_missiles_drop_table:
-    db #$00
-all_big_hp_drop_table:
-    db #$00
-all_small_hp_drop_table:
-    db #$FF, #$00, #$00, #$00, #$00, #$00
-
-!DROP_CHANCE_TABLE_LENGTH = #$0007
-drop_chance_tables:
-    dw #$0000
-    dw #all_small_hp_drop_table
-    dw #all_big_hp_drop_table
-    dw #all_missiles_drop_table
-    dw #all_nothing_drop_table
-    dw #all_supers_drop_table
-    dw #all_power_bombs_drop_table
-
-%endfree(B4)
-
 
 %startfree(B8)
 
