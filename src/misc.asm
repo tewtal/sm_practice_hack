@@ -167,11 +167,26 @@ org $90D000       ; hijack, runs when a shinespark is activated
     JMP misc_shinespark_activation
 
 
+; Continue drawing escape timer after reaching ship
 if !FEATURE_PAL
-org $91DC97
+org $90E905
 else
-org $91DD32
+org $90E908
 endif
+    JSR preserve_escape_timer
+
+
+if !FEATURE_PAL
+org $91EAB8
+else
+org $91EB53
+endif
+    JMP misc_check_bonk
+hijack_bonk_return:
+
+
+%startfree(91)
+
 misc_check_bonk:
 {
     LDA !SAMUS_POTENTIAL_POSE_VALUES : BMI .return
@@ -184,24 +199,8 @@ misc_check_bonk:
     LDA !IH_LETTER_B : STA $7EC628
     BRA .return
 }
-%warnpc($91DD5B, $91DCC0)
 
-if !FEATURE_PAL
-org $91EAB8
-else
-org $91EB53
-endif
-    JMP misc_check_bonk
-hijack_bonk_return:
-
-
-; Continue drawing escape timer after reaching ship
-if !FEATURE_PAL
-org $90E905
-else
-org $90E908
-endif
-    JSR preserve_escape_timer
+%endfree(91)
 
 
 ; Stop drawing timer when its VRAM is overwritten

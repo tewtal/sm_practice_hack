@@ -148,12 +148,16 @@ org $808262
     LDA #$0004
 
 
-; Allow DemoSamusSetup table to be relocated
+; Allow demo tables to be relocated
+org $91879E
+    LDA.w DemoSamusData,X
+
 org $9187FE
     LDA.w DemoSamusSetup,X
 
 
-org $918885
+%startfree(91)
+
 DemoSamusData:
 {
     dw DemoSamusData_set1, DemoSamusData_set2, DemoSamusData_set3, DemoSamusData_set4
@@ -666,7 +670,8 @@ else
 endif
     dw $FFFF
 }
-%warnpc($919EE2, $919E3A) ; space freed up from repointing input data
+
+%endfree(91)
 
 
 ; Vanilla game uses 12h for demo data because it includes the door slot
