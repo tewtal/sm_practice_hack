@@ -439,7 +439,6 @@ mm_goto_brbmenu:
 PresetOptionsMenu:
     dw #presets_select_preset_category
     dw #presets_current
-    dw #$FFFF
     dw #presets_category_adjustments
     dw #$FFFF
     dw #presets_custom_preset_slot
@@ -452,6 +451,7 @@ else
 endif
     dw #presets_reload_last
     dw #presets_load_random
+    dw #$FFFF
     dw #presets_equip_rando_menu
     dw #presets_elevator
     dw #presets_open_blue_doors
@@ -1763,6 +1763,7 @@ action_teleport:
 
 SpritesMenu:
     dw #sprites_samus_prio
+    dw #$FFFF
     dw #sprites_show_samus_hitbox
     dw #sprites_show_enemy_hitbox
     dw #sprites_show_extended_hitbox
@@ -1770,6 +1771,7 @@ SpritesMenu:
     dw #sprites_show_samusproj_hitbox
     dw #sprites_show_enemyproj_hitbox
     dw #sprites_show_proj_as_32x32
+    dw #$FFFF
     dw #sprites_oob_viewer
     dw #$0000
     %cm_header("SPRITE FEATURES")
@@ -1820,9 +1822,9 @@ InfoHudMenu:
     dw #ih_room_strat
     dw #ih_goto_superhud
     dw #ih_superhud_bottom_selector
+    dw #ih_door_display_mode
     dw #ih_display_mode_reward
     dw #$FFFF
-    dw #ih_door_display_mode
     dw #ih_goto_timer_settings
     dw #$FFFF
     dw #ih_minimap
@@ -1832,7 +1834,6 @@ InfoHudMenu:
 if !PRESERVE_WRAM_DURING_SPACETIME
     dw #ih_spacetime_infohud
 endif
-    dw #ih_lag
     dw #$FFFF
     dw #ih_ram_watch
     dw #$0000
@@ -2845,9 +2846,6 @@ ih_spacetime_infohud:
     db #$28, "    VANILLA", #$FF
     db #$28, "  PRESERVED", #$FF
     db #$FF
-
-ih_lag:
-    %cm_numfield("Artificial Lag", !sram_artificial_lag, 0, 64, 1, 4, #0)
 
 ih_ram_watch:
     %cm_jsl("Customize RAM Watch", #ih_prepare_ram_watch_menu, #RAMWatchMenu)
@@ -3991,6 +3989,8 @@ endif
 SlowdownMenu:
     dw #slowdown_mode
     dw #slowdown_frames
+    dw #$FFFF
+    dw #slowdown_artifial_lag
     dw #$0000
     %cm_header("SLOWDOWN MODE")
 
@@ -4006,6 +4006,9 @@ slowdown_mode:
 
 slowdown_frames:
     %cm_numfield("Slowdown (Lag) Frames", !ram_cm_slowdown_frames, 0, 120, 1, 4, #0)
+
+slowdown_artifial_lag:
+    %cm_numfield("Artificial Lag", !sram_artificial_lag, 0, 64, 1, 4, #0)
 
 
 ; ---------------
