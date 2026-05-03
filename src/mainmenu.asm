@@ -104,7 +104,7 @@ action_game_mainmenu:
 action_rng_mainmenu:
 {
     LDA !ram_turret_rng : LSR : STA !ram_cm_turret_rng
-    LDA !DROP_CHANCE_TABLE_LENGTH-1 : ASL : TAX
+    LDA.w !DROP_CHANCE_TABLE_LENGTH-1 : ASL : TAX
   .dropTableLoop
     LDA.l drop_chance_tables,X : CMP !ram_drop_chance_table : BEQ .setDropChances
     DEX #2 : BPL .dropTableLoop
