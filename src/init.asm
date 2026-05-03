@@ -244,6 +244,7 @@ endif
     TDC : STA !sram_fast_pause
     STA !sram_bonk_indicators
     STA !sram_speed_booster_physics
+    STA !sram_streamer_name
 
     LDA !SRAM_VERSION : STA !sram_initialized
     RTS

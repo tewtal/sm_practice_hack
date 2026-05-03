@@ -133,7 +133,7 @@ brb_streamer_name:
     JML ConvertNormal2Header
   .blank
     ; restore default name
-    TDC : STA !sram_custom_header
+    TDC : STA !sram_streamer_name
   .done
     RTL
 
@@ -294,7 +294,6 @@ cm_tilemap_brb:
     LDA.w #!sram_streamer_name>>16 : STA !DP_CurrentMenu+2
 
     ; Count characters in name
-    STX !DP_Temp
     ; skip to second character, first cannot be terminator
     LDX #$0002 : LDY #$0016+2+1
     %a8()
