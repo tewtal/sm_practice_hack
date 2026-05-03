@@ -1447,5 +1447,6 @@ endif
 !PROFILE_PapaSchmo    = #$0019
 !PROFILE_Vespher      = #$001A
 !PROFILE_EXAKT        = #$001B
-!PROFILE_COUNT        = #$001C
+!PROFILE_Bastion      = #$001C
+!PROFILE_COUNT        = #$001D
 

@@ -350,6 +350,7 @@ mc_paletteprofile:
     db #$28, "  PAPASCHMO", #$FF
     db #$28, "    VESPHER", #$FF
     db #$28, "      EXAKT", #$FF
+    db #$28, "    BASTION", #$FF
     db #$FF
 
 mc_palette_to_custom:
@@ -1209,6 +1210,7 @@ PaletteProfileTables:
     dw #PapaSchmoProfileTable     ; 19
     dw #VespherProfileTable       ; 1A
     dw #EXAKTProfileTable         ; 1B
+    dw #BastionProfileTable       ; 1C
     dw #$0000
 
 ; border, headeroutline, text, background, numoutline, numfill, toggleon, seltext, seltextbg, numseloutline, numsel
@@ -1292,6 +1294,9 @@ VespherProfileTable:
 
 EXAKTProfileTable:
     dw $2DC6, $5F65, $3A42, $18A1, $2982, $4F0A, $6F08, $4EC9, $18A1, $2DE6, $63CC
+
+BastionProfileTable:
+    dw $5620, $5980, $7F00, $0000, $0000, $7F00, $001F, $001F, $0000, $001F, $0000
 }
 
 %endfree(AE)
