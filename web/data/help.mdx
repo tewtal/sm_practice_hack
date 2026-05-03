@@ -80,11 +80,7 @@ If you experience crashes or severe glitches when using savestates, your platfor
 | - Load with Enemies           | Skips clearing enemies when loading presets. NOTE: Enemy data is not saved with presets. Therefore, enemies will always be loaded in their starting positions for the room
 | - Clear Map Tiles             | Clears all explored map tiles when loading a preset
 | - Auto Reset Segment          | When enabled, the segment timer will not be reset until the next door transition
-| - Compressed Graphics         | Use built-in and slower compressed tile graphics when loading presets.
-|                               | Only enable this if you are applying patches that use banks F5-FE and loading prests crashes the game.
-| - Compressed Palettes         | Use built-in compressed palettes when loading presets.
-|                               | Only enable this if you are applying custom room palettes.
-| - Compressed Tables           | Use built-in compressed tile tables when loading presets.
+| - Custom Samus Skin           | Use built-in and slower compressed graphics when loading presets. Only enable this if you are applying patches that use banks F5-FE, such as SpriteSomething, and loading presets causes graphics corruption.
 |&nbsp;|
 | **Save Stations**             | Warp to any save station or hidden debug load station
 |&nbsp;|
@@ -325,5 +321,5 @@ As we continue to maintain and add features to the practice ROM, this is our str
 | - Events                      | On events (when drops appear, when an item is collected, etc.), we may add features. It's conceivable this could add a lag frame, although in most circumstances it would be unlikely or impossible.
 | - Door/Elevator Transitions   | Similar to events, we may add features during this time. Some features require data to be reloaded during this time.
 | - Practice Features           | Once you start turning on practice features, lag may no longer be similar to actual game. Some features like magic pants or the metronome may not have much impact, but others like the OOB tile viewer add a significant amount of work for the CPU.
-| - Sprite Patches              | Sprite patches such as SpriteSomething should be supported. These patches sometimes modify the game and theoretically could affect lag on their own, although if you intend to play the vanilla game or randomizer with a sprite patch then you might as well apply it to the practice ROM. You may need to turn on Compressed Graphics/Palettes/Tables in Preset Options as SpriteSomething will overwrite some data used to load presets (and in some cases savestates) faster.
+| - Sprite Patches              | Sprite patches such as SpriteSomething should be supported. These patches sometimes modify the game and theoretically could affect lag on their own, although if you intend to play the vanilla game or randomizer with a sprite patch then you might as well apply it to the practice ROM. You may need to turn on Custom Samus Skin in Preset Options as SpriteSomething will overwrite some data used to load presets (and in some cases savestates) faster.
 <br />

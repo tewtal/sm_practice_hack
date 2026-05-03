@@ -108,6 +108,7 @@ init_sram_routine_table:
     dw init_sram_upgrade_18to19
     dw init_sram_upgrade_19to1A
     dw init_sram_upgrade_1Ato1B
+    dw init_sram_upgrade_1Bto1C
 
 init_sram:
 {
@@ -238,6 +239,9 @@ endif
     STA !sram_categoryadjust_maxpbs
     DEC : STA !sram_categoryadjust_item_remove
     STA !sram_categoryadjust_beam_remove
+
+  .upgrade_1Bto1C
+    TDC : STA !sram_streamer_name
 
     LDA !SRAM_VERSION : STA !sram_initialized
     RTS

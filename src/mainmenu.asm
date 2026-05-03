@@ -1,32 +1,4 @@
 
-%startfree(B4)
-
-; No reason these drop tables can't overlap
-all_power_bombs_drop_table:
-    db #$00
-all_supers_drop_table:
-    db #$00
-all_nothing_drop_table:
-    db #$00
-all_missiles_drop_table:
-    db #$00
-all_big_hp_drop_table:
-    db #$00
-all_small_hp_drop_table:
-    db #$FF, #$00, #$00, #$00, #$00, #$00
-
-!DROP_CHANCE_TABLE_LENGTH = #$0007
-drop_chance_tables:
-    dw #$0000
-    dw #all_small_hp_drop_table
-    dw #all_big_hp_drop_table
-    dw #all_missiles_drop_table
-    dw #all_nothing_drop_table
-    dw #all_supers_drop_table
-    dw #all_power_bombs_drop_table
-
-%endfree(B4)
-
 
 %startfree(B8)
 
@@ -132,7 +104,7 @@ action_game_mainmenu:
 action_rng_mainmenu:
 {
     LDA !ram_turret_rng : LSR : STA !ram_cm_turret_rng
-    LDA !DROP_CHANCE_TABLE_LENGTH-1 : ASL : TAX
+    LDA.w !DROP_CHANCE_TABLE_LENGTH-1 : ASL : TAX
   .dropTableLoop
     LDA.l drop_chance_tables,X : CMP !ram_drop_chance_table : BEQ .setDropChances
     DEX #2 : BPL .dropTableLoop
@@ -467,7 +439,6 @@ mm_goto_brbmenu:
 PresetOptionsMenu:
     dw #presets_select_preset_category
     dw #presets_current
-    dw #$FFFF
     dw #presets_category_adjustments
     dw #$FFFF
     dw #presets_custom_preset_slot
@@ -480,6 +451,7 @@ else
 endif
     dw #presets_reload_last
     dw #presets_load_random
+    dw #$FFFF
     dw #presets_equip_rando_menu
     dw #presets_elevator
     dw #presets_open_blue_doors
@@ -493,7 +465,7 @@ endif
     dw #$0000
     %cm_header("PRESET OPTIONS MENU")
 if !RAW_TILE_GRAPHICS
-    %cm_footer("COMPRESSED OFF IS FASTER")
+    %cm_footer("SAMUS SKIN OFF IS FASTER")
 endif
 
 presets_select_preset_category:
@@ -627,7 +599,7 @@ presets_auto_segment_reset:
 
 if !RAW_TILE_GRAPHICS
 presets_compressed_data:
-    %cm_toggle_bit("Compressed Data", !sram_preset_options, !PRESETS_COMPRESSED, #0)
+    %cm_toggle_bit("Custom Samus Skin", !sram_preset_options, !PRESETS_COMPRESSED, #0)
 endif
 
 PresetCategoryAdjustmentMenu:
@@ -1791,6 +1763,7 @@ action_teleport:
 
 SpritesMenu:
     dw #sprites_samus_prio
+    dw #$FFFF
     dw #sprites_show_samus_hitbox
     dw #sprites_show_enemy_hitbox
     dw #sprites_show_extended_hitbox
@@ -1798,6 +1771,7 @@ SpritesMenu:
     dw #sprites_show_samusproj_hitbox
     dw #sprites_show_enemyproj_hitbox
     dw #sprites_show_proj_as_32x32
+    dw #$FFFF
     dw #sprites_oob_viewer
     dw #$0000
     %cm_header("SPRITE FEATURES")
@@ -1848,9 +1822,9 @@ InfoHudMenu:
     dw #ih_room_strat
     dw #ih_goto_superhud
     dw #ih_superhud_bottom_selector
+    dw #ih_door_display_mode
     dw #ih_display_mode_reward
     dw #$FFFF
-    dw #ih_door_display_mode
     dw #ih_goto_timer_settings
     dw #$FFFF
     dw #ih_minimap
@@ -1860,7 +1834,6 @@ InfoHudMenu:
 if !PRESERVE_WRAM_DURING_SPACETIME
     dw #ih_spacetime_infohud
 endif
-    dw #ih_lag
     dw #$FFFF
     dw #ih_ram_watch
     dw #$0000
@@ -2873,9 +2846,6 @@ ih_spacetime_infohud:
     db #$28, "    VANILLA", #$FF
     db #$28, "  PRESERVED", #$FF
     db #$FF
-
-ih_lag:
-    %cm_numfield("Artificial Lag", !sram_artificial_lag, 0, 64, 1, 4, #0)
 
 ih_ram_watch:
     %cm_jsl("Customize RAM Watch", #ih_prepare_ram_watch_menu, #RAMWatchMenu)
@@ -4019,6 +3989,8 @@ endif
 SlowdownMenu:
     dw #slowdown_mode
     dw #slowdown_frames
+    dw #$FFFF
+    dw #slowdown_artifial_lag
     dw #$0000
     %cm_header("SLOWDOWN MODE")
 
@@ -4034,6 +4006,9 @@ slowdown_mode:
 
 slowdown_frames:
     %cm_numfield("Slowdown (Lag) Frames", !ram_cm_slowdown_frames, 0, 120, 1, 4, #0)
+
+slowdown_artifial_lag:
+    %cm_numfield("Artificial Lag", !sram_artificial_lag, 0, 64, 1, 4, #0)
 
 
 ; ---------------

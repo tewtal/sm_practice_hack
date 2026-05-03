@@ -391,7 +391,7 @@
 !ram_cm_preset_elevator = !WRAM_MENU_START+$94
 
 ; keyboard used by both presets and customize menus
-!ram_cm_keyboard_buffer = !WRAM_MENU_START+$98 ; $18 bytes
+!ram_cm_keyboard_buffer = !WRAM_MENU_START+$B8 ; $18 bytes
 
 !ram_cm_custompalette_blue = !WRAM_MENU_START+$90
 !ram_cm_custompalette_green = !WRAM_MENU_START+$92
@@ -402,7 +402,7 @@
 !ram_cm_dummy_num = !WRAM_MENU_START+$AE
 
 ; ^ FREE SPACE ^ up to +$CE
-; Note: +$B8 to +$CE range also used as frames held counters
+; Note: +$B8 to +$CE range also used as frames held counters and keyboard buffer
 ;       and is reset to zero when loading a savestate
 
 ; Reserve 48 bytes for CGRAM cache
@@ -474,7 +474,7 @@
 ; SRAM
 ; -----
 
-!SRAM_VERSION = #$001B
+!SRAM_VERSION = #$001C
 
 !SRAM_START = $702000
 !SRAM_SIZE = #$1000
@@ -597,12 +597,14 @@
 !sram_ctrl_1_shortcut_inputs = !SRAM_START+$140 ; 96 bytes
 !sram_ctrl_2_shortcut_inputs = !SRAM_START+$1A0 ; 96 bytes
 
-; ^ FREE SPACE ^ up to +$BA6
+; ^ FREE SPACE ^ up to +$B8E (normal) / +$DFE (tinystates)
 
+!sram_streamer_name_normal = !SRAM_START+$B90 ; $18 bytes
 !sram_custom_header_normal = !SRAM_START+$BA8 ; $18 bytes
 !sram_custom_preset_safewords_normal = !SRAM_START+$BC0 ; $50 bytes
 !sram_custom_preset_names_normal = !SRAM_START+$C10 ; $3C0 bytes
 
+!sram_streamer_name_tinystates = !SRAM_START+$E00 ; $18 bytes
 !sram_custom_header_tinystates = !SRAM_START+$E18 ; $18 bytes
 !sram_custom_preset_safewords_tinystates = !SRAM_START+$E30 ; $20 bytes
 !sram_custom_preset_names_tinystates = !SRAM_START+$E50 ; $180 bytes
@@ -1177,10 +1179,12 @@ endif
 
 ; this is moved here to prevent symbols.asm from having duplicate labels
 if !FEATURE_TINYSTATES
+!sram_streamer_name = !sram_streamer_name_normal
 !sram_custom_header = !sram_custom_header_tinystates
 !sram_custom_preset_safewords = !sram_custom_preset_safewords_tinystates
 !sram_custom_preset_names = !sram_custom_preset_names_tinystates
 else
+!sram_streamer_name = !sram_streamer_name_tinystates
 !sram_custom_header = !sram_custom_header_normal
 !sram_custom_preset_safewords = !sram_custom_preset_safewords_normal
 !sram_custom_preset_names = !sram_custom_preset_names_normal
@@ -1262,6 +1266,7 @@ endif
 
 !SUIT_PROPERTIES_MASK = #$0007
 !SUIT_PROPRETIES_PAL_DEBUG_FLAG = #$0008
+!DROP_CHANCE_TABLE_LENGTH = #(drop_chance_tables_end-drop_chance_tables)/2
 
 !FRAME_COUNTER_USE_IGT = #$0001
 !FRAME_COUNTER_ADJUST_REALTIME = #$0002
@@ -1446,5 +1451,6 @@ endif
 !PROFILE_PapaSchmo    = #$0019
 !PROFILE_Vespher      = #$001A
 !PROFILE_EXAKT        = #$001B
-!PROFILE_COUNT        = #$001C
+!PROFILE_Bastion      = #$001C
+!PROFILE_COUNT        = #$001D
 

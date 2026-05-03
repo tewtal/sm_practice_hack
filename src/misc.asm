@@ -1005,6 +1005,35 @@ misc_force_stand_routine:
 %endfree(90)
 
 
+%startfree(B4)
+
+; No reason these drop tables can't overlap
+all_power_bombs_drop_table:
+    db #$00
+all_supers_drop_table:
+    db #$00
+all_nothing_drop_table:
+    db #$00
+all_missiles_drop_table:
+    db #$00
+all_big_hp_drop_table:
+    db #$00
+all_small_hp_drop_table:
+    db #$FF, #$00, #$00, #$00, #$00, #$00
+
+drop_chance_tables:
+    dw #$0000
+    dw #all_small_hp_drop_table
+    dw #all_big_hp_drop_table
+    dw #all_missiles_drop_table
+    dw #all_nothing_drop_table
+    dw #all_supers_drop_table
+    dw #all_power_bombs_drop_table
+  .end
+
+%endfree(B4)
+
+
 if !FEATURE_PAL
 org $8B9EEA
 else ; runs when title intro completes
