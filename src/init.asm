@@ -242,6 +242,7 @@ endif
 
   .upgrade_1Bto1C
     TDC : STA !sram_fast_pause
+    STA !sram_bonk_indicators
 
     LDA !SRAM_VERSION : STA !sram_initialized
     RTS

@@ -1831,6 +1831,7 @@ InfoHudMenu:
     dw #ih_top_HUD_mode
     dw #ih_dynamic_frames_held
     dw #ih_status_icons
+    dw #ih_bonk_indicator
 if !PRESERVE_WRAM_DURING_SPACETIME
     dw #ih_spacetime_infohud
 endif
@@ -2858,6 +2859,9 @@ ih_status_icons:
   .routine
     LDA !IH_BLANK : STA !HUD_TILEMAP+$54 : STA !HUD_TILEMAP+$56 : STA !HUD_TILEMAP+$58
     RTL
+
+ih_bonk_indicator:
+    %cm_toggle("Bonk Indicators", !sram_bonk_indicators, #$02, #0)
 
 ih_spacetime_infohud:
     dw !ACTION_CHOICE

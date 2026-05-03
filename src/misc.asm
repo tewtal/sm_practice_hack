@@ -190,6 +190,7 @@ hijack_bonk_return:
 misc_check_bonk:
 {
     LDA !SAMUS_POTENTIAL_POSE_VALUES : BMI .return
+    LDA !sram_bonk_indicators : BEQ .return
     LDA $7EC622 : CMP !IH_BLANK : BNE .second
     LDA !IH_LETTER_B : STA $7EC622
   .return
