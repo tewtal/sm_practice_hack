@@ -525,6 +525,7 @@ sram_ceres_timer = !sram_ceres_timer ; !SRAM_START+$A0
 sram_zebes_timer = !sram_zebes_timer ; !SRAM_START+$A2
 sram_fast_pause = !sram_fast_pause ; !SRAM_START+$A4
 sram_bonk_indicators = !sram_bonk_indicators ; !SRAM_START+$A6
+sram_speed_booster_physics = !sram_speed_booster_physics ; !SRAM_START+$A8
 
 ; ^ FREE SPACE ^ up to +$EC
 
