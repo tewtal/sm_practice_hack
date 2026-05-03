@@ -33,6 +33,8 @@ BRBMenu:
     dw #brb_menu_scroll
     dw #$FFFF
     dw #brb_menu_music_toggle
+    dw #$FFFF
+    dw #brb_streamer_name
     dw #$0000
     %cm_header("BRB SCREEN MENU")
 
@@ -106,6 +108,33 @@ brb_menu_music_toggle:
   .resume_music
     LDA !MUSIC_DATA : CLC : ADC #$FF00 : PHA : STZ !MUSIC_DATA : PLA : JSL !MUSIC_ROUTINE
     LDA !MUSIC_TRACK : PHA : STZ !MUSIC_TRACK : PLA : JSL !MUSIC_ROUTINE
+    RTL
+
+brb_streamer_name:
+    %cm_jsl("Set Streamer Name", #.routine, #!sram_streamer_name)
+  .routine
+    ; enter keyboard editing mode
+    STY !DP_Address
+    LDA.w #!sram_streamer_name>>16 : STA !DP_Address+2
+    ; check if streamer name exists
+    LDA !sram_streamer_name : AND #$00FF : CMP #$0028 : BNE .keyboardMode
+    ; store SAFE word to indicate a name already exists
+    LDA !SAFEWORD : STA !DP_KB_Control
+    ; load existing name
+    LDX #$0016 : TXY
+  .loopExistingName
+    LDA [!DP_Address],Y : STA !ram_cm_keyboard_buffer,X
+    DEX #2
+    DEY #2 : BPL .loopExistingName
+  .keyboardMode
+    JSL kb_ctrl_mode : BCC .done
+    ; check if "nothing" was saved
+    LDA !sram_streamer_name : CMP #$FF28 : BEQ .blank
+    JML ConvertNormal2Header
+  .blank
+    ; restore default name
+    TDC : STA !sram_custom_header
+  .done
     RTL
 
 
@@ -237,28 +266,59 @@ cm_tilemap_brb:
     JSR cm_transfer_brb_cgram
 
   .draw_brb_stuff
-    ; Drawing whatever manually
     LDA !ram_cm_brb_timer : INC : STA !ram_cm_brb_timer
+
+    ; Drawing some randomly placed metroids
+    ; Some metroids may be lost to the text
+    ; Metroids that spawn outside the border live forever
+    LDA !BRB_METROID : TAY
     LDA !ram_seed_X : AND #$07FE : TAX
-    LDA !BRB_METROID : STA !ram_tilemap_buffer,X
+    TYA : STA !ram_tilemap_buffer,X
 
     LDA !ram_seed_X : XBA : AND #$07FE : TAX
-    LDA !BRB_METROID : STA !ram_tilemap_buffer,X
+    TYA : STA !ram_tilemap_buffer,X
 
     LDA !ram_seed_Y : AND #$07FE : TAX
-    LDA !BRB_METROID : STA !ram_tilemap_buffer,X
+    TYA : STA !ram_tilemap_buffer,X
 
     LDA !ram_seed_Y : XBA : AND #$07FE : TAX
-    LDA !BRB_METROID : STA !ram_tilemap_buffer,X
+    TYA : STA !ram_tilemap_buffer,X
 
-  .draw_text
     ; Same bank for all of the BRB text
     PHK : PHK : PLA : STA !DP_CurrentMenu+2
 
+    ; Check if streamer name is customized
+    LDA !sram_streamer_name : BEQ .default_name
+    PEI (!DP_CurrentMenu+2)
+    LDA.w #!sram_streamer_name : STA !DP_CurrentMenu
+    LDA.w #!sram_streamer_name>>16 : STA !DP_CurrentMenu+2
+
+    ; Count characters in name
+    STX !DP_Temp
+    ; skip to second character, first cannot be terminator
+    LDX #$0002 : LDY #$0016+2+1
+    %a8()
+  .loop_offset
+    LDA !sram_streamer_name,X : CMP #$FF : BEQ .found_offset
+    INX : DEY
+    BRA .loop_offset
+  .found_offset
+    %a16()
+    ; Bias to the right, even for tilemap indexing
+    TYA : INC : AND #$001E
+    ; Offset the tilemap index to center the name
+    CLC : ADC #$01C6 : TAX
+
+    JSR cm_draw_brb_text
+    PLA : STA !DP_CurrentMenu+2
+    BRA .draw_line2
+
+  .default_name
     LDA.w #BRB_common_line1 : STA !DP_CurrentMenu
     LDX #$01C6
     JSR cm_draw_brb_text
 
+   .draw_line2
     LDA.w #BRB_common_line2 : STA !DP_CurrentMenu
     LDX #$0286
     JSR cm_draw_brb_text
@@ -284,16 +344,18 @@ cm_tilemap_brb:
     LDA.l TimerNumberGFX2,X : STA !ram_tilemap_buffer+$35C
 
     ; Draw colon seperator
-    LDA #$2849 : STA !ram_tilemap_buffer+$35E
+    LDA #$2800|':' : STA !ram_tilemap_buffer+$35E
 
     ; Draw +/- after countdown expires
+table ../resources/header.tbl
     LDA !ram_cm_brb_timer_mode : BEQ .draw_cycling_text
     DEC : BEQ .draw_countup
-    LDA #$286C : STA !ram_tilemap_buffer+$358
+    LDA #$2800|'-' : STA !ram_tilemap_buffer+$358
     BRA .draw_cycling_text
 
   .draw_countup
-    LDA #$288B : STA !ram_tilemap_buffer+$358
+    LDA #$2800|'+' : STA !ram_tilemap_buffer+$358
+table ../resources/normal.tbl
 
   .draw_cycling_text
     ; Draw cycling text
@@ -502,10 +564,9 @@ cm_draw_brb_text:
     ; !DP_CurrentMenu[0x3] = address
     %a8()
     LDY #$0000
-    ; terminator
+    ; get tile attributes, if not terminator
     LDA [!DP_CurrentMenu],Y : INY : CMP #$FF : BEQ .end
-    ; ORA with palette info
-    ORA !DP_Palette : STA !DP_Palette
+    STA !DP_Palette
 
   .loop
     LDA [!DP_CurrentMenu],Y : CMP #$FF : BEQ .end       ; terminator
@@ -686,6 +747,7 @@ BRBTilemapTableLine2:
     dw #BRB_screen7_line2
 
 
+; see !BRB_TOTAL_SCREENS at top of file
 BRB_screen1_line1:
     db #$28, "   SM Speedrunning Wiki", #$FF
 BRB_screen1_line2:
@@ -705,7 +767,7 @@ BRB_screen3_line2:
 
 
 BRB_screen4_line1:
-    db #$28, "  Control Schemes for SM", #$FF
+    db #$28, " Community Control Schemes", #$FF
 BRB_screen4_line2:
     db #$28, "   controls.spazer.link", #$FF
 

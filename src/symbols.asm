@@ -374,7 +374,7 @@ ram_cm_selected_slot = !ram_cm_selected_slot ; !WRAM_MENU_START+$92
 ram_cm_preset_elevator = !ram_cm_preset_elevator ; !WRAM_MENU_START+$94
 
 ; keyboard used by both presets and customize menus
-ram_cm_keyboard_buffer = !ram_cm_keyboard_buffer ; !WRAM_MENU_START+$98 ; $18 bytes
+ram_cm_keyboard_buffer = !ram_cm_keyboard_buffer ; !WRAM_MENU_START+$B8 ; $18 bytes
 
 ram_cm_custompalette_blue = !ram_cm_custompalette_blue ; !WRAM_MENU_START+$90
 ram_cm_custompalette_green = !ram_cm_custompalette_green ; !WRAM_MENU_START+$92
@@ -385,7 +385,7 @@ ram_cm_dummy_off = !ram_cm_dummy_off ; !WRAM_MENU_START+$AC
 ram_cm_dummy_num = !ram_cm_dummy_num ; !WRAM_MENU_START+$AE
 
 ; ^ FREE SPACE ^ up to +$CE
-; Note: +$B8 to +$CE range also used as frames held counters
+; Note: +$B8 to +$CE range also used as frames held counters and keyboard buffer
 ;       and is reset to zero when loading a savestate
 
 ; Reserve 48 bytes for CGRAM cache
@@ -564,12 +564,14 @@ sram_categoryadjust_maxpbs = !sram_categoryadjust_maxpbs ; !SRAM_START+$13A
 sram_ctrl_1_shortcut_inputs = !sram_ctrl_1_shortcut_inputs ; !SRAM_START+$140 ; 96 bytes
 sram_ctrl_2_shortcut_inputs = !sram_ctrl_2_shortcut_inputs ; !SRAM_START+$1A0 ; 96 bytes
 
-; ^ FREE SPACE ^ up to +$BA6
+; ^ FREE SPACE ^ up to +$B8E (normal) / +$DFE (tinystates)
 
+sram_streamer_name_normal = !sram_streamer_name_normal ; !SRAM_START+$B90 ; $18 bytes
 sram_custom_header_normal = !sram_custom_header_normal ; !SRAM_START+$BA8 ; $18 bytes
 sram_custom_preset_safewords_normal = !sram_custom_preset_safewords_normal ; !SRAM_START+$BC0 ; $50 bytes
 sram_custom_preset_names_normal = !sram_custom_preset_names_normal ; !SRAM_START+$C10 ; $3C0 bytes
 
+sram_streamer_name_tinystates = !sram_streamer_name_tinystates ; !SRAM_START+$E00 ; $18 bytes
 sram_custom_header_tinystates = !sram_custom_header_tinystates ; !SRAM_START+$E18 ; $18 bytes
 sram_custom_preset_safewords_tinystates = !sram_custom_preset_safewords_tinystates ; !SRAM_START+$E30 ; $20 bytes
 sram_custom_preset_names_tinystates = !sram_custom_preset_names_tinystates ; !SRAM_START+$E50 ; $180 bytes

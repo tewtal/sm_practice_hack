@@ -563,10 +563,10 @@ mc_numbergfx_display:
     RTL
 
 mc_customheader:
-    %cm_jsl("Customize Menu Header", #.routine, #$0000)
+    %cm_jsl("Customize Menu Header", #.routine, #!sram_custom_header)
   .routine
     ; enter keyboard editing mode
-    LDA.w #!sram_custom_header : STA !DP_Address
+    TYA : STA !DP_Address
     LDA.w #!sram_custom_header>>16 : STA !DP_Address+2
     ; check if custom header exists
     LDA !sram_custom_header : AND #$00FF : CMP #$0028 : BNE .keyboardMode
@@ -1061,29 +1061,29 @@ ConvertNormal2Header:
 {
     PHB : PHK : PLB
     %ai8()
-    ; X = text, Y = table
-    LDX #$01 : LDY #$00
+    ; X = table, Y = text
+    LDX #$00 : LDY #$01
 
   .next_char
     ; safety net in case no terminator
-    CPX #$18 : BPL .done
+    CPY #$18 : BPL .done
     ; grab next byte of user text, exit if term ($FF)
-    LDA !sram_custom_header,X : CMP #$FF : BEQ .done
+    LDA [!DP_Address],Y : CMP #$FF : BEQ .done
   .loop_compare
     ; compare to first column of table
-    CMP.w .Table,Y : BEQ .found
-    INY #2 : CPY #$9A : BCS .not_found
+    CMP.w .table,X : BEQ .found
+    INX #2 : CPX #$9A : BCS .not_found
     BRA .loop_compare
 
   .found
     ; replace with byte from second column of table
-    INY : LDA.w .Table,Y : STA !sram_custom_header,X
-    INX : LDY #$00 : BRA .next_char
+    INX : LDA.w .table,X : STA [!DP_Address],Y
+    INY : LDX #$00 : BRA .next_char
 
   .not_found
     ; searched whole table
-    LDY #$00
-    INX
+    LDX #$00
+    INY
     BRA .next_char
 
   .done
@@ -1091,7 +1091,7 @@ ConvertNormal2Header:
     PLB
     RTL
 
-  .Table
+  .table
 ; normal, header
 ; db $00, $50
 ; db $01, $51
