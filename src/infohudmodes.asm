@@ -22,12 +22,14 @@
     dw status_vspeed
     dw status_quickdrop
     dw status_walljump
+    dw status_doublesbj
     dw status_countdamage
     dw status_enemyhp
     dw status_armpump
     dw status_pumpcounter
     dw status_xpos
     dw status_ypos
+    dw status_camerapos
     dw status_shottimer
     dw status_ramwatch
 
@@ -210,8 +212,9 @@ endif
 
   .average_momentum
     ; Do not print out momentum if Super HUD is enabled
-    LDA !sram_room_strat : BEQ .invalid_momentum
+    LDA !sram_room_strat : BEQ .check_superhud
 
+  .print_momentum
     ; We have total momentum (x256) over 44 frames
     ; To get the average (x1024), divide by 11
     LDA !ram_momentum_sum
@@ -237,6 +240,11 @@ endif
 
   .momentum_stopped
     TDC : STA !ram_momentum_sum : STA !ram_momentum_count : STA !ram_momentum_direction
+    BRA .shinetune_start
+
+  .check_superhud
+    LDA !sram_display_mode : CMP !IH_MODE_ROOMSTRAT_INDEX : BEQ .invalid_momentum
+    BRA .print_momentum
 
   .shinetune_start
     ; Track momentum
@@ -845,27 +853,41 @@ endif
     ; Suppress Samus HP display
     LDA !SAMUS_HP : STA !ram_last_hp
 
-    LDA !SAMUS_Y_SPEED : CMP !ram_momentum_sum : BEQ .checkfalling : CMP #$FFFF : BNE .drawspeed
+    LDA !SAMUS_Y_SPEEDCOMBINED : BPL .positivespeed
+    CMP !ram_momentum_sum : BEQ .checkfalling
 
     ; At the peak of a normal jump, speed will go negative for one frame
     ; Instead of drawing 65535 for one frame, draw a hyphen
     ; We can detect this if our speed was previously positive
-    ; If speed was previously negative, then proceed as normal to draw 65535
-    TAY : LDA !ram_momentum_sum : AND #$8000 : BNE .restorespeed
+    ; If speed was previously negative, then proceed to draw negative speed
+    TAY : LDA !ram_momentum_sum : AND #$8000 : BNE .negativespeed
 
-    LDA !IH_BLANK : STA !HUD_TILEMAP+$88 : STA !HUD_TILEMAP+$8A : STA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$90
-    LDA !IH_HYPHEN : STA !HUD_TILEMAP+$8E
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$88 : STA !HUD_TILEMAP+$90
+    LDA !IH_HYPHEN : STA !HUD_TILEMAP+$8A : STA !HUD_TILEMAP+$8E
+    LDA !IH_DECIMAL : STA !HUD_TILEMAP+$8C
 
-    ; Store speed as some negative value that isn't FFFF,
-    ; so if it is negative again we'll update it to 65535
+    ; Store speed as some negative value that isn't FFxx,
+    ; so if it is negative again we'll update it
     LDA #$8000 : STA !ram_momentum_sum
     BRA .checkfalling
 
-  .restorespeed
-    TYA
+  .negativespeed
+    TYA : STA !ram_momentum_sum
+    LDA !SAMUS_Y_SPEED : LDX #$0088 : JSR Draw4
+    BRA .drawblankcheckfalling
 
-  .drawspeed
-    STA !ram_momentum_sum : LDX #$0088 : JSR Draw4
+  .positivespeed
+    CMP !ram_momentum_sum : BEQ .checkfalling : STA !ram_momentum_sum
+
+    ; draw whole number in decimal
+    XBA : AND #$00FF : LDX #$0088 : JSR Draw2
+    LDA !IH_DECIMAL : STA !HUD_TILEMAP+$8C
+
+    ; draw fraction in hex
+    LDA !ram_momentum_sum : AND #$00F0 : LSR #3 : TAY
+    LDA.w HexGFXTable,Y : STA !HUD_TILEMAP+$8E
+
+  .drawblankcheckfalling
     LDA !IH_BLANK : STA !HUD_TILEMAP+$90
 
   .checkfalling
@@ -1351,6 +1373,75 @@ endif
     JMP .drawjumpcounter
 }
 
+status_doublesbj:
+{
+    LDA !SAMUS_Y_DIRECTION : BNE .checkstate
+    LDA !SAMUS_ITEMS_EQUIPPED : EOR !SAMUS_ITEMS_COLLECTED
+    AND #$0002 : BEQ .checkstate
+    LDA !GAMEMODE : CMP #$000C : BEQ .checkstate
+
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$88
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$8A : STA !HUD_TILEMAP+$8C
+    STA !HUD_TILEMAP+$8E : STA !HUD_TILEMAP+$90
+    TDC : STA !ram_roomstrat_state
+    RTS
+
+  .checkfirstpause
+    LDA !GAMEMODE : CMP #$000C : BEQ .incstate
+    RTS
+
+  .checkunpause
+    LDA !GAMEMODE : CMP #$0012 : BEQ .incstate
+    RTS
+
+  .checkstate
+    LDA !ram_roomstrat_state : BEQ .checkfirstpause
+    DEC : BEQ .checkmorphed
+    DEC : BEQ .checkunpause
+    DEC : BNE .done
+
+    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_START : BEQ .inccounter
+    LDA !ram_roomstrat_counter : CMP #$001F : BMI .pauseearly
+    SEC : SBC #$001E
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$8C
+    LDA !ram_roomstrat_state : DEC : STA !ram_roomstrat_state
+    RTS
+
+  .checkmorphed
+    LDA !SAMUS_POSE : CMP #$0031 : BEQ .morphed
+    CMP #$0032 : BNE .incpausetimer
+  .morphed
+    LDA #$001E : SEC : SBC !ram_roomstrat_counter
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A
+
+  .incstate
+    LDA !ram_roomstrat_state : STA !ram_roomstrat_counter
+    INC : STA !ram_roomstrat_state
+
+  .done
+    RTS
+
+  .pauseearly
+    LDA #$001F : SEC : SBC !ram_roomstrat_counter
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
+    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$8C
+
+  .inccounter
+    LDA !ram_roomstrat_counter : INC : STA !ram_roomstrat_counter
+    RTS
+
+  .incpausetimer
+    LDA !ram_roomstrat_counter : CMP #$001D : BPL .latemorph
+    INC : STA !ram_roomstrat_counter
+    RTS
+
+  .latemorph
+    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$8A
+    TDC : DEC : STA !ram_roomstrat_state
+    RTS
+}
+
 status_countdamage:
 {
     LDA !DAMAGE_COUNTER : CMP !ram_HUD_check : BEQ .done : STA !ram_HUD_check
@@ -1494,6 +1585,22 @@ status_ypos:
   .drawsubpixel
     STA !ram_subpixel_pos : LDX #$0092 : JSR Draw4Hex
     LDA !IH_DECIMAL : STA !HUD_TILEMAP+$90
+
+  .done
+    RTS
+}
+
+status_camerapos:
+{
+    ; Suppress Samus HP display
+    LDA !SAMUS_HP : STA !ram_last_hp
+
+    LDA !LAYER1_X : CMP !ram_xpos : BEQ .checkypos
+    STA !ram_xpos : LDX #$0088 : JSR Draw4Hex
+
+  .checkypos
+    LDA !LAYER1_Y : CMP !ram_ypos : BEQ .done
+    STA !ram_ypos : LDX #$0092 : JSR Draw4Hex
 
   .done
     RTS
@@ -1691,12 +1798,14 @@ superhud_bottom_table:
     dw status_vspeed
     dw status_quickdrop
     dw status_walljump
+    dw status_doublesbj
     dw status_countdamage
     dw status_enemyhp
     dw status_armpump
     dw status_pumpcounter
     dw status_xpos
     dw status_ypos
+    dw status_camerapos
     dw status_shottimer
     dw status_ramwatch
     dw status_ceresridley
@@ -2419,18 +2528,23 @@ status_ceresridley:
 
 status_doorskip:
 {
+    ; Constants also account for code optimization
 if !FEATURE_PAL
-    !start_to_jump_delay = $0011
+    !parlor_pause_to_jump_delay = $0015
+    !botwoon_pause_to_jump_delay = $0009
 else
-    !start_to_jump_delay = $0007
+    !parlor_pause_to_jump_delay = $000B
+    !botwoon_jump_to_pause_delay = $0003
 endif
 
     ; Check if Samus is in starting position
     LDA !SAMUS_Y : CMP #$04BB : BEQ .startpos
+    CMP #$004B : BEQ .startpos
 
     ; Reset state if Samus is well out of position
+    CMP #$0100 : BMI .notinit
     CMP #$0300 : BMI .clearstate
-    JMP .notinit
+    BRA .notinit
 
     ; Check if we are initial state, which means no vertical speed
     ; and no animation delay in normal gamestate holding jump and not holding start
@@ -2449,29 +2563,67 @@ endif
     ; Initial state
     LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$88
     LDA !IH_BLANK : STA !HUD_TILEMAP+$8A : STA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$8E
-    LDA #$0001 : STA !ram_roomstrat_state
+    LDA !SAMUS_Y : XBA : AND #$0004 : INC : STA !ram_roomstrat_state
     RTS
 
   .clearstate
-    LDA !ram_roomstrat_state : CMP #$0001 : BNE .resetstate : CMP #$0004 : BNE .clear
+    LDA !ram_roomstrat_state : CMP #$0001 : BEQ .clear
+    CMP #$0005 : BEQ .clear : CMP #$0004 : BNE .resetstate
     JMP .expandlate
 
   .clear
-    LDA !IH_BLANK : STA !HUD_TILEMAP+$88 : STA !HUD_TILEMAP+$8A : STA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$8E
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$88 : STA !HUD_TILEMAP+$8A
+    STA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$8E
     BRA .resetstate
 
   .notinit
-    LDA !ram_roomstrat_state : CMP #$0001 : BEQ .checkpause : CMP #$0002 : BEQ .checkjump
-    CMP #$0003 : BEQ .checkfall : CMP #$0004 : BEQ .checkexpand
+    LDA !ram_roomstrat_state
+    DEC : BEQ .checkjumpfirst : DEC : BEQ .checkpausesecond
+    DEC : BEQ .checkfall : DEC : BNE .notinitparlor
+    JMP .checkexpand
+
+  .notinitparlor
+    DEC : BEQ .checkpausefirst : DEC : BEQ .checkjumpsecond
 
   .resetstate
     TDC : STA !ram_roomstrat_state : STA !ram_roomstrat_counter
     RTS
 
-  .checkpause
+  .checkjumpfirst
+    ; On PAL we still need to pause first
+if !FEATURE_PAL
     LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_START : BEQ .done
+else
+    LDA !SAMUS_Y_DIRECTION : CMP #$0001 : BNE .done
+endif
     LDA #$0002 : STA !ram_roomstrat_counter : STA !ram_roomstrat_state
     RTS
+
+  .checkpausefirst
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_START : BEQ .done
+    LDA #$0006 : STA !ram_roomstrat_counter : STA !ram_roomstrat_state
+
+  .done
+    RTS
+
+  .checkpausesecond
+    ; On PAL we still need to jump first
+if !FEATURE_PAL
+    LDA !SAMUS_Y_DIRECTION : CMP #$0001 : BNE .inccounter
+    LDA !ram_roomstrat_counter : CMP #!botwoon_pause_to_jump_delay
+else
+    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_START : BEQ .inccounter
+    LDA !ram_roomstrat_counter : CMP #!botwoon_jump_to_pause_delay
+endif
+    BEQ .botwoonframeperfect : BMI .pauseearly
+
+    ; Paused late
+if !FEATURE_PAL
+    SEC : SBC #!botwoon_pause_to_jump_delay
+else
+    SEC : SBC #!botwoon_jump_to_pause_delay
+endif
+    BRA .pausejumplate
 
   .checkfall
     ; Check if we are falling in aim down pose
@@ -2480,18 +2632,45 @@ endif
 
   .inccounter
     LDA !ram_roomstrat_counter : INC : STA !ram_roomstrat_counter
-
-  .done
     RTS
 
-  .checkjump
+  .checkjumpsecond
     LDA !SAMUS_Y_DIRECTION : CMP #$0001 : BNE .inccounter
-    LDA !ram_roomstrat_counter : CMP #!start_to_jump_delay : BEQ .jumpframeperfect : BMI .jumpearly
+    LDA !ram_roomstrat_counter : CMP #!parlor_pause_to_jump_delay
+    BEQ .parlorframeperfect : BMI .jumpearly
 
     ; Jumped late
-    SEC : SBC #!start_to_jump_delay : ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A
+    SEC : SBC #!parlor_pause_to_jump_delay
+  .pausejumplate
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A
     LDA !IH_LETTER_L : STA !HUD_TILEMAP+$88
-    BRA .resetstate
+    JMP .resetstate
+
+  .jumpearly
+    LDA #!parlor_pause_to_jump_delay
+  .pausejumpearly
+    SEC : SBC !ram_roomstrat_counter
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A
+    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$88
+    JMP .resetstate
+
+  .botwoonframeperfect
+    BRA .botwoonadjustcounter
+
+  .parlorframeperfect
+    BRA .parloradjustcounter
+
+  .pauseearly
+if !FEATURE_PAL
+    LDA #!botwoon_pause_to_jump_delay
+else
+    LDA #!botwoon_jump_to_pause_delay
+endif
+    BRA .pausejumpearly
+
+  .readyexpand
+    LDA #$0004 : STA !ram_roomstrat_state
+    BRA .inccounter
 
   .checkexpand
     LDA !SAMUS_POSE : CMP #$0017 : BEQ .inccounter : CMP #$0018 : BEQ .inccounter
@@ -2503,17 +2682,18 @@ endif
     LDA !IH_LETTER_X : STA !HUD_TILEMAP+$8E
     JMP .resetstate
 
-  .readyexpand
-    LDA #$0004 : STA !ram_roomstrat_state
-    BRA .inccounter
+  .botwoonadjustcounter
+if !FEATURE_PAL
+    LDA !ram_roomstrat_counter
+else
+    LDA #$0001
+endif
+    BRA .firstframeperfect
 
-  .jumpearly
-    LDA #!start_to_jump_delay : SEC : SBC !ram_roomstrat_counter
-    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A
-    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$88
-    JMP .resetstate
-
-  .jumpframeperfect
+  .parloradjustcounter
+    LDA !ram_roomstrat_counter : SEC : SBC #$0004
+  .firstframeperfect
+    STA !ram_roomstrat_counter
     LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$88 : STA !HUD_TILEMAP+$8A
     LDA #$0003 : STA !ram_roomstrat_state
     RTS

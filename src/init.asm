@@ -4,20 +4,18 @@ org $808455
     JML init_code
 
 
-; hijack when clearing bank 7E
+; hijack when clearing bank 7E during soft reset
 org $808490
 clear_bank:
-    ; Save quickboot state since it needs to distinguish between a soft and hard reset
-    LDY.w !ram_quickboot_spc_state
-    LDX #$3FFE
+    ; This value is based on WRAM_PERSIST_START
+    LDX #$3F5E
   .loop
     STZ $0000,X
-    STZ $4000,X
-    STZ $8000,X
-    STZ $C000,X
+    STZ $3F60,X
+    STZ $7EC0,X
+    STZ $BE20,X
     DEX #2 : BPL .loop
     JSL init_nonzero_wram
-    STY.w !ram_quickboot_spc_state
     BRA .end
 warnpc $8084AF
 
@@ -49,13 +47,34 @@ init_code:
 
   .sram_initialized
     PLA
-    ; Execute overwritten logic and return
+    ; Execute vanilla boot logic
 if !FEATURE_PAL
     JSL $8B90EF
 else
     JSL $8B9146
 endif
-    JML $808459
+    JSL $80800A
+    dl $CF8000
+    %a8()
+    LDA #$8F : STA $2100
+    %ai16()
+    PEA $7E00 : PLB : PLB
+    ; Save quickboot state since it needs to distinguish between a soft and hard reset
+    LDY.w !ram_quickboot_spc_state
+    LDX #$1FFE
+  .clear_loop
+    STZ $0000,X
+    STZ $2000,X
+    STZ $4000,X
+    STZ $6000,X
+    STZ $8000,X
+    STZ $A000,X
+    STZ $C000,X
+    STZ $E000,X
+    DEX #2 : BPL .clear_loop
+    JSL init_nonzero_wram
+    STY.w !ram_quickboot_spc_state
+    JML clear_bank_end
 }
 
 init_nonzero_wram:
@@ -108,6 +127,7 @@ init_sram_routine_table:
     dw init_sram_upgrade_18to19
     dw init_sram_upgrade_19to1A
     dw init_sram_upgrade_1Ato1B
+    dw init_sram_upgrade_1Bto1C
 
 init_sram:
 {
@@ -238,6 +258,12 @@ endif
     STA !sram_categoryadjust_maxpbs
     DEC : STA !sram_categoryadjust_item_remove
     STA !sram_categoryadjust_beam_remove
+
+  .upgrade_1Bto1C
+    TDC : STA !sram_fast_pause
+    STA !sram_bonk_indicators
+    STA !sram_speed_booster_physics
+    STA !sram_streamer_name
 
     LDA !SRAM_VERSION : STA !sram_initialized
     RTS

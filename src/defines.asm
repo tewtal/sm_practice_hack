@@ -30,6 +30,7 @@
 !CTRL_SHORTCUT_SKIP_REMAINING_PEA = !CTRL_SHORTCUT_ROUTINE+$7FA
 !CTRL_SHORTCUT_SKIP_REMAINING_PEA_VALUE = $FCFC
 
+; If WRAM_PERSIST_START is changed then also adjust clear_bank in init.asm
 !WRAM_SIZE = #$0200
 !WRAM_START = $7EFD00
 !WRAM_PERSIST_START = $7EFD80
@@ -309,6 +310,7 @@
 !ram_cm_phantoon_next_flames_rng = !WRAM_MENU_START+$A6
 !ram_cm_phantoon_flame_direction_rng = !WRAM_MENU_START+$A8
 
+!ram_cm_ridley_tail_rng = !WRAM_MENU_START+$9A
 !ram_cm_ridley_pogo_height_rng = !WRAM_MENU_START+$9C
 !ram_cm_ridley_lunge_pogo_rng = !WRAM_MENU_START+$9E
 !ram_cm_ridley_swoop_pogo_rng = !WRAM_MENU_START+$A0
@@ -391,7 +393,7 @@
 !ram_cm_preset_elevator = !WRAM_MENU_START+$94
 
 ; keyboard used by both presets and customize menus
-!ram_cm_keyboard_buffer = !WRAM_MENU_START+$98 ; $18 bytes
+!ram_cm_keyboard_buffer = !WRAM_MENU_START+$B8 ; $18 bytes
 
 !ram_cm_custompalette_blue = !WRAM_MENU_START+$90
 !ram_cm_custompalette_green = !WRAM_MENU_START+$92
@@ -402,7 +404,7 @@
 !ram_cm_dummy_num = !WRAM_MENU_START+$AE
 
 ; ^ FREE SPACE ^ up to +$CE
-; Note: +$B8 to +$CE range also used as frames held counters
+; Note: +$B8 to +$CE range also used as frames held counters and keyboard buffer
 ;       and is reset to zero when loading a savestate
 
 ; Reserve 48 bytes for CGRAM cache
@@ -474,7 +476,7 @@
 ; SRAM
 ; -----
 
-!SRAM_VERSION = #$001B
+!SRAM_VERSION = #$001C
 
 !SRAM_START = $702000
 !SRAM_SIZE = #$1000
@@ -555,6 +557,9 @@
 !sram_demo_timer = !SRAM_START+$9E
 !sram_ceres_timer = !SRAM_START+$A0
 !sram_zebes_timer = !SRAM_START+$A2
+!sram_fast_pause = !SRAM_START+$A4
+!sram_bonk_indicators = !SRAM_START+$A6
+!sram_speed_booster_physics = !SRAM_START+$A8
 
 ; ^ FREE SPACE ^ up to +$EC
 
@@ -597,12 +602,14 @@
 !sram_ctrl_1_shortcut_inputs = !SRAM_START+$140 ; 96 bytes
 !sram_ctrl_2_shortcut_inputs = !SRAM_START+$1A0 ; 96 bytes
 
-; ^ FREE SPACE ^ up to +$BA6
+; ^ FREE SPACE ^ up to +$B8E (normal) / +$DFE (tinystates)
 
+!sram_streamer_name_normal = !SRAM_START+$B90 ; $18 bytes
 !sram_custom_header_normal = !SRAM_START+$BA8 ; $18 bytes
 !sram_custom_preset_safewords_normal = !SRAM_START+$BC0 ; $50 bytes
 !sram_custom_preset_names_normal = !SRAM_START+$C10 ; $3C0 bytes
 
+!sram_streamer_name_tinystates = !SRAM_START+$E00 ; $18 bytes
 !sram_custom_header_tinystates = !SRAM_START+$E18 ; $18 bytes
 !sram_custom_preset_safewords_tinystates = !SRAM_START+$E30 ; $20 bytes
 !sram_custom_preset_names_tinystates = !SRAM_START+$E50 ; $180 bytes
@@ -758,6 +765,15 @@
 !SCREEN_FADE_DELAY = $0723
 !SCREEN_FADE_COUNTER = $0725
 !PAUSE_MENU_INDEX = $0727
+!PAUSE_L_R_HIGHLIGHT_ANIMATION_TIMER = $072B
+!PAUSE_MENU_PALETTE_ANIMATION_TIMER = $073B
+!PAUSE_L_R_HIGHLIGHT_ANIMATION_FRAME = $073F
+!MAP_SCROLL_UP_ANIMATION_FRAME = $0747
+!MAP_SCROLL_DOWN_ANIMATION_FRAME = $0749
+!MAP_SCROLL_RIGHT_ANIMATION_FRAME = $074B
+!MAP_SCROLL_LEFT_ANIMATION_FRAME = $074D
+!PAUSE_MENU_BUTTON_LABEL_MODE = $0753
+!PAUSE_MENU_MODE = $0763
 !AREA_MAP_COLLECTED = $0789
 !LOAD_STATION_INDEX = $078B
 !DOOR_ID = $078D
@@ -841,10 +857,12 @@
 !IGT_HOURS = $09E0
 !SAMUS_MOONWALK = $09E4
 !PAL_DEBUG_MOVEMENT = $09E6
+!SAMUS_FAKE_SHINESPARK_FLAG = $0A02  ; Not used in vanilla
 !SAMUS_AUTO_CANCEL = $0A04
 !SAMUS_LAST_HP = $0A06
-!SAMUS_DOUBLE_JUMP = $0A14 ; Only used during demos in vanilla
-!SAMUS_SUBTRACT_WALL_JUMP = $0A16 ; Only used during demos in vanilla
+!SAMUS_DOUBLE_JUMP = $0A14  ; Only used during demos in vanilla
+!SAMUS_SUBTRACT_WALL_JUMP = $0A16  ; Only used during demos in vanilla
+!SAMUS_SPEED_OR_BLUE_BOOSTER_BITMASK = $0A1A  ; Not used in vanilla
 !SAMUS_POSE = $0A1C
 !SAMUS_POSE_DIRECTION = $0A1E
 !SAMUS_MOVEMENT_TYPE = $0A1F
@@ -873,6 +891,7 @@
 !SAMUS_X_SPEED_TABLE = $0A6C
 !SAMUS_CONTACT_DAMAGE_INDEX = $0A6E
 !SAMUS_WATER_PHYSICS = $0A70  ; Not used in vanilla
+!SAMUS_SUIT_PALETTE_INDEX = $0A74
 !SAMUS_HYPER_BEAM = $0A76
 !TIME_IS_FROZEN = $0A78
 !DEMO_PREINSTRUCTION_POINTER = $0A7A
@@ -887,6 +906,8 @@
 !SAMUS_LAVA_DAMAGE_SUITS = $0A98  ; Not used in vanilla
 !SAMUS_SHINESPARK_DELAY_TIMER = $0AA2
 !SAMUS_SHINE_TIMER_TYPE = $0ACC
+!SAMUS_SHINE_PALETTE_TYPE = $0ACE
+!SAMUS_MULTI_PURPOSE_PALETTE_TIMER = $0AD0
 !LIQUID_PHYSICS_TYPE = $0AD2
 !SAMUS_AUTO_JUMP_TIMER = $0AF4
 !SAMUS_X = $0AF6
@@ -908,6 +929,8 @@
 !SAMUS_Y_SUBACCELERATION = $0B32
 !SAMUS_Y_ACCELERATION = $0B34
 !SAMUS_Y_DIRECTION = $0B36
+!SAMUS_RUNNING_MOMENTUM_FLAG = $0B3C
+!SAMUS_SPEED_BOOST_TIMER = $0B3E
 !SAMUS_DASH_COUNTER = $0B3F
 !SAMUS_X_RUNSPEED = $0B42
 !SAMUS_X_SUBRUNSPEED = $0B44
@@ -1040,6 +1063,7 @@
 !eram_ridley_pogo_time_rng         = !ENEMY_VAR_2+!ENEMY_1F_OFFSET
 !eram_ridley_pogo_height_rng       = !ENEMY_VAR_3+!ENEMY_1F_OFFSET
 !eram_ridley_backpogo_rng          = !ENEMY_VAR_4+!ENEMY_1F_OFFSET
+!eram_ridley_tail_rng              = !ENEMY_VAR_5+!ENEMY_1F_OFFSET
 
 !eram_mb_normal_walking_rng        = !ENEMY_VAR_5+!ENEMY_1D_OFFSET
 !eram_mb_ketchup_walking_rng       = !ENEMY_VAR_1+!ENEMY_1E_OFFSET
@@ -1177,10 +1201,12 @@ endif
 
 ; this is moved here to prevent symbols.asm from having duplicate labels
 if !FEATURE_TINYSTATES
+!sram_streamer_name = !sram_streamer_name_normal
 !sram_custom_header = !sram_custom_header_tinystates
 !sram_custom_preset_safewords = !sram_custom_preset_safewords_tinystates
 !sram_custom_preset_names = !sram_custom_preset_names_tinystates
 else
+!sram_streamer_name = !sram_streamer_name_tinystates
 !sram_custom_header = !sram_custom_header_normal
 !sram_custom_preset_safewords = !sram_custom_preset_safewords_normal
 !sram_custom_preset_names = !sram_custom_preset_names_normal
@@ -1262,6 +1288,7 @@ endif
 
 !SUIT_PROPERTIES_MASK = #$0007
 !SUIT_PROPRETIES_PAL_DEBUG_FLAG = #$0008
+!DROP_CHANCE_TABLE_LENGTH = #(drop_chance_tables_end-drop_chance_tables)/2
 
 !FRAME_COUNTER_USE_IGT = #$0001
 !FRAME_COUNTER_ADJUST_REALTIME = #$0002
@@ -1363,8 +1390,10 @@ endif
 !RIDLEY_RNG_75_25_POGO              = #$0080
 !RIDLEY_RNG_75_25_MASK              = #$00C0
 !RIDLEY_RNG_75_25_INVERTED          = #$FF3F
-!RIDLEY_RNG_BACKPOGO_MASK           = #$3F00
-!RIDLEY_RNG_BACKPOGO_INVERTED       = #$C0FF
+!RIDLEY_RNG_BACKPOGO_MASK           = #$0700
+!RIDLEY_RNG_BACKPOGO_INVERTED       = #$F8FF
+!RIDLEY_RNG_TAIL_MASK               = #$3800
+!RIDLEY_RNG_TAIL_INVERTED           = #$C7FF
 !RIDLEY_RNG_50_50_SWOOP             = #$4000
 !RIDLEY_RNG_50_50_POGO              = #$8000
 !RIDLEY_RNG_50_50_MASK              = #$C000
@@ -1446,5 +1475,6 @@ endif
 !PROFILE_PapaSchmo    = #$0019
 !PROFILE_Vespher      = #$001A
 !PROFILE_EXAKT        = #$001B
-!PROFILE_COUNT        = #$001C
+!PROFILE_Bastion      = #$001C
+!PROFILE_COUNT        = #$001D
 

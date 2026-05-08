@@ -167,24 +167,14 @@ org $90D000       ; hijack, runs when a shinespark is activated
     JMP misc_shinespark_activation
 
 
+; Continue drawing escape timer after reaching ship
 if !FEATURE_PAL
-org $91DC97
+org $90E905
 else
-org $91DD32
+org $90E908
 endif
-misc_check_bonk:
-{
-    LDA !SAMUS_POTENTIAL_POSE_VALUES : BMI .return
-    LDA $7EC622 : CMP !IH_BLANK : BNE .second
-    LDA !IH_LETTER_B : STA $7EC622
-  .return
-    LDA !SAMUS_POSE
-    JMP hijack_bonk_return
-  .second
-    LDA !IH_LETTER_B : STA $7EC628
-    BRA .return
-}
-%warnpc($91DD5B, $91DCC0)
+    JSR preserve_escape_timer
+
 
 if !FEATURE_PAL
 org $91EAB8
@@ -195,13 +185,23 @@ endif
 hijack_bonk_return:
 
 
-; Continue drawing escape timer after reaching ship
-if !FEATURE_PAL
-org $90E905
-else
-org $90E908
-endif
-    JSR preserve_escape_timer
+%startfree(91)
+
+misc_check_bonk:
+{
+    LDA !SAMUS_POTENTIAL_POSE_VALUES : BMI .return
+    LDA !sram_bonk_indicators : BEQ .return
+    LDA $7EC622 : CMP !IH_BLANK : BNE .second
+    LDA !IH_LETTER_B : STA $7EC622
+  .return
+    LDA !SAMUS_POSE
+    JMP hijack_bonk_return
+  .second
+    LDA !IH_LETTER_B : STA $7EC628
+    BRA .return
+}
+
+%endfree(91)
 
 
 ; Stop drawing timer when its VRAM is overwritten
@@ -1003,6 +1003,35 @@ misc_force_stand_routine:
 }
 
 %endfree(90)
+
+
+%startfree(B4)
+
+; No reason these drop tables can't overlap
+all_power_bombs_drop_table:
+    db #$00
+all_supers_drop_table:
+    db #$00
+all_nothing_drop_table:
+    db #$00
+all_missiles_drop_table:
+    db #$00
+all_big_hp_drop_table:
+    db #$00
+all_small_hp_drop_table:
+    db #$FF, #$00, #$00, #$00, #$00, #$00
+
+drop_chance_tables:
+    dw #$0000
+    dw #all_small_hp_drop_table
+    dw #all_big_hp_drop_table
+    dw #all_missiles_drop_table
+    dw #all_nothing_drop_table
+    dw #all_supers_drop_table
+    dw #all_power_bombs_drop_table
+  .end
+
+%endfree(B4)
 
 
 if !FEATURE_PAL

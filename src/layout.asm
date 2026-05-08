@@ -3998,6 +3998,34 @@ endif
 %endfree(A1)
 
 
+; Use door direction to check in Big Boy room if we are coming in from the left or right
+if !FEATURE_PAL
+org $A9EFB9
+else
+org $A9EF6C
+endif
+layout_fix_big_boy:
+{
+    LDA !DOOR_DIRECTION : BNE .spawn_big_boy
+    LDA #$2D00 : STA !ENEMY_PROPERTIES,X
+if !FEATURE_PAL
+    LDA #$F02C
+else
+    LDA #$EFDF
+endif
+    BRA .done
+    NOP
+  .spawn_big_boy
+if !FEATURE_PAL
+    LDA #$F033
+else
+    LDA #$EFE6
+endif
+  .done
+}
+%warnpc($A9EF80, $A9EFCD)
+
+
 ; Restore escape wall after MB1 in case of left entry
 org $ADE3D1
     JSL layout_fix_mb_escape_wall

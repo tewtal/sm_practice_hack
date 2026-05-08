@@ -1383,30 +1383,23 @@ endif
     LDA !ram_ridley_rng_flags : AND !RIDLEY_RNG_POGO_HEIGHT_MASK
     LSR #3 : STA !eram_ridley_pogo_height_rng
 
-    PHX : LDA !ram_ridley_rng_flags : AND !RIDLEY_RNG_BACKPOGO_MASK
+    PHX
+    LDA !ram_ridley_rng_flags : AND !RIDLEY_RNG_BACKPOGO_MASK
     XBA : ASL : TAX : LDA.l ridley_backpogo_threshold_table,X
-    STA !eram_ridley_backpogo_rng : PLX
+    STA !eram_ridley_backpogo_rng
+
+    LDA !ram_ridley_rng_flags : AND !RIDLEY_RNG_TAIL_MASK
+    XBA : LSR #2 : TAX : LDA.l ridley_tail_threshold_table,X
+    STA !eram_ridley_tail_rng
+    PLX
     RTL
 }
 
 ridley_backpogo_threshold_table:
-    dw #$0555, #$0000
-    dw #$FFFF, #$0AAA, #$0FFF
-    dw #$1554, #$1AA9, #$1FFE
-    dw #$2553, #$2AA8, #$2FFD
-    dw #$3552, #$3AA7, #$3FFC
-    dw #$4551, #$4AA6, #$4FFB
-    dw #$5550, #$5AA5, #$5FFA
-    dw #$654F, #$6AA4, #$6FF9
-    dw #$754E, #$7AA3, #$7FF8
-    dw #$854D, #$8AA2, #$8FF7
-    dw #$954C, #$9AA1, #$9FF6
-    dw #$A54B, #$AAA0, #$AFF5
-    dw #$B54A, #$BA9F, #$BFF4
-    dw #$C549, #$CA9E, #$CFF3
-    dw #$D548, #$DA9D, #$DFF2
-    dw #$E547, #$EA9C, #$EFF1
-    dw #$F546, #$FA9B, #$FFF0
+    dw #$0555, #$0000, #$FFFF, #$0AAA, #$0FFF, #$4000, #$8000, #$C000
+
+ridley_tail_threshold_table:
+    dw #$00F0, #$0100, #$0000, #$00E0, #$00D0, #$00C0, #$0080, #$0040
 
 %endfree(A5)
 
@@ -1697,6 +1690,27 @@ ridley_set_pogo_height:
     LDA !eram_ridley_pogo_height_rng : BEQ $BD
     DEC : BRA $C0
 %warnpc($A6B959, $A6B969)
+
+if !FEATURE_PAL
+org $A6CCA5
+else
+org $A6CC95
+endif
+    CMP !eram_ridley_tail_rng
+
+if !FEATURE_PAL
+org $A6CD42
+else
+org $A6CD32
+endif
+    CMP !eram_ridley_tail_rng
+
+if !FEATURE_PAL
+org $A6CDC8
+else
+org $A6CDB8
+endif
+    CMP !eram_ridley_tail_rng
 
 if !FEATURE_PAL
 org $A6EFA9

@@ -376,6 +376,7 @@ ToggleItemsMenu:
     dw #ti_xray
     dw #$FFFF
     dw #misc_suit_properties
+    dw #misc_speed_properties
     dw #misc_water_physics
     dw #misc_double_jump
     dw #$0000
@@ -2295,6 +2296,7 @@ MiscMenu:
     dw #misc_gooslowdown
     dw #misc_healthbomb
     dw #misc_suit_properties
+    dw #misc_speed_properties
     dw #misc_water_physics
     dw #misc_double_jump
     dw #misc_spin_lock
@@ -2306,7 +2308,6 @@ MiscMenu:
     dw #misc_metronome
     dw #misc_metronome_tickrate
     dw #misc_metronome_sfx
-    dw #$FFFF
     dw #misc_killenemies
     dw #misc_forcestand
     dw #$0000
@@ -2385,7 +2386,9 @@ misc_spacepants:
     db #$FF
 
 misc_metronome:
-    %cm_toggle("Metronome", !ram_metronome, #$01, GameLoopExtras)
+    %cm_toggle("Metronome", !ram_metronome, #$01, .routine)
+  .routine
+    JML GameLoopExtras
 
 misc_metronome_tickrate:
     %cm_numfield_word("Metronome Tickrate", !sram_metronome_tickrate, 1, 255, 1, 8, #.routine)
@@ -2511,6 +2514,16 @@ init_heat_damage_ram:
     RTL
 }
 
+misc_speed_properties:
+    dw !ACTION_CHOICE
+    dl #!sram_speed_booster_physics
+    dw init_physics_ram
+    db #$28, "Speed Booster", #$FF
+    db #$28, "    VANILLA", #$FF
+    db #$28, " BLUE BOOST", #$FF
+    db #$28, "SPARK BOOST", #$FF
+    db #$FF
+
 misc_water_physics:
     dw !ACTION_CHOICE
     dl #!sram_water_physics
@@ -2535,6 +2548,14 @@ misc_infidoppler:
 
 init_physics_ram:
 {
+    LDA !sram_speed_booster_physics : BIT #$0002 : BNE .spark_booster
+    LDA #$2000
+    BRA .store_bitmask
+
+  .spark_booster
+    TDC
+  .store_bitmask
+    STA !SAMUS_SPEED_OR_BLUE_BOOSTER_BITMASK
     LDA !sram_water_physics : BNE init_physics_non_vanilla
     ; Fallthrough to init_physics_vanilla
 }
