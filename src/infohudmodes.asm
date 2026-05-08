@@ -1394,17 +1394,13 @@ status_doublesbj:
     LDA !GAMEMODE : CMP #$0012 : BEQ .incstate
     RTS
 
-  .inccounter
-    LDA !ram_roomstrat_counter : INC : STA !ram_roomstrat_counter
-    RTS
-
   .checkstate
     LDA !ram_roomstrat_state : BEQ .checkfirstpause
     DEC : BEQ .checkmorphed
     DEC : BEQ .checkunpause
     DEC : BNE .done
 
-    LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_START : BEQ .inccounter
+    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_START : BEQ .inccounter
     LDA !ram_roomstrat_counter : CMP #$001F : BMI .pauseearly
     SEC : SBC #$001E
     ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
@@ -1431,8 +1427,8 @@ status_doublesbj:
     ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
     LDA !IH_LETTER_E : STA !HUD_TILEMAP+$8C
 
-  .clearstate
-    TDC : STA !ram_roomstrat_state
+  .inccounter
+    LDA !ram_roomstrat_counter : INC : STA !ram_roomstrat_counter
     RTS
 
   .incpausetimer
@@ -1442,7 +1438,8 @@ status_doublesbj:
 
   .latemorph
     LDA !IH_LETTER_L : STA !HUD_TILEMAP+$8A
-    BRA .clearstate
+    TDC : DEC : STA !ram_roomstrat_state
+    RTS
 }
 
 status_countdamage:
