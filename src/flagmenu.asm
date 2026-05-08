@@ -2386,7 +2386,9 @@ misc_spacepants:
     db #$FF
 
 misc_metronome:
-    %cm_toggle("Metronome", !ram_metronome, #$01, GameLoopExtras)
+    %cm_toggle("Metronome", !ram_metronome, #$01, .routine)
+  .routine
+    JML GameLoopExtras
 
 misc_metronome_tickrate:
     %cm_numfield_word("Metronome Tickrate", !sram_metronome_tickrate, 1, 255, 1, 8, #.routine)
