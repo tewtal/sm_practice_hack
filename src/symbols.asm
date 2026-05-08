@@ -21,6 +21,8 @@ ram_tilemap_buffer = !ram_tilemap_buffer ; $7EF500 ; 2048 bytes
 ; so it can use the same space as the practice hack menu tilemap buffer
 ; Shortcuts can skip remaining checks by replacing the return address word
 
+; If WRAM_PERSIST_START is changed then also adjust clear_bank in init.asm
+
 ; These variables are NOT PERSISTENT across savestates --
 ; they're saved and reloaded along with the game state.
 ; Use this section for infohud variables that are dependent
