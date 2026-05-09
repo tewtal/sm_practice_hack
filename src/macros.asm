@@ -430,7 +430,7 @@ endmacro
 
 macro palettemenu(title, label, addr)
 ; menu tables for customizing menu color palettes
-    %cm_submenu("<title>", <label>)
+    %cm_jsl("<title>", #palettemenu_setup, <label>)
 
 <label>:
     dw #custompalettes_hex_red
@@ -457,8 +457,7 @@ macro palettemenu(title, label, addr)
     %cm_numfield_hex_word("SNES 15-bit BGR", !ram_cm_custompalette, #$7FFF, .set)
   .set
     STA <addr>
-    JSL cm_colors
-    JML MixRGB
+    JML SplitRGB
 }
 endmacro
 

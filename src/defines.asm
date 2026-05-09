@@ -399,6 +399,7 @@
 !ram_cm_custompalette_green = !WRAM_MENU_START+$92
 !ram_cm_custompalette_red = !WRAM_MENU_START+$94
 !ram_cm_custompalette = !WRAM_MENU_START+$96
+!ram_cm_noncustompalette = !WRAM_MENU_START+$98
 !ram_cm_dummy_on = !WRAM_MENU_START+$AA
 !ram_cm_dummy_off = !WRAM_MENU_START+$AC
 !ram_cm_dummy_num = !WRAM_MENU_START+$AE

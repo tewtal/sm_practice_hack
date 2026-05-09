@@ -190,6 +190,11 @@ action_layout_mainmenu:
 
 action_customize_mainmenu:
 {
+    LDA !sram_custompalette_profile : BEQ .set_noncustompalette
+    LDA #$0001
+  .set_noncustompalette
+    STA !ram_cm_noncustompalette
+
     ; Set fast button selection
     LDA !sram_cm_fast_scroll_button : CMP !CTRL_X : BEQ .xSelected
     CMP !CTRL_Y : BEQ .ySelected
@@ -249,7 +254,6 @@ action_submenu_jump:
     ; Set cursor to top for new menus
     TDC : STA !ram_cm_cursor_stack,X
     JSL cm_calculate_max
-    JSL cm_colors
 
     ; Perform the cm_move check
     ; in case we shouldn't be on the first line

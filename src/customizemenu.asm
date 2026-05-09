@@ -292,7 +292,7 @@ audio_playmusic:
 
 CustomizeMenu:
     dw #mc_menubackground
-    dw #mc_custompalettes_menu
+    dw #mc_dynamic_custompalettes_menu
     dw #mc_paletteprofile
     dw #mc_palette_to_custom
     dw #mc_paletterando
@@ -314,13 +314,24 @@ CustomizeMenu:
 mc_menubackground:
     %cm_toggle("Menu Background", !sram_menu_background, #$01, #0)
 
+mc_dynamic_custompalettes_menu:
+    dw !ACTION_DYNAMIC
+    dl #!ram_cm_noncustompalette
+    dw #mc_custompalettes_menu
+    dw #mc_choosecustomtext
+
 mc_custompalettes_menu:
     %cm_submenu("Customize Menu Palette", #CustomPalettesMenu)
+
+mc_choosecustomtext:
+    %cm_jsl("Choose CUSTOM to customize", #.routine, #$0000)
+  .routine
+    RTL
 
 mc_paletteprofile:
     dw !ACTION_CHOICE
     dl #!sram_custompalette_profile
-    dw refresh_cgram_long
+    dw #.routine
     db #$28, "Menu Palette", #$FF
     db #$28, "     CUSTOM", #$FF ; CUSTOM should always be first
     db #$28, "     TWITCH", #$FF
@@ -352,6 +363,12 @@ mc_paletteprofile:
     db #$28, "      EXAKT", #$FF
     db #$28, "    BASTION", #$FF
     db #$FF
+  .routine
+    LDA !sram_custompalette_profile : BEQ .set_noncustompalette
+    LDA #$0001
+  .set_noncustompalette
+    STA !ram_cm_noncustompalette
+    JML refresh_cgram_long
 
 mc_palette_to_custom:
     %cm_submenu("Copy Palette to Custom", #PaletteToCustomConfirm)
@@ -372,7 +389,11 @@ palette_to_custom_abort:
 palette_to_custom_confirm:
     %cm_jsl("Copy Palette to Custom", .routine, #$0000)
   .routine
-    LDA !sram_custompalette_profile : BEQ .custom_selected
+    LDA !sram_custompalette_profile : BNE .copy
+    %sfxfail()
+    BRA .go_back
+
+  .copy
     PHB : %i8()
     LDX.b #PaletteProfileTables>>16 : PHX : PLB
     ASL : TAX
@@ -392,13 +413,10 @@ palette_to_custom_confirm:
     LDY #$14 : LDA ($C1),Y : STA !sram_palette_numsel
 
     ; play sfx and refresh current profile
-    JSL refresh_custom_palettes
+    TDC : STA !sram_custompalette_profile : STA !ram_cm_noncustompalette
+    JSL refresh_cgram_long
     %sfxconfirm()
     PLB : %i16()
-    BRA .go_back
-
-  .custom_selected
-    %sfxfail()
 
   .go_back
     ; go back to CustomizeMenu manually to avoid %sfxgoback
@@ -456,7 +474,8 @@ paletterando_confirm:
     ; play a happy sound and refresh current profile
     %ai16()
     JSL PrepMenuPalette_customPalette ; points to a branch within PrepMenuPalette
-    JSL refresh_custom_palettes
+    TDC : STA !sram_custompalette_profile : STA !ram_cm_noncustompalette
+    JSL refresh_cgram_long
     %sfxconfirm()
     RTL
 
@@ -926,16 +945,6 @@ PrepMenuPalette:
     RTL
 }
 
-refresh_custom_palettes:
-{
-    PHP
-    %ai16()
-    JSL refresh_cgram_long
-    TDC : STA !sram_custompalette_profile
-    PLP
-    RTL
-}
-
 refresh_cgram_long:
 {
     JSL cm_transfer_original_cgram
@@ -960,9 +969,7 @@ MixRGB:
 
     ; store BGR value
     STA !ram_cm_custompalette
-
-    JSL refresh_custom_palettes
-    RTL
+    JML refresh_cgram_long
 
   .MenuPaletteTable
     ; the order of this table must match the menu order
@@ -979,18 +986,27 @@ MixRGB:
     dw !sram_palette_background
 }
 
-cm_colors:
+SplitRGB:
 {
-    PHP : PHB
-    PHK : PLB
+    STA !ram_cm_custompalette
+
+    ; split 15-bit BGR format into 5-bit red, green, and blue
+    AND #$7C00 : XBA : LSR #2 : STA !ram_cm_custompalette_blue
+    LDA !ram_cm_custompalette : AND #$03E0 : LSR #5 : STA !ram_cm_custompalette_green
+    LDA !ram_cm_custompalette : AND #$001F : STA !ram_cm_custompalette_red
+    JML refresh_cgram_long
+}
+
+palettemenu_setup:
+{
     ; determine which menu element is being edited
-    LDA !MENU_STACK_INDEX : DEC #2 : TAX
-    ; exit if not in a color menu
-    LDA !ram_cm_menu_stack,X : CMP #CustomPalettesMenu : BNE .done
+    LDA !MENU_STACK_INDEX : TAX
     ; exit if beyond table boundaries
     LDA !ram_cm_cursor_stack,X : CMP #$0016 : BPL .done
 
     ; setup indirect address [$C1] with sram pointer
+    PHP : PHB
+    PHK : PLB
     %a8()
     TAX : JSR (.ColorMenuTable,X)
     STX $C1 : STA $C3
@@ -1003,10 +1019,10 @@ cm_colors:
 
     ; store BGR value
     LDA [$C1] : AND #$7FFF : STA !ram_cm_custompalette
+    PLB : PLP
 
   .done
-    PLB : PLP
-    RTL
+    JML action_submenu
 
   .ColorMenuTable
     ; the order of this table must match the menu order
