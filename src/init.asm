@@ -3,11 +3,10 @@
 org $808455
     JML init_code
 
-
-; hijack when clearing bank 7E during soft reset
+; hijack when clearing bank 7E
 org $808490
 clear_bank:
-    ; This value is based on WRAM_PERSIST_START
+    ; This loop is based on WRAM_PERSIST_START
     LDX #$3F5E
   .loop
     STZ $0000,X
@@ -33,11 +32,25 @@ init_code:
     %ai16()
     PHA
 
-    ; Initialize RAM (Bank 7E required)
-    TDC : STA !ram_slowdown_mode
-    JSL validate_sram
+    ; Clear persistent RAM (except quickboot itself) if not already cleared
+    PEA $807E : PLB
+    LDA !ram_quickboot_spc_state : BEQ .persistent_cleared
+    ; This loop is based on WRAM_PERSIST_START
+    LDX #$007E
+  .clear_loop
+    STZ $FD80,X
+    STZ $FE00,X
+    STZ $FE80,X
+    STZ $FF00,X
+    STZ $FF80,X
+    DEX #2 : BPL .clear_loop
+    STA !ram_quickboot_spc_state
+  .persistent_cleared
+    STZ.w !ram_slowdown_mode
+    PLB
 
     ; Check if we should initialize SRAM
+    JSL validate_sram
     LDA !sram_initialized : CMP !SRAM_VERSION : BEQ .sram_initialized
     BCC .sram_init_routine
     TDC
@@ -46,35 +59,15 @@ init_code:
     JSR (init_sram_routine_table,X)
 
   .sram_initialized
+    ; Execute overwritten logic
     PLA
-    ; Execute vanilla boot logic
 if !FEATURE_PAL
     JSL $8B90EF
 else
     JSL $8B9146
 endif
-    JSL $80800A
-    dl $CF8000
-    %a8()
-    LDA #$8F : STA $2100
-    %ai16()
-    PEA $7E00 : PLB : PLB
-    ; Save quickboot state since it needs to distinguish between a soft and hard reset
-    LDY.w !ram_quickboot_spc_state
-    LDX #$1FFE
-  .clear_loop
-    STZ $0000,X
-    STZ $2000,X
-    STZ $4000,X
-    STZ $6000,X
-    STZ $8000,X
-    STZ $A000,X
-    STZ $C000,X
-    STZ $E000,X
-    DEX #2 : BPL .clear_loop
-    JSL init_nonzero_wram
-    STY.w !ram_quickboot_spc_state
-    JML clear_bank_end
+    ; Here for sanity, but this code is not executed
+    JML $808459
 }
 
 init_nonzero_wram:
