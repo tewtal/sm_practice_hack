@@ -315,12 +315,19 @@ endif
     LDA !IH_CONTROLLER_PRI : AND !IH_INPUT_RUN : BEQ .nodash0
     LDA !ram_shinetune_early_1 : INC : STA !ram_shinetune_early_1
 
+    ; Now check if we just pressed dash
+    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_RUN : BEQ .donegearshift
+    JMP .pressdash0
+
   .donegearshift
     RTS
 
   .nodash0
-    STA !ram_shinetune_early_1
-    RTS
+    ; Gear 0, not holding dash, check if we were already holding dash for the next transition
+    LDA !ram_shinetune_early_1 : BEQ .donegearshift
+
+    ; We were, which means we may have let go of dash early
+    JMP .releasedash0
 
   .check123
     ; Sitting in a gear between 0 and 4
@@ -596,6 +603,32 @@ endif
   .draw1miss
     LDA !IH_LETTER_X : STA !HUD_TILEMAP+$88 : STA !HUD_TILEMAP+$8A
     JMP .clear1
+
+  .releasedash0
+    TDC : STA !ram_shinetune_early_1
+    LDA !SAMUS_POSE : CMP #$0010 : BPL .dash0done
+    CMP #$0009 : BMI .dash0done
+    LDA !sram_speed_booster_physics : BEQ .dash0done
+    LDA !SAMUS_ANIMATION_FRAME : ASL : ASL
+    ORA !SAMUS_ANIMATION_TIMER : ASL : TAY
+    LDA.w ShineTune1TapEarlyTable,Y : BEQ .dash0done
+    STA !HUD_TILEMAP+$8A
+    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$88
+    JMP .clear1
+
+  .pressdash0
+    LDA !SAMUS_POSE : CMP #$0010 : BPL .dash0done
+    CMP #$0009 : BMI .dash0done
+    LDA !sram_speed_booster_physics : BEQ .dash0done
+    LDA !SAMUS_ANIMATION_FRAME : ASL : ASL
+    ORA !SAMUS_ANIMATION_TIMER : ASL : TAY
+    LDA.w ShineTune1TapLateTable,Y : BEQ .dash0done
+    STA !HUD_TILEMAP+$8A
+    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$88
+    JMP .clear1
+
+  .dash0done
+    RTS
 }
 
 status_iframecounter:
