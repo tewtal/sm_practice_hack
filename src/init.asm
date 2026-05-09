@@ -14,7 +14,7 @@ clear_bank:
     STZ $7EC0,X
     STZ $BE20,X
     DEX #2 : BPL .loop
-    JSL init_nonzero_wram
+    JSL init_wram_based_on_sram
     BRA .end
 warnpc $8084AF
 
@@ -34,7 +34,7 @@ init_code:
 
     ; Clear persistent RAM (except quickboot itself) if not already cleared
     PEA $807E : PLB
-    LDA !ram_quickboot_spc_state : BEQ .persistent_cleared
+    LDA.w !ram_quickboot_spc_state : BEQ .persistent_cleared
     ; This loop is based on WRAM_PERSIST_START
     LDX #$007E
   .clear_loop
@@ -44,8 +44,18 @@ init_code:
     STZ $FF00,X
     STZ $FF80,X
     DEX #2 : BPL .clear_loop
-    STA !ram_quickboot_spc_state
+    STA.w !ram_quickboot_spc_state
+
+    ; Initialize non-zero persistent WRAM
+    LDA #!ENEMY_HP : STA.w !ram_watch_left
+    LDA #!SAMUS_HP : STA.w !ram_watch_right
+    LDA #$007E : STA.w !ram_watch_bank
+    LDA !sram_seed_X : STA.w !ram_seed_X
+    LDA !sram_seed_Y : STA.w !ram_seed_Y
+    LDA #$8000 : STA.w !ram_cm_gmode
+
   .persistent_cleared
+    ; Always clear slowdown mode
     STZ.w !ram_slowdown_mode
     PLB
 
@@ -68,27 +78,6 @@ else
 endif
     ; Here for sanity, but this code is not executed
     JML $808459
-}
-
-init_nonzero_wram:
-{
-    ; RAM $7E0000 fluctuates so it is not a good default value
-    LDA #!ENEMY_HP : STA !ram_watch_left
-    LDA #!SAMUS_HP : STA !ram_watch_right
-    LDA #$007E : STA !ram_watch_bank
-    LDA !sram_seed_X : STA !ram_seed_X
-    LDA !sram_seed_Y : STA !ram_seed_Y
-
-    TDC : STA !ram_cm_watch_enemy_side
-    STA !ram_cm_watch_enemy_property : STA !ram_cm_watch_enemy_index
-    STA !ram_watch_left_index : STA !ram_watch_right_index
-
-    INC : STA !ram_cm_sfxlib1
-    STA !ram_cm_sfxlib2 : STA !ram_cm_sfxlib3
-
-    LDA #$8000 : STA !ram_cm_gmode
-
-    JML init_wram_based_on_sram
 }
 
 init_sram_routine_table:

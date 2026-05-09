@@ -114,6 +114,26 @@ action_rng_mainmenu:
     JMP action_mainmenu
 }
 
+action_audio_mainmenu:
+{
+    LDA !ram_cm_sfxlib1 : BEQ .set1 : BMI .set1
+    CMP #$0043 : BMI .done1
+  .set1
+    LDA #$0001 : STA !ram_cm_sfxlib1
+  .done1
+    LDA !ram_cm_sfxlib2 : BEQ .set2 : BMI .set2
+    CMP #$0080 : BMI .done2
+  .set2
+    LDA #$0001 : STA !ram_cm_sfxlib2
+  .done2
+    LDA !ram_cm_sfxlib3 : BEQ .set3 : BMI .set3
+    CMP #$0030 : BMI .done3
+  .set3
+    LDA #$0001 : STA !ram_cm_sfxlib3
+  .done3
+    JMP action_mainmenu
+}
+
 action_ctrlshortcut_mainmenu:
 {
     TDC : TAX : STA !ram_cm_ctrl_savestates_allowed
@@ -420,7 +440,7 @@ mm_goto_ctrlshortcut:
     %cm_jsl("Controller Shortcuts", #action_ctrlshortcut_mainmenu, #CtrlShortcutMenu)
 
 mm_goto_audiomenu:
-    %cm_mainmenu("Audio Menu", #AudioMenu)
+    %cm_jsl("Audio Menu", #action_audio_mainmenu, #AudioMenu)
 
 mm_goto_customize:
     %cm_jsl("Customize Practice Menu", #action_customize_mainmenu, #CustomizeMenu)

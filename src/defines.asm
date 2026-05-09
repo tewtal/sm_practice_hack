@@ -266,14 +266,10 @@
 !ram_cm_palette_numseloutline = !WRAM_MENU_START+$52
 !ram_cm_palette_numsel = !WRAM_MENU_START+$54
 
-!ram_cm_sfxlib1 = !WRAM_MENU_START+$56
-!ram_cm_sfxlib2 = !WRAM_MENU_START+$58
-!ram_cm_sfxlib3 = !WRAM_MENU_START+$5A
+!ram_sram_detection = !WRAM_MENU_START+$56
 
-!ram_sram_detection = !WRAM_MENU_START+$5C
-
-!ram_timers_autoupdate = !WRAM_MENU_START+$5E
-!ram_cm_gmode = !WRAM_MENU_START+$60
+!ram_timers_autoupdate = !WRAM_MENU_START+$58
+!ram_cm_gmode = !WRAM_MENU_START+$5A
 
 ; ^ FREE SPACE ^ up to +$86
 
@@ -365,6 +361,10 @@
 !ram_cm_ctrl_swap = !WRAM_MENU_START+$98
 !ram_cm_ctrl_timer = !WRAM_MENU_START+$9A
 !ram_cm_ctrl_savestates_allowed = !WRAM_MENU_START+$9C
+
+!ram_cm_sfxlib1 = !WRAM_MENU_START+$90
+!ram_cm_sfxlib2 = !WRAM_MENU_START+$92
+!ram_cm_sfxlib3 = !WRAM_MENU_START+$94
 
 !ram_cm_crop_mode = !WRAM_MENU_START+$90
 !ram_cm_crop_tile = !WRAM_MENU_START+$92
