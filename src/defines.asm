@@ -1477,5 +1477,6 @@ endif
 !PROFILE_Vespher      = #$001A
 !PROFILE_EXAKT        = #$001B
 !PROFILE_Bastion      = #$001C
-!PROFILE_COUNT        = #$001D
+!PROFILE_D9Killdozer  = #$001D
+!PROFILE_COUNT        = #$001E
 

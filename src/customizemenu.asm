@@ -362,6 +362,7 @@ mc_paletteprofile:
     db #$28, "    VESPHER", #$FF
     db #$28, "      EXAKT", #$FF
     db #$28, "    BASTION", #$FF
+    db #$28, "D9KILLDOZER", #$FF
     db #$FF
   .routine
     LDA !sram_custompalette_profile : BEQ .set_noncustompalette
@@ -1231,6 +1232,7 @@ PaletteProfileTables:
     dw #VespherProfileTable       ; 1A
     dw #EXAKTProfileTable         ; 1B
     dw #BastionProfileTable       ; 1C
+    dw #D9KilldozerProfileTable   ; 1D
     dw #$0000
 
 ; border, headeroutline, text, background, numoutline, numfill, toggleon, seltext, seltextbg, numseloutline, numsel
@@ -1317,6 +1319,9 @@ EXAKTProfileTable:
 
 BastionProfileTable:
     dw $5620, $5980, $7F00, $0000, $0000, $7F00, $001F, $001F, $0000, $001F, $0000
+
+D9KilldozerProfileTable:
+    dw $14A8, $0441, $0D60, $0000, $0481, $11C1, $47E0, $53E0, $0466, $10C3, $4BE3
 }
 
 %endfree(AE)
