@@ -792,7 +792,7 @@ action_factory_reset:
 {
     ; Wipe standard practice hack memory
     LDA !ram_quickboot_spc_state : PHA
-    TDC : LDX !WRAM_SIZE-2
+    TDC : LDX !WRAM_AND_CRASH_SIZE-2
   .wram_loop
     STA !WRAM_START,X
     DEX #2 : BPL .wram_loop
