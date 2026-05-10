@@ -1254,11 +1254,16 @@ draw_choice:
 
   .loop_choices
     DEY : BEQ .found
+    LDA [!DP_CurrentMenu] : %a16() : INC !DP_CurrentMenu : %a8()
+    CMP #$FF : BEQ .loop_done
 
   .loop_text
     LDA [!DP_CurrentMenu] : %a16() : INC !DP_CurrentMenu : %a8()
-    CMP #$FF : BEQ .loop_choices
-    BRA .loop_text
+    CMP #$FF : BNE .loop_text
+    BRA .loop_choices
+
+  .loop_done
+     RTS
 
   .found
     %a16()
@@ -3529,7 +3534,8 @@ execute_choice:
     %a8()
 
   .loop_choices
-    LDA [!DP_CurrentMenu] : %a16() : INC !DP_CurrentMenu : %a8() : CMP #$FF : BEQ .loop_done
+    LDA [!DP_CurrentMenu] : %a16() : INC !DP_CurrentMenu : %a8()
+    CMP #$FF : BEQ .loop_done
 
   .loop_text
     LDA [!DP_CurrentMenu] : %a16() : INC !DP_CurrentMenu : %a8()
