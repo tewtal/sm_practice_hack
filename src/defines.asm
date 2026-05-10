@@ -303,8 +303,11 @@
 !ram_cm_phantoon_flip_rng = !WRAM_MENU_START+$A0
 !ram_cm_phantoon_eyeclose_rng = !WRAM_MENU_START+$A2
 !ram_cm_phantoon_flames_rng = !WRAM_MENU_START+$A4
-!ram_cm_phantoon_next_flames_rng = !WRAM_MENU_START+$A6
-!ram_cm_phantoon_flame_direction_rng = !WRAM_MENU_START+$A8
+!ram_cm_phantoon_flames_1_rng = !WRAM_MENU_START+$A6
+!ram_cm_phantoon_flames_2_rng = !WRAM_MENU_START+$A8
+!ram_cm_phantoon_flames_3_rng = !WRAM_MENU_START+$AA
+!ram_cm_phantoon_flames_4_rng = !WRAM_MENU_START+$AC
+!ram_cm_phantoon_flame_direction_rng = !WRAM_MENU_START+$AE
 
 !ram_cm_ridley_tail_rng = !WRAM_MENU_START+$9A
 !ram_cm_ridley_pogo_height_rng = !WRAM_MENU_START+$9C
@@ -1051,9 +1054,11 @@
 !eram_phantoon_rng_round_2         = !ENEMY_VAR_2+!ENEMY_1E_OFFSET
 !eram_phantoon_rng_flip            = !ENEMY_VAR_3+!ENEMY_1E_OFFSET
 !eram_phantoon_rng_eyeclose        = !ENEMY_VAR_4+!ENEMY_1E_OFFSET
-!eram_phantoon_rng_flames          = !ENEMY_VAR_1+!ENEMY_1F_OFFSET
-!eram_phantoon_rng_next_flames     = !ENEMY_VAR_2+!ENEMY_1F_OFFSET
-!eram_phantoon_rng_flame_direction = !ENEMY_VAR_3+!ENEMY_1F_OFFSET
+!eram_phantoon_rng_flames_1        = !ENEMY_VAR_1+!ENEMY_1F_OFFSET
+!eram_phantoon_rng_flames_2        = !ENEMY_VAR_2+!ENEMY_1F_OFFSET
+!eram_phantoon_rng_flames_3        = !ENEMY_VAR_3+!ENEMY_1F_OFFSET
+!eram_phantoon_rng_flames_4        = !ENEMY_VAR_4+!ENEMY_1F_OFFSET
+!eram_phantoon_rng_flame_direction = !ENEMY_VAR_5+!ENEMY_1F_OFFSET
 
 !eram_ceres_ridley_rng             = !ENEMY_VAR_1+!ENEMY_1E_OFFSET
 !eram_ridley_lunge_pogo_rng        = !ENEMY_VAR_2+!ENEMY_1E_OFFSET
@@ -1371,12 +1376,16 @@ endif
 !PHANTOON_RNG_VISIBLE_BIT           = #$4000
 !PHANTOON_RNG_VISIBLE_INVERTED      = #$BFFF
 
-!PHANTOON_RNG_FLAMES_MASK           = #$0007
-!PHANTOON_RNG_FLAMES_INVERTED       = #$FFF8
+!PHANTOON_RNG_FLAMES_1_MASK         = #$0007
+!PHANTOON_RNG_FLAMES_1_INVERTED     = #$FFF8
+!PHANTOON_RNG_FLAMES_2_MASK         = #$0038
+!PHANTOON_RNG_FLAMES_2_INVERTED     = #$FFC7
 !PHANTOON_RNG_FLAMES_PATH_MASK      = #$00C0
 !PHANTOON_RNG_FLAMES_PATH_INVERTED  = #$FF3F
-!PHANTOON_RNG_FLAMES_NEXT_MASK      = #$0700
-!PHANTOON_RNG_FLAMES_NEXT_INVERTED  = #$F8FF
+!PHANTOON_RNG_FLAMES_3_MASK         = #$0700
+!PHANTOON_RNG_FLAMES_3_INVERTED     = #$F8FF
+!PHANTOON_RNG_FLAMES_4_MASK         = #$3800
+!PHANTOON_RNG_FLAMES_4_INVERTED     = #$C7FF
 !PHANTOON_RNG_EYE_CLOSE_MASK        = #$C000
 !PHANTOON_RNG_EYE_CLOSE_INVERTED    = #$3FFF
 

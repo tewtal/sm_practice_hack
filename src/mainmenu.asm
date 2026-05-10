@@ -3060,16 +3060,31 @@ rng_prepare_phantoon_menu:
     JSL rng_phan_set_phan_second_phase
     PLA : STA !ram_phantoon_phase_rng
     AND !PHANTOON_RNG_FLIP_MASK : ASL #2 : XBA : STA !ram_cm_phantoon_flip_rng
-    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_MASK
-    STA !ram_cm_phantoon_flames_rng
+    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_1_MASK
+    STA !ram_cm_phantoon_flames_1_rng
+    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_2_MASK
+    LSR #3 : STA !ram_cm_phantoon_flames_2_rng
     LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_PATH_MASK
     ASL #2 : XBA : STA !ram_cm_phantoon_flame_direction_rng
-    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_NEXT_MASK
-    XBA : STA !ram_cm_phantoon_next_flames_rng
+    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_3_MASK
+    XBA : STA !ram_cm_phantoon_flames_3_rng
+    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_4_MASK
+    XBA : LSR #3 : CMP #$0007 : BNE .set_flame_4
+    DEC #2
+  .set_flame_4
+    STA !ram_cm_phantoon_flames_4_rng
     LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_EYE_CLOSE_MASK
     XBA : ASL #2 : XBA : STA !ram_cm_phantoon_eyeclose_rng
+    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_EYE_CLOSE_INVERTED
+    BEQ .set_flames : CMP #$0005 : BEQ .first_only : CMP #$0006 : BEQ .first_only
+    LDA #$0001
+  .set_flames
+    STA !ram_cm_phantoon_flames_rng
     %setmenubank()
     JML action_submenu
+  .first_only
+    DEC #3
+    BRA .set_flames
 }
 
 RngPhantoonMenu:
@@ -3090,10 +3105,10 @@ RngPhantoonMenu:
     dw #rng_phan_second_phase_flip
     dw #$FFFF
     dw #rng_phan_eyeclose
-    dw #rng_phan_flamepattern
-    dw #rng_phan_next_flamepattern
-    dw #rng_phan_flame_direction
     dw #rng_phan_always_visible
+    dw #$FFFF
+    dw #rng_phan_flames
+    dw #rng_customize_phan_flames
     dw #$0000
     %cm_header("PHANTOON RNG CONTROL")
 
@@ -3127,21 +3142,21 @@ rng_phan_first_phase:
     ORA !ram_phantoon_phase_rng : STA !ram_phantoon_phase_rng
   .check_flames
     ; If first round pattern is random or #1 Left or #1 Right, update it
-    LDA !ram_cm_phantoon_flames_rng : BEQ .update_flames
+    LDA !ram_cm_phantoon_flames_1_rng : BEQ .update_flames
     CMP #$0005 : BMI .done_flames
   .update_flames
     LDA !ram_phantoon_phase_rng : AND !PHANTOON_RNG_PHASE_1_MASK
     BEQ .set_random : AND #$0015 : BEQ .set_left
     LDA !ram_phantoon_phase_rng : AND #$002A : BEQ .set_right
   .set_random
-    LDA #$0000 : STA !ram_cm_phantoon_flames_rng
-    JMP rng_phan_flamepattern_routine
+    TDC : STA !ram_cm_phantoon_flames_1_rng
+    JMP rng_phan_flame_pattern_1_routine
   .set_left
-    LDA #$0005 : STA !ram_cm_phantoon_flames_rng
-    JMP rng_phan_flamepattern_routine
+    LDA #$0005 : STA !ram_cm_phantoon_flames_1_rng
+    JMP rng_phan_flame_pattern_1_routine
   .set_right
-    LDA #$0006 : STA !ram_cm_phantoon_flames_rng
-    JMP rng_phan_flamepattern_routine
+    LDA #$0006 : STA !ram_cm_phantoon_flames_1_rng
+    JMP rng_phan_flame_pattern_1_routine
   .done_flames
     LDA !ROOM_ID : CMP.w #ROOM_PhantoonRoom : BNE .done
     JML init_phantoon_rng
@@ -3314,11 +3329,51 @@ rng_phan_eyeclose:
   .done
     RTL
 
-rng_phan_flamepattern:
+rng_phan_flames:
     dw !ACTION_CHOICE
     dl #!ram_cm_phantoon_flames_rng
     dw #.routine
     db #$28, "Phantoon Flames", #$FF
+    db #$28, "     RANDOM", #$FF
+    db #$28, "     CUSTOM", #$FF
+    db #$28, "    #1 LEFT", #$FF
+    db #$28, "   #1 RIGHT", #$FF
+    db #$FF
+  .routine
+    LDA !ram_cm_phantoon_flames_rng : BEQ .set_cm_vars
+    CMP #$0001 : BEQ .done
+    INC #3
+  .set_cm_vars
+    STA !ram_cm_phantoon_flames_1_rng
+    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_EYE_CLOSE_MASK
+    ORA !ram_cm_phantoon_flames_1_rng : STA !ram_phantoon_eye_and_flames_rng
+    TDC : STA !ram_cm_phantoon_flames_2_rng : STA !ram_cm_phantoon_flames_3_rng
+    STA !ram_cm_phantoon_flames_4_rng : STA !ram_cm_phantoon_flame_direction_rng
+    LDA !ROOM_ID : CMP.w #ROOM_PhantoonRoom : BNE .done
+    JML init_phantoon_rng
+  .done
+    RTL
+
+rng_customize_phan_flames:
+    %cm_submenu("Customize Phantoon Flames", #RngPhantoonFlamesMenu)
+
+RngPhantoonFlamesMenu:
+    dw #rng_phan_flames
+    dw #$FFFF
+    dw #rng_phan_flame_pattern_1
+    dw #rng_phan_flame_pattern_2
+    dw #rng_phan_flame_pattern_3
+    dw #rng_phan_flame_pattern_4
+    dw #$FFFF
+    dw #rng_phan_flame_direction
+    dw #$0000
+    %cm_header("PHANTOON RNG CONTROL")
+
+rng_phan_flame_pattern_1:
+    dw !ACTION_CHOICE
+    dl #!ram_cm_phantoon_flames_1_rng
+    dw #.routine
+    db #$28, "First Pattern", #$FF
     db #$28, "     RANDOM", #$FF
     db #$28, "      22222", #$FF
     db #$28, "        111", #$FF
@@ -3328,18 +3383,15 @@ rng_phan_flamepattern:
     db #$28, "   #1 RIGHT", #$FF
     db #$FF
   .routine
-    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_INVERTED
-    ORA !ram_cm_phantoon_flames_rng : STA !ram_phantoon_eye_and_flames_rng
-    LDA !ROOM_ID : CMP.w #ROOM_PhantoonRoom : BNE .done
-    JML init_phantoon_rng
-  .done
-    RTL
+    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_1_INVERTED
+    ORA !ram_cm_phantoon_flames_1_rng : STA !ram_phantoon_eye_and_flames_rng
+    JMP flame_pattern_update
 
-rng_phan_next_flamepattern:
+rng_phan_flame_pattern_2:
     dw !ACTION_CHOICE
-    dl #!ram_cm_phantoon_next_flames_rng
+    dl #!ram_cm_phantoon_flames_2_rng
     dw #.routine
-    db #$28, "Next Flames", #$FF
+    db #$28, "Second Pattern", #$FF
     db #$28, "     RANDOM", #$FF
     db #$28, "      22222", #$FF
     db #$28, "        111", #$FF
@@ -3347,14 +3399,51 @@ rng_phan_next_flamepattern:
     db #$28, "    1424212", #$FF
     db #$FF
   .routine
-    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_NEXT_INVERTED
+    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_2_INVERTED
     STA !ram_phantoon_eye_and_flames_rng
-    LDA !ram_cm_phantoon_next_flames_rng : XBA
+    LDA !ram_cm_phantoon_flames_2_rng : ASL #3
     ORA !ram_phantoon_eye_and_flames_rng : STA !ram_phantoon_eye_and_flames_rng
-    LDA !ROOM_ID : CMP.w #ROOM_PhantoonRoom : BNE .done
-    JML init_phantoon_rng
-  .done
-    RTL
+    JMP flame_pattern_update
+
+rng_phan_flame_pattern_3:
+    dw !ACTION_CHOICE
+    dl #!ram_cm_phantoon_flames_3_rng
+    dw #.routine
+    db #$28, "Third Pattern", #$FF
+    db #$28, "     RANDOM", #$FF
+    db #$28, "      22222", #$FF
+    db #$28, "        111", #$FF
+    db #$28, "    3333333", #$FF
+    db #$28, "    1424212", #$FF
+    db #$FF
+  .routine
+    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_3_INVERTED
+    STA !ram_phantoon_eye_and_flames_rng
+    LDA !ram_cm_phantoon_flames_3_rng : XBA
+    ORA !ram_phantoon_eye_and_flames_rng : STA !ram_phantoon_eye_and_flames_rng
+    JMP flame_pattern_update
+
+rng_phan_flame_pattern_4:
+    dw !ACTION_CHOICE
+    dl #!ram_cm_phantoon_flames_4_rng
+    dw #.routine
+    db #$28, "Fourth Pattern", #$FF
+    db #$28, "     RANDOM", #$FF
+    db #$28, "      22222", #$FF
+    db #$28, "        111", #$FF
+    db #$28, "    3333333", #$FF
+    db #$28, "    1424212", #$FF
+    db #$28, "  NO REPEAT", #$FF
+    db #$FF
+  .routine
+    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_4_INVERTED
+    STA !ram_phantoon_eye_and_flames_rng
+    LDA !ram_cm_phantoon_flames_4_rng : CMP #$0005 : BNE .set_flame_4
+    INC #2
+  .set_flame_4
+    XBA : ASL #3
+    ORA !ram_phantoon_eye_and_flames_rng : STA !ram_phantoon_eye_and_flames_rng
+    JMP flame_pattern_update
 
 rng_phan_flame_direction:
     dw !ACTION_CHOICE
@@ -3370,10 +3459,23 @@ rng_phan_flame_direction:
     STA !ram_phantoon_eye_and_flames_rng
     LDA !ram_cm_phantoon_flame_direction_rng : XBA : LSR #2
     ORA !ram_phantoon_eye_and_flames_rng : STA !ram_phantoon_eye_and_flames_rng
+    ; Fallthrough
+
+flame_pattern_update:
+{
+    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_EYE_CLOSE_INVERTED
+    BEQ .set_flames : CMP #$0005 : BEQ .first_only : CMP #$0006 : BEQ .first_only
+    LDA #$0001
+  .set_flames
+    STA !ram_cm_phantoon_flames_rng
     LDA !ROOM_ID : CMP.w #ROOM_PhantoonRoom : BNE .done
     JML init_phantoon_rng
+  .first_only
+    DEC #3
+    BRA .set_flames
   .done
     RTL
+}
 
 
 ; --------------

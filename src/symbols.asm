@@ -287,8 +287,11 @@ ram_cm_phantoon_second_phase_rng = !ram_cm_phantoon_second_phase_rng ; !WRAM_MEN
 ram_cm_phantoon_flip_rng = !ram_cm_phantoon_flip_rng ; !WRAM_MENU_START+$A0
 ram_cm_phantoon_eyeclose_rng = !ram_cm_phantoon_eyeclose_rng ; !WRAM_MENU_START+$A2
 ram_cm_phantoon_flames_rng = !ram_cm_phantoon_flames_rng ; !WRAM_MENU_START+$A4
-ram_cm_phantoon_next_flames_rng = !ram_cm_phantoon_next_flames_rng ; !WRAM_MENU_START+$A6
-ram_cm_phantoon_flame_direction_rng = !ram_cm_phantoon_flame_direction_rng ; !WRAM_MENU_START+$A8
+ram_cm_phantoon_flames_1_rng = !ram_cm_phantoon_flames_1_rng ; !WRAM_MENU_START+$A6
+ram_cm_phantoon_flames_2_rng = !ram_cm_phantoon_flames_2_rng ; !WRAM_MENU_START+$A8
+ram_cm_phantoon_flames_3_rng = !ram_cm_phantoon_flames_3_rng ; !WRAM_MENU_START+$AA
+ram_cm_phantoon_flames_4_rng = !ram_cm_phantoon_flames_4_rng ; !WRAM_MENU_START+$AC
+ram_cm_phantoon_flame_direction_rng = !ram_cm_phantoon_flame_direction_rng ; !WRAM_MENU_START+$AE
 
 ram_cm_ridley_tail_rng = !ram_cm_ridley_tail_rng ; !WRAM_MENU_START+$9A
 ram_cm_ridley_pogo_height_rng = !ram_cm_ridley_pogo_height_rng ; !WRAM_MENU_START+$9C

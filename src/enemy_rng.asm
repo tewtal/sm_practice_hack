@@ -583,12 +583,16 @@ init_phantoon_rng:
     XBA : STA !eram_phantoon_rng_round_2
     LDA !ram_phantoon_phase_rng : AND !PHANTOON_RNG_FLIP_MASK
     ASL #2 : XBA : STA !eram_phantoon_rng_flip
-    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_MASK
-    STA !eram_phantoon_rng_flames
+    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_1_MASK
+    STA !eram_phantoon_rng_flames_1
+    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_2_MASK
+    LSR #3 : STA !eram_phantoon_rng_flames_2
     LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_PATH_MASK
     ASL #2 : XBA : STA !eram_phantoon_rng_flame_direction
-    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_NEXT_MASK
-    XBA : STA !eram_phantoon_rng_next_flames
+    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_3_MASK
+    XBA : STA !eram_phantoon_rng_flames_3
+    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_4_MASK
+    XBA : LSR #3 : STA !eram_phantoon_rng_flames_4
     LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_EYE_CLOSE_MASK
     XBA : ASL #2 : XBA : STA !eram_phantoon_rng_eyeclose
     RTL
@@ -788,28 +792,38 @@ hook_phantoon_flame_pattern:
 {
     JSL $808111 ; Trying to preserve the number of RNG calls being done in the frame
 
-    LDA !eram_phantoon_rng_flames : TAY
-    LDA !eram_phantoon_rng_next_flames : STA !eram_phantoon_rng_flames
+    LDA !eram_phantoon_rng_flames_1 : CMP #$0007 : BNE .rotate
+
+    ; No repeat, go back to vanilla
+    STZ !eram_phantoon_rng_flames_1 : STZ !eram_phantoon_rng_flames_2
+    STZ !eram_phantoon_rng_flames_3 : STZ !eram_phantoon_rng_flames_4
+    LDA !CACHED_RANDOM_NUMBER ; return with random number
+    RTL
+
+  .rotate
+    TAY : LDA !eram_phantoon_rng_flames_2 : STA !eram_phantoon_rng_flames_1
+    LDA !eram_phantoon_rng_flames_3 : STA !eram_phantoon_rng_flames_2
+    LDA !eram_phantoon_rng_flames_4 : STA !eram_phantoon_rng_flames_3
     TYA : BEQ .no_manip : CMP #$0005 : BMI .dec_manip : BEQ .pick_left
 
     ; Pick a pattern corresponding with first round right movement
-    STZ !eram_phantoon_rng_next_flames
+    STZ !eram_phantoon_rng_flames_4
     LDA !CACHED_RANDOM_NUMBER : AND #$0002
     RTL
 
   .pick_left
     ; Pick a pattern corresponding with first round left movement
-    STZ !eram_phantoon_rng_next_flames
+    STZ !eram_phantoon_rng_flames_4
     LDA !CACHED_RANDOM_NUMBER : AND #$0002 : INC
     RTL
 
   .dec_manip
-    STA !eram_phantoon_rng_next_flames
+    STA !eram_phantoon_rng_flames_4
     DEC
     RTL
 
   .no_manip
-    STA !eram_phantoon_rng_next_flames
+    STA !eram_phantoon_rng_flames_4
     LDA !CACHED_RANDOM_NUMBER ; return with random number
     RTL
 }
