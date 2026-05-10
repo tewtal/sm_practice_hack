@@ -790,10 +790,12 @@ mc_factory_reset_delete_presets:
 action_factory_reset:
 {
     ; Wipe standard practice hack memory
+    LDA !ram_quickboot_spc_state : PHA
     TDC : LDX !WRAM_SIZE-2
   .wram_loop
     STA !WRAM_START,X
     DEX #2 : BPL .wram_loop
+    PLA : STA !ram_quickboot_spc_state
 
     ; Wipe stored practice hack memory
     LDX !SRAM_SIZE-2
@@ -816,15 +818,17 @@ action_factory_reset:
     STZ !MUSIC_QUEUE_NEXT : STZ !MUSIC_QUEUE_START
     STZ !MUSIC_ENTRY : STZ !MUSIC_TIMER
 
-    ; wait for NMI
+    ; prepare reboot
+    JSL init_factory_reset
+
+    ; wait for NMI and reboot
   .nmi_loop
     JSL $808EF4 : BCC .reboot
     JSL $808338 ; wait for NMI
     BRA .nmi_loop
 
-    ; Reboot
   .reboot
-    JML $80841C
+    JML $808462
 }
 
 

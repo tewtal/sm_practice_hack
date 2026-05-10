@@ -45,14 +45,7 @@ init_code:
     STZ $FF80,X
     DEX #2 : BPL .clear_loop
     STA.w !ram_quickboot_spc_state
-
-    ; Initialize non-zero persistent WRAM
-    LDA #!ENEMY_HP : STA.w !ram_watch_left
-    LDA #!SAMUS_HP : STA.w !ram_watch_right
-    LDA #$007E : STA.w !ram_watch_bank
-    LDA !sram_seed_X : STA.w !ram_seed_X
-    LDA !sram_seed_Y : STA.w !ram_seed_Y
-    LDA #$8000 : STA.w !ram_cm_gmode
+    JSR init_non_zero_persistent_wram
 
   .persistent_cleared
     ; Always clear slowdown mode
@@ -78,6 +71,24 @@ else
 endif
     ; Here for sanity, but this code is not executed
     JML $808459
+}
+
+init_factory_reset:
+{
+    JSR init_non_zero_persistent_wram
+    JSR init_sram
+    RTL
+}
+
+init_non_zero_persistent_wram:
+{
+    LDA #!ENEMY_HP : STA.w !ram_watch_left
+    LDA #!SAMUS_HP : STA.w !ram_watch_right
+    LDA #$007E : STA.w !ram_watch_bank
+    LDA !sram_seed_X : STA.w !ram_seed_X
+    LDA !sram_seed_Y : STA.w !ram_seed_Y
+    LDA #$8000 : STA.w !ram_cm_gmode
+    RTS
 }
 
 init_sram_routine_table:
