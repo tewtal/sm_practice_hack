@@ -407,7 +407,7 @@ preset_nodropskpdr_230_missile_path_early_supers_missile:
     dw $D8B4, $0002  ; Doors
     dw #$FFFF
 
-preset_nodropskpdr_230_missile_path_brinstar_reserve_missiles:
+preset_nodropskpdr_230_missile_path_25_path_reserve_missiles:
     dw #preset_nodropskpdr_230_missile_path_early_supers_missile ; 230 Missile Path: Early Supers Missile
     dw $078D, $8D4E  ; DDB
     dw $0915, $0400  ; Screen Y position in pixels
@@ -417,8 +417,8 @@ preset_nodropskpdr_230_missile_path_brinstar_reserve_missiles:
     dw $D870, $9180  ; Items
     dw #$FFFF
 
-preset_nodropskpdr_230_missile_path_early_supers:
-    dw #preset_nodropskpdr_230_missile_path_brinstar_reserve_missiles ; 230 Missile Path: Brinstar Reserve Missiles
+preset_nodropskpdr_230_missile_path_25_path_early_supers:
+    dw #preset_nodropskpdr_230_missile_path_25_path_reserve_missiles ; 230 Missile Path: (25 Path) Reserve Missiles
     dw $078D, $8D5A  ; DDB
     dw $079B, $9C07  ; MDB
     dw $07F5, $0003  ; Music Track
@@ -626,7 +626,7 @@ preset_nodropskpdr_blue_brinstar_missile_path_early_supers:
     dw #$FFFF
 
 preset_nodropskpdr_refill_15_missiles_path_missile_refill:
-    dw #preset_nodropskpdr_blue_brinstar_missile_path_early_supers ; Blue Brinstar Missile Path: Early Supers
+    dw #preset_nodropskpdr_230_missile_path_early_supers_missile ; 230 Missile Path: Early Supers Missile
     dw $078D, $8D4E  ; DDB
     dw $090F, $6000  ; Screen subpixel X position
     dw $0915, $061A  ; Screen Y position in pixels
@@ -640,9 +640,9 @@ preset_nodropskpdr_refill_15_missiles_path_missile_refill:
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $0069  ; Samus X
     dw $0AFA, $068B  ; Samus Y
-    dw $D870, $8180  ; Items
-    dw $D872, $1401  ; Items
-    dw $D8B4, $000E  ; Doors
+    dw $D870, $9180  ; Items
+    dw $D872, $0401  ; Items
+    dw $D8B4, $000A  ; Doors
     dw #$FFFF
 
 preset_nodropskpdr_refill_15_missiles_path_leaving_missile_refill:
@@ -670,8 +670,10 @@ preset_nodropskpdr_refill_15_missiles_path_dachora_room:
     dw $0915, $061B  ; Screen Y position in pixels
     dw $0919, $0494  ; Layer 2 Y position
     dw $09C2, $006F  ; Health
+    dw $09C6, $000A  ; Missiles
     dw $0AF6, $0057  ; Samus X
     dw $0AFA, $068B  ; Samus Y
+    dw $D8B4, $000E  ; Doors
     dw #$FFFF
 
 preset_nodropskpdr_refill_15_missiles_path_big_pink:
@@ -699,13 +701,17 @@ preset_nodropskpdr_refill_15_missiles_path_leaving_spore_spawn_supers:
     dw $0915, $0800  ; Screen Y position in pixels
     dw $0917, $00B5  ; Layer 2 X position
     dw $0919, $0600  ; Layer 2 Y position
+    dw $09C2, $005B  ; Health
+    dw $09C6, $000F  ; Missiles
+    dw $09C8, $0014  ; Max missiles
     dw $09CA, $0009  ; Supers
     dw $09CC, $000A  ; Max supers
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $0192  ; Samus X
     dw $0AFA, $088B  ; Samus Y
-    dw $D870, $C180  ; Items
+    dw $D870, $D180  ; Items
+    dw $D872, $0421  ; Items
     dw #$FFFF
 
 preset_nodropskpdr_refill_15_missiles_path_green_hill_zone:
@@ -722,13 +728,13 @@ preset_nodropskpdr_refill_15_missiles_path_green_hill_zone:
     dw $09A6, $1000  ; Equipped Beams
     dw $09A8, $1000  ; Collected Beams
     dw $09C6, $0014  ; Missiles
-    dw $09C8, $0014  ; Max missiles
+    dw $09C8, $0019  ; Max missiles
     dw $09CA, $0006  ; Supers
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $0365  ; Samus X
     dw $0AFA, $068B  ; Samus Y
-    dw $D872, $14C1  ; Items
+    dw $D872, $04E1  ; Items
     dw $D8B4, $020E  ; Doors
     dw #$FFFF
 
@@ -743,14 +749,14 @@ preset_nodropskpdr_refill_15_missiles_path_skree_boost:
     dw $0915, $091A  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $06D3  ; Layer 2 Y position
-    dw $09C2, $0065  ; Health
+    dw $09C2, $0047  ; Health
     dw $09C6, $0019  ; Missiles
-    dw $09C8, $0019  ; Max missiles
+    dw $09C8, $001E  ; Max missiles
     dw $09CA, $0005  ; Supers
     dw $0AF6, $0056  ; Samus X
     dw $0AFA, $098B  ; Samus Y
-    dw $D872, $16C1  ; Items
-    dw $D8B6, $000C  ; Doors
+    dw $D872, $06E1  ; Items
+    dw $D8B6, $0008  ; Doors
     dw #$FFFF
 
 preset_nodropskpdr_refill_15_missiles_path_entering_kraids_lair:
@@ -761,7 +767,7 @@ preset_nodropskpdr_refill_15_missiles_path_entering_kraids_lair:
     dw $0913, $CC00  ; Screen subpixel Y position
     dw $0915, $0100  ; Screen Y position in pixels
     dw $0919, $0100  ; Layer 2 Y position
-    dw $09C2, $0056  ; Health
+    dw $09C2, $0038  ; Health
     dw $09D2, $0002  ; Currently selected item
     dw $0AF6, $002E  ; Samus X
     dw $0AFA, $018B  ; Samus Y
@@ -786,16 +792,19 @@ preset_nodropskpdr_refill_15_missiles_path_warehouse_zeelas:
     dw #$FFFF
 
 preset_nodropskpdr_refill_15_missiles_path_kraid_kihunters:
-    dw #preset_nodropskpdr_refill_15_missiles_path_entering_kraids_lair ; Refill 15 Missiles Path: Entering Kraid's Lair
+    dw #preset_nodropskpdr_refill_15_missiles_path_warehouse_zeelas ; Refill 15 Missiles Path: Warehouse Zeelas
     dw $078D, $923A  ; DDB
     dw $079B, $A471  ; MDB
     dw $090F, $8000  ; Screen subpixel X position
     dw $0911, $0100  ; Screen X position in pixels
     dw $0913, $8000  ; Screen subpixel Y position
+    dw $0915, $0100  ; Screen Y position in pixels
     dw $0917, $00C0  ; Layer 2 X position
-    dw $09C2, $004C  ; Health
+    dw $0919, $0100  ; Layer 2 Y position
+    dw $09C2, $002E  ; Health
     dw $0AF6, $0167  ; Samus X
     dw $0AF8, $B000  ; Samus subpixel X
+    dw $0AFA, $018B  ; Samus Y
     dw #$FFFF
 
 preset_nodropskpdr_refill_15_missiles_path_minikraid:
@@ -818,7 +827,7 @@ preset_nodropskpdr_refill_15_missiles_path_kraid:
     dw $090F, $A000  ; Screen subpixel X position
     dw $0913, $0800  ; Screen subpixel Y position
     dw $0917, $0100  ; Layer 2 X position
-    dw $09C2, $0046  ; Health
+    dw $09C2, $0028  ; Health
     dw $09C6, $0011  ; Missiles
     dw $09D2, $0000  ; Currently selected item
     dw $0AF6, $01BD  ; Samus X
@@ -839,7 +848,6 @@ preset_nodropskpdr_refill_15_missiles_path_leaving_varia:
     dw $0919, $0000  ; Layer 2 Y position
     dw $09A2, $1005  ; Equipped Items
     dw $09A4, $1005  ; Collected Items
-    dw $09C2, $0026  ; Health
     dw $09C6, $0005  ; Missiles
     dw $0A1C, $009B  ; Samus position/state
     dw $0A1E, $0000  ; More position/state
@@ -858,7 +866,7 @@ preset_nodropskpdr_refill_15_missiles_path_minikraid_revisit:
     dw $0913, $7800  ; Screen subpixel Y position
     dw $0915, $0100  ; Screen Y position in pixels
     dw $0919, $0100  ; Layer 2 Y position
-    dw $09C2, $001E  ; Health
+    dw $09C2, $0020  ; Health
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $0058  ; Samus X
@@ -874,7 +882,7 @@ preset_nodropskpdr_refill_15_missiles_path_kraid_kihunters_revisit:
     dw $0913, $4000  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0919, $0000  ; Layer 2 Y position
-    dw $09C2, $0014  ; Health
+    dw $09C2, $0016  ; Health
     dw $0AF6, $009A  ; Samus X
     dw $0AFA, $00AB  ; Samus Y
     dw $D8B8, $00EC  ; Doors
@@ -889,7 +897,7 @@ preset_nodropskpdr_refill_15_missiles_path_business_center_preelev:
     dw $0911, $0006  ; Screen X position in pixels
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0917, $0006  ; Layer 2 X position
-    dw $09C2, $000F  ; Health
+    dw $09C2, $0011  ; Health
     dw $09CA, $0003  ; Supers
     dw $0AF6, $0078  ; Samus X
     dw $0AFA, $008B  ; Samus Y
@@ -939,7 +947,7 @@ preset_nodropskpdr_refill_15_missiles_path_leaving_hijump:
     dw $09C2, $012B  ; Health
     dw $09C4, $012B  ; Max health
     dw $09C6, $0005  ; Missiles
-    dw $09C8, $001E  ; Max missiles
+    dw $09C8, $0023  ; Max missiles
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $00B5  ; Samus X
@@ -962,7 +970,7 @@ preset_nodropskpdr_refill_15_missiles_path_business_center_revisit:
     dw #$FFFF
 
 preset_nodropskpdr_refill_25_missiles_path_missile_refill:
-    dw #preset_nodropskpdr_230_missile_path_early_supers ; 230 Missile Path: Early Supers
+    dw #preset_nodropskpdr_230_missile_path_25_path_early_supers ; 230 Missile Path: (25 Path) Early Supers
     dw $078D, $8D4E  ; DDB
     dw $079B, $9AD9  ; MDB
     dw $07F5, $0005  ; Music Track
@@ -976,6 +984,7 @@ preset_nodropskpdr_refill_25_missiles_path_missile_refill:
     dw $09CC, $0005  ; Max supers
     dw $0AF6, $0069  ; Samus X
     dw $0AFA, $068B  ; Samus Y
+    dw $D870, $D180  ; Items
     dw $D872, $040D  ; Items
     dw $D8B4, $004E  ; Doors
     dw #$FFFF
@@ -1078,7 +1087,7 @@ preset_nodropskpdr_refill_25_missiles_path_skree_boost:
     dw $0915, $091A  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
     dw $0919, $06D3  ; Layer 2 Y position
-    dw $09C2, $0065  ; Health
+    dw $09C2, $005B  ; Health
     dw $09CA, $0005  ; Supers
     dw $0AF6, $0056  ; Samus X
     dw $0AFA, $098B  ; Samus Y
@@ -1093,7 +1102,7 @@ preset_nodropskpdr_refill_25_missiles_path_entering_kraids_lair:
     dw $0913, $CC00  ; Screen subpixel Y position
     dw $0915, $0100  ; Screen Y position in pixels
     dw $0919, $0100  ; Layer 2 Y position
-    dw $09C2, $0056  ; Health
+    dw $09C2, $004C  ; Health
     dw $09D2, $0002  ; Currently selected item
     dw $0AF6, $002E  ; Samus X
     dw $0AFA, $018B  ; Samus Y
@@ -1118,16 +1127,19 @@ preset_nodropskpdr_refill_25_missiles_path_warehouse_zeelas:
     dw #$FFFF
 
 preset_nodropskpdr_refill_25_missiles_path_kraid_kihunters:
-    dw #preset_nodropskpdr_refill_25_missiles_path_entering_kraids_lair ; Refill 25 Missiles Path: Entering Kraid's Lair
+    dw #preset_nodropskpdr_refill_25_missiles_path_warehouse_zeelas ; Refill 25 Missiles Path: Warehouse Zeelas
     dw $078D, $923A  ; DDB
     dw $079B, $A471  ; MDB
     dw $090F, $8000  ; Screen subpixel X position
     dw $0911, $0100  ; Screen X position in pixels
     dw $0913, $8000  ; Screen subpixel Y position
+    dw $0915, $0100  ; Screen Y position in pixels
     dw $0917, $00C0  ; Layer 2 X position
-    dw $09C2, $004C  ; Health
+    dw $0919, $0100  ; Layer 2 Y position
+    dw $09C2, $0042  ; Health
     dw $0AF6, $0167  ; Samus X
     dw $0AF8, $B000  ; Samus subpixel X
+    dw $0AFA, $018B  ; Samus Y
     dw #$FFFF
 
 preset_nodropskpdr_refill_25_missiles_path_minikraid:
@@ -1150,7 +1162,7 @@ preset_nodropskpdr_refill_25_missiles_path_kraid:
     dw $090F, $A000  ; Screen subpixel X position
     dw $0913, $0800  ; Screen subpixel Y position
     dw $0917, $0100  ; Layer 2 X position
-    dw $09C2, $0046  ; Health
+    dw $09C2, $003C  ; Health
     dw $09C6, $0016  ; Missiles
     dw $09D2, $0000  ; Currently selected item
     dw $0AF6, $01BD  ; Samus X
@@ -1171,7 +1183,6 @@ preset_nodropskpdr_refill_25_missiles_path_leaving_varia:
     dw $0919, $0000  ; Layer 2 Y position
     dw $09A2, $1005  ; Equipped Items
     dw $09A4, $1005  ; Collected Items
-    dw $09C2, $0026  ; Health
     dw $09C6, $000A  ; Missiles
     dw $0A1C, $009B  ; Samus position/state
     dw $0A1E, $0000  ; More position/state
@@ -1190,7 +1201,7 @@ preset_nodropskpdr_refill_25_missiles_path_minikraid_revisit:
     dw $0913, $7800  ; Screen subpixel Y position
     dw $0915, $0100  ; Screen Y position in pixels
     dw $0919, $0100  ; Layer 2 Y position
-    dw $09C2, $001E  ; Health
+    dw $09C2, $0034  ; Health
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $0058  ; Samus X
@@ -1206,7 +1217,7 @@ preset_nodropskpdr_refill_25_missiles_path_kraid_kihunters_revisit:
     dw $0913, $4000  ; Screen subpixel Y position
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0919, $0000  ; Layer 2 Y position
-    dw $09C2, $0014  ; Health
+    dw $09C2, $002A  ; Health
     dw $0AF6, $009A  ; Samus X
     dw $0AFA, $00AB  ; Samus Y
     dw $D8B8, $00EC  ; Doors
@@ -1221,7 +1232,7 @@ preset_nodropskpdr_refill_25_missiles_path_business_center_preelev:
     dw $0911, $0006  ; Screen X position in pixels
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0917, $0006  ; Layer 2 X position
-    dw $09C2, $000F  ; Health
+    dw $09C2, $0025  ; Health
     dw $09CA, $0003  ; Supers
     dw $0AF6, $0078  ; Samus X
     dw $0AFA, $008B  ; Samus Y
@@ -2416,7 +2427,6 @@ preset_nodropskpdr_upper_norfair_revisit_spiky_acid_snakes:
     dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $01FA  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
-    dw $09C2, $018F  ; Health
     dw $0AF6, $030E  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
@@ -2429,6 +2439,7 @@ preset_nodropskpdr_upper_norfair_revisit_kronic_boost:
     dw $0911, $0300  ; Screen X position in pixels
     dw $0913, $8C00  ; Screen subpixel Y position
     dw $0917, $0240  ; Layer 2 X position
+    dw $09C2, $018F  ; Health
     dw $09D2, $0003  ; Currently selected item
     dw $0AF6, $03BC  ; Samus X
     dw #$FFFF

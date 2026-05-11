@@ -1,6 +1,6 @@
 
-warnpc $EFBEFD
-org $EFBEFD
+warnpc $EFBEE5
+org $EFBEE5
 print pc, " preset names start"
 
 preset_names:
@@ -13,6 +13,12 @@ preset_names_230_bombway_revisit:
 
 preset_names_230_mockball:
     db "230 Mockball", #$FF
+
+preset_names_25_path_early_supers:
+    db "(25 Path) Early Supers", #$FF
+
+preset_names_25_path_reserve_missiles:
+    db "(25 Path) Reserve Missiles", #$FF
 
 preset_names_3_musketeers:
     db "3 Musketeers", #$FF
@@ -295,9 +301,6 @@ preset_names_brinstar_map_entrance:
 
 preset_names_brinstar_reserve:
     db "Brinstar Reserve", #$FF
-
-preset_names_brinstar_reserve_missiles:
-    db "Brinstar Reserve Missiles", #$FF
 
 preset_names_brinstar_reserve_tank:
     db "Brinstar Reserve Tank", #$FF
