@@ -105,12 +105,34 @@ post_load_state:
 
   .randomizeOnLoad
     ; Randomize energy/ammo?
-    LDA !sram_loadstate_rando_enable : BEQ .done
+    LDA !sram_loadstate_rando_enable : BEQ .init_wram
     JSL RandomizeOnLoad
 
-  .done
+  .init_wram
     JSL init_wram_based_on_sram
     JSL cm_write_ctrl_routine
+
+    ; Align enemy RAM with persistent RAM
+    LDA !ROOM_ID
+    CMP.w #ROOM_RidleyRoom : BNE .done_zebes_ridley
+    JSL init_zebes_ridley_rng
+    BRA .done_eram
+  .done_zebes_ridley
+    CMP.w #ROOM_PhantoonRoom : BNE .done_phantoon
+    JSL init_phantoon_rng
+    BRA .done_eram
+  .done_phantoon
+    CMP.w #ROOM_BotwoonRoom : BNE .done_botwoon
+    JSL init_botwoon_rng
+    BRA .done_eram
+  .done_botwoon
+    CMP.w #ROOM_MotherBrainRoom : BNE .done_mb
+    JSL init_mb_rng_from_menu
+    BRA .done_eram
+  .done_mb
+    CMP.w #ROOM_CeresRidleyRoom : BNE .done_eram
+    JSL init_ceres_ridley_rng
+  .done_eram
 
     ; Freeze inputs if necessary
     LDA !ram_freeze_on_load : BEQ .return
@@ -265,7 +287,7 @@ save_write_table:
 
     ; Copy WRAM segments, uses $710000-$747FFF
     %wram_to_sram($7E0000, $8000, $710000)
-    %wram_to_sram($7E8000, $8000, $720000)
+    %wram_to_sram($7E8000, !WRAM_PERSIST_START-$7E8000, $720000)
     %wram_to_sram($7F0000, $8000, $730000)
     %wram_to_sram($7F8000, $8000, $740000)
 
@@ -329,7 +351,7 @@ load_write_table:
 
     ; Copy WRAM segments, uses $710000-$747FFF
     %sram_to_wram($7E0000, $8000, $710000)
-    %sram_to_wram($7E8000, $8000, $720000)
+    %sram_to_wram($7E8000, !WRAM_PERSIST_START-$7E8000, $720000)
     %sram_to_wram($7F0000, $8000, $730000)
     %sram_to_wram($7F8000, $8000, $740000)
 

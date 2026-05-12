@@ -144,12 +144,34 @@ post_load_state:
 
   .randomizeOnLoad
     ; Randomize energy/ammo?
-    LDA !sram_loadstate_rando_enable : BEQ .done
+    LDA !sram_loadstate_rando_enable : BEQ .init_wram
     JSL RandomizeOnLoad
 
-  .done
+  .init_wram
     JSL init_wram_based_on_sram
     JSL cm_write_ctrl_routine
+
+    ; Align enemy RAM with persistent RAM
+    LDA !ROOM_ID
+    CMP.w #ROOM_RidleyRoom : BNE .done_zebes_ridley
+    JSL init_zebes_ridley_rng
+    BRA .done_eram
+  .done_zebes_ridley
+    CMP.w #ROOM_PhantoonRoom : BNE .done_phantoon
+    JSL init_phantoon_rng
+    BRA .done_eram
+  .done_phantoon
+    CMP.w #ROOM_BotwoonRoom : BNE .done_botwoon
+    JSL init_botwoon_rng
+    BRA .done_eram
+  .done_botwoon
+    CMP.w #ROOM_MotherBrainRoom : BNE .done_mb
+    JSL init_mb_rng_from_menu
+    BRA .done_eram
+  .done_mb
+    CMP.w #ROOM_CeresRidleyRoom : BNE .done_eram
+    JSL init_ceres_ridley_rng
+  .done_eram
 
     ; Freeze inputs if necessary
     LDA !ram_freeze_on_load : BEQ .return
@@ -307,7 +329,7 @@ save_write_table:
     ; Single address, B bus -> A bus.  B address = reflector to WRAM ($2180).
     dw $0000|$4310, $8080  ; direction = B->A, byte reg, B addr = $2180
 
-    ; Copy WRAM segments, uses $704000-$7071FF, $710000-$726B01, $736000-$736FFF
+    ; Copy WRAM segments, uses $704000-$70727F, $710000-$726B01, $736000-$736FFF
     %wram_to_sram($7E0000, $2000, $704000)
     %wram_to_sram($7E7000, $1000, $706000)
     %wram_to_sram($7E3300, $0200, $707000)
@@ -378,7 +400,7 @@ load_write_table:
     ; Single address, A bus -> B bus.  B address = reflector to WRAM ($2180).
     dw $0000|$4310, $8000  ; direction = A->B, B addr = $2180
 
-    ; Copy WRAM segments, uses $704000-$7071FF, $710000-$726B01, $736000-$736FFF
+    ; Copy WRAM segments, uses $704000-$70727F, $710000-$726B01, $736000-$736FFF
     %sram_to_wram($7E0000, $2000, $704000)
     %sram_to_wram($7E7000, $1000, $706000)
     %sram_to_wram($7E3300, $0200, $707000)
