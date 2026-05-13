@@ -90,7 +90,9 @@ Displays the horizontal speed combined with momentum in pixels and 1/16th pixels
 Displays the horizontal speed (without momentum) in pixels and 1/16th pixels (subpixels).
 
 ## Vertical Speed
-Displays the vertical speed in pixels. Initial jump speed will displayed as a three digit hex value, overwriting the item collection percentage. Samus HP will be overwritten with space jump feedback:
+Displays the vertical speed in pixels and 1/16th pixels (subpixels), except in the case where speed is negative during a moonfall.
+The negative moonfall speed is still displayed as positive, so it starts at 65535 (0xFFFF) and decreases as Samus' moonfall speed increases.
+Also initial jump speed will displayed as a three digit hex value overwriting the item collection percentage, and Samus HP will be overwritten with space jump feedback:
 &nbsp;  
 First two characters = Number of frames that the jump button was held.
 &nbsp;  
@@ -135,8 +137,24 @@ First two characters = Feedback on the walljump:
 
 Note that the namihe does not pull Samus in like a wall does (subpixels are not reset), so while a delayed walljump is preferred (it matters if you jump from a higher position), walljumps off of the namihe do not provide the traditional 2-9 frame window for walljumps.
 
+## Double Springball Jump
+Provides feedback on attempts to double springball jump:
+&nbsp;  
+First Y = You are on the ground with springball unequipped.
+&nbsp;  
+First two characters = Feedback on timing of morphing before the pause menu opens:
+- Y# indicates you morphed in time where the number tells you how many frames remained before the menu opened (Y1 is the last possible frame).
+- YL indicates you did not morph in time.
+
+Last two characters = Feedback on subsequent pauses:
+- E# indicates you pressed pause early where the number tells you how many frames you were early.
+- Y# indicates the game should accept the pause input where the number tells you how many frames passed before the pause input (Y1 is the first possible frame).
+
 ## Boss Damage Counter
 Counts the amount of damage dealt to a boss.
+
+## Boss HP Counter
+Counts the amount of HP remaining for a boss.
 
 ## Arm Pump Trainer
 Displays the number of armpumps (pose changes) per second, and the number of wasted angle down and/or angle up inputs per second.
@@ -152,6 +170,9 @@ Displays the X position in hexadecimal pixels. Also Samus HP is replaced by the 
 
 ## Y Position
 Displays the Y position in hexadecimal pixels. Also Samus HP is replaced by the subpixels in hexadecimal.
+
+## Camera Position
+Displays the camera Layer 1 X and Y positions in hexadecimal pixels (overwriting Samus HP).
 
 ## Shot Timer
 Displays the number of frames between pressing the shoot button.
@@ -182,12 +203,12 @@ Options to replace the item% and status icons and reserves area with other infoh
 ## Ceres Ridley Hits
 Display number of hits Ceres Ridley has taken. Ceres Ridley fly away conditions are upon Samus health dropping below 30 or upon hitting Ridley 100 times, at which point Ridley drops the baby metroid before recollecting it and flying away.
 
-## Parlor-Climb Door Skip
-Provides feedback on attempts to get out of bounds while falling through the door from parlor to climb:  
+## Parlor-Botwoon Door Skip
+Provides feedback on attempts to get out of bounds while falling through the door from parlor to climb or pre-botwoon to aqueduct:  
 &nbsp;  
 First Y = You started from the correct position and you are holding jump (ready to do a buffered jump upon turning around). Currently only the non-moonfall starting position is accepted.
 &nbsp;  
-First two characters = Feedback on timing the first jump after pausing (this will overwrite the first Y):
+First two characters = Feedback on timing the first jump after pausing (except for botwoon on NTSC you actually pause before jump):
 - E# indicates you jumped early where the number tells you how many frames you were early.
 - YY indicates you jumped on the correct frame.
 - L# indicates you jumped late where the number tells you how many frames you were late.

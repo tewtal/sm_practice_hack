@@ -608,7 +608,6 @@ endif
     TDC : STA !ram_shinetune_early_1
     LDA !SAMUS_POSE : CMP #$0010 : BPL .dash0done
     CMP #$0009 : BMI .dash0done
-    LDA !sram_speed_booster_physics : BEQ .dash0done
     LDA !SAMUS_ANIMATION_FRAME : ASL : ASL
     ORA !SAMUS_ANIMATION_TIMER : ASL : TAY
     LDA.w ShineTune1TapEarlyTable,Y : BEQ .dash0done
@@ -619,7 +618,6 @@ endif
   .pressdash0
     LDA !SAMUS_POSE : CMP #$0010 : BPL .dash0done
     CMP #$0009 : BMI .dash0done
-    LDA !sram_speed_booster_physics : BEQ .dash0done
     LDA !SAMUS_ANIMATION_FRAME : ASL : ASL
     ORA !SAMUS_ANIMATION_TIMER : ASL : TAY
     LDA.w ShineTune1TapLateTable,Y : BEQ .dash0done
