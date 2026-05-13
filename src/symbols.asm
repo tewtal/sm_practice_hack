@@ -444,12 +444,6 @@ ram_crash_input_timer = !ram_crash_input_timer ; !CRASHDUMP+$66
 ;       so if we make a mess not cleaned up by the vanilla game
 ;       then we won't be accurate to the vanilla game anymore
 
-; Temporary stack written here since level data will be initialized afterwards
-; There is room for 256 entries in the stack before risking leaving data behind,
-; since even the smallest room has 512 bytes of level data
-
-; Do not use RAM for variables at or beyond this point
-
 ; -----
 ; SRAM
 ; -----

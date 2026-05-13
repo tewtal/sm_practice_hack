@@ -465,15 +465,6 @@
 
 !LEVEL_DATA_SIZE = $7F0000
 !LEVEL_DATA = $7F0002
-
-; Temporary stack written here since level data will be initialized afterwards
-; There is room for 256 entries in the stack before risking leaving data behind,
-; since even the smallest room has 512 bytes of level data
-!CATEGORY_PRESET_STACK = !LEVEL_DATA
-
-!END_OF_SINGLE_SCROLL_ROOM_LEVEL_DATA = $7F0202
-
-; Do not use RAM for variables at or beyond this point
 !LEVEL_BTS = $7F6402
 
 
@@ -1101,6 +1092,10 @@
 !eram_baby_dead_hop_delay          = !ENEMY_VAR_3+!ENEMY_1F_OFFSET
 !eram_baby_hop_velocity_tables     = !ENEMY_VAR_4+!ENEMY_1F_OFFSET
 !eram_baby_initial_delay           = !ENEMY_VAR_5+!ENEMY_1F_OFFSET
+
+; Also during preset loading, the entire enemy ram region is available
+!CATEGORY_PRESET_STACK_SIZE        = #$0800
+!eram_category_preset_stack        = !ENEMY_ID
 
 !HUD_TILEMAP = $7EC600
 !MAP_COUNTER = $7ECAE8 ; Not used in vanilla

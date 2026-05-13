@@ -471,17 +471,24 @@ category_preset_load:
     ; Get preset address to load into $C3 and bank into $C5
     LDA !ram_load_preset_high_word : STA !sram_last_preset_high_word : STA $C4
     LDA !ram_load_preset_low_word : STA !sram_last_preset_low_word
-    STA $C3 : STA !CATEGORY_PRESET_STACK
+    STA $C3 : STA !eram_category_preset_stack
     LDX #$0000
 
   .buildLoop
     ; Build list of presets to traverse
-    LDA [$C3] : BEQ .traversePrep
-    INX #2 : STA !CATEGORY_PRESET_STACK,X
+    LDA [$C3] : BEQ .verifyLength
+    INX #2 : STA !eram_category_preset_stack,X
     CMP $C3 : STA $C3 : BCC .buildLoop
     ; We just crossed a bank
     DEC $C5
     BRA .buildLoop
+
+  .verifyLength
+    ; If we exceeded our stack size then crash
+    ; This would require over a thousand presets in the stack,
+    ; so it should not happen, but we don't want to continue if it does
+    CPX !CATEGORY_PRESET_STACK_SIZE : BMI .traversePrep
+    BRK
 
   .traversePrep
     ; If this is a map category, then clear map data
@@ -509,7 +516,8 @@ category_preset_load:
 
   .crossBankTraverseLoop
     ; Now traverse from the first preset until the last one
-    LDA !CATEGORY_PRESET_STACK,X : TAY : CMP $C1 : BCC .incBankInnerLoop
+    LDA.l $7E0000+!eram_category_preset_stack,X
+    TAY : CMP $C1 : BCC .incBankInnerLoop
     STA $C1 : INY #2
     BRA .crossBankLoadAddr
 
