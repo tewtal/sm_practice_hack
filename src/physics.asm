@@ -280,7 +280,11 @@ modified_speed_booster_shine_palette:
     LDA.w shinecharge_palette_table,X : STA $24
     LDA !SAMUS_SHINE_PALETTE_TYPE : CLC : ADC $24
     TAX : LDA $0000,X : TAX
+if !FEATURE_PAL
+    JSR $DCC0
+else
     JSR $DD5B
+endif
     LDA !SAMUS_SHINE_PALETTE_TYPE : INC : INC
     CMP #$000C : BMI .set
     TDC
@@ -314,7 +318,7 @@ endif
 %warnpc($91DB75, $91DADA)
 
 if !FEATURE_PAL
-org $91D8FB
+org $91DAFB
 else
 org $91DB96
 endif
@@ -633,7 +637,7 @@ spark_booster_remove_echoes:
 {
     PHP : PHB
 if !FEATURE_PAL
-    JMP $DEF2
+    JMP $DDF2
 else
     JMP $DE8D
 endif
@@ -641,7 +645,7 @@ endif
 
 shinecharge_palette_table:
 if !FEATURE_PAL
-    dw $DA7B, $DB87, $DB93
+    dw $DA7B, $DA87, $DA93
 else
     dw $DB16, $DB22, $DB2E
 endif
@@ -658,13 +662,13 @@ endif
 
 ; The following three fix double jump when landing on spikes
 org $948EA9
-    STA $0A4E : STZ !SAMUS_DOUBLE_JUMP
+    STA !SAMUS_PERIODIC_SUBDAMAGE : STZ !SAMUS_DOUBLE_JUMP
 
 org $948EE4
-    STA $0A4E : STZ !SAMUS_DOUBLE_JUMP
+    STA !SAMUS_PERIODIC_SUBDAMAGE : STZ !SAMUS_DOUBLE_JUMP
 
 org $948F1F
-    STA $0A4E : STZ !SAMUS_DOUBLE_JUMP
+    STA !SAMUS_PERIODIC_SUBDAMAGE : STZ !SAMUS_DOUBLE_JUMP
 
 
 org $9BC4BE
