@@ -292,7 +292,7 @@ audio_playmusic:
 
 CustomizeMenu:
     dw #mc_menubackground
-    dw #mc_custompalettes_menu
+    dw #mc_dynamic_custompalettes_menu
     dw #mc_paletteprofile
     dw #mc_palette_to_custom
     dw #mc_paletterando
@@ -314,13 +314,24 @@ CustomizeMenu:
 mc_menubackground:
     %cm_toggle("Menu Background", !sram_menu_background, #$01, #0)
 
+mc_dynamic_custompalettes_menu:
+    dw !ACTION_DYNAMIC
+    dl #!ram_cm_noncustompalette
+    dw #mc_custompalettes_menu
+    dw #mc_choosecustomtext
+
 mc_custompalettes_menu:
     %cm_submenu("Customize Menu Palette", #CustomPalettesMenu)
+
+mc_choosecustomtext:
+    %cm_jsl("Choose CUSTOM to customize", #.routine, #$0000)
+  .routine
+    RTL
 
 mc_paletteprofile:
     dw !ACTION_CHOICE
     dl #!sram_custompalette_profile
-    dw refresh_cgram_long
+    dw #.routine
     db #$28, "Menu Palette", #$FF
     db #$28, "     CUSTOM", #$FF ; CUSTOM should always be first
     db #$28, "     TWITCH", #$FF
@@ -350,7 +361,15 @@ mc_paletteprofile:
     db #$28, "  PAPASCHMO", #$FF
     db #$28, "    VESPHER", #$FF
     db #$28, "      EXAKT", #$FF
+    db #$28, "    BASTION", #$FF
+    db #$28, "D9KILLDOZER", #$FF
     db #$FF
+  .routine
+    LDA !sram_custompalette_profile : BEQ .set_noncustompalette
+    LDA #$0001
+  .set_noncustompalette
+    STA !ram_cm_noncustompalette
+    JML refresh_cgram_long
 
 mc_palette_to_custom:
     %cm_submenu("Copy Palette to Custom", #PaletteToCustomConfirm)
@@ -371,7 +390,11 @@ palette_to_custom_abort:
 palette_to_custom_confirm:
     %cm_jsl("Copy Palette to Custom", .routine, #$0000)
   .routine
-    LDA !sram_custompalette_profile : BEQ .custom_selected
+    LDA !sram_custompalette_profile : BNE .copy
+    %sfxfail()
+    BRA .go_back
+
+  .copy
     PHB : %i8()
     LDX.b #PaletteProfileTables>>16 : PHX : PLB
     ASL : TAX
@@ -391,13 +414,10 @@ palette_to_custom_confirm:
     LDY #$14 : LDA ($C1),Y : STA !sram_palette_numsel
 
     ; play sfx and refresh current profile
-    JSL refresh_custom_palettes
+    TDC : STA !sram_custompalette_profile : STA !ram_cm_noncustompalette
+    JSL refresh_cgram_long
     %sfxconfirm()
     PLB : %i16()
-    BRA .go_back
-
-  .custom_selected
-    %sfxfail()
 
   .go_back
     ; go back to CustomizeMenu manually to avoid %sfxgoback
@@ -455,7 +475,8 @@ paletterando_confirm:
     ; play a happy sound and refresh current profile
     %ai16()
     JSL PrepMenuPalette_customPalette ; points to a branch within PrepMenuPalette
-    JSL refresh_custom_palettes
+    TDC : STA !sram_custompalette_profile : STA !ram_cm_noncustompalette
+    JSL refresh_cgram_long
     %sfxconfirm()
     RTL
 
@@ -562,10 +583,10 @@ mc_numbergfx_display:
     RTL
 
 mc_customheader:
-    %cm_jsl("Customize Menu Header", #.routine, #$0000)
+    %cm_jsl("Customize Menu Header", #.routine, #!sram_custom_header)
   .routine
     ; enter keyboard editing mode
-    LDA.w #!sram_custom_header : STA !DP_Address
+    TYA : STA !DP_Address
     LDA.w #!sram_custom_header>>16 : STA !DP_Address+2
     ; check if custom header exists
     LDA !sram_custom_header : AND #$00FF : CMP #$0028 : BNE .keyboardMode
@@ -770,10 +791,12 @@ mc_factory_reset_delete_presets:
 action_factory_reset:
 {
     ; Wipe standard practice hack memory
-    TDC : LDX !WRAM_SIZE-2
+    LDA !ram_quickboot_spc_state : PHA
+    TDC : LDX !WRAM_AND_CRASH_SIZE-2
   .wram_loop
     STA !WRAM_START,X
     DEX #2 : BPL .wram_loop
+    PLA : STA !ram_quickboot_spc_state
 
     ; Wipe stored practice hack memory
     LDX !SRAM_SIZE-2
@@ -796,15 +819,17 @@ action_factory_reset:
     STZ !MUSIC_QUEUE_NEXT : STZ !MUSIC_QUEUE_START
     STZ !MUSIC_ENTRY : STZ !MUSIC_TIMER
 
-    ; wait for NMI
+    ; prepare reboot
+    JSL init_factory_reset
+
+    ; wait for NMI and reboot
   .nmi_loop
     JSL $808EF4 : BCC .reboot
     JSL $808338 ; wait for NMI
     BRA .nmi_loop
 
-    ; Reboot
   .reboot
-    JML $80841C
+    JML $808462
 }
 
 
@@ -925,16 +950,6 @@ PrepMenuPalette:
     RTL
 }
 
-refresh_custom_palettes:
-{
-    PHP
-    %ai16()
-    JSL refresh_cgram_long
-    TDC : STA !sram_custompalette_profile
-    PLP
-    RTL
-}
-
 refresh_cgram_long:
 {
     JSL cm_transfer_original_cgram
@@ -959,9 +974,7 @@ MixRGB:
 
     ; store BGR value
     STA !ram_cm_custompalette
-
-    JSL refresh_custom_palettes
-    RTL
+    JML refresh_cgram_long
 
   .MenuPaletteTable
     ; the order of this table must match the menu order
@@ -978,18 +991,27 @@ MixRGB:
     dw !sram_palette_background
 }
 
-cm_colors:
+SplitRGB:
 {
-    PHP : PHB
-    PHK : PLB
+    STA !ram_cm_custompalette
+
+    ; split 15-bit BGR format into 5-bit red, green, and blue
+    AND #$7C00 : XBA : LSR #2 : STA !ram_cm_custompalette_blue
+    LDA !ram_cm_custompalette : AND #$03E0 : LSR #5 : STA !ram_cm_custompalette_green
+    LDA !ram_cm_custompalette : AND #$001F : STA !ram_cm_custompalette_red
+    JML refresh_cgram_long
+}
+
+palettemenu_setup:
+{
     ; determine which menu element is being edited
-    LDA !MENU_STACK_INDEX : DEC #2 : TAX
-    ; exit if not in a color menu
-    LDA !ram_cm_menu_stack,X : CMP #CustomPalettesMenu : BNE .done
+    LDA !MENU_STACK_INDEX : TAX
     ; exit if beyond table boundaries
     LDA !ram_cm_cursor_stack,X : CMP #$0016 : BPL .done
 
     ; setup indirect address [$C1] with sram pointer
+    PHP : PHB
+    PHK : PLB
     %a8()
     TAX : JSR (.ColorMenuTable,X)
     STX $C1 : STA $C3
@@ -1002,10 +1024,10 @@ cm_colors:
 
     ; store BGR value
     LDA [$C1] : AND #$7FFF : STA !ram_cm_custompalette
+    PLB : PLP
 
   .done
-    PLB : PLP
-    RTL
+    JML action_submenu
 
   .ColorMenuTable
     ; the order of this table must match the menu order
@@ -1060,29 +1082,29 @@ ConvertNormal2Header:
 {
     PHB : PHK : PLB
     %ai8()
-    ; X = text, Y = table
-    LDX #$01 : LDY #$00
+    ; X = table, Y = text
+    LDX #$00 : LDY #$01
 
   .next_char
     ; safety net in case no terminator
-    CPX #$18 : BPL .done
+    CPY #$18 : BPL .done
     ; grab next byte of user text, exit if term ($FF)
-    LDA !sram_custom_header,X : CMP #$FF : BEQ .done
+    LDA [!DP_Address],Y : CMP #$FF : BEQ .done
   .loop_compare
     ; compare to first column of table
-    CMP.w .Table,Y : BEQ .found
-    INY #2 : CPY #$9A : BCS .not_found
+    CMP.w .table,X : BEQ .found
+    INX #2 : CPX #$9A : BCS .not_found
     BRA .loop_compare
 
   .found
     ; replace with byte from second column of table
-    INY : LDA.w .Table,Y : STA !sram_custom_header,X
-    INX : LDY #$00 : BRA .next_char
+    INX : LDA.w .table,X : STA [!DP_Address],Y
+    INY : LDX #$00 : BRA .next_char
 
   .not_found
     ; searched whole table
-    LDY #$00
-    INX
+    LDX #$00
+    INY
     BRA .next_char
 
   .done
@@ -1090,7 +1112,7 @@ ConvertNormal2Header:
     PLB
     RTL
 
-  .Table
+  .table
 ; normal, header
 ; db $00, $50
 ; db $01, $51
@@ -1209,6 +1231,8 @@ PaletteProfileTables:
     dw #PapaSchmoProfileTable     ; 19
     dw #VespherProfileTable       ; 1A
     dw #EXAKTProfileTable         ; 1B
+    dw #BastionProfileTable       ; 1C
+    dw #D9KilldozerProfileTable   ; 1D
     dw #$0000
 
 ; border, headeroutline, text, background, numoutline, numfill, toggleon, seltext, seltextbg, numseloutline, numsel
@@ -1292,6 +1316,12 @@ VespherProfileTable:
 
 EXAKTProfileTable:
     dw $2DC6, $5F65, $3A42, $18A1, $2982, $4F0A, $6F08, $4EC9, $18A1, $2DE6, $63CC
+
+BastionProfileTable:
+    dw $5620, $5980, $7F00, $0000, $0000, $7F00, $001F, $001F, $0000, $001F, $0000
+
+D9KilldozerProfileTable:
+    dw $14A8, $0441, $0D60, $0000, $0481, $11C1, $47E0, $53E0, $0466, $10C3, $4BE3
 }
 
 %endfree(AE)

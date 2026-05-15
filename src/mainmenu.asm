@@ -1,32 +1,4 @@
 
-%startfree(B4)
-
-; No reason these drop tables can't overlap
-all_power_bombs_drop_table:
-    db #$00
-all_supers_drop_table:
-    db #$00
-all_nothing_drop_table:
-    db #$00
-all_missiles_drop_table:
-    db #$00
-all_big_hp_drop_table:
-    db #$00
-all_small_hp_drop_table:
-    db #$FF, #$00, #$00, #$00, #$00, #$00
-
-!DROP_CHANCE_TABLE_LENGTH = #$0007
-drop_chance_tables:
-    dw #$0000
-    dw #all_small_hp_drop_table
-    dw #all_big_hp_drop_table
-    dw #all_missiles_drop_table
-    dw #all_nothing_drop_table
-    dw #all_supers_drop_table
-    dw #all_power_bombs_drop_table
-
-%endfree(B4)
-
 
 %startfree(B8)
 
@@ -132,13 +104,33 @@ action_game_mainmenu:
 action_rng_mainmenu:
 {
     LDA !ram_turret_rng : LSR : STA !ram_cm_turret_rng
-    LDA !DROP_CHANCE_TABLE_LENGTH-1 : ASL : TAX
+    LDA.w !DROP_CHANCE_TABLE_LENGTH-1 : ASL : TAX
   .dropTableLoop
     LDA.l drop_chance_tables,X : CMP !ram_drop_chance_table : BEQ .setDropChances
     DEX #2 : BPL .dropTableLoop
     TDC : TAX
   .setDropChances
     TXA : LSR : STA !ram_cm_drop_chances
+    JMP action_mainmenu
+}
+
+action_audio_mainmenu:
+{
+    LDA !ram_cm_sfxlib1 : BEQ .set1 : BMI .set1
+    CMP #$0043 : BMI .done1
+  .set1
+    LDA #$0001 : STA !ram_cm_sfxlib1
+  .done1
+    LDA !ram_cm_sfxlib2 : BEQ .set2 : BMI .set2
+    CMP #$0080 : BMI .done2
+  .set2
+    LDA #$0001 : STA !ram_cm_sfxlib2
+  .done2
+    LDA !ram_cm_sfxlib3 : BEQ .set3 : BMI .set3
+    CMP #$0030 : BMI .done3
+  .set3
+    LDA #$0001 : STA !ram_cm_sfxlib3
+  .done3
     JMP action_mainmenu
 }
 
@@ -198,6 +190,11 @@ action_layout_mainmenu:
 
 action_customize_mainmenu:
 {
+    LDA !sram_custompalette_profile : BEQ .set_noncustompalette
+    LDA #$0001
+  .set_noncustompalette
+    STA !ram_cm_noncustompalette
+
     ; Set fast button selection
     LDA !sram_cm_fast_scroll_button : CMP !CTRL_X : BEQ .xSelected
     CMP !CTRL_Y : BEQ .ySelected
@@ -257,7 +254,6 @@ action_submenu_jump:
     ; Set cursor to top for new menus
     TDC : STA !ram_cm_cursor_stack,X
     JSL cm_calculate_max
-    JSL cm_colors
 
     ; Perform the cm_move check
     ; in case we shouldn't be on the first line
@@ -448,7 +444,7 @@ mm_goto_ctrlshortcut:
     %cm_jsl("Controller Shortcuts", #action_ctrlshortcut_mainmenu, #CtrlShortcutMenu)
 
 mm_goto_audiomenu:
-    %cm_mainmenu("Audio Menu", #AudioMenu)
+    %cm_jsl("Audio Menu", #action_audio_mainmenu, #AudioMenu)
 
 mm_goto_customize:
     %cm_jsl("Customize Practice Menu", #action_customize_mainmenu, #CustomizeMenu)
@@ -467,7 +463,6 @@ mm_goto_brbmenu:
 PresetOptionsMenu:
     dw #presets_select_preset_category
     dw #presets_current
-    dw #$FFFF
     dw #presets_category_adjustments
     dw #$FFFF
     dw #presets_custom_preset_slot
@@ -480,6 +475,7 @@ else
 endif
     dw #presets_reload_last
     dw #presets_load_random
+    dw #$FFFF
     dw #presets_equip_rando_menu
     dw #presets_elevator
     dw #presets_open_blue_doors
@@ -493,7 +489,7 @@ endif
     dw #$0000
     %cm_header("PRESET OPTIONS MENU")
 if !RAW_TILE_GRAPHICS
-    %cm_footer("COMPRESSED OFF IS FASTER")
+    %cm_footer("SAMUS SKIN OFF IS FASTER")
 endif
 
 presets_select_preset_category:
@@ -627,7 +623,7 @@ presets_auto_segment_reset:
 
 if !RAW_TILE_GRAPHICS
 presets_compressed_data:
-    %cm_toggle_bit("Compressed Data", !sram_preset_options, !PRESETS_COMPRESSED, #0)
+    %cm_toggle_bit("Custom Samus Skin", !sram_preset_options, !PRESETS_COMPRESSED, #0)
 endif
 
 PresetCategoryAdjustmentMenu:
@@ -1791,6 +1787,7 @@ action_teleport:
 
 SpritesMenu:
     dw #sprites_samus_prio
+    dw #$FFFF
     dw #sprites_show_samus_hitbox
     dw #sprites_show_enemy_hitbox
     dw #sprites_show_extended_hitbox
@@ -1798,6 +1795,7 @@ SpritesMenu:
     dw #sprites_show_samusproj_hitbox
     dw #sprites_show_enemyproj_hitbox
     dw #sprites_show_proj_as_32x32
+    dw #$FFFF
     dw #sprites_oob_viewer
     dw #$0000
     %cm_header("SPRITE FEATURES")
@@ -1848,19 +1846,19 @@ InfoHudMenu:
     dw #ih_room_strat
     dw #ih_goto_superhud
     dw #ih_superhud_bottom_selector
+    dw #ih_door_display_mode
     dw #ih_display_mode_reward
     dw #$FFFF
-    dw #ih_door_display_mode
     dw #ih_goto_timer_settings
     dw #$FFFF
     dw #ih_minimap
     dw #ih_top_HUD_mode
     dw #ih_dynamic_frames_held
     dw #ih_status_icons
+    dw #ih_bonk_indicator
 if !PRESERVE_WRAM_DURING_SPACETIME
     dw #ih_spacetime_infohud
 endif
-    dw #ih_lag
     dw #$FFFF
     dw #ih_ram_watch
     dw #$0000
@@ -1887,6 +1885,7 @@ DisplayModeMenu:
     dw ihmode_vspeed
     dw ihmode_quickdrop
     dw ihmode_walljump
+    dw ihmode_doublesbj
     dw #$FFFF
     dw ihmode_goto_page2
     dw #$0000
@@ -1894,10 +1893,12 @@ DisplayModeMenu:
 
 DisplayModeMenu2:
     dw ihmode_countdamage
+    dw ihmode_counthp
     dw ihmode_armpump
     dw ihmode_pumpcounter
     dw ihmode_xpos
     dw ihmode_ypos
+    dw ihmode_camerapos
     dw ihmode_shottimer
     dw ihmode_ramwatch
     dw #$FFFF
@@ -1961,36 +1962,42 @@ ihmode_walljump:
 !IH_MODE_WALLJUMP_INDEX = #$0010
     %cm_jsl("Walljump Trainer", #action_select_infohud_mode, #$0010)
 
+ihmode_doublesbj:
+    %cm_jsl("Double Springball Jump", #action_select_infohud_mode, #$0011)
+
 ihmode_countdamage:
-!IH_MODE_COUNTDAMAGE_INDEX = #$0011
-    %cm_jsl("Boss Damage Counter", #action_select_infohud_mode, #$0011)
+!IH_MODE_COUNTDAMAGE_INDEX = #$0012
+    %cm_jsl("Boss Damage Counter", #action_select_infohud_mode, #$0012)
 
 ihmode_counthp:
-!IH_MODE_COUNTHP_INDEX = #$0012
-    %cm_jsl("Boss HP Counter", #action_select_infohud_mode, #$0012)
+!IH_MODE_COUNTHP_INDEX = #$0013
+    %cm_jsl("Boss HP Counter", #action_select_infohud_mode, #$0013)
 
 ihmode_armpump:
-!IH_MODE_ARMPUMP_INDEX = #$0013
-    %cm_jsl("Arm Pump Trainer", #action_select_infohud_mode, #$0013)
+!IH_MODE_ARMPUMP_INDEX = #$0014
+    %cm_jsl("Arm Pump Trainer", #action_select_infohud_mode, #$0014)
 
 ihmode_pumpcounter:
-    %cm_jsl("Arm Pump Counter", #action_select_infohud_mode, #$0014)
+    %cm_jsl("Arm Pump Counter", #action_select_infohud_mode, #$0015)
 
 ihmode_xpos:
-    %cm_jsl("X Position", #action_select_infohud_mode, #$0015)
+    %cm_jsl("X Position", #action_select_infohud_mode, #$0016)
 
 ihmode_ypos:
-    %cm_jsl("Y Position", #action_select_infohud_mode, #$0016)
+    %cm_jsl("Y Position", #action_select_infohud_mode, #$0017)
+
+ihmode_camerapos:
+    %cm_jsl("Camera Position", #action_select_infohud_mode, #$0018)
 
 ihmode_shottimer:
-!IH_MODE_SHOTTIMER_INDEX = #$0017
-    %cm_jsl("Shot Timer", #action_select_infohud_mode, #$0017)
+!IH_MODE_SHOTTIMER_INDEX = #$0019
+    %cm_jsl("Shot Timer", #action_select_infohud_mode, #$0019)
 
 ihmode_ramwatch:
-!IH_MODE_RAMWATCH_INDEX = #$0018
-    %cm_jsl("Custom RAM Watch", #action_select_infohud_mode, #$0018)
+!IH_MODE_RAMWATCH_INDEX = #$001A
+    %cm_jsl("Custom RAM Watch", #action_select_infohud_mode, #$001A)
 
-!IH_MODE_COUNT = #$0019
+!IH_MODE_COUNT = #$001B
 action_select_infohud_mode:
 {
     TYA : STA !sram_display_mode
@@ -2026,12 +2033,14 @@ ih_display_mode:
     db #$28, " VERT SPEED", #$FF
     db #$28, " QUICK DROP", #$FF
     db #$28, "  WALL JUMP", #$FF
+    db #$28, " DOUBLE SBJ", #$FF
     db #$28, "DMG COUNTER", #$FF
     db #$28, " HP COUNTER", #$FF
     db #$28, "   ARM PUMP", #$FF
     db #$28, " PUMP COUNT", #$FF
     db #$28, " X POSITION", #$FF
     db #$28, " Y POSITION", #$FF
+    db #$28, " CAMERA POS", #$FF
     db #$28, " SHOT TIMER", #$FF
     db #$28, "  RAM WATCH", #$FF
     db #$FF
@@ -2089,7 +2098,7 @@ ihstrat_ceresridley:
     %cm_jsl("Ceres Ridley Hits", #action_select_room_strat, #$0001)
 
 ihstrat_doorskip:
-    %cm_jsl("Parlor-Climb Door Skip", #action_select_room_strat, #$0002)
+    %cm_jsl("Parlor/Botwoon Door Skip", #action_select_room_strat, #$0002)
 
 ihstrat_tacotank:
     %cm_jsl("Taco Tank", #action_select_room_strat, #$0003)
@@ -2239,12 +2248,14 @@ ih_superhud_bottom_selector:
     db #$28, " VERT SPEED", #$FF
     db #$28, " QUICK DROP", #$FF
     db #$28, "  WALL JUMP", #$FF
+    db #$28, " DOUBLE SBJ", #$FF
     db #$28, "DMG COUNTER", #$FF
     db #$28, " HP COUNTER", #$FF
     db #$28, "   ARM PUMP", #$FF
     db #$28, " PUMP COUNT", #$FF
     db #$28, " X POSITION", #$FF
     db #$28, " Y POSITION", #$FF
+    db #$28, " CAMERA POS", #$FF
     db #$28, " SHOT TIMER", #$FF
     db #$28, "  RAM WATCH", #$FF
     db #$28, " CERES HITS", #$FF
@@ -2291,8 +2302,7 @@ SuperHUDBottomMenu:
     dw ih_superhud_vspeed
     dw ih_superhud_quickdrop
     dw ih_superhud_walljump
-    dw ih_superhud_countdamage
-    dw ih_superhud_counthp
+    dw ih_superhud_doublesbj
     dw #$FFFF
     dw ih_superhud_goto_page2
     dw ih_superhud_goto_page3
@@ -2300,10 +2310,13 @@ SuperHUDBottomMenu:
     %cm_header("SUPER HUD BOTTOM MODE")
 
 SuperHUDBottomMenu2:
+    dw ih_superhud_countdamage
+    dw ih_superhud_counthp
     dw ih_superhud_armpump
     dw ih_superhud_pumpcounter
     dw ih_superhud_xpos
     dw ih_superhud_ypos
+    dw ih_superhud_camerapos
     dw ih_superhud_shottimer
     dw ih_superhud_ramwatch
     dw ih_superhud_ceresridley
@@ -2315,8 +2328,6 @@ SuperHUDBottomMenu2:
     dw ih_superhud_bootlessup
     dw ih_superhud_gateglitch
     dw ih_superhud_moatcwj
-    dw ih_superhud_robotflush
-    dw ih_superhud_shinetopb
     dw #$FFFF
     dw ih_superhud_goto_page1
     dw ih_superhud_goto_page3
@@ -2324,6 +2335,8 @@ SuperHUDBottomMenu2:
     %cm_header("SUPER HUD BOTTOM MODE")
 
 SuperHUDBottomMenu3:
+    dw ih_superhud_robotflush
+    dw ih_superhud_shinetopb
     dw ih_superhud_elevatorcf
     dw ih_superhud_botwooncf
     dw ih_superhud_draygonai
@@ -2392,103 +2405,109 @@ ih_superhud_walljump:
 !IH_SUPERHUD_WALLJUMP_BOTTOM_INDEX = #$000F
     %cm_jsl("Walljump Trainer", #action_select_superhud_bottom, #$000F)
 
+ih_superhud_doublesbj:
+    %cm_jsl("Double Springball Jump", #action_select_superhud_bottom, #$0010)
+
 ih_superhud_countdamage:
-!IH_SUPERHUD_COUNTDAMAGE_BOTTOM_INDEX = #$0010
-    %cm_jsl("Boss Damage Counter", #action_select_superhud_bottom, #$0010)
+!IH_SUPERHUD_COUNTDAMAGE_BOTTOM_INDEX = #$0011
+    %cm_jsl("Boss Damage Counter", #action_select_superhud_bottom, #$0011)
 
 ih_superhud_counthp:
-!IH_SUPERHUD_COUNTHP_BOTTOM_INDEX = #$0011
-    %cm_jsl("Boss HP Counter", #action_select_superhud_bottom, #$0011)
+!IH_SUPERHUD_COUNTHP_BOTTOM_INDEX = #$0012
+    %cm_jsl("Boss HP Counter", #action_select_superhud_bottom, #$0012)
 
 ih_superhud_armpump:
-!IH_SUPERHUD_ARMPUMP_BOTTOM_INDEX = #$0012
-    %cm_jsl("Arm Pump Trainer", #action_select_superhud_bottom, #$0012)
+!IH_SUPERHUD_ARMPUMP_BOTTOM_INDEX = #$0013
+    %cm_jsl("Arm Pump Trainer", #action_select_superhud_bottom, #$0013)
 
 ih_superhud_pumpcounter:
-    %cm_jsl("Arm Pump Counter", #action_select_superhud_bottom, #$0013)
+    %cm_jsl("Arm Pump Counter", #action_select_superhud_bottom, #$0014)
 
 ih_superhud_xpos:
-    %cm_jsl("X Position", #action_select_superhud_bottom, #$0014)
+    %cm_jsl("X Position", #action_select_superhud_bottom, #$0015)
 
 ih_superhud_ypos:
-    %cm_jsl("Y Position", #action_select_superhud_bottom, #$0015)
+    %cm_jsl("Y Position", #action_select_superhud_bottom, #$0016)
+
+ih_superhud_camerapos:
+    %cm_jsl("Camera Position", #action_select_superhud_bottom, #$0017)
 
 ih_superhud_shottimer:
-!IH_SUPERHUD_SHOTTIMER_BOTTOM_INDEX = #$0016
-    %cm_jsl("Shot Timer", #action_select_superhud_bottom, #$0016)
+!IH_SUPERHUD_SHOTTIMER_BOTTOM_INDEX = #$0018
+    %cm_jsl("Shot Timer", #action_select_superhud_bottom, #$0018)
 
 ih_superhud_ramwatch:
-!IH_SUPERHUD_RAMWATCH_BOTTOM_INDEX = #$0017
-    %cm_jsl("Custom RAM Watch", #action_select_superhud_bottom, #$0017)
+!IH_SUPERHUD_RAMWATCH_BOTTOM_INDEX = #$0019
+    %cm_jsl("Custom RAM Watch", #action_select_superhud_bottom, #$0019)
 
 ih_superhud_ceresridley:
-    %cm_jsl("Ceres Ridley Hits", #action_select_superhud_bottom, #$0018)
+    %cm_jsl("Ceres Ridley Hits", #action_select_superhud_bottom, #$001A)
 
 ih_superhud_doorskip:
-    %cm_jsl("Parlor-Climb Door Skip", #action_select_superhud_bottom, #$0019)
+    %cm_jsl("Parlor-Climb Door Skip", #action_select_superhud_bottom, #$001B)
 
 ih_superhud_tacotank:
-    %cm_jsl("Taco Tank", #action_select_superhud_bottom, #$001A)
+    %cm_jsl("Taco Tank", #action_select_superhud_bottom, #$001C)
 
 ih_superhud_pitdoor:
-    %cm_jsl("Pit Room Right Door", #action_select_superhud_bottom, #$001B)
+    %cm_jsl("Pit Room Right Door", #action_select_superhud_bottom, #$001D)
 
 ih_superhud_moondance:
-    %cm_jsl("Moondance", #action_select_superhud_bottom, #$001C)
+    %cm_jsl("Moondance", #action_select_superhud_bottom, #$001E)
 
 ih_superhud_kraidradar:
-    %cm_jsl("Kraid Nail Radar", #action_select_superhud_bottom, #$001D)
+    %cm_jsl("Kraid Nail Radar", #action_select_superhud_bottom, #$001F)
 
 ih_superhud_bootlessup:
-    %cm_jsl("Bootless Up In Two", #action_select_superhud_bottom, #$001E)
+    %cm_jsl("Bootless Up In Two", #action_select_superhud_bottom, #$0020)
 
 ih_superhud_gateglitch:
-    %cm_jsl("Gate Glitch", #action_select_superhud_bottom, #$001F)
+    %cm_jsl("Gate Glitch", #action_select_superhud_bottom, #$0021)
 
 ih_superhud_moatcwj:
-    %cm_jsl("Moat CWJ", #action_select_superhud_bottom, #$0020)
+    %cm_jsl("Moat CWJ", #action_select_superhud_bottom, #$0022)
 
 ih_superhud_robotflush:
-    %cm_jsl("Robot Flush", #action_select_superhud_bottom, #$0021)
+    %cm_jsl("Robot Flush", #action_select_superhud_bottom, #$0023)
 
 ih_superhud_shinetopb:
-    %cm_jsl("Shine to PB", #action_select_superhud_bottom, #$0022)
+    %cm_jsl("Shine to PB", #action_select_superhud_bottom, #$0024)
 
 ih_superhud_elevatorcf:
-    %cm_jsl("Elevator Crystal Flash", #action_select_superhud_bottom, #$0023)
+    %cm_jsl("Elevator Crystal Flash", #action_select_superhud_bottom, #$0025)
 
 ih_superhud_botwooncf:
-    %cm_jsl("Botwoon Crystal Flash", #action_select_superhud_bottom, #$0024)
+    %cm_jsl("Botwoon Crystal Flash", #action_select_superhud_bottom, #$0026)
 
 ih_superhud_draygonai:
-    %cm_jsl("Draygon AI", #action_select_superhud_bottom, #$0025)
+    %cm_jsl("Draygon AI", #action_select_superhud_bottom, #$0027)
 
 ih_superhud_snailclip:
-    %cm_jsl("Aqueduct Snail Clip", #action_select_superhud_bottom, #$0026)
+    %cm_jsl("Aqueduct Snail Clip", #action_select_superhud_bottom, #$0028)
 
 ih_superhud_wasteland:
-    %cm_jsl("Wasteland Entry", #action_select_superhud_bottom, #$0027)
+    %cm_jsl("Wasteland Entry", #action_select_superhud_bottom, #$0029)
 
 ih_superhud_ridleyai:
-    %cm_jsl("Ridley AI", #action_select_superhud_bottom, #$0028)
+    %cm_jsl("Ridley AI", #action_select_superhud_bottom, #$002A)
 
 ih_superhud_kihuntermanip:
-    %cm_jsl("Kihunter Manipulation", #action_select_superhud_bottom, #$0029)
+    %cm_jsl("Kihunter Manipulation", #action_select_superhud_bottom, #$002B)
 
 ih_superhud_downbackzeb:
-    %cm_jsl("Downback Zeb Skip", #action_select_superhud_bottom, #$002A)
+    %cm_jsl("Downback Zeb Skip", #action_select_superhud_bottom, #$002C)
 
 ih_superhud_zebskip:
-    %cm_jsl("Zeb Skip Indicator", #action_select_superhud_bottom, #$002B)
+    %cm_jsl("Zeb Skip Indicator", #action_select_superhud_bottom, #$002D)
 
 ih_superhud_mbhp:
-!IH_SUPERHUD_MBHP_BOTTOM_INDEX = #$002C
-    %cm_jsl("Mother Brain HP", #action_select_superhud_bottom, #$002C)
+!IH_SUPERHUD_MBHP_BOTTOM_INDEX = #$002E
+    %cm_jsl("Mother Brain HP", #action_select_superhud_bottom, #$002E)
 
 ih_superhud_twocries:
-    %cm_jsl("Two Cries Standup", #action_select_superhud_bottom, #$002D)
+    %cm_jsl("Two Cries Standup", #action_select_superhud_bottom, #$002F)
 
-!IH_SUPERHUD_BOTTOM_COUNT = #$002E
+!IH_SUPERHUD_BOTTOM_COUNT = #$0030
 action_select_superhud_bottom:
 {
     TYA : STA !sram_superhud_bottom
@@ -2865,6 +2884,9 @@ ih_status_icons:
     LDA !IH_BLANK : STA !HUD_TILEMAP+$54 : STA !HUD_TILEMAP+$56 : STA !HUD_TILEMAP+$58
     RTL
 
+ih_bonk_indicator:
+    %cm_toggle("Bonk Indicators", !sram_bonk_indicators, #$02, #0)
+
 ih_spacetime_infohud:
     dw !ACTION_CHOICE
     dl #!ram_spacetime_infohud
@@ -2873,9 +2895,6 @@ ih_spacetime_infohud:
     db #$28, "    VANILLA", #$FF
     db #$28, "  PRESERVED", #$FF
     db #$FF
-
-ih_lag:
-    %cm_numfield("Artificial Lag", !sram_artificial_lag, 0, 64, 1, 4, #0)
 
 ih_ram_watch:
     %cm_jsl("Customize RAM Watch", #ih_prepare_ram_watch_menu, #RAMWatchMenu)
@@ -3041,16 +3060,31 @@ rng_prepare_phantoon_menu:
     JSL rng_phan_set_phan_second_phase
     PLA : STA !ram_phantoon_phase_rng
     AND !PHANTOON_RNG_FLIP_MASK : ASL #2 : XBA : STA !ram_cm_phantoon_flip_rng
-    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_MASK
-    STA !ram_cm_phantoon_flames_rng
+    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_1_MASK
+    STA !ram_cm_phantoon_flames_1_rng
+    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_2_MASK
+    LSR #3 : STA !ram_cm_phantoon_flames_2_rng
     LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_PATH_MASK
     ASL #2 : XBA : STA !ram_cm_phantoon_flame_direction_rng
-    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_NEXT_MASK
-    XBA : STA !ram_cm_phantoon_next_flames_rng
+    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_3_MASK
+    XBA : STA !ram_cm_phantoon_flames_3_rng
+    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_4_MASK
+    XBA : LSR #3 : CMP #$0007 : BNE .set_flame_4
+    DEC #2
+  .set_flame_4
+    STA !ram_cm_phantoon_flames_4_rng
     LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_EYE_CLOSE_MASK
     XBA : ASL #2 : XBA : STA !ram_cm_phantoon_eyeclose_rng
+    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_EYE_CLOSE_INVERTED
+    BEQ .set_flames : CMP #$0005 : BEQ .first_only : CMP #$0006 : BEQ .first_only
+    LDA #$0001
+  .set_flames
+    STA !ram_cm_phantoon_flames_rng
     %setmenubank()
     JML action_submenu
+  .first_only
+    DEC #3
+    BRA .set_flames
 }
 
 RngPhantoonMenu:
@@ -3071,10 +3105,10 @@ RngPhantoonMenu:
     dw #rng_phan_second_phase_flip
     dw #$FFFF
     dw #rng_phan_eyeclose
-    dw #rng_phan_flamepattern
-    dw #rng_phan_next_flamepattern
-    dw #rng_phan_flame_direction
     dw #rng_phan_always_visible
+    dw #$FFFF
+    dw #rng_phan_flames
+    dw #rng_customize_phan_flames
     dw #$0000
     %cm_header("PHANTOON RNG CONTROL")
 
@@ -3108,21 +3142,21 @@ rng_phan_first_phase:
     ORA !ram_phantoon_phase_rng : STA !ram_phantoon_phase_rng
   .check_flames
     ; If first round pattern is random or #1 Left or #1 Right, update it
-    LDA !ram_cm_phantoon_flames_rng : BEQ .update_flames
+    LDA !ram_cm_phantoon_flames_1_rng : BEQ .update_flames
     CMP #$0005 : BMI .done_flames
   .update_flames
     LDA !ram_phantoon_phase_rng : AND !PHANTOON_RNG_PHASE_1_MASK
     BEQ .set_random : AND #$0015 : BEQ .set_left
     LDA !ram_phantoon_phase_rng : AND #$002A : BEQ .set_right
   .set_random
-    LDA #$0000 : STA !ram_cm_phantoon_flames_rng
-    JMP rng_phan_flamepattern_routine
+    TDC : STA !ram_cm_phantoon_flames_1_rng
+    JMP rng_phan_flame_pattern_1_routine
   .set_left
-    LDA #$0005 : STA !ram_cm_phantoon_flames_rng
-    JMP rng_phan_flamepattern_routine
+    LDA #$0005 : STA !ram_cm_phantoon_flames_1_rng
+    JMP rng_phan_flame_pattern_1_routine
   .set_right
-    LDA #$0006 : STA !ram_cm_phantoon_flames_rng
-    JMP rng_phan_flamepattern_routine
+    LDA #$0006 : STA !ram_cm_phantoon_flames_1_rng
+    JMP rng_phan_flame_pattern_1_routine
   .done_flames
     LDA !ROOM_ID : CMP.w #ROOM_PhantoonRoom : BNE .done
     JML init_phantoon_rng
@@ -3295,11 +3329,51 @@ rng_phan_eyeclose:
   .done
     RTL
 
-rng_phan_flamepattern:
+rng_phan_flames:
     dw !ACTION_CHOICE
     dl #!ram_cm_phantoon_flames_rng
     dw #.routine
     db #$28, "Phantoon Flames", #$FF
+    db #$28, "     RANDOM", #$FF
+    db #$28, "     CUSTOM", #$FF
+    db #$28, "    #1 LEFT", #$FF
+    db #$28, "   #1 RIGHT", #$FF
+    db #$FF
+  .routine
+    LDA !ram_cm_phantoon_flames_rng : BEQ .set_cm_vars
+    CMP #$0001 : BEQ .done
+    INC #3
+  .set_cm_vars
+    STA !ram_cm_phantoon_flames_1_rng
+    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_EYE_CLOSE_MASK
+    ORA !ram_cm_phantoon_flames_1_rng : STA !ram_phantoon_eye_and_flames_rng
+    TDC : STA !ram_cm_phantoon_flames_2_rng : STA !ram_cm_phantoon_flames_3_rng
+    STA !ram_cm_phantoon_flames_4_rng : STA !ram_cm_phantoon_flame_direction_rng
+    LDA !ROOM_ID : CMP.w #ROOM_PhantoonRoom : BNE .done
+    JML init_phantoon_rng
+  .done
+    RTL
+
+rng_customize_phan_flames:
+    %cm_submenu("Customize Phantoon Flames", #RngPhantoonFlamesMenu)
+
+RngPhantoonFlamesMenu:
+    dw #rng_phan_flames
+    dw #$FFFF
+    dw #rng_phan_flame_pattern_1
+    dw #rng_phan_flame_pattern_2
+    dw #rng_phan_flame_pattern_3
+    dw #rng_phan_flame_pattern_4
+    dw #$FFFF
+    dw #rng_phan_flame_direction
+    dw #$0000
+    %cm_header("PHANTOON RNG CONTROL")
+
+rng_phan_flame_pattern_1:
+    dw !ACTION_CHOICE
+    dl #!ram_cm_phantoon_flames_1_rng
+    dw #.routine
+    db #$28, "First Pattern", #$FF
     db #$28, "     RANDOM", #$FF
     db #$28, "      22222", #$FF
     db #$28, "        111", #$FF
@@ -3309,18 +3383,15 @@ rng_phan_flamepattern:
     db #$28, "   #1 RIGHT", #$FF
     db #$FF
   .routine
-    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_INVERTED
-    ORA !ram_cm_phantoon_flames_rng : STA !ram_phantoon_eye_and_flames_rng
-    LDA !ROOM_ID : CMP.w #ROOM_PhantoonRoom : BNE .done
-    JML init_phantoon_rng
-  .done
-    RTL
+    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_1_INVERTED
+    ORA !ram_cm_phantoon_flames_1_rng : STA !ram_phantoon_eye_and_flames_rng
+    JMP flame_pattern_update
 
-rng_phan_next_flamepattern:
+rng_phan_flame_pattern_2:
     dw !ACTION_CHOICE
-    dl #!ram_cm_phantoon_next_flames_rng
+    dl #!ram_cm_phantoon_flames_2_rng
     dw #.routine
-    db #$28, "Next Flames", #$FF
+    db #$28, "Second Pattern", #$FF
     db #$28, "     RANDOM", #$FF
     db #$28, "      22222", #$FF
     db #$28, "        111", #$FF
@@ -3328,14 +3399,51 @@ rng_phan_next_flamepattern:
     db #$28, "    1424212", #$FF
     db #$FF
   .routine
-    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_NEXT_INVERTED
+    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_2_INVERTED
     STA !ram_phantoon_eye_and_flames_rng
-    LDA !ram_cm_phantoon_next_flames_rng : XBA
+    LDA !ram_cm_phantoon_flames_2_rng : ASL #3
     ORA !ram_phantoon_eye_and_flames_rng : STA !ram_phantoon_eye_and_flames_rng
-    LDA !ROOM_ID : CMP.w #ROOM_PhantoonRoom : BNE .done
-    JML init_phantoon_rng
-  .done
-    RTL
+    JMP flame_pattern_update
+
+rng_phan_flame_pattern_3:
+    dw !ACTION_CHOICE
+    dl #!ram_cm_phantoon_flames_3_rng
+    dw #.routine
+    db #$28, "Third Pattern", #$FF
+    db #$28, "     RANDOM", #$FF
+    db #$28, "      22222", #$FF
+    db #$28, "        111", #$FF
+    db #$28, "    3333333", #$FF
+    db #$28, "    1424212", #$FF
+    db #$FF
+  .routine
+    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_3_INVERTED
+    STA !ram_phantoon_eye_and_flames_rng
+    LDA !ram_cm_phantoon_flames_3_rng : XBA
+    ORA !ram_phantoon_eye_and_flames_rng : STA !ram_phantoon_eye_and_flames_rng
+    JMP flame_pattern_update
+
+rng_phan_flame_pattern_4:
+    dw !ACTION_CHOICE
+    dl #!ram_cm_phantoon_flames_4_rng
+    dw #.routine
+    db #$28, "Fourth Pattern", #$FF
+    db #$28, "     RANDOM", #$FF
+    db #$28, "      22222", #$FF
+    db #$28, "        111", #$FF
+    db #$28, "    3333333", #$FF
+    db #$28, "    1424212", #$FF
+    db #$28, "  NO REPEAT", #$FF
+    db #$FF
+  .routine
+    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_4_INVERTED
+    STA !ram_phantoon_eye_and_flames_rng
+    LDA !ram_cm_phantoon_flames_4_rng : CMP #$0005 : BNE .set_flame_4
+    INC #2
+  .set_flame_4
+    XBA : ASL #3
+    ORA !ram_phantoon_eye_and_flames_rng : STA !ram_phantoon_eye_and_flames_rng
+    JMP flame_pattern_update
 
 rng_phan_flame_direction:
     dw !ACTION_CHOICE
@@ -3351,10 +3459,23 @@ rng_phan_flame_direction:
     STA !ram_phantoon_eye_and_flames_rng
     LDA !ram_cm_phantoon_flame_direction_rng : XBA : LSR #2
     ORA !ram_phantoon_eye_and_flames_rng : STA !ram_phantoon_eye_and_flames_rng
+    ; Fallthrough
+
+flame_pattern_update:
+{
+    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_EYE_CLOSE_INVERTED
+    BEQ .set_flames : CMP #$0005 : BEQ .first_only : CMP #$0006 : BEQ .first_only
+    LDA #$0001
+  .set_flames
+    STA !ram_cm_phantoon_flames_rng
     LDA !ROOM_ID : CMP.w #ROOM_PhantoonRoom : BNE .done
     JML init_phantoon_rng
+  .first_only
+    DEC #3
+    BRA .set_flames
   .done
     RTL
+}
 
 
 ; --------------
@@ -3371,6 +3492,8 @@ rng_prepare_ridley_menu:
     ASL #2 : XBA : STA !ram_cm_ridley_lunge_pogo_rng
     LDA !ram_ridley_rng_flags : AND !RIDLEY_RNG_BACKPOGO_MASK
     XBA : STA !ram_cm_ridley_backpogo_rng
+    LDA !ram_ridley_rng_flags : AND !RIDLEY_RNG_TAIL_MASK
+    XBA : LSR #3 : STA !ram_cm_ridley_tail_rng
     LDA !ram_ridley_rng_flags : AND !RIDLEY_RNG_50_50_MASK
     XBA : ASL #2 : XBA : STA !ram_cm_ridley_swoop_pogo_rng
     LDA !ram_ridley_rng_times_and_fireball : AND !RIDLEY_RNG_HOVER_TIME_MASK
@@ -3402,6 +3525,8 @@ RngRidleyMenu:
     dw #rng_ridley_hover_time
     dw #rng_ridley_hover_time_dynamic
     dw #rng_ridley_hover_fireball
+    dw #$FFFF
+    dw #rng_ridley_tail
     dw #$0000
     %cm_header("RIDLEY RNG CONTROL")
 
@@ -3471,51 +3596,9 @@ rng_ridley_backpogo:
     db #$28, "        MAX", #$FF
     db #$28, "         2x", #$FF
     db #$28, "         3x", #$FF
-    db #$28, "         4x", #$FF
-    db #$28, "         5x", #$FF
-    db #$28, "         6x", #$FF
-    db #$28, "         7x", #$FF
-    db #$28, "         8x", #$FF
-    db #$28, "         9x", #$FF
-    db #$28, "        10x", #$FF
-    db #$28, "        11x", #$FF
-    db #$28, "        12x", #$FF
-    db #$28, "        13x", #$FF
-    db #$28, "        14x", #$FF
-    db #$28, "        15x", #$FF
-    db #$28, "        16x", #$FF
-    db #$28, "        17x", #$FF
-    db #$28, "        18x", #$FF
-    db #$28, "        19x", #$FF
-    db #$28, "        20x", #$FF
-    db #$28, "        21x", #$FF
-    db #$28, "        22x", #$FF
-    db #$28, "        23x", #$FF
-    db #$28, "        24x", #$FF
-    db #$28, "        25x", #$FF
-    db #$28, "        26x", #$FF
-    db #$28, "        27x", #$FF
-    db #$28, "        28x", #$FF
-    db #$28, "        29x", #$FF
-    db #$28, "        30x", #$FF
-    db #$28, "        31x", #$FF
-    db #$28, "        32x", #$FF
-    db #$28, "        33x", #$FF
-    db #$28, "        34x", #$FF
-    db #$28, "        35x", #$FF
-    db #$28, "        36x", #$FF
-    db #$28, "        37x", #$FF
-    db #$28, "        38x", #$FF
-    db #$28, "        39x", #$FF
-    db #$28, "        40x", #$FF
-    db #$28, "        41x", #$FF
-    db #$28, "        42x", #$FF
-    db #$28, "        43x", #$FF
-    db #$28, "        44x", #$FF
-    db #$28, "        45x", #$FF
-    db #$28, "        46x", #$FF
-    db #$28, "        47x", #$FF
-    db #$28, "        48x", #$FF
+    db #$28, "        25%", #$FF
+    db #$28, "        50%", #$FF
+    db #$28, "        75%", #$FF
     db #$FF
   .routine
     LDA !ram_ridley_rng_flags : AND !RIDLEY_RNG_BACKPOGO_INVERTED
@@ -3638,6 +3721,30 @@ rng_ridley_hover_fireball:
     STA !ram_ridley_rng_times_and_fireball
     LDA !ram_cm_ridley_hover_fireball_rng : XBA : LSR #2
     ORA !ram_ridley_rng_times_and_fireball : STA !ram_ridley_rng_times_and_fireball
+    LDA !ROOM_ID : CMP.w #ROOM_RidleyRoom : BNE .done
+    JML init_zebes_ridley_rng
+  .done
+    RTL
+
+rng_ridley_tail:
+    dw !ACTION_CHOICE
+    dl #!ram_cm_ridley_tail_rng
+    dw #.routine
+    db #$28, "Tail", #$FF
+    db #$28, "    VANILLA", #$FF
+    db #$28, "        OFF", #$FF
+    db #$28, "        MAX", #$FF
+    db #$28, "         2x", #$FF
+    db #$28, "         3x", #$FF
+    db #$28, "        25%", #$FF
+    db #$28, "        50%", #$FF
+    db #$28, "        75%", #$FF
+    db #$FF
+  .routine
+    LDA !ram_ridley_rng_flags : AND !RIDLEY_RNG_TAIL_INVERTED
+    STA !ram_ridley_rng_flags
+    LDA !ram_cm_ridley_tail_rng : ASL #3 : XBA
+    ORA !ram_ridley_rng_flags : STA !ram_ridley_rng_flags
     LDA !ROOM_ID : CMP.w #ROOM_RidleyRoom : BNE .done
     JML init_zebes_ridley_rng
   .done
@@ -4019,6 +4126,8 @@ endif
 SlowdownMenu:
     dw #slowdown_mode
     dw #slowdown_frames
+    dw #$FFFF
+    dw #slowdown_artifial_lag
     dw #$0000
     %cm_header("SLOWDOWN MODE")
 
@@ -4034,6 +4143,9 @@ slowdown_mode:
 
 slowdown_frames:
     %cm_numfield("Slowdown (Lag) Frames", !ram_cm_slowdown_frames, 0, 120, 1, 4, #0)
+
+slowdown_artifial_lag:
+    %cm_numfield("Artificial Lag", !sram_artificial_lag, 0, 64, 1, 4, #0)
 
 
 ; ---------------

@@ -82,8 +82,9 @@ presets_submenu_nodropskpdr_230_missile_path:
     dw #presets_nodropskpdr_230_missile_path_green_pirate_shaft
     dw #presets_nodropskpdr_230_missile_path_green_brinstar_elevator
     dw #presets_nodropskpdr_230_missile_path_early_supers_missile
-    dw #presets_nodropskpdr_230_missile_path_brinstar_reserve_missiles
-    dw #presets_nodropskpdr_230_missile_path_early_supers
+    dw #$FFFF
+    dw #presets_nodropskpdr_230_missile_path_25_path_reserve_missiles
+    dw #presets_nodropskpdr_230_missile_path_25_path_early_supers
     dw #$0000
     %cm_header("230 MISSILE PATH")
 
@@ -192,8 +193,8 @@ presets_submenu_nodropskpdr_wrecked_ship:
     dw #presets_nodropskpdr_wrecked_ship_bowling_spark
     dw #presets_nodropskpdr_wrecked_ship_leaving_gravity
     dw #presets_nodropskpdr_wrecked_ship_moat_ball
-    dw #presets_nodropskpdr_wrecked_ship_crateria_refill_return
     dw #presets_nodropskpdr_wrecked_ship_crateria_kihunters_return
+    dw #presets_nodropskpdr_wrecked_ship_crateria_refill_return
     dw #$0000
     %cm_header("WRECKED SHIP")
 
@@ -375,11 +376,11 @@ presets_nodropskpdr_230_missile_path_green_brinstar_elevator:
 presets_nodropskpdr_230_missile_path_early_supers_missile:
     %cm_preset("Early Supers Missile", #preset_names_early_supers_missile, #preset_nodropskpdr_230_missile_path_early_supers_missile)
 
-presets_nodropskpdr_230_missile_path_brinstar_reserve_missiles:
-    %cm_preset("Brinstar Reserve Missiles", #preset_names_brinstar_reserve_missiles, #preset_nodropskpdr_230_missile_path_brinstar_reserve_missiles)
+presets_nodropskpdr_230_missile_path_25_path_reserve_missiles:
+    %cm_preset("(25 Path) Reserve Missiles", #preset_names_25_path_reserve_missiles, #preset_nodropskpdr_230_missile_path_25_path_reserve_missiles)
 
-presets_nodropskpdr_230_missile_path_early_supers:
-    %cm_preset("Early Supers", #preset_names_early_supers, #preset_nodropskpdr_230_missile_path_early_supers)
+presets_nodropskpdr_230_missile_path_25_path_early_supers:
+    %cm_preset("(25 Path) Early Supers", #preset_names_25_path_early_supers, #preset_nodropskpdr_230_missile_path_25_path_early_supers)
 
 
 ; Blue Brinstar Missile Path

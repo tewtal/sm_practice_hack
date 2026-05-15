@@ -80,11 +80,7 @@ If you experience crashes or severe glitches when using savestates, your platfor
 | - Load with Enemies           | Skips clearing enemies when loading presets. NOTE: Enemy data is not saved with presets. Therefore, enemies will always be loaded in their starting positions for the room
 | - Clear Map Tiles             | Clears all explored map tiles when loading a preset
 | - Auto Reset Segment          | When enabled, the segment timer will not be reset until the next door transition
-| - Compressed Graphics         | Use built-in and slower compressed tile graphics when loading presets.
-|                               | Only enable this if you are applying patches that use banks F5-FE and loading prests crashes the game.
-| - Compressed Palettes         | Use built-in compressed palettes when loading presets.
-|                               | Only enable this if you are applying custom room palettes.
-| - Compressed Tables           | Use built-in compressed tile tables when loading presets.
+| - Custom Samus Skin           | Use built-in and slower compressed graphics when loading presets. Only enable this if you are applying patches that use banks F5-FE, such as SpriteSomething, and loading presets causes graphics corruption.
 |&nbsp;|
 | **Save Stations**             | Warp to any save station or hidden debug load station
 |&nbsp;|
@@ -103,6 +99,7 @@ If you experience crashes or severe glitches when using savestates, your platfor
 |                               | Complementary = Varia has no changes, Gravity (without Varia) has half lava protection, no heat protection and 50% enemy/environmental damage reduction
 |                               | DASH Recall = Similar to progressive except Gravity has only 25% heat damage reduction
 |                               | Heat Shield = DASH Recall plus heat resistance applied as if the Heat Shield item were equipped
+| - Speed Booster               | Modify the speed booster similar to map rando's split speed (vanilla, blue booster, spark booster)
 | - Water Physics               | Control whether the current room's water physics are applied, including DASH Recall's Pressure Valve item.
 | - Double Jump                 | From DASH Recall, allows Samus to double jump as if she had space jump for one jump.
 | - Spin Lock                   | From Map Rando, allows Samus to avoid breaking out of spin with up or down following a walljump.
@@ -123,9 +120,9 @@ If you experience crashes or severe glitches when using savestates, your platfor
 | - Room Strat                  | Select which Room Strat to be displayed in the bottom-left of the HUD.
 |                               | This only works if "Room Strat" is selected as the above Infohud Mode.
 | - Configure Super HUD         | Options to replace the item% and status icons and reserves area with other infohud modes, while still having a primary infohud mode or room strat. Compatible with most but not all other infohud modes and room strats.
-| - Strat Reward SFX            | Toggle a sound effect that plays when achieving certain HUD mode and room strats.
 | - Door HUD Mode               | Configure the HUD mode that runs when touching a door transition.
 |                               | Only works when the normal HUD mode is set to Enemy HP.
+| - Strat Reward SFX            | Toggle a sound effect that plays when achieving certain HUD mode and room strats.
 | - Minimap                     | Restores the game minimap, which also allows the pause menu map to be updated. When enabled, a map tile counter will also be displayed.
 | - Top-Left Display            | Choose item collection percentage, reserve energy, or vanilla health to be displayed at the top-left of the HUD.
 |                               | The vanilla options also compresses the viewable area so it is more suitable for practice on an curved CRT monitor or TV.
@@ -133,9 +130,8 @@ If you experience crashes or severe glitches when using savestates, your platfor
 | - Frames Held Mode            | Replaces the controller input display with numbers representing the frames held.
 |                               | Any or all of the 12 controller inputs can be individually toggled into frames held mode.
 | - Status Icons                | Toggle icons to appear when standing on an elevator or when the shine timer is active (e.g. while carrying a spikesuit).
+| - Bonk Indicators             | Toggles the two B indicators that appear on the InfoHUD when Samus bonks a wall and it prevents her from taking an action such as jumping.
 | - Spacetime HUD               | Option to preserve the InfoHUD when using spacetime beam
-| - Artificial Lag              | Select a value to adjust how much lag occurs during normal gameplay. 
-|                               | This is to compensate for the lack of a minimap on the HUD which would normally consume CPU cycles.
 | - Customize RAM Watch         | Setup addresses to be monitored by the RAM Watch HUD mode. Address 1 will appear in the bottom-left corner of the HUD, while Address 2 appears just to the right of Address 1. Memory at these locations can be edited by configuring a Value and selecting 'Write to Address'. Toggle 'Lock Value' to automatically write the value once every frame. RAM Watch must must be the selected HUD mode to continue writing to the address. Only one byte of hex can be configured at a time in the menu. 'Hi' refers to the first byte, while 'Lo' refers to the second. Set the Hi Address to 0D and the Lo Address to EC to monitor the memory address $0DEC, which stores the counter for Samus direction changes while held by Draygon (among other uses). You can find lists of known RAM addresses by selecting 'Select Common Addresses'.
 | **Timer Settings**            | Located within the InfoHUD menu
 | - Frame Counters              | Toggle the room timer in the top-right of the HUD between realtime, gametime, and "speedrun time".
@@ -186,6 +182,7 @@ If you experience crashes or severe glitches when using savestates, your platfor
 | - Zebes Timer                 | Override the initial starting time of 180 seconds to escape Zebes.
 | - Fast Doors                  | Toggle for fast doors similar to some randomizers.
 | - Fast Elevators              | Toggle for fast elevators similar to some randomizers.
+| - Fast Pause                  | Toggle for fast pause similar to some randomizers.
 | - Top-Left Display            | Choose item collection percentage, reserve energy, or vanilla health to be displayed at the top-left of the HUD.
 |                               | The vanilla options also compresses the viewable area so it is more suitable for practice on an curved CRT monitor or TV.
 |                               | Vanilla+ allows infohud mode or roomstrat to overwrite the energy text while Vanilla simply shows the energy text.
@@ -236,6 +233,8 @@ If you experience crashes or severe glitches when using savestates, your platfor
 | - Energy/Ammo Variance        | Set ranges allowing resources to vary randomly when you reload a savestate.
 |&nbsp;|
 | **Slowdown Mode**             | Set if practice hack is in slowdown mode and the number of lag frames it is set for.
+| - Artificial Lag              | Select a value to adjust how much lag occurs during normal gameplay. 
+|                               | This is to compensate for the lack of a minimap on the HUD which would normally consume CPU cycles.
 |&nbsp;|
 | **Controller Shortcuts**      | Set or change button combinations for activating features. Shortcuts may appear multiple times allowing different button combinations to trigger the same action.
 | - Add Shortcut                | Allows a new shortcut to be set. This option might be found on page 2 or 3 if prior pages are full.
@@ -268,8 +267,8 @@ If you experience crashes or severe glitches when using savestates, your platfor
 | - Prev Status Mode            | Decrements the current InfoHUD mode.
 | - Next Room Strat             | Increments the current Room Strat.
 | - Prev Room Strat             | Decrements the current Room Strat.
-| - Next Super HUD              | Increments the current SuperHUD bottom mode.
-| - Prev Super HUD              | Decrements the current SuperHUD bottom mode.
+| - Next Super HUD              | Increments the current Super HUD bottom mode.
+| - Prev Super HUD              | Decrements the current Super HUD bottom mode.
 | - Reset to Defaults           | Resets controller shortcuts to their original defaults.
 |&nbsp;|
 | **Audio Menu**                | Audio related settings and sound test menu.
@@ -325,5 +324,5 @@ As we continue to maintain and add features to the practice ROM, this is our str
 | - Events                      | On events (when drops appear, when an item is collected, etc.), we may add features. It's conceivable this could add a lag frame, although in most circumstances it would be unlikely or impossible.
 | - Door/Elevator Transitions   | Similar to events, we may add features during this time. Some features require data to be reloaded during this time.
 | - Practice Features           | Once you start turning on practice features, lag may no longer be similar to actual game. Some features like magic pants or the metronome may not have much impact, but others like the OOB tile viewer add a significant amount of work for the CPU.
-| - Sprite Patches              | Sprite patches such as SpriteSomething should be supported. These patches sometimes modify the game and theoretically could affect lag on their own, although if you intend to play the vanilla game or randomizer with a sprite patch then you might as well apply it to the practice ROM. You may need to turn on Compressed Graphics/Palettes/Tables in Preset Options as SpriteSomething will overwrite some data used to load presets (and in some cases savestates) faster.
+| - Sprite Patches              | Sprite patches such as SpriteSomething should be supported. These patches sometimes modify the game and theoretically could affect lag on their own, although if you intend to play the vanilla game or randomizer with a sprite patch then you might as well apply it to the practice ROM. You may need to turn on Custom Samus Skin in Preset Options as SpriteSomething will overwrite some data used to load presets (and in some cases savestates) faster.
 <br />

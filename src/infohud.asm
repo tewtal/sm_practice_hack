@@ -240,8 +240,8 @@ ih_get_item_code:
     LDA !ram_realtime_room : STA !ram_last_realtime_room
 
     ; save temp variables
-    LDA $12 : PHA
-    LDA $14 : PHA
+    PEI ($12)
+    PEI ($14)
 
     ; check if segment timer should be reset
     LDA !ram_reset_segment_later : BPL .fanfare_timing
@@ -505,8 +505,8 @@ ih_before_room_transition:
     INC : STA !ram_transition_flag
 
     ; Save temp variables
-    LDA $12 : PHA
-    LDA $14 : PHA
+    PEI ($12)
+    PEI ($14)
 
     ; Update HUD
     JSL ih_update_hud_before_transition
@@ -998,8 +998,8 @@ ih_update_hud_early:
     LDA !ram_realtime_room : STA !ram_last_realtime_room
 
     ; update HUD
-    LDA $12 : PHA
-    LDA $14 : PHA
+    PEI ($12)
+    PEI ($14)
 
     JSL ih_update_hud_code
 
@@ -2202,6 +2202,30 @@ NumberGFXTable:
 HexGFXTable:
     dw #$0C09, #$0C00, #$0C01, #$0C02, #$0C03, #$0C04, #$0C05, #$0C06, #$0C07, #$0C08
     dw #$0C64, #$0C65, #$0C58, #$0C59, #$0C5A, #$0C5B
+
+ShineTune1TapEarlyTable:
+    dw #$0C09, #$0000, #$0C00, #$0000
+    dw #$0C09, #$0000, #$0000, #$0000
+    dw #$0C09, #$0000, #$0000, #$0000
+    dw #$0C09, #$0000, #$0000, #$0000
+    dw #$0C09, #$0000, #$0000, #$0000
+    dw #$0C09, #$0000, #$0000, #$0000
+    dw #$0C09, #$0000, #$0000, #$0000
+    dw #$0C09, #$0C06, #$0C07, #$0C08
+    dw #$0C09, #$0C04, #$0C05, #$0C06
+    dw #$0C09, #$0C01, #$0C02, #$0C03
+
+ShineTune1TapLateTable:
+    dw #$0C09, #$0C00, #$0C09, #$0C09
+    dw #$0C09, #$0C03, #$0C02, #$0C01
+    dw #$0C09, #$0C05, #$0C04, #$0C04
+    dw #$0C09, #$0C08, #$0C07, #$0C06
+    dw #$0C09, #$0000, #$0000, #$0000
+    dw #$0C09, #$0000, #$0000, #$0000
+    dw #$0C09, #$0000, #$0000, #$0000
+    dw #$0C09, #$0000, #$0000, #$0000
+    dw #$0C09, #$0000, #$0000, #$0000
+    dw #$0C09, #$0000, #$0000, #$0000
 
 ControllerTable1:
     dw #$0000, #$0020, #$0800, #$0010, #$4000, #$0040, #$2000

@@ -17,6 +17,61 @@ endif
 org $80AE5C
     JSR cutscenes_door_transition
 
+org $828D2F
+    TDC : INC
+    STA !PAUSE_MENU_PALETTE_ANIMATION_TIMER
+    STA !SCREEN_FADE_COUNTER
+    EOR !sram_fast_pause
+    STA !SCREEN_FADE_DELAY
+    STZ !MAP_SCROLL_LEFT_ANIMATION_FRAME
+warnpc $828D41
+
+org $8290CF
+    JSL cutscenes_fade_in
+
+org $82916A
+    JSL cutscenes_fade_out
+
+org $82918F
+    JSL cutscenes_fade_out
+
+org $8291B8
+    TDC : INC
+    STA !PAUSE_MENU_MODE
+    STA !SCREEN_FADE_COUNTER
+    EOR !sram_fast_pause
+    STA !SCREEN_FADE_DELAY
+    JSR $A615
+    STZ !PAUSE_L_R_HIGHLIGHT_ANIMATION_FRAME
+    LDA $C10C
+    STA !PAUSE_L_R_HIGHLIGHT_ANIMATION_TIMER
+warnpc $8291D3
+
+org $8291ED
+    TDC : STA !PAUSE_MENU_MODE
+    INC : STA !SCREEN_FADE_COUNTER
+    EOR !sram_fast_pause
+    STA !SCREEN_FADE_DELAY
+warnpc $8291FC
+
+org $829211
+    JSL cutscenes_fade_in
+
+org $82923D
+    JSL cutscenes_fade_in
+
+org $82932E
+    JSL cutscenes_fade_out
+
+org $82A5C9
+    LDA !PAUSE_MENU_BUTTON_LABEL_MODE
+    PHA : TDC : INC
+    STA !PAUSE_MENU_BUTTON_LABEL_MODE
+    STA !SCREEN_FADE_COUNTER
+    EOR !sram_fast_pause
+    STA !SCREEN_FADE_DELAY
+warnpc $82A5DC
+
 
 %startfree(80)
 
@@ -34,6 +89,45 @@ cutscenes_door_transition:
     JSL ih_adjust_realtime
   .slow
     JMP ($AE76,x)
+}
+
+cutscenes_fade_in:
+{
+    PHP
+    LDA !sram_fast_pause : BNE .fast
+    JMP $894E
+
+  .fast
+    %ai8()
+    LDA !REG_2100_BRIGHTNESS
+    INC : AND #$0F : BEQ .done
+    STA !REG_2100_BRIGHTNESS
+    INC : AND #$0F : BEQ .done
+    STA !REG_2100_BRIGHTNESS
+  .done:
+    PLP
+    RTL
+}
+
+cutscenes_fade_out:
+{
+    PHP
+    LDA !sram_fast_pause : BNE .fast
+    JMP $8925
+
+  .fast
+    %ai8()
+    LDA !REG_2100_BRIGHTNESS
+    AND #$0F : BEQ .done
+    DEC : BEQ .force_blank
+    DEC : BNE .store
+  .force_blank:
+    LDA #$80
+  .store:
+    STA !REG_2100_BRIGHTNESS
+  .done:
+    PLP
+    RTL
 }
 
 %endfree(80)

@@ -21,6 +21,8 @@ ram_tilemap_buffer = !ram_tilemap_buffer ; $7EF500 ; 2048 bytes
 ; so it can use the same space as the practice hack menu tilemap buffer
 ; Shortcuts can skip remaining checks by replacing the return address word
 
+; If WRAM_PERSIST_START is changed from $7EFD80 then also adjust init.asm
+
 ; These variables are NOT PERSISTENT across savestates --
 ; they're saved and reloaded along with the game state.
 ; Use this section for infohud variables that are dependent
@@ -248,14 +250,10 @@ ram_cm_palette_seltextbg = !ram_cm_palette_seltextbg ; !WRAM_MENU_START+$50
 ram_cm_palette_numseloutline = !ram_cm_palette_numseloutline ; !WRAM_MENU_START+$52
 ram_cm_palette_numsel = !ram_cm_palette_numsel ; !WRAM_MENU_START+$54
 
-ram_cm_sfxlib1 = !ram_cm_sfxlib1 ; !WRAM_MENU_START+$56
-ram_cm_sfxlib2 = !ram_cm_sfxlib2 ; !WRAM_MENU_START+$58
-ram_cm_sfxlib3 = !ram_cm_sfxlib3 ; !WRAM_MENU_START+$5A
+ram_sram_detection = !ram_sram_detection ; !WRAM_MENU_START+$56
 
-ram_sram_detection = !ram_sram_detection ; !WRAM_MENU_START+$5C
-
-ram_timers_autoupdate = !ram_timers_autoupdate ; !WRAM_MENU_START+$5E
-ram_cm_gmode = !ram_cm_gmode ; !WRAM_MENU_START+$60
+ram_timers_autoupdate = !ram_timers_autoupdate ; !WRAM_MENU_START+$58
+ram_cm_gmode = !ram_cm_gmode ; !WRAM_MENU_START+$5A
 
 ; ^ FREE SPACE ^ up to +$86
 
@@ -289,9 +287,13 @@ ram_cm_phantoon_second_phase_rng = !ram_cm_phantoon_second_phase_rng ; !WRAM_MEN
 ram_cm_phantoon_flip_rng = !ram_cm_phantoon_flip_rng ; !WRAM_MENU_START+$A0
 ram_cm_phantoon_eyeclose_rng = !ram_cm_phantoon_eyeclose_rng ; !WRAM_MENU_START+$A2
 ram_cm_phantoon_flames_rng = !ram_cm_phantoon_flames_rng ; !WRAM_MENU_START+$A4
-ram_cm_phantoon_next_flames_rng = !ram_cm_phantoon_next_flames_rng ; !WRAM_MENU_START+$A6
-ram_cm_phantoon_flame_direction_rng = !ram_cm_phantoon_flame_direction_rng ; !WRAM_MENU_START+$A8
+ram_cm_phantoon_flames_1_rng = !ram_cm_phantoon_flames_1_rng ; !WRAM_MENU_START+$A6
+ram_cm_phantoon_flames_2_rng = !ram_cm_phantoon_flames_2_rng ; !WRAM_MENU_START+$A8
+ram_cm_phantoon_flames_3_rng = !ram_cm_phantoon_flames_3_rng ; !WRAM_MENU_START+$AA
+ram_cm_phantoon_flames_4_rng = !ram_cm_phantoon_flames_4_rng ; !WRAM_MENU_START+$AC
+ram_cm_phantoon_flame_direction_rng = !ram_cm_phantoon_flame_direction_rng ; !WRAM_MENU_START+$AE
 
+ram_cm_ridley_tail_rng = !ram_cm_ridley_tail_rng ; !WRAM_MENU_START+$9A
 ram_cm_ridley_pogo_height_rng = !ram_cm_ridley_pogo_height_rng ; !WRAM_MENU_START+$9C
 ram_cm_ridley_lunge_pogo_rng = !ram_cm_ridley_lunge_pogo_rng ; !WRAM_MENU_START+$9E
 ram_cm_ridley_swoop_pogo_rng = !ram_cm_ridley_swoop_pogo_rng ; !WRAM_MENU_START+$A0
@@ -347,6 +349,10 @@ ram_cm_ctrl_swap = !ram_cm_ctrl_swap ; !WRAM_MENU_START+$98
 ram_cm_ctrl_timer = !ram_cm_ctrl_timer ; !WRAM_MENU_START+$9A
 ram_cm_ctrl_savestates_allowed = !ram_cm_ctrl_savestates_allowed ; !WRAM_MENU_START+$9C
 
+ram_cm_sfxlib1 = !ram_cm_sfxlib1 ; !WRAM_MENU_START+$90
+ram_cm_sfxlib2 = !ram_cm_sfxlib2 ; !WRAM_MENU_START+$92
+ram_cm_sfxlib3 = !ram_cm_sfxlib3 ; !WRAM_MENU_START+$94
+
 ram_cm_crop_mode = !ram_cm_crop_mode ; !WRAM_MENU_START+$90
 ram_cm_crop_tile = !ram_cm_crop_tile ; !WRAM_MENU_START+$92
 
@@ -374,18 +380,19 @@ ram_cm_selected_slot = !ram_cm_selected_slot ; !WRAM_MENU_START+$92
 ram_cm_preset_elevator = !ram_cm_preset_elevator ; !WRAM_MENU_START+$94
 
 ; keyboard used by both presets and customize menus
-ram_cm_keyboard_buffer = !ram_cm_keyboard_buffer ; !WRAM_MENU_START+$98 ; $18 bytes
+ram_cm_keyboard_buffer = !ram_cm_keyboard_buffer ; !WRAM_MENU_START+$B8 ; $18 bytes
 
 ram_cm_custompalette_blue = !ram_cm_custompalette_blue ; !WRAM_MENU_START+$90
 ram_cm_custompalette_green = !ram_cm_custompalette_green ; !WRAM_MENU_START+$92
 ram_cm_custompalette_red = !ram_cm_custompalette_red ; !WRAM_MENU_START+$94
 ram_cm_custompalette = !ram_cm_custompalette ; !WRAM_MENU_START+$96
+ram_cm_noncustompalette = !ram_cm_noncustompalette ; !WRAM_MENU_START+$98
 ram_cm_dummy_on = !ram_cm_dummy_on ; !WRAM_MENU_START+$AA
 ram_cm_dummy_off = !ram_cm_dummy_off ; !WRAM_MENU_START+$AC
 ram_cm_dummy_num = !ram_cm_dummy_num ; !WRAM_MENU_START+$AE
 
 ; ^ FREE SPACE ^ up to +$CE
-; Note: +$B8 to +$CE range also used as frames held counters
+; Note: +$B8 to +$CE range also used as frames held counters and keyboard buffer
 ;       and is reset to zero when loading a savestate
 
 ; Reserve 48 bytes for CGRAM cache
@@ -436,12 +443,6 @@ ram_crash_input_timer = !ram_crash_input_timer ; !CRASHDUMP+$66
 ;       and the out of bounds blocks depend on this RAM,
 ;       so if we make a mess not cleaned up by the vanilla game
 ;       then we won't be accurate to the vanilla game anymore
-
-; Temporary stack written here since level data will be initialized afterwards
-; There is room for 256 entries in the stack before risking leaving data behind,
-; since even the smallest room has 512 bytes of level data
-
-; Do not use RAM for variables at or beyond this point
 
 ; -----
 ; SRAM
@@ -522,6 +523,9 @@ sram_random_bubble_sfx = !sram_random_bubble_sfx ; !SRAM_START+$9C
 sram_demo_timer = !sram_demo_timer ; !SRAM_START+$9E
 sram_ceres_timer = !sram_ceres_timer ; !SRAM_START+$A0
 sram_zebes_timer = !sram_zebes_timer ; !SRAM_START+$A2
+sram_fast_pause = !sram_fast_pause ; !SRAM_START+$A4
+sram_bonk_indicators = !sram_bonk_indicators ; !SRAM_START+$A6
+sram_speed_booster_physics = !sram_speed_booster_physics ; !SRAM_START+$A8
 
 ; ^ FREE SPACE ^ up to +$EC
 
@@ -564,12 +568,14 @@ sram_categoryadjust_maxpbs = !sram_categoryadjust_maxpbs ; !SRAM_START+$13A
 sram_ctrl_1_shortcut_inputs = !sram_ctrl_1_shortcut_inputs ; !SRAM_START+$140 ; 96 bytes
 sram_ctrl_2_shortcut_inputs = !sram_ctrl_2_shortcut_inputs ; !SRAM_START+$1A0 ; 96 bytes
 
-; ^ FREE SPACE ^ up to +$BA6
+; ^ FREE SPACE ^ up to +$B8E (normal) / +$DFE (tinystates)
 
+sram_streamer_name_normal = !sram_streamer_name_normal ; !SRAM_START+$B90 ; $18 bytes
 sram_custom_header_normal = !sram_custom_header_normal ; !SRAM_START+$BA8 ; $18 bytes
 sram_custom_preset_safewords_normal = !sram_custom_preset_safewords_normal ; !SRAM_START+$BC0 ; $50 bytes
 sram_custom_preset_names_normal = !sram_custom_preset_names_normal ; !SRAM_START+$C10 ; $3C0 bytes
 
+sram_streamer_name_tinystates = !sram_streamer_name_tinystates ; !SRAM_START+$E00 ; $18 bytes
 sram_custom_header_tinystates = !sram_custom_header_tinystates ; !SRAM_START+$E18 ; $18 bytes
 sram_custom_preset_safewords_tinystates = !sram_custom_preset_safewords_tinystates ; !SRAM_START+$E30 ; $20 bytes
 sram_custom_preset_names_tinystates = !sram_custom_preset_names_tinystates ; !SRAM_START+$E50 ; $180 bytes
