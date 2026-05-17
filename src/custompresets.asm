@@ -88,7 +88,7 @@ custom_preset_save:
     ; save scrolls
     PHB : TXA : PHA : CLC
     ADC #(!PRESET_SLOTS+$8C) : TAY   ; Y = Destination
-    LDX #$CD20 : LDA #$0031          ; X = Source, A = Size
+    LDX #$CD20 : LDA #$0031          ; X = Source, A = Size-1
     MVN $7E70                        ; srcBank, destBank
 
     ; save explored map tiles
@@ -282,7 +282,7 @@ custom_preset_save:
     PHB
     TXA : CLC
     ADC #(!PRESET_SLOTS+$8C) : TAY   ; Y = Destination
-    LDX #$CD20 : LDA #$0031          ; X = Source, A = Size
+    LDX #$CD20 : LDA #$0031          ; X = Source, A = Size-1
     MVN $7E70                        ; srcBank, destBank
     PLB
     RTL
@@ -440,7 +440,7 @@ custom_preset_save:
     PHB
     TXA : CLC
     ADC #(!PRESET_SLOTS+$1B8) : TAY  ; Y = Destination
-    LDX #$CD20 : LDA #$0031          ; X = Source, A = Size
+    LDX #$CD20 : LDA #$0031          ; X = Source, A = Size-1
     MVN $7E70                        ; srcBank, destBank
     PLB
     RTL
