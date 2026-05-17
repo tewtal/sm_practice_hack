@@ -9,6 +9,9 @@
 !CRASHDUMP_TILEMAP_BUFFER = $7E5800 ; 2048 bytes
 !CRASH_INITIAL_ADDRESS = #$7E0A44
 
+!DP_REGISTER_BACKUP_START = $7EF4D0
+!DP_REGISTER_BACKUP_SIZE = $30
+
 ; Practice hack menu tilemap buffer
 !ram_tilemap_buffer = $7EF500 ; 2048 bytes
 

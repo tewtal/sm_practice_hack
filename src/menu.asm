@@ -449,28 +449,29 @@ endif
 
 cm_transfer_custom_cgram:
 {
-    ; $0A = Border & OFF   $7277
-    ; $12 = Header         $48F3
-    ; $1A = Num            $0000, $7FFF
-    ; $32 = ON / Sel Num   $4376
-    ; $34 = Selected item  $761F
-    ; $3A = Sel Num        $0000, $761F
-    %a16()
+    %ai16()
+    ; backup DB registers (also sets bank to 7E)
+    PHB : LDX #$0000                  ; X = Source
+    LDY.w #!DP_REGISTER_BACKUP_START  ; Y = Destination
+    LDA.w #!DP_REGISTER_BACKUP_SIZE-1 ; A = Size-1
+    MVN $7E7E                         ; srcBank, destBank
+
     ; backup gameplay palettes
-    LDA $7EC00A : STA !ram_cgram_cache
-    LDA $7EC00E : STA !ram_cgram_cache+$02
-    LDA $7EC012 : STA !ram_cgram_cache+$04
-    LDA $7EC014 : STA !ram_cgram_cache+$06
-    LDA $7EC016 : STA !ram_cgram_cache+$08
-    LDA $7EC01A : STA !ram_cgram_cache+$0A
-    LDA $7EC01C : STA !ram_cgram_cache+$0C
-    LDA $7EC01E : STA !ram_cgram_cache+$0E
-    LDA $7EC032 : STA !ram_cgram_cache+$10
-    LDA $7EC034 : STA !ram_cgram_cache+$12
-    LDA $7EC036 : STA !ram_cgram_cache+$14
-    LDA $7EC03A : STA !ram_cgram_cache+$16
-    LDA $7EC03C : STA !ram_cgram_cache+$18
-    LDA $7EC03E : STA !ram_cgram_cache+$1A
+    LDA $C00A : STA !ram_cgram_cache
+    LDA $C00E : STA !ram_cgram_cache+$02
+    LDA $C012 : STA !ram_cgram_cache+$04
+    LDA $C014 : STA !ram_cgram_cache+$06
+    LDA $C016 : STA !ram_cgram_cache+$08
+    LDA $C01A : STA !ram_cgram_cache+$0A
+    LDA $C01C : STA !ram_cgram_cache+$0C
+    LDA $C01E : STA !ram_cgram_cache+$0E
+    LDA $C032 : STA !ram_cgram_cache+$10
+    LDA $C034 : STA !ram_cgram_cache+$12
+    LDA $C036 : STA !ram_cgram_cache+$14
+    LDA $C03A : STA !ram_cgram_cache+$16
+    LDA $C03C : STA !ram_cgram_cache+$18
+    LDA $C03E : STA !ram_cgram_cache+$1A
+    PLB
 
     JSL PrepMenuPalette
 
@@ -495,22 +496,29 @@ cm_transfer_custom_cgram:
 
 cm_transfer_original_cgram:
 {
-    PHP : %a16()
+    PHP : %ai16()
+    ; restore DB registers (also sets bank to 7E)
+    PHB : LDY #$0000                  ; Y = Destination
+    LDX.w #!DP_REGISTER_BACKUP_START  ; X = Source
+    LDA.w #!DP_REGISTER_BACKUP_SIZE-1 ; A = Size-1
+    MVN $7E7E                         ; srcBank, destBank
+
     ; restore gameplay palettes
-    LDA !ram_cgram_cache : STA $7EC00A
-    LDA !ram_cgram_cache+$02 : STA $7EC00E
-    LDA !ram_cgram_cache+$04 : STA $7EC012
-    LDA !ram_cgram_cache+$06 : STA $7EC014
-    LDA !ram_cgram_cache+$08 : STA $7EC016
-    LDA !ram_cgram_cache+$0A : STA $7EC01A
-    LDA !ram_cgram_cache+$0C : STA $7EC01C
-    LDA !ram_cgram_cache+$0E : STA $7EC01E
-    LDA !ram_cgram_cache+$10 : STA $7EC032
-    LDA !ram_cgram_cache+$12 : STA $7EC034
-    LDA !ram_cgram_cache+$14 : STA $7EC036
-    LDA !ram_cgram_cache+$16 : STA $7EC03A
-    LDA !ram_cgram_cache+$18 : STA $7EC03C
-    LDA !ram_cgram_cache+$1A : STA $7EC03E
+    LDA !ram_cgram_cache : STA $C00A
+    LDA !ram_cgram_cache+$02 : STA $C00E
+    LDA !ram_cgram_cache+$04 : STA $C012
+    LDA !ram_cgram_cache+$06 : STA $C014
+    LDA !ram_cgram_cache+$08 : STA $C016
+    LDA !ram_cgram_cache+$0A : STA $C01A
+    LDA !ram_cgram_cache+$0C : STA $C01C
+    LDA !ram_cgram_cache+$0E : STA $C01E
+    LDA !ram_cgram_cache+$10 : STA $C032
+    LDA !ram_cgram_cache+$12 : STA $C034
+    LDA !ram_cgram_cache+$14 : STA $C036
+    LDA !ram_cgram_cache+$16 : STA $C03A
+    LDA !ram_cgram_cache+$18 : STA $C03C
+    LDA !ram_cgram_cache+$1A : STA $C03E
+    PLB
 
     JSL transfer_cgram_long
     PLP
