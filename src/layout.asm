@@ -1403,32 +1403,9 @@ layout_asm_mb_external:
 %endfree(83)
 
 
-; Ignore bombs for bomb torizo with VARIA tweaks
-org $848258
-layout_bomb_torizo_finish_crumbling:
-    INC $1D27,X : INC $1D27,X
-    LDA #$D356 : STA $1CD7,X
-    RTS
-warnpc $848270
-
-; Relocate grey door preinstruction table and add new type that has no prerequisite to begin flashing
-org $848C4F
-layout_grey_door_preinstruction_table:
-    dw $BDD4, $BDE3, $BDF2, $BE01, $BE1C, $BE1F, $BE30, $BDB2
-warnpc $848C7C
-
 ; Allow debug save stations to be used
 org $848D0C
     AND #$000F
-
-; Instruction set to restore MB escape wall
-org $8494C9
-layout_restore_mb_escape_wall:
-    dw $8004, $8B0F, $8AE8, $82E8, $830F
-    db $01, $00
-    dw $8004, $8B0F, $8AE8, $82E8, $830F
-    dw $0000
-warnpc $849505
 
 org $84AADF
 layout_save_station_mini_entry:
@@ -1458,16 +1435,7 @@ org $84BAD1
 layout_bomb_grey_door_new_check:
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_VARIA_TWEAKS : BNE layout_bomb_grey_door_original_skip
     BRA layout_bomb_grey_door_original_check
-
-layout_bomb_set_room_argument:
-{
-    LDA !sram_room_layout : BIT !ROOM_LAYOUT_VARIA_TWEAKS : BEQ .end
-    LDA #layout_bomb_torizo_start_crumbling : STA $1D21
-    LDA #$BA54 : STA $1D75
-  .end
-    JMP $8899
-}
-warnpc $84BAF4
+warnpc $84BADC
 
 org $84BAF8
     dw layout_bomb_grey_door_new_instructions
@@ -1512,17 +1480,6 @@ layout_bomb_torizo_start_crumbling:
 layout_bomb_torizo_end_preinstruction:
 warnpc $84D356
 
-org $84D476
-layout_spazer_block_plm:
-{
-    LDX $0DDE : LDA $0C18,X : BIT #$0004 : BEQ .delete_plm
-    JMP $CF0C ; Break block
-  .delete_plm
-    TDC : STA $1C37,Y
-    RTS
-}
-warnpc $84D490
-
 if !FEATURE_PAL
 org $84E543
 else
@@ -1547,7 +1504,6 @@ org $84EE02
 endif
 layout_morph_ball_hidden_plm_equipment:
     dw $0004
-
 
 
 %startfree(84)
@@ -1582,6 +1538,10 @@ layout_save_station_mini_instructions:
     dw $0000
 }
 
+; Add new type that has no prerequisite to begin flashing
+layout_grey_door_preinstruction_table:
+    dw $BDD4, $BDE3, $BDF2, $BE01, $BE1C, $BE1F, $BE30, $BDB2
+
 layout_bomb_grey_door_new_instructions:
     dw layout_bomb_grey_door_check_vanilla
     dw #$0001, $A683
@@ -1607,6 +1567,22 @@ layout_bomb_grey_door_check_fast:
     RTS
 }
 
+layout_bomb_set_room_argument:
+{
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_VARIA_TWEAKS : BEQ .end
+    LDA #layout_bomb_torizo_start_crumbling : STA $1D21
+    LDA #layout_bomb_grey_door_original_delay : STA $1D75
+  .end
+    JMP $8899
+}
+
+layout_bomb_torizo_finish_crumbling:
+{
+    INC $1D27,X : INC $1D27,X
+    LDA #$D356 : STA $1CD7,X
+    RTS
+}
+
 layout_fix_mb_escape_wall:
 {
     ; Overwritten logic
@@ -1616,6 +1592,22 @@ layout_fix_mb_escape_wall:
     JSL $8483D7
     dw $0600, $B66F
     RTL
+}
+
+layout_restore_mb_escape_wall:
+    dw $8004, $8B0F, $8AE8, $82E8, $830F
+    db $01, $00
+    dw $8004, $8B0F, $8AE8, $82E8, $830F
+    dw $0000
+
+layout_spazer_block_plm:
+{
+    LDX $0DDE : LDA $0C18,X
+    BIT #$0004 : BEQ .delete_plm
+    JMP $CF0C ; Break block
+  .delete_plm
+    TDC : STA $1C37,Y
+    RTS
 }
 
 %endfree(84)

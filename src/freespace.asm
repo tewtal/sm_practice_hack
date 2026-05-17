@@ -9,7 +9,8 @@
 !START_FREESPACE_82 = $82F70F ; $8F1
 ; Logic expects custom doors are placed at or after $83C000
 !START_FREESPACE_83 = $83C000 ; $529A
-!START_FREESPACE_84 = $84EFD9 ; $1027 (PAL)
+; Block shuffler parity only allows freespace in $84F000 region
+!START_FREESPACE_84 = $84F002 ; $FFC
 ; Leave space for custom fanfare text to immediately follow vanilla text
 !START_FREESPACE_85 = $85A000 ; $69BF
 !START_FREESPACE_86 = $86F4E2 ; $B1E (PAL)
@@ -195,7 +196,7 @@ endif
 !END_FREESPACE_81 = $81FF00 ; Thanks Genji!
 !END_FREESPACE_82 = $820000+$10000
 !END_FREESPACE_83 = $830000+$10000
-!END_FREESPACE_84 = $840000+$10000
+!END_FREESPACE_84 = $840000+$FFFE ; Avoid the edge of bank $84 for block shuffler
 !END_FREESPACE_85 = $850000+$10000
 !END_FREESPACE_86 = $860000+$10000
 !END_FREESPACE_87 = $870000+$10000
