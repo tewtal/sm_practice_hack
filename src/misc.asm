@@ -221,6 +221,177 @@ org $84D66B
 endif
     JSL lock_samus_bowling
 
+org $848610
+    JSR process_plm_draw_instruction
+
+org $848B46
+    JSR process_plm_draw_instruction
+
+if !FEATURE_PAL
+org $84E090
+else
+org $84E08A
+endif
+    JSR process_plm_draw_instruction
+
+%startfree(84)
+
+; Copied from vanilla, but modified to handle block shuffler
+process_plm_draw_instruction:
+{
+    LDA $7EDE6C,X : TAY
+    LDA !PLM_BLOCK_INDEX,X : STA $12 : TAX
+    LDA $0000,Y : BPL .row
+    JMP $8647
+
+  .row
+    BEQ .shuffler
+    STA $16 : INY #2
+
+  .loop_row
+    LDA $0000,Y
+    STA $7F0002,X
+    INY #2 : INX #2
+    DEC $16 : BNE .loop_row
+
+  .done
+    JMP $8664
+
+  .shuffler
+    STA $16 : INY #2
+    CPY #$F000 : BCS .loop_F000_check
+
+  .loop_shuffler
+    LDA $0000,Y
+    STA $7F0002,X
+    INY #2 : INX #2
+    DEC $16 : BEQ .done_shuffler
+    CPY #$F000 : BCC .loop_shuffler
+
+  .loop_F000
+    LDA #$FFFF
+    STA $7F0002,X
+    INY #2 : INX #2
+    DEC $16 : BEQ .done_shuffler
+  .loop_F000_check
+    CPY #$FFFE : BCS .loop_shuffler
+    BRA .loop_F000
+
+  .done_shuffler
+    ; subtract Y from X
+    PHY : TXA
+    SEC : SBC $01,X : TAX
+
+if !FEATURE_PAL
+else
+    ; account for bank 84 patches
+    LDA #$861E : STA $7F8613,X ; $848610 misc
+    LDA #$8E22 : STA $7F88A1,X ; $84889F infohud
+    LDA #$8081 : STA $7F88A3,X ; $84889F infohud
+    LDA #$861E : STA $7F8B49,X ; $848B46 misc
+    LDA #$A2DA : STA $7F8BDF,X ; $848BDD fanfare
+    LDA #$0EA2 : STA $7F8BE0,X ; $848BDD fanfare
+    LDA #$0007 : STA $7F8D0F,X ; $848D0C layout
+    LDA #$0001 : STA $7FAAE1,X ; $84AADF layout
+    LDA #$A2B5 : STA $7FAAE3,X ; $84AADF layout
+    LDA #$949D : STA $7FAC03,X ; $84AC01 layout
+    LDA #$09A2 : STA $7FB426,X ; $84B423 layout
+    LDA #$09A2 : STA $7FB4D4,X ; $84B4D1 layout
+    LDA #$2000 : STA $7FB7F5,X ; $84B7F2 layout
+                               ; $84BA4C layout
+    LDA #$BA6F : STA $7FBA52,X ; $84BA50 layout
+                               ; $84BA54 layout
+                               ; $84BA6F layout
+                               ; $84BA7A layout
+    LDA #$C8B9 : STA $7FBAD3,X ; $84BAD1 layout
+    LDA #$291D : STA $7FBAD5,X ; $84BAD1 layout
+    LDA #$007C : STA $7FBAD7,X ; $84BAD1 layout
+    LDA #$A94A : STA $7FBAD9,X ; $84BAD1 layout
+    LDA #$0004 : STA $7FBADB,X ; $84BAD1 layout
+    LDA #$9900 : STA $7FBADC,X ; $84BAD1 layout
+    LDA #$BA4C : STA $7FBAFA,X ; $84BAF8 layout
+    LDA #$BE4B : STA $7FBE45,X ; $84BE43 layout
+    LDA #$CFA0 : STA $7FD016,X ; $84D014 layout
+    LDA #$C910 : STA $7FD018,X ; $84D014 layout
+    LDA #$A4AD : STA $7FD191,X ; $84D18F layout
+    LDA #$2909 : STA $7FD193,X ; $84D18F layout
+    LDA #$0200 : STA $7FD195,X ; $84D18F layout
+    LDA #$47F0 : STA $7FD197,X ; $84D18F layout
+    LDA #$02AD : STA $7FD199,X ; $84D18F layout
+    LDA #$290B : STA $7FD19B,X ; $84D18F layout
+    LDA #$000F : STA $7FD19D,X ; $84D18F layout
+    LDA #$03C9 : STA $7FD19F,X ; $84D18F layout
+    LDA #$D000 : STA $7FD1A1,X ; $84D18F layout
+    LDA #$AD3C : STA $7FD1A3,X ; $84D18F layout
+    LDA #$0A1C : STA $7FD1A5,X ; $84D18F layout
+    LDA #$1DC9 : STA $7FD1A7,X ; $84D18F layout
+    LDA #$F000 : STA $7FD1A9,X ; $84D18F layout
+    LDA #$C90A : STA $7FD1AB,X ; $84D18F layout
+    LDA #$0079 : STA $7FD1AD,X ; $84D18F layout
+    LDA #$05F0 : STA $7FD1AF,X ; $84D18F layout
+    LDA #$7AC9 : STA $7FD1B1,X ; $84D18F layout
+    LDA #$D000 : STA $7FD1B3,X ; $84D18F layout
+    LDA #$A92A : STA $7FD1B5,X ; $84D18F layout
+    LDA #$000C : STA $7FD1B7,X ; $84D18F layout
+    LDA #$FA22 : STA $7FD1B9,X ; $84D18F layout
+    LDA #$8081 : STA $7FD1BB,X ; $84D18F layout
+    LDA #$01A9 : STA $7FD1BD,X ; $84D18F layout
+    LDA #$9D00 : STA $7FD1BF,X ; $84D18F layout
+    LDA #$0FB4 : STA $7FD1C1,X ; $84D18F layout
+                               ; $84D1DE layout
+    LDA #$A4AD : STA $7FD33D,X ; $84D33B layout
+    LDA #$2909 : STA $7FD33F,X ; $84D33B layout
+    LDA #$1000 : STA $7FD341,X ; $84D33B layout
+    LDA #$13F0 : STA $7FD343,X ; $84D33B layout
+    LDA #$01A9 : STA $7FD345,X ; $84D33B layout
+    LDA #$9F00 : STA $7FD347,X ; $84D33B layout
+    LDA #$DE1C : STA $7FD349,X ; $84D33B layout
+    LDA #$FE7E : STA $7FD34B,X ; $84D33B layout
+    LDA #$1D27 : STA $7FD34D,X ; $84D33B layout
+    LDA #$27FE : STA $7FD34F,X ; $84D33B layout
+    LDA #$A91D : STA $7FD351,X ; $84D33B layout
+    LDA #$D356 : STA $7FD353,X ; $84D33B layout
+    LDA #$D79D : STA $7FD355,X ; $84D33B layout
+    LDA #$1CD7 : STA $7FD356,X ; $84D33B layout
+    LDA #$F084 : STA $7FD66E,X ; $84D66B misc
+    LDA #$861E : STA $7FE08D,X ; $84E08A misc
+    LDA #$8899 : STA $7FE53F,X ; $84E53D layout
+    LDA #$0002 : STA $7FE8D0,X ; $84E8CE layout
+    LDA #$0002 : STA $7FEE04,X ; $84EE02 layout
+endif
+
+    ; account for WRAM modifications
+    TDC
+    STA $7F003B,X ; $39-3B
+    STA $7F003C,X ; $39-3B
+    STA $7F0040,X ; $3E-43
+    STA $7F0042,X ; $3E-43
+    STA $7F0044,X ; $3E-43
+    STA $7F00C3,X ; $C1-CF
+    STA $7F00C5,X ; $C1-CF
+    STA $7F00C7,X ; $C1-CF
+    STA $7F00C9,X ; $C1-CF
+    STA $7F00CB,X ; $C1-CF
+    STA $7F00CD,X ; $C1-CF
+    STA $7F00CF,X ; $C1-CF
+    STA $7F00D0,X ; $C1-CF
+    STA $7F05A2,X ; !REALTIME_LAG_COUNTER
+    STA $7F05D7,X ; !MENU_STACK_INDEX
+    STA $7F05D9,X ; !MENU_STACK_INDEX
+    STA $7F0A04,X ; !SAMUS_FAKE_SHINESPARK_FLAG
+    STA $7F0A16,X ; !SAMUS_DOUBLE_JUMP
+    STA $7F0A18,X ; !SAMUS_SUBTRACT_WALL_JUMP
+    STA $7F0A1C,X ; !SAMUS_SPEED_OR_BLUE_BOOSTER_BITMASK
+    STA $7F0A72,X ; !SAMUS_WATER_PHYSICS
+    STA $7F0A9A,X ; !SAMUS_LAVA_DAMAGE_SUITS
+    STA $7F0B0E,X ; !DAMAGE_COUNTER
+
+    PLY
+    JMP $8664
+}
+
+%endfree(84)
+
 
 org $869D59
     JSR move_kraid_rocks_horizontally
