@@ -221,6 +221,9 @@ org $84D66B
 endif
     JSL lock_samus_bowling
 
+org $84878F
+    JMP hook_load_item_plm_gfx
+
 org $848610
     JSR process_plm_draw_instruction
 
@@ -286,6 +289,8 @@ if !FEATURE_PAL
 else
     ; account for bank 84 patches
     LDA #$861E : STA $7F8613,X ; $848610 misc
+    LDA #$00B9 : STA $7F8791,X ; $84878F misc
+    TDC        : STA $7F8792,X ; $84878F misc
     LDA #$8E22 : STA $7F88A1,X ; $84889F infohud
     LDA #$8081 : STA $7F88A3,X ; $84889F infohud
     LDA #$861E : STA $7F8B49,X ; $848B46 misc
@@ -388,6 +393,22 @@ endif
 
     PLY
     JMP $8664
+}
+
+hook_load_item_plm_gfx:
+{
+    LDA $0000,Y
+    CMP #$AF00 : BCC .end
+    CMP #$FF00 : BCS .end
+
+    ; We are attempting to load GFX from freespace,
+    ; probably because of some OOB block shuffler shenanigans
+    ; However we are using the freespace so we don't want to use that,
+    ; so transfer data from $AF00 which we know is FFFF
+    LDA #$AF00
+
+  .end
+    JMP $8792
 }
 
 %endfree(84)
