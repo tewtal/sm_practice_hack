@@ -2568,6 +2568,19 @@ else
     !botwoon_jump_to_pause_delay = $0003
 endif
 
+    ; Suppress Samus HP display
+    LDA !SAMUS_HP : STA !ram_last_hp
+    LDX #$004E
+  .plm_search
+    LDA !PLM_ID,X : BEQ .plm_search_done
+    DEX #2 : BPL .plm_search
+  .plm_search_done
+    TXA : CMP !ram_HUD_check : BEQ .plm_done
+    STA !ram_HUD_check
+    LDA #$004E : SEC : SBC !ram_HUD_check
+    LSR : LDX #$0092 : JSR Draw4
+  .plm_done
+
     ; Check if Samus is in starting position
     LDA !SAMUS_Y : CMP #$04BB : BEQ .startpos
     CMP #$004B : BEQ .startpos
