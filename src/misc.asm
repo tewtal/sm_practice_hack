@@ -391,6 +391,26 @@ endif
     STA $7F0A9A,X ; !SAMUS_LAVA_DAMAGE_SUITS
     STA $7F0B0E,X ; !DAMAGE_COUNTER
 
+    LDA !ram_sprite_feature_flags : BEQ .end
+
+    ; Remove up to !OAM_HIGH
+    LDA !OAM_STACK_POINTER : PHA
+    LDA #(!OAM_HIGH-!OAM_LOW) : STA !OAM_STACK_POINTER
+    JSR hide_sprite_features
+    TYA : CMP 1,S : BPL .clear_oam
+    PLA : TYA : PHA
+  .clear_oam
+    PLA : STA !OAM_STACK_POINTER
+
+    ; Set remaining OAM to default values
+    CPY #(!OAM_HIGH-!OAM_LOW) : BPL .end
+  .clear_oam_loop
+    LDA #$F000 : STA !OAM_LOW,Y
+    TDC : STA !OAM_LOW+2,Y
+    TYA : CLC : ADC #$0004 : TAY
+    CPY #(!OAM_HIGH-!OAM_LOW) : BMI .clear_oam_loop
+
+  .end
     PLY
     JMP $8664
 }
@@ -411,7 +431,77 @@ hook_load_item_plm_gfx:
     JMP $8792
 }
 
+hide_sprite_features:
+{
+    LDX #$0000 : TXY
+  .loop
+    LDA !OAM_LOW+2,X : AND #$00FF
+    CMP #$0047 : BEQ .skip
+    CMP #$00D0 : BCC .keep
+    CMP #$00F0 : BCC .skip
+  .keep
+    PHX : TYA
+    CMP 1,S : BEQ .continue
+
+    ; Replace earlier entries we skipped
+    LDA !OAM_LOW,X : STA !OAM_LOW,Y
+    LDA !OAM_LOW+2,X : STA !OAM_LOW+2,Y
+
+  .continue
+    PLX
+    TYA : CLC : ADC #$0004 : TAY
+  .skip
+    TXA : CLC : ADC #$0004 : TAX
+    CPX #(!OAM_HIGH-!OAM_LOW) : BPL .done
+    CPY !OAM_STACK_POINTER : BMI .loop
+  .done
+    RTS
+}
+
+handle_gold_block:
+{
+    PHA
+    LDA !ram_sprite_feature_flags : BEQ .continue
+
+    ; Remove up to either stack pointer or #$0384
+    LDA !OAM_STACK_POINTER : PHA
+    CMP #($0384-!OAM_LOW) : BPL .remove
+    LDA #($0384-!OAM_LOW) : STA !OAM_STACK_POINTER
+  .remove
+    PHY
+    JSR hide_sprite_features
+    PLY
+    PLA : STA !OAM_STACK_POINTER
+
+  .continue
+    ; Fix up the PLM
+    LDA #$0380 : TAX : STA !PLM_ID,Y
+    LDA $0382 : STA !PLM_INSTRUCTION_LIST_POINTER,Y
+    PLA
+    JMP ($0380)
+}
+
+handle_gold_block_pointer:
+    dw #handle_gold_block
+
 %endfree(84)
+
+
+org $949422
+    JMP hook_horizontal_extension_reaction
+hook_gold_block:
+    dw #handle_gold_block_pointer
+
+
+%startfree(94)
+
+hook_horizontal_extension_reaction:
+{
+    AND #$00FF
+    JMP $942A
+}
+
+%endfree(94)
 
 
 org $869D59
