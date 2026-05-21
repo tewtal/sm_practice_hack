@@ -59,6 +59,7 @@ RAMWatchCommonMenu:
     dw ramwatch_common_plm
     dw ramwatch_common_proj
     dw ramwatch_common_misc
+    dw ramwatch_common_anyglitched
     dw #$0000
     %cm_header("CHOOSE RAM CATEGORY")
 
@@ -79,6 +80,9 @@ ramwatch_common_proj:
 
 ramwatch_common_misc:
     %cm_submenu("Misc Addresses", #RAMWatchCommonMiscMenu)
+
+ramwatch_common_anyglitched:
+    %cm_submenu("Any% Glitched", #RAMWatchCommonAnyGlitchedMenu)
 
 RAMWatchCommonEnemyMenu:
     dw ramwatch_common_enemy_side
@@ -518,6 +522,67 @@ ramwatch_common_misc_0E52:
 
 ramwatch_common_misc_1840:
     %cm_jsl("Earthquake Timer", action_select_common_address, #!EARTHQUAKE_TIMER)
+
+RAMWatchCommonAnyGlitchedMenu:
+    dw ramwatch_common_anyglitched_0026
+    dw ramwatch_common_anyglitched_03D7
+    dw ramwatch_common_anyglitched_090F
+    dw ramwatch_common_anyglitched_0913
+    dw ramwatch_common_anyglitched_0C5F
+    dw ramwatch_common_anyglitched_0DC4
+    dw ramwatch_common_anyglitched_0E21
+    dw ramwatch_common_anyglitched_11FD
+    dw ramwatch_common_anyglitched_1201
+    dw ramwatch_common_anyglitched_1843
+    dw ramwatch_common_anyglitched_1A8A
+    dw ramwatch_common_anyglitched_1D59
+    dw ramwatch_common_anyglitched_1D5B
+    dw ramwatch_common_anyglitched_D821
+    dw #$0000
+    %cm_header("SELECT ANY% GLITCHED RAM")
+    %cm_footer("DESIRED VALUE ON RIGHT")
+
+ramwatch_common_anyglitched_0026:
+    %cm_jsl("0026 Temporary Shot   FFFF", action_select_common_address, #$0026)
+
+ramwatch_common_anyglitched_03D7:
+    %cm_jsl("03D7 OAM Sprite       ----", action_select_common_address, #$03D7)
+
+ramwatch_common_anyglitched_090F:
+    %cm_jsl("090F Layer 1 SubX     --F-", action_select_common_address, #$090F)
+
+ramwatch_common_anyglitched_0913:
+    %cm_jsl("0913 Layer 1 SubY     --FF", action_select_common_address, #$0913)
+
+ramwatch_common_anyglitched_0C5F:
+    %cm_jsl("0C5F Bomb One Geemer  --FF", action_select_common_address, #$0C5F)
+
+ramwatch_common_anyglitched_0DC4:
+    %cm_jsl("0DC4 Collision Block  ----", action_select_common_address, #$0DC4)
+
+ramwatch_common_anyglitched_0E21:
+    %cm_jsl("0E21 5olD Geemer Side --F-", action_select_common_address, #$0E21)
+
+ramwatch_common_anyglitched_11FD:
+    %cm_jsl("11FD 5olD Geemer SubX ---F", action_select_common_address, #$11FD)
+
+ramwatch_common_anyglitched_1201:
+    %cm_jsl("1201 5olD Geemer SubY ---F", action_select_common_address, #$1201)
+
+ramwatch_common_anyglitched_1843:
+    %cm_jsl("1843 Room Timer x256  --1-", action_select_common_address, #$1843)
+
+ramwatch_common_anyglitched_1A8A:
+    %cm_jsl("1A8A Skree Proj SubY  --6F", action_select_common_address, #$1A8A)
+
+ramwatch_common_anyglitched_1D59:
+    %cm_jsl("1D59 Left Bomb Block  --5D", action_select_common_address, #$1D59)
+
+ramwatch_common_anyglitched_1D5B:
+    %cm_jsl("1D5B Right Bomb Block --5D", action_select_common_address, #$1D5B)
+
+ramwatch_common_anyglitched_D821:
+    %cm_jsl("D821 Zebes Ablaze     --F-", action_select_common_address, #$D821)
 
 action_select_common_address:
 {
