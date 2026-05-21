@@ -525,6 +525,7 @@ ramwatch_common_misc_1840:
 
 RAMWatchCommonAnyGlitchedMenu:
     dw ramwatch_common_anyglitched_0026
+    dw ramwatch_common_anyglitched_0028
     dw ramwatch_common_anyglitched_03D7
     dw ramwatch_common_anyglitched_090F
     dw ramwatch_common_anyglitched_0913
@@ -543,7 +544,10 @@ RAMWatchCommonAnyGlitchedMenu:
     %cm_footer("DESIRED VALUE ON RIGHT")
 
 ramwatch_common_anyglitched_0026:
-    %cm_jsl("0026 Temporary Shot   FFFF", action_select_common_address, #$0026)
+    %cm_jsl("0026 Shot Source      FFFF", action_select_common_address, #$0026)
+
+ramwatch_common_anyglitched_0028:
+    %cm_jsl("0028 Shot Destination FFFF", action_select_common_address, #$0028)
 
 ramwatch_common_anyglitched_03D7:
     %cm_jsl("03D7 OAM Sprite       ----", action_select_common_address, #$03D7)
