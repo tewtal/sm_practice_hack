@@ -476,7 +476,7 @@ handle_gold_block:
   .continue
     ; Fix up the PLM
     LDA #$0380 : TAX : STA !PLM_ID,Y
-    LDA $0382 : STA !PLM_INSTRUCTION_LIST_POINTER,Y
+    LDA $0382 : STA !PLM_INSTRUCTION_POINTER,Y
     PLA
     JMP ($0380)
 }

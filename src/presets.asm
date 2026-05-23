@@ -890,7 +890,7 @@ preset_open_all_blue_doors:
     LDX #$004E
   .plmSearchLoop
     LDA !PLM_ID,X : BEQ .plmSearchDone
-    LDY !PLM_INSTRUCTION_LIST_POINTER,X
+    LDY !PLM_INSTRUCTION_POINTER,X
     LDA $0000,Y : CMP #$8A72 : BEQ .plmDoorFound
   .plmSearchResume
     DEX #2 : BRA .plmSearchLoop
