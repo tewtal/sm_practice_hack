@@ -359,37 +359,37 @@ RAMWatchCommonPlmMenu:
     %cm_header("SELECT FROM PLM RAM")
 
 ramwatch_common_plm_1C23:
-    %cm_jsl("PLM Flag", action_select_common_address, #$1C23)
+    %cm_jsl("PLM Flag", action_select_common_address, #!PLM_ENABLE)
 
 ramwatch_common_plm_1C27:
-    %cm_jsl("Current ID", action_select_common_address, #$1C27)
+    %cm_jsl("Current ID", action_select_common_address, #!PLM_INDEX)
 
 ramwatch_common_plm_1C29:
-    %cm_jsl("Current X", action_select_common_address, #$1C29)
+    %cm_jsl("Current X", action_select_common_address, #!PLM_X_BLOCK)
 
 ramwatch_common_plm_1C2B:
-    %cm_jsl("Current Y", action_select_common_address, #$1C2B)
+    %cm_jsl("Current Y", action_select_common_address, #!PLM_Y_BLOCK)
 
 ramwatch_common_plm_1C85:
-    %cm_jsl("Last ID", action_select_common_address, #$1C85)
+    %cm_jsl("Last ID", action_select_common_address, #(!PLM_ID+$4E))
 
 ramwatch_common_plm_1CD5:
-    %cm_jsl("Last Block", action_select_common_address, #$1CD5)
+    %cm_jsl("Last Block", action_select_common_address, #(!PLM_BLOCK_INDEX+$4E))
 
 ramwatch_common_plm_1D25:
-    %cm_jsl("Last Preinstruction", action_select_common_address, #$1D25)
+    %cm_jsl("Last Preinstruction", action_select_common_address, #(!PLM_PREINSTRUCTION+$4E))
 
 ramwatch_common_plm_1D75:
-    %cm_jsl("Last Instruction", action_select_common_address, #$1D75)
+    %cm_jsl("Last Instruction", action_select_common_address, #(!PLM_INSTRUCTION_POINTER+$4E))
 
 ramwatch_common_plm_1DC5:
-    %cm_jsl("Last Timer", action_select_common_address, #$1DC5)
+    %cm_jsl("Last Timer", action_select_common_address, #(!PLM_TIMER+$4E))
 
 ramwatch_common_plm_1E15:
-    %cm_jsl("Last Room Argument", action_select_common_address, #$1E15)
+    %cm_jsl("Last Room Argument", action_select_common_address, #(!PLM_ROOM_ARGUMENT+$4E))
 
 ramwatch_common_plm_1E65:
-    %cm_jsl("Last Variable", action_select_common_address, #$1E65)
+    %cm_jsl("Last Variable", action_select_common_address, #(!PLM_VARIABLE+$4E))
 
 RAMWatchCommonProjMenu:
     dw ramwatch_common_proj_198D
@@ -417,67 +417,67 @@ RAMWatchCommonProjMenu:
     %cm_header("SELECT FROM PROJECTILE RAM")
 
 ramwatch_common_proj_198D:
-    %cm_jsl("Projectiles Flag", action_select_common_address, #$198D)
+    %cm_jsl("Projectiles Flag", action_select_common_address, #!ENEMY_PROJ_ENABLE)
 
 ramwatch_common_proj_1991:
-    %cm_jsl("Current Index", action_select_common_address, #$1991)
+    %cm_jsl("Current Index", action_select_common_address, #!ENEMY_PROJ_INDEX)
 
 ramwatch_common_proj_1993:
-    %cm_jsl("Current Init Parameter", action_select_common_address, #$1993)
+    %cm_jsl("Current Init Parameter", action_select_common_address, #!ENEMY_PROJ_INIT_PARAMETER)
 
 ramwatch_common_proj_19B9:
-    %cm_jsl("Last ID", action_select_common_address, #$19B9)
+    %cm_jsl("Last ID", action_select_common_address, #(!ENEMY_PROJ_ID+$22))
 
 ramwatch_common_proj_19DD:
-    %cm_jsl("Last Graphics Index", action_select_common_address, #$19DD)
+    %cm_jsl("Last Graphics Index", action_select_common_address, #(!ENEMY_PROJ_GFX_INDEX+$22))
 
 ramwatch_common_proj_1A01:
-    %cm_jsl("Last Timer", action_select_common_address, #$1A01)
+    %cm_jsl("Last Timer", action_select_common_address, #(!ENEMY_PROJ_TIMER+$22))
 
 ramwatch_common_proj_1A25:
-    %cm_jsl("Last Preinstruction", action_select_common_address, #$1A25)
+    %cm_jsl("Last Preinstruction", action_select_common_address, #(!ENEMY_PROJ_PREINSTRUCTION+$22))
 
 ramwatch_common_proj_1A49:
-    %cm_jsl("Last Sub X", action_select_common_address, #$1A49)
+    %cm_jsl("Last Sub X", action_select_common_address, #(!ENEMY_PROJ_X_SUBPX+$22))
 
 ramwatch_common_proj_1A6D:
-    %cm_jsl("Last X", action_select_common_address, #$1A6D)
+    %cm_jsl("Last X", action_select_common_address, #(!ENEMY_PROJ_X+$22))
 
 ramwatch_common_proj_1A91:
-    %cm_jsl("Last Sub Y", action_select_common_address, #$1A91)
+    %cm_jsl("Last Sub Y", action_select_common_address, #(!ENEMY_PROJ_Y_SUBPX+$22))
 
 ramwatch_common_proj_1AB5:
-    %cm_jsl("Last Y", action_select_common_address, #$1AB5)
+    %cm_jsl("Last Y", action_select_common_address, #(!ENEMY_PROJ_Y+$22))
 
 ramwatch_common_proj_1AD9:
-    %cm_jsl("Last X Velocity", action_select_common_address, #$1AD9)
+    %cm_jsl("Last X Velocity", action_select_common_address, #(!ENEMY_PROJ_X_VELOCITY+$22))
 
 ramwatch_common_proj_1AFD:
-    %cm_jsl("Last Y Velocity", action_select_common_address, #$1AFD)
+    %cm_jsl("Last Y Velocity", action_select_common_address, #(!ENEMY_PROJ_Y_VELOCITY+$22))
 
 ramwatch_common_proj_1B21:
-    %cm_jsl("Last Variable 1", action_select_common_address, #$1B21)
+    %cm_jsl("Last Variable 1", action_select_common_address, #(!ENEMY_PROJ_VAR_1+$22))
 
 ramwatch_common_proj_1B45:
-    %cm_jsl("Last Variable 2", action_select_common_address, #$1B45)
+    %cm_jsl("Last Variable 2", action_select_common_address, #(!ENEMY_PROJ_VAR_2+$22))
 
 ramwatch_common_proj_1B69:
-    %cm_jsl("Last Instruction", action_select_common_address, #$1B69)
+    %cm_jsl("Last Instruction", action_select_common_address, #(!ENEMY_PROJ_INSTRUCTION_POINTER+$22))
 
 ramwatch_common_proj_1B8D:
-    %cm_jsl("Last Spritemap", action_select_common_address, #$1B8D)
+    %cm_jsl("Last Spritemap", action_select_common_address, #(!ENEMY_PROJ_SPRITEMAP+$22))
 
 ramwatch_common_proj_1BB1:
-    %cm_jsl("Last Instruction Timer", action_select_common_address, #$1BB1)
+    %cm_jsl("Last Instruction Timer", action_select_common_address, #(!ENEMY_PROJ_INSTRUCTION_TIMER+$22))
 
 ramwatch_common_proj_1BD5:
-    %cm_jsl("Last Radius", action_select_common_address, #$1BD5)
+    %cm_jsl("Last Radius", action_select_common_address, #(!ENEMY_PROJ_RADIUS+$22))
 
 ramwatch_common_proj_1BF9:
-    %cm_jsl("Last Properties", action_select_common_address, #$1BF9)
+    %cm_jsl("Last Properties", action_select_common_address, #(!ENEMY_PROJ_PROPERTIES+$22))
 
 ramwatch_common_proj_1C1D:
-    %cm_jsl("Last Type", action_select_common_address, #$1C1D)
+    %cm_jsl("Last Type", action_select_common_address, #(!ENEMY_PROJ_TYPE+$22))
 
 RAMWatchCommonMiscMenu:
     dw ramwatch_common_misc_05E5
@@ -487,6 +487,7 @@ RAMWatchCommonMiscMenu:
     dw ramwatch_common_misc_09DC
     dw ramwatch_common_misc_09DE
     dw ramwatch_common_misc_09E0
+    dw ramwatch_common_misc_0DC4
     dw ramwatch_common_misc_0E50
     dw ramwatch_common_misc_0E52
     dw ramwatch_common_misc_1840
@@ -514,6 +515,9 @@ ramwatch_common_misc_09DE:
 ramwatch_common_misc_09E0:
     %cm_jsl("Game Time, Hours", action_select_common_address, #!IGT_HOURS)
 
+ramwatch_common_misc_0DC4:
+    %cm_jsl("Current Block Index", action_select_common_address, #!CURRENT_BLOCK_INDEX)
+
 ramwatch_common_misc_0E50:
     %cm_jsl("Room Enemies Killed", action_select_common_address, #!ENEMY_KILLS_COUNTER)
 
@@ -526,19 +530,17 @@ ramwatch_common_misc_1840:
 RAMWatchCommonAnyGlitchedMenu:
     dw ramwatch_common_anyglitched_0026
     dw ramwatch_common_anyglitched_0028
-    dw ramwatch_common_anyglitched_03D7
     dw ramwatch_common_anyglitched_090F
     dw ramwatch_common_anyglitched_0913
-    dw ramwatch_common_anyglitched_0C5F
-    dw ramwatch_common_anyglitched_0DC4
-    dw ramwatch_common_anyglitched_0E21
-    dw ramwatch_common_anyglitched_11FD
-    dw ramwatch_common_anyglitched_1201
-    dw ramwatch_common_anyglitched_1843
-    dw ramwatch_common_anyglitched_1A8A
+    dw ramwatch_common_anyglitched_0C5E
+    dw ramwatch_common_anyglitched_0E20
+    dw ramwatch_common_anyglitched_11FC
+    dw ramwatch_common_anyglitched_1200
+    dw ramwatch_common_anyglitched_1842
+    dw ramwatch_common_anyglitched_1A89
     dw ramwatch_common_anyglitched_1D59
     dw ramwatch_common_anyglitched_1D5B
-    dw ramwatch_common_anyglitched_D821
+    dw ramwatch_common_anyglitched_D820
     dw #$0000
     %cm_header("SELECT ANY% GLITCHED RAM")
     %cm_footer("DESIRED VALUE ON RIGHT")
@@ -549,44 +551,38 @@ ramwatch_common_anyglitched_0026:
 ramwatch_common_anyglitched_0028:
     %cm_jsl("0028 Shot Destination FFFF", action_select_common_address, #$0028)
 
-ramwatch_common_anyglitched_03D7:
-    %cm_jsl("03D7 OAM Sprite       ----", action_select_common_address, #$03D7)
-
 ramwatch_common_anyglitched_090F:
-    %cm_jsl("090F Layer 1 SubX     --F-", action_select_common_address, #$090F)
+    %cm_jsl("090F Layer 1 SubX     --F-", action_select_common_address, #!LAYER1_SUB_X)
 
 ramwatch_common_anyglitched_0913:
-    %cm_jsl("0913 Layer 1 SubY     --FF", action_select_common_address, #$0913)
+    %cm_jsl("0913 Layer 1 SubY     --00", action_select_common_address, #!LAYER1_SUB_Y)
 
-ramwatch_common_anyglitched_0C5F:
-    %cm_jsl("0C5F Bomb One Geemer  --FF", action_select_common_address, #$0C5F)
+ramwatch_common_anyglitched_0C5E:
+    %cm_jsl("0C5E Bomb One Geemer  FF--", action_select_common_address, #!SAMUS_BOMB_INSTRUCTION_TIMER)
 
-ramwatch_common_anyglitched_0DC4:
-    %cm_jsl("0DC4 Collision Block  ----", action_select_common_address, #$0DC4)
+ramwatch_common_anyglitched_0E20:
+    %cm_jsl("0E20 5olD Geemer Side F---", action_select_common_address, #$0E20)
 
-ramwatch_common_anyglitched_0E21:
-    %cm_jsl("0E21 5olD Geemer Side --F-", action_select_common_address, #$0E21)
+ramwatch_common_anyglitched_11FC:
+    %cm_jsl("11FC 5olD Geemer SubX -F--", action_select_common_address, #(!ENEMY_X_SUBPX+$280))
 
-ramwatch_common_anyglitched_11FD:
-    %cm_jsl("11FD 5olD Geemer SubX ---F", action_select_common_address, #$11FD)
+ramwatch_common_anyglitched_1200:
+    %cm_jsl("1200 5olD Geemer SubY -F--", action_select_common_address, #(!ENEMY_Y_SUBPX+$280))
 
-ramwatch_common_anyglitched_1201:
-    %cm_jsl("1201 5olD Geemer SubY ---F", action_select_common_address, #$1201)
+ramwatch_common_anyglitched_1842:
+    %cm_jsl("1842 Time Since Reset 1---", action_select_common_address, #!EARTHQUAKE_EXECUTION_COUNT)
 
-ramwatch_common_anyglitched_1843:
-    %cm_jsl("1843 Room Timer x256  --1-", action_select_common_address, #$1843)
-
-ramwatch_common_anyglitched_1A8A:
-    %cm_jsl("1A8A Skree Proj SubY  --6F", action_select_common_address, #$1A8A)
+ramwatch_common_anyglitched_1A89:
+    %cm_jsl("1A89 Skree Proj SubY  6F--", action_select_common_address, #(!ENEMY_PROJ_Y_SUBPX+$1A))
 
 ramwatch_common_anyglitched_1D59:
-    %cm_jsl("1D59 Left Bomb Block  --5D", action_select_common_address, #$1D59)
+    %cm_jsl("1D59 4th Bomb Block   --5D", action_select_common_address, #(!PLM_INSTRUCTION_POINTER+$32))
 
 ramwatch_common_anyglitched_1D5B:
-    %cm_jsl("1D5B Right Bomb Block --5D", action_select_common_address, #$1D5B)
+    %cm_jsl("1D5B 3rd Bomb Block   --5D", action_select_common_address, #(!PLM_INSTRUCTION_POINTER+$34))
 
-ramwatch_common_anyglitched_D821:
-    %cm_jsl("D821 Zebes Ablaze     --F-", action_select_common_address, #$D821)
+ramwatch_common_anyglitched_D820:
+    %cm_jsl("D820 Zebes Ablaze     F---", action_select_common_address, #!EVENT_BIT_ARRAY)
 
 action_select_common_address:
 {
