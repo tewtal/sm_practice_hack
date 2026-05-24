@@ -431,7 +431,7 @@ brb_zsnes_splashscreen:
     ; Set up video mode
     %ai8()
     LDA #$80    ; screen off
-    STA $2100   ; brightness + screen enable register
+    STA $802100 ; brightness + screen enable register
     LDA #$03
     STA $2105   ; video mode 3, 8x8 tiles, 256 color BG1, 16 color BG2
     STZ $2106   ; noplanes, no mosaic, = Mosaic register
@@ -506,7 +506,7 @@ brb_zsnes_splashscreen:
     STA $420B   ; Start DMA transfer
 
     LDA #$0F    ; screen on, full brightness
-    STA $2100   ; brightness + screen enable register
+    STA $0F2100 ; brightness + screen enable register
 
     %a16()
     RTS
@@ -584,7 +584,7 @@ cm_transfer_brb_tileset:
 
     ; Load custom vram to normal location
     %a8()
-    LDA #$80 : STA $2100 ; enable forced blanking
+    LDA #$80 : STA $802100 ; enable forced blanking
     LDA #!DP_CurrentMenu : STA $210C
     LDA #$80 : STA $2115 ; word-access, incr by 1
     LDX #$4000 : STX $2116 ; VRAM address (8000 in vram)
@@ -594,7 +594,7 @@ cm_transfer_brb_tileset:
     LDA #$01 : STA $4300 ; word, normal increment (DMA MODE)
     LDA #$18 : STA $4301 ; destination (VRAM write)
     LDA #$01 : STA $420B ; initiate DMA (channel 1)
-    LDA #$0F : STA $2100 ; disable forced blanking
+    LDA #$0F : STA $0F2100 ; disable forced blanking
     PLP
     RTS
 }
@@ -666,19 +666,14 @@ cm_brb_scroll_BG3:
 
   .applyScrolls
     ; force blank and apply scrolls
-    %i8()
-    LDX #$80 : STX $2100
+    LDA !ram_cm_brb_scroll_Y : DEC : PHA
+    LDA !ram_cm_brb_scroll_X : PHA
 
-    LDA !ram_cm_brb_scroll_X
     %a8()
-    STA $2111 : XBA : STA $2111
-    %a16()
-
-    LDA !ram_cm_brb_scroll_Y : DEC
-    %a8()
-    STA $2112 : XBA : STA $2112
-
-    LDA #$0F : STA $2100
+    LDA #$80 : STA $802100
+    PLA : STA $2111 : PLA : STA $2111
+    PLA : STA $2112 : PLA : STA $2112
+    LDA #$0F : STA $0F2100
 
     PLP
     RTS

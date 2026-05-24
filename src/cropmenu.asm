@@ -39,10 +39,10 @@ ccm_crop_tile:
 
 cm_crop_mode:
 {
-    PHP : %a16() : %i8()
-
+    PHP : %ai8()
     ; turn on forced blank
-    LDX #$80 : STX $2100
+    LDA #$80 : STA $802100
+    %a16()
 
     ; fix BG3 scroll offset
     LDX #$FF : STX $2112
@@ -72,7 +72,9 @@ cm_crop_mode:
 
   .drawingdone
     ; turn off forced blank
-    LDX #$0F : STX $2100
+    %a8()
+    LDA #$0F : STA $0F2100
+    %a16()
 
   .loop
     ; Make sure we don't read joysticks twice in the same frame
@@ -108,11 +110,11 @@ cm_crop_mode:
 
   .end
     ; restore BG3 scroll offset
-    LDA !REG_2112_BG3_Y
+    LDA !REG_2112_BG3_Y : PHA
     %ai8()
-    LDX #$80 : STX $2100
-    STA $2112 : XBA : STA $2112
-    LDX #$0F : STX $2100
+    LDA #$80 : STA $802100
+    PLA : STA $2112 : PLA : STA $2112
+    LDA #$0F : STA $0F2100
 
     PLP
     RTL

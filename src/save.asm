@@ -246,7 +246,7 @@ register_restore_return:
 {
     %a8()
     LDA !REG_4200_NMI : STA $4200
-    LDA #$0F : STA $13 : STA $2100
+    LDA #$0F : STA $13 : STA $0F2100
     RTL
 }
 

@@ -148,10 +148,10 @@ cm_init:
     ; Setup registers
     %a8()
     STZ $420C
-    LDA #$80 : STA $2100 ; enable forced blanking
+    LDA #$80 : STA $802100 ; enable forced blanking
     LDA #$A1 : STA $4200 ; enable NMI, v-IRQ, and auto-joy read
     LDA #$09 : STA $2105 ; BG Mode 1, enable BG3 priority
-    LDA #$0F : STA $2100 ; disable forced blanking
+    LDA #$0F : STA $0F2100 ; disable forced blanking
     %ai16()
 
     ; Preserve DP registers
@@ -329,7 +329,7 @@ cm_transfer_custom_tileset:
 
     ; Load custom vram to normal BG3 location
     %a8()
-    LDA #$80 : STA $2100 ; enable forced blanking
+    LDA #$80 : STA $802100 ; enable forced blanking
     LDA #$04 : STA $210C ; BG3 starts at $4000 (8000 in vram)
     LDA #$80 : STA $2115 ; word-access, incr by 1
     LDX #$4000 : STX $2116 ; VRAM address (8000 in vram)
@@ -339,14 +339,14 @@ cm_transfer_custom_tileset:
     LDA #$01 : STA $4300 ; word, normal increment (DMA MODE)
     LDA #$18 : STA $4301 ; destination (VRAM write)
     LDA #$01 : STA $420B ; initiate DMA (channel 1)
-    LDA #$0F : STA $2100 ; disable forced blanking
+    LDA #$0F : STA $0F2100 ; disable forced blanking
     PLP
     RTL
 
   .kraid_vram
     ; Load custom vram to kraid BG3 location
     %a8()
-    LDA #$80 : STA $2100 ; enable forced blanking
+    LDA #$80 : STA $802100 ; enable forced blanking
     LDA #$02 : STA $210C ; BG3 starts at $2000 (4000 in vram)
     LDA #$80 : STA $2115 ; word-access, incr by 1
     LDX #$2000 : STX $2116 ; VRAM address (4000 in vram)
@@ -356,7 +356,7 @@ cm_transfer_custom_tileset:
     LDA #$01 : STA $4300 ; word, normal increment (DMA MODE)
     LDA #$18 : STA $4301 ; destination (VRAM write)
     LDA #$01 : STA $420B ; initiate DMA (channel 1)
-    LDA #$0F : STA $2100 ; disable forced blanking
+    LDA #$0F : STA $0F2100 ; disable forced blanking
     PLP
     RTL
 }
@@ -384,7 +384,7 @@ endif
 
   .normal_vram
     ; Load in normal vram to normal BG3 location
-    LDA #$80 : STA $2100 ; enable forced blanking
+    LDA #$80 : STA $802100 ; enable forced blanking
     LDA #$04 : STA $210C ; BG3 starts at $4000 (8000 in vram)
     LDA #$80 : STA $2115 ; word-access, incr by 1
     LDX #$4000 : STX $2116 ; VRAM address (8000 in vram)
@@ -394,7 +394,7 @@ endif
     LDA #$01 : STA $4300 ; word, normal increment (DMA MODE)
     LDA #$18 : STA $4301 ; destination (VRAM write)
     LDA #$01 : STA $420B ; initiate DMA (channel 1)
-    LDA #$0F : STA $2100 ; disable forced blanking
+    LDA #$0F : STA $0F2100 ; disable forced blanking
     PLP
     RTL
 
@@ -406,7 +406,7 @@ else
 endif
 
     ; Load in normal vram to kraid BG3 location
-    LDA #$80 : STA $2100 ; enable forced blanking
+    LDA #$80 : STA $802100 ; enable forced blanking
     LDA #$02 : STA $210C ; BG3 starts at $2000 (4000 in vram)
     LDA #$80 : STA $2115 ; word-access, incr by 1
     LDX #$2000 : STX $2116 ; VRAM address (4000 in vram)
@@ -416,7 +416,7 @@ endif
     LDA #$01 : STA $4300 ; word, normal increment (DMA MODE)
     LDA #$18 : STA $4301 ; destination (VRAM write)
     LDA #$01 : STA $420B ; initiate DMA (channel 1)
-    LDA #$0F : STA $2100 ; disable forced blanking
+    LDA #$0F : STA $0F2100 ; disable forced blanking
     PLP
     RTL
 
@@ -424,7 +424,7 @@ if !FEATURE_VANILLAHUD
 else
   .minimap_vram
     ; Load in minimap vram to normal BG3 location
-    LDA #$80 : STA $2100 ; enable forced blanking
+    LDA #$80 : STA $802100 ; enable forced blanking
     LDA #$04 : STA $210C ; BG3 starts at $4000 (8000 in vram)
     LDA #$80 : STA $2115 ; word-access, incr by 1
     LDX #$4000 : STX $2116 ; VRAM address (8000 in vram)
@@ -434,13 +434,13 @@ else
     LDA #$01 : STA $4300 ; word, normal increment (DMA MODE)
     LDA #$18 : STA $4301 ; destination (VRAM write)
     LDA #$01 : STA $420B ; initiate DMA (channel 1)
-    LDA #$0F : STA $2100 ; disable forced blanking
+    LDA #$0F : STA $0F2100 ; disable forced blanking
     PLP
     RTL
 
   .kraid_minimap_vram
     ; Load in minimap vram to kraid BG3 location
-    LDA #$80 : STA $2100 ; enable forced blanking
+    LDA #$80 : STA $802100 ; enable forced blanking
     LDA #$02 : STA $210C ; BG3 starts at $2000 (4000 in vram)
     LDA #$80 : STA $2115 ; word-access, incr by 1
     LDX #$2000 : STX $2116 ; VRAM address (4000 in vram)
@@ -450,7 +450,7 @@ else
     LDA #$01 : STA $4300 ; word, normal increment (DMA MODE)
     LDA #$18 : STA $4301 ; destination (VRAM write)
     LDA #$01 : STA $420B ; initiate DMA (channel 1)
-    LDA #$0F : STA $2100 ; disable forced blanking
+    LDA #$0F : STA $0F2100 ; disable forced blanking
     PLP
     RTL
 endif
