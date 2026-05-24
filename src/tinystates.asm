@@ -62,7 +62,7 @@ pre_load_state:
   .done
     ; Force blank and disable NMI
     %a8()
-    LDA #$80 : STA $2100
+    LDA #$80 : STA $802100
     LDA #$00 : STA $4200
     %ai16()
 
@@ -290,7 +290,7 @@ register_restore_return:
 {
     %a8()
     LDA !REG_4200_NMI : STA $4200
-    LDA #$0F : STA $13 : STA !REG_2100_BRIGHTNESS : STA $2100
+    LDA #$0F : STA $13 : STA !REG_2100_BRIGHTNESS : STA $0F2100
     RTL
 }
 

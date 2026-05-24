@@ -865,7 +865,7 @@ preset_clear_BG2_tilemap:
 
     ; Upload BG2 Tilemap
     %a8()
-    LDA #$80 : STA $2100 ; enable forced blanking
+    LDA #$80 : STA $802100 ; enable forced blanking
     LDA #$04 : STA $210C ; BG2 starts at $4000 (8000 in vram)
     LDA #$80 : STA $2115 ; word-access, incr by 1
     LDX #$4800 : STX $2116 ; VRAM address (8000 in vram)
@@ -875,7 +875,7 @@ preset_clear_BG2_tilemap:
     LDA #$01 : STA $4300 ; word, normal increment (DMA MODE)
     LDA #$18 : STA $4301 ; destination (VRAM write)
     LDA #$01 : STA $420B ; initiate DMA (channel 1)
-    LDA #$0F : STA $2100 ; disable forced blanking
+    LDA #$0F : STA $0F2100 ; disable forced blanking
     PLP
     RTL
 }
@@ -1105,10 +1105,12 @@ preset_bg_offsets:
 transfer_cgram_long:
 {
     PHP
-    %a16() : %i8()
-    LDX #$80 : STX $2100 ; forced blanking
+    %ai8()
+    LDA #$80 : STA $802100 ; forced blanking
+    %a16()
     JSR $933A
-    LDX #$0F : STX $2100
+    %a8()
+    LDA #$0F : STA $0F2100
     PLP
     RTL
 }
