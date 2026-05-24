@@ -19,17 +19,15 @@ incsrc mainmenu.asm
 %startfree(85)
 
 initialize_ppu_long:
-    PHP : %a16()
     LDA $7E33EA : STA !ram_cgram_cache+$2E
-    PLP
     JSR $8143
+    ; cm_transfer_custom_tileset will call %ai16()
     RTL
 
 restore_ppu_long:
     JSR $861A
-    PHP : %a16()
+    %ai16()
     LDA !ram_cgram_cache+$2E : STA $7E33EA
-    PLP
     RTL
 
 play_music_long:
@@ -150,11 +148,17 @@ cm_init:
     ; Setup registers
     %a8()
     STZ $420C
-    LDA #$80 : STA $802100 ; enable forced blanking
+    LDA #$80 : STA $2100 ; enable forced blanking
     LDA #$A1 : STA $4200 ; enable NMI, v-IRQ, and auto-joy read
     LDA #$09 : STA $2105 ; BG Mode 1, enable BG3 priority
-    LDA #$0F : STA $0F2100 ; disable forced blanking
-    %a16()
+    LDA #$0F : STA $2100 ; disable forced blanking
+    %ai16()
+
+    ; Preserve DP registers
+    PHB : LDX #$0000                  ; X = Source
+    LDY.w #!DP_REGISTER_BACKUP_START  ; Y = Destination
+    LDA.w #!DP_REGISTER_BACKUP_SIZE-1 ; A = Size-1
+    MVN $7E7E : PLB                   ; srcBank, destBank
 
     ; Preserve timers while menu is active
     LDA !ram_realtime_room : STA !ram_cm_preserved_timers
@@ -223,6 +227,12 @@ endif
     JSL init_physics_ram
     JSL GameLoopExtras ; check if game_loop_extras needs to be disabled
 
+    ; Restore DP registers
+    PHB : LDY #$0000                  ; Y = Destination
+    LDX.w #!DP_REGISTER_BACKUP_START  ; X = Source
+    LDA.w #!DP_REGISTER_BACKUP_SIZE-1 ; A = Size-1
+    MVN $7E7E : PLB                   ; srcBank, destBank
+
     ; Restore timers
     LDA !ram_cm_preserved_timers : STA !ram_realtime_room
     LDA !ram_cm_preserved_timers+2 : STA !ram_seg_rt_frames
@@ -232,7 +242,6 @@ endif
     JSL restore_ppu_long ; Restore PPU
 
     ; skip sound effects if not gameplay ($7-13 allowed)
-    %ai16()
     LDA !GAMEMODE : CMP #$0006 : BMI .skipSFX
     CMP #$0014 : BPL .skipSFX
     JSL $82BE2F ; Queue Samus movement sound effects
@@ -241,7 +250,7 @@ endif
     JSL play_music_long ; Play 2 lag frames of music and sound effects
     JSL maybe_trigger_pause_long ; Maybe trigger pause screen or return save confirmation selection
 
-    ; Restore timers
+    ; Restore timers again
     LDA !ram_cm_preserved_timers : STA !ram_realtime_room
     LDA !ram_cm_preserved_timers+$2 : STA !ram_seg_rt_frames
     LDA !ram_cm_preserved_timers+$4 : STA !ram_seg_rt_seconds
@@ -450,28 +459,22 @@ endif
 cm_transfer_custom_cgram:
 {
     %ai16()
-    ; backup DB registers (also sets bank to 7E)
-    PHB : LDX #$0000                  ; X = Source
-    LDY.w #!DP_REGISTER_BACKUP_START  ; Y = Destination
-    LDA.w #!DP_REGISTER_BACKUP_SIZE-1 ; A = Size-1
-    MVN $7E7E                         ; srcBank, destBank
 
     ; backup gameplay palettes
-    LDA $C00A : STA !ram_cgram_cache
-    LDA $C00E : STA !ram_cgram_cache+$02
-    LDA $C012 : STA !ram_cgram_cache+$04
-    LDA $C014 : STA !ram_cgram_cache+$06
-    LDA $C016 : STA !ram_cgram_cache+$08
-    LDA $C01A : STA !ram_cgram_cache+$0A
-    LDA $C01C : STA !ram_cgram_cache+$0C
-    LDA $C01E : STA !ram_cgram_cache+$0E
-    LDA $C032 : STA !ram_cgram_cache+$10
-    LDA $C034 : STA !ram_cgram_cache+$12
-    LDA $C036 : STA !ram_cgram_cache+$14
-    LDA $C03A : STA !ram_cgram_cache+$16
-    LDA $C03C : STA !ram_cgram_cache+$18
-    LDA $C03E : STA !ram_cgram_cache+$1A
-    PLB
+    LDA $7EC00A : STA !ram_cgram_cache
+    LDA $7EC00E : STA !ram_cgram_cache+$02
+    LDA $7EC012 : STA !ram_cgram_cache+$04
+    LDA $7EC014 : STA !ram_cgram_cache+$06
+    LDA $7EC016 : STA !ram_cgram_cache+$08
+    LDA $7EC01A : STA !ram_cgram_cache+$0A
+    LDA $7EC01C : STA !ram_cgram_cache+$0C
+    LDA $7EC01E : STA !ram_cgram_cache+$0E
+    LDA $7EC032 : STA !ram_cgram_cache+$10
+    LDA $7EC034 : STA !ram_cgram_cache+$12
+    LDA $7EC036 : STA !ram_cgram_cache+$14
+    LDA $7EC03A : STA !ram_cgram_cache+$16
+    LDA $7EC03C : STA !ram_cgram_cache+$18
+    LDA $7EC03E : STA !ram_cgram_cache+$1A
 
     JSL PrepMenuPalette
 
@@ -489,40 +492,30 @@ cm_transfer_custom_cgram:
     LDA !ram_cm_palette_numseloutline : STA $7EC03A
     LDA !ram_cm_palette_numsel : STA $7EC03C
 
-    JSL transfer_cgram_long
-    %ai16()
-    RTL
+    JML transfer_cgram_long
 }
 
 cm_transfer_original_cgram:
 {
-    PHP : %ai16()
-    ; restore DB registers (also sets bank to 7E)
-    PHB : LDY #$0000                  ; Y = Destination
-    LDX.w #!DP_REGISTER_BACKUP_START  ; X = Source
-    LDA.w #!DP_REGISTER_BACKUP_SIZE-1 ; A = Size-1
-    MVN $7E7E                         ; srcBank, destBank
+    %ai16()
 
     ; restore gameplay palettes
-    LDA !ram_cgram_cache : STA $C00A
-    LDA !ram_cgram_cache+$02 : STA $C00E
-    LDA !ram_cgram_cache+$04 : STA $C012
-    LDA !ram_cgram_cache+$06 : STA $C014
-    LDA !ram_cgram_cache+$08 : STA $C016
-    LDA !ram_cgram_cache+$0A : STA $C01A
-    LDA !ram_cgram_cache+$0C : STA $C01C
-    LDA !ram_cgram_cache+$0E : STA $C01E
-    LDA !ram_cgram_cache+$10 : STA $C032
-    LDA !ram_cgram_cache+$12 : STA $C034
-    LDA !ram_cgram_cache+$14 : STA $C036
-    LDA !ram_cgram_cache+$16 : STA $C03A
-    LDA !ram_cgram_cache+$18 : STA $C03C
-    LDA !ram_cgram_cache+$1A : STA $C03E
-    PLB
+    LDA !ram_cgram_cache : STA $7EC00A
+    LDA !ram_cgram_cache+$02 : STA $7EC00E
+    LDA !ram_cgram_cache+$04 : STA $7EC012
+    LDA !ram_cgram_cache+$06 : STA $7EC014
+    LDA !ram_cgram_cache+$08 : STA $7EC016
+    LDA !ram_cgram_cache+$0A : STA $7EC01A
+    LDA !ram_cgram_cache+$0C : STA $7EC01C
+    LDA !ram_cgram_cache+$0E : STA $7EC01E
+    LDA !ram_cgram_cache+$10 : STA $7EC032
+    LDA !ram_cgram_cache+$12 : STA $7EC034
+    LDA !ram_cgram_cache+$14 : STA $7EC036
+    LDA !ram_cgram_cache+$16 : STA $7EC03A
+    LDA !ram_cgram_cache+$18 : STA $7EC03C
+    LDA !ram_cgram_cache+$1A : STA $7EC03E
 
-    JSL transfer_cgram_long
-    PLP
-    RTL
+    JML transfer_cgram_long
 }
 
 cm_draw:
