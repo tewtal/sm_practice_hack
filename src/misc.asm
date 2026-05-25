@@ -488,20 +488,11 @@ handle_gold_block_pointer:
 
 
 org $949422
-    JMP hook_horizontal_extension_reaction
+    ; Replace AND #$00FF with NOP since it is not needed,
+    ; but we still want to burn a little CPU for parity with vanilla
+    NOP : BRA $05
 hook_gold_block:
     dw #handle_gold_block_pointer
-
-
-%startfree(94)
-
-hook_horizontal_extension_reaction:
-{
-    AND #$00FF
-    JMP $942A
-}
-
-%endfree(94)
 
 
 org $869D59
