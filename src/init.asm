@@ -82,12 +82,12 @@ init_factory_reset:
 
 init_non_zero_persistent_wram:
 {
-    LDA #!ENEMY_HP : STA.w !ram_watch_left
-    LDA #!SAMUS_HP : STA.w !ram_watch_right
-    LDA #$007E : STA.w !ram_watch_bank
-    LDA !sram_seed_X : STA.w !ram_seed_X
-    LDA !sram_seed_Y : STA.w !ram_seed_Y
-    LDA #$8000 : STA.w !ram_cm_gmode
+    LDA #!ENEMY_HP : STA !ram_watch_left
+    LDA #!SAMUS_HP : STA !ram_watch_right
+    LDA #$007E : STA !ram_watch_bank
+    LDA !sram_seed_X : STA !ram_seed_X
+    LDA !sram_seed_Y : STA !ram_seed_Y
+    LDA #$8000 : STA !ram_cm_gmode
     RTS
 }
 

@@ -602,14 +602,16 @@ ramwatch_common_addr1:
     %cm_jsl("Address 1 (Left)", .routine, #$0000)
   .routine
     LDA !ram_cm_watch_common_address : STA !ram_watch_left
-    TDC : STA !ram_watch_left_index : STA !ram_watch_bank
+    TDC : STA !ram_watch_left_index
+    LDA #$007E : STA !ram_watch_bank
     BRA ramwatch_common_addr_done
 
 ramwatch_common_addr2:
     %cm_jsl("Address 2 (Right)", .routine, #$0000)
   .routine
     LDA !ram_cm_watch_common_address : STA !ram_watch_right
-    TDC : STA !ram_watch_right_index : STA !ram_watch_bank
+    TDC : STA !ram_watch_right_index
+    LDA #$007E : STA !ram_watch_bank
 
 ramwatch_common_addr_done:
     LDY #RAMWatchMenu
