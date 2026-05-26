@@ -1646,6 +1646,16 @@ draw_ram_watch:
     LDX #$05D2 ; position for left hex
     LDA !ram_watch_left : CLC : ADC !ram_watch_left_index : STA !DP_Address
     LDA !ram_watch_bank : STA !DP_Address+2
+    CMP #$007E : BEQ .check_left_dp
+    BIT #$0040 : BNE .get_left_value
+  .check_left_dp
+    LDA !DP_Address : CMP.w #!DP_REGISTER_BACKUP_SIZE : BCS .get_left_value
+
+    ; User wants to view a DP register that we backed up
+    CLC : ADC #!DP_REGISTER_BACKUP_START : STA !DP_Address
+    LDA #$007E : STA !DP_Address+2
+
+  .get_left_value
     LDA [!DP_Address] : STA !DP_DrawValue
 
     ; check if 8-bit mode
@@ -1674,6 +1684,17 @@ draw_ram_watch:
 
     LDX #$05E8 ; position for right hex
     LDA !ram_watch_right : CLC : ADC !ram_watch_right_index : STA !DP_Address
+    LDA !ram_watch_bank : STA !DP_Address+2
+    CMP #$007E : BEQ .check_right_dp
+    BIT #$0040 : BNE .get_right_value
+  .check_right_dp
+    LDA !DP_Address : CMP.w #!DP_REGISTER_BACKUP_SIZE : BCS .get_right_value
+
+    ; User wants to view a DP register that we backed up
+    CLC : ADC #!DP_REGISTER_BACKUP_START : STA !DP_Address
+    LDA #$007E : STA !DP_Address+2
+
+  .get_right_value
     LDA [!DP_Address] : STA !DP_DrawValue
 
     ; check if 8-bit mode
