@@ -182,7 +182,13 @@ init_botwoon_rng:
     TDC
     BRA .set_first
 }
+%warnpc($B396C6, $B396D6)
 
+if !FEATURE_PAL
+org $B3970F
+else
+org $B396FF
+endif
 ; Vanilla main AI routine, just migrated
 botwoon_vanilla_main_ai:
 {
@@ -200,7 +206,7 @@ else
 endif
     RTL
 }
-%warnpc($B396C6, $B396D6)
+%warnpc($B3971B, $B3972B)
 
 if !FEATURE_PAL
 org $B398D1
