@@ -475,7 +475,7 @@
 ; SRAM
 ; -----
 
-!SRAM_VERSION = #$001C
+!SRAM_VERSION = #$001D
 
 !SRAM_START = $702000
 !SRAM_SIZE = #$1000
@@ -559,6 +559,7 @@
 !sram_fast_pause = !SRAM_START+$A4
 !sram_bonk_indicators = !SRAM_START+$A6
 !sram_speed_booster_physics = !SRAM_START+$A8
+!sram_fast_teleport = !SRAM_START+$AA
 
 ; ^ FREE SPACE ^ up to +$EC
 
