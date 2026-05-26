@@ -666,6 +666,14 @@ ramwatch_execute_left:
   .routine
     LDA !ram_watch_left : CLC : ADC !ram_watch_left_index : STA $C1
     LDA !ram_watch_bank : STA $C3
+    CMP #$007E : BEQ .checkDP
+    BIT #$0040 : BNE .applyWriteMode
+  .checkDP
+    LDA $C1 : CMP.w #!DP_REGISTER_BACKUP_SIZE : BCS .applyWriteMode
+    ; User wants to set a DP register that we backed up
+    CLC : ADC #!DP_REGISTER_BACKUP_START : STA $C1
+    LDA #$007E : STA $C3
+  .applyWriteMode
     LDA !ram_watch_write_mode : BEQ .setValue
     %a8()
   .setValue
@@ -678,18 +686,20 @@ ramwatch_execute_right:
   .routine
     LDA !ram_watch_right : CLC : ADC !ram_watch_right_index : STA $C1
     LDA !ram_watch_bank : STA $C3
+    CMP #$007E : BEQ .checkDP
+    BIT #$0040 : BNE .applyWriteMode
+  .checkDP
+    LDA $C1 : CMP.w #!DP_REGISTER_BACKUP_SIZE : BCS .applyWriteMode
+    ; User wants to set a DP register that we backed up
+    CLC : ADC #!DP_REGISTER_BACKUP_START : STA $C1
+    LDA #$007E : STA $C3
+  .applyWriteMode
     LDA !ram_watch_write_mode : BEQ .setValue
     %a8()
   .setValue
     LDA !ram_watch_edit_right : STA [$C1]
     %a16()
-    BRA action_HUD_ramwatch
-
-ramwatch_lock_left:
-    %cm_toggle("Lock Left Value", !ram_watch_edit_lock_left, #$01, #action_HUD_ramwatch)
-
-ramwatch_lock_right:
-    %cm_toggle("Lock Right Value", !ram_watch_edit_lock_right, #$01, #action_HUD_ramwatch)
+    ; Fallthrough
 
 action_HUD_ramwatch:
 {
@@ -705,6 +715,12 @@ action_HUD_ramwatch:
     %sfxconfirm()
     JML init_print_segment_timer
 }
+
+ramwatch_lock_left:
+    %cm_toggle("Lock Left Value", !ram_watch_edit_lock_left, #$01, #action_HUD_ramwatch)
+
+ramwatch_lock_right:
+    %cm_toggle("Lock Right Value", !ram_watch_edit_lock_right, #$01, #action_HUD_ramwatch)
 
 ramwatch_display:
     dw !ACTION_RAM_WATCH ; menu action index
