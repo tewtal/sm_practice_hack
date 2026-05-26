@@ -94,9 +94,18 @@ org $90E874
 else
 org $90E877
 endif
+    LDA !sram_fast_teleport : BNE .fast
+    JSR $8000
+    STZ !ELEVATOR_STATUS
+    LDA !SAMUS_Y : STA !SAMUS_PREVIOUS_Y
+    JSL $92ED24
+    BCC $18
+    BRA .end
+  .fast
     LDA !MUSIC_TRACK
     JSL $808FC1 ; queue room music track
-    BRA $18
+  .end
+%warnpc($90E898, $90E895)
 
 
 ; $82:8BB3 22 69 91 A0 JSL $A09169[$A0:9169]  ; Handles Samus getting hurt?

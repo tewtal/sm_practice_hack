@@ -121,6 +121,7 @@ init_sram_routine_table:
     dw init_sram_upgrade_19to1A
     dw init_sram_upgrade_1Ato1B
     dw init_sram_upgrade_1Bto1C
+    dw init_sram_upgrade_1Cto1D
 
 init_sram:
 {
@@ -257,6 +258,9 @@ endif
     STA !sram_bonk_indicators
     STA !sram_speed_booster_physics
     STA !sram_streamer_name
+
+  .upgrade_1Cto1D
+    TDC : INC : STA !sram_fast_teleport
 
     LDA !SRAM_VERSION : STA !sram_initialized
     RTS

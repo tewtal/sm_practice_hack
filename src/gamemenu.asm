@@ -18,6 +18,7 @@ GameMenu:
     dw #game_fast_doors_toggle
     dw #game_fast_elevators
     dw #game_fast_pause
+    dw #game_fast_teleport
     dw #$FFFF
     dw #game_goto_debug
     dw #$FFFF
@@ -123,6 +124,9 @@ game_fast_elevators:
 
 game_fast_pause:
     %cm_toggle("Fast Pause", !sram_fast_pause, #$01, #0)
+
+game_fast_teleport:
+    %cm_toggle("Fast Teleport", !sram_fast_teleport, #$01, #0)
 
 game_goto_debug:
     %cm_submenu("Debug Settings", #DebugMenu)
