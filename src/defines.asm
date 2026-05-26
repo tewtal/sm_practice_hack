@@ -1479,21 +1479,22 @@ endif
 ; Each botwoon pattern can be #$00 (off), #$01, #$09, #$11, #$19
 ; (except hidden pattern cannot be #$19)
 ; This corresponds to just three bits of information
-; For efficiency this information can be overlapped,
+; For efficiency this information can be overlapped
+; and is done for the hidden and second patterns,
 ; allowing for the spit value (#$00, #$04, #$08) to be included
-; and also the after spit value in the most and least significant bits
-!BOTWOON_RNG_FIRST_MASK             = #$0032 ; #$0019 << 1
-!BOTWOON_RNG_FIRST_INVERTED         = #$FFCD
-!BOTWOON_RNG_FIRST_ENABLED          = #$0002
-!BOTWOON_RNG_FIRST_VALUE            = #$0030
-!BOTWOON_RNG_HIDDEN_MASK            = #$0C80 ; #$1900 >> 1
-!BOTWOON_RNG_HIDDEN_INVERTED        = #$F37F
-!BOTWOON_RNG_HIDDEN_ENABLED         = #$0080
-!BOTWOON_RNG_HIDDEN_VALUE           = #$0C00
-!BOTWOON_RNG_SECOND_MASK            = #$3200 ; #$1900 << 1
-!BOTWOON_RNG_SECOND_INVERTED        = #$CDFF
-!BOTWOON_RNG_SECOND_ENABLED         = #$0200
-!BOTWOON_RNG_SECOND_VALUE           = #$3000
+; and also the after spit value in the most and least significant bits,
+; and a bit for each of the four first patterns toggled individually
+!BOTWOON_RNG_FIRST_MASK             = #$00F0
+!BOTWOON_RNG_FIRST_INVERTED         = #$FF0F
+!BOTWOON_RNG_HIDDEN_MASK            = #$1900 ; $19 << 8
+!BOTWOON_RNG_HIDDEN_INVERTED        = #$E6FF
+!BOTWOON_RNG_HIDDEN_ENABLED         = #$0100
+!BOTWOON_RNG_HIDDEN_VALUE           = #$1800
+!BOTWOON_RNG_SECOND_MASK            = #$6400 ; $19 << 10
+!BOTWOON_RNG_SECOND_INVERTED        = #$9BFF
+!BOTWOON_RNG_SECOND_ENABLED         = #$0400
+!BOTWOON_RNG_SECOND_VALUE           = #$6000
+!BOTWOON_RNG_ALL_PATTERN_MASK       = #$7DF0
 !BOTWOON_RNG_SPIT_MASK              = #$000C
 !BOTWOON_RNG_SPIT_INVERTED          = #$FFF3
 !BOTWOON_RNG_AFTER_SPIT_ENABLED     = #$8000

@@ -165,15 +165,22 @@ endif
 
 init_botwoon_rng:
 {
-    LDA !ram_botwoon_rng : AND !BOTWOON_RNG_SPIT_INVERTED : STA !eram_botwoon_all_pattern_rng
-    AND !BOTWOON_RNG_FIRST_MASK : LSR : STA !eram_botwoon_first_rng
+    LDA !ram_botwoon_rng : AND !BOTWOON_RNG_ALL_PATTERN_MASK : STA !eram_botwoon_all_pattern_rng
+    AND !BOTWOON_RNG_FIRST_MASK : CMP !BOTWOON_RNG_FIRST_MASK : BEQ .invalid
+    STA !eram_botwoon_first_rng : LSR #4 : ORA !eram_botwoon_first_rng
+  .set_first
+    STA !eram_botwoon_first_rng
     LDA !ram_botwoon_rng : AND !BOTWOON_RNG_HIDDEN_MASK
-    ASL : XBA : STA !eram_botwoon_hidden_rng
+    XBA : STA !eram_botwoon_hidden_rng
     LDA !ram_botwoon_rng : AND !BOTWOON_RNG_SECOND_MASK
-    LSR : XBA : STA !eram_botwoon_second_rng
+    LSR #2 : XBA : STA !eram_botwoon_second_rng
     LDA !ram_botwoon_rng : AND !BOTWOON_RNG_SPIT_MASK : STA !eram_botwoon_spit_rng
     LDA !ram_botwoon_rng : AND !BOTWOON_RNG_AFTER_SPIT_MASK : STA !eram_botwoon_after_spit_rng
     RTL
+
+  .invalid
+    TDC
+    BRA .set_first
 }
 
 ; Vanilla main AI routine, just migrated
@@ -565,7 +572,7 @@ hook_phantoon_init:
     PHP ; push 1
     PLA ; pop 2 (for a total of 3 bytes popped)
 
-    ; start boss music & fade-in animation
+    ; start boss music and fade-in animation
 if !FEATURE_PAL
     JML $A7D543
 else
@@ -599,7 +606,7 @@ init_phantoon_rng:
 }
 
 
-; Table of Phantoon pattern durations & directions
+; Table of Phantoon pattern durations and directions
 ; bit 0 is direction, remaining bits are duration
 ; Note that later entries in the table will tend to occur slightly more often.
 phan_pattern_table:
@@ -853,6 +860,20 @@ endif
     RTL
 }
 
+
+; Table of botwoon patterns
+; Note that later entries in the table will tend to occur slightly more often.
+botwoon_pattern_table:
+    dw $0019 ; left
+    dw $0011 ; right
+    dw $0009 ; top
+    dw $0001 ; bottom
+    dw $0019 ; left
+    dw $0011 ; right
+    dw $0009 ; top
+    dw $0001 ; bottom
+
+
 hook_botwoon_move:
 {
     LDA !eram_botwoon_all_pattern_rng : BEQ .no_manip_maybe_first_roll
@@ -867,17 +888,6 @@ hook_botwoon_move:
     JSL $808111
     ; return chosen pattern
     LDA !eram_botwoon_second_rng
-    RTL
-
-  .first_round
-    ; check if first round pattern fixed
-    LDA !eram_botwoon_first_rng : BEQ .no_manip_maybe_first_roll
-    ; preserve number of RNG calls in the frame
-    JSL $808111
-    ; mark first round complete
-    STZ !eram_botwoon_first_roll
-    ; return chosen pattern
-    LDA !eram_botwoon_first_rng
     RTL
 
   .hidden
@@ -895,6 +905,48 @@ hook_botwoon_move:
   .no_manip
     ; return random pattern
     JML $808111
+
+  .first_round
+    ; check if first round pattern fixed
+    LDA !eram_botwoon_first_rng : BEQ .no_manip_maybe_first_roll
+
+    PHX     ; push enemy index
+    PHA     ; push pattern mask
+    ; mark first round complete
+    STZ !eram_botwoon_first_roll
+
+    ; get random number in range 0-7
+    JSL $808111
+    AND #$0007 : TAX
+
+    ; play a game of eeny-meeny-miny-moe with the enabled patterns
+    ; X = number of enabled patterns to find before stopping
+    ; Y = index in botwoon_pattern_table of pattern currently being checked
+    ; A = bitmask of enabled patterns
+  .reload
+    LDA $01,S ; reload pattern mask
+    LDY #$0008  ; number of patterns (decremented immediately to index of last pattern)
+
+  .loop
+    DEY
+    LSR : BCS .skip
+
+    ; Pattern index Y is enabled
+    DEX : BMI .done ; is this the last one?
+    BRA .loop   ; no, keep looping
+
+  .skip
+    ; Pattern Y is not enabled, try the next pattern
+    BEQ .reload ; if we've tried all the patterns, start over
+    BRA .loop
+
+  .done
+    ; We've found the pattern to use
+    PLA ; we don't need the pattern mask anymore
+    TYA : ASL : TAX
+    LDA.l botwoon_pattern_table,X
+    PLX ; pop enemy index
+    RTL
 }
 
 hook_botwoon_spit:
