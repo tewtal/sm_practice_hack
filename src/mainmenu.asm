@@ -3757,18 +3757,18 @@ rng_ridley_tail:
 
 rng_prepare_botwoon_menu:
 {
-    TDC : STA !ram_cm_botwoon_first_rng
-    STA !ram_cm_botwoon_hidden_rng : STA !ram_cm_botwoon_second_rng
-    LDA !ram_botwoon_rng : BIT !BOTWOON_RNG_FIRST_ENABLED : BEQ .botwoonHidden
-    AND !BOTWOON_RNG_FIRST_VALUE : LSR #4 : INC
-    STA !ram_cm_botwoon_first_rng : LDA !ram_botwoon_rng
-  .botwoonHidden
-    BIT !BOTWOON_RNG_HIDDEN_ENABLED : BEQ .botwoonSecond
-    AND !BOTWOON_RNG_HIDDEN_VALUE : XBA : LSR #2 : INC
+    LDA !ram_botwoon_rng : AND !BOTWOON_RNG_FIRST_MASK
+    CMP !BOTWOON_RNG_FIRST_MASK : BNE .botwoonFirst
+    AND !BOTWOON_RNG_FIRST_INVERTED : STA !ram_botwoon_rng
+  .botwoonFirst
+    JSL rng_botwoon_set_first
+    TDC : STA !ram_cm_botwoon_hidden_rng : STA !ram_cm_botwoon_second_rng
+    LDA !ram_botwoon_rng : BIT !BOTWOON_RNG_HIDDEN_ENABLED : BEQ .botwoonSecond
+    AND !BOTWOON_RNG_HIDDEN_VALUE : XBA : LSR #3 : INC
     STA !ram_cm_botwoon_hidden_rng : LDA !ram_botwoon_rng
   .botwoonSecond
     BIT !BOTWOON_RNG_SECOND_ENABLED : BEQ .botwoonSpit
-    AND !BOTWOON_RNG_SECOND_VALUE : XBA : LSR #4 : INC
+    AND !BOTWOON_RNG_SECOND_VALUE : XBA : ASL #3 : XBA : INC
     STA !ram_cm_botwoon_second_rng : LDA !ram_botwoon_rng
   .botwoonSpit
     AND !BOTWOON_RNG_SPIT_MASK : LSR #2 : STA !ram_cm_botwoon_spit_rng
@@ -3783,6 +3783,11 @@ rng_prepare_botwoon_menu:
 
 RngBotwoonMenu:
     dw #rng_botwoon_first
+    dw #rng_botwoon_first_bottom
+    dw #rng_botwoon_first_top
+    dw #rng_botwoon_first_right
+    dw #rng_botwoon_first_left
+    dw #$FFFF
     dw #rng_botwoon_hidden
     dw #rng_botwoon_second
     dw #rng_botwoon_spit
@@ -3800,19 +3805,60 @@ rng_botwoon_first:
     db #$28, "  LT    TOP", #$FF
     db #$28, "  LR  RIGHT", #$FF
     db #$28, "  LL   LEFT", #$FF
+    db #$28, " NOT BOTTOM", #$FF
+    db #$28, " NOT    TOP", #$FF
+    db #$28, " NOT  RIGHT", #$FF
+    db #$28, " NOT   LEFT", #$FF
+    db #$28, " BOTTOM TOP", #$FF
+    db #$28, "BOTTOMRIGHT", #$FF
+    db #$28, "BOTTOM LEFT", #$FF
+    db #$28, "  TOP RIGHT", #$FF
+    db #$28, "   TOP LEFT", #$FF
+    db #$28, " RIGHT LEFT", #$FF
+    db #$28, "     CUSTOM", #$FF
     db #$FF
   .routine
+    ASL : TAX
     LDA !ram_botwoon_rng : AND !BOTWOON_RNG_FIRST_INVERTED
     STA !ram_botwoon_rng
-    LDA !ram_cm_botwoon_first_rng : BEQ .checkRoom
-    ; possible values are $01, $09, $11, $19
-    DEC : ASL #3 : INC : ASL
+    LDA.l rng_botwoon_first_table,X
     ORA !ram_botwoon_rng : STA !ram_botwoon_rng
   .checkRoom
     LDA !ROOM_ID : CMP.w #ROOM_BotwoonRoom : BNE .done
     JML init_botwoon_rng
   .done
     RTL
+
+rng_botwoon_first_table:
+    dw #$0000, #$00E0, #$00D0, #$00B0, #$0070, #$0010, #$0020, #$0040
+    dw #$0080, #$00C0, #$00A0, #$0060, #$0090, #$0050, #$0030, #$00F0
+
+rng_botwoon_set_first:
+{
+    LDX #$0000
+    LDA !ram_botwoon_rng : AND !BOTWOON_RNG_FIRST_MASK
+  .first_loop
+    CMP.l rng_botwoon_first_table,X : BEQ .end_first_loop
+    INX #2 : CPX #$001E : BNE .first_loop
+  .end_first_loop
+    TXA : LSR : STA !ram_cm_botwoon_first_rng
+    LDA !ROOM_ID : CMP.w #ROOM_BotwoonRoom : BNE .done
+    JML init_botwoon_rng
+  .done
+    RTL
+}
+
+rng_botwoon_first_bottom:
+    %cm_toggle_bit_inverted("First LB Bottom", !ram_botwoon_rng, #$0010, rng_botwoon_set_first)
+
+rng_botwoon_first_top:
+    %cm_toggle_bit_inverted("First LT Top", !ram_botwoon_rng, #$0020, rng_botwoon_set_first)
+
+rng_botwoon_first_right:
+    %cm_toggle_bit_inverted("First LR Right", !ram_botwoon_rng, #$0040, rng_botwoon_set_first)
+
+rng_botwoon_first_left:
+    %cm_toggle_bit_inverted("First LL Left", !ram_botwoon_rng, #$0080, rng_botwoon_set_first)
 
 rng_botwoon_hidden:
     dw !ACTION_CHOICE
@@ -3829,7 +3875,7 @@ rng_botwoon_hidden:
     STA !ram_botwoon_rng
     LDA !ram_cm_botwoon_hidden_rng : BEQ .checkRoom
     ; possible values are $01, $09, $11
-    DEC : ASL #3 : INC : XBA : LSR
+    DEC : ASL #3 : INC : XBA
     ORA !ram_botwoon_rng : STA !ram_botwoon_rng
   .checkRoom
     LDA !ROOM_ID : CMP.w #ROOM_BotwoonRoom : BNE .done
@@ -3853,7 +3899,7 @@ rng_botwoon_second:
     STA !ram_botwoon_rng
     LDA !ram_cm_botwoon_second_rng : BEQ .checkRoom
     ; possible values are $01, $09, $11, $19
-    DEC : ASL #3 : INC : XBA : ASL
+    DEC : ASL #3 : INC : XBA : ASL #2
     ORA !ram_botwoon_rng : STA !ram_botwoon_rng
   .checkRoom
     LDA !ROOM_ID : CMP.w #ROOM_BotwoonRoom : BNE .done
