@@ -530,6 +530,7 @@ ramwatch_common_misc_1840:
 RAMWatchCommonAnyGlitchedMenu:
     dw ramwatch_common_anyglitched_0026
     dw ramwatch_common_anyglitched_0028
+    dw ramwatch_common_anyglitched_03D6
     dw ramwatch_common_anyglitched_090F
     dw ramwatch_common_anyglitched_0913
     dw ramwatch_common_anyglitched_0C5E
@@ -550,6 +551,13 @@ ramwatch_common_anyglitched_0026:
 
 ramwatch_common_anyglitched_0028:
     %cm_jsl("0028 Shot Destination FFFF", action_select_common_address, #$0028)
+
+ramwatch_common_anyglitched_03D6:
+    dw !ACTION_JSL
+    dw #action_select_common_address
+    dw #$03D6
+table ../resources/normal.tbl
+    db #$28, "03D6 OAM (X", #$80, "0-7)      X---", #$FF
 
 ramwatch_common_anyglitched_090F:
     %cm_jsl("090F Layer 1 SubX     --F-", action_select_common_address, #!LAYER1_SUB_X)
