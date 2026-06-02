@@ -563,7 +563,7 @@ ramwatch_common_anyglitched_090F:
     %cm_jsl("090F Layer 1 SubX     --F-", action_select_common_address, #!LAYER1_SUB_X)
 
 ramwatch_common_anyglitched_0913:
-    %cm_jsl("0913 Layer 1 SubY     --0-", action_select_common_address, #!LAYER1_SUB_Y)
+    %cm_jsl("0913 Layer 1 SubY     --F-", action_select_common_address, #!LAYER1_SUB_Y)
 
 ramwatch_common_anyglitched_0C5E:
     %cm_jsl("0C5E Bomb One Geemer  F---", action_select_common_address, #!SAMUS_BOMB_INSTRUCTION_TIMER)
@@ -572,10 +572,10 @@ ramwatch_common_anyglitched_0E20:
     %cm_jsl("0E20 5olD Geemer Side F---", action_select_common_address, #$0E20)
 
 ramwatch_common_anyglitched_11FC:
-    %cm_jsl("11FC 5olD Geemer SubX -F--", action_select_common_address, #(!ENEMY_X_SUBPX+$280))
+    %cm_jsl("11FC 5olD Geemer SubX --F-", action_select_common_address, #(!ENEMY_X_SUBPX+$280))
 
 ramwatch_common_anyglitched_1200:
-    %cm_jsl("1200 5olD Geemer SubY -F--", action_select_common_address, #(!ENEMY_Y_SUBPX+$280))
+    %cm_jsl("1200 5olD Geemer SubY --F-", action_select_common_address, #(!ENEMY_Y_SUBPX+$280))
 
 ramwatch_common_anyglitched_1842:
     %cm_jsl("1842 Time Since Reset 1---", action_select_common_address, #!EARTHQUAKE_EXECUTION_COUNT)
