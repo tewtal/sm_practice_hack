@@ -469,7 +469,7 @@ hide_sprite_features:
 
 handle_gold_block:
 {
-    PHA
+    PHA : PHP
     LDA !ram_sprite_feature_flags : BEQ .continue
 
     ; Remove up to either stack pointer or #$0384
@@ -486,7 +486,7 @@ handle_gold_block:
     ; Fix up the PLM
     LDA #$0380 : TAX : STA !PLM_ID,Y
     LDA $0382 : STA !PLM_INSTRUCTION_POINTER,Y
-    PLA
+    PLP : PLA
     JMP ($0380)
 }
 
