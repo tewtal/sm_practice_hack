@@ -1856,7 +1856,7 @@ InfoHudMenu:
     dw #ih_dynamic_frames_held
     dw #ih_status_icons
     dw #ih_bonk_indicator
-if !PRESERVE_WRAM_DURING_SPACETIME
+if !PRESERVE_WRAM
     dw #ih_spacetime_infohud
 endif
     dw #$FFFF
