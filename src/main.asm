@@ -10,7 +10,7 @@ lorom
 !FEATURE_VANILLAHUD ?= 0
 !INFOHUD_ALWAYS_SHOW_X_Y ?= 0
 !ORIGINAL_MESSAGE_TEXT ?= 0
-!PRESERVE_WRAM_DURING_SPACETIME ?= 1
+!PRESERVE_WRAM ?= 1
 !RAW_TILE_GRAPHICS ?= 1
 !ZSNES_SPLASHSCREEN_GRAPHICS ?= 1
 
@@ -47,9 +47,9 @@ if !ORIGINAL_MESSAGE_TEXT
     print "PRESERVE FANFARE MESSAGES"
 endif
 
-if !PRESERVE_WRAM_DURING_SPACETIME
+if !PRESERVE_WRAM
 else
-    print "WRAM NOT PRESERVED DURING SPACETIME"
+    print "WRAM NOT PRESERVED DURING SPACETIME OR XRAY"
 endif
 
 if !RAW_TILE_GRAPHICS
@@ -108,6 +108,10 @@ incsrc init.asm
 incsrc fanfare.asm
 incsrc spriteprio.asm
 incsrc spritefeat.asm
+
+if !PRESERVE_WRAM
+    incsrc preserve_wram.asm
+endif
 
 if !RAW_TILE_GRAPHICS
     incsrc tilegraphics.asm
