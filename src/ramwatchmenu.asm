@@ -482,6 +482,7 @@ ramwatch_common_proj_1C1D:
 RAMWatchCommonMiscMenu:
     dw ramwatch_common_misc_05E5
     dw ramwatch_common_misc_079B
+    dw ramwatch_common_misc_07A5
     dw ramwatch_common_misc_0998
     dw ramwatch_common_misc_09DA
     dw ramwatch_common_misc_09DC
@@ -499,6 +500,9 @@ ramwatch_common_misc_05E5:
 
 ramwatch_common_misc_079B:
     %cm_jsl("Room ID", action_select_common_address, #!ROOM_ID)
+
+ramwatch_common_misc_07A5:
+    %cm_jsl("Room Width Blocks", action_select_common_address, #!ROOM_WIDTH_BLOCKS)
 
 ramwatch_common_misc_0998:
     %cm_jsl("Game State", action_select_common_address, #!GAMEMODE)
