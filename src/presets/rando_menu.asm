@@ -136,6 +136,7 @@ presets_submenu_rando_four_bosses:
     dw #presets_rando_four_bosses_grapple_escape_hijumpless
     dw #presets_rando_four_bosses_double_springball_jump
     dw #presets_rando_four_bosses_xray_climb
+    dw #presets_rando_four_bosses_ridley_loaded
     dw #presets_rando_four_bosses_ridley_30_25_5_ammo
     dw #presets_rando_four_bosses_ridley_10_20_15_ammo
     dw #presets_rando_four_bosses_ridley_low_hp
@@ -464,6 +465,9 @@ presets_rando_four_bosses_double_springball_jump:
 
 presets_rando_four_bosses_xray_climb:
     %cm_preset("X-Ray Climb", #preset_names_xray_climb, #preset_rando_four_bosses_xray_climb)
+
+presets_rando_four_bosses_ridley_loaded:
+    %cm_preset("Ridley Loaded", #preset_names_ridley_loaded, #preset_rando_four_bosses_ridley_loaded)
 
 presets_rando_four_bosses_ridley_30_25_5_ammo:
     %cm_preset("Ridley 30+25+5 Ammo", #preset_names_ridley_30_25_5_ammo, #preset_rando_four_bosses_ridley_30_25_5_ammo)
