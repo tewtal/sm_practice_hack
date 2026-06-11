@@ -1463,7 +1463,6 @@ preset_prkd19_lower_norfair_leaving_ridley:
     dw $0919, $00D7  ; Layer 2 Y position
     dw $09C6, $0004  ; Missiles
     dw $09CA, $0003  ; Supers
-    dw $09CE, $0005  ; Pbs
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $005F  ; Samus X
