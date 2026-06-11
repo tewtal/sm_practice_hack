@@ -16502,10 +16502,12 @@ preset_rando_tourian_metroids_1:
     dw $09CE, $000F  ; Pbs
     dw $09D0, $000F  ; Max pbs
     dw $09D2, $0003  ; Currently selected item
-    dw $D820, $0401  ; Events
-    dw $D828, $0100  ; Bosses
-    dw $D82A, $0100  ; Bosses
+    dw $D820, $0FC1  ; Events
+    dw $D822, $0020  ; Events
+    dw $D828, $0104  ; Bosses
+    dw $D82A, $0101  ; Bosses
     dw $D82C, $0003  ; Bosses
+    dw $D82E, $0001  ; Bosses
     dw $D872, $1400  ; Items
     dw $D8B2, $6C00  ; Doors
     dw $D8B4, $0000  ; Doors
@@ -16918,7 +16920,7 @@ preset_rando_tourian_metroids_2:
     dw $09CC, $003C  ; Max supers
     dw $09CE, $000C  ; Pbs
     dw $0AFA, $008B  ; Samus Y
-    dw $D822, $0001  ; Events
+    dw $D822, $0021  ; Events
     dw $D8C4, $0001  ; Doors
     dw #$FFFF
 
@@ -16939,7 +16941,7 @@ preset_rando_tourian_metroids_3:
     dw $0A1E, $1508  ; More position/state
     dw $0AF6, $00DB  ; Samus X
     dw $0AFA, $018B  ; Samus Y
-    dw $D822, $0003  ; Events
+    dw $D822, $0023  ; Events
     dw $D8C4, $0003  ; Doors
     dw #$FFFF
 
@@ -17180,7 +17182,7 @@ preset_rando_tourian_metroids_4:
     dw $0A1C, $0089  ; Samus position/state
     dw $0A1E, $1508  ; More position/state
     dw $0AF6, $05DB  ; Samus X
-    dw $D822, $0007  ; Events
+    dw $D822, $0027  ; Events
     dw $D8C4, $0007  ; Doors
     dw #$FFFF
 
@@ -17203,7 +17205,7 @@ preset_rando_tourian_blue_hoppers:
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $00B5  ; Samus X
     dw $0AFA, $01CB  ; Samus Y
-    dw $D822, $000F  ; Events
+    dw $D822, $002F  ; Events
     dw $D8C4, $000F  ; Doors
     dw #$FFFF
 
@@ -17779,9 +17781,9 @@ preset_rando_tourian_mother_brain_all_missiles:
     dw $09CA, $0000  ; Supers
     dw $09CC, $000A  ; Max supers
     dw $09D2, $0001  ; Currently selected item
-    dw $0AF6, $00CA  ; Samus X
+    dw $0AF6, $00CF  ; Samus X
     dw $0AFA, $009B  ; Samus Y
-    dw $D820, $0405  ; Events
+    dw $D820, $0FC5  ; Events
     dw #$FFFF
 
 preset_nodropskpdr_maridia_halfie_setup:
