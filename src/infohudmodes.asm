@@ -893,14 +893,14 @@ endif
     ; If speed was previously negative, then proceed to draw negative speed
     TAY : LDA !ram_momentum_sum : AND #$8000 : BNE .negativespeed
 
-    LDA !IH_BLANK : STA !HUD_TILEMAP+$88 : STA !HUD_TILEMAP+$90
-    LDA !IH_HYPHEN : STA !HUD_TILEMAP+$8A : STA !HUD_TILEMAP+$8E
-    LDA !IH_DECIMAL : STA !HUD_TILEMAP+$8C
+    LDA !IH_HYPHEN : STA !HUD_TILEMAP+$88
+    STA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$8E
+    LDA !IH_DECIMAL : STA !HUD_TILEMAP+$8A
 
     ; Store speed as some negative value that isn't FFxx,
     ; so if it is negative again we'll update it
     LDA #$8000 : STA !ram_momentum_sum
-    BRA .checkfalling
+    BRA .drawblankcheckfalling
 
   .negativespeed
     TYA : STA !ram_momentum_sum
@@ -911,11 +911,14 @@ endif
     CMP !ram_momentum_sum : BEQ .checkfalling : STA !ram_momentum_sum
 
     ; draw whole number in decimal
-    XBA : AND #$00FF : LDX #$0088 : JSR Draw2
-    LDA !IH_DECIMAL : STA !HUD_TILEMAP+$8C
+    TAX : XBA : AND #$00FF
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$88
+    LDA !IH_DECIMAL : STA !HUD_TILEMAP+$8A
 
     ; draw fraction in hex
-    LDA !ram_momentum_sum : AND #$00F0 : LSR #3 : TAY
+    TXA : AND #$00F0 : LSR #3 : TAY
+    LDA.w HexGFXTable,Y : STA !HUD_TILEMAP+$8C
+    TXA : AND #$000F : ASL : TAY
     LDA.w HexGFXTable,Y : STA !HUD_TILEMAP+$8E
 
   .drawblankcheckfalling
