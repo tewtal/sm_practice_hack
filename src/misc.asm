@@ -400,6 +400,32 @@ endif
     STA $7F0A9A,X ; !SAMUS_LAVA_DAMAGE_SUITS
     STA $7F0B0E,X ; !DAMAGE_COUNTER
 
+    ; Check if door skip is selected
+    LDA !sram_display_mode : CMP !IH_MODE_ROOMSTRAT_INDEX : BNE .check_sprite_flags
+    LDA !sram_room_strat : BEQ .check_super_hud
+    CMP !IH_STRAT_DOORSKIP_INDEX : BNE .check_sprite_flags
+
+  .draw_earthquake
+    ; Draw value relevant for block shuffler
+    LDA !EARTHQUAKE_EXECUTION_COUNT
+    AND #$F000 : XBA : LSR #3 : TAX
+    LDA.l HexGFXTable,X : STA !HUD_TILEMAP+$88
+    LDA !EARTHQUAKE_EXECUTION_COUNT
+    AND #$0F00 : XBA : ASL : TAX
+    LDA.l HexGFXTable,X : STA !HUD_TILEMAP+$8A
+    LDA !EARTHQUAKE_EXECUTION_COUNT
+    AND #$00F0 : LSR #3 : TAX
+    LDA.l HexGFXTable,X : STA !HUD_TILEMAP+$8C
+    LDA !EARTHQUAKE_EXECUTION_COUNT
+    AND #$000F : ASL : TAX
+    LDA.l HexGFXTable,X : STA !HUD_TILEMAP+$8E
+    BRA .check_sprite_flags
+
+  .check_super_hud
+    LDA !sram_superhud_bottom : CMP !IH_SUPERHUD_DOORSKIP_BOTTOM_INDEX
+    BEQ .draw_earthquake
+
+  .check_sprite_flags
     LDA !ram_sprite_feature_flags : BEQ .end
 
     ; Remove up to !OAM_HIGH
