@@ -1103,7 +1103,7 @@ preset_rando_four_bosses_xray_climb:
     dw $D8C2, $4D00  ; Doors
     dw #$FFFF
 
-preset_rando_four_bosses_ridley_30_25_5_ammo:
+preset_rando_four_bosses_ridley_loaded:
     dw #preset_rando_four_bosses_xray_climb ; Four Bosses: X-Ray Climb
     dw $078D, $995A  ; DDB
     dw $079B, $B37A  ; MDB
@@ -1113,16 +1113,16 @@ preset_rando_four_bosses_ridley_30_25_5_ammo:
     dw $0911, $0000  ; Screen X position in pixels
     dw $0913, $A400  ; Screen subpixel Y position
     dw $0917, $0000  ; Layer 2 X position
-    dw $09A2, $1005  ; Equipped Items
-    dw $09A4, $1005  ; Collected Items
-    dw $09A6, $0000  ; Equipped Beams
-    dw $09A8, $0000  ; Collected Beams
+    dw $09A2, $F32F  ; Equipped Items
+    dw $09A4, $F32F  ; Collected Items
+    dw $09A6, $100F  ; Equipped Beams
+    dw $09A8, $100F  ; Collected Beams
     dw $09C2, $0257  ; Health
     dw $09C4, $0257  ; Max health
     dw $09C6, $001E  ; Missiles
     dw $09C8, $001E  ; Max missiles
-    dw $09CA, $0019  ; Supers
-    dw $09CC, $0019  ; Max supers
+    dw $09CA, $001E  ; Supers
+    dw $09CC, $001E  ; Max supers
     dw $09CE, $0005  ; Pbs
     dw $09D0, $0005  ; Max pbs
     dw $0A1C, $008A  ; Samus position/state
@@ -1136,6 +1136,16 @@ preset_rando_four_bosses_ridley_30_25_5_ammo:
     dw $D8BC, $0001  ; Doors
     dw $D8C0, $0000  ; Doors
     dw $D8C2, $0000  ; Doors
+    dw #$FFFF
+
+preset_rando_four_bosses_ridley_30_25_5_ammo:
+    dw #preset_rando_four_bosses_ridley_loaded ; Four Bosses: Ridley Loaded
+    dw $09A2, $1005  ; Equipped Items
+    dw $09A4, $1005  ; Collected Items
+    dw $09A6, $0000  ; Equipped Beams
+    dw $09A8, $0000  ; Collected Beams
+    dw $09CA, $0019  ; Supers
+    dw $09CC, $0019  ; Max supers
     dw #$FFFF
 
 preset_rando_four_bosses_ridley_10_20_15_ammo:
@@ -2778,7 +2788,6 @@ preset_rando_tourian_mother_brain_all_missiles:
     dw $0AF6, $00CA  ; Samus X
     dw $0AFA, $009B  ; Samus Y
     dw $D820, $0405  ; Events
-    dw $D82C, $0203  ; Bosses
     dw #$FFFF
 
 preset_rando_tourian_mother_brain_all_supers:
@@ -2808,6 +2817,7 @@ preset_rando_tourian_zebes_escape:
     dw $0AF6, $0025  ; Samus X
     dw $0AFA, $00C3  ; Samus Y
     dw $D820, $4405  ; Events
+    dw $D82C, $0203  ; Bosses
     dw #$FFFF
 
 preset_rando_tourian_escape_room_3:

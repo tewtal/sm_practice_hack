@@ -1,6 +1,6 @@
 
-warnpc $EFBEE5
-org $EFBEE5
+warnpc $EFBED7
+org $EFBED7
 print pc, " preset names start"
 
 preset_names:
@@ -2323,6 +2323,9 @@ preset_names_ridley_etank:
 
 preset_names_ridley_farming_room:
     db "Ridley Farming Room", #$FF
+
+preset_names_ridley_loaded:
+    db "Ridley Loaded", #$FF
 
 preset_names_ridley_low_hp:
     db "Ridley Low HP", #$FF
