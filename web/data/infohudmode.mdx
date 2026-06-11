@@ -90,7 +90,7 @@ Displays the horizontal speed combined with momentum in pixels and 1/16th pixels
 Displays the horizontal speed (without momentum) in pixels and 1/16th pixels (subpixels).
 
 ## Vertical Speed
-Displays the vertical speed in pixels and 1/16th pixels (subpixels), except in the case where speed is negative during a moonfall.
+Displays the vertical speed in pixels and 1/256th pixels (subpixels), except in the case where speed is negative during a moonfall.
 The negative moonfall speed is still displayed as positive, so it starts at 65535 (0xFFFF) and decreases as Samus' moonfall speed increases.
 Also initial jump speed will displayed as a three digit hex value overwriting the item collection percentage, and Samus HP will be overwritten with space jump feedback:
 &nbsp;  
@@ -219,7 +219,8 @@ Last two characters = Feedback on breaking out of the aim down pose:
 - L1 indicates you broke pose one frame late. You will get this feedback just as you hit the door transition.
 - LX indicates you broke pose more than one frame late. You will not get this feedback until after the door transition.
 
-Additionally Samus HP will be overwritten with the number of PLMs.
+Additionally Samus HP will be overwritten with the number of PLMs, and when a block shuffler is touched,
+the aforementioned feedback will be overwritten by the $1842 RAM value since this value affects the any% glitched route.
 
 ## Taco Tank
 Provides feedback on attempts to collect the Retro Brinstar E-Tank using a precise walljump:  
