@@ -2098,6 +2098,7 @@ ihstrat_ceresridley:
     %cm_jsl("Ceres Ridley Hits", #action_select_room_strat, #$0001)
 
 ihstrat_doorskip:
+!IH_STRAT_DOORSKIP_INDEX = #$0002
     %cm_jsl("Parlor/Botwoon Door Skip", #action_select_room_strat, #$0002)
 
 ihstrat_tacotank:
@@ -2444,6 +2445,7 @@ ih_superhud_ceresridley:
     %cm_jsl("Ceres Ridley Hits", #action_select_superhud_bottom, #$001A)
 
 ih_superhud_doorskip:
+!IH_SUPERHUD_DOORSKIP_BOTTOM_INDEX = #$001B
     %cm_jsl("Parlor-Climb Door Skip", #action_select_superhud_bottom, #$001B)
 
 ih_superhud_tacotank:
