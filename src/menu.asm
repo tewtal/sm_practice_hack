@@ -1264,7 +1264,8 @@ draw_choice:
     BRA .loop_choices
 
   .loop_done
-     RTS
+    %a16()
+    RTS
 
   .found
     %a16()
