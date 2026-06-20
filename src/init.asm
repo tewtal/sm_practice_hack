@@ -34,7 +34,27 @@ init_code:
 
     ; Clear persistent RAM (except quickboot itself) if not already cleared
     PEA $807E : PLB
-    LDA.w !ram_quickboot_spc_state : BEQ .persistent_cleared
+    LDA.w !ram_quickboot_spc_state : BNE .clear_loop_start
+
+    ; Sanity check persistent RAM
+    LDA.w !ram_magic_pants_enabled : ORA.w !ram_space_pants_enabled
+    CMP #$0004 : BCS .clear_loop_start
+
+    LDA.w !ram_suits_heat_damage_value : AND #$0FFF : BNE .clear_loop_start
+
+    ; If not heat shield, then top nibble should be non-zero
+    LDA !sram_suit_properties : AND !SUIT_PROPERTIES_MASK
+    CMP #$0005 : BEQ .check_drop_chance_table
+    LDA.w !ram_suits_heat_damage_value : BEQ .clear_loop_start
+
+  .check_drop_chance_table
+    LDA.w !ram_drop_chance_table : BEQ .persistent_cleared
+    LDA.w !DROP_CHANCE_TABLE_LENGTH-1 : ASL : TAX
+  .drop_table_loop
+    LDA.l drop_chance_tables,X : CMP.w !ram_drop_chance_table : BEQ .persistent_cleared
+    DEX #2 : BPL .drop_table_loop
+
+  .clear_loop_start
     ; This loop is based on WRAM_PERSIST_START
     LDX #$007E
   .clear_loop
