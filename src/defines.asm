@@ -197,8 +197,8 @@
 !ram_suits_heat_damage_check        = !WRAM_PERSIST_START+$32
 !ram_pacifist                       = !WRAM_PERSIST_START+$34
 !ram_freeze_on_load                 = !WRAM_PERSIST_START+$36
+!ram_drop_chance_table              = !WRAM_PERSIST_START+$38
 
-!ram_spacetime_infohud              = !WRAM_PERSIST_START+$38
 !ram_watch_left_index               = !WRAM_PERSIST_START+$3A
 !ram_watch_right_index              = !WRAM_PERSIST_START+$3C
 !ram_watch_write_mode               = !WRAM_PERSIST_START+$3E
@@ -220,7 +220,6 @@
 !ram_frames_held                    = !WRAM_PERSIST_START+$5C
 !ram_quickboot_spc_state            = !WRAM_PERSIST_START+$5E
 !ram_display_backup                 = !WRAM_PERSIST_START+$60
-!ram_drop_chance_table              = !WRAM_PERSIST_START+$62
 
 ; ^ FREE SPACE ^ up to +$7C (!WRAM_START+$FC - !WRAM_PERSIST_START)
 
@@ -360,6 +359,9 @@
 
 !ram_cm_ceres_seconds = !WRAM_MENU_START+$90
 !ram_cm_zebes_seconds = !WRAM_MENU_START+$92
+
+!ram_cm_sprites_spacetime = !WRAM_MENU_START+$90
+!ram_cm_sprites_xray = !WRAM_MENU_START+$92
 
 !ram_cm_ctrl_add_shortcut_slot = !WRAM_MENU_START+$90
 !ram_cm_ctrl_last_pri = !WRAM_MENU_START+$92
@@ -1363,6 +1365,10 @@ endif
 !SPRITE_ENEMY_PROJ = #$0020
 !SPRITE_32x32_PROJ = #$0040
 !SPRITE_OOB_WATCH = #$0080
+!SPRITE_HUD_SPACETIME = #$0100
+!SPRITE_HUD_XRAY = #$0200
+!SPRITE_HUD_SPACETIME_INVERTED = #$FEFF
+!SPRITE_HUD_XRAY_INVERTED = #$FDFF
 
 !CUTSCENE_SKIP_INTRO = #$0001
 !CUTSCENE_SKIP_CERES_ARRIVAL = #$0002

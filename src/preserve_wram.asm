@@ -43,7 +43,7 @@ spacetime_routine:
     INX #2 : CPX #($7EC608-$7EC1C0) : BMI .loop_before_infohud
 
     ; Check if we should skip over infohud
-    LDA !ram_spacetime_infohud : BEQ .overwrite_infohud
+    LDA !ram_sprite_feature_flags : AND !SPRITE_HUD_SPACETIME : BEQ .overwrite_infohud
 
     ; Skip over infohud
     ; Instead of load and store, load and load
@@ -119,4 +119,923 @@ spacetime_routine:
 }
 
 %endfree(90)
+
+
+if !FEATURE_PAL
+org $91BE10
+else
+org $91BEB8
+endif
+    dw xray_offscreen_aim_right
+
+if !FEATURE_PAL
+org $91BE16
+else
+org $91BEBE
+endif
+    dw xray_offscreen_aim_left
+    dw xray_offscreen_horizontal
+
+if !FEATURE_PAL
+org $91C54D
+else
+org $91C5F5
+endif
+    dw xray_onscreen_aim_right
+
+if !FEATURE_PAL
+org $91C553
+else
+org $91C5FB
+endif
+    dw xray_onscreen_aim_left
+    dw xray_onscreen_horizontal
+
+
+%startfree(91)
+
+xray_offscreen_aim_right:
+{
+    PHP : %ai16()
+    LDA $18 : DEC : ASL : TAY
+    CPY #$27F8 : BCS .preserve
+  .vanilla
+if !FEATURE_PAL
+    JMP $BE22
+else
+    JMP $BECA
+endif
+
+  .preserve
+    CPY #$8008 : BCS .vanilla
+    LDA $16 : STA $22 : STA $24
+  .leftOffscreenLoop
+    LDA $22 : CLC : ADC $1E : STA $22
+    BCS .leftFoundScreen
+    DEY #2 : BPL .leftOffscreenLoop
+    STZ $12
+    JMP .leftEdgeEnd
+
+  .leftFoundScreen
+    TYA : INC #2 : STA $12
+    CPY #$6708 : BCS .leftFoundFirst
+    CPY #$5CF8 : BCS .leftFoundSkip
+    CPY #$32EC : BCS .leftFoundSecond
+    CPY #$27FF : BCC .leftFoundThird
+    LDA !ram_sprite_feature_flags : AND !SPRITE_HUD_XRAY : BEQ .leftFoundThird
+    DEY #2 : CPY #$27FF : BCC .leftFoundThirdContinue
+    JMP .leftOnscreenSecondSkip
+
+  .leftFoundFirst
+    LDA $23 : ORA #$FF00 : STA [$00],Y
+    DEY #2
+    LDA $22 : CLC : ADC $1E : STA $22
+    BCS .firstLostScreen
+    LDA $23 : ORA #$FF00 : STA [$00],Y
+    DEY #2 : BPL .leftOnscreenFirstLoop
+    JMP .leftEdgeEnd
+
+  .leftFoundSkip
+    DEY #2
+    BRA .leftOnscreenFirstSkip
+
+  .leftFoundSecond
+    LDA $23 : ORA #$FF00 : STA [$00],Y
+    DEY #2
+    BRA .leftOnscreenSecondLoop
+
+  .leftFoundThird
+    LDA $23 : ORA #$FF00 : STA [$00],Y
+    DEY #2
+  .leftFoundThirdContinue
+    BRA .leftOnscreenThirdLoop
+
+  .firstLostScreen
+    LDA #$00FF : STA [$00],Y
+    DEY #2 : BPL .leftLostFirstLoop
+    JMP .leftEdgeEnd
+
+  .leftOnscreenFirstLoop
+    LDA $22 : CLC : ADC $1E : STA $22
+    BCS .leftLostFirst
+    LDA $23 : ORA #$FF00 : STA [$00],Y
+    DEY #2 : CPY #$6708 : BCS .leftOnscreenFirstLoop
+  .leftOnscreenFirstSkip
+    LDA $22 : CLC : ADC $1E : STA $22
+    BCS .leftLostFirstSkip
+    LDA $23 : ORA #$FF00
+    DEY #2 : CPY #$5CF8 : BCS .leftOnscreenFirstSkip
+  .leftOnscreenSecondLoop
+    LDA $22 : CLC : ADC $1E : STA $22
+    BCS .leftLostSecond
+    LDA $23 : ORA #$FF00 : STA [$00],Y
+    DEY #2 : CPY #$32EC : BCS .leftOnscreenSecondLoop
+  .leftOnscreenCheckFlag
+    LDA !ram_sprite_feature_flags : AND !SPRITE_HUD_XRAY : BEQ .leftOnscreenThirdLoop
+  .leftOnscreenSecondSkip
+    LDA $22 : CLC : ADC $1E : STA $22
+    BCS .leftLostSecondSkip
+    LDA $23 : ORA #$FF00
+    DEY #2 : CPY #$27FF : BCS .leftOnscreenSecondSkip
+  .leftOnscreenThirdLoop
+    LDA $22 : CLC : ADC $1E : STA $22
+    BCS .leftLostThirdLoop
+    LDA $23 : ORA #$FF00 : STA [$00],Y
+    DEY #2 : BPL .leftOnscreenThirdLoop
+    BRA .leftEdgeEnd
+
+  .leftLostFirst
+    LDA #$00FF
+  .leftLostFirstLoop
+    STA [$00],Y
+    DEY #2 : CPY #$6708 : BCS .leftLostFirstLoop
+  .leftLostFirstSkip
+    LDA #$00FF
+    DEY #2 : CPY #$5CF8 : BCS .leftLostFirstSkip
+  .leftLostSecond
+    LDA #$00FF
+  .leftLostSecondLoop
+    STA [$00],Y
+    DEY #2 : CPY #$32EC : BCS .leftLostSecondLoop
+    LDA !ram_sprite_feature_flags : AND !SPRITE_HUD_XRAY : BEQ .leftLostThirdLoop
+  .leftLostSecondSkip
+    LDA #$00FF
+    DEY #2 : CPY #$27FF : BCS .leftLostSecondSkip
+  .leftLostThirdLoop
+    LDA #$00FF : STA [$00],Y
+    DEY #2 : BPL .leftLostThirdLoop
+
+  .leftEdgeEnd
+    LDA $18 : ASL : TAY
+  .rightOffscreenLoop
+    LDA $24 : CLC : ADC $20 : STA $24
+    BCS .rightFoundScreen
+    INY #2 : CPY #$01CC : BMI .rightOffscreenLoop
+    STY $14
+    JMP .rightEdgeEnd
+
+  .rightFoundScreen
+    TYA : DEC #2 : STA $14
+    CPY #$6708 : BCS .rightFoundStore
+    CPY #$5CF8 : BCS .rightFoundSkip
+    CPY #$32EC : BCS .rightFoundStore
+    CPY #$27FF : BCC .rightFoundStore
+    LDA !ram_sprite_feature_flags : AND !SPRITE_HUD_XRAY : BNE .rightFoundSkip
+  .rightFoundStore
+    LDA $25 : ORA #$FF00 : STA [$00],Y
+  .rightFoundSkip
+    INY #2
+    LDA $24 : CLC : ADC $20 : STA $24
+    BCS .rightLostScreen
+    CPY #$6708 : BCS .rightOnscreenStore
+    CPY #$5CF8 : BCS .rightOnscreenIny
+    CPY #$32EC : BCS .rightOnscreenStore
+    CPY #$27FF : BCC .rightOnscreenStore
+    LDA !ram_sprite_feature_flags : AND !SPRITE_HUD_XRAY : BEQ .rightOnscreenStore
+    BRA .rightOnscreenIny
+
+  .rightOnscreenLoop
+    LDA $24 : CLC : ADC $20 : STA $24
+    BCS .rightLostScreen
+  .rightOnscreenStore
+    LDA $25 : ORA #$FF00 : STA [$00],Y
+  .rightOnscreenIny
+    INY #2 : CPY #$01CC : BMI .rightOnscreenLoop
+    BRA .rightEdgeEnd
+
+  .rightLostScreen
+    CPY #$6708 : BCS .rightLostLoop
+    CPY #$5CF8 : BCS .rightLostSkip
+    CPY #$32EC : BCS .rightLostLoop
+    CPY #$27FF : BCC .rightLostLoop
+    LDA !ram_sprite_feature_flags : AND !SPRITE_HUD_XRAY : BNE .rightLostLoop
+  .rightLostSkip
+    LDA #$00FF
+    BRA .rightLostIny
+
+  .rightLostLoop
+    LDA #$00FF : STA [$00],Y
+  .rightLostIny
+    INY #2 : CPY #$01CC : BMI .rightLostLoop
+
+  .rightEdgeEnd
+    LDY $12
+    CPY #$6708 : BCS .finalThirdLoop
+    CPY #$5CF8 : BCS .finalSecondSkip
+    CPY #$32EC : BCS .finalSecond
+    CPY #$27FF : BCC .finalFirst
+    LDA !ram_sprite_feature_flags : AND !SPRITE_HUD_XRAY : BNE .finalSecond
+    BRA .finalFirstSkip
+
+  .finalFirst
+    LDA $14 : CMP #$27FE : BCC .finalThirdLoop
+  .finalFirstLoop
+    LDA #$FF00 : STA [$00],Y
+    INY #2 : CPY #$27FE : BMI .finalFirstLoop : BEQ .finalFirstLoop
+  .finalFirstSkip
+    LDA $14 : CMP #$32EC : BCC .finalSkipLoop
+  .finalFirstSkipLoop
+    LDA #$FF00
+    INY #2 : CPY #$32EC : BMI .finalFirstSkipLoop : BEQ .finalFirstSkipLoop
+  .finalSecond
+    LDA $14 : CMP #$5CF8 : BCC .finalThirdLoop
+  .finalSecondLoop
+    LDA #$FF00 : STA [$00],Y
+    INY #2 : CPY #$5CF8 : BMI .finalSecondLoop : BEQ .finalSecondLoop
+  .finalSecondSkip
+    LDA $14 : CMP #$6708 : BCC .finalSkipLoop
+  .finalSecondSkipLoop
+    LDA #$FF00
+    INY #2 : CPY #$6708 : BMI .finalSecondSkipLoop : BEQ .finalSecondSkipLoop
+  .finalThirdLoop
+    LDA #$FF00 : STA [$00],Y
+    INY #2 : CPY $14 : BMI .finalThirdLoop : BEQ .finalThirdLoop
+    PLP
+    RTS
+
+  .finalSkipLoop
+    LDA #$FF00
+    INY #2 : CPY $14 : BMI .finalSkipLoop : BEQ .finalSkipLoop
+    PLP
+    RTS
+}
+
+xray_offscreen_aim_left:
+{
+    PHP : %ai16()
+    LDA $18 : DEC : ASL : TAY
+    CPY #$27F8 : BCS .preserve
+  .vanilla
+if !FEATURE_PAL
+    JMP $BED2
+else
+    JMP $BF7A
+endif
+
+  .preserve
+    CPY #$8008 : BCS .vanilla
+    LDA $16 : STA $22 : STA $24
+  .rightOffscreenLoop
+    LDA $24 : SEC : SBC $20 : STA $24
+    BCC .rightFoundScreen
+    DEY #2 : BPL .rightOffscreenLoop
+    STZ $12
+    JMP .rightEdgeEnd
+
+  .rightFoundScreen
+    TYA : INC #2 : STA $12
+    CPY #$6708 : BCS .rightFoundFirst
+    CPY #$5CF8 : BCS .rightFoundSkip
+    CPY #$32EC : BCS .rightFoundSecond
+    CPY #$27FF : BCC .rightFoundThird
+    LDA !ram_sprite_feature_flags : AND !SPRITE_HUD_XRAY : BEQ .rightFoundThird
+    DEY #2 : CPY #$27FF : BCC .rightFoundThirdContinue
+    JMP .rightOnscreenSecondSkip
+
+  .rightFoundFirst
+    LDA $24 : AND #$FF00 : STA [$00],Y
+    DEY #2
+    LDA $24 : SEC : SBC $20 : STA $24
+    BCC .firstLostScreen
+    LDA $24 : AND #$FF00 : STA [$00],Y
+    DEY #2 : BPL .rightOnscreenFirstLoop
+    JMP .rightEdgeEnd
+
+  .rightFoundSkip
+    DEY #2
+    BRA .rightOnscreenFirstSkip
+
+  .rightFoundSecond
+    LDA $24 : AND #$FF00 : STA [$00],Y
+    DEY #2
+    BRA .rightOnscreenSecondLoop
+
+  .rightFoundThird
+    LDA $24 : AND #$FF00 : STA [$00],Y
+    DEY #2
+  .rightFoundThirdContinue
+    BRA .rightOnscreenThirdLoop
+
+  .firstLostScreen
+    LDA #$00FF : STA [$00],Y
+    DEY #2 : BPL .rightLostFirstLoop
+    JMP .rightEdgeEnd
+
+  .rightOnscreenFirstLoop
+    LDA $24 : SEC : SBC $20 : STA $24
+    BCC .rightLostFirst
+    LDA $24 : AND #$FF00 : STA [$00],Y
+    DEY #2 : CPY #$6708 : BCS .rightOnscreenFirstLoop
+  .rightOnscreenFirstSkip
+    LDA $24 : SEC : SBC $20 : STA $24
+    BCC .rightLostFirstSkip
+    LDA $24 : AND #$FF00
+    DEY #2 : CPY #$5CF8 : BCS .rightOnscreenFirstSkip
+  .rightOnscreenSecondLoop
+    LDA $24 : SEC : SBC $20 : STA $24
+    BCC .rightLostSecond
+    LDA $24 : AND #$FF00 : STA [$00],Y
+    DEY #2 : CPY #$32EC : BCS .rightOnscreenSecondLoop
+  .rightOnscreenCheckFlag
+    LDA !ram_sprite_feature_flags : AND !SPRITE_HUD_XRAY : BEQ .rightOnscreenThirdLoop
+  .rightOnscreenSecondSkip
+    LDA $24 : SEC : SBC $20 : STA $24
+    BCC .rightLostSecondSkip
+    LDA $24 : AND #$FF00
+    DEY #2 : CPY #$27FF : BCS .rightOnscreenSecondSkip
+  .rightOnscreenThirdLoop
+    LDA $24 : SEC : SBC $20 : STA $24
+    BCC .rightLostThirdLoop
+    LDA $24 : AND #$FF00 : STA [$00],Y
+    DEY #2 : BPL .rightOnscreenThirdLoop
+    BRA .rightEdgeEnd
+
+  .rightLostFirst
+    LDA #$00FF
+  .rightLostFirstLoop
+    STA [$00],Y
+    DEY #2 : CPY #$6708 : BCS .rightLostFirstLoop
+  .rightLostFirstSkip
+    LDA #$00FF
+    DEY #2 : CPY #$5CF8 : BCS .rightLostFirstSkip
+  .rightLostSecond
+    LDA #$00FF
+  .rightLostSecondLoop
+    STA [$00],Y
+    DEY #2 : CPY #$32EC : BCS .rightLostSecondLoop
+    LDA !ram_sprite_feature_flags : AND !SPRITE_HUD_XRAY : BEQ .rightLostThirdLoop
+  .rightLostSecondSkip
+    LDA #$00FF
+    DEY #2 : CPY #$27FF : BCS .rightLostSecondSkip
+  .rightLostThirdLoop
+    LDA #$00FF : STA [$00],Y
+    DEY #2 : BPL .rightLostThirdLoop
+
+  .rightEdgeEnd
+    LDA $18 : ASL : TAY
+  .leftOffscreenLoop
+    LDA $22 : SEC : SBC $1E : STA $22
+    BCC .leftFoundScreen
+    INY #2 : CPY #$01CC : BMI .leftOffscreenLoop
+    STY $14
+    JMP .leftEdgeEnd
+
+  .leftFoundScreen
+    TYA : DEC #2 : STA $14
+    CPY #$6708 : BCS .leftFoundStore
+    CPY #$5CF8 : BCS .leftFoundSkip
+    CPY #$32EC : BCS .leftFoundStore
+    CPY #$27FF : BCC .leftFoundStore
+    LDA !ram_sprite_feature_flags : AND !SPRITE_HUD_XRAY : BNE .leftFoundSkip
+  .leftFoundStore
+    LDA $22 : AND #$FF00 : STA [$00],Y
+  .leftFoundSkip
+    INY #2
+    LDA $22 : SEC : SBC $1E : STA $22
+    BCC .leftLostScreen
+    CPY #$6708 : BCS .leftOnscreenStore
+    CPY #$5CF8 : BCS .leftOnscreenIny
+    CPY #$32EC : BCS .leftOnscreenStore
+    CPY #$27FF : BCC .leftOnscreenStore
+    LDA !ram_sprite_feature_flags : AND !SPRITE_HUD_XRAY : BEQ .leftOnscreenStore
+    BRA .leftOnscreenIny
+
+  .leftOnscreenLoop
+    LDA $22 : SEC : SBC $1E : STA $22
+    BCC .leftLostScreen
+  .leftOnscreenStore
+    LDA $22 : AND #$FF00 : STA [$00],Y
+  .leftOnscreenIny
+    INY #2 : CPY #$01CC : BMI .leftOnscreenLoop
+    BRA .leftEdgeEnd
+
+  .leftLostScreen
+    CPY #$6708 : BCS .leftLostLoop
+    CPY #$5CF8 : BCS .leftLostSkip
+    CPY #$32EC : BCS .leftLostLoop
+    CPY #$27FF : BCC .leftLostLoop
+    LDA !ram_sprite_feature_flags : AND !SPRITE_HUD_XRAY : BNE .leftLostLoop
+  .leftLostSkip
+    LDA #$00FF
+    BRA .leftLostIny
+
+  .leftLostLoop
+    LDA #$00FF : STA [$00],Y
+  .leftLostIny
+    INY #2 : CPY #$01CC : BMI .leftLostLoop
+
+  .leftEdgeEnd
+    LDY $12
+    CPY #$6708 : BCS .finalThirdLoop
+    CPY #$5CF8 : BCS .finalSecondSkip
+    CPY #$32EC : BCS .finalSecond
+    CPY #$27FF : BCC .finalFirst
+    LDA !ram_sprite_feature_flags : AND !SPRITE_HUD_XRAY : BNE .finalSecond
+    BRA .finalFirstSkip
+
+  .finalFirst
+    LDA $14 : CMP #$27FE : BCC .finalThirdLoop
+  .finalFirstLoop
+    LDA #$FF00 : STA [$00],Y
+    INY #2 : CPY #$27FE : BMI .finalFirstLoop : BEQ .finalFirstLoop
+  .finalFirstSkip
+    LDA $14 : CMP #$32EC : BCC .finalSkipLoop
+  .finalFirstSkipLoop
+    LDA #$FF00
+    INY #2 : CPY #$32EC : BMI .finalFirstSkipLoop : BEQ .finalFirstSkipLoop
+  .finalSecond
+    LDA $14 : CMP #$5CF8 : BCC .finalThirdLoop
+  .finalSecondLoop
+    LDA #$FF00 : STA [$00],Y
+    INY #2 : CPY #$5CF8 : BMI .finalSecondLoop : BEQ .finalSecondLoop
+  .finalSecondSkip
+    LDA $14 : CMP #$6708 : BCC .finalSkipLoop
+  .finalSecondSkipLoop
+    LDA #$FF00
+    INY #2 : CPY #$6708 : BMI .finalSecondSkipLoop : BEQ .finalSecondSkipLoop
+  .finalThirdLoop
+    LDA #$FF00 : STA [$00],Y
+    INY #2 : CPY $14 : BMI .finalThirdLoop : BEQ .finalThirdLoop
+    PLP
+    RTS
+
+  .finalSkipLoop
+    LDA #$FF00
+    INY #2 : CPY $14 : BMI .finalSkipLoop : BEQ .finalSkipLoop
+    PLP
+    RTS
+}
+
+xray_offscreen_horizontal:
+{
+    PHP : %ai16()
+    LDA $18 : DEC : ASL : TAY
+    CPY #$27F8 : BCS .preserve
+  .vanilla
+if !FEATURE_PAL
+    JMP $C473
+else
+    JMP $C51B
+endif
+
+  .preserve
+    CPY #$8008 : BCS .vanilla
+    CPY #$6708 : BCS .firstStore
+    CPY #$5CF8 : BCS .firstSkip
+    CPY #$32EC : BCS .secondStore
+    CPY #$27FF : BCC .thirdStore
+    LDA !ram_sprite_feature_flags : AND !SPRITE_HUD_XRAY : BEQ .thirdStore
+    DEY #2 : CPY #$27FF : BCC .thirdContinue
+    JMP .topSecondSkip
+
+  .firstStore
+    LDA #$FF00 : STA [$00],Y
+    PHY : INY #2
+  .firstBottomLoop
+    LDA [$00],Y : CMP #$00FF : BEQ .firstBottomEnd
+    LDA #$00FF : STA [$00],Y
+    INY #2 : CPY #$01CC : BMI .firstBottomLoop
+  .firstBottomEnd
+    PLY : DEY #2
+    LDA [$00],Y : CMP #$00FF : BEQ .firstDone
+    LDA #$00FF : STA [$00],Y
+    DEY #2 : BPL .topFirstLoop
+  .firstDone
+    JMP .topEnd
+
+  .firstSkip
+    BRA .topFirstSkip
+
+  .secondStore
+    LDA #$FF00 : STA [$00],Y
+    PHY : INY #2
+    LDA [$00],Y : CMP #$00FF : BEQ .secondBottomEnd
+    LDA #$00FF : STA [$00],Y
+  .secondBottomEnd
+    PLY : DEY #2
+    BRA .topSecondLoop
+
+  .thirdStore
+    LDA #$FF00 : STA [$00],Y
+    PHY : INY #2
+    LDA [$00],Y : CMP #$00FF : BEQ .thirdBottomEnd
+    CPY #$27FF : BCC .thirdBottomStore
+    LDA !ram_sprite_feature_flags : AND !SPRITE_HUD_XRAY : BNE .thirdBottomEnd
+  .thirdBottomStore
+    LDA #$00FF : STA [$00],Y
+  .thirdBottomEnd
+    PLY : DEY #2
+  .thirdContinue
+    BRA .topThirdLoop
+
+  .topFirstLoop
+    LDA [$00],Y : CMP #$00FF : BEQ .topEnd
+    LDA #$00FF : STA [$00],Y
+    DEY #2 : CPY #$6708 : BCS .topFirstLoop
+  .topFirstSkip
+    LDA [$00],Y : CMP #$00FF
+    LDA #$00FF
+    DEY #2 : CPY #$5CF8 : BCS .topFirstSkip
+  .topSecondLoop
+    LDA [$00],Y : CMP #$00FF : BEQ .topEnd
+    LDA #$00FF : STA [$00],Y
+    DEY #2 : CPY #$32EC : BCS .topSecondLoop
+    LDA !ram_sprite_feature_flags : AND !SPRITE_HUD_XRAY : BEQ .topThirdLoop
+  .topSecondSkip
+    LDA [$00],Y : CMP #$00FF
+    LDA #$00FF
+    DEY #2 : CPY #$27FF : BCS .topSecondSkip
+  .topThirdLoop
+    LDA [$00],Y : CMP #$00FF : BEQ .topEnd
+    LDA #$00FF : STA [$00],Y
+    DEY #2 : BPL .topThirdLoop
+
+  .topEnd
+    PLP
+    RTS
+}
+
+xray_onscreen_aim_right:
+{
+    PHP : %ai16()
+    LDA $18 : DEC : ASL : TAY
+    CPY #$27F8 : BCS .preserve
+  .vanilla
+if !FEATURE_PAL
+    JMP $C54F
+else
+    JMP $C607
+endif
+
+  .preserve
+    CPY #$8008 : BCS .vanilla
+    LDA $16 : STA $22 : STA $24
+    CPY #$6708 : BCS .firstStore
+    CPY #$5CF8 : BCS .firstSkip
+    CPY #$32EC : BCS .secondStore
+    CPY #$27FF : BCC .thirdStore
+    LDA !ram_sprite_feature_flags : AND !SPRITE_HUD_XRAY : BEQ .thirdStore
+    DEY #2 : CPY #$27FF : BCC .thirdContinue
+    JMP .leftOnscreenSecondSkip
+
+  .firstStore
+    LDA $17 : ORA #$FF00 : STA [$00],Y
+    DEY #2
+    LDA $22 : CLC : ADC $1E : STA $22
+    BCS .firstLostScreen
+    LDA $23 : ORA #$FF00 : STA [$00],Y
+    DEY #2 : BPL .leftOnscreenFirstLoop
+    JMP .leftEdgeEnd
+
+  .firstSkip
+    DEY #2
+    BRA .leftOnscreenFirstSkip
+
+  .secondStore
+    LDA $17 : ORA #$FF00 : STA [$00],Y
+    DEY #2
+    BRA .leftOnscreenSecondLoop
+
+  .thirdStore
+    LDA $17 : ORA #$FF00 : STA [$00],Y
+    DEY #2
+  .thirdContinue
+    BRA .leftOnscreenThirdLoop
+
+  .firstLostScreen
+    LDA #$00FF : STA [$00],Y
+    DEY #2 : BPL .leftLostFirstLoop
+    JMP .leftEdgeEnd
+
+  .leftOnscreenFirstLoop
+    LDA $22 : CLC : ADC $1E : STA $22
+    BCS .leftLostFirst
+    LDA $23 : ORA #$FF00 : STA [$00],Y
+    DEY #2 : CPY #$6708 : BCS .leftOnscreenFirstLoop
+  .leftOnscreenFirstSkip
+    LDA $22 : CLC : ADC $1E : STA $22
+    BCS .leftLostFirstSkip
+    LDA $23 : ORA #$FF00
+    DEY #2 : CPY #$5CF8 : BCS .leftOnscreenFirstSkip
+  .leftOnscreenSecondLoop
+    LDA $22 : CLC : ADC $1E : STA $22
+    BCS .leftLostSecond
+    LDA $23 : ORA #$FF00 : STA [$00],Y
+    DEY #2 : CPY #$32EC : BCS .leftOnscreenSecondLoop
+  .leftOnscreenCheckFlag
+    LDA !ram_sprite_feature_flags : AND !SPRITE_HUD_XRAY : BEQ .leftOnscreenThirdLoop
+  .leftOnscreenSecondSkip
+    LDA $22 : CLC : ADC $1E : STA $22
+    BCS .leftLostSecondSkip
+    LDA $23 : ORA #$FF00
+    DEY #2 : CPY #$27FF : BCS .leftOnscreenSecondSkip
+  .leftOnscreenThirdLoop
+    LDA $22 : CLC : ADC $1E : STA $22
+    BCS .leftLostThirdLoop
+    LDA $23 : ORA #$FF00 : STA [$00],Y
+    DEY #2 : BPL .leftOnscreenThirdLoop
+    BRA .leftEdgeEnd
+
+  .leftLostFirst
+    LDA #$00FF
+  .leftLostFirstLoop
+    STA [$00],Y
+    DEY #2 : CPY #$6708 : BCS .leftLostFirstLoop
+  .leftLostFirstSkip
+    LDA #$00FF
+    DEY #2 : CPY #$5CF8 : BCS .leftLostFirstSkip
+  .leftLostSecond
+    LDA #$00FF
+  .leftLostSecondLoop
+    STA [$00],Y
+    DEY #2 : CPY #$32EC : BCS .leftLostSecondLoop
+    LDA !ram_sprite_feature_flags : AND !SPRITE_HUD_XRAY : BEQ .leftLostThirdLoop
+  .leftLostSecondSkip
+    LDA #$00FF
+    DEY #2 : CPY #$27FF : BCS .leftLostSecondSkip
+  .leftLostThirdLoop
+    LDA #$00FF : STA [$00],Y
+    DEY #2 : BPL .leftLostThirdLoop
+
+  .leftEdgeEnd
+    LDA $18 : ASL : TAY
+    LDA $24 : CLC : ADC $20 : STA $24
+    BCS .rightLostScreen
+    CPY #$6708 : BCS .rightOnscreenStore
+    CPY #$5CF8 : BCS .rightOnscreenIny
+    CPY #$32EC : BCS .rightOnscreenStore
+    CPY #$27FF : BCC .rightOnscreenStore
+    LDA !ram_sprite_feature_flags : AND !SPRITE_HUD_XRAY : BEQ .rightOnscreenStore
+    BRA .rightOnscreenIny
+
+  .rightOnscreenLoop
+    LDA $24 : CLC : ADC $20 : STA $24
+    BCS .rightLostScreen
+  .rightOnscreenStore
+    LDA $25 : ORA #$FF00 : STA [$00],Y
+  .rightOnscreenIny
+    INY #2 : CPY #$01CC : BMI .rightOnscreenLoop
+    BRA .rightEdgeEnd
+
+  .rightLostScreen
+    CPY #$6708 : BCS .rightLostLoop
+    CPY #$5CF8 : BCS .rightLostSkip
+    CPY #$32EC : BCS .rightLostLoop
+    CPY #$27FF : BCC .rightLostLoop
+    LDA !ram_sprite_feature_flags : AND !SPRITE_HUD_XRAY : BNE .rightLostLoop
+  .rightLostSkip
+    LDA #$00FF
+    BRA .rightLostIny
+
+  .rightLostLoop
+    LDA #$00FF : STA [$00],Y
+  .rightLostIny
+    INY #2 : CPY #$01CC : BMI .rightLostLoop
+
+  .rightEdgeEnd
+    PLP
+    RTS
+}
+
+xray_onscreen_aim_left:
+{
+    PHP : %ai16()
+    LDA $18 : DEC : ASL : TAY
+    CPY #$27F8 : BCS .preserve
+  .vanilla
+if !FEATURE_PAL
+    JMP $C5B0
+else
+    JMP $C668
+endif
+
+  .preserve
+    CPY #$8008 : BCS .vanilla
+    LDA $16 : STA $22 : STA $24
+    CPY #$6708 : BCS .firstStore
+    CPY #$5CF8 : BCS .firstSkip
+    CPY #$32EC : BCS .secondStore
+    CPY #$27FF : BCC .thirdStore
+    LDA !ram_sprite_feature_flags : AND !SPRITE_HUD_XRAY : BEQ .thirdStore
+    DEY #2 : CPY #$27FF : BCC .thirdContinue
+    JMP .rightOnscreenSecondSkip
+
+  .firstStore
+    LDA $16 : AND #$FF00 : STA [$00],Y
+    DEY #2
+    LDA $24 : SEC : SBC $20 : STA $24
+    BCC .firstLostScreen
+    LDA $24 : AND #$FF00 : STA [$00],Y
+    DEY #2 : BPL .rightOnscreenFirstLoop
+    JMP .rightEdgeEnd
+
+  .firstSkip
+    DEY #2
+    BRA .rightOnscreenFirstSkip
+
+  .secondStore
+    LDA $16 : AND #$FF00 : STA [$00],Y
+    DEY #2
+    BRA .rightOnscreenSecondLoop
+
+  .thirdStore
+    LDA $16 : AND #$FF00 : STA [$00],Y
+    DEY #2
+  .thirdContinue
+    BRA .rightOnscreenThirdLoop
+
+  .firstLostScreen
+    LDA #$00FF : STA [$00],Y
+    DEY #2 : BPL .rightLostFirstLoop
+    JMP .rightEdgeEnd
+
+  .rightOnscreenFirstLoop
+    LDA $24 : SEC : SBC $20 : STA $24
+    BCC .rightLostFirst
+    LDA $24 : AND #$FF00 : STA [$00],Y
+    DEY #2 : CPY #$6708 : BCS .rightOnscreenFirstLoop
+  .rightOnscreenFirstSkip
+    LDA $24 : SEC : SBC $20 : STA $24
+    BCC .rightLostFirstSkip
+    LDA $24 : AND #$FF00
+    DEY #2 : CPY #$5CF8 : BCS .rightOnscreenFirstSkip
+  .rightOnscreenSecondLoop
+    LDA $24 : SEC : SBC $20 : STA $24
+    BCC .rightLostSecond
+    LDA $24 : AND #$FF00 : STA [$00],Y
+    DEY #2 : CPY #$32EC : BCS .rightOnscreenSecondLoop
+  .rightOnscreenCheckFlag
+    LDA !ram_sprite_feature_flags : AND !SPRITE_HUD_XRAY : BEQ .rightOnscreenThirdLoop
+  .rightOnscreenSecondSkip
+    LDA $24 : SEC : SBC $20 : STA $24
+    BCC .rightLostSecondSkip
+    LDA $24 : AND #$FF00
+    DEY #2 : CPY #$27FF : BCS .rightOnscreenSecondSkip
+  .rightOnscreenThirdLoop
+    LDA $24 : SEC : SBC $20 : STA $24
+    BCC .rightLostThirdLoop
+    LDA $24 : AND #$FF00 : STA [$00],Y
+    DEY #2 : BPL .rightOnscreenThirdLoop
+    BRA .rightEdgeEnd
+
+  .rightLostFirst
+    LDA #$00FF
+  .rightLostFirstLoop
+    STA [$00],Y
+    DEY #2 : CPY #$6708 : BCS .rightLostFirstLoop
+  .rightLostFirstSkip
+    LDA #$00FF
+    DEY #2 : CPY #$5CF8 : BCS .rightLostFirstSkip
+  .rightLostSecond
+    LDA #$00FF
+  .rightLostSecondLoop
+    STA [$00],Y
+    DEY #2 : CPY #$32EC : BCS .rightLostSecondLoop
+    LDA !ram_sprite_feature_flags : AND !SPRITE_HUD_XRAY : BEQ .rightLostThirdLoop
+  .rightLostSecondSkip
+    LDA #$00FF
+    DEY #2 : CPY #$27FF : BCS .rightLostSecondSkip
+  .rightLostThirdLoop
+    LDA #$00FF : STA [$00],Y
+    DEY #2 : BPL .rightLostThirdLoop
+
+  .rightEdgeEnd
+    LDA $18 : ASL : TAY
+    LDA $22 : SEC : SBC $1E : STA $22
+    BCC .leftLostScreen
+    CPY #$6708 : BCS .leftOnscreenStore
+    CPY #$5CF8 : BCS .leftOnscreenIny
+    CPY #$32EC : BCS .leftOnscreenStore
+    CPY #$27FF : BCC .leftOnscreenStore
+    LDA !ram_sprite_feature_flags : AND !SPRITE_HUD_XRAY : BEQ .leftOnscreenStore
+    BRA .leftOnscreenIny
+
+  .leftOnscreenLoop
+    LDA $22 : SEC : SBC $1E : STA $22
+    BCC .leftLostScreen
+  .leftOnscreenStore
+    LDA $22 : AND #$FF00 : STA [$00],Y
+  .leftOnscreenIny
+    INY #2 : CPY #$01CC : BMI .leftOnscreenLoop
+    BRA .leftEdgeEnd
+
+  .leftLostScreen
+    CPY #$6708 : BCS .leftLostLoop
+    CPY #$5CF8 : BCS .leftLostSkip
+    CPY #$32EC : BCS .leftLostLoop
+    CPY #$27FF : BCC .leftLostLoop
+    LDA !ram_sprite_feature_flags : AND !SPRITE_HUD_XRAY : BNE .leftLostLoop
+  .leftLostSkip
+    LDA #$00FF
+    BRA .leftLostIny
+
+  .leftLostLoop
+    LDA #$00FF : STA [$00],Y
+  .leftLostIny
+    INY #2 : CPY #$01CC : BMI .leftLostLoop
+
+  .leftEdgeEnd
+    PLP
+    RTS
+}
+
+xray_onscreen_horizontal:
+{
+    PHP : %ai16()
+    LDA $18 : DEC : ASL : TAY
+    CPY #$27F8 : BCS .preserve
+  .vanilla
+if !FEATURE_PAL
+    JMP $C8F8
+else
+    JMP $C9A0
+endif
+
+  .preserve
+    CPY #$8008 : BCS .vanilla
+    CPY #$6708 : BCS .firstStore
+    CPY #$5CF8 : BCS .topFirstSkip
+    CPY #$32EC : BCS .secondStore
+    CPY #$27FF : BCC .thirdStore
+    LDA !ram_sprite_feature_flags : AND !SPRITE_HUD_XRAY : BEQ .thirdStore
+    DEY #2 : CPY #$27FF : BCC .topThird
+    BRA .topSecondSkip
+
+  .firstStore
+    LDA $12 : CMP #$0040 : BEQ .first40
+    LDA $16 : AND #$FF00
+    BRA .firstBottom
+
+  .first40
+    LDA $17 : ORA #$FF00
+  .firstBottom
+    STA [$00],Y
+    PHY : INY #2
+    LDA #$00FF
+  .firstBottomLoop
+    STA [$00],Y
+    INY #2 : CPY #$01CC : BMI .firstBottomLoop
+    PLY : DEY #2
+    LDA #$00FF : STA [$00],Y
+    DEY #2 : BPL .topFirstLoop
+    BRA .topEnd
+
+  .secondStore
+    LDA $12 : CMP #$0040 : BEQ .second40
+    LDA $16 : AND #$FF00
+    BRA .secondBottom
+
+  .thirdStore
+    LDA $12 : CMP #$0040 : BEQ .third40
+    LDA $16 : AND #$FF00
+    BRA .thirdBottom
+
+  .topFirstLoop
+    STA [$00],Y
+    DEY #2 : CPY #$6708 : BCS .topFirstLoop
+  .topFirstSkip
+    LDA #$00FF
+    DEY #2 : CPY #$5CF8 : BCS .topFirstSkip
+  .topSecondLoop
+    STA [$00],Y
+    DEY #2 : CPY #$32EC : BCS .topSecondLoop
+    LDA !ram_sprite_feature_flags : AND !SPRITE_HUD_XRAY : BEQ .topThird
+  .topSecondSkip
+    LDA #$00FF
+    DEY #2 : CPY #$27FF : BCS .topSecondSkip
+  .topThird
+    LDA #$00FF
+  .topThirdLoop
+    STA [$00],Y
+    DEY #2 : BPL .topThirdLoop
+
+  .topEnd
+    PLP
+    RTS
+
+  .second40
+    LDA $17 : ORA #$FF00
+  .secondBottom
+    STA [$00],Y
+    PHY : INY #2
+    LDA #$00FF : STA [$00],Y
+    PLY : DEY #2
+    LDA #$00FF
+    BRA .topSecondLoop
+
+  .third40
+    LDA $17 : ORA #$FF00
+  .thirdBottom
+    STA [$00],Y
+    PHY : INY #2
+    CPY #$27FF : BCC .thirdBottomStore
+    LDA !ram_sprite_feature_flags : AND !SPRITE_HUD_XRAY : BNE .thirdBottomEnd
+  .thirdBottomStore
+    LDA #$00FF : STA [$00],Y
+  .thirdBottomEnd
+    PLY : DEY #2
+    BRA .topThird
+}
+
+%endfree(91)
 
