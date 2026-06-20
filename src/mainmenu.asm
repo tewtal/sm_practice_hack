@@ -134,6 +134,17 @@ action_audio_mainmenu:
     JMP action_mainmenu
 }
 
+action_sprites_mainmenu:
+{
+if !PRESERVE_WRAM
+    LDA !ram_sprite_feature_flags : AND !SPRITE_HUD_SPACETIME
+    XBA : STA !ram_cm_sprites_spacetime
+    LDA !ram_sprite_feature_flags : AND !SPRITE_HUD_XRAY
+    XBA : LSR : STA !ram_cm_sprites_xray
+endif
+    JMP action_mainmenu
+}
+
 action_ctrlshortcut_mainmenu:
 {
     TDC : TAX : STA !ram_cm_ctrl_savestates_allowed
@@ -421,7 +432,7 @@ mm_goto_infohud:
 endif
 
 mm_goto_sprites:
-    %cm_mainmenu("Sprite Features", #SpritesMenu)
+    %cm_jsl("Sprite Features", #action_sprites_mainmenu, #SpritesMenu)
 
 mm_goto_layout:
     %cm_jsl("Room Layout", #action_layout_mainmenu, #LayoutMenu)
@@ -1795,6 +1806,11 @@ SpritesMenu:
     dw #sprites_show_samusproj_hitbox
     dw #sprites_show_enemyproj_hitbox
     dw #sprites_show_proj_as_32x32
+if !PRESERVE_WRAM
+    dw #$FFFF
+    dw #sprites_hud_spacetime
+    dw #sprites_hud_xray
+endif
     dw #$FFFF
     dw #sprites_oob_viewer
     dw #$0000
@@ -1823,6 +1839,38 @@ sprites_show_enemyproj_hitbox:
 
 sprites_show_proj_as_32x32:
     %cm_toggle_bit("32x32 Projectile Boxes", !ram_sprite_feature_flags, !SPRITE_32x32_PROJ, #0)
+
+if !PRESERVE_WRAM
+sprites_hud_spacetime:
+    dw !ACTION_CHOICE
+    dl #!ram_cm_sprites_spacetime
+    dw #.routine
+    db #$28, "Spacetime HUD", #$FF
+    db #$28, "    VANILLA", #$FF
+    db #$28, "  PRESERVED", #$FF
+    db #$FF
+  .routine
+    LDA !ram_sprite_feature_flags : AND !SPRITE_HUD_SPACETIME_INVERTED
+    STA !ram_sprite_feature_flags
+    LDA !ram_cm_sprites_spacetime : XBA
+    ORA !ram_sprite_feature_flags : STA !ram_sprite_feature_flags
+    RTL
+
+sprites_hud_xray:
+    dw !ACTION_CHOICE
+    dl #!ram_cm_sprites_xray
+    dw #.routine
+    db #$28, "X-Ray HUD", #$FF
+    db #$28, "    VANILLA", #$FF
+    db #$28, "  PRESERVED", #$FF
+    db #$FF
+  .routine
+    LDA !ram_sprite_feature_flags : AND !SPRITE_HUD_XRAY_INVERTED
+    STA !ram_sprite_feature_flags
+    LDA !ram_cm_sprites_xray : XBA : ASL
+    ORA !ram_sprite_feature_flags : STA !ram_sprite_feature_flags
+    RTL
+endif ; PRESERVE_WRAM
 
 sprites_oob_viewer:
     %cm_toggle_bit("OoB Tile Viewer", !ram_sprite_feature_flags, !SPRITE_OOB_WATCH, .routine)
@@ -1856,9 +1904,6 @@ InfoHudMenu:
     dw #ih_dynamic_frames_held
     dw #ih_status_icons
     dw #ih_bonk_indicator
-if !PRESERVE_WRAM
-    dw #ih_spacetime_infohud
-endif
     dw #$FFFF
     dw #ih_ram_watch
     dw #$0000
@@ -2888,15 +2933,6 @@ ih_status_icons:
 
 ih_bonk_indicator:
     %cm_toggle("Bonk Indicators", !sram_bonk_indicators, #$02, #0)
-
-ih_spacetime_infohud:
-    dw !ACTION_CHOICE
-    dl #!ram_spacetime_infohud
-    dw #$0000
-    db #$28, "Spacetime HUD", #$FF
-    db #$28, "    VANILLA", #$FF
-    db #$28, "  PRESERVED", #$FF
-    db #$FF
 
 ih_ram_watch:
     %cm_jsl("Customize RAM Watch", #ih_prepare_ram_watch_menu, #RAMWatchMenu)
