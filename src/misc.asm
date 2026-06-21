@@ -150,11 +150,6 @@ hook_spc_engine_mute_track_4:
     db $30, $C9, $00, $00
 
 
-org $E0E7E0       ; Make EOR $E067E0 read $E0E0 to match vanilla behavior
-hook_artificial_varia:
-    dw $E0E0
-
-
 org $808F24
     JSL hook_set_music_track
     BRA $00

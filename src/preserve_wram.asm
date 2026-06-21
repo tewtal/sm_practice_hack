@@ -122,41 +122,109 @@ spacetime_routine:
 
 
 if !FEATURE_PAL
-org $91BE10
+org $91BE0A
 else
-org $91BEB8
+org $91BEB2
 endif
-    dw xray_offscreen_aim_right
+    PLB
+    JMP (hook_xray_offscreen_table,X)
+hook_xray_offscreen_table:
+    dw hook_xray_offscreen_aim_right
+    dw hook_xray_offscreen_aim_up
+    dw hook_xray_offscreen_aim_down
+    dw hook_xray_offscreen_aim_left
+    dw hook_xray_offscreen_horizontal
 
 if !FEATURE_PAL
-org $91BE16
+org $91BEC9
 else
-org $91BEBE
+org $91BF71
 endif
-    dw xray_offscreen_aim_left
-    dw xray_offscreen_horizontal
+    RTL
 
 if !FEATURE_PAL
-org $91C54D
+org $91BF79
 else
-org $91C5F5
+org $91C021
 endif
-    dw xray_onscreen_aim_right
+    RTL
 
 if !FEATURE_PAL
-org $91C553
+org $91BFBA
 else
-org $91C5FB
+org $91C062
 endif
-    dw xray_onscreen_aim_left
-    dw xray_onscreen_horizontal
+    RTL
+
+if !FEATURE_PAL
+org $91C20E
+else
+org $91C2B6
+endif
+    RTL
+
+if !FEATURE_PAL
+org $91C4A2
+else
+org $91C54A
+endif
+    RTL
+
+if !FEATURE_PAL
+org $91C547
+else
+org $91C5EF
+endif
+    PLB
+    JMP (hook_xray_onscreen_table,X)
+hook_xray_onscreen_table:
+    dw hook_xray_onscreen_aim_right
+    dw hook_xray_onscreen_aim_up
+    dw hook_xray_onscreen_aim_down
+    dw hook_xray_onscreen_aim_left
+    dw hook_xray_onscreen_horizontal
+
+if !FEATURE_PAL
+org $91C5B7
+else
+org $91C65F
+endif
+    RTL
+
+if !FEATURE_PAL
+org $91C618
+else
+org $91C6C0
+endif
+    RTL
+
+if !FEATURE_PAL
+org $91C66D
+else
+org $91C715
+endif
+    RTL
+
+if !FEATURE_PAL
+org $91C7CB
+else
+org $91C873
+endif
+    RTL
+
+if !FEATURE_PAL
+org $91C92B
+else
+org $91C9D3
+endif
+    RTL
 
 
 %startfree(91)
 
-xray_offscreen_aim_right:
+hook_xray_offscreen_aim_right:
 {
-    PHP : %ai16()
+    %ai16()
     LDA $18 : DEC : ASL : TAY
     CPY #$27F8 : BCS .preserve
   .vanilla
@@ -168,6 +236,174 @@ endif
 
   .preserve
     CPY #$8008 : BCS .vanilla
+    JML xray_offscreen_aim_right
+}
+
+hook_xray_offscreen_aim_left:
+{
+    %ai16()
+    LDA $18 : DEC : ASL : TAY
+    CPY #$27F8 : BCS .preserve
+  .vanilla
+if !FEATURE_PAL
+    JMP $BED2
+else
+    JMP $BF7A
+endif
+
+  .preserve
+    CPY #$8008 : BCS .vanilla
+    JML xray_offscreen_aim_left
+}
+
+hook_xray_offscreen_aim_up:
+{
+    %ai16()
+    LDA $18 : DEC : ASL : TAY
+    CPY #$27F8 : BCS .preserve
+  .vanilla
+if !FEATURE_PAL
+    JMP $BF82
+else
+    JMP $C02A
+endif
+
+  .preserve
+    CPY #$8008 : BCS .vanilla
+    BRA .vanilla
+}
+
+hook_xray_offscreen_aim_down:
+{
+    %ai16()
+    LDA $18 : ASL : TAY
+    CPY #$27F8 : BCS .preserve
+  .vanilla
+if !FEATURE_PAL
+    JMP $C1DE
+else
+    JMP $C286
+endif
+
+  .preserve
+    CPY #$8008 : BCS .vanilla
+    BRA .vanilla
+}
+
+hook_xray_offscreen_horizontal:
+{
+    %ai16()
+    LDA $18 : DEC : ASL : TAY
+    CPY #$27F8 : BCS .preserve
+  .vanilla
+if !FEATURE_PAL
+    JMP $C473
+else
+    JMP $C51B
+endif
+
+  .preserve
+    CPY #$8008 : BCS .vanilla
+    JML xray_offscreen_horizontal
+}
+
+hook_xray_onscreen_aim_right:
+{
+    %ai16()
+    LDA $18 : DEC : ASL : TAY
+    CPY #$27F8 : BCS .preserve
+  .vanilla
+if !FEATURE_PAL
+    JMP $C55F
+else
+    JMP $C607
+endif
+
+  .preserve
+    CPY #$8008 : BCS .vanilla
+    JML xray_onscreen_aim_right
+}
+
+hook_xray_onscreen_aim_left:
+{
+    %ai16()
+    LDA $18 : DEC : ASL : TAY
+    CPY #$27F8 : BCS .preserve
+  .vanilla
+if !FEATURE_PAL
+    JMP $C5C0
+else
+    JMP $C668
+endif
+
+  .preserve
+    CPY #$8008 : BCS .vanilla
+    JML xray_onscreen_aim_left
+}
+
+hook_xray_onscreen_aim_up:
+{
+    %ai16()
+    LDA $18 : DEC : ASL : TAY
+    CPY #$27F8 : BCS .preserve
+  .vanilla
+if !FEATURE_PAL
+    JMP $C621
+else
+    JMP $C6C9
+endif
+
+  .preserve
+    CPY #$8008 : BCS .vanilla
+    BRA .vanilla
+}
+
+hook_xray_onscreen_aim_down:
+{
+    %ai16()
+    LDA $18 : DEC : ASL : TAY
+    CPY #$27F8 : BCS .preserve
+  .vanilla
+if !FEATURE_PAL
+    JMP $C782
+else
+    JMP $C82A
+endif
+
+  .preserve
+    CPY #$8008 : BCS .vanilla
+    BRA .vanilla
+}
+
+hook_xray_onscreen_horizontal:
+{
+    %ai16()
+    LDA $18 : DEC : ASL : TAY
+    CPY #$27F8 : BCS .preserve
+  .vanilla
+if !FEATURE_PAL
+    JMP $C8F8
+else
+    JMP $C9A0
+endif
+
+  .preserve
+    CPY #$8008 : BCS .vanilla
+    JML xray_onscreen_horizontal
+}
+
+%endfree(91)
+
+
+org $E0E7E0
+print pc, " preserve WRAM start"
+
+; Make EOR $E067E0 read $E0E0 to match vanilla behavior
+hook_artificial_varia:
+    dw $E0E0
+
+xray_offscreen_aim_right:
+{
     LDA $16 : STA $22 : STA $24
   .leftOffscreenLoop
     LDA $22 : CLC : ADC $1E : STA $22
@@ -351,29 +587,17 @@ endif
     LDA #$FF00 : STA [$00],Y
     INY #2 : CPY $14 : BMI .finalThirdLoop : BEQ .finalThirdLoop
     PLP
-    RTS
+    RTL
 
   .finalSkipLoop
     LDA #$FF00
     INY #2 : CPY $14 : BMI .finalSkipLoop : BEQ .finalSkipLoop
     PLP
-    RTS
+    RTL
 }
 
 xray_offscreen_aim_left:
 {
-    PHP : %ai16()
-    LDA $18 : DEC : ASL : TAY
-    CPY #$27F8 : BCS .preserve
-  .vanilla
-if !FEATURE_PAL
-    JMP $BED2
-else
-    JMP $BF7A
-endif
-
-  .preserve
-    CPY #$8008 : BCS .vanilla
     LDA $16 : STA $22 : STA $24
   .rightOffscreenLoop
     LDA $24 : SEC : SBC $20 : STA $24
@@ -557,29 +781,17 @@ endif
     LDA #$FF00 : STA [$00],Y
     INY #2 : CPY $14 : BMI .finalThirdLoop : BEQ .finalThirdLoop
     PLP
-    RTS
+    RTL
 
   .finalSkipLoop
     LDA #$FF00
     INY #2 : CPY $14 : BMI .finalSkipLoop : BEQ .finalSkipLoop
     PLP
-    RTS
+    RTL
 }
 
 xray_offscreen_horizontal:
 {
-    PHP : %ai16()
-    LDA $18 : DEC : ASL : TAY
-    CPY #$27F8 : BCS .preserve
-  .vanilla
-if !FEATURE_PAL
-    JMP $C473
-else
-    JMP $C51B
-endif
-
-  .preserve
-    CPY #$8008 : BCS .vanilla
     CPY #$6708 : BCS .firstStore
     CPY #$5CF8 : BCS .firstSkip
     CPY #$32EC : BCS .secondStore
@@ -652,7 +864,7 @@ endif
 
   .topEnd
     PLP
-    RTS
+    RTL
 }
 
 xray_onscreen_aim_right:
@@ -794,7 +1006,7 @@ endif
 
   .rightEdgeEnd
     PLP
-    RTS
+    RTL
 }
 
 xray_onscreen_aim_left:
@@ -936,7 +1148,7 @@ endif
 
   .leftEdgeEnd
     PLP
-    RTS
+    RTL
 }
 
 xray_onscreen_horizontal:
@@ -1011,7 +1223,7 @@ endif
 
   .topEnd
     PLP
-    RTS
+    RTL
 
   .second40
     LDA $17 : ORA #$FF00
@@ -1037,5 +1249,5 @@ endif
     BRA .topThird
 }
 
-%endfree(91)
+print pc, " preserve WRAM end"
 
