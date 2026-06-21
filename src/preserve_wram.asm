@@ -270,7 +270,22 @@ endif
 
   .preserve
     CPY #$8008 : BCS .vanilla
-    BRA .vanilla
+    LDA $16 : STA $22 : STA $24
+    LDA $1A : CMP #$00C0 : BMI .up_right
+    LDA $1C : CMP #$00C0 : BPL .up_left
+
+    ; Protection not needed for straight up case since this should not happen
+if !FEATURE_PAL
+    JMP $BF9B
+else
+    JMP $C043
+endif
+
+  .up_right
+    JML xray_offscreen_up_right
+
+  .up_left
+    JML xray_offscreen_up_left
 }
 
 hook_xray_offscreen_aim_down:
@@ -287,7 +302,22 @@ endif
 
   .preserve
     CPY #$8008 : BCS .vanilla
-    BRA .vanilla
+    LDA $16 : STA $22 : STA $24
+    LDA $1C : CMP #$0080 : BMI .down_right
+    LDA $1A : CMP #$0080 : BPL .down_left
+
+    ; Protection not needed for straight down case since this should not happen
+if !FEATURE_PAL
+    JMP $C1F7
+else
+    JMP $C29F
+endif
+
+  .down_right
+    JML xray_offscreen_down_right
+
+  .down_left
+    JML xray_offscreen_down_left
 }
 
 hook_xray_offscreen_horizontal:
@@ -355,7 +385,43 @@ endif
 
   .preserve
     CPY #$8008 : BCS .vanilla
-    BRA .vanilla
+    CPY #$6708 : BCS .store
+    CPY #$5CF8 : BCS .skip
+    CPY #$32EC : BCS .store
+    CPY #$27FF : BCC .store : BEQ .store_one
+    LDA !ram_sprite_feature_flags : AND !SPRITE_HUD_XRAY : BNE .skip
+  .store
+    %a8()
+    LDA $17 : STA [$00],Y
+    INY
+    LDA $17 : STA [$00],Y
+    %a16()
+    DEY
+  .skip
+    DEY #2
+    LDA $16 : STA $22 : STA $24
+    LDA $1A : CMP #$00C0 : BMI .up_right
+    LDA $1C : CMP #$00C0 : BPL .up_left
+
+    ; Protection not needed for straight up case since this should not happen
+if !FEATURE_PAL
+    JMP $C64A
+else
+    JMP $C6F2
+endif
+
+  .store_one
+    LDA !ram_sprite_feature_flags : AND !SPRITE_HUD_XRAY : BEQ .store
+    %a8()
+    LDA $17 : STA [$00],Y
+    %a16()
+    BRA .skip
+
+  .up_right
+    JML xray_onscreen_up_right
+
+  .up_left
+    JML xray_onscreen_up_left
 }
 
 hook_xray_onscreen_aim_down:
@@ -372,7 +438,44 @@ endif
 
   .preserve
     CPY #$8008 : BCS .vanilla
-    BRA .vanilla
+    CPY #$6708 : BCS .store
+    CPY #$5CF8 : BCS .skip
+    CPY #$32EC : BCS .store
+    CPY #$27FF : BCC .store : BEQ .store_one
+    LDA !ram_sprite_feature_flags : AND !SPRITE_HUD_XRAY : BNE .skip
+  .store
+    %a8()
+    LDA $17 : STA [$00],Y
+    INY
+    LDA $17 : STA [$00],Y
+    %a16()
+  .merge
+    INY
+    LDA $16 : STA $22 : STA $24
+    LDA $1C : CMP #$0080 : BMI .down_right
+    LDA $1A : CMP #$0080 : BPL .down_left
+
+    ; Protection not needed for straight down case since this should not happen
+if !FEATURE_PAL
+    JMP $C7A9
+else
+    JMP $C851
+endif
+
+  .store_one
+    LDA !ram_sprite_feature_flags : AND !SPRITE_HUD_XRAY : BEQ .store
+    %a8()
+    LDA $17 : STA [$00],Y
+    %a16()
+  .skip
+    INY
+    BRA .merge
+
+  .down_right
+    JML xray_onscreen_down_right
+
+  .down_left
+    JML xray_onscreen_down_left
 }
 
 hook_xray_onscreen_horizontal:
@@ -790,6 +893,26 @@ xray_offscreen_aim_left:
     RTL
 }
 
+xray_offscreen_up_right:
+{
+    BRK
+}
+
+xray_offscreen_up_left:
+{
+    BRK
+}
+
+xray_offscreen_down_right:
+{
+    BRK
+}
+
+xray_offscreen_down_left:
+{
+    BRK
+}
+
 xray_offscreen_horizontal:
 {
     CPY #$6708 : BCS .firstStore
@@ -1149,6 +1272,26 @@ endif
   .leftEdgeEnd
     PLP
     RTL
+}
+
+xray_onscreen_up_right:
+{
+    BRK
+}
+
+xray_onscreen_up_left:
+{
+    BRK
+}
+
+xray_onscreen_down_right:
+{
+    BRK
+}
+
+xray_onscreen_down_left:
+{
+    BRK
 }
 
 xray_onscreen_horizontal:
