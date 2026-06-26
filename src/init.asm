@@ -142,6 +142,8 @@ init_sram_routine_table:
     dw init_sram_upgrade_1Ato1B
     dw init_sram_upgrade_1Bto1C
     dw init_sram_upgrade_1Cto1D
+    dw init_sram_upgrade_1Dto1E
+    dw init_sram_fail
 
 init_sram:
 {
@@ -282,8 +284,15 @@ endif
   .upgrade_1Cto1D
     TDC : INC : STA !sram_fast_teleport
 
+  .upgrade_1Dto1E
+    TDC : STA !sram_update_timers_ctrl_input
+    INC : STA !sram_update_timers_options
+
     LDA !SRAM_VERSION : STA !sram_initialized
     RTS
+
+  .fail
+    BRK
 }
 
 init_sram_controller_shortcuts:

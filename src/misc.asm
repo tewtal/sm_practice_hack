@@ -386,6 +386,8 @@ endif
     STA $7F0A9A,X ; !SAMUS_LAVA_DAMAGE_SUITS
     STA $7F0B0E,X ; !DAMAGE_COUNTER
 
+if !FEATURE_VANILLAHUD
+else
     ; Check if door skip is selected
     LDA !sram_display_mode : CMP !IH_MODE_ROOMSTRAT_INDEX : BNE .check_sprite_flags
     LDA !sram_room_strat : BEQ .check_super_hud
@@ -412,6 +414,7 @@ endif
     BEQ .draw_earthquake
 
   .check_sprite_flags
+endif
     LDA !ram_sprite_feature_flags : BEQ .end
 
     ; Remove up to !OAM_HIGH

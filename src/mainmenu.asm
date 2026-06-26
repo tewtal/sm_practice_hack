@@ -159,10 +159,20 @@ action_ctrlshortcut_mainmenu:
     %a16()
     TXA : STA !ram_cm_ctrl_add_shortcut_slot
 
-    LDA !ram_sram_detection : BNE action_mainmenu
+    LDA !ram_sram_detection : BNE .end
     INC : STA !ram_cm_ctrl_savestates_allowed
+  .end
     BRA action_mainmenu
 }
+
+if !FEATURE_VANILLAHUD
+else
+action_updatetimers_mainmenu:
+{
+    JSL update_timers_set_cm_ctrl
+    BRA action_mainmenu
+}
+endif
 
 action_crop_mainmenu:
 {
@@ -365,6 +375,10 @@ if !FEATURE_SD2SNES
 endif
     dw #mm_goto_timecontrol
     dw #mm_goto_ctrlshortcut
+if !FEATURE_VANILLAHUD
+else
+    dw #mm_goto_updatetimers
+endif
     dw #mm_goto_audiomenu
     dw #mm_goto_customize
     dw #mm_goto_cropmenu
@@ -402,6 +416,10 @@ if !FEATURE_SD2SNES
 endif
     dw #SlowdownMenu>>16
     dw #CtrlShortcutMenu>>16
+if !FEATURE_VANILLAHUD
+else
+    dw #UpdateTimersMenu>>16
+endif
     dw #AudioMenu>>16
     dw #CustomizeMenu>>16
     dw #CaptureCroppingMenu>>16
@@ -453,6 +471,12 @@ mm_goto_timecontrol:
 
 mm_goto_ctrlshortcut:
     %cm_jsl("Controller Shortcuts", #action_ctrlshortcut_mainmenu, #CtrlShortcutMenu)
+
+if !FEATURE_VANILLAHUD
+else
+mm_goto_updatetimers:
+    %cm_jsl("Update Timers", #action_updatetimers_mainmenu, #UpdateTimersMenu)
+endif
 
 mm_goto_audiomenu:
     %cm_jsl("Audio Menu", #action_audio_mainmenu, #AudioMenu)

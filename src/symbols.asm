@@ -351,6 +351,8 @@ ram_cm_ctrl_swap = !ram_cm_ctrl_swap ; !WRAM_MENU_START+$98
 ram_cm_ctrl_timer = !ram_cm_ctrl_timer ; !WRAM_MENU_START+$9A
 ram_cm_ctrl_savestates_allowed = !ram_cm_ctrl_savestates_allowed ; !WRAM_MENU_START+$9C
 
+ram_cm_updatetimers_ctrl = !ram_cm_updatetimers_ctrl ; !WRAM_MENU_START+$90
+
 ram_cm_sfxlib1 = !ram_cm_sfxlib1 ; !WRAM_MENU_START+$90
 ram_cm_sfxlib2 = !ram_cm_sfxlib2 ; !WRAM_MENU_START+$92
 ram_cm_sfxlib3 = !ram_cm_sfxlib3 ; !WRAM_MENU_START+$94
@@ -529,6 +531,8 @@ sram_fast_pause = !sram_fast_pause ; !SRAM_START+$A4
 sram_bonk_indicators = !sram_bonk_indicators ; !SRAM_START+$A6
 sram_speed_booster_physics = !sram_speed_booster_physics ; !SRAM_START+$A8
 sram_fast_teleport = !sram_fast_teleport ; !SRAM_START+$AA
+sram_update_timers_ctrl_input = !sram_update_timers_ctrl_input ; !SRAM_START+$AC
+sram_update_timers_options = !sram_update_timers_options ; !SRAM_START+$AE
 
 ; ^ FREE SPACE ^ up to +$EC
 

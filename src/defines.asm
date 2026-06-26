@@ -17,7 +17,7 @@
 
 ; Shortcut routine is written on boot and each time the menu closes,
 ; so it can use the same space as the practice hack menu tilemap buffer
-!CTRL_SHORTCUT_ROUTINE = $7EF502 ; up to 1883 bytes or +$75A
+!CTRL_SHORTCUT_ROUTINE = $7EF502 ; up to 1887 bytes or +$75E
 !CTRL_SHORTCUT_TABLE = !CTRL_SHORTCUT_ROUTINE+$7B6 ; 48 bytes
 !CTRL_SHORTCUT_TYPE = !CTRL_SHORTCUT_ROUTINE+$7E6
 !CTRL_SHORTCUT_PRI = !CTRL_SHORTCUT_ROUTINE+$7E8
@@ -371,6 +371,8 @@
 !ram_cm_ctrl_timer = !WRAM_MENU_START+$9A
 !ram_cm_ctrl_savestates_allowed = !WRAM_MENU_START+$9C
 
+!ram_cm_updatetimers_ctrl = !WRAM_MENU_START+$90
+
 !ram_cm_sfxlib1 = !WRAM_MENU_START+$90
 !ram_cm_sfxlib2 = !WRAM_MENU_START+$92
 !ram_cm_sfxlib3 = !WRAM_MENU_START+$94
@@ -477,7 +479,7 @@
 ; SRAM
 ; -----
 
-!SRAM_VERSION = #$001D
+!SRAM_VERSION = #$001E
 
 !SRAM_START = $702000
 !SRAM_SIZE = #$1000
@@ -562,6 +564,8 @@
 !sram_bonk_indicators = !SRAM_START+$A6
 !sram_speed_booster_physics = !SRAM_START+$A8
 !sram_fast_teleport = !SRAM_START+$AA
+!sram_update_timers_ctrl_input = !SRAM_START+$AC
+!sram_update_timers_options = !SRAM_START+$AE
 
 ; ^ FREE SPACE ^ up to +$EC
 
@@ -1370,6 +1374,11 @@ endif
 !SPRITE_HUD_XRAY = #$0200
 !SPRITE_HUD_SPACETIME_INVERTED = #$FEFF
 !SPRITE_HUD_XRAY_INVERTED = #$FDFF
+
+!UPDATE_TIMERS_ON_PRESS = #$0001
+!UPDATE_TIMERS_ON_HOLD = #$0002
+!UPDATE_TIMERS_ON_RELEASE = #$0004
+!UPDATE_TIMERS_ALWAYS = #$0008
 
 !CUTSCENE_SKIP_INTRO = #$0001
 !CUTSCENE_SKIP_CERES_ARRIVAL = #$0002
