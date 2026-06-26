@@ -1022,29 +1022,15 @@ endif
     LDA.l ctrl_shortcut_jsl_word_lsb_table,X : STA !CTRL_SHORTCUT_JSL_WORD_LSB
     LDA.l ctrl_shortcut_jsl_word_msb_table,X : STA !CTRL_SHORTCUT_JSL_WORD_MSB
     LDA.l ctrl_shortcut_cancel_gameplay_table,X : BNE .priWriteSpecialClc
-    LDA !CTRL_SHORTCUT_PRI+1 : BIT #$10 : BNE .priWriteSpecialClv
     ; Simple JSL case, so branch by four
     PLX : LDA #$04 : STA !CTRL_SHORTCUT_ROUTINE,X : INX
     JSR .writeJsl
     BRA .nextPriWrite
 
   .priWriteSpecialClc
-    LDA !CTRL_SHORTCUT_PRI+1 : BIT #$10 : BNE .priWriteSpecialClcClv
     ; PLP : CLC : PHP followed by JSL, so branch by seven
     PLX : LDA #$07 : STA !CTRL_SHORTCUT_ROUTINE,X : INX
     JSR .writeClcJsl
-    BRA .nextPriWrite
-
-  .priWriteSpecialClv
-    ; PLP : CLV : PHP followed by JSL, so branch by seven
-    PLX : LDA #$07 : STA !CTRL_SHORTCUT_ROUTINE,X : INX
-    JSR .writeClvJsl
-    BRA .nextPriWrite
-
-  .priWriteSpecialClcClv
-    ; PLP : REP $41 : PHP followed by JSL, so branch by eight
-    PLX : LDA #$08 : STA !CTRL_SHORTCUT_ROUTINE,X : INX
-    JSR .writeClcClvJsl
 
   .nextPriWrite
     LDA !CTRL_SHORTCUT_TABLE_PRI_INDEX : CMP #$30 : BPL .donePriWrite
@@ -1199,7 +1185,6 @@ endif
     LDA.l ctrl_shortcut_jsl_word_lsb_table,X : STA !CTRL_SHORTCUT_JSL_WORD_LSB
     LDA.l ctrl_shortcut_jsl_word_msb_table,X : STA !CTRL_SHORTCUT_JSL_WORD_MSB
     LDA.l ctrl_shortcut_cancel_gameplay_table,X : BNE .secWriteMatchClc
-    LDA !CTRL_SHORTCUT_SEC+1 : BIT #$10 : BNE .secWriteMatchClv
     ; Simple JSL case, so branch by four, earlier branch by eight
     PLX : LDA #$08 : STA !CTRL_SHORTCUT_ROUTINE-$4,X
     LDA #$04 : STA !CTRL_SHORTCUT_ROUTINE,X : INX
@@ -1207,25 +1192,10 @@ endif
     JMP .nextSecWrite
 
   .secWriteMatchClc
-    LDA !CTRL_SHORTCUT_SEC+1 : BIT #$10 : BNE .secWriteMatchClcClv
     ; PLP : CLC : PHP followed by JSL, so branch by seven, earlier branch by eleven
     PLX : LDA #$0B : STA !CTRL_SHORTCUT_ROUTINE-$4,X
     LDA #$07 : STA !CTRL_SHORTCUT_ROUTINE,X : INX
     JSR .writeClcJsl
-    JMP .nextSecWrite
-
-  .secWriteMatchClv
-    ; PLP : CLV : PHP followed by JSL, so branch by seven, earlier branch by eleven
-    PLX : LDA #$0B : STA !CTRL_SHORTCUT_ROUTINE-$4,X
-    LDA #$07 : STA !CTRL_SHORTCUT_ROUTINE,X : INX
-    JSR .writeClvJsl
-    JMP .nextSecWrite
-
-  .secWriteMatchClcClv
-    ; PLP : REP $41 : PHP followed by JSL, so branch by eight, earlier branch by twelve
-    PLX : LDA #$0C : STA !CTRL_SHORTCUT_ROUTINE-$4,X
-    LDA #$08 : STA !CTRL_SHORTCUT_ROUTINE,X : INX
-    JSR .writeClcClvJsl
     JMP .nextSecWrite
 
   .secWriteSpecialLoop
@@ -1262,29 +1232,16 @@ endif
     LDA.l ctrl_shortcut_jsl_word_lsb_table,X : STA !CTRL_SHORTCUT_JSL_WORD_LSB
     LDA.l ctrl_shortcut_jsl_word_msb_table,X : STA !CTRL_SHORTCUT_JSL_WORD_MSB
     LDA.l ctrl_shortcut_cancel_gameplay_table,X : BNE .secWriteSpecialClc
-    LDA !CTRL_SHORTCUT_SEC+1 : BIT #$10 : BNE .secWriteSpecialClv
     ; Simple JSL case, so branch by four
     PLX : LDA #$04 : STA !CTRL_SHORTCUT_ROUTINE,X : INX
     JSR .writeJsl
     BRA .nextSecWrite
 
   .secWriteSpecialClc
-    LDA !CTRL_SHORTCUT_SEC+1 : BIT #$10 : BNE .secWriteSpecialClcClv
     ; PLP : CLC : PHP followed by JSL, so branch by seven
     PLX : LDA #$07 : STA !CTRL_SHORTCUT_ROUTINE,X : INX
     JSR .writeClcJsl
     BRA .nextSecWrite
-
-  .secWriteSpecialClv
-    ; PLP : CLV : PHP followed by JSL, so branch by seven
-    PLX : LDA #$07 : STA !CTRL_SHORTCUT_ROUTINE,X : INX
-    JSR .writeClvJsl
-    BRA .nextSecWrite
-
-  .secWriteSpecialClcClv
-    ; PLP : REP $41 : PHP followed by JSL, so branch by eight
-    PLX : LDA #$08 : STA !CTRL_SHORTCUT_ROUTINE,X : INX
-    JSR .writeClcClvJsl
 
   .nextSecWrite
     LDA !CTRL_SHORTCUT_TABLE_SEC_INDEX : CMP #$30 : BPL .doneSecWrite
@@ -1396,7 +1353,6 @@ endif
     LDA.l ctrl_shortcut_jsl_word_msb_table,X : STA !CTRL_SHORTCUT_JSL_WORD_MSB
     LDA.l ctrl_shortcut_cancel_gameplay_table,X : BNE .dualWriteMatchClc
     LDA !CTRL_SHORTCUT_PRI+1 : BIT #$10 : BNE .dualWriteMatchClv
-    LDA !CTRL_SHORTCUT_SEC+1 : BIT #$10 : BNE .dualWriteMatchClv
     ; Simple JSL case, so branch by four, earlier branches by 15 and 25
     PLX : LDA #$19 : STA !CTRL_SHORTCUT_ROUTINE-$15,X
     LDA #$0F : STA !CTRL_SHORTCUT_ROUTINE-$B,X
@@ -1406,7 +1362,6 @@ endif
 
   .dualWriteMatchClc
     LDA !CTRL_SHORTCUT_PRI+1 : BIT #$10 : BNE .dualWriteMatchClcClv
-    LDA !CTRL_SHORTCUT_SEC+1 : BIT #$10 : BNE .dualWriteMatchClcClv
     ; PLP : CLC : PHP followed by JSL, so branch by seven, earlier branches by 18 and 28
     PLX : LDA #$1C : STA !CTRL_SHORTCUT_ROUTINE-$15,X
     LDA #$12 : STA !CTRL_SHORTCUT_ROUTINE-$B,X
