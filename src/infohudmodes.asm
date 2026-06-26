@@ -4387,6 +4387,7 @@ endif
     CMP.w #ROOM_ElevToBlueBrinstar : BEQ .morph
     CMP.w #ROOM_GreenBrinElevRoom : BEQ .greenbrin
     CMP.w #ROOM_DachoraRoom : BEQ .dachora
+    CMP.w #ROOM_StatuesRoom : BEQ .statues
     CMP.w #ROOM_LowerNorfairElevator : BEQ .lowernorfair
     CMP.w #ROOM_WarehouseEntrance : BEQ .warehouse
     LDA !IH_BLANK : STA !HUD_TILEMAP+$88
@@ -4410,6 +4411,11 @@ endif
   .warehouse
     LDA #$0080 : CMP !ram_xpos : BEQ .questionpb
     LDA #$008B : CMP !ram_ypos : BEQ .goodpb
+    BRA .badpb
+
+  .statues
+    LDA #$0080 : CMP !ram_xpos : BEQ .questionpb
+    LDA #$019B : CMP !ram_ypos : BEQ .goodpb
     BRA .badpb
 
   .dachora
