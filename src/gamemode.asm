@@ -698,6 +698,12 @@ endif
     BRA .initialFirstInvalid
   .initialFirstPri
     TXA : LSR : TAX
+if !FEATURE_VANILLAHUD
+else
+    LDA.w !sram_ctrl_shortcut_selections,X : CMP #$05 : BNE .initialFirstPriAccept
+    LDA.w !sram_update_timers_options : BIT #$08 : BNE .initialFirstInvalid
+  .initialFirstPriAccept
+endif
     LDA !CTRL_SHORTCUT_TABLE_PRI_INDEX : CMP #$30 : BNE .initialFirstContinue
     TXA : STA !CTRL_SHORTCUT_TABLE_PRI_INDEX
     BRA .initialFirstContinue
@@ -742,6 +748,12 @@ endif
     BRA .initialSecondInvalid
   .initialSecondPri
     TXA : LSR : TAX
+if !FEATURE_VANILLAHUD
+else
+    LDA.w !sram_ctrl_shortcut_selections,X : CMP #$05 : BNE .initialSecondPriAccept
+    LDA.w !sram_update_timers_options : BIT #$08 : BNE .initialSecondInvalid
+  .initialSecondPriAccept
+endif
     LDA !CTRL_SHORTCUT_TABLE_PRI_INDEX : CMP #$30 : BNE .initialSecondContinue
     TXA : STA !CTRL_SHORTCUT_TABLE_PRI_INDEX
     BRA .initialSecondContinue
@@ -757,6 +769,18 @@ endif
     ; Restore X to resume writing
     LDX #$0001
 
+if !FEATURE_VANILLAHUD
+else
+    ; Check if we always update timers
+    LDA.w !sram_update_timers_options : BIT #$08 : BEQ .doneAlwaysUpdateTimers
+
+    ; Write simple JSL
+    LDA.l ctrl_shortcut_jsl_word_lsb_table+$05 : STA !CTRL_SHORTCUT_JSL_WORD_LSB
+    LDA.l ctrl_shortcut_jsl_word_msb_table+$05 : STA !CTRL_SHORTCUT_JSL_WORD_MSB
+    JSR .writeJsl
+
+  .doneAlwaysUpdateTimers
+endif
     ; Check if we have pri only shortcuts to write
     LDA !CTRL_SHORTCUT_TABLE_PRI_INDEX : CMP #$30 : BPL .noPriShortcuts
 
@@ -2199,6 +2223,129 @@ ctrl_add_shortcut_select:
     TXA : STA !ram_cm_ctrl_add_shortcut_slot
     JML cm_previous_menu
 }
+
+
+if !FEATURE_VANILLAHUD
+else
+; ------------------
+; Update Timers Menu
+; ------------------
+
+UpdateTimersMenu:
+    dw #update_timers_ctrl_inputs
+    dw #update_timers_customize_inputs
+    dw #$FFFF
+    dw #update_timers_on_press
+    dw #update_timers_on_hold
+    dw #update_timers_on_release
+    dw #update_timers_always
+    dw #$0000
+    %cm_header("UPDATE TIMERS")
+
+update_timers_ctrl_inputs:
+    dw !ACTION_CHOICE
+    dl #!ram_cm_updatetimers_ctrl
+    dw #.routine
+    db #$28, "Ctrl Inputs", #$FF
+    db #$28, "       NONE", #$FF
+    db #$28, "FACE BUTTON", #$FF
+    db #$28, "        L+R", #$FF
+    db #$28, "   FACE+L+R", #$FF
+    db #$28, "      D-PAD", #$FF
+    db #$28, "        ANY", #$FF
+    db #$28, "     CUSTOM", #$FF
+    db #$FF
+  .routine
+    LDA !ram_cm_updatetimers_ctrl : CMP #$0006 : BCS .done
+    ASL : TAX : LDA.l update_timers_ctrl_table,X
+    STA !sram_update_timers_ctrl_input
+  .done
+    RTL
+
+update_timers_customize_inputs:
+    %cm_submenu("Customize Ctrl Inputs", #UpdateTimersCtrlInputsMenu)
+
+update_timers_on_press:
+    %cm_toggle_bit("Update On Press", !sram_update_timers_options, !UPDATE_TIMERS_ON_PRESS, #0)
+
+update_timers_on_hold:
+    %cm_toggle_bit("Update On Hold", !sram_update_timers_options, !UPDATE_TIMERS_ON_HOLD, #0)
+
+update_timers_on_release:
+    %cm_toggle_bit("Update On Release", !sram_update_timers_options, !UPDATE_TIMERS_ON_RELEASE, #0)
+
+update_timers_always:
+    %cm_toggle_bit("Update Every Frame", !sram_update_timers_options, !UPDATE_TIMERS_ALWAYS, #0)
+
+UpdateTimersCtrlInputsMenu:
+    dw #update_timers_ctrl_inputs
+    dw #$FFFF
+    dw #update_timers_ctrl_A
+    dw #update_timers_ctrl_B
+    dw #update_timers_ctrl_L
+    dw #update_timers_ctrl_R
+    dw #update_timers_ctrl_X
+    dw #update_timers_ctrl_Y
+    dw #update_timers_ctrl_start
+    dw #update_timers_ctrl_select
+    dw #update_timers_ctrl_left
+    dw #update_timers_ctrl_right
+    dw #update_timers_ctrl_up
+    dw #update_timers_ctrl_down
+    dw #$0000
+    %cm_header("UPDATE TIMERS CTRL INPUTS")
+
+update_timers_ctrl_A:
+    %cm_toggle_bit("A", !sram_update_timers_ctrl_input, !CTRL_A, update_timers_set_cm_ctrl)
+
+update_timers_ctrl_B:
+    %cm_toggle_bit("B", !sram_update_timers_ctrl_input, !CTRL_B, update_timers_set_cm_ctrl)
+
+update_timers_ctrl_L:
+    %cm_toggle_bit("L", !sram_update_timers_ctrl_input, !CTRL_L, update_timers_set_cm_ctrl)
+
+update_timers_ctrl_R:
+    %cm_toggle_bit("R", !sram_update_timers_ctrl_input, !CTRL_R, update_timers_set_cm_ctrl)
+
+update_timers_ctrl_X:
+    %cm_toggle_bit("X", !sram_update_timers_ctrl_input, !CTRL_X, update_timers_set_cm_ctrl)
+
+update_timers_ctrl_Y:
+    %cm_toggle_bit("Y", !sram_update_timers_ctrl_input, !CTRL_Y, update_timers_set_cm_ctrl)
+
+update_timers_ctrl_start:
+    %cm_toggle_bit("Start", !sram_update_timers_ctrl_input, !IH_INPUT_START, update_timers_set_cm_ctrl)
+
+update_timers_ctrl_select:
+    %cm_toggle_bit("Select", !sram_update_timers_ctrl_input, !CTRL_SELECT, update_timers_set_cm_ctrl)
+
+update_timers_ctrl_left:
+    %cm_toggle_bit("Left", !sram_update_timers_ctrl_input, !IH_INPUT_LEFT, update_timers_set_cm_ctrl)
+
+update_timers_ctrl_right:
+    %cm_toggle_bit("Right", !sram_update_timers_ctrl_input, !IH_INPUT_RIGHT, update_timers_set_cm_ctrl)
+
+update_timers_ctrl_up:
+    %cm_toggle_bit("Up", !sram_update_timers_ctrl_input, !IH_INPUT_UP, update_timers_set_cm_ctrl)
+
+update_timers_ctrl_down:
+    %cm_toggle_bit("Down", !sram_update_timers_ctrl_input, !IH_INPUT_DOWN, update_timers_set_cm_ctrl)
+
+update_timers_ctrl_table:
+    dw #$0000, #$C0C0, #$0030, #$C0F0, #$0F00, #$FFF0
+
+update_timers_set_cm_ctrl:
+{
+    LDX #$0000
+    LDA !sram_update_timers_ctrl_input
+  .loop
+    CMP.l update_timers_ctrl_table,X : BEQ .end
+    INX #2 : CPX #$000C : BNE .loop
+  .end
+    TXA : LSR : STA !ram_cm_updatetimers_ctrl
+    RTL
+}
+endif ; !FEATURE_VANILLAHUD
 
 %endfree(85)
 
