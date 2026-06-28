@@ -1282,7 +1282,7 @@ DreamCowboyProfileTable:
     dw $35B2, $35B2, $6B5A, $7FFF, $35B2, $7FFF, $35B2, $35B2, $7FFF, $35B2, $6B5A
 
 ZeniProfileTable:
-    dw $7D40, $3900, $7F00, $0000, $0000, $7FE0, $7EA0, $7FE0, $0000, $0000, $7E00
+    dw $7C0E, $0000, $602F, $0000, $0000, $602F, $03E0, $1BE0, $0000, $4900, $03E0
 
 DyceProfileTable:
     dw $5DC0, $5DC0, $77BD, $2060, $0000, $7FFF, $7FFF, $7FFF, $5DC0, $5DC0, $7FFF
