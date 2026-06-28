@@ -23,7 +23,40 @@ org $82E526
 endif
 
 
+org $909453
+    JSR gamemode_set_downward_collision_result
+
+org $909469
+    JSR gamemode_set_downward_collision_result
+
+; Move $90E61B routine up to make room for patch
+org $90E5FE
+    STZ !SAMUS_X_SPEED_KILLED
+    STZ !SAMUS_VERTICAL_COLLISION_RESULT
+
+org $90E60C
+    BEQ $F1
+
+org $90E614
+    BRA $EE
+gamemode_set_downward_collision_result:
+    PHP : %ai16()
+    LDA !SAMUS_SOLID_COLLISION_FLAG : BEQ .continue
+    LDA #$0001 : STA !SAMUS_VERTICAL_COLLISION_RESULT
+    %ai8()
+    LDA !SAMUS_MOVEMENT_TYPE : TAX
+    LDA $E676,X : STA !SAMUS_VERTICAL_COLLISION_RESULT+1
+    PLP
+    STA !CTRL_SHORTCUT_TRACKING_LANDED
+    RTS
+warnpc $90E639
+
+org $90E639
+  .continue
+
+
 %startfree(85)
+
 if !FEATURE_SD2SNES
 gamemode_door_transition:
 {
@@ -642,8 +675,10 @@ cm_write_ctrl_routine:
     ; In fact, we are using the end of the buffer for temporary variables
     ; and a table to track which shortcuts we still need to write.
     PHB : PEA $7070 : PLB : PLB
-    TDC : TAX : TAY : STA !CTRL_SHORTCUT_TYPE
+    TDC : TAX : TAY : STA !CTRL_SHORTCUT_TYPE : STA !CTRL_SHORTCUT_PRI_UPDATE_TIMERS
     STA !CTRL_SHORTCUT_PRI_TO_SEC_DUAL_JUMP : STA !CTRL_SHORTCUT_SEC_TO_DUAL_JUMP
+    STA !CTRL_SHORTCUT_TRACKING_PRI_PREV
+    DEC : STA !CTRL_SHORTCUT_TRACKING_LANDED
 
     ; Initialize category indices to 48 indicating no shortcut found.
     LDA #$0030 : STA !CTRL_SHORTCUT_TABLE_DUAL_INDEX
@@ -672,9 +707,9 @@ if !FEATURE_VANILLAHUD
     CMP #$1F : BPL .initialFirstCheckInputs
     CMP #$19 : BPL .initialFirstInvalid
     CMP #$12 : BEQ .initialFirstInvalid
-    CMP #$05 : BEQ .initialFirstInvalid
+    CMP.b #!UPDATE_TIMERS_CTRL_SHORTCUT_TYPE : BEQ .initialFirstInvalid
 else
-    CMP #$05
+    CMP.b #!UPDATE_TIMERS_CTRL_SHORTCUT_TYPE
 endif
     BPL .initialFirstCheckInputs
     CMP #$01 : BEQ .initialFirstCheckInputs
@@ -689,6 +724,13 @@ endif
     LDY.w !sram_ctrl_1_shortcut_inputs,X : BEQ .initialFirstNoPri
     LDY.w !sram_ctrl_2_shortcut_inputs,X : BEQ .initialFirstPri
     TXA : LSR : TAX
+if !FEATURE_VANILLAHUD
+else
+    LDA.w !CTRL_SHORTCUT_TABLE,X : AND.b !CTRL_SHORTCUT_TYPE_MASK
+    CMP.b #!UPDATE_TIMERS_CTRL_SHORTCUT_TYPE : BNE .initialFirstDualAccept
+    LDA.w !sram_update_timers_options : BIT.b !UPDATE_TIMERS_ALWAYS : BNE .initialFirstInvalid
+  .initialFirstDualAccept
+endif
     LDA !CTRL_SHORTCUT_TABLE_DUAL_INDEX : CMP #$30 : BNE .initialFirstContinue
     TXA : STA !CTRL_SHORTCUT_TABLE_DUAL_INDEX
     BRA .initialFirstContinue
@@ -700,8 +742,9 @@ endif
     TXA : LSR : TAX
 if !FEATURE_VANILLAHUD
 else
-    LDA.w !sram_ctrl_shortcut_selections,X : CMP #$05 : BNE .initialFirstPriAccept
-    LDA.w !sram_update_timers_options : BIT #$08 : BNE .initialFirstInvalid
+    LDA.w !CTRL_SHORTCUT_TABLE,X : AND.b !CTRL_SHORTCUT_TYPE_MASK
+    CMP.b #!UPDATE_TIMERS_CTRL_SHORTCUT_TYPE : BNE .initialFirstPriAccept
+    LDA.w !sram_update_timers_options : BIT.b !UPDATE_TIMERS_ALWAYS : BNE .initialFirstInvalid
   .initialFirstPriAccept
 endif
     LDA !CTRL_SHORTCUT_TABLE_PRI_INDEX : CMP #$30 : BNE .initialFirstContinue
@@ -709,6 +752,13 @@ endif
     BRA .initialFirstContinue
   .initialFirstSec
     TXA : LSR : TAX
+if !FEATURE_VANILLAHUD
+else
+    LDA.w !CTRL_SHORTCUT_TABLE,X : AND.b !CTRL_SHORTCUT_TYPE_MASK
+    CMP.b #!UPDATE_TIMERS_CTRL_SHORTCUT_TYPE : BNE .initialFirstSecAccept
+    LDA.w !sram_update_timers_options : BIT.b !UPDATE_TIMERS_ALWAYS : BNE .initialFirstInvalid
+  .initialFirstSecAccept
+endif
     LDA !CTRL_SHORTCUT_TABLE_SEC_INDEX : CMP #$30 : BNE .initialFirstContinue
     TXA : STA !CTRL_SHORTCUT_TABLE_SEC_INDEX
   .initialFirstContinue
@@ -722,9 +772,9 @@ endif
 if !FEATURE_VANILLAHUD
     CMP #$19 : BPL .initialSecondInvalid
     CMP #$12 : BEQ .initialSecondInvalid
-    CMP #$05 : BEQ .initialSecondInvalid
+    CMP.b #!UPDATE_TIMERS_CTRL_SHORTCUT_TYPE : BEQ .initialSecondInvalid
 else
-    CMP #$05
+    CMP.b #!UPDATE_TIMERS_CTRL_SHORTCUT_TYPE
 endif
     BPL .initialSecondCheckInputs
     CMP #$01 : BEQ .initialSecondCheckInputs
@@ -739,6 +789,13 @@ endif
     LDY.w !sram_ctrl_1_shortcut_inputs,X : BEQ .initialSecondNoPri
     LDY.w !sram_ctrl_2_shortcut_inputs,X : BEQ .initialSecondPri
     TXA : LSR : TAX
+if !FEATURE_VANILLAHUD
+else
+    LDA.w !CTRL_SHORTCUT_TABLE,X : AND.b !CTRL_SHORTCUT_TYPE_MASK
+    CMP.b #!UPDATE_TIMERS_CTRL_SHORTCUT_TYPE : BNE .initialSecondDualAccept
+    LDA.w !sram_update_timers_options : BIT.b !UPDATE_TIMERS_ALWAYS : BNE .initialSecondInvalid
+  .initialSecondDualAccept
+endif
     LDA !CTRL_SHORTCUT_TABLE_DUAL_INDEX : CMP #$30 : BNE .initialSecondContinue
     TXA : STA !CTRL_SHORTCUT_TABLE_DUAL_INDEX
     BRA .initialSecondContinue
@@ -750,8 +807,9 @@ endif
     TXA : LSR : TAX
 if !FEATURE_VANILLAHUD
 else
-    LDA.w !sram_ctrl_shortcut_selections,X : CMP #$05 : BNE .initialSecondPriAccept
-    LDA.w !sram_update_timers_options : BIT #$08 : BNE .initialSecondInvalid
+    LDA.w !CTRL_SHORTCUT_TABLE,X : AND.b !CTRL_SHORTCUT_TYPE_MASK
+    CMP.b #!UPDATE_TIMERS_CTRL_SHORTCUT_TYPE : BNE .initialSecondPriAccept
+    LDA.w !sram_update_timers_options : BIT.b !UPDATE_TIMERS_ALWAYS : BNE .initialSecondInvalid
   .initialSecondPriAccept
 endif
     LDA !CTRL_SHORTCUT_TABLE_PRI_INDEX : CMP #$30 : BNE .initialSecondContinue
@@ -759,6 +817,13 @@ endif
     BRA .initialSecondContinue
   .initialSecondSec
     TXA : LSR : TAX
+if !FEATURE_VANILLAHUD
+else
+    LDA.w !CTRL_SHORTCUT_TABLE,X : AND.b !CTRL_SHORTCUT_TYPE_MASK
+    CMP.b #!UPDATE_TIMERS_CTRL_SHORTCUT_TYPE : BNE .initialSecondSecAccept
+    LDA.w !sram_update_timers_options : BIT.b !UPDATE_TIMERS_ALWAYS : BNE .initialSecondInvalid
+  .initialSecondSecAccept
+endif
     LDA !CTRL_SHORTCUT_TABLE_SEC_INDEX : CMP #$30 : BNE .initialSecondContinue
     TXA : STA !CTRL_SHORTCUT_TABLE_SEC_INDEX
   .initialSecondContinue
@@ -771,16 +836,142 @@ endif
 
 if !FEATURE_VANILLAHUD
 else
-    ; Check if we always update timers
-    LDA.w !sram_update_timers_options : BIT #$08 : BEQ .doneAlwaysUpdateTimers
+    ; Check if we have an update timers shortcut to write
+    LDA !sram_update_timers_ctrl_input : BNE .updateTimers
+    LDA !sram_update_timers_ctrl_input+1 : BNE .updateTimers
+    JMP .checkPriShortcuts
 
+  .updateTimers
+    ; Check if we always update timers, or if we update on press and not hold
+    LDA.w !sram_update_timers_options : BIT.b !UPDATE_TIMERS_ALWAYS : BNE .alwaysUpdateTimers
+    AND.b !UPDATE_TIMERS_ON_PRESS_HOLD : CMP.b !UPDATE_TIMERS_ON_PRESS : BNE .updateTimersOptions
+
+    ; Record the desired on press options
+    %a16() : LDA.w !sram_update_timers_ctrl_input : STA !CTRL_SHORTCUT_PRI_UPDATE_TIMERS : %a8()
+    BRA .updateTimersOptions
+
+  .alwaysUpdateTimers
     ; Write simple JSL
-    LDA.l ctrl_shortcut_jsl_word_lsb_table+$05 : STA !CTRL_SHORTCUT_JSL_WORD_LSB
-    LDA.l ctrl_shortcut_jsl_word_msb_table+$05 : STA !CTRL_SHORTCUT_JSL_WORD_MSB
+    LDA.l ctrl_shortcut_jsl_word_lsb_table+!UPDATE_TIMERS_CTRL_SHORTCUT_TYPE
+    STA !CTRL_SHORTCUT_JSL_WORD_LSB
+    LDA.l ctrl_shortcut_jsl_word_msb_table+!UPDATE_TIMERS_CTRL_SHORTCUT_TYPE
+    STA !CTRL_SHORTCUT_JSL_WORD_MSB
     JSR .writeJsl
 
-  .doneAlwaysUpdateTimers
-endif
+  .doneUpdateTimers
+    JMP .checkPriShortcuts
+
+  .updateTimersOptions
+    LDA.w !sram_update_timers_options : AND.b !UPDATE_TIMERS_ON_HOLD_RELEASE
+    CMP.b !UPDATE_TIMERS_ON_HOLD : BEQ .updateTimersHold
+    CMP.b !UPDATE_TIMERS_ON_RELEASE : BEQ .updateTimersRelease
+    CMP.b !UPDATE_TIMERS_ON_HOLD_RELEASE : BEQ .updateTimersHoldRelease
+    LDA.w !sram_update_timers_options : BIT.b !UPDATE_TIMERS_ON_LANDED
+    BEQ .doneUpdateTimers
+    JMP .updateTimersOnLanded
+
+  .updateTimersHoldRelease
+    ; LDA !CTRL_SHORTCUT_TRACKING_PRI_PREV
+    LDA #$AF : STA !CTRL_SHORTCUT_ROUTINE,X : INX
+    LDA.b #!CTRL_SHORTCUT_TRACKING_PRI_PREV : STA !CTRL_SHORTCUT_ROUTINE,X : INX
+    LDA.b #!CTRL_SHORTCUT_TRACKING_PRI_PREV>>8 : STA !CTRL_SHORTCUT_ROUTINE,X : INX
+    LDA.b #!CTRL_SHORTCUT_TRACKING_PRI_PREV>>16 : STA !CTRL_SHORTCUT_ROUTINE,X : INX
+    ; ORA $8B
+    LDA #$05 : STA !CTRL_SHORTCUT_ROUTINE,X : INX
+    LDA #$8B : STA !CTRL_SHORTCUT_ROUTINE,X : INX
+    BRA .updateTimersCtrlInput
+
+  .updateTimersHold
+    ; LDA $8B
+    LDA #$A5 : STA !CTRL_SHORTCUT_ROUTINE,X : INX
+    LDA #$8B : STA !CTRL_SHORTCUT_ROUTINE,X : INX
+    BRA .updateTimersCtrlInput
+
+  .updateTimersRelease
+    ; LDA !CTRL_SHORTCUT_TRACKING_PRI_PREV
+    LDA #$AF : STA !CTRL_SHORTCUT_ROUTINE,X : INX
+    LDA.b #!CTRL_SHORTCUT_TRACKING_PRI_PREV : STA !CTRL_SHORTCUT_ROUTINE,X : INX
+    LDA.b #!CTRL_SHORTCUT_TRACKING_PRI_PREV>>8 : STA !CTRL_SHORTCUT_ROUTINE,X : INX
+    LDA.b #!CTRL_SHORTCUT_TRACKING_PRI_PREV>>16 : STA !CTRL_SHORTCUT_ROUTINE,X : INX
+    ; EOR $8B
+    LDA #$45 : STA !CTRL_SHORTCUT_ROUTINE,X : INX
+    LDA #$8B : STA !CTRL_SHORTCUT_ROUTINE,X : INX
+    ; AND !CTRL_SHORTCUT_TRACKING_PRI_PREV
+    LDA #$2F : STA !CTRL_SHORTCUT_ROUTINE,X : INX
+    LDA.b #!CTRL_SHORTCUT_TRACKING_PRI_PREV : STA !CTRL_SHORTCUT_ROUTINE,X : INX
+    LDA.b #!CTRL_SHORTCUT_TRACKING_PRI_PREV>>8 : STA !CTRL_SHORTCUT_ROUTINE,X : INX
+    LDA.b #!CTRL_SHORTCUT_TRACKING_PRI_PREV>>16 : STA !CTRL_SHORTCUT_ROUTINE,X : INX
+
+  .updateTimersCtrlInput
+    ; BIT !sram_update_timers_ctrl_input
+    LDA #$89 : STA !CTRL_SHORTCUT_ROUTINE,X : INX
+    LDA !sram_update_timers_ctrl_input : STA !CTRL_SHORTCUT_ROUTINE,X : INX
+    LDA !sram_update_timers_ctrl_input+1 : STA !CTRL_SHORTCUT_ROUTINE,X : INX
+    ; BEQ $04 or $06
+    LDA #$F0 : STA !CTRL_SHORTCUT_ROUTINE,X : INX
+    LDA.w !sram_update_timers_options : AND.b !UPDATE_TIMERS_ON_LANDED
+    ORA #$04 : STA !CTRL_SHORTCUT_ROUTINE,X : INX
+    ; Write simple JSL
+    LDA.l ctrl_shortcut_jsl_word_lsb_table+!UPDATE_TIMERS_CTRL_SHORTCUT_TYPE
+    STA !CTRL_SHORTCUT_JSL_WORD_LSB
+    LDA.l ctrl_shortcut_jsl_word_msb_table+!UPDATE_TIMERS_CTRL_SHORTCUT_TYPE
+    STA !CTRL_SHORTCUT_JSL_WORD_MSB
+    JSR .writeJsl
+
+    ; Write on landed check if option selected
+    LDA.w !sram_update_timers_options : BIT.b !UPDATE_TIMERS_ON_LANDED : BNE .afterCtrlInputSkipLanded
+    JMP .updateTimersTrackPri
+
+  .afterCtrlInputSkipLanded
+    ; BRA $0D
+    LDA #$80 : STA !CTRL_SHORTCUT_ROUTINE,X : INX
+    LDA #$0D : STA !CTRL_SHORTCUT_ROUTINE,X : INX
+
+  .updateTimersOnLanded
+    ; LDA !CTRL_SHORTCUT_TRACKING_LANDED
+    LDA #$AF : STA !CTRL_SHORTCUT_ROUTINE,X : INX
+    LDA.b #!CTRL_SHORTCUT_TRACKING_LANDED : STA !CTRL_SHORTCUT_ROUTINE,X : INX
+    LDA.b #!CTRL_SHORTCUT_TRACKING_LANDED>>8 : STA !CTRL_SHORTCUT_ROUTINE,X : INX
+    LDA.b #!CTRL_SHORTCUT_TRACKING_LANDED>>16 : STA !CTRL_SHORTCUT_ROUTINE,X : INX
+    ; BIT #$0004
+    LDA #$89 : STA !CTRL_SHORTCUT_ROUTINE,X : INX
+    LDA #$04 : STA !CTRL_SHORTCUT_ROUTINE,X : INX
+    LDA #$00 : STA !CTRL_SHORTCUT_ROUTINE,X : INX
+    ; BNE $04
+    LDA #$D0 : STA !CTRL_SHORTCUT_ROUTINE,X : INX
+    LDA #$04 : STA !CTRL_SHORTCUT_ROUTINE,X : INX
+    ; Write simple JSL
+    LDA.l ctrl_shortcut_jsl_word_lsb_table+!UPDATE_TIMERS_CTRL_SHORTCUT_TYPE
+    STA !CTRL_SHORTCUT_JSL_WORD_LSB
+    LDA.l ctrl_shortcut_jsl_word_msb_table+!UPDATE_TIMERS_CTRL_SHORTCUT_TYPE
+    STA !CTRL_SHORTCUT_JSL_WORD_MSB
+    JSR .writeJsl
+
+    ; Reset on landed flag afterwards
+    ; LDA #$FFFF
+    LDA #$A9 : STA !CTRL_SHORTCUT_ROUTINE,X : INX
+    LDA #$FF : STA !CTRL_SHORTCUT_ROUTINE,X : INX
+    LDA #$FF : STA !CTRL_SHORTCUT_ROUTINE,X : INX
+    ; STA !CTRL_SHORTCUT_TRACKING_LANDED
+    LDA #$8F : STA !CTRL_SHORTCUT_ROUTINE,X : INX
+    LDA.b #!CTRL_SHORTCUT_TRACKING_LANDED : STA !CTRL_SHORTCUT_ROUTINE,X : INX
+    LDA.b #!CTRL_SHORTCUT_TRACKING_LANDED>>8 : STA !CTRL_SHORTCUT_ROUTINE,X : INX
+    LDA.b #!CTRL_SHORTCUT_TRACKING_LANDED>>16 : STA !CTRL_SHORTCUT_ROUTINE,X : INX
+
+  .updateTimersTrackPri
+    ; Track previous input if necessary
+    LDA.w !sram_update_timers_options : BIT.b !UPDATE_TIMERS_ON_RELEASE : BEQ .checkPriShortcuts
+    ; LDA $8B
+    LDA #$A5 : STA !CTRL_SHORTCUT_ROUTINE,X : INX
+    LDA #$8B : STA !CTRL_SHORTCUT_ROUTINE,X : INX
+    ; STA !CTRL_SHORTCUT_TRACKING_PRI_PREV
+    LDA #$8F : STA !CTRL_SHORTCUT_ROUTINE,X : INX
+    LDA.b #!CTRL_SHORTCUT_TRACKING_PRI_PREV : STA !CTRL_SHORTCUT_ROUTINE,X : INX
+    LDA.b #!CTRL_SHORTCUT_TRACKING_PRI_PREV>>8 : STA !CTRL_SHORTCUT_ROUTINE,X : INX
+    LDA.b #!CTRL_SHORTCUT_TRACKING_PRI_PREV>>16 : STA !CTRL_SHORTCUT_ROUTINE,X : INX
+
+  .checkPriShortcuts
+endif ; !FEATURE_VANILLAHUD
     ; Check if we have pri only shortcuts to write
     LDA !CTRL_SHORTCUT_TABLE_PRI_INDEX : CMP #$30 : BPL .noPriShortcuts
 
@@ -927,6 +1118,18 @@ endif
     %a16() : LDA !CTRL_SHORTCUT_PRI : DEC
     AND !CTRL_SHORTCUT_PRI : BNE .priWriteNotSpecial
 
+if !FEATURE_VANILLAHUD
+else
+    ; Check if we can combine with update timers on press option.
+    LDA !CTRL_SHORTCUT_PRI_UPDATE_TIMERS : BEQ .priWritePrepareSpecial
+    %a8() : LDA !CTRL_SHORTCUT_TYPE
+    CMP.b #!UPDATE_TIMERS_CTRL_SHORTCUT_TYPE : BNE .priWritePrepareSpecial
+    %a16() : LDA !CTRL_SHORTCUT_PRI_UPDATE_TIMERS
+    ORA !CTRL_SHORTCUT_PRI : STA !CTRL_SHORTCUT_PRI
+    TDC : STA !CTRL_SHORTCUT_PRI_UPDATE_TIMERS
+
+  .priWritePrepareSpecial
+endif
     ; Scan for other single bit non exact matches with same type,
     ; and also for next pri only shortcut.
     ; Don't forget to clear ourselves from the table and reset category index.
@@ -1057,8 +1260,39 @@ endif
     JSR .writeClcJsl
 
   .nextPriWrite
-    LDA !CTRL_SHORTCUT_TABLE_PRI_INDEX : CMP #$30 : BPL .donePriWrite
+    LDA !CTRL_SHORTCUT_TABLE_PRI_INDEX : CMP #$30
+if !FEATURE_VANILLAHUD
+    BPL .donePriWrite
     JMP .priWriteShortcuts
+else
+    BPL .checkPriUpdateTimers
+    JMP .priWriteShortcuts
+
+  .checkPriUpdateTimers
+    ; Check if we have an update timers on press shortcut to write
+    LDA !CTRL_SHORTCUT_PRI_UPDATE_TIMERS : BNE .priWriteTimersOnPress
+    LDA !CTRL_SHORTCUT_PRI_UPDATE_TIMERS+1 : BNE .priWriteTimersOnPress
+    JMP .donePriWrite
+
+  .priWriteTimersOnPress
+    ; LDA $8F
+    LDA #$A5 : STA !CTRL_SHORTCUT_ROUTINE,X : INX
+    LDA #$8F : STA !CTRL_SHORTCUT_ROUTINE,X : INX
+    ; BIT !CTRL_SHORTCUT_PRI_UPDATE_TIMERS
+    LDA #$89 : STA !CTRL_SHORTCUT_ROUTINE,X : INX
+    LDA !CTRL_SHORTCUT_PRI_UPDATE_TIMERS : STA !CTRL_SHORTCUT_ROUTINE,X : INX
+    LDA !CTRL_SHORTCUT_PRI_UPDATE_TIMERS+1 : STA !CTRL_SHORTCUT_ROUTINE,X : INX
+    ; BEQ $04
+    LDA #$F0 : STA !CTRL_SHORTCUT_ROUTINE,X : INX
+    LDA #$04 : STA !CTRL_SHORTCUT_ROUTINE,X : INX
+    ; Write simple JSL
+    LDA.l ctrl_shortcut_jsl_word_lsb_table+!UPDATE_TIMERS_CTRL_SHORTCUT_TYPE
+    STA !CTRL_SHORTCUT_JSL_WORD_LSB
+    LDA.l ctrl_shortcut_jsl_word_msb_table+!UPDATE_TIMERS_CTRL_SHORTCUT_TYPE
+    STA !CTRL_SHORTCUT_JSL_WORD_MSB
+    JSR .writeJsl
+    BRA .donePriWrite
+endif ; !FEATURE_VANILLAHUD
 
   .donePriNoSec
     ; Check if we have dual shortcuts to write
@@ -2238,6 +2472,9 @@ UpdateTimersMenu:
     dw #update_timers_on_press
     dw #update_timers_on_hold
     dw #update_timers_on_release
+    dw #$FFFF
+    dw #update_timers_on_landed
+    dw #$FFFF
     dw #update_timers_always
     dw #$0000
     %cm_header("UPDATE TIMERS")
@@ -2273,6 +2510,9 @@ update_timers_on_hold:
 
 update_timers_on_release:
     %cm_toggle_bit("Update On Release", !sram_update_timers_options, !UPDATE_TIMERS_ON_RELEASE, #0)
+
+update_timers_on_landed:
+    %cm_toggle_bit("Update On Samus Landed", !sram_update_timers_options, !UPDATE_TIMERS_ON_LANDED, #0)
 
 update_timers_always:
     %cm_toggle_bit("Update Every Frame", !sram_update_timers_options, !UPDATE_TIMERS_ALWAYS, #0)
