@@ -839,7 +839,11 @@ else
     ; Check if we have an update timers shortcut to write
     LDA !sram_update_timers_ctrl_input : BNE .updateTimers
     LDA !sram_update_timers_ctrl_input+1 : BNE .updateTimers
-    JMP .checkPriShortcuts
+
+    ; Check if we always update timers or update on landed
+    LDA.w !sram_update_timers_options : BIT.b !UPDATE_TIMERS_ALWAYS : BNE .alwaysUpdateTimers
+    BIT.b !UPDATE_TIMERS_ON_LANDED : BEQ .doneUpdateTimers
+    JMP .updateTimersOnLanded
 
   .updateTimers
     ; Check if we always update timers, or if we update on press and not hold

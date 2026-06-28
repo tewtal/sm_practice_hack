@@ -286,7 +286,7 @@ endif
 
   .upgrade_1Dto1E
     TDC : STA !sram_update_timers_ctrl_input
-    INC : STA !sram_update_timers_options
+    LDA !UPDATE_TIMERS_ON_PRESS : STA !sram_update_timers_options
 
     LDA !SRAM_VERSION : STA !sram_initialized
     RTS
