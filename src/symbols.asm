@@ -18,7 +18,7 @@ incsrc wram_symbols.asm
 ram_tilemap_buffer = !ram_tilemap_buffer ; $7EF500 ; 2048 bytes
 
 ; Shortcut routine is written on boot and each time the menu closes,
-; so it can use the same space as the practice hack menu tilemap buffer
+; so it can use the same space as the practice hack menu tilemap buffer.
 ; The following tracking variables are for Update Timers,
 ; and they are only accurate and maintained enough to make that work
 ; Shortcuts can skip remaining checks by replacing the return address word
