@@ -4,7 +4,7 @@ This page hosts the source material for the Super Metroid Practice Hack. It is i
 
 ## Getting Started:
 
-1. Download asar from https://github.com/RPGHacker/asar and place it in the \tools\ folder.
+1. Download asar v1.81 from https://github.com/RPGHacker/asar/releases/download/v1.81/asar181.zip and place it in the \tools\ folder.
 2. Download and install Python 3 from https://python.org. Windows users will need to set the PATH environmental variable to point to their Python installation folder.
 3. Run build.bat to create IPS patch files.
 4. Locate the patch files in \build\.
