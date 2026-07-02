@@ -61,6 +61,9 @@ org $828B34      ; reset room timers for first room of Ceres
 org $828B3A
 ceres_start_timers_return:
 
+org $82E34C      ; reset door transition timers in next room mode
+    LDA #hook_fix_doors_moving_up
+
 org $8290F6      ; hijack, HUD routine while paused
     JSL ih_hud_code_paused
 
@@ -222,6 +225,30 @@ org $AAE582
 endif
     JSL ih_chozo_segment
 endif ; !FEATURE_VANILLAHUD
+
+
+%startfree(82)
+
+hook_fix_doors_moving_up:
+{
+    PEA $8F70 : PLB
+    LDA.w !sram_lag_counter_mode : CMP #$0002 : BNE .vanilla
+
+    ; Translation lag set to next room, which we are starting to load next
+    ; Reset realtime and gametime/transition timers
+    TDC : STA !ram_realtime_room : STA !ram_transition_counter
+
+  .vanilla
+    PLB
+    LDA !DOOR_DIRECTION : AND #$0003 : CMP #$0003 : BNE .done
+    JSL $80AD1D
+
+  .done
+    LDA #$E36E : STA !DOOR_FUNCTION_POINTER
+    RTS
+}
+
+%endfree(82)
 
 
 ; Main bank stuff

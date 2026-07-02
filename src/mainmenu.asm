@@ -2853,6 +2853,7 @@ ih_lag_counter:
     db #$28, "Transition Lag", #$FF
     db #$28, "       DOOR", #$FF
     db #$28, "       FULL", #$FF
+    db #$28, "  NEXT ROOM", #$FF
     db #$FF
 
 ih_auto_update_timers:
