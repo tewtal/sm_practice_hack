@@ -1261,14 +1261,16 @@ endif
     PEA $A000 : PLB : PLB
     %ai16()
     ; Skip draw sprite objects
-    ; Skip drawing bombs and projectile explosions
     ; The rest will be the same as the original routine,
     ; other than adding a touch of artificial lag
-    PHA : PLA : PHA : PLA
+    PHX : LDX #$002E
+  .lagloop
+    DEX #2 : BPL .lagloop
+    PLX
 if !FEATURE_PAL
-    JML $A0886D
+    JML $A08869
 else
-    JML $A0885D
+    JML $A08859
 endif
 }
 
