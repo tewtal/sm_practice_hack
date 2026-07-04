@@ -23,7 +23,7 @@ ram_tilemap_buffer = !ram_tilemap_buffer ; $7EF500 ; 2048 bytes
 ; and they are only accurate and maintained enough to make that work
 ; Shortcuts can skip remaining checks by replacing the return address word
 
-; If WRAM_PERSIST_START is changed from $7EFD80 then also adjust init.asm
+; If WRAM_PERSIST_START is changed from $7EFDA0 then also adjust init.asm
 
 ; These variables are NOT PERSISTENT across savestates --
 ; they're saved and reloaded along with the game state.
@@ -141,6 +141,8 @@ ram_shinetune_late_3 = !ram_shinetune_late_3 ; !WRAM_START+$7A
 ram_shinetune_early_4 = !ram_shinetune_early_4 ; !WRAM_START+$7C
 ram_shinetune_late_4 = !ram_shinetune_late_4 ; !WRAM_START+$7E
 
+; ^ FREE SPACE ^ up to +$9E
+
 ; ----------------------------------------------------------
 ; WRAM variables below this point are PERSISTENT.
 ; They maintain their value across savestates.
@@ -156,19 +158,20 @@ ram_random_preset_value = !ram_random_preset_value ; !WRAM_PERSIST_START+$08
 
 ram_magic_pants_enabled = !ram_magic_pants_enabled ; !WRAM_PERSIST_START+$0A
 ram_space_pants_enabled = !ram_space_pants_enabled ; !WRAM_PERSIST_START+$0C
-ram_kraid_claw_rng = !ram_kraid_claw_rng ; !WRAM_PERSIST_START+$0E
-ram_kraid_wait_rng = !ram_kraid_wait_rng ; !WRAM_PERSIST_START+$10
-ram_draygon_rng_left = !ram_draygon_rng_left ; !WRAM_PERSIST_START+$12
-ram_draygon_rng_right = !ram_draygon_rng_right ; !WRAM_PERSIST_START+$14
-ram_turret_rng = !ram_turret_rng ; !WRAM_PERSIST_START+$16
-ram_ridley_rng_flags = !ram_ridley_rng_flags ; !WRAM_PERSIST_START+$18
-ram_ridley_rng_times_and_fireball = !ram_ridley_rng_times_and_fireball ; !WRAM_PERSIST_START+$1A
-ram_crocomire_rng = !ram_crocomire_rng ; !WRAM_PERSIST_START+$1C
-ram_phantoon_phase_rng = !ram_phantoon_phase_rng ; !WRAM_PERSIST_START+$1E
-ram_phantoon_eye_and_flames_rng = !ram_phantoon_eye_and_flames_rng ; !WRAM_PERSIST_START+$20
-ram_botwoon_rng = !ram_botwoon_rng ; !WRAM_PERSIST_START+$22
-ram_baby_rng = !ram_baby_rng ; !WRAM_PERSIST_START+$24
-ram_mb_rng = !ram_mb_rng ; !WRAM_PERSIST_START+$26
+
+ram_game_loop_extras = !ram_game_loop_extras ; !WRAM_PERSIST_START+$0E
+ram_infinite_ammo = !ram_infinite_ammo ; !WRAM_PERSIST_START+$10
+ram_suits_heat_damage_value = !ram_suits_heat_damage_value ; !WRAM_PERSIST_START+$12
+ram_sprite_feature_flags = !ram_sprite_feature_flags ; !WRAM_PERSIST_START+$14
+ram_door_portal_flags = !ram_door_portal_flags ; !WRAM_PERSIST_START+$16
+ram_door_source = !ram_door_source ; !WRAM_PERSIST_START+$18
+ram_door_destination = !ram_door_destination ; !WRAM_PERSIST_START+$1A
+ram_frames_held = !ram_frames_held ; !WRAM_PERSIST_START+$1C
+ram_quickboot_spc_state = !ram_quickboot_spc_state ; !WRAM_PERSIST_START+$1E
+ram_display_backup = !ram_display_backup ; !WRAM_PERSIST_START+$20
+ram_slowdown_mode = !ram_slowdown_mode ; !WRAM_PERSIST_START+$22
+
+; ^ FREE SPACE ^ up to +$26
 
 ram_itempickups_all = !ram_itempickups_all ; !WRAM_PERSIST_START+$28
 ram_itempickups_visible = !ram_itempickups_visible ; !WRAM_PERSIST_START+$2A
@@ -192,24 +195,7 @@ ram_watch_edit_right = !ram_watch_edit_right ; !WRAM_PERSIST_START+$48
 ram_watch_edit_lock_left = !ram_watch_edit_lock_left ; !WRAM_PERSIST_START+$4A
 ram_watch_edit_lock_right = !ram_watch_edit_lock_right ; !WRAM_PERSIST_START+$4C
 
-ram_game_loop_extras = !ram_game_loop_extras ; !WRAM_PERSIST_START+$4E
-ram_infinite_ammo = !ram_infinite_ammo ; !WRAM_PERSIST_START+$50
-ram_suits_heat_damage_value = !ram_suits_heat_damage_value ; !WRAM_PERSIST_START+$52
-ram_sprite_feature_flags = !ram_sprite_feature_flags ; !WRAM_PERSIST_START+$54
-ram_door_portal_flags = !ram_door_portal_flags ; !WRAM_PERSIST_START+$56
-ram_door_source = !ram_door_source ; !WRAM_PERSIST_START+$58
-ram_door_destination = !ram_door_destination ; !WRAM_PERSIST_START+$5A
-ram_frames_held = !ram_frames_held ; !WRAM_PERSIST_START+$5C
-ram_quickboot_spc_state = !ram_quickboot_spc_state ; !WRAM_PERSIST_START+$5E
-ram_display_backup = !ram_display_backup ; !WRAM_PERSIST_START+$60
-
-; ^ FREE SPACE ^ up to +$7C (!WRAM_START+$FC - !WRAM_PERSIST_START)
-
-; -----------------------
-; RAM (Bank 7E required)
-; -----------------------
-
-ram_slowdown_mode = !ram_slowdown_mode ; $7EFDFE
+; ^ FREE SPACE ^ up to +$5E (!WRAM_START+$FE - !WRAM_PERSIST_START)
 
 ; ---------
 ; RAM Menu
@@ -536,10 +522,25 @@ sram_fast_teleport = !sram_fast_teleport ; !SRAM_START+$AA
 sram_update_timers_ctrl_input = !sram_update_timers_ctrl_input ; !SRAM_START+$AC
 sram_update_timers_options = !sram_update_timers_options ; !SRAM_START+$AE
 
-; ^ FREE SPACE ^ up to +$EC
+; ^ FREE SPACE ^ up to +$CE
 
 ; This is a continuation of sram_ctrl_shortcut_selections
 sram_ctrl_additional_selections = !sram_ctrl_additional_selections ; !SRAM_START+$D0 ; 18 bytes starting from +$EE
+sram_hard_reset_clears_rng = !sram_hard_reset_clears_rng ; !SRAM_START+$D1 ; only uses first bit
+sram_kraid_claw_rng = !sram_kraid_claw_rng ; !SRAM_START+$D2
+sram_kraid_wait_rng = !sram_kraid_wait_rng ; !SRAM_START+$D4
+sram_draygon_rng_left = !sram_draygon_rng_left ; !SRAM_START+$D6
+sram_draygon_rng_right = !sram_draygon_rng_right ; !SRAM_START+$D8
+sram_turret_rng = !sram_turret_rng ; !SRAM_START+$DA
+sram_ridley_rng_flags = !sram_ridley_rng_flags ; !SRAM_START+$DC
+sram_ridley_rng_times_and_fireball = !sram_ridley_rng_times_and_fireball ; !SRAM_START+$DE
+sram_crocomire_rng = !sram_crocomire_rng ; !SRAM_START+$E0
+sram_phantoon_phase_rng = !sram_phantoon_phase_rng ; !SRAM_START+$E2
+sram_phantoon_eye_and_flames_rng = !sram_phantoon_eye_and_flames_rng ; !SRAM_START+$E4
+sram_botwoon_rng = !sram_botwoon_rng ; !SRAM_START+$E6
+sram_baby_rng = !sram_baby_rng ; !SRAM_START+$E8
+sram_mb_rng = !sram_mb_rng ; !SRAM_START+$EA
+sram_rng_reserved = !sram_rng_reserved ; !SRAM_START+$EC ; available
 
 sram_presetequiprando = !sram_presetequiprando ; !SRAM_START+$100
 sram_presetequiprando_beampref = !sram_presetequiprando_beampref ; !SRAM_START+$102

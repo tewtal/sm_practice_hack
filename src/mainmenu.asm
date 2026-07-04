@@ -103,7 +103,7 @@ action_game_mainmenu:
 
 action_rng_mainmenu:
 {
-    LDA !ram_turret_rng : LSR : STA !ram_cm_turret_rng
+    LDA !sram_turret_rng : LSR : STA !ram_cm_turret_rng
     LDA.w !DROP_CHANCE_TABLE_LENGTH-1 : ASL : TAX
   .dropTableLoop
     LDA.l drop_chance_tables,X : CMP !ram_drop_chance_table : BEQ .setDropChances
@@ -2988,6 +2988,8 @@ RngMenu:
     dw #rng_baby_rng
     dw #$FFFF
     dw #rng_drop_chances
+    dw #$FFFF
+    dw #rng_hard_reset
     dw #$0000
     %cm_header("RNG CONTROL")
 
@@ -3005,7 +3007,7 @@ rng_goto_mb:
 
 rng_kraid_claw_rng:
     dw !ACTION_CHOICE
-    dl #!ram_kraid_claw_rng
+    dl #!sram_kraid_claw_rng
     dw #$0000
     db #$28, "Kraid Claw RNG", #$FF
     db #$28, "     RANDOM", #$FF
@@ -3015,7 +3017,7 @@ rng_kraid_claw_rng:
 
 rng_kraid_wait_rng:
     dw !ACTION_CHOICE
-    dl #!ram_kraid_wait_rng
+    dl #!sram_kraid_wait_rng
     dw #$0000
     db #$28, "Kraid Wait RNG", #$FF
     db #$28, "     RANDOM", #$FF
@@ -3030,7 +3032,7 @@ rng_kraid_wait_rng:
 
 rng_crocomire_rng:
     dw !ACTION_CHOICE
-    dl #!ram_crocomire_rng
+    dl #!sram_crocomire_rng
     dw #$0000
     db #$28, "Crocomire RNG", #$FF
     db #$28, "     RANDOM", #$FF
@@ -3040,7 +3042,7 @@ rng_crocomire_rng:
 
 rng_draygon_rng_right:
     dw !ACTION_CHOICE
-    dl #!ram_draygon_rng_right
+    dl #!sram_draygon_rng_right
     dw #$0000
     db #$28, "Draygon from Ri", #$FF
     db #$28, "ght  RANDOM", #$FF
@@ -3050,7 +3052,7 @@ rng_draygon_rng_right:
 
 rng_draygon_rng_left:
     dw !ACTION_CHOICE
-    dl #!ram_draygon_rng_left
+    dl #!sram_draygon_rng_left
     dw #$0000
     db #$28, "Draygon from Le", #$FF
     db #$28, "ft   RANDOM", #$FF
@@ -3080,12 +3082,12 @@ rng_turret_rng:
     db #$28, "NOT DN RITE", #$FF
     db #$FF
   .routine
-    ASL : STA !ram_turret_rng
+    ASL : STA !sram_turret_rng
     RTL
 
 rng_baby_rng:
     dw !ACTION_CHOICE
-    dl #!ram_baby_rng
+    dl #!sram_baby_rng
     dw #$0000
     db #$28, "Baby Skip RNG", #$FF
     db #$28, "     RANDOM", #$FF
@@ -3111,6 +3113,9 @@ rng_drop_chances:
     LDA.l drop_chance_tables,X : STA !ram_drop_chance_table
     RTL
 
+rng_hard_reset:
+    %cm_toggle_bit("Hard Reset Clears RNG", !sram_hard_reset_clears_rng, #$0001, #0)
+
 
 ; --------------
 ; Phantoon Menu
@@ -3118,27 +3123,27 @@ rng_drop_chances:
 
 rng_prepare_phantoon_menu:
 {
-    LDA !ram_phantoon_phase_rng : PHA
+    LDA !sram_phantoon_phase_rng : PHA
     JSL rng_phan_set_phan_first_phase
     JSL rng_phan_set_phan_second_phase
-    PLA : STA !ram_phantoon_phase_rng
+    PLA : STA !sram_phantoon_phase_rng
     AND !PHANTOON_RNG_FLIP_MASK : ASL #2 : XBA : STA !ram_cm_phantoon_flip_rng
-    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_1_MASK
+    LDA !sram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_1_MASK
     STA !ram_cm_phantoon_flames_1_rng
-    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_2_MASK
+    LDA !sram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_2_MASK
     LSR #3 : STA !ram_cm_phantoon_flames_2_rng
-    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_PATH_MASK
+    LDA !sram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_PATH_MASK
     ASL #2 : XBA : STA !ram_cm_phantoon_flame_direction_rng
-    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_3_MASK
+    LDA !sram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_3_MASK
     XBA : STA !ram_cm_phantoon_flames_3_rng
-    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_4_MASK
+    LDA !sram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_4_MASK
     XBA : LSR #3 : CMP #$0007 : BNE .set_flame_4
     DEC #2
   .set_flame_4
     STA !ram_cm_phantoon_flames_4_rng
-    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_EYE_CLOSE_MASK
+    LDA !sram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_EYE_CLOSE_MASK
     XBA : ASL #2 : XBA : STA !ram_cm_phantoon_eyeclose_rng
-    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_EYE_CLOSE_INVERTED
+    LDA !sram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_EYE_CLOSE_INVERTED
     BEQ .set_flames : CMP #$0005 : BEQ .first_only : CMP #$0006 : BEQ .first_only
     LDA #$0001
   .set_flames
@@ -3199,18 +3204,18 @@ rng_phan_first_phase:
     db #$FF
   .routine
     ASL : TAX
-    LDA !ram_phantoon_phase_rng : AND !PHANTOON_RNG_PHASE_1_INVERTED
-    STA !ram_phantoon_phase_rng
+    LDA !sram_phantoon_phase_rng : AND !PHANTOON_RNG_PHASE_1_INVERTED
+    STA !sram_phantoon_phase_rng
     LDA.l rng_phan_phase_1_table,X
-    ORA !ram_phantoon_phase_rng : STA !ram_phantoon_phase_rng
+    ORA !sram_phantoon_phase_rng : STA !sram_phantoon_phase_rng
   .check_flames
     ; If first round pattern is random or #1 Left or #1 Right, update it
     LDA !ram_cm_phantoon_flames_1_rng : BEQ .update_flames
     CMP #$0005 : BMI .done_flames
   .update_flames
-    LDA !ram_phantoon_phase_rng : AND !PHANTOON_RNG_PHASE_1_MASK
+    LDA !sram_phantoon_phase_rng : AND !PHANTOON_RNG_PHASE_1_MASK
     BEQ .set_random : AND #$0015 : BEQ .set_left
-    LDA !ram_phantoon_phase_rng : AND #$002A : BEQ .set_right
+    LDA !sram_phantoon_phase_rng : AND #$002A : BEQ .set_right
   .set_random
     TDC : STA !ram_cm_phantoon_flames_1_rng
     JMP rng_phan_flame_pattern_1_routine
@@ -3253,15 +3258,15 @@ rng_phan_second_phase:
     ; Either set flip off or back to vanilla when changing second phase
     ; By default assume vanilla
     TDC : STA !ram_cm_phantoon_flip_rng
-    LDA !ram_phantoon_phase_rng : AND !PHANTOON_RNG_PHASE_2_FLIP_INVERTED
-    STA !ram_phantoon_phase_rng
+    LDA !sram_phantoon_phase_rng : AND !PHANTOON_RNG_PHASE_2_FLIP_INVERTED
+    STA !sram_phantoon_phase_rng
     LDA.l rng_phan_phase_2_table,X
-    ORA !ram_phantoon_phase_rng : STA !ram_phantoon_phase_rng
+    ORA !sram_phantoon_phase_rng : STA !sram_phantoon_phase_rng
     LDA.l rng_phan_phase_2_table,X
     BEQ .done_flip : TXA : BEQ .done_flip
     ; If setting phase 2 to non-vanilla value then turn flip off
     LDA #$0002 : STA !ram_cm_phantoon_flip_rng
-    LDA !ram_phantoon_phase_rng : ORA #$0080 : STA !ram_phantoon_phase_rng
+    LDA !sram_phantoon_phase_rng : ORA #$0080 : STA !sram_phantoon_phase_rng
   .done_flip
     LDA !ROOM_ID : CMP.w #ROOM_PhantoonRoom : BNE .done
     JML init_phantoon_rng
@@ -3279,7 +3284,7 @@ rng_phan_phase_2_table:
 rng_phan_set_phan_first_phase:
 {
     LDX #$0000
-    LDA !ram_phantoon_phase_rng : AND !PHANTOON_RNG_PHASE_1_MASK
+    LDA !sram_phantoon_phase_rng : AND !PHANTOON_RNG_PHASE_1_MASK
     BEQ .end_first_loop
   .first_loop
     CMP.l rng_phan_phase_1_table,X : BEQ .end_first_loop
@@ -3294,8 +3299,8 @@ rng_phan_set_phan_second_phase:
     ; Either set flip off or back to vanilla when changing second phase
     ; By default assume vanilla
     TDC : TAX : STA !ram_cm_phantoon_flip_rng
-    LDA !ram_phantoon_phase_rng : AND !PHANTOON_RNG_FLIP_INVERTED
-    STA !ram_phantoon_phase_rng : AND !PHANTOON_RNG_PHASE_2_MASK
+    LDA !sram_phantoon_phase_rng : AND !PHANTOON_RNG_FLIP_INVERTED
+    STA !sram_phantoon_phase_rng : AND !PHANTOON_RNG_PHASE_2_MASK
     BEQ .end_second_loop
   .second_loop
     CMP.l rng_phan_phase_2_table,X : BEQ .end_second_loop
@@ -3305,7 +3310,7 @@ rng_phan_set_phan_second_phase:
     BEQ .done_flip : TXA : BEQ .done_flip
     ; If setting phase 2 to non-vanilla value then turn flip off
     LDA #$0002 : STA !ram_cm_phantoon_flip_rng
-    LDA !ram_phantoon_phase_rng : ORA #$0080 : STA !ram_phantoon_phase_rng
+    LDA !sram_phantoon_phase_rng : ORA #$0080 : STA !sram_phantoon_phase_rng
   .done_flip
     LDA !ROOM_ID : CMP.w #ROOM_PhantoonRoom : BNE .done
     JML init_phantoon_rng
@@ -3314,43 +3319,43 @@ rng_phan_set_phan_second_phase:
 }
 
 rng_phan_always_visible:
-    %cm_toggle_bit("Always Visible", !ram_phantoon_phase_rng, !PHANTOON_RNG_VISIBLE_BIT, rng_phan_set_phan_second_phase_done_flip)
+    %cm_toggle_bit("Always Visible", !sram_phantoon_phase_rng, !PHANTOON_RNG_VISIBLE_BIT, rng_phan_set_phan_second_phase_done_flip)
 
 rng_phan_fast_left_1:
-    %cm_toggle_bit("#1 Fast Left", !ram_phantoon_phase_rng, #$0020, rng_phan_set_phan_first_phase)
+    %cm_toggle_bit("#1 Fast Left", !sram_phantoon_phase_rng, #$0020, rng_phan_set_phan_first_phase)
 
 rng_phan_mid_left_1:
-    %cm_toggle_bit("#1 Mid  Left", !ram_phantoon_phase_rng, #$0008, rng_phan_set_phan_first_phase)
+    %cm_toggle_bit("#1 Mid  Left", !sram_phantoon_phase_rng, #$0008, rng_phan_set_phan_first_phase)
 
 rng_phan_slow_left_1:
-    %cm_toggle_bit("#1 Slow Left", !ram_phantoon_phase_rng, #$0002, rng_phan_set_phan_first_phase)
+    %cm_toggle_bit("#1 Slow Left", !sram_phantoon_phase_rng, #$0002, rng_phan_set_phan_first_phase)
 
 rng_phan_fast_right_1:
-    %cm_toggle_bit("#1 Fast Right", !ram_phantoon_phase_rng, #$0010, rng_phan_set_phan_first_phase)
+    %cm_toggle_bit("#1 Fast Right", !sram_phantoon_phase_rng, #$0010, rng_phan_set_phan_first_phase)
 
 rng_phan_mid_right_1:
-    %cm_toggle_bit("#1 Mid  Right", !ram_phantoon_phase_rng, #$0004, rng_phan_set_phan_first_phase)
+    %cm_toggle_bit("#1 Mid  Right", !sram_phantoon_phase_rng, #$0004, rng_phan_set_phan_first_phase)
 
 rng_phan_slow_right_1:
-    %cm_toggle_bit("#1 Slow Right", !ram_phantoon_phase_rng, #$0001, rng_phan_set_phan_first_phase)
+    %cm_toggle_bit("#1 Slow Right", !sram_phantoon_phase_rng, #$0001, rng_phan_set_phan_first_phase)
 
 rng_phan_fast_left_2:
-    %cm_toggle_bit("#2 Fast Left", !ram_phantoon_phase_rng, #$2000, rng_phan_set_phan_second_phase)
+    %cm_toggle_bit("#2 Fast Left", !sram_phantoon_phase_rng, #$2000, rng_phan_set_phan_second_phase)
 
 rng_phan_mid_left_2:
-    %cm_toggle_bit("#2 Mid  Left", !ram_phantoon_phase_rng, #$0800, rng_phan_set_phan_second_phase)
+    %cm_toggle_bit("#2 Mid  Left", !sram_phantoon_phase_rng, #$0800, rng_phan_set_phan_second_phase)
 
 rng_phan_slow_left_2:
-    %cm_toggle_bit("#2 Slow Left", !ram_phantoon_phase_rng, #$0200, rng_phan_set_phan_second_phase)
+    %cm_toggle_bit("#2 Slow Left", !sram_phantoon_phase_rng, #$0200, rng_phan_set_phan_second_phase)
 
 rng_phan_fast_right_2:
-    %cm_toggle_bit("#2 Fast Right", !ram_phantoon_phase_rng, #$1000, rng_phan_set_phan_second_phase)
+    %cm_toggle_bit("#2 Fast Right", !sram_phantoon_phase_rng, #$1000, rng_phan_set_phan_second_phase)
 
 rng_phan_mid_right_2:
-    %cm_toggle_bit("#2 Mid  Right", !ram_phantoon_phase_rng, #$0400, rng_phan_set_phan_second_phase)
+    %cm_toggle_bit("#2 Mid  Right", !sram_phantoon_phase_rng, #$0400, rng_phan_set_phan_second_phase)
 
 rng_phan_slow_right_2:
-    %cm_toggle_bit("#2 Slow Right", !ram_phantoon_phase_rng, #$0100, rng_phan_set_phan_second_phase)
+    %cm_toggle_bit("#2 Slow Right", !sram_phantoon_phase_rng, #$0100, rng_phan_set_phan_second_phase)
 
 rng_phan_second_phase_flip:
     dw !ACTION_CHOICE
@@ -3363,10 +3368,10 @@ rng_phan_second_phase_flip:
     db #$28, "     RANDOM", #$FF
     db #$FF
   .routine
-    LDA !ram_phantoon_phase_rng : AND !PHANTOON_RNG_FLIP_INVERTED
-    STA !ram_phantoon_phase_rng
+    LDA !sram_phantoon_phase_rng : AND !PHANTOON_RNG_FLIP_INVERTED
+    STA !sram_phantoon_phase_rng
     LDA !ram_cm_phantoon_flip_rng : XBA : LSR #2
-    ORA !ram_phantoon_phase_rng : STA !ram_phantoon_phase_rng
+    ORA !sram_phantoon_phase_rng : STA !sram_phantoon_phase_rng
     LDA !ROOM_ID : CMP.w #ROOM_PhantoonRoom : BNE .done
     JML init_phantoon_rng
   .done
@@ -3383,10 +3388,10 @@ rng_phan_eyeclose:
     db #$28, "       FAST", #$FF
     db #$FF
   .routine
-    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_EYE_CLOSE_INVERTED
-    STA !ram_phantoon_eye_and_flames_rng
+    LDA !sram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_EYE_CLOSE_INVERTED
+    STA !sram_phantoon_eye_and_flames_rng
     LDA !ram_cm_phantoon_eyeclose_rng : XBA : LSR #2 : XBA
-    ORA !ram_phantoon_eye_and_flames_rng : STA !ram_phantoon_eye_and_flames_rng
+    ORA !sram_phantoon_eye_and_flames_rng : STA !sram_phantoon_eye_and_flames_rng
     LDA !ROOM_ID : CMP.w #ROOM_PhantoonRoom : BNE .done
     JML init_phantoon_rng
   .done
@@ -3408,8 +3413,8 @@ rng_phan_flames:
     INC #3
   .set_cm_vars
     STA !ram_cm_phantoon_flames_1_rng
-    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_EYE_CLOSE_MASK
-    ORA !ram_cm_phantoon_flames_1_rng : STA !ram_phantoon_eye_and_flames_rng
+    LDA !sram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_EYE_CLOSE_MASK
+    ORA !ram_cm_phantoon_flames_1_rng : STA !sram_phantoon_eye_and_flames_rng
     TDC : STA !ram_cm_phantoon_flames_2_rng : STA !ram_cm_phantoon_flames_3_rng
     STA !ram_cm_phantoon_flames_4_rng : STA !ram_cm_phantoon_flame_direction_rng
     LDA !ROOM_ID : CMP.w #ROOM_PhantoonRoom : BNE .done
@@ -3446,8 +3451,8 @@ rng_phan_flame_pattern_1:
     db #$28, "   #1 RIGHT", #$FF
     db #$FF
   .routine
-    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_1_INVERTED
-    ORA !ram_cm_phantoon_flames_1_rng : STA !ram_phantoon_eye_and_flames_rng
+    LDA !sram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_1_INVERTED
+    ORA !ram_cm_phantoon_flames_1_rng : STA !sram_phantoon_eye_and_flames_rng
     JMP flame_pattern_update
 
 rng_phan_flame_pattern_2:
@@ -3462,10 +3467,10 @@ rng_phan_flame_pattern_2:
     db #$28, "    1424212", #$FF
     db #$FF
   .routine
-    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_2_INVERTED
-    STA !ram_phantoon_eye_and_flames_rng
+    LDA !sram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_2_INVERTED
+    STA !sram_phantoon_eye_and_flames_rng
     LDA !ram_cm_phantoon_flames_2_rng : ASL #3
-    ORA !ram_phantoon_eye_and_flames_rng : STA !ram_phantoon_eye_and_flames_rng
+    ORA !sram_phantoon_eye_and_flames_rng : STA !sram_phantoon_eye_and_flames_rng
     JMP flame_pattern_update
 
 rng_phan_flame_pattern_3:
@@ -3480,10 +3485,10 @@ rng_phan_flame_pattern_3:
     db #$28, "    1424212", #$FF
     db #$FF
   .routine
-    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_3_INVERTED
-    STA !ram_phantoon_eye_and_flames_rng
+    LDA !sram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_3_INVERTED
+    STA !sram_phantoon_eye_and_flames_rng
     LDA !ram_cm_phantoon_flames_3_rng : XBA
-    ORA !ram_phantoon_eye_and_flames_rng : STA !ram_phantoon_eye_and_flames_rng
+    ORA !sram_phantoon_eye_and_flames_rng : STA !sram_phantoon_eye_and_flames_rng
     JMP flame_pattern_update
 
 rng_phan_flame_pattern_4:
@@ -3499,13 +3504,13 @@ rng_phan_flame_pattern_4:
     db #$28, "  NO REPEAT", #$FF
     db #$FF
   .routine
-    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_4_INVERTED
-    STA !ram_phantoon_eye_and_flames_rng
+    LDA !sram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_4_INVERTED
+    STA !sram_phantoon_eye_and_flames_rng
     LDA !ram_cm_phantoon_flames_4_rng : CMP #$0005 : BNE .set_flame_4
     INC #2
   .set_flame_4
     XBA : ASL #3
-    ORA !ram_phantoon_eye_and_flames_rng : STA !ram_phantoon_eye_and_flames_rng
+    ORA !sram_phantoon_eye_and_flames_rng : STA !sram_phantoon_eye_and_flames_rng
     JMP flame_pattern_update
 
 rng_phan_flame_direction:
@@ -3518,15 +3523,15 @@ rng_phan_flame_direction:
     db #$28, "      RIGHT", #$FF
     db #$FF
   .routine
-    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_PATH_INVERTED
-    STA !ram_phantoon_eye_and_flames_rng
+    LDA !sram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_PATH_INVERTED
+    STA !sram_phantoon_eye_and_flames_rng
     LDA !ram_cm_phantoon_flame_direction_rng : XBA : LSR #2
-    ORA !ram_phantoon_eye_and_flames_rng : STA !ram_phantoon_eye_and_flames_rng
+    ORA !sram_phantoon_eye_and_flames_rng : STA !sram_phantoon_eye_and_flames_rng
     ; Fallthrough
 
 flame_pattern_update:
 {
-    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_EYE_CLOSE_INVERTED
+    LDA !sram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_EYE_CLOSE_INVERTED
     BEQ .set_flames : CMP #$0005 : BEQ .first_only : CMP #$0006 : BEQ .first_only
     LDA #$0001
   .set_flames
@@ -3547,26 +3552,26 @@ flame_pattern_update:
 
 rng_prepare_ridley_menu:
 {
-    LDA !ram_ridley_rng_flags : AND !RIDLEY_RNG_CERES_MASK
+    LDA !sram_ridley_rng_flags : AND !RIDLEY_RNG_CERES_MASK
     STA !ram_cm_ridley_ceres_ai_rng
-    LDA !ram_ridley_rng_flags : AND !RIDLEY_RNG_POGO_HEIGHT_MASK
+    LDA !sram_ridley_rng_flags : AND !RIDLEY_RNG_POGO_HEIGHT_MASK
     LSR #3 : STA !ram_cm_ridley_pogo_height_rng
-    LDA !ram_ridley_rng_flags : AND !RIDLEY_RNG_75_25_MASK
+    LDA !sram_ridley_rng_flags : AND !RIDLEY_RNG_75_25_MASK
     ASL #2 : XBA : STA !ram_cm_ridley_lunge_pogo_rng
-    LDA !ram_ridley_rng_flags : AND !RIDLEY_RNG_BACKPOGO_MASK
+    LDA !sram_ridley_rng_flags : AND !RIDLEY_RNG_BACKPOGO_MASK
     XBA : STA !ram_cm_ridley_backpogo_rng
-    LDA !ram_ridley_rng_flags : AND !RIDLEY_RNG_TAIL_MASK
+    LDA !sram_ridley_rng_flags : AND !RIDLEY_RNG_TAIL_MASK
     XBA : LSR #3 : STA !ram_cm_ridley_tail_rng
-    LDA !ram_ridley_rng_flags : AND !RIDLEY_RNG_50_50_MASK
+    LDA !sram_ridley_rng_flags : AND !RIDLEY_RNG_50_50_MASK
     XBA : ASL #2 : XBA : STA !ram_cm_ridley_swoop_pogo_rng
-    LDA !ram_ridley_rng_times_and_fireball : AND !RIDLEY_RNG_HOVER_TIME_MASK
+    LDA !sram_ridley_rng_times_and_fireball : AND !RIDLEY_RNG_HOVER_TIME_MASK
     STA !ram_cm_ridley_hover_time_value_rng : BEQ .set_hover
     TDC : INC
   .set_hover
     STA !ram_cm_ridley_hover_time_rng
-    LDA !ram_ridley_rng_times_and_fireball : AND !RIDLEY_RNG_FIREBALL_MASK
+    LDA !sram_ridley_rng_times_and_fireball : AND !RIDLEY_RNG_FIREBALL_MASK
     ASL #2 : XBA : STA !ram_cm_ridley_hover_fireball_rng
-    LDA !ram_ridley_rng_times_and_fireball : AND !RIDLEY_RNG_POGO_TIME_MASK
+    LDA !sram_ridley_rng_times_and_fireball : AND !RIDLEY_RNG_POGO_TIME_MASK
     XBA : STA !ram_cm_ridley_pogo_time_value_rng : BEQ .set_pogo
     TDC : INC
   .set_pogo
@@ -3604,8 +3609,8 @@ rng_ridley_ceres_ai:
     db #$28, "      SWOOP", #$FF
     db #$FF
   .routine
-    LDA !ram_ridley_rng_flags : AND !RIDLEY_RNG_CERES_INVERTED
-    ORA !ram_cm_ridley_ceres_ai_rng : STA !ram_ridley_rng_flags
+    LDA !sram_ridley_rng_flags : AND !RIDLEY_RNG_CERES_INVERTED
+    ORA !ram_cm_ridley_ceres_ai_rng : STA !sram_ridley_rng_flags
     LDA !ROOM_ID : CMP.w #ROOM_CeresRidleyRoom : BNE .done
     JML init_ceres_ridley_rng
   .done
@@ -3621,10 +3626,10 @@ rng_ridley_lunge_pogo:
     db #$28, "o      POGO", #$FF
     db #$FF
   .routine
-    LDA !ram_ridley_rng_flags : AND !RIDLEY_RNG_75_25_INVERTED
-    STA !ram_ridley_rng_flags
+    LDA !sram_ridley_rng_flags : AND !RIDLEY_RNG_75_25_INVERTED
+    STA !sram_ridley_rng_flags
     LDA !ram_cm_ridley_lunge_pogo_rng : XBA : LSR #2
-    ORA !ram_ridley_rng_flags : STA !ram_ridley_rng_flags
+    ORA !sram_ridley_rng_flags : STA !sram_ridley_rng_flags
     LDA !ROOM_ID : CMP.w #ROOM_RidleyRoom : BNE .done
     JML init_zebes_ridley_rng
   .done
@@ -3640,10 +3645,10 @@ rng_ridley_swoop_pogo:
     db #$28, "o      POGO", #$FF
     db #$FF
   .routine
-    LDA !ram_ridley_rng_flags : AND !RIDLEY_RNG_50_50_INVERTED
-    STA !ram_ridley_rng_flags
+    LDA !sram_ridley_rng_flags : AND !RIDLEY_RNG_50_50_INVERTED
+    STA !sram_ridley_rng_flags
     LDA !ram_cm_ridley_swoop_pogo_rng : XBA : LSR #2 : XBA
-    ORA !ram_ridley_rng_flags : STA !ram_ridley_rng_flags
+    ORA !sram_ridley_rng_flags : STA !sram_ridley_rng_flags
     LDA !ROOM_ID : CMP.w #ROOM_RidleyRoom : BNE .done
     JML init_zebes_ridley_rng
   .done
@@ -3664,10 +3669,10 @@ rng_ridley_backpogo:
     db #$28, "        75%", #$FF
     db #$FF
   .routine
-    LDA !ram_ridley_rng_flags : AND !RIDLEY_RNG_BACKPOGO_INVERTED
-    STA !ram_ridley_rng_flags
+    LDA !sram_ridley_rng_flags : AND !RIDLEY_RNG_BACKPOGO_INVERTED
+    STA !sram_ridley_rng_flags
     LDA !ram_cm_ridley_backpogo_rng : XBA
-    ORA !ram_ridley_rng_flags : STA !ram_ridley_rng_flags
+    ORA !sram_ridley_rng_flags : STA !sram_ridley_rng_flags
     LDA !ROOM_ID : CMP.w #ROOM_RidleyRoom : BNE .done
     JML init_zebes_ridley_rng
   .done
@@ -3685,10 +3690,10 @@ rng_ridley_pogo_height:
     db #$28, "    HIGHEST", #$FF
     db #$FF
   .routine
-    LDA !ram_ridley_rng_flags : AND !RIDLEY_RNG_POGO_HEIGHT_INVERTED
-    STA !ram_ridley_rng_flags
+    LDA !sram_ridley_rng_flags : AND !RIDLEY_RNG_POGO_HEIGHT_INVERTED
+    STA !sram_ridley_rng_flags
     LDA !ram_cm_ridley_pogo_height_rng : ASL #3
-    ORA !ram_ridley_rng_flags : STA !ram_ridley_rng_flags
+    ORA !sram_ridley_rng_flags : STA !sram_ridley_rng_flags
     LDA !ROOM_ID : CMP.w #ROOM_RidleyRoom : BNE .done
     JML init_zebes_ridley_rng
   .done
@@ -3703,13 +3708,13 @@ rng_ridley_pogo_time:
     db #$28, "      FIXED", #$FF
     db #$FF
   .routine
-    LDA !ram_ridley_rng_times_and_fireball : AND !RIDLEY_RNG_POGO_TIME_INVERTED
-    STA !ram_ridley_rng_times_and_fireball
+    LDA !sram_ridley_rng_times_and_fireball : AND !RIDLEY_RNG_POGO_TIME_INVERTED
+    STA !sram_ridley_rng_times_and_fireball
     LDA !ram_cm_ridley_pogo_time_rng : BEQ .set_value
     LDA !ram_cm_ridley_pogo_time_value_rng : BNE .set_value
     LDA #$0080 : STA !ram_cm_ridley_pogo_time_value_rng
   .set_value
-    XBA : ORA !ram_ridley_rng_times_and_fireball : STA !ram_ridley_rng_times_and_fireball
+    XBA : ORA !sram_ridley_rng_times_and_fireball : STA !sram_ridley_rng_times_and_fireball
     LDA !ROOM_ID : CMP.w #ROOM_RidleyRoom : BNE .done
     JML init_zebes_ridley_rng
   .done
@@ -3724,10 +3729,10 @@ rng_ridley_pogo_time_dynamic:
 rng_ridley_pogo_time_value:
     %cm_numfield_word("Pogo Time Value", !ram_cm_ridley_pogo_time_value_rng, 128, 191, 1, 4, #.routine)
   .routine
-    LDA !ram_ridley_rng_times_and_fireball : AND !RIDLEY_RNG_POGO_TIME_INVERTED
-    STA !ram_ridley_rng_times_and_fireball
+    LDA !sram_ridley_rng_times_and_fireball : AND !RIDLEY_RNG_POGO_TIME_INVERTED
+    STA !sram_ridley_rng_times_and_fireball
     LDA !ram_cm_ridley_pogo_time_value_rng : XBA
-    ORA !ram_ridley_rng_times_and_fireball : STA !ram_ridley_rng_times_and_fireball
+    ORA !sram_ridley_rng_times_and_fireball : STA !sram_ridley_rng_times_and_fireball
     LDA !ROOM_ID : CMP.w #ROOM_RidleyRoom : BNE .done
     JML init_zebes_ridley_rng
   .done
@@ -3742,13 +3747,13 @@ rng_ridley_hover_time:
     db #$28, "      FIXED", #$FF
     db #$FF
   .routine
-    LDA !ram_ridley_rng_times_and_fireball : AND !RIDLEY_RNG_HOVER_TIME_INVERTED
-    STA !ram_ridley_rng_times_and_fireball
+    LDA !sram_ridley_rng_times_and_fireball : AND !RIDLEY_RNG_HOVER_TIME_INVERTED
+    STA !sram_ridley_rng_times_and_fireball
     LDA !ram_cm_ridley_hover_time_rng : BEQ .set_value
     LDA !ram_cm_ridley_hover_time_value_rng : BNE .set_value
     LDA #$0020 : STA !ram_cm_ridley_hover_time_value_rng
   .set_value
-    ORA !ram_ridley_rng_times_and_fireball : STA !ram_ridley_rng_times_and_fireball
+    ORA !sram_ridley_rng_times_and_fireball : STA !sram_ridley_rng_times_and_fireball
     LDA !ROOM_ID : CMP.w #ROOM_RidleyRoom : BNE .done
     JML init_zebes_ridley_rng
   .done
@@ -3763,8 +3768,8 @@ rng_ridley_hover_time_dynamic:
 rng_ridley_hover_time_value:
     %cm_numfield_word("Hover Time Value", !ram_cm_ridley_hover_time_value_rng, 32, 63, 1, 4, #.routine)
   .routine
-    LDA !ram_ridley_rng_times_and_fireball : AND !RIDLEY_RNG_HOVER_TIME_INVERTED
-    ORA !ram_cm_ridley_hover_time_value_rng : STA !ram_ridley_rng_times_and_fireball
+    LDA !sram_ridley_rng_times_and_fireball : AND !RIDLEY_RNG_HOVER_TIME_INVERTED
+    ORA !ram_cm_ridley_hover_time_value_rng : STA !sram_ridley_rng_times_and_fireball
     LDA !ROOM_ID : CMP.w #ROOM_RidleyRoom : BNE .done
     JML init_zebes_ridley_rng
   .done
@@ -3780,10 +3785,10 @@ rng_ridley_hover_fireball:
     db #$28, " LESS OFTEN", #$FF
     db #$FF
   .routine
-    LDA !ram_ridley_rng_times_and_fireball : AND !RIDLEY_RNG_FIREBALL_INVERTED
-    STA !ram_ridley_rng_times_and_fireball
+    LDA !sram_ridley_rng_times_and_fireball : AND !RIDLEY_RNG_FIREBALL_INVERTED
+    STA !sram_ridley_rng_times_and_fireball
     LDA !ram_cm_ridley_hover_fireball_rng : XBA : LSR #2
-    ORA !ram_ridley_rng_times_and_fireball : STA !ram_ridley_rng_times_and_fireball
+    ORA !sram_ridley_rng_times_and_fireball : STA !sram_ridley_rng_times_and_fireball
     LDA !ROOM_ID : CMP.w #ROOM_RidleyRoom : BNE .done
     JML init_zebes_ridley_rng
   .done
@@ -3804,10 +3809,10 @@ rng_ridley_tail:
     db #$28, "        75%", #$FF
     db #$FF
   .routine
-    LDA !ram_ridley_rng_flags : AND !RIDLEY_RNG_TAIL_INVERTED
-    STA !ram_ridley_rng_flags
+    LDA !sram_ridley_rng_flags : AND !RIDLEY_RNG_TAIL_INVERTED
+    STA !sram_ridley_rng_flags
     LDA !ram_cm_ridley_tail_rng : ASL #3 : XBA
-    ORA !ram_ridley_rng_flags : STA !ram_ridley_rng_flags
+    ORA !sram_ridley_rng_flags : STA !sram_ridley_rng_flags
     LDA !ROOM_ID : CMP.w #ROOM_RidleyRoom : BNE .done
     JML init_zebes_ridley_rng
   .done
@@ -3820,22 +3825,22 @@ rng_ridley_tail:
 
 rng_prepare_botwoon_menu:
 {
-    LDA !ram_botwoon_rng : AND !BOTWOON_RNG_FIRST_MASK
+    LDA !sram_botwoon_rng : AND !BOTWOON_RNG_FIRST_MASK
     CMP !BOTWOON_RNG_FIRST_MASK : BNE .botwoonFirst
-    AND !BOTWOON_RNG_FIRST_INVERTED : STA !ram_botwoon_rng
+    AND !BOTWOON_RNG_FIRST_INVERTED : STA !sram_botwoon_rng
   .botwoonFirst
     JSL rng_botwoon_set_first
     TDC : STA !ram_cm_botwoon_hidden_rng : STA !ram_cm_botwoon_second_rng
-    LDA !ram_botwoon_rng : BIT !BOTWOON_RNG_HIDDEN_ENABLED : BEQ .botwoonSecond
+    LDA !sram_botwoon_rng : BIT !BOTWOON_RNG_HIDDEN_ENABLED : BEQ .botwoonSecond
     AND !BOTWOON_RNG_HIDDEN_VALUE : XBA : LSR #3 : INC
-    STA !ram_cm_botwoon_hidden_rng : LDA !ram_botwoon_rng
+    STA !ram_cm_botwoon_hidden_rng : LDA !sram_botwoon_rng
   .botwoonSecond
     BIT !BOTWOON_RNG_SECOND_ENABLED : BEQ .botwoonSpit
     AND !BOTWOON_RNG_SECOND_VALUE : XBA : ASL #3 : XBA : INC
-    STA !ram_cm_botwoon_second_rng : LDA !ram_botwoon_rng
+    STA !ram_cm_botwoon_second_rng : LDA !sram_botwoon_rng
   .botwoonSpit
     AND !BOTWOON_RNG_SPIT_MASK : LSR #2 : STA !ram_cm_botwoon_spit_rng
-    LDA !ram_botwoon_rng : AND !BOTWOON_RNG_AFTER_SPIT_MASK
+    LDA !sram_botwoon_rng : AND !BOTWOON_RNG_AFTER_SPIT_MASK
     BEQ .botwoonAfterSpit
     EOR !BOTWOON_RNG_AFTER_SPIT_ENABLED : INC
   .botwoonAfterSpit
@@ -3882,10 +3887,10 @@ rng_botwoon_first:
     db #$FF
   .routine
     ASL : TAX
-    LDA !ram_botwoon_rng : AND !BOTWOON_RNG_FIRST_INVERTED
-    STA !ram_botwoon_rng
+    LDA !sram_botwoon_rng : AND !BOTWOON_RNG_FIRST_INVERTED
+    STA !sram_botwoon_rng
     LDA.l rng_botwoon_first_table,X
-    ORA !ram_botwoon_rng : STA !ram_botwoon_rng
+    ORA !sram_botwoon_rng : STA !sram_botwoon_rng
   .checkRoom
     LDA !ROOM_ID : CMP.w #ROOM_BotwoonRoom : BNE .done
     JML init_botwoon_rng
@@ -3899,7 +3904,7 @@ rng_botwoon_first_table:
 rng_botwoon_set_first:
 {
     LDX #$0000
-    LDA !ram_botwoon_rng : AND !BOTWOON_RNG_FIRST_MASK
+    LDA !sram_botwoon_rng : AND !BOTWOON_RNG_FIRST_MASK
   .first_loop
     CMP.l rng_botwoon_first_table,X : BEQ .end_first_loop
     INX #2 : CPX #$001E : BNE .first_loop
@@ -3912,16 +3917,16 @@ rng_botwoon_set_first:
 }
 
 rng_botwoon_first_bottom:
-    %cm_toggle_bit_inverted("First LB Bottom", !ram_botwoon_rng, #$0010, rng_botwoon_set_first)
+    %cm_toggle_bit_inverted("First LB Bottom", !sram_botwoon_rng, #$0010, rng_botwoon_set_first)
 
 rng_botwoon_first_top:
-    %cm_toggle_bit_inverted("First LT Top", !ram_botwoon_rng, #$0020, rng_botwoon_set_first)
+    %cm_toggle_bit_inverted("First LT Top", !sram_botwoon_rng, #$0020, rng_botwoon_set_first)
 
 rng_botwoon_first_right:
-    %cm_toggle_bit_inverted("First LR Right", !ram_botwoon_rng, #$0040, rng_botwoon_set_first)
+    %cm_toggle_bit_inverted("First LR Right", !sram_botwoon_rng, #$0040, rng_botwoon_set_first)
 
 rng_botwoon_first_left:
-    %cm_toggle_bit_inverted("First LL Left", !ram_botwoon_rng, #$0080, rng_botwoon_set_first)
+    %cm_toggle_bit_inverted("First LL Left", !sram_botwoon_rng, #$0080, rng_botwoon_set_first)
 
 rng_botwoon_hidden:
     dw !ACTION_CHOICE
@@ -3934,12 +3939,12 @@ rng_botwoon_hidden:
     db #$28, "LR BR TR RT", #$FF
     db #$FF
   .routine
-    LDA !ram_botwoon_rng : AND !BOTWOON_RNG_HIDDEN_INVERTED
-    STA !ram_botwoon_rng
+    LDA !sram_botwoon_rng : AND !BOTWOON_RNG_HIDDEN_INVERTED
+    STA !sram_botwoon_rng
     LDA !ram_cm_botwoon_hidden_rng : BEQ .checkRoom
     ; possible values are $01, $09, $11
     DEC : ASL #3 : INC : XBA
-    ORA !ram_botwoon_rng : STA !ram_botwoon_rng
+    ORA !sram_botwoon_rng : STA !sram_botwoon_rng
   .checkRoom
     LDA !ROOM_ID : CMP.w #ROOM_BotwoonRoom : BNE .done
     JML init_botwoon_rng
@@ -3958,12 +3963,12 @@ rng_botwoon_second:
     db #$28, "LL BB TT RR", #$FF
     db #$FF
   .routine
-    LDA !ram_botwoon_rng : AND !BOTWOON_RNG_SECOND_INVERTED
-    STA !ram_botwoon_rng
+    LDA !sram_botwoon_rng : AND !BOTWOON_RNG_SECOND_INVERTED
+    STA !sram_botwoon_rng
     LDA !ram_cm_botwoon_second_rng : BEQ .checkRoom
     ; possible values are $01, $09, $11, $19
     DEC : ASL #3 : INC : XBA : ASL #2
-    ORA !ram_botwoon_rng : STA !ram_botwoon_rng
+    ORA !sram_botwoon_rng : STA !sram_botwoon_rng
   .checkRoom
     LDA !ROOM_ID : CMP.w #ROOM_BotwoonRoom : BNE .done
     JML init_botwoon_rng
@@ -3980,11 +3985,11 @@ rng_botwoon_spit:
     db #$28, "ALWAYS SPIT", #$FF
     db #$FF
   .routine
-    LDA !ram_botwoon_rng : AND !BOTWOON_RNG_SPIT_INVERTED
-    STA !ram_botwoon_rng
+    LDA !sram_botwoon_rng : AND !BOTWOON_RNG_SPIT_INVERTED
+    STA !sram_botwoon_rng
     LDA !ram_cm_botwoon_spit_rng : BEQ .checkRoom
     ; 0-4 = no spit, 6-E = spit
-    ASL #2 : ORA !ram_botwoon_rng : STA !ram_botwoon_rng
+    ASL #2 : ORA !sram_botwoon_rng : STA !sram_botwoon_rng
   .checkRoom
     LDA !ROOM_ID : CMP.w #ROOM_BotwoonRoom : BNE .done
     JML init_botwoon_rng
@@ -4001,11 +4006,11 @@ rng_botwoon_after_spit:
     db #$28, "pit    HIDE", #$FF
     db #$FF
   .routine
-    LDA !ram_botwoon_rng : AND !BOTWOON_RNG_AFTER_SPIT_INVERTED
-    STA !ram_botwoon_rng
+    LDA !sram_botwoon_rng : AND !BOTWOON_RNG_AFTER_SPIT_INVERTED
+    STA !sram_botwoon_rng
     LDA !ram_cm_botwoon_after_spit_rng : BEQ .checkRoom
     DEC : ORA !BOTWOON_RNG_AFTER_SPIT_ENABLED
-    ORA !ram_botwoon_rng : STA !ram_botwoon_rng
+    ORA !sram_botwoon_rng : STA !sram_botwoon_rng
   .checkRoom
     LDA !ROOM_ID : CMP.w #ROOM_BotwoonRoom : BNE .done
     JML init_botwoon_rng
@@ -4019,17 +4024,17 @@ rng_botwoon_after_spit:
 
 rng_prepare_mb_menu:
 {
-    LDA !ram_mb_rng : AND !MB_RNG_WALKING_MASK
+    LDA !sram_mb_rng : AND !MB_RNG_WALKING_MASK
     STA !ram_cm_mb_walking_rng
-    LDA !ram_mb_rng : AND !MB_RNG_KETCHUP_MASK
+    LDA !sram_mb_rng : AND !MB_RNG_KETCHUP_MASK
     LSR #2 : STA !ram_cm_mb_ketchup_rng
-    LDA !ram_mb_rng : AND !MB_RNG_DAMAGE_DOWN_MASK
+    LDA !sram_mb_rng : AND !MB_RNG_DAMAGE_DOWN_MASK
     LSR #4 : STA !ram_cm_mb_damage_down_rng
-    LDA !ram_mb_rng : AND !MB_RNG_PHASE3_ATTACK_MASK
+    LDA !sram_mb_rng : AND !MB_RNG_PHASE3_ATTACK_MASK
     ASL : XBA : STA !ram_cm_mb_phase3_attack_rng
-    LDA !ram_mb_rng : AND !MB_RNG_NORMAL_ATTACK_MASK
+    LDA !sram_mb_rng : AND !MB_RNG_NORMAL_ATTACK_MASK
     LSR : XBA : STA !ram_cm_mb_normal_attack_rng
-    LDA !ram_mb_rng : AND !MB_RNG_BOMB_CROUCH_MASK
+    LDA !sram_mb_rng : AND !MB_RNG_BOMB_CROUCH_MASK
     XBA : ASL #2 : XBA : STA !ram_cm_mb_bomb_crouch_rng
     %setmenubank()
     JML action_submenu
@@ -4057,8 +4062,8 @@ rng_mb_walking:
     db #$28, "  MINIMIZED", #$FF
     db #$FF
   .routine
-    LDA !ram_mb_rng : AND !MB_RNG_WALKING_INVERTED
-    ORA !ram_cm_mb_walking_rng : STA !ram_mb_rng
+    LDA !sram_mb_rng : AND !MB_RNG_WALKING_INVERTED
+    ORA !ram_cm_mb_walking_rng : STA !sram_mb_rng
     LDA !ROOM_ID : CMP.w #ROOM_MotherBrainRoom : BNE .done
     JML init_mb_rng_from_menu
   .done
@@ -4079,10 +4084,10 @@ rng_mb_normal_attack:
     db #$28, "  MINIMIZED", #$FF
     db #$FF
   .routine
-    LDA !ram_mb_rng : AND !MB_RNG_NORMAL_ATTACK_INVERTED
-    STA !ram_mb_rng
+    LDA !sram_mb_rng : AND !MB_RNG_NORMAL_ATTACK_INVERTED
+    STA !sram_mb_rng
     LDA !ram_cm_mb_normal_attack_rng : ASL : XBA
-    ORA !ram_mb_rng : STA !ram_mb_rng
+    ORA !sram_mb_rng : STA !sram_mb_rng
     LDA !ROOM_ID : CMP.w #ROOM_MotherBrainRoom : BNE .done
     JML init_mb_rng_from_menu
   .done
@@ -4098,10 +4103,10 @@ rng_mb_bomb_crouch:
     db #$28, "  MINIMIZED", #$FF
     db #$FF
   .routine
-    LDA !ram_mb_rng : AND !MB_RNG_BOMB_CROUCH_INVERTED
-    STA !ram_mb_rng
+    LDA !sram_mb_rng : AND !MB_RNG_BOMB_CROUCH_INVERTED
+    STA !sram_mb_rng
     LDA !ram_cm_mb_bomb_crouch_rng : XBA : LSR #2 : XBA
-    ORA !ram_mb_rng : STA !ram_mb_rng
+    ORA !sram_mb_rng : STA !sram_mb_rng
     LDA !ROOM_ID : CMP.w #ROOM_MotherBrainRoom : BNE .done
     JML init_mb_rng_from_menu
   .done
@@ -4117,10 +4122,10 @@ rng_mb_ketchup:
     db #$28, "  MINIMIZED", #$FF
     db #$FF
   .routine
-    LDA !ram_mb_rng : AND !MB_RNG_KETCHUP_INVERTED
-    STA !ram_mb_rng
+    LDA !sram_mb_rng : AND !MB_RNG_KETCHUP_INVERTED
+    STA !sram_mb_rng
     LDA !ram_cm_mb_ketchup_rng : ASL #2
-    ORA !ram_mb_rng : STA !ram_mb_rng
+    ORA !sram_mb_rng : STA !sram_mb_rng
     LDA !ROOM_ID : CMP.w #ROOM_MotherBrainRoom : BNE .done
     JML init_mb_rng_from_menu
   .done
@@ -4136,10 +4141,10 @@ rng_mb_damage_down:
     db #$28, "  MAX BOMBS", #$FF
     db #$FF
   .routine
-    LDA !ram_mb_rng : AND !MB_RNG_DAMAGE_DOWN_INVERTED
-    STA !ram_mb_rng
+    LDA !sram_mb_rng : AND !MB_RNG_DAMAGE_DOWN_INVERTED
+    STA !sram_mb_rng
     LDA !ram_cm_mb_damage_down_rng : ASL #4
-    ORA !ram_mb_rng : STA !ram_mb_rng
+    ORA !sram_mb_rng : STA !sram_mb_rng
     LDA !ROOM_ID : CMP.w #ROOM_MotherBrainRoom : BNE .done
     JML init_mb_rng_from_menu
   .done
@@ -4155,10 +4160,10 @@ rng_mb_phase3_attack:
     db #$28, "  MAX BOMBS", #$FF
     db #$FF
   .routine
-    LDA !ram_mb_rng : AND !MB_RNG_PHASE3_ATTACK_INVERTED
-    STA !ram_mb_rng
+    LDA !sram_mb_rng : AND !MB_RNG_PHASE3_ATTACK_INVERTED
+    STA !sram_mb_rng
     LDA !ram_cm_mb_phase3_attack_rng : XBA : LSR
-    ORA !ram_mb_rng : STA !ram_mb_rng
+    ORA !sram_mb_rng : STA !sram_mb_rng
     LDA !ROOM_ID : CMP.w #ROOM_MotherBrainRoom : BNE .done
     JML init_mb_rng_from_menu
   .done
@@ -4186,6 +4191,8 @@ if !FEATURE_DEV
     dw #$FFFF
     dw #save_delete
 endif
+    dw #$FFFF
+    dw #rng_hard_reset
     dw #$0000
     %cm_header("SAVESTATE SETTINGS")
 
@@ -4201,12 +4208,14 @@ save_middoorsave:
 save_alwayssave:
     %cm_toggle_bit("Auto-Save Every Door", !ram_auto_save_state, #$8000, #0)
 
+if !FEATURE_DEV
 save_delete:
     %cm_jsl("DEV Delete Savestate", .routine, #$DEAD)
   .routine
     TYA : STA !SRAM_SAVED_STATE
     %sfxconfirm()
     RTL
+endif
 
 save_rando_enable:
     %cm_toggle("Variance on Load State", !sram_loadstate_rando_enable, #$01, #0)
@@ -4225,7 +4234,7 @@ save_rando_supers:
 
 save_rando_powerbombs:
     %cm_numfield_word("Power Bomb Variance", !sram_loadstate_rando_powerbombs, 0, 50, 1, 2, #0)
-endif
+endif ; !FEATURE_SD2SNES
 
 
 ; -------------

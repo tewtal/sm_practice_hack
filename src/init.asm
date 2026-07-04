@@ -7,12 +7,12 @@ org $808455
 org $808490
 clear_bank:
     ; This loop is based on WRAM_PERSIST_START
-    LDX #$3F5E
+    LDX #$3F66
   .loop
     STZ $0000,X
-    STZ $3F60,X
-    STZ $7EC0,X
-    STZ $BE20,X
+    STZ $3F68,X
+    STZ $7ED0,X
+    STZ $BE38,X
     DEX #2 : BPL .loop
     JSL init_wram_based_on_sram
     BRA .end
@@ -56,16 +56,17 @@ init_code:
 
   .clear_loop_start
     ; This loop is based on WRAM_PERSIST_START
-    LDX #$007E
+    LDX #$0096
   .clear_loop
-    STZ $FD80,X
-    STZ $FE00,X
-    STZ $FE80,X
-    STZ $FF00,X
-    STZ $FF80,X
+    STZ $FDA0,X
+    STZ $FE38,X
+    STZ $FED0,X
+    STZ $FF68,X
     DEX #2 : BPL .clear_loop
     STA.w !ram_quickboot_spc_state
     JSR init_non_zero_persistent_wram
+    LDA !sram_hard_reset_clears_rng : BIT #$0001 : BEQ .persistent_cleared
+    JSR init_reset_rng_control
 
   .persistent_cleared
     ; Always clear slowdown mode
@@ -111,6 +112,18 @@ init_non_zero_persistent_wram:
     RTS
 }
 
+init_reset_rng_control:
+{
+    TDC : STA !sram_kraid_claw_rng : STA !sram_kraid_wait_rng
+    STA !sram_draygon_rng_left : STA !sram_draygon_rng_right
+    STA !sram_turret_rng : STA !sram_ridley_rng_flags
+    STA !sram_ridley_rng_times_and_fireball : STA !sram_crocomire_rng
+    STA !sram_phantoon_phase_rng : STA !sram_phantoon_eye_and_flames_rng
+    STA !sram_botwoon_rng : STA !sram_baby_rng
+    STA !sram_mb_rng : STA !sram_rng_reserved
+    RTS
+}
+
 init_sram_routine_table:
     dw init_sram ; Version 0 treated same as 0-9
     dw init_sram ; Version 1 treated same as 0-9
@@ -143,6 +156,7 @@ init_sram_routine_table:
     dw init_sram_upgrade_1Bto1C
     dw init_sram_upgrade_1Cto1D
     dw init_sram_upgrade_1Dto1E
+    dw init_sram_upgrade_1Eto1F
     dw init_sram_fail
 
 init_sram:
@@ -287,6 +301,10 @@ endif
   .upgrade_1Dto1E
     TDC : STA !sram_update_timers_ctrl_input
     LDA !UPDATE_TIMERS_ON_PRESS : STA !sram_update_timers_options
+
+  .upgrade_1Eto1F
+    JSR init_reset_rng_control
+    INC : STA !sram_hard_reset_clears_rng
 
     LDA !SRAM_VERSION : STA !sram_initialized
     RTS

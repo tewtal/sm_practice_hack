@@ -165,17 +165,17 @@ endif
 
 init_botwoon_rng:
 {
-    LDA !ram_botwoon_rng : AND !BOTWOON_RNG_ALL_PATTERN_MASK : STA !eram_botwoon_all_pattern_rng
+    LDA !sram_botwoon_rng : AND !BOTWOON_RNG_ALL_PATTERN_MASK : STA !eram_botwoon_all_pattern_rng
     AND !BOTWOON_RNG_FIRST_MASK : CMP !BOTWOON_RNG_FIRST_MASK : BEQ .invalid
     STA !eram_botwoon_first_rng : LSR #4 : ORA !eram_botwoon_first_rng
   .set_first
     STA !eram_botwoon_first_rng
-    LDA !ram_botwoon_rng : AND !BOTWOON_RNG_HIDDEN_MASK
+    LDA !sram_botwoon_rng : AND !BOTWOON_RNG_HIDDEN_MASK
     XBA : STA !eram_botwoon_hidden_rng
-    LDA !ram_botwoon_rng : AND !BOTWOON_RNG_SECOND_MASK
+    LDA !sram_botwoon_rng : AND !BOTWOON_RNG_SECOND_MASK
     LSR #2 : XBA : STA !eram_botwoon_second_rng
-    LDA !ram_botwoon_rng : AND !BOTWOON_RNG_SPIT_MASK : STA !eram_botwoon_spit_rng
-    LDA !ram_botwoon_rng : AND !BOTWOON_RNG_AFTER_SPIT_MASK : STA !eram_botwoon_after_spit_rng
+    LDA !sram_botwoon_rng : AND !BOTWOON_RNG_SPIT_MASK : STA !eram_botwoon_spit_rng
+    LDA !sram_botwoon_rng : AND !BOTWOON_RNG_AFTER_SPIT_MASK : STA !eram_botwoon_after_spit_rng
     RTL
 
   .invalid
@@ -241,7 +241,7 @@ org $A587C2
 else
 org $A587B2
 endif
-    LDA !ram_turret_rng : TAX
+    LDA !sram_turret_rng : TAX
     JSL $808111 : AND #$0003
     JMP (hook_turret_rng_table,X)
 
@@ -336,7 +336,7 @@ org $A7AE23
 else
 org $A7AE0D
 endif
-    LDA !ram_kraid_wait_rng : BNE kraid_wait_load_delay
+    LDA !sram_kraid_wait_rng : BNE kraid_wait_load_delay
     LDA !CACHED_RANDOM_NUMBER : AND #$0007
 kraid_wait_load_delay:
     ASL : TAX : LDA.w KraidWaitTable,X
@@ -588,25 +588,25 @@ endif
 
 init_phantoon_rng:
 {
-    LDA !ram_phantoon_phase_rng : AND !PHANTOON_RNG_VISIBLE_BIT
+    LDA !sram_phantoon_phase_rng : AND !PHANTOON_RNG_VISIBLE_BIT
     STA !eram_phantoon_always_visible
-    LDA !ram_phantoon_phase_rng : AND !PHANTOON_RNG_PHASE_1_MASK
+    LDA !sram_phantoon_phase_rng : AND !PHANTOON_RNG_PHASE_1_MASK
     STA !eram_phantoon_rng_round_1
-    LDA !ram_phantoon_phase_rng : AND !PHANTOON_RNG_PHASE_2_MASK
+    LDA !sram_phantoon_phase_rng : AND !PHANTOON_RNG_PHASE_2_MASK
     XBA : STA !eram_phantoon_rng_round_2
-    LDA !ram_phantoon_phase_rng : AND !PHANTOON_RNG_FLIP_MASK
+    LDA !sram_phantoon_phase_rng : AND !PHANTOON_RNG_FLIP_MASK
     ASL #2 : XBA : STA !eram_phantoon_rng_flip
-    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_1_MASK
+    LDA !sram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_1_MASK
     STA !eram_phantoon_rng_flames_1
-    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_2_MASK
+    LDA !sram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_2_MASK
     LSR #3 : STA !eram_phantoon_rng_flames_2
-    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_PATH_MASK
+    LDA !sram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_PATH_MASK
     ASL #2 : XBA : STA !eram_phantoon_rng_flame_direction
-    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_3_MASK
+    LDA !sram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_3_MASK
     XBA : STA !eram_phantoon_rng_flames_3
-    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_4_MASK
+    LDA !sram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_FLAMES_4_MASK
     XBA : LSR #3 : STA !eram_phantoon_rng_flames_4
-    LDA !ram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_EYE_CLOSE_MASK
+    LDA !sram_phantoon_eye_and_flames_rng : AND !PHANTOON_RNG_EYE_CLOSE_MASK
     XBA : ASL #2 : XBA : STA !eram_phantoon_rng_eyeclose
     RTL
 }
@@ -982,7 +982,7 @@ hook_botwoon_move_after_spit:
 
 hook_crocomire_rng:
 {
-    LDA !ram_crocomire_rng : BEQ .no_manip
+    LDA !sram_crocomire_rng : BEQ .no_manip
     DEC : BEQ .step
     TDC           ; return with <400 for swipe
     RTS
@@ -1275,7 +1275,7 @@ turret_rng_reroll:
 
 hook_draygon_rng_right:
 {
-    LDA !ram_draygon_rng_right : BEQ .no_manip
+    LDA !sram_draygon_rng_right : BEQ .no_manip
     DEC    ; return with 1-swoop or 0-goop
     RTS
 
@@ -1286,7 +1286,7 @@ hook_draygon_rng_right:
 
 hook_draygon_rng_left:
 {
-    LDA !ram_draygon_rng_left : BEQ .no_manip
+    LDA !sram_draygon_rng_left : BEQ .no_manip
     DEC    ; return with 1-swoop or 0-goop
     RTS
 
@@ -1335,7 +1335,7 @@ hook_spore_spawn_scroll:
 ; Migrated from bank A6 since not enough freespace there
 init_ceres_ridley_rng:
 {
-    LDA !ram_ridley_rng_flags : AND !RIDLEY_RNG_CERES_MASK : BEQ .set_ceres_rng
+    LDA !sram_ridley_rng_flags : AND !RIDLEY_RNG_CERES_MASK : BEQ .set_ceres_rng
     CMP !RIDLEY_RNG_CERES_FIREBALL : BEQ .ceres_fireball
     CMP !RIDLEY_RNG_CERES_LUNGE : BEQ .ceres_lunge
     CMP !RIDLEY_RNG_CERES_SWOOP : BEQ .ceres_swoop
@@ -1371,7 +1371,7 @@ endif
 
 init_zebes_ridley_rng:
 {
-    LDA !ram_ridley_rng_flags
+    LDA !sram_ridley_rng_flags
     BIT !RIDLEY_RNG_75_25_LUNGE : BNE .set_75_25_lunge
     BIT !RIDLEY_RNG_75_25_POGO : BNE .set_75_25_pogo
 if !FEATURE_PAL
@@ -1399,7 +1399,7 @@ endif
   .set_75_25
     STA !eram_ridley_lunge_pogo_rng
 
-    LDA !ram_ridley_rng_flags
+    LDA !sram_ridley_rng_flags
     BIT !RIDLEY_RNG_50_50_SWOOP : BNE .set_50_50_swoop
     BIT !RIDLEY_RNG_50_50_POGO : BNE .set_50_50_pogo
 if !FEATURE_PAL
@@ -1431,7 +1431,7 @@ endif
   .set_50_50
     STA !eram_ridley_pogo_swoop_rng
 
-    LDA !ram_ridley_rng_times_and_fireball
+    LDA !sram_ridley_rng_times_and_fireball
     BIT !RIDLEY_RNG_ALL_FIREBALL : BNE .set_all_fireball
     BIT !RIDLEY_RNG_NO_FIREBALL : BNE .set_no_fireball
     TDC : BRA .set_fireball
@@ -1446,21 +1446,21 @@ endif
   .set_fireball
     STA !eram_ridley_fireball_rng
 
-    LDA !ram_ridley_rng_times_and_fireball : AND !RIDLEY_RNG_HOVER_TIME_MASK
+    LDA !sram_ridley_rng_times_and_fireball : AND !RIDLEY_RNG_HOVER_TIME_MASK
     STA !eram_ridley_hover_time_rng
 
-    LDA !ram_ridley_rng_times_and_fireball : AND !RIDLEY_RNG_POGO_TIME_MASK
+    LDA !sram_ridley_rng_times_and_fireball : AND !RIDLEY_RNG_POGO_TIME_MASK
     XBA : STA !eram_ridley_pogo_time_rng
 
-    LDA !ram_ridley_rng_flags : AND !RIDLEY_RNG_POGO_HEIGHT_MASK
+    LDA !sram_ridley_rng_flags : AND !RIDLEY_RNG_POGO_HEIGHT_MASK
     LSR #3 : STA !eram_ridley_pogo_height_rng
 
     PHX
-    LDA !ram_ridley_rng_flags : AND !RIDLEY_RNG_BACKPOGO_MASK
+    LDA !sram_ridley_rng_flags : AND !RIDLEY_RNG_BACKPOGO_MASK
     XBA : ASL : TAX : LDA.l ridley_backpogo_threshold_table,X
     STA !eram_ridley_backpogo_rng
 
-    LDA !ram_ridley_rng_flags : AND !RIDLEY_RNG_TAIL_MASK
+    LDA !sram_ridley_rng_flags : AND !RIDLEY_RNG_TAIL_MASK
     XBA : LSR #2 : TAX : LDA.l ridley_tail_threshold_table,X
     STA !eram_ridley_tail_rng
     PLX
@@ -2030,7 +2030,7 @@ endif
 
 hook_kraid_claw_rng:
 {
-    LDA !ram_kraid_claw_rng : BEQ .no_manip
+    LDA !sram_kraid_claw_rng : BEQ .no_manip
     DEC #2 ; return -1 (laggy) or 0 (laggier)
     RTS
 
@@ -2064,7 +2064,7 @@ endif
 
 hook_baby_skip_rng:
 {
-    LDA !ram_baby_rng : BEQ .no_manip
+    LDA !sram_baby_rng : BEQ .no_manip
     DEC : BEQ .rng_set
     ; lunge
     LDA #$0020 : STA $7E7802,X
@@ -2181,21 +2181,21 @@ init_mb_rng_from_menu:
 
 hook_mb_init_rng:
 {
-    LDA !ram_mb_rng : AND !MB_RNG_WALKING_MASK : ASL : TAX
+    LDA !sram_mb_rng : AND !MB_RNG_WALKING_MASK : ASL : TAX
     LDA.l mb_normal_walking_rng_table,X : STA !eram_mb_normal_walking_rng
     LDA.l mb_ketchup_walking_rng_table,X : STA !eram_mb_ketchup_walking_rng
-    LDA !ram_mb_rng : AND !MB_RNG_KETCHUP_MASK : LSR : TAX
+    LDA !sram_mb_rng : AND !MB_RNG_KETCHUP_MASK : LSR : TAX
     LDA.l mb_ketchup_rng_table,X : STA !eram_mb_ketchup_rng
-    LDA !ram_mb_rng : AND !MB_RNG_DAMAGE_DOWN_MASK : LSR #3 : TAX
+    LDA !sram_mb_rng : AND !MB_RNG_DAMAGE_DOWN_MASK : LSR #3 : TAX
     LDA.l mb_damage_down_rng_table,X : STA !eram_mb_damage_down_rng
-    LDA !ram_mb_rng : AND !MB_RNG_PHASE3_ATTACK_MASK
+    LDA !sram_mb_rng : AND !MB_RNG_PHASE3_ATTACK_MASK
     EOR !MB_RNG_PHASE3_ATTACK_RINGS : STA !eram_mb_phase3_attack_rng
-    LDA !ram_mb_rng : AND !MB_RNG_NORMAL_ATTACK_MASK : XBA : TAX
+    LDA !sram_mb_rng : AND !MB_RNG_NORMAL_ATTACK_MASK : XBA : TAX
     LDA.l mb_air_rings_rng_table,X : STA !eram_mb_air_rings_rng
     LDA.l mb_ground_bomb_rng_table,X : STA !eram_mb_ground_bomb_rng
     LDA.l mb_ground_attack_rng_tables_table,X : STA !eram_mb_ground_attack_rng_table
     LDA.l mb_close_attack_rng_tables_table,X : STA !eram_mb_close_attack_rng_table
-    LDA !ram_mb_rng : AND !MB_RNG_BOMB_CROUCH_MASK : XBA : ASL #3 : XBA : TAX
+    LDA !sram_mb_rng : AND !MB_RNG_BOMB_CROUCH_MASK : XBA : ASL #3 : XBA : TAX
     LDA.l mb_try_bomb_crouch_rng_table,X : STA !eram_mb_try_bomb_crouch
     LDA.l mb_bomb_crouch_rng_table,X : STA !eram_mb_bomb_crouch
 
