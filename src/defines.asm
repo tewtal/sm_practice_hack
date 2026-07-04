@@ -113,7 +113,7 @@
 !ram_room_has_set_rng               = !WRAM_START+$5E ; Room set RNG only uses the most significant bit
 !ram_activated_shine_duration       = !WRAM_START+$60
 
-; ^ FREE SPACE ^ up to +$6C
+; ^ FREE SPACE ^ up to +$8C
 
 ; ----------------------------------------------------------
 ; A few room strats like shinetune use several variables
@@ -121,50 +121,49 @@
 ; but also they do not need many other variables,
 ; so the following variables share the same WRAM
 
-!ram_xpos                           = !WRAM_START+$6E
-!ram_ypos                           = !WRAM_START+$70
-!ram_subpixel_pos                   = !WRAM_START+$72
-!ram_HUD_check                      = !WRAM_START+$74
-!ram_shot_timer                     = !WRAM_START+$76
-!ram_quickdrop_counter              = !WRAM_START+$78
-!ram_walljump_counter               = !WRAM_START+$7A
-!ram_fail_sum                       = !WRAM_START+$7C
-!ram_fail_count                     = !WRAM_START+$7E
+!ram_xpos                           = !WRAM_START+$8E
+!ram_ypos                           = !WRAM_START+$90
+!ram_subpixel_pos                   = !WRAM_START+$92
+!ram_HUD_check                      = !WRAM_START+$94
+!ram_shot_timer                     = !WRAM_START+$96
+!ram_quickdrop_counter              = !WRAM_START+$98
+!ram_walljump_counter               = !WRAM_START+$9A
+!ram_fail_sum                       = !WRAM_START+$9C
+!ram_fail_count                     = !WRAM_START+$9E
 
 ; Shot timer also reuses values
-!ram_shot_timer_past1               = !WRAM_START+$78
-!ram_shot_timer_past2               = !WRAM_START+$7A
-!ram_shot_timer_past3               = !WRAM_START+$7C
-!ram_shot_timer_past4               = !WRAM_START+$7E
+!ram_shot_timer_past1               = !WRAM_START+$98
+!ram_shot_timer_past2               = !WRAM_START+$9A
+!ram_shot_timer_past3               = !WRAM_START+$9C
+!ram_shot_timer_past4               = !WRAM_START+$9E
 
 ; Kihunter manip
-!ram_enemy0_last_xpos               = !WRAM_START+$6E
-!ram_enemy0_last_ypos               = !WRAM_START+$70
-!ram_enemy4_last_xpos               = !WRAM_START+$72
-!ram_enemy4_last_ypos               = !WRAM_START+$74
-!ram_enemy6_last_xpos               = !WRAM_START+$76
-!ram_enemy6_last_ypos               = !WRAM_START+$78
-!ram_enemy8_last_xpos               = !WRAM_START+$7A
-!ram_enemy8_last_ypos               = !WRAM_START+$7C
+!ram_enemy0_last_xpos               = !WRAM_START+$8E
+!ram_enemy0_last_ypos               = !WRAM_START+$90
+!ram_enemy4_last_xpos               = !WRAM_START+$92
+!ram_enemy4_last_ypos               = !WRAM_START+$94
+!ram_enemy6_last_xpos               = !WRAM_START+$96
+!ram_enemy6_last_ypos               = !WRAM_START+$98
+!ram_enemy8_last_xpos               = !WRAM_START+$9A
+!ram_enemy8_last_ypos               = !WRAM_START+$9C
 
 ; Kraid radar (reuses above ram_enemy6 variables)
-!ram_radar6                         = !WRAM_START+$6E
-!ram_radar7                         = !WRAM_START+$70
-!ram_enemy7_last_xpos               = !WRAM_START+$7A
-!ram_enemy7_last_ypos               = !WRAM_START+$7C
+!ram_radar6                         = !WRAM_START+$8E
+!ram_radar7                         = !WRAM_START+$90
+!ram_enemy7_last_xpos               = !WRAM_START+$9A
+!ram_enemy7_last_ypos               = !WRAM_START+$9C
 
 ; Shinetune
-!ram_shine_dash_held_late           = !WRAM_START+$6E
-!ram_shinetune_early_1              = !WRAM_START+$70
-!ram_shinetune_late_1               = !WRAM_START+$72
-!ram_shinetune_early_2              = !WRAM_START+$74
-!ram_shinetune_late_2               = !WRAM_START+$76
-!ram_shinetune_early_3              = !WRAM_START+$78
-!ram_shinetune_late_3               = !WRAM_START+$7A
-!ram_shinetune_early_4              = !WRAM_START+$7C
-!ram_shinetune_late_4               = !WRAM_START+$7E
+!ram_shine_dash_held_late           = !WRAM_START+$8E
+!ram_shinetune_early_1              = !WRAM_START+$90
+!ram_shinetune_late_1               = !WRAM_START+$92
+!ram_shinetune_early_2              = !WRAM_START+$94
+!ram_shinetune_late_2               = !WRAM_START+$96
+!ram_shinetune_early_3              = !WRAM_START+$98
+!ram_shinetune_late_3               = !WRAM_START+$9A
+!ram_shinetune_early_4              = !WRAM_START+$9C
+!ram_shinetune_late_4               = !WRAM_START+$9E
 
-; ^ FREE SPACE ^ up to +$9E
 
 ; ----------------------------------------------------------
 ; WRAM variables below this point are PERSISTENT.
@@ -1239,12 +1238,11 @@ if !FEATURE_TINYSTATES
 !SRAM_SAVED_RNG = $737F80
 !SRAM_SAVED_FRAME_COUNTER = $737F82
 !SRAM_SAVED_ENEMY_COUNTER = $737F84
-!SRAM_TINYSTATE_ROOM = $737F86
+!SRAM_SAVED_MINIMAP = $737F86
 !SRAM_SEG_TIMER_F = $737F88
 !SRAM_SEG_TIMER_S = $737F8A
 !SRAM_SEG_TIMER_M = $737F8C
-!SRAM_SAVED_MINIMAP = $737F8E
-!SRAM_SLOWDOWN_MODE = $737F90
+!SRAM_SLOWDOWN_MODE = $737F8E
 else
 !SRAM_DMA_BANK = $770000
 !SRAM_SAVED_RNG = $770080

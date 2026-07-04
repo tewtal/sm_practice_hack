@@ -96,8 +96,8 @@ endif
 
 init_factory_reset:
 {
-    JSR init_non_zero_persistent_wram
     JSR init_sram
+    JSR init_non_zero_persistent_wram
     RTL
 }
 
@@ -109,6 +109,15 @@ init_non_zero_persistent_wram:
     LDA !sram_seed_X : STA !ram_seed_X
     LDA !sram_seed_Y : STA !ram_seed_Y
     LDA #$8000 : STA !ram_cm_gmode
+
+    ; If Map Completion preset category selected then turn minimap on
+    LDA !sram_preset_category : CMP !PRESET_CATEGORY_100MAP_INDEX : BEQ .set_minimap
+    CMP !PRESET_CATEGORY_SPAZERMAP_INDEX : BNE .done
+
+  .set_minimap
+    LDA #$0001 : STA !ram_minimap
+
+  .done
     RTS
 }
 

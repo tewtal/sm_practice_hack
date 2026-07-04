@@ -125,16 +125,17 @@ cm_boot:
     LDA !ram_quickboot_spc_state : BMI .spc_loop
 
   .done
+    JSL cm_write_ctrl_routine
+    LDA !ram_load_preset_low_word : BEQ .main_game_loop
+
     ; If Map Completion preset category selected then turn minimap on
     LDA !sram_preset_category : CMP !PRESET_CATEGORY_100MAP_INDEX : BEQ .set_minimap
-    CMP !PRESET_CATEGORY_SPAZERMAP_INDEX : BNE .check_preset
+    CMP !PRESET_CATEGORY_SPAZERMAP_INDEX : BNE .load_preset
 
   .set_minimap
     LDA #$0001 : STA !ram_minimap
 
-  .check_preset
-    JSL cm_write_ctrl_routine
-    LDA !ram_load_preset_low_word : BEQ .main_game_loop
+  .load_preset
     JSL preset_load
 
   .main_game_loop
@@ -365,7 +366,8 @@ cm_transfer_original_tileset:
 {
     PHP : %ai16()
 
-    ; If Map Completion preset category selected then turn minimap on
+    ; If loading a preset and Map Completion preset category selected then turn minimap on
+    LDA !ram_load_preset_low_word : BEQ .check_room
     LDA !sram_preset_category : CMP !PRESET_CATEGORY_100MAP_INDEX : BEQ .set_minimap
     CMP !PRESET_CATEGORY_SPAZERMAP_INDEX : BNE .check_room
 
