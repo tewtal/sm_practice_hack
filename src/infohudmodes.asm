@@ -173,6 +173,10 @@ status_dashcounter:
     RTS
 }
 
+status_shinetune_invalid_momentum:
+    LDA #$DEAD : STA !ram_momentum_count
+    JMP status_shinetune_shinetune_start
+
 status_shinetune:
 {
 if !FEATURE_PAL
@@ -225,7 +229,7 @@ endif
     PEA $0000 : PLA : PEA $0000 : PLA
     LDA $4214 : LDX #$0054 : JSR Draw4Hundredths
 
-  .invalid_momentum
+  .done_momentum
     TDC : DEC : STA !ram_momentum_count
     BRA .shinetune_start
 
@@ -243,7 +247,7 @@ endif
     BRA .shinetune_start
 
   .check_superhud
-    LDA !sram_display_mode : CMP !IH_MODE_ROOMSTRAT_INDEX : BEQ .invalid_momentum
+    LDA !sram_display_mode : CMP !IH_MODE_ROOMSTRAT_INDEX : BEQ .done_momentum
     BRA .print_momentum
 
   .shinetune_start
@@ -618,6 +622,10 @@ endif
   .pressdash0
     LDA !SAMUS_POSE : CMP #$0010 : BPL .dash0done
     CMP #$0009 : BMI .dash0done
+    LDA !ram_momentum_count : CMP #$000C : BPL .latedash0
+    INC : BNE .dash0done
+
+  .latedash0
     LDA !SAMUS_ANIMATION_FRAME : ASL : ASL
     ORA !SAMUS_ANIMATION_TIMER : ASL : TAY
     LDA.w ShineTune1TapLateTable,Y : BEQ .dash0done
