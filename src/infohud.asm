@@ -234,7 +234,7 @@ hook_fix_doors_moving_up:
     PEA $8F70 : PLB
     LDA.w !sram_lag_counter_mode : CMP #$0002 : BNE .vanilla
 
-    ; Translation lag set to next room, which we are starting to load next
+    ; Transition lag set to next room, which we are starting to load next
     ; Reset realtime and gametime/transition timers
     TDC : STA !ram_realtime_room : STA !ram_transition_counter
 
