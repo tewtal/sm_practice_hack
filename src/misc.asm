@@ -1263,10 +1263,10 @@ endif
     ; Skip draw sprite objects
     ; The rest will be the same as the original routine,
     ; other than adding a touch of artificial lag
-    PHX : LDX #$002E
+    PHX : LDX #$0038
   .lagloop
     DEX #2 : BPL .lagloop
-    PLX
+    PLX : NOP #3
 if !FEATURE_PAL
     JML $A08869
 else
