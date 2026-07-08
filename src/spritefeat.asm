@@ -181,21 +181,21 @@ draw_sprite_oob:
 
     ; Set sprite ID
     %a8()
-    LDY !OAM_STACK_POINTER : STA $0372,Y
+    LDY !OAM_STACK_POINTER : STA !OAM_LOW+$2,Y
 
     ; Get X coord
     LDA $C1 : INC #2 : ASL #4 : SEC : SBC $C5
-    STA $0370,Y
+    STA !OAM_LOW,Y
 
     ; Get Y coord
     LDA $C3 : CLC : ADC #$04 : ASL #4 : SEC : SBC $C7
-    STA $0371,Y
+    STA !OAM_LOW+$1,Y
 
     ; Sprite Attributes - xxxxxxxx yyyyyyyy YXPPpppt tttttttt
     ; x=X pos, y=Y pos (low nibbles only), Y=Y flip, X=X flip
     ; P=Priority, p=Palette, t=Tile number
     ; Priority bits set, palette = 101
-    LDA #%00111010 : STA $0373,Y
+    LDA #%00111010 : STA !OAM_LOW+$3,Y
 
     %a16()
 
@@ -249,7 +249,7 @@ draw_sprite_oob:
     ; b: sx for sprite 4n+1
     ; c: sx for sprite 4n+2
     ; d: sx for sprite 4n+3
-    LDA #%10101010 : STA $0570,X
+    LDA #%10101010 : STA !OAM_HIGH,X
     INX : CPX $CB : BNE .copy_loop
     %ai16()
 
@@ -284,28 +284,28 @@ draw_oob_samus_hitbox:
     LDY !OAM_STACK_POINTER
     PLA ; X coord
     SEC : SBC !SAMUS_X_RADIUS
-    STA $0370,Y : STA $0378,Y
+    STA !OAM_LOW,Y : STA !OAM_LOW+$8,Y
     CLC : ADC !SAMUS_X_RADIUS : ADC !SAMUS_X_RADIUS : SEC : SBC #$08
-    STA $0374,Y : STA $037C,Y
+    STA !OAM_LOW+$4,Y : STA !OAM_LOW+$C,Y
     PLA ; discard high byte
 
     PLA : DEC ; Y coord
     SEC : SBC !SAMUS_Y_RADIUS
-    STA $0371,Y : STA $0375,Y
+    STA !OAM_LOW+$1,Y : STA !OAM_LOW+$5,Y
     CLC : ADC !SAMUS_Y_RADIUS : ADC !SAMUS_Y_RADIUS : SEC : SBC #$08
-    STA $0379,Y : STA $037D,Y
+    STA !OAM_LOW+$9,Y : STA !OAM_LOW+$D,Y
     PLA ; discard high byte
 
     LDA #%00111010
-    STA $0373,Y ; Sprite 1 ATTR
-    STA $0377,Y ; Sprite 2 ATTR
-    STA $037B,Y ; Sprite 3 ATTR
-    STA $037F,Y ; Sprite 4 ATTR
+    STA !OAM_LOW+$3,Y ; Sprite 1 ATTR
+    STA !OAM_LOW+$7,Y ; Sprite 2 ATTR
+    STA !OAM_LOW+$B,Y ; Sprite 3 ATTR
+    STA !OAM_LOW+$F,Y ; Sprite 4 ATTR
 
-    LDA #$DC : STA $0372,Y
-    LDA #$DD : STA $0376,Y
-    LDA #$EC : STA $037A,Y
-    LDA #$ED : STA $037E,Y
+    LDA #$DC : STA !OAM_LOW+$2,Y
+    LDA #$DD : STA !OAM_LOW+$6,Y
+    LDA #$EC : STA !OAM_LOW+$A,Y
+    LDA #$ED : STA !OAM_LOW+$E,Y
 
     ; Normally the high sprite bits are cleared to zero so this shouldn't be needed for 8x8 sprites,
     ; but the hitbox drawing code will overwrite 1-3 extra sprite bits to gain speed so instead we
@@ -320,7 +320,7 @@ draw_oob_samus_hitbox:
     TXA : AND #$0003 : ASL : TAX
 
     ; Mask off bits to clear high sprite offset
-    LDA $0570,Y : AND.l spr_clr_flags,X : STA $0570,Y
+    LDA !OAM_HIGH,Y : AND.l spr_clr_flags,X : STA !OAM_HIGH,Y
 
     ; Sprite number
     PLX : INX : TXA : PHX
@@ -329,7 +329,7 @@ draw_oob_samus_hitbox:
     TXA : AND #$0003 : ASL : TAX
 
     ; Mask off bits to clear high sprite offset
-    LDA $0570,Y : AND.l spr_clr_flags,X : STA $0570,Y
+    LDA !OAM_HIGH,Y : AND.l spr_clr_flags,X : STA !OAM_HIGH,Y
 
     ; Sprite number
     PLX : INX : TXA : PHX
@@ -338,7 +338,7 @@ draw_oob_samus_hitbox:
     TXA : AND #$0003 : ASL : TAX
 
     ; Mask off bits to clear high sprite offset
-    LDA $0570,Y : AND.l spr_clr_flags,X : STA $0570,Y
+    LDA !OAM_HIGH,Y : AND.l spr_clr_flags,X : STA !OAM_HIGH,Y
 
     ; Sprite number
     PLX : INX : TXA : PHX
@@ -347,7 +347,7 @@ draw_oob_samus_hitbox:
     TXA : AND #$0003 : ASL : TAX
 
     ; Mask off bits to clear high sprite offset
-    LDA $0570,Y : AND.l spr_clr_flags,X : STA $0570,Y
+    LDA !OAM_HIGH,Y : AND.l spr_clr_flags,X : STA !OAM_HIGH,Y
     PLX : PLY
 
     ; Inc OAM stack
@@ -370,29 +370,29 @@ draw_samus_hitbox:
     LDY !OAM_STACK_POINTER
     ; X coord
     PLA : SEC : SBC !SAMUS_X_RADIUS
-    STA $0370,Y : STA $0378,Y
+    STA !OAM_LOW,Y : STA !OAM_LOW+$8,Y
     CLC : ADC !SAMUS_X_RADIUS : ADC !SAMUS_X_RADIUS : SEC : SBC #$08
-    STA $0374,Y : STA $037C,Y
+    STA !OAM_LOW+$4,Y : STA !OAM_LOW+$C,Y
     PLA ; discard high byte
 
     ; Y coord
     PLA : DEC : SEC : SBC !SAMUS_Y_RADIUS
-    STA $0371,Y : STA $0375,Y
+    STA !OAM_LOW+$1,Y : STA !OAM_LOW+$5,Y
     CLC : ADC !SAMUS_Y_RADIUS : ADC !SAMUS_Y_RADIUS : SEC : SBC #$08
-    STA $0379,Y : STA $037D,Y
+    STA !OAM_LOW+$9,Y : STA !OAM_LOW+$D,Y
     PLA ; discard high byte
 
     ; Sprite Attributes - xxxxxxxx yyyyyyyy YXPPpppt tttttttt
     ; x=X pos, y=Y pos, Y=Y flip, X=X flip
     ; P=Priority, p=Palette, t=Tile number
-    LDA #%00111010 : STA $0373,Y ; top left
-    LDA #%01111010 : STA $0377,Y ; top right
-    LDA #%10111010 : STA $037B,Y ; bottom left
-    LDA #%11111010 : STA $037F,Y ; bottom right
+    LDA #%00111010 : STA !OAM_LOW+$3,Y ; top left
+    LDA #%01111010 : STA !OAM_LOW+$7,Y ; top right
+    LDA #%10111010 : STA !OAM_LOW+$B,Y ; bottom left
+    LDA #%11111010 : STA !OAM_LOW+$F,Y ; bottom right
 
     LDA #$47 ; tile number (8/9 bits)
-    STA $0372,Y : STA $0376,Y
-    STA $037A,Y : STA $037E,Y
+    STA !OAM_LOW+$2,Y : STA !OAM_LOW+$6,Y
+    STA !OAM_LOW+$A,Y : STA !OAM_LOW+$E,Y
 
     %a16()
     TYA : CLC : ADC #$0010 : STA !OAM_STACK_POINTER
@@ -437,28 +437,28 @@ draw_enemy_hitbox:
     %a8()
     ; X coord
     PLA : SEC : SBC !ENEMY_X_RADIUS,X
-    STA $0370,Y : STA $0378,Y ; X pos
+    STA !OAM_LOW,Y : STA !OAM_LOW+$8,Y ; X pos
     CLC : ADC !ENEMY_X_RADIUS,X : ADC !ENEMY_X_RADIUS,X
     SEC : SBC #$08
-    STA $0374,Y : STA $037C,Y
+    STA !OAM_LOW+$4,Y : STA !OAM_LOW+$C,Y
     PLA ; discard high byte
 
     ; Y coord
     PLA : DEC : SEC : SBC !ENEMY_Y_RADIUS,X
-    STA $0371,Y : STA $0375,Y
+    STA !OAM_LOW+$1,Y : STA !OAM_LOW+$5,Y
     CLC : ADC !ENEMY_Y_RADIUS,X : ADC !ENEMY_Y_RADIUS,X
     SEC : SBC #$08
-    STA $0379,Y : STA $037D,Y
+    STA !OAM_LOW+$9,Y : STA !OAM_LOW+$D,Y
     PLA ; discard high byte
 
     ; Sprite Attributes - xxxxxxxx yyyyyyyy YXPPpppt tttttttt
     ; x=X pos, y=Y pos (low nibbles only), Y=Y flip, X=X flip
     ; P=Priority, p=Palette, t=Tile number
     %ai16()
-    LDA #$3A47 : STA $0372,Y ; %00111010 top-left
-    LDA #$7A47 : STA $0376,Y ; %01111010 top-right
-    LDA #$BA47 : STA $037A,Y ; %10111010 bottom-left
-    LDA #$FA47 : STA $037E,Y ; %11111010 bottom-right
+    LDA #$3A47 : STA !OAM_LOW+$2,Y ; %00111010 top-left
+    LDA #$7A47 : STA !OAM_LOW+$6,Y ; %01111010 top-right
+    LDA #$BA47 : STA !OAM_LOW+$A,Y ; %10111010 bottom-left
+    LDA #$FA47 : STA !OAM_LOW+$E,Y ; %11111010 bottom-right
 
     ; inc oam stack
     TYA : CLC : ADC #$0010 : STA !OAM_STACK_POINTER : TAY
@@ -558,24 +558,24 @@ draw_ext_spritemap_hitbox:
     %a8()
     ; X coord
     LDA $1D : CLC : ADC $14
-    STA $0370,Y : STA $0378,Y ; sprite X pos
+    STA !OAM_LOW,Y : STA !OAM_LOW+$8,Y ; sprite X pos
     LDA $1D : CLC : ADC $18 : SEC : SBC #$08
-    STA $0374,Y : STA $037C,Y
+    STA !OAM_LOW+$4,Y : STA !OAM_LOW+$C,Y
 
     ; Y coord
     LDA $1C : DEC : CLC : ADC $16
-    STA $0371,Y : STA $0375,Y ; sprite Y pos
+    STA !OAM_LOW+$1,Y : STA !OAM_LOW+$5,Y ; sprite Y pos
     LDA $1C : CLC : ADC $1A : SEC : SBC #$08
-    STA $0379,Y : STA $037D,Y
+    STA !OAM_LOW+$9,Y : STA !OAM_LOW+$D,Y
 
     ; Sprite Attributes - xxxxxxxx yyyyyyyy YXPPpppt tttttttt
     ; x=X pos, y=Y pos, Y=Y flip, X=X flip
     ; P=Priority, p=Palette, t=Tile number
     %ai16()
-    LDA #$3A47 : STA $0372,Y ; %00111010 top-left
-    LDA #$7A47 : STA $0376,Y ; %01111010 top-right
-    LDA #$BA47 : STA $037A,Y ; %10111010 bottom-left
-    LDA #$FA47 : STA $037E,Y ; %11111010 bottom-right
+    LDA #$3A47 : STA !OAM_LOW+$2,Y ; %00111010 top-left
+    LDA #$7A47 : STA !OAM_LOW+$6,Y ; %01111010 top-right
+    LDA #$BA47 : STA !OAM_LOW+$A,Y ; %10111010 bottom-left
+    LDA #$FA47 : STA !OAM_LOW+$E,Y ; %11111010 bottom-right
 
     ; inc oam stack
     TYA : CLC : ADC #$0010 : STA !OAM_STACK_POINTER : TAY
@@ -652,22 +652,22 @@ draw_enemyproj_hitbox:
     %a8()
     PLA ; X coord
     SEC : SBC $12
-    STA $0370,Y
+    STA !OAM_LOW,Y
     CLC : ADC $12 : ADC $12
     SEC : SBC #$08
-    STA $0374,Y
+    STA !OAM_LOW+$4,Y
 
     PLA : PLA : DEC ; Y coord
     SEC : SBC $14
-    STA $0371,Y
+    STA !OAM_LOW+$1,Y
     CLC : ADC $14 : ADC $14
     SEC : SBC #$08
-    STA $0375,Y
+    STA !OAM_LOW+$5,Y
     PLA
 
     %ai16()
-    LDA #$3A47 : STA $0372,Y ; %00111010 top-left
-    LDA #$FA47 : STA $0376,Y ; %11111010 bottom-right
+    LDA #$3A47 : STA !OAM_LOW+$2,Y ; %00111010 top-left
+    LDA #$FA47 : STA !OAM_LOW+$6,Y ; %11111010 bottom-right
 
     ; inc OAM stack
     ; vanilla routines use AND #$01FF to wrap the stack after 1FCh
@@ -681,17 +681,17 @@ draw_enemyproj_hitbox:
     %a8()
     PLA ; X coord
     SEC : SBC $12
-    STA $0370,Y : STA $0378,Y
+    STA !OAM_LOW,Y : STA !OAM_LOW+$8,Y
     CLC : ADC $12 : ADC $12
     SEC : SBC #$08
-    STA $0374,Y : STA $037C,Y
+    STA !OAM_LOW+$4,Y : STA !OAM_LOW+$C,Y
     PLA ; discard high byte
 
     ; Y coord
     PLA : DEC : SEC : SBC $14
-    STA $0371,Y : STA $0375,Y
+    STA !OAM_LOW+$1,Y : STA !OAM_LOW+$5,Y
     CLC : ADC $14 : ADC $14 : SEC : SBC #$08
-    STA $0379,Y : STA $037D,Y
+    STA !OAM_LOW+$9,Y : STA !OAM_LOW+$D,Y
     PLA ; discard high byte
 
   .setAttributes
@@ -699,10 +699,10 @@ draw_enemyproj_hitbox:
     ; x=X pos, y=Y pos (low nibbles only), Y=Y flip, X=X flip
     ; P=Priority, p=Palette, t=Tile number
     %ai16()
-    LDA #$3A47 : STA $0372,Y ; %00111010 top-left
-    LDA #$7A47 : STA $0376,Y ; %01111010 top-right
-    LDA #$BA47 : STA $037A,Y ; %10111010 bottom-left
-    LDA #$FA47 : STA $037E,Y ; %11111010 bottom-right
+    LDA #$3A47 : STA !OAM_LOW+$2,Y ; %00111010 top-left
+    LDA #$7A47 : STA !OAM_LOW+$6,Y ; %01111010 top-right
+    LDA #$BA47 : STA !OAM_LOW+$A,Y ; %10111010 bottom-left
+    LDA #$FA47 : STA !OAM_LOW+$E,Y ; %11111010 bottom-right
 
     ; inc OAM stack
     ; vanilla routines use AND #$01FF to wrap the stack after 1FCh
@@ -740,14 +740,14 @@ draw_enemyproj_hitbox:
 
     %a8()
     PLA ; left edge
-    STA $0370,Y : STA $0378,Y
+    STA !OAM_LOW,Y : STA !OAM_LOW+$8,Y
     CLC : ADC #$18
-    STA $0374,Y : STA $037C,Y
+    STA !OAM_LOW+$4,Y : STA !OAM_LOW+$C,Y
 
     PLA : PLA ; top edge
-    STA $0371,Y : STA $0375,Y
+    STA !OAM_LOW+$1,Y : STA !OAM_LOW+$5,Y
     CLC : ADC #$18
-    STA $0379,Y : STA $037D,Y
+    STA !OAM_LOW+$9,Y : STA !OAM_LOW+$D,Y
     PLA
 
     JMP .setAttributes
@@ -788,16 +788,16 @@ draw_samusproj_hitbox:
     %a8()
     ; X coord
     PLA : SEC : SBC !SAMUS_PROJ_RADIUS_X,X
-    STA $0370,Y : STA $0378,Y ; X pos
+    STA !OAM_LOW,Y : STA !OAM_LOW+$8,Y ; X pos
     CLC : ADC !SAMUS_PROJ_RADIUS_X,X : ADC !SAMUS_PROJ_RADIUS_X,X : SEC : SBC #$08
-    STA $0374,Y : STA $037C,Y
+    STA !OAM_LOW+$4,Y : STA !OAM_LOW+$C,Y
     PLA ; discard high byte
 
     ; Y coord
     PLA : DEC : SEC : SBC !SAMUS_PROJ_RADIUS_Y,X
-    STA $0371,Y : STA $0375,Y ; Y pos
+    STA !OAM_LOW+$1,Y : STA !OAM_LOW+$5,Y ; Y pos
     CLC : ADC !SAMUS_PROJ_RADIUS_Y,X : ADC !SAMUS_PROJ_RADIUS_Y,X : SEC : SBC #$08
-    STA $0379,Y : STA $037D,Y
+    STA !OAM_LOW+$9,Y : STA !OAM_LOW+$D,Y
     PLA ; discard high byte
 
   .setAttributes
@@ -805,10 +805,10 @@ draw_samusproj_hitbox:
     ; x=X pos, y=Y pos (low nibbles only), Y=Y flip, X=X flip
     ; P=Priority, p=Palette, t=Tile number
     %ai16()
-    LDA #$3A47 : STA $0372,Y ; %00111010 top-left
-    LDA #$7A47 : STA $0376,Y ; %01111010 top-right
-    LDA #$BA47 : STA $037A,Y ; %10111010 bottom-left
-    LDA #$FA47 : STA $037E,Y ; %11111010 bottom-right
+    LDA #$3A47 : STA !OAM_LOW+$2,Y ; %00111010 top-left
+    LDA #$7A47 : STA !OAM_LOW+$6,Y ; %01111010 top-right
+    LDA #$BA47 : STA !OAM_LOW+$A,Y ; %10111010 bottom-left
+    LDA #$FA47 : STA !OAM_LOW+$E,Y ; %11111010 bottom-right
 
     ; inc OAM stack
     ; vanilla routines use AND #$01FF to wrap the stack after 1FCh
@@ -838,14 +838,14 @@ draw_samusproj_hitbox:
 
     %a8()
     PLA ; left edge
-    STA $0370,Y : STA $0378,Y
+    STA !OAM_LOW,Y : STA !OAM_LOW+$8,Y
     CLC : ADC #$18
-    STA $0374,Y : STA $037C,Y
+    STA !OAM_LOW+$4,Y : STA !OAM_LOW+$C,Y
 
     PLA : PLA ; top edge
-    STA $0371,Y : STA $0375,Y
+    STA !OAM_LOW+$1,Y : STA !OAM_LOW+$5,Y
     CLC : ADC #$18
-    STA $0379,Y : STA $037D,Y
+    STA !OAM_LOW+$9,Y : STA !OAM_LOW+$D,Y
     PLA
 
     JMP .setAttributes
@@ -962,20 +962,20 @@ draw_custom_boss_hitbox:
     LDY !OAM_STACK_POINTER
     %a8()
     ; X coord
-    LDA $14 : STA $0370,Y : STA $0378,Y
-    LDA $18 : STA $0374,Y : STA $037C,Y
+    LDA $14 : STA !OAM_LOW,Y : STA !OAM_LOW+$8,Y
+    LDA $18 : STA !OAM_LOW+$4,Y : STA !OAM_LOW+$C,Y
     ; Y coord
-    LDA $16 : DEC : STA $0371,Y : STA $0375,Y
-    LDA $1A : STA $0379,Y : STA $037D,Y
+    LDA $16 : DEC : STA !OAM_LOW+$1,Y : STA !OAM_LOW+$5,Y
+    LDA $1A : STA !OAM_LOW+$9,Y : STA !OAM_LOW+$D,Y
 
     ; Sprite Attributes - xxxxxxxx yyyyyyyy YXPPpppt tttttttt
     ; x=X pos, y=Y pos (low nibbles only), Y=Y flip, X=X flip
     ; P=Priority, p=Palette, t=Tile number
     %ai16()
-    LDA #$3A47 : STA $0372,Y ; %00111010 top-left
-    LDA #$7A47 : STA $0376,Y ; %01111010 top-right
-    LDA #$BA47 : STA $037A,Y ; %10111010 bottom-left
-    LDA #$FA47 : STA $037E,Y ; %11111010 bottom-right
+    LDA #$3A47 : STA !OAM_LOW+$2,Y ; %00111010 top-left
+    LDA #$7A47 : STA !OAM_LOW+$6,Y ; %01111010 top-right
+    LDA #$BA47 : STA !OAM_LOW+$A,Y ; %10111010 bottom-left
+    LDA #$FA47 : STA !OAM_LOW+$E,Y ; %11111010 bottom-right
 
     ; inc oam stack
     TYA : CLC : ADC #$0010 : STA !OAM_STACK_POINTER
@@ -1005,26 +1005,26 @@ draw_custom_boss_hitbox:
     %a8()
     ; X coord
     PLA : SEC : SBC #$0E
-    STA $0370,Y : STA $0378,Y ; X pos
+    STA !OAM_LOW,Y : STA !OAM_LOW+$8,Y ; X pos
     CLC : ADC #$14
-    STA $0374,Y : STA $037C,Y
+    STA !OAM_LOW+$4,Y : STA !OAM_LOW+$C,Y
     PLA ; discard high byte
 
     ; Y coord
     PLA : DEC : SEC : SBC #$0E
-    STA $0371,Y : STA $0375,Y
+    STA !OAM_LOW+$1,Y : STA !OAM_LOW+$5,Y
     CLC : ADC #$14
-    STA $0379,Y : STA $037D,Y
+    STA !OAM_LOW+$9,Y : STA !OAM_LOW+$D,Y
     PLA ; discard high byte
 
     ; Sprite Attributes - xxxxxxxx yyyyyyyy YXPPpppt tttttttt
     ; x=X pos, y=Y pos (low nibbles only), Y=Y flip, X=X flip
     ; P=Priority, p=Palette, t=Tile number
     %ai16()
-    LDA #$3A47 : STA $0372,Y ; %00111010 top-left
-    LDA #$7A47 : STA $0376,Y ; %01111010 top-right
-    LDA #$BA47 : STA $037A,Y ; %10111010 bottom-left
-    LDA #$FA47 : STA $037E,Y ; %11111010 bottom-right
+    LDA #$3A47 : STA !OAM_LOW+$2,Y ; %00111010 top-left
+    LDA #$7A47 : STA !OAM_LOW+$6,Y ; %01111010 top-right
+    LDA #$BA47 : STA !OAM_LOW+$A,Y ; %10111010 bottom-left
+    LDA #$FA47 : STA !OAM_LOW+$E,Y ; %11111010 bottom-right
 
     ; inc oam stack
     TYA : CLC : ADC #$0010 : STA !OAM_STACK_POINTER
@@ -1040,24 +1040,24 @@ DrawMBHitbox:
     %a8()
     ; X coord
     CLC : ADC $14
-    STA $0370,Y : STA $0378,Y ; sprite X pos
+    STA !OAM_LOW,Y : STA !OAM_LOW+$8,Y ; sprite X pos
     LDA $1D : CLC : ADC $18 : SEC : SBC #$08
-    STA $0374,Y : STA $037C,Y
+    STA !OAM_LOW+$4,Y : STA !OAM_LOW+$C,Y
 
     ; Y coord
     LDA $1C : DEC : CLC : ADC $16
-    STA $0371,Y : STA $0375,Y ; sprite Y pos
+    STA !OAM_LOW+$1,Y : STA !OAM_LOW+$5,Y ; sprite Y pos
     LDA $1C : CLC : ADC $1A : SEC : SBC #$08
-    STA $0379,Y : STA $037D,Y
+    STA !OAM_LOW+$9,Y : STA !OAM_LOW+$D,Y
 
     ; Sprite Attributes - xxxxxxxx yyyyyyyy YXPPpppt tttttttt
     ; x=X pos, y=Y pos, Y=Y flip, X=X flip
     ; P=Priority, p=Palette, t=Tile number
     %ai16()
-    LDA #$3A47 : STA $0372,Y ; %00111010 top-left
-    LDA #$7A47 : STA $0376,Y ; %01111010 top-right
-    LDA #$BA47 : STA $037A,Y ; %10111010 bottom-left
-    LDA #$FA47 : STA $037E,Y ; %11111010 bottom-right
+    LDA #$3A47 : STA !OAM_LOW+$2,Y ; %00111010 top-left
+    LDA #$7A47 : STA !OAM_LOW+$6,Y ; %01111010 top-right
+    LDA #$BA47 : STA !OAM_LOW+$A,Y ; %10111010 bottom-left
+    LDA #$FA47 : STA !OAM_LOW+$E,Y ; %11111010 bottom-right
 
     ; inc oam stack
     TYA : CLC : ADC #$0010 : STA !OAM_STACK_POINTER : TAY
