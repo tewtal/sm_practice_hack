@@ -1498,6 +1498,7 @@ xray_offscreen_up_right:
   .rightLostThirdLoop
     LDA #$FF : STA [$00],Y
     DEY #2 : BPL .rightLostThirdLoop
+    %a16()
 
   .rightEdgeEnd
     LDY $12
@@ -1739,6 +1740,7 @@ xray_offscreen_up_left:
   .rightLostThirdLoop
     LDA #$00 : STA [$00],Y
     DEY #2 : BPL .rightLostThirdLoop
+    %a16()
 
   .rightEdgeEnd
     LDY $14
