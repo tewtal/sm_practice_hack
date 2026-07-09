@@ -126,7 +126,7 @@ draw_sprite_oob:
     LDA $16 : STA $4202
     TYA : CLC : ADC $24 : STA $4203
     NOP #2 ; wait for CPU math
-    %ai16()
+    %a16()
     ; room_width_blocks * (Y + [Samus Y - (oob_height*8)] / 16)
     LDA $4216 : STA $18
 
@@ -234,6 +234,11 @@ draw_sprite_oob:
     JMP .loop_y
 
   .end_y
+    LDA !ram_sprite_feature_flags : BIT !SPRITE_OOB_X_WRAP : BEQ .copy_stack
+    LDA $12 : BPL .copy_stack
+    CLC : ADC #((!oob_width-1)*16) : BPL draw_sprite_x_wrap
+
+  .copy_stack
     LDA !OAM_STACK_POINTER : BEQ .end
     LSR #4 : INC : STA $CB
     LDA $C9 : LSR #4 : STA $C9
@@ -251,11 +256,148 @@ draw_sprite_oob:
     ; d: sx for sprite 4n+3
     LDA #%10101010 : STA !OAM_HIGH,X
     INX : CPX $CB : BNE .copy_loop
-    %ai16()
+    %a16()
 
   .end
     JSR draw_oob_samus_hitbox
     RTS
+}
+
+draw_sprite_x_wrap:
+{
+    ; Find the index where position goes from negative to positive
+    LDX #$0000
+    LDA $12
+  .search
+    INX : CLC : ADC #$0010 : BMI .search
+
+    ; Collision checks oscillate between left-to-right and right-to-left
+    ; Either way, the game looks up a block index and adds/subtracts from there
+    ; Normally there isn't much difference between the two checks,
+    ; but in the case where X position overflows or underflows,
+    ; there is a significant difference between left-to-right and right-to-left.
+    ; The end result is the game can check double the tiles it normally would,
+    ; but it only checks half of them each frame.
+    ;
+    ; To represent this, we want to draw the pairs of extra tiles along the Y-axis,
+    ; but each frame we will alternate which of the two extra tiles to draw.
+    ; This is done for efficiency and also to illustrate the oscillating effect.
+    STX $C1 : LDY #$0000
+    LDA $C5 : CLC : ADC #$0008 : STA $C5
+    LDA !FRAME_COUNTER : BIT #$0001 : BNE .loop
+    DEC $C1
+    LDA $C5 : SEC : SBC #$000F : STA $C5
+
+  .loop
+    %a8()
+    LDA $16 : STA $4202
+    TYA : CLC : ADC $24 : STA $4203
+    NOP #2 ; wait for CPU math
+    %a16()
+    ; room_width_blocks * (Y + [Samus Y - (oob_height*8)] / 16)
+    LDA $4216 : STA $18
+
+    PHY
+    STY $C3
+
+    ; X + [Samus X - (oob_width*8)] / 16
+    LDA $C1 : CLC : ADC $22 : AND #$0FFF
+    ORA #$1000 : BIT #$0800 : BEQ .continue
+    ORA #$F000
+
+  .continue
+    ; a = (width * bit.lrshift(bit.band(cameraY+y*16, 0xFFF), 4)) + bit.lrshift(bit.band(cameraX+x*16, 0xFFFF), 4)
+    CLC : ADC $18
+    ; a = a * 2
+    ASL : TAX
+    ; Load clipdata of block
+    LDA !LEVEL_DATA+1,X : AND #$00F0
+    CMP #$00D0 : BEQ .vertical : CMP #$0050 : BNE .get_sprite_id
+
+  .horizontal
+    ; Horizontal extension, try once to resolve it
+    TXA : LSR : TAX
+    LDA !LEVEL_BTS,X : AND #$00FF : BEQ .next
+    BIT #$0080 : BEQ .horizontal_addition
+    ORA #$FF00
+  .horizontal_addition
+    PHX : CLC : ADC 1,S : PLX
+    BRA .extension_block
+
+  .vertical
+    ; Vertical extension, try once to resolve it
+    TXA : LSR : TAX
+    LDA !LEVEL_BTS,X : AND #$00FF : BEQ .next
+    PHX
+    BIT #$0080 : BNE .negative_vertical
+    TAX
+    PLA
+  .loop_positive_vertical
+    CLC : ADC !ROOM_WIDTH_BLOCKS
+    DEX : BNE .loop_positive_vertical
+
+  .extension_block
+    ASL : TAX
+    LDA !LEVEL_DATA+1,X : AND #$00F0
+
+  .get_sprite_id
+    ; Get sprite ID for this block type
+    CMP #$0030 : BEQ .check_scroll
+    LSR #3 : TAX
+  .get_block_gfx
+    LDA.l block_gfx,X : BEQ .next
+
+    ; Set sprite ID
+    %a8()
+    LDY !OAM_STACK_POINTER : STA !OAM_LOW+$2,Y
+
+    ; Get X coord
+    LDA $C1 : INC #2 : ASL #4 : SEC : SBC $C5
+    STA !OAM_LOW,Y
+
+    ; Get Y coord
+    LDA $C3 : CLC : ADC #$04 : ASL #4 : SEC : SBC $C7
+    STA !OAM_LOW+$1,Y
+
+    ; Sprite Attributes - xxxxxxxx yyyyyyyy YXPPpppt tttttttt
+    ; x=X pos, y=Y pos (low nibbles only), Y=Y flip, X=X flip
+    ; P=Priority, p=Palette, t=Tile number
+    ; Priority bits set, palette = 101
+    LDA #%00111010 : STA !OAM_LOW+$3,Y
+
+    %a16()
+
+    INY #4
+    STY !OAM_STACK_POINTER
+
+  .next
+    PLY : INY : CPY #!oob_height : BEQ .end
+    JMP .loop
+
+  .end
+    JMP draw_sprite_oob_copy_stack
+
+  .negative_vertical
+    ORA #$FF00 : TAX
+    PLA
+  .loop_negative_vertical
+    SEC : SBC !ROOM_WIDTH_BLOCKS
+    INX : BNE .loop_negative_vertical
+
+    ; For negative vertical extension into horizontal extension,
+    ; allow one more attempt (handles 2x2 blocks)
+    ASL : TAX
+    LDA !LEVEL_DATA+1,X : AND #$00F0
+    CMP #$0050 : BNE .get_sprite_id
+    JMP .horizontal
+
+  .check_scroll
+    TXA : LSR : TAX
+    LDA !LEVEL_BTS,X : AND #$00FF
+    CMP #$0046 : BEQ .next
+    LDX #$0006
+    BRA .get_block_gfx
+}
 
 block_gfx:
     ; 00 = transparent

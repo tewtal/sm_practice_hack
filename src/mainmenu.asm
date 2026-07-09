@@ -1837,6 +1837,7 @@ if !PRESERVE_WRAM
 endif
     dw #$FFFF
     dw #sprites_oob_viewer
+    dw #sprites_oob_show_x_wrap
     dw #$0000
     %cm_header("SPRITE FEATURES")
 
@@ -1903,6 +1904,9 @@ sprites_oob_viewer:
     JML upload_sprite_oob_tiles
   .skip_oob
     RTL
+
+sprites_oob_show_x_wrap:
+    %cm_toggle_bit("OoB Show X Wraparound", !ram_sprite_feature_flags, !SPRITE_OOB_X_WRAP, #0)
 
 
 ; --------------
