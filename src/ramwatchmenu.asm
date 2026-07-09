@@ -60,6 +60,7 @@ RAMWatchCommonMenu:
     dw ramwatch_common_proj
     dw ramwatch_common_misc
     dw ramwatch_common_anyglitched
+    dw ramwatch_common_zeropercent
     dw #$0000
     %cm_header("CHOOSE RAM CATEGORY")
 
@@ -82,7 +83,10 @@ ramwatch_common_misc:
     %cm_submenu("Misc Addresses", #RAMWatchCommonMiscMenu)
 
 ramwatch_common_anyglitched:
-    %cm_submenu("Any% Glitched", #RAMWatchCommonAnyGlitchedMenu)
+    %cm_submenu("Any% Glitched Addresses", #RAMWatchCommonAnyGlitchedMenu)
+
+ramwatch_common_zeropercent:
+    %cm_submenu("0% Addresses", #RAMWatchCommonZeroPercentMenu)
 
 RAMWatchCommonEnemyMenu:
     dw ramwatch_common_enemy_side
@@ -595,6 +599,47 @@ ramwatch_common_anyglitched_1D5B:
 
 ramwatch_common_anyglitched_D820:
     %cm_jsl("D820 Zebes Ablaze     F---", action_select_common_address, #!EVENT_BIT_ARRAY)
+
+RAMWatchCommonZeroPercentMenu:
+    dw ramwatch_common_zeropercent_09A2
+    dw ramwatch_common_zeropercent_09A4
+    dw ramwatch_common_zeropercent_09C8
+    dw ramwatch_common_zeropercent_D820
+    dw ramwatch_common_zeropercent_D82E
+    dw ramwatch_common_zeropercent_D8B0
+    dw ramwatch_common_zeropercent_D914
+    dw ramwatch_common_zeropercent_78F6
+    dw ramwatch_common_zeropercent_92F2
+    dw #$0000
+    %cm_header("SELECT 0% RAM")
+    %cm_footer("DESIRED VALUE ON RIGHT")
+
+ramwatch_common_zeropercent_09A2:
+    %cm_jsl(" 09A2 Equipped Items  FFFF", action_select_common_address, #!SAMUS_ITEMS_EQUIPPED)
+
+ramwatch_common_zeropercent_09A4:
+    %cm_jsl(" 09A4 Collected Items 0000", action_select_common_address, #!SAMUS_ITEMS_COLLECTED)
+
+ramwatch_common_zeropercent_09C8:
+    %cm_jsl(" 09C8 Max Missiles    0000", action_select_common_address, #!SAMUS_MISSILES_MAX)
+
+ramwatch_common_zeropercent_D820:
+    %cm_jsl(" D820 Zebes Ablaze    F---", action_select_common_address, #!EVENT_BIT_ARRAY)
+
+ramwatch_common_zeropercent_D82E:
+    %cm_jsl(" D82E Ceres Ridley    ---0", action_select_common_address, #(!EVENT_BIT_ARRAY+$E))
+
+ramwatch_common_zeropercent_D8B0:
+    %cm_jsl(" D8B0 Opened Door     F---", action_select_common_address, #!OPENED_DOOR_BIT_ARRAY)
+
+ramwatch_common_zeropercent_D914:
+    %cm_jsl(" D914 Load Game State 0000", action_select_common_address, #!LOADING_GAME_STATE)
+
+ramwatch_common_zeropercent_78F6:
+    %cm_jsl("178F6 5D Block        5D--", action_select_common_address, #$7F78F6)
+
+ramwatch_common_zeropercent_92F2:
+    %cm_jsl("192F2 Exit Block      --81", action_select_common_address, #$7F92F2)
 
 action_select_common_address:
 {
