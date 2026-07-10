@@ -492,6 +492,7 @@ RAMWatchCommonMiscMenu:
     dw ramwatch_common_misc_09DC
     dw ramwatch_common_misc_09DE
     dw ramwatch_common_misc_09E0
+    dw ramwatch_common_misc_0A82
     dw ramwatch_common_misc_0DC4
     dw ramwatch_common_misc_0E50
     dw ramwatch_common_misc_0E52
@@ -522,6 +523,9 @@ ramwatch_common_misc_09DE:
 
 ramwatch_common_misc_09E0:
     %cm_jsl("Game Time, Hours", action_select_common_address, #!IGT_HOURS)
+
+ramwatch_common_misc_0A82:
+    %cm_jsl("X-Ray Angle", action_select_common_address, #!XRAY_ANGLE)
 
 ramwatch_common_misc_0DC4:
     %cm_jsl("Current Block Index", action_select_common_address, #!CURRENT_BLOCK_INDEX)
