@@ -142,6 +142,14 @@ if !PRESERVE_WRAM
     LDA !ram_sprite_feature_flags : AND !SPRITE_HUD_XRAY
     XBA : LSR : STA !ram_cm_sprites_xray
 endif
+    LDA !ram_sprite_feature_flags : AND !SPRITE_SAMUS_HITBOX_WHITE
+    XBA : LSR #4 : STA !ram_cm_sprites_samus_hitbox
+    LDA !ram_sprite_feature_flags : AND !SPRITE_SAMUS_PROJ_WHITE
+    XBA : ASL #3 : XBA : STA !ram_cm_sprites_samus_proj
+    LDA !ram_sprite_feature_flags : AND !SPRITE_ENEMY_HITBOX_WHITE
+    XBA : ASL #2 : XBA : STA !ram_cm_sprites_enemy_hitbox
+    LDA !ram_sprite_feature_flags : AND !SPRITE_ENEMY_PROJ_WHITE
+    XBA : ASL : XBA : STA !ram_cm_sprites_enemy_proj
     JMP action_mainmenu
 }
 
@@ -1830,6 +1838,11 @@ SpritesMenu:
     dw #sprites_show_samusproj_hitbox
     dw #sprites_show_enemyproj_hitbox
     dw #sprites_show_proj_as_32x32
+    dw #$FFFF
+    dw #sprites_samus_hitbox_color
+    dw #sprites_samus_proj_color
+    dw #sprites_enemy_hitbox_color
+    dw #sprites_enemy_proj_color
 if !PRESERVE_WRAM
     dw #$FFFF
     dw #sprites_hud_spacetime
@@ -1864,6 +1877,66 @@ sprites_show_enemyproj_hitbox:
 
 sprites_show_proj_as_32x32:
     %cm_toggle_bit("32x32 Projectile Boxes", !ram_sprite_feature_flags, !SPRITE_32x32_PROJ, #0)
+
+sprites_samus_hitbox_color:
+    dw !ACTION_CHOICE
+    dl #!ram_cm_sprites_samus_hitbox
+    dw #.routine
+    db #$28, "Samus Hitbox Co", #$FF
+    db #$28, "lor    BLUE", #$FF
+    db #$28, "lor   WHITE", #$FF
+    db #$FF
+  .routine
+    LDA !ram_sprite_feature_flags : AND !SPRITE_SAMUS_HITBOX_INVERTED
+    STA !ram_sprite_feature_flags
+    LDA !ram_cm_sprites_samus_hitbox : XBA : ASL #4
+    ORA !ram_sprite_feature_flags : STA !ram_sprite_feature_flags
+    RTL
+
+sprites_samus_proj_color:
+    dw !ACTION_CHOICE
+    dl #!ram_cm_sprites_samus_proj
+    dw #.routine
+    db #$28, "Samus Projectil", #$FF
+    db #$28, "e      BLUE", #$FF
+    db #$28, "e     WHITE", #$FF
+    db #$FF
+  .routine
+    LDA !ram_sprite_feature_flags : AND !SPRITE_SAMUS_PROJ_INVERTED
+    STA !ram_sprite_feature_flags
+    LDA !ram_cm_sprites_samus_proj : XBA : LSR #3 : XBA
+    ORA !ram_sprite_feature_flags : STA !ram_sprite_feature_flags
+    RTL
+
+sprites_enemy_hitbox_color:
+    dw !ACTION_CHOICE
+    dl #!ram_cm_sprites_enemy_hitbox
+    dw #.routine
+    db #$28, "Enemy Hitbox Co", #$FF
+    db #$28, "lor    BLUE", #$FF
+    db #$28, "lor   WHITE", #$FF
+    db #$FF
+  .routine
+    LDA !ram_sprite_feature_flags : AND !SPRITE_ENEMY_HITBOX_INVERTED
+    STA !ram_sprite_feature_flags
+    LDA !ram_cm_sprites_enemy_hitbox : XBA : LSR #2 : XBA
+    ORA !ram_sprite_feature_flags : STA !ram_sprite_feature_flags
+    RTL
+
+sprites_enemy_proj_color:
+    dw !ACTION_CHOICE
+    dl #!ram_cm_sprites_enemy_proj
+    dw #.routine
+    db #$28, "Enemy Projectil", #$FF
+    db #$28, "e      BLUE", #$FF
+    db #$28, "e     WHITE", #$FF
+    db #$FF
+  .routine
+    LDA !ram_sprite_feature_flags : AND !SPRITE_ENEMY_PROJ_INVERTED
+    STA !ram_sprite_feature_flags
+    LDA !ram_cm_sprites_enemy_proj : XBA : LSR : XBA
+    ORA !ram_sprite_feature_flags : STA !ram_sprite_feature_flags
+    RTL
 
 if !PRESERVE_WRAM
 sprites_hud_spacetime:

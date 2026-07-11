@@ -1,5 +1,8 @@
 ;
 ; Features using sprites to draw information
+; Sprite Attributes - xxxxxxxx yyyyyyyy tttttttt YXPPpppt
+; x=X pos, y=Y pos, Y=Y flip, X=X flip
+; P=Priority, p=Palette, t=Tile number
 ;
 
 
@@ -191,11 +194,8 @@ draw_sprite_oob:
     LDA $C3 : CLC : ADC #$04 : ASL #4 : SEC : SBC $C7
     STA !OAM_LOW+$1,Y
 
-    ; Sprite Attributes - xxxxxxxx yyyyyyyy YXPPpppt tttttttt
-    ; x=X pos, y=Y pos (low nibbles only), Y=Y flip, X=X flip
-    ; P=Priority, p=Palette, t=Tile number
-    ; Priority bits set, palette = 101
-    LDA #%00111010 : STA !OAM_LOW+$3,Y
+    ; Sprite attributes
+    LDA #$3A : STA !OAM_LOW+$3,Y
 
     %a16()
 
@@ -259,8 +259,7 @@ draw_sprite_oob:
     %a16()
 
   .end
-    JSR draw_oob_samus_hitbox
-    RTS
+    JMP draw_oob_samus_hitbox
 }
 
 draw_sprite_x_wrap:
@@ -359,11 +358,8 @@ draw_sprite_x_wrap:
     LDA $C3 : CLC : ADC #$04 : ASL #4 : SEC : SBC $C7
     STA !OAM_LOW+$1,Y
 
-    ; Sprite Attributes - xxxxxxxx yyyyyyyy YXPPpppt tttttttt
-    ; x=X pos, y=Y pos (low nibbles only), Y=Y flip, X=X flip
-    ; P=Priority, p=Palette, t=Tile number
-    ; Priority bits set, palette = 101
-    LDA #%00111010 : STA !OAM_LOW+$3,Y
+    ; Sprite Attributes
+    LDA #$3A : STA !OAM_LOW+$3,Y
 
     %a16()
 
@@ -506,8 +502,7 @@ draw_samus_hitbox:
 {
     LDA !SAMUS_Y : SEC : SBC !LAYER1_Y : PHA ; Y coord
     LDA !SAMUS_X : SEC : SBC !LAYER1_X : PHA ; X coord
-
-    LDA #$0000
+    TDC
     %a8()
     LDY !OAM_STACK_POINTER
     ; X coord
@@ -524,19 +519,25 @@ draw_samus_hitbox:
     STA !OAM_LOW+$9,Y : STA !OAM_LOW+$D,Y
     PLA ; discard high byte
 
-    ; Sprite Attributes - xxxxxxxx yyyyyyyy YXPPpppt tttttttt
-    ; x=X pos, y=Y pos, Y=Y flip, X=X flip
-    ; P=Priority, p=Palette, t=Tile number
-    LDA #%00111010 : STA !OAM_LOW+$3,Y ; top left
-    LDA #%01111010 : STA !OAM_LOW+$7,Y ; top right
-    LDA #%10111010 : STA !OAM_LOW+$B,Y ; bottom left
-    LDA #%11111010 : STA !OAM_LOW+$F,Y ; bottom right
-
-    LDA #$47 ; tile number (8/9 bits)
-    STA !OAM_LOW+$2,Y : STA !OAM_LOW+$6,Y
-    STA !OAM_LOW+$A,Y : STA !OAM_LOW+$E,Y
-
+    ; Sprite Attributes
     %a16()
+    LDA !ram_sprite_feature_flags : BIT !SPRITE_SAMUS_HITBOX_WHITE : BEQ .blue
+    LDA #$3047 : STA !OAM_LOW+$2,Y ; top left
+    ORA #$4000 : STA !OAM_LOW+$6,Y ; top right
+    ORA #$8000 : STA !OAM_LOW+$E,Y ; bottom right
+    AND #$BFFF : STA !OAM_LOW+$A,Y ; bottom left
+
+    ; inc oam stack
+    TYA : CLC : ADC #$0010 : STA !OAM_STACK_POINTER
+    RTS
+
+  .blue
+    LDA #$3A47 : STA !OAM_LOW+$2,Y ; top left
+    ORA #$4000 : STA !OAM_LOW+$6,Y ; top right
+    ORA #$8000 : STA !OAM_LOW+$E,Y ; bottom right
+    AND #$BFFF : STA !OAM_LOW+$A,Y ; bottom left
+
+    ; inc oam stack
     TYA : CLC : ADC #$0010 : STA !OAM_STACK_POINTER
     RTS
 }
@@ -544,6 +545,14 @@ draw_samus_hitbox:
 ; draw hitboxes around first 12 enemies
 draw_enemy_hitbox:
 {
+    LDA !ram_sprite_feature_flags : BIT !SPRITE_ENEMY_HITBOX_WHITE : BEQ .blue
+    LDA #$0047 : STA $CB
+    BRA .start
+
+  .blue
+    LDA #$0A47 : STA $CB
+
+  .start
     LDX #$0000 ; X = enemy index
     LDY !OAM_STACK_POINTER ; Y = OAM stack pointer
 
@@ -593,14 +602,13 @@ draw_enemy_hitbox:
     STA !OAM_LOW+$9,Y : STA !OAM_LOW+$D,Y
     PLA ; discard high byte
 
-    ; Sprite Attributes - xxxxxxxx yyyyyyyy YXPPpppt tttttttt
-    ; x=X pos, y=Y pos (low nibbles only), Y=Y flip, X=X flip
-    ; P=Priority, p=Palette, t=Tile number
-    %ai16()
-    LDA #$3A47 : STA !OAM_LOW+$2,Y ; %00111010 top-left
-    LDA #$7A47 : STA !OAM_LOW+$6,Y ; %01111010 top-right
-    LDA #$BA47 : STA !OAM_LOW+$A,Y ; %10111010 bottom-left
-    LDA #$FA47 : STA !OAM_LOW+$E,Y ; %11111010 bottom-right
+    ; Sprite Attributes
+    %a16()
+    LDA $CB
+    ORA #$3000 : STA !OAM_LOW+$2,Y ; top left
+    ORA #$4000 : STA !OAM_LOW+$6,Y ; top right
+    ORA #$8000 : STA !OAM_LOW+$E,Y ; bottom right
+    AND #$BFFF : STA !OAM_LOW+$A,Y ; bottom left
 
     ; inc oam stack
     TYA : CLC : ADC #$0010 : STA !OAM_STACK_POINTER : TAY
@@ -616,6 +624,14 @@ draw_enemy_hitbox:
 ; draw hitboxes around enemies that use extended spritemaps
 draw_ext_spritemap_hitbox:
 {
+    LDA !ram_sprite_feature_flags : BIT !SPRITE_ENEMY_HITBOX_WHITE : BEQ .blue
+    LDA #$0047 : STA $CB
+    BRA .start
+
+  .blue
+    LDA #$0A47 : STA $CB
+
+  .start
     LDX #$0000 ; X = enemy index
     LDY !OAM_STACK_POINTER ; Y = OAM stack pointer
 
@@ -710,14 +726,13 @@ draw_ext_spritemap_hitbox:
     LDA $1C : CLC : ADC $1A : SEC : SBC #$08
     STA !OAM_LOW+$9,Y : STA !OAM_LOW+$D,Y
 
-    ; Sprite Attributes - xxxxxxxx yyyyyyyy YXPPpppt tttttttt
-    ; x=X pos, y=Y pos, Y=Y flip, X=X flip
-    ; P=Priority, p=Palette, t=Tile number
-    %ai16()
-    LDA #$3A47 : STA !OAM_LOW+$2,Y ; %00111010 top-left
-    LDA #$7A47 : STA !OAM_LOW+$6,Y ; %01111010 top-right
-    LDA #$BA47 : STA !OAM_LOW+$A,Y ; %10111010 bottom-left
-    LDA #$FA47 : STA !OAM_LOW+$E,Y ; %11111010 bottom-right
+    ; Sprite Attributes
+    %a16()
+    LDA $CB
+    ORA #$3000 : STA !OAM_LOW+$2,Y ; top left
+    ORA #$4000 : STA !OAM_LOW+$6,Y ; top right
+    ORA #$8000 : STA !OAM_LOW+$E,Y ; bottom right
+    AND #$BFFF : STA !OAM_LOW+$A,Y ; bottom left
 
     ; inc oam stack
     TYA : CLC : ADC #$0010 : STA !OAM_STACK_POINTER : TAY
@@ -754,6 +769,14 @@ draw_enemyproj_hitbox:
     ; 5 would be ideal, but 7 works better with MB ketchup beam
     !min_four_corners_radius = #$0007
 
+    LDA !ram_sprite_feature_flags : BIT !SPRITE_ENEMY_PROJ_WHITE : BEQ .blue
+    LDA #$0047 : STA $CB
+    BRA .start
+
+  .blue
+    LDA #$0A47 : STA $CB
+
+  .start
     LDX #$FFFE : STX $12 : STX $14 ; X = projectile index
     LDY !OAM_STACK_POINTER ; Y = OAM stack pointer
 
@@ -807,9 +830,11 @@ draw_enemyproj_hitbox:
     STA !OAM_LOW+$5,Y
     PLA
 
-    %ai16()
-    LDA #$3A47 : STA !OAM_LOW+$2,Y ; %00111010 top-left
-    LDA #$FA47 : STA !OAM_LOW+$6,Y ; %11111010 bottom-right
+    ; Sprite Attributes
+    %a16()
+    LDA $CB
+    ORA #$3000 : STA !OAM_LOW+$2,Y ; top left
+    ORA #$C000 : STA !OAM_LOW+$6,Y ; bottom right
 
     ; inc OAM stack
     ; vanilla routines use AND #$01FF to wrap the stack after 1FCh
@@ -837,14 +862,13 @@ draw_enemyproj_hitbox:
     PLA ; discard high byte
 
   .setAttributes
-    ; Sprite Attributes - xxxxxxxx yyyyyyyy YXPPpppt tttttttt
-    ; x=X pos, y=Y pos (low nibbles only), Y=Y flip, X=X flip
-    ; P=Priority, p=Palette, t=Tile number
-    %ai16()
-    LDA #$3A47 : STA !OAM_LOW+$2,Y ; %00111010 top-left
-    LDA #$7A47 : STA !OAM_LOW+$6,Y ; %01111010 top-right
-    LDA #$BA47 : STA !OAM_LOW+$A,Y ; %10111010 bottom-left
-    LDA #$FA47 : STA !OAM_LOW+$E,Y ; %11111010 bottom-right
+    ; Sprite Attributes
+    %a16()
+    LDA $CB
+    ORA #$3000 : STA !OAM_LOW+$2,Y ; top left
+    ORA #$4000 : STA !OAM_LOW+$6,Y ; top right
+    ORA #$8000 : STA !OAM_LOW+$E,Y ; bottom right
+    AND #$BFFF : STA !OAM_LOW+$A,Y ; bottom left
 
     ; inc OAM stack
     ; vanilla routines use AND #$01FF to wrap the stack after 1FCh
@@ -898,6 +922,14 @@ draw_enemyproj_hitbox:
 ; draw hitboxes around Samus projectiles
 draw_samusproj_hitbox:
 {
+    LDA !ram_sprite_feature_flags : BIT !SPRITE_SAMUS_PROJ_WHITE : BEQ .blue
+    LDA #$0047 : STA $CB
+    BRA .start
+
+  .blue
+    LDA #$0A47 : STA $CB
+
+  .start
     LDX #$FFFE ; X = projectile index
     LDY !OAM_STACK_POINTER ; Y = OAM stack pointer
 
@@ -943,14 +975,13 @@ draw_samusproj_hitbox:
     PLA ; discard high byte
 
   .setAttributes
-    ; Sprite Attributes - xxxxxxxx yyyyyyyy YXPPpppt tttttttt
-    ; x=X pos, y=Y pos (low nibbles only), Y=Y flip, X=X flip
-    ; P=Priority, p=Palette, t=Tile number
-    %ai16()
-    LDA #$3A47 : STA !OAM_LOW+$2,Y ; %00111010 top-left
-    LDA #$7A47 : STA !OAM_LOW+$6,Y ; %01111010 top-right
-    LDA #$BA47 : STA !OAM_LOW+$A,Y ; %10111010 bottom-left
-    LDA #$FA47 : STA !OAM_LOW+$E,Y ; %11111010 bottom-right
+    ; Sprite Attributes
+    %a16()
+    LDA $CB
+    ORA #$3000 : STA !OAM_LOW+$2,Y ; top left
+    ORA #$4000 : STA !OAM_LOW+$6,Y ; top right
+    ORA #$8000 : STA !OAM_LOW+$E,Y ; bottom right
+    AND #$BFFF : STA !OAM_LOW+$A,Y ; bottom left
 
     ; inc OAM stack
     ; vanilla routines use AND #$01FF to wrap the stack after 1FCh
@@ -1012,7 +1043,14 @@ draw_custom_boss_hitbox:
   .mother_brain
     ; check which phase MB is in, 2 = 2nd phase
     LDA $7E7800 : CMP #$0002 : BMI .end
+    LDA !ram_sprite_feature_flags : BIT !SPRITE_ENEMY_HITBOX_WHITE : BEQ .mb_blue
+    LDA #$0047 : STA $CB
+    BRA .mb_start
 
+  .mb_blue
+    LDA #$0A47 : STA $CB
+
+  .mb_start
     ; load hitbox enable bitflags
     LDA $7E7808 : BEQ .end : STA $C1
     LDX #$0000 : LDY !OAM_STACK_POINTER ; X = enemy index
@@ -1110,14 +1148,23 @@ draw_custom_boss_hitbox:
     LDA $16 : DEC : STA !OAM_LOW+$1,Y : STA !OAM_LOW+$5,Y
     LDA $1A : STA !OAM_LOW+$9,Y : STA !OAM_LOW+$D,Y
 
-    ; Sprite Attributes - xxxxxxxx yyyyyyyy YXPPpppt tttttttt
-    ; x=X pos, y=Y pos (low nibbles only), Y=Y flip, X=X flip
-    ; P=Priority, p=Palette, t=Tile number
-    %ai16()
-    LDA #$3A47 : STA !OAM_LOW+$2,Y ; %00111010 top-left
-    LDA #$7A47 : STA !OAM_LOW+$6,Y ; %01111010 top-right
-    LDA #$BA47 : STA !OAM_LOW+$A,Y ; %10111010 bottom-left
-    LDA #$FA47 : STA !OAM_LOW+$E,Y ; %11111010 bottom-right
+    ; Sprite Attributes
+    %a16()
+    LDA !ram_sprite_feature_flags : BIT !SPRITE_ENEMY_HITBOX_WHITE : BEQ .kraid_blue
+    LDA #$3047 : STA !OAM_LOW+$2,Y ; top left
+    ORA #$4000 : STA !OAM_LOW+$6,Y ; top right
+    ORA #$8000 : STA !OAM_LOW+$E,Y ; bottom right
+    AND #$BFFF : STA !OAM_LOW+$A,Y ; bottom left
+
+    ; inc oam stack
+    TYA : CLC : ADC #$0010 : STA !OAM_STACK_POINTER
+    RTS
+
+  .kraid_blue
+    LDA #$3A47 : STA !OAM_LOW+$2,Y ; top left
+    ORA #$4000 : STA !OAM_LOW+$6,Y ; top right
+    ORA #$8000 : STA !OAM_LOW+$E,Y ; bottom right
+    AND #$BFFF : STA !OAM_LOW+$A,Y ; bottom left
 
     ; inc oam stack
     TYA : CLC : ADC #$0010 : STA !OAM_STACK_POINTER
@@ -1159,14 +1206,23 @@ draw_custom_boss_hitbox:
     STA !OAM_LOW+$9,Y : STA !OAM_LOW+$D,Y
     PLA ; discard high byte
 
-    ; Sprite Attributes - xxxxxxxx yyyyyyyy YXPPpppt tttttttt
-    ; x=X pos, y=Y pos (low nibbles only), Y=Y flip, X=X flip
-    ; P=Priority, p=Palette, t=Tile number
-    %ai16()
-    LDA #$3A47 : STA !OAM_LOW+$2,Y ; %00111010 top-left
-    LDA #$7A47 : STA !OAM_LOW+$6,Y ; %01111010 top-right
-    LDA #$BA47 : STA !OAM_LOW+$A,Y ; %10111010 bottom-left
-    LDA #$FA47 : STA !OAM_LOW+$E,Y ; %11111010 bottom-right
+    ; Sprite Attributes
+    %a16()
+    LDA !ram_sprite_feature_flags : BIT !SPRITE_ENEMY_HITBOX_WHITE : BEQ .ridley_blue
+    LDA #$3047 : STA !OAM_LOW+$2,Y ; top left
+    ORA #$4000 : STA !OAM_LOW+$6,Y ; top right
+    ORA #$8000 : STA !OAM_LOW+$E,Y ; bottom right
+    AND #$BFFF : STA !OAM_LOW+$A,Y ; bottom left
+
+    ; inc oam stack
+    TYA : CLC : ADC #$0010 : STA !OAM_STACK_POINTER
+    RTS
+
+  .ridley_blue
+    LDA #$3A47 : STA !OAM_LOW+$2,Y ; top left
+    ORA #$4000 : STA !OAM_LOW+$6,Y ; top right
+    ORA #$8000 : STA !OAM_LOW+$E,Y ; bottom right
+    AND #$BFFF : STA !OAM_LOW+$A,Y ; bottom left
 
     ; inc oam stack
     TYA : CLC : ADC #$0010 : STA !OAM_STACK_POINTER
@@ -1192,14 +1248,13 @@ DrawMBHitbox:
     LDA $1C : CLC : ADC $1A : SEC : SBC #$08
     STA !OAM_LOW+$9,Y : STA !OAM_LOW+$D,Y
 
-    ; Sprite Attributes - xxxxxxxx yyyyyyyy YXPPpppt tttttttt
-    ; x=X pos, y=Y pos, Y=Y flip, X=X flip
-    ; P=Priority, p=Palette, t=Tile number
-    %ai16()
-    LDA #$3A47 : STA !OAM_LOW+$2,Y ; %00111010 top-left
-    LDA #$7A47 : STA !OAM_LOW+$6,Y ; %01111010 top-right
-    LDA #$BA47 : STA !OAM_LOW+$A,Y ; %10111010 bottom-left
-    LDA #$FA47 : STA !OAM_LOW+$E,Y ; %11111010 bottom-right
+    ; Sprite Attributes
+    %a16()
+    LDA $CB
+    ORA #$3000 : STA !OAM_LOW+$2,Y ; top left
+    ORA #$4000 : STA !OAM_LOW+$6,Y ; top right
+    ORA #$8000 : STA !OAM_LOW+$E,Y ; bottom right
+    AND #$BFFF : STA !OAM_LOW+$A,Y ; bottom left
 
     ; inc oam stack
     TYA : CLC : ADC #$0010 : STA !OAM_STACK_POINTER : TAY

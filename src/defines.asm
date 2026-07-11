@@ -352,6 +352,10 @@
 
 !ram_cm_sprites_spacetime = !WRAM_MENU_START+$90
 !ram_cm_sprites_xray = !WRAM_MENU_START+$92
+!ram_cm_sprites_samus_hitbox = !WRAM_MENU_START+$94
+!ram_cm_sprites_samus_proj = !WRAM_MENU_START+$96
+!ram_cm_sprites_enemy_hitbox = !WRAM_MENU_START+$98
+!ram_cm_sprites_enemy_proj = !WRAM_MENU_START+$9A
 
 !ram_cm_ctrl_add_shortcut_slot = !WRAM_MENU_START+$90
 !ram_cm_ctrl_last_pri = !WRAM_MENU_START+$92
@@ -1384,6 +1388,14 @@ endif
 !SPRITE_HUD_XRAY = #$0200
 !SPRITE_HUD_XRAY_INVERTED = #$FDFF
 !SPRITE_OOB_X_WRAP = #$0400
+!SPRITE_SAMUS_HITBOX_WHITE = #$1000
+!SPRITE_SAMUS_HITBOX_INVERTED = #$EFFF
+!SPRITE_SAMUS_PROJ_WHITE = #$2000
+!SPRITE_SAMUS_PROJ_INVERTED = #$DFFF
+!SPRITE_ENEMY_HITBOX_WHITE = #$4000
+!SPRITE_ENEMY_HITBOX_INVERTED = #$BFFF
+!SPRITE_ENEMY_PROJ_WHITE = #$8000
+!SPRITE_ENEMY_PROJ_INVERTED = #$7FFF
 
 !UPDATE_TIMERS_CTRL_SHORTCUT_TYPE = $05
 

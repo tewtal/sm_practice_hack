@@ -328,6 +328,10 @@ ram_cm_zebes_seconds = !ram_cm_zebes_seconds ; !WRAM_MENU_START+$92
 
 ram_cm_sprites_spacetime = !ram_cm_sprites_spacetime ; !WRAM_MENU_START+$90
 ram_cm_sprites_xray = !ram_cm_sprites_xray ; !WRAM_MENU_START+$92
+ram_cm_sprites_samus_hitbox = !ram_cm_sprites_samus_hitbox ; !WRAM_MENU_START+$94
+ram_cm_sprites_samus_proj = !ram_cm_sprites_samus_proj ; !WRAM_MENU_START+$96
+ram_cm_sprites_enemy_hitbox = !ram_cm_sprites_enemy_hitbox ; !WRAM_MENU_START+$98
+ram_cm_sprites_enemy_proj = !ram_cm_sprites_enemy_proj ; !WRAM_MENU_START+$9A
 
 ram_cm_ctrl_add_shortcut_slot = !ram_cm_ctrl_add_shortcut_slot ; !WRAM_MENU_START+$90
 ram_cm_ctrl_last_pri = !ram_cm_ctrl_last_pri ; !WRAM_MENU_START+$92
