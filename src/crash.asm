@@ -308,7 +308,40 @@ CrashDump:
     ; -- Draw header --
     LDA.w #CrashTextHeader : STA !ram_crash_text
     LDA.w #CrashTextHeader>>16 : STA !ram_crash_text_bank
-    LDX #$008C : JSR crash_draw_text
+if !FEATURE_SD2SNES+!FEATURE_PAL+!FEATURE_VANILLAHUD+!FEATURE_DEV > 2
+    LDX #$0086
+elseif !FEATURE_SD2SNES+!FEATURE_PAL+!FEATURE_VANILLAHUD+!FEATURE_DEV == 2
+    LDX #$0088
+elseif !FEATURE_SD2SNES+!FEATURE_PAL+!FEATURE_VANILLAHUD+!FEATURE_DEV == 1
+    LDX #$008A
+else
+    LDX #$008C
+endif
+    JSR crash_draw_text
+
+    ; append build identifiers if needed
+    INX #2
+table ../resources/header.tbl
+if !FEATURE_TINYSTATES
+    LDA.w #$2800|'T' : STA !CRASHDUMP_TILEMAP_BUFFER,X
+    INX #2
+elseif !FEATURE_SD2SNES
+    LDA.w #$2800|'S' : STA !CRASHDUMP_TILEMAP_BUFFER,X
+    INX #2
+endif
+if !FEATURE_PAL
+    LDA.w #$2800|'P' : STA !CRASHDUMP_TILEMAP_BUFFER,X
+    INX #2
+endif
+if !FEATURE_VANILLAHUD
+    LDA.w #$2800|'V' : STA !CRASHDUMP_TILEMAP_BUFFER,X
+    INX #2
+endif
+if !FEATURE_DEV
+    LDA.w #$2800|'D' : STA !CRASHDUMP_TILEMAP_BUFFER,X
+endif
+table ../resources/normal.tbl
+
 
     ; -- Draw footer message --
     LDA.w #CrashTextFooter1 : STA !ram_crash_text
