@@ -1839,7 +1839,8 @@ SpritesMenu:
     dw #sprites_show_enemyproj_hitbox
     dw #sprites_show_proj_as_32x32
     dw #$FFFF
-    dw #sprites_color_customization
+    dw #sprites_customize_hitbox_color
+    dw #sprites_customize_grapple_color
 if !PRESERVE_WRAM
     dw #$FFFF
     dw #sprites_hud_spacetime
@@ -1875,8 +1876,11 @@ sprites_show_enemyproj_hitbox:
 sprites_show_proj_as_32x32:
     %cm_toggle_bit("32x32 Projectile Boxes", !ram_sprite_feature_flags, !SPRITE_32x32_PROJ, #0)
 
-sprites_color_customization:
-    %cm_submenu("Hitbox Color Customization", #SpritesColorMenu)
+sprites_customize_hitbox_color:
+    %cm_submenu("Customize Hitbox Color", #SpritesColorMenu)
+
+sprites_customize_grapple_color:
+    %cm_submenu("Customize Grapple Color", #SpritesColorMenu)
 
 if !PRESERVE_WRAM
 sprites_hud_spacetime:

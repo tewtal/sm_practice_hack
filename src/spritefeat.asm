@@ -471,22 +471,24 @@ draw_oob_samus_hitbox:
     STA !OAM_LOW+$9,Y : STA !OAM_LOW+$D,Y
     PLA ; discard high byte
 
-    LDA #%00111010
-    STA !OAM_LOW+$3,Y ; Sprite 1 ATTR
-    STA !OAM_LOW+$7,Y ; Sprite 2 ATTR
-    STA !OAM_LOW+$B,Y ; Sprite 3 ATTR
-    STA !OAM_LOW+$F,Y ; Sprite 4 ATTR
+    ; Sprite Attributes
+    %a16()
+    LDA !ram_sprite_feature_flags : BIT !SPRITE_SAMUS_HITBOX_WHITE : BEQ .blue
+    LDA #$30DC
+    BRA .draw
 
-    LDA #$DC : STA !OAM_LOW+$2,Y
-    LDA #$DD : STA !OAM_LOW+$6,Y
-    LDA #$EC : STA !OAM_LOW+$A,Y
-    LDA #$ED : STA !OAM_LOW+$E,Y
+  .blue
+    LDA #$3ADC
+
+  .draw
+    STA !OAM_LOW+$2,Y              ; top left
+    INC : STA !OAM_LOW+$6,Y        ; top right
+    EOR #$0031 : STA !OAM_LOW+$A,Y ; bottom left
+    INC : STA !OAM_LOW+$E,Y        ; bottom right
 
     ; Normally the high sprite bits are cleared to zero so this shouldn't be needed for 8x8 sprites,
     ; but the hitbox drawing code will overwrite 1-3 extra sprite bits to gain speed so instead we
     ; compensate for it here to just have to do it once
-
-    %ai16()
     PHY
     ; Sprite number
     TYA : LSR #2 : TAX : PHX
