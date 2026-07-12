@@ -428,7 +428,7 @@ macro examplemenu()
     dw #mc_dummy_num
 endmacro
 
-macro palettemenu(title, label, addr)
+macro palettemenu(title, label, addr, color_tile)
 ; menu tables for customizing menu color palettes
     %cm_jsl("<title>", #palettemenu_setup, <label>)
 
@@ -443,7 +443,7 @@ macro palettemenu(title, label, addr)
     dw #$FFFF
     dw <label>_hex_word
     dw #$FFFF
-    dw #$FFFF
+    dw <label>_color_bar
     dw #$FFFF
     dw #$FFFF
     dw #$FFFF
@@ -458,7 +458,12 @@ macro palettemenu(title, label, addr)
   .set
     STA <addr>
     JML SplitRGB
-}
+
+<label>_color_bar:
+  .dm_actionIndex
+    dw !ACTION_COLOR_BAR
+  .dm_colorTile
+    dw <color_tile>
 endmacro
 
 macro setupRGB(addr)

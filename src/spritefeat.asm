@@ -6,6 +6,13 @@
 ;
 
 
+org $80A0C6
+    JSL load_common_target_colors
+
+; Ceres does not need to overwrite sprite 5 blue color
+org $828130
+    BRA $02
+
 ; Hook Gamemode 7 to upload tiles after loading if needed
 org $828B26
     JSL update_sprite_tiles_loading
@@ -15,12 +22,42 @@ org $828B26
 org $828B98
     JSL update_sprite_features
 
+; Load target colors except load custom sprite 5 blue color
+org $82E138
+load_common_target_colors:
+{
+    %ai16()
+    LDX #$001E
+  .first_loop
+    LDA $9A81A0,X : STA $7EC3A0,X
+    DEX #2 : BPL .first_loop
+    LDA !sram_sprite_features_blue_color : STA $7EC3BE
+    LDX #$001E
+  .second_loop:
+    LDA $7EC1C0,X : STA $7EC3C0,X
+    LDA $9AFC00,X : STA $7EC300,X
+    DEX #2 : BPL .second_loop
+    RTL
+warnpc $82E169
+
+org $82E4D0
+    JSL load_common_target_colors
+
 
 ; Add hitbox graphic to free sprite VRAM slot
 org $9ADAE0
 hook_standard_sprite_tiles:
     db $FF, $FF, $80, $80, $80, $80, $80, $80, $80, $80, $80, $80, $80, $80, $80, $80
     db $FF, $FF, $80, $80, $80, $80, $80, $80, $80, $80, $80, $80, $80, $80, $80, $80
+
+
+; Grapple routine loads custom grapple color
+org $9BC686
+    LDA !sram_sprite_features_grapple_color : STA $7EC1BE
+    LDA #$C703 : STA !GRAPPLE_BEAM_FUNCTION
+    LDA #$0005 : JSL $80903F
+    TDC : INC
+warnpc $9BC69D
 
 
 %startfree(87)

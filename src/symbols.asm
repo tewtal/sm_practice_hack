@@ -332,6 +332,9 @@ ram_cm_sprites_samus_hitbox = !ram_cm_sprites_samus_hitbox ; !WRAM_MENU_START+$9
 ram_cm_sprites_samus_proj = !ram_cm_sprites_samus_proj ; !WRAM_MENU_START+$96
 ram_cm_sprites_enemy_hitbox = !ram_cm_sprites_enemy_hitbox ; !WRAM_MENU_START+$98
 ram_cm_sprites_enemy_proj = !ram_cm_sprites_enemy_proj ; !WRAM_MENU_START+$9A
+ram_cm_sprites_palette_blue = !ram_cm_sprites_palette_blue ; !WRAM_MENU_START+$9C
+ram_cm_sprites_palette_green = !ram_cm_sprites_palette_green ; !WRAM_MENU_START+$9E
+ram_cm_sprites_palette_red = !ram_cm_sprites_palette_red ; !WRAM_MENU_START+$A0
 
 ram_cm_ctrl_add_shortcut_slot = !ram_cm_ctrl_add_shortcut_slot ; !WRAM_MENU_START+$90
 ram_cm_ctrl_last_pri = !ram_cm_ctrl_last_pri ; !WRAM_MENU_START+$92
@@ -390,7 +393,7 @@ ram_cm_dummy_num = !ram_cm_dummy_num ; !WRAM_MENU_START+$AE
 ;       and is reset to zero when loading a savestate
 
 ; Reserve 48 bytes for CGRAM cache
-; Currently first 28 bytes plus last 2 bytes are used
+; Currently first 32 bytes plus last 2 bytes are used
 ram_cgram_cache = !ram_cgram_cache ; !WRAM_MENU_START+$D0 ; $30 bytes
 
 ; -----------------
@@ -523,6 +526,8 @@ sram_speed_booster_physics = !sram_speed_booster_physics ; !SRAM_START+$A8
 sram_fast_teleport = !sram_fast_teleport ; !SRAM_START+$AA
 sram_update_timers_ctrl_input = !sram_update_timers_ctrl_input ; !SRAM_START+$AC
 sram_update_timers_options = !sram_update_timers_options ; !SRAM_START+$AE
+sram_sprite_features_blue_color = !sram_sprite_features_blue_color ; !SRAM_START+$B0
+sram_sprite_features_grapple_color = !sram_sprite_features_grapple_color ; !SRAM_START+$B2
 
 ; ^ FREE SPACE ^ up to +$CE
 

@@ -356,6 +356,9 @@
 !ram_cm_sprites_samus_proj = !WRAM_MENU_START+$96
 !ram_cm_sprites_enemy_hitbox = !WRAM_MENU_START+$98
 !ram_cm_sprites_enemy_proj = !WRAM_MENU_START+$9A
+!ram_cm_sprites_palette_blue = !WRAM_MENU_START+$9C
+!ram_cm_sprites_palette_green = !WRAM_MENU_START+$9E
+!ram_cm_sprites_palette_red = !WRAM_MENU_START+$A0
 
 !ram_cm_ctrl_add_shortcut_slot = !WRAM_MENU_START+$90
 !ram_cm_ctrl_last_pri = !WRAM_MENU_START+$92
@@ -414,7 +417,7 @@
 ;       and is reset to zero when loading a savestate
 
 ; Reserve 48 bytes for CGRAM cache
-; Currently first 28 bytes plus last 2 bytes are used
+; Currently first 32 bytes plus last 2 bytes are used
 !ram_cgram_cache = !WRAM_MENU_START+$D0 ; $30 bytes
 
 
@@ -473,7 +476,7 @@
 ; SRAM
 ; -----
 
-!SRAM_VERSION = #$001F
+!SRAM_VERSION = #$0020
 
 !SRAM_START = $702000
 !SRAM_SIZE = #$1000
@@ -560,6 +563,8 @@
 !sram_fast_teleport = !SRAM_START+$AA
 !sram_update_timers_ctrl_input = !SRAM_START+$AC
 !sram_update_timers_options = !SRAM_START+$AE
+!sram_sprite_features_blue_color = !SRAM_START+$B0
+!sram_sprite_features_grapple_color = !SRAM_START+$B2
 
 ; ^ FREE SPACE ^ up to +$CE
 
@@ -714,6 +719,9 @@
 !CTRL_X = #$0040
 !CTRL_L = #$0020
 !CTRL_R = #$0010
+
+!VANILLA_SPRITE_PALETTE_5_BLUE_COLOR = #$7D08
+!VANILLA_SPRITE_PALETTE_5_GRAPPLE_COLOR = #$7F91
 
 !PLM_DELETE = $AAE3
 
@@ -996,6 +1004,7 @@
 !SAMUS_POWER_BOMB_X = $0CE2
 !SAMUS_POWER_BOMB_Y = $0CE4
 !OFFSCREEN_HDMA_INDEX = $0D1E
+!GRAPPLE_BEAM_FUNCTION = $0D32
 !CURRENT_BLOCK_INDEX = $0DC4
 !SAMUS_VERTICAL_COLLISION_RESULT = $0DC6
 !SAMUS_X_SPEED_KILLED = $0DCE
@@ -1333,6 +1342,7 @@ endif
 !ACTION_MANAGE_PRESETS      = #$002A
 !ACTION_CATEGORY_PRESET     = #$002C
 !ACTION_ADJUST_ITEM         = #$002E
+!ACTION_COLOR_BAR           = #$0030
 
 !SAFEWORD = #$5AFE
 

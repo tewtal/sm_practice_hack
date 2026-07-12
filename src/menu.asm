@@ -471,12 +471,14 @@ cm_transfer_custom_cgram:
     LDA $7EC01A : STA !ram_cgram_cache+$0A
     LDA $7EC01C : STA !ram_cgram_cache+$0C
     LDA $7EC01E : STA !ram_cgram_cache+$0E
-    LDA $7EC032 : STA !ram_cgram_cache+$10
-    LDA $7EC034 : STA !ram_cgram_cache+$12
-    LDA $7EC036 : STA !ram_cgram_cache+$14
-    LDA $7EC03A : STA !ram_cgram_cache+$16
-    LDA $7EC03C : STA !ram_cgram_cache+$18
-    LDA $7EC03E : STA !ram_cgram_cache+$1A
+    LDA $7EC022 : STA !ram_cgram_cache+$10
+    LDA $7EC026 : STA !ram_cgram_cache+$12
+    LDA $7EC032 : STA !ram_cgram_cache+$14
+    LDA $7EC034 : STA !ram_cgram_cache+$16
+    LDA $7EC036 : STA !ram_cgram_cache+$18
+    LDA $7EC03A : STA !ram_cgram_cache+$1A
+    LDA $7EC03C : STA !ram_cgram_cache+$1C
+    LDA $7EC03E : STA !ram_cgram_cache+$1E
 
     JSL PrepMenuPalette
 
@@ -488,6 +490,8 @@ cm_transfer_custom_cgram:
     LDA !ram_cm_palette_background : STA $7EC00E : STA $7EC016 : STA $7EC01E
     LDA !ram_cm_palette_numoutline : STA $7EC01A
     LDA !ram_cm_palette_numfill : STA $7EC01C
+    LDA !sram_sprite_features_blue_color : STA $7EC022
+    LDA !sram_sprite_features_grapple_color : STA $7EC026
     LDA !ram_cm_palette_toggleon : STA $7EC032
     LDA !ram_cm_palette_seltext : STA $7EC034
     LDA !ram_cm_palette_seltextbg : STA $7EC036 : STA $7EC03E
@@ -510,13 +514,20 @@ cm_transfer_original_cgram:
     LDA !ram_cgram_cache+$0A : STA $7EC01A
     LDA !ram_cgram_cache+$0C : STA $7EC01C
     LDA !ram_cgram_cache+$0E : STA $7EC01E
-    LDA !ram_cgram_cache+$10 : STA $7EC032
-    LDA !ram_cgram_cache+$12 : STA $7EC034
-    LDA !ram_cgram_cache+$14 : STA $7EC036
-    LDA !ram_cgram_cache+$16 : STA $7EC03A
-    LDA !ram_cgram_cache+$18 : STA $7EC03C
-    LDA !ram_cgram_cache+$1A : STA $7EC03E
+    LDA !ram_cgram_cache+$10 : STA $7EC022
+    LDA !ram_cgram_cache+$12 : STA $7EC026
+    LDA !ram_cgram_cache+$14 : STA $7EC032
+    LDA !ram_cgram_cache+$16 : STA $7EC034
+    LDA !ram_cgram_cache+$18 : STA $7EC036
+    LDA !ram_cgram_cache+$1A : STA $7EC03A
+    LDA !ram_cgram_cache+$1C : STA $7EC03C
+    LDA !ram_cgram_cache+$1E : STA $7EC03E
 
+    LDA !sram_sprite_features_blue_color : STA $7EC3BE
+    LDA !GAMEMODE : CMP #$0008 : BNE .transfer
+    LDA !sram_sprite_features_blue_color : STA $7EC1BE
+
+  .transfer
     JML transfer_cgram_long
 }
 
@@ -795,6 +806,7 @@ cm_draw_action_table:
     dw draw_manage_presets
     dw draw_category_preset
     dw draw_adjust_item
+    dw draw_color_bar
 
 draw_toggle:
 {
@@ -1859,6 +1871,19 @@ draw_adjust_item:
     RTS
 }
 
+draw_color_bar:
+{
+    ; Grab and draw the value
+    %item_index_to_vram_index()
+    LDA [!DP_CurrentMenu]
+    LDY #$0032
+
+  .loop
+    STA !ram_tilemap_buffer,X : INX #2
+    DEY #2 : BPL .loop
+    RTS
+}
+
 cm_hex2dec_draw5:
 ; Converts a hex number into a five digit decimal number
 ; expects value to be drawn in !DP_DrawValue
@@ -2000,7 +2025,7 @@ menu_ctrl_2_input_display:
     RTS
 
   .table
-    dw #$A100, #$B800, #$AC00, #$B200, #$9400, #$9400, #$9400, #$9400
+    dw #$A100, #$B800, #$AC00, #$B200, #$1F00, #$1F00, #$1F00, #$1F00
     dw #$A200, #$B900, #$8300, #$8200, #$F900, #$F980, #$FF40, #$FF00
 }
 
@@ -2019,12 +2044,12 @@ menu_ctrl_1_input_display:
 
   .no_draw
     INY : ASL : BNE .loop
-    LDA #$9400 : ORA !DP_Palette : XBA
+    LDA #$1F00 : ORA !DP_Palette : XBA
     STA !ram_tilemap_buffer,X
     RTS
 
   .table
-    dw #$8F00, #$8E00, #$8D00, #$8C00, #$9400, #$9400, #$9400, #$9400
+    dw #$8F00, #$8E00, #$8D00, #$8C00, #$1F00, #$1F00, #$1F00, #$1F00
     dw #$8700, #$8600, #$8500, #$8400, #$8100, #$8180, #$8040, #$8000
 }
 
@@ -3028,6 +3053,7 @@ cm_move:
 
   .checkCtrlShortcut
     STA !DP_CurrentMenu : LDA [!DP_CurrentMenu]
+    CMP !ACTION_COLOR_BAR : BEQ .repeat
     CMP !ACTION_CTRL_SHORTCUT : BNE .checkDynamic
 
     ; grab the shortcut slot
@@ -3117,7 +3143,7 @@ cm_execute_action_table:
     dw execute_numfield_word
     dw execute_numfield_hex_word
     dw execute_numfield_signed
-    dw execute_nop
+    dw execute_nop ; readonly
     dw execute_numfield_color
     dw execute_numfield_sound
     dw execute_choice
@@ -3127,11 +3153,12 @@ cm_execute_action_table:
     dw execute_jsl
     dw execute_submenu
     dw execute_custom_preset
-    dw execute_nop
+    dw execute_nop ; ram watch
     dw execute_dynamic
     dw execute_manage_presets
     dw execute_category_preset
     dw execute_adjust_item
+    dw execute_nop ; color bar
 
 execute_nop:
     RTS

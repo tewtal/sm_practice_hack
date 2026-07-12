@@ -166,6 +166,7 @@ init_sram_routine_table:
     dw init_sram_upgrade_1Cto1D
     dw init_sram_upgrade_1Dto1E
     dw init_sram_upgrade_1Eto1F
+    dw init_sram_upgrade_1Fto20
     dw init_sram_fail
 
 init_sram:
@@ -314,6 +315,10 @@ endif
   .upgrade_1Eto1F
     JSR init_reset_rng_control
     INC : STA !sram_hard_reset_clears_rng
+
+  .upgrade_1Fto20
+    LDA !VANILLA_SPRITE_PALETTE_5_BLUE_COLOR : STA !sram_sprite_features_blue_color
+    LDA !VANILLA_SPRITE_PALETTE_5_GRAPPLE_COLOR : STA !sram_sprite_features_grapple_color
 
     LDA !SRAM_VERSION : STA !sram_initialized
     RTS

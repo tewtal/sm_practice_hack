@@ -1839,10 +1839,7 @@ SpritesMenu:
     dw #sprites_show_enemyproj_hitbox
     dw #sprites_show_proj_as_32x32
     dw #$FFFF
-    dw #sprites_samus_hitbox_color
-    dw #sprites_samus_proj_color
-    dw #sprites_enemy_hitbox_color
-    dw #sprites_enemy_proj_color
+    dw #sprites_color_customization
 if !PRESERVE_WRAM
     dw #$FFFF
     dw #sprites_hud_spacetime
@@ -1877,6 +1874,67 @@ sprites_show_enemyproj_hitbox:
 
 sprites_show_proj_as_32x32:
     %cm_toggle_bit("32x32 Projectile Boxes", !ram_sprite_feature_flags, !SPRITE_32x32_PROJ, #0)
+
+sprites_color_customization:
+    %cm_submenu("Hitbox Color Customization", #SpritesColorMenu)
+
+if !PRESERVE_WRAM
+sprites_hud_spacetime:
+    dw !ACTION_CHOICE
+    dl #!ram_cm_sprites_spacetime
+    dw #.routine
+    db #$28, "Spacetime HUD", #$FF
+    db #$28, "    VANILLA", #$FF
+    db #$28, "  PRESERVED", #$FF
+    db #$FF
+  .routine
+    LDA !ram_sprite_feature_flags : AND !SPRITE_HUD_SPACETIME_INVERTED
+    STA !ram_sprite_feature_flags
+    LDA !ram_cm_sprites_spacetime : XBA
+    ORA !ram_sprite_feature_flags : STA !ram_sprite_feature_flags
+    RTL
+
+sprites_hud_xray:
+    dw !ACTION_CHOICE
+    dl #!ram_cm_sprites_xray
+    dw #.routine
+    db #$28, "X-Ray HUD", #$FF
+    db #$28, "    VANILLA", #$FF
+    db #$28, "  PRESERVED", #$FF
+    db #$FF
+  .routine
+    LDA !ram_sprite_feature_flags : AND !SPRITE_HUD_XRAY_INVERTED
+    STA !ram_sprite_feature_flags
+    LDA !ram_cm_sprites_xray : XBA : ASL
+    ORA !ram_sprite_feature_flags : STA !ram_sprite_feature_flags
+    RTL
+endif ; PRESERVE_WRAM
+
+sprites_oob_viewer:
+    %cm_toggle_bit("OoB Tile Viewer", !ram_sprite_feature_flags, !SPRITE_OOB_WATCH, .routine)
+  .routine
+    LDA !ram_sprite_feature_flags : BIT !SPRITE_OOB_WATCH : BEQ .skip_oob
+    JML upload_sprite_oob_tiles
+  .skip_oob
+    RTL
+
+sprites_oob_show_x_wrap:
+    %cm_toggle_bit("OoB Show X Wraparound", !ram_sprite_feature_flags, !SPRITE_OOB_X_WRAP, #0)
+
+SpritesColorMenu:
+    dw #sprites_samus_hitbox_color
+    dw #sprites_samus_proj_color
+    dw #sprites_enemy_hitbox_color
+    dw #sprites_enemy_proj_color
+    dw #$FFFF
+    dw #sprites_blue_color
+    dw #sprites_blue_color_bar
+    dw #$FFFF
+    dw #sprites_grapple_color
+    dw #sprites_grapple_color_bar
+    dw #$0000
+    %cm_header("SPRITE FEATURES")
+    %cm_footer("GRAPPLE OVERWRITES BLUE")
 
 sprites_samus_hitbox_color:
     dw !ACTION_CHOICE
@@ -1938,48 +1996,161 @@ sprites_enemy_proj_color:
     ORA !ram_sprite_feature_flags : STA !ram_sprite_feature_flags
     RTL
 
-if !PRESERVE_WRAM
-sprites_hud_spacetime:
-    dw !ACTION_CHOICE
-    dl #!ram_cm_sprites_spacetime
-    dw #.routine
-    db #$28, "Spacetime HUD", #$FF
-    db #$28, "    VANILLA", #$FF
-    db #$28, "  PRESERVED", #$FF
-    db #$FF
-  .routine
-    LDA !ram_sprite_feature_flags : AND !SPRITE_HUD_SPACETIME_INVERTED
-    STA !ram_sprite_feature_flags
-    LDA !ram_cm_sprites_spacetime : XBA
-    ORA !ram_sprite_feature_flags : STA !ram_sprite_feature_flags
-    RTL
+sprites_blue_color:
+    %cm_jsl("Customize Blue Color", #sprites_blue_color_setup, SpritesBlueColorMenu)
 
-sprites_hud_xray:
-    dw !ACTION_CHOICE
-    dl #!ram_cm_sprites_xray
-    dw #.routine
-    db #$28, "X-Ray HUD", #$FF
-    db #$28, "    VANILLA", #$FF
-    db #$28, "  PRESERVED", #$FF
-    db #$FF
-  .routine
-    LDA !ram_sprite_feature_flags : AND !SPRITE_HUD_XRAY_INVERTED
-    STA !ram_sprite_feature_flags
-    LDA !ram_cm_sprites_xray : XBA : ASL
-    ORA !ram_sprite_feature_flags : STA !ram_sprite_feature_flags
-    RTL
-endif ; PRESERVE_WRAM
+sprites_blue_color_bar:
+    dw !ACTION_COLOR_BAR
+    dw #$3091
 
-sprites_oob_viewer:
-    %cm_toggle_bit("OoB Tile Viewer", !ram_sprite_feature_flags, !SPRITE_OOB_WATCH, .routine)
-  .routine
-    LDA !ram_sprite_feature_flags : BIT !SPRITE_OOB_WATCH : BEQ .skip_oob
-    JML upload_sprite_oob_tiles
-  .skip_oob
-    RTL
+sprites_grapple_color:
+    %cm_jsl("Customize Grapple Color", #sprites_grapple_color_setup, SpritesGrappleColorMenu)
 
-sprites_oob_show_x_wrap:
-    %cm_toggle_bit("OoB Show X Wraparound", !ram_sprite_feature_flags, !SPRITE_OOB_X_WRAP, #0)
+sprites_grapple_color_bar:
+    dw !ACTION_COLOR_BAR
+    dw #$301F
+
+sprites_blue_color_setup:
+    LDA !sram_sprite_features_blue_color : AND #$7C00
+    XBA : LSR #2 : STA !ram_cm_sprites_palette_blue
+    LDA !sram_sprite_features_blue_color : AND #$03E0
+    LSR #5 : STA !ram_cm_sprites_palette_green
+    LDA !sram_sprite_features_blue_color : AND #$001F
+    STA !ram_cm_sprites_palette_red
+    JML action_submenu
+
+SpritesBlueColorMenu:
+    dw #sprites_blue_hex_red
+    dw #sprites_blue_hex_green
+    dw #sprites_blue_hex_blue
+    dw #$FFFF
+    dw #sprites_blue_dec_red
+    dw #sprites_blue_dec_green
+    dw #sprites_blue_dec_blue
+    dw #$FFFF
+    dw #sprites_blue_hex_word
+    dw #$FFFF
+    dw #sprites_blue_color_bar
+    dw #$FFFF
+    dw #sprites_blue_reset
+    dw #$0000
+    %cm_header("CUSTOMIZE BLUE COLOR")
+    %cm_footer("THREE WAYS TO EDIT COLORS")
+
+sprites_blue_hex_red:
+    %cm_numfield_color("Hexadecimal Red", !ram_cm_sprites_palette_red, #sprites_blue_mix_rgb)
+
+sprites_blue_hex_green:
+    %cm_numfield_color("Hexadecimal Green", !ram_cm_sprites_palette_green, #sprites_blue_mix_rgb)
+
+sprites_blue_hex_blue:
+    %cm_numfield_color("Hexadecimal Blue", !ram_cm_sprites_palette_blue, #sprites_blue_mix_rgb)
+
+sprites_blue_mix_rgb:
+    ; mix 5-bit RGB values into 15-bit BGR format
+    LDA !ram_cm_sprites_palette_blue : XBA : ASL #2
+    STA !sram_sprite_features_blue_color
+    LDA !ram_cm_sprites_palette_green : ASL #5
+    ORA !sram_sprite_features_blue_color : STA !sram_sprite_features_blue_color
+    LDA !ram_cm_sprites_palette_red
+    ORA !sram_sprite_features_blue_color : STA !sram_sprite_features_blue_color
+    JML refresh_cgram_long
+
+sprites_blue_dec_red:
+    %cm_numfield("Decimal Red", !ram_cm_sprites_palette_red, 0, 31, 1, 2, #sprites_blue_mix_rgb)
+
+sprites_blue_dec_green:
+    %cm_numfield("Decimal Green", !ram_cm_sprites_palette_green, 0, 31, 1, 2, #sprites_blue_mix_rgb)
+
+sprites_blue_dec_blue:
+    %cm_numfield("Decimal Blue", !ram_cm_sprites_palette_blue, 0, 31, 1, 2, #sprites_blue_mix_rgb)
+
+sprites_blue_hex_word:
+    %cm_numfield_hex_word("SNES 15-bit BGR", !sram_sprite_features_blue_color, #$7FFF, .routine)
+  .reset
+    TYA : STA !sram_sprite_features_blue_color
+  .routine
+    ; split 15-bit BGR format into 5-bit red, green, and blue
+    AND #$7C00 : XBA : LSR #2 : STA !ram_cm_sprites_palette_blue
+    LDA !sram_sprite_features_blue_color : AND #$03E0
+    LSR #5 : STA !ram_cm_sprites_palette_green
+    LDA !sram_sprite_features_blue_color : AND #$001F
+    STA !ram_cm_sprites_palette_red
+    JML refresh_cgram_long
+
+sprites_blue_reset:
+    %cm_jsl("Reset Blue Color", #sprites_blue_hex_word_reset, !VANILLA_SPRITE_PALETTE_5_BLUE_COLOR)
+
+sprites_grapple_color_setup:
+    LDA !sram_sprite_features_grapple_color : AND #$7C00
+    XBA : LSR #2 : STA !ram_cm_sprites_palette_blue
+    LDA !sram_sprite_features_grapple_color : AND #$03E0
+    LSR #5 : STA !ram_cm_sprites_palette_green
+    LDA !sram_sprite_features_grapple_color : AND #$001F
+    STA !ram_cm_sprites_palette_red
+    JML action_submenu
+
+SpritesGrappleColorMenu:
+    dw #sprites_grapple_hex_red
+    dw #sprites_grapple_hex_green
+    dw #sprites_grapple_hex_blue
+    dw #$FFFF
+    dw #sprites_grapple_dec_red
+    dw #sprites_grapple_dec_green
+    dw #sprites_grapple_dec_blue
+    dw #$FFFF
+    dw #sprites_grapple_hex_word
+    dw #$FFFF
+    dw #sprites_grapple_color_bar
+    dw #$FFFF
+    dw #sprites_grapple_reset
+    dw #$0000
+    %cm_header("CUSTOMIZE GRAPPLE COLOR")
+    %cm_footer("THREE WAYS TO EDIT COLORS")
+
+sprites_grapple_hex_red:
+    %cm_numfield_color("Hexadecimal Red", !ram_cm_sprites_palette_red, #sprites_grapple_mix_rgb)
+
+sprites_grapple_hex_green:
+    %cm_numfield_color("Hexadecimal Green", !ram_cm_sprites_palette_green, #sprites_grapple_mix_rgb)
+
+sprites_grapple_hex_blue:
+    %cm_numfield_color("Hexadecimal Blue", !ram_cm_sprites_palette_blue, #sprites_grapple_mix_rgb)
+
+sprites_grapple_mix_rgb:
+    ; mix 5-bit RGB values into 15-bit BGR format
+    LDA !ram_cm_sprites_palette_blue : XBA : ASL #2
+    STA !sram_sprite_features_grapple_color
+    LDA !ram_cm_sprites_palette_green : ASL #5
+    ORA !sram_sprite_features_grapple_color : STA !sram_sprite_features_grapple_color
+    LDA !ram_cm_sprites_palette_red
+    ORA !sram_sprite_features_grapple_color : STA !sram_sprite_features_grapple_color
+    JML refresh_cgram_long
+
+sprites_grapple_dec_red:
+    %cm_numfield("Decimal Red", !ram_cm_sprites_palette_red, 0, 31, 1, 2, #sprites_grapple_mix_rgb)
+
+sprites_grapple_dec_green:
+    %cm_numfield("Decimal Green", !ram_cm_sprites_palette_green, 0, 31, 1, 2, #sprites_grapple_mix_rgb)
+
+sprites_grapple_dec_blue:
+    %cm_numfield("Decimal Blue", !ram_cm_sprites_palette_blue, 0, 31, 1, 2, #sprites_grapple_mix_rgb)
+
+sprites_grapple_hex_word:
+    %cm_numfield_hex_word("SNES 15-bit BGR", !sram_sprite_features_grapple_color, #$7FFF, .routine)
+  .reset
+    TYA : STA !sram_sprite_features_grapple_color
+  .routine
+    ; split 15-bit BGR format into 5-bit red, green, and blue
+    AND #$7C00 : XBA : LSR #2 : STA !ram_cm_sprites_palette_blue
+    LDA !sram_sprite_features_grapple_color : AND #$03E0
+    LSR #5 : STA !ram_cm_sprites_palette_green
+    LDA !sram_sprite_features_grapple_color : AND #$001F
+    STA !ram_cm_sprites_palette_red
+    JML refresh_cgram_long
+
+sprites_grapple_reset:
+    %cm_jsl("Reset Grapple Color", #sprites_grapple_hex_word_reset, !VANILLA_SPRITE_PALETTE_5_GRAPPLE_COLOR)
 
 
 ; --------------
