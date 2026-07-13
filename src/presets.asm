@@ -90,6 +90,7 @@ endif
 
     ; Create Ceres elevator projectiles if needed
     LDA !GAMEMODE : CMP #$001F : BNE .doneCeresProjectiles
+    TDC : STA $7EC3BE
 if !FEATURE_PAL
     LDY #$A3C3 : JSL $868027
     LDY #$A3D1 : JSL $868027

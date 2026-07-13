@@ -9,10 +9,6 @@
 org $80A0C6
     JSL load_common_target_colors
 
-; Ceres does not need to overwrite sprite 5 blue color
-org $828130
-    BRA $02
-
 ; Hook Gamemode 7 to upload tiles after loading if needed
 org $828B26
     JSL update_sprite_tiles_loading
@@ -42,6 +38,31 @@ warnpc $82E169
 
 org $82E4D0
     JSL load_common_target_colors
+
+if !FEATURE_PAL
+org $86A3AE
+else
+org $86A372
+endif
+    LDA #delete_ceres_concealer_projectile_instruction
+
+
+%startfree(86)
+
+delete_ceres_concealer_projectile_instruction:
+    dw delete_ceres_concealer_projectile
+
+delete_ceres_concealer_projectile:
+{
+    LDA !sram_sprite_features_blue_color : STA $7EC1BE
+
+    ; Vanilla delete projectile routine
+    STZ !ENEMY_PROJ_ID,X
+    PLA
+    RTS
+}
+
+%endfree(86)
 
 
 ; Add hitbox graphic to free sprite VRAM slot
