@@ -450,6 +450,7 @@
 !ram_crash_mem_viewer = !CRASHDUMP+$54
 !ram_crash_mem_viewer_bank = !CRASHDUMP+$56
 !ram_crash_temp = !CRASHDUMP+$58
+!ram_crash_emu = !CRASHDUMP+$5A
 
 !ram_crash_input = !CRASHDUMP+$60
 !ram_crash_input_new = !CRASHDUMP+$62

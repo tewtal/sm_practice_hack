@@ -425,6 +425,7 @@ ram_crash_text_palette = !ram_crash_text_palette ; !CRASHDUMP+$52
 ram_crash_mem_viewer = !ram_crash_mem_viewer ; !CRASHDUMP+$54
 ram_crash_mem_viewer_bank = !ram_crash_mem_viewer_bank ; !CRASHDUMP+$56
 ram_crash_temp = !ram_crash_temp ; !CRASHDUMP+$58
+ram_crash_emu = !ram_crash_emu ; !CRASHDUMP+$5A
 
 ram_crash_input = !ram_crash_input ; !CRASHDUMP+$60
 ram_crash_input_new = !ram_crash_input_new ; !CRASHDUMP+$62
