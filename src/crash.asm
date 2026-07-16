@@ -25,18 +25,19 @@ NativeBRKHandlerHook:
 ; Hijack emulation COP vector
 org $80FFF4
 EmulationCOPHandlerHook:
-    dw COPHandler
+    dw EmuCOPHandler
 
 ; Hijack emulation IRQ/BRK vector
 ; Due to a bug in vanilla code, MSB needs to be unchanged (0x85)
-; https://patrickjohnston.org/bank/A6?just=9BB2
+; https://patrickjohnston.org/bank/A6?just=9B18&highlight#f9B18
 org $80FFFE
 EmulationBRKHandlerHook:
-    dw BRKHandlerHook
+    dw EmuBRKHandlerHook
 
-org $808577
-BRKHandlerHook:
-    JML BRKHandler_setBank
+org $808577 ; unused vanilla code, see note above
+EmuBRKHandlerHook:
+    JMP EmuBRKHandler
+warnpc $80858C
 
 
 %startfree(80)
@@ -53,6 +54,9 @@ CrashHandler:
     TYA : STA !ram_crash_y
     PLA : STA !ram_crash_dbp
     TSC : STA !ram_crash_sp
+
+    ; not emulation mode
+    LDA #$0000 : STA !ram_crash_emu
 
     ; check condition of stack
     BMI .overflow
@@ -121,6 +125,7 @@ BRKHandler:
     %ai16()
     STA !ram_crash_a
     LDA #$0000 : STA $004200 ; disable NMI
+    STA !ram_crash_emu ; not emulation mode
 
   .registers
     ; store remaining CPU registers
@@ -149,6 +154,17 @@ BRKHandler:
     JMP CrashHandler_fixStack
 }
 
+EmuBRKHandler:
+{
+    CLC : XCE ; get out of emulation mode
+    PHP : PHB
+    %ai16()
+    STA !ram_crash_a
+    LDA #$0000 : STA $004200 ; disable NMI
+    LDA #$FFFF : STA !ram_crash_emu ; mark as emulation mode
+    JML BRKHandler_registers
+}
+
 COPHandler:
 {
     JML .setBank
@@ -157,6 +173,7 @@ COPHandler:
     %ai16()
     STA !ram_crash_a
     LDA #$0000 : STA $004200 ; disable NMI
+    STA !ram_crash_emu ; not emulation mode
 
   .registers
     ; store remaining CPU registers
@@ -183,6 +200,17 @@ COPHandler:
     LDA $001FFE : STA !ram_crash_temp     ; preserve stack bytes
     LDY #$1FD0                            ; dump $1FD0-$1FFF
     JMP CrashHandler_fixStack
+}
+
+EmuCOPHandler:
+{
+    CLC : XCE ; get out of emulation mode
+    PHP : PHB
+    %ai16()
+    STA !ram_crash_a
+    LDA #$0000 : STA $004200 ; disable NMI
+    LDA #$FFFF : STA !ram_crash_emu ; mark as emulation mode
+    JML COPHandler_registers
 }
 
 %endfree(80)
@@ -480,7 +508,7 @@ table ../resources/normal.tbl
     LDA #$2C00|'#' : STA !CRASHDUMP_TILEMAP_BUFFER+$2D4
     LDA #$2C00|'$' : STA !CRASHDUMP_TILEMAP_BUFFER+$2D6
     STA !CRASHDUMP_TILEMAP_BUFFER+$2E6
-    BRA .drawStack
+    BRA .emuMarker
 
   .COPcrash
     LDA #$2C00|'C' : STA !CRASHDUMP_TILEMAP_BUFFER+$2CC
@@ -489,6 +517,10 @@ table ../resources/normal.tbl
     LDA #$2C00|'#' : STA !CRASHDUMP_TILEMAP_BUFFER+$2D4
     LDA #$2C00|'$' : STA !CRASHDUMP_TILEMAP_BUFFER+$2D6
     STA !CRASHDUMP_TILEMAP_BUFFER+$2E6
+
+  .emuMarker
+    LDA !ram_crash_emu : BEQ .drawStack
+    LDA #$2C00|'E' : STA !CRASHDUMP_TILEMAP_BUFFER+$2C8
 
   .drawStack
     ; -- Draw Stack Values --
