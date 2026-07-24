@@ -148,6 +148,13 @@ post_load_state:
     JSL MenuRNG ; rerandomize hack RNG
 
   .randomizeOnLoad
+    LDX #$0008
+    ; Make some RNG calls in case we're in a weird XBA state.
+  .rerandomize_loop
+    JSL $808111
+    DEX
+    BNE .rerandomize_loop
+
     ; Randomize energy/ammo?
     LDA !sram_loadstate_rando_enable : BEQ .init_wram
     JSL RandomizeOnLoad
