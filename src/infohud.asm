@@ -50,7 +50,7 @@ else
 org $A09CC8
 endif
     JSL infidoppler_hook_projectile_collision
-    NOP : NOP
+    BRA $00
 
 if !FEATURE_VANILLAHUD
 ; skip the rest of the hijacks if Vanilla HUD build
@@ -599,7 +599,6 @@ ih_before_room_transition:
     dw status_door_xpos
     dw status_door_ypos
 }
-endif ; !FEATURE_VANILLAHUD
 
 ceres_start_timers:
 {
@@ -609,14 +608,9 @@ ceres_start_timers:
 
     ; overwritten code
     STZ !SCREEN_FADE_DELAY : STZ !SCREEN_FADE_COUNTER
-if !FEATURE_VANILLAHUD
-else
     JML ceres_start_timers_return
-endif
 }
 
-if !FEATURE_VANILLAHUD
-else
 ih_unpause:
 ; Adds frames when unpausing (nmi is turned off during vram transfers)
 {
@@ -2029,7 +2023,7 @@ infidoppler_hook_projectile_collision:
   .no
     ; Vanilla logic
     LDA !SAMUS_PROJ_PROPERTIES,Y
-    BIT #$0008
+    AND #$0008
     RTL
 
   .disable
