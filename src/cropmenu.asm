@@ -97,7 +97,9 @@ cm_crop_mode:
     LDA #$0008
   .decSetPalette
     DEC : STA !ram_crash_palette
-    JSL crash_cgram_transfer
+    %i16()
+    JSL crash_cycle_palettes
+    JSL transfer_cgram_long
     BRA .loop
 
   .incPalette
@@ -105,7 +107,9 @@ cm_crop_mode:
     LDA #$FFFF
   .incSetPalette
     INC : STA !ram_crash_palette
-    JSL crash_cgram_transfer
+    %i16()
+    JSL crash_cycle_palettes
+    JSL transfer_cgram_long
     BRA .loop
 
   .end

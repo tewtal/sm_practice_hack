@@ -41,7 +41,7 @@ org $90E72B
 org $90E74D
     PLA : PHX : TAX
     JSR (periodic_damage_table,X)
-    PLX : NOP : NOP
+    PLX : BRA $00
 
 ; Transfer logic here by overwriting redundant end of periodic damage
 ; Also repoint jump and branch to avoid the redundant section

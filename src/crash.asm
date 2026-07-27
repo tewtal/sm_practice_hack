@@ -237,8 +237,8 @@ CrashViewer:
 
     %ai16()
     JSL crash_next_frame
-    JSL crash_cgram_transfer
-    LDA $C1 : PHA : LDA $C3 : PHA
+    JSL crash_cycle_palettes
+    PEI ($C1) : PEI ($C3)
     JSL cm_transfer_custom_tileset
     PLA : STA $C3 : PLA : STA $C1
 
@@ -324,7 +324,7 @@ endif
     INC : STA !ram_crash_palette
 
   .updateCGRAM
-    JSL crash_cgram_transfer
+    JSL crash_cycle_palettes
     JMP CrashLoop
 }
 
@@ -469,7 +469,7 @@ table ../resources/normal.tbl
     ; -- Detect and Draw COP/BRK --
     LDA !ram_crash_type : AND #$0003 : BEQ .drawStack_bridge
     LDA !ram_crash_type : AND #$C000 : BNE .corruptBRKCOP
-    LDA $C1 : PHA : LDA $C3 : PHA
+    PEI ($C1) : PEI ($C3)
 
     %a8()
     LDA !ram_crash_stack : STA !ram_crash_draw_value
@@ -723,7 +723,7 @@ CrashMemViewer:
     ; draw the current value and nearby bytes
     LDA !ram_crash_mem_viewer : BMI .bridge_drawUpperHalf
     %a16()
-    LDA $C1 : PHA : LDA $C3 : PHA
+    PEI ($C1) : PEI ($C3)
     LDA !ram_crash_mem_viewer_bank : STA $C3
     LDA !ram_crash_mem_viewer : STA $C1 : STA !ram_crash_temp
     LDA [$C1] : STA !ram_crash_draw_value
@@ -775,7 +775,7 @@ CrashMemViewer:
 
   .drawUpperHalf
     %a16()
-    LDA $41 : PHA : LDA $43 : PHA
+    PEI ($41) : PEI ($43)
     LDA !ram_crash_mem_viewer_bank : STA $43
     LDA !ram_crash_mem_viewer : STA $41 : STA !ram_crash_temp
     LDA [$41] : STA !ram_crash_draw_value
@@ -894,7 +894,7 @@ CrashInfo:
 crash_draw_text:
 {
     ; X = pointer to tilemap area (STA !CRASHDUMP_TILEMAP_BUFFER,X)
-    LDA $C5 : PHA : LDA $C7 : PHA
+    PEI ($C5) : PEI ($C7)
     LDA !ram_crash_text_bank : STA $C7
     LDA !ram_crash_text : STA $C5
     %a8()
@@ -914,7 +914,6 @@ crash_draw_text:
 
 crash_draw4:
 {
-    PHP : %a16()
     ; (X000)
     LDA !ram_crash_draw_value : AND #$F000 : XBA : LSR #3 : TAY
     LDA.w HexMenuGFXTable,Y : STA !CRASHDUMP_TILEMAP_BUFFER,X
@@ -927,7 +926,6 @@ crash_draw4:
     ; (000X)
     LDA !ram_crash_draw_value : AND #$000F : ASL : TAY
     LDA.w HexMenuGFXTable,Y : STA !CRASHDUMP_TILEMAP_BUFFER+6,X
-    PLP
     RTS
 }
 
@@ -944,18 +942,20 @@ crash_draw2:
     RTS
 }
 
-crash_cgram_transfer:
+crash_cycle_palettes:
 {
-    PHP : %a16()
+    LDA !ram_crash_palette : ASL : TAX
+    JMP (.pointers,X)
 
-    LDA !ram_crash_palette : BEQ .white ; 0 index
-    DEC : BEQ .grey      ; 1
-    DEC : BEQ .green     ; 2
-    DEC : BEQ .pink      ; 3
-    DEC : BEQ .yellow    ; 4
-    DEC : BEQ .blue      ; 5
-    DEC : BEQ .red       ; 6
-    DEC : BEQ .orange    ; 7
+  .pointers
+    dw .white  ; 0 index
+    dw .grey   ; 1
+    dw .green  ; 2
+    dw .pink   ; 3
+    dw .yellow ; 4
+    dw .blue   ; 5
+    dw .red    ; 6
+    dw .orange ; 7
 
   .white
     LDA #$44E5 : STA $7EC012
@@ -1005,9 +1005,18 @@ crash_cgram_transfer:
     STA $7EC016 : STA $7EC01E
     STA $7EC03C
 
-    JSL transfer_cgram_long
-    PLP
-    PHK : PLB
+    %a8()
+    LDA #$80 : STA $802100 ; forced blanking on
+    LDA #$00 : STA $4300 ; DMA mode
+    LDA #$7E : STA $4304 ; src bank
+    LDX #$C010 : STX $4302 ; src addr
+    LDA #$22 : STA $4301 ; dest addr
+    LDA #$08 : STA $2121 ; CGRAM addr
+    LDX #$0010 : STX $4305 ; size
+    LDA #$01 : STA $420B ; enable
+    LDA #$0F : STA $0F2100 ; forced blanking off
+    %a16()
+
     RTL
 }
 
@@ -1049,18 +1058,18 @@ crash_tilemap_transfer:
 
 crash_next_frame:
 {
-    PHP : %a8()
+    %a8()
     LDA !NMI_COUNTER : PHA
   .loop
     CMP !NMI_COUNTER : BEQ .loop
     PLA : STA !NMI_COUNTER
-    PLP
+    %a16()
     RTL
 }
 
 crash_read_inputs:
 {
-    PHP : %a8()
+    %a8()
   .loop
     LDA $4212 : AND #$01 : BNE .loop
 
@@ -1087,7 +1096,7 @@ crash_read_inputs:
 
   .done
     LDA !ram_crash_input : STA !ram_crash_input_prev
-    PLP
+    %a16()
     RTL
 }
 
