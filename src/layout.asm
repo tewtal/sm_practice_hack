@@ -311,9 +311,11 @@ hijack_after_load_level_data:
     JMP $E38E
 
   .mainStreet
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_MAP_RANDO : BNE .mainStreetExternal
     LDA !ram_door_portal_flags : AND !DOOR_PORTAL_MODE_MASK : CMP #$0002 : BNE .done
     LDA !ram_door_source : ASL : TAX
     LDA portals_left_vanilla_table,X : CMP #$A3CC : BNE .done
+  .mainStreetExternal
     JSL layout_asm_mainstreet_external
     JMP $E38E
 
@@ -330,9 +332,11 @@ hijack_after_load_level_data:
     JMP $E38E
 
   .mb
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_MAP_RANDO : BNE .mbExternal
     LDA !ram_door_portal_flags : AND !DOOR_PORTAL_MODE_MASK : CMP #$0002 : BNE .done
     LDA !ram_door_source : ASL : TAX
     LDA portals_left_vanilla_table,X : CMP #$AA80 : BNE .done
+  .mbExternal
     JSL layout_asm_mb_external
     JMP $E38E
 }
@@ -341,7 +345,7 @@ hijack_door_closing_plm:
 {
     PHP : PHB
     %ai16()
-    LDA $078D : CMP #$A654 : BNE .done
+    LDA !DOOR_ID : CMP #$A654 : BNE .done
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_AREA_RANDO : BNE .done
 
     ; Aqueduct Farm Sand Pit should not have a door closing PLM
@@ -1983,17 +1987,16 @@ org $8FBE18
 org $8FC124
 hook_layout_asm_escape_explosion:
     ; Start with copy of $8FC131 routine (replacing JSR with inlined version)
-    LDA $0A78 : BNE .end_explosion
-    LDA $05B6 : AND #$0001 : BNE .end_explosion
+    LDA !TIME_IS_FROZEN : BNE .end_explosion
+    LDA !FRAME_COUNTER : AND #$0001 : BNE .end_explosion
     JSL $808111
-    PHA : AND #$00FF : CLC : ADC $0911 : STA $12 : PLA
-    XBA : AND #$00FF : CLC : ADC $0915 : STA $14
-    LSR : LSR : LSR : LSR
-    %a8() : PHA : LDA $07A5 : STA $4202
+    PHA : AND #$00FF : CLC : ADC !LAYER1_X : STA $12 : PLA
+    XBA : AND #$00FF : CLC : ADC !LAYER1_Y : STA $14 : LSR #4
+    %a8() : PHA : LDA !ROOM_WIDTH_BLOCKS : STA $4202
     PLA : STA $4203 : %a16()
-    LDA $12 : LSR : LSR : LSR : LSR
+    LDA $12 : LSR #4
     CLC : ADC $4216 : ASL : TAX
-    LDA $7F0002,X : AND #$03FF
+    LDA.l !LEVEL_DATA,X : AND #$03FF
     CMP #$00FF : BEQ .end_explosion
 
     ; Jump to earthquake check after explosion
@@ -2304,15 +2307,15 @@ layout_skip_custom_door_asm:
 
 layout_asm_vanilla_parlor_escape:
 {
-    LDA #$0018 : STA $183E
-    LDA #$FFFF : STA $1840
+    LDA #$0018 : STA !EARTHQUAKE_TYPE
+    LDA #$FFFF : STA !EARTHQUAKE_TIMER
     RTS
 }
 
 layout_asm_vanilla_landing_site_escape:
 {
-    LDA #$0006 : STA $183E
-    LDA #$FFFF : STA $1840
+    LDA #$0006 : STA !EARTHQUAKE_TYPE
+    LDA #$FFFF : STA !EARTHQUAKE_TIMER
     RTS
 }
 
@@ -2321,7 +2324,7 @@ layout_asm_escape_screen_shake_pea:
 layout_asm_escape_screen_shake:
 {
     LDA !sram_suppress_flashing : BIT !SUPPRESS_EARTHQUAKE : BNE .suppress
-    LDA $1840 : ORA #$8000 : STA $1840
+    LDA !EARTHQUAKE_TIMER : ORA #$8000 : STA !EARTHQUAKE_TIMER
 
   .suppress
     RTS
@@ -2329,31 +2332,31 @@ layout_asm_escape_screen_shake:
 
 layout_asm_vanilla_tourian_escape_1:
 {
-    LDA #$0012 : STA $183E
-    LDA #$FFFF : STA $1840
+    LDA #$0012 : STA !EARTHQUAKE_TYPE
+    LDA #$FFFF : STA !EARTHQUAKE_TIMER
     RTS
 }
 
 layout_asm_vanilla_tourian_escape_2:
 {
-    LDA #$0012 : STA $183E
+    LDA #$0012 : STA !EARTHQUAKE_TYPE
     STA $07E3 : STZ $07E1
-    LDA #$FFFF : STA $1840
+    LDA #$FFFF : STA !EARTHQUAKE_TIMER
     RTS
 }
 
 layout_asm_vanilla_tourian_escape_3:
 {
-    LDA #$0015 : STA $183E
-    LDA #$FFFF : STA $1840
+    LDA #$0015 : STA !EARTHQUAKE_TYPE
+    LDA #$FFFF : STA !EARTHQUAKE_TIMER
     RTS
 }
 
 layout_asm_vanilla_tourian_escape_4:
 {
-    LDA #$0015 : STA $183E
+    LDA #$0015 : STA !EARTHQUAKE_TYPE
     STA $07E3 : STZ $07E1
-    LDA #$FFFF : STA $1840
+    LDA #$FFFF : STA !EARTHQUAKE_TIMER
     RTS
 }
 
@@ -2399,12 +2402,16 @@ layout_asm_maprando_mb_header:
 
 layout_asm_mb_state_check:
 {
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_MAP_RANDO : BNE .map_rando
     LDA !ram_door_portal_flags : AND !DOOR_PORTAL_MODE_MASK
     CMP #$0002 : BNE .vanilla
     LDA !ram_door_source : ASL : TAX
     LDA portals_left_vanilla_table,X : CMP #$AA80 : BNE .vanilla
+
+  .map_rando
     LDX #layout_asm_maprando_mb_header
     JMP $E5E6
+
   .vanilla
     LDX #$DD6E
     JMP $E5E6
@@ -2444,11 +2451,13 @@ endif ; !FEATURE_VANILLAHUD
 
 layout_asm_mb_to_tourian:
 {
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_MAP_RANDO : BNE .map_rando
     LDA !ram_door_portal_flags : AND !DOOR_PORTAL_MODE_MASK
     CMP #$0002 : BNE layout_asm_mbhp_done
     LDA !ram_door_source : ASL : TAX
     LDA portals_left_vanilla_table,X : CMP #$AAE0 : BNE layout_asm_mbhp_done
 
+  .map_rando
     ; Set door direction to keep gate from appearing
     LDA #$0001 : STA !DOOR_DIRECTION
 
@@ -2465,6 +2474,7 @@ layout_asm_tourianescape1_remove_plm:
 
 layout_asm_tourianescape1:
 {
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_MAP_RANDO : BNE layout_asm_tourianescape1_remove_plm
     LDA !ram_door_portal_flags : AND !DOOR_PORTAL_MODE_MASK
     CMP #$0002 : BNE layout_asm_mbhp_done
     LDA !ram_door_source : ASL : TAX
@@ -2597,6 +2607,7 @@ layout_asm_constructionzone:
     PHP
     %ai16()
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANY_RANDO : BEQ layout_asm_morphball_done
+    BIT !ROOM_LAYOUT_MAP_RANDO : BNE layout_asm_morphball_done
     BIT !ROOM_LAYOUT_DASH_RECALL : BEQ .set_zebes_awake
 
     ; DASH requires first item to be collected before waking the planet
@@ -2766,11 +2777,13 @@ layout_asm_mteverest:
     PHP
     %ai16()
 
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_MAP_RANDO : BNE .map_rando
     LDA !ram_door_portal_flags : AND !DOOR_PORTAL_MODE_MASK
     CMP #$0002 : BNE layout_asm_crabtunnel_done
     LDA !ram_door_destination : ASL : TAX
     LDA portals_right_vanilla_table,X : CMP #$A45C : BNE layout_asm_crabtunnel_done
 
+  .map_rando
     ; Expand hidden door and space in front of door
     LDA #$911D : STA $7F1CA2 : STA $7F1D62 : STA $7F1E22
     LDA #$011D : STA $7F1CA4 : STA $7F1D64 : STA $7F1E24 : STA $7F1EE4
@@ -3494,6 +3507,7 @@ layout_asm_redtowerelevator:
     PHP
     %ai16()
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_ANY_RANDO : BEQ layout_asm_moat_done
+    BIT !ROOM_LAYOUT_MAP_RANDO : BNE layout_asm_moat_done
 
     ; Replace yellow door PLM with flashing door PLM
     LDA #$C854 : STA $1C83

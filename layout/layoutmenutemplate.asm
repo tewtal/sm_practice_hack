@@ -7,14 +7,14 @@
 ; -------------------------
 
 LayoutMenu:
-    dw #layout_itempickups
-    dw #layout_bombtorizodoor
-    dw #layout_steamcollision
-    dw #layout_magnetstairs
+    dw #layout_maprando
     dw #layout_arearando
     dw #layout_antisoftlock
-    dw #layout_variatweaks
     dw #layout_dashrecall
+    dw #layout_variatweaks
+    dw #$FFFF
+    dw #layout_itempickups
+    dw #layout_lesscommon
     dw #$FFFF
     dw #layout_doorportal
     dw #layout_dynamic_dooriframes
@@ -29,6 +29,21 @@ LayoutMenu:
     dw #$0000
     %cm_header("ROOM LAYOUT")
     %cm_footer("APPLIED WHEN ROOM RELOADED")
+
+layout_maprando:
+    %cm_toggle_bit("Map Rando Patches", !sram_room_layout, !ROOM_LAYOUT_MAP_RANDO, #0)
+
+layout_arearando:
+    %cm_toggle_bit("Area Rando Patches", !sram_room_layout, !ROOM_LAYOUT_AREA_RANDO, #0)
+
+layout_antisoftlock:
+    %cm_toggle_bit("Anti-Softlock Patches", !sram_room_layout, !ROOM_LAYOUT_ANTISOFTLOCK, #0)
+
+layout_dashrecall:
+    %cm_toggle_bit("DASH Recall Patches", !sram_room_layout, !ROOM_LAYOUT_DASH_RECALL, #0)
+
+layout_variatweaks:
+    %cm_toggle_bit("VARIA Tweaks", !sram_room_layout, !ROOM_LAYOUT_VARIA_TWEAKS, #0)
 
 layout_itempickups:
     %cm_jsl("Item Pickups", #layout_prepare_itempickups_menu, #LayoutItemPickupsMenu)
@@ -311,6 +326,16 @@ layout_ip_set_hidden:
     JML layout_ip_init_all
 }
 
+layout_lesscommon:
+    %cm_submenu("Less Common Patches", #LessCommonLayoutMenu)
+
+LessCommonLayoutMenu:
+    dw #layout_bombtorizodoor
+    dw #layout_steamcollision
+    dw #layout_magnetstairs
+    dw #$0000
+    %cm_header("LESS COMMON PATCHES")
+
 layout_bombtorizodoor:
     dw !ACTION_CHOICE
     dl #!sram_bomb_torizo_door
@@ -326,18 +351,6 @@ layout_steamcollision:
 
 layout_magnetstairs:
     %cm_toggle_bit("Remove Magnet Stairs", !sram_room_layout, !ROOM_LAYOUT_NO_MAGNET_STAIRS, #0)
-
-layout_arearando:
-    %cm_toggle_bit("Area Rando Patches", !sram_room_layout, !ROOM_LAYOUT_AREA_RANDO, #0)
-
-layout_antisoftlock:
-    %cm_toggle_bit("Anti-Softlock Patches", !sram_room_layout, !ROOM_LAYOUT_ANTISOFTLOCK, #0)
-
-layout_variatweaks:
-    %cm_toggle_bit("VARIA Tweaks", !sram_room_layout, !ROOM_LAYOUT_VARIA_TWEAKS, #0)
-
-layout_dashrecall:
-    %cm_toggle_bit("DASH Recall Patches", !sram_room_layout, !ROOM_LAYOUT_DASH_RECALL, #0)
 
 layout_doorportal:
     dw !ACTION_CHOICE
