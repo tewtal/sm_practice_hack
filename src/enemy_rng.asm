@@ -999,14 +999,19 @@ hook_crocomire_rng:
 hook_crocomire_scroll:
 {
     LDA !ram_door_portal_flags : AND !DOOR_PORTAL_MODE_MASK
-    CMP #$0002 : BNE .vanilla
+    CMP #$0002 : BNE .not_door_portal
     LDA !ram_door_destination : ASL : TAX
-    LDA portals_right_vanilla_table,X : CMP #$93DE : BNE .vanilla
+    LDA portals_right_vanilla_table,X : CMP #$93DE : BNE .not_door_portal
 
+  .map_rando
     ; In map rando when right door selected,
     ; do not set red scrolls
     LDA $7ECD20
     RTS
+
+  .not_door_portal
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_MAP_RANDO : BEQ .vanilla
+    LDA !DOOR_ID : CMP #$9432 : BEQ .map_rando
 
   .vanilla
     TDC
@@ -1317,14 +1322,19 @@ endif
 hook_spore_spawn_scroll:
 {
     LDA !ram_door_portal_flags : AND !DOOR_PORTAL_MODE_MASK
-    CMP #$0002 : BNE .vanilla
+    CMP #$0002 : BNE .not_door_portal
     LDA !ram_door_source : ASL : TAX
-    LDA portals_left_vanilla_table,X : CMP #$8E4A : BNE .vanilla
+    LDA portals_left_vanilla_table,X : CMP #$8E4A : BNE .not_door_portal
 
+  .map_rando
     ; In map rando when top door selected,
     ; do not use a scroll hook for spore spawn
     TDC
     RTS
+
+  .not_door_portal
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_MAP_RANDO : BEQ .vanilla
+    LDA !DOOR_ID : CMP #$8D2A : BEQ .map_rando
 
   .vanilla
     ; Overwritten scrolling finished hook
@@ -2212,12 +2222,13 @@ else  ; Overridden logic
     JSL $A9D2F6
 endif
 
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_MAP_RANDO : BNE .map_rando
     LDA !ram_door_portal_flags : AND !DOOR_PORTAL_MODE_MASK
     CMP #$0002 : BNE .vanilla
     LDA !ram_door_source : ASL : TAX
     LDA portals_left_vanilla_table,X : CMP #$AA38 : BNE .vanilla
 
-    ; Use maprando values
+  .map_rando
     LDA #$0001 : STA !eram_baby_dead_hop_delay
     LDA #baby_maprando_hop_initial_velocities : STA !eram_baby_hop_velocity_tables
     LDA #$002C : STA !eram_baby_initial_delay
