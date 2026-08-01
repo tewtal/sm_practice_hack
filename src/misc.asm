@@ -158,6 +158,10 @@ org $808F65
     JML hook_set_music_data
 
 
+org $9085A3
+    JMP misc_fix_blue_echoes
+
+
 org $90D000       ; hijack, runs when a shinespark is activated
     JMP misc_shinespark_activation
 
@@ -1106,6 +1110,32 @@ stop_all_sounds:
     LDA #$0002 : JSL $80914D
   .done_health_alarm
     RTL
+}
+
+misc_fix_blue_echoes:
+{
+    ; In vanilla when playing the speed boosting sound,
+    ; it is possible to lose blue if enough other sounds are being played
+    ; This is typically patched in map rando
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_MAP_RANDO : BNE .map_rando
+
+    ; Overwritten logic
+    LDA #$0003 : JSL $80914D
+    JMP $85AA
+
+  .map_rando
+    ; Follow vanilla logic starting from $90:85A3
+    LDA #$0003 : JSL $80914D
+    XBA : AND #$00FF : ASL : TAX
+    LDA !SAMUS_SPEED_BOOST_TIMER : AND #$FF00
+    ORA $91B61F,X
+
+    ; Make sure lower byte is not zero
+    BIT #$00FF : BNE .map_rando_done
+    INC
+
+  .map_rando_done
+    JMP $85BA
 }
 
 misc_shinespark_activation:
