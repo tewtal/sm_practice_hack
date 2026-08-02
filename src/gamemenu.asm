@@ -213,10 +213,10 @@ game_paldebug:
     RTL
 
 game_debugbrightness:
-    %cm_toggle("Debug CPU Brightness", $7E0DF4, #$01, #0)
+    %cm_toggle("Debug CPU Brightness", !DEBUG_CPU_BRIGHTNESS, #$01, #0)
 
 game_invincibility:
-    %cm_toggle_bit("Invincibility", $7E0DE0, #$0007, #0)
+    %cm_toggle_bit("Invincibility", !DEBUG_INVINCIBILITY, #$0007, #0)
 
 game_infiniteammo:
     %cm_toggle("Infinite Ammo", !ram_infinite_ammo, #$01, .routine)
@@ -361,8 +361,8 @@ ControllerSettingMenu:
     dw #controls_dash
     dw #controls_item_select
     dw #controls_item_cancel
-    dw #controls_angle_up
-    dw #controls_angle_down
+    dw #controls_dynamic_angle_up
+    dw #controls_dynamic_angle_down
     dw #$0000
     %cm_header("CONTROLLER SETTING MODE")
 
@@ -384,11 +384,29 @@ controls_item_select:
 controls_item_cancel:
     %cm_ctrl_input(" ITEM CANCEL", !IH_INPUT_ITEM_CANCEL, action_submenu, #AssignControlsMenu)
 
+controls_dynamic_angle_up:
+    dw !ACTION_DYNAMIC
+    dl #!ram_cm_aim_anywhere
+    dw #controls_angle_up
+    dw #controls_aim_up
+
 controls_angle_up:
     %cm_ctrl_input("    ANGLE UP", !IH_INPUT_ANGLE_UP, action_submenu, #AssignAngleControlsMenu)
 
+controls_aim_up:
+    %cm_ctrl_input("    ANGLE UP", !IH_INPUT_ANGLE_UP, action_submenu, #AssignControlsMenu)
+
+controls_dynamic_angle_down:
+    dw !ACTION_DYNAMIC
+    dl #!ram_cm_aim_anywhere
+    dw #controls_angle_down
+    dw #controls_aim_down
+
 controls_angle_down:
     %cm_ctrl_input("  ANGLE DOWN", !IH_INPUT_ANGLE_DOWN, action_submenu, #AssignAngleControlsMenu)
+
+controls_aim_down:
+    %cm_ctrl_input("  ANGLE DOWN", !IH_INPUT_ANGLE_DOWN, action_submenu, #AssignControlsMenu)
 
 controls_save_to_file:
     %cm_jsl("Save to File", .routine, #0)
@@ -486,129 +504,60 @@ check_duplicate_inputs:
     LDA !CTRL_BINDING_SHOT : BEQ .swap_shot             ; check if shot is unassigned
     CMP $C4 : BNE .check_jump                           ; skip to check_jump if not a duplicate assignment
   .swap_shot
-    JMP .shot                                           ; swap with shot
+    LDA !ram_cm_ctrl_swap : STA !CTRL_BINDING_SHOT
+    RTL
 
   .check_jump
     LDA #!CTRL_BINDING_JUMP : CMP $C2 : BEQ .check_dash
     LDA !CTRL_BINDING_JUMP : BEQ .swap_jump
     CMP $C4 : BNE .check_dash
   .swap_jump
-    JMP .jump
+    LDA !ram_cm_ctrl_swap : STA !CTRL_BINDING_JUMP
+    RTL
 
   .check_dash
     LDA #!CTRL_BINDING_DASH : CMP $C2 : BEQ .check_cancel
     LDA !CTRL_BINDING_DASH : BEQ .swap_dash
     CMP $C4 : BNE .check_cancel
   .swap_dash
-    JMP .dash
+    LDA !ram_cm_ctrl_swap : STA !CTRL_BINDING_DASH
+    RTL
 
   .check_cancel
     LDA #!CTRL_BINDING_CANCEL : CMP $C2 : BEQ .check_select
     LDA !CTRL_BINDING_CANCEL : BEQ .swap_cancel
     CMP $C4 : BNE .check_select
   .swap_cancel
-    JMP .cancel
+    LDA !ram_cm_ctrl_swap : STA !CTRL_BINDING_CANCEL
+    RTL
 
   .check_select
-    LDA #!CTRL_BINDING_SELECT : CMP $C2 : BEQ .check_up
+    LDA #!CTRL_BINDING_SELECT : CMP $C2 : BEQ .check_angle_up
     LDA !CTRL_BINDING_SELECT : BEQ .swap_select
-    CMP $C4 : BNE .check_up
+    CMP $C4 : BNE .check_angle_up
   .swap_select
-    JMP .select
+    LDA !ram_cm_ctrl_swap : STA !CTRL_BINDING_SELECT
+    RTL
 
-  .check_up
-    LDA #!CTRL_BINDING_ANGLEUP : CMP $C2 : BEQ .check_down
-    LDA !CTRL_BINDING_ANGLEUP : BEQ .swap_up
-    CMP $C4 : BNE .check_down
-  .swap_up
-    JMP .up
+  .check_angle_up
+    LDA #!CTRL_BINDING_ANGLEUP : CMP $C2 : BEQ .check_angle_down
+    LDA !CTRL_BINDING_ANGLEUP : BEQ .swap_angle_up
+    CMP $C4 : BNE .check_angle_down
+  .swap_angle_up
+    LDA !ram_cm_ctrl_swap : STA !CTRL_BINDING_ANGLEUP
+    RTL
 
-  .check_down
+  .check_angle_down
     LDA #!CTRL_BINDING_ANGLEDOWN : CMP $C2 : BEQ .not_detected
-    LDA !CTRL_BINDING_ANGLEDOWN : BEQ .swap_down
+    LDA !CTRL_BINDING_ANGLEDOWN : BEQ .swap_angle_down
     CMP $C4 : BNE .not_detected
-  .swap_down
-    JMP .down
+  .swap_angle_down
+    LDA !ram_cm_ctrl_swap : STA !CTRL_BINDING_ANGLEDOWN
+    RTL
 
   .not_detected
     %sfxfail()
     LDA #$FFFF
-    RTL
-
-  .shot
-    LDA !ram_cm_ctrl_swap : AND #$0030 : BEQ .shot_safe  ; check if old input is L or R
-    TDC : STA !CTRL_BINDING_SHOT                         ; unassign input
-    RTL
-  .shot_safe
-    LDA !ram_cm_ctrl_swap : STA !CTRL_BINDING_SHOT       ; input is safe to be assigned
-    RTL
-
-  .jump
-    LDA !ram_cm_ctrl_swap : AND #$0030 : BEQ .jump_safe
-    TDC : STA !CTRL_BINDING_JUMP
-    RTL
-  .jump_safe
-    LDA !ram_cm_ctrl_swap : STA !CTRL_BINDING_JUMP
-    RTL
-
-  .dash
-    LDA !ram_cm_ctrl_swap : AND #$0030 : BEQ .dash_safe
-    TDC : STA !CTRL_BINDING_DASH
-    RTL
-  .dash_safe
-    LDA !ram_cm_ctrl_swap : STA !CTRL_BINDING_DASH
-    RTL
-
-  .cancel
-    LDA !ram_cm_ctrl_swap : AND #$0030 : BEQ .cancel_safe
-    TDC : STA !CTRL_BINDING_CANCEL
-    RTL
-  .cancel_safe
-    LDA !ram_cm_ctrl_swap : STA !CTRL_BINDING_CANCEL
-    RTL
-
-  .select
-    LDA !ram_cm_ctrl_swap : AND #$0030 : BEQ .select_safe
-    TDC : STA !CTRL_BINDING_SELECT
-    RTL
-  .select_safe
-    LDA !ram_cm_ctrl_swap : STA !CTRL_BINDING_SELECT
-    RTL
-
-  .up
-    LDA !ram_cm_ctrl_swap : AND #$0030 : BEQ .unbind_up  ; check if input is L or R, unbind if not
-    LDA !ram_cm_ctrl_swap : STA !CTRL_BINDING_ANGLEUP    ; safe to assign input
-    CMP !CTRL_BINDING_ANGLEDOWN : BEQ .swap_angle_down   ; check if input matches angle down
-    RTL
-
-  .unbind_up
-    STA !CTRL_BINDING_ANGLEUP
-    RTL
-
-  .swap_angle_down
-    CMP #$0020 : BNE .angle_down_l           ; check if angle up is assigned to L
-    LDA #$0010 : STA !CTRL_BINDING_ANGLEDOWN ; assign R to angle down
-    RTL
-  .angle_down_l
-    LDA #$0020 : STA !CTRL_BINDING_ANGLEDOWN ; assign L to angle down
-    RTL
-
-  .down
-    LDA !ram_cm_ctrl_swap : AND #$0030 : BEQ .unbind_down
-    LDA !ram_cm_ctrl_swap : STA !CTRL_BINDING_ANGLEDOWN
-    CMP !CTRL_BINDING_ANGLEUP : BEQ .swap_angle_up
-    RTL
-
-  .unbind_down
-    STA !CTRL_BINDING_ANGLEDOWN
-    RTL
-
-  .swap_angle_up
-    CMP #$0020 : BNE .angle_up_l
-    LDA #$0010 : STA !CTRL_BINDING_ANGLEUP
-    RTL
-  .angle_up_l
-    LDA #$0020 : STA !CTRL_BINDING_ANGLEUP
     RTL
 }
 

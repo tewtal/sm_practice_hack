@@ -325,6 +325,7 @@ ram_cm_metmask = !ram_cm_metmask ; !WRAM_MENU_START+$92
 
 ram_cm_ceres_seconds = !ram_cm_ceres_seconds ; !WRAM_MENU_START+$90
 ram_cm_zebes_seconds = !ram_cm_zebes_seconds ; !WRAM_MENU_START+$92
+ram_cm_aim_anywhere = !ram_cm_aim_anywhere ; !WRAM_MENU_START+$94
 
 ram_cm_sprites_spacetime = !ram_cm_sprites_spacetime ; !WRAM_MENU_START+$90
 ram_cm_sprites_xray = !ram_cm_sprites_xray ; !WRAM_MENU_START+$92

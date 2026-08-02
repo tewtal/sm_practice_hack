@@ -137,6 +137,39 @@ org $82E74B
 resume_original_fade_in:
 
 
+if !FEATURE_PAL
+org $82F5C0
+else              ; Set OFF tilemap for aim up/down
+org $82F5CA
+endif
+misc_angle_up_down_set_off_tilemap:
+{
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_MAP_RANDO : BNE .end
+
+    ; Relocate first part of original vanilla logic
+    ; Use more optimal BPL comparison to free up space for the above map rando check
+    LDA $1B47 : CMP #$0005 : BPL .second_check
+    LDA $F6AD : STA $7E352E
+    LDA $F6AF : STA $7E3530
+    LDA $F6B1 : STA $7E3532
+    LDA $F6B3 : STA $7E356E
+    LDA $F6B5 : STA $7E3570
+    LDA $F6B7 : STA $7E3572
+    NOP
+
+  .second_check
+    LDA $1B49 : CMP #$0005 : BPL .end
+}
+%warnpc($82F60E, $82F604)
+
+if !FEATURE_PAL
+org $82F62E
+else
+org $82F638
+endif
+misc_angle_up_down_set_off_tilemap_end:
+
+
 org $CF8BBF       ; Set map scroll beep to high priority
 hook_spc_engine_map_scroll_beep_priority:
     dw $2A97
@@ -158,6 +191,149 @@ org $808F65
     JML hook_set_music_data
 
 
+org $80A0A7
+    JSR hook_override_angle_ctrl_bindings
+
+
+%startfree(80)
+
+hook_override_angle_ctrl_bindings:
+{
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_MAP_RANDO : BNE .done
+    LDA !CTRL_BINDING_ANGLEUP : BIT !CTRL_ABXY_SELECT : BEQ .angle_down
+    STZ !CTRL_BINDING_ANGLEUP
+  .angle_down
+    LDA !CTRL_BINDING_ANGLEDOWN : BIT !CTRL_ABXY_SELECT : BEQ .done
+    STZ !CTRL_BINDING_ANGLEDOWN
+  .done
+    JMP $A12B
+}
+
+misc_restore_angle_ctrl_bindings:
+{
+    ; Normally vanilla can internally bind angle up/down to select or face buttons,
+    ; but blocks the button action and also shows it as OFF in the menu.
+    ; We want to allow aim anywhere if map rando is enabled,
+    ; but conditionally changing the blocking logic could affect CPU usage.
+    ; We can unconditionally remove the block without affecting CPU,
+    ; but now we need another way to conditionally enforce vanilla behavior.
+    ; To do this, we remove the disallowed bindings when starting gameplay.
+    ;
+    ; This logic is intending to restore the disallowed bindings when saving,
+    ; so that we don't change how the vanilla menuing works,
+    ; since circling back to the start of these comments,
+    ; normally vanilla can internally bind angle up/down to select or face buttons.
+
+    LDA !CTRL_BINDING_SHOT : ORA !CTRL_BINDING_JUMP
+    ORA !CTRL_BINDING_DASH : ORA !CTRL_BINDING_CANCEL
+    ORA !CTRL_BINDING_SELECT : AND !CTRL_ABXY_SELECT
+    EOR !CTRL_ABXY_SELECT : BEQ .done
+    PHA : DEC : AND $01,S : BNE .restore_both
+
+    LDA !CTRL_BINDING_ANGLEUP : BNE .angle_down
+    PLA : STA !CTRL_BINDING_ANGLEUP
+    BRA .done
+
+  .angle_down
+    LDA !CTRL_BINDING_ANGLEDOWN : BNE .done_pla
+    PLA : STA !CTRL_BINDING_ANGLEDOWN
+    BRA .done
+
+  .done_pla
+    PLA
+  .done
+    RTL
+
+  .restore_both
+    ; In the case where both angles are off,
+    ; we may have two options to restore.
+    ; First verify this is the case, then check
+    ; if there are exactly two select and/or face buttons.
+    ; If so, then we can fill those in,
+    ; and if not then we give up and leave the angles blank.
+    LDA !CTRL_BINDING_ANGLEUP : ORA !CTRL_BINDING_ANGLEDOWN : BNE .done_pla
+
+    PLA : CMP #$00C0 : BNE .not_xa
+    LDA !CTRL_X : STA !CTRL_BINDING_ANGLEUP
+    LDA !CTRL_A : STA !CTRL_BINDING_ANGLEDOWN
+    RTL
+
+  .not_xa
+    CMP #$2040 : BNE .not_xselect
+    LDA !CTRL_X : STA !CTRL_BINDING_ANGLEUP
+    LDA !CTRL_SELECT : STA !CTRL_BINDING_ANGLEDOWN
+    RTL
+
+  .not_xselect
+    CMP #$4040 : BNE .not_xy
+    LDA !CTRL_X : STA !CTRL_BINDING_ANGLEUP
+    LDA !CTRL_Y : STA !CTRL_BINDING_ANGLEDOWN
+    RTL
+
+  .not_xy
+    CMP #$8040 : BNE .not_xb
+    LDA !CTRL_X : STA !CTRL_BINDING_ANGLEUP
+    LDA !CTRL_B : STA !CTRL_BINDING_ANGLEDOWN
+    RTL
+
+  .not_xb
+    CMP #$2080 : BNE .not_aselect
+    LDA !CTRL_A : STA !CTRL_BINDING_ANGLEUP
+    LDA !CTRL_SELECT : STA !CTRL_BINDING_ANGLEDOWN
+    RTL
+
+  .not_aselect
+    CMP #$4080 : BNE .not_ay
+    LDA !CTRL_A : STA !CTRL_BINDING_ANGLEUP
+    LDA !CTRL_Y : STA !CTRL_BINDING_ANGLEDOWN
+    RTL
+
+  .not_ay
+    CMP #$8080 : BNE .not_ab
+    LDA !CTRL_A : STA !CTRL_BINDING_ANGLEUP
+    LDA !CTRL_B : STA !CTRL_BINDING_ANGLEDOWN
+    RTL
+
+  .not_ab
+    CMP #$6000 : BNE .not_selecty
+    LDA !CTRL_SELECT : STA !CTRL_BINDING_ANGLEUP
+    LDA !CTRL_Y : STA !CTRL_BINDING_ANGLEDOWN
+    RTL
+
+  .not_selecty
+    CMP #$A000 : BNE .not_selectb
+    LDA !CTRL_SELECT : STA !CTRL_BINDING_ANGLEUP
+    LDA !CTRL_B : STA !CTRL_BINDING_ANGLEDOWN
+    RTL
+
+  .not_selectb
+    CMP #$C000 : BNE .not_yb
+    LDA !CTRL_Y : STA !CTRL_BINDING_ANGLEUP
+    LDA !CTRL_B : STA !CTRL_BINDING_ANGLEDOWN
+  .not_yb
+    RTL
+}
+
+%endfree(80)
+
+
+org $818013
+hook_save_controller_bindings:
+{
+    JSL misc_restore_angle_ctrl_bindings
+
+    ; Migrate and optimize vanilla logic
+    LDY #$005E
+  .loop
+    LDA !SAMUS_ITEMS_EQUIPPED,Y
+    STA.w !WRAM_SAVED_TO_SRAM,Y
+    DEY #2 : BPL .loop
+    LDA !AREA_ID : XBA : TAX
+    TDC : TAY
+}
+warnpc $81802B
+
+
 org $9085A3
     JMP misc_fix_blue_echoes
 
@@ -173,6 +349,22 @@ else
 org $90E908
 endif
     JSR preserve_escape_timer
+
+
+; In order to allow aim anywhere with map rando in logic,
+; we need to allow it in the vanilla routine,
+; and instead remove the invalid binding
+org $918244
+    BIT !CTRL_ANY
+
+org $91825A
+    BIT !CTRL_ANY
+
+org $9182AF
+    BIT !CTRL_ANY
+
+org $9182C5
+    BIT !CTRL_ANY
 
 
 if !FEATURE_PAL
