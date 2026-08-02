@@ -98,6 +98,12 @@ action_game_mainmenu:
     ORA !ram_cm_ceres_seconds : STA !ram_cm_ceres_seconds
     LDA !sram_zebes_timer : AND #$000F
     ORA !ram_cm_zebes_seconds : STA !ram_cm_zebes_seconds
+
+    ; Aim anywhere allowed if map rando selected
+    LDA !sram_room_layout : AND !ROOM_LAYOUT_MAP_RANDO : BEQ .set_anywhere
+    LDA #$0001
+  .set_anywhere
+    STA !ram_cm_aim_anywhere
     JMP action_mainmenu
 }
 

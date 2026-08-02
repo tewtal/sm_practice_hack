@@ -583,6 +583,16 @@ preset_start_gameplay:
     LDA #$0030 : TRB !REG_4200_NMI
 
     JSL preset_load_destination_state_and_tiles
+
+    ; Override angle controller bindings if necessary
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_MAP_RANDO : BNE .done_angle_bindings
+    LDA !CTRL_BINDING_ANGLEUP : BIT !CTRL_ABXY_SELECT : BEQ .angle_down_binding
+    STZ !CTRL_BINDING_ANGLEUP
+  .angle_down_binding
+    LDA !CTRL_BINDING_ANGLEDOWN : BIT !CTRL_ABXY_SELECT : BEQ .done_angle_bindings
+    STZ !CTRL_BINDING_ANGLEDOWN
+  .done_angle_bindings
+
     JSL $878016 ; Clear animated tile objects
     JSL $88829E ; Wait until the end of a v-blank and clear (H)DMA enable flags
 

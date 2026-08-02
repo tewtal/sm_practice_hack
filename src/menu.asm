@@ -179,6 +179,7 @@ cm_init:
   .done_slowdown
     TDC : STA !ram_slowdown_mode : STA !ram_slowdown_frames
 
+    JSL misc_restore_angle_ctrl_bindings
     JSL initialize_ppu_long
     JSL cm_transfer_custom_tileset
     JSL cm_transfer_custom_cgram
@@ -208,6 +209,15 @@ cm_exit:
     JSL overwrite_HUD_numbers
     JSL cm_transfer_original_cgram
     JSL cm_write_ctrl_routine
+
+    ; Override angle controller bindings if necessary
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_MAP_RANDO : BNE .done_angle_bindings
+    LDA !CTRL_BINDING_ANGLEUP : BIT !CTRL_ABXY_SELECT : BEQ .angle_down_binding
+    STZ !CTRL_BINDING_ANGLEUP
+  .angle_down_binding
+    LDA !CTRL_BINDING_ANGLEDOWN : BIT !CTRL_ABXY_SELECT : BEQ .done_angle_bindings
+    STZ !CTRL_BINDING_ANGLEDOWN
+  .done_angle_bindings
 
     ; Update HUD (in case we added missiles etc.)
     LDA !ram_gametime_room : STA $C1
@@ -1408,8 +1418,22 @@ draw_controller_input:
     TXA : CLC : ADC #$0020 : TAX
 
     ; check if anything to draw
-    LDA (!DP_Address) : AND #$E0F0 : BEQ .unbound
+    LDA !sram_room_layout : BIT !ROOM_LAYOUT_MAP_RANDO : BNE .check_normal
+    LDA !DP_Address : CMP #!CTRL_BINDING_ANGLEUP : BEQ .check_angle
+    CMP #!CTRL_BINDING_ANGLEDOWN : BNE .check_normal
 
+  .check_angle
+    ; for angle bindings and map rando disabled, only show L and R options
+    LDA (!DP_Address) : AND !CTRL_LR : BNE .determine_input
+
+  .unbound
+    LDA !MENU_BLANK : STA !ram_tilemap_buffer,X
+    RTS
+
+  .check_normal
+    LDA (!DP_Address) : AND !CTRL_ABLRXY_SELECT : BEQ .unbound
+
+  .determine_input
     ; determine which input to draw, using Y to refresh A
     TAY : AND !CTRL_A : BEQ .check_b : LDY #$0000 : BRA .draw
   .check_b
@@ -1421,16 +1445,12 @@ draw_controller_input:
   .check_l
     TYA : AND !CTRL_L : BEQ .check_r : LDY #$0008 : BRA .draw
   .check_r
-    TYA : AND !CTRL_R : BEQ .check_s : LDY #$000A : BRA .draw
-  .check_s
+    TYA : AND !CTRL_R : BEQ .check_select : LDY #$000A : BRA .draw
+  .check_select
     TYA : AND !CTRL_SELECT : BEQ .unbound : LDY #$000C
 
   .draw
     LDA.w .CtrlMenuGFXTable,Y : STA !ram_tilemap_buffer,X
-    RTS
-
-  .unbound
-    LDA !MENU_BLANK : STA !ram_tilemap_buffer,X
     RTS
 
   .CtrlMenuGFXTable
