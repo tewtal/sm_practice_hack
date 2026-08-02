@@ -649,7 +649,7 @@ ih_elevator_activation:
     LDA !GAMEMODE : CMP #$0008 : BNE .done
     LDA !ram_timers_autoupdate : BNE .done
 
-    JSL ih_update_hud_early
+    JSL ih_update_timers
 
   .done
     PLA
@@ -662,8 +662,7 @@ ih_babyskip_segment:
 {
     ; runs when the screen locks to start the hopper/baby cutscene
     STA $7ECD22 ; overwritten code
-    JSL ih_update_hud_early
-    RTL
+    JML ih_update_timers
 }
 
 ih_mb1_segment:
@@ -676,13 +675,13 @@ else            ; overwritten code
 endif
 
     TDC : STA !DAMAGE_COUNTER
-    JML ih_update_hud_early
+    JML ih_update_timers
 }
 
 ih_mb2_segment_dead:
 {
     ; runs when MB2 realizes she has zero HP
-    JSL ih_update_hud_early
+    JSL ih_update_timers
     ; overwritten code
 if !FEATURE_PAL
     LDA #$B938 : STA !ENEMY_FUNCTION_POINTER
@@ -699,7 +698,7 @@ ih_mb2_segment_rainbow:
     STA $7E7854 ; overwritten code
 
     TDC : STA !DAMAGE_COUNTER
-    JML ih_update_hud_early
+    JML ih_update_timers
 }
 
 ih_shinespark_segment:
@@ -719,13 +718,15 @@ ih_shinespark_segment:
     PLB
 
   .done
-    JML ih_update_hud_early
+    JML ih_update_timers
 }
 
 ih_drops_segment:
 {
     ; runs when boss drops spawn
-    JSL ih_update_hud_early
+    PHA
+    JSL ih_update_timers
+    PLA
     ; overwritten code
     PLP : PLY : PLX
     RTL
@@ -734,12 +735,12 @@ ih_drops_segment:
 ih_chozo_segment:
 {
     JSL $8090CB ; overwritten code
-    JML ih_update_hud_early
+    JML ih_update_timers
 }
 
 ih_ceres_elevator_segment:
 {
-    JSL ih_update_hud_early
+    JSL ih_update_timers
 if !FEATURE_PAL
     JML $90F081
 else ; overwritten code
@@ -749,7 +750,7 @@ endif
 
 ih_ship_elevator_segment:
 {
-    JSL ih_update_hud_early
+    JSL ih_update_timers
 if !FEATURE_PAL
     JML $91E35B
 else ; overwritten code
@@ -761,7 +762,7 @@ ih_croc_segments:
 {
     ; runs on two music changes post-fight
     JSL !MUSIC_ROUTINE ; overwritten code
-    JML ih_update_hud_early
+    JML ih_update_timers
 }
 
 ih_update_hud_before_transition:
@@ -826,6 +827,8 @@ ih_update_hud_code:
     PEA $8080 : PLB : PLB
 
   .start
+    LDA #$FFFF : STA !ram_last_hp : STA !ram_enemy_hp
+    LDA !ram_watch_right_hud : EOR #$FFFF : STA !ram_watch_right_hud
     LDA !ram_minimap : BNE .mmHUD
     JMP .startUpdate
 
@@ -850,7 +853,6 @@ ih_update_hud_code:
     LDX #$0054 : JSR Draw3
 
   .mmRoomTimer
-    STZ $4205
     LDA !sram_frame_counter_mode : BIT !FRAME_COUNTER_USE_IGT : BNE .mmInGameTimer
     LDA !IH_DECIMAL : STA !HUD_TILEMAP+$B4
     LDA !ram_last_realtime_room
@@ -874,9 +876,6 @@ ih_update_hud_code:
     JMP .end
 
   .startUpdate
-    LDA #$FFFF : STA !ram_last_hp : STA !ram_enemy_hp
-    LDA !ram_watch_right_hud : EOR #$FFFF : STA !ram_watch_right_hud
-
     ; Determine starting point of time display
     LDX #$003C
     LDA !sram_top_display_mode : BIT !TOP_HUD_VANILLA_BIT : BEQ .pickRoomTimer
@@ -2217,6 +2216,278 @@ ih_set_zebes_timer:
 
 if !FEATURE_VANILLAHUD
 else
+; Update Timers is called during normal gameplay,
+; so it avoid common helper methods in favor of optimization
+ih_update_timers:
+{
+    PHX : PHP : PHB
+    PHK : PLB
+
+    LDA !ram_minimap : BEQ .start
+    JMP .mmHUD
+
+  .start
+    STZ $4205
+    LDA !sram_frame_counter_mode : BIT !FRAME_COUNTER_USE_IGT : BNE .inGameRoomTimer
+    LDA !ram_realtime_room
+    BRA .calculateRoomTimer
+  .inGameRoomTimer
+    LDA !ram_gametime_room
+  .calculateRoomTimer
+    ; Divide time by 60 or 50 and draw seconds and frames
+    STA $4204
+    %a8()
+    LDA.b !FRAMERATE : STA $4206
+    %ai16()
+    LDA !sram_top_display_mode : BIT !TOP_HUD_VANILLA_BIT : BEQ .drawRoomTimer
+    JMP .vanillaRoomTimer
+
+  .drawRoomTimer
+    ; Prepare to draw frames
+    LDA $4216 : ASL : PHA
+    ; Prepare seconds
+    LDA $4214 : STA $4204
+    %a8()
+    LDA #$64 : STA $4206
+    %ai16()
+    ; Draw frames while we wait for CPU math
+    PLX : LDA.w HexToNumberGFX1,X : STA !HUD_TILEMAP+$44
+    LDA.w HexToNumberGFX2,X : STA !HUD_TILEMAP+$46
+    LDA $4214 : BEQ .drawRoomTens
+    ; Draw hundreds digit seconds
+    ASL : TAX
+    LDA.w NumberGFXTable,X : STA !HUD_TILEMAP+$3C
+    ; Draw tens digit seconds
+    LDA $4216 : ASL : TAX
+    LDA.w HexToNumberGFX1,X : STA !HUD_TILEMAP+$3E
+    BRA .drawRoomOnes
+  .drawRoomTens
+    ; Draw tens digit seconds (may be blank)
+    LDA $4216 : ASL : TAX
+    LDA.w HexToNumberGFX1Blank,X : STA !HUD_TILEMAP+$3E
+  .drawRoomOnes
+    ; Draw ones digit seconds
+    LDA.w HexToNumberGFX2,X : STA !HUD_TILEMAP+$40
+
+    ; Prepare lag
+    LDA !ram_realtime_room : SEC : SBC !ram_transition_counter
+    STA $4204
+    %a8()
+    LDA #$64 : STA $4206
+    %ai16()
+    PEA $0000 : PLA ; wait for CPU math
+    LDA $4214 : BEQ .lagDrawTens
+    ; Draw thousands digit lag (may be blank)
+    ASL : TAX
+    LDA.w HexToNumberGFX1Blank,X : STA !HUD_TILEMAP+$80
+    ; Draw hundreds digit lag
+    LDA.w HexToNumberGFX2,X : STA !HUD_TILEMAP+$82
+    ; Draw tens digit tiles
+    LDA $4216 : ASL : TAX
+    LDA.w HexToNumberGFX1,X : STA !HUD_TILEMAP+$84
+    BRA .lagDrawOnes
+  .lagDrawTens
+    ; Draw tens digit tiles (may be blank)
+    LDA $4216 : ASL : TAX
+    LDA.w HexToNumberGFX1Blank,X : STA !HUD_TILEMAP+$84
+  .lagDrawOnes
+    ; Draw ones digit tiles
+    LDA.w HexToNumberGFX2,X : STA !HUD_TILEMAP+$86
+
+    ; Skip segment timer when certain HUD modes enabled
+    LDA !ram_print_segment_timer : BPL .end
+
+  .drawSegmentTimer
+    LDA !sram_frame_counter_mode : BIT !FRAME_COUNTER_USE_IGT : BNE .inGameSegmentTimer
+
+    ; Prepare minutes
+    LDA !ram_seg_rt_minutes : STA $4204
+    %a8()
+    LDA #$64 : STA $4206
+    %ai16()
+    ; Draw seconds and frames while we wait for CPU math
+    LDA !ram_seg_rt_seconds : ASL : TAX
+    LDA.w HexToNumberGFX1,X : STA !HUD_TILEMAP+$B6
+    LDA.w HexToNumberGFX2,X : STA !HUD_TILEMAP+$B8
+    LDA !ram_seg_rt_frames : ASL : TAX
+    LDA.w HexToNumberGFX1,X : STA !HUD_TILEMAP+$BC
+    LDA.w HexToNumberGFX2,X : STA !HUD_TILEMAP+$BE
+    LDA $4214 : BEQ .segmentDrawTens
+    ; Draw hundreds digit minutes
+    ASL : TAX
+    LDA.w NumberGFXTable,X : STA !HUD_TILEMAP+$AE
+    ; Draw tens digit minutes
+    LDA $4216 : ASL : TAX
+    LDA.w HexToNumberGFX1,X : STA !HUD_TILEMAP+$B0
+    BRA .segmentDrawOnes
+  .segmentDrawTens
+    ; Draw tens digit minutes (may be blank)
+    LDA $4216 : ASL : TAX
+    LDA.w HexToNumberGFX1Blank,X : STA !HUD_TILEMAP+$B0
+  .segmentDrawOnes
+    ; Draw ones digit minutes
+    LDA.w HexToNumberGFX2,X : STA !HUD_TILEMAP+$B2
+
+  .end
+    PLB : PLP : PLX
+    RTL
+
+  .inGameSegmentTimer
+    ; Prepare minutes
+    LDA !IGT_MINUTES : STA $4204
+    %a8()
+    LDA #$64 : STA $4206
+    %ai16()
+    ; Draw seconds and frames while we wait for CPU math
+    LDA !IGT_SECONDS : ASL : TAX
+    LDA.w HexToNumberGFX1,X : STA !HUD_TILEMAP+$B6
+    LDA.w HexToNumberGFX2,X : STA !HUD_TILEMAP+$B8
+    LDA !IGT_FRAMES : ASL : TAX
+    LDA.w HexToNumberGFX1,X : STA !HUD_TILEMAP+$BC
+    LDA.w HexToNumberGFX2,X : STA !HUD_TILEMAP+$BE
+    LDA $4214 : BEQ .inGameSegmentDrawTens
+    ; Draw hundreds digit minutes
+    ASL : TAX
+    LDA.w NumberGFXTable,X : STA !HUD_TILEMAP+$AE
+    ; Draw tens digit minutes
+    LDA $4216 : ASL : TAX
+    LDA.w HexToNumberGFX1,X : STA !HUD_TILEMAP+$B0
+    BRA .inGameSegmentDrawOnes
+  .inGameSegmentDrawTens
+    ; Draw tens digit minutes (may be blank)
+    LDA $4216 : ASL : TAX
+    LDA.w HexToNumberGFX1Blank,X : STA !HUD_TILEMAP+$B0
+  .inGameSegmentDrawOnes
+    ; Draw ones digit minutes
+    LDA.w HexToNumberGFX2,X : STA !HUD_TILEMAP+$B2
+    BRA .end
+
+  .vanillaRoomTimer
+    ; Prepare to draw frames
+    LDA $4216 : ASL : PHA
+    ; Prepare seconds
+    LDA $4214 : STA $4204
+    %a8()
+    LDA #$64 : STA $4206
+    %ai16()
+    ; Draw frames while we wait for CPU math
+    PLX : LDA.w HexToNumberGFX1,X : STA !HUD_TILEMAP+$42
+    LDA.w HexToNumberGFX2,X : STA !HUD_TILEMAP+$44
+    LDA $4214 : BEQ .vanillaDrawRoomTens
+    ; Draw hundreds digit seconds
+    ASL : TAX
+    LDA.w NumberGFXTable,X : STA !HUD_TILEMAP+$3A
+    ; Draw tens digit seconds
+    LDA $4216 : ASL : TAX
+    LDA.w HexToNumberGFX1,X : STA !HUD_TILEMAP+$3C
+    BRA .vanillaDrawRoomOnes
+  .vanillaDrawRoomTens
+    ; Draw tens digit seconds (may be blank)
+    LDA $4216 : ASL : TAX
+    LDA.w HexToNumberGFX1Blank,X : STA !HUD_TILEMAP+$3C
+  .vanillaDrawRoomOnes
+    ; Draw ones digit seconds
+    LDA.w HexToNumberGFX2,X : STA !HUD_TILEMAP+$3E
+
+    ; Prepare lag
+    LDA !ram_realtime_room : SEC : SBC !ram_transition_counter
+    STA $4204
+    %a8()
+    LDA #$64 : STA $4206
+    %ai16()
+    PEA $0000 : PLA ; wait for CPU math
+    LDA $4214 : BEQ .vanillaLagDrawTens
+    ; Draw thousands digit lag (may be blank)
+    ASL : TAX
+    LDA.w HexToNumberGFX1Blank,X : STA !HUD_TILEMAP+$7E
+    ; Draw hundreds digit lag
+    LDA.w HexToNumberGFX2,X : STA !HUD_TILEMAP+$80
+    ; Draw tens digit tiles
+    LDA $4216 : ASL : TAX
+    LDA.w HexToNumberGFX1,X : STA !HUD_TILEMAP+$82
+    BRA .vanillaLagDrawOnes
+  .vanillaLagDrawTens
+    ; Draw tens digit tiles (may be blank)
+    LDA $4216 : ASL : TAX
+    LDA.w HexToNumberGFX1Blank,X : STA !HUD_TILEMAP+$82
+  .vanillaLagDrawOnes
+    ; Draw ones digit tiles
+    LDA.w HexToNumberGFX2,X : STA !HUD_TILEMAP+$84
+
+    ; Skip segment timer when certain HUD modes enabled
+    LDA !ram_print_segment_timer : BPL .mmEnd
+    JMP .drawSegmentTimer
+
+  .mmEnd
+    PLB : PLP : PLX
+    RTL
+
+  .mmHUD
+    ; Map visible, so draw map counter over item%
+    LDA !sram_top_display_mode : BIT !TOP_HUD_VANILLA_BIT : BNE .mmEnd
+    STZ $4205
+    LDA !sram_display_mode : CMP !IH_MODE_ROOMSTRAT_INDEX : BNE .mmTileCounter
+    LDA !sram_room_strat : BEQ .mmRoomTimer
+
+  .mmTileCounter
+    ; Prepare tiles
+    LDA !MAP_COUNTER : STA $4204
+    %a8()
+    LDA #$64 : STA $4206
+    %ai16()
+    PEA $0000 : PLA ; wait for CPU math
+    LDA $4214 : BEQ .mmDrawTileTens
+    ; Draw hundreds digit tiles
+    ASL : TAX
+    LDA.w NumberGFXTable,X : STA !HUD_TILEMAP+$14
+    ; Draw tens digit tiles
+    LDA $4216 : ASL : TAX
+    LDA.w HexToNumberGFX1,X : STA !HUD_TILEMAP+$16
+    BRA .mmDrawTileOnes
+  .mmDrawTileTens
+    ; Draw tens digit tiles (may be blank)
+    LDA $4216 : ASL : TAX
+    LDA.w HexToNumberGFX1Blank,X : STA !HUD_TILEMAP+$16
+  .mmDrawTileOnes
+    ; Draw ones digit tiles
+    LDA.w HexToNumberGFX2,X : STA !HUD_TILEMAP+$18
+
+  .mmRoomTimer
+    LDA !sram_frame_counter_mode : BIT !FRAME_COUNTER_USE_IGT : BNE .mmInGameTimer
+    LDA !ram_realtime_room
+    BRA .mmCalculateTimer
+  .mmInGameTimer
+    LDA !ram_gametime_room
+  .mmCalculateTimer
+    ; Divide time by 60 or 50 and draw seconds and frames
+    STA $4204
+    %a8()
+    LDA.b !FRAMERATE : STA $4206
+    %ai16()
+    PEA $0000 : PLA ; wait for CPU math
+    ; Prepare to draw frames
+    LDA $4216 : ASL : PHA
+    ; Prepare seconds
+    LDA $4214 : STA $4204
+    %a8()
+    LDA #$0A : STA $4206
+    %ai16()
+    ; Draw frames while we wait for CPU math
+    PLX : LDA.w HexToNumberGFX1,X : STA !HUD_TILEMAP+$B6
+    LDA.w HexToNumberGFX2,X : STA !HUD_TILEMAP+$B8
+    LDA $4214 : BEQ .mmDrawTimerOnes
+    ; Draw tens digit seconds
+    ASL : TAX
+    LDA.w NumberGFXTable,X : STA !HUD_TILEMAP+$B0
+  .mmDrawTimerOnes
+    ; Draw ones digit seconds
+    LDA $4216 : ASL : TAX
+    LDA.w NumberGFXTable,X : STA !HUD_TILEMAP+$B2
+
+    PLB : PLP : PLX
+    RTL
+}
+
 NumberGFXTable:
     dw #$0C09, #$0C00, #$0C01, #$0C02, #$0C03, #$0C04, #$0C05, #$0C06, #$0C07, #$0C08
     dw #$0C70, #$0C71, #$0C72, #$0C73, #$0C74, #$0C75, #$0C78, #$0C79, #$0C7A, #$0C7B
@@ -2267,6 +2538,18 @@ FramesHeldTable1:
 FramesHeldTable2:
     dw #$0000, #$00C2, #$00C4, #$00C0, #$00CE, #$00BE, #$00C8
 
+HexToNumberGFX1Blank:
+    dw #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F, #$2C0F
+    dw #$0C00, #$0C00, #$0C00, #$0C00, #$0C00, #$0C00, #$0C00, #$0C00, #$0C00, #$0C00
+    dw #$0C01, #$0C01, #$0C01, #$0C01, #$0C01, #$0C01, #$0C01, #$0C01, #$0C01, #$0C01
+    dw #$0C02, #$0C02, #$0C02, #$0C02, #$0C02, #$0C02, #$0C02, #$0C02, #$0C02, #$0C02
+    dw #$0C03, #$0C03, #$0C03, #$0C03, #$0C03, #$0C03, #$0C03, #$0C03, #$0C03, #$0C03
+    dw #$0C04, #$0C04, #$0C04, #$0C04, #$0C04, #$0C04, #$0C04, #$0C04, #$0C04, #$0C04
+    dw #$0C05, #$0C05, #$0C05, #$0C05, #$0C05, #$0C05, #$0C05, #$0C05, #$0C05, #$0C05
+    dw #$0C06, #$0C06, #$0C06, #$0C06, #$0C06, #$0C06, #$0C06, #$0C06, #$0C06, #$0C06
+    dw #$0C07, #$0C07, #$0C07, #$0C07, #$0C07, #$0C07, #$0C07, #$0C07, #$0C07, #$0C07
+    dw #$0C08, #$0C08, #$0C08, #$0C08, #$0C08, #$0C08, #$0C08, #$0C08, #$0C08, #$0C08
+
 HexToNumberGFX1:
     dw #$0C09, #$0C09, #$0C09, #$0C09, #$0C09, #$0C09, #$0C09, #$0C09, #$0C09, #$0C09
     dw #$0C00, #$0C00, #$0C00, #$0C00, #$0C00, #$0C00, #$0C00, #$0C00, #$0C00, #$0C00
@@ -2274,8 +2557,16 @@ HexToNumberGFX1:
     dw #$0C02, #$0C02, #$0C02, #$0C02, #$0C02, #$0C02, #$0C02, #$0C02, #$0C02, #$0C02
     dw #$0C03, #$0C03, #$0C03, #$0C03, #$0C03, #$0C03, #$0C03, #$0C03, #$0C03, #$0C03
     dw #$0C04, #$0C04, #$0C04, #$0C04, #$0C04, #$0C04, #$0C04, #$0C04, #$0C04, #$0C04
+    dw #$0C05, #$0C05, #$0C05, #$0C05, #$0C05, #$0C05, #$0C05, #$0C05, #$0C05, #$0C05
+    dw #$0C06, #$0C06, #$0C06, #$0C06, #$0C06, #$0C06, #$0C06, #$0C06, #$0C06, #$0C06
+    dw #$0C07, #$0C07, #$0C07, #$0C07, #$0C07, #$0C07, #$0C07, #$0C07, #$0C07, #$0C07
+    dw #$0C08, #$0C08, #$0C08, #$0C08, #$0C08, #$0C08, #$0C08, #$0C08, #$0C08, #$0C08
 
 HexToNumberGFX2:
+    dw #$0C09, #$0C00, #$0C01, #$0C02, #$0C03, #$0C04, #$0C05, #$0C06, #$0C07, #$0C08
+    dw #$0C09, #$0C00, #$0C01, #$0C02, #$0C03, #$0C04, #$0C05, #$0C06, #$0C07, #$0C08
+    dw #$0C09, #$0C00, #$0C01, #$0C02, #$0C03, #$0C04, #$0C05, #$0C06, #$0C07, #$0C08
+    dw #$0C09, #$0C00, #$0C01, #$0C02, #$0C03, #$0C04, #$0C05, #$0C06, #$0C07, #$0C08
     dw #$0C09, #$0C00, #$0C01, #$0C02, #$0C03, #$0C04, #$0C05, #$0C06, #$0C07, #$0C08
     dw #$0C09, #$0C00, #$0C01, #$0C02, #$0C03, #$0C04, #$0C05, #$0C06, #$0C07, #$0C08
     dw #$0C09, #$0C00, #$0C01, #$0C02, #$0C03, #$0C04, #$0C05, #$0C06, #$0C07, #$0C08

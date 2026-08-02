@@ -294,7 +294,7 @@ gamemode_toggle_igt_rta:
 
 gamemode_update_timers:
 {
-    JML ih_update_hud_early
+    JML ih_update_timers
 }
 endif
 
@@ -397,7 +397,7 @@ gamemode_reset_segment_timer:
 if !FEATURE_VANILLAHUD
     RTL
 else
-    JML ih_update_hud_early
+    JML ih_update_timers
 endif
 }
 
