@@ -168,6 +168,7 @@ ram_frames_held = !ram_frames_held ; !WRAM_PERSIST_START+$1C
 ram_quickboot_spc_state = !ram_quickboot_spc_state ; !WRAM_PERSIST_START+$1E
 ram_display_backup = !ram_display_backup ; !WRAM_PERSIST_START+$20
 ram_slowdown_mode = !ram_slowdown_mode ; !WRAM_PERSIST_START+$22
+ram_update_timers_flag = !ram_update_timers_flag ; !WRAM_PERSIST_START+$24
 
 ; ^ FREE SPACE ^ up to +$26
 

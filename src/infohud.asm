@@ -649,7 +649,7 @@ ih_elevator_activation:
     LDA !GAMEMODE : CMP #$0008 : BNE .done
     LDA !ram_timers_autoupdate : BNE .done
 
-    JSL ih_update_timers
+    INC : STA !ram_update_timers_flag
 
   .done
     PLA
@@ -662,7 +662,8 @@ ih_babyskip_segment:
 {
     ; runs when the screen locks to start the hopper/baby cutscene
     STA $7ECD22 ; overwritten code
-    JML ih_update_timers
+    LDA #$0001 : STA !ram_update_timers_flag
+    RTL
 }
 
 ih_mb1_segment:
@@ -675,19 +676,20 @@ else            ; overwritten code
 endif
 
     TDC : STA !DAMAGE_COUNTER
-    JML ih_update_timers
+    INC : STA !ram_update_timers_flag
+    RTL
 }
 
 ih_mb2_segment_dead:
 {
     ; runs when MB2 realizes she has zero HP
-    JSL ih_update_timers
-    ; overwritten code
 if !FEATURE_PAL
     LDA #$B938 : STA !ENEMY_FUNCTION_POINTER
+    STA !ram_update_timers_flag
     JML $A9B938
 else
     LDA #$B8EB : STA !ENEMY_FUNCTION_POINTER
+    STA !ram_update_timers_flag
     JML $A9B8EB
 endif
 }
@@ -698,7 +700,8 @@ ih_mb2_segment_rainbow:
     STA $7E7854 ; overwritten code
 
     TDC : STA !DAMAGE_COUNTER
-    JML ih_update_timers
+    INC : STA !ram_update_timers_flag
+    RTL
 }
 
 ih_shinespark_segment:
@@ -718,14 +721,15 @@ ih_shinespark_segment:
     PLB
 
   .done
-    JML ih_update_timers
+    LDA #$0001 : STA !ram_update_timers_flag
+    RTL
 }
 
 ih_drops_segment:
 {
     ; runs when boss drops spawn
     PHA
-    JSL ih_update_timers
+    LDA #$0001 : STA !ram_update_timers_flag
     PLA
     ; overwritten code
     PLP : PLY : PLX
@@ -735,12 +739,13 @@ ih_drops_segment:
 ih_chozo_segment:
 {
     JSL $8090CB ; overwritten code
-    JML ih_update_timers
+    LDA #$0001 : STA !ram_update_timers_flag
+    RTL
 }
 
 ih_ceres_elevator_segment:
 {
-    JSL ih_update_timers
+    LDA #$0001 : STA !ram_update_timers_flag
 if !FEATURE_PAL
     JML $90F081
 else ; overwritten code
@@ -750,7 +755,7 @@ endif
 
 ih_ship_elevator_segment:
 {
-    JSL ih_update_timers
+    LDA #$0001 : STA !ram_update_timers_flag
 if !FEATURE_PAL
     JML $91E35B
 else ; overwritten code
@@ -762,7 +767,8 @@ ih_croc_segments:
 {
     ; runs on two music changes post-fight
     JSL !MUSIC_ROUTINE ; overwritten code
-    JML ih_update_timers
+    LDA #$0001 : STA !ram_update_timers_flag
+    RTL
 }
 
 ih_update_hud_before_transition:

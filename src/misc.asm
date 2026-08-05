@@ -116,7 +116,7 @@ misc_debug_brightness:
     LDA $2137 : LDA $213D : STA !ram_vcounter_data
 
     ; For efficiency, re-implement the debug brightness logic here
-    LDA $0DF4 : BEQ .skipDebugBrightness
+    LDA !DEBUG_CPU_BRIGHTNESS : BEQ .skipDebugBrightness
     %a8() : LDA !REG_2100_BRIGHTNESS : AND #$F0 : ORA #$05 : STA $2100 : %a16()
     BRA .skipDebugBrightness
 
@@ -1243,16 +1243,16 @@ else
 endif
 
     ; If minimap is disabled or shown, we ignore artificial lag
-    LDA !DISABLE_MINIMAP : BNE .endlag
-    LDA !ram_minimap : BNE .endlag
+    LDA !DISABLE_MINIMAP : BNE .skiplag
+    LDA !ram_minimap : BNE .skiplag
 
     ; Ignore artifical lag if sprite features are active
-    LDA !ram_sprite_feature_flags : BNE .endlag
+    LDA !ram_sprite_feature_flags : BNE .skiplag
 
     ; Artificial lag, multiplied by 16 to get loop count
     ; Each loop takes 5 clock cycles (assuming branch taken)
     ; For reference, 41 loops ~= 1 scanline
-    LDA !sram_artificial_lag : BEQ .endlag
+    LDA !sram_artificial_lag : BEQ .skiplag
 
 if !FEATURE_VANILLAHUD
 else
@@ -1264,27 +1264,56 @@ endif
     LDA !sram_artificial_lag
     ASL #4
     NOP #4 ; Add 8 more clock cycles
-    CLC : ADC #$000B ; Add 60 cycles including CLC+ADC
+  .combined
+    PHA : LDA !ram_update_timers_flag : BNE .update_timers
+    PLA
+    CLC : ADC #$0007 ; Add 40 cycles including CLC+ADC
+    BMI .endlag ; Make sure we haven't looped over to a negative count
+  .lagstart
     TAX
   .lagloop
     DEX : BNE .lagloop
   .endlag
     RTL
 
+  .skiplag
+    LDA !ram_update_timers_flag : BNE .conditional_update_timers
+    RTL
+
   .vanilla_display_lag_loop
     ; Vanilla display logic uses more CPU so reduce artificial lag
     LDA !sram_artificial_lag
-    DEC : BEQ .endlag ; Remove 76 clock cycles
-    DEC : BEQ .endlag ; Remove 76 clock cycles
+    DEC : BEQ .skiplag ; Remove 76 clock cycles
+    DEC : BEQ .skiplag ; Remove 76 clock cycles
     ASL #2
     INC ; Add 4 loops (22 clock cycles including the INC)
     ASL #2
     INC  ; Add 1 loop (7 clock cycles including the INC)
-    NOP #2 ; Add 4 more clock cycles
-    CLC : ADC #$000B ; Add 60 cycles including CLC+ADC
-    TAX
-  .vanilla_lagloop
-    DEX : BNE .vanilla_lagloop
+    BRA .combined
+
+  .update_timers
+    ; Update timers takes roughly 580 clock cycles,
+    ; plus time spent setting and clearing the flag,
+    ; so reduce artificial lag accordingly
+    JSL ih_update_timers
+    TDC : STA !ram_update_timers_flag
+    PLA : SEC : SBC #$0078
+    BPL .lagstart
+  .done
+    RTL
+
+  .conditional_update_timers
+    LDA !sram_update_timers_options : BIT !UPDATE_TIMERS_ALWAYS : BEQ .proceed_update_timers
+
+    ; Only update timers if we have enough time to
+    ; Assume we need three scanlines (224-3)
+    %a8() : LDA $4201 : ORA #$80 : STA $4201 : %ai16()
+    LDA $2137 : LDA $213D : AND #$00FF
+    CMP #$00DD : BMI .proceed_update_timers : CMP #$00E2 : BMI .done
+
+  .proceed_update_timers
+    JSL ih_update_timers
+    TDC : STA !ram_update_timers_flag
     RTL
 }
 
