@@ -192,6 +192,7 @@
 !ram_quickboot_spc_state            = !WRAM_PERSIST_START+$1E
 !ram_display_backup                 = !WRAM_PERSIST_START+$20
 !ram_slowdown_mode                  = !WRAM_PERSIST_START+$22
+!ram_update_timers_flag             = !WRAM_PERSIST_START+$24
 
 ; ^ FREE SPACE ^ up to +$26
 

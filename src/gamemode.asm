@@ -294,7 +294,8 @@ gamemode_toggle_igt_rta:
 
 gamemode_update_timers:
 {
-    JML ih_update_timers
+    LDA #$0001 : STA !ram_update_timers_flag
+    RTL
 }
 endif
 
@@ -395,10 +396,10 @@ gamemode_reset_segment_timer:
     STA !ram_seg_rt_seconds : STA !ram_seg_rt_minutes
     %sfxconfirm()
 if !FEATURE_VANILLAHUD
-    RTL
 else
-    JML ih_update_timers
+    LDA #$0001 : STA !ram_update_timers_flag
 endif
+    RTL
 }
 
 gamemode_reset_segment_later:
