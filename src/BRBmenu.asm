@@ -1,7 +1,6 @@
 
 %startfree(8E)
 
-!BRB_TOTAL_SCREENS = #$0007
 
 ; --------
 ; BRB Data
@@ -216,7 +215,7 @@ endif
     CMP !CTRL_A : BNE .loop
 
     LDA !ram_cm_brb_screen : INC : STA !ram_cm_brb_screen
-    CMP !BRB_TOTAL_SCREENS : BMI .loop
+    CMP.w !BRB_TOTAL_SCREENS : BMI .loop
     TDC : STA !ram_cm_brb_screen : STA !ram_cm_brb_timer
     BRA .loop
 }
@@ -251,7 +250,7 @@ cm_tilemap_brb:
 
     ; Cycle screen text
     LDA !ram_cm_brb_screen : INC : STA !ram_cm_brb_screen
-    CMP !BRB_TOTAL_SCREENS : BMI .done_cycle_text
+    CMP.w !BRB_TOTAL_SCREENS : BMI .done_cycle_text
     TDC : STA !ram_cm_brb_screen
 
   .done_cycle_text
@@ -730,6 +729,7 @@ BRBTilemapTableLine1:
     dw #BRB_screen5_line1
     dw #BRB_screen6_line1
     dw #BRB_screen7_line1
+  .end
 
 BRBTilemapTableLine2:
     dw #BRB_screen1_line2
@@ -741,7 +741,6 @@ BRBTilemapTableLine2:
     dw #BRB_screen7_line2
 
 
-; see !BRB_TOTAL_SCREENS at top of file
 BRB_screen1_line1:
     db #$28, "   SM Speedrunning Wiki", #$FF
 BRB_screen1_line2:
