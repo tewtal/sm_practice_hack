@@ -1349,8 +1349,11 @@ misc_fix_blue_echoes:
     LDA #$0003 : JSL $80914D
     XBA : AND #$00FF : ASL : TAX
     LDA !SAMUS_SPEED_BOOST_TIMER : AND #$FF00
+if !FEATURE_PAL
+    ORA $91B577,X
+else
     ORA $91B61F,X
-
+endif
     ; Make sure lower byte is not zero
     BIT #$00FF : BNE .map_rando_done
     INC
