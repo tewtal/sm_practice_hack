@@ -833,7 +833,8 @@ ih_update_hud_code:
     PEA $8080 : PLB : PLB
 
   .start
-    LDA #$FFFF : STA !ram_last_hp : STA !ram_enemy_hp
+    TDC : STA !ram_update_timers_flag
+    DEC : STA !ram_last_hp : STA !ram_enemy_hp
     LDA !ram_watch_right_hud : EOR #$FFFF : STA !ram_watch_right_hud
     LDA !ram_minimap : BNE .mmHUD
     JMP .startUpdate
@@ -937,7 +938,7 @@ ih_update_hud_code:
 
   .skipToLag
     LDA !sram_top_display_mode : BIT !TOP_HUD_VANILLA_BIT : BNE .vanillaLagReserves
-    LDA !ram_last_room_lag : LDX #$0080 : JSR Draw4
+    LDA !ram_last_room_lag : LDX #$0082 : JSR Draw3
 
     ; Door lag / transition time
     LDA !sram_lag_counter_mode : BNE .fullTransitionTime
@@ -968,7 +969,7 @@ ih_update_hud_code:
     LDA $0004,Y : STA !HUD_TILEMAP+$58 : LDA $0006,Y : STA !HUD_TILEMAP+$5A
 
   .vanillaDrawLag
-    LDA !ram_last_room_lag : LDX #$007E : JSR Draw4
+    LDA !ram_last_room_lag : LDX #$0080 : JSR Draw3
 
     ; Door lag / transition time
     LDA !sram_lag_counter_mode : BNE .vanillaFullTransitionTime
@@ -2268,6 +2269,8 @@ ih_update_timers:
     LDA.w HexToNumberGFX1,X : STA !HUD_TILEMAP+$3E
     BRA .drawRoomOnes
   .drawRoomTens
+    ; Draw blank hundreds digit seconds
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$3C
     ; Draw tens digit seconds (may be blank)
     LDA $4216 : ASL : TAX
     LDA.w HexToNumberGFX1Blank,X : STA !HUD_TILEMAP+$3E
@@ -2283,21 +2286,21 @@ ih_update_timers:
     %ai16()
     PEA $0000 : PLA ; wait for CPU math
     LDA $4214 : BEQ .lagDrawTens
-    ; Draw thousands digit lag (may be blank)
-    ASL : TAX
-    LDA.w HexToNumberGFX1Blank,X : STA !HUD_TILEMAP+$80
     ; Draw hundreds digit lag
-    LDA.w HexToNumberGFX2,X : STA !HUD_TILEMAP+$82
-    ; Draw tens digit tiles
+    ASL : TAX
+    LDA.w NumberGFXTable,X : STA !HUD_TILEMAP+$82
+    ; Draw tens digit lag
     LDA $4216 : ASL : TAX
     LDA.w HexToNumberGFX1,X : STA !HUD_TILEMAP+$84
     BRA .lagDrawOnes
   .lagDrawTens
-    ; Draw tens digit tiles (may be blank)
+    ; Draw blank hundreds digit lag
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$82
+    ; Draw tens digit lag (may be blank)
     LDA $4216 : ASL : TAX
     LDA.w HexToNumberGFX1Blank,X : STA !HUD_TILEMAP+$84
   .lagDrawOnes
-    ; Draw ones digit tiles
+    ; Draw ones digit lag
     LDA.w HexToNumberGFX2,X : STA !HUD_TILEMAP+$86
 
     ; Skip segment timer when certain HUD modes enabled
@@ -2327,6 +2330,8 @@ ih_update_timers:
     LDA.w HexToNumberGFX1,X : STA !HUD_TILEMAP+$B0
     BRA .segmentDrawOnes
   .segmentDrawTens
+    ; Draw blank hundreds digit minutes
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$AE
     ; Draw tens digit minutes (may be blank)
     LDA $4216 : ASL : TAX
     LDA.w HexToNumberGFX1Blank,X : STA !HUD_TILEMAP+$B0
@@ -2360,6 +2365,8 @@ ih_update_timers:
     LDA.w HexToNumberGFX1,X : STA !HUD_TILEMAP+$B0
     BRA .inGameSegmentDrawOnes
   .inGameSegmentDrawTens
+    ; Draw blank hundreds digit minutes
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$AE
     ; Draw tens digit minutes (may be blank)
     LDA $4216 : ASL : TAX
     LDA.w HexToNumberGFX1Blank,X : STA !HUD_TILEMAP+$B0
@@ -2388,6 +2395,8 @@ ih_update_timers:
     LDA.w HexToNumberGFX1,X : STA !HUD_TILEMAP+$3C
     BRA .vanillaDrawRoomOnes
   .vanillaDrawRoomTens
+    ; Draw blank hundreds digit seconds
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$3A
     ; Draw tens digit seconds (may be blank)
     LDA $4216 : ASL : TAX
     LDA.w HexToNumberGFX1Blank,X : STA !HUD_TILEMAP+$3C
@@ -2403,21 +2412,21 @@ ih_update_timers:
     %ai16()
     PEA $0000 : PLA ; wait for CPU math
     LDA $4214 : BEQ .vanillaLagDrawTens
-    ; Draw thousands digit lag (may be blank)
-    ASL : TAX
-    LDA.w HexToNumberGFX1Blank,X : STA !HUD_TILEMAP+$7E
     ; Draw hundreds digit lag
-    LDA.w HexToNumberGFX2,X : STA !HUD_TILEMAP+$80
-    ; Draw tens digit tiles
+    ASL : TAX
+    LDA.w NumberGFXTable,X : STA !HUD_TILEMAP+$80
+    ; Draw tens digit lag
     LDA $4216 : ASL : TAX
     LDA.w HexToNumberGFX1,X : STA !HUD_TILEMAP+$82
     BRA .vanillaLagDrawOnes
   .vanillaLagDrawTens
-    ; Draw tens digit tiles (may be blank)
+    ; Draw blank hundreds digit lag
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$80
+    ; Draw tens digit lag (may be blank)
     LDA $4216 : ASL : TAX
     LDA.w HexToNumberGFX1Blank,X : STA !HUD_TILEMAP+$82
   .vanillaLagDrawOnes
-    ; Draw ones digit tiles
+    ; Draw ones digit lag
     LDA.w HexToNumberGFX2,X : STA !HUD_TILEMAP+$84
 
     ; Skip segment timer when certain HUD modes enabled
@@ -2451,6 +2460,8 @@ ih_update_timers:
     LDA.w HexToNumberGFX1,X : STA !HUD_TILEMAP+$16
     BRA .mmDrawTileOnes
   .mmDrawTileTens
+    ; Draw blank hundreds digit tiles
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$14
     ; Draw tens digit tiles (may be blank)
     LDA $4216 : ASL : TAX
     LDA.w HexToNumberGFX1Blank,X : STA !HUD_TILEMAP+$16
@@ -2481,10 +2492,14 @@ ih_update_timers:
     ; Draw frames while we wait for CPU math
     PLX : LDA.w HexToNumberGFX1,X : STA !HUD_TILEMAP+$B6
     LDA.w HexToNumberGFX2,X : STA !HUD_TILEMAP+$B8
-    LDA $4214 : BEQ .mmDrawTimerOnes
+    LDA $4214 : BEQ .mmDrawTimerBlankTens
     ; Draw tens digit seconds
     ASL : TAX
     LDA.w NumberGFXTable,X : STA !HUD_TILEMAP+$B0
+    BRA .mmDrawTimerOnes
+  .mmDrawTimerBlankTens
+    ; Draw blank tens digit seconds
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$B0
   .mmDrawTimerOnes
     ; Draw ones digit seconds
     LDA $4216 : ASL : TAX
