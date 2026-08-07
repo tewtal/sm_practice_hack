@@ -1757,7 +1757,7 @@ draw_ram_watch:
     JSR cm_hex2dec_draw5
 
     ; adjust max cursor position to prevent selecting display item
-    LDA !DP_MenuIndices : PHA
+    PEI (!DP_MenuIndices)
     JSL cm_calculate_max
     PLA : STA !DP_MenuIndices
     LDA !ram_cm_cursor_max : SEC : SBC #$0004 : STA !ram_cm_cursor_max
