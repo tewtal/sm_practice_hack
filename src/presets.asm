@@ -559,6 +559,9 @@ category_preset_load:
     BRA .loadValue
 }
 
+preset_clear_bg1_vram_fillword:
+    dw #$0323
+
 ; This method is very similar to $80A07B (start gameplay)
 preset_start_gameplay:
 {
@@ -741,6 +744,17 @@ endif
   .clearFXPaletteLoop
     STZ !PALETTE_FX_ID,X
     DEX #2 : BPL .clearFXPaletteLoop
+
+    ; Reset BG1 VRAM
+    %a8()
+    LDA #$80 : STA $2115
+    LDX #$5000 : STX $2116
+    LDX #$1000 : STX $4315
+    LDX #$1809 : STX $4310
+    LDX #preset_clear_bg1_vram_fillword : STX $4312
+    LDA.b #preset_clear_bg1_vram_fillword>>16 : STA $4314
+    LDA #$02 : STA $420B
+    %a16()
 
     JSL Randomize_Preset_Equipment
     JSL $90AC8D ; Update beam graphics
