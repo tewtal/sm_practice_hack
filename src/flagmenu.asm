@@ -907,43 +907,27 @@ events_metroids:
     %cm_numfield("Metroid Rooms Cleared", !ram_cm_metmask, 0, 4, 1, 1, #.routine)
   .routine
     CMP #$0000 : BEQ .done
-    CMP #$0001 : BEQ .one
-    CMP #$0002 : BEQ .two
-    CMP #$0003 : BEQ .three
-
-    LDA #$000F : BRA .done
-  .three
-    LDA #$0007 : BRA .done
-  .two
-    LDA #$0003 : BRA .done
-  .one
-    LDA #$0001 : BRA .done
-
+    DEC : ASL : TAX
+    LDA.l .table,X
   .done
     STA $C1
     LDA $7ED822 : AND #$FFF0 : ORA $C1 : STA $7ED822
     RTL
+  .table
+    dw $0001, $0003, $0007, $000F
 
 events_zebettites:
     %cm_numfield("Zebs Killed", !ram_cm_zebmask, 0, 4, 1, 1, #.routine)
   .routine
     CMP #$0000 : BEQ .done
-    CMP #$0001 : BEQ .one
-    CMP #$0002 : BEQ .two
-    CMP #$0003 : BEQ .three
-
-    LDA #$0020 : BRA .done
-  .three
-    LDA #$0018 : BRA .done
-  .two
-    LDA #$0010 : BRA .done
-  .one
-    LDA #$0008
-
+    DEC : ASL : TAX
+    LDA.l .table,X
   .done
     STA $C1
     LDA $7ED820 : AND #$FFC7 : ORA $C1 : STA $7ED820
     RTL
+  .table
+    dw $0008, $0010, $0018, $0020
 
 events_mb1glass:
     %cm_toggle_bit("MB1 Glass Broken", $7ED820, #$0004, #0)
