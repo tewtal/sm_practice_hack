@@ -71,33 +71,57 @@ status_enemyhp:
 status_roomstrat:
 {
     LDA !sram_room_strat : ASL : TAX
-    JSR (.status_room_table,X)
+    JSR (status_room_table,X)
     RTS
 
-  .status_room_table
+status_room_table:
+  .superhud ; assumed to be zero index
     dw status_superhud
+  .ceresridley
     dw status_ceresridley
+  .doorskip
     dw status_doorskip
+  .tacotank
     dw status_tacotank
+  .pitdoor
     dw status_pitdoor
+  .moondance
     dw status_moondance
+  .kraidradar
     dw status_kraidradar
+  .bootlessup
     dw status_bootlessup
+  .gateglitch
     dw status_gateglitch
+  .moatcwj
     dw status_moatcwj
+  .robotflush
     dw status_robotflush
+  .shinetopb
     dw status_shinetopb
+  .elevatorcf
     dw status_elevatorcf
+  .botwooncf
     dw status_botwooncf
+  .draygonai
     dw status_draygonai
+  .snailclip
     dw status_snailclip
+  .wasteland
     dw status_wasteland
+  .ridleyai
     dw status_ridleyai
+  .kihuntermanip
     dw status_kihuntermanip
+  .downbackzeb
     dw status_downbackzeb
+  .zebskip
     dw status_zebskip
+  .mbhp
     dw status_mbhp
+  .twocries
     dw status_twocries
+  .end
 }
 
 status_chargetimer:
