@@ -472,7 +472,7 @@ gamemode_reveal_damage:
   .checkRoomStrat
     LDA !sram_room_strat : BNE .revealRoomStrat
     ; handle Super HUD case
-    LDA !sram_superhud_bottom : CMP !IH_SUPERHUD_COUNTDAMAGE_BOTTOM_INDEX : BNE .revealSuperHUD
+    LDA !sram_superhud_bottom : CMP.w !IH_SUPERHUD_BOTTOM_INDEX_COUNTDAMAGE : BNE .revealSuperHUD
     ; revert to prior Super HUD mode
     LDA !ram_display_backup : STA !sram_superhud_bottom
     %sfxreset()
@@ -480,7 +480,7 @@ gamemode_reveal_damage:
 
   .revealSuperHUD
     STA !ram_display_backup
-    LDA !IH_SUPERHUD_COUNTDAMAGE_BOTTOM_INDEX : STA !sram_superhud_bottom
+    LDA.w !IH_SUPERHUD_BOTTOM_INDEX_COUNTDAMAGE : STA !sram_superhud_bottom
     %sfxconfirm()
     BRA gamemode_reveal_hp_updateHUD
 }
@@ -510,7 +510,7 @@ gamemode_reveal_hp:
   .checkRoomStrat
     LDA !sram_room_strat : BNE .revealRoomStrat
     ; handle Super HUD case
-    LDA !sram_superhud_bottom : CMP !IH_SUPERHUD_COUNTHP_BOTTOM_INDEX : BNE .revealSuperHUD
+    LDA !sram_superhud_bottom : CMP.w !IH_SUPERHUD_BOTTOM_INDEX_COUNTHP : BNE .revealSuperHUD
     ; revert to prior Super HUD mode
     LDA !ram_display_backup : STA !sram_superhud_bottom
     %sfxreset()
@@ -518,7 +518,7 @@ gamemode_reveal_hp:
 
   .revealSuperHUD
     STA !ram_display_backup
-    LDA !IH_SUPERHUD_COUNTHP_BOTTOM_INDEX : STA !sram_superhud_bottom
+    LDA.w !IH_SUPERHUD_BOTTOM_INDEX_COUNTHP : STA !sram_superhud_bottom
     ; set ram_HUD_check to some value that cannot match the damage counter
     ; conveniently the current value of A will work
     STA !ram_HUD_check

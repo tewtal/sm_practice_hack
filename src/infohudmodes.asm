@@ -1874,90 +1874,173 @@ status_superhud:
     JMP (superhud_bottom_table,X)
 
 superhud_bottom_table:
+  .enemyhp
     dw status_enemyhp
+  .chargetimer
     dw status_chargetimer
+  .xfactor
     dw status_xfactor
+  .cooldown
     dw status_cooldown
+  .shinetimer
     dw status_shinetimer
+  .dashcounter
     dw status_dashcounter
+  .shinetune
     dw status_shinetune
+  .iframecounter
     dw status_iframecounter
+  .spikesuit
     dw status_spikesuit
+  .lagcounter
     dw status_lagcounter
+  .cpuusage
     dw status_cpuusage
+  .hspeed
     dw status_hspeed
+  .dashspeed
     dw status_dashspeed
+  .vspeed
     dw status_vspeed
+  .quickdrop
     dw status_quickdrop
+  .walljump
     dw status_walljump
+  .doublesbj
     dw status_doublesbj
+  .countdamage
     dw status_countdamage
+  .counthp
     dw status_enemyhp
+  .armpump
     dw status_armpump
+  .pumpcounter
     dw status_pumpcounter
+  .xpos
     dw status_xpos
+  .ypos
     dw status_ypos
+  .camerapos
     dw status_camerapos
+  .shottimer
     dw status_shottimer
+  .ramwatch
     dw status_ramwatch
+  .ceresridley
     dw status_ceresridley
+  .doorskip
     dw status_doorskip
+  .tacotank
     dw status_tacotank
+  .pitdoor
     dw status_pitdoor
+  .moondance
     dw status_moondance
+  .kraidradar
     dw status_kraidradar
+  .bootlessup
     dw status_bootlessup
+  .gateglitch
     dw status_gateglitch
+  .moatcwj
     dw status_moatcwj
+  .robotflush
     dw status_robotflush
+  .shinetopb
     dw status_shinetopb
+  .elevatorcf
     dw status_elevatorcf
+  .botwooncf
     dw status_botwooncf
+  .draygonai
     dw status_draygonai
+  .snailclip
     dw status_snailclip
+  .wasteland
     dw status_wasteland
+  .ridleyai
     dw status_ridleyai
+  .kihuntermanip
     dw status_kihuntermanip
+  .downbackzeb
     dw status_downbackzeb
+  .zebskip
     dw status_zebskip
+  .mbhp
     dw status_mbhp
+  .twocries
     dw status_twocries
+  .end
 
 superhud_middle_table:
+  .off
     dw status_enemyhp_done
+  .chargetimer
     dw middleHUD_chargetimer
+  .xfactor
     dw middleHUD_xfactor
+  .cooldown
     dw middleHUD_cooldown
+  .shinetimer
     dw middleHUD_shinetimer
+  .dashcounter
     dw middleHUD_dashcounter
+  .iframecounter
     dw middleHUD_iframecounter
+  .lagcounter
     dw middleHUD_lagcounter
+  .cpuusage
     dw middleHUD_cpuusage
+  .hspeed
     dw middleHUD_hspeed
+  .dashspeed
     dw middleHUD_dashspeed
+  .shottimer
     dw middleHUD_shottimer
+  .itempercent
     dw middleHUD_itempercent
+  .reserves
     dw middleHUD_reserves
+  .statusicons
     dw middleHUD_statusicons
+  .tilecounter
     dw middleHUD_tilecounter
+  .end
 
 superhud_top_table:
+  .off
     dw status_enemyhp_done
+  .chargetimer
     dw topHUD_chargetimer
+  .xfactor
     dw topHUD_xfactor
+  .cooldown
     dw topHUD_cooldown
+  .shinetimer
     dw topHUD_shinetimer
+  .dashcounter
     dw topHUD_dashcounter
+  .iframecounter
     dw topHUD_iframecounter
+  .lagcounter
     dw topHUD_lagcounter
+  .cpuusage
     dw topHUD_cpuusage
+  .hspeed
     dw topHUD_hspeed
+  .dashspeed
     dw topHUD_dashspeed
+  .shottimer
     dw topHUD_shottimer
+  .itempercent
     dw topHUD_itempercent
+  .reserves
     dw topHUD_reserves
+  .statusicons
     dw topHUD_statusicons
+  .tilecounter
     dw topHUD_tilecounter
+  .end
 
 middleHUD_chargetimer:
 {
@@ -2988,7 +3071,7 @@ endif
   .peaking
     ; If still rising, nothing to do
     LDA !SAMUS_Y_DIRECTION : CMP #$0001 : BEQ .done
-    
+
     ; Fail if not falling with proper speed and pose
     CMP #$0002 : BNE .peakfail
     LDA !SAMUS_Y : CMP #$0243 : BPL .peakfail
@@ -3958,7 +4041,7 @@ status_bootlessup:
   .inccounter
     LDA !ram_roomstrat_counter : INC : STA !ram_roomstrat_counter
     BRA .checkstartpos
-  
+
   .checky1bomb
     LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_SHOT : BEQ .inccounter
     JMP .laidy1bomb
@@ -5446,7 +5529,7 @@ status_downbackzeb:
     ; Start the vertical subpixel checks once knockback runs out
     STA !ram_roomstrat_state
     TDC : STA !ram_roomstrat_counter
-    
+
     ; check horizontal position
     LDA !IH_LETTER_X
     LDX !SAMUS_X_SUBPX : BEQ .good_subx

@@ -2430,7 +2430,7 @@ else
     CMP.w !IH_MODE_INDEX_ROOMSTRAT : BNE .done
     LDA !sram_superhud_bottom : BNE .done
     ; Switch Super HUD enemy HP to MB HP
-    LDA !IH_SUPERHUD_MBHP_BOTTOM_INDEX : STA !sram_superhud_bottom
+    LDA.w !IH_SUPERHUD_BOTTOM_INDEX_MBHP : STA !sram_superhud_bottom
     RTS
 
   .assignMBHP
