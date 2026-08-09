@@ -522,6 +522,34 @@ macro cm_equipment_beam(name, addr, bitmask, inverse, and)
     JMP equipment_toggle_beams
 endmacro
 
+macro cm_music_toggle()
+; Used in multiple menu banks
+    dw !ACTION_CHOICE
+    dl #!sram_music_toggle
+    dw .routine
+    db #$28, "Music", #$FF
+    db #$28, "        OFF", #$FF
+    db #$28, "         ON", #$FF
+    db #$28, "   FAST OFF", #$FF
+    db #$28, " PRESET OFF", #$FF
+    db #$FF
+  .routine
+    ; Clear music queue
+    STZ !MUSIC_QUEUE_TIMERS : STZ !MUSIC_QUEUE_TIMERS+$2
+    STZ !MUSIC_QUEUE_TIMERS+$4 : STZ !MUSIC_QUEUE_TIMERS+$6
+    STZ !MUSIC_QUEUE_TIMERS+$8 : STZ !MUSIC_QUEUE_TIMERS+$A
+    STZ !MUSIC_QUEUE_TIMERS+$C : STZ !MUSIC_QUEUE_TIMERS+$E
+    STZ !MUSIC_QUEUE_NEXT : STZ !MUSIC_QUEUE_START
+    STZ !MUSIC_ENTRY : STZ !MUSIC_TIMER
+    CMP #$0001 : BEQ .resume_music
+    STZ $2140
+    RTL
+  .resume_music
+    LDA !MUSIC_DATA : CLC : ADC #$FF00 : PHA : STZ !MUSIC_DATA : PLA : JSL !MUSIC_ROUTINE
+    LDA !MUSIC_TRACK : PHA : STZ !MUSIC_TRACK : PLA : JSL !MUSIC_ROUTINE
+    RTL
+endmacro
+
 macro cm_preset_adjust_item(name, addr, bitmask)
 ; Allows four-way toggling of items:  NO CHANGE/EQUIP/UNEQUIP/REMOVE
   .dm_actionIndex
