@@ -2403,77 +2403,74 @@ RoomStratMenu2:
 
 ; Super HUD must always be the first room strat option
 ihstrat_superhud:
-    %cm_jsl("Super HUD", #action_select_room_strat, #$0000)
+    %cm_jsl("Super HUD", #action_select_room_strat, !IH_STRAT_INDEX_SUPERHUD)
 
 ihstrat_ceresridley:
-    %cm_jsl("Ceres Ridley Hits", #action_select_room_strat, #$0001)
+    %cm_jsl("Ceres Ridley Hits", #action_select_room_strat, !IH_STRAT_INDEX_CERESRIDLEY)
 
 ihstrat_doorskip:
-!IH_STRAT_DOORSKIP_INDEX = #$0002
-    %cm_jsl("Parlor/Botwoon Door Skip", #action_select_room_strat, #$0002)
+    %cm_jsl("Parlor/Botwoon Door Skip", #action_select_room_strat, !IH_STRAT_INDEX_DOORSKIP)
 
 ihstrat_tacotank:
-    %cm_jsl("Taco Tank", #action_select_room_strat, #$0003)
+    %cm_jsl("Taco Tank", #action_select_room_strat, !IH_STRAT_INDEX_TACOTANK)
 
 ihstrat_pitdoor:
-    %cm_jsl("Pit Room Right Door", #action_select_room_strat, #$0004)
+    %cm_jsl("Pit Room Right Door", #action_select_room_strat, !IH_STRAT_INDEX_PITDOOR)
 
 ihstrat_moondance:
-    %cm_jsl("Moondance", #action_select_room_strat, #$0005)
+    %cm_jsl("Moondance", #action_select_room_strat, #!IH_STRAT_INDEX_MOONDANCE)
 
 ihstrat_kraidradar:
-    %cm_jsl("Kraid Nail Radar", #action_select_room_strat, #$0006)
+    %cm_jsl("Kraid Nail Radar", #action_select_room_strat, !IH_STRAT_INDEX_KRAIDRADAR)
 
 ihstrat_bootlessup:
-    %cm_jsl("Bootless Up In Two", #action_select_room_strat, #$0007)
+    %cm_jsl("Bootless Up In Two", #action_select_room_strat, !IH_STRAT_INDEX_BOOTLESSUP)
 
 ihstrat_gateglitch:
-    %cm_jsl("Gate Glitch", #action_select_room_strat, #$0008)
+    %cm_jsl("Gate Glitch", #action_select_room_strat, !IH_STRAT_INDEX_GATEGLITCH)
 
 ihstrat_moatcwj:
-    %cm_jsl("Moat CWJ", #action_select_room_strat, #$0009)
+    %cm_jsl("Moat CWJ", #action_select_room_strat, !IH_STRAT_INDEX_MOATCWJ)
 
 ihstrat_robotflush:
-    %cm_jsl("Robot Flush", #action_select_room_strat, #$000A)
+    %cm_jsl("Robot Flush", #action_select_room_strat, !IH_STRAT_INDEX_ROBOTFLUSH)
 
 ihstrat_shinetopb:
-    %cm_jsl("Shine to PB", #action_select_room_strat, #$000B)
+    %cm_jsl("Shine to PB", #action_select_room_strat, !IH_STRAT_INDEX_SHINETOPB)
 
 ihstrat_elevatorcf:
-    %cm_jsl("Elevator Crystal Flash", #action_select_room_strat, #$000C)
+    %cm_jsl("Elevator Crystal Flash", #action_select_room_strat, !IH_STRAT_INDEX_ELEVATORCF)
 
 ihstrat_botwooncf:
-    %cm_jsl("Botwoon Crystal Flash", #action_select_room_strat, #$000D)
+    %cm_jsl("Botwoon Crystal Flash", #action_select_room_strat, !IH_STRAT_INDEX_BOTWOONCF)
 
 ihstrat_draygonai:
-    %cm_jsl("Draygon AI", #action_select_room_strat, #$000E)
+    %cm_jsl("Draygon AI", #action_select_room_strat, !IH_STRAT_INDEX_DRAYGONAI)
 
 ihstrat_snailclip:
-    %cm_jsl("Aqueduct Snail Clip", #action_select_room_strat, #$000F)
+    %cm_jsl("Aqueduct Snail Clip", #action_select_room_strat, !IH_STRAT_INDEX_SNAILCLIP)
 
 ihstrat_wasteland:
-    %cm_jsl("Wasteland Entry", #action_select_room_strat, #$0010)
+    %cm_jsl("Wasteland Entry", #action_select_room_strat, !IH_STRAT_INDEX_WASTELAND)
 
 ihstrat_ridleyai:
-    %cm_jsl("Ridley AI", #action_select_room_strat, #$0011)
+    %cm_jsl("Ridley AI", #action_select_room_strat, !IH_STRAT_INDEX_RIDLEYAI)
 
 ihstrat_kihuntermanip:
-    %cm_jsl("Kihunter Manipulation", #action_select_room_strat, #$0012)
+    %cm_jsl("Kihunter Manipulation", #action_select_room_strat, !IH_STRAT_INDEX_KIHUNTERMANIP)
 
 ihstrat_downbackzeb:
-    %cm_jsl("Downback Zeb Skip", #action_select_room_strat, #$0013)
+    %cm_jsl("Downback Zeb Skip", #action_select_room_strat, !IH_STRAT_INDEX_DOWNBACKZEB)
 
 ihstrat_zebskip:
-    %cm_jsl("Zeb Skip Indicator", #action_select_room_strat, #$0014)
+    %cm_jsl("Zeb Skip Indicator", #action_select_room_strat, !IH_STRAT_INDEX_ZEBSKIP)
 
 ihstrat_mbhp:
-!IH_STRAT_MBHP_INDEX = #$0015
-    %cm_jsl("Mother Brain HP", #action_select_room_strat, #$0015)
+    %cm_jsl("Mother Brain HP", #action_select_room_strat, !IH_STRAT_INDEX_MBHP)
 
 ihstrat_twocries:
-    %cm_jsl("Two Cries Standup", #action_select_room_strat, #$0016)
+    %cm_jsl("Two Cries Standup", #action_select_room_strat, !IH_STRAT_INDEX_TWOCRIES)
 
-!IH_ROOM_STRAT_COUNT = #$0017
 action_select_room_strat:
 {
     TYA : STA !sram_room_strat

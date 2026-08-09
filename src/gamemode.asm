@@ -605,7 +605,7 @@ gamemode_decrement_display_mode:
 gamemode_increment_room_strat:
 {
     LDA !sram_room_strat : INC
-    CMP !IH_ROOM_STRAT_COUNT : BNE .set
+    CMP.w !IH_STRAT_COUNT : BNE .set
     TDC
   .set
     STA !sram_room_strat
@@ -618,7 +618,7 @@ gamemode_decrement_room_strat:
 {
     LDA !sram_room_strat : DEC
     CMP #$FFFF : BNE .set
-    LDA !IH_ROOM_STRAT_COUNT-1
+    LDA.w !IH_STRAT_COUNT-1
   .set
     STA !sram_room_strat
     ; enable ROOM STRAT mode

@@ -391,7 +391,7 @@ else
     ; Check if door skip is selected
     LDA !sram_display_mode : CMP.w !IH_MODE_INDEX_ROOMSTRAT : BNE .check_sprite_flags
     LDA !sram_room_strat : BEQ .check_super_hud
-    CMP !IH_STRAT_DOORSKIP_INDEX : BNE .check_sprite_flags
+    CMP.w !IH_STRAT_INDEX_DOORSKIP : BNE .check_sprite_flags
 
   .draw_earthquake
     ; Draw value relevant for block shuffler

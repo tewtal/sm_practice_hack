@@ -2436,7 +2436,7 @@ else
   .assignMBHP
     ; Switch enemy HP to MB HP
     LDA.w !IH_MODE_INDEX_ROOMSTRAT : STA !sram_display_mode
-    LDA !IH_STRAT_MBHP_INDEX : STA !sram_room_strat
+    LDA.w !IH_STRAT_INDEX_MBHP : STA !sram_room_strat
 endif ; !FEATURE_VANILLAHUD
   .done
     RTS

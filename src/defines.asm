@@ -1404,6 +1404,31 @@ endif
 !IH_MODE_INDEX_RAMWATCH = (status_display_table_ramwatch-status_display_table)/2
 !IH_MODE_COUNT = (status_display_table_end-status_display_table)/2
 
+!IH_STRAT_INDEX_SUPERHUD = (status_room_table_superhud-status_room_table)/2
+!IH_STRAT_INDEX_CERESRIDLEY = (status_room_table_ceresridley-status_room_table)/2
+!IH_STRAT_INDEX_DOORSKIP = (status_room_table_doorskip-status_room_table)/2
+!IH_STRAT_INDEX_TACOTANK = (status_room_table_tacotank-status_room_table)/2
+!IH_STRAT_INDEX_PITDOOR = (status_room_table_pitdoor-status_room_table)/2
+!IH_STRAT_INDEX_MOONDANCE = (status_room_table_moondance-status_room_table)/2
+!IH_STRAT_INDEX_KRAIDRADAR = (status_room_table_kraidradar-status_room_table)/2
+!IH_STRAT_INDEX_BOOTLESSUP = (status_room_table_bootlessup-status_room_table)/2
+!IH_STRAT_INDEX_GATEGLITCH = (status_room_table_gateglitch-status_room_table)/2
+!IH_STRAT_INDEX_MOATCWJ = (status_room_table_moatcwj-status_room_table)/2
+!IH_STRAT_INDEX_ROBOTFLUSH = (status_room_table_robotflush-status_room_table)/2
+!IH_STRAT_INDEX_SHINETOPB = (status_room_table_shinetopb-status_room_table)/2
+!IH_STRAT_INDEX_ELEVATORCF = (status_room_table_elevatorcf-status_room_table)/2
+!IH_STRAT_INDEX_BOTWOONCF = (status_room_table_botwooncf-status_room_table)/2
+!IH_STRAT_INDEX_DRAYGONAI = (status_room_table_draygonai-status_room_table)/2
+!IH_STRAT_INDEX_SNAILCLIP = (status_room_table_snailclip-status_room_table)/2
+!IH_STRAT_INDEX_WASTELAND = (status_room_table_wasteland-status_room_table)/2
+!IH_STRAT_INDEX_RIDLEYAI = (status_room_table_ridleyai-status_room_table)/2
+!IH_STRAT_INDEX_KIHUNTERMANIP = (status_room_table_kihuntermanip-status_room_table)/2
+!IH_STRAT_INDEX_DOWNBACKZEB = (status_room_table_downbackzeb-status_room_table)/2
+!IH_STRAT_INDEX_ZEBSKIP = (status_room_table_zebskip-status_room_table)/2
+!IH_STRAT_INDEX_MBHP = (status_room_table_mbhp-status_room_table)/2
+!IH_STRAT_INDEX_TWOCRIES = (status_room_table_twocries-status_room_table)/2
+!IH_STRAT_COUNT = (status_room_table_end-status_room_table)/2
+
 !ROOM_LAYOUT_NO_MAGNET_STAIRS = #$0001
 !ROOM_LAYOUT_AREA_RANDO = #$0002
 !ROOM_LAYOUT_ANTISOFTLOCK = #$0004
