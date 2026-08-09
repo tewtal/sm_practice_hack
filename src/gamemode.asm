@@ -455,8 +455,8 @@ if !FEATURE_VANILLAHUD
 else
 gamemode_reveal_damage:
 {
-    LDA !sram_display_mode : CMP !IH_MODE_ROOMSTRAT_INDEX : BEQ .checkRoomStrat
-    CMP !IH_MODE_COUNTDAMAGE_INDEX : BNE .reveal
+    LDA !sram_display_mode : CMP.w !IH_MODE_INDEX_ROOMSTRAT : BEQ .checkRoomStrat
+    CMP.w !IH_MODE_INDEX_COUNTDAMAGE : BNE .reveal
     ; revert to prior mode
     LDA !ram_display_backup : STA !sram_display_mode
     %sfxreset()
@@ -466,7 +466,7 @@ gamemode_reveal_damage:
     LDA !sram_display_mode
   .reveal
     STA !ram_display_backup
-    LDA !IH_MODE_COUNTDAMAGE_INDEX : STA !sram_display_mode
+    LDA.w !IH_MODE_INDEX_COUNTDAMAGE : STA !sram_display_mode
     %sfxconfirm()
     BRA gamemode_reveal_hp_updateHUD
 
@@ -488,8 +488,8 @@ gamemode_reveal_damage:
 
 gamemode_reveal_hp:
 {
-    LDA !sram_display_mode : CMP !IH_MODE_ROOMSTRAT_INDEX : BEQ .checkRoomStrat
-    CMP !IH_MODE_COUNTHP_INDEX : BNE .reveal
+    LDA !sram_display_mode : CMP.w !IH_MODE_INDEX_ROOMSTRAT : BEQ .checkRoomStrat
+    CMP.w !IH_MODE_INDEX_COUNTHP : BNE .reveal
     ; revert to prior mode
     LDA !ram_display_backup : STA !sram_display_mode
     %sfxreset()
@@ -504,7 +504,7 @@ gamemode_reveal_hp:
     LDA !sram_display_mode
   .reveal
     STA !ram_display_backup
-    LDA !IH_MODE_COUNTHP_INDEX : STA !sram_display_mode
+    LDA.w !IH_MODE_INDEX_COUNTHP : STA !sram_display_mode
     %sfxconfirm()
     BRA .updateHUD
 
@@ -586,7 +586,7 @@ else
 gamemode_increment_display_mode:
 {
     LDA !sram_display_mode : INC
-    CMP !IH_MODE_COUNT : BNE .set
+    CMP.w !IH_MODE_COUNT : BNE .set
     TDC
   .set
     STA !sram_display_mode
@@ -597,7 +597,7 @@ gamemode_decrement_display_mode:
 {
     LDA !sram_display_mode : DEC
     CMP #$FFFF : BNE .set
-    LDA !IH_MODE_COUNT-1
+    LDA.w !IH_MODE_COUNT-1
   .set
     STA !sram_display_mode
     JML ih_update_status
@@ -611,7 +611,7 @@ gamemode_increment_room_strat:
   .set
     STA !sram_room_strat
     ; enable ROOM STRAT mode
-    LDA !IH_MODE_ROOMSTRAT_INDEX : STA !sram_display_mode
+    LDA.w !IH_MODE_INDEX_ROOMSTRAT : STA !sram_display_mode
     JML ih_update_status
 }
 
@@ -623,7 +623,7 @@ gamemode_decrement_room_strat:
   .set
     STA !sram_room_strat
     ; enable ROOM STRAT mode
-    LDA !IH_MODE_ROOMSTRAT_INDEX : STA !sram_display_mode
+    LDA.w !IH_MODE_INDEX_ROOMSTRAT : STA !sram_display_mode
     JML ih_update_status
 }
 
@@ -635,7 +635,7 @@ gamemode_increment_super_hud:
   .set
     STA !sram_superhud_bottom
     ; enable Super HUD
-    LDA !IH_MODE_ROOMSTRAT_INDEX : STA !sram_display_mode
+    LDA.w !IH_MODE_INDEX_ROOMSTRAT : STA !sram_display_mode
     TDC : STA !sram_room_strat
     JML ih_update_status
 }
@@ -648,7 +648,7 @@ gamemode_decrement_super_hud:
   .set
     STA !sram_superhud_bottom
     ; enable Super HUD
-    LDA !IH_MODE_ROOMSTRAT_INDEX : STA !sram_display_mode
+    LDA.w !IH_MODE_INDEX_ROOMSTRAT : STA !sram_display_mode
     TDC : STA !sram_room_strat
     JML ih_update_status
 }

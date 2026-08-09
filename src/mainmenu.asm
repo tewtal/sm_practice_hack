@@ -2235,96 +2235,86 @@ DisplayModeMenu2:
 
 ; Enemy HP must always be the first display mode option
 ihmode_enemyhp:
-    %cm_jsl("Enemy HP", #action_select_infohud_mode, #$0000)
+    %cm_jsl("Enemy HP", #action_select_infohud_mode, !IH_MODE_INDEX_ENEMYHP)
 
 ihmode_roomstrat:
-!IH_MODE_ROOMSTRAT_INDEX = #$0001
-    %cm_jsl("Room Strat", #action_select_infohud_mode, #$0001)
+    %cm_jsl("Room Strat", #action_select_infohud_mode, !IH_MODE_INDEX_ROOMSTRAT)
 
 ihmode_chargetimer:
-    %cm_jsl("Charge Timer", #action_select_infohud_mode, #$0002)
+    %cm_jsl("Charge Timer", #action_select_infohud_mode, !IH_MODE_INDEX_CHARGETIMER)
 
 ihmode_xfactor:
-    %cm_jsl("X-Factor Timer", #action_select_infohud_mode, #$0003)
+    %cm_jsl("X-Factor Timer", #action_select_infohud_mode, !IH_MODE_INDEX_XFACTOR)
 
 ihmode_cooldown:
-    %cm_jsl("Cooldown Timer", #action_select_infohud_mode, #$0004)
+    %cm_jsl("Cooldown Timer", #action_select_infohud_mode, !IH_MODE_INDEX_COOLDOWN)
 
 ihmode_shinetimer:
-    %cm_jsl("Shinespark Timer", #action_select_infohud_mode, #$0005)
+    %cm_jsl("Shinespark Timer", #action_select_infohud_mode, !IH_MODE_INDEX_SHINETIMER)
 
 ihmode_dashcounter:
-    %cm_jsl("Dash Counter", #action_select_infohud_mode, #$0006)
+    %cm_jsl("Dash Counter", #action_select_infohud_mode, !IH_MODE_INDEX_DASHCOUNTER)
 
 ihmode_shinetune:
-!IH_MODE_SHINETUNE_INDEX = #$0007
-    %cm_jsl("Shine Tune", #action_select_infohud_mode, #$0007)
+    %cm_jsl("Shine Tune", #action_select_infohud_mode, !IH_MODE_INDEX_SHINETUNE)
 
 ihmode_iframecounter:
-    %cm_jsl("I-Frame Counter", #action_select_infohud_mode, #$0008)
+    %cm_jsl("I-Frame Counter", #action_select_infohud_mode, !IH_MODE_INDEX_IFRAMECOUNTER)
 
 ihmode_spikesuit:
-    %cm_jsl("Spikesuit Trainer", #action_select_infohud_mode, #$0009)
+    %cm_jsl("Spikesuit Trainer", #action_select_infohud_mode, !IH_MODE_INDEX_SPIKESUIT)
 
 ihmode_lagcounter:
-    %cm_jsl("Lag Counter", #action_select_infohud_mode, #$000A)
+    %cm_jsl("Lag Counter", #action_select_infohud_mode, !IH_MODE_INDEX_LAGCOUNTER)
 
 ihmode_cpuusage:
-    %cm_jsl("CPU Usage", #action_select_infohud_mode, #$000B)
+    %cm_jsl("CPU Usage", #action_select_infohud_mode, !IH_MODE_INDEX_CPUUSAGE)
 
 ihmode_hspeed:
-    %cm_jsl("Horizontal Speed", #action_select_infohud_mode, #$000C)
+    %cm_jsl("Horizontal Speed", #action_select_infohud_mode, !IH_MODE_INDEX_HSPEED)
 
 ihmode_dashspeed:
-    %cm_jsl("Dash Speed", #action_select_infohud_mode, #$000D)
+    %cm_jsl("Dash Speed", #action_select_infohud_mode, !IH_MODE_INDEX_DASHSPEED)
 
 ihmode_vspeed:
-!IH_MODE_VSPEED_INDEX = #$000E
-    %cm_jsl("Vertical Speed", #action_select_infohud_mode, #$000E)
+    %cm_jsl("Vertical Speed", #action_select_infohud_mode, !IH_MODE_INDEX_VSPEED)
 
 ihmode_quickdrop:
-    %cm_jsl("Quickdrop Trainer", #action_select_infohud_mode, #$000F)
+    %cm_jsl("Quickdrop Trainer", #action_select_infohud_mode, !IH_MODE_INDEX_QUICKDROP)
 
 ihmode_walljump:
-!IH_MODE_WALLJUMP_INDEX = #$0010
-    %cm_jsl("Walljump Trainer", #action_select_infohud_mode, #$0010)
+    %cm_jsl("Walljump Trainer", #action_select_infohud_mode, !IH_MODE_INDEX_WALLJUMP)
 
 ihmode_doublesbj:
-    %cm_jsl("Double Springball Jump", #action_select_infohud_mode, #$0011)
+    %cm_jsl("Double Springball Jump", #action_select_infohud_mode, !IH_MODE_INDEX_DOUBLESBJ)
 
 ihmode_countdamage:
-!IH_MODE_COUNTDAMAGE_INDEX = #$0012
-    %cm_jsl("Boss Damage Counter", #action_select_infohud_mode, #$0012)
+    %cm_jsl("Boss Damage Counter", #action_select_infohud_mode, !IH_MODE_INDEX_COUNTDAMAGE)
 
 ihmode_counthp:
-!IH_MODE_COUNTHP_INDEX = #$0013
-    %cm_jsl("Boss HP Counter", #action_select_infohud_mode, #$0013)
+    %cm_jsl("Boss HP Counter", #action_select_infohud_mode, !IH_MODE_INDEX_COUNTHP)
 
 ihmode_armpump:
-!IH_MODE_ARMPUMP_INDEX = #$0014
-    %cm_jsl("Arm Pump Trainer", #action_select_infohud_mode, #$0014)
+    %cm_jsl("Arm Pump Trainer", #action_select_infohud_mode, !IH_MODE_INDEX_ARMPUMP)
 
 ihmode_pumpcounter:
-    %cm_jsl("Arm Pump Counter", #action_select_infohud_mode, #$0015)
+    %cm_jsl("Arm Pump Counter", #action_select_infohud_mode, !IH_MODE_INDEX_PUMPCOUNTER)
 
 ihmode_xpos:
-    %cm_jsl("X Position", #action_select_infohud_mode, #$0016)
+    %cm_jsl("X Position", #action_select_infohud_mode, !IH_MODE_INDEX_XPOS)
 
 ihmode_ypos:
-    %cm_jsl("Y Position", #action_select_infohud_mode, #$0017)
+    %cm_jsl("Y Position", #action_select_infohud_mode, !IH_MODE_INDEX_YPOS)
 
 ihmode_camerapos:
-    %cm_jsl("Camera Position", #action_select_infohud_mode, #$0018)
+    %cm_jsl("Camera Position", #action_select_infohud_mode, !IH_MODE_INDEX_CAMERAPOS)
 
 ihmode_shottimer:
-!IH_MODE_SHOTTIMER_INDEX = #$0019
-    %cm_jsl("Shot Timer", #action_select_infohud_mode, #$0019)
+    %cm_jsl("Shot Timer", #action_select_infohud_mode, !IH_MODE_INDEX_SHOTTIMER)
 
 ihmode_ramwatch:
-!IH_MODE_RAMWATCH_INDEX = #$001A
-    %cm_jsl("Custom RAM Watch", #action_select_infohud_mode, #$001A)
+    %cm_jsl("Custom RAM Watch", #action_select_infohud_mode, !IH_MODE_INDEX_RAMWATCH)
 
-!IH_MODE_COUNT = #$001B
 action_select_infohud_mode:
 {
     TYA : STA !sram_display_mode
@@ -2494,7 +2484,7 @@ action_select_room_strat:
 {
     TYA : STA !sram_room_strat
     ; enable ROOM STRAT mode
-    LDA !IH_MODE_ROOMSTRAT_INDEX : STA !sram_display_mode
+    LDA.w !IH_MODE_INDEX_ROOMSTRAT : STA !sram_display_mode
     JSL init_print_segment_timer
     JML cm_previous_menu
 }
@@ -2535,7 +2525,7 @@ ih_room_strat:
     db #$28, "  TWO CRIES", #$FF
     db #$FF
   .routine
-    LDA !IH_MODE_ROOMSTRAT_INDEX : STA !sram_display_mode
+    LDA.w !IH_MODE_INDEX_ROOMSTRAT : STA !sram_display_mode
     JML init_print_segment_timer
 
 ih_goto_superhud:
@@ -3055,7 +3045,7 @@ action_select_superhud_top:
 }
 
 ih_superhud_enable:
-    %cm_jsl("Enable Super HUD", .routine, !IH_MODE_ROOMSTRAT_INDEX)
+    %cm_jsl("Enable Super HUD", .routine, !IH_MODE_INDEX_ROOMSTRAT)
   .routine
     TYA : STA !sram_display_mode
     TDC : STA !sram_room_strat
@@ -4558,10 +4548,10 @@ else
 if !INFOHUD_ALWAYS_SHOW_X_Y
 else
     ; Skip printing segment timer when shinetune or walljump or shot timer enabled
-    LDA !sram_display_mode : CMP !IH_MODE_ROOMSTRAT_INDEX : BEQ .checkSuperHUD
-    CMP !IH_MODE_SHINETUNE_INDEX : BEQ .skip
-    CMP !IH_MODE_WALLJUMP_INDEX : BEQ .skip
-    CMP !IH_MODE_SHOTTIMER_INDEX : BEQ .skip
+    LDA !sram_display_mode : CMP.w !IH_MODE_INDEX_ROOMSTRAT : BEQ .checkSuperHUD
+    CMP.w !IH_MODE_INDEX_SHINETUNE : BEQ .skip
+    CMP.w !IH_MODE_INDEX_WALLJUMP : BEQ .skip
+    CMP.w !IH_MODE_INDEX_SHOTTIMER : BEQ .skip
   .print
     LDA !ram_print_segment_timer : ORA #$8000 : STA !ram_print_segment_timer
     RTL

@@ -1384,6 +1384,35 @@ endif
 !FRAME_COUNTER_USE_IGT = #$0001
 !FRAME_COUNTER_ADJUST_REALTIME = #$0002
 
+!IH_MODE_INDEX_ENEMYHP = (status_display_table_enemyhp-status_display_table)/2
+!IH_MODE_INDEX_ROOMSTRAT = (status_display_table_roomstrat-status_display_table)/2
+!IH_MODE_INDEX_CHARGETIMER = (status_display_table_chargetimer-status_display_table)/2
+!IH_MODE_INDEX_XFACTOR = (status_display_table_xfactor-status_display_table)/2
+!IH_MODE_INDEX_COOLDOWN = (status_display_table_cooldown-status_display_table)/2
+!IH_MODE_INDEX_SHINETIMER = (status_display_table_shinetimer-status_display_table)/2
+!IH_MODE_INDEX_DASHCOUNTER = (status_display_table_dashcounter-status_display_table)/2
+!IH_MODE_INDEX_SHINETUNE = (status_display_table_shinetune-status_display_table)/2
+!IH_MODE_INDEX_IFRAMECOUNTER = (status_display_table_iframecounter-status_display_table)/2
+!IH_MODE_INDEX_SPIKESUIT = (status_display_table_spikesuit-status_display_table)/2
+!IH_MODE_INDEX_LAGCOUNTER = (status_display_table_lagcounter-status_display_table)/2
+!IH_MODE_INDEX_CPUUSAGE = (status_display_table_cpuusage-status_display_table)/2
+!IH_MODE_INDEX_HSPEED = (status_display_table_hspeed-status_display_table)/2
+!IH_MODE_INDEX_DASHSPEED = (status_display_table_dashspeed-status_display_table)/2
+!IH_MODE_INDEX_VSPEED = (status_display_table_vspeed-status_display_table)/2
+!IH_MODE_INDEX_QUICKDROP = (status_display_table_quickdrop-status_display_table)/2
+!IH_MODE_INDEX_WALLJUMP = (status_display_table_walljump-status_display_table)/2
+!IH_MODE_INDEX_DOUBLESBJ = (status_display_table_doublesbj-status_display_table)/2
+!IH_MODE_INDEX_COUNTDAMAGE = (status_display_table_countdamage-status_display_table)/2
+!IH_MODE_INDEX_COUNTHP = (status_display_table_counthp-status_display_table)/2
+!IH_MODE_INDEX_ARMPUMP = (status_display_table_armpump-status_display_table)/2
+!IH_MODE_INDEX_PUMPCOUNTER = (status_display_table_pumpcounter-status_display_table)/2
+!IH_MODE_INDEX_XPOS = (status_display_table_xpos-status_display_table)/2
+!IH_MODE_INDEX_YPOS = (status_display_table_ypos-status_display_table)/2
+!IH_MODE_INDEX_CAMERAPOS = (status_display_table_camerapos-status_display_table)/2
+!IH_MODE_INDEX_SHOTTIMER = (status_display_table_shottimer-status_display_table)/2
+!IH_MODE_INDEX_RAMWATCH = (status_display_table_ramwatch-status_display_table)/2
+!IH_MODE_COUNT = (status_display_table_end-status_display_table)/2
+
 !ROOM_LAYOUT_NO_MAGNET_STAIRS = #$0001
 !ROOM_LAYOUT_AREA_RANDO = #$0002
 !ROOM_LAYOUT_ANTISOFTLOCK = #$0004

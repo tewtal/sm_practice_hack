@@ -585,7 +585,7 @@ endif
 if !FEATURE_VANILLAHUD
 else
     ; Check if door skip is selected
-    LDA !sram_display_mode : CMP !IH_MODE_ROOMSTRAT_INDEX : BNE .check_sprite_flags
+    LDA !sram_display_mode : CMP.w !IH_MODE_INDEX_ROOMSTRAT : BNE .check_sprite_flags
     LDA !sram_room_strat : BEQ .check_super_hud
     CMP !IH_STRAT_DOORSKIP_INDEX : BNE .check_sprite_flags
 
