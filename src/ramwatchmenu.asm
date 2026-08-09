@@ -772,7 +772,7 @@ action_HUD_ramwatch:
     JML init_print_segment_timer
 
   .superHUD
-    LDA !IH_SUPERHUD_RAMWATCH_BOTTOM_INDEX : STA !sram_superhud_bottom
+    LDA.w !IH_SUPERHUD_BOTTOM_INDEX_RAMWATCH : STA !sram_superhud_bottom
     %sfxconfirm()
     JML init_print_segment_timer
 }

@@ -606,7 +606,7 @@ else
     BRA .check_sprite_flags
 
   .check_super_hud
-    LDA !sram_superhud_bottom : CMP !IH_SUPERHUD_DOORSKIP_BOTTOM_INDEX
+    LDA !sram_superhud_bottom : CMP.w !IH_SUPERHUD_BOTTOM_INDEX_DOORSKIP
     BEQ .draw_earthquake
 
   .check_sprite_flags

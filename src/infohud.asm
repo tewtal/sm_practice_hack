@@ -475,7 +475,7 @@ ih_after_room_transition:
     BRA .segmentTimer
 
   .checkSuperHUD
-    LDA !sram_superhud_bottom : CMP !IH_SUPERHUD_MBHP_BOTTOM_INDEX : BNE .segmentTimer
+    LDA !sram_superhud_bottom : CMP.w !IH_SUPERHUD_BOTTOM_INDEX_MBHP : BNE .segmentTimer
     LDA !ROOM_ID : CMP.w #ROOM_MotherBrainRoom : BEQ .segmentTimer
     TDC : STA !sram_superhud_bottom
 
@@ -793,7 +793,7 @@ ih_update_hud_after_transition:
     LDA !sram_room_strat : BNE ih_update_hud_code_start
 
     ; Update Super HUD lag counters
-    LDA !sram_superhud_top : CMP !IH_SUPERHUD_LAG_COUNTER_TOP_INDEX : BNE .middleHUD
+    LDA !sram_superhud_top : CMP.w !IH_SUPERHUD_TOP_INDEX_LAGCOUNTER : BNE .middleHUD
     LDA !sram_lag_counter_mode : BNE .topFullTime
     LDA !ram_last_door_lag_frames
     BRA .topDrawTime
@@ -804,7 +804,7 @@ ih_update_hud_after_transition:
     TDC : STA !ram_HUD_top
 
   .middleHUD
-    LDA !sram_superhud_middle : CMP !IH_SUPERHUD_LAG_COUNTER_MIDDLE_INDEX : BNE .bottomHUD
+    LDA !sram_superhud_middle : CMP.w !IH_SUPERHUD_MIDDLE_INDEX_LAGCOUNTER : BNE .bottomHUD
     LDA !sram_lag_counter_mode : BNE .middleFullTime
     LDA !ram_last_door_lag_frames
     BRA .middleDrawTime
@@ -816,7 +816,7 @@ ih_update_hud_after_transition:
 
     ; Check armpump
   .bottomHUD
-    LDA !sram_superhud_bottom : CMP !IH_SUPERHUD_ARMPUMP_BOTTOM_INDEX : BNE ih_update_hud_code_start
+    LDA !sram_superhud_bottom : CMP.w !IH_SUPERHUD_BOTTOM_INDEX_ARMPUMP : BNE ih_update_hud_code_start
     JMP ih_update_hud_before_transition_armpump
 }
 
