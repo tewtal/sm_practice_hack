@@ -2,36 +2,62 @@
 ;InfoHUD modes and room strats
 ;=======================================================
 
-; When adding or removing infohud modes,
-; also update infohud.asm: inc_statusdisplay and dec_statusdisplay
-.status_display_table
+status_display_table:
+  .enemyhp ; assumed to be zero index
     dw status_enemyhp
+  .roomstrat
     dw status_roomstrat
+  .chargetimer
     dw status_chargetimer
+  .xfactor
     dw status_xfactor
+  .cooldown
     dw status_cooldown
+  .shinetimer
     dw status_shinetimer
+  .dashcounter
     dw status_dashcounter
+  .shinetune
     dw status_shinetune
+  .iframecounter
     dw status_iframecounter
+  .spikesuit
     dw status_spikesuit
+  .lagcounter
     dw status_lagcounter
+  .cpuusage
     dw status_cpuusage
+  .hspeed
     dw status_hspeed
+  .dashspeed
     dw status_dashspeed
+  .vspeed
     dw status_vspeed
+  .quickdrop
     dw status_quickdrop
+  .walljump
     dw status_walljump
+  .doublesbj
     dw status_doublesbj
+  .countdamage
     dw status_countdamage
+  .counthp
     dw status_enemyhp
+  .armpump
     dw status_armpump
+  .pumpcounter
     dw status_pumpcounter
+  .xpos
     dw status_xpos
+  .ypos
     dw status_ypos
+  .camerapos
     dw status_camerapos
+  .shottimer
     dw status_shottimer
+  .ramwatch
     dw status_ramwatch
+  .end
 
 status_enemyhp:
 {
@@ -247,7 +273,7 @@ endif
     BRA .shinetune_start
 
   .check_superhud
-    LDA !sram_display_mode : CMP !IH_MODE_ROOMSTRAT_INDEX : BEQ .done_momentum
+    LDA !sram_display_mode : CMP.w !IH_MODE_INDEX_ROOMSTRAT : BEQ .done_momentum
     BRA .print_momentum
 
   .shinetune_start
@@ -1036,7 +1062,7 @@ endif
     ; Print initial jump speed over item% when Samus doesn't bonk and superhud not selected
     LDA !sram_top_display_mode : BNE .skipprint
     LDA $0B1A : BNE .skipprint
-    LDA !sram_display_mode : CMP !IH_MODE_ROOMSTRAT_INDEX : BNE .printjumpseed
+    LDA !sram_display_mode : CMP.w !IH_MODE_INDEX_ROOMSTRAT : BNE .printjumpseed
     LDA !sram_room_strat : BEQ .skipprint
 
   .printjumpseed
