@@ -2436,7 +2436,7 @@ ihstrat_pitdoor:
     %cm_jsl("Pit Room Right Door", #action_select_room_strat, !IH_STRAT_INDEX_PITDOOR)
 
 ihstrat_moondance:
-    %cm_jsl("Moondance", #action_select_room_strat, #!IH_STRAT_INDEX_MOONDANCE)
+    %cm_jsl("Moondance", #action_select_room_strat, !IH_STRAT_INDEX_MOONDANCE)
 
 ihstrat_kraidradar:
     %cm_jsl("Kraid Nail Radar", #action_select_room_strat, !IH_STRAT_INDEX_KRAIDRADAR)
@@ -2569,8 +2569,8 @@ SuperHUDMenu:
 ih_superhud_bottom_selector:
     dw !ACTION_CHOICE
     dl #!sram_superhud_bottom
-    db #$28, "Current Bottom", #$FF
     dw #.routine
+    db #$28, "Current Bottom", #$FF
     db #$28, "   ENEMY HP", #$FF
     db #$28, "     CHARGE", #$FF
     db #$28, "   X FACTOR", #$FF
@@ -2873,8 +2873,8 @@ ih_superhud_goto_page3:
 ih_superhud_middle_selector:
     dw !ACTION_CHOICE
     dl #!sram_superhud_middle
-    db #$28, "Current Middle", #$FF
     dw #.routine
+    db #$28, "Current Middle", #$FF
     db #$28, "        OFF", #$FF
     db #$28, "     CHARGE", #$FF
     db #$28, "   X FACTOR", #$FF
