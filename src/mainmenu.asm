@@ -3040,7 +3040,7 @@ ih_superhud_enable:
 ih_door_display_mode:
     dw !ACTION_CHOICE
     dl #!sram_door_display_mode
-    dw #$0000
+    dw #.routine
     db #$28, "Door HUD Mode", #$FF
     db #$28, "        OFF", #$FF
     db #$28, "HORIZ SPEED", #$FF
@@ -3052,6 +3052,57 @@ ih_door_display_mode:
     db #$28, " X POSITION", #$FF
     db #$28, " Y POSITION", #$FF
     db #$FF
+  .routine
+    ; check for A or Y input
+    LDA !IH_CONTROLLER_PRI_NEW : BIT #$4080 : BEQ .done
+    ; jump to submenu
+    LDY.w #DoorDisplayModeMenu
+    JSL cm_go_back
+    %submenu_jump()
+  .done
+    RTL
+
+DoorDisplayModeMenu:
+    dw ih_door_display_off
+    dw ih_door_display_hspeed
+    dw ih_door_display_vspeed
+    dw ih_door_display_chargetimer
+    dw ih_door_display_shinetimer
+    dw ih_door_display_dashcounter
+    dw ih_door_display_xpos
+    dw ih_door_display_ypos
+    dw $0000
+    %cm_header("Select Door HUD Mode")
+
+ih_door_display_off:
+    %cm_jsl("Disabled", #action_select_door_display_mode, !IH_DOOR_INDEX_OFF)
+
+ih_door_display_hspeed:
+    %cm_jsl("Horizontal Speed", #action_select_door_display_mode, !IH_DOOR_INDEX_HSPEED)
+
+ih_door_display_vspeed:
+    %cm_jsl("Vertical Speed", #action_select_door_display_mode, !IH_DOOR_INDEX_VSPEED)
+    
+ih_door_display_chargetimer:
+    %cm_jsl("Charge Timer", #action_select_door_display_mode, !IH_DOOR_INDEX_CHARGETIMER)
+    
+ih_door_display_shinetimer:
+    %cm_jsl("Shinespark Timer", #action_select_door_display_mode, !IH_DOOR_INDEX_SHINETIMER)
+    
+ih_door_display_dashcounter:
+    %cm_jsl("Dash Counter", #action_select_door_display_mode, !IH_DOOR_INDEX_DASHCOUNTER)
+    
+ih_door_display_xpos:
+    %cm_jsl("X Position", #action_select_door_display_mode, !IH_DOOR_INDEX_XPOS)
+    
+ih_door_display_ypos:
+    %cm_jsl("Y Position", #action_select_door_display_mode, !IH_DOOR_INDEX_YPOS)
+    
+action_select_door_display_mode:
+{
+    TYA : STA !sram_door_display_mode
+    JML cm_previous_menu
+}
 
 ih_goto_timer_settings:
     %cm_submenu("Timer Settings", #TimerSettingsMenu)

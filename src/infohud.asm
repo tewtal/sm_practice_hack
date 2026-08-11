@@ -569,7 +569,7 @@ ih_before_room_transition:
     LDA !sram_display_mode : BNE .done
     LDA !sram_door_display_mode : BEQ .done
     ASL : TAX
-    JSR (.doorDisplayTable,X)
+    JSR (DoorDisplayTable,X)
     ; Suppress Enemy HP display
     LDA !ENEMY_HP : STA !ram_enemy_hp
 
@@ -588,16 +588,26 @@ ih_before_room_transition:
     TYA : JSR Draw2
     BRA .doorDisplay
 
-  .doorDisplayTable
-    dw #$0000 ; off/dummy
-    dw status_door_hspeed
+DoorDisplayTable:    
+  .off
+    dw #$0000 ; off/dummy     
+  .hspeed
+    dw status_door_hspeed     
+  .dashspeed
     dw status_door_dashspeed
-    dw status_door_vspeed
+  .vspeed
+    dw status_door_vspeed     
+  .chargetimer
     dw status_door_chargetimer
-    dw status_door_shinetimer
+  .shinetimer
+    dw status_shinetimer      
+  .dashcounter
     dw status_door_dashcounter
-    dw status_door_xpos
-    dw status_door_ypos
+  .xpos
+    dw status_door_xpos       
+  .ypos
+    dw status_door_ypos       
+  .end
 }
 
 ceres_start_timers:

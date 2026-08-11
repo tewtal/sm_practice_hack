@@ -1524,6 +1524,17 @@ endif
 !IH_SUPERHUD_TOP_INDEX_TILECOUNTER = (superhud_top_table_tilecounter-superhud_top_table)/2
 !IH_SUPERHUD_TOP_COUNT = (superhud_top_table_end-superhud_top_table)/2
 
+!IH_DOOR_INDEX_OFF = (DoorDisplayTable_off-DoorDisplayTable)/2
+!IH_DOOR_INDEX_HSPEED = (DoorDisplayTable_hspeed-DoorDisplayTable)/2
+!IH_DOOR_INDEX_DASHSPEED = (DoorDisplayTable_dashspeed-DoorDisplayTable)/2
+!IH_DOOR_INDEX_VSPEED = (DoorDisplayTable_vspeed-DoorDisplayTable)/2
+!IH_DOOR_INDEX_CHARGETIMER = (DoorDisplayTable_chargetimer-DoorDisplayTable)/2
+!IH_DOOR_INDEX_SHINETIMER = (DoorDisplayTable_shinetimer-DoorDisplayTable)/2
+!IH_DOOR_INDEX_DASHCOUNTER = (DoorDisplayTable_dashcounter-DoorDisplayTable)/2
+!IH_DOOR_INDEX_XPOS = (DoorDisplayTable_xpos-DoorDisplayTable)/2
+!IH_DOOR_INDEX_YPOS = (DoorDisplayTable_ypos-DoorDisplayTable)/2
+!IH_DOOR_COUNT = (DoorDisplayTable_end-DoorDisplayTable)/2
+
 !ROOM_LAYOUT_NO_MAGNET_STAIRS = #$0001
 !ROOM_LAYOUT_AREA_RANDO = #$0002
 !ROOM_LAYOUT_ANTISOFTLOCK = #$0004
