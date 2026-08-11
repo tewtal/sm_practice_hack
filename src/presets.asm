@@ -1176,7 +1176,8 @@ resume_infohud_icon_initialization:
 ; Category Menus/Data
 ; -------------------
 
-org $E8E000
+org $E8D800
+PresetData:
 check bankcross off
 
 print pc, " preset data crossbank start"
@@ -1187,7 +1188,7 @@ print pc, " preset data crossbank end"
 table ../resources/normal.tbl
 incsrc presets/combined_preset_names.asm
 
-warnpc $F08000
+warnpc !START_FREESPACE_F0
 check bankcross on
 
 %startfree(F1)

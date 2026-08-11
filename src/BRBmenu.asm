@@ -778,7 +778,7 @@ ZSNES_Palette:
 incbin ../resources/zsnes_palette.bin
 
 print pc, " zsnes splashscreen graphics crossbank end"
-warnpc $E48000
+warnpc !START_FREESPACE_E3
 check bankcross on
 endif
 
