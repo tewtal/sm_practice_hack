@@ -1837,7 +1837,7 @@ else
 org $A98C05
 endif
     JMP cutscenes_mb_first_earthquake_start
-    BRA $02
+    BRA $02 : NOP #2
 cutscenes_mb_first_earthquake_end:
 
 if !FEATURE_PAL
