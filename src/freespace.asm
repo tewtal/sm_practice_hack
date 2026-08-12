@@ -254,7 +254,7 @@ endif
 !END_FREESPACE_E3 = $E30000+$10000
 !END_FREESPACE_E4 = $E40000+$10000
 !END_FREESPACE_E5 = $E58000 ; roomnames.asm
-!END_FREESPACE_E6 = $E68000 ; tilegraphics.asm
+!END_FREESPACE_E6 = $E68800 ; tilegraphics.asm
 !END_FREESPACE_E7 = $E78000 ; tilegraphics.asm
 !END_FREESPACE_E8 = $E88000 ; tilegraphics.asm + presets.asm
 !END_FREESPACE_E9 = $E98000 ; presets.asm
@@ -382,7 +382,7 @@ macro printfreespace()
 %tickfreespace(E3)
 %tickfreespace(E4)
 ;%tickfreespace(E5) roomnames.asm
-;%tickfreespace(E6) tilegraphics.asm
+%tickfreespace(E6)
 ;%tickfreespace(E7) tilegraphics.asm
 ;%tickfreespace(E8) tilegraphics.asm + presets.asm
 ;%tickfreespace(E9) presets.asm

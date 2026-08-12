@@ -1,5 +1,5 @@
 
-org $E68000
+org $E68800
 check bankcross off
 print pc, " raw tile tables crossbank start"
 
