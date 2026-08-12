@@ -19,7 +19,7 @@ incsrc mainmenu.asm
 %startfree(85)
 
 initialize_ppu_long:
-    LDA $7E33EA : STA !ram_cgram_cache+$2E
+    LDA !BG3_HDMA_CHANNELS_BACKUP : STA !ram_backup_message_box
     JSR $8143
     ; cm_transfer_custom_tileset will call %ai16()
     RTL
@@ -27,7 +27,7 @@ initialize_ppu_long:
 restore_ppu_long:
     JSR $861A
     %ai16()
-    LDA !ram_cgram_cache+$2E : STA $7E33EA
+    LDA !ram_backup_message_box : STA !BG3_HDMA_CHANNELS_BACKUP
     RTL
 
 play_music_long:

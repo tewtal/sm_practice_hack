@@ -402,9 +402,6 @@
 !ram_cm_selected_slot = !WRAM_MENU_START+$92
 !ram_cm_preset_elevator = !WRAM_MENU_START+$94
 
-; keyboard used by both presets and customize menus
-!ram_cm_keyboard_buffer = !WRAM_MENU_START+$B8 ; $18 bytes
-
 !ram_cm_custompalette_blue = !WRAM_MENU_START+$90
 !ram_cm_custompalette_green = !WRAM_MENU_START+$92
 !ram_cm_custompalette_red = !WRAM_MENU_START+$94
@@ -414,13 +411,25 @@
 !ram_cm_dummy_off = !WRAM_MENU_START+$AC
 !ram_cm_dummy_num = !WRAM_MENU_START+$AE
 
+; keyboard used by both presets and customize menus
+!ram_cm_keyboard_buffer = !WRAM_MENU_START+$B8 ; $18 bytes
+
 ; ^ FREE SPACE ^ up to +$CE
 ; Note: +$B8 to +$CE range also used as frames held counters and keyboard buffer
 ;       and is reset to zero when loading a savestate
 
-; Reserve 48 bytes for CGRAM cache
-; Currently first 32 bytes plus last 2 bytes are used
-!ram_cgram_cache = !WRAM_MENU_START+$D0 ; $30 bytes
+; load state cannot be initiated from the menu, so it can overlap cgram
+!ram_loadstate_music_data = !WRAM_MENU_START+$D0
+!ram_loadstate_music_track = !WRAM_MENU_START+$D2
+!ram_loadstate_sound_timer = !WRAM_MENU_START+$D4
+!ram_loadstate_cached_random_number = !WRAM_MENU_START+$D6
+!ram_loadstate_frame_counter = !WRAM_MENU_START+$D8
+!ram_loadstate_enemy_main_loop_counter = !WRAM_MENU_START+$DA
+!ram_cgram_cache = !WRAM_MENU_START+$D0 ; $20 bytes
+
+!ram_backup_message_box = !WRAM_MENU_START+$F0
+
+; ^ FREE SPACE ^ up to +$FE
 
 
 ; -----------------
@@ -636,11 +645,6 @@
 !sram_custom_header_tinystates = !SRAM_START+$E18 ; $18 bytes
 !sram_custom_preset_safewords_tinystates = !SRAM_START+$E30 ; $20 bytes
 !sram_custom_preset_names_tinystates = !SRAM_START+$E50 ; $180 bytes
-
-; SM specific things
-!SRAM_MUSIC_DATA = !SRAM_START+$FD0
-!SRAM_MUSIC_TRACK = !SRAM_START+$FD2
-!SRAM_SOUND_TIMER = !SRAM_START+$FD4
 
 ; ^ FREE SPACE ^ up to +$FFE
 
@@ -1182,8 +1186,9 @@
 !CATEGORY_PRESET_STACK_SIZE        = #$0800
 !eram_category_preset_stack        = !ENEMY_ID
 
+!BG3_HDMA_CHANNELS_BACKUP = $7E33EA
 !HUD_TILEMAP = $7EC600
-!MAP_COUNTER = $7ECAE8 ; Not used in vanilla
+!MAP_COUNTER = $7ECAE8  ; Not used in vanilla
 !SCROLLS = $7ECD20
 !MAP_TILES_EXPLORED_CRATERIA = $7ECD52
 !MAP_TILES_EXPLORED_BRINSTAR = $7ECE52
@@ -1260,26 +1265,18 @@ if !FEATURE_TINYSTATES
 !SRAM_DMA_BANK = $737000
 !SRAM_SAVED_SP = $737F00
 !SRAM_SAVED_STATE = $737F02
-!SRAM_SAVED_RNG = $737F80
-!SRAM_SAVED_FRAME_COUNTER = $737F82
-!SRAM_SAVED_ENEMY_COUNTER = $737F84
 !SRAM_SAVED_MINIMAP = $737F86
 !SRAM_SEG_TIMER_F = $737F88
 !SRAM_SEG_TIMER_S = $737F8A
 !SRAM_SEG_TIMER_M = $737F8C
-!SRAM_SLOWDOWN_MODE = $737F8E
 else
 !SRAM_DMA_BANK = $770000
-!SRAM_SAVED_RNG = $770080
-!SRAM_SAVED_FRAME_COUNTER = $770082
-!SRAM_SAVED_ENEMY_COUNTER = $770084
 !SRAM_SAVED_SP = $774004
 !SRAM_SAVED_STATE = $774006
 !SRAM_SAVED_MINIMAP = $774008
 !SRAM_SEG_TIMER_F = $77400A
 !SRAM_SEG_TIMER_S = $77400C
 !SRAM_SEG_TIMER_M = $77400E
-!SRAM_SLOWDOWN_MODE = $774010
 endif
 endif
 
