@@ -44,20 +44,16 @@ endmacro
 ; Both A and X/Y are 16-bit here
 pre_load_state:
 {
-    LDA !MUSIC_DATA : STA !SRAM_MUSIC_DATA
-    LDA !MUSIC_TRACK : STA !SRAM_MUSIC_TRACK
-    LDA !SOUND_TIMER : STA !SRAM_SOUND_TIMER
-
-    LDA !ram_slowdown_mode : STA !SRAM_SLOWDOWN_MODE
+    LDA !MUSIC_DATA : STA !ram_loadstate_music_data
+    LDA !MUSIC_TRACK : STA !ram_loadstate_music_track
+    LDA !SOUND_TIMER : STA !ram_loadstate_sound_timer
 
     ; Rerandomize
     LDA !sram_save_has_set_rng : BMI .done
     LDA !sram_rerandomize : BEQ .done
-    LDA !CACHED_RANDOM_NUMBER : STA !SRAM_SAVED_RNG
-    LDA !FRAME_COUNTER : STA !SRAM_SAVED_FRAME_COUNTER
-    LDA !ENEMY_MAIN_LOOP_COUNTER : STA !SRAM_SAVED_ENEMY_COUNTER
-    LDA !ram_seed_X : STA !sram_seed_X
-    LDA !ram_seed_Y : STA !sram_seed_Y
+    LDA !CACHED_RANDOM_NUMBER : STA !ram_loadstate_cached_random_number
+    LDA !FRAME_COUNTER : STA !ram_loadstate_frame_counter
+    LDA !ENEMY_MAIN_LOOP_COUNTER : STA !ram_loadstate_enemy_main_loop_counter
 
   .done
     RTS
@@ -94,18 +90,15 @@ post_load_state:
     ; Reload custom HUD number GFX
     JSL overwrite_HUD_numbers
 
-    LDA !SRAM_SLOWDOWN_MODE : STA !ram_slowdown_mode
     TDC : STA !ram_slowdown_frames
     STA !ram_slowdown_controller_1 : STA !ram_slowdown_controller_2
 
     ; Rerandomize
     LDA !sram_save_has_set_rng : BMI .randomizeOnLoad
     LDA !sram_rerandomize : BEQ .randomizeOnLoad
-    LDA !SRAM_SAVED_RNG : STA !CACHED_RANDOM_NUMBER
-    LDA !SRAM_SAVED_FRAME_COUNTER : STA !FRAME_COUNTER
-    LDA !SRAM_SAVED_ENEMY_COUNTER : STA !ENEMY_MAIN_LOOP_COUNTER
-    LDA !sram_seed_X : STA !ram_seed_X
-    LDA !sram_seed_Y : STA !ram_seed_Y
+    LDA !ram_loadstate_cached_random_number : STA !CACHED_RANDOM_NUMBER
+    LDA !ram_loadstate_frame_counter : STA !FRAME_COUNTER
+    LDA !ram_loadstate_enemy_main_loop_counter : STA !ENEMY_MAIN_LOOP_COUNTER
     JSL MenuRNG ; rerandomize hack RNG
 
   .randomizeOnLoad
@@ -181,7 +174,7 @@ post_load_music:
     LDA !sram_music_toggle : CMP #$0002 : BPL .fast_off_preset_off
 
     ; No data found in queue, check if we need to insert it
-    LDA !SRAM_MUSIC_DATA : CMP !MUSIC_DATA : BEQ .music_queue_increase_timer
+    LDA !ram_loadstate_music_data : CMP !MUSIC_DATA : BEQ .music_queue_increase_timer
 
     ; Insert queued music data
     DEX #2 : TXA : AND #$000E : TAX
@@ -197,7 +190,7 @@ post_load_music:
 
   .music_queue_empty
     LDA !sram_music_toggle : CMP #$0002 : BPL .fast_off_preset_off
-    LDA !SRAM_MUSIC_DATA : CMP !MUSIC_DATA : BNE .clear_track_load_data
+    LDA !ram_loadstate_music_data : CMP !MUSIC_DATA : BNE .clear_track_load_data
     JMP .check_track
 
   .clear_track_load_data
@@ -218,7 +211,7 @@ post_load_music:
 
   .music_queue_increase_timer
     ; Data is correct, but we may need to increase our sound timer
-    LDA !SRAM_SOUND_TIMER : CMP !MUSIC_TIMER : BMI .done
+    LDA !ram_loadstate_sound_timer : CMP !MUSIC_TIMER : BMI .done
     STA !MUSIC_TIMER : STA !SOUND_TIMER
     BRA .done
 
@@ -236,7 +229,7 @@ post_load_music:
     LDX !MUSIC_QUEUE_START
 
   .queued_music_prepare_set_timer
-    LDA !SRAM_SOUND_TIMER : BNE .queued_music_set_timer
+    LDA !ram_loadstate_sound_timer : BNE .queued_music_set_timer
     INC
 
   .queued_music_set_timer
@@ -244,7 +237,7 @@ post_load_music:
     BRA .done
 
   .check_track
-    LDA !SRAM_MUSIC_TRACK : CMP !MUSIC_TRACK : BEQ .done
+    LDA !ram_loadstate_music_track : CMP !MUSIC_TRACK : BEQ .done
 
   .load_track
     LDA !MUSIC_TRACK : JSL !MUSIC_ROUTINE

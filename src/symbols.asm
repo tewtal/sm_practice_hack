@@ -378,9 +378,6 @@ ram_cm_manage_slots = !ram_cm_manage_slots ; !WRAM_MENU_START+$90
 ram_cm_selected_slot = !ram_cm_selected_slot ; !WRAM_MENU_START+$92
 ram_cm_preset_elevator = !ram_cm_preset_elevator ; !WRAM_MENU_START+$94
 
-; keyboard used by both presets and customize menus
-ram_cm_keyboard_buffer = !ram_cm_keyboard_buffer ; !WRAM_MENU_START+$B8 ; $18 bytes
-
 ram_cm_custompalette_blue = !ram_cm_custompalette_blue ; !WRAM_MENU_START+$90
 ram_cm_custompalette_green = !ram_cm_custompalette_green ; !WRAM_MENU_START+$92
 ram_cm_custompalette_red = !ram_cm_custompalette_red ; !WRAM_MENU_START+$94
@@ -390,13 +387,25 @@ ram_cm_dummy_on = !ram_cm_dummy_on ; !WRAM_MENU_START+$AA
 ram_cm_dummy_off = !ram_cm_dummy_off ; !WRAM_MENU_START+$AC
 ram_cm_dummy_num = !ram_cm_dummy_num ; !WRAM_MENU_START+$AE
 
+; keyboard used by both presets and customize menus
+ram_cm_keyboard_buffer = !ram_cm_keyboard_buffer ; !WRAM_MENU_START+$B8 ; $18 bytes
+
 ; ^ FREE SPACE ^ up to +$CE
 ; Note: +$B8 to +$CE range also used as frames held counters and keyboard buffer
 ;       and is reset to zero when loading a savestate
 
-; Reserve 48 bytes for CGRAM cache
-; Currently first 32 bytes plus last 2 bytes are used
-ram_cgram_cache = !ram_cgram_cache ; !WRAM_MENU_START+$D0 ; $30 bytes
+; load state cannot be initiated from the menu, so it can overlap cgram
+ram_loadstate_music_data = !ram_loadstate_music_data ; !WRAM_MENU_START+$D0
+ram_loadstate_music_track = !ram_loadstate_music_track ; !WRAM_MENU_START+$D2
+ram_loadstate_sound_timer = !ram_loadstate_sound_timer ; !WRAM_MENU_START+$D4
+ram_loadstate_cached_random_number = !ram_loadstate_cached_random_number ; !WRAM_MENU_START+$D6
+ram_loadstate_frame_counter = !ram_loadstate_frame_counter ; !WRAM_MENU_START+$D8
+ram_loadstate_enemy_main_loop_counter = !ram_loadstate_enemy_main_loop_counter ; !WRAM_MENU_START+$DA
+ram_cgram_cache = !ram_cgram_cache ; !WRAM_MENU_START+$D0 ; $20 bytes
+
+ram_backup_message_box = !ram_backup_message_box ; !WRAM_MENU_START+$F0
+
+; ^ FREE SPACE ^ up to +$FE
 
 ; -----------------
 ; Crash Handler RAM
@@ -599,8 +608,6 @@ sram_streamer_name_tinystates = !sram_streamer_name_tinystates ; !SRAM_START+$E0
 sram_custom_header_tinystates = !sram_custom_header_tinystates ; !SRAM_START+$E18 ; $18 bytes
 sram_custom_preset_safewords_tinystates = !sram_custom_preset_safewords_tinystates ; !SRAM_START+$E30 ; $20 bytes
 sram_custom_preset_names_tinystates = !sram_custom_preset_names_tinystates ; !SRAM_START+$E50 ; $180 bytes
-
-; SM specific things
 
 ; ^ FREE SPACE ^ up to +$FFE
 
