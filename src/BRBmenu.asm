@@ -310,13 +310,13 @@ cm_tilemap_brb:
   .draw_timer
     ; Seconds
     LDA !ram_cm_brb_secs : ASL : TAX
-    LDA.l TimerNumberGFX1,X : STA !ram_tilemap_buffer+$360
-    LDA.l TimerNumberGFX2,X : STA !ram_tilemap_buffer+$362
+    LDA.l BRBTimerNumberGFX1,X : STA !ram_tilemap_buffer+$360
+    LDA.l BRBTimerNumberGFX2,X : STA !ram_tilemap_buffer+$362
 
     ; Minutes
     LDA !ram_cm_brb_mins : ASL : TAX
-    LDA.l TimerNumberGFX1,X : STA !ram_tilemap_buffer+$35A
-    LDA.l TimerNumberGFX2,X : STA !ram_tilemap_buffer+$35C
+    LDA.l BRBTimerNumberGFX1,X : STA !ram_tilemap_buffer+$35A
+    LDA.l BRBTimerNumberGFX2,X : STA !ram_tilemap_buffer+$35C
 
     ; Draw colon seperator
     LDA #$2800|':' : STA !ram_tilemap_buffer+$35E
@@ -759,6 +759,22 @@ BRB_screen7_line1:
     db #$28, "  Learn new SM strats at", #$FF
 BRB_screen7_line2:
     db #$28, "        crocomi.re", #$FF
+
+BRBTimerNumberGFX1:
+    dw #$2870, #$2870, #$2870, #$2870, #$2870, #$2870, #$2870, #$2870, #$2870, #$2870
+    dw #$2871, #$2871, #$2871, #$2871, #$2871, #$2871, #$2871, #$2871, #$2871, #$2871
+    dw #$2872, #$2872, #$2872, #$2872, #$2872, #$2872, #$2872, #$2872, #$2872, #$2872
+    dw #$2873, #$2873, #$2873, #$2873, #$2873, #$2873, #$2873, #$2873, #$2873, #$2873
+    dw #$2874, #$2874, #$2874, #$2874, #$2874, #$2874, #$2874, #$2874, #$2874, #$2874
+    dw #$2875, #$2875, #$2875, #$2875, #$2875, #$2875, #$2875, #$2875, #$2875, #$2875
+
+BRBTimerNumberGFX2:
+    dw #$2870, #$2871, #$2872, #$2873, #$2874, #$2875, #$2876, #$2877, #$2878, #$2879
+    dw #$2870, #$2871, #$2872, #$2873, #$2874, #$2875, #$2876, #$2877, #$2878, #$2879
+    dw #$2870, #$2871, #$2872, #$2873, #$2874, #$2875, #$2876, #$2877, #$2878, #$2879
+    dw #$2870, #$2871, #$2872, #$2873, #$2874, #$2875, #$2876, #$2877, #$2878, #$2879
+    dw #$2870, #$2871, #$2872, #$2873, #$2874, #$2875, #$2876, #$2877, #$2878, #$2879
+    dw #$2870, #$2871, #$2872, #$2873, #$2874, #$2875, #$2876, #$2877, #$2878, #$2879
 
 %endfree(A1)
 

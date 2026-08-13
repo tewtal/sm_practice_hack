@@ -834,22 +834,12 @@ draw_toggle:
     %item_index_to_vram_index()
     PHX : JSR cm_draw_text : PLX
 
-    ; Set position for ON/OFF
-    TXA : CLC : ADC #$002E : TAX
-
     ; grab the value at that memory address
-    LDA [!DP_Address] : CMP !DP_ToggleValue : BEQ .checked
+    LDA [!DP_Address] : CMP !DP_ToggleValue : BNE draw_toggle_bit_off
 
-    ; Off
-    LDA #$244B : STA !ram_tilemap_buffer,X   ; O
-    LDA #$244D : STA !ram_tilemap_buffer+2,X ; F
-    LDA #$244D : STA !ram_tilemap_buffer+4,X ; F
-    RTS
-
-  .checked
-    ; On
-    LDA #$384B : STA !ram_tilemap_buffer+2,X ; O
-    LDA #$384C : STA !ram_tilemap_buffer+4,X ; N
+  .on
+    LDA #$384B : STA !ram_tilemap_buffer+$30,X ; O
+           INC : STA !ram_tilemap_buffer+$32,X ; N
     RTS
 }
 
@@ -869,22 +859,13 @@ draw_toggle_bit:
     %item_index_to_vram_index()
     PHX : JSR cm_draw_text : PLX
 
-    ; Set position for ON/OFF
-    TXA : CLC : ADC #$002E : TAX
-
     ; grab the value at that memory address
-    LDA [!DP_Address] : AND !DP_ToggleValue : BNE .checked
+    LDA [!DP_Address] : AND !DP_ToggleValue : BNE draw_toggle_on
 
-    ; Off
-    LDA #$244B : STA !ram_tilemap_buffer,X   ; O
-    LDA #$244D : STA !ram_tilemap_buffer+2,X ; F
-    LDA #$244D : STA !ram_tilemap_buffer+4,X ; F
-    RTS
-
-  .checked
-    ; On
-    LDA #$384B : STA !ram_tilemap_buffer+2,X ; O
-    LDA #$384C : STA !ram_tilemap_buffer+4,X ; N
+  .off
+    LDA #$244B : STA !ram_tilemap_buffer+$2E,X ; O
+        INC #2 : STA !ram_tilemap_buffer+$30,X ; F
+                 STA !ram_tilemap_buffer+$32,X ; F
     RTS
 }
 
@@ -904,22 +885,12 @@ draw_toggle_inverted:
     %item_index_to_vram_index()
     PHX : JSR cm_draw_text : PLX
 
-    ; Set position for ON/OFF
-    TXA : CLC : ADC #$002E : TAX
-
     ; grab the value at that memory address
-    LDA [!DP_Address] : CMP !DP_ToggleValue : BNE .checked
+    LDA [!DP_Address] : CMP !DP_ToggleValue : BEQ draw_toggle_bit_inverted_off
 
-    ; Off
-    LDA #$244B : STA !ram_tilemap_buffer,X   ; O
-    LDA #$244D : STA !ram_tilemap_buffer+2,X ; F
-    LDA #$244D : STA !ram_tilemap_buffer+4,X ; F
-    RTS
-
-  .checked
-    ; On
-    LDA #$384B : STA !ram_tilemap_buffer+2,X ; O
-    LDA #$384C : STA !ram_tilemap_buffer+4,X ; N
+  .on
+    LDA #$384B : STA !ram_tilemap_buffer+$30,X ; O
+           INC : STA !ram_tilemap_buffer+$32,X ; N
     RTS
 }
 
@@ -939,215 +910,13 @@ draw_toggle_bit_inverted:
     %item_index_to_vram_index()
     PHX : JSR cm_draw_text : PLX
 
-    ; Set position for ON/OFF
-    TXA : CLC : ADC #$002E : TAX
-
     ; grab the value at that memory address
-    LDA [!DP_Address] : AND !DP_ToggleValue : BEQ .checked
+    LDA [!DP_Address] : AND !DP_ToggleValue : BEQ draw_toggle_inverted_on
 
-    ; Off
-    LDA #$244B : STA !ram_tilemap_buffer,X   ; O
-    LDA #$244D : STA !ram_tilemap_buffer+2,X ; F
-    LDA #$244D : STA !ram_tilemap_buffer+4,X ; F
-    RTS
-
-  .checked
-    ; On
-    LDA #$384B : STA !ram_tilemap_buffer+2,X ; O
-    LDA #$384C : STA !ram_tilemap_buffer+4,X ; N
-    RTS
-}
-
-draw_numfield:
-{
-    ; grab the memory address (long)
-    LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : INC !DP_CurrentMenu : STA !DP_Address
-    LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : STA !DP_Address+2
-
-    ; skip bounds and increment values
-    INC !DP_CurrentMenu : INC !DP_CurrentMenu : INC !DP_CurrentMenu : INC !DP_CurrentMenu
-
-    ; increment past JSL
-    INC !DP_CurrentMenu : INC !DP_CurrentMenu
-
-    ; Draw the text
-    %item_index_to_vram_index()
-    PHX : JSR cm_draw_text : PLX
-
-    ; set position for the number
-    TXA : CLC : ADC #$002E : TAX
-
-    ; convert value to decimal
-    LDA [!DP_Address] : AND #$00FF : JSR cm_hex2dec
-
-    ; Clear out the area
-    LDA !MENU_BLANK : STA !ram_tilemap_buffer,X
-                      STA !ram_tilemap_buffer+2,X
-                      STA !ram_tilemap_buffer+4,X
-
-    ; Set palette
-    %a8()
-    LDA #$24 : ORA !DP_Palette : STA !DP_Palette+1
-    LDA #$70 : STA !DP_Palette ; number tiles are 70-79
-
-    ; Draw numbers
-    %a16()
-    ; ones
-    LDA !DP_ThirdDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+4,X
-    ; tens
-    LDA !DP_SecondDigit : ORA !DP_FirstDigit : BEQ .done
-    LDA !DP_SecondDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+2,X
-    ; hundreds
-    LDA !DP_FirstDigit : BEQ .done
-    CLC : ADC !DP_Palette : STA !ram_tilemap_buffer,X
-
-  .done
-    RTS
-}
-
-draw_numfield_hex:
-draw_numfield_sound:
-{
-    ; grab the memory address (long)
-    LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : INC !DP_CurrentMenu : STA !DP_Address
-    LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : STA !DP_Address+2
-
-    ; skip bounds and increment values
-    INC !DP_CurrentMenu : INC !DP_CurrentMenu : INC !DP_CurrentMenu : INC !DP_CurrentMenu
-
-    ; increment past JSL
-    INC !DP_CurrentMenu : INC !DP_CurrentMenu
-
-    ; Draw the text
-    %item_index_to_vram_index()
-    PHX : JSR cm_draw_text : PLX
-
-    ; set position for the number
-    TXA : CLC : ADC #$0030 : TAX
-
-    ; load the value
-    LDA [!DP_Address] : AND #$00FF : STA !DP_DrawValue
-
-    ; Clear out the area
-    LDA !MENU_BLANK : STA !ram_tilemap_buffer,X
-                      STA !ram_tilemap_buffer+2,X
-
-    ; Draw numbers
-    ; (00X0)
-    LDA !DP_DrawValue : AND #$00F0 : LSR #3 : TAY
-    LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer,X
-    ; (000X)
-    LDA !DP_DrawValue : AND #$000F : ASL : TAY
-    LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer+2,X
-
-    ; overwrite palette bytes
-    %a8()
-    LDA #$24 : ORA !DP_Palette
-    STA !ram_tilemap_buffer+1,X : STA !ram_tilemap_buffer+3,X
-    %a16()
-
-    RTS
-}
-
-draw_numfield_word:
-{
-    ; grab the memory address (long)
-    LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : INC !DP_CurrentMenu : STA !DP_Address
-    LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : STA !DP_Address+2
-
-    ; skip min/max and increment values
-    INC !DP_CurrentMenu : INC !DP_CurrentMenu : INC !DP_CurrentMenu : INC !DP_CurrentMenu
-    INC !DP_CurrentMenu : INC !DP_CurrentMenu : INC !DP_CurrentMenu : INC !DP_CurrentMenu
-
-    ; increment past JSL
-    INC !DP_CurrentMenu : INC !DP_CurrentMenu
-
-    ; Draw the text
-    %item_index_to_vram_index()
-    PHX : JSR cm_draw_text : PLX
-
-    ; set position for the number
-    TXA : CLC : ADC #$002C : TAX
-
-    ; convert value to decimal
-    LDA [!DP_Address] : JSR cm_hex2dec
-
-    ; Clear out the area
-    LDA !MENU_BLANK : STA !ram_tilemap_buffer,X
-                      STA !ram_tilemap_buffer+2,X
-                      STA !ram_tilemap_buffer+4,X
-                      STA !ram_tilemap_buffer+6,X
-
-    ; Set palette
-    %a8()
-    LDA #$24 : ORA !DP_Palette : STA !DP_Palette+1
-    LDA #$70 : STA !DP_Palette ; number tiles are 70-79
-
-    ; Draw numbers
-    %a16()
-    ; ones
-    LDA !DP_ThirdDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+6,X
-    ; tens
-    LDA !DP_SecondDigit : ORA !DP_FirstDigit
-    ORA !DP_Temp : BEQ .done
-    LDA !DP_SecondDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+4,X
-    ; hundreds
-    LDA !DP_FirstDigit : ORA !DP_Temp : BEQ .done
-    LDA !DP_FirstDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+2,X
-    ; thousands
-    LDA !DP_Temp : BEQ .done
-    CLC : ADC !DP_Palette : STA !ram_tilemap_buffer,X
-
-  .done
-    RTS
-}
-
-draw_numfield_hex_word:
-{
-    ; grab the memory address (long)
-    LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : INC !DP_CurrentMenu : STA !DP_Address
-    LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : STA !DP_Address+2
-
-    ; skip bitmask and JSL address
-    INC !DP_CurrentMenu : INC !DP_CurrentMenu : INC !DP_CurrentMenu : INC !DP_CurrentMenu
-
-    ; Draw the text
-    %item_index_to_vram_index()
-    PHX : JSR cm_draw_text : PLX
-
-    ; set position for the number
-    TXA : CLC : ADC #$002C : TAX
-
-    ; load the value
-    LDA [!DP_Address] : STA !DP_DrawValue
-
-    ; Clear out the area
-    LDA !MENU_BLANK : STA !ram_tilemap_buffer,X
-                      STA !ram_tilemap_buffer+2,X
-                      STA !ram_tilemap_buffer+4,X
-                      STA !ram_tilemap_buffer+6,X
-
-    ; Draw numbers
-    ; (X000)
-    LDA !DP_DrawValue : AND #$F000 : XBA : LSR #3 : TAY
-    LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer,X
-    ; (0X00)
-    LDA !DP_DrawValue : AND #$0F00 : XBA : ASL : TAY
-    LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer+2,X
-    ; (00X0)
-    LDA !DP_DrawValue : AND #$00F0 : LSR #3 : TAY
-    LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer+4,X
-    ; (000X)
-    LDA !DP_DrawValue : AND #$000F : ASL : TAY
-    LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer+6,X
-
-    ; overwrite palette bytes
-    %a8()
-    LDA #$2C : ORA !DP_Palette
-    STA !ram_tilemap_buffer+1,X : STA !ram_tilemap_buffer+3,X
-    STA !ram_tilemap_buffer+5,X : STA !ram_tilemap_buffer+7,X
-    %a16()
-
+  .off
+    LDA #$244B : STA !ram_tilemap_buffer+$2E,X ; O
+        INC #2 : STA !ram_tilemap_buffer+$30,X ; F
+                 STA !ram_tilemap_buffer+$32,X ; F
     RTS
 }
 
@@ -1168,47 +937,179 @@ draw_numfield_signed:
     %item_index_to_vram_index()
     PHX : JSR cm_draw_text : PLX
 
-    ; set position for the number
-    TXA : CLC : ADC #$002C : TAX
-
-    ; Clear out the area
-    LDA !MENU_BLANK : STA !ram_tilemap_buffer,X
-                      STA !ram_tilemap_buffer+2,X
-                      STA !ram_tilemap_buffer+4,X
-                      STA !ram_tilemap_buffer+6,X
-
     ; Draw sign
-    LDA [!DP_Address] : BEQ .convert_value : BPL .plus
-    LDA.w #$1C00 : ORA !DP_Palette : XBA : STA !ram_tilemap_buffer,X
+    LDA [!DP_Address] : BEQ draw_numfield_convert_value : BPL .plus
+    LDA.w #$1C00 : ORA !DP_Palette : XBA : STA !ram_tilemap_buffer+$2C,X
     LDA [!DP_Address] : EOR #$FFFF : INC
-    BRA .convert_value
+    BRA draw_numfield_convert_value
 
   .plus
-    LDA.w #$4F00 : ORA !DP_Palette : XBA : STA !ram_tilemap_buffer,X
+    LDA.w #$4F00 : ORA !DP_Palette : XBA : STA !ram_tilemap_buffer+$2C,X
     LDA [!DP_Address]
+    BRA draw_numfield_convert_value
+}
+
+draw_numfield:
+{
+    ; grab the memory address (long)
+    LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : INC !DP_CurrentMenu : STA !DP_Address
+    LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : STA !DP_Address+2
+
+    ; skip bounds and increment values
+    INC !DP_CurrentMenu : INC !DP_CurrentMenu : INC !DP_CurrentMenu : INC !DP_CurrentMenu
+
+    ; increment past JSL
+    INC !DP_CurrentMenu : INC !DP_CurrentMenu
+
+    ; Draw the text
+    %item_index_to_vram_index()
+    PHX : JSR cm_draw_text : PLX
+
+    ; convert value to decimal
+    LDA [!DP_Address] : AND #$00FF
 
   .convert_value
-    ; Convert value to decimal
     JSR cm_hex2dec
 
-    ; Set palette
-    %a8()
-    LDA #$24 : ORA !DP_Palette : STA !DP_Palette+1
-    LDA #$70 : STA !DP_Palette ; number tiles are 70-79
+    ; Set palette word, with lower byte set to 70 since number tiles are 70-79
+    LDA !DP_Palette : XBA : ORA #$2470 : STA !DP_Palette
+
+    ; Draw ones digit
+    CLC : ADC !DP_ThirdDigit : STA !ram_tilemap_buffer+$32,X
+
+    ; Draw remaining digits
+    LDA !DP_FirstDigit : BEQ .clearHundreds
+    CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+$2E,X
+    LDA !DP_SecondDigit
+  .drawTens
+    CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+$30,X
+    RTS
+
+  .clearHundreds
+    LDA !MENU_BLANK : STA !ram_tilemap_buffer+$2E,X
+    LDA !DP_SecondDigit : BNE .drawTens
+    LDA !MENU_BLANK : STA !ram_tilemap_buffer+$30,X
+    RTS
+}
+
+draw_numfield_hex:
+draw_numfield_sound:
+{
+    ; grab the memory address (long)
+    LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : INC !DP_CurrentMenu : STA !DP_Address
+    LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : STA !DP_Address+2
+
+    ; skip bounds and increment values
+    INC !DP_CurrentMenu : INC !DP_CurrentMenu : INC !DP_CurrentMenu : INC !DP_CurrentMenu
+
+    ; increment past JSL
+    INC !DP_CurrentMenu : INC !DP_CurrentMenu
+
+    ; Draw the text
+    %item_index_to_vram_index()
+    PHX : JSR cm_draw_text : PLX
+
+    ; load the value
+    LDA [!DP_Address] : AND #$00FF : STA !DP_DrawValue
 
     ; Draw numbers
-    %a16()
-    ; ones
-    LDA !DP_ThirdDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+6,X
-    ; tens
-    LDA !DP_SecondDigit : ORA !DP_FirstDigit
-    ORA !DP_Temp : BEQ .done
-    LDA !DP_SecondDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+4,X
-    ; hundreds
-    LDA !DP_FirstDigit : ORA !DP_Temp : BEQ .done
-    LDA !DP_FirstDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+2,X
+    ; (00X0)
+    LDA !DP_DrawValue : AND #$00F0 : LSR #3 : TAY
+    LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer+$30,X
+    ; (000X)
+    LDA !DP_DrawValue : AND #$000F : ASL : TAY
+    LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer+$32,X
 
-  .done
+    ; overwrite palette bytes
+    %a8()
+    LDA #$24 : ORA !DP_Palette
+    STA !ram_tilemap_buffer+$31,X : STA !ram_tilemap_buffer+$33,X
+    %a16()
+    RTS
+}
+
+draw_numfield_word:
+{
+    ; grab the memory address (long)
+    LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : INC !DP_CurrentMenu : STA !DP_Address
+    LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : STA !DP_Address+2
+
+    ; skip min/max and increment values
+    INC !DP_CurrentMenu : INC !DP_CurrentMenu : INC !DP_CurrentMenu : INC !DP_CurrentMenu
+    INC !DP_CurrentMenu : INC !DP_CurrentMenu : INC !DP_CurrentMenu : INC !DP_CurrentMenu
+
+    ; increment past JSL
+    INC !DP_CurrentMenu : INC !DP_CurrentMenu
+
+    ; Draw the text
+    %item_index_to_vram_index()
+    PHX : JSR cm_draw_text : PLX
+
+    ; convert value to decimal
+    LDA [!DP_Address] : JSR cm_hex2dec
+
+    ; Set palette word, with lower byte set to 70 since number tiles are 70-79
+    LDA !DP_Palette : XBA : ORA #$2470 : STA !DP_Palette
+
+    ; Draw ones digit
+    CLC : ADC !DP_ThirdDigit : STA !ram_tilemap_buffer+$32,X
+
+    ; Draw remaining digits
+    LDA !DP_Temp : BEQ .clearThousands
+    CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+$2C,X
+    LDA !DP_FirstDigit
+  .drawHundreds
+    CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+$2E,X
+    LDA !DP_SecondDigit
+  .drawTens
+    CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+$30,X
+    RTS
+
+  .clearThousands
+    LDA !MENU_BLANK : STA !ram_tilemap_buffer+$2C,X
+    LDA !DP_FirstDigit : BNE .drawHundreds
+    LDA !MENU_BLANK : STA !ram_tilemap_buffer+$2E,X
+    LDA !DP_SecondDigit : BNE .drawTens
+    LDA !MENU_BLANK : STA !ram_tilemap_buffer+$30,X
+    RTS
+}
+
+draw_numfield_hex_word:
+{
+    ; grab the memory address (long)
+    LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : INC !DP_CurrentMenu : STA !DP_Address
+    LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : STA !DP_Address+2
+
+    ; skip bitmask and JSL address
+    INC !DP_CurrentMenu : INC !DP_CurrentMenu : INC !DP_CurrentMenu : INC !DP_CurrentMenu
+
+    ; Draw the text
+    %item_index_to_vram_index()
+    PHX : JSR cm_draw_text : PLX
+
+    ; load the value
+    LDA [!DP_Address] : STA !DP_DrawValue
+
+    ; Draw numbers
+    ; (X000)
+    LDA !DP_DrawValue : AND #$F000 : XBA : LSR #3 : TAY
+    LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer+$2C,X
+    ; (0X00)
+    LDA !DP_DrawValue : AND #$0F00 : XBA : ASL : TAY
+    LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer+$2E,X
+    ; (00X0)
+    LDA !DP_DrawValue : AND #$00F0 : LSR #3 : TAY
+    LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer+$30,X
+    ; (000X)
+    LDA !DP_DrawValue : AND #$000F : ASL : TAY
+    LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer+$32,X
+
+    ; overwrite palette bytes
+    %a8()
+    LDA #$2C : ORA !DP_Palette
+    STA !ram_tilemap_buffer+$2D,X : STA !ram_tilemap_buffer+$2F,X
+    STA !ram_tilemap_buffer+$31,X : STA !ram_tilemap_buffer+$33,X
+    %a16()
     RTS
 }
 
@@ -1226,31 +1127,23 @@ draw_numfield_color:
     %item_index_to_vram_index()
     PHX : JSR cm_draw_text : PLX
 
-    ; set position for the number
-    TXA : CLC : ADC #$0030 : TAX
-
     ; load the value
     LDA [!DP_Address] : AND #$00FF : STA !DP_DrawValue
-
-    ; Clear out the area
-    LDA !MENU_BLANK : STA !ram_tilemap_buffer,X
-                      STA !ram_tilemap_buffer+2,X
 
     ; Draw numbers
     ; (00X0)
     LDA !DP_DrawValue : AND #$001E : TAY
-    LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer,X
+    LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer+$30,X
     ; (000X)
     LDA !DP_DrawValue : AND #$0001 : ASL #4 : STA !DP_Temp
     LDA !DP_DrawValue : AND #$001C : LSR : CLC : ADC !DP_Temp : TAY
-    LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer+2,X
+    LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer+$32,X
 
     ; overwrite palette bytes
     %a8()
     LDA #$24 : ORA !DP_Palette
-    STA !ram_tilemap_buffer+1,X : STA !ram_tilemap_buffer+3,X
+    STA !ram_tilemap_buffer+$31,X : STA !ram_tilemap_buffer+$33,X
     %a16()
-
     RTS
 }
 
@@ -1265,10 +1158,10 @@ draw_choice:
 
     ; Draw the text first
     %item_index_to_vram_index()
-    PHX : JSR cm_draw_text : PLX
+    PHX : JSR cm_draw_text : PLA
 
     ; set position for choice
-    TXA : CLC : ADC #$001E : TAX
+    CLC : ADC #$001E : TAX
 
     ; grab the value at that memory address
     LDA [!DP_Address] : TAY
@@ -1414,9 +1307,6 @@ draw_controller_input:
     %item_index_to_vram_index()
     PHX : JSR cm_draw_text : PLX
 
-    ; set position for the input
-    TXA : CLC : ADC #$0020 : TAX
-
     ; check if anything to draw
     LDA !sram_room_layout : BIT !ROOM_LAYOUT_MAP_RANDO : BNE .check_normal
     LDA !DP_Address : CMP #!CTRL_BINDING_ANGLEUP : BEQ .check_angle
@@ -1427,36 +1317,38 @@ draw_controller_input:
     LDA (!DP_Address) : AND !CTRL_LR : BNE .determine_input
 
   .unbound
-    LDA !MENU_BLANK : STA !ram_tilemap_buffer,X
-    RTS
+    LDA !MENU_BLANK
+    BRA .draw
 
   .check_normal
     LDA (!DP_Address) : AND !CTRL_ABLRXY_SELECT : BEQ .unbound
 
   .determine_input
-    ; determine which input to draw, using Y to refresh A
-    TAY : AND !CTRL_A : BEQ .check_b : LDY #$0000 : BRA .draw
+    ; determine which input to draw
+    BIT !CTRL_A : BEQ .check_b
+    LDA #$288F : BRA .draw
   .check_b
-    TYA : AND !CTRL_B : BEQ .check_x : LDY #$0002 : BRA .draw
+    BIT !CTRL_B : BEQ .check_x
+    LDA #$2887 : BRA .draw
   .check_x
-    TYA : AND !CTRL_X : BEQ .check_y : LDY #$0004 : BRA .draw
+    BIT !CTRL_X : BEQ .check_y
+    LDA #$288E : BRA .draw
   .check_y
-    TYA : AND !CTRL_Y : BEQ .check_l : LDY #$0006 : BRA .draw
+    BIT !CTRL_Y : BEQ .check_l
+    LDA #$2886 : BRA .draw
   .check_l
-    TYA : AND !CTRL_L : BEQ .check_r : LDY #$0008 : BRA .draw
+    BIT !CTRL_L : BEQ .check_r
+    LDA #$288D : BRA .draw
   .check_r
-    TYA : AND !CTRL_R : BEQ .check_select : LDY #$000A : BRA .draw
+    BIT !CTRL_R : BEQ .check_select
+    LDA #$288C : BRA .draw
   .check_select
-    TYA : AND !CTRL_SELECT : BEQ .unbound : LDY #$000C
+    BIT !CTRL_SELECT : BEQ .unbound
+    LDA #$2885
 
   .draw
-    LDA.w .CtrlMenuGFXTable,Y : STA !ram_tilemap_buffer,X
+    STA !ram_tilemap_buffer+$20,X
     RTS
-
-  .CtrlMenuGFXTable
-    ;    A      B      X      Y      L      R    Select
-    ;  $0080  $8000  $0040  $4000  $0020  $0010  $2000
-    dw $288F, $2887, $288E, $2886, $288D, $288C, $2885
 }
 
 draw_jsl:
@@ -1536,103 +1428,85 @@ draw_custom_preset:
     ; draw Samus CURRENT ENERGY
     LDX !DP_Address : LDA !PRESET_SLOTS_ENERGY,X : STA !DP_DrawValue
     JSR cm_hex2dec
-    ; set palette
-    LDA !DP_CtrlInput : STA !DP_Palette
-    %a8()
-    LDA #$2C : ORA !DP_Palette : STA !DP_Palette+1
-    LDA #$70 : STA !DP_Palette ; number tiles are 70-79
-    %a16()
-    ; set tilemap position
-    LDA !DP_JSLTarget : CLC : ADC #$0006 : TAX
-    ; ones
-    LDA !DP_ThirdDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+6,X
-    ; tens
-    LDA !DP_SecondDigit : ORA !DP_FirstDigit
-    ORA !DP_Temp : BEQ .drawSamusMaxEnergy
-    LDA !DP_SecondDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+4,X
-    ; hundreds
-    LDA !DP_FirstDigit : ORA !DP_Temp : BEQ .drawSamusMaxEnergy
-    LDA !DP_FirstDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+2,X
-    ; thousands
-    LDA !DP_Temp : BEQ .drawSamusMaxEnergy
-    CLC : ADC !DP_Palette : STA !ram_tilemap_buffer,X
+    LDX !DP_JSLTarget
+    ; set palette word, with lower byte set to 70 since number tiles are 70-79
+    LDA !DP_CtrlInput : XBA : ORA #$2C70 : STA !DP_Palette
+    ; draw ones digit
+    CLC : ADC !DP_ThirdDigit : STA !ram_tilemap_buffer+$C,X
+    ; draw remaining digits
+    LDA !DP_Temp : BEQ .samusEnergyHundreds
+    CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+$6,X
+  .samusEnergyHundreds
+    LDA !DP_FirstDigit : BEQ .samusEnergyTens
+    CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+$8,X
+  .samusEnergyTens
+    LDA !DP_SecondDigit : BEQ .drawSamusMaxEnergy
+    CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+$A,X
 
   .drawSamusMaxEnergy
-    ; set tilemap position and draw hyphen
-    LDA !DP_JSLTarget : CLC : ADC #$000E : TAX
-    LDA !MENU_SLASH : STA !ram_tilemap_buffer,X
-
+    ; draw hyphen
+    LDA !MENU_SLASH : STA !ram_tilemap_buffer+$E,X
     ; get Samus max energy
     LDX !DP_Address : LDA !PRESET_SLOTS_MAXENERGY,X : STA !DP_DrawValue
     JSR cm_hex2dec
-    ; set tilemap position
-    LDA !DP_JSLTarget : CLC : ADC #$0010 : TAX
-    ; ones
-    LDA !DP_ThirdDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+6,X
-    ; tens
-    LDA !DP_SecondDigit : ORA !DP_FirstDigit
-    ORA !DP_Temp : BEQ .drawSamusReserves
-    LDA !DP_SecondDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+4,X
-    ; hundreds
-    LDA !DP_FirstDigit : ORA !DP_Temp : BEQ .drawSamusReserves
-    LDA !DP_FirstDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+2,X
-    ; thousands
-    LDA !DP_Temp : BEQ .drawSamusReserves
-    CLC : ADC !DP_Palette : STA !ram_tilemap_buffer,X
+    LDX !DP_JSLTarget
+    ; draw ones
+    LDA !DP_ThirdDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+$16,X
+    ; draw remaining digits
+    LDA !DP_Temp : BEQ .samusMaxEnergyHundreds
+    CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+$10,X
+  .samusMaxEnergyHundreds
+    LDA !DP_FirstDigit : BEQ .samusMaxEnergyTens
+    CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+$12,X
+  .samusMaxEnergyTens
+    LDA !DP_SecondDigit : BEQ .drawSamusReserves
+    CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+$14,X
 
   .drawSamusReserves
     LDX !DP_Address : LDA !PRESET_SLOTS_RESERVES,X : STA !DP_DrawValue
     JSR cm_hex2dec
-    ; set tilemap position
-    LDA !DP_JSLTarget : CLC : ADC #$001A : TAX
-    ; ones
-    LDA !DP_ThirdDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+4,X
-    ; tens
-    LDA !DP_SecondDigit : ORA !DP_FirstDigit
-    ORA !DP_Temp : BEQ .drawSamusMissiles
-    LDA !DP_SecondDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+2,X
-    ; hundreds
-    LDA !DP_FirstDigit : ORA !DP_Temp : BEQ .drawSamusMissiles
-    LDA !DP_FirstDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer,X
+    LDX !DP_JSLTarget
+    ; draw ones
+    LDA !DP_ThirdDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+$1E,X
+    ; draw remaining digits
+    LDA !DP_FirstDigit : BEQ .samusReservesTens
+    CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+$1A,X
+  .samusReservesTens
+    LDA !DP_SecondDigit : BEQ .drawSamusMissiles
+    CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+$1C,X
 
   .drawSamusMissiles
     LDX !DP_Address : LDA !PRESET_SLOTS_MISSILES,X : STA !DP_DrawValue
     JSR cm_hex2dec
-    ; set tilemap position
-    LDA !DP_JSLTarget : CLC : ADC #$0022 : TAX
-    ; ones
-    LDA !DP_ThirdDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+4,X
-    ; tens
-    LDA !DP_SecondDigit : ORA !DP_FirstDigit
-    ORA !DP_Temp : BEQ .drawSamusSupers
-    LDA !DP_SecondDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+2,X
-    ; hundreds
-    LDA !DP_FirstDigit : ORA !DP_Temp : BEQ .drawSamusSupers
-    LDA !DP_FirstDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer,X
+    LDX !DP_JSLTarget
+    ; draw ones
+    LDA !DP_ThirdDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+$26,X
+    ; draw remaining digits
+    LDA !DP_FirstDigit : BEQ .samusMissilesTens
+    CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+$22,X
+  .samusMissilesTens
+    LDA !DP_SecondDigit : BEQ .drawSamusSupers
+    CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+$24,X
 
   .drawSamusSupers
     LDX !DP_Address : LDA !PRESET_SLOTS_SUPERS,X : STA !DP_DrawValue
     JSR cm_hex2dec
-    ; set tilemap position
-    LDA !DP_JSLTarget : CLC : ADC #$002A : TAX
-    ; ones
-    LDA !DP_ThirdDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+2,X
-    ; tens
-    LDA !DP_SecondDigit : ORA !DP_FirstDigit
-    ORA !DP_Temp : BEQ .drawSamusPowerBombs
-    LDA !DP_SecondDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer,X
+    LDX !DP_JSLTarget
+    ; draw ones
+    LDA !DP_ThirdDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+$2C,X
+    ; draw remaining digits
+    LDA !DP_SecondDigit : BEQ .drawSamusPowerBombs
+    CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+$2A,X
 
   .drawSamusPowerBombs
     LDX !DP_Address : LDA !PRESET_SLOTS_PBS,X : STA !DP_DrawValue
     JSR cm_hex2dec
-    ; set tilemap position
-    LDA !DP_JSLTarget : CLC : ADC #$0030 : TAX
-    ; ones
-    LDA !DP_ThirdDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+2,X
-    ; tens
-    LDA !DP_SecondDigit : ORA !DP_FirstDigit
-    ORA !DP_Temp : BEQ .done
-    LDA !DP_SecondDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer,X
+    LDX !DP_JSLTarget
+    ; draw ones
+    LDA !DP_ThirdDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+$32,X
+    ; draw remaining digits
+    LDA !DP_SecondDigit : BEQ .done
+    CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+$30,X
 
   .done
     RTS
@@ -1653,8 +1527,8 @@ draw_manage_presets:
     TYA : CMP !ram_cm_selected_slot : BNE .done
 
     ; add the indicator on the left side
-    LDX !DP_JSLTarget : DEX #2
-    LDA !MENU_ARROW_RIGHT : STA !ram_tilemap_buffer,X
+    LDX !DP_JSLTarget
+    LDA !MENU_ARROW_RIGHT : STA !ram_tilemap_buffer-$2,X
 
   .done
     RTS
@@ -1676,7 +1550,7 @@ draw_ram_watch:
   .both_8bit
     TXA : STA !ram_tilemap_buffer+$5D4 : STA !ram_tilemap_buffer+$5EA
 
-    ; Draw hexidecimal numbers
+    ; Draw hexadecimal numbers
   .draw_hex
     LDX #$05D2 ; position for left hex
     LDA !ram_watch_left : CLC : ADC !ram_watch_left_index : STA !DP_Address
@@ -1704,14 +1578,14 @@ draw_ram_watch:
     LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer,X
     ; (0X00)
     LDA !DP_DrawValue : AND #$0F00 : XBA : ASL : TAY
-    LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer+2,X
+    LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer+$2,X
   .left_8bit
     ; (00X0)
     LDA !DP_DrawValue : AND #$00F0 : LSR #3 : TAY
-    LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer+4,X
+    LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer+$4,X
     ; (000X)
     LDA !DP_DrawValue : AND #$000F : ASL : TAY
-    LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer+6,X
+    LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer+$6,X
 
     ; Draw left decimal number
     LDX #$0610 ; position for left decimal
@@ -1743,14 +1617,14 @@ draw_ram_watch:
     LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer,X
     ; (0X00)
     LDA !DP_DrawValue : AND #$0F00 : XBA : ASL : TAY
-    LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer+2,X
+    LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer+$2,X
   .right_8bit
     ; (00X0)
     LDA !DP_DrawValue : AND #$00F0 : LSR #3 : TAY
-    LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer+4,X
+    LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer+$4,X
     ; (000X)
     LDA !DP_DrawValue : AND #$000F : ASL : TAY
-    LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer+6,X
+    LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer+$6,X
 
     ; Draw right decimal number
     LDX #$0626 ; position for right decimal
@@ -1909,7 +1783,6 @@ cm_hex2dec_draw5:
 ; expects value to be drawn in !DP_DrawValue
 ; expects tilemap pointer in X
 {
-    PHB
     LDA !DP_DrawValue : STA $4204
     %a8()
     LDA #$0A : STA $4206   ; divide by 10
@@ -1921,7 +1794,7 @@ cm_hex2dec_draw5:
     LDA #$2C70 : STA !DP_Palette ; number tiles are 70-79
 
     ; Ones digit
-    LDA $4216 : ORA !DP_Palette : STA !ram_tilemap_buffer+8,X
+    LDA $4216 : ORA !DP_Palette : STA !ram_tilemap_buffer+$8,X
 
     LDA !DP_Temp : BEQ .blanktens
     STA $4204
@@ -1932,7 +1805,7 @@ cm_hex2dec_draw5:
     LDA $4214 : STA !DP_ThirdDigit
 
     ; Tens digit
-    LDA $4216 : ORA !DP_Palette : STA !ram_tilemap_buffer+6,X
+    LDA $4216 : ORA !DP_Palette : STA !ram_tilemap_buffer+$6,X
 
     LDA !DP_ThirdDigit : BEQ .blankhundreds
     STA $4204
@@ -1943,7 +1816,7 @@ cm_hex2dec_draw5:
     LDA $4214 : STA !DP_SecondDigit
 
     ; Hundreds digit
-    LDA $4216 : ORA !DP_Palette : STA !ram_tilemap_buffer+4,X
+    LDA $4216 : ORA !DP_Palette : STA !ram_tilemap_buffer+$4,X
 
     LDA !DP_SecondDigit : BEQ .blankthousands
     STA $4204
@@ -1954,36 +1827,22 @@ cm_hex2dec_draw5:
     LDA $4214 : STA !DP_FirstDigit
 
     ; Thousands digit
-    LDA $4216 : ORA !DP_Palette : STA !ram_tilemap_buffer+2,X
+    LDA $4216 : ORA !DP_Palette : STA !ram_tilemap_buffer+$2,X
 
     ; Ten thousands digit
     LDA !DP_FirstDigit : BEQ .blanktenthousands
     ORA !DP_Palette : STA !ram_tilemap_buffer,X
-
-  .done
-    PLB
-    INX #10
     RTS
 
   .blanktens
-    LDA !MENU_BLANK
-    STA !ram_tilemap_buffer,X : STA !ram_tilemap_buffer+2,X
-    STA !ram_tilemap_buffer+4,X : STA !ram_tilemap_buffer+6,X
-    BRA .done
-
+    LDA !MENU_BLANK : STA !ram_tilemap_buffer+$6,X
   .blankhundreds
-    LDA !MENU_BLANK
-    STA !ram_tilemap_buffer,X : STA !ram_tilemap_buffer+2,X : STA !ram_tilemap_buffer+4,X
-    BRA .done
-
+    LDA !MENU_BLANK : STA !ram_tilemap_buffer+$4,X
   .blankthousands
-    LDA !MENU_BLANK
-    STA !ram_tilemap_buffer,X : STA !ram_tilemap_buffer+2,X
-    BRA .done
-
+    LDA !MENU_BLANK : STA !ram_tilemap_buffer+$2,X
   .blanktenthousands
     LDA !MENU_BLANK : STA !ram_tilemap_buffer,X
-    BRA .done
+    RTS
 }
 
 cm_draw_text:
@@ -2236,10 +2095,10 @@ cm_edit_digits:
 
     ; check for A, B, and D-pad
     JSR cm_get_inputs : STA !ram_cm_controller
-    AND #$8F80 : BEQ .redraw
+    AND #$8F80 : BEQ .goto_redraw
     BIT !IH_INPUT_LEFTRIGHT : BNE .selecting
     BIT !IH_INPUT_UPDOWN : BNE .editing
-    BIT !CTRL_AB : BEQ .redraw
+    BIT !CTRL_AB : BEQ .goto_redraw
 
     ; exit if A or B pressed
     ; skip if JSL target is zero
@@ -2267,16 +2126,12 @@ cm_edit_digits:
     LDA !ram_cm_controller : BIT !IH_INPUT_LEFT : BNE .left
     ; inc/dec horizontal cursor index
     LDA !ram_cm_horizontal_cursor : DEC : AND #$0003 : STA !ram_cm_horizontal_cursor
+  .goto_redraw
     BRA .redraw
+
   .left
     LDA !ram_cm_horizontal_cursor : INC : AND #$0003 : STA !ram_cm_horizontal_cursor
-  .redraw
-    ; redraw numbers so selected digit is highlighted
-    LDX !MENU_STACK_INDEX : LDA !ram_cm_cursor_stack,X : TAY
-    %item_index_to_vram_index()
-    TXA : CLC : ADC #$002C : TAX
-    LDA [!DP_DigitAddress]
-    JMP cm_draw4_editing ; and return from there
+    BRA .redraw
 
   .editing
     ; use horizontal cursor index to ADC/SBC
@@ -2293,56 +2148,48 @@ cm_edit_digits:
     ORA !DP_DigitValue : AND !DP_DigitMaximum : STA [!DP_DigitAddress]
     %sfxnumber()
 
-    ; redraw numbers
+  .redraw
     LDX !MENU_STACK_INDEX : LDA !ram_cm_cursor_stack,X : TAY
     %item_index_to_vram_index()
-    TXA : CLC : ADC #$002C : TAX
     LDA [!DP_DigitAddress]
 
-    ; fallthrough to cm_draw4_editing and return from there
-}
-
-cm_draw4_editing:
-{
     ; (X000)
     STA !DP_DrawValue : AND #$F000 : XBA : LSR #3 : TAY
-    LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer,X
+    LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer+$2C,X
     ; (0X00)
     LDA !DP_DrawValue : AND #$0F00 : XBA : ASL : TAY
-    LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer+2,X
+    LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer+$2E,X
     ; (00X0)
     LDA !DP_DrawValue : AND #$00F0 : LSR #3 : TAY
-    LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer+4,X
+    LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer+$30,X
     ; (000X)
     LDA !DP_DrawValue : AND #$000F : ASL : TAY
-    LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer+6,X
+    LDA.w HexMenuGFXTable,Y : STA !ram_tilemap_buffer+$32,X
 
     ; set palette bytes to unselected
     %a8()
     LDA #$2C
-    STA !ram_tilemap_buffer+1,X : STA !ram_tilemap_buffer+3,X
-    STA !ram_tilemap_buffer+5,X : STA !ram_tilemap_buffer+7,X
+    STA !ram_tilemap_buffer+$2D,X : STA !ram_tilemap_buffer+$2F,X
+    STA !ram_tilemap_buffer+$31,X : STA !ram_tilemap_buffer+$33,X
 
     ; highlight selected digit only
-    LDA !ram_cm_horizontal_cursor : BEQ .ones
-    DEC : BEQ .tens
-    DEC : BEQ .hundreds
+    LDA !ram_cm_horizontal_cursor : BEQ .highlight_ones
+    DEC : BEQ .highlight_tens
+    DEC : BEQ .highlight_hundreds
     ; thousands $X000
-    LDA #$3C : STA !ram_tilemap_buffer+1,X
-    BRA .done
-  .hundreds ; $0X00
-    LDA #$3C : STA !ram_tilemap_buffer+3,X
-    BRA .done
-  .tens ; $00X0
-    LDA #$3C : STA !ram_tilemap_buffer+5,X
-    BRA .done
-  .ones ; $000X
-    LDA #$3C : STA !ram_tilemap_buffer+7,X
-
-  .done
+    LDA #$3C : STA !ram_tilemap_buffer+$2D,X
+    BRA .redraw_done
+  .highlight_hundreds ; $0X00
+    LDA #$3C : STA !ram_tilemap_buffer+$2F,X
+    BRA .redraw_done
+  .highlight_tens ; $00X0
+    LDA #$3C : STA !ram_tilemap_buffer+$31,X
+    BRA .redraw_done
+  .highlight_ones ; $000X
+    LDA #$3C : STA !ram_tilemap_buffer+$33,X
+  .redraw_done
     %a16()
-    JSR cm_tilemap_transfer
-    RTS
+    JMP cm_tilemap_transfer
 }
 
 cm_SingleDigitEdit:
@@ -2430,35 +2277,34 @@ cm_edit_decimal_digits:
     ; get tilemap address
     LDX !MENU_STACK_INDEX : LDA !ram_cm_cursor_stack,X : TAY
     %item_index_to_vram_index()
-    TXA : CLC : ADC #$002C : TAX
 
     ; is editing thousands digit allowed?
     LDA #$2C00|'0'
     LDY !DP_DigitMaximum : CPY #1000 : BMI .drawThreeDigits
 
     ; start with zero tiles
-    STA !ram_tilemap_buffer,X
+    STA !ram_tilemap_buffer+$2C,X
   .drawThreeDigits
-    STA !ram_tilemap_buffer+2,X
-    STA !ram_tilemap_buffer+4,X
-    STA !ram_tilemap_buffer+6,X
+    STA !ram_tilemap_buffer+$2E,X
+    STA !ram_tilemap_buffer+$30,X
+    STA !ram_tilemap_buffer+$32,X
 
     ; set palette and default zero tile
     STA !DP_Palette
 
     ; Draw numbers
     ; ones
-    LDA !DP_ThirdDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+6,X
+    LDA !DP_ThirdDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+$32,X
     ; tens
     LDA !DP_SecondDigit : ORA !DP_FirstDigit
     ORA !DP_Temp : BEQ .highlighting
-    LDA !DP_SecondDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+4,X
+    LDA !DP_SecondDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+$30,X
     ; hundreds
     LDA !DP_FirstDigit : ORA !DP_Temp : BEQ .highlighting
-    LDA !DP_FirstDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+2,X
+    LDA !DP_FirstDigit : CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+$2E,X
     ; thousands
     LDA !DP_Temp : BEQ .highlighting
-    CLC : ADC !DP_Palette : STA !ram_tilemap_buffer,X
+    CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+$2C,X
 
   .highlighting
     ; highlight the selected tile
@@ -2475,10 +2321,9 @@ cm_edit_decimal_digits:
     TXA : CLC : ADC #$0006 : TAX
   .highlight
     ; number tiles are 70-79
-    LDA !ram_tilemap_buffer,X : ORA #$3C70 : STA !ram_tilemap_buffer,X
+    LDA !ram_tilemap_buffer+$2C,X : ORA #$3C70 : STA !ram_tilemap_buffer+$2C,X
 
-    JSR cm_tilemap_transfer
-    RTS
+    JMP cm_tilemap_transfer
 
   .exit
     ; check if value is inbounds
@@ -4427,23 +4272,8 @@ cm_hud_table:
 incbin ../resources/cm_gfx.bin
 
 HexMenuGFXTable:
-    dw $2C70, $2C71, $2C72, $2C73, $2C74, $2C75, $2C76, $2C77, $2C78, $2C79, $2C50, $2C51, $2C52, $2C53, $2C54, $2C55
-
-TimerNumberGFX1:
-    dw #$2870, #$2870, #$2870, #$2870, #$2870, #$2870, #$2870, #$2870, #$2870, #$2870
-    dw #$2871, #$2871, #$2871, #$2871, #$2871, #$2871, #$2871, #$2871, #$2871, #$2871
-    dw #$2872, #$2872, #$2872, #$2872, #$2872, #$2872, #$2872, #$2872, #$2872, #$2872
-    dw #$2873, #$2873, #$2873, #$2873, #$2873, #$2873, #$2873, #$2873, #$2873, #$2873
-    dw #$2874, #$2874, #$2874, #$2874, #$2874, #$2874, #$2874, #$2874, #$2874, #$2874
-    dw #$2875, #$2875, #$2875, #$2875, #$2875, #$2875, #$2875, #$2875, #$2875, #$2875
-
-TimerNumberGFX2:
-    dw #$2870, #$2871, #$2872, #$2873, #$2874, #$2875, #$2876, #$2877, #$2878, #$2879
-    dw #$2870, #$2871, #$2872, #$2873, #$2874, #$2875, #$2876, #$2877, #$2878, #$2879
-    dw #$2870, #$2871, #$2872, #$2873, #$2874, #$2875, #$2876, #$2877, #$2878, #$2879
-    dw #$2870, #$2871, #$2872, #$2873, #$2874, #$2875, #$2876, #$2877, #$2878, #$2879
-    dw #$2870, #$2871, #$2872, #$2873, #$2874, #$2875, #$2876, #$2877, #$2878, #$2879
-    dw #$2870, #$2871, #$2872, #$2873, #$2874, #$2875, #$2876, #$2877, #$2878, #$2879
+    dw #$2C70, #$2C71, #$2C72, #$2C73, #$2C74, #$2C75, #$2C76, #$2C77
+    dw #$2C78, #$2C79, #$2C50, #$2C51, #$2C52, #$2C53, #$2C54, #$2C55
 
 %endfree(89)
 
