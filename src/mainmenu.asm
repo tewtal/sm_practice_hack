@@ -595,6 +595,9 @@ presets_save_custom_preset:
     CMP #$0013 : BPL .not_safe
 
   .safe
+    LDA !sram_custom_preset_slot : AND #$003F
+    JSL $808192 ; change bit index to byte index
+    LDA !sram_read_only_locks,X : BIT $05E7 : BNE .not_safe
     JSL custom_preset_save
     LDA #$0001 : STA !ram_cm_leave
     %sfxconfirm()
@@ -1324,7 +1327,7 @@ endif
 endif
     dw #$0000
     %cm_header("PRESS A TO SWAP PRESETS")
-    %cm_footer("PRESS X TO DELETE PRESET")
+    %cm_footer("X DELETES - Y TOGGLES LOCK")
 
     %cm_managepreset(00)
     %cm_managepreset(01)
@@ -1383,7 +1386,7 @@ ManagePresetsMenu2:
     dw #managepreset_goto_page3
     dw #$0000
     %cm_header("PRESS A TO SWAP PRESETS")
-    %cm_footer("PRESS X TO DELETE PRESET")
+    %cm_footer("X DELETES - Y TOGGLES LOCK")
 
     %cm_managepreset(16)
     %cm_managepreset(17)
@@ -1425,7 +1428,7 @@ ManagePresetsMenu3:
     dw #managepreset_goto_page2
     dw #$0000
     %cm_header("PRESS A TO SWAP PRESETS")
-    %cm_footer("PRESS X TO DELETE PRESET")
+    %cm_footer("X DELETES - Y TOGGLES LOCK")
 
     %cm_managepreset(32)
     %cm_managepreset(33)
@@ -4520,6 +4523,7 @@ SavestateMenu:
     dw #save_freeze
     dw #save_middoorsave
     dw #save_alwayssave
+    dw #save_read_only
     dw #$FFFF
     dw #save_rando_enable
     dw #save_rando_energy
@@ -4547,6 +4551,14 @@ save_middoorsave:
 
 save_alwayssave:
     %cm_toggle_bit("Auto-Save Every Door", !ram_auto_save_state, #$8000, #0)
+
+save_read_only:
+    %cm_toggle("Read-Only Lock", !sram_read_only_locks+5, #$01, #.routine)
+  .routine
+    TAX : BEQ .done
+    TDC : STA !ram_auto_save_state
+  .done
+    RTL
 
 if !FEATURE_DEV
 save_delete:
