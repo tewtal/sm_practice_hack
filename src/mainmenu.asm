@@ -568,8 +568,7 @@ presets_custom_preset_slot:
 if !FEATURE_MAPSTATES
     ; Mapstates only has slots 00-01 or 00-09
     LDY.w #CustomPresetsMenu
-else
-if !FEATURE_TINYSTATES
+elseif !FEATURE_TINYSTATES
     ; Tinystates only has slots 00-15
     LDY.w #CustomPresetsMenu
 else
@@ -581,7 +580,6 @@ else
   .page3
     LDY.w #CustomPresetsMenu3
   .done
-endif
 endif
     %setmenubank()
     JML action_submenu

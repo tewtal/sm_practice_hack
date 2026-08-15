@@ -949,14 +949,12 @@ preset_scroll_fixes:
 if !FEATURE_MAPSTATES
     ASL : ASL : ASL : XBA : CLC      ; multiply by 800h (slot offset)
     ADC #(!PRESET_SLOTS+$BD) : TAX   ; X = Source
-else
-if !FEATURE_TINYSTATES
+elseif !FEATURE_TINYSTATES
     XBA : CLC                        ; multiply by 100h (slot offset)
     ADC #(!PRESET_SLOTS+$BD) : TAX   ; X = Source
 else
     ASL : XBA : CLC                  ; multiply by 200h (slot offset)
     ADC #(!PRESET_SLOTS+$1E9) : TAX  ; X = Source
-endif
 endif
     LDY #$CD51 : LDA #$0031      ; Y = Destination, A = Size-1
     MVP $707E                    ; srcBank, destBank
