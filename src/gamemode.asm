@@ -87,12 +87,16 @@ gamemode_door_transtion_load_sprites:
     BMI .auto_save
     TDC : STA !ram_auto_save_state
   .auto_save
+    LDA !sram_read_only_locks+5 : AND #$00FF : BNE .failSFX
     PHP : PHB
     PHK : PLB
     JSL save_state
     PLB : PLP
   .done
     JML $82E4A9 ; return to hijacked code
+  .failSFX
+    %sfxfail()
+    BRA .done
   .check
 if !FEATURE_PAL
     JML $82E4A9 ; return to hijacked code
@@ -250,6 +254,7 @@ if !FEATURE_TINYSTATES
     CMP #$001C : BPL .done
   .save
 endif
+    LDA !sram_read_only_locks+5 : AND #$00FF : BNE .failSFX
     PHP
     PHB
     JSL save_state
@@ -260,6 +265,10 @@ endif
     PLA : PEA !CTRL_SHORTCUT_SKIP_REMAINING_PEA_VALUE
 
   .done
+    RTL
+
+  .failSFX
+    %sfxfail()
     RTL
 }
 
@@ -328,6 +337,9 @@ gamemode_save_custom_preset:
     CMP #$0013 : BPL .not_safe
 
   .safe
+    LDA !sram_custom_preset_slot : AND #$003F
+    JSL $808192 ; change bit index to byte index
+    LDA !sram_read_only_locks,X : BIT $05E7 : BNE .not_safe
     JSL custom_preset_save
     %sfxconfirm()
     RTL

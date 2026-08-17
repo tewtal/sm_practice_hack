@@ -1393,6 +1393,15 @@ draw_custom_preset:
     RTS
 
   .validPreset
+    ; check if read-only lock exists
+    LDA !DP_ToggleValue
+    JSL $808192 ; change bit index to byte index
+    LDA !sram_read_only_locks,X : BIT $05E7 : BEQ .whatToDraw
+    ; draw lock
+    LDX !DP_JSLTarget
+    LDA !MENU_LOCK : STA !ram_tilemap_buffer-2,X
+
+  .whatToDraw
     ; determine what to draw
     LDA !ram_cm_custom_preset_labels : BNE .drawSamusData
 
@@ -3766,11 +3775,8 @@ execute_custom_preset:
     RTS
 
   .flipPage
-if !FEATURE_MAPSTATES
-    ; Mapstates only has one page
-else
-if !FEATURE_TINYSTATES
-    ; TinyStates only has one page
+if !FEATURE_TINYSTATES || !FEATURE_MAPSTATES
+    ; Tinystates and Mapstates only have one page
 else
     ; flip to the next/prev page
     BIT !IH_INPUT_LEFT : BNE .decPage
@@ -3792,18 +3798,14 @@ else
     JSL cm_go_back_adjacent_submenu
     JSL action_submenu
 endif
-endif
     RTS
 }
 
 execute_manage_presets:
 {
     LDA !IH_CONTROLLER_PRI : ORA !IH_CONTROLLER_SEC : BIT !IH_INPUT_LEFTRIGHT : BEQ .manageSlots
-if !FEATURE_MAPSTATES
-    ; Mapstates only has one page
-else
-if !FEATURE_TINYSTATES
-    ; TinyStates only has one page
+if !FEATURE_MAPSTATES || !FEATURE_TINYSTATES
+    ; TinyStates and Mapstates only have one page
 else
     ; flip to the next/prev page
     BIT !IH_INPUT_LEFT : BNE .decPage
@@ -3824,16 +3826,19 @@ else
     JSL cm_previous_menu
     JSL action_submenu
 endif
-endif
     RTS
 
   .manageSlots
-    ; are we deleting (X) or swapping?
-    LDA !IH_CONTROLLER_PRI_NEW : ORA !IH_CONTROLLER_SEC_NEW : BIT !CTRL_X : BEQ .swapMode
+    ; are we deleting (X)?
+    LDA !IH_CONTROLLER_PRI_NEW : ORA !IH_CONTROLLER_SEC_NEW : BIT !CTRL_X : BEQ .checkLock
     ; check if preset exists
     LDA [!DP_CurrentMenu] : AND #$00FF : STA !ram_cm_selected_slot
     %presetslotsize()
     LDA !PRESET_SLOTS,X : CMP !SAFEWORD : BNE .failSFX
+    ; check for read-only lock
+    LDA !ram_cm_selected_slot
+    JSL $808192 ; change bit index to byte index
+    LDA !sram_read_only_locks,X : BIT $05E7 : BNE .failSFX
     ; open confirmation screen before deleting preset
     LDY.w #ManagePresetsConfirm
     ; set bank for manual submenu jump
@@ -3843,6 +3848,19 @@ endif
 
   .failSFX
     %sfxfail()
+    RTS
+
+  .checkLock
+    ; check if toggling lock (Y)
+    BIT !CTRL_Y : BEQ .swapMode
+    LDA [!DP_CurrentMenu] : AND #$00FF : STA !ram_cm_selected_slot
+    %presetslotsize()
+    LDA !PRESET_SLOTS,X : CMP !SAFEWORD : BNE .failSFX
+    
+    ; toggle read-only lock
+    LDA !ram_cm_selected_slot
+    JSL $808192 ; change bit index to byte index
+    LDA !sram_read_only_locks,X : EOR $05E7 : STA !sram_read_only_locks,X
     RTS
 
   .swapMode
@@ -3861,7 +3879,8 @@ endif
     CLC : ADC.w #!PRESET_SLOTS : STA !DP_Address
 
     ; get preset slot #
-    LDA [!DP_CurrentMenu] : AND #$00FF : %presetslotsize()
+    LDA [!DP_CurrentMenu] : AND #$00FF : STA !DP_Palette
+    %presetslotsize()
 
     ; put source address for slot 2 in !DP_JSLTarget
     CLC : ADC.w #!PRESET_SLOTS : STA !DP_JSLTarget
@@ -3913,6 +3932,41 @@ endif
     LDA !sram_custom_preset_safewords,X : TYX : STA !sram_custom_preset_safewords,X
     LDX !DP_Temp : LDA !DP_Address : STA !sram_custom_preset_safewords,X
 
+    ; swap read-only locks
+    ; get slot 1 data
+    LDA !ram_cm_selected_slot
+    JSL $808192 ; change bit index to byte index
+    STX !DP_JSLTarget
+    LDA $05E7 : STA !DP_Temp
+    LDA !sram_read_only_locks,X : AND !DP_Temp : STA !DP_CtrlInput
+
+    ; get slot 2 data
+    LDA !DP_Palette
+    JSL $808192 ; change bit index to byte index
+    STX !DP_JSLTarget+2
+    LDA !sram_read_only_locks,X : AND $05E7 : STA !DP_CtrlInput+2
+
+    ; check if locks need swapping
+    ORA !DP_CtrlInput : BEQ .finalizeSwap
+
+    ; check which slot is locked
+    ; if both locked, no swap needed
+    LDA !DP_CtrlInput : BEQ .slot2
+    LDA !DP_CtrlInput+2 : BNE .finalizeSwap
+
+    ; slot 1 was locked
+    LDX !DP_JSLTarget
+    LDA !sram_read_only_locks,X : EOR !DP_CtrlInput : STA !sram_read_only_locks,X
+    LDX !DP_JSLTarget+2
+    LDA !sram_read_only_locks,X : ORA $05E7 : STA !sram_read_only_locks,X
+    BRA .finalizeSwap
+
+  .slot2
+    LDA !sram_read_only_locks,X : EOR !DP_CtrlInput+2 : STA !sram_read_only_locks,X
+    LDX !DP_JSLTarget
+    LDA !sram_read_only_locks,X : ORA !DP_Temp : STA !sram_read_only_locks,X
+
+  .finalizeSwap
     TDC : STA !ram_cm_manage_slots
     LDA !sram_last_preset_low_word : BMI .done
     TDC : STA !sram_last_preset_low_word : STA !sram_last_preset_high_word
