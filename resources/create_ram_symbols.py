@@ -42,6 +42,18 @@ for line in define_lines:
          symbols_file.write(" ;")
          symbols_file.write(parts[1])
          last_line_was_new_line = False
+   elif line.startswith("if"):
+      symbols_file.write(line)
+      last_line_was_new_line = False
+   elif line.startswith("else"):
+      symbols_file.write(line)
+      last_line_was_new_line = False
+   elif line.startswith("elseif"):
+      symbols_file.write(line)
+      last_line_was_new_line = False
+   elif line.startswith("endif"):
+      symbols_file.write(line)
+      last_line_was_new_line = False
 
 symbols_file.close()
 

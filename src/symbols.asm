@@ -599,17 +599,19 @@ sram_ctrl_2_shortcut_inputs = !sram_ctrl_2_shortcut_inputs ; !SRAM_START+$1A0 ; 
 
 ; ^ FREE SPACE ^ up to +$B8E (normal) / +$DFE (tinystates)
 
-sram_read_only_locks_tinystates = !sram_read_only_locks_tinystates ; !SRAM_START+$B8A ; $6 bytes
-sram_streamer_name_normal = !sram_streamer_name_normal ; !SRAM_START+$B90 ; $18 bytes
-sram_custom_header_normal = !sram_custom_header_normal ; !SRAM_START+$BA8 ; $18 bytes
-sram_custom_preset_safewords_normal = !sram_custom_preset_safewords_normal ; !SRAM_START+$BC0 ; $50 bytes
-sram_custom_preset_names_normal = !sram_custom_preset_names_normal ; !SRAM_START+$C10 ; $3C0 bytes
-
-sram_read_only_locks_normal = !sram_read_only_locks_normal ; !SRAM_START+$DFA ; $6 bytes
-sram_streamer_name_tinystates = !sram_streamer_name_tinystates ; !SRAM_START+$E00 ; $18 bytes
-sram_custom_header_tinystates = !sram_custom_header_tinystates ; !SRAM_START+$E18 ; $18 bytes
-sram_custom_preset_safewords_tinystates = !sram_custom_preset_safewords_tinystates ; !SRAM_START+$E30 ; $20 bytes
-sram_custom_preset_names_tinystates = !sram_custom_preset_names_tinystates ; !SRAM_START+$E50 ; $180 bytes
+if !FEATURE_TINYSTATES
+sram_read_only_locks = !sram_read_only_locks ; !SRAM_START+$B8A ; $6 bytes
+sram_streamer_name = !sram_streamer_name ; !SRAM_START+$B90 ; $18 bytes
+sram_custom_header = !sram_custom_header ; !SRAM_START+$BA8 ; $18 bytes
+sram_custom_preset_safewords = !sram_custom_preset_safewords ; !SRAM_START+$BC0 ; $50 bytes
+sram_custom_preset_names = !sram_custom_preset_names ; !SRAM_START+$C10 ; $3C0 bytes
+else
+sram_read_only_locks = !sram_read_only_locks ; !SRAM_START+$DFA ; $6 bytes
+sram_streamer_name = !sram_streamer_name ; !SRAM_START+$E00 ; $18 bytes
+sram_custom_header = !sram_custom_header ; !SRAM_START+$E18 ; $18 bytes
+sram_custom_preset_safewords = !sram_custom_preset_safewords ; !SRAM_START+$E30 ; $20 bytes
+sram_custom_preset_names = !sram_custom_preset_names ; !SRAM_START+$E50 ; $180 bytes
+endif
 
 ; ^ FREE SPACE ^ up to +$FFE
 
