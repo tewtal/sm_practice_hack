@@ -121,6 +121,8 @@ def load_preset_data(file_label):
                         if addr not in data_dict:
                             data_dict[addr] = value
                 else:
+                    for safeties_index in range(3960, 4186, 2):
+                        data_dict[f"{safeties_index:04X}"] = "0000"
                     for addr in default_map_addr_list:
                         data_dict[addr] = "0000"
                 if len(preset_name_list) == (last_data_index + 1):
@@ -337,7 +339,7 @@ def write_combined_preset_data():
             else:
                 print(f"    dw #{combined_preset_names_lists[last_data_index][0]}", file=file)
             for addr, value in sorted(combined_preset_data_list[i].items()):
-                if (((last_data_index < 0) and addr not in default_map_addr_list) or
+                if (((last_data_index < 0) and ((addr < "0F78") or (addr >= "105A")) and addr not in default_map_addr_list) or
                     ((last_data_index >= 0) and (combined_preset_data_list[last_data_index][addr] != value))):
                     print(f'    dw ${addr}, ${value}  ; {name_dict[addr]}', file=file)
             print("    dw #$FFFF", file=file)

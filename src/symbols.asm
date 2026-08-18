@@ -540,6 +540,8 @@ sram_update_timers_ctrl_input = !sram_update_timers_ctrl_input ; !SRAM_START+$AC
 sram_update_timers_options = !sram_update_timers_options ; !SRAM_START+$AE
 sram_sprite_features_blue_color = !sram_sprite_features_blue_color ; !SRAM_START+$B0
 sram_sprite_features_grapple_color = !sram_sprite_features_grapple_color ; !SRAM_START+$B2
+sram_safeties_kpdr20 = !sram_safeties_kpdr20 ; !SRAM_START+$B4
+sram_safeties_kpdr25 = !sram_safeties_kpdr25 ; !SRAM_START+$B6
 
 ; ^ FREE SPACE ^ up to +$CE
 

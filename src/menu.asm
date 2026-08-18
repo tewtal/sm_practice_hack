@@ -817,6 +817,7 @@ cm_draw_action_table:
     dw draw_category_preset
     dw draw_adjust_item
     dw draw_color_bar
+    dw draw_category_safety
 
 draw_toggle:
 {
@@ -867,6 +868,41 @@ draw_toggle_bit:
         INC #2 : STA !ram_tilemap_buffer+$30,X ; F
                  STA !ram_tilemap_buffer+$32,X ; F
     RTS
+}
+
+draw_category_safety:
+{
+    ; grab bitmask
+    LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : INC !DP_CurrentMenu : STA !DP_ToggleValue
+
+    ; grab the memory address (long)
+    LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : INC !DP_CurrentMenu : STA !DP_Address
+    LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : STA !DP_Address+2
+
+    ; get address to text label
+    %item_index_to_vram_index()
+    PHX : LDA [!DP_CurrentMenu] : TAY
+
+    ; prepare to draw text
+    %a8()
+    ; ORA with palette info
+    LDA #$28 : ORA !DP_Palette : STA !DP_Palette
+    ; set bank to preset names bank
+    PHB : LDA.b #preset_names>>16 : PHA : PLB
+
+  .loop
+    LDA $0000,Y : CMP #$FF : BEQ .end                   ; terminator
+    STA !ram_tilemap_buffer,X : INX                     ; tile
+    LDA !DP_Palette : STA !ram_tilemap_buffer,X : INX   ; palette
+    INY : BRA .loop
+
+  .end
+    PLB : PLX
+    %a16()
+
+    ; grab the value at that memory address
+    LDA [!DP_Address] : AND !DP_ToggleValue : BEQ draw_toggle_bit_off
+    BRA draw_toggle_inverted_on
 }
 
 draw_toggle_inverted:
@@ -1290,7 +1326,6 @@ draw_ctrl_shortcut:
 
   .end
     RTS
-
 }
 
 draw_controller_input:
@@ -3033,6 +3068,7 @@ cm_execute_action_table:
     dw execute_category_preset
     dw execute_adjust_item
     dw execute_nop ; color bar
+    dw execute_category_safety
 
 execute_nop:
     RTS
@@ -4094,6 +4130,20 @@ execute_adjust_item:
     LDA [!DP_Address] : ORA !DP_ToggleValue : STA [!DP_Address]
     DEC !DP_Address : DEC !DP_Address
     LDA [!DP_Address] : ORA !DP_ToggleValue : STA [!DP_Address]
+    RTS
+}
+
+execute_category_safety:
+{
+    ; Load which bit(s) to toggle
+    LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : INC !DP_CurrentMenu : STA !DP_ToggleValue
+
+    ; Load the address
+    LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : INC !DP_CurrentMenu : STA !DP_Address
+    LDA [!DP_CurrentMenu] : STA !DP_Address+2
+
+    ; Toggle the bit
+    LDA [!DP_Address] : EOR !DP_ToggleValue : STA [!DP_Address]
     RTS
 }
 

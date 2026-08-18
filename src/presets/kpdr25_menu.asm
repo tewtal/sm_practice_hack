@@ -10,6 +10,8 @@ PresetsMenuKpdr25:
     dw #presets_goto_kpdr25_lower_norfair
     dw #presets_goto_kpdr25_backtracking
     dw #presets_goto_kpdr25_tourian
+    dw #$FFFF
+    dw #presets_goto_kpdr25_safeties
     dw #$0000
     %cm_header("ANY% KPDR - EARLY ICE")
 
@@ -45,6 +47,9 @@ presets_goto_kpdr25_backtracking:
 
 presets_goto_kpdr25_tourian:
     %cm_submenu("Tourian", #presets_submenu_kpdr25_tourian)
+
+presets_goto_kpdr25_safeties:
+    %cm_submenu("Safeties", #presets_submenu_kpdr25_safeties)
 
 presets_submenu_kpdr25_crateria:
     dw #presets_kpdr25_crateria_ceres_elevator
@@ -250,6 +255,25 @@ presets_submenu_kpdr25_tourian:
     dw #presets_kpdr25_tourian_escape_parlor
     dw #$0000
     %cm_header("TOURIAN")
+
+presets_submenu_kpdr25_safeties:
+    dw #presets_kpdr25_safeties_spazer
+    dw #presets_kpdr25_safeties_kraid_etank
+    dw #presets_kpdr25_safeties_hjb_missiles
+    dw #presets_kpdr25_safeties_speed_missiles
+    dw #presets_kpdr25_safeties_grapple
+    dw #presets_kpdr25_safeties_crocomire_etank
+    dw #presets_kpdr25_safeties_sloaters_refill
+    dw #presets_kpdr25_safeties_moat_missiles
+    dw #presets_kpdr25_safeties_crab_supers
+    dw #presets_kpdr25_safeties_aqueduct_missiles
+    dw #presets_kpdr25_safeties_aqueduct_supers
+    dw #presets_kpdr25_safeties_nutella_refill
+    dw #presets_kpdr25_safeties_screw_attack
+    dw #presets_kpdr25_safeties_ridley_etank
+    dw #presets_kpdr25_safeties_baby_skip_skip
+    dw #$0000
+    %cm_header("SAFETIES")
 
 
 ; Crateria
@@ -755,4 +779,51 @@ presets_kpdr25_tourian_escape_climb:
 
 presets_kpdr25_tourian_escape_parlor:
     %cm_preset("Escape Parlor", #preset_names_escape_parlor, #preset_kpdr25_tourian_escape_parlor)
+
+
+; Safeties
+presets_kpdr25_safeties_spazer:
+    %cm_safety(#$0001, "Spazer", #preset_names_spazer, !sram_safeties_kpdr25)
+
+presets_kpdr25_safeties_kraid_etank:
+    %cm_safety(#$0002, "Kraid E-Tank", #preset_names_kraid_etank, !sram_safeties_kpdr25)
+
+presets_kpdr25_safeties_hjb_missiles:
+    %cm_safety(#$0004, "HJB Missiles", #preset_names_hjb_missiles, !sram_safeties_kpdr25)
+
+presets_kpdr25_safeties_speed_missiles:
+    %cm_safety(#$0008, "Speed Missiles", #preset_names_speed_missiles, !sram_safeties_kpdr25)
+
+presets_kpdr25_safeties_grapple:
+    %cm_safety(#$0010, "Grapple", #preset_names_grapple, !sram_safeties_kpdr25)
+
+presets_kpdr25_safeties_crocomire_etank:
+    %cm_safety(#$0020, "Crocomire E-Tank", #preset_names_crocomire_etank, !sram_safeties_kpdr25)
+
+presets_kpdr25_safeties_sloaters_refill:
+    %cm_safety(#$0040, "Sloaters Refill", #preset_names_sloaters_refill, !sram_safeties_kpdr25)
+
+presets_kpdr25_safeties_moat_missiles:
+    %cm_safety(#$0080, "Moat Missiles", #preset_names_moat_missiles, !sram_safeties_kpdr25)
+
+presets_kpdr25_safeties_crab_supers:
+    %cm_safety(#$0100, "Crab Supers", #preset_names_crab_supers, !sram_safeties_kpdr25)
+
+presets_kpdr25_safeties_aqueduct_missiles:
+    %cm_safety(#$0200, "Aqueduct Missiles", #preset_names_aqueduct_missiles, !sram_safeties_kpdr25)
+
+presets_kpdr25_safeties_aqueduct_supers:
+    %cm_safety(#$0400, "Aqueduct Supers", #preset_names_aqueduct_supers, !sram_safeties_kpdr25)
+
+presets_kpdr25_safeties_nutella_refill:
+    %cm_safety(#$0800, "Nutella Refill", #preset_names_nutella_refill, !sram_safeties_kpdr25)
+
+presets_kpdr25_safeties_screw_attack:
+    %cm_safety(#$1000, "Screw Attack", #preset_names_screw_attack, !sram_safeties_kpdr25)
+
+presets_kpdr25_safeties_ridley_etank:
+    %cm_safety(#$2000, "Ridley E-Tank", #preset_names_ridley_etank, !sram_safeties_kpdr25)
+
+presets_kpdr25_safeties_baby_skip_skip:
+    %cm_safety(#$4000, "Baby Skip Skip", #preset_names_baby_skip_skip, !sram_safeties_kpdr25)
 

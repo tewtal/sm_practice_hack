@@ -1,6 +1,6 @@
 
-warnpc $EFBED7
-org $EFBED7
+warnpc $EFBE72
+org $EFBE72
 print pc, " preset names start"
 
 preset_names:
@@ -74,6 +74,9 @@ preset_names_aqueduct_final:
 preset_names_aqueduct_final_visit:
     db "Aqueduct Final Visit", #$FF
 
+preset_names_aqueduct_missiles:
+    db "Aqueduct Missiles", #$FF
+
 preset_names_aqueduct_post_save:
     db "Aqueduct (Post Save)", #$FF
 
@@ -82,6 +85,9 @@ preset_names_aqueduct_revisit:
 
 preset_names_aqueduct_spikesuit:
     db "Aqueduct (Spikesuit)", #$FF
+
+preset_names_aqueduct_supers:
+    db "Aqueduct Supers", #$FF
 
 preset_names_arthur_j_metroid:
     db "Arthur J. Metroid", #$FF
@@ -100,6 +106,9 @@ preset_names_baby:
 
 preset_names_baby_skip:
     db "Baby Skip", #$FF
+
+preset_names_baby_skip_skip:
+    db "Baby Skip Skip", #$FF
 
 preset_names_back_to_back_hellrun:
     db "Back To Back Hellrun", #$FF
@@ -953,6 +962,9 @@ preset_names_giant_hoppers:
 preset_names_golden_torizo:
     db "Golden Torizo", #$FF
 
+preset_names_grapple:
+    db "Grapple", #$FF
+
 preset_names_grapple_beam:
     db "Grapple Beam", #$FF
 
@@ -1114,6 +1126,9 @@ preset_names_hijump_etank_room:
 
 preset_names_hijump_first:
     db "Hi-Jump First", #$FF
+
+preset_names_hjb_missiles:
+    db "HJB Missiles", #$FF
 
 preset_names_horizontal_bomb_jump:
     db "Horizontal Bomb Jump", #$FF
@@ -2468,6 +2483,9 @@ preset_names_skree_boost_revisit:
 preset_names_sky_missiles:
     db "Sky Missiles", #$FF
 
+preset_names_sloaters_refill:
+    db "Sloaters Refill", #$FF
+
 preset_names_snail_clip:
     db "Snail Clip", #$FF
 
@@ -2500,6 +2518,9 @@ preset_names_speed_hallway_in:
 
 preset_names_speed_hallway_out:
     db "Speed Hallway Out", #$FF
+
+preset_names_speed_missiles:
+    db "Speed Missiles", #$FF
 
 preset_names_speed_zeb_skip:
     db "Speed Zeb Skip", #$FF

@@ -577,6 +577,8 @@
 !sram_update_timers_options = !SRAM_START+$AE
 !sram_sprite_features_blue_color = !SRAM_START+$B0
 !sram_sprite_features_grapple_color = !SRAM_START+$B2
+!sram_safeties_kpdr20 = !SRAM_START+$B4
+!sram_safeties_kpdr25 = !SRAM_START+$B6
 
 ; ^ FREE SPACE ^ up to +$CE
 
@@ -1186,8 +1188,39 @@
 !eram_baby_initial_delay           = !ENEMY_VAR_5+!ENEMY_1F_OFFSET
 
 ; Also during preset loading, the entire enemy ram region is available
-!CATEGORY_PRESET_STACK_SIZE        = #$0800
-!eram_category_preset_stack        = !ENEMY_ID
+!eram_safeties_energy              = !ENEMY_ID
+!eram_safeties_reserves            = !ENEMY_ID+$20
+!eram_safeties_missiles            = !ENEMY_ID+$40
+!eram_safeties_supers              = !ENEMY_ID+$60
+!eram_safeties_pbs                 = !ENEMY_ID+$80
+!eram_safeties_unequip_items       = !ENEMY_ID+$A0
+!eram_safeties_unequip_beams       = !ENEMY_ID+$C0
+!eram_safeties_enabled             = !ENEMY_ID+$E0
+!eram_category_preset_stack        = !ENEMY_ID+$E2
+!CATEGORY_PRESET_STACK_SIZE        = #((!ENEMY_ID+$800)-(!eram_category_preset_stack))
+
+; We can also use stack area for temporary variables while applying safeties and adjustments
+!eram_apply_safeties_enable_flags  = !ENEMY_ID+$200
+!eram_apply_safeties_combo_flag    = !ENEMY_ID+$220
+
+; Mirrors the sram category adjustment variables
+!eram_apply_adjust_item_equip      = !ENEMY_ID+$300
+!eram_apply_adjust_item_unequip    = !ENEMY_ID+$302
+!eram_apply_adjust_item_remove     = !ENEMY_ID+$304
+!eram_apply_adjust_beam_equip      = !ENEMY_ID+$306
+!eram_apply_adjust_beam_unequip    = !ENEMY_ID+$308
+!eram_apply_adjust_beam_remove     = !ENEMY_ID+$30A
+!eram_apply_adjust_energy          = !ENEMY_ID+$30C
+!eram_apply_adjust_etanks          = !ENEMY_ID+$30E
+!eram_apply_adjust_reserves        = !ENEMY_ID+$310
+!eram_apply_adjust_rtanks          = !ENEMY_ID+$312
+!eram_apply_adjust_missiles        = !ENEMY_ID+$314
+!eram_apply_adjust_maxmissiles     = !ENEMY_ID+$316
+!eram_apply_adjust_supers          = !ENEMY_ID+$318
+!eram_apply_adjust_maxsupers       = !ENEMY_ID+$31A
+!eram_apply_adjust_pbs             = !ENEMY_ID+$31C
+!eram_apply_adjust_maxpbs          = !ENEMY_ID+$31E
+!CATEGORY_ADJUST_SIZE_MINUS_ONE    = #((!ENEMY_ID+$31F)-(!eram_apply_adjust_item_equip))
 
 !BG3_HDMA_CHANNELS_BACKUP = $7E33EA
 !HUD_TILEMAP = $7EC600
@@ -1203,6 +1236,7 @@
 !MAP_TILES_EXPLORED_DEBUG = $7ED452
 !WRAM_SAVED_TO_SRAM = $7ED7C0
 !EVENT_BIT_ARRAY = $7ED820
+!ITEM_COLLECTED_BIT_ARRAY = $7ED870
 !OPENED_DOOR_BIT_ARRAY = $7ED8B0
 !MAP_STATION_FLAGS = $7ED908
 !LOADING_GAME_STATE = $7ED914
@@ -1358,6 +1392,7 @@ endif
 !ACTION_CATEGORY_PRESET     = #$002C
 !ACTION_ADJUST_ITEM         = #$002E
 !ACTION_COLOR_BAR           = #$0030
+!ACTION_CATEGORY_SAFETY     = #$0032
 
 !SAFEWORD = #$5AFE
 
@@ -1751,4 +1786,29 @@ endif
 !PROFILE_Bastion      = #$001C
 !PROFILE_D9Killdozer  = #$001D
 !PROFILE_COUNT        = #$001E
+
+
+; ---------------
+; Preset Safeties
+; ---------------
+
+; Safeties are defined one byte at a time, starting with the command byte
+; Additional bytes are needed to complete the definition depending on the command
+
+!SAFETIES_CMD_NOP     = $00  ; Safety not implemented (0 bytes)
+!SAFETIES_CMD_ADJUST  = $01  ; Adjustments only (0 bytes)
+!SAFETIES_CMD_ITEM_HI = $02  ; Collect item (1 byte MSB equipment bit, 2 bytes item collected $D870 offset and bit)
+!SAFETIES_CMD_ITEM_LO = $03  ; Collect item (1 byte LSB equipment bit, 2 bytes item collected $D870 offset and bit)
+!SAFETIES_CMD_CHARGE  = $04  ; Collect charge beam (0 bytes)
+!SAFETIES_CMD_BEAM    = $05  ; Collect beam (1 byte LSB beam bit, 2 bytes item collected $D870 offset and bit)
+!SAFETIES_CMD_ETANK   = $06  ; Collect energy tank (2 bytes item collected $D870 offset and bit)
+!SAFETIES_CMD_RTANK   = $07  ; Collect reserve tank (2 bytes item collected $D870 offset and bit)
+!SAFETIES_CMD_MISSILE = $08  ; Collect missile pack (2 bytes item collected $D870 offset and bit)
+!SAFETIES_CMD_SUPER   = $09  ; Collect super pack (2 bytes item collected $D870 offset and bit)
+!SAFETIES_CMD_PB      = $0A  ; Collect power bomb pack (2 bytes item collected $D870 offset and bit)
+!SAFETIES_CMD_EVENT   = $0B  ; Set event flag (2 bytes event $D820 offset and bit)
+!SAFETIES_CMD_DOOR    = $0C  ; Set door flag (2 bytes event $D8B0 offset and bit)
+!SAFETIES_CMD_DONE    = $0D  ; End of safeties (0 bytes, can be omitted if all 16 safeties defined)
+!SAFETIES_CMD_MASK    = $7F  ; Command mask excluding flags
+!SAFETIES_COMBO_FLAG  = $80  ; Flag indicating the next safeties command also applies
 

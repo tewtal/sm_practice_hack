@@ -325,6 +325,12 @@ endif
     TDC : STA !sram_read_only_locks : STA !sram_read_only_locks+2
     STA !sram_read_only_locks+4
 
+    ; KPDR late ice defaults to 4-Tank 25/10 safeties
+    LDA #$0086 : STA !sram_safeties_kpdr20
+
+    ; KPDR early ice defaults to Spazer 5-Tank 25/10 safeties
+    LDA #$2087 : STA !sram_safeties_kpdr25
+
     LDA !SRAM_VERSION : STA !sram_initialized
     RTS
 

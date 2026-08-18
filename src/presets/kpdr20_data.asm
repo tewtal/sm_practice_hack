@@ -491,15 +491,15 @@ preset_kpdr20_brinstar_passing_through_maridia:
     dw $078D, $9132  ; DDB
     dw $079B, $A408  ; MDB
     dw $090F, $8000  ; Screen subpixel X position
-    dw $0911, $0100  ; Screen X position in pixels
     dw $0913, $CC00  ; Screen subpixel Y position
     dw $0915, $0100  ; Screen Y position in pixels
-    dw $0917, $00C0  ; Layer 2 X position
     dw $0919, $00C0  ; Layer 2 Y position
     dw $09C6, $0006  ; Missiles
     dw $09CA, $0005  ; Supers
     dw $0AF6, $01B1  ; Samus X
     dw $0AFA, $018B  ; Samus Y
+    dw $0FD8, $FFFF  ; Safeties supers adjustment
+    dw $1058, $0001  ; Safeties enabled
     dw #$FFFF
 
 preset_kpdr20_kraid_entering_kraids_lair:
@@ -512,7 +512,6 @@ preset_kpdr20_kraid_entering_kraids_lair:
     dw $0919, $0100  ; Layer 2 Y position
     dw $09D2, $0002  ; Currently selected item
     dw $0AF6, $002E  ; Samus X
-    dw $0AFA, $018B  ; Samus Y
     dw #$FFFF
 
 preset_kpdr20_kraid_warehouse_zeelas:
@@ -537,15 +536,12 @@ preset_kpdr20_kraid_kraid_kihunters:
     dw #preset_kpdr20_kraid_entering_kraids_lair ; Kraid: Entering Kraid's Lair
     dw $078D, $923A  ; DDB
     dw $079B, $A471  ; MDB
-    dw $07F5, $0005  ; Music Track
     dw $090F, $8000  ; Screen subpixel X position
     dw $0911, $0100  ; Screen X position in pixels
     dw $0913, $8000  ; Screen subpixel Y position
     dw $0917, $00C0  ; Layer 2 X position
-    dw $0919, $0100  ; Layer 2 Y position
     dw $0AF6, $0167  ; Samus X
     dw $0AF8, $B000  ; Samus subpixel X
-    dw $0AFA, $018B  ; Samus Y
     dw #$FFFF
 
 preset_kpdr20_kraid_minikraid:
@@ -573,7 +569,6 @@ preset_kpdr20_kraid_fallen_hero:
     dw $0917, $03C0  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
     dw $09C6, $0003  ; Missiles
-    dw $09CA, $0005  ; Supers
     dw $0AF6, $05B9  ; Samus X
     dw $0AF8, $5FFF  ; Samus subpixel X
     dw $0AFA, $008B  ; Samus Y
@@ -642,14 +637,10 @@ preset_kpdr20_kraid_minikraid_revisit:
     dw $079B, $A56B  ; MDB
     dw $090F, $3000  ; Screen subpixel X position
     dw $0913, $7800  ; Screen subpixel Y position
-    dw $0915, $0100  ; Screen Y position in pixels
     dw $0919, $0100  ; Layer 2 Y position
     dw $09C2, $007C  ; Health
     dw $09D2, $0002  ; Currently selected item
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
     dw $0AF6, $0058  ; Samus X
-    dw $0AFA, $018B  ; Samus Y
     dw #$FFFF
 
 preset_kpdr20_kraid_kraid_kihunters_revisit:
@@ -691,15 +682,15 @@ preset_kpdr20_kraid_business_center_preelev:
     dw $090F, $3000  ; Screen subpixel X position
     dw $0911, $0006  ; Screen X position in pixels
     dw $0913, $0000  ; Screen subpixel Y position
-    dw $0917, $0006  ; Layer 2 X position
     dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $0006  ; Layer 2 X position
     dw $0919, $0000  ; Layer 2 Y position
     dw $09C6, $0006  ; Missiles
     dw $09CA, $0004  ; Supers
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
     dw $0AF6, $0078  ; Samus X
     dw $0AFA, $008B  ; Samus Y
+    dw $0F7A, $004B  ; Safeties energy adjustment
+    dw $1058, $0003  ; Safeties enabled
     dw #$FFFF
 
 preset_kpdr20_upper_norfair_business_center_postelev:
@@ -749,6 +740,7 @@ preset_kpdr20_upper_norfair_leaving_hijump:
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $00B5  ; Samus X
     dw $0AFA, $008B  ; Samus Y
+    dw $0F7A, $0000  ; Safeties energy adjustment
     dw $D876, $0121  ; Items
     dw $D8BA, $0001  ; Doors
     dw #$FFFF
@@ -765,6 +757,7 @@ preset_kpdr20_upper_norfair_business_center_revisit:
     dw $09C6, $000B  ; Missiles
     dw $09C8, $000F  ; Max missiles
     dw $0AF6, $019C  ; Samus X
+    dw $1058, $0007  ; Safeties enabled
     dw $D876, $01A1  ; Items
     dw #$FFFF
 
@@ -866,10 +859,10 @@ preset_kpdr20_upper_norfair_bat_cave_revisit:
     dw $0919, $0014  ; Layer 2 Y position
     dw $09A2, $3105  ; Equipped Items
     dw $09A4, $3105  ; Collected Items
-    dw $09CA, $0001  ; Supers
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $002D  ; Samus X
+    dw $1058, $000F  ; Safeties enabled
     dw $D822, $0020  ; Events
     dw $D878, $0004  ; Items
     dw $D8BA, $0031  ; Doors
@@ -881,7 +874,6 @@ preset_kpdr20_upper_norfair_single_chamber:
     dw $079B, $ACB3  ; MDB
     dw $090F, $BFFF  ; Screen subpixel X position
     dw $0911, $0100  ; Screen X position in pixels
-    dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $0104  ; Screen Y position in pixels
     dw $0917, $00C0  ; Layer 2 X position
     dw $0919, $00C3  ; Layer 2 Y position
@@ -1025,6 +1017,7 @@ preset_kpdr20_red_brinstar_hellway:
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $008F  ; Samus X
+    dw $1058, $004F  ; Safeties enabled
     dw #$FFFF
 
 preset_kpdr20_red_brinstar_caterpillars_down:
@@ -1124,6 +1117,7 @@ preset_kpdr20_wrecked_ship_ocean_spark:
     dw $0917, $00C0  ; Layer 2 X position
     dw $09C2, $00EE  ; Health
     dw $0AF6, $01C6  ; Samus X
+    dw $1058, $00CF  ; Safeties enabled
     dw #$FFFF
 
 preset_kpdr20_wrecked_ship_entering_wrecked_ship:
@@ -1495,6 +1489,7 @@ preset_kpdr20_maridia_crab_shaft:
     dw $09C2, $0079  ; Health
     dw $0AF6, $05C0  ; Samus X
     dw $0AFA, $008B  ; Samus Y
+    dw $1058, $01CF  ; Safeties enabled
     dw #$FFFF
 
 preset_kpdr20_maridia_aqueduct:
@@ -1530,6 +1525,7 @@ preset_kpdr20_maridia_botwoon_hallway:
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $009D  ; Samus X
     dw $0AFA, $006B  ; Samus Y
+    dw $1058, $07CF  ; Safeties enabled
     dw #$FFFF
 
 preset_kpdr20_maridia_botwoon:
@@ -1769,7 +1765,6 @@ preset_kpdr20_upper_norfair_revisit_ice_beam_gates:
     dw $078D, $9246  ; DDB
     dw $079B, $A7DE  ; MDB
     dw $07F3, $0015  ; Music Bank
-    dw $090F, $8000  ; Screen subpixel X position
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $0238  ; Screen Y position in pixels
     dw $0919, $01AA  ; Layer 2 Y position
@@ -1905,6 +1900,7 @@ preset_kpdr20_upper_norfair_revisit_kronic_boost_lower:
     dw $0917, $0240  ; Layer 2 X position
     dw $09D2, $0003  ; Currently selected item
     dw $0AF6, $03BC  ; Samus X
+    dw $1058, $0FCF  ; Safeties enabled
     dw #$FFFF
 
 preset_kpdr20_lower_norfair_ln_main_hall:
@@ -1950,6 +1946,7 @@ preset_kpdr20_lower_norfair_fast_pillars_setup:
     dw $0919, $0180  ; Layer 2 Y position
     dw $09CE, $0005  ; Pbs
     dw $0AF6, $0025  ; Samus X
+    dw $1058, $1FCF  ; Safeties enabled
     dw #$FFFF
 
 preset_kpdr20_lower_norfair_worst_room_in_the_game:
@@ -2080,6 +2077,7 @@ preset_kpdr20_lower_norfair_leaving_ridley:
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $0057  ; Samus X
     dw $0AFA, $019B  ; Samus Y
+    dw $1058, $3FCF  ; Safeties enabled
     dw $D82A, $0101  ; Bosses
     dw #$FFFF
 
@@ -2506,6 +2504,7 @@ preset_kpdr20_tourian_gadora_room:
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $00DC  ; Samus X
     dw $0AFA, $018B  ; Samus Y
+    dw $1058, $7FCF  ; Safeties enabled
     dw $D8C4, $00AF  ; Doors
     dw #$FFFF
 

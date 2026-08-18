@@ -44,6 +44,23 @@ def load_preset_names(file_label):
                     outline = f'presets_{category_preset_label}:\n'
                     outfile.write(outline)
                     outline = f'    %cm_preset(\"{preset_name}\", #preset_names_{preset_label}, #preset_{category_preset_label})\n'
+                elif line.startswith("    %cm_safety("):
+                    safety_value = line[17:21]
+                    preset_name = line[24:].split("\"")[0]
+                    preset_label = compute_label_from_name(preset_name)
+                    if preset_label in all_preset_names:
+                        if preset_name != all_preset_names[preset_label]:
+                            raise Exception("Name conflict: " + preset_name + " and " + all_preset_names[preset_label] + " both resolve to " + preset_label)
+                    else:
+                        all_preset_names[preset_label] = preset_name
+                        names_total_size += len(preset_name) + 1
+                    category_preset_label = f'{file_label}_{group_label}_{preset_label}'
+                    if category_preset_label in category_presets:
+                        raise Exception("Category preset defined multiple times: preset_" + category_preset_label)
+                    category_presets[category_preset_label] = f'{group_name}: {preset_name}'
+                    outline = f'presets_{category_preset_label}:\n'
+                    outfile.write(outline)
+                    outline = f'    %cm_safety(#${safety_value}, \"{preset_name}\", #preset_names_{preset_label}, !sram_safeties_{file_label})\n'
                 else:
                     if outline:
                         outfile.write(outline)
