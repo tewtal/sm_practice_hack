@@ -67,7 +67,10 @@ If you experience crashes or severe glitches when using savestates, your platfor
 | - Custom Preset Slot          | Select one of 40 slots in memory to save or load custom presets. Press A to open a submenu with a list of preset slots.
 |                               | Press Y in the submenu to toggle the display between room names and Samus data.
 |                               | Press X in the submenu to provide a custom preset name.
-|                               | Use the Manage Custom Presets option at the bottom to swap or delete slots.
+|                               | Use the Manage Custom Presets option at the bottom to swap, lock, or delete slots.
+|                               | Press A to select a slot. Move to another slot and press A again to swap the two slots.
+|                               | Press X to delete the custom preset in the selected slot. A confirmation page is provided.
+|                               | Press Y to toggle the read-only lock, preventing the custom preset from being deleted or overwritten.
 | - Save Custom Preset          | Save a custom preset to the current slot in SRAM.
 |                               | A grapple sound effect will play if a preset cannot be saved (for example during room transition).
 | - Load Custom Preset          | Load the custom preset in the current slot in SRAM.
@@ -237,6 +240,7 @@ If you experience crashes or severe glitches when using savestates, your platfor
 |                               | It also resets the segment timer. Beware that since it leverages the existing frame advance feature, toggling this on changes the way frame advance works.
 | - Auto-Save Mid Door          | Creates a savestate in the middle of the next door transition.
 | - Auto-Save Every Door        | Creates a savestate in the middle of every door transition.
+| - Read-Only Lock              | Prevents a savestate from being overwritten.
 | - Energy/Ammo Variance        | Set ranges allowing resources to vary randomly when you reload a savestate.
 |&nbsp;|
 | **Slowdown Mode**             | Set if practice hack is in slowdown mode and the number of lag frames it is set for.
