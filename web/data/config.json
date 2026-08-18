@@ -1,6 +1,6 @@
 {
     "name": "Super Metroid Practice Hack",
-    "version": "2.7.9.1",
+    "version": "2.7.10",
     "variants": ["NTSC", "PAL"],
     "base": {
         "NTSC": {
