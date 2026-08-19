@@ -374,9 +374,7 @@ preset_14ice_brinstar_big_pink:
     dw $090F, $7000  ; Screen subpixel X position
     dw $0911, $0600  ; Screen X position in pixels
     dw $0913, $9400  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
     dw $0917, $0480  ; Layer 2 X position
-    dw $0919, $0000  ; Layer 2 Y position
     dw $09C6, $0000  ; Missiles
     dw $09CA, $0004  ; Supers
     dw $09CC, $0005  ; Max supers
