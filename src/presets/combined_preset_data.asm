@@ -4704,7 +4704,7 @@ preset_kpdr22_kraid_kraid_kihunters:
     dw $079B, $A471  ; MDB
     dw $0913, $8000  ; Screen subpixel Y position
     dw $0919, $0100  ; Layer 2 Y position
-    dw $09D2, $0002  ; Currently selected item
+    dw $09CA, $0002  ; Supers
     dw $0AF6, $0167  ; Samus X
     dw $0AF8, $B000  ; Samus subpixel X
     dw #$FFFF
@@ -5450,7 +5450,7 @@ preset_kpdr25_kraid_kraid_kihunters:
     dw $09A6, $1004  ; Equipped Beams
     dw $09A8, $1004  ; Collected Beams
     dw $09C6, $0007  ; Missiles
-    dw $09CA, $0004  ; Supers
+    dw $09CA, $0003  ; Supers
     dw $D874, $0404  ; Items
     dw $D8B6, $8008  ; Doors
     dw #$FFFF
@@ -6284,7 +6284,7 @@ preset_kpdr25_kraid_minikraid:
     dw $09A6, $1004  ; Equipped Beams
     dw $09A8, $1004  ; Collected Beams
     dw $09C6, $0007  ; Missiles
-    dw $09CA, $0004  ; Supers
+    dw $09CA, $0003  ; Supers
     dw $D874, $0404  ; Items
     dw $D8B6, $8008  ; Doors
     dw #$FFFF

@@ -4497,7 +4497,6 @@ preset_100map_greenpink_brin_cleanup_green_hill_zone_final:
     dw $09C2, $006B  ; Health
     dw $09C6, $0008  ; Missiles
     dw $09CA, $000B  ; Supers
-    dw $09CE, $0003  ; Pbs
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $035E  ; Samus X
@@ -4538,7 +4537,6 @@ preset_100map_blue_brinstar_cleanup_blue_brinstar_etank_room:
     dw $0919, $0000  ; Layer 2 Y position
     dw $09C2, $0069  ; Health
     dw $09C6, $0003  ; Missiles
-    dw $09CE, $0003  ; Pbs
     dw $09D2, $0000  ; Currently selected item
     dw $0AF6, $00D8  ; Samus X
     dw $CAE8, $0460  ; Map counter
@@ -4970,7 +4968,6 @@ preset_100map_tourian_baby_skip:
     dw $0911, $0100  ; Screen X position in pixels
     dw $0913, $1000  ; Screen subpixel Y position
     dw $0917, $00C0  ; Layer 2 X position
-    dw $09C2, $031F  ; Health
     dw $09CA, $000D  ; Supers
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
