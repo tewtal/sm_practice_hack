@@ -585,9 +585,9 @@ endif
 if !FEATURE_VANILLAHUD
 else
     ; Check if door skip is selected
-    LDA !sram_display_mode : CMP !IH_MODE_ROOMSTRAT_INDEX : BNE .check_sprite_flags
+    LDA !sram_display_mode : CMP.w !IH_MODE_INDEX_ROOMSTRAT : BNE .check_sprite_flags
     LDA !sram_room_strat : BEQ .check_super_hud
-    CMP !IH_STRAT_DOORSKIP_INDEX : BNE .check_sprite_flags
+    CMP.w !IH_STRAT_INDEX_DOORSKIP : BNE .check_sprite_flags
 
   .draw_earthquake
     ; Draw value relevant for block shuffler
@@ -606,7 +606,7 @@ else
     BRA .check_sprite_flags
 
   .check_super_hud
-    LDA !sram_superhud_bottom : CMP !IH_SUPERHUD_DOORSKIP_BOTTOM_INDEX
+    LDA !sram_superhud_bottom : CMP.w !IH_SUPERHUD_BOTTOM_INDEX_DOORSKIP
     BEQ .draw_earthquake
 
   .check_sprite_flags

@@ -491,14 +491,11 @@ preset_kpdr23_brinstar_spazer:
     dw $078D, $9102  ; DDB
     dw $079B, $A408  ; MDB
     dw $090F, $2000  ; Screen subpixel X position
-    dw $0911, $0100  ; Screen X position in pixels
     dw $0913, $5000  ; Screen subpixel Y position
     dw $0915, $001D  ; Screen Y position in pixels
-    dw $0917, $00C0  ; Layer 2 X position
     dw $0919, $0015  ; Layer 2 Y position
     dw $09CA, $0003  ; Supers
     dw $0AF6, $01B3  ; Samus X
-    dw $0AFA, $008B  ; Samus Y
     dw $D8B6, $8008  ; Doors
     dw #$FFFF
 
@@ -550,7 +547,6 @@ preset_kpdr23_kraid_entering_kraids_lair:
     dw $0919, $0100  ; Layer 2 Y position
     dw $09D2, $0002  ; Currently selected item
     dw $0AF6, $002E  ; Samus X
-    dw $0AFA, $018B  ; Samus Y
     dw #$FFFF
 
 preset_kpdr23_kraid_warehouse_zeelas:
@@ -572,13 +568,14 @@ preset_kpdr23_kraid_warehouse_zeelas:
     dw #$FFFF
 
 preset_kpdr23_kraid_kraid_kihunters:
-    dw #preset_kpdr23_kraid_entering_kraids_lair ; Kraid: Entering Kraid's Lair
+    dw #preset_kpdr23_kraid_warehouse_zeelas ; Kraid: Warehouse Zeelas
     dw $078D, $923A  ; DDB
     dw $079B, $A471  ; MDB
     dw $07F5, $0005  ; Music Track
     dw $090F, $8000  ; Screen subpixel X position
     dw $0911, $0100  ; Screen X position in pixels
     dw $0913, $8000  ; Screen subpixel Y position
+    dw $0915, $0100  ; Screen Y position in pixels
     dw $0917, $00C0  ; Layer 2 X position
     dw $0919, $0100  ; Layer 2 Y position
     dw $0AF6, $0167  ; Samus X
@@ -680,14 +677,10 @@ preset_kpdr23_kraid_minikraid_revisit:
     dw $079B, $A56B  ; MDB
     dw $090F, $3000  ; Screen subpixel X position
     dw $0913, $7800  ; Screen subpixel Y position
-    dw $0915, $0100  ; Screen Y position in pixels
     dw $0919, $0100  ; Layer 2 Y position
     dw $09C2, $007C  ; Health
     dw $09D2, $0002  ; Currently selected item
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
     dw $0AF6, $0058  ; Samus X
-    dw $0AFA, $018B  ; Samus Y
     dw #$FFFF
 
 preset_kpdr23_kraid_kraid_kihunters_revisit:
@@ -749,8 +742,6 @@ preset_kpdr23_kraid_business_center_preelev:
     dw $0911, $0006  ; Screen X position in pixels
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0917, $0006  ; Layer 2 X position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0919, $0000  ; Layer 2 Y position
     dw $09C6, $000A  ; Missiles
     dw $09CA, $0004  ; Supers
     dw $0A1C, $0002  ; Samus position/state
@@ -937,7 +928,6 @@ preset_kpdr23_upper_norfair_single_chamber:
     dw $079B, $ACB3  ; MDB
     dw $090F, $BFFF  ; Screen subpixel X position
     dw $0911, $0100  ; Screen X position in pixels
-    dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $0104  ; Screen Y position in pixels
     dw $0917, $00C0  ; Layer 2 X position
     dw $0919, $00C3  ; Layer 2 Y position
@@ -1828,7 +1818,6 @@ preset_kpdr23_upper_norfair_revisit_ice_beam_gates:
     dw $078D, $9246  ; DDB
     dw $079B, $A7DE  ; MDB
     dw $07F3, $0015  ; Music Bank
-    dw $090F, $8000  ; Screen subpixel X position
     dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $0238  ; Screen Y position in pixels
     dw $0919, $01AA  ; Layer 2 Y position

@@ -764,15 +764,15 @@ ramwatch_execute_right:
 
 action_HUD_ramwatch:
 {
-    LDA !sram_display_mode : CMP !IH_MODE_ROOMSTRAT_INDEX : BNE .notSuperHUD
+    LDA !sram_display_mode : CMP.w !IH_MODE_INDEX_ROOMSTRAT : BNE .notSuperHUD
     LDA !sram_room_strat : BEQ .superHUD
   .notSuperHUD
-    LDA !IH_MODE_RAMWATCH_INDEX : STA !sram_display_mode
+    LDA.w !IH_MODE_INDEX_RAMWATCH : STA !sram_display_mode
     %sfxconfirm()
     JML init_print_segment_timer
 
   .superHUD
-    LDA !IH_SUPERHUD_RAMWATCH_BOTTOM_INDEX : STA !sram_superhud_bottom
+    LDA.w !IH_SUPERHUD_BOTTOM_INDEX_RAMWATCH : STA !sram_superhud_bottom
     %sfxconfirm()
     JML init_print_segment_timer
 }

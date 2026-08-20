@@ -632,7 +632,6 @@ preset_nodropskpdr_refill_15_missiles_path_missile_refill:
     dw $0915, $061A  ; Screen Y position in pixels
     dw $0919, $0493  ; Layer 2 Y position
     dw $09C2, $0077  ; Health
-    dw $09C6, $0000  ; Missiles
     dw $09C8, $000F  ; Max missiles
     dw $09CA, $0005  ; Supers
     dw $09CC, $0005  ; Max supers
@@ -1049,7 +1048,6 @@ preset_nodropskpdr_refill_25_missiles_path_leaving_spore_spawn_supers:
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $0192  ; Samus X
     dw $0AFA, $088B  ; Samus Y
-    dw $D870, $D180  ; Items
     dw #$FFFF
 
 preset_nodropskpdr_refill_25_missiles_path_green_hill_zone:
@@ -1402,7 +1400,6 @@ preset_nodropskpdr_speed_wave_power_bombs_bat_cave_revisit:
     dw $0919, $0014  ; Layer 2 Y position
     dw $09A2, $3105  ; Equipped Items
     dw $09A4, $3105  ; Collected Items
-    dw $09C8, $0023  ; Max missiles
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $002D  ; Samus X

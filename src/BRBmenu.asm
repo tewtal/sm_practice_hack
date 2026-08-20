@@ -1,7 +1,6 @@
 
 %startfree(8E)
 
-!BRB_TOTAL_SCREENS = #$0007
 
 ; --------
 ; BRB Data
@@ -85,30 +84,7 @@ brb_menu_scroll:
     %cm_toggle("Screen Scrolling", !ram_cm_brb_scroll, #$01, #0)
 
 brb_menu_music_toggle:
-    dw !ACTION_CHOICE
-    dl #!sram_music_toggle
-    dw .routine
-    db #$28, "Music", #$FF
-    db #$28, "        OFF", #$FF
-    db #$28, "         ON", #$FF
-    db #$28, "   FAST OFF", #$FF
-    db #$28, " PRESET OFF", #$FF
-    db #$FF
-  .routine
-    ; Clear music queue
-    STZ !MUSIC_QUEUE_TIMERS : STZ !MUSIC_QUEUE_TIMERS+$2
-    STZ !MUSIC_QUEUE_TIMERS+$4 : STZ !MUSIC_QUEUE_TIMERS+$6
-    STZ !MUSIC_QUEUE_TIMERS+$8 : STZ !MUSIC_QUEUE_TIMERS+$A
-    STZ !MUSIC_QUEUE_TIMERS+$C : STZ !MUSIC_QUEUE_TIMERS+$E
-    STZ !MUSIC_QUEUE_NEXT : STZ !MUSIC_QUEUE_START
-    STZ !MUSIC_ENTRY : STZ !MUSIC_TIMER
-    CMP #$0001 : BEQ .resume_music
-    STZ $2140
-    RTL
-  .resume_music
-    LDA !MUSIC_DATA : CLC : ADC #$FF00 : PHA : STZ !MUSIC_DATA : PLA : JSL !MUSIC_ROUTINE
-    LDA !MUSIC_TRACK : PHA : STZ !MUSIC_TRACK : PLA : JSL !MUSIC_ROUTINE
-    RTL
+    %cm_music_toggle()
 
 brb_streamer_name:
     %cm_jsl("Set Streamer Name", #.routine, #!sram_streamer_name)
@@ -216,7 +192,7 @@ endif
     CMP !CTRL_A : BNE .loop
 
     LDA !ram_cm_brb_screen : INC : STA !ram_cm_brb_screen
-    CMP !BRB_TOTAL_SCREENS : BMI .loop
+    CMP.w !BRB_TOTAL_SCREENS : BMI .loop
     TDC : STA !ram_cm_brb_screen : STA !ram_cm_brb_timer
     BRA .loop
 }
@@ -251,7 +227,7 @@ cm_tilemap_brb:
 
     ; Cycle screen text
     LDA !ram_cm_brb_screen : INC : STA !ram_cm_brb_screen
-    CMP !BRB_TOTAL_SCREENS : BMI .done_cycle_text
+    CMP.w !BRB_TOTAL_SCREENS : BMI .done_cycle_text
     TDC : STA !ram_cm_brb_screen
 
   .done_cycle_text
@@ -334,13 +310,13 @@ cm_tilemap_brb:
   .draw_timer
     ; Seconds
     LDA !ram_cm_brb_secs : ASL : TAX
-    LDA.l TimerNumberGFX1,X : STA !ram_tilemap_buffer+$360
-    LDA.l TimerNumberGFX2,X : STA !ram_tilemap_buffer+$362
+    LDA.l BRBTimerNumberGFX1,X : STA !ram_tilemap_buffer+$360
+    LDA.l BRBTimerNumberGFX2,X : STA !ram_tilemap_buffer+$362
 
     ; Minutes
     LDA !ram_cm_brb_mins : ASL : TAX
-    LDA.l TimerNumberGFX1,X : STA !ram_tilemap_buffer+$35A
-    LDA.l TimerNumberGFX2,X : STA !ram_tilemap_buffer+$35C
+    LDA.l BRBTimerNumberGFX1,X : STA !ram_tilemap_buffer+$35A
+    LDA.l BRBTimerNumberGFX2,X : STA !ram_tilemap_buffer+$35C
 
     ; Draw colon seperator
     LDA #$2800|':' : STA !ram_tilemap_buffer+$35E
@@ -730,6 +706,7 @@ BRBTilemapTableLine1:
     dw #BRB_screen5_line1
     dw #BRB_screen6_line1
     dw #BRB_screen7_line1
+  .end
 
 BRBTilemapTableLine2:
     dw #BRB_screen1_line2
@@ -741,7 +718,6 @@ BRBTilemapTableLine2:
     dw #BRB_screen7_line2
 
 
-; see !BRB_TOTAL_SCREENS at top of file
 BRB_screen1_line1:
     db #$28, "   SM Speedrunning Wiki", #$FF
 BRB_screen1_line2:
@@ -784,6 +760,22 @@ BRB_screen7_line1:
 BRB_screen7_line2:
     db #$28, "        crocomi.re", #$FF
 
+BRBTimerNumberGFX1:
+    dw #$2870, #$2870, #$2870, #$2870, #$2870, #$2870, #$2870, #$2870, #$2870, #$2870
+    dw #$2871, #$2871, #$2871, #$2871, #$2871, #$2871, #$2871, #$2871, #$2871, #$2871
+    dw #$2872, #$2872, #$2872, #$2872, #$2872, #$2872, #$2872, #$2872, #$2872, #$2872
+    dw #$2873, #$2873, #$2873, #$2873, #$2873, #$2873, #$2873, #$2873, #$2873, #$2873
+    dw #$2874, #$2874, #$2874, #$2874, #$2874, #$2874, #$2874, #$2874, #$2874, #$2874
+    dw #$2875, #$2875, #$2875, #$2875, #$2875, #$2875, #$2875, #$2875, #$2875, #$2875
+
+BRBTimerNumberGFX2:
+    dw #$2870, #$2871, #$2872, #$2873, #$2874, #$2875, #$2876, #$2877, #$2878, #$2879
+    dw #$2870, #$2871, #$2872, #$2873, #$2874, #$2875, #$2876, #$2877, #$2878, #$2879
+    dw #$2870, #$2871, #$2872, #$2873, #$2874, #$2875, #$2876, #$2877, #$2878, #$2879
+    dw #$2870, #$2871, #$2872, #$2873, #$2874, #$2875, #$2876, #$2877, #$2878, #$2879
+    dw #$2870, #$2871, #$2872, #$2873, #$2874, #$2875, #$2876, #$2877, #$2878, #$2879
+    dw #$2870, #$2871, #$2872, #$2873, #$2874, #$2875, #$2876, #$2877, #$2878, #$2879
+
 %endfree(A1)
 
 
@@ -802,7 +794,7 @@ ZSNES_Palette:
 incbin ../resources/zsnes_palette.bin
 
 print pc, " zsnes splashscreen graphics crossbank end"
-warnpc $E48000
+warnpc !START_FREESPACE_E3
 check bankcross on
 endif
 

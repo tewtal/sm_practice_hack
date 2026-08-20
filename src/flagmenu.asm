@@ -828,41 +828,16 @@ eventflags_setmapstations:
 
 eventflags_prepare_events_menu:
 {
-    ; Zebettites
-    LDA $7ED820 : AND #$0038
-    CMP #$0020 : BEQ .fourZeb
-    CMP #$0018 : BEQ .threeZeb
-    CMP #$0010 : BEQ .twoZeb
-    CMP #$0008 : BEQ .oneZeb
-    LDA #$0000 : BRA .doneZeb
-  .fourZeb
-    LDA #$0004 : BRA .doneZeb
-  .threeZeb
-    LDA #$0003 : BRA .doneZeb
-  .twoZeb
-    LDA #$0002 : BRA .doneZeb
-  .oneZeb
-    LDA #$0001 : BRA .doneZeb
-  .doneZeb
-    STA !ram_cm_zebmask
-
     ; Metroids
     LDA $7ED822 : AND #$000F
-    BIT #$0008 : BNE .fourMet
-    BIT #$0004 : BNE .threeMet
-    BIT #$0002 : BNE .twoMet
-    BIT #$0001 : BNE .oneMet
-    LDA #$0000 : BRA .doneMet
-  .fourMet
-    LDA #$0004 : BRA .doneMet
-  .threeMet
-    LDA #$0003 : BRA .doneMet
-  .twoMet
-    LDA #$0002 : BRA .doneMet
-  .oneMet
-    LDA #$0001 : BRA .doneMet
-  .doneMet
-    STA !ram_cm_metmask
+    LDX #$FFFF
+  .metLoop
+    INX
+    LSR : BCS .metLoop
+    TXA : STA !ram_cm_metmask
+
+    ; Zebetites
+    LDA $7ED820 : AND #$0038 : LSR #3 : STA !ram_cm_zebmask
 
     %setmenubank()
     JML action_submenu
@@ -906,42 +881,20 @@ events_chozoacid:
 events_metroids:
     %cm_numfield("Metroid Rooms Cleared", !ram_cm_metmask, 0, 4, 1, 1, #.routine)
   .routine
-    CMP #$0000 : BEQ .done
-    CMP #$0001 : BEQ .one
-    CMP #$0002 : BEQ .two
-    CMP #$0003 : BEQ .three
-
-    LDA #$000F : BRA .done
-  .three
-    LDA #$0007 : BRA .done
-  .two
-    LDA #$0003 : BRA .done
-  .one
-    LDA #$0001 : BRA .done
-
+    TAX : BEQ .done
+    DEC : ASL : TAX
+    LDA.l .table,X
   .done
     STA $C1
     LDA $7ED822 : AND #$FFF0 : ORA $C1 : STA $7ED822
     RTL
+  .table
+    dw $0001, $0003, $0007, $000F
 
 events_zebettites:
     %cm_numfield("Zebs Killed", !ram_cm_zebmask, 0, 4, 1, 1, #.routine)
   .routine
-    CMP #$0000 : BEQ .done
-    CMP #$0001 : BEQ .one
-    CMP #$0002 : BEQ .two
-    CMP #$0003 : BEQ .three
-
-    LDA #$0020 : BRA .done
-  .three
-    LDA #$0018 : BRA .done
-  .two
-    LDA #$0010 : BRA .done
-  .one
-    LDA #$0008
-
-  .done
-    STA $C1
+    ASL #3 : STA $C1
     LDA $7ED820 : AND #$FFC7 : ORA $C1 : STA $7ED820
     RTL
 

@@ -87,12 +87,16 @@ gamemode_door_transtion_load_sprites:
     BMI .auto_save
     TDC : STA !ram_auto_save_state
   .auto_save
+    LDA !sram_read_only_locks+5 : AND #$00FF : BNE .failSFX
     PHP : PHB
     PHK : PLB
     JSL save_state
     PLB : PLP
   .done
     JML $82E4A9 ; return to hijacked code
+  .failSFX
+    %sfxfail()
+    BRA .done
   .check
 if !FEATURE_PAL
     JML $82E4A9 ; return to hijacked code
@@ -250,6 +254,7 @@ if !FEATURE_TINYSTATES
     CMP #$001C : BPL .done
   .save
 endif
+    LDA !sram_read_only_locks+5 : AND #$00FF : BNE .failSFX
     PHP
     PHB
     JSL save_state
@@ -260,6 +265,10 @@ endif
     PLA : PEA !CTRL_SHORTCUT_SKIP_REMAINING_PEA_VALUE
 
   .done
+    RTL
+
+  .failSFX
+    %sfxfail()
     RTL
 }
 
@@ -328,6 +337,9 @@ gamemode_save_custom_preset:
     CMP #$0013 : BPL .not_safe
 
   .safe
+    LDA !sram_custom_preset_slot : AND #$003F
+    JSL $808192 ; change bit index to byte index
+    LDA !sram_read_only_locks,X : BIT $05E7 : BNE .not_safe
     JSL custom_preset_save
     %sfxconfirm()
     RTL
@@ -455,8 +467,8 @@ if !FEATURE_VANILLAHUD
 else
 gamemode_reveal_damage:
 {
-    LDA !sram_display_mode : CMP !IH_MODE_ROOMSTRAT_INDEX : BEQ .checkRoomStrat
-    CMP !IH_MODE_COUNTDAMAGE_INDEX : BNE .reveal
+    LDA !sram_display_mode : CMP.w !IH_MODE_INDEX_ROOMSTRAT : BEQ .checkRoomStrat
+    CMP.w !IH_MODE_INDEX_COUNTDAMAGE : BNE .reveal
     ; revert to prior mode
     LDA !ram_display_backup : STA !sram_display_mode
     %sfxreset()
@@ -466,14 +478,14 @@ gamemode_reveal_damage:
     LDA !sram_display_mode
   .reveal
     STA !ram_display_backup
-    LDA !IH_MODE_COUNTDAMAGE_INDEX : STA !sram_display_mode
+    LDA.w !IH_MODE_INDEX_COUNTDAMAGE : STA !sram_display_mode
     %sfxconfirm()
     BRA gamemode_reveal_hp_updateHUD
 
   .checkRoomStrat
     LDA !sram_room_strat : BNE .revealRoomStrat
     ; handle Super HUD case
-    LDA !sram_superhud_bottom : CMP !IH_SUPERHUD_COUNTDAMAGE_BOTTOM_INDEX : BNE .revealSuperHUD
+    LDA !sram_superhud_bottom : CMP.w !IH_SUPERHUD_BOTTOM_INDEX_COUNTDAMAGE : BNE .revealSuperHUD
     ; revert to prior Super HUD mode
     LDA !ram_display_backup : STA !sram_superhud_bottom
     %sfxreset()
@@ -481,15 +493,15 @@ gamemode_reveal_damage:
 
   .revealSuperHUD
     STA !ram_display_backup
-    LDA !IH_SUPERHUD_COUNTDAMAGE_BOTTOM_INDEX : STA !sram_superhud_bottom
+    LDA.w !IH_SUPERHUD_BOTTOM_INDEX_COUNTDAMAGE : STA !sram_superhud_bottom
     %sfxconfirm()
     BRA gamemode_reveal_hp_updateHUD
 }
 
 gamemode_reveal_hp:
 {
-    LDA !sram_display_mode : CMP !IH_MODE_ROOMSTRAT_INDEX : BEQ .checkRoomStrat
-    CMP !IH_MODE_COUNTHP_INDEX : BNE .reveal
+    LDA !sram_display_mode : CMP.w !IH_MODE_INDEX_ROOMSTRAT : BEQ .checkRoomStrat
+    CMP.w !IH_MODE_INDEX_COUNTHP : BNE .reveal
     ; revert to prior mode
     LDA !ram_display_backup : STA !sram_display_mode
     %sfxreset()
@@ -504,14 +516,14 @@ gamemode_reveal_hp:
     LDA !sram_display_mode
   .reveal
     STA !ram_display_backup
-    LDA !IH_MODE_COUNTHP_INDEX : STA !sram_display_mode
+    LDA.w !IH_MODE_INDEX_COUNTHP : STA !sram_display_mode
     %sfxconfirm()
     BRA .updateHUD
 
   .checkRoomStrat
     LDA !sram_room_strat : BNE .revealRoomStrat
     ; handle Super HUD case
-    LDA !sram_superhud_bottom : CMP !IH_SUPERHUD_COUNTHP_BOTTOM_INDEX : BNE .revealSuperHUD
+    LDA !sram_superhud_bottom : CMP.w !IH_SUPERHUD_BOTTOM_INDEX_COUNTHP : BNE .revealSuperHUD
     ; revert to prior Super HUD mode
     LDA !ram_display_backup : STA !sram_superhud_bottom
     %sfxreset()
@@ -519,7 +531,7 @@ gamemode_reveal_hp:
 
   .revealSuperHUD
     STA !ram_display_backup
-    LDA !IH_SUPERHUD_COUNTHP_BOTTOM_INDEX : STA !sram_superhud_bottom
+    LDA.w !IH_SUPERHUD_BOTTOM_INDEX_COUNTHP : STA !sram_superhud_bottom
     ; set ram_HUD_check to some value that cannot match the damage counter
     ; conveniently the current value of A will work
     STA !ram_HUD_check
@@ -586,7 +598,7 @@ else
 gamemode_increment_display_mode:
 {
     LDA !sram_display_mode : INC
-    CMP !IH_MODE_COUNT : BNE .set
+    CMP.w !IH_MODE_COUNT : BNE .set
     TDC
   .set
     STA !sram_display_mode
@@ -597,7 +609,7 @@ gamemode_decrement_display_mode:
 {
     LDA !sram_display_mode : DEC
     CMP #$FFFF : BNE .set
-    LDA !IH_MODE_COUNT-1
+    LDA.w !IH_MODE_COUNT-1
   .set
     STA !sram_display_mode
     JML ih_update_status
@@ -606,12 +618,12 @@ gamemode_decrement_display_mode:
 gamemode_increment_room_strat:
 {
     LDA !sram_room_strat : INC
-    CMP !IH_ROOM_STRAT_COUNT : BNE .set
+    CMP.w !IH_STRAT_COUNT : BNE .set
     TDC
   .set
     STA !sram_room_strat
     ; enable ROOM STRAT mode
-    LDA !IH_MODE_ROOMSTRAT_INDEX : STA !sram_display_mode
+    LDA.w !IH_MODE_INDEX_ROOMSTRAT : STA !sram_display_mode
     JML ih_update_status
 }
 
@@ -619,11 +631,11 @@ gamemode_decrement_room_strat:
 {
     LDA !sram_room_strat : DEC
     CMP #$FFFF : BNE .set
-    LDA !IH_ROOM_STRAT_COUNT-1
+    LDA.w !IH_STRAT_COUNT-1
   .set
     STA !sram_room_strat
     ; enable ROOM STRAT mode
-    LDA !IH_MODE_ROOMSTRAT_INDEX : STA !sram_display_mode
+    LDA.w !IH_MODE_INDEX_ROOMSTRAT : STA !sram_display_mode
     JML ih_update_status
 }
 
@@ -635,7 +647,7 @@ gamemode_increment_super_hud:
   .set
     STA !sram_superhud_bottom
     ; enable Super HUD
-    LDA !IH_MODE_ROOMSTRAT_INDEX : STA !sram_display_mode
+    LDA.w !IH_MODE_INDEX_ROOMSTRAT : STA !sram_display_mode
     TDC : STA !sram_room_strat
     JML ih_update_status
 }
@@ -648,7 +660,7 @@ gamemode_decrement_super_hud:
   .set
     STA !sram_superhud_bottom
     ; enable Super HUD
-    LDA !IH_MODE_ROOMSTRAT_INDEX : STA !sram_display_mode
+    LDA.w !IH_MODE_INDEX_ROOMSTRAT : STA !sram_display_mode
     TDC : STA !sram_room_strat
     JML ih_update_status
 }

@@ -953,7 +953,6 @@ preset_pkrd_kraid_kraid_kihunters:
     dw $090F, $8000  ; Screen subpixel X position
     dw $0911, $0100  ; Screen X position in pixels
     dw $0913, $0C00  ; Screen subpixel Y position
-    dw $0917, $00C0  ; Layer 2 X position
     dw $0919, $0100  ; Layer 2 Y position
     dw $09CA, $0007  ; Supers
     dw $09D2, $0000  ; Currently selected item
@@ -1831,8 +1830,6 @@ preset_pkrd_maridia_aqueduct:
     dw $0917, $0006  ; Layer 2 X position
     dw $0919, $0240  ; Layer 2 Y position
     dw $09D2, $0002  ; Currently selected item
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
     dw $0AF6, $0078  ; Samus X
     dw $0AFA, $03AB  ; Samus Y
     dw #$FFFF
@@ -1862,7 +1859,6 @@ preset_pkrd_maridia_botwoon:
     dw #preset_pkrd_maridia_botwoon_hallway ; Maridia: Botwoon Hallway
     dw $078D, $A72C  ; DDB
     dw $079B, $D617  ; MDB
-    dw $090F, $0000  ; Screen subpixel X position
     dw $0911, $0300  ; Screen X position in pixels
     dw $0913, $F800  ; Screen subpixel Y position
     dw $0915, $0001  ; Screen Y position in pixels
@@ -1946,7 +1942,6 @@ preset_pkrd_maridia_spikesuit_reverse_halfie:
     dw $0919, $0002  ; Layer 2 Y position
     dw $09C2, $00D8  ; Health
     dw $09C6, $000F  ; Missiles
-    dw $09CA, $0003  ; Supers
     dw $0A68, $0001  ; Flash suit
     dw $0AF6, $003F  ; Samus X
     dw $0AFA, $008B  ; Samus Y
@@ -2066,7 +2061,6 @@ preset_pkrd_backtracking_parlor_return:
     dw $07F3, $000C  ; Music Bank
     dw $07F5, $0005  ; Music Track
     dw $0911, $05E3  ; Screen X position in pixels
-    dw $0913, $0000  ; Screen subpixel Y position
     dw $0915, $0400  ; Screen Y position in pixels
     dw $0917, $02F1  ; Layer 2 X position
     dw $09C6, $0010  ; Missiles

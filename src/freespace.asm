@@ -71,7 +71,7 @@ endif
 !START_FREESPACE_E0 = $E08000 ; $8000
 !START_FREESPACE_E1 = $E18000 ; $8000
 !START_FREESPACE_E2 = $E28000 ; $8000
-!START_FREESPACE_E3 = $E38000 ; $8000
+!START_FREESPACE_E3 = $E3EA40 ; $15C0 ZSNES graphics
 !START_FREESPACE_E4 = $E48000 ; $8000
 !START_FREESPACE_E5 = $E58000 ; $8000
 !START_FREESPACE_E6 = $E68000 ; $8000
@@ -250,11 +250,11 @@ endif
 !END_FREESPACE_DF = $DF0000+$10000
 !END_FREESPACE_E0 = $E00000+$E7E0 ; preserve_wram.asm
 !END_FREESPACE_E1 = $E10000+$10000
-!END_FREESPACE_E2 = $E20000+$10000
+!END_FREESPACE_E2 = $E28000 ; ZSNES graphics
 !END_FREESPACE_E3 = $E30000+$10000
 !END_FREESPACE_E4 = $E40000+$10000
-!END_FREESPACE_E5 = $E50000+$10000
-!END_FREESPACE_E6 = $E68000 ; tilegraphics.asm
+!END_FREESPACE_E5 = $E58000 ; roomnames.asm
+!END_FREESPACE_E6 = $E68800 ; tilegraphics.asm
 !END_FREESPACE_E7 = $E78000 ; tilegraphics.asm
 !END_FREESPACE_E8 = $E88000 ; tilegraphics.asm + presets.asm
 !END_FREESPACE_E9 = $E98000 ; presets.asm
@@ -263,7 +263,7 @@ endif
 !END_FREESPACE_EC = $EC8000 ; presets.asm
 !END_FREESPACE_ED = $ED8000 ; presets.asm
 !END_FREESPACE_EE = $EE8000 ; presets.asm
-!END_FREESPACE_EF = $EF0000+$10000
+!END_FREESPACE_EF = $EF8000 ; presets.asm
 !END_FREESPACE_F0 = $F00000+$10000
 !END_FREESPACE_F1 = $F10000+$10000
 !END_FREESPACE_F2 = $F20000+$10000
@@ -308,12 +308,107 @@ macro printfreespacebank(bank)
 org !FREESPACE_<bank>
 !FREESPACE_COUNTER_<bank> ?= 0
 if !FREESPACE_COUNTER_<bank>
-print "Bank $<bank> ended at $", pc, " with $", hex(!END_FREESPACE_<bank>-!FREESPACE_<bank>), " bytes remaining"
+print "Bank $<bank> ended at $", pc, " with $", hex(!FREESPACE_<bank>-!START_FREESPACE_<bank>), "/$", hex(!END_FREESPACE_<bank>-!START_FREESPACE_<bank>), " bytes used, $", hex(!END_FREESPACE_<bank>-!FREESPACE_<bank>), " bytes remaining"
 endif
 endmacro
 
+macro tickfreespace(bank)
+; make %printfreespace() print each bank with valid freespace
+; without altering the other macros
+%startfree(<bank>)
+%endfree(<bank>)
+endmacro
+
 macro printfreespace()
-; Hide this long list in a single macro
+; Hide these long lists in a single macro
+%tickfreespace(80)
+%tickfreespace(81)
+%tickfreespace(82)
+%tickfreespace(83)
+%tickfreespace(84)
+%tickfreespace(85)
+%tickfreespace(86)
+%tickfreespace(87)
+%tickfreespace(88)
+%tickfreespace(89)
+%tickfreespace(8A)
+%tickfreespace(8B)
+%tickfreespace(8C)
+%tickfreespace(8D)
+%tickfreespace(8E)
+%tickfreespace(8F)
+%tickfreespace(90)
+%tickfreespace(91)
+%tickfreespace(92)
+%tickfreespace(93)
+%tickfreespace(94)
+%tickfreespace(99)
+%tickfreespace(9A)
+%tickfreespace(9B)
+%tickfreespace(9C)
+%tickfreespace(9D)
+%tickfreespace(9E)
+%tickfreespace(9F)
+%tickfreespace(A0)
+%tickfreespace(A1)
+%tickfreespace(A2)
+%tickfreespace(A3)
+%tickfreespace(A4)
+%tickfreespace(A5)
+%tickfreespace(A6)
+%tickfreespace(A7)
+%tickfreespace(A8)
+%tickfreespace(A9)
+%tickfreespace(AA)
+%tickfreespace(AB)
+%tickfreespace(AC)
+%tickfreespace(AD)
+%tickfreespace(AE)
+%tickfreespace(AF)
+%tickfreespace(B0)
+%tickfreespace(B2)
+%tickfreespace(B3)
+%tickfreespace(B4)
+%tickfreespace(B5)
+%tickfreespace(B6)
+%tickfreespace(B7)
+%tickfreespace(B8)
+%tickfreespace(CE)
+%tickfreespace(DE)
+%tickfreespace(DF)
+%tickfreespace(E0)
+%tickfreespace(E1)
+;%tickfreespace(E2) ZSNES graphics
+%tickfreespace(E3)
+%tickfreespace(E4)
+;%tickfreespace(E5) roomnames.asm
+%tickfreespace(E6)
+;%tickfreespace(E7) tilegraphics.asm
+;%tickfreespace(E8) tilegraphics.asm + presets.asm
+;%tickfreespace(E9) presets.asm
+;%tickfreespace(EA) presets.asm
+;%tickfreespace(EB) presets.asm
+;%tickfreespace(EC) presets.asm
+;%tickfreespace(ED) presets.asm
+;%tickfreespace(EE) presets.asm
+;%tickfreespace(EF) presets.asm
+%tickfreespace(F0)
+%tickfreespace(F1)
+%tickfreespace(F2)
+%tickfreespace(F3)
+%tickfreespace(F4)
+;%tickfreespace(F5) tilegraphics.asm
+;%tickfreespace(F6) tilegraphics.asm
+;%tickfreespace(F7) tilegraphics.asm
+;%tickfreespace(F8) tilegraphics.asm
+;%tickfreespace(F9) tilegraphics.asm
+;%tickfreespace(FA) tilegraphics.asm
+;%tickfreespace(FB) tilegraphics.asm
+;%tickfreespace(FC) tilegraphics.asm
+;%tickfreespace(FD) tilegraphics.asm
+;%tickfreespace(FE) tilegraphics.asm
+;%tickfreespace(FF) used by SpriteSomething
+
 %printfreespacebank(80)
 %printfreespacebank(81)
 %printfreespacebank(82)

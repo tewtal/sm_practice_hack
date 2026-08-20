@@ -568,8 +568,7 @@ presets_custom_preset_slot:
 if !FEATURE_MAPSTATES
     ; Mapstates only has slots 00-01 or 00-09
     LDY.w #CustomPresetsMenu
-else
-if !FEATURE_TINYSTATES
+elseif !FEATURE_TINYSTATES
     ; Tinystates only has slots 00-15
     LDY.w #CustomPresetsMenu
 else
@@ -581,7 +580,6 @@ else
   .page3
     LDY.w #CustomPresetsMenu3
   .done
-endif
 endif
     %setmenubank()
     JML action_submenu
@@ -595,6 +593,9 @@ presets_save_custom_preset:
     CMP #$0013 : BPL .not_safe
 
   .safe
+    LDA !sram_custom_preset_slot : AND #$003F
+    JSL $808192 ; change bit index to byte index
+    LDA !sram_read_only_locks,X : BIT $05E7 : BNE .not_safe
     JSL custom_preset_save
     LDA #$0001 : STA !ram_cm_leave
     %sfxconfirm()
@@ -1324,7 +1325,7 @@ endif
 endif
     dw #$0000
     %cm_header("PRESS A TO SWAP PRESETS")
-    %cm_footer("PRESS X TO DELETE PRESET")
+    %cm_footer("X DELETES - Y TOGGLES LOCK")
 
     %cm_managepreset(00)
     %cm_managepreset(01)
@@ -1383,7 +1384,7 @@ ManagePresetsMenu2:
     dw #managepreset_goto_page3
     dw #$0000
     %cm_header("PRESS A TO SWAP PRESETS")
-    %cm_footer("PRESS X TO DELETE PRESET")
+    %cm_footer("X DELETES - Y TOGGLES LOCK")
 
     %cm_managepreset(16)
     %cm_managepreset(17)
@@ -1425,7 +1426,7 @@ ManagePresetsMenu3:
     dw #managepreset_goto_page2
     dw #$0000
     %cm_header("PRESS A TO SWAP PRESETS")
-    %cm_footer("PRESS X TO DELETE PRESET")
+    %cm_footer("X DELETES - Y TOGGLES LOCK")
 
     %cm_managepreset(32)
     %cm_managepreset(33)
@@ -2235,96 +2236,86 @@ DisplayModeMenu2:
 
 ; Enemy HP must always be the first display mode option
 ihmode_enemyhp:
-    %cm_jsl("Enemy HP", #action_select_infohud_mode, #$0000)
+    %cm_jsl("Enemy HP", #action_select_infohud_mode, !IH_MODE_INDEX_ENEMYHP)
 
 ihmode_roomstrat:
-!IH_MODE_ROOMSTRAT_INDEX = #$0001
-    %cm_jsl("Room Strat", #action_select_infohud_mode, #$0001)
+    %cm_jsl("Room Strat", #action_select_infohud_mode, !IH_MODE_INDEX_ROOMSTRAT)
 
 ihmode_chargetimer:
-    %cm_jsl("Charge Timer", #action_select_infohud_mode, #$0002)
+    %cm_jsl("Charge Timer", #action_select_infohud_mode, !IH_MODE_INDEX_CHARGETIMER)
 
 ihmode_xfactor:
-    %cm_jsl("X-Factor Timer", #action_select_infohud_mode, #$0003)
+    %cm_jsl("X-Factor Timer", #action_select_infohud_mode, !IH_MODE_INDEX_XFACTOR)
 
 ihmode_cooldown:
-    %cm_jsl("Cooldown Timer", #action_select_infohud_mode, #$0004)
+    %cm_jsl("Cooldown Timer", #action_select_infohud_mode, !IH_MODE_INDEX_COOLDOWN)
 
 ihmode_shinetimer:
-    %cm_jsl("Shinespark Timer", #action_select_infohud_mode, #$0005)
+    %cm_jsl("Shinespark Timer", #action_select_infohud_mode, !IH_MODE_INDEX_SHINETIMER)
 
 ihmode_dashcounter:
-    %cm_jsl("Dash Counter", #action_select_infohud_mode, #$0006)
+    %cm_jsl("Dash Counter", #action_select_infohud_mode, !IH_MODE_INDEX_DASHCOUNTER)
 
 ihmode_shinetune:
-!IH_MODE_SHINETUNE_INDEX = #$0007
-    %cm_jsl("Shine Tune", #action_select_infohud_mode, #$0007)
+    %cm_jsl("Shine Tune", #action_select_infohud_mode, !IH_MODE_INDEX_SHINETUNE)
 
 ihmode_iframecounter:
-    %cm_jsl("I-Frame Counter", #action_select_infohud_mode, #$0008)
+    %cm_jsl("I-Frame Counter", #action_select_infohud_mode, !IH_MODE_INDEX_IFRAMECOUNTER)
 
 ihmode_spikesuit:
-    %cm_jsl("Spikesuit Trainer", #action_select_infohud_mode, #$0009)
+    %cm_jsl("Spikesuit Trainer", #action_select_infohud_mode, !IH_MODE_INDEX_SPIKESUIT)
 
 ihmode_lagcounter:
-    %cm_jsl("Lag Counter", #action_select_infohud_mode, #$000A)
+    %cm_jsl("Lag Counter", #action_select_infohud_mode, !IH_MODE_INDEX_LAGCOUNTER)
 
 ihmode_cpuusage:
-    %cm_jsl("CPU Usage", #action_select_infohud_mode, #$000B)
+    %cm_jsl("CPU Usage", #action_select_infohud_mode, !IH_MODE_INDEX_CPUUSAGE)
 
 ihmode_hspeed:
-    %cm_jsl("Horizontal Speed", #action_select_infohud_mode, #$000C)
+    %cm_jsl("Horizontal Speed", #action_select_infohud_mode, !IH_MODE_INDEX_HSPEED)
 
 ihmode_dashspeed:
-    %cm_jsl("Dash Speed", #action_select_infohud_mode, #$000D)
+    %cm_jsl("Dash Speed", #action_select_infohud_mode, !IH_MODE_INDEX_DASHSPEED)
 
 ihmode_vspeed:
-!IH_MODE_VSPEED_INDEX = #$000E
-    %cm_jsl("Vertical Speed", #action_select_infohud_mode, #$000E)
+    %cm_jsl("Vertical Speed", #action_select_infohud_mode, !IH_MODE_INDEX_VSPEED)
 
 ihmode_quickdrop:
-    %cm_jsl("Quickdrop Trainer", #action_select_infohud_mode, #$000F)
+    %cm_jsl("Quickdrop Trainer", #action_select_infohud_mode, !IH_MODE_INDEX_QUICKDROP)
 
 ihmode_walljump:
-!IH_MODE_WALLJUMP_INDEX = #$0010
-    %cm_jsl("Walljump Trainer", #action_select_infohud_mode, #$0010)
+    %cm_jsl("Walljump Trainer", #action_select_infohud_mode, !IH_MODE_INDEX_WALLJUMP)
 
 ihmode_doublesbj:
-    %cm_jsl("Double Springball Jump", #action_select_infohud_mode, #$0011)
+    %cm_jsl("Double Springball Jump", #action_select_infohud_mode, !IH_MODE_INDEX_DOUBLESBJ)
 
 ihmode_countdamage:
-!IH_MODE_COUNTDAMAGE_INDEX = #$0012
-    %cm_jsl("Boss Damage Counter", #action_select_infohud_mode, #$0012)
+    %cm_jsl("Boss Damage Counter", #action_select_infohud_mode, !IH_MODE_INDEX_COUNTDAMAGE)
 
 ihmode_counthp:
-!IH_MODE_COUNTHP_INDEX = #$0013
-    %cm_jsl("Boss HP Counter", #action_select_infohud_mode, #$0013)
+    %cm_jsl("Boss HP Counter", #action_select_infohud_mode, !IH_MODE_INDEX_COUNTHP)
 
 ihmode_armpump:
-!IH_MODE_ARMPUMP_INDEX = #$0014
-    %cm_jsl("Arm Pump Trainer", #action_select_infohud_mode, #$0014)
+    %cm_jsl("Arm Pump Trainer", #action_select_infohud_mode, !IH_MODE_INDEX_ARMPUMP)
 
 ihmode_pumpcounter:
-    %cm_jsl("Arm Pump Counter", #action_select_infohud_mode, #$0015)
+    %cm_jsl("Arm Pump Counter", #action_select_infohud_mode, !IH_MODE_INDEX_PUMPCOUNTER)
 
 ihmode_xpos:
-    %cm_jsl("X Position", #action_select_infohud_mode, #$0016)
+    %cm_jsl("X Position", #action_select_infohud_mode, !IH_MODE_INDEX_XPOS)
 
 ihmode_ypos:
-    %cm_jsl("Y Position", #action_select_infohud_mode, #$0017)
+    %cm_jsl("Y Position", #action_select_infohud_mode, !IH_MODE_INDEX_YPOS)
 
 ihmode_camerapos:
-    %cm_jsl("Camera Position", #action_select_infohud_mode, #$0018)
+    %cm_jsl("Camera Position", #action_select_infohud_mode, !IH_MODE_INDEX_CAMERAPOS)
 
 ihmode_shottimer:
-!IH_MODE_SHOTTIMER_INDEX = #$0019
-    %cm_jsl("Shot Timer", #action_select_infohud_mode, #$0019)
+    %cm_jsl("Shot Timer", #action_select_infohud_mode, !IH_MODE_INDEX_SHOTTIMER)
 
 ihmode_ramwatch:
-!IH_MODE_RAMWATCH_INDEX = #$001A
-    %cm_jsl("Custom RAM Watch", #action_select_infohud_mode, #$001A)
+    %cm_jsl("Custom RAM Watch", #action_select_infohud_mode, !IH_MODE_INDEX_RAMWATCH)
 
-!IH_MODE_COUNT = #$001B
 action_select_infohud_mode:
 {
     TYA : STA !sram_display_mode
@@ -2372,7 +2363,19 @@ ih_display_mode:
     db #$28, "  RAM WATCH", #$FF
     db #$FF
   .routine
-    JML init_print_segment_timer
+    JSL init_print_segment_timer
+    ; check for A or Y input
+    LDA !IH_CONTROLLER_PRI_NEW : BIT #$4080 : BEQ .done
+    ; jump to appropriate submenu page
+    LDA !sram_superhud_bottom : CMP.w !IH_MODE_INDEX_COUNTDAMAGE : BMI .p1
+    LDY.w #DisplayModeMenu2
+    BRA .jump
+  .p1
+    LDY.w #DisplayModeMenu
+  .jump
+    JSL action_submenu
+  .done
+    RTL
 
 ih_display_mode_reward:
     %cm_toggle("Strat Reward SFX", !sram_display_mode_reward, #$01, #0)
@@ -2419,82 +2422,79 @@ RoomStratMenu2:
 
 ; Super HUD must always be the first room strat option
 ihstrat_superhud:
-    %cm_jsl("Super HUD", #action_select_room_strat, #$0000)
+    %cm_jsl("Super HUD", #action_select_room_strat, !IH_STRAT_INDEX_SUPERHUD)
 
 ihstrat_ceresridley:
-    %cm_jsl("Ceres Ridley Hits", #action_select_room_strat, #$0001)
+    %cm_jsl("Ceres Ridley Hits", #action_select_room_strat, !IH_STRAT_INDEX_CERESRIDLEY)
 
 ihstrat_doorskip:
-!IH_STRAT_DOORSKIP_INDEX = #$0002
-    %cm_jsl("Parlor/Botwoon Door Skip", #action_select_room_strat, #$0002)
+    %cm_jsl("Parlor/Botwoon Door Skip", #action_select_room_strat, !IH_STRAT_INDEX_DOORSKIP)
 
 ihstrat_tacotank:
-    %cm_jsl("Taco Tank", #action_select_room_strat, #$0003)
+    %cm_jsl("Taco Tank", #action_select_room_strat, !IH_STRAT_INDEX_TACOTANK)
 
 ihstrat_pitdoor:
-    %cm_jsl("Pit Room Right Door", #action_select_room_strat, #$0004)
+    %cm_jsl("Pit Room Right Door", #action_select_room_strat, !IH_STRAT_INDEX_PITDOOR)
 
 ihstrat_moondance:
-    %cm_jsl("Moondance", #action_select_room_strat, #$0005)
+    %cm_jsl("Moondance", #action_select_room_strat, !IH_STRAT_INDEX_MOONDANCE)
 
 ihstrat_kraidradar:
-    %cm_jsl("Kraid Nail Radar", #action_select_room_strat, #$0006)
+    %cm_jsl("Kraid Nail Radar", #action_select_room_strat, !IH_STRAT_INDEX_KRAIDRADAR)
 
 ihstrat_bootlessup:
-    %cm_jsl("Bootless Up In Two", #action_select_room_strat, #$0007)
+    %cm_jsl("Bootless Up In Two", #action_select_room_strat, !IH_STRAT_INDEX_BOOTLESSUP)
 
 ihstrat_gateglitch:
-    %cm_jsl("Gate Glitch", #action_select_room_strat, #$0008)
+    %cm_jsl("Gate Glitch", #action_select_room_strat, !IH_STRAT_INDEX_GATEGLITCH)
 
 ihstrat_moatcwj:
-    %cm_jsl("Moat CWJ", #action_select_room_strat, #$0009)
+    %cm_jsl("Moat CWJ", #action_select_room_strat, !IH_STRAT_INDEX_MOATCWJ)
 
 ihstrat_robotflush:
-    %cm_jsl("Robot Flush", #action_select_room_strat, #$000A)
+    %cm_jsl("Robot Flush", #action_select_room_strat, !IH_STRAT_INDEX_ROBOTFLUSH)
 
 ihstrat_shinetopb:
-    %cm_jsl("Shine to PB", #action_select_room_strat, #$000B)
+    %cm_jsl("Shine to PB", #action_select_room_strat, !IH_STRAT_INDEX_SHINETOPB)
 
 ihstrat_elevatorcf:
-    %cm_jsl("Elevator Crystal Flash", #action_select_room_strat, #$000C)
+    %cm_jsl("Elevator Crystal Flash", #action_select_room_strat, !IH_STRAT_INDEX_ELEVATORCF)
 
 ihstrat_botwooncf:
-    %cm_jsl("Botwoon Crystal Flash", #action_select_room_strat, #$000D)
+    %cm_jsl("Botwoon Crystal Flash", #action_select_room_strat, !IH_STRAT_INDEX_BOTWOONCF)
 
 ihstrat_draygonai:
-    %cm_jsl("Draygon AI", #action_select_room_strat, #$000E)
+    %cm_jsl("Draygon AI", #action_select_room_strat, !IH_STRAT_INDEX_DRAYGONAI)
 
 ihstrat_snailclip:
-    %cm_jsl("Aqueduct Snail Clip", #action_select_room_strat, #$000F)
+    %cm_jsl("Aqueduct Snail Clip", #action_select_room_strat, !IH_STRAT_INDEX_SNAILCLIP)
 
 ihstrat_wasteland:
-    %cm_jsl("Wasteland Entry", #action_select_room_strat, #$0010)
+    %cm_jsl("Wasteland Entry", #action_select_room_strat, !IH_STRAT_INDEX_WASTELAND)
 
 ihstrat_ridleyai:
-    %cm_jsl("Ridley AI", #action_select_room_strat, #$0011)
+    %cm_jsl("Ridley AI", #action_select_room_strat, !IH_STRAT_INDEX_RIDLEYAI)
 
 ihstrat_kihuntermanip:
-    %cm_jsl("Kihunter Manipulation", #action_select_room_strat, #$0012)
+    %cm_jsl("Kihunter Manipulation", #action_select_room_strat, !IH_STRAT_INDEX_KIHUNTERMANIP)
 
 ihstrat_downbackzeb:
-    %cm_jsl("Downback Zeb Skip", #action_select_room_strat, #$0013)
+    %cm_jsl("Downback Zeb Skip", #action_select_room_strat, !IH_STRAT_INDEX_DOWNBACKZEB)
 
 ihstrat_zebskip:
-    %cm_jsl("Zeb Skip Indicator", #action_select_room_strat, #$0014)
+    %cm_jsl("Zeb Skip Indicator", #action_select_room_strat, !IH_STRAT_INDEX_ZEBSKIP)
 
 ihstrat_mbhp:
-!IH_STRAT_MBHP_INDEX = #$0015
-    %cm_jsl("Mother Brain HP", #action_select_room_strat, #$0015)
+    %cm_jsl("Mother Brain HP", #action_select_room_strat, !IH_STRAT_INDEX_MBHP)
 
 ihstrat_twocries:
-    %cm_jsl("Two Cries Standup", #action_select_room_strat, #$0016)
+    %cm_jsl("Two Cries Standup", #action_select_room_strat, !IH_STRAT_INDEX_TWOCRIES)
 
-!IH_ROOM_STRAT_COUNT = #$0017
 action_select_room_strat:
 {
     TYA : STA !sram_room_strat
     ; enable ROOM STRAT mode
-    LDA !IH_MODE_ROOMSTRAT_INDEX : STA !sram_display_mode
+    LDA.w !IH_MODE_INDEX_ROOMSTRAT : STA !sram_display_mode
     JSL init_print_segment_timer
     JML cm_previous_menu
 }
@@ -2535,8 +2535,20 @@ ih_room_strat:
     db #$28, "  TWO CRIES", #$FF
     db #$FF
   .routine
-    LDA !IH_MODE_ROOMSTRAT_INDEX : STA !sram_display_mode
-    JML init_print_segment_timer
+    LDA.w !IH_MODE_INDEX_ROOMSTRAT : STA !sram_display_mode
+    JSL init_print_segment_timer
+    ; check for A or Y input
+    LDA !IH_CONTROLLER_PRI_NEW : BIT #$4080 : BEQ .done
+    ; jump to appropriate submenu page
+    LDA !sram_superhud_bottom : CMP.w !IH_STRAT_INDEX_DOWNBACKZEB : BMI .p1
+    LDY.w #RoomStratMenu2
+    BRA .jump
+  .p1
+    LDY.w #RoomStratMenu
+  .jump
+    JSL action_submenu
+  .done
+    RTL
 
 ih_goto_superhud:
     %cm_submenu("Configure Super HUD", #SuperHUDMenu)
@@ -2558,7 +2570,7 @@ SuperHUDMenu:
 ih_superhud_bottom_selector:
     dw !ACTION_CHOICE
     dl #!sram_superhud_bottom
-    dw #$0000
+    dw #.routine
     db #$28, "Current Bottom", #$FF
     db #$28, "   ENEMY HP", #$FF
     db #$28, "     CHARGE", #$FF
@@ -2609,6 +2621,23 @@ ih_superhud_bottom_selector:
     db #$28, "      MB HP", #$FF
     db #$28, "  TWO CRIES", #$FF
     db #$FF
+  .routine
+    ; check for A or Y input
+    LDA !IH_CONTROLLER_PRI_NEW : BIT #$4080 : BEQ .done
+    ; jump to appropriate submenu page
+    LDA !sram_superhud_bottom : CMP.w !IH_SUPERHUD_BOTTOM_INDEX_WALLJUMP : BMI .p1
+    LDA !sram_superhud_bottom : CMP.w !IH_SUPERHUD_BOTTOM_INDEX_WASTELAND : BMI .p2
+    LDY.w #SuperHUDBottomMenu3
+    BRA .jump
+  .p2
+    LDY.w #SuperHUDBottomMenu2
+    BRA .jump
+  .p1
+    LDY.w #SuperHUDBottomMenu
+  .jump
+    JSL action_submenu
+  .done
+    RTL
 
 ih_superhud_bottom_submenu:
     %cm_submenu("Bottom HUD List", #SuperHUDBottomMenu)
@@ -2684,159 +2713,149 @@ SuperHUDBottomMenu3:
 
 ; Enemy HP must always be the first Super HUD bottom option
 ih_superhud_enemyhp:
-    %cm_jsl("Enemy HP", #action_select_superhud_bottom, #$0000)
+    %cm_jsl("Enemy HP", #action_select_superhud_bottom, !IH_SUPERHUD_BOTTOM_INDEX_ENEMYHP)
 
 ih_superhud_chargetimer:
-    %cm_jsl("Charge Timer", #action_select_superhud_bottom, #$0001)
+    %cm_jsl("Charge Timer", #action_select_superhud_bottom, !IH_SUPERHUD_BOTTOM_INDEX_CHARGETIMER)
 
 ih_superhud_xfactor:
-    %cm_jsl("X-Factor Timer", #action_select_superhud_bottom, #$0002)
+    %cm_jsl("X-Factor Timer", #action_select_superhud_bottom, !IH_SUPERHUD_BOTTOM_INDEX_XFACTOR)
 
 ih_superhud_cooldown:
-    %cm_jsl("Cooldown Timer", #action_select_superhud_bottom, #$0003)
+    %cm_jsl("Cooldown Timer", #action_select_superhud_bottom, !IH_SUPERHUD_BOTTOM_INDEX_COOLDOWN)
 
 ih_superhud_shinetimer:
-    %cm_jsl("Shinespark Timer", #action_select_superhud_bottom, #$0004)
+    %cm_jsl("Shinespark Timer", #action_select_superhud_bottom, !IH_SUPERHUD_BOTTOM_INDEX_SHINETIMER)
 
 ih_superhud_dashcounter:
-    %cm_jsl("Dash Counter", #action_select_superhud_bottom, #$0005)
+    %cm_jsl("Dash Counter", #action_select_superhud_bottom, !IH_SUPERHUD_BOTTOM_INDEX_DASHCOUNTER)
 
 ih_superhud_shinetune:
-!IH_SUPERHUD_SHINETUNE_BOTTOM_INDEX = #$0006
-    %cm_jsl("Shine Tune", #action_select_superhud_bottom, #$0006)
+    %cm_jsl("Shine Tune", #action_select_superhud_bottom, !IH_SUPERHUD_BOTTOM_INDEX_SHINETUNE)
 
 ih_superhud_iframecounter:
-    %cm_jsl("I-Frame Counter", #action_select_superhud_bottom, #$0007)
+    %cm_jsl("I-Frame Counter", #action_select_superhud_bottom, !IH_SUPERHUD_BOTTOM_INDEX_IFRAMECOUNTER)
 
 ih_superhud_spikesuit:
-    %cm_jsl("Spikesuit Trainer", #action_select_superhud_bottom, #$0008)
+    %cm_jsl("Spikesuit Trainer", #action_select_superhud_bottom, !IH_SUPERHUD_BOTTOM_INDEX_SPIKESUIT)
 
 ih_superhud_lagcounter:
-    %cm_jsl("Lag Counter", #action_select_superhud_bottom, #$0009)
+    %cm_jsl("Lag Counter", #action_select_superhud_bottom, !IH_SUPERHUD_BOTTOM_INDEX_LAGCOUNTER)
 
 ih_superhud_cpuusage:
-    %cm_jsl("CPU Usage", #action_select_superhud_bottom, #$000A)
+    %cm_jsl("CPU Usage", #action_select_superhud_bottom, !IH_SUPERHUD_BOTTOM_INDEX_CPUUSAGE)
 
 ih_superhud_hspeed:
-    %cm_jsl("Horizontal Speed", #action_select_superhud_bottom, #$000B)
+    %cm_jsl("Horizontal Speed", #action_select_superhud_bottom, !IH_SUPERHUD_BOTTOM_INDEX_HSPEED)
 
 ih_superhud_dashspeed:
-    %cm_jsl("Dash Speed", #action_select_superhud_bottom, #$000C)
+    %cm_jsl("Dash Speed", #action_select_superhud_bottom, !IH_SUPERHUD_BOTTOM_INDEX_DASHSPEED)
 
 ih_superhud_vspeed:
-    %cm_jsl("Vertical Speed", #action_select_superhud_bottom, #$000D)
+    %cm_jsl("Vertical Speed", #action_select_superhud_bottom, !IH_SUPERHUD_BOTTOM_INDEX_VSPEED)
 
 ih_superhud_quickdrop:
-    %cm_jsl("Quickdrop Trainer", #action_select_superhud_bottom, #$000E)
+    %cm_jsl("Quickdrop Trainer", #action_select_superhud_bottom, !IH_SUPERHUD_BOTTOM_INDEX_QUICKDROP)
 
 ih_superhud_walljump:
-!IH_SUPERHUD_WALLJUMP_BOTTOM_INDEX = #$000F
-    %cm_jsl("Walljump Trainer", #action_select_superhud_bottom, #$000F)
+    %cm_jsl("Walljump Trainer", #action_select_superhud_bottom, !IH_SUPERHUD_BOTTOM_INDEX_WALLJUMP)
 
 ih_superhud_doublesbj:
-    %cm_jsl("Double Springball Jump", #action_select_superhud_bottom, #$0010)
+    %cm_jsl("Double Springball Jump", #action_select_superhud_bottom, !IH_SUPERHUD_BOTTOM_INDEX_DOUBLESBJ)
 
 ih_superhud_countdamage:
-!IH_SUPERHUD_COUNTDAMAGE_BOTTOM_INDEX = #$0011
-    %cm_jsl("Boss Damage Counter", #action_select_superhud_bottom, #$0011)
+    %cm_jsl("Boss Damage Counter", #action_select_superhud_bottom, !IH_SUPERHUD_BOTTOM_INDEX_COUNTDAMAGE)
 
 ih_superhud_counthp:
-!IH_SUPERHUD_COUNTHP_BOTTOM_INDEX = #$0012
-    %cm_jsl("Boss HP Counter", #action_select_superhud_bottom, #$0012)
+    %cm_jsl("Boss HP Counter", #action_select_superhud_bottom, !IH_SUPERHUD_BOTTOM_INDEX_COUNTHP)
 
 ih_superhud_armpump:
-!IH_SUPERHUD_ARMPUMP_BOTTOM_INDEX = #$0013
-    %cm_jsl("Arm Pump Trainer", #action_select_superhud_bottom, #$0013)
+    %cm_jsl("Arm Pump Trainer", #action_select_superhud_bottom, !IH_SUPERHUD_BOTTOM_INDEX_ARMPUMP)
 
 ih_superhud_pumpcounter:
-    %cm_jsl("Arm Pump Counter", #action_select_superhud_bottom, #$0014)
+    %cm_jsl("Arm Pump Counter", #action_select_superhud_bottom, !IH_SUPERHUD_BOTTOM_INDEX_PUMPCOUNTER)
 
 ih_superhud_xpos:
-    %cm_jsl("X Position", #action_select_superhud_bottom, #$0015)
+    %cm_jsl("X Position", #action_select_superhud_bottom, !IH_SUPERHUD_BOTTOM_INDEX_XPOS)
 
 ih_superhud_ypos:
-    %cm_jsl("Y Position", #action_select_superhud_bottom, #$0016)
+    %cm_jsl("Y Position", #action_select_superhud_bottom, !IH_SUPERHUD_BOTTOM_INDEX_YPOS)
 
 ih_superhud_camerapos:
-    %cm_jsl("Camera Position", #action_select_superhud_bottom, #$0017)
+    %cm_jsl("Camera Position", #action_select_superhud_bottom, !IH_SUPERHUD_BOTTOM_INDEX_CAMERAPOS)
 
 ih_superhud_shottimer:
-!IH_SUPERHUD_SHOTTIMER_BOTTOM_INDEX = #$0018
-    %cm_jsl("Shot Timer", #action_select_superhud_bottom, #$0018)
+    %cm_jsl("Shot Timer", #action_select_superhud_bottom, !IH_SUPERHUD_BOTTOM_INDEX_SHOTTIMER)
 
 ih_superhud_ramwatch:
-!IH_SUPERHUD_RAMWATCH_BOTTOM_INDEX = #$0019
-    %cm_jsl("Custom RAM Watch", #action_select_superhud_bottom, #$0019)
+    %cm_jsl("Custom RAM Watch", #action_select_superhud_bottom, !IH_SUPERHUD_BOTTOM_INDEX_RAMWATCH)
 
 ih_superhud_ceresridley:
-    %cm_jsl("Ceres Ridley Hits", #action_select_superhud_bottom, #$001A)
+    %cm_jsl("Ceres Ridley Hits", #action_select_superhud_bottom, !IH_SUPERHUD_BOTTOM_INDEX_CERESRIDLEY)
 
 ih_superhud_doorskip:
-!IH_SUPERHUD_DOORSKIP_BOTTOM_INDEX = #$001B
-    %cm_jsl("Parlor-Climb Door Skip", #action_select_superhud_bottom, #$001B)
+    %cm_jsl("Parlor-Climb Door Skip", #action_select_superhud_bottom, !IH_SUPERHUD_BOTTOM_INDEX_DOORSKIP)
 
 ih_superhud_tacotank:
-    %cm_jsl("Taco Tank", #action_select_superhud_bottom, #$001C)
+    %cm_jsl("Taco Tank", #action_select_superhud_bottom, !IH_SUPERHUD_BOTTOM_INDEX_TACOTANK)
 
 ih_superhud_pitdoor:
-    %cm_jsl("Pit Room Right Door", #action_select_superhud_bottom, #$001D)
+    %cm_jsl("Pit Room Right Door", #action_select_superhud_bottom, !IH_SUPERHUD_BOTTOM_INDEX_PITDOOR)
 
 ih_superhud_moondance:
-    %cm_jsl("Moondance", #action_select_superhud_bottom, #$001E)
+    %cm_jsl("Moondance", #action_select_superhud_bottom, !IH_SUPERHUD_BOTTOM_INDEX_MOONDANCE)
 
 ih_superhud_kraidradar:
-    %cm_jsl("Kraid Nail Radar", #action_select_superhud_bottom, #$001F)
+    %cm_jsl("Kraid Nail Radar", #action_select_superhud_bottom, !IH_SUPERHUD_BOTTOM_INDEX_KRAIDRADAR)
 
 ih_superhud_bootlessup:
-    %cm_jsl("Bootless Up In Two", #action_select_superhud_bottom, #$0020)
+    %cm_jsl("Bootless Up In Two", #action_select_superhud_bottom, !IH_SUPERHUD_BOTTOM_INDEX_BOOTLESSUP)
 
 ih_superhud_gateglitch:
-    %cm_jsl("Gate Glitch", #action_select_superhud_bottom, #$0021)
+    %cm_jsl("Gate Glitch", #action_select_superhud_bottom, !IH_SUPERHUD_BOTTOM_INDEX_GATEGLITCH)
 
 ih_superhud_moatcwj:
-    %cm_jsl("Moat CWJ", #action_select_superhud_bottom, #$0022)
+    %cm_jsl("Moat CWJ", #action_select_superhud_bottom, !IH_SUPERHUD_BOTTOM_INDEX_MOATCWJ)
 
 ih_superhud_robotflush:
-    %cm_jsl("Robot Flush", #action_select_superhud_bottom, #$0023)
+    %cm_jsl("Robot Flush", #action_select_superhud_bottom, !IH_SUPERHUD_BOTTOM_INDEX_ROBOTFLUSH)
 
 ih_superhud_shinetopb:
-    %cm_jsl("Shine to PB", #action_select_superhud_bottom, #$0024)
+    %cm_jsl("Shine to PB", #action_select_superhud_bottom, !IH_SUPERHUD_BOTTOM_INDEX_SHINETOPB)
 
 ih_superhud_elevatorcf:
-    %cm_jsl("Elevator Crystal Flash", #action_select_superhud_bottom, #$0025)
+    %cm_jsl("Elevator Crystal Flash", #action_select_superhud_bottom, !IH_SUPERHUD_BOTTOM_INDEX_ELEVATORCF)
 
 ih_superhud_botwooncf:
-    %cm_jsl("Botwoon Crystal Flash", #action_select_superhud_bottom, #$0026)
+    %cm_jsl("Botwoon Crystal Flash", #action_select_superhud_bottom, !IH_SUPERHUD_BOTTOM_INDEX_BOTWOONCF)
 
 ih_superhud_draygonai:
-    %cm_jsl("Draygon AI", #action_select_superhud_bottom, #$0027)
+    %cm_jsl("Draygon AI", #action_select_superhud_bottom, !IH_SUPERHUD_BOTTOM_INDEX_DRAYGONAI)
 
 ih_superhud_snailclip:
-    %cm_jsl("Aqueduct Snail Clip", #action_select_superhud_bottom, #$0028)
+    %cm_jsl("Aqueduct Snail Clip", #action_select_superhud_bottom, !IH_SUPERHUD_BOTTOM_INDEX_SNAILCLIP)
 
 ih_superhud_wasteland:
-    %cm_jsl("Wasteland Entry", #action_select_superhud_bottom, #$0029)
+    %cm_jsl("Wasteland Entry", #action_select_superhud_bottom, !IH_SUPERHUD_BOTTOM_INDEX_WASTELAND)
 
 ih_superhud_ridleyai:
-    %cm_jsl("Ridley AI", #action_select_superhud_bottom, #$002A)
+    %cm_jsl("Ridley AI", #action_select_superhud_bottom, !IH_SUPERHUD_BOTTOM_INDEX_RIDLEYAI)
 
 ih_superhud_kihuntermanip:
-    %cm_jsl("Kihunter Manipulation", #action_select_superhud_bottom, #$002B)
+    %cm_jsl("Kihunter Manipulation", #action_select_superhud_bottom, !IH_SUPERHUD_BOTTOM_INDEX_KIHUNTERMANIP)
 
 ih_superhud_downbackzeb:
-    %cm_jsl("Downback Zeb Skip", #action_select_superhud_bottom, #$002C)
+    %cm_jsl("Downback Zeb Skip", #action_select_superhud_bottom, !IH_SUPERHUD_BOTTOM_INDEX_DOWNBACKZEB)
 
 ih_superhud_zebskip:
-    %cm_jsl("Zeb Skip Indicator", #action_select_superhud_bottom, #$002D)
+    %cm_jsl("Zeb Skip Indicator", #action_select_superhud_bottom, !IH_SUPERHUD_BOTTOM_INDEX_ZEBSKIP)
 
 ih_superhud_mbhp:
-!IH_SUPERHUD_MBHP_BOTTOM_INDEX = #$002E
-    %cm_jsl("Mother Brain HP", #action_select_superhud_bottom, #$002E)
+    %cm_jsl("Mother Brain HP", #action_select_superhud_bottom, !IH_SUPERHUD_BOTTOM_INDEX_MBHP)
 
 ih_superhud_twocries:
-    %cm_jsl("Two Cries Standup", #action_select_superhud_bottom, #$002F)
+    %cm_jsl("Two Cries Standup", #action_select_superhud_bottom, !IH_SUPERHUD_BOTTOM_INDEX_TWOCRIES)
 
-!IH_SUPERHUD_BOTTOM_COUNT = #$0030
 action_select_superhud_bottom:
 {
     TYA : STA !sram_superhud_bottom
@@ -2855,7 +2874,7 @@ ih_superhud_goto_page3:
 ih_superhud_middle_selector:
     dw !ACTION_CHOICE
     dl #!sram_superhud_middle
-    dw #$0000
+    dw #.routine
     db #$28, "Current Middle", #$FF
     db #$28, "        OFF", #$FF
     db #$28, "     CHARGE", #$FF
@@ -2874,6 +2893,14 @@ ih_superhud_middle_selector:
     db #$28, "STATUS ICON", #$FF
     db #$28, "  MAP TILES", #$FF
     db #$FF
+  .routine
+    ; check for A or Y input
+    LDA !IH_CONTROLLER_PRI_NEW : BIT #$4080 : BEQ .done
+    ; jump to submenu
+    LDY.w #SuperHUDMiddleMenu
+    JSL action_submenu
+  .done
+    RTL
 
 ih_superhud_middle_submenu:
     %cm_submenu("Middle HUD List", #SuperHUDMiddleMenu)
@@ -2899,53 +2926,52 @@ SuperHUDMiddleMenu:
     %cm_header("SUPER HUD MIDDLE MODE")
 
 ih_superhud_middle_off:
-    %cm_jsl("Disabled", #action_select_superhud_middle, #$0000)
+    %cm_jsl("Disabled", #action_select_superhud_middle, !IH_SUPERHUD_MIDDLE_INDEX_OFF)
 
 ih_superhud_middle_chargetimer:
-    %cm_jsl("Charge Timer", #action_select_superhud_middle, #$0001)
+    %cm_jsl("Charge Timer", #action_select_superhud_middle, !IH_SUPERHUD_MIDDLE_INDEX_CHARGETIMER)
 
 ih_superhud_middle_xfactor:
-    %cm_jsl("X-Factor Timer", #action_select_superhud_middle, #$0002)
+    %cm_jsl("X-Factor Timer", #action_select_superhud_middle, !IH_SUPERHUD_MIDDLE_INDEX_XFACTOR)
 
 ih_superhud_middle_cooldown:
-    %cm_jsl("Cooldown Timer", #action_select_superhud_middle, #$0003)
+    %cm_jsl("Cooldown Timer", #action_select_superhud_middle, !IH_SUPERHUD_MIDDLE_INDEX_COOLDOWN)
 
 ih_superhud_middle_shinetimer:
-    %cm_jsl("Shinespark Timer", #action_select_superhud_middle, #$0004)
+    %cm_jsl("Shinespark Timer", #action_select_superhud_middle, !IH_SUPERHUD_MIDDLE_INDEX_SHINETIMER)
 
 ih_superhud_middle_dashcounter:
-    %cm_jsl("Dash Counter", #action_select_superhud_middle, #$0005)
+    %cm_jsl("Dash Counter", #action_select_superhud_middle, !IH_SUPERHUD_MIDDLE_INDEX_DASHCOUNTER)
 
 ih_superhud_middle_iframecounter:
-    %cm_jsl("I-Frame Counter", #action_select_superhud_middle, #$0006)
+    %cm_jsl("I-Frame Counter", #action_select_superhud_middle, !IH_SUPERHUD_MIDDLE_INDEX_IFRAMECOUNTER)
 
-!IH_SUPERHUD_LAG_COUNTER_MIDDLE_INDEX = #$0007
 ih_superhud_middle_lagcounter:
-    %cm_jsl("Lag Counter", #action_select_superhud_middle, #$0007)
+    %cm_jsl("Lag Counter", #action_select_superhud_middle, !IH_SUPERHUD_MIDDLE_INDEX_LAGCOUNTER)
 
 ih_superhud_middle_cpuusage:
-    %cm_jsl("CPU Usage", #action_select_superhud_middle, #$0008)
+    %cm_jsl("CPU Usage", #action_select_superhud_middle, !IH_SUPERHUD_MIDDLE_INDEX_CPUUSAGE)
 
 ih_superhud_middle_hspeed:
-    %cm_jsl("Horizontal Speed", #action_select_superhud_middle, #$0009)
+    %cm_jsl("Horizontal Speed", #action_select_superhud_middle, !IH_SUPERHUD_MIDDLE_INDEX_HSPEED)
 
 ih_superhud_middle_dashspeed:
-    %cm_jsl("Dash Speed", #action_select_superhud_middle, #$000A)
+    %cm_jsl("Dash Speed", #action_select_superhud_middle, !IH_SUPERHUD_MIDDLE_INDEX_DASHSPEED)
 
 ih_superhud_middle_shottimer:
-    %cm_jsl("Shot Timer", #action_select_superhud_middle, #$000B)
+    %cm_jsl("Shot Timer", #action_select_superhud_middle, !IH_SUPERHUD_MIDDLE_INDEX_SHOTTIMER)
 
 ih_superhud_middle_itempercent:
-    %cm_jsl("Item Collection %", #action_select_superhud_middle, #$000C)
+    %cm_jsl("Item Collection %", #action_select_superhud_middle, !IH_SUPERHUD_MIDDLE_INDEX_ITEMPERCENT)
 
 ih_superhud_middle_reserves:
-    %cm_jsl("Reserves", #action_select_superhud_middle, #$000D)
+    %cm_jsl("Reserves", #action_select_superhud_middle, !IH_SUPERHUD_MIDDLE_INDEX_RESERVES)
 
 ih_superhud_middle_statusicons:
-    %cm_jsl("Status Icons", #action_select_superhud_middle, #$000E)
+    %cm_jsl("Status Icons", #action_select_superhud_middle, !IH_SUPERHUD_MIDDLE_INDEX_STATUSICONS)
 
 ih_superhud_middle_tilecounter:
-    %cm_jsl("Map Tile Counter", #action_select_superhud_middle, #$000F)
+    %cm_jsl("Map Tile Counter", #action_select_superhud_middle, !IH_SUPERHUD_MIDDLE_INDEX_TILECOUNTER)
 
 action_select_superhud_middle:
 {
@@ -2956,7 +2982,7 @@ action_select_superhud_middle:
 ih_superhud_top_selector:
     dw !ACTION_CHOICE
     dl #!sram_superhud_top
-    dw #$0000
+    dw #.routine
     db #$28, "Current Top   ", #$FF
     db #$28, "        OFF", #$FF
     db #$28, "     CHARGE", #$FF
@@ -2975,6 +3001,14 @@ ih_superhud_top_selector:
     db #$28, "STATUS ICON", #$FF
     db #$28, "  MAP TILES", #$FF
     db #$FF
+  .routine
+    ; check for A or Y input
+    LDA !IH_CONTROLLER_PRI_NEW : BIT #$4080 : BEQ .done
+    ; jump to submenu
+    LDY.w #SuperHUDTopMenu
+    JSL action_submenu
+  .done
+    RTL
 
 ih_superhud_top_submenu:
     %cm_submenu("Top HUD List", #SuperHUDTopMenu)
@@ -3000,53 +3034,52 @@ SuperHUDTopMenu:
     %cm_header("SUPER HUD TOP MODE")
 
 ih_superhud_top_off:
-    %cm_jsl("Disabled", #action_select_superhud_top, #$0000)
+    %cm_jsl("Disabled", #action_select_superhud_top, !IH_SUPERHUD_TOP_INDEX_OFF)
 
 ih_superhud_top_chargetimer:
-    %cm_jsl("Charge Timer", #action_select_superhud_top, #$0001)
+    %cm_jsl("Charge Timer", #action_select_superhud_top, !IH_SUPERHUD_TOP_INDEX_CHARGETIMER)
 
 ih_superhud_top_xfactor:
-    %cm_jsl("X-Factor Timer", #action_select_superhud_top, #$0002)
+    %cm_jsl("X-Factor Timer", #action_select_superhud_top, !IH_SUPERHUD_TOP_INDEX_XFACTOR)
 
 ih_superhud_top_cooldown:
-    %cm_jsl("Cooldown Timer", #action_select_superhud_top, #$0003)
+    %cm_jsl("Cooldown Timer", #action_select_superhud_top, !IH_SUPERHUD_TOP_INDEX_COOLDOWN)
 
 ih_superhud_top_shinetimer:
-    %cm_jsl("Shinespark Timer", #action_select_superhud_top, #$0004)
+    %cm_jsl("Shinespark Timer", #action_select_superhud_top, !IH_SUPERHUD_TOP_INDEX_SHINETIMER)
 
 ih_superhud_top_dashcounter:
-    %cm_jsl("Dash Counter", #action_select_superhud_top, #$0005)
+    %cm_jsl("Dash Counter", #action_select_superhud_top, !IH_SUPERHUD_TOP_INDEX_DASHCOUNTER)
 
 ih_superhud_top_iframecounter:
-    %cm_jsl("I-Frame Counter", #action_select_superhud_top, #$0006)
+    %cm_jsl("I-Frame Counter", #action_select_superhud_top, !IH_SUPERHUD_TOP_INDEX_IFRAMECOUNTER)
 
-!IH_SUPERHUD_LAG_COUNTER_TOP_INDEX = #$0007
 ih_superhud_top_lagcounter:
-    %cm_jsl("Lag Counter", #action_select_superhud_top, #$0007)
+    %cm_jsl("Lag Counter", #action_select_superhud_top, !IH_SUPERHUD_TOP_INDEX_LAGCOUNTER)
 
 ih_superhud_top_cpuusage:
-    %cm_jsl("CPU Usage", #action_select_superhud_top, #$0008)
+    %cm_jsl("CPU Usage", #action_select_superhud_top, !IH_SUPERHUD_TOP_INDEX_CPUUSAGE)
 
 ih_superhud_top_hspeed:
-    %cm_jsl("Horizontal Speed", #action_select_superhud_top, #$0009)
+    %cm_jsl("Horizontal Speed", #action_select_superhud_top, !IH_SUPERHUD_TOP_INDEX_HSPEED)
 
 ih_superhud_top_dashspeed:
-    %cm_jsl("Dash Speed", #action_select_superhud_top, #$000A)
+    %cm_jsl("Dash Speed", #action_select_superhud_top, !IH_SUPERHUD_TOP_INDEX_DASHSPEED)
 
 ih_superhud_top_shottimer:
-    %cm_jsl("Shot Timer", #action_select_superhud_top, #$000B)
+    %cm_jsl("Shot Timer", #action_select_superhud_top, !IH_SUPERHUD_TOP_INDEX_SHOTTIMER)
 
 ih_superhud_top_itempercent:
-    %cm_jsl("Item Collection %", #action_select_superhud_top, #$000C)
+    %cm_jsl("Item Collection %", #action_select_superhud_top, !IH_SUPERHUD_TOP_INDEX_ITEMPERCENT)
 
 ih_superhud_top_reserves:
-    %cm_jsl("Reserves", #action_select_superhud_top, #$000D)
+    %cm_jsl("Reserves", #action_select_superhud_top, !IH_SUPERHUD_TOP_INDEX_RESERVES)
 
 ih_superhud_top_statusicons:
-    %cm_jsl("Status Icons", #action_select_superhud_top, #$000E)
+    %cm_jsl("Status Icons", #action_select_superhud_top, !IH_SUPERHUD_TOP_INDEX_STATUSICONS)
 
 ih_superhud_top_tilecounter:
-    %cm_jsl("Map Tile Counter", #action_select_superhud_top, #$000F)
+    %cm_jsl("Map Tile Counter", #action_select_superhud_top, !IH_SUPERHUD_TOP_INDEX_TILECOUNTER)
 
 action_select_superhud_top:
 {
@@ -3055,7 +3088,7 @@ action_select_superhud_top:
 }
 
 ih_superhud_enable:
-    %cm_jsl("Enable Super HUD", .routine, !IH_MODE_ROOMSTRAT_INDEX)
+    %cm_jsl("Enable Super HUD", .routine, !IH_MODE_INDEX_ROOMSTRAT)
   .routine
     TYA : STA !sram_display_mode
     TDC : STA !sram_room_strat
@@ -3065,7 +3098,7 @@ ih_superhud_enable:
 ih_door_display_mode:
     dw !ACTION_CHOICE
     dl #!sram_door_display_mode
-    dw #$0000
+    dw #.routine
     db #$28, "Door HUD Mode", #$FF
     db #$28, "        OFF", #$FF
     db #$28, "HORIZ SPEED", #$FF
@@ -3077,6 +3110,56 @@ ih_door_display_mode:
     db #$28, " X POSITION", #$FF
     db #$28, " Y POSITION", #$FF
     db #$FF
+  .routine
+    ; check for A or Y input
+    LDA !IH_CONTROLLER_PRI_NEW : BIT #$4080 : BEQ .done
+    ; jump to submenu
+    LDY.w #DoorDisplayModeMenu
+    JSL action_submenu
+  .done
+    RTL
+
+DoorDisplayModeMenu:
+    dw ih_door_display_off
+    dw ih_door_display_hspeed
+    dw ih_door_display_vspeed
+    dw ih_door_display_chargetimer
+    dw ih_door_display_shinetimer
+    dw ih_door_display_dashcounter
+    dw ih_door_display_xpos
+    dw ih_door_display_ypos
+    dw $0000
+    %cm_header("Select Door HUD Mode")
+
+ih_door_display_off:
+    %cm_jsl("Disabled", #action_select_door_display_mode, !IH_DOOR_INDEX_OFF)
+
+ih_door_display_hspeed:
+    %cm_jsl("Horizontal Speed", #action_select_door_display_mode, !IH_DOOR_INDEX_HSPEED)
+
+ih_door_display_vspeed:
+    %cm_jsl("Vertical Speed", #action_select_door_display_mode, !IH_DOOR_INDEX_VSPEED)
+    
+ih_door_display_chargetimer:
+    %cm_jsl("Charge Timer", #action_select_door_display_mode, !IH_DOOR_INDEX_CHARGETIMER)
+    
+ih_door_display_shinetimer:
+    %cm_jsl("Shinespark Timer", #action_select_door_display_mode, !IH_DOOR_INDEX_SHINETIMER)
+    
+ih_door_display_dashcounter:
+    %cm_jsl("Dash Counter", #action_select_door_display_mode, !IH_DOOR_INDEX_DASHCOUNTER)
+    
+ih_door_display_xpos:
+    %cm_jsl("X Position", #action_select_door_display_mode, !IH_DOOR_INDEX_XPOS)
+    
+ih_door_display_ypos:
+    %cm_jsl("Y Position", #action_select_door_display_mode, !IH_DOOR_INDEX_YPOS)
+    
+action_select_door_display_mode:
+{
+    TYA : STA !sram_door_display_mode
+    JML cm_previous_menu
+}
 
 ih_goto_timer_settings:
     %cm_submenu("Timer Settings", #TimerSettingsMenu)
@@ -4438,6 +4521,7 @@ SavestateMenu:
     dw #save_freeze
     dw #save_middoorsave
     dw #save_alwayssave
+    dw #save_read_only
     dw #$FFFF
     dw #save_rando_enable
     dw #save_rando_energy
@@ -4465,6 +4549,14 @@ save_middoorsave:
 
 save_alwayssave:
     %cm_toggle_bit("Auto-Save Every Door", !ram_auto_save_state, #$8000, #0)
+
+save_read_only:
+    %cm_toggle("Read-Only Lock", !sram_read_only_locks+5, #$01, #.routine)
+  .routine
+    TAX : BEQ .done
+    TDC : STA !ram_auto_save_state
+  .done
+    RTL
 
 if !FEATURE_DEV
 save_delete:
@@ -4558,19 +4650,19 @@ else
 if !INFOHUD_ALWAYS_SHOW_X_Y
 else
     ; Skip printing segment timer when shinetune or walljump or shot timer enabled
-    LDA !sram_display_mode : CMP !IH_MODE_ROOMSTRAT_INDEX : BEQ .checkSuperHUD
-    CMP !IH_MODE_SHINETUNE_INDEX : BEQ .skip
-    CMP !IH_MODE_WALLJUMP_INDEX : BEQ .skip
-    CMP !IH_MODE_SHOTTIMER_INDEX : BEQ .skip
+    LDA !sram_display_mode : CMP.w !IH_MODE_INDEX_ROOMSTRAT : BEQ .checkSuperHUD
+    CMP.w !IH_MODE_INDEX_SHINETUNE : BEQ .skip
+    CMP.w !IH_MODE_INDEX_WALLJUMP : BEQ .skip
+    CMP.w !IH_MODE_INDEX_SHOTTIMER : BEQ .skip
   .print
     LDA !ram_print_segment_timer : ORA #$8000 : STA !ram_print_segment_timer
     RTL
 
   .checkSuperHUD
     LDA !sram_room_strat : BNE .print
-    LDA !sram_superhud_bottom : CMP !IH_SUPERHUD_SHINETUNE_BOTTOM_INDEX : BEQ .skip
-    CMP !IH_SUPERHUD_WALLJUMP_BOTTOM_INDEX : BEQ .skip
-    CMP !IH_SUPERHUD_SHOTTIMER_BOTTOM_INDEX : BNE .print
+    LDA !sram_superhud_bottom : CMP.w !IH_SUPERHUD_BOTTOM_INDEX_SHINETUNE : BEQ .skip
+    CMP.w !IH_SUPERHUD_BOTTOM_INDEX_WALLJUMP : BEQ .skip
+    CMP.w !IH_SUPERHUD_BOTTOM_INDEX_SHOTTIMER : BNE .print
 
   .skip
 endif

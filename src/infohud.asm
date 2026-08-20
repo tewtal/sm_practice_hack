@@ -50,7 +50,7 @@ else
 org $A09CC8
 endif
     JSL infidoppler_hook_projectile_collision
-    NOP : NOP
+    BRA $00
 
 if !FEATURE_VANILLAHUD
 ; skip the rest of the hijacks if Vanilla HUD build
@@ -467,15 +467,15 @@ ih_after_room_transition:
     STA !REALTIME_LAG_COUNTER ; for lagcounter HUD mode
 
     ; Check if MBHP needs to be disabled
-    LDA !sram_display_mode : CMP !IH_MODE_ROOMSTRAT_INDEX : BNE .segmentTimer
+    LDA !sram_display_mode : CMP.w !IH_MODE_INDEX_ROOMSTRAT : BNE .segmentTimer
     LDA !sram_room_strat : BEQ .checkSuperHUD
-    CMP !IH_STRAT_MBHP_INDEX : BNE .segmentTimer
+    CMP.w !IH_STRAT_INDEX_MBHP : BNE .segmentTimer
     LDA !ROOM_ID : CMP.w #ROOM_MotherBrainRoom : BEQ .segmentTimer
     TDC : STA !sram_display_mode
     BRA .segmentTimer
 
   .checkSuperHUD
-    LDA !sram_superhud_bottom : CMP !IH_SUPERHUD_MBHP_BOTTOM_INDEX : BNE .segmentTimer
+    LDA !sram_superhud_bottom : CMP.w !IH_SUPERHUD_BOTTOM_INDEX_MBHP : BNE .segmentTimer
     LDA !ROOM_ID : CMP.w #ROOM_MotherBrainRoom : BEQ .segmentTimer
     TDC : STA !sram_superhud_bottom
 
@@ -554,7 +554,7 @@ ih_before_room_transition:
     LDX #$00C2
     LDA !sram_top_display_mode : BIT.b !TOP_HUD_VANILLA_BIT : BNE .vanillaDoorLag
     LDA !ram_minimap : BEQ .draw3
-    LDA !sram_display_mode : CMP.b !IH_MODE_ROOMSTRAT_INDEX : BNE .drawDoorMM
+    LDA !sram_display_mode : CMP.b !IH_MODE_INDEX_ROOMSTRAT : BNE .drawDoorMM
     LDA !sram_room_strat : BNE .drawDoorMM
     %a16()
     BRA .done
@@ -569,7 +569,7 @@ ih_before_room_transition:
     LDA !sram_display_mode : BNE .done
     LDA !sram_door_display_mode : BEQ .done
     ASL : TAX
-    JSR (.doorDisplayTable,X)
+    JSR (DoorDisplayTable,X)
     ; Suppress Enemy HP display
     LDA !ENEMY_HP : STA !ram_enemy_hp
 
@@ -588,18 +588,27 @@ ih_before_room_transition:
     TYA : JSR Draw2
     BRA .doorDisplay
 
-  .doorDisplayTable
-    dw #$0000 ; off/dummy
-    dw status_door_hspeed
+DoorDisplayTable:    
+  .off
+    dw #$0000 ; off/dummy     
+  .hspeed
+    dw status_door_hspeed     
+  .dashspeed
     dw status_door_dashspeed
-    dw status_door_vspeed
+  .vspeed
+    dw status_door_vspeed     
+  .chargetimer
     dw status_door_chargetimer
-    dw status_door_shinetimer
+  .shinetimer
+    dw status_shinetimer      
+  .dashcounter
     dw status_door_dashcounter
-    dw status_door_xpos
-    dw status_door_ypos
+  .xpos
+    dw status_door_xpos       
+  .ypos
+    dw status_door_ypos       
+  .end
 }
-endif ; !FEATURE_VANILLAHUD
 
 ceres_start_timers:
 {
@@ -609,14 +618,9 @@ ceres_start_timers:
 
     ; overwritten code
     STZ !SCREEN_FADE_DELAY : STZ !SCREEN_FADE_COUNTER
-if !FEATURE_VANILLAHUD
-else
     JML ceres_start_timers_return
-endif
 }
 
-if !FEATURE_VANILLAHUD
-else
 ih_unpause:
 ; Adds frames when unpausing (nmi is turned off during vram transfers)
 {
@@ -777,7 +781,7 @@ ih_update_hud_before_transition:
     ; Bank 80
     PEA $8080 : PLB : PLB
 
-    LDA !sram_display_mode : CMP !IH_MODE_ARMPUMP_INDEX : BNE ih_update_hud_after_transition_start
+    LDA !sram_display_mode : CMP.w !IH_MODE_INDEX_ARMPUMP : BNE ih_update_hud_after_transition_start
 
     ; Report armpump room totals
   .armpump
@@ -795,11 +799,11 @@ ih_update_hud_after_transition:
     PEA $8080 : PLB : PLB
 
   .start
-    LDA !sram_display_mode : CMP !IH_MODE_ROOMSTRAT_INDEX : BNE ih_update_hud_code_start
+    LDA !sram_display_mode : CMP.w !IH_MODE_INDEX_ROOMSTRAT : BNE ih_update_hud_code_start
     LDA !sram_room_strat : BNE ih_update_hud_code_start
 
     ; Update Super HUD lag counters
-    LDA !sram_superhud_top : CMP !IH_SUPERHUD_LAG_COUNTER_TOP_INDEX : BNE .middleHUD
+    LDA !sram_superhud_top : CMP.w !IH_SUPERHUD_TOP_INDEX_LAGCOUNTER : BNE .middleHUD
     LDA !sram_lag_counter_mode : BNE .topFullTime
     LDA !ram_last_door_lag_frames
     BRA .topDrawTime
@@ -810,7 +814,7 @@ ih_update_hud_after_transition:
     TDC : STA !ram_HUD_top
 
   .middleHUD
-    LDA !sram_superhud_middle : CMP !IH_SUPERHUD_LAG_COUNTER_MIDDLE_INDEX : BNE .bottomHUD
+    LDA !sram_superhud_middle : CMP.w !IH_SUPERHUD_MIDDLE_INDEX_LAGCOUNTER : BNE .bottomHUD
     LDA !sram_lag_counter_mode : BNE .middleFullTime
     LDA !ram_last_door_lag_frames
     BRA .middleDrawTime
@@ -822,7 +826,7 @@ ih_update_hud_after_transition:
 
     ; Check armpump
   .bottomHUD
-    LDA !sram_superhud_bottom : CMP !IH_SUPERHUD_ARMPUMP_BOTTOM_INDEX : BNE ih_update_hud_code_start
+    LDA !sram_superhud_bottom : CMP.w !IH_SUPERHUD_BOTTOM_INDEX_ARMPUMP : BNE ih_update_hud_code_start
     JMP ih_update_hud_before_transition_armpump
 }
 
@@ -845,7 +849,7 @@ ih_update_hud_code:
   .mmHUD
     ; Map visible, so draw map counter over item%
     LDA !sram_top_display_mode : BIT !TOP_HUD_VANILLA_BIT : BNE .mmVanilla
-    LDA !sram_display_mode : CMP !IH_MODE_ROOMSTRAT_INDEX : BNE .mmTileCounter
+    LDA !sram_display_mode : CMP.w !IH_MODE_INDEX_ROOMSTRAT : BNE .mmTileCounter
     LDA !sram_room_strat : BEQ .mmRoomTimer
 
   .mmTileCounter
@@ -913,8 +917,8 @@ ih_update_hud_code:
     ; 3 tiles between input display and missile icon
     ; skip item% if display mode = vspeed
     LDA !sram_top_display_mode : BNE .skipToLag
-    LDA !sram_display_mode : CMP !IH_MODE_VSPEED_INDEX : BEQ .skipToLag
-    CMP !IH_MODE_ROOMSTRAT_INDEX : BNE .drawItemPercent
+    LDA !sram_display_mode : CMP.w !IH_MODE_INDEX_VSPEED : BEQ .skipToLag
+    CMP.w !IH_MODE_INDEX_ROOMSTRAT : BNE .drawItemPercent
     LDA !sram_room_strat : BEQ .skipToLag
 
   .drawItemPercent
@@ -1166,7 +1170,7 @@ ih_hud_code:
 
   .status_display
     LDA !sram_display_mode : ASL : TAX
-    JSR (.status_display_table,X)
+    JSR (status_display_table,X)
 
   .status_display_done
 if !INFOHUD_ALWAYS_SHOW_X_Y
@@ -1206,7 +1210,7 @@ endif
   .reserves
     LDA !sram_top_display_mode : BEQ .statusIcons
     BIT !TOP_HUD_VANILLA_BIT : BNE .vanilla_check_health
-    LDA !sram_display_mode : CMP !IH_MODE_ROOMSTRAT_INDEX : BNE .checkReserves
+    LDA !sram_display_mode : CMP.w !IH_MODE_INDEX_ROOMSTRAT : BNE .checkReserves
     LDA !sram_room_strat : BNE .checkReserves
     RTL
 
@@ -1245,7 +1249,7 @@ endif
 
     ; Super HUD
   .checkSuperHUD
-    LDA !sram_display_mode : CMP !IH_MODE_ROOMSTRAT_INDEX : BNE .checkHealthBomb
+    LDA !sram_display_mode : CMP.w !IH_MODE_INDEX_ROOMSTRAT : BNE .checkHealthBomb
     LDA !sram_room_strat : BNE .checkHealthBomb
     RTL
 
@@ -2035,7 +2039,7 @@ infidoppler_hook_projectile_collision:
   .no
     ; Vanilla logic
     LDA !SAMUS_PROJ_PROPERTIES,Y
-    BIT #$0008
+    AND #$0008
     RTL
 
   .disable
@@ -2441,7 +2445,7 @@ ih_update_timers:
     ; Map visible, so draw map counter over item%
     LDA !sram_top_display_mode : BIT !TOP_HUD_VANILLA_BIT : BNE .mmEnd
     STZ $4205
-    LDA !sram_display_mode : CMP !IH_MODE_ROOMSTRAT_INDEX : BNE .mmTileCounter
+    LDA !sram_display_mode : CMP.w !IH_MODE_INDEX_ROOMSTRAT : BNE .mmTileCounter
     LDA !sram_room_strat : BEQ .mmRoomTimer
 
   .mmTileCounter

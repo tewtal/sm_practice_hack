@@ -4,8 +4,8 @@
 preset_load:
 {
     PHP
-    LDA !MUSIC_DATA : STA !SRAM_MUSIC_DATA
-    LDA !MUSIC_TRACK : STA !SRAM_MUSIC_TRACK
+    LDA !MUSIC_DATA : STA !ram_loadstate_music_data
+    LDA !MUSIC_TRACK : STA !ram_loadstate_music_track
 
     JSL $809E93  ; Clear timer RAM
     JSR $819B    ; Initialize IO registers
@@ -818,25 +818,25 @@ endif
     LDA !sram_music_toggle : CMP #$0002 : BPL .doneMusic
 
     ; Compare to currently loaded music data
-    LDA !SRAM_MUSIC_DATA : CMP !MUSIC_DATA : BEQ .doneLoadMusicData
+    LDA !ram_loadstate_music_data : CMP !MUSIC_DATA : BEQ .doneLoadMusicData
 
     ; Clear track if necessary
-    LDA !SRAM_MUSIC_TRACK : BEQ .loadMusicData
+    LDA !ram_loadstate_music_track : BEQ .loadMusicData
     TDC : JSL !MUSIC_ROUTINE
 
   .loadMusicData
     LDA !MUSIC_DATA : TAX
-    LDA !SRAM_MUSIC_DATA : STA !MUSIC_DATA
+    LDA !ram_loadstate_music_data : STA !MUSIC_DATA
     TXA : CLC : ADC #$FF00 : JSL !MUSIC_ROUTINE
     BRA .loadMusicTrack
 
   .doneLoadMusicData
     ; Compare to currently playing music
-    LDA !SRAM_MUSIC_TRACK : CMP !MUSIC_TRACK : BEQ .doneMusic
+    LDA !ram_loadstate_music_track : CMP !MUSIC_TRACK : BEQ .doneMusic
 
   .loadMusicTrack
     LDA !MUSIC_TRACK : TAX
-    LDA !SRAM_MUSIC_TRACK : STA !MUSIC_TRACK
+    LDA !ram_loadstate_music_track : STA !MUSIC_TRACK
     TXA : JSL !MUSIC_ROUTINE
 
   .doneMusic
@@ -1177,6 +1177,7 @@ resume_infohud_icon_initialization:
 ; -------------------
 
 org $E8E000
+PresetData:
 check bankcross off
 
 print pc, " preset data crossbank start"
