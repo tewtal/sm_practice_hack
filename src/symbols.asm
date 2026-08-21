@@ -401,7 +401,6 @@ ram_loadstate_sound_timer = !ram_loadstate_sound_timer ; !WRAM_MENU_START+$D4
 ram_loadstate_cached_random_number = !ram_loadstate_cached_random_number ; !WRAM_MENU_START+$D6
 ram_loadstate_frame_counter = !ram_loadstate_frame_counter ; !WRAM_MENU_START+$D8
 ram_loadstate_enemy_main_loop_counter = !ram_loadstate_enemy_main_loop_counter ; !WRAM_MENU_START+$DA
-ram_loadstate_savestate_type = !ram_loadstate_savestate_type ; !WRAM_MENU_START+$DC
 ram_cgram_cache = !ram_cgram_cache ; !WRAM_MENU_START+$D0 ; $20 bytes
 
 ram_backup_message_box = !ram_backup_message_box ; !WRAM_MENU_START+$F0

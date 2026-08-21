@@ -425,7 +425,6 @@
 !ram_loadstate_cached_random_number = !WRAM_MENU_START+$D6
 !ram_loadstate_frame_counter = !WRAM_MENU_START+$D8
 !ram_loadstate_enemy_main_loop_counter = !WRAM_MENU_START+$DA
-!ram_loadstate_savestate_type = !WRAM_MENU_START+$DC
 !ram_cgram_cache = !WRAM_MENU_START+$D0 ; $20 bytes
 
 !ram_backup_message_box = !WRAM_MENU_START+$F0
@@ -489,7 +488,7 @@
 ; SRAM
 ; -----
 
-!SRAM_VERSION = #$0021
+!SRAM_VERSION = #$0022
 
 !SRAM_START = $702000
 !SRAM_SIZE = #$1000
