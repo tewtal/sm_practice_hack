@@ -193,13 +193,13 @@ gamemode_start:
   .dec_seconds
     LDA !ram_seg_rt_seconds : BEQ .dec_minutes
     DEC : STA !ram_seg_rt_seconds
-    LDA #$003B : STA !ram_seg_rt_frames
+    LDA !FRAMERATE : DEC : STA !ram_seg_rt_frames
     BRA .skip_load
 
   .dec_minutes
     LDA !ram_seg_rt_minutes : BEQ .skip_load
     DEC : STA !ram_seg_rt_minutes
-    LDA #$003B : STA !ram_seg_rt_seconds : STA !ram_seg_rt_frames
+    LDA !FRAMERATE : DEC : STA !ram_seg_rt_seconds : STA !ram_seg_rt_frames
     BRA .skip_load
 }
 
