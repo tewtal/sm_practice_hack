@@ -432,7 +432,7 @@ save_full_table:
     dw $0000|$4316, $0002  ; size = $02xx ($0200), unused bank reg = $00
     dw $1000|$420B, $02    ; Trigger DMA on channel 1
 
-    ; Done
+    ; Done, other than DMA and flags, uses SRAM $777D00-$777DFF
     dw $0000, save_return
 
 save_1st_tiny_table:
@@ -471,7 +471,7 @@ save_1st_tiny_table:
     dw $0000|$4316, $0002  ; size = $02xx ($0200), unused bank reg = $00
     dw $1000|$420B, $02    ; Trigger DMA on channel 1
 
-    ; Done
+    ; Done, other than DMA and flags, uses SRAM $777E00-$777EFF
     dw $0000, save_return
 
 save_2nd_tiny_table:
@@ -510,7 +510,7 @@ save_2nd_tiny_table:
     dw $0000|$4316, $0002  ; size = $02xx ($0200), unused bank reg = $00
     dw $1000|$420B, $02    ; Trigger DMA on channel 1
 
-    ; Done
+    ; Done, other than DMA and flags, uses SRAM $777F00-$777FFF
     dw $0000, save_return
 
 save_return:
@@ -600,7 +600,7 @@ load_full_table:
     dw $0000|$4316, $0002  ; size = $02xx ($0200), unused bank reg = $00
     dw $1000|$420B, $02    ; Trigger DMA on channel 1
 
-    ; Done
+    ; Done, other than DMA and flags, uses SRAM $777D00-$777DFF
     dw $0000, load_return
 
 load_1st_tiny_table:
@@ -641,7 +641,7 @@ load_1st_tiny_table:
     dw $0000|$4316, $0002  ; size = $02xx ($0200), unused bank reg = $00
     dw $1000|$420B, $02    ; Trigger DMA on channel 1
 
-    ; Done
+    ; Done, other than DMA and flags, uses SRAM $777E00-$777EFF
     dw $0000, load_return
 
 load_2nd_tiny_table:
@@ -682,7 +682,7 @@ load_2nd_tiny_table:
     dw $0000|$4316, $0002  ; size = $02xx ($0200), unused bank reg = $00
     dw $1000|$420B, $02    ; Trigger DMA on channel 1
 
-    ; Done
+    ; Done, other than DMA and flags, uses SRAM $777F00-$777FFF
     dw $0000, load_return
 
 load_return:
