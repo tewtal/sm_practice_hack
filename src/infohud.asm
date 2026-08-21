@@ -375,23 +375,60 @@ endif
     %a8() : LDA #$01 : STA !NMI_REQUEST_FLAG : %a16()
     JMP .done
 
+if !FEATURE_TINYSTATES
   .pause
+elseif !FEATURE_SD2SNES
+  .pause
+    BRA .pauseOption
+
+  .restore_seg_full
+    LDA !SRAM_SEG_TIMER_F : STA !ram_seg_rt_frames
+    LDA !SRAM_SEG_TIMER_S : STA !ram_seg_rt_seconds
+    LDA !SRAM_SEG_TIMER_M : STA !ram_seg_rt_minutes
+    JMP .done
+
+  .restore_seg_1st_tiny
+    LDA !SRAM_1ST_SEG_TIMER_F : STA !ram_seg_rt_frames
+    LDA !SRAM_1ST_SEG_TIMER_S : STA !ram_seg_rt_seconds
+    LDA !SRAM_1ST_SEG_TIMER_M : STA !ram_seg_rt_minutes
+    JMP .done
+
+  .restore_seg_2nd_tiny
+    LDA !SRAM_2ND_SEG_TIMER_F : STA !ram_seg_rt_frames
+    LDA !SRAM_2ND_SEG_TIMER_S : STA !ram_seg_rt_seconds
+    LDA !SRAM_2ND_SEG_TIMER_M : STA !ram_seg_rt_minutes
+    JMP .done
+
+  .pauseOption
+else
+  .pause
+endif
     ; option to pause on loadstate
     LDA !ram_freeze_on_load : BEQ .checkFrameAdvance
     LDA !IH_CONTROLLER_PRI_NEW : BEQ .checkFrameAdvance
     ; unfreeze
     TDC : STA !ram_slowdown_mode : STA !ram_slowdown_frames
     STA !ram_freeze_on_load
-if !FEATURE_SD2SNES
+if !FEATURE_TINYSTATES
     LDA !SRAM_SEG_TIMER_F : STA !ram_seg_rt_frames
     LDA !SRAM_SEG_TIMER_S : STA !ram_seg_rt_seconds
     LDA !SRAM_SEG_TIMER_M : STA !ram_seg_rt_minutes
+    JMP .done
+elseif !FEATURE_SD2SNES
+    LDA !ram_last_save_state_type : BEQ .restore_seg_full
+    DEC : BEQ .restore_seg_1st_tiny
+    DEC : BEQ .restore_seg_2nd_tiny
+    TDC
+    STA !ram_seg_rt_frames
+    STA !ram_seg_rt_seconds
+    STA !ram_seg_rt_minutes
+    JMP .done
 else
     STA !ram_seg_rt_frames
     STA !ram_seg_rt_seconds
     STA !ram_seg_rt_minutes
-endif
     JMP .done
+endif
 
   .pauseDoorTransition
     LDA !DOOR_FUNCTION_POINTER : CMP #optimized_fade_in : BCC .done

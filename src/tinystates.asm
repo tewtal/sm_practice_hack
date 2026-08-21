@@ -310,12 +310,12 @@ save_state:
     LDA $4300,X : STA !SRAM_DMA_BANK,X
     INX
     INY : CPY #$0B : BNE .save_dma_regs
-    CPX #$7B : BEQ .done
+    CPX #$7B : BEQ .save_dma_regs_done
     TXA : CLC : ADC #$05 : TAX
     LDY #$00
     BRA .save_dma_regs
 
-  .done
+  .save_dma_regs_done
     %ai16()
     LDX #save_write_table
     ; fallthrough to run_vm
@@ -334,7 +334,7 @@ save_write_table:
     ; Single address, B bus -> A bus.  B address = reflector to WRAM ($2180).
     dw $0000|$4310, $8080  ; direction = B->A, byte reg, B addr = $2180
 
-    ; Copy WRAM segments, uses $704000-$70727F, $710000-$726B01, $736000-$736FFF
+    ; Copy WRAM segments, uses $704000-$7074FF, $710000-$726B01, $736000-$736FFF
     %wram_to_sram($7E0000, $2000, $704000)
     %wram_to_sram($7E7000, $1000, $706000)
     %wram_to_sram($7E3300, $0200, $707000)

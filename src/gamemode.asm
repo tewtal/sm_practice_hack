@@ -90,6 +90,7 @@ gamemode_door_transtion_load_sprites:
     LDA !sram_read_only_locks+5 : AND #$00FF : BNE .failSFX
     PHP : PHB
     PHK : PLB
+    ; Save using last known save state type
     JSL save_state
     PLB : PLP
   .done
@@ -257,6 +258,11 @@ endif
     LDA !sram_read_only_locks+5 : AND #$00FF : BNE .failSFX
     PHP
     PHB
+    TDC : STA !ram_last_save_state_type
+if !FEATURE_TINYSTATES
+elseif !FEATURE_SD2SNES
+    STA !SRAM_1ST_SAVED_STATE : STA !SRAM_2ND_SAVED_STATE
+endif
     JSL save_state
     PLB
     PLP
@@ -279,6 +285,7 @@ gamemode_load_state:
 
     ; We will not return from this method,
     ; since loading the state includes loading the stack
+    TDC : STA !ram_last_save_state_type
     JML load_state
 
   .not_available
@@ -680,8 +687,99 @@ gamemode_dev_shortcut:
 }
 endif
 
+if !FEATURE_TINYSTATES
+elseif !FEATURE_SD2SNES
+gamemode_save_1st_tiny:
+{
+    ; Check if save not allowed
+    LDA !GAMEMODE : CMP #$0003 : BEQ .done
+    ; Disallow tiny states outside of gameplay
+    ; Most other gamemodes will crash on load
+    CMP #$0020 : BEQ .save
+    CMP #$0007 : BMI .done
+    CMP #$001C : BPL .done
+  .save
+    LDA !sram_read_only_locks+5 : AND #$00FF : BNE .failSFX
+    PHP
+    PHB
+    LDA #$0001 : STA !ram_last_save_state_type
+    STA !SRAM_SAVED_STATE
+    JSL save_state
+    PLB
+    PLP
+
+    ; Skip remaining shortcuts
+    PLA : PEA !CTRL_SHORTCUT_SKIP_REMAINING_PEA_VALUE
+
+  .done
+    RTL
+
+  .failSFX
+    %sfxfail()
+    RTL
+}
+
+gamemode_load_1st_tiny:
+{
+    ; Check if a saved state exists
+    LDA !SRAM_1ST_SAVED_STATE : CMP !SAFEWORD : BNE .not_available
+
+    ; We will not return from this method,
+    ; since loading the state includes loading the stack
+    LDA #$0001 : STA !ram_last_save_state_type
+    JML load_state
+
+  .not_available
+    RTL
+}
+
+gamemode_save_2nd_tiny:
+{
+    ; Check if save not allowed
+    LDA !GAMEMODE : CMP #$0003 : BEQ .done
+    ; Disallow tiny states outside of gameplay
+    ; Most other gamemodes will crash on load
+    CMP #$0020 : BEQ .save
+    CMP #$0007 : BMI .done
+    CMP #$001C : BPL .done
+  .save
+    LDA !sram_read_only_locks+5 : AND #$00FF : BNE .failSFX
+    PHP
+    PHB
+    LDA #$0002 : STA !ram_last_save_state_type
+    STA !SRAM_SAVED_STATE
+    JSL save_state
+    PLB
+    PLP
+
+    ; Skip remaining shortcuts
+    PLA : PEA !CTRL_SHORTCUT_SKIP_REMAINING_PEA_VALUE
+
+  .done
+    RTL
+
+  .failSFX
+    %sfxfail()
+    RTL
+}
+
+gamemode_load_2nd_tiny:
+{
+    ; Check if a saved state exists
+    LDA !SRAM_2ND_SAVED_STATE : CMP !SAFEWORD : BNE .not_available
+
+    ; We will not return from this method,
+    ; since loading the state includes loading the stack
+    LDA #$0002 : STA !ram_last_save_state_type
+    JML load_state
+
+  .not_available
+    RTL
+}
+endif
+
 ; Write a customized routine based on ctrl shortcut selections
-!GAMEMODE_CTRL_SHORTCUT_COUNT = #$0023
+!GAMEMODE_CTRL_SHORTCUT_COUNT = #$0027
 cm_write_ctrl_routine:
 {
     ; No bounds check on X is done as we shouldn't exceed our buffer.
@@ -2020,6 +2118,13 @@ endif
     %cm_header("SELECT SHORTCUT TYPE")
 
 CtrlSelectShortcutTypeMenu2:
+if !FEATURE_TINYSTATES
+elseif !FEATURE_SD2SNES
+    dw #ctrl_add_save_1st_tiny
+    dw #ctrl_add_load_1st_tiny
+    dw #ctrl_add_save_2nd_tiny
+    dw #ctrl_add_load_2nd_tiny
+endif
     dw #ctrl_add_full_equipment
     dw #ctrl_add_kill_enemies
     dw #ctrl_add_toggle_tileviewer
@@ -2157,6 +2262,22 @@ else
     dw #ctrl_add_reveal_hp_dm_text
     dw #ctrl_add_toggle_igt_rta_dm_text
 endif
+if !FEATURE_TINYSTATES
+    dw #ctrl_add_empty_dm_text
+    dw #ctrl_add_empty_dm_text
+    dw #ctrl_add_empty_dm_text
+    dw #ctrl_add_empty_dm_text
+elseif !FEATURE_SD2SNES
+    dw #ctrl_add_save_1st_tiny_dm_text
+    dw #ctrl_add_load_1st_tiny_dm_text
+    dw #ctrl_add_save_2nd_tiny_dm_text
+    dw #ctrl_add_load_2nd_tiny_dm_text
+else
+    dw #ctrl_add_empty_dm_text
+    dw #ctrl_add_empty_dm_text
+    dw #ctrl_add_empty_dm_text
+    dw #ctrl_add_empty_dm_text
+endif
 
 ctrl_shortcut_cancel_gameplay_table:
     db $00 ; Empty
@@ -2194,6 +2315,10 @@ ctrl_shortcut_cancel_gameplay_table:
     db $01 ; DEV Shortcut
     db $00 ; Reveal HP
     db $00 ; Toggle IGT/RTA
+    db $01 ; Save 1st Tiny
+    db $01 ; Load 1st Tiny
+    db $01 ; Save 2nd Tiny
+    db $01 ; Load 2nd Tiny
 
 ctrl_shortcut_jsl_word_lsb_table:
     db #gamemode_placeholder
@@ -2263,6 +2388,22 @@ else
     db #gamemode_reveal_hp
     db #gamemode_toggle_igt_rta
 endif
+if !FEATURE_TINYSTATES
+    db #gamemode_placeholder
+    db #gamemode_placeholder
+    db #gamemode_placeholder
+    db #gamemode_placeholder
+elseif !FEATURE_SD2SNES
+    db #gamemode_save_1st_tiny
+    db #gamemode_load_1st_tiny
+    db #gamemode_save_2nd_tiny
+    db #gamemode_load_2nd_tiny
+else
+    db #gamemode_placeholder
+    db #gamemode_placeholder
+    db #gamemode_placeholder
+    db #gamemode_placeholder
+endif
 
 ctrl_shortcut_jsl_word_msb_table:
     db #gamemode_placeholder>>8
@@ -2331,6 +2472,22 @@ if !FEATURE_VANILLAHUD
 else
     db #gamemode_reveal_hp>>8
     db #gamemode_toggle_igt_rta>>8
+endif
+if !FEATURE_TINYSTATES
+    db #gamemode_placeholder>>8
+    db #gamemode_placeholder>>8
+    db #gamemode_placeholder>>8
+    db #gamemode_placeholder>>8
+elseif !FEATURE_SD2SNES
+    db #gamemode_save_1st_tiny>>8
+    db #gamemode_load_1st_tiny>>8
+    db #gamemode_save_2nd_tiny>>8
+    db #gamemode_load_2nd_tiny>>8
+else
+    db #gamemode_placeholder>>8
+    db #gamemode_placeholder>>8
+    db #gamemode_placeholder>>8
+    db #gamemode_placeholder>>8
 endif
 
 ctrl_add_empty:
@@ -2450,6 +2607,21 @@ ctrl_add_reveal_hp:
 
 ctrl_add_toggle_igt_rta:
     %cm_jsl("Toggle IGT/RTA", #ctrl_add_shortcut_select, #$0022)
+endif
+
+if !FEATURE_TINYSTATES
+elseif !FEATURE_SD2SNES
+ctrl_add_save_1st_tiny:
+    %cm_jsl("Save 1st Tiny", #ctrl_add_shortcut_select, #$00A3)
+
+ctrl_add_load_1st_tiny:
+    %cm_jsl("Load 1st Tiny", #ctrl_add_shortcut_select, #$00A4)
+
+ctrl_add_save_2nd_tiny:
+    %cm_jsl("Save 2nd Tiny", #ctrl_add_shortcut_select, #$00A5)
+
+ctrl_add_load_2nd_tiny:
+    %cm_jsl("Load 2nd Tiny", #ctrl_add_shortcut_select, #$00A6)
 endif
 
 ctrl_add_shortcut_select:
