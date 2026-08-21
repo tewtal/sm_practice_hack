@@ -4532,8 +4532,11 @@ SavestateMenu:
 if !FEATURE_DEV
     dw #$FFFF
     dw #save_delete
+if !FEATURE_TINYSTATES
+elseif !FEATURE_SD2SNES
     dw #save_delete_1st_tiny
     dw #save_delete_2nd_tiny
+endif
 endif
     dw #$FFFF
     dw #rng_hard_reset
