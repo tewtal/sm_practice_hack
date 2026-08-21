@@ -62,7 +62,7 @@ ram_reserves_last = !ram_reserves_last ; !WRAM_START+$2E
 
 ram_metronome_counter = !ram_metronome_counter ; !WRAM_START+$30
 ram_armed_shine_duration = !ram_armed_shine_duration ; !WRAM_START+$32
-ram_auto_save_state = !ram_auto_save_state ; !WRAM_START+$34
+ram_activated_shine_duration = !ram_activated_shine_duration ; !WRAM_START+$34
 ram_watch_left_hud = !ram_watch_left_hud ; !WRAM_START+$36
 ram_watch_right_hud = !ram_watch_right_hud ; !WRAM_START+$38
 
@@ -88,7 +88,6 @@ ram_kraid_adjust_timer = !ram_kraid_adjust_timer ; !WRAM_START+$5A
 ram_load_preset_low_word = !ram_load_preset_low_word ; !WRAM_START+$5C
 ram_load_preset_high_word = !ram_load_preset_high_word ; !WRAM_START+$5D ; Load preset is three bytes
 ram_room_has_set_rng = !ram_room_has_set_rng ; !WRAM_START+$5E ; Room set RNG only uses the most significant bit
-ram_activated_shine_duration = !ram_activated_shine_duration ; !WRAM_START+$60
 
 ; ^ FREE SPACE ^ up to +$8C
 
@@ -168,9 +167,8 @@ ram_frames_held = !ram_frames_held ; !WRAM_PERSIST_START+$1C
 ram_quickboot_spc_state = !ram_quickboot_spc_state ; !WRAM_PERSIST_START+$1E
 ram_display_backup = !ram_display_backup ; !WRAM_PERSIST_START+$20
 ram_slowdown_mode = !ram_slowdown_mode ; !WRAM_PERSIST_START+$22
-ram_update_timers_flag = !ram_update_timers_flag ; !WRAM_PERSIST_START+$24
-
-; ^ FREE SPACE ^ up to +$26
+ram_auto_save_state = !ram_auto_save_state ; !WRAM_PERSIST_START+$24
+ram_last_save_state_type = !ram_last_save_state_type ; !WRAM_PERSIST_START+$26
 
 ram_itempickups_all = !ram_itempickups_all ; !WRAM_PERSIST_START+$28
 ram_itempickups_visible = !ram_itempickups_visible ; !WRAM_PERSIST_START+$2A
@@ -193,6 +191,8 @@ ram_watch_edit_left = !ram_watch_edit_left ; !WRAM_PERSIST_START+$46
 ram_watch_edit_right = !ram_watch_edit_right ; !WRAM_PERSIST_START+$48
 ram_watch_edit_lock_left = !ram_watch_edit_lock_left ; !WRAM_PERSIST_START+$4A
 ram_watch_edit_lock_right = !ram_watch_edit_lock_right ; !WRAM_PERSIST_START+$4C
+
+ram_update_timers_flag = !ram_update_timers_flag ; !WRAM_PERSIST_START+$4E
 
 ; ^ FREE SPACE ^ up to +$5E (!WRAM_START+$FE - !WRAM_PERSIST_START)
 
@@ -597,19 +597,21 @@ sram_categoryadjust_maxpbs = !sram_categoryadjust_maxpbs ; !SRAM_START+$13A
 sram_ctrl_1_shortcut_inputs = !sram_ctrl_1_shortcut_inputs ; !SRAM_START+$140 ; 96 bytes
 sram_ctrl_2_shortcut_inputs = !sram_ctrl_2_shortcut_inputs ; !SRAM_START+$1A0 ; 96 bytes
 
-; ^ FREE SPACE ^ up to +$B8E (normal) / +$DFE (tinystates)
+; ^ FREE SPACE ^ up to +$B88 (normal) / +$DF8 (tinystates)
 
-sram_read_only_locks_tinystates = !sram_read_only_locks_tinystates ; !SRAM_START+$B8A ; $6 bytes
-sram_streamer_name_normal = !sram_streamer_name_normal ; !SRAM_START+$B90 ; $18 bytes
-sram_custom_header_normal = !sram_custom_header_normal ; !SRAM_START+$BA8 ; $18 bytes
-sram_custom_preset_safewords_normal = !sram_custom_preset_safewords_normal ; !SRAM_START+$BC0 ; $50 bytes
-sram_custom_preset_names_normal = !sram_custom_preset_names_normal ; !SRAM_START+$C10 ; $3C0 bytes
-
-sram_read_only_locks_normal = !sram_read_only_locks_normal ; !SRAM_START+$DFA ; $6 bytes
-sram_streamer_name_tinystates = !sram_streamer_name_tinystates ; !SRAM_START+$E00 ; $18 bytes
-sram_custom_header_tinystates = !sram_custom_header_tinystates ; !SRAM_START+$E18 ; $18 bytes
-sram_custom_preset_safewords_tinystates = !sram_custom_preset_safewords_tinystates ; !SRAM_START+$E30 ; $20 bytes
-sram_custom_preset_names_tinystates = !sram_custom_preset_names_tinystates ; !SRAM_START+$E50 ; $180 bytes
+if !FEATURE_TINYSTATES
+sram_read_only_locks = !sram_read_only_locks ; !SRAM_START+$DFA ; $6 bytes
+sram_streamer_name = !sram_streamer_name ; !SRAM_START+$E00 ; $18 bytes
+sram_custom_header = !sram_custom_header ; !SRAM_START+$E18 ; $18 bytes
+sram_custom_preset_safewords = !sram_custom_preset_safewords ; !SRAM_START+$E30 ; $20 bytes
+sram_custom_preset_names = !sram_custom_preset_names ; !SRAM_START+$E50 ; $180 bytes
+else
+sram_read_only_locks = !sram_read_only_locks ; !SRAM_START+$B8A ; $6 bytes
+sram_streamer_name = !sram_streamer_name ; !SRAM_START+$B90 ; $18 bytes
+sram_custom_header = !sram_custom_header ; !SRAM_START+$BA8 ; $18 bytes
+sram_custom_preset_safewords = !sram_custom_preset_safewords ; !SRAM_START+$BC0 ; $50 bytes
+sram_custom_preset_names = !sram_custom_preset_names ; !SRAM_START+$C10 ; $3C0 bytes
+endif
 
 ; ^ FREE SPACE ^ up to +$FFE
 

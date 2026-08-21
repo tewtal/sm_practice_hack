@@ -4532,6 +4532,11 @@ SavestateMenu:
 if !FEATURE_DEV
     dw #$FFFF
     dw #save_delete
+if !FEATURE_TINYSTATES
+elseif !FEATURE_SD2SNES
+    dw #save_delete_1st_tiny
+    dw #save_delete_2nd_tiny
+endif
 endif
     dw #$FFFF
     dw #rng_hard_reset
@@ -4565,6 +4570,23 @@ save_delete:
     TYA : STA !SRAM_SAVED_STATE
     %sfxconfirm()
     RTL
+
+if !FEATURE_TINYSTATES
+elseif !FEATURE_SD2SNES
+save_delete_1st_tiny:
+    %cm_jsl("DEV Delete 1st Tinystate", .routine, #$DEAD)
+  .routine
+    TYA : STA !SRAM_1ST_SAVED_STATE
+    %sfxconfirm()
+    RTL
+
+save_delete_2nd_tiny:
+    %cm_jsl("DEV Delete 2nd Tinystate", .routine, #$DEAD)
+  .routine
+    TYA : STA !SRAM_2ND_SAVED_STATE
+    %sfxconfirm()
+    RTL
+endif
 endif
 
 save_rando_enable:

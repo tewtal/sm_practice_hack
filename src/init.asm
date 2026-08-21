@@ -167,7 +167,8 @@ init_sram_routine_table:
     dw init_sram_upgrade_1Dto1E
     dw init_sram_upgrade_1Eto1F
     dw init_sram_upgrade_1Fto20
-    dw init_sram_upgrade_20to21
+    dw init_sram_upgrade_20to22
+    dw init_sram_upgrade_20to22
     dw init_sram_fail
 
 init_sram:
@@ -321,7 +322,7 @@ endif
     LDA !VANILLA_SPRITE_PALETTE_5_BLUE_COLOR : STA !sram_sprite_features_blue_color
     LDA !VANILLA_SPRITE_PALETTE_5_GRAPPLE_COLOR : STA !sram_sprite_features_grapple_color
 
-  .upgrade_20to21
+  .upgrade_20to22
     TDC : STA !sram_read_only_locks : STA !sram_read_only_locks+2
     STA !sram_read_only_locks+4
 

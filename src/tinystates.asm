@@ -5,35 +5,35 @@
 macro wram_to_sram(wram_addr, size, sram_addr)
     dw $0000|$4312, <sram_addr>&$FFFF                            ; A addr = $xx0000
     dw $0000|$4314, ((<sram_addr>>>16)&$FF)|((<size>&$FF)<<8)    ; A addr = $70xxxx, size = $xx00
-    dw $0000|$4316, (<size>>>8)&$FF                              ; size = $80xx ($8000), unused bank reg = $00.
+    dw $0000|$4316, (<size>>>8)&$FF                              ; size = $80xx ($8000), unused bank reg = $00
     dw $0000|$2181, <wram_addr>&$FFFF                            ; WRAM addr = $xx0000
     dw $1000|$2183, ((<wram_addr>>>16)&$FF)-$7E                  ; WRAM addr = $7Exxxx  (bank is relative to $7E)
     dw $1000|$420B, $02                                          ; Trigger DMA on channel 1
 endmacro
 
 macro vram_to_sram(vram_addr, size, sram_addr)
-    dw $0000|$2116, <vram_addr>>>1                               ; VRAM address >> 1.
-    dw $9000|$213A, $0000                                        ; VRAM dummy read.
+    dw $0000|$2116, <vram_addr>>>1                               ; VRAM address >> 1
+    dw $9000|$213A, $0000                                        ; VRAM dummy read
     dw $0000|$4312, <sram_addr>&$FFFF                            ; A addr = $xx0000
     dw $0000|$4314, ((<sram_addr>>>16)&$FF)|((<size>&$FF)<<8)    ; A addr = $70xxxx, size = $xx00
-    dw $0000|$4316, (<size>>>8)&$FF                              ; size = $80xx ($0000), unused bank reg = $00.
+    dw $0000|$4316, (<size>>>8)&$FF                              ; size = $80xx ($0000), unused bank reg = $00
     dw $1000|$420B, $02                                          ; Trigger DMA on channel 1
 endmacro
 
 macro sram_to_wram(wram_addr, size, sram_addr)
     dw $0000|$4312, <sram_addr>&$FFFF                            ; A addr = $xx0000
     dw $0000|$4314, ((<sram_addr>>>16)&$FF)|((<size>&$FF)<<8)    ; A addr = $70xxxx, size = $xx00
-    dw $0000|$4316, (<size>>>8)&$FF                              ; size = $80xx ($8000), unused bank reg = $00.
+    dw $0000|$4316, (<size>>>8)&$FF                              ; size = $80xx ($8000), unused bank reg = $00
     dw $0000|$2181, <wram_addr>&$FFFF                            ; WRAM addr = $xx0000
     dw $1000|$2183, ((<wram_addr>>>16)&$FF)-$7E                  ; WRAM addr = $7Exxxx  (bank is relative to $7E)
     dw $1000|$420B, $02                                          ; Trigger DMA on channel 1
 endmacro
 
 macro sram_to_vram(vram_addr, size, sram_addr)
-    dw $0000|$2116, <vram_addr>>>1                               ; VRAM address >> 1.
+    dw $0000|$2116, <vram_addr>>>1                               ; VRAM address >> 1
     dw $0000|$4312, <sram_addr>&$FFFF                            ; A addr = $xx0000
     dw $0000|$4314, ((<sram_addr>>>16)&$FF)|((<size>&$FF)<<8)    ; A addr = $70xxxx, size = $xx00
-    dw $0000|$4316, (<size>>>8)&$FF                              ; size = $80xx ($0000), unused bank reg = $00.
+    dw $0000|$4316, (<size>>>8)&$FF                              ; size = $80xx ($0000), unused bank reg = $00
     dw $1000|$420B, $02                                          ; Trigger DMA on channel 1
 endmacro
 
@@ -141,8 +141,8 @@ post_load_state:
     JSL MenuRNG ; rerandomize hack RNG
 
   .randomizeOnLoad
+    ; Make some RNG calls in case we're in a weird XBA state
     LDX #$0008
-    ; Make some RNG calls in case we're in a weird XBA state.
   .rerandomize_loop
     JSL $808111
     DEX
@@ -238,7 +238,7 @@ post_load_music:
     JMP .check_track
 
   .clear_track_load_data
-    LDA #$0000 : JSL !MUSIC_ROUTINE
+    TDC : JSL !MUSIC_ROUTINE
     LDA #$FF00 : CLC : ADC !MUSIC_DATA : JSL !MUSIC_ROUTINE
     BRA .load_track
 
@@ -310,12 +310,12 @@ save_state:
     LDA $4300,X : STA !SRAM_DMA_BANK,X
     INX
     INY : CPY #$0B : BNE .save_dma_regs
-    CPX #$7B : BEQ .done
+    CPX #$7B : BEQ .save_dma_regs_done
     TXA : CLC : ADC #$05 : TAX
     LDY #$00
     BRA .save_dma_regs
 
-  .done
+  .save_dma_regs_done
     %ai16()
     LDX #save_write_table
     ; fallthrough to run_vm
@@ -334,7 +334,7 @@ save_write_table:
     ; Single address, B bus -> A bus.  B address = reflector to WRAM ($2180).
     dw $0000|$4310, $8080  ; direction = B->A, byte reg, B addr = $2180
 
-    ; Copy WRAM segments, uses $704000-$70727F, $710000-$726B01, $736000-$736FFF
+    ; Copy WRAM segments, uses $704000-$7074FF, $710000-$726B01, $736000-$736FFF
     %wram_to_sram($7E0000, $2000, $704000)
     %wram_to_sram($7E7000, $1000, $706000)
     %wram_to_sram($7E3300, $0200, $707000)
@@ -347,7 +347,7 @@ save_write_table:
 
     ; Address pair, B bus -> A bus.  B address = VRAM read ($2139).
     dw $0000|$4310, $3981  ; direction = B->A, word reg, B addr = $2139
-    dw $1000|$2115, $0080  ; VRAM address increment mode.
+    dw $1000|$2115, $0080  ; VRAM address increment mode
 
     ; Copy VRAM segments, uses $726C00-$735FFF
     %vram_to_sram($7C00, $400,  $726C00)
@@ -360,10 +360,10 @@ save_write_table:
     dw $0000|$4310, $3B80  ; direction = B->A, byte reg, B addr = $213B
     dw $0000|$4312, $7E00  ; A addr = $xx7E00
     dw $0000|$4314, $0070  ; A addr = $70xxxx, size = $xx00
-    dw $0000|$4316, $0002  ; size = $02xx ($0200), unused bank reg = $00.
+    dw $0000|$4316, $0002  ; size = $02xx ($0200), unused bank reg = $00
     dw $1000|$420B, $02    ; Trigger DMA on channel 1
 
-    ; Done
+    ; Done, other than DMA and flags, uses SRAM $737F00-$737FFF
     dw $0000, save_return
 
 save_return:
@@ -418,7 +418,7 @@ load_write_table:
 
     ; Address pair, A bus -> B bus.  B address = VRAM write ($2118).
     dw $0000|$4310, $1801  ; direction = A->B, B addr = $2118
-    dw $1000|$2115, $0080  ; VRAM address increment mode.
+    dw $1000|$2115, $0080  ; VRAM address increment mode
 
     ; Copy VRAM segments, uses $726C00-$735FFF
     %sram_to_vram($7C00, $400,  $726C00)
@@ -434,7 +434,7 @@ load_write_table:
     dw $0000|$4316, $0002  ; size = $02xx ($0200), unused bank reg = $00.
     dw $1000|$420B, $02    ; Trigger DMA on channel 1
 
-    ; Done
+    ; Done, other than DMA and flags, uses SRAM $737F00-$737FFF
     dw $0000, load_return
 
 load_return:

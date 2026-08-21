@@ -609,6 +609,7 @@ preset_kpdr23_kraid_fallen_hero:
     dw $0919, $0000  ; Layer 2 Y position
     dw $09C6, $0008  ; Missiles
     dw $09CA, $0005  ; Supers
+    dw $09D2, $0000  ; Currently selected item
     dw $0AF6, $05B9  ; Samus X
     dw $0AF8, $5FFF  ; Samus subpixel X
     dw $0AFA, $008B  ; Samus Y
