@@ -35,6 +35,8 @@ The savestate feature allows you to save and instantly reload at nearly any part
 &nbsp;
 A separate version of the practice hack is offered with a modified version of savestates. It offers the same features of normal savestates, but uses some of the game's own loading routines to reduce the amount of data that needs to be stored. This brings the SRAM requirements down to 128K. The trade-off is that the saved state takes slightly longer to restore. Most modern PC emulators will work with this version. The older Everdrive flash carts are also supported. Using custom Samus sprites on this version may require turning on Compressed Graphics/Palettes/Tables in Preset Options (see Sprite Patches below).
 &nbsp;
+If we can fit a modified savestate into 128K, can we fit two into 256K? Yes we can! Separate controller shortcuts are available to save and load into one of two "tiny" states using the modified format. Loading with the original shortcut will pick the last accessed state. Saving with the original shortcut will save the 256K version overwriting both 128K regions. Using an auto-save feature after a reboot without having accessed a savestate will also default to saving the 256K version.
+&nbsp;
 If you experience crashes or severe glitches when using savestates, your platform may not be supported. It's recommended that you use a version of the practice hack without the built-in savestate feature. You can still use any savestate functionality offered by your platform.
 
 
