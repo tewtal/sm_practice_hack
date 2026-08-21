@@ -280,6 +280,23 @@ endif
 
 gamemode_load_state:
 {
+if !FEATURE_TINYSTATES
+else
+    LDA !ram_last_save_state_type : BEQ .load_full
+    DEC : BEQ .load_1st_tiny
+    DEC : BEQ .load_2nd_tiny
+    BRA .load_full
+
+  .load_1st_tiny
+    LDA !SRAM_1ST_SAVED_STATE : CMP !SAFEWORD : BNE .load_full
+    JML load_state
+
+  .load_2nd_tiny
+    LDA !SRAM_2ND_SAVED_STATE : CMP !SAFEWORD : BNE .load_full
+    JML load_state
+
+  .load_full
+endif
     ; Check if a saved state exists
     LDA !SRAM_SAVED_STATE : CMP !SAFEWORD : BNE .not_available
 
@@ -289,7 +306,21 @@ gamemode_load_state:
     JML load_state
 
   .not_available
+if !FEATURE_TINYSTATES
     RTL
+else
+    LDA !SRAM_1ST_SAVED_STATE : CMP !SAFEWORD : BEQ .backup_1st_tiny
+    LDA !SRAM_2ND_SAVED_STATE : CMP !SAFEWORD : BEQ .backup_2nd_tiny
+    RTL
+
+  .backup_1st_tiny
+    LDA #$0001 : STA !ram_last_save_state_type
+    JML load_state
+
+  .backup_2nd_tiny
+    LDA #$0002 : STA !ram_last_save_state_type
+    JML load_state
+endif
 }
 
 gamemode_auto_save_state:
