@@ -1,0 +1,1175 @@
+PresetsMenuKpdr:
+    dw #presets_goto_kpdr_crateria
+    dw #presets_goto_kpdr_brinstar
+    dw #presets_goto_kpdr_kraid
+    dw #presets_goto_kpdr_upper_norfair
+    dw #presets_goto_kpdr_red_brinstar
+    dw #presets_goto_kpdr_wrecked_ship
+    dw #presets_goto_kpdr_red_brinstar_revisit
+    dw #presets_goto_kpdr_maridia
+    dw #presets_goto_kpdr_upper_norfair_revisit
+    dw #presets_goto_kpdr_lower_norfair
+    dw #presets_goto_kpdr_backtracking
+    dw #presets_goto_kpdr_tourian
+    dw #$FFFF
+    dw #presets_goto_kpdr_safeties
+    dw #$0000
+    %cm_header("PRESETS FOR KPDR")
+
+presets_goto_kpdr_crateria:
+    %cm_submenu("Crateria", #presets_submenu_kpdr_crateria)
+
+presets_goto_kpdr_brinstar:
+    %cm_jsl("Brinstar", #.routine, #presets_submenu_kpdr_brinstar)
+  .routine
+    LDA !sram_safeties_enabled_kpdr : BIT #$0002 : BEQ .done
+    LDY #presets_submenu_kpdr_brinstar_spazer
+  .done
+    JML action_submenu
+
+presets_goto_kpdr_kraid:
+    %cm_jsl("Kraid's Lair", #.routine, #presets_submenu_kpdr_kraid)
+  .routine
+    LDA !sram_safeties_enabled_kpdr : BIT #$0004 : BEQ .check_etank
+    LDY #presets_submenu_kpdr_kraid_hijump_first
+    BRA .done
+  .check_etank
+    BIT #$0008 : BEQ .done
+    LDY #presets_submenu_kpdr_kraid_etank
+  .done
+    JML action_submenu
+
+presets_goto_kpdr_upper_norfair:
+    %cm_jsl("Upper Norfair", #.routine, #presets_submenu_kpdr_upper_norfair)
+  .routine
+    LDA !sram_safeties_enabled_kpdr : BIT #$0004 : BEQ .check_ice
+    LDY #presets_submenu_kpdr_upper_norfair_hijump_first
+    BRA .done
+  .check_ice
+    BIT #$0040 : BEQ .done
+    LDY #presets_submenu_kpdr_upper_norfair_early_ice
+  .done
+    JML action_submenu
+
+presets_goto_kpdr_red_brinstar:
+    %cm_submenu("Red Brinstar", #presets_submenu_kpdr_red_brinstar)
+
+presets_goto_kpdr_wrecked_ship:
+    %cm_submenu("Wrecked Ship", #presets_submenu_kpdr_wrecked_ship)
+
+presets_goto_kpdr_red_brinstar_revisit:
+    %cm_submenu("Red Brinstar Revisit", #presets_submenu_kpdr_red_brinstar_revisit)
+
+presets_goto_kpdr_maridia:
+    %cm_jsl("Maridia", #.routine, #presets_submenu_kpdr_maridia)
+  .routine
+    LDA !sram_safeties_enabled_kpdr : BIT #$8000 : BEQ .done
+    LDY #presets_submenu_kpdr_maridia_whomple
+  .done
+    JML action_submenu
+
+presets_goto_kpdr_upper_norfair_revisit:
+    %cm_jsl("Upper Norfair Revisit", #.routine, #presets_submenu_kpdr_upper_norfair_revisit)
+  .routine
+    LDA !sram_safeties_enabled_kpdr : BIT #$0040 : BEQ .check_southern
+    LDY #presets_submenu_kpdr_upper_norfair_revisit_early_ice
+    BRA .done
+  .check_southern
+    LDA !sram_safeties_enabled_kpdr+$2 : BIT #$0020 : BEQ .done
+    LDY #presets_submenu_kpdr_upper_norfair_revisit_southern
+  .done
+    JML action_submenu
+
+presets_goto_kpdr_lower_norfair:
+    %cm_submenu("Lower Norfair", #presets_submenu_kpdr_lower_norfair)
+
+presets_goto_kpdr_backtracking:
+    %cm_submenu("Backtracking", #presets_submenu_kpdr_backtracking)
+
+presets_goto_kpdr_tourian:
+    %cm_submenu("Tourian", #presets_submenu_kpdr_tourian)
+
+presets_goto_kpdr_safeties:
+    %cm_submenu("Safeties and Strategies", #presets_submenu_kpdr_safeties_page1)
+
+presets_submenu_kpdr_crateria:
+    dw #presets_kpdr_crateria_ceres_elevator
+    dw #presets_kpdr_crateria_ceres_escape
+    dw #presets_kpdr_crateria_ceres_last_3_rooms
+    dw #presets_kpdr_crateria_ship
+    dw #presets_kpdr_crateria_parlor
+    dw #presets_kpdr_crateria_parlor_downback
+    dw #presets_kpdr_crateria_climb_down
+    dw #presets_kpdr_crateria_pit_room
+    dw #presets_kpdr_crateria_morph
+    dw #presets_kpdr_crateria_construction_zone
+    dw #presets_kpdr_crateria_construction_zone_revisit
+    dw #presets_kpdr_crateria_pit_room_revisit
+    dw #presets_kpdr_crateria_climb_up
+    dw #presets_kpdr_crateria_parlor_revisit
+    dw #presets_kpdr_crateria_flyway
+    dw #presets_kpdr_crateria_bomb_torizo
+    dw #presets_kpdr_crateria_alcatraz
+    dw #presets_kpdr_crateria_terminator
+    dw #presets_kpdr_crateria_green_pirate_shaft
+    dw #$0000
+    %cm_header("CRATERIA")
+
+presets_submenu_kpdr_brinstar:
+    dw #presets_kpdr_brinstar_green_brinstar_elevator
+    dw #presets_kpdr_brinstar_early_supers
+    dw #presets_kpdr_brinstar_dachora_room
+    dw #presets_kpdr_brinstar_big_pink
+    dw #presets_kpdr_brinstar_green_hill_zone
+    dw #presets_kpdr_brinstar_noob_bridge
+    dw #presets_kpdr_brinstar_red_tower
+    dw #presets_kpdr_brinstar_skree_boost
+    dw #presets_kpdr_brinstar_below_spazer
+    dw #presets_kpdr_brinstar_passing_through_maridia
+    dw #$0000
+    %cm_header("BRINSTAR")
+
+presets_submenu_kpdr_brinstar_spazer:
+    dw #presets_kpdr_brinstar_green_brinstar_elevator
+    dw #presets_kpdr_brinstar_early_supers
+    dw #presets_kpdr_brinstar_dachora_room
+    dw #presets_kpdr_brinstar_big_pink
+    dw #presets_kpdr_brinstar_green_hill_zone
+    dw #presets_kpdr_brinstar_noob_bridge
+    dw #presets_kpdr_brinstar_red_tower
+    dw #presets_kpdr_brinstar_skree_boost
+    dw #presets_kpdr_brinstar_below_spazer
+    dw #presets_kpdr_brinstar_spazer
+    dw #presets_kpdr_brinstar_leaving_spazer
+    dw #presets_kpdr_brinstar_passing_through_maridia
+    dw #$0000
+    %cm_header("BRINSTAR")
+
+presets_submenu_kpdr_kraid:
+    dw #presets_kpdr_kraid_entering_kraids_lair
+    dw #presets_kpdr_kraid_warehouse_zeelas
+    dw #presets_kpdr_kraid_kraid_kihunters
+    dw #presets_kpdr_kraid_minikraid
+    dw #presets_kpdr_kraid_fallen_hero
+    dw #presets_kpdr_kraid_kraid
+    dw #presets_kpdr_kraid_leaving_varia
+    dw #presets_kpdr_kraid_arthur_j_metroid
+    dw #presets_kpdr_kraid_minikraid_revisit
+    dw #presets_kpdr_kraid_kraid_kihunters_revisit
+    dw #presets_kpdr_kraid_kraid_etank
+    dw #presets_kpdr_kraid_business_center_preelev
+    dw #$0000
+    %cm_header("KRAID'S LAIR")
+
+presets_submenu_kpdr_kraid_hijump_first:
+    dw #presets_kpdr_kraid_entering_kraids_lair
+    dw #presets_kpdr_kraid_business_center_postelev
+    dw #presets_kpdr_kraid_hijump_etank
+    dw #presets_kpdr_kraid_leaving_hijump
+    dw #presets_kpdr_kraid_business_center_revisit
+    dw #presets_kpdr_kraid_warehouse_zeelas
+    dw #presets_kpdr_kraid_kraid_kihunters
+    dw #presets_kpdr_kraid_minikraid
+    dw #presets_kpdr_kraid_fallen_hero
+    dw #presets_kpdr_kraid_kraid
+    dw #presets_kpdr_kraid_leaving_varia
+    dw #presets_kpdr_kraid_arthur_j_metroid
+    dw #presets_kpdr_kraid_minikraid_revisit
+    dw #presets_kpdr_kraid_kraid_kihunters_revisit
+    dw #presets_kpdr_kraid_kraid_etank
+    dw #presets_kpdr_kraid_leaving_kraid_etank
+    dw #presets_kpdr_kraid_business_center_preelev
+    dw #$0000
+    %cm_header("KRAID'S LAIR")
+
+presets_submenu_kpdr_kraid_etank:
+    dw #presets_kpdr_kraid_entering_kraids_lair
+    dw #presets_kpdr_kraid_warehouse_zeelas
+    dw #presets_kpdr_kraid_kraid_kihunters
+    dw #presets_kpdr_kraid_minikraid
+    dw #presets_kpdr_kraid_fallen_hero
+    dw #presets_kpdr_kraid_kraid
+    dw #presets_kpdr_kraid_leaving_varia
+    dw #presets_kpdr_kraid_arthur_j_metroid
+    dw #presets_kpdr_kraid_minikraid_revisit
+    dw #presets_kpdr_kraid_kraid_kihunters_revisit
+    dw #presets_kpdr_kraid_kraid_etank
+    dw #presets_kpdr_kraid_leaving_kraid_etank
+    dw #presets_kpdr_kraid_business_center_preelev
+    dw #$0000
+    %cm_header("KRAID'S LAIR")
+
+presets_submenu_kpdr_upper_norfair:
+    dw #presets_kpdr_upper_norfair_business_center_postelev
+    dw #presets_kpdr_upper_norfair_hijump_etank
+    dw #presets_kpdr_upper_norfair_leaving_hijump
+    dw #presets_kpdr_upper_norfair_business_center_revisit
+    dw #presets_kpdr_upper_norfair_precathedral
+    dw #presets_kpdr_upper_norfair_cathedral
+    dw #presets_kpdr_upper_norfair_rising_tide
+    dw #presets_kpdr_upper_norfair_bubble_mountain
+    dw #presets_kpdr_upper_norfair_bat_cave
+    dw #presets_kpdr_upper_norfair_speed_hallway
+    dw #presets_kpdr_upper_norfair_bat_cave_revisit
+    dw #presets_kpdr_upper_norfair_single_chamber
+    dw #presets_kpdr_upper_norfair_double_chamber
+    dw #presets_kpdr_upper_norfair_double_chamber_revisit
+    dw #presets_kpdr_upper_norfair_single_chamber_revisit
+    dw #presets_kpdr_upper_norfair_bubble_mountain_revisit
+    dw #presets_kpdr_upper_norfair_frog_speedway
+    dw #presets_kpdr_upper_norfair_heading_to_red_brinstar
+    dw #$0000
+    %cm_header("UPPER NORFAIR")
+
+presets_submenu_kpdr_upper_norfair_hijump_first:
+    dw #presets_kpdr_upper_norfair_precathedral
+    dw #presets_kpdr_upper_norfair_cathedral
+    dw #presets_kpdr_upper_norfair_rising_tide
+    dw #presets_kpdr_upper_norfair_bubble_mountain
+    dw #presets_kpdr_upper_norfair_bat_cave
+    dw #presets_kpdr_upper_norfair_speed_hallway
+    dw #presets_kpdr_upper_norfair_bat_cave_revisit
+    dw #presets_kpdr_upper_norfair_single_chamber
+    dw #presets_kpdr_upper_norfair_double_chamber
+    dw #presets_kpdr_upper_norfair_double_chamber_revisit
+    dw #presets_kpdr_upper_norfair_single_chamber_revisit
+    dw #presets_kpdr_upper_norfair_bubble_mountain_revisit
+    dw #presets_kpdr_upper_norfair_frog_speedway
+    dw #presets_kpdr_upper_norfair_entering_ice
+    dw #presets_kpdr_upper_norfair_ice_escape
+    dw #presets_kpdr_upper_norfair_heading_to_red_brinstar
+    dw #$0000
+    %cm_header("UPPER NORFAIR")
+
+presets_submenu_kpdr_upper_norfair_early_ice:
+    dw #presets_kpdr_upper_norfair_business_center_postelev
+    dw #presets_kpdr_upper_norfair_hijump_etank
+    dw #presets_kpdr_upper_norfair_leaving_hijump
+    dw #presets_kpdr_upper_norfair_business_center_revisit
+    dw #presets_kpdr_upper_norfair_precathedral
+    dw #presets_kpdr_upper_norfair_cathedral
+    dw #presets_kpdr_upper_norfair_rising_tide
+    dw #presets_kpdr_upper_norfair_bubble_mountain
+    dw #presets_kpdr_upper_norfair_bat_cave
+    dw #presets_kpdr_upper_norfair_speed_hallway
+    dw #presets_kpdr_upper_norfair_bat_cave_revisit
+    dw #presets_kpdr_upper_norfair_single_chamber
+    dw #presets_kpdr_upper_norfair_double_chamber
+    dw #presets_kpdr_upper_norfair_double_chamber_revisit
+    dw #presets_kpdr_upper_norfair_single_chamber_revisit
+    dw #presets_kpdr_upper_norfair_bubble_mountain_revisit
+    dw #presets_kpdr_upper_norfair_frog_speedway
+    dw #presets_kpdr_upper_norfair_entering_ice
+    dw #presets_kpdr_upper_norfair_ice_escape
+    dw #$0000
+    %cm_header("UPPER NORFAIR")
+
+presets_submenu_kpdr_red_brinstar:
+    dw #presets_kpdr_red_brinstar_alpha_spark
+    dw #presets_kpdr_red_brinstar_reverse_skree_boost
+    dw #presets_kpdr_red_brinstar_red_tower_climb
+    dw #presets_kpdr_red_brinstar_hellway
+    dw #presets_kpdr_red_brinstar_caterpillars_down
+    dw #presets_kpdr_red_brinstar_alpha_power_bombs
+    dw #presets_kpdr_red_brinstar_caterpillars_up
+    dw #$0000
+    %cm_header("RED BRINSTAR")
+
+presets_submenu_kpdr_wrecked_ship:
+    dw #presets_kpdr_wrecked_ship_crateria_kihunters
+    dw #presets_kpdr_wrecked_ship_ocean_fly_setup
+    dw #presets_kpdr_wrecked_ship_ocean_spark
+    dw #presets_kpdr_wrecked_ship_entering_wrecked_ship
+    dw #presets_kpdr_wrecked_ship_basement
+    dw #presets_kpdr_wrecked_ship_phantoon
+    dw #presets_kpdr_wrecked_ship_leaving_phantoon
+    dw #presets_kpdr_wrecked_ship_shaft_to_supers
+    dw #presets_kpdr_wrecked_ship_wrecked_ship_shaft
+    dw #presets_kpdr_wrecked_ship_attic
+    dw #presets_kpdr_wrecked_ship_upper_west_ocean
+    dw #presets_kpdr_wrecked_ship_pancakes_and_wavers
+    dw #presets_kpdr_wrecked_ship_bowling_spark
+    dw #presets_kpdr_wrecked_ship_leaving_gravity
+    dw #presets_kpdr_wrecked_ship_moat_ball
+    dw #presets_kpdr_wrecked_ship_crateria_kihunters_return
+    dw #$0000
+    %cm_header("WRECKED SHIP")
+
+presets_submenu_kpdr_red_brinstar_revisit:
+    dw #presets_kpdr_red_brinstar_revisit_red_brinstar_elevator
+    dw #presets_kpdr_red_brinstar_revisit_caterpillars_revisit
+    dw #presets_kpdr_red_brinstar_revisit_hellway_revisit
+    dw #presets_kpdr_red_brinstar_revisit_red_tower_down
+    dw #presets_kpdr_red_brinstar_revisit_skree_boost_final
+    dw #presets_kpdr_red_brinstar_revisit_below_spazer_final
+    dw #presets_kpdr_red_brinstar_revisit_breaking_the_tube
+    dw #$0000
+    %cm_header("RED BRINSTAR REVISIT")
+
+presets_submenu_kpdr_maridia:
+    dw #presets_kpdr_maridia_fish_tank
+    dw #presets_kpdr_maridia_mt_everest
+    dw #presets_kpdr_maridia_crab_shaft
+    dw #presets_kpdr_maridia_aqueduct
+    dw #presets_kpdr_maridia_botwoon_hallway
+    dw #presets_kpdr_maridia_botwoon
+    dw #presets_kpdr_maridia_botwoon_etank
+    dw #presets_kpdr_maridia_halfie_setup
+    dw #presets_kpdr_maridia_draygon
+    dw #presets_kpdr_maridia_reverse_halfie_spikesuit
+    dw #presets_kpdr_maridia_whomple_jump
+    dw #presets_kpdr_maridia_cac_alley_east
+    dw #presets_kpdr_maridia_cac_alley_west
+    dw #presets_kpdr_maridia_plasma_spark
+    dw #presets_kpdr_maridia_plasma_climb
+    dw #presets_kpdr_maridia_plasma_beam
+    dw #presets_kpdr_maridia_plasma_spark_revisit
+    dw #presets_kpdr_maridia_toilet
+    dw #presets_kpdr_maridia_sewers
+    dw #presets_kpdr_maridia_lower_maridia_gate
+    dw #$0000
+    %cm_header("MARIDIA")
+
+presets_submenu_kpdr_maridia_whomple:
+    dw #presets_kpdr_maridia_fish_tank
+    dw #presets_kpdr_maridia_mt_everest
+    dw #presets_kpdr_maridia_crab_shaft
+    dw #presets_kpdr_maridia_aqueduct
+    dw #presets_kpdr_maridia_botwoon_hallway
+    dw #presets_kpdr_maridia_botwoon
+    dw #presets_kpdr_maridia_botwoon_etank
+    dw #presets_kpdr_maridia_halfie_setup
+    dw #presets_kpdr_maridia_draygon
+    dw #presets_kpdr_maridia_whomple_jump
+    dw #presets_kpdr_maridia_cac_alley_east
+    dw #presets_kpdr_maridia_cac_alley_west
+    dw #presets_kpdr_maridia_plasma_spark
+    dw #presets_kpdr_maridia_plasma_climb
+    dw #presets_kpdr_maridia_plasma_beam
+    dw #presets_kpdr_maridia_plasma_spark_revisit
+    dw #presets_kpdr_maridia_toilet
+    dw #presets_kpdr_maridia_sewers
+    dw #presets_kpdr_maridia_lower_maridia_gate
+    dw #$0000
+    %cm_header("MARIDIA")
+
+presets_submenu_kpdr_upper_norfair_revisit:
+    dw #presets_kpdr_upper_norfair_revisit_ice_beam_gates
+    dw #presets_kpdr_upper_norfair_revisit_ice_maze_up
+    dw #presets_kpdr_upper_norfair_revisit_ice_maze_down
+    dw #presets_kpdr_upper_norfair_revisit_ice_escape
+    dw #presets_kpdr_upper_norfair_revisit_purple_shaft
+    dw #presets_kpdr_upper_norfair_revisit_magdollite_tunnel
+    dw #presets_kpdr_upper_norfair_revisit_northern_kronic_boost
+    dw #$0000
+    %cm_header("UPPER NORFAIR REVISIT")
+
+presets_submenu_kpdr_upper_norfair_revisit_early_ice:
+    dw #presets_kpdr_upper_norfair_revisit_business_center_revisit
+    dw #presets_kpdr_upper_norfair_revisit_purple_shaft
+    dw #presets_kpdr_upper_norfair_revisit_magdollite_tunnel
+    dw #presets_kpdr_upper_norfair_revisit_northern_kronic_boost
+    dw #$0000
+    %cm_header("UPPER NORFAIR REVISIT")
+
+presets_submenu_kpdr_upper_norfair_revisit_southern:
+    dw #presets_kpdr_upper_norfair_revisit_ice_beam_gates
+    dw #presets_kpdr_upper_norfair_revisit_ice_maze_up
+    dw #presets_kpdr_upper_norfair_revisit_ice_maze_down
+    dw #presets_kpdr_upper_norfair_revisit_ice_escape
+    dw #presets_kpdr_upper_norfair_revisit_croc_speedway
+    dw #presets_kpdr_upper_norfair_revisit_spiky_acid_snakes
+    dw #presets_kpdr_upper_norfair_revisit_southern_kronic_boost
+    dw #$0000
+    %cm_header("UPPER NORFAIR REVISIT")
+
+presets_submenu_kpdr_lower_norfair:
+    dw #presets_kpdr_lower_norfair_ln_main_hall
+    dw #presets_kpdr_lower_norfair_prepillars
+    dw #presets_kpdr_lower_norfair_fast_pillars_setup
+    dw #presets_kpdr_lower_norfair_worst_room_in_the_game
+    dw #presets_kpdr_lower_norfair_amphitheatre
+    dw #presets_kpdr_lower_norfair_kihunter_stairs_down
+    dw #presets_kpdr_lower_norfair_wasteland
+    dw #presets_kpdr_lower_norfair_metal_ninja_pirates
+    dw #presets_kpdr_lower_norfair_plowerhouse
+    dw #presets_kpdr_lower_norfair_ridley
+    dw #presets_kpdr_lower_norfair_leaving_ridley
+    dw #presets_kpdr_lower_norfair_reverse_plowerhouse
+    dw #presets_kpdr_lower_norfair_wasteland_revisit
+    dw #presets_kpdr_lower_norfair_kihunter_stairs_up
+    dw #presets_kpdr_lower_norfair_fireflea_room
+    dw #presets_kpdr_lower_norfair_springball_maze
+    dw #presets_kpdr_lower_norfair_three_musketeers
+    dw #presets_kpdr_lower_norfair_single_chamber_final
+    dw #presets_kpdr_lower_norfair_bubble_mountain_final
+    dw #presets_kpdr_lower_norfair_business_center_final
+    dw #$0000
+    %cm_header("LOWER NORFAIR")
+
+presets_submenu_kpdr_backtracking:
+    dw #presets_kpdr_backtracking_maridia_tube_revisit
+    dw #presets_kpdr_backtracking_fish_tank_revisit
+    dw #presets_kpdr_backtracking_mt_everest_revisit
+    dw #presets_kpdr_backtracking_red_brinstar_green_gate
+    dw #presets_kpdr_backtracking_crateria_kihunters_final
+    dw #presets_kpdr_backtracking_parlor_spacejump
+    dw #presets_kpdr_backtracking_terminator_revisit
+    dw #presets_kpdr_backtracking_green_pirate_shaft_revisit
+    dw #presets_kpdr_backtracking_g4_hallway
+    dw #presets_kpdr_backtracking_g4_elevator
+    dw #$0000
+    %cm_header("BACKTRACKING")
+
+presets_submenu_kpdr_tourian:
+    dw #presets_kpdr_tourian_tourian_elevator_room
+    dw #presets_kpdr_tourian_metroids_1
+    dw #presets_kpdr_tourian_metroids_2
+    dw #presets_kpdr_tourian_metroids_3
+    dw #presets_kpdr_tourian_metroids_4
+    dw #presets_kpdr_tourian_giant_hoppers
+    dw #presets_kpdr_tourian_baby_skip
+    dw #presets_kpdr_tourian_gadora_room
+    dw #presets_kpdr_tourian_zeb_skip
+    dw #presets_kpdr_tourian_mother_brain_2
+    dw #presets_kpdr_tourian_mother_brain_3
+    dw #presets_kpdr_tourian_zebes_escape
+    dw #presets_kpdr_tourian_escape_room_3
+    dw #presets_kpdr_tourian_escape_room_4
+    dw #presets_kpdr_tourian_escape_climb
+    dw #presets_kpdr_tourian_escape_parlor
+    dw #$0000
+    %cm_header("TOURIAN")
+
+presets_submenu_kpdr_safeties_page1:
+    dw #presets_kpdr_safeties_zeb_skip_skip
+    dw #presets_kpdr_safeties_hjb_missiles
+    dw #presets_kpdr_safeties_moat_missiles
+    dw #presets_kpdr_safeties_crab_supers
+    dw #presets_kpdr_safeties_aqueduct_missiles
+    dw #presets_kpdr_safeties_aqueduct_supers
+    dw #$FFFF
+    dw #presets_kpdr_safeties_hjjump_first
+    dw #presets_kpdr_safeties_kraid_etank
+    dw #presets_kpdr_safeties_early_ice
+    dw #presets_kpdr_safeties_southern_route
+    dw #$FFFF
+    dw #presets_kpdr_safeties_spazer
+    dw #presets_kpdr_safeties_grapple
+    dw #presets_kpdr_safeties_screw_attack
+    dw #$FFFF
+    dw #presets_kpdr_safeties_goto_page2
+    dw #$0000
+    %cm_header("SAFETIES AND STRATEGIES")
+
+presets_submenu_kpdr_safeties_page2:
+    dw #presets_kpdr_safeties_alpha_spark_skip
+    dw #presets_kpdr_safeties_spend_yellow_door_pb
+    dw #presets_kpdr_safeties_ocean_fly_skip
+    dw #presets_kpdr_safeties_phantoon_xfactor
+    dw #presets_kpdr_safeties_sloaters_refill
+    dw #presets_kpdr_safeties_mama_turtle_etank
+    dw #presets_kpdr_safeties_botwoon_xfactor
+    dw #presets_kpdr_safeties_halfie_savings
+    dw #presets_kpdr_safeties_whomple_savings
+    dw #presets_kpdr_safeties_plasma_spark_skip
+    dw #presets_kpdr_safeties_blue_pillars
+    dw #presets_kpdr_safeties_fireflea_etank
+    dw #presets_kpdr_safeties_ridley_etank
+    dw #$FFFF
+    dw #presets_kpdr_safeties_goto_page1
+    dw #$0000
+    %cm_header("SAFETIES AND STRATEGIES")
+
+presets_kpdr_safeties_goto_page1:
+    %cm_adjacent_submenu("GOTO PAGE ONE", #presets_submenu_kpdr_safeties_page1)
+
+presets_kpdr_safeties_goto_page2:
+    %cm_adjacent_submenu("GOTO PAGE TWO", #presets_submenu_kpdr_safeties_page2)
+
+presets_kpdr_safeties_zeb_skip_skip:
+    %cm_toggle_bit("Zeb Skip Skip", !sram_safeties_enabled_kpdr, #$0001, .routine)
+  .routine
+    ; Zeb Skip Skip requires HJB and moat and aqueduct missiles and supers
+    BIT #$0001 : BEQ .end
+    ORA #$0210 : STA !sram_safeties_enabled_kpdr
+    LDA !sram_safeties_enabled_kpdr+$2 : ORA #$0003 : STA !sram_safeties_enabled_kpdr+$2
+  .end
+    RTL
+
+presets_kpdr_safeties_spazer:
+    %cm_toggle_bit("Spazer", !sram_safeties_enabled_kpdr, #$0002, #0)
+
+presets_kpdr_safeties_hjjump_first:
+    %cm_toggle_bit("Hi-Jump First", !sram_safeties_enabled_kpdr, #$0004, .routine)
+  .routine
+    ; Hi-Jump First requires Kraid E-Tank and HJB missiles and Early Ice
+    BIT #$0004 : BEQ .end
+    ORA #$0058 : STA !sram_safeties_enabled_kpdr
+    LDA !sram_safeties_enabled_kpdr+$2 : AND #$FFDF : STA !sram_safeties_enabled_kpdr+$2
+  .end
+    RTL
+
+presets_kpdr_safeties_kraid_etank:
+    %cm_toggle_bit("Kraid E-Tank", !sram_safeties_enabled_kpdr, #$0008, .routine)
+  .routine
+    ; Kraid E-Tank required by Hi-Jump First
+    BIT #$0008 : BNE .end
+    AND #$FFFB : STA !sram_safeties_enabled_kpdr
+  .end
+    RTL
+
+presets_kpdr_safeties_hjb_missiles:
+    %cm_toggle_bit("HJB Missiles", !sram_safeties_enabled_kpdr, #$0010, .routine)
+  .routine
+    ; HJB missiles required by Zeb Skip Skip and Hi-Jump First
+    BIT #$0010 : BNE .end
+    AND #$FFFA : STA !sram_safeties_enabled_kpdr
+  .end
+    RTL
+
+presets_kpdr_safeties_grapple:
+    %cm_toggle_bit("Grapple", !sram_safeties_enabled_kpdr, #$0020, #0)
+
+presets_kpdr_safeties_early_ice:
+    %cm_toggle_bit("Early Ice", !sram_safeties_enabled_kpdr, #$0040, .routine)
+  .routine
+    ; Early Ice required by Hi-Jump First
+    ; Late Ice required by Southern Route
+    BIT #$0040 : BNE .early_ice
+    AND #$FFFB : STA !sram_safeties_enabled_kpdr
+    RTL
+  .early_ice
+    LDA !sram_safeties_enabled_kpdr+$2 : AND #$FFDF : STA !sram_safeties_enabled_kpdr+$2
+    RTL
+
+presets_kpdr_safeties_alpha_spark_skip:
+    %cm_toggle_bit("Alpha Spark Skip", !sram_safeties_enabled_kpdr, #$0080, #0)
+
+presets_kpdr_safeties_spend_yellow_door_pb:
+    %cm_toggle_bit_inverted("Save Yellow Door PB", !sram_safeties_enabled_kpdr, #$0100, #0)
+
+presets_kpdr_safeties_moat_missiles:
+    %cm_toggle_bit("Moat Missiles", !sram_safeties_enabled_kpdr, #$0200, .routine)
+  .routine
+    ; Moat missiles required by Zeb Skip Skip
+    BIT #$0200 : BNE .end
+    AND #$FFFE : STA !sram_safeties_enabled_kpdr
+  .end
+    RTL
+
+presets_kpdr_safeties_ocean_fly_skip:
+    %cm_toggle_bit("Ocean Fly Skip", !sram_safeties_enabled_kpdr, #$0400, #0)
+
+presets_kpdr_safeties_phantoon_xfactor:
+    %cm_toggle_bit("Phantoon X-Factor", !sram_safeties_enabled_kpdr, #$0800, #0)
+
+presets_kpdr_safeties_sloaters_refill:
+    %cm_toggle_bit("Sloaters Refill", !sram_safeties_enabled_kpdr, #$1000, #0)
+
+presets_kpdr_safeties_mama_turtle_etank:
+    %cm_toggle_bit("Mama Turtle E-Tank", !sram_safeties_enabled_kpdr, #$2000, #0)
+
+presets_kpdr_safeties_crab_supers:
+    %cm_toggle_bit("Crab Supers", !sram_safeties_enabled_kpdr, #$4000, #0)
+
+presets_kpdr_safeties_botwoon_xfactor:
+    %cm_toggle_bit("Botwoon X-Factor", !sram_safeties_enabled_kpdr, #$8000, #0)
+
+presets_kpdr_safeties_aqueduct_missiles:
+    %cm_toggle_bit("Aqueduct Missiles", !sram_safeties_enabled_kpdr+$2, #$0001, .routine)
+  .routine
+    ; Aqueduct missiles required by Zeb Skip Skip
+    BIT #$0001 : BNE .end
+    LDA !sram_safeties_enabled_kpdr : AND #$FFFE : STA !sram_safeties_enabled_kpdr
+  .end
+    RTL
+
+presets_kpdr_safeties_aqueduct_supers:
+    %cm_toggle_bit("Aqueduct Supers", !sram_safeties_enabled_kpdr+$2, #$0002, .routine)
+  .routine
+    ; Aqueduct supers required by Zeb Skip Skip
+    BIT #$0002 : BNE .end
+    LDA !sram_safeties_enabled_kpdr : AND #$FFFE : STA !sram_safeties_enabled_kpdr
+  .end
+    RTL
+
+presets_kpdr_safeties_halfie_savings:
+    %cm_toggle_bit("Halfie Savings", !sram_safeties_enabled_kpdr+$2, #$0004, #0)
+
+presets_kpdr_safeties_whomple_savings:
+    %cm_toggle_bit("Whomple Savings", !sram_safeties_enabled_kpdr+$2, #$0008, #0)
+
+presets_kpdr_safeties_plasma_spark_skip:
+    %cm_toggle_bit("Plasma Spark Skip", !sram_safeties_enabled_kpdr+$2, #$0010, #0)
+
+presets_kpdr_safeties_southern_route:
+    %cm_toggle_bit("Southern Route", !sram_safeties_enabled_kpdr+$2, #$0020, .routine)
+  .routine
+    ; Southern Route requires Late Ice
+    BIT #$0020 : BEQ .end
+    LDA !sram_safeties_enabled_kpdr : AND #$FFBB : STA !sram_safeties_enabled_kpdr
+  .end
+    RTL
+
+presets_kpdr_safeties_screw_attack:
+    %cm_toggle_bit("Screw Attack", !sram_safeties_enabled_kpdr+$2, #$0040, #0)
+
+presets_kpdr_safeties_blue_pillars:
+    %cm_toggle_bit("Blue Pillars", !sram_safeties_enabled_kpdr+$2, #$0080, #0)
+
+presets_kpdr_safeties_fireflea_etank:
+    %cm_toggle_bit("Fireflea E-Tank", !sram_safeties_enabled_kpdr+$2, #$0100, #0)
+
+presets_kpdr_safeties_ridley_etank:
+    %cm_toggle_bit("Ridley E-Tank", !sram_safeties_enabled_kpdr+$2, #$0200, #0)
+
+
+; Crateria
+presets_kpdr_crateria_ceres_elevator:
+    %cm_preset("Ceres Elevator", #preset_names_ceres_elevator, #preset_kpdr_crateria_ceres_elevator)
+
+presets_kpdr_crateria_ceres_escape:
+    %cm_preset("Ceres Escape", #preset_names_ceres_escape, #preset_kpdr_crateria_ceres_escape)
+
+presets_kpdr_crateria_ceres_last_3_rooms:
+    %cm_preset("Ceres Last 3 Rooms", #preset_names_ceres_last_3_rooms, #preset_kpdr_crateria_ceres_last_3_rooms)
+
+presets_kpdr_crateria_ship:
+    %cm_preset("Ship", #preset_names_ship, #preset_kpdr_crateria_ship)
+
+presets_kpdr_crateria_parlor:
+    %cm_preset("Parlor", #preset_names_parlor, #preset_kpdr_crateria_parlor)
+
+presets_kpdr_crateria_parlor_downback:
+    %cm_preset("Parlor Downback", #preset_names_parlor_downback, #preset_kpdr_crateria_parlor_downback)
+
+presets_kpdr_crateria_climb_down:
+    %cm_preset("Climb Down", #preset_names_climb_down, #preset_kpdr_crateria_climb_down)
+
+presets_kpdr_crateria_pit_room:
+    %cm_preset("Pit Room", #preset_names_pit_room, #preset_kpdr_crateria_pit_room)
+
+presets_kpdr_crateria_morph:
+    %cm_preset("Morph", #preset_names_morph, #preset_kpdr_crateria_morph)
+
+presets_kpdr_crateria_construction_zone:
+    %cm_preset("Construction Zone", #preset_names_construction_zone, #preset_kpdr_crateria_construction_zone)
+
+presets_kpdr_crateria_construction_zone_revisit:
+    %cm_preset("Construction Zone Revisit", #preset_names_construction_zone_revisit, #preset_kpdr_crateria_construction_zone_revisit)
+
+presets_kpdr_crateria_pit_room_revisit:
+    %cm_preset("Pit Room Revisit", #preset_names_pit_room_revisit, #preset_kpdr_crateria_pit_room_revisit)
+
+presets_kpdr_crateria_climb_up:
+    %cm_preset("Climb Up", #preset_names_climb_up, #preset_kpdr_crateria_climb_up)
+
+presets_kpdr_crateria_parlor_revisit:
+    %cm_preset("Parlor Revisit", #preset_names_parlor_revisit, #preset_kpdr_crateria_parlor_revisit)
+
+presets_kpdr_crateria_flyway:
+    %cm_preset("Flyway", #preset_names_flyway, #preset_kpdr_crateria_flyway)
+
+presets_kpdr_crateria_bomb_torizo:
+    %cm_preset("Bomb Torizo", #preset_names_bomb_torizo, #preset_kpdr_crateria_bomb_torizo)
+
+presets_kpdr_crateria_alcatraz:
+    %cm_preset("Alcatraz", #preset_names_alcatraz, #preset_kpdr_crateria_alcatraz)
+
+presets_kpdr_crateria_terminator:
+    %cm_preset("Terminator", #preset_names_terminator, #preset_kpdr_crateria_terminator)
+
+presets_kpdr_crateria_green_pirate_shaft:
+    %cm_preset("Green Pirate Shaft", #preset_names_green_pirate_shaft, #preset_kpdr_crateria_green_pirate_shaft)
+
+
+; Brinstar
+presets_kpdr_brinstar_green_brinstar_elevator:
+    %cm_preset("Green Brinstar Elevator", #preset_names_green_brinstar_elevator, #preset_kpdr_brinstar_green_brinstar_elevator)
+
+presets_kpdr_brinstar_early_supers:
+    %cm_preset("Early Supers", #preset_names_early_supers, #preset_kpdr_brinstar_early_supers)
+
+presets_kpdr_brinstar_dachora_room:
+    %cm_preset("Dachora Room", #preset_names_dachora_room, #preset_kpdr_brinstar_dachora_room)
+
+presets_kpdr_brinstar_big_pink:
+    %cm_preset("Big Pink", #preset_names_big_pink, #preset_kpdr_brinstar_big_pink)
+
+presets_kpdr_brinstar_green_hill_zone:
+    %cm_preset("Green Hill Zone", #preset_names_green_hill_zone, #preset_kpdr_brinstar_green_hill_zone)
+
+presets_kpdr_brinstar_noob_bridge:
+    %cm_preset("Noob Bridge", #preset_names_noob_bridge, #preset_kpdr_brinstar_noob_bridge)
+
+presets_kpdr_brinstar_red_tower:
+    %cm_preset("Red Tower", #preset_names_red_tower, #preset_kpdr_brinstar_red_tower)
+
+presets_kpdr_brinstar_skree_boost:
+    %cm_preset("Skree Boost", #preset_names_skree_boost, #preset_kpdr_brinstar_skree_boost)
+
+presets_kpdr_brinstar_below_spazer:
+    %cm_preset("Below Spazer", #preset_names_below_spazer, #preset_kpdr_brinstar_below_spazer)
+
+presets_kpdr_brinstar_spazer:
+    %cm_preset("Spazer", #preset_names_spazer, #preset_kpdr_brinstar_spazer)
+
+presets_kpdr_brinstar_leaving_spazer:
+    %cm_preset("Leaving Spazer", #preset_names_leaving_spazer, #preset_kpdr_brinstar_leaving_spazer)
+
+presets_kpdr_brinstar_passing_through_maridia:
+    %cm_preset("Passing Through Maridia", #preset_names_passing_through_maridia, #preset_kpdr_brinstar_passing_through_maridia)
+
+
+; Kraid
+presets_kpdr_kraid_entering_kraids_lair:
+    %cm_preset("Entering Kraid's Lair", #preset_names_entering_kraids_lair, #preset_kpdr_kraid_entering_kraids_lair)
+
+presets_kpdr_kraid_business_center_postelev:
+    %cm_preset("Business Center Post-Elev", #preset_names_business_center_postelev, #preset_kpdr_kraid_business_center_postelev)
+
+presets_kpdr_kraid_hijump_etank:
+    %cm_preset("Hi-Jump E-Tank", #preset_names_hijump_etank, #preset_kpdr_kraid_hijump_etank)
+
+presets_kpdr_kraid_leaving_hijump:
+    %cm_preset("Leaving Hi-Jump", #preset_names_leaving_hijump, #preset_kpdr_kraid_leaving_hijump)
+
+presets_kpdr_kraid_business_center_revisit:
+    %cm_preset("Business Center Revisit", #preset_names_business_center_revisit, #preset_kpdr_kraid_business_center_revisit)
+
+presets_kpdr_kraid_warehouse_zeelas:
+    %cm_preset("Warehouse Zeelas", #preset_names_warehouse_zeelas, #preset_kpdr_kraid_warehouse_zeelas)
+
+presets_kpdr_kraid_kraid_kihunters:
+    %cm_preset("Kraid Kihunters", #preset_names_kraid_kihunters, #preset_kpdr_kraid_kraid_kihunters)
+
+presets_kpdr_kraid_minikraid:
+    %cm_preset("Mini-Kraid", #preset_names_minikraid, #preset_kpdr_kraid_minikraid)
+
+presets_kpdr_kraid_fallen_hero:
+    %cm_preset("Fallen Hero", #preset_names_fallen_hero, #preset_kpdr_kraid_fallen_hero)
+
+presets_kpdr_kraid_kraid:
+    %cm_preset("Kraid", #preset_names_kraid, #preset_kpdr_kraid_kraid)
+
+presets_kpdr_kraid_leaving_varia:
+    %cm_preset("Leaving Varia", #preset_names_leaving_varia, #preset_kpdr_kraid_leaving_varia)
+
+presets_kpdr_kraid_arthur_j_metroid:
+    %cm_preset("Arthur J. Metroid", #preset_names_arthur_j_metroid, #preset_kpdr_kraid_arthur_j_metroid)
+
+presets_kpdr_kraid_minikraid_revisit:
+    %cm_preset("Mini-Kraid Revisit", #preset_names_minikraid_revisit, #preset_kpdr_kraid_minikraid_revisit)
+
+presets_kpdr_kraid_kraid_kihunters_revisit:
+    %cm_preset("Kraid Kihunters Revisit", #preset_names_kraid_kihunters_revisit, #preset_kpdr_kraid_kraid_kihunters_revisit)
+
+presets_kpdr_kraid_kraid_etank:
+    %cm_preset("Kraid E-Tank", #preset_names_kraid_etank, #preset_kpdr_kraid_kraid_etank)
+
+presets_kpdr_kraid_leaving_kraid_etank:
+    %cm_preset("Leaving Kraid E-Tank", #preset_names_leaving_kraid_etank, #preset_kpdr_kraid_leaving_kraid_etank)
+
+presets_kpdr_kraid_business_center_preelev:
+    %cm_preset("Business Center Pre-Elev", #preset_names_business_center_preelev, #preset_kpdr_kraid_business_center_preelev)
+
+
+; Upper Norfair
+presets_kpdr_upper_norfair_business_center_postelev:
+    %cm_preset("Business Center Post-Elev", #preset_names_business_center_postelev, #preset_kpdr_upper_norfair_business_center_postelev)
+
+presets_kpdr_upper_norfair_hijump_etank:
+    %cm_preset("Hi-Jump E-Tank", #preset_names_hijump_etank, #preset_kpdr_upper_norfair_hijump_etank)
+
+presets_kpdr_upper_norfair_leaving_hijump:
+    %cm_preset("Leaving Hi-Jump", #preset_names_leaving_hijump, #preset_kpdr_upper_norfair_leaving_hijump)
+
+presets_kpdr_upper_norfair_business_center_revisit:
+    %cm_preset("Business Center Revisit", #preset_names_business_center_revisit, #preset_kpdr_upper_norfair_business_center_revisit)
+
+presets_kpdr_upper_norfair_precathedral:
+    %cm_preset("Pre-Cathedral", #preset_names_precathedral, #preset_kpdr_upper_norfair_precathedral)
+
+presets_kpdr_upper_norfair_cathedral:
+    %cm_preset("Cathedral", #preset_names_cathedral, #preset_kpdr_upper_norfair_cathedral)
+
+presets_kpdr_upper_norfair_rising_tide:
+    %cm_preset("Rising Tide", #preset_names_rising_tide, #preset_kpdr_upper_norfair_rising_tide)
+
+presets_kpdr_upper_norfair_bubble_mountain:
+    %cm_preset("Bubble Mountain", #preset_names_bubble_mountain, #preset_kpdr_upper_norfair_bubble_mountain)
+
+presets_kpdr_upper_norfair_bat_cave:
+    %cm_preset("Bat Cave", #preset_names_bat_cave, #preset_kpdr_upper_norfair_bat_cave)
+
+presets_kpdr_upper_norfair_speed_hallway:
+    %cm_preset("Speed Hallway", #preset_names_speed_hallway, #preset_kpdr_upper_norfair_speed_hallway)
+
+presets_kpdr_upper_norfair_bat_cave_revisit:
+    %cm_preset("Bat Cave Revisit", #preset_names_bat_cave_revisit, #preset_kpdr_upper_norfair_bat_cave_revisit)
+
+presets_kpdr_upper_norfair_single_chamber:
+    %cm_preset("Single Chamber", #preset_names_single_chamber, #preset_kpdr_upper_norfair_single_chamber)
+
+presets_kpdr_upper_norfair_double_chamber:
+    %cm_preset("Double Chamber", #preset_names_double_chamber, #preset_kpdr_upper_norfair_double_chamber)
+
+presets_kpdr_upper_norfair_double_chamber_revisit:
+    %cm_preset("Double Chamber Revisit", #preset_names_double_chamber_revisit, #preset_kpdr_upper_norfair_double_chamber_revisit)
+
+presets_kpdr_upper_norfair_single_chamber_revisit:
+    %cm_preset("Single Chamber Revisit", #preset_names_single_chamber_revisit, #preset_kpdr_upper_norfair_single_chamber_revisit)
+
+presets_kpdr_upper_norfair_bubble_mountain_revisit:
+    %cm_preset("Bubble Mountain Revisit", #preset_names_bubble_mountain_revisit, #preset_kpdr_upper_norfair_bubble_mountain_revisit)
+
+presets_kpdr_upper_norfair_frog_speedway:
+    %cm_preset("Frog Speedway", #preset_names_frog_speedway, #preset_kpdr_upper_norfair_frog_speedway)
+
+presets_kpdr_upper_norfair_heading_to_red_brinstar:
+    %cm_preset("Heading To Red Brinstar", #preset_names_heading_to_red_brinstar, #preset_kpdr_upper_norfair_heading_to_red_brinstar)
+
+presets_kpdr_upper_norfair_entering_ice:
+    %cm_preset("Entering Ice", #preset_names_entering_ice, #preset_kpdr_upper_norfair_entering_ice)
+
+presets_kpdr_upper_norfair_ice_escape:
+    %cm_preset("Ice Escape", #preset_names_ice_escape, #preset_kpdr_upper_norfair_ice_escape)
+
+
+; Red Brinstar
+presets_kpdr_red_brinstar_alpha_spark:
+    %cm_preset("Alpha Spark", #preset_names_alpha_spark, #preset_kpdr_red_brinstar_alpha_spark)
+
+presets_kpdr_red_brinstar_reverse_skree_boost:
+    %cm_preset("Reverse Skree Boost", #preset_names_reverse_skree_boost, #preset_kpdr_red_brinstar_reverse_skree_boost)
+
+presets_kpdr_red_brinstar_red_tower_climb:
+    %cm_preset("Red Tower Climb", #preset_names_red_tower_climb, #preset_kpdr_red_brinstar_red_tower_climb)
+
+presets_kpdr_red_brinstar_hellway:
+    %cm_preset("Hellway", #preset_names_hellway, #preset_kpdr_red_brinstar_hellway)
+
+presets_kpdr_red_brinstar_caterpillars_down:
+    %cm_preset("Caterpillars Down", #preset_names_caterpillars_down, #preset_kpdr_red_brinstar_caterpillars_down)
+
+presets_kpdr_red_brinstar_alpha_power_bombs:
+    %cm_preset("Alpha Power Bombs", #preset_names_alpha_power_bombs, #preset_kpdr_red_brinstar_alpha_power_bombs)
+
+presets_kpdr_red_brinstar_caterpillars_up:
+    %cm_preset("Caterpillars Up", #preset_names_caterpillars_up, #preset_kpdr_red_brinstar_caterpillars_up)
+
+
+; Wrecked Ship
+presets_kpdr_wrecked_ship_crateria_kihunters:
+    %cm_preset("Crateria Kihunters", #preset_names_crateria_kihunters, #preset_kpdr_wrecked_ship_crateria_kihunters)
+
+presets_kpdr_wrecked_ship_ocean_fly_setup:
+    %cm_preset("Ocean Fly Setup", #preset_names_ocean_fly_setup, #preset_kpdr_wrecked_ship_ocean_fly_setup)
+
+presets_kpdr_wrecked_ship_ocean_spark:
+    %cm_preset("Ocean Spark", #preset_names_ocean_spark, #preset_kpdr_wrecked_ship_ocean_spark)
+
+presets_kpdr_wrecked_ship_entering_wrecked_ship:
+    %cm_preset("Entering Wrecked Ship", #preset_names_entering_wrecked_ship, #preset_kpdr_wrecked_ship_entering_wrecked_ship)
+
+presets_kpdr_wrecked_ship_basement:
+    %cm_preset("Basement", #preset_names_basement, #preset_kpdr_wrecked_ship_basement)
+
+presets_kpdr_wrecked_ship_phantoon:
+    %cm_preset("Phantoon", #preset_names_phantoon, #preset_kpdr_wrecked_ship_phantoon)
+
+presets_kpdr_wrecked_ship_leaving_phantoon:
+    %cm_preset("Leaving Phantoon", #preset_names_leaving_phantoon, #preset_kpdr_wrecked_ship_leaving_phantoon)
+
+presets_kpdr_wrecked_ship_shaft_to_supers:
+    %cm_preset("Shaft To Supers", #preset_names_shaft_to_supers, #preset_kpdr_wrecked_ship_shaft_to_supers)
+
+presets_kpdr_wrecked_ship_wrecked_ship_shaft:
+    %cm_preset("Wrecked Ship Shaft", #preset_names_wrecked_ship_shaft, #preset_kpdr_wrecked_ship_wrecked_ship_shaft)
+
+presets_kpdr_wrecked_ship_attic:
+    %cm_preset("Attic", #preset_names_attic, #preset_kpdr_wrecked_ship_attic)
+
+presets_kpdr_wrecked_ship_upper_west_ocean:
+    %cm_preset("Upper West Ocean", #preset_names_upper_west_ocean, #preset_kpdr_wrecked_ship_upper_west_ocean)
+
+presets_kpdr_wrecked_ship_pancakes_and_wavers:
+    %cm_preset("Pancakes and Wavers", #preset_names_pancakes_and_wavers, #preset_kpdr_wrecked_ship_pancakes_and_wavers)
+
+presets_kpdr_wrecked_ship_bowling_spark:
+    %cm_preset("Bowling Spark", #preset_names_bowling_spark, #preset_kpdr_wrecked_ship_bowling_spark)
+
+presets_kpdr_wrecked_ship_leaving_gravity:
+    %cm_preset("Leaving Gravity", #preset_names_leaving_gravity, #preset_kpdr_wrecked_ship_leaving_gravity)
+
+presets_kpdr_wrecked_ship_moat_ball:
+    %cm_preset("Moat Ball", #preset_names_moat_ball, #preset_kpdr_wrecked_ship_moat_ball)
+
+presets_kpdr_wrecked_ship_crateria_kihunters_return:
+    %cm_preset("Crateria Kihunters Return", #preset_names_crateria_kihunters_return, #preset_kpdr_wrecked_ship_crateria_kihunters_return)
+
+
+; Red Brinstar Revisit
+presets_kpdr_red_brinstar_revisit_red_brinstar_elevator:
+    %cm_preset("Red Brinstar Elevator", #preset_names_red_brinstar_elevator, #preset_kpdr_red_brinstar_revisit_red_brinstar_elevator)
+
+presets_kpdr_red_brinstar_revisit_caterpillars_revisit:
+    %cm_preset("Caterpillars Revisit", #preset_names_caterpillars_revisit, #preset_kpdr_red_brinstar_revisit_caterpillars_revisit)
+
+presets_kpdr_red_brinstar_revisit_hellway_revisit:
+    %cm_preset("Hellway Revisit", #preset_names_hellway_revisit, #preset_kpdr_red_brinstar_revisit_hellway_revisit)
+
+presets_kpdr_red_brinstar_revisit_red_tower_down:
+    %cm_preset("Red Tower Down", #preset_names_red_tower_down, #preset_kpdr_red_brinstar_revisit_red_tower_down)
+
+presets_kpdr_red_brinstar_revisit_skree_boost_final:
+    %cm_preset("Skree Boost Final", #preset_names_skree_boost_final, #preset_kpdr_red_brinstar_revisit_skree_boost_final)
+
+presets_kpdr_red_brinstar_revisit_below_spazer_final:
+    %cm_preset("Below Spazer Final", #preset_names_below_spazer_final, #preset_kpdr_red_brinstar_revisit_below_spazer_final)
+
+presets_kpdr_red_brinstar_revisit_breaking_the_tube:
+    %cm_preset("Breaking The Tube", #preset_names_breaking_the_tube, #preset_kpdr_red_brinstar_revisit_breaking_the_tube)
+
+
+; Maridia
+presets_kpdr_maridia_fish_tank:
+    %cm_preset("Fish Tank", #preset_names_fish_tank, #preset_kpdr_maridia_fish_tank)
+
+presets_kpdr_maridia_mt_everest:
+    %cm_preset("Mt. Everest", #preset_names_mt_everest, #preset_kpdr_maridia_mt_everest)
+
+presets_kpdr_maridia_crab_shaft:
+    %cm_preset("Crab Shaft", #preset_names_crab_shaft, #preset_kpdr_maridia_crab_shaft)
+
+presets_kpdr_maridia_aqueduct:
+    %cm_preset("Aqueduct", #preset_names_aqueduct, #preset_kpdr_maridia_aqueduct)
+
+presets_kpdr_maridia_botwoon_hallway:
+    %cm_preset("Botwoon Hallway", #preset_names_botwoon_hallway, #preset_kpdr_maridia_botwoon_hallway)
+
+presets_kpdr_maridia_botwoon:
+    %cm_preset("Botwoon", #preset_names_botwoon, #preset_kpdr_maridia_botwoon)
+
+presets_kpdr_maridia_botwoon_etank:
+    %cm_preset("Botwoon E-Tank", #preset_names_botwoon_etank, #preset_kpdr_maridia_botwoon_etank)
+
+presets_kpdr_maridia_halfie_setup:
+    %cm_preset("Halfie Setup", #preset_names_halfie_setup, #preset_kpdr_maridia_halfie_setup)
+
+presets_kpdr_maridia_draygon:
+    %cm_preset("Draygon", #preset_names_draygon, #preset_kpdr_maridia_draygon)
+
+presets_kpdr_maridia_reverse_halfie_spikesuit:
+    %cm_preset("Reverse Halfie (Spikesuit)", #preset_names_reverse_halfie_spikesuit, #preset_kpdr_maridia_reverse_halfie_spikesuit)
+
+presets_kpdr_maridia_whomple_jump:
+    %cm_preset("Whomple Jump", #preset_names_whomple_jump, #preset_kpdr_maridia_whomple_jump)
+
+presets_kpdr_maridia_cac_alley_east:
+    %cm_preset("Cac Alley East", #preset_names_cac_alley_east, #preset_kpdr_maridia_cac_alley_east)
+
+presets_kpdr_maridia_cac_alley_west:
+    %cm_preset("Cac Alley West", #preset_names_cac_alley_west, #preset_kpdr_maridia_cac_alley_west)
+
+presets_kpdr_maridia_plasma_spark:
+    %cm_preset("Plasma Spark", #preset_names_plasma_spark, #preset_kpdr_maridia_plasma_spark)
+
+presets_kpdr_maridia_plasma_climb:
+    %cm_preset("Plasma Climb", #preset_names_plasma_climb, #preset_kpdr_maridia_plasma_climb)
+
+presets_kpdr_maridia_plasma_beam:
+    %cm_preset("Plasma Beam", #preset_names_plasma_beam, #preset_kpdr_maridia_plasma_beam)
+
+presets_kpdr_maridia_plasma_spark_revisit:
+    %cm_preset("Plasma Spark Revisit", #preset_names_plasma_spark_revisit, #preset_kpdr_maridia_plasma_spark_revisit)
+
+presets_kpdr_maridia_toilet:
+    %cm_preset("Toilet", #preset_names_toilet, #preset_kpdr_maridia_toilet)
+
+presets_kpdr_maridia_sewers:
+    %cm_preset("Sewers", #preset_names_sewers, #preset_kpdr_maridia_sewers)
+
+presets_kpdr_maridia_lower_maridia_gate:
+    %cm_preset("Lower Maridia Gate", #preset_names_lower_maridia_gate, #preset_kpdr_maridia_lower_maridia_gate)
+
+
+; Upper Norfair Revisit
+presets_kpdr_upper_norfair_revisit_business_center_revisit:
+    %cm_preset("Business Center Revisit", #preset_names_business_center_revisit, #preset_kpdr_upper_norfair_revisit_business_center_revisit)
+
+presets_kpdr_upper_norfair_revisit_ice_beam_gates:
+    %cm_preset("Ice Beam Gates", #preset_names_ice_beam_gates, #preset_kpdr_upper_norfair_revisit_ice_beam_gates)
+
+presets_kpdr_upper_norfair_revisit_ice_maze_up:
+    %cm_preset("Ice Maze Up", #preset_names_ice_maze_up, #preset_kpdr_upper_norfair_revisit_ice_maze_up)
+
+presets_kpdr_upper_norfair_revisit_ice_maze_down:
+    %cm_preset("Ice Maze Down", #preset_names_ice_maze_down, #preset_kpdr_upper_norfair_revisit_ice_maze_down)
+
+presets_kpdr_upper_norfair_revisit_ice_escape:
+    %cm_preset("Ice Escape", #preset_names_ice_escape, #preset_kpdr_upper_norfair_revisit_ice_escape)
+
+presets_kpdr_upper_norfair_revisit_croc_speedway:
+    %cm_preset("Croc Speedway", #preset_names_croc_speedway, #preset_kpdr_upper_norfair_revisit_croc_speedway)
+
+presets_kpdr_upper_norfair_revisit_spiky_acid_snakes:
+    %cm_preset("Spiky Acid Snakes", #preset_names_spiky_acid_snakes, #preset_kpdr_upper_norfair_revisit_spiky_acid_snakes)
+
+presets_kpdr_upper_norfair_revisit_southern_kronic_boost:
+    %cm_preset("Southern Kronic Boost", #preset_names_southern_kronic_boost, #preset_kpdr_upper_norfair_revisit_southern_kronic_boost)
+
+presets_kpdr_upper_norfair_revisit_purple_shaft:
+    %cm_preset("Purple Shaft", #preset_names_purple_shaft, #preset_kpdr_upper_norfair_revisit_purple_shaft)
+
+presets_kpdr_upper_norfair_revisit_magdollite_tunnel:
+    %cm_preset("Magdollite Tunnel", #preset_names_magdollite_tunnel, #preset_kpdr_upper_norfair_revisit_magdollite_tunnel)
+
+presets_kpdr_upper_norfair_revisit_northern_kronic_boost:
+    %cm_preset("Northern Kronic Boost", #preset_names_northern_kronic_boost, #preset_kpdr_upper_norfair_revisit_northern_kronic_boost)
+
+
+; Lower Norfair
+presets_kpdr_lower_norfair_ln_main_hall:
+    %cm_preset("LN Main Hall", #preset_names_ln_main_hall, #preset_kpdr_lower_norfair_ln_main_hall)
+
+presets_kpdr_lower_norfair_prepillars:
+    %cm_preset("Pre-Pillars", #preset_names_prepillars, #preset_kpdr_lower_norfair_prepillars)
+
+presets_kpdr_lower_norfair_fast_pillars_setup:
+    %cm_preset("Fast Pillars Setup", #preset_names_fast_pillars_setup, #preset_kpdr_lower_norfair_fast_pillars_setup)
+
+presets_kpdr_lower_norfair_worst_room_in_the_game:
+    %cm_preset("Worst Room In The Game", #preset_names_worst_room_in_the_game, #preset_kpdr_lower_norfair_worst_room_in_the_game)
+
+presets_kpdr_lower_norfair_amphitheatre:
+    %cm_preset("Amphitheatre", #preset_names_amphitheatre, #preset_kpdr_lower_norfair_amphitheatre)
+
+presets_kpdr_lower_norfair_kihunter_stairs_down:
+    %cm_preset("Kihunter Stairs Down", #preset_names_kihunter_stairs_down, #preset_kpdr_lower_norfair_kihunter_stairs_down)
+
+presets_kpdr_lower_norfair_wasteland:
+    %cm_preset("Wasteland", #preset_names_wasteland, #preset_kpdr_lower_norfair_wasteland)
+
+presets_kpdr_lower_norfair_metal_ninja_pirates:
+    %cm_preset("Metal Ninja Pirates", #preset_names_metal_ninja_pirates, #preset_kpdr_lower_norfair_metal_ninja_pirates)
+
+presets_kpdr_lower_norfair_plowerhouse:
+    %cm_preset("Plowerhouse", #preset_names_plowerhouse, #preset_kpdr_lower_norfair_plowerhouse)
+
+presets_kpdr_lower_norfair_ridley:
+    %cm_preset("Ridley", #preset_names_ridley, #preset_kpdr_lower_norfair_ridley)
+
+presets_kpdr_lower_norfair_leaving_ridley:
+    %cm_preset("Leaving Ridley", #preset_names_leaving_ridley, #preset_kpdr_lower_norfair_leaving_ridley)
+
+presets_kpdr_lower_norfair_reverse_plowerhouse:
+    %cm_preset("Reverse Plowerhouse", #preset_names_reverse_plowerhouse, #preset_kpdr_lower_norfair_reverse_plowerhouse)
+
+presets_kpdr_lower_norfair_wasteland_revisit:
+    %cm_preset("Wasteland Revisit", #preset_names_wasteland_revisit, #preset_kpdr_lower_norfair_wasteland_revisit)
+
+presets_kpdr_lower_norfair_kihunter_stairs_up:
+    %cm_preset("Kihunter Stairs Up", #preset_names_kihunter_stairs_up, #preset_kpdr_lower_norfair_kihunter_stairs_up)
+
+presets_kpdr_lower_norfair_fireflea_room:
+    %cm_preset("Fireflea Room", #preset_names_fireflea_room, #preset_kpdr_lower_norfair_fireflea_room)
+
+presets_kpdr_lower_norfair_springball_maze:
+    %cm_preset("Springball Maze", #preset_names_springball_maze, #preset_kpdr_lower_norfair_springball_maze)
+
+presets_kpdr_lower_norfair_three_musketeers:
+    %cm_preset("Three Musketeers", #preset_names_three_musketeers, #preset_kpdr_lower_norfair_three_musketeers)
+
+presets_kpdr_lower_norfair_single_chamber_final:
+    %cm_preset("Single Chamber Final", #preset_names_single_chamber_final, #preset_kpdr_lower_norfair_single_chamber_final)
+
+presets_kpdr_lower_norfair_bubble_mountain_final:
+    %cm_preset("Bubble Mountain Final", #preset_names_bubble_mountain_final, #preset_kpdr_lower_norfair_bubble_mountain_final)
+
+presets_kpdr_lower_norfair_business_center_final:
+    %cm_preset("Business Center Final", #preset_names_business_center_final, #preset_kpdr_lower_norfair_business_center_final)
+
+
+; Backtracking
+presets_kpdr_backtracking_maridia_tube_revisit:
+    %cm_preset("Maridia Tube Revisit", #preset_names_maridia_tube_revisit, #preset_kpdr_backtracking_maridia_tube_revisit)
+
+presets_kpdr_backtracking_fish_tank_revisit:
+    %cm_preset("Fish Tank Revisit", #preset_names_fish_tank_revisit, #preset_kpdr_backtracking_fish_tank_revisit)
+
+presets_kpdr_backtracking_mt_everest_revisit:
+    %cm_preset("Mt. Everest Revisit", #preset_names_mt_everest_revisit, #preset_kpdr_backtracking_mt_everest_revisit)
+
+presets_kpdr_backtracking_red_brinstar_green_gate:
+    %cm_preset("Red Brinstar Green Gate", #preset_names_red_brinstar_green_gate, #preset_kpdr_backtracking_red_brinstar_green_gate)
+
+presets_kpdr_backtracking_crateria_kihunters_final:
+    %cm_preset("Crateria Kihunters Final", #preset_names_crateria_kihunters_final, #preset_kpdr_backtracking_crateria_kihunters_final)
+
+presets_kpdr_backtracking_parlor_spacejump:
+    %cm_preset("Parlor Spacejump", #preset_names_parlor_spacejump, #preset_kpdr_backtracking_parlor_spacejump)
+
+presets_kpdr_backtracking_terminator_revisit:
+    %cm_preset("Terminator Revisit", #preset_names_terminator_revisit, #preset_kpdr_backtracking_terminator_revisit)
+
+presets_kpdr_backtracking_green_pirate_shaft_revisit:
+    %cm_preset("Green Pirate Shaft Revisit", #preset_names_green_pirate_shaft_revisit, #preset_kpdr_backtracking_green_pirate_shaft_revisit)
+
+presets_kpdr_backtracking_g4_hallway:
+    %cm_preset("G4 Hallway", #preset_names_g4_hallway, #preset_kpdr_backtracking_g4_hallway)
+
+presets_kpdr_backtracking_g4_elevator:
+    %cm_preset("G4 Elevator", #preset_names_g4_elevator, #preset_kpdr_backtracking_g4_elevator)
+
+
+; Tourian
+presets_kpdr_tourian_tourian_elevator_room:
+    %cm_preset("Tourian Elevator Room", #preset_names_tourian_elevator_room, #preset_kpdr_tourian_tourian_elevator_room)
+
+presets_kpdr_tourian_metroids_1:
+    %cm_preset("Metroids 1", #preset_names_metroids_1, #preset_kpdr_tourian_metroids_1)
+
+presets_kpdr_tourian_metroids_2:
+    %cm_preset("Metroids 2", #preset_names_metroids_2, #preset_kpdr_tourian_metroids_2)
+
+presets_kpdr_tourian_metroids_3:
+    %cm_preset("Metroids 3", #preset_names_metroids_3, #preset_kpdr_tourian_metroids_3)
+
+presets_kpdr_tourian_metroids_4:
+    %cm_preset("Metroids 4", #preset_names_metroids_4, #preset_kpdr_tourian_metroids_4)
+
+presets_kpdr_tourian_giant_hoppers:
+    %cm_preset("Giant Hoppers", #preset_names_giant_hoppers, #preset_kpdr_tourian_giant_hoppers)
+
+presets_kpdr_tourian_baby_skip:
+    %cm_preset("Baby Skip", #preset_names_baby_skip, #preset_kpdr_tourian_baby_skip)
+
+presets_kpdr_tourian_gadora_room:
+    %cm_preset("Gadora Room", #preset_names_gadora_room, #preset_kpdr_tourian_gadora_room)
+
+presets_kpdr_tourian_zeb_skip:
+    %cm_preset("Zeb Skip", #preset_names_zeb_skip, #preset_kpdr_tourian_zeb_skip)
+
+presets_kpdr_tourian_mother_brain_2:
+    %cm_preset("Mother Brain 2", #preset_names_mother_brain_2, #preset_kpdr_tourian_mother_brain_2)
+
+presets_kpdr_tourian_mother_brain_3:
+    %cm_preset("Mother Brain 3", #preset_names_mother_brain_3, #preset_kpdr_tourian_mother_brain_3)
+
+presets_kpdr_tourian_zebes_escape:
+    %cm_preset("Zebes Escape", #preset_names_zebes_escape, #preset_kpdr_tourian_zebes_escape)
+
+presets_kpdr_tourian_escape_room_3:
+    %cm_preset("Escape Room 3", #preset_names_escape_room_3, #preset_kpdr_tourian_escape_room_3)
+
+presets_kpdr_tourian_escape_room_4:
+    %cm_preset("Escape Room 4", #preset_names_escape_room_4, #preset_kpdr_tourian_escape_room_4)
+
+presets_kpdr_tourian_escape_climb:
+    %cm_preset("Escape Climb", #preset_names_escape_climb, #preset_kpdr_tourian_escape_climb)
+
+presets_kpdr_tourian_escape_parlor:
+    %cm_preset("Escape Parlor", #preset_names_escape_parlor, #preset_kpdr_tourian_escape_parlor)
+

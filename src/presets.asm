@@ -308,28 +308,333 @@ preset_load_preset:
 
   .category_preset
     JSR category_preset_load
-    PLB
 
-    ; apply category adjustments
+    ; initialize apply adjust variables
+    LDY #!eram_apply_adjust_item_equip    ; Y = Destination
+    LDX #!sram_categoryadjust_item_equip  ; X = Source
+    LDA !CATEGORY_ADJUST_SIZE_MINUS_ONE   ; A = Size-1
+    MVN $707E                             ; srcBank, destBank
+    STZ !eram_apply_safeties_selected_item
+    STZ !eram_apply_safeties_stage_counter
+    STZ !eram_apply_safeties_refill
+    STZ $C1
+
+    ; apply safeties
+    LDA !sram_preset_category : ASL : TAX
+    LDA.l preset_safeties_definition_table,X : PHA ; later pulled with PLY
+    LDA.l preset_safeties_sram_table,X : TAX
+    LDA.l $700000,X : AND !eram_safeties_enabled : STA !eram_safeties_enabled
+    LDA.l $700002,X : AND !eram_safeties_enabled+$2 : STA !eram_safeties_enabled+$2
+    %a8()
+    LDA #preset_safeties_definition_table>>16 : PHA : PLB
+
+    TDC : TAX : TAY
+  .safeties_init_outer_loop
+    SEC : ROL
+  .safeties_init_inner_loop
+    STA $C1
+    LDA !eram_safeties_enabled,Y : AND $C1 : STA !eram_apply_safeties_enable_flags,X
+    LDA !eram_safeties_adjust_only,Y : AND $C1 : STA !eram_apply_safeties_adjust_only_flags,X
+    INX #2
+    LDA $C1 : ROL : BCC .safeties_init_inner_loop
+    INY : CPX #$0040 : BMI .safeties_init_outer_loop
+
+    TAX : PLY ; set X back to 0 and Y to start of safeties definition
+  .safeties_loop_store_counter
+    STA !eram_apply_safeties_stage_counter
+  .safeties_loop
+    STZ !eram_apply_safeties_combo_flag
+    LDA $0000,Y : BPL .safeties_check_cmd
+    STA !eram_apply_safeties_combo_flag
+    AND #!SAFETIES_CMD_MASK
+  .safeties_check_cmd
+    BEQ .safeties_next_iny
+    DEC : BEQ .safeties_check_adjust
+    DEC : BEQ .safeties_check_item_hi
+    DEC : BEQ .safeties_check_item_lo
+    DEC : BEQ .safeties_check_charge
+    DEC : BEQ .safeties_check_beam
+    DEC : BEQ .safeties_check_etank
+    DEC : BEQ .safeties_check_rtank
+    DEC : BEQ .safeties_check_missile
+    DEC : BEQ .safeties_check_super
+    DEC : BEQ .safeties_check_pb
+    DEC : BEQ .safeties_check_event
+    DEC : BEQ .safeties_check_door
+    DEC : BEQ .safeties_check_staged
+    JMP .safeties_check_done
+
+  .safeties_skip_three_bytes
+    INY
+  .safeties_skip_two_bytes
+    INY #2
+  .safeties_next_iny
+    INY
+  .safeties_next
+    LDA !eram_apply_safeties_combo_flag : BNE .safeties_loop
+    LDA !eram_apply_safeties_stage_counter : BEQ .safeties_loop_inx
+    DEC : BNE .safeties_loop_store_counter
+    PLY
+  .safeties_loop_inx
+    INX #2 : CPX #$0040 : BMI .safeties_loop_store_counter
+    JMP .apply_category_adjustments
+
+  .safeties_check_adjust
+    LDA !eram_apply_safeties_enable_flags,X : BEQ .safeties_next_iny
+    BRA .safeties_adjust
+
+  .safeties_check_item_hi
+    LDA !eram_apply_safeties_enable_flags,X : BEQ .safeties_skip_three_bytes
+    JMP .safeties_item_hi
+
+  .safeties_check_item_lo
+    LDA !eram_apply_safeties_enable_flags,X : BEQ .safeties_skip_three_bytes
+    JMP .safeties_item_lo
+
+  .safeties_check_charge
+    LDA !eram_apply_safeties_enable_flags,X : BEQ .safeties_next_iny
+    JMP .safeties_charge
+
+  .safeties_check_beam
+    LDA !eram_apply_safeties_enable_flags,X : BEQ .safeties_skip_three_bytes
+    JMP .safeties_beam
+
+  .safeties_check_etank
+    LDA !eram_apply_safeties_enable_flags,X : BEQ .safeties_skip_two_bytes
+    JMP .safeties_etank
+
+  .safeties_check_rtank
+    LDA !eram_apply_safeties_enable_flags,X : BEQ .safeties_skip_two_bytes
+    JMP .safeties_rtank
+
+  .safeties_check_missile
+    LDA !eram_apply_safeties_enable_flags,X : BEQ .safeties_skip_two_bytes
+    JMP .safeties_missile
+
+  .safeties_check_super
+    LDA !eram_apply_safeties_enable_flags,X : BEQ .safeties_skip_two_bytes
+    JMP .safeties_super
+
+  .safeties_check_pb
+    LDA !eram_apply_safeties_enable_flags,X : BEQ .safeties_skip_two_bytes
+    JMP .safeties_pb
+
+  .safeties_check_event
+    LDA !eram_apply_safeties_enable_flags,X : BEQ .safeties_skip_two_bytes
+    JMP .safeties_event
+
+  .safeties_check_door
+    LDA !eram_apply_safeties_enable_flags,X : BEQ .safeties_skip_two_bytes
+    JMP .safeties_door
+
+  .safeties_check_staged
+    LDA !eram_apply_safeties_enable_flags,X : BEQ .safeties_skip_two_bytes
+    LDA !eram_apply_safeties_stage_counter : BNE .safeties_stage_recursion
+    JMP .safeties_staged
+  .safeties_stage_recursion
+    BRK
+
+  .safeties_read_and_collect_a8
+    TDC : %a8()
+  .safeties_read_and_collect
+    PHX : INY
+    LDA $0000,Y : TAX : INY
+    LDA $0000,Y : ORA !ITEM_COLLECTED_BIT_ARRAY,X
+    STA !ITEM_COLLECTED_BIT_ARRAY,X : PLX
+  .safeties_adjust
+    INY
+    LDA !eram_apply_safeties_stage_counter : CMP #$02 : BPL .safeties_adjust_done
+    LDA !eram_apply_safeties_combo_flag : BEQ .safeties_adjust_energy
+    JMP .safeties_loop
+
+  .safeties_skip_read_collect
+    INY #2
+    BRA .safeties_adjust
+
+  .safeties_adjust_energy
+    %a16()
+    LDA !eram_safeties_energy,X : BEQ .safeties_adjust_reserves
+    CLC : ADC !eram_apply_adjust_energy : STA !eram_apply_adjust_energy
+  .safeties_adjust_reserves
+    LDA !eram_safeties_reserves,X : BEQ .safeties_adjust_missiles
+    CLC : ADC !eram_apply_adjust_reserves : STA !eram_apply_adjust_reserves
+  .safeties_adjust_missiles
+    LDA !eram_safeties_missiles,X : BEQ .safeties_adjust_supers
+    CLC : ADC !eram_apply_adjust_missiles : STA !eram_apply_adjust_missiles
+  .safeties_adjust_supers
+    LDA !eram_safeties_supers,X : BEQ .safeties_adjust_pbs
+    CLC : ADC !eram_apply_adjust_supers : STA !eram_apply_adjust_supers
+  .safeties_adjust_pbs
+    LDA !eram_safeties_pbs,X : BEQ .safeties_adjust_unequip_item
+    CLC : ADC !eram_apply_adjust_pbs : STA !eram_apply_adjust_pbs
+  .safeties_adjust_unequip_item
+    LDA !eram_safeties_unequip_items,X : BEQ .safeties_adjust_unequip_beam
+    AND !SAMUS_ITEMS_COLLECTED : ORA !eram_apply_adjust_item_unequip
+    STA !eram_apply_adjust_item_unequip
+  .safeties_adjust_unequip_beam
+    LDA !eram_safeties_unequip_beams,X : BEQ .safeties_adjust_select_item
+    AND !SAMUS_BEAMS_COLLECTED : ORA !eram_apply_adjust_beam_unequip
+    STA !eram_apply_adjust_beam_unequip
+  .safeties_adjust_select_item
+    LDA !eram_safeties_selected_item,X : BEQ .safeties_adjust_refill
+    STA !eram_apply_safeties_selected_item
+  .safeties_adjust_refill
+    LDA !eram_safeties_refill,X : BEQ .safeties_adjust_done
+    STA !eram_apply_safeties_refill
+  .safeties_adjust_done
+    TDC : %a8()
+    JMP .safeties_next
+
+  .safeties_item_hi
+    INY
+    LDA !eram_apply_safeties_adjust_only_flags,X : BEQ .safeties_item_hi_continue
+    JMP .safeties_skip_read_collect
+  .safeties_item_hi_continue
+    LDA $0000,Y : ORA !SAMUS_ITEMS_EQUIPPED+$1 : STA !SAMUS_ITEMS_EQUIPPED+$1
+    LDA $0000,Y : ORA !SAMUS_ITEMS_COLLECTED+$1 : STA !SAMUS_ITEMS_COLLECTED+$1
+    JMP .safeties_read_and_collect
+
+  .safeties_item_lo
+    INY
+    LDA !eram_apply_safeties_adjust_only_flags,X : BEQ .safeties_item_lo_continue
+    JMP .safeties_skip_read_collect
+  .safeties_item_lo_continue
+    LDA $0000,Y : ORA !SAMUS_ITEMS_EQUIPPED : STA !SAMUS_ITEMS_EQUIPPED
+    LDA $0000,Y : ORA !SAMUS_ITEMS_COLLECTED : STA !SAMUS_ITEMS_COLLECTED
+    JMP .safeties_read_and_collect
+
+  .safeties_charge
+    LDA !eram_apply_safeties_adjust_only_flags,X : BNE .safeties_charge_done
+    LDA #$10 : ORA !SAMUS_BEAMS_EQUIPPED+$1 : STA !SAMUS_BEAMS_EQUIPPED+$1
+    LDA #$10 : ORA !SAMUS_BEAMS_COLLECTED+$1 : STA !SAMUS_BEAMS_COLLECTED+$1
+    LDA !ITEM_COLLECTED_BIT_ARRAY+$2 : ORA #$80 : STA !ITEM_COLLECTED_BIT_ARRAY+$2
+  .safeties_charge_done
+    JMP .safeties_adjust
+
+  .safeties_beam
+    INY
+    LDA !eram_apply_safeties_adjust_only_flags,X : BEQ .safeties_beam_continue
+    JMP .safeties_skip_read_collect
+  .safeties_beam_continue
+    LDA !SAMUS_HYPER_BEAM : BNE .safeties_beam_collect
+    LDA $0000,Y : CMP #$04 : BNE .safeties_beam_equip
+    LDA !SAMUS_BEAMS_EQUIPPED : BIT #$08 : BNE .safeties_beam_collect
+    LDA #$04
+  .safeties_beam_equip
+    ORA !SAMUS_BEAMS_EQUIPPED : STA !SAMUS_BEAMS_EQUIPPED
+  .safeties_beam_collect
+    LDA $0000,Y : ORA !SAMUS_BEAMS_COLLECTED : STA !SAMUS_BEAMS_COLLECTED
+    JMP .safeties_read_and_collect
+
+  .safeties_etank
+    LDA !eram_apply_safeties_adjust_only_flags,X : BEQ .safeties_etank_continue
+    JMP .safeties_skip_read_collect
+  .safeties_etank_continue
+    %a16()
+    LDA !SAMUS_HP : CLC : ADC #$0064 : STA !SAMUS_HP
+    LDA !SAMUS_HP_MAX : CLC : ADC #$0064 : STA !SAMUS_HP_MAX
+    JMP .safeties_read_and_collect_a8
+
+  .safeties_rtank
+    LDA !eram_apply_safeties_adjust_only_flags,X : BEQ .safeties_rtank_continue
+    JMP .safeties_skip_read_collect
+  .safeties_rtank_continue
+    %a16()
+    LDA !SAMUS_RESERVE_MAX : CLC : ADC #$0064 : STA !SAMUS_RESERVE_MAX
+    LDA !SAMUS_RESERVE_MODE : BNE .safeties_rtank_done
+    INC : STA !SAMUS_RESERVE_MODE
+  .safeties_rtank_done
+    JMP .safeties_read_and_collect_a8
+
+  .safeties_missile
+    LDA !eram_apply_safeties_adjust_only_flags,X : BEQ .safeties_missile_continue
+    JMP .safeties_skip_read_collect
+  .safeties_missile_continue
+    %a16()
+    LDA !SAMUS_MISSILES : CLC : ADC #$0005 : STA !SAMUS_MISSILES
+    LDA !SAMUS_MISSILES_MAX : CLC : ADC #$0005 : STA !SAMUS_MISSILES_MAX
+    JMP .safeties_read_and_collect_a8
+
+  .safeties_super
+    LDA !eram_apply_safeties_adjust_only_flags,X : BEQ .safeties_super_continue
+    JMP .safeties_skip_read_collect
+  .safeties_super_continue
+    %a16()
+    LDA !SAMUS_SUPERS : CLC : ADC #$0005 : STA !SAMUS_SUPERS
+    LDA !SAMUS_SUPERS_MAX : CLC : ADC #$0005 : STA !SAMUS_SUPERS_MAX
+    JMP .safeties_read_and_collect_a8
+
+  .safeties_pb
+    LDA !eram_apply_safeties_adjust_only_flags,X : BEQ .safeties_pb_continue
+    JMP .safeties_skip_read_collect
+  .safeties_pb_continue
+    %a16()
+    LDA !SAMUS_PBS : CLC : ADC #$0005 : STA !SAMUS_PBS
+    LDA !SAMUS_PBS_MAX : CLC : ADC #$0005 : STA !SAMUS_PBS_MAX
+    JMP .safeties_read_and_collect_a8
+
+  .safeties_event
+    LDA !eram_apply_safeties_adjust_only_flags,X : BEQ .safeties_event_continue
+    JMP .safeties_skip_read_collect
+  .safeties_event_continue
+    PHX : INY
+    LDA $0000,Y : TAX : INY
+    LDA $0000,Y : ORA !EVENT_BIT_ARRAY,X
+    STA !EVENT_BIT_ARRAY,X : PLX
+    JMP .safeties_adjust
+
+  .safeties_door
+    LDA !eram_apply_safeties_adjust_only_flags,X : BEQ .safeties_door_continue
+    JMP .safeties_skip_read_collect
+  .safeties_door_continue
+    PHX : INY
+    LDA $0000,Y : TAX : INY
+    LDA $0000,Y : ORA !OPENED_DOOR_BIT_ARRAY,X
+    STA !OPENED_DOOR_BIT_ARRAY,X : PLX
+    JMP .safeties_adjust
+
+  .safeties_done_mid_stage
+    BRK
+
+  .safeties_staged
+    LDA !eram_apply_safeties_adjust_only_flags,X : BEQ .safeties_staged_continue
+    JMP .safeties_skip_read_collect
+  .safeties_staged_continue
+    %a16() : INY
+    LDA $0000,Y : INY #2 : PHY : TAY
+    LDA !eram_safeties_stage_counter,X : INC : STA !eram_apply_safeties_stage_counter
+    %a8()
+    JMP .safeties_loop
+
+  .safeties_invalid_cmd
+    BRK
+
+  .safeties_check_done
+    DEC : BNE .safeties_invalid_cmd
+    LDA !eram_apply_safeties_stage_counter : BNE .safeties_done_mid_stage
+
+  .apply_category_adjustments
+    %a16()
+    PLB
     LDA !SAMUS_ITEMS_EQUIPPED : EOR #$FFFF
-    ORA !sram_categoryadjust_item_unequip : EOR #$FFFF
-    AND !sram_categoryadjust_item_remove
-    ORA !sram_categoryadjust_item_equip : STA !SAMUS_ITEMS_EQUIPPED
-    LDA !SAMUS_ITEMS_COLLECTED : AND !sram_categoryadjust_item_remove
-    ORA !sram_categoryadjust_item_equip
-    ORA !sram_categoryadjust_item_unequip : STA !SAMUS_ITEMS_COLLECTED
+    ORA !eram_apply_adjust_item_unequip : EOR #$FFFF
+    AND !eram_apply_adjust_item_remove
+    ORA !eram_apply_adjust_item_equip : STA !SAMUS_ITEMS_EQUIPPED
+    LDA !SAMUS_ITEMS_COLLECTED : AND !eram_apply_adjust_item_remove
+    ORA !eram_apply_adjust_item_equip
+    ORA !eram_apply_adjust_item_unequip : STA !SAMUS_ITEMS_COLLECTED
 
     LDA !SAMUS_BEAMS_EQUIPPED : EOR #$FFFF
-    ORA !sram_categoryadjust_beam_unequip : EOR #$FFFF
-    AND !sram_categoryadjust_beam_remove
-    ORA !sram_categoryadjust_beam_equip : STA !SAMUS_BEAMS_EQUIPPED
-    LDA !SAMUS_BEAMS_COLLECTED : AND !sram_categoryadjust_beam_remove
-    ORA !sram_categoryadjust_beam_equip
-    ORA !sram_categoryadjust_beam_unequip : STA !SAMUS_BEAMS_COLLECTED
+    ORA !eram_apply_adjust_beam_unequip : EOR #$FFFF
+    AND !eram_apply_adjust_beam_remove
+    ORA !eram_apply_adjust_beam_equip : STA !SAMUS_BEAMS_EQUIPPED
+    LDA !SAMUS_BEAMS_COLLECTED : AND !eram_apply_adjust_beam_remove
+    ORA !eram_apply_adjust_beam_equip
+    ORA !eram_apply_adjust_beam_unequip : STA !SAMUS_BEAMS_COLLECTED
 
     ; don't allow adjustments to equip spazer+plasma
     LDA !SAMUS_HYPER_BEAM : BNE .beams_hyper
-    LDA !sram_categoryadjust_beam_equip : AND #$000C : BEQ .beams_done
+    LDA !eram_apply_adjust_beam_equip : AND #$000C : BEQ .beams_done
     LDA !SAMUS_BEAMS_EQUIPPED : AND #$000C : CMP #$000C : BNE .beams_done
     LDA !SAMUS_BEAMS_EQUIPPED : AND #$FFFB : STA !SAMUS_BEAMS_EQUIPPED
     BRA .beams_done
@@ -337,7 +642,7 @@ preset_load_preset:
     LDA #$1009 : STA !SAMUS_BEAMS_EQUIPPED
   .beams_done
 
-    LDA !sram_categoryadjust_etanks : BEQ .etanks_done
+    LDA !eram_apply_adjust_etanks : BEQ .etanks_done
     TAX : BPL .etanks_positive
     LDA !SAMUS_HP_MAX
   .etanks_negloop
@@ -353,11 +658,11 @@ preset_load_preset:
     BRA .etanks_posloop
   .etanks_set
     STA !SAMUS_HP_MAX
-    LDA !sram_categoryadjust_energy : BNE .energy_adjust
+    LDA !eram_apply_adjust_energy : BNE .energy_adjust
     LDA !SAMUS_HP : BRA .energy_cap
   .etanks_done
 
-    LDA !sram_categoryadjust_energy : BEQ .energy_done
+    LDA !eram_apply_adjust_energy : BEQ .energy_done
   .energy_adjust
     CLC : ADC !SAMUS_HP : BMI .energy_zero : BEQ .energy_zero
   .energy_cap
@@ -369,7 +674,17 @@ preset_load_preset:
     STA !SAMUS_HP
   .energy_done
 
-    LDA !sram_categoryadjust_rtanks : BEQ .rtanks_done
+    LDA !eram_apply_safeties_refill : BEQ .refill_done : BMI .refill_apply
+    TDC
+  .refill_apply
+    CLC : ADC !SAMUS_HP_MAX : BMI .refill_zero : BNE .refill_set
+  .refill_zero
+    LDA #$0001
+  .refill_set
+    STA !SAMUS_HP
+  .refill_done
+
+    LDA !eram_apply_adjust_rtanks : BEQ .rtanks_done
     TAX : BPL .rtanks_positive
     LDA !SAMUS_RESERVE_MAX
   .rtanks_negloop
@@ -390,11 +705,11 @@ preset_load_preset:
   .rtanks_zero
     STA !SAMUS_RESERVE_MODE
   .rtanks_cap
-    LDA !sram_categoryadjust_reserves : BNE .reserves_adjust
+    LDA !eram_apply_adjust_reserves : BNE .reserves_adjust
     LDA !SAMUS_RESERVE_ENERGY : BRA .reserves_cap
   .rtanks_done
 
-    LDA !sram_categoryadjust_reserves : BEQ .reserves_done
+    LDA !eram_apply_adjust_reserves : BEQ .reserves_done
   .reserves_adjust
     CLC : ADC !SAMUS_RESERVE_ENERGY : BMI .reserves_zero
   .reserves_cap
@@ -406,16 +721,16 @@ preset_load_preset:
     STA !SAMUS_RESERVE_ENERGY
   .reserves_done
 
-    LDA !sram_categoryadjust_maxmissiles : BEQ .maxmissiles_done
+    LDA !eram_apply_adjust_maxmissiles : BEQ .maxmissiles_done
     CLC : ADC !SAMUS_MISSILES_MAX : BPL .maxmissiles_set : BEQ .maxmissiles_set
     TDC
   .maxmissiles_set
     STA !SAMUS_MISSILES_MAX
-    LDA !sram_categoryadjust_missiles : BNE .missiles_adjust
+    LDA !eram_apply_adjust_missiles : BNE .missiles_adjust
     LDA !SAMUS_MISSILES : BRA .missiles_cap
   .maxmissiles_done
 
-    LDA !sram_categoryadjust_missiles : BEQ .missiles_done
+    LDA !eram_apply_adjust_missiles : BEQ .missiles_done
   .missiles_adjust
     CLC : ADC !SAMUS_MISSILES : BMI .missiles_zero
   .missiles_cap
@@ -427,16 +742,16 @@ preset_load_preset:
     STA !SAMUS_MISSILES
   .missiles_done
 
-    LDA !sram_categoryadjust_maxsupers : BEQ .maxsupers_done
+    LDA !eram_apply_adjust_maxsupers : BEQ .maxsupers_done
     CLC : ADC !SAMUS_SUPERS_MAX : BPL .maxsupers_set : BEQ .maxsupers_set
     TDC
   .maxsupers_set
     STA !SAMUS_SUPERS_MAX
-    LDA !sram_categoryadjust_supers : BNE .supers_adjust
+    LDA !eram_apply_adjust_supers : BNE .supers_adjust
     LDA !SAMUS_SUPERS : BRA .supers_cap
   .maxsupers_done
 
-    LDA !sram_categoryadjust_supers : BEQ .supers_done
+    LDA !eram_apply_adjust_supers : BEQ .supers_done
   .supers_adjust
     CLC : ADC !SAMUS_SUPERS : BMI .supers_zero
   .supers_cap
@@ -448,16 +763,16 @@ preset_load_preset:
     STA !SAMUS_SUPERS
   .supers_done
 
-    LDA !sram_categoryadjust_maxpbs : BEQ .maxpbs_done
+    LDA !eram_apply_adjust_maxpbs : BEQ .maxpbs_done
     CLC : ADC !SAMUS_PBS_MAX : BPL .maxpbs_set : BEQ .maxpbs_set
     TDC
   .maxpbs_set
     STA !SAMUS_PBS_MAX
-    LDA !sram_categoryadjust_pbs : BNE .pbs_adjust
+    LDA !eram_apply_adjust_pbs : BNE .pbs_adjust
     LDA !SAMUS_PBS : BRA .pbs_cap
   .maxpbs_done
 
-    LDA !sram_categoryadjust_pbs : BEQ .pbs_done
+    LDA !eram_apply_adjust_pbs : BEQ .pbs_done
   .pbs_adjust
     CLC : ADC !SAMUS_PBS : BMI .pbs_zero
   .pbs_cap
@@ -469,6 +784,12 @@ preset_load_preset:
     STA !SAMUS_PBS
   .pbs_done
 
+    LDA !eram_apply_safeties_selected_item : BEQ .selected_item_done
+    BPL .selected_item_set
+    TDC
+  .selected_item_set
+    STA !SAMUS_ITEM_SELECTED
+  .selected_item_done
     RTL
 }
 
@@ -491,17 +812,22 @@ category_preset_load:
 
   .verifyLength
     ; If we exceeded our stack size then crash
-    ; This would require over a thousand presets in the stack,
+    ; This would require over 700 presets in the stack,
     ; so it should not happen, but we don't want to continue if it does
     CPX !CATEGORY_PRESET_STACK_SIZE : BMI .traversePrep
     BRK
 
   .traversePrep
+    PHX : LDX #(!eram_category_preset_stack-(!ENEMY_ID+$2))
+  .clearSafetiesLoop
+    STZ !ENEMY_ID,X
+    DEX #2 : BPL .clearSafetiesLoop
+
     ; If this is a map category, then clear map data
     LDA $C3 : STA $C1 : CMP.w #preset_100map_bombs_ceres_elevator : BNE .setBanks
     LDA $C5 : AND #$00FF : CMP.w #preset_100map_bombs_ceres_elevator>>16 : BNE .setBanks
 
-    PHX : LDX #$00FE : TDC
+    LDX #$00FE : TDC
   .clearMapDataLoop
     STA !MAP_TILES_EXPLORED,X
     STA !MAP_TILES_EXPLORED_CRATERIA,X
@@ -510,11 +836,10 @@ category_preset_load:
     STA !MAP_TILES_EXPLORED_WRECKED_SHIP,X
     STA !MAP_TILES_EXPLORED_MARIDIA,X
     STA !MAP_TILES_EXPLORED_TOURIAN,X
-    DEX #2
-    BPL .clearMapDataLoop
-    PLX
+    DEX #2 : BPL .clearMapDataLoop
 
   .setBanks
+    PLX
     ; Set bank to read data from
     STZ $00 : %a8() : LDA $C5 : PHA : PLB
     ; Set bank to store data to
@@ -1176,22 +1501,27 @@ resume_infohud_icon_initialization:
 ; Category Menus/Data
 ; -------------------
 
+%startfree(AF)
+incsrc presets/combined_preset_safeties.asm
+%endfree(AF)
+
 org $E8E000
 PresetData:
-check bankcross off
 
 print pc, " preset data crossbank start"
+check bankcross off
+
 incsrc presets/combined_preset_data.asm
 incsrc presets/combined_map_preset_data.asm
+
+check bankcross on
 print pc, " preset data crossbank end"
 
 table ../resources/normal.tbl
 incsrc presets/combined_preset_names.asm
 
-warnpc $F08000
-check bankcross on
-
 %startfree(F1)
+incsrc presets/kpdr_menu.asm
 incsrc presets/kpdr20_menu.asm
 incsrc presets/kpdr21_menu.asm
 incsrc presets/kpdr22_menu.asm
