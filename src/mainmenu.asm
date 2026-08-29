@@ -301,6 +301,7 @@ action_submenu_jump:
 
 preset_category_submenus:
 {
+    dw #PresetsMenuKpdr
     dw #PresetsMenuKpdr20
     dw #PresetsMenuKpdr21
     dw #PresetsMenuKpdr22
@@ -332,6 +333,7 @@ preset_category_submenus:
 
 preset_category_banks:
 {
+    dw #PresetsMenuKpdr>>16
     dw #PresetsMenuKpdr20>>16
     dw #PresetsMenuKpdr21>>16
     dw #PresetsMenuKpdr22>>16
@@ -921,6 +923,7 @@ preset_adjust_plasmabeam:
 SelectPresetCategoryMenu:
     dw #presets_current
     dw #$FFFF
+    dw #precat_kpdr_safeties
     dw #precat_kpdr
     dw #precat_prkd19
     dw #precat_prkd20
@@ -948,6 +951,7 @@ presets_current:
     dl #!sram_preset_category
     dw #.routine
     db #$28, "CURRENT PRESET", #$FF
+    db #$28, "       KPDR", #$FF
     db #$28, "   KPDR 20%", #$FF
     db #$28, "   KPDR 21%", #$FF
     db #$28, "   KPDR 22%", #$FF
@@ -983,6 +987,7 @@ precat_kpdr:
     %cm_submenu("KPDR", #SelectKpdrPresetCategoryMenu)
 
 SelectKpdrPresetCategoryMenu:
+    dw #precat_kpdr_safeties
     dw #precat_kpdr20
     dw #precat_kpdr21
     dw #precat_kpdr22
@@ -993,70 +998,73 @@ SelectKpdrPresetCategoryMenu:
     dw #$0000
     %cm_header("SELECT KPDR CATEGORY")
 
+precat_kpdr_safeties:
+    %cm_jsl("KPDR (Safeties)", #action_select_preset_category, #$0000)
+
 precat_kpdr20:
-    %cm_jsl("20% KPDR 15 Missiles", #action_select_preset_category, #$0000)
+    %cm_jsl("20% KPDR 15 Missiles", #action_select_preset_category, #$0001)
 
 precat_kpdr21:
-    %cm_jsl("21% KPDR 3 E-Tanks", #action_select_preset_category, #$0001)
+    %cm_jsl("21% KPDR 3 E-Tanks", #action_select_preset_category, #$0002)
 
 precat_kpdr22:
-    %cm_jsl("22% KPDR 4 E-Tanks", #action_select_preset_category, #$0002)
+    %cm_jsl("22% KPDR 4 E-Tanks", #action_select_preset_category, #$0003)
 
 precat_kpdr23:
-    %cm_jsl("23% KPDR with Spazer", #action_select_preset_category, #$0003)
+    %cm_jsl("23% KPDR with Spazer", #action_select_preset_category, #$0004)
 
 precat_kpdr25:
-    %cm_jsl("25% KPDR Early Ice", #action_select_preset_category, #$0004)
+    %cm_jsl("25% KPDR Early Ice", #action_select_preset_category, #$0005)
 
 precat_prkd19:
-    %cm_jsl("19% PRKD 15 Missiles", #action_select_preset_category, #$0005)
+    %cm_jsl("19% PRKD 15 Missiles", #action_select_preset_category, #$0006)
 
 precat_prkd20:
-    %cm_jsl("20% PRKD 20 Missiles", #action_select_preset_category, #$0006)
+    %cm_jsl("20% PRKD 20 Missiles", #action_select_preset_category, #$0007)
 
 precat_pkrd:
-    %cm_jsl("Any% PKRD", #action_select_preset_category, #$0007)
+    %cm_jsl("Any% PKRD", #action_select_preset_category, #$0008)
 
 precat_gtclassic:
-    %cm_jsl("GT Classic", #action_select_preset_category, #$0008)
+    %cm_jsl("GT Classic", #action_select_preset_category, #$0009)
 
 precat_gtmax:
-    %cm_jsl("GT Max%", #action_select_preset_category, #$0009)
+    %cm_jsl("GT Max%", #action_select_preset_category, #$000A)
 
 precat_100early:
-    %cm_jsl("100% Early Crocomire", #action_select_preset_category, #$000A)
+    %cm_jsl("100% Early Crocomire", #action_select_preset_category, #$000B)
 
 precat_hundo:
-    %cm_jsl("100% Late Crocomire", #action_select_preset_category, #$000B)
+    %cm_jsl("100% Late Crocomire", #action_select_preset_category, #$000C)
 
 precat_100map:
-!PRESET_CATEGORY_100MAP_INDEX = #$000C
-    %cm_jsl("100% Map Completion", #action_select_preset_category, #$000C)
+!PRESET_CATEGORY_100MAP_INDEX = #$000D
+    %cm_jsl("100% Map Completion", #action_select_preset_category, #$000D)
 
 precat_spazermap:
-!PRESET_CATEGORY_SPAZERMAP_INDEX = #$000D
-    %cm_jsl("100% Map with Spazer", #action_select_preset_category, #$000D)
+!PRESET_CATEGORY_SPAZERMAP_INDEX = #$000E
+    %cm_jsl("100% Map with Spazer", #action_select_preset_category, #$000E)
 
 precat_14ice:
-    %cm_jsl("14% Ice", #action_select_preset_category, #$000E)
+    %cm_jsl("14% Ice", #action_select_preset_category, #$000F)
 
 precat_14speed:
-    %cm_jsl("14% Speed", #action_select_preset_category, #$000F)
+    %cm_jsl("14% Speed", #action_select_preset_category, #$0010)
 
 precat_rbo:
-    %cm_jsl("Reverse Boss Order", #action_select_preset_category, #$0010)
+    %cm_jsl("Reverse Boss Order", #action_select_preset_category, #$0011)
 
 precat_suitless:
-    %cm_jsl("Max% Suitless", #action_select_preset_category, #$0011)
+    %cm_jsl("Max% Suitless", #action_select_preset_category, #$0012)
 
 precat_ngplasma:
-    %cm_jsl("NewGame+ Plasma", #action_select_preset_category, #$0012)
+    %cm_jsl("NewGame+ Plasma", #action_select_preset_category, #$0013)
 
 precat_nghyper:
-    %cm_jsl("NewGame+ Hyper", #action_select_preset_category, #$0013)
+    %cm_jsl("NewGame+ Hyper", #action_select_preset_category, #$0014)
 
 precat_nintendopower:
-    %cm_jsl("Nintendo Power%", #action_select_preset_category, #$0014)
+    %cm_jsl("Nintendo Power%", #action_select_preset_category, #$0015)
 
 precat_allboss:
     %cm_submenu("All Bosses", #SelectAllBossesPresetCategoryMenu)
@@ -1069,19 +1077,19 @@ SelectAllBossesPresetCategoryMenu:
     %cm_header("SELECT ALL BOSSES CATEGORY")
 
 precat_allbosskpdr:
-    %cm_jsl("All Bosses KPDR", #action_select_preset_category, #$0015)
+    %cm_jsl("All Bosses KPDR", #action_select_preset_category, #$0016)
 
 precat_allbosspkdr:
-    %cm_jsl("All Bosses PKDR", #action_select_preset_category, #$0016)
+    %cm_jsl("All Bosses PKDR", #action_select_preset_category, #$0017)
 
 precat_allbossprkd:
-    %cm_jsl("All Bosses PRKD", #action_select_preset_category, #$0017)
+    %cm_jsl("All Bosses PRKD", #action_select_preset_category, #$0018)
 
 precat_nodropskpdr:
-    %cm_jsl("No Drops KPDR", #action_select_preset_category, #$0018)
+    %cm_jsl("No Drops KPDR", #action_select_preset_category, #$0019)
 
 precat_rando:
-    %cm_jsl("Randomizer", #action_select_preset_category, #$0019)
+    %cm_jsl("Randomizer", #action_select_preset_category, #$001A)
 
 action_select_preset_category:
 {

@@ -169,6 +169,7 @@ init_sram_routine_table:
     dw init_sram_upgrade_1Fto20
     dw init_sram_upgrade_20to22
     dw init_sram_upgrade_20to22
+    dw init_sram_upgrade_22to23
     dw init_sram_fail
 
 init_sram:
@@ -323,8 +324,13 @@ endif
     LDA !VANILLA_SPRITE_PALETTE_5_GRAPPLE_COLOR : STA !sram_sprite_features_grapple_color
 
   .upgrade_20to22
-    TDC : STA !sram_read_only_locks : STA !sram_read_only_locks+2
-    STA !sram_read_only_locks+4
+    TDC : STA !sram_read_only_locks : STA !sram_read_only_locks+$2
+    STA !sram_read_only_locks+$4
+
+  .upgrade_22to23
+    LDA #$0118 : STA !sram_safeties_enabled_kpdr
+    LDA #$0010 : STA !sram_safeties_enabled_kpdr+$2
+    TDC : STA !sram_safeties_enabled_prkd
 
     LDA !SRAM_VERSION : STA !sram_initialized
     RTS

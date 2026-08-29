@@ -9,6 +9,7 @@ combined_preset_data_list = []
 combined_preset_last_index_list = []
 combined_preset_names_lists = []
 name_dict = {}
+unused_safeties = set()
 
 # Map completion sets the mapping addresses to zero by default,
 # and not all of them are changed in map completion runs,
@@ -75,6 +76,19 @@ default_map_addr_list = ["07FB", "07FD", "07FF",
                          "D290", "D292", "D294", "D296", "D298", "D29C", "D29E",
                          "D2A0", "D2A2", "D2A4", "D2A6", "D2A8", "D2AC"]
 
+def init_unused_safeties():
+    global unused_safeties
+    for safeties_index in range(3960, 4608, 2):
+        unused_safeties.add(f"{safeties_index:04X}")
+
+def remove_unused_safeties():
+    global all_presets_data_list
+    global unused_safeties
+    for f in range(len(all_presets_data_list)):
+        for i in range(len(all_presets_data_list[f])):
+            for addr in unused_safeties:
+                del all_presets_data_list[f][i][addr]
+
 def compare_preset_data(current_index, rhs):
     global combined_preset_data_list
     differences = 0
@@ -104,6 +118,7 @@ def load_preset_data(file_label):
     global all_presets_data_list
     global all_presets_name_list
     global name_dict
+    global unused_safeties
     data_dict = {}
     input_filepath = file_label + "_data.asm"
     last_data_index = -2
@@ -121,6 +136,8 @@ def load_preset_data(file_label):
                         if addr not in data_dict:
                             data_dict[addr] = value
                 else:
+                    for safeties_index in range(3960, 4608, 2):
+                        data_dict[f"{safeties_index:04X}"] = "0000"
                     for addr in default_map_addr_list:
                         data_dict[addr] = "0000"
                 if len(preset_name_list) == (last_data_index + 1):
@@ -154,8 +171,13 @@ def load_preset_data(file_label):
                 elif name != name_dict[addr]:
                     raise Exception("Conflicting names for address: " + addr)
                 data_dict[addr] = value
+                if addr >= "0F78" and addr < "1200" and addr in unused_safeties:
+                    unused_safeties.remove(addr)
             elif line:
-                raise Exception("Unrecognized line: " + line)
+                if (preset_name or (len(preset_data_list) > 0) or
+                    (len(line) < 23) or (line[0:2] != "; ") or (line[-1:] != ")") or
+                    ((line[6:19] != " = Safeties (") and (line[10:23] != " = Safeties ("))):
+                    raise Exception("Unrecognized line: " + line)
             elif preset_name:
                 raise Exception("Empty line in preset: " + preset_name)
     if len(preset_data_list) <= 0:
@@ -223,7 +245,7 @@ def combine_preset_data():
         combined_preset_jump_list.append(1 + combined_preset_jump_list[last_index])
         combined_preset_last_index_list.append(last_index)
         combined_preset_names_lists.append([all_presets_name_list[next_file_index][preset_index]])
-        
+
         # Prepare next preset for this file
         next_preset_index = preset_index + 1
         difference = 0
@@ -233,17 +255,16 @@ def combine_preset_data():
             distance_list[next_file_index] = distance
             jump_list[next_file_index] = combined_preset_jump_list[current_index]
             last_index_list[next_file_index] = current_index
-            for i in reversed(range(current_index)):
-                distance = distance + combined_preset_distance_list[i]
+            for i in reversed(range(current_index + 1)):
                 difference = compare_preset_data(i, all_presets_data_list[next_file_index][next_preset_index])
                 if 0 == difference:
                     combined_preset_names_lists[i].append(all_presets_name_list[next_file_index][next_preset_index])
                     next_preset_index = next_preset_index + 1
-                    if len(all_presets_data_list[next_file_index]) <= next_preset_index:
-                        next_preset_index = -1
                     break
-                if distance > largest_allowed_distance:
-                    break
+                if i < current_index:
+                    distance = distance + combined_preset_distance_list[i]
+                    if distance > largest_allowed_distance:
+                        break
                 if ((difference < difference_list[next_file_index]) or
                     ((difference == difference_list[next_file_index]) and
                      (combined_preset_jump_list[i] < jump_list[next_file_index]))):
@@ -337,14 +358,16 @@ def write_combined_preset_data():
             else:
                 print(f"    dw #{combined_preset_names_lists[last_data_index][0]}", file=file)
             for addr, value in sorted(combined_preset_data_list[i].items()):
-                if (((last_data_index < 0) and addr not in default_map_addr_list) or
+                if (((last_data_index < 0) and ((addr < "0F78") or (addr >= "1200")) and addr not in default_map_addr_list) or
                     ((last_data_index >= 0) and (combined_preset_data_list[last_data_index][addr] != value))):
                     print(f'    dw ${addr}, ${value}  ; {name_dict[addr]}', file=file)
             print("    dw #$FFFF", file=file)
 
 
+init_unused_safeties()
 load_preset_data("100map")
 load_preset_data("spazermap")
+remove_unused_safeties()
 combine_preset_data()
 write_combined_preset_data()
 

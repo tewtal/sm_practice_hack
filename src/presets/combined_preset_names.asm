@@ -1,6 +1,6 @@
 
-warnpc $EFBED7
-org $EFBED7
+warnpc $EFBEAB
+org $EFBEAB
 print pc, " preset names start"
 
 preset_names:
@@ -1859,6 +1859,9 @@ preset_names_norfair_reserve_return:
 preset_names_norfair_reserve_room:
     db "Norfair Reserve Room", #$FF
 
+preset_names_northern_kronic_boost:
+    db "Northern Kronic Boost", #$FF
+
 preset_names_nutella_refill:
     db "Nutella Refill", #$FF
 
@@ -2473,6 +2476,9 @@ preset_names_snail_clip:
 
 preset_names_snake_room_revisit:
     db "Snake Room Revisit", #$FF
+
+preset_names_southern_kronic_boost:
+    db "Southern Kronic Boost", #$FF
 
 preset_names_spazer:
     db "Spazer", #$FF

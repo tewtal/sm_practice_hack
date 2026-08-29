@@ -9,6 +9,20 @@ combined_preset_data_list = []
 combined_preset_last_index_list = []
 combined_preset_names_lists = []
 name_dict = {}
+unused_safeties = set()
+
+def init_unused_safeties():
+    global unused_safeties
+    for safeties_index in range(3960, 4608, 2):
+        unused_safeties.add(f"{safeties_index:04X}")
+
+def remove_unused_safeties():
+    global all_presets_data_list
+    global unused_safeties
+    for f in range(len(all_presets_data_list)):
+        for i in range(len(all_presets_data_list[f])):
+            for addr in unused_safeties:
+                del all_presets_data_list[f][i][addr]
 
 def compare_preset_data(current_index, rhs):
     global combined_preset_data_list
@@ -39,6 +53,7 @@ def load_preset_data(file_label):
     global all_presets_data_list
     global all_presets_name_list
     global name_dict
+    global unused_safeties
     data_dict = {}
     input_filepath = file_label + "_data.asm"
     last_data_index = -2
@@ -55,6 +70,9 @@ def load_preset_data(file_label):
                     for addr, value in preset_data_list[last_data_index].items():
                         if addr not in data_dict:
                             data_dict[addr] = value
+                else:
+                    for safeties_index in range(3960, 4608, 2):
+                        data_dict[f"{safeties_index:04X}"] = "0000"
                 if len(preset_name_list) == (last_data_index + 1):
                     preset_data_list.append(data_dict)
                     preset_name_list.append(preset_name)
@@ -86,8 +104,13 @@ def load_preset_data(file_label):
                 elif name != name_dict[addr]:
                     raise Exception("Conflicting names for address: " + addr)
                 data_dict[addr] = value
+                if addr >= "0F78" and addr < "1200" and addr in unused_safeties:
+                    unused_safeties.remove(addr)
             elif line:
-                raise Exception("Unrecognized line: " + line)
+                if (preset_name or (len(preset_data_list) > 0) or
+                    (len(line) < 23) or (line[0:2] != "; ") or (line[-1:] != ")") or
+                    ((line[6:19] != " = Safeties (") and (line[10:23] != " = Safeties ("))):
+                    raise Exception("Unrecognized line: " + line)
             elif preset_name:
                 raise Exception("Empty line in preset: " + preset_name)
     if len(preset_data_list) <= 0:
@@ -268,11 +291,14 @@ def write_combined_preset_data():
             else:
                 print(f"    dw #{combined_preset_names_lists[last_data_index][0]}", file=file)
             for addr, value in sorted(combined_preset_data_list[i].items()):
-                if last_data_index < 0 or combined_preset_data_list[last_data_index][addr] != value:
+                if (((last_data_index < 0) and ((addr < "0F78") or (addr >= "1200"))) or
+                    ((last_data_index >= 0) and (combined_preset_data_list[last_data_index][addr] != value))):
                     print(f'    dw ${addr}, ${value}  ; {name_dict[addr]}', file=file)
             print("    dw #$FFFF", file=file)
 
 
+init_unused_safeties()
+load_preset_data("kpdr")
 load_preset_data("kpdr20")
 load_preset_data("kpdr21")
 load_preset_data("kpdr22")
@@ -297,6 +323,7 @@ load_preset_data("allbosspkdr")
 load_preset_data("allbossprkd")
 load_preset_data("nodropskpdr")
 load_preset_data("rando")
+remove_unused_safeties()
 combine_preset_data()
 write_combined_preset_data()
 
