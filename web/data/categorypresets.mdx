@@ -1,6 +1,6 @@
 # Category Presets
 Presets are pre-configured savestates that are specific to a particular category.
-&nbsp;
+<br />
 Presets load a room but do not load enemies for that room by default,
 so often a preset is named for the upcoming room or section, since enemies will load in the next room.
 This is also why any blue doors are already open to allow easier entry to the next room,
@@ -10,7 +10,7 @@ In fact if Samus is actually riding an elevator at the start of a preset, simula
 then enemies will also be loaded into the room. However since the enemies aren't loaded with the same timing as normal,
 this can result in enemies being out of position compared to the vanilla game, so depending on what you want to practice,
 you may want to select the preset before riding the elevator.
-&nbsp;
+<br />
 You're also welcome to create your own custom presets.
 Some category presets support different routing options, or contain a Safeties and Strategies section
 where you can toggle on/off various options. However with Super Metroid having a wealth of strats,
@@ -19,7 +19,7 @@ so making custom presets is also an option. When making custom presets, we recom
 your SaveRAM or .sram file (if practical) just in case it gets reset by accident (in particular microSD cards
 are known to fail on occasion and could take your custom presets with it). We do strive for backwards compatibility,
 so your custom presets should continue to work if you carry your SaveRAM/.sram file forward to a future update.
-&nbsp;
+<br />
 If you have interest in creating built-in category presets for a category we don't have presets for, it is possible with some effort.
 You will need to download a specific version of snes9x emulator in order to record a playthrough of the category,
 and then specific points during that playthrough can be chosen as the presets.
@@ -31,7 +31,7 @@ The playthrough method will give us a basic, continuous set of presets.
 If you want the category presets to have different routing options or a Safeties and Strategies section,
 that would need to be added manually by a Practice Hack developer.
 Click here for more information about [creating category presets](https://github.com/tewtal/sm_practice_hack/wiki/Creating-Category-Presets).
-&nbsp;
+<br />
 For categories with a Safeties and Strategies section, a description of what each option does is below.
 Unless otherwise stated, ammo and energy pickups give their natural inventory boost.
 For example, an option to collect a missile pack will give you an extra five missiles.
@@ -57,7 +57,7 @@ This preset has the following pickups and changes:
 - Collect Precious missiles (after Draygon)
 - Collect Hotarubi missiles
 - Marks all Zebetites destroyed and removes all missiles and supers for Mother Brain 2
-&nbsp;
+<br />
 Note this is not intended to be the most efficient method of Zeb Skip Skip. This route favors collecting earlier missiles
 since they can help with boss fights, but many other viable routes exist. In particular the Retro Brin missile pack could be dropped
 while Big Pink, Green Hill Zone, West Ocean, and Three Muskateers rooms all contain a missile pack that could be picked up
@@ -71,7 +71,7 @@ Collecting Spazer provides another option for killing and farming enemies, so th
 - +1 missile king cac
 - Above missile buffs reset after Bat Cave Revisit farm (assume less time spent farming)
 - +20 energy hellway farm (resets at next energy refill)
-&nbsp;
+<br />
 Note that collecting Spazer costs one super for the green door. To offset this,
 it assumed only one super will be used for Kraid entrance instead of three,
 so you end up with an extra super available for killing mini-kraid pirates.
@@ -102,6 +102,77 @@ It costs one super to open the green door. The super is recovered going up the C
 but costs 20 energy due to farming a super from a cac instead of energy.
 This cost is cleared after the Phantoon fight (assumed more energy recovered during the fight).
 
-### TODO more options to follow
+### Alpha Spark Skip
+Enable this option to gain 60 energy entering red tower (resets at next energy refill).
+
+### Save Yellow Door PB
+Enable this option to gain 1 power bomb by not opening the yellow door from Crateria Kihunters back to Red Brinstar.
+This is cleared upon returning to Red Brinstar.
+
+### Moat Missiles
+Often collected for 20/10 loadouts, with HJB missiles being the other 20/10 option (or collect both for 25/10 MB1 ammo).
+
+### Ocean Fly Skip
+Enable this option to gain 20 energy entering Wrecked Ship (resets at next energy refill).
+
+### Phantoon X-Factor
+This option causes Spazer and Ice Beam to be unequipped prior to Phantoon,
+with Spazer never being re-equipped and Ice Beam being re-equipped when entering Lower Norfair.
+This option does nothing if neither Spazer or Ice Beam are collected.
+
+### Sloaters Refill
+This option also applies -1 super for opening the green door (reset after Botwoon).
+The energy refill effect lasts until the next energy tank collection (either Mama Turtle E-Tank or Botwoon E-Tank).
+
+### Mama Turtle E-Tank
+This option also applies -5 missiles for opening the red door (reset after Botwoon).
+The energy refill effect lasts until Botwoon E-Tank is collected.
+
+### Crab Supers
+Adds crab supers with no other adjustments.
+
+### Botwoon X-Factor
+This option causes Spazer and Ice Beam to be unequipped prior to Crab Shaft (during Mt. Everest spark),
+with Spazer never being re-equipped and Ice Beam being re-equipped when entering Lower Norfair.
+This option does nothing if neither Spazer or Ice Beam are collected.
+
+### Aqueduct Missiles
+Adds aqueduct missiles with no other adjustments.
+
+### Aqueduct Supers
+Adds aqueduct supers with no other adjustments.
+
+### Halfie Savings
+Enable this option to gain 70 energy in the Colosseum.
+For consistency with the prior presets, this option grants an additional 30 energy after Draygon.
+This additional 30 energy might be pulled out into a separate option in the future.
+The energy bonus resets at the next energy refill or after Tourian Metroids.
+
+### Whomple Savings
+Enable this option to gain 112 energy on the reverse trip through the Colosseum.
+The energy bonus resets at the next energy refill or after Tourian Metroids.
+
+### Plasma Spark Skip
+Enable this option to gain 43 energy entering Plasma Climb.
+The energy bonus resets at the next energy refill or after Tourian Metroids.
+
+### Southern Route
+This option only controls whether Northern Route or Southern Route presets appear in the menu.
+
+### Screw Attack
+This option sets the acid as cleared, Golden Torizo defeated and gives Screw Attack.
+If a speedrunner really did this they might also collect the super pack (and possibly the missile pack).
+However by leaving those off, this option could also be used by speedrunners
+who intend to gate glitch just to get the Screw Attack.
+
+### Blue Pillars
+Enable this option to gain 74 energy entering Worst Room In The Game.
+The energy bonus resets at the next energy refill or after Tourian Metroids.
+
+### Fireflea E-Tank
+The energy refill effect lasts until Ridley E-Tank or after Tourian Metroids.
+
+### Ridley E-Tank
+The energy refill effect lasts until after Tourian Metroids.
 
 <br />
