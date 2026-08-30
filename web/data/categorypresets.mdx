@@ -1,15 +1,17 @@
 # Category Presets
 Presets are pre-configured savestates that are specific to a particular category.
-
-Presets load a room but do not load any enemies for that room by default,
+&nbsp;
+Presets load a room but do not load enemies for that room by default,
 so often a preset is named for the upcoming room or section, since enemies will load in the next room.
 This is also why any blue doors are already open to allow easier entry to the next room,
 except when Samus is facing forward as if she just arrived on the ship or is riding an elevator;
 in those cases the assumption is Samus couldn't have opened the doors and you want to practice opening them.
-In fact if Samus is actually riding an elevator at the start of a preset, as if she is entering the room,
+In fact if Samus is actually riding an elevator at the start of a preset, simulating an entry into the room,
 then enemies will also be loaded into the room. However since the enemies aren't loaded with the same timing as normal,
 this can result in enemies being out of position compared to the vanilla game, so depending on what you want to practice,
-you may want to select the preset before riding the elevator. You're also welcome to create your own custom presets.
+you may want to select the preset before riding the elevator.
+&nbsp;
+You're also welcome to create your own custom presets.
 Some category presets support different routing options, or contain a Safeties and Strategies section
 where you can toggle on/off various options. However with Super Metroid having a wealth of strats,
 with seemingly each room having multiple viable strats for speedrunning, the built-in presets can only cover so much,
@@ -17,7 +19,7 @@ so making custom presets is also an option. When making custom presets, we recom
 your SaveRAM or .sram file (if practical) just in case it gets reset by accident (in particular microSD cards
 are known to fail on occasion and could take your custom presets with it). We do strive for backwards compatibility,
 so your custom presets should continue to work if you carry your SaveRAM/.sram file forward to a future update.
-
+&nbsp;
 If you have interest in creating built-in category presets for a category we don't have presets for, it is possible with some effort.
 You will need to download a specific version of snes9x emulator in order to record a playthrough of the category,
 and then specific points during that playthrough can be chosen as the presets.
@@ -29,9 +31,77 @@ The playthrough method will give us a basic, continuous set of presets.
 If you want the category presets to have different routing options or a Safeties and Strategies section,
 that would need to be added manually by a Practice Hack developer.
 Click here for more information about [creating category presets](https://github.com/tewtal/sm_practice_hack/wiki/Creating-Category-Presets).
+&nbsp;
+For categories with a Safeties and Strategies section, a description of what each option does is below.
+Unless otherwise stated, ammo and energy pickups give their natural inventory boost.
+For example, an option to collect a missile pack will give you an extra five missiles.
+Collecting an energy tank gives you an extra 100 energy plus a refill effect
+that lasts until you would normally be at or near full energy even without the energy tank pickup.
 
 # Any% KPDR Safeties and Strategies
 ## NOTE: This is still in beta test and not available in the 2.7.11 release
-### Test
-TODO this page is under construction
+### Zeb Skip Skip
+For beginner speedrunners not comfortable with the Zeb Skip at the end of the run.
+This is listed first since you want to start picking up extra ammo for the zebetites early on.
+This preset has the following pickups and changes:
+- Open Retro Brin door (-5 missiles on red door, until after Pit Room)
+- Collect Retro Brin missiles
+- Collect Early Supers missiles
+- Collect HJB missiles
+- Collect Cathedral missiles (-2 missiles on gerutas and -60 energy on lava, until after Bat Cave Revisit)
+- Collect Bubble Mountain missiles
+- Collect Speed Booster missiles
+- Collect Alpha Power Bomb missiles
+- Collect Moat missiles
+- Collect Aqueduct missiles and supers
+- Collect Precious missiles (after Draygon)
+- Collect Hotarubi missiles
+- Marks all Zebetites destroyed and removes all missiles and supers for Mother Brain 2
+&nbsp;
+Note this is not intended to be the most efficient method of Zeb Skip Skip. This route favors collecting earlier missiles
+since they can help with boss fights, but many other viable routes exist. In particular the Retro Brin missile pack could be dropped
+while Big Pink, Green Hill Zone, West Ocean, and Three Muskateers rooms all contain a missile pack that could be picked up
+with only a slight detour in-room. Swapping in more super packs is also an option, or the two Brin Reserve missile packs with reserve tank.
+
+### Spazer
+Collecting Spazer provides another option for killing and farming enemies, so the following adjustments are made:
+- +1 missile cac below Spazer
+- +1 missile mini-kraid pirates (see below note)
+- +2 missiles pre-cathedral desgeegas
+- +1 missile king cac
+- Above missile buffs reset after Bat Cave Revisit farm (assume less time spent farming)
+- +20 energy hellway farm (resets at next energy refill)
+&nbsp;
+Note that collecting Spazer costs one super for the green door. To offset this,
+it assumed only one super will be used for Kraid entrance instead of three,
+so you end up with an extra super available for killing mini-kraid pirates.
+From there supers max out after killing mini-kraid, same as without Spazer.
+
+### Hi-Jump First
+For beginner speedrunners not comfortable with the Kraid entrance walljump.
+It also uses missiles instead of a super on the red door to Hi-Jump Boots,
+so it has +1 super -5 missiles during Upper Norfair until the farm after Bat Cave Revisit.
+
+### Kraid E-Tank
+Considered by many not as a safety, but as a timesave; it is difficult to actually save time skipping this energy tank.
+This option also applies -1 missile for killing the beetoms (reset after Bat Cave Revisit).
+The energy refill effect lasts until HJB E-Tank is collected (or until re-entering Upper Norfair if Hi-Jump First).
+
+### HJB Missiles
+Often collected for 20/10 loadouts, with moat missiles being the other 20/10 option (or collect both for 25/10 MB1 ammo).
+For consistency with the prior presets, this option comes with a -3 penalty after the Phantoon, and isn't cleared until entering Ridley.
+
+### Grapple
+For beginner speedrunners not confortable crossing moat, or perhaps for the extra health.
+This option kills Croc, gives Grapple, Croc power bombs, and Croc E-Tank.
+There is no energy refill effect since Samus is already at full health entering frog speedway.
+
+### Early Ice
+Collect Ice Beam on the first visit to Upper Norfair instead on the return trip.
+It costs one super to open the green door. The super is recovered going up the Caterpillars room,
+but costs 20 energy due to farming a super from a cac instead of energy.
+This cost is cleared after the Phantoon fight (assumed more energy recovered during the fight).
+
+### TODO more options to follow
+
 <br />
