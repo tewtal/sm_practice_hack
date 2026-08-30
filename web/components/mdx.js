@@ -5,6 +5,7 @@ import React from 'react'
 const components = {
     h1: props => <div className="p-4 mb-4 mt-8 bg-blue-100 text-blue-500 rounded shadow-sm font-sans font-bold">{props.children}</div>,
     h2: props => <h2 className="mx-2 text-lg font-bold mt-4" {...props} />,
+    h3: props => <h2 className="mx-2 font-bold mt-4" {...props} />,
     p: props => <p className="mx-4" {...props} />,
     ol: props => <ol className="list-decimal ml-8 text-md" {...props} />,
     ul: props => <ul className="list-disc ml-8 mb-4 text-md" {...props} />,
