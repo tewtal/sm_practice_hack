@@ -758,7 +758,7 @@ endif
 
     JSL Randomize_Preset_Equipment
     JSL $90AC8D ; Update beam graphics
-    JSL $82E139 ; Load target colours for common sprites, beams and slashing enemies / pickups
+    JSL load_common_target_colors
 if !FEATURE_PAL
     JSL $A08A2E
 else ; Load enemies
