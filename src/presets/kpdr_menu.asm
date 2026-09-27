@@ -442,6 +442,8 @@ presets_submenu_kpdr_tourian:
     %cm_header("TOURIAN")
 
 presets_submenu_kpdr_safeties_page1:
+    dw #presets_kpdr_safeties_builtin
+    dw #$FFFF
     dw #presets_kpdr_safeties_zeb_skip_skip
     dw #presets_kpdr_safeties_hjb_missiles
     dw #presets_kpdr_safeties_moat_missiles
@@ -464,6 +466,8 @@ presets_submenu_kpdr_safeties_page1:
     %cm_header("SAFETIES AND STRATEGIES")
 
 presets_submenu_kpdr_safeties_page2:
+    dw #presets_kpdr_safeties_builtin
+    dw #$FFFF
     dw #presets_kpdr_safeties_alpha_spark_skip
     dw #presets_kpdr_safeties_spend_yellow_door_pb
     dw #presets_kpdr_safeties_phantoon_xfactor
@@ -486,11 +490,40 @@ presets_submenu_kpdr_safeties_page2:
     dw #$0000
     %cm_header("SAFETIES AND STRATEGIES")
 
+presets_kpdr_safeties_builtin:
+    dw !ACTION_CHOICE
+    dl #!ram_cm_category_preset_kpdr_builtin
+    dw #.routine
+    db #$28, "Built-in Settin", #$FF
+    db #$28, "g    CUSTOM", #$FF
+    db #$28, "g  BEGINNER", #$FF
+    db #$28, "g   MISHRAK", #$FF
+    db #$28, "g EARLY ICE", #$FF
+    db #$28, "g    4-TANK", #$FF
+    db #$28, "g   MINIMAL", #$FF
+    db #$FF
+  .routine
+    LDA !ram_cm_category_preset_kpdr_builtin : BEQ .done : CMP #$0006 : BCS .done
+    ASL : TAX : LDA.l .first_table,X
+    STA !sram_safeties_enabled_kpdr
+    LDA.l .second_table,X
+    STA !sram_safeties_enabled_kpdr+$2
+  .done
+    RTL
+  .first_table:
+    dw #$0000, #$2FFF, #$A7DA, #$1F5A, #$0318, #$0100
+  .second_table:
+    dw #$0000, #$1B6E, #$1C78, #$1279, #$0040, #$0000
+
 presets_kpdr_safeties_goto_page1:
     %cm_adjacent_submenu("GOTO PAGE ONE", #presets_submenu_kpdr_safeties_page1)
 
 presets_kpdr_safeties_goto_page2:
     %cm_adjacent_submenu("GOTO PAGE TWO", #presets_submenu_kpdr_safeties_page2)
+
+presets_kpdr_safeties_clear_builtin:
+    TDC : STA !ram_cm_category_preset_kpdr_builtin
+    RTL
 
 presets_kpdr_safeties_zeb_skip_skip:
     %cm_toggle_bit("Zeb Skip Skip", !sram_safeties_enabled_kpdr, #$0001, .routine)
@@ -500,10 +533,11 @@ presets_kpdr_safeties_zeb_skip_skip:
     ORA #$0210 : STA !sram_safeties_enabled_kpdr
     LDA !sram_safeties_enabled_kpdr+$2 : ORA #$0006 : STA !sram_safeties_enabled_kpdr+$2
   .end
+    TDC : STA !ram_cm_category_preset_kpdr_builtin
     RTL
 
 presets_kpdr_safeties_spazer:
-    %cm_toggle_bit("Spazer", !sram_safeties_enabled_kpdr, #$0002, #0)
+    %cm_toggle_bit("Spazer", !sram_safeties_enabled_kpdr, #$0002, presets_kpdr_safeties_clear_builtin)
 
 presets_kpdr_safeties_hjjump_first:
     %cm_toggle_bit("Hi-Jump First", !sram_safeties_enabled_kpdr, #$0004, .routine)
@@ -513,6 +547,7 @@ presets_kpdr_safeties_hjjump_first:
     ORA #$0058 : STA !sram_safeties_enabled_kpdr
     LDA !sram_safeties_enabled_kpdr+$2 : AND #$FF7F : STA !sram_safeties_enabled_kpdr+$2
   .end
+    TDC : STA !ram_cm_category_preset_kpdr_builtin
     RTL
 
 presets_kpdr_safeties_kraid_etank:
@@ -522,6 +557,7 @@ presets_kpdr_safeties_kraid_etank:
     BIT #$0008 : BNE .end
     AND #$FFFB : STA !sram_safeties_enabled_kpdr
   .end
+    TDC : STA !ram_cm_category_preset_kpdr_builtin
     RTL
 
 presets_kpdr_safeties_hjb_missiles:
@@ -531,6 +567,7 @@ presets_kpdr_safeties_hjb_missiles:
     BIT #$0010 : BNE .end
     AND #$FFFA : STA !sram_safeties_enabled_kpdr
   .end
+    TDC : STA !ram_cm_category_preset_kpdr_builtin
     RTL
 
 presets_kpdr_safeties_grapple:
@@ -540,6 +577,7 @@ presets_kpdr_safeties_grapple:
     BIT #$0020 : BEQ .end
     ORA #$0400 : STA !sram_safeties_enabled_kpdr
   .end
+    TDC : STA !ram_cm_category_preset_kpdr_builtin
     RTL
 
 presets_kpdr_safeties_early_ice:
@@ -549,16 +587,18 @@ presets_kpdr_safeties_early_ice:
     ; Late Ice required by Southern Route
     BIT #$0040 : BNE .early_ice
     AND #$FFFB : STA !sram_safeties_enabled_kpdr
+    TDC : STA !ram_cm_category_preset_kpdr_builtin
     RTL
   .early_ice
     LDA !sram_safeties_enabled_kpdr+$2 : AND #$FF7F : STA !sram_safeties_enabled_kpdr+$2
+    TDC : STA !ram_cm_category_preset_kpdr_builtin
     RTL
 
 presets_kpdr_safeties_alpha_spark_skip:
-    %cm_toggle_bit("Alpha Spark Skip", !sram_safeties_enabled_kpdr, #$0080, #0)
+    %cm_toggle_bit("Alpha Spark Skip", !sram_safeties_enabled_kpdr, #$0080, presets_kpdr_safeties_clear_builtin)
 
 presets_kpdr_safeties_spend_yellow_door_pb:
-    %cm_toggle_bit_inverted("Save Yellow Door PB", !sram_safeties_enabled_kpdr, #$0100, #0)
+    %cm_toggle_bit_inverted("Save Yellow Door PB", !sram_safeties_enabled_kpdr, #$0100, presets_kpdr_safeties_clear_builtin)
 
 presets_kpdr_safeties_moat_missiles:
     %cm_toggle_bit("Moat Missiles", !sram_safeties_enabled_kpdr, #$0200, .routine)
@@ -567,6 +607,7 @@ presets_kpdr_safeties_moat_missiles:
     BIT #$0200 : BNE .end
     AND #$FFFE : STA !sram_safeties_enabled_kpdr
   .end
+    TDC : STA !ram_cm_category_preset_kpdr_builtin
     RTL
 
 presets_kpdr_safeties_ocean_fly_skip:
@@ -576,6 +617,7 @@ presets_kpdr_safeties_ocean_fly_skip:
     BIT #$0400 : BNE .end
     AND #$F7DF : STA !sram_safeties_enabled_kpdr
   .end
+    TDC : STA !ram_cm_category_preset_kpdr_builtin
     RTL
 
 presets_kpdr_safeties_healthsaver_spark:
@@ -585,22 +627,23 @@ presets_kpdr_safeties_healthsaver_spark:
     BIT #$0800 : BEQ .end
     ORA #$0400 : STA !sram_safeties_enabled_kpdr
   .end
+    TDC : STA !ram_cm_category_preset_kpdr_builtin
     RTL
 
 presets_kpdr_safeties_phantoon_xfactor:
-    %cm_toggle_bit("Phantoon X-Factor", !sram_safeties_enabled_kpdr, #$1000, #0)
+    %cm_toggle_bit("Phantoon X-Factor", !sram_safeties_enabled_kpdr, #$1000, presets_kpdr_safeties_clear_builtin)
 
 presets_kpdr_safeties_sloaters_refill:
-    %cm_toggle_bit("Sloaters Refill", !sram_safeties_enabled_kpdr, #$2000, #0)
+    %cm_toggle_bit("Sloaters Refill", !sram_safeties_enabled_kpdr, #$2000, presets_kpdr_safeties_clear_builtin)
 
 presets_kpdr_safeties_mama_turtle_etank:
-    %cm_toggle_bit("Mama Turtle E-Tank", !sram_safeties_enabled_kpdr, #$4000, #0)
+    %cm_toggle_bit("Mama Turtle E-Tank", !sram_safeties_enabled_kpdr, #$4000, presets_kpdr_safeties_clear_builtin)
 
 presets_kpdr_safeties_crab_supers:
-    %cm_toggle_bit("Crab Supers", !sram_safeties_enabled_kpdr, #$8000, #0)
+    %cm_toggle_bit("Crab Supers", !sram_safeties_enabled_kpdr, #$8000, presets_kpdr_safeties_clear_builtin)
 
 presets_kpdr_safeties_botwoon_xfactor:
-    %cm_toggle_bit("Botwoon X-Factor", !sram_safeties_enabled_kpdr+$2, #$0001, #0)
+    %cm_toggle_bit("Botwoon X-Factor", !sram_safeties_enabled_kpdr+$2, #$0001, presets_kpdr_safeties_clear_builtin)
 
 presets_kpdr_safeties_aqueduct_missiles:
     %cm_toggle_bit("Aqueduct Missiles", !sram_safeties_enabled_kpdr+$2, #$0002, .routine)
@@ -609,6 +652,7 @@ presets_kpdr_safeties_aqueduct_missiles:
     BIT #$0002 : BNE .end
     LDA !sram_safeties_enabled_kpdr : AND #$FFFE : STA !sram_safeties_enabled_kpdr
   .end
+    TDC : STA !ram_cm_category_preset_kpdr_builtin
     RTL
 
 presets_kpdr_safeties_aqueduct_supers:
@@ -618,19 +662,20 @@ presets_kpdr_safeties_aqueduct_supers:
     BIT #$0004 : BNE .end
     LDA !sram_safeties_enabled_kpdr : AND #$FFFE : STA !sram_safeties_enabled_kpdr
   .end
+    TDC : STA !ram_cm_category_preset_kpdr_builtin
     RTL
 
 presets_kpdr_safeties_halfie_savings:
-    %cm_toggle_bit("Halfie Savings", !sram_safeties_enabled_kpdr+$2, #$0008, #0)
+    %cm_toggle_bit("Halfie Savings", !sram_safeties_enabled_kpdr+$2, #$0008, presets_kpdr_safeties_clear_builtin)
 
 presets_kpdr_safeties_safer_draygon:
-    %cm_toggle_bit("Safer Draygon", !sram_safeties_enabled_kpdr+$2, #$0010, #0)
+    %cm_toggle_bit("Safer Draygon", !sram_safeties_enabled_kpdr+$2, #$0010, presets_kpdr_safeties_clear_builtin)
 
 presets_kpdr_safeties_whomple_savings:
-    %cm_toggle_bit("Whomple Savings", !sram_safeties_enabled_kpdr+$2, #$0020, #0)
+    %cm_toggle_bit("Whomple Savings", !sram_safeties_enabled_kpdr+$2, #$0020, presets_kpdr_safeties_clear_builtin)
 
 presets_kpdr_safeties_plasma_spark_skip:
-    %cm_toggle_bit("Plasma Spark Skip", !sram_safeties_enabled_kpdr+$2, #$0040, #0)
+    %cm_toggle_bit("Plasma Spark Skip", !sram_safeties_enabled_kpdr+$2, #$0040, presets_kpdr_safeties_clear_builtin)
 
 presets_kpdr_safeties_southern_route:
     %cm_toggle_bit("Southern Route", !sram_safeties_enabled_kpdr+$2, #$0080, .routine)
@@ -639,6 +684,7 @@ presets_kpdr_safeties_southern_route:
     BIT #$0080 : BEQ .end
     LDA !sram_safeties_enabled_kpdr : AND #$FFBB : STA !sram_safeties_enabled_kpdr
   .end
+    TDC : STA !ram_cm_category_preset_kpdr_builtin
     RTL
 
 presets_kpdr_safeties_screw_attack:
@@ -649,6 +695,7 @@ presets_kpdr_safeties_screw_attack:
     BIT #$0100 : BEQ .end
     ORA #$0200 : AND #$FBFF : STA !sram_safeties_enabled_kpdr+$2
   .end
+    TDC : STA !ram_cm_category_preset_kpdr_builtin
     RTL
 
 presets_kpdr_safeties_blue_pillars:
@@ -658,9 +705,11 @@ presets_kpdr_safeties_blue_pillars:
     ; Blue Pillars prevented by Slow Pillars
     BIT #$0200 : BNE .blue
     AND #$FEFF : STA !sram_safeties_enabled_kpdr+$2
+    TDC : STA !ram_cm_category_preset_kpdr_builtin
     RTL
   .blue
     AND #$FBFF : STA !sram_safeties_enabled_kpdr+$2
+    TDC : STA !ram_cm_category_preset_kpdr_builtin
     RTL
 
 presets_kpdr_safeties_slow_pillars:
@@ -670,13 +719,14 @@ presets_kpdr_safeties_slow_pillars:
     BIT #$0400 : BEQ .end
     AND #$FCFF : STA !sram_safeties_enabled_kpdr+$2
   .end
+    TDC : STA !ram_cm_category_preset_kpdr_builtin
     RTL
 
 presets_kpdr_safeties_fireflea_etank:
-    %cm_toggle_bit("Fireflea E-Tank", !sram_safeties_enabled_kpdr+$2, #$0800, #0)
+    %cm_toggle_bit("Fireflea E-Tank", !sram_safeties_enabled_kpdr+$2, #$0800, presets_kpdr_safeties_clear_builtin)
 
 presets_kpdr_safeties_ridley_etank:
-    %cm_toggle_bit("Ridley E-Tank", !sram_safeties_enabled_kpdr+$2, #$1000, #0)
+    %cm_toggle_bit("Ridley E-Tank", !sram_safeties_enabled_kpdr+$2, #$1000, presets_kpdr_safeties_clear_builtin)
 
 
 ; Crateria

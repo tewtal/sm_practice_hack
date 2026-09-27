@@ -255,6 +255,7 @@ ram_cm_preserved_timers = !ram_cm_preserved_timers ; !WRAM_MENU_START+$88 ; 8 by
 ; as long as it isn't used multiple times on the same menu page
 
 ram_cm_category_preset_pkrd = !ram_cm_category_preset_pkrd ; !WRAM_MENU_START+$90
+ram_cm_category_preset_kpdr_builtin = !ram_cm_category_preset_kpdr_builtin ; !WRAM_MENU_START+$92
 
 ram_cm_watch_enemy_property = !ram_cm_watch_enemy_property ; !WRAM_MENU_START+$90
 ram_cm_watch_enemy_index = !ram_cm_watch_enemy_index ; !WRAM_MENU_START+$92

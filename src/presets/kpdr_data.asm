@@ -1797,7 +1797,6 @@ preset_kpdr_maridia_botwoon:
     dw $0911, $0300  ; Screen X position in pixels
     dw $0913, $5800  ; Screen subpixel Y position
     dw $0917, $0240  ; Layer 2 X position
-    dw $09D2, $0000  ; Currently selected item
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $03A4  ; Samus X
@@ -1818,9 +1817,11 @@ preset_kpdr_maridia_botwoon_etank:
     dw $09C6, $000F  ; Missiles
     dw $09CA, $0003  ; Supers
     dw $09CE, $0002  ; Pbs
+    dw $09D2, $0000  ; Currently selected item
     dw $0AF6, $01C6  ; Samus X
     dw $101C, $0000  ; Safeties (Mama Turtle E-Tank) missiles adjustment
     dw $105A, $0000  ; Safeties (Sloaters Refill) supers adjustment
+    dw $1160, $0000  ; Safeties (Botwoon X-Factor) currently selected item
     dw $11DA, $FFEC  ; Safeties (Sloaters Refill) refill
     dw $11DC, $FFD9  ; Safeties (Mama Turtle E-Tank) refill
     dw $D82C, $0002  ; Bosses

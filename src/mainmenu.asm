@@ -270,6 +270,7 @@ action_submenu:
 
 action_presets_mainmenu:
 {
+    TDC : STA ram_cm_category_preset_kpdr_builtin
     LDA !sram_safeties_enabled_phantoonfirst : AND #$0008
     LSR #3 : STA !ram_cm_category_preset_pkrd
 

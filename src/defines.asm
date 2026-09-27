@@ -280,6 +280,7 @@
 ; as long as it isn't used multiple times on the same menu page
 
 !ram_cm_category_preset_pkrd = !WRAM_MENU_START+$90
+!ram_cm_category_preset_kpdr_builtin = !WRAM_MENU_START+$92
 
 !ram_cm_watch_enemy_property = !WRAM_MENU_START+$90
 !ram_cm_watch_enemy_index = !WRAM_MENU_START+$92
