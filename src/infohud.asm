@@ -749,7 +749,7 @@ ih_chozo_segment:
 
 ih_ceres_elevator_segment:
 {
-    LDA #$0001 : STA !ram_update_timers_flag
+    STA !ram_update_timers_flag
 if !FEATURE_PAL
     JML $90F081
 else ; overwritten code
