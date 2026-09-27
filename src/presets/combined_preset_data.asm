@@ -20602,6 +20602,13 @@ preset_kpdr_red_brinstar_hellway:
     dw $0AF6, $008F  ; Samus X
     dw #$FFFF
 
+preset_kpdr20_wrecked_ship_ocean_spark:
+    dw #preset_kpdr21_wrecked_ship_ocean_spark
+    dw $09C6, $000B  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
 preset_14speed_maridia_aqueduct_revisit:
     dw #preset_14speed_maridia_reverse_botwoon
     dw $078D, $A90C  ; DDB
@@ -20968,6 +20975,33 @@ preset_gtmax_lower_norfair_green_gate_final:
     dw $D878, $80C0  ; Items
     dw #$FFFF
 
+preset_kpdr20_wrecked_ship_entering_wrecked_ship:
+    dw #preset_kpdr21_wrecked_ship_entering_wrecked_ship
+    dw $09C6, $000B  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr21_wrecked_ship_basement:
+    dw #preset_kpdr21_wrecked_ship_entering_wrecked_ship
+    dw $078D, $A1BC  ; DDB
+    dw $079B, $CAF6  ; MDB
+    dw $07F3, $0030  ; Music Bank
+    dw $090F, $4000  ; Screen subpixel X position
+    dw $0911, $0400  ; Screen X position in pixels
+    dw $0913, $AC00  ; Screen subpixel Y position
+    dw $0915, $0691  ; Screen Y position in pixels
+    dw $0917, $0300  ; Layer 2 X position
+    dw $0919, $04EC  ; Layer 2 Y position
+    dw $09D2, $0002  ; Currently selected item
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $04C9  ; Samus X
+    dw $0AF8, $7FFF  ; Samus subpixel X
+    dw $0AFA, $0742  ; Samus Y
+    dw $0AFC, $B7FF  ; Samus subpixel Y
+    dw #$FFFF
+
 preset_gtclassic_hijump_upper_norfair_prepillars:
     dw #preset_gtclassic_hijump_upper_norfair_ln_main_hall
     dw $090F, $7000  ; Screen subpixel X position
@@ -21024,54 +21058,96 @@ preset_prkd20_upper_norfair_ice_maze_up:
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 
-preset_kpdr_red_brinstar_caterpillars_down:
-    dw #preset_kpdr20_red_brinstar_caterpillars_down
-    dw $0F78, $00FB  ; Safeties enabled
-    dw $0F82, $0014  ; Safeties energy adjustment
-    dw $0F8E, $003C  ; Safeties energy adjustment
-    dw $104C, $FFFF  ; Safeties supers adjustment
-    dw $1180, $0004  ; Safeties stage
-    dw $D876, $0121  ; Items
-    dw $D878, $001C  ; Items
-    dw $D8B8, $26EC  ; Doors
+preset_kpdr22_upper_norfair_moat_missile_single_chamber:
+    dw #preset_kpdr22_upper_norfair_hjb_missile_single_chamber
+    dw $09C6, $000A  ; Missiles
+    dw $09C8, $000A  ; Max missiles
     dw #$FFFF
 
-preset_kpdr_red_brinstar_alpha_power_bombs:
-    dw #preset_kpdr20_red_brinstar_alpha_power_bombs
-    dw $0F78, $00FB  ; Safeties enabled
-    dw $0F82, $0014  ; Safeties energy adjustment
-    dw $0F8E, $003C  ; Safeties energy adjustment
-    dw $104C, $FFFF  ; Safeties supers adjustment
-    dw $1180, $0004  ; Safeties stage
-    dw $D876, $0121  ; Items
-    dw $D878, $001C  ; Items
-    dw $D8B8, $26EC  ; Doors
+preset_kpdr22_upper_norfair_hjb_missile_double_chamber:
+    dw #preset_kpdr23_upper_norfair_double_chamber
+    dw $09A6, $1000  ; Equipped Beams
+    dw $09A8, $1000  ; Collected Beams
+    dw $09C6, $0008  ; Missiles
+    dw $D8B6, $0008  ; Doors
     dw #$FFFF
 
-preset_kpdr_red_brinstar_caterpillars_up:
-    dw #preset_kpdr20_red_brinstar_caterpillars_up
-    dw $09C2, $00D3  ; Health
-    dw $0F78, $00FB  ; Safeties enabled
-    dw $0F82, $0014  ; Safeties energy adjustment
-    dw $0F8E, $003C  ; Safeties energy adjustment
-    dw $104C, $FFFF  ; Safeties supers adjustment
-    dw $1180, $0005  ; Safeties stage
-    dw $D876, $0121  ; Items
-    dw $D878, $001C  ; Items
-    dw $D8B8, $26EC  ; Doors
+preset_phantoonfirst_kraid_before_ridley_kraid_etank:
+    dw #preset_phantoonfirst_kraid_before_ridley_kraid_kihunters_revisit
+    dw $078D, $916E  ; DDB
+    dw $079B, $A471  ; MDB
+    dw $07F3, $0012  ; Music Bank
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $9000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $5800  ; Screen subpixel Y position
+    dw $0915, $011B  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $011B  ; Layer 2 Y position
+    dw $0AF6, $0057  ; Samus X
+    dw $0AFA, $018B  ; Samus Y
+    dw $D8B8, $0001  ; Doors
     dw #$FFFF
 
-preset_kpdr_wrecked_ship_crateria_kihunters:
-    dw #preset_kpdr20_wrecked_ship_crateria_kihunters
-    dw $09C2, $00E7  ; Health
-    dw $0F78, $00FB  ; Safeties enabled
-    dw $0F82, $0014  ; Safeties energy adjustment
-    dw $0F8C, $FFEC  ; Safeties energy adjustment
-    dw $0F8E, $003C  ; Safeties energy adjustment
-    dw $1180, $0005  ; Safeties stage
-    dw $D876, $0121  ; Items
+preset_kpdr25_upper_norfair_frog_speedway:
+    dw #preset_kpdr23_upper_norfair_frog_speedway
+    dw $09C6, $0014  ; Missiles
+    dw $09CA, $0003  ; Supers
+    dw #$FFFF
+
+preset_kpdr23_upper_norfair_heading_to_red_brinstar:
+    dw #preset_kpdr23_upper_norfair_frog_speedway
+    dw $078D, $97DA  ; DDB
+    dw $079B, $B167  ; MDB
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0913, $A800  ; Screen subpixel Y position
+    dw $0AF6, $0029  ; Samus X
+    dw #$FFFF
+
+preset_kpdr23_red_brinstar_alpha_spark:
+    dw #preset_kpdr20_red_brinstar_alpha_spark
+    dw $09A6, $1005  ; Equipped Beams
+    dw $09A8, $1005  ; Collected Beams
+    dw $09C2, $018F  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $09C6, $0010  ; Missiles
+    dw $09C8, $0014  ; Max missiles
+    dw $D874, $0C04  ; Items
     dw $D878, $001C  ; Items
-    dw $D8B8, $26EC  ; Doors
+    dw $D8B6, $8008  ; Doors
+    dw $D8B8, $26EF  ; Doors
+    dw #$FFFF
+
+preset_pkrd_kraid_business_center_preelev:
+    dw #preset_pkrd_kraid_leaving_kraids_lair
+    dw $078D, $913E  ; DDB
+    dw $079B, $A6A1  ; MDB
+    dw $07F5, $0003  ; Music Track
+    dw $090F, $3000  ; Screen subpixel X position
+    dw $0911, $0006  ; Screen X position in pixels
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0917, $0006  ; Layer 2 X position
+    dw $09C6, $000D  ; Missiles
+    dw $09CA, $0009  ; Supers
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0078  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw #$FFFF
+
+preset_pkrd_upper_norfair_business_center_postelev:
+    dw #preset_prkd19_upper_norfair_business_center_postelev
+    dw $09A2, $1025  ; Equipped Items
+    dw $09A4, $1025  ; Collected Items
+    dw $09C2, $012B  ; Health
+    dw $09C4, $012B  ; Max health
+    dw $09C6, $000D  ; Missiles
+    dw $09CA, $0009  ; Supers
+    dw $09CE, $0005  ; Pbs
+    dw $D828, $0104  ; Bosses
+    dw $D874, $0D04  ; Items
+    dw $D876, $0001  ; Items
+    dw $D8B8, $00EF  ; Doors
     dw #$FFFF
 
 preset_14speed_maridia_everest_revisit:
@@ -21553,6 +21629,21 @@ preset_gtclassic_hijump_upper_norfair_gt_code:
     dw $D876, $0121  ; Items
     dw #$FFFF
 
+preset_prkd19_upper_norfair_ice_maze_down:
+preset_prkd20_upper_norfair_ice_maze_down:
+    dw #preset_prkd19_upper_norfair_ice_maze_up
+    dw $078D, $937E  ; DDB
+    dw $079B, $A890  ; MDB
+    dw $07F5, $0003  ; Music Track
+    dw $090F, $7000  ; Screen subpixel X position
+    dw $0913, $7C00  ; Screen subpixel Y position
+    dw $0917, $0001  ; Layer 2 X position
+    dw $09A6, $1006  ; Equipped Beams
+    dw $09A8, $1006  ; Collected Beams
+    dw $0AF6, $00BB  ; Samus X
+    dw $D876, $0124  ; Items
+    dw #$FFFF
+
 preset_14speed_tourian_metroids_1:
     dw #preset_14speed_tourian_pirate_shaft_revisit
     dw $078D, $9222  ; DDB
@@ -21901,6 +21992,186 @@ preset_gtmax_lower_norfair_mickey_mouse_missiles:
     dw $0AF6, $0050  ; Samus X
     dw #$FFFF
 
+preset_gtclassic_lower_norfair_amphitheatre:
+    dw #preset_gtclassic_lower_norfair_worst_room_in_the_game
+    dw $078D, $994E  ; DDB
+    dw $079B, $B4AD  ; MDB
+    dw $090F, $3000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $011D  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $00D5  ; Layer 2 Y position
+    dw $0AF6, $00AD  ; Samus X
+    dw $0AFA, $018B  ; Samus Y
+    dw #$FFFF
+
+preset_kpdr23_red_brinstar_reverse_skree_boost:
+    dw #preset_kpdr20_red_brinstar_reverse_skree_boost
+    dw $09A6, $1005  ; Equipped Beams
+    dw $09A8, $1005  ; Collected Beams
+    dw $09C2, $018F  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $09C6, $0010  ; Missiles
+    dw $09C8, $0014  ; Max missiles
+    dw $D874, $0C04  ; Items
+    dw $D878, $001C  ; Items
+    dw $D8B6, $8008  ; Doors
+    dw $D8B8, $26EF  ; Doors
+    dw #$FFFF
+
+preset_kpdr_red_brinstar_caterpillars_down:
+    dw #preset_kpdr_red_brinstar_hellway
+    dw $078D, $901E  ; DDB
+    dw $079B, $A2F7  ; MDB
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $01FB  ; Screen X position in pixels
+    dw $0913, $4400  ; Screen subpixel Y position
+    dw $0917, $017C  ; Layer 2 X position
+    dw $09C2, $00DD  ; Health
+    dw $0AF6, $0291  ; Samus X
+    dw $0F82, $0014  ; Safeties energy adjustment
+    dw #$FFFF
+
+preset_kpdr_red_brinstar_alpha_power_bombs:
+    dw #preset_kpdr20_red_brinstar_alpha_power_bombs
+    dw $09C2, $00DD  ; Health
+    dw $0F78, $00FB  ; Safeties enabled
+    dw $0F82, $0014  ; Safeties energy adjustment
+    dw $0F8E, $003C  ; Safeties energy adjustment
+    dw $104C, $FFFF  ; Safeties supers adjustment
+    dw $1180, $0004  ; Safeties stage
+    dw $D876, $0121  ; Items
+    dw $D878, $001C  ; Items
+    dw $D8B8, $26EC  ; Doors
+    dw #$FFFF
+
+preset_kpdr_red_brinstar_caterpillars_up:
+    dw #preset_kpdr20_red_brinstar_caterpillars_up
+    dw $09C2, $00D3  ; Health
+    dw $0F78, $00FB  ; Safeties enabled
+    dw $0F82, $0014  ; Safeties energy adjustment
+    dw $0F8E, $003C  ; Safeties energy adjustment
+    dw $104C, $FFFF  ; Safeties supers adjustment
+    dw $1180, $0005  ; Safeties stage
+    dw $D876, $0121  ; Items
+    dw $D878, $001C  ; Items
+    dw $D8B8, $26EC  ; Doors
+    dw #$FFFF
+
+preset_kpdr_wrecked_ship_crateria_kihunters:
+    dw #preset_kpdr20_wrecked_ship_crateria_kihunters
+    dw $09C2, $00E7  ; Health
+    dw $0F78, $00FB  ; Safeties enabled
+    dw $0F82, $0014  ; Safeties energy adjustment
+    dw $0F8C, $FFEC  ; Safeties energy adjustment
+    dw $0F8E, $003C  ; Safeties energy adjustment
+    dw $1180, $0005  ; Safeties stage
+    dw $D876, $0121  ; Items
+    dw $D878, $001C  ; Items
+    dw $D8B8, $26EC  ; Doors
+    dw #$FFFF
+
+preset_pkrd_upper_norfair_hijump_etank:
+    dw #preset_pkrd_upper_norfair_business_center_postelev
+    dw $090F, $4000  ; Screen subpixel X position
+    dw $0915, $051B  ; Screen Y position in pixels
+    dw $09CA, $0008  ; Supers
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $003C  ; Samus X
+    dw $0AFA, $058B  ; Samus Y
+    dw $D8B8, $20EF  ; Doors
+    dw #$FFFF
+
+preset_pkrd_upper_norfair_leaving_hijump:
+    dw #preset_prkd19_upper_norfair_leaving_hijump
+    dw $090F, $F000  ; Screen subpixel X position
+    dw $0913, $B800  ; Screen subpixel Y position
+    dw $0919, $01AA  ; Layer 2 Y position
+    dw $09A2, $1125  ; Equipped Items
+    dw $09A4, $1125  ; Collected Items
+    dw $09C2, $018F  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $09C6, $000D  ; Missiles
+    dw $09CE, $0005  ; Pbs
+    dw $0AF6, $0046  ; Samus X
+    dw $D828, $0104  ; Bosses
+    dw $D874, $0D04  ; Items
+    dw $D876, $0121  ; Items
+    dw $D8B8, $20EF  ; Doors
+    dw $D8BA, $0001  ; Doors
+    dw #$FFFF
+
+preset_gtclassic_lower_norfair_kihunter_stairs_down:
+    dw #preset_gtclassic_lower_norfair_worst_room_in_the_game
+    dw $078D, $997E  ; DDB
+    dw $079B, $B4E5  ; MDB
+    dw $090F, $4000  ; Screen subpixel X position
+    dw $0911, $0262  ; Screen X position in pixels
+    dw $0913, $5000  ; Screen subpixel Y position
+    dw $0915, $0033  ; Screen Y position in pixels
+    dw $0917, $01C9  ; Layer 2 X position
+    dw $0919, $0026  ; Layer 2 Y position
+    dw $09C2, $0277  ; Health
+    dw $0AF6, $02C2  ; Samus X
+    dw $0AFA, $00BB  ; Samus Y
+    dw #$FFFF
+
+preset_gtclassic_lower_norfair_wasteland:
+    dw #preset_gtclassic_lower_norfair_worst_room_in_the_game
+    dw $078D, $99A2  ; DDB
+    dw $079B, $B585  ; MDB
+    dw $090F, $AE01  ; Screen subpixel X position
+    dw $0911, $0200  ; Screen X position in pixels
+    dw $0913, $DC00  ; Screen subpixel Y position
+    dw $0915, $0416  ; Screen Y position in pixels
+    dw $0917, $0180  ; Layer 2 X position
+    dw $0919, $0310  ; Layer 2 Y position
+    dw $09C2, $029F  ; Health
+    dw $09CE, $0012  ; Pbs
+    dw $0AF6, $024A  ; Samus X
+    dw $0AFA, $047B  ; Samus Y
+    dw $D8BA, $4300  ; Doors
+    dw #$FFFF
+
+preset_gtclassic_lower_norfair_metal_ninja_pirates:
+    dw #preset_gtclassic_lower_norfair_worst_room_in_the_game
+    dw $078D, $99EA  ; DDB
+    dw $079B, $B5D5  ; MDB
+    dw $090F, $90FF  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $9C00  ; Screen subpixel Y position
+    dw $0915, $021F  ; Screen Y position in pixels
+    dw $0917, $00C0  ; Layer 2 X position
+    dw $0919, $0197  ; Layer 2 Y position
+    dw $09C2, $0266  ; Health
+    dw $09CA, $0012  ; Supers
+    dw $09CE, $0011  ; Pbs
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $016B  ; Samus X
+    dw $0AFA, $028B  ; Samus Y
+    dw $D8BA, $C300  ; Doors
+    dw #$FFFF
+
+preset_prkd19_upper_norfair_ice_escape:
+preset_prkd20_upper_norfair_ice_escape:
+    dw #preset_prkd19_upper_norfair_ice_maze_down
+    dw $078D, $935A  ; DDB
+    dw $079B, $A8B9  ; MDB
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $4000  ; Screen subpixel X position
+    dw $0913, $5400  ; Screen subpixel Y position
+    dw $0915, $0200  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $0180  ; Layer 2 Y position
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $00C8  ; Samus X
+    dw $0AFA, $028B  ; Samus Y
+    dw #$FFFF
+
 preset_14speed_tourian_metroids_2:
     dw #preset_14speed_tourian_metroids_1
     dw $078D, $A984  ; DDB
@@ -22243,229 +22514,251 @@ preset_kpdr_wrecked_ship_ocean_fly_setup:
     dw $D8B8, $26EC  ; Doors
     dw #$FFFF
 
-preset_kpdr20_wrecked_ship_ocean_spark:
-    dw #preset_kpdr21_wrecked_ship_ocean_spark
+preset_kpdr20_wrecked_ship_basement:
+    dw #preset_kpdr21_wrecked_ship_basement
     dw $09C6, $000B  ; Missiles
     dw $09C8, $000F  ; Max missiles
     dw $D878, $0014  ; Items
     dw #$FFFF
 
-preset_kpdr20_wrecked_ship_entering_wrecked_ship:
-    dw #preset_kpdr21_wrecked_ship_entering_wrecked_ship
-    dw $09C6, $000B  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr21_wrecked_ship_basement:
-    dw #preset_kpdr21_wrecked_ship_entering_wrecked_ship
-    dw $078D, $A1BC  ; DDB
-    dw $079B, $CAF6  ; MDB
-    dw $07F3, $0030  ; Music Bank
-    dw $090F, $4000  ; Screen subpixel X position
-    dw $0911, $0400  ; Screen X position in pixels
-    dw $0913, $AC00  ; Screen subpixel Y position
-    dw $0915, $0691  ; Screen Y position in pixels
-    dw $0917, $0300  ; Layer 2 X position
-    dw $0919, $04EC  ; Layer 2 Y position
-    dw $09D2, $0002  ; Currently selected item
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $04C9  ; Samus X
-    dw $0AF8, $7FFF  ; Samus subpixel X
-    dw $0AFA, $0742  ; Samus Y
-    dw $0AFC, $B7FF  ; Samus subpixel Y
-    dw #$FFFF
-
-preset_kpdr22_upper_norfair_moat_missile_single_chamber:
-    dw #preset_kpdr22_upper_norfair_hjb_missile_single_chamber
-    dw $09C6, $000A  ; Missiles
-    dw $09C8, $000A  ; Max missiles
-    dw #$FFFF
-
-preset_kpdr22_upper_norfair_hjb_missile_double_chamber:
-    dw #preset_kpdr23_upper_norfair_double_chamber
-    dw $09A6, $1000  ; Equipped Beams
-    dw $09A8, $1000  ; Collected Beams
-    dw $09C6, $0008  ; Missiles
-    dw $D8B6, $0008  ; Doors
-    dw #$FFFF
-
-preset_phantoonfirst_kraid_before_ridley_kraid_etank:
-    dw #preset_phantoonfirst_kraid_before_ridley_kraid_kihunters_revisit
-    dw $078D, $916E  ; DDB
-    dw $079B, $A471  ; MDB
-    dw $07F3, $0012  ; Music Bank
+preset_pkrd_upper_norfair_business_center_revisit:
+    dw #preset_pkrd_upper_norfair_leaving_hijump
+    dw $078D, $93F6  ; DDB
+    dw $079B, $AA41  ; MDB
     dw $07F5, $0005  ; Music Track
-    dw $090F, $9000  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $5800  ; Screen subpixel Y position
-    dw $0915, $011B  ; Screen Y position in pixels
-    dw $0917, $0000  ; Layer 2 X position
-    dw $0919, $011B  ; Layer 2 Y position
-    dw $0AF6, $0057  ; Samus X
-    dw $0AFA, $018B  ; Samus Y
-    dw $D8B8, $0001  ; Doors
-    dw #$FFFF
-
-preset_kpdr25_upper_norfair_frog_speedway:
-    dw #preset_kpdr23_upper_norfair_frog_speedway
-    dw $09C6, $0014  ; Missiles
-    dw $09CA, $0003  ; Supers
-    dw #$FFFF
-
-preset_kpdr23_upper_norfair_heading_to_red_brinstar:
-    dw #preset_kpdr23_upper_norfair_frog_speedway
-    dw $078D, $97DA  ; DDB
-    dw $079B, $B167  ; MDB
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $0913, $A800  ; Screen subpixel Y position
-    dw $0AF6, $0029  ; Samus X
-    dw #$FFFF
-
-preset_kpdr23_red_brinstar_alpha_spark:
-    dw #preset_kpdr23_upper_norfair_frog_speedway
-    dw $078D, $92EE  ; DDB
-    dw $079B, $A6A1  ; MDB
-    dw $07F3, $0012  ; Music Bank
-    dw $07F5, $0003  ; Music Track
-    dw $090F, $E000  ; Screen subpixel X position
-    dw $0913, $0000  ; Screen subpixel Y position
-    dw $09C6, $0010  ; Missiles
-    dw $0A1C, $009B  ; Samus position/state
-    dw $0A1E, $0000  ; More position/state
-    dw $0AF6, $0080  ; Samus X
-    dw $0AFA, $0086  ; Samus Y
-    dw #$FFFF
-
-preset_kpdr23_red_brinstar_reverse_skree_boost:
-    dw #preset_kpdr23_upper_norfair_frog_speedway
-    dw $078D, $A36C  ; DDB
-    dw $079B, $A408  ; MDB
-    dw $07F3, $0012  ; Music Bank
-    dw $090F, $C000  ; Screen subpixel X position
-    dw $0913, $B400  ; Screen subpixel Y position
-    dw $0915, $0100  ; Screen Y position in pixels
-    dw $0919, $00C0  ; Layer 2 Y position
-    dw $09C6, $0010  ; Missiles
-    dw $09CA, $0005  ; Supers
-    dw $0AF6, $003F  ; Samus X
-    dw $0AFA, $018B  ; Samus Y
-    dw #$FFFF
-
-preset_pkrd_kraid_business_center_preelev:
-    dw #preset_pkrd_kraid_leaving_kraids_lair
-    dw $078D, $913E  ; DDB
-    dw $079B, $A6A1  ; MDB
-    dw $07F5, $0003  ; Music Track
-    dw $090F, $3000  ; Screen subpixel X position
-    dw $0911, $0006  ; Screen X position in pixels
-    dw $0913, $0000  ; Screen subpixel Y position
-    dw $0917, $0006  ; Layer 2 X position
-    dw $09C6, $000D  ; Missiles
-    dw $09CA, $0009  ; Supers
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $0078  ; Samus X
+    dw $090F, $FFFF  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $27FF  ; Screen subpixel Y position
+    dw $0915, $000B  ; Screen Y position in pixels
+    dw $0917, $00C0  ; Layer 2 X position
+    dw $09C2, $018A  ; Health
+    dw $09CE, $0004  ; Pbs
+    dw $09D2, $0000  ; Currently selected item
+    dw $0AF6, $01C1  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 
-preset_pkrd_upper_norfair_business_center_postelev:
-    dw #preset_pkrd_kraid_leaving_kraids_lair
-    dw $078D, $9246  ; DDB
-    dw $079B, $A7DE  ; MDB
-    dw $07F3, $0015  ; Music Bank
-    dw $090F, $8000  ; Screen subpixel X position
-    dw $0913, $0000  ; Screen subpixel Y position
-    dw $0915, $0238  ; Screen Y position in pixels
-    dw $0919, $01AA  ; Layer 2 Y position
-    dw $09C6, $000D  ; Missiles
-    dw $09CA, $0009  ; Supers
-    dw $0A1C, $009B  ; Samus position/state
-    dw $0A1E, $0000  ; More position/state
-    dw $0AF6, $0080  ; Samus X
-    dw $0AFA, $02A8  ; Samus Y
+preset_kpdr21_wrecked_ship_phantoon:
+    dw #preset_kpdr21_wrecked_ship_basement
+    dw $078D, $A21C  ; DDB
+    dw $079B, $CC6F  ; MDB
+    dw $090F, $F000  ; Screen subpixel X position
+    dw $0913, $7000  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09CA, $0002  ; Supers
+    dw $09D2, $0000  ; Currently selected item
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $04CC  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw $D8C0, $0030  ; Doors
     dw #$FFFF
 
-preset_prkd19_upper_norfair_ice_maze_down:
-preset_prkd20_upper_norfair_ice_maze_down:
-    dw #preset_prkd19_upper_norfair_ice_maze_up
-    dw $078D, $937E  ; DDB
-    dw $079B, $A890  ; MDB
-    dw $07F5, $0003  ; Music Track
-    dw $090F, $7000  ; Screen subpixel X position
-    dw $0913, $7C00  ; Screen subpixel Y position
-    dw $0917, $0001  ; Layer 2 X position
+preset_kpdr22_upper_norfair_moat_missile_double_chamber:
+    dw #preset_kpdr22_upper_norfair_hjb_missile_double_chamber
+    dw $09C6, $0003  ; Missiles
+    dw $09C8, $000A  ; Max missiles
+    dw #$FFFF
+
+preset_kpdr22_upper_norfair_hjb_missile_double_chamber_revisit:
+    dw #preset_kpdr23_upper_norfair_double_chamber_revisit
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09A8, $1001  ; Collected Beams
+    dw $09C6, $000D  ; Missiles
+    dw $D8B6, $0008  ; Doors
+    dw #$FFFF
+
+preset_phantoonfirst_kraid_before_ridley_leaving_kraid_etank:
+    dw #preset_phantoonfirst_kraid_before_ridley_kraid_etank
+    dw $078D, $914A  ; DDB
+    dw $079B, $A4B1  ; MDB
+    dw $090F, $6000  ; Screen subpixel X position
+    dw $0913, $1C00  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $0085  ; Samus X
+    dw $0AFA, $009B  ; Samus Y
+    dw $0F78, $001F  ; Safeties enabled
+    dw $1088, $0002  ; Safeties power bombs adjustment
+    dw $11C8, $0001  ; Safeties refill
+    dw $D8B8, $0000  ; Doors
+    dw #$FFFF
+
+preset_kpdr25_upper_norfair_entering_ice:
+    dw #preset_kpdr25_upper_norfair_frog_speedway
+    dw $078D, $9816  ; DDB
+    dw $079B, $A7DE  ; MDB
+    dw $090F, $6800  ; Screen subpixel X position
+    dw $0913, $2400  ; Screen subpixel Y position
+    dw $0915, $0309  ; Screen Y position in pixels
+    dw $0919, $0246  ; Layer 2 Y position
+    dw $09CA, $0002  ; Supers
+    dw $0AF6, $0030  ; Samus X
+    dw $0AFA, $0394  ; Samus Y
+    dw $D8B8, $2EEF  ; Doors
+    dw #$FFFF
+
+preset_kpdr23_red_brinstar_red_tower_climb:
+    dw #preset_kpdr23_upper_norfair_heading_to_red_brinstar
+    dw $078D, $910E  ; DDB
+    dw $079B, $A3DD  ; MDB
+    dw $07F3, $0012  ; Music Bank
+    dw $0913, $EC00  ; Screen subpixel Y position
+    dw $09C2, $0152  ; Health
+    dw $09C6, $0010  ; Missiles
+    dw $09CA, $0005  ; Supers
+    dw $0AF6, $0024  ; Samus X
+    dw #$FFFF
+
+preset_kpdr23_red_brinstar_hellway:
+    dw #preset_kpdr21_red_brinstar_hellway
+    dw $09A6, $1005  ; Equipped Beams
+    dw $09A8, $1005  ; Collected Beams
+    dw $09C2, $0157  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $D874, $0C04  ; Items
+    dw $D8B6, $8008  ; Doors
+    dw $D8B8, $26EF  ; Doors
+    dw #$FFFF
+
+preset_kpdr23_red_brinstar_caterpillars_down:
+    dw #preset_kpdr21_red_brinstar_caterpillars_down
+    dw $09A6, $1005  ; Equipped Beams
+    dw $09A8, $1005  ; Collected Beams
+    dw $09C2, $0163  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $D874, $0C04  ; Items
+    dw $D8B6, $8008  ; Doors
+    dw $D8B8, $26EF  ; Doors
+    dw #$FFFF
+
+preset_kpdr23_red_brinstar_alpha_power_bombs:
+    dw #preset_kpdr21_red_brinstar_alpha_power_bombs
+    dw $09A6, $1005  ; Equipped Beams
+    dw $09A8, $1005  ; Collected Beams
+    dw $09C2, $0163  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $D874, $0C04  ; Items
+    dw $D8B6, $A008  ; Doors
+    dw $D8B8, $26EF  ; Doors
+    dw #$FFFF
+
+preset_kpdr23_red_brinstar_caterpillars_up:
+    dw #preset_kpdr21_red_brinstar_caterpillars_up
+    dw $09A6, $1005  ; Equipped Beams
+    dw $09A8, $1005  ; Collected Beams
+    dw $09C2, $015E  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $D874, $0D04  ; Items
+    dw $D8B6, $A008  ; Doors
+    dw $D8B8, $26EF  ; Doors
+    dw #$FFFF
+
+preset_kpdr23_wrecked_ship_crateria_kihunters:
+    dw #preset_kpdr21_wrecked_ship_crateria_kihunters
+    dw $09A6, $1005  ; Equipped Beams
+    dw $09A8, $1005  ; Collected Beams
+    dw $09C2, $016D  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $D874, $0D04  ; Items
+    dw $D8B6, $B008  ; Doors
+    dw $D8B8, $26EF  ; Doors
+    dw #$FFFF
+
+preset_kpdr23_wrecked_ship_ocean_fly_setup:
+    dw #preset_kpdr21_wrecked_ship_ocean_fly_setup
+    dw $09A6, $1005  ; Equipped Beams
+    dw $09A8, $1005  ; Collected Beams
+    dw $09C2, $0181  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $D874, $0D04  ; Items
+    dw $D8B6, $B008  ; Doors
+    dw $D8B8, $26EF  ; Doors
+    dw #$FFFF
+
+preset_kpdr23_wrecked_ship_ocean_spark:
+    dw #preset_kpdr21_wrecked_ship_ocean_spark
+    dw $09A6, $1005  ; Equipped Beams
+    dw $09A8, $1005  ; Collected Beams
+    dw $09C2, $014C  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $D874, $0D04  ; Items
+    dw $D8B6, $B008  ; Doors
+    dw $D8B8, $26EF  ; Doors
+    dw #$FFFF
+
+preset_kpdr23_wrecked_ship_entering_wrecked_ship:
+    dw #preset_kpdr21_wrecked_ship_entering_wrecked_ship
+    dw $09A6, $1005  ; Equipped Beams
+    dw $09A8, $1005  ; Collected Beams
+    dw $09C2, $00D3  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $D874, $0D04  ; Items
+    dw $D8B6, $B008  ; Doors
+    dw $D8B8, $26EF  ; Doors
+    dw #$FFFF
+
+preset_kpdr23_wrecked_ship_basement:
+    dw #preset_kpdr21_wrecked_ship_basement
+    dw $09A6, $1005  ; Equipped Beams
+    dw $09A8, $1005  ; Collected Beams
+    dw $09C2, $00D3  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $D874, $0D04  ; Items
+    dw $D8B6, $B008  ; Doors
+    dw $D8B8, $26EF  ; Doors
+    dw #$FFFF
+
+preset_gtclassic_lower_norfair_plowerhouse:
+    dw #preset_gtclassic_lower_norfair_metal_ninja_pirates
+    dw $078D, $9A1A  ; DDB
+    dw $079B, $B62B  ; MDB
+    dw $090F, $8000  ; Screen subpixel X position
+    dw $0911, $016F  ; Screen X position in pixels
+    dw $0913, $E400  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $0113  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09C0, $0001  ; Manual/Auto reserve tank
+    dw $09C2, $02BC  ; Health
+    dw $09CA, $0014  ; Supers
+    dw $0AF6, $01E0  ; Samus X
+    dw $0AFA, $00BB  ; Samus Y
+    dw $D8BC, $0001  ; Doors
+    dw #$FFFF
+
+preset_prkd19_upper_norfair_precathedral:
+preset_prkd20_upper_norfair_precathedral:
+    dw #preset_prkd19_upper_norfair_ice_escape
+    dw $078D, $932A  ; DDB
+    dw $079B, $A7DE  ; MDB
+    dw $090F, $7FFF  ; Screen subpixel X position
+    dw $0913, $23FF  ; Screen subpixel Y position
+    dw $0915, $031A  ; Screen Y position in pixels
+    dw $0919, $0253  ; Layer 2 Y position
+    dw $0AF6, $00A6  ; Samus X
+    dw $0AFA, $038B  ; Samus Y
+    dw #$FFFF
+
+preset_prkd19_upper_norfair_cathedral:
+preset_prkd20_upper_norfair_cathedral:
+    dw #preset_prkd19_upper_norfair_business_center_revisit
+    dw $078D, $92CA  ; DDB
+    dw $079B, $A7B3  ; MDB
+    dw $090F, $A000  ; Screen subpixel X position
+    dw $0911, $0200  ; Screen X position in pixels
+    dw $0913, $D000  ; Screen subpixel Y position
+    dw $0917, $0200  ; Layer 2 X position
     dw $09A6, $1006  ; Equipped Beams
     dw $09A8, $1006  ; Collected Beams
-    dw $0AF6, $00BB  ; Samus X
+    dw $09CA, $0007  ; Supers
+    dw $09CE, $0003  ; Pbs
+    dw $0AF6, $02A5  ; Samus X
     dw $D876, $0124  ; Items
-    dw #$FFFF
-
-preset_gtclassic_lower_norfair_amphitheatre:
-    dw #preset_gtclassic_lower_norfair_worst_room_in_the_game
-    dw $078D, $994E  ; DDB
-    dw $079B, $B4AD  ; MDB
-    dw $090F, $3000  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $0000  ; Screen subpixel Y position
-    dw $0915, $011D  ; Screen Y position in pixels
-    dw $0917, $0000  ; Layer 2 X position
-    dw $0919, $00D5  ; Layer 2 Y position
-    dw $0AF6, $00AD  ; Samus X
-    dw $0AFA, $018B  ; Samus Y
-    dw #$FFFF
-
-preset_gtclassic_lower_norfair_kihunter_stairs_down:
-    dw #preset_gtclassic_lower_norfair_worst_room_in_the_game
-    dw $078D, $997E  ; DDB
-    dw $079B, $B4E5  ; MDB
-    dw $090F, $4000  ; Screen subpixel X position
-    dw $0911, $0262  ; Screen X position in pixels
-    dw $0913, $5000  ; Screen subpixel Y position
-    dw $0915, $0033  ; Screen Y position in pixels
-    dw $0917, $01C9  ; Layer 2 X position
-    dw $0919, $0026  ; Layer 2 Y position
-    dw $09C2, $0277  ; Health
-    dw $0AF6, $02C2  ; Samus X
-    dw $0AFA, $00BB  ; Samus Y
-    dw #$FFFF
-
-preset_gtclassic_lower_norfair_wasteland:
-    dw #preset_gtclassic_lower_norfair_worst_room_in_the_game
-    dw $078D, $99A2  ; DDB
-    dw $079B, $B585  ; MDB
-    dw $090F, $AE01  ; Screen subpixel X position
-    dw $0911, $0200  ; Screen X position in pixels
-    dw $0913, $DC00  ; Screen subpixel Y position
-    dw $0915, $0416  ; Screen Y position in pixels
-    dw $0917, $0180  ; Layer 2 X position
-    dw $0919, $0310  ; Layer 2 Y position
-    dw $09C2, $029F  ; Health
-    dw $09CE, $0012  ; Pbs
-    dw $0AF6, $024A  ; Samus X
-    dw $0AFA, $047B  ; Samus Y
-    dw $D8BA, $4300  ; Doors
-    dw #$FFFF
-
-preset_gtclassic_lower_norfair_metal_ninja_pirates:
-    dw #preset_gtclassic_lower_norfair_worst_room_in_the_game
-    dw $078D, $99EA  ; DDB
-    dw $079B, $B5D5  ; MDB
-    dw $090F, $90FF  ; Screen subpixel X position
-    dw $0911, $0100  ; Screen X position in pixels
-    dw $0913, $9C00  ; Screen subpixel Y position
-    dw $0915, $021F  ; Screen Y position in pixels
-    dw $0917, $00C0  ; Layer 2 X position
-    dw $0919, $0197  ; Layer 2 Y position
-    dw $09C2, $0266  ; Health
-    dw $09CA, $0012  ; Supers
-    dw $09CE, $0011  ; Pbs
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $016B  ; Samus X
-    dw $0AFA, $028B  ; Samus Y
-    dw $D8BA, $C300  ; Doors
+    dw $D8B8, $2C00  ; Doors
     dw #$FFFF
 
 preset_14speed_tourian_metroids_3:
@@ -22869,21 +23162,6 @@ preset_gtmax_lower_norfair_wasteland:
     dw $D8BA, $4301  ; Doors
     dw #$FFFF
 
-preset_kpdr_wrecked_ship_ocean_spark:
-    dw #preset_kpdr_wrecked_ship_ocean_fly_setup
-    dw $078D, $8A36  ; DDB
-    dw $079B, $95FF  ; MDB
-    dw $090F, $A3FF  ; Screen subpixel X position
-    dw $0911, $0100  ; Screen X position in pixels
-    dw $0913, $6C00  ; Screen subpixel Y position
-    dw $0917, $00C0  ; Layer 2 X position
-    dw $09C2, $00B2  ; Health
-    dw $0AF6, $01C6  ; Samus X
-    dw $0F78, $07FB  ; Safeties enabled
-    dw $0F8A, $0026  ; Safeties energy adjustment
-    dw $0F94, $000F  ; Safeties energy adjustment
-    dw #$FFFF
-
 preset_gtmax_lower_norfair_metal_ninja_pirates:
     dw #preset_gtclassic_lower_norfair_metal_ninja_pirates
     dw $090F, $C000  ; Screen subpixel X position
@@ -22904,153 +23182,87 @@ preset_gtmax_lower_norfair_metal_ninja_pirates:
     dw $D8BA, $C301  ; Doors
     dw #$FFFF
 
-preset_kpdr_wrecked_ship_entering_wrecked_ship:
-    dw #preset_kpdr20_wrecked_ship_entering_wrecked_ship
-    dw $09C2, $0038  ; Health
-    dw $09CE, $0002  ; Pbs
-    dw $0F78, $1FFB  ; Safeties enabled
-    dw $0F82, $0014  ; Safeties energy adjustment
-    dw $0F8A, $007D  ; Safeties energy adjustment
-    dw $0F8C, $FFEC  ; Safeties energy adjustment
-    dw $0F8E, $003C  ; Safeties energy adjustment
-    dw $0F94, $000F  ; Safeties energy adjustment
-    dw $0F96, $0023  ; Safeties energy adjustment
-    dw $1090, $FFFF  ; Safeties power bombs adjustment
-    dw $1118, $0006  ; Safeties unequip beams
-    dw $1180, $0005  ; Safeties stage
-    dw $D876, $0121  ; Items
-    dw $D878, $001C  ; Items
-    dw $D8B0, $3000  ; Doors
-    dw $D8B8, $26EC  ; Doors
-    dw #$FFFF
-
-preset_kpdr20_wrecked_ship_basement:
-    dw #preset_kpdr21_wrecked_ship_basement
-    dw $09C6, $000B  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr21_wrecked_ship_phantoon:
-    dw #preset_kpdr21_wrecked_ship_basement
-    dw $078D, $A21C  ; DDB
-    dw $079B, $CC6F  ; MDB
-    dw $090F, $F000  ; Screen subpixel X position
-    dw $0913, $7000  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $09CA, $0002  ; Supers
-    dw $09D2, $0000  ; Currently selected item
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $04CC  ; Samus X
-    dw $0AFA, $008B  ; Samus Y
-    dw $D8C0, $0030  ; Doors
-    dw #$FFFF
-
-preset_kpdr22_upper_norfair_moat_missile_double_chamber:
-    dw #preset_kpdr22_upper_norfair_hjb_missile_double_chamber
-    dw $09C6, $0003  ; Missiles
-    dw $09C8, $000A  ; Max missiles
-    dw #$FFFF
-
-preset_kpdr22_upper_norfair_hjb_missile_double_chamber_revisit:
-    dw #preset_kpdr23_upper_norfair_double_chamber_revisit
-    dw $09A6, $1001  ; Equipped Beams
-    dw $09A8, $1001  ; Collected Beams
-    dw $09C6, $000D  ; Missiles
-    dw $D8B6, $0008  ; Doors
-    dw #$FFFF
-
-preset_phantoonfirst_kraid_before_ridley_leaving_kraid_etank:
-    dw #preset_phantoonfirst_kraid_before_ridley_kraid_etank
-    dw $078D, $914A  ; DDB
-    dw $079B, $A4B1  ; MDB
-    dw $090F, $6000  ; Screen subpixel X position
-    dw $0913, $1C00  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $0085  ; Samus X
-    dw $0AFA, $009B  ; Samus Y
-    dw $0F78, $001F  ; Safeties enabled
-    dw $1088, $0002  ; Safeties power bombs adjustment
-    dw $11C8, $0001  ; Safeties refill
-    dw $D8B8, $0000  ; Doors
-    dw #$FFFF
-
-preset_kpdr25_upper_norfair_entering_ice:
-    dw #preset_kpdr25_upper_norfair_frog_speedway
-    dw $078D, $9816  ; DDB
+preset_pkrd_upper_norfair_ice_beam_gates:
+    dw #preset_pkrd_upper_norfair_business_center_revisit
+    dw $078D, $941A  ; DDB
     dw $079B, $A7DE  ; MDB
-    dw $090F, $6800  ; Screen subpixel X position
-    dw $0913, $2400  ; Screen subpixel Y position
-    dw $0915, $0309  ; Screen Y position in pixels
-    dw $0919, $0246  ; Layer 2 Y position
-    dw $09CA, $0002  ; Supers
-    dw $0AF6, $0030  ; Samus X
-    dw $0AFA, $0394  ; Samus Y
-    dw $D8B8, $2EEF  ; Doors
-    dw #$FFFF
-
-preset_pkrd_upper_norfair_hijump_etank:
-    dw #preset_pkrd_upper_norfair_business_center_postelev
-    dw $090F, $4000  ; Screen subpixel X position
-    dw $0915, $051B  ; Screen Y position in pixels
-    dw $09CA, $0008  ; Supers
+    dw $090F, $8000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $A800  ; Screen subpixel Y position
+    dw $0915, $030B  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $0249  ; Layer 2 Y position
+    dw $09C6, $000F  ; Missiles
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $003C  ; Samus X
-    dw $0AFA, $058B  ; Samus Y
-    dw $D8B8, $20EF  ; Doors
+    dw $0AFA, $039A  ; Samus Y
+    dw $D8B8, $28EF  ; Doors
     dw #$FFFF
 
-preset_kpdr23_red_brinstar_red_tower_climb:
-    dw #preset_kpdr23_upper_norfair_heading_to_red_brinstar
-    dw $078D, $910E  ; DDB
-    dw $079B, $A3DD  ; MDB
-    dw $07F3, $0012  ; Music Bank
-    dw $0913, $EC00  ; Screen subpixel Y position
-    dw $09C2, $0152  ; Health
-    dw $09C6, $0010  ; Missiles
-    dw $09CA, $0005  ; Supers
-    dw $0AF6, $0024  ; Samus X
-    dw #$FFFF
-
-preset_prkd19_upper_norfair_ice_escape:
-preset_prkd20_upper_norfair_ice_escape:
-    dw #preset_prkd19_upper_norfair_ice_maze_down
-    dw $078D, $935A  ; DDB
-    dw $079B, $A8B9  ; MDB
-    dw $07F5, $0005  ; Music Track
-    dw $090F, $4000  ; Screen subpixel X position
-    dw $0913, $5400  ; Screen subpixel Y position
-    dw $0915, $0200  ; Screen Y position in pixels
+preset_gtclassic_lower_norfair_ridley:
+    dw #preset_gtclassic_lower_norfair_plowerhouse
+    dw $078D, $995A  ; DDB
+    dw $079B, $B37A  ; MDB
+    dw $090F, $D000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $C800  ; Screen subpixel Y position
     dw $0917, $0000  ; Layer 2 X position
-    dw $0919, $0180  ; Layer 2 Y position
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $00C8  ; Samus X
-    dw $0AFA, $028B  ; Samus Y
+    dw $09CA, $0013  ; Supers
+    dw $0AF6, $0024  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw $D8BA, $D300  ; Doors
     dw #$FFFF
 
-preset_gtclassic_lower_norfair_plowerhouse:
-    dw #preset_gtclassic_lower_norfair_metal_ninja_pirates
-    dw $078D, $9A1A  ; DDB
-    dw $079B, $B62B  ; MDB
-    dw $090F, $8000  ; Screen subpixel X position
-    dw $0911, $016F  ; Screen X position in pixels
-    dw $0913, $E400  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0917, $0113  ; Layer 2 X position
-    dw $0919, $0000  ; Layer 2 Y position
+preset_gtclassic_lower_norfair_leaving_ridley:
+    dw #preset_gtclassic_lower_norfair_green_gate_revisit
+    dw $078D, $98CA  ; DDB
+    dw $079B, $B32E  ; MDB
+    dw $090F, $4000  ; Screen subpixel X position
+    dw $0913, $6800  ; Screen subpixel Y position
+    dw $0915, $011F  ; Screen Y position in pixels
+    dw $0919, $00D7  ; Layer 2 Y position
     dw $09C0, $0001  ; Manual/Auto reserve tank
-    dw $09C2, $02BC  ; Health
-    dw $09CA, $0014  ; Supers
-    dw $0AF6, $01E0  ; Samus X
-    dw $0AFA, $00BB  ; Samus Y
+    dw $09C2, $0276  ; Health
+    dw $09CA, $0013  ; Supers
+    dw $09CE, $0011  ; Pbs
+    dw $0AF6, $005F  ; Samus X
+    dw $0AFA, $019B  ; Samus Y
+    dw $D82A, $0005  ; Bosses
+    dw $D8BA, $D300  ; Doors
     dw $D8BC, $0001  ; Doors
+    dw #$FFFF
+
+preset_prkd19_upper_norfair_rising_tide:
+preset_prkd20_upper_norfair_rising_tide:
+    dw #preset_prkd19_upper_norfair_cathedral
+    dw $078D, $92B2  ; DDB
+    dw $079B, $A788  ; MDB
+    dw $090F, $C000  ; Screen subpixel X position
+    dw $0913, $2800  ; Screen subpixel Y position
+    dw $0915, $0100  ; Screen Y position in pixels
+    dw $0919, $0100  ; Layer 2 Y position
+    dw $09C6, $000E  ; Missiles
+    dw $09CA, $0006  ; Supers
+    dw $0AF6, $02AF  ; Samus X
+    dw $0AFA, $018B  ; Samus Y
+    dw $D8B8, $2E00  ; Doors
+    dw #$FFFF
+
+preset_prkd19_upper_norfair_bubble_mountain:
+preset_prkd20_upper_norfair_bubble_mountain:
+    dw #preset_prkd19_upper_norfair_cathedral
+    dw $078D, $929A  ; DDB
+    dw $079B, $AFA3  ; MDB
+    dw $090F, $3000  ; Screen subpixel X position
+    dw $0911, $0400  ; Screen X position in pixels
+    dw $0913, $7C00  ; Screen subpixel Y position
+    dw $0917, $0300  ; Layer 2 X position
+    dw $09C2, $0121  ; Health
+    dw $09C6, $000E  ; Missiles
+    dw $09CA, $0006  ; Supers
+    dw $0AF6, $04B0  ; Samus X
+    dw $D8B8, $2E00  ; Doors
     dw #$FFFF
 
 preset_14speed_tourian_mother_brain_2:
@@ -23297,325 +23509,81 @@ preset_gtmax_lower_norfair_plowerhouse:
     dw $D8BC, $0001  ; Doors
     dw #$FFFF
 
-preset_kpdr_wrecked_ship_basement:
-    dw #preset_kpdr20_wrecked_ship_basement
-    dw $09C2, $0038  ; Health
-    dw $09CE, $0002  ; Pbs
-    dw $0F78, $1FFB  ; Safeties enabled
-    dw $0F82, $0014  ; Safeties energy adjustment
-    dw $0F8A, $007D  ; Safeties energy adjustment
-    dw $0F8C, $FFEC  ; Safeties energy adjustment
-    dw $0F8E, $003C  ; Safeties energy adjustment
-    dw $0F94, $000F  ; Safeties energy adjustment
-    dw $0F96, $0023  ; Safeties energy adjustment
-    dw $1090, $FFFF  ; Safeties power bombs adjustment
-    dw $1118, $0006  ; Safeties unequip beams
-    dw $1180, $0005  ; Safeties stage
-    dw $D876, $0121  ; Items
-    dw $D878, $001C  ; Items
-    dw $D8B0, $3000  ; Doors
-    dw $D8B8, $26EC  ; Doors
-    dw #$FFFF
-
-preset_kpdr20_wrecked_ship_phantoon:
-    dw #preset_kpdr21_wrecked_ship_phantoon
-    dw $09C6, $000B  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_pkrd_upper_norfair_leaving_hijump:
-    dw #preset_pkrd_upper_norfair_hijump_etank
-    dw $078D, $9426  ; DDB
-    dw $079B, $A9E5  ; MDB
-    dw $07F5, $0003  ; Music Track
-    dw $090F, $F000  ; Screen subpixel X position
-    dw $0913, $B800  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $09A2, $1125  ; Equipped Items
-    dw $09A4, $1125  ; Collected Items
-    dw $09C2, $018F  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $09D2, $0003  ; Currently selected item
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $0046  ; Samus X
-    dw $0AFA, $00BB  ; Samus Y
-    dw $D876, $0121  ; Items
-    dw $D8BA, $0001  ; Doors
-    dw #$FFFF
-
-preset_kpdr21_wrecked_ship_leaving_phantoon:
-    dw #preset_kpdr21_wrecked_ship_phantoon
-    dw $078D, $A2AC  ; DDB
-    dw $079B, $CD13  ; MDB
-    dw $07F5, $0003  ; Music Track
-    dw $090F, $6000  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $8400  ; Screen subpixel Y position
-    dw $0917, $0001  ; Layer 2 X position
-    dw $09C2, $00E2  ; Health
-    dw $09C6, $000C  ; Missiles
-    dw $09CA, $0005  ; Supers
-    dw $09CE, $0002  ; Pbs
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $006D  ; Samus X
-    dw $0AFA, $00BB  ; Samus Y
-    dw $D82A, $0100  ; Bosses
-    dw $D8C0, $0070  ; Doors
-    dw #$FFFF
-
-preset_kpdr22_upper_norfair_moat_missile_double_chamber_revisit:
-    dw #preset_kpdr22_upper_norfair_hjb_missile_double_chamber_revisit
-    dw $09C6, $0009  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw #$FFFF
-
-preset_kpdr22_upper_norfair_hjb_missile_single_chamber_revisit:
-    dw #preset_kpdr23_upper_norfair_single_chamber_revisit
-    dw $09A6, $1001  ; Equipped Beams
-    dw $09A8, $1001  ; Collected Beams
-    dw $09C6, $000D  ; Missiles
-    dw $D8B6, $0008  ; Doors
-    dw #$FFFF
-
-preset_phantoonfirst_kraid_before_ridley_leaving_kraids_lair:
-    dw #preset_phantoonfirst_kraid_before_ridley_leaving_kraid_etank
-    dw $078D, $916E  ; DDB
-    dw $079B, $A471  ; MDB
-    dw $090F, $C001  ; Screen subpixel X position
-    dw $0913, $F000  ; Screen subpixel Y position
-    dw $09C2, $00C1  ; Health
-    dw $09C6, $000C  ; Missiles
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $0025  ; Samus X
-    dw $0AFA, $008B  ; Samus Y
-    dw #$FFFF
-
-preset_kpdr25_upper_norfair_ice_escape:
-    dw #preset_kpdr25_upper_norfair_entering_ice
-    dw $078D, $935A  ; DDB
-    dw $079B, $A8B9  ; MDB
-    dw $090F, $5001  ; Screen subpixel X position
-    dw $0913, $7000  ; Screen subpixel Y position
-    dw $0915, $0200  ; Screen Y position in pixels
-    dw $0919, $0180  ; Layer 2 Y position
-    dw $09A6, $1007  ; Equipped Beams
-    dw $09A8, $1007  ; Collected Beams
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $00C7  ; Samus X
-    dw $0AFA, $028B  ; Samus Y
-    dw $D876, $01A5  ; Items
-    dw #$FFFF
-
-preset_kpdr25_red_brinstar_alpha_spark:
-    dw #preset_kpdr23_red_brinstar_alpha_spark
-    dw $0915, $0200  ; Screen Y position in pixels
-    dw $0919, $0180  ; Layer 2 Y position
-    dw $09A6, $1007  ; Equipped Beams
-    dw $09A8, $1007  ; Collected Beams
-    dw $09C6, $0014  ; Missiles
-    dw $09CA, $0002  ; Supers
-    dw $D876, $01A5  ; Items
-    dw $D8B8, $2EEF  ; Doors
-    dw #$FFFF
-
-preset_kpdr25_red_brinstar_reverse_skree_boost:
-    dw #preset_kpdr23_red_brinstar_reverse_skree_boost
-    dw $09A6, $1007  ; Equipped Beams
-    dw $09A8, $1007  ; Collected Beams
-    dw $09C6, $0014  ; Missiles
-    dw $09CA, $0003  ; Supers
-    dw $D876, $01A5  ; Items
-    dw $D8B8, $2EEF  ; Doors
-    dw #$FFFF
-
-preset_kpdr25_red_brinstar_red_tower_climb:
-    dw #preset_kpdr23_red_brinstar_red_tower_climb
-    dw $09A6, $1007  ; Equipped Beams
-    dw $09A8, $1007  ; Collected Beams
-    dw $09C6, $0014  ; Missiles
-    dw $09CA, $0003  ; Supers
-    dw $D876, $01A5  ; Items
-    dw $D8B8, $2EEF  ; Doors
-    dw #$FFFF
-
-preset_kpdr23_red_brinstar_hellway:
-    dw #preset_kpdr23_red_brinstar_red_tower_climb
-    dw $078D, $90F6  ; DDB
-    dw $079B, $A253  ; MDB
-    dw $090F, $D000  ; Screen subpixel X position
-    dw $0913, $6800  ; Screen subpixel Y position
-    dw $09C2, $0157  ; Health
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $008F  ; Samus X
-    dw #$FFFF
-
-preset_kpdr23_red_brinstar_caterpillars_down:
-    dw #preset_kpdr21_red_brinstar_caterpillars_down
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
-    dw $09C2, $0163  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0C04  ; Items
-    dw $D8B6, $8008  ; Doors
-    dw $D8B8, $26EF  ; Doors
-    dw #$FFFF
-
-preset_kpdr23_red_brinstar_alpha_power_bombs:
-    dw #preset_kpdr21_red_brinstar_alpha_power_bombs
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
-    dw $09C2, $0163  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0C04  ; Items
-    dw $D8B6, $A008  ; Doors
-    dw $D8B8, $26EF  ; Doors
-    dw #$FFFF
-
-preset_kpdr23_red_brinstar_caterpillars_up:
-    dw #preset_kpdr21_red_brinstar_caterpillars_up
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
-    dw $09C2, $015E  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0D04  ; Items
-    dw $D8B6, $A008  ; Doors
-    dw $D8B8, $26EF  ; Doors
-    dw #$FFFF
-
-preset_kpdr23_wrecked_ship_crateria_kihunters:
-    dw #preset_kpdr21_wrecked_ship_crateria_kihunters
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
-    dw $09C2, $016D  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0D04  ; Items
-    dw $D8B6, $B008  ; Doors
-    dw $D8B8, $26EF  ; Doors
-    dw #$FFFF
-
-preset_kpdr23_wrecked_ship_ocean_fly_setup:
-    dw #preset_kpdr21_wrecked_ship_ocean_fly_setup
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
-    dw $09C2, $0181  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0D04  ; Items
-    dw $D8B6, $B008  ; Doors
-    dw $D8B8, $26EF  ; Doors
-    dw #$FFFF
-
-preset_kpdr23_wrecked_ship_ocean_spark:
-    dw #preset_kpdr21_wrecked_ship_ocean_spark
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
-    dw $09C2, $014C  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0D04  ; Items
-    dw $D8B6, $B008  ; Doors
-    dw $D8B8, $26EF  ; Doors
-    dw #$FFFF
-
-preset_kpdr23_wrecked_ship_entering_wrecked_ship:
-    dw #preset_kpdr21_wrecked_ship_entering_wrecked_ship
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
-    dw $09C2, $00D3  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0D04  ; Items
-    dw $D8B6, $B008  ; Doors
-    dw $D8B8, $26EF  ; Doors
-    dw #$FFFF
-
-preset_kpdr23_wrecked_ship_basement:
-    dw #preset_kpdr21_wrecked_ship_basement
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
-    dw $09C2, $00D3  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0D04  ; Items
-    dw $D8B6, $B008  ; Doors
-    dw $D8B8, $26EF  ; Doors
-    dw #$FFFF
-
-preset_kpdr23_wrecked_ship_phantoon:
-    dw #preset_kpdr21_wrecked_ship_phantoon
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
-    dw $09C2, $00D3  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0D04  ; Items
-    dw $D8B6, $B008  ; Doors
-    dw $D8B8, $26EF  ; Doors
-    dw #$FFFF
-
-preset_prkd19_upper_norfair_precathedral:
-preset_prkd20_upper_norfair_precathedral:
-    dw #preset_prkd19_upper_norfair_ice_escape
-    dw $078D, $932A  ; DDB
-    dw $079B, $A7DE  ; MDB
-    dw $090F, $7FFF  ; Screen subpixel X position
-    dw $0913, $23FF  ; Screen subpixel Y position
-    dw $0915, $031A  ; Screen Y position in pixels
-    dw $0919, $0253  ; Layer 2 Y position
-    dw $0AF6, $00A6  ; Samus X
-    dw $0AFA, $038B  ; Samus Y
-    dw #$FFFF
-
-preset_prkd19_upper_norfair_cathedral:
-preset_prkd20_upper_norfair_cathedral:
-    dw #preset_prkd19_upper_norfair_business_center_revisit
-    dw $078D, $92CA  ; DDB
-    dw $079B, $A7B3  ; MDB
+preset_pkrd_upper_norfair_ice_maze_up:
+    dw #preset_pkrd_upper_norfair_ice_beam_gates
+    dw $078D, $931E  ; DDB
+    dw $079B, $A75D  ; MDB
     dw $090F, $A000  ; Screen subpixel X position
-    dw $0911, $0200  ; Screen X position in pixels
-    dw $0913, $D000  ; Screen subpixel Y position
-    dw $0917, $0200  ; Layer 2 X position
-    dw $09A6, $1006  ; Equipped Beams
-    dw $09A8, $1006  ; Collected Beams
-    dw $09CA, $0007  ; Supers
-    dw $09CE, $0003  ; Pbs
-    dw $0AF6, $02A5  ; Samus X
-    dw $D876, $0124  ; Items
-    dw $D8B8, $2C00  ; Doors
-    dw #$FFFF
-
-preset_gtclassic_lower_norfair_ridley:
-    dw #preset_gtclassic_lower_norfair_plowerhouse
-    dw $078D, $995A  ; DDB
-    dw $079B, $B37A  ; MDB
-    dw $090F, $D000  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $C800  ; Screen subpixel Y position
-    dw $0917, $0000  ; Layer 2 X position
-    dw $09CA, $0013  ; Supers
-    dw $0AF6, $0024  ; Samus X
+    dw $0913, $E400  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $0AF6, $0038  ; Samus X
     dw $0AFA, $008B  ; Samus Y
-    dw $D8BA, $D300  ; Doors
     dw #$FFFF
 
-preset_gtclassic_lower_norfair_leaving_ridley:
-    dw #preset_gtclassic_lower_norfair_green_gate_revisit
-    dw $078D, $98CA  ; DDB
-    dw $079B, $B32E  ; MDB
-    dw $090F, $4000  ; Screen subpixel X position
-    dw $0913, $6800  ; Screen subpixel Y position
-    dw $0915, $011F  ; Screen Y position in pixels
-    dw $0919, $00D7  ; Layer 2 Y position
-    dw $09C0, $0001  ; Manual/Auto reserve tank
-    dw $09C2, $0276  ; Health
-    dw $09CA, $0013  ; Supers
-    dw $09CE, $0011  ; Pbs
-    dw $0AF6, $005F  ; Samus X
-    dw $0AFA, $019B  ; Samus Y
+preset_gtclassic_lower_norfair_reverse_plowerhouse:
+    dw #preset_gtclassic_lower_norfair_ridley
+    dw $078D, $98BE  ; DDB
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $0200  ; Screen X position in pixels
+    dw $0913, $3FFF  ; Screen subpixel Y position
+    dw $0917, $0180  ; Layer 2 X position
+    dw $09C2, $0273  ; Health
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $02BB  ; Samus X
     dw $D82A, $0005  ; Bosses
-    dw $D8BA, $D300  ; Doors
-    dw $D8BC, $0001  ; Doors
+    dw $D8BA, $D700  ; Doors
+    dw #$FFFF
+
+preset_prkd19_upper_norfair_bat_cave:
+preset_prkd20_upper_norfair_bat_cave:
+    dw #preset_prkd19_upper_norfair_bubble_mountain
+    dw $078D, $973E  ; DDB
+    dw $079B, $ACB3  ; MDB
+    dw $090F, $E000  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $C000  ; Screen subpixel Y position
+    dw $0917, $00C0  ; Layer 2 X position
+    dw $09C2, $011F  ; Health
+    dw $09CA, $0005  ; Supers
+    dw $09D2, $0001  ; Currently selected item
+    dw $0AF6, $01BA  ; Samus X
+    dw $D8BA, $0011  ; Doors
+    dw #$FFFF
+
+preset_prkd19_upper_norfair_leaving_speedbooster:
+preset_prkd20_upper_norfair_leaving_speedbooster:
+    dw #preset_prkd19_upper_norfair_ice_maze_down
+    dw $078D, $95B2  ; DDB
+    dw $079B, $AD1B  ; MDB
+    dw $090F, $C000  ; Screen subpixel X position
+    dw $0913, $B000  ; Screen subpixel Y position
+    dw $0917, $0000  ; Layer 2 X position
+    dw $09A2, $3124  ; Equipped Items
+    dw $09A4, $3124  ; Collected Items
+    dw $09C2, $011F  ; Health
+    dw $09CA, $0004  ; Supers
+    dw $09CE, $0003  ; Pbs
+    dw $0AF6, $0045  ; Samus X
+    dw $D878, $0004  ; Items
+    dw $D8B8, $2E00  ; Doors
+    dw $D8BA, $0031  ; Doors
+    dw #$FFFF
+
+preset_kpdr_wrecked_ship_ocean_spark:
+    dw #preset_kpdr_wrecked_ship_ocean_fly_setup
+    dw $078D, $8A36  ; DDB
+    dw $079B, $95FF  ; MDB
+    dw $090F, $A3FF  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $6C00  ; Screen subpixel Y position
+    dw $0917, $00C0  ; Layer 2 X position
+    dw $09C2, $00B2  ; Health
+    dw $0AF6, $01C6  ; Samus X
+    dw $0F78, $07FB  ; Safeties enabled
+    dw $0F8A, $0026  ; Safeties energy adjustment
+    dw $0F94, $000F  ; Safeties energy adjustment
     dw #$FFFF
 
 preset_14speed_tourian_mother_brain_3:
@@ -23917,21 +23885,316 @@ preset_gtmax_lower_norfair_ridley:
     dw $D8BA, $D301  ; Doors
     dw #$FFFF
 
-preset_pkrd_upper_norfair_business_center_revisit:
-    dw #preset_pkrd_upper_norfair_leaving_hijump
-    dw $078D, $93F6  ; DDB
-    dw $079B, $AA41  ; MDB
-    dw $07F5, $0005  ; Music Track
-    dw $090F, $FFFF  ; Screen subpixel X position
-    dw $0911, $0100  ; Screen X position in pixels
-    dw $0913, $27FF  ; Screen subpixel Y position
-    dw $0915, $000B  ; Screen Y position in pixels
-    dw $0917, $00C0  ; Layer 2 X position
-    dw $09C2, $018A  ; Health
-    dw $09CE, $0004  ; Pbs
+preset_pkrd_upper_norfair_ice_maze_down:
+    dw #preset_pkrd_upper_norfair_ice_maze_up
+    dw $078D, $937E  ; DDB
+    dw $079B, $A890  ; MDB
+    dw $07F5, $0003  ; Music Track
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0913, $3400  ; Screen subpixel Y position
+    dw $0917, $0001  ; Layer 2 X position
+    dw $09A6, $1006  ; Equipped Beams
+    dw $09A8, $1006  ; Collected Beams
+    dw $0AF6, $00B9  ; Samus X
+    dw $D876, $0125  ; Items
+    dw #$FFFF
+
+preset_gtclassic_lower_norfair_wasteland_revisit:
+    dw #preset_gtclassic_lower_norfair_reverse_plowerhouse
+    dw $078D, $9966  ; DDB
+    dw $079B, $B62B  ; MDB
+    dw $090F, $E000  ; Screen subpixel X position
+    dw $0913, $7400  ; Screen subpixel Y position
+    dw $09C2, $0254  ; Health
+    dw $0AF6, $02DC  ; Samus X
+    dw #$FFFF
+
+preset_gtclassic_lower_norfair_kihunter_stairs_up:
+    dw #preset_gtclassic_lower_norfair_ridley
+    dw $078D, $9A3E  ; DDB
+    dw $079B, $B5D5  ; MDB
+    dw $090F, $D480  ; Screen subpixel X position
+    dw $0911, $0500  ; Screen X position in pixels
+    dw $0913, $F001  ; Screen subpixel Y position
+    dw $0917, $03C0  ; Layer 2 X position
+    dw $09C2, $0227  ; Health
+    dw $09CE, $0010  ; Pbs
+    dw $0AF6, $0589  ; Samus X
+    dw $0AFA, $005B  ; Samus Y
+    dw $D82A, $0005  ; Bosses
+    dw $D8BA, $D700  ; Doors
+    dw #$FFFF
+
+preset_gtclassic_lower_norfair_fireflea_room:
+    dw #preset_gtclassic_lower_norfair_reverse_plowerhouse
+    dw $078D, $9A26  ; DDB
+    dw $079B, $B585  ; MDB
+    dw $090F, $5780  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $8000  ; Screen subpixel Y position
+    dw $0915, $0017  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $0011  ; Layer 2 Y position
+    dw $09C2, $0227  ; Health
+    dw $09CE, $000F  ; Pbs
+    dw $0AF6, $009C  ; Samus X
+    dw #$FFFF
+
+preset_prkd19_upper_norfair_single_chamber:
+preset_prkd20_upper_norfair_single_chamber:
+    dw #preset_prkd19_upper_norfair_bat_cave
+    dw $078D, $97AA  ; DDB
+    dw $090F, $8FFF  ; Screen subpixel X position
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $00FD  ; Screen Y position in pixels
+    dw $0919, $00BD  ; Layer 2 Y position
+    dw $09A2, $3124  ; Equipped Items
+    dw $09A4, $3124  ; Collected Items
+    dw $09C2, $0129  ; Health
+    dw $09C6, $000F  ; Missiles
+    dw $09CA, $000A  ; Supers
     dw $09D2, $0000  ; Currently selected item
-    dw $0AF6, $01C1  ; Samus X
+    dw $0AF6, $01A8  ; Samus X
+    dw $0AFA, $018B  ; Samus Y
+    dw $D822, $0020  ; Events
+    dw $D878, $0004  ; Items
+    dw $D8BA, $0031  ; Doors
+    dw #$FFFF
+
+preset_kpdr_wrecked_ship_entering_wrecked_ship:
+    dw #preset_kpdr20_wrecked_ship_entering_wrecked_ship
+    dw $09C2, $0038  ; Health
+    dw $09CE, $0002  ; Pbs
+    dw $0F78, $1FFB  ; Safeties enabled
+    dw $0F82, $0014  ; Safeties energy adjustment
+    dw $0F8A, $007D  ; Safeties energy adjustment
+    dw $0F8C, $FFEC  ; Safeties energy adjustment
+    dw $0F8E, $003C  ; Safeties energy adjustment
+    dw $0F94, $000F  ; Safeties energy adjustment
+    dw $0F96, $0023  ; Safeties energy adjustment
+    dw $1090, $FFFF  ; Safeties power bombs adjustment
+    dw $1118, $0006  ; Safeties unequip beams
+    dw $1180, $0005  ; Safeties stage
+    dw $D876, $0121  ; Items
+    dw $D878, $001C  ; Items
+    dw $D8B0, $3000  ; Doors
+    dw $D8B8, $26EC  ; Doors
+    dw #$FFFF
+
+preset_kpdr20_wrecked_ship_phantoon:
+    dw #preset_kpdr21_wrecked_ship_phantoon
+    dw $09C6, $000B  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr23_wrecked_ship_phantoon:
+    dw #preset_kpdr21_wrecked_ship_phantoon
+    dw $09A6, $1005  ; Equipped Beams
+    dw $09A8, $1005  ; Collected Beams
+    dw $09C2, $00D3  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $D874, $0D04  ; Items
+    dw $D8B6, $B008  ; Doors
+    dw $D8B8, $26EF  ; Doors
+    dw #$FFFF
+
+preset_kpdr21_wrecked_ship_leaving_phantoon:
+    dw #preset_kpdr21_wrecked_ship_phantoon
+    dw $078D, $A2AC  ; DDB
+    dw $079B, $CD13  ; MDB
+    dw $07F5, $0003  ; Music Track
+    dw $090F, $6000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $8400  ; Screen subpixel Y position
+    dw $0917, $0001  ; Layer 2 X position
+    dw $09C2, $00E2  ; Health
+    dw $09C6, $000C  ; Missiles
+    dw $09CA, $0005  ; Supers
+    dw $09CE, $0002  ; Pbs
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $006D  ; Samus X
+    dw $0AFA, $00BB  ; Samus Y
+    dw $D82A, $0100  ; Bosses
+    dw $D8C0, $0070  ; Doors
+    dw #$FFFF
+
+preset_kpdr22_upper_norfair_moat_missile_double_chamber_revisit:
+    dw #preset_kpdr22_upper_norfair_hjb_missile_double_chamber_revisit
+    dw $09C6, $0009  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw #$FFFF
+
+preset_kpdr22_upper_norfair_hjb_missile_single_chamber_revisit:
+    dw #preset_kpdr23_upper_norfair_single_chamber_revisit
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09A8, $1001  ; Collected Beams
+    dw $09C6, $000D  ; Missiles
+    dw $D8B6, $0008  ; Doors
+    dw #$FFFF
+
+preset_phantoonfirst_kraid_before_ridley_leaving_kraids_lair:
+    dw #preset_phantoonfirst_kraid_before_ridley_leaving_kraid_etank
+    dw $078D, $916E  ; DDB
+    dw $079B, $A471  ; MDB
+    dw $090F, $C001  ; Screen subpixel X position
+    dw $0913, $F000  ; Screen subpixel Y position
+    dw $09C6, $000C  ; Missiles
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0025  ; Samus X
     dw $0AFA, $008B  ; Samus Y
+    dw #$FFFF
+
+preset_kpdr25_upper_norfair_ice_escape:
+    dw #preset_kpdr25_upper_norfair_entering_ice
+    dw $078D, $935A  ; DDB
+    dw $079B, $A8B9  ; MDB
+    dw $090F, $5001  ; Screen subpixel X position
+    dw $0913, $7000  ; Screen subpixel Y position
+    dw $0915, $0200  ; Screen Y position in pixels
+    dw $0919, $0180  ; Layer 2 Y position
+    dw $09A6, $1007  ; Equipped Beams
+    dw $09A8, $1007  ; Collected Beams
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $00C7  ; Samus X
+    dw $0AFA, $028B  ; Samus Y
+    dw $D876, $01A5  ; Items
+    dw #$FFFF
+
+preset_kpdr25_red_brinstar_alpha_spark:
+    dw #preset_kpdr23_red_brinstar_alpha_spark
+    dw $0915, $0200  ; Screen Y position in pixels
+    dw $0919, $0180  ; Layer 2 Y position
+    dw $09A6, $1007  ; Equipped Beams
+    dw $09A8, $1007  ; Collected Beams
+    dw $09C6, $0014  ; Missiles
+    dw $09CA, $0002  ; Supers
+    dw $D876, $01A5  ; Items
+    dw $D8B8, $2EEF  ; Doors
+    dw #$FFFF
+
+preset_kpdr25_red_brinstar_reverse_skree_boost:
+    dw #preset_kpdr23_red_brinstar_reverse_skree_boost
+    dw $09A6, $1007  ; Equipped Beams
+    dw $09A8, $1007  ; Collected Beams
+    dw $09C6, $0014  ; Missiles
+    dw $09CA, $0003  ; Supers
+    dw $D876, $01A5  ; Items
+    dw $D8B8, $2EEF  ; Doors
+    dw #$FFFF
+
+preset_kpdr25_red_brinstar_red_tower_climb:
+    dw #preset_kpdr23_red_brinstar_red_tower_climb
+    dw $09A6, $1007  ; Equipped Beams
+    dw $09A8, $1007  ; Collected Beams
+    dw $09C6, $0014  ; Missiles
+    dw $09CA, $0003  ; Supers
+    dw $D876, $01A5  ; Items
+    dw $D8B8, $2EEF  ; Doors
+    dw #$FFFF
+
+preset_kpdr25_red_brinstar_hellway:
+    dw #preset_kpdr23_red_brinstar_hellway
+    dw $09A6, $1007  ; Equipped Beams
+    dw $09A8, $1007  ; Collected Beams
+    dw $09C6, $0014  ; Missiles
+    dw $09CA, $0003  ; Supers
+    dw $D876, $01A5  ; Items
+    dw $D8B8, $2EEF  ; Doors
+    dw #$FFFF
+
+preset_kpdr25_red_brinstar_caterpillars_down:
+    dw #preset_kpdr23_red_brinstar_caterpillars_down
+    dw $09A6, $1007  ; Equipped Beams
+    dw $09A8, $1007  ; Collected Beams
+    dw $09C6, $0014  ; Missiles
+    dw $09CA, $0003  ; Supers
+    dw $D876, $01A5  ; Items
+    dw $D8B8, $2EEF  ; Doors
+    dw #$FFFF
+
+preset_kpdr25_red_brinstar_alpha_power_bombs:
+    dw #preset_kpdr23_red_brinstar_alpha_power_bombs
+    dw $09A6, $1007  ; Equipped Beams
+    dw $09A8, $1007  ; Collected Beams
+    dw $09C6, $0014  ; Missiles
+    dw $09CA, $0002  ; Supers
+    dw $D876, $01A5  ; Items
+    dw $D8B8, $2EEF  ; Doors
+    dw #$FFFF
+
+preset_kpdr25_red_brinstar_caterpillars_up:
+    dw #preset_kpdr23_red_brinstar_caterpillars_up
+    dw $09A6, $1007  ; Equipped Beams
+    dw $09A8, $1007  ; Collected Beams
+    dw $09C6, $0014  ; Missiles
+    dw $09CA, $0002  ; Supers
+    dw $D876, $01A5  ; Items
+    dw $D8B8, $2EEF  ; Doors
+    dw #$FFFF
+
+preset_kpdr25_wrecked_ship_crateria_kihunters:
+    dw #preset_kpdr23_wrecked_ship_crateria_kihunters
+    dw $09A6, $1007  ; Equipped Beams
+    dw $09A8, $1007  ; Collected Beams
+    dw $09C2, $015E  ; Health
+    dw $09C6, $0014  ; Missiles
+    dw $09CA, $0004  ; Supers
+    dw $D876, $01A5  ; Items
+    dw $D8B8, $2EEF  ; Doors
+    dw #$FFFF
+
+preset_kpdr25_wrecked_ship_ocean_fly_setup:
+    dw #preset_kpdr23_wrecked_ship_ocean_fly_setup
+    dw $09A6, $1007  ; Equipped Beams
+    dw $09A8, $1007  ; Collected Beams
+    dw $09C2, $0172  ; Health
+    dw $09C6, $0014  ; Missiles
+    dw $09CA, $0004  ; Supers
+    dw $D876, $01A5  ; Items
+    dw $D8B8, $2EEF  ; Doors
+    dw #$FFFF
+
+preset_kpdr25_wrecked_ship_ocean_spark:
+    dw #preset_kpdr23_wrecked_ship_ocean_spark
+    dw $09A6, $1007  ; Equipped Beams
+    dw $09A8, $1007  ; Collected Beams
+    dw $09C2, $013D  ; Health
+    dw $09C6, $0018  ; Missiles
+    dw $09C8, $0019  ; Max missiles
+    dw $09CA, $0004  ; Supers
+    dw $D870, $0190  ; Items
+    dw $D876, $01A5  ; Items
+    dw $D8B8, $2EEF  ; Doors
+    dw #$FFFF
+
+preset_kpdr25_wrecked_ship_entering_wrecked_ship:
+    dw #preset_kpdr23_wrecked_ship_entering_wrecked_ship
+    dw $09A6, $1007  ; Equipped Beams
+    dw $09A8, $1007  ; Collected Beams
+    dw $09C2, $00C4  ; Health
+    dw $09C6, $0018  ; Missiles
+    dw $09C8, $0019  ; Max missiles
+    dw $09CA, $0003  ; Supers
+    dw $D870, $0190  ; Items
+    dw $D876, $01A5  ; Items
+    dw $D8B8, $2EEF  ; Doors
+    dw #$FFFF
+
+preset_kpdr25_wrecked_ship_basement:
+    dw #preset_kpdr23_wrecked_ship_basement
+    dw $09A6, $1007  ; Equipped Beams
+    dw $09A8, $1007  ; Collected Beams
+    dw $09C2, $00C4  ; Health
+    dw $09C6, $0018  ; Missiles
+    dw $09C8, $0019  ; Max missiles
+    dw $09CA, $0003  ; Supers
+    dw $D870, $0190  ; Items
+    dw $D876, $01A5  ; Items
+    dw $D8B8, $2EEF  ; Doors
     dw #$FFFF
 
 preset_14speed_tourian_zebes_escape:
@@ -24264,278 +24527,6 @@ preset_gtmax_lower_norfair_leaving_ridley_etank:
     dw $D82A, $0005  ; Bosses
     dw #$FFFF
 
-preset_kpdr_wrecked_ship_phantoon:
-    dw #preset_kpdr_wrecked_ship_basement
-    dw $078D, $A21C  ; DDB
-    dw $079B, $CC6F  ; MDB
-    dw $090F, $F000  ; Screen subpixel X position
-    dw $0913, $7000  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $09CA, $0002  ; Supers
-    dw $09D2, $0000  ; Currently selected item
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $04CC  ; Samus X
-    dw $0AFA, $008B  ; Samus Y
-    dw $D8C0, $0030  ; Doors
-    dw #$FFFF
-
-preset_kpdr20_wrecked_ship_leaving_phantoon:
-    dw #preset_kpdr21_wrecked_ship_leaving_phantoon
-    dw $09C6, $000A  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr23_wrecked_ship_leaving_phantoon:
-    dw #preset_kpdr21_wrecked_ship_leaving_phantoon
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
-    dw $09C2, $014B  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0D04  ; Items
-    dw $D8B6, $B008  ; Doors
-    dw $D8B8, $26EF  ; Doors
-    dw #$FFFF
-
-preset_kpdr21_wrecked_ship_shaft_to_supers:
-    dw #preset_kpdr21_wrecked_ship_leaving_phantoon
-    dw $078D, $A2C4  ; DDB
-    dw $079B, $CC6F  ; MDB
-    dw $07F5, $0006  ; Music Track
-    dw $090F, $8000  ; Screen subpixel X position
-    dw $0911, $0233  ; Screen X position in pixels
-    dw $0913, $E000  ; Screen subpixel Y position
-    dw $0917, $01A6  ; Layer 2 X position
-    dw $0AF6, $02CE  ; Samus X
-    dw $0AF8, $1000  ; Samus subpixel X
-    dw $0AFA, $006B  ; Samus Y
-    dw #$FFFF
-
-preset_kpdr21_wrecked_ship_wrecked_ship_shaft:
-    dw #preset_kpdr21_wrecked_ship_leaving_phantoon
-    dw $078D, $A210  ; DDB
-    dw $079B, $CDA8  ; MDB
-    dw $07F5, $0006  ; Music Track
-    dw $090F, $3000  ; Screen subpixel X position
-    dw $0913, $0400  ; Screen subpixel Y position
-    dw $0917, $0000  ; Layer 2 X position
-    dw $09CA, $000A  ; Supers
-    dw $09CC, $000A  ; Max supers
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $00CC  ; Samus X
-    dw $0AF8, $8000  ; Samus subpixel X
-    dw $0AFA, $008B  ; Samus Y
-    dw $D880, $0020  ; Items
-    dw $D8C0, $0074  ; Doors
-    dw #$FFFF
-
-preset_kpdr22_upper_norfair_moat_missile_single_chamber_revisit:
-    dw #preset_kpdr22_upper_norfair_hjb_missile_single_chamber_revisit
-    dw $09C6, $0009  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw #$FFFF
-
-preset_kpdr22_upper_norfair_hjb_missile_bubble_mountain_revisit:
-    dw #preset_kpdr23_upper_norfair_bubble_mountain_revisit
-    dw $09A6, $1001  ; Equipped Beams
-    dw $09A8, $1001  ; Collected Beams
-    dw $09C6, $000D  ; Missiles
-    dw $D8B6, $0008  ; Doors
-    dw #$FFFF
-
-preset_phantoonfirst_kraid_before_ridley_business_center_preelev:
-    dw #preset_phantoonfirst_kraid_before_ridley_leaving_kraids_lair
-    dw $078D, $913E  ; DDB
-    dw $079B, $A6A1  ; MDB
-    dw $07F5, $0003  ; Music Track
-    dw $090F, $3000  ; Screen subpixel X position
-    dw $0911, $0006  ; Screen X position in pixels
-    dw $0913, $0000  ; Screen subpixel Y position
-    dw $0917, $0006  ; Layer 2 X position
-    dw $09CA, $0008  ; Supers
-    dw $0AF6, $0078  ; Samus X
-    dw #$FFFF
-
-preset_phantoonfirst_upper_norfair_business_center_postelev:
-    dw #preset_phantoonfirst_kraid_before_ridley_leaving_kraids_lair
-    dw $078D, $9246  ; DDB
-    dw $079B, $A7DE  ; MDB
-    dw $07F3, $0015  ; Music Bank
-    dw $090F, $8000  ; Screen subpixel X position
-    dw $0913, $0000  ; Screen subpixel Y position
-    dw $0915, $0238  ; Screen Y position in pixels
-    dw $0919, $01AA  ; Layer 2 Y position
-    dw $09CA, $0008  ; Supers
-    dw $0A1C, $009B  ; Samus position/state
-    dw $0A1E, $0000  ; More position/state
-    dw $0AF6, $0080  ; Samus X
-    dw $0AFA, $02A8  ; Samus Y
-    dw #$FFFF
-
-preset_kpdr25_red_brinstar_hellway:
-    dw #preset_kpdr23_red_brinstar_hellway
-    dw $09A6, $1007  ; Equipped Beams
-    dw $09A8, $1007  ; Collected Beams
-    dw $09C6, $0014  ; Missiles
-    dw $09CA, $0003  ; Supers
-    dw $D876, $01A5  ; Items
-    dw $D8B8, $2EEF  ; Doors
-    dw #$FFFF
-
-preset_kpdr25_red_brinstar_caterpillars_down:
-    dw #preset_kpdr23_red_brinstar_caterpillars_down
-    dw $09A6, $1007  ; Equipped Beams
-    dw $09A8, $1007  ; Collected Beams
-    dw $09C6, $0014  ; Missiles
-    dw $09CA, $0003  ; Supers
-    dw $D876, $01A5  ; Items
-    dw $D8B8, $2EEF  ; Doors
-    dw #$FFFF
-
-preset_kpdr25_red_brinstar_alpha_power_bombs:
-    dw #preset_kpdr23_red_brinstar_alpha_power_bombs
-    dw $09A6, $1007  ; Equipped Beams
-    dw $09A8, $1007  ; Collected Beams
-    dw $09C6, $0014  ; Missiles
-    dw $09CA, $0002  ; Supers
-    dw $D876, $01A5  ; Items
-    dw $D8B8, $2EEF  ; Doors
-    dw #$FFFF
-
-preset_kpdr25_red_brinstar_caterpillars_up:
-    dw #preset_kpdr23_red_brinstar_caterpillars_up
-    dw $09A6, $1007  ; Equipped Beams
-    dw $09A8, $1007  ; Collected Beams
-    dw $09C6, $0014  ; Missiles
-    dw $09CA, $0002  ; Supers
-    dw $D876, $01A5  ; Items
-    dw $D8B8, $2EEF  ; Doors
-    dw #$FFFF
-
-preset_kpdr25_wrecked_ship_crateria_kihunters:
-    dw #preset_kpdr23_wrecked_ship_crateria_kihunters
-    dw $09A6, $1007  ; Equipped Beams
-    dw $09A8, $1007  ; Collected Beams
-    dw $09C2, $015E  ; Health
-    dw $09C6, $0014  ; Missiles
-    dw $09CA, $0004  ; Supers
-    dw $D876, $01A5  ; Items
-    dw $D8B8, $2EEF  ; Doors
-    dw #$FFFF
-
-preset_kpdr25_wrecked_ship_ocean_fly_setup:
-    dw #preset_kpdr23_wrecked_ship_ocean_fly_setup
-    dw $09A6, $1007  ; Equipped Beams
-    dw $09A8, $1007  ; Collected Beams
-    dw $09C2, $0172  ; Health
-    dw $09C6, $0014  ; Missiles
-    dw $09CA, $0004  ; Supers
-    dw $D876, $01A5  ; Items
-    dw $D8B8, $2EEF  ; Doors
-    dw #$FFFF
-
-preset_kpdr25_wrecked_ship_ocean_spark:
-    dw #preset_kpdr23_wrecked_ship_ocean_spark
-    dw $09A6, $1007  ; Equipped Beams
-    dw $09A8, $1007  ; Collected Beams
-    dw $09C2, $013D  ; Health
-    dw $09C6, $0018  ; Missiles
-    dw $09C8, $0019  ; Max missiles
-    dw $09CA, $0004  ; Supers
-    dw $D870, $0190  ; Items
-    dw $D876, $01A5  ; Items
-    dw $D8B8, $2EEF  ; Doors
-    dw #$FFFF
-
-preset_kpdr25_wrecked_ship_entering_wrecked_ship:
-    dw #preset_kpdr23_wrecked_ship_entering_wrecked_ship
-    dw $09A6, $1007  ; Equipped Beams
-    dw $09A8, $1007  ; Collected Beams
-    dw $09C2, $00C4  ; Health
-    dw $09C6, $0018  ; Missiles
-    dw $09C8, $0019  ; Max missiles
-    dw $09CA, $0003  ; Supers
-    dw $D870, $0190  ; Items
-    dw $D876, $01A5  ; Items
-    dw $D8B8, $2EEF  ; Doors
-    dw #$FFFF
-
-preset_kpdr25_wrecked_ship_basement:
-    dw #preset_kpdr23_wrecked_ship_basement
-    dw $09A6, $1007  ; Equipped Beams
-    dw $09A8, $1007  ; Collected Beams
-    dw $09C2, $00C4  ; Health
-    dw $09C6, $0018  ; Missiles
-    dw $09C8, $0019  ; Max missiles
-    dw $09CA, $0003  ; Supers
-    dw $D870, $0190  ; Items
-    dw $D876, $01A5  ; Items
-    dw $D8B8, $2EEF  ; Doors
-    dw #$FFFF
-
-preset_kpdr25_wrecked_ship_phantoon:
-    dw #preset_kpdr23_wrecked_ship_phantoon
-    dw $09A6, $1007  ; Equipped Beams
-    dw $09A8, $1007  ; Collected Beams
-    dw $09C2, $00C4  ; Health
-    dw $09C6, $0018  ; Missiles
-    dw $09C8, $0019  ; Max missiles
-    dw $09CA, $0001  ; Supers
-    dw $D870, $0190  ; Items
-    dw $D876, $01A5  ; Items
-    dw $D8B8, $2EEF  ; Doors
-    dw #$FFFF
-
-preset_prkd19_upper_norfair_rising_tide:
-preset_prkd20_upper_norfair_rising_tide:
-    dw #preset_prkd19_upper_norfair_cathedral
-    dw $078D, $92B2  ; DDB
-    dw $079B, $A788  ; MDB
-    dw $090F, $C000  ; Screen subpixel X position
-    dw $0913, $2800  ; Screen subpixel Y position
-    dw $0915, $0100  ; Screen Y position in pixels
-    dw $0919, $0100  ; Layer 2 Y position
-    dw $09C6, $000E  ; Missiles
-    dw $09CA, $0006  ; Supers
-    dw $0AF6, $02AF  ; Samus X
-    dw $0AFA, $018B  ; Samus Y
-    dw $D8B8, $2E00  ; Doors
-    dw #$FFFF
-
-preset_prkd19_upper_norfair_bubble_mountain:
-preset_prkd20_upper_norfair_bubble_mountain:
-    dw #preset_prkd19_upper_norfair_cathedral
-    dw $078D, $929A  ; DDB
-    dw $079B, $AFA3  ; MDB
-    dw $090F, $3000  ; Screen subpixel X position
-    dw $0911, $0400  ; Screen X position in pixels
-    dw $0913, $7C00  ; Screen subpixel Y position
-    dw $0917, $0300  ; Layer 2 X position
-    dw $09C2, $0121  ; Health
-    dw $09C6, $000E  ; Missiles
-    dw $09CA, $0006  ; Supers
-    dw $0AF6, $04B0  ; Samus X
-    dw $D8B8, $2E00  ; Doors
-    dw #$FFFF
-
-preset_gtclassic_lower_norfair_reverse_plowerhouse:
-    dw #preset_gtclassic_lower_norfair_ridley
-    dw $078D, $98BE  ; DDB
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $0911, $0200  ; Screen X position in pixels
-    dw $0913, $3FFF  ; Screen subpixel Y position
-    dw $0917, $0180  ; Layer 2 X position
-    dw $09C2, $0273  ; Health
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $02BB  ; Samus X
-    dw $D82A, $0005  ; Bosses
-    dw $D8BA, $D700  ; Doors
-    dw #$FFFF
-
 preset_gtmax_lower_norfair_reverse_plowerhouse:
     dw #preset_gtmax_lower_norfair_ridley
     dw $078D, $98BE  ; DDB
@@ -24556,22 +24547,100 @@ preset_gtmax_lower_norfair_reverse_plowerhouse:
     dw $D8BA, $DF01  ; Doors
     dw #$FFFF
 
-preset_pkrd_upper_norfair_ice_beam_gates:
-    dw #preset_pkrd_upper_norfair_business_center_revisit
-    dw $078D, $941A  ; DDB
-    dw $079B, $A7DE  ; MDB
-    dw $090F, $8000  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $A800  ; Screen subpixel Y position
-    dw $0915, $030B  ; Screen Y position in pixels
+preset_pkrd_upper_norfair_ice_escape:
+    dw #preset_pkrd_upper_norfair_ice_maze_down
+    dw $078D, $935A  ; DDB
+    dw $079B, $A8B9  ; MDB
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $0001  ; Screen subpixel X position
+    dw $0913, $0800  ; Screen subpixel Y position
+    dw $0915, $0200  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
-    dw $0919, $0249  ; Layer 2 Y position
+    dw $0919, $0180  ; Layer 2 Y position
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $00C8  ; Samus X
+    dw $0AFA, $028B  ; Samus Y
+    dw #$FFFF
+
+preset_gtclassic_lower_norfair_springball_maze:
+    dw #preset_gtclassic_lower_norfair_kihunter_stairs_up
+    dw $078D, $9A02  ; DDB
+    dw $079B, $B6EE  ; MDB
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0917, $0100  ; Layer 2 X position
+    dw $0919, $0003  ; Layer 2 Y position
+    dw $09CE, $000F  ; Pbs
+    dw $0AF6, $0167  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw #$FFFF
+
+preset_prkd19_upper_norfair_double_chamber:
+preset_prkd20_upper_norfair_double_chamber:
+    dw #preset_prkd19_upper_norfair_single_chamber
+    dw $078D, $9582  ; DDB
+    dw $079B, $AD5E  ; MDB
+    dw $090F, $9000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0915, $0124  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $00DB  ; Layer 2 Y position
+    dw $09C2, $011D  ; Health
+    dw $09CA, $0009  ; Supers
+    dw $0AF6, $00B5  ; Samus X
+    dw $D8BA, $0071  ; Doors
+    dw #$FFFF
+
+preset_prkd19_upper_norfair_double_chamber_revisit:
+    dw #preset_prkd19_upper_norfair_leaving_speedbooster
+    dw $078D, $961E  ; DDB
+    dw $079B, $ADDE  ; MDB
+    dw $090F, $2001  ; Screen subpixel X position
+    dw $0913, $3800  ; Screen subpixel Y position
+    dw $09A6, $1007  ; Equipped Beams
+    dw $09A8, $1007  ; Collected Beams
+    dw $09C2, $011D  ; Health
     dw $09C6, $000F  ; Missiles
+    dw $09CA, $0008  ; Supers
+    dw $0AF6, $004F  ; Samus X
+    dw $D822, $0020  ; Events
+    dw $D878, $0014  ; Items
+    dw $D8BA, $00F1  ; Doors
+    dw #$FFFF
+
+preset_kpdr_wrecked_ship_basement:
+    dw #preset_kpdr_wrecked_ship_entering_wrecked_ship
+    dw $078D, $A1BC  ; DDB
+    dw $079B, $CAF6  ; MDB
+    dw $07F3, $0030  ; Music Bank
+    dw $090F, $4000  ; Screen subpixel X position
+    dw $0911, $0400  ; Screen X position in pixels
+    dw $0913, $AC00  ; Screen subpixel Y position
+    dw $0915, $0691  ; Screen Y position in pixels
+    dw $0917, $0300  ; Layer 2 X position
+    dw $0919, $04EC  ; Layer 2 Y position
+    dw $09D2, $0002  ; Currently selected item
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $003C  ; Samus X
-    dw $0AFA, $039A  ; Samus Y
-    dw $D8B8, $28EF  ; Doors
+    dw $0AF6, $04C9  ; Samus X
+    dw $0AF8, $7FFF  ; Samus subpixel X
+    dw $0AFA, $0742  ; Samus Y
+    dw $0AFC, $B7FF  ; Samus subpixel Y
+    dw #$FFFF
+
+preset_kpdr25_wrecked_ship_phantoon:
+    dw #preset_kpdr23_wrecked_ship_phantoon
+    dw $09A6, $1007  ; Equipped Beams
+    dw $09A8, $1007  ; Collected Beams
+    dw $09C2, $00C4  ; Health
+    dw $09C6, $0018  ; Missiles
+    dw $09C8, $0019  ; Max missiles
+    dw $09CA, $0001  ; Supers
+    dw $D870, $0190  ; Items
+    dw $D876, $01A5  ; Items
+    dw $D8B8, $2EEF  ; Doors
     dw #$FFFF
 
 preset_14speed_tourian_escape_room_3:
@@ -24781,68 +24850,6 @@ preset_hundo_brinstar_cleanup_green_pirate_shaft:
     dw $D870, $81BF  ; Items
     dw #$FFFF
 
-preset_kpdr_wrecked_ship_leaving_phantoon:
-    dw #preset_kpdr20_wrecked_ship_leaving_phantoon
-    dw $09C2, $00A6  ; Health
-    dw $09CE, $0003  ; Pbs
-    dw $0F78, $1FFB  ; Safeties enabled
-    dw $0F82, $0014  ; Safeties energy adjustment
-    dw $0F8A, $002D  ; Safeties energy adjustment
-    dw $0F8E, $003C  ; Safeties energy adjustment
-    dw $0F94, $000F  ; Safeties energy adjustment
-    dw $0F96, $000F  ; Safeties energy adjustment
-    dw $1008, $FFFE  ; Safeties missiles adjustment
-    dw $1012, $FFFE  ; Safeties missiles adjustment
-    dw $1090, $FFFF  ; Safeties power bombs adjustment
-    dw $1118, $0006  ; Safeties unequip beams
-    dw $1180, $0005  ; Safeties stage
-    dw $D876, $0121  ; Items
-    dw $D878, $001C  ; Items
-    dw $D8B0, $3000  ; Doors
-    dw $D8B8, $26EC  ; Doors
-    dw #$FFFF
-
-preset_gtclassic_lower_norfair_wasteland_revisit:
-    dw #preset_gtclassic_lower_norfair_reverse_plowerhouse
-    dw $078D, $9966  ; DDB
-    dw $079B, $B62B  ; MDB
-    dw $090F, $E000  ; Screen subpixel X position
-    dw $0913, $7400  ; Screen subpixel Y position
-    dw $09C2, $0254  ; Health
-    dw $0AF6, $02DC  ; Samus X
-    dw #$FFFF
-
-preset_gtclassic_lower_norfair_kihunter_stairs_up:
-    dw #preset_gtclassic_lower_norfair_ridley
-    dw $078D, $9A3E  ; DDB
-    dw $079B, $B5D5  ; MDB
-    dw $090F, $D480  ; Screen subpixel X position
-    dw $0911, $0500  ; Screen X position in pixels
-    dw $0913, $F001  ; Screen subpixel Y position
-    dw $0917, $03C0  ; Layer 2 X position
-    dw $09C2, $0227  ; Health
-    dw $09CE, $0010  ; Pbs
-    dw $0AF6, $0589  ; Samus X
-    dw $0AFA, $005B  ; Samus Y
-    dw $D82A, $0005  ; Bosses
-    dw $D8BA, $D700  ; Doors
-    dw #$FFFF
-
-preset_gtclassic_lower_norfair_fireflea_room:
-    dw #preset_gtclassic_lower_norfair_reverse_plowerhouse
-    dw $078D, $9A26  ; DDB
-    dw $079B, $B585  ; MDB
-    dw $090F, $5780  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $8000  ; Screen subpixel Y position
-    dw $0915, $0017  ; Screen Y position in pixels
-    dw $0917, $0000  ; Layer 2 X position
-    dw $0919, $0011  ; Layer 2 Y position
-    dw $09C2, $0227  ; Health
-    dw $09CE, $000F  ; Pbs
-    dw $0AF6, $009C  ; Samus X
-    dw #$FFFF
-
 preset_gtmax_lower_norfair_wasteland_revisit:
     dw #preset_gtmax_lower_norfair_reverse_plowerhouse
     dw $078D, $9966  ; DDB
@@ -24884,196 +24891,80 @@ preset_gtmax_lower_norfair_fireflea_room:
     dw $0AF6, $009C  ; Samus X
     dw #$FFFF
 
-preset_pkrd_upper_norfair_ice_maze_up:
-    dw #preset_pkrd_upper_norfair_ice_beam_gates
-    dw $078D, $931E  ; DDB
-    dw $079B, $A75D  ; MDB
-    dw $090F, $A000  ; Screen subpixel X position
-    dw $0913, $E400  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $0AF6, $0038  ; Samus X
-    dw $0AFA, $008B  ; Samus Y
+preset_pkrd_upper_norfair_precathedral:
+    dw #preset_pkrd_upper_norfair_ice_escape
+    dw $078D, $932A  ; DDB
+    dw $079B, $A7DE  ; MDB
+    dw $090F, $5FFF  ; Screen subpixel X position
+    dw $0913, $DBFF  ; Screen subpixel Y position
+    dw $0915, $0319  ; Screen Y position in pixels
+    dw $0919, $0253  ; Layer 2 Y position
+    dw $0AF6, $00A4  ; Samus X
+    dw $0AFA, $038B  ; Samus Y
     dw #$FFFF
 
-preset_kpdr25_wrecked_ship_leaving_phantoon:
-    dw #preset_kpdr23_wrecked_ship_leaving_phantoon
-    dw $09A6, $1007  ; Equipped Beams
-    dw $09A8, $1007  ; Collected Beams
-    dw $09C6, $0011  ; Missiles
-    dw $09C8, $0019  ; Max missiles
-    dw $09CA, $0003  ; Supers
-    dw $D870, $0190  ; Items
-    dw $D876, $01A5  ; Items
-    dw $D8B8, $2EEF  ; Doors
-    dw #$FFFF
-
-preset_kpdr20_wrecked_ship_shaft_to_supers:
-    dw #preset_kpdr21_wrecked_ship_shaft_to_supers
-    dw $09C6, $000A  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr23_wrecked_ship_shaft_to_supers:
-    dw #preset_kpdr21_wrecked_ship_shaft_to_supers
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
-    dw $09C2, $014B  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0D04  ; Items
-    dw $D8B6, $B008  ; Doors
-    dw $D8B8, $26EF  ; Doors
-    dw #$FFFF
-
-preset_kpdr20_wrecked_ship_wrecked_ship_shaft:
-    dw #preset_kpdr21_wrecked_ship_wrecked_ship_shaft
-    dw $09C6, $000A  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr23_wrecked_ship_wrecked_ship_shaft:
-    dw #preset_kpdr21_wrecked_ship_wrecked_ship_shaft
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
-    dw $09C2, $014B  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0D04  ; Items
-    dw $D8B6, $B008  ; Doors
-    dw $D8B8, $26EF  ; Doors
-    dw #$FFFF
-
-preset_kpdr21_wrecked_ship_attic:
-    dw #preset_kpdr21_wrecked_ship_wrecked_ship_shaft
-    dw $078D, $A2E8  ; DDB
-    dw $079B, $CAF6  ; MDB
-    dw $090F, $AC00  ; Screen subpixel X position
-    dw $0911, $0400  ; Screen X position in pixels
-    dw $0913, $B000  ; Screen subpixel Y position
-    dw $0917, $0300  ; Layer 2 X position
-    dw $09D2, $0003  ; Currently selected item
-    dw $0AF6, $0445  ; Samus X
-    dw $0AFA, $006B  ; Samus Y
-    dw #$FFFF
-
-preset_kpdr21_wrecked_ship_upper_west_ocean:
-    dw #preset_kpdr21_wrecked_ship_wrecked_ship_shaft
-    dw $078D, $A228  ; DDB
-    dw $079B, $CA52  ; MDB
-    dw $090F, $7000  ; Screen subpixel X position
-    dw $0913, $C7FD  ; Screen subpixel Y position
-    dw $0915, $001F  ; Screen Y position in pixels
-    dw $0919, $001E  ; Layer 2 Y position
-    dw $09C2, $00EE  ; Health
-    dw $09CA, $0009  ; Supers
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $003B  ; Samus X
-    dw $D8C0, $0174  ; Doors
-    dw #$FFFF
-
-preset_kpdr21_wrecked_ship_pancakes_and_wavers:
-    dw #preset_kpdr21_wrecked_ship_wrecked_ship_shaft
-    dw $078D, $A1E0  ; DDB
-    dw $079B, $93FE  ; MDB
-    dw $07F3, $000C  ; Music Bank
+preset_pkrd_upper_norfair_cathedral:
+    dw #preset_pkrd_upper_norfair_ice_maze_down
+    dw $078D, $92CA  ; DDB
+    dw $079B, $A7B3  ; MDB
     dw $07F5, $0005  ; Music Track
-    dw $090F, $E000  ; Screen subpixel X position
-    dw $0911, $0200  ; Screen X position in pixels
-    dw $0913, $F800  ; Screen subpixel Y position
-    dw $0915, $01FC  ; Screen Y position in pixels
-    dw $0917, $0100  ; Layer 2 X position
-    dw $09C2, $0102  ; Health
-    dw $09CA, $0009  ; Supers
-    dw $0AF6, $02C2  ; Samus X
-    dw $0AFA, $028B  ; Samus Y
-    dw $D8C0, $0174  ; Doors
-    dw #$FFFF
-
-preset_kpdr22_upper_norfair_moat_missile_bubble_mountain_revisit:
-    dw #preset_kpdr22_upper_norfair_hjb_missile_bubble_mountain_revisit
-    dw $09C6, $0009  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw #$FFFF
-
-preset_kpdr22_upper_norfair_hjb_missile_frog_speedway:
-    dw #preset_kpdr23_upper_norfair_frog_speedway
-    dw $09A6, $1001  ; Equipped Beams
-    dw $09A8, $1001  ; Collected Beams
-    dw $09C6, $000D  ; Missiles
-    dw $D8B6, $0008  ; Doors
-    dw #$FFFF
-
-preset_phantoonfirst_upper_norfair_hijump_etank:
-    dw #preset_phantoonfirst_upper_norfair_business_center_postelev
-    dw $090F, $FFFF  ; Screen subpixel X position
-    dw $0915, $051B  ; Screen Y position in pixels
-    dw $0919, $03D4  ; Layer 2 Y position
-    dw $09CA, $0007  ; Supers
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $0049  ; Samus X
-    dw $0AFA, $058B  ; Samus Y
-    dw $D8B8, $2000  ; Doors
-    dw #$FFFF
-
-preset_phantoonfirst_upper_norfair_leaving_hijump:
-    dw #preset_phantoonfirst_kraid_before_ridley_leaving_kraid_etank
-    dw $078D, $9426  ; DDB
-    dw $079B, $A9E5  ; MDB
-    dw $07F3, $0015  ; Music Bank
-    dw $07F5, $0003  ; Music Track
-    dw $090F, $E000  ; Screen subpixel X position
-    dw $0913, $7800  ; Screen subpixel Y position
-    dw $09A2, $1124  ; Equipped Items
-    dw $09A4, $1124  ; Collected Items
-    dw $09C2, $012B  ; Health
-    dw $09C4, $012B  ; Max health
-    dw $09C6, $000C  ; Missiles
-    dw $09CA, $0008  ; Supers
-    dw $09D2, $0003  ; Currently selected item
-    dw $0AF6, $0047  ; Samus X
-    dw $0AFA, $00BB  ; Samus Y
-    dw $0F86, $0000  ; Safeties energy adjustment
-    dw $11C8, $0000  ; Safeties refill
-    dw $D876, $0120  ; Items
-    dw $D8B8, $2000  ; Doors
-    dw #$FFFF
-
-preset_prkd19_upper_norfair_bat_cave:
-preset_prkd20_upper_norfair_bat_cave:
-    dw #preset_prkd19_upper_norfair_bubble_mountain
-    dw $078D, $973E  ; DDB
-    dw $079B, $ACB3  ; MDB
-    dw $090F, $E000  ; Screen subpixel X position
-    dw $0911, $0100  ; Screen X position in pixels
-    dw $0913, $C000  ; Screen subpixel Y position
-    dw $0917, $00C0  ; Layer 2 X position
-    dw $09C2, $011F  ; Health
-    dw $09CA, $0005  ; Supers
-    dw $09D2, $0001  ; Currently selected item
-    dw $0AF6, $01BA  ; Samus X
-    dw $D8BA, $0011  ; Doors
-    dw #$FFFF
-
-preset_prkd19_upper_norfair_leaving_speedbooster:
-preset_prkd20_upper_norfair_leaving_speedbooster:
-    dw #preset_prkd19_upper_norfair_ice_maze_down
-    dw $078D, $95B2  ; DDB
-    dw $079B, $AD1B  ; MDB
     dw $090F, $C000  ; Screen subpixel X position
-    dw $0913, $B000  ; Screen subpixel Y position
+    dw $0911, $0200  ; Screen X position in pixels
+    dw $0913, $5400  ; Screen subpixel Y position
+    dw $0917, $0200  ; Layer 2 X position
+    dw $09CA, $0007  ; Supers
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $02A2  ; Samus X
+    dw $D8B8, $2CEF  ; Doors
+    dw #$FFFF
+
+preset_gtclassic_lower_norfair_three_musketeers:
+    dw #preset_gtclassic_lower_norfair_springball_maze
+    dw $078D, $9A92  ; DDB
+    dw $079B, $B510  ; MDB
+    dw $090F, $4001  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $6000  ; Screen subpixel Y position
     dw $0917, $0000  ; Layer 2 X position
-    dw $09A2, $3124  ; Equipped Items
-    dw $09A4, $3124  ; Collected Items
-    dw $09C2, $011F  ; Health
-    dw $09CA, $0004  ; Supers
-    dw $09CE, $0003  ; Pbs
-    dw $0AF6, $0045  ; Samus X
-    dw $D878, $0004  ; Items
-    dw $D8B8, $2E00  ; Doors
-    dw $D8BA, $0031  ; Doors
+    dw $0919, $0002  ; Layer 2 Y position
+    dw $0AF6, $0069  ; Samus X
+    dw #$FFFF
+
+preset_gtclassic_lower_norfair_single_chamber_final:
+    dw #preset_gtclassic_lower_norfair_springball_maze
+    dw $078D, $99AE  ; DDB
+    dw $079B, $B656  ; MDB
+    dw $090F, $C000  ; Screen subpixel X position
+    dw $0913, $F400  ; Screen subpixel Y position
+    dw $0915, $0004  ; Screen Y position in pixels
+    dw $0917, $00C0  ; Layer 2 X position
+    dw $0AF6, $0171  ; Samus X
+    dw #$FFFF
+
+preset_prkd20_upper_norfair_double_chamber_revisit:
+    dw #preset_prkd19_upper_norfair_double_chamber_revisit
+    dw $09C6, $0014  ; Missiles
+    dw $09C8, $0014  ; Max missiles
+    dw $D878, $001C  ; Items
+    dw #$FFFF
+
+preset_kpdr20_wrecked_ship_leaving_phantoon:
+    dw #preset_kpdr21_wrecked_ship_leaving_phantoon
+    dw $09C6, $000A  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr23_wrecked_ship_leaving_phantoon:
+    dw #preset_kpdr21_wrecked_ship_leaving_phantoon
+    dw $09A6, $1005  ; Equipped Beams
+    dw $09A8, $1005  ; Collected Beams
+    dw $09C2, $014B  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $D874, $0D04  ; Items
+    dw $D8B6, $B008  ; Doors
+    dw $D8B8, $26EF  ; Doors
     dw #$FFFF
 
 preset_14ice_tourian_escape_room_3:
@@ -25241,20 +25132,6 @@ preset_hundo_brinstar_cleanup_green_shaft_revisit:
     dw $D870, $87BF  ; Items
     dw #$FFFF
 
-preset_gtclassic_lower_norfair_springball_maze:
-    dw #preset_gtclassic_lower_norfair_kihunter_stairs_up
-    dw $078D, $9A02  ; DDB
-    dw $079B, $B6EE  ; MDB
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $0911, $0100  ; Screen X position in pixels
-    dw $0913, $0000  ; Screen subpixel Y position
-    dw $0917, $0100  ; Layer 2 X position
-    dw $0919, $0003  ; Layer 2 Y position
-    dw $09CE, $000F  ; Pbs
-    dw $0AF6, $0167  ; Samus X
-    dw $0AFA, $008B  ; Samus Y
-    dw #$FFFF
-
 preset_gtmax_lower_norfair_springball_maze:
     dw #preset_gtmax_lower_norfair_fireflea_room
     dw $078D, $9A02  ; DDB
@@ -25274,38 +25151,36 @@ preset_gtmax_lower_norfair_springball_maze:
     dw $D87A, $0001  ; Items
     dw #$FFFF
 
-preset_pkrd_upper_norfair_ice_maze_down:
-    dw #preset_pkrd_upper_norfair_ice_maze_up
-    dw $078D, $937E  ; DDB
-    dw $079B, $A890  ; MDB
-    dw $07F5, $0003  ; Music Track
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $0913, $3400  ; Screen subpixel Y position
-    dw $0917, $0001  ; Layer 2 X position
-    dw $09A6, $1006  ; Equipped Beams
-    dw $09A8, $1006  ; Collected Beams
-    dw $0AF6, $00B9  ; Samus X
-    dw $D876, $0125  ; Items
+preset_pkrd_upper_norfair_rising_tide:
+    dw #preset_pkrd_upper_norfair_cathedral
+    dw $078D, $92B2  ; DDB
+    dw $079B, $A788  ; MDB
+    dw $090F, $867F  ; Screen subpixel X position
+    dw $0913, $2800  ; Screen subpixel Y position
+    dw $0915, $0100  ; Screen Y position in pixels
+    dw $0919, $0100  ; Layer 2 Y position
+    dw $09CA, $0006  ; Supers
+    dw $0AF6, $02B5  ; Samus X
+    dw $0AFA, $018B  ; Samus Y
+    dw $D8B8, $2EEF  ; Doors
     dw #$FFFF
 
-preset_pkrd_upper_norfair_ice_escape:
-    dw #preset_prkd19_upper_norfair_ice_escape
-    dw $090F, $0001  ; Screen subpixel X position
-    dw $0913, $0800  ; Screen subpixel Y position
-    dw $09A2, $1125  ; Equipped Items
-    dw $09A4, $1125  ; Collected Items
-    dw $09C2, $018A  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $09C6, $000F  ; Missiles
-    dw $09CE, $0004  ; Pbs
-    dw $D828, $0104  ; Bosses
-    dw $D874, $0D04  ; Items
-    dw $D876, $0125  ; Items
-    dw $D8B8, $28EF  ; Doors
+preset_pkrd_upper_norfair_bubble_mountain:
+    dw #preset_pkrd_upper_norfair_cathedral
+    dw $078D, $929A  ; DDB
+    dw $079B, $AFA3  ; MDB
+    dw $090F, $1000  ; Screen subpixel X position
+    dw $0911, $0400  ; Screen X position in pixels
+    dw $0913, $B400  ; Screen subpixel Y position
+    dw $0917, $0300  ; Layer 2 X position
+    dw $09C2, $0185  ; Health
+    dw $09CA, $0006  ; Supers
+    dw $0AF6, $04AD  ; Samus X
+    dw $D8B8, $2EEF  ; Doors
     dw #$FFFF
 
-preset_kpdr_wrecked_ship_shaft_to_supers:
-    dw #preset_kpdr_wrecked_ship_leaving_phantoon
+preset_kpdr21_wrecked_ship_shaft_to_supers:
+    dw #preset_kpdr21_wrecked_ship_leaving_phantoon
     dw $078D, $A2C4  ; DDB
     dw $079B, $CC6F  ; MDB
     dw $07F5, $0006  ; Music Track
@@ -25318,8 +25193,8 @@ preset_kpdr_wrecked_ship_shaft_to_supers:
     dw $0AFA, $006B  ; Samus Y
     dw #$FFFF
 
-preset_kpdr_wrecked_ship_wrecked_ship_shaft:
-    dw #preset_kpdr_wrecked_ship_leaving_phantoon
+preset_kpdr21_wrecked_ship_wrecked_ship_shaft:
+    dw #preset_kpdr21_wrecked_ship_leaving_phantoon
     dw $078D, $A210  ; DDB
     dw $079B, $CDA8  ; MDB
     dw $07F5, $0006  ; Music Track
@@ -25335,6 +25210,163 @@ preset_kpdr_wrecked_ship_wrecked_ship_shaft:
     dw $0AFA, $008B  ; Samus Y
     dw $D880, $0020  ; Items
     dw $D8C0, $0074  ; Doors
+    dw #$FFFF
+
+preset_kpdr22_upper_norfair_moat_missile_single_chamber_revisit:
+    dw #preset_kpdr22_upper_norfair_hjb_missile_single_chamber_revisit
+    dw $09C6, $0009  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw #$FFFF
+
+preset_kpdr22_upper_norfair_hjb_missile_bubble_mountain_revisit:
+    dw #preset_kpdr25_upper_norfair_bubble_mountain_revisit
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09A8, $1001  ; Collected Beams
+    dw $09C6, $000D  ; Missiles
+    dw $09CA, $0003  ; Supers
+    dw $D8B6, $0008  ; Doors
+    dw #$FFFF
+
+preset_phantoonfirst_kraid_before_ridley_business_center_preelev:
+    dw #preset_phantoonfirst_kraid_before_ridley_leaving_kraids_lair
+    dw $078D, $913E  ; DDB
+    dw $079B, $A6A1  ; MDB
+    dw $07F5, $0003  ; Music Track
+    dw $090F, $3000  ; Screen subpixel X position
+    dw $0911, $0006  ; Screen X position in pixels
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0917, $0006  ; Layer 2 X position
+    dw $09CA, $0008  ; Supers
+    dw $0AF6, $0078  ; Samus X
+    dw #$FFFF
+
+preset_phantoonfirst_upper_norfair_business_center_postelev:
+    dw #preset_phantoonfirst_kraid_before_ridley_leaving_kraids_lair
+    dw $078D, $9246  ; DDB
+    dw $079B, $A7DE  ; MDB
+    dw $07F3, $0015  ; Music Bank
+    dw $090F, $8000  ; Screen subpixel X position
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $0238  ; Screen Y position in pixels
+    dw $0919, $01AA  ; Layer 2 Y position
+    dw $09CA, $0008  ; Supers
+    dw $0A1C, $009B  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
+    dw $0AF6, $0080  ; Samus X
+    dw $0AFA, $02A8  ; Samus Y
+    dw #$FFFF
+
+preset_prkd19_upper_norfair_single_chamber_revisit:
+    dw #preset_prkd19_upper_norfair_double_chamber_revisit
+    dw $078D, $962A  ; DDB
+    dw $079B, $ADAD  ; MDB
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $C000  ; Screen subpixel X position
+    dw $0911, $0140  ; Screen X position in pixels
+    dw $0913, $2400  ; Screen subpixel Y position
+    dw $0915, $011F  ; Screen Y position in pixels
+    dw $0917, $00F0  ; Layer 2 X position
+    dw $0919, $011F  ; Layer 2 Y position
+    dw $0AF6, $01DB  ; Samus X
+    dw $0AFA, $01BB  ; Samus Y
+    dw #$FFFF
+
+preset_prkd19_upper_norfair_volcano_room:
+    dw #preset_prkd19_upper_norfair_double_chamber_revisit
+    dw $078D, $95EE  ; DDB
+    dw $079B, $AE07  ; MDB
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $9E80  ; Screen subpixel X position
+    dw $0911, $0300  ; Screen X position in pixels
+    dw $0913, $6400  ; Screen subpixel Y position
+    dw $0917, $0240  ; Layer 2 X position
+    dw $09C2, $010E  ; Health
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $03AE  ; Samus X
+    dw #$FFFF
+
+preset_prkd19_upper_norfair_kronic_boost:
+    dw #preset_prkd19_upper_norfair_double_chamber_revisit
+    dw $078D, $9642  ; DDB
+    dw $079B, $AE32  ; MDB
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $9E00  ; Screen subpixel X position
+    dw $0913, $1400  ; Screen subpixel Y position
+    dw $0915, $0200  ; Screen Y position in pixels
+    dw $0919, $0200  ; Layer 2 Y position
+    dw $09C2, $010A  ; Health
+    dw $0A1C, $008A  ; Samus position/state
+    dw $0A1E, $1504  ; More position/state
+    dw $0AF6, $0025  ; Samus X
+    dw $0AFA, $028B  ; Samus Y
+    dw #$FFFF
+
+preset_kpdr_wrecked_ship_phantoon:
+    dw #preset_kpdr_wrecked_ship_basement
+    dw $078D, $A21C  ; DDB
+    dw $079B, $CC6F  ; MDB
+    dw $090F, $F000  ; Screen subpixel X position
+    dw $0913, $7000  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09CA, $0002  ; Supers
+    dw $09D2, $0000  ; Currently selected item
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $04CC  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw $D8C0, $0030  ; Doors
+    dw #$FFFF
+
+preset_gtclassic_lower_norfair_bubble_mountain_final:
+    dw #preset_gtclassic_lower_norfair_three_musketeers
+    dw $078D, $9A4A  ; DDB
+    dw $079B, $AD5E  ; MDB
+    dw $07F3, $0015  ; Music Bank
+    dw $090F, $D000  ; Screen subpixel X position
+    dw $0913, $A400  ; Screen subpixel Y position
+    dw $0915, $0006  ; Screen Y position in pixels
+    dw $0919, $0004  ; Layer 2 Y position
+    dw $09C6, $0062  ; Missiles
+    dw $0AF6, $0091  ; Samus X
+    dw #$FFFF
+
+preset_gtclassic_lower_norfair_frog_speedway:
+    dw #preset_gtclassic_lower_norfair_springball_maze
+    dw $078D, $956A  ; DDB
+    dw $079B, $AF72  ; MDB
+    dw $07F3, $0015  ; Music Bank
+    dw $0911, $0026  ; Screen X position in pixels
+    dw $0913, $E000  ; Screen subpixel Y position
+    dw $0917, $001C  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09C2, $022C  ; Health
+    dw $09C6, $005F  ; Missiles
+    dw $09CA, $0014  ; Supers
+    dw $09CE, $000E  ; Pbs
+    dw $0AF6, $00C6  ; Samus X
+    dw #$FFFF
+
+preset_kpdr_wrecked_ship_leaving_phantoon:
+    dw #preset_kpdr20_wrecked_ship_leaving_phantoon
+    dw $09C2, $00A6  ; Health
+    dw $09CE, $0003  ; Pbs
+    dw $0F78, $1FFB  ; Safeties enabled
+    dw $0F82, $0014  ; Safeties energy adjustment
+    dw $0F8A, $002D  ; Safeties energy adjustment
+    dw $0F8E, $003C  ; Safeties energy adjustment
+    dw $0F94, $000F  ; Safeties energy adjustment
+    dw $0F96, $000F  ; Safeties energy adjustment
+    dw $1008, $FFFE  ; Safeties missiles adjustment
+    dw $1012, $FFFE  ; Safeties missiles adjustment
+    dw $1090, $FFFF  ; Safeties power bombs adjustment
+    dw $1118, $0006  ; Safeties unequip beams
+    dw $1180, $0005  ; Safeties stage
+    dw $D876, $0121  ; Items
+    dw $D878, $001C  ; Items
+    dw $D8B0, $3000  ; Doors
+    dw $D8B8, $26EC  ; Doors
     dw #$FFFF
 
 preset_14ice_tourian_escape_room_4:
@@ -25505,29 +25537,6 @@ preset_hundo_brinstar_cleanup_etecoon_energy_tank_room:
     dw $D8B6, $E818  ; Doors
     dw #$FFFF
 
-preset_gtclassic_lower_norfair_three_musketeers:
-    dw #preset_gtclassic_lower_norfair_springball_maze
-    dw $078D, $9A92  ; DDB
-    dw $079B, $B510  ; MDB
-    dw $090F, $4001  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $6000  ; Screen subpixel Y position
-    dw $0917, $0000  ; Layer 2 X position
-    dw $0919, $0002  ; Layer 2 Y position
-    dw $0AF6, $0069  ; Samus X
-    dw #$FFFF
-
-preset_gtclassic_lower_norfair_single_chamber_final:
-    dw #preset_gtclassic_lower_norfair_springball_maze
-    dw $078D, $99AE  ; DDB
-    dw $079B, $B656  ; MDB
-    dw $090F, $C000  ; Screen subpixel X position
-    dw $0913, $F400  ; Screen subpixel Y position
-    dw $0915, $0004  ; Screen Y position in pixels
-    dw $0917, $00C0  ; Layer 2 X position
-    dw $0AF6, $0171  ; Samus X
-    dw #$FFFF
-
 preset_gtmax_lower_norfair_three_musketeers:
     dw #preset_gtmax_lower_norfair_springball_maze
     dw $078D, $9A92  ; DDB
@@ -25563,20 +25572,52 @@ preset_gtmax_upper_norfair_and_kraid_single_chamber:
     dw $D878, $FEC0  ; Items
     dw #$FFFF
 
-preset_pkrd_upper_norfair_precathedral:
-    dw #preset_pkrd_upper_norfair_ice_escape
-    dw $078D, $932A  ; DDB
-    dw $079B, $A7DE  ; MDB
-    dw $090F, $5FFF  ; Screen subpixel X position
-    dw $0913, $DBFF  ; Screen subpixel Y position
-    dw $0915, $0319  ; Screen Y position in pixels
-    dw $0919, $0253  ; Layer 2 Y position
-    dw $0AF6, $00A4  ; Samus X
-    dw $0AFA, $038B  ; Samus Y
+preset_pkrd_upper_norfair_bat_cave:
+    dw #preset_pkrd_upper_norfair_bubble_mountain
+    dw $078D, $973E  ; DDB
+    dw $079B, $ACB3  ; MDB
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0917, $00C0  ; Layer 2 X position
+    dw $09D2, $0001  ; Currently selected item
+    dw $0AF6, $01BC  ; Samus X
+    dw $D8BA, $0011  ; Doors
     dw #$FFFF
 
-preset_kpdr25_wrecked_ship_shaft_to_supers:
-    dw #preset_kpdr23_wrecked_ship_shaft_to_supers
+preset_pkrd_upper_norfair_leaving_speedbooster:
+    dw #preset_pkrd_upper_norfair_ice_maze_down
+    dw $078D, $95B2  ; DDB
+    dw $079B, $AD1B  ; MDB
+    dw $0913, $EC00  ; Screen subpixel Y position
+    dw $0917, $0000  ; Layer 2 X position
+    dw $09A2, $3125  ; Equipped Items
+    dw $09A4, $3125  ; Collected Items
+    dw $09C2, $018F  ; Health
+    dw $09CA, $0007  ; Supers
+    dw $0AF6, $0041  ; Samus X
+    dw $D878, $0004  ; Items
+    dw $D8B8, $2EEF  ; Doors
+    dw $D8BA, $0031  ; Doors
+    dw #$FFFF
+
+preset_pkrd_upper_norfair_single_chamber:
+    dw #preset_prkd19_upper_norfair_single_chamber
+    dw $090F, $A000  ; Screen subpixel X position
+    dw $09A2, $3125  ; Equipped Items
+    dw $09A4, $3125  ; Collected Items
+    dw $09C2, $018D  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $09CA, $0009  ; Supers
+    dw $09CE, $0004  ; Pbs
+    dw $0AF6, $01B1  ; Samus X
+    dw $D828, $0104  ; Bosses
+    dw $D874, $0D04  ; Items
+    dw $D876, $0125  ; Items
+    dw $D8B8, $2EEF  ; Doors
+    dw #$FFFF
+
+preset_kpdr25_wrecked_ship_leaving_phantoon:
+    dw #preset_kpdr23_wrecked_ship_leaving_phantoon
     dw $09A6, $1007  ; Equipped Beams
     dw $09A8, $1007  ; Collected Beams
     dw $09C6, $0011  ; Missiles
@@ -25587,27 +25628,36 @@ preset_kpdr25_wrecked_ship_shaft_to_supers:
     dw $D8B8, $2EEF  ; Doors
     dw #$FFFF
 
-preset_kpdr25_wrecked_ship_wrecked_ship_shaft:
-    dw #preset_kpdr23_wrecked_ship_wrecked_ship_shaft
-    dw $09A6, $1007  ; Equipped Beams
-    dw $09A8, $1007  ; Collected Beams
-    dw $09C6, $0011  ; Missiles
-    dw $09C8, $0019  ; Max missiles
-    dw $09CA, $0008  ; Supers
-    dw $D870, $0190  ; Items
-    dw $D876, $01A5  ; Items
-    dw $D8B8, $2EEF  ; Doors
+preset_prkd20_upper_norfair_single_chamber_revisit:
+    dw #preset_prkd19_upper_norfair_single_chamber_revisit
+    dw $09C6, $0014  ; Missiles
+    dw $09C8, $0014  ; Max missiles
+    dw $D878, $001C  ; Items
     dw #$FFFF
 
-preset_kpdr20_wrecked_ship_attic:
-    dw #preset_kpdr21_wrecked_ship_attic
+preset_prkd20_upper_norfair_volcano_room:
+    dw #preset_prkd19_upper_norfair_volcano_room
+    dw $09C6, $0014  ; Missiles
+    dw $09C8, $0014  ; Max missiles
+    dw $D878, $001C  ; Items
+    dw #$FFFF
+
+preset_prkd20_upper_norfair_kronic_boost:
+    dw #preset_prkd19_upper_norfair_kronic_boost
+    dw $09C6, $0014  ; Missiles
+    dw $09C8, $0014  ; Max missiles
+    dw $D878, $001C  ; Items
+    dw #$FFFF
+
+preset_kpdr20_wrecked_ship_shaft_to_supers:
+    dw #preset_kpdr21_wrecked_ship_shaft_to_supers
     dw $09C6, $000A  ; Missiles
     dw $09C8, $000F  ; Max missiles
     dw $D878, $0014  ; Items
     dw #$FFFF
 
-preset_kpdr23_wrecked_ship_attic:
-    dw #preset_kpdr21_wrecked_ship_attic
+preset_kpdr23_wrecked_ship_shaft_to_supers:
+    dw #preset_kpdr21_wrecked_ship_shaft_to_supers
     dw $09A6, $1005  ; Equipped Beams
     dw $09A8, $1005  ; Collected Beams
     dw $09C2, $014B  ; Health
@@ -25617,40 +25667,46 @@ preset_kpdr23_wrecked_ship_attic:
     dw $D8B8, $26EF  ; Doors
     dw #$FFFF
 
-preset_kpdr20_wrecked_ship_upper_west_ocean:
-    dw #preset_kpdr21_wrecked_ship_upper_west_ocean
+preset_kpdr20_wrecked_ship_wrecked_ship_shaft:
+    dw #preset_kpdr21_wrecked_ship_wrecked_ship_shaft
     dw $09C6, $000A  ; Missiles
     dw $09C8, $000F  ; Max missiles
     dw $D878, $0014  ; Items
     dw #$FFFF
 
-preset_kpdr23_wrecked_ship_upper_west_ocean:
-    dw #preset_kpdr21_wrecked_ship_upper_west_ocean
+preset_kpdr23_wrecked_ship_wrecked_ship_shaft:
+    dw #preset_kpdr21_wrecked_ship_wrecked_ship_shaft
     dw $09A6, $1005  ; Equipped Beams
     dw $09A8, $1005  ; Collected Beams
-    dw $09C2, $0152  ; Health
+    dw $09C2, $014B  ; Health
     dw $09C4, $018F  ; Max health
     dw $D874, $0D04  ; Items
     dw $D8B6, $B008  ; Doors
     dw $D8B8, $26EF  ; Doors
     dw #$FFFF
 
-preset_kpdr20_wrecked_ship_pancakes_and_wavers:
-    dw #preset_kpdr21_wrecked_ship_pancakes_and_wavers
-    dw $09C6, $000A  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
+preset_kpdr21_wrecked_ship_attic:
+    dw #preset_kpdr21_wrecked_ship_wrecked_ship_shaft
+    dw $078D, $A2E8  ; DDB
+    dw $079B, $CAF6  ; MDB
+    dw $090F, $AC00  ; Screen subpixel X position
+    dw $0911, $0400  ; Screen X position in pixels
+    dw $0913, $B000  ; Screen subpixel Y position
+    dw $0917, $0300  ; Layer 2 X position
+    dw $09D2, $0003  ; Currently selected item
+    dw $0AF6, $0445  ; Samus X
+    dw $0AFA, $006B  ; Samus Y
     dw #$FFFF
 
-preset_kpdr23_wrecked_ship_pancakes_and_wavers:
-    dw #preset_kpdr21_wrecked_ship_pancakes_and_wavers
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
-    dw $09C2, $0166  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0D04  ; Items
-    dw $D8B6, $B008  ; Doors
-    dw $D8B8, $26EF  ; Doors
+preset_gtclassic_lower_norfair_business_center_final:
+    dw #preset_gtclassic_lower_norfair_frog_speedway
+    dw $078D, $97DA  ; DDB
+    dw $079B, $B167  ; MDB
+    dw $090F, $8000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $0C00  ; Screen subpixel Y position
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0AF6, $0039  ; Samus X
     dw #$FFFF
 
 preset_14ice_tourian_escape_parlor:
@@ -25783,283 +25839,6 @@ preset_hundo_brinstar_cleanup_etecoon_room:
     dw $D872, $C48F  ; Items
     dw #$FFFF
 
-preset_gtclassic_lower_norfair_bubble_mountain_final:
-    dw #preset_gtclassic_lower_norfair_three_musketeers
-    dw $078D, $9A4A  ; DDB
-    dw $079B, $AD5E  ; MDB
-    dw $07F3, $0015  ; Music Bank
-    dw $090F, $D000  ; Screen subpixel X position
-    dw $0913, $A400  ; Screen subpixel Y position
-    dw $0915, $0006  ; Screen Y position in pixels
-    dw $0919, $0004  ; Layer 2 Y position
-    dw $09C6, $0062  ; Missiles
-    dw $0AF6, $0091  ; Samus X
-    dw #$FFFF
-
-preset_kpdr21_wrecked_ship_bowling_spark:
-    dw #preset_kpdr21_wrecked_ship_pancakes_and_wavers
-    dw $078D, $89E2  ; DDB
-    dw $079B, $9461  ; MDB
-    dw $090F, $6800  ; Screen subpixel X position
-    dw $0911, $0100  ; Screen X position in pixels
-    dw $0913, $2400  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0917, $00C0  ; Layer 2 X position
-    dw $0AF6, $016E  ; Samus X
-    dw $0AFA, $009D  ; Samus Y
-    dw #$FFFF
-
-preset_kpdr21_wrecked_ship_leaving_gravity:
-    dw #preset_kpdr21_wrecked_ship_wrecked_ship_shaft
-    dw $078D, $A1A4  ; DDB
-    dw $079B, $CE40  ; MDB
-    dw $07F5, $0003  ; Music Track
-    dw $0913, $E400  ; Screen subpixel Y position
-    dw $0917, $0001  ; Layer 2 X position
-    dw $09A2, $3125  ; Equipped Items
-    dw $09A4, $3125  ; Collected Items
-    dw $09C2, $00A9  ; Health
-    dw $09CA, $0009  ; Supers
-    dw $0A1C, $009B  ; Samus position/state
-    dw $0A1E, $0000  ; More position/state
-    dw $0AF6, $0078  ; Samus X
-    dw $0AFA, $0088  ; Samus Y
-    dw $D880, $00A0  ; Items
-    dw $D8C0, $0174  ; Doors
-    dw #$FFFF
-
-preset_kpdr22_upper_norfair_moat_missile_frog_speedway:
-    dw #preset_kpdr22_upper_norfair_hjb_missile_frog_speedway
-    dw $09C6, $0009  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw #$FFFF
-
-preset_kpdr22_upper_norfair_hjb_missile_heading_to_red_brinstar:
-    dw #preset_kpdr23_upper_norfair_heading_to_red_brinstar
-    dw $09A6, $1001  ; Equipped Beams
-    dw $09A8, $1001  ; Collected Beams
-    dw $09C6, $000D  ; Missiles
-    dw $D8B6, $0008  ; Doors
-    dw #$FFFF
-
-preset_phantoonfirst_upper_norfair_business_center_revisit:
-    dw #preset_phantoonfirst_upper_norfair_leaving_hijump
-    dw $078D, $93F6  ; DDB
-    dw $079B, $AA41  ; MDB
-    dw $07F5, $0005  ; Music Track
-    dw $090F, $7FFF  ; Screen subpixel X position
-    dw $0911, $0100  ; Screen X position in pixels
-    dw $0913, $27FF  ; Screen subpixel Y position
-    dw $0917, $00C0  ; Layer 2 X position
-    dw $09C2, $0126  ; Health
-    dw $09CE, $0001  ; Pbs
-    dw $09D2, $0000  ; Currently selected item
-    dw $0AF6, $01BC  ; Samus X
-    dw $0AFA, $008B  ; Samus Y
-    dw $0F78, $003F  ; Safeties enabled
-    dw $D8BA, $0001  ; Doors
-    dw #$FFFF
-
-preset_phantoonfirst_upper_norfair_ice_beam_gates:
-    dw #preset_prkd19_upper_norfair_ice_beam_gates
-    dw $0F78, $003F  ; Safeties enabled
-    dw $0FC0, $002D  ; Safeties reserves adjustment
-    dw $1006, $0001  ; Safeties missiles adjustment
-    dw $1046, $0001  ; Safeties supers adjustment
-    dw $1086, $0001  ; Safeties power bombs adjustment
-    dw $1088, $0002  ; Safeties power bombs adjustment
-    dw #$FFFF
-
-preset_phantoonfirst_upper_norfair_ice_maze_up:
-    dw #preset_prkd19_upper_norfair_ice_maze_up
-    dw $0F78, $003F  ; Safeties enabled
-    dw $0FC0, $002D  ; Safeties reserves adjustment
-    dw $1006, $0001  ; Safeties missiles adjustment
-    dw $1046, $0001  ; Safeties supers adjustment
-    dw $1086, $0001  ; Safeties power bombs adjustment
-    dw $1088, $0002  ; Safeties power bombs adjustment
-    dw #$FFFF
-
-preset_phantoonfirst_upper_norfair_ice_maze_down:
-    dw #preset_prkd19_upper_norfair_ice_maze_down
-    dw $0F78, $003F  ; Safeties enabled
-    dw $0FC0, $002D  ; Safeties reserves adjustment
-    dw $1006, $0001  ; Safeties missiles adjustment
-    dw $1046, $0001  ; Safeties supers adjustment
-    dw $1086, $0001  ; Safeties power bombs adjustment
-    dw $1088, $0002  ; Safeties power bombs adjustment
-    dw #$FFFF
-
-preset_phantoonfirst_upper_norfair_ice_escape:
-    dw #preset_prkd19_upper_norfair_ice_escape
-    dw $0F78, $003F  ; Safeties enabled
-    dw $0FC0, $002D  ; Safeties reserves adjustment
-    dw $1006, $0001  ; Safeties missiles adjustment
-    dw $1046, $0001  ; Safeties supers adjustment
-    dw $1086, $0001  ; Safeties power bombs adjustment
-    dw $1088, $0002  ; Safeties power bombs adjustment
-    dw #$FFFF
-
-preset_phantoonfirst_upper_norfair_precathedral:
-    dw #preset_prkd19_upper_norfair_precathedral
-    dw $0F78, $003F  ; Safeties enabled
-    dw $0FC0, $002D  ; Safeties reserves adjustment
-    dw $1006, $0001  ; Safeties missiles adjustment
-    dw $1046, $0001  ; Safeties supers adjustment
-    dw $1086, $0001  ; Safeties power bombs adjustment
-    dw $1088, $0002  ; Safeties power bombs adjustment
-    dw #$FFFF
-
-preset_phantoonfirst_upper_norfair_cathedral:
-    dw #preset_prkd19_upper_norfair_cathedral
-    dw $0F78, $003F  ; Safeties enabled
-    dw $0FC0, $002D  ; Safeties reserves adjustment
-    dw $1006, $0001  ; Safeties missiles adjustment
-    dw $1046, $0001  ; Safeties supers adjustment
-    dw $1086, $0001  ; Safeties power bombs adjustment
-    dw $1088, $0001  ; Safeties power bombs adjustment
-    dw #$FFFF
-
-preset_phantoonfirst_upper_norfair_rising_tide:
-    dw #preset_prkd19_upper_norfair_rising_tide
-    dw $0F78, $003F  ; Safeties enabled
-    dw $0FC0, $002D  ; Safeties reserves adjustment
-    dw $1006, $0001  ; Safeties missiles adjustment
-    dw $1046, $0001  ; Safeties supers adjustment
-    dw $1086, $0001  ; Safeties power bombs adjustment
-    dw $1088, $0001  ; Safeties power bombs adjustment
-    dw #$FFFF
-
-preset_phantoonfirst_upper_norfair_bubble_mountain:
-    dw #preset_prkd19_upper_norfair_bubble_mountain
-    dw $0F78, $003F  ; Safeties enabled
-    dw $0FC0, $002D  ; Safeties reserves adjustment
-    dw $1006, $0001  ; Safeties missiles adjustment
-    dw $1046, $0001  ; Safeties supers adjustment
-    dw $1086, $0001  ; Safeties power bombs adjustment
-    dw $1088, $0001  ; Safeties power bombs adjustment
-    dw #$FFFF
-
-preset_phantoonfirst_upper_norfair_bat_cave:
-    dw #preset_prkd19_upper_norfair_bat_cave
-    dw $0F78, $003F  ; Safeties enabled
-    dw $0FC0, $002D  ; Safeties reserves adjustment
-    dw $1006, $0001  ; Safeties missiles adjustment
-    dw $1046, $0001  ; Safeties supers adjustment
-    dw $1086, $0001  ; Safeties power bombs adjustment
-    dw $1088, $0001  ; Safeties power bombs adjustment
-    dw #$FFFF
-
-preset_prkd19_upper_norfair_single_chamber:
-preset_prkd20_upper_norfair_single_chamber:
-    dw #preset_prkd19_upper_norfair_bat_cave
-    dw $078D, $97AA  ; DDB
-    dw $090F, $8FFF  ; Screen subpixel X position
-    dw $0913, $0000  ; Screen subpixel Y position
-    dw $0915, $00FD  ; Screen Y position in pixels
-    dw $0919, $00BD  ; Layer 2 Y position
-    dw $09A2, $3124  ; Equipped Items
-    dw $09A4, $3124  ; Collected Items
-    dw $09C2, $0129  ; Health
-    dw $09C6, $000F  ; Missiles
-    dw $09CA, $000A  ; Supers
-    dw $09D2, $0000  ; Currently selected item
-    dw $0AF6, $01A8  ; Samus X
-    dw $0AFA, $018B  ; Samus Y
-    dw $D822, $0020  ; Events
-    dw $D878, $0004  ; Items
-    dw $D8BA, $0031  ; Doors
-    dw #$FFFF
-
-preset_phantoonfirst_upper_norfair_leaving_speedbooster:
-    dw #preset_prkd19_upper_norfair_leaving_speedbooster
-    dw $0F78, $003F  ; Safeties enabled
-    dw $0FC0, $002D  ; Safeties reserves adjustment
-    dw $1006, $0001  ; Safeties missiles adjustment
-    dw $1046, $0001  ; Safeties supers adjustment
-    dw $1086, $0001  ; Safeties power bombs adjustment
-    dw $1088, $0001  ; Safeties power bombs adjustment
-    dw #$FFFF
-
-preset_gtclassic_lower_norfair_frog_speedway:
-    dw #preset_gtclassic_lower_norfair_springball_maze
-    dw $078D, $956A  ; DDB
-    dw $079B, $AF72  ; MDB
-    dw $07F3, $0015  ; Music Bank
-    dw $0911, $0026  ; Screen X position in pixels
-    dw $0913, $E000  ; Screen subpixel Y position
-    dw $0917, $001C  ; Layer 2 X position
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $09C2, $022C  ; Health
-    dw $09C6, $005F  ; Missiles
-    dw $09CA, $0014  ; Supers
-    dw $09CE, $000E  ; Pbs
-    dw $0AF6, $00C6  ; Samus X
-    dw #$FFFF
-
-preset_pkrd_upper_norfair_cathedral:
-    dw #preset_pkrd_upper_norfair_ice_escape
-    dw $078D, $92CA  ; DDB
-    dw $079B, $A7B3  ; MDB
-    dw $090F, $C000  ; Screen subpixel X position
-    dw $0911, $0200  ; Screen X position in pixels
-    dw $0913, $5400  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0917, $0200  ; Layer 2 X position
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $09CA, $0007  ; Supers
-    dw $0AF6, $02A2  ; Samus X
-    dw $0AFA, $008B  ; Samus Y
-    dw $D8B8, $2CEF  ; Doors
-    dw #$FFFF
-
-preset_kpdr_wrecked_ship_attic:
-    dw #preset_kpdr_wrecked_ship_wrecked_ship_shaft
-    dw $078D, $A2E8  ; DDB
-    dw $079B, $CAF6  ; MDB
-    dw $090F, $AC00  ; Screen subpixel X position
-    dw $0911, $0400  ; Screen X position in pixels
-    dw $0913, $B000  ; Screen subpixel Y position
-    dw $0917, $0300  ; Layer 2 X position
-    dw $09D2, $0003  ; Currently selected item
-    dw $0AF6, $0445  ; Samus X
-    dw $0AFA, $006B  ; Samus Y
-    dw #$FFFF
-
-preset_kpdr_wrecked_ship_upper_west_ocean:
-    dw #preset_kpdr_wrecked_ship_wrecked_ship_shaft
-    dw $078D, $A228  ; DDB
-    dw $079B, $CA52  ; MDB
-    dw $090F, $7000  ; Screen subpixel X position
-    dw $0913, $C7FD  ; Screen subpixel Y position
-    dw $0915, $001F  ; Screen Y position in pixels
-    dw $0919, $001E  ; Layer 2 Y position
-    dw $09C2, $00B2  ; Health
-    dw $09CA, $0009  ; Supers
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $003B  ; Samus X
-    dw $D8C0, $0174  ; Doors
-    dw #$FFFF
-
-preset_kpdr_wrecked_ship_pancakes_and_wavers:
-    dw #preset_kpdr_wrecked_ship_wrecked_ship_shaft
-    dw $078D, $A1E0  ; DDB
-    dw $079B, $93FE  ; MDB
-    dw $07F3, $000C  ; Music Bank
-    dw $07F5, $0005  ; Music Track
-    dw $090F, $E000  ; Screen subpixel X position
-    dw $0911, $0200  ; Screen X position in pixels
-    dw $0913, $F800  ; Screen subpixel Y position
-    dw $0915, $01FC  ; Screen Y position in pixels
-    dw $0917, $0100  ; Layer 2 X position
-    dw $09C2, $00C6  ; Health
-    dw $09CA, $0009  ; Supers
-    dw $0AF6, $02C2  ; Samus X
-    dw $0AFA, $028B  ; Samus Y
-    dw $D8C0, $0174  ; Doors
-    dw #$FFFF
-
 preset_gtmax_upper_norfair_and_kraid_double_chamber:
     dw #preset_gtmax_upper_norfair_and_kraid_single_chamber
     dw $078D, $9A4A  ; DDB
@@ -26098,8 +25877,185 @@ preset_gtmax_upper_norfair_and_kraid_bat_cave:
     dw $D8BA, $DF51  ; Doors
     dw #$FFFF
 
-preset_kpdr25_wrecked_ship_attic:
-    dw #preset_kpdr23_wrecked_ship_attic
+preset_pkrd_upper_norfair_double_chamber:
+    dw #preset_pkrd_upper_norfair_single_chamber
+    dw $078D, $9582  ; DDB
+    dw $079B, $AD5E  ; MDB
+    dw $090F, $8000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $E000  ; Screen subpixel Y position
+    dw $0915, $0125  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $00DB  ; Layer 2 Y position
+    dw $09C2, $0181  ; Health
+    dw $09CA, $0008  ; Supers
+    dw $0AF6, $00BF  ; Samus X
+    dw $D8BA, $0071  ; Doors
+    dw #$FFFF
+
+preset_kpdr21_wrecked_ship_upper_west_ocean:
+    dw #preset_kpdr21_wrecked_ship_wrecked_ship_shaft
+    dw $078D, $A228  ; DDB
+    dw $079B, $CA52  ; MDB
+    dw $090F, $7000  ; Screen subpixel X position
+    dw $0913, $C7FD  ; Screen subpixel Y position
+    dw $0915, $001F  ; Screen Y position in pixels
+    dw $0919, $001E  ; Layer 2 Y position
+    dw $09C2, $00EE  ; Health
+    dw $09CA, $0009  ; Supers
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $003B  ; Samus X
+    dw $D8C0, $0174  ; Doors
+    dw #$FFFF
+
+preset_kpdr21_wrecked_ship_pancakes_and_wavers:
+    dw #preset_kpdr21_wrecked_ship_wrecked_ship_shaft
+    dw $078D, $A1E0  ; DDB
+    dw $079B, $93FE  ; MDB
+    dw $07F3, $000C  ; Music Bank
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $E000  ; Screen subpixel X position
+    dw $0911, $0200  ; Screen X position in pixels
+    dw $0913, $F800  ; Screen subpixel Y position
+    dw $0915, $01FC  ; Screen Y position in pixels
+    dw $0917, $0100  ; Layer 2 X position
+    dw $09C2, $0102  ; Health
+    dw $09CA, $0009  ; Supers
+    dw $0AF6, $02C2  ; Samus X
+    dw $0AFA, $028B  ; Samus Y
+    dw $D8C0, $0174  ; Doors
+    dw #$FFFF
+
+preset_kpdr22_upper_norfair_moat_missile_bubble_mountain_revisit:
+    dw #preset_kpdr22_upper_norfair_hjb_missile_bubble_mountain_revisit
+    dw $09C6, $0009  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw #$FFFF
+
+preset_kpdr22_upper_norfair_hjb_missile_frog_speedway:
+    dw #preset_kpdr23_upper_norfair_frog_speedway
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09A8, $1001  ; Collected Beams
+    dw $09C6, $000D  ; Missiles
+    dw $D8B6, $0008  ; Doors
+    dw #$FFFF
+
+preset_phantoonfirst_upper_norfair_hijump_etank:
+    dw #preset_phantoonfirst_upper_norfair_business_center_postelev
+    dw $090F, $FFFF  ; Screen subpixel X position
+    dw $0915, $051B  ; Screen Y position in pixels
+    dw $0919, $03D4  ; Layer 2 Y position
+    dw $09CA, $0007  ; Supers
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0049  ; Samus X
+    dw $0AFA, $058B  ; Samus Y
+    dw $D8B8, $2000  ; Doors
+    dw #$FFFF
+
+preset_phantoonfirst_upper_norfair_leaving_hijump:
+    dw #preset_phantoonfirst_kraid_before_ridley_leaving_kraid_etank
+    dw $078D, $9426  ; DDB
+    dw $079B, $A9E5  ; MDB
+    dw $07F3, $0015  ; Music Bank
+    dw $07F5, $0003  ; Music Track
+    dw $090F, $E000  ; Screen subpixel X position
+    dw $0913, $7800  ; Screen subpixel Y position
+    dw $09A2, $1124  ; Equipped Items
+    dw $09A4, $1124  ; Collected Items
+    dw $09C2, $012B  ; Health
+    dw $09C4, $012B  ; Max health
+    dw $09C6, $000C  ; Missiles
+    dw $09CA, $0008  ; Supers
+    dw $09D2, $0003  ; Currently selected item
+    dw $0AF6, $0047  ; Samus X
+    dw $0AFA, $00BB  ; Samus Y
+    dw $0F86, $0000  ; Safeties energy adjustment
+    dw $11C8, $0000  ; Safeties refill
+    dw $D876, $0120  ; Items
+    dw $D8B8, $2000  ; Doors
+    dw #$FFFF
+
+preset_prkd19_upper_norfair_lava_spark:
+    dw #preset_prkd19_upper_norfair_kronic_boost
+    dw $078D, $965A  ; DDB
+    dw $079B, $AE74  ; MDB
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $C000  ; Screen subpixel Y position
+    dw $0917, $0100  ; Layer 2 X position
+    dw $09CE, $0005  ; Pbs
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $01EB  ; Samus X
+    dw $D8BA, $01F1  ; Doors
+    dw #$FFFF
+
+preset_kpdr_wrecked_ship_shaft_to_supers:
+    dw #preset_kpdr_wrecked_ship_leaving_phantoon
+    dw $078D, $A2C4  ; DDB
+    dw $079B, $CC6F  ; MDB
+    dw $07F5, $0006  ; Music Track
+    dw $090F, $8000  ; Screen subpixel X position
+    dw $0911, $0233  ; Screen X position in pixels
+    dw $0913, $E000  ; Screen subpixel Y position
+    dw $0917, $01A6  ; Layer 2 X position
+    dw $0AF6, $02CE  ; Samus X
+    dw $0AF8, $1000  ; Samus subpixel X
+    dw $0AFA, $006B  ; Samus Y
+    dw #$FFFF
+
+preset_kpdr_wrecked_ship_wrecked_ship_shaft:
+    dw #preset_kpdr_wrecked_ship_leaving_phantoon
+    dw $078D, $A210  ; DDB
+    dw $079B, $CDA8  ; MDB
+    dw $07F5, $0006  ; Music Track
+    dw $090F, $3000  ; Screen subpixel X position
+    dw $0913, $0400  ; Screen subpixel Y position
+    dw $0917, $0000  ; Layer 2 X position
+    dw $09CA, $000A  ; Supers
+    dw $09CC, $000A  ; Max supers
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $00CC  ; Samus X
+    dw $0AF8, $8000  ; Samus subpixel X
+    dw $0AFA, $008B  ; Samus Y
+    dw $D880, $0020  ; Items
+    dw $D8C0, $0074  ; Doors
+    dw #$FFFF
+
+preset_pkrd_upper_norfair_double_chamber_revisit:
+    dw #preset_pkrd_upper_norfair_leaving_speedbooster
+    dw $078D, $961E  ; DDB
+    dw $079B, $ADDE  ; MDB
+    dw $090F, $8000  ; Screen subpixel X position
+    dw $0913, $C800  ; Screen subpixel Y position
+    dw $09A6, $1007  ; Equipped Beams
+    dw $09A8, $1007  ; Collected Beams
+    dw $09C2, $0181  ; Health
+    dw $09C6, $0014  ; Missiles
+    dw $09C8, $0014  ; Max missiles
+    dw $0AF6, $0054  ; Samus X
+    dw $D822, $0020  ; Events
+    dw $D878, $001C  ; Items
+    dw $D8BA, $00F1  ; Doors
+    dw #$FFFF
+
+preset_kpdr25_wrecked_ship_shaft_to_supers:
+    dw #preset_kpdr23_wrecked_ship_shaft_to_supers
+    dw $09A6, $1007  ; Equipped Beams
+    dw $09A8, $1007  ; Collected Beams
+    dw $09C6, $0011  ; Missiles
+    dw $09C8, $0019  ; Max missiles
+    dw $09CA, $0003  ; Supers
+    dw $D870, $0190  ; Items
+    dw $D876, $01A5  ; Items
+    dw $D8B8, $2EEF  ; Doors
+    dw #$FFFF
+
+preset_kpdr25_wrecked_ship_wrecked_ship_shaft:
+    dw #preset_kpdr23_wrecked_ship_wrecked_ship_shaft
     dw $09A6, $1007  ; Equipped Beams
     dw $09A8, $1007  ; Collected Beams
     dw $09C6, $0011  ; Missiles
@@ -26110,28 +26066,36 @@ preset_kpdr25_wrecked_ship_attic:
     dw $D8B8, $2EEF  ; Doors
     dw #$FFFF
 
-preset_kpdr25_wrecked_ship_upper_west_ocean:
-    dw #preset_kpdr23_wrecked_ship_upper_west_ocean
-    dw $09A6, $1007  ; Equipped Beams
-    dw $09A8, $1007  ; Collected Beams
-    dw $09C6, $0011  ; Missiles
-    dw $09C8, $0019  ; Max missiles
-    dw $09CA, $0007  ; Supers
-    dw $D870, $0190  ; Items
-    dw $D876, $01A5  ; Items
-    dw $D8B8, $2EEF  ; Doors
+preset_gtclassic_maridia_maridia_tube_revisit:
+    dw #preset_gtclassic_lower_norfair_business_center_final
+    dw $078D, $92EE  ; DDB
+    dw $079B, $A6A1  ; MDB
+    dw $07F3, $0012  ; Music Bank
+    dw $07F5, $0003  ; Music Track
+    dw $090F, $1000  ; Screen subpixel X position
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0A1C, $009B  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
+    dw $0AF6, $0080  ; Samus X
+    dw $0AFA, $0086  ; Samus Y
     dw #$FFFF
 
-preset_kpdr25_wrecked_ship_pancakes_and_wavers:
-    dw #preset_kpdr23_wrecked_ship_pancakes_and_wavers
-    dw $09A6, $1007  ; Equipped Beams
-    dw $09A8, $1007  ; Collected Beams
-    dw $09C6, $0011  ; Missiles
-    dw $09C8, $0019  ; Max missiles
-    dw $09CA, $0007  ; Supers
-    dw $D870, $0190  ; Items
-    dw $D876, $01A5  ; Items
-    dw $D8B8, $2EEF  ; Doors
+preset_gtclassic_maridia_fish_tank:
+    dw #preset_gtclassic_lower_norfair_frog_speedway
+    dw $078D, $A330  ; DDB
+    dw $079B, $CFC9  ; MDB
+    dw $07F3, $001B  ; Music Bank
+    dw $07F5, $0006  ; Music Track
+    dw $090F, $D000  ; Screen subpixel X position
+    dw $0911, $00FA  ; Screen X position in pixels
+    dw $0913, $CC00  ; Screen subpixel Y position
+    dw $0915, $05F1  ; Screen Y position in pixels
+    dw $0917, $00BB  ; Layer 2 X position
+    dw $0919, $0474  ; Layer 2 Y position
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $0168  ; Samus X
+    dw $0AFA, $068B  ; Samus Y
     dw #$FFFF
 
 preset_100early_wrecked_ship_attic:
@@ -26294,184 +26258,6 @@ preset_hundo_brinstar_cleanup_dachora_room_revisit:
     dw $D870, $A7BF  ; Items
     dw #$FFFF
 
-preset_kpdr20_wrecked_ship_bowling_spark:
-    dw #preset_kpdr21_wrecked_ship_bowling_spark
-    dw $09C6, $000A  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_gtclassic_lower_norfair_business_center_final:
-    dw #preset_gtclassic_lower_norfair_frog_speedway
-    dw $078D, $97DA  ; DDB
-    dw $079B, $B167  ; MDB
-    dw $090F, $8000  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $0C00  ; Screen subpixel Y position
-    dw $0917, $0000  ; Layer 2 X position
-    dw $0AF6, $0039  ; Samus X
-    dw #$FFFF
-
-preset_kpdr23_wrecked_ship_bowling_spark:
-    dw #preset_kpdr21_wrecked_ship_bowling_spark
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
-    dw $09C2, $0166  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0D04  ; Items
-    dw $D8B6, $B008  ; Doors
-    dw $D8B8, $26EF  ; Doors
-    dw #$FFFF
-
-preset_kpdr20_wrecked_ship_leaving_gravity:
-    dw #preset_kpdr21_wrecked_ship_leaving_gravity
-    dw $09C6, $000A  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr23_wrecked_ship_leaving_gravity:
-    dw #preset_kpdr21_wrecked_ship_leaving_gravity
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
-    dw $09C2, $010D  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0D04  ; Items
-    dw $D8B6, $B008  ; Doors
-    dw $D8B8, $26EF  ; Doors
-    dw #$FFFF
-
-preset_kpdr21_wrecked_ship_moat_ball:
-    dw #preset_kpdr21_wrecked_ship_leaving_gravity
-    dw $078D, $A300  ; DDB
-    dw $079B, $93FE  ; MDB
-    dw $07F3, $000C  ; Music Bank
-    dw $07F5, $0005  ; Music Track
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $0911, $00E4  ; Screen X position in pixels
-    dw $0913, $2800  ; Screen subpixel Y position
-    dw $0915, $0445  ; Screen Y position in pixels
-    dw $0917, $0072  ; Layer 2 X position
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $0184  ; Samus X
-    dw $0AFA, $04D0  ; Samus Y
-    dw #$FFFF
-
-preset_kpdr22_upper_norfair_moat_missile_heading_to_red_brinstar:
-    dw #preset_kpdr22_upper_norfair_hjb_missile_heading_to_red_brinstar
-    dw $09C6, $0009  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw #$FFFF
-
-preset_kpdr22_red_brinstar_hjb_missile_alpha_spark:
-    dw #preset_kpdr23_red_brinstar_alpha_spark
-    dw $09A6, $1001  ; Equipped Beams
-    dw $09A8, $1001  ; Collected Beams
-    dw $D8B6, $0008  ; Doors
-    dw #$FFFF
-
-preset_phantoonfirst_upper_norfair_single_chamber:
-    dw #preset_prkd19_upper_norfair_single_chamber
-    dw $0F78, $003F  ; Safeties enabled
-    dw $0FC0, $002D  ; Safeties reserves adjustment
-    dw $1086, $0001  ; Safeties power bombs adjustment
-    dw $1088, $0001  ; Safeties power bombs adjustment
-    dw #$FFFF
-
-preset_prkd19_upper_norfair_double_chamber:
-preset_prkd20_upper_norfair_double_chamber:
-    dw #preset_prkd19_upper_norfair_single_chamber
-    dw $078D, $9582  ; DDB
-    dw $079B, $AD5E  ; MDB
-    dw $090F, $9000  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
-    dw $0915, $0124  ; Screen Y position in pixels
-    dw $0917, $0000  ; Layer 2 X position
-    dw $0919, $00DB  ; Layer 2 Y position
-    dw $09C2, $011D  ; Health
-    dw $09CA, $0009  ; Supers
-    dw $0AF6, $00B5  ; Samus X
-    dw $D8BA, $0071  ; Doors
-    dw #$FFFF
-
-preset_prkd19_upper_norfair_double_chamber_revisit:
-    dw #preset_prkd19_upper_norfair_leaving_speedbooster
-    dw $078D, $961E  ; DDB
-    dw $079B, $ADDE  ; MDB
-    dw $090F, $2001  ; Screen subpixel X position
-    dw $0913, $3800  ; Screen subpixel Y position
-    dw $09A6, $1007  ; Equipped Beams
-    dw $09A8, $1007  ; Collected Beams
-    dw $09C2, $011D  ; Health
-    dw $09C6, $000F  ; Missiles
-    dw $09CA, $0008  ; Supers
-    dw $0AF6, $004F  ; Samus X
-    dw $D822, $0020  ; Events
-    dw $D878, $0014  ; Items
-    dw $D8BA, $00F1  ; Doors
-    dw #$FFFF
-
-preset_pkrd_upper_norfair_rising_tide:
-    dw #preset_pkrd_upper_norfair_cathedral
-    dw $078D, $92B2  ; DDB
-    dw $079B, $A788  ; MDB
-    dw $090F, $867F  ; Screen subpixel X position
-    dw $0913, $2800  ; Screen subpixel Y position
-    dw $0915, $0100  ; Screen Y position in pixels
-    dw $0919, $0100  ; Layer 2 Y position
-    dw $09CA, $0006  ; Supers
-    dw $0AF6, $02B5  ; Samus X
-    dw $0AFA, $018B  ; Samus Y
-    dw $D8B8, $2EEF  ; Doors
-    dw #$FFFF
-
-preset_pkrd_upper_norfair_bubble_mountain:
-    dw #preset_pkrd_upper_norfair_cathedral
-    dw $078D, $929A  ; DDB
-    dw $079B, $AFA3  ; MDB
-    dw $090F, $1000  ; Screen subpixel X position
-    dw $0911, $0400  ; Screen X position in pixels
-    dw $0913, $B400  ; Screen subpixel Y position
-    dw $0917, $0300  ; Layer 2 X position
-    dw $09C2, $0185  ; Health
-    dw $09CA, $0006  ; Supers
-    dw $0AF6, $04AD  ; Samus X
-    dw $D8B8, $2EEF  ; Doors
-    dw #$FFFF
-
-preset_kpdr_wrecked_ship_bowling_spark:
-    dw #preset_kpdr_wrecked_ship_pancakes_and_wavers
-    dw $078D, $89E2  ; DDB
-    dw $079B, $9461  ; MDB
-    dw $090F, $6800  ; Screen subpixel X position
-    dw $0911, $0100  ; Screen X position in pixels
-    dw $0913, $2400  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0917, $00C0  ; Layer 2 X position
-    dw $0AF6, $016E  ; Samus X
-    dw $0AFA, $009D  ; Samus Y
-    dw #$FFFF
-
-preset_kpdr_wrecked_ship_leaving_gravity:
-    dw #preset_kpdr_wrecked_ship_wrecked_ship_shaft
-    dw $078D, $A1A4  ; DDB
-    dw $079B, $CE40  ; MDB
-    dw $07F5, $0003  ; Music Track
-    dw $0913, $E400  ; Screen subpixel Y position
-    dw $0917, $0001  ; Layer 2 X position
-    dw $09A2, $3125  ; Equipped Items
-    dw $09A4, $3125  ; Collected Items
-    dw $09C2, $006D  ; Health
-    dw $09CA, $0009  ; Supers
-    dw $0A1C, $009B  ; Samus position/state
-    dw $0A1E, $0000  ; More position/state
-    dw $0AF6, $0078  ; Samus X
-    dw $0AFA, $0088  ; Samus Y
-    dw $D880, $00A0  ; Items
-    dw $D8C0, $0174  ; Doors
-    dw #$FFFF
-
 preset_gtmax_upper_norfair_and_kraid_bat_cave_revisit:
     dw #preset_gtmax_upper_norfair_and_kraid_bat_cave
     dw $078D, $97B6  ; DDB
@@ -26487,6 +26273,374 @@ preset_gtmax_upper_norfair_and_kraid_bat_cave_revisit:
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $0025  ; Samus X
     dw $D878, $FECA  ; Items
+    dw #$FFFF
+
+preset_prkd20_upper_norfair_lava_spark:
+    dw #preset_prkd19_upper_norfair_lava_spark
+    dw $09C6, $0014  ; Missiles
+    dw $09C8, $0014  ; Max missiles
+    dw $D878, $001C  ; Items
+    dw #$FFFF
+
+preset_kpdr20_wrecked_ship_attic:
+    dw #preset_kpdr21_wrecked_ship_attic
+    dw $09C6, $000A  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr23_wrecked_ship_attic:
+    dw #preset_kpdr21_wrecked_ship_attic
+    dw $09A6, $1005  ; Equipped Beams
+    dw $09A8, $1005  ; Collected Beams
+    dw $09C2, $014B  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $D874, $0D04  ; Items
+    dw $D8B6, $B008  ; Doors
+    dw $D8B8, $26EF  ; Doors
+    dw #$FFFF
+
+preset_kpdr20_wrecked_ship_upper_west_ocean:
+    dw #preset_kpdr21_wrecked_ship_upper_west_ocean
+    dw $09C6, $000A  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr23_wrecked_ship_upper_west_ocean:
+    dw #preset_kpdr21_wrecked_ship_upper_west_ocean
+    dw $09A6, $1005  ; Equipped Beams
+    dw $09A8, $1005  ; Collected Beams
+    dw $09C2, $0152  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $D874, $0D04  ; Items
+    dw $D8B6, $B008  ; Doors
+    dw $D8B8, $26EF  ; Doors
+    dw #$FFFF
+
+preset_kpdr20_wrecked_ship_pancakes_and_wavers:
+    dw #preset_kpdr21_wrecked_ship_pancakes_and_wavers
+    dw $09C6, $000A  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr23_wrecked_ship_pancakes_and_wavers:
+    dw #preset_kpdr21_wrecked_ship_pancakes_and_wavers
+    dw $09A6, $1005  ; Equipped Beams
+    dw $09A8, $1005  ; Collected Beams
+    dw $09C2, $0166  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $D874, $0D04  ; Items
+    dw $D8B6, $B008  ; Doors
+    dw $D8B8, $26EF  ; Doors
+    dw #$FFFF
+
+preset_kpdr21_wrecked_ship_bowling_spark:
+    dw #preset_kpdr21_wrecked_ship_pancakes_and_wavers
+    dw $078D, $89E2  ; DDB
+    dw $079B, $9461  ; MDB
+    dw $090F, $6800  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $2400  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $00C0  ; Layer 2 X position
+    dw $0AF6, $016E  ; Samus X
+    dw $0AFA, $009D  ; Samus Y
+    dw #$FFFF
+
+preset_kpdr21_wrecked_ship_leaving_gravity:
+    dw #preset_kpdr21_wrecked_ship_wrecked_ship_shaft
+    dw $078D, $A1A4  ; DDB
+    dw $079B, $CE40  ; MDB
+    dw $07F5, $0003  ; Music Track
+    dw $0913, $E400  ; Screen subpixel Y position
+    dw $0917, $0001  ; Layer 2 X position
+    dw $09A2, $3125  ; Equipped Items
+    dw $09A4, $3125  ; Collected Items
+    dw $09C2, $00A9  ; Health
+    dw $09CA, $0009  ; Supers
+    dw $0A1C, $009B  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
+    dw $0AF6, $0078  ; Samus X
+    dw $0AFA, $0088  ; Samus Y
+    dw $D880, $00A0  ; Items
+    dw $D8C0, $0174  ; Doors
+    dw #$FFFF
+
+preset_kpdr22_upper_norfair_moat_missile_frog_speedway:
+    dw #preset_kpdr22_upper_norfair_hjb_missile_frog_speedway
+    dw $09C6, $0009  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw #$FFFF
+
+preset_kpdr22_upper_norfair_hjb_missile_heading_to_red_brinstar:
+    dw #preset_kpdr23_upper_norfair_heading_to_red_brinstar
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09A8, $1001  ; Collected Beams
+    dw $09C6, $000D  ; Missiles
+    dw $D8B6, $0008  ; Doors
+    dw #$FFFF
+
+preset_phantoonfirst_upper_norfair_business_center_revisit:
+    dw #preset_phantoonfirst_upper_norfair_leaving_hijump
+    dw $078D, $93F6  ; DDB
+    dw $079B, $AA41  ; MDB
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $7FFF  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $27FF  ; Screen subpixel Y position
+    dw $0917, $00C0  ; Layer 2 X position
+    dw $09C2, $0126  ; Health
+    dw $09CE, $0001  ; Pbs
+    dw $09D2, $0000  ; Currently selected item
+    dw $0AF6, $01BC  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw $0F78, $003F  ; Safeties enabled
+    dw $D8BA, $0001  ; Doors
+    dw #$FFFF
+
+preset_phantoonfirst_upper_norfair_ice_beam_gates:
+    dw #preset_prkd19_upper_norfair_ice_beam_gates
+    dw $0F78, $003F  ; Safeties enabled
+    dw $0FC0, $002D  ; Safeties reserves adjustment
+    dw $1006, $0001  ; Safeties missiles adjustment
+    dw $1046, $0001  ; Safeties supers adjustment
+    dw $1086, $0001  ; Safeties power bombs adjustment
+    dw $1088, $0002  ; Safeties power bombs adjustment
+    dw #$FFFF
+
+preset_phantoonfirst_upper_norfair_ice_maze_up:
+    dw #preset_prkd19_upper_norfair_ice_maze_up
+    dw $0F78, $003F  ; Safeties enabled
+    dw $0FC0, $002D  ; Safeties reserves adjustment
+    dw $1006, $0001  ; Safeties missiles adjustment
+    dw $1046, $0001  ; Safeties supers adjustment
+    dw $1086, $0001  ; Safeties power bombs adjustment
+    dw $1088, $0002  ; Safeties power bombs adjustment
+    dw #$FFFF
+
+preset_phantoonfirst_upper_norfair_ice_maze_down:
+    dw #preset_prkd19_upper_norfair_ice_maze_down
+    dw $0F78, $003F  ; Safeties enabled
+    dw $0FC0, $002D  ; Safeties reserves adjustment
+    dw $1006, $0001  ; Safeties missiles adjustment
+    dw $1046, $0001  ; Safeties supers adjustment
+    dw $1086, $0001  ; Safeties power bombs adjustment
+    dw $1088, $0002  ; Safeties power bombs adjustment
+    dw #$FFFF
+
+preset_phantoonfirst_upper_norfair_ice_escape:
+    dw #preset_prkd19_upper_norfair_ice_escape
+    dw $0F78, $003F  ; Safeties enabled
+    dw $0FC0, $002D  ; Safeties reserves adjustment
+    dw $1006, $0001  ; Safeties missiles adjustment
+    dw $1046, $0001  ; Safeties supers adjustment
+    dw $1086, $0001  ; Safeties power bombs adjustment
+    dw $1088, $0002  ; Safeties power bombs adjustment
+    dw #$FFFF
+
+preset_phantoonfirst_upper_norfair_precathedral:
+    dw #preset_prkd19_upper_norfair_precathedral
+    dw $0F78, $003F  ; Safeties enabled
+    dw $0FC0, $002D  ; Safeties reserves adjustment
+    dw $1006, $0001  ; Safeties missiles adjustment
+    dw $1046, $0001  ; Safeties supers adjustment
+    dw $1086, $0001  ; Safeties power bombs adjustment
+    dw $1088, $0002  ; Safeties power bombs adjustment
+    dw #$FFFF
+
+preset_phantoonfirst_upper_norfair_cathedral:
+    dw #preset_prkd19_upper_norfair_cathedral
+    dw $0F78, $003F  ; Safeties enabled
+    dw $0FC0, $002D  ; Safeties reserves adjustment
+    dw $1006, $0001  ; Safeties missiles adjustment
+    dw $1046, $0001  ; Safeties supers adjustment
+    dw $1086, $0001  ; Safeties power bombs adjustment
+    dw $1088, $0001  ; Safeties power bombs adjustment
+    dw #$FFFF
+
+preset_phantoonfirst_upper_norfair_rising_tide:
+    dw #preset_prkd19_upper_norfair_rising_tide
+    dw $0F78, $003F  ; Safeties enabled
+    dw $0FC0, $002D  ; Safeties reserves adjustment
+    dw $1006, $0001  ; Safeties missiles adjustment
+    dw $1046, $0001  ; Safeties supers adjustment
+    dw $1086, $0001  ; Safeties power bombs adjustment
+    dw $1088, $0001  ; Safeties power bombs adjustment
+    dw #$FFFF
+
+preset_phantoonfirst_upper_norfair_bubble_mountain:
+    dw #preset_prkd19_upper_norfair_bubble_mountain
+    dw $0F78, $003F  ; Safeties enabled
+    dw $0FC0, $002D  ; Safeties reserves adjustment
+    dw $1006, $0001  ; Safeties missiles adjustment
+    dw $1046, $0001  ; Safeties supers adjustment
+    dw $1086, $0001  ; Safeties power bombs adjustment
+    dw $1088, $0001  ; Safeties power bombs adjustment
+    dw #$FFFF
+
+preset_phantoonfirst_upper_norfair_bat_cave:
+    dw #preset_prkd19_upper_norfair_bat_cave
+    dw $0F78, $003F  ; Safeties enabled
+    dw $0FC0, $002D  ; Safeties reserves adjustment
+    dw $1006, $0001  ; Safeties missiles adjustment
+    dw $1046, $0001  ; Safeties supers adjustment
+    dw $1086, $0001  ; Safeties power bombs adjustment
+    dw $1088, $0001  ; Safeties power bombs adjustment
+    dw #$FFFF
+
+preset_phantoonfirst_upper_norfair_leaving_speedbooster:
+    dw #preset_prkd19_upper_norfair_leaving_speedbooster
+    dw $0F78, $003F  ; Safeties enabled
+    dw $0FC0, $002D  ; Safeties reserves adjustment
+    dw $1006, $0001  ; Safeties missiles adjustment
+    dw $1046, $0001  ; Safeties supers adjustment
+    dw $1086, $0001  ; Safeties power bombs adjustment
+    dw $1088, $0001  ; Safeties power bombs adjustment
+    dw #$FFFF
+
+preset_phantoonfirst_upper_norfair_single_chamber:
+    dw #preset_prkd19_upper_norfair_single_chamber
+    dw $0F78, $003F  ; Safeties enabled
+    dw $0FC0, $002D  ; Safeties reserves adjustment
+    dw $1086, $0001  ; Safeties power bombs adjustment
+    dw $1088, $0001  ; Safeties power bombs adjustment
+    dw #$FFFF
+
+preset_phantoonfirst_upper_norfair_double_chamber:
+    dw #preset_prkd19_upper_norfair_double_chamber
+    dw $0F78, $003F  ; Safeties enabled
+    dw $0FC0, $002D  ; Safeties reserves adjustment
+    dw $1086, $0001  ; Safeties power bombs adjustment
+    dw $1088, $0001  ; Safeties power bombs adjustment
+    dw #$FFFF
+
+preset_phantoonfirst_upper_norfair_double_chamber_revisit:
+    dw #preset_prkd19_upper_norfair_double_chamber_revisit
+    dw $0F78, $007F  ; Safeties enabled
+    dw $0FC0, $002D  ; Safeties reserves adjustment
+    dw $1086, $0001  ; Safeties power bombs adjustment
+    dw $1088, $0001  ; Safeties power bombs adjustment
+    dw #$FFFF
+
+preset_phantoonfirst_upper_norfair_single_chamber_revisit:
+    dw #preset_prkd19_upper_norfair_single_chamber_revisit
+    dw $0F78, $007F  ; Safeties enabled
+    dw $0FC0, $002D  ; Safeties reserves adjustment
+    dw $1086, $0001  ; Safeties power bombs adjustment
+    dw $1088, $0001  ; Safeties power bombs adjustment
+    dw #$FFFF
+
+preset_phantoonfirst_upper_norfair_volcano_room:
+    dw #preset_prkd19_upper_norfair_volcano_room
+    dw $0F78, $007F  ; Safeties enabled
+    dw $0FC0, $002D  ; Safeties reserves adjustment
+    dw $1086, $0001  ; Safeties power bombs adjustment
+    dw $1088, $0001  ; Safeties power bombs adjustment
+    dw #$FFFF
+
+preset_phantoonfirst_upper_norfair_kronic_boost:
+    dw #preset_prkd19_upper_norfair_kronic_boost
+    dw $0F78, $007F  ; Safeties enabled
+    dw $0FC0, $002D  ; Safeties reserves adjustment
+    dw $1086, $0001  ; Safeties power bombs adjustment
+    dw $1088, $0001  ; Safeties power bombs adjustment
+    dw #$FFFF
+
+preset_prkd19_lower_norfair_ln_main_hall:
+    dw #preset_prkd19_upper_norfair_lava_spark
+    dw $078D, $96F6  ; DDB
+    dw $079B, $B236  ; MDB
+    dw $07F3, $0018  ; Music Bank
+    dw $090F, $1000  ; Screen subpixel X position
+    dw $0911, $0400  ; Screen X position in pixels
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0917, $0300  ; Layer 2 X position
+    dw $0919, $0301  ; Layer 2 Y position
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09C2, $00B4  ; Health
+    dw $09D2, $0003  ; Currently selected item
+    dw $0A1C, $009B  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
+    dw $0AF6, $0480  ; Samus X
+    dw $0AF8, $D000  ; Samus subpixel X
+    dw $0AFA, $0288  ; Samus Y
+    dw #$FFFF
+
+preset_pkrd_upper_norfair_single_chamber_revisit:
+    dw #preset_pkrd_upper_norfair_double_chamber_revisit
+    dw $078D, $962A  ; DDB
+    dw $079B, $ADAD  ; MDB
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $013B  ; Screen X position in pixels
+    dw $0913, $0800  ; Screen subpixel Y position
+    dw $0915, $011F  ; Screen Y position in pixels
+    dw $0917, $00F0  ; Layer 2 X position
+    dw $0919, $011F  ; Layer 2 Y position
+    dw $0AF6, $01DB  ; Samus X
+    dw $0AFA, $01BB  ; Samus Y
+    dw #$FFFF
+
+preset_pkrd_upper_norfair_volcano_room:
+    dw #preset_pkrd_upper_norfair_double_chamber_revisit
+    dw $078D, $95EE  ; DDB
+    dw $079B, $AE07  ; MDB
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $7200  ; Screen subpixel X position
+    dw $0911, $0300  ; Screen X position in pixels
+    dw $0913, $0400  ; Screen subpixel Y position
+    dw $0917, $0240  ; Layer 2 X position
+    dw $09C2, $0172  ; Health
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $03AF  ; Samus X
+    dw #$FFFF
+
+preset_pkrd_upper_norfair_kronic_boost:
+    dw #preset_pkrd_upper_norfair_double_chamber_revisit
+    dw $078D, $9642  ; DDB
+    dw $079B, $AE32  ; MDB
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $1C01  ; Screen subpixel X position
+    dw $0913, $E400  ; Screen subpixel Y position
+    dw $0915, $0200  ; Screen Y position in pixels
+    dw $0919, $0200  ; Layer 2 Y position
+    dw $09C2, $016E  ; Health
+    dw $0AF6, $0030  ; Samus X
+    dw $0AFA, $028B  ; Samus Y
+    dw #$FFFF
+
+preset_gtclassic_maridia_mt_everest:
+    dw #preset_gtclassic_maridia_fish_tank
+    dw $078D, $A3F0  ; DDB
+    dw $079B, $D0B9  ; MDB
+    dw $090F, $C000  ; Screen subpixel X position
+    dw $0911, $0101  ; Screen X position in pixels
+    dw $0913, $0C00  ; Screen subpixel Y position
+    dw $0915, $031F  ; Screen Y position in pixels
+    dw $0917, $00C0  ; Layer 2 X position
+    dw $0919, $0257  ; Layer 2 Y position
+    dw $0A1C, $009B  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
+    dw $0AF6, $0181  ; Samus X
+    dw $0AFA, $03B8  ; Samus Y
+    dw #$FFFF
+
+preset_gtclassic_maridia_crab_shaft:
+    dw #preset_gtclassic_maridia_fish_tank
+    dw $078D, $A3F0  ; DDB
+    dw $079B, $D0B9  ; MDB
+    dw $090F, $0800  ; Screen subpixel X position
+    dw $0911, $0500  ; Screen X position in pixels
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $03C0  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09C2, $01EF  ; Health
+    dw $0AF6, $05C7  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 
 preset_100early_wrecked_ship_sky_missiles:
@@ -26672,254 +26826,6 @@ preset_hundo_brinstar_cleanup_mission_impossible:
     dw $D8B4, $0346  ; Doors
     dw #$FFFF
 
-preset_gtclassic_maridia_maridia_tube_revisit:
-    dw #preset_gtclassic_lower_norfair_business_center_final
-    dw $078D, $92EE  ; DDB
-    dw $079B, $A6A1  ; MDB
-    dw $07F3, $0012  ; Music Bank
-    dw $07F5, $0003  ; Music Track
-    dw $090F, $1000  ; Screen subpixel X position
-    dw $0913, $0000  ; Screen subpixel Y position
-    dw $0A1C, $009B  ; Samus position/state
-    dw $0A1E, $0000  ; More position/state
-    dw $0AF6, $0080  ; Samus X
-    dw $0AFA, $0086  ; Samus Y
-    dw #$FFFF
-
-preset_gtclassic_maridia_fish_tank:
-    dw #preset_gtclassic_lower_norfair_frog_speedway
-    dw $078D, $A330  ; DDB
-    dw $079B, $CFC9  ; MDB
-    dw $07F3, $001B  ; Music Bank
-    dw $07F5, $0006  ; Music Track
-    dw $090F, $D000  ; Screen subpixel X position
-    dw $0911, $00FA  ; Screen X position in pixels
-    dw $0913, $CC00  ; Screen subpixel Y position
-    dw $0915, $05F1  ; Screen Y position in pixels
-    dw $0917, $00BB  ; Layer 2 X position
-    dw $0919, $0474  ; Layer 2 Y position
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $0168  ; Samus X
-    dw $0AFA, $068B  ; Samus Y
-    dw #$FFFF
-
-preset_pkrd_upper_norfair_bat_cave:
-    dw #preset_pkrd_upper_norfair_bubble_mountain
-    dw $078D, $973E  ; DDB
-    dw $079B, $ACB3  ; MDB
-    dw $0911, $0100  ; Screen X position in pixels
-    dw $0913, $0000  ; Screen subpixel Y position
-    dw $0917, $00C0  ; Layer 2 X position
-    dw $09D2, $0001  ; Currently selected item
-    dw $0AF6, $01BC  ; Samus X
-    dw $D8BA, $0011  ; Doors
-    dw #$FFFF
-
-preset_pkrd_upper_norfair_leaving_speedbooster:
-    dw #preset_pkrd_upper_norfair_ice_maze_down
-    dw $078D, $95B2  ; DDB
-    dw $079B, $AD1B  ; MDB
-    dw $0913, $EC00  ; Screen subpixel Y position
-    dw $0917, $0000  ; Layer 2 X position
-    dw $09A2, $3125  ; Equipped Items
-    dw $09A4, $3125  ; Collected Items
-    dw $09C2, $018F  ; Health
-    dw $09CA, $0007  ; Supers
-    dw $0AF6, $0041  ; Samus X
-    dw $D878, $0004  ; Items
-    dw $D8B8, $2EEF  ; Doors
-    dw $D8BA, $0031  ; Doors
-    dw #$FFFF
-
-preset_pkrd_upper_norfair_single_chamber:
-    dw #preset_prkd19_upper_norfair_single_chamber
-    dw $090F, $A000  ; Screen subpixel X position
-    dw $09A2, $3125  ; Equipped Items
-    dw $09A4, $3125  ; Collected Items
-    dw $09C2, $018D  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $09CA, $0009  ; Supers
-    dw $09CE, $0004  ; Pbs
-    dw $0AF6, $01B1  ; Samus X
-    dw $D828, $0104  ; Bosses
-    dw $D874, $0D04  ; Items
-    dw $D876, $0125  ; Items
-    dw $D8B8, $2EEF  ; Doors
-    dw #$FFFF
-
-preset_kpdr25_wrecked_ship_bowling_spark:
-    dw #preset_kpdr23_wrecked_ship_bowling_spark
-    dw $09A6, $1007  ; Equipped Beams
-    dw $09A8, $1007  ; Collected Beams
-    dw $09C6, $0011  ; Missiles
-    dw $09C8, $0019  ; Max missiles
-    dw $09CA, $0007  ; Supers
-    dw $D870, $0190  ; Items
-    dw $D876, $01A5  ; Items
-    dw $D8B8, $2EEF  ; Doors
-    dw #$FFFF
-
-preset_kpdr25_wrecked_ship_leaving_gravity:
-    dw #preset_kpdr23_wrecked_ship_leaving_gravity
-    dw $09A6, $1007  ; Equipped Beams
-    dw $09A8, $1007  ; Collected Beams
-    dw $09C6, $0011  ; Missiles
-    dw $09C8, $0019  ; Max missiles
-    dw $09CA, $0007  ; Supers
-    dw $D870, $0190  ; Items
-    dw $D876, $01A5  ; Items
-    dw $D8B8, $2EEF  ; Doors
-    dw #$FFFF
-
-preset_prkd20_upper_norfair_double_chamber_revisit:
-    dw #preset_prkd19_upper_norfair_double_chamber_revisit
-    dw $09C6, $0014  ; Missiles
-    dw $09C8, $0014  ; Max missiles
-    dw $D878, $001C  ; Items
-    dw #$FFFF
-
-preset_kpdr20_wrecked_ship_moat_ball:
-    dw #preset_kpdr21_wrecked_ship_moat_ball
-    dw $09C6, $000A  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr23_wrecked_ship_moat_ball:
-    dw #preset_kpdr21_wrecked_ship_moat_ball
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
-    dw $09C2, $010D  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0D04  ; Items
-    dw $D8B6, $B008  ; Doors
-    dw $D8B8, $26EF  ; Doors
-    dw #$FFFF
-
-preset_kpdr21_wrecked_ship_crateria_kihunters_return:
-    dw #preset_kpdr21_wrecked_ship_moat_ball
-    dw $078D, $89CA  ; DDB
-    dw $079B, $95FF  ; MDB
-    dw $090F, $8400  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $0000  ; Screen subpixel Y position
-    dw $0915, $0007  ; Screen Y position in pixels
-    dw $0917, $0000  ; Layer 2 X position
-    dw $0919, $0005  ; Layer 2 Y position
-    dw $0AF6, $003B  ; Samus X
-    dw $0AFA, $0097  ; Samus Y
-    dw #$FFFF
-
-preset_kpdr21_red_brinstar_revisit_red_brinstar_elevator:
-    dw #preset_kpdr21_wrecked_ship_leaving_gravity
-    dw $078D, $8A42  ; DDB
-    dw $079B, $962A  ; MDB
-    dw $07F3, $000C  ; Music Bank
-    dw $090F, $7000  ; Screen subpixel X position
-    dw $0913, $5800  ; Screen subpixel Y position
-    dw $0917, $0000  ; Layer 2 X position
-    dw $09C2, $00BD  ; Health
-    dw $09C6, $000A  ; Missiles
-    dw $09CE, $0003  ; Pbs
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $0080  ; Samus X
-    dw $0AFA, $00A8  ; Samus Y
-    dw #$FFFF
-
-preset_kpdr22_red_brinstar_moat_missile_alpha_spark:
-    dw #preset_kpdr22_red_brinstar_hjb_missile_alpha_spark
-    dw $09C6, $000B  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw #$FFFF
-
-preset_kpdr22_red_brinstar_hjb_missile_reverse_skree_boost:
-    dw #preset_kpdr23_red_brinstar_reverse_skree_boost
-    dw $09A6, $1001  ; Equipped Beams
-    dw $09A8, $1001  ; Collected Beams
-    dw $D8B6, $0008  ; Doors
-    dw #$FFFF
-
-preset_phantoonfirst_upper_norfair_double_chamber:
-    dw #preset_prkd19_upper_norfair_double_chamber
-    dw $0F78, $003F  ; Safeties enabled
-    dw $0FC0, $002D  ; Safeties reserves adjustment
-    dw $1086, $0001  ; Safeties power bombs adjustment
-    dw $1088, $0001  ; Safeties power bombs adjustment
-    dw #$FFFF
-
-preset_phantoonfirst_upper_norfair_double_chamber_revisit:
-    dw #preset_prkd19_upper_norfair_double_chamber_revisit
-    dw $0F78, $007F  ; Safeties enabled
-    dw $0FC0, $002D  ; Safeties reserves adjustment
-    dw $1086, $0001  ; Safeties power bombs adjustment
-    dw $1088, $0001  ; Safeties power bombs adjustment
-    dw #$FFFF
-
-preset_prkd19_upper_norfair_single_chamber_revisit:
-    dw #preset_prkd19_upper_norfair_double_chamber_revisit
-    dw $078D, $962A  ; DDB
-    dw $079B, $ADAD  ; MDB
-    dw $07F5, $0005  ; Music Track
-    dw $090F, $C000  ; Screen subpixel X position
-    dw $0911, $0140  ; Screen X position in pixels
-    dw $0913, $2400  ; Screen subpixel Y position
-    dw $0915, $011F  ; Screen Y position in pixels
-    dw $0917, $00F0  ; Layer 2 X position
-    dw $0919, $011F  ; Layer 2 Y position
-    dw $0AF6, $01DB  ; Samus X
-    dw $0AFA, $01BB  ; Samus Y
-    dw #$FFFF
-
-preset_prkd19_upper_norfair_volcano_room:
-    dw #preset_prkd19_upper_norfair_double_chamber_revisit
-    dw $078D, $95EE  ; DDB
-    dw $079B, $AE07  ; MDB
-    dw $07F5, $0005  ; Music Track
-    dw $090F, $9E80  ; Screen subpixel X position
-    dw $0911, $0300  ; Screen X position in pixels
-    dw $0913, $6400  ; Screen subpixel Y position
-    dw $0917, $0240  ; Layer 2 X position
-    dw $09C2, $010E  ; Health
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $03AE  ; Samus X
-    dw #$FFFF
-
-preset_prkd19_upper_norfair_kronic_boost:
-    dw #preset_prkd19_upper_norfair_double_chamber_revisit
-    dw $078D, $9642  ; DDB
-    dw $079B, $AE32  ; MDB
-    dw $07F5, $0005  ; Music Track
-    dw $090F, $9E00  ; Screen subpixel X position
-    dw $0913, $1400  ; Screen subpixel Y position
-    dw $0915, $0200  ; Screen Y position in pixels
-    dw $0919, $0200  ; Layer 2 Y position
-    dw $09C2, $010A  ; Health
-    dw $0A1C, $008A  ; Samus position/state
-    dw $0A1E, $1504  ; More position/state
-    dw $0AF6, $0025  ; Samus X
-    dw $0AFA, $028B  ; Samus Y
-    dw #$FFFF
-
-preset_kpdr_wrecked_ship_moat_ball:
-    dw #preset_kpdr_wrecked_ship_leaving_gravity
-    dw $078D, $A300  ; DDB
-    dw $079B, $93FE  ; MDB
-    dw $07F3, $000C  ; Music Bank
-    dw $07F5, $0005  ; Music Track
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $0911, $00E4  ; Screen X position in pixels
-    dw $0913, $2800  ; Screen subpixel Y position
-    dw $0915, $0445  ; Screen Y position in pixels
-    dw $0917, $0072  ; Layer 2 X position
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $0184  ; Samus X
-    dw $0AFA, $04D0  ; Samus Y
-    dw #$FFFF
-
 preset_gtmax_upper_norfair_and_kraid_bubble_mountain_revisit:
     dw #preset_gtmax_upper_norfair_and_kraid_bat_cave_revisit
     dw $078D, $95A6  ; DDB
@@ -26950,6 +26856,148 @@ preset_gtmax_upper_norfair_and_kraid_leaving_norfair_reserve:
     dw $D876, $E021  ; Items
     dw $D878, $FECA  ; Items
     dw $D8BA, $DF59  ; Doors
+    dw #$FFFF
+
+preset_kpdr25_wrecked_ship_attic:
+    dw #preset_kpdr23_wrecked_ship_attic
+    dw $09A6, $1007  ; Equipped Beams
+    dw $09A8, $1007  ; Collected Beams
+    dw $09C6, $0011  ; Missiles
+    dw $09C8, $0019  ; Max missiles
+    dw $09CA, $0008  ; Supers
+    dw $D870, $0190  ; Items
+    dw $D876, $01A5  ; Items
+    dw $D8B8, $2EEF  ; Doors
+    dw #$FFFF
+
+preset_kpdr25_wrecked_ship_upper_west_ocean:
+    dw #preset_kpdr23_wrecked_ship_upper_west_ocean
+    dw $09A6, $1007  ; Equipped Beams
+    dw $09A8, $1007  ; Collected Beams
+    dw $09C6, $0011  ; Missiles
+    dw $09C8, $0019  ; Max missiles
+    dw $09CA, $0007  ; Supers
+    dw $D870, $0190  ; Items
+    dw $D876, $01A5  ; Items
+    dw $D8B8, $2EEF  ; Doors
+    dw #$FFFF
+
+preset_kpdr25_wrecked_ship_pancakes_and_wavers:
+    dw #preset_kpdr23_wrecked_ship_pancakes_and_wavers
+    dw $09A6, $1007  ; Equipped Beams
+    dw $09A8, $1007  ; Collected Beams
+    dw $09C6, $0011  ; Missiles
+    dw $09C8, $0019  ; Max missiles
+    dw $09CA, $0007  ; Supers
+    dw $D870, $0190  ; Items
+    dw $D876, $01A5  ; Items
+    dw $D8B8, $2EEF  ; Doors
+    dw #$FFFF
+
+preset_kpdr23_wrecked_ship_bowling_spark:
+    dw #preset_kpdr21_wrecked_ship_bowling_spark
+    dw $09A6, $1005  ; Equipped Beams
+    dw $09A8, $1005  ; Collected Beams
+    dw $09C2, $0166  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $D874, $0D04  ; Items
+    dw $D8B6, $B008  ; Doors
+    dw $D8B8, $26EF  ; Doors
+    dw #$FFFF
+
+preset_kpdr23_wrecked_ship_leaving_gravity:
+    dw #preset_kpdr21_wrecked_ship_leaving_gravity
+    dw $09A6, $1005  ; Equipped Beams
+    dw $09A8, $1005  ; Collected Beams
+    dw $09C2, $010D  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $D874, $0D04  ; Items
+    dw $D8B6, $B008  ; Doors
+    dw $D8B8, $26EF  ; Doors
+    dw #$FFFF
+
+preset_kpdr22_upper_norfair_moat_missile_heading_to_red_brinstar:
+    dw #preset_kpdr22_upper_norfair_hjb_missile_heading_to_red_brinstar
+    dw $09C6, $0009  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw #$FFFF
+
+preset_kpdr22_red_brinstar_hjb_missile_alpha_spark:
+    dw #preset_kpdr23_red_brinstar_alpha_spark
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09A8, $1001  ; Collected Beams
+    dw $D8B6, $0008  ; Doors
+    dw #$FFFF
+
+preset_prkd19_lower_norfair_nox_ridley_ln_main_hall:
+    dw #preset_prkd19_lower_norfair_ln_main_hall
+    dw $09A6, $1007  ; Equipped Beams
+    dw $0AF8, $FFFF  ; Samus subpixel X
+    dw #$FFFF
+
+preset_prkd20_lower_norfair_ln_main_hall:
+    dw #preset_prkd19_lower_norfair_ln_main_hall
+    dw $09C6, $0014  ; Missiles
+    dw $09C8, $0014  ; Max missiles
+    dw $0AF8, $FFFF  ; Samus subpixel X
+    dw $D878, $001C  ; Items
+    dw #$FFFF
+
+preset_prkd19_lower_norfair_prepillars:
+    dw #preset_prkd19_lower_norfair_ln_main_hall
+    dw $090F, $3000  ; Screen subpixel X position
+    dw $0911, $0700  ; Screen X position in pixels
+    dw $0913, $9400  ; Screen subpixel Y position
+    dw $0917, $0540  ; Layer 2 X position
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $079E  ; Samus X
+    dw $0AFA, $028B  ; Samus Y
+    dw #$FFFF
+
+preset_pkrd_upper_norfair_lava_spark:
+    dw #preset_pkrd_upper_norfair_kronic_boost
+    dw $078D, $965A  ; DDB
+    dw $079B, $AE74  ; MDB
+    dw $090F, $E000  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $3800  ; Screen subpixel Y position
+    dw $0917, $0100  ; Layer 2 X position
+    dw $09C2, $0175  ; Health
+    dw $09C6, $0012  ; Missiles
+    dw $09CE, $0005  ; Pbs
+    dw $0AF6, $01EB  ; Samus X
+    dw $D8BA, $01F1  ; Doors
+    dw #$FFFF
+
+preset_gtclassic_maridia_aqueduct:
+    dw #preset_gtclassic_maridia_crab_shaft
+    dw $078D, $A468  ; DDB
+    dw $079B, $D1A3  ; MDB
+    dw $090F, $F001  ; Screen subpixel X position
+    dw $0911, $0008  ; Screen X position in pixels
+    dw $0913, $5400  ; Screen subpixel Y position
+    dw $0915, $0300  ; Screen Y position in pixels
+    dw $0917, $0008  ; Layer 2 X position
+    dw $0919, $0240  ; Layer 2 Y position
+    dw $09D2, $0002  ; Currently selected item
+    dw $0AF6, $007C  ; Samus X
+    dw $0AFA, $03AB  ; Samus Y
+    dw #$FFFF
+
+preset_gtclassic_maridia_botwoon_hallway:
+    dw #preset_gtclassic_lower_norfair_business_center_final
+    dw $078D, $A4C8  ; DDB
+    dw $079B, $D5A7  ; MDB
+    dw $07F3, $001B  ; Music Bank
+    dw $090F, $9000  ; Screen subpixel X position
+    dw $0913, $8C00  ; Screen subpixel Y position
+    dw $09C2, $01EF  ; Health
+    dw $09CA, $0013  ; Supers
+    dw $09CE, $000D  ; Pbs
+    dw $0AF6, $0092  ; Samus X
+    dw $0AFA, $006B  ; Samus Y
+    dw $D8C0, $8000  ; Doors
     dw #$FFFF
 
 preset_100early_wrecked_ship_bowling_alley:
@@ -27121,72 +27169,18 @@ preset_hundo_brinstar_cleanup_pink_brinstar_etank:
     dw $D8B4, $8346  ; Doors
     dw #$FFFF
 
-preset_gtclassic_maridia_mt_everest:
-    dw #preset_gtclassic_maridia_fish_tank
-    dw $078D, $A3F0  ; DDB
-    dw $079B, $D0B9  ; MDB
-    dw $090F, $C000  ; Screen subpixel X position
-    dw $0911, $0101  ; Screen X position in pixels
-    dw $0913, $0C00  ; Screen subpixel Y position
-    dw $0915, $031F  ; Screen Y position in pixels
-    dw $0917, $00C0  ; Layer 2 X position
-    dw $0919, $0257  ; Layer 2 Y position
-    dw $0A1C, $009B  ; Samus position/state
-    dw $0A1E, $0000  ; More position/state
-    dw $0AF6, $0181  ; Samus X
-    dw $0AFA, $03B8  ; Samus Y
+preset_gtmax_upper_norfair_and_kraid_bubble_mountain_final:
+    dw #preset_gtmax_upper_norfair_and_kraid_leaving_norfair_reserve
+    dw $078D, $952E  ; DDB
+    dw $079B, $AC83  ; MDB
+    dw $090F, $1000  ; Screen subpixel X position
+    dw $0913, $6800  ; Screen subpixel Y position
+    dw $09C2, $02AD  ; Health
+    dw $0AF6, $01C3  ; Samus X
     dw #$FFFF
 
-preset_gtclassic_maridia_crab_shaft:
-    dw #preset_gtclassic_maridia_fish_tank
-    dw $078D, $A3F0  ; DDB
-    dw $079B, $D0B9  ; MDB
-    dw $090F, $0800  ; Screen subpixel X position
-    dw $0911, $0500  ; Screen X position in pixels
-    dw $0913, $0000  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0917, $03C0  ; Layer 2 X position
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $09C2, $01EF  ; Health
-    dw $0AF6, $05C7  ; Samus X
-    dw $0AFA, $008B  ; Samus Y
-    dw #$FFFF
-
-preset_pkrd_upper_norfair_double_chamber:
-    dw #preset_pkrd_upper_norfair_single_chamber
-    dw $078D, $9582  ; DDB
-    dw $079B, $AD5E  ; MDB
-    dw $090F, $8000  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $E000  ; Screen subpixel Y position
-    dw $0915, $0125  ; Screen Y position in pixels
-    dw $0917, $0000  ; Layer 2 X position
-    dw $0919, $00DB  ; Layer 2 Y position
-    dw $09C2, $0181  ; Health
-    dw $09CA, $0008  ; Supers
-    dw $0AF6, $00BF  ; Samus X
-    dw $D8BA, $0071  ; Doors
-    dw #$FFFF
-
-preset_pkrd_upper_norfair_double_chamber_revisit:
-    dw #preset_prkd20_upper_norfair_double_chamber_revisit
-    dw $090F, $8000  ; Screen subpixel X position
-    dw $0913, $C800  ; Screen subpixel Y position
-    dw $09A2, $3125  ; Equipped Items
-    dw $09A4, $3125  ; Collected Items
-    dw $09C2, $0181  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $09CA, $0007  ; Supers
-    dw $09CE, $0004  ; Pbs
-    dw $0AF6, $0054  ; Samus X
-    dw $D828, $0104  ; Bosses
-    dw $D874, $0D04  ; Items
-    dw $D876, $0125  ; Items
-    dw $D8B8, $2EEF  ; Doors
-    dw #$FFFF
-
-preset_kpdr25_wrecked_ship_moat_ball:
-    dw #preset_kpdr23_wrecked_ship_moat_ball
+preset_kpdr25_wrecked_ship_bowling_spark:
+    dw #preset_kpdr23_wrecked_ship_bowling_spark
     dw $09A6, $1007  ; Equipped Beams
     dw $09A8, $1007  ; Collected Beams
     dw $09C6, $0011  ; Missiles
@@ -27197,86 +27191,132 @@ preset_kpdr25_wrecked_ship_moat_ball:
     dw $D8B8, $2EEF  ; Doors
     dw #$FFFF
 
-preset_prkd20_upper_norfair_single_chamber_revisit:
-    dw #preset_prkd19_upper_norfair_single_chamber_revisit
-    dw $09C6, $0014  ; Missiles
-    dw $09C8, $0014  ; Max missiles
-    dw $D878, $001C  ; Items
+preset_kpdr25_wrecked_ship_leaving_gravity:
+    dw #preset_kpdr23_wrecked_ship_leaving_gravity
+    dw $09A6, $1007  ; Equipped Beams
+    dw $09A8, $1007  ; Collected Beams
+    dw $09C6, $0011  ; Missiles
+    dw $09C8, $0019  ; Max missiles
+    dw $09CA, $0007  ; Supers
+    dw $D870, $0190  ; Items
+    dw $D876, $01A5  ; Items
+    dw $D8B8, $2EEF  ; Doors
     dw #$FFFF
 
-preset_prkd20_upper_norfair_volcano_room:
-    dw #preset_prkd19_upper_norfair_volcano_room
-    dw $09C6, $0014  ; Missiles
-    dw $09C8, $0014  ; Max missiles
-    dw $D878, $001C  ; Items
-    dw #$FFFF
-
-preset_prkd20_upper_norfair_kronic_boost:
-    dw #preset_prkd19_upper_norfair_kronic_boost
-    dw $09C6, $0014  ; Missiles
-    dw $09C8, $0014  ; Max missiles
-    dw $D878, $001C  ; Items
-    dw #$FFFF
-
-preset_kpdr20_wrecked_ship_crateria_kihunters_return:
-    dw #preset_kpdr21_wrecked_ship_crateria_kihunters_return
-    dw $09C6, $000A  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr23_wrecked_ship_crateria_kihunters_return:
-    dw #preset_kpdr21_wrecked_ship_crateria_kihunters_return
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
-    dw $09C2, $010D  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0D04  ; Items
-    dw $D8B6, $B008  ; Doors
-    dw $D8B8, $26EF  ; Doors
-    dw #$FFFF
-
-preset_kpdr20_red_brinstar_revisit_red_brinstar_elevator:
-    dw #preset_kpdr21_red_brinstar_revisit_red_brinstar_elevator
-    dw $09C6, $0008  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr23_red_brinstar_revisit_red_brinstar_elevator:
-    dw #preset_kpdr21_red_brinstar_revisit_red_brinstar_elevator
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
-    dw $09C2, $0121  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0D04  ; Items
-    dw $D8B6, $B008  ; Doors
-    dw $D8B8, $26EF  ; Doors
-    dw #$FFFF
-
-preset_prkd19_upper_norfair_lava_spark:
-    dw #preset_prkd19_upper_norfair_kronic_boost
-    dw $078D, $965A  ; DDB
-    dw $079B, $AE74  ; MDB
+preset_kpdr23_wrecked_ship_moat_ball:
+    dw #preset_kpdr23_wrecked_ship_leaving_gravity
+    dw $078D, $A300  ; DDB
+    dw $079B, $93FE  ; MDB
+    dw $07F3, $000C  ; Music Bank
+    dw $07F5, $0005  ; Music Track
     dw $090F, $0000  ; Screen subpixel X position
-    dw $0911, $0100  ; Screen X position in pixels
-    dw $0913, $C000  ; Screen subpixel Y position
-    dw $0917, $0100  ; Layer 2 X position
-    dw $09CE, $0005  ; Pbs
+    dw $0911, $00E4  ; Screen X position in pixels
+    dw $0913, $2800  ; Screen subpixel Y position
+    dw $0915, $0445  ; Screen Y position in pixels
+    dw $0917, $0072  ; Layer 2 X position
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $01EB  ; Samus X
-    dw $D8BA, $01F1  ; Doors
+    dw $0AF6, $0184  ; Samus X
+    dw $0AFA, $04D0  ; Samus Y
     dw #$FFFF
 
-preset_gtmax_upper_norfair_and_kraid_bubble_mountain_final:
-    dw #preset_gtmax_upper_norfair_and_kraid_leaving_norfair_reserve
-    dw $078D, $952E  ; DDB
-    dw $079B, $AC83  ; MDB
-    dw $090F, $1000  ; Screen subpixel X position
-    dw $0913, $6800  ; Screen subpixel Y position
-    dw $09C2, $02AD  ; Health
-    dw $0AF6, $01C3  ; Samus X
+preset_kpdr22_red_brinstar_moat_missile_alpha_spark:
+    dw #preset_kpdr22_red_brinstar_hjb_missile_alpha_spark
+    dw $09C6, $000B  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw #$FFFF
+
+preset_kpdr22_red_brinstar_hjb_missile_reverse_skree_boost:
+    dw #preset_kpdr23_red_brinstar_reverse_skree_boost
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09A8, $1001  ; Collected Beams
+    dw $D8B6, $0008  ; Doors
+    dw #$FFFF
+
+preset_prkd20_lower_norfair_nox_ridley_ln_main_hall:
+    dw #preset_prkd20_lower_norfair_ln_main_hall
+    dw $09A6, $1007  ; Equipped Beams
+    dw #$FFFF
+
+preset_prkd19_lower_norfair_nox_ridley_prepillars:
+    dw #preset_prkd19_lower_norfair_prepillars
+    dw $09A6, $1007  ; Equipped Beams
+    dw $0AF8, $FFFF  ; Samus subpixel X
+    dw #$FFFF
+
+preset_prkd20_lower_norfair_prepillars:
+    dw #preset_prkd19_lower_norfair_prepillars
+    dw $09C6, $0014  ; Missiles
+    dw $09C8, $0014  ; Max missiles
+    dw $0AF8, $FFFF  ; Samus subpixel X
+    dw $D878, $001C  ; Items
+    dw #$FFFF
+
+preset_prkd19_lower_norfair_worst_room_in_the_game:
+    dw #preset_prkd19_lower_norfair_prepillars
+    dw $078D, $9912  ; DDB
+    dw $079B, $B457  ; MDB
+    dw $090F, $277F  ; Screen subpixel X position
+    dw $0911, $0300  ; Screen X position in pixels
+    dw $0913, $E800  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $0240  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09C2, $0071  ; Health
+    dw $0AF6, $03DB  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw #$FFFF
+
+preset_gtclassic_maridia_botwoon:
+    dw #preset_gtclassic_maridia_botwoon_hallway
+    dw $078D, $A72C  ; DDB
+    dw $079B, $D617  ; MDB
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $02FF  ; Screen X position in pixels
+    dw $0913, $2800  ; Screen subpixel Y position
+    dw $0915, $0003  ; Screen Y position in pixels
+    dw $0917, $023F  ; Layer 2 X position
+    dw $0919, $0003  ; Layer 2 Y position
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $039F  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw #$FFFF
+
+preset_gtclassic_maridia_halfie_setup:
+    dw #preset_gtclassic_maridia_mt_everest
+    dw $078D, $A918  ; DDB
+    dw $079B, $D7E4  ; MDB
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $A000  ; Screen subpixel X position
+    dw $0911, $0006  ; Screen X position in pixels
+    dw $0913, $8000  ; Screen subpixel Y position
+    dw $0915, $001F  ; Screen Y position in pixels
+    dw $0917, $0004  ; Layer 2 X position
+    dw $0919, $001F  ; Layer 2 Y position
+    dw $09C2, $0253  ; Health
+    dw $09CE, $000F  ; Pbs
+    dw $0AF6, $00A0  ; Samus X
+    dw $0AFA, $0098  ; Samus Y
+    dw $D82C, $0002  ; Bosses
+    dw $D8C0, $8000  ; Doors
+    dw #$FFFF
+
+preset_gtclassic_maridia_draygon:
+    dw #preset_gtclassic_maridia_botwoon_hallway
+    dw $078D, $A7F8  ; DDB
+    dw $079B, $D78F  ; MDB
+    dw $090F, $6000  ; Screen subpixel X position
+    dw $0913, $0400  ; Screen subpixel Y position
+    dw $0915, $0200  ; Screen Y position in pixels
+    dw $0919, $0180  ; Layer 2 Y position
+    dw $09C2, $01D4  ; Health
+    dw $09CA, $0012  ; Supers
+    dw $09CE, $000F  ; Pbs
+    dw $0AF6, $0040  ; Samus X
+    dw $0AFA, $028B  ; Samus Y
+    dw $D82C, $0002  ; Bosses
+    dw $D8C2, $0C00  ; Doors
     dw #$FFFF
 
 preset_100early_brinstar_cleanup_landing_site:
@@ -27492,79 +27532,63 @@ preset_hundo_brinstar_cleanup_waterway_etank:
     dw $D8B6, $E8F8  ; Doors
     dw #$FFFF
 
-preset_gtclassic_maridia_aqueduct:
-    dw #preset_gtclassic_maridia_crab_shaft
-    dw $078D, $A468  ; DDB
-    dw $079B, $D1A3  ; MDB
-    dw $090F, $F001  ; Screen subpixel X position
-    dw $0911, $0008  ; Screen X position in pixels
-    dw $0913, $5400  ; Screen subpixel Y position
-    dw $0915, $0300  ; Screen Y position in pixels
-    dw $0917, $0008  ; Layer 2 X position
-    dw $0919, $0240  ; Layer 2 Y position
-    dw $09D2, $0002  ; Currently selected item
-    dw $0AF6, $007C  ; Samus X
-    dw $0AFA, $03AB  ; Samus Y
+preset_gtmax_upper_norfair_and_kraid_cathedral_revisit:
+    dw #preset_gtmax_upper_norfair_and_kraid_bubble_mountain_final
+    dw $078D, $955E  ; DDB
+    dw $079B, $AFA3  ; MDB
+    dw $090F, $E000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $7400  ; Screen subpixel Y position
+    dw $0917, $0000  ; Layer 2 X position
+    dw $09C6, $0090  ; Missiles
+    dw $09C8, $0091  ; Max missiles
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0049  ; Samus X
+    dw $D878, $FECB  ; Items
     dw #$FFFF
 
-preset_gtclassic_maridia_botwoon_hallway:
-    dw #preset_gtclassic_lower_norfair_business_center_final
-    dw $078D, $A4C8  ; DDB
-    dw $079B, $D5A7  ; MDB
-    dw $07F3, $001B  ; Music Bank
-    dw $090F, $9000  ; Screen subpixel X position
-    dw $0913, $8C00  ; Screen subpixel Y position
-    dw $09C2, $01EF  ; Health
-    dw $09CA, $0013  ; Supers
-    dw $09CE, $000D  ; Pbs
-    dw $0AF6, $0092  ; Samus X
-    dw $0AFA, $006B  ; Samus Y
-    dw $D8C0, $8000  ; Doors
+preset_kpdr25_wrecked_ship_moat_ball:
+    dw #preset_kpdr23_wrecked_ship_moat_ball
+    dw $09A6, $1007  ; Equipped Beams
+    dw $09A8, $1007  ; Collected Beams
+    dw $09C6, $0011  ; Missiles
+    dw $09C8, $0019  ; Max missiles
+    dw $09CA, $0007  ; Supers
+    dw $D870, $0190  ; Items
+    dw $D876, $01A5  ; Items
+    dw $D8B8, $2EEF  ; Doors
     dw #$FFFF
 
-preset_pkrd_upper_norfair_single_chamber_revisit:
-    dw #preset_pkrd_upper_norfair_double_chamber_revisit
-    dw $078D, $962A  ; DDB
-    dw $079B, $ADAD  ; MDB
-    dw $07F5, $0005  ; Music Track
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $0911, $013B  ; Screen X position in pixels
-    dw $0913, $0800  ; Screen subpixel Y position
-    dw $0915, $011F  ; Screen Y position in pixels
-    dw $0917, $00F0  ; Layer 2 X position
-    dw $0919, $011F  ; Layer 2 Y position
-    dw $0AF6, $01DB  ; Samus X
-    dw $0AFA, $01BB  ; Samus Y
+preset_kpdr23_wrecked_ship_crateria_kihunters_return:
+    dw #preset_kpdr23_wrecked_ship_moat_ball
+    dw $078D, $89CA  ; DDB
+    dw $079B, $95FF  ; MDB
+    dw $090F, $8400  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $0007  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $0005  ; Layer 2 Y position
+    dw $0AF6, $003B  ; Samus X
+    dw $0AFA, $0097  ; Samus Y
     dw #$FFFF
 
-preset_pkrd_upper_norfair_volcano_room:
-    dw #preset_pkrd_upper_norfair_double_chamber_revisit
-    dw $078D, $95EE  ; DDB
-    dw $079B, $AE07  ; MDB
-    dw $07F5, $0005  ; Music Track
-    dw $090F, $7200  ; Screen subpixel X position
-    dw $0911, $0300  ; Screen X position in pixels
-    dw $0913, $0400  ; Screen subpixel Y position
-    dw $0917, $0240  ; Layer 2 X position
-    dw $09C2, $0172  ; Health
+preset_kpdr23_red_brinstar_revisit_red_brinstar_elevator:
+    dw #preset_kpdr23_wrecked_ship_leaving_gravity
+    dw $078D, $8A42  ; DDB
+    dw $079B, $962A  ; MDB
+    dw $07F3, $000C  ; Music Bank
+    dw $090F, $7000  ; Screen subpixel X position
+    dw $0913, $5800  ; Screen subpixel Y position
+    dw $0917, $0000  ; Layer 2 X position
+    dw $09C2, $0121  ; Health
+    dw $09C6, $000A  ; Missiles
+    dw $09CE, $0003  ; Pbs
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $03AF  ; Samus X
-    dw #$FFFF
-
-preset_kpdr21_red_brinstar_revisit_caterpillars_revisit:
-    dw #preset_kpdr21_red_brinstar_revisit_red_brinstar_elevator
-    dw $078D, $8B02  ; DDB
-    dw $079B, $A322  ; MDB
-    dw $07F3, $0012  ; Music Bank
-    dw $07F5, $0005  ; Music Track
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $0913, $0000  ; Screen subpixel Y position
-    dw $0915, $0238  ; Screen Y position in pixels
-    dw $0919, $0238  ; Layer 2 Y position
-    dw $0A1C, $009B  ; Samus position/state
-    dw $0A1E, $0000  ; More position/state
-    dw $0AFA, $02AB  ; Samus Y
+    dw $0AF6, $0080  ; Samus X
+    dw $0AFA, $00A8  ; Samus Y
     dw #$FFFF
 
 preset_kpdr22_red_brinstar_moat_missile_reverse_skree_boost:
@@ -27580,141 +27604,70 @@ preset_kpdr22_red_brinstar_hjb_missile_red_tower_climb:
     dw $D8B6, $0008  ; Doors
     dw #$FFFF
 
-preset_phantoonfirst_upper_norfair_single_chamber_revisit:
-    dw #preset_prkd19_upper_norfair_single_chamber_revisit
-    dw $0F78, $007F  ; Safeties enabled
-    dw $0FC0, $002D  ; Safeties reserves adjustment
-    dw $1086, $0001  ; Safeties power bombs adjustment
-    dw $1088, $0001  ; Safeties power bombs adjustment
-    dw #$FFFF
-
-preset_phantoonfirst_upper_norfair_volcano_room:
-    dw #preset_prkd19_upper_norfair_volcano_room
-    dw $0F78, $007F  ; Safeties enabled
-    dw $0FC0, $002D  ; Safeties reserves adjustment
-    dw $1086, $0001  ; Safeties power bombs adjustment
-    dw $1088, $0001  ; Safeties power bombs adjustment
-    dw #$FFFF
-
-preset_phantoonfirst_upper_norfair_kronic_boost:
-    dw #preset_prkd19_upper_norfair_kronic_boost
-    dw $0F78, $007F  ; Safeties enabled
-    dw $0FC0, $002D  ; Safeties reserves adjustment
-    dw $1086, $0001  ; Safeties power bombs adjustment
-    dw $1088, $0001  ; Safeties power bombs adjustment
-    dw #$FFFF
-
-preset_pkrd_upper_norfair_kronic_boost:
-    dw #preset_pkrd_upper_norfair_double_chamber_revisit
-    dw $078D, $9642  ; DDB
-    dw $079B, $AE32  ; MDB
-    dw $07F5, $0005  ; Music Track
-    dw $090F, $1C01  ; Screen subpixel X position
-    dw $0913, $E400  ; Screen subpixel Y position
-    dw $0915, $0200  ; Screen Y position in pixels
-    dw $0919, $0200  ; Layer 2 Y position
-    dw $09C2, $016E  ; Health
-    dw $0AF6, $0030  ; Samus X
-    dw $0AFA, $028B  ; Samus Y
-    dw #$FFFF
-
-preset_kpdr_wrecked_ship_crateria_kihunters_return:
-    dw #preset_kpdr_wrecked_ship_moat_ball
-    dw $078D, $89CA  ; DDB
-    dw $079B, $95FF  ; MDB
-    dw $090F, $8400  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $0000  ; Screen subpixel Y position
-    dw $0915, $0007  ; Screen Y position in pixels
-    dw $0917, $0000  ; Layer 2 X position
-    dw $0919, $0005  ; Layer 2 Y position
-    dw $0AF6, $003B  ; Samus X
-    dw $0AFA, $0097  ; Samus Y
-    dw #$FFFF
-
-preset_kpdr_red_brinstar_revisit_red_brinstar_elevator:
-    dw #preset_kpdr_wrecked_ship_leaving_gravity
-    dw $078D, $8A42  ; DDB
-    dw $079B, $962A  ; MDB
-    dw $07F3, $000C  ; Music Bank
-    dw $090F, $7000  ; Screen subpixel X position
-    dw $0913, $5800  ; Screen subpixel Y position
-    dw $0917, $0000  ; Layer 2 X position
-    dw $09C2, $0081  ; Health
-    dw $09C6, $0008  ; Missiles
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $0080  ; Samus X
-    dw $0AFA, $00A8  ; Samus Y
-    dw $0F78, $1EFB  ; Safeties enabled
-    dw $1090, $0000  ; Safeties power bombs adjustment
-    dw #$FFFF
-
-preset_kpdr25_wrecked_ship_crateria_kihunters_return:
-    dw #preset_kpdr23_wrecked_ship_crateria_kihunters_return
-    dw $09A6, $1007  ; Equipped Beams
-    dw $09A8, $1007  ; Collected Beams
-    dw $09C6, $0011  ; Missiles
-    dw $09C8, $0019  ; Max missiles
+preset_pkrd_lower_norfair_ln_main_hall:
+    dw #preset_prkd20_lower_norfair_nox_ridley_ln_main_hall
+    dw $090F, $2000  ; Screen subpixel X position
+    dw $09A2, $3125  ; Equipped Items
+    dw $09A4, $3125  ; Collected Items
+    dw $09C2, $0120  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $09C6, $0012  ; Missiles
     dw $09CA, $0007  ; Supers
-    dw $D870, $0190  ; Items
-    dw $D876, $01A5  ; Items
+    dw $D828, $0104  ; Bosses
+    dw $D874, $0D04  ; Items
+    dw $D876, $0125  ; Items
     dw $D8B8, $2EEF  ; Doors
     dw #$FFFF
 
-preset_kpdr25_red_brinstar_revisit_red_brinstar_elevator:
-    dw #preset_kpdr23_red_brinstar_revisit_red_brinstar_elevator
+preset_prkd20_lower_norfair_nox_ridley_prepillars:
+    dw #preset_prkd20_lower_norfair_prepillars
     dw $09A6, $1007  ; Equipped Beams
-    dw $09A8, $1007  ; Collected Beams
-    dw $09C6, $000F  ; Missiles
-    dw $09C8, $0019  ; Max missiles
-    dw $09CA, $0007  ; Supers
-    dw $D870, $0190  ; Items
-    dw $D876, $01A5  ; Items
-    dw $D8B8, $2EEF  ; Doors
     dw #$FFFF
 
-preset_prkd20_upper_norfair_lava_spark:
-    dw #preset_prkd19_upper_norfair_lava_spark
+preset_prkd19_lower_norfair_nox_ridley_worst_room_in_the_game:
+    dw #preset_prkd19_lower_norfair_worst_room_in_the_game
+    dw $09A6, $1007  ; Equipped Beams
+    dw $0AF8, $FFFF  ; Samus subpixel X
+    dw #$FFFF
+
+preset_prkd20_lower_norfair_worst_room_in_the_game:
+    dw #preset_prkd19_lower_norfair_worst_room_in_the_game
     dw $09C6, $0014  ; Missiles
     dw $09C8, $0014  ; Max missiles
+    dw $0AF8, $FFFF  ; Samus subpixel X
     dw $D878, $001C  ; Items
     dw #$FFFF
 
-preset_prkd19_lower_norfair_ln_main_hall:
-    dw #preset_prkd19_upper_norfair_lava_spark
-    dw $078D, $96F6  ; DDB
-    dw $079B, $B236  ; MDB
-    dw $07F3, $0018  ; Music Bank
-    dw $090F, $1000  ; Screen subpixel X position
-    dw $0911, $0400  ; Screen X position in pixels
-    dw $0913, $0000  ; Screen subpixel Y position
-    dw $0917, $0300  ; Layer 2 X position
-    dw $0919, $0301  ; Layer 2 Y position
-    dw $09A6, $1001  ; Equipped Beams
-    dw $09C2, $00B4  ; Health
-    dw $09D2, $0003  ; Currently selected item
-    dw $0A1C, $009B  ; Samus position/state
-    dw $0A1E, $0000  ; More position/state
-    dw $0AF6, $0480  ; Samus X
-    dw $0AF8, $D000  ; Samus subpixel X
-    dw $0AFA, $0288  ; Samus Y
+preset_prkd19_lower_norfair_amphitheatre:
+    dw #preset_prkd19_lower_norfair_worst_room_in_the_game
+    dw $078D, $994E  ; DDB
+    dw $079B, $B4AD  ; MDB
+    dw $090F, $4000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $A400  ; Screen subpixel Y position
+    dw $0915, $011C  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $00D5  ; Layer 2 Y position
+    dw $09CE, $0004  ; Pbs
+    dw $09D2, $0000  ; Currently selected item
+    dw $0AF6, $00B1  ; Samus X
+    dw $0AFA, $018B  ; Samus Y
     dw #$FFFF
 
-preset_gtmax_upper_norfair_and_kraid_cathedral_revisit:
-    dw #preset_gtmax_upper_norfair_and_kraid_bubble_mountain_final
-    dw $078D, $955E  ; DDB
-    dw $079B, $AFA3  ; MDB
-    dw $090F, $E000  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $7400  ; Screen subpixel Y position
-    dw $0917, $0000  ; Layer 2 X position
-    dw $09C6, $0090  ; Missiles
-    dw $09C8, $0091  ; Max missiles
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $0049  ; Samus X
-    dw $D878, $FECB  ; Items
+preset_gtclassic_maridia_reverse_halfie_spikesuit:
+    dw #preset_gtclassic_maridia_draygon
+    dw $078D, $A96C  ; DDB
+    dw $090F, $2000  ; Screen subpixel X position
+    dw $0913, $6800  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09C2, $01CF  ; Health
+    dw $09C6, $0056  ; Missiles
+    dw $0A68, $0001  ; Flash suit
+    dw $0AF6, $003B  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw $D82C, $0003  ; Bosses
+    dw $D8C2, $4C00  ; Doors
     dw #$FFFF
 
 preset_100early_brinstar_cleanup_gauntlet_spark:
@@ -27849,123 +27802,6 @@ preset_hundo_mama_turtle_etank_big_pink_charge_escape:
     dw $D874, $0F8E  ; Items
     dw #$FFFF
 
-preset_gtclassic_maridia_botwoon:
-    dw #preset_gtclassic_maridia_botwoon_hallway
-    dw $078D, $A72C  ; DDB
-    dw $079B, $D617  ; MDB
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $0911, $02FF  ; Screen X position in pixels
-    dw $0913, $2800  ; Screen subpixel Y position
-    dw $0915, $0003  ; Screen Y position in pixels
-    dw $0917, $023F  ; Layer 2 X position
-    dw $0919, $0003  ; Layer 2 Y position
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $039F  ; Samus X
-    dw $0AFA, $008B  ; Samus Y
-    dw #$FFFF
-
-preset_gtclassic_maridia_halfie_setup:
-    dw #preset_gtclassic_maridia_mt_everest
-    dw $078D, $A918  ; DDB
-    dw $079B, $D7E4  ; MDB
-    dw $07F5, $0005  ; Music Track
-    dw $090F, $A000  ; Screen subpixel X position
-    dw $0911, $0006  ; Screen X position in pixels
-    dw $0913, $8000  ; Screen subpixel Y position
-    dw $0915, $001F  ; Screen Y position in pixels
-    dw $0917, $0004  ; Layer 2 X position
-    dw $0919, $001F  ; Layer 2 Y position
-    dw $09C2, $0253  ; Health
-    dw $09CE, $000F  ; Pbs
-    dw $0AF6, $00A0  ; Samus X
-    dw $0AFA, $0098  ; Samus Y
-    dw $D82C, $0002  ; Bosses
-    dw $D8C0, $8000  ; Doors
-    dw #$FFFF
-
-preset_gtclassic_maridia_draygon:
-    dw #preset_gtclassic_maridia_botwoon_hallway
-    dw $078D, $A7F8  ; DDB
-    dw $079B, $D78F  ; MDB
-    dw $090F, $6000  ; Screen subpixel X position
-    dw $0913, $0400  ; Screen subpixel Y position
-    dw $0915, $0200  ; Screen Y position in pixels
-    dw $0919, $0180  ; Layer 2 Y position
-    dw $09C2, $01D4  ; Health
-    dw $09CA, $0012  ; Supers
-    dw $09CE, $000F  ; Pbs
-    dw $0AF6, $0040  ; Samus X
-    dw $0AFA, $028B  ; Samus Y
-    dw $D82C, $0002  ; Bosses
-    dw $D8C2, $0C00  ; Doors
-    dw #$FFFF
-
-preset_kpdr23_red_brinstar_revisit_caterpillars_revisit:
-    dw #preset_kpdr21_red_brinstar_revisit_caterpillars_revisit
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
-    dw $09C2, $0121  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0D04  ; Items
-    dw $D8B6, $B008  ; Doors
-    dw $D8B8, $26EF  ; Doors
-    dw #$FFFF
-
-preset_kpdr22_red_brinstar_moat_missile_red_tower_climb:
-    dw #preset_kpdr22_red_brinstar_hjb_missile_red_tower_climb
-    dw $09C6, $000B  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw #$FFFF
-
-preset_kpdr22_red_brinstar_hjb_missile_hellway:
-    dw #preset_kpdr23_red_brinstar_hellway
-    dw $09A6, $1001  ; Equipped Beams
-    dw $09A8, $1001  ; Collected Beams
-    dw $D8B6, $0008  ; Doors
-    dw #$FFFF
-
-preset_pkrd_upper_norfair_lava_spark:
-    dw #preset_pkrd_upper_norfair_kronic_boost
-    dw $078D, $965A  ; DDB
-    dw $079B, $AE74  ; MDB
-    dw $090F, $E000  ; Screen subpixel X position
-    dw $0911, $0100  ; Screen X position in pixels
-    dw $0913, $3800  ; Screen subpixel Y position
-    dw $0917, $0100  ; Layer 2 X position
-    dw $09C2, $0175  ; Health
-    dw $09C6, $0012  ; Missiles
-    dw $09CE, $0005  ; Pbs
-    dw $0AF6, $01EB  ; Samus X
-    dw $D8BA, $01F1  ; Doors
-    dw #$FFFF
-
-preset_prkd19_lower_norfair_nox_ridley_ln_main_hall:
-    dw #preset_prkd19_lower_norfair_ln_main_hall
-    dw $09A6, $1007  ; Equipped Beams
-    dw $0AF8, $FFFF  ; Samus subpixel X
-    dw #$FFFF
-
-preset_prkd20_lower_norfair_ln_main_hall:
-    dw #preset_prkd19_lower_norfair_ln_main_hall
-    dw $09C6, $0014  ; Missiles
-    dw $09C8, $0014  ; Max missiles
-    dw $0AF8, $FFFF  ; Samus subpixel X
-    dw $D878, $001C  ; Items
-    dw #$FFFF
-
-preset_prkd19_lower_norfair_prepillars:
-    dw #preset_prkd19_lower_norfair_ln_main_hall
-    dw $090F, $3000  ; Screen subpixel X position
-    dw $0911, $0700  ; Screen X position in pixels
-    dw $0913, $9400  ; Screen subpixel Y position
-    dw $0917, $0540  ; Layer 2 X position
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $079E  ; Samus X
-    dw $0AFA, $028B  ; Samus Y
-    dw #$FFFF
-
 preset_gtmax_upper_norfair_and_kraid_ice_gate_room:
     dw #preset_gtmax_upper_norfair_and_kraid_cathedral_revisit
     dw $078D, $92A6  ; DDB
@@ -28003,6 +27839,140 @@ preset_gtmax_upper_norfair_and_kraid_crocomire:
     dw $D876, $E02B  ; Items
     dw $D878, $FECB  ; Items
     dw $D8B8, $6EEC  ; Doors
+    dw #$FFFF
+
+preset_pkrd_lower_norfair_prepillars:
+    dw #preset_pkrd_lower_norfair_ln_main_hall
+    dw $090F, $4000  ; Screen subpixel X position
+    dw $0911, $0700  ; Screen X position in pixels
+    dw $0913, $7400  ; Screen subpixel Y position
+    dw $0917, $0540  ; Layer 2 X position
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $07A1  ; Samus X
+    dw $0AFA, $028B  ; Samus Y
+    dw #$FFFF
+
+preset_pkrd_lower_norfair_worst_room_in_the_game:
+    dw #preset_pkrd_upper_norfair_volcano_room
+    dw $078D, $9912  ; DDB
+    dw $079B, $B457  ; MDB
+    dw $07F3, $0018  ; Music Bank
+    dw $090F, $02FF  ; Screen subpixel X position
+    dw $0913, $9800  ; Screen subpixel Y position
+    dw $09C2, $00E1  ; Health
+    dw $09C6, $0012  ; Missiles
+    dw $09CE, $0005  ; Pbs
+    dw $09D2, $0003  ; Currently selected item
+    dw $0AF6, $03DB  ; Samus X
+    dw $D8BA, $01F1  ; Doors
+    dw #$FFFF
+
+preset_pkrd_lower_norfair_amphitheatre:
+    dw #preset_pkrd_upper_norfair_kronic_boost
+    dw $078D, $994E  ; DDB
+    dw $079B, $B4AD  ; MDB
+    dw $07F3, $0018  ; Music Bank
+    dw $090F, $B000  ; Screen subpixel X position
+    dw $0913, $B800  ; Screen subpixel Y position
+    dw $0915, $011F  ; Screen Y position in pixels
+    dw $0919, $00D5  ; Layer 2 Y position
+    dw $09C2, $00E1  ; Health
+    dw $09C6, $0012  ; Missiles
+    dw $0A1C, $0009  ; Samus position/state
+    dw $0A1E, $0108  ; More position/state
+    dw $0AF6, $00B8  ; Samus X
+    dw $0AFA, $018B  ; Samus Y
+    dw $D8BA, $01F1  ; Doors
+    dw #$FFFF
+
+preset_kpdr25_wrecked_ship_crateria_kihunters_return:
+    dw #preset_kpdr23_wrecked_ship_crateria_kihunters_return
+    dw $09A6, $1007  ; Equipped Beams
+    dw $09A8, $1007  ; Collected Beams
+    dw $09C6, $0011  ; Missiles
+    dw $09C8, $0019  ; Max missiles
+    dw $09CA, $0007  ; Supers
+    dw $D870, $0190  ; Items
+    dw $D876, $01A5  ; Items
+    dw $D8B8, $2EEF  ; Doors
+    dw #$FFFF
+
+preset_kpdr25_red_brinstar_revisit_red_brinstar_elevator:
+    dw #preset_kpdr23_red_brinstar_revisit_red_brinstar_elevator
+    dw $09A6, $1007  ; Equipped Beams
+    dw $09A8, $1007  ; Collected Beams
+    dw $09C6, $000F  ; Missiles
+    dw $09C8, $0019  ; Max missiles
+    dw $09CA, $0007  ; Supers
+    dw $D870, $0190  ; Items
+    dw $D876, $01A5  ; Items
+    dw $D8B8, $2EEF  ; Doors
+    dw #$FFFF
+
+preset_kpdr23_red_brinstar_revisit_caterpillars_revisit:
+    dw #preset_kpdr23_red_brinstar_revisit_red_brinstar_elevator
+    dw $078D, $8B02  ; DDB
+    dw $079B, $A322  ; MDB
+    dw $07F3, $0012  ; Music Bank
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $0238  ; Screen Y position in pixels
+    dw $0919, $0238  ; Layer 2 Y position
+    dw $0A1C, $009B  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
+    dw $0AFA, $02AB  ; Samus Y
+    dw #$FFFF
+
+preset_kpdr22_red_brinstar_moat_missile_red_tower_climb:
+    dw #preset_kpdr22_red_brinstar_hjb_missile_red_tower_climb
+    dw $09C6, $000B  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw #$FFFF
+
+preset_kpdr22_red_brinstar_hjb_missile_hellway:
+    dw #preset_kpdr23_red_brinstar_hellway
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09A8, $1001  ; Collected Beams
+    dw $D8B6, $0008  ; Doors
+    dw #$FFFF
+
+preset_prkd20_lower_norfair_nox_ridley_worst_room_in_the_game:
+    dw #preset_prkd20_lower_norfair_worst_room_in_the_game
+    dw $09A6, $1007  ; Equipped Beams
+    dw #$FFFF
+
+preset_prkd19_lower_norfair_nox_ridley_amphitheatre:
+    dw #preset_prkd19_lower_norfair_amphitheatre
+    dw $09A6, $1007  ; Equipped Beams
+    dw $0AF8, $FFFF  ; Samus subpixel X
+    dw #$FFFF
+
+preset_prkd20_lower_norfair_amphitheatre:
+    dw #preset_prkd19_lower_norfair_amphitheatre
+    dw $09C6, $0014  ; Missiles
+    dw $09C8, $0014  ; Max missiles
+    dw $0AF8, $FFFF  ; Samus subpixel X
+    dw $D878, $001C  ; Items
+    dw #$FFFF
+
+preset_prkd19_lower_norfair_kihunter_stairs_down:
+    dw #preset_prkd19_lower_norfair_amphitheatre
+    dw $078D, $997E  ; DDB
+    dw $079B, $B4E5  ; MDB
+    dw $0911, $0270  ; Screen X position in pixels
+    dw $0913, $F000  ; Screen subpixel Y position
+    dw $0915, $004B  ; Screen Y position in pixels
+    dw $0917, $01D4  ; Layer 2 X position
+    dw $0919, $0038  ; Layer 2 Y position
+    dw $0AF6, $02D0  ; Samus X
+    dw $0AFA, $00BB  ; Samus Y
+    dw #$FFFF
+
+preset_gtclassic_maridia_whomple_jump:
+    dw #preset_gtclassic_maridia_reverse_halfie_spikesuit
+    dw $0A68, $0000  ; Flash suit
     dw #$FFFF
 
 preset_100early_brinstar_cleanup_gauntlet_etank:
@@ -28186,20 +28156,78 @@ preset_hundo_mama_turtle_etank_blockbuster:
     dw $D8B6, $E8F9  ; Doors
     dw #$FFFF
 
-preset_gtclassic_maridia_reverse_halfie_spikesuit:
-    dw #preset_gtclassic_maridia_draygon
-    dw $078D, $A96C  ; DDB
-    dw $090F, $2000  ; Screen subpixel X position
-    dw $0913, $6800  ; Screen subpixel Y position
+preset_gtmax_upper_norfair_and_kraid_leaving_crocomire:
+    dw #preset_gtmax_upper_norfair_and_kraid_crocomire
+    dw $078D, $93D2  ; DDB
+    dw $079B, $A98D  ; MDB
+    dw $07F3, $0027  ; Music Bank
+    dw $07F5, $0006  ; Music Track
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $0700  ; Screen X position in pixels
     dw $0915, $0000  ; Screen Y position in pixels
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $09C2, $01CF  ; Health
-    dw $09C6, $0056  ; Missiles
-    dw $0A68, $0001  ; Flash suit
-    dw $0AF6, $003B  ; Samus X
-    dw $0AFA, $008B  ; Samus Y
-    dw $D82C, $0003  ; Bosses
-    dw $D8C2, $4C00  ; Doors
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $0001  ; Layer 2 Y position
+    dw $09C2, $03CF  ; Health
+    dw $09C4, $03E8  ; Max health
+    dw $09C6, $009B  ; Missiles
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $07C9  ; Samus X
+    dw $0AFA, $006B  ; Samus Y
+    dw $D82A, $0007  ; Bosses
+    dw $D876, $E03B  ; Items
+    dw #$FFFF
+
+preset_pkrd_lower_norfair_kihunter_stairs_down:
+    dw #preset_pkrd_lower_norfair_amphitheatre
+    dw $078D, $997E  ; DDB
+    dw $079B, $B4E5  ; MDB
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $0275  ; Screen X position in pixels
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $0047  ; Screen Y position in pixels
+    dw $0917, $01D4  ; Layer 2 X position
+    dw $0919, $0038  ; Layer 2 Y position
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $02D5  ; Samus X
+    dw $0AFA, $00B9  ; Samus Y
+    dw #$FFFF
+
+preset_pkrd_lower_norfair_wasteland:
+    dw #preset_pkrd_lower_norfair_amphitheatre
+    dw $078D, $99A2  ; DDB
+    dw $079B, $B585  ; MDB
+    dw $090F, $3400  ; Screen subpixel X position
+    dw $0911, $0200  ; Screen X position in pixels
+    dw $0913, $F3FF  ; Screen subpixel Y position
+    dw $0915, $0416  ; Screen Y position in pixels
+    dw $0917, $0180  ; Layer 2 X position
+    dw $0919, $0310  ; Layer 2 Y position
+    dw $09C2, $00F4  ; Health
+    dw $09CE, $0002  ; Pbs
+    dw $0A1C, $001D  ; Samus position/state
+    dw $0A1E, $0408  ; More position/state
+    dw $0AF6, $024A  ; Samus X
+    dw $0AFA, $0489  ; Samus Y
+    dw $D8BA, $41F1  ; Doors
+    dw #$FFFF
+
+preset_pkrd_lower_norfair_metal_ninja_pirates:
+    dw #preset_pkrd_upper_norfair_lava_spark
+    dw $078D, $99EA  ; DDB
+    dw $079B, $B5D5  ; MDB
+    dw $07F3, $0018  ; Music Bank
+    dw $090F, $9000  ; Screen subpixel X position
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $021B  ; Screen Y position in pixels
+    dw $0917, $00C0  ; Layer 2 X position
+    dw $0919, $0195  ; Layer 2 Y position
+    dw $09C2, $00CF  ; Health
+    dw $09CA, $0006  ; Supers
+    dw $09CE, $0001  ; Pbs
+    dw $0AF6, $0167  ; Samus X
+    dw $D8BA, $C1F1  ; Doors
     dw #$FFFF
 
 preset_kpdr23_red_brinstar_revisit_hellway_revisit:
@@ -28239,60 +28267,52 @@ preset_kpdr22_red_brinstar_hjb_missile_caterpillars_down:
     dw $D8B6, $0008  ; Doors
     dw #$FFFF
 
-preset_prkd20_lower_norfair_nox_ridley_ln_main_hall:
-    dw #preset_prkd20_lower_norfair_ln_main_hall
+preset_prkd20_lower_norfair_nox_ridley_amphitheatre:
+    dw #preset_prkd20_lower_norfair_amphitheatre
     dw $09A6, $1007  ; Equipped Beams
     dw #$FFFF
 
-preset_prkd19_lower_norfair_nox_ridley_prepillars:
-    dw #preset_prkd19_lower_norfair_prepillars
+preset_prkd19_lower_norfair_nox_ridley_kihunter_stairs_down:
+    dw #preset_prkd19_lower_norfair_kihunter_stairs_down
     dw $09A6, $1007  ; Equipped Beams
     dw $0AF8, $FFFF  ; Samus subpixel X
     dw #$FFFF
 
-preset_prkd20_lower_norfair_prepillars:
-    dw #preset_prkd19_lower_norfair_prepillars
+preset_prkd19_lower_norfair_wasteland:
+    dw #preset_prkd19_lower_norfair_amphitheatre
+    dw $078D, $99A2  ; DDB
+    dw $079B, $B585  ; MDB
+    dw $090F, $A980  ; Screen subpixel X position
+    dw $0911, $0200  ; Screen X position in pixels
+    dw $0913, $F3FF  ; Screen subpixel Y position
+    dw $0915, $0416  ; Screen Y position in pixels
+    dw $0917, $0180  ; Layer 2 X position
+    dw $0919, $0310  ; Layer 2 Y position
+    dw $09C2, $0088  ; Health
+    dw $09CE, $0002  ; Pbs
+    dw $0A1C, $001D  ; Samus position/state
+    dw $0A1E, $0408  ; More position/state
+    dw $0AF6, $024C  ; Samus X
+    dw $0AFA, $0489  ; Samus Y
+    dw $D8BA, $41F1  ; Doors
+    dw #$FFFF
+
+preset_prkd20_lower_norfair_kihunter_stairs_down:
+    dw #preset_prkd19_lower_norfair_kihunter_stairs_down
     dw $09C6, $0014  ; Missiles
     dw $09C8, $0014  ; Max missiles
     dw $0AF8, $FFFF  ; Samus subpixel X
     dw $D878, $001C  ; Items
     dw #$FFFF
 
-preset_prkd19_lower_norfair_worst_room_in_the_game:
-    dw #preset_prkd19_lower_norfair_prepillars
-    dw $078D, $9912  ; DDB
-    dw $079B, $B457  ; MDB
-    dw $090F, $277F  ; Screen subpixel X position
-    dw $0911, $0300  ; Screen X position in pixels
-    dw $0913, $E800  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0917, $0240  ; Layer 2 X position
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $09C2, $0071  ; Health
-    dw $0AF6, $03DB  ; Samus X
-    dw $0AFA, $008B  ; Samus Y
-    dw #$FFFF
-
-preset_gtmax_upper_norfair_and_kraid_leaving_crocomire:
-    dw #preset_gtmax_upper_norfair_and_kraid_crocomire
-    dw $078D, $93D2  ; DDB
-    dw $079B, $A98D  ; MDB
-    dw $07F3, $0027  ; Music Bank
-    dw $07F5, $0006  ; Music Track
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $0911, $0700  ; Screen X position in pixels
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0917, $0000  ; Layer 2 X position
-    dw $0919, $0001  ; Layer 2 Y position
-    dw $09C2, $03CF  ; Health
-    dw $09C4, $03E8  ; Max health
-    dw $09C6, $009B  ; Missiles
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $07C9  ; Samus X
-    dw $0AFA, $006B  ; Samus Y
-    dw $D82A, $0007  ; Bosses
-    dw $D876, $E03B  ; Items
+preset_gtclassic_maridia_reverse_halfie_climb:
+    dw #preset_gtclassic_maridia_whomple_jump
+    dw $078D, $A834  ; DDB
+    dw $079B, $D72A  ; MDB
+    dw $090F, $4000  ; Screen subpixel X position
+    dw $0913, $6000  ; Screen subpixel Y position
+    dw $09C2, $015E  ; Health
+    dw $0AF6, $0037  ; Samus X
     dw #$FFFF
 
 preset_100early_brinstar_cleanup_green_brinstar_elevator:
@@ -28430,9 +28450,40 @@ preset_hundo_mama_turtle_etank_breaking_the_tube:
     dw $0AFA, $0188  ; Samus Y
     dw #$FFFF
 
-preset_gtclassic_maridia_whomple_jump:
-    dw #preset_gtclassic_maridia_reverse_halfie_spikesuit
-    dw $0A68, $0000  ; Flash suit
+preset_gtmax_upper_norfair_and_kraid_grapple_shaft_down:
+    dw #preset_gtmax_upper_norfair_and_kraid_leaving_crocomire
+    dw $078D, $946E  ; DDB
+    dw $079B, $AA82  ; MDB
+    dw $07F3, $0015  ; Music Bank
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $9000  ; Screen subpixel X position
+    dw $0911, $0026  ; Screen X position in pixels
+    dw $0915, $011D  ; Screen Y position in pixels
+    dw $0917, $0026  ; Layer 2 X position
+    dw $0919, $011D  ; Layer 2 Y position
+    dw $09CA, $000A  ; Supers
+    dw $09CE, $0022  ; Pbs
+    dw $09D0, $0023  ; Max pbs
+    dw $0AF6, $00A6  ; Samus X
+    dw $0AFA, $01AB  ; Samus Y
+    dw $D876, $E23B  ; Items
+    dw $D8BA, $DF5B  ; Doors
+    dw #$FFFF
+
+preset_pkrd_lower_norfair_plowerhouse:
+    dw #preset_pkrd_lower_norfair_metal_ninja_pirates
+    dw $078D, $9A1A  ; DDB
+    dw $079B, $B62B  ; MDB
+    dw $090F, $F000  ; Screen subpixel X position
+    dw $0911, $0156  ; Screen X position in pixels
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $0177  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09C2, $0181  ; Health
+    dw $09CA, $0009  ; Supers
+    dw $0AF6, $01CA  ; Samus X
+    dw $0AFA, $00BB  ; Samus Y
+    dw $D8BC, $0001  ; Doors
     dw #$FFFF
 
 preset_kpdr23_red_brinstar_revisit_red_tower_down:
@@ -28485,74 +28536,67 @@ preset_kpdr22_red_brinstar_hjb_missile_alpha_power_bombs:
     dw $09A8, $1001  ; Collected Beams
     dw #$FFFF
 
-preset_pkrd_lower_norfair_ln_main_hall:
-    dw #preset_prkd20_lower_norfair_nox_ridley_ln_main_hall
-    dw $090F, $2000  ; Screen subpixel X position
-    dw $09A2, $3125  ; Equipped Items
-    dw $09A4, $3125  ; Collected Items
-    dw $09C2, $0120  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $09C6, $0012  ; Missiles
-    dw $09CA, $0007  ; Supers
-    dw $D828, $0104  ; Bosses
-    dw $D874, $0D04  ; Items
-    dw $D876, $0125  ; Items
-    dw $D8B8, $2EEF  ; Doors
-    dw #$FFFF
-
-preset_prkd20_lower_norfair_nox_ridley_prepillars:
-    dw #preset_prkd20_lower_norfair_prepillars
-    dw $09A6, $1007  ; Equipped Beams
-    dw #$FFFF
-
-preset_prkd19_lower_norfair_nox_ridley_worst_room_in_the_game:
-    dw #preset_prkd19_lower_norfair_worst_room_in_the_game
+preset_prkd19_lower_norfair_nox_ridley_wasteland:
+    dw #preset_prkd19_lower_norfair_wasteland
     dw $09A6, $1007  ; Equipped Beams
     dw $0AF8, $FFFF  ; Samus subpixel X
     dw #$FFFF
 
-preset_prkd20_lower_norfair_worst_room_in_the_game:
-    dw #preset_prkd19_lower_norfair_worst_room_in_the_game
+preset_prkd19_lower_norfair_metal_ninja_pirates:
+    dw #preset_prkd19_upper_norfair_lava_spark
+    dw $078D, $99EA  ; DDB
+    dw $079B, $B5D5  ; MDB
+    dw $07F3, $0018  ; Music Bank
+    dw $090F, $1000  ; Screen subpixel X position
+    dw $0913, $4C00  ; Screen subpixel Y position
+    dw $0915, $021C  ; Screen Y position in pixels
+    dw $0917, $00C0  ; Layer 2 X position
+    dw $0919, $0195  ; Layer 2 Y position
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09C2, $0063  ; Health
+    dw $09CA, $0007  ; Supers
+    dw $09CE, $0001  ; Pbs
+    dw $0AF6, $0169  ; Samus X
+    dw $0AF8, $D000  ; Samus subpixel X
+    dw $D8BA, $C1F1  ; Doors
+    dw #$FFFF
+
+preset_prkd20_lower_norfair_nox_ridley_kihunter_stairs_down:
+    dw #preset_prkd20_lower_norfair_kihunter_stairs_down
+    dw $09A6, $1007  ; Equipped Beams
+    dw #$FFFF
+
+preset_prkd20_lower_norfair_wasteland:
+    dw #preset_prkd19_lower_norfair_wasteland
     dw $09C6, $0014  ; Missiles
     dw $09C8, $0014  ; Max missiles
     dw $0AF8, $FFFF  ; Samus subpixel X
     dw $D878, $001C  ; Items
     dw #$FFFF
 
-preset_prkd19_lower_norfair_amphitheatre:
-    dw #preset_prkd19_lower_norfair_worst_room_in_the_game
-    dw $078D, $994E  ; DDB
-    dw $079B, $B4AD  ; MDB
-    dw $090F, $4000  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $A400  ; Screen subpixel Y position
-    dw $0915, $011C  ; Screen Y position in pixels
-    dw $0917, $0000  ; Layer 2 X position
-    dw $0919, $00D5  ; Layer 2 Y position
-    dw $09CE, $0004  ; Pbs
-    dw $09D2, $0000  ; Currently selected item
-    dw $0AF6, $00B1  ; Samus X
-    dw $0AFA, $018B  ; Samus Y
+preset_gtclassic_maridia_reverse_botwoon_etank:
+    dw #preset_gtclassic_maridia_reverse_halfie_climb
+    dw $078D, $A7E0  ; DDB
+    dw $079B, $D913  ; MDB
+    dw $090F, $7000  ; Screen subpixel X position
+    dw $0913, $2800  ; Screen subpixel Y position
+    dw $0915, $0200  ; Screen Y position in pixels
+    dw $0919, $0200  ; Layer 2 Y position
+    dw $09C6, $0053  ; Missiles
+    dw $0AF6, $00A5  ; Samus X
+    dw $0AFA, $028B  ; Samus Y
     dw #$FFFF
 
-preset_gtmax_upper_norfair_and_kraid_grapple_shaft_down:
-    dw #preset_gtmax_upper_norfair_and_kraid_leaving_crocomire
-    dw $078D, $946E  ; DDB
-    dw $079B, $AA82  ; MDB
-    dw $07F3, $0015  ; Music Bank
-    dw $07F5, $0005  ; Music Track
-    dw $090F, $9000  ; Screen subpixel X position
-    dw $0911, $0026  ; Screen X position in pixels
-    dw $0915, $011D  ; Screen Y position in pixels
-    dw $0917, $0026  ; Layer 2 X position
-    dw $0919, $011D  ; Layer 2 Y position
-    dw $09CA, $000A  ; Supers
-    dw $09CE, $0022  ; Pbs
-    dw $09D0, $0023  ; Max pbs
-    dw $0AF6, $00A6  ; Samus X
-    dw $0AFA, $01AB  ; Samus Y
-    dw $D876, $E23B  ; Items
-    dw $D8BA, $DF5B  ; Doors
+preset_gtclassic_maridia_reverse_botwoon_hallway:
+    dw #preset_gtclassic_maridia_reverse_halfie_climb
+    dw $078D, $A84C  ; DDB
+    dw $079B, $D95E  ; MDB
+    dw $07F5, $0003  ; Music Track
+    dw $090F, $6B80  ; Screen subpixel X position
+    dw $0913, $EC00  ; Screen subpixel Y position
+    dw $09C6, $0053  ; Missiles
+    dw $0AF6, $0024  ; Samus X
+    dw $D8C2, $6C00  ; Doors
     dw #$FFFF
 
 preset_100early_brinstar_cleanup_green_brinstar_beetoms:
@@ -28728,14 +28772,40 @@ preset_hundo_mama_turtle_etank_main_street:
     dw $D820, $0801  ; Events
     dw #$FFFF
 
-preset_gtclassic_maridia_reverse_halfie_climb:
-    dw #preset_gtclassic_maridia_whomple_jump
-    dw $078D, $A834  ; DDB
-    dw $079B, $D72A  ; MDB
-    dw $090F, $4000  ; Screen subpixel X position
-    dw $0913, $6000  ; Screen subpixel Y position
-    dw $09C2, $015E  ; Health
-    dw $0AF6, $0037  ; Samus X
+preset_gtmax_upper_norfair_and_kraid_sine_missiles:
+    dw #preset_gtmax_upper_norfair_and_kraid_grapple_shaft_down
+    dw $078D, $94CE  ; DDB
+    dw $079B, $AB07  ; MDB
+    dw $090F, $B000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $7400  ; Screen subpixel Y position
+    dw $0915, $02F6  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $0238  ; Layer 2 Y position
+    dw $09C2, $03E8  ; Health
+    dw $09C6, $00A0  ; Missiles
+    dw $09C8, $00A0  ; Max missiles
+    dw $09CA, $0009  ; Supers
+    dw $09D6, $012E  ; Reserves
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $00AF  ; Samus X
+    dw $0AFA, $038B  ; Samus Y
+    dw $D876, $EA3B  ; Items
+    dw $D8BA, $DF5F  ; Doors
+    dw #$FFFF
+
+preset_pkrd_lower_norfair_ridley_farming_room:
+    dw #preset_pkrd_lower_norfair_plowerhouse
+    dw $078D, $9A32  ; DDB
+    dw $079B, $B482  ; MDB
+    dw $090F, $D000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $B000  ; Screen subpixel Y position
+    dw $0917, $0000  ; Layer 2 X position
+    dw $09C2, $0159  ; Health
+    dw $0AF6, $004E  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 
 preset_kpdr23_red_brinstar_revisit_below_spazer_final:
@@ -28750,51 +28820,6 @@ preset_kpdr23_red_brinstar_revisit_below_spazer_final:
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $01DC  ; Samus X
-    dw #$FFFF
-
-preset_pkrd_lower_norfair_prepillars:
-    dw #preset_pkrd_lower_norfair_ln_main_hall
-    dw $090F, $4000  ; Screen subpixel X position
-    dw $0911, $0700  ; Screen X position in pixels
-    dw $0913, $7400  ; Screen subpixel Y position
-    dw $0917, $0540  ; Layer 2 X position
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $07A1  ; Samus X
-    dw $0AFA, $028B  ; Samus Y
-    dw #$FFFF
-
-preset_pkrd_lower_norfair_worst_room_in_the_game:
-    dw #preset_pkrd_upper_norfair_volcano_room
-    dw $078D, $9912  ; DDB
-    dw $079B, $B457  ; MDB
-    dw $07F3, $0018  ; Music Bank
-    dw $090F, $02FF  ; Screen subpixel X position
-    dw $0913, $9800  ; Screen subpixel Y position
-    dw $09C2, $00E1  ; Health
-    dw $09C6, $0012  ; Missiles
-    dw $09CE, $0005  ; Pbs
-    dw $09D2, $0003  ; Currently selected item
-    dw $0AF6, $03DB  ; Samus X
-    dw $D8BA, $01F1  ; Doors
-    dw #$FFFF
-
-preset_pkrd_lower_norfair_amphitheatre:
-    dw #preset_pkrd_upper_norfair_kronic_boost
-    dw $078D, $994E  ; DDB
-    dw $079B, $B4AD  ; MDB
-    dw $07F3, $0018  ; Music Bank
-    dw $090F, $B000  ; Screen subpixel X position
-    dw $0913, $B800  ; Screen subpixel Y position
-    dw $0915, $011F  ; Screen Y position in pixels
-    dw $0919, $00D5  ; Layer 2 Y position
-    dw $09C2, $00E1  ; Health
-    dw $09C6, $0012  ; Missiles
-    dw $0A1C, $0009  ; Samus position/state
-    dw $0A1E, $0108  ; More position/state
-    dw $0AF6, $00B8  ; Samus X
-    dw $0AFA, $018B  ; Samus Y
-    dw $D8BA, $01F1  ; Doors
     dw #$FFFF
 
 preset_kpdr25_red_brinstar_revisit_red_tower_down:
@@ -28833,59 +28858,106 @@ preset_kpdr22_red_brinstar_hjb_missile_caterpillars_up:
     dw $09A8, $1001  ; Collected Beams
     dw #$FFFF
 
-preset_prkd20_lower_norfair_nox_ridley_worst_room_in_the_game:
-    dw #preset_prkd20_lower_norfair_worst_room_in_the_game
-    dw $09A6, $1007  ; Equipped Beams
-    dw #$FFFF
-
-preset_prkd19_lower_norfair_nox_ridley_amphitheatre:
-    dw #preset_prkd19_lower_norfair_amphitheatre
+preset_prkd19_lower_norfair_nox_ridley_metal_ninja_pirates:
+    dw #preset_prkd19_lower_norfair_metal_ninja_pirates
     dw $09A6, $1007  ; Equipped Beams
     dw $0AF8, $FFFF  ; Samus subpixel X
     dw #$FFFF
 
-preset_prkd20_lower_norfair_amphitheatre:
-    dw #preset_prkd19_lower_norfair_amphitheatre
+preset_prkd19_lower_norfair_plowerhouse:
+    dw #preset_prkd19_lower_norfair_metal_ninja_pirates
+    dw $078D, $9A1A  ; DDB
+    dw $079B, $B62B  ; MDB
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $01F4  ; Screen X position in pixels
+    dw $0913, $1C00  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $0177  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09C2, $00E9  ; Health
+    dw $09CA, $000A  ; Supers
+    dw $0AF6, $0254  ; Samus X
+    dw $0AFA, $00BB  ; Samus Y
+    dw $D8BC, $0001  ; Doors
+    dw #$FFFF
+
+preset_prkd20_lower_norfair_nox_ridley_wasteland:
+    dw #preset_prkd20_lower_norfair_wasteland
+    dw $09A6, $1007  ; Equipped Beams
+    dw #$FFFF
+
+preset_prkd20_lower_norfair_metal_ninja_pirates:
+    dw #preset_prkd19_lower_norfair_metal_ninja_pirates
     dw $09C6, $0014  ; Missiles
     dw $09C8, $0014  ; Max missiles
     dw $0AF8, $FFFF  ; Samus subpixel X
     dw $D878, $001C  ; Items
     dw #$FFFF
 
-preset_prkd19_lower_norfair_kihunter_stairs_down:
-    dw #preset_prkd19_lower_norfair_amphitheatre
-    dw $078D, $997E  ; DDB
-    dw $079B, $B4E5  ; MDB
-    dw $0911, $0270  ; Screen X position in pixels
-    dw $0913, $F000  ; Screen subpixel Y position
-    dw $0915, $004B  ; Screen Y position in pixels
-    dw $0917, $01D4  ; Layer 2 X position
-    dw $0919, $0038  ; Layer 2 Y position
-    dw $0AF6, $02D0  ; Samus X
-    dw $0AFA, $00BB  ; Samus Y
+preset_gtclassic_maridia_aqueduct_revisit:
+    dw #preset_gtclassic_maridia_reverse_botwoon_hallway
+    dw $078D, $A90C  ; DDB
+    dw $079B, $D617  ; MDB
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $0015  ; Screen X position in pixels
+    dw $0913, $0C00  ; Screen subpixel Y position
+    dw $0915, $001F  ; Screen Y position in pixels
+    dw $0917, $000F  ; Layer 2 X position
+    dw $0919, $001F  ; Layer 2 Y position
+    dw $0AF6, $00B5  ; Samus X
+    dw $0AFA, $00CB  ; Samus Y
     dw #$FFFF
 
-preset_gtmax_upper_norfair_and_kraid_sine_missiles:
-    dw #preset_gtmax_upper_norfair_and_kraid_grapple_shaft_down
-    dw $078D, $94CE  ; DDB
-    dw $079B, $AB07  ; MDB
-    dw $090F, $B000  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $7400  ; Screen subpixel Y position
-    dw $0915, $02F6  ; Screen Y position in pixels
-    dw $0917, $0000  ; Layer 2 X position
-    dw $0919, $0238  ; Layer 2 Y position
-    dw $09C2, $03E8  ; Health
-    dw $09C6, $00A0  ; Missiles
-    dw $09C8, $00A0  ; Max missiles
-    dw $09CA, $0009  ; Supers
-    dw $09D6, $012E  ; Reserves
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $00AF  ; Samus X
-    dw $0AFA, $038B  ; Samus Y
-    dw $D876, $EA3B  ; Items
-    dw $D8BA, $DF5F  ; Doors
+preset_gtclassic_maridia_reverse_crab_shaft:
+    dw #preset_gtclassic_maridia_reverse_botwoon_hallway
+    dw $078D, $A768  ; DDB
+    dw $079B, $D5A7  ; MDB
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $00FD  ; Screen Y position in pixels
+    dw $0919, $00FD  ; Layer 2 Y position
+    dw $0AF6, $006A  ; Samus X
+    dw $0AFA, $018B  ; Samus Y
+    dw #$FFFF
+
+preset_gtclassic_maridia_mt_everest_revisit:
+    dw #preset_gtclassic_maridia_reverse_botwoon_etank
+    dw $078D, $A708  ; DDB
+    dw $079B, $D1A3  ; MDB
+    dw $07F5, $0006  ; Music Track
+    dw $090F, $F001  ; Screen subpixel X position
+    dw $0913, $2C00  ; Screen subpixel Y position
+    dw $0919, $0180  ; Layer 2 Y position
+    dw $0AF6, $0069  ; Samus X
+    dw $D8C2, $6C00  ; Doors
+    dw #$FFFF
+
+preset_gtclassic_maridia_red_brinstar_green_gate:
+    dw #preset_gtclassic_maridia_reverse_botwoon_hallway
+    dw $078D, $A42C  ; DDB
+    dw $079B, $D104  ; MDB
+    dw $07F5, $0006  ; Music Track
+    dw $090F, $2C00  ; Screen subpixel X position
+    dw $0911, $0001  ; Screen X position in pixels
+    dw $0913, $6400  ; Screen subpixel Y position
+    dw $0917, $0001  ; Layer 2 X position
+    dw $0AF6, $007A  ; Samus X
+    dw #$FFFF
+
+preset_gtclassic_wrecked_ship_crateria_kihunters:
+    dw #preset_gtclassic_maridia_reverse_botwoon_hallway
+    dw $078D, $90BA  ; DDB
+    dw $079B, $962A  ; MDB
+    dw $07F3, $0012  ; Music Bank
+    dw $090F, $9000  ; Screen subpixel X position
+    dw $0913, $3C00  ; Screen subpixel Y position
+    dw $09CA, $0011  ; Supers
+    dw $09CE, $000E  ; Pbs
+    dw $0AF6, $008C  ; Samus X
+    dw $0AFA, $005B  ; Samus Y
+    dw $D8B2, $2C01  ; Doors
     dw #$FFFF
 
 preset_100early_brinstar_cleanup_etecoon_etank_room:
@@ -29067,29 +29139,35 @@ preset_hundo_mama_turtle_etank_fish_tank:
     dw $D880, $01FF  ; Items
     dw #$FFFF
 
-preset_gtclassic_maridia_reverse_botwoon_etank:
-    dw #preset_gtclassic_maridia_reverse_halfie_climb
-    dw $078D, $A7E0  ; DDB
-    dw $079B, $D913  ; MDB
-    dw $090F, $7000  ; Screen subpixel X position
-    dw $0913, $2800  ; Screen subpixel Y position
-    dw $0915, $0200  ; Screen Y position in pixels
-    dw $0919, $0200  ; Layer 2 Y position
-    dw $09C6, $0053  ; Missiles
-    dw $0AF6, $00A5  ; Samus X
-    dw $0AFA, $028B  ; Samus Y
+preset_gtmax_upper_norfair_and_kraid_crocomire_revisit:
+    dw #preset_gtmax_upper_norfair_and_kraid_sine_missiles
+    dw $078D, $947A  ; DDB
+    dw $079B, $AA82  ; MDB
+    dw $090F, $9000  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $7800  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $0100  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09C2, $035F  ; Health
+    dw $09C6, $00A5  ; Missiles
+    dw $09C8, $00A5  ; Max missiles
+    dw $0AF6, $01C4  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw $D876, $EE3B  ; Items
     dw #$FFFF
 
-preset_gtclassic_maridia_reverse_botwoon_hallway:
-    dw #preset_gtclassic_maridia_reverse_halfie_climb
-    dw $078D, $A84C  ; DDB
-    dw $079B, $D95E  ; MDB
-    dw $07F5, $0003  ; Music Track
-    dw $090F, $6B80  ; Screen subpixel X position
-    dw $0913, $EC00  ; Screen subpixel Y position
-    dw $09C6, $0053  ; Missiles
-    dw $0AF6, $0024  ; Samus X
-    dw $D8C2, $6C00  ; Doors
+preset_pkrd_lower_norfair_ridley:
+    dw #preset_pkrd_lower_norfair_ridley_farming_room
+    dw $078D, $995A  ; DDB
+    dw $079B, $B37A  ; MDB
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0913, $D800  ; Screen subpixel Y position
+    dw $09C2, $0146  ; Health
+    dw $09CA, $000A  ; Supers
+    dw $0AF6, $003C  ; Samus X
+    dw $0AFA, $009B  ; Samus Y
+    dw $D8BA, $D1F1  ; Doors
     dw #$FFFF
 
 preset_kpdr25_red_brinstar_revisit_below_spazer_final:
@@ -29138,58 +29216,6 @@ preset_kpdr23_maridia_fish_tank:
     dw $D820, $0801  ; Events
     dw #$FFFF
 
-preset_pkrd_lower_norfair_kihunter_stairs_down:
-    dw #preset_pkrd_lower_norfair_amphitheatre
-    dw $078D, $997E  ; DDB
-    dw $079B, $B4E5  ; MDB
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $0911, $0275  ; Screen X position in pixels
-    dw $0913, $0000  ; Screen subpixel Y position
-    dw $0915, $0047  ; Screen Y position in pixels
-    dw $0917, $01D4  ; Layer 2 X position
-    dw $0919, $0038  ; Layer 2 Y position
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $02D5  ; Samus X
-    dw $0AFA, $00B9  ; Samus Y
-    dw #$FFFF
-
-preset_pkrd_lower_norfair_wasteland:
-    dw #preset_pkrd_lower_norfair_amphitheatre
-    dw $078D, $99A2  ; DDB
-    dw $079B, $B585  ; MDB
-    dw $090F, $3400  ; Screen subpixel X position
-    dw $0911, $0200  ; Screen X position in pixels
-    dw $0913, $F3FF  ; Screen subpixel Y position
-    dw $0915, $0416  ; Screen Y position in pixels
-    dw $0917, $0180  ; Layer 2 X position
-    dw $0919, $0310  ; Layer 2 Y position
-    dw $09C2, $00F4  ; Health
-    dw $09CE, $0002  ; Pbs
-    dw $0A1C, $001D  ; Samus position/state
-    dw $0A1E, $0408  ; More position/state
-    dw $0AF6, $024A  ; Samus X
-    dw $0AFA, $0489  ; Samus Y
-    dw $D8BA, $41F1  ; Doors
-    dw #$FFFF
-
-preset_pkrd_lower_norfair_metal_ninja_pirates:
-    dw #preset_pkrd_upper_norfair_lava_spark
-    dw $078D, $99EA  ; DDB
-    dw $079B, $B5D5  ; MDB
-    dw $07F3, $0018  ; Music Bank
-    dw $090F, $9000  ; Screen subpixel X position
-    dw $0913, $0000  ; Screen subpixel Y position
-    dw $0915, $021B  ; Screen Y position in pixels
-    dw $0917, $00C0  ; Layer 2 X position
-    dw $0919, $0195  ; Layer 2 Y position
-    dw $09C2, $00CF  ; Health
-    dw $09CA, $0006  ; Supers
-    dw $09CE, $0001  ; Pbs
-    dw $0AF6, $0167  ; Samus X
-    dw $D8BA, $C1F1  ; Doors
-    dw #$FFFF
-
 preset_kpdr22_red_brinstar_moat_missile_caterpillars_up:
     dw #preset_kpdr22_red_brinstar_hjb_missile_caterpillars_up
     dw $09C6, $000B  ; Missiles
@@ -29197,65 +29223,64 @@ preset_kpdr22_red_brinstar_moat_missile_caterpillars_up:
     dw #$FFFF
 
 preset_kpdr22_red_brinstar_hjb_missile_crateria_kihunters:
-    dw #preset_kpdr23_wrecked_ship_crateria_kihunters
+    dw #preset_kpdr25_wrecked_ship_crateria_kihunters
     dw $09A6, $1001  ; Equipped Beams
     dw $09A8, $1001  ; Collected Beams
+    dw $09C2, $016D  ; Health
+    dw $09C6, $0010  ; Missiles
+    dw $09CA, $0005  ; Supers
+    dw $D876, $01A1  ; Items
+    dw $D8B8, $26EF  ; Doors
     dw #$FFFF
 
-preset_prkd20_lower_norfair_nox_ridley_amphitheatre:
-    dw #preset_prkd20_lower_norfair_amphitheatre
-    dw $09A6, $1007  ; Equipped Beams
-    dw #$FFFF
-
-preset_prkd19_lower_norfair_nox_ridley_kihunter_stairs_down:
-    dw #preset_prkd19_lower_norfair_kihunter_stairs_down
+preset_prkd19_lower_norfair_nox_ridley_plowerhouse:
+    dw #preset_prkd19_lower_norfair_plowerhouse
     dw $09A6, $1007  ; Equipped Beams
     dw $0AF8, $FFFF  ; Samus subpixel X
     dw #$FFFF
 
-preset_prkd19_lower_norfair_wasteland:
-    dw #preset_prkd19_lower_norfair_amphitheatre
-    dw $078D, $99A2  ; DDB
-    dw $079B, $B585  ; MDB
-    dw $090F, $A980  ; Screen subpixel X position
-    dw $0911, $0200  ; Screen X position in pixels
-    dw $0913, $F3FF  ; Screen subpixel Y position
-    dw $0915, $0416  ; Screen Y position in pixels
-    dw $0917, $0180  ; Layer 2 X position
-    dw $0919, $0310  ; Layer 2 Y position
-    dw $09C2, $0088  ; Health
-    dw $09CE, $0002  ; Pbs
-    dw $0A1C, $001D  ; Samus position/state
-    dw $0A1E, $0408  ; More position/state
-    dw $0AF6, $024C  ; Samus X
-    dw $0AFA, $0489  ; Samus Y
-    dw $D8BA, $41F1  ; Doors
+preset_prkd19_lower_norfair_ridley_farming_room:
+    dw #preset_prkd19_lower_norfair_plowerhouse
+    dw $078D, $9A32  ; DDB
+    dw $079B, $B482  ; MDB
+    dw $090F, $9000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $8C00  ; Screen subpixel Y position
+    dw $0917, $0000  ; Layer 2 X position
+    dw $09C2, $00CD  ; Health
+    dw $0AF6, $0047  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 
-preset_prkd20_lower_norfair_kihunter_stairs_down:
-    dw #preset_prkd19_lower_norfair_kihunter_stairs_down
+preset_prkd20_lower_norfair_nox_ridley_metal_ninja_pirates:
+    dw #preset_prkd20_lower_norfair_metal_ninja_pirates
+    dw $09A6, $1007  ; Equipped Beams
+    dw #$FFFF
+
+preset_prkd20_lower_norfair_plowerhouse:
+    dw #preset_prkd19_lower_norfair_plowerhouse
     dw $09C6, $0014  ; Missiles
     dw $09C8, $0014  ; Max missiles
     dw $0AF8, $FFFF  ; Samus subpixel X
     dw $D878, $001C  ; Items
     dw #$FFFF
 
-preset_gtmax_upper_norfair_and_kraid_crocomire_revisit:
-    dw #preset_gtmax_upper_norfair_and_kraid_sine_missiles
-    dw $078D, $947A  ; DDB
-    dw $079B, $AA82  ; MDB
-    dw $090F, $9000  ; Screen subpixel X position
-    dw $0911, $0100  ; Screen X position in pixels
-    dw $0913, $7800  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0917, $0100  ; Layer 2 X position
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $09C2, $035F  ; Health
-    dw $09C6, $00A5  ; Missiles
-    dw $09C8, $00A5  ; Max missiles
-    dw $0AF6, $01C4  ; Samus X
+preset_gtclassic_wrecked_ship_moat:
+    dw #preset_gtclassic_wrecked_ship_crateria_kihunters
+    dw $078D, $8AF6  ; DDB
+    dw $079B, $948C  ; MDB
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $7000  ; Screen subpixel X position
+    dw $0911, $0200  ; Screen X position in pixels
+    dw $0913, $A400  ; Screen subpixel Y position
+    dw $0917, $0180  ; Layer 2 X position
+    dw $09C2, $0163  ; Health
+    dw $09CE, $000D  ; Pbs
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $02B3  ; Samus X
     dw $0AFA, $008B  ; Samus Y
-    dw $D876, $EE3B  ; Items
+    dw $D8B0, $2000  ; Doors
     dw #$FFFF
 
 preset_100early_brinstar_cleanup_dachora_room_revisit:
@@ -29414,70 +29439,61 @@ preset_hundo_mama_turtle_etank_fish_tank_revisit:
     dw $D8C0, $4B7C  ; Doors
     dw #$FFFF
 
-preset_gtclassic_maridia_aqueduct_revisit:
-    dw #preset_gtclassic_maridia_reverse_botwoon_hallway
-    dw $078D, $A90C  ; DDB
-    dw $079B, $D617  ; MDB
-    dw $07F5, $0005  ; Music Track
+preset_gtmax_upper_norfair_and_kraid_croc_escape_super_gate:
+    dw #preset_gtmax_upper_norfair_and_kraid_crocomire_revisit
+    dw $078D, $93EA  ; DDB
+    dw $079B, $A923  ; MDB
     dw $090F, $0000  ; Screen subpixel X position
-    dw $0911, $0015  ; Screen X position in pixels
-    dw $0913, $0C00  ; Screen subpixel Y position
-    dw $0915, $001F  ; Screen Y position in pixels
-    dw $0917, $000F  ; Layer 2 X position
-    dw $0919, $001F  ; Layer 2 Y position
-    dw $0AF6, $00B5  ; Samus X
-    dw $0AFA, $00CB  ; Samus Y
+    dw $0911, $0C00  ; Screen X position in pixels
+    dw $0913, $5400  ; Screen subpixel Y position
+    dw $0915, $0014  ; Screen Y position in pixels
+    dw $0917, $0900  ; Layer 2 X position
+    dw $0919, $000F  ; Layer 2 Y position
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0C91  ; Samus X
+    dw $0AFA, $00AB  ; Samus Y
+    dw $D8B8, $EEEC  ; Doors
     dw #$FFFF
 
-preset_gtclassic_maridia_reverse_crab_shaft:
-    dw #preset_gtclassic_maridia_reverse_botwoon_hallway
-    dw $078D, $A768  ; DDB
-    dw $079B, $D5A7  ; MDB
-    dw $07F5, $0005  ; Music Track
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $0913, $0000  ; Screen subpixel Y position
-    dw $0915, $00FD  ; Screen Y position in pixels
-    dw $0919, $00FD  ; Layer 2 Y position
-    dw $0AF6, $006A  ; Samus X
-    dw $0AFA, $018B  ; Samus Y
-    dw #$FFFF
-
-preset_gtclassic_maridia_mt_everest_revisit:
-    dw #preset_gtclassic_maridia_reverse_botwoon_etank
-    dw $078D, $A708  ; DDB
-    dw $079B, $D1A3  ; MDB
-    dw $07F5, $0006  ; Music Track
-    dw $090F, $F001  ; Screen subpixel X position
-    dw $0913, $2C00  ; Screen subpixel Y position
-    dw $0919, $0180  ; Layer 2 Y position
-    dw $0AF6, $0069  ; Samus X
-    dw $D8C2, $6C00  ; Doors
-    dw #$FFFF
-
-preset_gtclassic_maridia_red_brinstar_green_gate:
-    dw #preset_gtclassic_maridia_reverse_botwoon_hallway
-    dw $078D, $A42C  ; DDB
-    dw $079B, $D104  ; MDB
-    dw $07F5, $0006  ; Music Track
-    dw $090F, $2C00  ; Screen subpixel X position
-    dw $0911, $0001  ; Screen X position in pixels
-    dw $0913, $6400  ; Screen subpixel Y position
+preset_pkrd_lower_norfair_leaving_ridley:
+    dw #preset_pkrd_lower_norfair_ridley
+    dw $078D, $98CA  ; DDB
+    dw $079B, $B32E  ; MDB
+    dw $07F3, $0024  ; Music Bank
+    dw $07F5, $0003  ; Music Track
+    dw $0913, $7C00  ; Screen subpixel Y position
+    dw $0915, $011F  ; Screen Y position in pixels
     dw $0917, $0001  ; Layer 2 X position
-    dw $0AF6, $007A  ; Samus X
+    dw $0919, $00D7  ; Layer 2 Y position
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09C2, $0105  ; Health
+    dw $09C6, $0011  ; Missiles
+    dw $09CA, $0002  ; Supers
+    dw $09CE, $0005  ; Pbs
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $0064  ; Samus X
+    dw $0AFA, $019B  ; Samus Y
+    dw $D82A, $0101  ; Bosses
     dw #$FFFF
 
-preset_gtclassic_wrecked_ship_crateria_kihunters:
-    dw #preset_gtclassic_maridia_reverse_botwoon_hallway
-    dw $078D, $90BA  ; DDB
-    dw $079B, $962A  ; MDB
-    dw $07F3, $0012  ; Music Bank
-    dw $090F, $9000  ; Screen subpixel X position
-    dw $0913, $3C00  ; Screen subpixel Y position
-    dw $09CA, $0011  ; Supers
-    dw $09CE, $000E  ; Pbs
-    dw $0AF6, $008C  ; Samus X
-    dw $0AFA, $005B  ; Samus Y
-    dw $D8B2, $2C01  ; Doors
+preset_pkrd_lower_norfair_reverse_plowerhouse:
+    dw #preset_pkrd_lower_norfair_worst_room_in_the_game
+    dw $078D, $98BE  ; DDB
+    dw $079B, $B37A  ; MDB
+    dw $090F, $4000  ; Screen subpixel X position
+    dw $0911, $0200  ; Screen X position in pixels
+    dw $0917, $0180  ; Layer 2 X position
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09C2, $0101  ; Health
+    dw $09C6, $0011  ; Missiles
+    dw $09CA, $0002  ; Supers
+    dw $09D2, $0000  ; Currently selected item
+    dw $0AF6, $02C9  ; Samus X
+    dw $D82A, $0101  ; Bosses
+    dw $D8BA, $D5F1  ; Doors
+    dw $D8BC, $0001  ; Doors
     dw #$FFFF
 
 preset_kpdr25_red_brinstar_revisit_breaking_the_tube:
@@ -29518,22 +29534,6 @@ preset_kpdr23_maridia_mt_everest:
     dw $0AFA, $03BB  ; Samus Y
     dw #$FFFF
 
-preset_pkrd_lower_norfair_plowerhouse:
-    dw #preset_pkrd_lower_norfair_metal_ninja_pirates
-    dw $078D, $9A1A  ; DDB
-    dw $079B, $B62B  ; MDB
-    dw $090F, $F000  ; Screen subpixel X position
-    dw $0911, $0156  ; Screen X position in pixels
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0917, $0177  ; Layer 2 X position
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $09C2, $0181  ; Health
-    dw $09CA, $0009  ; Supers
-    dw $0AF6, $01CA  ; Samus X
-    dw $0AFA, $00BB  ; Samus Y
-    dw $D8BC, $0001  ; Doors
-    dw #$FFFF
-
 preset_kpdr22_red_brinstar_moat_missile_crateria_kihunters:
     dw #preset_kpdr22_red_brinstar_hjb_missile_crateria_kihunters
     dw $09C6, $000B  ; Missiles
@@ -29541,64 +29541,69 @@ preset_kpdr22_red_brinstar_moat_missile_crateria_kihunters:
     dw #$FFFF
 
 preset_kpdr22_red_brinstar_hjb_missile_ocean_fly_setup:
-    dw #preset_kpdr23_wrecked_ship_ocean_fly_setup
+    dw #preset_kpdr25_wrecked_ship_ocean_fly_setup
     dw $09A6, $1001  ; Equipped Beams
     dw $09A8, $1001  ; Collected Beams
+    dw $09C2, $0181  ; Health
+    dw $09C6, $0010  ; Missiles
+    dw $09CA, $0005  ; Supers
+    dw $D876, $01A1  ; Items
+    dw $D8B8, $26EF  ; Doors
     dw #$FFFF
 
-preset_prkd19_lower_norfair_nox_ridley_wasteland:
-    dw #preset_prkd19_lower_norfair_wasteland
+preset_prkd19_lower_norfair_nox_ridley_ridley_farming_room:
+    dw #preset_prkd19_lower_norfair_ridley_farming_room
     dw $09A6, $1007  ; Equipped Beams
     dw $0AF8, $FFFF  ; Samus subpixel X
     dw #$FFFF
 
-preset_prkd19_lower_norfair_metal_ninja_pirates:
-    dw #preset_prkd19_upper_norfair_lava_spark
-    dw $078D, $99EA  ; DDB
-    dw $079B, $B5D5  ; MDB
-    dw $07F3, $0018  ; Music Bank
+preset_prkd19_lower_norfair_ridley:
+    dw #preset_prkd19_lower_norfair_ridley_farming_room
+    dw $078D, $995A  ; DDB
+    dw $079B, $B37A  ; MDB
     dw $090F, $1000  ; Screen subpixel X position
-    dw $0913, $4C00  ; Screen subpixel Y position
-    dw $0915, $021C  ; Screen Y position in pixels
-    dw $0917, $00C0  ; Layer 2 X position
-    dw $0919, $0195  ; Layer 2 Y position
-    dw $09A6, $1001  ; Equipped Beams
-    dw $09C2, $0063  ; Health
-    dw $09CA, $0007  ; Supers
-    dw $09CE, $0001  ; Pbs
-    dw $0AF6, $0169  ; Samus X
-    dw $0AF8, $D000  ; Samus subpixel X
-    dw $D8BA, $C1F1  ; Doors
+    dw $0913, $7C00  ; Screen subpixel Y position
+    dw $09C2, $00F2  ; Health
+    dw $09CE, $0005  ; Pbs
+    dw $0AF6, $0024  ; Samus X
+    dw $D8BA, $D1F1  ; Doors
     dw #$FFFF
 
-preset_prkd20_lower_norfair_nox_ridley_kihunter_stairs_down:
-    dw #preset_prkd20_lower_norfair_kihunter_stairs_down
+preset_prkd20_lower_norfair_nox_ridley_plowerhouse:
+    dw #preset_prkd20_lower_norfair_plowerhouse
     dw $09A6, $1007  ; Equipped Beams
     dw #$FFFF
 
-preset_prkd20_lower_norfair_wasteland:
-    dw #preset_prkd19_lower_norfair_wasteland
+preset_prkd20_lower_norfair_ridley_farming_room:
+    dw #preset_prkd19_lower_norfair_ridley_farming_room
     dw $09C6, $0014  ; Missiles
     dw $09C8, $0014  ; Max missiles
     dw $0AF8, $FFFF  ; Samus subpixel X
     dw $D878, $001C  ; Items
     dw #$FFFF
 
-preset_gtmax_upper_norfair_and_kraid_croc_escape_super_gate:
-    dw #preset_gtmax_upper_norfair_and_kraid_crocomire_revisit
-    dw $078D, $93EA  ; DDB
-    dw $079B, $A923  ; MDB
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $0911, $0C00  ; Screen X position in pixels
-    dw $0913, $5400  ; Screen subpixel Y position
-    dw $0915, $0014  ; Screen Y position in pixels
-    dw $0917, $0900  ; Layer 2 X position
-    dw $0919, $000F  ; Layer 2 Y position
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $0C91  ; Samus X
-    dw $0AFA, $00AB  ; Samus Y
-    dw $D8B8, $EEEC  ; Doors
+preset_gtclassic_wrecked_ship_ocean:
+    dw #preset_gtclassic_wrecked_ship_moat
+    dw $078D, $8A36  ; DDB
+    dw $079B, $95FF  ; MDB
+    dw $090F, $4000  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0917, $00C0  ; Layer 2 X position
+    dw $0AF6, $01A8  ; Samus X
+    dw #$FFFF
+
+preset_gtclassic_wrecked_ship_wrecked_ship_shaft:
+    dw #preset_gtclassic_wrecked_ship_moat
+    dw $078D, $89D6  ; DDB
+    dw $079B, $CA08  ; MDB
+    dw $07F3, $0030  ; Music Bank
+    dw $090F, $8C00  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0917, $0000  ; Layer 2 X position
+    dw $09CA, $0010  ; Supers
+    dw $0AF6, $002E  ; Samus X
+    dw $D8B0, $3000  ; Doors
     dw #$FFFF
 
 preset_100early_brinstar_cleanup_big_pink_power_bombs:
@@ -29711,49 +29716,6 @@ preset_hundo_maridia_beach_mt_everest:
     dw $D880, $0FFF  ; Items
     dw #$FFFF
 
-preset_gtclassic_wrecked_ship_moat:
-    dw #preset_gtclassic_wrecked_ship_crateria_kihunters
-    dw $078D, $8AF6  ; DDB
-    dw $079B, $948C  ; MDB
-    dw $07F5, $0005  ; Music Track
-    dw $090F, $7000  ; Screen subpixel X position
-    dw $0911, $0200  ; Screen X position in pixels
-    dw $0913, $A400  ; Screen subpixel Y position
-    dw $0917, $0180  ; Layer 2 X position
-    dw $09C2, $0163  ; Health
-    dw $09CE, $000D  ; Pbs
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $02B3  ; Samus X
-    dw $0AFA, $008B  ; Samus Y
-    dw $D8B0, $2000  ; Doors
-    dw #$FFFF
-
-preset_kpdr25_maridia_mt_everest:
-    dw #preset_kpdr23_maridia_mt_everest
-    dw $09A6, $1007  ; Equipped Beams
-    dw $09A8, $1007  ; Collected Beams
-    dw $09C6, $000F  ; Missiles
-    dw $09C8, $0019  ; Max missiles
-    dw $09CA, $0009  ; Supers
-    dw $D870, $0190  ; Items
-    dw $D876, $01A5  ; Items
-    dw $D8B8, $2EEF  ; Doors
-    dw #$FFFF
-
-preset_pkrd_lower_norfair_ridley_farming_room:
-    dw #preset_pkrd_lower_norfair_plowerhouse
-    dw $078D, $9A32  ; DDB
-    dw $079B, $B482  ; MDB
-    dw $090F, $D000  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $B000  ; Screen subpixel Y position
-    dw $0917, $0000  ; Layer 2 X position
-    dw $09C2, $0159  ; Health
-    dw $0AF6, $004E  ; Samus X
-    dw $0AFA, $008B  ; Samus Y
-    dw #$FFFF
-
 preset_gtmax_upper_norfair_and_kraid_hijump_etank_revisit:
     dw #preset_gtmax_upper_norfair_and_kraid_croc_escape_super_gate
     dw $078D, $9402  ; DDB
@@ -29787,6 +29749,443 @@ preset_gtmax_upper_norfair_and_kraid_business_center_final:
     dw $0AF6, $0191  ; Samus X
     dw $D876, $EFFB  ; Items
     dw $D8B8, $EEEC  ; Doors
+    dw #$FFFF
+
+preset_pkrd_lower_norfair_wasteland_revisit:
+    dw #preset_pkrd_lower_norfair_reverse_plowerhouse
+    dw $078D, $9966  ; DDB
+    dw $079B, $B62B  ; MDB
+    dw $090F, $9000  ; Screen subpixel X position
+    dw $0913, $4C00  ; Screen subpixel Y position
+    dw $09C2, $00D3  ; Health
+    dw $09CA, $0006  ; Supers
+    dw $0AF6, $02DC  ; Samus X
+    dw #$FFFF
+
+preset_kpdr25_maridia_mt_everest:
+    dw #preset_kpdr23_maridia_mt_everest
+    dw $09A6, $1007  ; Equipped Beams
+    dw $09A8, $1007  ; Collected Beams
+    dw $09C6, $000F  ; Missiles
+    dw $09C8, $0019  ; Max missiles
+    dw $09CA, $0009  ; Supers
+    dw $D870, $0190  ; Items
+    dw $D876, $01A5  ; Items
+    dw $D8B8, $2EEF  ; Doors
+    dw #$FFFF
+
+preset_kpdr23_maridia_crab_shaft:
+    dw #preset_kpdr23_maridia_mt_everest
+    dw $090F, $E000  ; Screen subpixel X position
+    dw $0911, $0500  ; Screen X position in pixels
+    dw $0913, $9C01  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $03C0  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09C2, $00DD  ; Health
+    dw $0AF6, $05C0  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw #$FFFF
+
+preset_kpdr23_maridia_aqueduct:
+    dw #preset_kpdr23_maridia_mt_everest
+    dw $078D, $A468  ; DDB
+    dw $079B, $D1A3  ; MDB
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0913, $83FF  ; Screen subpixel Y position
+    dw $0915, $0300  ; Screen Y position in pixels
+    dw $0917, $0100  ; Layer 2 X position
+    dw $0919, $0240  ; Layer 2 Y position
+    dw $09C2, $00DD  ; Health
+    dw $09CA, $0009  ; Supers
+    dw $09D2, $0003  ; Currently selected item
+    dw $0AF6, $01AD  ; Samus X
+    dw $0AFA, $038B  ; Samus Y
+    dw $D8C0, $8174  ; Doors
+    dw #$FFFF
+
+preset_kpdr23_maridia_botwoon_hallway:
+    dw #preset_kpdr23_red_brinstar_revisit_red_tower_down
+    dw $078D, $A4C8  ; DDB
+    dw $079B, $D5A7  ; MDB
+    dw $07F3, $001B  ; Music Bank
+    dw $090F, $A000  ; Screen subpixel X position
+    dw $0913, $4000  ; Screen subpixel Y position
+    dw $09C2, $00DD  ; Health
+    dw $09CE, $0001  ; Pbs
+    dw $09D2, $0003  ; Currently selected item
+    dw $0AF6, $009D  ; Samus X
+    dw $0AF8, $7FFF  ; Samus subpixel X
+    dw $0AFA, $006B  ; Samus Y
+    dw $D820, $0801  ; Events
+    dw $D8C0, $8174  ; Doors
+    dw #$FFFF
+
+preset_kpdr22_red_brinstar_moat_missile_ocean_fly_setup:
+    dw #preset_kpdr22_red_brinstar_hjb_missile_ocean_fly_setup
+    dw $09C6, $000B  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw #$FFFF
+
+preset_phantoonfirst_upper_norfair_lava_spark:
+    dw #preset_prkd19_upper_norfair_lava_spark
+    dw $0F78, $007F  ; Safeties enabled
+    dw $0FC0, $002D  ; Safeties reserves adjustment
+    dw #$FFFF
+
+preset_kpdr_wrecked_ship_attic:
+    dw #preset_kpdr_wrecked_ship_wrecked_ship_shaft
+    dw $078D, $A2E8  ; DDB
+    dw $079B, $CAF6  ; MDB
+    dw $090F, $AC00  ; Screen subpixel X position
+    dw $0911, $0400  ; Screen X position in pixels
+    dw $0913, $B000  ; Screen subpixel Y position
+    dw $0917, $0300  ; Layer 2 X position
+    dw $09D2, $0003  ; Currently selected item
+    dw $0AF6, $0445  ; Samus X
+    dw $0AFA, $006B  ; Samus Y
+    dw #$FFFF
+
+preset_kpdr_wrecked_ship_upper_west_ocean:
+    dw #preset_kpdr_wrecked_ship_wrecked_ship_shaft
+    dw $078D, $A228  ; DDB
+    dw $079B, $CA52  ; MDB
+    dw $090F, $7000  ; Screen subpixel X position
+    dw $0913, $C7FD  ; Screen subpixel Y position
+    dw $0915, $001F  ; Screen Y position in pixels
+    dw $0919, $001E  ; Layer 2 Y position
+    dw $09C2, $00B2  ; Health
+    dw $09CA, $0009  ; Supers
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $003B  ; Samus X
+    dw $D8C0, $0174  ; Doors
+    dw #$FFFF
+
+preset_kpdr_wrecked_ship_pancakes_and_wavers:
+    dw #preset_kpdr_wrecked_ship_wrecked_ship_shaft
+    dw $078D, $A1E0  ; DDB
+    dw $079B, $93FE  ; MDB
+    dw $07F3, $000C  ; Music Bank
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $E000  ; Screen subpixel X position
+    dw $0911, $0200  ; Screen X position in pixels
+    dw $0913, $F800  ; Screen subpixel Y position
+    dw $0915, $01FC  ; Screen Y position in pixels
+    dw $0917, $0100  ; Layer 2 X position
+    dw $09C2, $00C6  ; Health
+    dw $09CA, $0009  ; Supers
+    dw $0AF6, $02C2  ; Samus X
+    dw $0AFA, $028B  ; Samus Y
+    dw $D8C0, $0174  ; Doors
+    dw #$FFFF
+
+preset_kpdr20_wrecked_ship_bowling_spark:
+    dw #preset_kpdr21_wrecked_ship_bowling_spark
+    dw $09C6, $000A  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr20_wrecked_ship_leaving_gravity:
+    dw #preset_kpdr21_wrecked_ship_leaving_gravity
+    dw $09C6, $000A  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_phantoonfirst_lower_norfair_ln_main_hall:
+    dw #preset_prkd19_lower_norfair_nox_ridley_ln_main_hall
+    dw $0F78, $01FF  ; Safeties enabled
+    dw $0F8E, $003C  ; Safeties energy adjustment
+    dw $0FC0, $002D  ; Safeties reserves adjustment
+    dw $1110, $0006  ; Safeties unequip beams
+    dw #$FFFF
+
+preset_kpdr21_wrecked_ship_moat_ball:
+    dw #preset_kpdr23_wrecked_ship_moat_ball
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09A8, $1001  ; Collected Beams
+    dw $09C2, $00A9  ; Health
+    dw $09C4, $012B  ; Max health
+    dw $D874, $0104  ; Items
+    dw $D8B6, $3008  ; Doors
+    dw $D8B8, $26ED  ; Doors
+    dw #$FFFF
+
+preset_phantoonfirst_lower_norfair_prepillars:
+    dw #preset_prkd19_lower_norfair_nox_ridley_prepillars
+    dw $0F78, $01FF  ; Safeties enabled
+    dw $0F8E, $003C  ; Safeties energy adjustment
+    dw $0FC0, $002D  ; Safeties reserves adjustment
+    dw $1110, $0006  ; Safeties unequip beams
+    dw #$FFFF
+
+preset_kpdr21_wrecked_ship_crateria_kihunters_return:
+    dw #preset_kpdr23_wrecked_ship_crateria_kihunters_return
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09A8, $1001  ; Collected Beams
+    dw $09C2, $00A9  ; Health
+    dw $09C4, $012B  ; Max health
+    dw $D874, $0104  ; Items
+    dw $D8B6, $3008  ; Doors
+    dw $D8B8, $26ED  ; Doors
+    dw #$FFFF
+
+preset_kpdr21_red_brinstar_revisit_red_brinstar_elevator:
+    dw #preset_kpdr23_red_brinstar_revisit_red_brinstar_elevator
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09A8, $1001  ; Collected Beams
+    dw $09C2, $00BD  ; Health
+    dw $09C4, $012B  ; Max health
+    dw $D874, $0104  ; Items
+    dw $D8B6, $3008  ; Doors
+    dw $D8B8, $26ED  ; Doors
+    dw #$FFFF
+
+preset_phantoonfirst_lower_norfair_worst_room_in_the_game:
+    dw #preset_prkd19_lower_norfair_nox_ridley_worst_room_in_the_game
+    dw $0F78, $03FF  ; Safeties enabled
+    dw $0F8E, $003C  ; Safeties energy adjustment
+    dw $0F92, $0028  ; Safeties energy adjustment
+    dw $0FC0, $002D  ; Safeties reserves adjustment
+    dw $1092, $FFFE  ; Safeties power bombs adjustment
+    dw $1110, $0006  ; Safeties unequip beams
+    dw #$FFFF
+
+preset_kpdr21_red_brinstar_revisit_caterpillars_revisit:
+    dw #preset_kpdr23_red_brinstar_revisit_caterpillars_revisit
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09A8, $1001  ; Collected Beams
+    dw $09C2, $00BD  ; Health
+    dw $09C4, $012B  ; Max health
+    dw $D874, $0104  ; Items
+    dw $D8B6, $3008  ; Doors
+    dw $D8B8, $26ED  ; Doors
+    dw #$FFFF
+
+preset_phantoonfirst_lower_norfair_amphitheatre:
+    dw #preset_prkd19_lower_norfair_nox_ridley_amphitheatre
+    dw $0F78, $03FF  ; Safeties enabled
+    dw $0F8E, $003C  ; Safeties energy adjustment
+    dw $0F92, $0028  ; Safeties energy adjustment
+    dw $0FC0, $002D  ; Safeties reserves adjustment
+    dw $1092, $FFFE  ; Safeties power bombs adjustment
+    dw $1110, $0006  ; Safeties unequip beams
+    dw #$FFFF
+
+preset_kpdr21_red_brinstar_revisit_hellway_revisit:
+    dw #preset_kpdr23_red_brinstar_revisit_hellway_revisit
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09A8, $1001  ; Collected Beams
+    dw $09C2, $00BD  ; Health
+    dw $09C4, $012B  ; Max health
+    dw $D874, $0104  ; Items
+    dw $D8B6, $3008  ; Doors
+    dw $D8B8, $26ED  ; Doors
+    dw #$FFFF
+
+preset_phantoonfirst_lower_norfair_kihunter_stairs_down:
+    dw #preset_prkd19_lower_norfair_nox_ridley_kihunter_stairs_down
+    dw $0F78, $03FF  ; Safeties enabled
+    dw $0F8E, $003C  ; Safeties energy adjustment
+    dw $0F92, $0028  ; Safeties energy adjustment
+    dw $0FC0, $002D  ; Safeties reserves adjustment
+    dw $1092, $FFFE  ; Safeties power bombs adjustment
+    dw $1110, $0006  ; Safeties unequip beams
+    dw #$FFFF
+
+preset_kpdr21_red_brinstar_revisit_red_tower_down:
+    dw #preset_kpdr23_red_brinstar_revisit_red_tower_down
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09A8, $1001  ; Collected Beams
+    dw $09C2, $00B5  ; Health
+    dw $09C4, $012B  ; Max health
+    dw $D874, $0104  ; Items
+    dw $D8B6, $3008  ; Doors
+    dw $D8B8, $26ED  ; Doors
+    dw #$FFFF
+
+preset_kpdr21_red_brinstar_revisit_skree_boost_final:
+    dw #preset_kpdr23_red_brinstar_revisit_skree_boost_final
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09A8, $1001  ; Collected Beams
+    dw $09C2, $00B5  ; Health
+    dw $09C4, $012B  ; Max health
+    dw $D874, $0104  ; Items
+    dw $D8B6, $3008  ; Doors
+    dw $D8B8, $26ED  ; Doors
+    dw #$FFFF
+
+preset_phantoonfirst_lower_norfair_wasteland:
+    dw #preset_prkd19_lower_norfair_nox_ridley_wasteland
+    dw $0F78, $07FF  ; Safeties enabled
+    dw $0F8E, $003C  ; Safeties energy adjustment
+    dw $0F92, $0028  ; Safeties energy adjustment
+    dw $0FC0, $002D  ; Safeties reserves adjustment
+    dw $1092, $FFFF  ; Safeties power bombs adjustment
+    dw $1110, $0006  ; Safeties unequip beams
+    dw $11D4, $0001  ; Safeties refill
+    dw #$FFFF
+
+preset_kpdr21_red_brinstar_revisit_below_spazer_final:
+    dw #preset_kpdr23_red_brinstar_revisit_below_spazer_final
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09A8, $1001  ; Collected Beams
+    dw $09C2, $00B4  ; Health
+    dw $09C4, $012B  ; Max health
+    dw $D874, $0104  ; Items
+    dw $D8B6, $3008  ; Doors
+    dw $D8B8, $26ED  ; Doors
+    dw #$FFFF
+
+preset_phantoonfirst_lower_norfair_metal_ninja_pirates:
+    dw #preset_prkd19_lower_norfair_nox_ridley_metal_ninja_pirates
+    dw $0F78, $07FF  ; Safeties enabled
+    dw $0F8E, $003C  ; Safeties energy adjustment
+    dw $0F92, $0028  ; Safeties energy adjustment
+    dw $0FC0, $002D  ; Safeties reserves adjustment
+    dw $1092, $FFFF  ; Safeties power bombs adjustment
+    dw $1110, $0006  ; Safeties unequip beams
+    dw $11D4, $FFDB  ; Safeties refill
+    dw #$FFFF
+
+preset_kpdr21_red_brinstar_revisit_breaking_the_tube:
+    dw #preset_kpdr23_red_brinstar_revisit_breaking_the_tube
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09A8, $1001  ; Collected Beams
+    dw $09C2, $00B4  ; Health
+    dw $09C4, $012B  ; Max health
+    dw $D874, $0104  ; Items
+    dw $D8B6, $3008  ; Doors
+    dw $D8B8, $26ED  ; Doors
+    dw #$FFFF
+
+preset_kpdr21_maridia_fish_tank:
+    dw #preset_kpdr23_maridia_fish_tank
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09A8, $1001  ; Collected Beams
+    dw $09C2, $00B4  ; Health
+    dw $09C4, $012B  ; Max health
+    dw $D874, $0104  ; Items
+    dw $D8B6, $3008  ; Doors
+    dw $D8B8, $26ED  ; Doors
+    dw #$FFFF
+
+preset_phantoonfirst_lower_norfair_plowerhouse:
+    dw #preset_prkd19_lower_norfair_nox_ridley_plowerhouse
+    dw $0F78, $07FF  ; Safeties enabled
+    dw $0F8E, $003C  ; Safeties energy adjustment
+    dw $0F92, $0028  ; Safeties energy adjustment
+    dw $0FC0, $002D  ; Safeties reserves adjustment
+    dw $1092, $FFFF  ; Safeties power bombs adjustment
+    dw $1110, $0006  ; Safeties unequip beams
+    dw $11D4, $0001  ; Safeties refill
+    dw #$FFFF
+
+preset_kpdr21_maridia_mt_everest:
+    dw #preset_kpdr23_maridia_mt_everest
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09A8, $1001  ; Collected Beams
+    dw $09C2, $00B4  ; Health
+    dw $09C4, $012B  ; Max health
+    dw $D874, $0104  ; Items
+    dw $D8B6, $3008  ; Doors
+    dw $D8B8, $26ED  ; Doors
+    dw #$FFFF
+
+preset_kpdr22_red_brinstar_hjb_missile_ocean_spark:
+    dw #preset_kpdr22_red_brinstar_hjb_missile_ocean_fly_setup
+    dw $078D, $8A36  ; DDB
+    dw $079B, $95FF  ; MDB
+    dw $090F, $A3FF  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $6C00  ; Screen subpixel Y position
+    dw $0917, $00C0  ; Layer 2 X position
+    dw $09C2, $014C  ; Health
+    dw $0AF6, $01C6  ; Samus X
+    dw #$FFFF
+
+preset_phantoonfirst_lower_norfair_ridley_farming_room:
+    dw #preset_prkd19_lower_norfair_nox_ridley_ridley_farming_room
+    dw $0F78, $07FF  ; Safeties enabled
+    dw $0F8E, $003C  ; Safeties energy adjustment
+    dw $0F92, $0028  ; Safeties energy adjustment
+    dw $0FC0, $002D  ; Safeties reserves adjustment
+    dw $1092, $FFFF  ; Safeties power bombs adjustment
+    dw $1110, $0006  ; Safeties unequip beams
+    dw $11D4, $FFE4  ; Safeties refill
+    dw #$FFFF
+
+preset_prkd19_lower_norfair_nox_ridley_ridley:
+    dw #preset_prkd19_lower_norfair_ridley
+    dw $09A6, $1007  ; Equipped Beams
+    dw $09CE, $0004  ; Pbs
+    dw $0AF8, $FFFF  ; Samus subpixel X
+    dw #$FFFF
+
+preset_prkd19_lower_norfair_leaving_ridley:
+    dw #preset_prkd19_lower_norfair_ridley
+    dw $078D, $98CA  ; DDB
+    dw $079B, $B32E  ; MDB
+    dw $07F3, $0024  ; Music Bank
+    dw $07F5, $0003  ; Music Track
+    dw $090F, $C000  ; Screen subpixel X position
+    dw $0913, $C400  ; Screen subpixel Y position
+    dw $0915, $011F  ; Screen Y position in pixels
+    dw $0917, $0001  ; Layer 2 X position
+    dw $0919, $00D7  ; Layer 2 Y position
+    dw $09C6, $0004  ; Missiles
+    dw $09CA, $0003  ; Supers
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $005F  ; Samus X
+    dw $0AFA, $019B  ; Samus Y
+    dw $D82A, $0101  ; Bosses
+    dw #$FFFF
+
+preset_prkd20_lower_norfair_nox_ridley_ridley_farming_room:
+    dw #preset_prkd20_lower_norfair_ridley_farming_room
+    dw $09A6, $1007  ; Equipped Beams
+    dw #$FFFF
+
+preset_prkd20_lower_norfair_ridley:
+    dw #preset_prkd19_lower_norfair_ridley
+    dw $09C6, $0014  ; Missiles
+    dw $09C8, $0014  ; Max missiles
+    dw $0AF8, $FFFF  ; Samus subpixel X
+    dw $D878, $001C  ; Items
+    dw #$FFFF
+
+preset_gtclassic_wrecked_ship_basement:
+    dw #preset_gtclassic_wrecked_ship_wrecked_ship_shaft
+    dw $078D, $A1BC  ; DDB
+    dw $079B, $CAF6  ; MDB
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $0400  ; Screen X position in pixels
+    dw $0913, $1C00  ; Screen subpixel Y position
+    dw $0915, $071F  ; Screen Y position in pixels
+    dw $0917, $0300  ; Layer 2 X position
+    dw $0919, $0557  ; Layer 2 Y position
+    dw $09CA, $000F  ; Supers
+    dw $09D2, $0002  ; Currently selected item
+    dw $0AF6, $045F  ; Samus X
+    dw $0AFA, $07BB  ; Samus Y
+    dw $D8C0, $8010  ; Doors
+    dw #$FFFF
+
+preset_gtclassic_wrecked_ship_phantoon:
+    dw #preset_gtclassic_wrecked_ship_wrecked_ship_shaft
+    dw $078D, $A21C  ; DDB
+    dw $079B, $CC6F  ; MDB
+    dw $090F, $4000  ; Screen subpixel X position
+    dw $0911, $0400  ; Screen X position in pixels
+    dw $0913, $2C00  ; Screen subpixel Y position
+    dw $0917, $0300  ; Layer 2 X position
+    dw $09CA, $000E  ; Supers
+    dw $09CE, $000C  ; Pbs
+    dw $0AF6, $04CE  ; Samus X
+    dw $D8C0, $8030  ; Doors
     dw #$FFFF
 
 preset_100early_brinstar_cleanup_big_pink_hopper_room:
@@ -29929,306 +30328,6 @@ preset_hundo_maridia_beach_beach_missiles:
     dw $0AFA, $005B  ; Samus Y
     dw #$FFFF
 
-preset_gtclassic_wrecked_ship_ocean:
-    dw #preset_gtclassic_wrecked_ship_moat
-    dw $078D, $8A36  ; DDB
-    dw $079B, $95FF  ; MDB
-    dw $090F, $4000  ; Screen subpixel X position
-    dw $0911, $0100  ; Screen X position in pixels
-    dw $0917, $00C0  ; Layer 2 X position
-    dw $0AF6, $01A8  ; Samus X
-    dw #$FFFF
-
-preset_gtclassic_wrecked_ship_wrecked_ship_shaft:
-    dw #preset_gtclassic_wrecked_ship_moat
-    dw $078D, $89D6  ; DDB
-    dw $079B, $CA08  ; MDB
-    dw $07F3, $0030  ; Music Bank
-    dw $090F, $8C00  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $0000  ; Screen subpixel Y position
-    dw $0917, $0000  ; Layer 2 X position
-    dw $09CA, $0010  ; Supers
-    dw $0AF6, $002E  ; Samus X
-    dw $D8B0, $3000  ; Doors
-    dw #$FFFF
-
-preset_pkrd_lower_norfair_ridley:
-    dw #preset_pkrd_lower_norfair_ridley_farming_room
-    dw $078D, $995A  ; DDB
-    dw $079B, $B37A  ; MDB
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $0913, $D800  ; Screen subpixel Y position
-    dw $09C2, $0146  ; Health
-    dw $09CA, $000A  ; Supers
-    dw $0AF6, $003C  ; Samus X
-    dw $0AFA, $009B  ; Samus Y
-    dw $D8BA, $D1F1  ; Doors
-    dw #$FFFF
-
-preset_kpdr23_maridia_crab_shaft:
-    dw #preset_kpdr23_maridia_mt_everest
-    dw $090F, $E000  ; Screen subpixel X position
-    dw $0911, $0500  ; Screen X position in pixels
-    dw $0913, $9C01  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0917, $03C0  ; Layer 2 X position
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $09C2, $00DD  ; Health
-    dw $0AF6, $05C0  ; Samus X
-    dw $0AFA, $008B  ; Samus Y
-    dw #$FFFF
-
-preset_kpdr23_maridia_aqueduct:
-    dw #preset_kpdr23_maridia_mt_everest
-    dw $078D, $A468  ; DDB
-    dw $079B, $D1A3  ; MDB
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $0913, $83FF  ; Screen subpixel Y position
-    dw $0915, $0300  ; Screen Y position in pixels
-    dw $0917, $0100  ; Layer 2 X position
-    dw $0919, $0240  ; Layer 2 Y position
-    dw $09C2, $00DD  ; Health
-    dw $09CA, $0009  ; Supers
-    dw $09D2, $0003  ; Currently selected item
-    dw $0AF6, $01AD  ; Samus X
-    dw $0AFA, $038B  ; Samus Y
-    dw $D8C0, $8174  ; Doors
-    dw #$FFFF
-
-preset_kpdr23_maridia_botwoon_hallway:
-    dw #preset_kpdr23_red_brinstar_revisit_red_tower_down
-    dw $078D, $A4C8  ; DDB
-    dw $079B, $D5A7  ; MDB
-    dw $07F3, $001B  ; Music Bank
-    dw $090F, $A000  ; Screen subpixel X position
-    dw $0913, $4000  ; Screen subpixel Y position
-    dw $09C2, $00DD  ; Health
-    dw $09CE, $0001  ; Pbs
-    dw $09D2, $0003  ; Currently selected item
-    dw $0AF6, $009D  ; Samus X
-    dw $0AF8, $7FFF  ; Samus subpixel X
-    dw $0AFA, $006B  ; Samus Y
-    dw $D820, $0801  ; Events
-    dw $D8C0, $8174  ; Doors
-    dw #$FFFF
-
-preset_kpdr22_red_brinstar_moat_missile_ocean_fly_setup:
-    dw #preset_kpdr22_red_brinstar_hjb_missile_ocean_fly_setup
-    dw $09C6, $000B  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw #$FFFF
-
-preset_phantoonfirst_upper_norfair_lava_spark:
-    dw #preset_prkd19_upper_norfair_lava_spark
-    dw $0F78, $007F  ; Safeties enabled
-    dw $0FC0, $002D  ; Safeties reserves adjustment
-    dw #$FFFF
-
-preset_kpdr20_red_brinstar_revisit_caterpillars_revisit:
-    dw #preset_kpdr21_red_brinstar_revisit_caterpillars_revisit
-    dw $09C6, $0008  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr_red_brinstar_revisit_caterpillars_revisit:
-    dw #preset_kpdr_red_brinstar_revisit_red_brinstar_elevator
-    dw $078D, $8B02  ; DDB
-    dw $079B, $A322  ; MDB
-    dw $07F3, $0012  ; Music Bank
-    dw $07F5, $0005  ; Music Track
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $0913, $0000  ; Screen subpixel Y position
-    dw $0915, $0238  ; Screen Y position in pixels
-    dw $0919, $0238  ; Layer 2 Y position
-    dw $0A1C, $009B  ; Samus position/state
-    dw $0A1E, $0000  ; More position/state
-    dw $0AFA, $02AB  ; Samus Y
-    dw #$FFFF
-
-preset_phantoonfirst_lower_norfair_ln_main_hall:
-    dw #preset_prkd19_lower_norfair_nox_ridley_ln_main_hall
-    dw $0F78, $01FF  ; Safeties enabled
-    dw $0F8E, $003C  ; Safeties energy adjustment
-    dw $0FC0, $002D  ; Safeties reserves adjustment
-    dw $1110, $0006  ; Safeties unequip beams
-    dw #$FFFF
-
-preset_kpdr21_red_brinstar_revisit_hellway_revisit:
-    dw #preset_kpdr23_red_brinstar_revisit_hellway_revisit
-    dw $09A6, $1001  ; Equipped Beams
-    dw $09A8, $1001  ; Collected Beams
-    dw $09C2, $00BD  ; Health
-    dw $09C4, $012B  ; Max health
-    dw $D874, $0104  ; Items
-    dw $D8B6, $3008  ; Doors
-    dw $D8B8, $26ED  ; Doors
-    dw #$FFFF
-
-preset_phantoonfirst_lower_norfair_prepillars:
-    dw #preset_prkd19_lower_norfair_nox_ridley_prepillars
-    dw $0F78, $01FF  ; Safeties enabled
-    dw $0F8E, $003C  ; Safeties energy adjustment
-    dw $0FC0, $002D  ; Safeties reserves adjustment
-    dw $1110, $0006  ; Safeties unequip beams
-    dw #$FFFF
-
-preset_kpdr21_red_brinstar_revisit_red_tower_down:
-    dw #preset_kpdr23_red_brinstar_revisit_red_tower_down
-    dw $09A6, $1001  ; Equipped Beams
-    dw $09A8, $1001  ; Collected Beams
-    dw $09C2, $00B5  ; Health
-    dw $09C4, $012B  ; Max health
-    dw $D874, $0104  ; Items
-    dw $D8B6, $3008  ; Doors
-    dw $D8B8, $26ED  ; Doors
-    dw #$FFFF
-
-preset_kpdr21_red_brinstar_revisit_skree_boost_final:
-    dw #preset_kpdr23_red_brinstar_revisit_skree_boost_final
-    dw $09A6, $1001  ; Equipped Beams
-    dw $09A8, $1001  ; Collected Beams
-    dw $09C2, $00B5  ; Health
-    dw $09C4, $012B  ; Max health
-    dw $D874, $0104  ; Items
-    dw $D8B6, $3008  ; Doors
-    dw $D8B8, $26ED  ; Doors
-    dw #$FFFF
-
-preset_phantoonfirst_lower_norfair_worst_room_in_the_game:
-    dw #preset_prkd19_lower_norfair_nox_ridley_worst_room_in_the_game
-    dw $0F78, $03FF  ; Safeties enabled
-    dw $0F8E, $003C  ; Safeties energy adjustment
-    dw $0F92, $0028  ; Safeties energy adjustment
-    dw $0FC0, $002D  ; Safeties reserves adjustment
-    dw $1092, $FFFE  ; Safeties power bombs adjustment
-    dw $1110, $0006  ; Safeties unequip beams
-    dw #$FFFF
-
-preset_kpdr21_red_brinstar_revisit_below_spazer_final:
-    dw #preset_kpdr23_red_brinstar_revisit_below_spazer_final
-    dw $09A6, $1001  ; Equipped Beams
-    dw $09A8, $1001  ; Collected Beams
-    dw $09C2, $00B4  ; Health
-    dw $09C4, $012B  ; Max health
-    dw $D874, $0104  ; Items
-    dw $D8B6, $3008  ; Doors
-    dw $D8B8, $26ED  ; Doors
-    dw #$FFFF
-
-preset_phantoonfirst_lower_norfair_amphitheatre:
-    dw #preset_prkd19_lower_norfair_nox_ridley_amphitheatre
-    dw $0F78, $03FF  ; Safeties enabled
-    dw $0F8E, $003C  ; Safeties energy adjustment
-    dw $0F92, $0028  ; Safeties energy adjustment
-    dw $0FC0, $002D  ; Safeties reserves adjustment
-    dw $1092, $FFFE  ; Safeties power bombs adjustment
-    dw $1110, $0006  ; Safeties unequip beams
-    dw #$FFFF
-
-preset_kpdr21_red_brinstar_revisit_breaking_the_tube:
-    dw #preset_kpdr23_red_brinstar_revisit_breaking_the_tube
-    dw $09A6, $1001  ; Equipped Beams
-    dw $09A8, $1001  ; Collected Beams
-    dw $09C2, $00B4  ; Health
-    dw $09C4, $012B  ; Max health
-    dw $D874, $0104  ; Items
-    dw $D8B6, $3008  ; Doors
-    dw $D8B8, $26ED  ; Doors
-    dw #$FFFF
-
-preset_kpdr21_maridia_fish_tank:
-    dw #preset_kpdr23_maridia_fish_tank
-    dw $09A6, $1001  ; Equipped Beams
-    dw $09A8, $1001  ; Collected Beams
-    dw $09C2, $00B4  ; Health
-    dw $09C4, $012B  ; Max health
-    dw $D874, $0104  ; Items
-    dw $D8B6, $3008  ; Doors
-    dw $D8B8, $26ED  ; Doors
-    dw #$FFFF
-
-preset_phantoonfirst_lower_norfair_kihunter_stairs_down:
-    dw #preset_prkd19_lower_norfair_nox_ridley_kihunter_stairs_down
-    dw $0F78, $03FF  ; Safeties enabled
-    dw $0F8E, $003C  ; Safeties energy adjustment
-    dw $0F92, $0028  ; Safeties energy adjustment
-    dw $0FC0, $002D  ; Safeties reserves adjustment
-    dw $1092, $FFFE  ; Safeties power bombs adjustment
-    dw $1110, $0006  ; Safeties unequip beams
-    dw #$FFFF
-
-preset_kpdr21_maridia_mt_everest:
-    dw #preset_kpdr23_maridia_mt_everest
-    dw $09A6, $1001  ; Equipped Beams
-    dw $09A8, $1001  ; Collected Beams
-    dw $09C2, $00B4  ; Health
-    dw $09C4, $012B  ; Max health
-    dw $D874, $0104  ; Items
-    dw $D8B6, $3008  ; Doors
-    dw $D8B8, $26ED  ; Doors
-    dw #$FFFF
-
-preset_kpdr22_red_brinstar_hjb_missile_ocean_spark:
-    dw #preset_kpdr22_red_brinstar_hjb_missile_ocean_fly_setup
-    dw $078D, $8A36  ; DDB
-    dw $079B, $95FF  ; MDB
-    dw $090F, $A3FF  ; Screen subpixel X position
-    dw $0911, $0100  ; Screen X position in pixels
-    dw $0913, $6C00  ; Screen subpixel Y position
-    dw $0917, $00C0  ; Layer 2 X position
-    dw $09C2, $014C  ; Health
-    dw $0AF6, $01C6  ; Samus X
-    dw #$FFFF
-
-preset_phantoonfirst_lower_norfair_wasteland:
-    dw #preset_prkd19_lower_norfair_nox_ridley_wasteland
-    dw $0F78, $07FF  ; Safeties enabled
-    dw $0F8E, $003C  ; Safeties energy adjustment
-    dw $0F92, $0028  ; Safeties energy adjustment
-    dw $0FC0, $002D  ; Safeties reserves adjustment
-    dw $1092, $FFFF  ; Safeties power bombs adjustment
-    dw $1110, $0006  ; Safeties unequip beams
-    dw $11D4, $0001  ; Safeties refill
-    dw #$FFFF
-
-preset_prkd19_lower_norfair_nox_ridley_metal_ninja_pirates:
-    dw #preset_prkd19_lower_norfair_metal_ninja_pirates
-    dw $09A6, $1007  ; Equipped Beams
-    dw $0AF8, $FFFF  ; Samus subpixel X
-    dw #$FFFF
-
-preset_prkd19_lower_norfair_plowerhouse:
-    dw #preset_prkd19_lower_norfair_metal_ninja_pirates
-    dw $078D, $9A1A  ; DDB
-    dw $079B, $B62B  ; MDB
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $0911, $01F4  ; Screen X position in pixels
-    dw $0913, $1C00  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0917, $0177  ; Layer 2 X position
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $09C2, $00E9  ; Health
-    dw $09CA, $000A  ; Supers
-    dw $0AF6, $0254  ; Samus X
-    dw $0AFA, $00BB  ; Samus Y
-    dw $D8BC, $0001  ; Doors
-    dw #$FFFF
-
-preset_prkd20_lower_norfair_nox_ridley_wasteland:
-    dw #preset_prkd20_lower_norfair_wasteland
-    dw $09A6, $1007  ; Equipped Beams
-    dw #$FFFF
-
-preset_prkd20_lower_norfair_metal_ninja_pirates:
-    dw #preset_prkd19_lower_norfair_metal_ninja_pirates
-    dw $09C6, $0014  ; Missiles
-    dw $09C8, $0014  ; Max missiles
-    dw $0AF8, $FFFF  ; Samus subpixel X
-    dw $D878, $001C  ; Items
-    dw #$FFFF
-
 preset_gtmax_upper_norfair_and_kraid_kraid_revisit:
     dw #preset_gtmax_upper_norfair_and_kraid_business_center_final
     dw $078D, $92EE  ; DDB
@@ -30244,6 +30343,288 @@ preset_gtmax_upper_norfair_and_kraid_kraid_revisit:
     dw $0A1E, $0000  ; More position/state
     dw $0AF6, $0080  ; Samus X
     dw $0AFA, $0086  ; Samus Y
+    dw #$FFFF
+
+preset_pkrd_lower_norfair_kihunter_stairs_up:
+    dw #preset_pkrd_lower_norfair_wasteland_revisit
+    dw $078D, $9A3E  ; DDB
+    dw $079B, $B5D5  ; MDB
+    dw $090F, $B200  ; Screen subpixel X position
+    dw $0911, $0500  ; Screen X position in pixels
+    dw $0913, $E800  ; Screen subpixel Y position
+    dw $0917, $03C0  ; Layer 2 X position
+    dw $09C2, $00A4  ; Health
+    dw $09CE, $0004  ; Pbs
+    dw $0AF6, $055B  ; Samus X
+    dw $0AFA, $009B  ; Samus Y
+    dw #$FFFF
+
+preset_kpdr21_maridia_crab_shaft:
+    dw #preset_kpdr23_maridia_crab_shaft
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09A8, $1001  ; Collected Beams
+    dw $09C2, $0079  ; Health
+    dw $09C4, $012B  ; Max health
+    dw $D874, $0104  ; Items
+    dw $D8B6, $3008  ; Doors
+    dw $D8B8, $26ED  ; Doors
+    dw #$FFFF
+
+preset_kpdr25_maridia_crab_shaft:
+    dw #preset_kpdr23_maridia_crab_shaft
+    dw $09A6, $1007  ; Equipped Beams
+    dw $09A8, $1007  ; Collected Beams
+    dw $09C6, $000F  ; Missiles
+    dw $09C8, $0019  ; Max missiles
+    dw $09CA, $0009  ; Supers
+    dw $D870, $0190  ; Items
+    dw $D876, $01A5  ; Items
+    dw $D8B8, $2EEF  ; Doors
+    dw #$FFFF
+
+preset_kpdr21_maridia_aqueduct:
+    dw #preset_kpdr23_maridia_aqueduct
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09A8, $1001  ; Collected Beams
+    dw $09C2, $0079  ; Health
+    dw $09C4, $012B  ; Max health
+    dw $D874, $0104  ; Items
+    dw $D8B6, $3008  ; Doors
+    dw $D8B8, $26ED  ; Doors
+    dw #$FFFF
+
+preset_kpdr25_maridia_aqueduct:
+    dw #preset_kpdr23_maridia_aqueduct
+    dw $09A6, $1007  ; Equipped Beams
+    dw $09A8, $1007  ; Collected Beams
+    dw $09C6, $000F  ; Missiles
+    dw $09C8, $0019  ; Max missiles
+    dw $09CA, $0008  ; Supers
+    dw $D870, $0190  ; Items
+    dw $D876, $01A5  ; Items
+    dw $D8B8, $2EEF  ; Doors
+    dw #$FFFF
+
+preset_kpdr21_maridia_botwoon_hallway:
+    dw #preset_kpdr23_maridia_botwoon_hallway
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09A8, $1001  ; Collected Beams
+    dw $09C2, $0079  ; Health
+    dw $09C4, $012B  ; Max health
+    dw $D874, $0104  ; Items
+    dw $D8B6, $3008  ; Doors
+    dw $D8B8, $26ED  ; Doors
+    dw #$FFFF
+
+preset_kpdr25_maridia_botwoon_hallway:
+    dw #preset_kpdr23_maridia_botwoon_hallway
+    dw $09A6, $1007  ; Equipped Beams
+    dw $09A8, $1007  ; Collected Beams
+    dw $09C6, $000F  ; Missiles
+    dw $09C8, $0019  ; Max missiles
+    dw $09CA, $0008  ; Supers
+    dw $D870, $0190  ; Items
+    dw $D876, $01A5  ; Items
+    dw $D8B8, $2EEF  ; Doors
+    dw #$FFFF
+
+preset_kpdr23_maridia_botwoon:
+    dw #preset_kpdr23_maridia_botwoon_hallway
+    dw $078D, $A72C  ; DDB
+    dw $079B, $D617  ; MDB
+    dw $090F, $DFFF  ; Screen subpixel X position
+    dw $0911, $0300  ; Screen X position in pixels
+    dw $0913, $5800  ; Screen subpixel Y position
+    dw $0917, $0240  ; Layer 2 X position
+    dw $09D2, $0000  ; Currently selected item
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $03A4  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw #$FFFF
+
+preset_kpdr_wrecked_ship_bowling_spark:
+    dw #preset_kpdr_wrecked_ship_pancakes_and_wavers
+    dw $078D, $89E2  ; DDB
+    dw $079B, $9461  ; MDB
+    dw $090F, $6800  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $2400  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $00C0  ; Layer 2 X position
+    dw $0AF6, $016E  ; Samus X
+    dw $0AFA, $009D  ; Samus Y
+    dw #$FFFF
+
+preset_kpdr_wrecked_ship_leaving_gravity:
+    dw #preset_kpdr_wrecked_ship_wrecked_ship_shaft
+    dw $078D, $A1A4  ; DDB
+    dw $079B, $CE40  ; MDB
+    dw $07F5, $0003  ; Music Track
+    dw $0913, $E400  ; Screen subpixel Y position
+    dw $0917, $0001  ; Layer 2 X position
+    dw $09A2, $3125  ; Equipped Items
+    dw $09A4, $3125  ; Collected Items
+    dw $09C2, $006D  ; Health
+    dw $09CA, $0009  ; Supers
+    dw $0A1C, $009B  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
+    dw $0AF6, $0078  ; Samus X
+    dw $0AFA, $0088  ; Samus Y
+    dw $D880, $00A0  ; Items
+    dw $D8C0, $0174  ; Doors
+    dw #$FFFF
+
+preset_kpdr20_wrecked_ship_moat_ball:
+    dw #preset_kpdr21_wrecked_ship_moat_ball
+    dw $09C6, $000A  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr20_wrecked_ship_crateria_kihunters_return:
+    dw #preset_kpdr21_wrecked_ship_crateria_kihunters_return
+    dw $09C6, $000A  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr20_red_brinstar_revisit_red_brinstar_elevator:
+    dw #preset_kpdr21_red_brinstar_revisit_red_brinstar_elevator
+    dw $09C6, $0008  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr20_red_brinstar_revisit_caterpillars_revisit:
+    dw #preset_kpdr21_red_brinstar_revisit_caterpillars_revisit
+    dw $09C6, $0008  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr20_red_brinstar_revisit_hellway_revisit:
+    dw #preset_kpdr21_red_brinstar_revisit_hellway_revisit
+    dw $09C6, $0008  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr20_red_brinstar_revisit_red_tower_down:
+    dw #preset_kpdr21_red_brinstar_revisit_red_tower_down
+    dw $09C6, $0008  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr20_red_brinstar_revisit_skree_boost_final:
+    dw #preset_kpdr21_red_brinstar_revisit_skree_boost_final
+    dw $09C6, $0008  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr20_red_brinstar_revisit_below_spazer_final:
+    dw #preset_kpdr21_red_brinstar_revisit_below_spazer_final
+    dw $09C6, $0008  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr20_red_brinstar_revisit_breaking_the_tube:
+    dw #preset_kpdr21_red_brinstar_revisit_breaking_the_tube
+    dw $09C6, $0008  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr20_maridia_fish_tank:
+    dw #preset_kpdr21_maridia_fish_tank
+    dw $09C6, $0008  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr20_maridia_mt_everest:
+    dw #preset_kpdr21_maridia_mt_everest
+    dw $09C6, $0008  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr22_red_brinstar_moat_missile_ocean_spark:
+    dw #preset_kpdr22_red_brinstar_hjb_missile_ocean_spark
+    dw $D870, $0190  ; Items
+    dw #$FFFF
+
+preset_kpdr22_wrecked_ship_entering_wrecked_ship:
+    dw #preset_kpdr25_wrecked_ship_entering_wrecked_ship
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09A8, $1001  ; Collected Beams
+    dw $09C2, $00D3  ; Health
+    dw $09C6, $0010  ; Missiles
+    dw $09C8, $0014  ; Max missiles
+    dw $09CA, $0004  ; Supers
+    dw $D870, $0180  ; Items
+    dw $D876, $01A1  ; Items
+    dw $D8B8, $26EF  ; Doors
+    dw #$FFFF
+
+preset_phantoonfirst_lower_norfair_ridley:
+    dw #preset_prkd19_lower_norfair_nox_ridley_ridley
+    dw $0F78, $07FF  ; Safeties enabled
+    dw $0F8E, $003C  ; Safeties energy adjustment
+    dw $0F92, $0028  ; Safeties energy adjustment
+    dw $0FC0, $002D  ; Safeties reserves adjustment
+    dw $1090, $0001  ; Safeties power bombs adjustment
+    dw $1110, $0006  ; Safeties unequip beams
+    dw $11D4, $0001  ; Safeties refill
+    dw #$FFFF
+
+preset_prkd19_lower_norfair_nox_ridley_leaving_ridley:
+    dw #preset_prkd19_lower_norfair_leaving_ridley
+    dw $0AF8, $FFFF  ; Samus subpixel X
+    dw #$FFFF
+
+preset_prkd19_lower_norfair_reverse_plowerhouse:
+    dw #preset_prkd19_lower_norfair_ridley
+    dw $078D, $98BE  ; DDB
+    dw $090F, $F000  ; Screen subpixel X position
+    dw $0911, $0200  ; Screen X position in pixels
+    dw $0913, $0400  ; Screen subpixel Y position
+    dw $0917, $0180  ; Layer 2 X position
+    dw $09C2, $00F1  ; Health
+    dw $09C6, $0009  ; Missiles
+    dw $09CA, $0003  ; Supers
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $02B1  ; Samus X
+    dw $D82A, $0101  ; Bosses
+    dw $D8BA, $D5F1  ; Doors
+    dw #$FFFF
+
+preset_prkd20_lower_norfair_nox_ridley_ridley:
+    dw #preset_prkd20_lower_norfair_ridley
+    dw $09A6, $1007  ; Equipped Beams
+    dw $09CE, $0004  ; Pbs
+    dw #$FFFF
+
+preset_gtclassic_wrecked_ship_shaft_climb:
+    dw #preset_gtclassic_wrecked_ship_phantoon
+    dw $078D, $A2C4  ; DDB
+    dw $07F5, $0006  ; Music Track
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $0225  ; Screen X position in pixels
+    dw $0913, $B800  ; Screen subpixel Y position
+    dw $0917, $019B  ; Layer 2 X position
+    dw $09C2, $0154  ; Health
+    dw $09C6, $0055  ; Missiles
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $02C5  ; Samus X
+    dw $0AFA, $006B  ; Samus Y
+    dw $D82A, $0105  ; Bosses
+    dw $D8C0, $8070  ; Doors
     dw #$FFFF
 
 preset_100early_brinstar_cleanup_spore_spawn_supers:
@@ -30395,77 +30776,6 @@ preset_hundo_maridia_beach_maridia_bug_room:
     dw $D880, $4FFF  ; Items
     dw #$FFFF
 
-preset_gtclassic_wrecked_ship_basement:
-    dw #preset_gtclassic_wrecked_ship_wrecked_ship_shaft
-    dw $078D, $A1BC  ; DDB
-    dw $079B, $CAF6  ; MDB
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $0911, $0400  ; Screen X position in pixels
-    dw $0913, $1C00  ; Screen subpixel Y position
-    dw $0915, $071F  ; Screen Y position in pixels
-    dw $0917, $0300  ; Layer 2 X position
-    dw $0919, $0557  ; Layer 2 Y position
-    dw $09CA, $000F  ; Supers
-    dw $09D2, $0002  ; Currently selected item
-    dw $0AF6, $045F  ; Samus X
-    dw $0AFA, $07BB  ; Samus Y
-    dw $D8C0, $8010  ; Doors
-    dw #$FFFF
-
-preset_gtclassic_wrecked_ship_phantoon:
-    dw #preset_gtclassic_wrecked_ship_wrecked_ship_shaft
-    dw $078D, $A21C  ; DDB
-    dw $079B, $CC6F  ; MDB
-    dw $090F, $4000  ; Screen subpixel X position
-    dw $0911, $0400  ; Screen X position in pixels
-    dw $0913, $2C00  ; Screen subpixel Y position
-    dw $0917, $0300  ; Layer 2 X position
-    dw $09CA, $000E  ; Supers
-    dw $09CE, $000C  ; Pbs
-    dw $0AF6, $04CE  ; Samus X
-    dw $D8C0, $8030  ; Doors
-    dw #$FFFF
-
-preset_pkrd_lower_norfair_leaving_ridley:
-    dw #preset_pkrd_lower_norfair_ridley
-    dw $078D, $98CA  ; DDB
-    dw $079B, $B32E  ; MDB
-    dw $07F3, $0024  ; Music Bank
-    dw $07F5, $0003  ; Music Track
-    dw $0913, $7C00  ; Screen subpixel Y position
-    dw $0915, $011F  ; Screen Y position in pixels
-    dw $0917, $0001  ; Layer 2 X position
-    dw $0919, $00D7  ; Layer 2 Y position
-    dw $09A6, $1001  ; Equipped Beams
-    dw $09C2, $0105  ; Health
-    dw $09C6, $0011  ; Missiles
-    dw $09CA, $0002  ; Supers
-    dw $09CE, $0005  ; Pbs
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $0064  ; Samus X
-    dw $0AFA, $019B  ; Samus Y
-    dw $D82A, $0101  ; Bosses
-    dw #$FFFF
-
-preset_pkrd_lower_norfair_reverse_plowerhouse:
-    dw #preset_pkrd_lower_norfair_worst_room_in_the_game
-    dw $078D, $98BE  ; DDB
-    dw $079B, $B37A  ; MDB
-    dw $090F, $4000  ; Screen subpixel X position
-    dw $0911, $0200  ; Screen X position in pixels
-    dw $0917, $0180  ; Layer 2 X position
-    dw $09A6, $1001  ; Equipped Beams
-    dw $09C2, $0101  ; Health
-    dw $09C6, $0011  ; Missiles
-    dw $09CA, $0002  ; Supers
-    dw $09D2, $0000  ; Currently selected item
-    dw $0AF6, $02C9  ; Samus X
-    dw $D82A, $0101  ; Bosses
-    dw $D8BA, $D5F1  ; Doors
-    dw $D8BC, $0001  ; Doors
-    dw #$FFFF
-
 preset_gtmax_upper_norfair_and_kraid_kraid_etank:
     dw #preset_gtmax_upper_norfair_and_kraid_kraid_revisit
     dw $078D, $923A  ; DDB
@@ -30482,6 +30792,97 @@ preset_gtmax_upper_norfair_and_kraid_kraid_etank:
     dw $0AF6, $0059  ; Samus X
     dw $0AFA, $018B  ; Samus Y
     dw $D8B8, $EEED  ; Doors
+    dw #$FFFF
+
+preset_pkrd_lower_norfair_fireflea_room:
+    dw #preset_pkrd_lower_norfair_kihunter_stairs_up
+    dw $078D, $9A26  ; DDB
+    dw $079B, $B585  ; MDB
+    dw $090F, $2000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $8800  ; Screen subpixel Y position
+    dw $0915, $000F  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $0009  ; Layer 2 Y position
+    dw $0AF6, $009C  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw #$FFFF
+
+preset_pkrd_lower_norfair_springball_maze:
+    dw #preset_pkrd_lower_norfair_kihunter_stairs_up
+    dw $078D, $9A02  ; DDB
+    dw $079B, $B6EE  ; MDB
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0917, $0100  ; Layer 2 X position
+    dw $0919, $000D  ; Layer 2 Y position
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $016D  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw #$FFFF
+
+preset_kpdr20_maridia_crab_shaft:
+    dw #preset_kpdr21_maridia_crab_shaft
+    dw $09C6, $0008  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr20_maridia_aqueduct:
+    dw #preset_kpdr21_maridia_aqueduct
+    dw $09C6, $0008  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr20_maridia_botwoon_hallway:
+    dw #preset_kpdr21_maridia_botwoon_hallway
+    dw $09C6, $0008  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr21_maridia_botwoon:
+    dw #preset_kpdr23_maridia_botwoon
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09A8, $1001  ; Collected Beams
+    dw $09C2, $0079  ; Health
+    dw $09C4, $012B  ; Max health
+    dw $D874, $0104  ; Items
+    dw $D8B6, $3008  ; Doors
+    dw $D8B8, $26ED  ; Doors
+    dw #$FFFF
+
+preset_gtclassic_wrecked_ship_ocean_revisit:
+    dw #preset_gtclassic_wrecked_ship_shaft_climb
+    dw $078D, $A294  ; DDB
+    dw $079B, $CAF6  ; MDB
+    dw $090F, $EC00  ; Screen subpixel X position
+    dw $0911, $0400  ; Screen X position in pixels
+    dw $0913, $5800  ; Screen subpixel Y position
+    dw $0915, $0313  ; Screen Y position in pixels
+    dw $0917, $0300  ; Layer 2 X position
+    dw $0919, $024E  ; Layer 2 Y position
+    dw $0AF6, $0466  ; Samus X
+    dw $0AFA, $038B  ; Samus Y
+    dw $D8C0, $8074  ; Doors
+    dw #$FFFF
+
+preset_gtclassic_wrecked_ship_crateria_kihunters_revisit:
+    dw #preset_gtclassic_wrecked_ship_shaft_climb
+    dw $078D, $89CA  ; DDB
+    dw $079B, $95FF  ; MDB
+    dw $07F3, $000C  ; Music Bank
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $4000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0AF6, $0032  ; Samus X
+    dw $0AFA, $008E  ; Samus Y
+    dw $D8C0, $8074  ; Doors
     dw #$FFFF
 
 preset_100early_brinstar_cleanup_waterway_etank:
@@ -30603,241 +31004,6 @@ preset_hundo_maridia_beach_maridia_bug_room_revisit:
     dw $D880, $7FFF  ; Items
     dw #$FFFF
 
-preset_gtclassic_wrecked_ship_shaft_climb:
-    dw #preset_gtclassic_wrecked_ship_phantoon
-    dw $078D, $A2C4  ; DDB
-    dw $07F5, $0006  ; Music Track
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $0911, $0225  ; Screen X position in pixels
-    dw $0913, $B800  ; Screen subpixel Y position
-    dw $0917, $019B  ; Layer 2 X position
-    dw $09C2, $0154  ; Health
-    dw $09C6, $0055  ; Missiles
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $02C5  ; Samus X
-    dw $0AFA, $006B  ; Samus Y
-    dw $D82A, $0105  ; Bosses
-    dw $D8C0, $8070  ; Doors
-    dw #$FFFF
-
-preset_pkrd_lower_norfair_wasteland_revisit:
-    dw #preset_pkrd_lower_norfair_reverse_plowerhouse
-    dw $078D, $9966  ; DDB
-    dw $079B, $B62B  ; MDB
-    dw $090F, $9000  ; Screen subpixel X position
-    dw $0913, $4C00  ; Screen subpixel Y position
-    dw $09C2, $00D3  ; Health
-    dw $09CA, $0006  ; Supers
-    dw $0AF6, $02DC  ; Samus X
-    dw #$FFFF
-
-preset_kpdr21_maridia_crab_shaft:
-    dw #preset_kpdr23_maridia_crab_shaft
-    dw $09A6, $1001  ; Equipped Beams
-    dw $09A8, $1001  ; Collected Beams
-    dw $09C2, $0079  ; Health
-    dw $09C4, $012B  ; Max health
-    dw $D874, $0104  ; Items
-    dw $D8B6, $3008  ; Doors
-    dw $D8B8, $26ED  ; Doors
-    dw #$FFFF
-
-preset_kpdr25_maridia_crab_shaft:
-    dw #preset_kpdr23_maridia_crab_shaft
-    dw $09A6, $1007  ; Equipped Beams
-    dw $09A8, $1007  ; Collected Beams
-    dw $09C6, $000F  ; Missiles
-    dw $09C8, $0019  ; Max missiles
-    dw $09CA, $0009  ; Supers
-    dw $D870, $0190  ; Items
-    dw $D876, $01A5  ; Items
-    dw $D8B8, $2EEF  ; Doors
-    dw #$FFFF
-
-preset_kpdr21_maridia_aqueduct:
-    dw #preset_kpdr23_maridia_aqueduct
-    dw $09A6, $1001  ; Equipped Beams
-    dw $09A8, $1001  ; Collected Beams
-    dw $09C2, $0079  ; Health
-    dw $09C4, $012B  ; Max health
-    dw $D874, $0104  ; Items
-    dw $D8B6, $3008  ; Doors
-    dw $D8B8, $26ED  ; Doors
-    dw #$FFFF
-
-preset_kpdr25_maridia_aqueduct:
-    dw #preset_kpdr23_maridia_aqueduct
-    dw $09A6, $1007  ; Equipped Beams
-    dw $09A8, $1007  ; Collected Beams
-    dw $09C6, $000F  ; Missiles
-    dw $09C8, $0019  ; Max missiles
-    dw $09CA, $0008  ; Supers
-    dw $D870, $0190  ; Items
-    dw $D876, $01A5  ; Items
-    dw $D8B8, $2EEF  ; Doors
-    dw #$FFFF
-
-preset_kpdr21_maridia_botwoon_hallway:
-    dw #preset_kpdr23_maridia_botwoon_hallway
-    dw $09A6, $1001  ; Equipped Beams
-    dw $09A8, $1001  ; Collected Beams
-    dw $09C2, $0079  ; Health
-    dw $09C4, $012B  ; Max health
-    dw $D874, $0104  ; Items
-    dw $D8B6, $3008  ; Doors
-    dw $D8B8, $26ED  ; Doors
-    dw #$FFFF
-
-preset_kpdr25_maridia_botwoon_hallway:
-    dw #preset_kpdr23_maridia_botwoon_hallway
-    dw $09A6, $1007  ; Equipped Beams
-    dw $09A8, $1007  ; Collected Beams
-    dw $09C6, $000F  ; Missiles
-    dw $09C8, $0019  ; Max missiles
-    dw $09CA, $0008  ; Supers
-    dw $D870, $0190  ; Items
-    dw $D876, $01A5  ; Items
-    dw $D8B8, $2EEF  ; Doors
-    dw #$FFFF
-
-preset_kpdr23_maridia_botwoon:
-    dw #preset_kpdr23_maridia_botwoon_hallway
-    dw $078D, $A72C  ; DDB
-    dw $079B, $D617  ; MDB
-    dw $090F, $DFFF  ; Screen subpixel X position
-    dw $0911, $0300  ; Screen X position in pixels
-    dw $0913, $5800  ; Screen subpixel Y position
-    dw $0917, $0240  ; Layer 2 X position
-    dw $09D2, $0000  ; Currently selected item
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $03A4  ; Samus X
-    dw $0AFA, $008B  ; Samus Y
-    dw #$FFFF
-
-preset_kpdr_red_brinstar_revisit_hellway_revisit:
-    dw #preset_kpdr_red_brinstar_revisit_caterpillars_revisit
-    dw $090F, $C000  ; Screen subpixel X position
-    dw $0913, $2800  ; Screen subpixel Y position
-    dw $0915, $0500  ; Screen Y position in pixels
-    dw $0919, $0500  ; Layer 2 Y position
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $0040  ; Samus X
-    dw $0AFA, $058B  ; Samus Y
-    dw #$FFFF
-
-preset_kpdr20_red_brinstar_revisit_hellway_revisit:
-    dw #preset_kpdr21_red_brinstar_revisit_hellway_revisit
-    dw $09C6, $0008  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr20_red_brinstar_revisit_red_tower_down:
-    dw #preset_kpdr21_red_brinstar_revisit_red_tower_down
-    dw $09C6, $0008  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr20_red_brinstar_revisit_skree_boost_final:
-    dw #preset_kpdr21_red_brinstar_revisit_skree_boost_final
-    dw $09C6, $0008  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr20_red_brinstar_revisit_below_spazer_final:
-    dw #preset_kpdr21_red_brinstar_revisit_below_spazer_final
-    dw $09C6, $0008  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr20_red_brinstar_revisit_breaking_the_tube:
-    dw #preset_kpdr21_red_brinstar_revisit_breaking_the_tube
-    dw $09C6, $0008  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr20_maridia_fish_tank:
-    dw #preset_kpdr21_maridia_fish_tank
-    dw $09C6, $0008  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr20_maridia_mt_everest:
-    dw #preset_kpdr21_maridia_mt_everest
-    dw $09C6, $0008  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr22_red_brinstar_moat_missile_ocean_spark:
-    dw #preset_kpdr22_red_brinstar_hjb_missile_ocean_spark
-    dw $D870, $0190  ; Items
-    dw #$FFFF
-
-preset_kpdr22_wrecked_ship_entering_wrecked_ship:
-    dw #preset_kpdr25_wrecked_ship_entering_wrecked_ship
-    dw $09A6, $1001  ; Equipped Beams
-    dw $09A8, $1001  ; Collected Beams
-    dw $09C2, $00D3  ; Health
-    dw $09C6, $0010  ; Missiles
-    dw $09C8, $0014  ; Max missiles
-    dw $09CA, $0004  ; Supers
-    dw $D870, $0180  ; Items
-    dw $D876, $01A1  ; Items
-    dw $D8B8, $26EF  ; Doors
-    dw #$FFFF
-
-preset_phantoonfirst_lower_norfair_metal_ninja_pirates:
-    dw #preset_prkd19_lower_norfair_nox_ridley_metal_ninja_pirates
-    dw $0F78, $07FF  ; Safeties enabled
-    dw $0F8E, $003C  ; Safeties energy adjustment
-    dw $0F92, $0028  ; Safeties energy adjustment
-    dw $0FC0, $002D  ; Safeties reserves adjustment
-    dw $1092, $FFFF  ; Safeties power bombs adjustment
-    dw $1110, $0006  ; Safeties unequip beams
-    dw $11D4, $FFDB  ; Safeties refill
-    dw #$FFFF
-
-preset_prkd19_lower_norfair_nox_ridley_plowerhouse:
-    dw #preset_prkd19_lower_norfair_plowerhouse
-    dw $09A6, $1007  ; Equipped Beams
-    dw $0AF8, $FFFF  ; Samus subpixel X
-    dw #$FFFF
-
-preset_prkd19_lower_norfair_ridley_farming_room:
-    dw #preset_prkd19_lower_norfair_plowerhouse
-    dw $078D, $9A32  ; DDB
-    dw $079B, $B482  ; MDB
-    dw $090F, $9000  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $8C00  ; Screen subpixel Y position
-    dw $0917, $0000  ; Layer 2 X position
-    dw $09C2, $00CD  ; Health
-    dw $0AF6, $0047  ; Samus X
-    dw $0AFA, $008B  ; Samus Y
-    dw #$FFFF
-
-preset_prkd20_lower_norfair_nox_ridley_metal_ninja_pirates:
-    dw #preset_prkd20_lower_norfair_metal_ninja_pirates
-    dw $09A6, $1007  ; Equipped Beams
-    dw #$FFFF
-
-preset_prkd20_lower_norfair_plowerhouse:
-    dw #preset_prkd19_lower_norfair_plowerhouse
-    dw $09C6, $0014  ; Missiles
-    dw $09C8, $0014  ; Max missiles
-    dw $0AF8, $FFFF  ; Samus subpixel X
-    dw $D878, $001C  ; Items
-    dw #$FFFF
-
 preset_gtmax_upper_norfair_and_kraid_kraid_kihunters_final:
     dw #preset_gtmax_upper_norfair_and_kraid_kraid_etank
     dw $078D, $9162  ; DDB
@@ -30873,6 +31039,199 @@ preset_gtmax_maridia_predraygon_maridia_tube_revisit:
     dw $0AFA, $008B  ; Samus Y
     dw $D874, $1904  ; Items
     dw $D8B8, $EEEF  ; Doors
+    dw #$FFFF
+
+preset_pkrd_lower_norfair_three_musketeers:
+    dw #preset_pkrd_lower_norfair_springball_maze
+    dw $078D, $9A92  ; DDB
+    dw $079B, $B510  ; MDB
+    dw $090F, $5000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $EC00  ; Screen subpixel Y position
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $0AF6, $005D  ; Samus X
+    dw #$FFFF
+
+preset_kpdr25_maridia_botwoon:
+    dw #preset_kpdr23_maridia_botwoon
+    dw $09A6, $1007  ; Equipped Beams
+    dw $09A8, $1007  ; Collected Beams
+    dw $09C6, $000F  ; Missiles
+    dw $09C8, $0019  ; Max missiles
+    dw $09CA, $0008  ; Supers
+    dw $D870, $0190  ; Items
+    dw $D876, $01A5  ; Items
+    dw $D8B8, $2EEF  ; Doors
+    dw #$FFFF
+
+preset_kpdr23_maridia_botwoon_etank:
+    dw #preset_kpdr23_maridia_botwoon
+    dw $078D, $A774  ; DDB
+    dw $079B, $D95E  ; MDB
+    dw $07F3, $002A  ; Music Bank
+    dw $07F5, $0003  ; Music Track
+    dw $090F, $4000  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $C000  ; Screen subpixel Y position
+    dw $0917, $0100  ; Layer 2 X position
+    dw $09C2, $0105  ; Health
+    dw $09C6, $0010  ; Missiles
+    dw $09CA, $0003  ; Supers
+    dw $09CE, $0002  ; Pbs
+    dw $0AF6, $01C6  ; Samus X
+    dw $D82C, $0002  ; Bosses
+    dw #$FFFF
+
+preset_kpdr_wrecked_ship_moat_ball:
+    dw #preset_kpdr_wrecked_ship_leaving_gravity
+    dw $078D, $A300  ; DDB
+    dw $079B, $93FE  ; MDB
+    dw $07F3, $000C  ; Music Bank
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $00E4  ; Screen X position in pixels
+    dw $0913, $2800  ; Screen subpixel Y position
+    dw $0915, $0445  ; Screen Y position in pixels
+    dw $0917, $0072  ; Layer 2 X position
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0184  ; Samus X
+    dw $0AFA, $04D0  ; Samus Y
+    dw #$FFFF
+
+preset_kpdr22_wrecked_ship_entering_with_extra_pb:
+    dw #preset_kpdr22_wrecked_ship_entering_wrecked_ship
+    dw $09CE, $0002  ; Pbs
+    dw #$FFFF
+
+preset_kpdr22_wrecked_ship_basement:
+    dw #preset_kpdr22_wrecked_ship_entering_wrecked_ship
+    dw $078D, $A1BC  ; DDB
+    dw $079B, $CAF6  ; MDB
+    dw $07F3, $0030  ; Music Bank
+    dw $090F, $4000  ; Screen subpixel X position
+    dw $0911, $0400  ; Screen X position in pixels
+    dw $0913, $AC00  ; Screen subpixel Y position
+    dw $0915, $0691  ; Screen Y position in pixels
+    dw $0917, $0300  ; Layer 2 X position
+    dw $0919, $04EC  ; Layer 2 Y position
+    dw $09D2, $0002  ; Currently selected item
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $04C9  ; Samus X
+    dw $0AF8, $7FFF  ; Samus subpixel X
+    dw $0AFA, $0742  ; Samus Y
+    dw $0AFC, $B7FF  ; Samus subpixel Y
+    dw #$FFFF
+
+preset_prkd20_lower_norfair_leaving_ridley:
+preset_prkd20_lower_norfair_nox_ridley_leaving_ridley:
+    dw #preset_prkd19_lower_norfair_nox_ridley_leaving_ridley
+    dw $09C8, $0014  ; Max missiles
+    dw $D878, $001C  ; Items
+    dw #$FFFF
+
+preset_phantoonfirst_lower_norfair_leaving_ridley:
+    dw #preset_prkd19_lower_norfair_nox_ridley_leaving_ridley
+    dw $0F78, $0C7F  ; Safeties enabled
+    dw $0F88, $FFB0  ; Safeties energy adjustment
+    dw $0F96, $0039  ; Safeties energy adjustment
+    dw $0FC0, $002D  ; Safeties reserves adjustment
+    dw #$FFFF
+
+preset_prkd19_lower_norfair_nox_ridley_reverse_plowerhouse:
+    dw #preset_prkd19_lower_norfair_reverse_plowerhouse
+    dw $0AF8, $FFFF  ; Samus subpixel X
+    dw #$FFFF
+
+preset_prkd19_lower_norfair_wasteland_revisit:
+    dw #preset_prkd19_lower_norfair_reverse_plowerhouse
+    dw $078D, $9966  ; DDB
+    dw $079B, $B62B  ; MDB
+    dw $090F, $6000  ; Screen subpixel X position
+    dw $0913, $8800  ; Screen subpixel Y position
+    dw $09C2, $00C8  ; Health
+    dw $0AF6, $02DC  ; Samus X
+    dw #$FFFF
+
+preset_pkrd_lower_norfair_single_chamber_final:
+    dw #preset_pkrd_lower_norfair_springball_maze
+    dw $078D, $99AE  ; DDB
+    dw $079B, $B656  ; MDB
+    dw $090F, $5000  ; Screen subpixel X position
+    dw $0913, $2C00  ; Screen subpixel Y position
+    dw $0915, $000B  ; Screen Y position in pixels
+    dw $0917, $00C0  ; Layer 2 X position
+    dw $0919, $0001  ; Layer 2 Y position
+    dw $09C2, $006D  ; Health
+    dw $0AF6, $0169  ; Samus X
+    dw #$FFFF
+
+preset_kpdr20_maridia_botwoon:
+    dw #preset_kpdr21_maridia_botwoon
+    dw $09C6, $0008  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_gtclassic_wrecked_ship_parlor_return:
+    dw #preset_gtclassic_wrecked_ship_crateria_kihunters_revisit
+    dw $078D, $8AC6  ; DDB
+    dw $079B, $91F8  ; MDB
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $05EC  ; Screen X position in pixels
+    dw $0913, $B000  ; Screen subpixel Y position
+    dw $0915, $0400  ; Screen Y position in pixels
+    dw $0917, $02F6  ; Layer 2 X position
+    dw $0AF6, $068C  ; Samus X
+    dw $0AFA, $04BB  ; Samus Y
+    dw #$FFFF
+
+preset_gtclassic_wrecked_ship_terminator_revisit:
+    dw #preset_gtclassic_wrecked_ship_crateria_kihunters_revisit
+    dw $078D, $8916  ; DDB
+    dw $079B, $92FD  ; MDB
+    dw $07F3, $0009  ; Music Bank
+    dw $090F, $F800  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $2400  ; Screen subpixel Y position
+    dw $0917, $00C0  ; Layer 2 X position
+    dw $0A1C, $008A  ; Samus position/state
+    dw $0A1E, $1504  ; More position/state
+    dw $0AF6, $0115  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw $0B3F, $0104  ; Blue suit
+    dw #$FFFF
+
+preset_gtclassic_wrecked_ship_green_pirate_shaft:
+    dw #preset_gtclassic_wrecked_ship_crateria_kihunters_revisit
+    dw $078D, $895E  ; DDB
+    dw $079B, $990D  ; MDB
+    dw $07F3, $0009  ; Music Bank
+    dw $090F, $7980  ; Screen subpixel X position
+    dw $0913, $9C00  ; Screen subpixel Y position
+    dw $0915, $01FC  ; Screen Y position in pixels
+    dw $0919, $017D  ; Layer 2 Y position
+    dw $0AF6, $0062  ; Samus X
+    dw $0AFA, $029B  ; Samus Y
+    dw #$FFFF
+
+preset_gtclassic_wrecked_ship_g4_elevator:
+    dw #preset_gtclassic_wrecked_ship_crateria_kihunters_revisit
+    dw $078D, $91F2  ; DDB
+    dw $079B, $A66A  ; MDB
+    dw $07F3, $0009  ; Music Bank
+    dw $07F5, $0006  ; Music Track
+    dw $090F, $A000  ; Screen subpixel X position
+    dw $0915, $001D  ; Screen Y position in pixels
+    dw $09C2, $0159  ; Health
+    dw $09C6, $0057  ; Missiles
+    dw $09CA, $000D  ; Supers
+    dw $0AF6, $003D  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw $D820, $0FC1  ; Events
+    dw $D8B2, $6C01  ; Doors
     dw #$FFFF
 
 preset_100early_brinstar_cleanup_green_hill_zone_revisit:
@@ -30960,208 +31319,6 @@ preset_hundo_maridia_beach_beach_revisit:
     dw $0AFA, $018B  ; Samus Y
     dw #$FFFF
 
-preset_gtclassic_wrecked_ship_ocean_revisit:
-    dw #preset_gtclassic_wrecked_ship_shaft_climb
-    dw $078D, $A294  ; DDB
-    dw $079B, $CAF6  ; MDB
-    dw $090F, $EC00  ; Screen subpixel X position
-    dw $0911, $0400  ; Screen X position in pixels
-    dw $0913, $5800  ; Screen subpixel Y position
-    dw $0915, $0313  ; Screen Y position in pixels
-    dw $0917, $0300  ; Layer 2 X position
-    dw $0919, $024E  ; Layer 2 Y position
-    dw $0AF6, $0466  ; Samus X
-    dw $0AFA, $038B  ; Samus Y
-    dw $D8C0, $8074  ; Doors
-    dw #$FFFF
-
-preset_gtclassic_wrecked_ship_crateria_kihunters_revisit:
-    dw #preset_gtclassic_wrecked_ship_shaft_climb
-    dw $078D, $89CA  ; DDB
-    dw $079B, $95FF  ; MDB
-    dw $07F3, $000C  ; Music Bank
-    dw $07F5, $0005  ; Music Track
-    dw $090F, $4000  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $0000  ; Screen subpixel Y position
-    dw $0917, $0000  ; Layer 2 X position
-    dw $0AF6, $0032  ; Samus X
-    dw $0AFA, $008E  ; Samus Y
-    dw $D8C0, $8074  ; Doors
-    dw #$FFFF
-
-preset_pkrd_lower_norfair_kihunter_stairs_up:
-    dw #preset_pkrd_lower_norfair_wasteland_revisit
-    dw $078D, $9A3E  ; DDB
-    dw $079B, $B5D5  ; MDB
-    dw $090F, $B200  ; Screen subpixel X position
-    dw $0911, $0500  ; Screen X position in pixels
-    dw $0913, $E800  ; Screen subpixel Y position
-    dw $0917, $03C0  ; Layer 2 X position
-    dw $09C2, $00A4  ; Health
-    dw $09CE, $0004  ; Pbs
-    dw $0AF6, $055B  ; Samus X
-    dw $0AFA, $009B  ; Samus Y
-    dw #$FFFF
-
-preset_kpdr20_maridia_crab_shaft:
-    dw #preset_kpdr21_maridia_crab_shaft
-    dw $09C6, $0008  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr20_maridia_aqueduct:
-    dw #preset_kpdr21_maridia_aqueduct
-    dw $09C6, $0008  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr20_maridia_botwoon_hallway:
-    dw #preset_kpdr21_maridia_botwoon_hallway
-    dw $09C6, $0008  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr21_maridia_botwoon:
-    dw #preset_kpdr23_maridia_botwoon
-    dw $09A6, $1001  ; Equipped Beams
-    dw $09A8, $1001  ; Collected Beams
-    dw $09C2, $0079  ; Health
-    dw $09C4, $012B  ; Max health
-    dw $D874, $0104  ; Items
-    dw $D8B6, $3008  ; Doors
-    dw $D8B8, $26ED  ; Doors
-    dw #$FFFF
-
-preset_kpdr25_maridia_botwoon:
-    dw #preset_kpdr23_maridia_botwoon
-    dw $09A6, $1007  ; Equipped Beams
-    dw $09A8, $1007  ; Collected Beams
-    dw $09C6, $000F  ; Missiles
-    dw $09C8, $0019  ; Max missiles
-    dw $09CA, $0008  ; Supers
-    dw $D870, $0190  ; Items
-    dw $D876, $01A5  ; Items
-    dw $D8B8, $2EEF  ; Doors
-    dw #$FFFF
-
-preset_kpdr23_maridia_botwoon_etank:
-    dw #preset_kpdr23_maridia_botwoon
-    dw $078D, $A774  ; DDB
-    dw $079B, $D95E  ; MDB
-    dw $07F3, $002A  ; Music Bank
-    dw $07F5, $0003  ; Music Track
-    dw $090F, $4000  ; Screen subpixel X position
-    dw $0911, $0100  ; Screen X position in pixels
-    dw $0913, $C000  ; Screen subpixel Y position
-    dw $0917, $0100  ; Layer 2 X position
-    dw $09C2, $0105  ; Health
-    dw $09C6, $0010  ; Missiles
-    dw $09CA, $0003  ; Supers
-    dw $09CE, $0002  ; Pbs
-    dw $0AF6, $01C6  ; Samus X
-    dw $D82C, $0002  ; Bosses
-    dw #$FFFF
-
-preset_kpdr_red_brinstar_revisit_red_tower_down:
-    dw #preset_kpdr_red_brinstar_revisit_hellway_revisit
-    dw $078D, $90AE  ; DDB
-    dw $079B, $A2F7  ; MDB
-    dw $0913, $9000  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $09C2, $0079  ; Health
-    dw $0AF6, $003D  ; Samus X
-    dw $0AFA, $008B  ; Samus Y
-    dw #$FFFF
-
-preset_kpdr_red_brinstar_revisit_skree_boost_final:
-    dw #preset_kpdr_red_brinstar_revisit_caterpillars_revisit
-    dw $078D, $907E  ; DDB
-    dw $079B, $A253  ; MDB
-    dw $090F, $A001  ; Screen subpixel X position
-    dw $0915, $091A  ; Screen Y position in pixels
-    dw $0919, $06D3  ; Layer 2 Y position
-    dw $09C2, $0079  ; Health
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $0054  ; Samus X
-    dw $0AFA, $098B  ; Samus Y
-    dw $0F78, $3EFB  ; Safeties enabled
-    dw $105A, $FFFF  ; Safeties supers adjustment
-    dw $11DA, $0001  ; Safeties refill
-    dw #$FFFF
-
-preset_kpdr22_wrecked_ship_entering_with_extra_pb:
-    dw #preset_kpdr22_wrecked_ship_entering_wrecked_ship
-    dw $09CE, $0002  ; Pbs
-    dw #$FFFF
-
-preset_kpdr22_wrecked_ship_basement:
-    dw #preset_kpdr22_wrecked_ship_entering_wrecked_ship
-    dw $078D, $A1BC  ; DDB
-    dw $079B, $CAF6  ; MDB
-    dw $07F3, $0030  ; Music Bank
-    dw $090F, $4000  ; Screen subpixel X position
-    dw $0911, $0400  ; Screen X position in pixels
-    dw $0913, $AC00  ; Screen subpixel Y position
-    dw $0915, $0691  ; Screen Y position in pixels
-    dw $0917, $0300  ; Layer 2 X position
-    dw $0919, $04EC  ; Layer 2 Y position
-    dw $09D2, $0002  ; Currently selected item
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $04C9  ; Samus X
-    dw $0AF8, $7FFF  ; Samus subpixel X
-    dw $0AFA, $0742  ; Samus Y
-    dw $0AFC, $B7FF  ; Samus subpixel Y
-    dw #$FFFF
-
-preset_phantoonfirst_lower_norfair_plowerhouse:
-    dw #preset_prkd19_lower_norfair_nox_ridley_plowerhouse
-    dw $0F78, $07FF  ; Safeties enabled
-    dw $0F8E, $003C  ; Safeties energy adjustment
-    dw $0F92, $0028  ; Safeties energy adjustment
-    dw $0FC0, $002D  ; Safeties reserves adjustment
-    dw $1092, $FFFF  ; Safeties power bombs adjustment
-    dw $1110, $0006  ; Safeties unequip beams
-    dw $11D4, $0001  ; Safeties refill
-    dw #$FFFF
-
-preset_prkd19_lower_norfair_nox_ridley_ridley_farming_room:
-    dw #preset_prkd19_lower_norfair_ridley_farming_room
-    dw $09A6, $1007  ; Equipped Beams
-    dw $0AF8, $FFFF  ; Samus subpixel X
-    dw #$FFFF
-
-preset_prkd19_lower_norfair_ridley:
-    dw #preset_prkd19_lower_norfair_ridley_farming_room
-    dw $078D, $995A  ; DDB
-    dw $079B, $B37A  ; MDB
-    dw $090F, $1000  ; Screen subpixel X position
-    dw $0913, $7C00  ; Screen subpixel Y position
-    dw $09C2, $00F2  ; Health
-    dw $09CE, $0005  ; Pbs
-    dw $0AF6, $0024  ; Samus X
-    dw $D8BA, $D1F1  ; Doors
-    dw #$FFFF
-
-preset_prkd20_lower_norfair_nox_ridley_plowerhouse:
-    dw #preset_prkd20_lower_norfair_plowerhouse
-    dw $09A6, $1007  ; Equipped Beams
-    dw #$FFFF
-
-preset_prkd20_lower_norfair_ridley_farming_room:
-    dw #preset_prkd19_lower_norfair_ridley_farming_room
-    dw $09C6, $0014  ; Missiles
-    dw $09C8, $0014  ; Max missiles
-    dw $0AF8, $FFFF  ; Samus subpixel X
-    dw $D878, $001C  ; Items
-    dw #$FFFF
-
 preset_gtmax_maridia_predraygon_fish_tank:
     dw #preset_gtmax_maridia_predraygon_maridia_tube_revisit
     dw $078D, $A330  ; DDB
@@ -31179,6 +31336,51 @@ preset_gtmax_maridia_predraygon_fish_tank:
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $0165  ; Samus X
     dw $0AFA, $068B  ; Samus Y
+    dw #$FFFF
+
+preset_pkrd_lower_norfair_bubble_mountain_final:
+    dw #preset_pkrd_lower_norfair_three_musketeers
+    dw $078D, $9A4A  ; DDB
+    dw $079B, $AD5E  ; MDB
+    dw $07F3, $0015  ; Music Bank
+    dw $090F, $A000  ; Screen subpixel X position
+    dw $0913, $5C00  ; Screen subpixel Y position
+    dw $0915, $000D  ; Screen Y position in pixels
+    dw $0919, $0014  ; Layer 2 Y position
+    dw $09C2, $0061  ; Health
+    dw $0AF6, $008B  ; Samus X
+    dw #$FFFF
+
+preset_pkrd_lower_norfair_frog_speedway:
+    dw #preset_pkrd_lower_norfair_springball_maze
+    dw $078D, $956A  ; DDB
+    dw $079B, $AF72  ; MDB
+    dw $07F3, $0015  ; Music Bank
+    dw $0911, $0024  ; Screen X position in pixels
+    dw $0913, $5800  ; Screen subpixel Y position
+    dw $0917, $0014  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09C2, $0061  ; Health
+    dw $09C6, $000E  ; Missiles
+    dw $09CA, $0008  ; Supers
+    dw $09CE, $0003  ; Pbs
+    dw $0AF6, $00C4  ; Samus X
+    dw #$FFFF
+
+preset_gtclassic_tourian_tourian_elevator_room:
+    dw #preset_gtclassic_wrecked_ship_g4_elevator
+    dw $078D, $9222  ; DDB
+    dw $079B, $DAAE  ; MDB
+    dw $07F3, $001E  ; Music Bank
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $8000  ; Screen subpixel X position
+    dw $0915, $0238  ; Screen Y position in pixels
+    dw $0919, $01AA  ; Layer 2 Y position
+    dw $0A1C, $009B  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
+    dw $0AF6, $0080  ; Samus X
+    dw $0AFA, $02A8  ; Samus Y
+    dw $D90C, $0100  ; Map Stations
     dw #$FFFF
 
 preset_100early_brinstar_cleanup_blockbuster:
@@ -31330,119 +31532,6 @@ preset_hundo_draygon_botwoon:
     dw $D8C0, $CB7C  ; Doors
     dw #$FFFF
 
-preset_gtclassic_wrecked_ship_parlor_return:
-    dw #preset_gtclassic_wrecked_ship_crateria_kihunters_revisit
-    dw $078D, $8AC6  ; DDB
-    dw $079B, $91F8  ; MDB
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $0911, $05EC  ; Screen X position in pixels
-    dw $0913, $B000  ; Screen subpixel Y position
-    dw $0915, $0400  ; Screen Y position in pixels
-    dw $0917, $02F6  ; Layer 2 X position
-    dw $0AF6, $068C  ; Samus X
-    dw $0AFA, $04BB  ; Samus Y
-    dw #$FFFF
-
-preset_gtclassic_wrecked_ship_terminator_revisit:
-    dw #preset_gtclassic_wrecked_ship_crateria_kihunters_revisit
-    dw $078D, $8916  ; DDB
-    dw $079B, $92FD  ; MDB
-    dw $07F3, $0009  ; Music Bank
-    dw $090F, $F800  ; Screen subpixel X position
-    dw $0911, $0100  ; Screen X position in pixels
-    dw $0913, $2400  ; Screen subpixel Y position
-    dw $0917, $00C0  ; Layer 2 X position
-    dw $0A1C, $008A  ; Samus position/state
-    dw $0A1E, $1504  ; More position/state
-    dw $0AF6, $0115  ; Samus X
-    dw $0AFA, $008B  ; Samus Y
-    dw $0B3F, $0104  ; Blue suit
-    dw #$FFFF
-
-preset_gtclassic_wrecked_ship_green_pirate_shaft:
-    dw #preset_gtclassic_wrecked_ship_crateria_kihunters_revisit
-    dw $078D, $895E  ; DDB
-    dw $079B, $990D  ; MDB
-    dw $07F3, $0009  ; Music Bank
-    dw $090F, $7980  ; Screen subpixel X position
-    dw $0913, $9C00  ; Screen subpixel Y position
-    dw $0915, $01FC  ; Screen Y position in pixels
-    dw $0919, $017D  ; Layer 2 Y position
-    dw $0AF6, $0062  ; Samus X
-    dw $0AFA, $029B  ; Samus Y
-    dw #$FFFF
-
-preset_gtclassic_wrecked_ship_g4_elevator:
-    dw #preset_gtclassic_wrecked_ship_crateria_kihunters_revisit
-    dw $078D, $91F2  ; DDB
-    dw $079B, $A66A  ; MDB
-    dw $07F3, $0009  ; Music Bank
-    dw $07F5, $0006  ; Music Track
-    dw $090F, $A000  ; Screen subpixel X position
-    dw $0915, $001D  ; Screen Y position in pixels
-    dw $09C2, $0159  ; Health
-    dw $09C6, $0057  ; Missiles
-    dw $09CA, $000D  ; Supers
-    dw $0AF6, $003D  ; Samus X
-    dw $0AFA, $008B  ; Samus Y
-    dw $D820, $0FC1  ; Events
-    dw $D8B2, $6C01  ; Doors
-    dw #$FFFF
-
-preset_pkrd_lower_norfair_fireflea_room:
-    dw #preset_pkrd_lower_norfair_kihunter_stairs_up
-    dw $078D, $9A26  ; DDB
-    dw $079B, $B585  ; MDB
-    dw $090F, $2000  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $8800  ; Screen subpixel Y position
-    dw $0915, $000F  ; Screen Y position in pixels
-    dw $0917, $0000  ; Layer 2 X position
-    dw $0919, $0009  ; Layer 2 Y position
-    dw $0AF6, $009C  ; Samus X
-    dw $0AFA, $008B  ; Samus Y
-    dw #$FFFF
-
-preset_pkrd_lower_norfair_springball_maze:
-    dw #preset_pkrd_lower_norfair_kihunter_stairs_up
-    dw $078D, $9A02  ; DDB
-    dw $079B, $B6EE  ; MDB
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $0911, $0100  ; Screen X position in pixels
-    dw $0913, $0000  ; Screen subpixel Y position
-    dw $0917, $0100  ; Layer 2 X position
-    dw $0919, $000D  ; Layer 2 Y position
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $016D  ; Samus X
-    dw $0AFA, $008B  ; Samus Y
-    dw #$FFFF
-
-preset_prkd19_lower_norfair_nox_ridley_ridley:
-    dw #preset_prkd19_lower_norfair_ridley
-    dw $09A6, $1007  ; Equipped Beams
-    dw $09CE, $0004  ; Pbs
-    dw $0AF8, $FFFF  ; Samus subpixel X
-    dw #$FFFF
-
-preset_kpdr20_maridia_botwoon:
-    dw #preset_kpdr21_maridia_botwoon
-    dw $09C6, $0008  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr21_maridia_botwoon_etank:
-    dw #preset_kpdr23_maridia_botwoon_etank
-    dw $09A6, $1001  ; Equipped Beams
-    dw $09A8, $1001  ; Collected Beams
-    dw $09C2, $00A1  ; Health
-    dw $09C4, $012B  ; Max health
-    dw $D874, $0104  ; Items
-    dw $D8B6, $3008  ; Doors
-    dw $D8B8, $26ED  ; Doors
-    dw #$FFFF
-
 preset_gtmax_maridia_predraygon_tatori_room:
     dw #preset_gtmax_maridia_predraygon_fish_tank
     dw $078D, $A3B4  ; DDB
@@ -31479,6 +31568,225 @@ preset_gtmax_maridia_predraygon_mt_everest_and_crab_supers:
     dw $0AFA, $006B  ; Samus Y
     dw $D880, $0C00  ; Items
     dw $D8C0, $4000  ; Doors
+    dw #$FFFF
+
+preset_pkrd_lower_norfair_business_center_final:
+    dw #preset_pkrd_lower_norfair_frog_speedway
+    dw $078D, $97DA  ; DDB
+    dw $079B, $B167  ; MDB
+    dw $090F, $8000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $EC00  ; Screen subpixel Y position
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0AF6, $002A  ; Samus X
+    dw #$FFFF
+
+preset_kpdr21_maridia_botwoon_etank:
+    dw #preset_kpdr23_maridia_botwoon_etank
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09A8, $1001  ; Collected Beams
+    dw $09C2, $00A1  ; Health
+    dw $09C4, $012B  ; Max health
+    dw $D874, $0104  ; Items
+    dw $D8B6, $3008  ; Doors
+    dw $D8B8, $26ED  ; Doors
+    dw #$FFFF
+
+preset_kpdr25_maridia_botwoon_etank:
+    dw #preset_kpdr23_maridia_botwoon_etank
+    dw $09A6, $1007  ; Equipped Beams
+    dw $09A8, $1007  ; Collected Beams
+    dw $09C6, $0019  ; Missiles
+    dw $09C8, $0019  ; Max missiles
+    dw $09CA, $0002  ; Supers
+    dw $D870, $0190  ; Items
+    dw $D876, $01A5  ; Items
+    dw $D8B8, $2EEF  ; Doors
+    dw #$FFFF
+
+preset_kpdr23_maridia_halfie_setup:
+    dw #preset_kpdr23_maridia_botwoon_etank
+    dw $078D, $A918  ; DDB
+    dw $079B, $D7E4  ; MDB
+    dw $07F3, $001B  ; Music Bank
+    dw $07F5, $0005  ; Music Track
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $4400  ; Screen subpixel Y position
+    dw $0915, $001F  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $001F  ; Layer 2 Y position
+    dw $09C2, $01F3  ; Health
+    dw $09C4, $01F3  ; Max health
+    dw $0A1C, $009B  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
+    dw $0AF6, $008D  ; Samus X
+    dw $0AFA, $0098  ; Samus Y
+    dw $D882, $0100  ; Items
+    dw #$FFFF
+
+preset_kpdr_wrecked_ship_crateria_kihunters_return:
+    dw #preset_kpdr_wrecked_ship_moat_ball
+    dw $078D, $89CA  ; DDB
+    dw $079B, $95FF  ; MDB
+    dw $090F, $8400  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $0007  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $0005  ; Layer 2 Y position
+    dw $0AF6, $003B  ; Samus X
+    dw $0AFA, $0097  ; Samus Y
+    dw #$FFFF
+
+preset_kpdr_red_brinstar_revisit_red_brinstar_elevator:
+    dw #preset_kpdr_wrecked_ship_leaving_gravity
+    dw $078D, $8A42  ; DDB
+    dw $079B, $962A  ; MDB
+    dw $07F3, $000C  ; Music Bank
+    dw $090F, $7000  ; Screen subpixel X position
+    dw $0913, $5800  ; Screen subpixel Y position
+    dw $0917, $0000  ; Layer 2 X position
+    dw $09C2, $0081  ; Health
+    dw $09C6, $0008  ; Missiles
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $0080  ; Samus X
+    dw $0AFA, $00A8  ; Samus Y
+    dw $0F78, $1EFB  ; Safeties enabled
+    dw $1090, $0000  ; Safeties power bombs adjustment
+    dw #$FFFF
+
+preset_kpdr22_wrecked_ship_phantoon:
+    dw #preset_kpdr22_wrecked_ship_basement
+    dw $078D, $A21C  ; DDB
+    dw $079B, $CC6F  ; MDB
+    dw $090F, $F000  ; Screen subpixel X position
+    dw $0913, $7000  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09CA, $0002  ; Supers
+    dw $09D2, $0000  ; Currently selected item
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $04CC  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw $D8C0, $0030  ; Doors
+    dw #$FFFF
+
+preset_kpdr22_wrecked_ship_leaving_phantoon:
+    dw #preset_kpdr25_wrecked_ship_leaving_phantoon
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09A8, $1001  ; Collected Beams
+    dw $09C6, $000C  ; Missiles
+    dw $09C8, $0014  ; Max missiles
+    dw $09CA, $0005  ; Supers
+    dw $D870, $0180  ; Items
+    dw $D876, $01A1  ; Items
+    dw $D8B8, $26EF  ; Doors
+    dw #$FFFF
+
+preset_kpdr22_wrecked_ship_shaft_to_supers:
+    dw #preset_kpdr23_wrecked_ship_shaft_to_supers
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09A8, $1001  ; Collected Beams
+    dw #$FFFF
+
+preset_kpdr22_wrecked_ship_wrecked_ship_shaft:
+    dw #preset_kpdr23_wrecked_ship_wrecked_ship_shaft
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09A8, $1001  ; Collected Beams
+    dw #$FFFF
+
+preset_kpdr22_wrecked_ship_attic:
+    dw #preset_kpdr23_wrecked_ship_attic
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09A8, $1001  ; Collected Beams
+    dw #$FFFF
+
+preset_kpdr22_wrecked_ship_upper_west_ocean:
+    dw #preset_kpdr23_wrecked_ship_upper_west_ocean
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09A8, $1001  ; Collected Beams
+    dw $09C6, $000D  ; Missiles
+    dw $09CA, $0006  ; Supers
+    dw #$FFFF
+
+preset_kpdr22_wrecked_ship_pancakes_and_wavers:
+    dw #preset_kpdr23_wrecked_ship_pancakes_and_wavers
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09A8, $1001  ; Collected Beams
+    dw $09C6, $000D  ; Missiles
+    dw $09CA, $0006  ; Supers
+    dw #$FFFF
+
+preset_kpdr22_wrecked_ship_bowling_spark:
+    dw #preset_kpdr23_wrecked_ship_bowling_spark
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09A8, $1001  ; Collected Beams
+    dw $09C6, $000D  ; Missiles
+    dw $09CA, $0006  ; Supers
+    dw #$FFFF
+
+preset_kpdr22_wrecked_ship_leaving_gravity:
+    dw #preset_kpdr23_wrecked_ship_leaving_gravity
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09A8, $1001  ; Collected Beams
+    dw $09C6, $000D  ; Missiles
+    dw $09CA, $0006  ; Supers
+    dw #$FFFF
+
+preset_kpdr22_wrecked_ship_moat_ball:
+    dw #preset_kpdr23_wrecked_ship_moat_ball
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09A8, $1001  ; Collected Beams
+    dw $09C6, $000D  ; Missiles
+    dw $09CA, $0006  ; Supers
+    dw #$FFFF
+
+preset_prkd20_lower_norfair_reverse_plowerhouse:
+preset_prkd20_lower_norfair_nox_ridley_reverse_plowerhouse:
+    dw #preset_prkd19_lower_norfair_nox_ridley_reverse_plowerhouse
+    dw $09C8, $0014  ; Max missiles
+    dw $D878, $001C  ; Items
+    dw #$FFFF
+
+preset_phantoonfirst_lower_norfair_reverse_plowerhouse:
+    dw #preset_prkd19_lower_norfair_nox_ridley_reverse_plowerhouse
+    dw $0F78, $0C7F  ; Safeties enabled
+    dw $0F88, $FFB0  ; Safeties energy adjustment
+    dw $0F96, $0039  ; Safeties energy adjustment
+    dw $0FC0, $002D  ; Safeties reserves adjustment
+    dw #$FFFF
+
+preset_prkd19_lower_norfair_nox_ridley_wasteland_revisit:
+    dw #preset_prkd19_lower_norfair_wasteland_revisit
+    dw $0AF8, $FFFF  ; Samus subpixel X
+    dw #$FFFF
+
+preset_prkd19_lower_norfair_kihunter_stairs_up:
+    dw #preset_prkd19_lower_norfair_reverse_plowerhouse
+    dw $078D, $9A3E  ; DDB
+    dw $079B, $B5D5  ; MDB
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $0500  ; Screen X position in pixels
+    dw $0913, $B000  ; Screen subpixel Y position
+    dw $0917, $03C0  ; Layer 2 X position
+    dw $09C2, $0099  ; Health
+    dw $09CE, $0004  ; Pbs
+    dw $0AF6, $055B  ; Samus X
+    dw $0AFA, $009B  ; Samus Y
+    dw #$FFFF
+
+preset_gtclassic_tourian_metroids_1:
+    dw #preset_gtclassic_tourian_tourian_elevator_room
+    dw $090F, $E001  ; Screen subpixel X position
+    dw $0913, $DBFF  ; Screen subpixel Y position
+    dw $0915, $0300  ; Screen Y position in pixels
+    dw $0919, $0240  ; Layer 2 Y position
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $003F  ; Samus X
+    dw $0AFA, $038B  ; Samus Y
     dw #$FFFF
 
 preset_100early_maridia_predraygon_main_street:
@@ -31631,174 +31939,6 @@ preset_hundo_draygon_full_halfie:
     dw $D82C, $0002  ; Bosses
     dw #$FFFF
 
-preset_gtclassic_tourian_tourian_elevator_room:
-    dw #preset_gtclassic_wrecked_ship_g4_elevator
-    dw $078D, $9222  ; DDB
-    dw $079B, $DAAE  ; MDB
-    dw $07F3, $001E  ; Music Bank
-    dw $07F5, $0005  ; Music Track
-    dw $090F, $8000  ; Screen subpixel X position
-    dw $0915, $0238  ; Screen Y position in pixels
-    dw $0919, $01AA  ; Layer 2 Y position
-    dw $0A1C, $009B  ; Samus position/state
-    dw $0A1E, $0000  ; More position/state
-    dw $0AF6, $0080  ; Samus X
-    dw $0AFA, $02A8  ; Samus Y
-    dw $D90C, $0100  ; Map Stations
-    dw #$FFFF
-
-preset_pkrd_lower_norfair_three_musketeers:
-    dw #preset_pkrd_lower_norfair_springball_maze
-    dw $078D, $9A92  ; DDB
-    dw $079B, $B510  ; MDB
-    dw $090F, $5000  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $EC00  ; Screen subpixel Y position
-    dw $0917, $0000  ; Layer 2 X position
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $0AF6, $005D  ; Samus X
-    dw #$FFFF
-
-preset_kpdr25_maridia_botwoon_etank:
-    dw #preset_kpdr23_maridia_botwoon_etank
-    dw $09A6, $1007  ; Equipped Beams
-    dw $09A8, $1007  ; Collected Beams
-    dw $09C6, $0019  ; Missiles
-    dw $09C8, $0019  ; Max missiles
-    dw $09CA, $0002  ; Supers
-    dw $D870, $0190  ; Items
-    dw $D876, $01A5  ; Items
-    dw $D8B8, $2EEF  ; Doors
-    dw #$FFFF
-
-preset_prkd19_lower_norfair_leaving_ridley:
-    dw #preset_prkd19_lower_norfair_ridley
-    dw $078D, $98CA  ; DDB
-    dw $079B, $B32E  ; MDB
-    dw $07F3, $0024  ; Music Bank
-    dw $07F5, $0003  ; Music Track
-    dw $090F, $C000  ; Screen subpixel X position
-    dw $0913, $C400  ; Screen subpixel Y position
-    dw $0915, $011F  ; Screen Y position in pixels
-    dw $0917, $0001  ; Layer 2 X position
-    dw $0919, $00D7  ; Layer 2 Y position
-    dw $09C6, $0004  ; Missiles
-    dw $09CA, $0003  ; Supers
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $005F  ; Samus X
-    dw $0AFA, $019B  ; Samus Y
-    dw $D82A, $0101  ; Bosses
-    dw #$FFFF
-
-preset_kpdr23_maridia_halfie_setup:
-    dw #preset_kpdr23_maridia_botwoon_etank
-    dw $078D, $A918  ; DDB
-    dw $079B, $D7E4  ; MDB
-    dw $07F3, $001B  ; Music Bank
-    dw $07F5, $0005  ; Music Track
-    dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $4400  ; Screen subpixel Y position
-    dw $0915, $001F  ; Screen Y position in pixels
-    dw $0917, $0000  ; Layer 2 X position
-    dw $0919, $001F  ; Layer 2 Y position
-    dw $09C2, $01F3  ; Health
-    dw $09C4, $01F3  ; Max health
-    dw $0A1C, $009B  ; Samus position/state
-    dw $0A1E, $0000  ; More position/state
-    dw $0AF6, $008D  ; Samus X
-    dw $0AFA, $0098  ; Samus Y
-    dw $D882, $0100  ; Items
-    dw #$FFFF
-
-preset_kpdr_red_brinstar_revisit_below_spazer_final:
-    dw #preset_kpdr_red_brinstar_revisit_skree_boost_final
-    dw $078D, $9042  ; DDB
-    dw $079B, $A3DD  ; MDB
-    dw $090F, $5FFF  ; Screen subpixel X position
-    dw $0911, $0100  ; Screen X position in pixels
-    dw $0913, $4400  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0917, $00C0  ; Layer 2 X position
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $09C2, $0078  ; Health
-    dw $0AF6, $01DC  ; Samus X
-    dw $0AFA, $008B  ; Samus Y
-    dw $11DA, $FFFF  ; Safeties refill
-    dw #$FFFF
-
-preset_kpdr22_wrecked_ship_phantoon:
-    dw #preset_kpdr22_wrecked_ship_basement
-    dw $078D, $A21C  ; DDB
-    dw $079B, $CC6F  ; MDB
-    dw $090F, $F000  ; Screen subpixel X position
-    dw $0913, $7000  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $09CA, $0002  ; Supers
-    dw $09D2, $0000  ; Currently selected item
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $04CC  ; Samus X
-    dw $0AFA, $008B  ; Samus Y
-    dw $D8C0, $0030  ; Doors
-    dw #$FFFF
-
-preset_phantoonfirst_lower_norfair_ridley_farming_room:
-    dw #preset_prkd19_lower_norfair_nox_ridley_ridley_farming_room
-    dw $0F78, $07FF  ; Safeties enabled
-    dw $0F8E, $003C  ; Safeties energy adjustment
-    dw $0F92, $0028  ; Safeties energy adjustment
-    dw $0FC0, $002D  ; Safeties reserves adjustment
-    dw $1092, $FFFF  ; Safeties power bombs adjustment
-    dw $1110, $0006  ; Safeties unequip beams
-    dw $11D4, $FFE4  ; Safeties refill
-    dw #$FFFF
-
-preset_prkd20_lower_norfair_nox_ridley_ridley_farming_room:
-    dw #preset_prkd20_lower_norfair_ridley_farming_room
-    dw $09A6, $1007  ; Equipped Beams
-    dw #$FFFF
-
-preset_prkd20_lower_norfair_ridley:
-    dw #preset_prkd19_lower_norfair_ridley
-    dw $09C6, $0014  ; Missiles
-    dw $09C8, $0014  ; Max missiles
-    dw $0AF8, $FFFF  ; Samus subpixel X
-    dw $D878, $001C  ; Items
-    dw #$FFFF
-
-preset_pkrd_lower_norfair_single_chamber_final:
-    dw #preset_pkrd_lower_norfair_springball_maze
-    dw $078D, $99AE  ; DDB
-    dw $079B, $B656  ; MDB
-    dw $090F, $5000  ; Screen subpixel X position
-    dw $0913, $2C00  ; Screen subpixel Y position
-    dw $0915, $000B  ; Screen Y position in pixels
-    dw $0917, $00C0  ; Layer 2 X position
-    dw $0919, $0001  ; Layer 2 Y position
-    dw $09C2, $006D  ; Health
-    dw $0AF6, $0169  ; Samus X
-    dw #$FFFF
-
-preset_phantoonfirst_lower_norfair_ridley:
-    dw #preset_prkd19_lower_norfair_nox_ridley_ridley
-    dw $0F78, $07FF  ; Safeties enabled
-    dw $0F8E, $003C  ; Safeties energy adjustment
-    dw $0F92, $0028  ; Safeties energy adjustment
-    dw $0FC0, $002D  ; Safeties reserves adjustment
-    dw $1090, $0001  ; Safeties power bombs adjustment
-    dw $1110, $0006  ; Safeties unequip beams
-    dw $11D4, $0001  ; Safeties refill
-    dw #$FFFF
-
-preset_kpdr20_maridia_botwoon_etank:
-    dw #preset_kpdr21_maridia_botwoon_etank
-    dw $09C6, $000F  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
 preset_gtmax_maridia_predraygon_crab_shaft:
     dw #preset_gtmax_maridia_predraygon_mt_everest_and_crab_supers
     dw $078D, $A3CC  ; DDB
@@ -31833,6 +31973,171 @@ preset_gtmax_maridia_predraygon_path_to_watering_hole:
     dw $0AF6, $0069  ; Samus X
     dw $0AFA, $018B  ; Samus Y
     dw $D880, $4E00  ; Items
+    dw #$FFFF
+
+preset_pkrd_maridia_maridia_tube_revisit:
+    dw #preset_pkrd_lower_norfair_business_center_final
+    dw $078D, $92EE  ; DDB
+    dw $079B, $A6A1  ; MDB
+    dw $07F3, $0012  ; Music Bank
+    dw $07F5, $0003  ; Music Track
+    dw $090F, $6000  ; Screen subpixel X position
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $09C2, $0075  ; Health
+    dw $09C6, $0010  ; Missiles
+    dw $0A1C, $009B  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
+    dw $0AF6, $0080  ; Samus X
+    dw $0AFA, $0086  ; Samus Y
+    dw #$FFFF
+
+preset_kpdr20_maridia_botwoon_etank:
+    dw #preset_kpdr21_maridia_botwoon_etank
+    dw $09C6, $000F  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr21_maridia_halfie_setup:
+    dw #preset_kpdr23_maridia_halfie_setup
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09A8, $1001  ; Collected Beams
+    dw $09C2, $018F  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $D874, $0104  ; Items
+    dw $D8B6, $3008  ; Doors
+    dw $D8B8, $26ED  ; Doors
+    dw #$FFFF
+
+preset_kpdr25_maridia_halfie_setup:
+    dw #preset_kpdr23_maridia_halfie_setup
+    dw $09A6, $1007  ; Equipped Beams
+    dw $09A8, $1007  ; Collected Beams
+    dw $09C6, $0019  ; Missiles
+    dw $09C8, $0019  ; Max missiles
+    dw $09CA, $0002  ; Supers
+    dw $D870, $0190  ; Items
+    dw $D876, $01A5  ; Items
+    dw $D8B8, $2EEF  ; Doors
+    dw #$FFFF
+
+preset_kpdr23_maridia_draygon:
+    dw #preset_kpdr23_maridia_halfie_setup
+    dw $078D, $A7F8  ; DDB
+    dw $079B, $D78F  ; MDB
+    dw $090F, $3000  ; Screen subpixel X position
+    dw $0913, $E400  ; Screen subpixel Y position
+    dw $0915, $0200  ; Screen Y position in pixels
+    dw $0919, $0180  ; Layer 2 Y position
+    dw $09C2, $0174  ; Health
+    dw $09CA, $0001  ; Supers
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0041  ; Samus X
+    dw $0AFA, $028B  ; Samus Y
+    dw $D8C2, $0C00  ; Doors
+    dw #$FFFF
+
+preset_kpdr_red_brinstar_revisit_caterpillars_revisit:
+    dw #preset_kpdr_red_brinstar_revisit_red_brinstar_elevator
+    dw $078D, $8B02  ; DDB
+    dw $079B, $A322  ; MDB
+    dw $07F3, $0012  ; Music Bank
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $0238  ; Screen Y position in pixels
+    dw $0919, $0238  ; Layer 2 Y position
+    dw $0A1C, $009B  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
+    dw $0AFA, $02AB  ; Samus Y
+    dw #$FFFF
+
+preset_kpdr22_wrecked_ship_moat_with_missile_gone:
+    dw #preset_kpdr22_wrecked_ship_moat_ball
+    dw $D870, $0190  ; Items
+    dw #$FFFF
+
+preset_kpdr22_wrecked_ship_crateria_kihunters_return:
+    dw #preset_kpdr23_wrecked_ship_crateria_kihunters_return
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09A8, $1001  ; Collected Beams
+    dw $09C6, $000D  ; Missiles
+    dw $09CA, $0006  ; Supers
+    dw #$FFFF
+
+preset_prkd20_lower_norfair_wasteland_revisit:
+preset_prkd20_lower_norfair_nox_ridley_wasteland_revisit:
+    dw #preset_prkd19_lower_norfair_nox_ridley_wasteland_revisit
+    dw $09C8, $0014  ; Max missiles
+    dw $D878, $001C  ; Items
+    dw #$FFFF
+
+preset_phantoonfirst_lower_norfair_wasteland_revisit:
+    dw #preset_prkd19_lower_norfair_nox_ridley_wasteland_revisit
+    dw $0F78, $0C7F  ; Safeties enabled
+    dw $0F88, $FFB0  ; Safeties energy adjustment
+    dw $0F96, $0039  ; Safeties energy adjustment
+    dw $0FC0, $002D  ; Safeties reserves adjustment
+    dw #$FFFF
+
+preset_prkd19_lower_norfair_nox_ridley_kihunter_stairs_up:
+    dw #preset_prkd19_lower_norfair_kihunter_stairs_up
+    dw $0AF8, $FFFF  ; Samus subpixel X
+    dw #$FFFF
+
+preset_prkd19_lower_norfair_fireflea_room:
+    dw #preset_prkd19_lower_norfair_kihunter_stairs_up
+    dw $078D, $9A26  ; DDB
+    dw $079B, $B585  ; MDB
+    dw $090F, $2001  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $4C00  ; Screen subpixel Y position
+    dw $0915, $000D  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $0009  ; Layer 2 Y position
+    dw $0AF6, $009C  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw #$FFFF
+
+preset_gtclassic_tourian_metroids_2:
+    dw #preset_gtclassic_tourian_metroids_1
+    dw $078D, $A984  ; DDB
+    dw $079B, $DAE1  ; MDB
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $00F4  ; Screen X position in pixels
+    dw $0913, $6C00  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $00B7  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09C2, $0183  ; Health
+    dw $09C6, $0064  ; Missiles
+    dw $09CA, $000B  ; Supers
+    dw $09CE, $0011  ; Pbs
+    dw $0AF6, $0154  ; Samus X
+    dw $0AFA, $00AB  ; Samus Y
+    dw $D822, $0001  ; Events
+    dw $D8C4, $0001  ; Doors
+    dw #$FFFF
+
+preset_gtclassic_tourian_metroids_3:
+    dw #preset_gtclassic_tourian_tourian_elevator_room
+    dw $078D, $A9B4  ; DDB
+    dw $079B, $DB31  ; MDB
+    dw $090F, $7FFF  ; Screen subpixel X position
+    dw $0913, $F400  ; Screen subpixel Y position
+    dw $0915, $011D  ; Screen Y position in pixels
+    dw $0919, $00D5  ; Layer 2 Y position
+    dw $09C2, $01EC  ; Health
+    dw $09C6, $0064  ; Missiles
+    dw $09CA, $000F  ; Supers
+    dw $09CE, $0011  ; Pbs
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $00C5  ; Samus X
+    dw $0AFA, $018B  ; Samus Y
+    dw $D822, $0003  ; Events
+    dw $D8C4, $0003  ; Doors
     dw #$FFFF
 
 preset_100early_maridia_predraygon_mama_turtle_etank:
@@ -31964,69 +32269,6 @@ preset_hundo_draygon_draygon_escape:
     dw $D8C2, $8C00  ; Doors
     dw #$FFFF
 
-preset_gtclassic_tourian_metroids_1:
-    dw #preset_gtclassic_tourian_tourian_elevator_room
-    dw $090F, $E001  ; Screen subpixel X position
-    dw $0913, $DBFF  ; Screen subpixel Y position
-    dw $0915, $0300  ; Screen Y position in pixels
-    dw $0919, $0240  ; Layer 2 Y position
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $003F  ; Samus X
-    dw $0AFA, $038B  ; Samus Y
-    dw #$FFFF
-
-preset_pkrd_lower_norfair_bubble_mountain_final:
-    dw #preset_pkrd_lower_norfair_three_musketeers
-    dw $078D, $9A4A  ; DDB
-    dw $079B, $AD5E  ; MDB
-    dw $07F3, $0015  ; Music Bank
-    dw $090F, $A000  ; Screen subpixel X position
-    dw $0913, $5C00  ; Screen subpixel Y position
-    dw $0915, $000D  ; Screen Y position in pixels
-    dw $0919, $0014  ; Layer 2 Y position
-    dw $09C2, $0061  ; Health
-    dw $0AF6, $008B  ; Samus X
-    dw #$FFFF
-
-preset_pkrd_lower_norfair_frog_speedway:
-    dw #preset_pkrd_lower_norfair_springball_maze
-    dw $078D, $956A  ; DDB
-    dw $079B, $AF72  ; MDB
-    dw $07F3, $0015  ; Music Bank
-    dw $0911, $0024  ; Screen X position in pixels
-    dw $0913, $5800  ; Screen subpixel Y position
-    dw $0917, $0014  ; Layer 2 X position
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $09C2, $0061  ; Health
-    dw $09C6, $000E  ; Missiles
-    dw $09CA, $0008  ; Supers
-    dw $09CE, $0003  ; Pbs
-    dw $0AF6, $00C4  ; Samus X
-    dw #$FFFF
-
-preset_prkd19_lower_norfair_nox_ridley_leaving_ridley:
-    dw #preset_prkd19_lower_norfair_leaving_ridley
-    dw $0AF8, $FFFF  ; Samus subpixel X
-    dw #$FFFF
-
-preset_prkd19_lower_norfair_reverse_plowerhouse:
-    dw #preset_prkd19_lower_norfair_ridley
-    dw $078D, $98BE  ; DDB
-    dw $090F, $F000  ; Screen subpixel X position
-    dw $0911, $0200  ; Screen X position in pixels
-    dw $0913, $0400  ; Screen subpixel Y position
-    dw $0917, $0180  ; Layer 2 X position
-    dw $09C2, $00F1  ; Health
-    dw $09C6, $0009  ; Missiles
-    dw $09CA, $0003  ; Supers
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $02B1  ; Samus X
-    dw $D82A, $0101  ; Bosses
-    dw $D8BA, $D5F1  ; Doors
-    dw #$FFFF
-
 preset_gtmax_maridia_predraygon_beach_exit:
     dw #preset_gtmax_maridia_predraygon_crab_shaft
     dw $078D, $A498  ; DDB
@@ -32044,6 +32286,283 @@ preset_gtmax_maridia_predraygon_beach_exit:
     dw $09D6, $0147  ; Reserves
     dw $0AF6, $00AC  ; Samus X
     dw $D880, $7E00  ; Items
+    dw #$FFFF
+
+preset_pkrd_maridia_fish_tank:
+    dw #preset_pkrd_maridia_maridia_tube_revisit
+    dw $078D, $A330  ; DDB
+    dw $079B, $CFC9  ; MDB
+    dw $07F3, $001B  ; Music Bank
+    dw $07F5, $0006  ; Music Track
+    dw $090F, $BFFF  ; Screen subpixel X position
+    dw $0911, $00F5  ; Screen X position in pixels
+    dw $0913, $1C00  ; Screen subpixel Y position
+    dw $0915, $05ED  ; Screen Y position in pixels
+    dw $0917, $00B7  ; Layer 2 X position
+    dw $0919, $0471  ; Layer 2 Y position
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $0162  ; Samus X
+    dw $0AFA, $068B  ; Samus Y
+    dw #$FFFF
+
+preset_kpdr25_maridia_draygon:
+    dw #preset_kpdr23_maridia_draygon
+    dw $09A6, $1007  ; Equipped Beams
+    dw $09A8, $1007  ; Collected Beams
+    dw $09C2, $01BA  ; Health
+    dw $09C6, $0019  ; Missiles
+    dw $09C8, $0019  ; Max missiles
+    dw $09CA, $0000  ; Supers
+    dw $D870, $0190  ; Items
+    dw $D876, $01A5  ; Items
+    dw $D8B8, $2EEF  ; Doors
+    dw #$FFFF
+
+preset_kpdr23_maridia_reverse_halfie_spikesuit:
+    dw #preset_kpdr23_maridia_draygon
+    dw $078D, $A96C  ; DDB
+    dw $090F, $6000  ; Screen subpixel X position
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09A2, $3325  ; Equipped Items
+    dw $09A4, $3325  ; Collected Items
+    dw $09C2, $011E  ; Health
+    dw $09C6, $000D  ; Missiles
+    dw $09CA, $0005  ; Supers
+    dw $09CE, $0003  ; Pbs
+    dw $0A68, $0001  ; Flash suit
+    dw $0AF6, $0044  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw $D82C, $0003  ; Bosses
+    dw $D882, $0500  ; Items
+    dw $D8C2, $CC00  ; Doors
+    dw #$FFFF
+
+preset_kpdr22_wrecked_ship_return_with_yellow_door:
+    dw #preset_kpdr22_wrecked_ship_crateria_kihunters_return
+    dw $09CE, $0004  ; Pbs
+    dw $D870, $0190  ; Items
+    dw $D8B0, $3000  ; Doors
+    dw #$FFFF
+
+preset_kpdr22_red_brinstar_revisit_red_brinstar_elevator:
+    dw #preset_kpdr23_red_brinstar_revisit_red_brinstar_elevator
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09A8, $1001  ; Collected Beams
+    dw $09C6, $000B  ; Missiles
+    dw $09CA, $0006  ; Supers
+    dw #$FFFF
+
+preset_kpdr22_red_brinstar_revisit_caterpillars_revisit:
+    dw #preset_kpdr23_red_brinstar_revisit_caterpillars_revisit
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09A8, $1001  ; Collected Beams
+    dw $09C6, $000B  ; Missiles
+    dw $09CA, $0006  ; Supers
+    dw #$FFFF
+
+preset_kpdr22_red_brinstar_revisit_hellway_revisit:
+    dw #preset_kpdr23_red_brinstar_revisit_hellway_revisit
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09A8, $1001  ; Collected Beams
+    dw $09C6, $000B  ; Missiles
+    dw $09CA, $0008  ; Supers
+    dw #$FFFF
+
+preset_kpdr22_red_brinstar_revisit_red_tower_down:
+    dw #preset_kpdr23_red_brinstar_revisit_red_tower_down
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09A8, $1001  ; Collected Beams
+    dw $09C6, $000B  ; Missiles
+    dw $09CA, $0008  ; Supers
+    dw #$FFFF
+
+preset_kpdr22_red_brinstar_revisit_skree_boost_final:
+    dw #preset_kpdr23_red_brinstar_revisit_skree_boost_final
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09A8, $1001  ; Collected Beams
+    dw $09C6, $000B  ; Missiles
+    dw $09CA, $0008  ; Supers
+    dw #$FFFF
+
+preset_kpdr22_red_brinstar_revisit_below_spazer_final:
+    dw #preset_kpdr23_red_brinstar_revisit_below_spazer_final
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09A8, $1001  ; Collected Beams
+    dw $09C6, $000B  ; Missiles
+    dw $09CA, $0008  ; Supers
+    dw #$FFFF
+
+preset_kpdr22_red_brinstar_revisit_breaking_the_tube:
+    dw #preset_kpdr23_red_brinstar_revisit_breaking_the_tube
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09A8, $1001  ; Collected Beams
+    dw $09C6, $000B  ; Missiles
+    dw $09CA, $0009  ; Supers
+    dw #$FFFF
+
+preset_kpdr22_maridia_fish_tank:
+    dw #preset_kpdr23_maridia_fish_tank
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09A8, $1001  ; Collected Beams
+    dw $09C6, $000B  ; Missiles
+    dw $09CA, $0009  ; Supers
+    dw #$FFFF
+
+preset_kpdr22_maridia_mt_everest:
+    dw #preset_kpdr23_maridia_mt_everest
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09A8, $1001  ; Collected Beams
+    dw $09C6, $000B  ; Missiles
+    dw $09CA, $0009  ; Supers
+    dw #$FFFF
+
+preset_kpdr22_maridia_crab_shaft:
+    dw #preset_kpdr23_maridia_crab_shaft
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09A8, $1001  ; Collected Beams
+    dw $09C6, $000B  ; Missiles
+    dw $09CA, $0009  ; Supers
+    dw #$FFFF
+
+preset_kpdr22_maridia_aqueduct:
+    dw #preset_kpdr23_maridia_aqueduct
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09A8, $1001  ; Collected Beams
+    dw $09C6, $000B  ; Missiles
+    dw $09CA, $0008  ; Supers
+    dw #$FFFF
+
+preset_kpdr22_maridia_botwoon_hallway:
+    dw #preset_kpdr23_maridia_botwoon_hallway
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09A8, $1001  ; Collected Beams
+    dw $09C6, $000B  ; Missiles
+    dw $09CA, $0008  ; Supers
+    dw #$FFFF
+
+preset_kpdr22_maridia_botwoon:
+    dw #preset_kpdr23_maridia_botwoon
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09A8, $1001  ; Collected Beams
+    dw $09C6, $000B  ; Missiles
+    dw $09CA, $0008  ; Supers
+    dw #$FFFF
+
+preset_prkd20_lower_norfair_kihunter_stairs_up:
+preset_prkd20_lower_norfair_nox_ridley_kihunter_stairs_up:
+    dw #preset_prkd19_lower_norfair_nox_ridley_kihunter_stairs_up
+    dw $09C8, $0014  ; Max missiles
+    dw $D878, $001C  ; Items
+    dw #$FFFF
+
+preset_kpdr22_maridia_botwoon_etank:
+    dw #preset_kpdr23_maridia_botwoon_etank
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09A8, $1001  ; Collected Beams
+    dw #$FFFF
+
+preset_kpdr22_maridia_halfie_setup:
+    dw #preset_kpdr23_maridia_halfie_setup
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09A8, $1001  ; Collected Beams
+    dw #$FFFF
+
+preset_prkd20_lower_norfair_fireflea_room:
+preset_prkd20_lower_norfair_nox_ridley_fireflea_room:
+    dw #preset_prkd19_lower_norfair_fireflea_room
+    dw $09C8, $0014  ; Max missiles
+    dw $0AF8, $FFFF  ; Samus subpixel X
+    dw $D878, $001C  ; Items
+    dw #$FFFF
+
+preset_kpdr20_maridia_halfie_setup:
+    dw #preset_kpdr21_maridia_halfie_setup
+    dw $09C6, $000F  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr22_maridia_draygon:
+    dw #preset_kpdr23_maridia_draygon
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09A8, $1001  ; Collected Beams
+    dw #$FFFF
+
+preset_kpdr_red_brinstar_revisit_hellway_revisit:
+    dw #preset_kpdr_red_brinstar_revisit_caterpillars_revisit
+    dw $090F, $C000  ; Screen subpixel X position
+    dw $0913, $2800  ; Screen subpixel Y position
+    dw $0915, $0500  ; Screen Y position in pixels
+    dw $0919, $0500  ; Layer 2 Y position
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0040  ; Samus X
+    dw $0AFA, $058B  ; Samus Y
+    dw #$FFFF
+
+preset_phantoonfirst_lower_norfair_kihunter_stairs_up:
+    dw #preset_prkd19_lower_norfair_nox_ridley_kihunter_stairs_up
+    dw $0F78, $0C7F  ; Safeties enabled
+    dw $0F88, $FFB0  ; Safeties energy adjustment
+    dw $0F96, $0039  ; Safeties energy adjustment
+    dw $0FC0, $002D  ; Safeties reserves adjustment
+    dw #$FFFF
+
+preset_prkd19_lower_norfair_nox_ridley_fireflea_room:
+    dw #preset_prkd19_lower_norfair_fireflea_room
+    dw $0AF8, $FFFF  ; Samus subpixel X
+    dw #$FFFF
+
+preset_prkd19_lower_norfair_springball_maze:
+    dw #preset_prkd19_lower_norfair_kihunter_stairs_up
+    dw $078D, $9A02  ; DDB
+    dw $079B, $B6EE  ; MDB
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0917, $0100  ; Layer 2 X position
+    dw $0919, $000D  ; Layer 2 Y position
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $016C  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw #$FFFF
+
+preset_gtclassic_tourian_metroids_4:
+    dw #preset_gtclassic_tourian_metroids_3
+    dw $078D, $A9CC  ; DDB
+    dw $079B, $DB7D  ; MDB
+    dw $090F, $3000  ; Screen subpixel X position
+    dw $0911, $0500  ; Screen X position in pixels
+    dw $0913, $7800  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $03C0  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09C2, $025A  ; Health
+    dw $09CE, $0014  ; Pbs
+    dw $0AF6, $05A4  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw $D822, $0007  ; Events
+    dw $D8C4, $0007  ; Doors
+    dw #$FFFF
+
+preset_gtclassic_tourian_giant_hoppers:
+    dw #preset_gtclassic_tourian_metroids_3
+    dw $078D, $A9E4  ; DDB
+    dw $079B, $DBCD  ; MDB
+    dw $090F, $A000  ; Screen subpixel X position
+    dw $0913, $EC00  ; Screen subpixel Y position
+    dw $0915, $011F  ; Screen Y position in pixels
+    dw $0919, $00D7  ; Layer 2 Y position
+    dw $09C2, $02BC  ; Health
+    dw $09CA, $0011  ; Supers
+    dw $09CE, $0014  ; Pbs
+    dw $0AF6, $005A  ; Samus X
+    dw $0AFA, $01CB  ; Samus Y
+    dw $D822, $000F  ; Events
+    dw $D8C4, $000F  ; Doors
     dw #$FFFF
 
 preset_100early_maridia_predraygon_fish_tank_revisit:
@@ -32163,195 +32682,6 @@ preset_hundo_maridia_cleanup_aqueduct_revisit:
     dw $D8C2, $CC00  ; Doors
     dw #$FFFF
 
-preset_gtclassic_tourian_metroids_2:
-    dw #preset_gtclassic_tourian_metroids_1
-    dw $078D, $A984  ; DDB
-    dw $079B, $DAE1  ; MDB
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $0911, $00F4  ; Screen X position in pixels
-    dw $0913, $6C00  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0917, $00B7  ; Layer 2 X position
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $09C2, $0183  ; Health
-    dw $09C6, $0064  ; Missiles
-    dw $09CA, $000B  ; Supers
-    dw $09CE, $0011  ; Pbs
-    dw $0AF6, $0154  ; Samus X
-    dw $0AFA, $00AB  ; Samus Y
-    dw $D822, $0001  ; Events
-    dw $D8C4, $0001  ; Doors
-    dw #$FFFF
-
-preset_gtclassic_tourian_metroids_3:
-    dw #preset_gtclassic_tourian_tourian_elevator_room
-    dw $078D, $A9B4  ; DDB
-    dw $079B, $DB31  ; MDB
-    dw $090F, $7FFF  ; Screen subpixel X position
-    dw $0913, $F400  ; Screen subpixel Y position
-    dw $0915, $011D  ; Screen Y position in pixels
-    dw $0919, $00D5  ; Layer 2 Y position
-    dw $09C2, $01EC  ; Health
-    dw $09C6, $0064  ; Missiles
-    dw $09CA, $000F  ; Supers
-    dw $09CE, $0011  ; Pbs
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $00C5  ; Samus X
-    dw $0AFA, $018B  ; Samus Y
-    dw $D822, $0003  ; Events
-    dw $D8C4, $0003  ; Doors
-    dw #$FFFF
-
-preset_pkrd_lower_norfair_business_center_final:
-    dw #preset_pkrd_lower_norfair_frog_speedway
-    dw $078D, $97DA  ; DDB
-    dw $079B, $B167  ; MDB
-    dw $090F, $8000  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $EC00  ; Screen subpixel Y position
-    dw $0917, $0000  ; Layer 2 X position
-    dw $0AF6, $002A  ; Samus X
-    dw #$FFFF
-
-preset_kpdr21_maridia_halfie_setup:
-    dw #preset_kpdr23_maridia_halfie_setup
-    dw $09A6, $1001  ; Equipped Beams
-    dw $09A8, $1001  ; Collected Beams
-    dw $09C2, $018F  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0104  ; Items
-    dw $D8B6, $3008  ; Doors
-    dw $D8B8, $26ED  ; Doors
-    dw #$FFFF
-
-preset_kpdr25_maridia_halfie_setup:
-    dw #preset_kpdr23_maridia_halfie_setup
-    dw $09A6, $1007  ; Equipped Beams
-    dw $09A8, $1007  ; Collected Beams
-    dw $09C6, $0019  ; Missiles
-    dw $09C8, $0019  ; Max missiles
-    dw $09CA, $0002  ; Supers
-    dw $D870, $0190  ; Items
-    dw $D876, $01A5  ; Items
-    dw $D8B8, $2EEF  ; Doors
-    dw #$FFFF
-
-preset_kpdr23_maridia_draygon:
-    dw #preset_kpdr23_maridia_halfie_setup
-    dw $078D, $A7F8  ; DDB
-    dw $079B, $D78F  ; MDB
-    dw $090F, $3000  ; Screen subpixel X position
-    dw $0913, $E400  ; Screen subpixel Y position
-    dw $0915, $0200  ; Screen Y position in pixels
-    dw $0919, $0180  ; Layer 2 Y position
-    dw $09C2, $0174  ; Health
-    dw $09CA, $0001  ; Supers
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $0041  ; Samus X
-    dw $0AFA, $028B  ; Samus Y
-    dw $D8C2, $0C00  ; Doors
-    dw #$FFFF
-
-preset_kpdr_red_brinstar_revisit_breaking_the_tube:
-    dw #preset_kpdr_red_brinstar_revisit_below_spazer_final
-    dw $078D, $9102  ; DDB
-    dw $079B, $A408  ; MDB
-    dw $090F, $C000  ; Screen subpixel X position
-    dw $0913, $D000  ; Screen subpixel Y position
-    dw $0915, $0100  ; Screen Y position in pixels
-    dw $0919, $00C0  ; Layer 2 Y position
-    dw $09CA, $000A  ; Supers
-    dw $09D2, $0003  ; Currently selected item
-    dw $0AF6, $01B1  ; Samus X
-    dw $0AFA, $018B  ; Samus Y
-    dw #$FFFF
-
-preset_kpdr_maridia_fish_tank:
-    dw #preset_kpdr_red_brinstar_revisit_below_spazer_final
-    dw $078D, $A330  ; DDB
-    dw $079B, $CFC9  ; MDB
-    dw $07F3, $001B  ; Music Bank
-    dw $07F5, $0006  ; Music Track
-    dw $090F, $4000  ; Screen subpixel X position
-    dw $0911, $00F0  ; Screen X position in pixels
-    dw $0913, $E000  ; Screen subpixel Y position
-    dw $0915, $05ED  ; Screen Y position in pixels
-    dw $0917, $00B4  ; Layer 2 X position
-    dw $0919, $0471  ; Layer 2 Y position
-    dw $09CA, $000A  ; Supers
-    dw $09CE, $0002  ; Pbs
-    dw $0AF6, $0161  ; Samus X
-    dw $0AF8, $7FFF  ; Samus subpixel X
-    dw $0AFA, $068B  ; Samus Y
-    dw $D820, $0801  ; Events
-    dw #$FFFF
-
-preset_kpdr22_wrecked_ship_leaving_phantoon:
-    dw #preset_kpdr22_wrecked_ship_phantoon
-    dw $078D, $A2AC  ; DDB
-    dw $079B, $CD13  ; MDB
-    dw $07F5, $0003  ; Music Track
-    dw $090F, $6000  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $8400  ; Screen subpixel Y position
-    dw $0917, $0001  ; Layer 2 X position
-    dw $09C2, $014B  ; Health
-    dw $09C6, $000C  ; Missiles
-    dw $09CA, $0005  ; Supers
-    dw $09CE, $0002  ; Pbs
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $006D  ; Samus X
-    dw $0AFA, $00BB  ; Samus Y
-    dw $D82A, $0100  ; Bosses
-    dw $D8C0, $0070  ; Doors
-    dw #$FFFF
-
-preset_prkd20_lower_norfair_nox_ridley_ridley:
-    dw #preset_prkd20_lower_norfair_ridley
-    dw $09A6, $1007  ; Equipped Beams
-    dw $09CE, $0004  ; Pbs
-    dw #$FFFF
-
-preset_prkd20_lower_norfair_leaving_ridley:
-preset_prkd20_lower_norfair_nox_ridley_leaving_ridley:
-    dw #preset_prkd19_lower_norfair_nox_ridley_leaving_ridley
-    dw $09C8, $0014  ; Max missiles
-    dw $D878, $001C  ; Items
-    dw #$FFFF
-
-preset_prkd20_lower_norfair_reverse_plowerhouse:
-preset_prkd20_lower_norfair_nox_ridley_reverse_plowerhouse:
-    dw #preset_prkd19_lower_norfair_reverse_plowerhouse
-    dw $09C8, $0014  ; Max missiles
-    dw $0AF8, $FFFF  ; Samus subpixel X
-    dw $D878, $001C  ; Items
-    dw #$FFFF
-
-preset_phantoonfirst_lower_norfair_leaving_ridley:
-    dw #preset_prkd19_lower_norfair_nox_ridley_leaving_ridley
-    dw $0F78, $0C7F  ; Safeties enabled
-    dw $0F96, $0039  ; Safeties energy adjustment
-    dw $0FC0, $002D  ; Safeties reserves adjustment
-    dw #$FFFF
-
-preset_prkd19_lower_norfair_nox_ridley_reverse_plowerhouse:
-    dw #preset_prkd19_lower_norfair_reverse_plowerhouse
-    dw $0AF8, $FFFF  ; Samus subpixel X
-    dw #$FFFF
-
-preset_prkd19_lower_norfair_wasteland_revisit:
-    dw #preset_prkd19_lower_norfair_reverse_plowerhouse
-    dw $078D, $9966  ; DDB
-    dw $079B, $B62B  ; MDB
-    dw $090F, $6000  ; Screen subpixel X position
-    dw $0913, $8800  ; Screen subpixel Y position
-    dw $09C2, $00C8  ; Health
-    dw $0AF6, $02DC  ; Samus X
-    dw #$FFFF
-
 preset_gtmax_maridia_predraygon_crab_shaft_revisit:
     dw #preset_gtmax_maridia_predraygon_beach_exit
     dw $078D, $A4A4  ; DDB
@@ -32366,6 +32696,79 @@ preset_gtmax_maridia_predraygon_crab_shaft_revisit:
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $00A8  ; Samus X
     dw $0AFA, $02B3  ; Samus Y
+    dw #$FFFF
+
+preset_pkrd_maridia_mt_everest:
+    dw #preset_pkrd_maridia_fish_tank
+    dw $078D, $A3F0  ; DDB
+    dw $079B, $D0B9  ; MDB
+    dw $090F, $2000  ; Screen subpixel X position
+    dw $0911, $0109  ; Screen X position in pixels
+    dw $0913, $6800  ; Screen subpixel Y position
+    dw $0915, $031F  ; Screen Y position in pixels
+    dw $0917, $00C6  ; Layer 2 X position
+    dw $0919, $0257  ; Layer 2 Y position
+    dw $0AF6, $019D  ; Samus X
+    dw $0AFA, $03BB  ; Samus Y
+    dw #$FFFF
+
+preset_prkd19_lower_norfair_nox_ridley_springball_maze:
+    dw #preset_prkd19_lower_norfair_springball_maze
+    dw $0AF8, $FFFF  ; Samus subpixel X
+    dw #$FFFF
+
+preset_kpdr23_maridia_whomple_jump:
+    dw #preset_kpdr23_maridia_reverse_halfie_spikesuit
+    dw $0A68, $0000  ; Flash suit
+    dw #$FFFF
+
+preset_gtclassic_tourian_baby_skip:
+    dw #preset_gtclassic_tourian_giant_hoppers
+    dw $078D, $AA14  ; DDB
+    dw $079B, $DC65  ; MDB
+    dw $07F3, $0045  ; Music Bank
+    dw $07F5, $0006  ; Music Track
+    dw $090F, $2FFF  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $5000  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $00C0  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $01DB  ; Samus X
+    dw $0AFA, $00AB  ; Samus Y
+    dw #$FFFF
+
+preset_gtclassic_tourian_gadora_room:
+    dw #preset_gtclassic_tourian_giant_hoppers
+    dw $078D, $AA44  ; DDB
+    dw $079B, $DCFF  ; MDB
+    dw $090F, $5000  ; Screen subpixel X position
+    dw $0913, $6400  ; Screen subpixel Y position
+    dw $0915, $0113  ; Screen Y position in pixels
+    dw $0919, $00CE  ; Layer 2 Y position
+    dw $09CA, $0010  ; Supers
+    dw $0AF6, $00DC  ; Samus X
+    dw $0AFA, $018B  ; Samus Y
+    dw $D8C4, $00AF  ; Doors
+    dw #$FFFF
+
+preset_gtclassic_tourian_zeb_skip:
+    dw #preset_gtclassic_tourian_giant_hoppers
+    dw $078D, $AAA4  ; DDB
+    dw $079B, $DDF3  ; MDB
+    dw $090F, $9000  ; Screen subpixel X position
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $021D  ; Screen Y position in pixels
+    dw $0919, $0195  ; Layer 2 Y position
+    dw $09CA, $000E  ; Supers
+    dw $09D2, $0002  ; Currently selected item
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0047  ; Samus X
+    dw $0AFA, $028B  ; Samus Y
+    dw $D8C4, $03AF  ; Doors
     dw #$FFFF
 
 preset_100early_maridia_predraygon_mt_everest:
@@ -32509,194 +32912,6 @@ preset_hundo_maridia_cleanup_right_sand_pit:
     dw $0AFA, $02CB  ; Samus Y
     dw #$FFFF
 
-preset_gtclassic_tourian_metroids_4:
-    dw #preset_gtclassic_tourian_metroids_3
-    dw $078D, $A9CC  ; DDB
-    dw $079B, $DB7D  ; MDB
-    dw $090F, $3000  ; Screen subpixel X position
-    dw $0911, $0500  ; Screen X position in pixels
-    dw $0913, $7800  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0917, $03C0  ; Layer 2 X position
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $09C2, $025A  ; Health
-    dw $09CE, $0014  ; Pbs
-    dw $0AF6, $05A4  ; Samus X
-    dw $0AFA, $008B  ; Samus Y
-    dw $D822, $0007  ; Events
-    dw $D8C4, $0007  ; Doors
-    dw #$FFFF
-
-preset_gtclassic_tourian_giant_hoppers:
-    dw #preset_gtclassic_tourian_metroids_3
-    dw $078D, $A9E4  ; DDB
-    dw $079B, $DBCD  ; MDB
-    dw $090F, $A000  ; Screen subpixel X position
-    dw $0913, $EC00  ; Screen subpixel Y position
-    dw $0915, $011F  ; Screen Y position in pixels
-    dw $0919, $00D7  ; Layer 2 Y position
-    dw $09C2, $02BC  ; Health
-    dw $09CA, $0011  ; Supers
-    dw $09CE, $0014  ; Pbs
-    dw $0AF6, $005A  ; Samus X
-    dw $0AFA, $01CB  ; Samus Y
-    dw $D822, $000F  ; Events
-    dw $D8C4, $000F  ; Doors
-    dw #$FFFF
-
-preset_pkrd_maridia_maridia_tube_revisit:
-    dw #preset_pkrd_lower_norfair_business_center_final
-    dw $078D, $92EE  ; DDB
-    dw $079B, $A6A1  ; MDB
-    dw $07F3, $0012  ; Music Bank
-    dw $07F5, $0003  ; Music Track
-    dw $090F, $6000  ; Screen subpixel X position
-    dw $0913, $0000  ; Screen subpixel Y position
-    dw $09C2, $0075  ; Health
-    dw $09C6, $0010  ; Missiles
-    dw $0A1C, $009B  ; Samus position/state
-    dw $0A1E, $0000  ; More position/state
-    dw $0AF6, $0080  ; Samus X
-    dw $0AFA, $0086  ; Samus Y
-    dw #$FFFF
-
-preset_prkd20_lower_norfair_wasteland_revisit:
-preset_prkd20_lower_norfair_nox_ridley_wasteland_revisit:
-    dw #preset_prkd19_lower_norfair_wasteland_revisit
-    dw $09C8, $0014  ; Max missiles
-    dw $0AF8, $FFFF  ; Samus subpixel X
-    dw $D878, $001C  ; Items
-    dw #$FFFF
-
-preset_kpdr20_maridia_halfie_setup:
-    dw #preset_kpdr21_maridia_halfie_setup
-    dw $09C6, $000F  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr21_maridia_draygon:
-    dw #preset_kpdr23_maridia_draygon
-    dw $09A6, $1001  ; Equipped Beams
-    dw $09A8, $1001  ; Collected Beams
-    dw $09C2, $0110  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0104  ; Items
-    dw $D8B6, $3008  ; Doors
-    dw $D8B8, $26ED  ; Doors
-    dw #$FFFF
-
-preset_kpdr25_maridia_draygon:
-    dw #preset_kpdr23_maridia_draygon
-    dw $09A6, $1007  ; Equipped Beams
-    dw $09A8, $1007  ; Collected Beams
-    dw $09C2, $01BA  ; Health
-    dw $09C6, $0019  ; Missiles
-    dw $09C8, $0019  ; Max missiles
-    dw $09CA, $0000  ; Supers
-    dw $D870, $0190  ; Items
-    dw $D876, $01A5  ; Items
-    dw $D8B8, $2EEF  ; Doors
-    dw #$FFFF
-
-preset_kpdr23_maridia_reverse_halfie_spikesuit:
-    dw #preset_kpdr23_maridia_draygon
-    dw $078D, $A96C  ; DDB
-    dw $090F, $6000  ; Screen subpixel X position
-    dw $0913, $0000  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $09A2, $3325  ; Equipped Items
-    dw $09A4, $3325  ; Collected Items
-    dw $09C2, $011E  ; Health
-    dw $09C6, $000D  ; Missiles
-    dw $09CA, $0005  ; Supers
-    dw $09CE, $0003  ; Pbs
-    dw $0A68, $0001  ; Flash suit
-    dw $0AF6, $0044  ; Samus X
-    dw $0AFA, $008B  ; Samus Y
-    dw $D82C, $0003  ; Bosses
-    dw $D882, $0500  ; Items
-    dw $D8C2, $CC00  ; Doors
-    dw #$FFFF
-
-preset_kpdr_maridia_mt_everest:
-    dw #preset_kpdr_maridia_fish_tank
-    dw $078D, $A3F0  ; DDB
-    dw $079B, $D0B9  ; MDB
-    dw $090F, $8000  ; Screen subpixel X position
-    dw $0911, $0100  ; Screen X position in pixels
-    dw $0913, $BC00  ; Screen subpixel Y position
-    dw $0915, $031F  ; Screen Y position in pixels
-    dw $0917, $00C0  ; Layer 2 X position
-    dw $0919, $0257  ; Layer 2 Y position
-    dw $0AF6, $019D  ; Samus X
-    dw $0AFA, $03BB  ; Samus Y
-    dw $0F78, $7EFB  ; Safeties enabled
-    dw $101C, $FFFB  ; Safeties missiles adjustment
-    dw $11DC, $0001  ; Safeties refill
-    dw #$FFFF
-
-preset_kpdr22_wrecked_ship_shaft_to_supers:
-    dw #preset_kpdr22_wrecked_ship_leaving_phantoon
-    dw $078D, $A2C4  ; DDB
-    dw $079B, $CC6F  ; MDB
-    dw $07F5, $0006  ; Music Track
-    dw $090F, $8000  ; Screen subpixel X position
-    dw $0911, $0233  ; Screen X position in pixels
-    dw $0913, $E000  ; Screen subpixel Y position
-    dw $0917, $01A6  ; Layer 2 X position
-    dw $0AF6, $02CE  ; Samus X
-    dw $0AF8, $1000  ; Samus subpixel X
-    dw $0AFA, $006B  ; Samus Y
-    dw #$FFFF
-
-preset_kpdr22_wrecked_ship_wrecked_ship_shaft:
-    dw #preset_kpdr22_wrecked_ship_leaving_phantoon
-    dw $078D, $A210  ; DDB
-    dw $079B, $CDA8  ; MDB
-    dw $07F5, $0006  ; Music Track
-    dw $090F, $3000  ; Screen subpixel X position
-    dw $0913, $0400  ; Screen subpixel Y position
-    dw $0917, $0000  ; Layer 2 X position
-    dw $09CA, $000A  ; Supers
-    dw $09CC, $000A  ; Max supers
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $00CC  ; Samus X
-    dw $0AF8, $8000  ; Samus subpixel X
-    dw $0AFA, $008B  ; Samus Y
-    dw $D880, $0020  ; Items
-    dw $D8C0, $0074  ; Doors
-    dw #$FFFF
-
-preset_prkd20_lower_norfair_kihunter_stairs_up:
-preset_prkd20_lower_norfair_nox_ridley_kihunter_stairs_up:
-    dw #preset_prkd20_lower_norfair_reverse_plowerhouse
-    dw $078D, $9A3E  ; DDB
-    dw $079B, $B5D5  ; MDB
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $0911, $0500  ; Screen X position in pixels
-    dw $0913, $B000  ; Screen subpixel Y position
-    dw $0917, $03C0  ; Layer 2 X position
-    dw $09C2, $0099  ; Health
-    dw $09CE, $0004  ; Pbs
-    dw $0AF6, $055B  ; Samus X
-    dw $0AFA, $009B  ; Samus Y
-    dw #$FFFF
-
-preset_phantoonfirst_lower_norfair_reverse_plowerhouse:
-    dw #preset_prkd19_lower_norfair_nox_ridley_reverse_plowerhouse
-    dw $0F78, $0C7F  ; Safeties enabled
-    dw $0F96, $0039  ; Safeties energy adjustment
-    dw $0FC0, $002D  ; Safeties reserves adjustment
-    dw #$FFFF
-
-preset_prkd19_lower_norfair_nox_ridley_wasteland_revisit:
-    dw #preset_prkd19_lower_norfair_wasteland_revisit
-    dw $0AF8, $FFFF  ; Samus subpixel X
-    dw #$FFFF
-
 preset_gtmax_maridia_predraygon_botwoon_hallway:
     dw #preset_gtmax_maridia_predraygon_crab_shaft_revisit
     dw $078D, $A4C8  ; DDB
@@ -32713,6 +32928,143 @@ preset_gtmax_maridia_predraygon_botwoon_hallway:
     dw $0AF6, $0121  ; Samus X
     dw $0AFA, $009B  ; Samus Y
     dw $D8C0, $C000  ; Doors
+    dw #$FFFF
+
+preset_pkrd_maridia_crab_shaft:
+    dw #preset_pkrd_maridia_mt_everest
+    dw $090F, $F800  ; Screen subpixel X position
+    dw $0911, $0500  ; Screen X position in pixels
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $03C0  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09C2, $0044  ; Health
+    dw $0AF6, $05C4  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw #$FFFF
+
+preset_prkd20_lower_norfair_springball_maze:
+preset_prkd20_lower_norfair_nox_ridley_springball_maze:
+    dw #preset_prkd19_lower_norfair_nox_ridley_springball_maze
+    dw $09C8, $0014  ; Max missiles
+    dw $D878, $001C  ; Items
+    dw #$FFFF
+
+preset_kpdr22_maridia_reverse_halfie_spikesuit:
+    dw #preset_kpdr23_maridia_reverse_halfie_spikesuit
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09A8, $1001  ; Collected Beams
+    dw #$FFFF
+
+preset_kpdr25_maridia_reverse_halfie_spikesuit:
+    dw #preset_kpdr23_maridia_reverse_halfie_spikesuit
+    dw $09A6, $1007  ; Equipped Beams
+    dw $09A8, $1007  ; Collected Beams
+    dw $09C2, $0184  ; Health
+    dw $09C6, $0006  ; Missiles
+    dw $09C8, $0019  ; Max missiles
+    dw $09CA, $0003  ; Supers
+    dw $09CE, $0005  ; Pbs
+    dw $D870, $0190  ; Items
+    dw $D876, $01A5  ; Items
+    dw $D8B8, $2EEF  ; Doors
+    dw #$FFFF
+
+preset_kpdr21_maridia_draygon:
+    dw #preset_kpdr22_maridia_draygon
+    dw $09C2, $0110  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $D874, $0104  ; Items
+    dw $D8B6, $3008  ; Doors
+    dw $D8B8, $26ED  ; Doors
+    dw #$FFFF
+
+preset_kpdr_red_brinstar_revisit_red_tower_down:
+    dw #preset_kpdr_red_brinstar_revisit_hellway_revisit
+    dw $078D, $90AE  ; DDB
+    dw $079B, $A2F7  ; MDB
+    dw $0913, $9000  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09C2, $0079  ; Health
+    dw $0AF6, $003D  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw #$FFFF
+
+preset_kpdr_red_brinstar_revisit_skree_boost_final:
+    dw #preset_kpdr_red_brinstar_revisit_caterpillars_revisit
+    dw $078D, $907E  ; DDB
+    dw $079B, $A253  ; MDB
+    dw $090F, $A001  ; Screen subpixel X position
+    dw $0915, $091A  ; Screen Y position in pixels
+    dw $0919, $06D3  ; Layer 2 Y position
+    dw $09C2, $0079  ; Health
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $0054  ; Samus X
+    dw $0AFA, $098B  ; Samus Y
+    dw $0F78, $3EFB  ; Safeties enabled
+    dw $105A, $FFFF  ; Safeties supers adjustment
+    dw $11DA, $0001  ; Safeties refill
+    dw #$FFFF
+
+preset_phantoonfirst_lower_norfair_fireflea_room:
+    dw #preset_prkd19_lower_norfair_nox_ridley_fireflea_room
+    dw $0F78, $0C7F  ; Safeties enabled
+    dw $0F88, $FFB0  ; Safeties energy adjustment
+    dw $0F96, $0039  ; Safeties energy adjustment
+    dw $0FC0, $002D  ; Safeties reserves adjustment
+    dw #$FFFF
+
+preset_prkd19_lower_norfair_three_musketeers:
+    dw #preset_prkd19_lower_norfair_springball_maze
+    dw $078D, $9A92  ; DDB
+    dw $079B, $B510  ; MDB
+    dw $090F, $E100  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $5400  ; Screen subpixel Y position
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $0AF6, $0069  ; Samus X
+    dw #$FFFF
+
+preset_phantoonfirst_lower_norfair_springball_maze:
+    dw #preset_prkd19_lower_norfair_nox_ridley_springball_maze
+    dw $0F78, $0C7F  ; Safeties enabled
+    dw $0F88, $FFB0  ; Safeties energy adjustment
+    dw $0F96, $0039  ; Safeties energy adjustment
+    dw $0FC0, $002D  ; Safeties reserves adjustment
+    dw #$FFFF
+
+preset_kpdr23_maridia_cac_alley_east:
+    dw #preset_kpdr23_maridia_whomple_jump
+    dw $078D, $A7E0  ; DDB
+    dw $079B, $D913  ; MDB
+    dw $090F, $8000  ; Screen subpixel X position
+    dw $0915, $011A  ; Screen Y position in pixels
+    dw $0919, $011A  ; Layer 2 Y position
+    dw $09C2, $00AE  ; Health
+    dw $09C6, $000C  ; Missiles
+    dw $0AF6, $0030  ; Samus X
+    dw $0AFA, $018B  ; Samus Y
+    dw $D8C2, $DC00  ; Doors
+    dw #$FFFF
+
+preset_gtclassic_tourian_mother_brain_2:
+    dw #preset_gtclassic_tourian_zeb_skip
+    dw $078D, $AAC8  ; DDB
+    dw $079B, $DD58  ; MDB
+    dw $07F3, $0021  ; Music Bank
+    dw $07F5, $0000  ; Music Track
+    dw $090F, $79FF  ; Screen subpixel X position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09C6, $005B  ; Missiles
+    dw $09CA, $0001  ; Supers
+    dw $09D2, $0000  ; Currently selected item
+    dw $0AF6, $00CF  ; Samus X
+    dw $0AFA, $009B  ; Samus Y
+    dw $D820, $0FC5  ; Events
     dw #$FFFF
 
 preset_100early_maridia_predraygon_beach_missiles:
@@ -32814,117 +33166,6 @@ preset_hundo_maridia_cleanup_puyo_ice_clip_springball:
     dw $D882, $058C  ; Items
     dw #$FFFF
 
-preset_gtclassic_tourian_baby_skip:
-    dw #preset_gtclassic_tourian_giant_hoppers
-    dw $078D, $AA14  ; DDB
-    dw $079B, $DC65  ; MDB
-    dw $07F3, $0045  ; Music Bank
-    dw $07F5, $0006  ; Music Track
-    dw $090F, $2FFF  ; Screen subpixel X position
-    dw $0911, $0100  ; Screen X position in pixels
-    dw $0913, $5000  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0917, $00C0  ; Layer 2 X position
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $01DB  ; Samus X
-    dw $0AFA, $00AB  ; Samus Y
-    dw #$FFFF
-
-preset_gtclassic_tourian_gadora_room:
-    dw #preset_gtclassic_tourian_giant_hoppers
-    dw $078D, $AA44  ; DDB
-    dw $079B, $DCFF  ; MDB
-    dw $090F, $5000  ; Screen subpixel X position
-    dw $0913, $6400  ; Screen subpixel Y position
-    dw $0915, $0113  ; Screen Y position in pixels
-    dw $0919, $00CE  ; Layer 2 Y position
-    dw $09CA, $0010  ; Supers
-    dw $0AF6, $00DC  ; Samus X
-    dw $0AFA, $018B  ; Samus Y
-    dw $D8C4, $00AF  ; Doors
-    dw #$FFFF
-
-preset_gtclassic_tourian_zeb_skip:
-    dw #preset_gtclassic_tourian_giant_hoppers
-    dw $078D, $AAA4  ; DDB
-    dw $079B, $DDF3  ; MDB
-    dw $090F, $9000  ; Screen subpixel X position
-    dw $0913, $0000  ; Screen subpixel Y position
-    dw $0915, $021D  ; Screen Y position in pixels
-    dw $0919, $0195  ; Layer 2 Y position
-    dw $09CA, $000E  ; Supers
-    dw $09D2, $0002  ; Currently selected item
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $0047  ; Samus X
-    dw $0AFA, $028B  ; Samus Y
-    dw $D8C4, $03AF  ; Doors
-    dw #$FFFF
-
-preset_pkrd_maridia_fish_tank:
-    dw #preset_pkrd_maridia_maridia_tube_revisit
-    dw $078D, $A330  ; DDB
-    dw $079B, $CFC9  ; MDB
-    dw $07F3, $001B  ; Music Bank
-    dw $07F5, $0006  ; Music Track
-    dw $090F, $BFFF  ; Screen subpixel X position
-    dw $0911, $00F5  ; Screen X position in pixels
-    dw $0913, $1C00  ; Screen subpixel Y position
-    dw $0915, $05ED  ; Screen Y position in pixels
-    dw $0917, $00B7  ; Layer 2 X position
-    dw $0919, $0471  ; Layer 2 Y position
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $0162  ; Samus X
-    dw $0AFA, $068B  ; Samus Y
-    dw #$FFFF
-
-preset_prkd19_lower_norfair_kihunter_stairs_up:
-    dw #preset_prkd20_lower_norfair_kihunter_stairs_up
-    dw $09C8, $000F  ; Max missiles
-    dw $0AF8, $D000  ; Samus subpixel X
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr20_maridia_draygon:
-    dw #preset_kpdr21_maridia_draygon
-    dw $09C6, $000F  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_prkd20_lower_norfair_fireflea_room:
-preset_prkd20_lower_norfair_nox_ridley_fireflea_room:
-    dw #preset_prkd20_lower_norfair_kihunter_stairs_up
-    dw $078D, $9A26  ; DDB
-    dw $079B, $B585  ; MDB
-    dw $090F, $2001  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $4C00  ; Screen subpixel Y position
-    dw $0915, $000D  ; Screen Y position in pixels
-    dw $0917, $0000  ; Layer 2 X position
-    dw $0919, $0009  ; Layer 2 Y position
-    dw $0AF6, $009C  ; Samus X
-    dw $0AFA, $008B  ; Samus Y
-    dw #$FFFF
-
-preset_prkd20_lower_norfair_springball_maze:
-preset_prkd20_lower_norfair_nox_ridley_springball_maze:
-    dw #preset_prkd20_lower_norfair_kihunter_stairs_up
-    dw $078D, $9A02  ; DDB
-    dw $079B, $B6EE  ; MDB
-    dw $0911, $0100  ; Screen X position in pixels
-    dw $0913, $0000  ; Screen subpixel Y position
-    dw $0917, $0100  ; Layer 2 X position
-    dw $0919, $000D  ; Layer 2 Y position
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $016C  ; Samus X
-    dw $0AFA, $008B  ; Samus Y
-    dw #$FFFF
-
 preset_gtmax_maridia_predraygon_botwoon:
     dw #preset_gtmax_maridia_predraygon_botwoon_hallway
     dw $078D, $A72C  ; DDB
@@ -32959,6 +33200,70 @@ preset_gtmax_maridia_predraygon_halfie_setup:
     dw $0AF6, $0079  ; Samus X
     dw $0AFA, $0098  ; Samus Y
     dw $D82C, $0002  ; Bosses
+    dw #$FFFF
+
+preset_pkrd_maridia_aqueduct:
+    dw #preset_pkrd_maridia_crab_shaft
+    dw $078D, $A468  ; DDB
+    dw $079B, $D1A3  ; MDB
+    dw $090F, $5001  ; Screen subpixel X position
+    dw $0911, $0006  ; Screen X position in pixels
+    dw $0913, $F001  ; Screen subpixel Y position
+    dw $0915, $0300  ; Screen Y position in pixels
+    dw $0917, $0006  ; Layer 2 X position
+    dw $0919, $0240  ; Layer 2 Y position
+    dw $09D2, $0002  ; Currently selected item
+    dw $0AF6, $0078  ; Samus X
+    dw $0AFA, $03AB  ; Samus Y
+    dw #$FFFF
+
+preset_pkrd_maridia_botwoon_hallway:
+    dw #preset_pkrd_lower_norfair_three_musketeers
+    dw $078D, $A4C8  ; DDB
+    dw $079B, $D5A7  ; MDB
+    dw $07F3, $001B  ; Music Bank
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0913, $6000  ; Screen subpixel Y position
+    dw $09C2, $0044  ; Health
+    dw $09C6, $0010  ; Missiles
+    dw $09CA, $0007  ; Supers
+    dw $09CE, $0002  ; Pbs
+    dw $0AF6, $009F  ; Samus X
+    dw $0AFA, $006B  ; Samus Y
+    dw $D8C0, $8174  ; Doors
+    dw #$FFFF
+
+preset_prkd19_lower_norfair_nox_ridley_three_musketeers:
+    dw #preset_prkd19_lower_norfair_three_musketeers
+    dw $0AF8, $FFFF  ; Samus subpixel X
+    dw #$FFFF
+
+preset_prkd19_lower_norfair_single_chamber_final:
+    dw #preset_prkd19_lower_norfair_springball_maze
+    dw $078D, $99AE  ; DDB
+    dw $079B, $B656  ; MDB
+    dw $090F, $E000  ; Screen subpixel X position
+    dw $0913, $5800  ; Screen subpixel Y position
+    dw $0915, $0002  ; Screen Y position in pixels
+    dw $0917, $00C0  ; Layer 2 X position
+    dw $0919, $0001  ; Layer 2 Y position
+    dw $09C2, $0062  ; Health
+    dw $0AF6, $016F  ; Samus X
+    dw #$FFFF
+
+preset_gtclassic_tourian_zebes_escape:
+    dw #preset_gtclassic_tourian_mother_brain_2
+    dw $09A6, $1009  ; Equipped Beams
+    dw $09C6, $0000  ; Missiles
+    dw $09CA, $0000  ; Supers
+    dw $09CE, $0000  ; Pbs
+    dw $0A1C, $009B  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
+    dw $0A76, $8000  ; Hyper beam
+    dw $0AF6, $0025  ; Samus X
+    dw $0AFA, $009E  ; Samus Y
+    dw $D820, $4FCD  ; Events
+    dw $D82C, $0203  ; Bosses
     dw #$FFFF
 
 preset_100early_maridia_predraygon_west_beach:
@@ -33047,212 +33352,6 @@ preset_hundo_maridia_cleanup_shaktool:
     dw $0AFA, $018B  ; Samus Y
     dw #$FFFF
 
-preset_gtclassic_tourian_mother_brain_2:
-    dw #preset_gtclassic_tourian_zeb_skip
-    dw $078D, $AAC8  ; DDB
-    dw $079B, $DD58  ; MDB
-    dw $07F3, $0021  ; Music Bank
-    dw $07F5, $0000  ; Music Track
-    dw $090F, $79FF  ; Screen subpixel X position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $09C6, $005B  ; Missiles
-    dw $09CA, $0001  ; Supers
-    dw $09D2, $0000  ; Currently selected item
-    dw $0AF6, $00CF  ; Samus X
-    dw $0AFA, $009B  ; Samus Y
-    dw $D820, $0FC5  ; Events
-    dw #$FFFF
-
-preset_pkrd_maridia_mt_everest:
-    dw #preset_pkrd_maridia_fish_tank
-    dw $078D, $A3F0  ; DDB
-    dw $079B, $D0B9  ; MDB
-    dw $090F, $2000  ; Screen subpixel X position
-    dw $0911, $0109  ; Screen X position in pixels
-    dw $0913, $6800  ; Screen subpixel Y position
-    dw $0915, $031F  ; Screen Y position in pixels
-    dw $0917, $00C6  ; Layer 2 X position
-    dw $0919, $0257  ; Layer 2 Y position
-    dw $0AF6, $019D  ; Samus X
-    dw $0AFA, $03BB  ; Samus Y
-    dw #$FFFF
-
-preset_prkd19_lower_norfair_nox_ridley_kihunter_stairs_up:
-    dw #preset_prkd19_lower_norfair_kihunter_stairs_up
-    dw $0AF8, $FFFF  ; Samus subpixel X
-    dw #$FFFF
-
-preset_kpdr23_maridia_whomple_jump:
-    dw #preset_kpdr23_maridia_reverse_halfie_spikesuit
-    dw $0A68, $0000  ; Flash suit
-    dw #$FFFF
-
-preset_kpdr21_maridia_reverse_halfie_spikesuit:
-    dw #preset_kpdr23_maridia_reverse_halfie_spikesuit
-    dw $09A6, $1001  ; Equipped Beams
-    dw $09A8, $1001  ; Collected Beams
-    dw $09C2, $00BA  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0104  ; Items
-    dw $D8B6, $3008  ; Doors
-    dw $D8B8, $26ED  ; Doors
-    dw #$FFFF
-
-preset_kpdr25_maridia_reverse_halfie_spikesuit:
-    dw #preset_kpdr23_maridia_reverse_halfie_spikesuit
-    dw $09A6, $1007  ; Equipped Beams
-    dw $09A8, $1007  ; Collected Beams
-    dw $09C2, $0184  ; Health
-    dw $09C6, $0006  ; Missiles
-    dw $09C8, $0019  ; Max missiles
-    dw $09CA, $0003  ; Supers
-    dw $09CE, $0005  ; Pbs
-    dw $D870, $0190  ; Items
-    dw $D876, $01A5  ; Items
-    dw $D8B8, $2EEF  ; Doors
-    dw #$FFFF
-
-preset_kpdr_maridia_crab_shaft:
-    dw #preset_kpdr_maridia_mt_everest
-    dw $090F, $E000  ; Screen subpixel X position
-    dw $0911, $0500  ; Screen X position in pixels
-    dw $0913, $9C01  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0917, $03C0  ; Layer 2 X position
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $09C2, $003D  ; Health
-    dw $0AF6, $05C0  ; Samus X
-    dw $0AFA, $008B  ; Samus Y
-    dw $0F78, $FEFB  ; Safeties enabled
-    dw $0F7A, $0001  ; Safeties enabled
-    dw $1120, $0006  ; Safeties unequip beams
-    dw $11DA, $FFC4  ; Safeties refill
-    dw $11DC, $FFC5  ; Safeties refill
-    dw #$FFFF
-
-preset_kpdr22_wrecked_ship_attic:
-    dw #preset_kpdr22_wrecked_ship_wrecked_ship_shaft
-    dw $078D, $A2E8  ; DDB
-    dw $079B, $CAF6  ; MDB
-    dw $090F, $AC00  ; Screen subpixel X position
-    dw $0911, $0400  ; Screen X position in pixels
-    dw $0913, $B000  ; Screen subpixel Y position
-    dw $0917, $0300  ; Layer 2 X position
-    dw $09D2, $0003  ; Currently selected item
-    dw $0AF6, $0445  ; Samus X
-    dw $0AFA, $006B  ; Samus Y
-    dw #$FFFF
-
-preset_kpdr22_wrecked_ship_upper_west_ocean:
-    dw #preset_kpdr22_wrecked_ship_wrecked_ship_shaft
-    dw $078D, $A228  ; DDB
-    dw $079B, $CA52  ; MDB
-    dw $090F, $7000  ; Screen subpixel X position
-    dw $0913, $C7FD  ; Screen subpixel Y position
-    dw $0915, $001F  ; Screen Y position in pixels
-    dw $0919, $001E  ; Layer 2 Y position
-    dw $09C2, $0152  ; Health
-    dw $09C6, $000D  ; Missiles
-    dw $09CA, $0006  ; Supers
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $003B  ; Samus X
-    dw $D8C0, $0174  ; Doors
-    dw #$FFFF
-
-preset_kpdr22_wrecked_ship_pancakes_and_wavers:
-    dw #preset_kpdr22_wrecked_ship_wrecked_ship_shaft
-    dw $078D, $A1E0  ; DDB
-    dw $079B, $93FE  ; MDB
-    dw $07F3, $000C  ; Music Bank
-    dw $07F5, $0005  ; Music Track
-    dw $090F, $E000  ; Screen subpixel X position
-    dw $0911, $0200  ; Screen X position in pixels
-    dw $0913, $F800  ; Screen subpixel Y position
-    dw $0915, $01FC  ; Screen Y position in pixels
-    dw $0917, $0100  ; Layer 2 X position
-    dw $09C2, $0166  ; Health
-    dw $09C6, $000D  ; Missiles
-    dw $09CA, $0006  ; Supers
-    dw $0AF6, $02C2  ; Samus X
-    dw $0AFA, $028B  ; Samus Y
-    dw $D8C0, $0174  ; Doors
-    dw #$FFFF
-
-preset_kpdr22_wrecked_ship_bowling_spark:
-    dw #preset_kpdr25_wrecked_ship_bowling_spark
-    dw $09A6, $1001  ; Equipped Beams
-    dw $09A8, $1001  ; Collected Beams
-    dw $09C6, $000D  ; Missiles
-    dw $09C8, $0014  ; Max missiles
-    dw $09CA, $0006  ; Supers
-    dw $D870, $0180  ; Items
-    dw $D876, $01A1  ; Items
-    dw $D8B8, $26EF  ; Doors
-    dw #$FFFF
-
-preset_kpdr22_wrecked_ship_leaving_gravity:
-    dw #preset_kpdr25_wrecked_ship_leaving_gravity
-    dw $09A6, $1001  ; Equipped Beams
-    dw $09A8, $1001  ; Collected Beams
-    dw $09C6, $000D  ; Missiles
-    dw $09C8, $0014  ; Max missiles
-    dw $09CA, $0006  ; Supers
-    dw $D870, $0180  ; Items
-    dw $D876, $01A1  ; Items
-    dw $D8B8, $26EF  ; Doors
-    dw #$FFFF
-
-preset_kpdr22_wrecked_ship_moat_ball:
-    dw #preset_kpdr23_wrecked_ship_moat_ball
-    dw $09A6, $1001  ; Equipped Beams
-    dw $09A8, $1001  ; Collected Beams
-    dw $09C6, $000D  ; Missiles
-    dw $09CA, $0006  ; Supers
-    dw #$FFFF
-
-preset_phantoonfirst_lower_norfair_wasteland_revisit:
-    dw #preset_prkd19_lower_norfair_nox_ridley_wasteland_revisit
-    dw $0F78, $0C7F  ; Safeties enabled
-    dw $0F96, $0039  ; Safeties energy adjustment
-    dw $0FC0, $002D  ; Safeties reserves adjustment
-    dw #$FFFF
-
-preset_prkd19_lower_norfair_fireflea_room:
-    dw #preset_prkd20_lower_norfair_fireflea_room
-    dw $09C8, $000F  ; Max missiles
-    dw $0AF8, $D000  ; Samus subpixel X
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_prkd20_lower_norfair_three_musketeers:
-preset_prkd20_lower_norfair_nox_ridley_three_musketeers:
-    dw #preset_prkd20_lower_norfair_springball_maze
-    dw $078D, $9A92  ; DDB
-    dw $079B, $B510  ; MDB
-    dw $090F, $E100  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $5400  ; Screen subpixel Y position
-    dw $0917, $0000  ; Layer 2 X position
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $0AF6, $0069  ; Samus X
-    dw #$FFFF
-
-preset_prkd20_lower_norfair_single_chamber_final:
-preset_prkd20_lower_norfair_nox_ridley_single_chamber_final:
-    dw #preset_prkd20_lower_norfair_springball_maze
-    dw $078D, $99AE  ; DDB
-    dw $079B, $B656  ; MDB
-    dw $090F, $E000  ; Screen subpixel X position
-    dw $0913, $5800  ; Screen subpixel Y position
-    dw $0915, $0002  ; Screen Y position in pixels
-    dw $0917, $00C0  ; Layer 2 X position
-    dw $0919, $0001  ; Layer 2 Y position
-    dw $09C2, $0062  ; Health
-    dw $0AF6, $016F  ; Samus X
-    dw #$FFFF
-
 preset_gtmax_maridia_predraygon_precious_room:
     dw #preset_gtmax_maridia_predraygon_halfie_setup
     dw $078D, $A8E8  ; DDB
@@ -33290,6 +33389,144 @@ preset_gtmax_maridia_predraygon_draygon:
     dw $0AFA, $028B  ; Samus Y
     dw $D882, $0080  ; Items
     dw $D8C2, $0C00  ; Doors
+    dw #$FFFF
+
+preset_pkrd_maridia_botwoon:
+    dw #preset_pkrd_maridia_botwoon_hallway
+    dw $078D, $A72C  ; DDB
+    dw $079B, $D617  ; MDB
+    dw $0911, $0300  ; Screen X position in pixels
+    dw $0913, $F800  ; Screen subpixel Y position
+    dw $0915, $0001  ; Screen Y position in pixels
+    dw $0917, $0240  ; Layer 2 X position
+    dw $0919, $0001  ; Layer 2 Y position
+    dw $09D2, $0003  ; Currently selected item
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $03A2  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw #$FFFF
+
+preset_pkrd_maridia_botwoon_etank:
+    dw #preset_pkrd_lower_norfair_reverse_plowerhouse
+    dw $078D, $A774  ; DDB
+    dw $079B, $D95E  ; MDB
+    dw $07F3, $002A  ; Music Bank
+    dw $07F5, $0003  ; Music Track
+    dw $090F, $F000  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $EC00  ; Screen subpixel Y position
+    dw $0917, $0100  ; Layer 2 X position
+    dw $09C2, $00C6  ; Health
+    dw $09C6, $0014  ; Missiles
+    dw $09CA, $0004  ; Supers
+    dw $09CE, $0001  ; Pbs
+    dw $0AF6, $01CB  ; Samus X
+    dw $D82C, $0002  ; Bosses
+    dw $D8C0, $8174  ; Doors
+    dw #$FFFF
+
+preset_pkrd_maridia_halfie_setup:
+    dw #preset_kpdr25_maridia_halfie_setup
+    dw $090F, $E000  ; Screen subpixel X position
+    dw $0911, $0002  ; Screen X position in pixels
+    dw $0913, $9000  ; Screen subpixel Y position
+    dw $0917, $0001  ; Layer 2 X position
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09C6, $0014  ; Missiles
+    dw $09C8, $0014  ; Max missiles
+    dw $09CA, $0005  ; Supers
+    dw $09CE, $0001  ; Pbs
+    dw $0AF6, $0087  ; Samus X
+    dw $0AF8, $FFFF  ; Samus subpixel X
+    dw $0AFC, $FFFF  ; Samus subpixel Y
+    dw $D82A, $0101  ; Bosses
+    dw $D876, $0125  ; Items
+    dw $D8BA, $D5F1  ; Doors
+    dw $D8BC, $0001  ; Doors
+    dw #$FFFF
+
+preset_prkd20_lower_norfair_three_musketeers:
+preset_prkd20_lower_norfair_nox_ridley_three_musketeers:
+    dw #preset_prkd19_lower_norfair_nox_ridley_three_musketeers
+    dw $09C8, $0014  ; Max missiles
+    dw $D878, $001C  ; Items
+    dw #$FFFF
+
+preset_prkd19_lower_norfair_nox_ridley_single_chamber_final:
+    dw #preset_prkd19_lower_norfair_single_chamber_final
+    dw $0AF8, $FFFF  ; Samus subpixel X
+    dw #$FFFF
+
+preset_kpdr22_maridia_whomple_jump:
+    dw #preset_kpdr22_maridia_reverse_halfie_spikesuit
+    dw $0A68, $0000  ; Flash suit
+    dw #$FFFF
+
+preset_kpdr21_maridia_reverse_halfie_spikesuit:
+    dw #preset_kpdr22_maridia_reverse_halfie_spikesuit
+    dw $09C2, $00BA  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $D874, $0104  ; Items
+    dw $D8B6, $3008  ; Doors
+    dw $D8B8, $26ED  ; Doors
+    dw #$FFFF
+
+preset_kpdr25_maridia_whomple_jump:
+    dw #preset_kpdr25_maridia_reverse_halfie_spikesuit
+    dw $0A68, $0000  ; Flash suit
+    dw #$FFFF
+
+preset_kpdr20_maridia_draygon:
+    dw #preset_kpdr21_maridia_draygon
+    dw $09C6, $000F  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr_red_brinstar_revisit_below_spazer_final:
+    dw #preset_kpdr_red_brinstar_revisit_skree_boost_final
+    dw $078D, $9042  ; DDB
+    dw $079B, $A3DD  ; MDB
+    dw $090F, $5FFF  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $4400  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $00C0  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09C2, $0078  ; Health
+    dw $0AF6, $01DC  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw $11DA, $FFFF  ; Safeties refill
+    dw #$FFFF
+
+preset_prkd19_lower_norfair_bubble_mountain_final:
+    dw #preset_prkd19_lower_norfair_three_musketeers
+    dw $078D, $9A4A  ; DDB
+    dw $079B, $AD5E  ; MDB
+    dw $07F3, $0015  ; Music Bank
+    dw $090F, $B000  ; Screen subpixel X position
+    dw $0913, $D800  ; Screen subpixel Y position
+    dw $0915, $001B  ; Screen Y position in pixels
+    dw $0919, $0014  ; Layer 2 Y position
+    dw $09C2, $0056  ; Health
+    dw $0AF6, $007D  ; Samus X
+    dw #$FFFF
+
+preset_gtclassic_tourian_escape_room_3:
+    dw #preset_gtclassic_tourian_zebes_escape
+    dw $078D, $AAEC  ; DDB
+    dw $079B, $DE7A  ; MDB
+    dw $07F3, $0024  ; Music Bank
+    dw $07F5, $0007  ; Music Track
+    dw $090F, $7000  ; Screen subpixel X position
+    dw $0913, $0C00  ; Screen subpixel Y position
+    dw $0915, $00F5  ; Screen Y position in pixels
+    dw $0919, $00B7  ; Layer 2 Y position
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $00DF  ; Samus X
+    dw $0AFA, $018B  ; Samus Y
     dw #$FFFF
 
 preset_100early_maridia_predraygon_watering_hole:
@@ -33446,98 +33683,6 @@ preset_hundo_maridia_cleanup_shaktool_revisit:
     dw $D882, $05CC  ; Items
     dw #$FFFF
 
-preset_gtclassic_tourian_zebes_escape:
-    dw #preset_gtclassic_tourian_mother_brain_2
-    dw $09A6, $1009  ; Equipped Beams
-    dw $09C6, $0000  ; Missiles
-    dw $09CA, $0000  ; Supers
-    dw $09CE, $0000  ; Pbs
-    dw $0A1C, $009B  ; Samus position/state
-    dw $0A1E, $0000  ; More position/state
-    dw $0A76, $8000  ; Hyper beam
-    dw $0AF6, $0025  ; Samus X
-    dw $0AFA, $009E  ; Samus Y
-    dw $D820, $4FCD  ; Events
-    dw $D82C, $0203  ; Bosses
-    dw #$FFFF
-
-preset_pkrd_maridia_crab_shaft:
-    dw #preset_pkrd_maridia_mt_everest
-    dw $090F, $F800  ; Screen subpixel X position
-    dw $0911, $0500  ; Screen X position in pixels
-    dw $0913, $0000  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0917, $03C0  ; Layer 2 X position
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $09C2, $0044  ; Health
-    dw $0AF6, $05C4  ; Samus X
-    dw $0AFA, $008B  ; Samus Y
-    dw #$FFFF
-
-preset_phantoonfirst_lower_norfair_kihunter_stairs_up:
-    dw #preset_prkd19_lower_norfair_nox_ridley_kihunter_stairs_up
-    dw $0F78, $0C7F  ; Safeties enabled
-    dw $0F96, $0039  ; Safeties energy adjustment
-    dw $0FC0, $002D  ; Safeties reserves adjustment
-    dw #$FFFF
-
-preset_kpdr23_maridia_cac_alley_east:
-    dw #preset_kpdr23_maridia_whomple_jump
-    dw $078D, $A7E0  ; DDB
-    dw $079B, $D913  ; MDB
-    dw $090F, $8000  ; Screen subpixel X position
-    dw $0915, $011A  ; Screen Y position in pixels
-    dw $0919, $011A  ; Layer 2 Y position
-    dw $09C2, $00AE  ; Health
-    dw $09C6, $000C  ; Missiles
-    dw $0AF6, $0030  ; Samus X
-    dw $0AFA, $018B  ; Samus Y
-    dw $D8C2, $DC00  ; Doors
-    dw #$FFFF
-
-preset_prkd19_lower_norfair_nox_ridley_fireflea_room:
-    dw #preset_prkd19_lower_norfair_fireflea_room
-    dw $0AF8, $FFFF  ; Samus subpixel X
-    dw #$FFFF
-
-preset_prkd19_lower_norfair_springball_maze:
-    dw #preset_prkd20_lower_norfair_springball_maze
-    dw $09C8, $000F  ; Max missiles
-    dw $0AF8, $D000  ; Samus subpixel X
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_prkd20_lower_norfair_bubble_mountain_final:
-preset_prkd20_lower_norfair_nox_ridley_bubble_mountain_final:
-    dw #preset_prkd20_lower_norfair_three_musketeers
-    dw $078D, $9A4A  ; DDB
-    dw $079B, $AD5E  ; MDB
-    dw $07F3, $0015  ; Music Bank
-    dw $090F, $B000  ; Screen subpixel X position
-    dw $0913, $D800  ; Screen subpixel Y position
-    dw $0915, $001B  ; Screen Y position in pixels
-    dw $0919, $0014  ; Layer 2 Y position
-    dw $09C2, $0056  ; Health
-    dw $0AF6, $007D  ; Samus X
-    dw #$FFFF
-
-preset_prkd20_lower_norfair_frog_speedway:
-preset_prkd20_lower_norfair_nox_ridley_frog_speedway:
-    dw #preset_prkd20_lower_norfair_springball_maze
-    dw $078D, $956A  ; DDB
-    dw $079B, $AF72  ; MDB
-    dw $07F3, $0015  ; Music Bank
-    dw $0911, $001B  ; Screen X position in pixels
-    dw $0913, $7C00  ; Screen subpixel Y position
-    dw $0917, $0014  ; Layer 2 X position
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $09C2, $0056  ; Health
-    dw $09C6, $0008  ; Missiles
-    dw $09CA, $0004  ; Supers
-    dw $09CE, $0003  ; Pbs
-    dw $0AF6, $00BB  ; Samus X
-    dw #$FFFF
-
 preset_gtmax_maridia_postdraygon_reverse_halfie:
     dw #preset_gtmax_maridia_predraygon_draygon
     dw $078D, $A96C  ; DDB
@@ -33552,6 +33697,132 @@ preset_gtmax_maridia_postdraygon_reverse_halfie:
     dw $0AFA, $008B  ; Samus Y
     dw $D82C, $0003  ; Bosses
     dw $D8C2, $4C00  ; Doors
+    dw #$FFFF
+
+preset_pkrd_maridia_draygon:
+    dw #preset_pkrd_maridia_halfie_setup
+    dw $078D, $A7F8  ; DDB
+    dw $079B, $D78F  ; MDB
+    dw $090F, $8000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $0400  ; Screen subpixel Y position
+    dw $0915, $0200  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $0180  ; Layer 2 Y position
+    dw $09C2, $0173  ; Health
+    dw $09CA, $0003  ; Supers
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0062  ; Samus X
+    dw $0AFA, $028B  ; Samus Y
+    dw $D8C2, $0C00  ; Doors
+    dw #$FFFF
+
+preset_prkd20_lower_norfair_single_chamber_final:
+preset_prkd20_lower_norfair_nox_ridley_single_chamber_final:
+    dw #preset_prkd19_lower_norfair_nox_ridley_single_chamber_final
+    dw $09C8, $0014  ; Max missiles
+    dw $D878, $001C  ; Items
+    dw #$FFFF
+
+preset_kpdr22_maridia_cac_alley_east:
+    dw #preset_kpdr23_maridia_cac_alley_east
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09A8, $1001  ; Collected Beams
+    dw #$FFFF
+
+preset_kpdr23_maridia_cac_alley_west:
+    dw #preset_kpdr23_maridia_cac_alley_east
+    dw $078D, $A900  ; DDB
+    dw $079B, $DA2B  ; MDB
+    dw $090F, $B000  ; Screen subpixel X position
+    dw $0915, $0002  ; Screen Y position in pixels
+    dw $0919, $0002  ; Layer 2 Y position
+    dw $09C6, $000B  ; Missiles
+    dw $09CA, $0007  ; Supers
+    dw $0AF6, $005B  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw #$FFFF
+
+preset_phantoonfirst_lower_norfair_three_musketeers:
+    dw #preset_prkd19_lower_norfair_nox_ridley_three_musketeers
+    dw $0F78, $0C7F  ; Safeties enabled
+    dw $0F88, $FFB0  ; Safeties energy adjustment
+    dw $0F96, $0039  ; Safeties energy adjustment
+    dw $0FC0, $002D  ; Safeties reserves adjustment
+    dw #$FFFF
+
+preset_phantoonfirst_lower_norfair_single_chamber_final:
+    dw #preset_prkd19_lower_norfair_nox_ridley_single_chamber_final
+    dw $0F78, $0C7F  ; Safeties enabled
+    dw $0F88, $FFB0  ; Safeties energy adjustment
+    dw $0F96, $0039  ; Safeties energy adjustment
+    dw $0FC0, $002D  ; Safeties reserves adjustment
+    dw #$FFFF
+
+preset_prkd19_lower_norfair_nox_ridley_bubble_mountain_final:
+    dw #preset_prkd19_lower_norfair_bubble_mountain_final
+    dw $0AF8, $FFFF  ; Samus subpixel X
+    dw #$FFFF
+
+preset_prkd19_lower_norfair_frog_speedway:
+    dw #preset_prkd19_lower_norfair_springball_maze
+    dw $078D, $956A  ; DDB
+    dw $079B, $AF72  ; MDB
+    dw $07F3, $0015  ; Music Bank
+    dw $0911, $001B  ; Screen X position in pixels
+    dw $0913, $7C00  ; Screen subpixel Y position
+    dw $0917, $0014  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09C2, $0056  ; Health
+    dw $09C6, $0008  ; Missiles
+    dw $09CA, $0004  ; Supers
+    dw $09CE, $0003  ; Pbs
+    dw $0AF6, $00BB  ; Samus X
+    dw #$FFFF
+
+preset_gtclassic_tourian_escape_room_4:
+    dw #preset_gtclassic_tourian_escape_room_3
+    dw $078D, $AB04  ; DDB
+    dw $079B, $DEA7  ; MDB
+    dw $090F, $D000  ; Screen subpixel X position
+    dw $0911, $0500  ; Screen X position in pixels
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $001A  ; Screen Y position in pixels
+    dw $0917, $03C0  ; Layer 2 X position
+    dw $0919, $0013  ; Layer 2 Y position
+    dw $0AF6, $05DB  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw #$FFFF
+
+preset_gtclassic_tourian_escape_climb:
+    dw #preset_gtclassic_tourian_escape_room_3
+    dw $078D, $AB1C  ; DDB
+    dw $079B, $DEDE  ; MDB
+    dw $090F, $6000  ; Screen subpixel X position
+    dw $0911, $00F4  ; Screen X position in pixels
+    dw $0913, $6C00  ; Screen subpixel Y position
+    dw $0915, $0103  ; Screen Y position in pixels
+    dw $0917, $00B7  ; Layer 2 X position
+    dw $0919, $00C2  ; Layer 2 Y position
+    dw $0AF6, $0154  ; Samus X
+    dw #$FFFF
+
+preset_gtclassic_tourian_escape_parlor:
+    dw #preset_gtclassic_tourian_zebes_escape
+    dw $078D, $AB34  ; DDB
+    dw $079B, $96BA  ; MDB
+    dw $07F3, $0024  ; Music Bank
+    dw $07F5, $0007  ; Music Track
+    dw $090F, $EFFF  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $6801  ; Screen subpixel Y position
+    dw $0917, $00C0  ; Layer 2 X position
+    dw $09C2, $0229  ; Health
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $01D1  ; Samus X
+    dw $0AFA, $004B  ; Samus Y
     dw #$FFFF
 
 preset_100early_maridia_predraygon_beach_missiles_revisit:
@@ -33644,78 +33915,37 @@ preset_hundo_maridia_cleanup_east_sand_hall:
     dw $0AFA, $038B  ; Samus Y
     dw #$FFFF
 
-preset_gtclassic_tourian_escape_room_3:
-    dw #preset_gtclassic_tourian_zebes_escape
-    dw $078D, $AAEC  ; DDB
-    dw $079B, $DE7A  ; MDB
-    dw $07F3, $0024  ; Music Bank
-    dw $07F5, $0007  ; Music Track
-    dw $090F, $7000  ; Screen subpixel X position
-    dw $0913, $0C00  ; Screen subpixel Y position
-    dw $0915, $00F5  ; Screen Y position in pixels
-    dw $0919, $00B7  ; Layer 2 Y position
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $00DF  ; Samus X
-    dw $0AFA, $018B  ; Samus Y
-    dw #$FFFF
-
-preset_pkrd_maridia_aqueduct:
-    dw #preset_pkrd_maridia_crab_shaft
-    dw $078D, $A468  ; DDB
-    dw $079B, $D1A3  ; MDB
-    dw $090F, $5001  ; Screen subpixel X position
-    dw $0911, $0006  ; Screen X position in pixels
-    dw $0913, $F001  ; Screen subpixel Y position
-    dw $0915, $0300  ; Screen Y position in pixels
-    dw $0917, $0006  ; Layer 2 X position
-    dw $0919, $0240  ; Layer 2 Y position
-    dw $09D2, $0002  ; Currently selected item
-    dw $0AF6, $0078  ; Samus X
-    dw $0AFA, $03AB  ; Samus Y
-    dw #$FFFF
-
-preset_pkrd_maridia_botwoon_hallway:
-    dw #preset_pkrd_lower_norfair_three_musketeers
-    dw $078D, $A4C8  ; DDB
-    dw $079B, $D5A7  ; MDB
-    dw $07F3, $001B  ; Music Bank
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $0913, $6000  ; Screen subpixel Y position
-    dw $09C2, $0044  ; Health
-    dw $09C6, $0010  ; Missiles
-    dw $09CA, $0007  ; Supers
-    dw $09CE, $0002  ; Pbs
-    dw $0AF6, $009F  ; Samus X
-    dw $0AFA, $006B  ; Samus Y
-    dw $D8C0, $8174  ; Doors
-    dw #$FFFF
-
-preset_prkd19_lower_norfair_nox_ridley_springball_maze:
-    dw #preset_prkd19_lower_norfair_springball_maze
-    dw $0AF8, $FFFF  ; Samus subpixel X
-    dw #$FFFF
-
-preset_kpdr25_maridia_whomple_jump:
-    dw #preset_kpdr25_maridia_reverse_halfie_spikesuit
+preset_gtmax_maridia_postdraygon_whomple_jump:
+    dw #preset_gtmax_maridia_postdraygon_reverse_halfie
     dw $0A68, $0000  ; Flash suit
     dw #$FFFF
 
-preset_kpdr22_wrecked_ship_moat_with_missile_gone:
-    dw #preset_kpdr22_wrecked_ship_moat_ball
-    dw $D870, $0190  ; Items
+preset_pkrd_maridia_spikesuit_reverse_halfie:
+    dw #preset_pkrd_maridia_draygon
+    dw $078D, $A96C  ; DDB
+    dw $090F, $A000  ; Screen subpixel X position
+    dw $0913, $DC00  ; Screen subpixel Y position
+    dw $0915, $0003  ; Screen Y position in pixels
+    dw $0919, $0002  ; Layer 2 Y position
+    dw $09C2, $00D8  ; Health
+    dw $09C6, $000F  ; Missiles
+    dw $0A68, $0001  ; Flash suit
+    dw $0AF6, $003F  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw $D82C, $0003  ; Bosses
+    dw $D8C2, $4C00  ; Doors
     dw #$FFFF
 
-preset_kpdr22_wrecked_ship_crateria_kihunters_return:
-    dw #preset_kpdr25_wrecked_ship_crateria_kihunters_return
-    dw $09A6, $1001  ; Equipped Beams
-    dw $09A8, $1001  ; Collected Beams
-    dw $09C6, $000D  ; Missiles
+preset_prkd20_lower_norfair_bubble_mountain_final:
+preset_prkd20_lower_norfair_nox_ridley_bubble_mountain_final:
+    dw #preset_prkd19_lower_norfair_nox_ridley_bubble_mountain_final
     dw $09C8, $0014  ; Max missiles
-    dw $09CA, $0006  ; Supers
-    dw $D870, $0180  ; Items
-    dw $D876, $01A1  ; Items
-    dw $D8B8, $26EF  ; Doors
+    dw $D878, $001C  ; Items
+    dw #$FFFF
+
+preset_prkd19_lower_norfair_nox_ridley_frog_speedway:
+    dw #preset_prkd19_lower_norfair_frog_speedway
+    dw $0AF8, $FFFF  ; Samus subpixel X
     dw #$FFFF
 
 preset_kpdr21_maridia_whomple_jump:
@@ -33723,41 +33953,67 @@ preset_kpdr21_maridia_whomple_jump:
     dw $0A68, $0000  ; Flash suit
     dw #$FFFF
 
-preset_prkd19_lower_norfair_three_musketeers:
-    dw #preset_prkd20_lower_norfair_three_musketeers
+preset_kpdr20_maridia_reverse_halfie_spikesuit:
+    dw #preset_kpdr21_maridia_reverse_halfie_spikesuit
+    dw $09C6, $000C  ; Missiles
     dw $09C8, $000F  ; Max missiles
-    dw $0AF8, $D000  ; Samus subpixel X
     dw $D878, $0014  ; Items
     dw #$FFFF
 
-preset_kpdr23_maridia_cac_alley_west:
-    dw #preset_kpdr23_maridia_cac_alley_east
-    dw $078D, $A900  ; DDB
-    dw $079B, $DA2B  ; MDB
-    dw $090F, $B000  ; Screen subpixel X position
-    dw $0915, $0002  ; Screen Y position in pixels
-    dw $0919, $0002  ; Layer 2 Y position
-    dw $09C6, $000B  ; Missiles
-    dw $09CA, $0007  ; Supers
-    dw $0AF6, $005B  ; Samus X
-    dw $0AFA, $008B  ; Samus Y
+preset_kpdr25_maridia_cac_alley_east:
+    dw #preset_kpdr25_maridia_whomple_jump
+    dw $078D, $A7E0  ; DDB
+    dw $079B, $D913  ; MDB
+    dw $090F, $8000  ; Screen subpixel X position
+    dw $0915, $011A  ; Screen Y position in pixels
+    dw $0919, $011A  ; Layer 2 Y position
+    dw $09C6, $0005  ; Missiles
+    dw $0AF6, $0030  ; Samus X
+    dw $0AFA, $018B  ; Samus Y
+    dw $D8C2, $DC00  ; Doors
     dw #$FFFF
 
-preset_prkd20_lower_norfair_business_center_final:
-preset_prkd20_lower_norfair_nox_ridley_business_center_final:
-    dw #preset_prkd20_lower_norfair_frog_speedway
-    dw $078D, $97DA  ; DDB
-    dw $079B, $B167  ; MDB
-    dw $090F, $9000  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $1800  ; Screen subpixel Y position
-    dw $0917, $0000  ; Layer 2 X position
-    dw $0AF6, $0032  ; Samus X
+preset_kpdr_red_brinstar_revisit_breaking_the_tube:
+    dw #preset_kpdr_red_brinstar_revisit_below_spazer_final
+    dw $078D, $9102  ; DDB
+    dw $079B, $A408  ; MDB
+    dw $090F, $C000  ; Screen subpixel X position
+    dw $0913, $D000  ; Screen subpixel Y position
+    dw $0915, $0100  ; Screen Y position in pixels
+    dw $0919, $00C0  ; Layer 2 Y position
+    dw $09CA, $000A  ; Supers
+    dw $09D2, $0003  ; Currently selected item
+    dw $0AF6, $01B1  ; Samus X
+    dw $0AFA, $018B  ; Samus Y
     dw #$FFFF
 
-preset_gtmax_maridia_postdraygon_whomple_jump:
-    dw #preset_gtmax_maridia_postdraygon_reverse_halfie
-    dw $0A68, $0000  ; Flash suit
+preset_kpdr_maridia_fish_tank:
+    dw #preset_kpdr_red_brinstar_revisit_below_spazer_final
+    dw $078D, $A330  ; DDB
+    dw $079B, $CFC9  ; MDB
+    dw $07F3, $001B  ; Music Bank
+    dw $07F5, $0006  ; Music Track
+    dw $090F, $4000  ; Screen subpixel X position
+    dw $0911, $00F0  ; Screen X position in pixels
+    dw $0913, $E000  ; Screen subpixel Y position
+    dw $0915, $05ED  ; Screen Y position in pixels
+    dw $0917, $00B4  ; Layer 2 X position
+    dw $0919, $0471  ; Layer 2 Y position
+    dw $09CA, $000A  ; Supers
+    dw $09CE, $0002  ; Pbs
+    dw $0AF6, $0161  ; Samus X
+    dw $0AF8, $7FFF  ; Samus subpixel X
+    dw $0AFA, $068B  ; Samus Y
+    dw $D820, $0801  ; Events
+    dw #$FFFF
+
+preset_kpdr21_maridia_cac_alley_east:
+    dw #preset_kpdr22_maridia_cac_alley_east
+    dw $09C2, $004A  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $D874, $0104  ; Items
+    dw $D8B6, $3008  ; Doors
+    dw $D8B8, $26ED  ; Doors
     dw #$FFFF
 
 preset_100early_maridia_predraygon_aqueduct:
@@ -33966,381 +34222,6 @@ preset_hundo_maridia_cleanup_plasma:
     dw $D8C2, $CC28  ; Doors
     dw #$FFFF
 
-preset_gtclassic_tourian_escape_room_4:
-    dw #preset_gtclassic_tourian_escape_room_3
-    dw $078D, $AB04  ; DDB
-    dw $079B, $DEA7  ; MDB
-    dw $090F, $D000  ; Screen subpixel X position
-    dw $0911, $0500  ; Screen X position in pixels
-    dw $0913, $0000  ; Screen subpixel Y position
-    dw $0915, $001A  ; Screen Y position in pixels
-    dw $0917, $03C0  ; Layer 2 X position
-    dw $0919, $0013  ; Layer 2 Y position
-    dw $0AF6, $05DB  ; Samus X
-    dw $0AFA, $008B  ; Samus Y
-    dw #$FFFF
-
-preset_gtclassic_tourian_escape_climb:
-    dw #preset_gtclassic_tourian_escape_room_3
-    dw $078D, $AB1C  ; DDB
-    dw $079B, $DEDE  ; MDB
-    dw $090F, $6000  ; Screen subpixel X position
-    dw $0911, $00F4  ; Screen X position in pixels
-    dw $0913, $6C00  ; Screen subpixel Y position
-    dw $0915, $0103  ; Screen Y position in pixels
-    dw $0917, $00B7  ; Layer 2 X position
-    dw $0919, $00C2  ; Layer 2 Y position
-    dw $0AF6, $0154  ; Samus X
-    dw #$FFFF
-
-preset_gtclassic_tourian_escape_parlor:
-    dw #preset_gtclassic_tourian_zebes_escape
-    dw $078D, $AB34  ; DDB
-    dw $079B, $96BA  ; MDB
-    dw $07F3, $0024  ; Music Bank
-    dw $07F5, $0007  ; Music Track
-    dw $090F, $EFFF  ; Screen subpixel X position
-    dw $0911, $0100  ; Screen X position in pixels
-    dw $0913, $6801  ; Screen subpixel Y position
-    dw $0917, $00C0  ; Layer 2 X position
-    dw $09C2, $0229  ; Health
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $01D1  ; Samus X
-    dw $0AFA, $004B  ; Samus Y
-    dw #$FFFF
-
-preset_pkrd_maridia_botwoon:
-    dw #preset_pkrd_maridia_botwoon_hallway
-    dw $078D, $A72C  ; DDB
-    dw $079B, $D617  ; MDB
-    dw $0911, $0300  ; Screen X position in pixels
-    dw $0913, $F800  ; Screen subpixel Y position
-    dw $0915, $0001  ; Screen Y position in pixels
-    dw $0917, $0240  ; Layer 2 X position
-    dw $0919, $0001  ; Layer 2 Y position
-    dw $09D2, $0003  ; Currently selected item
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $03A2  ; Samus X
-    dw $0AFA, $008B  ; Samus Y
-    dw #$FFFF
-
-preset_pkrd_maridia_botwoon_etank:
-    dw #preset_pkrd_lower_norfair_reverse_plowerhouse
-    dw $078D, $A774  ; DDB
-    dw $079B, $D95E  ; MDB
-    dw $07F3, $002A  ; Music Bank
-    dw $07F5, $0003  ; Music Track
-    dw $090F, $F000  ; Screen subpixel X position
-    dw $0911, $0100  ; Screen X position in pixels
-    dw $0913, $EC00  ; Screen subpixel Y position
-    dw $0917, $0100  ; Layer 2 X position
-    dw $09C2, $00C6  ; Health
-    dw $09C6, $0014  ; Missiles
-    dw $09CA, $0004  ; Supers
-    dw $09CE, $0001  ; Pbs
-    dw $0AF6, $01CB  ; Samus X
-    dw $D82C, $0002  ; Bosses
-    dw $D8C0, $8174  ; Doors
-    dw #$FFFF
-
-preset_pkrd_maridia_halfie_setup:
-    dw #preset_kpdr25_maridia_halfie_setup
-    dw $090F, $E000  ; Screen subpixel X position
-    dw $0911, $0002  ; Screen X position in pixels
-    dw $0913, $9000  ; Screen subpixel Y position
-    dw $0917, $0001  ; Layer 2 X position
-    dw $09A6, $1001  ; Equipped Beams
-    dw $09C6, $0014  ; Missiles
-    dw $09C8, $0014  ; Max missiles
-    dw $09CA, $0005  ; Supers
-    dw $09CE, $0001  ; Pbs
-    dw $0AF6, $0087  ; Samus X
-    dw $0AF8, $FFFF  ; Samus subpixel X
-    dw $0AFC, $FFFF  ; Samus subpixel Y
-    dw $D82A, $0101  ; Bosses
-    dw $D876, $0125  ; Items
-    dw $D8BA, $D5F1  ; Doors
-    dw $D8BC, $0001  ; Doors
-    dw #$FFFF
-
-preset_prkd20_kraid_entering_kraids_lair:
-    dw #preset_pkrd_maridia_maridia_tube_revisit
-    dw $090F, $2000  ; Screen subpixel X position
-    dw $09A2, $3124  ; Equipped Items
-    dw $09A4, $3124  ; Collected Items
-    dw $09C2, $006A  ; Health
-    dw $09C4, $012B  ; Max health
-    dw $09C6, $0008  ; Missiles
-    dw $09CA, $0006  ; Supers
-    dw $09D2, $0002  ; Currently selected item
-    dw $D828, $0004  ; Bosses
-    dw $D874, $0504  ; Items
-    dw $D876, $0124  ; Items
-    dw $D8B8, $2E00  ; Doors
-    dw #$FFFF
-
-preset_prkd20_kraid_kraid_kihunters:
-    dw #preset_prkd20_lower_norfair_reverse_plowerhouse
-    dw $078D, $923A  ; DDB
-    dw $079B, $A471  ; MDB
-    dw $07F3, $0012  ; Music Bank
-    dw $090F, $C000  ; Screen subpixel X position
-    dw $0911, $0100  ; Screen X position in pixels
-    dw $0913, $4FFF  ; Screen subpixel Y position
-    dw $0915, $0100  ; Screen Y position in pixels
-    dw $0917, $00C0  ; Layer 2 X position
-    dw $0919, $0100  ; Layer 2 Y position
-    dw $09C2, $006F  ; Health
-    dw $09C6, $0008  ; Missiles
-    dw $09CA, $0005  ; Supers
-    dw $09CE, $0003  ; Pbs
-    dw $0AF6, $016B  ; Samus X
-    dw $0AFA, $018B  ; Samus Y
-    dw #$FFFF
-
-preset_kpdr25_maridia_cac_alley_east:
-    dw #preset_kpdr25_maridia_whomple_jump
-    dw $078D, $A7E0  ; DDB
-    dw $079B, $D913  ; MDB
-    dw $090F, $8000  ; Screen subpixel X position
-    dw $0915, $011A  ; Screen Y position in pixels
-    dw $0919, $011A  ; Layer 2 Y position
-    dw $09C6, $0005  ; Missiles
-    dw $0AF6, $0030  ; Samus X
-    dw $0AFA, $018B  ; Samus Y
-    dw $D8C2, $DC00  ; Doors
-    dw #$FFFF
-
-preset_kpdr22_wrecked_ship_return_with_yellow_door:
-    dw #preset_kpdr22_wrecked_ship_crateria_kihunters_return
-    dw $09CE, $0004  ; Pbs
-    dw $D870, $0190  ; Items
-    dw $D8B0, $3000  ; Doors
-    dw #$FFFF
-
-preset_kpdr20_maridia_reverse_halfie_spikesuit:
-    dw #preset_kpdr21_maridia_reverse_halfie_spikesuit
-    dw $09C6, $000C  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr22_red_brinstar_revisit_red_brinstar_elevator:
-    dw #preset_kpdr22_wrecked_ship_leaving_gravity
-    dw $078D, $8A42  ; DDB
-    dw $079B, $962A  ; MDB
-    dw $07F3, $000C  ; Music Bank
-    dw $090F, $7000  ; Screen subpixel X position
-    dw $0913, $5800  ; Screen subpixel Y position
-    dw $0917, $0000  ; Layer 2 X position
-    dw $09C2, $0121  ; Health
-    dw $09C6, $000B  ; Missiles
-    dw $09CE, $0003  ; Pbs
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $0080  ; Samus X
-    dw $0AFA, $00A8  ; Samus Y
-    dw #$FFFF
-
-preset_kpdr22_red_brinstar_revisit_caterpillars_revisit:
-    dw #preset_kpdr23_red_brinstar_revisit_caterpillars_revisit
-    dw $09A6, $1001  ; Equipped Beams
-    dw $09A8, $1001  ; Collected Beams
-    dw $09C6, $000B  ; Missiles
-    dw $09CA, $0006  ; Supers
-    dw #$FFFF
-
-preset_kpdr22_red_brinstar_revisit_hellway_revisit:
-    dw #preset_kpdr23_red_brinstar_revisit_hellway_revisit
-    dw $09A6, $1001  ; Equipped Beams
-    dw $09A8, $1001  ; Collected Beams
-    dw $09C6, $000B  ; Missiles
-    dw $09CA, $0008  ; Supers
-    dw #$FFFF
-
-preset_kpdr22_red_brinstar_revisit_red_tower_down:
-    dw #preset_kpdr23_red_brinstar_revisit_red_tower_down
-    dw $09A6, $1001  ; Equipped Beams
-    dw $09A8, $1001  ; Collected Beams
-    dw $09C6, $000B  ; Missiles
-    dw $09CA, $0008  ; Supers
-    dw #$FFFF
-
-preset_kpdr22_red_brinstar_revisit_skree_boost_final:
-    dw #preset_kpdr23_red_brinstar_revisit_skree_boost_final
-    dw $09A6, $1001  ; Equipped Beams
-    dw $09A8, $1001  ; Collected Beams
-    dw $09C6, $000B  ; Missiles
-    dw $09CA, $0008  ; Supers
-    dw #$FFFF
-
-preset_kpdr22_red_brinstar_revisit_below_spazer_final:
-    dw #preset_kpdr23_red_brinstar_revisit_below_spazer_final
-    dw $09A6, $1001  ; Equipped Beams
-    dw $09A8, $1001  ; Collected Beams
-    dw $09C6, $000B  ; Missiles
-    dw $09CA, $0008  ; Supers
-    dw #$FFFF
-
-preset_kpdr22_red_brinstar_revisit_breaking_the_tube:
-    dw #preset_kpdr23_red_brinstar_revisit_breaking_the_tube
-    dw $09A6, $1001  ; Equipped Beams
-    dw $09A8, $1001  ; Collected Beams
-    dw $09C6, $000B  ; Missiles
-    dw $09CA, $0009  ; Supers
-    dw #$FFFF
-
-preset_kpdr22_maridia_fish_tank:
-    dw #preset_kpdr23_maridia_fish_tank
-    dw $09A6, $1001  ; Equipped Beams
-    dw $09A8, $1001  ; Collected Beams
-    dw $09C6, $000B  ; Missiles
-    dw $09CA, $0009  ; Supers
-    dw #$FFFF
-
-preset_kpdr22_maridia_mt_everest:
-    dw #preset_kpdr23_maridia_mt_everest
-    dw $09A6, $1001  ; Equipped Beams
-    dw $09A8, $1001  ; Collected Beams
-    dw $09C6, $000B  ; Missiles
-    dw $09CA, $0009  ; Supers
-    dw #$FFFF
-
-preset_kpdr22_maridia_crab_shaft:
-    dw #preset_kpdr23_maridia_crab_shaft
-    dw $09A6, $1001  ; Equipped Beams
-    dw $09A8, $1001  ; Collected Beams
-    dw $09C6, $000B  ; Missiles
-    dw $09CA, $0009  ; Supers
-    dw #$FFFF
-
-preset_kpdr22_maridia_aqueduct:
-    dw #preset_kpdr23_maridia_aqueduct
-    dw $09A6, $1001  ; Equipped Beams
-    dw $09A8, $1001  ; Collected Beams
-    dw $09C6, $000B  ; Missiles
-    dw $09CA, $0008  ; Supers
-    dw #$FFFF
-
-preset_kpdr22_maridia_botwoon_hallway:
-    dw #preset_kpdr23_maridia_botwoon_hallway
-    dw $09A6, $1001  ; Equipped Beams
-    dw $09A8, $1001  ; Collected Beams
-    dw $09C6, $000B  ; Missiles
-    dw $09CA, $0008  ; Supers
-    dw #$FFFF
-
-preset_kpdr22_maridia_botwoon:
-    dw #preset_kpdr23_maridia_botwoon
-    dw $09A6, $1001  ; Equipped Beams
-    dw $09A8, $1001  ; Collected Beams
-    dw $09C6, $000B  ; Missiles
-    dw $09CA, $0008  ; Supers
-    dw #$FFFF
-
-preset_kpdr22_maridia_botwoon_etank:
-    dw #preset_kpdr23_maridia_botwoon_etank
-    dw $09A6, $1001  ; Equipped Beams
-    dw $09A8, $1001  ; Collected Beams
-    dw #$FFFF
-
-preset_kpdr22_maridia_halfie_setup:
-    dw #preset_kpdr23_maridia_halfie_setup
-    dw $09A6, $1001  ; Equipped Beams
-    dw $09A8, $1001  ; Collected Beams
-    dw #$FFFF
-
-preset_kpdr22_maridia_draygon:
-    dw #preset_kpdr23_maridia_draygon
-    dw $09A6, $1001  ; Equipped Beams
-    dw $09A8, $1001  ; Collected Beams
-    dw #$FFFF
-
-preset_kpdr22_maridia_reverse_halfie_spikesuit:
-    dw #preset_kpdr23_maridia_reverse_halfie_spikesuit
-    dw $09A6, $1001  ; Equipped Beams
-    dw $09A8, $1001  ; Collected Beams
-    dw #$FFFF
-
-preset_kpdr_maridia_aqueduct:
-    dw #preset_kpdr_maridia_crab_shaft
-    dw $078D, $A468  ; DDB
-    dw $079B, $D1A3  ; MDB
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $0911, $0100  ; Screen X position in pixels
-    dw $0913, $83FF  ; Screen subpixel Y position
-    dw $0915, $0300  ; Screen Y position in pixels
-    dw $0917, $0100  ; Layer 2 X position
-    dw $0919, $0240  ; Layer 2 Y position
-    dw $09CA, $0009  ; Supers
-    dw $09D2, $0003  ; Currently selected item
-    dw $0AF6, $01AD  ; Samus X
-    dw $0AFA, $038B  ; Samus Y
-    dw $D8C0, $8174  ; Doors
-    dw #$FFFF
-
-preset_kpdr21_maridia_cac_alley_east:
-    dw #preset_kpdr23_maridia_cac_alley_east
-    dw $09A6, $1001  ; Equipped Beams
-    dw $09A8, $1001  ; Collected Beams
-    dw $09C2, $004A  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0104  ; Items
-    dw $D8B6, $3008  ; Doors
-    dw $D8B8, $26ED  ; Doors
-    dw #$FFFF
-
-preset_phantoonfirst_lower_norfair_fireflea_room:
-    dw #preset_prkd19_lower_norfair_nox_ridley_fireflea_room
-    dw $0F78, $0C7F  ; Safeties enabled
-    dw $0F96, $0039  ; Safeties energy adjustment
-    dw $0FC0, $002D  ; Safeties reserves adjustment
-    dw #$FFFF
-
-preset_phantoonfirst_lower_norfair_springball_maze:
-    dw #preset_prkd19_lower_norfair_nox_ridley_springball_maze
-    dw $0F78, $0C7F  ; Safeties enabled
-    dw $0F96, $0039  ; Safeties energy adjustment
-    dw $0FC0, $002D  ; Safeties reserves adjustment
-    dw #$FFFF
-
-preset_prkd19_lower_norfair_nox_ridley_three_musketeers:
-    dw #preset_prkd19_lower_norfair_three_musketeers
-    dw $0AF8, $FFFF  ; Samus subpixel X
-    dw #$FFFF
-
-preset_prkd19_lower_norfair_single_chamber_final:
-    dw #preset_prkd20_lower_norfair_single_chamber_final
-    dw $09C8, $000F  ; Max missiles
-    dw $0AF8, $D000  ; Samus subpixel X
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr21_maridia_cac_alley_west:
-    dw #preset_kpdr23_maridia_cac_alley_west
-    dw $09A6, $1001  ; Equipped Beams
-    dw $09A8, $1001  ; Collected Beams
-    dw $09C2, $004A  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0104  ; Items
-    dw $D8B6, $3008  ; Doors
-    dw $D8B8, $26ED  ; Doors
-    dw #$FFFF
-
-preset_kpdr23_maridia_plasma_spark:
-    dw #preset_kpdr23_maridia_cac_alley_west
-    dw $078D, $A93C  ; DDB
-    dw $079B, $D5EC  ; MDB
-    dw $090F, $2000  ; Screen subpixel X position
-    dw $0913, $7400  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $09CA, $0008  ; Supers
-    dw $0AF6, $001F  ; Samus X
-    dw #$FFFF
-
 preset_gtmax_maridia_postdraygon_reverse_botwoon_etank:
     dw #preset_gtmax_maridia_postdraygon_whomple_jump
     dw $078D, $A7E0  ; DDB
@@ -34369,6 +34250,67 @@ preset_gtmax_maridia_postdraygon_aqueduct_ammo:
     dw $0AF6, $0189  ; Samus X
     dw $0AFA, $00AB  ; Samus Y
     dw $D882, $0180  ; Items
+    dw #$FFFF
+
+preset_pkrd_maridia_reverse_colosseum:
+    dw #preset_pkrd_maridia_spikesuit_reverse_halfie
+    dw $0A68, $0000  ; Flash suit
+    dw #$FFFF
+
+preset_prkd20_lower_norfair_frog_speedway:
+preset_prkd20_lower_norfair_nox_ridley_frog_speedway:
+    dw #preset_prkd19_lower_norfair_nox_ridley_frog_speedway
+    dw $09C8, $0014  ; Max missiles
+    dw $D878, $001C  ; Items
+    dw #$FFFF
+
+preset_kpdr22_maridia_cac_alley_west:
+    dw #preset_kpdr23_maridia_cac_alley_west
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09A8, $1001  ; Collected Beams
+    dw #$FFFF
+
+preset_kpdr23_maridia_plasma_spark:
+    dw #preset_kpdr23_maridia_cac_alley_west
+    dw $078D, $A93C  ; DDB
+    dw $079B, $D5EC  ; MDB
+    dw $090F, $2000  ; Screen subpixel X position
+    dw $0913, $7400  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09CA, $0008  ; Supers
+    dw $0AF6, $001F  ; Samus X
+    dw #$FFFF
+
+preset_phantoonfirst_lower_norfair_bubble_mountain_final:
+    dw #preset_prkd19_lower_norfair_nox_ridley_bubble_mountain_final
+    dw $0F78, $0C7F  ; Safeties enabled
+    dw $0F88, $FFB0  ; Safeties energy adjustment
+    dw $0F96, $0039  ; Safeties energy adjustment
+    dw $0FC0, $002D  ; Safeties reserves adjustment
+    dw #$FFFF
+
+preset_prkd19_lower_norfair_business_center_final:
+    dw #preset_prkd19_lower_norfair_frog_speedway
+    dw $078D, $97DA  ; DDB
+    dw $079B, $B167  ; MDB
+    dw $090F, $9000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $1800  ; Screen subpixel Y position
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0AF6, $0032  ; Samus X
+    dw #$FFFF
+
+preset_phantoonfirst_lower_norfair_frog_speedway:
+    dw #preset_prkd19_lower_norfair_nox_ridley_frog_speedway
+    dw $0F78, $0C7F  ; Safeties enabled
+    dw $0F86, $003C  ; Safeties energy adjustment
+    dw $0F88, $FFB0  ; Safeties energy adjustment
+    dw $0F96, $0039  ; Safeties energy adjustment
+    dw $0FC0, $002D  ; Safeties reserves adjustment
+    dw $1006, $0006  ; Safeties missiles adjustment
+    dw $1046, $0005  ; Safeties supers adjustment
+    dw $1086, $0001  ; Safeties power bombs adjustment
     dw #$FFFF
 
 preset_suitless_maridia_cleanup_2_fish_tank_sbj:
@@ -34560,67 +34502,46 @@ preset_100early_maridia_predraygon_draygon_missiles:
     dw $D8C2, $0400  ; Doors
     dw #$FFFF
 
-preset_pkrd_maridia_draygon:
-    dw #preset_pkrd_maridia_halfie_setup
-    dw $078D, $A7F8  ; DDB
-    dw $079B, $D78F  ; MDB
-    dw $090F, $8000  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $0400  ; Screen subpixel Y position
-    dw $0915, $0200  ; Screen Y position in pixels
-    dw $0917, $0000  ; Layer 2 X position
-    dw $0919, $0180  ; Layer 2 Y position
-    dw $09C2, $0173  ; Health
-    dw $09CA, $0003  ; Supers
+preset_gtmax_maridia_postdraygon_right_sand_pit:
+    dw #preset_gtmax_maridia_postdraygon_aqueduct_ammo
+    dw $078D, $A7D4  ; DDB
+    dw $079B, $D5A7  ; MDB
+    dw $090F, $3FFF  ; Screen subpixel X position
+    dw $0911, $0500  ; Screen X position in pixels
+    dw $0913, $9400  ; Screen subpixel Y position
+    dw $0915, $021F  ; Screen Y position in pixels
+    dw $0917, $03C0  ; Layer 2 X position
+    dw $0919, $021F  ; Layer 2 Y position
+    dw $09C6, $00C4  ; Missiles
+    dw $09C8, $00CD  ; Max missiles
+    dw $09CA, $0014  ; Supers
+    dw $09CC, $0028  ; Max supers
     dw $0A1C, $0002  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $0062  ; Samus X
-    dw $0AFA, $028B  ; Samus Y
-    dw $D8C2, $0C00  ; Doors
+    dw $0AF6, $05A5  ; Samus X
+    dw $0AFA, $02CB  ; Samus Y
+    dw $D882, $01B0  ; Items
     dw #$FFFF
 
-preset_prkd20_kraid_minikraid:
-    dw #preset_prkd20_kraid_kraid_kihunters
-    dw $078D, $9156  ; DDB
-    dw $079B, $A4DA  ; MDB
-    dw $090F, $7000  ; Screen subpixel X position
-    dw $0913, $EBFF  ; Screen subpixel Y position
-    dw $0915, $00FA  ; Screen Y position in pixels
-    dw $0919, $00FA  ; Layer 2 Y position
+preset_pkrd_maridia_reverse_halfie_climb:
+    dw #preset_pkrd_maridia_reverse_colosseum
+    dw $078D, $A834  ; DDB
+    dw $079B, $D72A  ; MDB
+    dw $090F, $8000  ; Screen subpixel X position
+    dw $0913, $F001  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09C2, $0066  ; Health
+    dw $0AF6, $0042  ; Samus X
     dw #$FFFF
 
-preset_prkd20_kraid_kraid:
-    dw #preset_prkd20_kraid_kraid_kihunters
-    dw $078D, $919E  ; DDB
-    dw $079B, $A56B  ; MDB
-    dw $07F3, $0027  ; Music Bank
-    dw $07F5, $0006  ; Music Track
-    dw $090F, $4000  ; Screen subpixel X position
-    dw $0913, $D400  ; Screen subpixel Y position
-    dw $0917, $0100  ; Layer 2 X position
-    dw $09C2, $006B  ; Health
-    dw $09C6, $0006  ; Missiles
-    dw $09CA, $0008  ; Supers
-    dw $0AF6, $01BF  ; Samus X
-    dw $D8B8, $2E24  ; Doors
+preset_prkd19_lower_norfair_nox_ridley_business_center_final:
+    dw #preset_prkd19_lower_norfair_business_center_final
+    dw $0AF8, $FFFF  ; Samus subpixel X
     dw #$FFFF
 
-preset_prkd20_kraid_leaving_varia:
-    dw #preset_pkrd_maridia_maridia_tube_revisit
-    dw $078D, $91DA  ; DDB
-    dw $079B, $A6E2  ; MDB
-    dw $07F3, $0027  ; Music Bank
-    dw $090F, $2000  ; Screen subpixel X position
-    dw $0913, $0800  ; Screen subpixel Y position
-    dw $09C2, $00C0  ; Health
-    dw $09C4, $012B  ; Max health
-    dw $09C6, $000E  ; Missiles
-    dw $09CA, $0007  ; Supers
-    dw $09CE, $0005  ; Pbs
-    dw $0AF6, $0078  ; Samus X
-    dw $0AFA, $0088  ; Samus Y
-    dw $D874, $0504  ; Items
-    dw $D8B8, $2E64  ; Doors
+preset_kpdr20_maridia_whomple_jump:
+    dw #preset_kpdr20_maridia_reverse_halfie_spikesuit
+    dw $0A68, $0000  ; Flash suit
     dw #$FFFF
 
 preset_kpdr25_maridia_cac_alley_west:
@@ -34647,36 +34568,37 @@ preset_kpdr25_maridia_plasma_spark:
     dw $D8C2, $DC00  ; Doors
     dw #$FFFF
 
-preset_prkd19_lower_norfair_nox_ridley_single_chamber_final:
-    dw #preset_prkd19_lower_norfair_single_chamber_final
-    dw $0AF8, $FFFF  ; Samus subpixel X
+preset_kpdr_maridia_mt_everest:
+    dw #preset_kpdr_maridia_fish_tank
+    dw $078D, $A3F0  ; DDB
+    dw $079B, $D0B9  ; MDB
+    dw $090F, $8000  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $BC00  ; Screen subpixel Y position
+    dw $0915, $031F  ; Screen Y position in pixels
+    dw $0917, $00C0  ; Layer 2 X position
+    dw $0919, $0257  ; Layer 2 Y position
+    dw $0AF6, $019D  ; Samus X
+    dw $0AFA, $03BB  ; Samus Y
+    dw $0F78, $7EFB  ; Safeties enabled
+    dw $101C, $FFFB  ; Safeties missiles adjustment
+    dw $11DC, $0001  ; Safeties refill
     dw #$FFFF
 
-preset_prkd19_lower_norfair_bubble_mountain_final:
-    dw #preset_prkd20_lower_norfair_bubble_mountain_final
+preset_kpdr20_maridia_cac_alley_east:
+    dw #preset_kpdr21_maridia_cac_alley_east
+    dw $09C6, $000B  ; Missiles
     dw $09C8, $000F  ; Max missiles
-    dw $0AF8, $D000  ; Samus subpixel X
     dw $D878, $0014  ; Items
     dw #$FFFF
 
-preset_gtmax_maridia_postdraygon_right_sand_pit:
-    dw #preset_gtmax_maridia_postdraygon_aqueduct_ammo
-    dw $078D, $A7D4  ; DDB
-    dw $079B, $D5A7  ; MDB
-    dw $090F, $3FFF  ; Screen subpixel X position
-    dw $0911, $0500  ; Screen X position in pixels
-    dw $0913, $9400  ; Screen subpixel Y position
-    dw $0915, $021F  ; Screen Y position in pixels
-    dw $0917, $03C0  ; Layer 2 X position
-    dw $0919, $021F  ; Layer 2 Y position
-    dw $09C6, $00C4  ; Missiles
-    dw $09C8, $00CD  ; Max missiles
-    dw $09CA, $0014  ; Supers
-    dw $09CC, $0028  ; Max supers
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0AF6, $05A5  ; Samus X
-    dw $0AFA, $02CB  ; Samus Y
-    dw $D882, $01B0  ; Items
+preset_kpdr21_maridia_cac_alley_west:
+    dw #preset_kpdr22_maridia_cac_alley_west
+    dw $09C2, $004A  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $D874, $0104  ; Items
+    dw $D8B6, $3008  ; Doors
+    dw $D8B8, $26ED  ; Doors
     dw #$FFFF
 
 preset_suitless_maridia_cleanup_2_watering_hole:
@@ -34788,69 +34710,6 @@ preset_100early_maridia_predraygon_draygon:
     dw $D8C2, $0C00  ; Doors
     dw #$FFFF
 
-preset_pkrd_maridia_spikesuit_reverse_halfie:
-    dw #preset_pkrd_maridia_draygon
-    dw $078D, $A96C  ; DDB
-    dw $090F, $A000  ; Screen subpixel X position
-    dw $0913, $DC00  ; Screen subpixel Y position
-    dw $0915, $0003  ; Screen Y position in pixels
-    dw $0919, $0002  ; Layer 2 Y position
-    dw $09C2, $00D8  ; Health
-    dw $09C6, $000F  ; Missiles
-    dw $0A68, $0001  ; Flash suit
-    dw $0AF6, $003F  ; Samus X
-    dw $0AFA, $008B  ; Samus Y
-    dw $D82C, $0003  ; Bosses
-    dw $D8C2, $4C00  ; Doors
-    dw #$FFFF
-
-preset_prkd20_kraid_minikraid_revisit:
-    dw #preset_prkd20_kraid_leaving_varia
-    dw $078D, $91CE  ; DDB
-    dw $079B, $A56B  ; MDB
-    dw $090F, $4000  ; Screen subpixel X position
-    dw $0913, $3800  ; Screen subpixel Y position
-    dw $0915, $0100  ; Screen Y position in pixels
-    dw $0919, $0100  ; Layer 2 Y position
-    dw $09C2, $00BC  ; Health
-    dw $09D2, $0002  ; Currently selected item
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $0060  ; Samus X
-    dw $0AFA, $018B  ; Samus Y
-    dw $D8B8, $2EE4  ; Doors
-    dw #$FFFF
-
-preset_prkd20_kraid_kraid_kihunters_revisit:
-    dw #preset_prkd20_kraid_leaving_varia
-    dw $078D, $91AA  ; DDB
-    dw $079B, $A521  ; MDB
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $0911, $012C  ; Screen X position in pixels
-    dw $0913, $EC00  ; Screen subpixel Y position
-    dw $0917, $00E1  ; Layer 2 X position
-    dw $09C2, $00BC  ; Health
-    dw $09C6, $000B  ; Missiles
-    dw $09CA, $000A  ; Supers
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $01CC  ; Samus X
-    dw $0AFA, $00AB  ; Samus Y
-    dw $D8B8, $2EEC  ; Doors
-    dw #$FFFF
-
-preset_prkd19_lower_norfair_nox_ridley_bubble_mountain_final:
-    dw #preset_prkd19_lower_norfair_bubble_mountain_final
-    dw $0AF8, $FFFF  ; Samus subpixel X
-    dw #$FFFF
-
-preset_prkd19_lower_norfair_frog_speedway:
-    dw #preset_prkd20_lower_norfair_frog_speedway
-    dw $09C8, $000F  ; Max missiles
-    dw $0AF8, $D000  ; Samus subpixel X
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
 preset_gtmax_maridia_postdraygon_oasis_and_sewer:
     dw #preset_gtmax_maridia_postdraygon_right_sand_pit
     dw $078D, $A6CC  ; DDB
@@ -34868,6 +34727,165 @@ preset_gtmax_maridia_postdraygon_oasis_and_sewer:
     dw $0AF6, $0053  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw $D882, $01BC  ; Items
+    dw #$FFFF
+
+preset_pkrd_maridia_reverse_botwoon_etank:
+    dw #preset_pkrd_maridia_reverse_halfie_climb
+    dw $078D, $A7E0  ; DDB
+    dw $079B, $D913  ; MDB
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0913, $2800  ; Screen subpixel Y position
+    dw $0915, $0200  ; Screen Y position in pixels
+    dw $0919, $0200  ; Layer 2 Y position
+    dw $0AF6, $00AE  ; Samus X
+    dw $0AFA, $028B  ; Samus Y
+    dw #$FFFF
+
+preset_pkrd_maridia_reverse_botwoon_hallway:
+    dw #preset_pkrd_maridia_reverse_halfie_climb
+    dw $078D, $A84C  ; DDB
+    dw $079B, $D95E  ; MDB
+    dw $07F5, $0003  ; Music Track
+    dw $090F, $1F80  ; Screen subpixel X position
+    dw $0913, $D800  ; Screen subpixel Y position
+    dw $0AF6, $0025  ; Samus X
+    dw $0AFA, $00BB  ; Samus Y
+    dw #$FFFF
+
+preset_pkrd_maridia_reverse_crab_shaft:
+    dw #preset_pkrd_maridia_reverse_halfie_climb
+    dw $078D, $A768  ; DDB
+    dw $079B, $D5A7  ; MDB
+    dw $0913, $6800  ; Screen subpixel Y position
+    dw $0915, $00FE  ; Screen Y position in pixels
+    dw $0919, $00FE  ; Layer 2 Y position
+    dw $0AF6, $0069  ; Samus X
+    dw $0AFA, $018B  ; Samus Y
+    dw $D8C2, $6C00  ; Doors
+    dw #$FFFF
+
+preset_prkd20_lower_norfair_business_center_final:
+preset_prkd20_lower_norfair_nox_ridley_business_center_final:
+    dw #preset_prkd19_lower_norfair_nox_ridley_business_center_final
+    dw $09C8, $0014  ; Max missiles
+    dw $D878, $001C  ; Items
+    dw #$FFFF
+
+preset_prkd20_kraid_entering_kraids_lair:
+    dw #preset_pkrd_maridia_maridia_tube_revisit
+    dw $090F, $2000  ; Screen subpixel X position
+    dw $09A2, $3124  ; Equipped Items
+    dw $09A4, $3124  ; Collected Items
+    dw $09C2, $006A  ; Health
+    dw $09C4, $012B  ; Max health
+    dw $09C6, $0008  ; Missiles
+    dw $09CA, $0006  ; Supers
+    dw $09D2, $0002  ; Currently selected item
+    dw $D828, $0004  ; Bosses
+    dw $D874, $0504  ; Items
+    dw $D876, $0124  ; Items
+    dw $D8B8, $2E00  ; Doors
+    dw #$FFFF
+
+preset_prkd20_kraid_kraid_kihunters:
+    dw #preset_prkd20_lower_norfair_reverse_plowerhouse
+    dw $078D, $923A  ; DDB
+    dw $079B, $A471  ; MDB
+    dw $07F3, $0012  ; Music Bank
+    dw $090F, $C000  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $4FFF  ; Screen subpixel Y position
+    dw $0915, $0100  ; Screen Y position in pixels
+    dw $0917, $00C0  ; Layer 2 X position
+    dw $0919, $0100  ; Layer 2 Y position
+    dw $09C2, $006F  ; Health
+    dw $09C6, $0008  ; Missiles
+    dw $09CA, $0005  ; Supers
+    dw $09CE, $0003  ; Pbs
+    dw $0AF6, $016B  ; Samus X
+    dw $0AFA, $018B  ; Samus Y
+    dw #$FFFF
+
+preset_kpdr22_maridia_plasma_spark:
+    dw #preset_kpdr23_maridia_plasma_spark
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09A8, $1001  ; Collected Beams
+    dw #$FFFF
+
+preset_kpdr23_maridia_plasma_climb:
+    dw #preset_kpdr23_maridia_plasma_spark
+    dw $078D, $A750  ; DDB
+    dw $079B, $D340  ; MDB
+    dw $090F, $FFFF  ; Screen subpixel X position
+    dw $0911, $0200  ; Screen X position in pixels
+    dw $0913, $8C00  ; Screen subpixel Y position
+    dw $0915, $00F3  ; Screen Y position in pixels
+    dw $0917, $01C0  ; Layer 2 X position
+    dw $0919, $00F3  ; Layer 2 Y position
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $027F  ; Samus X
+    dw $0AFA, $018B  ; Samus Y
+    dw #$FFFF
+
+preset_kpdr23_maridia_plasma_beam:
+    dw #preset_kpdr23_maridia_plasma_spark
+    dw $078D, $A5DC  ; DDB
+    dw $079B, $D27E  ; MDB
+    dw $090F, $9000  ; Screen subpixel X position
+    dw $0913, $0800  ; Screen subpixel Y position
+    dw $09D2, $0003  ; Currently selected item
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $0095  ; Samus X
+    dw $D8C2, $DC08  ; Doors
+    dw #$FFFF
+
+preset_kpdr23_maridia_plasma_spark_revisit:
+    dw #preset_kpdr23_maridia_cac_alley_east
+    dw $078D, $A540  ; DDB
+    dw $079B, $D387  ; MDB
+    dw $0915, $031A  ; Screen Y position in pixels
+    dw $0919, $0253  ; Layer 2 Y position
+    dw $09A6, $1009  ; Equipped Beams
+    dw $09A8, $100D  ; Collected Beams
+    dw $09C2, $0108  ; Health
+    dw $09C6, $0011  ; Missiles
+    dw $09CA, $0008  ; Supers
+    dw $09CE, $0002  ; Pbs
+    dw $0AF6, $0025  ; Samus X
+    dw $0AFA, $038B  ; Samus Y
+    dw $D880, $80A0  ; Items
+    dw $D8C2, $DC0A  ; Doors
+    dw #$FFFF
+
+preset_phantoonfirst_lower_norfair_business_center_final:
+    dw #preset_phantoonfirst_lower_norfair_frog_speedway
+    dw $078D, $97DA  ; DDB
+    dw $079B, $B167  ; MDB
+    dw $090F, $9000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $1800  ; Screen subpixel Y position
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0AF6, $0032  ; Samus X
+    dw #$FFFF
+
+preset_kpdr_maridia_crab_shaft:
+    dw #preset_kpdr_maridia_mt_everest
+    dw $090F, $E000  ; Screen subpixel X position
+    dw $0911, $0500  ; Screen X position in pixels
+    dw $0913, $9C01  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $03C0  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09C2, $003D  ; Health
+    dw $0AF6, $05C0  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw $0F78, $FEFB  ; Safeties enabled
+    dw $0F7A, $0001  ; Safeties enabled
+    dw $1120, $0006  ; Safeties unequip beams
+    dw $11DA, $FFC4  ; Safeties refill
+    dw $11DC, $FFC5  ; Safeties refill
     dw #$FFFF
 
 preset_suitless_maridia_cleanup_2_beach_revisit:
@@ -35040,41 +35058,6 @@ preset_100early_maridia_postdraygon_reverse_halfie:
     dw $D8C2, $CC00  ; Doors
     dw #$FFFF
 
-preset_pkrd_maridia_reverse_colosseum:
-    dw #preset_pkrd_maridia_spikesuit_reverse_halfie
-    dw $0A68, $0000  ; Flash suit
-    dw #$FFFF
-
-preset_prkd20_kraid_leaving_kraids_lair:
-    dw #preset_prkd20_kraid_kraid_kihunters_revisit
-    dw $078D, $916E  ; DDB
-    dw $079B, $A471  ; MDB
-    dw $07F3, $0012  ; Music Bank
-    dw $07F5, $0005  ; Music Track
-    dw $090F, $C001  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $F000  ; Screen subpixel Y position
-    dw $0915, $001B  ; Screen Y position in pixels
-    dw $0917, $0000  ; Layer 2 X position
-    dw $0919, $001B  ; Layer 2 Y position
-    dw $09C2, $00C1  ; Health
-    dw $09C6, $000D  ; Missiles
-    dw $0AF6, $0025  ; Samus X
-    dw $0AFA, $008B  ; Samus Y
-    dw #$FFFF
-
-preset_prkd19_lower_norfair_nox_ridley_frog_speedway:
-    dw #preset_prkd19_lower_norfair_frog_speedway
-    dw $0AF8, $FFFF  ; Samus subpixel X
-    dw #$FFFF
-
-preset_prkd19_lower_norfair_business_center_final:
-    dw #preset_prkd20_lower_norfair_business_center_final
-    dw $09C8, $000F  ; Max missiles
-    dw $0AF8, $D000  ; Samus subpixel X
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
 preset_gtmax_maridia_postdraygon_maridia_ggg:
     dw #preset_gtmax_maridia_postdraygon_oasis_and_sewer
     dw $078D, $A660  ; DDB
@@ -35097,6 +35080,185 @@ preset_gtmax_maridia_postdraygon_left_sand_pit:
     dw $09CE, $0027  ; Pbs
     dw $09D0, $0028  ; Max pbs
     dw $D882, $01BC  ; Items
+    dw #$FFFF
+
+preset_pkrd_maridia_mt_everest_revisit:
+    dw #preset_pkrd_maridia_reverse_botwoon_etank
+    dw $078D, $A708  ; DDB
+    dw $079B, $D1A3  ; MDB
+    dw $07F5, $0006  ; Music Track
+    dw $0913, $A800  ; Screen subpixel Y position
+    dw $0915, $0201  ; Screen Y position in pixels
+    dw $0919, $0180  ; Layer 2 Y position
+    dw $0AF6, $0073  ; Samus X
+    dw $D8C2, $6C00  ; Doors
+    dw #$FFFF
+
+preset_pkrd_backtracking_red_brinstar_green_gate:
+    dw #preset_pkrd_maridia_reverse_halfie_climb
+    dw $078D, $A42C  ; DDB
+    dw $079B, $D104  ; MDB
+    dw $07F5, $0006  ; Music Track
+    dw $090F, $C000  ; Screen subpixel X position
+    dw $0911, $001A  ; Screen X position in pixels
+    dw $0913, $8800  ; Screen subpixel Y position
+    dw $0917, $001A  ; Layer 2 X position
+    dw $09C2, $008E  ; Health
+    dw $09C6, $0011  ; Missiles
+    dw $09CA, $0006  ; Supers
+    dw $09D2, $0002  ; Currently selected item
+    dw $0AF6, $007F  ; Samus X
+    dw $D8C2, $6C00  ; Doors
+    dw #$FFFF
+
+preset_pkrd_backtracking_crateria_kihunters_final:
+    dw #preset_pkrd_maridia_maridia_tube_revisit
+    dw $078D, $90BA  ; DDB
+    dw $079B, $962A  ; MDB
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $09C2, $008E  ; Health
+    dw $09C4, $01F3  ; Max health
+    dw $09C6, $0011  ; Missiles
+    dw $09CA, $0005  ; Supers
+    dw $09CE, $0001  ; Pbs
+    dw $0AFA, $00A8  ; Samus Y
+    dw $D82C, $0003  ; Bosses
+    dw $D882, $0100  ; Items
+    dw $D8C0, $8174  ; Doors
+    dw $D8C2, $6C00  ; Doors
+    dw #$FFFF
+
+preset_prkd19_kraid_entering_kraids_lair:
+    dw #preset_prkd20_kraid_entering_kraids_lair
+    dw $09C8, $000F  ; Max missiles
+    dw $0AF8, $D000  ; Samus subpixel X
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_prkd19_kraid_kraid_kihunters:
+    dw #preset_prkd20_kraid_kraid_kihunters
+    dw $09C8, $000F  ; Max missiles
+    dw $0AF8, $D000  ; Samus subpixel X
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr20_maridia_cac_alley_west:
+    dw #preset_kpdr21_maridia_cac_alley_west
+    dw $09C6, $000A  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_prkd20_kraid_minikraid:
+    dw #preset_prkd20_kraid_kraid_kihunters
+    dw $078D, $9156  ; DDB
+    dw $079B, $A4DA  ; MDB
+    dw $090F, $7000  ; Screen subpixel X position
+    dw $0913, $EBFF  ; Screen subpixel Y position
+    dw $0915, $00FA  ; Screen Y position in pixels
+    dw $0919, $00FA  ; Layer 2 Y position
+    dw #$FFFF
+
+preset_prkd20_kraid_kraid:
+    dw #preset_prkd20_kraid_kraid_kihunters
+    dw $078D, $919E  ; DDB
+    dw $079B, $A56B  ; MDB
+    dw $07F3, $0027  ; Music Bank
+    dw $07F5, $0006  ; Music Track
+    dw $090F, $4000  ; Screen subpixel X position
+    dw $0913, $D400  ; Screen subpixel Y position
+    dw $0917, $0100  ; Layer 2 X position
+    dw $09C2, $006B  ; Health
+    dw $09C6, $0006  ; Missiles
+    dw $09CA, $0008  ; Supers
+    dw $0AF6, $01BF  ; Samus X
+    dw $D8B8, $2E24  ; Doors
+    dw #$FFFF
+
+preset_prkd20_kraid_leaving_varia:
+    dw #preset_pkrd_maridia_maridia_tube_revisit
+    dw $078D, $91DA  ; DDB
+    dw $079B, $A6E2  ; MDB
+    dw $07F3, $0027  ; Music Bank
+    dw $090F, $2000  ; Screen subpixel X position
+    dw $0913, $0800  ; Screen subpixel Y position
+    dw $09C2, $00C0  ; Health
+    dw $09C4, $012B  ; Max health
+    dw $09C6, $000E  ; Missiles
+    dw $09CA, $0007  ; Supers
+    dw $09CE, $0005  ; Pbs
+    dw $0AF6, $0078  ; Samus X
+    dw $0AFA, $0088  ; Samus Y
+    dw $D874, $0504  ; Items
+    dw $D8B8, $2E64  ; Doors
+    dw #$FFFF
+
+preset_kpdr21_maridia_plasma_spark:
+    dw #preset_kpdr22_maridia_plasma_spark
+    dw $09C2, $004A  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $D874, $0104  ; Items
+    dw $D8B6, $3008  ; Doors
+    dw $D8B8, $26ED  ; Doors
+    dw #$FFFF
+
+preset_kpdr22_maridia_plasma_climb:
+    dw #preset_kpdr23_maridia_plasma_climb
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09A8, $1001  ; Collected Beams
+    dw #$FFFF
+
+preset_kpdr25_maridia_plasma_climb:
+    dw #preset_kpdr23_maridia_plasma_climb
+    dw $09A6, $1007  ; Equipped Beams
+    dw $09A8, $1007  ; Collected Beams
+    dw $09C2, $0184  ; Health
+    dw $09C6, $0007  ; Missiles
+    dw $09C8, $0019  ; Max missiles
+    dw $09CA, $0006  ; Supers
+    dw $09CE, $0005  ; Pbs
+    dw $D870, $0190  ; Items
+    dw $D876, $01A5  ; Items
+    dw $D8B8, $2EEF  ; Doors
+    dw #$FFFF
+
+preset_kpdr25_maridia_plasma_beam:
+    dw #preset_kpdr25_maridia_plasma_spark
+    dw $078D, $A5DC  ; DDB
+    dw $079B, $D27E  ; MDB
+    dw $090F, $9000  ; Screen subpixel X position
+    dw $0913, $0800  ; Screen subpixel Y position
+    dw $09C6, $0007  ; Missiles
+    dw $09D2, $0003  ; Currently selected item
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $0095  ; Samus X
+    dw $D8C2, $DC08  ; Doors
+    dw #$FFFF
+
+preset_kpdr22_maridia_plasma_beam:
+    dw #preset_kpdr23_maridia_plasma_beam
+    dw $09A6, $1001  ; Equipped Beams
+    dw $09A8, $1001  ; Collected Beams
+    dw #$FFFF
+
+preset_kpdr22_maridia_plasma_spark_revisit:
+    dw #preset_kpdr23_maridia_plasma_spark_revisit
+    dw $09A8, $1009  ; Collected Beams
+    dw #$FFFF
+
+preset_kpdr25_maridia_plasma_spark_revisit:
+    dw #preset_kpdr23_maridia_plasma_spark_revisit
+    dw $09A6, $100B  ; Equipped Beams
+    dw $09A8, $100F  ; Collected Beams
+    dw $09C2, $01BB  ; Health
+    dw $09C6, $0009  ; Missiles
+    dw $09C8, $0019  ; Max missiles
+    dw $09CA, $0006  ; Supers
+    dw $09CE, $0005  ; Pbs
+    dw $D870, $0190  ; Items
+    dw $D876, $01A5  ; Items
+    dw $D8B8, $2EEF  ; Doors
     dw #$FFFF
 
 preset_suitless_maridia_cleanup_2_right_sand_pit:
@@ -35176,155 +35338,6 @@ preset_100early_maridia_postdraygon_reverse_botwoon_etank:
     dw $0AFA, $028B  ; Samus Y
     dw #$FFFF
 
-preset_pkrd_maridia_reverse_halfie_climb:
-    dw #preset_pkrd_maridia_reverse_colosseum
-    dw $078D, $A834  ; DDB
-    dw $079B, $D72A  ; MDB
-    dw $090F, $8000  ; Screen subpixel X position
-    dw $0913, $F001  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $09C2, $0066  ; Health
-    dw $0AF6, $0042  ; Samus X
-    dw #$FFFF
-
-preset_prkd20_maridia_maridia_tube_revisit:
-    dw #preset_prkd20_kraid_leaving_kraids_lair
-    dw $078D, $922E  ; DDB
-    dw $079B, $CF80  ; MDB
-    dw $090F, $D000  ; Screen subpixel X position
-    dw $0913, $6400  ; Screen subpixel Y position
-    dw $0915, $0100  ; Screen Y position in pixels
-    dw $0919, $0100  ; Layer 2 Y position
-    dw $09CA, $0009  ; Supers
-    dw $0AF6, $00B3  ; Samus X
-    dw $0AFA, $018B  ; Samus Y
-    dw #$FFFF
-
-preset_prkd20_maridia_fish_tank:
-    dw #preset_pkrd_maridia_fish_tank
-    dw $09C2, $00C1  ; Health
-    dw $09C4, $012B  ; Max health
-    dw $09C6, $000D  ; Missiles
-    dw $09CA, $0009  ; Supers
-    dw $09CE, $0005  ; Pbs
-    dw $D874, $0504  ; Items
-    dw $D8B8, $2EEC  ; Doors
-    dw #$FFFF
-
-preset_prkd20_maridia_mt_everest:
-    dw #preset_pkrd_maridia_mt_everest
-    dw $09C2, $00C1  ; Health
-    dw $09C4, $012B  ; Max health
-    dw $09C6, $000D  ; Missiles
-    dw $09CA, $0009  ; Supers
-    dw $09CE, $0005  ; Pbs
-    dw $D874, $0504  ; Items
-    dw $D8B8, $2EEC  ; Doors
-    dw #$FFFF
-
-preset_prkd19_lower_norfair_nox_ridley_business_center_final:
-    dw #preset_prkd19_lower_norfair_business_center_final
-    dw $0AF8, $FFFF  ; Samus subpixel X
-    dw #$FFFF
-
-preset_prkd19_kraid_entering_kraids_lair:
-    dw #preset_prkd20_kraid_entering_kraids_lair
-    dw $09C8, $000F  ; Max missiles
-    dw $0AF8, $D000  ; Samus subpixel X
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_prkd19_kraid_kraid_kihunters:
-    dw #preset_prkd20_kraid_kraid_kihunters
-    dw $09C8, $000F  ; Max missiles
-    dw $0AF8, $D000  ; Samus subpixel X
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr22_maridia_whomple_jump:
-    dw #preset_kpdr22_maridia_reverse_halfie_spikesuit
-    dw $0A68, $0000  ; Flash suit
-    dw #$FFFF
-
-preset_kpdr22_maridia_cac_alley_east:
-    dw #preset_kpdr23_maridia_cac_alley_east
-    dw $09A6, $1001  ; Equipped Beams
-    dw $09A8, $1001  ; Collected Beams
-    dw #$FFFF
-
-preset_kpdr22_maridia_cac_alley_west:
-    dw #preset_kpdr23_maridia_cac_alley_west
-    dw $09A6, $1001  ; Equipped Beams
-    dw $09A8, $1001  ; Collected Beams
-    dw #$FFFF
-
-preset_kpdr20_maridia_whomple_jump:
-    dw #preset_kpdr20_maridia_reverse_halfie_spikesuit
-    dw $0A68, $0000  ; Flash suit
-    dw #$FFFF
-
-preset_kpdr_maridia_botwoon_hallway:
-    dw #preset_kpdr_maridia_aqueduct
-    dw $078D, $A4C8  ; DDB
-    dw $079B, $D5A7  ; MDB
-    dw $07F5, $0005  ; Music Track
-    dw $090F, $A000  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $4000  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0917, $0000  ; Layer 2 X position
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $09CE, $0001  ; Pbs
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $009D  ; Samus X
-    dw $0AFA, $006B  ; Samus Y
-    dw $0F7A, $0007  ; Safeties enabled
-    dw #$FFFF
-
-preset_prkd19_kraid_minikraid:
-    dw #preset_prkd20_kraid_minikraid
-    dw $09C8, $000F  ; Max missiles
-    dw $0AF8, $D000  ; Samus subpixel X
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_prkd19_kraid_kraid:
-    dw #preset_prkd20_kraid_kraid
-    dw $09C8, $000F  ; Max missiles
-    dw $0AF8, $D000  ; Samus subpixel X
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_prkd19_kraid_leaving_varia:
-    dw #preset_prkd20_kraid_leaving_varia
-    dw $09C8, $000F  ; Max missiles
-    dw $0AF8, $D000  ; Samus subpixel X
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_prkd19_kraid_minikraid_revisit:
-    dw #preset_prkd20_kraid_minikraid_revisit
-    dw $09C8, $000F  ; Max missiles
-    dw $0AF8, $D000  ; Samus subpixel X
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_prkd19_kraid_kraid_kihunters_revisit:
-    dw #preset_prkd20_kraid_kraid_kihunters_revisit
-    dw $09C8, $000F  ; Max missiles
-    dw $0AF8, $D000  ; Samus subpixel X
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_prkd19_kraid_leaving_kraids_lair:
-    dw #preset_prkd20_kraid_leaving_kraids_lair
-    dw $09C8, $000F  ; Max missiles
-    dw $0AF8, $D000  ; Samus subpixel X
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
 preset_gtmax_maridia_postdraygon_maridia_ggg_revisit:
     dw #preset_gtmax_maridia_postdraygon_maridia_ggg
     dw $078D, $A6B4  ; DDB
@@ -35339,6 +35352,22 @@ preset_gtmax_maridia_postdraygon_maridia_ggg_revisit:
     dw $09D4, $01F4  ; Max reserves
     dw $0AF6, $0043  ; Samus X
     dw $D882, $01BF  ; Items
+    dw #$FFFF
+
+preset_pkrd_backtracking_parlor_return:
+    dw #preset_pkrd_backtracking_crateria_kihunters_final
+    dw $078D, $8AC6  ; DDB
+    dw $079B, $91F8  ; MDB
+    dw $07F3, $000C  ; Music Bank
+    dw $07F5, $0005  ; Music Track
+    dw $0911, $05E3  ; Screen X position in pixels
+    dw $0915, $0400  ; Screen Y position in pixels
+    dw $0917, $02F1  ; Layer 2 X position
+    dw $09C6, $0010  ; Missiles
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0683  ; Samus X
+    dw $0AFA, $04BB  ; Samus Y
     dw #$FFFF
 
 preset_suitless_maridia_cleanup_2_east_sand_hall_final:
@@ -35433,278 +35462,6 @@ preset_100early_maridia_postdraygon_pants_room:
     dw $D882, $048C  ; Items
     dw #$FFFF
 
-preset_pkrd_maridia_reverse_botwoon_etank:
-    dw #preset_pkrd_maridia_reverse_halfie_climb
-    dw $078D, $A7E0  ; DDB
-    dw $079B, $D913  ; MDB
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $0913, $2800  ; Screen subpixel Y position
-    dw $0915, $0200  ; Screen Y position in pixels
-    dw $0919, $0200  ; Layer 2 Y position
-    dw $0AF6, $00AE  ; Samus X
-    dw $0AFA, $028B  ; Samus Y
-    dw #$FFFF
-
-preset_pkrd_maridia_reverse_botwoon_hallway:
-    dw #preset_pkrd_maridia_reverse_halfie_climb
-    dw $078D, $A84C  ; DDB
-    dw $079B, $D95E  ; MDB
-    dw $07F5, $0003  ; Music Track
-    dw $090F, $1F80  ; Screen subpixel X position
-    dw $0913, $D800  ; Screen subpixel Y position
-    dw $0AF6, $0025  ; Samus X
-    dw $0AFA, $00BB  ; Samus Y
-    dw #$FFFF
-
-preset_pkrd_maridia_reverse_crab_shaft:
-    dw #preset_pkrd_maridia_reverse_halfie_climb
-    dw $078D, $A768  ; DDB
-    dw $079B, $D5A7  ; MDB
-    dw $0913, $6800  ; Screen subpixel Y position
-    dw $0915, $00FE  ; Screen Y position in pixels
-    dw $0919, $00FE  ; Layer 2 Y position
-    dw $0AF6, $0069  ; Samus X
-    dw $0AFA, $018B  ; Samus Y
-    dw $D8C2, $6C00  ; Doors
-    dw #$FFFF
-
-preset_prkd19_maridia_maridia_tube_revisit:
-    dw #preset_prkd20_maridia_maridia_tube_revisit
-    dw $09C8, $000F  ; Max missiles
-    dw $0AF8, $D000  ; Samus subpixel X
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_prkd19_maridia_fish_tank:
-    dw #preset_prkd20_maridia_fish_tank
-    dw $09C8, $000F  ; Max missiles
-    dw $0AF8, $D000  ; Samus subpixel X
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_prkd19_maridia_mt_everest:
-    dw #preset_prkd20_maridia_mt_everest
-    dw $09C8, $000F  ; Max missiles
-    dw $0AF8, $D000  ; Samus subpixel X
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr20_maridia_cac_alley_east:
-    dw #preset_kpdr21_maridia_cac_alley_east
-    dw $09C6, $000B  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_phantoonfirst_lower_norfair_three_musketeers:
-    dw #preset_prkd19_lower_norfair_nox_ridley_three_musketeers
-    dw $0F78, $0C7F  ; Safeties enabled
-    dw $0F96, $0039  ; Safeties energy adjustment
-    dw $0FC0, $002D  ; Safeties reserves adjustment
-    dw #$FFFF
-
-preset_kpdr20_maridia_cac_alley_west:
-    dw #preset_kpdr21_maridia_cac_alley_west
-    dw $09C6, $000A  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr22_maridia_plasma_spark:
-    dw #preset_kpdr23_maridia_plasma_spark
-    dw $09A6, $1001  ; Equipped Beams
-    dw $09A8, $1001  ; Collected Beams
-    dw #$FFFF
-
-preset_kpdr23_maridia_plasma_climb:
-    dw #preset_kpdr23_maridia_plasma_spark
-    dw $078D, $A750  ; DDB
-    dw $079B, $D340  ; MDB
-    dw $090F, $FFFF  ; Screen subpixel X position
-    dw $0911, $0200  ; Screen X position in pixels
-    dw $0913, $8C00  ; Screen subpixel Y position
-    dw $0915, $00F3  ; Screen Y position in pixels
-    dw $0917, $01C0  ; Layer 2 X position
-    dw $0919, $00F3  ; Layer 2 Y position
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $027F  ; Samus X
-    dw $0AFA, $018B  ; Samus Y
-    dw #$FFFF
-
-preset_kpdr23_maridia_plasma_beam:
-    dw #preset_kpdr23_maridia_plasma_spark
-    dw $078D, $A5DC  ; DDB
-    dw $079B, $D27E  ; MDB
-    dw $090F, $9000  ; Screen subpixel X position
-    dw $0913, $0800  ; Screen subpixel Y position
-    dw $09D2, $0003  ; Currently selected item
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $0095  ; Samus X
-    dw $D8C2, $DC08  ; Doors
-    dw #$FFFF
-
-preset_kpdr23_maridia_plasma_spark_revisit:
-    dw #preset_kpdr23_maridia_cac_alley_east
-    dw $078D, $A540  ; DDB
-    dw $079B, $D387  ; MDB
-    dw $0915, $031A  ; Screen Y position in pixels
-    dw $0919, $0253  ; Layer 2 Y position
-    dw $09A6, $1009  ; Equipped Beams
-    dw $09A8, $100D  ; Collected Beams
-    dw $09C2, $0108  ; Health
-    dw $09C6, $0011  ; Missiles
-    dw $09CA, $0008  ; Supers
-    dw $09CE, $0002  ; Pbs
-    dw $0AF6, $0025  ; Samus X
-    dw $0AFA, $038B  ; Samus Y
-    dw $D880, $80A0  ; Items
-    dw $D8C2, $DC0A  ; Doors
-    dw #$FFFF
-
-preset_phantoonfirst_lower_norfair_single_chamber_final:
-    dw #preset_prkd19_lower_norfair_nox_ridley_single_chamber_final
-    dw $0F78, $0C7F  ; Safeties enabled
-    dw $0F96, $0039  ; Safeties energy adjustment
-    dw $0FC0, $002D  ; Safeties reserves adjustment
-    dw #$FFFF
-
-preset_phantoonfirst_lower_norfair_bubble_mountain_final:
-    dw #preset_prkd19_lower_norfair_nox_ridley_bubble_mountain_final
-    dw $0F78, $0C7F  ; Safeties enabled
-    dw $0F96, $0039  ; Safeties energy adjustment
-    dw $0FC0, $002D  ; Safeties reserves adjustment
-    dw #$FFFF
-
-preset_phantoonfirst_lower_norfair_frog_speedway:
-    dw #preset_prkd19_lower_norfair_nox_ridley_frog_speedway
-    dw $0F78, $0C7F  ; Safeties enabled
-    dw $0F86, $003C  ; Safeties energy adjustment
-    dw $0F96, $0039  ; Safeties energy adjustment
-    dw $0FC0, $002D  ; Safeties reserves adjustment
-    dw $1006, $0006  ; Safeties missiles adjustment
-    dw $1046, $0005  ; Safeties supers adjustment
-    dw $1086, $0001  ; Safeties power bombs adjustment
-    dw #$FFFF
-
-preset_prkd20_maridia_crab_shaft:
-    dw #preset_prkd20_maridia_mt_everest
-    dw $090F, $6000  ; Screen subpixel X position
-    dw $0911, $0500  ; Screen X position in pixels
-    dw $0913, $9C01  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0917, $03C0  ; Layer 2 X position
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $09C2, $0086  ; Health
-    dw $0A1C, $0089  ; Samus position/state
-    dw $0A1E, $1508  ; More position/state
-    dw $0AF6, $05DB  ; Samus X
-    dw $0AFA, $008B  ; Samus Y
-    dw #$FFFF
-
-preset_prkd20_maridia_aqueduct:
-    dw #preset_pkrd_maridia_aqueduct
-    dw $09C2, $0086  ; Health
-    dw $09C4, $012B  ; Max health
-    dw $09C6, $000D  ; Missiles
-    dw $09CA, $0009  ; Supers
-    dw $09CE, $0005  ; Pbs
-    dw $D874, $0504  ; Items
-    dw $D8B8, $2EEC  ; Doors
-    dw #$FFFF
-
-preset_prkd20_maridia_botwoon_hallway:
-    dw #preset_pkrd_maridia_botwoon_hallway
-    dw $09C2, $0086  ; Health
-    dw $09C4, $012B  ; Max health
-    dw $09C6, $000D  ; Missiles
-    dw $09CA, $0008  ; Supers
-    dw $09CE, $0004  ; Pbs
-    dw $D874, $0504  ; Items
-    dw $D8B8, $2EEC  ; Doors
-    dw #$FFFF
-
-preset_prkd20_maridia_botwoon:
-    dw #preset_pkrd_maridia_botwoon
-    dw $090F, $A000  ; Screen subpixel X position
-    dw $0911, $02FF  ; Screen X position in pixels
-    dw $0913, $C800  ; Screen subpixel Y position
-    dw $0917, $023F  ; Layer 2 X position
-    dw $09C2, $0086  ; Health
-    dw $09C4, $012B  ; Max health
-    dw $09C6, $000D  ; Missiles
-    dw $09CA, $0008  ; Supers
-    dw $09CE, $0004  ; Pbs
-    dw $0AF6, $039D  ; Samus X
-    dw $D874, $0504  ; Items
-    dw $D8B8, $2EEC  ; Doors
-    dw #$FFFF
-
-preset_prkd20_maridia_botwoon_etank:
-    dw #preset_pkrd_maridia_botwoon_etank
-    dw $090F, $8000  ; Screen subpixel X position
-    dw $0913, $7800  ; Screen subpixel Y position
-    dw $09C2, $00C0  ; Health
-    dw $09C4, $012B  ; Max health
-    dw $09C6, $000E  ; Missiles
-    dw $09CE, $0005  ; Pbs
-    dw $0AF6, $01C5  ; Samus X
-    dw $D874, $0504  ; Items
-    dw $D8B8, $2EEC  ; Doors
-    dw #$FFFF
-
-preset_prkd20_maridia_halfie_setup:
-    dw #preset_pkrd_maridia_halfie_setup
-    dw $090F, $B000  ; Screen subpixel X position
-    dw $0913, $8000  ; Screen subpixel Y position
-    dw $09C2, $018F  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $09C6, $0010  ; Missiles
-    dw $09CA, $0004  ; Supers
-    dw $09CE, $0005  ; Pbs
-    dw $0AF6, $0099  ; Samus X
-    dw $D874, $0504  ; Items
-    dw $D8B8, $2EEC  ; Doors
-    dw #$FFFF
-
-preset_prkd20_maridia_draygon:
-    dw #preset_pkrd_maridia_draygon
-    dw $090F, $5000  ; Screen subpixel X position
-    dw $0913, $0800  ; Screen subpixel Y position
-    dw $09C2, $0110  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $09CA, $0002  ; Supers
-    dw $09CE, $0005  ; Pbs
-    dw $D874, $0504  ; Items
-    dw $D8B8, $2EEC  ; Doors
-    dw #$FFFF
-
-preset_prkd20_maridia_spikesuit_reverse_halfie:
-    dw #preset_pkrd_maridia_spikesuit_reverse_halfie
-    dw $090F, $1000  ; Screen subpixel X position
-    dw $0913, $0000  ; Screen subpixel Y position
-    dw $09C4, $018F  ; Max health
-    dw $09CE, $0005  ; Pbs
-    dw $D874, $0504  ; Items
-    dw $D8B8, $2EEC  ; Doors
-    dw #$FFFF
-
-preset_kpdr_maridia_botwoon:
-    dw #preset_kpdr_maridia_botwoon_hallway
-    dw $078D, $A72C  ; DDB
-    dw $079B, $D617  ; MDB
-    dw $090F, $DFFF  ; Screen subpixel X position
-    dw $0911, $0300  ; Screen X position in pixels
-    dw $0913, $5800  ; Screen subpixel Y position
-    dw $0917, $0240  ; Layer 2 X position
-    dw $09D2, $0000  ; Currently selected item
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $03A4  ; Samus X
-    dw $0AFA, $008B  ; Samus Y
-    dw #$FFFF
-
 preset_gtmax_maridia_postdraygon_mt_everest_exit:
     dw #preset_gtmax_maridia_postdraygon_maridia_ggg_revisit
     dw $078D, $A414  ; DDB
@@ -35725,6 +35482,151 @@ preset_gtmax_maridia_postdraygon_mt_everest_exit:
     dw $0AF6, $0104  ; Samus X
     dw $0AFA, $00A7  ; Samus Y
     dw $D880, $7F00  ; Items
+    dw #$FFFF
+
+preset_pkrd_backtracking_terminator_revisit:
+    dw #preset_pkrd_backtracking_parlor_return
+    dw $078D, $8916  ; DDB
+    dw $079B, $92FD  ; MDB
+    dw $07F3, $0009  ; Music Bank
+    dw $090F, $C000  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $3C00  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $00C0  ; Layer 2 X position
+    dw $0A1C, $0072  ; Samus position/state
+    dw $0A1E, $0504  ; More position/state
+    dw $0AF6, $010C  ; Samus X
+    dw $0AFA, $0090  ; Samus Y
+    dw #$FFFF
+
+preset_kpdr23_maridia_toilet:
+    dw #preset_kpdr23_maridia_plasma_spark_revisit
+    dw $078D, $A5D0  ; DDB
+    dw $079B, $D340  ; MDB
+    dw $0911, $002E  ; Screen X position in pixels
+    dw $0913, $0800  ; Screen subpixel Y position
+    dw $0915, $021F  ; Screen Y position in pixels
+    dw $0917, $0028  ; Layer 2 X position
+    dw $0919, $021F  ; Layer 2 Y position
+    dw $09C2, $00A9  ; Health
+    dw $09CA, $0009  ; Supers
+    dw $0AF6, $00A3  ; Samus X
+    dw $0AFA, $02AB  ; Samus Y
+    dw $D8C2, $DC1A  ; Doors
+    dw #$FFFF
+
+preset_prkd20_kraid_minikraid_revisit:
+    dw #preset_prkd20_kraid_leaving_varia
+    dw $078D, $91CE  ; DDB
+    dw $079B, $A56B  ; MDB
+    dw $090F, $4000  ; Screen subpixel X position
+    dw $0913, $3800  ; Screen subpixel Y position
+    dw $0915, $0100  ; Screen Y position in pixels
+    dw $0919, $0100  ; Layer 2 Y position
+    dw $09C2, $00BC  ; Health
+    dw $09D2, $0002  ; Currently selected item
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0060  ; Samus X
+    dw $0AFA, $018B  ; Samus Y
+    dw $D8B8, $2EE4  ; Doors
+    dw #$FFFF
+
+preset_kpdr_maridia_aqueduct:
+    dw #preset_kpdr_maridia_crab_shaft
+    dw $078D, $A468  ; DDB
+    dw $079B, $D1A3  ; MDB
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $83FF  ; Screen subpixel Y position
+    dw $0915, $0300  ; Screen Y position in pixels
+    dw $0917, $0100  ; Layer 2 X position
+    dw $0919, $0240  ; Layer 2 Y position
+    dw $09CA, $0009  ; Supers
+    dw $09D2, $0003  ; Currently selected item
+    dw $0AF6, $01AD  ; Samus X
+    dw $0AFA, $038B  ; Samus Y
+    dw $D8C0, $8174  ; Doors
+    dw #$FFFF
+
+preset_phantoonfirst_kraid_entering_kraids_lair:
+    dw #preset_prkd19_kraid_entering_kraids_lair
+    dw $0AF8, $FFFF  ; Samus subpixel X
+    dw $0F78, $0C7F  ; Safeties enabled
+    dw $0F86, $003C  ; Safeties energy adjustment
+    dw $0F88, $FFB0  ; Safeties energy adjustment
+    dw $0F96, $0039  ; Safeties energy adjustment
+    dw $0FC0, $002D  ; Safeties reserves adjustment
+    dw $1006, $0006  ; Safeties missiles adjustment
+    dw $1046, $0005  ; Safeties supers adjustment
+    dw $1086, $0001  ; Safeties power bombs adjustment
+    dw #$FFFF
+
+preset_phantoonfirst_kraid_kraid_kihunters:
+    dw #preset_prkd19_kraid_kraid_kihunters
+    dw $0AF8, $FFFF  ; Samus subpixel X
+    dw $0F78, $0C7F  ; Safeties enabled
+    dw $0F86, $003C  ; Safeties energy adjustment
+    dw $0F88, $FFB0  ; Safeties energy adjustment
+    dw $0F96, $0039  ; Safeties energy adjustment
+    dw $0FC0, $002D  ; Safeties reserves adjustment
+    dw $1006, $0006  ; Safeties missiles adjustment
+    dw $1046, $0005  ; Safeties supers adjustment
+    dw $1086, $0001  ; Safeties power bombs adjustment
+    dw #$FFFF
+
+preset_prkd19_kraid_minikraid:
+    dw #preset_prkd20_kraid_minikraid
+    dw $09C8, $000F  ; Max missiles
+    dw $0AF8, $D000  ; Samus subpixel X
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_prkd19_kraid_kraid:
+    dw #preset_prkd20_kraid_kraid
+    dw $09C8, $000F  ; Max missiles
+    dw $0AF8, $D000  ; Samus subpixel X
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_prkd19_kraid_leaving_varia:
+    dw #preset_prkd20_kraid_leaving_varia
+    dw $09C8, $000F  ; Max missiles
+    dw $0AF8, $D000  ; Samus subpixel X
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_prkd20_kraid_kraid_kihunters_revisit:
+    dw #preset_prkd20_kraid_leaving_varia
+    dw $078D, $91AA  ; DDB
+    dw $079B, $A521  ; MDB
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $012C  ; Screen X position in pixels
+    dw $0913, $EC00  ; Screen subpixel Y position
+    dw $0917, $00E1  ; Layer 2 X position
+    dw $09C2, $00BC  ; Health
+    dw $09C6, $000B  ; Missiles
+    dw $09CA, $000A  ; Supers
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $01CC  ; Samus X
+    dw $0AFA, $00AB  ; Samus Y
+    dw $D8B8, $2EEC  ; Doors
+    dw #$FFFF
+
+preset_pkrd_backtracking_green_pirate_shaft_revisit:
+    dw #preset_pkrd_backtracking_parlor_return
+    dw $078D, $895E  ; DDB
+    dw $079B, $990D  ; MDB
+    dw $07F3, $0009  ; Music Bank
+    dw $090F, $DE80  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0915, $01FB  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $017C  ; Layer 2 Y position
+    dw $0AF6, $0062  ; Samus X
+    dw $0AFA, $029B  ; Samus Y
     dw #$FFFF
 
 preset_suitless_maridia_cleanup_2_oasis:
@@ -35820,120 +35722,6 @@ preset_100early_maridia_postdraygon_shaktool_revisit:
     dw $D882, $04CC  ; Items
     dw #$FFFF
 
-preset_pkrd_maridia_mt_everest_revisit:
-    dw #preset_pkrd_maridia_reverse_botwoon_etank
-    dw $078D, $A708  ; DDB
-    dw $079B, $D1A3  ; MDB
-    dw $07F5, $0006  ; Music Track
-    dw $0913, $A800  ; Screen subpixel Y position
-    dw $0915, $0201  ; Screen Y position in pixels
-    dw $0919, $0180  ; Layer 2 Y position
-    dw $0AF6, $0073  ; Samus X
-    dw $D8C2, $6C00  ; Doors
-    dw #$FFFF
-
-preset_pkrd_backtracking_red_brinstar_green_gate:
-    dw #preset_pkrd_maridia_reverse_halfie_climb
-    dw $078D, $A42C  ; DDB
-    dw $079B, $D104  ; MDB
-    dw $07F5, $0006  ; Music Track
-    dw $090F, $C000  ; Screen subpixel X position
-    dw $0911, $001A  ; Screen X position in pixels
-    dw $0913, $8800  ; Screen subpixel Y position
-    dw $0917, $001A  ; Layer 2 X position
-    dw $09C2, $008E  ; Health
-    dw $09C6, $0011  ; Missiles
-    dw $09CA, $0006  ; Supers
-    dw $09D2, $0002  ; Currently selected item
-    dw $0AF6, $007F  ; Samus X
-    dw $D8C2, $6C00  ; Doors
-    dw #$FFFF
-
-preset_pkrd_backtracking_crateria_kihunters_final:
-    dw #preset_pkrd_maridia_maridia_tube_revisit
-    dw $078D, $90BA  ; DDB
-    dw $079B, $962A  ; MDB
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $09C2, $008E  ; Health
-    dw $09C4, $01F3  ; Max health
-    dw $09C6, $0011  ; Missiles
-    dw $09CA, $0005  ; Supers
-    dw $09CE, $0001  ; Pbs
-    dw $0AFA, $00A8  ; Samus Y
-    dw $D82C, $0003  ; Bosses
-    dw $D882, $0100  ; Items
-    dw $D8C0, $8174  ; Doors
-    dw $D8C2, $6C00  ; Doors
-    dw #$FFFF
-
-preset_kpdr21_maridia_plasma_spark:
-    dw #preset_kpdr22_maridia_plasma_spark
-    dw $09C2, $004A  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0104  ; Items
-    dw $D8B6, $3008  ; Doors
-    dw $D8B8, $26ED  ; Doors
-    dw #$FFFF
-
-preset_kpdr22_maridia_plasma_climb:
-    dw #preset_kpdr23_maridia_plasma_climb
-    dw $09A6, $1001  ; Equipped Beams
-    dw $09A8, $1001  ; Collected Beams
-    dw #$FFFF
-
-preset_kpdr25_maridia_plasma_climb:
-    dw #preset_kpdr23_maridia_plasma_climb
-    dw $09A6, $1007  ; Equipped Beams
-    dw $09A8, $1007  ; Collected Beams
-    dw $09C2, $0184  ; Health
-    dw $09C6, $0007  ; Missiles
-    dw $09C8, $0019  ; Max missiles
-    dw $09CA, $0006  ; Supers
-    dw $09CE, $0005  ; Pbs
-    dw $D870, $0190  ; Items
-    dw $D876, $01A5  ; Items
-    dw $D8B8, $2EEF  ; Doors
-    dw #$FFFF
-
-preset_kpdr25_maridia_plasma_beam:
-    dw #preset_kpdr25_maridia_plasma_spark
-    dw $078D, $A5DC  ; DDB
-    dw $079B, $D27E  ; MDB
-    dw $090F, $9000  ; Screen subpixel X position
-    dw $0913, $0800  ; Screen subpixel Y position
-    dw $09C6, $0007  ; Missiles
-    dw $09D2, $0003  ; Currently selected item
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $0095  ; Samus X
-    dw $D8C2, $DC08  ; Doors
-    dw #$FFFF
-
-preset_kpdr22_maridia_plasma_beam:
-    dw #preset_kpdr23_maridia_plasma_beam
-    dw $09A6, $1001  ; Equipped Beams
-    dw $09A8, $1001  ; Collected Beams
-    dw #$FFFF
-
-preset_kpdr22_maridia_plasma_spark_revisit:
-    dw #preset_kpdr23_maridia_plasma_spark_revisit
-    dw $09A8, $1009  ; Collected Beams
-    dw #$FFFF
-
-preset_kpdr25_maridia_plasma_spark_revisit:
-    dw #preset_kpdr23_maridia_plasma_spark_revisit
-    dw $09A6, $100B  ; Equipped Beams
-    dw $09A8, $100F  ; Collected Beams
-    dw $09C2, $01BB  ; Health
-    dw $09C6, $0009  ; Missiles
-    dw $09C8, $0019  ; Max missiles
-    dw $09CA, $0006  ; Supers
-    dw $09CE, $0005  ; Pbs
-    dw $D870, $0190  ; Items
-    dw $D876, $01A5  ; Items
-    dw $D8B8, $2EEF  ; Doors
-    dw #$FFFF
-
 preset_gtmax_maridia_postdraygon_red_brinstar_green_gate:
     dw #preset_gtmax_maridia_postdraygon_mt_everest_exit
     dw $078D, $A42C  ; DDB
@@ -35969,6 +35757,211 @@ preset_gtmax_maridia_postdraygon_leaving_alpha_power_bombs:
     dw $0AF6, $0036  ; Samus X
     dw $0AFA, $00BB  ; Samus Y
     dw $D874, $1B04  ; Items
+    dw #$FFFF
+
+preset_prkd19_kraid_minikraid_revisit:
+    dw #preset_prkd20_kraid_minikraid_revisit
+    dw $09C8, $000F  ; Max missiles
+    dw $0AF8, $D000  ; Samus subpixel X
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_prkd19_kraid_kraid_kihunters_revisit:
+    dw #preset_prkd20_kraid_kraid_kihunters_revisit
+    dw $09C8, $000F  ; Max missiles
+    dw $0AF8, $D000  ; Samus subpixel X
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr20_maridia_plasma_spark:
+    dw #preset_kpdr21_maridia_plasma_spark
+    dw $09C6, $000A  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr21_maridia_plasma_climb:
+    dw #preset_kpdr22_maridia_plasma_climb
+    dw $09C2, $004A  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $D874, $0104  ; Items
+    dw $D8B6, $3008  ; Doors
+    dw $D8B8, $26ED  ; Doors
+    dw #$FFFF
+
+preset_kpdr21_maridia_plasma_beam:
+    dw #preset_kpdr22_maridia_plasma_beam
+    dw $09C2, $004A  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $D874, $0104  ; Items
+    dw $D8B6, $3008  ; Doors
+    dw $D8B8, $26ED  ; Doors
+    dw #$FFFF
+
+preset_kpdr21_maridia_plasma_spark_revisit:
+    dw #preset_kpdr22_maridia_plasma_spark_revisit
+    dw $09C2, $00A4  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $D874, $0104  ; Items
+    dw $D8B6, $3008  ; Doors
+    dw $D8B8, $26ED  ; Doors
+    dw #$FFFF
+
+preset_kpdr22_maridia_toilet:
+    dw #preset_kpdr23_maridia_toilet
+    dw $09A8, $1009  ; Collected Beams
+    dw #$FFFF
+
+preset_kpdr23_maridia_sewers:
+    dw #preset_kpdr23_maridia_toilet
+    dw $078D, $A600  ; DDB
+    dw $079B, $D48E  ; MDB
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $3000  ; Screen subpixel Y position
+    dw $0915, $011C  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $00D5  ; Layer 2 Y position
+    dw $0AF6, $00BB  ; Samus X
+    dw $0AFA, $018B  ; Samus Y
+    dw #$FFFF
+
+preset_kpdr25_maridia_toilet:
+    dw #preset_kpdr23_maridia_toilet
+    dw $09A6, $100B  ; Equipped Beams
+    dw $09A8, $100F  ; Collected Beams
+    dw $09C2, $01C0  ; Health
+    dw $09C6, $0009  ; Missiles
+    dw $09C8, $0019  ; Max missiles
+    dw $09CA, $0005  ; Supers
+    dw $09CE, $0005  ; Pbs
+    dw $D870, $0190  ; Items
+    dw $D876, $01A5  ; Items
+    dw $D8B8, $2EEF  ; Doors
+    dw #$FFFF
+
+preset_kpdr_maridia_botwoon_hallway:
+    dw #preset_kpdr_maridia_aqueduct
+    dw $078D, $A4C8  ; DDB
+    dw $079B, $D5A7  ; MDB
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $A000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $4000  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09CE, $0001  ; Pbs
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $009D  ; Samus X
+    dw $0AFA, $006B  ; Samus Y
+    dw $0F7A, $0007  ; Safeties enabled
+    dw #$FFFF
+
+preset_phantoonfirst_kraid_minikraid:
+    dw #preset_phantoonfirst_kraid_kraid_kihunters
+    dw $078D, $9156  ; DDB
+    dw $079B, $A4DA  ; MDB
+    dw $090F, $7000  ; Screen subpixel X position
+    dw $0913, $EBFF  ; Screen subpixel Y position
+    dw $0915, $00FA  ; Screen Y position in pixels
+    dw $0919, $00FA  ; Layer 2 Y position
+    dw #$FFFF
+
+preset_phantoonfirst_kraid_kraid:
+    dw #preset_prkd19_kraid_kraid
+    dw $0AF8, $FFFF  ; Samus subpixel X
+    dw $0F78, $0C7F  ; Safeties enabled
+    dw $0F86, $003C  ; Safeties energy adjustment
+    dw $0F88, $FFB0  ; Safeties energy adjustment
+    dw $0F96, $0039  ; Safeties energy adjustment
+    dw $0FC0, $002D  ; Safeties reserves adjustment
+    dw $1006, $0006  ; Safeties missiles adjustment
+    dw $1046, $0005  ; Safeties supers adjustment
+    dw $1086, $0001  ; Safeties power bombs adjustment
+    dw #$FFFF
+
+preset_phantoonfirst_kraid_leaving_varia:
+    dw #preset_prkd19_kraid_leaving_varia
+    dw $0AF8, $FFFF  ; Samus subpixel X
+    dw $0F78, $0C7F  ; Safeties enabled
+    dw $0F86, $003C  ; Safeties energy adjustment
+    dw $0F88, $FFB0  ; Safeties energy adjustment
+    dw $0F96, $0039  ; Safeties energy adjustment
+    dw $0FC0, $002D  ; Safeties reserves adjustment
+    dw $1006, $0006  ; Safeties missiles adjustment
+    dw $1046, $0005  ; Safeties supers adjustment
+    dw $1086, $0001  ; Safeties power bombs adjustment
+    dw #$FFFF
+
+preset_prkd20_kraid_leaving_kraids_lair:
+    dw #preset_prkd20_kraid_kraid_kihunters_revisit
+    dw $078D, $916E  ; DDB
+    dw $079B, $A471  ; MDB
+    dw $07F3, $0012  ; Music Bank
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $C001  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $F000  ; Screen subpixel Y position
+    dw $0915, $001B  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $001B  ; Layer 2 Y position
+    dw $09C2, $00C1  ; Health
+    dw $09C6, $000D  ; Missiles
+    dw $0AF6, $0025  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw #$FFFF
+
+preset_pkrd_backtracking_g4_hallway:
+    dw #preset_pkrd_backtracking_green_pirate_shaft_revisit
+    dw $078D, $8BE6  ; DDB
+    dw $079B, $99BD  ; MDB
+    dw $090F, $7FFF  ; Screen subpixel X position
+    dw $0913, $E400  ; Screen subpixel Y position
+    dw $0915, $0600  ; Screen Y position in pixels
+    dw $0917, $0001  ; Layer 2 X position
+    dw $0919, $0480  ; Layer 2 Y position
+    dw $09CA, $0004  ; Supers
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $00C2  ; Samus X
+    dw $0AFA, $068B  ; Samus Y
+    dw $D8B2, $6C01  ; Doors
+    dw #$FFFF
+
+preset_pkrd_backtracking_g4_elevator:
+    dw #preset_pkrd_backtracking_green_pirate_shaft_revisit
+    dw $078D, $91F2  ; DDB
+    dw $079B, $A66A  ; MDB
+    dw $07F5, $0006  ; Music Track
+    dw $090F, $7000  ; Screen subpixel X position
+    dw $0913, $7000  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09CA, $0004  ; Supers
+    dw $0AF6, $0049  ; Samus X
+    dw $0AFA, $009B  ; Samus Y
+    dw $D820, $0BC1  ; Events
+    dw $D8B2, $6C01  ; Doors
+    dw #$FFFF
+
+preset_pkrd_tourian_tourian_elevator_room:
+    dw #preset_pkrd_backtracking_crateria_kihunters_final
+    dw $078D, $9222  ; DDB
+    dw $079B, $DAAE  ; MDB
+    dw $07F3, $001E  ; Music Bank
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $9FFF  ; Screen subpixel X position
+    dw $0915, $0238  ; Screen Y position in pixels
+    dw $0919, $01AA  ; Layer 2 Y position
+    dw $09A6, $1007  ; Equipped Beams
+    dw $09C6, $0010  ; Missiles
+    dw $09CA, $0004  ; Supers
+    dw $0AFA, $02A8  ; Samus Y
+    dw $D820, $0FC1  ; Events
+    dw $D8B2, $6C01  ; Doors
+    dw $D90C, $0100  ; Map Stations
     dw #$FFFF
 
 preset_suitless_maridia_cleanup_2_plasma_spark_room:
@@ -36054,22 +36047,6 @@ preset_100early_maridia_postdraygon_east_sand_hall:
     dw $0AFA, $038B  ; Samus Y
     dw #$FFFF
 
-preset_pkrd_backtracking_parlor_return:
-    dw #preset_pkrd_backtracking_crateria_kihunters_final
-    dw $078D, $8AC6  ; DDB
-    dw $079B, $91F8  ; MDB
-    dw $07F3, $000C  ; Music Bank
-    dw $07F5, $0005  ; Music Track
-    dw $0911, $05E3  ; Screen X position in pixels
-    dw $0915, $0400  ; Screen Y position in pixels
-    dw $0917, $02F1  ; Layer 2 X position
-    dw $09C6, $0010  ; Missiles
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $0683  ; Samus X
-    dw $0AFA, $04BB  ; Samus Y
-    dw #$FFFF
-
 preset_gtmax_maridia_postdraygon_beta_power_bombs:
     dw #preset_gtmax_maridia_postdraygon_leaving_alpha_power_bombs
     dw $078D, $90EA  ; DDB
@@ -36104,6 +36081,148 @@ preset_gtmax_wrecked_ship_crateria_kihunters:
     dw $D874, $1B84  ; Items
     dw $D8B2, $2C01  ; Doors
     dw $D8B6, $7808  ; Doors
+    dw #$FFFF
+
+preset_phantoonfirst_kraid_minikraid_revisit:
+    dw #preset_prkd19_kraid_minikraid_revisit
+    dw $0AF8, $FFFF  ; Samus subpixel X
+    dw $0F78, $0C7F  ; Safeties enabled
+    dw $0F86, $003C  ; Safeties energy adjustment
+    dw $0F88, $FFB0  ; Safeties energy adjustment
+    dw $0F96, $0039  ; Safeties energy adjustment
+    dw $0FC0, $002D  ; Safeties reserves adjustment
+    dw $1006, $0006  ; Safeties missiles adjustment
+    dw $1046, $0005  ; Safeties supers adjustment
+    dw $1086, $0001  ; Safeties power bombs adjustment
+    dw #$FFFF
+
+preset_phantoonfirst_kraid_kraid_kihunters_revisit:
+    dw #preset_prkd19_kraid_kraid_kihunters_revisit
+    dw $0AF8, $FFFF  ; Samus subpixel X
+    dw $0F78, $0C7F  ; Safeties enabled
+    dw $0F7C, $0008  ; Safeties adjust only
+    dw $0F86, $003C  ; Safeties energy adjustment
+    dw $0F88, $FFB0  ; Safeties energy adjustment
+    dw $0F96, $0039  ; Safeties energy adjustment
+    dw $0FC0, $002D  ; Safeties reserves adjustment
+    dw $1006, $0006  ; Safeties missiles adjustment
+    dw $1046, $0005  ; Safeties supers adjustment
+    dw $1086, $0001  ; Safeties power bombs adjustment
+    dw #$FFFF
+
+preset_prkd19_kraid_leaving_kraids_lair:
+    dw #preset_prkd20_kraid_leaving_kraids_lair
+    dw $09C8, $000F  ; Max missiles
+    dw $0AF8, $D000  ; Samus subpixel X
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr20_maridia_plasma_climb:
+    dw #preset_kpdr21_maridia_plasma_climb
+    dw $09C6, $000A  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr20_maridia_plasma_beam:
+    dw #preset_kpdr21_maridia_plasma_beam
+    dw $09C6, $000A  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr20_maridia_plasma_spark_revisit:
+    dw #preset_kpdr21_maridia_plasma_spark_revisit
+    dw $09C6, $000F  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr21_maridia_toilet:
+    dw #preset_kpdr22_maridia_toilet
+    dw $09C4, $018F  ; Max health
+    dw $D874, $0104  ; Items
+    dw $D8B6, $3008  ; Doors
+    dw $D8B8, $26ED  ; Doors
+    dw #$FFFF
+
+preset_kpdr22_maridia_sewers:
+    dw #preset_kpdr23_maridia_sewers
+    dw $09A8, $1009  ; Collected Beams
+    dw #$FFFF
+
+preset_prkd20_maridia_maridia_tube_revisit:
+    dw #preset_prkd20_kraid_leaving_kraids_lair
+    dw $078D, $922E  ; DDB
+    dw $079B, $CF80  ; MDB
+    dw $090F, $D000  ; Screen subpixel X position
+    dw $0913, $6400  ; Screen subpixel Y position
+    dw $0915, $0100  ; Screen Y position in pixels
+    dw $0919, $0100  ; Layer 2 Y position
+    dw $09CA, $0009  ; Supers
+    dw $0AF6, $00B3  ; Samus X
+    dw $0AFA, $018B  ; Samus Y
+    dw #$FFFF
+
+preset_prkd20_maridia_fish_tank:
+    dw #preset_pkrd_maridia_fish_tank
+    dw $09C2, $00C1  ; Health
+    dw $09C4, $012B  ; Max health
+    dw $09C6, $000D  ; Missiles
+    dw $09CA, $0009  ; Supers
+    dw $09CE, $0005  ; Pbs
+    dw $D874, $0504  ; Items
+    dw $D8B8, $2EEC  ; Doors
+    dw #$FFFF
+
+preset_prkd20_maridia_mt_everest:
+    dw #preset_pkrd_maridia_mt_everest
+    dw $09C2, $00C1  ; Health
+    dw $09C4, $012B  ; Max health
+    dw $09C6, $000D  ; Missiles
+    dw $09CA, $0009  ; Supers
+    dw $09CE, $0005  ; Pbs
+    dw $D874, $0504  ; Items
+    dw $D8B8, $2EEC  ; Doors
+    dw #$FFFF
+
+preset_kpdr23_maridia_lower_maridia_gate:
+    dw #preset_kpdr23_maridia_sewers
+    dw $078D, $A528  ; DDB
+    dw $079B, $D21C  ; MDB
+    dw $090F, $8000  ; Screen subpixel X position
+    dw $0913, $5C00  ; Screen subpixel Y position
+    dw $0915, $0100  ; Screen Y position in pixels
+    dw $0919, $0100  ; Layer 2 Y position
+    dw $09C2, $0112  ; Health
+    dw $09CE, $0005  ; Pbs
+    dw $0AF6, $002E  ; Samus X
+    dw #$FFFF
+
+preset_kpdr25_maridia_sewers:
+    dw #preset_kpdr25_maridia_toilet
+    dw $078D, $A600  ; DDB
+    dw $079B, $D48E  ; MDB
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $3000  ; Screen subpixel Y position
+    dw $0915, $011C  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $00D5  ; Layer 2 Y position
+    dw $0AF6, $00BB  ; Samus X
+    dw $0AFA, $018B  ; Samus Y
+    dw #$FFFF
+
+preset_pkrd_tourian_metroids_1:
+    dw #preset_pkrd_tourian_tourian_elevator_room
+    dw $090F, $0001  ; Screen subpixel X position
+    dw $0913, $D3FF  ; Screen subpixel Y position
+    dw $0915, $0300  ; Screen Y position in pixels
+    dw $0919, $0240  ; Layer 2 Y position
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0041  ; Samus X
+    dw $0AFA, $038B  ; Samus Y
     dw #$FFFF
 
 preset_suitless_maridia_cleanup_2_plasma:
@@ -36227,318 +36346,6 @@ preset_100early_maridia_postdraygon_kassiuz_room:
     dw $D8C2, $CC28  ; Doors
     dw #$FFFF
 
-preset_pkrd_backtracking_terminator_revisit:
-    dw #preset_pkrd_backtracking_parlor_return
-    dw $078D, $8916  ; DDB
-    dw $079B, $92FD  ; MDB
-    dw $07F3, $0009  ; Music Bank
-    dw $090F, $C000  ; Screen subpixel X position
-    dw $0911, $0100  ; Screen X position in pixels
-    dw $0913, $3C00  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0917, $00C0  ; Layer 2 X position
-    dw $0A1C, $0072  ; Samus position/state
-    dw $0A1E, $0504  ; More position/state
-    dw $0AF6, $010C  ; Samus X
-    dw $0AFA, $0090  ; Samus Y
-    dw #$FFFF
-
-preset_kpdr23_maridia_toilet:
-    dw #preset_kpdr23_maridia_plasma_spark_revisit
-    dw $078D, $A5D0  ; DDB
-    dw $079B, $D340  ; MDB
-    dw $0911, $002E  ; Screen X position in pixels
-    dw $0913, $0800  ; Screen subpixel Y position
-    dw $0915, $021F  ; Screen Y position in pixels
-    dw $0917, $0028  ; Layer 2 X position
-    dw $0919, $021F  ; Layer 2 Y position
-    dw $09C2, $00A9  ; Health
-    dw $09CA, $0009  ; Supers
-    dw $0AF6, $00A3  ; Samus X
-    dw $0AFA, $02AB  ; Samus Y
-    dw $D8C2, $DC1A  ; Doors
-    dw #$FFFF
-
-preset_phantoonfirst_lower_norfair_business_center_final:
-    dw #preset_phantoonfirst_lower_norfair_frog_speedway
-    dw $078D, $97DA  ; DDB
-    dw $079B, $B167  ; MDB
-    dw $090F, $9000  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $1800  ; Screen subpixel Y position
-    dw $0917, $0000  ; Layer 2 X position
-    dw $0AF6, $0032  ; Samus X
-    dw #$FFFF
-
-preset_phantoonfirst_kraid_entering_kraids_lair:
-    dw #preset_prkd19_kraid_entering_kraids_lair
-    dw $0AF8, $FFFF  ; Samus subpixel X
-    dw $0F78, $0C7F  ; Safeties enabled
-    dw $0F86, $003C  ; Safeties energy adjustment
-    dw $0F96, $0039  ; Safeties energy adjustment
-    dw $0FC0, $002D  ; Safeties reserves adjustment
-    dw $1006, $0006  ; Safeties missiles adjustment
-    dw $1046, $0005  ; Safeties supers adjustment
-    dw $1086, $0001  ; Safeties power bombs adjustment
-    dw #$FFFF
-
-preset_phantoonfirst_kraid_kraid_kihunters:
-    dw #preset_prkd19_kraid_kraid_kihunters
-    dw $0AF8, $FFFF  ; Samus subpixel X
-    dw $0F78, $0C7F  ; Safeties enabled
-    dw $0F86, $003C  ; Safeties energy adjustment
-    dw $0F96, $0039  ; Safeties energy adjustment
-    dw $0FC0, $002D  ; Safeties reserves adjustment
-    dw $1006, $0006  ; Safeties missiles adjustment
-    dw $1046, $0005  ; Safeties supers adjustment
-    dw $1086, $0001  ; Safeties power bombs adjustment
-    dw #$FFFF
-
-preset_prkd19_maridia_crab_shaft:
-    dw #preset_prkd20_maridia_crab_shaft
-    dw $09C8, $000F  ; Max missiles
-    dw $0AF8, $D000  ; Samus subpixel X
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_prkd19_maridia_aqueduct:
-    dw #preset_prkd20_maridia_aqueduct
-    dw $09C8, $000F  ; Max missiles
-    dw $0AF8, $D000  ; Samus subpixel X
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_prkd19_maridia_botwoon_hallway:
-    dw #preset_prkd20_maridia_botwoon_hallway
-    dw $09C8, $000F  ; Max missiles
-    dw $0AF8, $D000  ; Samus subpixel X
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_prkd19_maridia_botwoon:
-    dw #preset_prkd20_maridia_botwoon
-    dw $09C8, $000F  ; Max missiles
-    dw $0AF8, $D000  ; Samus subpixel X
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_prkd19_maridia_botwoon_etank:
-    dw #preset_prkd20_maridia_botwoon_etank
-    dw $09C6, $0009  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $0AF8, $D000  ; Samus subpixel X
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_prkd19_maridia_halfie_setup:
-    dw #preset_prkd20_maridia_halfie_setup
-    dw $09C6, $000F  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $0AF8, $D000  ; Samus subpixel X
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_prkd19_maridia_draygon:
-    dw #preset_prkd20_maridia_draygon
-    dw $09C6, $000F  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $0AF8, $D000  ; Samus subpixel X
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_prkd20_maridia_reverse_colosseum:
-    dw #preset_prkd20_maridia_spikesuit_reverse_halfie
-    dw $0A68, $0000  ; Flash suit
-    dw #$FFFF
-
-preset_prkd20_maridia_reverse_halfie_climb:
-    dw #preset_pkrd_maridia_reverse_halfie_climb
-    dw $09C4, $018F  ; Max health
-    dw $09CE, $0005  ; Pbs
-    dw $D874, $0504  ; Items
-    dw $D8B8, $2EEC  ; Doors
-    dw #$FFFF
-
-preset_prkd20_maridia_reverse_botwoon_etank:
-    dw #preset_pkrd_maridia_reverse_botwoon_etank
-    dw $09C4, $018F  ; Max health
-    dw $09CE, $0005  ; Pbs
-    dw $D874, $0504  ; Items
-    dw $D8B8, $2EEC  ; Doors
-    dw #$FFFF
-
-preset_prkd20_maridia_reverse_botwoon_hallway:
-    dw #preset_pkrd_maridia_reverse_botwoon_hallway
-    dw $09C4, $018F  ; Max health
-    dw $09CE, $0005  ; Pbs
-    dw $D874, $0504  ; Items
-    dw $D8B8, $2EEC  ; Doors
-    dw #$FFFF
-
-preset_prkd20_maridia_reverse_crab_shaft:
-    dw #preset_pkrd_maridia_reverse_crab_shaft
-    dw $09C4, $018F  ; Max health
-    dw $09CE, $0005  ; Pbs
-    dw $D874, $0504  ; Items
-    dw $D8B8, $2EEC  ; Doors
-    dw #$FFFF
-
-preset_prkd19_maridia_spikesuit_reverse_halfie:
-    dw #preset_prkd20_maridia_spikesuit_reverse_halfie
-    dw $09C6, $000A  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $0AF8, $D000  ; Samus subpixel X
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr_maridia_botwoon_etank:
-    dw #preset_kpdr_maridia_botwoon
-    dw $078D, $A774  ; DDB
-    dw $079B, $D95E  ; MDB
-    dw $07F3, $002A  ; Music Bank
-    dw $07F5, $0003  ; Music Track
-    dw $090F, $4000  ; Screen subpixel X position
-    dw $0911, $0100  ; Screen X position in pixels
-    dw $0913, $C000  ; Screen subpixel Y position
-    dw $0917, $0100  ; Layer 2 X position
-    dw $09C2, $0065  ; Health
-    dw $09C6, $000F  ; Missiles
-    dw $09CA, $0003  ; Supers
-    dw $09CE, $0002  ; Pbs
-    dw $0AF6, $01C6  ; Samus X
-    dw $101C, $0000  ; Safeties missiles adjustment
-    dw $105A, $0000  ; Safeties supers adjustment
-    dw $11DA, $FFEC  ; Safeties refill
-    dw $11DC, $FFD9  ; Safeties refill
-    dw $D82C, $0002  ; Bosses
-    dw #$FFFF
-
-preset_kpdr_maridia_halfie_setup:
-    dw #preset_kpdr20_maridia_halfie_setup
-    dw $0F78, $D27B  ; Safeties enabled
-    dw $0F7A, $0007  ; Safeties enabled
-    dw $1008, $FFFE  ; Safeties missiles adjustment
-    dw $1012, $FFFE  ; Safeties missiles adjustment
-    dw $1118, $0006  ; Safeties unequip beams
-    dw $1120, $0006  ; Safeties unequip beams
-    dw $1180, $0005  ; Safeties stage
-    dw $D876, $0121  ; Items
-    dw $D878, $001C  ; Items
-    dw $D8B0, $3000  ; Doors
-    dw $D8B8, $26EC  ; Doors
-    dw #$FFFF
-
-preset_kpdr_maridia_draygon:
-    dw #preset_kpdr20_maridia_draygon
-    dw $0F78, $D27B  ; Safeties enabled
-    dw $0F7A, $000F  ; Safeties enabled
-    dw $0FA6, $0046  ; Safeties energy adjustment
-    dw $1008, $FFFE  ; Safeties missiles adjustment
-    dw $1012, $FFFE  ; Safeties missiles adjustment
-    dw $1118, $0006  ; Safeties unequip beams
-    dw $1120, $0006  ; Safeties unequip beams
-    dw $1180, $0005  ; Safeties stage
-    dw $D876, $0121  ; Items
-    dw $D878, $001C  ; Items
-    dw $D8B0, $3000  ; Doors
-    dw $D8B8, $26EC  ; Doors
-    dw #$FFFF
-
-preset_kpdr_maridia_reverse_halfie_spikesuit:
-    dw #preset_kpdr20_maridia_reverse_halfie_spikesuit
-    dw $0F78, $D27B  ; Safeties enabled
-    dw $0F7A, $001F  ; Safeties enabled
-    dw $0FA6, $0046  ; Safeties energy adjustment
-    dw $0FA8, $0028  ; Safeties energy adjustment
-    dw $1118, $0006  ; Safeties unequip beams
-    dw $1120, $0006  ; Safeties unequip beams
-    dw $1180, $0006  ; Safeties stage
-    dw $D876, $0121  ; Items
-    dw $D878, $001C  ; Items
-    dw $D8B0, $3000  ; Doors
-    dw $D8B8, $26EC  ; Doors
-    dw #$FFFF
-
-preset_prkd20_maridia_mt_everest_revisit:
-    dw #preset_pkrd_maridia_mt_everest_revisit
-    dw $09C4, $018F  ; Max health
-    dw $09CE, $0005  ; Pbs
-    dw $D874, $0504  ; Items
-    dw $D8B8, $2EEC  ; Doors
-    dw #$FFFF
-
-preset_prkd20_backtracking_red_brinstar_green_gate:
-    dw #preset_pkrd_backtracking_red_brinstar_green_gate
-    dw $09C4, $018F  ; Max health
-    dw $09CE, $0005  ; Pbs
-    dw $D874, $0504  ; Items
-    dw $D8B8, $2EEC  ; Doors
-    dw #$FFFF
-
-preset_prkd20_backtracking_crateria_kihunters_final:
-    dw #preset_pkrd_backtracking_crateria_kihunters_final
-    dw $09C4, $018F  ; Max health
-    dw $09CE, $0005  ; Pbs
-    dw $D874, $0504  ; Items
-    dw $D8B8, $2EEC  ; Doors
-    dw #$FFFF
-
-preset_kpdr20_maridia_plasma_spark:
-    dw #preset_kpdr21_maridia_plasma_spark
-    dw $09C6, $000A  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr21_maridia_plasma_climb:
-    dw #preset_kpdr22_maridia_plasma_climb
-    dw $09C2, $004A  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0104  ; Items
-    dw $D8B6, $3008  ; Doors
-    dw $D8B8, $26ED  ; Doors
-    dw #$FFFF
-
-preset_kpdr21_maridia_plasma_beam:
-    dw #preset_kpdr22_maridia_plasma_beam
-    dw $09C2, $004A  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0104  ; Items
-    dw $D8B6, $3008  ; Doors
-    dw $D8B8, $26ED  ; Doors
-    dw #$FFFF
-
-preset_kpdr21_maridia_plasma_spark_revisit:
-    dw #preset_kpdr22_maridia_plasma_spark_revisit
-    dw $09C2, $00A4  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0104  ; Items
-    dw $D8B6, $3008  ; Doors
-    dw $D8B8, $26ED  ; Doors
-    dw #$FFFF
-
-preset_prkd20_backtracking_parlor_return:
-    dw #preset_pkrd_backtracking_parlor_return
-    dw $09C4, $018F  ; Max health
-    dw $09CE, $0005  ; Pbs
-    dw $D874, $0504  ; Items
-    dw $D8B8, $2EEC  ; Doors
-    dw #$FFFF
-
-preset_pkrd_backtracking_green_pirate_shaft_revisit:
-    dw #preset_pkrd_backtracking_parlor_return
-    dw $078D, $895E  ; DDB
-    dw $079B, $990D  ; MDB
-    dw $07F3, $0009  ; Music Bank
-    dw $090F, $DE80  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
-    dw $0915, $01FB  ; Screen Y position in pixels
-    dw $0917, $0000  ; Layer 2 X position
-    dw $0919, $017C  ; Layer 2 Y position
-    dw $0AF6, $0062  ; Samus X
-    dw $0AFA, $029B  ; Samus Y
-    dw #$FFFF
-
 preset_gtmax_wrecked_ship_moat:
     dw #preset_gtmax_wrecked_ship_crateria_kihunters
     dw $078D, $8AF6  ; DDB
@@ -36556,6 +36363,197 @@ preset_gtmax_wrecked_ship_moat:
     dw $0AF6, $02AD  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw $D8B0, $2000  ; Doors
+    dw #$FFFF
+
+preset_prkd20_maridia_crab_shaft:
+    dw #preset_prkd20_maridia_mt_everest
+    dw $090F, $6000  ; Screen subpixel X position
+    dw $0911, $0500  ; Screen X position in pixels
+    dw $0913, $9C01  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $03C0  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09C2, $0086  ; Health
+    dw $0A1C, $0089  ; Samus position/state
+    dw $0A1E, $1508  ; More position/state
+    dw $0AF6, $05DB  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw #$FFFF
+
+preset_prkd20_maridia_aqueduct:
+    dw #preset_pkrd_maridia_aqueduct
+    dw $09C2, $0086  ; Health
+    dw $09C4, $012B  ; Max health
+    dw $09C6, $000D  ; Missiles
+    dw $09CA, $0009  ; Supers
+    dw $09CE, $0005  ; Pbs
+    dw $D874, $0504  ; Items
+    dw $D8B8, $2EEC  ; Doors
+    dw #$FFFF
+
+preset_prkd20_maridia_botwoon_hallway:
+    dw #preset_pkrd_maridia_botwoon_hallway
+    dw $09C2, $0086  ; Health
+    dw $09C4, $012B  ; Max health
+    dw $09C6, $000D  ; Missiles
+    dw $09CA, $0008  ; Supers
+    dw $09CE, $0004  ; Pbs
+    dw $D874, $0504  ; Items
+    dw $D8B8, $2EEC  ; Doors
+    dw #$FFFF
+
+preset_prkd20_maridia_botwoon:
+    dw #preset_pkrd_maridia_botwoon
+    dw $090F, $A000  ; Screen subpixel X position
+    dw $0911, $02FF  ; Screen X position in pixels
+    dw $0913, $C800  ; Screen subpixel Y position
+    dw $0917, $023F  ; Layer 2 X position
+    dw $09C2, $0086  ; Health
+    dw $09C4, $012B  ; Max health
+    dw $09C6, $000D  ; Missiles
+    dw $09CA, $0008  ; Supers
+    dw $09CE, $0004  ; Pbs
+    dw $0AF6, $039D  ; Samus X
+    dw $D874, $0504  ; Items
+    dw $D8B8, $2EEC  ; Doors
+    dw #$FFFF
+
+preset_prkd20_maridia_botwoon_etank:
+    dw #preset_pkrd_maridia_botwoon_etank
+    dw $090F, $8000  ; Screen subpixel X position
+    dw $0913, $7800  ; Screen subpixel Y position
+    dw $09C2, $00C0  ; Health
+    dw $09C4, $012B  ; Max health
+    dw $09C6, $000E  ; Missiles
+    dw $09CE, $0005  ; Pbs
+    dw $0AF6, $01C5  ; Samus X
+    dw $D874, $0504  ; Items
+    dw $D8B8, $2EEC  ; Doors
+    dw #$FFFF
+
+preset_prkd20_maridia_halfie_setup:
+    dw #preset_pkrd_maridia_halfie_setup
+    dw $090F, $B000  ; Screen subpixel X position
+    dw $0913, $8000  ; Screen subpixel Y position
+    dw $09C2, $018F  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $09C6, $0010  ; Missiles
+    dw $09CA, $0004  ; Supers
+    dw $09CE, $0005  ; Pbs
+    dw $0AF6, $0099  ; Samus X
+    dw $D874, $0504  ; Items
+    dw $D8B8, $2EEC  ; Doors
+    dw #$FFFF
+
+preset_prkd20_maridia_draygon:
+    dw #preset_pkrd_maridia_draygon
+    dw $090F, $5000  ; Screen subpixel X position
+    dw $0913, $0800  ; Screen subpixel Y position
+    dw $09C2, $0110  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $09CA, $0002  ; Supers
+    dw $09CE, $0005  ; Pbs
+    dw $D874, $0504  ; Items
+    dw $D8B8, $2EEC  ; Doors
+    dw #$FFFF
+
+preset_prkd20_maridia_spikesuit_reverse_halfie:
+    dw #preset_pkrd_maridia_spikesuit_reverse_halfie
+    dw $090F, $1000  ; Screen subpixel X position
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $09C4, $018F  ; Max health
+    dw $09CE, $0005  ; Pbs
+    dw $D874, $0504  ; Items
+    dw $D8B8, $2EEC  ; Doors
+    dw #$FFFF
+
+preset_kpdr_maridia_botwoon:
+    dw #preset_kpdr_maridia_botwoon_hallway
+    dw $078D, $A72C  ; DDB
+    dw $079B, $D617  ; MDB
+    dw $090F, $DFFF  ; Screen subpixel X position
+    dw $0911, $0300  ; Screen X position in pixels
+    dw $0913, $5800  ; Screen subpixel Y position
+    dw $0917, $0240  ; Layer 2 X position
+    dw $09D2, $0000  ; Currently selected item
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $03A4  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw #$FFFF
+
+preset_phantoonfirst_kraid_kraid_etank:
+    dw #preset_phantoonfirst_kraid_kraid_kihunters_revisit
+    dw $078D, $916E  ; DDB
+    dw $079B, $A471  ; MDB
+    dw $07F3, $0012  ; Music Bank
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $9000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $5800  ; Screen subpixel Y position
+    dw $0915, $011B  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $011B  ; Layer 2 Y position
+    dw $0AF6, $0057  ; Samus X
+    dw $0AFA, $018B  ; Samus Y
+    dw $D8B8, $2EED  ; Doors
+    dw #$FFFF
+
+preset_prkd19_maridia_maridia_tube_revisit:
+    dw #preset_prkd20_maridia_maridia_tube_revisit
+    dw $09C8, $000F  ; Max missiles
+    dw $0AF8, $D000  ; Samus subpixel X
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_prkd19_maridia_fish_tank:
+    dw #preset_prkd20_maridia_fish_tank
+    dw $09C8, $000F  ; Max missiles
+    dw $0AF8, $D000  ; Samus subpixel X
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_prkd19_maridia_mt_everest:
+    dw #preset_prkd20_maridia_mt_everest
+    dw $09C8, $000F  ; Max missiles
+    dw $0AF8, $D000  ; Samus subpixel X
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_pkrd_tourian_metroids_2:
+    dw #preset_pkrd_tourian_metroids_1
+    dw $078D, $A984  ; DDB
+    dw $079B, $DAE1  ; MDB
+    dw $090F, $6000  ; Screen subpixel X position
+    dw $0911, $0119  ; Screen X position in pixels
+    dw $0913, $A400  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $00D2  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09C2, $006B  ; Health
+    dw $09C6, $0014  ; Missiles
+    dw $09CA, $0006  ; Supers
+    dw $0AF6, $0197  ; Samus X
+    dw $0AFA, $00AB  ; Samus Y
+    dw $D822, $0021  ; Events
+    dw #$FFFF
+
+preset_pkrd_tourian_metroids_3:
+    dw #preset_pkrd_tourian_tourian_elevator_room
+    dw $078D, $A9B4  ; DDB
+    dw $079B, $DB31  ; MDB
+    dw $090F, $EFFF  ; Screen subpixel X position
+    dw $0915, $0117  ; Screen Y position in pixels
+    dw $0919, $00D1  ; Layer 2 Y position
+    dw $09C2, $00D4  ; Health
+    dw $09C6, $0014  ; Missiles
+    dw $09CA, $0007  ; Supers
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $00C0  ; Samus X
+    dw $0AFA, $018B  ; Samus Y
+    dw $D822, $0023  ; Events
+    dw $D8C4, $0003  ; Doors
     dw #$FFFF
 
 preset_suitless_maridia_cleanup_2_kassiuz_room_down:
@@ -36680,260 +36678,6 @@ preset_100early_maridia_postdraygon_leaving_plasma:
     dw $D8C2, $CC2A  ; Doors
     dw #$FFFF
 
-preset_prkd20_backtracking_terminator_revisit:
-    dw #preset_pkrd_backtracking_terminator_revisit
-    dw $09C4, $018F  ; Max health
-    dw $09CE, $0005  ; Pbs
-    dw $D874, $0504  ; Items
-    dw $D8B8, $2EEC  ; Doors
-    dw #$FFFF
-
-preset_kpdr22_maridia_toilet:
-    dw #preset_kpdr23_maridia_toilet
-    dw $09A8, $1009  ; Collected Beams
-    dw #$FFFF
-
-preset_kpdr23_maridia_sewers:
-    dw #preset_kpdr23_maridia_toilet
-    dw $078D, $A600  ; DDB
-    dw $079B, $D48E  ; MDB
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $3000  ; Screen subpixel Y position
-    dw $0915, $011C  ; Screen Y position in pixels
-    dw $0917, $0000  ; Layer 2 X position
-    dw $0919, $00D5  ; Layer 2 Y position
-    dw $0AF6, $00BB  ; Samus X
-    dw $0AFA, $018B  ; Samus Y
-    dw #$FFFF
-
-preset_kpdr25_maridia_toilet:
-    dw #preset_kpdr23_maridia_toilet
-    dw $09A6, $100B  ; Equipped Beams
-    dw $09A8, $100F  ; Collected Beams
-    dw $09C2, $01C0  ; Health
-    dw $09C6, $0009  ; Missiles
-    dw $09C8, $0019  ; Max missiles
-    dw $09CA, $0005  ; Supers
-    dw $09CE, $0005  ; Pbs
-    dw $D870, $0190  ; Items
-    dw $D876, $01A5  ; Items
-    dw $D8B8, $2EEF  ; Doors
-    dw #$FFFF
-
-preset_phantoonfirst_kraid_minikraid:
-    dw #preset_phantoonfirst_kraid_kraid_kihunters
-    dw $078D, $9156  ; DDB
-    dw $079B, $A4DA  ; MDB
-    dw $090F, $7000  ; Screen subpixel X position
-    dw $0913, $EBFF  ; Screen subpixel Y position
-    dw $0915, $00FA  ; Screen Y position in pixels
-    dw $0919, $00FA  ; Layer 2 Y position
-    dw #$FFFF
-
-preset_phantoonfirst_kraid_kraid:
-    dw #preset_prkd19_kraid_kraid
-    dw $0AF8, $FFFF  ; Samus subpixel X
-    dw $0F78, $0C7F  ; Safeties enabled
-    dw $0F86, $003C  ; Safeties energy adjustment
-    dw $0F96, $0039  ; Safeties energy adjustment
-    dw $0FC0, $002D  ; Safeties reserves adjustment
-    dw $1006, $0006  ; Safeties missiles adjustment
-    dw $1046, $0005  ; Safeties supers adjustment
-    dw $1086, $0001  ; Safeties power bombs adjustment
-    dw #$FFFF
-
-preset_phantoonfirst_kraid_leaving_varia:
-    dw #preset_prkd19_kraid_leaving_varia
-    dw $0AF8, $FFFF  ; Samus subpixel X
-    dw $0F78, $0C7F  ; Safeties enabled
-    dw $0F86, $003C  ; Safeties energy adjustment
-    dw $0F96, $0039  ; Safeties energy adjustment
-    dw $0FC0, $002D  ; Safeties reserves adjustment
-    dw $1006, $0006  ; Safeties missiles adjustment
-    dw $1046, $0005  ; Safeties supers adjustment
-    dw $1086, $0001  ; Safeties power bombs adjustment
-    dw #$FFFF
-
-preset_phantoonfirst_kraid_minikraid_revisit:
-    dw #preset_prkd19_kraid_minikraid_revisit
-    dw $0AF8, $FFFF  ; Samus subpixel X
-    dw $0F78, $0C7F  ; Safeties enabled
-    dw $0F86, $003C  ; Safeties energy adjustment
-    dw $0F96, $0039  ; Safeties energy adjustment
-    dw $0FC0, $002D  ; Safeties reserves adjustment
-    dw $1006, $0006  ; Safeties missiles adjustment
-    dw $1046, $0005  ; Safeties supers adjustment
-    dw $1086, $0001  ; Safeties power bombs adjustment
-    dw #$FFFF
-
-preset_phantoonfirst_kraid_kraid_kihunters_revisit:
-    dw #preset_prkd19_kraid_kraid_kihunters_revisit
-    dw $0AF8, $FFFF  ; Samus subpixel X
-    dw $0F78, $0C7F  ; Safeties enabled
-    dw $0F7C, $0008  ; Safeties adjust only
-    dw $0F86, $003C  ; Safeties energy adjustment
-    dw $0F96, $0039  ; Safeties energy adjustment
-    dw $0FC0, $002D  ; Safeties reserves adjustment
-    dw $1006, $0006  ; Safeties missiles adjustment
-    dw $1046, $0005  ; Safeties supers adjustment
-    dw $1086, $0001  ; Safeties power bombs adjustment
-    dw #$FFFF
-
-preset_prkd19_maridia_reverse_colosseum:
-    dw #preset_prkd19_maridia_spikesuit_reverse_halfie
-    dw $0A68, $0000  ; Flash suit
-    dw #$FFFF
-
-preset_prkd20_backtracking_green_pirate_shaft_revisit:
-    dw #preset_pkrd_backtracking_green_pirate_shaft_revisit
-    dw $09C4, $018F  ; Max health
-    dw $09CE, $0005  ; Pbs
-    dw $D874, $0504  ; Items
-    dw $D8B8, $2EEC  ; Doors
-    dw #$FFFF
-
-preset_prkd19_maridia_reverse_halfie_climb:
-    dw #preset_prkd20_maridia_reverse_halfie_climb
-    dw $09C6, $000A  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $0AF8, $D000  ; Samus subpixel X
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_prkd19_maridia_reverse_botwoon_etank:
-    dw #preset_prkd20_maridia_reverse_botwoon_etank
-    dw $09C6, $000A  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $0AF8, $D000  ; Samus subpixel X
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_prkd19_maridia_reverse_botwoon_hallway:
-    dw #preset_prkd20_maridia_reverse_botwoon_hallway
-    dw $09C6, $000A  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $0AF8, $D000  ; Samus subpixel X
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_prkd19_maridia_reverse_crab_shaft:
-    dw #preset_prkd20_maridia_reverse_crab_shaft
-    dw $09C6, $000A  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $0AF8, $D000  ; Samus subpixel X
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr_maridia_whomple_jump:
-    dw #preset_kpdr_maridia_reverse_halfie_spikesuit
-    dw $0A68, $0000  ; Flash suit
-    dw #$FFFF
-
-preset_prkd19_maridia_mt_everest_revisit:
-    dw #preset_prkd20_maridia_mt_everest_revisit
-    dw $09C6, $000A  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $0AF8, $D000  ; Samus subpixel X
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_prkd19_backtracking_red_brinstar_green_gate:
-    dw #preset_prkd20_backtracking_red_brinstar_green_gate
-    dw $09C6, $000B  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $0AF8, $D000  ; Samus subpixel X
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_prkd19_backtracking_crateria_kihunters_final:
-    dw #preset_prkd20_backtracking_crateria_kihunters_final
-    dw $09C6, $000B  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $0AF8, $D000  ; Samus subpixel X
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr20_maridia_plasma_climb:
-    dw #preset_kpdr21_maridia_plasma_climb
-    dw $09C6, $000A  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr20_maridia_plasma_beam:
-    dw #preset_kpdr21_maridia_plasma_beam
-    dw $09C6, $000A  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr20_maridia_plasma_spark_revisit:
-    dw #preset_kpdr21_maridia_plasma_spark_revisit
-    dw $09C6, $000F  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_prkd19_backtracking_parlor_return:
-    dw #preset_prkd20_backtracking_parlor_return
-    dw $09C6, $0009  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $0AF8, $D000  ; Samus subpixel X
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_pkrd_backtracking_g4_hallway:
-    dw #preset_pkrd_backtracking_green_pirate_shaft_revisit
-    dw $078D, $8BE6  ; DDB
-    dw $079B, $99BD  ; MDB
-    dw $090F, $7FFF  ; Screen subpixel X position
-    dw $0913, $E400  ; Screen subpixel Y position
-    dw $0915, $0600  ; Screen Y position in pixels
-    dw $0917, $0001  ; Layer 2 X position
-    dw $0919, $0480  ; Layer 2 Y position
-    dw $09CA, $0004  ; Supers
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $00C2  ; Samus X
-    dw $0AFA, $068B  ; Samus Y
-    dw $D8B2, $6C01  ; Doors
-    dw #$FFFF
-
-preset_pkrd_backtracking_g4_elevator:
-    dw #preset_pkrd_backtracking_green_pirate_shaft_revisit
-    dw $078D, $91F2  ; DDB
-    dw $079B, $A66A  ; MDB
-    dw $07F5, $0006  ; Music Track
-    dw $090F, $7000  ; Screen subpixel X position
-    dw $0913, $7000  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $09CA, $0004  ; Supers
-    dw $0AF6, $0049  ; Samus X
-    dw $0AFA, $009B  ; Samus Y
-    dw $D820, $0BC1  ; Events
-    dw $D8B2, $6C01  ; Doors
-    dw #$FFFF
-
-preset_pkrd_tourian_tourian_elevator_room:
-    dw #preset_pkrd_backtracking_crateria_kihunters_final
-    dw $078D, $9222  ; DDB
-    dw $079B, $DAAE  ; MDB
-    dw $07F3, $001E  ; Music Bank
-    dw $07F5, $0005  ; Music Track
-    dw $090F, $9FFF  ; Screen subpixel X position
-    dw $0915, $0238  ; Screen Y position in pixels
-    dw $0919, $01AA  ; Layer 2 Y position
-    dw $09A6, $1007  ; Equipped Beams
-    dw $09C6, $0010  ; Missiles
-    dw $09CA, $0004  ; Supers
-    dw $0AFA, $02A8  ; Samus Y
-    dw $D820, $0FC1  ; Events
-    dw $D8B2, $6C01  ; Doors
-    dw $D90C, $0100  ; Map Stations
-    dw #$FFFF
-
 preset_gtmax_wrecked_ship_ocean:
     dw #preset_gtmax_wrecked_ship_moat
     dw $078D, $8A36  ; DDB
@@ -36946,6 +36690,280 @@ preset_gtmax_wrecked_ship_ocean:
     dw $09C8, $00E6  ; Max missiles
     dw $0AF6, $01A9  ; Samus X
     dw $D870, $0090  ; Items
+    dw #$FFFF
+
+preset_prkd19_maridia_crab_shaft:
+    dw #preset_prkd20_maridia_crab_shaft
+    dw $09C8, $000F  ; Max missiles
+    dw $0AF8, $D000  ; Samus subpixel X
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_prkd19_maridia_aqueduct:
+    dw #preset_prkd20_maridia_aqueduct
+    dw $09C8, $000F  ; Max missiles
+    dw $0AF8, $D000  ; Samus subpixel X
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_prkd19_maridia_botwoon_hallway:
+    dw #preset_prkd20_maridia_botwoon_hallway
+    dw $09C8, $000F  ; Max missiles
+    dw $0AF8, $D000  ; Samus subpixel X
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_prkd19_maridia_botwoon:
+    dw #preset_prkd20_maridia_botwoon
+    dw $09C8, $000F  ; Max missiles
+    dw $0AF8, $D000  ; Samus subpixel X
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr20_maridia_toilet:
+    dw #preset_kpdr21_maridia_toilet
+    dw $09C6, $000F  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_prkd19_maridia_botwoon_etank:
+    dw #preset_prkd20_maridia_botwoon_etank
+    dw $09C6, $0009  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $0AF8, $D000  ; Samus subpixel X
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_prkd19_maridia_halfie_setup:
+    dw #preset_prkd20_maridia_halfie_setup
+    dw $09C6, $000F  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $0AF8, $D000  ; Samus subpixel X
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_prkd19_maridia_draygon:
+    dw #preset_prkd20_maridia_draygon
+    dw $09C6, $000F  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $0AF8, $D000  ; Samus subpixel X
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_prkd20_maridia_reverse_colosseum:
+    dw #preset_prkd20_maridia_spikesuit_reverse_halfie
+    dw $0A68, $0000  ; Flash suit
+    dw #$FFFF
+
+preset_prkd20_maridia_reverse_halfie_climb:
+    dw #preset_pkrd_maridia_reverse_halfie_climb
+    dw $09C4, $018F  ; Max health
+    dw $09CE, $0005  ; Pbs
+    dw $D874, $0504  ; Items
+    dw $D8B8, $2EEC  ; Doors
+    dw #$FFFF
+
+preset_prkd20_maridia_reverse_botwoon_etank:
+    dw #preset_pkrd_maridia_reverse_botwoon_etank
+    dw $09C4, $018F  ; Max health
+    dw $09CE, $0005  ; Pbs
+    dw $D874, $0504  ; Items
+    dw $D8B8, $2EEC  ; Doors
+    dw #$FFFF
+
+preset_prkd20_maridia_reverse_botwoon_hallway:
+    dw #preset_pkrd_maridia_reverse_botwoon_hallway
+    dw $09C4, $018F  ; Max health
+    dw $09CE, $0005  ; Pbs
+    dw $D874, $0504  ; Items
+    dw $D8B8, $2EEC  ; Doors
+    dw #$FFFF
+
+preset_prkd20_maridia_reverse_crab_shaft:
+    dw #preset_pkrd_maridia_reverse_crab_shaft
+    dw $09C4, $018F  ; Max health
+    dw $09CE, $0005  ; Pbs
+    dw $D874, $0504  ; Items
+    dw $D8B8, $2EEC  ; Doors
+    dw #$FFFF
+
+preset_prkd20_maridia_mt_everest_revisit:
+    dw #preset_pkrd_maridia_mt_everest_revisit
+    dw $09C4, $018F  ; Max health
+    dw $09CE, $0005  ; Pbs
+    dw $D874, $0504  ; Items
+    dw $D8B8, $2EEC  ; Doors
+    dw #$FFFF
+
+preset_prkd20_backtracking_red_brinstar_green_gate:
+    dw #preset_pkrd_backtracking_red_brinstar_green_gate
+    dw $09C4, $018F  ; Max health
+    dw $09CE, $0005  ; Pbs
+    dw $D874, $0504  ; Items
+    dw $D8B8, $2EEC  ; Doors
+    dw #$FFFF
+
+preset_prkd20_backtracking_crateria_kihunters_final:
+    dw #preset_pkrd_backtracking_crateria_kihunters_final
+    dw $09C4, $018F  ; Max health
+    dw $09CE, $0005  ; Pbs
+    dw $D874, $0504  ; Items
+    dw $D8B8, $2EEC  ; Doors
+    dw #$FFFF
+
+preset_prkd20_backtracking_parlor_return:
+    dw #preset_pkrd_backtracking_parlor_return
+    dw $09C4, $018F  ; Max health
+    dw $09CE, $0005  ; Pbs
+    dw $D874, $0504  ; Items
+    dw $D8B8, $2EEC  ; Doors
+    dw #$FFFF
+
+preset_prkd20_backtracking_terminator_revisit:
+    dw #preset_pkrd_backtracking_terminator_revisit
+    dw $09C4, $018F  ; Max health
+    dw $09CE, $0005  ; Pbs
+    dw $D874, $0504  ; Items
+    dw $D8B8, $2EEC  ; Doors
+    dw #$FFFF
+
+preset_prkd20_backtracking_green_pirate_shaft_revisit:
+    dw #preset_pkrd_backtracking_green_pirate_shaft_revisit
+    dw $09C4, $018F  ; Max health
+    dw $09CE, $0005  ; Pbs
+    dw $D874, $0504  ; Items
+    dw $D8B8, $2EEC  ; Doors
+    dw #$FFFF
+
+preset_prkd20_backtracking_g4_hallway:
+    dw #preset_pkrd_backtracking_g4_hallway
+    dw $09C4, $018F  ; Max health
+    dw $09CE, $0005  ; Pbs
+    dw $D874, $0504  ; Items
+    dw $D8B8, $2EEC  ; Doors
+    dw #$FFFF
+
+preset_prkd20_backtracking_g4_elevator:
+    dw #preset_pkrd_backtracking_g4_elevator
+    dw $09C4, $018F  ; Max health
+    dw $09CE, $0005  ; Pbs
+    dw $D874, $0504  ; Items
+    dw $D8B8, $2EEC  ; Doors
+    dw #$FFFF
+
+preset_prkd20_tourian_tourian_elevator_room:
+    dw #preset_pkrd_tourian_tourian_elevator_room
+    dw $09C4, $018F  ; Max health
+    dw $09CE, $0005  ; Pbs
+    dw $D874, $0504  ; Items
+    dw $D8B8, $2EEC  ; Doors
+    dw #$FFFF
+
+preset_prkd20_tourian_metroids_1:
+    dw #preset_pkrd_tourian_metroids_1
+    dw $09C4, $018F  ; Max health
+    dw $09CE, $0005  ; Pbs
+    dw $D874, $0504  ; Items
+    dw $D8B8, $2EEC  ; Doors
+    dw #$FFFF
+
+preset_prkd20_tourian_metroids_2:
+    dw #preset_pkrd_tourian_metroids_2
+    dw $09C4, $018F  ; Max health
+    dw $09CE, $0005  ; Pbs
+    dw $D874, $0504  ; Items
+    dw $D8B8, $2EEC  ; Doors
+    dw #$FFFF
+
+preset_prkd20_tourian_metroids_3:
+    dw #preset_pkrd_tourian_metroids_3
+    dw $09C4, $018F  ; Max health
+    dw $09CE, $0005  ; Pbs
+    dw $D874, $0504  ; Items
+    dw $D8B8, $2EEC  ; Doors
+    dw #$FFFF
+
+preset_prkd19_maridia_spikesuit_reverse_halfie:
+    dw #preset_prkd20_maridia_spikesuit_reverse_halfie
+    dw $09C6, $000A  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $0AF8, $D000  ; Samus subpixel X
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr21_maridia_sewers:
+    dw #preset_kpdr22_maridia_sewers
+    dw $09C4, $018F  ; Max health
+    dw $D874, $0104  ; Items
+    dw $D8B6, $3008  ; Doors
+    dw $D8B8, $26ED  ; Doors
+    dw #$FFFF
+
+preset_pkrd_tourian_metroids_4:
+    dw #preset_pkrd_tourian_metroids_3
+    dw $078D, $A9CC  ; DDB
+    dw $079B, $DB7D  ; MDB
+    dw $090F, $A000  ; Screen subpixel X position
+    dw $0911, $0500  ; Screen X position in pixels
+    dw $0913, $6800  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $03C0  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09C2, $011B  ; Health
+    dw $09CA, $0008  ; Supers
+    dw $0AF6, $05AB  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw $D822, $0027  ; Events
+    dw $D8C4, $0007  ; Doors
+    dw #$FFFF
+
+preset_pkrd_tourian_giant_hoppers:
+    dw #preset_pkrd_tourian_metroids_3
+    dw $078D, $A9E4  ; DDB
+    dw $079B, $DBCD  ; MDB
+    dw $090F, $B000  ; Screen subpixel X position
+    dw $0913, $4C00  ; Screen subpixel Y position
+    dw $0915, $011F  ; Screen Y position in pixels
+    dw $0919, $00D7  ; Layer 2 Y position
+    dw $09C2, $01CC  ; Health
+    dw $09CA, $000A  ; Supers
+    dw $0AF6, $005E  ; Samus X
+    dw $0AFA, $01CB  ; Samus Y
+    dw $D822, $002F  ; Events
+    dw $D8C4, $000F  ; Doors
+    dw #$FFFF
+
+preset_pkrd_tourian_baby_skip:
+    dw #preset_pkrd_tourian_metroids_2
+    dw $078D, $AA14  ; DDB
+    dw $079B, $DC65  ; MDB
+    dw $07F3, $0045  ; Music Bank
+    dw $07F5, $0006  ; Music Track
+    dw $090F, $D000  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $8800  ; Screen subpixel Y position
+    dw $0917, $00C0  ; Layer 2 X position
+    dw $09C2, $01C2  ; Health
+    dw $09CA, $000A  ; Supers
+    dw $0AF6, $01DA  ; Samus X
+    dw $D822, $002F  ; Events
+    dw $D8C4, $000F  ; Doors
+    dw #$FFFF
+
+preset_pkrd_tourian_gadora_room:
+    dw #preset_pkrd_tourian_metroids_3
+    dw $078D, $AA44  ; DDB
+    dw $079B, $DCFF  ; MDB
+    dw $090F, $7000  ; Screen subpixel X position
+    dw $0913, $D000  ; Screen subpixel Y position
+    dw $0915, $0116  ; Screen Y position in pixels
+    dw $0919, $00D0  ; Layer 2 Y position
+    dw $09C2, $01C2  ; Health
+    dw $09CA, $0009  ; Supers
+    dw $0AF6, $00DD  ; Samus X
+    dw $D822, $002F  ; Events
+    dw $D8C4, $00AF  ; Doors
     dw #$FFFF
 
 preset_suitless_maridia_cleanup_2_plasma_spark_revisit:
@@ -37070,58 +37088,6 @@ preset_100early_maridia_postdraygon_botwoon_etank:
     dw $D8C2, $CCAA  ; Doors
     dw #$FFFF
 
-preset_prkd19_backtracking_terminator_revisit:
-    dw #preset_prkd20_backtracking_terminator_revisit
-    dw $09C6, $0009  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $0AF8, $D000  ; Samus subpixel X
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_prkd19_backtracking_green_pirate_shaft_revisit:
-    dw #preset_prkd20_backtracking_green_pirate_shaft_revisit
-    dw $09C6, $0009  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $0AF8, $D000  ; Samus subpixel X
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_prkd20_backtracking_g4_hallway:
-    dw #preset_pkrd_backtracking_g4_hallway
-    dw $09C4, $018F  ; Max health
-    dw $09CE, $0005  ; Pbs
-    dw $D874, $0504  ; Items
-    dw $D8B8, $2EEC  ; Doors
-    dw #$FFFF
-
-preset_prkd20_backtracking_g4_elevator:
-    dw #preset_pkrd_backtracking_g4_elevator
-    dw $09C4, $018F  ; Max health
-    dw $09CE, $0005  ; Pbs
-    dw $D874, $0504  ; Items
-    dw $D8B8, $2EEC  ; Doors
-    dw #$FFFF
-
-preset_prkd20_tourian_tourian_elevator_room:
-    dw #preset_pkrd_tourian_tourian_elevator_room
-    dw $09C4, $018F  ; Max health
-    dw $09CE, $0005  ; Pbs
-    dw $D874, $0504  ; Items
-    dw $D8B8, $2EEC  ; Doors
-    dw #$FFFF
-
-preset_pkrd_tourian_metroids_1:
-    dw #preset_pkrd_tourian_tourian_elevator_room
-    dw $090F, $0001  ; Screen subpixel X position
-    dw $0913, $D3FF  ; Screen subpixel Y position
-    dw $0915, $0300  ; Screen Y position in pixels
-    dw $0919, $0240  ; Layer 2 Y position
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $0041  ; Samus X
-    dw $0AFA, $038B  ; Samus Y
-    dw #$FFFF
-
 preset_gtmax_wrecked_ship_enter_wrecked_ship:
     dw #preset_gtmax_wrecked_ship_ocean
     dw $078D, $8AEA  ; DDB
@@ -37136,6 +37102,64 @@ preset_gtmax_wrecked_ship_enter_wrecked_ship:
     dw $0AF6, $0791  ; Samus X
     dw $0AFA, $049B  ; Samus Y
     dw $D8B0, $3000  ; Doors
+    dw #$FFFF
+
+preset_prkd19_maridia_reverse_colosseum:
+    dw #preset_prkd19_maridia_spikesuit_reverse_halfie
+    dw $0A68, $0000  ; Flash suit
+    dw #$FFFF
+
+preset_kpdr22_maridia_lower_maridia_gate:
+    dw #preset_kpdr23_maridia_lower_maridia_gate
+    dw $09A8, $1009  ; Collected Beams
+    dw #$FFFF
+
+preset_pkrd_tourian_rinka_shaft:
+    dw #preset_pkrd_tourian_metroids_4
+    dw $078D, $AA5C  ; DDB
+    dw $079B, $DDC4  ; MDB
+    dw $090F, $4000  ; Screen subpixel X position
+    dw $0911, $0300  ; Screen X position in pixels
+    dw $0913, $5400  ; Screen subpixel Y position
+    dw $0917, $0240  ; Layer 2 X position
+    dw $09C2, $01C2  ; Health
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $03DB  ; Samus X
+    dw $D822, $002F  ; Events
+    dw $D8C4, $01AF  ; Doors
+    dw #$FFFF
+
+preset_pkrd_tourian_zeb_skip:
+    dw #preset_pkrd_tourian_metroids_3
+    dw $078D, $AAA4  ; DDB
+    dw $079B, $DDF3  ; MDB
+    dw $090F, $6000  ; Screen subpixel X position
+    dw $0915, $021A  ; Screen Y position in pixels
+    dw $0919, $0193  ; Layer 2 Y position
+    dw $09C2, $01C2  ; Health
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0040  ; Samus X
+    dw $0AFA, $028B  ; Samus Y
+    dw $D822, $002F  ; Events
+    dw $D8C4, $03AF  ; Doors
+    dw #$FFFF
+
+preset_kpdr23_upper_norfair_revisit_ice_beam_gates:
+    dw #preset_kpdr23_maridia_lower_maridia_gate
+    dw $078D, $9246  ; DDB
+    dw $079B, $A7DE  ; MDB
+    dw $07F3, $0015  ; Music Bank
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $0238  ; Screen Y position in pixels
+    dw $0919, $01AA  ; Layer 2 Y position
+    dw $09CA, $0008  ; Supers
+    dw $09D2, $0002  ; Currently selected item
+    dw $0A1C, $009B  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
+    dw $0AF6, $0032  ; Samus X
+    dw $0AFA, $0395  ; Samus Y
     dw #$FFFF
 
 preset_suitless_forgotten_highway_crab_maze:
@@ -37255,12 +37279,244 @@ preset_100early_maridia_postdraygon_aqueduct_final:
     dw $D882, $05CC  ; Items
     dw #$FFFF
 
-preset_prkd20_tourian_metroids_1:
-    dw #preset_pkrd_tourian_metroids_1
+preset_gtmax_wrecked_ship_basement:
+    dw #preset_gtmax_wrecked_ship_enter_wrecked_ship
+    dw $078D, $A294  ; DDB
+    dw $079B, $CAF6  ; MDB
+    dw $07F3, $0030  ; Music Bank
+    dw $090F, $7000  ; Screen subpixel X position
+    dw $0911, $0400  ; Screen X position in pixels
+    dw $0913, $F000  ; Screen subpixel Y position
+    dw $0915, $071F  ; Screen Y position in pixels
+    dw $0917, $0300  ; Layer 2 X position
+    dw $0919, $0557  ; Layer 2 Y position
+    dw $09C6, $00E4  ; Missiles
+    dw $09C8, $00EB  ; Max missiles
+    dw $09CA, $000F  ; Supers
+    dw $09CE, $0027  ; Pbs
+    dw $0AF6, $0455  ; Samus X
+    dw $0AFA, $07BB  ; Samus Y
+    dw $D880, $7F01  ; Items
+    dw $D8C0, $C010  ; Doors
+    dw #$FFFF
+
+preset_pkrd_tourian_mother_brain_2:
+    dw #preset_pkrd_tourian_zeb_skip
+    dw $078D, $AAC8  ; DDB
+    dw $079B, $DD58  ; MDB
+    dw $07F3, $0021  ; Music Bank
+    dw $07F5, $0000  ; Music Track
+    dw $090F, $79FF  ; Screen subpixel X position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09C2, $01B3  ; Health
+    dw $09C6, $0005  ; Missiles
+    dw $09CA, $0000  ; Supers
+    dw $0AF6, $00CF  ; Samus X
+    dw $0AFA, $009B  ; Samus Y
+    dw $D820, $0FC5  ; Events
+    dw #$FFFF
+
+preset_kpdr23_upper_norfair_revisit_ice_maze_up:
+    dw #preset_kpdr23_maridia_lower_maridia_gate
+    dw $078D, $931E  ; DDB
+    dw $079B, $A75D  ; MDB
+    dw $07F3, $0015  ; Music Bank
+    dw $090F, $6000  ; Screen subpixel X position
+    dw $0913, $E800  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09CA, $0007  ; Supers
+    dw $0AF6, $0025  ; Samus X
+    dw $0AF8, $0000  ; Samus subpixel X
+    dw $0AFA, $008B  ; Samus Y
+    dw $0AFC, $FFFF  ; Samus subpixel Y
+    dw $D8B8, $2EEF  ; Doors
+    dw #$FFFF
+
+preset_kpdr25_maridia_lower_maridia_gate:
+    dw #preset_kpdr25_maridia_sewers
+    dw $078D, $A528  ; DDB
+    dw $079B, $D21C  ; MDB
+    dw $090F, $8000  ; Screen subpixel X position
+    dw $0913, $5C00  ; Screen subpixel Y position
+    dw $0915, $0100  ; Screen Y position in pixels
+    dw $0919, $0100  ; Layer 2 Y position
+    dw $09C2, $01F3  ; Health
+    dw $0AF6, $002E  ; Samus X
+    dw #$FFFF
+
+preset_kpdr_maridia_botwoon_etank:
+    dw #preset_kpdr_maridia_botwoon
+    dw $078D, $A774  ; DDB
+    dw $079B, $D95E  ; MDB
+    dw $07F3, $002A  ; Music Bank
+    dw $07F5, $0003  ; Music Track
+    dw $090F, $4000  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $C000  ; Screen subpixel Y position
+    dw $0917, $0100  ; Layer 2 X position
+    dw $09C2, $0065  ; Health
+    dw $09C6, $000F  ; Missiles
+    dw $09CA, $0003  ; Supers
+    dw $09CE, $0002  ; Pbs
+    dw $0AF6, $01C6  ; Samus X
+    dw $101C, $0000  ; Safeties missiles adjustment
+    dw $105A, $0000  ; Safeties supers adjustment
+    dw $11DA, $FFEC  ; Safeties refill
+    dw $11DC, $FFD9  ; Safeties refill
+    dw $D82C, $0002  ; Bosses
+    dw #$FFFF
+
+preset_kpdr_maridia_halfie_setup:
+    dw #preset_kpdr20_maridia_halfie_setup
+    dw $0F78, $D27B  ; Safeties enabled
+    dw $0F7A, $0007  ; Safeties enabled
+    dw $1008, $FFFE  ; Safeties missiles adjustment
+    dw $1012, $FFFE  ; Safeties missiles adjustment
+    dw $1118, $0006  ; Safeties unequip beams
+    dw $1120, $0006  ; Safeties unequip beams
+    dw $1180, $0005  ; Safeties stage
+    dw $D876, $0121  ; Items
+    dw $D878, $001C  ; Items
+    dw $D8B0, $3000  ; Doors
+    dw $D8B8, $26EC  ; Doors
+    dw #$FFFF
+
+preset_kpdr_maridia_draygon:
+    dw #preset_kpdr20_maridia_draygon
+    dw $0F78, $D27B  ; Safeties enabled
+    dw $0F7A, $000F  ; Safeties enabled
+    dw $0FA6, $0046  ; Safeties energy adjustment
+    dw $1008, $FFFE  ; Safeties missiles adjustment
+    dw $1012, $FFFE  ; Safeties missiles adjustment
+    dw $1118, $0006  ; Safeties unequip beams
+    dw $1120, $0006  ; Safeties unequip beams
+    dw $1180, $0005  ; Safeties stage
+    dw $D876, $0121  ; Items
+    dw $D878, $001C  ; Items
+    dw $D8B0, $3000  ; Doors
+    dw $D8B8, $26EC  ; Doors
+    dw #$FFFF
+
+preset_kpdr_maridia_reverse_halfie_spikesuit:
+    dw #preset_kpdr20_maridia_reverse_halfie_spikesuit
+    dw $0F78, $D27B  ; Safeties enabled
+    dw $0F7A, $001F  ; Safeties enabled
+    dw $0FA6, $0046  ; Safeties energy adjustment
+    dw $0FA8, $0028  ; Safeties energy adjustment
+    dw $1118, $0006  ; Safeties unequip beams
+    dw $1120, $0006  ; Safeties unequip beams
+    dw $1180, $0006  ; Safeties stage
+    dw $D876, $0121  ; Items
+    dw $D878, $001C  ; Items
+    dw $D8B0, $3000  ; Doors
+    dw $D8B8, $26EC  ; Doors
+    dw #$FFFF
+
+preset_phantoonfirst_kraid_leaving_kraid_etank:
+    dw #preset_phantoonfirst_kraid_kraid_etank
+    dw $078D, $914A  ; DDB
+    dw $079B, $A4B1  ; MDB
+    dw $090F, $6000  ; Screen subpixel X position
+    dw $0913, $1C00  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $0085  ; Samus X
+    dw $0AFA, $009B  ; Samus Y
+    dw $0F78, $1C7F  ; Safeties enabled
+    dw $11D8, $0001  ; Safeties refill
+    dw $D8B8, $2EEC  ; Doors
+    dw #$FFFF
+
+preset_prkd20_tourian_metroids_4:
+    dw #preset_pkrd_tourian_metroids_4
     dw $09C4, $018F  ; Max health
     dw $09CE, $0005  ; Pbs
     dw $D874, $0504  ; Items
     dw $D8B8, $2EEC  ; Doors
+    dw #$FFFF
+
+preset_prkd19_maridia_reverse_halfie_climb:
+    dw #preset_prkd20_maridia_reverse_halfie_climb
+    dw $09C6, $000A  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $0AF8, $D000  ; Samus subpixel X
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_prkd19_maridia_reverse_botwoon_etank:
+    dw #preset_prkd20_maridia_reverse_botwoon_etank
+    dw $09C6, $000A  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $0AF8, $D000  ; Samus subpixel X
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_prkd19_maridia_reverse_botwoon_hallway:
+    dw #preset_prkd20_maridia_reverse_botwoon_hallway
+    dw $09C6, $000A  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $0AF8, $D000  ; Samus subpixel X
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_prkd19_maridia_reverse_crab_shaft:
+    dw #preset_prkd20_maridia_reverse_crab_shaft
+    dw $09C6, $000A  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $0AF8, $D000  ; Samus subpixel X
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_prkd19_maridia_mt_everest_revisit:
+    dw #preset_prkd20_maridia_mt_everest_revisit
+    dw $09C6, $000A  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $0AF8, $D000  ; Samus subpixel X
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_prkd19_backtracking_red_brinstar_green_gate:
+    dw #preset_prkd20_backtracking_red_brinstar_green_gate
+    dw $09C6, $000B  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $0AF8, $D000  ; Samus subpixel X
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_prkd19_backtracking_crateria_kihunters_final:
+    dw #preset_prkd20_backtracking_crateria_kihunters_final
+    dw $09C6, $000B  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $0AF8, $D000  ; Samus subpixel X
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_prkd19_backtracking_parlor_return:
+    dw #preset_prkd20_backtracking_parlor_return
+    dw $09C6, $0009  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $0AF8, $D000  ; Samus subpixel X
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_prkd19_backtracking_terminator_revisit:
+    dw #preset_prkd20_backtracking_terminator_revisit
+    dw $09C6, $0009  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $0AF8, $D000  ; Samus subpixel X
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_prkd19_backtracking_green_pirate_shaft_revisit:
+    dw #preset_prkd20_backtracking_green_pirate_shaft_revisit
+    dw $09C6, $0009  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $0AF8, $D000  ; Samus subpixel X
+    dw $D878, $0014  ; Items
     dw #$FFFF
 
 preset_prkd19_backtracking_g4_hallway:
@@ -37287,61 +37543,80 @@ preset_prkd19_tourian_tourian_elevator_room:
     dw $D878, $0014  ; Items
     dw #$FFFF
 
-preset_pkrd_tourian_metroids_2:
-    dw #preset_pkrd_tourian_metroids_1
-    dw $078D, $A984  ; DDB
-    dw $079B, $DAE1  ; MDB
-    dw $090F, $6000  ; Screen subpixel X position
-    dw $0911, $0119  ; Screen X position in pixels
-    dw $0913, $A400  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0917, $00D2  ; Layer 2 X position
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $09C2, $006B  ; Health
-    dw $09C6, $0014  ; Missiles
-    dw $09CA, $0006  ; Supers
-    dw $0AF6, $0197  ; Samus X
-    dw $0AFA, $00AB  ; Samus Y
-    dw $D822, $0021  ; Events
+preset_prkd19_tourian_metroids_1:
+    dw #preset_prkd20_tourian_metroids_1
+    dw $09C6, $0009  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $0AF8, $D000  ; Samus subpixel X
+    dw $D878, $0014  ; Items
     dw #$FFFF
 
-preset_pkrd_tourian_metroids_3:
-    dw #preset_pkrd_tourian_tourian_elevator_room
-    dw $078D, $A9B4  ; DDB
-    dw $079B, $DB31  ; MDB
-    dw $090F, $EFFF  ; Screen subpixel X position
-    dw $0915, $0117  ; Screen Y position in pixels
-    dw $0919, $00D1  ; Layer 2 Y position
-    dw $09C2, $00D4  ; Health
-    dw $09C6, $0014  ; Missiles
-    dw $09CA, $0007  ; Supers
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $00C0  ; Samus X
-    dw $0AFA, $018B  ; Samus Y
-    dw $D822, $0023  ; Events
-    dw $D8C4, $0003  ; Doors
+preset_prkd19_tourian_metroids_2:
+    dw #preset_prkd20_tourian_metroids_2
+    dw $09C6, $000F  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $0AF8, $D000  ; Samus subpixel X
+    dw $D878, $0014  ; Items
     dw #$FFFF
 
-preset_gtmax_wrecked_ship_basement:
-    dw #preset_gtmax_wrecked_ship_enter_wrecked_ship
-    dw $078D, $A294  ; DDB
-    dw $079B, $CAF6  ; MDB
-    dw $07F3, $0030  ; Music Bank
-    dw $090F, $7000  ; Screen subpixel X position
-    dw $0911, $0400  ; Screen X position in pixels
-    dw $0913, $F000  ; Screen subpixel Y position
-    dw $0915, $071F  ; Screen Y position in pixels
-    dw $0917, $0300  ; Layer 2 X position
-    dw $0919, $0557  ; Layer 2 Y position
-    dw $09C6, $00E4  ; Missiles
-    dw $09C8, $00EB  ; Max missiles
-    dw $09CA, $000F  ; Supers
-    dw $09CE, $0027  ; Pbs
-    dw $0AF6, $0455  ; Samus X
-    dw $0AFA, $07BB  ; Samus Y
-    dw $D880, $7F01  ; Items
-    dw $D8C0, $C010  ; Doors
+preset_prkd19_tourian_metroids_3:
+    dw #preset_prkd20_tourian_metroids_3
+    dw $09C6, $000F  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $0AF8, $D000  ; Samus subpixel X
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr20_maridia_sewers:
+    dw #preset_kpdr21_maridia_sewers
+    dw $09C6, $000F  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_prkd20_tourian_giant_hoppers:
+    dw #preset_pkrd_tourian_giant_hoppers
+    dw $09C2, $018F  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $09CE, $0005  ; Pbs
+    dw $D874, $0504  ; Items
+    dw $D8B8, $2EEC  ; Doors
+    dw #$FFFF
+
+preset_prkd20_tourian_baby_skip:
+    dw #preset_pkrd_tourian_baby_skip
+    dw $09C2, $0185  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $09CE, $0005  ; Pbs
+    dw $D874, $0504  ; Items
+    dw $D8B8, $2EEC  ; Doors
+    dw #$FFFF
+
+preset_prkd20_tourian_gadora_room:
+    dw #preset_pkrd_tourian_gadora_room
+    dw $09C2, $0185  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $09CE, $0005  ; Pbs
+    dw $D874, $0504  ; Items
+    dw $D8B8, $2EEC  ; Doors
+    dw #$FFFF
+
+preset_prkd20_tourian_rinka_shaft:
+    dw #preset_pkrd_tourian_rinka_shaft
+    dw $09C2, $0185  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $09CE, $0005  ; Pbs
+    dw $D874, $0504  ; Items
+    dw $D8B8, $2EEC  ; Doors
+    dw #$FFFF
+
+preset_prkd20_tourian_zeb_skip:
+    dw #preset_pkrd_tourian_zeb_skip
+    dw $09C2, $0185  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $09CE, $0005  ; Pbs
+    dw $D874, $0504  ; Items
+    dw $D8B8, $2EEC  ; Doors
     dw #$FFFF
 
 preset_suitless_forgotten_highway_east_ocean:
@@ -37461,96 +37736,6 @@ preset_100early_maridia_postdraygon_west_sand_pit:
     dw $D882, $05FC  ; Items
     dw #$FFFF
 
-preset_prkd19_tourian_metroids_1:
-    dw #preset_prkd20_tourian_metroids_1
-    dw $09C6, $0009  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $0AF8, $D000  ; Samus subpixel X
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_prkd20_tourian_metroids_2:
-    dw #preset_pkrd_tourian_metroids_2
-    dw $09C4, $018F  ; Max health
-    dw $09CE, $0005  ; Pbs
-    dw $D874, $0504  ; Items
-    dw $D8B8, $2EEC  ; Doors
-    dw #$FFFF
-
-preset_prkd20_tourian_metroids_3:
-    dw #preset_pkrd_tourian_metroids_3
-    dw $09C4, $018F  ; Max health
-    dw $09CE, $0005  ; Pbs
-    dw $D874, $0504  ; Items
-    dw $D8B8, $2EEC  ; Doors
-    dw #$FFFF
-
-preset_pkrd_tourian_metroids_4:
-    dw #preset_pkrd_tourian_metroids_3
-    dw $078D, $A9CC  ; DDB
-    dw $079B, $DB7D  ; MDB
-    dw $090F, $A000  ; Screen subpixel X position
-    dw $0911, $0500  ; Screen X position in pixels
-    dw $0913, $6800  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0917, $03C0  ; Layer 2 X position
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $09C2, $011B  ; Health
-    dw $09CA, $0008  ; Supers
-    dw $0AF6, $05AB  ; Samus X
-    dw $0AFA, $008B  ; Samus Y
-    dw $D822, $0027  ; Events
-    dw $D8C4, $0007  ; Doors
-    dw #$FFFF
-
-preset_pkrd_tourian_giant_hoppers:
-    dw #preset_pkrd_tourian_metroids_3
-    dw $078D, $A9E4  ; DDB
-    dw $079B, $DBCD  ; MDB
-    dw $090F, $B000  ; Screen subpixel X position
-    dw $0913, $4C00  ; Screen subpixel Y position
-    dw $0915, $011F  ; Screen Y position in pixels
-    dw $0919, $00D7  ; Layer 2 Y position
-    dw $09C2, $01CC  ; Health
-    dw $09CA, $000A  ; Supers
-    dw $0AF6, $005E  ; Samus X
-    dw $0AFA, $01CB  ; Samus Y
-    dw $D822, $002F  ; Events
-    dw $D8C4, $000F  ; Doors
-    dw #$FFFF
-
-preset_pkrd_tourian_baby_skip:
-    dw #preset_pkrd_tourian_metroids_2
-    dw $078D, $AA14  ; DDB
-    dw $079B, $DC65  ; MDB
-    dw $07F3, $0045  ; Music Bank
-    dw $07F5, $0006  ; Music Track
-    dw $090F, $D000  ; Screen subpixel X position
-    dw $0911, $0100  ; Screen X position in pixels
-    dw $0913, $8800  ; Screen subpixel Y position
-    dw $0917, $00C0  ; Layer 2 X position
-    dw $09C2, $01C2  ; Health
-    dw $09CA, $000A  ; Supers
-    dw $0AF6, $01DA  ; Samus X
-    dw $D822, $002F  ; Events
-    dw $D8C4, $000F  ; Doors
-    dw #$FFFF
-
-preset_pkrd_tourian_gadora_room:
-    dw #preset_pkrd_tourian_metroids_3
-    dw $078D, $AA44  ; DDB
-    dw $079B, $DCFF  ; MDB
-    dw $090F, $7000  ; Screen subpixel X position
-    dw $0913, $D000  ; Screen subpixel Y position
-    dw $0915, $0116  ; Screen Y position in pixels
-    dw $0919, $00D0  ; Layer 2 Y position
-    dw $09C2, $01C2  ; Health
-    dw $09CA, $0009  ; Supers
-    dw $0AF6, $00DD  ; Samus X
-    dw $D822, $002F  ; Events
-    dw $D8C4, $00AF  ; Doors
-    dw #$FFFF
-
 preset_gtmax_wrecked_ship_phantoon:
     dw #preset_gtmax_wrecked_ship_basement
     dw $078D, $A21C  ; DDB
@@ -37563,6 +37748,168 @@ preset_gtmax_wrecked_ship_phantoon:
     dw $0AF6, $04CD  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw $D8C0, $C030  ; Doors
+    dw #$FFFF
+
+preset_prkd20_tourian_mother_brain_2:
+    dw #preset_pkrd_tourian_mother_brain_2
+    dw $09C2, $0176  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $09CE, $0005  ; Pbs
+    dw $D874, $0504  ; Items
+    dw $D8B8, $2EEC  ; Doors
+    dw #$FFFF
+
+preset_kpdr21_maridia_lower_maridia_gate:
+    dw #preset_kpdr22_maridia_lower_maridia_gate
+    dw $09C2, $00AE  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $D874, $0104  ; Items
+    dw $D8B6, $3008  ; Doors
+    dw $D8B8, $26ED  ; Doors
+    dw #$FFFF
+
+preset_kpdr22_upper_norfair_revisit_ice_beam_gates:
+    dw #preset_kpdr23_upper_norfair_revisit_ice_beam_gates
+    dw $09A8, $1009  ; Collected Beams
+    dw #$FFFF
+
+preset_kpdr25_maridia_business_center_revisit:
+    dw #preset_kpdr23_upper_norfair_revisit_ice_beam_gates
+    dw $09A6, $100B  ; Equipped Beams
+    dw $09A8, $100F  ; Collected Beams
+    dw $09C2, $01F3  ; Health
+    dw $09C6, $0009  ; Missiles
+    dw $09C8, $0019  ; Max missiles
+    dw $09CA, $0004  ; Supers
+    dw $09D2, $0000  ; Currently selected item
+    dw $D870, $0190  ; Items
+    dw $D876, $01A5  ; Items
+    dw $D8B8, $2EEF  ; Doors
+    dw #$FFFF
+
+preset_pkrd_tourian_mother_brain_3:
+    dw #preset_pkrd_tourian_mother_brain_2
+    dw $09A6, $1009  ; Equipped Beams
+    dw $09C2, $01F3  ; Health
+    dw $09C6, $0000  ; Missiles
+    dw $09CE, $0000  ; Pbs
+    dw $0A76, $8000  ; Hyper beam
+    dw $D82C, $0203  ; Bosses
+    dw #$FFFF
+
+preset_kpdr22_upper_norfair_revisit_ice_maze_up:
+    dw #preset_kpdr23_upper_norfair_revisit_ice_maze_up
+    dw $09A8, $1009  ; Collected Beams
+    dw #$FFFF
+
+preset_kpdr22_upper_norfair_revisit_ice_maze_down:
+    dw #preset_kpdr23_upper_norfair_revisit_ice_maze_up
+    dw $078D, $937E  ; DDB
+    dw $079B, $A890  ; MDB
+    dw $07F5, $0003  ; Music Track
+    dw $090F, $5000  ; Screen subpixel X position
+    dw $0913, $7000  ; Screen subpixel Y position
+    dw $0917, $0001  ; Layer 2 X position
+    dw $09A6, $100B  ; Equipped Beams
+    dw $09A8, $100B  ; Collected Beams
+    dw $09C2, $0121  ; Health
+    dw $0AF6, $00BA  ; Samus X
+    dw $D876, $01A5  ; Items
+    dw #$FFFF
+
+preset_kpdr_maridia_whomple_jump:
+    dw #preset_kpdr_maridia_reverse_halfie_spikesuit
+    dw $0A68, $0000  ; Flash suit
+    dw #$FFFF
+
+preset_phantoonfirst_kraid_leaving_kraids_lair:
+    dw #preset_phantoonfirst_kraid_leaving_kraid_etank
+    dw $078D, $916E  ; DDB
+    dw $079B, $A471  ; MDB
+    dw $090F, $C001  ; Screen subpixel X position
+    dw $0913, $F000  ; Screen subpixel Y position
+    dw $09C2, $00C1  ; Health
+    dw $09C6, $000D  ; Missiles
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0025  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw #$FFFF
+
+preset_phantoonfirst_maridia_maridia_tube_revisit:
+    dw #preset_prkd19_maridia_maridia_tube_revisit
+    dw $0AF8, $FFFF  ; Samus subpixel X
+    dw $0F78, $1C7F  ; Safeties enabled
+    dw $0F7C, $0008  ; Safeties adjust only
+    dw $0F86, $FFE5  ; Safeties energy adjustment
+    dw $0F88, $FFB0  ; Safeties energy adjustment
+    dw $0F96, $0039  ; Safeties energy adjustment
+    dw $0FC0, $002D  ; Safeties reserves adjustment
+    dw $1006, $0001  ; Safeties missiles adjustment
+    dw $1086, $FFFF  ; Safeties power bombs adjustment
+    dw $11D8, $0001  ; Safeties refill
+    dw #$FFFF
+
+preset_phantoonfirst_maridia_fish_tank:
+    dw #preset_prkd19_maridia_fish_tank
+    dw $0AF8, $FFFF  ; Samus subpixel X
+    dw $0F78, $1C7F  ; Safeties enabled
+    dw $0F7C, $0008  ; Safeties adjust only
+    dw $0F86, $FFE5  ; Safeties energy adjustment
+    dw $0F88, $FFB0  ; Safeties energy adjustment
+    dw $0F96, $0039  ; Safeties energy adjustment
+    dw $0FC0, $002D  ; Safeties reserves adjustment
+    dw $1006, $0001  ; Safeties missiles adjustment
+    dw $1086, $FFFF  ; Safeties power bombs adjustment
+    dw $11D8, $0001  ; Safeties refill
+    dw #$FFFF
+
+preset_prkd19_tourian_metroids_4:
+    dw #preset_prkd20_tourian_metroids_4
+    dw $09C6, $000F  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $0AF8, $D000  ; Samus subpixel X
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_prkd19_tourian_giant_hoppers:
+    dw #preset_prkd20_tourian_giant_hoppers
+    dw $09C6, $000F  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $0AF8, $D000  ; Samus subpixel X
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_prkd19_tourian_baby_skip:
+    dw #preset_prkd20_tourian_baby_skip
+    dw $09C6, $000F  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $0AF8, $D000  ; Samus subpixel X
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_prkd19_tourian_gadora_room:
+    dw #preset_prkd20_tourian_gadora_room
+    dw $09C6, $000F  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $0AF8, $D000  ; Samus subpixel X
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_prkd19_tourian_rinka_shaft:
+    dw #preset_prkd20_tourian_rinka_shaft
+    dw $09C6, $000F  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $0AF8, $D000  ; Samus subpixel X
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_prkd19_tourian_zeb_skip:
+    dw #preset_prkd20_tourian_zeb_skip
+    dw $09C6, $000F  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $0AF8, $D000  ; Samus subpixel X
+    dw $D878, $0014  ; Items
     dw #$FFFF
 
 preset_suitless_forgotten_highway_shaft_down:
@@ -37655,89 +38002,6 @@ preset_100early_maridia_postdraygon_thread_the_needle:
     dw $D882, $05FF  ; Items
     dw #$FFFF
 
-preset_prkd20_tourian_metroids_4:
-    dw #preset_pkrd_tourian_metroids_4
-    dw $09C4, $018F  ; Max health
-    dw $09CE, $0005  ; Pbs
-    dw $D874, $0504  ; Items
-    dw $D8B8, $2EEC  ; Doors
-    dw #$FFFF
-
-preset_prkd19_tourian_metroids_2:
-    dw #preset_prkd20_tourian_metroids_2
-    dw $09C6, $000F  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $0AF8, $D000  ; Samus subpixel X
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_prkd19_tourian_metroids_3:
-    dw #preset_prkd20_tourian_metroids_3
-    dw $09C6, $000F  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $0AF8, $D000  ; Samus subpixel X
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_pkrd_tourian_rinka_shaft:
-    dw #preset_pkrd_tourian_metroids_4
-    dw $078D, $AA5C  ; DDB
-    dw $079B, $DDC4  ; MDB
-    dw $090F, $4000  ; Screen subpixel X position
-    dw $0911, $0300  ; Screen X position in pixels
-    dw $0913, $5400  ; Screen subpixel Y position
-    dw $0917, $0240  ; Layer 2 X position
-    dw $09C2, $01C2  ; Health
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $03DB  ; Samus X
-    dw $D822, $002F  ; Events
-    dw $D8C4, $01AF  ; Doors
-    dw #$FFFF
-
-preset_pkrd_tourian_zeb_skip:
-    dw #preset_pkrd_tourian_metroids_3
-    dw $078D, $AAA4  ; DDB
-    dw $079B, $DDF3  ; MDB
-    dw $090F, $6000  ; Screen subpixel X position
-    dw $0915, $021A  ; Screen Y position in pixels
-    dw $0919, $0193  ; Layer 2 Y position
-    dw $09C2, $01C2  ; Health
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $0040  ; Samus X
-    dw $0AFA, $028B  ; Samus Y
-    dw $D822, $002F  ; Events
-    dw $D8C4, $03AF  ; Doors
-    dw #$FFFF
-
-preset_prkd20_tourian_giant_hoppers:
-    dw #preset_pkrd_tourian_giant_hoppers
-    dw $09C2, $018F  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $09CE, $0005  ; Pbs
-    dw $D874, $0504  ; Items
-    dw $D8B8, $2EEC  ; Doors
-    dw #$FFFF
-
-preset_prkd20_tourian_baby_skip:
-    dw #preset_pkrd_tourian_baby_skip
-    dw $09C2, $0185  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $09CE, $0005  ; Pbs
-    dw $D874, $0504  ; Items
-    dw $D8B8, $2EEC  ; Doors
-    dw #$FFFF
-
-preset_prkd20_tourian_gadora_room:
-    dw #preset_pkrd_tourian_gadora_room
-    dw $09C2, $0185  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $09CE, $0005  ; Pbs
-    dw $D874, $0504  ; Items
-    dw $D8B8, $2EEC  ; Doors
-    dw #$FFFF
-
 preset_gtmax_wrecked_ship_shaft_to_supers:
     dw #preset_gtmax_wrecked_ship_phantoon
     dw $078D, $A2C4  ; DDB
@@ -37774,6 +38038,100 @@ preset_gtmax_wrecked_ship_east_supers:
     dw $0AFA, $068B  ; Samus Y
     dw $D82A, $0107  ; Bosses
     dw $D8C0, $C074  ; Doors
+    dw #$FFFF
+
+preset_prkd19_tourian_mother_brain_2:
+    dw #preset_prkd20_tourian_mother_brain_2
+    dw $09C6, $0000  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $0AF8, $D000  ; Samus subpixel X
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr20_maridia_lower_maridia_gate:
+    dw #preset_kpdr21_maridia_lower_maridia_gate
+    dw $09C6, $000F  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_prkd20_tourian_mother_brain_3:
+    dw #preset_pkrd_tourian_mother_brain_3
+    dw $09C2, $018F  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $D874, $0504  ; Items
+    dw $D8B8, $2EEC  ; Doors
+    dw #$FFFF
+
+preset_pkrd_tourian_zebes_escape:
+    dw #preset_pkrd_tourian_mother_brain_3
+    dw $09C2, $01B7  ; Health
+    dw $0A1C, $009B  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
+    dw $0AF6, $0025  ; Samus X
+    dw $0AFA, $009E  ; Samus Y
+    dw $D820, $4FC5  ; Events
+    dw #$FFFF
+
+preset_kpdr21_upper_norfair_revisit_ice_beam_gates:
+    dw #preset_kpdr22_upper_norfair_revisit_ice_beam_gates
+    dw $09C2, $00AE  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $D874, $0104  ; Items
+    dw $D8B6, $3008  ; Doors
+    dw $D8B8, $26ED  ; Doors
+    dw #$FFFF
+
+preset_kpdr25_lower_norfair_magdollite_tunnel:
+    dw #preset_kpdr25_maridia_business_center_revisit
+    dw $078D, $9576  ; DDB
+    dw $079B, $AEDF  ; MDB
+    dw $090F, $B001  ; Screen subpixel X position
+    dw $0915, $01F4  ; Screen Y position in pixels
+    dw $0919, $0177  ; Layer 2 Y position
+    dw $0AF6, $0059  ; Samus X
+    dw $0AFA, $028B  ; Samus Y
+    dw #$FFFF
+
+preset_kpdr25_lower_norfair_ln_main_hall:
+    dw #preset_kpdr25_maridia_business_center_revisit
+    dw $078D, $96F6  ; DDB
+    dw $079B, $B236  ; MDB
+    dw $07F3, $0018  ; Music Bank
+    dw $090F, $E000  ; Screen subpixel X position
+    dw $0911, $0400  ; Screen X position in pixels
+    dw $0915, $0200  ; Screen Y position in pixels
+    dw $0917, $0300  ; Layer 2 X position
+    dw $0919, $0301  ; Layer 2 Y position
+    dw $09C2, $01F0  ; Health
+    dw $09C6, $0008  ; Missiles
+    dw $09CE, $0004  ; Pbs
+    dw $0AF6, $0480  ; Samus X
+    dw $0AFA, $0288  ; Samus Y
+    dw $D8BA, $01F1  ; Doors
+    dw #$FFFF
+
+preset_kpdr21_upper_norfair_revisit_ice_maze_up:
+    dw #preset_kpdr22_upper_norfair_revisit_ice_maze_up
+    dw $09C2, $00AE  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $D874, $0104  ; Items
+    dw $D8B6, $3008  ; Doors
+    dw $D8B8, $2EED  ; Doors
+    dw #$FFFF
+
+preset_kpdr23_upper_norfair_revisit_ice_maze_down:
+    dw #preset_kpdr22_upper_norfair_revisit_ice_maze_down
+    dw $09A8, $100F  ; Collected Beams
+    dw #$FFFF
+
+preset_kpdr21_upper_norfair_revisit_ice_maze_down:
+    dw #preset_kpdr22_upper_norfair_revisit_ice_maze_down
+    dw $09C2, $00BD  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $D874, $0104  ; Items
+    dw $D8B6, $3008  ; Doors
+    dw $D8B8, $2EED  ; Doors
     dw #$FFFF
 
 preset_suitless_forgotten_highway_phantoon:
@@ -37876,73 +38234,6 @@ preset_100early_kraidicekronic_kraid_entrance_revisit:
     dw $0AF6, $005B  ; Samus X
     dw #$FFFF
 
-preset_prkd19_tourian_metroids_4:
-    dw #preset_prkd20_tourian_metroids_4
-    dw $09C6, $000F  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $0AF8, $D000  ; Samus subpixel X
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_prkd20_tourian_rinka_shaft:
-    dw #preset_pkrd_tourian_rinka_shaft
-    dw $09C2, $0185  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $09CE, $0005  ; Pbs
-    dw $D874, $0504  ; Items
-    dw $D8B8, $2EEC  ; Doors
-    dw #$FFFF
-
-preset_prkd20_tourian_zeb_skip:
-    dw #preset_pkrd_tourian_zeb_skip
-    dw $09C2, $0185  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $09CE, $0005  ; Pbs
-    dw $D874, $0504  ; Items
-    dw $D8B8, $2EEC  ; Doors
-    dw #$FFFF
-
-preset_pkrd_tourian_mother_brain_2:
-    dw #preset_pkrd_tourian_zeb_skip
-    dw $078D, $AAC8  ; DDB
-    dw $079B, $DD58  ; MDB
-    dw $07F3, $0021  ; Music Bank
-    dw $07F5, $0000  ; Music Track
-    dw $090F, $79FF  ; Screen subpixel X position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $09C2, $01B3  ; Health
-    dw $09C6, $0005  ; Missiles
-    dw $09CA, $0000  ; Supers
-    dw $0AF6, $00CF  ; Samus X
-    dw $0AFA, $009B  ; Samus Y
-    dw $D820, $0FC5  ; Events
-    dw #$FFFF
-
-preset_prkd19_tourian_giant_hoppers:
-    dw #preset_prkd20_tourian_giant_hoppers
-    dw $09C6, $000F  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $0AF8, $D000  ; Samus subpixel X
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_prkd19_tourian_baby_skip:
-    dw #preset_prkd20_tourian_baby_skip
-    dw $09C6, $000F  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $0AF8, $D000  ; Samus subpixel X
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_prkd19_tourian_gadora_room:
-    dw #preset_prkd20_tourian_gadora_room
-    dw $09C6, $000F  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $0AF8, $D000  ; Samus subpixel X
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
 preset_gtmax_wrecked_ship_west_supers:
     dw #preset_gtmax_wrecked_ship_shaft_to_supers
     dw $078D, $A234  ; DDB
@@ -37978,6 +38269,208 @@ preset_gtmax_wrecked_ship_sponge_bath:
     dw $0AF6, $042F  ; Samus X
     dw $0AFA, $04EB  ; Samus Y
     dw $D880, $7F61  ; Items
+    dw #$FFFF
+
+preset_pkrd_tourian_escape_room_3:
+    dw #preset_pkrd_tourian_zebes_escape
+    dw $078D, $AAEC  ; DDB
+    dw $079B, $DE7A  ; MDB
+    dw $07F3, $0024  ; Music Bank
+    dw $07F5, $0007  ; Music Track
+    dw $090F, $F000  ; Screen subpixel X position
+    dw $0913, $CC00  ; Screen subpixel Y position
+    dw $0915, $0100  ; Screen Y position in pixels
+    dw $0919, $00C0  ; Layer 2 Y position
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $00DF  ; Samus X
+    dw $0AFA, $018B  ; Samus Y
+    dw #$FFFF
+
+preset_kpdr22_upper_norfair_revisit_ice_escape:
+    dw #preset_kpdr22_upper_norfair_revisit_ice_maze_down
+    dw $078D, $935A  ; DDB
+    dw $079B, $A8B9  ; MDB
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $E000  ; Screen subpixel X position
+    dw $0913, $9000  ; Screen subpixel Y position
+    dw $0915, $0200  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $0180  ; Layer 2 Y position
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $00C5  ; Samus X
+    dw $0AFA, $028B  ; Samus Y
+    dw #$FFFF
+
+preset_kpdr_maridia_cac_alley_east:
+    dw #preset_kpdr_maridia_whomple_jump
+    dw $078D, $A7E0  ; DDB
+    dw $079B, $D913  ; MDB
+    dw $090F, $8000  ; Screen subpixel X position
+    dw $0915, $011A  ; Screen Y position in pixels
+    dw $0919, $011A  ; Layer 2 Y position
+    dw $09C2, $004A  ; Health
+    dw $09C6, $000B  ; Missiles
+    dw $0AF6, $0030  ; Samus X
+    dw $0AFA, $018B  ; Samus Y
+    dw $0F7A, $003F  ; Safeties enabled
+    dw $0FAA, $0070  ; Safeties energy adjustment
+    dw $D8C2, $DC00  ; Doors
+    dw #$FFFF
+
+preset_phantoonfirst_maridia_mt_everest:
+    dw #preset_phantoonfirst_maridia_fish_tank
+    dw $078D, $A3F0  ; DDB
+    dw $079B, $D0B9  ; MDB
+    dw $090F, $2000  ; Screen subpixel X position
+    dw $0911, $0109  ; Screen X position in pixels
+    dw $0913, $6800  ; Screen subpixel Y position
+    dw $0915, $031F  ; Screen Y position in pixels
+    dw $0917, $00C6  ; Layer 2 X position
+    dw $0919, $0257  ; Layer 2 Y position
+    dw $0AF6, $019D  ; Samus X
+    dw $0AFA, $03BB  ; Samus Y
+    dw #$FFFF
+
+preset_phantoonfirst_maridia_crab_shaft:
+    dw #preset_prkd19_maridia_crab_shaft
+    dw $0AF8, $FFFF  ; Samus subpixel X
+    dw $0F78, $3C7F  ; Safeties enabled
+    dw $0F7C, $0008  ; Safeties adjust only
+    dw $0F86, $FFE5  ; Safeties energy adjustment
+    dw $0F88, $FFB0  ; Safeties energy adjustment
+    dw $0F96, $0039  ; Safeties energy adjustment
+    dw $0F9A, $003B  ; Safeties energy adjustment
+    dw $0FC0, $002D  ; Safeties reserves adjustment
+    dw $1006, $0001  ; Safeties missiles adjustment
+    dw $1086, $FFFF  ; Safeties power bombs adjustment
+    dw $11D8, $FFC5  ; Safeties refill
+    dw #$FFFF
+
+preset_phantoonfirst_maridia_aqueduct:
+    dw #preset_prkd19_maridia_aqueduct
+    dw $0AF8, $FFFF  ; Samus subpixel X
+    dw $0F78, $3C7F  ; Safeties enabled
+    dw $0F7C, $0008  ; Safeties adjust only
+    dw $0F86, $FFE5  ; Safeties energy adjustment
+    dw $0F88, $FFB0  ; Safeties energy adjustment
+    dw $0F96, $0039  ; Safeties energy adjustment
+    dw $0F9A, $003B  ; Safeties energy adjustment
+    dw $0FC0, $002D  ; Safeties reserves adjustment
+    dw $1006, $0001  ; Safeties missiles adjustment
+    dw $1086, $FFFF  ; Safeties power bombs adjustment
+    dw $11D8, $FFC5  ; Safeties refill
+    dw #$FFFF
+
+preset_phantoonfirst_maridia_botwoon_hallway:
+    dw #preset_prkd19_maridia_botwoon_hallway
+    dw $0AF8, $FFFF  ; Samus subpixel X
+    dw $0F78, $3C7F  ; Safeties enabled
+    dw $0F7C, $0008  ; Safeties adjust only
+    dw $0F86, $FFE5  ; Safeties energy adjustment
+    dw $0F88, $FFB0  ; Safeties energy adjustment
+    dw $0F96, $0039  ; Safeties energy adjustment
+    dw $0F9A, $003B  ; Safeties energy adjustment
+    dw $0FC0, $002D  ; Safeties reserves adjustment
+    dw $1006, $0001  ; Safeties missiles adjustment
+    dw $1086, $FFFF  ; Safeties power bombs adjustment
+    dw $11D8, $FFC5  ; Safeties refill
+    dw #$FFFF
+
+preset_phantoonfirst_maridia_botwoon:
+    dw #preset_prkd19_maridia_botwoon
+    dw $0AF8, $FFFF  ; Samus subpixel X
+    dw $0F78, $3C7F  ; Safeties enabled
+    dw $0F7C, $0008  ; Safeties adjust only
+    dw $0F86, $FFE5  ; Safeties energy adjustment
+    dw $0F88, $FFB0  ; Safeties energy adjustment
+    dw $0F96, $0039  ; Safeties energy adjustment
+    dw $0F9A, $003B  ; Safeties energy adjustment
+    dw $0FC0, $002D  ; Safeties reserves adjustment
+    dw $1006, $0001  ; Safeties missiles adjustment
+    dw $1086, $FFFF  ; Safeties power bombs adjustment
+    dw $11D8, $FFC5  ; Safeties refill
+    dw #$FFFF
+
+preset_phantoonfirst_maridia_botwoon_etank:
+    dw #preset_prkd19_maridia_botwoon_etank
+    dw $09C6, $000F  ; Missiles
+    dw $0AF8, $FFFF  ; Samus subpixel X
+    dw $0F78, $3C7F  ; Safeties enabled
+    dw $0F7C, $0008  ; Safeties adjust only
+    dw $0F86, $FFE5  ; Safeties energy adjustment
+    dw $0F88, $FFD8  ; Safeties energy adjustment
+    dw $0F98, $0028  ; Safeties energy adjustment
+    dw $0F9A, $003B  ; Safeties energy adjustment
+    dw $0FC0, $002D  ; Safeties reserves adjustment
+    dw $1086, $FFFF  ; Safeties power bombs adjustment
+    dw #$FFFF
+
+preset_phantoonfirst_maridia_halfie_setup:
+    dw #preset_prkd19_maridia_halfie_setup
+    dw $09C2, $00C0  ; Health
+    dw $09C4, $012B  ; Max health
+    dw $0AF8, $FFFF  ; Samus subpixel X
+    dw $0F78, $7C7F  ; Safeties enabled
+    dw $0F7C, $0008  ; Safeties adjust only
+    dw $0F86, $FFE5  ; Safeties energy adjustment
+    dw $0F88, $FFD8  ; Safeties energy adjustment
+    dw $0F98, $0028  ; Safeties energy adjustment
+    dw $0F9A, $003B  ; Safeties energy adjustment
+    dw $0F9C, $006B  ; Safeties energy adjustment
+    dw $0FC0, $002D  ; Safeties reserves adjustment
+    dw $1086, $FFFF  ; Safeties power bombs adjustment
+    dw #$FFFF
+
+preset_phantoonfirst_maridia_draygon:
+    dw #preset_prkd19_maridia_draygon
+    dw $09C2, $0041  ; Health
+    dw $09C4, $012B  ; Max health
+    dw $0AF8, $FFFF  ; Samus subpixel X
+    dw $0F78, $FC7F  ; Safeties enabled
+    dw $0F7C, $0008  ; Safeties adjust only
+    dw $0F86, $FFE5  ; Safeties energy adjustment
+    dw $0F88, $FFD8  ; Safeties energy adjustment
+    dw $0F98, $0028  ; Safeties energy adjustment
+    dw $0F9A, $003B  ; Safeties energy adjustment
+    dw $0F9C, $006B  ; Safeties energy adjustment
+    dw $0F9E, $0046  ; Safeties energy adjustment
+    dw $0FC0, $002D  ; Safeties reserves adjustment
+    dw $1086, $FFFF  ; Safeties power bombs adjustment
+    dw #$FFFF
+
+preset_phantoonfirst_maridia_spikesuit_reverse_halfie:
+    dw #preset_prkd19_maridia_spikesuit_reverse_halfie
+    dw $09C2, $0031  ; Health
+    dw $09C4, $012B  ; Max health
+    dw $0AF8, $FFFF  ; Samus subpixel X
+    dw $0F78, $FC7F  ; Safeties enabled
+    dw $0F7A, $0001  ; Safeties enabled
+    dw $0F7C, $0008  ; Safeties adjust only
+    dw $0F86, $FFE5  ; Safeties energy adjustment
+    dw $0F88, $FFD8  ; Safeties energy adjustment
+    dw $0F98, $0028  ; Safeties energy adjustment
+    dw $0F9A, $003B  ; Safeties energy adjustment
+    dw $0F9C, $0043  ; Safeties energy adjustment
+    dw $0F9E, $0046  ; Safeties energy adjustment
+    dw $0FC0, $002D  ; Safeties reserves adjustment
+    dw $1086, $FFFF  ; Safeties power bombs adjustment
+    dw #$FFFF
+
+preset_prkd19_tourian_mother_brain_3:
+    dw #preset_prkd20_tourian_mother_brain_3
+    dw $09C8, $000F  ; Max missiles
+    dw $0AF8, $D000  ; Samus subpixel X
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_prkd20_tourian_zebes_escape:
+    dw #preset_pkrd_tourian_zebes_escape
+    dw $09C2, $018F  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $D874, $0504  ; Items
+    dw $D8B8, $2EEC  ; Doors
     dw #$FFFF
 
 preset_suitless_wrecked_ship_right_supers:
@@ -38093,114 +38586,6 @@ preset_100early_kraidicekronic_kraid_missiles_escape:
     dw $D882, $05FF  ; Items
     dw #$FFFF
 
-preset_prkd19_tourian_rinka_shaft:
-    dw #preset_prkd20_tourian_rinka_shaft
-    dw $09C6, $000F  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $0AF8, $D000  ; Samus subpixel X
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_prkd19_tourian_zeb_skip:
-    dw #preset_prkd20_tourian_zeb_skip
-    dw $09C6, $000F  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $0AF8, $D000  ; Samus subpixel X
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr21_maridia_toilet:
-    dw #preset_kpdr22_maridia_toilet
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0104  ; Items
-    dw $D8B6, $3008  ; Doors
-    dw $D8B8, $26ED  ; Doors
-    dw #$FFFF
-
-preset_kpdr22_maridia_sewers:
-    dw #preset_kpdr23_maridia_sewers
-    dw $09A8, $1009  ; Collected Beams
-    dw #$FFFF
-
-preset_prkd20_tourian_mother_brain_2:
-    dw #preset_pkrd_tourian_mother_brain_2
-    dw $09C2, $0176  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $09CE, $0005  ; Pbs
-    dw $D874, $0504  ; Items
-    dw $D8B8, $2EEC  ; Doors
-    dw #$FFFF
-
-preset_kpdr23_maridia_lower_maridia_gate:
-    dw #preset_kpdr23_maridia_sewers
-    dw $078D, $A528  ; DDB
-    dw $079B, $D21C  ; MDB
-    dw $090F, $8000  ; Screen subpixel X position
-    dw $0913, $5C00  ; Screen subpixel Y position
-    dw $0915, $0100  ; Screen Y position in pixels
-    dw $0919, $0100  ; Layer 2 Y position
-    dw $09C2, $0112  ; Health
-    dw $09CE, $0005  ; Pbs
-    dw $0AF6, $002E  ; Samus X
-    dw #$FFFF
-
-preset_kpdr25_maridia_sewers:
-    dw #preset_kpdr25_maridia_toilet
-    dw $078D, $A600  ; DDB
-    dw $079B, $D48E  ; MDB
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $3000  ; Screen subpixel Y position
-    dw $0915, $011C  ; Screen Y position in pixels
-    dw $0917, $0000  ; Layer 2 X position
-    dw $0919, $00D5  ; Layer 2 Y position
-    dw $0AF6, $00BB  ; Samus X
-    dw $0AFA, $018B  ; Samus Y
-    dw #$FFFF
-
-preset_phantoonfirst_kraid_kraid_etank:
-    dw #preset_phantoonfirst_kraid_kraid_kihunters_revisit
-    dw $078D, $916E  ; DDB
-    dw $079B, $A471  ; MDB
-    dw $07F3, $0012  ; Music Bank
-    dw $07F5, $0005  ; Music Track
-    dw $090F, $9000  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $5800  ; Screen subpixel Y position
-    dw $0915, $011B  ; Screen Y position in pixels
-    dw $0917, $0000  ; Layer 2 X position
-    dw $0919, $011B  ; Layer 2 Y position
-    dw $0AF6, $0057  ; Samus X
-    dw $0AFA, $018B  ; Samus Y
-    dw $D8B8, $2EED  ; Doors
-    dw #$FFFF
-
-preset_kpdr_maridia_cac_alley_east:
-    dw #preset_kpdr_maridia_whomple_jump
-    dw $078D, $A7E0  ; DDB
-    dw $079B, $D913  ; MDB
-    dw $090F, $8000  ; Screen subpixel X position
-    dw $0915, $011A  ; Screen Y position in pixels
-    dw $0919, $011A  ; Layer 2 Y position
-    dw $09C2, $004A  ; Health
-    dw $09C6, $000B  ; Missiles
-    dw $0AF6, $0030  ; Samus X
-    dw $0AFA, $018B  ; Samus Y
-    dw $0F7A, $003F  ; Safeties enabled
-    dw $0FAA, $0070  ; Safeties energy adjustment
-    dw $D8C2, $DC00  ; Doors
-    dw #$FFFF
-
-preset_pkrd_tourian_mother_brain_3:
-    dw #preset_pkrd_tourian_mother_brain_2
-    dw $09A6, $1009  ; Equipped Beams
-    dw $09C2, $01F3  ; Health
-    dw $09C6, $0000  ; Missiles
-    dw $09CE, $0000  ; Pbs
-    dw $0A76, $8000  ; Hyper beam
-    dw $D82C, $0203  ; Bosses
-    dw #$FFFF
-
 preset_gtmax_wrecked_ship_leaving_ws_etank:
     dw #preset_gtmax_wrecked_ship_sponge_bath
     dw $078D, $A27C  ; DDB
@@ -38219,6 +38604,65 @@ preset_gtmax_wrecked_ship_leaving_ws_etank:
     dw $0AFA, $008B  ; Samus Y
     dw $D880, $7F71  ; Items
     dw $D8C0, $C87C  ; Doors
+    dw #$FFFF
+
+preset_prkd20_tourian_escape_room_3:
+    dw #preset_pkrd_tourian_escape_room_3
+    dw $09C2, $018F  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $D874, $0504  ; Items
+    dw $D8B8, $2EEC  ; Doors
+    dw #$FFFF
+
+preset_pkrd_tourian_escape_room_4:
+    dw #preset_pkrd_tourian_escape_room_3
+    dw $078D, $AB04  ; DDB
+    dw $079B, $DEA7  ; MDB
+    dw $090F, $3000  ; Screen subpixel X position
+    dw $0911, $0500  ; Screen X position in pixels
+    dw $0913, $4C00  ; Screen subpixel Y position
+    dw $0915, $001C  ; Screen Y position in pixels
+    dw $0917, $03C0  ; Layer 2 X position
+    dw $0919, $0015  ; Layer 2 Y position
+    dw $0AF6, $05D6  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw #$FFFF
+
+preset_pkrd_tourian_escape_climb:
+    dw #preset_pkrd_tourian_escape_room_3
+    dw $078D, $AB1C  ; DDB
+    dw $079B, $DEDE  ; MDB
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $00F1  ; Screen X position in pixels
+    dw $0913, $A400  ; Screen subpixel Y position
+    dw $0915, $00FB  ; Screen Y position in pixels
+    dw $0917, $00B4  ; Layer 2 X position
+    dw $0919, $00BC  ; Layer 2 Y position
+    dw $09C2, $0199  ; Health
+    dw $0AF6, $0151  ; Samus X
+    dw #$FFFF
+
+preset_pkrd_tourian_escape_parlor:
+    dw #preset_pkrd_tourian_mother_brain_3
+    dw $078D, $AB34  ; DDB
+    dw $079B, $96BA  ; MDB
+    dw $07F3, $0024  ; Music Bank
+    dw $07F5, $0007  ; Music Track
+    dw $090F, $8FFF  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $6801  ; Screen subpixel Y position
+    dw $0917, $00C0  ; Layer 2 X position
+    dw $09C2, $0106  ; Health
+    dw $0AF6, $01DA  ; Samus X
+    dw $0AFA, $004B  ; Samus Y
+    dw $D820, $4FC5  ; Events
+    dw #$FFFF
+
+preset_prkd19_tourian_zebes_escape:
+    dw #preset_prkd20_tourian_zebes_escape
+    dw $09C8, $000F  ; Max missiles
+    dw $0AF8, $D000  ; Samus subpixel X
+    dw $D878, $0014  ; Items
     dw #$FFFF
 
 preset_suitless_wrecked_ship_left_supers:
@@ -38318,127 +38762,6 @@ preset_100early_kraidicekronic_ice_beam_gate_room:
     dw $D8B8, $EEEF  ; Doors
     dw #$FFFF
 
-preset_kpdr20_maridia_toilet:
-    dw #preset_kpdr21_maridia_toilet
-    dw $09C6, $000F  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_prkd19_tourian_mother_brain_2:
-    dw #preset_prkd20_tourian_mother_brain_2
-    dw $09C6, $0000  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $0AF8, $D000  ; Samus subpixel X
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_prkd20_tourian_mother_brain_3:
-    dw #preset_pkrd_tourian_mother_brain_3
-    dw $09C2, $018F  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0504  ; Items
-    dw $D8B8, $2EEC  ; Doors
-    dw #$FFFF
-
-preset_kpdr21_maridia_sewers:
-    dw #preset_kpdr22_maridia_sewers
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0104  ; Items
-    dw $D8B6, $3008  ; Doors
-    dw $D8B8, $26ED  ; Doors
-    dw #$FFFF
-
-preset_kpdr22_maridia_lower_maridia_gate:
-    dw #preset_kpdr23_maridia_lower_maridia_gate
-    dw $09A8, $1009  ; Collected Beams
-    dw #$FFFF
-
-preset_kpdr23_upper_norfair_revisit_ice_beam_gates:
-    dw #preset_kpdr23_maridia_lower_maridia_gate
-    dw $078D, $9246  ; DDB
-    dw $079B, $A7DE  ; MDB
-    dw $07F3, $0015  ; Music Bank
-    dw $0913, $0000  ; Screen subpixel Y position
-    dw $0915, $0238  ; Screen Y position in pixels
-    dw $0919, $01AA  ; Layer 2 Y position
-    dw $09CA, $0008  ; Supers
-    dw $09D2, $0002  ; Currently selected item
-    dw $0A1C, $009B  ; Samus position/state
-    dw $0A1E, $0000  ; More position/state
-    dw $0AF6, $0032  ; Samus X
-    dw $0AFA, $0395  ; Samus Y
-    dw #$FFFF
-
-preset_kpdr23_upper_norfair_revisit_ice_maze_up:
-    dw #preset_kpdr23_maridia_lower_maridia_gate
-    dw $078D, $931E  ; DDB
-    dw $079B, $A75D  ; MDB
-    dw $07F3, $0015  ; Music Bank
-    dw $090F, $6000  ; Screen subpixel X position
-    dw $0913, $E800  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $09CA, $0007  ; Supers
-    dw $0AF6, $0025  ; Samus X
-    dw $0AF8, $0000  ; Samus subpixel X
-    dw $0AFA, $008B  ; Samus Y
-    dw $0AFC, $FFFF  ; Samus subpixel Y
-    dw $D8B8, $2EEF  ; Doors
-    dw #$FFFF
-
-preset_kpdr25_maridia_lower_maridia_gate:
-    dw #preset_kpdr25_maridia_sewers
-    dw $078D, $A528  ; DDB
-    dw $079B, $D21C  ; MDB
-    dw $090F, $8000  ; Screen subpixel X position
-    dw $0913, $5C00  ; Screen subpixel Y position
-    dw $0915, $0100  ; Screen Y position in pixels
-    dw $0919, $0100  ; Layer 2 Y position
-    dw $09C2, $01F3  ; Health
-    dw $0AF6, $002E  ; Samus X
-    dw #$FFFF
-
-preset_phantoonfirst_kraid_leaving_kraid_etank:
-    dw #preset_phantoonfirst_kraid_kraid_etank
-    dw $078D, $914A  ; DDB
-    dw $079B, $A4B1  ; MDB
-    dw $090F, $6000  ; Screen subpixel X position
-    dw $0913, $1C00  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $0085  ; Samus X
-    dw $0AFA, $009B  ; Samus Y
-    dw $0F78, $1C7F  ; Safeties enabled
-    dw $11D8, $0001  ; Safeties refill
-    dw $D8B8, $2EEC  ; Doors
-    dw #$FFFF
-
-preset_kpdr_maridia_cac_alley_west:
-    dw #preset_kpdr_maridia_cac_alley_east
-    dw $078D, $A900  ; DDB
-    dw $079B, $DA2B  ; MDB
-    dw $090F, $B000  ; Screen subpixel X position
-    dw $0915, $0002  ; Screen Y position in pixels
-    dw $0919, $0002  ; Layer 2 Y position
-    dw $09C6, $000A  ; Missiles
-    dw $09CA, $0007  ; Supers
-    dw $0AF6, $005B  ; Samus X
-    dw $0AFA, $008B  ; Samus Y
-    dw #$FFFF
-
-preset_pkrd_tourian_zebes_escape:
-    dw #preset_pkrd_tourian_mother_brain_3
-    dw $09C2, $01B7  ; Health
-    dw $0A1C, $009B  ; Samus position/state
-    dw $0A1E, $0000  ; More position/state
-    dw $0AF6, $0025  ; Samus X
-    dw $0AFA, $009E  ; Samus Y
-    dw $D820, $4FC5  ; Events
-    dw #$FFFF
-
 preset_gtmax_wrecked_ship_reverse_spiky_room:
     dw #preset_gtmax_wrecked_ship_leaving_ws_etank
     dw $078D, $A288  ; DDB
@@ -38469,6 +38792,114 @@ preset_gtmax_wrecked_ship_shaft_to_attic:
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $01DB  ; Samus X
+    dw #$FFFF
+
+preset_prkd19_tourian_escape_room_3:
+    dw #preset_prkd20_tourian_escape_room_3
+    dw $09C8, $000F  ; Max missiles
+    dw $0AF8, $D000  ; Samus subpixel X
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr20_upper_norfair_revisit_ice_beam_gates:
+    dw #preset_kpdr21_upper_norfair_revisit_ice_beam_gates
+    dw $09C6, $000F  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr25_lower_norfair_prepillars:
+    dw #preset_kpdr25_lower_norfair_ln_main_hall
+    dw $090F, $9000  ; Screen subpixel X position
+    dw $0911, $0700  ; Screen X position in pixels
+    dw $0913, $E400  ; Screen subpixel Y position
+    dw $0917, $0540  ; Layer 2 X position
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $07A2  ; Samus X
+    dw $0AFA, $028B  ; Samus Y
+    dw #$FFFF
+
+preset_kpdr20_upper_norfair_revisit_ice_maze_up:
+    dw #preset_kpdr21_upper_norfair_revisit_ice_maze_up
+    dw $09C6, $000F  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr20_upper_norfair_revisit_ice_maze_down:
+    dw #preset_kpdr21_upper_norfair_revisit_ice_maze_down
+    dw $09C6, $000F  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr23_upper_norfair_revisit_ice_escape:
+    dw #preset_kpdr22_upper_norfair_revisit_ice_escape
+    dw $09A8, $100F  ; Collected Beams
+    dw #$FFFF
+
+preset_kpdr21_upper_norfair_revisit_ice_escape:
+    dw #preset_kpdr22_upper_norfair_revisit_ice_escape
+    dw $09C2, $00BD  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $D874, $0104  ; Items
+    dw $D8B6, $3008  ; Doors
+    dw $D8B8, $2EED  ; Doors
+    dw #$FFFF
+
+preset_kpdr22_upper_norfair_revisit_purple_shaft_upper:
+    dw #preset_kpdr22_upper_norfair_revisit_ice_escape
+    dw $078D, $971A  ; DDB
+    dw $079B, $ACB3  ; MDB
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0913, $E800  ; Screen subpixel Y position
+    dw $0915, $0300  ; Screen Y position in pixels
+    dw $0919, $0240  ; Layer 2 Y position
+    dw $0AF6, $0036  ; Samus X
+    dw $0AFA, $038B  ; Samus Y
+    dw #$FFFF
+
+preset_kpdr_maridia_cac_alley_west:
+    dw #preset_kpdr_maridia_cac_alley_east
+    dw $078D, $A900  ; DDB
+    dw $079B, $DA2B  ; MDB
+    dw $090F, $B000  ; Screen subpixel X position
+    dw $0915, $0002  ; Screen Y position in pixels
+    dw $0919, $0002  ; Layer 2 Y position
+    dw $09C6, $000A  ; Missiles
+    dw $09CA, $0007  ; Supers
+    dw $0AF6, $005B  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw #$FFFF
+
+preset_phantoonfirst_maridia_reverse_colosseum:
+    dw #preset_phantoonfirst_maridia_spikesuit_reverse_halfie
+    dw $0A68, $0000  ; Flash suit
+    dw #$FFFF
+
+preset_prkd20_tourian_escape_room_4:
+    dw #preset_pkrd_tourian_escape_room_4
+    dw $09C2, $018F  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $D874, $0504  ; Items
+    dw $D8B8, $2EEC  ; Doors
+    dw #$FFFF
+
+preset_prkd20_tourian_escape_climb:
+    dw #preset_pkrd_tourian_escape_climb
+    dw $09C2, $0171  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $D874, $0504  ; Items
+    dw $D8B8, $2EEC  ; Doors
+    dw #$FFFF
+
+preset_prkd20_tourian_escape_parlor:
+    dw #preset_pkrd_tourian_escape_parlor
+    dw $09C2, $00DE  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $D874, $0504  ; Items
+    dw $D8B8, $2EEC  ; Doors
     dw #$FFFF
 
 preset_suitless_wrecked_ship_sponge_bath:
@@ -38584,292 +39015,6 @@ preset_100early_kraidicekronic_ice_beam_snake_room:
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 
-preset_prkd19_tourian_mother_brain_3:
-    dw #preset_prkd20_tourian_mother_brain_3
-    dw $09C8, $000F  ; Max missiles
-    dw $0AF8, $D000  ; Samus subpixel X
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr20_maridia_sewers:
-    dw #preset_kpdr21_maridia_sewers
-    dw $09C6, $000F  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_prkd20_tourian_zebes_escape:
-    dw #preset_pkrd_tourian_zebes_escape
-    dw $09C2, $018F  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0504  ; Items
-    dw $D8B8, $2EEC  ; Doors
-    dw #$FFFF
-
-preset_kpdr21_maridia_lower_maridia_gate:
-    dw #preset_kpdr22_maridia_lower_maridia_gate
-    dw $09C2, $00AE  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0104  ; Items
-    dw $D8B6, $3008  ; Doors
-    dw $D8B8, $26ED  ; Doors
-    dw #$FFFF
-
-preset_kpdr22_upper_norfair_revisit_ice_beam_gates:
-    dw #preset_kpdr23_upper_norfair_revisit_ice_beam_gates
-    dw $09A8, $1009  ; Collected Beams
-    dw #$FFFF
-
-preset_kpdr25_maridia_business_center_revisit:
-    dw #preset_kpdr23_upper_norfair_revisit_ice_beam_gates
-    dw $09A6, $100B  ; Equipped Beams
-    dw $09A8, $100F  ; Collected Beams
-    dw $09C2, $01F3  ; Health
-    dw $09C6, $0009  ; Missiles
-    dw $09C8, $0019  ; Max missiles
-    dw $09CA, $0004  ; Supers
-    dw $09D2, $0000  ; Currently selected item
-    dw $D870, $0190  ; Items
-    dw $D876, $01A5  ; Items
-    dw $D8B8, $2EEF  ; Doors
-    dw #$FFFF
-
-preset_kpdr22_upper_norfair_revisit_ice_maze_up:
-    dw #preset_kpdr23_upper_norfair_revisit_ice_maze_up
-    dw $09A8, $1009  ; Collected Beams
-    dw #$FFFF
-
-preset_kpdr22_upper_norfair_revisit_ice_maze_down:
-    dw #preset_kpdr23_upper_norfair_revisit_ice_maze_up
-    dw $078D, $937E  ; DDB
-    dw $079B, $A890  ; MDB
-    dw $07F5, $0003  ; Music Track
-    dw $090F, $5000  ; Screen subpixel X position
-    dw $0913, $7000  ; Screen subpixel Y position
-    dw $0917, $0001  ; Layer 2 X position
-    dw $09A6, $100B  ; Equipped Beams
-    dw $09A8, $100B  ; Collected Beams
-    dw $09C2, $0121  ; Health
-    dw $0AF6, $00BA  ; Samus X
-    dw $D876, $01A5  ; Items
-    dw #$FFFF
-
-preset_phantoonfirst_kraid_leaving_kraids_lair:
-    dw #preset_phantoonfirst_kraid_leaving_kraid_etank
-    dw $078D, $916E  ; DDB
-    dw $079B, $A471  ; MDB
-    dw $090F, $C001  ; Screen subpixel X position
-    dw $0913, $F000  ; Screen subpixel Y position
-    dw $09C2, $00C1  ; Health
-    dw $09C6, $000D  ; Missiles
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $0025  ; Samus X
-    dw $0AFA, $008B  ; Samus Y
-    dw #$FFFF
-
-preset_phantoonfirst_maridia_maridia_tube_revisit:
-    dw #preset_prkd19_maridia_maridia_tube_revisit
-    dw $0AF8, $FFFF  ; Samus subpixel X
-    dw $0F78, $1C7F  ; Safeties enabled
-    dw $0F7C, $0008  ; Safeties adjust only
-    dw $0F86, $FFE5  ; Safeties energy adjustment
-    dw $0F96, $0039  ; Safeties energy adjustment
-    dw $0FC0, $002D  ; Safeties reserves adjustment
-    dw $1006, $0001  ; Safeties missiles adjustment
-    dw $1086, $FFFF  ; Safeties power bombs adjustment
-    dw $11D8, $0001  ; Safeties refill
-    dw #$FFFF
-
-preset_phantoonfirst_maridia_fish_tank:
-    dw #preset_prkd19_maridia_fish_tank
-    dw $0AF8, $FFFF  ; Samus subpixel X
-    dw $0F78, $1C7F  ; Safeties enabled
-    dw $0F7C, $0008  ; Safeties adjust only
-    dw $0F86, $FFE5  ; Safeties energy adjustment
-    dw $0F96, $0039  ; Safeties energy adjustment
-    dw $0FC0, $002D  ; Safeties reserves adjustment
-    dw $1006, $0001  ; Safeties missiles adjustment
-    dw $1086, $FFFF  ; Safeties power bombs adjustment
-    dw $11D8, $0001  ; Safeties refill
-    dw #$FFFF
-
-preset_phantoonfirst_maridia_mt_everest:
-    dw #preset_prkd19_maridia_mt_everest
-    dw $0AF8, $FFFF  ; Samus subpixel X
-    dw $0F78, $1C7F  ; Safeties enabled
-    dw $0F7C, $0008  ; Safeties adjust only
-    dw $0F86, $FFE5  ; Safeties energy adjustment
-    dw $0F96, $0039  ; Safeties energy adjustment
-    dw $0FC0, $002D  ; Safeties reserves adjustment
-    dw $1006, $0001  ; Safeties missiles adjustment
-    dw $1086, $FFFF  ; Safeties power bombs adjustment
-    dw $11D8, $0001  ; Safeties refill
-    dw #$FFFF
-
-preset_phantoonfirst_maridia_crab_shaft:
-    dw #preset_prkd19_maridia_crab_shaft
-    dw $0AF8, $FFFF  ; Samus subpixel X
-    dw $0F78, $3C7F  ; Safeties enabled
-    dw $0F7C, $0008  ; Safeties adjust only
-    dw $0F86, $FFE5  ; Safeties energy adjustment
-    dw $0F96, $0039  ; Safeties energy adjustment
-    dw $0F9A, $003B  ; Safeties energy adjustment
-    dw $0FC0, $002D  ; Safeties reserves adjustment
-    dw $1006, $0001  ; Safeties missiles adjustment
-    dw $1086, $FFFF  ; Safeties power bombs adjustment
-    dw $11D8, $FFC5  ; Safeties refill
-    dw #$FFFF
-
-preset_phantoonfirst_maridia_aqueduct:
-    dw #preset_prkd19_maridia_aqueduct
-    dw $0AF8, $FFFF  ; Samus subpixel X
-    dw $0F78, $3C7F  ; Safeties enabled
-    dw $0F7C, $0008  ; Safeties adjust only
-    dw $0F86, $FFE5  ; Safeties energy adjustment
-    dw $0F96, $0039  ; Safeties energy adjustment
-    dw $0F9A, $003B  ; Safeties energy adjustment
-    dw $0FC0, $002D  ; Safeties reserves adjustment
-    dw $1006, $0001  ; Safeties missiles adjustment
-    dw $1086, $FFFF  ; Safeties power bombs adjustment
-    dw $11D8, $FFC5  ; Safeties refill
-    dw #$FFFF
-
-preset_phantoonfirst_maridia_botwoon_hallway:
-    dw #preset_prkd19_maridia_botwoon_hallway
-    dw $0AF8, $FFFF  ; Samus subpixel X
-    dw $0F78, $3C7F  ; Safeties enabled
-    dw $0F7C, $0008  ; Safeties adjust only
-    dw $0F86, $FFE5  ; Safeties energy adjustment
-    dw $0F96, $0039  ; Safeties energy adjustment
-    dw $0F9A, $003B  ; Safeties energy adjustment
-    dw $0FC0, $002D  ; Safeties reserves adjustment
-    dw $1006, $0001  ; Safeties missiles adjustment
-    dw $1086, $FFFF  ; Safeties power bombs adjustment
-    dw $11D8, $FFC5  ; Safeties refill
-    dw #$FFFF
-
-preset_phantoonfirst_maridia_botwoon:
-    dw #preset_prkd19_maridia_botwoon
-    dw $0AF8, $FFFF  ; Samus subpixel X
-    dw $0F78, $3C7F  ; Safeties enabled
-    dw $0F7C, $0008  ; Safeties adjust only
-    dw $0F86, $FFE5  ; Safeties energy adjustment
-    dw $0F96, $0039  ; Safeties energy adjustment
-    dw $0F9A, $003B  ; Safeties energy adjustment
-    dw $0FC0, $002D  ; Safeties reserves adjustment
-    dw $1006, $0001  ; Safeties missiles adjustment
-    dw $1086, $FFFF  ; Safeties power bombs adjustment
-    dw $11D8, $FFC5  ; Safeties refill
-    dw #$FFFF
-
-preset_phantoonfirst_maridia_botwoon_etank:
-    dw #preset_prkd19_maridia_botwoon_etank
-    dw $09C6, $000F  ; Missiles
-    dw $0AF8, $FFFF  ; Samus subpixel X
-    dw $0F78, $3C7F  ; Safeties enabled
-    dw $0F7C, $0008  ; Safeties adjust only
-    dw $0F86, $FFE5  ; Safeties energy adjustment
-    dw $0F98, $0028  ; Safeties energy adjustment
-    dw $0F9A, $003B  ; Safeties energy adjustment
-    dw $0FC0, $002D  ; Safeties reserves adjustment
-    dw $1086, $FFFF  ; Safeties power bombs adjustment
-    dw #$FFFF
-
-preset_phantoonfirst_maridia_halfie_setup:
-    dw #preset_prkd19_maridia_halfie_setup
-    dw $09C2, $00C0  ; Health
-    dw $09C4, $012B  ; Max health
-    dw $0AF8, $FFFF  ; Samus subpixel X
-    dw $0F78, $7C7F  ; Safeties enabled
-    dw $0F7C, $0008  ; Safeties adjust only
-    dw $0F86, $FFE5  ; Safeties energy adjustment
-    dw $0F98, $0028  ; Safeties energy adjustment
-    dw $0F9A, $003B  ; Safeties energy adjustment
-    dw $0F9C, $006B  ; Safeties energy adjustment
-    dw $0FC0, $002D  ; Safeties reserves adjustment
-    dw $1086, $FFFF  ; Safeties power bombs adjustment
-    dw #$FFFF
-
-preset_phantoonfirst_maridia_draygon:
-    dw #preset_prkd19_maridia_draygon
-    dw $09C2, $0041  ; Health
-    dw $09C4, $012B  ; Max health
-    dw $0AF8, $FFFF  ; Samus subpixel X
-    dw $0F78, $FC7F  ; Safeties enabled
-    dw $0F7C, $0008  ; Safeties adjust only
-    dw $0F86, $FFE5  ; Safeties energy adjustment
-    dw $0F98, $0028  ; Safeties energy adjustment
-    dw $0F9A, $003B  ; Safeties energy adjustment
-    dw $0F9C, $006B  ; Safeties energy adjustment
-    dw $0F9E, $0046  ; Safeties energy adjustment
-    dw $0FC0, $002D  ; Safeties reserves adjustment
-    dw $1086, $FFFF  ; Safeties power bombs adjustment
-    dw #$FFFF
-
-preset_phantoonfirst_maridia_spikesuit_reverse_halfie:
-    dw #preset_prkd19_maridia_spikesuit_reverse_halfie
-    dw $09C2, $0031  ; Health
-    dw $09C4, $012B  ; Max health
-    dw $0AF8, $FFFF  ; Samus subpixel X
-    dw $0F78, $FC7F  ; Safeties enabled
-    dw $0F7A, $0001  ; Safeties enabled
-    dw $0F7C, $0008  ; Safeties adjust only
-    dw $0F86, $FFE5  ; Safeties energy adjustment
-    dw $0F98, $0028  ; Safeties energy adjustment
-    dw $0F9A, $003B  ; Safeties energy adjustment
-    dw $0F9C, $0043  ; Safeties energy adjustment
-    dw $0F9E, $0046  ; Safeties energy adjustment
-    dw $0FC0, $002D  ; Safeties reserves adjustment
-    dw $1086, $FFFF  ; Safeties power bombs adjustment
-    dw #$FFFF
-
-preset_kpdr_maridia_plasma_spark:
-    dw #preset_kpdr_maridia_cac_alley_west
-    dw $078D, $A93C  ; DDB
-    dw $079B, $D5EC  ; MDB
-    dw $090F, $2000  ; Screen subpixel X position
-    dw $0913, $7400  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $09CA, $0008  ; Supers
-    dw $0AF6, $001F  ; Samus X
-    dw #$FFFF
-
-preset_kpdr_maridia_plasma_climb:
-    dw #preset_kpdr20_maridia_plasma_climb
-    dw $09C2, $001F  ; Health
-    dw $0F78, $D27B  ; Safeties enabled
-    dw $0F7A, $007F  ; Safeties enabled
-    dw $0FA6, $0046  ; Safeties energy adjustment
-    dw $0FA8, $0028  ; Safeties energy adjustment
-    dw $0FAA, $0070  ; Safeties energy adjustment
-    dw $0FAC, $002B  ; Safeties energy adjustment
-    dw $1118, $0006  ; Safeties unequip beams
-    dw $1120, $0006  ; Safeties unequip beams
-    dw $1180, $0006  ; Safeties stage
-    dw $D876, $0121  ; Items
-    dw $D878, $001C  ; Items
-    dw $D8B0, $3000  ; Doors
-    dw $D8B8, $26EC  ; Doors
-    dw #$FFFF
-
-preset_pkrd_tourian_escape_room_3:
-    dw #preset_pkrd_tourian_zebes_escape
-    dw $078D, $AAEC  ; DDB
-    dw $079B, $DE7A  ; MDB
-    dw $07F3, $0024  ; Music Bank
-    dw $07F5, $0007  ; Music Track
-    dw $090F, $F000  ; Screen subpixel X position
-    dw $0913, $CC00  ; Screen subpixel Y position
-    dw $0915, $0100  ; Screen Y position in pixels
-    dw $0919, $00C0  ; Layer 2 Y position
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $00DF  ; Samus X
-    dw $0AFA, $018B  ; Samus Y
-    dw #$FFFF
-
 preset_gtmax_wrecked_ship_attic:
     dw #preset_gtmax_wrecked_ship_shaft_to_attic
     dw $078D, $A2D0  ; DDB
@@ -38919,6 +39064,141 @@ preset_gtmax_wrecked_ship_attic_revisit:
     dw $0AF6, $00AB  ; Samus X
     dw $D880, $7F79  ; Items
     dw $D8C0, $CA7C  ; Doors
+    dw #$FFFF
+
+preset_kpdr25_lower_norfair_fast_pillars_setup:
+    dw #preset_kpdr25_lower_norfair_prepillars
+    dw $078D, $989A  ; DDB
+    dw $079B, $B3A5  ; MDB
+    dw $090F, $8001  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $7000  ; Screen subpixel Y position
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $0180  ; Layer 2 Y position
+    dw $09C6, $000A  ; Missiles
+    dw $09CE, $0005  ; Pbs
+    dw $0AF6, $0025  ; Samus X
+    dw #$FFFF
+
+preset_prkd19_tourian_escape_room_4:
+    dw #preset_prkd20_tourian_escape_room_4
+    dw $09C8, $000F  ; Max missiles
+    dw $0AF8, $D000  ; Samus subpixel X
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_prkd19_tourian_escape_climb:
+    dw #preset_prkd20_tourian_escape_climb
+    dw $09C8, $000F  ; Max missiles
+    dw $0AF8, $D000  ; Samus subpixel X
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_prkd19_tourian_escape_parlor:
+    dw #preset_prkd20_tourian_escape_parlor
+    dw $09C8, $000F  ; Max missiles
+    dw $0AF8, $D000  ; Samus subpixel X
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr20_upper_norfair_revisit_ice_escape:
+    dw #preset_kpdr21_upper_norfair_revisit_ice_escape
+    dw $09C6, $000F  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr23_upper_norfair_revisit_purple_shaft_upper:
+    dw #preset_kpdr22_upper_norfair_revisit_purple_shaft_upper
+    dw $09A8, $100F  ; Collected Beams
+    dw #$FFFF
+
+preset_kpdr21_upper_norfair_revisit_purple_shaft_upper:
+    dw #preset_kpdr22_upper_norfair_revisit_purple_shaft_upper
+    dw $09C2, $00BD  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $D874, $0104  ; Items
+    dw $D8B6, $3008  ; Doors
+    dw $D8B8, $2EED  ; Doors
+    dw #$FFFF
+
+preset_kpdr22_upper_norfair_revisit_croc_speedway_lower:
+    dw #preset_kpdr22_upper_norfair_revisit_purple_shaft_upper
+    dw $078D, $9336  ; DDB
+    dw $079B, $A8F8  ; MDB
+    dw $090F, $6781  ; Screen subpixel X position
+    dw $0913, $0800  ; Screen subpixel Y position
+    dw $0AF6, $00DD  ; Samus X
+    dw #$FFFF
+
+preset_kpdr22_upper_norfair_revisit_magdollite_tunnel_upper:
+    dw #preset_kpdr22_upper_norfair_revisit_ice_escape
+    dw $078D, $9576  ; DDB
+    dw $079B, $AEDF  ; MDB
+    dw $090F, $B001  ; Screen subpixel X position
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $01F4  ; Screen Y position in pixels
+    dw $0919, $0177  ; Layer 2 Y position
+    dw $0AF6, $0059  ; Samus X
+    dw #$FFFF
+
+preset_kpdr22_upper_norfair_revisit_spiky_acid_snakes_lower:
+    dw #preset_kpdr22_upper_norfair_revisit_ice_maze_down
+    dw $078D, $93C6  ; DDB
+    dw $079B, $AFCE  ; MDB
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $A000  ; Screen subpixel X position
+    dw $0911, $02A3  ; Screen X position in pixels
+    dw $0913, $7400  ; Screen subpixel Y position
+    dw $0917, $01FA  ; Layer 2 X position
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $030E  ; Samus X
+    dw #$FFFF
+
+preset_kpdr_maridia_plasma_spark:
+    dw #preset_kpdr_maridia_cac_alley_west
+    dw $078D, $A93C  ; DDB
+    dw $079B, $D5EC  ; MDB
+    dw $090F, $2000  ; Screen subpixel X position
+    dw $0913, $7400  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09CA, $0008  ; Supers
+    dw $0AF6, $001F  ; Samus X
+    dw #$FFFF
+
+preset_kpdr_maridia_plasma_climb:
+    dw #preset_kpdr20_maridia_plasma_climb
+    dw $09C2, $001F  ; Health
+    dw $0F78, $D27B  ; Safeties enabled
+    dw $0F7A, $007F  ; Safeties enabled
+    dw $0FA6, $0046  ; Safeties energy adjustment
+    dw $0FA8, $0028  ; Safeties energy adjustment
+    dw $0FAA, $0070  ; Safeties energy adjustment
+    dw $0FAC, $002B  ; Safeties energy adjustment
+    dw $1118, $0006  ; Safeties unequip beams
+    dw $1120, $0006  ; Safeties unequip beams
+    dw $1180, $0006  ; Safeties stage
+    dw $D876, $0121  ; Items
+    dw $D878, $001C  ; Items
+    dw $D8B0, $3000  ; Doors
+    dw $D8B8, $26EC  ; Doors
+    dw #$FFFF
+
+preset_phantoonfirst_maridia_reverse_halfie_climb:
+    dw #preset_phantoonfirst_maridia_reverse_colosseum
+    dw $078D, $A834  ; DDB
+    dw $079B, $D72A  ; MDB
+    dw $090F, $8000  ; Screen subpixel X position
+    dw $0913, $F001  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09C2, $FFC1  ; Health
+    dw $0AF6, $0042  ; Samus X
+    dw $0F7A, $0003  ; Safeties enabled
+    dw $0FA0, $002D  ; Safeties energy adjustment
+    dw $0FA2, $0043  ; Safeties energy adjustment
     dw #$FFFF
 
 preset_suitless_wrecked_ship_spiky_room_revisit:
@@ -39023,82 +39303,71 @@ preset_100early_kraidicekronic_snake_room_revisit:
     dw $D876, $1FF7  ; Items
     dw #$FFFF
 
-preset_prkd19_tourian_zebes_escape:
-    dw #preset_prkd20_tourian_zebes_escape
-    dw $09C8, $000F  ; Max missiles
-    dw $0AF8, $D000  ; Samus subpixel X
-    dw $D878, $0014  ; Items
+preset_gtmax_wrecked_ship_pancake_room:
+    dw #preset_gtmax_wrecked_ship_attic_revisit
+    dw $078D, $A1E0  ; DDB
+    dw $079B, $93FE  ; MDB
+    dw $07F3, $000C  ; Music Bank
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $C000  ; Screen subpixel X position
+    dw $0911, $0200  ; Screen X position in pixels
+    dw $0913, $F800  ; Screen subpixel Y position
+    dw $0915, $01FC  ; Screen Y position in pixels
+    dw $0917, $0100  ; Layer 2 X position
+    dw $09C6, $00E3  ; Missiles
+    dw $09C8, $00FA  ; Max missiles
+    dw $09CA, $001B  ; Supers
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $02BD  ; Samus X
+    dw $0AFA, $028B  ; Samus Y
+    dw $D870, $009C  ; Items
+    dw $D8C0, $CB7C  ; Doors
     dw #$FFFF
 
-preset_kpdr20_maridia_lower_maridia_gate:
-    dw #preset_kpdr21_maridia_lower_maridia_gate
+preset_kpdr25_lower_norfair_worst_room_in_the_game:
+    dw #preset_kpdr25_lower_norfair_fast_pillars_setup
+    dw $078D, $9912  ; DDB
+    dw $079B, $B457  ; MDB
+    dw $090F, $64FF  ; Screen subpixel X position
+    dw $0911, $0300  ; Screen X position in pixels
+    dw $0913, $F800  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $0240  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09C2, $017B  ; Health
+    dw $0AF6, $03DB  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw #$FFFF
+
+preset_kpdr25_lower_norfair_amphitheatre:
+    dw #preset_kpdr25_lower_norfair_fast_pillars_setup
+    dw $078D, $994E  ; DDB
+    dw $079B, $B4AD  ; MDB
+    dw $090F, $C000  ; Screen subpixel X position
+    dw $0913, $A400  ; Screen subpixel Y position
+    dw $0915, $011D  ; Screen Y position in pixels
+    dw $0919, $00D5  ; Layer 2 Y position
+    dw $09C2, $017B  ; Health
+    dw $09CE, $0004  ; Pbs
+    dw $0AF6, $00A7  ; Samus X
+    dw $0AFA, $018B  ; Samus Y
+    dw #$FFFF
+
+preset_kpdr20_upper_norfair_revisit_purple_shaft_upper:
+    dw #preset_kpdr21_upper_norfair_revisit_purple_shaft_upper
     dw $09C6, $000F  ; Missiles
     dw $09C8, $000F  ; Max missiles
     dw $D878, $0014  ; Items
     dw #$FFFF
 
-preset_kpdr21_upper_norfair_revisit_ice_beam_gates:
-    dw #preset_kpdr22_upper_norfair_revisit_ice_beam_gates
-    dw $09C2, $00AE  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0104  ; Items
-    dw $D8B6, $3008  ; Doors
-    dw $D8B8, $26ED  ; Doors
-    dw #$FFFF
-
-preset_prkd20_tourian_escape_room_3:
-    dw #preset_pkrd_tourian_escape_room_3
-    dw $09C2, $018F  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0504  ; Items
-    dw $D8B8, $2EEC  ; Doors
-    dw #$FFFF
-
-preset_kpdr25_lower_norfair_magdollite_tunnel:
-    dw #preset_kpdr25_maridia_business_center_revisit
-    dw $078D, $9576  ; DDB
-    dw $079B, $AEDF  ; MDB
-    dw $090F, $B001  ; Screen subpixel X position
-    dw $0915, $01F4  ; Screen Y position in pixels
-    dw $0919, $0177  ; Layer 2 Y position
-    dw $0AF6, $0059  ; Samus X
-    dw $0AFA, $028B  ; Samus Y
-    dw #$FFFF
-
-preset_kpdr25_lower_norfair_ln_main_hall:
-    dw #preset_kpdr25_maridia_business_center_revisit
-    dw $078D, $96F6  ; DDB
-    dw $079B, $B236  ; MDB
-    dw $07F3, $0018  ; Music Bank
-    dw $090F, $E000  ; Screen subpixel X position
-    dw $0911, $0400  ; Screen X position in pixels
-    dw $0915, $0200  ; Screen Y position in pixels
-    dw $0917, $0300  ; Layer 2 X position
-    dw $0919, $0301  ; Layer 2 Y position
-    dw $09C2, $01F0  ; Health
-    dw $09C6, $0008  ; Missiles
-    dw $09CE, $0004  ; Pbs
-    dw $0AF6, $0480  ; Samus X
-    dw $0AFA, $0288  ; Samus Y
-    dw $D8BA, $01F1  ; Doors
-    dw #$FFFF
-
-preset_kpdr21_upper_norfair_revisit_ice_maze_up:
-    dw #preset_kpdr22_upper_norfair_revisit_ice_maze_up
-    dw $09C2, $00AE  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0104  ; Items
-    dw $D8B6, $3008  ; Doors
-    dw $D8B8, $2EED  ; Doors
-    dw #$FFFF
-
-preset_kpdr23_upper_norfair_revisit_ice_maze_down:
-    dw #preset_kpdr22_upper_norfair_revisit_ice_maze_down
+preset_kpdr23_upper_norfair_revisit_croc_speedway_lower:
+    dw #preset_kpdr22_upper_norfair_revisit_croc_speedway_lower
     dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
-preset_kpdr21_upper_norfair_revisit_ice_maze_down:
-    dw #preset_kpdr22_upper_norfair_revisit_ice_maze_down
+preset_kpdr21_upper_norfair_revisit_croc_speedway_lower:
+    dw #preset_kpdr22_upper_norfair_revisit_croc_speedway_lower
     dw $09C2, $00BD  ; Health
     dw $09C4, $018F  ; Max health
     dw $D874, $0104  ; Items
@@ -39106,25 +39375,67 @@ preset_kpdr21_upper_norfair_revisit_ice_maze_down:
     dw $D8B8, $2EED  ; Doors
     dw #$FFFF
 
-preset_kpdr22_upper_norfair_revisit_ice_escape:
-    dw #preset_kpdr22_upper_norfair_revisit_ice_maze_down
-    dw $078D, $935A  ; DDB
-    dw $079B, $A8B9  ; MDB
-    dw $07F5, $0005  ; Music Track
-    dw $090F, $E000  ; Screen subpixel X position
-    dw $0913, $9000  ; Screen subpixel Y position
-    dw $0915, $0200  ; Screen Y position in pixels
-    dw $0917, $0000  ; Layer 2 X position
-    dw $0919, $0180  ; Layer 2 Y position
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $00C5  ; Samus X
-    dw $0AFA, $028B  ; Samus Y
+preset_kpdr23_upper_norfair_revisit_magdollite_tunnel_upper:
+    dw #preset_kpdr22_upper_norfair_revisit_magdollite_tunnel_upper
+    dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
-preset_phantoonfirst_maridia_reverse_colosseum:
-    dw #preset_phantoonfirst_maridia_spikesuit_reverse_halfie
-    dw $0A68, $0000  ; Flash suit
+preset_kpdr21_upper_norfair_revisit_magdollite_tunnel_upper:
+    dw #preset_kpdr22_upper_norfair_revisit_magdollite_tunnel_upper
+    dw $09C2, $00BD  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $D874, $0104  ; Items
+    dw $D8B6, $3008  ; Doors
+    dw $D8B8, $2EED  ; Doors
+    dw #$FFFF
+
+preset_kpdr23_upper_norfair_revisit_spiky_acid_snakes_lower:
+    dw #preset_kpdr22_upper_norfair_revisit_spiky_acid_snakes_lower
+    dw $09A8, $100F  ; Collected Beams
+    dw #$FFFF
+
+preset_kpdr21_upper_norfair_revisit_spiky_acid_snakes_lower:
+    dw #preset_kpdr22_upper_norfair_revisit_spiky_acid_snakes_lower
+    dw $09C2, $00BD  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $D874, $0104  ; Items
+    dw $D8B6, $3008  ; Doors
+    dw $D8B8, $2EED  ; Doors
+    dw #$FFFF
+
+preset_kpdr22_upper_norfair_revisit_kronic_boost_upper:
+    dw #preset_kpdr22_upper_norfair_revisit_spiky_acid_snakes_lower
+    dw $078D, $96BA  ; DDB
+    dw $079B, $AEB4  ; MDB
+    dw $090F, $8000  ; Screen subpixel X position
+    dw $0911, $0200  ; Screen X position in pixels
+    dw $0913, $9000  ; Screen subpixel Y position
+    dw $0917, $0180  ; Layer 2 X position
+    dw $0AF6, $02B7  ; Samus X
+    dw #$FFFF
+
+preset_kpdr22_upper_norfair_revisit_kronic_boost_lower:
+    dw #preset_kpdr22_upper_norfair_revisit_spiky_acid_snakes_lower
+    dw $078D, $9792  ; DDB
+    dw $079B, $AFFB  ; MDB
+    dw $090F, $B000  ; Screen subpixel X position
+    dw $0911, $0300  ; Screen X position in pixels
+    dw $0913, $8C00  ; Screen subpixel Y position
+    dw $0917, $0240  ; Layer 2 X position
+    dw $09D2, $0003  ; Currently selected item
+    dw $0AF6, $03BC  ; Samus X
+    dw #$FFFF
+
+preset_kpdr22_lower_norfair_ln_main_hall:
+    dw #preset_kpdr25_lower_norfair_ln_main_hall
+    dw $09A8, $100B  ; Collected Beams
+    dw $09C2, $011E  ; Health
+    dw $09C6, $0011  ; Missiles
+    dw $09C8, $0014  ; Max missiles
+    dw $09CA, $0007  ; Supers
+    dw $0AF8, $0000  ; Samus subpixel X
+    dw $0AFC, $FFFF  ; Samus subpixel Y
+    dw $D870, $0180  ; Items
     dw #$FFFF
 
 preset_kpdr_maridia_plasma_beam:
@@ -39148,9 +39459,9 @@ preset_kpdr_maridia_plasma_spark_revisit:
     dw $09C2, $0056  ; Health
     dw $0F78, $C27B  ; Safeties enabled
     dw $0F7A, $007E  ; Safeties enabled
-    dw $0FA6, $0046  ; Safeties energy adjustment
+    dw $0FA6, $0040  ; Safeties energy adjustment
     dw $0FA8, $0028  ; Safeties energy adjustment
-    dw $0FAA, $0070  ; Safeties energy adjustment
+    dw $0FAA, $006A  ; Safeties energy adjustment
     dw $0FAC, $002B  ; Safeties energy adjustment
     dw $1118, $0006  ; Safeties unequip beams
     dw $1120, $0006  ; Safeties unequip beams
@@ -39161,70 +39472,39 @@ preset_kpdr_maridia_plasma_spark_revisit:
     dw $D8B8, $26EC  ; Doors
     dw #$FFFF
 
-preset_pkrd_tourian_escape_room_4:
-    dw #preset_pkrd_tourian_escape_room_3
-    dw $078D, $AB04  ; DDB
-    dw $079B, $DEA7  ; MDB
-    dw $090F, $3000  ; Screen subpixel X position
-    dw $0911, $0500  ; Screen X position in pixels
-    dw $0913, $4C00  ; Screen subpixel Y position
-    dw $0915, $001C  ; Screen Y position in pixels
-    dw $0917, $03C0  ; Layer 2 X position
-    dw $0919, $0015  ; Layer 2 Y position
-    dw $0AF6, $05D6  ; Samus X
-    dw $0AFA, $008B  ; Samus Y
-    dw #$FFFF
-
-preset_pkrd_tourian_escape_climb:
-    dw #preset_pkrd_tourian_escape_room_3
-    dw $078D, $AB1C  ; DDB
-    dw $079B, $DEDE  ; MDB
+preset_phantoonfirst_maridia_reverse_botwoon_etank:
+    dw #preset_phantoonfirst_maridia_reverse_halfie_climb
+    dw $078D, $A7E0  ; DDB
+    dw $079B, $D913  ; MDB
     dw $090F, $0000  ; Screen subpixel X position
-    dw $0911, $00F1  ; Screen X position in pixels
-    dw $0913, $A400  ; Screen subpixel Y position
-    dw $0915, $00FB  ; Screen Y position in pixels
-    dw $0917, $00B4  ; Layer 2 X position
-    dw $0919, $00BC  ; Layer 2 Y position
-    dw $09C2, $0199  ; Health
-    dw $0AF6, $0151  ; Samus X
-    dw #$FFFF
-
-preset_pkrd_tourian_escape_parlor:
-    dw #preset_pkrd_tourian_mother_brain_3
-    dw $078D, $AB34  ; DDB
-    dw $079B, $96BA  ; MDB
-    dw $07F3, $0024  ; Music Bank
-    dw $07F5, $0007  ; Music Track
-    dw $090F, $8FFF  ; Screen subpixel X position
-    dw $0911, $0100  ; Screen X position in pixels
-    dw $0913, $6801  ; Screen subpixel Y position
-    dw $0917, $00C0  ; Layer 2 X position
-    dw $09C2, $0106  ; Health
-    dw $0AF6, $01DA  ; Samus X
-    dw $0AFA, $004B  ; Samus Y
-    dw $D820, $4FC5  ; Events
-    dw #$FFFF
-
-preset_gtmax_wrecked_ship_pancake_room:
-    dw #preset_gtmax_wrecked_ship_attic_revisit
-    dw $078D, $A1E0  ; DDB
-    dw $079B, $93FE  ; MDB
-    dw $07F3, $000C  ; Music Bank
-    dw $07F5, $0005  ; Music Track
-    dw $090F, $C000  ; Screen subpixel X position
-    dw $0911, $0200  ; Screen X position in pixels
-    dw $0913, $F800  ; Screen subpixel Y position
-    dw $0915, $01FC  ; Screen Y position in pixels
-    dw $0917, $0100  ; Layer 2 X position
-    dw $09C6, $00E3  ; Missiles
-    dw $09C8, $00FA  ; Max missiles
-    dw $09CA, $001B  ; Supers
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $02BD  ; Samus X
+    dw $0913, $2800  ; Screen subpixel Y position
+    dw $0915, $0200  ; Screen Y position in pixels
+    dw $0919, $0200  ; Layer 2 Y position
+    dw $0AF6, $00AE  ; Samus X
     dw $0AFA, $028B  ; Samus Y
-    dw $D870, $009C  ; Items
-    dw $D8C0, $CB7C  ; Doors
+    dw #$FFFF
+
+preset_phantoonfirst_maridia_reverse_botwoon_hallway:
+    dw #preset_phantoonfirst_maridia_reverse_halfie_climb
+    dw $078D, $A84C  ; DDB
+    dw $079B, $D95E  ; MDB
+    dw $07F5, $0003  ; Music Track
+    dw $090F, $1F80  ; Screen subpixel X position
+    dw $0913, $D800  ; Screen subpixel Y position
+    dw $0AF6, $0025  ; Samus X
+    dw $0AFA, $00BB  ; Samus Y
+    dw #$FFFF
+
+preset_phantoonfirst_maridia_reverse_crab_shaft:
+    dw #preset_phantoonfirst_maridia_reverse_halfie_climb
+    dw $078D, $A768  ; DDB
+    dw $079B, $D5A7  ; MDB
+    dw $0913, $6800  ; Screen subpixel Y position
+    dw $0915, $00FE  ; Screen Y position in pixels
+    dw $0919, $00FE  ; Layer 2 Y position
+    dw $0AF6, $0069  ; Samus X
+    dw $0AFA, $018B  ; Samus Y
+    dw $D8C2, $6C00  ; Doors
     dw #$FFFF
 
 preset_suitless_wrecked_ship_attic:
@@ -39368,127 +39648,6 @@ preset_100early_kraidicekronic_crumble_shaft_missiles:
     dw $0AFA, $03B3  ; Samus Y
     dw #$FFFF
 
-preset_prkd19_tourian_escape_room_3:
-    dw #preset_prkd20_tourian_escape_room_3
-    dw $09C8, $000F  ; Max missiles
-    dw $0AF8, $D000  ; Samus subpixel X
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr20_upper_norfair_revisit_ice_beam_gates:
-    dw #preset_kpdr21_upper_norfair_revisit_ice_beam_gates
-    dw $09C6, $000F  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr25_lower_norfair_prepillars:
-    dw #preset_kpdr25_lower_norfair_ln_main_hall
-    dw $090F, $9000  ; Screen subpixel X position
-    dw $0911, $0700  ; Screen X position in pixels
-    dw $0913, $E400  ; Screen subpixel Y position
-    dw $0917, $0540  ; Layer 2 X position
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $07A2  ; Samus X
-    dw $0AFA, $028B  ; Samus Y
-    dw #$FFFF
-
-preset_kpdr20_upper_norfair_revisit_ice_maze_up:
-    dw #preset_kpdr21_upper_norfair_revisit_ice_maze_up
-    dw $09C6, $000F  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr20_upper_norfair_revisit_ice_maze_down:
-    dw #preset_kpdr21_upper_norfair_revisit_ice_maze_down
-    dw $09C6, $000F  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr23_upper_norfair_revisit_ice_escape:
-    dw #preset_kpdr22_upper_norfair_revisit_ice_escape
-    dw $09A8, $100F  ; Collected Beams
-    dw #$FFFF
-
-preset_kpdr21_upper_norfair_revisit_ice_escape:
-    dw #preset_kpdr22_upper_norfair_revisit_ice_escape
-    dw $09C2, $00BD  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0104  ; Items
-    dw $D8B6, $3008  ; Doors
-    dw $D8B8, $2EED  ; Doors
-    dw #$FFFF
-
-preset_kpdr22_upper_norfair_revisit_purple_shaft_upper:
-    dw #preset_kpdr22_upper_norfair_revisit_ice_escape
-    dw $078D, $971A  ; DDB
-    dw $079B, $ACB3  ; MDB
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $0913, $E800  ; Screen subpixel Y position
-    dw $0915, $0300  ; Screen Y position in pixels
-    dw $0919, $0240  ; Layer 2 Y position
-    dw $0AF6, $0036  ; Samus X
-    dw $0AFA, $038B  ; Samus Y
-    dw #$FFFF
-
-preset_phantoonfirst_maridia_reverse_halfie_climb:
-    dw #preset_phantoonfirst_maridia_reverse_colosseum
-    dw $078D, $A834  ; DDB
-    dw $079B, $D72A  ; MDB
-    dw $090F, $8000  ; Screen subpixel X position
-    dw $0913, $F001  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $09C2, $FFC1  ; Health
-    dw $0AF6, $0042  ; Samus X
-    dw $0F7A, $0003  ; Safeties enabled
-    dw $0FA0, $002D  ; Safeties energy adjustment
-    dw $0FA2, $0043  ; Safeties energy adjustment
-    dw #$FFFF
-
-preset_kpdr_maridia_toilet:
-    dw #preset_kpdr_maridia_plasma_spark_revisit
-    dw $078D, $A5D0  ; DDB
-    dw $079B, $D340  ; MDB
-    dw $0911, $002E  ; Screen X position in pixels
-    dw $0913, $0800  ; Screen subpixel Y position
-    dw $0915, $021F  ; Screen Y position in pixels
-    dw $0917, $0028  ; Layer 2 X position
-    dw $0919, $021F  ; Layer 2 Y position
-    dw $09C2, $005B  ; Health
-    dw $09CA, $0009  ; Supers
-    dw $0AF6, $00A3  ; Samus X
-    dw $0AFA, $02AB  ; Samus Y
-    dw $D8C2, $DC1A  ; Doors
-    dw #$FFFF
-
-preset_prkd20_tourian_escape_room_4:
-    dw #preset_pkrd_tourian_escape_room_4
-    dw $09C2, $018F  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0504  ; Items
-    dw $D8B8, $2EEC  ; Doors
-    dw #$FFFF
-
-preset_prkd20_tourian_escape_climb:
-    dw #preset_pkrd_tourian_escape_climb
-    dw $09C2, $0171  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0504  ; Items
-    dw $D8B8, $2EEC  ; Doors
-    dw #$FFFF
-
-preset_prkd20_tourian_escape_parlor:
-    dw #preset_pkrd_tourian_escape_parlor
-    dw $09C2, $00DE  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0504  ; Items
-    dw $D8B8, $2EEC  ; Doors
-    dw #$FFFF
-
 preset_gtmax_wrecked_ship_bowling_spark:
     dw #preset_gtmax_wrecked_ship_pancake_room
     dw $078D, $89E2  ; DDB
@@ -39522,6 +39681,189 @@ preset_gtmax_wrecked_ship_ocean_revisit:
     dw $D870, $009C  ; Items
     dw $D880, $7FFF  ; Items
     dw $D8C0, $CB7C  ; Doors
+    dw #$FFFF
+
+preset_kpdr25_lower_norfair_kihunter_stairs_down:
+    dw #preset_kpdr25_lower_norfair_amphitheatre
+    dw $078D, $997E  ; DDB
+    dw $079B, $B4E5  ; MDB
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $0282  ; Screen X position in pixels
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $0043  ; Screen Y position in pixels
+    dw $0917, $01E1  ; Layer 2 X position
+    dw $0919, $0032  ; Layer 2 Y position
+    dw $0AF6, $02E2  ; Samus X
+    dw $0AFA, $00B3  ; Samus Y
+    dw #$FFFF
+
+preset_kpdr20_upper_norfair_revisit_croc_speedway_lower:
+    dw #preset_kpdr21_upper_norfair_revisit_croc_speedway_lower
+    dw $09C6, $000F  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr20_upper_norfair_revisit_magdollite_tunnel_upper:
+    dw #preset_kpdr21_upper_norfair_revisit_magdollite_tunnel_upper
+    dw $09C6, $000F  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr20_upper_norfair_revisit_spiky_acid_snakes_lower:
+    dw #preset_kpdr21_upper_norfair_revisit_spiky_acid_snakes_lower
+    dw $09C6, $000F  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr23_upper_norfair_revisit_kronic_boost_upper:
+    dw #preset_kpdr22_upper_norfair_revisit_kronic_boost_upper
+    dw $09A8, $100F  ; Collected Beams
+    dw #$FFFF
+
+preset_kpdr21_upper_norfair_revisit_kronic_boost_upper:
+    dw #preset_kpdr22_upper_norfair_revisit_kronic_boost_upper
+    dw $09C2, $00BD  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $D874, $0104  ; Items
+    dw $D8B6, $3008  ; Doors
+    dw $D8B8, $2EED  ; Doors
+    dw #$FFFF
+
+preset_kpdr23_upper_norfair_revisit_kronic_boost_lower:
+    dw #preset_kpdr22_upper_norfair_revisit_kronic_boost_lower
+    dw $09A8, $100F  ; Collected Beams
+    dw #$FFFF
+
+preset_kpdr21_upper_norfair_revisit_kronic_boost_lower:
+    dw #preset_kpdr22_upper_norfair_revisit_kronic_boost_lower
+    dw $09C2, $00BD  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $D874, $0104  ; Items
+    dw $D8B6, $3008  ; Doors
+    dw $D8B8, $2EED  ; Doors
+    dw #$FFFF
+
+preset_kpdr23_lower_norfair_ln_main_hall:
+    dw #preset_kpdr22_lower_norfair_ln_main_hall
+    dw $09A8, $100F  ; Collected Beams
+    dw #$FFFF
+
+preset_kpdr23_lower_norfair_prepillars:
+    dw #preset_kpdr25_lower_norfair_prepillars
+    dw $09C2, $011E  ; Health
+    dw $09C6, $0011  ; Missiles
+    dw $09C8, $0014  ; Max missiles
+    dw $09CA, $0007  ; Supers
+    dw $0AF8, $0000  ; Samus subpixel X
+    dw $0AFC, $FFFF  ; Samus subpixel Y
+    dw $D870, $0180  ; Items
+    dw #$FFFF
+
+preset_kpdr23_lower_norfair_fast_pillars_setup:
+    dw #preset_kpdr25_lower_norfair_fast_pillars_setup
+    dw $09C2, $011E  ; Health
+    dw $09C6, $0013  ; Missiles
+    dw $09C8, $0014  ; Max missiles
+    dw $09CA, $0007  ; Supers
+    dw $0AF8, $0000  ; Samus subpixel X
+    dw $0AFC, $FFFF  ; Samus subpixel Y
+    dw $D870, $0180  ; Items
+    dw #$FFFF
+
+preset_kpdr23_lower_norfair_worst_room_in_the_game:
+    dw #preset_kpdr25_lower_norfair_worst_room_in_the_game
+    dw $09C2, $00D4  ; Health
+    dw $09C6, $0013  ; Missiles
+    dw $09C8, $0014  ; Max missiles
+    dw $09CA, $0007  ; Supers
+    dw $0AF8, $0000  ; Samus subpixel X
+    dw $0AFC, $FFFF  ; Samus subpixel Y
+    dw $D870, $0180  ; Items
+    dw #$FFFF
+
+preset_kpdr23_lower_norfair_amphitheatre:
+    dw #preset_kpdr25_lower_norfair_amphitheatre
+    dw $09C2, $00E8  ; Health
+    dw $09C6, $0013  ; Missiles
+    dw $09C8, $0014  ; Max missiles
+    dw $09CA, $0007  ; Supers
+    dw $0AF8, $0000  ; Samus subpixel X
+    dw $0AFC, $FFFF  ; Samus subpixel Y
+    dw $D870, $0180  ; Items
+    dw #$FFFF
+
+preset_kpdr21_lower_norfair_ln_main_hall:
+    dw #preset_kpdr22_lower_norfair_ln_main_hall
+    dw $09C2, $00BA  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $D874, $0104  ; Items
+    dw $D8B6, $3008  ; Doors
+    dw $D8B8, $2EED  ; Doors
+    dw #$FFFF
+
+preset_kpdr_maridia_toilet:
+    dw #preset_kpdr_maridia_plasma_spark_revisit
+    dw $078D, $A5D0  ; DDB
+    dw $079B, $D340  ; MDB
+    dw $0911, $002E  ; Screen X position in pixels
+    dw $0913, $0800  ; Screen subpixel Y position
+    dw $0915, $021F  ; Screen Y position in pixels
+    dw $0917, $0028  ; Layer 2 X position
+    dw $0919, $021F  ; Layer 2 Y position
+    dw $09C2, $005B  ; Health
+    dw $09CA, $0009  ; Supers
+    dw $0AF6, $00A3  ; Samus X
+    dw $0AFA, $02AB  ; Samus Y
+    dw $D8C2, $DC1A  ; Doors
+    dw #$FFFF
+
+preset_phantoonfirst_maridia_mt_everest_revisit:
+    dw #preset_phantoonfirst_maridia_reverse_botwoon_etank
+    dw $078D, $A708  ; DDB
+    dw $079B, $D1A3  ; MDB
+    dw $07F5, $0006  ; Music Track
+    dw $0913, $A800  ; Screen subpixel Y position
+    dw $0915, $0201  ; Screen Y position in pixels
+    dw $0919, $0180  ; Layer 2 Y position
+    dw $0AF6, $0073  ; Samus X
+    dw $D8C2, $6C00  ; Doors
+    dw #$FFFF
+
+preset_phantoonfirst_backtracking_red_brinstar_green_gate:
+    dw #preset_phantoonfirst_maridia_reverse_halfie_climb
+    dw $078D, $A42C  ; DDB
+    dw $079B, $D104  ; MDB
+    dw $07F5, $0006  ; Music Track
+    dw $090F, $C000  ; Screen subpixel X position
+    dw $0911, $001A  ; Screen X position in pixels
+    dw $0913, $8800  ; Screen subpixel Y position
+    dw $0917, $001A  ; Layer 2 X position
+    dw $09C2, $FFE9  ; Health
+    dw $09C6, $000B  ; Missiles
+    dw $09CA, $0006  ; Supers
+    dw $09D2, $0002  ; Currently selected item
+    dw $0AF6, $007F  ; Samus X
+    dw $D8C2, $6C00  ; Doors
+    dw #$FFFF
+
+preset_phantoonfirst_backtracking_crateria_kihunters_final:
+    dw #preset_phantoonfirst_maridia_reverse_botwoon_hallway
+    dw $078D, $90BA  ; DDB
+    dw $079B, $962A  ; MDB
+    dw $07F3, $0012  ; Music Bank
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $09C2, $FFE9  ; Health
+    dw $09C6, $000B  ; Missiles
+    dw $09CA, $0005  ; Supers
+    dw $0A1C, $009B  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
+    dw $0AF6, $0080  ; Samus X
+    dw $0AFA, $00A8  ; Samus Y
+    dw $D8C2, $6C00  ; Doors
     dw #$FFFF
 
 preset_suitless_wrecked_ship_west_ocean:
@@ -39638,145 +39980,6 @@ preset_100early_kraidicekronic_crocomire_speedway:
     dw $D876, $1FFF  ; Items
     dw #$FFFF
 
-preset_kpdr25_lower_norfair_fast_pillars_setup:
-    dw #preset_kpdr25_lower_norfair_prepillars
-    dw $078D, $989A  ; DDB
-    dw $079B, $B3A5  ; MDB
-    dw $090F, $8001  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $7000  ; Screen subpixel Y position
-    dw $0917, $0000  ; Layer 2 X position
-    dw $0919, $0180  ; Layer 2 Y position
-    dw $09C6, $000A  ; Missiles
-    dw $09CE, $0005  ; Pbs
-    dw $0AF6, $0025  ; Samus X
-    dw #$FFFF
-
-preset_prkd19_tourian_escape_room_4:
-    dw #preset_prkd20_tourian_escape_room_4
-    dw $09C8, $000F  ; Max missiles
-    dw $0AF8, $D000  ; Samus subpixel X
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_prkd19_tourian_escape_climb:
-    dw #preset_prkd20_tourian_escape_climb
-    dw $09C8, $000F  ; Max missiles
-    dw $0AF8, $D000  ; Samus subpixel X
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_prkd19_tourian_escape_parlor:
-    dw #preset_prkd20_tourian_escape_parlor
-    dw $09C8, $000F  ; Max missiles
-    dw $0AF8, $D000  ; Samus subpixel X
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr20_upper_norfair_revisit_ice_escape:
-    dw #preset_kpdr21_upper_norfair_revisit_ice_escape
-    dw $09C6, $000F  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr23_upper_norfair_revisit_purple_shaft_upper:
-    dw #preset_kpdr22_upper_norfair_revisit_purple_shaft_upper
-    dw $09A8, $100F  ; Collected Beams
-    dw #$FFFF
-
-preset_kpdr21_upper_norfair_revisit_purple_shaft_upper:
-    dw #preset_kpdr22_upper_norfair_revisit_purple_shaft_upper
-    dw $09C2, $00BD  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0104  ; Items
-    dw $D8B6, $3008  ; Doors
-    dw $D8B8, $2EED  ; Doors
-    dw #$FFFF
-
-preset_kpdr22_upper_norfair_revisit_croc_speedway_lower:
-    dw #preset_kpdr22_upper_norfair_revisit_purple_shaft_upper
-    dw $078D, $9336  ; DDB
-    dw $079B, $A8F8  ; MDB
-    dw $090F, $6781  ; Screen subpixel X position
-    dw $0913, $0800  ; Screen subpixel Y position
-    dw $0AF6, $00DD  ; Samus X
-    dw #$FFFF
-
-preset_kpdr22_upper_norfair_revisit_magdollite_tunnel_upper:
-    dw #preset_kpdr22_upper_norfair_revisit_ice_escape
-    dw $078D, $9576  ; DDB
-    dw $079B, $AEDF  ; MDB
-    dw $090F, $B001  ; Screen subpixel X position
-    dw $0913, $0000  ; Screen subpixel Y position
-    dw $0915, $01F4  ; Screen Y position in pixels
-    dw $0919, $0177  ; Layer 2 Y position
-    dw $0AF6, $0059  ; Samus X
-    dw #$FFFF
-
-preset_kpdr22_upper_norfair_revisit_spiky_acid_snakes_lower:
-    dw #preset_kpdr22_upper_norfair_revisit_ice_maze_down
-    dw $078D, $93C6  ; DDB
-    dw $079B, $AFCE  ; MDB
-    dw $07F5, $0005  ; Music Track
-    dw $090F, $A000  ; Screen subpixel X position
-    dw $0911, $02A3  ; Screen X position in pixels
-    dw $0913, $7400  ; Screen subpixel Y position
-    dw $0917, $01FA  ; Layer 2 X position
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $030E  ; Samus X
-    dw #$FFFF
-
-preset_phantoonfirst_maridia_reverse_botwoon_etank:
-    dw #preset_phantoonfirst_maridia_reverse_halfie_climb
-    dw $078D, $A7E0  ; DDB
-    dw $079B, $D913  ; MDB
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $0913, $2800  ; Screen subpixel Y position
-    dw $0915, $0200  ; Screen Y position in pixels
-    dw $0919, $0200  ; Layer 2 Y position
-    dw $0AF6, $00AE  ; Samus X
-    dw $0AFA, $028B  ; Samus Y
-    dw #$FFFF
-
-preset_phantoonfirst_maridia_reverse_botwoon_hallway:
-    dw #preset_phantoonfirst_maridia_reverse_halfie_climb
-    dw $078D, $A84C  ; DDB
-    dw $079B, $D95E  ; MDB
-    dw $07F5, $0003  ; Music Track
-    dw $090F, $1F80  ; Screen subpixel X position
-    dw $0913, $D800  ; Screen subpixel Y position
-    dw $0AF6, $0025  ; Samus X
-    dw $0AFA, $00BB  ; Samus Y
-    dw #$FFFF
-
-preset_phantoonfirst_maridia_reverse_crab_shaft:
-    dw #preset_phantoonfirst_maridia_reverse_halfie_climb
-    dw $078D, $A768  ; DDB
-    dw $079B, $D5A7  ; MDB
-    dw $0913, $6800  ; Screen subpixel Y position
-    dw $0915, $00FE  ; Screen Y position in pixels
-    dw $0919, $00FE  ; Layer 2 Y position
-    dw $0AF6, $0069  ; Samus X
-    dw $0AFA, $018B  ; Samus Y
-    dw $D8C2, $6C00  ; Doors
-    dw #$FFFF
-
-preset_kpdr_maridia_sewers:
-    dw #preset_kpdr_maridia_toilet
-    dw $078D, $A600  ; DDB
-    dw $079B, $D48E  ; MDB
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $3000  ; Screen subpixel Y position
-    dw $0915, $011C  ; Screen Y position in pixels
-    dw $0917, $0000  ; Layer 2 X position
-    dw $0919, $00D5  ; Layer 2 Y position
-    dw $0AF6, $00BB  ; Samus X
-    dw $0AFA, $018B  ; Samus Y
-    dw #$FFFF
-
 preset_gtmax_brinstar_cleanup_crateria_power_bombs:
     dw #preset_gtmax_wrecked_ship_ocean_revisit
     dw $078D, $8AC6  ; DDB
@@ -39797,6 +40000,105 @@ preset_gtmax_brinstar_cleanup_crateria_power_bombs:
     dw $0AF6, $0803  ; Samus X
     dw $0AFA, $0159  ; Samus Y
     dw $D870, $009E  ; Items
+    dw #$FFFF
+
+preset_kpdr23_lower_norfair_kihunter_stairs_down:
+    dw #preset_kpdr25_lower_norfair_kihunter_stairs_down
+    dw $09C2, $00E8  ; Health
+    dw $09C6, $0013  ; Missiles
+    dw $09C8, $0014  ; Max missiles
+    dw $09CA, $0007  ; Supers
+    dw $0AF8, $0000  ; Samus subpixel X
+    dw $0AFC, $FFFF  ; Samus subpixel Y
+    dw $D870, $0180  ; Items
+    dw #$FFFF
+
+preset_kpdr25_lower_norfair_wasteland:
+    dw #preset_kpdr25_lower_norfair_kihunter_stairs_down
+    dw $078D, $99A2  ; DDB
+    dw $079B, $B585  ; MDB
+    dw $090F, $8000  ; Screen subpixel X position
+    dw $0911, $0200  ; Screen X position in pixels
+    dw $0915, $0419  ; Screen Y position in pixels
+    dw $0917, $0180  ; Layer 2 X position
+    dw $0919, $0312  ; Layer 2 Y position
+    dw $09CE, $0002  ; Pbs
+    dw $0A1C, $001D  ; Samus position/state
+    dw $0A1E, $0408  ; More position/state
+    dw $0AF6, $0248  ; Samus X
+    dw $0AFA, $0489  ; Samus Y
+    dw $D8BA, $41F1  ; Doors
+    dw #$FFFF
+
+preset_kpdr20_upper_norfair_revisit_kronic_boost_upper:
+    dw #preset_kpdr21_upper_norfair_revisit_kronic_boost_upper
+    dw $09C6, $000F  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr20_upper_norfair_revisit_kronic_boost_lower:
+    dw #preset_kpdr21_upper_norfair_revisit_kronic_boost_lower
+    dw $09C6, $000F  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr22_lower_norfair_prepillars:
+    dw #preset_kpdr23_lower_norfair_prepillars
+    dw $09A8, $100B  ; Collected Beams
+    dw #$FFFF
+
+preset_kpdr22_lower_norfair_fast_pillars_setup:
+    dw #preset_kpdr23_lower_norfair_fast_pillars_setup
+    dw $09A8, $100B  ; Collected Beams
+    dw #$FFFF
+
+preset_kpdr22_lower_norfair_worst_room_in_the_game:
+    dw #preset_kpdr23_lower_norfair_worst_room_in_the_game
+    dw $09A8, $100B  ; Collected Beams
+    dw #$FFFF
+
+preset_kpdr22_lower_norfair_amphitheatre:
+    dw #preset_kpdr23_lower_norfair_amphitheatre
+    dw $09A8, $100B  ; Collected Beams
+    dw #$FFFF
+
+preset_kpdr20_lower_norfair_ln_main_hall:
+    dw #preset_kpdr21_lower_norfair_ln_main_hall
+    dw $09C6, $000F  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr_maridia_sewers:
+    dw #preset_kpdr_maridia_toilet
+    dw $078D, $A600  ; DDB
+    dw $079B, $D48E  ; MDB
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $3000  ; Screen subpixel Y position
+    dw $0915, $011C  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $00D5  ; Layer 2 Y position
+    dw $0AF6, $00BB  ; Samus X
+    dw $0AFA, $018B  ; Samus Y
+    dw #$FFFF
+
+preset_phantoonfirst_backtracking_parlor_return:
+    dw #preset_phantoonfirst_backtracking_crateria_kihunters_final
+    dw $078D, $8AC6  ; DDB
+    dw $079B, $91F8  ; MDB
+    dw $07F3, $000C  ; Music Bank
+    dw $07F5, $0005  ; Music Track
+    dw $0911, $05E3  ; Screen X position in pixels
+    dw $0915, $0400  ; Screen Y position in pixels
+    dw $0917, $02F1  ; Layer 2 X position
+    dw $09C6, $0009  ; Missiles
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0683  ; Samus X
+    dw $0AFA, $04BB  ; Samus Y
     dw #$FFFF
 
 preset_suitless_wrecked_ship_bowling:
@@ -39958,178 +40260,6 @@ preset_100early_lower_norfair_ln_main_hall:
     dw $D8BA, $01F7  ; Doors
     dw #$FFFF
 
-preset_kpdr25_lower_norfair_worst_room_in_the_game:
-    dw #preset_kpdr25_lower_norfair_fast_pillars_setup
-    dw $078D, $9912  ; DDB
-    dw $079B, $B457  ; MDB
-    dw $090F, $64FF  ; Screen subpixel X position
-    dw $0911, $0300  ; Screen X position in pixels
-    dw $0913, $F800  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0917, $0240  ; Layer 2 X position
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $09C2, $017B  ; Health
-    dw $0AF6, $03DB  ; Samus X
-    dw $0AFA, $008B  ; Samus Y
-    dw #$FFFF
-
-preset_kpdr25_lower_norfair_amphitheatre:
-    dw #preset_kpdr25_lower_norfair_fast_pillars_setup
-    dw $078D, $994E  ; DDB
-    dw $079B, $B4AD  ; MDB
-    dw $090F, $C000  ; Screen subpixel X position
-    dw $0913, $A400  ; Screen subpixel Y position
-    dw $0915, $011D  ; Screen Y position in pixels
-    dw $0919, $00D5  ; Layer 2 Y position
-    dw $09C2, $017B  ; Health
-    dw $09CE, $0004  ; Pbs
-    dw $0AF6, $00A7  ; Samus X
-    dw $0AFA, $018B  ; Samus Y
-    dw #$FFFF
-
-preset_kpdr20_upper_norfair_revisit_purple_shaft_upper:
-    dw #preset_kpdr21_upper_norfair_revisit_purple_shaft_upper
-    dw $09C6, $000F  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr23_upper_norfair_revisit_croc_speedway_lower:
-    dw #preset_kpdr22_upper_norfair_revisit_croc_speedway_lower
-    dw $09A8, $100F  ; Collected Beams
-    dw #$FFFF
-
-preset_kpdr21_upper_norfair_revisit_croc_speedway_lower:
-    dw #preset_kpdr22_upper_norfair_revisit_croc_speedway_lower
-    dw $09C2, $00BD  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0104  ; Items
-    dw $D8B6, $3008  ; Doors
-    dw $D8B8, $2EED  ; Doors
-    dw #$FFFF
-
-preset_kpdr23_upper_norfair_revisit_magdollite_tunnel_upper:
-    dw #preset_kpdr22_upper_norfair_revisit_magdollite_tunnel_upper
-    dw $09A8, $100F  ; Collected Beams
-    dw #$FFFF
-
-preset_kpdr21_upper_norfair_revisit_magdollite_tunnel_upper:
-    dw #preset_kpdr22_upper_norfair_revisit_magdollite_tunnel_upper
-    dw $09C2, $00BD  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0104  ; Items
-    dw $D8B6, $3008  ; Doors
-    dw $D8B8, $2EED  ; Doors
-    dw #$FFFF
-
-preset_kpdr23_upper_norfair_revisit_spiky_acid_snakes_lower:
-    dw #preset_kpdr22_upper_norfair_revisit_spiky_acid_snakes_lower
-    dw $09A8, $100F  ; Collected Beams
-    dw #$FFFF
-
-preset_kpdr21_upper_norfair_revisit_spiky_acid_snakes_lower:
-    dw #preset_kpdr22_upper_norfair_revisit_spiky_acid_snakes_lower
-    dw $09C2, $00BD  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0104  ; Items
-    dw $D8B6, $3008  ; Doors
-    dw $D8B8, $2EED  ; Doors
-    dw #$FFFF
-
-preset_kpdr22_upper_norfair_revisit_kronic_boost_upper:
-    dw #preset_kpdr22_upper_norfair_revisit_spiky_acid_snakes_lower
-    dw $078D, $96BA  ; DDB
-    dw $079B, $AEB4  ; MDB
-    dw $090F, $8000  ; Screen subpixel X position
-    dw $0911, $0200  ; Screen X position in pixels
-    dw $0913, $9000  ; Screen subpixel Y position
-    dw $0917, $0180  ; Layer 2 X position
-    dw $0AF6, $02B7  ; Samus X
-    dw #$FFFF
-
-preset_kpdr22_upper_norfair_revisit_kronic_boost_lower:
-    dw #preset_kpdr22_upper_norfair_revisit_spiky_acid_snakes_lower
-    dw $078D, $9792  ; DDB
-    dw $079B, $AFFB  ; MDB
-    dw $090F, $B000  ; Screen subpixel X position
-    dw $0911, $0300  ; Screen X position in pixels
-    dw $0913, $8C00  ; Screen subpixel Y position
-    dw $0917, $0240  ; Layer 2 X position
-    dw $09D2, $0003  ; Currently selected item
-    dw $0AF6, $03BC  ; Samus X
-    dw #$FFFF
-
-preset_kpdr22_lower_norfair_ln_main_hall:
-    dw #preset_kpdr25_lower_norfair_ln_main_hall
-    dw $09A8, $100B  ; Collected Beams
-    dw $09C2, $011E  ; Health
-    dw $09C6, $0011  ; Missiles
-    dw $09C8, $0014  ; Max missiles
-    dw $09CA, $0007  ; Supers
-    dw $0AF8, $0000  ; Samus subpixel X
-    dw $0AFC, $FFFF  ; Samus subpixel Y
-    dw $D870, $0180  ; Items
-    dw #$FFFF
-
-preset_phantoonfirst_maridia_mt_everest_revisit:
-    dw #preset_phantoonfirst_maridia_reverse_botwoon_etank
-    dw $078D, $A708  ; DDB
-    dw $079B, $D1A3  ; MDB
-    dw $07F5, $0006  ; Music Track
-    dw $0913, $A800  ; Screen subpixel Y position
-    dw $0915, $0201  ; Screen Y position in pixels
-    dw $0919, $0180  ; Layer 2 Y position
-    dw $0AF6, $0073  ; Samus X
-    dw $D8C2, $6C00  ; Doors
-    dw #$FFFF
-
-preset_phantoonfirst_backtracking_red_brinstar_green_gate:
-    dw #preset_phantoonfirst_maridia_reverse_halfie_climb
-    dw $078D, $A42C  ; DDB
-    dw $079B, $D104  ; MDB
-    dw $07F5, $0006  ; Music Track
-    dw $090F, $C000  ; Screen subpixel X position
-    dw $0911, $001A  ; Screen X position in pixels
-    dw $0913, $8800  ; Screen subpixel Y position
-    dw $0917, $001A  ; Layer 2 X position
-    dw $09C2, $FFE9  ; Health
-    dw $09C6, $000B  ; Missiles
-    dw $09CA, $0006  ; Supers
-    dw $09D2, $0002  ; Currently selected item
-    dw $0AF6, $007F  ; Samus X
-    dw $D8C2, $6C00  ; Doors
-    dw #$FFFF
-
-preset_phantoonfirst_backtracking_crateria_kihunters_final:
-    dw #preset_phantoonfirst_maridia_reverse_botwoon_hallway
-    dw $078D, $90BA  ; DDB
-    dw $079B, $962A  ; MDB
-    dw $07F3, $0012  ; Music Bank
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $0913, $0000  ; Screen subpixel Y position
-    dw $09C2, $FFE9  ; Health
-    dw $09C6, $000B  ; Missiles
-    dw $09CA, $0005  ; Supers
-    dw $0A1C, $009B  ; Samus position/state
-    dw $0A1E, $0000  ; More position/state
-    dw $0AF6, $0080  ; Samus X
-    dw $0AFA, $00A8  ; Samus Y
-    dw $D8C2, $6C00  ; Doors
-    dw #$FFFF
-
-preset_kpdr_maridia_lower_maridia_gate:
-    dw #preset_kpdr_maridia_sewers
-    dw $078D, $A528  ; DDB
-    dw $079B, $D21C  ; MDB
-    dw $090F, $8000  ; Screen subpixel X position
-    dw $0913, $5C00  ; Screen subpixel Y position
-    dw $0915, $0100  ; Screen Y position in pixels
-    dw $0919, $0100  ; Layer 2 Y position
-    dw $09C2, $0083  ; Health
-    dw $09CE, $0005  ; Pbs
-    dw $0AF6, $002E  ; Samus X
-    dw #$FFFF
-
 preset_gtmax_brinstar_cleanup_landing_site_revisit:
     dw #preset_gtmax_brinstar_cleanup_crateria_power_bombs
     dw $078D, $893A  ; DDB
@@ -40148,6 +40278,118 @@ preset_gtmax_brinstar_cleanup_landing_site_revisit:
     dw $0AFA, $008B  ; Samus Y
     dw $D870, $009D  ; Items
     dw $D8B0, $3002  ; Doors
+    dw #$FFFF
+
+preset_kpdr22_lower_norfair_kihunter_stairs_down:
+    dw #preset_kpdr23_lower_norfair_kihunter_stairs_down
+    dw $09A8, $100B  ; Collected Beams
+    dw #$FFFF
+
+preset_kpdr23_lower_norfair_wasteland:
+    dw #preset_kpdr25_lower_norfair_wasteland
+    dw $09C2, $0110  ; Health
+    dw $09C6, $0013  ; Missiles
+    dw $09C8, $0014  ; Max missiles
+    dw $09CA, $0007  ; Supers
+    dw $0AF8, $0000  ; Samus subpixel X
+    dw $0AFC, $FFFF  ; Samus subpixel Y
+    dw $D870, $0180  ; Items
+    dw #$FFFF
+
+preset_kpdr25_lower_norfair_metal_ninja_pirates:
+    dw #preset_kpdr25_lower_norfair_wasteland
+    dw $078D, $99EA  ; DDB
+    dw $079B, $B5D5  ; MDB
+    dw $090F, $E000  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0915, $021B  ; Screen Y position in pixels
+    dw $09C2, $0179  ; Health
+    dw $09CA, $0003  ; Supers
+    dw $09CE, $0001  ; Pbs
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0168  ; Samus X
+    dw $0AFA, $028B  ; Samus Y
+    dw $D8BA, $C1F1  ; Doors
+    dw #$FFFF
+
+preset_kpdr21_lower_norfair_prepillars:
+    dw #preset_kpdr22_lower_norfair_prepillars
+    dw $09C2, $00BA  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $D874, $0104  ; Items
+    dw $D8B6, $3008  ; Doors
+    dw $D8B8, $2EED  ; Doors
+    dw #$FFFF
+
+preset_kpdr21_lower_norfair_fast_pillars_setup:
+    dw #preset_kpdr22_lower_norfair_fast_pillars_setup
+    dw $09C2, $00BA  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $D874, $0104  ; Items
+    dw $D8B6, $3008  ; Doors
+    dw $D8B8, $2EED  ; Doors
+    dw #$FFFF
+
+preset_kpdr21_lower_norfair_worst_room_in_the_game:
+    dw #preset_kpdr22_lower_norfair_worst_room_in_the_game
+    dw $09C2, $0070  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $D874, $0104  ; Items
+    dw $D8B6, $3008  ; Doors
+    dw $D8B8, $2EED  ; Doors
+    dw #$FFFF
+
+preset_kpdr21_lower_norfair_amphitheatre:
+    dw #preset_kpdr22_lower_norfair_amphitheatre
+    dw $09C2, $0084  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $D874, $0104  ; Items
+    dw $D8B6, $3008  ; Doors
+    dw $D8B8, $2EED  ; Doors
+    dw #$FFFF
+
+preset_kpdr_maridia_lower_maridia_gate:
+    dw #preset_kpdr_maridia_sewers
+    dw $078D, $A528  ; DDB
+    dw $079B, $D21C  ; MDB
+    dw $090F, $8000  ; Screen subpixel X position
+    dw $0913, $5C00  ; Screen subpixel Y position
+    dw $0915, $0100  ; Screen Y position in pixels
+    dw $0919, $0100  ; Layer 2 Y position
+    dw $09C2, $0083  ; Health
+    dw $09CE, $0005  ; Pbs
+    dw $0AF6, $002E  ; Samus X
+    dw #$FFFF
+
+preset_phantoonfirst_backtracking_terminator_revisit:
+    dw #preset_phantoonfirst_backtracking_parlor_return
+    dw $078D, $8916  ; DDB
+    dw $079B, $92FD  ; MDB
+    dw $07F3, $0009  ; Music Bank
+    dw $090F, $C000  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $3C00  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $00C0  ; Layer 2 X position
+    dw $0A1C, $0072  ; Samus position/state
+    dw $0A1E, $0504  ; More position/state
+    dw $0AF6, $010C  ; Samus X
+    dw $0AFA, $0090  ; Samus Y
+    dw #$FFFF
+
+preset_phantoonfirst_backtracking_green_pirate_shaft_revisit:
+    dw #preset_phantoonfirst_backtracking_parlor_return
+    dw $078D, $895E  ; DDB
+    dw $079B, $990D  ; MDB
+    dw $07F3, $0009  ; Music Bank
+    dw $090F, $DE80  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0915, $01FB  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $017C  ; Layer 2 Y position
+    dw $0AF6, $0062  ; Samus X
+    dw $0AFA, $029B  ; Samus Y
     dw #$FFFF
 
 preset_suitless_wrecked_ship_moat:
@@ -40239,141 +40481,86 @@ preset_100early_lower_norfair_golden_torizo:
     dw $D820, $3801  ; Events
     dw #$FFFF
 
-preset_kpdr25_lower_norfair_kihunter_stairs_down:
-    dw #preset_kpdr25_lower_norfair_amphitheatre
-    dw $078D, $997E  ; DDB
-    dw $079B, $B4E5  ; MDB
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $0911, $0282  ; Screen X position in pixels
-    dw $0913, $0000  ; Screen subpixel Y position
-    dw $0915, $0043  ; Screen Y position in pixels
-    dw $0917, $01E1  ; Layer 2 X position
-    dw $0919, $0032  ; Layer 2 Y position
-    dw $0AF6, $02E2  ; Samus X
-    dw $0AFA, $00B3  ; Samus Y
+preset_gtmax_brinstar_cleanup_gauntlet_etank:
+    dw #preset_gtmax_brinstar_cleanup_landing_site_revisit
+    dw $078D, $892E  ; DDB
+    dw $079B, $92B3  ; MDB
+    dw $07F3, $0009  ; Music Bank
+    dw $090F, $B000  ; Screen subpixel X position
+    dw $0913, $5000  ; Screen subpixel Y position
+    dw $09C2, $041C  ; Health
+    dw $09D2, $0000  ; Currently selected item
+    dw $0AF6, $0081  ; Samus X
     dw #$FFFF
 
-preset_kpdr20_upper_norfair_revisit_croc_speedway_lower:
-    dw #preset_kpdr21_upper_norfair_revisit_croc_speedway_lower
-    dw $09C6, $000F  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr20_upper_norfair_revisit_magdollite_tunnel_upper:
-    dw #preset_kpdr21_upper_norfair_revisit_magdollite_tunnel_upper
-    dw $09C6, $000F  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr20_upper_norfair_revisit_spiky_acid_snakes_lower:
-    dw #preset_kpdr21_upper_norfair_revisit_spiky_acid_snakes_lower
-    dw $09C6, $000F  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr23_upper_norfair_revisit_kronic_boost_upper:
-    dw #preset_kpdr22_upper_norfair_revisit_kronic_boost_upper
-    dw $09A8, $100F  ; Collected Beams
-    dw #$FFFF
-
-preset_kpdr21_upper_norfair_revisit_kronic_boost_upper:
-    dw #preset_kpdr22_upper_norfair_revisit_kronic_boost_upper
-    dw $09C2, $00BD  ; Health
+preset_kpdr21_lower_norfair_kihunter_stairs_down:
+    dw #preset_kpdr22_lower_norfair_kihunter_stairs_down
+    dw $09C2, $0084  ; Health
     dw $09C4, $018F  ; Max health
     dw $D874, $0104  ; Items
     dw $D8B6, $3008  ; Doors
     dw $D8B8, $2EED  ; Doors
     dw #$FFFF
 
-preset_kpdr23_upper_norfair_revisit_kronic_boost_lower:
-    dw #preset_kpdr22_upper_norfair_revisit_kronic_boost_lower
-    dw $09A8, $100F  ; Collected Beams
+preset_kpdr22_lower_norfair_wasteland:
+    dw #preset_kpdr23_lower_norfair_wasteland
+    dw $09A8, $100B  ; Collected Beams
     dw #$FFFF
 
-preset_kpdr21_upper_norfair_revisit_kronic_boost_lower:
-    dw #preset_kpdr22_upper_norfair_revisit_kronic_boost_lower
-    dw $09C2, $00BD  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0104  ; Items
-    dw $D8B6, $3008  ; Doors
-    dw $D8B8, $2EED  ; Doors
-    dw #$FFFF
-
-preset_kpdr23_lower_norfair_ln_main_hall:
-    dw #preset_kpdr22_lower_norfair_ln_main_hall
-    dw $09A8, $100F  ; Collected Beams
-    dw #$FFFF
-
-preset_kpdr23_lower_norfair_prepillars:
-    dw #preset_kpdr25_lower_norfair_prepillars
-    dw $09C2, $011E  ; Health
-    dw $09C6, $0011  ; Missiles
-    dw $09C8, $0014  ; Max missiles
-    dw $09CA, $0007  ; Supers
-    dw $0AF8, $0000  ; Samus subpixel X
-    dw $0AFC, $FFFF  ; Samus subpixel Y
-    dw $D870, $0180  ; Items
-    dw #$FFFF
-
-preset_kpdr23_lower_norfair_fast_pillars_setup:
-    dw #preset_kpdr25_lower_norfair_fast_pillars_setup
-    dw $09C2, $011E  ; Health
+preset_kpdr23_lower_norfair_metal_ninja_pirates:
+    dw #preset_kpdr25_lower_norfair_metal_ninja_pirates
+    dw $09C2, $00EB  ; Health
     dw $09C6, $0013  ; Missiles
     dw $09C8, $0014  ; Max missiles
-    dw $09CA, $0007  ; Supers
+    dw $09CA, $0006  ; Supers
     dw $0AF8, $0000  ; Samus subpixel X
     dw $0AFC, $FFFF  ; Samus subpixel Y
     dw $D870, $0180  ; Items
     dw #$FFFF
 
-preset_kpdr23_lower_norfair_worst_room_in_the_game:
-    dw #preset_kpdr25_lower_norfair_worst_room_in_the_game
-    dw $09C2, $00D4  ; Health
-    dw $09C6, $0013  ; Missiles
-    dw $09C8, $0014  ; Max missiles
+preset_kpdr25_lower_norfair_plowerhouse:
+    dw #preset_kpdr25_lower_norfair_metal_ninja_pirates
+    dw $078D, $9A1A  ; DDB
+    dw $079B, $B62B  ; MDB
+    dw $090F, $7000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $CC00  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09C2, $01A5  ; Health
     dw $09CA, $0007  ; Supers
-    dw $0AF8, $0000  ; Samus subpixel X
-    dw $0AFC, $FFFF  ; Samus subpixel Y
-    dw $D870, $0180  ; Items
+    dw $0AF6, $006A  ; Samus X
+    dw $0AFA, $00BB  ; Samus Y
+    dw $D8BC, $0001  ; Doors
     dw #$FFFF
 
-preset_kpdr23_lower_norfair_amphitheatre:
-    dw #preset_kpdr25_lower_norfair_amphitheatre
-    dw $09C2, $00E8  ; Health
-    dw $09C6, $0013  ; Missiles
-    dw $09C8, $0014  ; Max missiles
-    dw $09CA, $0007  ; Supers
-    dw $0AF8, $0000  ; Samus subpixel X
-    dw $0AFC, $FFFF  ; Samus subpixel Y
-    dw $D870, $0180  ; Items
+preset_kpdr20_lower_norfair_prepillars:
+    dw #preset_kpdr21_lower_norfair_prepillars
+    dw $09C6, $000F  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
     dw #$FFFF
 
-preset_kpdr21_lower_norfair_ln_main_hall:
-    dw #preset_kpdr22_lower_norfair_ln_main_hall
-    dw $09C2, $00BA  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0104  ; Items
-    dw $D8B6, $3008  ; Doors
-    dw $D8B8, $2EED  ; Doors
+preset_kpdr20_lower_norfair_fast_pillars_setup:
+    dw #preset_kpdr21_lower_norfair_fast_pillars_setup
+    dw $09C6, $000F  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
     dw #$FFFF
 
-preset_phantoonfirst_backtracking_parlor_return:
-    dw #preset_phantoonfirst_backtracking_crateria_kihunters_final
-    dw $078D, $8AC6  ; DDB
-    dw $079B, $91F8  ; MDB
-    dw $07F3, $000C  ; Music Bank
-    dw $07F5, $0005  ; Music Track
-    dw $0911, $05E3  ; Screen X position in pixels
-    dw $0915, $0400  ; Screen Y position in pixels
-    dw $0917, $02F1  ; Layer 2 X position
-    dw $09C6, $0009  ; Missiles
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $0683  ; Samus X
-    dw $0AFA, $04BB  ; Samus Y
+preset_kpdr20_lower_norfair_worst_room_in_the_game:
+    dw #preset_kpdr21_lower_norfair_worst_room_in_the_game
+    dw $09C6, $000F  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr20_lower_norfair_amphitheatre:
+    dw #preset_kpdr21_lower_norfair_amphitheatre
+    dw $09C6, $000F  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
     dw #$FFFF
 
 preset_kpdr_upper_norfair_revisit_business_center_revisit:
@@ -40391,16 +40578,55 @@ preset_kpdr_upper_norfair_revisit_business_center_revisit:
     dw $0AFA, $0395  ; Samus Y
     dw #$FFFF
 
-preset_gtmax_brinstar_cleanup_gauntlet_etank:
-    dw #preset_gtmax_brinstar_cleanup_landing_site_revisit
-    dw $078D, $892E  ; DDB
-    dw $079B, $92B3  ; MDB
-    dw $07F3, $0009  ; Music Bank
-    dw $090F, $B000  ; Screen subpixel X position
-    dw $0913, $5000  ; Screen subpixel Y position
-    dw $09C2, $041C  ; Health
-    dw $09D2, $0000  ; Currently selected item
-    dw $0AF6, $0081  ; Samus X
+preset_phantoonfirst_backtracking_g4_hallway:
+    dw #preset_phantoonfirst_backtracking_green_pirate_shaft_revisit
+    dw $078D, $8BE6  ; DDB
+    dw $079B, $99BD  ; MDB
+    dw $090F, $7FFF  ; Screen subpixel X position
+    dw $0913, $E400  ; Screen subpixel Y position
+    dw $0915, $0600  ; Screen Y position in pixels
+    dw $0917, $0001  ; Layer 2 X position
+    dw $0919, $0480  ; Layer 2 Y position
+    dw $09CA, $0004  ; Supers
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $00C2  ; Samus X
+    dw $0AFA, $068B  ; Samus Y
+    dw $D8B2, $6C01  ; Doors
+    dw #$FFFF
+
+preset_phantoonfirst_backtracking_g4_elevator:
+    dw #preset_phantoonfirst_backtracking_green_pirate_shaft_revisit
+    dw $078D, $91F2  ; DDB
+    dw $079B, $A66A  ; MDB
+    dw $07F5, $0006  ; Music Track
+    dw $090F, $7000  ; Screen subpixel X position
+    dw $0913, $7000  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09CA, $0004  ; Supers
+    dw $0AF6, $0049  ; Samus X
+    dw $0AFA, $009B  ; Samus Y
+    dw $D820, $0BC1  ; Events
+    dw $D8B2, $6C01  ; Doors
+    dw #$FFFF
+
+preset_phantoonfirst_tourian_tourian_elevator_room:
+    dw #preset_phantoonfirst_backtracking_crateria_kihunters_final
+    dw $078D, $9222  ; DDB
+    dw $079B, $DAAE  ; MDB
+    dw $07F3, $001E  ; Music Bank
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $9FFF  ; Screen subpixel X position
+    dw $0915, $0238  ; Screen Y position in pixels
+    dw $0919, $01AA  ; Layer 2 Y position
+    dw $09A6, $1007  ; Equipped Beams
+    dw $09C6, $0009  ; Missiles
+    dw $09CA, $0004  ; Supers
+    dw $0AFA, $02A8  ; Samus Y
+    dw $D820, $0FC1  ; Events
+    dw $D8B2, $6C01  ; Doors
+    dw $D90C, $0100  ; Map Stations
     dw #$FFFF
 
 preset_suitless_wrecked_ship_red_tower_elevator:
@@ -40491,103 +40717,82 @@ preset_100early_lower_norfair_leaving_golden_torizo:
     dw $D878, $00DE  ; Items
     dw #$FFFF
 
-preset_kpdr23_lower_norfair_kihunter_stairs_down:
-    dw #preset_kpdr25_lower_norfair_kihunter_stairs_down
-    dw $09C2, $00E8  ; Health
-    dw $09C6, $0013  ; Missiles
+preset_gtmax_brinstar_cleanup_crumble_blocks:
+    dw #preset_gtmax_brinstar_cleanup_gauntlet_etank
+    dw $078D, $8952  ; DDB
+    dw $079B, $965B  ; MDB
+    dw $090F, $4000  ; Screen subpixel X position
+    dw $0913, $0400  ; Screen subpixel Y position
+    dw $09C2, $0632  ; Health
+    dw $09C4, $0640  ; Max health
+    dw $0AF6, $0044  ; Samus X
+    dw $D870, $00BD  ; Items
+    dw #$FFFF
+
+preset_kpdr20_lower_norfair_kihunter_stairs_down:
+    dw #preset_kpdr21_lower_norfair_kihunter_stairs_down
+    dw $09C6, $000F  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr21_lower_norfair_wasteland:
+    dw #preset_kpdr22_lower_norfair_wasteland
+    dw $09C2, $00AC  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $D874, $0104  ; Items
+    dw $D8B6, $3008  ; Doors
+    dw $D8B8, $2EED  ; Doors
+    dw #$FFFF
+
+preset_kpdr22_lower_norfair_metal_ninja_pirates:
+    dw #preset_kpdr23_lower_norfair_metal_ninja_pirates
+    dw $09A8, $100B  ; Collected Beams
+    dw #$FFFF
+
+preset_kpdr23_lower_norfair_plowerhouse:
+    dw #preset_kpdr25_lower_norfair_plowerhouse
+    dw $09C2, $0186  ; Health
+    dw $09C6, $0014  ; Missiles
     dw $09C8, $0014  ; Max missiles
-    dw $09CA, $0007  ; Supers
+    dw $09CA, $0009  ; Supers
     dw $0AF8, $0000  ; Samus subpixel X
     dw $0AFC, $FFFF  ; Samus subpixel Y
     dw $D870, $0180  ; Items
     dw #$FFFF
 
-preset_kpdr25_lower_norfair_wasteland:
-    dw #preset_kpdr25_lower_norfair_kihunter_stairs_down
-    dw $078D, $99A2  ; DDB
-    dw $079B, $B585  ; MDB
-    dw $090F, $8000  ; Screen subpixel X position
-    dw $0911, $0200  ; Screen X position in pixels
-    dw $0915, $0419  ; Screen Y position in pixels
-    dw $0917, $0180  ; Layer 2 X position
-    dw $0919, $0312  ; Layer 2 Y position
-    dw $09CE, $0002  ; Pbs
-    dw $0A1C, $001D  ; Samus position/state
-    dw $0A1E, $0408  ; More position/state
-    dw $0AF6, $0248  ; Samus X
-    dw $0AFA, $0489  ; Samus Y
-    dw $D8BA, $41F1  ; Doors
+preset_kpdr25_lower_norfair_ridley:
+    dw #preset_kpdr25_lower_norfair_plowerhouse
+    dw $078D, $995A  ; DDB
+    dw $079B, $B37A  ; MDB
+    dw $090F, $2000  ; Screen subpixel X position
+    dw $0913, $5000  ; Screen subpixel Y position
+    dw $09CA, $0006  ; Supers
+    dw $0AF6, $003D  ; Samus X
+    dw $0AFA, $009B  ; Samus Y
+    dw $D8BA, $D1F1  ; Doors
     dw #$FFFF
 
-preset_kpdr20_upper_norfair_revisit_kronic_boost_upper:
-    dw #preset_kpdr21_upper_norfair_revisit_kronic_boost_upper
-    dw $09C6, $000F  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr20_upper_norfair_revisit_kronic_boost_lower:
-    dw #preset_kpdr21_upper_norfair_revisit_kronic_boost_lower
-    dw $09C6, $000F  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr22_lower_norfair_prepillars:
-    dw #preset_kpdr23_lower_norfair_prepillars
-    dw $09A8, $100B  ; Collected Beams
-    dw #$FFFF
-
-preset_kpdr22_lower_norfair_fast_pillars_setup:
-    dw #preset_kpdr23_lower_norfair_fast_pillars_setup
-    dw $09A8, $100B  ; Collected Beams
-    dw #$FFFF
-
-preset_kpdr22_lower_norfair_worst_room_in_the_game:
-    dw #preset_kpdr23_lower_norfair_worst_room_in_the_game
-    dw $09A8, $100B  ; Collected Beams
-    dw #$FFFF
-
-preset_kpdr22_lower_norfair_amphitheatre:
-    dw #preset_kpdr23_lower_norfair_amphitheatre
-    dw $09A8, $100B  ; Collected Beams
-    dw #$FFFF
-
-preset_kpdr20_lower_norfair_ln_main_hall:
-    dw #preset_kpdr21_lower_norfair_ln_main_hall
-    dw $09C6, $000F  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_phantoonfirst_backtracking_terminator_revisit:
-    dw #preset_phantoonfirst_backtracking_parlor_return
-    dw $078D, $8916  ; DDB
-    dw $079B, $92FD  ; MDB
-    dw $07F3, $0009  ; Music Bank
-    dw $090F, $C000  ; Screen subpixel X position
-    dw $0911, $0100  ; Screen X position in pixels
+preset_kpdr25_lower_norfair_leaving_ridley:
+    dw #preset_kpdr25_lower_norfair_amphitheatre
+    dw $078D, $98CA  ; DDB
+    dw $079B, $B32E  ; MDB
+    dw $07F3, $0024  ; Music Bank
+    dw $07F5, $0003  ; Music Track
     dw $0913, $3C00  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0917, $00C0  ; Layer 2 X position
-    dw $0A1C, $0072  ; Samus position/state
-    dw $0A1E, $0504  ; More position/state
-    dw $0AF6, $010C  ; Samus X
-    dw $0AFA, $0090  ; Samus Y
-    dw #$FFFF
-
-preset_phantoonfirst_backtracking_green_pirate_shaft_revisit:
-    dw #preset_phantoonfirst_backtracking_parlor_return
-    dw $078D, $895E  ; DDB
-    dw $079B, $990D  ; MDB
-    dw $07F3, $0009  ; Music Bank
-    dw $090F, $DE80  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
-    dw $0915, $01FB  ; Screen Y position in pixels
-    dw $0917, $0000  ; Layer 2 X position
-    dw $0919, $017C  ; Layer 2 Y position
-    dw $0AF6, $0062  ; Samus X
-    dw $0AFA, $029B  ; Samus Y
+    dw $0915, $011F  ; Screen Y position in pixels
+    dw $0917, $0001  ; Layer 2 X position
+    dw $0919, $00D7  ; Layer 2 Y position
+    dw $09C2, $0257  ; Health
+    dw $09C4, $0257  ; Max health
+    dw $09C6, $000E  ; Missiles
+    dw $09CA, $0009  ; Supers
+    dw $0AF6, $0057  ; Samus X
+    dw $0AFA, $019B  ; Samus Y
+    dw $D82A, $0101  ; Bosses
+    dw $D878, $401C  ; Items
+    dw $D8BA, $D9F1  ; Doors
+    dw $D8BC, $0001  ; Doors
     dw #$FFFF
 
 preset_kpdr_upper_norfair_revisit_ice_beam_gates:
@@ -40612,16 +40817,16 @@ preset_kpdr_upper_norfair_revisit_ice_maze_up:
     dw $D8B8, $2EEC  ; Doors
     dw #$FFFF
 
-preset_gtmax_brinstar_cleanup_crumble_blocks:
-    dw #preset_gtmax_brinstar_cleanup_gauntlet_etank
-    dw $078D, $8952  ; DDB
-    dw $079B, $965B  ; MDB
-    dw $090F, $4000  ; Screen subpixel X position
-    dw $0913, $0400  ; Screen subpixel Y position
-    dw $09C2, $0632  ; Health
-    dw $09C4, $0640  ; Max health
-    dw $0AF6, $0044  ; Samus X
-    dw $D870, $00BD  ; Items
+preset_phantoonfirst_tourian_metroids_1:
+    dw #preset_phantoonfirst_tourian_tourian_elevator_room
+    dw $090F, $0001  ; Screen subpixel X position
+    dw $0913, $D3FF  ; Screen subpixel Y position
+    dw $0915, $0300  ; Screen Y position in pixels
+    dw $0919, $0240  ; Layer 2 Y position
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0041  ; Samus X
+    dw $0AFA, $038B  ; Samus Y
     dw #$FFFF
 
 preset_suitless_red_tower_cleanup_alpha_power_bombs:
@@ -40746,124 +40951,85 @@ preset_100early_lower_norfair_fast_ripper_room:
     dw $D8BA, $03F7  ; Doors
     dw #$FFFF
 
-preset_kpdr22_lower_norfair_kihunter_stairs_down:
-    dw #preset_kpdr23_lower_norfair_kihunter_stairs_down
+preset_gtmax_brinstar_cleanup_kago_mushroom_room:
+    dw #preset_gtmax_brinstar_cleanup_crumble_blocks
+    dw $078D, $8B1A  ; DDB
+    dw $079B, $99BD  ; MDB
+    dw $090F, $C000  ; Screen subpixel X position
+    dw $0913, $E400  ; Screen subpixel Y position
+    dw $0915, $0600  ; Screen Y position in pixels
+    dw $0917, $0001  ; Layer 2 X position
+    dw $0919, $0480  ; Layer 2 Y position
+    dw $09C2, $0640  ; Health
+    dw $09C6, $00F0  ; Missiles
+    dw $09C8, $0113  ; Max missiles
+    dw $09D6, $0196  ; Reserves
+    dw $0AF6, $00B5  ; Samus X
+    dw $0AFA, $068B  ; Samus Y
+    dw $D870, $06BD  ; Items
+    dw #$FFFF
+
+preset_kpdr20_lower_norfair_wasteland:
+    dw #preset_kpdr21_lower_norfair_wasteland
+    dw $09C6, $000F  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr21_lower_norfair_metal_ninja_pirates:
+    dw #preset_kpdr22_lower_norfair_metal_ninja_pirates
+    dw $09C2, $0087  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $D874, $0104  ; Items
+    dw $D8B6, $3008  ; Doors
+    dw $D8B8, $2EED  ; Doors
+    dw #$FFFF
+
+preset_kpdr22_lower_norfair_plowerhouse:
+    dw #preset_kpdr23_lower_norfair_plowerhouse
     dw $09A8, $100B  ; Collected Beams
     dw #$FFFF
 
-preset_kpdr23_lower_norfair_wasteland:
-    dw #preset_kpdr25_lower_norfair_wasteland
-    dw $09C2, $0110  ; Health
-    dw $09C6, $0013  ; Missiles
+preset_kpdr23_lower_norfair_ridley:
+    dw #preset_kpdr25_lower_norfair_ridley
+    dw $09C2, $0147  ; Health
+    dw $09C6, $0014  ; Missiles
     dw $09C8, $0014  ; Max missiles
-    dw $09CA, $0007  ; Supers
+    dw $09CA, $0008  ; Supers
     dw $0AF8, $0000  ; Samus subpixel X
     dw $0AFC, $FFFF  ; Samus subpixel Y
     dw $D870, $0180  ; Items
     dw #$FFFF
 
-preset_kpdr25_lower_norfair_metal_ninja_pirates:
-    dw #preset_kpdr25_lower_norfair_wasteland
-    dw $078D, $99EA  ; DDB
-    dw $079B, $B5D5  ; MDB
-    dw $090F, $E000  ; Screen subpixel X position
-    dw $0911, $0100  ; Screen X position in pixels
-    dw $0915, $021B  ; Screen Y position in pixels
-    dw $09C2, $0179  ; Health
-    dw $09CA, $0003  ; Supers
-    dw $09CE, $0001  ; Pbs
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $0168  ; Samus X
-    dw $0AFA, $028B  ; Samus Y
-    dw $D8BA, $C1F1  ; Doors
+preset_kpdr23_lower_norfair_leaving_ridley:
+    dw #preset_kpdr25_lower_norfair_leaving_ridley
+    dw $09C2, $013D  ; Health
+    dw $09C4, $01F3  ; Max health
+    dw $09C6, $0014  ; Missiles
+    dw $09C8, $0014  ; Max missiles
+    dw $09CA, $000A  ; Supers
+    dw $09CE, $0003  ; Pbs
+    dw $0AF8, $0000  ; Samus subpixel X
+    dw $0AFC, $FFFF  ; Samus subpixel Y
+    dw $D870, $0180  ; Items
+    dw $D878, $001C  ; Items
+    dw $D8BA, $D1F1  ; Doors
     dw #$FFFF
 
-preset_kpdr21_lower_norfair_prepillars:
-    dw #preset_kpdr22_lower_norfair_prepillars
-    dw $09C2, $00BA  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0104  ; Items
-    dw $D8B6, $3008  ; Doors
-    dw $D8B8, $2EED  ; Doors
-    dw #$FFFF
-
-preset_kpdr21_lower_norfair_fast_pillars_setup:
-    dw #preset_kpdr22_lower_norfair_fast_pillars_setup
-    dw $09C2, $00BA  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0104  ; Items
-    dw $D8B6, $3008  ; Doors
-    dw $D8B8, $2EED  ; Doors
-    dw #$FFFF
-
-preset_kpdr21_lower_norfair_worst_room_in_the_game:
-    dw #preset_kpdr22_lower_norfair_worst_room_in_the_game
-    dw $09C2, $0070  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0104  ; Items
-    dw $D8B6, $3008  ; Doors
-    dw $D8B8, $2EED  ; Doors
-    dw #$FFFF
-
-preset_kpdr21_lower_norfair_amphitheatre:
-    dw #preset_kpdr22_lower_norfair_amphitheatre
-    dw $09C2, $0084  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0104  ; Items
-    dw $D8B6, $3008  ; Doors
-    dw $D8B8, $2EED  ; Doors
-    dw #$FFFF
-
-preset_phantoonfirst_backtracking_g4_hallway:
-    dw #preset_phantoonfirst_backtracking_green_pirate_shaft_revisit
-    dw $078D, $8BE6  ; DDB
-    dw $079B, $99BD  ; MDB
-    dw $090F, $7FFF  ; Screen subpixel X position
-    dw $0913, $E400  ; Screen subpixel Y position
-    dw $0915, $0600  ; Screen Y position in pixels
-    dw $0917, $0001  ; Layer 2 X position
-    dw $0919, $0480  ; Layer 2 Y position
-    dw $09CA, $0004  ; Supers
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $00C2  ; Samus X
-    dw $0AFA, $068B  ; Samus Y
-    dw $D8B2, $6C01  ; Doors
-    dw #$FFFF
-
-preset_phantoonfirst_backtracking_g4_elevator:
-    dw #preset_phantoonfirst_backtracking_green_pirate_shaft_revisit
-    dw $078D, $91F2  ; DDB
-    dw $079B, $A66A  ; MDB
-    dw $07F5, $0006  ; Music Track
-    dw $090F, $7000  ; Screen subpixel X position
-    dw $0913, $7000  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $09CA, $0004  ; Supers
-    dw $0AF6, $0049  ; Samus X
-    dw $0AFA, $009B  ; Samus Y
-    dw $D820, $0BC1  ; Events
-    dw $D8B2, $6C01  ; Doors
-    dw #$FFFF
-
-preset_phantoonfirst_tourian_tourian_elevator_room:
-    dw #preset_phantoonfirst_backtracking_crateria_kihunters_final
-    dw $078D, $9222  ; DDB
-    dw $079B, $DAAE  ; MDB
-    dw $07F3, $001E  ; Music Bank
-    dw $07F5, $0005  ; Music Track
-    dw $090F, $9FFF  ; Screen subpixel X position
-    dw $0915, $0238  ; Screen Y position in pixels
-    dw $0919, $01AA  ; Layer 2 Y position
-    dw $09A6, $1007  ; Equipped Beams
-    dw $09C6, $0009  ; Missiles
-    dw $09CA, $0004  ; Supers
-    dw $0AFA, $02A8  ; Samus Y
-    dw $D820, $0FC1  ; Events
-    dw $D8B2, $6C01  ; Doors
-    dw $D90C, $0100  ; Map Stations
+preset_kpdr23_lower_norfair_reverse_plowerhouse:
+    dw #preset_kpdr23_upper_norfair_revisit_kronic_boost_upper
+    dw $078D, $98BE  ; DDB
+    dw $079B, $B37A  ; MDB
+    dw $07F3, $0018  ; Music Bank
+    dw $0913, $AC00  ; Screen subpixel Y position
+    dw $09C2, $013A  ; Health
+    dw $09C6, $0014  ; Missiles
+    dw $09CA, $000A  ; Supers
+    dw $09CE, $0003  ; Pbs
+    dw $0AF6, $02B8  ; Samus X
+    dw $D82A, $0101  ; Bosses
+    dw $D8BA, $D5F1  ; Doors
+    dw $D8BC, $0001  ; Doors
     dw #$FFFF
 
 preset_kpdr_upper_norfair_revisit_ice_maze_down:
@@ -40882,22 +41048,40 @@ preset_kpdr_upper_norfair_revisit_ice_maze_down:
     dw $D876, $0125  ; Items
     dw #$FFFF
 
-preset_gtmax_brinstar_cleanup_kago_mushroom_room:
-    dw #preset_gtmax_brinstar_cleanup_crumble_blocks
-    dw $078D, $8B1A  ; DDB
-    dw $079B, $99BD  ; MDB
-    dw $090F, $C000  ; Screen subpixel X position
-    dw $0913, $E400  ; Screen subpixel Y position
-    dw $0915, $0600  ; Screen Y position in pixels
-    dw $0917, $0001  ; Layer 2 X position
-    dw $0919, $0480  ; Layer 2 Y position
-    dw $09C2, $0640  ; Health
-    dw $09C6, $00F0  ; Missiles
-    dw $09C8, $0113  ; Max missiles
-    dw $09D6, $0196  ; Reserves
-    dw $0AF6, $00B5  ; Samus X
-    dw $0AFA, $068B  ; Samus Y
-    dw $D870, $06BD  ; Items
+preset_phantoonfirst_tourian_metroids_2:
+    dw #preset_phantoonfirst_tourian_metroids_1
+    dw $078D, $A984  ; DDB
+    dw $079B, $DAE1  ; MDB
+    dw $090F, $6000  ; Screen subpixel X position
+    dw $0911, $0119  ; Screen X position in pixels
+    dw $0913, $A400  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $00D2  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09C2, $FFC6  ; Health
+    dw $09C6, $000F  ; Missiles
+    dw $09CA, $0006  ; Supers
+    dw $0AF6, $0197  ; Samus X
+    dw $0AFA, $00AB  ; Samus Y
+    dw $D822, $0021  ; Events
+    dw #$FFFF
+
+preset_phantoonfirst_tourian_metroids_3:
+    dw #preset_phantoonfirst_tourian_tourian_elevator_room
+    dw $078D, $A9B4  ; DDB
+    dw $079B, $DB31  ; MDB
+    dw $090F, $EFFF  ; Screen subpixel X position
+    dw $0915, $0117  ; Screen Y position in pixels
+    dw $0919, $00D1  ; Layer 2 Y position
+    dw $09C2, $002F  ; Health
+    dw $09C6, $000F  ; Missiles
+    dw $09CA, $0007  ; Supers
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $00C0  ; Samus X
+    dw $0AFA, $018B  ; Samus Y
+    dw $D822, $0023  ; Events
+    dw $D8C4, $0003  ; Doors
     dw #$FFFF
 
 preset_suitless_red_tower_cleanup_hellway:
@@ -40968,104 +41152,6 @@ preset_100early_lower_norfair_worst_room_in_the_game:
     dw $09C2, $03FD  ; Health
     dw $09CA, $001D  ; Supers
     dw $0AF6, $03DB  ; Samus X
-    dw #$FFFF
-
-preset_kpdr21_lower_norfair_kihunter_stairs_down:
-    dw #preset_kpdr22_lower_norfair_kihunter_stairs_down
-    dw $09C2, $0084  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0104  ; Items
-    dw $D8B6, $3008  ; Doors
-    dw $D8B8, $2EED  ; Doors
-    dw #$FFFF
-
-preset_kpdr22_lower_norfair_wasteland:
-    dw #preset_kpdr23_lower_norfair_wasteland
-    dw $09A8, $100B  ; Collected Beams
-    dw #$FFFF
-
-preset_kpdr23_lower_norfair_metal_ninja_pirates:
-    dw #preset_kpdr25_lower_norfair_metal_ninja_pirates
-    dw $09C2, $00EB  ; Health
-    dw $09C6, $0013  ; Missiles
-    dw $09C8, $0014  ; Max missiles
-    dw $09CA, $0006  ; Supers
-    dw $0AF8, $0000  ; Samus subpixel X
-    dw $0AFC, $FFFF  ; Samus subpixel Y
-    dw $D870, $0180  ; Items
-    dw #$FFFF
-
-preset_kpdr25_lower_norfair_plowerhouse:
-    dw #preset_kpdr25_lower_norfair_metal_ninja_pirates
-    dw $078D, $9A1A  ; DDB
-    dw $079B, $B62B  ; MDB
-    dw $090F, $7000  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $CC00  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0917, $0000  ; Layer 2 X position
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $09C2, $01A5  ; Health
-    dw $09CA, $0007  ; Supers
-    dw $0AF6, $006A  ; Samus X
-    dw $0AFA, $00BB  ; Samus Y
-    dw $D8BC, $0001  ; Doors
-    dw #$FFFF
-
-preset_kpdr20_lower_norfair_prepillars:
-    dw #preset_kpdr21_lower_norfair_prepillars
-    dw $09C6, $000F  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr20_lower_norfair_fast_pillars_setup:
-    dw #preset_kpdr21_lower_norfair_fast_pillars_setup
-    dw $09C6, $000F  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr20_lower_norfair_worst_room_in_the_game:
-    dw #preset_kpdr21_lower_norfair_worst_room_in_the_game
-    dw $09C6, $000F  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr20_lower_norfair_amphitheatre:
-    dw #preset_kpdr21_lower_norfair_amphitheatre
-    dw $09C6, $000F  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_phantoonfirst_tourian_metroids_1:
-    dw #preset_phantoonfirst_tourian_tourian_elevator_room
-    dw $090F, $0001  ; Screen subpixel X position
-    dw $0913, $D3FF  ; Screen subpixel Y position
-    dw $0915, $0300  ; Screen Y position in pixels
-    dw $0919, $0240  ; Layer 2 Y position
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $0041  ; Samus X
-    dw $0AFA, $038B  ; Samus Y
-    dw #$FFFF
-
-preset_kpdr_upper_norfair_revisit_ice_escape:
-    dw #preset_kpdr_upper_norfair_revisit_ice_maze_down
-    dw $078D, $935A  ; DDB
-    dw $079B, $A8B9  ; MDB
-    dw $07F5, $0005  ; Music Track
-    dw $090F, $E000  ; Screen subpixel X position
-    dw $0913, $9000  ; Screen subpixel Y position
-    dw $0915, $0200  ; Screen Y position in pixels
-    dw $0917, $0000  ; Layer 2 X position
-    dw $0919, $0180  ; Layer 2 Y position
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $00C5  ; Samus X
-    dw $0AFA, $028B  ; Samus Y
     dw #$FFFF
 
 preset_suitless_red_tower_cleanup_red_tower_revisit:
@@ -41189,320 +41275,90 @@ preset_gtmax_brinstar_cleanup_brinstar_reserve_tank:
     dw $D8B4, $0246  ; Doors
     dw #$FFFF
 
-preset_hundo_final_cleanup_retro_brinstar_hoppers:
-    dw #preset_hundo_final_cleanup_reverse_slinky
-    dw $078D, $8EFE  ; DDB
-    dw $079B, $9E52  ; MDB
-    dw $090F, $5FFF  ; Screen subpixel X position
-    dw $0911, $00E4  ; Screen X position in pixels
-    dw $0913, $0000  ; Screen subpixel Y position
-    dw $0915, $001D  ; Screen Y position in pixels
-    dw $0A1C, $0009  ; Samus position/state
-    dw $0A1E, $0108  ; More position/state
-    dw $0AF6, $0155  ; Samus X
-    dw $0AFA, $008B  ; Samus Y
-    dw #$FFFF
-
-preset_hundo_final_cleanup_retro_brinstar_etank:
-    dw #preset_hundo_final_cleanup_reverse_slinky
-    dw $078D, $8E86  ; DDB
-    dw $079B, $9E9F  ; MDB
-    dw $07F3, $0009  ; Music Bank
-    dw $0911, $0573  ; Screen X position in pixels
-    dw $0913, $5C00  ; Screen subpixel Y position
-    dw $0915, $0200  ; Screen Y position in pixels
-    dw $09CE, $001B  ; Pbs
-    dw $09D0, $0032  ; Max pbs
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $05D3  ; Samus X
-    dw $0AFA, $02BB  ; Samus Y
-    dw $D872, $CFEF  ; Items
-    dw #$FFFF
-
-preset_100early_lower_norfair_mickey_mouse_missiles:
-    dw #preset_100early_lower_norfair_worst_room_in_the_game
-    dw $078D, $994E  ; DDB
-    dw $079B, $B4AD  ; MDB
-    dw $090F, $8000  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $5000  ; Screen subpixel Y position
-    dw $0915, $0103  ; Screen Y position in pixels
-    dw $0917, $0000  ; Layer 2 X position
-    dw $0919, $00C2  ; Layer 2 Y position
-    dw $09C2, $0411  ; Health
-    dw $0AF6, $0071  ; Samus X
-    dw $0AFA, $017B  ; Samus Y
-    dw #$FFFF
-
-preset_kpdr20_lower_norfair_kihunter_stairs_down:
-    dw #preset_kpdr21_lower_norfair_kihunter_stairs_down
+preset_kpdr20_lower_norfair_metal_ninja_pirates:
+    dw #preset_kpdr21_lower_norfair_metal_ninja_pirates
     dw $09C6, $000F  ; Missiles
     dw $09C8, $000F  ; Max missiles
     dw $D878, $0014  ; Items
     dw #$FFFF
 
-preset_kpdr21_lower_norfair_wasteland:
-    dw #preset_kpdr22_lower_norfair_wasteland
-    dw $09C2, $00AC  ; Health
+preset_kpdr21_lower_norfair_plowerhouse:
+    dw #preset_kpdr22_lower_norfair_plowerhouse
+    dw $09C2, $0122  ; Health
     dw $09C4, $018F  ; Max health
     dw $D874, $0104  ; Items
     dw $D8B6, $3008  ; Doors
     dw $D8B8, $2EED  ; Doors
     dw #$FFFF
 
-preset_kpdr22_lower_norfair_metal_ninja_pirates:
-    dw #preset_kpdr23_lower_norfair_metal_ninja_pirates
+preset_kpdr22_lower_norfair_ridley:
+    dw #preset_kpdr23_lower_norfair_ridley
     dw $09A8, $100B  ; Collected Beams
     dw #$FFFF
 
-preset_kpdr23_lower_norfair_plowerhouse:
-    dw #preset_kpdr25_lower_norfair_plowerhouse
-    dw $09C2, $0186  ; Health
-    dw $09C6, $0014  ; Missiles
-    dw $09C8, $0014  ; Max missiles
-    dw $09CA, $0009  ; Supers
-    dw $0AF8, $0000  ; Samus subpixel X
-    dw $0AFC, $FFFF  ; Samus subpixel Y
-    dw $D870, $0180  ; Items
+preset_kpdr22_lower_norfair_leaving_ridley:
+    dw #preset_kpdr23_lower_norfair_leaving_ridley
+    dw $09A8, $100B  ; Collected Beams
     dw #$FFFF
 
-preset_kpdr25_lower_norfair_ridley:
-    dw #preset_kpdr25_lower_norfair_plowerhouse
-    dw $078D, $995A  ; DDB
-    dw $079B, $B37A  ; MDB
-    dw $090F, $2000  ; Screen subpixel X position
-    dw $0913, $5000  ; Screen subpixel Y position
-    dw $09CA, $0006  ; Supers
-    dw $0AF6, $003D  ; Samus X
+preset_kpdr22_lower_norfair_reverse_plowerhouse:
+    dw #preset_kpdr23_lower_norfair_reverse_plowerhouse
+    dw $09A8, $100B  ; Collected Beams
+    dw #$FFFF
+
+preset_kpdr23_lower_norfair_wasteland_revisit:
+    dw #preset_kpdr23_lower_norfair_reverse_plowerhouse
+    dw $078D, $9966  ; DDB
+    dw $079B, $B62B  ; MDB
+    dw $090F, $9000  ; Screen subpixel X position
+    dw $0913, $7400  ; Screen subpixel Y position
+    dw $09C2, $0118  ; Health
+    dw $0AF6, $02DC  ; Samus X
+    dw #$FFFF
+
+preset_kpdr23_lower_norfair_kihunter_stairs_up:
+    dw #preset_kpdr23_lower_norfair_reverse_plowerhouse
+    dw $078D, $9A3E  ; DDB
+    dw $079B, $B5D5  ; MDB
+    dw $090F, $D5FF  ; Screen subpixel X position
+    dw $0911, $0500  ; Screen X position in pixels
+    dw $0913, $B000  ; Screen subpixel Y position
+    dw $0917, $03C0  ; Layer 2 X position
+    dw $09C2, $0116  ; Health
+    dw $09CE, $0002  ; Pbs
+    dw $0AF6, $055B  ; Samus X
     dw $0AFA, $009B  ; Samus Y
-    dw $D8BA, $D1F1  ; Doors
     dw #$FFFF
 
-preset_kpdr25_lower_norfair_leaving_ridley:
-    dw #preset_kpdr25_lower_norfair_amphitheatre
-    dw $078D, $98CA  ; DDB
-    dw $079B, $B32E  ; MDB
-    dw $07F3, $0024  ; Music Bank
-    dw $07F5, $0003  ; Music Track
-    dw $0913, $3C00  ; Screen subpixel Y position
-    dw $0915, $011F  ; Screen Y position in pixels
-    dw $0917, $0001  ; Layer 2 X position
-    dw $0919, $00D7  ; Layer 2 Y position
-    dw $09C2, $0257  ; Health
+preset_kpdr25_lower_norfair_reverse_plowerhouse:
+    dw #preset_kpdr23_lower_norfair_reverse_plowerhouse
+    dw $09C2, $0252  ; Health
     dw $09C4, $0257  ; Max health
     dw $09C6, $000E  ; Missiles
+    dw $09C8, $0019  ; Max missiles
     dw $09CA, $0009  ; Supers
-    dw $0AF6, $0057  ; Samus X
-    dw $0AFA, $019B  ; Samus Y
-    dw $D82A, $0101  ; Bosses
+    dw $09CE, $0004  ; Pbs
+    dw $0AF8, $7FFF  ; Samus subpixel X
+    dw $0AFC, $B7FF  ; Samus subpixel Y
+    dw $D870, $0190  ; Items
     dw $D878, $401C  ; Items
-    dw $D8BA, $D9F1  ; Doors
-    dw $D8BC, $0001  ; Doors
+    dw $D8BA, $DDF1  ; Doors
     dw #$FFFF
 
-preset_phantoonfirst_tourian_metroids_2:
-    dw #preset_phantoonfirst_tourian_metroids_1
-    dw $078D, $A984  ; DDB
-    dw $079B, $DAE1  ; MDB
-    dw $090F, $6000  ; Screen subpixel X position
-    dw $0911, $0119  ; Screen X position in pixels
-    dw $0913, $A400  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0917, $00D2  ; Layer 2 X position
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $09C2, $FFC6  ; Health
-    dw $09C6, $000F  ; Missiles
-    dw $09CA, $0006  ; Supers
-    dw $0AF6, $0197  ; Samus X
-    dw $0AFA, $00AB  ; Samus Y
-    dw $D822, $0021  ; Events
-    dw #$FFFF
-
-preset_phantoonfirst_tourian_metroids_3:
-    dw #preset_phantoonfirst_tourian_tourian_elevator_room
-    dw $078D, $A9B4  ; DDB
-    dw $079B, $DB31  ; MDB
-    dw $090F, $EFFF  ; Screen subpixel X position
-    dw $0915, $0117  ; Screen Y position in pixels
-    dw $0919, $00D1  ; Layer 2 Y position
-    dw $09C2, $002F  ; Health
-    dw $09C6, $000F  ; Missiles
-    dw $09CA, $0007  ; Supers
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $00C0  ; Samus X
-    dw $0AFA, $018B  ; Samus Y
-    dw $D822, $0023  ; Events
-    dw $D8C4, $0003  ; Doors
-    dw #$FFFF
-
-preset_kpdr_upper_norfair_revisit_croc_speedway:
-    dw #preset_kpdr_upper_norfair_revisit_ice_escape
-    dw $078D, $9336  ; DDB
-    dw $079B, $A8F8  ; MDB
-    dw $090F, $6781  ; Screen subpixel X position
-    dw $0913, $0800  ; Screen subpixel Y position
-    dw $0915, $0300  ; Screen Y position in pixels
-    dw $0919, $0240  ; Layer 2 Y position
-    dw $0AF6, $00DD  ; Samus X
-    dw $0AFA, $038B  ; Samus Y
-    dw #$FFFF
-
-preset_kpdr_upper_norfair_revisit_spiky_acid_snakes:
+preset_kpdr_upper_norfair_revisit_ice_escape:
     dw #preset_kpdr_upper_norfair_revisit_ice_maze_down
-    dw $078D, $93C6  ; DDB
-    dw $079B, $AFCE  ; MDB
+    dw $078D, $935A  ; DDB
+    dw $079B, $A8B9  ; MDB
     dw $07F5, $0005  ; Music Track
-    dw $090F, $A000  ; Screen subpixel X position
-    dw $0911, $02A3  ; Screen X position in pixels
-    dw $0913, $7400  ; Screen subpixel Y position
-    dw $0917, $01FA  ; Layer 2 X position
+    dw $090F, $E000  ; Screen subpixel X position
+    dw $0913, $9000  ; Screen subpixel Y position
+    dw $0915, $0200  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $0180  ; Layer 2 Y position
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $030E  ; Samus X
-    dw #$FFFF
-
-preset_suitless_red_tower_cleanup_upper_norfair_elevator:
-    dw #preset_suitless_red_tower_cleanup_red_tower_revisit
-    dw $078D, $A384  ; DDB
-    dw $079B, $A6A1  ; MDB
-    dw $07F5, $0003  ; Music Track
-    dw $090F, $4000  ; Screen subpixel X position
-    dw $0913, $C800  ; Screen subpixel Y position
-    dw $09CA, $0014  ; Supers
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $007C  ; Samus X
-    dw $0AF8, $E000  ; Samus subpixel X
-    dw #$FFFF
-
-preset_suitless_red_tower_cleanup_ice_gates_revisit:
-    dw #preset_suitless_red_tower_cleanup_hellway
-    dw $078D, $9246  ; DDB
-    dw $079B, $A7DE  ; MDB
-    dw $07F3, $0015  ; Music Bank
-    dw $090F, $2000  ; Screen subpixel X position
-    dw $0913, $0000  ; Screen subpixel Y position
-    dw $0915, $031F  ; Screen Y position in pixels
-    dw $0919, $0257  ; Layer 2 Y position
-    dw $09CA, $0014  ; Supers
-    dw $0AF6, $0025  ; Samus X
-    dw $0AF8, $0000  ; Samus subpixel X
-    dw $0AFA, $038E  ; Samus Y
-    dw $0AFC, $D7FF  ; Samus subpixel Y
-    dw #$FFFF
-
-preset_gtmax_brinstar_cleanup_reverse_mockball:
-    dw #preset_gtmax_brinstar_cleanup_green_brinstar_revisit
-    dw $078D, $8D5A  ; DDB
-    dw $079B, $9C07  ; MDB
-    dw $07F3, $000F  ; Music Bank
-    dw $0913, $8800  ; Screen subpixel Y position
-    dw $09C6, $00FA  ; Missiles
-    dw $09C8, $0118  ; Max missiles
-    dw $09CA, $001A  ; Supers
-    dw $09CE, $002B  ; Pbs
-    dw $09D4, $02BC  ; Max reserves
-    dw $0AF6, $0044  ; Samus X
-    dw $D872, $040F  ; Items
-    dw $D8B4, $0246  ; Doors
-    dw #$FFFF
-
-preset_hundo_final_cleanup_billy_mays:
-    dw #preset_hundo_final_cleanup_retro_brinstar_hoppers
-    dw $078D, $8ECE  ; DDB
-    dw $079B, $9F64  ; MDB
-    dw $07F3, $0009  ; Music Bank
-    dw $090F, $A001  ; Screen subpixel X position
-    dw $0911, $0200  ; Screen X position in pixels
-    dw $09C2, $05DB  ; Health
-    dw $09C4, $05DB  ; Max health
-    dw $09CA, $000C  ; Supers
-    dw $09CE, $001A  ; Pbs
-    dw $09D0, $0032  ; Max pbs
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $0253  ; Samus X
-    dw $D872, $EFEF  ; Items
-    dw $D8B6, $EEFD  ; Doors
-    dw #$FFFF
-
-preset_100early_lower_norfair_amphitheatre:
-    dw #preset_100early_lower_norfair_mickey_mouse_missiles
-    dw $078D, $9936  ; DDB
-    dw $090F, $0001  ; Screen subpixel X position
-    dw $0913, $0000  ; Screen subpixel Y position
-    dw $0915, $011D  ; Screen Y position in pixels
-    dw $0919, $00D5  ; Layer 2 Y position
-    dw $09C6, $00A1  ; Missiles
-    dw $09C8, $00B4  ; Max missiles
-    dw $0AF6, $00AB  ; Samus X
-    dw $0AFA, $018B  ; Samus Y
-    dw $D878, $82DE  ; Items
-    dw #$FFFF
-
-preset_kpdr20_lower_norfair_wasteland:
-    dw #preset_kpdr21_lower_norfair_wasteland
-    dw $09C6, $000F  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr21_lower_norfair_metal_ninja_pirates:
-    dw #preset_kpdr22_lower_norfair_metal_ninja_pirates
-    dw $09C2, $0087  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0104  ; Items
-    dw $D8B6, $3008  ; Doors
-    dw $D8B8, $2EED  ; Doors
-    dw #$FFFF
-
-preset_kpdr22_lower_norfair_plowerhouse:
-    dw #preset_kpdr23_lower_norfair_plowerhouse
-    dw $09A8, $100B  ; Collected Beams
-    dw #$FFFF
-
-preset_kpdr23_lower_norfair_ridley:
-    dw #preset_kpdr25_lower_norfair_ridley
-    dw $09C2, $0147  ; Health
-    dw $09C6, $0014  ; Missiles
-    dw $09C8, $0014  ; Max missiles
-    dw $09CA, $0008  ; Supers
-    dw $0AF8, $0000  ; Samus subpixel X
-    dw $0AFC, $FFFF  ; Samus subpixel Y
-    dw $D870, $0180  ; Items
-    dw #$FFFF
-
-preset_kpdr23_lower_norfair_leaving_ridley:
-    dw #preset_kpdr25_lower_norfair_leaving_ridley
-    dw $09C2, $013D  ; Health
-    dw $09C4, $01F3  ; Max health
-    dw $09C6, $0014  ; Missiles
-    dw $09C8, $0014  ; Max missiles
-    dw $09CA, $000A  ; Supers
-    dw $09CE, $0003  ; Pbs
-    dw $0AF8, $0000  ; Samus subpixel X
-    dw $0AFC, $FFFF  ; Samus subpixel Y
-    dw $D870, $0180  ; Items
-    dw $D878, $001C  ; Items
-    dw $D8BA, $D1F1  ; Doors
-    dw #$FFFF
-
-preset_kpdr23_lower_norfair_reverse_plowerhouse:
-    dw #preset_kpdr23_upper_norfair_revisit_kronic_boost_upper
-    dw $078D, $98BE  ; DDB
-    dw $079B, $B37A  ; MDB
-    dw $07F3, $0018  ; Music Bank
-    dw $0913, $AC00  ; Screen subpixel Y position
-    dw $09C2, $013A  ; Health
-    dw $09C6, $0014  ; Missiles
-    dw $09CA, $000A  ; Supers
-    dw $09CE, $0003  ; Pbs
-    dw $0AF6, $02B8  ; Samus X
-    dw $D82A, $0101  ; Bosses
-    dw $D8BA, $D5F1  ; Doors
-    dw $D8BC, $0001  ; Doors
+    dw $0AF6, $00C5  ; Samus X
+    dw $0AFA, $028B  ; Samus Y
     dw #$FFFF
 
 preset_phantoonfirst_tourian_metroids_4:
@@ -41583,363 +41439,96 @@ preset_phantoonfirst_tourian_mother_brain_2:
     dw $0FC0, $0046  ; Safeties reserves adjustment
     dw #$FFFF
 
-preset_kpdr_upper_norfair_revisit_southern_kronic_boost:
-    dw #preset_kpdr_upper_norfair_revisit_spiky_acid_snakes
-    dw $078D, $9792  ; DDB
-    dw $079B, $AFFB  ; MDB
-    dw $090F, $B000  ; Screen subpixel X position
-    dw $0911, $0300  ; Screen X position in pixels
-    dw $0913, $8C00  ; Screen subpixel Y position
-    dw $0917, $0240  ; Layer 2 X position
-    dw $09D2, $0003  ; Currently selected item
-    dw $0AF6, $03BC  ; Samus X
-    dw #$FFFF
-
-preset_kpdr_upper_norfair_revisit_purple_shaft:
-    dw #preset_kpdr_upper_norfair_revisit_croc_speedway
-    dw $078D, $971A  ; DDB
-    dw $079B, $ACB3  ; MDB
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $0913, $E800  ; Screen subpixel Y position
-    dw $0AF6, $0036  ; Samus X
-    dw #$FFFF
-
-preset_kpdr_upper_norfair_revisit_magdollite_tunnel:
-    dw #preset_kpdr_upper_norfair_revisit_ice_escape
-    dw $078D, $9576  ; DDB
-    dw $079B, $AEDF  ; MDB
-    dw $090F, $B001  ; Screen subpixel X position
+preset_hundo_final_cleanup_retro_brinstar_hoppers:
+    dw #preset_hundo_final_cleanup_reverse_slinky
+    dw $078D, $8EFE  ; DDB
+    dw $079B, $9E52  ; MDB
+    dw $090F, $5FFF  ; Screen subpixel X position
+    dw $0911, $00E4  ; Screen X position in pixels
     dw $0913, $0000  ; Screen subpixel Y position
-    dw $0915, $01F4  ; Screen Y position in pixels
-    dw $0919, $0177  ; Layer 2 Y position
-    dw $0AF6, $0059  ; Samus X
-    dw #$FFFF
-
-preset_kpdr_upper_norfair_revisit_northern_kronic_boost:
-    dw #preset_kpdr_upper_norfair_revisit_spiky_acid_snakes
-    dw $078D, $96BA  ; DDB
-    dw $079B, $AEB4  ; MDB
-    dw $090F, $8000  ; Screen subpixel X position
-    dw $0911, $0200  ; Screen X position in pixels
-    dw $0913, $9000  ; Screen subpixel Y position
-    dw $0917, $0180  ; Layer 2 X position
-    dw $0AF6, $02B7  ; Samus X
-    dw #$FFFF
-
-preset_kpdr_lower_norfair_ln_main_hall:
-    dw #preset_kpdr20_lower_norfair_ln_main_hall
-    dw $09C2, $008F  ; Health
-    dw $0F78, $C23B  ; Safeties enabled
-    dw $0F7A, $007E  ; Safeties enabled
-    dw $0FA6, $0046  ; Safeties energy adjustment
-    dw $0FA8, $0028  ; Safeties energy adjustment
-    dw $0FAA, $0070  ; Safeties energy adjustment
-    dw $0FAC, $002B  ; Safeties energy adjustment
-    dw $1118, $0004  ; Safeties unequip beams
-    dw $1120, $0004  ; Safeties unequip beams
-    dw $1180, $0006  ; Safeties stage
-    dw $D876, $0125  ; Items
-    dw $D878, $001C  ; Items
-    dw $D8B0, $3000  ; Doors
-    dw $D8B8, $2EEC  ; Doors
-    dw #$FFFF
-
-preset_suitless_red_tower_cleanup_crumble_tower:
-    dw #preset_suitless_red_tower_cleanup_ice_gates_revisit
-    dw $078D, $92BE  ; DDB
-    dw $079B, $A815  ; MDB
-    dw $090F, $4FFF  ; Screen subpixel X position
-    dw $0911, $0300  ; Screen X position in pixels
-    dw $0913, $DC00  ; Screen subpixel Y position
-    dw $0915, $02D2  ; Screen Y position in pixels
-    dw $0917, $0240  ; Layer 2 X position
-    dw $0919, $021D  ; Layer 2 Y position
-    dw $09CE, $001C  ; Pbs
-    dw $0AF6, $0389  ; Samus X
-    dw $0AF8, $BFFF  ; Samus subpixel X
-    dw $0AFA, $036B  ; Samus Y
-    dw $0AFC, $FFFF  ; Samus subpixel Y
-    dw #$FFFF
-
-preset_suitless_red_tower_cleanup_croc_speedway:
-    dw #preset_suitless_red_tower_cleanup_upper_norfair_elevator
-    dw $078D, $9336  ; DDB
-    dw $079B, $A8F8  ; MDB
-    dw $07F3, $0015  ; Music Bank
-    dw $07F5, $0005  ; Music Track
-    dw $0913, $8800  ; Screen subpixel Y position
-    dw $0915, $0300  ; Screen Y position in pixels
-    dw $0919, $0240  ; Layer 2 Y position
-    dw $09C2, $02E0  ; Health
-    dw $09C6, $003A  ; Missiles
-    dw $09C8, $00A0  ; Max missiles
-    dw $09CE, $001C  ; Pbs
-    dw $0AF6, $00DB  ; Samus X
-    dw $0AF8, $FFFF  ; Samus subpixel X
-    dw $0AFA, $03BB  ; Samus Y
-    dw $D876, $1FFE  ; Items
-    dw #$FFFF
-
-preset_gtmax_brinstar_cleanup_green_shaft_descent:
-    dw #preset_gtmax_brinstar_cleanup_reverse_mockball
-    dw $078D, $8D66  ; DDB
-    dw $079B, $9BC8  ; MDB
-    dw $07F5, $0005  ; Music Track
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $0911, $002F  ; Screen X position in pixels
-    dw $0913, $FC02  ; Screen subpixel Y position
-    dw $0915, $0100  ; Screen Y position in pixels
-    dw $0917, $0023  ; Layer 2 X position
-    dw $0919, $00C0  ; Layer 2 Y position
-    dw $09C6, $00FF  ; Missiles
-    dw $09C8, $011D  ; Max missiles
-    dw $0AF6, $00CF  ; Samus X
-    dw $0AFA, $015B  ; Samus Y
-    dw $D870, $86BD  ; Items
-    dw #$FFFF
-
-preset_hundo_final_cleanup_billy_mays_escape:
-    dw #preset_hundo_final_cleanup_billy_mays
-    dw $078D, $8FEE  ; DDB
-    dw $079B, $A1D8  ; MDB
-    dw $090F, $4000  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $C000  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $09C6, $00A2  ; Missiles
-    dw $09C8, $00D7  ; Max missiles
+    dw $0915, $001D  ; Screen Y position in pixels
     dw $0A1C, $0009  ; Samus position/state
     dw $0A1E, $0108  ; More position/state
-    dw $0AF6, $00E0  ; Samus X
-    dw $D874, $1FFE  ; Items
-    dw #$FFFF
-
-preset_hundo_final_cleanup_retro_brinstar_escape:
-    dw #preset_hundo_final_cleanup_billy_mays
-    dw $078D, $8FE2  ; DDB
-    dw $090F, $6000  ; Screen subpixel X position
-    dw $0913, $C400  ; Screen subpixel Y position
-    dw $0915, $0200  ; Screen Y position in pixels
-    dw $09C2, $05D1  ; Health
-    dw $09C6, $00A7  ; Missiles
-    dw $09C8, $00DC  ; Max missiles
-    dw $09CE, $0019  ; Pbs
-    dw $0A1C, $00A5  ; Samus position/state
-    dw $0AF6, $02D6  ; Samus X
-    dw $0AFA, $02BB  ; Samus Y
-    dw $D872, $FFEF  ; Items
-    dw $D874, $1FFE  ; Items
-    dw #$FFFF
-
-preset_100early_lower_norfair_red_kihunter_shaft:
-    dw #preset_100early_lower_norfair_amphitheatre
-    dw $078D, $997E  ; DDB
-    dw $079B, $B4E5  ; MDB
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $0911, $0270  ; Screen X position in pixels
-    dw $0913, $F000  ; Screen subpixel Y position
-    dw $0915, $0031  ; Screen Y position in pixels
-    dw $0917, $01D4  ; Layer 2 X position
-    dw $0919, $0024  ; Layer 2 Y position
-    dw $0AF6, $02D0  ; Samus X
-    dw $0AFA, $00BB  ; Samus Y
-    dw #$FFFF
-
-preset_100early_lower_norfair_ninja_pirates:
-    dw #preset_hundo_ridley_ninja_pirates
-    dw $090F, $4FFF  ; Screen subpixel X position
-    dw $0915, $021F  ; Screen Y position in pixels
-    dw $0919, $0197  ; Layer 2 Y position
-    dw $09A2, $732F  ; Equipped Items
-    dw $09A4, $732F  ; Collected Items
-    dw $09C2, $03D8  ; Health
-    dw $09C4, $04AF  ; Max health
-    dw $09C6, $00A3  ; Missiles
-    dw $09C8, $00B4  ; Max missiles
-    dw $09CA, $001C  ; Supers
-    dw $09CE, $000D  ; Pbs
-    dw $09D0, $0028  ; Max pbs
-    dw $09D6, $00A8  ; Reserves
-    dw $0AF6, $0163  ; Samus X
-    dw $D82A, $0106  ; Bosses
-    dw $D876, $1FFF  ; Items
-    dw $D8B8, $EEEF  ; Doors
-    dw $D8BA, $C3F7  ; Doors
-    dw #$FFFF
-
-preset_kpdr20_lower_norfair_metal_ninja_pirates:
-    dw #preset_kpdr21_lower_norfair_metal_ninja_pirates
-    dw $09C6, $000F  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr21_lower_norfair_plowerhouse:
-    dw #preset_kpdr22_lower_norfair_plowerhouse
-    dw $09C2, $0122  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0104  ; Items
-    dw $D8B6, $3008  ; Doors
-    dw $D8B8, $2EED  ; Doors
-    dw #$FFFF
-
-preset_kpdr22_lower_norfair_ridley:
-    dw #preset_kpdr23_lower_norfair_ridley
-    dw $09A8, $100B  ; Collected Beams
-    dw #$FFFF
-
-preset_kpdr22_lower_norfair_leaving_ridley:
-    dw #preset_kpdr23_lower_norfair_leaving_ridley
-    dw $09A8, $100B  ; Collected Beams
-    dw #$FFFF
-
-preset_kpdr22_lower_norfair_reverse_plowerhouse:
-    dw #preset_kpdr23_lower_norfair_reverse_plowerhouse
-    dw $09A8, $100B  ; Collected Beams
-    dw #$FFFF
-
-preset_kpdr23_lower_norfair_wasteland_revisit:
-    dw #preset_kpdr23_lower_norfair_reverse_plowerhouse
-    dw $078D, $9966  ; DDB
-    dw $079B, $B62B  ; MDB
-    dw $090F, $9000  ; Screen subpixel X position
-    dw $0913, $7400  ; Screen subpixel Y position
-    dw $09C2, $0118  ; Health
-    dw $0AF6, $02DC  ; Samus X
-    dw #$FFFF
-
-preset_kpdr23_lower_norfair_kihunter_stairs_up:
-    dw #preset_kpdr23_lower_norfair_reverse_plowerhouse
-    dw $078D, $9A3E  ; DDB
-    dw $079B, $B5D5  ; MDB
-    dw $090F, $D5FF  ; Screen subpixel X position
-    dw $0911, $0500  ; Screen X position in pixels
-    dw $0913, $B000  ; Screen subpixel Y position
-    dw $0917, $03C0  ; Layer 2 X position
-    dw $09C2, $0116  ; Health
-    dw $09CE, $0002  ; Pbs
-    dw $0AF6, $055B  ; Samus X
-    dw $0AFA, $009B  ; Samus Y
-    dw #$FFFF
-
-preset_kpdr25_lower_norfair_reverse_plowerhouse:
-    dw #preset_kpdr23_lower_norfair_reverse_plowerhouse
-    dw $09C2, $0252  ; Health
-    dw $09C4, $0257  ; Max health
-    dw $09C6, $000E  ; Missiles
-    dw $09C8, $0019  ; Max missiles
-    dw $09CA, $0009  ; Supers
-    dw $09CE, $0004  ; Pbs
-    dw $0AF8, $7FFF  ; Samus subpixel X
-    dw $0AFC, $B7FF  ; Samus subpixel Y
-    dw $D870, $0190  ; Items
-    dw $D878, $401C  ; Items
-    dw $D8BA, $DDF1  ; Doors
-    dw #$FFFF
-
-preset_phantoonfirst_tourian_mother_brain_3:
-    dw #preset_phantoonfirst_tourian_mother_brain_2
-    dw $09A6, $1009  ; Equipped Beams
-    dw $09C2, $012B  ; Health
-    dw $09CE, $0000  ; Pbs
-    dw $0A76, $8000  ; Hyper beam
-    dw $1002, $FFFB  ; Safeties missiles adjustment
-    dw $100A, $FFFB  ; Safeties missiles adjustment
-    dw $100C, $FFFB  ; Safeties missiles adjustment
-    dw $1044, $FFFB  ; Safeties supers adjustment
-    dw $D82C, $0203  ; Bosses
-    dw #$FFFF
-
-preset_kpdr_lower_norfair_prepillars:
-    dw #preset_kpdr_lower_norfair_ln_main_hall
-    dw $090F, $9000  ; Screen subpixel X position
-    dw $0911, $0700  ; Screen X position in pixels
-    dw $0913, $E400  ; Screen subpixel Y position
-    dw $0917, $0540  ; Layer 2 X position
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $07A2  ; Samus X
-    dw $0AFA, $028B  ; Samus Y
-    dw #$FFFF
-
-preset_suitless_red_tower_cleanup_nutella_refill:
-    dw #preset_suitless_red_tower_cleanup_croc_speedway
-    dw $078D, $93C6  ; DDB
-    dw $079B, $AFCE  ; MDB
-    dw $090F, $E000  ; Screen subpixel X position
-    dw $0911, $02BC  ; Screen X position in pixels
-    dw $0913, $8000  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0917, $020D  ; Layer 2 X position
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $09C2, $0257  ; Health
-    dw $0AF6, $031C  ; Samus X
-    dw $0AF8, $857F  ; Samus subpixel X
+    dw $0AF6, $0155  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 
-preset_gtmax_brinstar_cleanup_green_brinstar_beetoms:
-    dw #preset_gtmax_brinstar_cleanup_green_shaft_descent
-    dw $078D, $8D4E  ; DDB
-    dw $079B, $9AD9  ; MDB
+preset_hundo_final_cleanup_retro_brinstar_etank:
+    dw #preset_hundo_final_cleanup_reverse_slinky
+    dw $078D, $8E86  ; DDB
+    dw $079B, $9E9F  ; MDB
+    dw $07F3, $0009  ; Music Bank
+    dw $0911, $0573  ; Screen X position in pixels
+    dw $0913, $5C00  ; Screen subpixel Y position
+    dw $0915, $0200  ; Screen Y position in pixels
+    dw $09CE, $001B  ; Pbs
+    dw $09D0, $0032  ; Max pbs
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $05D3  ; Samus X
+    dw $0AFA, $02BB  ; Samus Y
+    dw $D872, $CFEF  ; Items
+    dw #$FFFF
+
+preset_100early_lower_norfair_mickey_mouse_missiles:
+    dw #preset_100early_lower_norfair_worst_room_in_the_game
+    dw $078D, $994E  ; DDB
+    dw $079B, $B4AD  ; MDB
+    dw $090F, $8000  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $0000  ; Screen subpixel Y position
-    dw $0915, $0A1F  ; Screen Y position in pixels
+    dw $0913, $5000  ; Screen subpixel Y position
+    dw $0915, $0103  ; Screen Y position in pixels
     dw $0917, $0000  ; Layer 2 X position
-    dw $0919, $0797  ; Layer 2 Y position
-    dw $09CE, $002A  ; Pbs
-    dw $0AF6, $0025  ; Samus X
-    dw $0AFA, $0A8B  ; Samus Y
+    dw $0919, $00C2  ; Layer 2 Y position
+    dw $09C2, $0411  ; Health
+    dw $0AF6, $0071  ; Samus X
+    dw $0AFA, $017B  ; Samus Y
     dw #$FFFF
 
-preset_hundo_final_cleanup_pit_room_missiles:
-    dw #preset_hundo_final_cleanup_retro_brinstar_escape
-    dw $078D, $8EB6  ; DDB
-    dw $079B, $97B5  ; MDB
+preset_suitless_red_tower_cleanup_upper_norfair_elevator:
+    dw #preset_suitless_red_tower_cleanup_red_tower_revisit
+    dw $078D, $A384  ; DDB
+    dw $079B, $A6A1  ; MDB
     dw $07F5, $0003  ; Music Track
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
+    dw $090F, $4000  ; Screen subpixel X position
+    dw $0913, $C800  ; Screen subpixel Y position
+    dw $09CA, $0014  ; Supers
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $007C  ; Samus X
+    dw $0AF8, $E000  ; Samus subpixel X
+    dw #$FFFF
+
+preset_suitless_red_tower_cleanup_ice_gates_revisit:
+    dw #preset_suitless_red_tower_cleanup_hellway
+    dw $078D, $9246  ; DDB
+    dw $079B, $A7DE  ; MDB
+    dw $07F3, $0015  ; Music Bank
+    dw $090F, $2000  ; Screen subpixel X position
     dw $0913, $0000  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0A1C, $009B  ; Samus position/state
-    dw $0A1E, $0000  ; More position/state
-    dw $0A68, $0068  ; Flash suit
-    dw $0AF6, $0080  ; Samus X
-    dw $0AFA, $0088  ; Samus Y
+    dw $0915, $031F  ; Screen Y position in pixels
+    dw $0919, $0257  ; Layer 2 Y position
+    dw $09CA, $0014  ; Supers
+    dw $0AF6, $0025  ; Samus X
+    dw $0AF8, $0000  ; Samus subpixel X
+    dw $0AFA, $038E  ; Samus Y
+    dw $0AFC, $D7FF  ; Samus subpixel Y
     dw #$FFFF
 
-preset_hundo_final_cleanup_climb_supers:
-    dw #preset_hundo_final_cleanup_retro_brinstar_escape
-    dw $078D, $8B92  ; DDB
-    dw $079B, $975C  ; MDB
-    dw $090F, $8001  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $47FE  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $09C6, $00AC  ; Missiles
-    dw $09C8, $00E1  ; Max missiles
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0AF6, $0045  ; Samus X
-    dw $0AFA, $0088  ; Samus Y
-    dw $D870, $E7FF  ; Items
-    dw #$FFFF
-
-preset_100early_lower_norfair_plowerhouse_room:
-    dw #preset_100early_lower_norfair_ninja_pirates
-    dw $078D, $9A1A  ; DDB
-    dw $079B, $B62B  ; MDB
-    dw $090F, $3000  ; Screen subpixel X position
-    dw $0911, $017E  ; Screen X position in pixels
-    dw $0913, $4800  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0917, $011E  ; Layer 2 X position
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $09C2, $0437  ; Health
-    dw $09C6, $00A5  ; Missiles
-    dw $09CA, $0022  ; Supers
-    dw $0AF6, $01EB  ; Samus X
-    dw $0AFA, $00BB  ; Samus Y
-    dw $D8BC, $0001  ; Doors
+preset_gtmax_brinstar_cleanup_reverse_mockball:
+    dw #preset_gtmax_brinstar_cleanup_green_brinstar_revisit
+    dw $078D, $8D5A  ; DDB
+    dw $079B, $9C07  ; MDB
+    dw $07F3, $000F  ; Music Bank
+    dw $0913, $8800  ; Screen subpixel Y position
+    dw $09C6, $00FA  ; Missiles
+    dw $09C8, $0118  ; Max missiles
+    dw $09CA, $001A  ; Supers
+    dw $09CE, $002B  ; Pbs
+    dw $09D4, $02BC  ; Max reserves
+    dw $0AF6, $0044  ; Samus X
+    dw $D872, $040F  ; Items
+    dw $D8B4, $0246  ; Doors
     dw #$FFFF
 
 preset_kpdr20_lower_norfair_plowerhouse:
@@ -42024,114 +41613,130 @@ preset_kpdr25_lower_norfair_kihunter_stairs_up:
     dw $0AFA, $009B  ; Samus Y
     dw #$FFFF
 
-preset_phantoonfirst_tourian_zebes_escape:
-    dw #preset_phantoonfirst_tourian_mother_brain_3
-    dw $0A1C, $009B  ; Samus position/state
-    dw $0A1E, $0000  ; More position/state
-    dw $0AF6, $0025  ; Samus X
-    dw $0AFA, $009E  ; Samus Y
-    dw $D820, $4FC5  ; Events
+preset_kpdr_upper_norfair_revisit_croc_speedway:
+    dw #preset_kpdr_upper_norfair_revisit_ice_escape
+    dw $078D, $9336  ; DDB
+    dw $079B, $A8F8  ; MDB
+    dw $090F, $6781  ; Screen subpixel X position
+    dw $0913, $0800  ; Screen subpixel Y position
+    dw $0915, $0300  ; Screen Y position in pixels
+    dw $0919, $0240  ; Layer 2 Y position
+    dw $0AF6, $00DD  ; Samus X
+    dw $0AFA, $038B  ; Samus Y
     dw #$FFFF
 
-preset_phantoonfirst_tourian_escape_room_3:
-    dw #preset_prkd19_tourian_escape_room_3
+preset_kpdr_upper_norfair_revisit_spiky_acid_snakes:
+    dw #preset_kpdr_upper_norfair_revisit_ice_maze_down
+    dw $078D, $93C6  ; DDB
+    dw $079B, $AFCE  ; MDB
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $A000  ; Screen subpixel X position
+    dw $0911, $02A3  ; Screen X position in pixels
+    dw $0913, $7400  ; Screen subpixel Y position
+    dw $0917, $01FA  ; Layer 2 X position
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $030E  ; Samus X
+    dw #$FFFF
+
+preset_phantoonfirst_tourian_mother_brain_3:
+    dw #preset_phantoonfirst_tourian_mother_brain_2
+    dw $09A6, $1009  ; Equipped Beams
     dw $09C2, $012B  ; Health
-    dw $09C4, $012B  ; Max health
-    dw $0AF8, $FFFF  ; Samus subpixel X
-    dw $0F78, $5C77  ; Safeties enabled
-    dw $0F7A, $0001  ; Safeties enabled
-    dw $0FC0, $0046  ; Safeties reserves adjustment
+    dw $09CE, $0000  ; Pbs
+    dw $0A76, $8000  ; Hyper beam
     dw $1002, $FFFB  ; Safeties missiles adjustment
     dw $100A, $FFFB  ; Safeties missiles adjustment
     dw $100C, $FFFB  ; Safeties missiles adjustment
     dw $1044, $FFFB  ; Safeties supers adjustment
+    dw $D82C, $0203  ; Bosses
     dw #$FFFF
 
-preset_suitless_red_tower_cleanup_kronic_boost_room:
-    dw #preset_suitless_red_tower_cleanup_nutella_refill
-    dw $078D, $9792  ; DDB
-    dw $079B, $AFFB  ; MDB
-    dw $090F, $C000  ; Screen subpixel X position
-    dw $0911, $0300  ; Screen X position in pixels
-    dw $0913, $F400  ; Screen subpixel Y position
-    dw $0917, $0240  ; Layer 2 X position
-    dw $09C2, $0395  ; Health
-    dw $09D2, $0003  ; Currently selected item
-    dw $0AF6, $03C1  ; Samus X
-    dw $0AF8, $FFFF  ; Samus subpixel X
-    dw #$FFFF
-
-preset_suitless_red_tower_cleanup_lava_dive:
-    dw #preset_suitless_red_tower_cleanup_croc_speedway
-    dw $078D, $977A  ; DDB
-    dw $079B, $AE74  ; MDB
-    dw $090F, $5000  ; Screen subpixel X position
-    dw $0911, $0100  ; Screen X position in pixels
-    dw $0913, $F800  ; Screen subpixel Y position
-    dw $0915, $0200  ; Screen Y position in pixels
-    dw $0917, $0100  ; Layer 2 X position
-    dw $0919, $0200  ; Layer 2 Y position
-    dw $09C2, $0339  ; Health
-    dw $09CE, $001D  ; Pbs
+preset_hundo_final_cleanup_billy_mays:
+    dw #preset_hundo_final_cleanup_retro_brinstar_hoppers
+    dw $078D, $8ECE  ; DDB
+    dw $079B, $9F64  ; MDB
+    dw $07F3, $0009  ; Music Bank
+    dw $090F, $A001  ; Screen subpixel X position
+    dw $0911, $0200  ; Screen X position in pixels
+    dw $09C2, $05DB  ; Health
+    dw $09C4, $05DB  ; Max health
+    dw $09CA, $000C  ; Supers
+    dw $09CE, $001A  ; Pbs
+    dw $09D0, $0032  ; Max pbs
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $0154  ; Samus X
-    dw $0AF8, $A8FF  ; Samus subpixel X
-    dw $0AFA, $028B  ; Samus Y
-    dw $D8BA, $01F7  ; Doors
+    dw $0AF6, $0253  ; Samus X
+    dw $D872, $EFEF  ; Items
+    dw $D8B6, $EEFD  ; Doors
     dw #$FFFF
 
-preset_gtmax_brinstar_cleanup_etecoon_etank_room:
-    dw #preset_gtmax_brinstar_cleanup_green_brinstar_beetoms
-    dw $078D, $8F3A  ; DDB
-    dw $079B, $A051  ; MDB
-    dw $090F, $C000  ; Screen subpixel X position
-    dw $0913, $EBFF  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0917, $0001  ; Layer 2 X position
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $09CA, $001E  ; Supers
-    dw $09CC, $0037  ; Max supers
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $0087  ; Samus X
-    dw $0AFA, $009B  ; Samus Y
-    dw $D872, $840F  ; Items
-    dw $D8B6, $7818  ; Doors
+preset_100early_lower_norfair_amphitheatre:
+    dw #preset_100early_lower_norfair_mickey_mouse_missiles
+    dw $078D, $9936  ; DDB
+    dw $090F, $0001  ; Screen subpixel X position
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $011D  ; Screen Y position in pixels
+    dw $0919, $00D5  ; Layer 2 Y position
+    dw $09C6, $00A1  ; Missiles
+    dw $09C8, $00B4  ; Max missiles
+    dw $0AF6, $00AB  ; Samus X
+    dw $0AFA, $018B  ; Samus Y
+    dw $D878, $82DE  ; Items
     dw #$FFFF
 
-preset_hundo_final_cleanup_the_last_missiles:
-    dw #preset_hundo_final_cleanup_climb_supers
-    dw $078D, $8B3E  ; DDB
-    dw $079B, $92FD  ; MDB
-    dw $090F, $8000  ; Screen subpixel X position
-    dw $0911, $0100  ; Screen X position in pixels
-    dw $0913, $4800  ; Screen subpixel Y position
-    dw $0915, $0306  ; Screen Y position in pixels
-    dw $09C2, $0541  ; Health
-    dw $09CA, $0011  ; Supers
-    dw $09CC, $0032  ; Max supers
-    dw $09CE, $0017  ; Pbs
-    dw $0A1C, $000A  ; Samus position/state
-    dw $0A1E, $0104  ; More position/state
-    dw $0AF6, $015E  ; Samus X
-    dw $0AFA, $039B  ; Samus Y
-    dw $D870, $EFFF  ; Items
-    dw $D8B2, $2C09  ; Doors
+preset_suitless_red_tower_cleanup_crumble_tower:
+    dw #preset_suitless_red_tower_cleanup_ice_gates_revisit
+    dw $078D, $92BE  ; DDB
+    dw $079B, $A815  ; MDB
+    dw $090F, $4FFF  ; Screen subpixel X position
+    dw $0911, $0300  ; Screen X position in pixels
+    dw $0913, $DC00  ; Screen subpixel Y position
+    dw $0915, $02D2  ; Screen Y position in pixels
+    dw $0917, $0240  ; Layer 2 X position
+    dw $0919, $021D  ; Layer 2 Y position
+    dw $09CE, $001C  ; Pbs
+    dw $0AF6, $0389  ; Samus X
+    dw $0AF8, $BFFF  ; Samus subpixel X
+    dw $0AFA, $036B  ; Samus Y
+    dw $0AFC, $FFFF  ; Samus subpixel Y
     dw #$FFFF
 
-preset_100early_lower_norfair_ridley:
-    dw #preset_100early_lower_norfair_plowerhouse_room
-    dw $078D, $995A  ; DDB
-    dw $079B, $B37A  ; MDB
-    dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $4C00  ; Screen subpixel Y position
-    dw $0917, $0000  ; Layer 2 X position
-    dw $09C2, $0434  ; Health
-    dw $09CA, $0021  ; Supers
-    dw $0AF6, $0039  ; Samus X
-    dw $0AFA, $009B  ; Samus Y
-    dw $D8BA, $D3F7  ; Doors
+preset_suitless_red_tower_cleanup_croc_speedway:
+    dw #preset_suitless_red_tower_cleanup_upper_norfair_elevator
+    dw $078D, $9336  ; DDB
+    dw $079B, $A8F8  ; MDB
+    dw $07F3, $0015  ; Music Bank
+    dw $07F5, $0005  ; Music Track
+    dw $0913, $8800  ; Screen subpixel Y position
+    dw $0915, $0300  ; Screen Y position in pixels
+    dw $0919, $0240  ; Layer 2 Y position
+    dw $09C2, $02E0  ; Health
+    dw $09C6, $003A  ; Missiles
+    dw $09C8, $00A0  ; Max missiles
+    dw $09CE, $001C  ; Pbs
+    dw $0AF6, $00DB  ; Samus X
+    dw $0AF8, $FFFF  ; Samus subpixel X
+    dw $0AFA, $03BB  ; Samus Y
+    dw $D876, $1FFE  ; Items
+    dw #$FFFF
+
+preset_gtmax_brinstar_cleanup_green_shaft_descent:
+    dw #preset_gtmax_brinstar_cleanup_reverse_mockball
+    dw $078D, $8D66  ; DDB
+    dw $079B, $9BC8  ; MDB
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $002F  ; Screen X position in pixels
+    dw $0913, $FC02  ; Screen subpixel Y position
+    dw $0915, $0100  ; Screen Y position in pixels
+    dw $0917, $0023  ; Layer 2 X position
+    dw $0919, $00C0  ; Layer 2 Y position
+    dw $09C6, $00FF  ; Missiles
+    dw $09C8, $011D  ; Max missiles
+    dw $0AF6, $00CF  ; Samus X
+    dw $0AFA, $015B  ; Samus Y
+    dw $D870, $86BD  ; Items
     dw #$FFFF
 
 preset_kpdr20_lower_norfair_ridley:
@@ -42220,37 +41825,30 @@ preset_kpdr23_lower_norfair_three_musketeers:
     dw $0AF6, $0060  ; Samus X
     dw #$FFFF
 
-preset_phantoonfirst_tourian_escape_room_4:
-    dw #preset_phantoonfirst_tourian_escape_room_3
-    dw $078D, $AB04  ; DDB
-    dw $079B, $DEA7  ; MDB
-    dw $090F, $3000  ; Screen subpixel X position
-    dw $0911, $0500  ; Screen X position in pixels
-    dw $0913, $4C00  ; Screen subpixel Y position
-    dw $0915, $001C  ; Screen Y position in pixels
-    dw $0917, $03C0  ; Layer 2 X position
-    dw $0919, $0015  ; Layer 2 Y position
-    dw $0AF6, $05D6  ; Samus X
-    dw $0AFA, $008B  ; Samus Y
+preset_kpdr_upper_norfair_revisit_southern_kronic_boost:
+    dw #preset_kpdr_upper_norfair_revisit_spiky_acid_snakes
+    dw $078D, $9792  ; DDB
+    dw $079B, $AFFB  ; MDB
+    dw $090F, $B000  ; Screen subpixel X position
+    dw $0911, $0300  ; Screen X position in pixels
+    dw $0913, $8C00  ; Screen subpixel Y position
+    dw $0917, $0240  ; Layer 2 X position
+    dw $09D2, $0003  ; Currently selected item
+    dw $0AF6, $03BC  ; Samus X
     dw #$FFFF
 
-preset_phantoonfirst_tourian_escape_climb:
-    dw #preset_phantoonfirst_tourian_escape_room_3
-    dw $078D, $AB1C  ; DDB
-    dw $079B, $DEDE  ; MDB
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $0911, $00F1  ; Screen X position in pixels
-    dw $0913, $A400  ; Screen subpixel Y position
-    dw $0915, $00FB  ; Screen Y position in pixels
-    dw $0917, $00B4  ; Layer 2 X position
-    dw $0919, $00BC  ; Layer 2 Y position
-    dw $09C2, $010D  ; Health
-    dw $0AF6, $0151  ; Samus X
+preset_phantoonfirst_tourian_zebes_escape:
+    dw #preset_phantoonfirst_tourian_mother_brain_3
+    dw $0A1C, $009B  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
+    dw $0AF6, $0025  ; Samus X
+    dw $0AFA, $009E  ; Samus Y
+    dw $D820, $4FC5  ; Events
     dw #$FFFF
 
-preset_phantoonfirst_tourian_escape_parlor:
-    dw #preset_prkd19_tourian_escape_parlor
-    dw $09C2, $007A  ; Health
+preset_phantoonfirst_tourian_escape_room_3:
+    dw #preset_prkd19_tourian_escape_room_3
+    dw $09C2, $012B  ; Health
     dw $09C4, $012B  ; Max health
     dw $0AF8, $FFFF  ; Samus subpixel X
     dw $0F78, $5C77  ; Safeties enabled
@@ -42262,159 +41860,152 @@ preset_phantoonfirst_tourian_escape_parlor:
     dw $1044, $FFFB  ; Safeties supers adjustment
     dw #$FFFF
 
-preset_kpdr_lower_norfair_fast_pillars_setup:
-    dw #preset_kpdr_lower_norfair_prepillars
-    dw $078D, $989A  ; DDB
-    dw $079B, $B3A5  ; MDB
-    dw $090F, $8001  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $7000  ; Screen subpixel Y position
-    dw $0917, $0000  ; Layer 2 X position
-    dw $0919, $0180  ; Layer 2 Y position
-    dw $09CE, $0005  ; Pbs
-    dw $0AF6, $0025  ; Samus X
-    dw $0F7A, $017E  ; Safeties enabled
+preset_kpdr_upper_norfair_revisit_purple_shaft:
+    dw #preset_kpdr_upper_norfair_revisit_croc_speedway
+    dw $078D, $971A  ; DDB
+    dw $079B, $ACB3  ; MDB
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0913, $E800  ; Screen subpixel Y position
+    dw $0AF6, $0036  ; Samus X
     dw #$FFFF
 
-preset_kpdr_lower_norfair_worst_room_in_the_game:
-    dw #preset_kpdr_upper_norfair_revisit_southern_kronic_boost
-    dw $078D, $9912  ; DDB
-    dw $079B, $B457  ; MDB
-    dw $07F3, $0018  ; Music Bank
-    dw $090F, $64FF  ; Screen subpixel X position
-    dw $0913, $F800  ; Screen subpixel Y position
-    dw $09C2, $0045  ; Health
-    dw $09D2, $0000  ; Currently selected item
-    dw $0AF6, $03DB  ; Samus X
-    dw $0F7A, $077E  ; Safeties enabled
-    dw $0FB2, $004A  ; Safeties energy adjustment
-    dw $10B4, $FFFE  ; Safeties power bombs adjustment
+preset_kpdr_upper_norfair_revisit_magdollite_tunnel:
+    dw #preset_kpdr_upper_norfair_revisit_ice_escape
+    dw $078D, $9576  ; DDB
+    dw $079B, $AEDF  ; MDB
+    dw $090F, $B001  ; Screen subpixel X position
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $01F4  ; Screen Y position in pixels
+    dw $0919, $0177  ; Layer 2 Y position
+    dw $0AF6, $0059  ; Samus X
+    dw #$FFFF
+
+preset_kpdr_upper_norfair_revisit_northern_kronic_boost:
+    dw #preset_kpdr_upper_norfair_revisit_spiky_acid_snakes
+    dw $078D, $96BA  ; DDB
+    dw $079B, $AEB4  ; MDB
+    dw $090F, $8000  ; Screen subpixel X position
+    dw $0911, $0200  ; Screen X position in pixels
+    dw $0913, $9000  ; Screen subpixel Y position
+    dw $0917, $0180  ; Layer 2 X position
+    dw $0AF6, $02B7  ; Samus X
+    dw #$FFFF
+
+preset_kpdr_lower_norfair_ln_main_hall:
+    dw #preset_kpdr20_lower_norfair_ln_main_hall
+    dw $09C2, $008F  ; Health
+    dw $0F78, $C23B  ; Safeties enabled
+    dw $0F7A, $007E  ; Safeties enabled
+    dw $0FA6, $0040  ; Safeties energy adjustment
+    dw $0FA8, $0028  ; Safeties energy adjustment
+    dw $0FAA, $006A  ; Safeties energy adjustment
+    dw $0FAC, $002B  ; Safeties energy adjustment
     dw $1118, $0004  ; Safeties unequip beams
     dw $1120, $0004  ; Safeties unequip beams
-    dw $D8BA, $01F1  ; Doors
+    dw $1180, $0006  ; Safeties stage
+    dw $D876, $0125  ; Items
+    dw $D878, $001C  ; Items
+    dw $D8B0, $3000  ; Doors
+    dw $D8B8, $2EEC  ; Doors
     dw #$FFFF
 
-preset_suitless_ridley_lower_norfair_elevator:
-    dw #preset_suitless_red_tower_cleanup_lava_dive
-    dw $078D, $96DE  ; DDB
-    dw $079B, $AF3F  ; MDB
+preset_hundo_final_cleanup_billy_mays_escape:
+    dw #preset_hundo_final_cleanup_billy_mays
+    dw $078D, $8FEE  ; DDB
+    dw $079B, $A1D8  ; MDB
+    dw $090F, $4000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $C000  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $09C6, $00A2  ; Missiles
+    dw $09C8, $00D7  ; Max missiles
+    dw $0A1C, $0009  ; Samus position/state
+    dw $0A1E, $0108  ; More position/state
+    dw $0AF6, $00E0  ; Samus X
+    dw $D874, $1FFE  ; Items
+    dw #$FFFF
+
+preset_hundo_final_cleanup_retro_brinstar_escape:
+    dw #preset_hundo_final_cleanup_billy_mays
+    dw $078D, $8FE2  ; DDB
     dw $090F, $6000  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $7800  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0917, $0000  ; Layer 2 X position
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $09C2, $00F4  ; Health
-    dw $0AF6, $007B  ; Samus X
-    dw $0AF8, $2000  ; Samus subpixel X
-    dw $0AFA, $008B  ; Samus Y
+    dw $0913, $C400  ; Screen subpixel Y position
+    dw $0915, $0200  ; Screen Y position in pixels
+    dw $09C2, $05D1  ; Health
+    dw $09C6, $00A7  ; Missiles
+    dw $09C8, $00DC  ; Max missiles
+    dw $09CE, $0019  ; Pbs
+    dw $0A1C, $00A5  ; Samus position/state
+    dw $0AF6, $02D6  ; Samus X
+    dw $0AFA, $02BB  ; Samus Y
+    dw $D872, $FFEF  ; Items
+    dw $D874, $1FFE  ; Items
     dw #$FFFF
 
-preset_suitless_ridley_acid_chozo:
-    dw #preset_suitless_red_tower_cleanup_lava_dive
-    dw $078D, $96F6  ; DDB
-    dw $079B, $B236  ; MDB
-    dw $07F3, $0018  ; Music Bank
-    dw $090F, $E000  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $6800  ; Screen subpixel Y position
-    dw $0917, $0000  ; Layer 2 X position
-    dw $0919, $0301  ; Layer 2 Y position
-    dw $09C2, $03DD  ; Health
-    dw $09C6, $0030  ; Missiles
-    dw $09CA, $000A  ; Supers
-    dw $09CE, $0012  ; Pbs
-    dw $09D2, $0003  ; Currently selected item
-    dw $09D6, $012C  ; Reserves
-    dw $0AF6, $0039  ; Samus X
-    dw $0AF8, $BFFF  ; Samus subpixel X
-    dw #$FFFF
-
-preset_gtmax_brinstar_cleanup_etecoon_room:
-    dw #preset_gtmax_brinstar_cleanup_etecoon_etank_room
-    dw $078D, $8F5E  ; DDB
-    dw $079B, $A011  ; MDB
-    dw $090F, $BFFF  ; Screen subpixel X position
-    dw $0911, $0400  ; Screen X position in pixels
-    dw $0913, $0400  ; Screen subpixel Y position
-    dw $0915, $0100  ; Screen Y position in pixels
-    dw $0917, $0300  ; Layer 2 X position
-    dw $0919, $00C0  ; Layer 2 Y position
-    dw $09C2, $0687  ; Health
-    dw $09C4, $06A4  ; Max health
-    dw $0A1C, $0089  ; Samus position/state
-    dw $0A1E, $1508  ; More position/state
-    dw $0AF6, $04DB  ; Samus X
-    dw $0AFA, $018B  ; Samus Y
-    dw $D872, $C40F  ; Items
-    dw #$FFFF
-
-preset_hundo_final_cleanup_the_last_missiles_escape:
-    dw #preset_hundo_final_cleanup_the_last_missiles
-    dw $078D, $8C82  ; DDB
-    dw $079B, $9A90  ; MDB
-    dw $090F, $F000  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $5400  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $09C6, $00B1  ; Missiles
-    dw $09C8, $00E6  ; Max missiles
-    dw $09CE, $0016  ; Pbs
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $0057  ; Samus X
-    dw $0AFA, $008B  ; Samus Y
-    dw $D870, $FFFF  ; Items
-    dw #$FFFF
-
-preset_100early_lower_norfair_ridley_escape:
-    dw #preset_100early_lower_norfair_ridley
-    dw $078D, $98CA  ; DDB
-    dw $079B, $B32E  ; MDB
-    dw $07F3, $0024  ; Music Bank
-    dw $07F5, $0003  ; Music Track
-    dw $0915, $011F  ; Screen Y position in pixels
-    dw $09CA, $0022  ; Supers
-    dw $09CE, $000E  ; Pbs
-    dw $0AF6, $00C9  ; Samus X
-    dw $0AFA, $019B  ; Samus Y
-    dw $D82A, $0107  ; Bosses
-    dw #$FFFF
-
-preset_100early_lower_norfair_wasteland_revisit:
-    dw #preset_100early_lower_norfair_plowerhouse_room
-    dw $078D, $9966  ; DDB
+preset_100early_lower_norfair_red_kihunter_shaft:
+    dw #preset_100early_lower_norfair_amphitheatre
+    dw $078D, $997E  ; DDB
+    dw $079B, $B4E5  ; MDB
     dw $090F, $0000  ; Screen subpixel X position
-    dw $0911, $0200  ; Screen X position in pixels
-    dw $0913, $8400  ; Screen subpixel Y position
-    dw $0915, $011F  ; Screen Y position in pixels
-    dw $0917, $0180  ; Layer 2 X position
-    dw $09C2, $04F1  ; Health
-    dw $09C4, $0513  ; Max health
-    dw $09CE, $000E  ; Pbs
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $02DB  ; Samus X
-    dw $0AFA, $00AB  ; Samus Y
-    dw $D82A, $0107  ; Bosses
-    dw $D878, $D2DE  ; Items
-    dw $D8BA, $DFF7  ; Doors
+    dw $0911, $0270  ; Screen X position in pixels
+    dw $0913, $F000  ; Screen subpixel Y position
+    dw $0915, $0031  ; Screen Y position in pixels
+    dw $0917, $01D4  ; Layer 2 X position
+    dw $0919, $0024  ; Layer 2 Y position
+    dw $0AF6, $02D0  ; Samus X
+    dw $0AFA, $00BB  ; Samus Y
     dw #$FFFF
 
-preset_100early_lower_norfair_kihunter_shaft_revisit:
-    dw #preset_100early_lower_norfair_plowerhouse_room
-    dw $078D, $9A3E  ; DDB
-    dw $079B, $B5D5  ; MDB
-    dw $0911, $0500  ; Screen X position in pixels
-    dw $0913, $2FFF  ; Screen subpixel Y position
-    dw $0917, $03C0  ; Layer 2 X position
-    dw $09C2, $04C4  ; Health
-    dw $09C4, $0513  ; Max health
-    dw $0AF6, $0590  ; Samus X
-    dw $0AFA, $005B  ; Samus Y
-    dw $D82A, $0107  ; Bosses
-    dw $D878, $D2DE  ; Items
-    dw $D8BA, $DFF7  ; Doors
+preset_100early_lower_norfair_ninja_pirates:
+    dw #preset_hundo_ridley_ninja_pirates
+    dw $090F, $4FFF  ; Screen subpixel X position
+    dw $0915, $021F  ; Screen Y position in pixels
+    dw $0919, $0197  ; Layer 2 Y position
+    dw $09A2, $732F  ; Equipped Items
+    dw $09A4, $732F  ; Collected Items
+    dw $09C2, $03D8  ; Health
+    dw $09C4, $04AF  ; Max health
+    dw $09C6, $00A3  ; Missiles
+    dw $09C8, $00B4  ; Max missiles
+    dw $09CA, $001C  ; Supers
+    dw $09CE, $000D  ; Pbs
+    dw $09D0, $0028  ; Max pbs
+    dw $09D6, $00A8  ; Reserves
+    dw $0AF6, $0163  ; Samus X
+    dw $D82A, $0106  ; Bosses
+    dw $D876, $1FFF  ; Items
+    dw $D8B8, $EEEF  ; Doors
+    dw $D8BA, $C3F7  ; Doors
+    dw #$FFFF
+
+preset_suitless_red_tower_cleanup_nutella_refill:
+    dw #preset_suitless_red_tower_cleanup_croc_speedway
+    dw $078D, $93C6  ; DDB
+    dw $079B, $AFCE  ; MDB
+    dw $090F, $E000  ; Screen subpixel X position
+    dw $0911, $02BC  ; Screen X position in pixels
+    dw $0913, $8000  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $020D  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09C2, $0257  ; Health
+    dw $0AF6, $031C  ; Samus X
+    dw $0AF8, $857F  ; Samus subpixel X
+    dw $0AFA, $008B  ; Samus Y
+    dw #$FFFF
+
+preset_gtmax_brinstar_cleanup_green_brinstar_beetoms:
+    dw #preset_gtmax_brinstar_cleanup_green_shaft_descent
+    dw $078D, $8D4E  ; DDB
+    dw $079B, $9AD9  ; MDB
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $0A1F  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $0797  ; Layer 2 Y position
+    dw $09CE, $002A  ; Pbs
+    dw $0AF6, $0025  ; Samus X
+    dw $0AFA, $0A8B  ; Samus Y
     dw #$FFFF
 
 preset_kpdr20_lower_norfair_wasteland_revisit:
@@ -42518,112 +42109,161 @@ preset_kpdr25_lower_norfair_three_musketeers:
     dw $D8BA, $DDF1  ; Doors
     dw #$FFFF
 
-preset_kpdr_lower_norfair_amphitheatre:
-    dw #preset_kpdr_lower_norfair_worst_room_in_the_game
-    dw $078D, $994E  ; DDB
-    dw $079B, $B4AD  ; MDB
-    dw $090F, $C000  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $A400  ; Screen subpixel Y position
-    dw $0915, $011D  ; Screen Y position in pixels
-    dw $0917, $0000  ; Layer 2 X position
-    dw $0919, $00D5  ; Layer 2 Y position
-    dw $09C2, $0059  ; Health
-    dw $09CE, $0004  ; Pbs
-    dw $0AF6, $00A7  ; Samus X
-    dw $0AFA, $018B  ; Samus Y
+preset_phantoonfirst_tourian_escape_room_4:
+    dw #preset_phantoonfirst_tourian_escape_room_3
+    dw $078D, $AB04  ; DDB
+    dw $079B, $DEA7  ; MDB
+    dw $090F, $3000  ; Screen subpixel X position
+    dw $0911, $0500  ; Screen X position in pixels
+    dw $0913, $4C00  ; Screen subpixel Y position
+    dw $0915, $001C  ; Screen Y position in pixels
+    dw $0917, $03C0  ; Layer 2 X position
+    dw $0919, $0015  ; Layer 2 Y position
+    dw $0AF6, $05D6  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 
-preset_suitless_ridley_golden_torizo:
-    dw #preset_suitless_ridley_acid_chozo
-    dw $078D, $9852  ; DDB
-    dw $079B, $B1E5  ; MDB
-    dw $090F, $6000  ; Screen subpixel X position
-    dw $0911, $0200  ; Screen X position in pixels
-    dw $0913, $0000  ; Screen subpixel Y position
-    dw $0917, $0180  ; Layer 2 X position
-    dw $0919, $0180  ; Layer 2 Y position
-    dw $09C2, $023E  ; Health
-    dw $09CE, $0010  ; Pbs
-    dw $09D2, $0000  ; Currently selected item
+preset_phantoonfirst_tourian_escape_climb:
+    dw #preset_phantoonfirst_tourian_escape_room_3
+    dw $078D, $AB1C  ; DDB
+    dw $079B, $DEDE  ; MDB
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $00F1  ; Screen X position in pixels
+    dw $0913, $A400  ; Screen subpixel Y position
+    dw $0915, $00FB  ; Screen Y position in pixels
+    dw $0917, $00B4  ; Layer 2 X position
+    dw $0919, $00BC  ; Layer 2 Y position
+    dw $09C2, $010D  ; Health
+    dw $0AF6, $0151  ; Samus X
+    dw #$FFFF
+
+preset_phantoonfirst_tourian_escape_parlor:
+    dw #preset_prkd19_tourian_escape_parlor
+    dw $09C2, $007A  ; Health
+    dw $09C4, $012B  ; Max health
+    dw $0AF8, $FFFF  ; Samus subpixel X
+    dw $0F78, $5C77  ; Safeties enabled
+    dw $0F7A, $0001  ; Safeties enabled
+    dw $0FC0, $0046  ; Safeties reserves adjustment
+    dw $1002, $FFFB  ; Safeties missiles adjustment
+    dw $100A, $FFFB  ; Safeties missiles adjustment
+    dw $100C, $FFFB  ; Safeties missiles adjustment
+    dw $1044, $FFFB  ; Safeties supers adjustment
+    dw #$FFFF
+
+preset_kpdr_lower_norfair_prepillars:
+    dw #preset_kpdr_lower_norfair_ln_main_hall
+    dw $090F, $9000  ; Screen subpixel X position
+    dw $0911, $0700  ; Screen X position in pixels
+    dw $0913, $E400  ; Screen subpixel Y position
+    dw $0917, $0540  ; Layer 2 X position
     dw $0A1C, $0001  ; Samus position/state
     dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $02C2  ; Samus X
-    dw $0AF8, $EFFF  ; Samus subpixel X
-    dw $D820, $3801  ; Events
+    dw $0AF6, $07A2  ; Samus X
+    dw $0AFA, $028B  ; Samus Y
     dw #$FFFF
 
-preset_gtmax_brinstar_cleanup_green_shaft_final:
-    dw #preset_gtmax_brinstar_cleanup_etecoon_room
-    dw $078D, $8F46  ; DDB
-    dw $079B, $9AD9  ; MDB
+preset_hundo_final_cleanup_pit_room_missiles:
+    dw #preset_hundo_final_cleanup_retro_brinstar_escape
+    dw $078D, $8EB6  ; DDB
+    dw $079B, $97B5  ; MDB
+    dw $07F5, $0003  ; Music Track
     dw $090F, $0000  ; Screen subpixel X position
-    dw $0911, $01B9  ; Screen X position in pixels
-    dw $0913, $4400  ; Screen subpixel Y position
-    dw $0915, $074D  ; Screen Y position in pixels
-    dw $0917, $01B9  ; Layer 2 X position
-    dw $0919, $0579  ; Layer 2 Y position
-    dw $09CE, $002F  ; Pbs
-    dw $09D0, $0037  ; Max pbs
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $0259  ; Samus X
-    dw $0AFA, $07BB  ; Samus Y
-    dw $D870, $A6BD  ; Items
-    dw #$FFFF
-
-preset_hundo_tourian_metroids_1:
-    dw #preset_hundo_final_cleanup_the_last_missiles_escape
-    dw $078D, $9222  ; DDB
-    dw $079B, $DAAE  ; MDB
-    dw $07F3, $001E  ; Music Bank
-    dw $090F, $C001  ; Screen subpixel X position
-    dw $0913, $4FFF  ; Screen subpixel Y position
-    dw $0915, $0300  ; Screen Y position in pixels
-    dw $0919, $0240  ; Layer 2 Y position
-    dw $09C2, $054B  ; Health
-    dw $09C6, $00B5  ; Missiles
-    dw $09CA, $0010  ; Supers
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $0036  ; Samus X
-    dw $0AFA, $038B  ; Samus Y
-    dw $D820, $3FC1  ; Events
-    dw $D8B2, $6C09  ; Doors
-    dw $D90C, $0100  ; Map Stations
-    dw #$FFFF
-
-preset_100early_lower_norfair_firefleas_room:
-    dw #preset_100early_lower_norfair_wasteland_revisit
-    dw $078D, $9A26  ; DDB
-    dw $079B, $B585  ; MDB
-    dw $090F, $4180  ; Screen subpixel X position
     dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $4000  ; Screen subpixel Y position
-    dw $0915, $001A  ; Screen Y position in pixels
-    dw $0917, $0000  ; Layer 2 X position
-    dw $0919, $0013  ; Layer 2 Y position
-    dw $09C2, $04C4  ; Health
-    dw $09CE, $000C  ; Pbs
-    dw $0AF6, $009C  ; Samus X
-    dw $0AFA, $008B  ; Samus Y
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0A1C, $009B  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
+    dw $0A68, $0068  ; Flash suit
+    dw $0AF6, $0080  ; Samus X
+    dw $0AFA, $0088  ; Samus Y
     dw #$FFFF
 
-preset_100early_lower_norfair_springball_maze:
-    dw #preset_100early_lower_norfair_kihunter_shaft_revisit
-    dw $078D, $9A02  ; DDB
-    dw $079B, $B6EE  ; MDB
-    dw $090F, $0000  ; Screen subpixel X position
+preset_hundo_final_cleanup_climb_supers:
+    dw #preset_hundo_final_cleanup_retro_brinstar_escape
+    dw $078D, $8B92  ; DDB
+    dw $079B, $975C  ; MDB
+    dw $090F, $8001  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $47FE  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $09C6, $00AC  ; Missiles
+    dw $09C8, $00E1  ; Max missiles
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0AF6, $0045  ; Samus X
+    dw $0AFA, $0088  ; Samus Y
+    dw $D870, $E7FF  ; Items
+    dw #$FFFF
+
+preset_100early_lower_norfair_plowerhouse_room:
+    dw #preset_100early_lower_norfair_ninja_pirates
+    dw $078D, $9A1A  ; DDB
+    dw $079B, $B62B  ; MDB
+    dw $090F, $3000  ; Screen subpixel X position
+    dw $0911, $017E  ; Screen X position in pixels
+    dw $0913, $4800  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $011E  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09C2, $0437  ; Health
+    dw $09C6, $00A5  ; Missiles
+    dw $09CA, $0022  ; Supers
+    dw $0AF6, $01EB  ; Samus X
+    dw $0AFA, $00BB  ; Samus Y
+    dw $D8BC, $0001  ; Doors
+    dw #$FFFF
+
+preset_suitless_red_tower_cleanup_kronic_boost_room:
+    dw #preset_suitless_red_tower_cleanup_nutella_refill
+    dw $078D, $9792  ; DDB
+    dw $079B, $AFFB  ; MDB
+    dw $090F, $C000  ; Screen subpixel X position
+    dw $0911, $0300  ; Screen X position in pixels
+    dw $0913, $F400  ; Screen subpixel Y position
+    dw $0917, $0240  ; Layer 2 X position
+    dw $09C2, $0395  ; Health
+    dw $09D2, $0003  ; Currently selected item
+    dw $0AF6, $03C1  ; Samus X
+    dw $0AF8, $FFFF  ; Samus subpixel X
+    dw #$FFFF
+
+preset_suitless_red_tower_cleanup_lava_dive:
+    dw #preset_suitless_red_tower_cleanup_croc_speedway
+    dw $078D, $977A  ; DDB
+    dw $079B, $AE74  ; MDB
+    dw $090F, $5000  ; Screen subpixel X position
     dw $0911, $0100  ; Screen X position in pixels
-    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0913, $F800  ; Screen subpixel Y position
+    dw $0915, $0200  ; Screen Y position in pixels
     dw $0917, $0100  ; Layer 2 X position
-    dw $0919, $001C  ; Layer 2 Y position
-    dw $09C2, $0576  ; Health
-    dw $09C4, $0577  ; Max health
-    dw $09CA, $0021  ; Supers
-    dw $0AF6, $016B  ; Samus X
-    dw $0AFA, $008B  ; Samus Y
-    dw $D87A, $0001  ; Items
+    dw $0919, $0200  ; Layer 2 Y position
+    dw $09C2, $0339  ; Health
+    dw $09CE, $001D  ; Pbs
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0154  ; Samus X
+    dw $0AF8, $A8FF  ; Samus subpixel X
+    dw $0AFA, $028B  ; Samus Y
+    dw $D8BA, $01F7  ; Doors
+    dw #$FFFF
+
+preset_gtmax_brinstar_cleanup_etecoon_etank_room:
+    dw #preset_gtmax_brinstar_cleanup_green_brinstar_beetoms
+    dw $078D, $8F3A  ; DDB
+    dw $079B, $A051  ; MDB
+    dw $090F, $C000  ; Screen subpixel X position
+    dw $0913, $EBFF  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $0001  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09CA, $001E  ; Supers
+    dw $09CC, $0037  ; Max supers
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $0087  ; Samus X
+    dw $0AFA, $009B  ; Samus Y
+    dw $D872, $840F  ; Items
+    dw $D8B6, $7818  ; Doors
     dw #$FFFF
 
 preset_kpdr20_lower_norfair_fireflea_room:
@@ -42760,115 +42400,125 @@ preset_kpdr25_lower_norfair_business_center_final:
     dw $D8BA, $DDF1  ; Doors
     dw #$FFFF
 
-preset_kpdr_lower_norfair_kihunter_stairs_down:
-    dw #preset_kpdr_lower_norfair_amphitheatre
-    dw $078D, $997E  ; DDB
-    dw $079B, $B4E5  ; MDB
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $0911, $0282  ; Screen X position in pixels
-    dw $0913, $0000  ; Screen subpixel Y position
-    dw $0915, $0043  ; Screen Y position in pixels
-    dw $0917, $01E1  ; Layer 2 X position
-    dw $0919, $0032  ; Layer 2 Y position
-    dw $0AF6, $02E2  ; Samus X
-    dw $0AFA, $00B3  ; Samus Y
+preset_kpdr_lower_norfair_fast_pillars_setup:
+    dw #preset_kpdr_lower_norfair_prepillars
+    dw $078D, $989A  ; DDB
+    dw $079B, $B3A5  ; MDB
+    dw $090F, $8001  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $7000  ; Screen subpixel Y position
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $0180  ; Layer 2 Y position
+    dw $09CE, $0005  ; Pbs
+    dw $0AF6, $0025  ; Samus X
+    dw $0F7A, $017E  ; Safeties enabled
     dw #$FFFF
 
-preset_suitless_ridley_screw_attack:
-    dw #preset_suitless_ridley_golden_torizo
-    dw $078D, $983A  ; DDB
-    dw $079B, $B283  ; MDB
-    dw $07F3, $0024  ; Music Bank
-    dw $07F5, $0003  ; Music Track
-    dw $090F, $4FFF  ; Screen subpixel X position
+preset_kpdr_lower_norfair_worst_room_in_the_game:
+    dw #preset_kpdr_upper_norfair_revisit_southern_kronic_boost
+    dw $078D, $9912  ; DDB
+    dw $079B, $B457  ; MDB
+    dw $07F3, $0018  ; Music Bank
+    dw $090F, $64FF  ; Screen subpixel X position
+    dw $0913, $F800  ; Screen subpixel Y position
+    dw $09C2, $0045  ; Health
+    dw $09D2, $0000  ; Currently selected item
+    dw $0AF6, $03DB  ; Samus X
+    dw $0F7A, $077E  ; Safeties enabled
+    dw $0FB2, $004A  ; Safeties energy adjustment
+    dw $10B4, $FFFE  ; Safeties power bombs adjustment
+    dw $1118, $0004  ; Safeties unequip beams
+    dw $1120, $0004  ; Safeties unequip beams
+    dw $D8BA, $01F1  ; Doors
+    dw #$FFFF
+
+preset_hundo_final_cleanup_the_last_missiles:
+    dw #preset_hundo_final_cleanup_climb_supers
+    dw $078D, $8B3E  ; DDB
+    dw $079B, $92FD  ; MDB
+    dw $090F, $8000  ; Screen subpixel X position
     dw $0911, $0100  ; Screen X position in pixels
-    dw $0913, $EC00  ; Screen subpixel Y position
+    dw $0913, $4800  ; Screen subpixel Y position
+    dw $0915, $0306  ; Screen Y position in pixels
+    dw $09C2, $0541  ; Health
+    dw $09CA, $0011  ; Supers
+    dw $09CC, $0032  ; Max supers
+    dw $09CE, $0017  ; Pbs
+    dw $0A1C, $000A  ; Samus position/state
+    dw $0A1E, $0104  ; More position/state
+    dw $0AF6, $015E  ; Samus X
+    dw $0AFA, $039B  ; Samus Y
+    dw $D870, $EFFF  ; Items
+    dw $D8B2, $2C09  ; Doors
+    dw #$FFFF
+
+preset_100early_lower_norfair_ridley:
+    dw #preset_100early_lower_norfair_plowerhouse_room
+    dw $078D, $995A  ; DDB
+    dw $079B, $B37A  ; MDB
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $4C00  ; Screen subpixel Y position
+    dw $0917, $0000  ; Layer 2 X position
+    dw $09C2, $0434  ; Health
+    dw $09CA, $0021  ; Supers
+    dw $0AF6, $0039  ; Samus X
+    dw $0AFA, $009B  ; Samus Y
+    dw $D8BA, $D3F7  ; Doors
+    dw #$FFFF
+
+preset_suitless_ridley_lower_norfair_elevator:
+    dw #preset_suitless_red_tower_cleanup_lava_dive
+    dw $078D, $96DE  ; DDB
+    dw $079B, $AF3F  ; MDB
+    dw $090F, $6000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $7800  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09C2, $00F4  ; Health
+    dw $0AF6, $007B  ; Samus X
+    dw $0AF8, $2000  ; Samus subpixel X
+    dw $0AFA, $008B  ; Samus Y
+    dw #$FFFF
+
+preset_suitless_ridley_acid_chozo:
+    dw #preset_suitless_red_tower_cleanup_lava_dive
+    dw $078D, $96F6  ; DDB
+    dw $079B, $B236  ; MDB
+    dw $07F3, $0018  ; Music Bank
+    dw $090F, $E000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $6800  ; Screen subpixel Y position
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $0301  ; Layer 2 Y position
+    dw $09C2, $03DD  ; Health
+    dw $09C6, $0030  ; Missiles
+    dw $09CA, $000A  ; Supers
+    dw $09CE, $0012  ; Pbs
+    dw $09D2, $0003  ; Currently selected item
+    dw $09D6, $012C  ; Reserves
+    dw $0AF6, $0039  ; Samus X
+    dw $0AF8, $BFFF  ; Samus subpixel X
+    dw #$FFFF
+
+preset_gtmax_brinstar_cleanup_etecoon_room:
+    dw #preset_gtmax_brinstar_cleanup_etecoon_etank_room
+    dw $078D, $8F5E  ; DDB
+    dw $079B, $A011  ; MDB
+    dw $090F, $BFFF  ; Screen subpixel X position
+    dw $0911, $0400  ; Screen X position in pixels
+    dw $0913, $0400  ; Screen subpixel Y position
     dw $0915, $0100  ; Screen Y position in pixels
-    dw $0917, $00C0  ; Layer 2 X position
-    dw $0919, $0100  ; Layer 2 Y position
-    dw $09C2, $00FC  ; Health
-    dw $09C6, $0037  ; Missiles
-    dw $09C8, $00A5  ; Max missiles
-    dw $09CA, $0012  ; Supers
-    dw $09CC, $002D  ; Max supers
-    dw $09CE, $0011  ; Pbs
+    dw $0917, $0300  ; Layer 2 X position
+    dw $0919, $00C0  ; Layer 2 Y position
+    dw $09C2, $0687  ; Health
+    dw $09C4, $06A4  ; Max health
     dw $0A1C, $0089  ; Samus position/state
     dw $0A1E, $1508  ; More position/state
-    dw $0AF6, $01DB  ; Samus X
-    dw $0AF8, $FFFF  ; Samus subpixel X
+    dw $0AF6, $04DB  ; Samus X
     dw $0AFA, $018B  ; Samus Y
-    dw $D82A, $0106  ; Bosses
-    dw $D878, $00DE  ; Items
-    dw #$FFFF
-
-preset_hundo_tourian_metroids_2:
-    dw #preset_hundo_tourian_metroids_1
-    dw $078D, $A984  ; DDB
-    dw $079B, $DAE1  ; MDB
-    dw $090F, $F000  ; Screen subpixel X position
-    dw $0913, $8800  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $09C2, $056C  ; Health
-    dw $09C6, $00BF  ; Missiles
-    dw $09CA, $000F  ; Supers
-    dw $09CE, $0018  ; Pbs
-    dw $0AF6, $003A  ; Samus X
-    dw $0AFA, $008B  ; Samus Y
-    dw $D822, $0021  ; Events
-    dw $D8C4, $0001  ; Doors
-    dw #$FFFF
-
-preset_hundo_tourian_metroids_3:
-    dw #preset_hundo_tourian_metroids_1
-    dw $078D, $A9B4  ; DDB
-    dw $079B, $DB31  ; MDB
-    dw $090F, $C000  ; Screen subpixel X position
-    dw $0913, $AC00  ; Screen subpixel Y position
-    dw $0915, $00F2  ; Screen Y position in pixels
-    dw $0919, $00B5  ; Layer 2 Y position
-    dw $09C2, $059D  ; Health
-    dw $09C6, $00C7  ; Missiles
-    dw $09CA, $0011  ; Supers
-    dw $09CE, $001B  ; Pbs
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $00CA  ; Samus X
-    dw $0AFA, $018B  ; Samus Y
-    dw $D822, $0023  ; Events
-    dw $D8C4, $0003  ; Doors
-    dw #$FFFF
-
-preset_100early_lower_norfair_three_musketeers:
-    dw #preset_100early_lower_norfair_springball_maze
-    dw $078D, $9A92  ; DDB
-    dw $079B, $B510  ; MDB
-    dw $090F, $D801  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
-    dw $0917, $0000  ; Layer 2 X position
-    dw $0919, $0015  ; Layer 2 Y position
-    dw $09C6, $00AA  ; Missiles
-    dw $09C8, $00B9  ; Max missiles
-    dw $09CE, $0012  ; Pbs
-    dw $09D0, $002D  ; Max pbs
-    dw $0AF6, $0059  ; Samus X
-    dw $D878, $DEDE  ; Items
-    dw #$FFFF
-
-preset_gtmax_brinstar_cleanup_dachora_room_revisit:
-    dw #preset_gtmax_brinstar_cleanup_green_shaft_final
-    dw $078D, $8D06  ; DDB
-    dw $090F, $4000  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $E800  ; Screen subpixel Y position
-    dw $0915, $0604  ; Screen Y position in pixels
-    dw $0917, $0000  ; Layer 2 X position
-    dw $0919, $0483  ; Layer 2 Y position
-    dw $09CE, $002E  ; Pbs
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $00B2  ; Samus X
-    dw $0AFA, $068B  ; Samus Y
+    dw $D872, $C40F  ; Items
     dw #$FFFF
 
 preset_kpdr20_lower_norfair_springball_maze:
@@ -43008,25 +42658,625 @@ preset_kpdr25_backtracking_red_brinstar_green_gate:
     dw $0AF6, $0079  ; Samus X
     dw #$FFFF
 
-preset_kpdr_lower_norfair_wasteland:
-    dw #preset_kpdr_lower_norfair_kihunter_stairs_down
-    dw $078D, $99A2  ; DDB
-    dw $079B, $B585  ; MDB
-    dw $090F, $8000  ; Screen subpixel X position
+preset_kpdr_lower_norfair_amphitheatre:
+    dw #preset_kpdr_lower_norfair_worst_room_in_the_game
+    dw $078D, $994E  ; DDB
+    dw $079B, $B4AD  ; MDB
+    dw $090F, $C000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $A400  ; Screen subpixel Y position
+    dw $0915, $011D  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $00D5  ; Layer 2 Y position
+    dw $09C2, $0059  ; Health
+    dw $09CE, $0004  ; Pbs
+    dw $0AF6, $00A7  ; Samus X
+    dw $0AFA, $018B  ; Samus Y
+    dw $0FB2, $0036  ; Safeties energy adjustment
+    dw #$FFFF
+
+preset_hundo_final_cleanup_the_last_missiles_escape:
+    dw #preset_hundo_final_cleanup_the_last_missiles
+    dw $078D, $8C82  ; DDB
+    dw $079B, $9A90  ; MDB
+    dw $090F, $F000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $5400  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $09C6, $00B1  ; Missiles
+    dw $09C8, $00E6  ; Max missiles
+    dw $09CE, $0016  ; Pbs
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $0057  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw $D870, $FFFF  ; Items
+    dw #$FFFF
+
+preset_100early_lower_norfair_ridley_escape:
+    dw #preset_100early_lower_norfair_ridley
+    dw $078D, $98CA  ; DDB
+    dw $079B, $B32E  ; MDB
+    dw $07F3, $0024  ; Music Bank
+    dw $07F5, $0003  ; Music Track
+    dw $0915, $011F  ; Screen Y position in pixels
+    dw $09CA, $0022  ; Supers
+    dw $09CE, $000E  ; Pbs
+    dw $0AF6, $00C9  ; Samus X
+    dw $0AFA, $019B  ; Samus Y
+    dw $D82A, $0107  ; Bosses
+    dw #$FFFF
+
+preset_100early_lower_norfair_wasteland_revisit:
+    dw #preset_100early_lower_norfair_plowerhouse_room
+    dw $078D, $9966  ; DDB
+    dw $090F, $0000  ; Screen subpixel X position
     dw $0911, $0200  ; Screen X position in pixels
-    dw $0915, $0419  ; Screen Y position in pixels
+    dw $0913, $8400  ; Screen subpixel Y position
+    dw $0915, $011F  ; Screen Y position in pixels
     dw $0917, $0180  ; Layer 2 X position
-    dw $0919, $0312  ; Layer 2 Y position
+    dw $09C2, $04F1  ; Health
+    dw $09C4, $0513  ; Max health
+    dw $09CE, $000E  ; Pbs
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $02DB  ; Samus X
+    dw $0AFA, $00AB  ; Samus Y
+    dw $D82A, $0107  ; Bosses
+    dw $D878, $D2DE  ; Items
+    dw $D8BA, $DFF7  ; Doors
+    dw #$FFFF
+
+preset_100early_lower_norfair_kihunter_shaft_revisit:
+    dw #preset_100early_lower_norfair_plowerhouse_room
+    dw $078D, $9A3E  ; DDB
+    dw $079B, $B5D5  ; MDB
+    dw $0911, $0500  ; Screen X position in pixels
+    dw $0913, $2FFF  ; Screen subpixel Y position
+    dw $0917, $03C0  ; Layer 2 X position
+    dw $09C2, $04C4  ; Health
+    dw $09C4, $0513  ; Max health
+    dw $0AF6, $0590  ; Samus X
+    dw $0AFA, $005B  ; Samus Y
+    dw $D82A, $0107  ; Bosses
+    dw $D878, $D2DE  ; Items
+    dw $D8BA, $DFF7  ; Doors
+    dw #$FFFF
+
+preset_suitless_ridley_golden_torizo:
+    dw #preset_suitless_ridley_acid_chozo
+    dw $078D, $9852  ; DDB
+    dw $079B, $B1E5  ; MDB
+    dw $090F, $6000  ; Screen subpixel X position
+    dw $0911, $0200  ; Screen X position in pixels
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0917, $0180  ; Layer 2 X position
+    dw $0919, $0180  ; Layer 2 Y position
+    dw $09C2, $023E  ; Health
+    dw $09CE, $0010  ; Pbs
+    dw $09D2, $0000  ; Currently selected item
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $02C2  ; Samus X
+    dw $0AF8, $EFFF  ; Samus subpixel X
+    dw $D820, $3801  ; Events
+    dw #$FFFF
+
+preset_gtmax_brinstar_cleanup_green_shaft_final:
+    dw #preset_gtmax_brinstar_cleanup_etecoon_room
+    dw $078D, $8F46  ; DDB
+    dw $079B, $9AD9  ; MDB
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $01B9  ; Screen X position in pixels
+    dw $0913, $4400  ; Screen subpixel Y position
+    dw $0915, $074D  ; Screen Y position in pixels
+    dw $0917, $01B9  ; Layer 2 X position
+    dw $0919, $0579  ; Layer 2 Y position
+    dw $09CE, $002F  ; Pbs
+    dw $09D0, $0037  ; Max pbs
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0259  ; Samus X
+    dw $0AFA, $07BB  ; Samus Y
+    dw $D870, $A6BD  ; Items
+    dw #$FFFF
+
+preset_kpdr20_lower_norfair_single_chamber_final:
+    dw #preset_kpdr21_lower_norfair_single_chamber_final
+    dw $09C6, $000F  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr20_lower_norfair_bubble_mountain_final:
+    dw #preset_kpdr21_lower_norfair_bubble_mountain_final
+    dw $09C6, $000F  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr20_lower_norfair_business_center_final:
+    dw #preset_kpdr21_lower_norfair_business_center_final
+    dw $09C6, $000C  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr21_backtracking_maridia_tube_revisit:
+    dw #preset_kpdr22_backtracking_maridia_tube_revisit
+    dw $09C2, $0088  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $D874, $0104  ; Items
+    dw $D8B6, $3008  ; Doors
+    dw $D8B8, $2EED  ; Doors
+    dw #$FFFF
+
+preset_kpdr22_backtracking_crateria_kihunters_final:
+    dw #preset_kpdr23_backtracking_crateria_kihunters_final
+    dw $09A8, $100B  ; Collected Beams
+    dw #$FFFF
+
+preset_kpdr22_backtracking_parlor_spacejump:
+    dw #preset_kpdr23_backtracking_parlor_spacejump
+    dw $09A8, $100B  ; Collected Beams
+    dw #$FFFF
+
+preset_kpdr23_backtracking_terminator_revisit:
+    dw #preset_kpdr23_backtracking_parlor_spacejump
+    dw $078D, $8916  ; DDB
+    dw $079B, $92FD  ; MDB
+    dw $07F3, $0009  ; Music Bank
+    dw $090F, $4000  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $B400  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $00C0  ; Layer 2 X position
+    dw $0A1C, $001C  ; Samus position/state
+    dw $0A1E, $0304  ; More position/state
+    dw $0AF6, $0101  ; Samus X
+    dw $0AFA, $0086  ; Samus Y
+    dw #$FFFF
+
+preset_kpdr23_backtracking_green_pirate_shaft_revisit:
+    dw #preset_kpdr23_backtracking_parlor_spacejump
+    dw $078D, $895E  ; DDB
+    dw $079B, $990D  ; MDB
+    dw $07F3, $0009  ; Music Bank
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $0800  ; Screen subpixel Y position
+    dw $0915, $0200  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $0180  ; Layer 2 Y position
+    dw $0AF6, $0073  ; Samus X
+    dw $0AFA, $029B  ; Samus Y
+    dw #$FFFF
+
+preset_kpdr23_backtracking_g4_hallway:
+    dw #preset_kpdr23_lower_norfair_fireflea_room
+    dw $078D, $8BE6  ; DDB
+    dw $079B, $99BD  ; MDB
+    dw $07F3, $0009  ; Music Bank
+    dw $090F, $F000  ; Screen subpixel X position
+    dw $0913, $E400  ; Screen subpixel Y position
+    dw $0915, $0600  ; Screen Y position in pixels
+    dw $0917, $0001  ; Layer 2 X position
+    dw $0919, $0480  ; Layer 2 Y position
+    dw $09C2, $0114  ; Health
+    dw $09C6, $0012  ; Missiles
+    dw $09CA, $0008  ; Supers
+    dw $09CE, $0001  ; Pbs
+    dw $0AF6, $00BC  ; Samus X
+    dw $0AFA, $068B  ; Samus Y
+    dw $D8B2, $6C01  ; Doors
+    dw #$FFFF
+
+preset_kpdr21_backtracking_fish_tank_revisit:
+    dw #preset_kpdr22_backtracking_fish_tank_revisit
+    dw $09C2, $0088  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $D874, $0104  ; Items
+    dw $D8B6, $3008  ; Doors
+    dw $D8B8, $2EED  ; Doors
+    dw #$FFFF
+
+preset_kpdr21_backtracking_mt_everest_revisit:
+    dw #preset_kpdr22_backtracking_mt_everest_revisit
+    dw $09C2, $0088  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $D874, $0104  ; Items
+    dw $D8B6, $3008  ; Doors
+    dw $D8B8, $2EED  ; Doors
+    dw #$FFFF
+
+preset_kpdr21_backtracking_red_brinstar_green_gate:
+    dw #preset_kpdr22_backtracking_red_brinstar_green_gate
+    dw $09C2, $0088  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $D874, $0104  ; Items
+    dw $D8B6, $3008  ; Doors
+    dw $D8B8, $2EED  ; Doors
+    dw #$FFFF
+
+preset_kpdr25_backtracking_crateria_kihunters_final:
+    dw #preset_kpdr25_backtracking_maridia_tube_revisit
+    dw $078D, $90BA  ; DDB
+    dw $079B, $962A  ; MDB
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $09CA, $0009  ; Supers
+    dw $0AFA, $00A8  ; Samus Y
+    dw #$FFFF
+
+preset_kpdr25_backtracking_parlor_spacejump:
+    dw #preset_kpdr23_backtracking_parlor_spacejump
+    dw $09C2, $01AE  ; Health
+    dw $09C4, $0257  ; Max health
+    dw $09C6, $000D  ; Missiles
+    dw $09C8, $0019  ; Max missiles
+    dw $0AF8, $7FFF  ; Samus subpixel X
+    dw $0AFC, $B7FF  ; Samus subpixel Y
+    dw $D870, $0190  ; Items
+    dw $D878, $401C  ; Items
+    dw $D8BA, $DDF1  ; Doors
+    dw #$FFFF
+
+preset_kpdr_lower_norfair_kihunter_stairs_down:
+    dw #preset_kpdr_lower_norfair_amphitheatre
+    dw $078D, $997E  ; DDB
+    dw $079B, $B4E5  ; MDB
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $0282  ; Screen X position in pixels
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $0043  ; Screen Y position in pixels
+    dw $0917, $01E1  ; Layer 2 X position
+    dw $0919, $0032  ; Layer 2 Y position
+    dw $0AF6, $02E2  ; Samus X
+    dw $0AFA, $00B3  ; Samus Y
+    dw #$FFFF
+
+preset_kpdr_lower_norfair_wasteland:
+    dw #preset_kpdr20_lower_norfair_wasteland
     dw $09C2, $0081  ; Health
-    dw $09CE, $0002  ; Pbs
-    dw $0A1C, $001D  ; Samus position/state
-    dw $0A1E, $0408  ; More position/state
-    dw $0AF6, $0248  ; Samus X
-    dw $0AFA, $0489  ; Samus Y
+    dw $0F78, $C23B  ; Safeties enabled
     dw $0F7A, $0F7E  ; Safeties enabled
+    dw $0FA6, $0040  ; Safeties energy adjustment
+    dw $0FA8, $0028  ; Safeties energy adjustment
+    dw $0FAA, $006A  ; Safeties energy adjustment
+    dw $0FAC, $002B  ; Safeties energy adjustment
+    dw $0FB2, $000E  ; Safeties energy adjustment
     dw $10B4, $FFFF  ; Safeties power bombs adjustment
+    dw $1118, $0004  ; Safeties unequip beams
+    dw $1120, $0004  ; Safeties unequip beams
+    dw $1180, $0006  ; Safeties stage
     dw $11F6, $0001  ; Safeties refill
-    dw $D8BA, $41F1  ; Doors
+    dw $D876, $0125  ; Items
+    dw $D878, $001C  ; Items
+    dw $D8B0, $3000  ; Doors
+    dw $D8B8, $2EEC  ; Doors
+    dw #$FFFF
+
+preset_hundo_tourian_metroids_1:
+    dw #preset_hundo_final_cleanup_the_last_missiles_escape
+    dw $078D, $9222  ; DDB
+    dw $079B, $DAAE  ; MDB
+    dw $07F3, $001E  ; Music Bank
+    dw $090F, $C001  ; Screen subpixel X position
+    dw $0913, $4FFF  ; Screen subpixel Y position
+    dw $0915, $0300  ; Screen Y position in pixels
+    dw $0919, $0240  ; Layer 2 Y position
+    dw $09C2, $054B  ; Health
+    dw $09C6, $00B5  ; Missiles
+    dw $09CA, $0010  ; Supers
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0036  ; Samus X
+    dw $0AFA, $038B  ; Samus Y
+    dw $D820, $3FC1  ; Events
+    dw $D8B2, $6C09  ; Doors
+    dw $D90C, $0100  ; Map Stations
+    dw #$FFFF
+
+preset_100early_lower_norfair_firefleas_room:
+    dw #preset_100early_lower_norfair_wasteland_revisit
+    dw $078D, $9A26  ; DDB
+    dw $079B, $B585  ; MDB
+    dw $090F, $4180  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $4000  ; Screen subpixel Y position
+    dw $0915, $001A  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $0013  ; Layer 2 Y position
+    dw $09C2, $04C4  ; Health
+    dw $09CE, $000C  ; Pbs
+    dw $0AF6, $009C  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw #$FFFF
+
+preset_100early_lower_norfair_springball_maze:
+    dw #preset_100early_lower_norfair_kihunter_shaft_revisit
+    dw $078D, $9A02  ; DDB
+    dw $079B, $B6EE  ; MDB
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0917, $0100  ; Layer 2 X position
+    dw $0919, $001C  ; Layer 2 Y position
+    dw $09C2, $0576  ; Health
+    dw $09C4, $0577  ; Max health
+    dw $09CA, $0021  ; Supers
+    dw $0AF6, $016B  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw $D87A, $0001  ; Items
+    dw #$FFFF
+
+preset_suitless_ridley_screw_attack:
+    dw #preset_suitless_ridley_golden_torizo
+    dw $078D, $983A  ; DDB
+    dw $079B, $B283  ; MDB
+    dw $07F3, $0024  ; Music Bank
+    dw $07F5, $0003  ; Music Track
+    dw $090F, $4FFF  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $EC00  ; Screen subpixel Y position
+    dw $0915, $0100  ; Screen Y position in pixels
+    dw $0917, $00C0  ; Layer 2 X position
+    dw $0919, $0100  ; Layer 2 Y position
+    dw $09C2, $00FC  ; Health
+    dw $09C6, $0037  ; Missiles
+    dw $09C8, $00A5  ; Max missiles
+    dw $09CA, $0012  ; Supers
+    dw $09CC, $002D  ; Max supers
+    dw $09CE, $0011  ; Pbs
+    dw $0A1C, $0089  ; Samus position/state
+    dw $0A1E, $1508  ; More position/state
+    dw $0AF6, $01DB  ; Samus X
+    dw $0AF8, $FFFF  ; Samus subpixel X
+    dw $0AFA, $018B  ; Samus Y
+    dw $D82A, $0106  ; Bosses
+    dw $D878, $00DE  ; Items
+    dw #$FFFF
+
+preset_hundo_tourian_metroids_2:
+    dw #preset_hundo_tourian_metroids_1
+    dw $078D, $A984  ; DDB
+    dw $079B, $DAE1  ; MDB
+    dw $090F, $F000  ; Screen subpixel X position
+    dw $0913, $8800  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09C2, $056C  ; Health
+    dw $09C6, $00BF  ; Missiles
+    dw $09CA, $000F  ; Supers
+    dw $09CE, $0018  ; Pbs
+    dw $0AF6, $003A  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw $D822, $0021  ; Events
+    dw $D8C4, $0001  ; Doors
+    dw #$FFFF
+
+preset_hundo_tourian_metroids_3:
+    dw #preset_hundo_tourian_metroids_1
+    dw $078D, $A9B4  ; DDB
+    dw $079B, $DB31  ; MDB
+    dw $090F, $C000  ; Screen subpixel X position
+    dw $0913, $AC00  ; Screen subpixel Y position
+    dw $0915, $00F2  ; Screen Y position in pixels
+    dw $0919, $00B5  ; Layer 2 Y position
+    dw $09C2, $059D  ; Health
+    dw $09C6, $00C7  ; Missiles
+    dw $09CA, $0011  ; Supers
+    dw $09CE, $001B  ; Pbs
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $00CA  ; Samus X
+    dw $0AFA, $018B  ; Samus Y
+    dw $D822, $0023  ; Events
+    dw $D8C4, $0003  ; Doors
+    dw #$FFFF
+
+preset_100early_lower_norfair_three_musketeers:
+    dw #preset_100early_lower_norfair_springball_maze
+    dw $078D, $9A92  ; DDB
+    dw $079B, $B510  ; MDB
+    dw $090F, $D801  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $0015  ; Layer 2 Y position
+    dw $09C6, $00AA  ; Missiles
+    dw $09C8, $00B9  ; Max missiles
+    dw $09CE, $0012  ; Pbs
+    dw $09D0, $002D  ; Max pbs
+    dw $0AF6, $0059  ; Samus X
+    dw $D878, $DEDE  ; Items
+    dw #$FFFF
+
+preset_gtmax_brinstar_cleanup_dachora_room_revisit:
+    dw #preset_gtmax_brinstar_cleanup_green_shaft_final
+    dw $078D, $8D06  ; DDB
+    dw $090F, $4000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $E800  ; Screen subpixel Y position
+    dw $0915, $0604  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $0483  ; Layer 2 Y position
+    dw $09CE, $002E  ; Pbs
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $00B2  ; Samus X
+    dw $0AFA, $068B  ; Samus Y
+    dw #$FFFF
+
+preset_kpdr20_backtracking_maridia_tube_revisit:
+    dw #preset_kpdr21_backtracking_maridia_tube_revisit
+    dw $09C6, $000C  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr21_backtracking_crateria_kihunters_final:
+    dw #preset_kpdr22_backtracking_crateria_kihunters_final
+    dw $09C2, $0088  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $D874, $0104  ; Items
+    dw $D8B6, $3008  ; Doors
+    dw $D8B8, $2EED  ; Doors
+    dw #$FFFF
+
+preset_kpdr21_backtracking_parlor_spacejump:
+    dw #preset_kpdr22_backtracking_parlor_spacejump
+    dw $09C2, $0088  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $D874, $0104  ; Items
+    dw $D8B6, $3008  ; Doors
+    dw $D8B8, $2EED  ; Doors
+    dw #$FFFF
+
+preset_kpdr22_backtracking_terminator_revisit:
+    dw #preset_kpdr23_backtracking_terminator_revisit
+    dw $09A8, $100B  ; Collected Beams
+    dw #$FFFF
+
+preset_kpdr22_backtracking_green_pirate_shaft_revisit:
+    dw #preset_kpdr23_backtracking_green_pirate_shaft_revisit
+    dw $09A8, $100B  ; Collected Beams
+    dw #$FFFF
+
+preset_kpdr22_backtracking_g4_hallway:
+    dw #preset_kpdr23_backtracking_g4_hallway
+    dw $09A8, $100B  ; Collected Beams
+    dw #$FFFF
+
+preset_kpdr23_backtracking_g4_elevator:
+    dw #preset_kpdr23_backtracking_g4_hallway
+    dw $078D, $91F2  ; DDB
+    dw $079B, $A66A  ; MDB
+    dw $07F5, $0006  ; Music Track
+    dw $090F, $7000  ; Screen subpixel X position
+    dw $0913, $7000  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0049  ; Samus X
+    dw $0AFA, $009B  ; Samus Y
+    dw $D820, $0BC1  ; Events
+    dw #$FFFF
+
+preset_kpdr23_tourian_tourian_elevator_room:
+    dw #preset_kpdr23_backtracking_g4_hallway
+    dw $078D, $9222  ; DDB
+    dw $079B, $DAAE  ; MDB
+    dw $07F3, $001E  ; Music Bank
+    dw $090F, $9FFF  ; Screen subpixel X position
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $0238  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $01AA  ; Layer 2 Y position
+    dw $0A1C, $009B  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
+    dw $0AF6, $0080  ; Samus X
+    dw $0AFA, $02A8  ; Samus Y
+    dw $D820, $0FC1  ; Events
+    dw $D90C, $0100  ; Map Stations
+    dw #$FFFF
+
+preset_kpdr20_backtracking_fish_tank_revisit:
+    dw #preset_kpdr21_backtracking_fish_tank_revisit
+    dw $09C6, $000C  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr20_backtracking_mt_everest_revisit:
+    dw #preset_kpdr21_backtracking_mt_everest_revisit
+    dw $09C6, $000C  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr20_backtracking_red_brinstar_green_gate:
+    dw #preset_kpdr21_backtracking_red_brinstar_green_gate
+    dw $09C6, $000C  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr25_backtracking_terminator_revisit:
+    dw #preset_kpdr25_backtracking_parlor_spacejump
+    dw $078D, $8916  ; DDB
+    dw $079B, $92FD  ; MDB
+    dw $07F3, $0009  ; Music Bank
+    dw $090F, $4000  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $B400  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $00C0  ; Layer 2 X position
+    dw $0AF6, $0101  ; Samus X
+    dw $0AFA, $0086  ; Samus Y
+    dw #$FFFF
+
+preset_kpdr25_backtracking_green_pirate_shaft_revisit:
+    dw #preset_kpdr23_backtracking_green_pirate_shaft_revisit
+    dw $09C2, $01AE  ; Health
+    dw $09C4, $0257  ; Max health
+    dw $09C6, $000D  ; Missiles
+    dw $09C8, $0019  ; Max missiles
+    dw $0AF8, $7FFF  ; Samus subpixel X
+    dw $0AFC, $B7FF  ; Samus subpixel Y
+    dw $D870, $0190  ; Items
+    dw $D878, $401C  ; Items
+    dw $D8BA, $DDF1  ; Doors
+    dw #$FFFF
+
+preset_kpdr25_backtracking_g4_hallway:
+    dw #preset_kpdr23_backtracking_g4_hallway
+    dw $09C2, $01AE  ; Health
+    dw $09C4, $0257  ; Max health
+    dw $09C6, $000D  ; Missiles
+    dw $09C8, $0019  ; Max missiles
+    dw $0AF8, $7FFF  ; Samus subpixel X
+    dw $0AFC, $B7FF  ; Samus subpixel Y
+    dw $D870, $0190  ; Items
+    dw $D878, $401C  ; Items
+    dw $D8BA, $DDF1  ; Doors
+    dw #$FFFF
+
+preset_kpdr_lower_norfair_metal_ninja_pirates:
+    dw #preset_kpdr_lower_norfair_wasteland
+    dw $078D, $99EA  ; DDB
+    dw $079B, $B5D5  ; MDB
+    dw $090F, $E000  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0915, $021B  ; Screen Y position in pixels
+    dw $09C2, $005C  ; Health
+    dw $09CA, $0006  ; Supers
+    dw $09CE, $0001  ; Pbs
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0168  ; Samus X
+    dw $0AFA, $028B  ; Samus Y
+    dw $11F6, $FFDB  ; Safeties refill
+    dw $D8BA, $C1F1  ; Doors
+    dw #$FFFF
+
+preset_kpdr_lower_norfair_plowerhouse:
+    dw #preset_kpdr20_lower_norfair_plowerhouse
+    dw $09C2, $00F7  ; Health
+    dw $0F78, $C23B  ; Safeties enabled
+    dw $0F7A, $0F7E  ; Safeties enabled
+    dw $0FA6, $0022  ; Safeties energy adjustment
+    dw $0FAA, $004C  ; Safeties energy adjustment
+    dw $0FAC, $002B  ; Safeties energy adjustment
+    dw $0FB2, $000E  ; Safeties energy adjustment
+    dw $10B4, $FFFF  ; Safeties power bombs adjustment
+    dw $1118, $0004  ; Safeties unequip beams
+    dw $1120, $0004  ; Safeties unequip beams
+    dw $1180, $0006  ; Safeties stage
+    dw $11F6, $0001  ; Safeties refill
+    dw $D876, $0125  ; Items
+    dw $D878, $001C  ; Items
+    dw $D8B0, $3000  ; Doors
+    dw $D8B8, $2EEC  ; Doors
     dw #$FFFF
 
 preset_suitless_ridley_gt_refill_exit:
@@ -43156,29 +43406,22 @@ preset_gtmax_brinstar_cleanup_mission_impossible:
     dw $D8B4, $0346  ; Doors
     dw #$FFFF
 
-preset_kpdr20_lower_norfair_single_chamber_final:
-    dw #preset_kpdr21_lower_norfair_single_chamber_final
-    dw $09C6, $000F  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr20_lower_norfair_bubble_mountain_final:
-    dw #preset_kpdr21_lower_norfair_bubble_mountain_final
-    dw $09C6, $000F  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr20_lower_norfair_business_center_final:
-    dw #preset_kpdr21_lower_norfair_business_center_final
+preset_kpdr20_backtracking_crateria_kihunters_final:
+    dw #preset_kpdr21_backtracking_crateria_kihunters_final
     dw $09C6, $000C  ; Missiles
     dw $09C8, $000F  ; Max missiles
     dw $D878, $0014  ; Items
     dw #$FFFF
 
-preset_kpdr21_backtracking_maridia_tube_revisit:
-    dw #preset_kpdr22_backtracking_maridia_tube_revisit
+preset_kpdr20_backtracking_parlor_spacejump:
+    dw #preset_kpdr21_backtracking_parlor_spacejump
+    dw $09C6, $000B  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr21_backtracking_terminator_revisit:
+    dw #preset_kpdr22_backtracking_terminator_revisit
     dw $09C2, $0088  ; Health
     dw $09C4, $018F  ; Max health
     dw $D874, $0104  ; Items
@@ -43186,137 +43429,31 @@ preset_kpdr21_backtracking_maridia_tube_revisit:
     dw $D8B8, $2EED  ; Doors
     dw #$FFFF
 
-preset_kpdr22_backtracking_crateria_kihunters_final:
-    dw #preset_kpdr23_backtracking_crateria_kihunters_final
+preset_kpdr21_backtracking_green_pirate_shaft_revisit:
+    dw #preset_kpdr22_backtracking_green_pirate_shaft_revisit
+    dw $09C2, $0088  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $D874, $0104  ; Items
+    dw $D8B6, $3008  ; Doors
+    dw $D8B8, $2EED  ; Doors
+    dw #$FFFF
+
+preset_kpdr21_backtracking_g4_hallway:
+    dw #preset_kpdr22_backtracking_g4_hallway
+    dw $09C2, $00B0  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $D874, $0104  ; Items
+    dw $D8B6, $3008  ; Doors
+    dw $D8B8, $2EED  ; Doors
+    dw #$FFFF
+
+preset_kpdr22_backtracking_g4_elevator:
+    dw #preset_kpdr23_backtracking_g4_elevator
     dw $09A8, $100B  ; Collected Beams
     dw #$FFFF
 
-preset_kpdr22_backtracking_parlor_spacejump:
-    dw #preset_kpdr23_backtracking_parlor_spacejump
-    dw $09A8, $100B  ; Collected Beams
-    dw #$FFFF
-
-preset_kpdr23_backtracking_terminator_revisit:
-    dw #preset_kpdr23_backtracking_parlor_spacejump
-    dw $078D, $8916  ; DDB
-    dw $079B, $92FD  ; MDB
-    dw $07F3, $0009  ; Music Bank
-    dw $090F, $4000  ; Screen subpixel X position
-    dw $0911, $0100  ; Screen X position in pixels
-    dw $0913, $B400  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0917, $00C0  ; Layer 2 X position
-    dw $0A1C, $001C  ; Samus position/state
-    dw $0A1E, $0304  ; More position/state
-    dw $0AF6, $0101  ; Samus X
-    dw $0AFA, $0086  ; Samus Y
-    dw #$FFFF
-
-preset_kpdr23_backtracking_green_pirate_shaft_revisit:
-    dw #preset_kpdr23_backtracking_parlor_spacejump
-    dw $078D, $895E  ; DDB
-    dw $079B, $990D  ; MDB
-    dw $07F3, $0009  ; Music Bank
-    dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $0800  ; Screen subpixel Y position
-    dw $0915, $0200  ; Screen Y position in pixels
-    dw $0917, $0000  ; Layer 2 X position
-    dw $0919, $0180  ; Layer 2 Y position
-    dw $0AF6, $0073  ; Samus X
-    dw $0AFA, $029B  ; Samus Y
-    dw #$FFFF
-
-preset_kpdr23_backtracking_g4_hallway:
-    dw #preset_pkrd_backtracking_g4_hallway
-    dw $090F, $F000  ; Screen subpixel X position
-    dw $09A2, $3325  ; Equipped Items
-    dw $09A4, $3325  ; Collected Items
-    dw $09A6, $100B  ; Equipped Beams
-    dw $09A8, $100F  ; Collected Beams
-    dw $09C2, $0114  ; Health
-    dw $09C6, $0012  ; Missiles
-    dw $09CA, $0008  ; Supers
-    dw $0AF6, $00BC  ; Samus X
-    dw $0AF8, $0000  ; Samus subpixel X
-    dw $D870, $0180  ; Items
-    dw $D876, $01A5  ; Items
-    dw $D880, $80A0  ; Items
-    dw $D882, $0500  ; Items
-    dw $D8C2, $DC1A  ; Doors
-    dw #$FFFF
-
-preset_kpdr23_backtracking_g4_elevator:
-    dw #preset_pkrd_backtracking_g4_elevator
-    dw $09A2, $3325  ; Equipped Items
-    dw $09A4, $3325  ; Collected Items
-    dw $09A6, $100B  ; Equipped Beams
-    dw $09A8, $100F  ; Collected Beams
-    dw $09C2, $0114  ; Health
-    dw $09C6, $0012  ; Missiles
-    dw $09CA, $0008  ; Supers
-    dw $0AF8, $0000  ; Samus subpixel X
-    dw $D870, $0180  ; Items
-    dw $D876, $01A5  ; Items
-    dw $D880, $80A0  ; Items
-    dw $D882, $0500  ; Items
-    dw $D8C2, $DC1A  ; Doors
-    dw #$FFFF
-
-preset_kpdr23_tourian_tourian_elevator_room:
-    dw #preset_pkrd_tourian_tourian_elevator_room
-    dw $09A2, $3325  ; Equipped Items
-    dw $09A4, $3325  ; Collected Items
-    dw $09A6, $100B  ; Equipped Beams
-    dw $09A8, $100F  ; Collected Beams
-    dw $09C2, $0114  ; Health
-    dw $09C6, $0012  ; Missiles
-    dw $09CA, $0008  ; Supers
-    dw $0AF8, $0000  ; Samus subpixel X
-    dw $D870, $0180  ; Items
-    dw $D876, $01A5  ; Items
-    dw $D880, $80A0  ; Items
-    dw $D882, $0500  ; Items
-    dw $D8C2, $DC1A  ; Doors
-    dw #$FFFF
-
-preset_kpdr21_backtracking_fish_tank_revisit:
-    dw #preset_kpdr22_backtracking_fish_tank_revisit
-    dw $09C2, $0088  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0104  ; Items
-    dw $D8B6, $3008  ; Doors
-    dw $D8B8, $2EED  ; Doors
-    dw #$FFFF
-
-preset_kpdr21_backtracking_mt_everest_revisit:
-    dw #preset_kpdr22_backtracking_mt_everest_revisit
-    dw $09C2, $0088  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0104  ; Items
-    dw $D8B6, $3008  ; Doors
-    dw $D8B8, $2EED  ; Doors
-    dw #$FFFF
-
-preset_kpdr21_backtracking_red_brinstar_green_gate:
-    dw #preset_kpdr22_backtracking_red_brinstar_green_gate
-    dw $09C2, $0088  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0104  ; Items
-    dw $D8B6, $3008  ; Doors
-    dw $D8B8, $2EED  ; Doors
-    dw #$FFFF
-
-preset_kpdr25_backtracking_crateria_kihunters_final:
-    dw #preset_kpdr25_backtracking_maridia_tube_revisit
-    dw $078D, $90BA  ; DDB
-    dw $079B, $962A  ; MDB
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $09CA, $0009  ; Supers
-    dw $0AFA, $00A8  ; Samus Y
-    dw #$FFFF
-
-preset_kpdr25_backtracking_parlor_spacejump:
-    dw #preset_kpdr23_backtracking_parlor_spacejump
+preset_kpdr25_backtracking_g4_elevator:
+    dw #preset_kpdr23_backtracking_g4_elevator
     dw $09C2, $01AE  ; Health
     dw $09C4, $0257  ; Max health
     dw $09C6, $000D  ; Missiles
@@ -43328,22 +43465,108 @@ preset_kpdr25_backtracking_parlor_spacejump:
     dw $D8BA, $DDF1  ; Doors
     dw #$FFFF
 
-preset_kpdr_lower_norfair_metal_ninja_pirates:
-    dw #preset_kpdr_lower_norfair_wasteland
-    dw $078D, $99EA  ; DDB
-    dw $079B, $B5D5  ; MDB
-    dw $090F, $E000  ; Screen subpixel X position
-    dw $0911, $0100  ; Screen X position in pixels
-    dw $0915, $021B  ; Screen Y position in pixels
-    dw $09C2, $005C  ; Health
-    dw $09CA, $0006  ; Supers
-    dw $09CE, $0001  ; Pbs
+preset_kpdr22_tourian_tourian_elevator_room:
+    dw #preset_kpdr23_tourian_tourian_elevator_room
+    dw $09A8, $100B  ; Collected Beams
+    dw #$FFFF
+
+preset_kpdr23_tourian_metroids_1:
+    dw #preset_kpdr23_tourian_tourian_elevator_room
+    dw $090F, $8000  ; Screen subpixel X position
+    dw $0913, $F7FF  ; Screen subpixel Y position
+    dw $0915, $0300  ; Screen Y position in pixels
+    dw $0919, $0240  ; Layer 2 Y position
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $0168  ; Samus X
-    dw $0AFA, $028B  ; Samus Y
-    dw $11F6, $FFDB  ; Safeties refill
-    dw $D8BA, $C1F1  ; Doors
+    dw $0AF6, $0040  ; Samus X
+    dw $0AFA, $038B  ; Samus Y
+    dw #$FFFF
+
+preset_kpdr23_tourian_metroids_2:
+    dw #preset_kpdr23_lower_norfair_three_musketeers
+    dw $078D, $A984  ; DDB
+    dw $079B, $DAE1  ; MDB
+    dw $07F3, $001E  ; Music Bank
+    dw $090F, $7000  ; Screen subpixel X position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09C2, $0150  ; Health
+    dw $09CA, $0009  ; Supers
+    dw $0AF6, $003B  ; Samus X
+    dw $D820, $0FC1  ; Events
+    dw $D822, $0021  ; Events
+    dw $D8B2, $6C01  ; Doors
+    dw $D8C4, $0001  ; Doors
+    dw $D90C, $0100  ; Map Stations
+    dw #$FFFF
+
+preset_kpdr25_tourian_tourian_elevator_room:
+    dw #preset_kpdr23_tourian_tourian_elevator_room
+    dw $09C2, $01AE  ; Health
+    dw $09C4, $0257  ; Max health
+    dw $09C6, $000D  ; Missiles
+    dw $09C8, $0019  ; Max missiles
+    dw $0AF8, $7FFF  ; Samus subpixel X
+    dw $0AFC, $B7FF  ; Samus subpixel Y
+    dw $D870, $0190  ; Items
+    dw $D878, $401C  ; Items
+    dw $D8BA, $DDF1  ; Doors
+    dw #$FFFF
+
+preset_kpdr_lower_norfair_ridley:
+    dw #preset_kpdr_lower_norfair_plowerhouse
+    dw $078D, $995A  ; DDB
+    dw $079B, $B37A  ; MDB
+    dw $090F, $2000  ; Screen subpixel X position
+    dw $0913, $5000  ; Screen subpixel Y position
+    dw $09C2, $00B8  ; Health
+    dw $09CA, $0008  ; Supers
+    dw $0AF6, $003D  ; Samus X
+    dw $0AFA, $009B  ; Samus Y
+    dw $0F7A, $0B7E  ; Safeties enabled
+    dw $10B4, $0000  ; Safeties power bombs adjustment
+    dw $11F6, $FFC1  ; Safeties refill
+    dw $D8BA, $D1F1  ; Doors
+    dw #$FFFF
+
+preset_kpdr_lower_norfair_leaving_ridley:
+    dw #preset_kpdr20_lower_norfair_leaving_ridley
+    dw $09C2, $00AE  ; Health
+    dw $0F78, $C23B  ; Safeties enabled
+    dw $0F7A, $1B7E  ; Safeties enabled
+    dw $0FA6, $0022  ; Safeties energy adjustment
+    dw $0FAA, $004C  ; Safeties energy adjustment
+    dw $0FAC, $002B  ; Safeties energy adjustment
+    dw $0FB2, $000E  ; Safeties energy adjustment
+    dw $1118, $0004  ; Safeties unequip beams
+    dw $1120, $0004  ; Safeties unequip beams
+    dw $1180, $0006  ; Safeties stage
+    dw $11F6, $FFB7  ; Safeties refill
+    dw $11F8, $0001  ; Safeties refill
+    dw $D876, $0125  ; Items
+    dw $D878, $001C  ; Items
+    dw $D8B0, $3000  ; Doors
+    dw $D8B8, $2EEC  ; Doors
+    dw #$FFFF
+
+preset_kpdr_lower_norfair_reverse_plowerhouse:
+    dw #preset_kpdr20_lower_norfair_reverse_plowerhouse
+    dw $09C2, $00AB  ; Health
+    dw $0F78, $C23B  ; Safeties enabled
+    dw $0F7A, $1B7E  ; Safeties enabled
+    dw $0FA6, $0022  ; Safeties energy adjustment
+    dw $0FAA, $004C  ; Safeties energy adjustment
+    dw $0FAC, $002B  ; Safeties energy adjustment
+    dw $0FB2, $000E  ; Safeties energy adjustment
+    dw $1118, $0004  ; Safeties unequip beams
+    dw $1120, $0004  ; Safeties unequip beams
+    dw $1180, $0006  ; Safeties stage
+    dw $11F6, $FFB4  ; Safeties refill
+    dw $11F8, $FFFD  ; Safeties refill
+    dw $D876, $0125  ; Items
+    dw $D878, $001C  ; Items
+    dw $D8B0, $3000  ; Doors
+    dw $D8B8, $2EEC  ; Doors
     dw #$FFFF
 
 preset_suitless_ridley_fast_ripper_room:
@@ -43445,58 +43668,90 @@ preset_gtmax_brinstar_cleanup_leaving_pink_etank:
     dw $D8B6, $78D8  ; Doors
     dw #$FFFF
 
-preset_kpdr20_backtracking_maridia_tube_revisit:
-    dw #preset_kpdr21_backtracking_maridia_tube_revisit
-    dw $09C6, $000C  ; Missiles
+preset_kpdr20_backtracking_terminator_revisit:
+    dw #preset_kpdr21_backtracking_terminator_revisit
+    dw $09C6, $000B  ; Missiles
     dw $09C8, $000F  ; Max missiles
     dw $D878, $0014  ; Items
     dw #$FFFF
 
-preset_kpdr21_backtracking_crateria_kihunters_final:
-    dw #preset_kpdr22_backtracking_crateria_kihunters_final
-    dw $09C2, $0088  ; Health
+preset_kpdr20_backtracking_green_pirate_shaft_revisit:
+    dw #preset_kpdr21_backtracking_green_pirate_shaft_revisit
+    dw $09C6, $000B  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr20_backtracking_g4_hallway:
+    dw #preset_kpdr21_backtracking_g4_hallway
+    dw $09C6, $000D  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr21_backtracking_g4_elevator:
+    dw #preset_kpdr22_backtracking_g4_elevator
+    dw $09C2, $00B0  ; Health
     dw $09C4, $018F  ; Max health
     dw $D874, $0104  ; Items
     dw $D8B6, $3008  ; Doors
     dw $D8B8, $2EED  ; Doors
     dw #$FFFF
 
-preset_kpdr21_backtracking_parlor_spacejump:
-    dw #preset_kpdr22_backtracking_parlor_spacejump
-    dw $09C2, $0088  ; Health
+preset_kpdr21_tourian_tourian_elevator_room:
+    dw #preset_kpdr22_tourian_tourian_elevator_room
+    dw $09C2, $00B0  ; Health
     dw $09C4, $018F  ; Max health
     dw $D874, $0104  ; Items
     dw $D8B6, $3008  ; Doors
     dw $D8B8, $2EED  ; Doors
     dw #$FFFF
 
-preset_kpdr22_backtracking_terminator_revisit:
-    dw #preset_kpdr23_backtracking_terminator_revisit
+preset_kpdr22_tourian_metroids_1:
+    dw #preset_kpdr23_tourian_metroids_1
     dw $09A8, $100B  ; Collected Beams
     dw #$FFFF
 
-preset_kpdr22_backtracking_green_pirate_shaft_revisit:
-    dw #preset_kpdr23_backtracking_green_pirate_shaft_revisit
+preset_kpdr22_tourian_metroids_2:
+    dw #preset_kpdr23_tourian_metroids_2
     dw $09A8, $100B  ; Collected Beams
     dw #$FFFF
 
-preset_kpdr22_backtracking_g4_hallway:
-    dw #preset_kpdr23_backtracking_g4_hallway
-    dw $09A8, $100B  ; Collected Beams
+preset_kpdr23_tourian_metroids_3:
+    dw #preset_kpdr23_tourian_metroids_2
+    dw $078D, $A9B4  ; DDB
+    dw $079B, $DB31  ; MDB
+    dw $090F, $9000  ; Screen subpixel X position
+    dw $0913, $1000  ; Screen subpixel Y position
+    dw $0915, $0109  ; Screen Y position in pixels
+    dw $0919, $00C6  ; Layer 2 Y position
+    dw $09C2, $01C8  ; Health
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $00C2  ; Samus X
+    dw $0AFA, $018B  ; Samus Y
+    dw $D822, $0023  ; Events
+    dw $D8C4, $0003  ; Doors
     dw #$FFFF
 
-preset_kpdr22_backtracking_g4_elevator:
-    dw #preset_kpdr23_backtracking_g4_elevator
-    dw $09A8, $100B  ; Collected Beams
+preset_kpdr23_tourian_metroids_4:
+    dw #preset_kpdr23_tourian_metroids_2
+    dw $078D, $A9CC  ; DDB
+    dw $079B, $DB7D  ; MDB
+    dw $090F, $C000  ; Screen subpixel X position
+    dw $0911, $0500  ; Screen X position in pixels
+    dw $0913, $0400  ; Screen subpixel Y position
+    dw $0917, $03C0  ; Layer 2 X position
+    dw $09C2, $01F3  ; Health
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $059E  ; Samus X
+    dw $D822, $0027  ; Events
+    dw $D8C4, $0007  ; Doors
     dw #$FFFF
 
-preset_kpdr22_tourian_tourian_elevator_room:
-    dw #preset_kpdr23_tourian_tourian_elevator_room
-    dw $09A8, $100B  ; Collected Beams
-    dw #$FFFF
-
-preset_kpdr23_tourian_metroids_1:
-    dw #preset_kpdr23_tourian_tourian_elevator_room
+preset_kpdr25_tourian_metroids_1:
+    dw #preset_kpdr25_tourian_tourian_elevator_room
     dw $090F, $8000  ; Screen subpixel X position
     dw $0913, $F7FF  ; Screen subpixel Y position
     dw $0915, $0300  ; Screen Y position in pixels
@@ -43507,47 +43762,13 @@ preset_kpdr23_tourian_metroids_1:
     dw $0AFA, $038B  ; Samus Y
     dw #$FFFF
 
-preset_kpdr20_backtracking_fish_tank_revisit:
-    dw #preset_kpdr21_backtracking_fish_tank_revisit
-    dw $09C6, $000C  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr20_backtracking_mt_everest_revisit:
-    dw #preset_kpdr21_backtracking_mt_everest_revisit
-    dw $09C6, $000C  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr20_backtracking_red_brinstar_green_gate:
-    dw #preset_kpdr21_backtracking_red_brinstar_green_gate
-    dw $09C6, $000C  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr25_backtracking_terminator_revisit:
-    dw #preset_kpdr25_backtracking_parlor_spacejump
-    dw $078D, $8916  ; DDB
-    dw $079B, $92FD  ; MDB
-    dw $07F3, $0009  ; Music Bank
-    dw $090F, $4000  ; Screen subpixel X position
-    dw $0911, $0100  ; Screen X position in pixels
-    dw $0913, $B400  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0917, $00C0  ; Layer 2 X position
-    dw $0AF6, $0101  ; Samus X
-    dw $0AFA, $0086  ; Samus Y
-    dw #$FFFF
-
-preset_kpdr25_backtracking_green_pirate_shaft_revisit:
-    dw #preset_kpdr23_backtracking_green_pirate_shaft_revisit
-    dw $09C2, $01AE  ; Health
+preset_kpdr25_tourian_metroids_2:
+    dw #preset_kpdr23_tourian_metroids_2
+    dw $09C2, $01C5  ; Health
     dw $09C4, $0257  ; Max health
-    dw $09C6, $000D  ; Missiles
+    dw $09C6, $000F  ; Missiles
     dw $09C8, $0019  ; Max missiles
+    dw $09CA, $0007  ; Supers
     dw $0AF8, $7FFF  ; Samus subpixel X
     dw $0AFC, $B7FF  ; Samus subpixel Y
     dw $D870, $0190  ; Items
@@ -43555,43 +43776,32 @@ preset_kpdr25_backtracking_green_pirate_shaft_revisit:
     dw $D8BA, $DDF1  ; Doors
     dw #$FFFF
 
-preset_kpdr25_backtracking_g4_hallway:
-    dw #preset_kpdr23_backtracking_g4_hallway
-    dw $09C2, $01AE  ; Health
-    dw $09C4, $0257  ; Max health
-    dw $09C6, $000D  ; Missiles
-    dw $09C8, $0019  ; Max missiles
-    dw $0AF8, $7FFF  ; Samus subpixel X
-    dw $0AFC, $B7FF  ; Samus subpixel Y
-    dw $D870, $0190  ; Items
-    dw $D878, $401C  ; Items
-    dw $D8BA, $DDF1  ; Doors
+preset_kpdr_lower_norfair_wasteland_revisit:
+    dw #preset_kpdr_lower_norfair_reverse_plowerhouse
+    dw $078D, $9966  ; DDB
+    dw $079B, $B62B  ; MDB
+    dw $090F, $9000  ; Screen subpixel X position
+    dw $0913, $7400  ; Screen subpixel Y position
+    dw $09C2, $0089  ; Health
+    dw $0AF6, $02DC  ; Samus X
+    dw $11F6, $FF92  ; Safeties refill
+    dw $11F8, $FFDB  ; Safeties refill
     dw #$FFFF
 
-preset_kpdr25_backtracking_g4_elevator:
-    dw #preset_kpdr23_backtracking_g4_elevator
-    dw $09C2, $01AE  ; Health
-    dw $09C4, $0257  ; Max health
-    dw $09C6, $000D  ; Missiles
-    dw $09C8, $0019  ; Max missiles
-    dw $0AF8, $7FFF  ; Samus subpixel X
-    dw $0AFC, $B7FF  ; Samus subpixel Y
-    dw $D870, $0190  ; Items
-    dw $D878, $401C  ; Items
-    dw $D8BA, $DDF1  ; Doors
-    dw #$FFFF
-
-preset_kpdr25_tourian_tourian_elevator_room:
-    dw #preset_kpdr23_tourian_tourian_elevator_room
-    dw $09C2, $01AE  ; Health
-    dw $09C4, $0257  ; Max health
-    dw $09C6, $000D  ; Missiles
-    dw $09C8, $0019  ; Max missiles
-    dw $0AF8, $7FFF  ; Samus subpixel X
-    dw $0AFC, $B7FF  ; Samus subpixel Y
-    dw $D870, $0190  ; Items
-    dw $D878, $401C  ; Items
-    dw $D8BA, $DDF1  ; Doors
+preset_kpdr_lower_norfair_kihunter_stairs_up:
+    dw #preset_kpdr_lower_norfair_reverse_plowerhouse
+    dw $078D, $9A3E  ; DDB
+    dw $079B, $B5D5  ; MDB
+    dw $090F, $D5FF  ; Screen subpixel X position
+    dw $0911, $0500  ; Screen X position in pixels
+    dw $0913, $B000  ; Screen subpixel Y position
+    dw $0917, $03C0  ; Layer 2 X position
+    dw $09C2, $0087  ; Health
+    dw $09CE, $0002  ; Pbs
+    dw $0AF6, $055B  ; Samus X
+    dw $0AFA, $009B  ; Samus Y
+    dw $11F6, $FF90  ; Safeties refill
+    dw $11F8, $FFD9  ; Safeties refill
     dw #$FFFF
 
 preset_suitless_ridley_amphitheatre:
@@ -43684,76 +43894,22 @@ preset_gtmax_brinstar_cleanup_leaving_spore_spawn_supers:
     dw $D8B6, $78F8  ; Doors
     dw #$FFFF
 
-preset_kpdr23_tourian_metroids_2:
-    dw #preset_kpdr23_tourian_metroids_1
-    dw $078D, $A984  ; DDB
-    dw $079B, $DAE1  ; MDB
-    dw $090F, $7000  ; Screen subpixel X position
-    dw $0913, $5000  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $09C2, $0150  ; Health
-    dw $09C6, $0014  ; Missiles
-    dw $09CA, $0009  ; Supers
-    dw $09CE, $0002  ; Pbs
-    dw $0AF6, $003B  ; Samus X
-    dw $0AFA, $008B  ; Samus Y
-    dw $D822, $0021  ; Events
-    dw $D8C4, $0001  ; Doors
-    dw #$FFFF
-
-preset_kpdr_lower_norfair_plowerhouse:
-    dw #preset_kpdr_lower_norfair_metal_ninja_pirates
-    dw $078D, $9A1A  ; DDB
-    dw $079B, $B62B  ; MDB
-    dw $090F, $7000  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $CC00  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0917, $0000  ; Layer 2 X position
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $09C2, $00F7  ; Health
-    dw $09CA, $0009  ; Supers
-    dw $0AF6, $006A  ; Samus X
-    dw $0AFA, $00BB  ; Samus Y
-    dw $11F6, $0001  ; Safeties refill
-    dw $D8BC, $0001  ; Doors
-    dw #$FFFF
-
-preset_kpdr20_backtracking_crateria_kihunters_final:
-    dw #preset_kpdr21_backtracking_crateria_kihunters_final
-    dw $09C6, $000C  ; Missiles
+preset_kpdr20_backtracking_g4_elevator:
+    dw #preset_kpdr21_backtracking_g4_elevator
+    dw $09C6, $000D  ; Missiles
     dw $09C8, $000F  ; Max missiles
     dw $D878, $0014  ; Items
     dw #$FFFF
 
-preset_kpdr20_backtracking_parlor_spacejump:
-    dw #preset_kpdr21_backtracking_parlor_spacejump
-    dw $09C6, $000B  ; Missiles
+preset_kpdr20_tourian_tourian_elevator_room:
+    dw #preset_kpdr21_tourian_tourian_elevator_room
+    dw $09C6, $000D  ; Missiles
     dw $09C8, $000F  ; Max missiles
     dw $D878, $0014  ; Items
     dw #$FFFF
 
-preset_kpdr21_backtracking_terminator_revisit:
-    dw #preset_kpdr22_backtracking_terminator_revisit
-    dw $09C2, $0088  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0104  ; Items
-    dw $D8B6, $3008  ; Doors
-    dw $D8B8, $2EED  ; Doors
-    dw #$FFFF
-
-preset_kpdr21_backtracking_green_pirate_shaft_revisit:
-    dw #preset_kpdr22_backtracking_green_pirate_shaft_revisit
-    dw $09C2, $0088  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0104  ; Items
-    dw $D8B6, $3008  ; Doors
-    dw $D8B8, $2EED  ; Doors
-    dw #$FFFF
-
-preset_kpdr21_backtracking_g4_hallway:
-    dw #preset_kpdr22_backtracking_g4_hallway
+preset_kpdr21_tourian_metroids_1:
+    dw #preset_kpdr22_tourian_metroids_1
     dw $09C2, $00B0  ; Health
     dw $09C4, $018F  ; Max health
     dw $D874, $0104  ; Items
@@ -43761,39 +43917,100 @@ preset_kpdr21_backtracking_g4_hallway:
     dw $D8B8, $2EED  ; Doors
     dw #$FFFF
 
-preset_kpdr21_backtracking_g4_elevator:
-    dw #preset_kpdr22_backtracking_g4_elevator
-    dw $09C2, $00B0  ; Health
+preset_kpdr21_tourian_metroids_2:
+    dw #preset_kpdr22_tourian_metroids_2
+    dw $09C2, $00EC  ; Health
     dw $09C4, $018F  ; Max health
     dw $D874, $0104  ; Items
     dw $D8B6, $3008  ; Doors
     dw $D8B8, $2EED  ; Doors
     dw #$FFFF
 
-preset_kpdr21_tourian_tourian_elevator_room:
-    dw #preset_kpdr22_tourian_tourian_elevator_room
-    dw $09C2, $00B0  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0104  ; Items
-    dw $D8B6, $3008  ; Doors
-    dw $D8B8, $2EED  ; Doors
-    dw #$FFFF
-
-preset_kpdr22_tourian_metroids_1:
-    dw #preset_kpdr23_tourian_metroids_1
+preset_kpdr22_tourian_metroids_3:
+    dw #preset_kpdr23_tourian_metroids_3
     dw $09A8, $100B  ; Collected Beams
     dw #$FFFF
 
-preset_kpdr25_tourian_metroids_1:
-    dw #preset_kpdr25_tourian_tourian_elevator_room
-    dw $090F, $8000  ; Screen subpixel X position
-    dw $0913, $F7FF  ; Screen subpixel Y position
-    dw $0915, $0300  ; Screen Y position in pixels
-    dw $0919, $0240  ; Layer 2 Y position
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $0040  ; Samus X
-    dw $0AFA, $038B  ; Samus Y
+preset_kpdr25_tourian_metroids_3:
+    dw #preset_kpdr23_tourian_metroids_3
+    dw $09C2, $0210  ; Health
+    dw $09C4, $0257  ; Max health
+    dw $09C6, $0015  ; Missiles
+    dw $09C8, $0019  ; Max missiles
+    dw $0AF8, $7FFF  ; Samus subpixel X
+    dw $0AFC, $B7FF  ; Samus subpixel Y
+    dw $D870, $0190  ; Items
+    dw $D878, $401C  ; Items
+    dw $D8BA, $DDF1  ; Doors
+    dw #$FFFF
+
+preset_kpdr23_tourian_giant_hoppers:
+    dw #preset_kpdr23_tourian_metroids_3
+    dw $078D, $A9E4  ; DDB
+    dw $079B, $DBCD  ; MDB
+    dw $090F, $1000  ; Screen subpixel X position
+    dw $0913, $4C00  ; Screen subpixel Y position
+    dw $0915, $011F  ; Screen Y position in pixels
+    dw $0919, $00D7  ; Layer 2 Y position
+    dw $09C2, $01F3  ; Health
+    dw $09CA, $000A  ; Supers
+    dw $09CE, $0005  ; Pbs
+    dw $0AF6, $0058  ; Samus X
+    dw $0AFA, $01CB  ; Samus Y
+    dw $D822, $002F  ; Events
+    dw $D8C4, $000F  ; Doors
+    dw #$FFFF
+
+preset_kpdr23_tourian_baby_skip:
+    dw #preset_kpdr23_tourian_metroids_2
+    dw $078D, $AA14  ; DDB
+    dw $079B, $DC65  ; MDB
+    dw $07F3, $0045  ; Music Bank
+    dw $07F5, $0006  ; Music Track
+    dw $090F, $3000  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $1800  ; Screen subpixel Y position
+    dw $0917, $00C0  ; Layer 2 X position
+    dw $09C2, $01D5  ; Health
+    dw $09CA, $000A  ; Supers
+    dw $09CE, $0005  ; Pbs
+    dw $0AF6, $01D8  ; Samus X
+    dw $0AFA, $00AB  ; Samus Y
+    dw $D822, $002F  ; Events
+    dw $D8C4, $000F  ; Doors
+    dw #$FFFF
+
+preset_kpdr22_tourian_metroids_4:
+    dw #preset_kpdr23_tourian_metroids_4
+    dw $09A8, $100B  ; Collected Beams
+    dw #$FFFF
+
+preset_kpdr25_tourian_metroids_4:
+    dw #preset_kpdr23_tourian_metroids_4
+    dw $09C2, $0257  ; Health
+    dw $09C4, $0257  ; Max health
+    dw $09C6, $0019  ; Missiles
+    dw $09C8, $0019  ; Max missiles
+    dw $09CA, $0008  ; Supers
+    dw $0AF8, $7FFF  ; Samus subpixel X
+    dw $0AFC, $B7FF  ; Samus subpixel Y
+    dw $D870, $0190  ; Items
+    dw $D878, $401C  ; Items
+    dw $D8BA, $DDF1  ; Doors
+    dw #$FFFF
+
+preset_kpdr_lower_norfair_fireflea_room:
+    dw #preset_kpdr_lower_norfair_kihunter_stairs_up
+    dw $078D, $9A26  ; DDB
+    dw $079B, $B585  ; MDB
+    dw $090F, $D000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $2800  ; Screen subpixel Y position
+    dw $0915, $000D  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $0009  ; Layer 2 Y position
+    dw $0AF6, $009C  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 
 preset_suitless_ridley_firefleas:
@@ -43881,18 +44098,40 @@ preset_gtmax_brinstar_cleanup_waterway_etank:
     dw $D8B4, $8B46  ; Doors
     dw #$FFFF
 
-preset_kpdr22_tourian_metroids_2:
-    dw #preset_kpdr23_tourian_metroids_2
+preset_kpdr20_tourian_metroids_1:
+    dw #preset_kpdr21_tourian_metroids_1
+    dw $09C6, $000D  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr20_tourian_metroids_2:
+    dw #preset_kpdr21_tourian_metroids_2
+    dw $09C6, $000F  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr21_tourian_metroids_3:
+    dw #preset_kpdr22_tourian_metroids_3
+    dw $09C2, $0164  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $D874, $0104  ; Items
+    dw $D8B6, $3008  ; Doors
+    dw $D8B8, $2EED  ; Doors
+    dw #$FFFF
+
+preset_kpdr22_tourian_giant_hoppers:
+    dw #preset_kpdr23_tourian_giant_hoppers
     dw $09A8, $100B  ; Collected Beams
     dw #$FFFF
 
-preset_kpdr25_tourian_metroids_2:
-    dw #preset_kpdr23_tourian_metroids_2
-    dw $09C2, $01C5  ; Health
+preset_kpdr25_tourian_giant_hoppers:
+    dw #preset_kpdr23_tourian_giant_hoppers
+    dw $09C2, $0257  ; Health
     dw $09C4, $0257  ; Max health
-    dw $09C6, $000F  ; Missiles
+    dw $09C6, $0019  ; Missiles
     dw $09C8, $0019  ; Max missiles
-    dw $09CA, $0007  ; Supers
     dw $0AF8, $7FFF  ; Samus subpixel X
     dw $0AFC, $B7FF  ; Samus subpixel Y
     dw $D870, $0190  ; Items
@@ -43900,118 +44139,74 @@ preset_kpdr25_tourian_metroids_2:
     dw $D8BA, $DDF1  ; Doors
     dw #$FFFF
 
-preset_kpdr23_tourian_metroids_3:
-    dw #preset_kpdr23_tourian_metroids_2
-    dw $078D, $A9B4  ; DDB
-    dw $079B, $DB31  ; MDB
-    dw $090F, $9000  ; Screen subpixel X position
-    dw $0913, $1000  ; Screen subpixel Y position
-    dw $0915, $0109  ; Screen Y position in pixels
-    dw $0919, $00C6  ; Layer 2 Y position
-    dw $09C2, $01C8  ; Health
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $00C2  ; Samus X
+preset_kpdr23_tourian_gadora_room:
+    dw #preset_kpdr23_tourian_giant_hoppers
+    dw $078D, $AA44  ; DDB
+    dw $079B, $DCFF  ; MDB
+    dw $0913, $B800  ; Screen subpixel Y position
+    dw $0915, $0117  ; Screen Y position in pixels
+    dw $0919, $00D1  ; Layer 2 Y position
+    dw $09C2, $01D5  ; Health
+    dw $09CA, $0009  ; Supers
+    dw $0AF6, $00DC  ; Samus X
     dw $0AFA, $018B  ; Samus Y
-    dw $D822, $0023  ; Events
-    dw $D8C4, $0003  ; Doors
+    dw $D8C4, $00AF  ; Doors
     dw #$FFFF
 
-preset_kpdr23_tourian_metroids_4:
-    dw #preset_kpdr23_tourian_metroids_2
-    dw $078D, $A9CC  ; DDB
-    dw $079B, $DB7D  ; MDB
-    dw $090F, $C000  ; Screen subpixel X position
-    dw $0911, $0500  ; Screen X position in pixels
-    dw $0913, $0400  ; Screen subpixel Y position
-    dw $0917, $03C0  ; Layer 2 X position
-    dw $09C2, $01F3  ; Health
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $059E  ; Samus X
-    dw $D822, $0027  ; Events
-    dw $D8C4, $0007  ; Doors
+preset_kpdr22_tourian_baby_skip:
+    dw #preset_kpdr23_tourian_baby_skip
+    dw $09A8, $100B  ; Collected Beams
     dw #$FFFF
 
-preset_kpdr_lower_norfair_ridley:
-    dw #preset_kpdr_lower_norfair_plowerhouse
-    dw $078D, $995A  ; DDB
-    dw $079B, $B37A  ; MDB
-    dw $090F, $2000  ; Screen subpixel X position
-    dw $0913, $5000  ; Screen subpixel Y position
-    dw $09C2, $00B8  ; Health
-    dw $09CA, $0008  ; Supers
-    dw $0AF6, $003D  ; Samus X
-    dw $0AFA, $009B  ; Samus Y
-    dw $0F7A, $0B7E  ; Safeties enabled
-    dw $10B4, $0000  ; Safeties power bombs adjustment
-    dw $11F6, $FFC1  ; Safeties refill
-    dw $D8BA, $D1F1  ; Doors
+preset_kpdr25_tourian_baby_skip:
+    dw #preset_kpdr23_tourian_baby_skip
+    dw $09C2, $0239  ; Health
+    dw $09C4, $0257  ; Max health
+    dw $09C6, $0019  ; Missiles
+    dw $09C8, $0019  ; Max missiles
+    dw $0AF8, $7FFF  ; Samus subpixel X
+    dw $0AFC, $B7FF  ; Samus subpixel Y
+    dw $D870, $0190  ; Items
+    dw $D878, $401C  ; Items
+    dw $D8BA, $DDF1  ; Doors
     dw #$FFFF
 
-preset_kpdr_lower_norfair_leaving_ridley:
-    dw #preset_kpdr20_lower_norfair_leaving_ridley
-    dw $09C2, $00AE  ; Health
-    dw $0F78, $C23B  ; Safeties enabled
-    dw $0F7A, $1B7E  ; Safeties enabled
-    dw $0FA6, $0046  ; Safeties energy adjustment
-    dw $0FA8, $0028  ; Safeties energy adjustment
-    dw $0FAA, $0070  ; Safeties energy adjustment
-    dw $0FAC, $002B  ; Safeties energy adjustment
-    dw $0FB2, $004A  ; Safeties energy adjustment
-    dw $1118, $0004  ; Safeties unequip beams
-    dw $1120, $0004  ; Safeties unequip beams
-    dw $1180, $0006  ; Safeties stage
-    dw $11F6, $FFB7  ; Safeties refill
-    dw $11F8, $0001  ; Safeties refill
-    dw $D876, $0125  ; Items
-    dw $D878, $001C  ; Items
-    dw $D8B0, $3000  ; Doors
-    dw $D8B8, $2EEC  ; Doors
-    dw #$FFFF
-
-preset_kpdr20_backtracking_terminator_revisit:
-    dw #preset_kpdr21_backtracking_terminator_revisit
-    dw $09C6, $000B  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr20_backtracking_green_pirate_shaft_revisit:
-    dw #preset_kpdr21_backtracking_green_pirate_shaft_revisit
-    dw $09C6, $000B  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr20_backtracking_g4_hallway:
-    dw #preset_kpdr21_backtracking_g4_hallway
-    dw $09C6, $000D  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr20_backtracking_g4_elevator:
-    dw #preset_kpdr21_backtracking_g4_elevator
-    dw $09C6, $000D  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr20_tourian_tourian_elevator_room:
-    dw #preset_kpdr21_tourian_tourian_elevator_room
-    dw $09C6, $000D  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr21_tourian_metroids_1:
-    dw #preset_kpdr22_tourian_metroids_1
-    dw $09C2, $00B0  ; Health
+preset_kpdr21_tourian_metroids_4:
+    dw #preset_kpdr22_tourian_metroids_4
+    dw $09C2, $018F  ; Health
     dw $09C4, $018F  ; Max health
     dw $D874, $0104  ; Items
     dw $D8B6, $3008  ; Doors
     dw $D8B8, $2EED  ; Doors
+    dw #$FFFF
+
+preset_kpdr_lower_norfair_springball_maze:
+    dw #preset_kpdr_lower_norfair_fireflea_room
+    dw $078D, $9A02  ; DDB
+    dw $079B, $B6EE  ; MDB
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $0001  ; Screen Y position in pixels
+    dw $0917, $0100  ; Layer 2 X position
+    dw $0919, $0001  ; Layer 2 Y position
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $016C  ; Samus X
+    dw #$FFFF
+
+preset_kpdr_lower_norfair_three_musketeers:
+    dw #preset_kpdr_lower_norfair_fireflea_room
+    dw $078D, $9A92  ; DDB
+    dw $079B, $B510  ; MDB
+    dw $090F, $5A81  ; Screen subpixel X position
+    dw $0913, $5000  ; Screen subpixel Y position
+    dw $0915, $0003  ; Screen Y position in pixels
+    dw $0919, $0002  ; Layer 2 Y position
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0060  ; Samus X
+    dw $1180, $0007  ; Safeties stage
     dw #$FFFF
 
 preset_suitless_ridley_wasteland:
@@ -44127,81 +44322,33 @@ preset_gtmax_blue_brinstar_cleanup_green_hill_zone_revisit:
     dw $D874, $1B8E  ; Items
     dw #$FFFF
 
-preset_kpdr21_tourian_metroids_2:
-    dw #preset_kpdr22_tourian_metroids_2
-    dw $09C2, $00EC  ; Health
+preset_kpdr20_tourian_metroids_3:
+    dw #preset_kpdr21_tourian_metroids_3
+    dw $09C6, $000F  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr21_tourian_giant_hoppers:
+    dw #preset_kpdr22_tourian_giant_hoppers
+    dw $09C2, $018F  ; Health
     dw $09C4, $018F  ; Max health
     dw $D874, $0104  ; Items
     dw $D8B6, $3008  ; Doors
     dw $D8B8, $2EED  ; Doors
     dw #$FFFF
 
-preset_kpdr22_tourian_metroids_3:
-    dw #preset_kpdr23_tourian_metroids_3
+preset_kpdr22_tourian_gadora_room:
+    dw #preset_kpdr23_tourian_gadora_room
     dw $09A8, $100B  ; Collected Beams
     dw #$FFFF
 
-preset_kpdr25_tourian_metroids_3:
-    dw #preset_kpdr23_tourian_metroids_3
-    dw $09C2, $0210  ; Health
-    dw $09C4, $0257  ; Max health
-    dw $09C6, $0015  ; Missiles
-    dw $09C8, $0019  ; Max missiles
-    dw $0AF8, $7FFF  ; Samus subpixel X
-    dw $0AFC, $B7FF  ; Samus subpixel Y
-    dw $D870, $0190  ; Items
-    dw $D878, $401C  ; Items
-    dw $D8BA, $DDF1  ; Doors
-    dw #$FFFF
-
-preset_kpdr23_tourian_giant_hoppers:
-    dw #preset_kpdr23_tourian_metroids_3
-    dw $078D, $A9E4  ; DDB
-    dw $079B, $DBCD  ; MDB
-    dw $090F, $1000  ; Screen subpixel X position
-    dw $0913, $4C00  ; Screen subpixel Y position
-    dw $0915, $011F  ; Screen Y position in pixels
-    dw $0919, $00D7  ; Layer 2 Y position
-    dw $09C2, $01F3  ; Health
-    dw $09CA, $000A  ; Supers
-    dw $09CE, $0005  ; Pbs
-    dw $0AF6, $0058  ; Samus X
-    dw $0AFA, $01CB  ; Samus Y
-    dw $D822, $002F  ; Events
-    dw $D8C4, $000F  ; Doors
-    dw #$FFFF
-
-preset_kpdr23_tourian_baby_skip:
-    dw #preset_kpdr23_tourian_metroids_2
-    dw $078D, $AA14  ; DDB
-    dw $079B, $DC65  ; MDB
-    dw $07F3, $0045  ; Music Bank
-    dw $07F5, $0006  ; Music Track
-    dw $090F, $3000  ; Screen subpixel X position
-    dw $0911, $0100  ; Screen X position in pixels
-    dw $0913, $1800  ; Screen subpixel Y position
-    dw $0917, $00C0  ; Layer 2 X position
-    dw $09C2, $01D5  ; Health
-    dw $09CA, $000A  ; Supers
-    dw $09CE, $0005  ; Pbs
-    dw $0AF6, $01D8  ; Samus X
-    dw $0AFA, $00AB  ; Samus Y
-    dw $D822, $002F  ; Events
-    dw $D8C4, $000F  ; Doors
-    dw #$FFFF
-
-preset_kpdr22_tourian_metroids_4:
-    dw #preset_kpdr23_tourian_metroids_4
-    dw $09A8, $100B  ; Collected Beams
-    dw #$FFFF
-
-preset_kpdr25_tourian_metroids_4:
-    dw #preset_kpdr23_tourian_metroids_4
-    dw $09C2, $0257  ; Health
+preset_kpdr25_tourian_gadora_room:
+    dw #preset_kpdr23_tourian_gadora_room
+    dw $09C2, $0239  ; Health
     dw $09C4, $0257  ; Max health
     dw $09C6, $0019  ; Missiles
     dw $09C8, $0019  ; Max missiles
-    dw $09CA, $0008  ; Supers
     dw $0AF8, $7FFF  ; Samus subpixel X
     dw $0AFC, $B7FF  ; Samus subpixel Y
     dw $D870, $0190  ; Items
@@ -44209,31 +44356,82 @@ preset_kpdr25_tourian_metroids_4:
     dw $D8BA, $DDF1  ; Doors
     dw #$FFFF
 
-preset_kpdr_lower_norfair_reverse_plowerhouse:
-    dw #preset_kpdr_lower_norfair_leaving_ridley
-    dw $078D, $98BE  ; DDB
-    dw $079B, $B37A  ; MDB
-    dw $07F3, $0018  ; Music Bank
-    dw $07F5, $0005  ; Music Track
-    dw $090F, $8000  ; Screen subpixel X position
-    dw $0911, $0200  ; Screen X position in pixels
-    dw $0913, $AC00  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0917, $0180  ; Layer 2 X position
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $09C2, $00AB  ; Health
-    dw $0AF6, $02B8  ; Samus X
-    dw $0AFA, $008B  ; Samus Y
-    dw $11F6, $FFB4  ; Safeties refill
-    dw $11F8, $FFFD  ; Safeties refill
-    dw $D8BA, $D5F1  ; Doors
+preset_kpdr23_tourian_zeb_skip:
+    dw #preset_kpdr23_tourian_gadora_room
+    dw $078D, $AAA4  ; DDB
+    dw $079B, $DDF3  ; MDB
+    dw $090F, $E000  ; Screen subpixel X position
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $021A  ; Screen Y position in pixels
+    dw $0919, $0193  ; Layer 2 Y position
+    dw $09CA, $0007  ; Supers
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0038  ; Samus X
+    dw $0AFA, $028B  ; Samus Y
+    dw $D8C4, $03AF  ; Doors
     dw #$FFFF
 
-preset_kpdr20_tourian_metroids_1:
-    dw #preset_kpdr21_tourian_metroids_1
-    dw $09C6, $000D  ; Missiles
+preset_kpdr21_tourian_baby_skip:
+    dw #preset_kpdr22_tourian_baby_skip
+    dw $09C2, $0171  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $D874, $0104  ; Items
+    dw $D8B6, $3008  ; Doors
+    dw $D8B8, $2EED  ; Doors
+    dw #$FFFF
+
+preset_kpdr20_tourian_metroids_4:
+    dw #preset_kpdr21_tourian_metroids_4
+    dw $09C6, $000F  ; Missiles
     dw $09C8, $000F  ; Max missiles
     dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr_lower_norfair_single_chamber_final:
+    dw #preset_kpdr_lower_norfair_three_musketeers
+    dw $078D, $99AE  ; DDB
+    dw $079B, $B656  ; MDB
+    dw $090F, $9000  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $E000  ; Screen subpixel Y position
+    dw $0917, $00C0  ; Layer 2 X position
+    dw $09C2, $0055  ; Health
+    dw $0AF6, $016E  ; Samus X
+    dw $11F6, $FF5E  ; Safeties refill
+    dw $11F8, $FFA7  ; Safeties refill
+    dw #$FFFF
+
+preset_kpdr_lower_norfair_bubble_mountain_final:
+    dw #preset_kpdr_lower_norfair_three_musketeers
+    dw $078D, $9A4A  ; DDB
+    dw $079B, $AD5E  ; MDB
+    dw $07F3, $0015  ; Music Bank
+    dw $090F, $8000  ; Screen subpixel X position
+    dw $0913, $A800  ; Screen subpixel Y position
+    dw $0915, $0016  ; Screen Y position in pixels
+    dw $0919, $0010  ; Layer 2 Y position
+    dw $09C2, $0049  ; Health
+    dw $09D2, $0001  ; Currently selected item
+    dw $0AF6, $0075  ; Samus X
+    dw $11F6, $FF52  ; Safeties refill
+    dw $11F8, $FF9B  ; Safeties refill
+    dw #$FFFF
+
+preset_kpdr_lower_norfair_business_center_final:
+    dw #preset_kpdr_lower_norfair_three_musketeers
+    dw $078D, $97DA  ; DDB
+    dw $079B, $B167  ; MDB
+    dw $07F3, $0015  ; Music Bank
+    dw $090F, $6000  ; Screen subpixel X position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09C2, $005D  ; Health
+    dw $09C6, $000C  ; Missiles
+    dw $09CE, $0001  ; Pbs
+    dw $0AF6, $0032  ; Samus X
+    dw $11F6, $FF66  ; Safeties refill
+    dw $11F8, $FFAF  ; Safeties refill
     dw #$FFFF
 
 preset_suitless_ridley_plowerhouse:
@@ -44400,61 +44598,29 @@ preset_gtmax_blue_brinstar_cleanup_blue_brinstar_hoppers:
     dw $D8B6, $78F9  ; Doors
     dw #$FFFF
 
-preset_kpdr20_tourian_metroids_2:
-    dw #preset_kpdr21_tourian_metroids_2
+preset_kpdr20_tourian_giant_hoppers:
+    dw #preset_kpdr21_tourian_giant_hoppers
     dw $09C6, $000F  ; Missiles
     dw $09C8, $000F  ; Max missiles
     dw $D878, $0014  ; Items
     dw #$FFFF
 
-preset_kpdr21_tourian_metroids_3:
-    dw #preset_kpdr22_tourian_metroids_3
-    dw $09C2, $0164  ; Health
+preset_kpdr21_tourian_gadora_room:
+    dw #preset_kpdr22_tourian_gadora_room
+    dw $09C2, $0171  ; Health
     dw $09C4, $018F  ; Max health
     dw $D874, $0104  ; Items
     dw $D8B6, $3008  ; Doors
     dw $D8B8, $2EED  ; Doors
     dw #$FFFF
 
-preset_kpdr22_tourian_giant_hoppers:
-    dw #preset_kpdr23_tourian_giant_hoppers
+preset_kpdr22_tourian_zeb_skip:
+    dw #preset_kpdr23_tourian_zeb_skip
     dw $09A8, $100B  ; Collected Beams
     dw #$FFFF
 
-preset_kpdr25_tourian_giant_hoppers:
-    dw #preset_kpdr23_tourian_giant_hoppers
-    dw $09C2, $0257  ; Health
-    dw $09C4, $0257  ; Max health
-    dw $09C6, $0019  ; Missiles
-    dw $09C8, $0019  ; Max missiles
-    dw $0AF8, $7FFF  ; Samus subpixel X
-    dw $0AFC, $B7FF  ; Samus subpixel Y
-    dw $D870, $0190  ; Items
-    dw $D878, $401C  ; Items
-    dw $D8BA, $DDF1  ; Doors
-    dw #$FFFF
-
-preset_kpdr23_tourian_gadora_room:
-    dw #preset_kpdr23_tourian_giant_hoppers
-    dw $078D, $AA44  ; DDB
-    dw $079B, $DCFF  ; MDB
-    dw $0913, $B800  ; Screen subpixel Y position
-    dw $0915, $0117  ; Screen Y position in pixels
-    dw $0919, $00D1  ; Layer 2 Y position
-    dw $09C2, $01D5  ; Health
-    dw $09CA, $0009  ; Supers
-    dw $0AF6, $00DC  ; Samus X
-    dw $0AFA, $018B  ; Samus Y
-    dw $D8C4, $00AF  ; Doors
-    dw #$FFFF
-
-preset_kpdr22_tourian_baby_skip:
-    dw #preset_kpdr23_tourian_baby_skip
-    dw $09A8, $100B  ; Collected Beams
-    dw #$FFFF
-
-preset_kpdr25_tourian_baby_skip:
-    dw #preset_kpdr23_tourian_baby_skip
+preset_kpdr25_tourian_zeb_skip:
+    dw #preset_kpdr23_tourian_zeb_skip
     dw $09C2, $0239  ; Health
     dw $09C4, $0257  ; Max health
     dw $09C6, $0019  ; Missiles
@@ -44466,25 +44632,83 @@ preset_kpdr25_tourian_baby_skip:
     dw $D8BA, $DDF1  ; Doors
     dw #$FFFF
 
-preset_kpdr21_tourian_metroids_4:
-    dw #preset_kpdr22_tourian_metroids_4
-    dw $09C2, $018F  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0104  ; Items
-    dw $D8B6, $3008  ; Doors
-    dw $D8B8, $2EED  ; Doors
+preset_kpdr23_tourian_mother_brain_2:
+    dw #preset_kpdr23_tourian_zeb_skip
+    dw $078D, $AAC8  ; DDB
+    dw $079B, $DD58  ; MDB
+    dw $07F3, $0021  ; Music Bank
+    dw $07F5, $0000  ; Music Track
+    dw $090F, $79FF  ; Screen subpixel X position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09C2, $01DA  ; Health
+    dw $09C6, $0005  ; Missiles
+    dw $09CA, $0000  ; Supers
+    dw $0AF6, $00CF  ; Samus X
+    dw $0AFA, $009B  ; Samus Y
+    dw $D820, $0FC5  ; Events
     dw #$FFFF
 
-preset_kpdr_lower_norfair_wasteland_revisit:
-    dw #preset_kpdr_lower_norfair_reverse_plowerhouse
-    dw $078D, $9966  ; DDB
-    dw $079B, $B62B  ; MDB
-    dw $090F, $9000  ; Screen subpixel X position
-    dw $0913, $7400  ; Screen subpixel Y position
-    dw $09C2, $0089  ; Health
-    dw $0AF6, $02DC  ; Samus X
-    dw $11F6, $FF92  ; Safeties refill
-    dw $11F8, $FFDB  ; Safeties refill
+preset_kpdr20_tourian_baby_skip:
+    dw #preset_kpdr21_tourian_baby_skip
+    dw $09C6, $000F  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr_backtracking_maridia_tube_revisit:
+    dw #preset_kpdr_lower_norfair_business_center_final
+    dw $078D, $92EE  ; DDB
+    dw $079B, $A6A1  ; MDB
+    dw $07F3, $0012  ; Music Bank
+    dw $07F5, $0003  ; Music Track
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0A1C, $009B  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
+    dw $0AF6, $0080  ; Samus X
+    dw $0AFA, $0086  ; Samus Y
+    dw #$FFFF
+
+preset_kpdr_backtracking_fish_tank_revisit:
+    dw #preset_kpdr_lower_norfair_business_center_final
+    dw $078D, $A330  ; DDB
+    dw $079B, $CFC9  ; MDB
+    dw $07F3, $001B  ; Music Bank
+    dw $07F5, $0006  ; Music Track
+    dw $0911, $00FA  ; Screen X position in pixels
+    dw $0915, $05F3  ; Screen Y position in pixels
+    dw $0917, $00BB  ; Layer 2 X position
+    dw $0919, $0476  ; Layer 2 Y position
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $0168  ; Samus X
+    dw $0AFA, $068B  ; Samus Y
+    dw #$FFFF
+
+preset_kpdr_backtracking_mt_everest_revisit:
+    dw #preset_kpdr_lower_norfair_business_center_final
+    dw $078D, $A3B4  ; DDB
+    dw $079B, $D017  ; MDB
+    dw $07F3, $001B  ; Music Bank
+    dw $07F5, $0006  ; Music Track
+    dw $090F, $E000  ; Screen subpixel X position
+    dw $0911, $0068  ; Screen X position in pixels
+    dw $0913, $0C00  ; Screen subpixel Y position
+    dw $0917, $004E  ; Layer 2 X position
+    dw $0AF6, $00C8  ; Samus X
+    dw $0AFA, $006B  ; Samus Y
+    dw #$FFFF
+
+preset_kpdr_backtracking_red_brinstar_green_gate:
+    dw #preset_kpdr_lower_norfair_business_center_final
+    dw $078D, $A42C  ; DDB
+    dw $079B, $D104  ; MDB
+    dw $07F3, $001B  ; Music Bank
+    dw $07F5, $0006  ; Music Track
+    dw $090F, $3801  ; Screen subpixel X position
+    dw $0913, $2000  ; Screen subpixel Y position
+    dw $09D2, $0002  ; Currently selected item
+    dw $0AF6, $0079  ; Samus X
     dw #$FFFF
 
 preset_suitless_ridley_preridley_room:
@@ -44592,11 +44816,41 @@ preset_gtmax_blue_brinstar_cleanup_billy_mays:
     dw $D8B6, $78FD  ; Doors
     dw #$FFFF
 
-preset_kpdr25_tourian_gadora_room:
-    dw #preset_kpdr23_tourian_gadora_room
-    dw $09C2, $0239  ; Health
+preset_kpdr20_tourian_gadora_room:
+    dw #preset_kpdr21_tourian_gadora_room
+    dw $09C6, $000F  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr21_tourian_zeb_skip:
+    dw #preset_kpdr22_tourian_zeb_skip
+    dw $09C2, $0171  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $D874, $0104  ; Items
+    dw $D8B6, $3008  ; Doors
+    dw $D8B8, $2EED  ; Doors
+    dw #$FFFF
+
+preset_kpdr22_tourian_mother_brain_2:
+    dw #preset_kpdr23_tourian_mother_brain_2
+    dw $09A8, $100B  ; Collected Beams
+    dw #$FFFF
+
+preset_kpdr23_tourian_mother_brain_3:
+    dw #preset_kpdr23_tourian_mother_brain_2
+    dw $09A6, $1009  ; Equipped Beams
+    dw $09C2, $01F3  ; Health
+    dw $09C6, $0000  ; Missiles
+    dw $09CE, $0000  ; Pbs
+    dw $0A76, $8000  ; Hyper beam
+    dw $D82C, $0203  ; Bosses
+    dw #$FFFF
+
+preset_kpdr25_tourian_mother_brain_2:
+    dw #preset_kpdr23_tourian_mother_brain_2
     dw $09C4, $0257  ; Max health
-    dw $09C6, $0019  ; Missiles
+    dw $09C6, $000A  ; Missiles
     dw $09C8, $0019  ; Max missiles
     dw $0AF8, $7FFF  ; Samus subpixel X
     dw $0AFC, $B7FF  ; Samus subpixel Y
@@ -44605,73 +44859,29 @@ preset_kpdr25_tourian_gadora_room:
     dw $D8BA, $DDF1  ; Doors
     dw #$FFFF
 
-preset_kpdr23_tourian_zeb_skip:
-    dw #preset_kpdr23_tourian_gadora_room
-    dw $078D, $AAA4  ; DDB
-    dw $079B, $DDF3  ; MDB
-    dw $090F, $E000  ; Screen subpixel X position
-    dw $0913, $0000  ; Screen subpixel Y position
-    dw $0915, $021A  ; Screen Y position in pixels
-    dw $0919, $0193  ; Layer 2 Y position
-    dw $09CA, $0007  ; Supers
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $0038  ; Samus X
-    dw $0AFA, $028B  ; Samus Y
-    dw $D8C4, $03AF  ; Doors
+preset_kpdr_backtracking_crateria_kihunters_final:
+    dw #preset_kpdr_backtracking_maridia_tube_revisit
+    dw $078D, $90BA  ; DDB
+    dw $079B, $962A  ; MDB
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $09CA, $0009  ; Supers
+    dw $0AFA, $00A8  ; Samus Y
     dw #$FFFF
 
-preset_kpdr_lower_norfair_kihunter_stairs_up:
-    dw #preset_kpdr_lower_norfair_reverse_plowerhouse
-    dw $078D, $9A3E  ; DDB
-    dw $079B, $B5D5  ; MDB
-    dw $090F, $D5FF  ; Screen subpixel X position
-    dw $0911, $0500  ; Screen X position in pixels
-    dw $0913, $B000  ; Screen subpixel Y position
-    dw $0917, $03C0  ; Layer 2 X position
-    dw $09C2, $0087  ; Health
-    dw $09CE, $0002  ; Pbs
-    dw $0AF6, $055B  ; Samus X
-    dw $0AFA, $009B  ; Samus Y
-    dw $11F6, $FF90  ; Safeties refill
-    dw $11F8, $FFD9  ; Safeties refill
-    dw #$FFFF
-
-preset_kpdr20_tourian_metroids_3:
-    dw #preset_kpdr21_tourian_metroids_3
-    dw $09C6, $000F  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr21_tourian_giant_hoppers:
-    dw #preset_kpdr22_tourian_giant_hoppers
-    dw $09C2, $018F  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0104  ; Items
-    dw $D8B6, $3008  ; Doors
-    dw $D8B8, $2EED  ; Doors
-    dw #$FFFF
-
-preset_kpdr22_tourian_gadora_room:
-    dw #preset_kpdr23_tourian_gadora_room
-    dw $09A8, $100B  ; Collected Beams
-    dw #$FFFF
-
-preset_kpdr21_tourian_baby_skip:
-    dw #preset_kpdr22_tourian_baby_skip
-    dw $09C2, $0171  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0104  ; Items
-    dw $D8B6, $3008  ; Doors
-    dw $D8B8, $2EED  ; Doors
-    dw #$FFFF
-
-preset_kpdr20_tourian_metroids_4:
-    dw #preset_kpdr21_tourian_metroids_4
-    dw $09C6, $000F  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
+preset_kpdr_backtracking_parlor_spacejump:
+    dw #preset_kpdr_lower_norfair_business_center_final
+    dw $078D, $8AC6  ; DDB
+    dw $079B, $91F8  ; MDB
+    dw $07F3, $000C  ; Music Bank
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $05DC  ; Screen X position in pixels
+    dw $0913, $CC00  ; Screen subpixel Y position
+    dw $0915, $0400  ; Screen Y position in pixels
+    dw $0917, $02EE  ; Layer 2 X position
+    dw $09C6, $000B  ; Missiles
+    dw $09CA, $0009  ; Supers
+    dw $0AF6, $067C  ; Samus X
+    dw $0AFA, $04BB  ; Samus Y
     dw #$FFFF
 
 preset_suitless_ridley_ridley:
@@ -44855,76 +45065,94 @@ preset_gtmax_blue_brinstar_cleanup_leaving_blue_brinstar:
     dw $D874, $1BBE  ; Items
     dw #$FFFF
 
-preset_kpdr22_tourian_zeb_skip:
-    dw #preset_kpdr23_tourian_zeb_skip
-    dw $09A8, $100B  ; Collected Beams
-    dw #$FFFF
-
-preset_kpdr25_tourian_zeb_skip:
-    dw #preset_kpdr23_tourian_zeb_skip
-    dw $09C2, $0239  ; Health
-    dw $09C4, $0257  ; Max health
-    dw $09C6, $0019  ; Missiles
-    dw $09C8, $0019  ; Max missiles
-    dw $0AF8, $7FFF  ; Samus subpixel X
-    dw $0AFC, $B7FF  ; Samus subpixel Y
-    dw $D870, $0190  ; Items
-    dw $D878, $401C  ; Items
-    dw $D8BA, $DDF1  ; Doors
-    dw #$FFFF
-
-preset_kpdr23_tourian_mother_brain_2:
-    dw #preset_kpdr23_tourian_zeb_skip
-    dw $078D, $AAC8  ; DDB
-    dw $079B, $DD58  ; MDB
-    dw $07F3, $0021  ; Music Bank
-    dw $07F5, $0000  ; Music Track
-    dw $090F, $79FF  ; Screen subpixel X position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $09C2, $01DA  ; Health
-    dw $09C6, $0005  ; Missiles
-    dw $09CA, $0000  ; Supers
-    dw $0AF6, $00CF  ; Samus X
-    dw $0AFA, $009B  ; Samus Y
-    dw $D820, $0FC5  ; Events
-    dw #$FFFF
-
-preset_kpdr_lower_norfair_fireflea_room:
-    dw #preset_kpdr_lower_norfair_kihunter_stairs_up
-    dw $078D, $9A26  ; DDB
-    dw $079B, $B585  ; MDB
-    dw $090F, $D000  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $2800  ; Screen subpixel Y position
-    dw $0915, $000D  ; Screen Y position in pixels
-    dw $0917, $0000  ; Layer 2 X position
-    dw $0919, $0009  ; Layer 2 Y position
-    dw $0AF6, $009C  ; Samus X
-    dw $0AFA, $008B  ; Samus Y
-    dw #$FFFF
-
-preset_kpdr20_tourian_giant_hoppers:
-    dw #preset_kpdr21_tourian_giant_hoppers
+preset_kpdr20_tourian_zeb_skip:
+    dw #preset_kpdr21_tourian_zeb_skip
     dw $09C6, $000F  ; Missiles
     dw $09C8, $000F  ; Max missiles
     dw $D878, $0014  ; Items
     dw #$FFFF
 
-preset_kpdr21_tourian_gadora_room:
-    dw #preset_kpdr22_tourian_gadora_room
-    dw $09C2, $0171  ; Health
+preset_kpdr21_tourian_mother_brain_2:
+    dw #preset_kpdr22_tourian_mother_brain_2
+    dw $09C2, $0176  ; Health
     dw $09C4, $018F  ; Max health
     dw $D874, $0104  ; Items
     dw $D8B6, $3008  ; Doors
     dw $D8B8, $2EED  ; Doors
     dw #$FFFF
 
-preset_kpdr20_tourian_baby_skip:
-    dw #preset_kpdr21_tourian_baby_skip
-    dw $09C6, $000F  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
+preset_kpdr22_tourian_mother_brain_3:
+    dw #preset_kpdr23_tourian_mother_brain_3
+    dw $09A8, $100B  ; Collected Beams
+    dw #$FFFF
+
+preset_kpdr23_tourian_zebes_escape:
+    dw #preset_kpdr23_tourian_mother_brain_3
+    dw $0A1C, $009B  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
+    dw $0AF6, $0025  ; Samus X
+    dw $0AFA, $009E  ; Samus Y
+    dw $D820, $4FC5  ; Events
+    dw #$FFFF
+
+preset_kpdr25_tourian_mother_brain_3:
+    dw #preset_kpdr25_tourian_mother_brain_2
+    dw $09A6, $1009  ; Equipped Beams
+    dw $09C2, $0257  ; Health
+    dw $09C6, $0000  ; Missiles
+    dw $09CE, $0000  ; Pbs
+    dw $0A76, $8000  ; Hyper beam
+    dw $D82C, $0203  ; Bosses
+    dw #$FFFF
+
+preset_kpdr_backtracking_terminator_revisit:
+    dw #preset_kpdr_backtracking_parlor_spacejump
+    dw $078D, $8916  ; DDB
+    dw $079B, $92FD  ; MDB
+    dw $07F3, $0009  ; Music Bank
+    dw $090F, $4000  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $B400  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $00C0  ; Layer 2 X position
+    dw $0A1C, $001C  ; Samus position/state
+    dw $0A1E, $0304  ; More position/state
+    dw $0AF6, $0101  ; Samus X
+    dw $0AFA, $0086  ; Samus Y
+    dw #$FFFF
+
+preset_kpdr_backtracking_green_pirate_shaft_revisit:
+    dw #preset_kpdr_backtracking_parlor_spacejump
+    dw $078D, $895E  ; DDB
+    dw $079B, $990D  ; MDB
+    dw $07F3, $0009  ; Music Bank
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $0800  ; Screen subpixel Y position
+    dw $0915, $0200  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $0180  ; Layer 2 Y position
+    dw $0AF6, $0073  ; Samus X
+    dw $0AFA, $029B  ; Samus Y
+    dw #$FFFF
+
+preset_kpdr_backtracking_g4_hallway:
+    dw #preset_kpdr20_backtracking_g4_hallway
+    dw $09C2, $0085  ; Health
+    dw $0F78, $C23B  ; Safeties enabled
+    dw $0F7A, $1B7E  ; Safeties enabled
+    dw $0FA6, $0022  ; Safeties energy adjustment
+    dw $0FAA, $004C  ; Safeties energy adjustment
+    dw $0FAC, $002B  ; Safeties energy adjustment
+    dw $0FB2, $000E  ; Safeties energy adjustment
+    dw $1118, $0004  ; Safeties unequip beams
+    dw $1120, $0004  ; Safeties unequip beams
+    dw $1180, $0007  ; Safeties stage
+    dw $11F6, $FF8E  ; Safeties refill
+    dw $11F8, $FFD7  ; Safeties refill
+    dw $D876, $0125  ; Items
+    dw $D878, $001C  ; Items
+    dw $D8B0, $3000  ; Doors
+    dw $D8B8, $2EEC  ; Doors
     dw #$FFFF
 
 preset_suitless_norfair_cleanup_reverse_plowerhouse:
@@ -44987,76 +45215,85 @@ preset_gtmax_blue_brinstar_cleanup_climb_supers:
     dw $D8B2, $2C09  ; Doors
     dw #$FFFF
 
-preset_kpdr21_tourian_zeb_skip:
-    dw #preset_kpdr22_tourian_zeb_skip
-    dw $09C2, $0171  ; Health
+preset_kpdr20_tourian_mother_brain_2:
+    dw #preset_kpdr21_tourian_mother_brain_2
+    dw $09C6, $0000  ; Missiles
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr21_tourian_mother_brain_3:
+    dw #preset_kpdr22_tourian_mother_brain_3
+    dw $09C2, $018F  ; Health
     dw $09C4, $018F  ; Max health
     dw $D874, $0104  ; Items
     dw $D8B6, $3008  ; Doors
     dw $D8B8, $2EED  ; Doors
     dw #$FFFF
 
-preset_kpdr22_tourian_mother_brain_2:
-    dw #preset_kpdr23_tourian_mother_brain_2
+preset_kpdr22_tourian_zebes_escape:
+    dw #preset_kpdr23_tourian_zebes_escape
     dw $09A8, $100B  ; Collected Beams
     dw #$FFFF
 
-preset_kpdr23_tourian_mother_brain_3:
-    dw #preset_kpdr23_tourian_mother_brain_2
-    dw $09A6, $1009  ; Equipped Beams
-    dw $09C2, $01F3  ; Health
-    dw $09C6, $0000  ; Missiles
-    dw $09CE, $0000  ; Pbs
-    dw $0A76, $8000  ; Hyper beam
-    dw $D82C, $0203  ; Bosses
+preset_kpdr23_tourian_escape_room_3:
+    dw #preset_kpdr23_tourian_zebes_escape
+    dw $078D, $AAEC  ; DDB
+    dw $079B, $DE7A  ; MDB
+    dw $07F3, $0024  ; Music Bank
+    dw $07F5, $0007  ; Music Track
+    dw $090F, $1000  ; Screen subpixel X position
+    dw $0913, $2800  ; Screen subpixel Y position
+    dw $0915, $0100  ; Screen Y position in pixels
+    dw $0919, $00C0  ; Layer 2 Y position
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $00DF  ; Samus X
+    dw $0AFA, $018B  ; Samus Y
     dw #$FFFF
 
-preset_kpdr25_tourian_mother_brain_2:
-    dw #preset_kpdr23_tourian_mother_brain_2
-    dw $09C4, $0257  ; Max health
-    dw $09C6, $000A  ; Missiles
-    dw $09C8, $0019  ; Max missiles
-    dw $0AF8, $7FFF  ; Samus subpixel X
-    dw $0AFC, $B7FF  ; Samus subpixel Y
-    dw $D870, $0190  ; Items
-    dw $D878, $401C  ; Items
-    dw $D8BA, $DDF1  ; Doors
+preset_kpdr25_tourian_zebes_escape:
+    dw #preset_kpdr25_tourian_mother_brain_3
+    dw $0A1C, $009B  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
+    dw $0AF6, $0025  ; Samus X
+    dw $0AFA, $009E  ; Samus Y
+    dw $D820, $4FC5  ; Events
     dw #$FFFF
 
-preset_kpdr_lower_norfair_springball_maze:
-    dw #preset_kpdr_lower_norfair_fireflea_room
-    dw $078D, $9A02  ; DDB
-    dw $079B, $B6EE  ; MDB
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $0911, $0100  ; Screen X position in pixels
+preset_kpdr_backtracking_g4_elevator:
+    dw #preset_kpdr_backtracking_g4_hallway
+    dw $078D, $91F2  ; DDB
+    dw $079B, $A66A  ; MDB
+    dw $07F5, $0006  ; Music Track
+    dw $090F, $7000  ; Screen subpixel X position
+    dw $0913, $7000  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0049  ; Samus X
+    dw $0AFA, $009B  ; Samus Y
+    dw $D820, $0BC1  ; Events
+    dw #$FFFF
+
+preset_kpdr_tourian_tourian_elevator_room:
+    dw #preset_kpdr_backtracking_g4_hallway
+    dw $078D, $9222  ; DDB
+    dw $079B, $DAAE  ; MDB
+    dw $07F3, $001E  ; Music Bank
+    dw $090F, $9FFF  ; Screen subpixel X position
     dw $0913, $0000  ; Screen subpixel Y position
-    dw $0915, $0001  ; Screen Y position in pixels
-    dw $0917, $0100  ; Layer 2 X position
-    dw $0919, $0001  ; Layer 2 Y position
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $016C  ; Samus X
-    dw #$FFFF
-
-preset_kpdr_lower_norfair_three_musketeers:
-    dw #preset_kpdr_lower_norfair_fireflea_room
-    dw $078D, $9A92  ; DDB
-    dw $079B, $B510  ; MDB
-    dw $090F, $5A81  ; Screen subpixel X position
-    dw $0913, $5000  ; Screen subpixel Y position
-    dw $0915, $0003  ; Screen Y position in pixels
-    dw $0919, $0002  ; Layer 2 Y position
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $0060  ; Samus X
-    dw $1180, $0007  ; Safeties stage
-    dw #$FFFF
-
-preset_kpdr20_tourian_gadora_room:
-    dw #preset_kpdr21_tourian_gadora_room
-    dw $09C6, $000F  ; Missiles
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
+    dw $0915, $0238  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $01AA  ; Layer 2 Y position
+    dw $0A1C, $009B  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
+    dw $0AF6, $0080  ; Samus X
+    dw $0AFA, $02A8  ; Samus Y
+    dw $D820, $0FC1  ; Events
+    dw $D90C, $0100  ; Map Stations
     dw #$FFFF
 
 preset_suitless_norfair_cleanup_reverse_metal_pirates:
@@ -45136,60 +45373,112 @@ preset_gtmax_blue_brinstar_cleanup_to_final_missiles:
     dw $D870, $EEFD  ; Items
     dw #$FFFF
 
-preset_kpdr20_tourian_zeb_skip:
-    dw #preset_kpdr21_tourian_zeb_skip
-    dw $09C6, $000F  ; Missiles
+preset_kpdr20_tourian_mother_brain_3:
+    dw #preset_kpdr21_tourian_mother_brain_3
     dw $09C8, $000F  ; Max missiles
     dw $D878, $0014  ; Items
     dw #$FFFF
 
-preset_kpdr21_tourian_mother_brain_2:
-    dw #preset_kpdr22_tourian_mother_brain_2
-    dw $09C2, $0176  ; Health
+preset_kpdr21_tourian_zebes_escape:
+    dw #preset_kpdr22_tourian_zebes_escape
+    dw $09C2, $018F  ; Health
     dw $09C4, $018F  ; Max health
     dw $D874, $0104  ; Items
     dw $D8B6, $3008  ; Doors
     dw $D8B8, $2EED  ; Doors
     dw #$FFFF
 
-preset_kpdr22_tourian_mother_brain_3:
-    dw #preset_kpdr23_tourian_mother_brain_3
+preset_kpdr22_tourian_escape_room_3:
+    dw #preset_kpdr23_tourian_escape_room_3
     dw $09A8, $100B  ; Collected Beams
     dw #$FFFF
 
-preset_kpdr23_tourian_zebes_escape:
+preset_kpdr25_tourian_escape_room_3:
+    dw #preset_kpdr23_tourian_escape_room_3
+    dw $09C2, $0257  ; Health
+    dw $09C4, $0257  ; Max health
+    dw $09C8, $0019  ; Max missiles
+    dw $0AF8, $7FFF  ; Samus subpixel X
+    dw $0AFC, $B7FF  ; Samus subpixel Y
+    dw $D870, $0190  ; Items
+    dw $D878, $401C  ; Items
+    dw $D8BA, $DDF1  ; Doors
+    dw #$FFFF
+
+preset_kpdr23_tourian_escape_room_4:
+    dw #preset_kpdr23_tourian_escape_room_3
+    dw $078D, $AB04  ; DDB
+    dw $079B, $DEA7  ; MDB
+    dw $090F, $3000  ; Screen subpixel X position
+    dw $0911, $0500  ; Screen X position in pixels
+    dw $0913, $4C00  ; Screen subpixel Y position
+    dw $0915, $001C  ; Screen Y position in pixels
+    dw $0917, $03C0  ; Layer 2 X position
+    dw $0919, $0015  ; Layer 2 Y position
+    dw $0AF6, $05D6  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw #$FFFF
+
+preset_kpdr23_tourian_escape_climb:
+    dw #preset_kpdr23_tourian_escape_room_3
+    dw $078D, $AB1C  ; DDB
+    dw $079B, $DEDE  ; MDB
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $00F1  ; Screen X position in pixels
+    dw $0913, $A400  ; Screen subpixel Y position
+    dw $0915, $00FB  ; Screen Y position in pixels
+    dw $0917, $00B4  ; Layer 2 X position
+    dw $0919, $00BC  ; Layer 2 Y position
+    dw $09C2, $01D5  ; Health
+    dw $0AF6, $0151  ; Samus X
+    dw #$FFFF
+
+preset_kpdr23_tourian_escape_parlor:
     dw #preset_kpdr23_tourian_mother_brain_3
-    dw $0A1C, $009B  ; Samus position/state
-    dw $0A1E, $0000  ; More position/state
-    dw $0AF6, $0025  ; Samus X
-    dw $0AFA, $009E  ; Samus Y
+    dw $078D, $AB34  ; DDB
+    dw $079B, $96BA  ; MDB
+    dw $07F3, $0024  ; Music Bank
+    dw $07F5, $0007  ; Music Track
+    dw $090F, $BFFF  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $6801  ; Screen subpixel Y position
+    dw $0917, $00C0  ; Layer 2 X position
+    dw $09C2, $0142  ; Health
+    dw $0AF6, $01DA  ; Samus X
+    dw $0AFA, $004B  ; Samus Y
     dw $D820, $4FC5  ; Events
     dw #$FFFF
 
-preset_kpdr23_tourian_escape_room_3:
-    dw #preset_pkrd_tourian_escape_room_3
-    dw $090F, $1000  ; Screen subpixel X position
-    dw $0913, $2800  ; Screen subpixel Y position
-    dw $09A2, $3325  ; Equipped Items
-    dw $09A4, $3325  ; Collected Items
-    dw $09A8, $100F  ; Collected Beams
-    dw $09C2, $01F3  ; Health
-    dw $0AF8, $0000  ; Samus subpixel X
-    dw $D870, $0180  ; Items
-    dw $D876, $01A5  ; Items
-    dw $D880, $80A0  ; Items
-    dw $D882, $0500  ; Items
-    dw $D8C2, $DC1A  ; Doors
+preset_kpdr_tourian_metroids_1:
+    dw #preset_kpdr_tourian_tourian_elevator_room
+    dw $090F, $8000  ; Screen subpixel X position
+    dw $0913, $F7FF  ; Screen subpixel Y position
+    dw $0915, $0300  ; Screen Y position in pixels
+    dw $0919, $0240  ; Layer 2 Y position
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0040  ; Samus X
+    dw $0AFA, $038B  ; Samus Y
     dw #$FFFF
 
-preset_kpdr25_tourian_mother_brain_3:
-    dw #preset_kpdr25_tourian_mother_brain_2
-    dw $09A6, $1009  ; Equipped Beams
-    dw $09C2, $0257  ; Health
-    dw $09C6, $0000  ; Missiles
-    dw $09CE, $0000  ; Pbs
-    dw $0A76, $8000  ; Hyper beam
-    dw $D82C, $0203  ; Bosses
+preset_kpdr_tourian_metroids_2:
+    dw #preset_kpdr_lower_norfair_three_musketeers
+    dw $078D, $A984  ; DDB
+    dw $079B, $DAE1  ; MDB
+    dw $07F3, $001E  ; Music Bank
+    dw $090F, $7000  ; Screen subpixel X position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09C2, $00C1  ; Health
+    dw $09CA, $0009  ; Supers
+    dw $0AF6, $003B  ; Samus X
+    dw $11F6, $FFCA  ; Safeties refill
+    dw $11F8, $0001  ; Safeties refill
+    dw $D820, $0FC1  ; Events
+    dw $D822, $0021  ; Events
+    dw $D8B2, $6C01  ; Doors
+    dw $D8C4, $0001  ; Doors
+    dw $D90C, $0100  ; Map Stations
     dw #$FFFF
 
 preset_suitless_norfair_cleanup_hotarubi_missile_room:
@@ -45222,172 +45511,19 @@ preset_gtmax_blue_brinstar_cleanup_parlor_missiles:
     dw $0AFA, $008B  ; Samus Y
     dw #$FFFF
 
-preset_kpdr23_tourian_escape_room_4:
-    dw #preset_kpdr23_tourian_escape_room_3
-    dw $078D, $AB04  ; DDB
-    dw $079B, $DEA7  ; MDB
-    dw $090F, $3000  ; Screen subpixel X position
-    dw $0911, $0500  ; Screen X position in pixels
-    dw $0913, $4C00  ; Screen subpixel Y position
-    dw $0915, $001C  ; Screen Y position in pixels
-    dw $0917, $03C0  ; Layer 2 X position
-    dw $0919, $0015  ; Layer 2 Y position
-    dw $0AF6, $05D6  ; Samus X
-    dw $0AFA, $008B  ; Samus Y
-    dw #$FFFF
-
-preset_kpdr23_tourian_escape_climb:
-    dw #preset_kpdr23_tourian_escape_room_3
-    dw $078D, $AB1C  ; DDB
-    dw $079B, $DEDE  ; MDB
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $0911, $00F1  ; Screen X position in pixels
-    dw $0913, $A400  ; Screen subpixel Y position
-    dw $0915, $00FB  ; Screen Y position in pixels
-    dw $0917, $00B4  ; Layer 2 X position
-    dw $0919, $00BC  ; Layer 2 Y position
-    dw $09C2, $01D5  ; Health
-    dw $0AF6, $0151  ; Samus X
-    dw #$FFFF
-
-preset_kpdr23_tourian_escape_parlor:
-    dw #preset_pkrd_tourian_escape_parlor
-    dw $090F, $BFFF  ; Screen subpixel X position
-    dw $09A2, $3325  ; Equipped Items
-    dw $09A4, $3325  ; Collected Items
-    dw $09A8, $100F  ; Collected Beams
-    dw $09C2, $0142  ; Health
-    dw $0AF8, $0000  ; Samus subpixel X
-    dw $D870, $0180  ; Items
-    dw $D876, $01A5  ; Items
-    dw $D880, $80A0  ; Items
-    dw $D882, $0500  ; Items
-    dw $D8C2, $DC1A  ; Doors
-    dw #$FFFF
-
-preset_kpdr_lower_norfair_single_chamber_final:
-    dw #preset_kpdr_lower_norfair_three_musketeers
-    dw $078D, $99AE  ; DDB
-    dw $079B, $B656  ; MDB
-    dw $090F, $9000  ; Screen subpixel X position
-    dw $0911, $0100  ; Screen X position in pixels
-    dw $0913, $E000  ; Screen subpixel Y position
-    dw $0917, $00C0  ; Layer 2 X position
-    dw $09C2, $0055  ; Health
-    dw $0AF6, $016E  ; Samus X
-    dw $11F6, $FF5E  ; Safeties refill
-    dw $11F8, $FFA7  ; Safeties refill
-    dw #$FFFF
-
-preset_kpdr_lower_norfair_bubble_mountain_final:
-    dw #preset_kpdr_lower_norfair_three_musketeers
-    dw $078D, $9A4A  ; DDB
-    dw $079B, $AD5E  ; MDB
-    dw $07F3, $0015  ; Music Bank
-    dw $090F, $8000  ; Screen subpixel X position
-    dw $0913, $A800  ; Screen subpixel Y position
-    dw $0915, $0016  ; Screen Y position in pixels
-    dw $0919, $0010  ; Layer 2 Y position
-    dw $09C2, $0049  ; Health
-    dw $09D2, $0001  ; Currently selected item
-    dw $0AF6, $0075  ; Samus X
-    dw $11F6, $FF52  ; Safeties refill
-    dw $11F8, $FF9B  ; Safeties refill
-    dw #$FFFF
-
-preset_kpdr_lower_norfair_business_center_final:
-    dw #preset_kpdr_lower_norfair_three_musketeers
-    dw $078D, $97DA  ; DDB
-    dw $079B, $B167  ; MDB
-    dw $07F3, $0015  ; Music Bank
-    dw $090F, $6000  ; Screen subpixel X position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $09C2, $005D  ; Health
-    dw $09C6, $000C  ; Missiles
-    dw $09CE, $0001  ; Pbs
-    dw $0AF6, $0032  ; Samus X
-    dw $11F6, $FF66  ; Safeties refill
-    dw $11F8, $FFAF  ; Safeties refill
-    dw #$FFFF
-
-preset_kpdr20_tourian_mother_brain_2:
-    dw #preset_kpdr21_tourian_mother_brain_2
-    dw $09C6, $0000  ; Missiles
+preset_kpdr20_tourian_zebes_escape:
+    dw #preset_kpdr21_tourian_zebes_escape
     dw $09C8, $000F  ; Max missiles
     dw $D878, $0014  ; Items
     dw #$FFFF
 
-preset_kpdr21_tourian_mother_brain_3:
-    dw #preset_kpdr22_tourian_mother_brain_3
+preset_kpdr21_tourian_escape_room_3:
+    dw #preset_kpdr22_tourian_escape_room_3
     dw $09C2, $018F  ; Health
     dw $09C4, $018F  ; Max health
     dw $D874, $0104  ; Items
     dw $D8B6, $3008  ; Doors
     dw $D8B8, $2EED  ; Doors
-    dw #$FFFF
-
-preset_kpdr22_tourian_zebes_escape:
-    dw #preset_kpdr23_tourian_zebes_escape
-    dw $09A8, $100B  ; Collected Beams
-    dw #$FFFF
-
-preset_kpdr22_tourian_escape_room_3:
-    dw #preset_kpdr23_tourian_escape_room_3
-    dw $09A8, $100B  ; Collected Beams
-    dw #$FFFF
-
-preset_kpdr25_tourian_zebes_escape:
-    dw #preset_kpdr25_tourian_mother_brain_3
-    dw $0A1C, $009B  ; Samus position/state
-    dw $0A1E, $0000  ; More position/state
-    dw $0AF6, $0025  ; Samus X
-    dw $0AFA, $009E  ; Samus Y
-    dw $D820, $4FC5  ; Events
-    dw #$FFFF
-
-preset_kpdr25_tourian_escape_room_3:
-    dw #preset_kpdr23_tourian_escape_room_3
-    dw $09C2, $0257  ; Health
-    dw $09C4, $0257  ; Max health
-    dw $09C8, $0019  ; Max missiles
-    dw $0AF8, $7FFF  ; Samus subpixel X
-    dw $0AFC, $B7FF  ; Samus subpixel Y
-    dw $D870, $0190  ; Items
-    dw $D878, $401C  ; Items
-    dw $D8BA, $DDF1  ; Doors
-    dw #$FFFF
-
-preset_suitless_norfair_cleanup_hotarubi_revisit:
-    dw #preset_suitless_norfair_cleanup_hotarubi_missile_room
-    dw $078D, $99D2  ; DDB
-    dw $090F, $6000  ; Screen subpixel X position
-    dw $0913, $9000  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $09C2, $0097  ; Health
-    dw $09C6, $003E  ; Missiles
-    dw $09C8, $00AF  ; Max missiles
-    dw $09CE, $0015  ; Pbs
-    dw $09D0, $002D  ; Max pbs
-    dw $0AF6, $0165  ; Samus X
-    dw $0AF8, $3000  ; Samus subpixel X
-    dw $D878, $DEDE  ; Items
-    dw #$FFFF
-
-preset_gtmax_blue_brinstar_cleanup_parlor_again:
-    dw #preset_gtmax_blue_brinstar_cleanup_parlor_missiles
-    dw $078D, $8C9A  ; DDB
-    dw $090F, $4000  ; Screen subpixel X position
-    dw $0911, $0100  ; Screen X position in pixels
-    dw $0913, $6401  ; Screen subpixel Y position
-    dw $0917, $00C0  ; Layer 2 X position
-    dw $09C6, $012A  ; Missiles
-    dw $09C8, $0145  ; Max missiles
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $01B9  ; Samus X
-    dw $D870, $FEFD  ; Items
     dw #$FFFF
 
 preset_kpdr22_tourian_escape_room_4:
@@ -45437,610 +45573,6 @@ preset_kpdr25_tourian_escape_parlor:
     dw $D870, $0190  ; Items
     dw $D878, $401C  ; Items
     dw $D8BA, $DDF1  ; Doors
-    dw #$FFFF
-
-preset_kpdr_backtracking_maridia_tube_revisit:
-    dw #preset_kpdr_lower_norfair_business_center_final
-    dw $078D, $92EE  ; DDB
-    dw $079B, $A6A1  ; MDB
-    dw $07F3, $0012  ; Music Bank
-    dw $07F5, $0003  ; Music Track
-    dw $0913, $0000  ; Screen subpixel Y position
-    dw $0A1C, $009B  ; Samus position/state
-    dw $0A1E, $0000  ; More position/state
-    dw $0AF6, $0080  ; Samus X
-    dw $0AFA, $0086  ; Samus Y
-    dw #$FFFF
-
-preset_kpdr_backtracking_fish_tank_revisit:
-    dw #preset_kpdr_lower_norfair_business_center_final
-    dw $078D, $A330  ; DDB
-    dw $079B, $CFC9  ; MDB
-    dw $07F3, $001B  ; Music Bank
-    dw $07F5, $0006  ; Music Track
-    dw $0911, $00FA  ; Screen X position in pixels
-    dw $0915, $05F3  ; Screen Y position in pixels
-    dw $0917, $00BB  ; Layer 2 X position
-    dw $0919, $0476  ; Layer 2 Y position
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $0168  ; Samus X
-    dw $0AFA, $068B  ; Samus Y
-    dw #$FFFF
-
-preset_kpdr_backtracking_mt_everest_revisit:
-    dw #preset_kpdr_lower_norfair_business_center_final
-    dw $078D, $A3B4  ; DDB
-    dw $079B, $D017  ; MDB
-    dw $07F3, $001B  ; Music Bank
-    dw $07F5, $0006  ; Music Track
-    dw $090F, $E000  ; Screen subpixel X position
-    dw $0911, $0068  ; Screen X position in pixels
-    dw $0913, $0C00  ; Screen subpixel Y position
-    dw $0917, $004E  ; Layer 2 X position
-    dw $0AF6, $00C8  ; Samus X
-    dw $0AFA, $006B  ; Samus Y
-    dw #$FFFF
-
-preset_kpdr_backtracking_red_brinstar_green_gate:
-    dw #preset_kpdr_lower_norfair_business_center_final
-    dw $078D, $A42C  ; DDB
-    dw $079B, $D104  ; MDB
-    dw $07F3, $001B  ; Music Bank
-    dw $07F5, $0006  ; Music Track
-    dw $090F, $3801  ; Screen subpixel X position
-    dw $0913, $2000  ; Screen subpixel Y position
-    dw $09D2, $0002  ; Currently selected item
-    dw $0AF6, $0079  ; Samus X
-    dw #$FFFF
-
-preset_kpdr20_tourian_mother_brain_3:
-    dw #preset_kpdr21_tourian_mother_brain_3
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr21_tourian_zebes_escape:
-    dw #preset_kpdr22_tourian_zebes_escape
-    dw $09C2, $018F  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0104  ; Items
-    dw $D8B6, $3008  ; Doors
-    dw $D8B8, $2EED  ; Doors
-    dw #$FFFF
-
-preset_kpdr21_tourian_escape_room_3:
-    dw #preset_kpdr22_tourian_escape_room_3
-    dw $09C2, $018F  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0104  ; Items
-    dw $D8B6, $3008  ; Doors
-    dw $D8B8, $2EED  ; Doors
-    dw #$FFFF
-
-preset_suitless_norfair_cleanup_three_musketeers:
-    dw #preset_suitless_norfair_cleanup_hotarubi_revisit
-    dw $078D, $9A92  ; DDB
-    dw $079B, $B510  ; MDB
-    dw $090F, $5000  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $C400  ; Screen subpixel Y position
-    dw $0915, $0008  ; Screen Y position in pixels
-    dw $0917, $0000  ; Layer 2 X position
-    dw $0919, $0006  ; Layer 2 Y position
-    dw $09C2, $0072  ; Health
-    dw $0AF6, $0065  ; Samus X
-    dw $0AF8, $2000  ; Samus subpixel X
-    dw #$FFFF
-
-preset_suitless_norfair_cleanup_single_chamber:
-    dw #preset_suitless_norfair_cleanup_hotarubi_revisit
-    dw $078D, $99AE  ; DDB
-    dw $079B, $B656  ; MDB
-    dw $090F, $5000  ; Screen subpixel X position
-    dw $0913, $1800  ; Screen subpixel Y position
-    dw $0915, $001D  ; Screen Y position in pixels
-    dw $0917, $00C0  ; Layer 2 X position
-    dw $0919, $0015  ; Layer 2 Y position
-    dw $09C2, $04A7  ; Health
-    dw $09C6, $0038  ; Missiles
-    dw $09C8, $00B4  ; Max missiles
-    dw $09CA, $0005  ; Supers
-    dw $09CE, $000A  ; Pbs
-    dw $09D6, $0110  ; Reserves
-    dw $0AF6, $0168  ; Samus X
-    dw $0AF8, $8000  ; Samus subpixel X
-    dw $D878, $FEDE  ; Items
-    dw #$FFFF
-
-preset_gtmax_blue_brinstar_cleanup_terminator_etank:
-    dw #preset_gtmax_blue_brinstar_cleanup_parlor_again
-    dw $078D, $8C8E  ; DDB
-    dw $079B, $92FD  ; MDB
-    dw $0913, $1000  ; Screen subpixel Y position
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $016C  ; Samus X
-    dw $0AFA, $00AB  ; Samus Y
-    dw #$FFFF
-
-preset_gtmax_tourian_tourian_elevator_room:
-    dw #preset_gtmax_blue_brinstar_cleanup_pit_room_final_spark
-    dw $078D, $9222  ; DDB
-    dw $079B, $DAAE  ; MDB
-    dw $07F3, $001E  ; Music Bank
-    dw $07F5, $0005  ; Music Track
-    dw $090F, $8000  ; Screen subpixel X position
-    dw $0915, $0238  ; Screen Y position in pixels
-    dw $0919, $01AA  ; Layer 2 Y position
-    dw $09C2, $0834  ; Health
-    dw $09C4, $0834  ; Max health
-    dw $09C6, $012A  ; Missiles
-    dw $09C8, $0145  ; Max missiles
-    dw $09CA, $0021  ; Supers
-    dw $09CC, $0041  ; Max supers
-    dw $09CE, $002D  ; Pbs
-    dw $09D6, $01D2  ; Reserves
-    dw $0A68, $0000  ; Flash suit
-    dw $0AFA, $02A8  ; Samus Y
-    dw $D820, $1FC1  ; Events
-    dw $D870, $FFFD  ; Items
-    dw $D8B2, $6C09  ; Doors
-    dw $D90C, $0100  ; Map Stations
-    dw #$FFFF
-
-preset_kpdr21_tourian_escape_room_4:
-    dw #preset_kpdr22_tourian_escape_room_4
-    dw $09C2, $018F  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0104  ; Items
-    dw $D8B6, $3008  ; Doors
-    dw $D8B8, $2EED  ; Doors
-    dw #$FFFF
-
-preset_kpdr21_tourian_escape_climb:
-    dw #preset_kpdr22_tourian_escape_climb
-    dw $09C2, $0171  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0104  ; Items
-    dw $D8B6, $3008  ; Doors
-    dw $D8B8, $2EED  ; Doors
-    dw #$FFFF
-
-preset_kpdr21_tourian_escape_parlor:
-    dw #preset_kpdr22_tourian_escape_parlor
-    dw $09C2, $00DE  ; Health
-    dw $09C4, $018F  ; Max health
-    dw $D874, $0104  ; Items
-    dw $D8B6, $3008  ; Doors
-    dw $D8B8, $2EED  ; Doors
-    dw #$FFFF
-
-preset_kpdr_backtracking_crateria_kihunters_final:
-    dw #preset_kpdr_backtracking_maridia_tube_revisit
-    dw $078D, $90BA  ; DDB
-    dw $079B, $962A  ; MDB
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $09CA, $0009  ; Supers
-    dw $0AFA, $00A8  ; Samus Y
-    dw #$FFFF
-
-preset_kpdr_backtracking_parlor_spacejump:
-    dw #preset_kpdr_lower_norfair_business_center_final
-    dw $078D, $8AC6  ; DDB
-    dw $079B, $91F8  ; MDB
-    dw $07F3, $000C  ; Music Bank
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $0911, $05DC  ; Screen X position in pixels
-    dw $0913, $CC00  ; Screen subpixel Y position
-    dw $0915, $0400  ; Screen Y position in pixels
-    dw $0917, $02EE  ; Layer 2 X position
-    dw $09C6, $000B  ; Missiles
-    dw $09CA, $0009  ; Supers
-    dw $0AF6, $067C  ; Samus X
-    dw $0AFA, $04BB  ; Samus Y
-    dw #$FFFF
-
-preset_kpdr20_tourian_zebes_escape:
-    dw #preset_kpdr21_tourian_zebes_escape
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr20_tourian_escape_room_3:
-    dw #preset_kpdr21_tourian_escape_room_3
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_suitless_norfair_cleanup_bubble_mountain_return:
-    dw #preset_suitless_norfair_cleanup_single_chamber
-    dw $078D, $9A4A  ; DDB
-    dw $079B, $AD5E  ; MDB
-    dw $07F3, $0015  ; Music Bank
-    dw $090F, $6000  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $5C00  ; Screen subpixel Y position
-    dw $0915, $0002  ; Screen Y position in pixels
-    dw $0917, $0000  ; Layer 2 X position
-    dw $0919, $0001  ; Layer 2 Y position
-    dw $09C2, $0414  ; Health
-    dw $09C6, $0036  ; Missiles
-    dw $09D2, $0001  ; Currently selected item
-    dw $0AF6, $008E  ; Samus X
-    dw $0AF8, $C000  ; Samus subpixel X
-    dw #$FFFF
-
-preset_gtmax_tourian_metroids_1:
-    dw #preset_gtmax_tourian_tourian_elevator_room
-    dw $090F, $4FFF  ; Screen subpixel X position
-    dw $0913, $43FF  ; Screen subpixel Y position
-    dw $0915, $0300  ; Screen Y position in pixels
-    dw $0919, $0240  ; Layer 2 Y position
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $003B  ; Samus X
-    dw $0AFA, $038B  ; Samus Y
-    dw #$FFFF
-
-preset_kpdr20_tourian_escape_room_4:
-    dw #preset_kpdr21_tourian_escape_room_4
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr20_tourian_escape_climb:
-    dw #preset_kpdr21_tourian_escape_climb
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr20_tourian_escape_parlor:
-    dw #preset_kpdr21_tourian_escape_parlor
-    dw $09C8, $000F  ; Max missiles
-    dw $D878, $0014  ; Items
-    dw #$FFFF
-
-preset_kpdr_backtracking_terminator_revisit:
-    dw #preset_kpdr_backtracking_parlor_spacejump
-    dw $078D, $8916  ; DDB
-    dw $079B, $92FD  ; MDB
-    dw $07F3, $0009  ; Music Bank
-    dw $090F, $4000  ; Screen subpixel X position
-    dw $0911, $0100  ; Screen X position in pixels
-    dw $0913, $B400  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0917, $00C0  ; Layer 2 X position
-    dw $0A1C, $001C  ; Samus position/state
-    dw $0A1E, $0304  ; More position/state
-    dw $0AF6, $0101  ; Samus X
-    dw $0AFA, $0086  ; Samus Y
-    dw #$FFFF
-
-preset_kpdr_backtracking_green_pirate_shaft_revisit:
-    dw #preset_kpdr_backtracking_parlor_spacejump
-    dw $078D, $895E  ; DDB
-    dw $079B, $990D  ; MDB
-    dw $07F3, $0009  ; Music Bank
-    dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $0800  ; Screen subpixel Y position
-    dw $0915, $0200  ; Screen Y position in pixels
-    dw $0917, $0000  ; Layer 2 X position
-    dw $0919, $0180  ; Layer 2 Y position
-    dw $0AF6, $0073  ; Samus X
-    dw $0AFA, $029B  ; Samus Y
-    dw #$FFFF
-
-preset_kpdr_backtracking_g4_hallway:
-    dw #preset_kpdr20_backtracking_g4_hallway
-    dw $09C2, $0085  ; Health
-    dw $0F78, $C23B  ; Safeties enabled
-    dw $0F7A, $1B7E  ; Safeties enabled
-    dw $0FA6, $0046  ; Safeties energy adjustment
-    dw $0FA8, $0028  ; Safeties energy adjustment
-    dw $0FAA, $0070  ; Safeties energy adjustment
-    dw $0FAC, $002B  ; Safeties energy adjustment
-    dw $0FB2, $004A  ; Safeties energy adjustment
-    dw $1118, $0004  ; Safeties unequip beams
-    dw $1120, $0004  ; Safeties unequip beams
-    dw $1180, $0007  ; Safeties stage
-    dw $11F6, $FF8E  ; Safeties refill
-    dw $11F8, $FFD7  ; Safeties refill
-    dw $D876, $0125  ; Items
-    dw $D878, $001C  ; Items
-    dw $D8B0, $3000  ; Doors
-    dw $D8B8, $2EEC  ; Doors
-    dw #$FFFF
-
-preset_suitless_norfair_cleanup_norfair_reserve_back:
-    dw #preset_suitless_norfair_cleanup_bubble_mountain_return
-    dw $078D, $9552  ; DDB
-    dw $079B, $AC83  ; MDB
-    dw $090F, $2000  ; Screen subpixel X position
-    dw $0913, $6C00  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $09C2, $03C7  ; Health
-    dw $09C6, $003A  ; Missiles
-    dw $09C8, $00B9  ; Max missiles
-    dw $09D2, $0000  ; Currently selected item
-    dw $0AF6, $0049  ; Samus X
-    dw $D876, $9FFE  ; Items
-    dw $D8BA, $DFFF  ; Doors
-    dw #$FFFF
-
-preset_gtmax_tourian_metroids_2:
-    dw #preset_gtmax_tourian_metroids_1
-    dw $078D, $A984  ; DDB
-    dw $079B, $DAE1  ; MDB
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $0911, $0058  ; Screen X position in pixels
-    dw $0913, $F400  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0917, $0042  ; Layer 2 X position
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $09C2, $0821  ; Health
-    dw $09C6, $0132  ; Missiles
-    dw $09CA, $001E  ; Supers
-    dw $09D6, $0204  ; Reserves
-    dw $0AF6, $00F8  ; Samus X
-    dw $0AFA, $00AB  ; Samus Y
-    dw $D822, $0001  ; Events
-    dw $D8C4, $0001  ; Doors
-    dw #$FFFF
-
-preset_gtmax_tourian_metroids_3:
-    dw #preset_gtmax_tourian_tourian_elevator_room
-    dw $078D, $A9B4  ; DDB
-    dw $079B, $DB31  ; MDB
-    dw $090F, $5000  ; Screen subpixel X position
-    dw $0913, $9400  ; Screen subpixel Y position
-    dw $0915, $0107  ; Screen Y position in pixels
-    dw $0919, $00C5  ; Layer 2 Y position
-    dw $09C6, $0132  ; Missiles
-    dw $09CA, $001D  ; Supers
-    dw $09D6, $0223  ; Reserves
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $00C4  ; Samus X
-    dw $0AFA, $018B  ; Samus Y
-    dw $D822, $0003  ; Events
-    dw $D8C4, $0003  ; Doors
-    dw #$FFFF
-
-preset_kpdr_backtracking_g4_elevator:
-    dw #preset_kpdr_backtracking_g4_hallway
-    dw $078D, $91F2  ; DDB
-    dw $079B, $A66A  ; MDB
-    dw $07F5, $0006  ; Music Track
-    dw $090F, $7000  ; Screen subpixel X position
-    dw $0913, $7000  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0917, $0000  ; Layer 2 X position
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $0049  ; Samus X
-    dw $0AFA, $009B  ; Samus Y
-    dw $D820, $0BC1  ; Events
-    dw #$FFFF
-
-preset_kpdr_tourian_tourian_elevator_room:
-    dw #preset_kpdr_backtracking_g4_hallway
-    dw $078D, $9222  ; DDB
-    dw $079B, $DAAE  ; MDB
-    dw $07F3, $001E  ; Music Bank
-    dw $090F, $9FFF  ; Screen subpixel X position
-    dw $0913, $0000  ; Screen subpixel Y position
-    dw $0915, $0238  ; Screen Y position in pixels
-    dw $0917, $0000  ; Layer 2 X position
-    dw $0919, $01AA  ; Layer 2 Y position
-    dw $0A1C, $009B  ; Samus position/state
-    dw $0A1E, $0000  ; More position/state
-    dw $0AF6, $0080  ; Samus X
-    dw $0AFA, $02A8  ; Samus Y
-    dw $D820, $0FC1  ; Events
-    dw $D90C, $0100  ; Map Stations
-    dw #$FFFF
-
-preset_suitless_norfair_cleanup_bubble_mountain_final:
-    dw #preset_suitless_norfair_cleanup_norfair_reserve_back
-    dw $078D, $952E  ; DDB
-    dw $090F, $D000  ; Screen subpixel X position
-    dw $0911, $0100  ; Screen X position in pixels
-    dw $0917, $00C0  ; Layer 2 X position
-    dw $09C2, $030D  ; Health
-    dw $09C6, $003E  ; Missiles
-    dw $09C8, $00BE  ; Max missiles
-    dw $09D2, $0003  ; Currently selected item
-    dw $09D4, $0190  ; Max reserves
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $01C0  ; Samus X
-    dw $0AF8, $EFFF  ; Samus subpixel X
-    dw $D876, $FFFE  ; Items
-    dw #$FFFF
-
-preset_suitless_norfair_cleanup_frog_speedway:
-    dw #preset_suitless_norfair_cleanup_norfair_reserve_back
-    dw $078D, $956A  ; DDB
-    dw $079B, $AF72  ; MDB
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $0911, $0020  ; Screen X position in pixels
-    dw $0913, $1C00  ; Screen subpixel Y position
-    dw $0917, $0018  ; Layer 2 X position
-    dw $09C2, $02A8  ; Health
-    dw $09C6, $0043  ; Missiles
-    dw $09C8, $00C3  ; Max missiles
-    dw $09CE, $0009  ; Pbs
-    dw $09D4, $0190  ; Max reserves
-    dw $0AF6, $00C0  ; Samus X
-    dw $0AF8, $1000  ; Samus subpixel X
-    dw $D876, $FFFE  ; Items
-    dw $D878, $FEDF  ; Items
-    dw #$FFFF
-
-preset_gtmax_tourian_metroids_4:
-    dw #preset_gtmax_tourian_metroids_3
-    dw $078D, $A9CC  ; DDB
-    dw $079B, $DB7D  ; MDB
-    dw $090F, $B000  ; Screen subpixel X position
-    dw $0911, $0500  ; Screen X position in pixels
-    dw $0913, $9800  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0917, $03C0  ; Layer 2 X position
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $09C6, $0140  ; Missiles
-    dw $09CA, $001C  ; Supers
-    dw $09CE, $0030  ; Pbs
-    dw $09D6, $024A  ; Reserves
-    dw $0AF6, $05A3  ; Samus X
-    dw $0AFA, $008B  ; Samus Y
-    dw $D822, $0007  ; Events
-    dw $D8C4, $0007  ; Doors
-    dw #$FFFF
-
-preset_gtmax_tourian_giant_hoppers:
-    dw #preset_gtmax_tourian_metroids_3
-    dw $078D, $A9E4  ; DDB
-    dw $079B, $DBCD  ; MDB
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $0913, $4C00  ; Screen subpixel Y position
-    dw $0915, $011F  ; Screen Y position in pixels
-    dw $0919, $00D7  ; Layer 2 Y position
-    dw $09C6, $0140  ; Missiles
-    dw $09CA, $001B  ; Supers
-    dw $09CE, $0032  ; Pbs
-    dw $09D6, $02A4  ; Reserves
-    dw $0AF6, $0061  ; Samus X
-    dw $0AFA, $01CB  ; Samus Y
-    dw $D822, $000F  ; Events
-    dw $D8C4, $000F  ; Doors
-    dw #$FFFF
-
-preset_kpdr_tourian_metroids_1:
-    dw #preset_kpdr_tourian_tourian_elevator_room
-    dw $090F, $8000  ; Screen subpixel X position
-    dw $0913, $F7FF  ; Screen subpixel Y position
-    dw $0915, $0300  ; Screen Y position in pixels
-    dw $0919, $0240  ; Layer 2 Y position
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $0040  ; Samus X
-    dw $0AFA, $038B  ; Samus Y
-    dw #$FFFF
-
-preset_suitless_norfair_cleanup_business_center_final:
-    dw #preset_suitless_norfair_cleanup_frog_speedway
-    dw $078D, $97DA  ; DDB
-    dw $079B, $B167  ; MDB
-    dw $090F, $F000  ; Screen subpixel X position
-    dw $0911, $0000  ; Screen X position in pixels
-    dw $0913, $4800  ; Screen subpixel Y position
-    dw $0917, $0000  ; Layer 2 X position
-    dw $09C2, $029A  ; Health
-    dw $0A1C, $008A  ; Samus position/state
-    dw $0A1E, $1504  ; More position/state
-    dw $0AF6, $0025  ; Samus X
-    dw $0AF8, $0000  ; Samus subpixel X
-    dw #$FFFF
-
-preset_gtmax_tourian_baby_skip:
-    dw #preset_gtmax_tourian_giant_hoppers
-    dw $078D, $AA14  ; DDB
-    dw $079B, $DC65  ; MDB
-    dw $07F3, $0045  ; Music Bank
-    dw $07F5, $0006  ; Music Track
-    dw $0911, $0100  ; Screen X position in pixels
-    dw $0913, $E800  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0917, $00C0  ; Layer 2 X position
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $01DB  ; Samus X
-    dw $0AFA, $00AB  ; Samus Y
-    dw #$FFFF
-
-preset_gtmax_tourian_gadora_room:
-    dw #preset_gtmax_tourian_giant_hoppers
-    dw $078D, $AA44  ; DDB
-    dw $079B, $DCFF  ; MDB
-    dw $090F, $E000  ; Screen subpixel X position
-    dw $0913, $4400  ; Screen subpixel Y position
-    dw $0915, $0117  ; Screen Y position in pixels
-    dw $0919, $00D1  ; Layer 2 Y position
-    dw $09CA, $001A  ; Supers
-    dw $0AF6, $00DC  ; Samus X
-    dw $0AFA, $018B  ; Samus Y
-    dw $D8C4, $00AF  ; Doors
-    dw #$FFFF
-
-preset_gtmax_tourian_zeb_skip:
-    dw #preset_gtmax_tourian_giant_hoppers
-    dw $078D, $AAA4  ; DDB
-    dw $079B, $DDF3  ; MDB
-    dw $090F, $2000  ; Screen subpixel X position
-    dw $0913, $0000  ; Screen subpixel Y position
-    dw $0915, $021A  ; Screen Y position in pixels
-    dw $0919, $0193  ; Layer 2 Y position
-    dw $09CA, $0018  ; Supers
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $0041  ; Samus X
-    dw $0AFA, $028B  ; Samus Y
-    dw $D8C4, $03AF  ; Doors
-    dw #$FFFF
-
-preset_kpdr_tourian_metroids_2:
-    dw #preset_kpdr_tourian_metroids_1
-    dw $078D, $A984  ; DDB
-    dw $079B, $DAE1  ; MDB
-    dw $090F, $7000  ; Screen subpixel X position
-    dw $0913, $5000  ; Screen subpixel Y position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $09C2, $00C1  ; Health
-    dw $09C6, $000F  ; Missiles
-    dw $09CA, $0009  ; Supers
-    dw $09CE, $0002  ; Pbs
-    dw $0AF6, $003B  ; Samus X
-    dw $0AFA, $008B  ; Samus Y
-    dw $11F6, $FFCA  ; Safeties refill
-    dw $11F8, $0001  ; Safeties refill
-    dw $D822, $0021  ; Events
-    dw $D8C4, $0001  ; Doors
-    dw #$FFFF
-
-preset_suitless_norfair_cleanup_norfair_elevator:
-    dw #preset_suitless_norfair_cleanup_business_center_final
-    dw $078D, $92EE  ; DDB
-    dw $079B, $A6A1  ; MDB
-    dw $07F3, $0012  ; Music Bank
-    dw $07F5, $0003  ; Music Track
-    dw $090F, $6000  ; Screen subpixel X position
-    dw $0913, $8000  ; Screen subpixel Y position
-    dw $0A1C, $0002  ; Samus position/state
-    dw $0A1E, $0004  ; More position/state
-    dw $0AF6, $007E  ; Samus X
-    dw $0AF8, $5FFF  ; Samus subpixel X
-    dw #$FFFF
-
-preset_gtmax_tourian_mother_brain_2:
-    dw #preset_gtmax_tourian_zeb_skip
-    dw $078D, $AAC8  ; DDB
-    dw $079B, $DD58  ; MDB
-    dw $07F3, $0021  ; Music Bank
-    dw $07F5, $0000  ; Music Track
-    dw $090F, $79FF  ; Screen subpixel X position
-    dw $0915, $0000  ; Screen Y position in pixels
-    dw $0919, $0000  ; Layer 2 Y position
-    dw $09C2, $05C0  ; Health
-    dw $09C6, $0137  ; Missiles
-    dw $09CA, $000C  ; Supers
-    dw $0AF6, $00CF  ; Samus X
-    dw $0AFA, $009B  ; Samus Y
-    dw $D820, $1FCD  ; Events
     dw #$FFFF
 
 preset_kpdr_tourian_metroids_3:
@@ -46145,6 +45677,499 @@ preset_kpdr_tourian_mother_brain_2:
     dw $D8B8, $2EEC  ; Doors
     dw #$FFFF
 
+preset_suitless_norfair_cleanup_hotarubi_revisit:
+    dw #preset_suitless_norfair_cleanup_hotarubi_missile_room
+    dw $078D, $99D2  ; DDB
+    dw $090F, $6000  ; Screen subpixel X position
+    dw $0913, $9000  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09C2, $0097  ; Health
+    dw $09C6, $003E  ; Missiles
+    dw $09C8, $00AF  ; Max missiles
+    dw $09CE, $0015  ; Pbs
+    dw $09D0, $002D  ; Max pbs
+    dw $0AF6, $0165  ; Samus X
+    dw $0AF8, $3000  ; Samus subpixel X
+    dw $D878, $DEDE  ; Items
+    dw #$FFFF
+
+preset_gtmax_blue_brinstar_cleanup_parlor_again:
+    dw #preset_gtmax_blue_brinstar_cleanup_parlor_missiles
+    dw $078D, $8C9A  ; DDB
+    dw $090F, $4000  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $6401  ; Screen subpixel Y position
+    dw $0917, $00C0  ; Layer 2 X position
+    dw $09C6, $012A  ; Missiles
+    dw $09C8, $0145  ; Max missiles
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $01B9  ; Samus X
+    dw $D870, $FEFD  ; Items
+    dw #$FFFF
+
+preset_kpdr20_tourian_escape_room_3:
+    dw #preset_kpdr21_tourian_escape_room_3
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr21_tourian_escape_room_4:
+    dw #preset_kpdr22_tourian_escape_room_4
+    dw $09C2, $018F  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $D874, $0104  ; Items
+    dw $D8B6, $3008  ; Doors
+    dw $D8B8, $2EED  ; Doors
+    dw #$FFFF
+
+preset_kpdr21_tourian_escape_climb:
+    dw #preset_kpdr22_tourian_escape_climb
+    dw $09C2, $0171  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $D874, $0104  ; Items
+    dw $D8B6, $3008  ; Doors
+    dw $D8B8, $2EED  ; Doors
+    dw #$FFFF
+
+preset_kpdr21_tourian_escape_parlor:
+    dw #preset_kpdr22_tourian_escape_parlor
+    dw $09C2, $00DE  ; Health
+    dw $09C4, $018F  ; Max health
+    dw $D874, $0104  ; Items
+    dw $D8B6, $3008  ; Doors
+    dw $D8B8, $2EED  ; Doors
+    dw #$FFFF
+
+preset_kpdr_tourian_mother_brain_3:
+    dw #preset_kpdr_tourian_mother_brain_2
+    dw $09A6, $1009  ; Equipped Beams
+    dw $09C2, $018F  ; Health
+    dw $09CE, $0000  ; Pbs
+    dw $0A76, $8000  ; Hyper beam
+    dw $1000, $FFD8  ; Safeties missiles adjustment
+    dw $1008, $FFFB  ; Safeties missiles adjustment
+    dw $1012, $FFFB  ; Safeties missiles adjustment
+    dw $1022, $FFFB  ; Safeties missiles adjustment
+    dw $1040, $0000  ; Safeties supers adjustment
+    dw $105E, $FFFB  ; Safeties supers adjustment
+    dw $1064, $FFFB  ; Safeties supers adjustment
+    dw $D82C, $0203  ; Bosses
+    dw #$FFFF
+
+preset_suitless_norfair_cleanup_three_musketeers:
+    dw #preset_suitless_norfair_cleanup_hotarubi_revisit
+    dw $078D, $9A92  ; DDB
+    dw $079B, $B510  ; MDB
+    dw $090F, $5000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $C400  ; Screen subpixel Y position
+    dw $0915, $0008  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $0006  ; Layer 2 Y position
+    dw $09C2, $0072  ; Health
+    dw $0AF6, $0065  ; Samus X
+    dw $0AF8, $2000  ; Samus subpixel X
+    dw #$FFFF
+
+preset_suitless_norfair_cleanup_single_chamber:
+    dw #preset_suitless_norfair_cleanup_hotarubi_revisit
+    dw $078D, $99AE  ; DDB
+    dw $079B, $B656  ; MDB
+    dw $090F, $5000  ; Screen subpixel X position
+    dw $0913, $1800  ; Screen subpixel Y position
+    dw $0915, $001D  ; Screen Y position in pixels
+    dw $0917, $00C0  ; Layer 2 X position
+    dw $0919, $0015  ; Layer 2 Y position
+    dw $09C2, $04A7  ; Health
+    dw $09C6, $0038  ; Missiles
+    dw $09C8, $00B4  ; Max missiles
+    dw $09CA, $0005  ; Supers
+    dw $09CE, $000A  ; Pbs
+    dw $09D6, $0110  ; Reserves
+    dw $0AF6, $0168  ; Samus X
+    dw $0AF8, $8000  ; Samus subpixel X
+    dw $D878, $FEDE  ; Items
+    dw #$FFFF
+
+preset_gtmax_blue_brinstar_cleanup_terminator_etank:
+    dw #preset_gtmax_blue_brinstar_cleanup_parlor_again
+    dw $078D, $8C8E  ; DDB
+    dw $079B, $92FD  ; MDB
+    dw $0913, $1000  ; Screen subpixel Y position
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $016C  ; Samus X
+    dw $0AFA, $00AB  ; Samus Y
+    dw #$FFFF
+
+preset_gtmax_tourian_tourian_elevator_room:
+    dw #preset_gtmax_blue_brinstar_cleanup_pit_room_final_spark
+    dw $078D, $9222  ; DDB
+    dw $079B, $DAAE  ; MDB
+    dw $07F3, $001E  ; Music Bank
+    dw $07F5, $0005  ; Music Track
+    dw $090F, $8000  ; Screen subpixel X position
+    dw $0915, $0238  ; Screen Y position in pixels
+    dw $0919, $01AA  ; Layer 2 Y position
+    dw $09C2, $0834  ; Health
+    dw $09C4, $0834  ; Max health
+    dw $09C6, $012A  ; Missiles
+    dw $09C8, $0145  ; Max missiles
+    dw $09CA, $0021  ; Supers
+    dw $09CC, $0041  ; Max supers
+    dw $09CE, $002D  ; Pbs
+    dw $09D6, $01D2  ; Reserves
+    dw $0A68, $0000  ; Flash suit
+    dw $0AFA, $02A8  ; Samus Y
+    dw $D820, $1FC1  ; Events
+    dw $D870, $FFFD  ; Items
+    dw $D8B2, $6C09  ; Doors
+    dw $D90C, $0100  ; Map Stations
+    dw #$FFFF
+
+preset_kpdr20_tourian_escape_room_4:
+    dw #preset_kpdr21_tourian_escape_room_4
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr20_tourian_escape_climb:
+    dw #preset_kpdr21_tourian_escape_climb
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr20_tourian_escape_parlor:
+    dw #preset_kpdr21_tourian_escape_parlor
+    dw $09C8, $000F  ; Max missiles
+    dw $D878, $0014  ; Items
+    dw #$FFFF
+
+preset_kpdr_tourian_zebes_escape:
+    dw #preset_kpdr_tourian_mother_brain_3
+    dw $0A1C, $009B  ; Samus position/state
+    dw $0A1E, $0000  ; More position/state
+    dw $0AF6, $0025  ; Samus X
+    dw $0AFA, $009E  ; Samus Y
+    dw $D820, $4FC5  ; Events
+    dw #$FFFF
+
+preset_suitless_norfair_cleanup_bubble_mountain_return:
+    dw #preset_suitless_norfair_cleanup_single_chamber
+    dw $078D, $9A4A  ; DDB
+    dw $079B, $AD5E  ; MDB
+    dw $07F3, $0015  ; Music Bank
+    dw $090F, $6000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $5C00  ; Screen subpixel Y position
+    dw $0915, $0002  ; Screen Y position in pixels
+    dw $0917, $0000  ; Layer 2 X position
+    dw $0919, $0001  ; Layer 2 Y position
+    dw $09C2, $0414  ; Health
+    dw $09C6, $0036  ; Missiles
+    dw $09D2, $0001  ; Currently selected item
+    dw $0AF6, $008E  ; Samus X
+    dw $0AF8, $C000  ; Samus subpixel X
+    dw #$FFFF
+
+preset_gtmax_tourian_metroids_1:
+    dw #preset_gtmax_tourian_tourian_elevator_room
+    dw $090F, $4FFF  ; Screen subpixel X position
+    dw $0913, $43FF  ; Screen subpixel Y position
+    dw $0915, $0300  ; Screen Y position in pixels
+    dw $0919, $0240  ; Layer 2 Y position
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $003B  ; Samus X
+    dw $0AFA, $038B  ; Samus Y
+    dw #$FFFF
+
+preset_kpdr_tourian_escape_room_3:
+    dw #preset_kpdr_tourian_zebes_escape
+    dw $078D, $AAEC  ; DDB
+    dw $079B, $DE7A  ; MDB
+    dw $07F3, $0024  ; Music Bank
+    dw $07F5, $0007  ; Music Track
+    dw $090F, $1000  ; Screen subpixel X position
+    dw $0913, $2800  ; Screen subpixel Y position
+    dw $0915, $0100  ; Screen Y position in pixels
+    dw $0919, $00C0  ; Layer 2 Y position
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $00DF  ; Samus X
+    dw $0AFA, $018B  ; Samus Y
+    dw #$FFFF
+
+preset_suitless_norfair_cleanup_norfair_reserve_back:
+    dw #preset_suitless_norfair_cleanup_bubble_mountain_return
+    dw $078D, $9552  ; DDB
+    dw $079B, $AC83  ; MDB
+    dw $090F, $2000  ; Screen subpixel X position
+    dw $0913, $6C00  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09C2, $03C7  ; Health
+    dw $09C6, $003A  ; Missiles
+    dw $09C8, $00B9  ; Max missiles
+    dw $09D2, $0000  ; Currently selected item
+    dw $0AF6, $0049  ; Samus X
+    dw $D876, $9FFE  ; Items
+    dw $D8BA, $DFFF  ; Doors
+    dw #$FFFF
+
+preset_gtmax_tourian_metroids_2:
+    dw #preset_gtmax_tourian_metroids_1
+    dw $078D, $A984  ; DDB
+    dw $079B, $DAE1  ; MDB
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $0058  ; Screen X position in pixels
+    dw $0913, $F400  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $0042  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09C2, $0821  ; Health
+    dw $09C6, $0132  ; Missiles
+    dw $09CA, $001E  ; Supers
+    dw $09D6, $0204  ; Reserves
+    dw $0AF6, $00F8  ; Samus X
+    dw $0AFA, $00AB  ; Samus Y
+    dw $D822, $0001  ; Events
+    dw $D8C4, $0001  ; Doors
+    dw #$FFFF
+
+preset_gtmax_tourian_metroids_3:
+    dw #preset_gtmax_tourian_tourian_elevator_room
+    dw $078D, $A9B4  ; DDB
+    dw $079B, $DB31  ; MDB
+    dw $090F, $5000  ; Screen subpixel X position
+    dw $0913, $9400  ; Screen subpixel Y position
+    dw $0915, $0107  ; Screen Y position in pixels
+    dw $0919, $00C5  ; Layer 2 Y position
+    dw $09C6, $0132  ; Missiles
+    dw $09CA, $001D  ; Supers
+    dw $09D6, $0223  ; Reserves
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $00C4  ; Samus X
+    dw $0AFA, $018B  ; Samus Y
+    dw $D822, $0003  ; Events
+    dw $D8C4, $0003  ; Doors
+    dw #$FFFF
+
+preset_kpdr_tourian_escape_room_4:
+    dw #preset_kpdr_tourian_escape_room_3
+    dw $078D, $AB04  ; DDB
+    dw $079B, $DEA7  ; MDB
+    dw $090F, $3000  ; Screen subpixel X position
+    dw $0911, $0500  ; Screen X position in pixels
+    dw $0913, $4C00  ; Screen subpixel Y position
+    dw $0915, $001C  ; Screen Y position in pixels
+    dw $0917, $03C0  ; Layer 2 X position
+    dw $0919, $0015  ; Layer 2 Y position
+    dw $0AF6, $05D6  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw #$FFFF
+
+preset_kpdr_tourian_escape_climb:
+    dw #preset_kpdr_tourian_escape_room_3
+    dw $078D, $AB1C  ; DDB
+    dw $079B, $DEDE  ; MDB
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $00F1  ; Screen X position in pixels
+    dw $0913, $A400  ; Screen subpixel Y position
+    dw $0915, $00FB  ; Screen Y position in pixels
+    dw $0917, $00B4  ; Layer 2 X position
+    dw $0919, $00BC  ; Layer 2 Y position
+    dw $09C2, $0171  ; Health
+    dw $0AF6, $0151  ; Samus X
+    dw #$FFFF
+
+preset_kpdr_tourian_escape_parlor:
+    dw #preset_kpdr_tourian_mother_brain_3
+    dw $078D, $AB34  ; DDB
+    dw $079B, $96BA  ; MDB
+    dw $07F3, $0024  ; Music Bank
+    dw $07F5, $0007  ; Music Track
+    dw $090F, $BFFF  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $6801  ; Screen subpixel Y position
+    dw $0917, $00C0  ; Layer 2 X position
+    dw $09C2, $00DE  ; Health
+    dw $0AF6, $01DA  ; Samus X
+    dw $0AFA, $004B  ; Samus Y
+    dw $D820, $4FC5  ; Events
+    dw #$FFFF
+
+preset_suitless_norfair_cleanup_bubble_mountain_final:
+    dw #preset_suitless_norfair_cleanup_norfair_reserve_back
+    dw $078D, $952E  ; DDB
+    dw $090F, $D000  ; Screen subpixel X position
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0917, $00C0  ; Layer 2 X position
+    dw $09C2, $030D  ; Health
+    dw $09C6, $003E  ; Missiles
+    dw $09C8, $00BE  ; Max missiles
+    dw $09D2, $0003  ; Currently selected item
+    dw $09D4, $0190  ; Max reserves
+    dw $0A1C, $0001  ; Samus position/state
+    dw $0A1E, $0008  ; More position/state
+    dw $0AF6, $01C0  ; Samus X
+    dw $0AF8, $EFFF  ; Samus subpixel X
+    dw $D876, $FFFE  ; Items
+    dw #$FFFF
+
+preset_suitless_norfair_cleanup_frog_speedway:
+    dw #preset_suitless_norfair_cleanup_norfair_reserve_back
+    dw $078D, $956A  ; DDB
+    dw $079B, $AF72  ; MDB
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0911, $0020  ; Screen X position in pixels
+    dw $0913, $1C00  ; Screen subpixel Y position
+    dw $0917, $0018  ; Layer 2 X position
+    dw $09C2, $02A8  ; Health
+    dw $09C6, $0043  ; Missiles
+    dw $09C8, $00C3  ; Max missiles
+    dw $09CE, $0009  ; Pbs
+    dw $09D4, $0190  ; Max reserves
+    dw $0AF6, $00C0  ; Samus X
+    dw $0AF8, $1000  ; Samus subpixel X
+    dw $D876, $FFFE  ; Items
+    dw $D878, $FEDF  ; Items
+    dw #$FFFF
+
+preset_gtmax_tourian_metroids_4:
+    dw #preset_gtmax_tourian_metroids_3
+    dw $078D, $A9CC  ; DDB
+    dw $079B, $DB7D  ; MDB
+    dw $090F, $B000  ; Screen subpixel X position
+    dw $0911, $0500  ; Screen X position in pixels
+    dw $0913, $9800  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $03C0  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09C6, $0140  ; Missiles
+    dw $09CA, $001C  ; Supers
+    dw $09CE, $0030  ; Pbs
+    dw $09D6, $024A  ; Reserves
+    dw $0AF6, $05A3  ; Samus X
+    dw $0AFA, $008B  ; Samus Y
+    dw $D822, $0007  ; Events
+    dw $D8C4, $0007  ; Doors
+    dw #$FFFF
+
+preset_gtmax_tourian_giant_hoppers:
+    dw #preset_gtmax_tourian_metroids_3
+    dw $078D, $A9E4  ; DDB
+    dw $079B, $DBCD  ; MDB
+    dw $090F, $0000  ; Screen subpixel X position
+    dw $0913, $4C00  ; Screen subpixel Y position
+    dw $0915, $011F  ; Screen Y position in pixels
+    dw $0919, $00D7  ; Layer 2 Y position
+    dw $09C6, $0140  ; Missiles
+    dw $09CA, $001B  ; Supers
+    dw $09CE, $0032  ; Pbs
+    dw $09D6, $02A4  ; Reserves
+    dw $0AF6, $0061  ; Samus X
+    dw $0AFA, $01CB  ; Samus Y
+    dw $D822, $000F  ; Events
+    dw $D8C4, $000F  ; Doors
+    dw #$FFFF
+
+preset_suitless_norfair_cleanup_business_center_final:
+    dw #preset_suitless_norfair_cleanup_frog_speedway
+    dw $078D, $97DA  ; DDB
+    dw $079B, $B167  ; MDB
+    dw $090F, $F000  ; Screen subpixel X position
+    dw $0911, $0000  ; Screen X position in pixels
+    dw $0913, $4800  ; Screen subpixel Y position
+    dw $0917, $0000  ; Layer 2 X position
+    dw $09C2, $029A  ; Health
+    dw $0A1C, $008A  ; Samus position/state
+    dw $0A1E, $1504  ; More position/state
+    dw $0AF6, $0025  ; Samus X
+    dw $0AF8, $0000  ; Samus subpixel X
+    dw #$FFFF
+
+preset_gtmax_tourian_baby_skip:
+    dw #preset_gtmax_tourian_giant_hoppers
+    dw $078D, $AA14  ; DDB
+    dw $079B, $DC65  ; MDB
+    dw $07F3, $0045  ; Music Bank
+    dw $07F5, $0006  ; Music Track
+    dw $0911, $0100  ; Screen X position in pixels
+    dw $0913, $E800  ; Screen subpixel Y position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0917, $00C0  ; Layer 2 X position
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $01DB  ; Samus X
+    dw $0AFA, $00AB  ; Samus Y
+    dw #$FFFF
+
+preset_gtmax_tourian_gadora_room:
+    dw #preset_gtmax_tourian_giant_hoppers
+    dw $078D, $AA44  ; DDB
+    dw $079B, $DCFF  ; MDB
+    dw $090F, $E000  ; Screen subpixel X position
+    dw $0913, $4400  ; Screen subpixel Y position
+    dw $0915, $0117  ; Screen Y position in pixels
+    dw $0919, $00D1  ; Layer 2 Y position
+    dw $09CA, $001A  ; Supers
+    dw $0AF6, $00DC  ; Samus X
+    dw $0AFA, $018B  ; Samus Y
+    dw $D8C4, $00AF  ; Doors
+    dw #$FFFF
+
+preset_gtmax_tourian_zeb_skip:
+    dw #preset_gtmax_tourian_giant_hoppers
+    dw $078D, $AAA4  ; DDB
+    dw $079B, $DDF3  ; MDB
+    dw $090F, $2000  ; Screen subpixel X position
+    dw $0913, $0000  ; Screen subpixel Y position
+    dw $0915, $021A  ; Screen Y position in pixels
+    dw $0919, $0193  ; Layer 2 Y position
+    dw $09CA, $0018  ; Supers
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $0041  ; Samus X
+    dw $0AFA, $028B  ; Samus Y
+    dw $D8C4, $03AF  ; Doors
+    dw #$FFFF
+
+preset_suitless_norfair_cleanup_norfair_elevator:
+    dw #preset_suitless_norfair_cleanup_business_center_final
+    dw $078D, $92EE  ; DDB
+    dw $079B, $A6A1  ; MDB
+    dw $07F3, $0012  ; Music Bank
+    dw $07F5, $0003  ; Music Track
+    dw $090F, $6000  ; Screen subpixel X position
+    dw $0913, $8000  ; Screen subpixel Y position
+    dw $0A1C, $0002  ; Samus position/state
+    dw $0A1E, $0004  ; More position/state
+    dw $0AF6, $007E  ; Samus X
+    dw $0AF8, $5FFF  ; Samus subpixel X
+    dw #$FFFF
+
+preset_gtmax_tourian_mother_brain_2:
+    dw #preset_gtmax_tourian_zeb_skip
+    dw $078D, $AAC8  ; DDB
+    dw $079B, $DD58  ; MDB
+    dw $07F3, $0021  ; Music Bank
+    dw $07F5, $0000  ; Music Track
+    dw $090F, $79FF  ; Screen subpixel X position
+    dw $0915, $0000  ; Screen Y position in pixels
+    dw $0919, $0000  ; Layer 2 Y position
+    dw $09C2, $05C0  ; Health
+    dw $09C6, $0137  ; Missiles
+    dw $09CA, $000C  ; Supers
+    dw $0AF6, $00CF  ; Samus X
+    dw $0AFA, $009B  ; Samus Y
+    dw $D820, $1FCD  ; Events
+    dw #$FFFF
+
 preset_suitless_final_cleanup_below_spazer_final:
     dw #preset_suitless_norfair_cleanup_norfair_elevator
     dw $078D, $A33C  ; DDB
@@ -46170,22 +46195,6 @@ preset_gtmax_tourian_zebes_escape:
     dw $0AF6, $0025  ; Samus X
     dw $0AFA, $009E  ; Samus Y
     dw $D820, $5FCD  ; Events
-    dw $D82C, $0203  ; Bosses
-    dw #$FFFF
-
-preset_kpdr_tourian_mother_brain_3:
-    dw #preset_kpdr_tourian_mother_brain_2
-    dw $09A6, $1009  ; Equipped Beams
-    dw $09C2, $018F  ; Health
-    dw $09CE, $0000  ; Pbs
-    dw $0A76, $8000  ; Hyper beam
-    dw $1000, $FFD8  ; Safeties missiles adjustment
-    dw $1008, $FFFB  ; Safeties missiles adjustment
-    dw $1012, $FFFB  ; Safeties missiles adjustment
-    dw $1022, $FFFB  ; Safeties missiles adjustment
-    dw $1040, $0000  ; Safeties supers adjustment
-    dw $105E, $FFFB  ; Safeties supers adjustment
-    dw $1064, $FFFB  ; Safeties supers adjustment
     dw $D82C, $0203  ; Bosses
     dw #$FFFF
 
@@ -46282,15 +46291,6 @@ preset_gtmax_tourian_escape_room_3:
     dw $0AFA, $018B  ; Samus Y
     dw #$FFFF
 
-preset_kpdr_tourian_zebes_escape:
-    dw #preset_kpdr_tourian_mother_brain_3
-    dw $0A1C, $009B  ; Samus position/state
-    dw $0A1E, $0000  ; More position/state
-    dw $0AF6, $0025  ; Samus X
-    dw $0AFA, $009E  ; Samus Y
-    dw $D820, $4FC5  ; Events
-    dw #$FFFF
-
 preset_suitless_final_cleanup_blue_brin_hoppers_revisit:
     dw #preset_suitless_final_cleanup_big_pink_final
     dw $078D, $8DEA  ; DDB
@@ -46381,22 +46381,6 @@ preset_gtmax_tourian_escape_parlor:
     dw $0AFA, $004B  ; Samus Y
     dw #$FFFF
 
-preset_kpdr_tourian_escape_room_3:
-    dw #preset_kpdr_tourian_zebes_escape
-    dw $078D, $AAEC  ; DDB
-    dw $079B, $DE7A  ; MDB
-    dw $07F3, $0024  ; Music Bank
-    dw $07F5, $0007  ; Music Track
-    dw $090F, $1000  ; Screen subpixel X position
-    dw $0913, $2800  ; Screen subpixel Y position
-    dw $0915, $0100  ; Screen Y position in pixels
-    dw $0919, $00C0  ; Layer 2 Y position
-    dw $0A1C, $0001  ; Samus position/state
-    dw $0A1E, $0008  ; More position/state
-    dw $0AF6, $00DF  ; Samus X
-    dw $0AFA, $018B  ; Samus Y
-    dw #$FFFF
-
 preset_suitless_final_cleanup_john_cena_bridge:
     dw #preset_suitless_final_cleanup_beta_missile_room
     dw $078D, $8ECE  ; DDB
@@ -46433,50 +46417,6 @@ preset_suitless_final_cleanup_beta_missile_revisit:
     dw $0AF6, $01DD  ; Samus X
     dw $D872, $EFEF  ; Items
     dw $D874, $1FFE  ; Items
-    dw #$FFFF
-
-preset_kpdr_tourian_escape_room_4:
-    dw #preset_kpdr_tourian_escape_room_3
-    dw $078D, $AB04  ; DDB
-    dw $079B, $DEA7  ; MDB
-    dw $090F, $3000  ; Screen subpixel X position
-    dw $0911, $0500  ; Screen X position in pixels
-    dw $0913, $4C00  ; Screen subpixel Y position
-    dw $0915, $001C  ; Screen Y position in pixels
-    dw $0917, $03C0  ; Layer 2 X position
-    dw $0919, $0015  ; Layer 2 Y position
-    dw $0AF6, $05D6  ; Samus X
-    dw $0AFA, $008B  ; Samus Y
-    dw #$FFFF
-
-preset_kpdr_tourian_escape_climb:
-    dw #preset_kpdr_tourian_escape_room_3
-    dw $078D, $AB1C  ; DDB
-    dw $079B, $DEDE  ; MDB
-    dw $090F, $0000  ; Screen subpixel X position
-    dw $0911, $00F1  ; Screen X position in pixels
-    dw $0913, $A400  ; Screen subpixel Y position
-    dw $0915, $00FB  ; Screen Y position in pixels
-    dw $0917, $00B4  ; Layer 2 X position
-    dw $0919, $00BC  ; Layer 2 Y position
-    dw $09C2, $0171  ; Health
-    dw $0AF6, $0151  ; Samus X
-    dw #$FFFF
-
-preset_kpdr_tourian_escape_parlor:
-    dw #preset_kpdr_tourian_mother_brain_3
-    dw $078D, $AB34  ; DDB
-    dw $079B, $96BA  ; MDB
-    dw $07F3, $0024  ; Music Bank
-    dw $07F5, $0007  ; Music Track
-    dw $090F, $BFFF  ; Screen subpixel X position
-    dw $0911, $0100  ; Screen X position in pixels
-    dw $0913, $6801  ; Screen subpixel Y position
-    dw $0917, $00C0  ; Layer 2 X position
-    dw $09C2, $00DE  ; Health
-    dw $0AF6, $01DA  ; Samus X
-    dw $0AFA, $004B  ; Samus Y
-    dw $D820, $4FC5  ; Events
     dw #$FFFF
 
 preset_suitless_final_cleanup_pit_room_final:

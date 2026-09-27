@@ -1143,7 +1143,6 @@ preset_phantoonfirst_kraid_before_ridley_leaving_kraids_lair:
     dw $079B, $A471  ; MDB
     dw $090F, $C001  ; Screen subpixel X position
     dw $0913, $F000  ; Screen subpixel Y position
-    dw $09C2, $00C1  ; Health
     dw $09C6, $000C  ; Missiles
     dw $0A1C, $0002  ; Samus position/state
     dw $0A1E, $0004  ; More position/state
@@ -1707,6 +1706,7 @@ preset_phantoonfirst_lower_norfair_leaving_ridley:
     dw $0AF6, $005F  ; Samus X
     dw $0AFA, $019B  ; Samus Y
     dw $0F78, $0C7F  ; Safeties enabled
+    dw $0F88, $FFB0  ; Safeties (PKRD + E-Tank) energy adjustment
     dw $0F8E, $0000  ; Safeties (Varia + Gravity Jump) energy adjustment
     dw $0F92, $0000  ; Safeties (Slow Pillars) energy adjustment
     dw $0F96, $0039  ; Safeties (Ridley E-Tank) energy adjustment
@@ -2175,6 +2175,7 @@ preset_phantoonfirst_maridia_botwoon_etank:
     dw $09CE, $0005  ; Pbs
     dw $09D2, $0000  ; Currently selected item
     dw $0AF6, $01C5  ; Samus X
+    dw $0F88, $FFD8  ; Safeties (PKRD + E-Tank) energy adjustment
     dw $0F96, $0000  ; Safeties (Ridley E-Tank) energy adjustment
     dw $0F98, $0028  ; Safeties (Kraid E-Tank) energy adjustment
     dw $1006, $0000  ; Safeties (PKRD) missiles adjustment
@@ -2538,6 +2539,7 @@ preset_phantoonfirst_tourian_giant_hoppers:
     dw $0F7A, $0001  ; Safeties enabled
     dw $0F7C, $0000  ; Safeties adjust only
     dw $0F86, $0000  ; Safeties (PKRD) energy adjustment
+    dw $0F88, $0000  ; Safeties (PKRD + E-Tank) energy adjustment
     dw $0F98, $0000  ; Safeties (Kraid E-Tank) energy adjustment
     dw $0F9A, $0000  ; Safeties (Mt. Everest Spark Skip) energy adjustment
     dw $0F9C, $0000  ; Safeties (Botwoon E-Tank) energy adjustment

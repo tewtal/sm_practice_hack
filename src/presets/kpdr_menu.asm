@@ -75,7 +75,7 @@ presets_goto_kpdr_upper_norfair_revisit:
     LDY #presets_submenu_kpdr_upper_norfair_revisit_early_ice
     BRA .done
   .check_southern
-    LDA !sram_safeties_enabled_kpdr+$2 : BIT #$0020 : BEQ .done
+    LDA !sram_safeties_enabled_kpdr+$2 : BIT #$0080 : BEQ .done
     LDY #presets_submenu_kpdr_upper_norfair_revisit_southern
   .done
     JML action_submenu

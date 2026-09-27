@@ -1260,7 +1260,7 @@ preset_kpdr_red_brinstar_caterpillars_down:
     dw $0911, $01FB  ; Screen X position in pixels
     dw $0913, $4400  ; Screen subpixel Y position
     dw $0917, $017C  ; Layer 2 X position
-    dw $09C2, $0119  ; Health
+    dw $09C2, $00DD  ; Health
     dw $0AF6, $0291  ; Samus X
     dw $0F82, $0014  ; Safeties (Spazer) energy adjustment
     dw #$FFFF
@@ -2000,6 +2000,8 @@ preset_kpdr_maridia_plasma_spark_revisit:
     dw $0AFA, $038B  ; Samus Y
     dw $0F78, $C27B  ; Safeties enabled
     dw $0F7A, $007E  ; Safeties enabled
+    dw $0FA6, $0040  ; Safeties (Halfie Savings) energy adjustment
+    dw $0FAA, $006A  ; Safeties (Whomple Savings) energy adjustment
     dw $D880, $80A0  ; Items
     dw $D8C2, $DC0A  ; Doors
     dw #$FFFF
@@ -2277,6 +2279,7 @@ preset_kpdr_lower_norfair_amphitheatre:
     dw $09CE, $0004  ; Pbs
     dw $0AF6, $00A7  ; Samus X
     dw $0AFA, $018B  ; Samus Y
+    dw $0FB2, $0036  ; Safeties (Blue Pillars) energy adjustment
     dw #$FFFF
 
 preset_kpdr_lower_norfair_kihunter_stairs_down:
@@ -2309,6 +2312,7 @@ preset_kpdr_lower_norfair_wasteland:
     dw $0AF6, $0248  ; Samus X
     dw $0AFA, $0489  ; Samus Y
     dw $0F7A, $0F7E  ; Safeties enabled
+    dw $0FB2, $000E  ; Safeties (Blue Pillars) energy adjustment
     dw $10B4, $FFFF  ; Safeties (Slow Pillars) power bombs adjustment
     dw $11F6, $0001  ; Safeties (Fireflea E-Tank) refill
     dw $D8BA, $41F1  ; Doors
@@ -2346,6 +2350,9 @@ preset_kpdr_lower_norfair_plowerhouse:
     dw $09CA, $0009  ; Supers
     dw $0AF6, $006A  ; Samus X
     dw $0AFA, $00BB  ; Samus Y
+    dw $0FA6, $0022  ; Safeties (Halfie Savings) energy adjustment
+    dw $0FA8, $0000  ; Safeties (Safer Draygon) energy adjustment
+    dw $0FAA, $004C  ; Safeties (Whomple Savings) energy adjustment
     dw $11F6, $0001  ; Safeties (Fireflea E-Tank) refill
     dw $D8BC, $0001  ; Doors
     dw #$FFFF
@@ -2793,7 +2800,6 @@ preset_kpdr_tourian_giant_hoppers:
     dw $0AFA, $01CB  ; Samus Y
     dw $0F7A, $1906  ; Safeties enabled
     dw $0FA6, $0000  ; Safeties (Halfie Savings) energy adjustment
-    dw $0FA8, $0000  ; Safeties (Safer Draygon) energy adjustment
     dw $0FAA, $0000  ; Safeties (Whomple Savings) energy adjustment
     dw $0FAC, $0000  ; Safeties (Plasma Spark Skip) energy adjustment
     dw $0FB2, $0000  ; Safeties (Blue Pillars) energy adjustment
