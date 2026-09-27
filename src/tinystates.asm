@@ -76,7 +76,11 @@ pre_load_state:
 
     ; Load graphics tiles and tile tables back into RAM/WRAM
     ; before restoring the rest of the state from SRAM
+if !FEATURE_PRESETS
     JSL preset_load_destination_state_and_tiles
+else
+    JSL $82E76B
+endif
 if !RAW_TILE_GRAPHICS
     JSL preset_load_library_background
 else

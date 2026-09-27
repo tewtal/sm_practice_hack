@@ -268,9 +268,10 @@ action_submenu:
     BRA action_submenu_jump
 }
 
+if !FEATURE_PRESETS
 action_presets_mainmenu:
 {
-    TDC : STA ram_cm_category_preset_kpdr_builtin
+    TDC : STA !ram_cm_category_preset_kpdr_builtin
     LDA !sram_safeties_enabled_phantoonfirst : AND #$0008
     LSR #3 : STA !ram_cm_category_preset_pkrd
 
@@ -287,6 +288,7 @@ action_presets_mainmenu:
 
     ; Continue into action_submenu_jump
 }
+endif ; FEATURE_PRESETS
 
 action_submenu_jump:
 {
@@ -303,6 +305,7 @@ action_submenu_jump:
     JML cm_draw
 }
 
+if !FEATURE_PRESETS
 preset_category_submenus:
 {
     dw #PresetsMenuKpdr
@@ -350,6 +353,7 @@ preset_category_banks:
     dw #PresetsMenuRando>>16
     dw #$0000
 }
+endif ; FEATURE_PRESETS
 
 
 ; -----------
@@ -361,8 +365,10 @@ preset_category_banks:
 
 MainMenu:
     dw #mm_goto_equipment
+if !FEATURE_PRESETS
     dw #mm_goto_presets
     dw #mm_goto_presets_menu
+endif
     dw #mm_goto_teleport
     dw #mm_goto_events
     dw #mm_goto_misc
@@ -402,8 +408,10 @@ endif
 MainMenuBanks:
     ; this list must match the main menu order
     dw #EquipmentMenu>>16
+if !FEATURE_PRESETS
     dw #preset_category_banks>>16 ; dummy
     dw #PresetOptionsMenu>>16
+endif
     dw #TeleportMenu>>16
     dw #EventFlagsMenu>>16
     dw #MiscMenu>>16
@@ -432,11 +440,13 @@ endif
 mm_goto_equipment:
     %cm_jsl("Equipment", #action_equipment_mainmenu, #EquipmentMenu)
 
+if !FEATURE_PRESETS
 mm_goto_presets:
     %cm_jsl("Category Presets", #action_presets_mainmenu, #$0000)
 
 mm_goto_presets_menu:
     %cm_jsl("Preset Options", #action_preset_options_mainmenu, #PresetOptionsMenu)
+endif
 
 mm_goto_teleport:
     %cm_mainmenu("Save Stations", #TeleportMenu)
@@ -495,6 +505,7 @@ mm_goto_brbmenu:
     %cm_jsl("Be Right Back Menu", #action_brb_mainmenu, #BRBMenu)
 
 
+if !FEATURE_PRESETS
 ; -------------------
 ; Preset Options menu
 ; -------------------
@@ -1476,6 +1487,7 @@ presetequiprando_supers:
 
 presetequiprando_pbs:
     %cm_numfield("Max Power Bomb Pickups", !sram_presetequiprando_max_pbs, 0, 10, 1, 5, #0)
+endif ; FEATURE_PRESETS
 
 
 ; -------------
@@ -1767,7 +1779,7 @@ action_teleport:
     LDA #$001F : STA !SAMUS_HP
 
   .hp_set
-    JSL reset_all_counters
+    JSL ih_reset_all_counters
     JSL stop_all_sounds
 
     LDA #$0001 : STA !ram_cm_leave

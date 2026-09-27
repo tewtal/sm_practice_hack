@@ -100,8 +100,7 @@ gamemode_door_transtion_load_sprites:
     BRA .done
   .check
 if !FEATURE_PAL
-    JML $82E4A9 ; return to hijacked code
-else
+elseif !PRESERVE_WRAM
     LDA !IH_CONTROLLER_PRI : CMP #$C0C0 : BNE .done
     LDA !AREA_ID : BEQ .done : CMP #$0002 : BEQ .done
     PHX : PHP
@@ -124,10 +123,10 @@ else
     LDA #$001E : STA !GAMEMODE
   .end
     PLP : PLX
+endif
     JML $82E4A9 ; return to hijacked code
-endif
 }
-endif
+endif ; FEATURE_SD2SNES
 
 gamemode_start:
 {
@@ -168,10 +167,12 @@ gamemode_start:
     LDA !REG_2100_BRIGHTNESS : ORA #$000F : STA !REG_2100_BRIGHTNESS
 
   .skip_gameplay_done_pause
+if !FEATURE_PRESETS
     ; Don't load presets or decrement counters if we're in credits
     LDA !GAMEMODE : CMP #$0027 : BEQ .skip_load
     LDA !ram_load_preset_low_word : BEQ .dec_rta
     JSL preset_load
+endif
 
   .skip_load
     PLP
@@ -352,6 +353,7 @@ gamemode_update_timers:
 }
 endif
 
+if !FEATURE_PRESETS
 gamemode_reload_preset:
 {
     ; Choose a random preset if zero
@@ -441,6 +443,7 @@ endif
     %sfxnumber()
     RTL
 }
+endif ; FEATURE_PRESETS
 
 gamemode_reset_segment_timer:
 {
@@ -2239,12 +2242,14 @@ else
     dw #ctrl_add_update_timers
     dw #ctrl_add_toggle_igt_rta
 endif
+if !FEATURE_PRESETS
     dw #ctrl_add_reload_preset
     dw #ctrl_add_random_preset
     dw #ctrl_add_save_custom_preset
     dw #ctrl_add_load_custom_preset
     dw #ctrl_add_inc_custom_preset
     dw #ctrl_add_dec_custom_preset
+endif
     dw #ctrl_add_reset_segment_timer
     dw #ctrl_add_reset_segment_later
     dw #$FFFF
@@ -2347,12 +2352,21 @@ if !FEATURE_VANILLAHUD
 else
     dw #ctrl_add_update_timers_dm_text
 endif
+if !FEATURE_PRESETS
     dw #ctrl_add_reload_preset_dm_text
     dw #ctrl_add_random_preset_dm_text
     dw #ctrl_add_save_custom_preset_dm_text
     dw #ctrl_add_load_custom_preset_dm_text
     dw #ctrl_add_inc_custom_preset_dm_text
     dw #ctrl_add_dec_custom_preset_dm_text
+else
+    dw #ctrl_add_empty_dm_text
+    dw #ctrl_add_empty_dm_text
+    dw #ctrl_add_empty_dm_text
+    dw #ctrl_add_empty_dm_text
+    dw #ctrl_add_empty_dm_text
+    dw #ctrl_add_empty_dm_text
+endif
     dw #ctrl_add_reset_segment_timer_dm_text
     dw #ctrl_add_reset_segment_later_dm_text
     dw #ctrl_add_full_equipment_dm_text
@@ -2473,12 +2487,21 @@ if !FEATURE_VANILLAHUD
 else
     db #gamemode_update_timers
 endif
+if !FEATURE_PRESETS
     db #gamemode_reload_preset
     db #gamemode_random_preset
     db #gamemode_save_custom_preset
     db #gamemode_load_custom_preset
     db #gamemode_increment_custom_preset
     db #gamemode_decrement_custom_preset
+else
+    db #gamemode_placeholder
+    db #gamemode_placeholder
+    db #gamemode_placeholder
+    db #gamemode_placeholder
+    db #gamemode_placeholder
+    db #gamemode_placeholder
+endif
     db #gamemode_reset_segment_timer
     db #gamemode_reset_segment_later
     db #gamemode_full_equipment
@@ -2558,12 +2581,21 @@ if !FEATURE_VANILLAHUD
 else
     db #gamemode_update_timers>>8
 endif
+if !FEATURE_PRESETS
     db #gamemode_reload_preset>>8
     db #gamemode_random_preset>>8
     db #gamemode_save_custom_preset>>8
     db #gamemode_load_custom_preset>>8
     db #gamemode_increment_custom_preset>>8
     db #gamemode_decrement_custom_preset>>8
+else
+    db #gamemode_placeholder>>8
+    db #gamemode_placeholder>>8
+    db #gamemode_placeholder>>8
+    db #gamemode_placeholder>>8
+    db #gamemode_placeholder>>8
+    db #gamemode_placeholder>>8
+endif
     db #gamemode_reset_segment_timer>>8
     db #gamemode_reset_segment_later>>8
     db #gamemode_full_equipment>>8
@@ -2649,6 +2681,7 @@ ctrl_add_update_timers:
     %cm_jsl("Update Timers", #ctrl_add_shortcut_select, #$0005)
 endif
 
+if !FEATURE_PRESETS
 ctrl_add_reload_preset:
     %cm_jsl("Reload Preset", #ctrl_add_shortcut_select, #$0086)
 
@@ -2666,6 +2699,7 @@ ctrl_add_inc_custom_preset:
 
 ctrl_add_dec_custom_preset:
     %cm_jsl("Prev Preset Slot", #ctrl_add_shortcut_select, #$008B)
+endif
 
 ctrl_add_reset_segment_timer:
     %cm_jsl("Reset Seg Timer", #ctrl_add_shortcut_select, #$000C)

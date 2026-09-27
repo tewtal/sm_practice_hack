@@ -66,7 +66,11 @@ layout_create_plms_execute_asm_fixes:
     BRA .vanilla
   .endPLMs
     JSL layout_skip_custom_door_asm
+if !FEATURE_PRESETS
     JSL preset_room_setup_asm_fixes
+else
+    JSL layout_execute_setup_asm
+endif
     PLB : PLP : RTL
 }
 warnpc $82E8EB

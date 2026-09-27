@@ -110,11 +110,13 @@ init_non_zero_persistent_wram:
     LDA !sram_seed_Y : STA !ram_seed_Y
     LDA #$8000 : STA !ram_cm_gmode
 
+if !FEATURE_PRESETS
     ; If Map Completion preset category selected then turn minimap on
     LDA !sram_preset_category : CMP !PRESET_CATEGORY_100MAP_INDEX : BNE .done
     LDA #$0001 : STA !ram_minimap
 
   .done
+endif
     RTS
 }
 
@@ -364,8 +366,10 @@ if !FEATURE_SD2SNES
     LDA #$83 : INX : STA !sram_ctrl_shortcut_selections,X
   .skipTypes
 endif
+if !FEATURE_PRESETS
     ; Reload Preset
     LDA #$86 : INX : STA !sram_ctrl_shortcut_selections,X
+endif
     ; Main Menu
     LDA #$81 : INX : STA !sram_ctrl_shortcut_selections,X
     ; Pause
@@ -407,8 +411,10 @@ if !FEATURE_SD2SNES
     LDA #$6020 : INX #2 : STA !sram_ctrl_1_shortcut_inputs,X
   .skipValues
 endif
+if !FEATURE_PRESETS
     ; Reload Preset (Controller 1, Start + Y + L)
     LDA #$5020 : INX #2 : STA !sram_ctrl_1_shortcut_inputs,X
+endif
     ; Main Menu (Controller 2, Start + Select)
     LDA #$3000 : INX #2 : STA !sram_ctrl_2_shortcut_inputs,X
     ; Pause (Controller 2, Right)

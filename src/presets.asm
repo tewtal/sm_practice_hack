@@ -124,7 +124,7 @@ endif
     JSL upload_sprite_oob_tiles
 
   .done_upload_sprite_oob_tiles
-    JSL reset_all_counters
+    JSL ih_reset_all_counters
     STZ !DOOR_TRANSITION_FLAG_ELEVATOR
     STZ !DOOR_TRANSITION_FLAG_ENEMY
 
@@ -229,14 +229,7 @@ preset_start_transfer_to_vram:
 
 preset_end_transfer_to_vram:
     RTS
-endif
-
-EnsureSamusIsDrawn_long:
-; called from menu.asm
-{
-    JSR $DFC7 ; Ensures Samus is drawn every frame
-    RTL
-}
+endif ; RAW_TILE_GRAPHICS
 
 %endfree(82)
 
@@ -256,33 +249,6 @@ clear_all_enemies:
     TXA : CLC : ADC #$0040 : CMP #$0800 : BNE .loop
     STZ !ENEMY_KILLS_UNLOCK ; unlock grey doors that require killing enemies
     RTL
-}
-
-reset_all_counters:
-{
-    TDC
-    STZ !IGT_FRAMES : STZ !IGT_SECONDS : STZ !IGT_MINUTES : STZ !IGT_HOURS
-    STA !ram_seg_rt_frames : STA !ram_seg_rt_seconds : STA !ram_seg_rt_minutes
-    STA !ram_realtime_room : STA !ram_last_realtime_room
-    STA !ram_gametime_room : STA !ram_last_gametime_room
-    STA !ram_last_room_lag : STA !ram_last_door_lag_frames : STA !ram_transition_counter
-    RTL
-}
-
-startgame_seg_timer:
-{
-    ; seg timer will be 1:50 (1 second, 50 frames) behind by the time it appears
-    ; 20 frames more if the file was new
-    ; initializing to 1:50 for now
-    TDC : STA !ram_seg_rt_minutes
-if !FEATURE_PAL
-    INC : INC : STA !ram_seg_rt_seconds
-    LDA #$000A : STA !ram_seg_rt_frames
-else
-    INC : STA !ram_seg_rt_seconds
-    LDA #$0032 : STA !ram_seg_rt_frames
-endif
-    JML $808924 ; overwritten code
 }
 
 preset_load_preset:
@@ -1367,7 +1333,7 @@ preset_room_setup_asm_fixes:
     PHP : PHB
     %ai16()
     LDX !STATE_POINTER
-    LDA $0018,X : BEQ .end
+    LDA $0018,X : BEQ .elevator_check
 
     ; Check if this is scrolling sky
     CMP #$91C9 : BEQ .scrolling_sky
@@ -1377,8 +1343,10 @@ preset_room_setup_asm_fixes:
     CMP #layout_asm_eastocean : BEQ .scrolling_sky
 
   .execute_setup_asm
-    ; Resume execution
     JML layout_execute_setup_asm_execute
+
+  .elevator_check
+    JML layout_execute_setup_asm_elevator_check
 
   .scrolling_sky
     ; If we got here through normal gameplay, allow scrolling sky
@@ -1392,10 +1360,9 @@ else
     ; Disable scrolling sky asm
     STZ !ROOM_MAIN_ASM_POINTER
     ; Clear layer 2 library bits (change 0181 to 0080)
-    LDA #$0080 : STA $091B
+    LDA #$0080 : STA !LAYER2_SCROLL
 endif
 
-  .end
     PLB : PLP
     RTL
 }
@@ -1458,19 +1425,6 @@ preset_bg_offsets:
     STZ !BG2_Y_OFFSET
 
   .bgOffsetsCalculated
-    RTL
-}
-
-transfer_cgram_long:
-{
-    PHP
-    %ai8()
-    LDA #$80 : STA $802100 ; forced blanking
-    %a16()
-    JSR $933A
-    %a8()
-    LDA #$0F : STA $0F2100
-    PLP
     RTL
 }
 

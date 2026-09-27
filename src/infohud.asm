@@ -75,7 +75,7 @@ org $82E764      ; hijack, runs when Samus is coming out of a room transition
     RTS
 
 org $82EE92      ; runs on START GAME
-    JSL startgame_seg_timer
+    JSL ih_startgame_seg_timer
 
 org $84889F      ; hijack, runs every time an item is picked up
     JSL ih_get_item_code
@@ -2172,6 +2172,33 @@ ih_fix_scroll_down_offsets:
   .nofix
     LDA $B1 : SEC
     JMP $AE2C
+}
+
+ih_reset_all_counters:
+{
+    TDC
+    STZ !IGT_FRAMES : STZ !IGT_SECONDS : STZ !IGT_MINUTES : STZ !IGT_HOURS
+    STA !ram_seg_rt_frames : STA !ram_seg_rt_seconds : STA !ram_seg_rt_minutes
+    STA !ram_realtime_room : STA !ram_last_realtime_room
+    STA !ram_gametime_room : STA !ram_last_gametime_room
+    STA !ram_last_room_lag : STA !ram_last_door_lag_frames : STA !ram_transition_counter
+    RTL
+}
+
+ih_startgame_seg_timer:
+{
+    ; seg timer will be 1:50 (1 second, 50 frames) behind by the time it appears
+    ; 20 frames more if the file was new
+    ; initializing to 1:50 for now
+    TDC : STA !ram_seg_rt_minutes
+if !FEATURE_PAL
+    INC : INC : STA !ram_seg_rt_seconds
+    LDA #$000A : STA !ram_seg_rt_frames
+else
+    INC : STA !ram_seg_rt_seconds
+    LDA #$0032 : STA !ram_seg_rt_frames
+endif
+    JMP $8924 ; overwritten code
 }
 
 ih_hud_code_paused:

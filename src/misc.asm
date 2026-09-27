@@ -1267,8 +1267,11 @@ endif
     ASL #4
     NOP #4 ; Add 8 more clock cycles
   .combined
+if !FEATURE_VANILLAHUD
+else
     PHA : LDA !ram_update_timers_flag : BNE .update_timers
     PLA
+endif
     CLC : ADC #$0007 ; Add 40 cycles including CLC+ADC
     BMI .endlag ; Make sure we haven't looped over to a negative count
   .lagstart
@@ -1279,7 +1282,10 @@ endif
     RTL
 
   .skiplag
+if !FEATURE_VANILLAHUD
+else
     LDA !ram_update_timers_flag : BNE .conditional_update_timers
+endif
     RTL
 
   .vanilla_display_lag_loop
@@ -1293,6 +1299,8 @@ endif
     INC  ; Add 1 loop (7 clock cycles including the INC)
     BRA .combined
 
+if !FEATURE_VANILLAHUD
+else
   .update_timers
     ; Update timers takes roughly 580 clock cycles,
     ; plus time spent setting and clearing the flag,
@@ -1317,6 +1325,7 @@ endif
     JSL ih_update_timers
     TDC : STA !ram_update_timers_flag
     RTL
+endif
 }
 
 stop_all_sounds:
