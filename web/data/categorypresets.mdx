@@ -1,0 +1,296 @@
+# Category Presets
+Presets are pre-configured savestates that are specific to a particular category.  
+&nbsp;  
+Presets load a room but do not load enemies for that room by default,
+so often a preset is named for the upcoming room or section, since enemies will load in the next room.
+This is also why any blue doors are already open to allow easier entry to the next room,
+except when Samus is facing forward as if she just arrived on the ship or is riding an elevator;
+in those cases the assumption is Samus couldn't have opened the doors and you want to practice opening them.
+In fact if Samus is actually riding an elevator at the start of a preset, simulating an entry into the room,
+then enemies will also be loaded into the room. However since the enemies aren't loaded with the same timing as normal,
+this can result in enemies being out of position compared to the vanilla game, so depending on what you want to practice,
+you may want to select the preset before riding the elevator.  
+&nbsp;  
+You're also welcome to create your own custom presets.
+Some category presets support different routing options, or contain a Safeties and Strategies section
+where you can toggle on/off various options. However with Super Metroid having a wealth of strats,
+with seemingly each room having multiple viable strats for speedrunning, the built-in presets can only cover so much,
+so making custom presets is also an option. When making custom presets, we recommend periodically backing up
+your SaveRAM or .sram file (if practical) just in case it gets reset by accident (in particular microSD cards
+are known to fail on occasion and could take your custom presets with it). We do strive for backwards compatibility,
+so your custom presets should continue to work if you carry your SaveRAM/.sram file forward to a future update.  
+&nbsp;  
+If you have interest in creating built-in category presets for a category we don't have presets for, it is possible with some effort.
+You will need to download a specific version of snes9x emulator in order to record a playthrough of the category,
+and then specific points during that playthrough can be chosen as the presets.
+If you make a mistake during the playthrough and are able to farm back up or otherwise correct the mistake quickly,
+that would be preferred, but it is also possible to make edits afterwards.
+Once the playthrough movie is recorded, it needs to be given to a Practice Hack developer to continue the process.
+You may need to be patient as this isn't something we do often.
+The playthrough method will give us a basic, continuous set of presets.
+If you want the category presets to have different routing options or a Safeties and Strategies section,
+that would need to be added manually by a Practice Hack developer.
+Click here for more information about [creating category presets](https://github.com/tewtal/sm_practice_hack/wiki/Creating-Category-Presets).  
+&nbsp;  
+For categories with a Safeties and Strategies section, a description of what each option does is below.
+Unless otherwise stated, ammo and energy pickups give their natural inventory boost.
+For example, an option to collect a missile pack will give you an extra five missiles.
+Collecting an energy tank gives you an extra 100 energy plus a refill effect
+that lasts until you would normally be at or near full energy even without the energy tank pickup.
+
+# Any% KPDR Safeties and Strategies
+## NOTE: This is still in beta test and not available in the 2.7.11 release
+### Zeb Skip Skip
+#### When selected, also selects HJB Missiles, Moat Missiles, Aqueduct Missiles, Aqueduct Supers
+For beginner speedrunners not comfortable with the Zeb Skip at the end of the run.
+This is listed first since you want to start picking up extra ammo for the zebetites early on.
+This preset has the following pickups and changes:
+- Open Retro Brin door (-5 missiles on red door, until after Pit Room)
+- Collect Retro Brin missiles
+- Collect Early Supers missiles
+- Collect HJB missiles
+- Collect Cathedral missiles (-2 missiles on gerutas and -60 energy on lava, until after Bat Cave Revisit)
+- Collect Bubble Mountain missiles
+- Collect Speed Booster missiles
+- Collect Alpha Power Bomb missiles
+- Collect Moat missiles
+- Collect Aqueduct missiles and supers
+- Collect Precious missiles (after Draygon)
+- Collect Hotarubi missiles
+- Marks all Zebetites destroyed and removes all missiles and supers for Mother Brain 2  
+&nbsp;  
+Note this is not intended to be the most efficient method of Zeb Skip Skip. This route favors collecting earlier missiles
+since they can help with boss fights, but many other viable routes exist. In particular the Retro Brin missile pack could be dropped
+while Big Pink, Green Hill Zone, West Ocean, and Three Muskateers rooms all contain a missile pack that could be picked up
+with only a slight detour in-room. Swapping in more super packs is also an option, or the two Brin Reserve missile packs with reserve tank.
+
+### Spazer
+Collecting Spazer provides another option for killing and farming enemies, so the following adjustments are made:
+- +1 missile cac below Spazer
+- +1 missile mini-kraid pirates (see below note)
+- +2 missiles pre-cathedral desgeegas
+- +1 missile king cac
+- Above missile buffs reset after Bat Cave Revisit farm (assume less time spent farming)
+- +20 energy hellway farm (resets at next energy refill)  
+&nbsp;  
+Note that collecting Spazer costs one super for the green door. To offset this,
+it assumed only one super will be used for Kraid entrance instead of three,
+so you end up with an extra super available for killing mini-kraid pirates.
+From there supers max out after killing mini-kraid, same as without Spazer.
+
+### Hi-Jump First
+#### When selected, also selects Kraid E-Tank, HJB Missiles, Early Ice
+For beginner speedrunners not comfortable with the Kraid entrance walljump.
+It also uses missiles instead of a super on the red door to Hi-Jump Boots,
+so it has +1 super -5 missiles during Upper Norfair until the farm after Bat Cave Revisit.
+
+### Kraid E-Tank
+Considered by many not as a safety, but as a timesave; it is difficult to actually save time skipping this energy tank.
+This option also applies -1 missile for killing the beetoms (reset after Bat Cave Revisit).
+The energy refill effect lasts until HJB E-Tank is collected (or until re-entering Upper Norfair if Hi-Jump First).
+
+### HJB Missiles
+Often collected for 20/10 loadouts, with moat missiles being the other 20/10 option (or collect both for 25/10 MB1 ammo).
+This option comes with a -2 missile penalty after the Phantoon fight, which isn't cleared until after Draygon.
+
+### Grapple
+#### When selected, also selects Ocean Fly Skip
+For beginner speedrunners not confortable crossing moat, or perhaps for the extra health.
+This option kills Croc, gives Grapple, Croc power bombs, and Croc E-Tank.
+There is no energy refill effect since Samus is already at full health entering frog speedway.
+Grapple does give a +38 energy buff for skipping moat spark and a +87 energy buff for skipping ocean spark,
+which when combined with Ocean Fly Skip and Healthsaver Spark allows Samus to keep all her energy.
+This energy buff is reduced by 80 energy after Phantoon under the assumption the fight will be more difficult.
+
+### Early Ice
+#### Not compatible with Southern Route
+Collect Ice Beam on the first visit to Upper Norfair instead on the return trip.
+It costs one super to open the green door. The super is recovered going up the Caterpillars room,
+but costs 20 energy due to farming a super from a cac instead of energy.
+This cost is cleared after the Phantoon fight (assumed more energy recovered during the fight).
+
+### Alpha Spark Skip
+Enable this option to gain 60 energy entering red tower (resets at next energy refill).
+
+### Save Yellow Door PB
+Enable this option to gain 1 power bomb by not opening the yellow door from Crateria Kihunters back to Red Brinstar.
+This is cleared upon returning to Red Brinstar.
+
+### Moat Missiles
+Often collected for 20/10 loadouts, with HJB missiles being the other 20/10 option (or collect both for 25/10 MB1 ammo).
+This option comes with a -2 missile penalty after the Phantoon fight, which isn't cleared until after Draygon.
+
+### Ocean Fly Skip
+Enable this option to gain 15 energy starting at Ocean Spark (resets at next energy refill).
+
+### Healthsaver Spark
+#### When selected, also selects Ocean Fly Skip
+Enable this option to gain 35 energy entering Wrecked Ship (reduced to 15 energy after Phantoon and resets at next energy refill).
+Note that Healthsaver Spark requires Ocean Fly Skip, so effectively you get a +50 energy buff for Phantoon, dropping to +30 after Phantoon.
+
+### Phantoon X-Factor
+This option causes Spazer and Ice Beam to be unequipped prior to Phantoon,
+with Spazer never being re-equipped and Ice Beam being re-equipped when entering Lower Norfair.
+This option does nothing if neither Spazer or Ice Beam are collected.
+
+### Sloaters Refill
+This option also applies -1 super for opening the green door (reset after Botwoon).
+The energy refill effect lasts until the next energy tank collection (either Mama Turtle E-Tank or Botwoon E-Tank).
+
+### Mama Turtle E-Tank
+This option also applies -5 missiles for opening the red door (reset after Botwoon).
+The energy refill effect lasts until Botwoon E-Tank is collected.
+
+### Crab Supers
+Adds crab supers with no other adjustments.
+
+### Botwoon X-Factor
+This option causes Spazer and Ice Beam to be unequipped prior to Crab Shaft (during Mt. Everest spark),
+with Spazer never being re-equipped and Ice Beam being re-equipped when entering Lower Norfair.
+This option does nothing if neither Spazer or Ice Beam are collected.
+
+### Aqueduct Missiles
+Adds aqueduct missiles with no other adjustments.
+
+### Aqueduct Supers
+Adds aqueduct supers with no other adjustments.
+
+### Halfie Savings
+Enable this option to gain 70 energy in the Colosseum.
+The energy bonus resets at the next energy refill or after Tourian Metroids.
+
+### Safer Draygon
+Enable this option to gain 40 energy after Draygon.
+The energy bonus resets at the next energy refill or after Tourian Metroids.
+
+### Whomple Savings
+Enable this option to gain 112 energy on the reverse trip through the Colosseum.
+The energy bonus resets at the next energy refill or after Tourian Metroids.
+
+### Plasma Spark Skip
+Enable this option to gain 43 energy entering Plasma Climb.
+The energy bonus resets at the next energy refill or after Tourian Metroids.
+
+### Southern Route
+#### Not compatible with Early Ice
+This option only controls whether Northern Route or Southern Route presets appear in the menu.
+
+### Screw Attack
+#### When selected, also selects Blue Pillars
+This option sets the acid as cleared, Golden Torizo defeated and gives Screw Attack.
+If a speedrunner really did this they might also collect the super pack (and possibly the missile pack).
+However by leaving those off, this option could also be used by speedrunners
+who intend to gate glitch just to get the Screw Attack.
+
+### Blue Pillars
+#### Not compatible with Slow Pillars
+Enable this option to gain 74 energy entering Worst Room In The Game.
+The energy bonus resets at the next energy refill or after Tourian Metroids.
+
+### Slow Pillars
+#### Not compatible with Blue Pillars
+Enable this option to take a -2 power bombs penalty entering Worst Room In The Game.
+This penalty is reduced to -1 entering wasteland due to replacing a power bomb with bomb spread, and the penalty resets entering Ridley.
+
+### Fireflea E-Tank
+The energy refill effect lasts until Ridley E-Tank or after Tourian Metroids.
+
+### Ridley E-Tank
+The energy refill effect lasts until after Tourian Metroids.
+
+# Any% Phantoon First Safeties and Strategies
+## NOTE: This is still in beta test and not available in the 2.7.11 release
+### Brinstar Reserve
+Costs one super to open the red door towards the reserve tank, which is not reset until after Phantoon.
+It also costs 20 energy for the extra damage boosting through the Early Supers room.
+This energy is replenished through farming in the Dachora room, along with +3 missiles and +5 energy added to reserves.
+The +3 missile buff is reset after Phantoon, but also +40 energy is added to reserves after Phantoon (+45 total).
+An additional 25 energy is added to reserves after Tourian Metroids, bringing the final total in reserves to 70 energy.
+
+### Early Supers Missiles
+Adds the missile pack in Early Supers room with no other adjustments.
+
+### Right Side Supers
+Adds the Wrecked Ship right-side supers with no other adjustments.
+
+### PKRD
+Routes Kraid before Ridley. Typically paired with the Kraid E-Tank to provide additional safety in Lower Norfair.
+Upon entering Upper Norfair, in addition to having Kraid killed and collecting Varia,
+Samus will have an extra 16 energy, 1 missile, 1 super, and 1 power bomb (also collecting Kraid E-Tank will give more energy and power bombs).
+The energy adjustment resets after collecting HJB E-Tank.
+The extra missile and super reset after Bat Cave Revisit.
+The extra power bombs are reset after farming in Kronic Boost room.  
+&nbsp;  
+Upon reaching Frog Speedway, PKRD assumes extra farming will be done and grants +60 energy, +6 missiles, +5 supers, and +1 power bomb.
+However this isn't equivalent to what you get from doing Kraid after Ridley, which is +89 energy, +5 missiles, +5 supers, and +2 power bombs.
+Thus upon revisiting the Maridia tube, the final adjustments are -29 energy, +1 missile, and -1 power bomb.
+The missile buff is reset after Botwoon, and the energy and power bomb costs are reset after Tourian Metroids.
+
+### HJB Missiles
+Adds the missile pack in Hi Jump Boots E-Tank room with no other adjustments.
+
+### Wave Missiles
+Adds the missile pack in Double Chamber room with no other adjustments.
+
+### Varia + Gravity Jump
+#### When selected, also selects PKRD
+Enable this option to gain 60 energy after lava dive (resets after Ridley).
+
+### Ridley Beam Fight
+Enable this option to keep Ice and Spazer equipped when entering Lower Norfair.
+This option also assumes a power bomb farm was skipped so it enters Ridley with one fewer power bomb.
+Both conditions reset after Ridley.
+
+### Slow Pillars
+Enable this option to take a -2 power bombs penalty entering Worst Room In The Game.
+This penalty is reduced to -1 entering wasteland due to replacing a power bomb with bomb spread, and the penalty resets entering Ridley.
+This options also gains 40 energy entering Worst Room In The Game assuming some energy saved by not shinesparking (resets after Ridley).
+
+### Fireflea E-Tank
+#### At least one E-Tank is required (Fireflea, Ridley, Kraid, Botwoon)
+The energy refill effect lasts until after the Ridley fight.
+
+### Ridley E-Tank
+#### At least one E-Tank is required (Fireflea, Ridley, Kraid, Botwoon)
+The energy refill effect lasts until after Botwoon.
+
+### Kraid E-Tank
+#### At least one E-Tank is required (Fireflea, Ridley, Kraid, Botwoon)
+If PKRD is selected, collecting Kraid E-Tank also gives a +2 power bomb buff due to farming beetoms.
+The energy refill effect lasts until HJB E-Tank is collected,
+and the power bomb buff drops to +1 after pre-cathedral and is cleared after Kronic Boost farm.  
+&nbsp;  
+If PKRD is not selected, there is no power bomb buff since power bombs are already full.
+The energy refill effect lasts until Botwoon, and is then replaced by a +40 energy buff (reset after Tourian Metroids).
+If Botwoon E-Tank is also selected,
+then energy values between Botwoon E-Tank and Tourian Metroids may appear higher than expected.
+
+### Mt. Everest Spark Skip
+#### Not compatible with Kraid E-Tank (unless PKRD is selected), nor Botwoon E-Tank
+Enable this option to gain 59 energy starting at Maridia Crab Shaft (reset after Tourian Metroids).
+
+### Botwoon E-Tank
+#### At least one E-Tank is required (Fireflea, Ridley, Kraid, Botwoon)
+The energy refill effect lasts until Tourian Metroids.
+Selecting Botwoon E-Tank assumes an aggressive Draygon,
+and thus skipping Botwoon E-Tank will give +40 energy buff leaving Draygon.
+If Kraid E-Tank is also selected and PKRD is not selected,
+then energy values between Botwoon E-Tank and Tourian Metroids may appear higher than expected.
+
+### Halfie Savings
+Enable this option to gain 70 energy in the Colosseum (reset after Tourian Metroids).
+
+### Space Jump
+Space Jump gives a +45 energy buff for the return trip through Colosseum (reset after Tourian Metroids),
+which when combined with Reverse Spark Skip allows Samus to keep all her energy.
+
+### Reverse Spark Skip
+Enable this option to gain 67 energy on the reverse trip through the Colosseum (reset after Tourian Metroids).
+
+# 100% Map Completion Safeties and Strategies
+### Spazer
+Collect Spazer when visiting the room.
+This results in a pause during Forgotten Highway Elevator to unequip Spazer so that X-Factor strats may be used in Maridia.
+While unequipping Spazer, Varia is also unequipped to aid with Tourian and standup glitch later on.
+
+<br />
