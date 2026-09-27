@@ -1527,22 +1527,14 @@ incsrc presets/combined_preset_names.asm
 %startfree(F1)
 incsrc presets/kpdr_menu.asm
 incsrc presets/phantoonfirst_menu.asm
-incsrc presets/kpdr20_menu.asm
-incsrc presets/kpdr21_menu.asm
-incsrc presets/kpdr22_menu.asm
-incsrc presets/kpdr23_menu.asm
-incsrc presets/kpdr25_menu.asm
-incsrc presets/prkd19_menu.asm
-incsrc presets/prkd20_menu.asm
-incsrc presets/pkrd_menu.asm
 incsrc presets/gtclassic_menu.asm
 incsrc presets/gtmax_menu.asm
 incsrc presets/100early_menu.asm
 incsrc presets/hundo_menu.asm
+incsrc presets/100map_menu.asm
 %endfree(F1)
 
 %startfree(F2)
-incsrc presets/100map_menu.asm
 incsrc presets/14ice_menu.asm
 incsrc presets/14speed_menu.asm
 incsrc presets/rbo_menu.asm

@@ -6,14 +6,6 @@ preset_safeties_sram_table:
     dw #$0000
     dw #$0000
     dw #$0000
-    dw #$0000
-    dw #$0000
-    dw #$0000
-    dw #$0000
-    dw #$0000
-    dw #$0000
-    dw #$0000
-    dw #$0000
     dw #!sram_safeties_enabled_100map
     dw #$0000
     dw #$0000
@@ -31,14 +23,6 @@ preset_safeties_sram_table:
 preset_safeties_definition_table:
     dw #preset_kpdr_safeties_definition
     dw #preset_phantoonfirst_safeties_definition
-    dw #$0000
-    dw #$0000
-    dw #$0000
-    dw #$0000
-    dw #$0000
-    dw #$0000
-    dw #$0000
-    dw #$0000
     dw #$0000
     dw #$0000
     dw #$0000
