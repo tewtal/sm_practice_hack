@@ -8,12 +8,10 @@ org $80FFD8
 hook_sram_size:
 if !FEATURE_TINYSTATES
     db $07 ; 128kb
-else
-if !FEATURE_SD2SNES
+elseif !FEATURE_SD2SNES
     db $08 ; 256kb
 else
     db $05 ; 32kb
-endif
 endif
 
 
@@ -29,12 +27,10 @@ else
 endif
 
 org $8B8731
-if !FEATURE_SD2SNES
 if !FEATURE_TINYSTATES
     LDA #$39E3 ; T
-else
+elseif !FEATURE_SD2SNES
     LDA #$39E2 ; S
-endif
 else
     LDA #$04F0 ; blank
 endif

@@ -322,9 +322,9 @@ endif
 
   .upgrade_22to23
     TDC : STA !sram_preset_category
-    STA !sram_safeties_enabled_kpdr+$2
     STA !sram_safeties_enabled_phantoonfirst+$2
     LDA #$0318 : STA !sram_safeties_enabled_kpdr
+    LDA #$0040 : STA !sram_safeties_enabled_kpdr+$2
     LDA #$4140 : STA !sram_safeties_enabled_phantoonfirst
     LDA !FRAME_COUNTER_ADJUST_REALTIME : STA !sram_frame_counter_mode
 

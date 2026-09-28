@@ -16,9 +16,9 @@ lorom
 !ZSNES_SPLASHSCREEN_GRAPHICS ?= 1
 
 !VERSION_MAJOR = 2
-!VERSION_MINOR = 7
-!VERSION_BUILD = 11
-!VERSION_REV   = 30
+!VERSION_MINOR = 8
+!VERSION_BUILD = 0
+!VERSION_REV   = 0
 
 table ../resources/normal.tbl
 print ""

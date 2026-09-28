@@ -16,6 +16,10 @@ const MenuLinks = [
         href: '/infohudmode',
     },
     {
+        name: 'Category Presets',
+        href: '/categorypresets',
+    },
+    {
         name: 'Changelog',
         href: '/changelog',
     },
