@@ -1,4 +1,6 @@
 
+; 01 = Safeties (Spazer)
+
 preset_100map_bombs_ceres_elevator:
     dw #$0000
     dw $078D, $AB58  ; DDB
@@ -664,6 +666,7 @@ preset_100map_varia_leaving_spazer:
     dw $0AF6, $01AF  ; Samus X
     dw $0AF8, $87FF  ; Samus subpixel X
     dw $0AFA, $018B  ; Samus Y
+    dw $0F78, $0001  ; Safeties enabled
     dw $CAE8, $008A  ; Map counter
     dw $D8B6, $8108  ; Doors
     dw #$FFFF
@@ -2337,6 +2340,8 @@ preset_100map_forgotten_highway_pancakes_from_hell:
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $0025  ; Samus X
     dw $0AFA, $058B  ; Samus Y
+    dw $10C0, $0001  ; Safeties (Spazer) unequip items
+    dw $1100, $0004  ; Safeties (Spazer) unequip beams
     dw $CAE8, $0207  ; Map counter
     dw $CDE8, $807F  ; Explored map tiles (Crateria)
     dw $CDEC, $807F  ; Explored map tiles (Crateria)
@@ -2975,6 +2980,7 @@ preset_100map_maridia_cleanup_plasma_spark_room_final:
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $002A  ; Samus X
     dw $0AFA, $038B  ; Samus Y
+    dw $1100, $0000  ; Safeties (Spazer) unequip beams
     dw $CAE8, $02D2  ; Map counter
     dw $D880, $90F4  ; Items
     dw $D8C2, $CD7E  ; Doors

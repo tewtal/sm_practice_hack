@@ -75,7 +75,7 @@ org $82E764      ; hijack, runs when Samus is coming out of a room transition
     RTS
 
 org $82EE92      ; runs on START GAME
-    JSL startgame_seg_timer
+    JSL ih_startgame_seg_timer
 
 org $84889F      ; hijack, runs every time an item is picked up
     JSL ih_get_item_code
@@ -375,60 +375,23 @@ endif
     %a8() : LDA #$01 : STA !NMI_REQUEST_FLAG : %a16()
     JMP .done
 
-if !FEATURE_TINYSTATES
   .pause
-elseif !FEATURE_SD2SNES
-  .pause
-    BRA .pauseOption
-
-  .restore_seg_full
-    LDA !SRAM_SEG_TIMER_F : STA !ram_seg_rt_frames
-    LDA !SRAM_SEG_TIMER_S : STA !ram_seg_rt_seconds
-    LDA !SRAM_SEG_TIMER_M : STA !ram_seg_rt_minutes
-    JMP .done
-
-  .restore_seg_1st_tiny
-    LDA !SRAM_1ST_SEG_TIMER_F : STA !ram_seg_rt_frames
-    LDA !SRAM_1ST_SEG_TIMER_S : STA !ram_seg_rt_seconds
-    LDA !SRAM_1ST_SEG_TIMER_M : STA !ram_seg_rt_minutes
-    JMP .done
-
-  .restore_seg_2nd_tiny
-    LDA !SRAM_2ND_SEG_TIMER_F : STA !ram_seg_rt_frames
-    LDA !SRAM_2ND_SEG_TIMER_S : STA !ram_seg_rt_seconds
-    LDA !SRAM_2ND_SEG_TIMER_M : STA !ram_seg_rt_minutes
-    JMP .done
-
-  .pauseOption
-else
-  .pause
-endif
     ; option to pause on loadstate
     LDA !ram_freeze_on_load : BEQ .checkFrameAdvance
     LDA !IH_CONTROLLER_PRI_NEW : BEQ .checkFrameAdvance
     ; unfreeze
     TDC : STA !ram_slowdown_mode : STA !ram_slowdown_frames
     STA !ram_freeze_on_load
-if !FEATURE_TINYSTATES
+if !FEATURE_SD2SNES
     LDA !SRAM_SEG_TIMER_F : STA !ram_seg_rt_frames
     LDA !SRAM_SEG_TIMER_S : STA !ram_seg_rt_seconds
     LDA !SRAM_SEG_TIMER_M : STA !ram_seg_rt_minutes
-    JMP .done
-elseif !FEATURE_SD2SNES
-    LDA !ram_last_save_state_type : BEQ .restore_seg_full
-    DEC : BEQ .restore_seg_1st_tiny
-    DEC : BEQ .restore_seg_2nd_tiny
-    TDC
-    STA !ram_seg_rt_frames
-    STA !ram_seg_rt_seconds
-    STA !ram_seg_rt_minutes
-    JMP .done
 else
     STA !ram_seg_rt_frames
     STA !ram_seg_rt_seconds
     STA !ram_seg_rt_minutes
-    JMP .done
 endif
+    JMP .done
 
   .pauseDoorTransition
     LDA !DOOR_FUNCTION_POINTER : CMP #optimized_fade_in : BCC .done
@@ -786,7 +749,7 @@ ih_chozo_segment:
 
 ih_ceres_elevator_segment:
 {
-    LDA #$0001 : STA !ram_update_timers_flag
+    STA !ram_update_timers_flag
 if !FEATURE_PAL
     JML $90F081
 else ; overwritten code
@@ -2211,6 +2174,33 @@ ih_fix_scroll_down_offsets:
     JMP $AE2C
 }
 
+ih_reset_all_counters:
+{
+    TDC
+    STZ !IGT_FRAMES : STZ !IGT_SECONDS : STZ !IGT_MINUTES : STZ !IGT_HOURS
+    STA !ram_seg_rt_frames : STA !ram_seg_rt_seconds : STA !ram_seg_rt_minutes
+    STA !ram_realtime_room : STA !ram_last_realtime_room
+    STA !ram_gametime_room : STA !ram_last_gametime_room
+    STA !ram_last_room_lag : STA !ram_last_door_lag_frames : STA !ram_transition_counter
+    RTL
+}
+
+ih_startgame_seg_timer:
+{
+    ; seg timer will be 1:50 (1 second, 50 frames) behind by the time it appears
+    ; 20 frames more if the file was new
+    ; initializing to 1:50 for now
+    TDC : STA !ram_seg_rt_minutes
+if !FEATURE_PAL
+    INC : INC : STA !ram_seg_rt_seconds
+    LDA #$000A : STA !ram_seg_rt_frames
+else
+    INC : STA !ram_seg_rt_seconds
+    LDA #$0032 : STA !ram_seg_rt_frames
+endif
+    JMP $8924 ; overwritten code
+}
+
 ih_hud_code_paused:
 {
     ; overwritten code
@@ -2265,11 +2255,16 @@ ih_set_zebes_timer:
 if !FEATURE_VANILLAHUD
 else
 ; Update Timers is called during normal gameplay,
-; so it avoid common helper methods in favor of optimization
+; so it avoids common helper methods in favor of optimization
 ih_update_timers:
 {
     PHX : PHP : PHB
     PHK : PLB
+
+    ; Update last room times so opening and closing the prac hack menu doesn't overwrite updates
+    LDA !ram_realtime_room : SEC : SBC !ram_transition_counter : STA !ram_last_room_lag
+    LDA !ram_gametime_room : STA !ram_last_gametime_room
+    LDA !ram_realtime_room : STA !ram_last_realtime_room
 
     LDA !ram_minimap : BEQ .start
     JMP .mmHUD

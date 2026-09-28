@@ -1,6 +1,5 @@
 
 preset_100map_bombs_ceres_elevator:
-preset_spazermap_bombs_ceres_elevator:
     dw #$0000
     dw $078D, $AB58  ; DDB
     dw $079B, $DF45  ; MDB
@@ -72,7 +71,6 @@ preset_spazermap_bombs_ceres_elevator:
     dw #$FFFF
 
 preset_100map_bombs_ceres_escape:
-preset_spazermap_bombs_ceres_escape:
     dw #preset_100map_bombs_ceres_elevator
     dw $078D, $ABAC  ; DDB
     dw $079B, $E0B5  ; MDB
@@ -98,7 +96,6 @@ preset_spazermap_bombs_ceres_escape:
     dw #$FFFF
 
 preset_100map_bombs_ceres_last_3_rooms:
-preset_spazermap_bombs_ceres_last_3_rooms:
     dw #preset_100map_bombs_ceres_escape
     dw $078D, $ABA0  ; DDB
     dw $079B, $E021  ; MDB
@@ -111,7 +108,6 @@ preset_spazermap_bombs_ceres_last_3_rooms:
     dw #$FFFF
 
 preset_100map_bombs_ship:
-preset_spazermap_bombs_ship:
     dw #preset_100map_bombs_ceres_elevator
     dw $078D, $88FE  ; DDB
     dw $079B, $91F8  ; MDB
@@ -134,7 +130,6 @@ preset_spazermap_bombs_ship:
     dw #$FFFF
 
 preset_100map_bombs_parlor:
-preset_spazermap_bombs_parlor:
     dw #preset_100map_bombs_ship
     dw $080D, $F001  ; Explored map tiles
     dw $090F, $0000  ; Screen subpixel X position
@@ -150,7 +145,6 @@ preset_spazermap_bombs_parlor:
     dw #$FFFF
 
 preset_100map_bombs_climb_down:
-preset_spazermap_bombs_climb_down:
     dw #preset_100map_bombs_parlor
     dw $078D, $8916  ; DDB
     dw $079B, $92FD  ; MDB
@@ -174,7 +168,6 @@ preset_spazermap_bombs_climb_down:
     dw #$FFFF
 
 preset_100map_bombs_pit_room:
-preset_spazermap_bombs_pit_room:
     dw #preset_100map_bombs_climb_down
     dw $078D, $898E  ; DDB
     dw $079B, $96BA  ; MDB
@@ -201,7 +194,6 @@ preset_spazermap_bombs_pit_room:
     dw #$FFFF
 
 preset_100map_bombs_morph:
-preset_spazermap_bombs_morph:
     dw #preset_100map_bombs_ceres_elevator
     dw $078D, $8B9E  ; DDB
     dw $079B, $9E9F  ; MDB
@@ -242,7 +234,6 @@ preset_spazermap_bombs_morph:
     dw #$FFFF
 
 preset_100map_bombs_construction_zone_down:
-preset_spazermap_bombs_construction_zone_down:
     dw #preset_100map_bombs_morph
     dw $0825, $7800  ; Explored map tiles
     dw $090F, $2000  ; Screen subpixel X position
@@ -260,7 +251,6 @@ preset_spazermap_bombs_construction_zone_down:
     dw #$FFFF
 
 preset_100map_bombs_construction_zone_up:
-preset_spazermap_bombs_construction_zone_up:
     dw #preset_100map_bombs_construction_zone_down
     dw $078D, $8EDA  ; DDB
     dw $079B, $A107  ; MDB
@@ -281,7 +271,6 @@ preset_spazermap_bombs_construction_zone_up:
     dw #$FFFF
 
 preset_100map_bombs_pit_room_revisit:
-preset_spazermap_bombs_pit_room_revisit:
     dw #preset_100map_bombs_construction_zone_up
     dw $078D, $8EB6  ; DDB
     dw $079B, $97B5  ; MDB
@@ -318,7 +307,6 @@ preset_spazermap_bombs_pit_room_revisit:
     dw #$FFFF
 
 preset_100map_bombs_climb_up:
-preset_spazermap_bombs_climb_up:
     dw #preset_100map_bombs_pit_room_revisit
     dw $078D, $8B92  ; DDB
     dw $079B, $975C  ; MDB
@@ -335,7 +323,6 @@ preset_spazermap_bombs_climb_up:
     dw #$FFFF
 
 preset_100map_bombs_parlor_revisit:
-preset_spazermap_bombs_parlor_revisit:
     dw #preset_100map_bombs_climb_up
     dw $078D, $8B7A  ; DDB
     dw $079B, $96BA  ; MDB
@@ -348,7 +335,6 @@ preset_spazermap_bombs_parlor_revisit:
     dw #$FFFF
 
 preset_100map_bombs_flyway:
-preset_spazermap_bombs_flyway:
     dw #preset_100map_bombs_climb_up
     dw $078D, $8B3E  ; DDB
     dw $079B, $92FD  ; MDB
@@ -369,7 +355,6 @@ preset_spazermap_bombs_flyway:
     dw #$FFFF
 
 preset_100map_bombs_bomb_torizo:
-preset_spazermap_bombs_bomb_torizo:
     dw #preset_100map_bombs_climb_up
     dw $078D, $8982  ; DDB
     dw $079B, $9879  ; MDB
@@ -387,7 +372,6 @@ preset_spazermap_bombs_bomb_torizo:
     dw #$FFFF
 
 preset_100map_bombs_alcatraz:
-preset_spazermap_bombs_alcatraz:
     dw #preset_100map_bombs_climb_up
     dw $078D, $8BAA  ; DDB
     dw $079B, $9879  ; MDB
@@ -405,7 +389,6 @@ preset_spazermap_bombs_alcatraz:
     dw #$FFFF
 
 preset_100map_bombs_terminator:
-preset_spazermap_bombs_terminator:
     dw #preset_100map_bombs_alcatraz
     dw $078D, $8BB6  ; DDB
     dw $079B, $92FD  ; MDB
@@ -420,7 +403,6 @@ preset_spazermap_bombs_terminator:
     dw #$FFFF
 
 preset_100map_bombs_green_pirate_shaft:
-preset_spazermap_bombs_green_pirate_shaft:
     dw #preset_100map_bombs_alcatraz
     dw $078D, $895E  ; DDB
     dw $079B, $990D  ; MDB
@@ -442,7 +424,6 @@ preset_spazermap_bombs_green_pirate_shaft:
     dw #$FFFF
 
 preset_100map_varia_green_brinstar_elevator:
-preset_spazermap_varia_green_brinstar_elevator:
     dw #preset_100map_bombs_green_pirate_shaft
     dw $078D, $8C22  ; DDB
     dw $079B, $9938  ; MDB
@@ -461,7 +442,6 @@ preset_spazermap_varia_green_brinstar_elevator:
     dw #$FFFF
 
 preset_100map_varia_early_supers:
-preset_spazermap_varia_early_supers:
     dw #preset_100map_bombs_construction_zone_up
     dw $078D, $8C0A  ; DDB
     dw $079B, $9AD9  ; MDB
@@ -505,7 +485,6 @@ preset_spazermap_varia_early_supers:
     dw #$FFFF
 
 preset_100map_varia_brinstar_reserve:
-preset_spazermap_varia_brinstar_reserve:
     dw #preset_100map_varia_early_supers
     dw $078D, $8CD6  ; DDB
     dw $079B, $9BC8  ; MDB
@@ -528,7 +507,6 @@ preset_spazermap_varia_brinstar_reserve:
     dw #$FFFF
 
 preset_100map_varia_reverse_mockball:
-preset_spazermap_varia_reverse_mockball:
     dw #preset_100map_varia_brinstar_reserve
     dw $078D, $8D5A  ; DDB
     dw $079B, $9C07  ; MDB
@@ -548,7 +526,6 @@ preset_spazermap_varia_reverse_mockball:
     dw #$FFFF
 
 preset_100map_varia_green_hill_zone:
-preset_spazermap_varia_green_hill_zone:
     dw #preset_100map_varia_brinstar_reserve
     dw $078D, $8DAE  ; DDB
     dw $079B, $9D19  ; MDB
@@ -580,7 +557,6 @@ preset_spazermap_varia_green_hill_zone:
     dw #$FFFF
 
 preset_100map_varia_red_tower_down:
-preset_spazermap_varia_red_tower_down:
     dw #preset_100map_varia_green_hill_zone
     dw $078D, $8E92  ; DDB
     dw $079B, $9FBA  ; MDB
@@ -604,7 +580,6 @@ preset_spazermap_varia_red_tower_down:
     dw #$FFFF
 
 preset_100map_varia_skree_boost:
-preset_spazermap_varia_skree_boost:
     dw #preset_100map_varia_red_tower_down
     dw $078D, $8F0A  ; DDB
     dw $079B, $A253  ; MDB
@@ -644,14 +619,9 @@ preset_100map_varia_leaving_spazer:
     dw $0AF6, $01AF  ; Samus X
     dw $0AF8, $87FF  ; Samus subpixel X
     dw $0AFA, $018B  ; Samus Y
+    dw $0F78, $0001  ; Safeties enabled
     dw $CAE8, $008A  ; Map counter
     dw $D8B6, $8108  ; Doors
-    dw #$FFFF
-
-preset_spazermap_varia_leaving_spazer:
-    dw #preset_100map_varia_leaving_spazer
-    dw $09A6, $1004  ; Equipped Beams
-    dw $09A8, $1004  ; Collected Beams
     dw #$FFFF
 
 preset_100map_varia_kraid_kihunter_room:
@@ -692,12 +662,6 @@ preset_100map_varia_kraid_kihunter_room:
     dw $CF1A, $004E  ; Explored map tiles (Brinstar)
     dw $CF1E, $007C  ; Explored map tiles (Brinstar)
     dw $D19E, $3800  ; Explored map tiles (Maridia)
-    dw #$FFFF
-
-preset_spazermap_varia_kraid_kihunter_room:
-    dw #preset_100map_varia_kraid_kihunter_room
-    dw $09A6, $1004  ; Equipped Beams
-    dw $09A8, $1004  ; Collected Beams
     dw #$FFFF
 
 preset_100map_varia_kihunter_save_room:
@@ -743,12 +707,6 @@ preset_100map_varia_kraid:
     dw $D8B8, $0024  ; Doors
     dw #$FFFF
 
-preset_spazermap_varia_kihunter_save_room:
-    dw #preset_100map_varia_kihunter_save_room
-    dw $09A6, $1004  ; Equipped Beams
-    dw $09A8, $1004  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_varia_kraid_dboost_room_out:
     dw #preset_100map_varia_kihunter_save_room
     dw $078D, $9252  ; DDB
@@ -775,18 +733,6 @@ preset_100map_varia_kraid_dboost_room_out:
     dw $D8B8, $00E4  ; Doors
     dw #$FFFF
 
-preset_spazermap_varia_kraid:
-    dw #preset_100map_varia_kraid
-    dw $09A6, $1004  ; Equipped Beams
-    dw $09A8, $1004  ; Collected Beams
-    dw #$FFFF
-
-preset_spazermap_varia_kraid_dboost_room_out:
-    dw #preset_100map_varia_kraid_dboost_room_out
-    dw $09A6, $1004  ; Equipped Beams
-    dw $09A8, $1004  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_varia_leaving_kraid_refill:
     dw #preset_100map_varia_kraid_dboost_room_out
     dw $078D, $91C2  ; DDB
@@ -802,12 +748,6 @@ preset_100map_varia_leaving_kraid_refill:
     dw $0AFA, $008B  ; Samus Y
     dw $CAE8, $00A5  ; Map counter
     dw $D8B8, $00F4  ; Doors
-    dw #$FFFF
-
-preset_spazermap_varia_leaving_kraid_refill:
-    dw #preset_100map_varia_leaving_kraid_refill
-    dw $09A6, $1004  ; Equipped Beams
-    dw $09A8, $1004  ; Collected Beams
     dw #$FFFF
 
 preset_100map_varia_kihunter_room_leaving:
@@ -844,18 +784,6 @@ preset_100map_varia_mouthball:
     dw $CAE8, $00A6  ; Map counter
     dw $D874, $0804  ; Items
     dw $D8B8, $00FF  ; Doors
-    dw #$FFFF
-
-preset_spazermap_varia_kihunter_room_leaving:
-    dw #preset_100map_varia_kihunter_room_leaving
-    dw $09A6, $1004  ; Equipped Beams
-    dw $09A8, $1004  ; Collected Beams
-    dw #$FFFF
-
-preset_spazermap_varia_mouthball:
-    dw #preset_100map_varia_mouthball
-    dw $09A6, $1004  ; Equipped Beams
-    dw $09A8, $1004  ; Collected Beams
     dw #$FFFF
 
 preset_100map_upper_norfair_hi_jump_boots:
@@ -903,12 +831,6 @@ preset_100map_upper_norfair_hi_jump_boots:
     dw $D8B8, $20FF  ; Doors
     dw #$FFFF
 
-preset_spazermap_upper_norfair_hi_jump_boots:
-    dw #preset_100map_upper_norfair_hi_jump_boots
-    dw $09A6, $1004  ; Equipped Beams
-    dw $09A8, $1004  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_upper_norfair_precathedral:
     dw #preset_100map_upper_norfair_hi_jump_boots
     dw $078D, $941A  ; DDB
@@ -932,12 +854,6 @@ preset_100map_upper_norfair_precathedral:
     dw $D8BA, $0001  ; Doors
     dw #$FFFF
 
-preset_spazermap_upper_norfair_precathedral:
-    dw #preset_100map_upper_norfair_precathedral
-    dw $09A6, $1004  ; Equipped Beams
-    dw $09A8, $1004  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_upper_norfair_cathedral:
     dw #preset_100map_upper_norfair_precathedral
     dw $078D, $92CA  ; DDB
@@ -955,12 +871,6 @@ preset_100map_upper_norfair_cathedral:
     dw $0AFA, $008B  ; Samus Y
     dw $CAE8, $00B6  ; Map counter
     dw $D8B8, $24FF  ; Doors
-    dw #$FFFF
-
-preset_spazermap_upper_norfair_cathedral:
-    dw #preset_100map_upper_norfair_cathedral
-    dw $09A6, $1004  ; Equipped Beams
-    dw $09A8, $1004  ; Collected Beams
     dw #$FFFF
 
 preset_100map_upper_norfair_bubble_mountain:
@@ -982,12 +892,6 @@ preset_100map_upper_norfair_bubble_mountain:
     dw $D8B8, $26FF  ; Doors
     dw #$FFFF
 
-preset_spazermap_upper_norfair_bubble_mountain:
-    dw #preset_100map_upper_norfair_bubble_mountain
-    dw $09A6, $1004  ; Equipped Beams
-    dw $09A8, $1004  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_upper_norfair_bubble_mountain_climb:
     dw #preset_100map_upper_norfair_bubble_mountain
     dw $078D, $959A  ; DDB
@@ -1000,12 +904,6 @@ preset_100map_upper_norfair_bubble_mountain_climb:
     dw $0917, $0000  ; Layer 2 X position
     dw $0AF6, $00C7  ; Samus X
     dw $CAE8, $00C4  ; Map counter
-    dw #$FFFF
-
-preset_spazermap_upper_norfair_bubble_mountain_climb:
-    dw #preset_100map_upper_norfair_bubble_mountain_climb
-    dw $09A6, $1004  ; Equipped Beams
-    dw $09A8, $1004  ; Collected Beams
     dw #$FFFF
 
 preset_100map_upper_norfair_bat_cave:
@@ -1022,12 +920,6 @@ preset_100map_upper_norfair_bat_cave:
     dw $0AF6, $01BC  ; Samus X
     dw $CAE8, $00C7  ; Map counter
     dw $D8BA, $0011  ; Doors
-    dw #$FFFF
-
-preset_spazermap_upper_norfair_bat_cave:
-    dw #preset_100map_upper_norfair_bat_cave
-    dw $09A6, $1004  ; Equipped Beams
-    dw $09A8, $1004  ; Collected Beams
     dw #$FFFF
 
 preset_100map_upper_norfair_speed_hallway_in:
@@ -1048,12 +940,6 @@ preset_100map_upper_norfair_speed_hallway_in:
     dw $CAE8, $00C9  ; Map counter
     dw #$FFFF
 
-preset_spazermap_upper_norfair_speed_hallway_in:
-    dw #preset_100map_upper_norfair_speed_hallway_in
-    dw $09A6, $1004  ; Equipped Beams
-    dw $09A8, $1004  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_upper_norfair_speed_booster:
     dw #preset_100map_upper_norfair_speed_hallway_in
     dw $078D, $97B6  ; DDB
@@ -1071,12 +957,6 @@ preset_100map_upper_norfair_speed_booster:
     dw $0AFA, $018B  ; Samus Y
     dw $CAE8, $00D8  ; Map counter
     dw $D8BA, $0031  ; Doors
-    dw #$FFFF
-
-preset_spazermap_upper_norfair_speed_booster:
-    dw #preset_100map_upper_norfair_speed_booster
-    dw $09A6, $1004  ; Equipped Beams
-    dw $09A8, $1004  ; Collected Beams
     dw #$FFFF
 
 preset_100map_upper_norfair_single_chamber:
@@ -1100,12 +980,6 @@ preset_100map_upper_norfair_single_chamber:
     dw $D878, $0004  ; Items
     dw #$FFFF
 
-preset_spazermap_upper_norfair_single_chamber:
-    dw #preset_100map_upper_norfair_single_chamber
-    dw $09A6, $1004  ; Equipped Beams
-    dw $09A8, $1004  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_upper_norfair_double_chamber:
     dw #preset_100map_upper_norfair_single_chamber
     dw $078D, $9606  ; DDB
@@ -1122,12 +996,6 @@ preset_100map_upper_norfair_double_chamber:
     dw $0AF6, $00B1  ; Samus X
     dw $CAE8, $00DB  ; Map counter
     dw $D8BA, $0071  ; Doors
-    dw #$FFFF
-
-preset_spazermap_upper_norfair_double_chamber:
-    dw #preset_100map_upper_norfair_double_chamber
-    dw $09A6, $1004  ; Equipped Beams
-    dw $09A8, $1004  ; Collected Beams
     dw #$FFFF
 
 preset_100map_upper_norfair_double_chamber_out:
@@ -1155,12 +1023,6 @@ preset_100map_upper_norfair_double_chamber_out:
     dw $D8BA, $00F1  ; Doors
     dw #$FFFF
 
-preset_spazermap_upper_norfair_double_chamber_out:
-    dw #preset_100map_upper_norfair_double_chamber_out
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_upper_norfair_river_styx:
     dw #preset_100map_upper_norfair_double_chamber_out
     dw $078D, $9612  ; DDB
@@ -1178,12 +1040,6 @@ preset_100map_upper_norfair_river_styx:
     dw $0AF6, $0025  ; Samus X
     dw $0AFA, $036B  ; Samus Y
     dw $CAE8, $00E6  ; Map counter
-    dw #$FFFF
-
-preset_spazermap_upper_norfair_river_styx:
-    dw #preset_100map_upper_norfair_river_styx
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
 
 preset_100map_upper_norfair_volcano_room:
@@ -1239,24 +1095,6 @@ preset_100map_upper_norfair_purple_shaft:
     dw $CAE8, $00F3  ; Map counter
     dw #$FFFF
 
-preset_spazermap_upper_norfair_volcano_room:
-    dw #preset_100map_upper_norfair_volcano_room
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
-    dw #$FFFF
-
-preset_spazermap_upper_norfair_reverse_magdollite_room:
-    dw #preset_100map_upper_norfair_reverse_magdollite_room
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
-    dw #$FFFF
-
-preset_spazermap_upper_norfair_purple_shaft:
-    dw #preset_100map_upper_norfair_purple_shaft
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_upper_norfair_bubble_mountain_corner:
     dw #preset_100map_upper_norfair_purple_shaft
     dw $078D, $96C6  ; DDB
@@ -1270,12 +1108,6 @@ preset_100map_upper_norfair_bubble_mountain_corner:
     dw $09CA, $0004  ; Supers
     dw $0AF6, $002A  ; Samus X
     dw $CAE8, $00F6  ; Map counter
-    dw #$FFFF
-
-preset_spazermap_upper_norfair_bubble_mountain_corner:
-    dw #preset_100map_upper_norfair_bubble_mountain_corner
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
 
 preset_100map_grapple_crocomire:
@@ -1297,12 +1129,6 @@ preset_100map_grapple_crocomire:
     dw $0AFA, $02BB  ; Samus Y
     dw $CAE8, $0104  ; Map counter
     dw $D8B8, $66FF  ; Doors
-    dw #$FFFF
-
-preset_spazermap_grapple_crocomire:
-    dw #preset_100map_grapple_crocomire
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
 
 preset_100map_grapple_leaving_croc:
@@ -1329,12 +1155,6 @@ preset_100map_grapple_leaving_croc:
     dw $D876, $0131  ; Items
     dw #$FFFF
 
-preset_spazermap_grapple_leaving_croc:
-    dw #preset_100map_grapple_leaving_croc
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_grapple_crocomire_shaft:
     dw #preset_100map_grapple_leaving_croc
     dw $078D, $943E  ; DDB
@@ -1359,12 +1179,6 @@ preset_100map_grapple_crocomire_shaft:
     dw $D8BA, $00F3  ; Doors
     dw #$FFFF
 
-preset_spazermap_grapple_crocomire_shaft:
-    dw #preset_100map_grapple_crocomire_shaft
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_grapple_cosine_missile_room:
     dw #preset_100map_grapple_crocomire_shaft
     dw $078D, $944A  ; DDB
@@ -1385,12 +1199,6 @@ preset_100map_grapple_cosine_missile_room:
     dw $D8BA, $00F7  ; Doors
     dw #$FFFF
 
-preset_spazermap_grapple_cosine_missile_room:
-    dw #preset_100map_grapple_cosine_missile_room
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_grapple_indiana_jones_room:
     dw #preset_100map_grapple_cosine_missile_room
     dw $078D, $94AA  ; DDB
@@ -1407,12 +1215,6 @@ preset_100map_grapple_indiana_jones_room:
     dw $0AF6, $00A7  ; Samus X
     dw $0AFA, $04BB  ; Samus Y
     dw $CAE8, $0116  ; Map counter
-    dw #$FFFF
-
-preset_spazermap_grapple_indiana_jones_room:
-    dw #preset_100map_grapple_indiana_jones_room
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
 
 preset_100map_grapple_grapple_beam:
@@ -1455,18 +1257,6 @@ preset_100map_grapple_grapple_playground_1:
     dw $0AFA, $008B  ; Samus Y
     dw $CAE8, $012B  ; Map counter
     dw $D876, $1331  ; Items
-    dw #$FFFF
-
-preset_spazermap_grapple_grapple_beam:
-    dw #preset_100map_grapple_grapple_beam
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
-    dw #$FFFF
-
-preset_spazermap_grapple_grapple_playground_1:
-    dw #preset_100map_grapple_grapple_playground_1
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
 
 preset_100map_grapple_grapple_playground_2:
@@ -1516,24 +1306,6 @@ preset_100map_grapple_crocomire_farm_room:
     dw $CAE8, $0136  ; Map counter
     dw #$FFFF
 
-preset_spazermap_grapple_grapple_playground_2:
-    dw #preset_100map_grapple_grapple_playground_2
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
-    dw #$FFFF
-
-preset_spazermap_grapple_grapple_playground_final:
-    dw #preset_100map_grapple_grapple_playground_final
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
-    dw #$FFFF
-
-preset_spazermap_grapple_crocomire_farm_room:
-    dw #preset_100map_grapple_crocomire_farm_room
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_grapple_crocomire_cac_shaft:
     dw #preset_100map_grapple_crocomire_farm_room
     dw $078D, $9432  ; DDB
@@ -1566,18 +1338,6 @@ preset_100map_grapple_crocomire_escape:
     dw $0AF6, $002A  ; Samus X
     dw $CAE8, $013A  ; Map counter
     dw $D8B8, $E6FF  ; Doors
-    dw #$FFFF
-
-preset_spazermap_grapple_crocomire_cac_shaft:
-    dw #preset_100map_grapple_crocomire_cac_shaft
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
-    dw #$FFFF
-
-preset_spazermap_grapple_crocomire_escape:
-    dw #preset_100map_grapple_crocomire_escape
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
 
 preset_100map_grapple_business_center:
@@ -1662,18 +1422,6 @@ preset_100map_red_brinstar_warehouse_entrance:
     dw $D8BA, $00F7  ; Doors
     dw #$FFFF
 
-preset_spazermap_grapple_business_center:
-    dw #preset_100map_grapple_business_center
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
-    dw #$FFFF
-
-preset_spazermap_red_brinstar_warehouse_entrance:
-    dw #preset_100map_red_brinstar_warehouse_entrance
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_red_brinstar_red_tower_climb:
     dw #preset_100map_red_brinstar_warehouse_entrance
     dw $078D, $904E  ; DDB
@@ -1687,12 +1435,6 @@ preset_100map_red_brinstar_red_tower_climb:
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $00D2  ; Samus X
     dw $CAE8, $0147  ; Map counter
-    dw #$FFFF
-
-preset_spazermap_red_brinstar_red_tower_climb:
-    dw #preset_100map_red_brinstar_red_tower_climb
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
 
 preset_100map_red_brinstar_xray_hall_in:
@@ -1731,18 +1473,6 @@ preset_100map_red_brinstar_xray_hall_out:
     dw $D8B6, $8708  ; Doors
     dw #$FFFF
 
-preset_spazermap_red_brinstar_xray_hall_in:
-    dw #preset_100map_red_brinstar_xray_hall_in
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
-    dw #$FFFF
-
-preset_spazermap_red_brinstar_xray_hall_out:
-    dw #preset_100map_red_brinstar_xray_hall_out
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_red_brinstar_red_tower_up:
     dw #preset_100map_red_brinstar_xray_hall_out
     dw $078D, $9072  ; DDB
@@ -1756,12 +1486,6 @@ preset_100map_red_brinstar_red_tower_up:
     dw $09CE, $0005  ; Pbs
     dw $0AF6, $07A4  ; Samus X
     dw $CAE8, $0155  ; Map counter
-    dw #$FFFF
-
-preset_spazermap_red_brinstar_red_tower_up:
-    dw #preset_100map_red_brinstar_red_tower_up
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
 
 preset_100map_red_brinstar_hellway:
@@ -1781,12 +1505,6 @@ preset_100map_red_brinstar_hellway:
     dw $09CE, $0004  ; Pbs
     dw $0AF6, $0091  ; Samus X
     dw $CAE8, $0159  ; Map counter
-    dw #$FFFF
-
-preset_spazermap_red_brinstar_hellway:
-    dw #preset_100map_red_brinstar_hellway
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
 
 preset_100map_red_brinstar_alpha_pbs:
@@ -1809,12 +1527,6 @@ preset_100map_red_brinstar_alpha_pbs:
     dw $0AFA, $078B  ; Samus Y
     dw $CAE8, $015F  ; Map counter
     dw $D8B6, $A708  ; Doors
-    dw #$FFFF
-
-preset_spazermap_red_brinstar_alpha_pbs:
-    dw #preset_100map_red_brinstar_alpha_pbs
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
 
 preset_100map_red_brinstar_caterpillar_room_up:
@@ -1929,24 +1641,6 @@ preset_100map_red_brinstar_crateria_kihunters_room:
     dw $D8B6, $EF08  ; Doors
     dw #$FFFF
 
-preset_spazermap_red_brinstar_caterpillar_room_up:
-    dw #preset_100map_red_brinstar_caterpillar_room_up
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
-    dw #$FFFF
-
-preset_spazermap_red_brinstar_beta_pbs:
-    dw #preset_100map_red_brinstar_beta_pbs
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
-    dw #$FFFF
-
-preset_spazermap_red_brinstar_crateria_kihunters_room:
-    dw #preset_100map_red_brinstar_crateria_kihunters_room
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_wrecked_ship_ws_shaft_down:
     dw #preset_100map_red_brinstar_crateria_kihunters_room
     dw $078D, $89D6  ; DDB
@@ -1999,12 +1693,6 @@ preset_100map_wrecked_ship_ws_shaft_down:
     dw $D8B2, $2C01  ; Doors
     dw #$FFFF
 
-preset_spazermap_wrecked_ship_ws_shaft_down:
-    dw #preset_100map_wrecked_ship_ws_shaft_down
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_wrecked_ship_basement:
     dw #preset_100map_wrecked_ship_ws_shaft_down
     dw $078D, $A318  ; DDB
@@ -2031,12 +1719,6 @@ preset_100map_wrecked_ship_basement:
     dw $D8C0, $0010  ; Doors
     dw #$FFFF
 
-preset_spazermap_wrecked_ship_basement:
-    dw #preset_100map_wrecked_ship_basement
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_wrecked_ship_basement_speedball:
     dw #preset_100map_wrecked_ship_basement
     dw $078D, $A2A0  ; DDB
@@ -2056,12 +1738,6 @@ preset_100map_wrecked_ship_basement_speedball:
     dw $CAE8, $018E  ; Map counter
     dw #$FFFF
 
-preset_spazermap_wrecked_ship_basement_speedball:
-    dw #preset_100map_wrecked_ship_basement_speedball
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_wrecked_ship_phantoon:
     dw #preset_100map_wrecked_ship_basement_speedball
     dw $078D, $A2B8  ; DDB
@@ -2077,12 +1753,6 @@ preset_100map_wrecked_ship_phantoon:
     dw $0AF6, $04D4  ; Samus X
     dw $CAE8, $0190  ; Map counter
     dw $D8C0, $0030  ; Doors
-    dw #$FFFF
-
-preset_spazermap_wrecked_ship_phantoon:
-    dw #preset_100map_wrecked_ship_phantoon
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
 
 preset_100map_wrecked_ship_right_supers:
@@ -2128,18 +1798,6 @@ preset_100map_wrecked_ship_main_shaft_climb:
     dw $D8C0, $0074  ; Doors
     dw #$FFFF
 
-preset_spazermap_wrecked_ship_right_supers:
-    dw #preset_100map_wrecked_ship_right_supers
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
-    dw #$FFFF
-
-preset_spazermap_wrecked_ship_main_shaft_climb:
-    dw #preset_100map_wrecked_ship_main_shaft_climb
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_wrecked_ship_attic:
     dw #preset_100map_wrecked_ship_main_shaft_climb
     dw $078D, $A2E8  ; DDB
@@ -2156,12 +1814,6 @@ preset_100map_wrecked_ship_attic:
     dw $0AF6, $0443  ; Samus X
     dw $0AFA, $006B  ; Samus Y
     dw $CAE8, $0199  ; Map counter
-    dw #$FFFF
-
-preset_spazermap_wrecked_ship_attic:
-    dw #preset_100map_wrecked_ship_attic
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
 
 preset_100map_wrecked_ship_robots_of_pain:
@@ -2183,12 +1835,6 @@ preset_100map_wrecked_ship_robots_of_pain:
     dw $0AFA, $008B  ; Samus Y
     dw $CAE8, $01A0  ; Map counter
     dw $D8C0, $0374  ; Doors
-    dw #$FFFF
-
-preset_spazermap_wrecked_ship_robots_of_pain:
-    dw #preset_100map_wrecked_ship_robots_of_pain
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
 
 preset_100map_wrecked_ship_west_ocean:
@@ -2264,12 +1910,6 @@ preset_100map_wrecked_ship_bowling_area:
     dw $D8C0, $0374  ; Doors
     dw #$FFFF
 
-preset_spazermap_wrecked_ship_west_ocean:
-    dw #preset_100map_wrecked_ship_west_ocean
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_wrecked_ship_leaving_gravity:
     dw #preset_100map_wrecked_ship_west_ocean
     dw $078D, $A1A4  ; DDB
@@ -2315,18 +1955,6 @@ preset_100map_wrecked_ship_leaving_gravity:
     dw $D880, $00E0  ; Items
     dw #$FFFF
 
-preset_spazermap_wrecked_ship_bowling_area:
-    dw #preset_100map_wrecked_ship_bowling_area
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
-    dw #$FFFF
-
-preset_spazermap_wrecked_ship_leaving_gravity:
-    dw #preset_100map_wrecked_ship_leaving_gravity
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_wrecked_ship_sponge_bath:
     dw #preset_100map_wrecked_ship_leaving_gravity
     dw $078D, $A1BC  ; DDB
@@ -2348,12 +1976,6 @@ preset_100map_wrecked_ship_sponge_bath:
     dw $D086, $3F00  ; Explored map tiles (Wrecked Ship)
     dw $D08A, $3F00  ; Explored map tiles (Wrecked Ship)
     dw $D8C0, $037C  ; Doors
-    dw #$FFFF
-
-preset_spazermap_wrecked_ship_sponge_bath:
-    dw #preset_100map_wrecked_ship_sponge_bath
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
 
 preset_100map_wrecked_ship_electric_death_room:
@@ -2396,18 +2018,6 @@ preset_100map_wrecked_ship_wrecked_ship_etank:
     dw $0AFA, $008B  ; Samus Y
     dw $CAE8, $01DE  ; Map counter
     dw $D8C0, $0B7C  ; Doors
-    dw #$FFFF
-
-preset_spazermap_wrecked_ship_electric_death_room:
-    dw #preset_100map_wrecked_ship_electric_death_room
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
-    dw #$FFFF
-
-preset_spazermap_wrecked_ship_wrecked_ship_etank:
-    dw #preset_100map_wrecked_ship_wrecked_ship_etank
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
 
 preset_100map_forgotten_highway_east_ocean:
@@ -2466,18 +2076,6 @@ preset_100map_forgotten_highway_kago_room:
     dw $D8C0, $0B7C  ; Doors
     dw #$FFFF
 
-preset_spazermap_forgotten_highway_east_ocean:
-    dw #preset_100map_forgotten_highway_east_ocean
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
-    dw #$FFFF
-
-preset_spazermap_forgotten_highway_kago_room:
-    dw #preset_100map_forgotten_highway_kago_room
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_forgotten_highway_crab_maze:
     dw #preset_100map_forgotten_highway_kago_room
     dw $078D, $8A72  ; DDB
@@ -2497,12 +2095,6 @@ preset_100map_forgotten_highway_crab_maze:
     dw $0AF6, $00A9  ; Samus X
     dw $0AFA, $03BB  ; Samus Y
     dw $CAE8, $01F6  ; Map counter
-    dw #$FFFF
-
-preset_spazermap_forgotten_highway_crab_maze:
-    dw #preset_100map_forgotten_highway_crab_maze
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
 
 preset_100map_forgotten_highway_maridia_elevator:
@@ -2570,6 +2162,8 @@ preset_100map_forgotten_highway_pancakes_from_hell:
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $0025  ; Samus X
     dw $0AFA, $058B  ; Samus Y
+    dw $10C0, $0001  ; Safeties unequip items
+    dw $1100, $0004  ; Safeties unequip beams
     dw $CAE8, $0207  ; Map counter
     dw $CDE8, $807F  ; Explored map tiles (Crateria)
     dw $CDEC, $807F  ; Explored map tiles (Crateria)
@@ -2583,18 +2177,6 @@ preset_100map_forgotten_highway_pancakes_from_hell:
     dw $D094, $00FC  ; Explored map tiles (Wrecked Ship)
     dw $D8B0, $B000  ; Doors
     dw $D8C2, $0004  ; Doors
-    dw #$FFFF
-
-preset_spazermap_forgotten_highway_maridia_elevator:
-    dw #preset_100map_forgotten_highway_maridia_elevator
-    dw $09A6, $1005  ; Equipped Beams
-    dw $09A8, $1005  ; Collected Beams
-    dw #$FFFF
-
-preset_spazermap_forgotten_highway_pancakes_from_hell:
-    dw #preset_100map_forgotten_highway_pancakes_from_hell
-    dw $09A2, $7124  ; Equipped Items
-    dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
 
 preset_100map_forgotten_highway_plasma_spark_room:
@@ -2614,12 +2196,6 @@ preset_100map_forgotten_highway_plasma_spark_room:
     dw $0A1E, $1504  ; More position/state
     dw $0AFA, $00AB  ; Samus Y
     dw $CAE8, $0211  ; Map counter
-    dw #$FFFF
-
-preset_spazermap_forgotten_highway_plasma_spark_room:
-    dw #preset_100map_forgotten_highway_plasma_spark_room
-    dw $09A2, $7124  ; Equipped Items
-    dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
 
 preset_100map_forgotten_highway_west_sand_hall:
@@ -2654,12 +2230,6 @@ preset_100map_forgotten_highway_west_sand_hall:
     dw $D8C2, $0014  ; Doors
     dw #$FFFF
 
-preset_spazermap_forgotten_highway_west_sand_hall:
-    dw #preset_100map_forgotten_highway_west_sand_hall
-    dw $09A2, $7124  ; Equipped Items
-    dw $09A8, $1005  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_forgotten_highway_crab_ggg:
     dw #preset_100map_forgotten_highway_west_sand_hall
     dw $078D, $A528  ; DDB
@@ -2678,12 +2248,6 @@ preset_100map_forgotten_highway_crab_ggg:
     dw $CAE8, $022A  ; Map counter
     dw #$FFFF
 
-preset_spazermap_forgotten_highway_crab_ggg:
-    dw #preset_100map_forgotten_highway_crab_ggg
-    dw $09A2, $7124  ; Equipped Items
-    dw $09A8, $1005  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_space_jump_main_street:
     dw #preset_100map_forgotten_highway_crab_ggg
     dw $078D, $A4F8  ; DDB
@@ -2700,12 +2264,6 @@ preset_100map_space_jump_main_street:
     dw $0AF6, $00E1  ; Samus X
     dw $0AFA, $00AB  ; Samus Y
     dw $CAE8, $022E  ; Map counter
-    dw #$FFFF
-
-preset_spazermap_space_jump_main_street:
-    dw #preset_100map_space_jump_main_street
-    dw $09A2, $7124  ; Equipped Items
-    dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
 
 preset_100map_space_jump_mama_turtle:
@@ -2728,12 +2286,6 @@ preset_100map_space_jump_mama_turtle:
     dw $0AF6, $01E1  ; Samus X
     dw $0AFA, $028B  ; Samus Y
     dw $CAE8, $0237  ; Map counter
-    dw #$FFFF
-
-preset_spazermap_space_jump_mama_turtle:
-    dw #preset_100map_space_jump_mama_turtle
-    dw $09A2, $7124  ; Equipped Items
-    dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
 
 preset_100map_space_jump_leaving_mama_turtle:
@@ -2761,12 +2313,6 @@ preset_100map_space_jump_leaving_mama_turtle:
     dw $D8C0, $4B7C  ; Doors
     dw #$FFFF
 
-preset_spazermap_space_jump_leaving_mama_turtle:
-    dw #preset_100map_space_jump_leaving_mama_turtle
-    dw $09A2, $7124  ; Equipped Items
-    dw $09A8, $1005  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_space_jump_everest_post_fish_tank:
     dw #preset_100map_space_jump_leaving_mama_turtle
     dw $078D, $A408  ; DDB
@@ -2788,12 +2334,6 @@ preset_100map_space_jump_everest_post_fish_tank:
     dw $CAE8, $0246  ; Map counter
     dw #$FFFF
 
-preset_spazermap_space_jump_everest_post_fish_tank:
-    dw #preset_100map_space_jump_everest_post_fish_tank
-    dw $09A2, $7124  ; Equipped Items
-    dw $09A8, $1005  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_space_jump_everest_post_crab_supers:
     dw #preset_100map_space_jump_everest_post_fish_tank
     dw $078D, $A45C  ; DDB
@@ -2813,12 +2353,6 @@ preset_100map_space_jump_everest_post_crab_supers:
     dw $0AF6, $01D6  ; Samus X
     dw $0AFA, $028F  ; Samus Y
     dw $CAE8, $024F  ; Map counter
-    dw #$FFFF
-
-preset_spazermap_space_jump_everest_post_crab_supers:
-    dw #preset_100map_space_jump_everest_post_crab_supers
-    dw $09A2, $7124  ; Equipped Items
-    dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
 
 preset_100map_space_jump_beach:
@@ -2846,12 +2380,6 @@ preset_100map_space_jump_beach:
     dw $CAE8, $0259  ; Map counter
     dw #$FFFF
 
-preset_spazermap_space_jump_beach:
-    dw #preset_100map_space_jump_beach
-    dw $09A2, $7124  ; Equipped Items
-    dw $09A8, $1005  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_space_jump_swiss_cheese_room:
     dw #preset_100map_space_jump_beach
     dw $078D, $A4BC  ; DDB
@@ -2866,12 +2394,6 @@ preset_100map_space_jump_swiss_cheese_room:
     dw $0AF6, $0071  ; Samus X
     dw $0AFA, $018B  ; Samus Y
     dw $CAE8, $025D  ; Map counter
-    dw #$FFFF
-
-preset_spazermap_space_jump_swiss_cheese_room:
-    dw #preset_100map_space_jump_swiss_cheese_room
-    dw $09A2, $7124  ; Equipped Items
-    dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
 
 preset_100map_space_jump_swiss_cheese_revisit:
@@ -2900,12 +2422,6 @@ preset_100map_space_jump_swiss_cheese_revisit:
     dw $D880, $10F4  ; Items
     dw #$FFFF
 
-preset_spazermap_space_jump_swiss_cheese_revisit:
-    dw #preset_100map_space_jump_swiss_cheese_revisit
-    dw $09A2, $7124  ; Equipped Items
-    dw $09A8, $1005  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_space_jump_beach_revisit:
     dw #preset_100map_space_jump_swiss_cheese_revisit
     dw $078D, $A48C  ; DDB
@@ -2919,12 +2435,6 @@ preset_100map_space_jump_beach_revisit:
     dw $09C2, $00EF  ; Health
     dw $0AF6, $03A2  ; Samus X
     dw $0AFA, $018B  ; Samus Y
-    dw #$FFFF
-
-preset_spazermap_space_jump_beach_revisit:
-    dw #preset_100map_space_jump_beach_revisit
-    dw $09A2, $7124  ; Equipped Items
-    dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
 
 preset_100map_space_jump_crab_shaft_down:
@@ -2944,12 +2454,6 @@ preset_100map_space_jump_crab_shaft_down:
     dw $0AF6, $00AB  ; Samus X
     dw $0AFA, $02B0  ; Samus Y
     dw $CAE8, $026D  ; Map counter
-    dw #$FFFF
-
-preset_spazermap_space_jump_crab_shaft_down:
-    dw #preset_100map_space_jump_crab_shaft_down
-    dw $09A2, $7124  ; Equipped Items
-    dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
 
 preset_100map_space_jump_aqueduct_post_save:
@@ -2974,12 +2478,6 @@ preset_100map_space_jump_aqueduct_post_save:
     dw $D8C2, $0054  ; Doors
     dw #$FFFF
 
-preset_spazermap_space_jump_aqueduct_post_save:
-    dw #preset_100map_space_jump_aqueduct_post_save
-    dw $09A2, $7124  ; Equipped Items
-    dw $09A8, $1005  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_space_jump_prebotwoon:
     dw #preset_100map_space_jump_aqueduct_post_save
     dw $078D, $A828  ; DDB
@@ -2994,12 +2492,6 @@ preset_100map_space_jump_prebotwoon:
     dw $0AF6, $008D  ; Samus X
     dw $0AFA, $006B  ; Samus Y
     dw $CAE8, $0276  ; Map counter
-    dw #$FFFF
-
-preset_spazermap_space_jump_prebotwoon:
-    dw #preset_100map_space_jump_prebotwoon
-    dw $09A2, $7124  ; Equipped Items
-    dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
 
 preset_100map_space_jump_botwoon:
@@ -3063,24 +2555,6 @@ preset_100map_space_jump_under_over_spark:
     dw $D82C, $0002  ; Bosses
     dw #$FFFF
 
-preset_spazermap_space_jump_botwoon:
-    dw #preset_100map_space_jump_botwoon
-    dw $09A2, $7124  ; Equipped Items
-    dw $09A8, $1005  ; Collected Beams
-    dw #$FFFF
-
-preset_spazermap_space_jump_over_under_spark:
-    dw #preset_100map_space_jump_over_under_spark
-    dw $09A2, $7124  ; Equipped Items
-    dw $09A8, $1005  ; Collected Beams
-    dw #$FFFF
-
-preset_spazermap_space_jump_under_over_spark:
-    dw #preset_100map_space_jump_under_over_spark
-    dw $09A2, $7124  ; Equipped Items
-    dw $09A8, $1005  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_space_jump_colosseum:
     dw #preset_100map_space_jump_under_over_spark
     dw $078D, $A894  ; DDB
@@ -3119,18 +2593,6 @@ preset_100map_space_jump_draygon:
     dw $D8C2, $0D54  ; Doors
     dw #$FFFF
 
-preset_spazermap_space_jump_colosseum:
-    dw #preset_100map_space_jump_colosseum
-    dw $09A2, $7124  ; Equipped Items
-    dw $09A8, $1005  ; Collected Beams
-    dw #$FFFF
-
-preset_spazermap_space_jump_draygon:
-    dw #preset_100map_space_jump_draygon
-    dw $09A2, $7124  ; Equipped Items
-    dw $09A8, $1005  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_maridia_cleanup_reverse_halfie:
     dw #preset_100map_space_jump_draygon
     dw $078D, $A96C  ; DDB
@@ -3154,12 +2616,6 @@ preset_100map_maridia_cleanup_reverse_halfie:
     dw $D8C2, $CD54  ; Doors
     dw #$FFFF
 
-preset_spazermap_maridia_cleanup_reverse_halfie:
-    dw #preset_100map_maridia_cleanup_reverse_halfie
-    dw $09A2, $7324  ; Equipped Items
-    dw $09A8, $1005  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_maridia_cleanup_botwoon_hallway_revisit:
     dw #preset_100map_maridia_cleanup_reverse_halfie
     dw $078D, $A7E0  ; DDB
@@ -3174,12 +2630,6 @@ preset_100map_maridia_cleanup_botwoon_hallway_revisit:
     dw $0AF6, $00B4  ; Samus X
     dw $0AFA, $028B  ; Samus Y
     dw $CAE8, $029F  ; Map counter
-    dw #$FFFF
-
-preset_spazermap_maridia_cleanup_botwoon_hallway_revisit:
-    dw #preset_100map_maridia_cleanup_botwoon_hallway_revisit
-    dw $09A2, $7324  ; Equipped Items
-    dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
 
 preset_100map_maridia_cleanup_right_sand_pit:
@@ -3198,12 +2648,6 @@ preset_100map_maridia_cleanup_right_sand_pit:
     dw $0AF6, $03F5  ; Samus X
     dw $0AFA, $02CB  ; Samus Y
     dw $CAE8, $02AB  ; Map counter
-    dw #$FFFF
-
-preset_spazermap_maridia_cleanup_right_sand_pit:
-    dw #preset_100map_maridia_cleanup_right_sand_pit
-    dw $09A2, $7324  ; Equipped Items
-    dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
 
 preset_100map_maridia_cleanup_east_sand_hall:
@@ -3226,12 +2670,6 @@ preset_100map_maridia_cleanup_east_sand_hall:
     dw $CAE8, $02B1  ; Map counter
     dw #$FFFF
 
-preset_spazermap_maridia_cleanup_east_sand_hall:
-    dw #preset_100map_maridia_cleanup_east_sand_hall
-    dw $09A2, $7324  ; Equipped Items
-    dw $09A8, $1005  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_maridia_cleanup_pants_room:
     dw #preset_100map_maridia_cleanup_east_sand_hall
     dw $078D, $A6CC  ; DDB
@@ -3249,12 +2687,6 @@ preset_100map_maridia_cleanup_pants_room:
     dw $0AF6, $02AE  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw $CAE8, $02B3  ; Map counter
-    dw #$FFFF
-
-preset_spazermap_maridia_cleanup_pants_room:
-    dw #preset_100map_maridia_cleanup_pants_room
-    dw $09A2, $7324  ; Equipped Items
-    dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
 
 preset_100map_maridia_cleanup_spring_ball_room:
@@ -3277,12 +2709,6 @@ preset_100map_maridia_cleanup_spring_ball_room:
     dw $D820, $2001  ; Events
     dw #$FFFF
 
-preset_spazermap_maridia_cleanup_spring_ball_room:
-    dw #preset_100map_maridia_cleanup_spring_ball_room
-    dw $09A2, $7324  ; Equipped Items
-    dw $09A8, $1005  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_maridia_cleanup_pants_room_corner:
     dw #preset_100map_maridia_cleanup_spring_ball_room
     dw $078D, $A7C8  ; DDB
@@ -3302,12 +2728,6 @@ preset_100map_maridia_cleanup_pants_room_corner:
     dw $D882, $0440  ; Items
     dw #$FFFF
 
-preset_spazermap_maridia_cleanup_pants_room_corner:
-    dw #preset_100map_maridia_cleanup_pants_room_corner
-    dw $09A2, $7326  ; Equipped Items
-    dw $09A8, $1005  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_maridia_cleanup_plasma_spark_room_revisit:
     dw #preset_100map_maridia_cleanup_pants_room_corner
     dw $078D, $A780  ; DDB
@@ -3321,12 +2741,6 @@ preset_100map_maridia_cleanup_plasma_spark_room_revisit:
     dw $0AF6, $0052  ; Samus X
     dw $0AFA, $008B  ; Samus Y
     dw $CAE8, $02C3  ; Map counter
-    dw #$FFFF
-
-preset_spazermap_maridia_cleanup_plasma_spark_room_revisit:
-    dw #preset_100map_maridia_cleanup_plasma_spark_room_revisit
-    dw $09A2, $7326  ; Equipped Items
-    dw $09A8, $1005  ; Collected Beams
     dw #$FFFF
 
 preset_100map_maridia_cleanup_kassiuz_room:
@@ -3386,27 +2800,10 @@ preset_100map_maridia_cleanup_plasma_spark_room_final:
     dw $09CE, $0004  ; Pbs
     dw $0AF6, $002A  ; Samus X
     dw $0AFA, $038B  ; Samus Y
+    dw $1100, $0000  ; Safeties unequip beams
     dw $CAE8, $02D2  ; Map counter
     dw $D880, $90F4  ; Items
     dw $D8C2, $CD7E  ; Doors
-    dw #$FFFF
-
-preset_spazermap_maridia_cleanup_kassiuz_room:
-    dw #preset_100map_maridia_cleanup_kassiuz_room
-    dw $09A2, $7326  ; Equipped Items
-    dw $09A8, $1005  ; Collected Beams
-    dw #$FFFF
-
-preset_spazermap_maridia_cleanup_plasma_room:
-    dw #preset_100map_maridia_cleanup_plasma_room
-    dw $09A2, $7326  ; Equipped Items
-    dw $09A8, $1005  ; Collected Beams
-    dw #$FFFF
-
-preset_spazermap_maridia_cleanup_plasma_spark_room_final:
-    dw #preset_100map_maridia_cleanup_plasma_spark_room_final
-    dw $09A2, $7326  ; Equipped Items
-    dw $09A8, $100D  ; Collected Beams
     dw #$FFFF
 
 preset_100map_maridia_cleanup_west_cac_alley:
@@ -3429,12 +2826,6 @@ preset_100map_maridia_cleanup_west_cac_alley:
     dw $CAE8, $02D8  ; Map counter
     dw #$FFFF
 
-preset_spazermap_maridia_cleanup_west_cac_alley:
-    dw #preset_100map_maridia_cleanup_west_cac_alley
-    dw $09A2, $7326  ; Equipped Items
-    dw $09A8, $100D  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_maridia_cleanup_east_cac_alley:
     dw #preset_100map_maridia_cleanup_west_cac_alley
     dw $078D, $A75C  ; DDB
@@ -3452,12 +2843,6 @@ preset_100map_maridia_cleanup_east_cac_alley:
     dw $0AFA, $008B  ; Samus Y
     dw $CAE8, $02DA  ; Map counter
     dw $D8C2, $CDFE  ; Doors
-    dw #$FFFF
-
-preset_spazermap_maridia_cleanup_east_cac_alley:
-    dw #preset_100map_maridia_cleanup_east_cac_alley
-    dw $09A2, $7326  ; Equipped Items
-    dw $09A8, $100D  ; Collected Beams
     dw #$FFFF
 
 preset_100map_maridia_cleanup_botwoon_hallway_final:
@@ -3479,12 +2864,6 @@ preset_100map_maridia_cleanup_botwoon_hallway_final:
     dw $CAE8, $02E4  ; Map counter
     dw #$FFFF
 
-preset_spazermap_maridia_cleanup_botwoon_hallway_final:
-    dw #preset_100map_maridia_cleanup_botwoon_hallway_final
-    dw $09A2, $7326  ; Equipped Items
-    dw $09A8, $100D  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_maridia_cleanup_aqueduct_final:
     dw #preset_100map_maridia_cleanup_botwoon_hallway_final
     dw $078D, $A8AC  ; DDB
@@ -3504,12 +2883,6 @@ preset_100map_maridia_cleanup_aqueduct_final:
     dw $D882, $0540  ; Items
     dw #$FFFF
 
-preset_spazermap_maridia_cleanup_aqueduct_final:
-    dw #preset_100map_maridia_cleanup_aqueduct_final
-    dw $09A2, $7326  ; Equipped Items
-    dw $09A8, $100D  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_maridia_cleanup_left_sand_pit:
     dw #preset_100map_maridia_cleanup_aqueduct_final
     dw $078D, $A7D4  ; DDB
@@ -3524,12 +2897,6 @@ preset_100map_maridia_cleanup_left_sand_pit:
     dw $0AF6, $01E8  ; Samus X
     dw $0AFA, $02CB  ; Samus Y
     dw $CAE8, $02E7  ; Map counter
-    dw #$FFFF
-
-preset_spazermap_maridia_cleanup_left_sand_pit:
-    dw #preset_100map_maridia_cleanup_left_sand_pit
-    dw $09A2, $7326  ; Equipped Items
-    dw $09A8, $100D  ; Collected Beams
     dw #$FFFF
 
 preset_100map_maridia_cleanup_crab_hole:
@@ -3550,12 +2917,6 @@ preset_100map_maridia_cleanup_crab_hole:
     dw $CAE8, $02ED  ; Map counter
     dw #$FFFF
 
-preset_spazermap_maridia_cleanup_crab_hole:
-    dw #preset_100map_maridia_cleanup_crab_hole
-    dw $09A2, $7326  ; Equipped Items
-    dw $09A8, $100D  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_maridia_cleanup_kpdr_exit:
     dw #preset_100map_maridia_cleanup_crab_hole
     dw $078D, $A5E8  ; DDB
@@ -3573,12 +2934,6 @@ preset_100map_maridia_cleanup_kpdr_exit:
     dw $0AFA, $018B  ; Samus Y
     dw $CAE8, $02EF  ; Map counter
     dw $D8C2, $CDFF  ; Doors
-    dw #$FFFF
-
-preset_spazermap_maridia_cleanup_kpdr_exit:
-    dw #preset_100map_maridia_cleanup_kpdr_exit
-    dw $09A2, $7326  ; Equipped Items
-    dw $09A8, $100D  ; Collected Beams
     dw #$FFFF
 
 preset_100map_screw_attack_business_center:
@@ -3690,12 +3045,6 @@ preset_100map_screw_attack_business_center:
     dw $D216, $00C0  ; Explored map tiles (Maridia)
     dw #$FFFF
 
-preset_spazermap_screw_attack_business_center:
-    dw #preset_100map_screw_attack_business_center
-    dw $09A2, $7326  ; Equipped Items
-    dw $09A8, $100D  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_screw_attack_ice_beam_snake_room:
     dw #preset_100map_screw_attack_business_center
     dw $078D, $931E  ; DDB
@@ -3712,12 +3061,6 @@ preset_100map_screw_attack_ice_beam_snake_room:
     dw $0AFA, $008B  ; Samus Y
     dw $CAE8, $02F9  ; Map counter
     dw $D8B8, $FEFF  ; Doors
-    dw #$FFFF
-
-preset_spazermap_screw_attack_ice_beam_snake_room:
-    dw #preset_100map_screw_attack_ice_beam_snake_room
-    dw $09A2, $7326  ; Equipped Items
-    dw $09A8, $100D  ; Collected Beams
     dw #$FFFF
 
 preset_100map_screw_attack_ice_beam_foosball:
@@ -3739,12 +3082,6 @@ preset_100map_screw_attack_ice_beam_foosball:
     dw $D876, $1335  ; Items
     dw #$FFFF
 
-preset_spazermap_screw_attack_ice_beam_foosball:
-    dw #preset_100map_screw_attack_ice_beam_foosball
-    dw $09A2, $7326  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_screw_attack_ice_beam_boyon_room:
     dw #preset_100map_screw_attack_ice_beam_foosball
     dw $078D, $935A  ; DDB
@@ -3761,12 +3098,6 @@ preset_100map_screw_attack_ice_beam_boyon_room:
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $00DD  ; Samus X
     dw $CAE8, $02FE  ; Map counter
-    dw #$FFFF
-
-preset_spazermap_screw_attack_ice_beam_boyon_room:
-    dw #preset_100map_screw_attack_ice_beam_boyon_room
-    dw $09A2, $7326  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
 preset_100map_screw_attack_crocomire_speedway:
@@ -3789,12 +3120,6 @@ preset_100map_screw_attack_crocomire_speedway:
     dw $CAE8, $030A  ; Map counter
     dw #$FFFF
 
-preset_spazermap_screw_attack_crocomire_speedway:
-    dw #preset_100map_screw_attack_crocomire_speedway
-    dw $09A2, $7326  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_screw_attack_kronic_boost_room:
     dw #preset_100map_screw_attack_crocomire_speedway
     dw $078D, $9792  ; DDB
@@ -3815,12 +3140,6 @@ preset_100map_screw_attack_kronic_boost_room:
     dw $CAE8, $031D  ; Map counter
     dw #$FFFF
 
-preset_spazermap_screw_attack_kronic_boost_room:
-    dw #preset_100map_screw_attack_kronic_boost_room
-    dw $09A2, $7326  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_screw_attack_lava_dive_room:
     dw #preset_100map_screw_attack_kronic_boost_room
     dw $078D, $977A  ; DDB
@@ -3839,12 +3158,6 @@ preset_100map_screw_attack_lava_dive_room:
     dw $0AFA, $028B  ; Samus Y
     dw $CAE8, $0320  ; Map counter
     dw $D8BA, $01F7  ; Doors
-    dw #$FFFF
-
-preset_spazermap_screw_attack_lava_dive_room:
-    dw #preset_100map_screw_attack_lava_dive_room
-    dw $09A2, $7326  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
 preset_100map_screw_attack_lower_norfair_main_hall:
@@ -3892,18 +3205,6 @@ preset_100map_screw_attack_blue_fireball:
     dw $D8BA, $21F7  ; Doors
     dw #$FFFF
 
-preset_spazermap_screw_attack_lower_norfair_main_hall:
-    dw #preset_100map_screw_attack_lower_norfair_main_hall
-    dw $09A2, $7326  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
-    dw #$FFFF
-
-preset_spazermap_screw_attack_blue_fireball:
-    dw #preset_100map_screw_attack_blue_fireball
-    dw $09A2, $7326  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_screw_attack_golden_torizo:
     dw #preset_100map_screw_attack_blue_fireball
     dw $078D, $9852  ; DDB
@@ -3931,12 +3232,6 @@ preset_100map_screw_attack_golden_torizo:
     dw $D820, $3001  ; Events
     dw #$FFFF
 
-preset_spazermap_screw_attack_golden_torizo:
-    dw #preset_100map_screw_attack_golden_torizo
-    dw $09A2, $7326  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_screw_attack_screw_attack:
     dw #preset_100map_screw_attack_golden_torizo
     dw $078D, $983A  ; DDB
@@ -3961,12 +3256,6 @@ preset_100map_screw_attack_screw_attack:
     dw $D82A, $0106  ; Bosses
     dw #$FFFF
 
-preset_spazermap_screw_attack_screw_attack:
-    dw #preset_100map_screw_attack_screw_attack
-    dw $09A2, $7326  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_lower_norfair_fast_ripper_room:
     dw #preset_100map_screw_attack_screw_attack
     dw $078D, $98A6  ; DDB
@@ -3988,12 +3277,6 @@ preset_100map_lower_norfair_fast_ripper_room:
     dw $D8BA, $23F7  ; Doors
     dw #$FFFF
 
-preset_spazermap_lower_norfair_fast_ripper_room:
-    dw #preset_100map_lower_norfair_fast_ripper_room
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_lower_norfair_worst_room_in_the_game:
     dw #preset_100map_lower_norfair_fast_ripper_room
     dw $078D, $9912  ; DDB
@@ -4011,12 +3294,6 @@ preset_100map_lower_norfair_worst_room_in_the_game:
     dw $09CA, $0010  ; Supers
     dw $0AF6, $03DB  ; Samus X
     dw $CAE8, $0354  ; Map counter
-    dw #$FFFF
-
-preset_spazermap_lower_norfair_worst_room_in_the_game:
-    dw #preset_100map_lower_norfair_worst_room_in_the_game
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
 preset_100map_lower_norfair_mickey_mouse:
@@ -4041,12 +3318,6 @@ preset_100map_lower_norfair_mickey_mouse:
     dw $CAE8, $035A  ; Map counter
     dw #$FFFF
 
-preset_spazermap_lower_norfair_mickey_mouse:
-    dw #preset_100map_lower_norfair_mickey_mouse
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_lower_norfair_amphitheatre:
     dw #preset_100map_lower_norfair_mickey_mouse
     dw $078D, $9936  ; DDB
@@ -4061,12 +3332,6 @@ preset_100map_lower_norfair_amphitheatre:
     dw $0AF6, $00A9  ; Samus X
     dw $0AFA, $018B  ; Samus Y
     dw $CAE8, $035D  ; Map counter
-    dw #$FFFF
-
-preset_spazermap_lower_norfair_amphitheatre:
-    dw #preset_100map_lower_norfair_amphitheatre
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
 preset_100map_lower_norfair_kihunter_stairs_down:
@@ -4093,12 +3358,6 @@ preset_100map_lower_norfair_kihunter_stairs_down:
     dw $CAE8, $036F  ; Map counter
     dw #$FFFF
 
-preset_spazermap_lower_norfair_kihunter_stairs_down:
-    dw #preset_100map_lower_norfair_kihunter_stairs_down
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_lower_norfair_wasteland:
     dw #preset_100map_lower_norfair_kihunter_stairs_down
     dw $078D, $99A2  ; DDB
@@ -4121,12 +3380,6 @@ preset_100map_lower_norfair_wasteland:
     dw $0AFA, $04BB  ; Samus Y
     dw $CAE8, $0377  ; Map counter
     dw $D8BA, $63F7  ; Doors
-    dw #$FFFF
-
-preset_spazermap_lower_norfair_wasteland:
-    dw #preset_100map_lower_norfair_wasteland
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
 preset_100map_lower_norfair_metal_pirates:
@@ -4153,12 +3406,6 @@ preset_100map_lower_norfair_metal_pirates:
     dw $D8BA, $E3F7  ; Doors
     dw #$FFFF
 
-preset_spazermap_lower_norfair_metal_pirates:
-    dw #preset_100map_lower_norfair_metal_pirates
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_lower_norfair_ridley:
     dw #preset_100map_lower_norfair_metal_pirates
     dw $078D, $995A  ; DDB
@@ -4178,12 +3425,6 @@ preset_100map_lower_norfair_ridley:
     dw $CAE8, $0388  ; Map counter
     dw $D8BA, $F3F7  ; Doors
     dw $D8BC, $0001  ; Doors
-    dw #$FFFF
-
-preset_spazermap_lower_norfair_ridley:
-    dw #preset_100map_lower_norfair_ridley
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
 preset_100map_lower_norfair_leaving_ridley:
@@ -4209,12 +3450,6 @@ preset_100map_lower_norfair_leaving_ridley:
     dw $CAE8, $0389  ; Map counter
     dw $D82A, $0107  ; Bosses
     dw $D8BA, $FBF7  ; Doors
-    dw #$FFFF
-
-preset_spazermap_lower_norfair_leaving_ridley:
-    dw #preset_100map_lower_norfair_leaving_ridley
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
 preset_100map_lower_norfair_wasteland_revisit:
@@ -4258,18 +3493,6 @@ preset_100map_lower_norfair_kihunter_stairs_up:
     dw $D8BA, $FFF7  ; Doors
     dw #$FFFF
 
-preset_spazermap_lower_norfair_wasteland_revisit:
-    dw #preset_100map_lower_norfair_wasteland_revisit
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
-    dw #$FFFF
-
-preset_spazermap_lower_norfair_kihunter_stairs_up:
-    dw #preset_100map_lower_norfair_kihunter_stairs_up
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_lower_norfair_fireflea_room:
     dw #preset_100map_lower_norfair_kihunter_stairs_up
     dw $078D, $9AB6  ; DDB
@@ -4306,18 +3529,6 @@ preset_100map_lower_norfair_hotarubi_missile_room:
     dw $CAE8, $0393  ; Map counter
     dw #$FFFF
 
-preset_spazermap_lower_norfair_fireflea_room:
-    dw #preset_100map_lower_norfair_fireflea_room
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
-    dw #$FFFF
-
-preset_spazermap_lower_norfair_hotarubi_missile_room:
-    dw #preset_100map_lower_norfair_hotarubi_missile_room
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_lower_norfair_three_musketeers_room:
     dw #preset_100map_lower_norfair_hotarubi_missile_room
     dw $078D, $9A92  ; DDB
@@ -4334,12 +3545,6 @@ preset_100map_lower_norfair_three_musketeers_room:
     dw $09D2, $0000  ; Currently selected item
     dw $0AF6, $0067  ; Samus X
     dw $CAE8, $039C  ; Map counter
-    dw #$FFFF
-
-preset_spazermap_lower_norfair_three_musketeers_room:
-    dw #preset_100map_lower_norfair_three_musketeers_room
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
 preset_100map_begin_cleanup_single_chamber_revisit:
@@ -4361,12 +3566,6 @@ preset_100map_begin_cleanup_single_chamber_revisit:
     dw $CAE8, $03A2  ; Map counter
     dw #$FFFF
 
-preset_spazermap_begin_cleanup_single_chamber_revisit:
-    dw #preset_100map_begin_cleanup_single_chamber_revisit
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_begin_cleanup_bubble_mountain_dboost:
     dw #preset_100map_begin_cleanup_single_chamber_revisit
     dw $078D, $9A4A  ; DDB
@@ -4384,12 +3583,6 @@ preset_100map_begin_cleanup_bubble_mountain_dboost:
     dw $CAE8, $03A7  ; Map counter
     dw #$FFFF
 
-preset_spazermap_begin_cleanup_bubble_mountain_dboost:
-    dw #preset_100map_begin_cleanup_bubble_mountain_dboost
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_begin_cleanup_norfair_reserve_front:
     dw #preset_100map_begin_cleanup_bubble_mountain_dboost
     dw $078D, $95CA  ; DDB
@@ -4403,12 +3596,6 @@ preset_100map_begin_cleanup_norfair_reserve_front:
     dw $D8BA, $FFFF  ; Doors
     dw #$FFFF
 
-preset_spazermap_begin_cleanup_norfair_reserve_front:
-    dw #preset_100map_begin_cleanup_norfair_reserve_front
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_begin_cleanup_norfair_reserve_back:
     dw #preset_100map_begin_cleanup_norfair_reserve_front
     dw $078D, $9552  ; DDB
@@ -4417,12 +3604,6 @@ preset_100map_begin_cleanup_norfair_reserve_back:
     dw $090F, $4000  ; Screen subpixel X position
     dw $0913, $E000  ; Screen subpixel Y position
     dw $CAE8, $03A9  ; Map counter
-    dw #$FFFF
-
-preset_spazermap_begin_cleanup_norfair_reserve_back:
-    dw #preset_100map_begin_cleanup_norfair_reserve_back
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
 preset_100map_begin_cleanup_bubble_mountain_final:
@@ -4545,18 +3726,6 @@ preset_100map_begin_cleanup_tube:
     dw $D016, $00C0  ; Explored map tiles (Norfair)
     dw #$FFFF
 
-preset_spazermap_begin_cleanup_bubble_mountain_final:
-    dw #preset_100map_begin_cleanup_bubble_mountain_final
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
-    dw #$FFFF
-
-preset_spazermap_begin_cleanup_tube:
-    dw #preset_100map_begin_cleanup_tube
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_begin_cleanup_tube_climb:
     dw #preset_100map_begin_cleanup_tube
     dw $078D, $A354  ; DDB
@@ -4573,12 +3742,6 @@ preset_100map_begin_cleanup_tube_climb:
     dw $CAE8, $03B8  ; Map counter
     dw $D820, $3801  ; Events
     dw $D8C0, $DB7C  ; Doors
-    dw #$FFFF
-
-preset_spazermap_begin_cleanup_tube_climb:
-    dw #preset_100map_begin_cleanup_tube_climb
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
 preset_100map_begin_cleanup_sephy_fish_room:
@@ -4691,18 +3854,6 @@ preset_100map_begin_cleanup_crateria_kihunters_revisit:
     dw $D1A2, $1800  ; Explored map tiles (Maridia)
     dw #$FFFF
 
-preset_spazermap_begin_cleanup_sephy_fish_room:
-    dw #preset_100map_begin_cleanup_sephy_fish_room
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
-    dw #$FFFF
-
-preset_spazermap_begin_cleanup_crateria_kihunters_revisit:
-    dw #preset_100map_begin_cleanup_crateria_kihunters_revisit
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_begin_cleanup_landing_site_revisit:
     dw #preset_100map_begin_cleanup_crateria_kihunters_revisit
     dw $078D, $8AF6  ; DDB
@@ -4716,12 +3867,6 @@ preset_100map_begin_cleanup_landing_site_revisit:
     dw $0A1E, $0004  ; More position/state
     dw $0AF6, $015E  ; Samus X
     dw $0AFA, $00BB  ; Samus Y
-    dw #$FFFF
-
-preset_spazermap_begin_cleanup_landing_site_revisit:
-    dw #preset_100map_begin_cleanup_landing_site_revisit
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
 preset_100map_begin_cleanup_crateria_pbs:
@@ -4774,18 +3919,6 @@ preset_100map_begin_cleanup_gauntlet_etank:
     dw $D8B0, $B002  ; Doors
     dw #$FFFF
 
-preset_spazermap_begin_cleanup_crateria_pbs:
-    dw #preset_100map_begin_cleanup_crateria_pbs
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
-    dw #$FFFF
-
-preset_spazermap_begin_cleanup_gauntlet_etank:
-    dw #preset_100map_begin_cleanup_gauntlet_etank
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_begin_cleanup_quickdrops:
     dw #preset_100map_begin_cleanup_gauntlet_etank
     dw $078D, $8952  ; DDB
@@ -4799,12 +3932,6 @@ preset_100map_begin_cleanup_quickdrops:
     dw $09D2, $0000  ; Currently selected item
     dw $0AF6, $0025  ; Samus X
     dw $CAE8, $03FA  ; Map counter
-    dw #$FFFF
-
-preset_spazermap_begin_cleanup_quickdrops:
-    dw #preset_100map_begin_cleanup_quickdrops
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
 preset_100map_greenpink_brin_cleanup_green_brinstar_elevator:
@@ -4906,18 +4033,6 @@ preset_100map_greenpink_brin_cleanup_brinstar_map_entrance:
     dw $CDE6, $FCFF  ; Explored map tiles (Crateria)
     dw #$FFFF
 
-preset_spazermap_greenpink_brin_cleanup_green_brinstar_elevator:
-    dw #preset_100map_greenpink_brin_cleanup_green_brinstar_elevator
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
-    dw #$FFFF
-
-preset_spazermap_greenpink_brin_cleanup_brinstar_map_entrance:
-    dw #preset_100map_greenpink_brin_cleanup_brinstar_map_entrance
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_greenpink_brin_cleanup_green_brin_fireflea_room:
     dw #preset_100map_greenpink_brin_cleanup_brinstar_map_entrance
     dw $078D, $9006  ; DDB
@@ -4935,12 +4050,6 @@ preset_100map_greenpink_brin_cleanup_green_brin_fireflea_room:
     dw $CAE8, $0403  ; Map counter
     dw $D8B2, $AC01  ; Doors
     dw $D8B4, $026F  ; Doors
-    dw #$FFFF
-
-preset_spazermap_greenpink_brin_cleanup_green_brin_fireflea_room:
-    dw #preset_100map_greenpink_brin_cleanup_green_brin_fireflea_room
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
 preset_100map_greenpink_brin_cleanup_etecoons_etank_skip:
@@ -4964,12 +4073,6 @@ preset_100map_greenpink_brin_cleanup_etecoons_etank_skip:
     dw $CAE8, $040E  ; Map counter
     dw #$FFFF
 
-preset_spazermap_greenpink_brin_cleanup_etecoons_etank_skip:
-    dw #preset_100map_greenpink_brin_cleanup_etecoons_etank_skip
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_greenpink_brin_cleanup_etecoons_dboosts:
     dw #preset_100map_greenpink_brin_cleanup_etecoons_etank_skip
     dw $078D, $8F52  ; DDB
@@ -4987,12 +4090,6 @@ preset_100map_greenpink_brin_cleanup_etecoons_dboosts:
     dw $D8B6, $EF18  ; Doors
     dw #$FFFF
 
-preset_spazermap_greenpink_brin_cleanup_etecoons_dboosts:
-    dw #preset_100map_greenpink_brin_cleanup_etecoons_dboosts
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_greenpink_brin_cleanup_etecoons_climb:
     dw #preset_100map_greenpink_brin_cleanup_etecoons_dboosts
     dw $078D, $9012  ; DDB
@@ -5008,12 +4105,6 @@ preset_100map_greenpink_brin_cleanup_etecoons_climb:
     dw $0AF6, $04C6  ; Samus X
     dw $0AFA, $018B  ; Samus Y
     dw $CAE8, $0417  ; Map counter
-    dw #$FFFF
-
-preset_spazermap_greenpink_brin_cleanup_etecoons_climb:
-    dw #preset_100map_greenpink_brin_cleanup_etecoons_climb
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
 preset_100map_greenpink_brin_cleanup_dachora_moonfall:
@@ -5061,18 +4152,6 @@ preset_100map_greenpink_brin_cleanup_big_pink_climb:
     dw $CAE8, $042A  ; Map counter
     dw #$FFFF
 
-preset_spazermap_greenpink_brin_cleanup_dachora_moonfall:
-    dw #preset_100map_greenpink_brin_cleanup_dachora_moonfall
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
-    dw #$FFFF
-
-preset_spazermap_greenpink_brin_cleanup_big_pink_climb:
-    dw #preset_100map_greenpink_brin_cleanup_big_pink_climb
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_greenpink_brin_cleanup_spo_spo_kihunters_room:
     dw #preset_100map_greenpink_brin_cleanup_big_pink_climb
     dw $078D, $8FD6  ; DDB
@@ -5110,18 +4189,6 @@ preset_100map_greenpink_brin_cleanup_spore_spawn:
     dw $D8B4, $266F  ; Doors
     dw #$FFFF
 
-preset_spazermap_greenpink_brin_cleanup_spo_spo_kihunters_room:
-    dw #preset_100map_greenpink_brin_cleanup_spo_spo_kihunters_room
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
-    dw #$FFFF
-
-preset_spazermap_greenpink_brin_cleanup_spore_spawn:
-    dw #preset_100map_greenpink_brin_cleanup_spore_spawn
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_greenpink_brin_cleanup_spo_spo_moonfall:
     dw #preset_100map_greenpink_brin_cleanup_spore_spawn
     dw $078D, $8E3E  ; DDB
@@ -5143,12 +4210,6 @@ preset_100map_greenpink_brin_cleanup_spo_spo_moonfall:
     dw $0AFA, $008B  ; Samus Y
     dw $CAE8, $0437  ; Map counter
     dw $D828, $0304  ; Bosses
-    dw #$FFFF
-
-preset_spazermap_greenpink_brin_cleanup_spo_spo_moonfall:
-    dw #preset_100map_greenpink_brin_cleanup_spo_spo_moonfall
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
 preset_100map_greenpink_brin_cleanup_spo_spo_farm_room:
@@ -5178,12 +4239,6 @@ preset_100map_greenpink_brin_cleanup_spo_spo_farm_room:
     dw $CAE8, $0442  ; Map counter
     dw #$FFFF
 
-preset_spazermap_greenpink_brin_cleanup_spo_spo_farm_room:
-    dw #preset_100map_greenpink_brin_cleanup_spo_spo_farm_room
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_greenpink_brin_cleanup_wave_gate_room:
     dw #preset_100map_greenpink_brin_cleanup_spo_spo_farm_room
     dw $078D, $8F82  ; DDB
@@ -5208,12 +4263,6 @@ preset_100map_greenpink_brin_cleanup_wave_gate_room:
     dw $D8B6, $EF38  ; Doors
     dw #$FFFF
 
-preset_spazermap_greenpink_brin_cleanup_wave_gate_room:
-    dw #preset_100map_greenpink_brin_cleanup_wave_gate_room
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_greenpink_brin_cleanup_mission_impossible_room:
     dw #preset_100map_greenpink_brin_cleanup_wave_gate_room
     dw $078D, $8FB2  ; DDB
@@ -5234,12 +4283,6 @@ preset_100map_greenpink_brin_cleanup_mission_impossible_room:
     dw $0AFA, $038B  ; Samus Y
     dw $CAE8, $044C  ; Map counter
     dw $D8B6, $EFF8  ; Doors
-    dw #$FFFF
-
-preset_spazermap_greenpink_brin_cleanup_mission_impossible_room:
-    dw #preset_100map_greenpink_brin_cleanup_mission_impossible_room
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
 preset_100map_greenpink_brin_cleanup_green_hill_zone_final:
@@ -5267,12 +4310,6 @@ preset_100map_greenpink_brin_cleanup_green_hill_zone_final:
     dw $0AFA, $068B  ; Samus Y
     dw $CAE8, $045B  ; Map counter
     dw $D8B4, $2F6F  ; Doors
-    dw #$FFFF
-
-preset_spazermap_greenpink_brin_cleanup_green_hill_zone_final:
-    dw #preset_100map_greenpink_brin_cleanup_green_hill_zone_final
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
 preset_100map_blue_brinstar_cleanup_blue_brinstar_hoppers:
@@ -5313,18 +4350,6 @@ preset_100map_blue_brinstar_cleanup_blue_brinstar_etank_room:
     dw $D8B6, $EFFD  ; Doors
     dw #$FFFF
 
-preset_spazermap_blue_brinstar_cleanup_blue_brinstar_hoppers:
-    dw #preset_100map_blue_brinstar_cleanup_blue_brinstar_hoppers
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
-    dw #$FFFF
-
-preset_spazermap_blue_brinstar_cleanup_blue_brinstar_etank_room:
-    dw #preset_100map_blue_brinstar_cleanup_blue_brinstar_etank_room
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_blue_brinstar_cleanup_john_cena_bridge:
     dw #preset_100map_blue_brinstar_cleanup_blue_brinstar_etank_room
     dw $078D, $8ECE  ; DDB
@@ -5347,12 +4372,6 @@ preset_100map_blue_brinstar_cleanup_john_cena_bridge:
     dw $0AF6, $025B  ; Samus X
     dw $CAE8, $0465  ; Map counter
     dw $D872, $24C1  ; Items
-    dw #$FFFF
-
-preset_spazermap_blue_brinstar_cleanup_john_cena_bridge:
-    dw #preset_100map_blue_brinstar_cleanup_john_cena_bridge
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
 preset_100map_blue_brinstar_cleanup_blue_brinstar_screwfall:
@@ -5431,18 +4450,6 @@ preset_100map_blue_brinstar_cleanup_pit_room_final:
     dw $D8B6, $EFFD  ; Doors
     dw #$FFFF
 
-preset_spazermap_blue_brinstar_cleanup_blue_brinstar_screwfall:
-    dw #preset_100map_blue_brinstar_cleanup_blue_brinstar_screwfall
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
-    dw #$FFFF
-
-preset_spazermap_blue_brinstar_cleanup_pit_room_final:
-    dw #preset_100map_blue_brinstar_cleanup_pit_room_final
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_blue_brinstar_cleanup_climb_supers:
     dw #preset_100map_blue_brinstar_cleanup_pit_room_final
     dw $078D, $8B7A  ; DDB
@@ -5468,12 +4475,6 @@ preset_100map_blue_brinstar_cleanup_climb_supers:
     dw $D8B2, $AC09  ; Doors
     dw #$FFFF
 
-preset_spazermap_blue_brinstar_cleanup_climb_supers:
-    dw #preset_100map_blue_brinstar_cleanup_climb_supers
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_blue_brinstar_cleanup_parlor_again:
     dw #preset_100map_blue_brinstar_cleanup_climb_supers
     dw $078D, $8C6A  ; DDB
@@ -5497,12 +4498,6 @@ preset_100map_blue_brinstar_cleanup_parlor_again:
     dw $0AF6, $019D  ; Samus X
     dw $0AFA, $005B  ; Samus Y
     dw $CAE8, $0479  ; Map counter
-    dw #$FFFF
-
-preset_spazermap_blue_brinstar_cleanup_parlor_again:
-    dw #preset_100map_blue_brinstar_cleanup_parlor_again
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
 preset_100map_blue_brinstar_cleanup_crateria_map_entry:
@@ -5538,18 +4533,6 @@ preset_100map_blue_brinstar_cleanup_crateria_map_exit:
     dw $D8B0, $B022  ; Doors
     dw #$FFFF
 
-preset_spazermap_blue_brinstar_cleanup_crateria_map_entry:
-    dw #preset_100map_blue_brinstar_cleanup_crateria_map_entry
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
-    dw #$FFFF
-
-preset_spazermap_blue_brinstar_cleanup_crateria_map_exit:
-    dw #preset_100map_blue_brinstar_cleanup_crateria_map_exit
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_blue_brinstar_cleanup_230_mockball:
     dw #preset_100map_blue_brinstar_cleanup_crateria_map_exit
     dw $078D, $8C82  ; DDB
@@ -5565,12 +4548,6 @@ preset_100map_blue_brinstar_cleanup_230_mockball:
     dw $CAE8, $0480  ; Map counter
     dw #$FFFF
 
-preset_spazermap_blue_brinstar_cleanup_230_mockball:
-    dw #preset_100map_blue_brinstar_cleanup_230_mockball
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_blue_brinstar_cleanup_parlor_not_final_climb:
     dw #preset_100map_blue_brinstar_cleanup_230_mockball
     dw $078D, $899A  ; DDB
@@ -5581,12 +4558,6 @@ preset_100map_blue_brinstar_cleanup_parlor_not_final_climb:
     dw $09D2, $0000  ; Currently selected item
     dw $0AF6, $00C0  ; Samus X
     dw $CAE8, $0481  ; Map counter
-    dw #$FFFF
-
-preset_spazermap_blue_brinstar_cleanup_parlor_not_final_climb:
-    dw #preset_100map_blue_brinstar_cleanup_parlor_not_final_climb
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
 preset_100map_tourian_tourian_elevator:
@@ -5606,12 +4577,6 @@ preset_100map_tourian_tourian_elevator:
     dw $CAE8, $0488  ; Map counter
     dw $D820, $3FC1  ; Events
     dw $D8B2, $EC09  ; Doors
-    dw #$FFFF
-
-preset_spazermap_tourian_tourian_elevator:
-    dw #preset_100map_tourian_tourian_elevator
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
 preset_100map_tourian_metroids_1:
@@ -5687,12 +4652,6 @@ preset_100map_tourian_metroids_1:
     dw $D90C, $0100  ; Map Stations
     dw #$FFFF
 
-preset_spazermap_tourian_metroids_1:
-    dw #preset_100map_tourian_metroids_1
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_tourian_metroids_2:
     dw #preset_100map_tourian_metroids_1
     dw $078D, $A984  ; DDB
@@ -5713,12 +4672,6 @@ preset_100map_tourian_metroids_2:
     dw $CAE8, $0493  ; Map counter
     dw $D822, $0021  ; Events
     dw $D8C4, $0001  ; Doors
-    dw #$FFFF
-
-preset_spazermap_tourian_metroids_2:
-    dw #preset_100map_tourian_metroids_2
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
 preset_100map_tourian_metroids_3:
@@ -5742,12 +4695,6 @@ preset_100map_tourian_metroids_3:
     dw $D8C4, $0003  ; Doors
     dw #$FFFF
 
-preset_spazermap_tourian_metroids_3:
-    dw #preset_100map_tourian_metroids_3
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_tourian_metroids_4:
     dw #preset_100map_tourian_metroids_3
     dw $078D, $A9CC  ; DDB
@@ -5767,12 +4714,6 @@ preset_100map_tourian_metroids_4:
     dw $CAE8, $049B  ; Map counter
     dw $D822, $0027  ; Events
     dw $D8C4, $0007  ; Doors
-    dw #$FFFF
-
-preset_spazermap_tourian_metroids_4:
-    dw #preset_100map_tourian_metroids_4
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
 preset_100map_tourian_baby_skip:
@@ -5818,18 +4759,6 @@ preset_100map_tourian_dusty_shaft_revisit:
     dw $D8C4, $002F  ; Doors
     dw #$FFFF
 
-preset_spazermap_tourian_baby_skip:
-    dw #preset_100map_tourian_baby_skip
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
-    dw #$FFFF
-
-preset_spazermap_tourian_dusty_shaft_revisit:
-    dw #preset_100map_tourian_dusty_shaft_revisit
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_tourian_zeb_skip:
     dw #preset_100map_tourian_dusty_shaft_revisit
     dw $078D, $AAD4  ; DDB
@@ -5849,12 +4778,6 @@ preset_100map_tourian_zeb_skip:
     dw $0AFA, $028B  ; Samus Y
     dw $CAE8, $04B0  ; Map counter
     dw $D8C4, $03AF  ; Doors
-    dw #$FFFF
-
-preset_spazermap_tourian_zeb_skip:
-    dw #preset_100map_tourian_zeb_skip
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
 preset_100map_tourian_mother_brain_2:
@@ -5877,12 +4800,6 @@ preset_100map_tourian_mother_brain_2:
     dw $D820, $3FC5  ; Events
     dw #$FFFF
 
-preset_spazermap_tourian_mother_brain_2:
-    dw #preset_100map_tourian_mother_brain_2
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_tourian_zebes_escape:
     dw #preset_100map_tourian_mother_brain_2
     dw $09A6, $1009  ; Equipped Beams
@@ -5898,12 +4815,6 @@ preset_100map_tourian_zebes_escape:
     dw $0AFA, $009E  ; Samus Y
     dw $D820, $7FC5  ; Events
     dw $D82C, $0203  ; Bosses
-    dw #$FFFF
-
-preset_spazermap_tourian_zebes_escape:
-    dw #preset_100map_tourian_zebes_escape
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
 preset_100map_tourian_escape_room_3:
@@ -5924,12 +4835,6 @@ preset_100map_tourian_escape_room_3:
     dw $0AF6, $00DE  ; Samus X
     dw $0AFA, $018B  ; Samus Y
     dw $CAE8, $04B8  ; Map counter
-    dw #$FFFF
-
-preset_spazermap_tourian_escape_room_3:
-    dw #preset_100map_tourian_escape_room_3
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
     dw #$FFFF
 
 preset_100map_tourian_escape_room_4:
@@ -6033,24 +4938,6 @@ preset_100map_tourian_escape_parlor:
     dw $D90C, $0100  ; Map Stations
     dw #$FFFF
 
-preset_spazermap_tourian_escape_room_4:
-    dw #preset_100map_tourian_escape_room_4
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
-    dw #$FFFF
-
-preset_spazermap_tourian_escape_climb:
-    dw #preset_100map_tourian_escape_climb
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
-    dw #$FFFF
-
-preset_spazermap_tourian_escape_parlor:
-    dw #preset_100map_tourian_escape_parlor
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
-    dw #$FFFF
-
 preset_100map_tourian_landing_site_final:
     dw #preset_100map_tourian_escape_parlor
     dw $078D, $8B3E  ; DDB
@@ -6063,10 +4950,4 @@ preset_100map_tourian_landing_site_final:
     dw $0A1E, $0008  ; More position/state
     dw $0AF6, $047A  ; Samus X
     dw $0AFA, $009B  ; Samus Y
-    dw #$FFFF
-
-preset_spazermap_tourian_landing_site_final:
-    dw #preset_100map_tourian_landing_site_final
-    dw $09A2, $732E  ; Equipped Items
-    dw $09A8, $100F  ; Collected Beams
     dw #$FFFF

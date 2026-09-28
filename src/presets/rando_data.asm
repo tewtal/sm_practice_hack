@@ -1115,7 +1115,7 @@ preset_rando_four_bosses_ridley_loaded:
     dw $0917, $0000  ; Layer 2 X position
     dw $09A2, $F32F  ; Equipped Items
     dw $09A4, $F32F  ; Collected Items
-    dw $09A6, $100F  ; Equipped Beams
+    dw $09A6, $100B  ; Equipped Beams
     dw $09A8, $100F  ; Collected Beams
     dw $09C2, $0257  ; Health
     dw $09C4, $0257  ; Max health

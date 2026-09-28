@@ -76,7 +76,11 @@ pre_load_state:
 
     ; Load graphics tiles and tile tables back into RAM/WRAM
     ; before restoring the rest of the state from SRAM
+if !FEATURE_PRESETS
     JSL preset_load_destination_state_and_tiles
+else
+    JSL $82E76B
+endif
 if !RAW_TILE_GRAPHICS
     JSL preset_load_library_background
 else
@@ -179,23 +183,40 @@ post_load_state:
   .done_eram
 
     ; Freeze inputs if necessary
-    LDA !ram_freeze_on_load : BEQ .return
-    LDA !ram_slowdown_mode : BNE .return
+    LDA !ram_freeze_on_load : BEQ .done_freeze_inputs
+    LDA !ram_slowdown_mode : BNE .done_freeze_inputs
     LDA !SLOWDOWN_PAUSED : STA !ram_slowdown_mode
     INC : STA !ram_slowdown_controller_1 : STA !ram_slowdown_controller_2
     INC : STA !ram_slowdown_frames
-    ; Preserve segment timer during freeze
+
+  .done_freeze_inputs
+    ; Preserve segment timer (either for freeze on load or for NMI)
     LDA !ram_seg_rt_frames : STA !SRAM_SEG_TIMER_F
     LDA !ram_seg_rt_seconds : STA !SRAM_SEG_TIMER_S
     LDA !ram_seg_rt_minutes : STA !SRAM_SEG_TIMER_M
 
-  .return
+    ; Preserve timers if enabling NMI
+    LDA !REG_4200_NMI : BIT #$0080 : BEQ .done
+    LDA !FRAME_COUNTER : PHA
+    LDA !ram_realtime_room : PHA
+
     ; Re-enable NMI, turn on force-blank and wait NMI to execute.
     ; This prevents some annoying flashing when loading states where
     ; graphics changes otherwise happens mid-frame
     JSL $80834B
     JSL $80836F
-    RTS
+
+    PLA : STA !ram_realtime_room
+    PLA : STA !FRAME_COUNTER
+    LDA !SRAM_SEG_TIMER_F : STA !ram_seg_rt_frames
+    LDA !SRAM_SEG_TIMER_S : STA !ram_seg_rt_seconds
+    LDA !SRAM_SEG_TIMER_M : STA !ram_seg_rt_minutes
+
+  .done
+    %a8()
+    LDA !REG_4200_NMI : STA $4200
+    LDA #$0F : STA $13 : STA !REG_2100_BRIGHTNESS : STA $0F2100
+    RTL
 }
 
 post_load_music:
@@ -237,11 +258,6 @@ post_load_music:
     LDA !ram_loadstate_music_data : CMP !MUSIC_DATA : BNE .clear_track_load_data
     JMP .check_track
 
-  .clear_track_load_data
-    TDC : JSL !MUSIC_ROUTINE
-    LDA #$FF00 : CLC : ADC !MUSIC_DATA : JSL !MUSIC_ROUTINE
-    BRA .load_track
-
   .fast_off_preset_off
     ; Treat music as already loaded
     STZ !MUSIC_QUEUE_TIMERS : STZ !MUSIC_QUEUE_TIMERS+$2
@@ -259,10 +275,21 @@ post_load_music:
     STA !MUSIC_TIMER : STA !SOUND_TIMER
     BRA .done
 
+  .clear_track_load_data
+    TDC : JSL !MUSIC_ROUTINE
+    LDA #$FF00 : CLC : ADC !MUSIC_DATA : JSL !MUSIC_ROUTINE
+
+    ; Until we load music data, set music data to what APU currently has
+    LDA !ram_loadstate_music_data : STA !MUSIC_DATA
+    BRA .load_track
+
   .queued_music_data_clear_track
     ; Insert clear track before queued music data and start queue there
     DEX #2 : TXA : AND #$000E : STA !MUSIC_QUEUE_START : TAX
     STZ !MUSIC_QUEUE_ENTRIES,X : STZ !MUSIC_ENTRY
+
+    ; Until we load music data, set music data to what APU currently has
+    LDA !ram_loadstate_music_data : STA !MUSIC_DATA
 
     ; Clear all timers before this point
   .music_clear_timer_loop
@@ -288,15 +315,6 @@ post_load_music:
 
   .done
     RTS
-}
-
-; These restored registers are game-specific and needs to be updated for different games
-register_restore_return:
-{
-    %a8()
-    LDA !REG_4200_NMI : STA $4200
-    LDA #$0F : STA $13 : STA !REG_2100_BRIGHTNESS : STA $0F2100
-    RTL
 }
 
 save_state:
@@ -363,7 +381,7 @@ save_write_table:
     dw $0000|$4316, $0002  ; size = $02xx ($0200), unused bank reg = $00
     dw $1000|$420B, $02    ; Trigger DMA on channel 1
 
-    ; Done, other than DMA and flags, uses SRAM $737F00-$737FFF
+    ; Done, other than DMA and flags, uses SRAM $726B02-$726BFF
     dw $0000, save_return
 
 save_return:
@@ -381,9 +399,33 @@ save_return:
   .continue
     LDA !ram_minimap : STA !SRAM_SAVED_MINIMAP
     LDA !SAFEWORD : STA !SRAM_SAVED_STATE
-
     TSC : STA !SRAM_SAVED_SP
-    JMP register_restore_return
+
+    ; Preserve timers if enabling NMI
+    LDA !REG_4200_NMI : BIT #$0080 : BEQ .done
+
+    LDA !ram_seg_rt_frames : STA !SRAM_SEG_TIMER_F
+    LDA !ram_seg_rt_seconds : STA !SRAM_SEG_TIMER_S
+    LDA !ram_seg_rt_minutes : STA !SRAM_SEG_TIMER_M
+    LDA !FRAME_COUNTER : PHA
+    LDA !ram_realtime_room : PHA
+
+    ; When we re-enable NMI, it may or may not cost us a frame.
+    ; To make this more consistent, attempt to always trip the NMI.
+    JSL $80834B
+    JSL $808338
+
+    PLA : STA !ram_realtime_room
+    PLA : STA !FRAME_COUNTER
+    LDA !SRAM_SEG_TIMER_F : STA !ram_seg_rt_frames
+    LDA !SRAM_SEG_TIMER_S : STA !ram_seg_rt_seconds
+    LDA !SRAM_SEG_TIMER_M : STA !ram_seg_rt_minutes
+
+  .done
+    %a8()
+    LDA !REG_4200_NMI : STA $4200
+    LDA #$0F : STA $13 : STA !REG_2100_BRIGHTNESS : STA $0F2100
+    RTL
 }
 
 load_state:
@@ -434,7 +476,7 @@ load_write_table:
     dw $0000|$4316, $0002  ; size = $02xx ($0200), unused bank reg = $00.
     dw $1000|$420B, $02    ; Trigger DMA on channel 1
 
-    ; Done, other than DMA and flags, uses SRAM $737F00-$737FFF
+    ; Done, other than DMA and flags, uses SRAM $726B02-$726BFF
     dw $0000, load_return
 
 load_return:
@@ -462,7 +504,7 @@ load_return:
 
     ; pause menu graphics
     LDA !GAMEMODE : CMP #$0010 : BPL .not_paused
-    CMP #$000C : BMI .not_paused
+    CMP #$000D : BMI .not_paused
     JSL tinystates_load_paused
 
   .not_paused
@@ -481,8 +523,7 @@ load_return:
   .load_dma_regs_done
     ; Restore registers and return
     %ai16()
-    JSR post_load_state
-    JMP register_restore_return
+    JMP post_load_state
 }
 
 vm:
@@ -550,8 +591,7 @@ tinystates_load_paused:
     INX #2
     DEY : BNE .load_loop
 
-    JSL $82B62B ; Draw pause menu during fade in
-    RTL
+    JML tinystates_load_paused_continued
 }
 
 %endfree(80)
@@ -559,9 +599,17 @@ tinystates_load_paused:
 
 %startfree(82)
 
+tinystates_load_paused_continued:
+{
+    JSR $9009   ; Continue initializing pause menu
+    JML $82B62B ; Draw pause menu during fade in
+}
+
 tinystates_preload_bg_data:
+{
     JSR $82E2 ; Re-load BG3 tiles
     RTL
+}
 
 tinystates_load_kraid:
 {
@@ -646,8 +694,8 @@ else
 endif
 
   .call_pause_hook
-    ; We jump into the middle of the hook (to skip waiting for an NMI), so we have to be careful
-    ;   with the stack & processor status
+    ; We jump into the middle of the hook (to skip waiting for an NMI),
+    ; so we have to be careful with the stack and processor status
     PHP : %a8()
 if !FEATURE_PAL
     JML $A7C289

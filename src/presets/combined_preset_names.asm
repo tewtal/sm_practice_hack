@@ -1,6 +1,6 @@
 
-warnpc $EFBED7
-org $EFBED7
+warnpc $EFBF7A
+org $EFBF7A
 print pc, " preset names start"
 
 preset_names:
@@ -590,9 +590,6 @@ preset_names_croc_shaft_up:
 preset_names_croc_speedway:
     db "Croc Speedway", #$FF
 
-preset_names_croc_speedway_lower:
-    db "Croc Speedway (Lower)", #$FF
-
 preset_names_croc_speedway_up:
     db "Croc Speedway Up", #$FF
 
@@ -760,9 +757,6 @@ preset_names_entering_kraids_lair:
 
 preset_names_entering_maridia:
     db "Entering Maridia", #$FF
-
-preset_names_entering_with_extra_pb:
-    db "Entering With Extra PB", #$FF
 
 preset_names_entering_wrecked_ship:
     db "Entering Wrecked Ship", #$FF
@@ -1352,14 +1346,8 @@ preset_names_kraid_zeelas_revisit:
 preset_names_kronic_boost:
     db "Kronic Boost", #$FF
 
-preset_names_kronic_boost_lower:
-    db "Kronic Boost (Lower)", #$FF
-
 preset_names_kronic_boost_room:
     db "Kronic Boost Room", #$FF
-
-preset_names_kronic_boost_upper:
-    db "Kronic Boost (Upper)", #$FF
 
 preset_names_kronic_room:
     db "Kronic Room", #$FF
@@ -1613,9 +1601,6 @@ preset_names_magdollite_room:
 preset_names_magdollite_tunnel:
     db "Magdollite Tunnel", #$FF
 
-preset_names_magdollite_tunnel_upper:
-    db "Magdollite Tunnel (Upper)", #$FF
-
 preset_names_magnet_stairs:
     db "Magnet Stairs", #$FF
 
@@ -1751,9 +1736,6 @@ preset_names_moat_hbj:
 preset_names_moat_missiles:
     db "Moat Missiles", #$FF
 
-preset_names_moat_with_missile_gone:
-    db "Moat With Missile Gone", #$FF
-
 preset_names_mochtroid_ice_clip:
     db "Mochtroid Ice Clip", #$FF
 
@@ -1858,6 +1840,9 @@ preset_names_norfair_reserve_return:
 
 preset_names_norfair_reserve_room:
     db "Norfair Reserve Room", #$FF
+
+preset_names_northern_kronic_boost:
+    db "Northern Kronic Boost", #$FF
 
 preset_names_nutella_refill:
     db "Nutella Refill", #$FF
@@ -2111,9 +2096,6 @@ preset_names_puddles:
 preset_names_purple_shaft:
     db "Purple Shaft", #$FF
 
-preset_names_purple_shaft_upper:
-    db "Purple Shaft (Upper)", #$FF
-
 preset_names_puyo_ice_clip_springball:
     db "Puyo Ice Clip (Springball)", #$FF
 
@@ -2194,9 +2176,6 @@ preset_names_retro_brinstar_power_bombs:
 
 preset_names_retro_etank:
     db "Retro E-Tank", #$FF
-
-preset_names_return_with_yellow_door:
-    db "Return With Yellow Door", #$FF
 
 preset_names_reverse_amphitheatre:
     db "Reverse Amphitheatre", #$FF
@@ -2474,6 +2453,9 @@ preset_names_snail_clip:
 preset_names_snake_room_revisit:
     db "Snake Room Revisit", #$FF
 
+preset_names_southern_kronic_boost:
+    db "Southern Kronic Boost", #$FF
+
 preset_names_spazer:
     db "Spazer", #$FF
 
@@ -2515,9 +2497,6 @@ preset_names_spikesuit_reverse_halfie:
 
 preset_names_spiky_acid_snakes:
     db "Spiky Acid Snakes", #$FF
-
-preset_names_spiky_acid_snakes_lower:
-    db "Spiky Acid Snakes (Lower)", #$FF
 
 preset_names_spiky_room_of_death:
     db "Spiky Room of Death", #$FF

@@ -8,12 +8,10 @@ org $80FFD8
 hook_sram_size:
 if !FEATURE_TINYSTATES
     db $07 ; 128kb
-else
-if !FEATURE_SD2SNES
+elseif !FEATURE_SD2SNES
     db $08 ; 256kb
 else
     db $05 ; 32kb
-endif
 endif
 
 
@@ -29,12 +27,10 @@ else
 endif
 
 org $8B8731
-if !FEATURE_SD2SNES
 if !FEATURE_TINYSTATES
     LDA #$39E3 ; T
-else
+elseif !FEATURE_SD2SNES
     LDA #$39E2 ; S
-endif
 else
     LDA #$04F0 ; blank
 endif
@@ -187,7 +183,7 @@ org $808F24
     JSL hook_set_music_track
     BRA $00
 
-org $808F65
+org $808F62
     JML hook_set_music_data
 
 
@@ -871,11 +867,13 @@ hook_set_music_track:
 
 hook_set_music_data:
 {
-    STA !MUSIC_DATA : TAX ; overwritten code
+    STA !UPLOADING_TO_APU ; prevent prac hack from loading during this time
+    AND #$00FF : STA !MUSIC_DATA : TAX ; overwritten code
     LDA !sram_music_toggle : CMP #$0002 : BEQ .fast_no_music
     JML $808F69
 
   .fast_no_music
+    STZ !UPLOADING_TO_APU
     JML $808F89
 }
 
@@ -1265,8 +1263,11 @@ endif
     ASL #4
     NOP #4 ; Add 8 more clock cycles
   .combined
+if !FEATURE_VANILLAHUD
+else
     PHA : LDA !ram_update_timers_flag : BNE .update_timers
     PLA
+endif
     CLC : ADC #$0007 ; Add 40 cycles including CLC+ADC
     BMI .endlag ; Make sure we haven't looped over to a negative count
   .lagstart
@@ -1277,7 +1278,10 @@ endif
     RTL
 
   .skiplag
+if !FEATURE_VANILLAHUD
+else
     LDA !ram_update_timers_flag : BNE .conditional_update_timers
+endif
     RTL
 
   .vanilla_display_lag_loop
@@ -1291,6 +1295,8 @@ endif
     INC  ; Add 1 loop (7 clock cycles including the INC)
     BRA .combined
 
+if !FEATURE_VANILLAHUD
+else
   .update_timers
     ; Update timers takes roughly 580 clock cycles,
     ; plus time spent setting and clearing the flag,
@@ -1315,6 +1321,7 @@ endif
     JSL ih_update_timers
     TDC : STA !ram_update_timers_flag
     RTL
+endif
 }
 
 stop_all_sounds:

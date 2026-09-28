@@ -746,10 +746,16 @@ mc_factory_reset:
 FactoryResetConfirm:
     dw #mc_factory_reset_abort
     dw #$FFFF
+if !FEATURE_PRESETS
     dw #mc_factory_reset_keep_presets
+endif
     dw #mc_factory_reset_delete_presets
     dw #$0000
+if !FEATURE_PRESETS
     %cm_header("KEEP CUSTOM PRESETS?")
+else
+    %cm_header("ARE YOU SURE?")
+endif
     %cm_footer("THIS WILL REBOOT THE GAME")
 
 mc_factory_reset_abort:
@@ -758,11 +764,17 @@ mc_factory_reset_abort:
     %sfxgoback()
     JML cm_previous_menu
 
+if !FEATURE_PRESETS
 mc_factory_reset_keep_presets:
     %cm_jsl("Yes, keep my presets", #action_factory_reset, #$0000)
+endif
 
 mc_factory_reset_delete_presets:
+if !FEATURE_PRESETS
     %cm_jsl("No, mark them as empty", .routine, #$0000)
+else
+    %cm_jsl("Yes", .routine, #$0000)
+endif
   .routine
     TYX : TXA ; LDA/X/Y #$0000
   .loop

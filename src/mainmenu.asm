@@ -268,8 +268,13 @@ action_submenu:
     BRA action_submenu_jump
 }
 
+if !FEATURE_PRESETS
 action_presets_mainmenu:
 {
+    TDC : STA !ram_cm_category_preset_kpdr_builtin
+    LDA !sram_safeties_enabled_phantoonfirst : AND #$0008
+    LSR #3 : STA !ram_cm_category_preset_pkrd
+
     ; Increment stack pointer by 2, then store current menu
     LDA !MENU_STACK_INDEX : INC #2 : STA !MENU_STACK_INDEX : TAX
 
@@ -283,6 +288,7 @@ action_presets_mainmenu:
 
     ; Continue into action_submenu_jump
 }
+endif ; FEATURE_PRESETS
 
 action_submenu_jump:
 {
@@ -299,22 +305,16 @@ action_submenu_jump:
     JML cm_draw
 }
 
+if !FEATURE_PRESETS
 preset_category_submenus:
 {
-    dw #PresetsMenuKpdr20
-    dw #PresetsMenuKpdr21
-    dw #PresetsMenuKpdr22
-    dw #PresetsMenuKpdr23
-    dw #PresetsMenuKpdr25
-    dw #PresetsMenuPrkd19
-    dw #PresetsMenuPrkd20
-    dw #PresetsMenuPkrd
+    dw #PresetsMenuKpdr
+    dw #PresetsMenuPhantoonFirst
     dw #PresetsMenuGtclassic
     dw #PresetsMenuGtmax
     dw #PresetsMenu100early
     dw #PresetsMenuHundo
     dw #PresetsMenu100map
-    dw #PresetsMenuSpazermap
     dw #PresetsMenu14ice
     dw #PresetsMenu14speed
     dw #PresetsMenuRbo
@@ -332,20 +332,13 @@ preset_category_submenus:
 
 preset_category_banks:
 {
-    dw #PresetsMenuKpdr20>>16
-    dw #PresetsMenuKpdr21>>16
-    dw #PresetsMenuKpdr22>>16
-    dw #PresetsMenuKpdr23>>16
-    dw #PresetsMenuKpdr25>>16
-    dw #PresetsMenuPrkd19>>16
-    dw #PresetsMenuPrkd20>>16
-    dw #PresetsMenuPkrd>>16
+    dw #PresetsMenuKpdr>>16
+    dw #PresetsMenuPhantoonFirst>>16
     dw #PresetsMenuGtclassic>>16
     dw #PresetsMenuGtmax>>16
     dw #PresetsMenu100early>>16
     dw #PresetsMenuHundo>>16
     dw #PresetsMenu100map>>16
-    dw #PresetsMenuSpazermap>>16
     dw #PresetsMenu14ice>>16
     dw #PresetsMenu14speed>>16
     dw #PresetsMenuRbo>>16
@@ -360,6 +353,7 @@ preset_category_banks:
     dw #PresetsMenuRando>>16
     dw #$0000
 }
+endif ; FEATURE_PRESETS
 
 
 ; -----------
@@ -371,8 +365,10 @@ preset_category_banks:
 
 MainMenu:
     dw #mm_goto_equipment
+if !FEATURE_PRESETS
     dw #mm_goto_presets
     dw #mm_goto_presets_menu
+endif
     dw #mm_goto_teleport
     dw #mm_goto_events
     dw #mm_goto_misc
@@ -412,8 +408,10 @@ endif
 MainMenuBanks:
     ; this list must match the main menu order
     dw #EquipmentMenu>>16
+if !FEATURE_PRESETS
     dw #preset_category_banks>>16 ; dummy
     dw #PresetOptionsMenu>>16
+endif
     dw #TeleportMenu>>16
     dw #EventFlagsMenu>>16
     dw #MiscMenu>>16
@@ -442,11 +440,13 @@ endif
 mm_goto_equipment:
     %cm_jsl("Equipment", #action_equipment_mainmenu, #EquipmentMenu)
 
+if !FEATURE_PRESETS
 mm_goto_presets:
     %cm_jsl("Category Presets", #action_presets_mainmenu, #$0000)
 
 mm_goto_presets_menu:
     %cm_jsl("Preset Options", #action_preset_options_mainmenu, #PresetOptionsMenu)
+endif
 
 mm_goto_teleport:
     %cm_mainmenu("Save Stations", #TeleportMenu)
@@ -505,6 +505,7 @@ mm_goto_brbmenu:
     %cm_jsl("Be Right Back Menu", #action_brb_mainmenu, #BRBMenu)
 
 
+if !FEATURE_PRESETS
 ; -------------------
 ; Preset Options menu
 ; -------------------
@@ -922,15 +923,12 @@ SelectPresetCategoryMenu:
     dw #presets_current
     dw #$FFFF
     dw #precat_kpdr
-    dw #precat_prkd19
-    dw #precat_prkd20
-    dw #precat_pkrd
+    dw #precat_phantoonfirst
     dw #precat_gtclassic
     dw #precat_gtmax
     dw #precat_100early
     dw #precat_hundo
     dw #precat_100map
-    dw #precat_spazermap
     dw #precat_14ice
     dw #precat_14speed
     dw #precat_rbo
@@ -939,6 +937,7 @@ SelectPresetCategoryMenu:
     dw #precat_nghyper
     dw #precat_nintendopower
     dw #precat_allboss
+    dw #precat_nodropskpdr
     dw #precat_rando
     dw #$0000
     %cm_header("SELECT PRESET CATEGORY")
@@ -948,20 +947,13 @@ presets_current:
     dl #!sram_preset_category
     dw #.routine
     db #$28, "CURRENT PRESET", #$FF
-    db #$28, "   KPDR 20%", #$FF
-    db #$28, "   KPDR 21%", #$FF
-    db #$28, "   KPDR 22%", #$FF
-    db #$28, "   KPDR 23%", #$FF
-    db #$28, "   KPDR 25%", #$FF
-    db #$28, "   PRKD 19%", #$FF
-    db #$28, "   PRKD 20%", #$FF
-    db #$28, "  ANY% PKRD", #$FF
+    db #$28, "  ANY% KPDR", #$FF
+    db #$28, " PHAN FIRST", #$FF
     db #$28, " GT CLASSIC", #$FF
     db #$28, "    GT MAX%", #$FF
     db #$28, " 100% EARLY", #$FF
     db #$28, "  100% LATE", #$FF
     db #$28, "   100% MAP", #$FF
-    db #$28, " SPAZER MAP", #$FF
     db #$28, "    14% ICE", #$FF
     db #$28, "  14% SPEED", #$FF
     db #$28, "        RBO", #$FF
@@ -980,83 +972,47 @@ presets_current:
     RTL
 
 precat_kpdr:
-    %cm_submenu("KPDR", #SelectKpdrPresetCategoryMenu)
+    %cm_jsl("Any% KPDR", #action_select_preset_category, #$0000)
 
-SelectKpdrPresetCategoryMenu:
-    dw #precat_kpdr20
-    dw #precat_kpdr21
-    dw #precat_kpdr22
-    dw #precat_kpdr23
-    dw #precat_kpdr25
-    dw #precat_allbosskpdr
-    dw #precat_nodropskpdr
-    dw #$0000
-    %cm_header("SELECT KPDR CATEGORY")
-
-precat_kpdr20:
-    %cm_jsl("20% KPDR 15 Missiles", #action_select_preset_category, #$0000)
-
-precat_kpdr21:
-    %cm_jsl("21% KPDR 3 E-Tanks", #action_select_preset_category, #$0001)
-
-precat_kpdr22:
-    %cm_jsl("22% KPDR 4 E-Tanks", #action_select_preset_category, #$0002)
-
-precat_kpdr23:
-    %cm_jsl("23% KPDR with Spazer", #action_select_preset_category, #$0003)
-
-precat_kpdr25:
-    %cm_jsl("25% KPDR Early Ice", #action_select_preset_category, #$0004)
-
-precat_prkd19:
-    %cm_jsl("19% PRKD 15 Missiles", #action_select_preset_category, #$0005)
-
-precat_prkd20:
-    %cm_jsl("20% PRKD 20 Missiles", #action_select_preset_category, #$0006)
-
-precat_pkrd:
-    %cm_jsl("Any% PKRD", #action_select_preset_category, #$0007)
+precat_phantoonfirst:
+    %cm_jsl("Phantoon First", #action_select_preset_category, #$0001)
 
 precat_gtclassic:
-    %cm_jsl("GT Classic", #action_select_preset_category, #$0008)
+    %cm_jsl("GT Classic", #action_select_preset_category, #$0002)
 
 precat_gtmax:
-    %cm_jsl("GT Max%", #action_select_preset_category, #$0009)
+    %cm_jsl("GT Max%", #action_select_preset_category, #$0003)
 
 precat_100early:
-    %cm_jsl("100% Early Crocomire", #action_select_preset_category, #$000A)
+    %cm_jsl("100% Early Crocomire", #action_select_preset_category, #$0004)
 
 precat_hundo:
-    %cm_jsl("100% Late Crocomire", #action_select_preset_category, #$000B)
+    %cm_jsl("100% Late Crocomire", #action_select_preset_category, #$0005)
 
 precat_100map:
-!PRESET_CATEGORY_100MAP_INDEX = #$000C
-    %cm_jsl("100% Map Completion", #action_select_preset_category, #$000C)
-
-precat_spazermap:
-!PRESET_CATEGORY_SPAZERMAP_INDEX = #$000D
-    %cm_jsl("100% Map with Spazer", #action_select_preset_category, #$000D)
+!PRESET_CATEGORY_100MAP_INDEX = #$0006
+    %cm_jsl("100% Map Completion", #action_select_preset_category, #$0006)
 
 precat_14ice:
-    %cm_jsl("14% Ice", #action_select_preset_category, #$000E)
+    %cm_jsl("14% Ice", #action_select_preset_category, #$0007)
 
 precat_14speed:
-    %cm_jsl("14% Speed", #action_select_preset_category, #$000F)
+    %cm_jsl("14% Speed", #action_select_preset_category, #$0008)
 
 precat_rbo:
-    %cm_jsl("Reverse Boss Order", #action_select_preset_category, #$0010)
+    %cm_jsl("Reverse Boss Order", #action_select_preset_category, #$0009)
 
 precat_suitless:
-    %cm_jsl("Max% Suitless", #action_select_preset_category, #$0011)
+    %cm_jsl("Max% Suitless", #action_select_preset_category, #$000A)
 
 precat_ngplasma:
-    %cm_jsl("NewGame+ Plasma", #action_select_preset_category, #$0012)
+    %cm_jsl("NewGame+ Plasma", #action_select_preset_category, #$000B)
 
 precat_nghyper:
-    %cm_jsl("NewGame+ Hyper", #action_select_preset_category, #$0013)
+    %cm_jsl("NewGame+ Hyper", #action_select_preset_category, #$000C)
 
 precat_nintendopower:
-    %cm_jsl("Nintendo Power%", #action_select_preset_category, #$0014)
+    %cm_jsl("Nintendo Power%", #action_select_preset_category, #$000D)
 
 precat_allboss:
     %cm_submenu("All Bosses", #SelectAllBossesPresetCategoryMenu)
@@ -1069,19 +1025,19 @@ SelectAllBossesPresetCategoryMenu:
     %cm_header("SELECT ALL BOSSES CATEGORY")
 
 precat_allbosskpdr:
-    %cm_jsl("All Bosses KPDR", #action_select_preset_category, #$0015)
+    %cm_jsl("All Bosses KPDR", #action_select_preset_category, #$000E)
 
 precat_allbosspkdr:
-    %cm_jsl("All Bosses PKDR", #action_select_preset_category, #$0016)
+    %cm_jsl("All Bosses PKDR", #action_select_preset_category, #$000F)
 
 precat_allbossprkd:
-    %cm_jsl("All Bosses PRKD", #action_select_preset_category, #$0017)
+    %cm_jsl("All Bosses PRKD", #action_select_preset_category, #$0010)
 
 precat_nodropskpdr:
-    %cm_jsl("No Drops KPDR", #action_select_preset_category, #$0018)
+    %cm_jsl("No Drops KPDR", #action_select_preset_category, #$0011)
 
 precat_rando:
-    %cm_jsl("Randomizer", #action_select_preset_category, #$0019)
+    %cm_jsl("Randomizer", #action_select_preset_category, #$0012)
 
 action_select_preset_category:
 {
@@ -1531,6 +1487,7 @@ presetequiprando_supers:
 
 presetequiprando_pbs:
     %cm_numfield("Max Power Bomb Pickups", !sram_presetequiprando_max_pbs, 0, 10, 1, 5, #0)
+endif ; FEATURE_PRESETS
 
 
 ; -------------
@@ -1822,7 +1779,7 @@ action_teleport:
     LDA #$001F : STA !SAMUS_HP
 
   .hp_set
-    JSL reset_all_counters
+    JSL ih_reset_all_counters
     JSL stop_all_sounds
 
     LDA #$0001 : STA !ram_cm_leave

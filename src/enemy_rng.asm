@@ -1,13 +1,13 @@
 
 if !FEATURE_PAL
-org $86F14A
+org $86F145
 else
-org $86F10E
+org $86F109
 endif
-    LDA !ram_drop_chance_table : BNE $10
-    ; Since we replaced unnecessary logic,
-    ; we need to burn some cycles to compensate
-    BRA $00 : BRA $00
+    PEA $A07E : PLB
+    STZ.w !CTRL_SHORTCUT_TRACKING_DROP_SPAWNED
+    PLB : NOP
+    LDA !ram_drop_chance_table : BNE $0C
 %warnpc($86F118, $86F154)
 
 

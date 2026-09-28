@@ -14,6 +14,8 @@ PresetsMenu100map:
     dw #presets_goto_100map_greenpink_brin_cleanup
     dw #presets_goto_100map_blue_brinstar_cleanup
     dw #presets_goto_100map_tourian
+    dw #$FFFF
+    dw #presets_100map_safeties_spazer
     dw #$0000
     %cm_header("MAP COMPLETION PRESETS")
 
@@ -61,6 +63,9 @@ presets_goto_100map_blue_brinstar_cleanup:
 
 presets_goto_100map_tourian:
     %cm_submenu("Tourian", #presets_submenu_100map_tourian)
+
+presets_100map_safeties_spazer:
+    %cm_toggle_bit("Spazer", !sram_safeties_enabled_100map, #$0001, #0)
 
 presets_submenu_100map_bombs:
     dw #presets_100map_bombs_ceres_elevator

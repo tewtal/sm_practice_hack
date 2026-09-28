@@ -56,16 +56,16 @@ pre_load_state:
     LDA !ENEMY_MAIN_LOOP_COUNTER : STA !ram_loadstate_enemy_main_loop_counter
 
   .done
-    LDA !ram_last_save_state_type : BNE .tinystate
-    RTS
-
-  .tinystate
     ; Force blank and disable NMI
     %a8()
     LDA #$80 : STA $802100
     LDA #$00 : STA $4200
     %ai16()
 
+    LDA !ram_last_save_state_type : BNE .tinystate
+    RTS
+
+  .tinystate
     ; Save the old room ID
     LDA !ROOM_ID : PHA
 
@@ -83,7 +83,11 @@ pre_load_state:
 
     ; Load graphics tiles and tile tables back into RAM/WRAM
     ; before restoring the rest of the state from SRAM
+if !FEATURE_PRESETS
     JSL preset_load_destination_state_and_tiles
+else
+    JSL $82E76B
+endif
 if !RAW_TILE_GRAPHICS
     JSL preset_load_library_background
 else
@@ -201,25 +205,22 @@ post_load_state:
   .done_eram
 
     ; Freeze inputs if necessary
-    LDA !ram_freeze_on_load : BEQ .return
-    LDA !ram_slowdown_mode : BNE .return
+    LDA !ram_freeze_on_load : BEQ .done_freeze_inputs
+    LDA !ram_slowdown_mode : BNE .done_freeze_inputs
     LDA !SLOWDOWN_PAUSED : STA !ram_slowdown_mode
     INC : STA !ram_slowdown_controller_1 : STA !ram_slowdown_controller_2
     INC : STA !ram_slowdown_frames
 
-    ; Preserve segment timer during freeze
-    LDA !ram_last_save_state_type : BEQ .preserve_seg_full
-    DEC : BEQ .preserve_seg_1st_tiny
-    DEC : BEQ .preserve_seg_2nd_tiny
-    BRK
-
-  .preserve_seg_full
+  .done_freeze_inputs
+    ; Preserve segment timer (either for freeze on load or for NMI)
     LDA !ram_seg_rt_frames : STA !SRAM_SEG_TIMER_F
     LDA !ram_seg_rt_seconds : STA !SRAM_SEG_TIMER_S
     LDA !ram_seg_rt_minutes : STA !SRAM_SEG_TIMER_M
 
-  .return
-    LDA !ram_last_save_state_type : BEQ .done
+    ; Preserve timers if enabling NMI
+    LDA !REG_4200_NMI : BIT #$0080 : BEQ .done
+    LDA !FRAME_COUNTER : PHA
+    LDA !ram_realtime_room : PHA
 
     ; Re-enable NMI, turn on force-blank and wait NMI to execute.
     ; This prevents some annoying flashing when loading states where
@@ -227,20 +228,17 @@ post_load_state:
     JSL $80834B
     JSL $80836F
 
+    PLA : STA !ram_realtime_room
+    PLA : STA !FRAME_COUNTER
+    LDA !SRAM_SEG_TIMER_F : STA !ram_seg_rt_frames
+    LDA !SRAM_SEG_TIMER_S : STA !ram_seg_rt_seconds
+    LDA !SRAM_SEG_TIMER_M : STA !ram_seg_rt_minutes
+
   .done
-    RTS
-
-  .preserve_seg_1st_tiny
-    LDA !ram_seg_rt_frames : STA !SRAM_1ST_SEG_TIMER_F
-    LDA !ram_seg_rt_seconds : STA !SRAM_1ST_SEG_TIMER_S
-    LDA !ram_seg_rt_minutes : STA !SRAM_1ST_SEG_TIMER_M
-    BRA .return
-
-  .preserve_seg_2nd_tiny
-    LDA !ram_seg_rt_frames : STA !SRAM_2ND_SEG_TIMER_F
-    LDA !ram_seg_rt_seconds : STA !SRAM_2ND_SEG_TIMER_S
-    LDA !ram_seg_rt_minutes : STA !SRAM_2ND_SEG_TIMER_M
-    BRA .return
+    %a8()
+    LDA !REG_4200_NMI : STA $4200
+    LDA #$0F : STA $13 : STA !REG_2100_BRIGHTNESS : STA $0F2100
+    RTL
 }
 
 post_load_music:
@@ -282,11 +280,6 @@ post_load_music:
     LDA !ram_loadstate_music_data : CMP !MUSIC_DATA : BNE .clear_track_load_data
     JMP .check_track
 
-  .clear_track_load_data
-    TDC : JSL !MUSIC_ROUTINE
-    LDA #$FF00 : CLC : ADC !MUSIC_DATA : JSL !MUSIC_ROUTINE
-    BRA .load_track
-
   .fast_off_preset_off
     ; Treat music as already loaded
     STZ !MUSIC_QUEUE_TIMERS : STZ !MUSIC_QUEUE_TIMERS+$2
@@ -304,10 +297,21 @@ post_load_music:
     STA !MUSIC_TIMER : STA !SOUND_TIMER
     BRA .done
 
+  .clear_track_load_data
+    TDC : JSL !MUSIC_ROUTINE
+    LDA #$FF00 : CLC : ADC !MUSIC_DATA : JSL !MUSIC_ROUTINE
+
+    ; Until we load music data, set music data to what APU currently has
+    LDA !ram_loadstate_music_data : STA !MUSIC_DATA
+    BRA .load_track
+
   .queued_music_data_clear_track
     ; Insert clear track before queued music data and start queue there
     DEX #2 : TXA : AND #$000E : STA !MUSIC_QUEUE_START : TAX
     STZ !MUSIC_QUEUE_ENTRIES,X : STZ !MUSIC_ENTRY
+
+    ; Until we load music data, set music data to what APU currently has
+    LDA !ram_loadstate_music_data : STA !MUSIC_DATA
 
     ; Clear all timers before this point
   .music_clear_timer_loop
@@ -333,15 +337,6 @@ post_load_music:
 
   .done
     RTS
-}
-
-; These restored registers are game-specific and needs to be updated for different games
-register_restore_return:
-{
-    %a8()
-    LDA !REG_4200_NMI : STA $4200
-    LDA #$0F : STA $13 : STA !REG_2100_BRIGHTNESS : STA $0F2100
-    RTL
 }
 
 save_state:
@@ -432,7 +427,7 @@ save_full_table:
     dw $0000|$4316, $0002  ; size = $02xx ($0200), unused bank reg = $00
     dw $1000|$420B, $02    ; Trigger DMA on channel 1
 
-    ; Done, other than DMA and flags, uses SRAM $777D00-$777DFF
+    ; Done, other than DMA and flags, uses SRAM $777F02-$777FFF
     dw $0000, save_return
 
 save_1st_tiny_table:
@@ -442,16 +437,16 @@ save_1st_tiny_table:
     ; Single address, B bus -> A bus.  B address = reflector to WRAM ($2180).
     dw $0000|$4310, $8080  ; direction = B->A, byte reg, B addr = $2180
 
-    ; Copy WRAM segments, uses $770000-$7734FF, $710000-$726B01, $736000-$736FFF
+    ; Copy WRAM segments, uses $770000-$7724FF, $710000-$726B01, $736000-$737FFF
     %wram_to_sram($7E0000, $2000, $770000)
-    %wram_to_sram($7E7000, $1000, $772000)
-    %wram_to_sram($7E3300, $0200, $773000)
-    %wram_to_sram(!WRAM_START, !WRAM_PERSIST_START-!WRAM_START, $773200)
+    %wram_to_sram($7E3300, $0200, $772000)
+    %wram_to_sram(!WRAM_START, !WRAM_PERSIST_START-!WRAM_START, $772200)
     %wram_to_sram($7E8000, $2000, $710000)
     %wram_to_sram($7EC000, $34A0, $712000)
     %wram_to_sram($7F0000, $2B00, $715500)
     %wram_to_sram($7F2B00, $6B02, $720000)
     %wram_to_sram($7E2000, $1000, $736000)
+    %wram_to_sram($7E7000, $1000, $737000)
 
     ; Address pair, B bus -> A bus.  B address = VRAM read ($2139).
     dw $0000|$4310, $3981  ; direction = B->A, word reg, B addr = $2139
@@ -463,15 +458,15 @@ save_1st_tiny_table:
     %vram_to_sram($A000, $2000, $730000)
     %vram_to_sram($C000, $4000, $732000)
 
-    ; Copy CGRAM, uses SRAM $773500-$7736FF
+    ; Copy CGRAM, uses SRAM $772500-$7726FF
     dw $1000|$2121, $00    ; CGRAM address
     dw $0000|$4310, $3B80  ; direction = B->A, byte reg, B addr = $213B
-    dw $0000|$4312, $3500  ; A addr = $xx3500
+    dw $0000|$4312, $2500  ; A addr = $xx2500
     dw $0000|$4314, $0077  ; A addr = $77xxxx, size = $xx00
     dw $0000|$4316, $0002  ; size = $02xx ($0200), unused bank reg = $00
     dw $1000|$420B, $02    ; Trigger DMA on channel 1
 
-    ; Done, other than DMA and flags, uses SRAM $777E00-$777EFF
+    ; Done, other than DMA and flags, uses SRAM $726B02-$726BFF
     dw $0000, save_return
 
 save_2nd_tiny_table:
@@ -481,16 +476,16 @@ save_2nd_tiny_table:
     ; Single address, B bus -> A bus.  B address = reflector to WRAM ($2180).
     dw $0000|$4310, $8080  ; direction = B->A, byte reg, B addr = $2180
 
-    ; Copy WRAM segments, uses $774000-$7774FF, $740000-$756B01, $766000-$766FFF
-    %wram_to_sram($7E0000, $2000, $774000)
-    %wram_to_sram($7E7000, $1000, $776000)
-    %wram_to_sram($7E3300, $0200, $777000)
-    %wram_to_sram(!WRAM_START, !WRAM_PERSIST_START-!WRAM_START, $777200)
+    ; Copy WRAM segments, uses $772B00-$774FFF, $740000-$756B01, $766000-$767FFF
+    %wram_to_sram($7E0000, $2000, $773000)
+    %wram_to_sram($7E3300, $0200, $772B00)
+    %wram_to_sram(!WRAM_START, !WRAM_PERSIST_START-!WRAM_START, $772D00)
     %wram_to_sram($7E8000, $2000, $740000)
     %wram_to_sram($7EC000, $34A0, $742000)
     %wram_to_sram($7F0000, $2B00, $745500)
     %wram_to_sram($7F2B00, $6B02, $750000)
     %wram_to_sram($7E2000, $1000, $766000)
+    %wram_to_sram($7E7000, $1000, $767000)
 
     ; Address pair, B bus -> A bus.  B address = VRAM read ($2139).
     dw $0000|$4310, $3981  ; direction = B->A, word reg, B addr = $2139
@@ -502,15 +497,15 @@ save_2nd_tiny_table:
     %vram_to_sram($A000, $2000, $760000)
     %vram_to_sram($C000, $4000, $762000)
 
-    ; Copy CGRAM, uses SRAM $777500-$7776FF
+    ; Copy CGRAM, uses SRAM $772900-$772AFF
     dw $1000|$2121, $00    ; CGRAM address
     dw $0000|$4310, $3B80  ; direction = B->A, byte reg, B addr = $213B
-    dw $0000|$4312, $7500  ; A addr = $xx7500
+    dw $0000|$4312, $2900  ; A addr = $xx2900
     dw $0000|$4314, $0077  ; A addr = $77xxxx, size = $xx00
     dw $0000|$4316, $0002  ; size = $02xx ($0200), unused bank reg = $00
     dw $1000|$420B, $02    ; Trigger DMA on channel 1
 
-    ; Done, other than DMA and flags, uses SRAM $777F00-$777FFF
+    ; Done, other than DMA and flags, uses SRAM $756B02-$756BFF
     dw $0000, save_return
 
 save_return:
@@ -531,26 +526,49 @@ save_return:
     DEC : BEQ .continue_2nd_tiny
     BRK
 
-  .continue_full
-    LDA !ram_minimap : STA !SRAM_SAVED_MINIMAP
-    LDA !SAFEWORD : STA !SRAM_SAVED_STATE
-
-    TSC : STA !SRAM_SAVED_SP
-    JMP register_restore_return
-
   .continue_1st_tiny
     LDA !ram_minimap : STA !SRAM_1ST_SAVED_MINIMAP
     LDA !SAFEWORD : STA !SRAM_1ST_SAVED_STATE
-
     TSC : STA !SRAM_1ST_SAVED_SP
-    JMP register_restore_return
+    BRA .return
 
   .continue_2nd_tiny
     LDA !ram_minimap : STA !SRAM_2ND_SAVED_MINIMAP
     LDA !SAFEWORD : STA !SRAM_2ND_SAVED_STATE
-
     TSC : STA !SRAM_2ND_SAVED_SP
-    JMP register_restore_return
+    BRA .return
+
+  .continue_full
+    LDA !ram_minimap : STA !SRAM_SAVED_MINIMAP
+    LDA !SAFEWORD : STA !SRAM_SAVED_STATE
+    TSC : STA !SRAM_SAVED_SP
+
+  .return
+    ; Preserve timers if enabling NMI
+    LDA !REG_4200_NMI : BIT #$0080 : BEQ .done
+
+    LDA !ram_seg_rt_frames : STA !SRAM_SEG_TIMER_F
+    LDA !ram_seg_rt_seconds : STA !SRAM_SEG_TIMER_S
+    LDA !ram_seg_rt_minutes : STA !SRAM_SEG_TIMER_M
+    LDA !FRAME_COUNTER : PHA
+    LDA !ram_realtime_room : PHA
+
+    ; When we re-enable NMI, it may or may not cost us a frame.
+    ; To make this more consistent, attempt to always trip the NMI.
+    JSL $80834B
+    JSL $808338
+
+    PLA : STA !ram_realtime_room
+    PLA : STA !FRAME_COUNTER
+    LDA !SRAM_SEG_TIMER_F : STA !ram_seg_rt_frames
+    LDA !SRAM_SEG_TIMER_S : STA !ram_seg_rt_seconds
+    LDA !SRAM_SEG_TIMER_M : STA !ram_seg_rt_minutes
+
+  .done
+    %a8()
+    LDA !REG_4200_NMI : STA $4200
+    LDA #$0F : STA $13 : STA !REG_2100_BRIGHTNESS : STA $0F2100
+    RTL
 }
 
 load_state:
@@ -600,7 +618,7 @@ load_full_table:
     dw $0000|$4316, $0002  ; size = $02xx ($0200), unused bank reg = $00
     dw $1000|$420B, $02    ; Trigger DMA on channel 1
 
-    ; Done, other than DMA and flags, uses SRAM $777D00-$777DFF
+    ; Done, other than DMA and flags, uses SRAM $777F02-$777FFF
     dw $0000, load_return
 
 load_1st_tiny_table:
@@ -612,16 +630,16 @@ load_1st_tiny_table:
     ; Single address, A bus -> B bus.  B address = reflector to WRAM ($2180).
     dw $0000|$4310, $8000  ; direction = A->B, B addr = $2180
 
-    ; Copy WRAM segments, uses $770000-$7734FF, $710000-$726B01, $736000-$736FFF
+    ; Copy WRAM segments, uses $770000-$7724FF, $710000-$726B01, $736000-$737FFF
     %sram_to_wram($7E0000, $2000, $770000)
-    %sram_to_wram($7E7000, $1000, $772000)
-    %sram_to_wram($7E3300, $0200, $773000)
-    %sram_to_wram(!WRAM_START, !WRAM_PERSIST_START-!WRAM_START, $773200)
+    %sram_to_wram($7E3300, $0200, $772000)
+    %sram_to_wram(!WRAM_START, !WRAM_PERSIST_START-!WRAM_START, $772200)
     %sram_to_wram($7E8000, $2000, $710000)
     %sram_to_wram($7EC000, $34A0, $712000)
     %sram_to_wram($7F0000, $2B00, $715500)
     %sram_to_wram($7F2B00, $6B02, $720000)
     %sram_to_wram($7E2000, $1000, $736000)
+    %sram_to_wram($7E7000, $1000, $737000)
 
     ; Address pair, A bus -> B bus.  B address = VRAM write ($2118).
     dw $0000|$4310, $1801  ; direction = A->B, B addr = $2118
@@ -633,15 +651,15 @@ load_1st_tiny_table:
     %sram_to_vram($A000, $2000, $730000)
     %sram_to_vram($C000, $4000, $732000)
 
-    ; Copy CGRAM, uses SRAM $773500-$7736FF
+    ; Copy CGRAM, uses SRAM $772500-$7726FF
     dw $1000|$2121, $00    ; CGRAM address
     dw $0000|$4310, $2200  ; direction = A->B, byte reg, B addr = $2122
-    dw $0000|$4312, $3500  ; A addr = $xx3500
+    dw $0000|$4312, $2500  ; A addr = $xx2500
     dw $0000|$4314, $0077  ; A addr = $77xxxx, size = $xx00
     dw $0000|$4316, $0002  ; size = $02xx ($0200), unused bank reg = $00
     dw $1000|$420B, $02    ; Trigger DMA on channel 1
 
-    ; Done, other than DMA and flags, uses SRAM $777E00-$777EFF
+    ; Done, other than DMA and flags, uses SRAM $726B02-$726BFF
     dw $0000, load_return
 
 load_2nd_tiny_table:
@@ -653,16 +671,16 @@ load_2nd_tiny_table:
     ; Single address, A bus -> B bus.  B address = reflector to WRAM ($2180).
     dw $0000|$4310, $8000  ; direction = A->B, B addr = $2180
 
-    ; Copy WRAM segments, uses $774000-$7774FF, $740000-$756B01, $766000-$766FFF
-    %sram_to_wram($7E0000, $2000, $774000)
-    %sram_to_wram($7E7000, $1000, $776000)
-    %sram_to_wram($7E3300, $0200, $777000)
-    %sram_to_wram(!WRAM_START, !WRAM_PERSIST_START-!WRAM_START, $777200)
+    ; Copy WRAM segments, uses $772B00-$774FFF, $740000-$756B01, $766000-$767FFF
+    %sram_to_wram($7E0000, $2000, $773000)
+    %sram_to_wram($7E3300, $0200, $772B00)
+    %sram_to_wram(!WRAM_START, !WRAM_PERSIST_START-!WRAM_START, $772D00)
     %sram_to_wram($7E8000, $2000, $740000)
     %sram_to_wram($7EC000, $34A0, $742000)
     %sram_to_wram($7F0000, $2B00, $745500)
     %sram_to_wram($7F2B00, $6B02, $750000)
     %sram_to_wram($7E2000, $1000, $766000)
+    %sram_to_wram($7E7000, $1000, $767000)
 
     ; Address pair, A bus -> B bus.  B address = VRAM write ($2118).
     dw $0000|$4310, $1801  ; direction = A->B, B addr = $2118
@@ -674,15 +692,15 @@ load_2nd_tiny_table:
     %sram_to_vram($A000, $2000, $760000)
     %sram_to_vram($C000, $4000, $762000)
 
-    ; Copy CGRAM, uses SRAM $777500-$7776FF
+    ; Copy CGRAM, uses SRAM $772900-$772AFF
     dw $1000|$2121, $00    ; CGRAM address
     dw $0000|$4310, $2200  ; direction = A->B, byte reg, B addr = $2122
-    dw $0000|$4312, $7500  ; A addr = $xx7500
+    dw $0000|$4312, $2900  ; A addr = $xx2900
     dw $0000|$4314, $0077  ; A addr = $77xxxx, size = $xx00
     dw $0000|$4316, $0002  ; size = $02xx ($0200), unused bank reg = $00
     dw $1000|$420B, $02    ; Trigger DMA on channel 1
 
-    ; Done, other than DMA and flags, uses SRAM $777F00-$777FFF
+    ; Done, other than DMA and flags, uses SRAM $756B02-$756BFF
     dw $0000, load_return
 
 load_return:
@@ -726,7 +744,7 @@ load_return:
 
     ; pause menu graphics
     LDA !GAMEMODE : CMP #$0010 : BPL .not_paused
-    CMP #$000C : BMI .not_paused
+    CMP #$000D : BMI .not_paused
     JSL tinystates_load_paused
 
   .not_paused
@@ -770,8 +788,7 @@ load_return:
   .load_dma_regs_done
     ; Restore registers and return
     %ai16()
-    JSR post_load_state
-    JMP register_restore_return
+    JMP post_load_state
 }
 
 vm:
@@ -839,8 +856,7 @@ tinystates_load_paused:
     INX #2
     DEY : BNE .load_loop
 
-    JSL $82B62B ; Draw pause menu during fade in
-    RTL
+    JML tinystates_load_paused_continued
 }
 
 %endfree(80)
@@ -848,9 +864,17 @@ tinystates_load_paused:
 
 %startfree(82)
 
+tinystates_load_paused_continued:
+{
+    JSR $9009   ; Continue initializing pause menu
+    JML $82B62B ; Draw pause menu during fade in
+}
+
 tinystates_preload_bg_data:
+{
     JSR $82E2 ; Re-load BG3 tiles
     RTL
+}
 
 tinystates_load_kraid:
 {
@@ -935,8 +959,8 @@ else
 endif
 
   .call_pause_hook
-    ; We jump into the middle of the hook (to skip waiting for an NMI), so we have to be careful
-    ;   with the stack & processor status
+    ; We jump into the middle of the hook (to skip waiting for an NMI),
+    ; so we have to be careful with the stack and processor status
     PHP : %a8()
 if !FEATURE_PAL
     JML $A7C289

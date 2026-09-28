@@ -16,6 +16,35 @@ incsrc mainmenu.asm
 ; Menu logic
 ; ----------
 
+%startfree(80)
+
+transfer_cgram_long:
+{
+    PHP
+    %ai8()
+    LDA #$80 : STA $802100 ; forced blanking
+    %a16()
+    JSR $933A
+    %a8()
+    LDA #$0F : STA $0F2100
+    PLP
+    RTL
+}
+
+%endfree(80)
+
+
+%startfree(82)
+
+EnsureSamusIsDrawn_long:
+{
+    JSR $DFC7 ; Ensures Samus is drawn every frame
+    RTL
+}
+
+%endfree(82)
+
+
 %startfree(85)
 
 initialize_ppu_long:
@@ -126,19 +155,18 @@ cm_boot:
 
   .done
     JSL cm_write_ctrl_routine
+if !FEATURE_PRESETS
     LDA !ram_load_preset_low_word : BEQ .main_game_loop
 
     ; If Map Completion preset category selected then turn minimap on
-    LDA !sram_preset_category : CMP !PRESET_CATEGORY_100MAP_INDEX : BEQ .set_minimap
-    CMP !PRESET_CATEGORY_SPAZERMAP_INDEX : BNE .load_preset
-
-  .set_minimap
+    LDA !sram_preset_category : CMP !PRESET_CATEGORY_100MAP_INDEX : BNE .load_preset
     LDA #$0001 : STA !ram_minimap
 
   .load_preset
     JSL preset_load
 
   .main_game_loop
+endif
     PEA $8282 : PLB : PLB
     %a8()
     JML $828944
@@ -376,15 +404,14 @@ cm_transfer_original_tileset:
 {
     PHP : %ai16()
 
+if !FEATURE_PRESETS
     ; If loading a preset and Map Completion preset category selected then turn minimap on
     LDA !ram_load_preset_low_word : BEQ .check_room
-    LDA !sram_preset_category : CMP !PRESET_CATEGORY_100MAP_INDEX : BEQ .set_minimap
-    CMP !PRESET_CATEGORY_SPAZERMAP_INDEX : BNE .check_room
-
-  .set_minimap
+    LDA !sram_preset_category : CMP !PRESET_CATEGORY_100MAP_INDEX : BNE .check_room
     LDA #$0001 : STA !ram_minimap
 
   .check_room
+endif
     LDA !ROOM_ID : CMP.w #ROOM_KraidRoom : BEQ .kraid_vram
 
     %a8()
@@ -1367,6 +1394,7 @@ draw_submenu:
 
 draw_custom_preset:
 {
+if !FEATURE_PRESETS
     %a8()
     ; store slot index in !DP_ToggleValue
     LDA [!DP_CurrentMenu] : STA !DP_ToggleValue
@@ -1518,11 +1546,13 @@ draw_custom_preset:
     CLC : ADC !DP_Palette : STA !ram_tilemap_buffer+$30,X
 
   .done
+endif ; FEATURE_PRESETS
     RTS
 }
 
 draw_manage_presets:
 {
+if !FEATURE_PRESETS
     LDA [!DP_CurrentMenu] : AND #$00FF : PHA
     ; draw it normally first
     JSR draw_custom_preset
@@ -1540,6 +1570,7 @@ draw_manage_presets:
     LDA !MENU_ARROW_RIGHT : STA !ram_tilemap_buffer-$2,X
 
   .done
+endif ; FEATURE_PRESETS
     RTS
 }
 
@@ -1684,6 +1715,7 @@ draw_dynamic:
 
 draw_category_preset:
 {
+if !FEATURE_PRESETS
     ; skip argument
     INC !DP_CurrentMenu : INC !DP_CurrentMenu : INC !DP_CurrentMenu
 
@@ -1707,6 +1739,7 @@ draw_category_preset:
   .end
     PLB
     %a16()
+endif ; FEATURE_PRESETS
     RTS
 }
 
@@ -3085,12 +3118,21 @@ execute_toggle_bit:
 
     ; Load which bit(s) to toggle
     LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : INC !DP_CurrentMenu : STA !DP_ToggleValue
+    EOR #$FFFF : STA !DP_Temp
 
     ; Load JSL target
     LDA [!DP_CurrentMenu] : INC !DP_CurrentMenu : INC !DP_CurrentMenu : STA !DP_JSLTarget
 
-    ; Toggle the bit
-    LDA [!DP_Address] : EOR !DP_ToggleValue : STA [!DP_Address]
+    LDA [!DP_Address] : BIT !DP_ToggleValue : BNE .toggleOff
+    ; toggle on
+    ORA !DP_ToggleValue
+    BRA .store
+
+  .toggleOff
+    AND !DP_Temp
+
+  .store
+    STA [!DP_Address]
 
     ; skip if JSL target is zero
     LDA !DP_JSLTarget : BEQ .end
@@ -3718,6 +3760,7 @@ execute_submenu:
 
 execute_custom_preset:
 {
+if !FEATURE_PRESETS
     ; check if X or Y newly pressed
     LDA !IH_CONTROLLER_PRI_NEW : ORA !IH_CONTROLLER_SEC_NEW : BIT !CTRL_Y : BNE .toggleDisplay
     LDA !IH_CONTROLLER_PRI_NEW : ORA !IH_CONTROLLER_SEC_NEW : BIT !CTRL_X : BEQ .checkLeftRight
@@ -3798,11 +3841,13 @@ else
     JSL cm_go_back_adjacent_submenu
     JSL action_submenu
 endif
+endif ; FEATURE_PRESETS
     RTS
 }
 
 execute_manage_presets:
 {
+if !FEATURE_PRESETS
     LDA !IH_CONTROLLER_PRI : ORA !IH_CONTROLLER_SEC : BIT !IH_INPUT_LEFTRIGHT : BEQ .manageSlots
 if !FEATURE_MAPSTATES || !FEATURE_TINYSTATES
     ; TinyStates and Mapstates only have one page
@@ -3972,6 +4017,7 @@ endif
     TDC : STA !sram_last_preset_low_word : STA !sram_last_preset_high_word
   .done
     PLB
+endif ; FEATURE_PRESETS
     RTS
 }
 
@@ -4010,6 +4056,7 @@ execute_dynamic:
 
 execute_category_preset:
 {
+if !FEATURE_PRESETS
     ; <, > and X should do nothing here
     ; also ignore input held flag
     LDA !ram_cm_controller : BIT !IH_INPUT_XLEFTRIGHTHELD : BNE .end
@@ -4023,6 +4070,7 @@ execute_category_preset:
     LDX #$0000
 
   .end
+endif
     RTS
 }
 

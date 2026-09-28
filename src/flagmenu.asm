@@ -876,7 +876,7 @@ events_shaktool:
     %cm_toggle_bit("Shaktool Done Digging", $7ED820, #$2000, #0)
 
 events_chozoacid:
-    %cm_toggle_bit("Chozo Lowered Acid", $7ED821, #$0010, #0)
+    %cm_toggle_bit("Chozo Lowered Acid", $7ED820, #$1000, #0)
 
 events_metroids:
     %cm_numfield("Metroid Rooms Cleared", !ram_cm_metmask, 0, 4, 1, 1, #.routine)

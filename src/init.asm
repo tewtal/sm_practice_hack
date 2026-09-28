@@ -110,14 +110,13 @@ init_non_zero_persistent_wram:
     LDA !sram_seed_Y : STA !ram_seed_Y
     LDA #$8000 : STA !ram_cm_gmode
 
+if !FEATURE_PRESETS
     ; If Map Completion preset category selected then turn minimap on
-    LDA !sram_preset_category : CMP !PRESET_CATEGORY_100MAP_INDEX : BEQ .set_minimap
-    CMP !PRESET_CATEGORY_SPAZERMAP_INDEX : BNE .done
-
-  .set_minimap
+    LDA !sram_preset_category : CMP !PRESET_CATEGORY_100MAP_INDEX : BNE .done
     LDA #$0001 : STA !ram_minimap
 
   .done
+endif
     RTS
 }
 
@@ -169,13 +168,13 @@ init_sram_routine_table:
     dw init_sram_upgrade_1Fto20
     dw init_sram_upgrade_20to22
     dw init_sram_upgrade_20to22
+    dw init_sram_upgrade_22to23
     dw init_sram_fail
 
 init_sram:
 {
     LDA #$0015 : STA !sram_artificial_lag
     TDC : STA !sram_fanfare
-    STA !sram_frame_counter_mode
     STA !sram_display_mode
     STA !sram_last_preset_low_word
     STA !sram_save_has_set_rng
@@ -185,7 +184,6 @@ init_sram:
     INC : STA !sram_rerandomize
     STA !sram_music_toggle
     INC : STA !sram_metronome_sfx
-    STA !sram_preset_category
     LDA #$000A : STA !sram_metronome_tickrate
 
   .upgrade_9toA
@@ -231,11 +229,7 @@ endif
     TDC : STA !sram_custom_header
 
   .upgrade_13to14
-    ; "skip fanfares, but adjust timer" option has been replaced with "speedrun" timer mode
-    LDA !sram_fanfare : BIT #$0002 : BEQ .upgrade_14to15
     LDA !sram_fanfare : AND #$0001 : STA !sram_fanfare
-    LDA !sram_frame_counter_mode : BNE .upgrade_14to15
-    LDA !FRAME_COUNTER_ADJUST_REALTIME : STA !sram_frame_counter_mode
 
   .upgrade_14to15
     TDC : STA !sram_bomb_torizo_door
@@ -323,8 +317,16 @@ endif
     LDA !VANILLA_SPRITE_PALETTE_5_GRAPPLE_COLOR : STA !sram_sprite_features_grapple_color
 
   .upgrade_20to22
-    TDC : STA !sram_read_only_locks : STA !sram_read_only_locks+2
-    STA !sram_read_only_locks+4
+    TDC : STA !sram_read_only_locks : STA !sram_read_only_locks+$2
+    STA !sram_read_only_locks+$4
+
+  .upgrade_22to23
+    TDC : STA !sram_preset_category
+    STA !sram_safeties_enabled_phantoonfirst+$2
+    LDA #$0318 : STA !sram_safeties_enabled_kpdr
+    LDA #$0040 : STA !sram_safeties_enabled_kpdr+$2
+    LDA #$4140 : STA !sram_safeties_enabled_phantoonfirst
+    LDA !FRAME_COUNTER_ADJUST_REALTIME : STA !sram_frame_counter_mode
 
     LDA !SRAM_VERSION : STA !sram_initialized
     RTS
@@ -364,8 +366,10 @@ if !FEATURE_SD2SNES
     LDA #$83 : INX : STA !sram_ctrl_shortcut_selections,X
   .skipTypes
 endif
+if !FEATURE_PRESETS
     ; Reload Preset
     LDA #$86 : INX : STA !sram_ctrl_shortcut_selections,X
+endif
     ; Main Menu
     LDA #$81 : INX : STA !sram_ctrl_shortcut_selections,X
     ; Pause
@@ -407,8 +411,10 @@ if !FEATURE_SD2SNES
     LDA #$6020 : INX #2 : STA !sram_ctrl_1_shortcut_inputs,X
   .skipValues
 endif
+if !FEATURE_PRESETS
     ; Reload Preset (Controller 1, Start + Y + L)
     LDA #$5020 : INX #2 : STA !sram_ctrl_1_shortcut_inputs,X
+endif
     ; Main Menu (Controller 2, Start + Select)
     LDA #$3000 : INX #2 : STA !sram_ctrl_2_shortcut_inputs,X
     ; Pause (Controller 2, Right)

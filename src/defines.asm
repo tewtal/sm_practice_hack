@@ -17,23 +17,26 @@
 
 ; Shortcut routine is written on boot and each time the menu closes,
 ; so it can use the same space as the practice hack menu tilemap buffer.
-!CTRL_SHORTCUT_ROUTINE = $7EF502 ; up to 1941 bytes or through +$796
-!CTRL_SHORTCUT_PRI_UPDATE_TIMERS = !CTRL_SHORTCUT_ROUTINE+$7B0
-!CTRL_SHORTCUT_TABLE = !CTRL_SHORTCUT_ROUTINE+$7B2 ; 48 bytes
-!CTRL_SHORTCUT_TYPE = !CTRL_SHORTCUT_ROUTINE+$7E2
-!CTRL_SHORTCUT_PRI = !CTRL_SHORTCUT_ROUTINE+$7E4
-!CTRL_SHORTCUT_SEC = !CTRL_SHORTCUT_ROUTINE+$7E6
-!CTRL_SHORTCUT_JSL_WORD_LSB = !CTRL_SHORTCUT_ROUTINE+$7E8
-!CTRL_SHORTCUT_JSL_WORD_MSB = !CTRL_SHORTCUT_ROUTINE+$7EA
-!CTRL_SHORTCUT_PRI_TO_SEC_DUAL_JUMP = !CTRL_SHORTCUT_ROUTINE+$7EC
-!CTRL_SHORTCUT_SEC_TO_DUAL_JUMP = !CTRL_SHORTCUT_ROUTINE+$7EE
-!CTRL_SHORTCUT_TABLE_PRI_INDEX = !CTRL_SHORTCUT_ROUTINE+$7F0
-!CTRL_SHORTCUT_TABLE_SEC_INDEX = !CTRL_SHORTCUT_ROUTINE+$7F2
-!CTRL_SHORTCUT_TABLE_DUAL_INDEX = !CTRL_SHORTCUT_ROUTINE+$7F4
+; Note that the following estimated maximum for shortcut routine length
+; is unrealistic as it requires most shortcuts to be dual controller inputs.
+!CTRL_SHORTCUT_ROUTINE = $7EF502 ; up to 1949 bytes or through +$79E
+!CTRL_SHORTCUT_PRI_UPDATE_TIMERS = !CTRL_SHORTCUT_ROUTINE+$7AE
+!CTRL_SHORTCUT_TABLE = !CTRL_SHORTCUT_ROUTINE+$7B0 ; 48 bytes
+!CTRL_SHORTCUT_TYPE = !CTRL_SHORTCUT_ROUTINE+$7E0
+!CTRL_SHORTCUT_PRI = !CTRL_SHORTCUT_ROUTINE+$7E2
+!CTRL_SHORTCUT_SEC = !CTRL_SHORTCUT_ROUTINE+$7E4
+!CTRL_SHORTCUT_JSL_WORD_LSB = !CTRL_SHORTCUT_ROUTINE+$7E6
+!CTRL_SHORTCUT_JSL_WORD_MSB = !CTRL_SHORTCUT_ROUTINE+$7E8
+!CTRL_SHORTCUT_PRI_TO_SEC_DUAL_JUMP = !CTRL_SHORTCUT_ROUTINE+$7EA
+!CTRL_SHORTCUT_SEC_TO_DUAL_JUMP = !CTRL_SHORTCUT_ROUTINE+$7EC
+!CTRL_SHORTCUT_TABLE_PRI_INDEX = !CTRL_SHORTCUT_ROUTINE+$7EE
+!CTRL_SHORTCUT_TABLE_SEC_INDEX = !CTRL_SHORTCUT_ROUTINE+$7F0
+!CTRL_SHORTCUT_TABLE_DUAL_INDEX = !CTRL_SHORTCUT_ROUTINE+$7F2
 ; The following tracking variables are for Update Timers,
 ; and they are only accurate and maintained enough to make that work
-!CTRL_SHORTCUT_TRACKING_PRI_PREV = !CTRL_SHORTCUT_ROUTINE+$7F6
-!CTRL_SHORTCUT_TRACKING_LANDED = !CTRL_SHORTCUT_ROUTINE+$7F8
+!CTRL_SHORTCUT_TRACKING_PRI_PREV = !CTRL_SHORTCUT_ROUTINE+$7F4
+!CTRL_SHORTCUT_TRACKING_LANDED = !CTRL_SHORTCUT_ROUTINE+$7F6
+!CTRL_SHORTCUT_TRACKING_DROP_SPAWNED = !CTRL_SHORTCUT_ROUTINE+$7F8
 ; Shortcuts can skip remaining checks by replacing the return address word
 !CTRL_SHORTCUT_SKIP_REMAINING_PEA = !CTRL_SHORTCUT_ROUTINE+$7FA
 !CTRL_SHORTCUT_SKIP_REMAINING_PEA_VALUE = $FCFC
@@ -276,6 +279,9 @@
 ; The following RAM may be used multiple times,
 ; as long as it isn't used multiple times on the same menu page
 
+!ram_cm_category_preset_pkrd = !WRAM_MENU_START+$90
+!ram_cm_category_preset_kpdr_builtin = !WRAM_MENU_START+$92
+
 !ram_cm_watch_enemy_property = !WRAM_MENU_START+$90
 !ram_cm_watch_enemy_index = !WRAM_MENU_START+$92
 !ram_cm_watch_enemy_side = !WRAM_MENU_START+$94
@@ -488,7 +494,7 @@
 ; SRAM
 ; -----
 
-!SRAM_VERSION = #$0022
+!SRAM_VERSION = #$0023
 
 !SRAM_START = $702000
 !SRAM_SIZE = #$1000
@@ -577,6 +583,10 @@
 !sram_update_timers_options = !SRAM_START+$AE
 !sram_sprite_features_blue_color = !SRAM_START+$B0
 !sram_sprite_features_grapple_color = !SRAM_START+$B2
+
+!sram_safeties_enabled_kpdr = !SRAM_START+$B4 ; 4 bytes
+!sram_safeties_enabled_phantoonfirst = !SRAM_START+$B8 ; 3 bytes
+!sram_safeties_enabled_100map = !SRAM_START+$BB ; 1 byte
 
 ; ^ FREE SPACE ^ up to +$CE
 
@@ -846,6 +856,7 @@ endif
 !LAYER1_Y = $0915
 !LAYER2_X = $0917
 !LAYER2_Y = $0919
+!LAYER2_SCROLL = $091B
 !BG1_X_OFFSET = $091D
 !BG1_Y_OFFSET = $091F
 !BG2_X_OFFSET = $0921
@@ -1188,8 +1199,47 @@ endif
 !eram_baby_initial_delay           = !ENEMY_VAR_5+!ENEMY_1F_OFFSET
 
 ; Also during preset loading, the entire enemy ram region is available
-!CATEGORY_PRESET_STACK_SIZE        = #$0800
-!eram_category_preset_stack        = !ENEMY_ID
+!eram_safeties_enabled                 = !ENEMY_ID       ; 4 bytes
+!eram_safeties_adjust_only             = !ENEMY_ID+$4    ; 4 bytes
+!eram_safeties_energy                  = !ENEMY_ID+$8    ; 64 bytes
+!eram_safeties_reserves                = !ENEMY_ID+$48   ; 64 bytes
+!eram_safeties_missiles                = !ENEMY_ID+$88   ; 64 bytes
+!eram_safeties_supers                  = !ENEMY_ID+$C8   ; 64 bytes
+!eram_safeties_pbs                     = !ENEMY_ID+$108  ; 64 bytes
+!eram_safeties_unequip_items           = !ENEMY_ID+$148  ; 64 bytes
+!eram_safeties_unequip_beams           = !ENEMY_ID+$188  ; 64 bytes
+!eram_safeties_selected_item           = !ENEMY_ID+$1C8  ; 64 bytes
+!eram_safeties_stage_counter           = !ENEMY_ID+$208  ; 64 bytes
+!eram_safeties_refill                  = !ENEMY_ID+$248  ; 64 bytes
+!eram_category_preset_stack            = !ENEMY_ID+$288
+!CATEGORY_PRESET_STACK_SIZE            = #((!ENEMY_ID+$800)-(!eram_category_preset_stack))
+
+; We can also use stack area for temporary variables while applying safeties and adjustments
+!eram_apply_safeties_combo_flag        = !ENEMY_ID+$2F8
+!eram_apply_safeties_selected_item     = !ENEMY_ID+$2FA
+!eram_apply_safeties_stage_counter     = !ENEMY_ID+$2FC
+!eram_apply_safeties_refill            = !ENEMY_ID+$2FE
+!eram_apply_safeties_enable_flags      = !ENEMY_ID+$300  ; 64 bytes
+!eram_apply_safeties_adjust_only_flags = !ENEMY_ID+$340  ; 64 bytes
+
+; Mirrors the sram category adjustment variables
+!eram_apply_adjust_item_equip          = !ENEMY_ID+$380
+!eram_apply_adjust_item_unequip        = !ENEMY_ID+$382
+!eram_apply_adjust_item_remove         = !ENEMY_ID+$384
+!eram_apply_adjust_beam_equip          = !ENEMY_ID+$386
+!eram_apply_adjust_beam_unequip        = !ENEMY_ID+$388
+!eram_apply_adjust_beam_remove         = !ENEMY_ID+$38A
+!eram_apply_adjust_energy              = !ENEMY_ID+$38C
+!eram_apply_adjust_etanks              = !ENEMY_ID+$38E
+!eram_apply_adjust_reserves            = !ENEMY_ID+$390
+!eram_apply_adjust_rtanks              = !ENEMY_ID+$392
+!eram_apply_adjust_missiles            = !ENEMY_ID+$394
+!eram_apply_adjust_maxmissiles         = !ENEMY_ID+$396
+!eram_apply_adjust_supers              = !ENEMY_ID+$398
+!eram_apply_adjust_maxsupers           = !ENEMY_ID+$39A
+!eram_apply_adjust_pbs                 = !ENEMY_ID+$39C
+!eram_apply_adjust_maxpbs              = !ENEMY_ID+$39E
+!CATEGORY_ADJUST_SIZE_MINUS_ONE        = #((!ENEMY_ID+$39F)-(!eram_apply_adjust_item_equip))
 
 !BG3_HDMA_CHANNELS_BACKUP = $7E33EA
 !HUD_TILEMAP = $7EC600
@@ -1205,6 +1255,7 @@ endif
 !MAP_TILES_EXPLORED_DEBUG = $7ED452
 !WRAM_SAVED_TO_SRAM = $7ED7C0
 !EVENT_BIT_ARRAY = $7ED820
+!ITEM_COLLECTED_BIT_ARRAY = $7ED870
 !OPENED_DOOR_BIT_ARRAY = $7ED8B0
 !MAP_STATION_FLAGS = $7ED908
 !LOADING_GAME_STATE = $7ED914
@@ -1269,37 +1320,31 @@ endif
 ; ----------
 
 if !FEATURE_TINYSTATES
-!SRAM_DMA_BANK          = $737F00
-!SRAM_SAVED_SP          = $737F80
-!SRAM_SAVED_STATE       = $737F82
-!SRAM_SAVED_MINIMAP     = $737F84
-!SRAM_SEG_TIMER_F       = $737F86
-!SRAM_SEG_TIMER_S       = $737F88
-!SRAM_SEG_TIMER_M       = $737F8A
+!SRAM_SAVED_SP          = $726B02
+!SRAM_SAVED_STATE       = $726B04
+!SRAM_SAVED_MINIMAP     = $726B06
+!SRAM_SEG_TIMER_F       = $726B08
+!SRAM_SEG_TIMER_S       = $726B0A
+!SRAM_SEG_TIMER_M       = $726B0C
+!SRAM_DMA_BANK          = $726B10
 elseif !FEATURE_SD2SNES
-!SRAM_DMA_BANK          = $777D00
-!SRAM_SAVED_SP          = $777D80
-!SRAM_SAVED_STATE       = $777D82
-!SRAM_SAVED_MINIMAP     = $777D84
-!SRAM_SEG_TIMER_F       = $777D86
-!SRAM_SEG_TIMER_S       = $777D88
-!SRAM_SEG_TIMER_M       = $777D8A
+!SRAM_SAVED_SP          = $777F02
+!SRAM_SAVED_STATE       = $777F04
+!SRAM_SAVED_MINIMAP     = $777F06
+!SRAM_SEG_TIMER_F       = $777F08
+!SRAM_SEG_TIMER_S       = $777F0A
+!SRAM_SEG_TIMER_M       = $777F0C
+!SRAM_DMA_BANK          = $777F10
 
-!SRAM_1ST_DMA_BANK      = $777E00
-!SRAM_1ST_SAVED_SP      = $777E80
-!SRAM_1ST_SAVED_STATE   = $777E82
-!SRAM_1ST_SAVED_MINIMAP = $777E84
-!SRAM_1ST_SEG_TIMER_F   = $777E86
-!SRAM_1ST_SEG_TIMER_S   = $777E88
-!SRAM_1ST_SEG_TIMER_M   = $777E8A
+!SRAM_1ST_SAVED_SP      = $726B02
+!SRAM_1ST_SAVED_STATE   = $726B04
+!SRAM_1ST_SAVED_MINIMAP = $726B06
+!SRAM_1ST_DMA_BANK      = $726B10
 
-!SRAM_2ND_DMA_BANK      = $777F00
-!SRAM_2ND_SAVED_SP      = $777F80
-!SRAM_2ND_SAVED_STATE   = $777F82
-!SRAM_2ND_SAVED_MINIMAP = $777F84
-!SRAM_2ND_SEG_TIMER_F   = $777F86
-!SRAM_2ND_SEG_TIMER_S   = $777F88
-!SRAM_2ND_SEG_TIMER_M   = $777F8A
+!SRAM_2ND_SAVED_SP      = $756B02
+!SRAM_2ND_SAVED_STATE   = $756B04
+!SRAM_2ND_SAVED_MINIMAP = $756B06
+!SRAM_2ND_DMA_BANK      = $756B10
 endif
 
 
@@ -1585,6 +1630,8 @@ endif
 !UPDATE_TIMERS_ON_PRESS_HOLD = #$000C
 !UPDATE_TIMERS_ON_RELEASE = #$0010
 !UPDATE_TIMERS_ON_HOLD_RELEASE = #$0018
+!UPDATE_TIMERS_ON_DROP_SPAWNED = #$0020
+!UPDATE_TIMERS_ON_LANDED_DROP_SPAWNED = #$0022
 
 !CUTSCENE_SKIP_INTRO = #$0001
 !CUTSCENE_SKIP_CERES_ARRIVAL = #$0002
@@ -1752,4 +1799,30 @@ endif
 !PROFILE_Bastion      = #$001C
 !PROFILE_D9Killdozer  = #$001D
 !PROFILE_COUNT        = #$001E
+
+
+; ---------------
+; Preset Safeties
+; ---------------
+
+; Safeties are defined one byte at a time, starting with the command byte
+; Additional bytes are needed to complete the definition depending on the command
+
+!SAFETIES_CMD_NOP     = $00  ; Safety not implemented (0 bytes)
+!SAFETIES_CMD_ADJUST  = $01  ; Adjustments only (0 bytes)
+!SAFETIES_CMD_ITEM_HI = $02  ; Collect item (1 byte MSB equipment bit, 2 bytes item collected $D870 offset and bit)
+!SAFETIES_CMD_ITEM_LO = $03  ; Collect item (1 byte LSB equipment bit, 2 bytes item collected $D870 offset and bit)
+!SAFETIES_CMD_CHARGE  = $04  ; Collect charge beam (0 bytes)
+!SAFETIES_CMD_BEAM    = $05  ; Collect beam (1 byte LSB beam bit, 2 bytes item collected $D870 offset and bit)
+!SAFETIES_CMD_ETANK   = $06  ; Collect energy tank (2 bytes item collected $D870 offset and bit)
+!SAFETIES_CMD_RTANK   = $07  ; Collect reserve tank (2 bytes item collected $D870 offset and bit)
+!SAFETIES_CMD_MISSILE = $08  ; Collect missile pack (2 bytes item collected $D870 offset and bit)
+!SAFETIES_CMD_SUPER   = $09  ; Collect super pack (2 bytes item collected $D870 offset and bit)
+!SAFETIES_CMD_PB      = $0A  ; Collect power bomb pack (2 bytes item collected $D870 offset and bit)
+!SAFETIES_CMD_EVENT   = $0B  ; Set event flag (2 bytes event $D820 offset and bit)
+!SAFETIES_CMD_DOOR    = $0C  ; Set door flag (2 bytes event $D8B0 offset and bit)
+!SAFETIES_CMD_STAGED  = $0D  ; Multi-part definition applied in stages (2 bytes pointer to multi-part definition)
+!SAFETIES_CMD_DONE    = $0E  ; End of safeties (0 bytes, can be omitted if all 16 safeties defined)
+!SAFETIES_CMD_MASK    = $7F  ; Command mask excluding flags
+!SAFETIES_COMBO_FLAG  = $80  ; Flag indicating the next safeties command also applies
 

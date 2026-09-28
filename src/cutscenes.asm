@@ -344,7 +344,7 @@ if !FEATURE_SD2SNES
     JSL gamemode_load_state
 endif
 
-  .no_savestate
+if !FEATURE_PRESETS
     ; reload last preset if it exists
     LDA !sram_last_preset_low_word : BEQ .save_file : STA !ram_load_preset_low_word
     LDA !sram_last_preset_high_word : STA !ram_load_preset_high_word
@@ -352,6 +352,7 @@ endif
     BRA .skip_gameplay
 
   .save_file
+endif
     ; load from SRAM, carry set if corrupt/empty
     LDA !CURRENT_SAVE_FILE : JSL $818085 : BCS .game_over
     JSL $82BE17 ; Cancel sound effects
@@ -380,7 +381,7 @@ cutscenes_kraid_death_camera:
 }
 
 if !FEATURE_PAL
-else
+elseif !PRESERVE_WRAM
 custom_intro_init:
 {
     JSL $888293
@@ -530,17 +531,19 @@ custom_intro_ApuUpload:
     LDA #GalaxyIsAtPeaceMusic : STA $00
     PLP : JML $808024
 }
+endif ; PRESERVE_WRAM
 
-endif
 %endfree(8B)
 
+
 if !FEATURE_PAL
-else
+elseif !PRESERVE_WRAM
 org $808F7E
     JSL custom_intro_ApuUpload
-endif
+
 
 %startfree(E0)
+
 LastMetroidMusic:
 {
 ; Sample table
@@ -660,7 +663,9 @@ db $00
 ; EOF
 dw $0000, $1500
 }
+
 %endfree(E0)
+
 
 org $8CD67D
 IndirectInstructions_IntroText_Space:
@@ -760,8 +765,6 @@ macro intro_char(label, x, y)
 endmacro
 
 
-if !FEATURE_PAL
-else
 %startfree(8C)
 
 custom_intro_CustomText:
@@ -1201,7 +1204,7 @@ custom_intro_CustomText:
     dw $9698
 
 %endfree(8C)
-endif
+endif ; PRESERVE_WRAM
 
 
 ; Non-flashing palette instruction
