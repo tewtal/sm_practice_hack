@@ -3891,8 +3891,8 @@ RngRidleyMenu:
     dw #rng_ridley_hover_time
     dw #rng_ridley_hover_time_dynamic
     dw #rng_ridley_hover_fireball
-    dw #$FFFF
-    dw #rng_ridley_tail
+;    dw #$FFFF
+;    dw #rng_ridley_tail
     dw #$0000
     %cm_header("RIDLEY RNG CONTROL")
 

@@ -1778,21 +1778,21 @@ org $A6CCA5
 else
 org $A6CC95
 endif
-    CMP !eram_ridley_tail_rng
+;    CMP !eram_ridley_tail_rng
 
 if !FEATURE_PAL
 org $A6CD42
 else
 org $A6CD32
 endif
-    CMP !eram_ridley_tail_rng
+;    CMP !eram_ridley_tail_rng
 
 if !FEATURE_PAL
 org $A6CDC8
 else
 org $A6CDB8
 endif
-    CMP !eram_ridley_tail_rng
+;    CMP !eram_ridley_tail_rng
 
 if !FEATURE_PAL
 org $A6EFA9
