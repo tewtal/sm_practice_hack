@@ -4,7 +4,6 @@
 preset_load:
 {
     PHP
-    LDA !MUSIC_DATA : STA !ram_loadstate_music_data
     LDA !MUSIC_TRACK : STA !ram_loadstate_music_track
 
     JSL $809E93  ; Clear timer RAM
@@ -1113,16 +1112,12 @@ endif
     LDA !sram_music_toggle : CMP #$0002 : BPL .doneMusic
 
     ; Compare to currently loaded music data
-    LDA !ram_loadstate_music_data : CMP !MUSIC_DATA : BEQ .doneLoadMusicData
+    LDA !MUSIC_DATA_ACTUAL : CMP !MUSIC_DATA_CACHED : BEQ .doneLoadMusicData
 
-    ; Clear track if necessary
-    LDA !ram_loadstate_music_track : BEQ .loadMusicData
     TDC : JSL !MUSIC_ROUTINE
-
-  .loadMusicData
-    LDA !MUSIC_DATA : TAX
-    LDA !ram_loadstate_music_data : STA !MUSIC_DATA
-    TXA : CLC : ADC #$FF00 : JSL !MUSIC_ROUTINE
+    LDA !MUSIC_DATA_CACHED : CLC : ADC #$FF00
+    PHA : STZ !MUSIC_DATA_CACHED : JSL !MUSIC_ROUTINE
+    PLA : STA !MUSIC_DATA_CACHED
     BRA .loadMusicTrack
 
   .doneLoadMusicData

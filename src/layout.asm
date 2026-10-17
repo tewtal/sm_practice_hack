@@ -2488,7 +2488,7 @@ layout_asm_tourianescape1:
 
 layout_asm_big_boy_music:
 {
-    LDA !MUSIC_DATA : CMP #$0045 : BEQ .check_track
+    LDA !MUSIC_DATA_CACHED : CMP #$0045 : BEQ .check_track
     TDC : JSL !MUSIC_ROUTINE
     LDA #$FF45 : JSL !MUSIC_ROUTINE
 
