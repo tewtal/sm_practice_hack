@@ -44,7 +44,7 @@ endmacro
 ; Both A and X/Y are 16-bit here
 pre_load_state:
 {
-    LDA !MUSIC_DATA : STA !ram_loadstate_music_data
+    LDA !MUSIC_DATA_ACTUAL : STA !ram_loadstate_music_data
     LDA !MUSIC_TRACK : STA !ram_loadstate_music_track
     LDA !SOUND_TIMER : STA !ram_loadstate_sound_timer
 
@@ -222,6 +222,7 @@ post_load_state:
 post_load_music:
 {
     JSL stop_all_sounds
+    LDA !ram_loadstate_music_data : STA !MUSIC_DATA_ACTUAL
 
     LDY !MUSIC_TRACK
     LDA !MUSIC_QUEUE_NEXT : CMP !MUSIC_QUEUE_START : BEQ .music_queue_empty
@@ -239,23 +240,23 @@ post_load_music:
     LDA !sram_music_toggle : CMP #$0002 : BPL .fast_off_preset_off
 
     ; No data found in queue, check if we need to insert it
-    LDA !ram_loadstate_music_data : CMP !MUSIC_DATA : BEQ .music_queue_increase_timer
+    LDA !MUSIC_DATA_ACTUAL : CMP !MUSIC_DATA_CACHED : BEQ .music_queue_increase_timer
 
     ; Insert queued music data
     DEX #2 : TXA : AND #$000E : TAX
-    LDA #$FF00 : CLC : ADC !MUSIC_DATA : STA !MUSIC_QUEUE_ENTRIES,X
+    LDA #$FF00 : CLC : ADC !MUSIC_DATA_CACHED : STA !MUSIC_QUEUE_ENTRIES,X
     LDA #$0008 : STA !MUSIC_QUEUE_TIMERS,X
 
   .queued_music_data
     LDA !sram_music_toggle : CMP #$0002 : BMI .queued_music_data_clear_track
 
     ; There is music data in the queue, assume it was loaded
-    LDA !MUSIC_QUEUE_ENTRIES,X : STA !MUSIC_DATA
+    LDA !MUSIC_QUEUE_ENTRIES,X : STA !MUSIC_DATA_CACHED
     BRA .fast_off_preset_off
 
   .music_queue_empty
     LDA !sram_music_toggle : CMP #$0002 : BPL .fast_off_preset_off
-    LDA !ram_loadstate_music_data : CMP !MUSIC_DATA : BNE .clear_track_load_data
+    LDA !MUSIC_DATA_ACTUAL : CMP !MUSIC_DATA_CACHED : BNE .clear_track_load_data
     JMP .check_track
 
   .fast_off_preset_off
@@ -277,19 +278,15 @@ post_load_music:
 
   .clear_track_load_data
     TDC : JSL !MUSIC_ROUTINE
-    LDA #$FF00 : CLC : ADC !MUSIC_DATA : JSL !MUSIC_ROUTINE
-
-    ; Until we load music data, set music data to what APU currently has
-    LDA !ram_loadstate_music_data : STA !MUSIC_DATA
+    LDA !MUSIC_DATA_CACHED : CLC : ADC #$FF00
+    PHA : STZ !MUSIC_DATA_CACHED : JSL !MUSIC_ROUTINE
+    PLA : STA !MUSIC_DATA_CACHED
     BRA .load_track
 
   .queued_music_data_clear_track
     ; Insert clear track before queued music data and start queue there
     DEX #2 : TXA : AND #$000E : STA !MUSIC_QUEUE_START : TAX
     STZ !MUSIC_QUEUE_ENTRIES,X : STZ !MUSIC_ENTRY
-
-    ; Until we load music data, set music data to what APU currently has
-    LDA !ram_loadstate_music_data : STA !MUSIC_DATA
 
     ; Clear all timers before this point
   .music_clear_timer_loop

@@ -868,8 +868,9 @@ hook_set_music_track:
 hook_set_music_data:
 {
     STA !UPLOADING_TO_APU ; prevent prac hack from loading during this time
-    AND #$00FF : STA !MUSIC_DATA : TAX ; overwritten code
+    AND #$00FF : STA !MUSIC_DATA_CACHED : TAX ; overwritten code
     LDA !sram_music_toggle : CMP #$0002 : BEQ .fast_no_music
+    LDA !MUSIC_DATA_CACHED : STA !MUSIC_DATA_ACTUAL
     JML $808F69
 
   .fast_no_music
