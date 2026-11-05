@@ -6,7 +6,9 @@ hook_copy_protection:
 ; Set SRAM size
 org $80FFD8
 hook_sram_size:
-if !FEATURE_TINYSTATES
+if !FEATURE_TAS_RECORD
+    db $08 ; 256kb
+elseif !FEATURE_TINYSTATES
     db $07 ; 128kb
 elseif !FEATURE_SD2SNES
     db $08 ; 256kb

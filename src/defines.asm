@@ -652,6 +652,9 @@ if !FEATURE_TINYSTATES
 !sram_custom_header = !SRAM_START+$E18 ; $18 bytes
 !sram_custom_preset_safewords = !SRAM_START+$E30 ; $20 bytes
 !sram_custom_preset_names = !SRAM_START+$E50 ; $180 bytes
+if !FEATURE_TAS_RECORD
+!sram_tas_record = !SRAM_START+$FD0
+endif
 else
 !sram_read_only_locks = !SRAM_START+$B8A ; $6 bytes
 !sram_streamer_name = !SRAM_START+$B90 ; $18 bytes
@@ -688,6 +691,8 @@ endif
 !IH_HEALTHBOMB = #$085A
 !IH_RESERVE_AUTO = #$0C0C
 !IH_RESERVE_EMPTY = #$0C0D
+!IH_LETTER_A_PINK = #$0864
+!IH_LETTER_B_PINK = #$0865
 !IH_LETTER_A = #$0C64
 !IH_LETTER_B = #$0C65
 !IH_LETTER_C = #$0C58
@@ -718,6 +723,7 @@ endif
 !IH_ARROW_DOWN_GREY = #$1463
 !IH_ARROW_DOWN_PINK_OUTLINE = #$0863
 !IH_ARROW_DOWN_RED = #$1C63
+!IH_MORPH_BALL_PINK = #$08C9
 !IH_MORPH_BALL_YELLOW = #$00C9
 !IH_MORPH_BALL_GREEN = #$10C9
 !IH_STUCK_GREEN = #$106B
@@ -1379,6 +1385,18 @@ endif
 !DP_DigitValue = $24
 !DP_DigitMinimum = $26
 !DP_DigitMaximum = $28
+
+if !FEATURE_TAS_RECORD
+!DP_tas_record_force        = $CA
+!DP_tas_record_menu_backup  = $CC
+!DP_tas_record              = $CE
+endif
+
+if !FEATURE_TAS_PLAYBACK
+!DP_tas_verify_input        = $C7
+!DP_tas_frame_counter       = $CA
+!DP_tas_cached_rng          = $CD
+endif
 
 !ACTION_TOGGLE              = #$0000
 !ACTION_TOGGLE_BIT          = #$0002

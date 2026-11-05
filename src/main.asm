@@ -8,11 +8,14 @@ lorom
 !FEATURE_PAL ?= 0
 !FEATURE_PRESETS ?= 1
 !FEATURE_TALLMENU ?= 0
+!FEATURE_TAS_RECORD ?= 0
+!FEATURE_TAS_PLAYBACK ?= 0
 !FEATURE_VANILLAHUD ?= 0
 !INFOHUD_ALWAYS_SHOW_X_Y ?= 0
 !ORIGINAL_MESSAGE_TEXT ?= 0
 !PRESERVE_WRAM ?= 1
 !RAW_TILE_GRAPHICS ?= 1
+!SPRITE_FEATURES ?= 1
 !ZSNES_SPLASHSCREEN_GRAPHICS ?= 1
 
 !VERSION_MAJOR = 2
@@ -27,6 +30,23 @@ if !FEATURE_PAL
     print "PAL REGION"
 else
     print "NTSC REGION"
+endif
+
+if !FEATURE_TAS_RECORD
+    print "TAS RECORD"
+    !FEATURE_TINYSTATES = 1
+if !FEATURE_TAS_PLAYBACK
+    print "!! TAS PLAYBACK IGNORED !!"
+    !FEATURE_TAS_PLAYBACK = 0
+endif
+elseif !FEATURE_TAS_PLAYBACK
+    print "TAS PLAYBACK"
+    !FEATURE_TAS_VERIFY = 1
+    !FEATURE_TINYSTATES = 1
+    !FEATURE_PRESETS = 0
+    !PRESERVE_WRAM = 0
+    !SPRITE_FEATURES = 0
+    !ZSNES_SPLASHSCREEN_GRAPHICS = 0
 endif
 
 if !FEATURE_TALLMENU
@@ -49,6 +69,11 @@ endif
 if !PRESERVE_WRAM
 else
     print "WRAM NOT PRESERVED DURING SPACETIME OR XRAY"
+endif
+
+if !SPRITE_FEATURES
+else
+    print "SPRITE FEATURES DISABLED"
 endif
 
 if !FEATURE_PRESETS
@@ -109,8 +134,11 @@ incsrc layout.asm
 incsrc cutscenes.asm
 incsrc init.asm
 incsrc fanfare.asm
-incsrc spriteprio.asm
-incsrc spritefeat.asm
+
+if !SPRITE_FEATURES
+    incsrc spritefeat.asm
+    incsrc spriteprio.asm
+endif
 
 if !PRESERVE_WRAM
     incsrc preserve_wram.asm
@@ -126,12 +154,16 @@ if !RAW_TILE_GRAPHICS
     incsrc tilegraphics.asm
 endif
 
-if !FEATURE_DEV
+if !FEATURE_DEV || !FEATURE_TAS_RECORD || !FEATURE_TAS_PLAYBACK
     incsrc symbols.asm
 endif
 
-; Make sure the ROM expands to 4MB
-org $FFFFFF : db $FF
+if !FEATURE_TAS_PLAYBACK
+    incsrc ../tas_playback/tasplayback.asm
+else
+    ; Make sure the ROM expands to 4MB
+    org $FFFFFF : db $FF
+endif
 
 %printfreespace()
 print "Assembly complete. Total bytes written: ", bytes

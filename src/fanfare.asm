@@ -268,6 +268,23 @@ hook_message_box_wait:
     LDA !sram_fanfare : BNE .fanfareloop
     ; shorten message box length if necessary
     CPX #$0020 : BMI .nofanfareloop
+
+if !FEATURE_TAS_RECORD
+    %a16()
+    LDA !DP_tas_record : INC #2
+    STA !DP_tas_record : BMI .sideB
+    TAX : LDA #$2F00 : STA $740000,X
+    LDA !MESSAGE_BOX_INDEX : STA $750000,X
+    BRA .ldx
+
+  .sideB
+    AND #$7FFF : TAX
+    LDA #$2F00 : STA $760000,X
+    LDA !MESSAGE_BOX_INDEX : STA $770000,X
+
+  .ldx
+    %a8()
+endif
     LDX #$0020
 
   .nofanfareloop

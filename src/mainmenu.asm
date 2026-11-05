@@ -140,6 +140,7 @@ action_audio_mainmenu:
     JMP action_mainmenu
 }
 
+if !SPRITE_FEATURES
 action_sprites_mainmenu:
 {
 if !PRESERVE_WRAM
@@ -158,6 +159,7 @@ endif
     XBA : ASL : XBA : STA !ram_cm_sprites_enemy_proj
     JMP action_mainmenu
 }
+endif ; SPRITE_FEATURES
 
 action_ctrlshortcut_mainmenu:
 {
@@ -376,7 +378,9 @@ if !FEATURE_VANILLAHUD
 else
     dw #mm_goto_infohud
 endif
+if !SPRITE_FEATURES
     dw #mm_goto_sprites
+endif
     dw #mm_goto_layout
     dw #mm_goto_gamemenu
     dw #mm_goto_rngmenu
@@ -419,7 +423,9 @@ if !FEATURE_VANILLAHUD
 else
     dw #InfoHudMenu>>16
 endif
+if !SPRITE_FEATURES
     dw #SpritesMenu>>16
+endif
     dw #LayoutMenu>>16
     dw #GameMenu>>16
     dw #RngMenu>>16
@@ -463,8 +469,10 @@ mm_goto_infohud:
     %cm_jsl("InfoHUD", #action_infohud_mainmenu, #InfoHudMenu)
 endif
 
+if !SPRITE_FEATURES
 mm_goto_sprites:
     %cm_jsl("Sprite Features", #action_sprites_mainmenu, #SpritesMenu)
+endif
 
 mm_goto_layout:
     %cm_jsl("Room Layout", #action_layout_mainmenu, #LayoutMenu)
@@ -1788,6 +1796,7 @@ action_teleport:
 }
 
 
+if !SPRITE_FEATURES
 ; ---------------
 ; Sprite Features
 ; ---------------
@@ -2119,6 +2128,7 @@ sprites_grapple_hex_word:
 
 sprites_grapple_reset:
     %cm_jsl("Reset Grapple Color", #sprites_grapple_hex_word_reset, !VANILLA_SPRITE_PALETTE_5_GRAPPLE_COLOR)
+endif ; SPRITE_FEATURES
 
 
 ; --------------

@@ -1811,19 +1811,19 @@ status_ramwatch:
     ; Store Samus HP so it doesn't overwrite our HUD
     LDA !SAMUS_HP : STA !ram_last_hp
 
-    ; Store bank bytes
-    LDA !ram_watch_bank : STA $C3 : STA $C7
+    ; Store bank bytes (keep to C1-C6 range)
+    LDA !ram_watch_bank : STA $C3 : XBA : STA $C5
 
     ; Calculate addresses
     LDA !ram_watch_left : CLC : ADC !ram_watch_left_index : STA $C1
-    LDA !ram_watch_right : CLC : ADC !ram_watch_right_index : STA $C5
+    LDA !ram_watch_right : CLC : ADC !ram_watch_right_index : STA $C4
 
     ; Draw if watched value changed
     LDA [$C1] : CMP !ram_watch_left_hud : BEQ .drawRight
     STA !ram_watch_left_hud : LDX #$0088 : JSR Draw4Hex
 
   .drawRight
-    LDA [$C5] : CMP !ram_watch_right_hud : BEQ .checkBlank
+    LDA [$C4] : CMP !ram_watch_right_hud : BEQ .checkBlank
     STA !ram_watch_right_hud : LDX #$0092 : JSR Draw4Hex
 
   .checkBlank
@@ -1843,7 +1843,7 @@ status_ramwatch:
     LDA !ram_watch_edit_left : STA [$C1]
   .e8LeftDone
     LDA !ram_watch_edit_lock_right : BEQ .e8RightDone
-    LDA !ram_watch_edit_right : STA [$C5]
+    LDA !ram_watch_edit_right : STA [$C4]
   .e8RightDone
     %a16()
     RTS
@@ -1853,7 +1853,7 @@ status_ramwatch:
     LDA !ram_watch_edit_left : STA [$C1]
   .e16LeftDone
     LDA !ram_watch_edit_lock_right : BEQ .e16RightDone
-    LDA !ram_watch_edit_right : STA [$C5]
+    LDA !ram_watch_edit_right : STA [$C4]
   .e16RightDone
     RTS
 }

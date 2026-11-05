@@ -614,6 +614,9 @@ sram_streamer_name = !sram_streamer_name ; !SRAM_START+$E00 ; $18 bytes
 sram_custom_header = !sram_custom_header ; !SRAM_START+$E18 ; $18 bytes
 sram_custom_preset_safewords = !sram_custom_preset_safewords ; !SRAM_START+$E30 ; $20 bytes
 sram_custom_preset_names = !sram_custom_preset_names ; !SRAM_START+$E50 ; $180 bytes
+if !FEATURE_TAS_RECORD
+sram_tas_record = !sram_tas_record ; !SRAM_START+$FD0
+endif
 else
 sram_read_only_locks = !sram_read_only_locks ; !SRAM_START+$B8A ; $6 bytes
 sram_streamer_name = !sram_streamer_name ; !SRAM_START+$B90 ; $18 bytes
