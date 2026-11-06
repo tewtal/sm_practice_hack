@@ -183,6 +183,9 @@ endif
     STA !ram_cm_input_counter
     PLP : BNE .input_read
     JSL $809459 ; Read controller input
+if !FEATURE_TAS_RECORD
+    LDA !DP_tas_record_menu_backup : STA !DP_tas_record
+endif
 
   .input_read
     LDA !IH_CONTROLLER_PRI_NEW : BEQ .loop
@@ -194,7 +197,7 @@ endif
     LDA !ram_cm_brb_screen : INC : STA !ram_cm_brb_screen
     CMP.w !BRB_TOTAL_SCREENS : BMI .loop
     TDC : STA !ram_cm_brb_screen : STA !ram_cm_brb_timer
-    BRA .loop
+    JMP .loop
 }
 
 cm_draw_brb:

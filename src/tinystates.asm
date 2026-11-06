@@ -106,10 +106,12 @@ post_load_state:
 {
     JSR post_load_music
 
+if !SPRITE_FEATURES
     ; Reload OOB tile viewer if enabled
     LDA !ram_sprite_feature_flags : BIT !SPRITE_OOB_WATCH : BEQ .tileviewerDone
     JSL upload_sprite_oob_tiles
   .tileviewerDone
+endif
 
     ; Reload BG3 GFX if minimap setting changed
     LDA !ram_minimap : CMP !SRAM_SAVED_MINIMAP : BEQ .minimapDone
@@ -199,6 +201,9 @@ post_load_state:
     LDA !REG_4200_NMI : BIT #$0080 : BEQ .done
     LDA !FRAME_COUNTER : PHA
     LDA !ram_realtime_room : PHA
+if !FEATURE_TAS_RECORD
+    LDA !DP_tas_record : PHA
+endif
 
     ; Re-enable NMI, turn on force-blank and wait NMI to execute.
     ; This prevents some annoying flashing when loading states where
@@ -206,6 +211,9 @@ post_load_state:
     JSL $80834B
     JSL $80836F
 
+if !FEATURE_TAS_RECORD
+    PLA : STA !DP_tas_record
+endif
     PLA : STA !ram_realtime_room
     PLA : STA !FRAME_COUNTER
     LDA !SRAM_SEG_TIMER_F : STA !ram_seg_rt_frames
@@ -215,7 +223,11 @@ post_load_state:
   .done
     %a8()
     LDA !REG_4200_NMI : STA $4200
-    LDA #$0F : STA $13 : STA !REG_2100_BRIGHTNESS : STA $0F2100
+    LDA #$0F : STA $13
+if !FEATURE_TAS_RECORD
+    STA !DP_tas_record_force
+endif
+    STA !REG_2100_BRIGHTNESS : STA $0F2100
     RTL
 }
 
@@ -406,12 +418,18 @@ save_return:
     LDA !ram_seg_rt_minutes : STA !SRAM_SEG_TIMER_M
     LDA !FRAME_COUNTER : PHA
     LDA !ram_realtime_room : PHA
+if !FEATURE_TAS_RECORD
+    LDA !DP_tas_record : PHA
+endif
 
     ; When we re-enable NMI, it may or may not cost us a frame.
     ; To make this more consistent, attempt to always trip the NMI.
     JSL $80834B
     JSL $808338
 
+if !FEATURE_TAS_RECORD
+    PLA : STA !DP_tas_record : STA !sram_tas_record
+endif
     PLA : STA !ram_realtime_room
     PLA : STA !FRAME_COUNTER
     LDA !SRAM_SEG_TIMER_F : STA !ram_seg_rt_frames
@@ -421,7 +439,11 @@ save_return:
   .done
     %a8()
     LDA !REG_4200_NMI : STA $4200
-    LDA #$0F : STA $13 : STA !REG_2100_BRIGHTNESS : STA $0F2100
+    LDA #$0F : STA $13
+if !FEATURE_TAS_RECORD
+    STA !DP_tas_record_force
+endif
+    STA !REG_2100_BRIGHTNESS : STA $0F2100
     RTL
 }
 

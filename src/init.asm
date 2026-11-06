@@ -229,7 +229,12 @@ endif
     TDC : STA !sram_custom_header
 
   .upgrade_13to14
-    LDA !sram_fanfare : AND #$0001 : STA !sram_fanfare
+if !FEATURE_TAS_PLAYBACK
+    LDA #$0001
+else
+    LDA !sram_fanfare : AND #$0001
+endif
+    STA !sram_fanfare
 
   .upgrade_14to15
     TDC : STA !sram_bomb_torizo_door
@@ -327,6 +332,9 @@ endif
     LDA #$0040 : STA !sram_safeties_enabled_kpdr+$2
     LDA #$4140 : STA !sram_safeties_enabled_phantoonfirst
     LDA !FRAME_COUNTER_ADJUST_REALTIME : STA !sram_frame_counter_mode
+if !FEATURE_TAS_RECORD
+    LDA #$FFFE : STA !sram_tas_record
+endif
 
     LDA !SRAM_VERSION : STA !sram_initialized
     RTS
@@ -477,6 +485,18 @@ init_menu_customization:
 
 init_post_boot:
 {
+if !FEATURE_TAS_RECORD
+    LDA !sram_tas_record : STA !DP_tas_record
+endif
+if !FEATURE_TAS_PLAYBACK
+    LDA #ZebesTASVerifyInput>>8 : STA !DP_tas_verify_input+1
+    LDA #ZebesTASVerifyInput : STA !DP_tas_verify_input
+    LDA #ZebesTASFrameCounter>>8 : STA !DP_tas_frame_counter+1
+    LDA #ZebesTASFrameCounter : STA !DP_tas_frame_counter
+    LDA #ZebesTASCachedRng>>8 : STA !DP_tas_cached_rng+1
+    LDA #ZebesTASCachedRng : STA !DP_tas_cached_rng
+endif
+
     ; Load the last selected file slot (so that the user's controller
     ; bindings will apply if they load a preset without loading a save file)
     LDA $701FEC : STA !CURRENT_SAVE_FILE

@@ -188,6 +188,9 @@ cm_init:
     LDY.w #!DP_REGISTER_BACKUP_START  ; Y = Destination
     LDA.w #!DP_REGISTER_BACKUP_SIZE-1 ; A = Size-1
     MVN $7E7E : PLB                   ; srcBank, destBank
+if !FEATURE_TAS_RECORD
+    LDA !DP_tas_record : STA !DP_tas_record_menu_backup
+endif
 
     ; Preserve timers while menu is active
     LDA !ram_realtime_room : STA !ram_cm_preserved_timers
@@ -2068,6 +2071,9 @@ cm_ctrl_mode:
 ; If inputs blank then must be blank for two seconds
 {
     JSL $809459 ; Read controller input
+if !FEATURE_TAS_RECORD
+    LDA !DP_tas_record_menu_backup : STA !DP_tas_record
+endif
 
     ; set palette
     %a8() : LDA #$28 : STA !DP_Palette : %a16()
@@ -2872,6 +2878,9 @@ cm_get_inputs:
     PHP : STA !ram_cm_input_counter : PLP : BNE .input_read
 
     JSL $809459 ; Read controller input
+if !FEATURE_TAS_RECORD
+    LDA !DP_tas_record_menu_backup : STA !DP_tas_record
+endif
 
   .input_read
     LDA !IH_CONTROLLER_PRI_NEW : BEQ .check_input_sec

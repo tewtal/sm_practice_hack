@@ -84,6 +84,9 @@ cm_crop_mode:
     STA !ram_cm_input_counter
     PLP : BNE .inputRead
     JSL $809459 ; Read controller input
+if !FEATURE_TAS_RECORD
+    LDA !DP_tas_record_menu_backup : STA !DP_tas_record
+endif
 
   .inputRead
     LDA !IH_CONTROLLER_PRI_NEW : BEQ .loop

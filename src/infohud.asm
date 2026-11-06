@@ -2,6 +2,14 @@
 ; InfoHUD timers and stuff
 ; =======================================================
 
+if !FEATURE_TAS_RECORD
+org $80948C
+    JMP ih_tas_record_input
+elseif !FEATURE_TAS_PLAYBACK
+org $80948C
+    JMP ih_tas_playback_input
+endif
+
 org $809490
     BRA $05      ; skip resetting player 2 inputs
 
@@ -17,11 +25,22 @@ org $8095FC      ; hijack, end of NMI routine to update realtime frames
 
 org $809609      ; inc counter if NMI lag branch
     INC !REALTIME_LAG_COUNTER
+if !FEATURE_TAS_RECORD
+    JMP ih_tas_record_lag
+endif
 
 org $809DFD
 hook_start_escape_timers:
     dw #ih_set_ceres_timer
     dw #ih_set_zebes_timer
+
+if !FEATURE_TAS_RECORD
+org $80A122
+    JMP ih_tas_record_start
+elseif !FEATURE_TAS_PLAYBACK
+org $80A122
+    JMP ih_tas_playback_start
+endif
 
 if !FEATURE_VANILLAHUD
 else
@@ -837,6 +856,19 @@ ih_update_hud_code:
     PEA $8080 : PLB : PLB
 
   .start
+if !FEATURE_TAS_RECORD
+    LDA !IH_MORPH_BALL_PINK : STA !HUD_TILEMAP+$2E
+    LDA !DP_tas_record : BMI .sideB
+    LDA !IH_LETTER_A_PINK
+    BRA .sideDraw
+  .sideB
+    LDA !IH_LETTER_B_PINK
+  .sideDraw
+    STA !HUD_TILEMAP+$34
+elseif !FEATURE_TAS_PLAYBACK
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$2E
+endif
+
     TDC : STA !ram_update_timers_flag
     DEC : STA !ram_last_hp : STA !ram_enemy_hp
     LDA !ram_watch_right_hud : EOR #$FFFF : STA !ram_watch_right_hud
@@ -2251,6 +2283,169 @@ ih_set_zebes_timer:
     CLC
     RTS
 }
+
+if !FEATURE_TAS_RECORD
+ih_tas_record_input:
+{
+    %i16() : LDA !DP_tas_record : INC #2
+    STA !DP_tas_record : BMI .sideB
+    TAX : LDA !IH_CONTROLLER_PRI : CMP !IH_CONTROLLER_PRI_PREV : BEQ .sideA_match
+    STA !IH_CONTROLLER_PRI_PREV
+    LDA !FRAME_COUNTER : AND #$000F
+    ORA !IH_CONTROLLER_PRI : STA $740000,X
+    LDA !CACHED_RANDOM_NUMBER : STA $750000,X
+    %i8() : JMP $9497
+
+  .sideB
+    AND #$7FFF : TAX
+    LDA !IH_CONTROLLER_PRI : CMP !IH_CONTROLLER_PRI_PREV : BEQ .sideB_match
+    STA !IH_CONTROLLER_PRI_PREV
+    LDA !FRAME_COUNTER : AND #$000F
+    ORA !IH_CONTROLLER_PRI : STA $760000,X
+    LDA !CACHED_RANDOM_NUMBER : STA $770000,X
+    %i8() : JMP $9497
+
+  .sideA_match
+    LDA !DP_tas_record_force : BNE .sideA_force
+    LDA !FRAME_COUNTER : AND #$0FFF : ORA #$0F00 : STA $740000,X
+    LDA !CACHED_RANDOM_NUMBER : STA $750000,X
+    %i8() : JMP $9497
+
+  .sideB_match
+    LDA !DP_tas_record_force : BNE .sideB_force
+    LDA !FRAME_COUNTER : AND #$0FFF : ORA #$0F00 : STA $760000,X
+    LDA !CACHED_RANDOM_NUMBER : STA $770000,X
+    %i8() : JMP $9497
+
+  .sideA_force
+    STZ !DP_tas_record_force
+    LDA !FRAME_COUNTER : AND #$000F
+    ORA !IH_CONTROLLER_PRI : STA $740000,X
+    LDA !CACHED_RANDOM_NUMBER : STA $750000,X
+    %i8() : JMP $9497
+
+  .sideB_force
+    STZ !DP_tas_record_force
+    LDA !FRAME_COUNTER : AND #$000F
+    ORA !IH_CONTROLLER_PRI : STA $760000,X
+    LDA !CACHED_RANDOM_NUMBER : STA $770000,X
+    %i8() : JMP $9497
+}
+
+ih_tas_record_lag:
+{
+    ; overwritten logic
+    %ai16() : INC !NMI_COUNTER
+
+    LDA !DP_tas_record : INC #2
+    STA !DP_tas_record : BMI .sideB
+    TAX : LDA !FRAME_COUNTER : ORA #$FF00 : STA $740000,X
+    JML ih_nmi_end
+
+  .sideB
+    AND #$7FFF : TAX
+    LDA !FRAME_COUNTER : ORA #$FF00 : STA $760000,X
+    JML ih_nmi_end
+}
+
+ih_tas_record_start:
+{
+    LDA !DP_tas_record : ORA #$7FFE : STA !DP_tas_record
+
+    ; overwritten logic
+    LDA #$E737 : STA !DOOR_FUNCTION_POINTER
+    PLB : PLP : RTL
+}
+endif ; FEATURE_TAS_RECORD
+
+if !FEATURE_TAS_PLAYBACK
+ih_tas_playback_input:
+{
+    LDA [!DP_tas_verify_input] : CMP !IH_CONTROLLER_PRI : BEQ .match
+    LDA !IH_CONTROLLER_PRI : STA !IH_CONTROLLER_PRI_PREV
+if !FEATURE_TAS_VERIFY
+    LDA !IH_MORPH_BALL_YELLOW
+else
+    LDA !IH_BLANK
+endif
+    STA !HUD_TILEMAP+$2E : STA !HUD_TILEMAP+$34
+    BRA .continue
+
+  .match
+    STA !IH_CONTROLLER_PRI_PREV
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$34
+
+  .continue
+    LDA [!DP_tas_frame_counter] : STA !FRAME_COUNTER
+    LDA [!DP_tas_cached_rng] : STA !CACHED_RANDOM_NUMBER
+    LDA !DP_tas_frame_counter : INC : BEQ .frame_counter_rollover
+    STA !DP_tas_frame_counter
+    LDA !DP_tas_cached_rng : INC #2 : BEQ .cached_rng_rollover
+    STA !DP_tas_cached_rng
+    LDA !DP_tas_verify_input : INC #2 : STA !DP_tas_verify_input
+    JMP $9497
+
+  .frame_counter_error
+    BRK
+
+  .frame_counter_rollover
+    LDA #$8000
+    STA !DP_tas_frame_counter : STA !DP_tas_cached_rng : STA !DP_tas_verify_input
+    %a8() : LDX !DP_tas_frame_counter+2
+    LDA.l tas_playback_rng_time_next_bank,X : BEQ .frame_counter_error
+    STA !DP_tas_frame_counter+2
+    BRA .continue_rollover
+
+  .cached_rng_error
+    BRK
+
+  .cached_rng_rollover
+    LDA #$8000
+    STA !DP_tas_cached_rng : STA !DP_tas_verify_input
+    %a8()
+
+  .continue_rollover
+    LDX !DP_tas_cached_rng+2
+    LDA.l tas_playback_rng_time_next_bank,X : BEQ .cached_rng_error
+    STA !DP_tas_cached_rng+2
+    LDX !DP_tas_verify_input+2
+    LDA.l tas_playback_verify_next_bank,X : BEQ .verify_input_error
+    STA !DP_tas_verify_input+2
+    %a16()
+    JMP $9497
+
+  .verify_input_error
+    BRK
+}
+
+ih_tas_playback_start:
+{
+    LDA !IH_BLANK : STA !HUD_TILEMAP+$2E : STA !HUD_TILEMAP+$34
+    LDA !AREA_ID : CMP #$0006 : BEQ .ceres
+    LDA #ZebesTASVerifyInput>>8 : STA !DP_tas_verify_input+1
+    LDA #ZebesTASVerifyInput : STA !DP_tas_verify_input
+    LDA #ZebesTASFrameCounter>>8 : STA !DP_tas_frame_counter+1
+    LDA #ZebesTASFrameCounter : STA !DP_tas_frame_counter
+    LDA #ZebesTASCachedRng>>8 : STA !DP_tas_cached_rng+1
+    LDA #ZebesTASCachedRng : STA !DP_tas_cached_rng
+
+    ; overwritten logic
+    LDA #$E737 : STA !DOOR_FUNCTION_POINTER
+    PLB : PLP : RTL
+
+  .ceres
+    LDA #CeresTASVerifyInput>>8 : STA !DP_tas_verify_input+1
+    LDA #CeresTASVerifyInput : STA !DP_tas_verify_input
+    LDA #CeresTASFrameCounter>>8 : STA !DP_tas_frame_counter+1
+    LDA #CeresTASFrameCounter : STA !DP_tas_frame_counter
+    LDA #CeresTASCachedRng>>8 : STA !DP_tas_cached_rng+1
+    LDA #CeresTASCachedRng : STA !DP_tas_cached_rng
+
+    ; overwritten logic
+    LDA #$E737 : STA !DOOR_FUNCTION_POINTER
+    PLB : PLP : RTL
+}
+endif ; FEATURE_TAS_PLAYBACK
 
 if !FEATURE_VANILLAHUD
 else
