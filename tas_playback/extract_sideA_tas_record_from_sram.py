@@ -72,18 +72,26 @@ previous_input = "............"
 verify_value = 0
 for i in range(32766, -2, -2):
    if 0x0F != (other_side_ctrl_data[i + 1] & 0x0F):
-      previous_input = 'U' if other_side_ctrl_data[i + 1] & 0x08 else '.'
-      previous_input += 'D' if other_side_ctrl_data[i + 1] & 0x04 else '.'
-      previous_input += 'L' if other_side_ctrl_data[i + 1] & 0x02 else '.'
-      previous_input += 'R' if other_side_ctrl_data[i + 1] & 0x01 else '.'
-      previous_input += 's' if other_side_ctrl_data[i + 1] & 0x20 else '.'
-      previous_input += 'S' if other_side_ctrl_data[i + 1] & 0x10 else '.'
-      previous_input += 'Y' if other_side_ctrl_data[i + 1] & 0x40 else '.'
-      previous_input += 'B' if other_side_ctrl_data[i + 1] & 0x80 else '.'
-      previous_input += 'X' if other_side_ctrl_data[i] & 0x40 else '.'
-      previous_input += 'A' if other_side_ctrl_data[i] & 0x80 else '.'
-      previous_input += 'l' if other_side_ctrl_data[i] & 0x20 else '.'
-      previous_input += 'r' if other_side_ctrl_data[i] & 0x10 else '.'
+      verify_value = other_side_ctrl_data[i + 1]
+      verify_value <<= 8
+      verify_value |= other_side_ctrl_data[i] & 0xF0
+      if 0x6010 == verify_value:
+         previous_input = "....s......r"
+      elif 0x6020 == verify_value:
+         previous_input = "....s.....l."
+      else:
+         previous_input = 'U' if other_side_ctrl_data[i + 1] & 0x08 else '.'
+         previous_input += 'D' if other_side_ctrl_data[i + 1] & 0x04 else '.'
+         previous_input += 'L' if other_side_ctrl_data[i + 1] & 0x02 else '.'
+         previous_input += 'R' if other_side_ctrl_data[i + 1] & 0x01 else '.'
+         previous_input += 's' if other_side_ctrl_data[i + 1] & 0x20 else '.'
+         previous_input += 'S' if other_side_ctrl_data[i + 1] & 0x10 else '.'
+         previous_input += 'Y' if other_side_ctrl_data[i + 1] & 0x40 else '.'
+         previous_input += 'B' if other_side_ctrl_data[i + 1] & 0x80 else '.'
+         previous_input += 'X' if other_side_ctrl_data[i] & 0x40 else '.'
+         previous_input += 'A' if other_side_ctrl_data[i] & 0x80 else '.'
+         previous_input += 'l' if other_side_ctrl_data[i] & 0x20 else '.'
+         previous_input += 'r' if other_side_ctrl_data[i] & 0x10 else '.'
       break
 for i in range(32766, -2, -2):
    full_time = other_side_ctrl_data[i]
@@ -104,18 +112,29 @@ for i in range(0, 32768, 2):
    if 0xFF == ctrl_data[i + 1]:
       ctrl_file.write(f"|..|{previous_input}|\n")
       ctrl_line_number += 1
-      all_file.write(f"{frame_number:06} ---- |..|{previous_input}|{full_time:02X} ctrl line {ctrl_line_number:5}\n")
+      if 0x6010 == verify_value or 0x6020 == verify_value:
+         all_file.write(f"{frame_number:06} ---- |..|{previous_input}|{full_time:02X} ctrl line {ctrl_line_number:5} [removed Y]\n")
+      else:
+         all_file.write(f"{frame_number:06} ---- |..|{previous_input}|{full_time:02X} ctrl line {ctrl_line_number:5}\n")
       previous_full_time = full_time - 1
    elif 0x0F == ctrl_data[i + 1]:
       rng_value = rng_data[i + 1]
       rng_value <<= 8
       rng_value |= rng_data[i]
-      verify_file.write(f"    dw ${verify_value:04X} ; |..|{previous_input}|\n")
+      if 0x6010 == verify_value:
+         verify_file.write(f"    dw $2010 ; |..|{previous_input}| [removed Y]\n")
+      elif 0x6020 == verify_value:
+         verify_file.write(f"    dw $2020 ; |..|{previous_input}| [removed Y]\n")
+      else:
+         verify_file.write(f"    dw ${verify_value:04X} ; |..|{previous_input}|\n")
       time_file.write(f"    db ${full_time:02X}\n")
       rng_file.write(f"    dw ${rng_value:04X}\n")
       ctrl_file.write(f"|..|{previous_input}|\n")
       ctrl_line_number += 1
-      all_file.write(f"{frame_number:06} {rng_value:04X} |..|{previous_input}|{full_time:02X} ctrl line {ctrl_line_number:5}\n")
+      if 0x6010 == verify_value or 0x6020 == verify_value:
+         all_file.write(f"{frame_number:06} {rng_value:04X} |..|{previous_input}|{full_time:02X} ctrl line {ctrl_line_number:5} [removed Y]\n")
+      else:
+         all_file.write(f"{frame_number:06} {rng_value:04X} |..|{previous_input}|{full_time:02X} ctrl line {ctrl_line_number:5}\n")
       previous_full_time = full_time
    elif 0x1F == ctrl_data[i + 1]:
       rng_value = rng_data[i + 1]
@@ -148,26 +167,36 @@ for i in range(0, 32768, 2):
       verify_value = ctrl_data[i + 1]
       verify_value <<= 8
       verify_value |= ctrl_data[i] & 0xF0
-      previous_input = 'U' if ctrl_data[i + 1] & 0x08 else '.'
-      previous_input += 'D' if ctrl_data[i + 1] & 0x04 else '.'
-      previous_input += 'L' if ctrl_data[i + 1] & 0x02 else '.'
-      previous_input += 'R' if ctrl_data[i + 1] & 0x01 else '.'
-      previous_input += 's' if ctrl_data[i + 1] & 0x20 else '.'
-      previous_input += 'S' if ctrl_data[i + 1] & 0x10 else '.'
-      previous_input += 'Y' if ctrl_data[i + 1] & 0x40 else '.'
-      previous_input += 'B' if ctrl_data[i + 1] & 0x80 else '.'
-      previous_input += 'X' if ctrl_data[i] & 0x40 else '.'
-      previous_input += 'A' if ctrl_data[i] & 0x80 else '.'
-      previous_input += 'l' if ctrl_data[i] & 0x20 else '.'
-      previous_input += 'r' if ctrl_data[i] & 0x10 else '.'
+      if 0x6010 == verify_value:
+         previous_input = "....s......r"
+         verify_file.write(f"    dw $2010 ; |..|{previous_input}| [removed Y]\n")
+      elif 0x6020 == verify_value:
+         previous_input = "....s.....l."
+         verify_file.write(f"    dw $2020 ; |..|{previous_input}| [removed Y]\n")
+      else:
+         previous_input = 'U' if ctrl_data[i + 1] & 0x08 else '.'
+         previous_input += 'D' if ctrl_data[i + 1] & 0x04 else '.'
+         previous_input += 'L' if ctrl_data[i + 1] & 0x02 else '.'
+         previous_input += 'R' if ctrl_data[i + 1] & 0x01 else '.'
+         previous_input += 's' if ctrl_data[i + 1] & 0x20 else '.'
+         previous_input += 'S' if ctrl_data[i + 1] & 0x10 else '.'
+         previous_input += 'Y' if ctrl_data[i + 1] & 0x40 else '.'
+         previous_input += 'B' if ctrl_data[i + 1] & 0x80 else '.'
+         previous_input += 'X' if ctrl_data[i] & 0x40 else '.'
+         previous_input += 'A' if ctrl_data[i] & 0x80 else '.'
+         previous_input += 'l' if ctrl_data[i] & 0x20 else '.'
+         previous_input += 'r' if ctrl_data[i] & 0x10 else '.'
+         verify_file.write(f"    dw ${verify_value:04X} ; |..|{previous_input}|\n")
       partial_time = full_time & 0x0F
       full_time = ((previous_full_time + 1) & 0xF0) | partial_time
-      verify_file.write(f"    dw ${verify_value:04X} ; |..|{previous_input}|\n")
       time_file.write(f"    db ${full_time:02X}\n")
       rng_file.write(f"    dw ${rng_value:04X}\n")
       ctrl_file.write(f"|..|{previous_input}|\n")
       ctrl_line_number += 1
-      all_file.write(f"{frame_number:06} {rng_value:04X} |..|{previous_input}|{full_time:02X} ({partial_time:01X})  line {ctrl_line_number:5}\n")
+      if 0x6010 == verify_value or 0x6020 == verify_value:
+         all_file.write(f"{frame_number:06} {rng_value:04X} |..|{previous_input}|{full_time:02X} ({partial_time:01X})  line {ctrl_line_number:5} [removed Y]\n")
+      else:
+         all_file.write(f"{frame_number:06} {rng_value:04X} |..|{previous_input}|{full_time:02X} ({partial_time:01X})  line {ctrl_line_number:5}\n")
       previous_full_time = full_time
    frame_number += 1
 verify_file.close()
