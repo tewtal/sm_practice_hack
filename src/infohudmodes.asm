@@ -55,6 +55,8 @@ status_display_table:
     dw status_camerapos
   .shottimer
     dw status_shottimer
+  .xbomb
+    dw status_xbomb
   .ramwatch
     dw status_ramwatch
   .end
@@ -1804,6 +1806,67 @@ endif
     ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
     LDA !IH_LETTER_E : STA !HUD_TILEMAP+$8C
     BRA .phantoonClear
+}
+
+status_xbomb:
+{
+    ; Is there a bomb?
+    LDA !SAMUS_BOMB_TIMER
+    BEQ .nobomb
+    BMI .nobomb
+
+    ; Did we just fire a shot?
+    LDX !SAMUS_PROJ_INVINCIBILITY_TIMER
+    CPX #$0009 : BNE .notfired
+
+    ; Did we fire a shot on the right frame of the bomb timer?
+    SEC : SBC #$0010
+    BEQ .shot_correct : BCC .shot_late
+
+    ; shot early
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A
+    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$88
+    RTS
+
+  .shot_correct
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$88 : STA !HUD_TILEMAP+$8A
+    RTS
+  .shot_late
+    EOR #$FFFF : ADC #$0001     ; we BCC'd here
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A
+    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$88
+    RTS
+
+  .nobomb
+    RTS
+
+  .notfired
+    ; Did we just try to activate X-ray?
+    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_RUN : BEQ .nox
+    LDA !SAMUS_ITEM_SELECTED : CMP #$0005 : BNE .nox
+
+    LDA !SAMUS_BOMB_TIMER
+    ; if we didn't get xray, the timer will have 1 extra frame
+    SEC : SBC !TIME_IS_FROZEN
+    SEC : SBC #$0007
+    BEQ .x_correct : BCC .x_late
+
+    ; x early
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
+    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$8C
+    RTS
+
+  .x_correct
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$8E
+    RTS
+  .x_late
+    EOR #$FFFF : ADC #$0001             ; we BCC'd here
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
+    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$8C
+    RTS
+
+  .nox
+    RTS
 }
 
 status_ramwatch:
