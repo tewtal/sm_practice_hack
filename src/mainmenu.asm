@@ -2185,6 +2185,7 @@ DisplayModeMenu2:
     dw ihmode_ypos
     dw ihmode_camerapos
     dw ihmode_shottimer
+    dw ihmode_xbomb
     dw ihmode_ramwatch
     dw #$FFFF
     dw ihmode_goto_page1
@@ -2270,6 +2271,9 @@ ihmode_camerapos:
 ihmode_shottimer:
     %cm_jsl("Shot Timer", #action_select_infohud_mode, !IH_MODE_INDEX_SHOTTIMER)
 
+ihmode_xbomb:
+    %cm_jsl("X-Bomb Trainer", #action_select_infohud_mode, !IH_MODE_INDEX_XBOMB)
+
 ihmode_ramwatch:
     %cm_jsl("Custom RAM Watch", #action_select_infohud_mode, !IH_MODE_INDEX_RAMWATCH)
 
@@ -2317,6 +2321,7 @@ ih_display_mode:
     db #$28, " Y POSITION", #$FF
     db #$28, " CAMERA POS", #$FF
     db #$28, " SHOT TIMER", #$FF
+    db #$28, "     X-BOMB", #$FF
     db #$28, "  RAM WATCH", #$FF
     db #$FF
   .routine
