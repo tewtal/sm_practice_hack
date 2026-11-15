@@ -266,7 +266,7 @@
 !ram_sram_detection = !WRAM_MENU_START+$56
 
 !ram_timers_autoupdate = !WRAM_MENU_START+$58
-!ram_cm_gmode = !WRAM_MENU_START+$5A
+!ram_cm_gmode_xmode = !WRAM_MENU_START+$5A
 
 ; ^ FREE SPACE ^ up to +$86
 

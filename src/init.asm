@@ -108,7 +108,7 @@ init_non_zero_persistent_wram:
     LDA #$007E : STA !ram_watch_bank
     LDA !sram_seed_X : STA !ram_seed_X
     LDA !sram_seed_Y : STA !ram_seed_Y
-    LDA #$8000 : STA !ram_cm_gmode
+    LDA #$8000 : STA !ram_cm_gmode_xmode
 
 if !FEATURE_PRESETS
     ; If Map Completion preset category selected then turn minimap on

@@ -43,9 +43,12 @@ action_game_mainmenu:
     AND !ENEMY_PROJ_ENABLE : AND !ANIMATED_TILES_ENABLE
     BEQ .init_timers
 
-  .set_gmode_flag
     ; If all four on or off, set g-mode flag accordingly
-    STA !ram_cm_gmode
+    LDA !ram_cm_gmode_xmode : ORA #$8000 : STA !ram_cm_gmode_xmode
+    BRA .init_timers
+
+  .set_gmode_flag
+    LDA !ram_cm_gmode_xmode : AND #$0001 : STA !ram_cm_gmode_xmode
 
   .init_timers
     ; Each hexadecimal nibble represents a decimal

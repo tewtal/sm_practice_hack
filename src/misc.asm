@@ -373,6 +373,13 @@ endif
     JMP misc_check_bonk
 hijack_bonk_return:
 
+if !FEATURE_PAL
+org $91EB97
+else
+org $91EC32
+endif
+    dw misc_xray_pose_change_command
+
 
 %startfree(91)
 
@@ -388,6 +395,27 @@ misc_check_bonk:
   .second
     LDA !IH_LETTER_B : STA $7EC628
     BRA .return
+}
+
+misc_xray_pose_change_command:
+{
+    LDA !ram_cm_gmode_xmode : BIT #$0001 : BNE .xmode
+  .vanilla
+    JMP $EEA6
+
+  .xmode
+    LDA !SAMUS_POSE : CMP #$00D5 : BMI .vanilla
+    CMP #$00DB : BPL .vanilla
+    AND #$FF53 : STA !SAMUS_POSE
+    LDA !SAMUS_POSE_DIRECTION : ORA #$0200 : STA !SAMUS_POSE_DIRECTION
+    LDA #$A337 : STA !SAMUS_NORMAL_MOVEMENT_HANDLER
+if !FEATURE_PAL
+    LDA #$E910
+else
+    LDA #$E913
+endif
+    STA !SAMUS_CONTROLLER_HANDLER
+    RTS
 }
 
 %endfree(91)
