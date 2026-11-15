@@ -241,7 +241,7 @@ ram_cm_palette_numsel = !ram_cm_palette_numsel ; !WRAM_MENU_START+$54
 ram_sram_detection = !ram_sram_detection ; !WRAM_MENU_START+$56
 
 ram_timers_autoupdate = !ram_timers_autoupdate ; !WRAM_MENU_START+$58
-ram_cm_gmode = !ram_cm_gmode ; !WRAM_MENU_START+$5A
+ram_cm_gmode_xmode = !ram_cm_gmode_xmode ; !WRAM_MENU_START+$5A
 
 ; ^ FREE SPACE ^ up to +$86
 
@@ -614,6 +614,9 @@ sram_streamer_name = !sram_streamer_name ; !SRAM_START+$E00 ; $18 bytes
 sram_custom_header = !sram_custom_header ; !SRAM_START+$E18 ; $18 bytes
 sram_custom_preset_safewords = !sram_custom_preset_safewords ; !SRAM_START+$E30 ; $20 bytes
 sram_custom_preset_names = !sram_custom_preset_names ; !SRAM_START+$E50 ; $180 bytes
+if !FEATURE_TAS_RECORD
+sram_tas_record = !sram_tas_record ; !SRAM_START+$FD0
+endif
 else
 sram_read_only_locks = !sram_read_only_locks ; !SRAM_START+$B8A ; $6 bytes
 sram_streamer_name = !sram_streamer_name ; !SRAM_START+$B90 ; $18 bytes

@@ -71,7 +71,11 @@ endif
 !START_FREESPACE_E0 = $E08000 ; $8000
 !START_FREESPACE_E1 = $E18000 ; $8000
 !START_FREESPACE_E2 = $E28000 ; $8000
+if !ZSNES_SPLASHSCREEN_GRAPHICS
 !START_FREESPACE_E3 = $E3EA40 ; $15C0 ZSNES graphics
+else
+!START_FREESPACE_E3 = $E38000 ; $8000
+endif
 !START_FREESPACE_E4 = $E48000 ; $8000
 !START_FREESPACE_E5 = $E58000 ; $8000
 !START_FREESPACE_E6 = $E68000 ; $8000
@@ -248,12 +252,25 @@ endif
 !END_FREESPACE_CE = $CE0000+$10000
 !END_FREESPACE_DE = $DE0000+$10000
 !END_FREESPACE_DF = $DF0000+$10000
+if !PRESERVE_WRAM
 !END_FREESPACE_E0 = $E00000+$E7E0 ; preserve_wram.asm
+else
+!END_FREESPACE_E0 = $E00000+$10000
+endif
 !END_FREESPACE_E1 = $E10000+$10000
+if !ZSNES_SPLASHSCREEN_GRAPHICS
 !END_FREESPACE_E2 = $E28000 ; ZSNES graphics
+else
+!END_FREESPACE_E2 = $E20000+$10000
+endif
 !END_FREESPACE_E3 = $E30000+$10000
 !END_FREESPACE_E4 = $E40000+$10000
+if !FEATURE_TAS_PLAYBACK
+!END_FREESPACE_E5 = $E50000+$10000
+else
 !END_FREESPACE_E5 = $E58000 ; roomnames.asm
+endif
+if !FEATURE_PRESETS || !RAW_TILE_GRAPHICS
 !END_FREESPACE_E6 = $E68800 ; tilegraphics.asm
 !END_FREESPACE_E7 = $E78000 ; tilegraphics.asm
 !END_FREESPACE_E8 = $E88000 ; tilegraphics.asm + presets.asm
@@ -264,10 +281,23 @@ endif
 !END_FREESPACE_ED = $ED8000 ; presets.asm
 !END_FREESPACE_EE = $EE8000 ; presets.asm
 !END_FREESPACE_EF = $EF8000 ; presets.asm
+else
+!END_FREESPACE_E6 = $E60000+$10000
+!END_FREESPACE_E7 = $E70000+$10000
+!END_FREESPACE_E8 = $E80000+$10000
+!END_FREESPACE_E9 = $E90000+$10000
+!END_FREESPACE_EA = $EA0000+$10000
+!END_FREESPACE_EB = $EB0000+$10000
+!END_FREESPACE_EC = $EC0000+$10000
+!END_FREESPACE_ED = $ED0000+$10000
+!END_FREESPACE_EE = $EE0000+$10000
+!END_FREESPACE_EF = $EF0000+$10000
+endif
 !END_FREESPACE_F0 = $F00000+$10000
 !END_FREESPACE_F1 = $F10000+$10000
 !END_FREESPACE_F2 = $F20000+$10000
 !END_FREESPACE_F3 = $F30000+$10000
+if !RAW_TILE_GRAPHICS
 !END_FREESPACE_F4 = $F4D800 ; tilegraphics.asm
 !END_FREESPACE_F5 = $F58000 ; tilegraphics.asm
 !END_FREESPACE_F6 = $F68000 ; tilegraphics.asm
@@ -279,7 +309,24 @@ endif
 !END_FREESPACE_FC = $FC8000 ; tilegraphics.asm
 !END_FREESPACE_FD = $FD8000 ; tilegraphics.asm
 !END_FREESPACE_FE = $FE8000 ; tilegraphics.asm
+else
+!END_FREESPACE_F4 = $F40000+$10000
+!END_FREESPACE_F5 = $F50000+$10000
+!END_FREESPACE_F6 = $F60000+$10000
+!END_FREESPACE_F7 = $F70000+$10000
+!END_FREESPACE_F8 = $F80000+$10000
+!END_FREESPACE_F9 = $F90000+$10000
+!END_FREESPACE_FA = $FA0000+$10000
+!END_FREESPACE_FB = $FB0000+$10000
+!END_FREESPACE_FC = $FC0000+$10000
+!END_FREESPACE_FD = $FD0000+$10000
+!END_FREESPACE_FE = $FE0000+$10000
+endif
+if !FEATURE_TAS_PLAYBACK
+!END_FREESPACE_FF = $FF0000+$10000
+else
 !END_FREESPACE_FF = $FF8000 ; used by SpriteSomething
+endif
 
 ; Allows us to setup warnings for mishandled macros
 !FREESPACE_BANK = -1
@@ -300,7 +347,9 @@ FreespaceLabel<bank>_!FREESPACE_COUNTER_<bank>:
 !FREESPACE_<bank> := FreespaceLabel<bank>_!FREESPACE_COUNTER_<bank>
 !FREESPACE_COUNTER_<bank> #= !FREESPACE_COUNTER_<bank>+1
 !FREESPACE_BANK = -1
+if !END_FREESPACE_<bank> <= $FFFFFF
 warnpc !END_FREESPACE_<bank>
+endif
 endmacro
 
 macro printfreespacebank(bank)
@@ -378,11 +427,20 @@ macro printfreespace()
 %tickfreespace(DF)
 %tickfreespace(E0)
 %tickfreespace(E1)
+if !ZSNES_SPLASHSCREEN_GRAPHICS
 ;%tickfreespace(E2) ZSNES graphics
+else
+%tickfreespace(E2)
+endif
 %tickfreespace(E3)
 %tickfreespace(E4)
+if !FEATURE_TAS_PLAYBACK
+%tickfreespace(E5)
+else
 ;%tickfreespace(E5) roomnames.asm
+endif
 %tickfreespace(E6)
+if !FEATURE_PRESETS || !RAW_TILE_GRAPHICS
 ;%tickfreespace(E7) tilegraphics.asm
 ;%tickfreespace(E8) tilegraphics.asm + presets.asm
 ;%tickfreespace(E9) presets.asm
@@ -392,11 +450,23 @@ macro printfreespace()
 ;%tickfreespace(ED) presets.asm
 ;%tickfreespace(EE) presets.asm
 ;%tickfreespace(EF) presets.asm
+else
+%tickfreespace(E7)
+%tickfreespace(E8)
+%tickfreespace(E9)
+%tickfreespace(EA)
+%tickfreespace(EB)
+%tickfreespace(EC)
+%tickfreespace(ED)
+%tickfreespace(EE)
+%tickfreespace(EF)
+endif
 %tickfreespace(F0)
 %tickfreespace(F1)
 %tickfreespace(F2)
 %tickfreespace(F3)
 %tickfreespace(F4)
+if !RAW_TILE_GRAPHICS
 ;%tickfreespace(F5) tilegraphics.asm
 ;%tickfreespace(F6) tilegraphics.asm
 ;%tickfreespace(F7) tilegraphics.asm
@@ -407,7 +477,23 @@ macro printfreespace()
 ;%tickfreespace(FC) tilegraphics.asm
 ;%tickfreespace(FD) tilegraphics.asm
 ;%tickfreespace(FE) tilegraphics.asm
+else
+%tickfreespace(F5)
+%tickfreespace(F6)
+%tickfreespace(F7)
+%tickfreespace(F8)
+%tickfreespace(F9)
+%tickfreespace(FA)
+%tickfreespace(FB)
+%tickfreespace(FC)
+%tickfreespace(FD)
+%tickfreespace(FE)
+endif
+if !FEATURE_TAS_PLAYBACK
+%tickfreespace(FF)
+else
 ;%tickfreespace(FF) used by SpriteSomething
+endif
 
 %printfreespacebank(80)
 %printfreespacebank(81)

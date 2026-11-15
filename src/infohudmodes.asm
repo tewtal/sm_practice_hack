@@ -55,6 +55,8 @@ status_display_table:
     dw status_camerapos
   .shottimer
     dw status_shottimer
+  .xbomb
+    dw status_xbomb
   .ramwatch
     dw status_ramwatch
   .end
@@ -1806,24 +1808,85 @@ endif
     BRA .phantoonClear
 }
 
+status_xbomb:
+{
+    ; Is there a bomb?
+    LDA !SAMUS_BOMB_TIMER
+    BEQ .nobomb
+    BMI .nobomb
+
+    ; Did we just fire a shot?
+    LDX !SAMUS_PROJ_INVINCIBILITY_TIMER
+    CPX #$0009 : BNE .notfired
+
+    ; Did we fire a shot on the right frame of the bomb timer?
+    SEC : SBC #$0010
+    BEQ .shot_correct : BCC .shot_late
+
+    ; shot early
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A
+    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$88
+    RTS
+
+  .shot_correct
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$88 : STA !HUD_TILEMAP+$8A
+    RTS
+  .shot_late
+    EOR #$FFFF : ADC #$0001     ; we BCC'd here
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8A
+    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$88
+    RTS
+
+  .nobomb
+    RTS
+
+  .notfired
+    ; Did we just try to activate X-ray?
+    LDA !IH_CONTROLLER_PRI_NEW : AND !IH_INPUT_RUN : BEQ .nox
+    LDA !SAMUS_ITEM_SELECTED : CMP #$0005 : BNE .nox
+
+    LDA !SAMUS_BOMB_TIMER
+    ; if we didn't get xray, the timer will have 1 extra frame
+    SEC : SBC !TIME_IS_FROZEN
+    SEC : SBC #$0007
+    BEQ .x_correct : BCC .x_late
+
+    ; x early
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
+    LDA !IH_LETTER_E : STA !HUD_TILEMAP+$8C
+    RTS
+
+  .x_correct
+    LDA !IH_LETTER_Y : STA !HUD_TILEMAP+$8C : STA !HUD_TILEMAP+$8E
+    RTS
+  .x_late
+    EOR #$FFFF : ADC #$0001             ; we BCC'd here
+    ASL : TAY : LDA.w NumberGFXTable,Y : STA !HUD_TILEMAP+$8E
+    LDA !IH_LETTER_L : STA !HUD_TILEMAP+$8C
+    RTS
+
+  .nox
+    RTS
+}
+
 status_ramwatch:
 {
     ; Store Samus HP so it doesn't overwrite our HUD
     LDA !SAMUS_HP : STA !ram_last_hp
 
-    ; Store bank bytes
-    LDA !ram_watch_bank : STA $C3 : STA $C7
+    ; Store bank bytes (keep to C1-C6 range)
+    LDA !ram_watch_bank : STA $C3 : XBA : STA $C5
 
     ; Calculate addresses
     LDA !ram_watch_left : CLC : ADC !ram_watch_left_index : STA $C1
-    LDA !ram_watch_right : CLC : ADC !ram_watch_right_index : STA $C5
+    LDA !ram_watch_right : CLC : ADC !ram_watch_right_index : STA $C4
 
     ; Draw if watched value changed
     LDA [$C1] : CMP !ram_watch_left_hud : BEQ .drawRight
     STA !ram_watch_left_hud : LDX #$0088 : JSR Draw4Hex
 
   .drawRight
-    LDA [$C5] : CMP !ram_watch_right_hud : BEQ .checkBlank
+    LDA [$C4] : CMP !ram_watch_right_hud : BEQ .checkBlank
     STA !ram_watch_right_hud : LDX #$0092 : JSR Draw4Hex
 
   .checkBlank
@@ -1843,7 +1906,7 @@ status_ramwatch:
     LDA !ram_watch_edit_left : STA [$C1]
   .e8LeftDone
     LDA !ram_watch_edit_lock_right : BEQ .e8RightDone
-    LDA !ram_watch_edit_right : STA [$C5]
+    LDA !ram_watch_edit_right : STA [$C4]
   .e8RightDone
     %a16()
     RTS
@@ -1853,7 +1916,7 @@ status_ramwatch:
     LDA !ram_watch_edit_left : STA [$C1]
   .e16LeftDone
     LDA !ram_watch_edit_lock_right : BEQ .e16RightDone
-    LDA !ram_watch_edit_right : STA [$C5]
+    LDA !ram_watch_edit_right : STA [$C4]
   .e16RightDone
     RTS
 }

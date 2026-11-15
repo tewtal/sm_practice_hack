@@ -43,9 +43,12 @@ action_game_mainmenu:
     AND !ENEMY_PROJ_ENABLE : AND !ANIMATED_TILES_ENABLE
     BEQ .init_timers
 
-  .set_gmode_flag
     ; If all four on or off, set g-mode flag accordingly
-    STA !ram_cm_gmode
+    LDA !ram_cm_gmode_xmode : ORA #$8000 : STA !ram_cm_gmode_xmode
+    BRA .init_timers
+
+  .set_gmode_flag
+    LDA !ram_cm_gmode_xmode : AND #$0001 : STA !ram_cm_gmode_xmode
 
   .init_timers
     ; Each hexadecimal nibble represents a decimal
@@ -140,6 +143,7 @@ action_audio_mainmenu:
     JMP action_mainmenu
 }
 
+if !SPRITE_FEATURES
 action_sprites_mainmenu:
 {
 if !PRESERVE_WRAM
@@ -158,6 +162,7 @@ endif
     XBA : ASL : XBA : STA !ram_cm_sprites_enemy_proj
     JMP action_mainmenu
 }
+endif ; SPRITE_FEATURES
 
 action_ctrlshortcut_mainmenu:
 {
@@ -376,7 +381,9 @@ if !FEATURE_VANILLAHUD
 else
     dw #mm_goto_infohud
 endif
+if !SPRITE_FEATURES
     dw #mm_goto_sprites
+endif
     dw #mm_goto_layout
     dw #mm_goto_gamemenu
     dw #mm_goto_rngmenu
@@ -419,7 +426,9 @@ if !FEATURE_VANILLAHUD
 else
     dw #InfoHudMenu>>16
 endif
+if !SPRITE_FEATURES
     dw #SpritesMenu>>16
+endif
     dw #LayoutMenu>>16
     dw #GameMenu>>16
     dw #RngMenu>>16
@@ -463,8 +472,10 @@ mm_goto_infohud:
     %cm_jsl("InfoHUD", #action_infohud_mainmenu, #InfoHudMenu)
 endif
 
+if !SPRITE_FEATURES
 mm_goto_sprites:
     %cm_jsl("Sprite Features", #action_sprites_mainmenu, #SpritesMenu)
+endif
 
 mm_goto_layout:
     %cm_jsl("Room Layout", #action_layout_mainmenu, #LayoutMenu)
@@ -1788,6 +1799,7 @@ action_teleport:
 }
 
 
+if !SPRITE_FEATURES
 ; ---------------
 ; Sprite Features
 ; ---------------
@@ -2119,6 +2131,7 @@ sprites_grapple_hex_word:
 
 sprites_grapple_reset:
     %cm_jsl("Reset Grapple Color", #sprites_grapple_hex_word_reset, !VANILLA_SPRITE_PALETTE_5_GRAPPLE_COLOR)
+endif ; SPRITE_FEATURES
 
 
 ; --------------
@@ -2185,6 +2198,7 @@ DisplayModeMenu2:
     dw ihmode_ypos
     dw ihmode_camerapos
     dw ihmode_shottimer
+    dw ihmode_xbomb
     dw ihmode_ramwatch
     dw #$FFFF
     dw ihmode_goto_page1
@@ -2270,6 +2284,9 @@ ihmode_camerapos:
 ihmode_shottimer:
     %cm_jsl("Shot Timer", #action_select_infohud_mode, !IH_MODE_INDEX_SHOTTIMER)
 
+ihmode_xbomb:
+    %cm_jsl("X-Bomb Trainer", #action_select_infohud_mode, !IH_MODE_INDEX_XBOMB)
+
 ihmode_ramwatch:
     %cm_jsl("Custom RAM Watch", #action_select_infohud_mode, !IH_MODE_INDEX_RAMWATCH)
 
@@ -2317,6 +2334,7 @@ ih_display_mode:
     db #$28, " Y POSITION", #$FF
     db #$28, " CAMERA POS", #$FF
     db #$28, " SHOT TIMER", #$FF
+    db #$28, "     X-BOMB", #$FF
     db #$28, "  RAM WATCH", #$FF
     db #$FF
   .routine

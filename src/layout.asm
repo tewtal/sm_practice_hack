@@ -301,8 +301,24 @@ hijack_after_load_level_data:
     JSL layout_swap_left_right
 
   .checkRoom
+if !FEATURE_TAS_RECORD
+    LDA !DP_tas_record : INC #2
+    STA !DP_tas_record : BMI .sideB
+    TAX : LDA #$1F00 : STA $740000,X
+    LDA !ROOM_ID : STA $750000,X
+    BRA .continueRoom
+
+  .sideB
+    AND #$7FFF : TAX
+    LDA #$1F00 : STA $760000,X
+    LDA !ROOM_ID : STA $770000,X
+
+  .continueRoom
+else
+    LDA !ROOM_ID
+endif
     ; Several rooms need to be handled before the door scroll
-    LDA !ROOM_ID : CMP #ROOM_EastTunnel : BEQ .eastTunnel
+    CMP #ROOM_EastTunnel : BEQ .eastTunnel
     CMP #ROOM_MainStreet : BEQ .mainStreet
     CMP #ROOM_PantsRoom : BEQ .pantsRoom
     CMP #ROOM_BelowBotwoonETank : BEQ .belowBotwoonETank

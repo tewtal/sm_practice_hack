@@ -266,7 +266,7 @@
 !ram_sram_detection = !WRAM_MENU_START+$56
 
 !ram_timers_autoupdate = !WRAM_MENU_START+$58
-!ram_cm_gmode = !WRAM_MENU_START+$5A
+!ram_cm_gmode_xmode = !WRAM_MENU_START+$5A
 
 ; ^ FREE SPACE ^ up to +$86
 
@@ -652,6 +652,9 @@ if !FEATURE_TINYSTATES
 !sram_custom_header = !SRAM_START+$E18 ; $18 bytes
 !sram_custom_preset_safewords = !SRAM_START+$E30 ; $20 bytes
 !sram_custom_preset_names = !SRAM_START+$E50 ; $180 bytes
+if !FEATURE_TAS_RECORD
+!sram_tas_record = !SRAM_START+$FD0
+endif
 else
 !sram_read_only_locks = !SRAM_START+$B8A ; $6 bytes
 !sram_streamer_name = !SRAM_START+$B90 ; $18 bytes
@@ -688,6 +691,8 @@ endif
 !IH_HEALTHBOMB = #$085A
 !IH_RESERVE_AUTO = #$0C0C
 !IH_RESERVE_EMPTY = #$0C0D
+!IH_LETTER_A_PINK = #$0864
+!IH_LETTER_B_PINK = #$0865
 !IH_LETTER_A = #$0C64
 !IH_LETTER_B = #$0C65
 !IH_LETTER_C = #$0C58
@@ -718,6 +723,7 @@ endif
 !IH_ARROW_DOWN_GREY = #$1463
 !IH_ARROW_DOWN_PINK_OUTLINE = #$0863
 !IH_ARROW_DOWN_RED = #$1C63
+!IH_MORPH_BALL_PINK = #$08C9
 !IH_MORPH_BALL_YELLOW = #$00C9
 !IH_MORPH_BALL_GREEN = #$10C9
 !IH_STUCK_GREEN = #$106B
@@ -1078,6 +1084,7 @@ endif
 !EARTHQUAKE_EXECUTION_COUNT = $1842
 !SAMUS_IFRAME_TIMER = $18A8
 !SAMUS_KNOCKBACK_TIMER = $18AA
+!SAMUS_PROJ_INVINCIBILITY_TIMER = $18AC
 !LAVA_ACID_Y = $1962
 !FX_BASE_Y = $1978
 !ENEMY_PROJ_ENABLE = $198D
@@ -1380,6 +1387,18 @@ endif
 !DP_DigitMinimum = $26
 !DP_DigitMaximum = $28
 
+if !FEATURE_TAS_RECORD
+!DP_tas_record_force        = $CA
+!DP_tas_record_menu_backup  = $CC
+!DP_tas_record              = $CE
+endif
+
+if !FEATURE_TAS_PLAYBACK
+!DP_tas_verify_input        = $C7
+!DP_tas_frame_counter       = $CA
+!DP_tas_cached_rng          = $CD
+endif
+
 !ACTION_TOGGLE              = #$0000
 !ACTION_TOGGLE_BIT          = #$0002
 !ACTION_TOGGLE_INVERTED     = #$0004
@@ -1462,6 +1481,7 @@ endif
 !IH_MODE_INDEX_YPOS = #(status_display_table_ypos-status_display_table)/2
 !IH_MODE_INDEX_CAMERAPOS = #(status_display_table_camerapos-status_display_table)/2
 !IH_MODE_INDEX_SHOTTIMER = #(status_display_table_shottimer-status_display_table)/2
+!IH_MODE_INDEX_XBOMB = #(status_display_table_xbomb-status_display_table)/2
 !IH_MODE_INDEX_RAMWATCH = #(status_display_table_ramwatch-status_display_table)/2
 !IH_MODE_COUNT = #(status_display_table_end-status_display_table)/2
 

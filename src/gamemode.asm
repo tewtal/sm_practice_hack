@@ -183,6 +183,9 @@ endif
     ; If we are skipping gameplay this frame and not loading a preset,
     ; it's not fair to still increment timers at the end of the frame,
     ; so decrement timers here to compensate
+if !FEATURE_TAS_RECORD
+    LDA !DP_tas_record : DEC #2 : STA !DP_tas_record
+endif
     DEC !FRAME_COUNTER
     LDA !ram_realtime_room : DEC : STA !ram_realtime_room
 
@@ -246,6 +249,9 @@ gamemode_placeholder:
 if !FEATURE_SD2SNES
 gamemode_save_state:
 {
+if !FEATURE_TAS_PLAYBACK
+    BRK
+else
     ; Check if save not allowed
     LDA !GAMEMODE : CMP #$0003 : BEQ .done
 if !FEATURE_TINYSTATES
@@ -277,10 +283,14 @@ endif
   .failSFX
     %sfxfail()
     RTL
+endif ; !FEATURE_TAS_PLAYBACK
 }
 
 gamemode_load_state:
 {
+if !FEATURE_TAS_PLAYBACK
+    BRK
+else
     ; Do not load state while uploading music data to APU
     LDA !UPLOADING_TO_APU : BNE .not_allowed
 
@@ -328,6 +338,7 @@ else
     LDA #$0002 : STA !ram_last_save_state_type
     JML load_state
 endif
+endif ; !FEATURE_TAS_PLAYBACK
 }
 
 gamemode_auto_save_state:
@@ -335,7 +346,7 @@ gamemode_auto_save_state:
     LDA #$0001 : STA !ram_auto_save_state
     RTL
 }
-endif
+endif ; FEATURE_SD2SNES
 
 if !FEATURE_VANILLAHUD
 else
@@ -490,6 +501,7 @@ gamemode_kill_enemies:
     JML kill_enemies
 }
 
+if !SPRITE_FEATURES
 gamemode_toggle_oob_tile_viewer:
 {
     LDA !ram_sprite_feature_flags : BIT !SPRITE_OOB_WATCH : BEQ .turnOn
@@ -500,6 +512,7 @@ gamemode_toggle_oob_tile_viewer:
     ORA !SPRITE_OOB_WATCH : STA !ram_sprite_feature_flags
     JML upload_sprite_oob_tiles
 }
+endif
 
 gamemode_randomize_rng:
 {
@@ -2268,7 +2281,9 @@ elseif !FEATURE_SD2SNES
 endif
     dw #ctrl_add_full_equipment
     dw #ctrl_add_kill_enemies
+if !SPRITE_FEATURES
     dw #ctrl_add_toggle_tileviewer
+endif
     dw #ctrl_add_randomize_rng
 if !FEATURE_VANILLAHUD
 else
@@ -2371,7 +2386,9 @@ endif
     dw #ctrl_add_reset_segment_later_dm_text
     dw #ctrl_add_full_equipment_dm_text
     dw #ctrl_add_kill_enemies_dm_text
+if !SPRITE_FEATURES
     dw #ctrl_add_toggle_tileviewer_dm_text
+endif
     dw #ctrl_add_randomize_rng_dm_text
 if !FEATURE_VANILLAHUD
     dw #ctrl_add_empty_dm_text
@@ -2506,7 +2523,11 @@ endif
     db #gamemode_reset_segment_later
     db #gamemode_full_equipment
     db #gamemode_kill_enemies
+if !SPRITE_FEATURES
     db #gamemode_toggle_oob_tile_viewer
+else
+    db #gamemode_placeholder
+endif
     db #gamemode_randomize_rng
 if !FEATURE_VANILLAHUD
     db #gamemode_placeholder
@@ -2600,7 +2621,11 @@ endif
     db #gamemode_reset_segment_later>>8
     db #gamemode_full_equipment>>8
     db #gamemode_kill_enemies>>8
+if !SPRITE_FEATURES
     db #gamemode_toggle_oob_tile_viewer>>8
+else
+    db #gamemode_placeholder>>8
+endif
     db #gamemode_randomize_rng>>8
 if !FEATURE_VANILLAHUD
     db #gamemode_placeholder>>8
@@ -2713,8 +2738,10 @@ ctrl_add_full_equipment:
 ctrl_add_kill_enemies:
     %cm_jsl("Kill Enemies", #ctrl_add_shortcut_select, #$008F)
 
+if !SPRITE_FEATURES
 ctrl_add_toggle_tileviewer:
     %cm_jsl("Toggle OOB Tiles", #ctrl_add_shortcut_select, #$0010)
+endif
 
 ctrl_add_randomize_rng:
     %cm_jsl("Randomize RNG", #ctrl_add_shortcut_select, #$0011)
