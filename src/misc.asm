@@ -401,7 +401,11 @@ misc_xray_pose_change_command:
 {
     LDA !ram_cm_gmode_xmode : BIT #$0001 : BNE .xmode
   .vanilla
+if !FEATURE_PAL
+    JMP $EE0B
+else
     JMP $EEA6
+endif
 
   .xmode
     LDA !SAMUS_POSE : CMP #$00D5 : BMI .vanilla
