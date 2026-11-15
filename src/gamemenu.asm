@@ -191,6 +191,7 @@ DebugMenu:
     dw #game_pacifist
     dw #$FFFF
     dw #game_debugplms
+    dw #game_debugxmode
     dw #game_debugprojectiles
     dw #game_debugfixscrolloffsets
     dw #game_elevatorfix
@@ -227,14 +228,17 @@ game_pacifist:
     %cm_toggle("Deal Zero Damage", !ram_pacifist, #$01, #0)
 
 game_debugplms:
-    %cm_toggle_bit_inverted("Pseudo G-Mode", !ram_cm_gmode, #$8000, #.routine)
+    %cm_toggle_bit_inverted("Pseudo G-Mode", !ram_cm_gmode_xmode, #$8000, #.routine)
   .routine
-    LDA !ram_cm_gmode
+    LDA !ram_cm_gmode_xmode : AND #$8000
     STA !PALETTE_FX_ENABLE
     STA !PLM_ENABLE
     STA !ENEMY_PROJ_ENABLE
     STA !ANIMATED_TILES_ENABLE
     RTL
+
+game_debugxmode:
+    %cm_toggle_bit("Pseudo X-Mode", !ram_cm_gmode_xmode, #$0001, #0)
 
 game_debugprojectiles:
     %cm_toggle_bit("Enable Projectiles", !ENEMY_PROJ_ENABLE, #$8000, #0)

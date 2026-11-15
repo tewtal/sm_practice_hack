@@ -266,7 +266,7 @@
 !ram_sram_detection = !WRAM_MENU_START+$56
 
 !ram_timers_autoupdate = !WRAM_MENU_START+$58
-!ram_cm_gmode = !WRAM_MENU_START+$5A
+!ram_cm_gmode_xmode = !WRAM_MENU_START+$5A
 
 ; ^ FREE SPACE ^ up to +$86
 
@@ -1084,6 +1084,7 @@ endif
 !EARTHQUAKE_EXECUTION_COUNT = $1842
 !SAMUS_IFRAME_TIMER = $18A8
 !SAMUS_KNOCKBACK_TIMER = $18AA
+!SAMUS_PROJ_INVINCIBILITY_TIMER = $18AC
 !LAVA_ACID_Y = $1962
 !FX_BASE_Y = $1978
 !ENEMY_PROJ_ENABLE = $198D
@@ -1480,6 +1481,7 @@ endif
 !IH_MODE_INDEX_YPOS = #(status_display_table_ypos-status_display_table)/2
 !IH_MODE_INDEX_CAMERAPOS = #(status_display_table_camerapos-status_display_table)/2
 !IH_MODE_INDEX_SHOTTIMER = #(status_display_table_shottimer-status_display_table)/2
+!IH_MODE_INDEX_XBOMB = #(status_display_table_xbomb-status_display_table)/2
 !IH_MODE_INDEX_RAMWATCH = #(status_display_table_ramwatch-status_display_table)/2
 !IH_MODE_COUNT = #(status_display_table_end-status_display_table)/2
 
