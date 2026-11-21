@@ -127,14 +127,14 @@ org $A7DE2F
 else
 org $A7DDFB
 endif
-    LDA $187A
+    LDA !ENEMY_SHOT_AI_PROJ_DAMAGE
 
 if !FEATURE_PAL
-org $A7DE99
-else
 org $A7DE65
+else
+org $A7DE31
 endif
-    LDA $187A
+    LDA !ENEMY_SHOT_AI_PROJ_DAMAGE
 
 
 ; --------------
