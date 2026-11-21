@@ -269,7 +269,11 @@ endif
     STA !sram_loadstate_rando_missiles
     STA !sram_loadstate_rando_supers
     STA !sram_loadstate_rando_powerbombs
+if !FEATURE_TAS_RECORD
+    LDA #$270F : STA !sram_demo_timer
+else
     LDA #$0384 : STA !sram_demo_timer
+endif
     LDA #$0100 : STA !sram_ceres_timer
     LDA #$0300 : STA !sram_zebes_timer
 
