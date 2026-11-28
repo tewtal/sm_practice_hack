@@ -426,7 +426,7 @@ save_full_table:
     dw $0000|$4316, $0002  ; size = $02xx ($0200), unused bank reg = $00
     dw $1000|$420B, $02    ; Trigger DMA on channel 1
 
-    ; Done, other than DMA and flags, uses SRAM $777F02-$777FFF
+    ; Done, other than DMA and flags, uses SRAM $777D00-$777DFF
     dw $0000, save_return
 
 save_1st_tiny_table:
@@ -436,16 +436,16 @@ save_1st_tiny_table:
     ; Single address, B bus -> A bus.  B address = reflector to WRAM ($2180).
     dw $0000|$4310, $8080  ; direction = B->A, byte reg, B addr = $2180
 
-    ; Copy WRAM segments, uses $770000-$7724FF, $710000-$726B01, $736000-$737FFF
+    ; Copy WRAM segments, uses $770000-$7734FF, $710000-$726B01, $736000-$736FFF
     %wram_to_sram($7E0000, $2000, $770000)
-    %wram_to_sram($7E3300, $0200, $772000)
-    %wram_to_sram(!WRAM_START, !WRAM_PERSIST_START-!WRAM_START, $772200)
+    %wram_to_sram($7E7000, $1000, $772000)
+    %wram_to_sram($7E3300, $0200, $773000)
+    %wram_to_sram(!WRAM_START, !WRAM_PERSIST_START-!WRAM_START, $773200)
     %wram_to_sram($7E8000, $2000, $710000)
     %wram_to_sram($7EC000, $34A0, $712000)
     %wram_to_sram($7F0000, $2B00, $715500)
     %wram_to_sram($7F2B00, $6B02, $720000)
     %wram_to_sram($7E2000, $1000, $736000)
-    %wram_to_sram($7E7000, $1000, $737000)
 
     ; Address pair, B bus -> A bus.  B address = VRAM read ($2139).
     dw $0000|$4310, $3981  ; direction = B->A, word reg, B addr = $2139
@@ -457,15 +457,15 @@ save_1st_tiny_table:
     %vram_to_sram($A000, $2000, $730000)
     %vram_to_sram($C000, $4000, $732000)
 
-    ; Copy CGRAM, uses SRAM $772500-$7726FF
+    ; Copy CGRAM, uses SRAM $773500-$7736FF
     dw $1000|$2121, $00    ; CGRAM address
     dw $0000|$4310, $3B80  ; direction = B->A, byte reg, B addr = $213B
-    dw $0000|$4312, $2500  ; A addr = $xx2500
+    dw $0000|$4312, $3500  ; A addr = $xx3500
     dw $0000|$4314, $0077  ; A addr = $77xxxx, size = $xx00
     dw $0000|$4316, $0002  ; size = $02xx ($0200), unused bank reg = $00
     dw $1000|$420B, $02    ; Trigger DMA on channel 1
 
-    ; Done, other than DMA and flags, uses SRAM $726B02-$726BFF
+    ; Done, other than DMA and flags, uses SRAM $777E00-$777EFF
     dw $0000, save_return
 
 save_2nd_tiny_table:
@@ -475,16 +475,16 @@ save_2nd_tiny_table:
     ; Single address, B bus -> A bus.  B address = reflector to WRAM ($2180).
     dw $0000|$4310, $8080  ; direction = B->A, byte reg, B addr = $2180
 
-    ; Copy WRAM segments, uses $772B00-$774FFF, $740000-$756B01, $766000-$767FFF
-    %wram_to_sram($7E0000, $2000, $773000)
-    %wram_to_sram($7E3300, $0200, $772B00)
-    %wram_to_sram(!WRAM_START, !WRAM_PERSIST_START-!WRAM_START, $772D00)
+    ; Copy WRAM segments, uses $774000-$7774FF, $740000-$756B01, $766000-$766FFF
+    %wram_to_sram($7E0000, $2000, $774000)
+    %wram_to_sram($7E7000, $1000, $776000)
+    %wram_to_sram($7E3300, $0200, $777000)
+    %wram_to_sram(!WRAM_START, !WRAM_PERSIST_START-!WRAM_START, $777200)
     %wram_to_sram($7E8000, $2000, $740000)
     %wram_to_sram($7EC000, $34A0, $742000)
     %wram_to_sram($7F0000, $2B00, $745500)
     %wram_to_sram($7F2B00, $6B02, $750000)
     %wram_to_sram($7E2000, $1000, $766000)
-    %wram_to_sram($7E7000, $1000, $767000)
 
     ; Address pair, B bus -> A bus.  B address = VRAM read ($2139).
     dw $0000|$4310, $3981  ; direction = B->A, word reg, B addr = $2139
@@ -496,15 +496,15 @@ save_2nd_tiny_table:
     %vram_to_sram($A000, $2000, $760000)
     %vram_to_sram($C000, $4000, $762000)
 
-    ; Copy CGRAM, uses SRAM $772900-$772AFF
+    ; Copy CGRAM, uses SRAM $777500-$7776FF
     dw $1000|$2121, $00    ; CGRAM address
     dw $0000|$4310, $3B80  ; direction = B->A, byte reg, B addr = $213B
-    dw $0000|$4312, $2900  ; A addr = $xx2900
+    dw $0000|$4312, $7500  ; A addr = $xx7500
     dw $0000|$4314, $0077  ; A addr = $77xxxx, size = $xx00
     dw $0000|$4316, $0002  ; size = $02xx ($0200), unused bank reg = $00
     dw $1000|$420B, $02    ; Trigger DMA on channel 1
 
-    ; Done, other than DMA and flags, uses SRAM $756B02-$756BFF
+    ; Done, other than DMA and flags, uses SRAM $777F00-$777FFF
     dw $0000, save_return
 
 save_return:
@@ -617,7 +617,7 @@ load_full_table:
     dw $0000|$4316, $0002  ; size = $02xx ($0200), unused bank reg = $00
     dw $1000|$420B, $02    ; Trigger DMA on channel 1
 
-    ; Done, other than DMA and flags, uses SRAM $777F02-$777FFF
+    ; Done, other than DMA and flags, uses SRAM $777D00-$777DFF
     dw $0000, load_return
 
 load_1st_tiny_table:
@@ -629,16 +629,16 @@ load_1st_tiny_table:
     ; Single address, A bus -> B bus.  B address = reflector to WRAM ($2180).
     dw $0000|$4310, $8000  ; direction = A->B, B addr = $2180
 
-    ; Copy WRAM segments, uses $770000-$7724FF, $710000-$726B01, $736000-$737FFF
+    ; Copy WRAM segments, uses $770000-$7734FF, $710000-$726B01, $736000-$736FFF
     %sram_to_wram($7E0000, $2000, $770000)
-    %sram_to_wram($7E3300, $0200, $772000)
-    %sram_to_wram(!WRAM_START, !WRAM_PERSIST_START-!WRAM_START, $772200)
+    %sram_to_wram($7E7000, $1000, $772000)
+    %sram_to_wram($7E3300, $0200, $773000)
+    %sram_to_wram(!WRAM_START, !WRAM_PERSIST_START-!WRAM_START, $773200)
     %sram_to_wram($7E8000, $2000, $710000)
     %sram_to_wram($7EC000, $34A0, $712000)
     %sram_to_wram($7F0000, $2B00, $715500)
     %sram_to_wram($7F2B00, $6B02, $720000)
     %sram_to_wram($7E2000, $1000, $736000)
-    %sram_to_wram($7E7000, $1000, $737000)
 
     ; Address pair, A bus -> B bus.  B address = VRAM write ($2118).
     dw $0000|$4310, $1801  ; direction = A->B, B addr = $2118
@@ -650,15 +650,15 @@ load_1st_tiny_table:
     %sram_to_vram($A000, $2000, $730000)
     %sram_to_vram($C000, $4000, $732000)
 
-    ; Copy CGRAM, uses SRAM $772500-$7726FF
+    ; Copy CGRAM, uses SRAM $773500-$7736FF
     dw $1000|$2121, $00    ; CGRAM address
     dw $0000|$4310, $2200  ; direction = A->B, byte reg, B addr = $2122
-    dw $0000|$4312, $2500  ; A addr = $xx2500
+    dw $0000|$4312, $3500  ; A addr = $xx3500
     dw $0000|$4314, $0077  ; A addr = $77xxxx, size = $xx00
     dw $0000|$4316, $0002  ; size = $02xx ($0200), unused bank reg = $00
     dw $1000|$420B, $02    ; Trigger DMA on channel 1
 
-    ; Done, other than DMA and flags, uses SRAM $726B02-$726BFF
+    ; Done, other than DMA and flags, uses SRAM $777E00-$777EFF
     dw $0000, load_return
 
 load_2nd_tiny_table:
@@ -670,16 +670,16 @@ load_2nd_tiny_table:
     ; Single address, A bus -> B bus.  B address = reflector to WRAM ($2180).
     dw $0000|$4310, $8000  ; direction = A->B, B addr = $2180
 
-    ; Copy WRAM segments, uses $772B00-$774FFF, $740000-$756B01, $766000-$767FFF
-    %sram_to_wram($7E0000, $2000, $773000)
-    %sram_to_wram($7E3300, $0200, $772B00)
-    %sram_to_wram(!WRAM_START, !WRAM_PERSIST_START-!WRAM_START, $772D00)
+    ; Copy WRAM segments, uses $774000-$7774FF, $740000-$756B01, $766000-$766FFF
+    %sram_to_wram($7E0000, $2000, $774000)
+    %sram_to_wram($7E7000, $1000, $776000)
+    %sram_to_wram($7E3300, $0200, $777000)
+    %sram_to_wram(!WRAM_START, !WRAM_PERSIST_START-!WRAM_START, $777200)
     %sram_to_wram($7E8000, $2000, $740000)
     %sram_to_wram($7EC000, $34A0, $742000)
     %sram_to_wram($7F0000, $2B00, $745500)
     %sram_to_wram($7F2B00, $6B02, $750000)
     %sram_to_wram($7E2000, $1000, $766000)
-    %sram_to_wram($7E7000, $1000, $767000)
 
     ; Address pair, A bus -> B bus.  B address = VRAM write ($2118).
     dw $0000|$4310, $1801  ; direction = A->B, B addr = $2118
@@ -691,15 +691,15 @@ load_2nd_tiny_table:
     %sram_to_vram($A000, $2000, $760000)
     %sram_to_vram($C000, $4000, $762000)
 
-    ; Copy CGRAM, uses SRAM $772900-$772AFF
+    ; Copy CGRAM, uses SRAM $777500-$7776FF
     dw $1000|$2121, $00    ; CGRAM address
     dw $0000|$4310, $2200  ; direction = A->B, byte reg, B addr = $2122
-    dw $0000|$4312, $2900  ; A addr = $xx2900
+    dw $0000|$4312, $7500  ; A addr = $xx7500
     dw $0000|$4314, $0077  ; A addr = $77xxxx, size = $xx00
     dw $0000|$4316, $0002  ; size = $02xx ($0200), unused bank reg = $00
     dw $1000|$420B, $02    ; Trigger DMA on channel 1
 
-    ; Done, other than DMA and flags, uses SRAM $756B02-$756BFF
+    ; Done, other than DMA and flags, uses SRAM $777F00-$777FFF
     dw $0000, load_return
 
 load_return:
